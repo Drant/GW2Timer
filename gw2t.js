@@ -791,7 +791,7 @@ C = {
 		$(chainhtmlid).append(
 		"<div id='barChain_" + pChain.alias + "' class='barChain'>"
 			+ "<div class='chnTitle'>"
-				+ "<img src='img/chain/" + C.parseChainAlias(pChain.alias) + ".png' />"
+				+ "<img src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + ".png' />"
 				+ "<div id='chnCheck_" + pChain.alias + "' class='chnCheck'></div>"
 				+ "<h2>" + C.truncateTitleString(pChain.title, C.cChainTitleCharLimit) + "</h2>"
 				+ "<time id='chnTime_" + pChain.alias + "'></time>"
@@ -1132,7 +1132,7 @@ C = {
 			$("#listChainsTimetable").append(
 			"<div class='barChainDummy'>"
 				+ "<div class='chnTitle chnTitleFutureFar'>"
-					+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias) + ".png' />"
+					+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + ".png' />"
 					+ "<h2>" + C.truncateTitleString(ithchain.title, C.cChainTitleCharLimit) + "</h2>"
 					+ "<time>" + timestring + "</time>"
 				+ "</div>"
@@ -2634,10 +2634,10 @@ K = {
 					$(pIcon).css({opacity: 1});
 				}
 			};
-			$(pIcon0).attr("src", "img/chain/" + chain0.alias + ".png");
-			$(pIcon1).attr("src", "img/chain/" + chain1.alias + ".png");
-			$(pIcon2).attr("src", "img/chain/" + chain2.alias + ".png");
-			$(pIcon3).attr("src", "img/chain/" + chain3.alias + ".png");
+			$(pIcon0).attr("src", "img/chain/" + chain0.alias.toLowerCase() + ".png");
+			$(pIcon1).attr("src", "img/chain/" + chain1.alias.toLowerCase() + ".png");
+			$(pIcon2).attr("src", "img/chain/" + chain2.alias.toLowerCase() + ".png");
+			$(pIcon3).attr("src", "img/chain/" + chain3.alias.toLowerCase() + ".png");
 			fadeIcons(chain0, pIcon0);
 			fadeIcons(chain1, pIcon1);
 			fadeIcons(chain2, pIcon2);
@@ -2931,7 +2931,7 @@ I = {
 			// Scroll to top when clicked the header
 			var headertext = $(this).text();
 			var headertextstripped = headertext.replace(/[^a-zA-Z0-9]/, "");
-			$(this).html(headertext + "<span class='tocTop'> ↑</span>");
+			$(this).html(headertext + "<span class='tocTop'> ?</span>");
 			$(this).click(function()
 			{
 				I.scrollToElement($("#jsTOC_" + I.currentContent), $(I.cContentPane), "fast");
