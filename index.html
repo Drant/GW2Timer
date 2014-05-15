@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Meta -->
+	<title>GW2Timer - World Boss Timers and Daily Map Guide</title>
+	<meta charset="utf-8" />
+	<meta name="robots" content="index, follow, noarchive" />
+	<meta name="description" content="Timer map for world boss meta events and daily achievement guide." />
+
+	<!-- Stylesheets -->
+	<link rel="shortcut icon" type="image/x-icon" href="img/event/boss.png" />
+	<link rel="stylesheet" media="screen" href="gw2t.css" />
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+	
+	<!-- JavaScript  -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+	<!-- Web application files  -->
+	<script type="text/javascript" src="zones.js"></script>
+	<script type="text/javascript" src="metas.js"></script>
+	<script type="text/javascript" src="gw2t.js"></script>
+</head>
+
+<body>
+	<noscript><span id="diaNoJSWarning">This web application requires JavaScript enabled.</span></noscript>
+	<div id="jsConsole"></div>
+	<iframe id="jsTTS"></iframe>
+	<main id="windowMain">
+	<div id="panelLeft" class="panelMain">
+		<!-- Map, the dummy space is required or Leaflet won't show
+		==================================================================== -->
+		<section id="paneMap">&nbsp;
+			<div id="itemMapCoordinates">
+				<input id="mapCoordinatesDynamic" type="text" />
+				<input id="mapCoordinatesStatic" type="text" />
+				<input id="mapCoordinatesRegion" type="text" />
+			</div>
+			<div id="itemMapButtons">
+				<img id="mapCompassButton" src="img/map/compass.png" alt="compass" />
+			</div>
+		</section>
+	</div><!-- End of panelLeft -->
+	<div id="panelRight" class="panelMain">
+		<!-- Clock
+		==================================================================== -->
+		<section id="paneClock" class="paneRight">
+			<div id="paneClockBackground"></div>
+			<div class="itemClockIcon">
+				<img id="itemClockIcon0" src="img/chain/tbd.png" alt="X:00 Event" />
+				<img id="itemClockIcon1" src="img/chain/tbd.png" alt="X:15 Event" />
+				<img id="itemClockIcon2" src="img/chain/tbd.png" alt="X:30 Event" />
+				<img id="itemClockIcon3" src="img/chain/tbd.png" alt="X:45 Event" />
+			</div>
+			<svg id="itemClock" viewBox="0 0 100 100"> <!-- x=50,y=50 is the center -->
+				<defs> <!-- Shadow filters -->
+					<filter id="clkFilterShadowOuter" height="130%">
+						<feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+						<feOffset dx="0" dy="0" result="offsetblur" />
+						<feMerge> 
+							<feMergeNode /> <!-- this contains the offset blurred image -->
+							<feMergeNode in="SourceGraphic" /> <!-- this contains the element that the filter is applied to -->
+						</feMerge>
+					</filter>
+					<filter id="clkFilterShadowHand" x="-50%" y="-50%" width="200%" height="200%">
+						<feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur" />
+						<feOffset in="blur" dx="1" dy="1" result="shadow" />
+						<feComponentTransfer>
+							<feFuncA type="linear" slope="1"/> <!-- Opacity of the shadow -->
+						</feComponentTransfer>
+						<feMerge> 
+							<feMergeNode/>
+							<feMergeNode in="SourceGraphic"/> 
+						</feMerge>
+					</filter>
+				</defs>
+				<circle id="clkFace" cx="50" cy="50" r="45" filter="url(#clkFilterShadowOuter)" /> <!-- Clock face -->
+				<path id="clkSector" d="M50,50 L50,6 A44,44 0,0 1 94,50 z" />
+				<g id="clkTicks"> <!-- 12 hour tick marks -->
+					<line x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line x1="72.50" y1="11.03" x2="70.00" y2="15.36" />
+					<line x1="88.97" y1="27.50" x2="84.64" y2="30.00" />
+					<line x1="95.00" y1="50.00" x2="90.00" y2="50.00" />
+					<line x1="88.97" y1="72.50" x2="84.64" y2="70.00" />
+					<line x1="72.50" y1="88.97" x2="70.00" y2="84.64" />
+					<line x1="50.00" y1="95.00" x2="50.00" y2="90.00" />
+					<line x1="27.50" y1="88.97" x2="30.00" y2="84.64" />
+					<line x1="11.03" y1="72.50" x2="15.36" y2="70.00" />
+					<line x1="5.00" y1="50.00" x2="10.00" y2="50.00" />
+					<line x1="11.03" y1="27.50" x2="15.36" y2="30.00" />
+					<line x1="27.50" y1="11.03" x2="30.00" y2="15.36" />
+				</g>
+				<g id="clkMarkers">
+					<!-- 15 minute dividers for four events in an hour -->
+					<line id="clkMarker0" x1="50.00" y1="0.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker1" x1="100.00" y1="50.00" x2="90.00" y2="50.00" />
+					<line id="clkMarker2" x1="50.00" y1="100.00" x2="50.00" y2="90.00" />
+					<line id="clkMarker3" x1="0.00" y1="50.00" x2="10.00" y2="50.00" />
+					<!-- Markers for minimum time event ends and average time event ends -->
+					<line id="clkMarker0A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker0B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker1A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker1B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker2A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker2B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker3A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker3B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+				</g>
+				<g id="clkNumbers">
+					<text x="50" y="18">12</text>
+					<text x="85" y="53">3</text>
+					<text x="50" y="88">6</text>
+					<text x="15" y="53">9</text>
+				</g>
+				<!-- Hands and markers initially point at 12 o'clock, JS will rotate them -->
+				<g id="clkHands" filter="url(#clkFilterShadowHand)">
+					<line id="clkHourHand" x1="50" y1="50" x2="50" y2="24"/>
+					<line id="clkMinuteHand" x1="50" y1="50" x2="50" y2="16"/>
+					<line id="clkSecondHand" x1="50" y1="50" x2="50" y2="16"/>
+				</g>
+			</svg>
+			<div class="itemClockIconOver">
+				<img id="itemClockWaypoint0" src="img/event/waypoint.png" alt="X:00 Waypoint">
+				<img id="itemClockWaypoint1" src="img/event/waypoint.png" alt="X:15 Waypoint">
+				<img id="itemClockWaypoint2" src="img/event/waypoint.png" alt="X:30 Waypoint">
+				<img id="itemClockWaypoint3" src="img/event/waypoint.png" alt="X:45 Waypoint">
+			</div>
+			<time id="itemTimeLocal" class="itemTimeDigital">00:00</time>
+			<time id="itemTimeServer" class="itemTimeDigital">16:00</time>
+		</section>
+		<!-- Menu, if these IDs were changed, change the <article> tags' too
+		==================================================================== -->
+		<nav id="paneMenu" class="paneRight">
+			<div id="menuChains"></div>
+			<div id="menuMap"></div>
+			<div id="menuHelp"></div>
+			<div id="menuOptions"></div>
+		</nav>
+		<!-- Content mini-pane
+		==================================================================== -->
+		<section id="paneContent" class="paneRight">
+			<div id="jsTop">↑</div>
+			<article id="layerChains"> <!-- This layer will be populated by JS -->
+				<header>
+					<img src="img/ui/scheduled.png" alt="Scheduled Bosses" />
+					<ins></ins>
+				</header>
+				<div id="listChainsScheduled" class="listChains"></div>
+				<header>
+					<img src="img/event/boss.png" alt="Unscheduled Bosses" />
+					<ins></ins>
+				</header>
+				<div id="listChainsUnscheduled" class="listChains"></div>
+				<header>
+					<img src="img/chain/temple.png" alt="Orr Temples" />
+					<ins></ins>
+				</header>
+				<div id="listChainsTemple" class="listChains"></div>
+				<header id="headerTimetable">
+					<img src="img/event/special.png" alt="Timetable" />
+					<ins></ins>
+				</header>
+				<div id="listChainsTimetable" class="listChains"></div>
+				<div id="listDummyBottom"></div>
+			</article>
+			<article id="layerMap"></article>
+			<article id="layerHelp"></article> <!-- This layer will be populated by AJAX -->
+			<article id="layerOptions">
+				<div class="cntComposition">
+					<h1>Options</h1>
+					<br />
+					<h2>Timer</h2>
+					<label><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off chains</label>
+					<label><input id="opt_bol_use24Hour" type="checkbox" /> Use 24 hour format</label>
+					<label><input id="opt_bol_detectDST" type="checkbox" /> Detect Daylight Saving Time</label>
+					<div class="optFieldsets">
+						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain? Auto will use the North American time of day to choose. Changes will take effect when the next chain starts. &lt;br /&gt;Min: for full population map&lt;br /&gt;Min-Avg: Min + (Avg - Min)/2&lt;br /&gt;Avg: for regular zerg size"><legend>Predictor</legend>
+							<label><input id="opt_int_setPredictor" type="radio" name="int_setPredictor" /> Auto</label>
+							<label><input type="radio" name="int_setPredictor" /> Min</label>
+							<label><input type="radio" name="int_setPredictor" /> Min-Avg</label>
+							<label><input type="radio" name="int_setPredictor" /> Avg</label>
+						</fieldset>
+						<fieldset name="int_useTimeCountdown" title="Display the soonest time the chain will start, or countdown to that time?"><legend>Chain Times</legend>
+							<label><input id="opt_int_useTimeCountdown" type="radio" name="int_useTimeCountdown" /> Schedule</label>
+							<label><input type="radio" name="int_useTimeCountdown" /> Countdown</label>
+						</fieldset>
+						<fieldset name="int_dimClockBackground"><legend>Clock Bg</legend>
+							<label><input id="opt_int_dimClockBackground" type="radio" name="int_dimClockBackground" /> Auto-dim</label>
+							<label><input type="radio" name="int_dimClockBackground" /> Bright</label>
+							<label><input type="radio" name="int_dimClockBackground" /> Dark</label>
+						</fieldset>
+					</div>
+					<br />
+					<h2>Map</h2>
+					<label title="Automatically scroll the map to the next predicted event. You'll need to be on the chains tab."><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
+					<label title="Show the colored lines of the event paths."><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
+					<label><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
+					<label>Map pane minimum width (for small screens).<br />Refresh your browser to see change.<br />0px <input id="opt_int_resizeMapPaneWidth" type="range" min="0" max="720" step="12" /> 720px</label>
+					<br />
+					<h2>Alarm</h2>
+					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. When should the program announce the next boss?</span>
+					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
+					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current chain finishes</label>
+					<br />
+					<h2>Defaults</h2>
+					<div class="optButtons">
+						<button id="btnRestoreAllChains" title="Unhide all chains and uncheck them.">Restore All Chains</button>
+						<button id="btnClearLocalStorage" title="Clear the localStorage which stores options and states.">Clear Website Memory</button>
+					</div>
+				</div>
+			</article>
+		</section>
+	</div><!-- End of panelRight -->
+	</main>
+	<!-- Misc third party scripts; load last for faster page load -->
+	<script type="text/javascript" src="plugins.js"></script>
+</body>
+</html>

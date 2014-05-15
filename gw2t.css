@@ -1,0 +1,812 @@
+/*
+	Design: "Synchronicity" with Guild Wars 2 assets and motifs.
+	Website: GW2Timer world boss timer and map guide.
+	Measurements: minimum window size is 360x720, which is only enough for the
+	clock and timers list (all of the right panel).
+	CSS3: uses gradient, text-shadow, box-shadow modules.
+	Version: 2014.04.30 modified - 2010.04.18 created
+
+	CREDITS:
+	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
+	extracted using https://github.com/kytulendu/Gw2Browser
+	Gradient generated with colorzilla.com/gradient-editor
+	WintrySnowman - Design influenced by http://gw2stuff.com
+
+	CONVENTIONS:
+	Classes and IDs are lower camel case: exampleClass
+	CSS properties are ordered as: structure, content, style
+	The first word is its "type", and three-letter abbreviations are "namespaces"
+	Divisors of 360: 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 18, 20, 24,
+	30, 36, 40, 45, 60, 72, 90, 120, 180.
+	four-values: top, right, bottom, left;
+
+	TABLE OF CONTENTS (Ctrl+F "AtsignAtsignLetter" to jump to section)
+
+	M - Map pane
+	C - Clock pane
+	B - Menu bar pane
+	T - Timer layer
+	O - Options layer
+	P - Color palette
+
+*/
+
+/* Reset styles
+------------------------------------------------------------- */
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;outline:0;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+/* Structure (same order as browser view)
+body > windowMain
+{
+	panelLeft[paneMap], panelRight[paneClock, paneMenu, paneContent]
+}
+------------------------------------------------------------- */
+html, body {
+	height: 100%;
+}
+
+::selection {
+	color: #576976;
+}
+
+#diaNoJSWarning {
+	position: absolute;
+	padding: 10px 0 0 10px;
+	font-size: 24px;
+	font-weight: bold;
+	color: red;
+}
+
+#jsConsole {
+	position: absolute;
+	z-index: 9;
+	margin-top: 24px;
+	margin-left: 24px;
+	font-family: monospace;
+	font-size: 16px;
+	color: white;
+	text-shadow:
+		1px 1px 0px #333,
+		-1px -1px 0px #333,
+		1px -1px 0px #333,
+		-1px 1px 0px #333,
+		1px 1px 0px #333;
+}
+
+#jsTTS {
+	display: none;
+}
+
+#windowMain {
+	display: table;
+	width: 100%; height: 100%;
+	background: black;
+}
+
+.panelMain {
+	display: table-cell;
+	height: 100%;
+}
+
+/*
+ * Style for qTip tooltip JS plugin by Craig Erskine
+ * The offset for tooltip placement under the cursor can be changed in
+ * plugins.js by the variable offsetX and offsetY in the qTip object.
+ */
+div#qTip {
+	display: none;
+	position: absolute; z-index: 1000;
+	max-width: 360px;
+	padding: 4px 6px 4px 6px;
+	border: 2px solid #111;
+	background: #293c4a;
+	background: linear-gradient(to right, #001019 0%, #364852 100%);
+	text-align: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 110%;
+	color: #eee;
+	text-shadow: 0px 0px 2px black;
+	box-shadow: 0px 0px 2px #555;
+	opacity: 0.9;
+}
+
+/* =============================================================
+ *  Left panel
+ * ============================================================= */
+#panelLeft, #panelRight {
+	background: url("img/background/space.jpg") repeat center;
+}
+
+/* @@Map
+------------------------------------------------------------- */
+#paneMap {
+	height: 100%;
+	min-height: 720px;
+	background: url("img/background/space.jpg") repeat center;
+}
+
+#itemMapCoordinates {
+	position: absolute;
+	bottom: 12px; left: 12px;
+	z-index: 9;
+}
+#itemMapCoordinates input {
+	display: inline-block;
+	width: 90px;
+	height: 16px;
+	padding: 3px 6px 3px 6px;
+	margin-left: 12px;
+	border: none;
+	border-bottom: 1px solid gray;
+	background: black;
+	color: #ddff77;
+	opacity: 0.6;
+}
+#mapCoordinatesRegion {
+	width: 120px !important; 
+}
+
+#itemMapButtons {
+	position: absolute;
+	bottom: 12px; right: 12px;
+	z-index: 9;
+}
+#mapCompassButton {
+	
+	vertical-align: middle;
+	opacity: 0.6;
+	cursor: pointer;
+}
+#mapCompassButton:hover {
+	opacity: 1;
+}
+
+.mapWP {
+	font-size: 16px;
+	line-height: 120%;
+	color: #ffcc77;
+	text-shadow:
+		0px 0px 2px black,
+		1px 1px 1px black;
+}
+
+
+/* =============================================================
+ *  Right panel
+ *  Panes (the clock, menu, content pane) are fixed height and
+ *  are manually calculated and absolutely positioned (pinned)
+ *  to fit as so: Clock(360px) + Menu(48px) + Content(fit to bottom).
+ *  If relatively positioned the map pane would be pushed down
+ *  by how tall the panes on the right are.
+ * ============================================================= */
+#panelRight {
+	width: 361px; // 1px extra compensating for the border-left
+}
+
+.paneRight {
+	border-left: 1px solid #444;
+	box-shadow: -5px 0px 5px #223;
+}
+
+/* @@Clock
+------------------------------------------------------------- */
+#paneClock {
+	position: absolute;
+	top: 0px;
+	width: 360px; height: 360px;
+	background: #333;
+	background: radial-gradient(ellipse at center, #4c4c4c 0%, #444444 50%, #131313 100%);
+}
+
+#paneClockBackground {
+	width: 360px; height: 360px;
+	background: url("img/background/globe.jpg") no-repeat center;
+	opacity: 0;
+}
+
+.itemClockIcon img {
+	position: absolute;
+	width: 64px; height: 64px;
+}
+.itemClockIcon img {
+	border: 1px solid black;
+	border-radius: 12px;
+}
+#itemClockIcon0 {
+	top: 4px; left: 148px;
+}
+#itemClockIcon1 {
+	top: 148px; left: 290px;
+}
+#itemClockIcon2 {
+	top: 290px; left: 148px;
+}
+#itemClockIcon3 {
+	top: 148px; left: 4px;
+}
+
+.itemClockIconOver img {
+	position: absolute;
+	width: 32px; height: 32px;
+	cursor: pointer;
+}
+.itemClockIconOver img:active {
+	opacity: 0.5;
+}
+#itemClockWaypoint0 {
+	top: 52px; left: 164px;
+}
+#itemClockWaypoint1 {
+	top: 164px; left: 274px;
+}
+#itemClockWaypoint2 {
+	top: 274px; left: 164px;
+}
+#itemClockWaypoint3 {
+	top: 164px; left: 52px;
+}
+
+#itemClock { /* the clock */
+	position: absolute;
+	top: 70px; left: 70px;
+	width: 220px; height: 220px;
+	stroke: black;
+	stroke-linecap: round;
+	fill: #eef;
+}
+#clkFace { /* clock circumference */
+	stroke-width: 2px;
+}
+#clkSector {
+	stroke-width: 1px;
+	stroke: chartreuse ;
+	fill: lime;
+	opacity: 0.2;
+}
+#clkTicks { /* hour separator lines */
+	stroke-width: 2px;
+	opacity: 0.1;
+} 
+#clkHourHand {
+	stroke-width: 4px;
+	opacity: 0.1;
+}
+#clkMinuteHand {
+	stroke-width: 2px;
+	stroke: black;
+}
+#clkSecondHand {
+	stroke-width: 1px;
+	stroke: red;
+	opacity: 0; /* second hand is not used */
+} 
+#clkNumbers {
+	font-family: sans-serif;
+	font-size: 7pt;
+	font-weight: bold; 
+	text-anchor: middle;
+	stroke: none;
+	fill: black;
+}
+#clkMarkers {
+	stroke-width: 2px;
+}
+
+.itemTimeDigital {
+	position: absolute;
+	font-family: sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #bbcc77;
+	text-shadow:
+		1px 1px 0px #333,
+		-1px -1px 0px #333,
+		1px -1px 0px #333,
+		-1px 1px 0px #333,
+		1px 1px 0px #333;
+}
+#itemTimeLocal {
+	left: 10px; bottom: 10px;
+}
+#itemTimeServer {
+	right: 10px; bottom: 10px;
+}
+
+/* @@Bar menu
+------------------------------------------------------------- */
+#paneMenu {
+	position: absolute;
+	top: 360px;
+	width: 360px; height: 48px;
+	background: #333;
+	background: linear-gradient(to bottom, #111 0%, #444 50%, #111 100%);
+}
+
+#paneMenu div {
+	display: inline-block;
+	float: left;
+	width: 90px; height: 48px;
+	cursor: pointer;
+}
+#paneMenu div:hover {
+	box-shadow: 0px 0px 10px #e7e3bd;
+}
+#paneMenu div:active {
+	box-shadow: 0px 0px 10px white;
+}
+
+#menuChains {
+	background: url("img/ui/timers.png") no-repeat center;
+}
+#menuDaily {
+	background: url("img/ui/daily.png") no-repeat center;
+}
+#menuMap {
+	background: url("img/ui/map.png") no-repeat center;
+}
+#menuOptions {
+	background: url("img/ui/options.png") no-repeat center;
+}
+#menuHelp {
+	background: url("img/ui/help.png") no-repeat center;
+}
+
+/* =============================================================
+ *  Bottom right content subpanel; the contents are layered and
+ *  requires JavaScript to toggle their display based on what
+ *  menu icon was clicked.
+ * ============================================================= */
+#paneContent {
+	position: absolute;
+	bottom: 0px;
+	width: 360px; height: auto;
+	min-height: 312px;
+	overflow-y: auto;
+	top: 408px;
+	color: #eee;
+	text-shadow: 0px 0px 2px black;
+	background: #333;
+	background: linear-gradient(to right, #111 0%, #383838 50%, #111 100%);
+}
+
+#layerChains {
+	display: block; /* timer layer is the first to be displayed, others are hidden */
+}
+#layerMap, #layerHelp, #layerOptions {
+	display: none;
+}
+
+.cntComposition {
+	width: auto; min-height: 36px;
+	margin: 8px;
+	margin-left: 0px;
+	padding: 4px 8px 18px 12px;
+	border: 1px solid #111;
+	border-radius: 8px;
+	background: #222;
+	background: linear-gradient(to right, #111 0%, #333 100%);
+	font-family: sans-serif;
+	font-size: 12px;
+	line-height: 150%;
+	color: #eee;
+	text-shadow: 0px 0px 2px black;
+}
+
+.cntComposition fieldset {
+	display: inline-block;
+	padding: 4px;
+	margin-bottom: 16px;
+	border: 1px solid gray;
+}
+
+.cntComposition label {
+	display: block;
+	clear: both;
+	margin-bottom: 8px;
+}
+
+.cntComposition button {
+	text-shadow: none;
+}
+
+.cntComposition hr {
+	margin-top: 8px;
+	margin-bottom: 4px;
+}
+
+.cntComposition h1 {
+	padding-top: 12px;
+	margin-bottom: 8px;
+	font-size: 20px;
+	text-shadow: 0px 0px 2px #e4e0b3;
+	cursor: pointer;
+}
+.cntComposition h1:hover {
+	text-decoration: underline;
+}
+.cntComposition h1:first-of-type {
+	font-variant: small-caps;
+	letter-spacing: 2px;
+}
+.cntComposition h2 {
+	margin-top: 4px;
+	margin-bottom: 2px;
+	font-size: 16px;
+	text-shadow: 0px 0px 1px #e4e0b3;
+}
+.cntComposition h3 {
+	margin-left: 12px;
+	margin-bottom: 2px;
+	font-size: 14px;
+	text-shadow: 0px 0px 1px #e4e0b3;
+}
+.cntComposition h1, .cntComposition h2, .cntComposition h3 {
+	font-weight: bold;
+	color: #e4e0b3;
+}
+
+.cntComposition em {
+	font-style: italic;
+}
+
+.cntComposition strong {
+	font-weight: bold;
+}
+
+.cntComposition p {
+	margin-bottom: 16px;
+}
+
+.cntComposition a {
+	color: #ccc;
+}
+.cntComposition a:visited {
+	color: #999;
+}
+.cntComposition a:hover {
+	color: #e4e0b3;
+}
+.cntComposition a:active {
+	color: #fff;
+}
+
+.cntComposition i {
+	opacity: 0.5;
+}
+
+.cntComposition dt {
+	display: inline;
+	font-weight: bold;
+}
+
+.cntComposition dd {
+	margin-left: 12px;
+}
+
+.cntComposition ins, .mapZones li, .mapJPs dt, .mapNodes dt {
+	font-weight: bold;
+	color: #ffcc77;
+	cursor: pointer;
+	cursor: zoom-in;
+}
+.cntComposition ins:hover, .mapZones li:hover, .mapJPs dt:hover, .mapNodes dt:hover {
+	color: #ffd899;
+}
+.cntComposition ins:active, .mapZones li:active, .mapJPs dt:active, .mapNodes dt:active {
+	color: white;
+}
+
+.mapJPs a {
+	text-decoration: none;
+}
+
+.jsTableOfContents {
+	padding-top: 12px;
+	padding-bottom: 24px;
+}
+
+.jsTableOfContents h2 {
+	margin-top: 12px;
+	margin-bottom: 8px;
+	font-size: 18px;
+	font-style: italic;
+}
+.tocTop {
+	float: right;
+}
+
+.jsTableOfContents ol {
+	margin-bottom: 4px;
+	margin-left: 26px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #e4e0b3;
+}
+.jsTableOfContents ol li {
+	margin-bottom: 4px;
+	list-style-type: circle;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.jsTableOfContents ol li:hover {
+	text-decoration: none;
+}
+
+#jsTop {
+	display: none;
+	position: fixed;
+	width: 24px; height: 24px;
+	bottom: 8px;
+	right: 24px;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	color: #e4e0b3;
+	text-shadow: 0px 0px 2px #e4e0b3;
+	cursor: pointer;
+}
+
+/* @@Timer chains
+------------------------------------------------------------- */
+#layerChains header {
+	display: block;
+	width: auto; height: 36px;
+	margin-bottom: 8px;
+	padding: 0px 12px 0px 4px;
+	border: 1px solid #111;
+	border-radius: 4px;
+	background: #444;
+	background: linear-gradient(to bottom, #222 0%, #383838 100%);
+	cursor: pointer;
+}
+#layerChains header img {
+	width: 32px; height: 32px;
+	margin-top: 2px;
+	float: left;
+}
+#layerChains header ins {
+	margin-top: 8px;
+	float: right;
+	font-family: monospace;
+	font-size: 16px;
+	color: #999;
+	text-shadow: 0px 0px 2px black;
+}
+
+.listChains {
+	margin-bottom: 24px;
+	font-family: "Times New Roman", Times, Georgia, serif;
+	text-shadow:
+		1px 1px 0px #000,
+		-1px -1px 0px #000,
+		1px -1px 0px #000,
+		-1px 1px 0px #000,
+		1px 1px 0px #000;
+}
+
+.barChain, .barChainDummy, #listChainsDungeon > div { /* A bar containing the chain icon, title, time, and events */
+	width: auto; min-height: 36px;
+	margin-bottom: 4px;
+	padding-left: 8px;
+	border: 1px solid #111;
+	border-radius: 8px;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	background: #222;
+	background: linear-gradient(to right, #111 0%, #333 100%);
+}
+
+.barChainChecked {
+	opacity: 0.3;
+}
+.barChainDeleted {
+	display: none;
+}
+
+.chnTitle {
+	display: table;
+	color: #ffaa22;
+}
+
+.chnTitle img, #listChainsDungeon img {
+	width: 32px; height: 32px;
+	border-radius: 4px;
+}
+
+.chnCheck, .chnChecked {
+	display: inline-block;
+	margin-left: -32px;
+	width: 32px; height: 32px;
+	opacity: 0.4;
+}
+.chnCheck {
+	background: url("img/ui/check.png") no-repeat center;
+}
+.chnCheck:hover, .chnChecked {
+	background: url("img/ui/checkover.png") no-repeat center;
+}
+.chnCheck:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+.chnTitle h2 {
+	display: table-cell;
+	width: 210px; /* this pushes the time to the right */
+	padding-left: 8px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.chnTitle h2:hover {
+	color: #eee;
+}
+
+.chnTitle time {
+	display: table-cell;
+	width: 74px;
+	vertical-align: middle;
+	text-align: right;
+	cursor: help;
+}
+
+#listChainsTimetable .chnTitle time {
+	cursor: auto;
+}
+
+.chnDetails ol {
+	margin-top: 8px;
+}
+
+.chnDetails ol li {
+	margin-bottom: 5px;
+	line-height: 0%; /* for Opera extra height quirk */
+	color: #ff8844;
+}
+
+.chnDetails ol li:hover {
+	color: #eee;
+}
+
+.chnDetails ol li img {
+	vertical-align: middle;
+	width: 16px; height: 16px;
+	cursor: help;
+}
+
+.chnDetails ol li img:hover {
+	box-shadow: 0px 0px 4px #ee7924;
+}
+
+.chnDetails ol li span {
+	margin-left: 4px;
+	vertical-align: middle;
+	cursor: pointer;
+	cursor: zoom-in;
+}
+
+.chnDetailsLinks {
+	margin-bottom: 8px;
+	text-align: right;
+}
+
+.chnDetailsLinks ins {
+	margin-right: 6px;
+	font-family: monospace;
+	font-size: 12px;
+	color: #777;
+	cursor: pointer;
+}
+
+#listChainsTimetable .chnTitle h2,
+#listChainsTimetable .chnTitle time {
+	cursor: auto;
+}
+
+/* JavaScript added classes */
+.chnBarPrevious {
+	background: #1f0f05;
+	background: linear-gradient(to right, #111 0%, #261306 100%);
+}
+.chnBarCurrent {
+	background: #3b1e09;
+	background: linear-gradient(to right, #111 0%, #4f280c 100%);
+}
+
+.chnTitleCurrent {
+	color: #ffaa22;
+}
+.chnTitleFuture {
+	color: #805511;
+}
+.chnTitleFutureFar {
+	color: #888;
+}
+
+.chnTimeCurrent {
+	color: #bbcc77;
+}
+.chnTimeFuture {
+	color: #75804a;
+}
+.chnTimeFutureFar {
+	color: #888;
+}
+
+.chnEventPast {
+	color: #bbb !important;
+	opacity: 0.5;
+}
+.chnEventCurrent {
+	color: #ff8844 !important;
+	opacity: 1;
+}
+.chnEventFuture {
+	color: #ff8844 !important;
+	opacity: 0.5;
+}
+
+/* @@Map layer
+------------------------------------------------------------- */
+.mapZoneList {
+	border-spacing: 12px;
+}
+.mapZoneList div {
+	display: table-cell;
+}
+
+/* @@Options layer
+------------------------------------------------------------- */
+.optFieldsets fieldset {
+	margin-right: 8px;
+	vertical-align: top;
+}
+
+.optButtons {
+	margin-top: 8px;
+}
+.optButtons button {
+	width: 270px;
+	margin-bottom: 4px;
+}
+
+label:hover {
+	color: #ddff77;
+}
+
+
+
+/* =============================================================
+ *  @@Palette color mostly derived from GW2 game interface.
+ *  This is for reference.
+ * ============================================================= */
+colorPalette {
+	color: #cc3322; /* Red time text */
+	color: #ff2200; /* Red chat text warning */
+	color: #ee3333; /* Red chat text team name */
+	color: #ff66ee; /* Pink chat text whisper name */
+	color: #ff99ee; /* Pink chat text whisper */
+	color: #ee6655; /* Salmon chat text map name */
+	color: #ffddcc; /* Salmon chat text map */
+	color: #ee7924; /* Orange event progress bar */
+	color: #ff8844; /* Orange text in event panel */
+	color: #ffbb44; /* Gold guild chat text name */
+	color: #ffeeaa; /* Gold guild chat text */
+	color: #ffcc77; /* Gold waypoint chat text */
+	color: #e4e0b3; /* Yellow menu icons top left corner */
+	color: #ffaa22; /* Yellow orange chain title text in event panel */
+	color: #ffcc77; /* Yellow waypoint text */
+	color: #ffff00; /* Yellow chat text squad name */
+	color: #ffff66; /* Yellow chat text squad */
+	color: #bbcc77; /* Green time text */
+	color: #ddff77; /* Green bright chat text notice */
+	color: #88ff88; /* Green chat text say name */
+	color: #44bbff; /* Blue chat text party name */
+	color: #bbddff; /* Blue chat text party */
+	color: #bbbbbb; /* Gray text in mob description */
+	color: #888888; /* Gray chat time timestamp */
+}
+
+

@@ -1,0 +1,174 @@
+<div class="cntComposition">
+
+<h1>Help</h1>
+<div class="jsTableOfContents" id="jsTOC_Help"></div>
+
+<hr />
+
+<h1>FAQ</h1>
+<h2>What do the colors in the clock mean?</h2>
+<p>Overview of the <a href="http://i.imgur.com/Zng2PoK.png">GW2Timer analog clock</a>. As you may know, world boss (WB) chains start exactly 15 minutes apart (X:00, X:15, X:30, X:45), and most of them don't take longer than 15 minutes to complete, so the chains can be neatly fitted into a clock's quadrants. The <strong>bright green</strong> mark is the current WB's start (<strong>dark green</strong> is the next), the <strong>orange</strong> mark is the minimum time it is completed (usually by a full map population), and the <strong>red</strong> mark is the average. If you waypoint to a WB after the red mark is passed, it's likely the boss is already dead. You should instead wait for the next one, which is the dark green mark. Also, don't wait too long during the green minute hand phase or the map instances with the WB running will get full and you'll be placed into an instance with the chain far behind or inactive.</p>
+
+<h2>What do the colors of the map lines mean?</h2>
+<p>Each different colored lines represent one &quot;step&quot;: one event, or multiple simultaneous events that are considered a single link in the meta event chain. The colors are ordered like the mnemonic ROYGBIV: Red, Orange, Yellow, Green, Blue, Indigo, Violet; so red is the first step in the chain, and green and blue are much later. You can click on the event name to be directed to the path, which were hand drawn to trace a player's progress or NPC route. A straight line through lots of obstacles means you should waypoint instead of walk there.</p>
+
+<h2>Why is there no timer for the other world bosses?</h2>
+<p>Megaservers are pretty much overflows, and the API (files on the game's website that tells when events are up) don't give information about overflows because they are dynamic instances not tied to a particular server. To do these events you have to physically check the places where they happen, and if none of them are active for that chain, you should ask map chat when the chain was last completed.</p>
+
+<h2>How is GW2Timer.com able to tell when individual events in the chain are active without an API?</h2>
+<p>tl;dr: Statistics.</p>
+<p>Before the megaserver launch, the site was originally meant to predict for world boss trains a sorted schedule of the next quickest-to-complete meta event chain which were then asynchronous. To do that the site had to collect time statistics on the chains' individual events. Using the API, a monitor program recorded (continuously over two weeks on four varied tier servers) the times between an event changing its state, most importantly the "Active" to "Success" transition. Another custom written program was used to generate histogram and boxplot data, which were handpicked as the minimum possible, modal average, and modal maximum time an event is completed.</p>
+<p>Additionally, the interim between an event finishes and its followup event starts is also collected (usually this is a preset time, or the time it takes an NPC to run to their destination), and all these times are summed to give an estimate of how long an entire chain takes to complete. Although most meta events are now prescheduled and time sorting is moot, the site can still give players a general idea of the battlefield without having to set foot on it.<br />
+</p>
+
+<hr />
+
+<h1>About</h1>
+<p>This web application runs entirely on the client's side, except for API calls to the GW2 server for map data. Few libraries/plugins were used to avoid bloat. It was tested on Firefox/Chrome 2013-2014 and Opera 2013, in 1024x768 through 1920x1200. IE10 or below is not recommended and kludges were <strong>not</strong> used to compensate for IE's flaws. Smartphone users with large screen can use this right panel as an &quot;app&quot; (minimum resolution 360x720).</p>
+<h2>History</h2>
+<p>The idea of GW2Timer stemmed from the dissatisfaction (pre-megaserver) of GW2Stuff's lack of individual event information. As a former PVE commander, I needed to know what will be the shortest meta event chain to lead the train to. Although GW2Stuff was excellent at telling people when bosses are happening, it did not reveal the hard work (the pre-events) that more knowledgeable people had to do. GW2Timer uses time statistics of individual events to predict when they will start and finish so players can more effectively manage their playtime.</p>
+<p>2013 December 13 - Inception<br />
+2014 March 17 - Logger program started<br />
+2014 April 11 - Statistics compilation done<br />
+2014 April 15 - Megaserver. Project stalled<br />
+2014 April 23 - Project resumed with updated stats<br />
+2014 May 14 - Site beta
+</p>
+
+<h2>Contact</h2>
+<p>Use the <a href="http://forum.renaka.com/forum/368355/">forum</a> for questions/suggestions/reports. You can post as an unregistered guest.</p>
+
+<hr />
+
+<h1>Credits</h1>
+<p>View this website's source for the &quot;includes&quot;. Each source file has the appropriate credits and are fully documented.</p>
+
+<h2>Shout-outs</h2>
+<p>
+<a href="http://us.gw2stuff.com/">GW2 Stuff</a> - dependable and helpful timer<br />
+<a href="http://argos-soft.net/GW2">Argos Soft</a> - useful event map<br />
+<a href="http://divinitysreach.com">Divinity’s Reach</a> - comprehensive map completioner<br />
+<a href="http://virtus-gilde.de/gw2map">gw2map</a> - promising path maker and viewer<br />
+<a href="http://howar31.github.io/GW2Timer/">howar31</a> - clean schedule timer
+</p>
+
+<h2>ArenaNet Copyright</h2>
+<p>© 2012 ArenaNet, Inc. All rights reserved. NCsoft, the interlocking NC logo, ArenaNet, Arena.net, Guild Wars, Guild Wars Factions, Factions, Guild Wars Nightfall, Nightfall, Guild Wars: Eye of the North, Eye of the North, Guild Wars 2, and all associated logos and designs are trademarks or registered trademarks of NCsoft Corporation. All other trademarks are the property of their respective owners.</p>
+
+<hr />
+
+<h1>Mini-Walkthrough</h1>
+
+<p>In the chains/timers tab, mouse over an orange icon next to an event name to show that event's information:</p>
+<dl>
+	<dt>Event Number</dt><dd>The order in the chain. Numbers like 1 and 2 (without letters) are single running events in the chain. Numbers like 1A1 and 1B1 happen at the same time, and 1A2 happens after 1A1. Numbers like 1a1 and 1b1 happen at the same time but branch out as subchains. Numbers like 1.1 are failure events.</dd>
+	<dt>If Success/Failure Go To</dt><dd>The event that follows for that condition. Failure number 0 means the event is unfailable.</dd>
+	<dt>If Success/Failure Wait</dt><dd>The time between an event has just succeeded/failed and the one that follows it starting.</dd>
+	<dt>Time Limit</dt><dd>The timer you see in the game; may be the time until the event fails or the time you have to endure to succeed.</dd>
+	<dt>Avg to Complete</dt><dd>The time it usually takes to complete (by a zerg).</dd>
+	<dt>Min to Complete</dt><dd>The shortest possible time it takes to complete (by a full map).</dd>
+	<dt>Max to Complete</dt><dd>The longest reasonable time it takes to complete (solo or small group)</dd>
+</dl>
+<br />
+<p>Some skills useful when doing almost all world bosses are: <a href="http://wiki.guildwars2.com/wiki/Condition#Traits_that_remove_conditions">Condition Removal</a>, <a href="http://wiki.guildwars2.com/wiki/Stun_break">Stun Break</a>, <a href="http://wiki.guildwars2.com/wiki/Invulnerability">Invulnerability</a>, <a href="http://wiki.guildwars2.com/wiki/Reflect">Missile Attacks Reflection</a>, and <a href="http://wiki.guildwars2.com/wiki/Range">Range</a></p>
+
+<h1>Scheduled Bosses</h1>
+
+<h2>Fire Elemental</h2>
+<p>Talk to <ins data-coord="[7876, 17644]">Rooba</ins> to get the chain started. Her golem will stroll through the reactor's center and a random room. Kill enemies and destroy green chaotic materials near the golem to protect it. Eventually the two will go the boss room where you'll have plenty of time to equip revive/heal/cleanse/stability skills for the burns and knockbacks FE will do. The boss will die quickly, the hardest part is avoiding the winds and aoe rings. After completing FE, usually the zerg will head to the reactor's <ins data-coord="[7587, 17619]">center</ins> to trigger the <a href="http://wiki.guildwars2.com/wiki/Defeat_the_misplaced_steam_ogre">Steam Ogre</a> event. (D3-5)</p>
+
+<h2>Golem Mark II</h2>
+<p>Originally this chain had a kelp harvesting pre-event that had a success interim of 3 minutes. This time was not removed, so you have to wait for that silent timer until the <ins data-coord="[21221, 22685]">toxin containers</ins> spawn. Talk to the containers and choose any answer (it's random) then focus on the asura engineer when they come (else they permanently undo that container). The boss will spawn after enough containers are disabled; you may camp at the <ins data-coord="[21220, 22564]">southeast corner</ins> of the platform and 1200/1500 range the boss, or melee it for more damage, though you will require stun breaks as the electricity downs you in 2 seconds. The closer you are to the boss, the easier it is to dodge the electricity (because the aoe is a slice of a circle). (D15-30)</p>
+
+<h2>Claw of Jormag</h2>
+<p>There are five <ins data-coord="[23250, 9233]">ice structures</ins> to destroy; if you are an elementalist, use ice bow 4 or fiery gs 4 (without autotargeting) to do massive damage to them (this will also be useful against the ice wall and the boss). During the boss fight, avoid the blue terrain on the minimap or you will get lethal debuff stacks. If you lack range, pick up a bazooka at the orange cog icons. Rush to the boss when the ice wall breaks and position yourself between the boss icon's horns in the minimap, this will allow you to attack two hitboxes. Continue attacking by spamming 1 even after the boss flies up, only start running back when you no see damage applied. After it reaches below 50% HP, it will fly to the <ins data-coord="[23007, 8969]">other cliff</ins>. You should clear any icicles, or they will kill the golems trying to bomb the boss. (D15-30)</p>
+
+<h2>Karka Queen</h2>
+<p>The pre-events can be active before the chain actually starts, so if people captured all the <ins data-coord="[12901, 20394]">settlements</ins> as said in the top right corner info &quot;Secure settlements: 4/4&quot;, then the queen will spawn immediately at the scheduled chain time. If you waypointed after the chain start time you'll likely in be a new instance with the settlements events yet to be done. The south central settlement takes the longest, and settlements have 7-10 minutes before being unsecure, so capture that one first then rush to the rest. The queen will spawn randomly--in front of the south central settlement, the blue pools in the center, or between the two northeast settlements (look for the boss icon in your map). Do not go through the <ins data-coord="[13037, 19777]">center camp</ins> because it will be infested with karkas; you must waypoint. &quot;Karka Eggs&quot; will spawn a couple of meters around from the boss for you to pick up and target her to remove the heavy armored buff stacks, which will be important if the group is small. (D30)</p>
+
+<h2>Svanir Shaman</h2>
+<p>Kill the grawls then talk to <ins data-coord="[22996, 12655]">Brogun</ins> to start the chain, which is extremely easy with even a small group. You should either melee or range the boss from afar as to avoid the scattered whirlwinds. (D3-5)</p>
+
+<h2>Megadestroyer</h2>
+<p>Destroy the power cores at the <ins data-coord="[19550, 23259]">Inquest camp</ins> in time or you will have to kill a <ins data-coord="[19539, 22443]">champ golem</ins>. After that, head to the <ins data-coord="[18951, 23508]">asura lab</ins> and kill destroyers then follow Ambr into the cave to finalize the event. Subsequently, kill every single destroyer in the three orange event circles around the volcano to let the asura scientists spawn the boss (quickly revive them if they die). The <ins data-coord="[19177, 23086]">megadestroyer's</ins> attack can be reflected; after every 25% HP chunks, the group should spread out to kill its minions. Try to lure it to land so it's meleeable. (D0)</p>
+
+<h2>Shadow Behemoth</h2>
+<p>There are three portal spawns to destroy on the outskirt of the swamp; you should head to the one people <ins data-coord="[12825, 13761]">rarely do</ins>, then use the larger portal that appears after to teleport to the boss. It will be difficult to see where you can hit the boss, so first select the boss then look where your character faces or your weapon hits. The boss will raise its head to be unattackable until all the portals around its body are destroyed (this repeats), so if you want to quicken the event, first tag the boss with a few thousand damage, then <em>camp at the <ins data-coord="[12040, 13712]">portals</ins></em>, not at his head like most people. (D3-5)</p>
+
+<h2>The Shatterer</h2>
+<p>Both pre-events can easily be soloed, and should be soloed. It takes 10 siege pieces for a soloer to complete the <ins data-coord="[30493, 13355]">collection event</ins> by killing Ascalonian ghosts or picking it up from metal piles northwest of Blackhorn. It will take 2 minutes after he leaves for the boss to arrive. The boss does virtually no harm, and the acceleration of the event depends on how fast the crystals that spawn ahead of it are destroyed, and how many people are using the <ins data-coord="[29825, 12856]">mortars</ins> on the boss (aim somewhere between its arms for double hitboxes). (D15-25)</p>
+
+<h2>Taidha Covington</h2>
+<p>The hardest part of this chain may actually be the terrain, so familiarize yourself with it beforehand. After you have secured the <ins data-coord="[15840, 16924]">two cliffs</ins>, pick up gunpowder kegs by the orange cog icons and place them by the gate to destroy it faster. The pirates cannoning the the allied ship should be killed or you'll solely depend on gunpowder. Taidha will run through the gate toward you and attack until she is 50% (be careful when meleeing her), then she will run into the <ins data-coord="[16117, 17134]">shiphouse basement</ins>. To get there, go through the big gate and up the steps, then head left to see and take the rail stairs down; at the bottom of those stairs, turn right and backward and take the corridor down to the basement. After she disappears for the last time, go up the steps on the left to get to the bow of the shiphouse. (D3-5)</p>
+
+<h2>Modniir Ulgoth</h2>
+<p>The chain's events can run before the scheduled time, except the original penultimate event &quot;Keep the Modniir..&quot; does not precede the boss but instead loops the defense event. If the group has taken the chain that far, then on schedule the 8 minute hard limit <ins data-coord="[15584, 10163]">Stop the centaurs..</ins> event needs to be done before the new penultimate event &quot;Assault Kingsgate..&quot; begins, else the chain is progressed normally (and asynchronously by map instance) as <ins data-coord="[14142,  ]10617">pathed</ins>. To quicken the <ins data-coord="[15527, 9816]">main escort</ins> event, protect Edwards and use swiftness on her. Before the boss spawns, you should hop tag the three champ wolves as people will tend to spread them out. (D3-5)</p>
+
+<h2>Caledon Wurm</h2>
+<p>Complete the <ins data-coord="[9908, 16750]">three events</ins> east of the swamp, then head back to kill more plant things. There is a <ins data-coord="[9629, 16764]">tree branch</ins> a few meters northeast of the boss that will impede your fear-running while still be in range. If the group is small, kill the plant mobs or the boss will eat them for health. (D3-5)</p>
+
+<h2>Tequatl and Triple Wurm</h2>
+<p>A mini-walkthrough will not suffice for these heavy coordination-required bosses. The TTS guild provides a guide for <a href="http://ttsgamers.com/strategy/tequatl/">Tequatl</a> and <a href="http://ttsgamers.com/strategy/great-jungle-wurm/">Triple Wurm</a> (D15-25)</p>
+
+
+<h1>Unscheduled Bosses</h1>
+
+<h2>Fire Shaman</h2>
+<p>Jump through a <ins data-coord="[27494, 9876]">crevice</ins> in the obsidian wall to get to the boss. His phases are as follows: Minions -&gt; Boss -&gt; Minions -&gt; Boss -&gt; Minions -&gt; Boss. You can attack the boss normally, but during the minions phase, you have to kill enough minions for the boss to be attackable again. There is a hidden mechanic (or bug) where stepping near the giant <ins data-coord="[27415, 9639]">Fire Elemental</ins> will cause the event's progress to reset, so people should stay and kill minions near the heal bubble the charr allies made. Crossing the fire lines or attacking the boss is okay as long as nobody touches the giant Fire Elemental, but you should not take this chance as ignorant players will follow you and bungle it. This chain restarts after 25-35 minutes. (D15-25)</p>
+
+<h2>Foulbear Kraal</h2>
+<p>This chain is unique like Balthazar in allowing separate subchains to start the main events. The easiest subchain is the <ins data-coord="[30082, 18147]">charr</ins>; leave no ogres alive in the two circles to capture the camp, then 2.5 minutes later talk to <ins data-coord="[30241, 18121]">Maybri</ins> to start the Foulbear assault. Alternately start the vanguard subchain by talking to <ins data-coord="[30438, 19039]">Tahiri</ins> and kill the veteran ogres in the junkyard then capture the hill with the campfire. 4 minutes later talk to <ins data-coord="[30460, 18948]">Finley</ins> to start the assault. Both subchains start with the killing of <ins data-coord="[30427, 18385]">two champ ogres</ins> then on to demolishing the ogre village. If an event does not follow, it means the NPC to trigger it had died and you need to find and revive them (Maybri and Slashclaw, or Gregory). The final boss Foulbear Chieftain dies quickly, though you should still get credit by killing her guards. This chain restarts immediately by progressing any subchain again. (D0)</p>
+
+<h2>Dredge Commissar</h2>
+<p>Capture the <ins data-coord="[20612, 17610]">two circle-shaped camps</ins>, which only takes 1-3 players to complete in less than a minute. In the north one, try to avoid or destroy the dredge cannons, because they hit like a truck. The <ins data-coord="[19780, 18055]">commissar</ins> will spawn right after both camps are secured so you will need to quickly waypoint and jump through the scaffold shortcut to get there quickly, else a large group may kill him too fast. This chain restarts in 20 minutes. (D3-5)
+
+<h2>Eye of Zhaitan</h2>
+<p>Take the Rally Waypoint in Straits and run to the <ins data-coord="[15319, 24772]">claw-like structure</ins> in the minimap southeast of Balthazar Temple. Follow the path indicated to get to the catacombs and destroy the <ins data-coord="[15149, 24961]">coffins</ins>, then you'll need to kill three risens, which the hardest to solo is the <ins data-coord="[15309, 25088]">noble</ins>. After you have killed them and waited 15-25 minutes, the <ins data-coord="[16114, 24933]">AA gun and escort mission</ins> will follow, which should also be soloed else three deadly champion abominations will spawn for large groups. Once inside the catacombs, it will take 5-15 people to kill the <ins data-coord="[15192, 24961]">champion abomination</ins> that spawns in the room just before the coffin room. Its single strike will down most players, so strafe and dodge with invulnerability skills equipped. The final boss Eye of Zhaitan is a cakewalk, though you should kill the risen adds that may heal it. <ins data-coord="[15068, 24960]">Escort</ins> the NPCs out the west side of catacombs and the chain will restart in 9-12 minutes. (D3-5)</p>
+
+
+<h1>Temples</h1>
+All temples drop 30 dragonite.
+
+<h2>Lyssa</h2>
+<p>Usually people will capture the <ins data-coord="[13238, 23581]">Union seal</ins> first for the waypoint so they can map call for help. The northwest seal can be completed by picking up batteries from the lightning towers and giving them to the glass pod, or throwing them at the golems. The southeast seal requires protecting the cannon from waves of risens, which attack every seals, and attack them again 10 or 20-30 minutes after the seals were secured. During this timeframe the <ins data-coord="[13133, 23954]">priestess</ins> can be attacked, except for the times she uses her perma stun skill when your character is facing her (also causes more mobs to spawn). The two things to watch for is the champion gorillas which can insta down you, and the seals being attacked again, which if not quickly reclaimed after the risens had captured it, will cause the boss to fully heal. A retake event occurs 1.5-2 hours after, and you must let the risens recapture temple for the chain to instantly restart, else that retake event loops 1-1.5 hours later.</p>
+
+<h2>Dwayna</h2>
+<p>The chain starts with being near <ins data-coord="[12179, 24716]">Vermoth</ins> to activate him. He has moderate HP and resurrects at the same spot 3-5 minutes after dying, but should still be carefully guarded, especially when a Veteran Risen Subjugator (that makes lethal necro wells) spawns a bit far north of him. After arriving at the temple, the priestess (not the final boss) needs about 5 people to kill, particularly because of her more powerful adds like subjugators that do a blood leech animation and acolytes that spawn even more adds; either stay away from them or kill them quickly, but the priestess should be focused. Swim to the west sea to activate <ins data-coord="[11171, 24522]">Malchor</ins> which is a reverse-escort event. Back at the temple again, the <ins data-coord="[11171, 24522]">statue boss</ins> is actually easier than the priestess, though with more health. Its deadly blue missile attacks can be reflected and dodgeable about every 10 seconds. The temple will be secure for 1.5-2 hours until the retake event occurs which should be ignored and failed so the chain restarts with Vermoth in 3-5 minutes, else the retake event loops 1-1.5 hours later.</p>
+
+<h2>Melandru</h2>
+<p>The Gavbeorn camp should be secured for <ins data-coord="[10538, 26521]">Izzmek</ins> to begin the chain. Along with Grenth, this chain is done more for farming mobs, so equip aoes to tag them. After a hold event and three unfailable escorts, the priest (not the final boss) should be ranged unless a zerg is present. A moderately sized group will sometimes get morphed, in which everyone should spread out and kill the acolytes to reduce the priest healing. The final boss is not a monster but a protect event; try to prevent mobs from ascending to the platform and hitting the <ins data-coord="[11275, 26691]">pact interrupter</ins>; people will usually camp on the west end to farm the champ spider. Other mob spawns are at the end of the south stairs and west stairs. A retake event occurs after 1-1.5 hours and must be failed, not just so it restarts the chain in 8-10 minutes with Izzmek, but the chain is known to bug out permanently if players succeed the retake event.</p>
+
+<h2>Grenth</h2>
+<p>The chain starts at the north <ins data-coord="[10692, 27699]">pier</ins> of the west island. It is entirely soloable and NPCs can be revived to continue--up to arriving at the temple. After finishing the Death's Gaze Torch event, the assault will begin and reinforcements will pulse in as long as <ins data-coord="[10483, 28670]">Jonez</ins> still has HP. The priest (not the final boss) will cast brown whirlpools that teleport you up in the air to cause falling damage, so equip the <a href="http://wiki.guildwars2.com/wiki/Damage#Falling_damage">reduction trait</a> beforehand. The mechanic is to get a buff from the black whirlpools on either side of the temple that allows you to damage the shades (though they can still down you after hitting you 25 times). It is often more efficient to just avoid the shades and red aoe rings and to lure and semi-range the priest by the back of the temple, so Jonez won't become collateral damage. If you died, it will take about 2 minutes to run from the nearest uncontested waypoint to back here, but you should anyway if the boss' health isn't flinching. The protect event that follows is a farming frenzy, but keep an eye on <ins data-coord="[10360, 28672]">Jonez</ins> and use aoe heals on him when necessary; at 2:00 minutes remaining time, a champion wraith will spawn before the temple's steps, and should be dispatched immediately because it will kill Jonez and fail the event. If you do fail the cleanse event, it will take Jonez 2 minutes to retreat to the lightning cannons to defend, then 8-10 minutes of waiting time before the temple assault restarts. If you succeeded the cleanse event then the retake event starts in 1.5-2 hours, which if failed will restart the chain in 2.5 minutes, or if unwittingly succeeded will loop in 1-1.5 hours.</p>
+
+<h2>Balthazar</h2>
+<p>The Temple of Balthazar chain comprises three pre chains in their own right, and are all about the same difficulty (but different length), depending on how much you like underwater fight. The north invasion is the shortest if soloed, and central and south about the same length. Chains should be simultaneously completed before the NPCs at <ins data-coord="[15304, 24002]">Rally Waypoint</ins> begins the temple assault, so their morale bar can be boosted; otherwise just do a single pre chain to trigger the temple assault. If you are soloing the pre chain (which is possible), note that you must call for help just before the chain progresses to the west shore, because the escort events, which are quite unsoloable, will start quickly afterwards. 5-10 minutes after the escort had left, the shore foothold will need to be defended, and if you succeed the event (by abandoning the escort or by someone else doing it), the escort can happen again in about 10 minutes, otherwise the chain is pushed back (which is okay if you succeed the escort). Use the chains tab on this website and click on the Balthazar temple events and hover on the orange icons to better understand the sequence.</p>
+
+<h3>North Invasion</h3>
+<p>Capture the <ins data-coord="[16295, 22846]">cannonade</ins> simply by staying in the blue circle, then go up the steps and protect the cannons (shaped like giant telescopes). For the underwater events that follow, focus on the <ins data-coord="[15932, 22956]">ships</ins> and only bother with mobs if they are really hurting you. On shore, capture <ins data-coord="[15513, 23311]">Brassclaw Landing</ins> by killing as many risens in the circle as you can to keep it clear, and the escort will start after in 1.5 minutes.</p>
+
+<h3>Central Invasion</h3>
+<p>Protect the <ins data-coord="[17118, 23410]">three cannons</ins> by killing the risens by the shorefront before they can reach the cannons. The <ins data-coord="[16436, 23493]">krait platform</ins> event that follows have harpoons underwater and upstairs, so quickly snipe them while ignoring mobs. Stay on the platform to defend, since you'll likely do better damage on land, and try to keep at least one NPC alive to succeed. The <ins data-coord="[16059, 23727]">minefield</ins> event to the west should be done with range and from afar so you can see where the mines are. Securing the <ins data-coord="[15798, 23831]">shore</ins> requires you to protect the beached submarines from land attack and behind in the water. Succeeding that, the escort will begin in less than a minute.</p>
+
+<h3>South Invasion</h3>
+<p>Most likely the chain is at the trebuchet event, if earlier then do the <ins data-coord="[17517, 23845]">escort</ins> siege team or Denbi to the south of Fort Trinity to secure the trebuchet camp, which will summon <ins data-coord="[17193, 24170]">Agent Carver</ins> to capture the island to the west. After escorting the pack marmox to the bridge near <ins data-coord="[16264, 24326]">Lasciate Gate</ins>, concentrate fire on the gate to allow the NPCs to arrive in a minute to be escorted. A trick to this particular pre chain is the an optional &quot;conservatory&quot; event that happens after you successfully defended this camp (which also requires you to stay and abandon the escort). With the conservatory event active, you may let the NPCs associated with it die, and so the camp will not get attacked again until that event is finished, thereby saving the progress of the pre chain at that point. To resume the chain you can finish the conservatory event and the escort event will restart from there.
+
+<h3>Invasion Escorts</h3>
+<p>All the escorts to Rally Waypoint encounters the pattern of risens spawning on the side of the route or ambushing behind a gate. The best practice is not to focus on healing the NPCs, but by engaging and killing the risens, particularly the veterans, as quickly as possible so they don't even get the chance to damage the NPCs. Nevertheless, providing aoe heal or protection buffs for the NPCs can be beneficial, and most importantly equip a <a href="http://wiki.guildwars2.com/wiki/Revive#Skills_that_revive_allies">revive skill</a>, so when you have about 75% of the pact NPCs dead, you can instantly resurrect them! Still it should be used in an emergency, and NPCs should be manually revived immediately when they go down, unless there are too many enemies attacking, because all NPCs dead means the pre chain fails and you must backtrack to the previous event (which reverts if it fails because no one did them). When the escort has reached the rally point, you have 2.5 minutes to call as many friends/followers/guildies/strangers as possible to help with the final escort that follows.</p>
+
+<h3>Balthazar Escort</h3>
+<p>The reason why this temple is the rarest to be open is Veteran Risen Subjugators. They have a ludicrous attack (heard as a warhorn) that conjures multiple scattered necro wells that nukes the pact NPCs in 2-3 seconds, and so instantly fails the chain that had been worked so hard on. The sharp turns in the Balthazar <ins data-coord="[15231, 24062]">final escort</ins> route indicates where the subjugators usually spawn (they have multiple random spawns), and there are about 4 waves of them. You should turn enemy names on always so you can quickly find and suppress the subjugators using <a href="http://wiki.guildwars2.com/wiki/Control_effect">crowd control</a> skills and prevent them from ever using their dooming attack. The priority of the mission should be: subjugators, any vets, healing/buffing the NPCs, then finally regular mobs. Once you have made it to the stone slope up to the <ins data-coord="[15046, 24546]">temple</ins>, you have pretty much succeeded the chain, unless the morale bar is 1% left. After the seizing the altar, the priest should be focused using range if the group is small, or melee if large, but nevertheless avoid and ignore the distracting abomination, and in short time the temple will be yours.</p>
+
+
+<h1>Dungeons</h1>
+
+<h2>Gates of Arah (The Ruined City of Arah)</h2>
+<p>Although this chain does not reward a rare nor give dragonite, people still do it for the level 80 mobs. The chain starts when a player is near <ins data-coord="[11062, 27370]">Chan</ins>. To not scale the event, solo or duo it up until the <ins data-coord="[11005, 27891]">Anchorage camp</ins>, where you must climb two bone towers on the northeast and southeast corner of the camp to destroy the cauldrons up top, then you will need to quickly call for help in killing the champ knight before the time limit. With the camp secure, you can do any of the three concurrent events before the assault begin at the timer's end (or not do them at all), as completing each one bolsters the reinforcement. <ins data-coord="[11128, 27827]">Didi's</ins> event is the most useful as she will provide a durable golem to tank the champ giant ahead. Note that when any of the events on the promenade is active, the Arah dungeon (its waypoint) will be contested. Capturing the <ins data-coord="[11645, 27853]">promenade</ins> simply requires you to kill the risens in the capture circle, and you should avoid the deadly eye of zhaitan if your group is small. The final boss can be meleed, but you should mind the surrounding mobs and statue debuffs. A retake event will occur 1.5-2 hours after, and if succeeded will loops in 1-1.5 hours, else a grace defense event on Anchorage will happen which loops the retake event if succeeded, or restart the chain in 8-10 minutes if failed.</p>
+
+<h2>The Battle for the Flame Citadel and Senecus Castrum (Citadel of Flame)</h2>
+<p>The unlocking of the COF dungeon starts with escorting <ins data-coord="[25745, 8678]">Sancia</ins> in securing Senecus Castrum, which will then incite <ins data-coord="[25875, 8722]">Razen</ins> (when you're near him) to assault the bridge by the dungeon. Razen has very little health, and most of the escort will be you reviving him, so try to kill the enemies quickly. The <ins data-coord="[26703, 8870]">bridge</ins> hold event is a group effort that takes 7 minutes to complete (dungeon contested), and 20-30 minutes to loop (dungeon open). If the bridge event fails, Razen will assault again after 10-15 minutes.</p>
+
+<h2>Toil for the Coil (Crucible of Eternity)</h2>
+<p>Unlocking COE takes about 10 minutes from start to finish soloing, and much faster with a group. Start at the camp west of COE and follow the NPCs to do the <ins data-coord="[19954, 21625]">troll cave</ins>, then the assault will start back at the camp towards the <ins data-coord="[20555, 21919]">west entrance</ins> of COE (left side of the hexagon). If you somehow fail to reach the COE, the chain will restart in 9 minutes. Else, you have unlimited time to clear the corners of the hexagon before a champ is spawned in the center, which is soloable if you dodge his slow missiles. COE will be open for 1.5-2 hours before a retake event at the <ins data-coord="[20978, 21894]">dungeon portal</ins> happens, which loops every 45 minutes if succeeded, or restarts the chain in 5-10 minutes if failed.</p>
+
+</div><!-- End of page -->
