@@ -3,7 +3,7 @@
 	jQuery-dependent (v1.11.0), with other plugins in plugins.js.
 	Coded in NetBeans; debugged in Opera Dragonfly.
 	IDE recommended for viewing and collapsing code sections.
-	Version: 2014.05.15 modified - 2010.04.18 created
+	Version: 2014.05.14 modified - 2010.04.18 created
 
 	CREDITS:
 	Vladimir Agafonkin - LeafletJS map library
@@ -13,7 +13,7 @@
 	David Flanagan - SVG clock based on example from "JavaScript The Definitive Guide 6e"
 	Jon Rohan, James M. Greene - ZeroClipboard
 	Cliff Spradlin - GW2 API Documentation
-	Google and TTS-API.COM - Text-To-Speech service
+	Google - Text-To-Speech service
 
 	CONVENTIONS:
 	Local variables are all lower case: examplevariable
@@ -549,13 +549,11 @@ O = {
 	{
 		if (O.Options.bol_showMap)
 		{
-			//$("#paneMap").css({visibility: "visible"});
-			$("#paneMap").show();
+			$("#paneMap").css({visibility: "visible"});
 		}
 		else
 		{
-			//$("#paneMap").css({visibility: "hidden"});
-			$("#paneMap").hide();
+			$("#paneMap").css({visibility: "hidden"});
 		}
 	},
 	enact_int_resizeMapPaneWidth: function()
@@ -2800,9 +2798,6 @@ I = {
 	 */
 	initializeMandatoryMisc: function()
 	{
-		// Clear initial non-load warning the moment JavaScript is runned
-		$("#jsConsole").empty();
-		
 		// Remember user's browser maker
 		var useragent = navigator.userAgent;
 		if (useragent.indexOf("MSIE") !== -1)
@@ -2936,17 +2931,17 @@ I = {
 			// Scroll to top when clicked the header
 			var headertext = $(this).text();
 			var headertextstripped = headertext.replace(/[^a-zA-Z0-9]/, "");
-			$(this).html(headertext + "<span class='tocTop'> \u2191</span>");
+			$(this).html(headertext + "<span class='tocTop'> ?</span>");
 			$(this).click(function()
 			{
-				I.scrollToElement($("#jsTOC_" + I.currentContent), $(I.currentContentLayer), "fast");
+				I.scrollToElement($("#jsTOC_" + I.currentContent), $(I.cContentPane), "fast");
 			}).attr("id", "toc_" + layername + "_" + headertextstripped);
 			// Add ToC list entries that scrolls to the headers when clicked
 			$("<li>" + headertext + "</li>").appendTo($(pLayer + " .jsTableOfContents ol"))
 				.click(function()
 				{
 					I.scrollToElement($("#toc_" + layername + "_" + headertextstripped),
-						$(I.currentContentLayer), "fast");
+						$(I.cContentPane), "fast");
 				});
 		});
 	},
@@ -3028,7 +3023,6 @@ I = {
 			{
 				var layer = $(this).attr("id");
 				I.currentContent = layer.substring(menuprefix.length, layer.length);
-				I.currentContentLayer = "#layer" + I.currentContent;
 				
 				if (O.Options.bol_showChainPaths)
 				{
@@ -3058,15 +3052,19 @@ I = {
 				}
 				
 				$("#paneContent article").hide(); // Hide all layers
-				$(I.currentContentLayer + " h1").first()
+				$("#paneContent #layer" + I.currentContent + " h1").first()
 					.css({opacity: 0}).animate( // Fade in the first header tag
 				{
 					opacity: 1
 				}, 400);
-				$(I.currentContentLayer).animate( // Show clicked layer
+				$("#paneContent #layer" + I.currentContent).animate( // Show clicked layer
 				{
 					width: "show"
 				}, 200);
+				/*var container = $("#paneContent");
+				var header = $("#paneContent #layer" + I.currentContent);
+				// Scroll to the top of the "page"
+				I.scrollToElement(header, container);*/
 			});
 		});
 
@@ -3149,7 +3147,7 @@ I = {
 		*/
 		$("#jsTop").click(function()
 		{
-			$(I.currentContentLayer).animate({scrollTop: 0}, "fast");
+			I.scrollToElement($("#layer" + I.currentContent), $(I.cContentPane), "fast");
 		});
 	   
 	}, // End of menu initialization
@@ -3169,7 +3167,7 @@ I = {
 				// Change the toggle icon after finish toggling
 				if ($(this).is(":visible"))
 				{
-					var container = $("#layer" + I.ContentEnum.Chains);
+					var container = $("#paneContent");
 					var header = $(this).prev();
 					header.find("ins").html("[-]");
 					// Automatically scroll to the clicked header
