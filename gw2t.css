@@ -32,7 +32,7 @@
 */
 
 /* Reset styles
-------------------------------------------------------------- */
+----------------------------------------------------------------------------- */
 a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;outline:0;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 /* Structure (same order as browser view)
@@ -40,7 +40,7 @@ body > windowMain
 {
 	panelLeft[paneMap], panelRight[paneClock, paneMenu, paneContent]
 }
-------------------------------------------------------------- */
+----------------------------------------------------------------------------- */
 html, body {
 	height: 100%;
 }
@@ -71,6 +71,9 @@ html, body {
 		1px -1px 0px #333,
 		-1px 1px 0px #333,
 		1px 1px 0px #333;
+}
+#jsConsole a {
+	color: #aaa;
 }
 
 #jsTTS {
@@ -112,15 +115,15 @@ div#qTip {
 	opacity: 0.9;
 }
 
-/* =============================================================
+/* =============================================================================
  *  Left panel
- * ============================================================= */
+ * ========================================================================== */
 #panelLeft, #panelRight {
 	background: url("img/background/space.jpg") repeat center;
 }
 
 /* @@Map
-------------------------------------------------------------- */
+----------------------------------------------------------------------------- */
 #paneMap {
 	height: 100%;
 	min-height: 720px;
@@ -173,14 +176,14 @@ div#qTip {
 }
 
 
-/* =============================================================
+/* =============================================================================
  *  Right panel
  *  Panes (the clock, menu, content pane) are fixed height and
  *  are manually calculated and absolutely positioned (pinned)
  *  to fit as so: Clock(360px) + Menu(48px) + Content(fit to bottom).
  *  If relatively positioned the map pane would be pushed down
  *  by how tall the panes on the right are.
- * ============================================================= */
+ * ========================================================================== */
 #panelRight {
 	width: 361px; // 1px extra compensating for the border-left
 }
@@ -191,7 +194,7 @@ div#qTip {
 }
 
 /* @@Clock
-------------------------------------------------------------- */
+----------------------------------------------------------------------------- */
 #paneClock {
 	position: absolute;
 	top: 0px;
@@ -315,7 +318,7 @@ div#qTip {
 }
 
 /* @@Bar menu
-------------------------------------------------------------- */
+----------------------------------------------------------------------------- */
 #paneMenu {
 	position: absolute;
 	top: 360px;
@@ -353,11 +356,10 @@ div#qTip {
 	background: url("img/ui/help.png") no-repeat center;
 }
 
-/* =============================================================
- *  Bottom right content subpanel; the contents are layered and
- *  requires JavaScript to toggle their display based on what
- *  menu icon was clicked.
- * ============================================================= */
+/* =============================================================================
+ *  Bottom right content subpanel; the contents are layered and requires
+ *  JavaScript to toggle their display based on what menu icon was clicked.
+ * ========================================================================== */
 #paneContent {
 	position: absolute;
 	bottom: 0px;
@@ -496,7 +498,7 @@ div#qTip {
 	cursor: zoom-in;
 }
 .cntComposition ins:hover, .mapZones li:hover, .mapJPs dt:hover, .mapNodes dt:hover {
-	color: #ffd899;
+	color: #ffdda6;
 }
 .cntComposition ins:active, .mapZones li:active, .mapJPs dt:active, .mapNodes dt:active {
 	color: white;
@@ -553,7 +555,7 @@ div#qTip {
 }
 
 /* @@Timer chains
-------------------------------------------------------------- */
+----------------------------------------------------------------------------- */
 #layerChains header {
 	display: block;
 	width: auto; height: 36px;
@@ -590,7 +592,8 @@ div#qTip {
 		1px 1px 0px #000;
 }
 
-.barChain, .barChainDummy, #listChainsDungeon > div { /* A bar containing the chain icon, title, time, and events */
+/* A bar containing the chain icon, title, time, and events */
+.barChain, .barChainDummy, #listChainsDungeon > div {
 	width: auto; min-height: 36px;
 	margin-bottom: 4px;
 	padding-left: 8px;
@@ -665,8 +668,7 @@ div#qTip {
 }
 
 .chnDetails ol li {
-	margin-bottom: 5px;
-	line-height: 0%; /* for Opera extra height quirk */
+	margin-bottom: 4px;
 	color: #ff8844;
 }
 
@@ -753,7 +755,7 @@ div#qTip {
 }
 
 /* @@Map layer
-------------------------------------------------------------- */
+----------------------------------------------------------------------------- */
 .mapZoneList {
 	border-spacing: 12px;
 }
@@ -762,7 +764,7 @@ div#qTip {
 }
 
 /* @@Options layer
-------------------------------------------------------------- */
+----------------------------------------------------------------------------- */
 .optFieldsets fieldset {
 	margin-right: 8px;
 	vertical-align: top;
@@ -782,10 +784,10 @@ label:hover {
 
 
 
-/* =============================================================
+/* =============================================================================
  *  @@Palette color mostly derived from GW2 game interface.
  *  This is for reference.
- * ============================================================= */
+ * ========================================================================== */
 colorPalette {
 	color: #cc3322; /* Red time text */
 	color: #ff2200; /* Red chat text warning */

@@ -23,10 +23,10 @@
 
 <body>
 	<div id="jsConsole">
-		If you can read this then maybe:<br />
-		- Your browser's adblocker may be blocking the leaflet.js map script; please whitelist it.<br />
+		If you can read this then <strong>maybe</strong>:<br />
+		- Your browser's adblocker is blocking the leaflet.js map script; please whitelist it.<br />
 		- You have JavaScript disabled; this whole application runs on JavaScript!<br />
-		- Your browser does not have/allow localStorage; it is needed for storing options<br />
+		- This web application encountered a bug; try refreshing or <a href="bin/clear.html">clearing</a> its localStorage.<br />
 	</div>
 	<iframe id="jsTTS"></iframe>
 	<main id="windowMain">
@@ -204,6 +204,7 @@
 					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. When should the program announce the next boss?</span>
 					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
 					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current chain finishes</label>
+					<label><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
 					<br />
 					<h2>Defaults</h2>
 					<div class="optButtons">
