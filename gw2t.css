@@ -212,10 +212,9 @@ div#qTip {
 .itemClockIcon img {
 	position: absolute;
 	width: 64px; height: 64px;
-}
-.itemClockIcon img {
 	border: 1px solid black;
 	border-radius: 12px;
+	cursor: zoom-in;
 }
 #itemClockIcon0 {
 	top: 4px; left: 148px;
@@ -626,7 +625,7 @@ div#qTip {
 	display: inline-block;
 	margin-left: -32px;
 	width: 32px; height: 32px;
-	opacity: 0.4;
+	opacity: 0.6;
 }
 .chnCheck {
 	background: url("img/ui/check.png") no-repeat center;

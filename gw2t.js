@@ -1383,7 +1383,7 @@ C = {
 	 * Does cosmestic effects to event names as they transition and view the
 	 * event on the map. Also plays the alarm if it is the final event finishing.
 	 * @param object pChain to read from.
-	 * @param int pPrimaryEventIndex of the current active event. -1 if want finish.
+	 * @param int pPrimaryEventIndex of the current active event.
 	 * @pre Events HTML is generated and map is loaded.
 	 */
 	highlightEvents: function(pChain, pPrimaryEventIndex)
@@ -1392,7 +1392,7 @@ C = {
 		var animationspeed = 500;
 		var eventnamewidth = 320;
 		
-		if (pPrimaryEventIndex > -1)
+		if (pPrimaryEventIndex > -1) // -1 means the final event's finish time
 		{
 			C.CurrentPrimaryEvent = pChain.primaryEvents[pPrimaryEventIndex];
 			
@@ -1426,7 +1426,7 @@ C = {
 				$("#chnEvent_" + pChain.alias + "_" + C.CurrentPrimaryEvent.num).trigger("click");
 			}
 		}
-		else
+		else // Finish time
 		{
 			$("#chnEvents_" + pChain.alias + " li").removeClass("chnEventCurrent")
 				.addClass("chnEventPast").last().css({opacity: 1}).animate({opacity: 0.5}, 500);
@@ -2526,21 +2526,20 @@ K = {
 		{
 			var secondsleft = C.convertScheduleIndexToLocalTime(pChain.scheduleIndexes[0])
 				- T.getTimeOffsetSinceMidnight("local", "seconds");
-			var sec = secondsleft % 60;
 			var min = ~~(secondsleft / 60) % 60;
-
-			if (Math.abs(secondsleft) > T.cSECONDS_IN_MINUTE)
+			var hour = ~~(secondsleft / 3600);
+			
+			min = min + "m"
+			if (Math.abs(secondsleft) > T.cSECONDS_IN_HOUR)
 			{
-				sec = "";
-				min = min + "m";
+				hour = hour + "h ";
 			}
 			else
 			{
-				sec = sec + "s";
-				min = "";
+				hour = "";
 			}
 
-			return " in " + min + sec;
+			return " in " + hour + min;
 		};
 		var chain0 = C.getCurrentChain();
 		var chain1 = C.getCurrentChain(1);
@@ -2854,6 +2853,22 @@ K = {
 		// Refresh waypoints because the icon's clock position changed
 		K.updateWaypointsClipboard();
 		K.initializeClockItems();
+		
+		// Rebind the clock chain icons to view map event when clicked
+		var i;
+		var coord;
+		for (i = 0; i < T.cNUMFRAMES_IN_HOUR; i++)
+		{
+			K.iconChains[i].unbind("click");
+			(function(pIndex)
+			{
+				K.iconChains[pIndex].click(function()
+				{
+					coord = C.getCurrentChain(pIndex).primaryEvents[0].path[0];
+					M.goToView(coord, M.PinProgram);
+				});
+			})(i);
+		}
 	},
 
 	/*
@@ -2888,7 +2903,7 @@ K = {
 					setTimeout(function()
 					{
 						$(elm).attr("src", M.cICON_WAYPOINT);
-					}, 200);
+					}, 400);
 				});
 			});
 		}
