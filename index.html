@@ -156,24 +156,24 @@
 		<!-- Content mini-pane
 		==================================================================== -->
 		<section id="paneContent" class="paneRight">
-			<div id="jsTop">↑</div>
+			<div id="jsTop">&uarr;</div>
 			<article id="layerChains"> <!-- This layer will be populated by JS -->
-				<header>
+				<header title="Scheduled Bosses">
 					<img src="img/ui/scheduled.png" alt="Scheduled Bosses" />
 					<ins></ins>
 				</header>
 				<div id="listChainsScheduled" class="listChains"></div>
-				<header>
+				<header title="Unscheduled Bosses (event state unknown)">
 					<img src="img/event/boss.png" alt="Unscheduled Bosses" />
 					<ins></ins>
 				</header>
 				<div id="listChainsUnscheduled" class="listChains"></div>
-				<header>
+				<header title="Orr Temples (event state unknown)">
 					<img src="img/chain/temple.png" alt="Orr Temples" />
 					<ins></ins>
 				</header>
 				<div id="listChainsTemple" class="listChains"></div>
-				<header id="headerTimetable">
+				<header id="headerTimetable" title="Full Timetable of Bosses">
 					<img src="img/event/special.png" alt="Timetable" />
 					<ins></ins>
 				</header>
@@ -185,11 +185,13 @@
 			<article id="layerOptions">
 				<div class="cntComposition">
 					<h1>Options</h1>
+					<label id="optSound"><input id="opt_bol_enableSound" type="checkbox" /><img id="optSoundButton" src="img/ui/speaker.png" alt="Mute"/></label>
 					<br />
 					<h2>Timer</h2>
 					<label><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off chains</label>
 					<label><input id="opt_bol_use24Hour" type="checkbox" /> Use 24 hour format</label>
 					<label><input id="opt_bol_detectDST" type="checkbox" /> Detect Daylight Saving Time</label>
+					<label><input id="opt_bol_showClock" type="checkbox" /> Show the clock pane</label>
 					<div class="optFieldsets">
 						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain? Auto will use the North American time of day to choose. Changes will take effect when the next chain starts. &lt;br /&gt;Min: for full population map&lt;br /&gt;Min-Avg: Min + (Avg - Min)/2&lt;br /&gt;Avg: for regular zerg size"><legend>Predictor</legend>
 							<label><input id="opt_int_setPredictor" type="radio" name="int_setPredictor" /> Auto</label>

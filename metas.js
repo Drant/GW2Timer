@@ -417,7 +417,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "Maw",
-	pronunciation: "svan near shamun",
+	pronunciation: "svaniir shaman",
 	category: "Champ",
 	serial: "005",
 	waypoint: "[&BMIDAAA=]",
@@ -593,9 +593,9 @@ var GW2T_CHAINS_DATA = [
 			sInterim: ["0:30"],
 			fInterim: "*",
 			lim: "20:00",
-			avg: "4:00",
+			avg: "2:30",
 			min: "1:30",
-			max: "7:00",
+			max: "6:00",
 			primacy: 1
 		},
 		{
@@ -608,9 +608,9 @@ var GW2T_CHAINS_DATA = [
 			sInterim: ["0:30"],
 			fInterim: "*",
 			lim: "20:00",
-			avg: "4:00",
+			avg: "2:30",
 			min: "1:30",
-			max: "7:00",
+			max: "6:00",
 			primacy: 1
 		},
 		{
@@ -623,9 +623,9 @@ var GW2T_CHAINS_DATA = [
 			sInterim: ["0:30"],
 			fInterim: "*",
 			lim: "20:00",
-			avg: "4:00",
+			avg: "2:30",
 			min: "1:30",
-			max: "7:00",
+			max: "6:00",
 			primacy: 2
 		},
 		{

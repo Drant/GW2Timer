@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x720, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.05.15 modified - 2010.04.18 created
+	Version: 2014.05.16 modified - 2010.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -490,20 +490,20 @@ div#qTip {
 	margin-left: 12px;
 }
 
-.cntComposition ins, .mapZones li, .mapJPs dt, .mapNodes dt {
+.cntComposition ins, .mapZones li, .mapJP dt, .mapNodes dt {
 	font-weight: bold;
 	color: #ffcc77;
 	cursor: pointer;
 	cursor: zoom-in;
 }
-.cntComposition ins:hover, .mapZones li:hover, .mapJPs dt:hover, .mapNodes dt:hover {
+.cntComposition ins:hover, .mapZones li:hover, .mapJP dt:hover, .mapNodes dt:hover {
 	color: #ffdda6;
 }
-.cntComposition ins:active, .mapZones li:active, .mapJPs dt:active, .mapNodes dt:active {
+.cntComposition ins:active, .mapZones li:active, .mapJP dt:active, .mapNodes dt:active {
 	color: white;
 }
 
-.mapJPs a {
+.mapJP a {
 	text-decoration: none;
 }
 
@@ -666,8 +666,10 @@ div#qTip {
 	margin-top: 8px;
 }
 
-.chnDetails ol li {
+.chnDetails ol li { /* Contains the event icon and event name */
 	margin-bottom: 4px;
+	white-space: nowrap;
+    overflow: hidden;
 	color: #ff8844;
 }
 
@@ -762,8 +764,23 @@ div#qTip {
 	display: table-cell;
 }
 
+.mapJP input, #btnJPsUncheck {
+	float: right;
+}
+
 /* @@Options layer
 ----------------------------------------------------------------------------- */
+#optSound {
+	float: right;
+	margin-top: -24px;
+	margin-right: 12px;
+}
+
+#optSoundButton {
+	width: 32px; height: 32px;
+	vertical-align: middle;
+}
+
 .optFieldsets fieldset {
 	margin-right: 8px;
 	vertical-align: top;
@@ -777,6 +794,9 @@ div#qTip {
 	margin-bottom: 4px;
 }
 
+label, input {
+	vertical-align: middle;
+}
 label:hover {
 	color: #ddff77;
 }

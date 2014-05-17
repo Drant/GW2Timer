@@ -3,7 +3,7 @@
 	jQuery-dependent (v1.11.0), with other plugins in plugins.js.
 	Coded in NetBeans; debugged in Opera Dragonfly.
 	IDE recommended for viewing and collapsing code sections.
-	Version: 2014.05.15 modified - 2010.04.18 created
+	Version: 2014.05.16 modified - 2010.04.18 created
 
 	CREDITS:
 	Vladimir Agafonkin - LeafletJS map library
@@ -60,9 +60,12 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
+	int_programVersion: 1405161927,
+	programVersionName: "int_programVersion",
 	
-	prefixID: "opt_",
+	prefixOption: "opt_",
 	prefixChain: "chn_",
+	prefixJP: "jp_",
 	
 	/*
 	 * This UNIX time variable should be updated whenever a server reset related
@@ -75,7 +78,7 @@ O = {
 	
 	/*
 	 * All of these options must have an associated input tag in the HTML that
-	 * users interact with, and their IDs are in the form prefixID + optionname.
+	 * users interact with, and their IDs are in the form prefixOption + optionname.
 	 * Note the three letter prefix indicating the option's data type.
 	 */
 	Options:
@@ -84,6 +87,7 @@ O = {
 		bol_hideChecked: false,
 		bol_use24Hour: false,
 		bol_detectDST: true,
+		bol_showClock: true,
 		int_dimClockBackground: 0,
 		int_useTimeCountdown: 1,
 		int_setPredictor: 0,
@@ -93,8 +97,9 @@ O = {
 		bol_showMap: true,
 		int_resizeMapPaneWidth: 0,
 		// Alarm
-		bol_alertAtStart: false,
-		bol_alertAtEnd: false,
+		bol_enableSound: false,
+		bol_alertAtStart: true,
+		bol_alertAtEnd: true,
 		bol_alertChecked: true
 	},
 	
@@ -105,6 +110,10 @@ O = {
 		Checked: 1,
 		Deleted: -1
 	},
+	
+	JPChecklist: "", // Will use 0s and 1s as a long string rather than separate variables
+	JPChecklistName: "JPChecklist",
+	numOfJPs: 0,
 	
 	/*
 	 * localStorage stores everything as string. This function converts the
@@ -146,6 +155,26 @@ O = {
 			return true;
 		}
 		return false;
+	},
+	boolToInt: function(pBoolean)
+	{
+		if (pBoolean)
+		{
+			return 1;
+		}
+		return 0;
+	},
+	
+	/*
+	 * Replaces a character in a string with a specified character.
+	 * @param string pString to manipulate.
+	 * @param int pIndex of the target character.
+	 * @param string pCharacter the replacement.
+	 * @returns string with a character at index replaced.
+	 */
+	replaceCharAt: function(pString, pIndex, pCharacter)
+	{
+		return pString.substr(0, pIndex) + pCharacter + pString.substr(pIndex + pCharacter.length);
 	},
 	
 	/*
@@ -212,7 +241,7 @@ O = {
 				O.Options[optionname] = O.convertLocalStorageDataType(localStorage[optionname]);
 			}
 			// Update the inputs with specific name format, this "loop" runs once
-			$("#" + O.prefixID + optionname).each(function()
+			$("#" + O.prefixOption + optionname).each(function()
 			{
 				// Assign the retrieved values to the input tags
 				var inputtype = $(this).attr("type");
@@ -257,7 +286,7 @@ O = {
 				{
 					$(this).change(function()
 					{
-						var thisoptionname = $(this).attr("id").slice(O.prefixID.length);
+						var thisoptionname = $(this).attr("id").slice(O.prefixOption.length);
 						if (inputtype === "checkbox")
 						{
 							O.Options[thisoptionname] = $(this).prop("checked");
@@ -272,13 +301,13 @@ O = {
 			});
 		}
 		
-		// Optional event handlers for the inputs
+		// Supplementary event handlers for some inputs
 		O.bindOptionsInputs();
 	},
 	
 	/*
-	 * Loads chain checklist state as recorded in localStorage, and binds clicking
-	 * behavior to the div fake checkboxes.
+	 * Loads chain checklist state as recorded in localStorage, and binds
+	 * clicking behavior to the div faux checkboxes.
 	 * @pre Chains have been initialized.
 	 */
 	initializeChainChecklist: function()
@@ -316,6 +345,10 @@ O = {
 					{
 						bar.css({opacity: 1}).animate({opacity: 0.4}, 200);
 						check.addClass("chnChecked");
+						if (O.Options.bol_hideChecked)
+						{
+							bar.hide();
+						}
 					} break;
 					case O.ChecklistEnum.Deleted:
 					{
@@ -328,7 +361,9 @@ O = {
 				O.clearServerSensitiveOptions();
 			}
 			
-			// Bind event handler for the div "checkboxes"
+			/*
+			 * Bind event handler for the div "checkboxes".
+			 */
 			check.click(function()
 			{
 				O.updateSSTimestamp();
@@ -360,7 +395,7 @@ O = {
 				}
 				localStorage[thisoptionname] = O.Checklist[thisoptionname];
 				// Also autohide the chain bar if opted
-				if (O.Checklist[thisoptionname] === 1)
+				if (O.Checklist[thisoptionname] === O.ChecklistEnum.Checked)
 				{
 					if (O.Options.bol_hideChecked)
 					{
@@ -393,7 +428,7 @@ O = {
 	},
 	
 	/*
-	 * Get the checklist state of a chain.
+	 * Gets the checklist state of a chain.
 	 * @param object pChain chain to test.
 	 * @returns int state (use enum).
 	 */
@@ -428,6 +463,76 @@ O = {
 	},
 	
 	/*
+	 * Creates checkboxes next to JP names and bind event handlers for storing
+	 * their states as a combined string of 0s and 1s, which the index 0 is the
+	 * first JP in the list.
+	 */
+	generateAndInitializeJPChecklist: function()
+	{
+		// Make checkboxes
+		$(".mapJP dt").each(function()
+		{
+			$(this).after("<input type='checkbox' id='mapJP_" + O.numOfJPs + "' />");
+			O.JPChecklist += "0";
+			O.numOfJPs++;
+		});
+		
+		// Initialize localStorage
+		if (localStorage[O.JPChecklistName] === undefined)
+		{
+			localStorage[O.JPChecklistName] = O.JPChecklist;
+		}
+		else
+		{
+			O.JPChecklist = localStorage[O.JPChecklistName];
+		}
+		
+		var i; // This is the JP checkbox ID number
+		for (i = 0; i < O.numOfJPs; i++)
+		{
+			$("#mapJP_" + i).each(function()
+			{
+				// Convert the digit at ith position in the checklist string to boolean
+				var stateinstring = O.intToBool(parseInt(O.JPChecklist.charAt(i)));
+				$(this).prop("checked", stateinstring);
+				
+			}).change(function()
+			{
+				// Get the checkbox ID that associates itself with that JP
+				var stateincheckbox = O.boolToInt($(this).prop("checked")).toString();
+				var checkboxindex = parseInt($(this).attr("id").split("_")[1]);
+				
+				// Rewrite the checklist string by updating the digit at the ID/index
+				O.JPChecklist = O.replaceCharAt(O.JPChecklist, checkboxindex, stateincheckbox);
+				localStorage[O.JPChecklistName] = O.JPChecklist;
+			}).hover(
+				// Highlight JP name when hovered over checkbox
+				function()
+				{
+					$(this).prev().css({"text-decoration": "underline"});
+				},
+				function()
+				{
+					$(this).prev().css({"text-decoration": "none"});
+				}
+			);
+		}
+		
+		// The button to clear all JP checkboxes
+		$("#btnJPsUncheck").click(function()
+		{
+			var jpchecklist = "";
+			for (i = 0; i < O.numOfJPs; i++)
+			{
+				$("#mapJP_" + i).prop("checked", false);
+				jpchecklist += "0";
+			}
+			O.JPChecklist = jpchecklist;
+			localStorage[O.JPChecklistName] = O.JPChecklist;
+		});
+	},
+	
+	/*
 	 * Binds custom event handlers for options that need immediate visual effect.
 	 */
 	bindOptionsInputs: function()
@@ -443,6 +548,10 @@ O = {
 		$("#opt_bol_detectDST").change(function()
 		{
 			O.enact_bol_detectDST();
+		});
+		$("#opt_bol_showClock").change(function()
+		{
+			O.enact_bol_showClock();
 		});
 		$("fieldset[name=int_dimClockBackground]").change(function()
 		{
@@ -470,12 +579,13 @@ O = {
 		 */
 		O.enact_bol_hideChecked();
 		O.enact_bol_detectDST();
+		O.enact_bol_showClock();
 		O.enact_int_dimClockBackground();
 		O.enact_bol_showMap();
 		O.enact_int_resizeMapPaneWidth();
 		
 		/*
-		 * Button event handlers bindings (these don't have stored values).
+		 * Button event handlers bindings (buttons don't have stored values).
 		 * ---------------------------------------------------------------------
 		 */
 		
@@ -498,7 +608,7 @@ O = {
 			// Also unfade the clock icons, which are the current first four bosses
 			for (i = 0; i < T.cNUMFRAMES_IN_HOUR; i++)
 			{
-				K.checkoffChainIcon(C.getCurrentChain(i).alias)
+				K.checkoffChainIcon(C.getCurrentChain(i).alias);
 			}
 			
 			O.updateSSTimestamp();
@@ -549,6 +659,30 @@ O = {
 	{
 		T.DST_IN_EFFECT = (O.Options.bol_detectDST) ? 1 : 0;
 	},
+	enact_bol_showClock: function()
+	{
+		/*
+		 * There are three panes on the right panel: Clock, Menu, and Content
+		 * all absolutely positioned, so to move them the CSS "top" attribute
+		 * needs to be changed: less to go up, more to go down.
+		 */
+		var animationspeed = 200;
+		if (O.Options.bol_showClock)
+		{
+			$("#paneClock").show();
+			$("#paneMenu").animate({top: I.cPANE_CLOCK_HEIGHT}, animationspeed);
+			$("#paneContent").animate({top: (I.cPANE_CLOCK_HEIGHT
+				+ I.cPANE_MENU_HEIGHT)}, animationspeed);
+		}
+		else
+		{
+			$("#paneMenu").animate({top: 0}, animationspeed);
+			$("#paneContent").animate({top: I.cPANE_MENU_HEIGHT}, animationspeed, function()
+			{
+				$("#paneClock").hide();
+			});
+		}
+	},
 	enact_int_dimClockBackground: function()
 	{
 		switch (O.Options.int_dimClockBackground)
@@ -569,7 +703,7 @@ O = {
 		}
 		else
 		{
-			M.setLayerGroupDisplay(M.PathLayer, "hide")
+			M.setLayerGroupDisplay(M.PathLayer, "hide");
 		}
 	},
 	enact_bol_showMap: function()
@@ -577,12 +711,12 @@ O = {
 		if (O.Options.bol_showMap)
 		{
 			//$("#paneMap").css({visibility: "visible"});
-			$("#paneMap").show();
+			$("#panelLeft").show();
 		}
 		else
 		{
 			//$("#paneMap").css({visibility: "hidden"});
-			$("#paneMap").hide();
+			$("#panelLeft").hide();
 		}
 	},
 	enact_int_resizeMapPaneWidth: function()
@@ -604,6 +738,7 @@ C = {
 	Chains: GW2T_CHAINS_DATA,
 	CurrentChain: {},
 	PreviousChain: {},
+	PreviousPreviousChain: {},
 	NextChain: {},
 	cChainTitleCharLimit: 30,
 	CurrentPrimaryEvent: {},
@@ -1054,10 +1189,47 @@ C = {
 		var min = now.getUTCMinutes();
 		var sec = now.getUTCSeconds();
 		return ((min % T.cMINUTES_IN_FRAME) * T.cSECONDS_IN_MINUTE) + sec;
+		// Less efficient method
+		/*return Math.abs(getSecondsUntilChainStarts(C.CurrentChain));*/
+	},
+	
+	/*
+	 * Gets the seconds until a chain start by subtracting the current time from
+	 * the chain start time; both of which are seconds since midnight. Because
+	 * the timer uses the 24 hour cyclical system, this function faces the
+	 * design problem of deciding whether the chain start time is ahead or
+	 * behind the local time when past midnight.
+	 * @param object pChain to get start time.
+	 * @returns int seconds remaining, negative if it started already.
+	 * @pre Chain's scheduleIndexes array was refreshed with the earliest start
+	 * time at the first index.
+	 */
+	getSecondsUntilChainStarts: function(pChain)
+	{
+		var secondschain = (C.convertScheduleIndexToLocalTime(pChain.scheduleIndexes[0]));
+		var secondscurrent = T.getTimeOffsetSinceMidnight("local", "seconds");
+		var rolloverthreshold = (T.cSECONDS_IN_FRAME * T.cNUMFRAMES_IN_HOUR); // This is 3600 seconds
 		
-		// Code below bugged if at midnight (85500 - 0)
-		/*return Math.abs((C.convertScheduleIndexToLocalTime(C.CurrentChain.scheduleIndexes[0]))
-				- T.getTimeOffsetSinceMidnight("local", "seconds"));*/
+		/*
+		 * It is known that the program looks at most 4 chains ahead of the
+		 * current to display the clock icons. Deal with the midnight problem by
+		 * enforcing a one hour threshold before and after midnight, so for
+		 * example the current time is 23:00:00 and the target chain starts at
+		 * 00:15:00, it would return 01:15:00 (in seconds). Without the
+		 * threshold, it would return -22:45:00.
+		 */
+		if (secondschain >= (T.cSECONDS_IN_DAY - rolloverthreshold)
+			&& secondscurrent <= rolloverthreshold)
+		{
+			return (T.cSECONDS_IN_DAY - secondschain) + secondscurrent;
+		}
+		if (secondscurrent >= (T.cSECONDS_IN_DAY - rolloverthreshold)
+			&& secondschain <= rolloverthreshold)
+		{
+			return (T.cSECONDS_IN_DAY - secondscurrent) + secondschain;
+		}
+		
+		return secondschain - secondscurrent;
 	},
 	
 	/*
@@ -1109,8 +1281,7 @@ C = {
 				} break;
 				case 1:
 				{
-					time = (C.convertScheduleIndexToLocalTime(ithchain.scheduleIndexes[0]))
-						- T.getTimeOffsetSinceMidnight("local", "seconds");
+					time = C.getSecondsUntilChainStarts(ithchain);
 					wantletters = true;
 				} break;
 			}
@@ -1245,7 +1416,7 @@ C = {
 		$("#barChain_" + C.PreviousChain.alias)
 			.removeClass("chnBarCurrent").addClass("chnBarPrevious");
 		// Stop highlighting the previous previous chain bar
-		$("#barChain_" + C.getCurrentChain(-2).alias).removeClass("chnBarPrevious");
+		$("#barChain_" + C.PreviousPreviousChain.alias).removeClass("chnBarPrevious");
 		// Also highlight timetable chain bar
 		$("#listChainsTimetable .barChainDummy").removeClass("chnBarCurrent");
 		$("#listChainsTimetable .barChainDummy:eq(" + C.CurrentChain.scheduleIndexes[0] + ")")
@@ -2107,7 +2278,7 @@ M = {
 		M.Pins.push(M.PinProgram);
 		M.Pins.push(M.PinEvent);
 		
-		// Click pin to get coordinates in the coordinates bar
+		// Bind pin click event to get coordinates in the coordinates bar
 		for (var i in M.Pins)
 		{
 			M.Pins[i].on("click", function()
@@ -2444,7 +2615,6 @@ T = {
 			return (hour * T.cMINUTES_IN_HOUR) + min;
 		}
 		// Default return seconds
-		//console.log((hour * T.cSECONDS_IN_HOUR) + (min * T.cSECONDS_IN_MINUTE) + sec);
 		return (hour * T.cSECONDS_IN_HOUR) + (min * T.cSECONDS_IN_MINUTE) + sec;
 	},
 	
@@ -2524,13 +2694,12 @@ K = {
 	{
 		var getTimeTillChainFormatted = function(pChain)
 		{
-			var secondsleft = C.convertScheduleIndexToLocalTime(pChain.scheduleIndexes[0])
-				- T.getTimeOffsetSinceMidnight("local", "seconds");
+			var secondsleft = C.getSecondsUntilChainStarts(pChain);
 			var min = ~~(secondsleft / 60) % 60;
 			var hour = ~~(secondsleft / 3600);
 			
-			min = min + "m"
-			if (Math.abs(secondsleft) > T.cSECONDS_IN_HOUR)
+			min = min + "m";
+			if (Math.abs(secondsleft) >= T.cSECONDS_IN_HOUR)
 			{
 				hour = hour + "h ";
 			}
@@ -2696,6 +2865,7 @@ K = {
 		}
 		
 		// Remember current chain to reference variable
+		C.PreviousPreviousChain = C.getCurrentChain(-2);
 		C.PreviousChain = C.getCurrentChain(-1);
 		C.CurrentChain = C.getCurrentChain();
 		C.NextChain = C.getCurrentChain(1);
@@ -2760,7 +2930,7 @@ K = {
 				"box-shadow": "0px 0px 10px green"
 			});
 			// Chain shortcuts
-			var chain0 = C.getCurrentChain()
+			var chain0 = C.getCurrentChain();
 			var chain1 = C.getCurrentChain(1);
 			var chain2 = C.getCurrentChain(2);
 			var chain3 = C.getCurrentChain(3);
@@ -2916,10 +3086,15 @@ K = {
 I = {
 	cContentPane: "#paneContent",
 	cSiteName: "GW2Timer.com",
+	
+	// HTML/CSS pixel units
+	cPANE_CLOCK_HEIGHT: 360,
+	cPANE_MENU_HEIGHT: 48,
 	cTOOLTIP_DEFAULT_OFFSET_X: -180,
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
 	cTOOLTIP_ADD_OFFSET_Y: 45,
 	cTOOLTIP_ADD_OFFSET_X: 35,
+	
 	ContentEnum:
 	{
 		// These are the X in "menuX" and "layerX" IDs in the HTML
@@ -2945,29 +3120,33 @@ I = {
 	 */
 	speak: function(pString)
 	{
-		var url;
-		var tts = document.getElementById("jsTTS");
-		
-		if (I.userBrowser === I.BrowserEnum.Chrome)
+		if (O.Options.bol_enableSound)
 		{
-			/*
-			 * Google TTS seems to only work with their browser; using it on
-			 * Firefox gives "Video playback aborted due to a network error"
-			 * Note that GTTS has a 100 character URL limit.
-			 */
-			url = "http://translate.google.com/translate_tts?tl=en&q=" + escape(pString);
+			var url;
+			var tts = document.getElementById("jsTTS");
+
+			if (I.userBrowser === I.BrowserEnum.Chrome)
+			{
+				/*
+				 * Google TTS seems to only work with their browser; using it on
+				 * Firefox gives "Video playback aborted due to a network error"
+				 * Note that GTTS has a 100 character URL limit.
+				 */
+				url = "http://translate.google.com/translate_tts?tl=en&q=" + escape(pString);
+			}
+			else
+			{
+				url = "http://tts-api.com/tts.mp3?q=" + escape(pString);
+			}
+			tts.src = url;
 		}
-		else
-		{
-			url = "http://tts-api.com/tts.mp3?q=" + escape(pString);
-		}
-		tts.src = url;
 	},
 	
 	/*
-	 * Initializes variables that need to be before any other initializations.
+	 * Does things that need to be done before everything else.
+	 * @pre This function is ran before any initialization functions.
 	 */
-	initializeMandatoryMisc: function()
+	initializeFirst: function()
 	{
 		// Clear initial non-load warning the moment JavaScript is runned
 		$("#jsConsole").empty();
@@ -2985,11 +3164,19 @@ I = {
 		else if (useragent.indexOf("Firefox") !== -1)
 		{
 			I.userBrowser = I.BrowserEnum.Firefox;
+			/*
+			 * Firefox does not reload a webpage's iframe when on reloading,
+			 * so have to clear the iframe manually on page load.
+			 */
+			document.getElementById("jsTTS").src = "";
 		}
 		else if (useragent.indexOf("Opera") !== -1)
 		{
 			I.userBrowser = I.BrowserEnum.Opera;
 		}
+		
+		// Remember the program's version
+		localStorage[O.programVersionName] = O.programVersion;
 		
 		// Default content tab
 		I.currentContent = I.ContentEnum.Chains;
@@ -3251,6 +3438,11 @@ I = {
 	   /*
 		* AJAX load the separate HTML files into the content layer when user
 		* clicks on respective menu icon.
+		* ----------------------------------------------------------------------
+		*/
+	   
+	   /*
+		* Help layer.
 		*/
 	   $("#menuHelp").click(function()
 	   {
@@ -3271,6 +3463,10 @@ I = {
 			   }
 		   });
 	   });
+	   
+	   /*
+		* Map layer.
+		*/
 	   $("#menuMap").click(function()
 	   {
 		   $("#layerMap").each(function()
@@ -3293,7 +3489,7 @@ I = {
 							});
 						});
 						// Bind JP links
-						$(".mapJPs dt").each(function()
+						$(".mapJP dt").each(function()
 						{
 							var term = $(this).text();
 							$(this).after(" <a href='" + I.getYouTubeLink(term + " Guild Wars 2")
@@ -3304,6 +3500,8 @@ I = {
 								M.goToView(thiscoord, M.PinProgram);
 							});
 						});
+						// Bind JP checklist
+						O.generateAndInitializeJPChecklist();
 						// Bind resource node links
 						$(".mapNodes dt").each(function()
 						{
@@ -3396,7 +3594,7 @@ I = {
  *  @@Xecutions and jQuery bindings; the order matters!
  * ============================================================= */
 T.checkDST(); // tell if DST is in effect
-I.initializeMandatoryMisc(); // initialize variables that need to be first
+I.initializeFirst(); // initialize variables that need to be first
 O.initializeOptions(); // load stored or default options to the HTML input
 C.initializeSchedule(); // compute event data and write HTML
 O.initializeChainChecklist(); // bind event handlers for checklist
@@ -3405,7 +3603,6 @@ K.updateTimeFrame(new Date()); // initial refresh of the clock
 K.tickSecond(); // start infinite loop clock
 K.initializeClipboard(); // bind Flash to the waypoint icons for clipboard
 I.initializeUI(); // bind event handlers for misc written content
-
 
 
 
