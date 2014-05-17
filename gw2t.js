@@ -3,7 +3,7 @@
 	jQuery-dependent (v1.11.0), with other plugins in plugins.js.
 	Coded in NetBeans; debugged in Opera Dragonfly.
 	IDE recommended for viewing and collapsing code sections.
-	Version: 2014.05.16 modified - 2010.04.18 created
+	Version: 2014.05.17 modified - 2010.04.18 created
 
 	CREDITS:
 	Vladimir Agafonkin - LeafletJS map library
@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 1405161927,
+	int_programVersion: 1405171447,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
@@ -509,11 +509,11 @@ O = {
 				// Highlight JP name when hovered over checkbox
 				function()
 				{
-					$(this).prev().css({"text-decoration": "underline"});
+					$(this).prev().css({"text-decoration": "underline", color: "#ffff00"});
 				},
 				function()
 				{
-					$(this).prev().css({"text-decoration": "none"});
+					$(this).prev().css({"text-decoration": "none", color: "#ffcc77"});
 				}
 			);
 		}
@@ -730,10 +730,10 @@ O = {
  * ========================================================================== */
 C = {
 	
-	/* 
-	 *	http://gw2timer.com/metas.js holds a giant object containing an array of
-	 *	meta event chains, which themselves contain an array of their events.
-	 *	This is referred to by the variable "C.Chains".
+	/*
+	 * http://gw2timer.com/metas.js holds a giant object containing an array of
+	 * meta event chains, which themselves contain an array of their events.
+	 * This is referred to by the variable "C.Chains".
 	 */
 	Chains: GW2T_CHAINS_DATA,
 	CurrentChain: {},
@@ -1742,10 +1742,10 @@ C = {
  * @@Map
  * ========================================================================== */
 M = {
-	/* 
-	 *	http://gw2timer.com/zones.js holds an array of zones (e.g. Queensdale, LA)
-	 *	objects containing their rectangular coordinates.
-	 *	This is referred to by the variable "M.Zones".
+	/*
+	 * http://gw2timer.com/zones.js holds an array of zones (e.g. Queensdale, LA)
+	 * objects containing their rectangular coordinates.
+	 * This is referred to by the variable "M.Zones".
 	 */
 	Zones: GW2T_ZONES_DATA,
 	Nodes: {},
