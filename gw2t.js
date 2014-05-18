@@ -3,7 +3,7 @@
 	jQuery-dependent (v1.11.0), with other plugins in plugins.js.
 	Coded in NetBeans; debugged in Opera Dragonfly.
 	IDE recommended for viewing and collapsing code sections.
-	Version: 2014.05.17 modified - 2010.04.18 created
+	Version: 2014.05.18 modified - 2010.04.18 created
 
 	CREDITS:
 	Vladimir Agafonkin - LeafletJS map library
@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 1405171447,
+	int_programVersion: 1405181315,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
@@ -495,12 +495,28 @@ O = {
 				// Convert the digit at ith position in the checklist string to boolean
 				var stateinstring = O.intToBool(parseInt(O.JPChecklist.charAt(i)));
 				$(this).prop("checked", stateinstring);
+				if (stateinstring === false)
+				{
+					$(this).prev().css({color: "#ffcc77"});
+				}
+				else
+				{
+					$(this).prev().css({color: "#ffff00"});
+				}
 				
 			}).change(function()
 			{
 				// Get the checkbox ID that associates itself with that JP
 				var stateincheckbox = O.boolToInt($(this).prop("checked")).toString();
 				var checkboxindex = parseInt($(this).attr("id").split("_")[1]);
+				if (stateincheckbox === "0")
+				{
+					$(this).prev().css({color: "#ffcc77"});
+				}
+				else
+				{
+					$(this).prev().css({color: "#ffff00"});
+				}
 				
 				// Rewrite the checklist string by updating the digit at the ID/index
 				O.JPChecklist = O.replaceCharAt(O.JPChecklist, checkboxindex, stateincheckbox);
@@ -509,11 +525,11 @@ O = {
 				// Highlight JP name when hovered over checkbox
 				function()
 				{
-					$(this).prev().css({"text-decoration": "underline", color: "#ffff00"});
+					$(this).prev().css({"text-decoration": "underline"});
 				},
 				function()
 				{
-					$(this).prev().css({"text-decoration": "none", color: "#ffcc77"});
+					$(this).prev().css({"text-decoration": "none"});
 				}
 			);
 		}
@@ -524,7 +540,8 @@ O = {
 			var jpchecklist = "";
 			for (i = 0; i < O.numOfJPs; i++)
 			{
-				$("#mapJP_" + i).prop("checked", false);
+				$("#mapJP_" + i).prop("checked", false)
+					.prev().css({color: "#ffcc77"});
 				jpchecklist += "0";
 			}
 			O.JPChecklist = jpchecklist;
@@ -2629,7 +2646,7 @@ T = {
 };
 
 /* =============================================================================
- *  @@Clock analog and by-the-second and frame refreshes
+ *  @@Klock analog and by-the-second and frame refreshes
  * ========================================================================== */
 K = {
 	
@@ -3035,7 +3052,7 @@ K = {
 				K.iconChains[pIndex].click(function()
 				{
 					coord = C.getCurrentChain(pIndex).primaryEvents[0].path[0];
-					M.goToView(coord, M.PinProgram);
+					M.goToView(coord, M.PinEvent);
 				});
 			})(i);
 		}

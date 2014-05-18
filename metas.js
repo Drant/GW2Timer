@@ -94,7 +94,7 @@ var GW2T_CHAINS_DATA = [
 	title: "Inquest Golem Mark II",
 	events: [
 		{
-			path: [[21221, 22685], [21157, 22898], [21188, 22867], [21220, 22564]],
+			path: [[21220, 22564], [21157, 22898], [21188, 22867], [21220, 22564]],
 			name: "Prepare for toxic waste evacuation",
 			icon: "cross",
 			num: "1",
@@ -220,7 +220,7 @@ var GW2T_CHAINS_DATA = [
 			lim: "15:00",
 			avg: "1:30",
 			min: "1:00",
-			max: "3:00",
+			max: "2:30",
 			primacy: 2
 		},
 		{
@@ -258,8 +258,8 @@ var GW2T_CHAINS_DATA = [
 			sInterim: ["0:30", "7:00~10:00"],
 			fInterim: "*",
 			lim: "15:00",
-			avg: "6:00",
-			min: "4:00",
+			avg: "5:00",
+			min: "3:00",
 			max: "8:00",
 			primacy: 2
 		},
@@ -274,7 +274,7 @@ var GW2T_CHAINS_DATA = [
 			fInterim: "0",
 			lim: "0",
 			avg: "4:30",
-			min: "4:00",
+			min: "3:00",
 			max: "5:00",
 			primacy: 0
 		},

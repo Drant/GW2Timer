@@ -2,10 +2,10 @@
 <html>
 <head>
 	<!-- Meta -->
-	<title>GW2Timer - World Boss Timers and Daily Map Guide</title>
+	<title>GW2Timer - World Boss Timers and Daily Map Guide for Guild Wars 2</title>
 	<meta charset="utf-8" />
 	<meta name="robots" content="index, follow, noarchive" />
-	<meta name="description" content="Timer map for world boss meta events and daily achievement guide." />
+	<meta name="description" content="Guild Wars 2 timers and clock for world boss meta events and daily achievement guide. Provides detailed prediction and map walkthrough of events along with customizeable checklist and Text-to-Speech alarm." />
 	<meta name="google-site-verification" content="hPcBd74DxlBzpTu6wO6DkIcOVFLu9SOMT-GQ1MI3fbg" />
 
 	<!-- Stylesheets -->
@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 	<!-- Web application files  -->
+	<script type="text/javascript" src="plugins.js"></script>
 	<script type="text/javascript" src="zones.js"></script>
 	<script type="text/javascript" src="metas.js"></script>
 	<script type="text/javascript" src="gw2t.js"></script>
@@ -52,6 +53,7 @@
 				<input id="mapCoordinatesRegion" type="text" />
 			</div>
 			<div id="itemMapButtons">
+				<span>GW2Timer.com</span>
 				<img id="mapCompassButton" src="img/map/compass.png" alt="compass" />
 			</div>
 		</section>
@@ -64,10 +66,10 @@
 			Green clock tick is chain start, orange tick is minimum time chain is predicted to finish, red tick is average.">
 			<div id="paneClockBackground"></div>
 			<div class="itemClockIcon">
-				<img id="itemClockIcon0" src="img/chain/tbd.png" alt="X:00 Event" />
-				<img id="itemClockIcon1" src="img/chain/tbd.png" alt="X:15 Event" />
-				<img id="itemClockIcon2" src="img/chain/tbd.png" alt="X:30 Event" />
-				<img id="itemClockIcon3" src="img/chain/tbd.png" alt="X:45 Event" />
+				<img id="itemClockIcon0" src="img/chain/tbd.png" alt="X:00 Chain" />
+				<img id="itemClockIcon1" src="img/chain/tbd.png" alt="X:15 Chain" />
+				<img id="itemClockIcon2" src="img/chain/tbd.png" alt="X:30 Chain" />
+				<img id="itemClockIcon3" src="img/chain/tbd.png" alt="X:45 Chain" />
 			</div>
 			<svg id="itemClock" viewBox="0 0 100 100"> <!-- x=50,y=50 is the center -->
 				<defs> <!-- Shadow filters -->
@@ -158,23 +160,27 @@
 		<section id="paneContent" class="paneRight">
 			<div id="jsTop">&uarr;</div>
 			<article id="layerChains"> <!-- This layer will be populated by JS -->
-				<header title="Scheduled Bosses">
+				<header>
 					<img src="img/ui/scheduled.png" alt="Scheduled Bosses" />
+					<span>Scheduled Bosses</span>
 					<ins></ins>
 				</header>
 				<div id="listChainsScheduled" class="listChains"></div>
-				<header title="Unscheduled Bosses (event state unknown)">
+				<header>
 					<img src="img/event/boss.png" alt="Unscheduled Bosses" />
+					<span>Unscheduled Bosses</span>
 					<ins></ins>
 				</header>
 				<div id="listChainsUnscheduled" class="listChains"></div>
-				<header title="Orr Temples (event state unknown)">
+				<header>
 					<img src="img/chain/temple.png" alt="Orr Temples" />
+					<span>Orr Temples</span>
 					<ins></ins>
 				</header>
 				<div id="listChainsTemple" class="listChains"></div>
-				<header id="headerTimetable" title="Full Timetable of Bosses">
+				<header id="headerTimetable">
 					<img src="img/event/special.png" alt="Timetable" />
+					<span>Full Timetable</span>
 					<ins></ins>
 				</header>
 				<div id="listChainsTimetable" class="listChains"></div>
@@ -217,7 +223,7 @@
 					<label>Map pane minimum width (for small screens).<br />Refresh your browser to see change.<br />0px <input id="opt_int_resizeMapPaneWidth" type="range" min="0" max="720" step="12" /> 720px</label>
 					<br />
 					<h2>Alarm</h2>
-					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. When should the program announce the next boss?</span>
+					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. Click the speaker icon above to toggle sound. When should the program announce the next boss?</span>
 					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
 					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current chain finishes</label>
 					<label><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
@@ -225,14 +231,12 @@
 					<h2>Defaults</h2>
 					<div class="optButtons">
 						<button id="btnRestoreAllChains" title="Unhide all chains and uncheck them.">Restore All Chains</button>
-						<button id="btnClearLocalStorage" title="Clear the localStorage which stores options and states.">Clear Website Memory</button>
+						<button id="btnClearLocalStorage" title="Clear the localStorage which stores options and states, as if you visited for the first time.">Clear Website Memory</button>
 					</div>
 				</div>
 			</article>
 		</section>
 	</div><!-- End of panelRight -->
 	</main>
-	<!-- Misc third party scripts; load last for faster page load -->
-	<script type="text/javascript" src="plugins.js"></script>
 </body>
 </html>
