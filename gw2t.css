@@ -44,8 +44,6 @@ body > windowMain
 @font-face {
 	font-family: "Menomonia";
 	src: url("https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.woff") format("woff");
-	font-weight: normal;
-	font-style: normal;
 }
 
 html, body {
@@ -159,9 +157,11 @@ div#qTip {
 	vertical-align: middle;
 	font-family: Menomonia;
 	font-size: 18px;
-	color: #ffeebb;
 	opacity: 0.6;
-	cursor: default;
+}
+#itemMapButtons span a {
+	text-decoration: none;
+	color: #ffeebb;
 }
 #mapCompassButton {
 	
@@ -441,7 +441,9 @@ div#qTip {
 }
 .cntComposition h1:first-of-type {
 	font-variant: small-caps;
+	text-decoration: none;
 	letter-spacing: 2px;
+	cursor: default;
 }
 .cntComposition h2 {
 	margin-top: 4px;
@@ -458,6 +460,31 @@ div#qTip {
 .cntComposition h1, .cntComposition h2, .cntComposition h3 {
 	font-weight: bold;
 	color: #e4e0b3;
+}
+
+.cntComposition header {
+	padding-top: 12px;
+	font-size: 20px;
+	text-shadow: 0px 0px 2px #e4e0b3;
+	text-decoration: underline;
+	color: #e4e0b3;
+	cursor: pointer;
+}
+.cntComposition header:hover, .jsCollapsibleDone:hover {
+	color: white;
+}
+.cntComposition header img {
+	width: 32px; height: 32px;
+	margin-right: 16px;
+	vertical-align: middle;
+}
+
+.jsCollapsibleDone {
+	margin-bottom: 16px;
+	font-size: 16px;
+	text-decoration: underline;
+	text-shadow: 0px 0px 2px #e4e0b3;
+	cursor: pointer;
 }
 
 .cntComposition em {

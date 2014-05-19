@@ -53,7 +53,7 @@
 				<input id="mapCoordinatesRegion" type="text" />
 			</div>
 			<div id="itemMapButtons">
-				<span>GW2Timer.com</span>
+				<span><a href="http://www.reddit.com/r/gw2timer" target="_blank">GW2Timer.com</a></span>
 				<img id="mapCompassButton" src="img/map/compass.png" alt="compass" />
 			</div>
 		</section>
@@ -196,7 +196,6 @@
 					<h2>Timer</h2>
 					<label><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off chains</label>
 					<label><input id="opt_bol_use24Hour" type="checkbox" /> Use 24 hour format</label>
-					<label><input id="opt_bol_detectDST" type="checkbox" /> Detect Daylight Saving Time</label>
 					<label><input id="opt_bol_showClock" type="checkbox" /> Show the clock pane</label>
 					<div class="optFieldsets">
 						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain? Auto will use the North American time of day to choose. Changes will take effect when the next chain starts. &lt;br /&gt;Min: for full population map&lt;br /&gt;Min-Avg: Min + (Avg - Min)/2&lt;br /&gt;Avg: for regular zerg size"><legend>Predictor</legend>
@@ -227,6 +226,10 @@
 					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
 					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current chain finishes</label>
 					<label><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
+					<br />
+					<h2>Advanced</h2>
+					<label><input id="opt_bol_clearOnServerReset" type="checkbox" /> Clear checklist on server reset (Midnight UTC)</label>
+					<label><input id="opt_bol_detectDST" type="checkbox" /> Detect Daylight Saving Time</label>
 					<br />
 					<h2>Defaults</h2>
 					<div class="optButtons">

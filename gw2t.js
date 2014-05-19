@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 1405181315,
+	int_programVersion: 1405182331,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
@@ -86,7 +86,6 @@ O = {
 		// Timer
 		bol_hideChecked: false,
 		bol_use24Hour: false,
-		bol_detectDST: true,
 		bol_showClock: true,
 		int_dimClockBackground: 0,
 		int_useTimeCountdown: 1,
@@ -100,7 +99,10 @@ O = {
 		bol_enableSound: false,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
-		bol_alertChecked: true
+		bol_alertChecked: true,
+		// Advanced
+		bol_clearOnServerReset: true,
+		bol_detectDST: true
 	},
 	
 	Checklist: {},
@@ -356,7 +358,7 @@ O = {
 					} break;
 				}
 			}
-			else
+			else if (O.Options.bol_clearOnServerReset)
 			{
 				O.clearServerSensitiveOptions();
 			}
@@ -2876,7 +2878,7 @@ K = {
 	updateTimeFrame: function(pTime)
 	{
 		// Check if server reset happened
-		if (O.isSSTimestampOutdated() === true)
+		if (O.isSSTimestampOutdated() === true && O.Options.bol_clearOnServerReset === true)
 		{
 			O.clearServerSensitiveOptions();
 		}
@@ -3279,8 +3281,8 @@ I = {
 	
 	/*
 	 * Scrolls to an element at specified rate.
-	 * @param element pElement to scroll to.
-	 * @param element pContainerOfElement container with the scroll bar.
+	 * @param jqelement pElement to scroll to.
+	 * @param jqelement pContainerOfElement container with the scroll bar.
 	 * @param int or string pTime duration to animate.
 	 */
 	scrollToElement: function(pElement, pContainerOfElement, pTime)
@@ -3295,8 +3297,7 @@ I = {
 	
 	/*
 	 * Creates a single-level table of content for a composition (writings) layer.
-	 * @param string pLayer name of layer in the content pane.
-	 * @pre Header text does not contain special characters.
+	 * @param string pLayer HTML ID of layer in the content pane.
 	 */
 	generateTableOfContent: function(pLayer)
 	{
@@ -3321,6 +3322,37 @@ I = {
 					I.scrollToElement($("#toc_" + layername + "_" + headertextstripped),
 						$(I.currentContentLayer), "fast");
 				});
+		});
+	},
+	
+	/*
+	 * Binds element with the collapsible class to toggle display of its sibling
+	 * container element. Also creates another button-like element at the bottom
+	 * of the container to collapse it again.
+	 * @param string pLayer HTML ID of layer in the content pane.
+	 */
+	bindCollapsible: function(pLayer)
+	{
+		$(pLayer + " .jsCollapsible").each(function()
+		{
+			var header = $(this);
+			header.next().append("<div class='jsCollapsibleDone'>Done reading " + header.text() + "</div>");
+			header.next().hide();
+			// Bind click the header to toggle the sibling collapsible container
+			header.click(function()
+			{
+				$(this).next().toggle("fast");
+				I.scrollToElement($(this), $(pLayer), "fast");
+			});
+		});
+		
+		// Bind the additional bottom header to collapse the container
+		$(pLayer + " .jsCollapsibleDone").each(function()
+		{
+			$(this).click(function()
+			{
+				$(this).parent().hide("fast");		
+			});
 		});
 	},
 	
@@ -3458,6 +3490,13 @@ I = {
 		* ----------------------------------------------------------------------
 		*/
 	   
+		var bindAfterAJAXContent = function(pLayer)
+		{
+			I.generateTableOfContent(pLayer);
+			I.bindCollapsible(pLayer);
+			M.bindMapLinks(pLayer);
+		};
+	   
 	   /*
 		* Help layer.
 		*/
@@ -3470,8 +3509,8 @@ I = {
 					// Help layer contains map links
 					$(this).load("help.html", function()
 					{
-						I.generateTableOfContent("#layerHelp");
-						M.bindMapLinks("#layerHelp");
+						bindAfterAJAXContent("#layerHelp");
+						
 						// Open links on new window
 						$("a").attr("target", "_blank");
 					});
@@ -3493,8 +3532,7 @@ I = {
 					// Help layer contains map links
 					$(this).load("map.html", function()
 					{
-						I.generateTableOfContent("#layerMap");
-						M.bindMapLinks("#layerMap");
+						bindAfterAJAXContent("#layerMap");
 						
 						// Bind map zone links
 						$(".mapZones li").each(function()
