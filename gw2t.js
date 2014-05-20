@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 1405182331,
+	int_programVersion: 1405192357,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
@@ -94,7 +94,6 @@ O = {
 		bol_tourPrediction: true,
 		bol_showChainPaths: true,
 		bol_showMap: true,
-		int_resizeMapPaneWidth: 0,
 		// Alarm
 		bol_enableSound: false,
 		bol_alertAtStart: true,
@@ -588,10 +587,6 @@ O = {
 		{
 			O.enact_bol_showMap();
 		});
-		$("#opt_int_resizeMapPaneWidth").change(function()
-		{
-			O.enact_int_resizeMapPaneWidth();
-		});
 		/*
 		 * Run enactors when the page loads (because this an initializer function).
 		 * Will have to place it elsewhere if it requires data to be loaded first.
@@ -601,7 +596,6 @@ O = {
 		O.enact_bol_showClock();
 		O.enact_int_dimClockBackground();
 		O.enact_bol_showMap();
-		O.enact_int_resizeMapPaneWidth();
 		
 		/*
 		 * Button event handlers bindings (buttons don't have stored values).
@@ -738,10 +732,6 @@ O = {
 			$("#panelLeft").hide();
 		}
 	},
-	enact_int_resizeMapPaneWidth: function()
-	{
-		$("#paneMap").css({"min-width": O.Options.int_resizeMapPaneWidth});
-	}
 };
 
 /* =============================================================================
@@ -1777,7 +1767,7 @@ M = {
 	cICON_PIN_EVENT: "img/map/pin_green.png",
 	cLEAFLET_PATH_OPACITY: 0.5,
 	cLEAFLET_ICON_SIZE: 32,
-	cMAP_BOUND: 32768, // the map is a square
+	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
 	cINITIAL_ZOOM_LEVEL: 3,
 	cMAX_ZOOM_LEVEL: 7,
@@ -1842,15 +1832,15 @@ M = {
 		
 		M.PathLayer = L.layerGroup();
 		
-		// Do other initialization functions
-		M.drawChainPaths();
-		M.populateMap();
-		
 		// Initialize array to later hold waypoint map markers
 		for (var i in M.Zones)
 		{
 			M.Zones[i].waypoints = new Array();
 		}
+		
+		// Do other initialization functions
+		M.drawChainPaths();
+		M.populateMap();
 
 		/*
 		 * Clicking an empty place on the map highlight its coordinate.
@@ -1862,7 +1852,49 @@ M = {
 				.val("[" + mouseposition.x + ", " + mouseposition.y + "]")
 				.select();
 		});
-
+		
+		/*
+		 * Move the personal pin marker to where the user double clicks.
+		 */
+		M.Map.on("dblclick", function(pEvent)
+		{
+			M.PinPersonal.setLatLng(pEvent.latlng);
+		});
+		
+		/*
+		 * Go to the coordinates in the bar when user presses enter.
+		 */
+		$("#mapCoordinatesStatic").bind("enterKey", function(pEvent)
+		{
+			var coord = M.parseCoordinates($(this).val());
+			if (coord[0] !== "" && coord.length === 2)
+			{
+				M.goToView(coord);
+				M.PinPersonal.setLatLng(M.convertGCtoLC(coord));
+			}
+		}).keyup(function(pEvent)
+		{
+			if(pEvent.keyCode === 13) // code for Enter key
+			{
+				$(this).trigger("enterKey");
+			}
+		});
+		
+		/*
+		 * Hide the right panel if click on the map compass.
+		 */
+		$("#mapCompassButton").click(function()
+		{
+			$("#panelRight").toggle();
+		});
+	}, // End of map initialization
+	
+	/*
+	 * Bindings for map events that need to be done after AJAX has loaded the
+	 * API-generated markers.
+	 */
+	bindMapVisualChanges: function()
+	{
 		/*
 		 * Bind the mousemove event to update the map coordinate bar.
 		 * Note that the throttle function is from a separate script. It permits
@@ -1948,42 +1980,7 @@ M = {
 				M.changeMarkerIcon(M.Waypoints[i], M.cICON_WAYPOINT, newiconsize);
 			}
 		});
-		
-		/*
-		 * Move the personal pin marker to where the user double clicks.
-		 */
-		M.Map.on("dblclick", function(pEvent)
-		{
-			M.PinPersonal.setLatLng(pEvent.latlng);
-		});
-		
-		/*
-		 * Go to the coordinates in the bar when user presses enter.
-		 */
-		$("#mapCoordinatesStatic").bind("enterKey", function(pEvent)
-		{
-			var coord = M.parseCoordinates($(this).val());
-			if (coord[0] !== "" && coord.length === 2)
-			{
-				M.goToView(coord);
-				M.PinPersonal.setLatLng(M.convertGCtoLC(coord));
-			}
-		}).keyup(function(pEvent)
-		{
-			if(pEvent.keyCode === 13) // code for Enter key
-			{
-				$(this).trigger("enterKey");
-			}
-		});
-		
-		/*
-		 * Hide the right panel if click on the map compass.
-		 */
-		$("#mapCompassButton").click(function()
-		{
-			$("#panelRight").toggle();
-		});
-	}, // End of map initialization
+	},
 	
 	/*
 	 * Changes the marker icon's image and size (Leaflet does not have this method).
@@ -2145,7 +2142,7 @@ M = {
 	},
 	
 	/*
-	 * Initializes map waypoints, pins, and other markers.
+	 * Initializes map waypoints and other markers from the GW2 server API files.
 	 */
 	populateMap: function()
 	{
@@ -2215,7 +2212,7 @@ M = {
 							$("#mapCoordinatesRegion").val(this.options.waypoint);
 						});
 						
-						// Assign the waypoint to their zone
+						// Assign the waypoint to its zone
 						for (ii in M.Zones)
 						{
 							if (M.Zones[ii].name === gamemap.name)
@@ -2238,7 +2235,6 @@ M = {
 			{
 				M.setLayerGroupDisplay(M.PathLayer, "show");
 			}
-			
 			// The zoomend event handler doesn't detect the first zoom by prediction
 			if (O.Options.bol_tourPrediction && C.CurrentPrimaryEvent.num)
 			{
@@ -2247,31 +2243,23 @@ M = {
 					M.changeMarkerIcon(M.Waypoints[i], M.cICON_WAYPOINT, M.cLEAFLET_ICON_SIZE);
 				}
 			}
-			
-			/*
-			 * Start tooltip plugin after the markers were loaded. This should
-			 * always be executed after all AJAX functions have completed
-			 * because it reads the title attribute and convert them into
-			 * div "tooltips".
-			 */
-			qTip.init();
-			
 		}).fail(function(){
-			qTip.init();
-			//$("#paneMap").css({visibility: "hidden"});
-			$("#jsConsole").html(
+			I.writeConsole(
 				"Guild Wars 2 API server is unreachable.<br />"
 				+ "Reasons could be:<br />"
 				+ "- The GW2 server is down for maintenance.<br />"
 				+ "- Your computer's time is out of sync.<br />"
 				+ "- Your browser does not have the necessary features.<br />"
 				+ "- This website's code encountered a bug.<br />"
-				+ "Map features will be limited.<br />"
-			);
-			setTimeout(function()
-			{
-				$("#jsConsole").empty();
-			}, 30000);
+				+ "Map features will be limited.<br />", 30);
+		}).always(function() // Do after AJAX regardless of success/failure
+		{
+			M.bindMapVisualChanges();
+			/*
+			 * Start tooltip plugin after the markers were loaded, because it
+			 * reads the title attribute and convert them into div "tooltips".
+			 */
+			qTip.init();
 		});
 		
 		/*
@@ -2652,6 +2640,8 @@ T = {
  * ========================================================================== */
 K = {
 	
+	awakeTimestampPrevious: 0,
+	awakeTimestampTolerance: 5,
 	currentFrameOffsetMinutes: 0,
 	cClockEventsLimit: 4, // Number of events on the clock
 	iconOpacityChecked: 0.4,
@@ -2829,9 +2819,22 @@ K = {
 			}
 			K.updateTimeFrame(now);
 		}
-		// Hasn't crossed the 15 minute mark, keep dimming the background globe
-		else
+		else // If crossing a 1 second mark and hasn't crossed the 15 minute mark
 		{
+			/*
+			 * For devices that goes to sleep, check the UNIX timestamp (which
+			 * is updated every second if the device is awake) to see if it's
+			 * out of sync, and refresh the clock if so.
+			 */
+			var awaketimestampcurrent = T.getUNIXSeconds();
+			if (K.awakeTimestampPrevious < (awaketimestampcurrent - K.awakeTimestampTolerance))
+			{
+				K.updateTimeFrame(now);
+			}
+			// Update the timestamp
+			K.awakeTimestampPrevious = awaketimestampcurrent;
+			
+			// Dim the clock background
 			if (O.Options.int_dimClockBackground === 0)
 			{
 				clockbackground.style.opacity = opacityAdd;
@@ -3105,6 +3108,7 @@ K = {
 I = {
 	cContentPane: "#paneContent",
 	cSiteName: "GW2Timer.com",
+	consoleTimeout: {},
 	
 	// HTML/CSS pixel units
 	cPANE_CLOCK_HEIGHT: 360,
@@ -3130,6 +3134,9 @@ I = {
 		Firefox: "Firefox",
 		Opera: "Opera"
 	},
+	userSmallScreen: false,
+	smallScreenWidth: 800,
+	smallScreenHeight: 600,
 	
 	/*
 	 * Loads a TTS sound file generated from a TTS web service into a hidden
@@ -3162,13 +3169,51 @@ I = {
 	},
 	
 	/*
+	 * Writes an HTML string to the "console" area in the top left corner of
+	 * the website that disappears after a while.
+	 * @param string pString to write.
+	 * @param int pSeconds until the console is cleared.
+	 */
+	writeConsole: function(pString, pSeconds)
+	{
+		$("#jsConsole").html(pString);
+		
+		window.clearTimeout(I.consoleTimeout);
+		I.consoleTimeout = setTimeout(function()
+		{
+			$("#jsConsole").css({opacity: 1}).animate({opacity: 0}, 400, function()
+			{
+				$(this).empty().css({opacity: 1});
+			});
+		}, pSeconds * T.cMILLISECONDS_IN_SECOND);
+	},
+	
+	/*
 	 * Does things that need to be done before everything else.
 	 * @pre This function is ran before any initialization functions.
 	 */
 	initializeFirst: function()
 	{
-		// Clear initial non-load warning the moment JavaScript is runned
+		// Clear initial non-load warning the moment JavaScript is ran
 		$("#jsConsole").empty();
+		
+		// Initial sync of the sleep detection variable
+		K.awakeTimestampPrevious = T.getUNIXSeconds();
+		// Detect small screen devices
+		if (window.innerWidth <= I.smallScreenWidth && window.innerHeight <= I.smallScreenHeight)
+		{
+			I.userSmallScreen = true;
+			I.writeConsole("Small screen detected.<br />"
+				+ "Map features have been turned off by default for better performance.<br />"
+				+ "You can re-enable them in the options.<br />", 10);
+			/*
+			 * Turn off map features if small screen, note that localStorage will
+			 * override these if they were previously stored.
+			 */
+			O.Options.bol_tourPrediction = false;
+			O.Options.bol_showChainPaths = false;
+			O.Options.bol_showMap = false;
+		}
 		
 		// Remember user's browser maker
 		var useragent = navigator.userAgent;
@@ -3490,6 +3535,7 @@ I = {
 		* ----------------------------------------------------------------------
 		*/
 	   
+	   // Macro function for various written content added functionality
 		var bindAfterAJAXContent = function(pLayer)
 		{
 			I.generateTableOfContent(pLayer);
@@ -3547,7 +3593,7 @@ I = {
 						$(".mapJP dt").each(function()
 						{
 							var term = $(this).text();
-							$(this).after(" <a href='" + I.getYouTubeLink(term + " Guild Wars 2")
+							$(this).after("&nbsp;<a href='" + I.getYouTubeLink(term + " Guild Wars 2")
 								+ "'>[Y]</a> <a href='" + I.getWikiLink(term) + "'>[W]</a>");
 							$(this).click(function()
 							{

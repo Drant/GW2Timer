@@ -197,6 +197,7 @@ div#qTip {
 }
 
 .paneRight {
+	right: 0px;
 	border-left: 1px solid #444;
 	box-shadow: -5px 0px 5px #223;
 }
@@ -858,7 +859,7 @@ label:hover {
 }
 
 /* =============================================================================
- *  @@Palette color derived from GW2 game interface text.
+ *  @@Palette color derived from GW2 user interface.
  *  This is for reference.
  * ========================================================================== */
 paletteText {
