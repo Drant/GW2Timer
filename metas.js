@@ -1234,7 +1234,7 @@ var GW2T_CHAINS_DATA = [
 	title: "To Be Determined",
 	events: [
 		{
-			path: [[16829, 12514], [16829, 12514], [16829, 12514]],
+			path: [[16590, 15324], [16590, 15324], [16590, 15324]],
 			name: "TBD Event",
 			icon: "boss",
 			num: "1",

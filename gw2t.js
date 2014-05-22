@@ -3,7 +3,7 @@
 	jQuery-dependent (v1.11.0), with other plugins in plugins.js.
 	Coded in NetBeans; debugged in Opera Dragonfly.
 	IDE recommended for viewing and collapsing code sections.
-	Version: 2014.05.18 modified - 2010.04.18 created
+	Version: 2014.05.21 modified - 2010.04.18 created
 
 	CREDITS:
 	Vladimir Agafonkin - LeafletJS map library
@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 1405192357,
+	int_programVersion: 1405212357,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
@@ -2443,11 +2443,11 @@ T = {
 
 	/*
 	 * Gets a formatted time string, arguments are taken as name value pairs.
+	 * @objparam string reference place to offset the time, default is local.
 	 * @objparam boolean want24 to format as 24 hour or not (AM/PM).
-	 * @objparam boolean wantLetters to format #hr #m #s instead of colons.
+	 * @objparam boolean wantLetters to format #h #m #s instead of colons.
 	 * @objparam boolean wantSeconds to include the seconds.
-	 * @objparam boolean wantServer to convert time to server time.
-	 * @objparam int pCustomTimeInSeconds to convert a time string, will use
+	 * @objparam int customTimeInSeconds to convert to a time string, will use
 	 * current time if undefined.
 	 * @returns 23:59:59 or 11:59:59 PM or 23h 59h 59s time string.
 	 */
@@ -2455,6 +2455,10 @@ T = {
 	{
 		// Set parameter defaults
 		pArgs = pArgs || {};
+		if (pArgs.reference === undefined)
+		{
+			pArgs.reference = "local";
+		}
 		if (pArgs.want24 === undefined)
 		{
 			pArgs.want24 = O.Options.bol_use24Hour;
@@ -2467,10 +2471,6 @@ T = {
 		{
 			pArgs.wantHours = true;
 		}
-		if (pArgs.wantServer === undefined)
-		{
-			pArgs.wantServer = false;
-		}
 		if (pArgs.wantLetters === undefined)
 		{
 			pArgs.wantLetters = false;
@@ -2481,14 +2481,35 @@ T = {
 		
 		if (pArgs.customTimeInSeconds === undefined)
 		{
-			sec = now.getSeconds();
-			min = now.getMinutes();
-			hour = now.getHours();
-			// Account for hours greater than 24 or negative hours
+			switch (pArgs.reference)
+			{
+				case "local":
+				{
+					sec = now.getSeconds();
+					min = now.getMinutes();
+					hour = now.getHours();
+				} break;
+				case "server":
+				{
+					sec = now.getSeconds();
+					min = now.getMinutes();
+					hour = (now.getUTCHours() + T.cSERVER_UTC_OFFSET + T.DST_IN_EFFECT)
+						% T.cHOURS_IN_DAY;
+					if (hour < 0)
+					{
+						hour = T.cHOURS_IN_DAY + hour;
+					}
+				} break;
+				case "utc":
+				{
+					sec = now.getUTCSeconds();
+					min = now.getUTCMinutes();
+					hour = now.getUTCHours();
+				} break;
+			}
 		}
 		else
 		{
-			pArgs.wantServer = false;
 			// Account for negative input
 			pArgs.customTimeInSeconds = pArgs.customTimeInSeconds % T.cSECONDS_IN_DAY;
 			if (pArgs.customTimeInSeconds < 0)
@@ -2502,16 +2523,6 @@ T = {
 			sec = pArgs.customTimeInSeconds % 60;
 			min = ~~(pArgs.customTimeInSeconds / 60) % 60;
 			hour = ~~(pArgs.customTimeInSeconds / 3600);
-		}
-		
-		if (pArgs.wantServer)
-		{
-			hour = (now.getUTCHours() + T.cSERVER_UTC_OFFSET + T.DST_IN_EFFECT)
-				% T.cHOURS_IN_DAY;
-			if (hour < 0)
-			{
-				hour = T.cHOURS_IN_DAY + hour;
-			}
 		}
 		
 		var minsec = "";
@@ -2583,8 +2594,8 @@ T = {
 
 	/*
 	 * Gets the time in units since midnight at the point of reference.
-	 * @param string pTimeUnit: time unit to convert from.
-	 * @param string pReference: place to offset the time, default is UTC.
+	 * @param string pTimeUnit time unit to convert from.
+	 * @param string pReference place to offset the time, default is UTC.
 	 * @returns number seconds, minutes, or hours.
 	 */
 	getTimeOffsetSinceMidnight: function(pReference, pTimeUnit)
@@ -2846,8 +2857,8 @@ K = {
 		document.getElementById("itemTimeServer").innerHTML = "(" +
 			T.getTimeFormatted(
 			{
-				wantSeconds: false,
-				wantServer: true
+				reference: "server",
+				wantSeconds: false
 			}) + ")";
 		// Change the minute hand if passing colored marker
 		if (secinhour >= K.currentFrameOffsetMinutes
@@ -3197,8 +3208,12 @@ I = {
 		// Clear initial non-load warning the moment JavaScript is ran
 		$("#jsConsole").empty();
 		
+		// Manually clear the TTS iframe to prevent old sound from playing
+		document.getElementById("jsTTS").src = "";
+		
 		// Initial sync of the sleep detection variable
 		K.awakeTimestampPrevious = T.getUNIXSeconds();
+		
 		// Detect small screen devices
 		if (window.innerWidth <= I.smallScreenWidth && window.innerHeight <= I.smallScreenHeight)
 		{
@@ -3228,11 +3243,6 @@ I = {
 		else if (useragent.indexOf("Firefox") !== -1)
 		{
 			I.userBrowser = I.BrowserEnum.Firefox;
-			/*
-			 * Firefox does not reload a webpage's iframe when on reloading,
-			 * so have to clear the iframe manually on page load.
-			 */
-			document.getElementById("jsTTS").src = "";
 		}
 		else if (useragent.indexOf("Opera") !== -1)
 		{
