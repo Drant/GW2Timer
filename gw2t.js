@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 1405212357,
+	int_programVersion: 140522,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
@@ -1334,7 +1334,7 @@ C = {
 			ithchain = C.cSchedule[i];
 			timestring = T.getTimeFormatted(
 			{
-				wantSeconds: O.Options.bol_use24Hour,
+				wantSeconds: false,
 				customTimeInSeconds: C.convertScheduleIndexToLocalTime(i)
 			});
 			
@@ -1847,7 +1847,7 @@ M = {
 		 */
 		M.Map.on("click", function(pEvent)
 		{
-			var mouseposition = M.Map.project(pEvent.latlng, M.cMAX_ZOOM_LEVEL);
+			var mouseposition = M.convertLCtoGC(pEvent.latlng);
 			$("#mapCoordinatesStatic")
 				.val("[" + mouseposition.x + ", " + mouseposition.y + "]")
 				.select();
@@ -1890,6 +1890,64 @@ M = {
 	}, // End of map initialization
 	
 	/*
+	 * Finds what zone the specified point is in by comparing it to the top left
+	 * and bottom right coordinates of the zones, then show the zone's visuals.
+	 * @param object pPoint containing x and y coordinates.
+	 */
+	showCurrentZone: function(pPoint)
+	{
+		document.getElementById("mapCoordinatesDynamic")
+			.value = pPoint.x + ", " + pPoint.y;
+		
+		var i, ii1, ii2;
+		
+		for (i in M.Zones)
+		{
+			var zonex1 = M.Zones[i].rect[0][0];
+			var zoney1 = M.Zones[i].rect[0][1];
+			var zonex2 = M.Zones[i].rect[1][0];
+			var zoney2 = M.Zones[i].rect[1][1];
+
+			if (pPoint.x >= zonex1
+				&& pPoint.x <= zonex2
+				&& pPoint.y >= zoney1
+				&& pPoint.y <= zoney2)
+			{
+				/*
+				 * If got here then i is the index of the current moused
+				 * zone. To not waste computation, only update the
+				 * coordinates bar and reveal the zone waypoints if the
+				 * found zone is different from the previously moused zone.
+				 */
+				if (i !== M.mousedZoneIndex)
+				{
+					// Note that the master index was initialized as -1
+					if (M.mousedZoneIndex !== -1)
+					{
+						// Hide the waypoints of the previously moused zone
+						for (ii1 in M.Zones[M.mousedZoneIndex].waypoints)
+						{
+							M.Zones[M.mousedZoneIndex].waypoints[ii1]
+								._icon.style.display = "none";
+						}
+					}
+					// Update the master moused zone index to the current index
+					M.mousedZoneIndex = i;
+					var mousedzone = M.Zones[i];
+					document.getElementById("mapCoordinatesRegion")
+						.value = mousedzone.name;
+					// Reveal moused zone waypoints
+					for (ii2 in mousedzone.waypoints)
+					{
+						mousedzone.waypoints[ii2]._icon.style.display = "block";
+					}
+				}
+				return; // Already found zone so stop searching
+			}
+		}
+	},
+	
+	/*
 	 * Bindings for map events that need to be done after AJAX has loaded the
 	 * API-generated markers.
 	 */
@@ -1902,59 +1960,7 @@ M = {
 		 */
 		M.Map.on("mousemove", $.throttle(M.cMAP_MOUSEMOVE_RATE, function(pEvent)
 		{
-			var i, ii1, ii2;
-			var mouseposition = M.Map.project(pEvent.latlng, M.cMAX_ZOOM_LEVEL);
-			document.getElementById("mapCoordinatesDynamic")
-				.value = mouseposition.x + ", " + mouseposition.y;
-
-			/*
-			 * Figure out what zone the mouse is over by comparing mouse coordinates
-			 * to the top left and bottom right coordinates of the zones.
-			 */
-			for (i in M.Zones)
-			{
-				var zonex1 = M.Zones[i].rect[0][0];
-				var zoney1 = M.Zones[i].rect[0][1];
-				var zonex2 = M.Zones[i].rect[1][0];
-				var zoney2 = M.Zones[i].rect[1][1];
-
-				if (mouseposition.x >= zonex1
-					&& mouseposition.x <= zonex2
-					&& mouseposition.y >= zoney1
-					&& mouseposition.y <= zoney2)
-				{
-					/*
-					 * If got here then i is the index of the current moused
-					 * zone. To not waste computation, only update the
-					 * coordinates bar and reveal the zone waypoints if the
-					 * found zone is different from the previously moused zone.
-					 */
-					if (i !== M.mousedZoneIndex)
-					{
-						// Note that the master index was initialized as -1
-						if (M.mousedZoneIndex !== -1)
-						{
-							// Hide the waypoints of the previously moused zone
-							for (ii1 in M.Zones[M.mousedZoneIndex].waypoints)
-							{
-								M.Zones[M.mousedZoneIndex].waypoints[ii1]
-									._icon.style.display = "none";
-							}
-						}
-						// Update the master moused zone index to the current index
-						M.mousedZoneIndex = i;
-						var mousedzone = M.Zones[i];
-						document.getElementById("mapCoordinatesRegion")
-							.value = mousedzone.name;
-						// Reveal moused zone waypoints
-						for (ii2 in mousedzone.waypoints)
-						{
-							mousedzone.waypoints[ii2]._icon.style.display = "block";
-						}
-					}
-					return; // Already found zone so stop searching
-				}
-			}
+			M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
 		}));
 
 		/*
@@ -2069,6 +2075,7 @@ M = {
 			default: zoom = M.cMAX_ZOOM_LEVEL;
 		}
 		M.Map.setView(M.convertGCtoLC(pCoord), zoom);
+		M.showCurrentZone(M.convertLCtoGC(M.Map.getCenter()));
 	},
 	
 	/*
@@ -2101,14 +2108,17 @@ M = {
 	},
 	
 	/*
-	 * Convert's Leaflet LatLng to GW2's 2 unit array coordinates.
+	 * Converts Leaflet LatLng to GW2 coordinates.
 	 * @param object pLatLng from Leaflet.
-	 * @returns array of x and y.
+	 * @returns object Point of x and y accessible by Point.x Point.y notation.
 	 */
 	convertLCtoGC: function(pLatLng)
 	{
-		var coord = M.Map.project(pLatLng, M.cMAX_ZOOM_LEVEL);
-		return [coord.x, coord.y];
+		var coords = M.Map.project(pLatLng, M.cMAX_ZOOM_LEVEL);
+		// Get rid of any decimals
+		coords.x = ~~(coords.x);
+		coords.y = ~~(coords.y);
+		return coords;
 	},
 	
 	/*
@@ -2290,9 +2300,9 @@ M = {
 		{
 			M.Pins[i].on("click", function()
 			{
-				var coord = M.convertLCtoGC(this.getLatLng());
+				var point = M.convertLCtoGC(this.getLatLng());
 				$("#mapCoordinatesStatic")
-					.val("[" + coord[0] + ", " + coord[1] + "]")
+					.val("[" + point.x + ", " + point.y + "]")
 					.select();
 			});
 		}
