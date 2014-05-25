@@ -258,8 +258,8 @@ var GW2T_CHAINS_DATA = [
 			sInterim: ["0:30", "7:00~10:00"],
 			fInterim: "*",
 			lim: "15:00",
-			avg: "5:00",
-			min: "3:00",
+			avg: "3:00",
+			min: "0:05",
 			max: "8:00",
 			primacy: 2
 		},

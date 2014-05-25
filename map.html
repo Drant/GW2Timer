@@ -1,3 +1,248 @@
+<script type="text/javascript">
+var GW2T_RESOURCES_DATA = {
+	Copper: {
+		nodes: [
+		[8526, 17275], // metrica
+		[7576, 18624], // metrica
+		[9860, 16199], // caledon
+		[10138, 17684], // caledon
+		[11750, 13108], // queensdale 
+		[12787, 14004], // queensdale
+		[21988, 13629], // wayfarer
+		[22096, 11512], // wayfarer
+		[25767, 15370], // ashford
+		[27540, 15135] // ashford
+		], type: "Metal"
+	},	
+	Iron: {
+		nodes: [
+		[6317, 15049], // brisban
+		[9584, 15076], // kessex
+		[12661, 15573], // kessex
+		[12679, 15914], // kessex
+		[16935, 14020], // gendarran
+		[13543, 11115], // harathi
+		[18351, 13415], // lornar
+		[20911, 12454], // snowden
+		[20374, 15751], // dredgehaunt
+		[23766, 12745], // diessa
+		[28949, 17363], // fields
+		[31180, 15023] // blazeridge
+		], type: "Metal"
+	},
+	Silver: {
+		nodes: [
+		[6955, 14737], // brisban
+		[9575, 15073], // kessex
+		[12621, 15597], // kessex
+		[12653, 15915], // kessex
+		[17407, 14141], // gendarran
+		[19589, 12765], // snowden
+		[17685, 14703], // lornar
+		[25154, 12247], // diessa
+		[31100, 16455] // fields
+		], type: "Metal"
+	},
+	Gold: {
+		nodes: [
+		[17916, 17952], // lornar
+		[20062, 17212], // dredgehaunt
+		[31648, 17373], // fields
+		[31100, 12304] // blazeridge
+		], type: "Metal"
+	},
+	Platinum: {
+		nodes: [
+		[16427, 18188], // bloodtide
+		[15599, 20283], // sparkfly
+		[17300, 20347], // sparkfly
+		[17938, 22158], // maelstrom
+		[20931, 22505], // maelstrom
+		[19154, 19245], // timberline
+		[20840, 18479], // timberline
+		[27720, 9664], // blazeridge
+		[29092, 9608], // blazeridge
+		[24681, 9350], // fireheart
+		[26973, 9894] // fireheart
+		], type: "Metal"
+	},
+	Mithril: {
+		nodes: [
+		[21340, 10767], // frostgorge
+		[22193, 9463], // frostgorge
+		[27087, 9023], // fireheart
+		[15003, 22732], // straits
+		[14259, 23476], // malchor
+		[11008, 23944], // malchor
+		[10722, 27467], // cursed
+		[11658, 29144] // cursed
+		], type: "Metal"
+	},
+	Orichalcum: {
+		approx: true,
+		nodes: [
+		[11939, 20363], // southsun
+		[12409, 19473],
+		[12032, 19858],
+		[12530, 20204],
+		[13142, 20027],
+		[13293, 20430],
+		[21241, 9412], // frostgorge
+		[21321, 8478],
+		[21813, 8866],
+		[22965, 9086],
+		[23446, 9405],
+		[23551, 8690],
+		[11123, 24294], // malchor
+		[11615, 24632],
+		[11766, 24151],
+		[11812, 25099],
+		[12618, 24950],
+		[13464, 24281],
+		[13548, 24842],
+		[13320, 23362],
+		[13851, 23643],
+		[10324, 25702], // cursed
+		[11500, 25959],
+		[10578, 27706],
+		[11197, 28168],
+		[11885, 28403]
+		], type: "Metal"
+	},
+	Green: {
+		zones: ["metrica", "caledon", "brisban", "queensdale", "kessex", "wayfarer", "snowden", "ashford", "diessa"],
+		offset: [0, 128],
+		type: "Wood"
+	},
+	Soft: {
+		zones: ["brisban", "kessex", "gendarran", "harathi", "snowden", "lornar", "diessa", "fields"],
+		offset: [128, 0],
+		type: "Wood"
+	},
+	Seasoned: {
+		zones: ["harathi", "bloodtide", "lornar", "dredgehaunt", "timberline", "fields", "blazeridge", "marches"],
+		offset: [0, -128],
+		type: "Wood"
+	},
+	Hard: {
+		zones: ["sparkfly", "maelstrom", "bloodtide", "timberline", "fireheart", "marches"],
+		offset: [-128, 0],
+		type: "Wood"
+	},
+	Elder: {
+		nodes: [
+		[20139, 21809], // maelstrom
+		[15575, 24851], // straits
+		[13808, 24941] // malchor
+		], type: "Wood"
+	},
+	Ancient: {
+		approx: true,
+		nodes: [
+		[12214, 20258], // southsun
+		[12906, 19772],
+		[13161, 19435],
+		[21241, 8590], // frostgorge
+		[21319, 9152],
+		[22779, 8416],
+		[22397, 9072],
+		[23027, 9141],
+		[23612, 8600],
+		[12614, 23543], // malchor
+		[12339, 24633],
+		[13155, 24745],
+		[14041, 24646],
+		[10566, 26077], // cursed
+		[10967, 27113],
+		[11134, 28079],
+		[11750, 28675]
+		], type: "Wood"
+	},
+	Lettuce: {
+		nodes: [
+		[10569, 16278], // queensdale
+		[13101, 12254] // queensdale
+		], type: "Plant"
+	},
+	Potato: {
+		nodes: [
+		[8862, 19448], // metrica
+		[21930, 13888], // wayfarer
+		[28361, 15485] // ashford
+		], type: "Plant"
+	},
+	Strawberry: {
+		nodes: [
+		[13175, 15839], // kessex
+		[20960, 13010], // snowden
+		[23621, 13438] // diessa
+		], type: "Plant"
+	},
+	Spinach: {
+		nodes: [
+		[9115, 17065], // brisban
+		[15420, 12390] // gendarran
+		], type: "Plant"
+	},
+	Grape: {
+		nodes: [
+		[17832, 17426], // lornar
+		[31099, 19162] // fields
+		], type: "Plant"
+	},
+	Cabbage: {
+		nodes: [
+		[13880, 11060], // harathi
+		[21212, 16264], // dredgehaunt
+		[30955, 13247] // blazeridge
+		], type: "Plant"
+	},
+	Vanilla: {
+		approx: true,
+		nodes: [
+		[20567, 22235], // maelstrom
+		[19833, 22345], // maelstrom
+		[19839, 22821] // maelstrom
+		], type: "Plant"
+	},
+	Pumpkin: {
+		nodes: [
+		[17406, 17518], // bloodtide
+		[27484, 10330] // blazeridge
+		], type: "Plant"
+	},
+	Cauliflower: {
+		nodes: [
+		[15626, 19889], // sparkfly
+		[19179, 19204] // timberline
+		], type: "Plant"
+	},
+	Butternut: {
+		nodes: [
+		[23310, 10745], // frostgorge
+		[24342, 11048] // fireheart
+		], type: "Plant"
+	},
+	Artichoke: {
+		nodes: [
+		[20076, 22914], // maelstrom
+		[17476, 22679] // straits
+		], type: "Plant"
+	},
+	Omnomberry: {
+		approx: true,
+		nodes: [
+		[12001, 24499], // malchor
+		[12873, 24592],
+		[13230, 24861],
+		[13983, 24719],
+		[10567, 26268], // cursed
+		[11069, 27131]
+		], type: "Plant"
+	}
+	
+}
+</script>
 <div class="cntComposition">
 
 <h1>Map</h1>
@@ -58,12 +303,26 @@
 	</ul>
 	</div>
 </div>
-<div class="jsTableOfContents" id="jsTOC_Map"></div>
 
-<hr />
-	
-<h1>Dailies</h1>
-<p>These are some places to complete a daily achievement quickly; the leftmost location should be the fastest. Most of the places are based on the <a href="http://wiki.guildwars2.com/wiki/Daily">wiki</a>, if you know a good spot, please <a href="http://forum.renaka.com/topic/5476238/">share it</a>.</p>
+<header class="jsCollapsible"><img src="img/ui/node_metal.png" alt="Resource Nodes" />Resource Nodes</header>
+<div>
+<div style="width:100%;height:32px"><button id="btnNodesToggle" class="cssRight">Toggle All</button></div>
+<div class="mapResourceList">
+	<div id="mapResource_Metal"></div>
+	<div id="mapResource_Plant"></div>
+	<div id="mapResource_Wood"></div>
+</div>
+Rich and T6 nodes reset in about 22 hours after gathering; T1-T5 nodes reset in about 2 hours. You can use alts to re-gather any nodes.<br />
+<div id="mapLegendSolid" class="mapLegendLine"></div> <strong>Exact</strong> location of that node<br />
+<div id="mapLegendDotted" class="mapLegendLine"></div> <strong>Approximate</strong> vicinity of that node<br />
+<div id="mapLegendDashed" class="mapLegendLine"></div> <strong>Map</strong> has that resource (not a node)<br />
+<br />
+</div>
+
+
+<header class="jsCollapsible"><img src="img/ui/ap.png" alt="Daily Achievements" />Daily Achievements</header>
+<div>
+<p>These are some places to complete dailies quickly; the leftmost location should be the fastest. Most of the places are based on the <a href="http://wiki.guildwars2.com/wiki/Daily">wiki</a>, if you know a good spot, please <a href="http://forum.renaka.com/topic/5476238/">share it</a>.</p>
 
 <h2>Killer</h2>
 <h3>Ascalonian Killer</h3>
@@ -73,7 +332,7 @@ Vets: <ins data-coord="[27618, 15147]">Ashford air elementals</ins>, <ins data-c
 <p>Regular: <ins data-coord="[10055, 13446]">Troll Cave</ins><br />
 Vets: <ins data-coord="[11451, 13286]">Queensdale oakhearts</ins></p>
 <h3>Maguuman</h3>
-<p>Regular: <ins data-coord="[8763, 14724]">Brisban Bandits</ins><br />
+<p>Regular: <ins data-coord="[9993, 16259]">Caledon spiders nest</ins><br />
 Vets: <ins data-coord="[9573, 16229]">Caledon mosshearts</ins></p>
 <h3>Shiverpeaks</h3>
 <p>Regular: <ins data-coord="[22587, 15535]">Outcast's Cleft</ins><br />
@@ -105,7 +364,6 @@ If there are others doing the daily, you should revive to 20% then move to the n
 You may need to complete the heart before you can purchase.
 <p><ins data-coord="[6264, 16087]">Basic Salvage Kits</ins> , <ins data-coord="[18781, 21684]">Mithril Mining Pick</ins>, <ins data-coord="[19451, 21524]">Mithril Logging Axe</ins>, <ins data-coord="[17005, 21298]">Mithril Harvesting Sickle</ins>, <ins data-coord="[12821, 19438]">Orichalcum Mining Pick</ins>, <ins data-coord="[11427, 26183]">Orichalcum Logging Axe</ins>, <ins data-coord="[11327, 25777]">Orichalcum Harvesting Sickle</ins>, <ins data-coord="[15095, 24672]">Obsidian Shard</ins></p>
 
-
 <h2>Miscellaneous</h2>
 <dl>
 	<dt>Activity<dt><dd>Go to the blue/red flag icon in a city to start. These may be time consuming except for Crab Toss.</dd>
@@ -124,10 +382,11 @@ You may need to complete the heart before you can purchase.
 	<dt>Story Dungeon<dt><dd>Play on a character that needs it. <a href="http://wiki.guildwars2.com/wiki/Caudecus's_Manor_(story)">Caudecus' Manor</a> may be the shortest.</dd>
 </dl>
 <br />
+</div>
 
-<hr />
 
-<h1>Jumping Puzzles</h1>
+<header class="jsCollapsible"><img src="img/ui/jp.png" alt="Jumping Puzzles" />Jumping Puzzles</header>
+<div>
 <p>The map pin refers to the JP's entrance. JPs in each list are sorted by location. The descriptions are just to remind you of which JP it is.</p>
 <button id="btnJPsUncheck">Uncheck All</button>
 
@@ -186,5 +445,7 @@ A marathon of intricate jumps.
 	<dt data-coord="[13610, 25044]">Scavenger's Chasm</dt><dd>Malchor's the hardest JP in the game collecting 12 orbs</dd>
 </dl>
 <br />
+</div>
+
 
 </div><!-- End of page -->

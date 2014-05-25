@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x720, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.05.18 modified - 2010.04.18 created
+	Version: 2014.05.24 modified - 2010.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -27,6 +27,7 @@
 	B - Menu bar pane
 	C - Chains layer
 	O - Options layer
+	U - Utility styles
 	P - Color palette
 
 */
@@ -150,7 +151,7 @@ div#qTip {
 
 #itemMapButtons {
 	position: absolute;
-	bottom: 12px; right: 12px;
+	bottom: 4px; right: 12px;
 	z-index: 9;
 }
 #itemMapButtons span { /* Website name */
@@ -164,7 +165,6 @@ div#qTip {
 	color: #ffeebb;
 }
 #mapCompassButton {
-	
 	vertical-align: middle;
 	opacity: 0.6;
 	cursor: pointer;
@@ -464,7 +464,7 @@ div#qTip {
 }
 
 .cntComposition header {
-	padding-top: 12px;
+	padding-top: 8px;
 	font-size: 20px;
 	text-shadow: 0px 0px 2px #e4e0b3;
 	text-decoration: underline;
@@ -526,16 +526,16 @@ div#qTip {
 	margin-left: 12px;
 }
 
-.cntComposition ins, .mapZones li, .mapJP dt, .mapNodes dt {
+.cntComposition ins, .mapZones li, .mapJP dt {
 	font-weight: bold;
 	color: #ffcc77;
 	cursor: pointer;
 	cursor: zoom-in;
 }
-.cntComposition ins:hover, .mapZones li:hover, .mapJP dt:hover, .mapNodes dt:hover {
+.cntComposition ins:hover, .mapZones li:hover, .mapJP dt:hover {
 	color: #ffdda6;
 }
-.cntComposition ins:active, .mapZones li:active, .mapJP dt:active, .mapNodes dt:active {
+.cntComposition ins:active, .mapZones li:active, .mapJP dt:active {
 	color: white;
 }
 
@@ -586,7 +586,23 @@ div#qTip {
 	text-align: center;
 	color: #e4e0b3;
 	text-shadow: 0px 0px 2px #e4e0b3;
+	opacity: 0.9;
 	cursor: pointer;
+}
+
+#jsCenter {
+	display: none;
+	position: fixed;
+	width: 32px; height: 32px;
+	background: url("img/map/star.png") no-repeat center;
+	bottom: 8px;
+	right: 28px;
+	opacity: 0.9;
+	cursor: pointer;
+}
+
+#jsTop:hover, #jsCenter:hover {
+	opacity: 1;
 }
 
 /* @@Chains layer
@@ -817,12 +833,35 @@ div#qTip {
 .mapZoneList {
 	border-spacing: 12px;
 }
-.mapZoneList div {
+.mapZoneList div, .mapResourceList div {
 	display: table-cell;
 }
 
 .mapJP input, #btnJPsUncheck {
 	float: right;
+}
+
+.mapResourceList {
+	font-size: 11px;
+}
+.mapResourceList img {
+	width: 16px; height: 16px;
+	vertical-align: middle;
+}
+
+.mapLegendLine {
+	display: inline-block;
+	width: 64px; height: 20px;
+	margin-right: 12px;
+}
+#mapLegendSolid {
+	border-bottom: 2px solid lime;
+}
+#mapLegendDashed {
+	border-bottom: 2px dashed lime;
+}
+#mapLegendDotted {
+	border-bottom: 2px dotted lime;
 }
 
 /* @@Options layer
@@ -831,6 +870,7 @@ div#qTip {
 	float: right;
 	margin-top: -24px;
 	margin-right: 12px;
+	cursor: pointer;
 }
 
 #optSoundButton {
@@ -856,6 +896,17 @@ label, input {
 }
 label:hover {
 	color: #ddff77;
+}
+
+/* =============================================================================
+ *  @@Utility styles
+ * ========================================================================== */
+.cssMonospace {
+	font-family: monospace;
+}
+
+.cssRight {
+	float: right;
 }
 
 /* =============================================================================

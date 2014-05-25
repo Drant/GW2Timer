@@ -3,7 +3,7 @@
 	jQuery-dependent (v1.11.0), with other plugins in plugins.js.
 	Coded in NetBeans; debugged in Opera Dragonfly.
 	IDE recommended for viewing and collapsing code sections.
-	Version: 2014.05.21 modified - 2010.04.18 created
+	Version: 2014.05.24 modified - 2010.04.18 created
 
 	CREDITS:
 	Vladimir Agafonkin - LeafletJS map library
@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 140522,
+	int_programVersion: 140524,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
@@ -369,7 +369,7 @@ O = {
 			{
 				O.updateSSTimestamp();
 				// The ID was named so by the chain initializer, get the chain alias
-				var alias = $(this).attr("id").split("_")[1];
+				var alias = I.getNameFromHTMLID($(this));
 				var thisoptionname = O.prefixChain + alias;
 				var thisbar = $("#barChain_" + alias);
 				// State of the div is stored in the Checklist object rather in the element itself
@@ -414,7 +414,7 @@ O = {
 			// Bind the delete [x] chain text button
 			$("#chnDelete_" + chain.alias).click(function()
 			{
-				var alias = $(this).attr("id").split("_")[1];
+				var alias = I.getNameFromHTMLID($(this));
 				var thisoptionname = O.prefixChain + alias;
 				var thisbar = $("#barChain_" + alias);
 
@@ -509,7 +509,7 @@ O = {
 			{
 				// Get the checkbox ID that associates itself with that JP
 				var stateincheckbox = O.boolToInt($(this).prop("checked")).toString();
-				var checkboxindex = parseInt($(this).attr("id").split("_")[1]);
+				var checkboxindex = parseInt(I.getNameFromHTMLID($(this)));
 				if (stateincheckbox === "0")
 				{
 					$(this).prev().css({color: "#ffcc77"});
@@ -647,7 +647,7 @@ O = {
 	{
 		$(".barChain").each(function()
 		{
-			var alias = $(this).attr("id").split("_")[1];
+			var alias = I.getNameFromHTMLID($(this));
 			var thisoptionname = O.prefixChain + alias;
 			if (O.Checklist[thisoptionname] === O.ChecklistEnum.Checked)
 			{
@@ -1601,7 +1601,8 @@ C = {
 			}
 			
 			// Tour to the event on the map if opted
-			if (O.Options.bol_tourPrediction && I.currentContent === I.ContentEnum.Chains)
+			if (O.Options.bol_tourPrediction && I.currentContent === I.ContentEnum.Chains
+					&& M.isMapAJAXDone)
 			{
 				$("#chnEvent_" + pChain.alias + "_" + C.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -1757,8 +1758,10 @@ M = {
 	 * This is referred to by the variable "M.Zones".
 	 */
 	Zones: GW2T_ZONES_DATA,
-	Nodes: {},
-	mousedZoneIndex: -1,
+	isMapAJAXDone: false,
+	Resources: {},
+	resourcesToggleState: false,
+	mousedZoneIndex: null,
 	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 	cICON_WAYPOINT: "img/event/waypoint.png",
@@ -1822,7 +1825,7 @@ M = {
 			zoomControl: false, // the zoom UI
 			attributionControl: false, // the Leaflet link UI
 			crs: L.CRS.Simple
-		}).setView([-133, 133], M.cINITIAL_ZOOM_LEVEL);
+		}).setView([-128, 128], M.cINITIAL_ZOOM_LEVEL);
 		
 		// Set layers
 		L.tileLayer(M.cURL_API_TILES,
@@ -1847,9 +1850,9 @@ M = {
 		 */
 		M.Map.on("click", function(pEvent)
 		{
-			var mouseposition = M.convertLCtoGC(pEvent.latlng);
+			var coord = M.convertLCtoGC(pEvent.latlng);
 			$("#mapCoordinatesStatic")
-				.val("[" + mouseposition.x + ", " + mouseposition.y + "]")
+				.val("[" + coord[0] + ", " + coord[1] + "]")
 				.select();
 		});
 		
@@ -1869,8 +1872,7 @@ M = {
 			var coord = M.parseCoordinates($(this).val());
 			if (coord[0] !== "" && coord.length === 2)
 			{
-				M.goToView(coord);
-				M.PinPersonal.setLatLng(M.convertGCtoLC(coord));
+				M.goToView(coord, M.PinPersonal);
 			}
 		}).keyup(function(pEvent)
 		{
@@ -1892,12 +1894,12 @@ M = {
 	/*
 	 * Finds what zone the specified point is in by comparing it to the top left
 	 * and bottom right coordinates of the zones, then show the zone's visuals.
-	 * @param object pPoint containing x and y coordinates.
+	 * @param array pCoord containing x and y coordinates.
 	 */
-	showCurrentZone: function(pPoint)
+	showCurrentZone: function(pCoord)
 	{
 		document.getElementById("mapCoordinatesDynamic")
-			.value = pPoint.x + ", " + pPoint.y;
+			.value = pCoord[0] + ", " + pCoord[1];
 		
 		var i, ii1, ii2;
 		
@@ -1908,10 +1910,10 @@ M = {
 			var zonex2 = M.Zones[i].rect[1][0];
 			var zoney2 = M.Zones[i].rect[1][1];
 
-			if (pPoint.x >= zonex1
-				&& pPoint.x <= zonex2
-				&& pPoint.y >= zoney1
-				&& pPoint.y <= zoney2)
+			if (pCoord[0] >= zonex1
+				&& pCoord[0] <= zonex2
+				&& pCoord[1] >= zoney1
+				&& pCoord[1] <= zoney2)
 			{
 				/*
 				 * If got here then i is the index of the current moused
@@ -1921,8 +1923,8 @@ M = {
 				 */
 				if (i !== M.mousedZoneIndex)
 				{
-					// Note that the master index was initialized as -1
-					if (M.mousedZoneIndex !== -1)
+					// Note that the master index was initialized as null
+					if (M.mousedZoneIndex !== null)
 					{
 						// Hide the waypoints of the previously moused zone
 						for (ii1 in M.Zones[M.mousedZoneIndex].waypoints)
@@ -1945,6 +1947,20 @@ M = {
 				return; // Already found zone so stop searching
 			}
 		}
+	},
+	
+	/*
+	 * Gets the center coordinates of a zone.
+	 * @param string pZone nickname of the map.
+	 * @returns array of x and y coordinates.
+	 */
+	getZoneCenter: function(pZone)
+	{
+		var rect = M.Zones[pZone].rect;
+		// x = OffsetX + (WidthOfZone/2), y = OffsetY + (HeightOfZone/2)
+		var x = rect[0][0] + ~~((rect[1][0] - rect[0][0]) / 2);
+		var y = rect[0][1] + ~~((rect[1][1] - rect[0][1]) / 2);
+		return [x, y];
 	},
 	
 	/*
@@ -2024,13 +2040,26 @@ M = {
 		}
 		switch (pDisplay)
 		{
+			case true: display = "block"; break;
+			case false: display = "none"; break;
 			case "hide": display = "none"; break;
 			case "show": display = "block"; break;
 			case "toggle":
 			{
 				pLayerGroup.eachLayer(function(pLayer)
 				{
-					var currentstyle = pLayer._container.style.display;
+					var currentstyle;
+					
+					if (pLayer._container !== undefined) // If it's a path
+					{
+						currentstyle = pLayer._container.style.display;
+					}
+					else // If it's a marker
+					{
+						currentstyle = pLayer._icon.style.display;
+					}
+					
+					// Modify the display by reference
 					if (currentstyle === "block")
 					{
 						currentstyle = "none";
@@ -2046,15 +2075,22 @@ M = {
 		
 		pLayerGroup.eachLayer(function(pLayer)
 		{
-			pLayer._container.style.display = display;
+			if (pLayer._container !== undefined) // If it's a path
+			{
+				pLayer._container.style.display = display;
+			}
+			else // If it's a marker
+			{
+				pLayer._icon.style.display = display;
+			}
 		});
 	},
 	
 	/*
 	 * View the map at the specifications.
 	 * @param array pCoord two number coordinates.
+	 * @param object pPin which to move to coordinate.
 	 * @param string pZoom level.
-	 * @param boolean pWantPin whether to move the program pin icon there.
 	 */
 	goToView: function(pCoord, pPin, pZoom)
 	{
@@ -2062,7 +2098,7 @@ M = {
 		{
 			pPin = M.PinProgram;
 		}
-		else
+		if (pPin !== null)
 		{
 			pPin.setLatLng(M.convertGCtoLC(pCoord));
 		}
@@ -2075,7 +2111,7 @@ M = {
 			default: zoom = M.cMAX_ZOOM_LEVEL;
 		}
 		M.Map.setView(M.convertGCtoLC(pCoord), zoom);
-		M.showCurrentZone(M.convertLCtoGC(M.Map.getCenter()));
+		M.showCurrentZone(pCoord);
 	},
 	
 	/*
@@ -2108,17 +2144,14 @@ M = {
 	},
 	
 	/*
-	 * Converts Leaflet LatLng to GW2 coordinates.
+	 * Converts Leaflet LatLng to GW2's 2 unit array coordinates.
 	 * @param object pLatLng from Leaflet.
-	 * @returns object Point of x and y accessible by Point.x Point.y notation.
+	 * @returns array of x and y coordinates.
 	 */
 	convertLCtoGC: function(pLatLng)
 	{
-		var coords = M.Map.project(pLatLng, M.cMAX_ZOOM_LEVEL);
-		// Get rid of any decimals
-		coords.x = ~~(coords.x);
-		coords.y = ~~(coords.y);
-		return coords;
+		var coord = M.Map.project(pLatLng, M.cMAX_ZOOM_LEVEL);
+		return [coord.x, coord.y];
 	},
 	
 	/*
@@ -2253,6 +2286,11 @@ M = {
 					M.changeMarkerIcon(M.Waypoints[i], M.cICON_WAYPOINT, M.cLEAFLET_ICON_SIZE);
 				}
 			}
+			// Tour to the event on the map if opted
+			if (O.Options.bol_tourPrediction && I.currentContent === I.ContentEnum.Chains)
+			{
+				$("#chnEvent_" + C.CurrentChain.alias + "_" + C.CurrentPrimaryEvent.num).trigger("click");
+			}
 		}).fail(function(){
 			I.writeConsole(
 				"Guild Wars 2 API server is unreachable.<br />"
@@ -2264,6 +2302,7 @@ M = {
 				+ "Map features will be limited.<br />", 30);
 		}).always(function() // Do after AJAX regardless of success/failure
 		{
+			M.isMapAJAXDone = true;
 			M.bindMapVisualChanges();
 			/*
 			 * Start tooltip plugin after the markers were loaded, because it
@@ -2300,9 +2339,9 @@ M = {
 		{
 			M.Pins[i].on("click", function()
 			{
-				var point = M.convertLCtoGC(this.getLatLng());
+				var coord = M.convertLCtoGC(this.getLatLng());
 				$("#mapCoordinatesStatic")
-					.val("[" + point.x + ", " + point.y + "]")
+					.val("[" + coord[0] + ", " + coord[1] + "]")
 					.select();
 			});
 		}
@@ -2399,6 +2438,96 @@ M = {
 				var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
 				M.goToView(thiscoord, M.PinProgram);
 			});
+		});
+	},
+	
+	/*
+	 * Populates the map with resource node markers and create HTML checkboxes
+	 * to toggle their display on the map.
+	 */
+	generateAndInitializeResourceNodes: function()
+	{
+		M.Resources = GW2T_RESOURCES_DATA; // This object is embedded in /map.html
+		var i, ii;
+		var resource; // A type of resource, like copper
+		var marker;
+		
+		var styleMarker = function(pMarker, pResource)
+		{
+			pMarker.setIcon(new L.icon(
+			{
+				iconUrl: "img/node/" + pResource.toLowerCase() + ".png",
+				iconSize: [32, 32],
+				iconAnchor: [16, 16]
+			}));
+			marker._icon.style.borderRadius = "16px";
+			marker._icon.style.opacity = "0.9";
+			marker._icon.style.border = "2px solid lime";
+			marker._icon.style.display = "none";
+		};
+		
+		for (i in M.Resources)
+		{
+			resource = M.Resources[i];
+			resource.NodeLayer = L.layerGroup();
+			
+			// Resources with specific node locations
+			if (resource.nodes !== undefined)
+			{
+				for (ii in resource.nodes)
+				{
+					marker = L.marker(M.convertGCtoLC(resource.nodes[ii])).addTo(M.Map);
+					styleMarker(marker, i);
+					if (resource.approx === true)
+					{
+						marker._icon.style.border = "2px dotted lime";
+					}
+					// Add to layer group
+					resource.NodeLayer.addLayer(marker);
+				}
+			}
+			// Resources with only zone locations (dummy marker in the center)
+			else if (resource.zones !== undefined)
+			{
+				for (ii in resource.zones)
+				{
+					var zone = resource.zones[ii];
+					var coord = M.getZoneCenter(zone);
+					coord[0] += resource.offset[0];
+					coord[1] += resource.offset[1];
+					marker = L.marker(M.convertGCtoLC(coord)).addTo(M.Map);
+					styleMarker(marker, i);
+					marker._icon.style.border = "2px dashed lime";
+					// Add to layer group
+					resource.NodeLayer.addLayer(marker);
+				}
+			}
+		}
+		
+		// Create checkboxes
+		for (i in M.Resources)
+		{
+			var resource = M.Resources[i];
+			$("#mapResource_" + resource.type).append(
+				"<label><input id='nod_" + i + "' type='checkbox' /> <img src='img/node/" + i.toLowerCase() + ".png' /> " + i + "</label>");
+		}
+		// Bind checkboxes
+		for (i in M.Resources)
+		{
+			$("#nod_" + i).change(function()
+			{
+				var thisresource = I.getNameFromHTMLID($(this));
+				M.setLayerGroupDisplay(M.Resources[thisresource].NodeLayer, $(this).prop("checked"));
+			});
+		}
+		$("#btnNodesToggle").click(function()
+		{
+			M.resourcesToggleState = !(M.resourcesToggleState);
+			for (i in M.Resources)
+			{
+				$("#nod_" + i).prop("checked", M.resourcesToggleState);
+				M.setLayerGroupDisplay(M.Resources[i].NodeLayer, M.resourcesToggleState);
+			}
 		});
 	}
 	
@@ -3156,8 +3285,8 @@ I = {
 		Opera: "Opera"
 	},
 	userSmallScreen: false,
-	smallScreenWidth: 800,
-	smallScreenHeight: 600,
+	cSMALL_SCREEN_WIDTH: 800,
+	cSMALL_SCREEN_HEIGHT: 600,
 	
 	/*
 	 * Loads a TTS sound file generated from a TTS web service into a hidden
@@ -3225,7 +3354,7 @@ I = {
 		K.awakeTimestampPrevious = T.getUNIXSeconds();
 		
 		// Detect small screen devices
-		if (window.innerWidth <= I.smallScreenWidth && window.innerHeight <= I.smallScreenHeight)
+		if (window.innerWidth <= I.cSMALL_SCREEN_WIDTH && window.innerHeight <= I.cSMALL_SCREEN_HEIGHT)
 		{
 			I.userSmallScreen = true;
 			I.writeConsole("Small screen detected.<br />"
@@ -3264,6 +3393,17 @@ I = {
 		
 		// Default content tab
 		I.currentContent = I.ContentEnum.Chains;
+	},
+	
+	/*
+	 * Extracts the "name" part of an HTML element's ID. Most iterable elements'
+	 * IDs were manually named as [prefix]_[Name].
+	 * @param object jQuery element object.
+	 * @returns string name of the element's ID.
+	 */
+	getNameFromHTMLID: function(pJQObject)
+	{
+		return pJQObject.attr("id").split("_")[1];
 	},
 	
 	/*
@@ -3366,28 +3506,31 @@ I = {
 	 */
 	generateTableOfContent: function(pLayer)
 	{
-		var layername = pLayer.substring(1, pLayer.length);
-		$(pLayer + " .jsTableOfContents").append("<h2>Table of Contents</h2><ol></ol>");
-		
-		// Iterate over every h1 tag in the layer except the first
-		$(pLayer + " h1:not(:first)").each(function()
+		if ($(pLayer + " .jsTableOfContents").hasClass("jsTableOfContents"))
 		{
-			// Scroll to top when clicked the header
-			var headertext = $(this).text();
-			var headertextstripped = headertext.replace(/[^a-zA-Z0-9]/, "");
-			$(this).html(headertext + "<span class='tocTop'> \u2191</span>");
-			$(this).click(function()
+			var layername = pLayer.substring(1, pLayer.length);
+			$(pLayer + " .jsTableOfContents").append("<h2>Table of Contents</h2><ol></ol>");
+
+			// Iterate over every h1 tag in the layer except the first
+			$(pLayer + " h1:not(:first)").each(function()
 			{
-				I.scrollToElement($("#jsTOC_" + I.currentContent), $(I.currentContentLayer), "fast");
-			}).attr("id", "toc_" + layername + "_" + headertextstripped);
-			// Add ToC list entries that scrolls to the headers when clicked
-			$("<li>" + headertext + "</li>").appendTo($(pLayer + " .jsTableOfContents ol"))
-				.click(function()
+				// Scroll to top when clicked the header
+				var headertext = $(this).text();
+				var headertextstripped = headertext.replace(/[^a-zA-Z0-9]/, "");
+				$(this).html(headertext + "<span class='tocTop'> \u2191</span>");
+				$(this).click(function()
 				{
-					I.scrollToElement($("#toc_" + layername + "_" + headertextstripped),
-						$(I.currentContentLayer), "fast");
-				});
-		});
+					I.scrollToElement($("#jsTOC_" + I.currentContent), $(I.currentContentLayer), "fast");
+				}).attr("id", "toc_" + layername + "_" + headertextstripped);
+				// Add ToC list entries that scrolls to the headers when clicked
+				$("<li>" + headertext + "</li>").appendTo($(pLayer + " .jsTableOfContents ol"))
+					.click(function()
+					{
+						I.scrollToElement($("#toc_" + layername + "_" + headertextstripped),
+							$(I.currentContentLayer), "fast");
+					});
+			});
+		}
 	},
 	
 	/*
@@ -3508,6 +3651,7 @@ I = {
 						{
 							M.setLayerGroupDisplay(M.PathLayer, "show");
 							$("#jsTop").hide();
+							$("#jsCenter").hide();
 							/*
 							 * Get the current event map view it by triggering
 							 * the binded event names.
@@ -3522,16 +3666,19 @@ I = {
 						{
 							M.setLayerGroupDisplay(M.PathLayer, "show");
 							$("#jsTop").show();
+							$("#jsCenter").hide();
 						} break;
 						case I.ContentEnum.Map:
 						{
 							M.setLayerGroupDisplay(M.PathLayer, "hide");
-							$("#jsTop").show();
+							$("#jsTop").hide();
+							$("#jsCenter").show().trigger("click");
 						} break;
 						default:
 						{
 							M.setLayerGroupDisplay(M.PathLayer, "show");
 							$("#jsTop").hide();
+							$("#jsCenter").hide();
 						} break;
 					}
 				}
@@ -3599,6 +3746,7 @@ I = {
 					$(this).load("map.html", function()
 					{
 						bindAfterAJAXContent("#layerMap");
+						var i;
 						
 						// Bind map zone links
 						$(".mapZones li").each(function()
@@ -3621,17 +3769,10 @@ I = {
 								M.goToView(thiscoord, M.PinProgram);
 							});
 						});
-						// Bind JP checklist
+						// Create JP checklist
 						O.generateAndInitializeJPChecklist();
-						// Bind resource node links
-						$(".mapNodes dt").each(function()
-						{
-							$(this).click(function()
-							{
-								var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
-								M.goToView(thiscoord, M.PinProgram);
-							});
-						});
+						// Create node markers and checkboxes
+						M.generateAndInitializeResourceNodes();
 						// Make URL links open on new window
 						$("a").attr("target", "_blank");
 					});
@@ -3647,6 +3788,13 @@ I = {
 		$("#jsTop").click(function()
 		{
 			$(I.currentContentLayer).animate({scrollTop: 0}, "fast");
+		});
+		/*
+		 * Center view the map button.
+		 */
+		$("#jsCenter").click(function()
+		{
+			M.Map.setView(M.convertGCtoLC(M.cMAP_CENTER), M.cINITIAL_ZOOM_LEVEL);
 		});
 	   
 	}, // End of menu initialization
