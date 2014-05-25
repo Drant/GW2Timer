@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x720, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.05.24 modified - 2010.04.18 created
+	Version: 2014.05.25 modified - 2010.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -335,16 +335,16 @@ div#qTip {
 	background: linear-gradient(to bottom, #111 0%, #444 50%, #111 100%);
 }
 
-#paneMenu div {
+#paneMenu span {
 	display: inline-block;
 	float: left;
 	width: 90px; height: 48px;
 	cursor: pointer;
 }
-#paneMenu div:hover {
+#paneMenu span:hover {
 	box-shadow: 0px 0px 10px #e7e3bd;
 }
-#paneMenu div:active {
+#paneMenu span:active {
 	box-shadow: 0px 0px 10px white;
 }
 
@@ -640,11 +640,10 @@ div#qTip {
 #layerChains header:hover span {
 	visibility: visible;
 }
-
 #layerChains header span:active {
 	color: white;
 }
-#layerChains header ins {
+#layerChains header ins { /* The [+] button */
 	margin-top: 8px;
 	float: right;
 	font-family: monospace;
@@ -666,13 +665,12 @@ div#qTip {
 
 /* A bar containing the chain icon, title, time, and events */
 .barChain, .barChainDummy, #listChainsDungeon > div {
-	width: auto; min-height: 36px;
+	width: auto;
 	margin-bottom: 4px;
 	padding-left: 8px;
 	border: 1px solid #111;
-	border-radius: 8px;
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
 	background: #222;
 	background: linear-gradient(to right, #111 0%, #333 100%);
 }
@@ -688,7 +686,6 @@ div#qTip {
 	display: table;
 	color: #ffaa22;
 }
-
 .chnTitle img, #listChainsDungeon img {
 	width: 32px; height: 32px;
 	border-radius: 4px;
@@ -718,9 +715,11 @@ div#qTip {
 	vertical-align: middle;
 	cursor: pointer;
 }
-
 .chnTitle h2:hover {
 	color: #eee;
+}
+#listChainsTimetable .chnTitle h2 {
+	cursor: auto;
 }
 
 .chnTitle time {
@@ -728,61 +727,48 @@ div#qTip {
 	width: 74px;
 	vertical-align: middle;
 	text-align: right;
-	cursor: help;
 }
-
-#listChainsTimetable .chnTitle time {
-	cursor: auto;
+#listChainsScheduled .chnTitle time {
+	cursor: help;
 }
 
 .chnDetails ol {
 	margin-top: 8px;
 }
-
 .chnDetails ol li { /* Contains the event icon and event name */
 	margin-bottom: 4px;
 	white-space: nowrap;
     overflow: hidden;
 	color: #ff8844;
 }
-
 .chnDetails ol li:hover {
 	color: #eee;
 }
-
-.chnDetails ol li img {
+.chnDetails ol li img { /* Orange event icon */
 	vertical-align: middle;
 	width: 16px; height: 16px;
 	cursor: help;
 }
-
 .chnDetails ol li img:hover {
 	box-shadow: 0px 0px 4px #ee7924;
 }
-
-.chnDetails ol li span {
+.chnDetails ol li span { /* Event name */
 	margin-left: 4px;
 	vertical-align: middle;
 	cursor: pointer;
 	cursor: zoom-in;
 }
 
-.chnDetailsLinks {
+.chnDetailsLinks { /* Small gray link bottom right of a chain bar */
 	margin-bottom: 8px;
 	text-align: right;
 }
-
 .chnDetailsLinks ins {
 	margin-right: 6px;
 	font-family: monospace;
 	font-size: 12px;
 	color: #777;
 	cursor: pointer;
-}
-
-#listChainsTimetable .chnTitle h2,
-#listChainsTimetable .chnTitle time {
-	cursor: auto;
 }
 
 /* JavaScript added classes */
@@ -904,9 +890,11 @@ label:hover {
 .cssMonospace {
 	font-family: monospace;
 }
-
 .cssRight {
 	float: right;
+}
+.cssGold {
+	color: #ffcc77;
 }
 
 /* =============================================================================

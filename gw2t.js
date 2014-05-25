@@ -3,7 +3,7 @@
 	jQuery-dependent (v1.11.0), with other plugins in plugins.js.
 	Coded in NetBeans; debugged in Opera Dragonfly.
 	IDE recommended for viewing and collapsing code sections.
-	Version: 2014.05.24 modified - 2010.04.18 created
+	Version: 2014.05.25 modified - 2010.04.18 created
 
 	CREDITS:
 	Vladimir Agafonkin - LeafletJS map library
@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 140524,
+	int_programVersion: 140525,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
@@ -470,6 +470,20 @@ O = {
 	 */
 	generateAndInitializeJPChecklist: function()
 	{
+		// Bind JP links
+		$(".mapJP dt").each(function()
+		{
+			var term = $(this).text();
+			$(this).after("&nbsp;<a href='"
+				+ I.getYouTubeLink(term + " Guild Wars 2") + "' target='blank_'>[Y]</a> <a href='"
+				+ I.getWikiLink(term) + "' target='blank_'>[W]</a>");
+			$(this).click(function()
+			{
+				var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
+				M.goToView(thiscoord, M.PinProgram);
+			});
+		});
+		
 		// Make checkboxes
 		$(".mapJP dt").each(function()
 		{
@@ -988,7 +1002,7 @@ C = {
 			var b = "&lt;br /&gt;";
 			var w = function(pS)
 			{
-				return "&lt;span style=\"color:#ffcc77\"&gt;" + pS + "&lt;/span&gt;";
+				return "&lt;span class=\"cssGold\"&gt;" + pS + "&lt;/span&gt;";
 			};
 			// Tooltip when user hovers over the tiny orange event icon
 			var eventhtmltitle = w("Event Number: ") + e.num + b
@@ -2279,7 +2293,8 @@ M = {
 				M.setLayerGroupDisplay(M.PathLayer, "show");
 			}
 			// The zoomend event handler doesn't detect the first zoom by prediction
-			if (O.Options.bol_tourPrediction && C.CurrentPrimaryEvent.num)
+			if (O.Options.bol_tourPrediction && I.currentContent === I.ContentEnum.Chains
+				&& C.CurrentPrimaryEvent.num !== undefined)
 			{
 				for (var i in M.Waypoints)
 				{
@@ -2811,6 +2826,16 @@ K = {
 	wpClipboards: [],
 	cWpClipboardDataAttribute: "data-clipboard-text", // Defined by ZeroClipboard
 	tickerTimeout: {},
+	
+	/*
+	 * Starts the clock.
+	 */
+	initializeClock: function()
+	{
+		K.updateTimeFrame(new Date());
+		K.tickSecond();
+		K.initializeClipboard();
+	},
 
 	/*
 	 * Sets a marker (small spikes at clock circumference) to specified angle.
@@ -2846,7 +2871,7 @@ K = {
 	},
 	
 	/*
-	 * Update waypoint icons' copy text.
+	 * Updates waypoint icons' copy text.
 	 * @pre The waypoint icon's position on the clock was updated.
 	 */
 	updateWaypointsClipboard: function()
@@ -3350,6 +3375,9 @@ I = {
 		// Manually clear the TTS iframe to prevent old sound from playing
 		document.getElementById("jsTTS").src = "";
 		
+		// Tell if DST is in effect
+		T.checkDST()
+		
 		// Initial sync of the sleep detection variable
 		K.awakeTimestampPrevious = T.getUNIXSeconds();
 		
@@ -3590,7 +3618,7 @@ I = {
 		   $("#paneMenu").hover(
 			   function()
 			   {
-				   $("#paneMenu div").each(function()
+				   $("#paneMenu span").each(function()
 				   {
 					   // Fade icon not being hovered over
 					   if (!$(this).is(":hover"))
@@ -3602,14 +3630,14 @@ I = {
 			   function()
 			   {
 				   // User moused outside the menu, so stop the animations
-				   $("#paneMenu div").finish().each(function()
+				   $("#paneMenu span").finish().each(function()
 				   {
 					   $(this).animate({opacity: 1}, cAnimationSpeed);
 				   });
 			   }
 		   );
 		   // User hovers over individual menu icons
-		   $("#paneMenu div").hover(
+		   $("#paneMenu span").hover(
 			   function()
 			   {
 				   $(this).animate({opacity: 1}, cAnimationSpeed);
@@ -3630,7 +3658,7 @@ I = {
 		/*
 		 * Menu click icon to show respective content layer.
 		 */
-		$("#paneMenu div").each(function()
+		$("#paneMenu span").each(function()
 		{
 			/* The menu buttons' IDs are named as menuSomething, change this if
 			 * it was changed in the HTML.
@@ -3698,89 +3726,13 @@ I = {
 
 	   /*
 		* AJAX load the separate HTML files into the content layer when user
-		* clicks on respective menu icon.
-		* ----------------------------------------------------------------------
+		* clicks on respective menu icon. Most content are not generated until
+		* the user expand a section of the content.
 		*/
-	   
-	   // Macro function for various written content added functionality
-		var bindAfterAJAXContent = function(pLayer)
-		{
-			I.generateTableOfContent(pLayer);
-			I.bindCollapsible(pLayer);
-			M.bindMapLinks(pLayer);
-		};
-	   
-	   /*
-		* Help layer.
-		*/
-	   $("#menuHelp").click(function()
-	   {
-		   $("#layerHelp").each(function()
-		   {
-			   if ($(this).is(":empty"))
-			   {
-					// Help layer contains map links
-					$(this).load("help.html", function()
-					{
-						bindAfterAJAXContent("#layerHelp");
-						
-						// Open links on new window
-						$("a").attr("target", "_blank");
-					});
-					// Unbind this event handler
-					$("#menuHelp").unbind("mousedown");
-			   }
-		   });
-	   });
-	   
-	   /*
-		* Map layer.
-		*/
-	   $("#menuMap").click(function()
-	   {
-		   $("#layerMap").each(function()
-		   {
-			   if ($(this).is(":empty"))
-			   {
-					// Help layer contains map links
-					$(this).load("map.html", function()
-					{
-						bindAfterAJAXContent("#layerMap");
-						var i;
-						
-						// Bind map zone links
-						$(".mapZones li").each(function()
-						{
-							$(this).click(function()
-							{
-								var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
-								M.goToView(thiscoord, M.PinProgram, "sky");
-							});
-						});
-						// Bind JP links
-						$(".mapJP dt").each(function()
-						{
-							var term = $(this).text();
-							$(this).after("&nbsp;<a href='" + I.getYouTubeLink(term + " Guild Wars 2")
-								+ "'>[Y]</a> <a href='" + I.getWikiLink(term) + "'>[W]</a>");
-							$(this).click(function()
-							{
-								var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
-								M.goToView(thiscoord, M.PinProgram);
-							});
-						});
-						// Create JP checklist
-						O.generateAndInitializeJPChecklist();
-						// Create node markers and checkboxes
-						M.generateAndInitializeResourceNodes();
-						// Make URL links open on new window
-						$("a").attr("target", "_blank");
-					});
-					// Unbind this event handler
-					$("#menuMap").unbind("mousedown");
-			   }
-		   });
-	   });
+		// Map layer
+		$("#menuMap").one("click", I.loadMapLayer);
+		// Help layer
+		$("#menuHelp").one("click", I.loadHelpLayer);
 	   
 	   /*
 		* Scroll to top arrow text button.
@@ -3798,6 +3750,54 @@ I = {
 		});
 	   
 	}, // End of menu initialization
+	
+	/*
+	 * Macro function for various written content added functionality.
+	 */
+	bindAfterAJAXContent: function(pLayer)
+	{
+		I.generateTableOfContent(pLayer);
+		I.bindCollapsible(pLayer);
+		M.bindMapLinks(pLayer);
+		// Open links on new window
+		$(pLayer + " a").attr("target", "_blank");
+	},
+	
+	/*
+	 * Loads the help page into the help content layer.
+	 */
+	loadHelpLayer: function()
+	{
+		$("#layerHelp").load("help.html", function()
+		{
+			I.bindAfterAJAXContent("#layerHelp");
+		});
+	},
+	
+	/*
+	 * Loads the map page into the map content layer.
+	 */
+	loadMapLayer: function()
+	{
+		$("#layerMap").load("map.html", function()
+		{
+			I.bindAfterAJAXContent("#layerMap");
+
+			// Bind map zone links
+			$(".mapZones li").each(function()
+			{
+				$(this).click(function()
+				{
+					var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
+					M.goToView(thiscoord, M.PinProgram, "sky");
+				});
+			});
+			// Create node markers and checkboxes
+			$("#mapResourceHeader").one("click", M.generateAndInitializeResourceNodes);
+			// Create JP checklist
+			$("#mapJPHeader").one("click", O.generateAndInitializeJPChecklist);
+		});
+	},
 	
 	/*
 	 * Events' event handlers and UI postchanges.
@@ -3862,15 +3862,12 @@ I = {
 /* =============================================================
  *  @@Xecutions and jQuery bindings; the order matters!
  * ============================================================= */
-T.checkDST(); // tell if DST is in effect
 I.initializeFirst(); // initialize variables that need to be first
 O.initializeOptions(); // load stored or default options to the HTML input
 C.initializeSchedule(); // compute event data and write HTML
 O.initializeChainChecklist(); // bind event handlers for checklist
-M.initializeMap(); // instantantiate the map and populate it
-K.updateTimeFrame(new Date()); // initial refresh of the clock
-K.tickSecond(); // start infinite loop clock
-K.initializeClipboard(); // bind Flash to the waypoint icons for clipboard
+M.initializeMap(); // instantiate the map and populate it
+K.initializeClock(); // start the clock and infinite loop
 I.initializeUI(); // bind event handlers for misc written content
 
 

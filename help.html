@@ -3,7 +3,9 @@
 <h1>Help</h1>
 <div class="jsTableOfContents" id="jsTOC_Help"></div>
 
+
 <hr />
+
 
 <h1>FAQ</h1>
 <p>Overview of <a href="http://i.imgur.com/KvJEr58.png">GW2Timer.com features</a>.</p>
@@ -16,13 +18,27 @@
 <h2>Why is there no timer for the other world bosses?</h2>
 <p>Megaservers are pretty much overflows, and the API (files on the game's website that tells when events are up) don't give information about overflows because they are dynamic instances not tied to a particular server. To do these events you have to physically check the places where they happen, and if none of them are active for that chain, you should ask map chat when the chain was last completed.</p>
 
+<p>Knowing the timings for these events will be helpful, so in the chains/timers tab, mouse over an orange icon next to an event name to show that event's information:</p>
+<dl>
+	<dt>Event Number</dt><dd>The order in the chain. Numbers like 1 and 2 (without letters) are single running events in the chain. Numbers like 1A1 and 1B1 happen at the same time, and 1A2 happens after 1A1. Numbers like 1a1 and 1b1 happen at the same time but branch out as subchains. Numbers like 1.1 are failure events.</dd>
+	<dt>If Success/Failure Go To</dt><dd>The event that follows for that condition. Failure number 0 means the event is unfailable.</dd>
+	<dt>If Success/Failure Wait</dt><dd>The time between an event has just succeeded/failed and the one that follows it starting.</dd>
+	<dt>Time Limit</dt><dd>The timer you see in the game; may be the time until the event fails or the time you have to endure to succeed.</dd>
+	<dt>Avg to Complete</dt><dd>The time it usually takes to complete (by a zerg).</dd>
+	<dt>Min to Complete</dt><dd>The shortest possible time it takes to complete (by a full map).</dd>
+	<dt>Max to Complete</dt><dd>The longest reasonable time it takes to complete (solo or small group)</dd>
+</dl>
+<br />
+
 <h2>How is GW2Timer.com able to tell when individual events in the chain are active without an API?</h2>
 <p>tl;dr: Statistics.</p>
 <p>Before the megaserver launch, the site was originally meant to predict for world boss trains a sorted schedule of the next quickest-to-complete meta event chain which were then asynchronous. To do that the site had to collect time statistics on the chains' individual events. Using the API, a monitor program recorded (continuously over two weeks on four varied tier servers) the times between an event changing its state, most importantly the "Active" to "Success" transition. Another custom written program was used to generate histogram and boxplot data, which were handpicked as the minimum possible, modal average, and modal maximum time an event is completed.</p>
-<p>Additionally, the interim between an event finishes and its followup event starts is also collected (usually this is a preset time, or the time it takes an NPC to run to their destination), and all these times are summed to give an estimate of how long an entire chain takes to complete. Although most meta events are now prescheduled and time sorting is moot, the site can still give players a general idea of the battlefield without having to set foot on it.<br />
+<p>Additionally, the interim between an event finishes and its followup event starts is also collected (usually this is a preset time, or the time for an NPC to run a place), and all these times are summed to give an estimate of how long an entire chain takes to complete. Although most meta events are now prescheduled and time sorting is moot, the site can still give players a general idea of the battlefield without having to set foot on it.<br />
 </p>
 
+
 <hr />
+
 
 <h1>About</h1>
 <p>This web application runs entirely on the client's side, except for API calls to the GW2 server for map data. Few libraries/plugins were used to avoid bloat. It was tested on Firefox/Chrome 2013-2014 and Opera 2013, in 1024x768 through 1920x1200. IE10 or below is not recommended and kludges were <strong>not</strong> used to compensate for IE's flaws. Smartphone users with large screen can use this right panel as an &quot;app&quot; (minimum resolution 360x720). Google Analytics is used to collect visitor's system/browser/locale information; you can <a href="https://www.google.com/search?q=block+Google+Analytics">block it</a> if you wish.</p>
@@ -39,7 +55,9 @@
 <h1>Contact</h1>
 <p>Use the <a href="http://www.reddit.com/r/gw2timer/">/r/gw2timer subreddit</a> or the <a href="http://forum.renaka.com/forum/368355/">forum</a> for questions/suggestions/reports; you can post as an unregistered guest at the forum.</p>
 
+
 <hr />
+
 
 <h1>Credits</h1>
 <p>View this website's source for the &quot;includes&quot;. Each source file has the appropriate credits and are fully documented.</p>
@@ -56,24 +74,14 @@
 <h2>ArenaNet Copyright</h2>
 <p>&#169; 2012 ArenaNet, Inc. All rights reserved. NCsoft, the interlocking NC logo, ArenaNet, Arena.net, Guild Wars, Guild Wars Factions, Factions, Guild Wars Nightfall, Nightfall, Guild Wars: Eye of the North, Eye of the North, Guild Wars 2, and all associated logos and designs are trademarks or registered trademarks of NCsoft Corporation. All other trademarks are the property of their respective owners.</p>
 
+
 <hr />
+
 
 <h1>Walkthrough</h1>
 
-<p>In the chains/timers tab, mouse over an orange icon next to an event name to show that event's information:</p>
-<dl>
-	<dt>Event Number</dt><dd>The order in the chain. Numbers like 1 and 2 (without letters) are single running events in the chain. Numbers like 1A1 and 1B1 happen at the same time, and 1A2 happens after 1A1. Numbers like 1a1 and 1b1 happen at the same time but branch out as subchains. Numbers like 1.1 are failure events.</dd>
-	<dt>If Success/Failure Go To</dt><dd>The event that follows for that condition. Failure number 0 means the event is unfailable.</dd>
-	<dt>If Success/Failure Wait</dt><dd>The time between an event has just succeeded/failed and the one that follows it starting.</dd>
-	<dt>Time Limit</dt><dd>The timer you see in the game; may be the time until the event fails or the time you have to endure to succeed.</dd>
-	<dt>Avg to Complete</dt><dd>The time it usually takes to complete (by a zerg).</dd>
-	<dt>Min to Complete</dt><dd>The shortest possible time it takes to complete (by a full map).</dd>
-	<dt>Max to Complete</dt><dd>The longest reasonable time it takes to complete (solo or small group)</dd>
-</dl>
-<br />
 <p>Some skills useful when doing almost all world bosses are: <a href="http://wiki.guildwars2.com/wiki/Condition#Traits_that_remove_conditions">Condition Removal</a>, <a href="http://wiki.guildwars2.com/wiki/Stun_break">Stun Break</a>, <a href="http://wiki.guildwars2.com/wiki/Invulnerability">Invulnerability</a>, <a href="http://wiki.guildwars2.com/wiki/Reflect">Missile Reflection</a>, and <a href="http://wiki.guildwars2.com/wiki/Range">Range</a>. Bosses with a big distinct health bar cannot be critically hit, so the Precision and Ferocity attribute buffs are useless against them.</p>
 <p>Click a header below to expand the walkthrough section.</p>
-
 
 <header class="jsCollapsible"><img src="img/ui/scheduled.png" alt="Scheduled Bosses" />Scheduled Bosses</header>
 <div>
@@ -133,7 +141,7 @@
 
 <header class="jsCollapsible"><img src="img/chain/temple.png" alt="Orr Temples" />Temples</header>
 <div>
-All temples drop 30 dragonite.
+All temples drop 30 dragonite and unlock a <a href="http://wiki.guildwars2.com/wiki/Temple_armor">karma vendor</a> for 1.5-2 hours selling exotic armor and trinkets.
 
 <h2>Lyssa</h2>
 <p>Usually people will capture the <ins data-coord="[13238, 23581]">Union seal</ins> first for the waypoint so they can map call for help. The northwest seal can be completed by picking up batteries from the lightning towers and giving them to the glass pod, or throwing them at the golems. The southeast seal requires protecting the cannon from waves of risens, which attack every seals, and attack them again 10 or 20-30 minutes after the seals were secured. During this timeframe the <ins data-coord="[13133, 23954]">priestess</ins> can be attacked, except for the times she uses her perma stun skill when your character is facing her (also causes more mobs to spawn). The two things to watch for is the champion gorillas which can insta down you, and the seals being attacked again, which if not quickly reclaimed after the risens had captured it, will cause the boss to fully heal. A retake event occurs 1.5-2 hours after, and you must let the risens recapture temple for the chain to instantly restart, else that retake event loops 1-1.5 hours later.</p>
