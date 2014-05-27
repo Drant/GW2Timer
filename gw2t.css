@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x720, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.05.25 modified - 2010.04.18 created
+	Version: 2014.05.25 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -42,17 +42,13 @@ body > windowMain
 	panelLeft[paneMap], panelRight[paneClock, paneMenu, paneContent]
 }
 ----------------------------------------------------------------------------- */
-@font-face {
+/*@font-face {
 	font-family: "Menomonia";
 	src: url("https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.woff") format("woff");
-}
+}*/
 
 html, body {
 	height: 100%;
-}
-
-::selection {
-	color: #576976;
 }
 
 #jsConsole {
@@ -113,6 +109,42 @@ div#qTip {
 	opacity: 0.9;
 }
 
+/* Custom cursors
+----------------------------------------------------------------------------- */
+
+html, body,
+#listChainsTimetable .chnTitle h2,
+.leaflet-container, .leaflet-popup-pane, .leaflet-control {
+	cursor: url("img/cursor/auto.png"), auto;
+}
+
+a, input, label, button,
+#mapCompassButton, #paneMenu span, .itemClockIconOver img,
+.cntComposition h1, .cntComposition header,
+.jsTableOfContents ol li, .jsCollapsibleDone,
+#layerChains header, .chnCheck:hover, .chnTitle h2, .chnDetailsLinks ins,
+.leaflet-clickable {
+	cursor: url("img/cursor/pointer.png"), pointer;
+}
+
+.itemClockIcon img,
+.cntComposition ins, .mapZones li, .mapJP dt, .chnDetails ol li span {
+	cursor: url("img/cursor/zoom.png"), zoom-in;
+}
+
+.leaflet-dragging .leaflet-container, .leaflet-dragging .leaflet-clickable {
+	cursor: url("img/cursor/move.png"), move;
+}
+
+#listChainsScheduled .chnTitle time,
+.chnDetails ol li img {
+	cursor: url("img/cursor/help.png"), help;
+}
+
+::selection {
+	color: #576976;
+}
+
 /* =============================================================================
  *  Left panel
  * ========================================================================== */
@@ -167,7 +199,6 @@ div#qTip {
 #mapCompassButton {
 	vertical-align: middle;
 	opacity: 0.6;
-	cursor: pointer;
 }
 #mapCompassButton:hover {
 	opacity: 1;
@@ -223,7 +254,6 @@ div#qTip {
 	width: 64px; height: 64px;
 	border: 1px solid black;
 	border-radius: 12px;
-	cursor: zoom-in;
 }
 #itemClockIcon0 {
 	top: 4px; left: 148px;
@@ -241,7 +271,6 @@ div#qTip {
 .itemClockIconOver img {
 	position: absolute;
 	width: 32px; height: 32px;
-	cursor: pointer;
 }
 .itemClockIconOver img:active {
 	opacity: 0.5;
@@ -339,7 +368,6 @@ div#qTip {
 	display: inline-block;
 	float: left;
 	width: 90px; height: 48px;
-	cursor: pointer;
 }
 #paneMenu span:hover {
 	box-shadow: 0px 0px 10px #e7e3bd;
@@ -435,7 +463,6 @@ div#qTip {
 	margin-bottom: 8px;
 	font-size: 20px;
 	text-shadow: 0px 0px 2px #e4e0b3;
-	cursor: pointer;
 }
 .cntComposition h1:hover {
 	text-decoration: underline;
@@ -444,7 +471,6 @@ div#qTip {
 	font-variant: small-caps;
 	text-decoration: none;
 	letter-spacing: 2px;
-	cursor: default;
 }
 .cntComposition h2 {
 	margin-top: 4px;
@@ -469,7 +495,6 @@ div#qTip {
 	text-shadow: 0px 0px 2px #e4e0b3;
 	text-decoration: underline;
 	color: #e4e0b3;
-	cursor: pointer;
 }
 .cntComposition header:hover, .jsCollapsibleDone:hover {
 	color: white;
@@ -485,7 +510,6 @@ div#qTip {
 	font-size: 16px;
 	text-decoration: underline;
 	text-shadow: 0px 0px 2px #e4e0b3;
-	cursor: pointer;
 }
 
 .cntComposition em {
@@ -529,8 +553,6 @@ div#qTip {
 .cntComposition ins, .mapZones li, .mapJP dt {
 	font-weight: bold;
 	color: #ffcc77;
-	cursor: pointer;
-	cursor: zoom-in;
 }
 .cntComposition ins:hover, .mapZones li:hover, .mapJP dt:hover {
 	color: #ffdda6;
@@ -569,7 +591,6 @@ div#qTip {
 	margin-bottom: 4px;
 	list-style-type: circle;
 	text-decoration: underline;
-	cursor: pointer;
 }
 .jsTableOfContents ol li:hover {
 	text-decoration: none;
@@ -587,7 +608,6 @@ div#qTip {
 	color: #e4e0b3;
 	text-shadow: 0px 0px 2px #e4e0b3;
 	opacity: 0.9;
-	cursor: pointer;
 }
 
 #jsCenter {
@@ -598,7 +618,6 @@ div#qTip {
 	bottom: 8px;
 	right: 28px;
 	opacity: 0.9;
-	cursor: pointer;
 }
 
 #jsTop:hover, #jsCenter:hover {
@@ -616,7 +635,6 @@ div#qTip {
 	border-radius: 4px;
 	background: #444;
 	background: linear-gradient(to bottom, #222 0%, #383838 100%);
-	cursor: pointer;
 }
 #layerChains header img {
 	width: 32px; height: 32px;
@@ -705,7 +723,6 @@ div#qTip {
 }
 .chnCheck:hover {
 	opacity: 1;
-	cursor: pointer;
 }
 
 .chnTitle h2 {
@@ -713,13 +730,9 @@ div#qTip {
 	width: 210px; /* This pushes the time to the right */
 	padding-left: 8px;
 	vertical-align: middle;
-	cursor: pointer;
 }
 .chnTitle h2:hover {
 	color: #eee;
-}
-#listChainsTimetable .chnTitle h2 {
-	cursor: auto;
 }
 
 .chnTitle time {
@@ -727,9 +740,6 @@ div#qTip {
 	width: 74px;
 	vertical-align: middle;
 	text-align: right;
-}
-#listChainsScheduled .chnTitle time {
-	cursor: help;
 }
 
 .chnDetails ol {
@@ -747,7 +757,6 @@ div#qTip {
 .chnDetails ol li img { /* Orange event icon */
 	vertical-align: middle;
 	width: 16px; height: 16px;
-	cursor: help;
 }
 .chnDetails ol li img:hover {
 	box-shadow: 0px 0px 4px #ee7924;
@@ -755,8 +764,6 @@ div#qTip {
 .chnDetails ol li span { /* Event name */
 	margin-left: 4px;
 	vertical-align: middle;
-	cursor: pointer;
-	cursor: zoom-in;
 }
 
 .chnDetailsLinks { /* Small gray link bottom right of a chain bar */
@@ -768,7 +775,6 @@ div#qTip {
 	font-family: monospace;
 	font-size: 12px;
 	color: #777;
-	cursor: pointer;
 }
 
 /* JavaScript added classes */
@@ -856,7 +862,6 @@ div#qTip {
 	float: right;
 	margin-top: -24px;
 	margin-right: 12px;
-	cursor: pointer;
 }
 
 #optSoundButton {

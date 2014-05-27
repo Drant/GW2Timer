@@ -3,7 +3,7 @@
 	jQuery-dependent (v1.11.0), with other plugins in plugins.js.
 	Coded in NetBeans; debugged in Opera Dragonfly.
 	IDE recommended for viewing and collapsing code sections.
-	Version: 2014.05.25 modified - 2010.04.18 created
+	Version: see int_programVersion - 2014.04.18 created
 
 	CREDITS:
 	Vladimir Agafonkin - LeafletJS map library
@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 140525,
+	int_programVersion: 140526,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
@@ -334,6 +334,7 @@ O = {
 			var bar = $("#barChain_" + chain.alias);
 			var check = $("#chnCheck_" + chain.alias);
 			
+			// Set the checkbox visual state as stored
 			if (O.isSSTimestampOutdated() === false)
 			{
 				switch (O.Checklist[optionname])
@@ -344,7 +345,7 @@ O = {
 					} break;
 					case O.ChecklistEnum.Checked:
 					{
-						bar.css({opacity: 1}).animate({opacity: 0.4}, 200);
+						bar.css({opacity: K.iconOpacityChecked});
 						check.addClass("chnChecked");
 						if (O.Options.bol_hideChecked)
 						{
@@ -377,14 +378,14 @@ O = {
 				{
 					case O.ChecklistEnum.Unchecked:
 					{
-						thisbar.css({opacity: 1}).animate({opacity: 0.4}, 200);
+						thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
 						$(this).addClass("chnChecked");
 						O.Checklist[thisoptionname] = 1;
 						
 					} break;
 					case O.ChecklistEnum.Checked:
 					{
-						thisbar.css({opacity: 0.4}).animate({opacity: 1}, 200);
+						thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
 						$(this).removeClass("chnChecked");
 						O.Checklist[thisoptionname] = 0;
 					} break;
@@ -477,11 +478,7 @@ O = {
 			$(this).after("&nbsp;<a href='"
 				+ I.getYouTubeLink(term + " Guild Wars 2") + "' target='blank_'>[Y]</a> <a href='"
 				+ I.getWikiLink(term) + "' target='blank_'>[W]</a>");
-			$(this).click(function()
-			{
-				var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
-				M.goToView(thiscoord, M.PinProgram);
-			});
+			M.bindMapLinkBehavior($(this), M.PinProgram);
 		});
 		
 		// Make checkboxes
@@ -1494,7 +1491,9 @@ C = {
 		var wait;
 		var hasfoundcurrentprimaryindex = false;
 		
-		// If the user just loaded in instead of transitioning at a timeframe
+		/*
+		 * If the user just loaded in instead of transitioning at a timeframe.
+		 */
 		if (elapsed > 0)
 		{
 			// Gray out all of the scheduled chain's events
@@ -1503,7 +1502,7 @@ C = {
 			for (i in chain.primaryEvents)
 			{
 				/*
-				 * For an event to active, its start time (xxxSum) should be 
+				 * For an event to be active, its start time (xxxSum) should be 
 				 * <= the elapsed time, and the next event's start time
 				 * should be > the elapsed time.
 				 */
@@ -1779,9 +1778,6 @@ M = {
 	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 	cICON_WAYPOINT: "img/event/waypoint.png",
-	cICON_PIN_PERSONAL: "img/map/pin_white.png",
-	cICON_PIN_PROGRAM: "img/map/pin_blue.png",
-	cICON_PIN_EVENT: "img/map/pin_green.png",
 	cLEAFLET_PATH_OPACITY: 0.5,
 	cLEAFLET_ICON_SIZE: 32,
 	cMAP_BOUND: 32768, // The map is a square
@@ -1797,24 +1793,6 @@ M = {
 		iconSize: [16, 16],
 		iconAnchor: [8, 8]
 	}),
-	iconPinPersonal: L.icon(
-	{
-		iconUrl: "img/map/pin_white.png",
-		iconSize: [32, 32],
-		iconAnchor: [16, 16]
-	}),
-	iconPinProgram: L.icon(
-	{
-		iconUrl: "img/map/pin_blue.png",
-		iconSize: [32, 32],
-		iconAnchor: [16, 16]
-	}),
-	iconPinEvent: L.icon(
-	{
-		iconUrl: "img/map/pin_green.png",
-		iconSize: [32, 32],
-		iconAnchor: [16, 16]
-	}),
 	/*
 	 * Waypoint markers will be stored in the M.Zones object for each zone.
 	 * This is a shortcut reference array for all the waypoints.
@@ -1822,6 +1800,7 @@ M = {
 	PinPersonal: {},
 	PinProgram: {},
 	PinEvent: {},
+	PinPoint: {},
 	Waypoints: new Array(),
 	Pins: new Array(), // General Leaflet markers
 	PathLayer: {},
@@ -2037,6 +2016,25 @@ M = {
 			iconSize: [pSize, pSize],
 			iconAnchor: [pSize/2, pSize/2]
 		}));
+	},
+	
+	/*
+	 * Creates a pin in the map to be assigned to a reference object.
+	 * @param string pIconURL image of the marker.
+	 * @returns object Leaflet marker.
+	 */
+	createPin: function(pIconURL)
+	{
+		return L.marker(M.convertGCtoLC([0,0]),
+		{
+			icon: L.icon(
+			{
+				iconUrl: pIconURL,
+				iconSize: [32, 32],
+				iconAnchor: [16, 16]
+			}),
+			draggable: true
+		}).addTo(M.Map);
 	},
 	
 	/*
@@ -2329,25 +2327,16 @@ M = {
 		/*
 		 * Create pin markers that can be moved by user or program.
 		 */
-		M.PinPersonal = L.marker(M.convertGCtoLC([0,0]),
-		{
-			icon: M.iconPinPersonal,
-			draggable: true
-		}).addTo(M.Map);
-		M.PinProgram = L.marker(M.convertGCtoLC([0,0]),
-		{
-			icon: M.iconPinProgram,
-			draggable: true
-		}).addTo(M.Map);
-		M.PinEvent = L.marker(M.convertGCtoLC([0,0]),
-		{
-			icon: M.iconPinEvent,
-			draggable: true
-		}).addTo(M.Map);
-		// Add to array for iteration
+		M.PinPersonal = M.createPin("img/map/pin_white.png");
+		M.PinProgram = M.createPin("img/map/pin_blue.png");
+		M.PinEvent = M.createPin("img/map/pin_green.png");
+		M.PinPoint = M.createPin("img/map/pin_point.png");
+		
+		// Add to array for iterationicon
 		M.Pins.push(M.PinPersonal);
 		M.Pins.push(M.PinProgram);
 		M.Pins.push(M.PinEvent);
+		M.Pins.push(M.PinPoint);
 		
 		// Bind pin click event to get coordinates in the coordinates bar
 		for (var i in M.Pins)
@@ -2358,6 +2347,10 @@ M = {
 				$("#mapCoordinatesStatic")
 					.val("[" + coord[0] + ", " + coord[1] + "]")
 					.select();
+			});
+			M.Pins[i].on("dblclick", function()
+			{
+				this.setLatLng(M.convertGCtoLC([0,0]));
 			});
 		}
 		
@@ -2440,7 +2433,8 @@ M = {
 	},
 	
 	/*
-	 * Binds map view event handlers to all map links in the specified container.
+	 * Binds map view event handlers to all map links (ins tag reserved) in the
+	 * specified container.
 	 * @param string pContainer element ID.
 	 */
 	bindMapLinks: function(pContainer)
@@ -2448,11 +2442,34 @@ M = {
 		$(pContainer + " ins").each(function()
 		{
 			$(this).text("[" + $(this).text() + "]");
-			$(this).click(function()
-			{
-				var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
-				M.goToView(thiscoord, M.PinProgram);
-			});
+			M.bindMapLinkBehavior($(this), M.PinProgram);
+		});
+	},
+	
+	/*
+	 * Binds specified link to move a pinpoint to the location when hovered, and
+	 * to view the map location when clicked.
+	 * @param JQObject pLink to bind.
+	 * @param object pPin marker to move.
+	 * @param string pZoom level when viewed location.
+	 */
+	bindMapLinkBehavior: function(pLink, pPin, pZoom)
+	{
+		pLink.click(function()
+		{
+			var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
+			M.goToView(thiscoord, pPin, pZoom);
+		});
+		
+		// Move a point pin to that location as a preview
+		pLink.mouseover(function()
+		{
+			var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
+			M.PinPoint.setLatLng(M.convertGCtoLC(thiscoord));
+		});
+		pLink.mouseout(function()
+		{
+			M.PinPoint.setLatLng(M.convertGCtoLC([0,0]));
 		});
 	},
 	
@@ -2810,6 +2827,7 @@ K = {
 	currentFrameOffsetMinutes: 0,
 	cClockEventsLimit: 4, // Number of events on the clock
 	iconOpacityChecked: 0.4,
+	iconOpacitySpeed: 200,
 	wp0: document.getElementById("itemClockWaypoint0"),
 	wp1: document.getElementById("itemClockWaypoint1"),
 	wp2: document.getElementById("itemClockWaypoint2"),
@@ -2934,11 +2952,13 @@ K = {
 			{
 				if (O.getChainChecklistState(chain) !== O.ChecklistEnum.Unchecked)
 				{
-					iconchain.css({opacity: K.iconOpacityChecked});
+					iconchain.css({opacity: 1})
+						.animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
 				}
 				else
 				{
-					iconchain.css({opacity: 1});
+					iconchain.css({opacity: K.iconOpacityChecked})
+						.animate({opacity: 1}, K.iconOpacitySpeed);
 				}
 			}
 		}
@@ -3376,7 +3396,7 @@ I = {
 		document.getElementById("jsTTS").src = "";
 		
 		// Tell if DST is in effect
-		T.checkDST()
+		T.checkDST();
 		
 		// Initial sync of the sleep detection variable
 		K.awakeTimestampPrevious = T.getUNIXSeconds();
@@ -3786,11 +3806,7 @@ I = {
 			// Bind map zone links
 			$(".mapZones li").each(function()
 			{
-				$(this).click(function()
-				{
-					var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
-					M.goToView(thiscoord, M.PinProgram, "sky");
-				});
+				M.bindMapLinkBehavior($(this), M.PinProgram, "sky");
 			});
 			// Create node markers and checkboxes
 			$("#mapResourceHeader").one("click", M.generateAndInitializeResourceNodes);

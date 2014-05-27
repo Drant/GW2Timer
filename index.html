@@ -10,8 +10,8 @@
 
 	<!-- Stylesheets -->
 	<link rel="shortcut icon" type="image/x-icon" href="img/event/boss.png" />
-	<link rel="stylesheet" media="screen" href="gw2t.css" />
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+	<link rel="stylesheet" media="screen" href="gw2t.css" />
 	
 	<!-- JavaScript  -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -72,21 +72,21 @@
 				<img id="itemClockIcon2" src="img/chain/tbd.png" alt="X:30 Chain" />
 				<img id="itemClockIcon3" src="img/chain/tbd.png" alt="X:45 Chain" />
 			</div>
-			<svg id="itemClock" viewBox="0 0 100 100"> <!-- x=50,y=50 is the center -->
-				<defs> <!-- Shadow filters -->
+			<svg id="itemClock" viewBox="0 0 100 100"><!-- x=50,y=50 is the center -->
+				<defs><!-- Shadow filters -->
 					<filter id="clkFilterShadowOuter" height="130%">
 						<feGaussianBlur in="SourceAlpha" stdDeviation="3" />
 						<feOffset dx="0" dy="0" result="offsetblur" />
 						<feMerge> 
-							<feMergeNode /> <!-- this contains the offset blurred image -->
-							<feMergeNode in="SourceGraphic" /> <!-- this contains the element that the filter is applied to -->
+							<feMergeNode /><!-- this contains the offset blurred image -->
+							<feMergeNode in="SourceGraphic" /><!-- this contains the element that the filter is applied to -->
 						</feMerge>
 					</filter>
 					<filter id="clkFilterShadowHand" x="-50%" y="-50%" width="200%" height="200%">
 						<feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur" />
 						<feOffset in="blur" dx="1" dy="1" result="shadow" />
 						<feComponentTransfer>
-							<feFuncA type="linear" slope="1"/> <!-- Opacity of the shadow -->
+							<feFuncA type="linear" slope="1"/><!-- Opacity of the shadow -->
 						</feComponentTransfer>
 						<feMerge> 
 							<feMergeNode/>
@@ -94,9 +94,9 @@
 						</feMerge>
 					</filter>
 				</defs>
-				<circle id="clkFace" cx="50" cy="50" r="45" filter="url(#clkFilterShadowOuter)" /> <!-- Clock face -->
+				<circle id="clkFace" cx="50" cy="50" r="45" filter="url(#clkFilterShadowOuter)" /><!-- Clock face -->
 				<path id="clkSector" d="M50,50 L50,6 A44,44 0,0 1 94,50 z" />
-				<g id="clkTicks"> <!-- 12 hour tick marks -->
+				<g id="clkTicks"><!-- 12 hour tick marks -->
 					<line x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
 					<line x1="72.50" y1="11.03" x2="70.00" y2="15.36" />
 					<line x1="88.97" y1="27.50" x2="84.64" y2="30.00" />
@@ -154,14 +154,14 @@
 			<span id="menuChains" title="&lt;span class='cssGold'&gt;Chains:&lt;/span&gt; Timers, Events, Checklist"></span>
 			<span id="menuMap" title="&lt;span class='cssGold'&gt;Map:&lt;/span&gt; Gathering Nodes, Dailies, JPs"></span>
 			<span id="menuHelp" title="&lt;span class='cssGold'&gt;Help:&lt;/span&gt; FAQs, About, Walkthrough"></span>
-			<span id="menuOptions" title="&lt;span class='cssGold'&gt;Options:&lt;/span&gt; Timer, Map, Alarm"></span>
+			<span id="menuOptions" title="&lt;span class='cssGold'&gt;Options:&lt;/span&gt; Display, Format, Alarm"></span>
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->
 		<section id="paneContent" class="paneRight">
-			<div id="jsTop">&uarr;</div>
-			<div id="jsCenter" title="Default map view"></div>
-			<article id="layerChains"> <!-- This layer will be populated by JS -->
+			<a id="jsTop">&uarr;</a>
+			<a id="jsCenter"></a>
+			<article id="layerChains"><!-- This layer will be populated by JS -->
 				<header>
 					<img src="img/ui/scheduled.png" alt="Scheduled Bosses" />
 					<span>Scheduled Bosses</span>
@@ -188,8 +188,8 @@
 				<div id="listChainsTimetable" class="listChains"></div>
 				<div id="listDummyBottom"></div>
 			</article>
-			<article id="layerMap"></article>
-			<article id="layerHelp"></article> <!-- This layer will be populated by AJAX -->
+			<article id="layerMap"></article><!-- Empty layers will be populated by AJAX -->
+			<article id="layerHelp"></article>
 			<article id="layerOptions">
 				<div class="cntComposition">
 					<h1>Options</h1>
