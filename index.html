@@ -7,6 +7,7 @@
 	<meta name="robots" content="index, follow, noarchive" />
 	<meta name="description" content="Guild Wars 2 timers and clock for world boss meta events, with walkthroughs and daily achievement guide." />
 	<meta name="google-site-verification" content="hPcBd74DxlBzpTu6wO6DkIcOVFLu9SOMT-GQ1MI3fbg" />
+	<meta property="fb:page_id" content="275711502600805" />
 
 	<!-- Stylesheets -->
 	<link rel="shortcut icon" type="image/x-icon" href="img/event/boss.png" />
@@ -62,11 +63,9 @@
 	<div id="panelRight" class="panelMain">
 		<!-- Clock
 		==================================================================== -->
-		<section id="paneClock" class="paneRight"
-			title="Click a waypoint icon to autocopy to clipboard.&lt;br /&gt;
-			Green clock tick is chain start, orange tick is minimum time chain is predicted to finish, red tick is average.">
+		<section id="paneClock" class="paneRight">
 			<div id="paneClockBackground"></div>
-			<div class="itemClockIcon">
+			<div id="itemClockIcons">
 				<img id="itemClockIcon0" src="img/chain/tbd.png" alt="X:00 Chain" />
 				<img id="itemClockIcon1" src="img/chain/tbd.png" alt="X:15 Chain" />
 				<img id="itemClockIcon2" src="img/chain/tbd.png" alt="X:30 Chain" />
@@ -139,7 +138,7 @@
 					<line id="clkSecondHand" x1="50" y1="50" x2="50" y2="16"/>
 				</g>
 			</svg>
-			<div class="itemClockIconOver">
+			<div id="itemClockWaypoints">
 				<img id="itemClockWaypoint0" src="img/event/waypoint.png" alt="X:00 Waypoint">
 				<img id="itemClockWaypoint1" src="img/event/waypoint.png" alt="X:15 Waypoint">
 				<img id="itemClockWaypoint2" src="img/event/waypoint.png" alt="X:30 Waypoint">
@@ -147,20 +146,27 @@
 			</div>
 			<time id="itemTimeLocal" class="itemTimeDigital">00:00</time>
 			<time id="itemTimeServer" class="itemTimeDigital">16:00</time>
+			<div id="itemSocial">
+				<a id="itemSocialInfo" title="&lt;dfn&gt;Clock:&lt;/dfn&gt; Click a waypoint icon to autocopy to clipboard.
+					Green clock tick is chain start, orange tick is minimum time chain is predicted to finish, red tick is average."
+					href="http://i.imgur.com/KvJEr58.png" target="_blank"></a>
+				<a id="itemSocialFB" title="&lt;dfn&gt;Like GW2Timer on Facebook :)&lt;/dfn&gt;" href="http://www.facebook.com/gw2timer" target="_blank"></a>
+				<a id="itemSocialTT" title="&lt;dfn&gt;Tweet GW2Timer on Twitter :)&lt;/dfn&gt;" href="http://twitter.com/intent/tweet?text=http%3A%2F%2FGW2Timer.com%20-%20World%20Boss%20Timers%20and%20Daily%20Map%20Guide" target="_blank"></a>
+			</div>
 		</section>
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
 		<nav id="paneMenu" class="paneRight">
-			<span id="menuChains" title="&lt;span class='cssGold'&gt;Chains:&lt;/span&gt; Timers, Events, Checklist"></span>
-			<span id="menuMap" title="&lt;span class='cssGold'&gt;Map:&lt;/span&gt; Gathering Nodes, Dailies, JPs"></span>
-			<span id="menuHelp" title="&lt;span class='cssGold'&gt;Help:&lt;/span&gt; FAQs, About, Walkthrough"></span>
-			<span id="menuOptions" title="&lt;span class='cssGold'&gt;Options:&lt;/span&gt; Display, Format, Alarm"></span>
+			<span id="menuChains" title="&lt;dfn&gt;Chains:&lt;/dfn&gt; Timers, Events, Checklist"></span>
+			<span id="menuMap" title="&lt;dfn&gt;Map:&lt;/dfn&gt; Dailies, Gathering Nodes, Jumping Puzzles"></span>
+			<span id="menuHelp" title="&lt;dfn&gt;Help:&lt;/dfn&gt; FAQs, About, Walkthrough"></span>
+			<span id="menuOptions" title="&lt;dfn&gt;Options:&lt;/dfn&gt; Display, Format, Alarm"></span>
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->
 		<section id="paneContent" class="paneRight">
 			<a id="jsTop">&uarr;</a>
-			<a id="jsCenter"></a>
+			<a id="jsCenter" title="Map Center"></a>
 			<article id="layerChains"><!-- This layer will be populated by JS -->
 				<header>
 					<img src="img/ui/scheduled.png" alt="Scheduled Bosses" />
@@ -234,8 +240,8 @@
 					<br />
 					<h2>Defaults</h2>
 					<div class="optButtons">
-						<button id="btnRestoreAllChains" title="Unhide all chains and uncheck them.">Restore All Chains</button>
-						<button id="btnClearLocalStorage" title="Clear the localStorage which stores options and states, as if you visited for the first time.">Clear Website Memory</button>
+						<button id="optRestoreAllChains" title="Unhide all chains and uncheck them.">Restore All Chains</button>
+						<button id="optClearLocalStorage" title="Clear the localStorage which stores options and states, as if you visited for the first time.">Clear Website Memory</button>
 					</div>
 				</div>
 			</article>

@@ -246,7 +246,7 @@ var GW2T_RESOURCES_DATA = {
 <div class="cntComposition">
 
 <h1>Map</h1>
-<div class="mapZoneList">
+<div class="mapZoneList mapLinks">
 	<div>
 	<h2>Kryta</h2>
 	<ul class="mapZones">
@@ -304,61 +304,90 @@ var GW2T_RESOURCES_DATA = {
 	</div>
 </div>
 
-<header class="jsCollapsible" id="mapResourceHeader"><img src="img/ui/node_metal.png" alt="Resource Nodes" />Resource Nodes</header>
+
+<header id="mapHeader_Daily" class="jsCollapsible"><img src="img/ui/ap.png" alt="Daily Achievements" />Daily Achievements</header>
 <div>
-<div style="width:100%;height:32px"><button id="btnNodesToggle" class="cssRight">Toggle All</button></div>
-<div class="mapResourceList">
-	<div id="mapResource_Metal"></div>
-	<div id="mapResource_Plant"></div>
-	<div id="mapResource_Wood"></div>
-</div>
-<div id="mapLegendSolid" class="mapLegendLine"></div> <strong>Exact</strong> location of that node<br />
-<div id="mapLegendDotted" class="mapLegendLine"></div> <strong>Approximate</strong> vicinity of that node<br />
-<div id="mapLegendDashed" class="mapLegendLine"></div> <strong>Map</strong> has that resource (not a node)<br />
-Rich and T6 nodes reset in about 22 hours after gathering; T1-T5 nodes reset in about 2 hours. You can use alts to re-gather any node. More <a href="http://wiki.guildwars2.com/wiki/Resource#Harvesting">plants</a> on the wiki.<br />
+<p>These are some places to complete dailies quickly; the top of each list should be the fastest. Most of the places are based on the <a href="http://wiki.guildwars2.com/wiki/Daily">wiki</a>; if you know a good spot, please <a href="http://forum.renaka.com/topic/5476238/">share it</a>.</p>
+<div class="cssRight"><button id="mapToggle_Daily">Toggle Icons</button></div>
+
+<div class="mapDailyLists mapLinks">
+<h2><img src="img/daily/killer.png" alt="Killer" /> Killer</h2>
+<dl class="mapDailyList" id="mapDailyList_Killer">
+	<dt data-coord="[10055, 13446]">Altar's Windings</dt><dd>Kryta-Queensdale troll cave grubs, bandit camp</dd>
+	<dt data-coord="[9993, 16259]">Wychmire Swamp</dt><dd>Maguuma-Caledon spiders nest</dd>
+	<dt data-coord="[22587, 15535]">Outcast's Cleft</dt><dd>Shiverpeaks-Wayfarer svanirs</dd>
+	<dt data-coord="[23136, 13562]">Grawlenfjord</dt><dd>Shiverpeaks-Wayfarer arctodus and barracudas</dd>
+	<dt data-coord="[27618, 15147]">Windrock Maze</dt><dd>Ascalon-Ashford various mobs</dd>
+	<dt data-coord="[10887, 25671]">Fields of Gold</dt><dd>Orr-Cursed risens</dd>
+</dl>
 <br />
-</div>
 
+<h2><img src="img/daily/veteran.png" alt="Veteran" /> Veteran</h2>
+Champions are not veterans, you can find them in dungeons or the Frostgorge farm train.
+<dl class="mapDailyList" id="mapDailyList_Veteran">
+	<dt data-coord="[11451, 13286]">Greenheart Weald</dt><dd>Kryta-Queensdale oakhearts</dd>
+	<dt data-coord="[9573, 16229]">Wychmire Swamp</dt><dd>Maguuma-Caledon mosshearts</dd>
+	<dt data-coord="[23240, 11685]">Cragstead</dt><dd>Shiverpeaks-Wayfarer spider cave</dd>
+	<dt data-coord="[27618, 15147]">Windrock Maze</dt><dd>Ascalon-Ashford air elementals</dd>
+	<dt data-coord="[25779, 15298]">Decimus Stones</dt><dd>Ascalon-Ashford ghosts</dd>
+</dl>
+<br />
 
-<header class="jsCollapsible"><img src="img/ui/ap.png" alt="Daily Achievements" />Daily Achievements</header>
-<div>
-<p>These are some places to complete dailies quickly; the leftmost location should be the fastest. Most of the places are based on the <a href="http://wiki.guildwars2.com/wiki/Daily">wiki</a>, if you know a good spot, please <a href="http://forum.renaka.com/topic/5476238/">share it</a>.</p>
+<h2><img src="img/daily/variety.png" alt="Variety" /> Variety</h2>
+You need to kill unique <a href="http://wiki.guildwars2.com/wiki/Bestiary">species</a> of enemies.
+<dl class="mapDailyList" id="mapDailyList_Variety">
+	<dt data-coord="[7564, 17591]">Thaumanova Reactor</dt><dd>Maguuma-Metrica numerous unique monsters</dd>
+	<dt data-coord="[6510, 16998]">Toxal Bog</dt><dd>Maguuma-Brisban same as Thaumanova</dd>
+</dl>
+<br />
 
-<h2>Killer</h2>
-<h3>Ascalonian Killer</h3>
-<p>Regular: <ins data-coord="[27618, 15147]">Windrock Maze</ins><br />
-Vets: <ins data-coord="[27618, 15147]">Ashford air elementals</ins>, <ins data-coord="[25779, 15298]">Ashford ghosts</ins></p>
-<h3>Krytan Killer</h3>
-<p>Regular: <ins data-coord="[10055, 13446]">Troll Cave</ins><br />
-Vets: <ins data-coord="[11451, 13286]">Queensdale oakhearts</ins></p>
-<h3>Maguuman</h3>
-<p>Regular: <ins data-coord="[9993, 16259]">Caledon spiders nest</ins><br />
-Vets: <ins data-coord="[9573, 16229]">Caledon mosshearts</ins></p>
-<h3>Shiverpeaks</h3>
-<p>Regular: <ins data-coord="[22587, 15535]">Outcast's Cleft</ins><br />
-Vets: <ins data-coord="[23240, 11685]">Spider Cave spiders</ins></p>
-<h3>Orrian</h3>
-<p>Regular: <ins data-coord="[10887, 25671]">Fields of Gold</ins></p>
+<h2><img src="img/daily/aquatic.png" alt="Aquatic" /> Aquatic</h2>
+<dl class="mapDailyList" id="mapDailyList_Aquatic">
+	<dt data-coord="[23047, 14192]">Grawlenfjord</dt><dd>Shiverpeaks-Wayfarer barracudas and skelks throughout the long river</dd>
+	<dt data-coord="[11724, 12139]">Lake Delavan</dt><dd>Kryta-Queensdale fishes</dd>
+	<dt data-coord="[11030, 16632]">Quetzal Bay</dt><dd>Maguuma-Caledon kraits</dd>
+	<dt data-coord="[8418, 19985]">Loch Jezt</dt><dd>Maguuma-Metrica fishes</dd>
+</dl>
+<br />
 
-<h2>Variety</h2>
-<p><ins data-coord="[7576, 17591]">Thaumanova Reactor</ins>, <ins data-coord="[6510, 16998]">Toxal Bog</ins></p>
+<h2><img src="img/daily/ambient.png" alt="Ambient" /> Ambient</h2>
+WvW North Camp also has concentrated critters.
+<dl class="mapDailyList" id="mapDailyList_Ambient">
+	<dt data-coord="[12140, 13462]">Godslost Swamp</dt><dd>Queensdale ravens and frogs (high concentration at the house porch)</dd>
+	<dt data-coord="[15613, 17626]">Grand Barrier Isle</dt><dd>Bloodtide crows (fast respawn)</dd>
+	<dt data-coord="[22538, 14438]">Hangrammr Climb</dt><dd>Wayfarer ravens</dd>
+</dl>
+<br />
 
-<h2>Aquatic</h2>
-<p><ins data-coord="[23047, 14192]">Grawlenfjord</ins>, <ins data-coord="[11724, 12139]">Lake Delavan</ins>, <ins data-coord="[11030, 16632]">Quetzal Bay</ins>, <ins data-coord="[8418, 19985]">Loch Jezt</ins></p>
+<h2><img src="img/daily/condition.png" alt="Condition" /> Condition Remover</h2>
+Toxic Offshoot events (mostly in Kessex) also has numerous conditions. Use <a href="http://wiki.guildwars2.com/wiki/Condition#Skills_that_remove_conditions">multiple-conditions</a> cleanser for faster job.
+<dl class="mapDailyList" id="mapDailyList_Condition">
+	<dt data-coord="[29749, 12644]">Lowland Burns</dt><dd>Blazeridge noxious branded plants (very high rate of conditions)</dd>
+	<dt data-coord="[6274, 15960]">Vandal's Claim</dt><dd>Brisban bandit mines lots of cripples</dd>
+	<dt data-coord="[11801, 28676]">Desmina's Hallows</dt><dd>Cursed Melandru statues and risen rotmouths</dd>
+</dl>
+<br />
 
-<h2>Ambient</h2>
-<p><ins data-coord="[12140, 13462]">Godslost Swamp</ins>, <ins data-coord="[15613, 17626]">Grand Barrier Isle</ins>, <ins data-coord="[22471, 14518]">Hangrammr Climb</ins>, WvW North Camp</p>
-
-<h2>Condition Remover</h2>
-<p><ins data-coord="[29655, 12621]">Lowland Burns noxious branded plants</ins>, <ins data-coord="[6274, 15960]">Vandal's Claim bandit mines</ins>, Kessex Hills Toxic Offshoot events, <ins data-coord="[11801, 28676]">Orr Melandru statues and risen rotmouths</ins></p>
-
-<h2>Dodger/Interrupter</h2>
+<h2><img src="img/daily/dodger.png" alt="Dodger" /> Dodger/Interrupter</h2>
 Use your sword2/focus4 mesmer to do these quickly.
-<p><ins data-coord="[10024, 13443]">Troll Cave luminescent grub</ins>, <ins data-coord="[13094, 19731]">Southsun karka (suicidal but fast)</ins>, <ins data-coord="[29713, 12573]">Lowland Burns noxious branded plants</ins>, <ins data-coord="[11640, 13161]">QD ettins/bears/oakhearts</ins>,</p>
+<dl class="mapDailyList" id="mapDailyList_Dodger">
+	<dt data-coord="[10024, 13443]">Altar's Windings</dt><dd>Queensdale troll cave grubs</dd>
+	<dt data-coord="[13094, 19731]">Steampipe Steading</dt><dd>Southsun karkas</dd>
+	<dt data-coord="[29655, 12621]">Lowland Burns</dt><dd>Blazeridge noxious branded plants (single fast attacks)</dd>
+	<dt data-coord="[11640, 13161]">Phinney Ridge</dt><dd>Queensdale ettins/bears/oakhearts (multiple slow attackers)</dd>
+</dl>
+<br />
 
-<h2>Reviver</h2>
-If there are others doing the daily, you should revive to 20% then move to the next body, so more people can get credit.
-<p><ins data-coord="[7576, 17591]">Thaumanova Reactor</ins>, <ins data-coord="[6274, 15960]">Vandal's Claim</ins>, <ins data-coord="[14143, 13005]">The Bloodfields (the dead icons do not show)</ins></p>
+<h2><img src="img/daily/reviver.png" alt="Reviver" /> Reviver</h2>
+If there are others doing the daily, you should revive to 20% then move to the next body, so more people can get credit. * indicates the dead NPC icons are not shown on the minimap. If the NPCs are still alive, try to lure enemies to kill them.
+<dl class="mapDailyList" id="mapDailyList_Reviver">
+	<dt data-coord="[7617, 17607]">Thaumanova Reactor</dt><dd>Metrica irradiated asura</dd>
+	<dt data-coord="[6305, 15965]">Vandal's Claim</dt><dd>Brisban minefield</dd>
+	<dt data-coord="[14143, 13005]">The Bloodfields</dt><dd>Gendarran seraphs battlefield*</dd>
+	<dt data-coord="[29670, 12434]">Lowland Burns</dt><dd>Blazeridge sentinel tank squad*</dd>
+</dl>
+</div>
+<br />
 
 <h2>Karma Spender</h2>
 You may need to complete the heart before you can purchase.
@@ -370,7 +399,7 @@ You may need to complete the heart before you can purchase.
 	<dt>Costume Brawl<dt><dd>Ask map chat for brawl, kind people will usually not hit back.</dd>
 	<dt>Crafter<dt><dd>Refine materials you will use.</dd>
 	<dt>Dungeon<dt><dd>Do Citadel of Flame dungeon <a href="http://wiki.guildwars2.com/wiki/Citadel_of_Flame_(explorable)#Ferrah">Path 1</a> (Ferrah).</dd>
-	<dt>Events (Group/Regional/Mentor)<dt><dd>Do world bosses for profit, or Queensdale train for easiness. Or just ask for events in map chat.</dd>
+	<dt>Events (Group/Regional/Mentor)<dt><dd>Do world bosses for profit, or Queensdale events for easiness. Or just ask for events in map chat.</dd>
 	<dt>Feast<dt><dd>Buy Rice in Bulk from any master chef in town.</dd>
 	<dt>Fractal Runner<dt><dd>Start a level 1 or 10 and enter/exit to Dessa's lab until you get the swamp fractal (only need to finish one fractal).</dd>
 	<dt>Laurel Vendor<dt><dd>Teleport to your own borderland and walk south for the vendor. Relog to return to your previous spot.</dd>
@@ -385,14 +414,30 @@ You may need to complete the heart before you can purchase.
 </div>
 
 
-<header class="jsCollapsible" id="mapJPHeader"><img src="img/ui/jp.png" alt="Jumping Puzzles" />Jumping Puzzles</header>
+<header id="mapHeader_Resource" class="jsCollapsible"><img src="img/ui/resource.png" alt="Resource Nodes" />Resource Nodes</header>
 <div>
-<p>The map pin refers to the JP's entrance. JPs in each list are sorted by location. The descriptions are to remind you of which JP it is. The checklist is saved automatically.</p>
-<button id="btnJPsUncheck">Uncheck All</button>
+<div style="width:100%;height:32px"><button id="mapToggle_Resource" class="cssRight">Toggle Icons</button></div>
+<div class="mapResourceList">
+	<div id="mapResource_Metal"></div>
+	<div id="mapResource_Plant"></div>
+	<div id="mapResource_Wood"></div>
+</div>
+<div id="mapLegendSolid" class="mapLegendLine"></div> <strong>Exact</strong> location of that node<br />
+<div id="mapLegendDotted" class="mapLegendLine"></div> <strong>Approximate</strong> vicinity of that node<br />
+<div id="mapLegendDashed" class="mapLegendLine"></div> <strong>Map</strong> has that resource (not a node)<br />
+Rich and T6 nodes reset in about 22 hours after gathering; T1-T5 nodes reset in about 2 hours. You can use alts to re-gather any node. More <a href="http://wiki.guildwars2.com/wiki/Resource#Harvesting">plants</a> on the wiki.<br />
+<br />
+</div>
+
+
+<header id="mapHeader_JP" class="jsCollapsible"><img src="img/ui/jp.png" alt="Jumping Puzzles" />Jumping Puzzles</header>
+<div>
+<p>The map pin refers to the JP's entrance. JPs in each list are sorted by location. The descriptions are to remind you of which JP it is. Clicking on a checkbox here or a JP icon on the map will save the checklist.</p>
+<div class="cssRight"><button id="mapJPUncheck">Uncheck All</button><button id="mapToggle_JP">Toggle Icons</button></div>
 
 <h2>Easy</h2>
 Simple jumps.
-<dl class="mapJP">
+<dl class="mapJPList">
 	<dt data-coord="[17399, 14591]">Urmaug's Secret</dt><dd>LA short climbs up cave cliff</dd>
 	<dt data-coord="[13202, 13674]">Demongrub Pits</dt><dd>Queensdale small cave with grubs and skelks</dd>
 	<dt data-coord="[12781, 15876]">The Collapsed Observatory</dt><dd>Kessex cave ruins behind a river</dd>
@@ -412,7 +457,7 @@ Simple jumps.
 <br />
 <h2>Medium</h2>
 Tricky jumps or interaction required
-<dl class="mapJP">
+<dl class="mapJPList">
 	<dt data-coord="[16300, 14605]">Troll's End</dt><dd>LA stalactite cave with planks</dd>
 	<dt data-coord="[17210, 15481]">Weyandt's Revenge</dt><dd>LA huge pirate themed cave</dd>
 	<dt data-coord="[16670, 14183]">Swashbuckler's Cove</dt><dd>Gendarran light the torches and swim in time</dd>
@@ -435,7 +480,7 @@ Tricky jumps or interaction required
 <br />
 <h2>Hard</h2>
 A marathon of intricate jumps.
-<dl class="mapJP">
+<dl class="mapJPList">
 	<dt data-coord="[15379, 14282]">Not So Secret</dt><dd>Gendarran trampolines aetherblade hideout</dd>
 	<dt data-coord="[9235, 18967]">Goemm's Lab</dt><dd>Metrica floating landmasses in the sky as asura stations</dd>
 	<dt data-coord="[10963, 19197]">Dark Reverie</dt><dd>Caledon nightmare court blue hideout jump across giant mushrooms</dd>

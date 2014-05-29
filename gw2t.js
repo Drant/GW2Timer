@@ -60,12 +60,11 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 140526,
+	int_programVersion: 140528,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
 	prefixChain: "chn_",
-	prefixJP: "jp_",
 	
 	/*
 	 * This UNIX time variable should be updated whenever a server reset related
@@ -465,103 +464,6 @@ O = {
 	},
 	
 	/*
-	 * Creates checkboxes next to JP names and bind event handlers for storing
-	 * their states as a combined string of 0s and 1s, which the index 0 is the
-	 * first JP in the list.
-	 */
-	generateAndInitializeJPChecklist: function()
-	{
-		// Bind JP links
-		$(".mapJP dt").each(function()
-		{
-			var term = $(this).text();
-			$(this).after("&nbsp;<a href='"
-				+ I.getYouTubeLink(term + " Guild Wars 2") + "' target='blank_'>[Y]</a> <a href='"
-				+ I.getWikiLink(term) + "' target='blank_'>[W]</a>");
-			M.bindMapLinkBehavior($(this), M.PinProgram);
-		});
-		
-		// Make checkboxes
-		$(".mapJP dt").each(function()
-		{
-			$(this).after("<input type='checkbox' id='mapJP_" + O.numOfJPs + "' />");
-			O.JPChecklist += "0";
-			O.numOfJPs++;
-		});
-		
-		// Initialize localStorage
-		if (localStorage[O.JPChecklistName] === undefined)
-		{
-			localStorage[O.JPChecklistName] = O.JPChecklist;
-		}
-		else
-		{
-			O.JPChecklist = localStorage[O.JPChecklistName];
-		}
-		
-		var i; // This is the JP checkbox ID number
-		for (i = 0; i < O.numOfJPs; i++)
-		{
-			$("#mapJP_" + i).each(function()
-			{
-				// Convert the digit at ith position in the checklist string to boolean
-				var stateinstring = O.intToBool(parseInt(O.JPChecklist.charAt(i)));
-				$(this).prop("checked", stateinstring);
-				if (stateinstring === false)
-				{
-					$(this).prev().css({color: "#ffcc77"});
-				}
-				else
-				{
-					$(this).prev().css({color: "#ffff00"});
-				}
-				
-			}).change(function()
-			{
-				// Get the checkbox ID that associates itself with that JP
-				var stateincheckbox = O.boolToInt($(this).prop("checked")).toString();
-				var checkboxindex = parseInt(I.getNameFromHTMLID($(this)));
-				if (stateincheckbox === "0")
-				{
-					$(this).prev().css({color: "#ffcc77"});
-				}
-				else
-				{
-					$(this).prev().css({color: "#ffff00"});
-				}
-				
-				// Rewrite the checklist string by updating the digit at the ID/index
-				O.JPChecklist = O.replaceCharAt(O.JPChecklist, checkboxindex, stateincheckbox);
-				localStorage[O.JPChecklistName] = O.JPChecklist;
-			}).hover(
-				// Highlight JP name when hovered over checkbox
-				function()
-				{
-					$(this).prev().css({"text-decoration": "underline"});
-				},
-				function()
-				{
-					$(this).prev().css({"text-decoration": "none"});
-				}
-			);
-		}
-		
-		// The button to clear all JP checkboxes
-		$("#btnJPsUncheck").click(function()
-		{
-			var jpchecklist = "";
-			for (i = 0; i < O.numOfJPs; i++)
-			{
-				$("#mapJP_" + i).prop("checked", false)
-					.prev().css({color: "#ffcc77"});
-				jpchecklist += "0";
-			}
-			O.JPChecklist = jpchecklist;
-			localStorage[O.JPChecklistName] = O.JPChecklist;
-		});
-	},
-	
-	/*
 	 * Binds custom event handlers for options that need immediate visual effect.
 	 */
 	bindOptionsInputs: function()
@@ -616,7 +518,7 @@ O = {
 		/*
 		 * Clears the checklist including the deleted chain.
 		 */
-		$("#btnRestoreAllChains").click(function()
+		$("#optRestoreAllChains").click(function()
 		{
 			var chain;
 			var optionname;
@@ -642,7 +544,7 @@ O = {
 		/*
 		 * Clears the browser storage.
 		 */
-		$("#btnClearLocalStorage").click(function()
+		$("#optClearLocalStorage").click(function()
 		{
 			localStorage.clear();
 			location.reload();
@@ -721,14 +623,7 @@ O = {
 	},
 	enact_bol_showChainPaths: function()
 	{
-		if (O.Options.bol_showChainPaths)
-		{
-			M.setLayerGroupDisplay(M.PathLayer, "show");
-		}
-		else
-		{
-			M.setLayerGroupDisplay(M.PathLayer, "hide");
-		}
+		M.setEntityGroupDisplay(M.ChainPathEntities, O.Options.bol_showChainPaths);
 	},
 	enact_bol_showMap: function()
 	{
@@ -751,8 +646,8 @@ O = {
 C = {
 	
 	/*
-	 * http://gw2timer.com/metas.js holds a giant object containing an array of
-	 * meta event chains, which themselves contain an array of their events.
+	 * http://gw2timer.com/metas.js holds an array of meta event chain objects,
+	 * which themselves contain an array of their events.
 	 * This is referred to by the variable "C.Chains".
 	 */
 	Chains: GW2T_CHAINS_DATA,
@@ -830,6 +725,9 @@ C = {
 				}
 			}
 		}
+		
+		// Finally bind event handlers for the chain checklist
+		O.initializeChainChecklist();
 	},
 	
 	/*
@@ -881,7 +779,8 @@ C = {
 	 */
 	parseEventTime: function(pTime)
 	{
-		/* Time string with the ~ are preformatted as the minimum time plus the
+		/*
+		 * Time string with the ~ are preformatted as the minimum time plus the
 		 * window time (two time strings), for example "1:30:00~30:00" is 1.5 hour
 		 * wait, and 0.5 hour window during which the next event can happen.
 		 */
@@ -968,7 +867,7 @@ C = {
 			default: return;
 		}
 		
-		/* 
+		/*
 		 * A chain bar (HTML) is a rectangle that contains the event chain icon,
 		 * chain title, time, individual events listed, and other elements.
 		 * Lots of CSS IDs and classes here, so update if the CSS changed.
@@ -999,7 +898,7 @@ C = {
 			var b = "&lt;br /&gt;";
 			var w = function(pS)
 			{
-				return "&lt;span class=\"cssGold\"&gt;" + pS + "&lt;/span&gt;";
+				return "&lt;dfn&gt;" + pS + "&lt;/dfn&gt;";
 			};
 			// Tooltip when user hovers over the tiny orange event icon
 			var eventhtmltitle = w("Event Number: ") + e.num + b
@@ -1087,7 +986,8 @@ C = {
 		}
 		for (i = 1; i < pChain.primaryEvents.length; i++)
 		{
-			/* iterated event's xxxSum = the previous primary event's xxx time
+			/*
+			 * iterated event's xxxSum = the previous primary event's xxx time
 			 *		+ the previous primary event's success interim
 			 *		+ the previous primary event's xxxSum;
 			 */
@@ -1101,7 +1001,8 @@ C = {
 			pChain.primaryEvents[i].minavgSum = pChain.primaryEvents[i].minSum
 				+ ~~(Math.abs(pChain.primaryEvents[i].avgSum - pChain.primaryEvents[i].minSum) / 2);
 		}
-		/* min time for the entire chain to finish is the final primary event's
+		/*
+		 * min time for the entire chain to finish is the final primary event's
 		 * minSum plus the final primary event's min.
 		 * Note that i was post-incremented in the for loop after exiting.
 		 */
@@ -1263,7 +1164,7 @@ C = {
 		var spacer;
 		for (var ii in pChain.scheduleIndexes)
 		{
-			spacer = (parseInt(ii) === 0) ? "Schedule: " : " -- ";
+			spacer = (parseInt(ii) === 0) ? "<dfn>Schedule:</dfn><br />" : " <br /> ";
 			minischedulestring = minischedulestring + spacer
 				+ T.getTimeFormatted(
 				{
@@ -1314,6 +1215,9 @@ C = {
 				})
 			);
 		}
+		
+		// Rebind tooltips for the time elements because they were updated
+		I.qTip.init(".chnTitle time");
 	},
 	
 	/*
@@ -1517,7 +1421,7 @@ C = {
 					}
 				}
 			}
-			/* 
+			/*
 			 * Finished scanning the array but couldn't find active event in it,
 			 * now compare with the final event's finish time.
 			 */
@@ -1762,19 +1666,19 @@ C = {
 };
 
 /* =============================================================================
- * @@Map
+ * @@Map and map controls
  * ========================================================================== */
 M = {
 	/*
-	 * http://gw2timer.com/zones.js holds an array of zones (e.g. Queensdale, LA)
-	 * objects containing their rectangular coordinates.
+	 * http://gw2timer.com/zones.js contains zone (e.g. Queensdale, LA) objects
+	 * with their rectangular coordinates.
 	 * This is referred to by the variable "M.Zones".
 	 */
 	Zones: GW2T_ZONES_DATA,
-	isMapAJAXDone: false,
 	Resources: {},
-	resourcesToggleState: false,
+	isMapAJAXDone: false,
 	mousedZoneIndex: null,
+	currentIconSize: 32,
 	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 	cICON_WAYPOINT: "img/event/waypoint.png",
@@ -1797,13 +1701,20 @@ M = {
 	 * Waypoint markers will be stored in the M.Zones object for each zone.
 	 * This is a shortcut reference array for all the waypoints.
 	 */
+	cPinZIndex: 10,
 	PinPersonal: {},
 	PinProgram: {},
 	PinEvent: {},
-	PinPoint: {},
-	Waypoints: new Array(),
-	Pins: new Array(), // General Leaflet markers
-	PathLayer: {},
+	PinOver: {},
+	// All objects in the map (such as paths and markers) shall be called "entities"
+	WaypointEntities: new Array(),
+	PinEntities: new Array(), // Utility pin markers, looks like GW2 personal waypoints
+	DailyEntities: new Array(),
+	JPEntities: new Array(),
+	ChainPathEntities: new Array(),
+	DailyToggleState: true,
+	ResourceToggleState: false,
+	JPToggleState: true,
 	
 	/*
 	 * Initializes the Leaflet map, adds markers, and binds events.
@@ -1826,9 +1737,7 @@ M = {
 			continuousWorld: true
 		}).addTo(M.Map);
 		
-		M.PathLayer = L.layerGroup();
-		
-		// Initialize array to later hold waypoint map markers
+		// Initialize array in zones to later hold waypoint map markers
 		for (var i in M.Zones)
 		{
 			M.Zones[i].waypoints = new Array();
@@ -1979,20 +1888,20 @@ M = {
 		M.Map.on("zoomend", function(pEvent)
 		{
 			var currentzoom = this.getZoom();
-			var newiconsize = 0;
+			M.currentIconSize = 0;
 			
 			// Resize all waypoint icons in all zones
 			switch (currentzoom)
 			{
-				case 7: newiconsize = 32; break;
-				case 6: newiconsize = 28; break;
-				case 5: newiconsize = 24; break;
-				case 4: newiconsize = 20; break;
-				case 3: newiconsize = 16; break;
+				case 7: M.currentIconSize = 32; break;
+				case 6: M.currentIconSize = 28; break;
+				case 5: M.currentIconSize = 24; break;
+				case 4: M.currentIconSize = 20; break;
+				case 3: M.currentIconSize = 16; break;
 			}
-			for (var i in M.Waypoints)
+			for (var i in M.WaypointEntities)
 			{
-				M.changeMarkerIcon(M.Waypoints[i], M.cICON_WAYPOINT, newiconsize);
+				M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.currentIconSize);
 			}
 		});
 	},
@@ -2033,69 +1942,44 @@ M = {
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}),
-			draggable: true
+			draggable: true,
+			zIndexOffset: M.cPinZIndex
 		}).addTo(M.Map);
 	},
 	
 	/*
-	 * Macro function for toggling LayerGroup display (Leaflet doesn't have a
-	 * hide/show LayerGroup method except through its own UI).
-	 * @param object pLayerGroup container of objects like paths and markers.
+	 * Macro function for toggling map entities display (Leaflet doesn't have a
+	 * hide/show markers and paths method except through its own UI).
+	 * @param array pEntityGroup objects like paths and markers.
 	 * @param string pDisplay to show or hide.
 	 */
-	setLayerGroupDisplay: function(pLayerGroup, pDisplay)
+	setEntityGroupDisplay: function(pEntityGroup, pDisplay)
 	{
+		var i;
 		var display;
-		if (pDisplay === undefined)
+		var entity;
+		
+		if (pDisplay === false || pDisplay === "hide" || pDisplay < 0)
 		{
-			pDisplay = "toggle";
+			display = "none";
 		}
-		switch (pDisplay)
+		else
 		{
-			case true: display = "block"; break;
-			case false: display = "none"; break;
-			case "hide": display = "none"; break;
-			case "show": display = "block"; break;
-			case "toggle":
-			{
-				pLayerGroup.eachLayer(function(pLayer)
-				{
-					var currentstyle;
-					
-					if (pLayer._container !== undefined) // If it's a path
-					{
-						currentstyle = pLayer._container.style.display;
-					}
-					else // If it's a marker
-					{
-						currentstyle = pLayer._icon.style.display;
-					}
-					
-					// Modify the display by reference
-					if (currentstyle === "block")
-					{
-						currentstyle = "none";
-					}
-					else
-					{
-						currentstyle = "block";
-					}
-					return;
-				});
-			}
+			display = "block";
 		}
 		
-		pLayerGroup.eachLayer(function(pLayer)
+		for (i in pEntityGroup)
 		{
-			if (pLayer._container !== undefined) // If it's a path
+			entity = pEntityGroup[i];
+			if (entity._container !== undefined) // If it's a vector (like paths)
 			{
-				pLayer._container.style.display = display;
+				entity._container.style.display = display;
 			}
 			else // If it's a marker
 			{
-				pLayer._icon.style.display = display;
+				entity._icon.style.display = display;
 			}
-		});
+		}
 	},
 	
 	/*
@@ -2177,6 +2061,16 @@ M = {
 		var coord = pString.replace(/[^\d,-]/g, "");
 		return coord.split(",");
 	},
+	
+	/*
+	 * Gets the coordinates from the data attribute of an HTML element.
+	 * @param JQObject pElement to extract from.
+	 * @returns array of GW2 coordinates.
+	 */
+	getElementCoordinates: function(pElement)
+	{
+		return M.parseCoordinates(pElement.attr("data-coord"));
+	},
 
 	/*
 	* Converts a poi_id number from maps_floor.json to a valid chat link.
@@ -2254,7 +2148,7 @@ M = {
 
 						var waypoint = L.marker(M.convertGCtoLC(poi.coord),
 						{
-							title: "<span class='mapWP'>" + poi.name + "</span>",
+							title: "<span class='mapLoc mapLoc_WP'>" + poi.name + "</span>",
 							waypoint: poi.name,
 							icon: M.iconWaypoint,
 							link: M.getChatlinkFromPoiID(poi.poi_id)
@@ -2276,7 +2170,7 @@ M = {
 							}
 						}
 						// Assign the waypoint to a single pool
-						M.Waypoints.push(waypoint);
+						M.WaypointEntities.push(waypoint);
 					}
 				}
 			}
@@ -2288,15 +2182,15 @@ M = {
 			 */
 			if (O.Options.bol_showChainPaths === true && I.currentContent !== I.ContentEnum.Map)
 			{
-				M.setLayerGroupDisplay(M.PathLayer, "show");
+				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
 			}
 			// The zoomend event handler doesn't detect the first zoom by prediction
 			if (O.Options.bol_tourPrediction && I.currentContent === I.ContentEnum.Chains
 				&& C.CurrentPrimaryEvent.num !== undefined)
 			{
-				for (var i in M.Waypoints)
+				for (var i in M.WaypointEntities)
 				{
-					M.changeMarkerIcon(M.Waypoints[i], M.cICON_WAYPOINT, M.cLEAFLET_ICON_SIZE);
+					M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.cLEAFLET_ICON_SIZE);
 				}
 			}
 			// Tour to the event on the map if opted
@@ -2319,36 +2213,47 @@ M = {
 			M.bindMapVisualChanges();
 			/*
 			 * Start tooltip plugin after the markers were loaded, because it
-			 * reads the title attribute and convert them into div "tooltips".
+			 * reads the title attribute and convert them into a div "tooltip".
 			 */
-			qTip.init();
+			I.qTip.init(".leaflet-marker-icon");
 		});
 		
 		/*
 		 * Create pin markers that can be moved by user or program.
+		 * ---------------------------------------------------------------------
 		 */
 		M.PinPersonal = M.createPin("img/map/pin_white.png");
 		M.PinProgram = M.createPin("img/map/pin_blue.png");
 		M.PinEvent = M.createPin("img/map/pin_green.png");
-		M.PinPoint = M.createPin("img/map/pin_point.png");
+		M.PinOver = L.marker(M.convertGCtoLC([0,0]),
+		{
+			icon: L.icon(
+			{
+				iconUrl: "img/map/pin_over.png",
+				iconSize: [128, 128],
+				iconAnchor: [64, 64]
+			}),
+			draggable: true,
+			zIndexOffset: M.cPinZIndex
+		}).addTo(M.Map);
 		
-		// Add to array for iterationicon
-		M.Pins.push(M.PinPersonal);
-		M.Pins.push(M.PinProgram);
-		M.Pins.push(M.PinEvent);
-		M.Pins.push(M.PinPoint);
+		// Add to array for iteration
+		M.PinEntities.push(M.PinPersonal);
+		M.PinEntities.push(M.PinProgram);
+		M.PinEntities.push(M.PinEvent);
+		M.PinEntities.push(M.PinOver);
 		
 		// Bind pin click event to get coordinates in the coordinates bar
-		for (var i in M.Pins)
+		for (var i in M.PinEntities)
 		{
-			M.Pins[i].on("click", function()
+			M.PinEntities[i].on("click", function()
 			{
 				var coord = M.convertLCtoGC(this.getLatLng());
 				$("#mapCoordinatesStatic")
 					.val("[" + coord[0] + ", " + coord[1] + "]")
 					.select();
 			});
-			M.Pins[i].on("dblclick", function()
+			M.PinEntities[i].on("dblclick", function()
 			{
 				this.setLatLng(M.convertGCtoLC([0,0]));
 			});
@@ -2396,7 +2301,7 @@ M = {
 				 * only a single entry, that is, their location.
 				 */
 				coords = M.convertGCtoLCMulti(primaryevent.path, 1);
-				M.PathLayer.addLayer(L.polyline(coords, {color: color}));
+				M.ChainPathEntities.push(L.polyline(coords, {color: color}).addTo(M.Map));
 			}
 			
 			/*
@@ -2428,8 +2333,7 @@ M = {
 		}
 		
 		// Initially hide paths, unhide when map populating is complete
-		M.PathLayer.addTo(M.Map);
-		M.setLayerGroupDisplay(M.PathLayer, "hide");
+		M.setEntityGroupDisplay(M.ChainPathEntities, "hide");
 	},
 	
 	/*
@@ -2457,20 +2361,56 @@ M = {
 	{
 		pLink.click(function()
 		{
-			var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
+			var thiscoord = M.getElementCoordinates($(this));
 			M.goToView(thiscoord, pPin, pZoom);
 		});
 		
 		// Move a point pin to that location as a preview
 		pLink.mouseover(function()
 		{
-			var thiscoord = M.parseCoordinates($(this).attr("data-coord"));
-			M.PinPoint.setLatLng(M.convertGCtoLC(thiscoord));
+			var thiscoord = M.getElementCoordinates($(this));
+			M.PinOver.setLatLng(M.convertGCtoLC(thiscoord));
 		});
 		pLink.mouseout(function()
 		{
-			M.PinPoint.setLatLng(M.convertGCtoLC([0,0]));
+			M.PinOver.setLatLng(M.convertGCtoLC([0,0]));
 		});
+	},
+	
+	/*
+	 * Populates the map with dailies location markers.
+	 */
+	generateAndInitializeDailies: function()
+	{
+		$(".mapDailyList dt").each(function()
+		{
+			M.bindMapLinkBehavior($(this), null);
+			
+			var coord = M.getElementCoordinates($(this));
+			var type = I.getNameFromHTMLID($(this).parent());
+			var marker = L.marker(M.convertGCtoLC(coord),
+			{
+				title: "<div class='mapLoc'><dfn>Daily:</dfn> " + type + "</div>"
+			}).addTo(M.Map);
+			marker.setIcon(new L.icon(
+			{
+				iconUrl: "img/daily/" + type.toLowerCase() + ".png",
+				iconSize: [32, 32],
+				iconAnchor: [16, 16]
+			}));
+			marker._icon.style.opacity = "0.9";
+			
+			// Add to array
+			M.DailyEntities.push(marker);
+		});
+		
+		$("#mapToggle_Daily").click(function()
+		{
+			M.DailyToggleState = !(M.DailyToggleState);
+			M.setEntityGroupDisplay(M.DailyEntities, M.DailyToggleState);
+		});
+		
+		I.qTip.init(".leaflet-marker-icon");
 	},
 	
 	/*
@@ -2481,7 +2421,7 @@ M = {
 	{
 		M.Resources = GW2T_RESOURCES_DATA; // This object is embedded in /map.html
 		var i, ii;
-		var resource; // A type of resource, like copper
+		var resource; // A type of resource, like copper ore
 		var marker;
 		
 		var styleMarker = function(pMarker, pResource)
@@ -2492,16 +2432,16 @@ M = {
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}));
-			marker._icon.style.borderRadius = "16px";
-			marker._icon.style.opacity = "0.9";
-			marker._icon.style.border = "2px solid lime";
-			marker._icon.style.display = "none";
+			pMarker._icon.style.borderRadius = "16px";
+			pMarker._icon.style.opacity = "0.9";
+			pMarker._icon.style.border = "2px solid lime";
+			pMarker._icon.style.display = "none";
 		};
 		
 		for (i in M.Resources)
 		{
 			resource = M.Resources[i];
-			resource.NodeLayer = L.layerGroup();
+			resource.NodeEntities = new Array();
 			
 			// Resources with specific node locations
 			if (resource.nodes !== undefined)
@@ -2514,8 +2454,8 @@ M = {
 					{
 						marker._icon.style.border = "2px dotted lime";
 					}
-					// Add to layer group
-					resource.NodeLayer.addLayer(marker);
+					// Add to array
+					resource.NodeEntities.push(marker);
 				}
 			}
 			// Resources with only zone locations (dummy marker in the center)
@@ -2530,8 +2470,8 @@ M = {
 					marker = L.marker(M.convertGCtoLC(coord)).addTo(M.Map);
 					styleMarker(marker, i);
 					marker._icon.style.border = "2px dashed lime";
-					// Add to layer group
-					resource.NodeLayer.addLayer(marker);
+					// Add to array
+					resource.NodeEntities.push(marker);
 				}
 			}
 		}
@@ -2549,17 +2489,211 @@ M = {
 			$("#nod_" + i).change(function()
 			{
 				var thisresource = I.getNameFromHTMLID($(this));
-				M.setLayerGroupDisplay(M.Resources[thisresource].NodeLayer, $(this).prop("checked"));
+				M.setEntityGroupDisplay(M.Resources[thisresource].NodeEntities, $(this).prop("checked"));
 			});
 		}
-		$("#btnNodesToggle").click(function()
+		$("#mapToggle_Resource").click(function()
 		{
-			M.resourcesToggleState = !(M.resourcesToggleState);
+			M.ResourceToggleState = !(M.ResourceToggleState);
 			for (i in M.Resources)
 			{
-				$("#nod_" + i).prop("checked", M.resourcesToggleState);
-				M.setLayerGroupDisplay(M.Resources[i].NodeLayer, M.resourcesToggleState);
+				$("#nod_" + i).prop("checked", M.ResourceToggleState);
+				M.setEntityGroupDisplay(M.Resources[i].NodeEntities, M.ResourceToggleState);
 			}
+		});
+	},
+	
+	/*
+	 * Styles the border color of JP icons based on difficulty.
+	 * @param object pMarker to recolor.
+	 * @param int pDifficulty for color.
+	 */
+	styleJPMarkers: function(pMarker, pDifficulty)
+	{
+		var border = "2px solid lime";
+		switch (pDifficulty)
+		{
+			case 1: border = "2px solid orange"; break;
+			case 2: border = "2px solid red"; break;
+		}
+		pMarker._icon.style.border = border;
+	},
+	
+	/*
+	 * Populates the map with JP location markers with different color depending
+	 * on the difficulty.
+	 */
+	generateAndInitializeJPs: function()
+	{
+		var i;
+		var id = 0;
+		var numdifficulties = $(".mapJPList").length;
+		var createJPMarkers = function(pElement, pID, pDifficulty)
+		{
+			var coord = M.getElementCoordinates(pElement);
+			var marker = L.marker(M.convertGCtoLC(coord),
+			{
+				id: pID,
+				dif: pDifficulty,
+				title: "<div class='mapLoc'><dfn>JP:</dfn> " + pElement.text() + "</div>"
+			}).addTo(M.Map);
+			marker.setIcon(new L.icon(
+			{
+				iconUrl: "img/ui/jp.png",
+				iconSize: [32, 32],
+				iconAnchor: [16, 16]
+			}));
+			marker._icon.style.borderRadius = "50%";
+			marker._icon.style.opacity = "0.9";
+			M.styleJPMarkers(marker, pDifficulty);
+			
+			// Add to array
+			M.JPEntities.push(marker);
+		};
+		
+		// Create the markers, each set pertains to one "mapJPList"
+		for (i = 0; i < numdifficulties; i++)
+		{
+			$(".mapJPList:eq(" + i + ") dt").each(function()
+			{
+				createJPMarkers($(this), id, i);
+				id++;
+			});
+		}
+		
+		$("#mapToggle_JP").click(function()
+		{
+			M.JPToggleState = !(M.JPToggleState);
+			M.setEntityGroupDisplay(M.JPEntities, M.JPToggleState);
+		});
+		
+		I.qTip.init(".leaflet-marker-icon");
+	},
+	
+	/*
+	 * Creates checkboxes next to JP names and bind event handlers for storing
+	 * their states as a combined string of 0s and 1s, which the index 0 is the
+	 * first JP in the list.
+	 */
+	generateAndInitializeJPChecklistHTML: function()
+	{
+		// Bind JP links
+		$(".mapJPList dt").each(function()
+		{
+			var term = $(this).text();
+			$(this).after("&nbsp;<a href='"
+				+ I.getYouTubeLink(term + " Guild Wars 2") + "' target='blank_'>[Y]</a> <a href='"
+				+ I.getWikiLink(term) + "' target='blank_'>[W]</a>");
+			M.bindMapLinkBehavior($(this), null);
+			
+			// Make checkboxes
+			$(this).append("<input type='checkbox' id='mapJP_" + O.numOfJPs + "' />");
+			O.JPChecklist += "0";
+			O.numOfJPs++;
+		});
+		
+		// Initialize localStorage
+		if (localStorage[O.JPChecklistName] === undefined)
+		{
+			localStorage[O.JPChecklistName] = O.JPChecklist;
+		}
+		else
+		{
+			O.JPChecklist = localStorage[O.JPChecklistName];
+		}
+		
+		var i; // This is the JP checkbox ID number
+		for (i = 0; i < O.numOfJPs; i++)
+		{
+			$("#mapJP_" + i).each(function()
+			{
+				/*
+				 * Read and enact the state of the JP checklist.
+				 */
+				// Convert the digit at ith position in the checklist string to boolean
+				var stateinstring = O.intToBool(parseInt(O.JPChecklist.charAt(i)));
+				$(this).prop("checked", stateinstring);
+				if (stateinstring === false)
+				{
+					$(this).parent().css({color: "#ffcc77"});
+				}
+				else
+				{
+					$(this).parent().css({color: "#ffff00"});
+					M.JPEntities[i]._icon.style.border = "2px solid black";
+				}
+				
+			}).click(function(pEvent)
+			{
+				/*
+				 * The checkbox is inside the JP name tag (its parent), the line
+				 * below stops it from triggering the JP name's event handler.
+				 */
+				pEvent.stopPropagation();
+
+				// Get the checkbox ID that associates itself with that JP
+				var stateincheckbox = O.boolToInt($(this).prop("checked")).toString();
+				var checkboxindex = parseInt(I.getNameFromHTMLID($(this)));
+				if (stateincheckbox === "0")
+				{
+					$(this).parent().css({color: "#ffcc77"});
+					M.styleJPMarkers(M.JPEntities[checkboxindex], M.JPEntities[checkboxindex].options.dif);
+				}
+				else
+				{
+					$(this).parent().css({color: "#ffff00"});
+					M.JPEntities[checkboxindex]._icon.style.border = "2px solid black";
+				}
+				
+				// Rewrite the checklist string by updating the digit at the ID/index
+				O.JPChecklist = O.replaceCharAt(O.JPChecklist, checkboxindex, stateincheckbox);
+				localStorage[O.JPChecklistName] = O.JPChecklist;
+				
+			}).hover(
+				// Highlight JP name when hovered over checkbox
+				function()
+				{
+					$(this).parent().css({"text-decoration": "underline"});
+				},
+				function()
+				{
+					$(this).parent().css({"text-decoration": "none"});
+				}
+			);
+	
+			/*
+			 * Duplicate the behavior of JP checklist and zoom by mirroring the
+			 * action of clicking on the JP icon with the associated HTML element.
+			 */
+			(function(pIndex)
+			{
+				// Click associated checkbox when clicked
+				M.JPEntities[pIndex].on("click", function()
+				{
+					$("#mapJP_" + pIndex).trigger("click");
+				});
+				// Zoom in when double clicked
+				M.JPEntities[pIndex].on("dblclick", function()
+				{
+					$(".mapJPList dt:eq(" + pIndex + ")").trigger("click");
+				});
+			})(i);
+		}
+		
+		// The button to clear all JP checkboxes
+		$("#mapJPUncheck").click(function()
+		{
+			var jpchecklist = "";
+			for (i = 0; i < O.numOfJPs; i++)
+			{
+				$("#mapJP_" + i).prop("checked", false)
+					.parent().css({color: "#ffcc77"});
+				M.styleJPMarkers(M.JPEntities[i], M.JPEntities[i].options.dif);
+				
+				jpchecklist += "0";
+			}
+			O.JPChecklist = jpchecklist;
+			localStorage[O.JPChecklistName] = O.JPChecklist;
 		});
 	}
 	
@@ -3122,7 +3256,7 @@ K = {
 		{
 			$(this).attr("stroke", "black");
 		});
-		$(".itemClockIcon img").each(function()
+		$("#itemClockIcons img").each(function()
 		{
 			$(this).css(
 			{
@@ -3274,7 +3408,8 @@ K = {
 					moviePath: "bin/ZeroClipboard.swf"
 				})
 			);
-			/* Zero Clipboard works by overlaying an invisible Flash object over the
+			/*
+			 * Zero Clipboard works by overlaying an invisible Flash object over the
 			 * target (the waypoint icons). When a user click on it the data
 			 * attribute of the target is loaded to the user's clipboard. The code
 			 * below are additional stuff to execute after.
@@ -3295,7 +3430,7 @@ K = {
 			});
 		}
 	}
-}; // END OF K OBJECT
+};
 
 /* =============================================================================
  * @@Interface and UI/jQuery bindings in HTML
@@ -3303,7 +3438,9 @@ K = {
 I = {
 	cContentPane: "#paneContent",
 	cSiteName: "GW2Timer.com",
+	URLArguments: {},
 	consoleTimeout: {},
+	URLNamePage: "page",
 	
 	// HTML/CSS pixel units
 	cPANE_CLOCK_HEIGHT: 360,
@@ -3401,6 +3538,9 @@ I = {
 		// Initial sync of the sleep detection variable
 		K.awakeTimestampPrevious = T.getUNIXSeconds();
 		
+		// Parse and store the URL arguments
+		I.URLArguments = I.getURLArguments();
+		
 		// Detect small screen devices
 		if (window.innerWidth <= I.cSMALL_SCREEN_WIDTH && window.innerHeight <= I.cSMALL_SCREEN_HEIGHT)
 		{
@@ -3444,6 +3584,44 @@ I = {
 	},
 	
 	/*
+	 * Extracts arguments from the URL string "?query=argument&example=etc".
+	 * @returns object containing the value pairs.
+	 */
+	getURLArguments: function()
+	{
+		var urlargs = window.location.search.substr(1).split('&');
+		if (urlargs === "")
+		{
+			return {};
+		}
+		
+		var argsobject = {};
+		for (var i = 0; i < urlargs.length; ++i)
+		{
+			var p = urlargs[i].split("=");
+			if (p.length !== 2)
+			{
+				continue;
+			}
+			argsobject[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+		}
+		return argsobject;
+	},
+	
+	/*
+	 * Does the commands within the address bar after the site's domain name.
+	 * @pre URLArguments object was initialized by extraction.
+	 */
+	enactURLArguments: function()
+	{
+		// Go to the content layer requested
+		if (I.URLArguments[I.URLNamePage] !== undefined)
+		{
+			$("#menu" + I.URLArguments[I.URLNamePage]).trigger("click");
+		}
+	},
+	
+	/*
 	 * Extracts the "name" part of an HTML element's ID. Most iterable elements'
 	 * IDs were manually named as [prefix]_[Name].
 	 * @param object jQuery element object.
@@ -3452,25 +3630,6 @@ I = {
 	getNameFromHTMLID: function(pJQObject)
 	{
 		return pJQObject.attr("id").split("_")[1];
-	},
-	
-	/*
-	 * Gets the ?query=argument&example=etc arguments.
-	 * @returns object containing the value pairs.
-	 */
-	getURLArguments: function()
-	{
-		var urlargs = window.location.search.substr(1).split('&');
-
-		if (urlargs === "") return {};
-		var argsobject = {};
-		for (var i = 0; i < urlargs.length; ++i)
-		{
-			var p = urlargs[i].split("=");
-			if (p.length !== 2) continue;
-			argsobject[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-		}
-		return argsobject;
 	},
 	
 	/*
@@ -3492,44 +3651,6 @@ I = {
 	getYouTubeLink: function(pString)
 	{
 		return "http://www.youtube.com/results?search_query=" + escape(pString);
-	},
-	
-	/*
-	 * Makes the tooltip appear top of the cursor instead of below if it's too
-	 * near the bottom of the window (to avoid overflow).
-	 */
-	initializeTooltip: function()
-	{
-		$("#panelRight").mousemove(function(pEvent)
-		{
-			/*
-			$("#jsConsole").html(pEvent.pageX + ", " + pEvent.pageY + "<br />"
-				+ $("#qTip").width() + ", " + $("#qTip").height() + "<br />"
-				+ $(window).width() + ", " + $(window).height());
-			*/
-			if ($("#qTip").height() + pEvent.pageY + I.cTOOLTIP_ADD_OFFSET_Y
-				> $(window).height())
-			{
-				qTip.offsetY = -($("#qTip").height()) - I.cTOOLTIP_ADD_OFFSET_Y;
-			}
-			else
-			{
-				qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
-			}
-			qTip.offsetX = I.cTOOLTIP_DEFAULT_OFFSET_X;
-		});
-		$("#panelLeft").mousemove(function(pEvent)
-		{
-			if ($("#qTip").width() + pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $("#paneMap").width())
-			{
-				qTip.offsetX = -($("#qTip").width());
-			}
-			else
-			{
-				qTip.offsetY = -50;
-				qTip.offsetX = 0;
-			}
-		});
 	},
 	
 	/*
@@ -3620,6 +3741,7 @@ I = {
 		I.initializeTooltip();
 		I.initializeUIforMenu();
 		I.initializeUIforChains();
+		I.enactURLArguments();
 	},
 	
 	/*
@@ -3680,7 +3802,8 @@ I = {
 		 */
 		$("#paneMenu span").each(function()
 		{
-			/* The menu buttons' IDs are named as menuSomething, change this if
+			/*
+			 * The menu buttons' IDs are named as menuSomething, change this if
 			 * it was changed in the HTML.
 			 */
 			var menuprefix = "menu";
@@ -3691,44 +3814,38 @@ I = {
 				I.currentContent = layer.substring(menuprefix.length, layer.length);
 				I.currentContentLayer = "#layer" + I.currentContent;
 				
-				if (O.Options.bol_showChainPaths)
+				switch (I.currentContent)
 				{
-					switch (I.currentContent)
+					case I.ContentEnum.Chains:
 					{
-						case I.ContentEnum.Chains:
+						$("#jsTop").hide();
+						$("#jsCenter").hide();
+						/*
+						 * Get the current event map view it by triggering
+						 * the binded event names.
+						 */ 
+						if (O.Options.bol_tourPrediction)
 						{
-							M.setLayerGroupDisplay(M.PathLayer, "show");
-							$("#jsTop").hide();
-							$("#jsCenter").hide();
-							/*
-							 * Get the current event map view it by triggering
-							 * the binded event names.
-							 */ 
-							if (O.Options.bol_tourPrediction)
-							{
-								$("#chnEvent_" + C.CurrentChain.alias + "_"
-									+ C.CurrentPrimaryEvent.num).trigger("click");
-							}
-						} break;
-						case I.ContentEnum.Help:
-						{
-							M.setLayerGroupDisplay(M.PathLayer, "show");
-							$("#jsTop").show();
-							$("#jsCenter").hide();
-						} break;
-						case I.ContentEnum.Map:
-						{
-							M.setLayerGroupDisplay(M.PathLayer, "hide");
-							$("#jsTop").hide();
-							$("#jsCenter").show().trigger("click");
-						} break;
-						default:
-						{
-							M.setLayerGroupDisplay(M.PathLayer, "show");
-							$("#jsTop").hide();
-							$("#jsCenter").hide();
-						} break;
-					}
+							$("#chnEvent_" + C.CurrentChain.alias + "_"
+								+ C.CurrentPrimaryEvent.num).trigger("click");
+						}
+					} break;
+					case I.ContentEnum.Help:
+					{
+						$("#jsTop").show();
+						$("#jsCenter").hide();
+					} break;
+					case I.ContentEnum.Map:
+					{
+						$("#jsTop").hide();
+						$("#jsCenter").show().trigger("click");
+						M.PinEvent.setLatLng(M.convertGCtoLC([0,0]));
+					} break;
+					default:
+					{
+						$("#jsTop").hide();
+						$("#jsCenter").hide();
+					} break;
 				}
 				
 				$("#paneContent article").hide(); // Hide all layers
@@ -3741,6 +3858,21 @@ I = {
 				{
 					width: "show"
 				}, 200);
+				// Update the address bar URL with the current layer name
+				history.replaceState("", null, "?" + I.URLNamePage + "=" + I.currentContent);
+				
+				// Also hide chain paths if on the map layer
+				if (O.Options.bol_showChainPaths)
+				{
+					if (I.currentContent === I.ContentEnum.Map)
+					{
+						M.setEntityGroupDisplay(M.ChainPathEntities, "hide");
+					}
+					else
+					{
+						M.setEntityGroupDisplay(M.ChainPathEntities, "show");
+					}
+				}
 			});
 		});
 
@@ -3806,12 +3938,18 @@ I = {
 			// Bind map zone links
 			$(".mapZones li").each(function()
 			{
-				M.bindMapLinkBehavior($(this), M.PinProgram, "sky");
+				M.bindMapLinkBehavior($(this), null, "sky");
 			});
+			// Create daily markers
+			$("#mapHeader_Daily").one("click", M.generateAndInitializeDailies);
 			// Create node markers and checkboxes
-			$("#mapResourceHeader").one("click", M.generateAndInitializeResourceNodes);
+			$("#mapHeader_Resource").one("click", M.generateAndInitializeResourceNodes);
 			// Create JP checklist
-			$("#mapJPHeader").one("click", O.generateAndInitializeJPChecklist);
+			$("#mapHeader_JP").one("click", function()
+			{
+				M.generateAndInitializeJPs();
+				M.generateAndInitializeJPChecklistHTML();
+			});
 		});
 	},
 	
@@ -3872,6 +4010,118 @@ I = {
 		$("#headerTimetable").one("click", function(){
 		   C.initializeTimetableHTML(); 
 		});
+	},
+	
+	/*
+	 * Initializes custom tooltips and sets mouse-tooltip behavior.
+	 */
+	initializeTooltip: function()
+	{
+		// Bind the following tags with the title attribute for tooltip
+		I.qTip.init("a, fieldset, label, img, input, button, ins, span");
+		
+		/*
+		 * Make the tooltip appear top of the cursor instead of below if it's too
+		 * near the bottom of the window (to avoid overflow).
+		*/
+		$("#panelRight").mousemove(function(pEvent)
+		{
+			/*
+			$("#jsConsole").html(pEvent.pageX + ", " + pEvent.pageY + "<br />"
+				+ $("#qTip").width() + ", " + $("#qTip").height() + "<br />"
+				+ $(window).width() + ", " + $(window).height());
+			*/
+			if ($("#qTip").height() + pEvent.pageY + I.cTOOLTIP_ADD_OFFSET_Y
+				> $(window).height())
+			{
+				I.qTip.offsetY = -($("#qTip").height()) - I.cTOOLTIP_ADD_OFFSET_Y;
+			}
+			else
+			{
+				I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
+			}
+			I.qTip.offsetX = I.cTOOLTIP_DEFAULT_OFFSET_X;
+		});
+		$("#panelLeft").mousemove(function(pEvent)
+		{
+			if ($("#qTip").width() + pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $("#paneMap").width())
+			{
+				I.qTip.offsetX = -($("#qTip").width());
+			}
+			else
+			{
+				I.qTip.offsetY = -50;
+				I.qTip.offsetX = 0;
+			}
+		});
+	},
+	
+	/*
+	 * qTip (2008 minified) tooltip plugin by Craig Erskine http://qrayg.com
+	 * Placed here instead of plugin.js because it's customizable and so small.
+	 */
+	qTip:
+	{
+		name: "qTip",
+		offsetX: -180,
+		offsetY: 15,
+		a: null,
+		/*
+		 * Binds matched elements with title attribute to show a popup div with
+		 * that title as content when hovered over the element.
+		 * @param string s DOM query using standard querySelectorAll function.
+		 */
+		init: function(s)
+		{
+			if (!a) var a = "qTip";
+			var b = document.getElementById(a);
+			b || (b = document.createElementNS ? document.createElementNS("http://www.w3.org/1999/xhtml", "div")
+				: document.createElement("div"), b.setAttribute("id", a),
+				document.getElementsByTagName("body").item(0).appendChild(b));
+			if (document.getElementById)
+			{
+				if (this.a = document.getElementById(this.name)) document.onmousemove = function(a)
+				{
+					I.qTip.move(a);
+				};
+				var c = document.querySelectorAll(s);
+				for (var e = 0; e < c.length; e++)
+				{
+					if (a = c[e], b = a.getAttribute("title"))
+					{
+						a.setAttribute("tiptitle", b), a.removeAttribute("title"),
+							a.removeAttribute("alt"), a.onmouseover = function()
+						{
+							I.qTip.show(this.getAttribute("tiptitle"));
+						}, a.onmouseout = function()
+						{
+							I.qTip.hide();
+						};
+					}
+				}
+			}
+		},
+		move: function(a)
+		{
+			var x = 0,
+				y = 0;
+			document.all ? (x = document.documentElement && document.documentElement.scrollLeft
+				? document.documentElement.scrollLeft : document.body.scrollLeft,
+				y = document.documentElement && document.documentElement.scrollTop
+				? document.documentElement.scrollTop : document.body.scrollTop,
+				x += window.event.clientX, y += window.event.clientY
+			) : (x = a.pageX, y = a.pageY);
+			this.a.style.left = x + this.offsetX + "px";
+			this.a.style.top = y + this.offsetY + "px";
+		},
+		show: function(a)
+		{
+			this.a && (this.a.innerHTML = a, this.a.style.display = "block");
+		},
+		hide: function()
+		{
+			this.a && (this.a.innerHTML = "", this.a.style.display = "none");
+		}
 	}
 };
 
@@ -3881,7 +4131,6 @@ I = {
 I.initializeFirst(); // initialize variables that need to be first
 O.initializeOptions(); // load stored or default options to the HTML input
 C.initializeSchedule(); // compute event data and write HTML
-O.initializeChainChecklist(); // bind event handlers for checklist
 M.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
 I.initializeUI(); // bind event handlers for misc written content

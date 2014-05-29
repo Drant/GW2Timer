@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x720, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.05.25 modified - 2014.04.18 created
+	Version: 2014.05.28 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -108,6 +108,10 @@ div#qTip {
 	box-shadow: 0px 0px 2px #555;
 	opacity: 0.9;
 }
+div#qTip dfn { /* Highlight color for important text in tooltip */
+	background: none;
+	color: #ffcc77;
+}
 
 /* Custom cursors
 ----------------------------------------------------------------------------- */
@@ -119,7 +123,7 @@ html, body,
 }
 
 a, input, label, button,
-#mapCompassButton, #paneMenu span, .itemClockIconOver img,
+#mapCompassButton, #paneMenu span, #itemClockWaypoints img,
 .cntComposition h1, .cntComposition header,
 .jsTableOfContents ol li, .jsCollapsibleDone,
 #layerChains header, .chnCheck:hover, .chnTitle h2, .chnDetailsLinks ins,
@@ -127,8 +131,8 @@ a, input, label, button,
 	cursor: url("img/cursor/pointer.png"), pointer;
 }
 
-.itemClockIcon img,
-.cntComposition ins, .mapZones li, .mapJP dt, .chnDetails ol li span {
+#itemClockIcons img,
+.cntComposition ins, .mapZones li, .mapJPList dt, .chnDetails ol li span {
 	cursor: url("img/cursor/zoom.png"), zoom-in;
 }
 
@@ -177,8 +181,8 @@ a, input, label, button,
 	color: #ddff77;
 	opacity: 0.6;
 }
-#mapCoordinatesRegion {
-	width: 120px !important; 
+input#mapCoordinatesRegion {
+	width: 120px; 
 }
 
 #itemMapButtons {
@@ -204,15 +208,18 @@ a, input, label, button,
 	opacity: 1;
 }
 
-.mapWP {
+.mapLoc {
 	font-family: Menomonia;
 	font-size: 20px;
 	line-height: 110%;
 	letter-spacing: -1px;
-	color: #ffcc77;
+	color: white;
 	text-shadow:
 		0px 0px 2px black,
 		1px 1px 1px black;
+}
+.mapLoc_WP {
+	color: #ffcc77;
 }
 
 
@@ -244,12 +251,19 @@ a, input, label, button,
 }
 
 #paneClockBackground {
+	position: absolute;
 	width: 360px; height: 360px;
 	background: url("img/background/globe.jpg") no-repeat center;
 	opacity: 0;
 }
 
-.itemClockIcon img {
+#itemClockIcons {
+	position: absolute;
+	width: 360px; height: 360px;
+	background: url("img/background/face.png") no-repeat center;
+}
+
+#itemClockIcons img {
 	position: absolute;
 	width: 64px; height: 64px;
 	border: 1px solid black;
@@ -268,11 +282,11 @@ a, input, label, button,
 	top: 148px; left: 4px;
 }
 
-.itemClockIconOver img {
+#itemClockWaypoints img {
 	position: absolute;
 	width: 32px; height: 32px;
 }
-.itemClockIconOver img:active {
+#itemClockWaypoints img:active {
 	opacity: 0.5;
 }
 #itemClockWaypoint0 {
@@ -288,24 +302,25 @@ a, input, label, button,
 	top: 164px; left: 52px;
 }
 
-#itemClock { /* the clock */
+#itemClock { /* The clock */
 	position: absolute;
 	top: 70px; left: 70px;
 	width: 220px; height: 220px;
-	stroke: black;
+	stroke: #111;
 	stroke-linecap: round;
-	fill: #eef;
+	fill: none;
+	/*fill: #eef;*/
 }
-#clkFace { /* clock circumference */
+#clkFace { /* Clock circumference */
 	stroke-width: 2px;
 }
-#clkSector {
+#clkSector { /* Quadrant slice of the clock */
 	stroke-width: 1px;
 	stroke: chartreuse ;
 	fill: lime;
 	opacity: 0.2;
 }
-#clkTicks { /* hour separator lines */
+#clkTicks { /* Hour separator lines */
 	stroke-width: 2px;
 	opacity: 0.1;
 } 
@@ -320,7 +335,7 @@ a, input, label, button,
 #clkSecondHand {
 	stroke-width: 1px;
 	stroke: red;
-	opacity: 0; /* second hand is not used */
+	opacity: 0; /* Second hand is not used */
 } 
 #clkNumbers {
 	font-family: sans-serif;
@@ -352,6 +367,31 @@ a, input, label, button,
 }
 #itemTimeServer {
 	right: 10px; bottom: 10px;
+}
+#itemSocial {
+	position: absolute;
+	bottom: 28px;
+	right: 10px;
+	opacity: 0.8;
+}
+#itemSocial:hover a {
+	opacity: 0.6;
+}
+#itemSocial a {
+	display: inline-block;
+	width: 16px; height: 16px;
+}
+#itemSocial a:hover {
+	opacity: 1;
+}
+#itemSocialInfo {
+	background: url("img/ui/info.png") no-repeat center;
+}
+#itemSocialFB {
+	background: url("img/ui/fb.png") no-repeat center;
+}
+#itemSocialTT {
+	background: url("img/ui/tt.png") no-repeat center;
 }
 
 /* @@Bar menu
@@ -550,18 +590,18 @@ a, input, label, button,
 	margin-left: 12px;
 }
 
-.cntComposition ins, .mapZones li, .mapJP dt {
+.cntComposition ins, .mapLinks li, .mapLinks dt {
 	font-weight: bold;
 	color: #ffcc77;
 }
-.cntComposition ins:hover, .mapZones li:hover, .mapJP dt:hover {
+.cntComposition ins:hover, .mapLinks li:hover, .mapLinks dt:hover {
 	color: #ffdda6;
 }
-.cntComposition ins:active, .mapZones li:active, .mapJP dt:active {
+.cntComposition ins:active, .mapLinks li:active, .mapLinks dt:active {
 	color: white;
 }
 
-.mapJP a {
+.mapJPList a {
 	text-decoration: none;
 }
 
@@ -829,7 +869,12 @@ a, input, label, button,
 	display: table-cell;
 }
 
-.mapJP input, #btnJPsUncheck {
+.mapDailyLists h2 img {
+	width: 24px; height: 24px;
+	vertical-align: middle;
+}
+
+.mapJPList input {
 	float: right;
 }
 
@@ -898,9 +943,6 @@ label:hover {
 .cssRight {
 	float: right;
 }
-.cssGold {
-	color: #ffcc77;
-}
 
 /* =============================================================================
  *  @@Palette color derived from GW2 user interface.
@@ -918,14 +960,14 @@ paletteText {
 	color: #ff8844; /* Orange event name in panel */
 	color: #dd8800; /* Orange AP */
 	color: #ffbb44; /* Gold guild chat name */
-	color: #44dd44; /* Green laurel */
-	color: #009900; /* Green stats */
+	color: #ffcc77; /* Gold notice/waypoint */
 	color: #ffeebb; /* Cream window and UI title */
 	color: #ffeeaa; /* Cream guild chat and item count */
-	color: #ffcc77; /* Cream notice/waypoint */
 	color: #ffaa22; /* Yellow orange chain title in event panel */
 	color: #ffff00; /* Yellow chat squad name */
 	color: #ffff66; /* Yellow chat squad */
+	color: #44dd44; /* Green laurel */
+	color: #009900; /* Green stats */
 	color: #bbcc77; /* Green time */
 	color: #ddff77; /* Green bright chat notice */
 	color: #88ff88; /* Green chat say name */
