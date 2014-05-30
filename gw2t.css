@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x720, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.05.28 modified - 2014.04.18 created
+	Version: 2014.05.29 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -132,7 +132,7 @@ a, input, label, button,
 }
 
 #itemClockIcons img,
-.cntComposition ins, .mapZones li, .mapJPList dt, .chnDetails ol li span {
+.cntComposition ins, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
 	cursor: url("img/cursor/zoom.png"), zoom-in;
 }
 
@@ -190,15 +190,13 @@ input#mapCoordinatesRegion {
 	bottom: 4px; right: 12px;
 	z-index: 9;
 }
-#itemMapButtons span { /* Website name */
+#itemMapButtons a { /* Website name */
 	vertical-align: middle;
 	font-family: Menomonia;
 	font-size: 18px;
-	opacity: 0.6;
-}
-#itemMapButtons span a {
 	text-decoration: none;
 	color: #ffeebb;
+	opacity: 0.6;
 }
 #mapCompassButton {
 	vertical-align: middle;
@@ -322,7 +320,7 @@ input#mapCoordinatesRegion {
 }
 #clkTicks { /* Hour separator lines */
 	stroke-width: 2px;
-	opacity: 0.1;
+	opacity: 0.2;
 } 
 #clkHourHand {
 	stroke-width: 4px;
@@ -374,24 +372,15 @@ input#mapCoordinatesRegion {
 	right: 10px;
 	opacity: 0.8;
 }
-#itemSocial:hover a {
-	opacity: 0.6;
-}
 #itemSocial a {
+	text-decoration: none;
+}
+#itemSocial a img {
 	display: inline-block;
 	width: 16px; height: 16px;
 }
-#itemSocial a:hover {
-	opacity: 1;
-}
-#itemSocialInfo {
-	background: url("img/ui/info.png") no-repeat center;
-}
-#itemSocialFB {
-	background: url("img/ui/fb.png") no-repeat center;
-}
-#itemSocialTT {
-	background: url("img/ui/tt.png") no-repeat center;
+#itemSocial a img:hover {
+	padding-bottom: 4px;
 }
 
 /* @@Bar menu
@@ -888,17 +877,8 @@ input#mapCoordinatesRegion {
 
 .mapLegendLine {
 	display: inline-block;
-	width: 64px; height: 20px;
-	margin-right: 12px;
-}
-#mapLegendSolid {
-	border-bottom: 2px solid lime;
-}
-#mapLegendDashed {
-	border-bottom: 2px dashed lime;
-}
-#mapLegendDotted {
-	border-bottom: 2px dotted lime;
+	width: 64px; height: 2px;
+	margin: auto 12px 5px 6px;
 }
 
 /* @@Options layer

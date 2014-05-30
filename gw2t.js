@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 140528,
+	int_programVersion: 140529,
 	programVersionName: "int_programVersion",
 	
 	prefixOption: "opt_",
@@ -1221,7 +1221,7 @@ C = {
 	},
 	
 	/*
-	 * Update the current chain bar's time as a countup since it began.
+	 * Updates the current chain bar's time as a countup since it began.
 	 */
 	updateCurrentChainTimeHTML: function()
 	{
@@ -1236,7 +1236,7 @@ C = {
 	},
 	
 	/*
-	 * Create a list similar to the schedule chains HTML list but with bare
+	 * Creates a list similar to the schedule chains HTML list but with bare
 	 * chain titles and static schedule time.
 	 */
 	initializeTimetableHTML: function()
@@ -2064,7 +2064,7 @@ M = {
 	
 	/*
 	 * Gets the coordinates from the data attribute of an HTML element.
-	 * @param JQObject pElement to extract from.
+	 * @param jqobject pElement to extract from.
 	 * @returns array of GW2 coordinates.
 	 */
 	getElementCoordinates: function(pElement)
@@ -2184,6 +2184,11 @@ M = {
 			{
 				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
 			}
+			/*
+			 * Start tooltip plugin after the markers were loaded, because it
+			 * reads the title attribute and convert them into a div "tooltip".
+			 */
+			I.qTip.init(".leaflet-marker-icon");
 			// The zoomend event handler doesn't detect the first zoom by prediction
 			if (O.Options.bol_tourPrediction && I.currentContent === I.ContentEnum.Chains
 				&& C.CurrentPrimaryEvent.num !== undefined)
@@ -2211,11 +2216,6 @@ M = {
 		{
 			M.isMapAJAXDone = true;
 			M.bindMapVisualChanges();
-			/*
-			 * Start tooltip plugin after the markers were loaded, because it
-			 * reads the title attribute and convert them into a div "tooltip".
-			 */
-			I.qTip.init(".leaflet-marker-icon");
 		});
 		
 		/*
@@ -2353,7 +2353,7 @@ M = {
 	/*
 	 * Binds specified link to move a pinpoint to the location when hovered, and
 	 * to view the map location when clicked.
-	 * @param JQObject pLink to bind.
+	 * @param jqobject pLink to bind.
 	 * @param object pPin marker to move.
 	 * @param string pZoom level when viewed location.
 	 */
@@ -2382,7 +2382,7 @@ M = {
 	 */
 	generateAndInitializeDailies: function()
 	{
-		$(".mapDailyList dt").each(function()
+		$(".mapDailyLists dt").each(function()
 		{
 			M.bindMapLinkBehavior($(this), null);
 			
@@ -3438,9 +3438,9 @@ K = {
 I = {
 	cContentPane: "#paneContent",
 	cSiteName: "GW2Timer.com",
+	cURLNamePage: "page",
 	URLArguments: {},
 	consoleTimeout: {},
-	URLNamePage: "page",
 	
 	// HTML/CSS pixel units
 	cPANE_CLOCK_HEIGHT: 360,
@@ -3579,7 +3579,7 @@ I = {
 		// Remember the program's version
 		localStorage[O.programVersionName] = O.programVersion;
 		
-		// Default content tab
+		// Default content layer
 		I.currentContent = I.ContentEnum.Chains;
 	},
 	
@@ -3615,25 +3615,25 @@ I = {
 	enactURLArguments: function()
 	{
 		// Go to the content layer requested
-		if (I.URLArguments[I.URLNamePage] !== undefined)
+		if (I.URLArguments[I.cURLNamePage] !== undefined)
 		{
-			$("#menu" + I.URLArguments[I.URLNamePage]).trigger("click");
+			$("#menu" + I.URLArguments[I.cURLNamePage]).trigger("click");
 		}
 	},
 	
 	/*
 	 * Extracts the "name" part of an HTML element's ID. Most iterable elements'
 	 * IDs were manually named as [prefix]_[Name].
-	 * @param object jQuery element object.
+	 * @param jqobject pElement to extract.
 	 * @returns string name of the element's ID.
 	 */
-	getNameFromHTMLID: function(pJQObject)
+	getNameFromHTMLID: function(pElement)
 	{
-		return pJQObject.attr("id").split("_")[1];
+		return pElement.attr("id").split("_")[1];
 	},
 	
 	/*
-	 * Converts a search to GW2 wiki http link.
+	 * Converts a search query to GW2 wiki http link.
 	 * @param string pString search entry.
 	 * @returns string wiki link.
 	 */
@@ -3644,7 +3644,7 @@ I = {
 	},
 	
 	/*
-	 * Converts a search to YouTube http link.
+	 * Converts a search query to YouTube http link.
 	 * @param string pString search entry.
 	 * @returns string youtube link.
 	 */
@@ -3655,8 +3655,8 @@ I = {
 	
 	/*
 	 * Scrolls to an element at specified rate.
-	 * @param jqelement pElement to scroll to.
-	 * @param jqelement pContainerOfElement container with the scroll bar.
+	 * @param object pElement to scroll to.
+	 * @param object pContainerOfElement container with the scroll bar.
 	 * @param int or string pTime duration to animate.
 	 */
 	scrollToElement: function(pElement, pContainerOfElement, pTime)
@@ -3859,7 +3859,7 @@ I = {
 					width: "show"
 				}, 200);
 				// Update the address bar URL with the current layer name
-				history.replaceState("", null, "?" + I.URLNamePage + "=" + I.currentContent);
+				history.replaceState("", null, "?" + I.cURLNamePage + "=" + I.currentContent);
 				
 				// Also hide chain paths if on the map layer
 				if (O.Options.bol_showChainPaths)

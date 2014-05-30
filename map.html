@@ -308,11 +308,11 @@ var GW2T_RESOURCES_DATA = {
 <header id="mapHeader_Daily" class="jsCollapsible"><img src="img/ui/ap.png" alt="Daily Achievements" />Daily Achievements</header>
 <div>
 <p>These are some places to complete dailies quickly; the top of each list should be the fastest. Most of the places are based on the <a href="http://wiki.guildwars2.com/wiki/Daily">wiki</a>; if you know a good spot, please <a href="http://forum.renaka.com/topic/5476238/">share it</a>.</p>
-<div class="cssRight"><button id="mapToggle_Daily">Toggle Icons</button></div>
+<button id="mapToggle_Daily" class="cssRight">Toggle Icons</button>
 
 <div class="mapDailyLists mapLinks">
 <h2><img src="img/daily/killer.png" alt="Killer" /> Killer</h2>
-<dl class="mapDailyList" id="mapDailyList_Killer">
+<dl id="mapDailyList_Killer">
 	<dt data-coord="[10055, 13446]">Altar's Windings</dt><dd>Kryta-Queensdale troll cave grubs, bandit camp</dd>
 	<dt data-coord="[9993, 16259]">Wychmire Swamp</dt><dd>Maguuma-Caledon spiders nest</dd>
 	<dt data-coord="[22587, 15535]">Outcast's Cleft</dt><dd>Shiverpeaks-Wayfarer svanirs</dd>
@@ -324,7 +324,7 @@ var GW2T_RESOURCES_DATA = {
 
 <h2><img src="img/daily/veteran.png" alt="Veteran" /> Veteran</h2>
 Champions are not veterans, you can find them in dungeons or the Frostgorge farm train.
-<dl class="mapDailyList" id="mapDailyList_Veteran">
+<dl id="mapDailyList_Veteran">
 	<dt data-coord="[11451, 13286]">Greenheart Weald</dt><dd>Kryta-Queensdale oakhearts</dd>
 	<dt data-coord="[9573, 16229]">Wychmire Swamp</dt><dd>Maguuma-Caledon mosshearts</dd>
 	<dt data-coord="[23240, 11685]">Cragstead</dt><dd>Shiverpeaks-Wayfarer spider cave</dd>
@@ -335,14 +335,14 @@ Champions are not veterans, you can find them in dungeons or the Frostgorge farm
 
 <h2><img src="img/daily/variety.png" alt="Variety" /> Variety</h2>
 You need to kill unique <a href="http://wiki.guildwars2.com/wiki/Bestiary">species</a> of enemies.
-<dl class="mapDailyList" id="mapDailyList_Variety">
+<dl id="mapDailyList_Variety">
 	<dt data-coord="[7564, 17591]">Thaumanova Reactor</dt><dd>Maguuma-Metrica numerous unique monsters</dd>
 	<dt data-coord="[6510, 16998]">Toxal Bog</dt><dd>Maguuma-Brisban same as Thaumanova</dd>
 </dl>
 <br />
 
 <h2><img src="img/daily/aquatic.png" alt="Aquatic" /> Aquatic</h2>
-<dl class="mapDailyList" id="mapDailyList_Aquatic">
+<dl id="mapDailyList_Aquatic">
 	<dt data-coord="[23047, 14192]">Grawlenfjord</dt><dd>Shiverpeaks-Wayfarer barracudas and skelks throughout the long river</dd>
 	<dt data-coord="[11724, 12139]">Lake Delavan</dt><dd>Kryta-Queensdale fishes</dd>
 	<dt data-coord="[11030, 16632]">Quetzal Bay</dt><dd>Maguuma-Caledon kraits</dd>
@@ -352,7 +352,7 @@ You need to kill unique <a href="http://wiki.guildwars2.com/wiki/Bestiary">speci
 
 <h2><img src="img/daily/ambient.png" alt="Ambient" /> Ambient</h2>
 WvW North Camp also has concentrated critters.
-<dl class="mapDailyList" id="mapDailyList_Ambient">
+<dl id="mapDailyList_Ambient">
 	<dt data-coord="[12140, 13462]">Godslost Swamp</dt><dd>Queensdale ravens and frogs (high concentration at the house porch)</dd>
 	<dt data-coord="[15613, 17626]">Grand Barrier Isle</dt><dd>Bloodtide crows (fast respawn)</dd>
 	<dt data-coord="[22538, 14438]">Hangrammr Climb</dt><dd>Wayfarer ravens</dd>
@@ -361,7 +361,7 @@ WvW North Camp also has concentrated critters.
 
 <h2><img src="img/daily/condition.png" alt="Condition" /> Condition Remover</h2>
 Toxic Offshoot events (mostly in Kessex) also has numerous conditions. Use <a href="http://wiki.guildwars2.com/wiki/Condition#Skills_that_remove_conditions">multiple-conditions</a> cleanser for faster job.
-<dl class="mapDailyList" id="mapDailyList_Condition">
+<dl id="mapDailyList_Condition">
 	<dt data-coord="[29749, 12644]">Lowland Burns</dt><dd>Blazeridge noxious branded plants (very high rate of conditions)</dd>
 	<dt data-coord="[6274, 15960]">Vandal's Claim</dt><dd>Brisban bandit mines lots of cripples</dd>
 	<dt data-coord="[11801, 28676]">Desmina's Hallows</dt><dd>Cursed Melandru statues and risen rotmouths</dd>
@@ -370,7 +370,7 @@ Toxic Offshoot events (mostly in Kessex) also has numerous conditions. Use <a hr
 
 <h2><img src="img/daily/dodger.png" alt="Dodger" /> Dodger/Interrupter</h2>
 Use your sword2/focus4 mesmer to do these quickly.
-<dl class="mapDailyList" id="mapDailyList_Dodger">
+<dl id="mapDailyList_Dodger">
 	<dt data-coord="[10024, 13443]">Altar's Windings</dt><dd>Queensdale troll cave grubs</dd>
 	<dt data-coord="[13094, 19731]">Steampipe Steading</dt><dd>Southsun karkas</dd>
 	<dt data-coord="[29655, 12621]">Lowland Burns</dt><dd>Blazeridge noxious branded plants (single fast attacks)</dd>
@@ -380,7 +380,7 @@ Use your sword2/focus4 mesmer to do these quickly.
 
 <h2><img src="img/daily/reviver.png" alt="Reviver" /> Reviver</h2>
 If there are others doing the daily, you should revive to 20% then move to the next body, so more people can get credit. * indicates the dead NPC icons are not shown on the minimap. If the NPCs are still alive, try to lure enemies to kill them.
-<dl class="mapDailyList" id="mapDailyList_Reviver">
+<dl id="mapDailyList_Reviver">
 	<dt data-coord="[7617, 17607]">Thaumanova Reactor</dt><dd>Metrica irradiated asura</dd>
 	<dt data-coord="[6305, 15965]">Vandal's Claim</dt><dd>Brisban minefield</dd>
 	<dt data-coord="[14143, 13005]">The Bloodfields</dt><dd>Gendarran seraphs battlefield*</dd>
@@ -422,9 +422,9 @@ You may need to complete the heart before you can purchase.
 	<div id="mapResource_Plant"></div>
 	<div id="mapResource_Wood"></div>
 </div>
-<div id="mapLegendSolid" class="mapLegendLine"></div> <strong>Exact</strong> location of that node<br />
-<div id="mapLegendDotted" class="mapLegendLine"></div> <strong>Approximate</strong> vicinity of that node<br />
-<div id="mapLegendDashed" class="mapLegendLine"></div> <strong>Map</strong> has that resource (not a node)<br />
+<div class="mapLegendLine" style="border-bottom: 2px solid lime"></div> <strong>Exact</strong> location of that node<br />
+<div class="mapLegendLine" style="border-bottom: 2px dotted lime"></div> <strong>Approximate</strong> vicinity of that node<br />
+<div class="mapLegendLine" style="border-bottom: 2px dashed lime"></div> <strong>Map</strong> has that resource (not a node)<br />
 Rich and T6 nodes reset in about 22 hours after gathering; T1-T5 nodes reset in about 2 hours. You can use alts to re-gather any node. More <a href="http://wiki.guildwars2.com/wiki/Resource#Harvesting">plants</a> on the wiki.<br />
 <br />
 </div>
@@ -433,41 +433,42 @@ Rich and T6 nodes reset in about 22 hours after gathering; T1-T5 nodes reset in 
 <header id="mapHeader_JP" class="jsCollapsible"><img src="img/ui/jp.png" alt="Jumping Puzzles" />Jumping Puzzles</header>
 <div>
 <p>The map pin refers to the JP's entrance. JPs in each list are sorted by location. The descriptions are to remind you of which JP it is. Clicking on a checkbox here or a JP icon on the map will save the checklist.</p>
-<div class="cssRight"><button id="mapJPUncheck">Uncheck All</button><button id="mapToggle_JP">Toggle Icons</button></div>
+<button id="mapToggle_JP" class="cssRight">Toggle Icons</button>
 
-<h2>Easy</h2>
+<div class="mapLinks">
+<h2>Easy <span class="mapLegendLine" style="border-bottom: 2px solid lime"></span></h2>
 Simple jumps.
 <dl class="mapJPList">
 	<dt data-coord="[17399, 14591]">Urmaug's Secret</dt><dd>LA short climbs up cave cliff</dd>
 	<dt data-coord="[13202, 13674]">Demongrub Pits</dt><dd>Queensdale small cave with grubs and skelks</dd>
 	<dt data-coord="[12781, 15876]">The Collapsed Observatory</dt><dd>Kessex cave ruins behind a river</dd>
 	<dt data-coord="[13884, 20428]">Under New Management</dt><dd>Southsun short climb up the Consortium building</dd>
-	<dt data-coord="[10635, 20000]">Spelunker's Delve</dt><dd>Caledon giant mushrooms water cavern</dd>
+	<dt data-coord="[10635, 20000]">Spelunker's Delve</dt><dd>Caledon giant mushrooms water cavern. Entrance is an underground hole covered by shrubs</dd>
 	<dt data-coord="[22078, 13584]">Shamans Rookery</dt><dd>Wayfarer raven knockbacks from rock pillars</dd>
 	<dt data-coord="[21490, 12271]">King Jalis's Refuge</dt><dd>Snowden Priory site with looters</dd>
-	<dt data-coord="[20756, 20878]">Coddler's Cove</dt><dd>Timberline skip jump over quaggan lanterns</dd>
+	<dt data-coord="[20756, 20878]">Coddler's Cove</dt><dd>Timberline skip jump over quaggan lanterns. <ins data-coord="[20685, 21217]">Inner cove entrance</ins> is at the rock steps by the wall sloping westward</dd>
 	<dt data-coord="[22073, 9112]">Shattered Ice Ruins</dt><dd>Frostgorge ice cave with trolls  skelks oozes</dd>
 	<dt data-coord="[26258, 13026]">Crimson Plateau</dt><dd>Diessa grawl plateau with rocks and ruins</dd>
 	<dt data-coord="[25136, 12227]">Grendich Gamble</dt><dd>Diessa ruined Ascalonian stone tower climb</dd>
-	<dt data-coord="[25530, 13388]">Wall Breach Blitz</dt><dd>Diessa long Ascalonian wall climb</dd>
+	<dt data-coord="[25530, 13388]">Wall Breach Blitz</dt><dd>Diessa long Ascalonian wall with vista at end</dd>
 	<dt data-coord="[25986, 10719]">Pig Iron Quarry</dt><dd>Fireheart suspended carts high over two hills</dd>
-	<dt data-coord="[16325, 24485]">Vizier's Tower</dt><dd>Straits coral climb up a tower</dd>
+	<dt data-coord="[16325, 24485]">Vizier's Tower</dt><dd>Straits coral climb up a plateau tower</dd>
 	<dt data-coord="[11078, 29012]">Buried Archives</dt><dd>Cursed wall coral jump through risens eagles</dd>
 </dl>
 <br />
-<h2>Medium</h2>
+<h2>Medium <span class="mapLegendLine" style="border-bottom: 2px solid orange"></span></h2>
 Tricky jumps or interaction required
 <dl class="mapJPList">
 	<dt data-coord="[16300, 14605]">Troll's End</dt><dd>LA stalactite cave with planks</dd>
 	<dt data-coord="[17210, 15481]">Weyandt's Revenge</dt><dd>LA huge pirate themed cave</dd>
-	<dt data-coord="[16670, 14183]">Swashbuckler's Cove</dt><dd>Gendarran light the torches and swim in time</dd>
-	<dt data-coord="[14340, 9666]">Fawcett's Bounty</dt><dd>Harathi pirate ship in an underground lake</dd>
-	<dt data-coord="[15726, 16423]">Professor Portmatt's Lab</dt><dd>Bloodtide number puzzle with underwater force fields</dd>
-	<dt data-coord="[11020, 19349]">Morgan's Leap</dt><dd>Caledon spiral tree and floating rocks in the sky</dd>
+	<dt data-coord="[16670, 14183]">Swashbuckler's Cove</dt><dd>Gendarran light torches and swim in time</dd>
+	<dt data-coord="[14340, 9666]">Fawcett's Bounty</dt><dd>Harathi pirate ship in underground lake</dd>
+	<dt data-coord="[15726, 16423]">Professor Portmatt's Lab</dt><dd>Bloodtide underwater number puzzle force fields</dd>
+	<dt data-coord="[11020, 19349]">Morgan's Leap</dt><dd>Caledon spiral tree and floating rocks in the sky. Escort <ins data-coord="[10696, 19663]">Brugh</ins> to regrow the giant leaves</dd>
 	<dt data-coord="[9492, 18652]">Spekks's Laboratory</dt><dd>Caledon asuran light platforms with lava below</dd>
-	<dt data-coord="[17958, 21624]">Conundrum Cubed</dt><dd>Maelstrom metallic floating cubes and electricity</dd>
+	<dt data-coord="[17958, 21624]">Conundrum Cubed</dt><dd>Maelstrom floating cubes and electricity</dd>
 	<dt data-coord="[17545, 21917]">Hexfoundry Unhinged</dt><dd>Sparkfly destroyed and slanted Inquest platforms</dd>
-	<dt data-coord="[18077, 17118]">Griffonrook Run</dt><dd>Lornar's steep griffons rock pillars</dd>
+	<dt data-coord="[18077, 17118]">Griffonrook Run</dt><dd>Lornar's steep griffons rock pillars. Entrance is an underwater hole covered by kelp</dd>
 	<dt data-coord="[19819, 17950]">Tribulation Rift Scaffolding</dt><dd>Dredgehaunt tall tower scaffold planks</dd>
 	<dt data-coord="[19718, 17986]">Tribulation Caverns</dt><dd>Dredgehaunt ice cave after the scaffold JP</dd>
 	<dt data-coord="[21080, 18861]">Only Zuhl</dt><dd>Timberline dredge/destroyer volcanic cave</dd>
@@ -478,18 +479,20 @@ Tricky jumps or interaction required
 	<dt data-coord="[13598, 24798]">Antre of Adjournment</dt><dd>Malchor's cave wall climb with mini treasure chests</dd>
 </dl>
 <br />
-<h2>Hard</h2>
+<h2>Hard <span class="mapLegendLine" style="border-bottom: 2px solid red"></span></h2>
 A marathon of intricate jumps.
 <dl class="mapJPList">
 	<dt data-coord="[15379, 14282]">Not So Secret</dt><dd>Gendarran trampolines aetherblade hideout</dd>
 	<dt data-coord="[9235, 18967]">Goemm's Lab</dt><dd>Metrica floating landmasses in the sky as asura stations</dd>
-	<dt data-coord="[10963, 19197]">Dark Reverie</dt><dd>Caledon nightmare court blue hideout jump across giant mushrooms</dd>
+	<dt data-coord="[10963, 19197]">Dark Reverie</dt><dd>Caledon nightmare court blue hideout after Morgan's Spiral</dd>
 	<dt data-coord="[21357, 21885]">Hidden Garden</dt><dd>Maelstrom unlock four element cantles. Keeper portal locations: <ins data-coord="[18335, 22125]">Earth</ins>, <ins data-coord="[19523, 22724]">Light</ins>, <ins data-coord="[20143, 22209]">Waves</ins>, <ins data-coord="[20770, 23385]">Winds</ins></dd>
-	<dt data-coord="[27345, 13106]">Chaos Crystal Cavern</dt><dd>Marches skip rocks jumps with transformations</dd>
+	<dt data-coord="[27345, 13106]">Chaos Crystal Cavern</dt><dd>Marches skip rocks jumps with disorienting character transformations</dd>
 	<dt data-coord="[12780, 19377]">Skipping Stones</dt><dd>Southsun stones gushed up by geysers</dd>
 	<dt data-coord="[13610, 25044]">Scavenger's Chasm</dt><dd>Malchor's the hardest JP in the game collecting 12 orbs</dd>
 </dl>
-<br />
+<button id="mapJPUncheck" class="cssRight">Uncheck All</button>
+</div>
+<br /><br />
 </div>
 
 

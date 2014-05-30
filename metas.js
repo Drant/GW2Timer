@@ -1216,7 +1216,7 @@ var GW2T_CHAINS_DATA = [
 	alias: "TBD",
 	pronunciation: "tbd",
 	serial: "099",
-	waypoint: "[&BJIBAAA=]",
+	waypoint: "[&BDAEAAA=]",
 	title: "To Be Determined",
 	events: [
 		{
@@ -1296,7 +1296,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 0
 		},
 		{
-			path: [[30460, 18948]],
+			path: [[30438, 19039]],
 			name: "Kill the ogre leaders of Sapper's Delve and hold the hill",
 			icon: "star",
 			num: "1b1",
