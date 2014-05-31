@@ -60,11 +60,13 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 140529,
+	int_programVersion: 140530,
 	programVersionName: "int_programVersion",
 	
+	lengthOfPrefixes: 3,
 	prefixOption: "opt_",
 	prefixChain: "chn_",
+	prefixPage: "page",
 	
 	/*
 	 * This UNIX time variable should be updated whenever a server reset related
@@ -85,9 +87,10 @@ O = {
 		// Timer
 		bol_hideChecked: false,
 		bol_use24Hour: false,
+		bol_compactClock: false,
 		bol_showClock: true,
 		int_dimClockBackground: 0,
-		int_useTimeCountdown: 1,
+		int_setTimeStyle: 0,
 		int_setPredictor: 0,
 		// Map
 		bol_tourPrediction: true,
@@ -102,6 +105,12 @@ O = {
 		bol_clearOnServerReset: true,
 		bol_detectDST: true
 	},
+	/*
+	 * All Options of a numeric type must have an associated legal range to be
+	 * used in sanitation of user submitted ones. This object is updated by the
+	 * function O.initializeOptions() that initializes HTML input tags.
+	 */
+	OptionsRange: {},
 	
 	Checklist: {},
 	ChecklistEnum:
@@ -114,6 +123,94 @@ O = {
 	JPChecklist: "", // Will use 0s and 1s as a long string rather than separate variables
 	JPChecklistName: "JPChecklist",
 	numOfJPs: 0,
+	
+	/*
+	 * URLArguments may contain Options object's variables. Written in the form of:
+	 * http://example.com/?ExampleName=ExampleValue&MoreExampleName=MoreExampleValue
+	 * so if a user enters http://gw2timer.com/?bol_showClock=false then the clock
+	 * will be hidden regardless of previous localStorage or the defaults here.
+	 * Note that "bol_showClock" matches exactly as in the Options, otherwise
+	 * it would have not overridden any Options variable.
+	 */
+	URLArguments: {},
+	/*
+	 * Extracts arguments from a https://en.wikipedia.org/wiki/Query_string
+	 * @returns object containing the name value pairs.
+	 */
+	getURLArguments: function()
+	{
+		var urlargs = window.location.search.substr(1).split('&');
+		if (urlargs === "")
+		{
+			return {};
+		}
+		
+		var argsobject = {};
+		for (var i = 0; i < urlargs.length; ++i)
+		{
+			var p = urlargs[i].split("=");
+			if (p.length !== 2)
+			{
+				continue;
+			}
+			argsobject[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+		}
+		return argsobject;
+	},
+	/*
+	 * Sanitizes URLArguments value part before overriding. For example:
+	 * http://gw2timer.com/?bol_showClock=falsse "falsse" defaults to "true"
+	 * @param string pName of an option.
+	 * @param string pValue of that option.
+	 * @returns string sanitized value.
+	 * @pre The name value pair matches the Options object's and numeric values
+	 * have the OptionsRange object initialized for legal numbers.
+	 */
+	sanitizeURLOptionsValue: function(pName, pValue)
+	{
+		var datatype = pName.substring(0, O.lengthOfPrefixes);
+		var s = pValue.toLowerCase();
+		switch (datatype)
+		{
+			case "bol":
+			{
+				if (s === "true" || s === "false")
+				{
+					return s;
+				}
+				return O.Options[pName].toString(); // Default boolean
+			} break;
+			case "int":
+			{
+				if (isFinite(s)) // Is a number
+				{
+					var integer = parseInt(s);
+					if (integer >= O.OptionsRange[pName][0] && integer <= O.OptionsRange[pName][1])
+					{
+						return integer.toString();
+					}
+				}
+				return O.OptionsRange[pName][0].toString(); // Default number
+			} break;
+			case "flt":
+			{
+				if (isFinite(s)) // Is a number
+				{
+					var float = parseFloat(s);
+					if (float >= O.OptionsRange[pName][0] && float <= O.OptionsRange[pName][1])
+					{
+						return float.toString();
+					}
+				}
+				return O.OptionsRange[pName][0].toString(); // Default number
+			} break;
+			case "str":
+			{
+				return pValue;
+			} break;
+		}
+		return "null";
+	},
 	
 	/*
 	 * localStorage stores everything as string. This function converts the
@@ -214,7 +311,8 @@ O = {
 	
 	/*
 	 * Sets the HTML input tag values to the localStorage's or the defaults here.
-	 * @pre The tags are preloaded (not AJAX).
+	 * URLArguments with same Options object's names (if available) will override both.
+	 * @pre The tags are preloaded (not AJAX) and URLArguments was initialized.
 	 */
 	initializeOptions: function()
 	{
@@ -228,8 +326,37 @@ O = {
 			O.lastServerSensitiveActionTimestamp = parseInt(localStorage[O.lastSSATName]);
 		}
 		
+		var optionname;
+		for (optionname in O.Options)
+		{
+			/*
+			 * URLArguments overrides localStorage, which overrides Options here
+			 * only if such an Options variable exists.
+			 */
+			if (O.URLArguments[optionname] !== undefined)
+			{
+				/*
+				 * Initialize legal numeric values by looking up the associated
+				 * input tag.
+				 */
+				$("#" + O.prefixOption + optionname).each(function()
+				{
+					var inputtype = $(this).attr("type");
+					if (inputtype === "radio")
+					{
+						// Range shall be 0 to how many radio buttons there are minus one
+						O.OptionsRange[optionname] = new Array(0,
+							$("fieldset[name=" + optionname + "] input").length - 1);
+					}
+				});
+				// Override localStorage
+				localStorage[optionname] = O.sanitizeURLOptionsValue(
+					optionname, O.URLArguments[optionname]);
+			}
+		}
+		
 		// Load or initialize input options
-		for (var optionname in O.Options)
+		for (optionname in O.Options)
 		{
 			// Assign default values to localStorage if they are empty
 			if (localStorage[optionname] === undefined)
@@ -480,6 +607,10 @@ O = {
 		{
 			O.enact_bol_detectDST();
 		});
+		$("#opt_bol_compactClock").change(function()
+		{
+			O.enact_bol_compactClock();
+		});
 		$("#opt_bol_showClock").change(function()
 		{
 			O.enact_bol_showClock();
@@ -488,9 +619,9 @@ O = {
 		{
 			O.enact_int_dimClockBackground();
 		});
-		$("fieldset[name=int_useTimeCountdown]").change(function()
+		$("fieldset[name=int_setTimeStyle]").change(function()
 		{
-			O.enact_int_useTimeCountdown();
+			O.enact_int_setTimeStyle();
 		});
 		$("#opt_bol_showChainPaths").change(function()
 		{
@@ -506,6 +637,7 @@ O = {
 		 */
 		O.enact_bol_hideChecked();
 		O.enact_bol_detectDST();
+		O.enact_bol_compactClock();
 		O.enact_bol_showClock();
 		O.enact_int_dimClockBackground();
 		O.enact_bol_showMap();
@@ -552,6 +684,19 @@ O = {
 	},
 	
 	/*
+	 * Does the commands within the address bar after the site's domain name.
+	 * @pre URLArguments object was initialized by extraction.
+	 */
+	enactURLArguments: function()
+	{
+		// Go to the content layer requested
+		if (O.URLArguments[O.prefixPage] !== undefined)
+		{
+			$("#menu" + O.URLArguments[O.prefixPage]).trigger("click");
+		}
+	},
+	
+	/*
 	 * Functions to enact the options, for which a simple variable change is
 	 * not enough.
 	 * -------------------------------------------------------------------------
@@ -585,6 +730,89 @@ O = {
 	{
 		T.DST_IN_EFFECT = (O.Options.bol_detectDST) ? 1 : 0;
 	},
+	enact_bol_compactClock: function()
+	{
+		var animationspeed = 200;
+		var clockheight = 0;
+		if (O.Options.bol_compactClock)
+		{
+			// Reposition clock items
+			$("#itemClockFace img").animate({ "border-radius": "32px" }, animationspeed);
+			$("#itemClock").css({top: "0px"});
+			$("#itemClockIcon0").css({ top: "4px", left: "290px" });
+			$("#itemClockIcon1").css({ top: "148px", left: "290px" });
+			$("#itemClockIcon2").css({ top: "148px", left: "4px" });
+			$("#itemClockIcon3").css({ top: "4px", left: "4px" });
+			$("#itemClockWaypoint0").css({ top: "24px", left: "274px" });
+			$("#itemClockWaypoint1").css({ top: "164px", left: "274px" });
+			$("#itemClockWaypoint2").css({ top: "164px", left: "52px" });
+			$("#itemClockWaypoint3").css({ top: "24px", left: "52px" });
+			$("#itemTimeLocal").css({
+				width: "100%",
+				left: "auto", bottom: "90px",
+				"text-align": "center",
+				color: "#eee",
+				opacity: 0.5
+			});
+			$("#itemTimeServer").css({
+				width: "100%",
+				top: "90px", bottom: "auto", right: "auto",
+				"text-align": "center",
+				color: "#eee",
+				opacity: 0.5
+			});
+			$("#itemSocial").css({ bottom: "98px", right: "10px" });
+			
+			// Resize panes by animation
+			if (O.Options.bol_showClock)
+			{
+				clockheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
+			}
+			$("#paneMenu").animate({top: clockheight}, animationspeed);
+			$("#paneContent").animate({top: clockheight + I.cPANE_MENU_HEIGHT}, animationspeed);
+			$("#paneClock, #paneClockBack, #paneClockBackground, #itemClockFace")
+				.animate({height: I.cPANE_CLOCK_HEIGHT_COMPACT}, animationspeed);
+		}
+		else
+		{
+			// Reposition clock items
+			$("#itemClockFace img").animate({ "border-radius": "12px" }, animationspeed);
+			$("#itemClock").css({top: "70px"});
+			$("#itemClockIcon0").css({ top: "4px", left: "148px" });
+			$("#itemClockIcon1").css({ top: "148px", left: "290px" });
+			$("#itemClockIcon2").css({ top: "290px", left: "148px" });
+			$("#itemClockIcon3").css({ top: "148px", left: "4px" });
+			$("#itemClockWaypoint0").css({ top: "52px", left: "164px" });
+			$("#itemClockWaypoint1").css({ top: "164px", left: "274px" });
+			$("#itemClockWaypoint2").css({ top: "274px", left: "164px" });
+			$("#itemClockWaypoint3").css({ top: "164px", left: "52px" });
+			$("#itemTimeLocal").css({
+				width: "auto",
+				left: "10px", bottom: "10px",
+				"text-align": "left",
+				color: "#bbcc77",
+				opacity: 1
+			});
+			$("#itemTimeServer").css({
+				width: "auto",
+				top: "auto", bottom: "10px", right: "10px",
+				"text-align": "left",
+				color: "#bbcc77",
+				opacity: 1
+			});
+			$("#itemSocial").css({ bottom: "28px", right: "10px" });
+			
+			// Resize panes by animation
+			if (O.Options.bol_showClock)
+			{
+				clockheight = I.cPANE_CLOCK_HEIGHT;
+			}
+			$("#paneMenu").animate({top: clockheight}, animationspeed);
+			$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT)}, animationspeed);
+			$("#paneClock, #paneClockBack, #paneClockBackground, #itemClockFace")
+				.animate({height: I.cPANE_CLOCK_HEIGHT}, animationspeed);
+		}
+	},
 	enact_bol_showClock: function()
 	{
 		/*
@@ -595,10 +823,14 @@ O = {
 		var animationspeed = 200;
 		if (O.Options.bol_showClock)
 		{
+			var clockheight = I.cPANE_CLOCK_HEIGHT;
+			if (O.Options.bol_compactClock)
+			{
+				clockheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
+			}
 			$("#paneClock").show();
-			$("#paneMenu").animate({top: I.cPANE_CLOCK_HEIGHT}, animationspeed);
-			$("#paneContent").animate({top: (I.cPANE_CLOCK_HEIGHT
-				+ I.cPANE_MENU_HEIGHT)}, animationspeed);
+			$("#paneMenu").animate({top: clockheight}, animationspeed);
+			$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT)}, animationspeed);
 		}
 		else
 		{
@@ -617,7 +849,7 @@ O = {
 			case 2: $("#paneClockBackground").css({opacity: 0}); break;
 		}
 	},
-	enact_int_useTimeCountdown: function()
+	enact_int_setTimeStyle: function()
 	{
 		C.updateChainsTimeHTML();
 	},
@@ -629,15 +861,13 @@ O = {
 	{
 		if (O.Options.bol_showMap)
 		{
-			//$("#paneMap").css({visibility: "visible"});
 			$("#panelLeft").show();
 		}
 		else
 		{
-			//$("#paneMap").css({visibility: "hidden"});
 			$("#panelLeft").hide();
 		}
-	},
+	}
 };
 
 /* =============================================================================
@@ -1194,16 +1424,17 @@ C = {
 				continue;
 			}
 			
-			switch (O.Options.int_useTimeCountdown)
+			switch (O.Options.int_setTimeStyle)
 			{
 				case 0:
 				{
-					time = C.convertScheduleIndexToLocalTime(ithchain.scheduleIndexes[0]);
+					time = C.getSecondsUntilChainStarts(ithchain);
+					wantletters = true;
 				} break;
 				case 1:
 				{
-					time = C.getSecondsUntilChainStarts(ithchain);
-					wantletters = true;
+					time = C.convertScheduleIndexToLocalTime(ithchain.scheduleIndexes[0]);
+					wantletters = false;
 				} break;
 			}
 			
@@ -1225,11 +1456,17 @@ C = {
 	 */
 	updateCurrentChainTimeHTML: function()
 	{
+		var wantletters = false;
+		if (O.Options.int_setTimeStyle === 0)
+		{
+			wantletters = true;
+		}
+		
 		$("#chnTime_" + C.CurrentChain.alias).text("-" + T.getTimeFormatted(
 			{
 				want24: true,
 				wantHours: false,
-				wantLetters: O.intToBool(O.Options.int_useTimeCountdown),
+				wantLetters: wantletters,
 				customTimeInSeconds: C.getCurrentChainElapsedTime()
 			})
 		);
@@ -1327,7 +1564,7 @@ C = {
 			}
 		}
 		// Update chain time HTML
-		O.enact_int_useTimeCountdown();
+		O.enact_int_setTimeStyle();
 		
 		/*
 		 * Now that the chains are sorted, do cosmetic updates.
@@ -3133,7 +3370,7 @@ K = {
 		if (sec === 0)
 		{
 			// Refresh the chain time countdown opted
-			if (O.Options.int_useTimeCountdown === 1)
+			if (O.Options.int_setTimeStyle === 0)
 			{
 				C.updateChainsTimeHTML();
 			}
@@ -3256,7 +3493,7 @@ K = {
 		{
 			$(this).attr("stroke", "black");
 		});
-		$("#itemClockIcons img").each(function()
+		$("#itemClockFace img").each(function()
 		{
 			$(this).css(
 			{
@@ -3438,12 +3675,11 @@ K = {
 I = {
 	cContentPane: "#paneContent",
 	cSiteName: "GW2Timer.com",
-	cURLNamePage: "page",
-	URLArguments: {},
 	consoleTimeout: {},
 	
 	// HTML/CSS pixel units
 	cPANE_CLOCK_HEIGHT: 360,
+	cPANE_CLOCK_HEIGHT_COMPACT: 220,
 	cPANE_MENU_HEIGHT: 48,
 	cTOOLTIP_DEFAULT_OFFSET_X: -180,
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
@@ -3466,9 +3702,10 @@ I = {
 		Firefox: "Firefox",
 		Opera: "Opera"
 	},
-	userSmallScreen: false,
-	cSMALL_SCREEN_WIDTH: 800,
-	cSMALL_SCREEN_HEIGHT: 600,
+	userSmallDevice: false,
+	cSMALL_DEVICE_WIDTH: 800,
+	cSMALL_DEVICE_HEIGHT: 600,
+	cSMALL_DISPLAY_HEIGHT: 900,
 	
 	/*
 	 * Loads a TTS sound file generated from a TTS web service into a hidden
@@ -3526,9 +3763,6 @@ I = {
 	 */
 	initializeFirst: function()
 	{
-		// Clear initial non-load warning the moment JavaScript is ran
-		$("#jsConsole").empty();
-		
 		// Manually clear the TTS iframe to prevent old sound from playing
 		document.getElementById("jsTTS").src = "";
 		
@@ -3539,13 +3773,13 @@ I = {
 		K.awakeTimestampPrevious = T.getUNIXSeconds();
 		
 		// Parse and store the URL arguments
-		I.URLArguments = I.getURLArguments();
+		O.URLArguments = O.getURLArguments();
 		
-		// Detect small screen devices
-		if (window.innerWidth <= I.cSMALL_SCREEN_WIDTH && window.innerHeight <= I.cSMALL_SCREEN_HEIGHT)
+		// Detect small devices
+		if (window.innerWidth <= I.cSMALL_DEVICE_WIDTH && window.innerHeight <= I.cSMALL_DEVICE_HEIGHT)
 		{
-			I.userSmallScreen = true;
-			I.writeConsole("Small screen detected.<br />"
+			I.userSmallDevice = true;
+			I.writeConsole("Small device detected.<br />"
 				+ "Map features have been turned off by default for better performance.<br />"
 				+ "You can re-enable them in the options.<br />", 10);
 			/*
@@ -3555,6 +3789,11 @@ I = {
 			O.Options.bol_tourPrediction = false;
 			O.Options.bol_showChainPaths = false;
 			O.Options.bol_showMap = false;
+		}
+		// Detect small displays
+		if (window.innerHeight <= I.cSMALL_DISPLAY_HEIGHT)
+		{
+			O.Options.bol_compactClock = true;
 		}
 		
 		// Remember user's browser maker
@@ -3584,41 +3823,18 @@ I = {
 	},
 	
 	/*
-	 * Extracts arguments from the URL string "?query=argument&example=etc".
-	 * @returns object containing the value pairs.
+	 * Does things that need to be done after everything was loaded.
 	 */
-	getURLArguments: function()
+	initializeLast: function()
 	{
-		var urlargs = window.location.search.substr(1).split('&');
-		if (urlargs === "")
-		{
-			return {};
-		}
-		
-		var argsobject = {};
-		for (var i = 0; i < urlargs.length; ++i)
-		{
-			var p = urlargs[i].split("=");
-			if (p.length !== 2)
-			{
-				continue;
-			}
-			argsobject[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-		}
-		return argsobject;
-	},
-	
-	/*
-	 * Does the commands within the address bar after the site's domain name.
-	 * @pre URLArguments object was initialized by extraction.
-	 */
-	enactURLArguments: function()
-	{
-		// Go to the content layer requested
-		if (I.URLArguments[I.cURLNamePage] !== undefined)
-		{
-			$("#menu" + I.URLArguments[I.cURLNamePage]).trigger("click");
-		}
+		// Initializes all UI
+		I.initializeTooltip();
+		I.initializeUIforMenu();
+		I.initializeUIforChains();
+		// Do special commands from the URL
+		O.enactURLArguments();
+		// Clear the non-load warning after everything succeeded
+		$("#jsConsole").empty();
 	},
 	
 	/*
@@ -3731,17 +3947,6 @@ I = {
 				$(this).parent().hide("fast");		
 			});
 		});
-	},
-	
-	/*
-	 * Initializes all UI.
-	 */
-	initializeUI: function()
-	{
-		I.initializeTooltip();
-		I.initializeUIforMenu();
-		I.initializeUIforChains();
-		I.enactURLArguments();
 	},
 	
 	/*
@@ -3859,7 +4064,7 @@ I = {
 					width: "show"
 				}, 200);
 				// Update the address bar URL with the current layer name
-				history.replaceState("", null, "?" + I.cURLNamePage + "=" + I.currentContent);
+				history.replaceState("", null, "?" + O.prefixPage + "=" + I.currentContent);
 				
 				// Also hide chain paths if on the map layer
 				if (O.Options.bol_showChainPaths)
@@ -4133,7 +4338,7 @@ O.initializeOptions(); // load stored or default options to the HTML input
 C.initializeSchedule(); // compute event data and write HTML
 M.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
-I.initializeUI(); // bind event handlers for misc written content
+I.initializeLast(); // bind event handlers for misc written content
 
 
 

@@ -62,9 +62,10 @@
 	<div id="panelRight" class="panelMain">
 		<!-- Clock
 		==================================================================== -->
-		<section id="paneClock" class="paneRight">
-			<div id="paneClockBackground"></div>
-			<div id="itemClockIcons">
+		<section id="paneClock" class="paneRight clkSizeRegular">
+			<div id="paneClockBack" class="clkSizeRegular"></div>
+			<div id="paneClockBackground" class="clkSizeRegular"></div>
+			<div id="itemClockFace" class="clkSizeRegular">
 				<img id="itemClockIcon0" src="img/chain/tbd.png" alt="X:00 Chain" />
 				<img id="itemClockIcon1" src="img/chain/tbd.png" alt="X:15 Chain" />
 				<img id="itemClockIcon2" src="img/chain/tbd.png" alt="X:30 Chain" />
@@ -92,7 +93,7 @@
 						</feMerge>
 					</filter>
 				</defs>
-				<circle id="clkFace" cx="50" cy="50" r="45" filter="url(#clkFilterShadowOuter)" /><!-- Clock face -->
+				<circle id="clkCircumference" cx="50" cy="50" r="45" filter="url(#clkFilterShadowOuter)" />
 				<path id="clkSector" d="M50,50 L50,6 A44,44 0,0 1 94,50 z" />
 				<g id="clkTicks"><!-- 12 hour tick marks -->
 					<line x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
@@ -110,10 +111,10 @@
 				</g>
 				<g id="clkMarkers">
 					<!-- 15 minute dividers for four events in an hour -->
-					<line id="clkMarker0" x1="50.00" y1="0.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker1" x1="100.00" y1="50.00" x2="90.00" y2="50.00" />
-					<line id="clkMarker2" x1="50.00" y1="100.00" x2="50.00" y2="90.00" />
-					<line id="clkMarker3" x1="0.00" y1="50.00" x2="10.00" y2="50.00" />
+					<line id="clkMarker0" x1="50.00" y1="3.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker1" x1="97.00" y1="50.00" x2="90.00" y2="50.00" />
+					<line id="clkMarker2" x1="50.00" y1="97.00" x2="50.00" y2="90.00" />
+					<line id="clkMarker3" x1="3.00" y1="50.00" x2="10.00" y2="50.00" />
 					<!-- Markers for minimum time event ends and average time event ends -->
 					<line id="clkMarker0A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
 					<line id="clkMarker0B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
@@ -146,9 +147,7 @@
 			<time id="itemTimeLocal" class="itemTimeDigital">00:00</time>
 			<time id="itemTimeServer" class="itemTimeDigital">16:00</time>
 			<div id="itemSocial">
-				<a title="&lt;dfn&gt;Clock:&lt;/dfn&gt; Click a waypoint icon to autocopy to clipboard.
-					Green clock tick is chain start, orange tick is minimum time chain is predicted to finish, red tick is average."
-					href="http://i.imgur.com/KvJEr58.png" target="_blank">
+				<a title="&lt;dfn&gt;Learn GW2Timer's features :?&lt;/dfn&gt;" href="http://i.imgur.com/KvJEr58.png" target="_blank">
 					<img src="img/ui/info.png" alt="Info" />
 				</a>
 				<a title="&lt;dfn&gt;Like GW2Timer on Facebook :)&lt;/dfn&gt;" href="http://www.facebook.com/gw2timer" target="_blank">
@@ -204,12 +203,13 @@
 			<article id="layerOptions">
 				<div class="cntComposition">
 					<h1>Options</h1>
-					<label id="optSound"><input id="opt_bol_enableSound" type="checkbox" /><img id="optSoundButton" src="img/ui/speaker.png" alt="Mute"/></label>
+					<label id="optSound" title="Toggle sound. More options in the alarm section below."><input id="opt_bol_enableSound" type="checkbox" /><img id="optSoundButton" src="img/ui/speaker.png" alt="Mute"/></label>
 					<br />
 					<h2>Timer</h2>
-					<label><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off chains</label>
-					<label><input id="opt_bol_use24Hour" type="checkbox" /> Use 24 hour format</label>
-					<label><input id="opt_bol_showClock" type="checkbox" /> Show the clock pane</label>
+					<label title="Hide the boss bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off chains</label>
+					<label title="13:00:00 or 1:00:00 PM"><input id="opt_bol_use24Hour" type="checkbox" /> Use 24 hour format</label>
+					<label title="Make the clock area smaller."><input id="opt_bol_compactClock" type="checkbox" /> Compact the clock pane</label>
+					<label title="Show/Hide the entire clock area."><input id="opt_bol_showClock" type="checkbox" /> Show the clock pane</label>
 					<div class="optFieldsets">
 						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain? Auto will use the North American time of day to choose. Changes will take effect when the next chain starts. &lt;br /&gt;Min: for full population map&lt;br /&gt;Min-Avg: Min + (Avg - Min)/2&lt;br /&gt;Avg: for regular zerg size"><legend>Predictor</legend>
 							<label><input id="opt_int_setPredictor" type="radio" name="int_setPredictor" /> Auto</label>
@@ -217,11 +217,11 @@
 							<label><input type="radio" name="int_setPredictor" /> Min-Avg</label>
 							<label><input type="radio" name="int_setPredictor" /> Avg</label>
 						</fieldset>
-						<fieldset name="int_useTimeCountdown" title="Display the soonest time the chain will start, or countdown to that time?"><legend>Chain Times</legend>
-							<label><input id="opt_int_useTimeCountdown" type="radio" name="int_useTimeCountdown" /> Schedule</label>
-							<label><input type="radio" name="int_useTimeCountdown" /> Countdown</label>
+						<fieldset name="int_setTimeStyle" title="Display the countdown to when a chain starts or the soonest scheduled time?"><legend>Chain Times</legend>
+							<label><input id="opt_int_setTimeStyle" type="radio" name="int_setTimeStyle" /> Countdown</label>
+							<label><input type="radio" name="int_setTimeStyle" /> Schedule</label>
 						</fieldset>
-						<fieldset name="int_dimClockBackground"><legend>Clock Bg</legend>
+						<fieldset name="int_dimClockBackground" title="Dim the clock background from bright to dark within 15 minutes or stay as so?"><legend>Clock Bg</legend>
 							<label><input id="opt_int_dimClockBackground" type="radio" name="int_dimClockBackground" /> Auto-dim</label>
 							<label><input type="radio" name="int_dimClockBackground" /> Bright</label>
 							<label><input type="radio" name="int_dimClockBackground" /> Dark</label>
@@ -229,25 +229,26 @@
 					</div>
 					<br />
 					<h2>Map</h2>
-					<label title="Automatically scroll the map to the next predicted event. You'll need to be on the chains tab."><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
-					<label title="Show the colored lines of the event paths."><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
-					<label><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
+					<label title="Automatically scroll the map to the next predicted event. You'll need to be on the chains page."><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
+					<label title="Show/Hide the colored lines of the event paths."><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
+					<label title="Show/Hide the map area on the left."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<br />
 					<h2>Alarm</h2>
 					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. Click the speaker icon above to toggle sound. When should the program announce the next boss?</span>
 					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
 					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current chain finishes</label>
-					<label><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
+					<label title="You can &quot;subscribe&quot; to bosses by checking off those you don't want."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
 					<br />
 					<h2>Advanced</h2>
-					<label><input id="opt_bol_clearOnServerReset" type="checkbox" /> Clear checklist on server reset (Midnight UTC)</label>
-					<label><input id="opt_bol_detectDST" type="checkbox" /> Detect Daylight Saving Time</label>
+					<label title="Automatically uncheck the boss checklist on the daily reset time."><input id="opt_bol_clearOnServerReset" type="checkbox" /> Clear checklist on server reset (Midnight UTC)</label>
+					<label title="DST for showing ArenaNet Washington-US time."><input id="opt_bol_detectDST" type="checkbox" /> Detect Daylight Saving Time</label>
 					<br />
 					<h2>Defaults</h2>
 					<div class="optButtons">
 						<button id="optRestoreAllChains" title="Unhide all chains and uncheck them.">Restore All Chains</button>
 						<button id="optClearLocalStorage" title="Clear the localStorage which stores options and states, as if you visited for the first time.">Clear Website Memory</button>
 					</div>
+					<br />
 				</div>
 			</article>
 		</section>

@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x720, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.05.29 modified - 2014.04.18 created
+	Version: 2014.05.30 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -96,7 +96,7 @@ div#qTip {
 	max-width: 360px;
 	padding: 4px 6px 4px 6px;
 	border: 2px solid #111;
-	background: #293c4a;
+	background: #22323d;
 	background: linear-gradient(to right, #001019 0%, #364852 100%);
 	text-align: left;
 	font-family: Arial, Helvetica, sans-serif;
@@ -131,7 +131,7 @@ a, input, label, button,
 	cursor: url("img/cursor/pointer.png"), pointer;
 }
 
-#itemClockIcons img,
+#itemClockFace img,
 .cntComposition ins, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
 	cursor: url("img/cursor/zoom.png"), zoom-in;
 }
@@ -240,28 +240,30 @@ input#mapCoordinatesRegion {
 
 /* @@Klock
 ----------------------------------------------------------------------------- */
-#paneClock {
+.clkSizeRegular {
 	position: absolute;
-	top: 0px;
 	width: 360px; height: 360px;
+}
+
+#paneClock {
+	top: 0px;
+}
+
+#paneClockBack {
 	background: #333;
 	background: radial-gradient(ellipse at center, #4c4c4c 0%, #444444 50%, #131313 100%);
 }
 
 #paneClockBackground {
-	position: absolute;
-	width: 360px; height: 360px;
 	background: url("img/background/globe.jpg") no-repeat center;
 	opacity: 0;
 }
 
-#itemClockIcons {
-	position: absolute;
-	width: 360px; height: 360px;
+#itemClockFace {
 	background: url("img/background/face.png") no-repeat center;
 }
 
-#itemClockIcons img {
+#itemClockFace img {
 	position: absolute;
 	width: 64px; height: 64px;
 	border: 1px solid black;
@@ -309,7 +311,7 @@ input#mapCoordinatesRegion {
 	fill: none;
 	/*fill: #eef;*/
 }
-#clkFace { /* Clock circumference */
+#clkCircumference { /* Clock circumference */
 	stroke-width: 2px;
 }
 #clkSector { /* Quadrant slice of the clock */
