@@ -3762,6 +3762,7 @@ I = {
 	cTOOLTIP_ADD_OFFSET_Y: 42,
 	cTOOLTIP_ADD_OFFSET_X: 36,
 	
+	cContentPrefix: "#layer",
 	ContentEnum:
 	{
 		// These are the X in "menuX" and "layerX" IDs in the HTML
@@ -4024,16 +4025,32 @@ I = {
 	
 	/*
 	 * Binds element with the collapsible class to toggle display of its sibling
-	 * container element. Also creates another button-like element at the bottom
-	 * of the container to collapse it again.
+	 * container element. Creates a side menu as an alias for clicking the
+	 * headers; also creates another button-like element at the bottom of the
+	 * container to collapse it again.
+	 * Example: <header class="jsCollapsible">Example Title</header><div></div>
+	 * That container div should contain everything that needs to be collapsed/expanded
+	 * by clicking that header tag.
 	 * @param string pLayer HTML ID of layer in the content pane.
 	 */
 	bindCollapsible: function(pLayer)
 	{
+		// Don't bind unless there exists
+		if ($(pLayer + " header.jsCollapsible").length <= 0)
+		{
+			return;
+		}
+		
+		var layer = pLayer.substring(I.cContentPrefix.length, pLayer.length);
+		var beamid = "menuBeam_" + layer;
+		var menubeam = $("<div class='menuBeam' id='" + beamid + "'></div>").prependTo(pLayer);
+		
 		$(pLayer + " header.jsCollapsible").each(function()
 		{
 			var header = $(this);
+			var headertext = header.text();
 			header.next().append("<div class='jsCollapsibleDone'>Done reading " + header.text() + "</div>");
+			// Hide the entire collapsible div tag next to the header tag
 			header.next().hide();
 			header.wrapInner("<span></span>");
 			header.append("&nbsp;<sup>[+]</sup>");
@@ -4049,10 +4066,69 @@ I = {
 				{
 					$(this).children("sup").text("[-]");
 				}
-				$(this).next().toggle("fast");
-				I.scrollToElement($(this), $(pLayer), "fast");
+				
+				if ($(this).data("donotanimate") !== "true")
+				{
+					$(this).next().toggle("fast");
+					I.scrollToElement($(this), $(pLayer), "fast");
+				}
+				else
+				{
+					$(this).next().toggle();
+				}
+				$(this).removeData("donotanimate");
 			});
+			
+			/*
+			 * Side menu icon alias for clicking the headers.
+			 */
+			var src = header.find("img:eq(0)").attr("src");
+			var icon = $("<img class='menuBeamIcon' src='" + src + "' "
+				+ "title='&lt;dfn&gt;Toggle Section: &lt;/dfn&gt;" + headertext + "' />")
+				.appendTo(menubeam);
+			(function(i, l, h)
+			{
+				i.click(function()
+				{
+					$(l + " header.jsCollapsible").each(function()
+					{
+						// Hide all the collapsible sections
+						if ($(this).next().is(":visible"))
+						{
+							// Don't animate so the scrolling to the section-to-be-opened works properly
+							$(this).data("donotanimate", "true");
+							$(this).trigger("click");
+						}
+					});
+					if ( ! (h.next().is(":visible")))
+					{
+						h.trigger("click");
+					}
+				});
+			})(icon, pLayer, header);
+			
 		});
+
+		// Side menu icon to close all the sections
+		var doneicon = $("<img class='menuBeamIcon' src='img/ui/exit.png' "
+			+ "title='&lt;dfn&gt;Close All Sections&lt;/dfn&gt;' />")
+			.appendTo(menubeam);
+		(function(i, l)
+		{
+			i.click(function()
+			{
+				$(l + " header.jsCollapsible").each(function()
+				{
+					if ($(this).next().is(":visible"))
+					{
+						$(this).trigger("click");
+					}
+				});
+			});
+		})(doneicon, pLayer);
+		
+		// Make tooltips for the beam menu icons
+		I.qTip.init(".menuBeamIcon");
 		
 		// Bind the additional bottom header to collapse the container
 		$(pLayer + " .jsCollapsibleDone").each(function()
@@ -4132,7 +4208,7 @@ I = {
 			{
 				var layer = $(this).attr("id");
 				I.currentContent = layer.substring(menuprefix.length, layer.length);
-				I.currentContentLayer = "#layer" + I.currentContent;
+				I.currentContentLayer = I.cContentPrefix + I.currentContent;
 				
 				switch (I.currentContent)
 				{
@@ -4224,7 +4300,8 @@ I = {
 	}, // End of menu initialization
 	
 	/*
-	 * Macro function for various written content added functionality.
+	 * Macro function for various written content added functionality. Must be
+	 * run at the beginning of any load function's done block.
 	 */
 	bindAfterAJAXContent: function(pLayer)
 	{
@@ -4261,11 +4338,11 @@ I = {
 				M.bindMapLinkBehavior($(this), null, "sky");
 			});
 			// Create daily markers
-			$("#mapHeader_Daily").one("click", M.generateAndInitializeDailies);
+			$("#headerMap_Daily").one("click", M.generateAndInitializeDailies);
 			// Create node markers and checkboxes
-			$("#mapHeader_Resource").one("click", M.generateAndInitializeResourceNodes);
+			$("#headerMap_Resource").one("click", M.generateAndInitializeResourceNodes);
 			// Create JP checklist
-			$("#mapHeader_JP").one("click", function()
+			$("#headerMap_JP").one("click", function()
 			{
 				M.generateAndInitializeJPs();
 				M.generateAndInitializeJPChecklistHTML();
@@ -4288,7 +4365,7 @@ I = {
 				// Change the toggle icon after finish toggling
 				if ($(this).is(":visible"))
 				{
-					var container = $("#layer" + I.ContentEnum.Chains);
+					var container = $(I.cContentPrefix + I.ContentEnum.Chains);
 					var header = $(this).prev();
 					header.find("ins").html("[-]");
 					// Automatically scroll to the clicked header

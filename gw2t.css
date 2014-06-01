@@ -124,7 +124,7 @@ html, body,
 
 a, input, label, button,
 #mapCompassButton, #paneMenu span, #itemClockWaypoints img,
-.cntComposition h1, .cntComposition header,
+.menuBeam img:hover, .cntComposition h1, .cntComposition header,
 .jsTableOfContents ol li, .jsCollapsibleDone,
 #layerChains header, .chnCheck:hover, .chnTitle h2, .chnDetailsLinks ins,
 .leaflet-clickable {
@@ -424,6 +424,33 @@ input#mapCoordinatesRegion {
 }
 #menuHelp {
 	background: url("img/ui/help.png") no-repeat center;
+}
+
+.menuBeam {
+	position: absolute;
+	left: -41px;
+	width: 40px;
+	padding-top: 4px;
+	text-align: center;
+	border-left: 1px solid #444;
+	border-top: 1px solid #444;
+	border-bottom: 1px solid #444;
+	box-shadow: -5px 0px 5px #223;
+	background: #222;
+	opacity: 0.8;
+}
+.menuBeam img {
+	display: inline-block;
+	width: 32px; height: 32px;
+	margin-bottom: 2px;
+	opacity: 0.8;
+}
+.menuBeam img:hover {
+	box-shadow: 0px 0px 4px #e4e0b3;
+	opacity: 1;
+}
+.menuBeam img:active {
+	box-shadow: 0px 0px 4px #009900;
 }
 
 /* =============================================================================
