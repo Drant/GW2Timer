@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user
  * ========================================================================== */
 O = {
-	int_programVersion: 140530,
+	int_programVersion: 140531,
 	programVersionName: "int_programVersion",
 	
 	lengthOfPrefixes: 3,
@@ -689,10 +689,17 @@ O = {
 	 */
 	enactURLArguments: function()
 	{
+		var i;
 		// Go to the content layer requested
 		if (O.URLArguments[O.prefixPage] !== undefined)
 		{
-			$("#menu" + O.URLArguments[O.prefixPage]).trigger("click");
+			for (i in I.ContentEnum)
+			{
+				if (O.URLArguments[O.prefixPage].toLowerCase() === I.ContentEnum[i].toLowerCase())
+				{
+					$("#menu" + I.ContentEnum[i]).trigger("click");
+				}
+			}
 		}
 	},
 	
@@ -737,16 +744,18 @@ O = {
 		if (O.Options.bol_compactClock)
 		{
 			// Reposition clock items
-			$("#itemClockFace img").animate({ "border-radius": "32px" }, animationspeed);
-			$("#itemClock").css({top: "0px"});
-			$("#itemClockIcon0").css({ top: "4px", left: "290px" });
-			$("#itemClockIcon1").css({ top: "148px", left: "290px" });
-			$("#itemClockIcon2").css({ top: "148px", left: "4px" });
-			$("#itemClockIcon3").css({ top: "4px", left: "4px" });
-			$("#itemClockWaypoint0").css({ top: "24px", left: "274px" });
-			$("#itemClockWaypoint1").css({ top: "164px", left: "274px" });
-			$("#itemClockWaypoint2").css({ top: "164px", left: "52px" });
-			$("#itemClockWaypoint3").css({ top: "24px", left: "52px" });
+			I.bulkAnimate([
+				{s: "#itemClockFace img", p: {"border-radius": "32px"}},
+				{s: "#itemClock", p: {top: "0px"}},
+				{s: "#itemClockIcon0", p: {top: "4px", left: "290px"}},
+				{s: "#itemClockIcon1", p: {top: "148px", left: "290px"}},
+				{s: "#itemClockIcon2", p: {top: "148px", left: "4px"}},
+				{s: "#itemClockIcon3", p: {top: "4px", left: "4px"}},
+				{s: "#itemClockWaypoint0", p: {top: "24px", left: "274px"}},
+				{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
+				{s: "#itemClockWaypoint2", p: {top: "164px", left: "52px"}},
+				{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}}
+			], animationspeed);
 			$("#itemTimeLocal").css({
 				width: "100%",
 				left: "auto", bottom: "90px",
@@ -769,23 +778,41 @@ O = {
 				clockheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
 			}
 			$("#paneMenu").animate({top: clockheight}, animationspeed);
-			$("#paneContent").animate({top: clockheight + I.cPANE_MENU_HEIGHT}, animationspeed);
 			$("#paneClock, #paneClockBack, #paneClockBackground, #itemClockFace")
 				.animate({height: I.cPANE_CLOCK_HEIGHT_COMPACT}, animationspeed);
+			
+			// Readjust content pane
+			$("#paneContent").css({"min-height": I.cPANEL_HEIGHT
+				- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"});
+	
+			// Readjust content pane
+			if (O.Options.bol_showClock)
+			{
+				$("#paneContent").animate({top: clockheight + I.cPANE_MENU_HEIGHT,
+					"min-height": I.cPANEL_HEIGHT
+					- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+			}
+			else
+			{
+				$("#paneContent").animate({top: clockheight + I.cPANE_MENU_HEIGHT}, animationspeed)
+					.css({"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"});
+			}
 		}
 		else
 		{
 			// Reposition clock items
-			$("#itemClockFace img").animate({ "border-radius": "12px" }, animationspeed);
-			$("#itemClock").css({top: "70px"});
-			$("#itemClockIcon0").css({ top: "4px", left: "148px" });
-			$("#itemClockIcon1").css({ top: "148px", left: "290px" });
-			$("#itemClockIcon2").css({ top: "290px", left: "148px" });
-			$("#itemClockIcon3").css({ top: "148px", left: "4px" });
-			$("#itemClockWaypoint0").css({ top: "52px", left: "164px" });
-			$("#itemClockWaypoint1").css({ top: "164px", left: "274px" });
-			$("#itemClockWaypoint2").css({ top: "274px", left: "164px" });
-			$("#itemClockWaypoint3").css({ top: "164px", left: "52px" });
+			I.bulkAnimate([
+				{s: "#itemClockFace img", p: {"border-radius": "12px"}},
+				{s: "#itemClock", p: {top: "70px"}},
+				{s: "#itemClockIcon0", p: {top: "4px", left: "148px"}},
+				{s: "#itemClockIcon1", p: {top: "148px", left: "290px"}},
+				{s: "#itemClockIcon2", p: {top: "290px", left: "148px"}},
+				{s: "#itemClockIcon3", p: {top: "148px", left: "4px"}},
+				{s: "#itemClockWaypoint0", p: {top: "52px", left: "164px"}},
+				{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
+				{s: "#itemClockWaypoint2", p: {top: "274px", left: "164px"}},
+				{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}}
+			], animationspeed);
 			$("#itemTimeLocal").css({
 				width: "auto",
 				left: "10px", bottom: "10px",
@@ -808,9 +835,22 @@ O = {
 				clockheight = I.cPANE_CLOCK_HEIGHT;
 			}
 			$("#paneMenu").animate({top: clockheight}, animationspeed);
-			$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT)}, animationspeed);
 			$("#paneClock, #paneClockBack, #paneClockBackground, #itemClockFace")
 				.animate({height: I.cPANE_CLOCK_HEIGHT}, animationspeed);
+		
+			// Readjust content pane
+			if (O.Options.bol_showClock)
+			{
+				$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+					"min-height": I.cPANEL_HEIGHT
+					- (I.cPANE_CLOCK_HEIGHT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+			}
+			else
+			{
+				$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+					"min-height": I.cPANEL_HEIGHT
+					- (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+			}
 		}
 	},
 	enact_bol_showClock: function()
@@ -830,12 +870,27 @@ O = {
 			}
 			$("#paneClock").show();
 			$("#paneMenu").animate({top: clockheight}, animationspeed);
-			$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT)}, animationspeed);
+			
+			// Readjust content pane
+			if (O.Options.bol_compactClock)
+			{
+				$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+					"min-height": I.cPANEL_HEIGHT
+					- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+			}
+			else
+			{
+				$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+					"min-height": I.cPANEL_HEIGHT
+					- (I.cPANE_CLOCK_HEIGHT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+			}
 		}
 		else
 		{
 			$("#paneMenu").animate({top: 0}, animationspeed);
-			$("#paneContent").animate({top: I.cPANE_MENU_HEIGHT}, animationspeed, function()
+			$("#paneContent").animate({top: I.cPANE_MENU_HEIGHT,
+				"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed,
+			function()
 			{
 				$("#paneClock").hide();
 			});
@@ -1923,8 +1978,8 @@ M = {
 	cLEAFLET_ICON_SIZE: 32,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
-	cINITIAL_ZOOM_LEVEL: 3,
-	cMAX_ZOOM_LEVEL: 7,
+	cZOOM_LEVEL_DEFAULT: 3,
+	cZOOM_LEVEL_MAX: 7,
 	cMAP_MOUSEMOVE_RATE: 100,
 	
 	// Icons are initially invisible until zoomed in close enough or moused over a zone
@@ -1961,12 +2016,12 @@ M = {
 		// M.Map is the actual Leaflet map object, initialize it
 		M.Map = L.map("paneMap", {
 			minZoom: 0,
-			maxZoom: M.cMAX_ZOOM_LEVEL,
+			maxZoom: M.cZOOM_LEVEL_MAX,
 			doubleClickZoom: false,
 			zoomControl: false, // the zoom UI
 			attributionControl: false, // the Leaflet link UI
 			crs: L.CRS.Simple
-		}).setView([-128, 128], M.cINITIAL_ZOOM_LEVEL);
+		}).setView([-128, 128], M.cZOOM_LEVEL_DEFAULT);
 		
 		// Set layers
 		L.tileLayer(M.cURL_API_TILES,
@@ -2241,7 +2296,7 @@ M = {
 		{
 			case "space": zoom = 3; break;
 			case "sky": zoom = 5; break;
-			default: zoom = M.cMAX_ZOOM_LEVEL;
+			default: zoom = M.cZOOM_LEVEL_MAX;
 		}
 		M.Map.setView(M.convertGCtoLC(pCoord), zoom);
 		M.showCurrentZone(pCoord);
@@ -2283,7 +2338,7 @@ M = {
 	 */
 	convertLCtoGC: function(pLatLng)
 	{
-		var coord = M.Map.project(pLatLng, M.cMAX_ZOOM_LEVEL);
+		var coord = M.Map.project(pLatLng, M.cZOOM_LEVEL_MAX);
 		return [coord.x, coord.y];
 	},
 	
@@ -2631,7 +2686,7 @@ M = {
 			}).addTo(M.Map);
 			marker.setIcon(new L.icon(
 			{
-				iconUrl: "img/daily/" + type.toLowerCase() + ".png",
+				iconUrl: "img/daily/" + type.toLowerCase() + I.cImageMainExtension,
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}));
@@ -2665,7 +2720,7 @@ M = {
 		{
 			pMarker.setIcon(new L.icon(
 			{
-				iconUrl: "img/node/" + pResource.toLowerCase() + ".png",
+				iconUrl: "img/node/" + pResource.toLowerCase() + I.cImageMainExtension,
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}));
@@ -2762,9 +2817,9 @@ M = {
 	 */
 	generateAndInitializeJPs: function()
 	{
+		O.numOfJPs = $(".mapJPList dt").length;
+		
 		var i;
-		var id = 0;
-		var numdifficulties = $(".mapJPList").length;
 		var createJPMarkers = function(pElement, pID, pDifficulty)
 		{
 			var coord = M.getElementCoordinates(pElement);
@@ -2772,7 +2827,8 @@ M = {
 			{
 				id: pID,
 				dif: pDifficulty,
-				title: "<div class='mapLoc'><dfn>JP:</dfn> " + pElement.text() + "</div>"
+				title: "<div class='mapLoc'><dfn>JP:</dfn> " + pElement.text()
+					+ "<img src='" + I.cImageHost + pElement.data("img") + I.cImageMainExtension + "' /></div>"
 			}).addTo(M.Map);
 			marker.setIcon(new L.icon(
 			{
@@ -2789,12 +2845,12 @@ M = {
 		};
 		
 		// Create the markers, each set pertains to one "mapJPList"
-		for (i = 0; i < numdifficulties; i++)
+		for (i = 0; i < O.numOfJPs; i++)
 		{
-			$(".mapJPList:eq(" + i + ") dt").each(function()
+			$("#mapJP_" + i).each(function()
 			{
-				createJPMarkers($(this), id, i);
-				id++;
+				createJPMarkers($(this), I.getNameFromHTMLID($(this)),
+					$(this).parent().data("jpdif"));
 			});
 		}
 		
@@ -2818,15 +2874,14 @@ M = {
 		$(".mapJPList dt").each(function()
 		{
 			var term = $(this).text();
-			$(this).after("&nbsp;<a href='"
+			$(this).after("&nbsp;<cite><a href='"
 				+ I.getYouTubeLink(term + " Guild Wars 2") + "' target='blank_'>[Y]</a> <a href='"
-				+ I.getWikiLink(term) + "' target='blank_'>[W]</a>");
+				+ I.getWikiLink(term) + "' target='blank_'>[W]</a></cite>");
 			M.bindMapLinkBehavior($(this), null);
 			
 			// Make checkboxes
-			$(this).append("<input type='checkbox' id='mapJP_" + O.numOfJPs + "' />");
+			$(this).append("<input type='checkbox' id='mapJPCheck_" + I.getNameFromHTMLID($(this)) + "' />");
 			O.JPChecklist += "0";
-			O.numOfJPs++;
 		});
 		
 		// Initialize localStorage
@@ -2839,10 +2894,10 @@ M = {
 			O.JPChecklist = localStorage[O.JPChecklistName];
 		}
 		
-		var i; // This is the JP checkbox ID number
+		var i;
 		for (i = 0; i < O.numOfJPs; i++)
 		{
-			$("#mapJP_" + i).each(function()
+			$("#mapJPCheck_" + i).each(function()
 			{
 				/*
 				 * Read and enact the state of the JP checklist.
@@ -2907,12 +2962,19 @@ M = {
 				// Click associated checkbox when clicked
 				M.JPEntities[pIndex].on("click", function()
 				{
-					$("#mapJP_" + pIndex).trigger("click");
+					$("#mapJPCheck_" + pIndex).trigger("click");
 				});
 				// Zoom in when double clicked
 				M.JPEntities[pIndex].on("dblclick", function()
 				{
-					$(".mapJPList dt:eq(" + pIndex + ")").trigger("click");
+					if (M.Map.getZoom() === M.cZOOM_LEVEL_MAX)
+					{
+						M.Map.setZoom(M.cZOOM_LEVEL_DEFAULT);
+					}
+					else
+					{
+						$("#mapJP_" + pIndex).trigger("click");
+					}
 				});
 			})(i);
 		}
@@ -2923,7 +2985,7 @@ M = {
 			var jpchecklist = "";
 			for (i = 0; i < O.numOfJPs; i++)
 			{
-				$("#mapJP_" + i).prop("checked", false)
+				$("#mapJPCheck_" + i).prop("checked", false)
 					.parent().css({color: "#ffcc77"});
 				M.styleJPMarkers(M.JPEntities[i], M.JPEntities[i].options.dif);
 				
@@ -3543,10 +3605,10 @@ K = {
 					$(pIcon).css({opacity: 1});
 				}
 			};
-			K.iconChain0.attr("src", "img/chain/" + chain0.alias.toLowerCase() + ".png");
-			K.iconChain1.attr("src", "img/chain/" + chain1.alias.toLowerCase() + ".png");
-			K.iconChain2.attr("src", "img/chain/" + chain2.alias.toLowerCase() + ".png");
-			K.iconChain3.attr("src", "img/chain/" + chain3.alias.toLowerCase() + ".png");
+			K.iconChain0.attr("src", "img/chain/" + chain0.alias.toLowerCase() + I.cImageMainExtension);
+			K.iconChain1.attr("src", "img/chain/" + chain1.alias.toLowerCase() + I.cImageMainExtension);
+			K.iconChain2.attr("src", "img/chain/" + chain2.alias.toLowerCase() + I.cImageMainExtension);
+			K.iconChain3.attr("src", "img/chain/" + chain3.alias.toLowerCase() + I.cImageMainExtension);
 			fadeIcons(chain0, K.iconChain0);
 			fadeIcons(chain1, K.iconChain1);
 			fadeIcons(chain2, K.iconChain2);
@@ -3675,16 +3737,19 @@ K = {
 I = {
 	cContentPane: "#paneContent",
 	cSiteName: "GW2Timer.com",
+	cImageHost: "http://i.imgur.com/",
+	cImageMainExtension: ".png", // Almost all used images are PNG
 	consoleTimeout: {},
 	
 	// HTML/CSS pixel units
+	cPANEL_HEIGHT: 720,
 	cPANE_CLOCK_HEIGHT: 360,
 	cPANE_CLOCK_HEIGHT_COMPACT: 220,
 	cPANE_MENU_HEIGHT: 48,
 	cTOOLTIP_DEFAULT_OFFSET_X: -180,
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
-	cTOOLTIP_ADD_OFFSET_Y: 45,
-	cTOOLTIP_ADD_OFFSET_X: 35,
+	cTOOLTIP_ADD_OFFSET_Y: 42,
+	cTOOLTIP_ADD_OFFSET_X: 36,
 	
 	ContentEnum:
 	{
@@ -3706,56 +3771,6 @@ I = {
 	cSMALL_DEVICE_WIDTH: 800,
 	cSMALL_DEVICE_HEIGHT: 600,
 	cSMALL_DISPLAY_HEIGHT: 900,
-	
-	/*
-	 * Loads a TTS sound file generated from a TTS web service into a hidden
-	 * iframe. The sound plays automatically after changing the iframe's src via
-	 * the browser's builtin media player.
-	 * @param string pString to convert to speech.
-	 */
-	speak: function(pString)
-	{
-		if (O.Options.bol_enableSound)
-		{
-			var url;
-			var tts = document.getElementById("jsTTS");
-
-			if (I.userBrowser === I.BrowserEnum.Chrome)
-			{
-				/*
-				 * Google TTS seems to only work with their browser; using it on
-				 * Firefox gives "Video playback aborted due to a network error"
-				 * Note that GTTS has a 100 character URL limit.
-				 */
-				url = "http://translate.google.com/translate_tts?tl=en&q=" + escape(pString);
-			}
-			else
-			{
-				url = "http://tts-api.com/tts.mp3?q=" + escape(pString);
-			}
-			tts.src = url;
-		}
-	},
-	
-	/*
-	 * Writes an HTML string to the "console" area in the top left corner of
-	 * the website that disappears after a while.
-	 * @param string pString to write.
-	 * @param int pSeconds until the console is cleared.
-	 */
-	writeConsole: function(pString, pSeconds)
-	{
-		$("#jsConsole").html(pString);
-		
-		window.clearTimeout(I.consoleTimeout);
-		I.consoleTimeout = setTimeout(function()
-		{
-			$("#jsConsole").css({opacity: 1}).animate({opacity: 0}, 400, function()
-			{
-				$(this).empty().css({opacity: 1});
-			});
-		}, pSeconds * T.cMILLISECONDS_IN_SECOND);
-	},
 	
 	/*
 	 * Does things that need to be done before everything else.
@@ -3838,6 +3853,56 @@ I = {
 	},
 	
 	/*
+	 * Loads a TTS sound file generated from a TTS web service into a hidden
+	 * iframe. The sound plays automatically after changing the iframe's src via
+	 * the browser's builtin media player.
+	 * @param string pString to convert to speech.
+	 */
+	speak: function(pString)
+	{
+		if (O.Options.bol_enableSound)
+		{
+			var url;
+			var tts = document.getElementById("jsTTS");
+
+			if (I.userBrowser === I.BrowserEnum.Chrome)
+			{
+				/*
+				 * Google TTS seems to only work with their browser; using it on
+				 * Firefox gives "Video playback aborted due to a network error"
+				 * Note that GTTS has a 100 character URL limit.
+				 */
+				url = "http://translate.google.com/translate_tts?tl=en&q=" + escape(pString);
+			}
+			else
+			{
+				url = "http://tts-api.com/tts.mp3?q=" + escape(pString);
+			}
+			tts.src = url;
+		}
+	},
+	
+	/*
+	 * Writes an HTML string to the "console" area in the top left corner of
+	 * the website that disappears after a while.
+	 * @param string pString to write.
+	 * @param int pSeconds until the console is cleared.
+	 */
+	writeConsole: function(pString, pSeconds)
+	{
+		$("#jsConsole").html(pString);
+		
+		window.clearTimeout(I.consoleTimeout);
+		I.consoleTimeout = setTimeout(function()
+		{
+			$("#jsConsole").css({opacity: 1}).animate({opacity: 0}, 400, function()
+			{
+				$(this).empty().css({opacity: 1});
+			});
+		}, pSeconds * T.cMILLISECONDS_IN_SECOND);
+	},
+	
+	/*
 	 * Extracts the "name" part of an HTML element's ID. Most iterable elements'
 	 * IDs were manually named as [prefix]_[Name].
 	 * @param jqobject pElement to extract.
@@ -3870,6 +3935,16 @@ I = {
 	},
 	
 	/*
+	 * Strips all non-alphabet and non-numbers from a string using regex.
+	 * @param string pString to strip.
+	 * @return string stripped.
+	 */
+	stripToAlphanumeric: function(pString)
+	{
+		return pString.replace(/\W/g, "");
+	},
+	
+	/*
 	 * Scrolls to an element at specified rate.
 	 * @param object pElement to scroll to.
 	 * @param object pContainerOfElement container with the scroll bar.
@@ -3883,6 +3958,24 @@ I = {
 			scrollTop: pElement.offset().top - pContainerOfElement.offset().top
 				+ pContainerOfElement.scrollTop()
 		}, rate);
+	},
+	
+	/*
+	 * Animates multiple elements simultaneously.
+	 * @param array pRequests array of objects.
+	 *	@objparam string s selector for elements.
+	 *	@objparam object p properties to animate.
+	 * @param int pSpeed of animation.
+	 */
+	bulkAnimate: function(pRequests, pSpeed)
+	{
+		var i;
+		var r;
+		for (i in pRequests)
+		{
+			r = pRequests[i];
+			$(r.s).animate(r.p, {duration: pSpeed, queue: false});
+		}
 	},
 	
 	/*
@@ -3901,7 +3994,7 @@ I = {
 			{
 				// Scroll to top when clicked the header
 				var headertext = $(this).text();
-				var headertextstripped = headertext.replace(/[^a-zA-Z0-9]/, "");
+				var headertextstripped = I.stripToAlphanumeric(headertext);
 				$(this).html(headertext + "<span class='tocTop'> \u2191</span>");
 				$(this).click(function()
 				{
@@ -4103,7 +4196,7 @@ I = {
 		 */
 		$("#jsCenter").click(function()
 		{
-			M.Map.setView(M.convertGCtoLC(M.cMAP_CENTER), M.cINITIAL_ZOOM_LEVEL);
+			M.Map.setView(M.convertGCtoLC(M.cMAP_CENTER), M.cZOOM_LEVEL_DEFAULT);
 		});
 	   
 	}, // End of menu initialization
@@ -4251,12 +4344,19 @@ I = {
 		{
 			if ($("#qTip").width() + pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $("#paneMap").width())
 			{
-				I.qTip.offsetX = -($("#qTip").width());
+				I.qTip.offsetX = -($("#qTip").width()) - I.cTOOLTIP_ADD_OFFSET_X;
 			}
 			else
 			{
-				I.qTip.offsetY = -50;
-				I.qTip.offsetX = 0;
+				I.qTip.offsetX = 24;
+			}
+			if ($("#qTip").height() - 24 + pEvent.pageY > $(window).height())
+			{
+				I.qTip.offsetY = -($("#qTip").height()) - I.cTOOLTIP_ADD_OFFSET_Y;
+			}
+			else
+			{
+				I.qTip.offsetY = -42;
 			}
 		});
 	},
@@ -4316,6 +4416,12 @@ I = {
 				? document.documentElement.scrollTop : document.body.scrollTop,
 				x += window.event.clientX, y += window.event.clientY
 			) : (x = a.pageX, y = a.pageY);
+			/*
+			$("#jsConsole").html(
+				x + ", " + y + "<br />"
+				+ (this.a.offsetWidth) + ", " + (this.a.offsetHeight) + "<br />"
+				+ window.innerWidth + ", " + window.innerHeight);
+			 */
 			this.a.style.left = x + this.offsetX + "px";
 			this.a.style.top = y + this.offsetY + "px";
 		},
