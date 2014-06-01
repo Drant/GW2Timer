@@ -86,8 +86,8 @@ O = {
 	{
 		// Timer
 		bol_hideChecked: false,
-		bol_use24Hour: false,
-		bol_compactClock: false,
+		bol_use24Hour: true,
+		bol_compactClock: true,
 		bol_showClock: true,
 		int_dimClockBackground: 0,
 		int_setTimeStyle: 0,
@@ -3003,8 +3003,11 @@ M = {
  * ========================================================================== */
 T = {
 
-	cSERVER_UTC_OFFSET: -8, // server is Pacific Time, 8 hours behind UTC
-	DST_IN_EFFECT: 0, // will become 1 and added to the server offset if DST is on
+	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
+	cUTC_OFFSET_USER: 0,
+	cUTC_OFFSET_SERVER: -8, // Server is Pacific Time, 8 hours behind UTC
+	cUTC_OFFSET_HAWAII: -10,
+	cUTC_OFFSET_EASTERN: -4,
 	cMILLISECONDS_IN_SECOND: 1000,
 	cSECONDS_IN_MINUTE: 60,
 	cSECONDS_IN_HOUR: 3600,
@@ -3042,6 +3045,14 @@ T = {
 		if (now.dst() && O.Options.bol_detectDST === false)
 		{
 			T.DST_IN_EFFECT = 1;
+		}
+		
+		// If user lives in the Americas then use AM/PM time format by default
+		T.cUTC_OFFSET_USER = -((new Date()).getTimezoneOffset() / T.cMINUTES_IN_HOUR);
+		if (T.cUTC_OFFSET_USER <= T.cUTC_OFFSET_EASTERN
+			&& T.cUTC_OFFSET_USER >= T.cUTC_OFFSET_HAWAII)
+		{
+			O.Options.bol_use24Hour = false;
 		}
 	},
 
@@ -3097,7 +3108,7 @@ T = {
 				{
 					sec = now.getSeconds();
 					min = now.getMinutes();
-					hour = (now.getUTCHours() + T.cSERVER_UTC_OFFSET + T.DST_IN_EFFECT)
+					hour = (now.getUTCHours() + T.cUTC_OFFSET_SERVER + T.DST_IN_EFFECT)
 						% T.cHOURS_IN_DAY;
 					if (hour < 0)
 					{
@@ -3214,7 +3225,7 @@ T = {
 		
 		switch (pReference)
 		{
-			case "server": hour = hour + T.cSERVER_UTC_OFFSET + T.DST_IN_EFFECT; break;
+			case "server": hour = hour + T.cUTC_OFFSET_SERVER + T.DST_IN_EFFECT; break;
 			case "utc": break;
 			case "local":
 			{
@@ -3770,7 +3781,6 @@ I = {
 	userSmallDevice: false,
 	cSMALL_DEVICE_WIDTH: 800,
 	cSMALL_DEVICE_HEIGHT: 600,
-	cSMALL_DISPLAY_HEIGHT: 900,
 	
 	/*
 	 * Does things that need to be done before everything else.
@@ -3804,11 +3814,6 @@ I = {
 			O.Options.bol_tourPrediction = false;
 			O.Options.bol_showChainPaths = false;
 			O.Options.bol_showMap = false;
-		}
-		// Detect small displays
-		if (window.innerHeight <= I.cSMALL_DISPLAY_HEIGHT)
-		{
-			O.Options.bol_compactClock = true;
 		}
 		
 		// Remember user's browser maker
