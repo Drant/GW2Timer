@@ -87,7 +87,7 @@ O = {
 		// Timer
 		bol_hideChecked: false,
 		bol_use24Hour: true,
-		bol_compactClock: true,
+		bol_compactClock: false,
 		bol_showClock: true,
 		int_dimClockBackground: 0,
 		int_setTimeStyle: 0,
@@ -2440,7 +2440,7 @@ M = {
 
 						var waypoint = L.marker(M.convertGCtoLC(poi.coord),
 						{
-							title: "<span class='mapLoc mapLoc_WP'>" + poi.name + "</span>",
+							title: "<span class='mapLoc'><dfn>" + poi.name + "</dfn></span>",
 							waypoint: poi.name,
 							icon: M.iconWaypoint,
 							link: M.getChatlinkFromPoiID(poi.poi_id)
@@ -3781,6 +3781,7 @@ I = {
 	userSmallDevice: false,
 	cSMALL_DEVICE_WIDTH: 800,
 	cSMALL_DEVICE_HEIGHT: 600,
+	cSMALL_DISPLAY_HEIGHT: 900,
 	
 	/*
 	 * Does things that need to be done before everything else.
@@ -3814,6 +3815,11 @@ I = {
 			O.Options.bol_tourPrediction = false;
 			O.Options.bol_showChainPaths = false;
 			O.Options.bol_showMap = false;
+		}
+		// Detect small displays
+		if (window.innerHeight <= I.cSMALL_DISPLAY_HEIGHT)
+		{
+			O.Options.bol_compactClock = true;
 		}
 		
 		// Remember user's browser maker
@@ -4024,14 +4030,25 @@ I = {
 	 */
 	bindCollapsible: function(pLayer)
 	{
-		$(pLayer + " .jsCollapsible").each(function()
+		$(pLayer + " header.jsCollapsible").each(function()
 		{
 			var header = $(this);
 			header.next().append("<div class='jsCollapsibleDone'>Done reading " + header.text() + "</div>");
 			header.next().hide();
+			header.wrapInner("<span></span>");
+			header.append("&nbsp;<sup>[+]</sup>");
+			
 			// Bind click the header to toggle the sibling collapsible container
 			header.click(function()
 			{
+				if ($(this).next().is(":visible"))
+				{
+					$(this).children("sup").text("[+]");
+				}
+				else
+				{
+					$(this).children("sup").text("[-]");
+				}
 				$(this).next().toggle("fast");
 				I.scrollToElement($(this), $(pLayer), "fast");
 			});
@@ -4042,7 +4059,7 @@ I = {
 		{
 			$(this).click(function()
 			{
-				$(this).parent().hide("fast");		
+				$(this).parent().prev().trigger("click");
 			});
 		});
 	},
