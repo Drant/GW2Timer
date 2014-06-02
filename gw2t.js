@@ -3844,6 +3844,7 @@ I = {
 	cPANE_CLOCK_HEIGHT: 360,
 	cPANE_CLOCK_HEIGHT_COMPACT: 220,
 	cPANE_MENU_HEIGHT: 48,
+	cPANE_BEAM_LEFT: -41,
 	cTOOLTIP_DEFAULT_OFFSET_X: -180,
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
 	cTOOLTIP_ADD_OFFSET_Y: 42,
@@ -4482,6 +4483,12 @@ I = {
 			// Expand a header if requested in the URL
 			I.openSectionFromURL();
 		});
+		
+		// Bind beam menu animation
+		$("#menuHelp").click(function()
+		{
+			$("#menuBeam_Help").css({left: 0}).animate({left: I.cPANE_BEAM_LEFT}, "fast");
+		});
 	},
 	
 	/*
@@ -4508,7 +4515,7 @@ I = {
 				M.generateAndInitializeJPs();
 				M.generateAndInitializeJPChecklistHTML();
 			});
-			// Bind show icons when clicked on header
+			// Bind show map icons when clicked on header
 			$("#headerMap_Daily, #headerMap_Resource, #headerMap_JP").each(function()
 			{
 				$(this).click(function()
@@ -4530,6 +4537,12 @@ I = {
 				M.displayIcons();
 			});
 			I.qTip.init(".menuBeamIcon");
+			
+			// Bind beam menu animation
+			$("#menuMap").click(function()
+			{
+				$("#menuBeam_Map").css({left: 0}).animate({left: I.cPANE_BEAM_LEFT}, "fast");
+			});
 			
 			// Expand a header if requested in the URL
 			I.openSectionFromURL();
