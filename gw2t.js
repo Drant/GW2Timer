@@ -57,16 +57,15 @@ var K = {}; // clock
 var I = {}; // interface
 
 /* =============================================================================
- * @@Options for the user
+ * @@Options for the user, anything that persists after reloading the website.
  * ========================================================================== */
 O = {
-	int_programVersion: 140531,
+	int_programVersion: 140601,
 	programVersionName: "int_programVersion",
 	
 	lengthOfPrefixes: 3,
 	prefixOption: "opt_",
 	prefixChain: "chn_",
-	prefixPage: "page",
 	
 	/*
 	 * This UNIX time variable should be updated whenever a server reset related
@@ -691,11 +690,11 @@ O = {
 	{
 		var i;
 		// Go to the content layer requested
-		if (O.URLArguments[O.prefixPage] !== undefined)
+		if (O.URLArguments[I.prefixPage] !== undefined)
 		{
 			for (i in I.ContentEnum)
 			{
-				if (O.URLArguments[O.prefixPage].toLowerCase() === I.ContentEnum[i].toLowerCase())
+				if (O.URLArguments[I.prefixPage].toLowerCase() === I.ContentEnum[i].toLowerCase())
 				{
 					$("#menu" + I.ContentEnum[i]).trigger("click");
 				}
@@ -852,6 +851,8 @@ O = {
 					- (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 			}
 		}
+		
+		K.reapplyFilters();
 	},
 	enact_bol_showClock: function()
 	{
@@ -895,6 +896,8 @@ O = {
 				$("#paneClock").hide();
 			});
 		}
+		
+		K.reapplyFilters();
 	},
 	enact_int_dimClockBackground: function()
 	{
@@ -1810,7 +1813,7 @@ C = {
 			}
 			
 			// Tour to the event on the map if opted
-			if (O.Options.bol_tourPrediction && I.currentContent === I.ContentEnum.Chains
+			if (O.Options.bol_tourPrediction && I.contentCurrent === I.ContentEnum.Chains
 					&& M.isMapAJAXDone)
 			{
 				$("#chnEvent_" + pChain.alias + "_" + C.CurrentPrimaryEvent.num).trigger("click");
@@ -2004,9 +2007,9 @@ M = {
 	DailyEntities: new Array(),
 	JPEntities: new Array(),
 	ChainPathEntities: new Array(),
-	DailyToggleState: true,
-	ResourceToggleState: false,
-	JPToggleState: true,
+	isShowingIconsForDaily: true,
+	isShowingIconsForResource: false,
+	isShowingIconsForJP: true,
 	
 	/*
 	 * Initializes the Leaflet map, adds markers, and binds events.
@@ -2447,11 +2450,13 @@ M = {
 						}).addTo(M.Map);
 						// Initially hide all the waypoints
 						waypoint._icon.style.display = "none";
+						// Bind behavior
 						waypoint.on("click", function()
 						{
 							$("#mapCoordinatesStatic").val(this.options.link).select();
 							$("#mapCoordinatesRegion").val(this.options.waypoint);
 						});
+						M.bindMarkerZoomBehavior(waypoint, "dblclick");
 						
 						// Assign the waypoint to its zone
 						for (ii in M.Zones)
@@ -2472,7 +2477,7 @@ M = {
 			 * AJAX takes a while so can use this to advantage to delay graphics
 			 * that seem out of place without a map loaded.
 			 */
-			if (O.Options.bol_showChainPaths === true && I.currentContent !== I.ContentEnum.Map)
+			if (O.Options.bol_showChainPaths === true && I.contentCurrent !== I.ContentEnum.Map)
 			{
 				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
 			}
@@ -2482,7 +2487,7 @@ M = {
 			 */
 			I.qTip.init(".leaflet-marker-icon");
 			// The zoomend event handler doesn't detect the first zoom by prediction
-			if (O.Options.bol_tourPrediction && I.currentContent === I.ContentEnum.Chains
+			if (O.Options.bol_tourPrediction && I.contentCurrent === I.ContentEnum.Chains
 				&& C.CurrentPrimaryEvent.num !== undefined)
 			{
 				for (var i in M.WaypointEntities)
@@ -2491,7 +2496,7 @@ M = {
 				}
 			}
 			// Tour to the event on the map if opted
-			if (O.Options.bol_tourPrediction && I.currentContent === I.ContentEnum.Chains)
+			if (O.Options.bol_tourPrediction && I.contentCurrent === I.ContentEnum.Chains)
 			{
 				$("#chnEvent_" + C.CurrentChain.alias + "_" + C.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -2501,7 +2506,7 @@ M = {
 				+ "Reasons could be:<br />"
 				+ "- The GW2 server is down for maintenance.<br />"
 				+ "- Your computer's time is out of sync.<br />"
-				+ "- Your browser does not have the necessary features.<br />"
+				+ "- Your browser is too old (if IE then need 11+).<br />"
 				+ "- This website's code encountered a bug.<br />"
 				+ "Map features will be limited.<br />", 30);
 		}).always(function() // Do after AJAX regardless of success/failure
@@ -2670,6 +2675,26 @@ M = {
 	},
 	
 	/*
+	 * Binds standard zoom in/out when user do something to an icon on the map.
+	 * @param object pMarker to bind.
+	 * @param string pEventType like "click" or "dblclick".
+	 */
+	bindMarkerZoomBehavior: function(pMarker, pEventType)
+	{
+		pMarker.on(pEventType, function(pEvent)
+		{
+			if (M.Map.getZoom() === M.cZOOM_LEVEL_MAX)
+			{
+				M.Map.setZoom(M.cZOOM_LEVEL_DEFAULT);
+			}
+			else
+			{
+				M.Map.setView(pEvent.latlng, M.cZOOM_LEVEL_MAX);
+			}
+		});
+	},
+	
+	/*
 	 * Populates the map with dailies location markers.
 	 */
 	generateAndInitializeDailies: function()
@@ -2691,6 +2716,7 @@ M = {
 				iconAnchor: [16, 16]
 			}));
 			marker._icon.style.opacity = "0.9";
+			M.bindMarkerZoomBehavior(marker, "click");
 			
 			// Add to array
 			M.DailyEntities.push(marker);
@@ -2698,8 +2724,8 @@ M = {
 		
 		$("#mapToggle_Daily").click(function()
 		{
-			M.DailyToggleState = !(M.DailyToggleState);
-			M.setEntityGroupDisplay(M.DailyEntities, M.DailyToggleState);
+			M.isShowingIconsForDaily = !(M.isShowingIconsForDaily);
+			M.setEntityGroupDisplay(M.DailyEntities, M.isShowingIconsForDaily);
 		});
 		
 		I.qTip.init(".leaflet-marker-icon");
@@ -2727,7 +2753,8 @@ M = {
 			pMarker._icon.style.borderRadius = "16px";
 			pMarker._icon.style.opacity = "0.9";
 			pMarker._icon.style.border = "2px solid lime";
-			pMarker._icon.style.display = "none";
+			
+			M.bindMarkerZoomBehavior(pMarker, "click");
 		};
 		
 		for (i in M.Resources)
@@ -2786,11 +2813,11 @@ M = {
 		}
 		$("#mapToggle_Resource").click(function()
 		{
-			M.ResourceToggleState = !(M.ResourceToggleState);
+			M.isShowingIconsForResource = !(M.isShowingIconsForResource);
 			for (i in M.Resources)
 			{
-				$("#nod_" + i).prop("checked", M.ResourceToggleState);
-				M.setEntityGroupDisplay(M.Resources[i].NodeEntities, M.ResourceToggleState);
+				$("#nod_" + i).prop("checked", M.isShowingIconsForResource);
+				M.setEntityGroupDisplay(M.Resources[i].NodeEntities, M.isShowingIconsForResource);
 			}
 		});
 	},
@@ -2856,8 +2883,8 @@ M = {
 		
 		$("#mapToggle_JP").click(function()
 		{
-			M.JPToggleState = !(M.JPToggleState);
-			M.setEntityGroupDisplay(M.JPEntities, M.JPToggleState);
+			M.isShowingIconsForJP = !(M.isShowingIconsForJP);
+			M.setEntityGroupDisplay(M.JPEntities, M.isShowingIconsForJP);
 		});
 		
 		I.qTip.init(".leaflet-marker-icon");
@@ -2994,6 +3021,46 @@ M = {
 			O.JPChecklist = jpchecklist;
 			localStorage[O.JPChecklistName] = O.JPChecklist;
 		});
+	},
+	
+	/*
+	 * Hides all the map icons by triggering the toggle button of each map section.
+	 */
+	displayIcons: function(pSection, pWantShow)
+	{
+		// Hide all icons if no parameters given
+		if (pSection === undefined || pSection === null)
+		{
+			if (M.isShowingIconsForDaily)
+			{
+				$("#mapToggle_Daily").trigger("click");
+			}
+			if (M.isShowingIconsForResource)
+			{
+				$("#mapToggle_Resource").trigger("click");
+			}
+			if (M.isShowingIconsForJP)
+			{
+				$("#mapToggle_JP").trigger("click");
+			}
+		}
+		else
+		{
+			if (pWantShow)
+			{
+				if ( ! M["isShowingIconsFor" + pSection])
+				{
+					$("#mapToggle_" + pSection).trigger("click");
+				}
+			}
+			else
+			{
+				if (M["isShowingIconsFor" + pSection])
+				{
+					$("#mapToggle_" + pSection).trigger("click");
+				}
+			}
+		}
 	}
 	
 };
@@ -3317,6 +3384,25 @@ K = {
 	rotateClockElement: function(pElement, pAngle)
 	{
 		pElement.setAttribute("transform", "rotate(" + pAngle + ", 50, 50)");
+	},
+	
+	/*
+	 * Removes the filter attribute from SVG elements that have them (as in
+	 * the shadow effect), then re-adds the filter. This is used because Firefox
+	 * has a bug that causes the clock's circumference and hand to disappear
+	 * when the whole clock is moved visually.
+	 */
+	reapplyFilters: function()
+	{
+		if (I.userBrowser === I.BrowserEnum.Firefox)
+		{
+			var e1 = $("#clkCircumference");
+			var e2 = $("#clkHands");
+			var f1 = e1.attr("filter");
+			var f2 = e2.attr("filter");
+			e1.removeAttr("filter").attr("filter", f1);
+			e2.removeAttr("filter").attr("filter", f2);
+		}
 	},
 	
 	/*
@@ -3736,6 +3822,7 @@ K = {
 					{
 						$(elm).attr("src", M.cICON_WAYPOINT);
 					}, 400);
+					I.writeConsole("Chat link copied to clipboard :)<br />" + $(this).data("clipboard-text"), 5);
 				});
 			});
 		}
@@ -3762,6 +3849,7 @@ I = {
 	cTOOLTIP_ADD_OFFSET_Y: 42,
 	cTOOLTIP_ADD_OFFSET_X: 36,
 	
+	// Content-Layer-Page and Section-Header
 	cContentPrefix: "#layer",
 	ContentEnum:
 	{
@@ -3771,6 +3859,16 @@ I = {
 		Help: "Help",
 		Options: "Options"
 	},
+	contentCurrent: "",
+	contentCurrentLayer: "", // This is cContentPrefix + contentCurrent
+	sectionPrefix: "sectionCurrent_",
+	sectionCurrent_Map: "",
+	sectionCurrent_Help: "",
+	cHeaderPrefix: "#header",
+	prefixPage: "page",
+	prefixSection: "section",
+	
+	// User information
 	userBrowser: "Unknown",
 	BrowserEnum:
 	{
@@ -3846,7 +3944,7 @@ I = {
 		localStorage[O.programVersionName] = O.programVersion;
 		
 		// Default content layer
-		I.currentContent = I.ContentEnum.Chains;
+		I.contentCurrent = I.ContentEnum.Chains;
 	},
 	
 	/*
@@ -3862,6 +3960,8 @@ I = {
 		O.enactURLArguments();
 		// Clear the non-load warning after everything succeeded
 		$("#jsConsole").empty();
+		// Fix Firefox SVG filter bug
+		K.reapplyFilters();
 	},
 	
 	/*
@@ -3902,7 +4002,7 @@ I = {
 	 */
 	writeConsole: function(pString, pSeconds)
 	{
-		$("#jsConsole").html(pString);
+		$("#jsConsole").append(pString + "<br />");
 		
 		window.clearTimeout(I.consoleTimeout);
 		I.consoleTimeout = setTimeout(function()
@@ -3912,6 +4012,52 @@ I = {
 				$(this).empty().css({opacity: 1});
 			});
 		}, pSeconds * T.cMILLISECONDS_IN_SECOND);
+	},
+	
+	/*
+	 * Rewrites the URL in the address bar to show the current page and section.
+	 * Does not actually load anything and is only a visual effect; however, if
+	 * the user presses enter with that URL (go to such a link), a separate
+	 * function will load that page (content layer) and expand that section.
+	 */
+	updateAddressBar: function()
+	{
+		if (I.contentCurrent !== "")
+		{
+			var section = I[I.sectionPrefix + I.contentCurrent];
+			var pagestring = "?" + I.prefixPage + "=" + I.contentCurrent;
+			var sectionstring = "&" + I.prefixSection + "=" + section;
+			if (section !== "" && section !== undefined)
+			{
+				history.replaceState("", null, pagestring + sectionstring);
+			}
+			else
+			{
+				history.replaceState("", null, pagestring);
+			}			
+		}
+	},
+	
+	/*
+	 * Triggers the header tag associated with the requested page and section,
+	 * which will cause the section beside the header to expand. This is to be
+	 * called after a page has been AJAX loaded and bindings completed.
+	 */
+	openSectionFromURL: function()
+	{
+		/*
+		 * Enclosed in setTimeout because without it the scroll to element
+		 * animation function is glitchy (the function is called when the header
+		 * is clicked so the page automatically scrolls to the header).
+		 */
+		setTimeout(function()
+		{
+			if (O.URLArguments[I.prefixSection] !== undefined)
+			{
+				$(I.cHeaderPrefix + I.contentCurrent + "_"
+					+ O.URLArguments[I.prefixSection]).trigger("click");
+			}
+		}, 0);
 	},
 	
 	/*
@@ -3992,6 +4138,8 @@ I = {
 	
 	/*
 	 * Creates a single-level table of content for a composition (writings) layer.
+	 * Example: <div class="jsTableOfContents" id="jsTOC_LAYERNAME"></div>
+	 * will be filled with links to the h1 headers in that layer.
 	 * @param string pLayer HTML ID of layer in the content pane.
 	 */
 	generateTableOfContent: function(pLayer)
@@ -4002,7 +4150,7 @@ I = {
 			$(pLayer + " .jsTableOfContents").append("<h2>Table of Contents</h2><ol></ol>");
 
 			// Iterate over every h1 tag in the layer except the first
-			$(pLayer + " h1:not(:first)").each(function()
+			$(pLayer + " h1").each(function()
 			{
 				// Scroll to top when clicked the header
 				var headertext = $(this).text();
@@ -4010,30 +4158,30 @@ I = {
 				$(this).html(headertext + "<span class='tocTop'> \u2191</span>");
 				$(this).click(function()
 				{
-					I.scrollToElement($("#jsTOC_" + I.currentContent), $(I.currentContentLayer), "fast");
+					I.scrollToElement($("#jsTOC_" + I.contentCurrent), $(I.contentCurrentLayer), "fast");
 				}).attr("id", "toc_" + layername + "_" + headertextstripped);
 				// Add ToC list entries that scrolls to the headers when clicked
 				$("<li>" + headertext + "</li>").appendTo($(pLayer + " .jsTableOfContents ol"))
 					.click(function()
 					{
 						I.scrollToElement($("#toc_" + layername + "_" + headertextstripped),
-							$(I.currentContentLayer), "fast");
+							$(I.contentCurrentLayer), "fast");
 					});
 			});
 		}
 	},
 	
 	/*
-	 * Binds element with the collapsible class to toggle display of its sibling
+	 * Binds headers with the collapsible class to toggle display of its sibling
 	 * container element. Creates a side menu as an alias for clicking the
-	 * headers; also creates another button-like element at the bottom of the
+	 * headers; also creates another button-like text at the bottom of the
 	 * container to collapse it again.
 	 * Example: <header class="jsCollapsible">Example Title</header><div></div>
 	 * That container div should contain everything that needs to be collapsed/expanded
 	 * by clicking that header tag.
 	 * @param string pLayer HTML ID of layer in the content pane.
 	 */
-	bindCollapsible: function(pLayer)
+	generateSectionMenu: function(pLayer)
 	{
 		// Don't bind unless there exists
 		if ($(pLayer + " header.jsCollapsible").length <= 0)
@@ -4057,16 +4205,29 @@ I = {
 			
 			// Bind click the header to toggle the sibling collapsible container
 			header.click(function()
-			{
+			{	
+				var section = I.getNameFromHTMLID($(this));
+				$(pLayer + " .menuBeamIcon").removeClass("menuBeamIconActive");
+				
 				if ($(this).next().is(":visible"))
 				{
+					// To be collapsed
 					$(this).children("sup").text("[+]");
+					
+					I[I.sectionPrefix + layer] = "";
 				}
 				else
 				{
+					// To be expanded
 					$(this).children("sup").text("[-]");
+					$(pLayer + " .menuBeamIcon[data-section='" + section + "']")
+						.addClass("menuBeamIconActive");
+					
+					I[I.sectionPrefix + layer] = section;
 				}
+				I.updateAddressBar();
 				
+				// Do the collapse/expand
 				if ($(this).data("donotanimate") !== "true")
 				{
 					$(this).next().toggle("fast");
@@ -4080,19 +4241,19 @@ I = {
 			});
 			
 			/*
-			 * Side menu icon alias for clicking the headers.
+			 * Side menu icons as alias for headers. Clicking an icon shows the
+			 * associated header's sibling container (section) by triggering
+			 * that header's handler.
 			 */
+			var section = I.getNameFromHTMLID(header);
 			var src = header.find("img:eq(0)").attr("src");
-			var icon = $("<img class='menuBeamIcon' src='" + src + "' "
-				+ "title='&lt;dfn&gt;Toggle Section: &lt;/dfn&gt;" + headertext + "' />")
-				.appendTo(menubeam);
-			(function(i, l, h)
-			{
-				i.click(function()
+			$("<img class='menuBeamIcon' data-section='" + section + "' src='" + src + "' "
+				+ "title='&lt;dfn&gt;Section: &lt;/dfn&gt;" + headertext + "' />")
+				.appendTo(menubeam).click(function()
 				{
-					$(l + " header.jsCollapsible").each(function()
+					// Hide all the collapsible sections
+					$(pLayer + " header.jsCollapsible").each(function()
 					{
-						// Hide all the collapsible sections
 						if ($(this).next().is(":visible"))
 						{
 							// Don't animate so the scrolling to the section-to-be-opened works properly
@@ -4100,32 +4261,29 @@ I = {
 							$(this).trigger("click");
 						}
 					});
-					if ( ! (h.next().is(":visible")))
+					// Show the requested section
+					if ( ! (header.next().is(":visible")))
 					{
-						h.trigger("click");
+						header.trigger("click");
 					}
 				});
-			})(icon, pLayer, header);
-			
 		});
 
 		// Side menu icon to close all the sections
-		var doneicon = $("<img class='menuBeamIcon' src='img/ui/exit.png' "
+		$("<img class='menuBeamIcon' src='img/ui/exit.png' "
 			+ "title='&lt;dfn&gt;Close All Sections&lt;/dfn&gt;' />")
-			.appendTo(menubeam);
-		(function(i, l)
-		{
-			i.click(function()
+			.appendTo(menubeam).click(function()
 			{
-				$(l + " header.jsCollapsible").each(function()
+				$(pLayer + " header.jsCollapsible").each(function()
 				{
 					if ($(this).next().is(":visible"))
 					{
 						$(this).trigger("click");
 					}
 				});
+				$(pLayer + " .menuBeamIcon").removeClass("menuBeamIconActive");
 			});
-		})(doneicon, pLayer);
+		
 		
 		// Make tooltips for the beam menu icons
 		I.qTip.init(".menuBeamIcon");
@@ -4207,10 +4365,10 @@ I = {
 			$(this).click(function()
 			{
 				var layer = $(this).attr("id");
-				I.currentContent = layer.substring(menuprefix.length, layer.length);
-				I.currentContentLayer = I.cContentPrefix + I.currentContent;
+				I.contentCurrent = layer.substring(menuprefix.length, layer.length);
+				I.contentCurrentLayer = I.cContentPrefix + I.contentCurrent;
 				
-				switch (I.currentContent)
+				switch (I.contentCurrent)
 				{
 					case I.ContentEnum.Chains:
 					{
@@ -4245,22 +4403,22 @@ I = {
 				}
 				
 				$("#paneContent article").hide(); // Hide all layers
-				$(I.currentContentLayer + " h1").first()
+				$(I.contentCurrentLayer + " h1").first()
 					.css({opacity: 0}).animate( // Fade in the first header tag
 				{
 					opacity: 1
 				}, 400);
-				$(I.currentContentLayer).animate( // Show clicked layer
+				$(I.contentCurrentLayer).animate( // Show clicked layer
 				{
 					width: "show"
 				}, 200);
 				// Update the address bar URL with the current layer name
-				history.replaceState("", null, "?" + O.prefixPage + "=" + I.currentContent);
+				I.updateAddressBar();
 				
 				// Also hide chain paths if on the map layer
 				if (O.Options.bol_showChainPaths)
 				{
-					if (I.currentContent === I.ContentEnum.Map)
+					if (I.contentCurrent === I.ContentEnum.Map)
 					{
 						M.setEntityGroupDisplay(M.ChainPathEntities, "hide");
 					}
@@ -4287,7 +4445,7 @@ I = {
 		*/
 		$("#jsTop").click(function()
 		{
-			$(I.currentContentLayer).animate({scrollTop: 0}, "fast");
+			$(I.contentCurrentLayer).animate({scrollTop: 0}, "fast");
 		});
 		/*
 		 * Center view the map button.
@@ -4306,7 +4464,7 @@ I = {
 	bindAfterAJAXContent: function(pLayer)
 	{
 		I.generateTableOfContent(pLayer);
-		I.bindCollapsible(pLayer);
+		I.generateSectionMenu(pLayer);
 		M.bindMapLinks(pLayer);
 		// Open links on new window
 		$(pLayer + " a").attr("target", "_blank");
@@ -4320,6 +4478,9 @@ I = {
 		$("#layerHelp").load("help.html", function()
 		{
 			I.bindAfterAJAXContent("#layerHelp");
+			
+			// Expand a header if requested in the URL
+			I.openSectionFromURL();
 		});
 	},
 	
@@ -4347,6 +4508,31 @@ I = {
 				M.generateAndInitializeJPs();
 				M.generateAndInitializeJPChecklistHTML();
 			});
+			// Bind show icons when clicked on header
+			$("#headerMap_Daily, #headerMap_Resource, #headerMap_JP").each(function()
+			{
+				$(this).click(function()
+				{
+					// Show only if the section is about to be expanded
+					if ($(this).children("sup").text() === "[-]")
+					{
+						M.displayIcons(I.getNameFromHTMLID($(this)), true);
+					}
+				});
+			});
+			
+			// Create additional map related side menu icon
+			$("<img class='menuBeamIcon' src='img/ui/eye.png' "
+				+ "title='&lt;dfn&gt;Hide Map Icons&lt;/dfn&gt;' />")
+				.appendTo("#menuBeam_Map")
+			.click(function()
+			{
+				M.displayIcons();
+			});
+			I.qTip.init(".menuBeamIcon");
+			
+			// Expand a header if requested in the URL
+			I.openSectionFromURL();
 		});
 	},
 	

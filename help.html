@@ -1,13 +1,9 @@
 <div class="cntComposition">
 
-<h1>Help</h1>
-<div class="jsTableOfContents" id="jsTOC_Help"></div>
+<header class="cntHeader">Help</header>
 
-
-<hr />
-
-
-<h1>FAQ</h1>
+<header id="headerHelp_FAQ" class="jsCollapsible"><img src="img/ui/faq.png" alt="FAQ" />FAQ</header>
+<div>
 <p>Overview of <a href="http://i.imgur.com/KvJEr58.png">GW2Timer.com features</a>.</p>
 <h2>What do the colors in the clock mean?</h2>
 <p>As you may know, world boss (WB) chains start exactly 15 minutes apart (X:00, X:15, X:30, X:45), and most of them don't take longer than 15 minutes to complete, so the chains can be neatly fitted into a clock's quadrants. The <strong>bright green</strong> mark is the current WB's start (<strong>dark green</strong> is the next), the <strong>orange</strong> mark is the minimum time it is completed (usually by a full map population), and the <strong>red</strong> mark is the average. If you waypoint to a WB after the red mark is passed, it's likely the boss is already dead, and you'll be placed in a newer map instance with the chain still in the early events. Chains have a 15-20 minutes time limit to start the boss, so you can still make it, but you may miss the next boss because of the 15 minute per boss timeframe overlap.</p>
@@ -18,7 +14,7 @@
 <h2>Why is there no timer for the other world bosses?</h2>
 <p>Megaservers are pretty much overflows, and the API (files on the game's website that tells when events are up) don't give information about overflows because they are dynamic instances not tied to a particular server. To do these events you have to physically check the places where they happen, and if none of them are active for that chain, you should ask map chat when the chain was last completed.</p>
 
-<p>Knowing the timings for these events will be helpful, so in the chains/timers tab, mouse over an orange icon <img src="img/event/swords.png" alt="Icon" style="width: 16px; height: 16px; vertical-align: middle;" /> next to an event name to show that event's information:</p>
+<p>Knowing the timings for these events will be helpful, so in the chains/timers tab, mouse over an orange icon <img class="cntIconExample" src="img/event/swords.png" alt="Icon" /> next to an event name to show that event's information:</p>
 <dl>
 	<dt>Event Number</dt><dd>The order in the chain. Numbers like 1 and 2 (without letters) are single running events in the chain. Numbers like 1A1 and 1B1 happen at the same time, and 1A2 happens after 1A1. Numbers like 1a1 and 1b1 happen at the same time but branch out as subchains. Numbers like 1.1 are failure events.</dd>
 	<dt>If Success/Failure Go To</dt><dd>The event that follows for that condition. Failure number 0 means the event is unfailable.</dd>
@@ -33,14 +29,15 @@
 <h2>How is GW2Timer.com able to tell when individual events in the chain are active without an API?</h2>
 <p>tl;dr: Statistics.</p>
 <p>Before the megaserver launch, the site was originally meant to predict for world boss trains a sorted schedule of the next quickest-to-complete meta event chain which were then asynchronous. To do that the site had to collect time statistics on the chains' individual events. Using the API, a monitor program recorded (continuously over two weeks on four varied tier servers) the times between an event changing its state, most importantly the "Active" to "Success" transition. Another custom written program was used to generate histogram and boxplot data, which were handpicked as the minimum possible, modal average, and modal maximum time an event is completed.</p>
-<p>Additionally, the interim between an event finishes and its followup event starts is also collected (usually this is a preset time, or the time for an NPC to run a place), and all these times are summed to give an estimate of how long an entire chain takes to complete. Although most meta events are now prescheduled and time sorting is moot, the site can still give players a general idea of the battlefield without having to set foot on it.<br />
-</p>
+<p>Additionally, the interim between an event finishes and its followup event starts is also collected (usually this is a preset time, or the time for an NPC to run a place), and all these times are summed to give an estimate of how long an entire chain takes to complete. Although most meta events are now prescheduled and time sorting is moot, the site can still give players a general idea of the battlefield without having to set foot on it.</p>
 
+<h2>How do I use the map?</h2>
+<p>The map works like Google Maps: you can drag the map to pan, and you can scroll your mouse wheel to zoom. No UI map controls are included to maximize viewing. On the map page, click the star on the bottom right corner or the map menu button itself to default the map view and zoom. Most icons on the map are interactive by clicking/double clicking, most of which causes the map to zoom in that icon, or zoom out back to default. &quot;Pins&quot; look like the colored star symbols you see in the GW2 minimap and can be hidden by double clicking; you can lay your own personal pin by double clicking an empty map area.</p>
+<p>Expanding a section on the map page will show their icons, and if you expand many sections you'll probably be overwhelmed by icons, so click the eye button <img class="cntIconExample" src="img/ui/eye.png" alt="Icon" /> on the vertical menu bar to hide all the map icons, then only expand the section you want to view at the moment.</p>
+</div>
 
-<hr />
-
-
-<h1>About</h1>
+<header id="headerHelp_About" class="jsCollapsible"><img src="img/ui/about.png" alt="About" />About</header>
+<div>
 <p>This web application runs entirely on the client's side, except for API calls to the GW2 server for map data. Few libraries/plugins were used to avoid bloat. It was tested on Firefox/Chrome 2013-2014 and Opera 2013, in 1024x768 through 1920x1200. IE10 or below is not recommended and kludges were <strong>not</strong> used to compensate for IE's flaws. Smartphone users with large screen can use this right panel as an &quot;app&quot; (minimum resolution 360x720). User settings are stored in browser <a href="https://en.wikipedia.org/wiki/LocalStorage#localStorage">localStorage</a>. Google Analytics is used to collect visitor's system/browser/locale information; you can <a href="https://www.google.com/search?q=block+Google+Analytics">block it</a> if you wish.</p>
 <h2>History</h2>
 <p>The idea of GW2Timer stemmed from the dissatisfaction (pre-megaserver) of GW2Stuff's lack of individual event information. As a former PVE commander, I needed to know what will be the shortest meta event chain to lead the train to. Although GW2Stuff was excellent at telling people when bosses are happening, it did not reveal the hard work (the pre-events) that more knowledgeable people had to do. GW2Timer uses time statistics of individual events to predict when they will start and finish so players can more effectively manage their playtime.</p>
@@ -49,15 +46,14 @@
 2014 April 11 - Statistics compilation done<br />
 2014 April 15 - Megaserver. Project stalled<br />
 2014 April 23 - Project resumed with updated stats<br />
-2014 May 15 - Site beta
+2014 May 15 - Site beta<br />
+2014 June 1 - Gone gold<br />
 </p>
 
 <h1>Contact</h1>
 <p>Use the <a href="http://www.reddit.com/r/gw2timer/">/r/gw2timer subreddit</a> or the <a href="http://forum.renaka.com/forum/368355/">forum</a> for questions/suggestions/reports; you can post as an unregistered guest at the forum.</p>
 
-
 <hr />
-
 
 <h1>Credits</h1>
 <p>View this website's source for the &quot;includes&quot;. Each source file has the appropriate credits and are fully documented.</p>
@@ -74,17 +70,15 @@
 <h2>ArenaNet Copyright</h2>
 <p>&#169; 2012 ArenaNet, Inc. All rights reserved. NCsoft, the interlocking NC logo, ArenaNet, Arena.net, Guild Wars, Guild Wars Factions, Factions, Guild Wars Nightfall, Nightfall, Guild Wars: Eye of the North, Eye of the North, Guild Wars 2, and all associated logos and designs are trademarks or registered trademarks of NCsoft Corporation. All other trademarks are the property of their respective owners.</p>
 
+</div>
 
-<hr />
 
-
+<header id="headerHelp_Scheduled" class="jsCollapsible"><img src="img/ui/scheduled.png" alt="Scheduled Bosses" />Scheduled Bosses</header>
+<div>
 <h1>Walkthrough</h1>
 
 <p>Some skills useful when doing almost all world bosses are: <a href="http://wiki.guildwars2.com/wiki/Condition#Traits_that_remove_conditions">Condition Removal</a>, <a href="http://wiki.guildwars2.com/wiki/Stun_break">Stun Break</a>, <a href="http://wiki.guildwars2.com/wiki/Invulnerability">Invulnerability</a>, <a href="http://wiki.guildwars2.com/wiki/Reflect">Missile Reflection</a>, and <a href="http://wiki.guildwars2.com/wiki/Range">Range</a>. Bosses with a big distinct health bar cannot be critically hit, so the Precision and Ferocity attribute buffs are useless against them.</p>
-<p>Click a header below to expand the walkthrough section.</p>
 
-<header class="jsCollapsible"><img src="img/ui/scheduled.png" alt="Scheduled Bosses" />Scheduled Bosses</header>
-<div>
 <h2>Fire Elemental</h2>
 <p>Talk to <ins data-coord="[7876, 17644]">Rooba</ins> to get the chain started. Her golem will stroll through the reactor's center and a random room. Kill enemies and destroy green chaotic materials near the golem to protect it. Eventually the two will go the boss room where you'll have plenty of time to equip revive/heal/cleanse/stability skills for the burns and knockbacks FE will do. The boss will die quickly, the hardest part is avoiding the winds and aoe rings. After completing FE, usually the zerg will head to the reactor's <ins data-coord="[7587, 17619]">center</ins> to trigger the <a href="http://wiki.guildwars2.com/wiki/Defeat_the_misplaced_steam_ogre">Steam Ogre</a> event. (D3-5)</p>
 
@@ -123,7 +117,7 @@
 </div>
 
 
-<header class="jsCollapsible"><img src="img/event/boss.png" alt="Unscheduled Bosses" />Unscheduled Bosses</header>
+<header id="headerHelp_Unscheduled" class="jsCollapsible"><img src="img/event/boss.png" alt="Unscheduled Bosses" />Unscheduled Bosses</header>
 <div>
 <h2>Fire Shaman</h2>
 <p>Jump through a <ins data-coord="[27494, 9876]">crevice</ins> in the obsidian wall to get to the boss. His phases are as follows: Minions -&gt; Boss -&gt; Minions -&gt; Boss -&gt; Minions -&gt; Boss. You can attack the boss normally, but during the minions phase, you have to kill enough minions for the boss to be attackable again. There is a hidden mechanic (or bug) where stepping near the giant <ins data-coord="[27415, 9639]">Fire Elemental</ins> will cause the event's progress to reset, so people should stay and kill minions near the heal bubble the charr allies made. Crossing the fire lines or attacking the boss is okay as long as nobody touches the giant Fire Elemental, but you should not take this chance as ignorant players will follow you and bungle it. This chain restarts after 25-35 minutes. (D15-25)</p>
@@ -139,7 +133,7 @@
 </div>
 
 
-<header class="jsCollapsible"><img src="img/chain/temple.png" alt="Orr Temples" />Temples</header>
+<header id="headerHelp_Temples" class="jsCollapsible"><img src="img/chain/temple.png" alt="Temples" />Temples</header>
 <div>
 All temples drop 30 dragonite and unlock a <a href="http://wiki.guildwars2.com/wiki/Temple_armor">karma vendor</a> for 1.5-2 hours selling exotic armor and trinkets.
 
@@ -175,7 +169,7 @@ All temples drop 30 dragonite and unlock a <a href="http://wiki.guildwars2.com/w
 </div>
 
 
-<header class="jsCollapsible"><img src="img/ui/dungeon.png" alt="Orr Temples" />Dungeons</header>
+<header id="headerHelp_Dungeons" class="jsCollapsible"><img src="img/ui/dungeon.png" alt="Dungeons" />Dungeons</header>
 <div>
 <h2>Gates of Arah (The Ruined City of Arah)</h2>
 <p>Although this chain does not reward a rare nor give dragonite, people still do it for the level 80 mobs. The chain starts when a player is near <ins data-coord="[11062, 27370]">Chan</ins>. To not scale the event, solo or duo it up until the <ins data-coord="[11005, 27891]">Anchorage camp</ins>, where you must climb two bone towers on the northeast and southeast corner of the camp to destroy the cauldrons up top, then you will need to quickly call for help in killing the champ knight before the time limit. With the camp secure, you can do any of the three concurrent events before the assault begin at the timer's end (or not do them at all), as completing each one bolsters the reinforcement. <ins data-coord="[11128, 27827]">Didi's</ins> event is the most useful as she will provide a durable golem to tank the champ giant ahead. Note that when any of the events on the promenade is active, the Arah dungeon (its waypoint) will be contested. Capturing the <ins data-coord="[11645, 27853]">promenade</ins> simply requires you to kill the risens in the capture circle, and you should avoid the deadly eye of zhaitan if your group is small. The final boss can be meleed, but you should mind the surrounding mobs and statue debuffs. A retake event will occur 1.5-2 hours after, and if succeeded will loop in 1-1.5 hours, else a grace defense event on Anchorage will happen which loops the retake event if succeeded, or restarts the chain in 8-10 minutes if failed.</p>

@@ -38,9 +38,11 @@
 	<div id="jsConsole">
 		If you can read this then <strong>maybe</strong>:<br />
 		- You are still loading the website (slowly); ignore this message.<br />
+		- You are using Internet Explorer 10 or lower; please upgrade to IE11 or higher.<br />
 		- Your browser's adblocker is blocking the leaflet.js map script; please whitelist it.<br />
 		- You have JavaScript disabled; this whole application runs on JavaScript!<br />
-		- This web application encountered a bug; try refreshing or <a href="bin/clear.html">clearing</a> its localStorage.<br />
+		- This web application encountered a bug; try refreshing, or <a href="bin/clear.html">clearing</a> its localStorage.<br />
+		Do you want to <a href="http://forum.renaka.com/topic/5476238/">report</a> this problem?<br />
 	</div>
 	<iframe id="jsTTS"></iframe>
 	<main id="windowMain">
@@ -169,7 +171,7 @@
 		<!-- Content mini-pane
 		==================================================================== -->
 		<section id="paneContent" class="paneRight">
-			<a id="jsTop">&uarr;</a>
+			<a id="jsTop" title="Scroll Top">&uarr;</a>
 			<a id="jsCenter" title="Map Center"></a>
 			<article id="layerChains"><!-- This layer will be populated by JS -->
 				<header>
@@ -202,7 +204,7 @@
 			<article id="layerHelp"></article>
 			<article id="layerOptions">
 				<div class="cntComposition">
-					<h1>Options</h1>
+					<header class="cntHeader">Options</header>
 					<label id="optSound" title="Toggle sound. More options in the alarm section below."><input id="opt_bol_enableSound" type="checkbox" /><img id="optSoundButton" src="img/ui/speaker.png" alt="Mute"/></label>
 					<br />
 					<h2>Timer</h2>
