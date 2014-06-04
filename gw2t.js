@@ -37,7 +37,7 @@
 	O - Options for user
 	C - Chains events
 	M - Map Leaflet
-	T - Time variables
+	T - Time utilities
 	K - Clock SVG
 	I - Interface UI
 	X - Executions of functions to load the application
@@ -60,7 +60,7 @@ var I = {}; // interface
  * @@Options for the user, anything that persists after reloading the website.
  * ========================================================================== */
 O = {
-	int_programVersion: 140601,
+	int_programVersion: 140603,
 	programVersionName: "int_programVersion",
 	
 	lengthOfPrefixes: 3,
@@ -88,7 +88,7 @@ O = {
 		bol_use24Hour: true,
 		bol_compactClock: false,
 		bol_showClock: true,
-		int_dimClockBackground: 0,
+		int_setClockBackground: 0,
 		int_setTimeStyle: 0,
 		int_setPredictor: 0,
 		// Map
@@ -111,17 +111,26 @@ O = {
 	 */
 	OptionsRange: {},
 	
-	Checklist: {},
-	ChecklistEnum:
+	/*
+	 * A checklist is a set of checkboxes that can have the usual unchecked,
+	 * checked, and disabled states. These states are recorded as a single
+	 * character in a string of numbers representing those states, and the index
+	 * of a character is that checkbox's "ID". The Chl object stores checklist
+	 * objects with such a string and a name for localStorage.
+	 */
+	Chl:
+	{
+		// localStorage name-value pair: name is name, list is value
+		Chain: { name: "str_chlChain", list: "" },
+		JP: { name: "str_chlJP", list: "" },
+		Dungeon: { name: "str_chlDungeon", list: "", money: 0 }
+	},
+	ChlEnum:
 	{
 		Unchecked: 0,
 		Checked: 1,
-		Deleted: -1
+		Disabled: 2
 	},
-	
-	JPChecklist: "", // Will use 0s and 1s as a long string rather than separate variables
-	JPChecklistName: "JPChecklist",
-	numOfJPs: 0,
 	
 	/*
 	 * URLArguments may contain Options object's variables. Written in the form of:
@@ -132,6 +141,7 @@ O = {
 	 * it would have not overridden any Options variable.
 	 */
 	URLArguments: {},
+	
 	/*
 	 * Extracts arguments from a https://en.wikipedia.org/wiki/Query_string
 	 * @returns object containing the name value pairs.
@@ -156,6 +166,7 @@ O = {
 		}
 		return argsobject;
 	},
+	
 	/*
 	 * Sanitizes URLArguments value part before overriding. For example:
 	 * http://gw2timer.com/?bol_showClock=falsse "falsse" defaults to "true"
@@ -432,6 +443,181 @@ O = {
 	},
 	
 	/*
+	 * Creates a string for a checklist object with each character representing
+	 * a state, and each index representing a check item. Also initializes the
+	 * localStorage or load it as the returned checklist if already stored.
+	 * @param object pChecklist to initialize.
+	 * @param int pLength of the checklist string to construct.
+	 * @returns string new checklist to be assigned to a checklist variable.
+	 */
+	initializeChecklist: function(pChecklist, pLength)
+	{		
+		pChecklist.length = pLength;
+		/*
+		 * If localStorage doesn't have the checklist already or if it's an
+		 * improper length then it gets a default checklist string of 0's.
+		 */
+		if (localStorage[pChecklist.name] === undefined
+			|| localStorage[pChecklist.name].length !== pLength)
+		{
+			O.clearChecklist(pChecklist);
+		}
+		else
+		{
+			pChecklist.list = localStorage[pChecklist.name];
+		}
+	},
+	
+	/*
+	 * Replaces a character in a checklist string and updates the localStorage.
+	 * @param object pChecklist to modify.
+	 * @param int pIndex of the character in the string.
+	 * @param string pCharacter to replace the current.
+	 * @returns string new checklist to be assigned to a checklist variable.
+	 */
+	setChecklistItem: function(pChecklist, pIndex, pCharacter)
+	{
+		// A character must be length 1, else don't do anything
+		var char = pCharacter.toString();
+		if (char.length === 1)
+		{
+			var checklist = O.replaceCharAt(pChecklist.list, pIndex, char);
+			localStorage[pChecklist.name] = checklist;
+			pChecklist.list = checklist;
+		}
+	},
+	
+	/*
+	 * Gets the character in a checklist string at specified index.
+	 * @param object pChecklist to extract.
+	 * @param int pIndex of the character.
+	 * @param string pConversion to convert that character to a type.
+	 * @returns dynamic depending on conversion param.
+	 */
+	getChecklistItem: function(pChecklist, pIndex, pConversion)
+	{
+		var char = pChecklist.list.charAt(pIndex);
+		
+		if (pConversion === undefined || pConversion === "int")
+		{
+			return parseInt(char);
+		}
+		else if (pConversion === "boolean")
+		{
+			return O.intToBool(parseInt(char));
+		}
+		return char;
+	},
+	
+	/*
+	 * Sets a checklist object's list to all 0's.
+	 * @param object pChecklist to clear.
+	 * @param boolean pUncheck whether to just 0 out the checked items only.
+	 * @pre checklist length attribute was initialized.
+	 */
+	clearChecklist: function(pChecklist, pUncheck)
+	{
+		var i;
+		var checklist = "";
+		if (pUncheck === true)
+		{
+			for (i = 0; i < pChecklist.length; i++)
+			{
+				if (pChecklist.list[i] === O.ChlEnum.Checked.toString())
+				{
+					checklist += "0";
+				}
+				else
+				{
+					checklist += pChecklist.list[i];
+				}
+			}
+		}
+		else
+		{
+			for (i = 0; i < pChecklist.length; i++)
+			{
+				checklist += "0";
+			}
+		}
+		
+		pChecklist.list = checklist;
+		localStorage[pChecklist.name] = checklist;
+	},
+	
+	/*
+	 * Reads a checkbox element and return its checklist enum state.
+	 * @param JQObject pElement to read.
+	 * @returns int checklist enum.
+	 */
+	getCheckboxEnumState: function(pElement)
+	{
+		if (pElement.prop("disabled") === true)
+		{
+			return O.ChlEnum.Disabled;
+		}
+		if (pElement.prop("checked") === true)
+		{
+			return O.ChlEnum.Checked;
+		}
+		return O.ChlEnum.Unchecked;
+	},
+	
+	/*
+	 * Sets a checkbox checked/disabled states based on specified enum.
+	 * @param JQObject pElement checkbox to change.
+	 * @param int pChecklistEnum to apply.
+	 */
+	setCheckboxEnumState: function(pElement, pChecklistEnum)
+	{
+		switch (pChecklistEnum)
+		{
+			case O.ChlEnum.Disabled:
+			{
+				pElement.prop("disabled", true);
+				pElement.prop("checked", false);
+			} break;
+			case O.ChlEnum.Checked:
+			{
+				pElement.prop("checked", true);
+			} break;
+			default: pElement.prop("checked", false);
+		}
+	},
+	
+	/*
+	 * Sets a checkbox to a desired state by reading it then manually triggering it.
+	 * @param JQObject pElement checkbox to manipulate.
+	 * @param int pState checkbox enum.
+	 */
+	triggerCheckbox: function(pElement, pState)
+	{
+		var checkboxstate = O.getCheckboxEnumState(pElement);
+		
+		if ( (pState === O.ChlEnum.Checked && (checkboxstate === O.ChlEnum.Unchecked))
+			|| (pState === O.ChlEnum.Unchecked && (checkboxstate === O.ChlEnum.Checked)) )
+		{
+			pElement.trigger("click");
+		}
+		else if (pState === O.ChlEnum.Disabled && checkboxstate !== O.ChlEnum.Disabled)
+		{
+			pElement.trigger("dblclick");
+		}
+	},
+	
+	/*
+	 * Triggers a checkbox based on associated state in a checklist.
+	 * @param object pChecklist as target state.
+	 * @param int pIndex of a state in checklist.
+	 * @param JQObject pElement checkbox to manipulate.
+	 */
+	triggerCheckboxEnumState: function(pChecklist, pIndex, pElement)
+	{
+		var checkliststate = O.getChecklistItem(pChecklist, pIndex);
+		O.triggerCheckbox(pElement, checkliststate);
+	},
+	
+	/*
 	 * Loads chain checklist state as recorded in localStorage, and binds
 	 * clicking behavior to the div faux checkboxes.
 	 * @pre Chains have been initialized.
@@ -440,21 +626,12 @@ O = {
 	{
 		var i;
 		var chain;
-		var optionname;
+		
+		O.initializeChecklist(O.Chl.Chain, C.Chains.length);
+		
 		for (i in C.Chains)
 		{
 			chain = C.Chains[i];
-			optionname = O.prefixChain + chain.alias;
-			O.Checklist[optionname] = O.ChecklistEnum.Unchecked; // Initialize the checklist object
-			// Assign default value to localStorage if it is empty
-			if (localStorage[optionname] === undefined)
-			{
-				localStorage[optionname] = O.ChecklistEnum.Unchecked;
-			}
-			else
-			{	// Else user checklist from localStorage becomes the new checklist
-				O.Checklist[optionname] = parseInt(localStorage[optionname]);
-			}
 			
 			var bar = $("#barChain_" + chain.alias);
 			var check = $("#chnCheck_" + chain.alias);
@@ -462,13 +639,13 @@ O = {
 			// Set the checkbox visual state as stored
 			if (O.isSSTimestampOutdated() === false)
 			{
-				switch (O.Checklist[optionname])
+				switch (O.getChecklistItem(O.Chl.Chain, chain.index))
 				{
-					case O.ChecklistEnum.Unchecked:
+					case O.ChlEnum.Unchecked:
 					{
 						// Chain is not checked off, so don't do anything
 					} break;
-					case O.ChecklistEnum.Checked:
+					case O.ChlEnum.Checked:
 					{
 						bar.css({opacity: K.iconOpacityChecked});
 						check.addClass("chnChecked");
@@ -477,7 +654,7 @@ O = {
 							bar.hide();
 						}
 					} break;
-					case O.ChecklistEnum.Deleted:
+					case O.ChlEnum.Disabled:
 					{
 						bar.hide();
 					} break;
@@ -496,33 +673,32 @@ O = {
 				O.updateSSTimestamp();
 				// The ID was named so by the chain initializer, get the chain alias
 				var alias = I.getNameFromHTMLID($(this));
-				var thisoptionname = O.prefixChain + alias;
+				var index = $(this).data("index");
 				var thisbar = $("#barChain_" + alias);
 				// State of the div is stored in the Checklist object rather in the element itself
-				switch (O.Checklist[thisoptionname])
+				switch (O.getChecklistItem(O.Chl.Chain, index))
 				{
-					case O.ChecklistEnum.Unchecked:
+					case O.ChlEnum.Unchecked:
 					{
 						thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
 						$(this).addClass("chnChecked");
-						O.Checklist[thisoptionname] = 1;
+						O.setChecklistItem(O.Chl.Chain, index, O.ChlEnum.Checked);
 						
 					} break;
-					case O.ChecklistEnum.Checked:
+					case O.ChlEnum.Checked:
 					{
 						thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
 						$(this).removeClass("chnChecked");
-						O.Checklist[thisoptionname] = 0;
+						O.setChecklistItem(O.Chl.Chain, index, O.ChlEnum.Unchecked);
 					} break;
-					case O.ChecklistEnum.Deleted:
+					case O.ChlEnum.Disabled:
 					{
 						thisbar.show("fast");
-						O.Checklist[thisoptionname] = 0;
+						O.setChecklistItem(O.Chl.Chain, index, O.ChlEnum.Disabled);
 					} break;
 				}
-				localStorage[thisoptionname] = O.Checklist[thisoptionname];
 				// Also autohide the chain bar if opted
-				if (O.Checklist[thisoptionname] === O.ChecklistEnum.Checked)
+				if (O.getChecklistItem(O.Chl.Chain, index) === O.ChlEnum.Checked)
 				{
 					if (O.Options.bol_hideChecked)
 					{
@@ -541,12 +717,11 @@ O = {
 			$("#chnDelete_" + chain.alias).click(function()
 			{
 				var alias = I.getNameFromHTMLID($(this));
-				var thisoptionname = O.prefixChain + alias;
+				var index = $(this).data("index");
 				var thisbar = $("#barChain_" + alias);
 
 				thisbar.hide("slow");
-				O.Checklist[thisoptionname] = O.ChecklistEnum.Deleted;
-				localStorage[thisoptionname] = O.Checklist[thisoptionname];
+				O.setChecklistItem(O.Chl.Chain, index, O.ChlEnum.Disabled);
 				
 				// Also update the clock icon
 				K.checkoffChainIcon(alias);
@@ -561,7 +736,141 @@ O = {
 	 */
 	getChainChecklistState: function(pChain)
 	{
-		return O.Checklist[O.prefixChain + pChain.alias];
+		return O.getChecklistItem(O.Chl.Chain, pChain.index);
+	},
+	
+	initializePersonalChecklist: function()
+	{
+		O.initializeChecklist(O.Chl.Dungeon, $("#chlDungeon input").length);
+		
+		// Load dungeon icons on demand because they are pretty large
+		$("#chlDungeon .chlDungeonBar").each(function()
+		{
+			$(this).prepend("<img src='img/dungeon/"
+				+ $(this).data("name").toLowerCase() + I.cImageMainExtension + "' />");
+		});
+		
+		var updateCalculator = function()
+		{
+			var money = O.Chl.Dungeon.money;
+			var gold = ~~(money / 10000);
+			var silver = ~~(money / 100) % 100;
+			var copper = money % 100;
+			$("#chlDungeonCalculator_Gold").text(gold);
+			$("#chlDungeonCalculator_Silver").text(silver);
+			$("#chlDungeonCalculator_Copper").text(copper);
+		};
+		
+		var styleCheckbox = function(pCheckbox, pIndex)
+		{
+			var state = O.getChecklistItem(O.Chl.Dungeon, pIndex);
+			switch (state)
+			{
+				case O.ChlEnum.Disabled:
+				{
+					pCheckbox.parent().removeClass("chlCheckboxChecked")
+						.addClass("chlCheckboxDisabled");
+				} break;
+				case O.ChlEnum.Checked:
+				{
+					pCheckbox.parent().removeClass("chlCheckboxDisabled")
+						.addClass("chlCheckboxChecked");
+				} break;
+				default:
+				{
+					pCheckbox.parent().removeClass("chlCheckboxDisabled")
+						.removeClass("chlCheckboxChecked");
+				}
+			}
+		};
+		
+		// Update checkbox visual and do the calculation when clicked
+		$("#chlDungeon input").each(function(pIndex)
+		{
+			// Bind checkbox behavior
+			$(this).change(function()
+			{
+				var state = O.getCheckboxEnumState($(this));
+				
+				O.setChecklistItem(O.Chl.Dungeon, pIndex, state);
+				styleCheckbox($(this), pIndex);
+				
+				// Sum the checkbox's path money
+				var calc = $("#chlDungeonCalculator");
+				var money = O.Chl.Dungeon.money;
+				var sum = $(this).data("money");
+				
+				switch ($(this).data("mode"))
+				{
+					case "E": sum += calc.data("moneyaddexp"); break;
+				}
+				
+				switch (state)
+				{
+					case O.ChlEnum.Disabled:
+					{
+						O.Chl.Dungeon.money = money - sum;
+					} break;
+					case O.ChlEnum.Checked:
+					{
+						O.Chl.Dungeon.money = money + sum;
+					} break;
+					default:
+					{
+						O.Chl.Dungeon.money = money - sum;
+					}
+				}
+				updateCalculator();
+			});
+		});
+		// Double click a label (which wraps an input tag) to en/disable the checkbox
+		$("#chlDungeon label").each(function(pIndex)
+		{
+			$(this).dblclick(function()
+			{
+				var checkbox = $(this).find("input:first-child");
+
+				if (checkbox.prop("disabled") === false)
+				{
+					/*
+					 * The double click triggers the click event, which causes
+					 * the calculator to count the disabled checkbox, so trigger
+					 * the unchecking of it first before disabling.
+					 */
+					if (checkbox.prop("checked") === true)
+					{
+						O.triggerCheckbox(checkbox, O.ChlEnum.Unchecked);
+					}
+					checkbox.prop("disabled", true).prop("checked", false);
+				}
+				else
+				{
+					checkbox.prop("disabled", false);
+				}
+				O.setChecklistItem(O.Chl.Dungeon, pIndex, O.getCheckboxEnumState(checkbox));
+				styleCheckbox(checkbox, pIndex);
+			});
+		});
+		
+		// Restore checklist state from stored by triggering the checkboxes (behaviors already bound)
+		$("#chlDungeon input").each(function(pIndex)
+		{
+			O.triggerCheckboxEnumState(O.Chl.Dungeon, pIndex, $(this));
+		});
+		
+		// Bind uncheck all button
+		$("#chlDungeonUncheck").click(function()
+		{
+			O.clearChecklist(O.Chl.Dungeon, true);
+			$("#chlDungeon input").each(function(pIndex)
+			{
+				if ($(this).prop("checked") === true)
+				{
+					$(this).trigger("click");
+				};
+				styleCheckbox($(this), pIndex);
+			});
+		});
 	},
 	
 	/*
@@ -571,22 +880,20 @@ O = {
 	clearServerSensitiveOptions: function()
 	{
 		var chain;
-		var optionname;
 		for (var i in C.Chains)
 		{
 			chain = C.Chains[i];
-			optionname = O.prefixChain + chain.alias;
 			$("#chnCheck_" + chain.alias).removeClass("chnChecked");
 			$("#barChain_" + chain.alias).css({opacity: 1});
-			if (O.Checklist[optionname] !== O.ChecklistEnum.Deleted)
+			if (O.getChecklistItem(O.Chl.Chain, chain.index) !== O.ChlEnum.Disabled)
 			{
 				$("#barChain_" + chain.alias).show();
-				O.Checklist[optionname] = O.ChecklistEnum.Unchecked;
-				localStorage[optionname] = O.Checklist[optionname];
+				O.setChecklistItem(O.Chl.Chain, chain.index, O.ChlEnum.Unchecked)
 			}
 		}
 		
 		O.updateSSTimestamp();
+		I.write("Daily Reset! Cleared all dailies related checkboxes.", 5);
 	},
 	
 	/*
@@ -614,9 +921,9 @@ O = {
 		{
 			O.enact_bol_showClock();
 		});
-		$("fieldset[name=int_dimClockBackground]").change(function()
+		$("fieldset[name=int_setClockBackground]").change(function()
 		{
-			O.enact_int_dimClockBackground();
+			O.enact_int_setClockBackground();
 		});
 		$("fieldset[name=int_setTimeStyle]").change(function()
 		{
@@ -638,7 +945,7 @@ O = {
 		O.enact_bol_detectDST();
 		O.enact_bol_compactClock();
 		O.enact_bol_showClock();
-		O.enact_int_dimClockBackground();
+		O.enact_int_setClockBackground();
 		O.enact_bol_showMap();
 		
 		/*
@@ -659,9 +966,8 @@ O = {
 				optionname = O.prefixChain + chain.alias;
 				$("#chnCheck_" + chain.alias).removeClass("chnChecked");
 				$("#barChain_" + chain.alias).show().css({opacity: 1});
-				O.Checklist[optionname] = O.ChecklistEnum.Unchecked;
-				localStorage[optionname] = O.Checklist[optionname];
 			}
+			O.clearChecklist(O.Chl.Chain);
 			// Also unfade the clock icons, which are the current first four bosses
 			for (i = 0; i < T.cNUMFRAMES_IN_HOUR; i++)
 			{
@@ -680,26 +986,22 @@ O = {
 			localStorage.clear();
 			location.reload();
 		});
-	},
-	
-	/*
-	 * Does the commands within the address bar after the site's domain name.
-	 * @pre URLArguments object was initialized by extraction.
-	 */
-	enactURLArguments: function()
-	{
-		var i;
-		// Go to the content layer requested
-		if (O.URLArguments[I.prefixPage] !== undefined)
+		
+		/*
+		 * Prints the browser storage to HTML console.
+		 */
+		$("#optPrintLocalStorage").click(function()
 		{
-			for (i in I.ContentEnum)
+			var s = "";
+			for (var i = 0; i < localStorage.length; i++)
 			{
-				if (O.URLArguments[I.prefixPage].toLowerCase() === I.ContentEnum[i].toLowerCase())
-				{
-					$("#menu" + I.ContentEnum[i]).trigger("click");
-				}
+				var name = localStorage.key(i);
+				var value = localStorage.getItem(name);
+				s += name + ": " + value + "<br />";
 			}
-		}
+			
+			I.write(s, 30, true);
+		});
 	},
 	
 	/*
@@ -711,9 +1013,8 @@ O = {
 	{
 		$(".barChain").each(function()
 		{
-			var alias = I.getNameFromHTMLID($(this));
-			var thisoptionname = O.prefixChain + alias;
-			if (O.Checklist[thisoptionname] === O.ChecklistEnum.Checked)
+			if (O.getChecklistItem(O.Chl.Chain, $(this).data("index"))
+				=== O.ChlEnum.Checked)
 			{
 				if (O.Options.bol_hideChecked)
 				{
@@ -781,19 +1082,19 @@ O = {
 				.animate({height: I.cPANE_CLOCK_HEIGHT_COMPACT}, animationspeed);
 			
 			// Readjust content pane
-			$("#paneContent").css({"min-height": I.cPANEL_HEIGHT
+			$(I.cContentPane).css({"min-height": I.cPANEL_HEIGHT
 				- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"});
 	
 			// Readjust content pane
 			if (O.Options.bol_showClock)
 			{
-				$("#paneContent").animate({top: clockheight + I.cPANE_MENU_HEIGHT,
+				$(I.cContentPane).animate({top: clockheight + I.cPANE_MENU_HEIGHT,
 					"min-height": I.cPANEL_HEIGHT
 					- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 			}
 			else
 			{
-				$("#paneContent").animate({top: clockheight + I.cPANE_MENU_HEIGHT}, animationspeed)
+				$(I.cContentPane).animate({top: clockheight + I.cPANE_MENU_HEIGHT}, animationspeed)
 					.css({"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"});
 			}
 		}
@@ -840,13 +1141,13 @@ O = {
 			// Readjust content pane
 			if (O.Options.bol_showClock)
 			{
-				$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+				$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
 					"min-height": I.cPANEL_HEIGHT
 					- (I.cPANE_CLOCK_HEIGHT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 			}
 			else
 			{
-				$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+				$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
 					"min-height": I.cPANEL_HEIGHT
 					- (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 			}
@@ -875,13 +1176,13 @@ O = {
 			// Readjust content pane
 			if (O.Options.bol_compactClock)
 			{
-				$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+				$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
 					"min-height": I.cPANEL_HEIGHT
 					- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 			}
 			else
 			{
-				$("#paneContent").animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+				$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
 					"min-height": I.cPANEL_HEIGHT
 					- (I.cPANE_CLOCK_HEIGHT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 			}
@@ -889,7 +1190,7 @@ O = {
 		else
 		{
 			$("#paneMenu").animate({top: 0}, animationspeed);
-			$("#paneContent").animate({top: I.cPANE_MENU_HEIGHT,
+			$(I.cContentPane).animate({top: I.cPANE_MENU_HEIGHT,
 				"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed,
 			function()
 			{
@@ -899,9 +1200,9 @@ O = {
 		
 		K.reapplyFilters();
 	},
-	enact_int_dimClockBackground: function()
+	enact_int_setClockBackground: function()
 	{
-		switch (O.Options.int_dimClockBackground)
+		switch (O.Options.int_setClockBackground)
 		{
 			case 1: $("#paneClockBackground").css({opacity: 1}); break;
 			case 2: $("#paneClockBackground").css({opacity: 0}); break;
@@ -919,11 +1220,11 @@ O = {
 	{
 		if (O.Options.bol_showMap)
 		{
-			$("#panelLeft").show();
+			$("#paneMap").show();
 		}
 		else
 		{
-			$("#panelLeft").hide();
+			$("#paneMap").hide();
 		}
 	}
 };
@@ -986,7 +1287,7 @@ C = {
 			C.Shatterer, C.Wurm, C.Tequatl, C.SB, // 11
 			C.Ulgoth, C.Maw, C.Triple, C.FE,      // 12
 			C.Golem, C.Wurm, C.Jormag, C.SB,      // 13
-			C.Taidha, C.Wurm, C.Megades, C.FE,    // 14
+			C.Taidha, C.Maw, C.Megades, C.FE,     // 14
 			C.TBD, C.Wurm, C.Shatterer, C.SB,     // 15
 			C.Karka, C.Maw, C.Ulgoth, C.FE,       // 16
 			C.Tequatl, C.Wurm, C.Golem, C.SB,     // 17
@@ -1144,10 +1445,9 @@ C = {
 	{
 		var i, ii;
 		var event;
-		var chaindivision = parseInt(pChain.serial.charAt(0));
 		var chainhtmlid = "";
 		
-		switch (chaindivision)
+		switch (pChain.series)
 		{
 			case 0: chainhtmlid = "#listChainsScheduled"; break;
 			case 1: chainhtmlid = "#listChainsUnscheduled"; break;
@@ -1161,17 +1461,17 @@ C = {
 		 * Lots of CSS IDs and classes here, so update if the CSS changed.
 		 */
 		$(chainhtmlid).append(
-		"<div id='barChain_" + pChain.alias + "' class='barChain'>"
+		"<div id='barChain_" + pChain.alias + "' class='barChain' data-index='" + pChain.index + "'>"
 			+ "<div class='chnTitle'>"
 				+ "<img src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + ".png' />"
-				+ "<div id='chnCheck_" + pChain.alias + "' class='chnCheck'></div>"
+				+ "<div id='chnCheck_" + pChain.alias + "' class='chnCheck' data-index='" + pChain.index + "'></div>"
 				+ "<h2>" + C.truncateTitleString(pChain.title, C.cChainTitleCharLimit) + "</h2>"
 				+ "<time id='chnTime_" + pChain.alias + "'></time>"
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.alias + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.alias + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsLinks'>"
-					+ "<ins id='chnDelete_" + pChain.alias + "' title='Permanently hide this event chain (can undo in options).'>[x]</ins>"
+					+ "<ins id='chnDelete_" + pChain.alias + "' data-index='" + pChain.index + "' title='Permanently hide this event chain (can undo in options).'>[x]</ins>"
 				+ "</div>"
 		+ "</div>");
 
@@ -1306,7 +1606,7 @@ C = {
 		 * events and create HTML elements so they can be displayed in totality.
 		 */
 		ii = 0;
-		if (chaindivision === 0) // Scheduled events need to remember concurrent events
+		if (pChain.series === 0) // Scheduled events need to remember concurrent events
 		{
 			C.ScheduledChains.push(pChain); // Initialize the shortcut reference array
 			
@@ -1356,9 +1656,11 @@ C = {
 			 */
 			for (var ii in C.Chains[i].events)
 			{
+				// Minus 1 because the event numbers are 1 indexed
 				C.Chains[i].events[ii].step = parseInt(C.Chains[i].events[ii].num.charAt(0)) - 1;
 			}
 			
+			C.Chains[i].index = i;
 			C.Chains[i].isSorted = false;
 			C.Chains[i].primaryEvents = new Array();
 			C.Chains[i].scheduleIndexes = new Array();
@@ -1858,7 +2160,7 @@ C = {
 				
 				var checked = "";
 				var nextchain = C.getCurrentChain(1);
-				if (O.getChainChecklistState(nextchain) !== O.ChecklistEnum.Unchecked)
+				if (O.getChainChecklistState(nextchain) !== O.ChlEnum.Unchecked)
 				{
 					checked = ", checked";
 				}
@@ -1976,7 +2278,7 @@ M = {
 	currentIconSize: 32,
 	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
-	cICON_WAYPOINT: "img/event/waypoint.png",
+	cICON_WAYPOINT: "img/map/waypoint.png",
 	cLEAFLET_PATH_OPACITY: 0.5,
 	cLEAFLET_ICON_SIZE: 32,
 	cMAP_BOUND: 32768, // The map is a square
@@ -1988,7 +2290,7 @@ M = {
 	// Icons are initially invisible until zoomed in close enough or moused over a zone
 	iconWaypoint: L.icon(
 	{
-		iconUrl: "img/event/waypoint.png",
+		iconUrl: "img/map/waypoint.png",
 		iconSize: [16, 16],
 		iconAnchor: [8, 8]
 	}),
@@ -2501,7 +2803,7 @@ M = {
 				$("#chnEvent_" + C.CurrentChain.alias + "_" + C.CurrentPrimaryEvent.num).trigger("click");
 			}
 		}).fail(function(){
-			I.writeConsole(
+			I.write(
 				"Guild Wars 2 API server is unreachable.<br />"
 				+ "Reasons could be:<br />"
 				+ "- The GW2 server is down for maintenance.<br />"
@@ -2737,7 +3039,7 @@ M = {
 	 */
 	generateAndInitializeResourceNodes: function()
 	{
-		M.Resources = GW2T_RESOURCES_DATA; // This object is embedded in /map.html
+		M.Resources = GW2T_RESOURCES_DATA; // This object is embedded in the map HTML file
 		var i, ii;
 		var resource; // A type of resource, like copper ore
 		var marker;
@@ -2844,7 +3146,7 @@ M = {
 	 */
 	generateAndInitializeJPs: function()
 	{
-		O.numOfJPs = $(".mapJPList dt").length;
+		O.Chl.JP.length = $(".mapJPList dt").length;
 		
 		var i;
 		var createJPMarkers = function(pElement, pID, pDifficulty)
@@ -2872,7 +3174,7 @@ M = {
 		};
 		
 		// Create the markers, each set pertains to one "mapJPList"
-		for (i = 0; i < O.numOfJPs; i++)
+		for (i = 0; i < O.Chl.JP.length; i++)
 		{
 			$("#mapJP_" + i).each(function()
 			{
@@ -2892,8 +3194,7 @@ M = {
 	
 	/*
 	 * Creates checkboxes next to JP names and bind event handlers for storing
-	 * their states as a combined string of 0s and 1s, which the index 0 is the
-	 * first JP in the list.
+	 * their states as a combined string of 0s and 1s.
 	 */
 	generateAndInitializeJPChecklistHTML: function()
 	{
@@ -2902,27 +3203,20 @@ M = {
 		{
 			var term = $(this).text();
 			$(this).after("&nbsp;<cite><a href='"
-				+ I.getYouTubeLink(term + " Guild Wars 2") + "' target='blank_'>[Y]</a> <a href='"
-				+ I.getWikiLink(term) + "' target='blank_'>[W]</a></cite>");
+				+ I.getYouTubeLink(term + " Guild Wars 2") + "' target='_blank'>[Y]</a> <a href='"
+				+ I.getWikiLink(term) + "' target='_blank'>[W]</a></cite>");
 			M.bindMapLinkBehavior($(this), null);
 			
 			// Make checkboxes
-			$(this).append("<input type='checkbox' id='mapJPCheck_" + I.getNameFromHTMLID($(this)) + "' />");
-			O.JPChecklist += "0";
+			$(this).after("<label><input type='checkbox' id='mapJPCheck_" + I.getNameFromHTMLID($(this)) + "' /></label>");
 		});
+		I.convertExternalLink(".mapJPList a");
 		
 		// Initialize localStorage
-		if (localStorage[O.JPChecklistName] === undefined)
-		{
-			localStorage[O.JPChecklistName] = O.JPChecklist;
-		}
-		else
-		{
-			O.JPChecklist = localStorage[O.JPChecklistName];
-		}
+		O.initializeChecklist(O.Chl.JP, O.Chl.JP.length);
 		
 		var i;
-		for (i = 0; i < O.numOfJPs; i++)
+		for (i = 0; i < O.Chl.JP.length; i++)
 		{
 			$("#mapJPCheck_" + i).each(function()
 			{
@@ -2930,53 +3224,46 @@ M = {
 				 * Read and enact the state of the JP checklist.
 				 */
 				// Convert the digit at ith position in the checklist string to boolean
-				var stateinstring = O.intToBool(parseInt(O.JPChecklist.charAt(i)));
+				var stateinstring = O.getChecklistItem(O.Chl.JP, i, "boolean");
 				$(this).prop("checked", stateinstring);
 				if (stateinstring === false)
 				{
-					$(this).parent().css({color: "#ffcc77"});
+					$(this).parent().prev().removeClass("mapJPListNameHover");
 				}
 				else
 				{
-					$(this).parent().css({color: "#ffff00"});
+					$(this).parent().prev().addClass("mapJPListNameHover");
 					M.JPEntities[i]._icon.style.border = "2px solid black";
 				}
 				
-			}).click(function(pEvent)
+			}).change(function()
 			{
-				/*
-				 * The checkbox is inside the JP name tag (its parent), the line
-				 * below stops it from triggering the JP name's event handler.
-				 */
-				pEvent.stopPropagation();
-
 				// Get the checkbox ID that associates itself with that JP
-				var stateincheckbox = O.boolToInt($(this).prop("checked")).toString();
+				var checkboxstate = O.getCheckboxEnumState($(this));
 				var checkboxindex = parseInt(I.getNameFromHTMLID($(this)));
-				if (stateincheckbox === "0")
+				if (checkboxstate === O.ChlEnum.Unchecked)
 				{
-					$(this).parent().css({color: "#ffcc77"});
+					$(this).parent().prev().removeClass("mapJPListNameHover");
 					M.styleJPMarkers(M.JPEntities[checkboxindex], M.JPEntities[checkboxindex].options.dif);
 				}
 				else
 				{
-					$(this).parent().css({color: "#ffff00"});
+					$(this).parent().prev().addClass("mapJPListNameHover");
 					M.JPEntities[checkboxindex]._icon.style.border = "2px solid black";
 				}
 				
 				// Rewrite the checklist string by updating the digit at the ID/index
-				O.JPChecklist = O.replaceCharAt(O.JPChecklist, checkboxindex, stateincheckbox);
-				localStorage[O.JPChecklistName] = O.JPChecklist;
+				O.setChecklistItem(O.Chl.JP, checkboxindex, checkboxstate);
 				
-			}).hover(
-				// Highlight JP name when hovered over checkbox
+			}).parent().hover(
+				// Highlight JP name when hovered over checkbox's label
 				function()
 				{
-					$(this).parent().css({"text-decoration": "underline"});
+					$(this).prev().css({"text-decoration": "underline"}).trigger("mouseenter");
 				},
 				function()
 				{
-					$(this).parent().css({"text-decoration": "none"});
+					$(this).prev().css({"text-decoration": "none"}).trigger("mouseleave");
 				}
 			);
 	
@@ -3010,16 +3297,16 @@ M = {
 		$("#mapJPUncheck").click(function()
 		{
 			var jpchecklist = "";
-			for (i = 0; i < O.numOfJPs; i++)
+			for (i = 0; i < O.Chl.JP.length; i++)
 			{
 				$("#mapJPCheck_" + i).prop("checked", false)
-					.parent().css({color: "#ffcc77"});
+					.parent().prev().removeClass("mapJPListNameHover");
 				M.styleJPMarkers(M.JPEntities[i], M.JPEntities[i].options.dif);
 				
 				jpchecklist += "0";
 			}
-			O.JPChecklist = jpchecklist;
-			localStorage[O.JPChecklistName] = O.JPChecklist;
+			O.Chl.JP.list = jpchecklist;
+			localStorage[O.Chl.JP.name] = O.Chl.JP.list;
 		});
 	},
 	
@@ -3035,10 +3322,16 @@ M = {
 			{
 				$("#mapToggle_Daily").trigger("click");
 			}
+			
 			if (M.isShowingIconsForResource)
 			{
 				$("#mapToggle_Resource").trigger("click");
 			}
+			else
+			{
+				$("#mapToggle_Resource").trigger("click").trigger("click");
+			}
+			
 			if (M.isShowingIconsForJP)
 			{
 				$("#mapToggle_JP").trigger("click");
@@ -3055,10 +3348,25 @@ M = {
 			}
 			else
 			{
-				if (M["isShowingIconsFor" + pSection])
+				if (pSection === "Resource")
 				{
-					$("#mapToggle_" + pSection).trigger("click");
+					if (M["isShowingIconsFor" + pSection])
+					{
+						$("#mapToggle_" + pSection).trigger("click");
+					}
+					else
+					{
+						$("#mapToggle_" + pSection).trigger("click").trigger("click");
+					}
 				}
+				else
+				{
+					if (M["isShowingIconsFor" + pSection])
+					{
+						$("#mapToggle_" + pSection).trigger("click");
+					}
+				}
+				
 			}
 		}
 	}
@@ -3066,7 +3374,7 @@ M = {
 };
 
 /* =============================================================================
- * @@Time utilities
+ * @@Time utilities and constants
  * ========================================================================== */
 T = {
 
@@ -3131,7 +3439,7 @@ T = {
 	 * @objparam boolean wantSeconds to include the seconds.
 	 * @objparam int customTimeInSeconds to convert to a time string, will use
 	 * current time if undefined.
-	 * @returns 23:59:59 or 11:59:59 PM or 23h 59h 59s time string.
+	 * @returns 23:59:59 or 11:59:59 PM or 23h 59m 59s time string.
 	 */
 	getTimeFormatted: function(pArgs)
 	{
@@ -3303,7 +3611,7 @@ T = {
 		}
 		if (hour < 0)
 		{
-			hour = hour + T.cHOURS_IN_DAY; // rollover because hour can be calculated to negative
+			hour = hour + T.cHOURS_IN_DAY; // Rollover because hour can be calculated to negative
 		}
 
 		if (pTimeUnit === "hours")
@@ -3480,7 +3788,7 @@ K = {
 			iconchain = K.iconChains[i];
 			if (pAlias === chain.alias)
 			{
-				if (O.getChainChecklistState(chain) !== O.ChecklistEnum.Unchecked)
+				if (O.getChainChecklistState(chain) !== O.ChlEnum.Unchecked)
 				{
 					iconchain.css({opacity: 1})
 						.animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
@@ -3538,7 +3846,7 @@ K = {
 		// If crossing a 15 minute mark (IMPORTANT)
 		if (min % T.cMINUTES_IN_FRAME === 0 && sec === 0)
 		{
-			if (O.Options.int_dimClockBackground === 0)
+			if (O.Options.int_setClockBackground === 0)
 			{
 				$(clockbackground).fadeTo(800, 1);
 			}
@@ -3560,7 +3868,7 @@ K = {
 			K.awakeTimestampPrevious = awaketimestampcurrent;
 			
 			// Dim the clock background
-			if (O.Options.int_dimClockBackground === 0)
+			if (O.Options.int_setClockBackground === 0)
 			{
 				clockbackground.style.opacity = opacityAdd;
 			}
@@ -3628,11 +3936,11 @@ K = {
 		{
 			var checkedcurrent = "";
 			var checkednext = "";
-			if (O.getChainChecklistState(C.CurrentChain) !== O.ChecklistEnum.Unchecked)
+			if (O.getChainChecklistState(C.CurrentChain) !== O.ChlEnum.Unchecked)
 			{
 				checkedcurrent = ", checked";
 			}
-			if (O.getChainChecklistState(C.NextChain) !== O.ChecklistEnum.Unchecked)
+			if (O.getChainChecklistState(C.NextChain) !== O.ChlEnum.Unchecked)
 			{
 				checkednext = ", checked";
 			}
@@ -3693,7 +4001,7 @@ K = {
 			// Update chain icons, fade if checked off
 			var fadeIcons = function(pChain, pIcon)
 			{
-				if (O.getChainChecklistState(pChain) !== O.ChecklistEnum.Unchecked)
+				if (O.getChainChecklistState(pChain) !== O.ChlEnum.Unchecked)
 				{
 					$(pIcon).css({opacity: K.iconOpacityChecked});
 				}
@@ -3822,7 +4130,7 @@ K = {
 					{
 						$(elm).attr("src", M.cICON_WAYPOINT);
 					}, 400);
-					I.writeConsole("Chat link copied to clipboard :)<br />" + $(this).data("clipboard-text"), 5);
+					I.write("Chat link copied to clipboard :)<br />" + $(this).data("clipboard-text"), 5);
 				});
 			});
 		}
@@ -3833,8 +4141,10 @@ K = {
  * @@Interface and UI/jQuery bindings in HTML
  * ========================================================================== */
 I = {
-	cContentPane: "#paneContent",
 	cSiteName: "GW2Timer.com",
+	cSiteURL: "http://gw2timer.com/",
+	cPageURLMap: "map.html",
+	cPageURLHelp: "help.html",
 	cImageHost: "http://i.imgur.com/",
 	cImageMainExtension: ".png", // Almost all used images are PNG
 	consoleTimeout: {},
@@ -3851,7 +4161,9 @@ I = {
 	cTOOLTIP_ADD_OFFSET_X: 36,
 	
 	// Content-Layer-Page and Section-Header
+	cContentPane: "#paneContent",
 	cContentPrefix: "#layer",
+	cMenuPrefix: "#menu",
 	ContentEnum:
 	{
 		// These are the X in "menuX" and "layerX" IDs in the HTML
@@ -3862,6 +4174,8 @@ I = {
 	},
 	contentCurrent: "",
 	contentCurrentLayer: "", // This is cContentPrefix + contentCurrent
+	isContentLoaded_Map: false,
+	isContentLoaded_Help: false,
 	sectionPrefix: "sectionCurrent_",
 	sectionCurrent_Map: "",
 	sectionCurrent_Help: "",
@@ -3905,7 +4219,7 @@ I = {
 		if (window.innerWidth <= I.cSMALL_DEVICE_WIDTH && window.innerHeight <= I.cSMALL_DEVICE_HEIGHT)
 		{
 			I.userSmallDevice = true;
-			I.writeConsole("Small device detected.<br />"
+			I.write("Small device detected.<br />"
 				+ "Map features have been turned off by default for better performance.<br />"
 				+ "You can re-enable them in the options.<br />", 10);
 			/*
@@ -3942,14 +4256,15 @@ I = {
 		}
 		
 		// Remember the program's version
-		localStorage[O.programVersionName] = O.programVersion;
+		localStorage[O.programVersionName] = O.int_programVersion;
 		
 		// Default content layer
 		I.contentCurrent = I.ContentEnum.Chains;
 	},
 	
 	/*
-	 * Does things that need to be done after everything was loaded.
+	 * Does things that need to be done after everything was initially loaded
+	 * (does not count AJAX loaded content).
 	 */
 	initializeLast: function()
 	{
@@ -3958,9 +4273,9 @@ I = {
 		I.initializeUIforMenu();
 		I.initializeUIforChains();
 		// Do special commands from the URL
-		O.enactURLArguments();
+		I.enactURLArguments();
 		// Clear the non-load warning after everything succeeded
-		$("#jsConsole").empty();
+		$("#paneWarning").remove();
 		// Fix Firefox SVG filter bug
 		K.reapplyFilters();
 	},
@@ -3999,16 +4314,45 @@ I = {
 	 * Writes an HTML string to the "console" area in the top left corner of
 	 * the website that disappears after a while.
 	 * @param string pString to write.
-	 * @param int pSeconds until the console is cleared.
+	 * @param int pSeconds to display the console with that string.
+	 * @param boolean pClear to empty the console before printing.
 	 */
-	writeConsole: function(pString, pSeconds)
+	write: function(pString, pSeconds, pClear)
 	{
-		$("#jsConsole").append(pString + "<br />");
+		var console = $("#jsConsole");
+		var characterspersecond = 48;
 		
+		if (pString === undefined)
+		{
+			pString = "emptystring";
+		}
+		else
+		{
+			pString = pString.toString();
+		}
+		if (pClear === undefined)
+		{
+			pClear = false;
+		}
+		if (pClear === true)
+		{
+			console.empty();
+		}
+		if (isFinite(pSeconds) === false)
+		{
+			/*
+			 * If seconds to display was not specified, set display time
+			 * based on how long the string is.
+			 */
+			pSeconds = 3 + parseInt(pString.length / characterspersecond);
+		}
+		console.append(pString + "<br />");
+		
+		// Ignore previous display time, which is how long before the console is cleared
 		window.clearTimeout(I.consoleTimeout);
 		I.consoleTimeout = setTimeout(function()
 		{
-			$("#jsConsole").css({opacity: 1}).animate({opacity: 0}, 400, function()
+			console.css({opacity: 1}).animate({opacity: 0}, 600, function()
 			{
 				$(this).empty().css({opacity: 1});
 			});
@@ -4059,6 +4403,41 @@ I = {
 					+ O.URLArguments[I.prefixSection]).trigger("click");
 			}
 		}, 0);
+	},
+	
+	/*
+	 * Does the commands within the address bar after the site's domain name.
+	 * @pre URLArguments object was initialized by extraction.
+	 */
+	enactURLArguments: function()
+	{
+		var i;
+		// Go to the page (content layer) requested, as in "openPageFromURL()"
+		if (O.URLArguments[I.prefixPage] !== undefined)
+		{
+			for (i in I.ContentEnum)
+			{
+				if (O.URLArguments[I.prefixPage].toLowerCase() === I.ContentEnum[i].toLowerCase())
+				{
+					$(I.cMenuPrefix + I.ContentEnum[i]).trigger("click");
+				}
+			}
+		}
+	},
+	
+	/*
+	 * Makes links open a new tab on an HTML page with analytics to record
+	 * what link the user clicked on, then almost instantly redirect them to
+	 * the proper address of the link.
+	 * @param string pSelector to find tags to convert.
+	 */
+	convertExternalLink: function(pSelector)
+	{
+		$(pSelector).each(function()
+		{
+			$(this).attr("href", I.cSiteURL + "out?" + escape($(this).attr("href")));
+			$(this).attr("target", "_blank");
+		});
 	},
 	
 	/*
@@ -4150,7 +4529,7 @@ I = {
 			var layername = pLayer.substring(1, pLayer.length);
 			$(pLayer + " .jsTableOfContents").append("<h2>Table of Contents</h2><ol></ol>");
 
-			// Iterate over every h1 tag in the layer except the first
+			// Convert every h1 tag
 			$(pLayer + " h1").each(function()
 			{
 				// Scroll to top when clicked the header
@@ -4174,8 +4553,8 @@ I = {
 	
 	/*
 	 * Binds headers with the collapsible class to toggle display of its sibling
-	 * container element. Creates a side menu as an alias for clicking the
-	 * headers; also creates another button-like text at the bottom of the
+	 * container element. Creates a vertical side menu as an alias for clicking
+	 * the headers; also creates another button-like text at the bottom of the
 	 * container to collapse it again.
 	 * Example: <header class="jsCollapsible">Example Title</header><div></div>
 	 * That container div should contain everything that needs to be collapsed/expanded
@@ -4194,11 +4573,16 @@ I = {
 		var beamid = "menuBeam_" + layer;
 		var menubeam = $("<div class='menuBeam' id='" + beamid + "'></div>").prependTo(pLayer);
 		
+		// Bind beam menu animation when clicked on the bar menu icon
+		$(I.cMenuPrefix + layer).click(function()
+		{
+			$("#menuBeam_" + I.contentCurrent).css({left: 0}).animate({left: I.cPANE_BEAM_LEFT}, "fast");
+		});
+		
 		$(pLayer + " header.jsCollapsible").each(function()
 		{
 			var header = $(this);
 			var headertext = header.text();
-			header.next().append("<div class='jsCollapsibleDone'>Done reading " + header.text() + "</div>");
 			// Hide the entire collapsible div tag next to the header tag
 			header.next().hide();
 			header.wrapInner("<span></span>");
@@ -4215,7 +4599,9 @@ I = {
 					// To be collapsed
 					$(this).children("sup").text("[+]");
 					
-					I[I.sectionPrefix + layer] = "";
+					M.displayIcons(section, false); // Hide this section's map icons
+					
+					I[I.sectionPrefix + layer] = ""; // Nullify current section variable
 				}
 				else
 				{
@@ -4241,6 +4627,13 @@ I = {
 				$(this).removeData("donotanimate");
 			});
 			
+			// Create and bind the additional bottom header to collapse the container
+			$("<div class='jsCollapsibleDone'>Done reading " + headertext + "</div>")
+				.appendTo(header.next()).click(function()
+				{
+					$(this).parent().prev().trigger("click");
+				});;
+			
 			/*
 			 * Side menu icons as alias for headers. Clicking an icon shows the
 			 * associated header's sibling container (section) by triggering
@@ -4255,7 +4648,7 @@ I = {
 					// Hide all the collapsible sections
 					$(pLayer + " header.jsCollapsible").each(function()
 					{
-						if ($(this).next().is(":visible"))
+						if ($(this).next().is(":visible") && $(this).attr("id") !== header.attr("id"))
 						{
 							// Don't animate so the scrolling to the section-to-be-opened works properly
 							$(this).data("donotanimate", "true");
@@ -4263,10 +4656,7 @@ I = {
 						}
 					});
 					// Show the requested section
-					if ( ! (header.next().is(":visible")))
-					{
-						header.trigger("click");
-					}
+					header.trigger("click");
 				});
 		});
 
@@ -4287,16 +4677,7 @@ I = {
 		
 		
 		// Make tooltips for the beam menu icons
-		I.qTip.init(".menuBeamIcon");
-		
-		// Bind the additional bottom header to collapse the container
-		$(pLayer + " .jsCollapsibleDone").each(function()
-		{
-			$(this).click(function()
-			{
-				$(this).parent().prev().trigger("click");
-			});
-		});
+		I.qTip.init(pLayer + " .menuBeamIcon");
 	},
 	
 	/*
@@ -4309,7 +4690,7 @@ I = {
 		 */
 		(function()
 		{
-		   var cAnimationSpeed = 200;
+		   var animationspeed = 200;
 		   var cFadeOpacity = 0.5;
 		   // User hovers over the menu bar
 		   $("#paneMenu").hover(
@@ -4320,7 +4701,7 @@ I = {
 					   // Fade icon not being hovered over
 					   if (!$(this).is(":hover"))
 					   {
-						   $(this).animate({opacity: cFadeOpacity}, cAnimationSpeed);
+						   $(this).animate({opacity: cFadeOpacity}, animationspeed);
 					   }
 				   });
 			   },
@@ -4329,7 +4710,7 @@ I = {
 				   // User moused outside the menu, so stop the animations
 				   $("#paneMenu span").finish().each(function()
 				   {
-					   $(this).animate({opacity: 1}, cAnimationSpeed);
+					   $(this).animate({opacity: 1}, animationspeed);
 				   });
 			   }
 		   );
@@ -4337,11 +4718,11 @@ I = {
 		   $("#paneMenu span").hover(
 			   function()
 			   {
-				   $(this).animate({opacity: 1}, cAnimationSpeed);
+				   $(this).animate({opacity: 1}, animationspeed);
 			   },
 			   function()
 			   {
-				   $(this).animate({opacity: cFadeOpacity}, cAnimationSpeed);
+				   $(this).animate({opacity: cFadeOpacity}, animationspeed);
 			   }
 		   ).mousedown(function()
 		   {
@@ -4353,20 +4734,14 @@ I = {
 		})();
 
 		/*
-		 * Menu click icon to show respective content layer.
+		 * Menu click icon to show respective content layer (page).
 		 */
 		$("#paneMenu span").each(function()
 		{
-			/*
-			 * The menu buttons' IDs are named as menuSomething, change this if
-			 * it was changed in the HTML.
-			 */
-			var menuprefix = "menu";
-
 			$(this).click(function()
 			{
 				var layer = $(this).attr("id");
-				I.contentCurrent = layer.substring(menuprefix.length, layer.length);
+				I.contentCurrent = layer.substring(I.cMenuPrefix.length-1, layer.length);
 				I.contentCurrentLayer = I.cContentPrefix + I.contentCurrent;
 				
 				switch (I.contentCurrent)
@@ -4374,7 +4749,6 @@ I = {
 					case I.ContentEnum.Chains:
 					{
 						$("#jsTop").hide();
-						$("#jsCenter").hide();
 						/*
 						 * Get the current event map view it by triggering
 						 * the binded event names.
@@ -4388,24 +4762,22 @@ I = {
 					case I.ContentEnum.Help:
 					{
 						$("#jsTop").show();
-						$("#jsCenter").hide();
 					} break;
 					case I.ContentEnum.Map:
 					{
-						$("#jsTop").hide();
-						$("#jsCenter").show().trigger("click");
+						$("#jsTop").show();
+						$("#jsCenter").trigger("click");
 						M.PinEvent.setLatLng(M.convertGCtoLC([0,0]));
 					} break;
 					default:
 					{
 						$("#jsTop").hide();
-						$("#jsCenter").hide();
 					} break;
 				}
 				
 				$("#paneContent article").hide(); // Hide all layers
-				$(I.contentCurrentLayer + " h1").first()
-					.css({opacity: 0}).animate( // Fade in the first header tag
+				$(I.contentCurrentLayer + " .cntHeader").css({opacity: 0})
+					.animate( // Fade page title
 				{
 					opacity: 1
 				}, 400);
@@ -4468,7 +4840,7 @@ I = {
 		I.generateSectionMenu(pLayer);
 		M.bindMapLinks(pLayer);
 		// Open links on new window
-		$(pLayer + " a").attr("target", "_blank");
+		I.convertExternalLink(pLayer + " a");
 	},
 	
 	/*
@@ -4476,18 +4848,15 @@ I = {
 	 */
 	loadHelpLayer: function()
 	{
-		$("#layerHelp").load("help.html", function()
+		$("#layerHelp").load(I.cPageURLHelp, function()
 		{
 			I.bindAfterAJAXContent("#layerHelp");
 			
 			// Expand a header if requested in the URL
 			I.openSectionFromURL();
-		});
-		
-		// Bind beam menu animation
-		$("#menuHelp").click(function()
-		{
-			$("#menuBeam_Help").css({left: 0}).animate({left: I.cPANE_BEAM_LEFT}, "fast");
+			
+			// Lastly
+			I.isContentLoaded_Help = true;
 		});
 	},
 	
@@ -4496,7 +4865,7 @@ I = {
 	 */
 	loadMapLayer: function()
 	{
-		$("#layerMap").load("map.html", function()
+		$("#layerMap").load(I.cPageURLMap, function()
 		{
 			I.bindAfterAJAXContent("#layerMap");
 
@@ -4515,6 +4884,9 @@ I = {
 				M.generateAndInitializeJPs();
 				M.generateAndInitializeJPChecklistHTML();
 			});
+			// Create custom checklists
+			$("#headerMap_Personal").one("click", O.initializePersonalChecklist);
+			
 			// Bind show map icons when clicked on header
 			$("#headerMap_Daily, #headerMap_Resource, #headerMap_JP").each(function()
 			{
@@ -4527,25 +4899,22 @@ I = {
 					}
 				});
 			});
-			
+
 			// Create additional map related side menu icon
-			$("<img class='menuBeamIcon' src='img/ui/eye.png' "
-				+ "title='&lt;dfn&gt;Hide Map Icons&lt;/dfn&gt;' />")
+			$("<img class='menuBeamIcon menuBeamIconCenter' src='img/map/star.png' "
+				+ "title='&lt;dfn&gt;Map Center&lt;/dfn&gt;' />")
 				.appendTo("#menuBeam_Map")
 			.click(function()
 			{
-				M.displayIcons();
+				$("#jsCenter").trigger("click");
 			});
-			I.qTip.init(".menuBeamIcon");
-			
-			// Bind beam menu animation
-			$("#menuMap").click(function()
-			{
-				$("#menuBeam_Map").css({left: 0}).animate({left: I.cPANE_BEAM_LEFT}, "fast");
-			});
+			I.qTip.init("#layerMap .menuBeamIconCenter, #layerMap label");
 			
 			// Expand a header if requested in the URL
 			I.openSectionFromURL();
+			
+			// Lastly
+			I.isContentLoaded_Map = true;
 		});
 	},
 	
@@ -4614,7 +4983,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind the following tags with the title attribute for tooltip
-		I.qTip.init("a, fieldset, label, img, input, button, ins, span");
+		I.qTip.init("a, ins, span, img, fieldset, label, input, button");
 		
 		/*
 		 * Make the tooltip appear top of the cursor instead of below if it's too

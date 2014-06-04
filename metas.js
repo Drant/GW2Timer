@@ -3,7 +3,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "FE",
 	pronunciation: "fire elemental",
-	serial: "001",
+	series: 0,
 	waypoint: "[&BEcAAAA=]",
 	title: "Thaumanova Reactor Fallout",
 	events: [
@@ -87,7 +87,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "Golem",
 	pronunciation: "golem mark two",
-	serial: "002",
+	series: 0,
 	waypoint: "[&BNQCAAA=]",
 	title: "Inquest Golem Mark II",
 	events: [
@@ -141,7 +141,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "Jormag",
 	pronunciation: "claw of jor mag",
-	serial: "003",
+	series: 0,
 	waypoint: "[&BHoCAAA=]",
 	title: "Breaking the Claw of Jormag",
 	events: [
@@ -240,7 +240,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "Karka",
 	pronunciation: "karka queen",
-	serial: "004",
+	series: 0,
 	waypoint: "[&BNcGAAA=]",
 	title: "Island Control",
 	events: [
@@ -429,7 +429,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "Maw",
 	pronunciation: "svaniir shaman",
-	serial: "005",
+	series: 0,
 	waypoint: "[&BMIDAAA=]",
 	title: "The Frozen Maw",
 	events: [
@@ -543,7 +543,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "Megades",
 	pronunciation: "megadestroyer",
-	serial: "006",
+	series: 0,
 	waypoint: "[&BM8CAAA=]",
 	title: "The Battle for Mount Maelstrom",
 	events: [
@@ -672,7 +672,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "SB",
 	pronunciation: "shadow behemoth",
-	serial: "007",
+	series: 0,
 	waypoint: "[&BPMAAAA=]",
 	title: "Secrets in the Swamp",
 	events: [
@@ -756,7 +756,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "Shatterer",
 	pronunciation: "the shatterer",
-	serial: "008",
+	series: 0,
 	waypoint: "[&BE4DAAA=]",
 	title: "Kralkatorrik's Legacy",
 	events: [
@@ -810,7 +810,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "Taidha",
 	pronunciation: "tai da, covington",
-	serial: "009",
+	series: 0,
 	waypoint: "[&BKgBAAA=]",
 	title: "The Campaign Against Taidha Covington",
 	events: [
@@ -879,7 +879,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "Ulgoth",
 	pronunciation: "mode near oo goth",
-	serial: "010",
+	series: 0,
 	waypoint: "[&BMMAAAA=]",
 	title: "Seraph Assault on Centaur Camps",
 	events: [
@@ -1008,7 +1008,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "Wurm",
 	pronunciation: "cal ley don worm",
-	serial: "011",
+	series: 0,
 	waypoint: "[&BEEFAAA=]",
 	title: "The Battle for Wychmire Swamp",
 	events: [
@@ -1092,7 +1092,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "Tequatl",
 	pronunciation: "tecquatle",
-	serial: "012",
+	series: 0,
 	waypoint: "[&BNEBAAA=]",
 	title: "Danger at Fabled Djannor",
 	events: [
@@ -1116,7 +1116,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "TripleWurm",
 	pronunciation: "triple worm",
-	serial: "013",
+	series: 0,
 	waypoint: "[&BKoBAAA=]",
 	title: "Triple Trouble",
 	events: [
@@ -1215,7 +1215,7 @@ var GW2T_CHAINS_DATA = [
 {
 	alias: "TBD",
 	pronunciation: "tbd",
-	serial: "099",
+	series: 0,
 	waypoint: "[&BDAEAAA=]",
 	title: "To Be Determined",
 	events: [
@@ -1238,7 +1238,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "FireShaman",
-	serial: "101",
+	series: 1,
 	waypoint: "[&BO4BAAA=]",
 	title: "Invictus Castrum",
 	events: [
@@ -1261,7 +1261,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "Foulbear",
-	serial: "102",
+	series: 1,
 	waypoint: "[&BDwEAAA=]",
 	title: "Ogre Wars",
 	events: [
@@ -1374,7 +1374,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "Commissar",
-	serial: "103",
+	series: 1,
 	waypoint: "[&BD8FAAA=]",
 	title: "In Pursuit of Knowledge",
 	events: [
@@ -1457,7 +1457,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "Eye",
-	serial: "104",
+	series: 1,
 	waypoint: "[&BNIEAAA=]",
 	title: "Zho'qafa Catacombs",
 	events: [
@@ -1600,7 +1600,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "Lyssa",
-	serial: "201",
+	series: 2,
 	waypoint: "[&BK4CAAA=]",
 	title: "Cathedral of Eternal Radiance",
 	events: [
@@ -1773,7 +1773,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "Dwayna",
-	serial: "202",
+	series: 2,
 	waypoint: "[&BLICAAA=]",
 	title: "Cathedral of Zephyrs",
 	events: [
@@ -1871,7 +1871,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "Melandru",
-	serial: "203",
+	series: 2,
 	waypoint: "[&BB4DAAA=]",
 	title: "Cathedral of Verdance",
 	events: [
@@ -2029,7 +2029,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "Grenth",
-	serial: "204",
+	series: 2,
 	waypoint: "[&BB4DAAA=]",
 	title: "Cathedral of Silence",
 	events: [
@@ -2172,7 +2172,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "Arah",
-	serial: "205",
+	series: 2,
 	waypoint: "[&BB4DAAA=]",
 	title: "Gates of Arah",
 	events: [
@@ -2345,7 +2345,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "Balthazar",
-	serial: "206",
+	series: 2,
 	waypoint: "[&BNIEAAA=]",
 	title: "Cathedral of Glorious Victory",
 	events: [
@@ -2413,7 +2413,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "BalthazarXXXN",
-	serial: "206A",
+	series: 2,
 	waypoint: "[&BFkGAAA=]",
 	title: "Northern Invasion of Orr",
 	events: [
@@ -2571,7 +2571,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "BalthazarXXXC",
-	serial: "206B",
+	series: 2,
 	waypoint: "[&BO4CAAA=]",
 	title: "Central Invasion of Orr",
 	events: [
@@ -2714,7 +2714,7 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "BalthazarXXXS",
-	serial: "206C",
+	series: 2,
 	waypoint: "[&BO8CAAA=]",
 	title: "Southern Invasion of Orr",
 	events: [

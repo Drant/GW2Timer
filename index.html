@@ -5,7 +5,7 @@
 	<title>GW2Timer - World Boss Timers and Daily Map Guide for Guild Wars 2</title>
 	<meta charset="utf-8" />
 	<meta name="robots" content="index, follow, noarchive" />
-	<meta name="description" content="Guild Wars 2 timers and clock for world boss meta events, with walkthroughs, daily achievements, jumping puzzles, and gathering nodes map." />
+	<meta name="description" content="Guild Wars 2 timers and clock for world boss meta events, with walkthroughs, daily achievements, jumping puzzles, and personal checklists." />
 	<meta name="google-site-verification" content="hPcBd74DxlBzpTu6wO6DkIcOVFLu9SOMT-GQ1MI3fbg" />
 
 	<!-- Stylesheets -->
@@ -35,15 +35,16 @@
 </head>
 
 <body>
-	<div id="jsConsole">
+	<div id="paneWarning">
 		If you can read this then <strong>maybe</strong>:<br />
 		- You are still loading the website (slowly); ignore this message.<br />
-		- You are using Internet Explorer 10 or lower; please upgrade to IE11 or higher.<br />
+		- You are using Internet Explorer 10 or lower; please <a href="http://microsoft.com/ie">upgrade</a> to IE11 or higher.<br />
 		- Your browser's adblocker is blocking the leaflet.js map script; please whitelist it.<br />
 		- You have JavaScript disabled; this whole application runs on JavaScript!<br />
 		- This web application encountered a bug; try refreshing, or <a href="bin/clear.html">clearing</a> its localStorage.<br />
 		Do you want to <a href="http://forum.renaka.com/topic/5476238/">report</a> this problem?<br />
 	</div>
+	<div id="jsConsole"></div>
 	<iframe id="jsTTS"></iframe>
 	<main id="windowMain">
 	<div id="panelLeft" class="panelMain">
@@ -141,10 +142,10 @@
 				</g>
 			</svg>
 			<div id="itemClockWaypoints">
-				<img id="itemClockWaypoint0" src="img/event/waypoint.png" alt="X:00 Waypoint">
-				<img id="itemClockWaypoint1" src="img/event/waypoint.png" alt="X:15 Waypoint">
-				<img id="itemClockWaypoint2" src="img/event/waypoint.png" alt="X:30 Waypoint">
-				<img id="itemClockWaypoint3" src="img/event/waypoint.png" alt="X:45 Waypoint">
+				<img id="itemClockWaypoint0" src="img/map/waypoint.png" alt="X:00 Waypoint">
+				<img id="itemClockWaypoint1" src="img/map/waypoint.png" alt="X:15 Waypoint">
+				<img id="itemClockWaypoint2" src="img/map/waypoint.png" alt="X:30 Waypoint">
+				<img id="itemClockWaypoint3" src="img/map/waypoint.png" alt="X:45 Waypoint">
 			</div>
 			<time id="itemTimeLocal" class="itemTimeDigital">00:00</time>
 			<time id="itemTimeServer" class="itemTimeDigital">16:00</time>
@@ -163,9 +164,9 @@
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
 		<nav id="paneMenu" class="paneRight">
-			<span id="menuChains" title="&lt;dfn&gt;Chains:&lt;/dfn&gt; Timers, Events, Checklist"></span>
-			<span id="menuMap" title="&lt;dfn&gt;Map:&lt;/dfn&gt; Dailies, Gathering Nodes, Jumping Puzzles"></span>
-			<span id="menuHelp" title="&lt;dfn&gt;Help:&lt;/dfn&gt; FAQs, About, Walkthrough"></span>
+			<span id="menuChains" title="&lt;dfn&gt;Chains:&lt;/dfn&gt; Timers, Events, Schedule"></span>
+			<span id="menuMap" title="&lt;dfn&gt;Map:&lt;/dfn&gt; Dailies, Gathering, JPs, Checklists"></span>
+			<span id="menuHelp" title="&lt;dfn&gt;Help:&lt;/dfn&gt; FAQ, About, Walkthrough"></span>
 			<span id="menuOptions" title="&lt;dfn&gt;Options:&lt;/dfn&gt; Display, Format, Alarm"></span>
 		</nav>
 		<!-- Content mini-pane
@@ -223,10 +224,10 @@
 							<label><input id="opt_int_setTimeStyle" type="radio" name="int_setTimeStyle" /> Countdown</label>
 							<label><input type="radio" name="int_setTimeStyle" /> Schedule</label>
 						</fieldset>
-						<fieldset name="int_dimClockBackground" title="Dim the clock background from bright to dark within 15 minutes or stay as so?"><legend>Clock Bg</legend>
-							<label><input id="opt_int_dimClockBackground" type="radio" name="int_dimClockBackground" /> Auto-dim</label>
-							<label><input type="radio" name="int_dimClockBackground" /> Bright</label>
-							<label><input type="radio" name="int_dimClockBackground" /> Dark</label>
+						<fieldset name="int_setClockBackground" title="Dim the clock background from bright to dark within 15 minutes or stay as so?"><legend>Clock Bg</legend>
+							<label><input id="opt_int_setClockBackground" type="radio" name="int_setClockBackground" /> Auto-dim</label>
+							<label><input type="radio" name="int_setClockBackground" /> Bright</label>
+							<label><input type="radio" name="int_setClockBackground" /> Dark</label>
 						</fieldset>
 					</div>
 					<br />
@@ -249,6 +250,11 @@
 					<div class="optButtons">
 						<button id="optRestoreAllChains" title="Unhide all world bosses and uncheck them.">Restore All Chains</button>
 						<button id="optClearLocalStorage" title="Clear the localStorage which stores options and states, as if you visited for the first time.">Clear Website Memory</button>
+					</div>
+					<br />
+					<h2>Debug</h2>
+					<div class="optButtons">
+						<button id="optPrintLocalStorage" title="Read what is stored in your browser for this website. Most of these name-value pairs can be overriden directly via URL query string. Example: http://gw2timer.com/?bol_showClock=false&int_setPredictor=3">Print Website Memory</button>
 					</div>
 					<br />
 				</div>

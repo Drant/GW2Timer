@@ -439,7 +439,7 @@ Rich and T6 nodes reset in about 22 hours after gathering; T1-T5 nodes reset in 
 
 <header id="headerMap_JP" class="jsCollapsible"><img src="img/ui/jp.png" alt="Jumping Puzzles" />Jumping Puzzles</header>
 <div>
-<p>The JP map icons point to the entrance. Click on a checkbox here or a JP icon on the map to auto-save the checklist. Double click a JP icon to zoom in/out.<br />Links: [Y]outube [W]iki.</p>
+<p>The JP map icons point to the entrance. Click on a checkbox here or a JP icon on the map to check off a JP. Double click a JP icon to zoom in/out.<br />Links: [Y]outube [W]iki.</p>
 <button id="mapToggle_JP" class="cssRight">Toggle Icons</button>
 
 <div class="mapLinks">
@@ -465,14 +465,14 @@ Simple jumps.
 </dl>
 <br />
 <h2>Medium <span class="mapLegendLine" style="border-bottom: 2px solid orange"></span></h2>
-Tricky jumps or interaction required
+Tricky jumps or interaction required.
 <dl data-jpdif="1" class="mapJPList">
 	<dt id="mapJP_15" data-coord="[16300, 14605]" data-img="8RKUmMH">Troll's End</dt><dd>LA stalactite cave with planks</dd>
 	<dt id="mapJP_18" data-coord="[17210, 15481]" data-img="Asnph3I">Weyandt's Revenge</dt><dd>LA huge pirate themed cave</dd>
 	<dt id="mapJP_17" data-coord="[16670, 14183]" data-img="19dLq1S">Swashbuckler's Cove</dt><dd>Gendarran light torches and swim in time. <ins data-coord="[16510, 14221]">Cave entrance</ins> faces east</dd>
 	<dt id="mapJP_12" data-coord="[14330, 9653]" data-img="vHwaBOm">Fawcett's Bounty</dt><dd>Harathi pirate ship in underground lake</dd>
 	<dt id="mapJP_14" data-coord="[15726, 16423]" data-img="3uEgh6s">Professor Portmatt's Lab</dt><dd>Bloodtide underwater number puzzle force fields</dd>
-	<dt id="mapJP_4" data-coord="[11020, 19349]" data-img="vJ9pk02">Morgan's Leap</dt><dd>Caledon spiral tree and floating rocks in the sky. Escort <ins data-coord="[10696, 19663]">Brugh</ins> to regrow the giant leaves</dd>
+	<dt id="mapJP_4" data-coord="[11020, 19349]" data-img="vJ9pk02">Morgan's Leap</dt><dd>Caledon spiral tree and floating rocks in the sky. Escort <ins data-coord="[10696, 19663]">Brugh</ins> to regrow the leaf stairs</dd>
 	<dt id="mapJP_1" data-coord="[9492, 18652]" data-img="wiRtb7r">Spekks's Laboratory</dt><dd>Caledon asuran light platforms with lava below</dd>
 	<dt id="mapJP_21" data-coord="[17958, 21624]" data-img="xE1n8zJ">Conundrum Cubed</dt><dd>Maelstrom floating cubes and electricity</dd>
 	<dt id="mapJP_20" data-coord="[17545, 21917]" data-img="LlN43yV">Hexfoundry Unhinged</dt><dd>Sparkfly destroyed Inquest facility</dd>
@@ -493,14 +493,90 @@ A marathon of intricate jumps.
 	<dt id="mapJP_13" data-coord="[15379, 14282]" data-img="wEG8PMR">Not So Secret</dt><dd>Gendarran aetherblade hideout with trampolines</dd>
 	<dt id="mapJP_0" data-coord="[9235, 18967]" data-img="782GdE5">Goemm's Lab</dt><dd>Metrica floating landmasses in the sky as asura weather stations</dd>
 	<dt id="mapJP_3" data-coord="[10963, 19197]" data-img="KcUE585">Dark Reverie</dt><dd>Caledon nightmare court blue hideout after Morgan's Spiral</dd>
-	<dt id="mapJP_27" data-coord="[21357, 21885]" data-img="ZgnQGFR">Hidden Garden</dt><dd>Maelstrom unlock four element cantles. Keeper portal locations: <ins data-coord="[18335, 22125]">Earth</ins>, <ins data-coord="[19523, 22724]">Light</ins>, <ins data-coord="[20143, 22209]">Waves</ins>, <ins data-coord="[20770, 23385]">Winds</ins></dd>
+	<dt id="mapJP_27" data-coord="[21357, 21885]" data-img="ZgnQGFR">Hidden Garden</dt><dd>Maelstrom unlock four element cantles. Keeper portal to JP locations: <ins data-coord="[18335, 22125]">Earth</ins>, <ins data-coord="[19514, 22714]">Light</ins>, <ins data-coord="[20143, 22209]">Waves</ins>, <ins data-coord="[20770, 23385]">Winds</ins></dd>
 	<dt id="mapJP_6" data-coord="[12780, 19377]" data-img="dxTDLqJ">Skipping Stones</dt><dd>Southsun stones gushed up by geysers</dd>
 	<dt id="mapJP_10" data-coord="[13610, 25044]" data-img="kDX7ZEq">Scavenger's Chasm</dt><dd>Malchor's convoluted orrian ruins cave collecting 12 orbs</dd>
 </dl>
+<br />
 <button id="mapJPUncheck" class="cssRight">Uncheck All</button>
+<p>Your checklist is automatically restored when you revisit this site. You can <strong>reset</strong> the list whenever by clicking the Uncheck All button.</p>
 </div>
-<br /><br />
+</div>
+
+
+<header id="headerMap_Personal" class="jsCollapsible"><img src="img/ui/checklist.png" alt="Personal" />Personal Checklist</header>
+<div>
+<div id="mapPersonal">
+<br />
+<div id="chlDungeon">
+	<div id="chlDungeonCalculator" data-moneyaddexp="2600">
+		<span><var id="chlDungeonCalculator_Gold">0</var><img src="img/ui/coin_gold.png" alt="Gold" /></span>
+		<span><var id="chlDungeonCalculator_Silver">0</var><img src="img/ui/coin_silver.png" alt="Silver" /></span>
+		<span><var id="chlDungeonCalculator_Copper">0</var><img src="img/ui/coin_copper.png" alt="Copper" /></span>
+	</div>
+	<div class="chlDungeonBar" data-name="AC">
+		<label title="Hodgins"><input data-money="15500" data-mode="E" type="checkbox" />1</label>
+		<label title="Detha"><input data-money="15500" data-mode="E" type="checkbox" />2</label>
+		<label title="Tzark"><input data-money="15500" data-mode="E" type="checkbox" />3</label>
+		<label title="Story"><input data-money="5000" data-mode="S" type="checkbox" />S</label>
+	</div>
+	<div class="chlDungeonBar" data-name="CM">
+		<label title="Asura"><input data-money="10500" data-mode="E" type="checkbox" />1</label>
+		<label title="Seraph"><input data-money="10500" data-mode="E" type="checkbox" />2</label>
+		<label title="Butler"><input data-money="10500" data-mode="E" type="checkbox" />3</label>
+		<label title="Story"><input data-money="5000" data-mode="S" type="checkbox" />S</label>
+	</div>
+	<div class="chlDungeonBar" data-name="TA">
+		<label title="Up Fyonna"><input data-money="10500"  data-mode="E" type="checkbox" />1</label>
+		<label title="Forward Vevina"><input data-money="10500"  data-mode="E" type="checkbox" />2</label>
+		<label title="Aetherpath"><input data-money="20500" data-mode="E" type="checkbox" />3</label>
+		<label title="Story"><input data-money="5000" data-mode="S" type="checkbox" />S</label>
+	</div>
+	<div class="chlDungeonBar" data-name="SE">
+		<label title="Fergg"><input data-money="10500" data-mode="E" type="checkbox" />1</label>
+		<label title="Rasolov"><input data-money="10500" data-mode="E" type="checkbox" />2</label>
+		<label title="Koptev"><input data-money="10500" data-mode="E" type="checkbox" />3</label>
+		<label title="Story"><input data-money="5000" data-mode="S" type="checkbox" />S</label>
+	</div>
+	<div class="chlDungeonBar" data-name="COF">
+		<label title="Ferrah"><input data-money="10500" data-mode="E" type="checkbox" />1</label>
+		<label title="Magg"><input data-money="10500" data-mode="E" type="checkbox" />2</label>
+		<label title="Rhiannon"><input data-money="10500" data-mode="E" type="checkbox" />3</label>
+		<label title="Story"><input data-money="5000" data-mode="S" type="checkbox" />S</label>
+	</div>
+	<div class="chlDungeonBar" data-name="HOTW">
+		<label title="Butcher"><input data-money="10500" data-mode="E" type="checkbox" />1</label>
+		<label title="Plunderer"><input data-money="10500" data-mode="E" type="checkbox" />2</label>
+		<label title="Zealot"><input data-money="10500" data-mode="E" type="checkbox" />3</label>
+		<label title="Story"><input data-money="5000" data-mode="S" type="checkbox" />S</label>
+	</div>
+	<div class="chlDungeonBar" data-name="COE">
+		<label title="Submarine"><input data-money="10500" data-mode="E" type="checkbox" />1</label>
+		<label title="Teleporter"><input data-money="10500" data-mode="E" type="checkbox" />2</label>
+		<label title="Front Door"><input data-money="10500" data-mode="E" type="checkbox" />3</label>
+		<label title="Story"><input data-money="5000" data-mode="S" type="checkbox" />S</label>
+	</div>
+	<div class="chlDungeonBar" data-name="Arah">
+		<label title="Jotun"><input data-money="30500" data-mode="E" type="checkbox" />1</label>
+		<label title="Mursaat"><input data-money="30500" data-mode="E" type="checkbox" />2</label>
+		<label title="Forgotten"><input data-money="15500" data-mode="E" type="checkbox" />3</label>
+		<label title="Seer"><input data-money="30500" data-mode="E" type="checkbox" />4</label>
+		<label title="Story"><input data-money="5000" data-mode="S" type="checkbox" />S</label>
+	</div>
+	<button id="chlDungeonUncheck" class="cssRight">Uncheck All</button>
+	<div class="chlDungeonBar" data-name="FOTM">
+		<label title="01-10"><input data-money="10000" data-mode="F" type="checkbox" />0</label>
+		<label title="11-20"><input data-money="11000" data-mode="F" type="checkbox" />1</label>
+		<label title="21-30"><input data-money="12000" data-mode="F" type="checkbox" />2</label>
+		<label title="31-40"><input data-money="13000" data-mode="F" type="checkbox" />3</label>
+		<label title="41-50"><input data-money="14000" data-mode="F" type="checkbox" />4</label>
+	</div>
 </div>
 <br />
+<p>You can <strong>disable</strong> a checkbox by double clicking it (for dungeon paths you never do), and you can <strong>re-enable</strong> a checkbox by double clicking the number next to it. More on <a href="http://wiki.guildwars2.com/wiki/Dungeon">dungeon rewards</a> at the wiki.</p>
+</div>
+</div>
 
+
+<br />
 </div><!-- End of page -->
