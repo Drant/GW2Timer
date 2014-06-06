@@ -45,6 +45,9 @@
 		Do you want to <a href="http://forum.renaka.com/topic/5476238/">report</a> this problem?<br />
 	</div>
 	<div id="jsConsole"></div>
+	<div id="jsConsoleButtons">
+		<a title="&lt;dfn&gt;Close Console&lt;dfn&gt;" id="jsConsoleButtonClose">[x]</a><a title="&lt;dfn&gt;Select Console&lt;dfn&gt;" id="jsConsoleButtonSelect">[s]</a>
+	</div>
 	<iframe id="jsTTS"></iframe>
 	<main id="windowMain">
 	<div id="panelLeft" class="panelMain">
@@ -57,7 +60,7 @@
 				<input id="mapCoordinatesRegion" type="text" />
 			</div>
 			<div id="itemMapButtons">
-				<a title="Go to Forum" href="http://forum.renaka.com/forum/368355/" target="_blank">GW2Timer.com</a>
+				<a title="News and Forum" href="http://forum.renaka.com/forum/368355/" target="_blank">GW2Timer.com</a>
 				<img title="Toggle Right Panel" id="mapCompassButton" src="img/map/compass.png" alt="compass" />
 			</div>
 		</section>
@@ -243,7 +246,8 @@
 					<label title="You can &quot;subscribe&quot; to bosses by checking off those you don't want."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
 					<br />
 					<h2>Advanced</h2>
-					<label title="Automatically uncheck the boss checklist on the daily reset time."><input id="opt_bol_clearOnServerReset" type="checkbox" /> Clear checklist on server reset (Midnight UTC)</label>
+					<label title="Automatically clear the boss checklist on the daily reset time."><input id="opt_bol_clearChainChecklistOnReset" type="checkbox" /> Clear boss checklist on server reset (Midnight UTC)</label>
+					<label title="Automatically clear the dungeon and custom checklist on the daily reset time."><input id="opt_bol_clearPersonalChecklistOnReset" type="checkbox" /> Clear personal checklist on server reset</label>
 					<label title="DST for showing ArenaNet Washington-US time."><input id="opt_bol_detectDST" type="checkbox" /> Detect Daylight Saving Time</label>
 					<br />
 					<h2>Defaults</h2>
@@ -254,7 +258,12 @@
 					<br />
 					<h2>Debug</h2>
 					<div class="optButtons">
-						<button id="optPrintLocalStorage" title="Read what is stored in your browser for this website. Most of these name-value pairs can be overriden directly via URL query string. Example: http://gw2timer.com/?bol_showClock=false&int_setPredictor=3">Print Website Memory</button>
+						<button id="optPrintLocalStorage" title="Read what is stored in your browser for this website. Most of these name-value pairs can be overriden directly via URL query string. Example: http://gw2timer.com/?bol_showClock=false&amp;int_setPredictor=3">Print Website Memory</button>
+						<div id="optTimestamps">
+							<div><time id="optTimestampServerReset">00:00</time> Next Server Reset (<time id="optTimeTillReset">00:00</time>)</div>
+							<div><time id="optTimestampUTC">00:00</time> UTC Timestamp</div>
+							<div><time id="optTimestampLocalReset">00:00</time> Last Local Reset</div>
+						</div>
 					</div>
 					<br />
 				</div>

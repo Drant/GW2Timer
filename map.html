@@ -45,6 +45,7 @@ var GW2T_RESOURCES_DATA = {
 	},
 	Gold: {
 		nodes: [
+		[15933, 16436], // bloodtide
 		[17916, 17952], // lornar
 		[20062, 17212], // dredgehaunt
 		[31648, 17373], // fields
@@ -246,10 +247,10 @@ var GW2T_RESOURCES_DATA = {
 
 <div class="cntComposition">
 
-<header class="cntHeader">Map</header>
+<header class="cntHeader">Map<samp class="jsHelpTooltip" title="All checklists are automatically saved in your browser and are restored when you revisit this site. Use the Uncheck All button at every checklists, or go to Options under Defaults to clear everything."></samp></header>
 
-<header id="headerMap_Zone" class="jsCollapsible"><img src="img/map/completion.png" alt="Map Zones" />Map Zones</header>
-<div>
+<header id="headerMap_Zone" class="jsSection"><img src="img/map/completion.png" alt="Map Zones" />Map Zones</header>
+<section>
 <div class="mapZoneList mapLinks">
 	<div>
 	<h2>Kryta</h2>
@@ -307,10 +308,10 @@ var GW2T_RESOURCES_DATA = {
 	</ul>
 	</div>
 </div>
-</div>
+</section>
 
-<header id="headerMap_Daily" class="jsCollapsible"><img src="img/ui/ap.png" alt="Daily Achievements" />Daily Achievements</header>
-<div>
+<header id="headerMap_Daily" class="jsSection"><img src="img/ui/ap.png" alt="Daily Achievements" />Daily Achievements</header>
+<section>
 <p>These are some places to complete dailies quickly; the top of each list should be the fastest. Most of the places are based on the <a href="http://wiki.guildwars2.com/wiki/Daily">wiki</a>; if you know a good spot, please <a href="http://forum.renaka.com/topic/5476238/">share it</a>. Click a daily icon on the map to zoom in/out.</p>
 <button id="mapToggle_Daily" class="cssRight">Toggle Icons</button>
 
@@ -360,6 +361,7 @@ WvW North Camp also has concentrated critters.
 	<dt data-coord="[12140, 13462]">Godslost Swamp</dt><dd>Queensdale ravens and frogs (high concentration at the house porch)</dd>
 	<dt data-coord="[15613, 17626]">Grand Barrier Isle</dt><dd>Bloodtide crows (fast respawn)</dd>
 	<dt data-coord="[22538, 14438]">Hangrammr Climb</dt><dd>Wayfarer ravens</dd>
+	<dt data-coord="[10332, 13437]">Altar's Windings</dt><dd>Queensdale chickens</dd>
 	<dt data-coord="[5901, 21550]">Idea Incubation Lab</dt><dd>Rata Sum lightning bugs occasionally scutter in a large group</dd>
 </dl>
 <br />
@@ -367,7 +369,7 @@ WvW North Camp also has concentrated critters.
 <h2><img src="img/daily/condition.png" alt="Condition" /> Condition Remover</h2>
 Toxic Offshoot events (mostly in Kessex) also has numerous conditions. Use <a href="http://wiki.guildwars2.com/wiki/Condition#Skills_that_remove_conditions">multiple-conditions</a> cleanser for faster job.
 <dl id="mapDailyList_Condition">
-	<dt data-coord="[29749, 12644]">Lowland Burns</dt><dd>Blazeridge noxious branded plants (very high rate of conditions)</dd>
+	<dt data-coord="[29781, 12749]">Lowland Burns</dt><dd>Blazeridge noxious branded plants (very high rate of conditions)</dd>
 	<dt data-coord="[6274, 15960]">Vandal's Claim</dt><dd>Brisban bandit mines lots of cripples</dd>
 	<dt data-coord="[11801, 28676]">Desmina's Hallows</dt><dd>Cursed Melandru statues and risen rotmouths</dd>
 </dl>
@@ -376,7 +378,7 @@ Toxic Offshoot events (mostly in Kessex) also has numerous conditions. Use <a hr
 <h2><img src="img/daily/dodger.png" alt="Dodger" /> Dodger/Interrupter</h2>
 Use your sword2/focus4 mesmer to do these quickly.
 <dl id="mapDailyList_Dodger">
-	<dt data-coord="[10024, 13443]">Altar's Windings</dt><dd>Queensdale troll cave grubs</dd>
+	<dt data-coord="[10015, 13457]">Altar's Windings</dt><dd>Queensdale troll cave grubs</dd>
 	<dt data-coord="[13094, 19731]">Steampipe Steading</dt><dd>Southsun karkas</dd>
 	<dt data-coord="[29655, 12621]">Lowland Burns</dt><dd>Blazeridge noxious branded plants (single fast attacks)</dd>
 	<dt data-coord="[11640, 13161]">Phinney Ridge</dt><dd>Queensdale ettins/bears/oakhearts (multiple slow attackers)</dd>
@@ -417,12 +419,11 @@ You may need to complete the heart before you can purchase.
 	<dt>Skill Point<dt><dd>Level up or consume your stashed Scrolls of Knowledge.</dd>
 	<dt>Story Dungeon<dt><dd>Play on a character that needs it. <a href="http://wiki.guildwars2.com/wiki/Caudecus's_Manor_(story)">Caudecus' Manor</a> may be the shortest.</dd>
 </dl>
-<br />
-</div>
+</section>
 
 
-<header id="headerMap_Resource" class="jsCollapsible"><img src="img/ui/resource.png" alt="Resource Nodes" />Resource Nodes</header>
-<div>
+<header id="headerMap_Resource" class="jsSection"><img src="img/ui/resource.png" alt="Resource Nodes" />Resource Nodes</header>
+<section>
 <div style="width:100%;height:32px"><button id="mapToggle_Resource" class="cssRight">Toggle Icons</button></div>
 <div class="mapResourceList">
 	<div id="mapResource_Metal"></div>
@@ -433,12 +434,11 @@ You may need to complete the heart before you can purchase.
 <div class="mapLegendLine" style="border-bottom: 2px dotted lime"></div> <strong>Approximate</strong> vicinity of that node<br />
 <div class="mapLegendLine" style="border-bottom: 2px dashed lime"></div> <strong>Map</strong> has that resource (not a node)<br />
 Rich and T6 nodes reset in about 22 hours after gathering; T1-T5 nodes reset in about 2 hours. You can use alts to re-gather any node. More <a href="http://wiki.guildwars2.com/wiki/Resource#Harvesting">plants</a> on the wiki. Click a resource node icon on the map to zoom in/out.<br />
-<br />
-</div>
+</section>
 
 
-<header id="headerMap_JP" class="jsCollapsible"><img src="img/ui/jp.png" alt="Jumping Puzzles" />Jumping Puzzles</header>
-<div>
+<header id="headerMap_JP" class="jsSection"><img src="img/ui/jp.png" alt="Jumping Puzzles" />Jumping Puzzles</header>
+<section>
 <p>The JP map icons point to the entrance. Click on a checkbox here or a JP icon on the map to check off a JP. Double click a JP icon to zoom in/out.<br />Links: [Y]outube [W]iki.</p>
 <button id="mapToggle_JP" class="cssRight">Toggle Icons</button>
 
@@ -497,23 +497,27 @@ A marathon of intricate jumps.
 	<dt id="mapJP_6" data-coord="[12780, 19377]" data-img="dxTDLqJ">Skipping Stones</dt><dd>Southsun stones gushed up by geysers</dd>
 	<dt id="mapJP_10" data-coord="[13610, 25044]" data-img="kDX7ZEq">Scavenger's Chasm</dt><dd>Malchor's convoluted orrian ruins cave collecting 12 orbs</dd>
 </dl>
-<br />
 <button id="mapJPUncheck" class="cssRight">Uncheck All</button>
-<p>Your checklist is automatically restored when you revisit this site. You can <strong>reset</strong> the list whenever by clicking the Uncheck All button.</p>
-</div>
-</div>
-
-
-<header id="headerMap_Personal" class="jsCollapsible"><img src="img/ui/checklist.png" alt="Personal" />Personal Checklist</header>
-<div>
-<div id="mapPersonal">
 <br />
+</div>
+</section>
+
+
+<header id="headerMap_Personal" class="jsSection"><img src="img/ui/checklist.png" alt="Personal" />Personal Checklist</header>
+<section>
+
+<samp class="jsHelpCollapsible"></samp>
+<div><br /><p>You can <strong>disable</strong> a checkbox by double clicking it (for dungeon paths you never do), and you can <strong>re-enable</strong> a checkbox by double clicking the number next to it.</p>
+<p>Money sum is daily path reward (26 silver + bonus chest) and do not count Bag of Coins, loot, etc. Each numbered path gives 40+20 tokens. More on <a href="http://wiki.guildwars2.com/wiki/Dungeon">dungeon rewards</a>.</p>
+<p>The personal checklist is automatically cleared after server reset, unless set otherwise in the options.</p>
+</div>
 <div id="chlDungeon">
 	<div id="chlDungeonCalculator" data-moneyaddexp="2600">
 		<span><var id="chlDungeonCalculator_Gold">0</var><img src="img/ui/coin_gold.png" alt="Gold" /></span>
 		<span><var id="chlDungeonCalculator_Silver">0</var><img src="img/ui/coin_silver.png" alt="Silver" /></span>
 		<span><var id="chlDungeonCalculator_Copper">0</var><img src="img/ui/coin_copper.png" alt="Copper" /></span>
 	</div>
+	<button id="chlDungeonUncheck" class="cssRight">Uncheck All</button>
 	<div class="chlDungeonBar" data-name="AC">
 		<label title="Hodgins"><input data-money="15500" data-mode="E" type="checkbox" />1</label>
 		<label title="Detha"><input data-money="15500" data-mode="E" type="checkbox" />2</label>
@@ -563,7 +567,6 @@ A marathon of intricate jumps.
 		<label title="Seer"><input data-money="30500" data-mode="E" type="checkbox" />4</label>
 		<label title="Story"><input data-money="5000" data-mode="S" type="checkbox" />S</label>
 	</div>
-	<button id="chlDungeonUncheck" class="cssRight">Uncheck All</button>
 	<div class="chlDungeonBar" data-name="FOTM">
 		<label title="01-10"><input data-money="10000" data-mode="F" type="checkbox" />0</label>
 		<label title="11-20"><input data-money="11000" data-mode="F" type="checkbox" />1</label>
@@ -572,11 +575,28 @@ A marathon of intricate jumps.
 		<label title="41-50"><input data-money="14000" data-mode="F" type="checkbox" />4</label>
 	</div>
 </div>
-<br />
-<p>You can <strong>disable</strong> a checkbox by double clicking it (for dungeon paths you never do), and you can <strong>re-enable</strong> a checkbox by double clicking the number next to it. More on <a href="http://wiki.guildwars2.com/wiki/Dungeon">dungeon rewards</a> at the wiki.</p>
-</div>
-</div>
 
-
+<samp class="jsHelpTooltip" title="Type your own text in the boxes then press Enter to make a custom daily checklist."></samp>
 <br />
+<div id="chlCustom"><!-- &zwnj; is an invisible character, used because empty label appears without a right border in Chrome -->
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="Did dailies" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="Gathered home nodes" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="Crafted timegates" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="Played dungeons" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
+	<br />
+	<br />
+	<button id="chlCustomRestore">Default Text</button>
+	<button id="chlCustomUncheck" class="cssRight">Uncheck All</button>
+</div>
+<br />
+</section>
+
 </div><!-- End of page -->

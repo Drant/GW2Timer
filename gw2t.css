@@ -57,6 +57,8 @@ html, body {
 	z-index: 9;
 	margin-top: 24px;
 	margin-left: 24px;
+}
+#jsConsole, #jsConsoleButtons, #paneWarning {
 	font-family: monospace;
 	font-size: 16px;
 	color: lime;
@@ -67,10 +69,16 @@ html, body {
 		-1px 1px 0px #333,
 		1px 1px 0px #333;
 }
-#paneWarning a {
-	color: green;
+#jsConsoleButtons {
+	display: none;
+	position: absolute;
+	z-index: 10;
+	left: 24px;
+	bottom: 48px;
 }
-
+#paneWarning a {
+	color: limegreen;
+}
 #jsTTS {
 	display: none;
 }
@@ -125,8 +133,8 @@ html, body,
 
 a, input, label, button,
 #mapCompassButton, #paneMenu span, #itemClockWaypoints img,
-.menuBeam img:hover, .cntComposition h1, .cntComposition header,
-.jsTableOfContents ol li, .jsCollapsibleDone,
+.menuBeam img:hover, .cntComposition h1, .jsSection,
+.jsTableOfContents ol li, .jsSectionDone, .jsHelpCollapsible,
 #layerChains header, .chnCheck:hover, .chnTitle h2, .chnDetailsLinks ins,
 .leaflet-clickable {
 	cursor: url("img/cursor/pointer.png"), pointer;
@@ -141,7 +149,7 @@ a, input, label, button,
 	cursor: url("img/cursor/move.png"), move;
 }
 
-#listChainsScheduled .chnTitle time,
+#listChainsScheduled .chnTitle time, .jsHelpTooltip,
 .chnDetails ol li img {
 	cursor: url("img/cursor/help.png"), help;
 }
@@ -461,30 +469,31 @@ input#mapCoordinatesRegion {
 	opacity: 1;
 }
 
-header.jsCollapsible {
+header.jsSection {
 	padding-top: 8px;
 	font-size: 20px;
 	text-shadow: 0px 0px 2px #e4e0b3;
 	color: #e4e0b3;
 }
-header.jsCollapsible:hover, header.jsCollapsible:hover {
+header.jsSection:hover, header.jsSection:hover {
 	color: white;
 }
-header.jsCollapsible span {
+header.jsSection span {
 	text-decoration: underline;
 }
-header.jsCollapsible span img { /* Each header must have inside it an img tag as icon */
+header.jsSection span img { /* Each header must have inside it an img tag as icon */
 	width: 32px; height: 32px;
 	margin-right: 16px;
 	vertical-align: middle;
 }
-header.jsCollapsible sup {
+header.jsSection sup {
 	float: right;
 	font-family: monospace;
 	font-size: 12px;
 	vertical-align: super;
 }
-.jsCollapsibleDone {
+.jsSectionDone {
+	margin-top: 8px;
 	margin-bottom: 16px;
 	font-size: 16px;
 	text-decoration: underline;
@@ -696,6 +705,21 @@ header.cntHeader {
 
 #jsTop:hover, #jsCenter:hover {
 	opacity: 1;
+}
+
+.jsHelpTooltip, .jsHelpCollapsible {
+	float: right;
+	font-family: sans-serif;
+	font-size: 12px;
+	font-variant: small-caps;
+	font-weight: bold;
+	letter-spacing: 2px;
+	color: white;
+	text-shadow: 0px 0px 2px #e4e0b3;
+}
+.jsHelpCollapsible:hover {
+	color: #ddff77;
+	text-decoration: underline;
 }
 
 /* @@Chains layer
@@ -946,15 +970,16 @@ dt.mapJPListNameHover {
 /* Personal checklist
 ----------------------------------------------------------------------------- */
 
-#mapPersonal {
-	margin-bottom: 24px;
+#chlDungeon {
+	margin-top: 12px;
 	margin-left: 12px;
 }
 
 #chlDungeonCalculator {
-	margin-left: 38px;
+	margin-right: 126px;
 	margin-bottom: 6px;
 	font-size: 16px;
+	text-align: right;
 }
 
 #chlDungeonCalculator img {
@@ -999,13 +1024,46 @@ dt.mapJPListNameHover {
 	opacity: 0.3;
 }
 
-.chlCustom {
-	width: 180px; height: 90px;
+#chlCustom input {
+	display: inline;
+}
+
+#chlCustom input[type="text"] {
+	display: inline;
+	width: 260px;
 	padding: 4px;
+	margin-left: 8px;
+	margin-bottom: 4px;
 	border: 1px solid #555;
 	background: #222;
 	font-family: sans-serif;
 	color: #ffddcc;
+}
+
+#chlCustom input[type="text"]:hover {
+	border: 1px solid red;
+}
+
+#chlCustom input[type="text"].chlCustomTextChecked {
+	color: red;
+}
+
+#chlCustom label {
+	display: inline;
+	padding-top: 4px;
+	padding-right: 2px;
+	padding-bottom: 4px;
+	padding-left: 2px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+#chlCustom label:hover {
+	border: 1px solid red;
+}
+
+#chlCustom label.chlCheckboxChecked {
+	border: 1px solid #ddff77;
 }
 
 /* @@Options layer
@@ -1032,6 +1090,10 @@ dt.mapJPListNameHover {
 .optButtons button {
 	width: 270px;
 	margin-bottom: 4px;
+}
+
+#optTimestamps time {
+	color: #bbcc77;
 }
 
 label, input {
