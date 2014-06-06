@@ -121,24 +121,23 @@ O = {
 	 */
 	Checklists:
 	{
-		// localStorage name-value pair: name is name, list is value
+		// localStorage name-value pairs (name is required)
 		Chain: { name: "str_chlChain", value: "" },
 		JP: { name: "str_chlJP", value: "" },
 		Dungeon: { name: "str_chlDungeon", value: "", money: 0 },
-		Custom:
+		Custom: { name: "str_chlCustom", value: "" },
+		CustomText:
 		{
-			name: "str_chlCustom",
-			list: "",
-			nameText: "str_chlCustomText",
-			textArray: new Array(),
-			textArrayDefault: new Array()
+			name: "str_chlCustomText",
+			value: new Array(),
+			valueDefault: new Array()
 		}
 	},
 	ChecklistEnum:
 	{
-		Unchecked: 0,
-		Checked: 1,
-		Disabled: 2
+		Unchecked: "0",
+		Checked: "1",
+		Disabled: "2"
 	},
 	
 	/*
@@ -577,11 +576,15 @@ O = {
 	{
 		var char = pChecklist.value.charAt(pIndex);
 		
-		if (pConversion === undefined || pConversion === "int")
+		if (pConversion === undefined)
+		{
+			return char;
+		}
+		if (pConversion === "int")
 		{
 			return parseInt(char);
 		}
-		else if (pConversion === "boolean")
+		if (pConversion === "boolean")
 		{
 			return O.intToBool(parseInt(char));
 		}
@@ -602,7 +605,7 @@ O = {
 		{
 			for (i = 0; i < pChecklist.length; i++)
 			{
-				if (pChecklist.value[i] === O.ChecklistEnum.Checked.toString())
+				if (pChecklist.value[i] === O.ChecklistEnum.Checked)
 				{
 					checklist += "0";
 				}
@@ -643,7 +646,7 @@ O = {
 	},
 	
 	/*
-	 * Sets a checkbox checked/disabled states based on specified enum.
+	 * Sets an input tag checkbox checked/disabled states based on specified enum.
 	 * @param jqobject pElement checkbox to change.
 	 * @param int pChecklistEnum to apply.
 	 */
@@ -700,7 +703,8 @@ O = {
 	 * Adds style classes to a label that wraps a checkbox depending on its state.
 	 * @param object pChecklist to get state.
 	 * @param int pIndex of state.
-	 * @param jqobject pElement checkbox to style.
+	 * @param jqobject pElement checkbox label to style.
+	 * @pre In format <label><input type="checkbox" />ExampleLabel</label>.
 	 */
 	styleCheckbox: function(pChecklist, pIndex, pElement)
 	{
@@ -987,8 +991,8 @@ O = {
 			
 			// Initialize default value of associated text field
 			var text = $(this).parent().next().val();
-			O.Checklists.Custom.textArray.push(text);
-			O.Checklists.Custom.textArrayDefault.push(text);
+			O.Checklists.CustomText.value.push(text);
+			O.Checklists.CustomText.valueDefault.push(text);
 		});
 		
 		// Bind uncheck all button
@@ -1010,25 +1014,25 @@ O = {
 		 * single string to be stored in localStorage.
 		 */
 		var i;
-		if (localStorage[O.Checklists.Custom.nameText] === undefined)
+		if (localStorage[O.Checklists.CustomText.name] === undefined)
 		{
 			// If localStorage value is empty, replace with original values in text field
-			localStorage[O.Checklists.Custom.nameText] = O.Checklists.Custom.textArray.join(I.cTextDelimiter);
+			localStorage[O.Checklists.CustomText.name] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
 		}
 		else
 		{
-			var storedtextarray = localStorage[O.Checklists.Custom.nameText].split(I.cTextDelimiter);
-			if (storedtextarray.length === O.Checklists.Custom.textArray.length)
+			var storedtextarray = localStorage[O.Checklists.CustomText.name].split(I.cTextDelimiter);
+			if (storedtextarray.length === O.Checklists.CustomText.value.length)
 			{
 				// Load the stored text if it has same number of strings as there are text fields
 				for (i in storedtextarray)
 				{
-					O.Checklists.Custom.textArray[i] = storedtextarray[i];
+					O.Checklists.CustomText.value[i] = storedtextarray[i];
 				}
 			}
 			else
 			{
-				localStorage[O.Checklists.Custom.nameText] = O.Checklists.Custom.textArray.join(I.cTextDelimiter);
+				localStorage[O.Checklists.CustomText.name] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
 			}
 		}
 		
@@ -1038,17 +1042,17 @@ O = {
 			// Read every text fields and rewrite the string of substrings again
 			$("#chlCustom input:text").each(function(pIndex)
 			{
-				O.Checklists.Custom.textArray[pIndex] = $(this).val().replace(regex, "");
+				O.Checklists.CustomText.value[pIndex] = $(this).val().replace(regex, "");
 			});
-			localStorage[O.Checklists.Custom.nameText] = O.Checklists.Custom.textArray.join(I.cTextDelimiter);
+			localStorage[O.Checklists.CustomText.name] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
 		};
 		
 		// Bind text fields behavior
 		$("#chlCustom input:text").each(function(pIndex)
 		{
 			// Set number of characters allowed in the text field
-			$(this).attr("maxlength", "48");
-			$(this).val(O.Checklists.Custom.textArray[pIndex]); // Load initialized text
+			$(this).attr("maxlength", 48);
+			$(this).val(O.Checklists.CustomText.value[pIndex]); // Load initialized text
 			
 			$(this).change(function()
 			{
@@ -1062,7 +1066,7 @@ O = {
 		{
 			$("#chlCustom input:text").each(function(pIndex)
 			{
-				$(this).val(O.Checklists.Custom.textArrayDefault[pIndex]).trigger("change");
+				$(this).val(O.Checklists.CustomText.valueDefault[pIndex]).trigger("change");
 			});
 		});
 	},
