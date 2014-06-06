@@ -243,7 +243,11 @@
 					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. Click the speaker icon above to toggle sound. When should the program announce the next boss?</span>
 					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
 					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current chain finishes</label>
-					<label title="You can &quot;subscribe&quot; to bosses by checking off those you don't want."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
+					<label title="This is for either times."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
+					<h3>Subscription</h3>
+					<label title="With this option on, you will only be alerted of bosses whose chain bars you expanded (by clicking the meta event name) and not checked off. The alert happens 30 and 15 minutes before that chain starts. Other alarm options will be ignored, and chain bars will not automatically expand.">
+						<input id="opt_bol_alertSubscribed" type="checkbox" /> Only alert bosses with opened pre-events bar
+					</label>
 					<br />
 					<h2>Advanced</h2>
 					<label title="Automatically clear the boss checklist on the daily reset time."><input id="opt_bol_clearChainChecklistOnReset" type="checkbox" /> Clear boss checklist on server reset (Midnight UTC)</label>
@@ -261,7 +265,7 @@
 						<button id="optPrintLocalStorage" title="Read what is stored in your browser for this website. Most of these name-value pairs can be overriden directly via URL query string. Example: http://gw2timer.com/?bol_showClock=false&amp;int_setPredictor=3">Print Website Memory</button>
 						<div id="optTimestamps">
 							<div><time id="optTimestampServerReset">00:00</time> Next Server Reset (<time id="optTimeTillReset">00:00</time>)</div>
-							<div><time id="optTimestampUTC">00:00</time> UTC Timestamp</div>
+							<div><time id="optTimestampUTC">00:00</time> UNIX Timestamp</div>
 							<div><time id="optTimestampLocalReset">00:00</time> Last Local Reset</div>
 						</div>
 					</div>

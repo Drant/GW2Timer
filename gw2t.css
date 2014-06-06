@@ -894,6 +894,9 @@ header.cntHeader {
 .chnTitleFutureFar {
 	color: #888;
 }
+.chnTitleSubscribed {
+	color: #ddff77 !important;
+}
 
 .chnTimeCurrent {
 	color: #bbcc77;

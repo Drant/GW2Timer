@@ -71,7 +71,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {name: "int_utlProgramVersion", value: 140604},
+		programVersion: {name: "int_utlProgramVersion", value: 140605},
 		lastLocalResetTimestamp: {name: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -99,6 +99,7 @@ O = {
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
 		bol_alertChecked: true,
+		bol_alertSubscribed: false,
 		// Advanced
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
@@ -826,6 +827,8 @@ O = {
 				K.checkoffChainIcon(alias);
 			});
 		}
+		
+		$(".chnDetails").hide();
 	},
 	
 	/*
@@ -1150,6 +1153,10 @@ O = {
 		{
 			O.enact_bol_showMap();
 		});
+		$("#opt_bol_alertSubscribed").change(function()
+		{
+			O.enact_bol_alertSubscribed();
+		});
 		/*
 		 * Run enactors when the page loads (because this an initializer function).
 		 * Will have to place it elsewhere if it requires data to be loaded first.
@@ -1434,6 +1441,32 @@ O = {
 		{
 			$("#paneMap").hide();
 		}
+	},
+	enact_bol_alertSubscribed: function()
+	{
+		$("#listChainsScheduled .chnTitle h2").each(function()
+		{
+			var details = $(this).parent().next();
+			// Highlight opened chain details if subscribe option on
+			if (O.Options.bol_alertSubscribed)
+			{
+				if (details.css("display") !== "none")
+				{
+					$(this).addClass("chnTitleSubscribed");
+				}
+				else
+				{
+					$(this).removeClass("chnTitleSubscribed");
+				}
+			}
+			else
+			{
+				// Restore to standard chain bar view if subscribe option off
+				$(this).removeClass("chnTitleSubscribed");
+				$("#listChainsScheduled .chnDetails").first().show();
+				$("#listChainsScheduled .chnDetails:not(:first)").hide();
+			}
+		});
 	}
 };
 
@@ -1452,6 +1485,7 @@ C = {
 	PreviousChain: {},
 	PreviousPreviousChain: {},
 	NextChain: {},
+	NextNextChain: {},
 	cChainTitleCharLimit: 30,
 	CurrentPrimaryEvent: {},
 	
@@ -1952,6 +1986,34 @@ C = {
 	},
 	
 	/*
+	 * Tells if a chain check state is intact (not checked off or deleted).
+	 * @param object pChain to get state.
+	 * @returns boolean unchecked or not.
+	 */
+	isChainUnchecked: function(pChain)
+	{
+		if (O.getChainChecklistState(pChain) === O.ChecklistEnum.Unchecked)
+		{
+			return true;
+		}
+		return false;
+	},
+	
+	/*
+	 * Tells if a chain bar is expanded by reading the details child element.
+	 * @param object pChain to get the bar.
+	 * @returns boolean shown or not.
+	 */
+	isChainBarOpen: function(pChain)
+	{
+		if ($("#chnDetails_" + pChain.alias).css("display") !== "none")
+		{
+			return true;
+		}
+		return false;
+	},
+	
+	/*
 	 * Updates a chain bar's time tooltip with a pre-sorted subschedule.
 	 * @pre scheduleIndexes array is sorted and first element is the soonest
 	 */
@@ -2137,13 +2199,16 @@ C = {
 		/*
 		 * Now that the chains are sorted, do cosmetic updates.
 		 */
-		$("#listChainsScheduled .chnDetails").hide();
 		// Highlight and show the current chain bar
 		$("#barChain_" + C.CurrentChain.alias).addClass("chnBarCurrent");
-		$("#chnDetails_" + C.CurrentChain.alias).show("fast");
-		// Still highlight the previous chain bar
+		// Show the current chain's pre events (details) only if subscription (by opening chain bars) is off
+		if (O.Options.bol_alertSubscribed === false)
+		{
+			$("#chnDetails_" + C.CurrentChain.alias).show("fast");
+		}
+		// Still highlight the previous chain bar but collapse it
 		$("#barChain_" + C.PreviousChain.alias)
-			.removeClass("chnBarCurrent").addClass("chnBarPrevious");
+			.removeClass("chnBarCurrent").addClass("chnBarPrevious").hide();
 		// Stop highlighting the previous previous chain bar
 		$("#barChain_" + C.PreviousPreviousChain.alias).removeClass("chnBarPrevious");
 		// Also highlight timetable chain bar
@@ -2298,7 +2363,7 @@ C = {
 		{
 			C.CurrentPrimaryEvent = pChain.primaryEvents[pPrimaryEventIndex];
 			
-			// Recolor the past events
+			// Recolor past events
 			for (i = 0; i < pPrimaryEventIndex; i++)
 			{
 				$(".chnStep_" + pChain.alias + "_" + i)
@@ -2307,12 +2372,13 @@ C = {
 			$(".chnStep_" + pChain.alias + "_" + (pPrimaryEventIndex - 1))
 				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
 			
-			// Recolor the current events and animate transition
+			// Recolor current events and animate transition
 			$(".chnStep_" + pChain.alias + "_" + pPrimaryEventIndex)
 				.removeClass("chnEventPast chnEventFuture").addClass("chnEventCurrent")
-				.css({width: 0, opacity: 0.5}).animate({width: eventnamewidth, opacity: 1}, animationspeed).css({width: "auto"});
+				.css({width: 0, opacity: 0.5}).animate({width: eventnamewidth, opacity: 1}, animationspeed)
+				.css({width: "auto"});
 		
-			// Recolor the future events
+			// Recolor future events
 			if (pPrimaryEventIndex < pChain.primaryEvents.length)
 			{
 				for (i = (pPrimaryEventIndex + 1); i < pChain.primaryEvents.length; i++)
@@ -2336,9 +2402,10 @@ C = {
 			
 			/*
 			 * Announce the next world boss and the time until it, only if it's
-			 * not past the timeframe.
+			 * not past the timeframe, and the subscription option is off.
 			 */
-			if (O.Options.bol_alertAtEnd && pChain.alias === C.CurrentChain.alias)
+			if (O.Options.bol_alertAtEnd && pChain.alias === C.CurrentChain.alias
+					&& O.Options.bol_alertSubscribed === false)
 			{
 				var secondsleft = T.cSECONDS_IN_FRAME - C.getCurrentChainElapsedTime();
 				var sec = secondsleft % 60;
@@ -3588,7 +3655,7 @@ T = {
 
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
 	SECONDS_TILL_RESET: 0,
-	TIMESTAMP_UTC_SECONDS: 0,
+	TIMESTAMP_UNIX_SECONDS: 0,
 	cUTC_OFFSET_USER: 0,
 	cUTC_OFFSET_SERVER: -8, // Server is Pacific Time, 8 hours behind UTC
 	cUTC_OFFSET_HAWAII: -10,
@@ -4022,7 +4089,7 @@ K = {
 		 * Things in this outer block runs every second, so core JS is used
 		 * instead of jQuery for performance.
 		 */
-		T.TIMESTAMP_UTC_SECONDS = T.getUNIXSeconds();
+		T.TIMESTAMP_UNIX_SECONDS = T.getUNIXSeconds();
 		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeOffsetSinceMidnight("utc", "seconds");
 		var now = new Date();
 		var sec = now.getSeconds();
@@ -4071,7 +4138,7 @@ K = {
 			 * is updated every second if the device is awake) to see if it's
 			 * out of sync, and refresh the clock if so.
 			 */
-			var awaketimestampcurrent = T.TIMESTAMP_UTC_SECONDS;
+			var awaketimestampcurrent = T.TIMESTAMP_UNIX_SECONDS;
 			if (K.awakeTimestampPrevious < (awaketimestampcurrent - K.awakeTimestampTolerance))
 			{
 				K.updateTimeFrame(now);
@@ -4095,11 +4162,11 @@ K = {
 				wantSeconds: false
 			}) + ")";
 		// Times in the Options page Debug section
-		document.getElementById("optTimestampUTC").innerHTML = T.TIMESTAMP_UTC_SECONDS;
+		document.getElementById("optTimestampUTC").innerHTML = T.TIMESTAMP_UNIX_SECONDS;
 		document.getElementById("optTimestampLocalReset").innerHTML =
 			O.Utilities.lastLocalResetTimestamp.value;
 		document.getElementById("optTimestampServerReset").innerHTML =
-			T.TIMESTAMP_UTC_SECONDS + T.SECONDS_TILL_RESET;
+			T.TIMESTAMP_UNIX_SECONDS + T.SECONDS_TILL_RESET;
 		document.getElementById("optTimeTillReset").innerHTML = T.getTimeFormatted(
 			{
 				customTimeInSeconds: T.SECONDS_TILL_RESET, want24: true
@@ -4144,6 +4211,7 @@ K = {
 		C.PreviousChain = C.getCurrentChain(-1);
 		C.CurrentChain = C.getCurrentChain();
 		C.NextChain = C.getCurrentChain(1);
+		C.NextNextChain = C.getCurrentChain(2);
 		
 		// Sort the chains list
 		C.sortChainsListHTML();
@@ -4152,15 +4220,15 @@ K = {
 		C.queueEventsHighlight();
 		
 		// Alert of current chain
-		if (O.Options.bol_alertAtEnd)
+		if (O.Options.bol_alertAtEnd && O.Options.bol_alertSubscribed === false)
 		{
 			var checkedcurrent = "";
 			var checkednext = "";
-			if (O.getChainChecklistState(C.CurrentChain) !== O.ChecklistEnum.Unchecked)
+			if (C.isChainUnchecked(C.CurrentChain) === false)
 			{
 				checkedcurrent = ", checked";
 			}
-			if (O.getChainChecklistState(C.NextChain) !== O.ChecklistEnum.Unchecked)
+			if (C.isChainUnchecked(C.NextChain) === false)
 			{
 				checkednext = ", checked";
 			}
@@ -4169,6 +4237,47 @@ K = {
 			{
 				I.speak("Current world boss is " + C.CurrentChain.pronunciation
 					+ checkedcurrent + ". Followed by " + C.NextChain.pronunciation + checkednext);
+			}
+		}
+		// Alert of subscribed chain (to subscribe is to expand a chain bar)
+		if (O.Options.bol_alertSubscribed === true)
+		{
+			var speech1;
+			var speech2;
+			var averagespeechtime = 8000;
+			
+			if (C.isChainBarOpen(C.NextChain) && C.isChainUnchecked(C.NextChain))
+			{
+				speech1 = "Subscribed world boss " + C.NextChain.pronunciation + ", will start in 15 minutes. ";
+			}
+			if (C.isChainBarOpen(C.NextNextChain) && C.isChainUnchecked(C.NextNextChain))
+			{
+				speech2 = "Subscribed world boss " + C.NextNextChain.pronunciation + ", will start in half an hour";
+			}
+			
+			if (speech1 !== undefined && speech2 === undefined)
+			{
+				I.speak(speech1);
+			}
+			else if (speech1 === undefined && speech2 !== undefined)
+			{
+				I.speak(speech2);
+			}
+			else if (speech1 !== undefined && speech2 !== undefined)
+			{
+				/*
+				 * If have to speak both bosses then have to split the speech
+				 * because of a 100 character limit for Google TTS
+				 */
+				I.speak(speech1);
+
+				(function(pSpeech, pWait)
+				{
+					setTimeout(function()
+					{
+						I.speak(pSpeech);
+					}, pWait);
+				})(speech2, averagespeechtime);
 			}
 		}
 		
@@ -4621,6 +4730,10 @@ I = {
 	 */
 	log: function(pString, pSeconds, pClear)
 	{
+		if (pSeconds === undefined)
+		{
+			pSeconds = 30;
+		}
 		I.write(pString, pSeconds, pClear);
 	},
 	
@@ -5276,10 +5389,23 @@ I = {
 		 * Show individual events of a chain bar if clicked on, or
 		 * automatically shown by the ticker function.
 		 */
-		$(".chnDetails:not(:first)").hide();
 		$(".chnTitle h2").click(function()
 		{
-			$(this).parent().next().slideToggle(100);
+			var details = $(this).parent().next();
+			var category = $(this).parent().parent().parent().attr("id");
+			if (O.Options.bol_alertSubscribed && category === "listChainsScheduled")
+			{
+				// Special title for subscribed scheduled chains
+				if (details.is(":visible"))
+				{
+					$(this).removeClass("chnTitleSubscribed");
+				}
+				else
+				{
+					$(this).addClass("chnTitleSubscribed");
+				}
+			}
+			details.slideToggle(100);
 		});
 
 		/*
