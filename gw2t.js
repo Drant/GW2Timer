@@ -2208,7 +2208,8 @@ C = {
 		}
 		// Still highlight the previous chain bar but collapse it
 		$("#barChain_" + C.PreviousChain.alias)
-			.removeClass("chnBarCurrent").addClass("chnBarPrevious").hide();
+			.removeClass("chnBarCurrent").addClass("chnBarPrevious");
+		$("#chnDetails_" + C.PreviousChain.alias).hide();
 		// Stop highlighting the previous previous chain bar
 		$("#barChain_" + C.PreviousPreviousChain.alias).removeClass("chnBarPrevious");
 		// Also highlight timetable chain bar
