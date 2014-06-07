@@ -71,7 +71,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {name: "int_utlProgramVersion", value: 140605},
+		programVersion: {name: "int_utlProgramVersion", value: 140606},
 		lastLocalResetTimestamp: {name: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -123,6 +123,7 @@ O = {
 	{
 		// localStorage name-value pairs (name is required)
 		Chain: { name: "str_chlChain", value: "" },
+		ChainSubscription: { name: "str_chlChainSubscription", value: "" },
 		JP: { name: "str_chlJP", value: "" },
 		Dungeon: { name: "str_chlDungeon", value: "", money: 0 },
 		Custom: { name: "str_chlCustom", value: "" },
@@ -165,7 +166,7 @@ O = {
 	/*
 	 * Checks localStorage for unrecognized variables and remove them.
 	 */
-	cleanLocalStorageNames: function()
+	cleanLocalStorage: function()
 	{
 		var i, ii;
 		var name;
@@ -740,6 +741,7 @@ O = {
 		var chain;
 		
 		O.initializeChecklist(O.Checklists.Chain, C.Chains.length);
+		O.initializeChecklist(O.Checklists.ChainSubscription, C.Chains.length);
 		
 		for (i in C.Chains)
 		{
@@ -747,6 +749,7 @@ O = {
 			
 			var bar = $("#barChain_" + chain.alias);
 			var check = $("#chnCheck_" + chain.alias);
+			var time = $("#chnTime_" + chain.alias);
 			
 			// Set the checkbox visual state as stored
 			switch (O.getChecklistItem(O.Checklists.Chain, chain.index))
@@ -769,6 +772,33 @@ O = {
 					bar.hide();
 				} break;
 			}
+			
+			// Set the time visual state as stored (subscribed or not)
+			if (O.getChecklistItem(O.Checklists.ChainSubscription, chain.index) ===
+					O.ChecklistEnum.Checked)
+			{
+				time.addClass("chnTimeSubscribed");
+			}
+			
+			/*
+			 * Bind event handler for the time clickable for subscription.
+			 */
+			time.click(function()
+			{
+				var index = $(this).data("index");
+				var alias = I.getIndexFromHTMLID($(this));
+				
+				if (O.getChecklistItem(O.Checklists.ChainSubscription, index) === O.ChecklistEnum.Checked)
+				{
+					$(this).removeClass("chnTimeSubscribed");
+					O.setChecklistItem(O.Checklists.ChainSubscription, index, O.ChecklistEnum.Unchecked);
+				}
+				else
+				{
+					$(this).addClass("chnTimeSubscribed");
+					O.setChecklistItem(O.Checklists.ChainSubscription, index, O.ChecklistEnum.Checked);
+				}
+			});
 			
 			/*
 			 * Bind event handler for the div "checkboxes".
@@ -831,8 +861,6 @@ O = {
 				K.checkoffChainIcon(alias);
 			});
 		}
-		
-		$(".chnDetails").hide();
 	},
 	
 	/*
@@ -1157,10 +1185,6 @@ O = {
 		{
 			O.enact_bol_showMap();
 		});
-		$("#opt_bol_alertSubscribed").change(function()
-		{
-			O.enact_bol_alertSubscribed();
-		});
 		/*
 		 * Run enactors when the page loads (because this an initializer function).
 		 * Will have to place it elsewhere if it requires data to be loaded first.
@@ -1212,12 +1236,23 @@ O = {
 		 */
 		$("#optPrintLocalStorage").click(function()
 		{
-			var s = "";
-			for (var i = 0; i < localStorage.length; i++)
+			var i;
+			var names = new Array();
+			// Gather the names
+			for (i = 0; i < localStorage.length; i++)
 			{
 				var name = O.escapeHTML(localStorage.key(i));
-				var value = O.escapeHTML(localStorage.getItem(name));
-				s += name + ": " + value + "<br />";
+				names.push(name);
+			}
+			// Sort them alphabetically
+			names.sort();
+			
+			var s = "";
+			// Print the name-value pairs by the name's order
+			for (i in names)
+			{
+				var value = O.escapeHTML(localStorage.getItem(names[i]));
+				s += names[i] + ": " + value + "<br />";
 			}
 			
 			I.write(s, 30, true);
@@ -1446,32 +1481,6 @@ O = {
 			$("#paneMap").hide();
 		}
 	},
-	enact_bol_alertSubscribed: function()
-	{
-		$("#listChainsScheduled .chnTitle h2").each(function()
-		{
-			var details = $(this).parent().next();
-			// Highlight opened chain details if subscribe option on
-			if (O.Options.bol_alertSubscribed)
-			{
-				if (details.css("display") !== "none")
-				{
-					$(this).addClass("chnTitleSubscribed");
-				}
-				else
-				{
-					$(this).removeClass("chnTitleSubscribed");
-				}
-			}
-			else
-			{
-				// Restore to standard chain bar view if subscribe option off
-				$(this).removeClass("chnTitleSubscribed");
-				$("#listChainsScheduled .chnDetails").first().show();
-				$("#listChainsScheduled .chnDetails:not(:first)").hide();
-			}
-		});
-	}
 };
 
 /* =============================================================================
@@ -1486,10 +1495,12 @@ C = {
 	 */
 	Chains: GW2T_CHAINS_DATA,
 	CurrentChain: {},
-	PreviousChain: {},
-	PreviousPreviousChain: {},
-	NextChain: {},
-	NextNextChain: {},
+	PreviousChain1: {},
+	PreviousChain2: {},
+	NextChain1: {},
+	NextChain2: {},
+	NextChain3: {},
+	NextChain4: {},
 	cChainTitleCharLimit: 30,
 	CurrentPrimaryEvent: {},
 	
@@ -1711,13 +1722,13 @@ C = {
 			+ "<div class='chnTitle'>"
 				+ "<img src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + ".png' />"
 				+ "<div id='chnCheck_" + pChain.alias + "' class='chnCheck' data-index='" + pChain.index + "'></div>"
-				+ "<h2>" + C.truncateTitleString(pChain.title, C.cChainTitleCharLimit) + "</h2>"
-				+ "<time id='chnTime_" + pChain.alias + "'></time>"
+				+ "<h1>" + C.truncateTitleString(pChain.title, C.cChainTitleCharLimit) + "</h1>"
+				+ "<time id='chnTime_" + pChain.alias + "' data-index='" + pChain.index + "'></time>"
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.alias + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.alias + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsLinks'>"
-					+ "<ins id='chnDelete_" + pChain.alias + "' data-index='" + pChain.index + "' title='Permanently hide this event chain (can undo in options).'>[x]</ins>"
+					+ "<ins id='chnDelete_" + pChain.alias + "' data-index='" + pChain.index + "' title='Permanently hide this event chain (can undo in Options).'>[x]</ins>"
 				+ "</div>"
 		+ "</div>");
 
@@ -1912,6 +1923,8 @@ C = {
 			C.Chains[i].scheduleIndexes = new Array();
 			C.initializeChainAndHTML(C.Chains[i]);
 		}
+		// Collapse all chain bars
+		$(".chnDetails").hide();
 	},
 	
 	/*
@@ -1990,6 +2003,54 @@ C = {
 	},
 	
 	/*
+	 * Gets a readable string of minutes and hours until a chain starts.
+	 * @param object pChain to tell time.
+	 * @param string pFormat of the time words.
+	 * @returns string time string.
+	 */
+	getTimeTillChainFormatted: function(pChain, pFormat)
+	{
+		var secondsleft = C.getSecondsUntilChainStarts(pChain);
+		var min = ~~(secondsleft / 60) % 60;
+		var hour = ~~(secondsleft / 3600);
+		var minword = "m";
+		var hourword = "h";
+		
+		if (pFormat === "speech")
+		{
+			minword = " minute";
+			hourword = " hour";
+			if (min > 1)
+			{
+				minword += "s";
+			}
+			if (hour > 1)
+			{
+				hourword += "s";
+			}
+			if (hour === 0 && min === 30)
+			{
+				min = "half an hour";
+				minword = "";
+				hourword = "";
+			}
+		}
+		hourword += " ";
+
+		min = min + minword;
+		if (Math.abs(secondsleft) >= T.cSECONDS_IN_HOUR)
+		{
+			hour = hour + hourword;
+		}
+		else
+		{
+			hour = "";
+		}
+
+		return " in " + hour + min;
+	},
+	
+	/*
 	 * Tells if a chain check state is intact (not checked off or deleted).
 	 * @param object pChain to get state.
 	 * @returns boolean unchecked or not.
@@ -2008,9 +2069,10 @@ C = {
 	 * @param object pChain to get the bar.
 	 * @returns boolean shown or not.
 	 */
-	isChainBarOpen: function(pChain)
+	isChainSubscribed: function(pChain)
 	{
-		if ($("#chnDetails_" + pChain.alias).css("display") !== "none")
+		if (O.getChecklistItem(O.Checklists.ChainSubscription, pChain.index) ===
+			O.ChecklistEnum.Checked)
 		{
 			return true;
 		}
@@ -2028,7 +2090,7 @@ C = {
 		var spacer;
 		for (var ii in pChain.scheduleIndexes)
 		{
-			spacer = (parseInt(ii) === 0) ? "<dfn>Schedule:</dfn><br />" : " <br /> ";
+			spacer = (parseInt(ii) === 0) ? "<dfn>Subscribe?</dfn><br />" : " <br /> ";
 			minischedulestring = minischedulestring + spacer
 				+ T.getTimeFormatted(
 				{
@@ -2128,7 +2190,7 @@ C = {
 			"<div class='barChainDummy'>"
 				+ "<div class='chnTitle chnTitleFutureFar'>"
 					+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + ".png' />"
-					+ "<h2>" + C.truncateTitleString(ithchain.title, C.cChainTitleCharLimit) + "</h2>"
+					+ "<h1>" + C.truncateTitleString(ithchain.title, C.cChainTitleCharLimit) + "</h1>"
 					+ "<time>" + timestring + "</time>"
 				+ "</div>"
 			+ "</div>");
@@ -2205,24 +2267,21 @@ C = {
 		 */
 		// Highlight and show the current chain bar
 		$("#barChain_" + C.CurrentChain.alias).addClass("chnBarCurrent");
-		// Show the current chain's pre events (details) only if subscription (by opening chain bars) is off
-		if (O.Options.bol_alertSubscribed === false)
-		{
-			$("#chnDetails_" + C.CurrentChain.alias).show("fast");
-		}
+		// Show the current chain's pre events (details)
+		$("#chnDetails_" + C.CurrentChain.alias).show("fast");
 		// Still highlight the previous chain bar but collapse it
-		$("#barChain_" + C.PreviousChain.alias)
+		$("#barChain_" + C.PreviousChain1.alias)
 			.removeClass("chnBarCurrent").addClass("chnBarPrevious");
-		$("#chnDetails_" + C.PreviousChain.alias).hide();
+		$("#chnDetails_" + C.PreviousChain1.alias).hide();
 		// Stop highlighting the previous previous chain bar
-		$("#barChain_" + C.PreviousPreviousChain.alias).removeClass("chnBarPrevious");
+		$("#barChain_" + C.PreviousChain2.alias).removeClass("chnBarPrevious");
 		// Also highlight timetable chain bar
 		$("#listChainsTimetable .barChainDummy").removeClass("chnBarCurrent");
 		$("#listChainsTimetable .barChainDummy:eq(" + C.CurrentChain.scheduleIndexes[0] + ")")
 			.addClass("chnBarCurrent");
 		
 		// Style the chain title according to order
-		$("#listChainsScheduled .chnTitle h2").each(function(pIndex)
+		$("#listChainsScheduled .chnTitle h1").each(function(pIndex)
 		{
 			$(this).removeClass("chnTitleCurrent chnTitleFuture chnTitleFutureFar");
 			if (pIndex === 0)
@@ -3200,11 +3259,11 @@ M = {
 				{
 					// Assign a data attribute to the event name
 					var coord = event.path[0];
-					$(this).attr("data-eventcoord", coord[0] + "," + coord[1]);
+					$(this).attr("data-coord", coord[0] + "," + coord[1]);
 					// Read the attribute and use the coordinate when clicked
 					$(this).click(function()
 					{
-						var thiscoord = $(this).attr("data-eventcoord").split(",");
+						var thiscoord = $(this).attr("data-coord").split(",");
 						M.goToView(thiscoord, M.PinEvent);
 					});
 				});
@@ -4014,41 +4073,23 @@ K = {
 	 */
 	updateWaypointsClipboard: function()
 	{
-		var getTimeTillChainFormatted = function(pChain)
-		{
-			var secondsleft = C.getSecondsUntilChainStarts(pChain);
-			var min = ~~(secondsleft / 60) % 60;
-			var hour = ~~(secondsleft / 3600);
-			
-			min = min + "m";
-			if (Math.abs(secondsleft) >= T.cSECONDS_IN_HOUR)
-			{
-				hour = hour + "h ";
-			}
-			else
-			{
-				hour = "";
-			}
-
-			return " in " + hour + min;
-		};
-		var chain0 = C.getCurrentChain();
-		var chain1 = C.getCurrentChain(1);
-		var chain2 = C.getCurrentChain(2);
-		var chain3 = C.getCurrentChain(3);
-		var chain4 = C.getCurrentChain(4);
+		var chain0 = C.CurrentChain;
+		var chain1 = C.NextChain1;
+		var chain2 = C.NextChain2;
+		var chain3 = C.NextChain3;
+		var chain4 = C.NextChain4;
 		K.wpChain0.setAttribute(K.cWpClipboardDataAttribute, chain0.waypoint
-			+ " " + chain0.alias + getTimeTillChainFormatted(chain0) + " then " + chain1.alias
-			+ getTimeTillChainFormatted(chain1) + " - " + I.cSiteName);
+			+ " " + chain0.alias + C.getTimeTillChainFormatted(chain0) + " then " + chain1.alias
+			+ C.getTimeTillChainFormatted(chain1) + " - " + I.cSiteName);
 		K.wpChain1.setAttribute(K.cWpClipboardDataAttribute, chain1.waypoint
-			+ " " + chain1.alias + getTimeTillChainFormatted(chain1) + " then " + chain2.alias
-			+ getTimeTillChainFormatted(chain2) + " - " + I.cSiteName);
+			+ " " + chain1.alias + C.getTimeTillChainFormatted(chain1) + " then " + chain2.alias
+			+ C.getTimeTillChainFormatted(chain2) + " - " + I.cSiteName);
 		K.wpChain2.setAttribute(K.cWpClipboardDataAttribute, chain2.waypoint
-			+ " " + chain2.alias + getTimeTillChainFormatted(chain2) + " then " + chain3.alias
-			+ getTimeTillChainFormatted(chain3) + " - " + I.cSiteName);
+			+ " " + chain2.alias + C.getTimeTillChainFormatted(chain2) + " then " + chain3.alias
+			+ C.getTimeTillChainFormatted(chain3) + " - " + I.cSiteName);
 		K.wpChain3.setAttribute(K.cWpClipboardDataAttribute, chain3.waypoint
-			+ " " + chain3.alias + getTimeTillChainFormatted(chain3) + " then " + chain4.alias
-			+ getTimeTillChainFormatted(chain4) + " - " + I.cSiteName);
+			+ " " + chain3.alias + C.getTimeTillChainFormatted(chain3) + " then " + chain4.alias
+			+ C.getTimeTillChainFormatted(chain4) + " - " + I.cSiteName);
 	},
 	
 	/*
@@ -4212,11 +4253,13 @@ K = {
 		O.checkResetTimestamp();
 		
 		// Remember current chain to reference variable
-		C.PreviousPreviousChain = C.getCurrentChain(-2);
-		C.PreviousChain = C.getCurrentChain(-1);
+		C.PreviousChain2 = C.getCurrentChain(-2);
+		C.PreviousChain1 = C.getCurrentChain(-1);
 		C.CurrentChain = C.getCurrentChain();
-		C.NextChain = C.getCurrentChain(1);
-		C.NextNextChain = C.getCurrentChain(2);
+		C.NextChain1 = C.getCurrentChain(1);
+		C.NextChain2 = C.getCurrentChain(2);
+		C.NextChain3 = C.getCurrentChain(3);
+		C.NextChain4 = C.getCurrentChain(4);
 		
 		// Sort the chains list
 		C.sortChainsListHTML();
@@ -4233,7 +4276,7 @@ K = {
 			{
 				checkedcurrent = ", checked";
 			}
-			if (C.isChainUnchecked(C.NextChain) === false)
+			if (C.isChainUnchecked(C.NextChain1) === false)
 			{
 				checkednext = ", checked";
 			}
@@ -4241,23 +4284,25 @@ K = {
 			if ( ! (checkedcurrent.length > 0 && O.Options.bol_alertChecked === false))
 			{
 				I.speak("Current world boss is " + C.CurrentChain.pronunciation
-					+ checkedcurrent + ". Followed by " + C.NextChain.pronunciation + checkednext);
+					+ checkedcurrent + ". Followed by " + C.NextChain1.pronunciation + checkednext);
 			}
 		}
-		// Alert of subscribed chain (to subscribe is to expand a chain bar)
+		// Alert of subscribed chain
 		if (O.Options.bol_alertSubscribed === true)
 		{
 			var speech1;
 			var speech2;
-			var averagespeechtime = 8000;
+			var averagespeechtime = 7000;
 			
-			if (C.isChainBarOpen(C.NextChain) && C.isChainUnchecked(C.NextChain))
+			if (C.isChainSubscribed(C.NextChain1) && C.isChainUnchecked(C.NextChain1))
 			{
-				speech1 = "Subscribed world boss " + C.NextChain.pronunciation + ", will start in 15 minutes. ";
+				speech1 = "Subscribed world boss " + C.NextChain1.pronunciation
+					+ ", will start " + C.getTimeTillChainFormatted(C.NextChain1, "speech");
 			}
-			if (C.isChainBarOpen(C.NextNextChain) && C.isChainUnchecked(C.NextNextChain))
+			if (C.isChainSubscribed(C.NextChain2) && C.isChainUnchecked(C.NextChain2))
 			{
-				speech2 = "Subscribed world boss " + C.NextNextChain.pronunciation + ", will start in half an hour";
+				speech2 = "Subscribed world boss " + C.NextChain2.pronunciation
+					+ ", will start " + C.getTimeTillChainFormatted(C.NextChain2, "speech");
 			}
 			
 			if (speech1 !== undefined && speech2 === undefined)
@@ -4280,7 +4325,7 @@ K = {
 				{
 					setTimeout(function()
 					{
-						I.speak(pSpeech);
+						I.speak("Also, " + pSpeech);
 					}, pWait);
 				})(speech2, averagespeechtime);
 			}
@@ -4319,10 +4364,10 @@ K = {
 				"box-shadow": "0px 0px 10px green"
 			});
 			// Chain shortcuts
-			var chain0 = C.getCurrentChain();
-			var chain1 = C.getCurrentChain(1);
-			var chain2 = C.getCurrentChain(2);
-			var chain3 = C.getCurrentChain(3);
+			var chain0 = C.CurrentChain;
+			var chain1 = C.NextChain1;
+			var chain2 = C.NextChain2;
+			var chain3 = C.NextChain3;
 			// Update chain markers
 			K.setMarkerAngle(pMarker0A, chain0.minFinish + pOffsetMark0);
 			K.setMarkerAngle(pMarker0B, chain0.avgFinish + pOffsetMark0);
@@ -4464,7 +4509,8 @@ K = {
 					{
 						$(elm).attr("src", M.cICON_WAYPOINT);
 					}, 400);
-					I.write("Chat link copied to clipboard :)<br />" + $(this).data("clipboard-text"), 5);
+					I.write("Chat link copied to clipboard :)<br />"
+						+ this.getAttribute(K.cWpClipboardDataAttribute), 5);
 				});
 			});
 		}
@@ -4645,7 +4691,7 @@ I = {
 		K.reapplyFilters();
 		
 		// Clean the localStorage of unrecognized variables
-		O.cleanLocalStorageNames();
+		O.cleanLocalStorage();
 	},
 	
 	/*
@@ -4690,7 +4736,7 @@ I = {
 	{
 		$("#jsConsoleButtons").show();
 		var console = $("#jsConsole");
-		var characterspersecond = 48;
+		var characterspersecond = 24;
 		
 		if (pString === undefined)
 		{
@@ -5394,23 +5440,9 @@ I = {
 		 * Show individual events of a chain bar if clicked on, or
 		 * automatically shown by the ticker function.
 		 */
-		$(".chnTitle h2").click(function()
+		$(".chnTitle h1").click(function()
 		{
-			var details = $(this).parent().next();
-			var category = $(this).parent().parent().parent().attr("id");
-			if (O.Options.bol_alertSubscribed && category === "listChainsScheduled")
-			{
-				// Special title for subscribed scheduled chains
-				if (details.is(":visible"))
-				{
-					$(this).removeClass("chnTitleSubscribed");
-				}
-				else
-				{
-					$(this).addClass("chnTitleSubscribed");
-				}
-			}
-			details.slideToggle(100);
+			$(this).parent().next().slideToggle(100);
 		});
 
 		/*

@@ -46,7 +46,7 @@
 	</div>
 	<div id="jsConsole"></div>
 	<div id="jsConsoleButtons">
-		<a title="&lt;dfn&gt;Close Console&lt;dfn&gt;" id="jsConsoleButtonClose">[x]</a><a title="&lt;dfn&gt;Select Console&lt;dfn&gt;" id="jsConsoleButtonSelect">[s]</a>
+		<a title="<dfn>Close Console<dfn>" id="jsConsoleButtonClose">[x]</a><a title="<dfn>Select Console<dfn>" id="jsConsoleButtonSelect">[s]</a>
 	</div>
 	<iframe id="jsTTS"></iframe>
 	<main id="windowMain">
@@ -153,13 +153,13 @@
 			<time id="itemTimeLocal" class="itemTimeDigital">00:00</time>
 			<time id="itemTimeServer" class="itemTimeDigital">16:00</time>
 			<div id="itemSocial">
-				<a title="&lt;dfn&gt;Learn GW2Timer's features :?&lt;/dfn&gt;" href="http://i.imgur.com/KvJEr58.png" target="_blank">
+				<a title="<dfn>Learn GW2Timer's features :?</dfn>" href="http://i.imgur.com/KvJEr58.png" target="_blank">
 					<img src="img/ui/info.png" alt="Info" />
 				</a>
-				<a title="&lt;dfn&gt;Like GW2Timer on Facebook :)&lt;/dfn&gt;" href="http://www.facebook.com/gw2timer" target="_blank">
+				<a title="<dfn>Like GW2Timer on Facebook :)</dfn>" href="http://www.facebook.com/gw2timer" target="_blank">
 					<img src="img/ui/fb.png" alt="Facebook" />
 				</a>
-				<a title="&lt;dfn&gt;Tweet GW2Timer on Twitter :)&lt;/dfn&gt;" href="http://twitter.com/intent/tweet?text=http%3A%2F%2FGW2Timer.com%20-%20World%20Boss%20Timers%20and%20Daily%20Map%20Guide" target="_blank">
+				<a title="<dfn>Tweet GW2Timer on Twitter :)</dfn>" href="http://twitter.com/intent/tweet?text=http%3A%2F%2FGW2Timer.com%20-%20World%20Boss%20Timers%20and%20Daily%20Map%20Guide" target="_blank">
 					<img src="img/ui/tt.png" alt="Twitter" />
 				</a>
 			</div>
@@ -167,10 +167,10 @@
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
 		<nav id="paneMenu" class="paneRight">
-			<span id="menuChains" title="&lt;dfn&gt;Chains:&lt;/dfn&gt; Timers, Events, Schedule"></span>
-			<span id="menuMap" title="&lt;dfn&gt;Map:&lt;/dfn&gt; Dailies, Gathering, JPs, Checklists"></span>
-			<span id="menuHelp" title="&lt;dfn&gt;Help:&lt;/dfn&gt; FAQ, About, Walkthrough"></span>
-			<span id="menuOptions" title="&lt;dfn&gt;Options:&lt;/dfn&gt; Display, Format, Alarm"></span>
+			<span id="menuChains" title="<dfn>Chains:</dfn> Timers, Events, Schedule"></span>
+			<span id="menuMap" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, Checklists"></span>
+			<span id="menuHelp" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"></span>
+			<span id="menuOptions" title="<dfn>Options:</dfn> Display, Format, Alarm"></span>
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->
@@ -178,6 +178,14 @@
 			<a id="jsTop" title="Scroll Top">&uarr;</a>
 			<a id="jsCenter" title="Map Center"></a>
 			<article id="layerChains"><!-- This layer will be populated by JS -->
+				<div id="optSound">
+					<label title="<dfn>Alarm Mode:</dfn> Unchecked--Alert the next world boss (checklist mode). Checked--Alert bosses whose times you clicked (subscription mode). Speaker icon must be checked to hear sound.">
+						<input id="opt_bol_alertSubscribed" type="checkbox" />
+					</label>
+					<label title="<dfn>Enable/Disable Alarm.</dfn> Go to Options page &gt; Alarm section for more info.">
+						<input id="opt_bol_enableSound" type="checkbox" /><img src="img/ui/speaker.png" alt="Mute"/>&zwnj;
+					</label>
+				</div>
 				<header>
 					<img src="img/ui/scheduled.png" alt="Scheduled Bosses" />
 					<span>Scheduled Bosses</span>
@@ -209,7 +217,6 @@
 			<article id="layerOptions">
 				<div class="cntComposition">
 					<header class="cntHeader">Options</header>
-					<label id="optSound" title="Toggle sound. More options in the alarm section below."><input id="opt_bol_enableSound" type="checkbox" /><img id="optSoundButton" src="img/ui/speaker.png" alt="Mute"/></label>
 					<br />
 					<h2>Timer</h2>
 					<label title="Hide the boss bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off chains</label>
@@ -240,14 +247,13 @@
 					<label title="Show/Hide the map area on the left."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<br />
 					<h2>Alarm</h2>
-					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. Click the speaker icon above to toggle sound. When should the program announce the next boss?</span>
+					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. Click the speaker icon on the chains page to toggle sound. When should the program announce the next boss?</span>
+					<h3>Checklist Mode</h3>
 					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
 					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current chain finishes</label>
 					<label title="This is for either times."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
-					<h3>Subscription</h3>
-					<label title="With this option on, you will only be alerted of bosses whose chain bars you expanded (by clicking the meta event name) and not checked off. The alert happens 30 and 15 minutes before that chain starts. Other alarm options will be ignored, and chain bars will not automatically expand.">
-						<input id="opt_bol_alertSubscribed" type="checkbox" /> Only alert bosses with opened pre-events bar
-					</label>
+					<h3>Subscription Mode</h3>
+					<p>No options to configure. Program will announce bosses 30 and 15 minutes before their chain starts. Checked off chains will not be announced.</p>
 					<br />
 					<h2>Advanced</h2>
 					<label title="Automatically clear the boss checklist on the daily reset time."><input id="opt_bol_clearChainChecklistOnReset" type="checkbox" /> Clear boss checklist on server reset (Midnight UTC)</label>

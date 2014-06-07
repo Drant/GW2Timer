@@ -126,7 +126,7 @@ div#qTip dfn { /* Highlight color for important text in tooltip */
 ----------------------------------------------------------------------------- */
 
 html, body,
-#listChainsTimetable .chnTitle h2,
+#listChainsTimetable .chnTitle h1,
 .leaflet-container, .leaflet-popup-pane, .leaflet-control {
 	cursor: url("img/cursor/auto.png"), auto;
 }
@@ -135,7 +135,8 @@ a, input, label, button,
 #mapCompassButton, #paneMenu span, #itemClockWaypoints img,
 .menuBeam img:hover, .cntComposition h1, .jsSection,
 .jsTableOfContents ol li, .jsSectionDone, .jsHelpCollapsible,
-#layerChains header, .chnCheck:hover, .chnTitle h2, .chnDetailsLinks ins,
+#layerChains header, .chnCheck:hover, .chnTitle h1, .chnDetailsLinks ins,
+#listChainsScheduled .chnTitle time,
 .leaflet-clickable {
 	cursor: url("img/cursor/pointer.png"), pointer;
 }
@@ -149,7 +150,7 @@ a, input, label, button,
 	cursor: url("img/cursor/move.png"), move;
 }
 
-#listChainsScheduled .chnTitle time, .jsHelpTooltip,
+.jsHelpTooltip,
 .chnDetails ol li img {
 	cursor: url("img/cursor/help.png"), help;
 }
@@ -724,6 +725,31 @@ header.cntHeader {
 
 /* @@Chains layer
 ----------------------------------------------------------------------------- */
+#optSound {
+	float: right;
+	padding: 7px 4px 6px 2px;
+	opacity: 0.5;
+}
+#optSound:hover {
+	opacity: 1;
+}
+#optSound label {
+	padding-top: 1px;
+	padding-bottom: 4px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+#optSound label:hover {
+	border: 1px solid red;
+}
+#optSound img {
+	width: 24px; height: 24px;
+	vertical-align: middle;
+}
+#opt_bol_enableSound, #opt_bol_alertSubscribed {
+	vertical-align: middle;
+}
+
 #layerChains header {
 	display: block;
 	width: auto; height: 36px;
@@ -759,7 +785,7 @@ header.cntHeader {
 #layerChains header span:active {
 	color: white;
 }
-#layerChains header ins { /* The [+] button */
+#layerChains header ins { /* The collapse/expand category button */
 	margin-top: 8px;
 	float: right;
 	font-family: monospace;
@@ -823,13 +849,13 @@ header.cntHeader {
 	opacity: 1;
 }
 
-.chnTitle h2 {
+.chnTitle h1 {
 	display: table-cell;
 	width: 210px; /* This pushes the time to the right */
 	padding-left: 8px;
 	vertical-align: middle;
 }
-.chnTitle h2:hover {
+.chnTitle h1:hover {
 	color: #eee;
 }
 
@@ -894,9 +920,6 @@ header.cntHeader {
 .chnTitleFutureFar {
 	color: #888;
 }
-.chnTitleSubscribed {
-	color: #ddff77 !important;
-}
 
 .chnTimeCurrent {
 	color: #bbcc77;
@@ -906,6 +929,13 @@ header.cntHeader {
 }
 .chnTimeFutureFar {
 	color: #888;
+}
+.chnTimeSubscribed {
+	color: #ddff77 !important;
+}
+
+.chnTimeCurrent:hover, .chnTimeFuture:hover, .chnTimeFutureFar:hover {
+	color: white;
 }
 
 .chnEventPast {
@@ -1071,17 +1101,6 @@ dt.mapJPListNameHover {
 
 /* @@Options layer
 ----------------------------------------------------------------------------- */
-#optSound {
-	float: right;
-	margin-top: -24px;
-	margin-right: 12px;
-}
-
-#optSoundButton {
-	width: 32px; height: 32px;
-	vertical-align: middle;
-}
-
 .optFieldsets fieldset {
 	margin-right: 8px;
 	vertical-align: top;
