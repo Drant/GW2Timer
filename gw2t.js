@@ -2020,15 +2020,15 @@ C = {
 		{
 			minword = " minute";
 			hourword = " hour";
-			if (min > 1)
+			if (Math.abs(min) > 1)
 			{
 				minword += "s";
 			}
-			if (hour > 1)
+			if (Math.abs(hour) > 1)
 			{
 				hourword += "s";
 			}
-			if (hour === 0 && min === 30)
+			if (hour === 0 && Math.abs(min) === 30)
 			{
 				min = "half an hour";
 				minword = "";
@@ -2046,7 +2046,11 @@ C = {
 		{
 			hour = "";
 		}
-
+		
+		if (secondsleft < 0)
+		{
+			return " " + hour + min + " ago ";
+		}
 		return " in " + hour + min;
 	},
 	
@@ -4687,6 +4691,7 @@ I = {
 			I.selectText("#jsConsole");
 		});
 		I.convertExternalLink("#itemMapButtons a");
+		I.convertExternalLink("#itemSocial a");
 		// Fix Firefox SVG filter bug
 		K.reapplyFilters();
 		

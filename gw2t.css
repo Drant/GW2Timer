@@ -950,6 +950,9 @@ header.cntHeader {
 	color: #ff8844 !important;
 	opacity: 0.5;
 }
+.chnEvents li:hover {
+	color: #ffcc77 !important;
+}
 
 /* @@Map layer
 ----------------------------------------------------------------------------- */
