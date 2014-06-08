@@ -602,25 +602,48 @@ O = {
 	{
 		var i;
 		var checklist = "";
-		if (pJob === "uncheck")
+		var value = "";
+		
+		switch (pJob)
 		{
-			for (i = 0; i < pChecklist.length; i++)
+			case "uncheck":
 			{
-				if (pChecklist.value[i] === O.ChecklistEnum.Checked)
+				for (i = 0; i < pChecklist.length; i++)
 				{
-					checklist += "0";
+					if (pChecklist.value[i] === O.ChecklistEnum.Checked)
+					{
+						checklist += O.ChecklistEnum.Unchecked;
+					}
+					else
+					{
+						checklist += pChecklist.value[i];
+					}
 				}
-				else
-				{
-					checklist += pChecklist.value[i];
-				}
-			}
-		}
-		else
-		{
-			for (i = 0; i < pChecklist.length; i++)
+			} break;
+			case "preuncheck":
 			{
-				checklist += "0";
+				value = localStorage[pChecklist.name];
+				if (value !== undefined)
+				{
+					for (i = 0; i < value.length; i++)
+					{
+						if (value[i] === O.ChecklistEnum.Checked)
+						{
+							checklist += O.ChecklistEnum.Unchecked;
+						}
+						else
+						{
+							checklist += value[i];
+						}
+					}
+				}
+			} break;
+			default:
+			{
+				for (i = 0; i < pChecklist.length; i++)
+				{
+					checklist += O.ChecklistEnum.Unchecked;
+				}
 			}
 		}
 		
@@ -1100,7 +1123,8 @@ O = {
 	},
 	
 	/*
-	 * Unchecks the checklist and clear variables, but ignore chains deleted
+	 * Unchecks the time sensitive checklists and clear variables, ignoring
+	 * the disabled/deleted ones.
 	 * by the user.
 	 */
 	clearServerSensitiveOptions: function()
@@ -1128,6 +1152,7 @@ O = {
 		
 		if (O.Options.bol_clearPersonalChecklistOnReset)
 		{
+			
 			if (I.isSectionLoadedMap_Personal === true)
 			{
 				$("#chlDungeonUncheck").trigger("click");
@@ -1135,8 +1160,8 @@ O = {
 			}
 			else
 			{
-				localStorage.removeItem(O.Checklists.Dungeon.name);
-				localStorage.removeItem(O.Checklists.Custom.name);
+				O.clearChecklist(O.Checklists.Dungeon, "preuncheck");
+				O.clearChecklist(O.Checklists.Custom, "preuncheck");
 			}
 			I.write("Personal checklist cleared as opted.", messagetime);
 		}
