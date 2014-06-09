@@ -3,7 +3,7 @@
 	jQuery-dependent (v1.11.0), with other plugins in plugins.js.
 	Coded in NetBeans; debugged in Opera Dragonfly.
 	IDE recommended for viewing and collapsing code sections.
-	Version: see int_programVersion - 2014.04.18 created
+	Version: see int_utlProgramVersion - 2014.04.18 created
 
 	CREDITS:
 	Vladimir Agafonkin - LeafletJS map library
@@ -71,7 +71,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {name: "int_utlProgramVersion", value: 140606},
+		programVersion: {name: "int_utlProgramVersion", value: 140607},
 		lastLocalResetTimestamp: {name: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -234,7 +234,7 @@ O = {
 	 * @param string pName of an option.
 	 * @param string pValue of that option.
 	 * @returns string sanitized value.
-	 * @pre The name value pair matches the Options object's and numeric values
+	 * @pre The name value pair matches the Options object's, and numeric values
 	 * have the OptionRange object initialized for legal numbers.
 	 */
 	sanitizeURLOptionsValue: function(pName, pValue)
@@ -596,7 +596,7 @@ O = {
 	 * Sets a checklist object's list to all 0's.
 	 * @param object pChecklist to clear.
 	 * @param boolean pJob whether to just 0 out the checked items only.
-	 * @pre checklist length attribute was initialized.
+	 * @pre Checklist length attribute was initialized.
 	 */
 	clearChecklist: function(pChecklist, pJob)
 	{
@@ -1646,7 +1646,7 @@ C = {
 	 * Converts a time string to seconds.
 	 * @param string pTime in X:XX:XX or X:XX or 0 format.
 	 * @returns int seconds totaled.
-	 * @pre time string contains at most 1 "~" and at most 2 ":".
+	 * @pre Time string contains at most 1 "~" and at most 2 ":".
 	 */
 	parseEventTime: function(pTime)
 	{
@@ -1690,8 +1690,8 @@ C = {
 	/*
 	 * Returns the substring before the "XXX" delimiter in a chain alias.
 	 * Used for reusing chain icons of different chains.
-	 * @param string pAlias of the chain
-	 * @returns string common alias of the chain
+	 * @param string pAlias of the chain.
+	 * @returns string common alias of the chain.
 	 */
 	parseChainAlias: function(pAlias)
 	{
@@ -1718,9 +1718,9 @@ C = {
 	},
 
 	/*
-	 * Calculates time sums for chains and push to array for later accessing by
-	 * the ticker. Initializes the chain HTML layer presentation with chains
-	 * and their individual events.
+	 * Initializes the chain HTML layer presentation with chains and their
+	 * individual events. Calculates time sums for chains and pushes to array
+	 * for later accessing by the ticker. 
 	 * @param object pChain chain to initialize.
 	 */
 	initializeChainAndHTML: function(pChain)
@@ -1831,10 +1831,10 @@ C = {
 		 * variables equalling how far into the chain they are.
 		 * 
 		 * Primacy Numbers:
-		 * 0 - A failure or optional subevent; includes temple retake event which should be ignored
-		 * 1 - A concurrent (multiple simultaneous) event that does not take the longest to complete
-		 * 2 - An only event at the time or a concurrent event that takes the longest to complete
-		 * 3 - The boss event
+		 * 0 - A failure or optional subevent; includes temple retake event which should be ignored.
+		 * 1 - A concurrent (multiple simultaneous) event that does not take the longest to complete.
+		 * 2 - An only event at the time or a concurrent event that takes the longest to complete.
+		 * 3 - The boss event.
 		 * Events with primacy numbers 2 and 3 are primary events.
 		 */
 		for (i in pChain.events)
@@ -2346,7 +2346,7 @@ C = {
 	
 	/*
 	 * minSum avgSum and minavgSum are the seconds since a chain began that
-	 * an event of it starts. Because the time a chain start is known, these
+	 * an event of it starts. Because the time a chain starts is known, these
 	 * statistical times can be used to predict when events happen and end.
 	 * @pre The sum statistics have been computed.
 	 */
@@ -4760,7 +4760,7 @@ I = {
 	 * @param string pString to write.
 	 * @param int pSeconds to display the console with that string.
 	 * @param boolean pClear to empty the console before printing.
-	 * @pre if input was from an outside source it must be escaped first!
+	 * @pre If input was from an outside source it must be escaped first!
 	 */
 	write: function(pString, pSeconds, pClear)
 	{
@@ -4932,9 +4932,9 @@ I = {
 	},
 	
 	/*
-	 * Selects text from an element (as if a user clicked on text and dragged
-	 * mouse to select the text).
-	 * @param string pSelector to get the element with text.
+	 * Selects text from an element (as if the user clicked on text and dragged
+	 * mouse to select text).
+	 * @param string pSelector DOM to get the element with text.
 	 */
 	selectText: function(pSelector)
 	{
@@ -5157,16 +5157,18 @@ I = {
 			
 			$(this).next().hide();
 			$(this).click(function()
-			{	
+			{
+				$(this).next().toggle();
+				
 				if ($(this).next().is(":visible"))
 				{
-					$(this).text("[?+]");
+					$(this).text("[?-]");
+					I.scrollToElement($(this), $(pLayer), "fast");
 				}
 				else
 				{
-					$(this).text("[?-]");
+					$(this).text("[?+]");
 				}
-				$(this).next().toggle();
 			});
 		});
 		

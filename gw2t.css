@@ -849,6 +849,9 @@ header.cntHeader {
 	opacity: 1;
 }
 
+.chnCheck:hover + h1 {
+	color: #ddff77;
+}
 .chnTitle h1 {
 	display: table-cell;
 	width: 210px; /* This pushes the time to the right */
