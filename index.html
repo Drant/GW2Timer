@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- Meta -->
-	<title>GW2Timer - World Boss Timers and Daily Map Guide for Guild Wars 2</title>
+	<title>GW2Timer.com - World Boss Timers and Daily Map Guide</title>
 	<meta charset="utf-8" />
 	<meta name="robots" content="index, follow, noarchive" />
 	<meta name="description" content="Guild Wars 2 timers and clock for world boss meta events, with walkthroughs, daily achievements, jumping puzzles gathering map, and personal checklists." />
@@ -100,7 +100,7 @@
 					</filter>
 				</defs>
 				<circle id="clkCircumference" cx="50" cy="50" r="45" filter="url(#clkFilterShadowOuter)" />
-				<path id="clkSector" d="M50,50 L50,6 A44,44 0,0 1 94,50 z" />
+				<path id="clkSector" d="M50,50 L50,6 A44,44 0,0 1 94,50 z" /><!-- 1/4 slice of a circle -->
 				<g id="clkTicks"><!-- 12 hour tick marks -->
 					<line x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
 					<line x1="72.50" y1="11.03" x2="70.00" y2="15.36" />
@@ -179,7 +179,7 @@
 			<a id="jsCenter" title="Map Center"></a>
 			<article id="layerChains"><!-- This layer will be populated by JS -->
 				<div id="optSound">
-					<label title="<dfn>Alarm Mode:</dfn> Unchecked--Announce the next world boss (checklist mode). Checked--Announce bosses whose time you clicked (subscription mode). Speaker icon must be checked to hear sound.">
+					<label title="<dfn>Alarm Mode:</dfn><br />If <input type='checkbox' /> Announce the next world boss (checklist mode).<br />If <input type='checkbox' checked='checked' /> Announce bosses whose time you clicked (subscription mode). Speaker icon must be checked to hear sound.">
 						<input id="opt_bol_alertSubscribed" type="checkbox" />
 					</label>
 					<label title="<dfn>Enable/Disable Alarm.</dfn> Go to Options page &gt; Alarm section for more info.">
@@ -247,13 +247,16 @@
 					<label title="Show/Hide the map area on the left."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<br />
 					<h2>Alarm</h2>
-					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. Click the speaker icon on the chains page to toggle sound. When should the program announce the next boss?</span>
+					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. Click the speaker icon on the chains page to toggle sound.</span>
 					<h3>Checklist Mode</h3>
+					<span>When should the program announce the next chain?</span>
 					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
 					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current chain finishes</label>
 					<label title="This is for either times."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
 					<h3>Subscription Mode</h3>
-					<p>No options to configure. Program will announce bosses 30 and 15 minutes before their chain starts. Checked off chains will not be announced.</p>
+					<span>How many minutes before a subscribed chain starts should you be alerted? Enter 0 to disable an alarm. Checked off bosses are ignored.</span>
+					<label><input id="opt_int_alertSubscribedFirst" type="number" min="0" max="30" step="1" /> First Alarm</label>
+					<label><input id="opt_int_alertSubscribedSecond" type="number" min="0" max="30" step="1" /> Second Alarm</label>
 					<br />
 					<h2>Advanced</h2>
 					<label title="Automatically clear the boss checklist on the daily reset time."><input id="opt_bol_clearChainChecklistOnReset" type="checkbox" /> Clear boss checklist on server reset (Midnight UTC)</label>

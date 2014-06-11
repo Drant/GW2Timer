@@ -62,7 +62,7 @@ var I = {}; // interface
 O = {
 	lengthOfPrefixes: 3,
 	prefixOption: "opt_",
-	legalLocalStorageNames: new Array(),
+	legalLocalStorageKeys: new Array(),
 
 	/*
 	 * These utility variables will also be stored in localStorage.
@@ -71,13 +71,13 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {name: "int_utlProgramVersion", value: 140607},
-		lastLocalResetTimestamp: {name: "int_utlLastLocalResetTimestamp", value: 0}
+		programVersion: {key: "int_utlProgramVersion", value: 140610},
+		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
 	/*
 	 * All of these options must have an associated input tag in the HTML that
-	 * users interact with, and their IDs are in the form prefixOption + optionname.
+	 * users interact with, and their IDs are in the form prefixOption + optionkey.
 	 * Note the three letter prefix indicating the option's data type.
 	 */
 	Options:
@@ -100,6 +100,8 @@ O = {
 		bol_alertAtEnd: true,
 		bol_alertChecked: true,
 		bol_alertSubscribed: false,
+		int_alertSubscribedFirst: 5,
+		int_alertSubscribedSecond: 15,
 		// Advanced
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
@@ -117,19 +119,19 @@ O = {
 	 * checked, and disabled states. These states are recorded as a single
 	 * character in a string of numbers representing those states, and the index
 	 * of a character is that checkbox's "ID". The Chl object stores checklist
-	 * objects with such a string and a name for localStorage.
+	 * objects with such a string and a key for localStorage.
 	 */
 	Checklists:
 	{
-		// localStorage name-value pairs (name is required)
-		Chain: { name: "str_chlChain", value: "" },
-		ChainSubscription: { name: "str_chlChainSubscription", value: "" },
-		JP: { name: "str_chlJP", value: "" },
-		Dungeon: { name: "str_chlDungeon", value: "", money: 0 },
-		Custom: { name: "str_chlCustom", value: "" },
+		// localStorage key-value pairs (key is required)
+		Chain: { key: "str_chlChain", value: "" },
+		ChainSubscription: { key: "str_chlChainSubscription", value: "" },
+		JP: { key: "str_chlJP", value: "" },
+		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
+		Custom: { key: "str_chlCustom", value: "" },
 		CustomText:
 		{
-			name: "str_chlCustomText",
+			key: "str_chlCustomText",
 			value: new Array(),
 			valueDefault: new Array()
 		}
@@ -142,24 +144,44 @@ O = {
 	},
 	
 	/*
-	 * Initializes the array of strings of legal localStorage variable names so
-	 * another function can later erase all unrecognized variables.
-	 * @pre All legal variable names are unique.
+	 * Updates and notifies user of version change.
 	 */
-	initializeLegalLocalStorageNames: function()
+	enforceProgramVersion: function()
+	{
+		var currentversion = O.Utilities.programVersion.value;
+		var usersversion = parseInt(localStorage[O.Utilities.programVersion.key]);
+		// If not first visit and version is mismatch, notify new version
+		if (isFinite(usersversion) && usersversion !== currentversion)
+		{
+			I.write(I.cSiteName + " was updated since your last visit.<br />"
+			+ "Current version: " + currentversion + "<br />"
+			+ "Your version: " + usersversion + "<br />"
+			+ "<a id='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>Go to the forum</a> to see the changes.", 15);
+			I.convertExternalLink("#urlUpdates");
+		}
+		
+		localStorage[O.Utilities.programVersion.key] = O.Utilities.programVersion.value;
+	},
+	
+	/*
+	 * Initializes the array of strings of legal localStorage variable keys so
+	 * another function can later erase all unrecognized variables.
+	 * @pre All legal variable keys are unique.
+	 */
+	initializeLegalLocalStorageKeys: function()
 	{
 		var i;
 		for (i in O.Utilities)
 		{
-			O.legalLocalStorageNames.push(O.Utilities[i].name);
+			O.legalLocalStorageKeys.push(O.Utilities[i].key);
 		}
 		for (i in O.Options)
 		{
-			O.legalLocalStorageNames.push(i);
+			O.legalLocalStorageKeys.push(i);
 		}
 		for (i in O.Checklists)
 		{
-			O.legalLocalStorageNames.push(O.Checklists[i].name);
+			O.legalLocalStorageKeys.push(O.Checklists[i].key);
 		}
 	},
 	
@@ -169,14 +191,14 @@ O = {
 	cleanLocalStorage: function()
 	{
 		var i, ii;
-		var name;
+		var key;
 		var match;
 		for (i = 0; i < localStorage.length; i++)
 		{
-			name = localStorage.key(i);
-			for (ii in O.legalLocalStorageNames)
+			key = localStorage.key(i);
+			for (ii in O.legalLocalStorageKeys)
 			{
-				if (name === O.legalLocalStorageNames[ii])
+				if (key === O.legalLocalStorageKeys[ii])
 				{
 					match = true;
 					break;
@@ -184,7 +206,7 @@ O = {
 			}
 			if (match !== true)
 			{
-				localStorage.removeItem(name);
+				localStorage.removeItem(key);
 			}
 			else
 			{
@@ -195,7 +217,7 @@ O = {
 	
 	/*
 	 * URLArguments may contain Options object's variables. Written in the form of:
-	 * http://example.com/?ExampleName=ExampleValue&MoreExampleName=MoreExampleValue
+	 * http://example.com/?ExampleKey=ExampleValue&MoreExampleKey=MoreExampleValue
 	 * so if a user enters http://gw2timer.com/?bol_showClock=false then the clock
 	 * will be hidden regardless of previous localStorage or the defaults here.
 	 * Note that "bol_showClock" matches exactly as in the Options, otherwise
@@ -205,7 +227,7 @@ O = {
 	
 	/*
 	 * Extracts arguments from a https://en.wikipedia.org/wiki/Query_string
-	 * @returns object containing the name value pairs.
+	 * @returns object containing the key-value pairs.
 	 */
 	getURLArguments: function()
 	{
@@ -231,15 +253,15 @@ O = {
 	/*
 	 * Sanitizes URLArguments value part before overriding. For example:
 	 * http://gw2timer.com/?bol_showClock=falsse "falsse" defaults to "true"
-	 * @param string pName of an option.
+	 * @param string pKey of an option.
 	 * @param string pValue of that option.
 	 * @returns string sanitized value.
-	 * @pre The name value pair matches the Options object's, and numeric values
+	 * @pre The key-value pair matches the Options object's, and numeric values
 	 * have the OptionRange object initialized for legal numbers.
 	 */
-	sanitizeURLOptionsValue: function(pName, pValue)
+	sanitizeURLOptionsValue: function(pKey, pValue)
 	{
-		var datatype = pName.substring(0, O.lengthOfPrefixes);
+		var datatype = pKey.substring(0, O.lengthOfPrefixes);
 		var s = pValue.toLowerCase();
 		switch (datatype)
 		{
@@ -249,31 +271,31 @@ O = {
 				{
 					return s;
 				}
-				return O.Options[pName].toString(); // Default boolean
+				return O.Options[pKey].toString(); // Default boolean
 			} break;
 			case "int":
 			{
 				if (isFinite(s)) // Is a number
 				{
 					var integer = parseInt(s);
-					if (integer >= O.OptionRange[pName][0] && integer <= O.OptionRange[pName][1])
+					if (integer >= O.OptionRange[pKey][0] && integer <= O.OptionRange[pKey][1])
 					{
 						return integer.toString();
 					}
 				}
-				return O.OptionRange[pName][0].toString(); // Default number
+				return O.OptionRange[pKey][0].toString(); // Default number
 			} break;
 			case "flt":
 			{
 				if (isFinite(s)) // Is a number
 				{
 					var float = parseFloat(s);
-					if (float >= O.OptionRange[pName][0] && float <= O.OptionRange[pName][1])
+					if (float >= O.OptionRange[pKey][0] && float <= O.OptionRange[pKey][1])
 					{
 						return float.toString();
 					}
 				}
-				return O.OptionRange[pName][0].toString(); // Default number
+				return O.OptionRange[pKey][0].toString(); // Default number
 			} break;
 			case "str":
 			{
@@ -376,13 +398,12 @@ O = {
 	updateLocalResetTimestamp: function()
 	{
 		O.Utilities.lastLocalResetTimestamp.value = T.getUNIXSeconds();
-		localStorage[O.Utilities.lastLocalResetTimestamp.name] = O.Utilities.lastLocalResetTimestamp.value;
+		localStorage[O.Utilities.lastLocalResetTimestamp.key] = O.Utilities.lastLocalResetTimestamp.value;
 	},
 	
 	/*
 	 * Compares the local reset timestamp with yesterday's server reset time
-	 * (Midnight 00:00 UTC).
-	 * @returns boolean timestamp is outdated or not.
+	 * (Midnight 00:00 UTC) and do clearings if so.
 	 */
 	checkResetTimestamp: function()
 	{
@@ -408,78 +429,79 @@ O = {
 	
 	/*
 	 * Sets the HTML input tag values to the localStorage's or the defaults here.
-	 * URLArguments with same Options object's names (if available) will override both.
+	 * URLArguments with same Options object's keys (if available) will override both.
 	 * @pre The tags are preloaded (not AJAX) and URLArguments was initialized.
 	 */
 	initializeOptions: function()
 	{	
-		O.initializeLegalLocalStorageNames();
-		
-		var optionname;
-		for (optionname in O.Options)
+		O.initializeLegalLocalStorageKeys();
+
+		var optionkey;
+		// Load or initialize input options
+		for (optionkey in O.Options)
 		{
+			/*
+			 * Initialize legal numeric values by looking up the associated
+			 * input tag.
+			 */
+			$("#" + O.prefixOption + optionkey).each(function()
+			{
+				var inputtype = $(this).attr("type");
+				if (inputtype === "radio")
+				{
+					// Range shall be 0 to how many radio buttons there are minus one
+					O.OptionRange[optionkey] = new Array(0,
+						$("fieldset[name=" + optionkey + "] input").length - 1);
+				}
+				else if (inputtype === "number" || inputtype === "range")
+				{
+					O.OptionRange[optionkey] = new Array($(this).prop("min"), $(this).prop("max"));
+				}
+			});
 			/*
 			 * URLArguments overrides localStorage, which overrides Options here
 			 * only if such an Options variable exists.
 			 */
-			if (O.URLArguments[optionname] !== undefined)
+			if (O.URLArguments[optionkey] !== undefined)
 			{
-				/*
-				 * Initialize legal numeric values by looking up the associated
-				 * input tag.
-				 */
-				$("#" + O.prefixOption + optionname).each(function()
-				{
-					var inputtype = $(this).attr("type");
-					if (inputtype === "radio")
-					{
-						// Range shall be 0 to how many radio buttons there are minus one
-						O.OptionRange[optionname] = new Array(0,
-							$("fieldset[name=" + optionname + "] input").length - 1);
-					}
-				});
 				// Override localStorage
-				localStorage[optionname] = O.sanitizeURLOptionsValue(
-					optionname, O.URLArguments[optionname]);
+				localStorage[optionkey] = O.sanitizeURLOptionsValue(
+					optionkey, O.URLArguments[optionkey]);
 			}
-		}
-		
-		// Load or initialize input options
-		for (optionname in O.Options)
-		{
+			
 			// Assign default values to localStorage if they are empty
-			if (localStorage[optionname] === undefined)
+			if (localStorage[optionkey] === undefined)
 			{
-				localStorage[optionname] = O.Options[optionname];
+				localStorage[optionkey] = O.Options[optionkey];
 			}
 			else
 			{	// Else user set options from localStorage become the new options
-				O.Options[optionname] = O.convertLocalStorageDataType(localStorage[optionname]);
+				O.Options[optionkey] = O.convertLocalStorageDataType(localStorage[optionkey]);
 			}
-			// Update the inputs with specific name format, this "loop" runs once
-			$("#" + O.prefixOption + optionname).each(function()
+			// Update the inputs of specific types, this "loop" runs once
+			$("#" + O.prefixOption + optionkey).each(function()
 			{
 				// Assign the retrieved values to the input tags
 				var inputtype = $(this).attr("type");
 				if (inputtype === "checkbox")
 				{
-					$(this).prop("checked", O.Options[optionname]);
+					$(this).prop("checked", O.Options[optionkey]);
 				}
-				else if (inputtype === "range")
+				else if (inputtype === "number" || inputtype === "range")
 				{
-					$(this).val(O.Options[optionname]);
+					$(this).val(O.Options[optionkey]);
 				}
 				else if (inputtype === "radio")
 				{
 					// Check the radio button of that index (int)
-					$("input:radio[name=" + optionname + "]:eq(" + O.Options[optionname] + ")")
+					$("input:radio[name=" + optionkey + "]:eq(" + O.Options[optionkey] + ")")
 						.prop("checked", true);
 				}
 				
 				/*
 				 * Bind simple event handlers to each input tags that writes
 				 * the value of the input to the options and localStorage.
-				 * Note that the optionname local variable was not reused here
+				 * Note that the optionkey local variable was not reused here
 				 * because this is the scope of the input's event! Have to use
 				 * separate variables.
 				 */
@@ -491,27 +513,47 @@ O = {
 					 * given the same name attribute. One button shall hold the
 					 * unique ID so the group will only be iterated once.
 					 */
-					$("fieldset[name=" + optionname + "]").change(function()
+					$("fieldset[name=" + optionkey + "]").change(function()
 					{
-						var thisoptionname = $(this).attr("name");
-						O.Options[thisoptionname] = O.getIndexOfSelectedRadioButton(thisoptionname);
-						localStorage[thisoptionname] = O.Options[thisoptionname];
+						var thisoptionkey = $(this).attr("name");
+						O.Options[thisoptionkey] = O.getIndexOfSelectedRadioButton(thisoptionkey);
+						localStorage[thisoptionkey] = O.Options[thisoptionkey];
 					});
 				}
 				else
 				{
 					$(this).change(function()
 					{
-						var thisoptionname = $(this).attr("id").slice(O.prefixOption.length);
-						if (inputtype === "checkbox")
+						var thisinputtype = $(this).attr("type");
+						var thisoptionkey = $(this).attr("id").slice(O.prefixOption.length);
+						
+						if (thisinputtype === "checkbox")
 						{
-							O.Options[thisoptionname] = $(this).prop("checked");
+							O.Options[thisoptionkey] = $(this).prop("checked");
+						}
+						else if (thisinputtype === "number" || thisinputtype === "range")
+						{
+							// These inputs can have custom text, so sanitize them first
+							var value = $(this).val();
+							var integer = parseInt(value);
+							if (isFinite(value) && integer >= O.OptionRange[thisoptionkey][0]
+								&& integer <= O.OptionRange[thisoptionkey][1])
+							{
+								O.Options[thisoptionkey] = integer;
+							}
+							else
+							{
+								// Load default value if not an integer within range
+								O.Options[thisoptionkey] = O.OptionRange[thisoptionkey][0];
+							}
+							$(this).val(O.Options[thisoptionkey]);
 						}
 						else
 						{
-							O.Options[thisoptionname] = $(this).val();
+							O.Options[thisoptionkey] = $(this).val();
 						}
-						localStorage[thisoptionname] = O.Options[thisoptionname];
+						
+						localStorage[thisoptionkey] = O.Options[thisoptionkey];
 					});
 				}
 			});
@@ -536,14 +578,14 @@ O = {
 		 * If localStorage doesn't have the checklist already or if it's an
 		 * improper length then it gets a default checklist string of 0's.
 		 */
-		if (localStorage[pChecklist.name] === undefined
-			|| localStorage[pChecklist.name].length !== pLength)
+		if (localStorage[pChecklist.key] === undefined
+			|| localStorage[pChecklist.key].length !== pLength)
 		{
 			O.clearChecklist(pChecklist);
 		}
 		else
 		{
-			pChecklist.value = localStorage[pChecklist.name];
+			pChecklist.value = localStorage[pChecklist.key];
 		}
 	},
 	
@@ -561,7 +603,7 @@ O = {
 		if (char.length === 1 && pChecklist.value[pIndex] !== char)
 		{
 			var checklist = O.replaceCharAt(pChecklist.value, pIndex, char);
-			localStorage[pChecklist.name] = checklist;
+			localStorage[pChecklist.key] = checklist;
 			pChecklist.value = checklist;
 		}
 	},
@@ -622,7 +664,7 @@ O = {
 			} break;
 			case "preuncheck":
 			{
-				value = localStorage[pChecklist.name];
+				value = localStorage[pChecklist.key];
 				if (value !== undefined)
 				{
 					for (i = 0; i < value.length; i++)
@@ -648,7 +690,7 @@ O = {
 		}
 		
 		pChecklist.value = checklist;
-		localStorage[pChecklist.name] = checklist;
+		localStorage[pChecklist.key] = checklist;
 	},
 	
 	/*
@@ -1065,14 +1107,14 @@ O = {
 		 * single string to be stored in localStorage.
 		 */
 		var i;
-		if (localStorage[O.Checklists.CustomText.name] === undefined)
+		if (localStorage[O.Checklists.CustomText.key] === undefined)
 		{
 			// If localStorage value is empty, replace with original values in text field
-			localStorage[O.Checklists.CustomText.name] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
+			localStorage[O.Checklists.CustomText.key] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
 		}
 		else
 		{
-			var storedtextarray = localStorage[O.Checklists.CustomText.name].split(I.cTextDelimiter);
+			var storedtextarray = localStorage[O.Checklists.CustomText.key].split(I.cTextDelimiter);
 			if (storedtextarray.length === O.Checklists.CustomText.value.length)
 			{
 				// Load the stored text if it has same number of strings as there are text fields
@@ -1083,7 +1125,7 @@ O = {
 			}
 			else
 			{
-				localStorage[O.Checklists.CustomText.name] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
+				localStorage[O.Checklists.CustomText.key] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
 			}
 		}
 		
@@ -1095,7 +1137,7 @@ O = {
 			{
 				O.Checklists.CustomText.value[pIndex] = $(this).val().replace(regex, "");
 			});
-			localStorage[O.Checklists.CustomText.name] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
+			localStorage[O.Checklists.CustomText.key] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
 		};
 		
 		// Bind text fields behavior
@@ -1262,22 +1304,22 @@ O = {
 		$("#optPrintLocalStorage").click(function()
 		{
 			var i;
-			var names = new Array();
-			// Gather the names
+			var keys = new Array();
+			// Gather the keys
 			for (i = 0; i < localStorage.length; i++)
 			{
-				var name = O.escapeHTML(localStorage.key(i));
-				names.push(name);
+				var key = O.escapeHTML(localStorage.key(i));
+				keys.push(key);
 			}
 			// Sort them alphabetically
-			names.sort();
+			keys.sort();
 			
 			var s = "";
-			// Print the name-value pairs by the name's order
-			for (i in names)
+			// Print the key-value pairs by the key's order
+			for (i in keys)
 			{
-				var value = O.escapeHTML(localStorage.getItem(names[i]));
-				s += names[i] + ": " + value + "<br />";
+				var value = O.escapeHTML(localStorage.getItem(keys[i]));
+				s += keys[i] + ": " + value + "<br />";
 			}
 			
 			I.write(s, 30, true);
@@ -1505,7 +1547,7 @@ O = {
 		{
 			$("#paneMap").hide();
 		}
-	},
+	}
 };
 
 /* =============================================================================
@@ -1976,13 +2018,18 @@ C = {
 	
 	/*
 	 * Gets the time the current chain has been running.
-	 * @returns int seconds elapsed since chain started.
+	 * @returns int seconds or minutes elapsed since chain started.
 	 */
-	getCurrentChainElapsedTime: function()
+	getCurrentChainElapsedTime: function(pUnit)
 	{
 		var now = new Date();
 		var min = now.getUTCMinutes();
 		var sec = now.getUTCSeconds();
+		
+		if (pUnit === "minutes")
+		{
+			return min % T.cMINUTES_IN_FRAME;
+		}
 		return ((min % T.cMINUTES_IN_FRAME) * T.cSECONDS_IN_MINUTE) + sec;
 		// Less efficient method
 		/*return Math.abs(getSecondsUntilChainStarts(C.CurrentChain));*/
@@ -2498,45 +2545,20 @@ C = {
 			 * not past the timeframe, and the subscription option is off.
 			 */
 			if (O.Options.bol_alertAtEnd && pChain.alias === C.CurrentChain.alias
-					&& O.Options.bol_alertSubscribed === false)
+				&& O.Options.bol_alertSubscribed === false
+				&& O.Options.bol_enableSound)
 			{
-				var secondsleft = T.cSECONDS_IN_FRAME - C.getCurrentChainElapsedTime();
-				var sec = secondsleft % 60;
-				var min = ~~(secondsleft / 60) % 60;
-				var secstr = " second";
-				var minstr = " minute";
-				
-				// Tell the minutes left, or seconds if it's less than a minute left
-				if (secondsleft > T.cSECONDS_IN_MINUTE)
-				{
-					if (min > 1)
-					{
-						minstr += "s";
-					}
-					sec = "";
-					min = min + minstr;
-				}
-				else
-				{
-					if (sec > 1)
-					{
-						secstr += "s";
-					}
-					sec = sec + secstr;
-					min = "";
-				}
-				
 				var checked = "";
-				var nextchain = C.getCurrentChain(1);
-				if (O.getChainChecklistState(nextchain) !== O.ChecklistEnum.Unchecked)
+				
+				if (O.getChainChecklistState(C.NextChain1) !== O.ChecklistEnum.Unchecked)
 				{
 					checked = ", checked";
 				}
 				// Don't alert if next boss is checked off and user opted not to hear
 				if ( ! (checked.length > 0 && O.Options.bol_alertChecked === false))
 				{
-					I.speak("Next world boss is " + nextchain.pronunciation
-						+ ", in " + min + sec + checked);
+					I.speak("Next world boss is " + C.NextChain1.pronunciation
+						+ ", " + C.getTimeTillChainFormatted(C.NextChain1, "speech") + checked);
 				}
 			}
 		}
@@ -3674,7 +3696,7 @@ M = {
 				jpchecklist += "0";
 			}
 			O.Checklists.JP.value = jpchecklist;
-			localStorage[O.Checklists.JP.name] = O.Checklists.JP.value;
+			localStorage[O.Checklists.JP.key] = O.Checklists.JP.value;
 		});
 	},
 	
@@ -3802,7 +3824,7 @@ T = {
 	},
 
 	/*
-	 * Gets a formatted time string, arguments are taken as name value pairs.
+	 * Gets a formatted time string, arguments are taken as key-value pairs.
 	 * @objparam string reference place to offset the time, default is local.
 	 * @objparam boolean want24 to format as 24 hour or not (AM/PM).
 	 * @objparam boolean wantLetters to format #h #m #s instead of colons.
@@ -4180,23 +4202,11 @@ K = {
 		K.rotateClockElement(sechand, secangle);
 		K.rotateClockElement(minhand, minangle);
 		K.rotateClockElement(hourhand, hourangle);
-
+		
 		// Opacity value 0.0 through 1.0 based on how far into the 15 minutes frame
 		var opacityAdd = 1 - ((min % T.cMINUTES_IN_FRAME)*60 + sec) / (T.cSECONDS_IN_FRAME);
 		var clockbackground = document.getElementById("paneClockBackground");
 		
-		// If crossing a 1 second mark (given)
-		C.updateCurrentChainTimeHTML();
-		// If crossing a 1 minute mark
-		if (sec === 0)
-		{
-			// Refresh the chain time countdown opted
-			if (O.Options.int_setTimeStyle === 0)
-			{
-				C.updateChainsTimeHTML();
-			}
-			K.updateWaypointsClipboard();
-		}
 		// If crossing a 15 minute mark (IMPORTANT)
 		if (min % T.cMINUTES_IN_FRAME === 0 && sec === 0)
 		{
@@ -4227,9 +4237,79 @@ K = {
 				clockbackground.style.opacity = opacityAdd;
 			}
 		}
+		
+		// Macro function to get a speech if the subscribed boss is within the opted time
+		var getSubscribedSpeech = function(pTime)
+		{
+			if (pTime > 0)
+			{
+				var minutestill = T.cMINUTES_IN_FRAME - C.getCurrentChainElapsedTime("minutes");
+				var chain = C.NextChain1;
+				if (pTime > T.cMINUTES_IN_FRAME)
+				{
+					chain = C.NextChain2;
+					minutestill += T.cMINUTES_IN_FRAME;
+				}
+				
+				if (C.isChainSubscribed(chain) && C.isChainUnchecked(chain)
+					&& pTime === minutestill)
+				{
+					return "Subscribed world boss " + chain.pronunciation
+						+ ", will start " + C.getTimeTillChainFormatted(chain, "speech");
+				}
+			}
+			return null;
+		};
+		
+		// If crossing a 1 second mark (given)
+		C.updateCurrentChainTimeHTML();
+		
+		// If crossing a 1 minute mark
+		if (sec === 0)
+		{
+			// Refresh the chain time countdown opted
+			if (O.Options.int_setTimeStyle === 0)
+			{
+				C.updateChainsTimeHTML();
+			}
+			K.updateWaypointsClipboard();
+			
+			// Alert subscribed chain
+			if (O.Options.bol_alertSubscribed === true && O.Options.bol_enableSound)
+			{
+				var speech1 = getSubscribedSpeech(O.Options.int_alertSubscribedFirst);
+				var speech2 = getSubscribedSpeech(O.Options.int_alertSubscribedSecond);
+				var averagespeechtime = 7000;
+
+				if (speech1 !== null && speech2 === null)
+				{
+					I.speak(speech1);
+				}
+				else if (speech1 === null && speech2 !== null)
+				{
+					I.speak(speech2);
+				}
+				else if (speech1 !== null && speech2 !== null)
+				{
+					/*
+					 * If have to speak both bosses then have to split the speech
+					 * because of a 100 character limit for Google TTS
+					 */
+					I.speak(speech1);
+
+					(function(pSpeech, pWait)
+					{
+						setTimeout(function()
+						{
+							I.speak("Also, " + pSpeech);
+						}, pWait);
+					})(speech2, averagespeechtime);
+				}
+			}
+		}
+		
 		// Tick the two digital clocks below the analog clock
-		document.getElementById("itemTimeLocal").innerHTML =
-			T.getTimeFormatted();
+		document.getElementById("itemTimeLocal").innerHTML = T.getTimeFormatted();
 		document.getElementById("itemTimeServer").innerHTML = "(" +
 			T.getTimeFormatted(
 			{
@@ -4296,8 +4376,9 @@ K = {
 		// Queue the highlighting of the current chain's events
 		C.queueEventsHighlight();
 		
-		// Alert of current chain
-		if (O.Options.bol_alertAtEnd && O.Options.bol_alertSubscribed === false)
+		// Alert current chain
+		if (O.Options.bol_alertAtEnd && O.Options.bol_alertSubscribed === false
+			&& O.Options.bol_enableSound)
 		{
 			var checkedcurrent = "";
 			var checkednext = "";
@@ -4314,49 +4395,6 @@ K = {
 			{
 				I.speak("Current world boss is " + C.CurrentChain.pronunciation
 					+ checkedcurrent + ". Followed by " + C.NextChain1.pronunciation + checkednext);
-			}
-		}
-		// Alert of subscribed chain
-		if (O.Options.bol_alertSubscribed === true)
-		{
-			var speech1;
-			var speech2;
-			var averagespeechtime = 7000;
-			
-			if (C.isChainSubscribed(C.NextChain1) && C.isChainUnchecked(C.NextChain1))
-			{
-				speech1 = "Subscribed world boss " + C.NextChain1.pronunciation
-					+ ", will start " + C.getTimeTillChainFormatted(C.NextChain1, "speech");
-			}
-			if (C.isChainSubscribed(C.NextChain2) && C.isChainUnchecked(C.NextChain2))
-			{
-				speech2 = "Subscribed world boss " + C.NextChain2.pronunciation
-					+ ", will start " + C.getTimeTillChainFormatted(C.NextChain2, "speech");
-			}
-			
-			if (speech1 !== undefined && speech2 === undefined)
-			{
-				I.speak(speech1);
-			}
-			else if (speech1 === undefined && speech2 !== undefined)
-			{
-				I.speak(speech2);
-			}
-			else if (speech1 !== undefined && speech2 !== undefined)
-			{
-				/*
-				 * If have to speak both bosses then have to split the speech
-				 * because of a 100 character limit for Google TTS
-				 */
-				I.speak(speech1);
-
-				(function(pSpeech, pWait)
-				{
-					setTimeout(function()
-					{
-						I.speak("Also, " + pSpeech);
-					}, pWait);
-				})(speech2, averagespeechtime);
 			}
 		}
 		
@@ -4625,13 +4663,13 @@ I = {
 		 * and not from the future, else initialize it.
 		 */ 
 		var currenttimestamp = T.getUNIXSeconds();
-		var storedtimestamp = parseInt(localStorage[O.Utilities.lastLocalResetTimestamp.name]);
-		if (localStorage[O.Utilities.lastLocalResetTimestamp.name] === undefined
+		var storedtimestamp = parseInt(localStorage[O.Utilities.lastLocalResetTimestamp.key]);
+		if (localStorage[O.Utilities.lastLocalResetTimestamp.key] === undefined
 			|| isFinite(storedtimestamp) === false
 			|| storedtimestamp > currenttimestamp)
 		{
 			O.Utilities.lastLocalResetTimestamp.value = currenttimestamp;
-			localStorage[O.Utilities.lastLocalResetTimestamp.name] = O.Utilities.lastLocalResetTimestamp.value;
+			localStorage[O.Utilities.lastLocalResetTimestamp.key] = O.Utilities.lastLocalResetTimestamp.value;
 		}
 		else
 		{
@@ -4684,8 +4722,8 @@ I = {
 			I.userBrowser = I.BrowserEnum.Opera;
 		}
 		
-		// Remember the program's version
-		localStorage[O.Utilities.programVersion.name] = O.Utilities.programVersion.value;
+		// Update and notify user of version change
+		O.enforceProgramVersion();
 		
 		// Default content layer
 		I.contentCurrent = I.ContentEnum.Chains;
@@ -4732,26 +4770,23 @@ I = {
 	 */
 	speak: function(pString)
 	{
-		if (O.Options.bol_enableSound)
-		{
-			var url;
-			var tts = document.getElementById("jsTTS");
+		var url;
+		var tts = document.getElementById("jsTTS");
 
-			if (I.userBrowser === I.BrowserEnum.Chrome)
-			{
-				/*
-				 * Google TTS seems to only work with their browser; using it on
-				 * Firefox gives "Video playback aborted due to a network error"
-				 * Note that GTTS has a 100 character URL limit.
-				 */
-				url = "http://translate.google.com/translate_tts?tl=en&q=" + escape(pString);
-			}
-			else
-			{
-				url = "http://tts-api.com/tts.mp3?q=" + escape(pString);
-			}
-			tts.src = url;
+		if (I.userBrowser === I.BrowserEnum.Chrome)
+		{
+			/*
+			 * Google TTS seems to only work with their browser; using it on
+			 * Firefox gives "Video playback aborted due to a network error"
+			 * Note that GTTS has a 100 character URL limit.
+			 */
+			url = "http://translate.google.com/translate_tts?tl=en&q=" + escape(pString);
 		}
+		else
+		{
+			url = "http://tts-api.com/tts.mp3?q=" + escape(pString);
+		}
+		tts.src = url;
 	},
 	
 	/*
@@ -4903,7 +4938,7 @@ I = {
 	 * Extracts the "index" part of an HTML element's ID. Most iterable elements'
 	 * IDs were manually named as [prefix]_[Index].
 	 * @param jqobject pElement to extract.
-	 * @returns string name of the element's ID.
+	 * @returns string pseudoindex of the element's ID.
 	 */
 	getIndexFromHTMLID: function(pElement)
 	{

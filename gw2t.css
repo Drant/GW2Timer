@@ -76,8 +76,11 @@ html, body {
 	left: 24px;
 	bottom: 48px;
 }
-#paneWarning a {
+#jsConsole a, #paneWarning a {
 	color: limegreen;
+}
+#jsConsole a:hover, #paneWarning a:hover {
+	color: greenyellow;
 }
 #jsTTS {
 	display: none;
@@ -1122,6 +1125,12 @@ dt.mapJPListNameHover {
 
 #optTimestamps time {
 	color: #bbcc77;
+}
+
+#layerOptions input[type="number"] {
+	width: 48px;
+	margin-right: 4px;
+	text-align: right;
 }
 
 label, input {
