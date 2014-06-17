@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x720, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.06.03 modified - 2014.04.18 created
+	Version: 2014.06.10 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -136,7 +136,7 @@ html, body,
 
 a, input, label, button,
 #mapCompassButton, #paneMenu span, #itemClockWaypoints img,
-.menuBeam img:hover, .cntComposition h1, .jsSection,
+.menuBeam img:hover, .jsSection,
 .jsTableOfContents ol li, .jsSectionDone, .jsHelpCollapsible,
 #layerChains header, .chnCheck:hover, .chnTitle h1, .chnDetailsLinks ins,
 #listChainsScheduled .chnTitle time,
@@ -1020,8 +1020,15 @@ dt.mapJPListNameHover {
 #chlDungeonCalculator {
 	margin-right: 126px;
 	margin-bottom: 6px;
-	font-size: 16px;
+	font-size: 18px;
+	font-weight: bold;
 	text-align: right;
+	text-shadow:
+		1px 1px 0px #000,
+		-1px -1px 0px #000,
+		1px -1px 0px #000,
+		-1px 1px 0px #000,
+		1px 1px 0px #000;
 }
 
 #chlDungeonCalculator img {
@@ -1035,6 +1042,16 @@ dt.mapJPListNameHover {
 	padding-left: 4px;
 	border-bottom: 1px solid #e4e0b3;
 	border-radius: 4px;
+}
+
+#chlDungeonCalculator_Gold {
+	color: #ddbb44;
+}
+#chlDungeonCalculator_Silver {
+	color: #aaaaaa;
+}
+#chlDungeonCalculator_Copper {
+	color: #bb6622;
 }
 
 .chlDungeonBar img {

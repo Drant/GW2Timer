@@ -71,7 +71,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140610},
+		programVersion: {key: "int_utlProgramVersion", value: 140617},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -118,8 +118,8 @@ O = {
 	 * A checklist is a set of checkboxes that can have the usual unchecked,
 	 * checked, and disabled states. These states are recorded as a single
 	 * character in a string of numbers representing those states, and the index
-	 * of a character is that checkbox's "ID". The Chl object stores checklist
-	 * objects with such a string and a key for localStorage.
+	 * of a character is that checkbox's "ID". The Checklists object stores
+	 * checklists with such a string and a key for localStorage.
 	 */
 	Checklists:
 	{
@@ -154,9 +154,9 @@ O = {
 		if (isFinite(usersversion) && usersversion !== currentversion)
 		{
 			I.write(I.cSiteName + " was updated since your last visit.<br />"
-			+ "Current version: " + currentversion + "<br />"
+			+ "This version: " + currentversion + "<br />"
 			+ "Your version: " + usersversion + "<br />"
-			+ "<a id='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>Go to the forum</a> to see the changes.", 15);
+			+ "Would you like to see the <a id='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />", 15);
 			I.convertExternalLink("#urlUpdates");
 		}
 		
@@ -462,7 +462,7 @@ O = {
 			 * URLArguments overrides localStorage, which overrides Options here
 			 * only if such an Options variable exists.
 			 */
-			if (O.URLArguments[optionkey] !== undefined)
+			if (O.URLArguments[optionkey] !== undefined && I.programMode !== I.programModeEnum.Embedded)
 			{
 				// Override localStorage
 				localStorage[optionkey] = O.sanitizeURLOptionsValue(
@@ -851,7 +851,6 @@ O = {
 			time.click(function()
 			{
 				var index = $(this).data("index");
-				var alias = I.getIndexFromHTMLID($(this));
 				
 				if (O.getChecklistItem(O.Checklists.ChainSubscription, index) === O.ChecklistEnum.Checked)
 				{
@@ -1597,30 +1596,30 @@ C = {
 		C.cSchedule =
 		[
 			// 0       15       30       45
-			C.Shatterer, C.Maw, C.Ulgoth, C.FE,   // 0
-			C.Karka, C.Wurm, C.Golem, C.SB,       // 1
-			C.Tequatl, C.Maw, C.Jormag, C.FE,     // 2
-			C.Triple, C.Wurm, C.Taidha, C.SB,     // 3
-			C.Megades, C.Maw, C.TBD, C.FE,        // 4
-			C.Shatterer, C.Wurm, C.Ulgoth, C.SB,  // 5
-			C.Golem, C.Maw, C.Jormag, C.FE,       // 6
+			C.Taidha, C.Maw, C.Megades, C.FE,     // 0
+			C.Shatterer, C.Wurm, C.Ulgoth, C.SB,  // 1
+			C.Golem, C.Maw, C.Jormag, C.FE,       // 2
+			C.Taidha, C.Wurm, C.Megades, C.SB,    // 3
+			C.Shatterer, C.Maw, C.Ulgoth, C.FE,   // 4
+			C.Golem, C.Wurm, C.Jormag, C.SB,      // 5
+			C.Taidha, C.Maw, C.Megades, C.FE,     // 6
 			C.Shatterer, C.Wurm, C.Ulgoth, C.SB,  // 7
 			C.Golem, C.Maw, C.Jormag, C.FE,       // 8
 			C.Taidha, C.Wurm, C.Megades, C.SB,    // 9
-			C.TBD, C.Maw, C.Karka, C.FE,          // 10
-			C.Shatterer, C.Wurm, C.Tequatl, C.SB, // 11
-			C.Ulgoth, C.Maw, C.Triple, C.FE,      // 12
-			C.Golem, C.Wurm, C.Jormag, C.SB,      // 13
-			C.Taidha, C.Maw, C.Megades, C.FE,     // 14
-			C.TBD, C.Wurm, C.Shatterer, C.SB,     // 15
-			C.Karka, C.Maw, C.Ulgoth, C.FE,       // 16
-			C.Tequatl, C.Wurm, C.Golem, C.SB,     // 17
-			C.Triple, C.Maw, C.Jormag, C.FE,      // 18
-			C.Taidha, C.Wurm, C.Megades, C.SB,    // 19
-			C.TBD, C.Maw, C.Shatterer, C.FE,      // 20
-			C.Ulgoth, C.Wurm, C.Golem, C.SB,      // 21
-			C.Jormag, C.Maw, C.Taidha, C.FE,      // 22
-			C.Megades, C.Wurm, C.TBD, C.SB        // 23
+			C.Shatterer, C.Maw, C.Ulgoth, C.FE,   // 10
+			C.Golem, C.Wurm, C.Jormag, C.SB,      // 11
+			C.Taidha, C.Maw, C.Megades, C.FE,     // 12
+			C.Shatterer, C.Wurm, C.Ulgoth, C.SB,  // 13
+			C.Golem, C.Maw, C.Jormag, C.FE,       // 14
+			C.Taidha, C.Wurm, C.Megades, C.SB,    // 15
+			C.Shatterer, C.Maw, C.Ulgoth, C.FE,   // 16
+			C.Golem, C.Wurm, C.Jormag, C.SB,      // 17
+			C.Taidha, C.Maw, C.Megades, C.FE,     // 18
+			C.Shatterer, C.Wurm, C.Ulgoth, C.SB,  // 19
+			C.Golem, C.Maw, C.Jormag, C.FE,       // 20
+			C.Taidha, C.Wurm, C.Megades, C.SB,    // 21
+			C.Shatterer, C.Maw, C.Ulgoth, C.FE,   // 22
+			C.Golem, C.Wurm, C.Jormag, C.SB       // 23
 		];
 		
 		C.ScheduledChains = new Array();
@@ -2731,8 +2730,8 @@ M = {
 		}
 		
 		// Do other initialization functions
-		M.drawChainPaths();
 		M.populateMap();
+		M.drawChainPaths();
 
 		/*
 		 * Clicking an empty place on the map highlight its coordinate.
@@ -3312,11 +3311,7 @@ M = {
 					var coord = event.path[0];
 					$(this).attr("data-coord", coord[0] + "," + coord[1]);
 					// Read the attribute and use the coordinate when clicked
-					$(this).click(function()
-					{
-						var thiscoord = $(this).attr("data-coord").split(",");
-						M.goToView(thiscoord, M.PinEvent);
-					});
+					M.bindMapLinkBehavior($(this), M.PinEvent);
 				});
 			}
 		}
@@ -4033,6 +4028,8 @@ T = {
  * ========================================================================== */
 K = {
 	
+	tickerFrequency: 250, // Must be a divisor of 1000 milliseconds
+	tickerSecondPrevious: undefined,
 	awakeTimestampPrevious: 0,
 	awakeTimestampTolerance: 5,
 	currentFrameOffsetMinutes: 0,
@@ -4183,13 +4180,30 @@ K = {
 	tickSecond: function()
 	{
 		/*
+		 * Although the effects are supposed to happen every 1 second, this
+		 * function is actually ran multiple times per second so setTimeout
+		 * is in sync with the Date object.
+		 */
+		var now = new Date();
+		var sec = now.getSeconds();
+		if (K.tickerSecondPrevious === sec)
+		{
+			// If the Date second has not changed, then don't do the effects
+			K.tickerTimeout = setTimeout(K.tickSecond, K.tickerFrequency);
+			return;
+		}
+		else
+		{
+			// Else update the second variable and do the effects
+			K.tickerSecondPrevious = sec;
+		}
+		
+		/*
 		 * Things in this outer block runs every second, so core JS is used
 		 * instead of jQuery for performance.
 		 */
 		T.TIMESTAMP_UNIX_SECONDS = T.getUNIXSeconds();
 		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeOffsetSinceMidnight("utc", "seconds");
-		var now = new Date();
-		var sec = now.getSeconds();
 		var min = now.getMinutes();
 		var hour = now.getHours() % 12;
 		var secinhour = min*60 + sec;
@@ -4239,20 +4253,20 @@ K = {
 		}
 		
 		// Macro function to get a speech if the subscribed boss is within the opted time
-		var getSubscribedSpeech = function(pTime)
+		var getSubscribedSpeech = function(pMinutes)
 		{
-			if (pTime > 0)
+			if (pMinutes > 0)
 			{
 				var minutestill = T.cMINUTES_IN_FRAME - C.getCurrentChainElapsedTime("minutes");
 				var chain = C.NextChain1;
-				if (pTime > T.cMINUTES_IN_FRAME)
+				if (pMinutes > T.cMINUTES_IN_FRAME)
 				{
 					chain = C.NextChain2;
 					minutestill += T.cMINUTES_IN_FRAME;
 				}
 				
 				if (C.isChainSubscribed(chain) && C.isChainUnchecked(chain)
-					&& pTime === minutestill)
+					&& pMinutes === minutestill)
 				{
 					return "Subscribed world boss " + chain.pronunciation
 						+ ", will start " + C.getTimeTillChainFormatted(chain, "speech");
@@ -4344,7 +4358,7 @@ K = {
 		}
 
 		// Loop this function, can use variable to halt it
-		K.tickerTimeout = setTimeout(K.tickSecond, 1000);
+		K.tickerTimeout = setTimeout(K.tickSecond, K.tickerFrequency);
 	},
 
 	/*
@@ -4355,6 +4369,7 @@ K = {
 	 * Q2: X:15-X:30 (or 3-6 o'clock)
 	 * Q3: X:30-X:45 (or 6-9 o'clock)
 	 * Q4: X:45-X:00 (or 9-12 o'clock)
+	 * @param Date pTime to determine the current timeframe.
 	 */
 	updateTimeFrame: function(pTime)
 	{
@@ -4609,6 +4624,13 @@ I = {
 	cTOOLTIP_ADD_OFFSET_X: 36,
 	
 	// Content-Layer-Page and Section-Header
+	programMode: null,
+	programModeEnum:
+	{
+		Website: "Website",
+		Overlay: "Overlay",
+		Embedded: "Embedded"
+	},
 	cContentPane: "#paneContent",
 	cContentPrefix: "#layer",
 	cMenuPrefix: "#menu",
@@ -4629,8 +4651,9 @@ I = {
 	sectionCurrent_Map: "",
 	sectionCurrent_Help: "",
 	cHeaderPrefix: "#header",
-	prefixPage: "page",
-	prefixSection: "section",
+	URLKeyPage: "page",
+	URLKeySection: "section",
+	URLKeyMode: "mode",
 	
 	// User information
 	userBrowser: "Unknown",
@@ -4658,6 +4681,12 @@ I = {
 		// Tell if DST is in effect
 		T.checkDST();
 		
+		// Detect iFrame embedding
+		if (window !== window.top)
+		{
+			I.programMode = I.programModeEnum.Embedded;
+		}
+		
 		/*
 		 * Loaded stored server sensitive timestamp if it exists, is a number,
 		 * and not from the future, else initialize it.
@@ -4682,8 +4711,16 @@ I = {
 		// Parse and store the URL arguments
 		O.URLArguments = O.getURLArguments();
 		
+		// Consolidate elements for overlay mode
+		if (O.URLArguments[I.URLKeyMode] === I.programModeEnum.Overlay)
+		{
+			I.programMode = I.programModeEnum.Overlay;
+			$("#itemSocial").hide();
+		}
+		
 		// Detect small devices
-		if (window.innerWidth <= I.cSMALL_DEVICE_WIDTH && window.innerHeight <= I.cSMALL_DEVICE_HEIGHT)
+		if (window.innerWidth <= I.cSMALL_DEVICE_WIDTH && window.innerHeight <= I.cSMALL_DEVICE_HEIGHT
+			&& I.programMode !== I.programModeEnum.Overlay)
 		{
 			I.userSmallDevice = true;
 			I.write("Small device detected.<br />"
@@ -4864,8 +4901,8 @@ I = {
 		if (I.contentCurrent !== "")
 		{
 			var section = I[I.sectionPrefix + I.contentCurrent];
-			var pagestring = "?" + I.prefixPage + "=" + I.contentCurrent;
-			var sectionstring = "&" + I.prefixSection + "=" + section;
+			var pagestring = "?" + I.URLKeyPage + "=" + I.contentCurrent;
+			var sectionstring = "&" + I.URLKeySection + "=" + section;
 			if (section !== "" && section !== undefined)
 			{
 				history.replaceState("", null, pagestring + sectionstring);
@@ -4891,10 +4928,10 @@ I = {
 		 */
 		setTimeout(function()
 		{
-			if (O.URLArguments[I.prefixSection] !== undefined)
+			if (O.URLArguments[I.URLKeySection] !== undefined)
 			{
 				$(I.cHeaderPrefix + I.contentCurrent + "_"
-					+ O.URLArguments[I.prefixSection]).trigger("click");
+					+ O.URLArguments[I.URLKeySection]).trigger("click");
 			}
 		}, 0);
 	},
@@ -4907,11 +4944,11 @@ I = {
 	{
 		var i;
 		// Go to the page (content layer) requested, as in "openPageFromURL()"
-		if (O.URLArguments[I.prefixPage] !== undefined)
+		if (O.URLArguments[I.URLKeyPage] !== undefined)
 		{
 			for (i in I.ContentEnum)
 			{
-				if (O.URLArguments[I.prefixPage].toLowerCase() === I.ContentEnum[i].toLowerCase())
+				if (O.URLArguments[I.URLKeyPage].toLowerCase() === I.ContentEnum[i].toLowerCase())
 				{
 					$(I.cMenuPrefix + I.ContentEnum[i]).trigger("click");
 				}
