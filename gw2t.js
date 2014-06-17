@@ -1597,9 +1597,9 @@ C = {
 		[
 			// 0       15       30       45
 			C.Taidha, C.Maw, C.Megades, C.FE,     // 0
-			C.Shatterer, C.Wurm, C.Ulgoth, C.SB,  // 1
-			C.Golem, C.Maw, C.Jormag, C.FE,       // 2
-			C.Taidha, C.Wurm, C.Megades, C.SB,    // 3
+			C.Triple, C.Wurm, C.Ulgoth, C.SB,     // 1
+			C.Karka, C.Maw, C.Jormag, C.FE,       // 2
+			C.Tequatl, C.Wurm, C.Megades, C.SB,   // 3
 			C.Shatterer, C.Maw, C.Ulgoth, C.FE,   // 4
 			C.Golem, C.Wurm, C.Jormag, C.SB,      // 5
 			C.Taidha, C.Maw, C.Megades, C.FE,     // 6

@@ -1213,30 +1213,6 @@ var GW2T_CHAINS_DATA = [
 	]
 },
 {
-	alias: "TBD",
-	pronunciation: "tbd",
-	series: 0,
-	waypoint: "[&BDAEAAA=]",
-	title: "To Be Determined",
-	events: [
-		{
-			path: [[16590, 15324], [16590, 15324], [16590, 15324]],
-			name: "TBD Event",
-			icon: "boss",
-			num: "1",
-			sGotoNum: ["1"],
-			fGotoNum: "1",
-			sInterim: ["*"],
-			fInterim: "*",
-			lim: "0",
-			avg: "7:30",
-			min: "7:00",
-			max: "8:00",
-			primacy: 3
-		}
-	]
-},
-{
 	alias: "FireShaman",
 	series: 1,
 	waypoint: "[&BO4BAAA=]",
