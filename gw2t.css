@@ -919,22 +919,28 @@ header.cntHeader {
 
 .chnTitleCurrent {
 	color: #ffaa22;
+	opacity: 1;
 }
 .chnTitleFuture {
-	color: #805511;
+	color: #ffaa22;
+	opacity: 0.5;
 }
-.chnTitleFutureFar {
+.chnTitleFutureFar, .barChainDummy h1 {
 	color: #888;
+	opacity: 1;
 }
 
 .chnTimeCurrent {
 	color: #bbcc77;
+	opacity: 1;
 }
 .chnTimeFuture {
-	color: #75804a;
+	color: #bbcc77;
+	opacity: 0.75;
 }
-.chnTimeFutureFar {
-	color: #888;
+.chnTimeFutureFar, .barChainDummy time {
+	color: #999;
+	opacity: 1;
 }
 .chnTimeSubscribed {
 	color: #ddff77 !important;

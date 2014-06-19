@@ -71,7 +71,8 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140617},
+		programVersion: {key: "int_utlProgramVersion", value: 140618},
+		programLanguage: {key: "str_utlProgramLanguage", value: "en"},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -85,7 +86,7 @@ O = {
 		// Timer
 		bol_hideChecked: false,
 		bol_use24Hour: true,
-		bol_compactClock: false,
+		bol_compactClock: true,
 		bol_showClock: true,
 		int_setClockBackground: 0,
 		int_setTimeStyle: 0,
@@ -141,6 +142,17 @@ O = {
 		Unchecked: "0",
 		Checked: "1",
 		Disabled: "2"
+	},
+	
+	LanguageEnum:
+	{
+		English: "en",
+		French: "fr",
+		German: "de",
+		Mandarin: "zh",
+		Polish: "pl",
+		Russian: "ru",
+		Spanish: "es"
 	},
 	
 	/*
@@ -1281,9 +1293,9 @@ O = {
 			}
 			O.clearChecklist(O.Checklists.Chain);
 			// Also unfade the clock icons, which are the current first four bosses
-			for (i = 0; i < T.cNUMFRAMES_IN_HOUR; i++)
+			for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 			{
-				K.checkoffChainIcon(C.getCurrentChain(i).alias);
+				K.checkoffChainIcon(T.getStandardChains(i));
 			}
 			$("#menuChains").trigger("click");
 		});
@@ -1555,91 +1567,39 @@ O = {
 C = {
 	
 	/*
-	 * http://gw2timer.com/metas.js holds an array of meta event chain objects,
+	 * http://gw2timer.com/chains.js holds an array of meta event chain objects,
 	 * which themselves contain an array of their events.
 	 * This is referred to by the variable "C.Chains".
 	 */
 	Chains: GW2T_CHAINS_DATA,
 	CurrentChain: {},
-	PreviousChain1: {},
-	PreviousChain2: {},
 	NextChain1: {},
 	NextChain2: {},
 	NextChain3: {},
 	NextChain4: {},
+	CurrentChains: [],
+	PreviousChains1: [],
+	PreviousChains2: [],
+	NextChains1: [],
+	NextChains2: [],
+	NextChains3: [],
+	NextChains4: [],
 	cChainTitleCharLimit: 30,
 	CurrentPrimaryEvent: {},
-	
-	initializeSchedule: function()
+	ChainSeriesEnum:
 	{
-	   // Shortcut reference to the chains
-		C.FE = C.getChainFromAlias("FE");
-		C.Golem = C.getChainFromAlias("Golem");
-		C.Jormag = C.getChainFromAlias("Jormag");
-		C.Karka = C.getChainFromAlias("Karka");
-		C.Maw = C.getChainFromAlias("Maw");
-		C.Megades = C.getChainFromAlias("Megades");
-		C.SB = C.getChainFromAlias("SB");
-		C.Shatterer = C.getChainFromAlias("Shatterer");
-		C.Taidha = C.getChainFromAlias("Taidha");
-		C.Ulgoth = C.getChainFromAlias("Ulgoth");
-		C.Wurm = C.getChainFromAlias("Wurm");
-		C.Tequatl = C.getChainFromAlias("Tequatl");
-		C.Triple = C.getChainFromAlias("TripleWurm");
-		C.TBD = C.getChainFromAlias("TBD");
-		
-		/*
-		 * This circular array corresponds to Anet's megaserver WB list.
-		 * The array starts at midnight UTC; each chain is a 15 minute frame,
-		 * and each line represents one hour.
-		 */
-		C.cSchedule =
-		[
-			// 0       15       30       45
-			C.Taidha, C.Maw, C.Megades, C.FE,     // 0
-			C.Triple, C.Wurm, C.Ulgoth, C.SB,     // 1
-			C.Karka, C.Maw, C.Jormag, C.FE,       // 2
-			C.Tequatl, C.Wurm, C.Megades, C.SB,   // 3
-			C.Shatterer, C.Maw, C.Ulgoth, C.FE,   // 4
-			C.Golem, C.Wurm, C.Jormag, C.SB,      // 5
-			C.Taidha, C.Maw, C.Megades, C.FE,     // 6
-			C.Shatterer, C.Wurm, C.Ulgoth, C.SB,  // 7
-			C.Golem, C.Maw, C.Jormag, C.FE,       // 8
-			C.Taidha, C.Wurm, C.Megades, C.SB,    // 9
-			C.Shatterer, C.Maw, C.Ulgoth, C.FE,   // 10
-			C.Golem, C.Wurm, C.Jormag, C.SB,      // 11
-			C.Taidha, C.Maw, C.Megades, C.FE,     // 12
-			C.Shatterer, C.Wurm, C.Ulgoth, C.SB,  // 13
-			C.Golem, C.Maw, C.Jormag, C.FE,       // 14
-			C.Taidha, C.Wurm, C.Megades, C.SB,    // 15
-			C.Shatterer, C.Maw, C.Ulgoth, C.FE,   // 16
-			C.Golem, C.Wurm, C.Jormag, C.SB,      // 17
-			C.Taidha, C.Maw, C.Megades, C.FE,     // 18
-			C.Shatterer, C.Wurm, C.Ulgoth, C.SB,  // 19
-			C.Golem, C.Maw, C.Jormag, C.FE,       // 20
-			C.Taidha, C.Wurm, C.Megades, C.SB,    // 21
-			C.Shatterer, C.Maw, C.Ulgoth, C.FE,   // 22
-			C.Golem, C.Wurm, C.Jormag, C.SB       // 23
-		];
-		
-		C.ScheduledChains = new Array();
-		C.initializeAllChains();
-		
-		// Each chain gets an array of indexes of where it is in the schedule
-		for (var i in C.cSchedule)
-		{
-			for (var ii in C.ScheduledChains)
-			{
-				if (C.ScheduledChains[ii].alias === C.cSchedule[i].alias)
-				{
-					C.ScheduledChains[ii].scheduleIndexes.push(i);
-					break;
-				}
-			}
-		}
-		
-		// Finally bind event handlers for the chain checklist
-		O.initializeChainChecklist();
+		Temple: 0, // Unscheduled Orr temples
+		Legacy: 1, // Unscheduled chains that still gives a rare
+		Standard: 2, // Scheduled non-hardcore chains
+		Hardcore: 3, // Scheduled challenging chains with a separate schedule from non-hardcores
+		Story: 4 // Scheduled Living Story chains
+	},
+	EventPrimacyEnum:
+	{
+		Optional: 0, // A failure or optional subevent; includes temple retake event which should be ignored
+		Normal: 1, // A concurrent (multiple simultaneous) event that does not take the longest to complete
+		Primary: 2, // An only event at the time or a concurrent event that takes the longest to complete
+		Boss: 3 // The boss event, also considered a primary event
 	},
 	
 	/*
@@ -1657,76 +1617,6 @@ C = {
 			}
 		}
 	 },
-	
-	/*
-	 * Gets a chain object for that time of day in the schedule.
-	 * @param int pOffset chain index offset (e.g. to get the following chain)
-	 * @returns object chain.
-	 */
-	getCurrentChain: function(pOffset)
-	{
-		return C.cSchedule[C.getCurrentIndexOfSchedule(pOffset)];
-	},
-	getCurrentIndexOfSchedule: function(pOffset)
-	{
-		if (pOffset === undefined)
-		{
-			pOffset = 0;
-		}
-		pOffset = pOffset % C.cSchedule.length;
-		if (pOffset < 0)
-		{
-			pOffset = C.cSchedule.length + pOffset;
-		}
-		var utctimeinminutes = T.getTimeOffsetSinceMidnight("utc", "minutes");
-		return ((parseInt(utctimeinminutes / T.cMINUTES_IN_FRAME))
-			+ pOffset) % C.cSchedule.length;
-	},
-
-	/*
-	 * Converts a time string to seconds.
-	 * @param string pTime in X:XX:XX or X:XX or 0 format.
-	 * @returns int seconds totaled.
-	 * @pre Time string contains at most 1 "~" and at most 2 ":".
-	 */
-	parseEventTime: function(pTime)
-	{
-		/*
-		 * Time string with the ~ are preformatted as the minimum time plus the
-		 * window time (two time strings), for example "1:30:00~30:00" is 1.5 hour
-		 * wait, and 0.5 hour window during which the next event can happen.
-		 */
-		var time = new Array();
-		if (pTime.indexOf("~") !== -1)
-		{
-			time = pTime.split("~");
-			// Sum the minimum wait with the expected (half) time of the window
-			return C.parseEventTime(time[0]) + ~~(C.parseEventTime(time[1]) / 2);
-		}
-		if (pTime === "*")
-		{
-			return 0;
-		}
-		// If just a number without colons, assume it is already seconds
-		if (pTime.indexOf(":") === -1)
-		{
-			return parseInt(pTime, 10);
-		}
-
-		time = pTime.split(":");
-		if (time.length === 2)
-		{
-			return parseInt(time[0], 10) * T.cSECONDS_IN_MINUTE
-					+ parseInt(time[1], 10);
-		}
-		if (time.length === 3)
-		{
-			return parseInt(time[0]) * T.cSECONDS_IN_HOUR
-					+ parseInt(time[1], 10) * T.cSECONDS_IN_MINUTE
-					+ parseInt(time[2], 10);
-		}
-		return NaN;
-	},
 	
 	/*
 	 * Returns the substring before the "XXX" delimiter in a chain alias.
@@ -1772,10 +1662,11 @@ C = {
 		
 		switch (pChain.series)
 		{
-			case 0: chainhtmlid = "#listChainsScheduled"; break;
-			case 1: chainhtmlid = "#listChainsUnscheduled"; break;
-			case 2: chainhtmlid = "#listChainsTemple"; break;
-			default: return;
+			case C.ChainSeriesEnum.Standard: chainhtmlid = "#listChainsScheduled"; break;
+			case C.ChainSeriesEnum.Hardcore: chainhtmlid = "#listChainsScheduled"; break;
+			case C.ChainSeriesEnum.Story: chainhtmlid = "#listChainsScheduled"; break;
+			case C.ChainSeriesEnum.Legacy: chainhtmlid = "#listChainsUnscheduled"; break;
+			case C.ChainSeriesEnum.Temple: chainhtmlid = "#listChainsTemple"; break;
 		}
 		
 		/*
@@ -1789,7 +1680,7 @@ C = {
 				+ "<img src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + ".png' />"
 				+ "<div id='chnCheck_" + pChain.alias + "' class='chnCheck' data-index='" + pChain.index + "'></div>"
 				+ "<h1>" + C.truncateTitleString(pChain.title, C.cChainTitleCharLimit) + "</h1>"
-				+ "<time id='chnTime_" + pChain.alias + "' data-index='" + pChain.index + "'></time>"
+				+ "<time class='chnTimeFutureFar' id='chnTime_" + pChain.alias + "' data-index='" + pChain.index + "'></time>"
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.alias + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.alias + "' class='chnEvents'></ol>"
@@ -1870,22 +1761,15 @@ C = {
 		 * number (the "step" number), but "escort Rooba" is considered primary
 		 * because it takes the longest. Each event gets the three new time
 		 * variables equalling how far into the chain they are.
-		 * 
-		 * Primacy Numbers:
-		 * 0 - A failure or optional subevent; includes temple retake event which should be ignored.
-		 * 1 - A concurrent (multiple simultaneous) event that does not take the longest to complete.
-		 * 2 - An only event at the time or a concurrent event that takes the longest to complete.
-		 * 3 - The boss event.
-		 * Events with primacy numbers 2 and 3 are primary events.
 		 */
 		for (i in pChain.events)
 		{
 			event = pChain.events[i];
-			if (event.primacy === 2)
+			if (event.primacy === C.EventPrimacyEnum.Primary)
 			{
 				pChain.primaryEvents.push(event);
 			}
-			else if (event.primacy === 3)
+			else if (event.primacy === C.EventPrimacyEnum.Boss)
 			{
 				pChain.primaryEvents.push(event);
 				// 0 because the first primary event does not have precedents
@@ -1902,11 +1786,11 @@ C = {
 			 *		+ the previous primary event's success interim
 			 *		+ the previous primary event's xxxSum;
 			 */
-			var previoussuccessinterim = C.parseEventTime(pChain.primaryEvents[i-1].sInterim[0]);
+			var previoussuccessinterim = T.parseEventTime(pChain.primaryEvents[i-1].sInterim[0]);
 
-			pChain.primaryEvents[i].minSum = C.parseEventTime(pChain.primaryEvents[i-1].min)
+			pChain.primaryEvents[i].minSum = T.parseEventTime(pChain.primaryEvents[i-1].min)
 				+ previoussuccessinterim + pChain.primaryEvents[i-1].minSum;
-			pChain.primaryEvents[i].avgSum = C.parseEventTime(pChain.primaryEvents[i-1].avg)
+			pChain.primaryEvents[i].avgSum = T.parseEventTime(pChain.primaryEvents[i-1].avg)
 				+ previoussuccessinterim + pChain.primaryEvents[i-1].avgSum;
 			// minavgSum = minSum + (avgSum - minSum)/2;
 			pChain.primaryEvents[i].minavgSum = pChain.primaryEvents[i].minSum
@@ -1919,9 +1803,9 @@ C = {
 		 */
 		i--;
 		pChain.minFinish = pChain.primaryEvents[i].minSum
-			+ C.parseEventTime(pChain.primaryEvents[i].min);
+			+ T.parseEventTime(pChain.primaryEvents[i].min);
 		pChain.avgFinish = pChain.primaryEvents[i].avgSum
-			+ C.parseEventTime(pChain.primaryEvents[i].avg);
+			+ T.parseEventTime(pChain.primaryEvents[i].avg);
 		pChain.minavgFinish = pChain.minFinish + ~~(Math.abs(pChain.avgFinish - pChain.minFinish)/2);
 		
 		/*
@@ -1929,14 +1813,16 @@ C = {
 		 * events and create HTML elements so they can be displayed in totality.
 		 */
 		ii = 0;
-		if (pChain.series === 0) // Scheduled events need to remember concurrent events
+		// Scheduled events need to remember concurrent events
+		if (pChain.series !== C.ChainSeriesEnum.Temple
+			&& pChain.series !== C.ChainSeriesEnum.Legacy)
 		{
 			C.ScheduledChains.push(pChain); // Initialize the shortcut reference array
 			
 			for (i in pChain.events)
 			{
 				// Ignore failure events and optional defense events
-				if (pChain.events[i].primacy > 0)
+				if (pChain.events[i].primacy !== C.EventPrimacyEnum.Optional)
 				{
 					// Compare the first character of their event number
 					if (pChain.events[i].num.charAt(0) !== pChain.primaryEvents[ii].num.charAt(0))
@@ -1950,7 +1836,7 @@ C = {
 					insertEventToBarHTML(pChain, pChain.events[i]);
 				}
 				// If reached the boss event (which has been added), then stop looping
-				if (pChain.events[i].primacy === 3)
+				if (pChain.events[i].primacy === C.EventPrimacyEnum.Boss)
 				{
 					break;
 				}
@@ -1986,143 +1872,30 @@ C = {
 			C.Chains[i].index = i;
 			C.Chains[i].isSorted = false;
 			C.Chains[i].primaryEvents = new Array();
-			C.Chains[i].scheduleIndexes = new Array();
+			C.Chains[i].scheduleKeys = new Array();
 			C.initializeChainAndHTML(C.Chains[i]);
 		}
 		// Collapse all chain bars
 		$(".chnDetails").hide();
+		// Initial recoloring of chain titles
+		$("#listChainsScheduled .barChain h1").addClass("chnTitleFutureFar");
 	},
 	
 	/*
-	 * Gets the local time in seconds for when a chain starts in the schedule.
-	 * @param int pScheduleIndex of a chain.
-	 * @returns int seconds since midnight local time.
+	 * Tells if a chain is an active on the chains list.
+	 * @param object pChain to verify.
+	 * @returns boolean current or not.
 	 */
-	convertScheduleIndexToLocalTime: function(pScheduleIndex)
+	isChainCurrent: function(pChain)
 	{
-		pScheduleIndex = pScheduleIndex % C.cSchedule.length;
-		if (pScheduleIndex < 0)
+		for (var i in C.CurrentChains)
 		{
-			pScheduleIndex = C.cSchedule.length - pScheduleIndex;
-		}
-		
-		var time = (pScheduleIndex * T.cMINUTES_IN_FRAME * T.cSECONDS_IN_MINUTE)
-			- ((new Date()).getTimezoneOffset() * T.cSECONDS_IN_MINUTE);
-		if (time < 0)
-		{
-			time = T.cSECONDS_IN_DAY + time;
-		}
-		return time;
-	},
-	
-	/*
-	 * Gets the time the current chain has been running.
-	 * @returns int seconds or minutes elapsed since chain started.
-	 */
-	getCurrentChainElapsedTime: function(pUnit)
-	{
-		var now = new Date();
-		var min = now.getUTCMinutes();
-		var sec = now.getUTCSeconds();
-		
-		if (pUnit === "minutes")
-		{
-			return min % T.cMINUTES_IN_FRAME;
-		}
-		return ((min % T.cMINUTES_IN_FRAME) * T.cSECONDS_IN_MINUTE) + sec;
-		// Less efficient method
-		/*return Math.abs(getSecondsUntilChainStarts(C.CurrentChain));*/
-	},
-	
-	/*
-	 * Gets the seconds until a chain start by subtracting the current time from
-	 * the chain start time; both of which are seconds since midnight. Because
-	 * the timer uses the 24 hour cyclical system, this function faces the
-	 * design problem of deciding whether the chain start time is ahead or
-	 * behind the local time when past midnight.
-	 * @param object pChain to get start time.
-	 * @returns int seconds remaining, negative if it started already.
-	 * @pre Chain's scheduleIndexes array was refreshed with the earliest start
-	 * time at the first index.
-	 */
-	getSecondsUntilChainStarts: function(pChain)
-	{
-		var secondschain = (C.convertScheduleIndexToLocalTime(pChain.scheduleIndexes[0]));
-		var secondscurrent = T.getTimeOffsetSinceMidnight("local", "seconds");
-		var rolloverthreshold = (T.cSECONDS_IN_FRAME * T.cNUMFRAMES_IN_HOUR); // This is 3600 seconds
-		
-		/*
-		 * It is known that the program looks at most 4 chains ahead of the
-		 * current to display the clock icons. Deal with the midnight problem by
-		 * enforcing a one hour threshold before and after midnight, so for
-		 * example the current time is 23:00:00 and the target chain starts at
-		 * 00:15:00, it would return 01:15:00 (in seconds). Without the
-		 * threshold, it would return -22:45:00.
-		 */
-		if (secondschain >= (T.cSECONDS_IN_DAY - rolloverthreshold)
-			&& secondscurrent <= rolloverthreshold)
-		{
-			return (T.cSECONDS_IN_DAY - secondschain) + secondscurrent;
-		}
-		if (secondscurrent >= (T.cSECONDS_IN_DAY - rolloverthreshold)
-			&& secondschain <= rolloverthreshold)
-		{
-			return (T.cSECONDS_IN_DAY - secondscurrent) + secondschain;
-		}
-		
-		return secondschain - secondscurrent;
-	},
-	
-	/*
-	 * Gets a readable string of minutes and hours until a chain starts.
-	 * @param object pChain to tell time.
-	 * @param string pFormat of the time words.
-	 * @returns string time string.
-	 */
-	getTimeTillChainFormatted: function(pChain, pFormat)
-	{
-		var secondsleft = C.getSecondsUntilChainStarts(pChain);
-		var min = ~~(secondsleft / 60) % 60;
-		var hour = ~~(secondsleft / 3600);
-		var minword = "m";
-		var hourword = "h";
-		
-		if (pFormat === "speech")
-		{
-			minword = " minute";
-			hourword = " hour";
-			if (Math.abs(min) > 1)
+			if (pChain.alias === C.CurrentChains[i].alias)
 			{
-				minword += "s";
-			}
-			if (Math.abs(hour) > 1)
-			{
-				hourword += "s";
-			}
-			if (hour === 0 && Math.abs(min) === 30)
-			{
-				min = "half an hour";
-				minword = "";
-				hourword = "";
+				return true;
 			}
 		}
-		hourword += " ";
-
-		min = min + minword;
-		if (Math.abs(secondsleft) >= T.cSECONDS_IN_HOUR)
-		{
-			hour = hour + hourword;
-		}
-		else
-		{
-			hour = "";
-		}
-		
-		if (secondsleft < 0)
-		{
-			return " " + hour + min + " ago ";
-		}
-		return " in " + hour + min;
+		return false;
 	},
 	
 	/*
@@ -2156,22 +1929,22 @@ C = {
 	
 	/*
 	 * Updates a chain bar's time tooltip with a pre-sorted subschedule.
-	 * @pre scheduleIndexes array is sorted and first element is the soonest
+	 * @pre scheduleKeys array is sorted and first element is the soonest
 	 */
 	updateChainTimeTooltipHTML: function(pChain)
 	{
 		// Update the title tootlip with that chain's schedule
 		var minischedulestring = "";
 		var spacer;
-		for (var ii in pChain.scheduleIndexes)
+		for (var ii in pChain.scheduleKeys)
 		{
 			spacer = (parseInt(ii) === 0) ? "<dfn>Subscribe?</dfn><br />" : " <br /> ";
 			minischedulestring = minischedulestring + spacer
 				+ T.getTimeFormatted(
 				{
 					wantSeconds: false,
-					customTimeInSeconds: C.convertScheduleIndexToLocalTime(
-						pChain.scheduleIndexes[ii])
+					customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(
+						pChain.scheduleKeys[ii])
 				});
 		}
 		$("#chnTime_" + pChain.alias).prop("title", minischedulestring);
@@ -2182,15 +1955,16 @@ C = {
 	 */
 	updateChainsTimeHTML: function()
 	{
+		var i;
 		var ithchain;
 		var time;
 		var wantletters = false;
-		for (var i in C.ScheduledChains)
+		for (i in C.ScheduledChains)
 		{
 			ithchain = C.ScheduledChains[i];
 			C.updateChainTimeTooltipHTML(ithchain);
-			// Don't change the first bar
-			if (ithchain.alias === C.CurrentChain.alias)
+			// Don't change the active bars
+			if (C.isChainCurrent(ithchain))
 			{
 				continue;
 			}
@@ -2199,12 +1973,12 @@ C = {
 			{
 				case 0:
 				{
-					time = C.getSecondsUntilChainStarts(ithchain);
+					time = T.getSecondsUntilChainStarts(ithchain);
 					wantletters = true;
 				} break;
 				case 1:
 				{
-					time = C.convertScheduleIndexToLocalTime(ithchain.scheduleIndexes[0]);
+					time = T.convertScheduleKeyToLocalSeconds(ithchain.scheduleKeys[0]);
 					wantletters = false;
 				} break;
 			}
@@ -2225,7 +1999,7 @@ C = {
 	/*
 	 * Updates the current chain bar's time as a countup since it began.
 	 */
-	updateCurrentChainTimeHTML: function()
+	updateCurrentChainTimeHTML: function(pChain)
 	{
 		var wantletters = false;
 		if (O.Options.int_setTimeStyle === 0)
@@ -2233,12 +2007,12 @@ C = {
 			wantletters = true;
 		}
 		
-		$("#chnTime_" + C.CurrentChain.alias).text("-" + T.getTimeFormatted(
+		$("#chnTime_" + pChain.alias).text("-" + T.getTimeFormatted(
 			{
 				want24: true,
 				wantHours: false,
 				wantLetters: wantletters,
-				customTimeInSeconds: C.getCurrentChainElapsedTime()
+				customTimeInSeconds: T.getCurrentTimeframeElapsedTime()
 			})
 		);
 	},
@@ -2250,28 +2024,41 @@ C = {
 	initializeTimetableHTML: function()
 	{
 		$("#listChainsTimetable").empty(); // This makes the function reuseable
+		var i, ii;
+		var chains;
 		var ithchain;
 		var timestring;
-		for (var i in C.cSchedule)
+		for (i in T.Schedule)
 		{
-			ithchain = C.cSchedule[i];
-			timestring = T.getTimeFormatted(
+			chains = T.getScheduleSlotChainsByKey(i);
+			for (ii in chains)
 			{
-				wantSeconds: false,
-				customTimeInSeconds: C.convertScheduleIndexToLocalTime(i)
-			});
-			
-			$("#listChainsTimetable").append(
-			"<div class='barChainDummy'>"
-				+ "<div class='chnTitle chnTitleFutureFar'>"
-					+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + ".png' />"
-					+ "<h1>" + C.truncateTitleString(ithchain.title, C.cChainTitleCharLimit) + "</h1>"
-					+ "<time>" + timestring + "</time>"
-				+ "</div>"
-			+ "</div>");
+				ithchain = chains[ii];
+				// Only generate chain bars for these types
+				if (ithchain.series !== C.ChainSeriesEnum.Standard
+					&& ithchain.series !== C.ChainSeriesEnum.Hardcore)
+				{
+					break;
+				}
+				
+				timestring = T.getTimeFormatted(
+				{
+					wantSeconds: false,
+					customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(i)
+				});
+
+				$("#listChainsTimetable").append(
+				"<div class='barChainDummy barChainDummy_" + i + "'>"
+					+ "<div class='chnTitle'>"
+						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + ".png' />"
+						+ "<h1>" + C.truncateTitleString(ithchain.title, C.cChainTitleCharLimit) + "</h1>"
+						+ "<time>" + timestring + "</time>"
+					+ "</div>"
+				+ "</div>");
+			}
 		}
 		// Highlight current chain
-		$("#listChainsTimetable .barChainDummy:eq(" + C.CurrentChain.scheduleIndexes[0] + ")")
+		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey())
 			.addClass("chnBarCurrent");
 	},
    
@@ -2285,6 +2072,7 @@ C = {
 		var numchainstosort = C.ScheduledChains.length;
 		var i = 0;
 		var ii = 0;
+		var chains;
 		var ithchain;
 		/*
 		 * Look at the schedule and start with the current active chain; move
@@ -2297,15 +2085,22 @@ C = {
 		 */
 		while (numchainssorted < numchainstosort)
 		{
-			// The index function automatically rolls over the schedule
-			var scheduleindex = C.getCurrentIndexOfSchedule(i);
-			ithchain = C.cSchedule[scheduleindex];
-			if (ithchain.isSorted === false)
+			chains = T.getTimeframeChains(i);
+			for (ii in chains)
 			{
-				$("#barChain_" + ithchain.alias).appendTo("#listChainsScheduled");
-				ithchain.isSorted = true;
-				ithchain.scheduleIndexImmediate = scheduleindex;
-				numchainssorted++;
+				if (numchainssorted >= numchainstosort)
+				{
+					break;
+				}
+				
+				ithchain = chains[ii];
+				if (ithchain.isSorted === false)
+				{
+					$("#barChain_" + ithchain.alias).appendTo("#listChainsScheduled");
+					ithchain.isSorted = true;
+					ithchain.scheduleKeyImmediate = T.getTimeframeKey(i);
+					numchainssorted++;
+				}
 			}
 			i++;
 		}
@@ -2317,19 +2112,18 @@ C = {
 			ithchain.isSorted = false;
 			
 			/*
-			 * scheduleIndexes is a "subarray" containing indexes of the main
-			 * schedule pertaining to that chain alone. Circularly shift the
-			 * array so that the soonest index is first--by concatenating the
-			 * two slices of the array using that found index.
+			 * scheduleKeys is an array of keys to the schedule for when that
+			 * chain starts. Circularly shift the array so that the soonest
+			 * index is first--by concatenating the two slices of the array
+			 * using that found index.
 			 */
-			for (ii in ithchain.scheduleIndexes)
+			for (ii in ithchain.scheduleKeys)
 			{
-				if (parseInt(ithchain.scheduleIndexes[ii]) ===
-					parseInt(ithchain.scheduleIndexImmediate))
+				if (ithchain.scheduleKeys[ii] === ithchain.scheduleKeyImmediate)
 				{
-					ithchain.scheduleIndexes = 
-						(ithchain.scheduleIndexes.slice(ii, ithchain.scheduleIndexes.length))
-							.concat(ithchain.scheduleIndexes.slice(0, ii));
+					ithchain.scheduleKeys = 
+						(ithchain.scheduleKeys.slice(ii, ithchain.scheduleKeys.length))
+							.concat(ithchain.scheduleKeys.slice(0, ii));
 					break;
 				}
 			}
@@ -2340,67 +2134,74 @@ C = {
 		/*
 		 * Now that the chains are sorted, do cosmetic updates.
 		 */
-		// Highlight and show the current chain bar
-		$("#barChain_" + C.CurrentChain.alias).addClass("chnBarCurrent");
-		// Show the current chain's pre events (details)
-		$("#chnDetails_" + C.CurrentChain.alias).show("fast");
-		// Still highlight the previous chain bar but collapse it
-		$("#barChain_" + C.PreviousChain1.alias)
-			.removeClass("chnBarCurrent").addClass("chnBarPrevious");
-		$("#chnDetails_" + C.PreviousChain1.alias).hide();
-		// Stop highlighting the previous previous chain bar
-		$("#barChain_" + C.PreviousChain2.alias).removeClass("chnBarPrevious");
+		for (i in C.CurrentChains)
+		{
+			ithchain = C.CurrentChains[i];
+			// Highlight and show the current chain bar
+			$("#barChain_" + ithchain.alias).addClass("chnBarCurrent");
+			// Show the current chain's pre events (details)
+			if (C.isChainUnchecked(ithchain))
+			{
+				$("#chnDetails_" + ithchain.alias).show("fast");
+			}
+			
+			// Style the title and time
+			$("#barChain_" + ithchain.alias + " h1").first()
+				.removeClass("chnTitleFuture chnTitleFutureFar").addClass("chnTitleCurrent");
+			$("#barChain_" + ithchain.alias + " time").first()
+				.removeClass("chnTimeFuture chnTimeFutureFar").addClass("chnTimeCurrent");
+		}
+
+		for (i in C.PreviousChains1)
+		{
+			ithchain = C.PreviousChains1[i];
+			// Still highlight the previous chain bar but collapse it
+			$("#barChain_" + ithchain.alias)
+				.removeClass("chnBarCurrent").addClass("chnBarPrevious");
+			$("#chnDetails_" + ithchain.alias).hide();
+			
+			// Style the title and time
+			$("#barChain_" + ithchain.alias + " h1").first()
+				.removeClass("chnTitleCurrent").addClass("chnTitleFutureFar");
+			$("#barChain_" + ithchain.alias + " time").first()
+				.removeClass("chnTimeCurrent").addClass("chnTimeFutureFar");
+		}
+		
+		for (i in C.PreviousChains2)
+		{
+			ithchain = C.PreviousChains2[i];
+			// Stop highlighting the previous previous chain bar
+			$("#barChain_" + ithchain.alias).removeClass("chnBarPrevious");
+		}
+		
+		for (i in C.NextChains1)
+		{
+			ithchain = C.NextChains1[i];
+			// Style the title and time
+			$("#barChain_" + ithchain.alias + " h1").first()
+				.removeClass("chnTitleFutureFar").addClass("chnTitleFuture");
+			$("#barChain_" + ithchain.alias + " time").first()
+				.removeClass("chnTimeFutureFar").addClass("chnTimeFuture");
+		}
+		
 		// Also highlight timetable chain bar
 		$("#listChainsTimetable .barChainDummy").removeClass("chnBarCurrent");
-		$("#listChainsTimetable .barChainDummy:eq(" + C.CurrentChain.scheduleIndexes[0] + ")")
+		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey())
 			.addClass("chnBarCurrent");
-		
-		// Style the chain title according to order
-		$("#listChainsScheduled .chnTitle h1").each(function(pIndex)
-		{
-			$(this).removeClass("chnTitleCurrent chnTitleFuture chnTitleFutureFar");
-			if (pIndex === 0)
-			{
-				$(this).addClass("chnTitleCurrent");
-			}
-			else if (pIndex === 1)
-			{
-				$(this).addClass("chnTitleFuture");
-			}
-			else
-			{
-				$(this).addClass("chnTitleFutureFar");
-			}
-		});
-		$("#listChainsScheduled .chnTitle time").each(function(pIndex)
-		{
-			$(this).removeClass("chnTimeCurrent chnTimeFuture chnTimeFutureFar");
-			if (pIndex === 0)
-			{
-				$(this).addClass("chnTimeCurrent");
-			}
-			else if (pIndex === 1)
-			{
-				$(this).addClass("chnTimeFuture");
-			}
-			else
-			{
-				$(this).addClass("chnTimeFutureFar");
-			}
-		});
 	},
 	
 	/*
 	 * minSum avgSum and minavgSum are the seconds since a chain began that
 	 * an event of it starts. Because the time a chain starts is known, these
 	 * statistical times can be used to predict when events happen and end.
+	 * @param object pChainOuter to queue.
 	 * @pre The sum statistics have been computed.
 	 */
-	queueEventsHighlight: function()
+	queueEventsHighlight: function(pChainOuter)
 	{
 		var i;
-		var chain = C.CurrentChain;
-		var elapsed = C.getCurrentChainElapsedTime();
+		var chain = pChainOuter;
+		var elapsed = T.getCurrentTimeframeElapsedTime();
 		var wait;
 		var hasfoundcurrentprimaryindex = false;
 		
@@ -2557,7 +2358,7 @@ C = {
 				if ( ! (checked.length > 0 && O.Options.bol_alertChecked === false))
 				{
 					I.speak("Next world boss is " + C.NextChain1.pronunciation
-						+ ", " + C.getTimeTillChainFormatted(C.NextChain1, "speech") + checked);
+						+ ", " + T.getTimeTillChainFormatted(C.NextChain1, "speech") + checked);
 				}
 			}
 		}
@@ -3777,14 +3578,488 @@ T = {
 	cMINUTES_IN_HOUR: 60,
 	cMINUTES_IN_DAY: 1440,
 	cHOURS_IN_DAY: 24,
-	cSECONDS_IN_FRAME: 900,
-	cMINUTES_IN_FRAME: 15,
-	cNUMFRAMES_IN_HOUR: 4,
+	cSECONDS_IN_TIMEFRAME: 900,
+	cMINUTES_IN_TIMEFRAME: 15,
+	cNUM_TIMEFRAMES_IN_HOUR: 4,
 	cSECS_F1_MARK: 0,
 	cSECS_F2_MARK: 900,
 	cSECS_F3_MARK: 1800,
 	cSECS_F4_MARK: 2700,
 	cSECS_F0_MARK: 3599,
+	cBASE_10: 10,
+	
+	Schedule: {},
+	
+	initializeSchedule: function()
+	{
+		// Shortcut reference to the chains
+		C.FE = C.getChainFromAlias("FE");
+		C.Golem = C.getChainFromAlias("Golem");
+		C.Jormag = C.getChainFromAlias("Jormag");
+		C.Karka = C.getChainFromAlias("Karka");
+		C.Maw = C.getChainFromAlias("Maw");
+		C.Megades = C.getChainFromAlias("Megades");
+		C.SB = C.getChainFromAlias("SB");
+		C.Shatterer = C.getChainFromAlias("Shatterer");
+		C.Taidha = C.getChainFromAlias("Taidha");
+		C.Ulgoth = C.getChainFromAlias("Ulgoth");
+		C.Wurm = C.getChainFromAlias("Wurm");
+		C.Tequatl = C.getChainFromAlias("Tequatl");
+		C.Triple = C.getChainFromAlias("TripleWurm");
+		
+		/*
+		 * This "hash table" contains all time-sensitive chains (a group of
+		 * events). The "key"/slot is the time in minutes, and the "value" is an 
+		 * object with the minutes (again for access) and the array of chains
+		 * that start at that time.
+		 * A "Timeframe" is the quarter of an hour that a regular chain(s) is
+		 * considered current and before it is replaced by the next chain(s).
+		 */
+		T.Schedule =
+		{
+			   t0: {t: "00:00", c: [C.Taidha, C.Tequatl]},
+			  t15: {t: "00:15", c: [C.Maw]},
+			  t30: {t: "00:30", c: [C.Megades]},
+			  t45: {t: "00:45", c: [C.FE]},
+
+			  t60: {t: "01:00", c: [C.Shatterer, C.Triple]},
+			  t75: {t: "01:15", c: [C.Wurm]},
+			  t90: {t: "01:30", c: [C.Ulgoth]},
+			 t105: {t: "01:45", c: [C.SB]},
+
+			 t120: {t: "02:00", c: [C.Golem, C.Karka]},
+			 t135: {t: "02:15", c: [C.Maw]},
+			 t150: {t: "02:30", c: [C.Jormag]},
+			 t165: {t: "02:45", c: [C.FE]},
+
+			 t180: {t: "03:00", c: [C.Taidha, C.Tequatl]},
+			 t195: {t: "03:15", c: [C.Wurm]},
+			 t210: {t: "03:30", c: [C.Megades]},
+			 t225: {t: "03:45", c: [C.SB]},
+
+			 t240: {t: "04:00", c: [C.Shatterer, C.Triple]},
+			 t255: {t: "04:15", c: [C.Maw]},
+			 t270: {t: "04:30", c: [C.Ulgoth]},
+			 t285: {t: "04:45", c: [C.FE]},
+
+			 t300: {t: "05:00", c: [C.Golem]},
+			 t315: {t: "05:15", c: [C.Wurm]},
+			 t330: {t: "05:30", c: [C.Jormag]},
+			 t345: {t: "05:45", c: [C.SB]},
+
+			 t360: {t: "06:00", c: [C.Taidha, C.Karka]},
+			 t375: {t: "06:15", c: [C.Maw]},
+			 t390: {t: "06:30", c: [C.Megades]},
+			 t405: {t: "06:45", c: [C.FE]},
+
+			 t420: {t: "07:00", c: [C.Shatterer, C.Tequatl]},
+			 t435: {t: "07:15", c: [C.Wurm]},
+			 t450: {t: "07:30", c: [C.Ulgoth]},
+			 t465: {t: "07:45", c: [C.SB]},
+
+			 t480: {t: "08:00", c: [C.Golem, C.Triple]},
+			 t495: {t: "08:15", c: [C.Maw]},
+			 t510: {t: "08:30", c: [C.Jormag]},
+			 t525: {t: "08:45", c: [C.FE]},
+
+			 t540: {t: "09:00", c: [C.Taidha]},
+			 t555: {t: "09:15", c: [C.Wurm]},
+			 t570: {t: "09:30", c: [C.Megades]},
+			 t585: {t: "09:45", c: [C.SB]},
+
+			 t600: {t: "10:00", c: [C.Shatterer]},
+			 t615: {t: "10:15", c: [C.Maw]},
+			 t630: {t: "10:30", c: [C.Ulgoth, C.Karka]},
+			 t645: {t: "10:45", c: [C.FE]},
+
+			 t660: {t: "11:00", c: [C.Golem]},
+			 t675: {t: "11:15", c: [C.Wurm]},
+			 t690: {t: "11:30", c: [C.Jormag, C.Tequatl]},
+			 t705: {t: "11:45", c: [C.SB]},
+
+			 t720: {t: "12:00", c: [C.Taidha]},
+			 t735: {t: "12:15", c: [C.Maw]},
+			 t750: {t: "12:30", c: [C.Megades, C.Triple]},
+			 t765: {t: "12:45", c: [C.FE]},
+
+			 t780: {t: "13:00", c: [C.Shatterer]},
+			 t795: {t: "13:15", c: [C.Wurm]},
+			 t810: {t: "13:30", c: [C.Ulgoth]},
+			 t825: {t: "13:45", c: [C.SB]},
+
+			 t840: {t: "14:00", c: [C.Golem]},
+			 t855: {t: "14:15", c: [C.Maw]},
+			 t870: {t: "14:30", c: [C.Jormag]},
+			 t885: {t: "14:45", c: [C.FE]},
+
+			 t900: {t: "15:00", c: [C.Taidha, C.Karka]},
+			 t915: {t: "15:15", c: [C.Wurm]},
+			 t930: {t: "15:30", c: [C.Megades]},
+			 t945: {t: "15:45", c: [C.SB]},
+
+			 t960: {t: "16:00", c: [C.Shatterer, C.Tequatl]},
+			 t975: {t: "16:15", c: [C.Maw]},
+			 t990: {t: "16:30", c: [C.Ulgoth]},
+			t1005: {t: "16:45", c: [C.FE]},
+
+			t1020: {t: "17:00", c: [C.Golem, C.Triple]},
+			t1035: {t: "17:15", c: [C.Wurm]},
+			t1050: {t: "17:30", c: [C.Jormag]},
+			t1065: {t: "17:45", c: [C.SB]},
+
+			t1080: {t: "18:00", c: [C.Taidha, C.Karka]},
+			t1095: {t: "18:15", c: [C.Maw]},
+			t1110: {t: "18:30", c: [C.Megades]},
+			t1125: {t: "18:45", c: [C.FE]},
+
+			t1140: {t: "19:00", c: [C.Shatterer, C.Tequatl]},
+			t1155: {t: "19:15", c: [C.Wurm]},
+			t1170: {t: "19:30", c: [C.Ulgoth]},
+			t1185: {t: "19:45", c: [C.SB]},
+
+			t1200: {t: "20:00", c: [C.Golem, C.Triple]},
+			t1215: {t: "20:15", c: [C.Maw]},
+			t1230: {t: "20:30", c: [C.Jormag]},
+			t1245: {t: "20:45", c: [C.FE]},
+
+			t1260: {t: "21:00", c: [C.Taidha]},
+			t1275: {t: "21:15", c: [C.Wurm]},
+			t1290: {t: "21:30", c: [C.Megades]},
+			t1305: {t: "21:45", c: [C.SB]},
+
+			t1320: {t: "22:00", c: [C.Shatterer]},
+			t1335: {t: "22:15", c: [C.Maw]},
+			t1350: {t: "22:30", c: [C.Ulgoth]},
+			t1365: {t: "22:45", c: [C.FE]},
+
+			t1380: {t: "23:00", c: [C.Golem, C.Karka]},
+			t1395: {t: "23:15", c: [C.Wurm]},
+			t1410: {t: "23:30", c: [C.Jormag]},
+			t1425: {t: "23:45", c: [C.SB]}
+		};
+		
+		C.ScheduledChains = new Array();
+		C.initializeAllChains();
+		
+		var i, ii, iii;
+		var slot;
+		
+		for (i in T.Schedule)
+		{
+			// Convert all schedule time strings to minute integer
+			T.Schedule[i].t = T.parseChainTime(T.Schedule[i].t);
+			// Each chain gets an array of schedule keys of where it is in the schedule
+			slot = T.Schedule[i];
+			for (ii in C.ScheduledChains)
+			{
+				for (iii in slot.c)
+				{
+					if (C.ScheduledChains[ii].alias === slot.c[iii].alias)
+					{
+						C.ScheduledChains[ii].scheduleKeys.push(i);
+						break;
+					}
+				}
+			}
+		}
+		
+		// Finally bind event handlers for the chain checklist
+		O.initializeChainChecklist();
+	},
+	
+	/*
+	 * Gets the minutes for specified slot.
+	 * @param int pKey of schedule slot.
+	 * @returns int minutes.
+	 */
+	getScheduleSlotTime: function(pKey)
+	{
+		return T.Schedule[pKey].t;
+	},
+	
+	/*
+	 * Gets the chain array in schedule by specified key.
+	 * @param string pKey of schedule slot.
+	 * @returns array chains.
+	 */
+	getScheduleSlotChainsByKey: function(pKey)
+	{
+		return T.Schedule[pKey].c;
+	},
+	
+	/*
+	 * Gets the earliest minutes since UTC midnight that is divisible by the
+	 * timeframe minutes.
+	 * @returns int minutes.
+	 */
+	getCurrentTimeframe: function()
+	{
+		var minutes = T.getTimeOffsetSinceMidnight("utc", "minutes");
+		return minutes - (minutes % T.cMINUTES_IN_TIMEFRAME);
+	},
+	
+	/*
+	 * Gets the minutes since midnight UTC corresponding to a schedule slot
+	 * divisible by the timeframe minutes.
+	 * @param int pOffset number of timeframes from the current.
+	 * @returns int minutes.
+	 */
+	getTimeframe: function(pOffset)
+	{
+		pOffset = pOffset || 0;
+		var frameminute = T.getCurrentTimeframe() + (pOffset * T.cMINUTES_IN_TIMEFRAME);
+		return T.wrapInteger(frameminute, T.cMINUTES_IN_DAY);
+	},
+	
+	/*
+	 * Gets an array of chains for specified timeframe.
+	 * @param int pOffset number of timeframes from the current.
+	 * @returns array chains, current active chains if offset is 0.
+	 */
+	getTimeframeChains: function(pOffset)
+	{
+		return T.Schedule["t" + T.getTimeframe(pOffset)].c;
+	},
+	
+	/*
+	 * Gets a chain of particular series for specified timeframe.
+	 * @param int pOffset number of timeframes from the current.
+	 * @param string pSeries to filter the chains array.
+	 */
+	getTimeframeChainBySeries: function(pOffset, pSeries)
+	{
+		var i;
+		var chains = T.getTimeframeChains(pOffset);
+		
+		for (i in chains)
+		{
+			if (chains[i].series === pSeries)
+			{
+				return chains[i];
+			}
+		}
+		return null;
+	},
+	getStandardChain: function(pOffset)
+	{
+		return T.getTimeframeChainBySeries(pOffset, C.ChainSeriesEnum.Standard);
+	},
+	getHardcoreChain: function(pOffset)
+	{
+		return T.getTimeframeChainBySeries(pOffset, C.ChainSeriesEnum.Hardcore);
+	},
+	
+	/*
+	 * Gets the key from current timeframe offset.
+	 * @param int pOffset number of timeframes from the current.
+	 * @returns int key for the schedule slot.
+	 */
+	getTimeframeKey: function(pOffset)
+	{
+		return "t" + T.getTimeframe(pOffset);
+	},
+	
+	/*
+	 * Gets the local time in seconds for when a chain starts in the schedule.
+	 * @param string pKey in the schedule.
+	 * @returns int seconds since midnight local time.
+	 */
+	convertScheduleKeyToLocalSeconds: function(pKey)
+	{
+		var time = (T.getScheduleSlotTime(pKey) * T.cSECONDS_IN_MINUTE)
+			- ((new Date()).getTimezoneOffset() * T.cSECONDS_IN_MINUTE);
+		time = T.wrapInteger(time, T.cSECONDS_IN_DAY);
+
+		return time;
+	},
+	
+	/*
+	 * Gets the time the current chain has been running.
+	 * @returns int seconds or minutes elapsed since chain started.
+	 */
+	getCurrentTimeframeElapsedTime: function(pUnit)
+	{
+		var now = new Date();
+		var min = now.getUTCMinutes();
+		var sec = now.getUTCSeconds();
+		
+		if (pUnit === "minutes")
+		{
+			return min % T.cMINUTES_IN_TIMEFRAME;
+		}
+		return ((min % T.cMINUTES_IN_TIMEFRAME) * T.cSECONDS_IN_MINUTE) + sec;
+	},
+	
+	/*
+	 * Gets the seconds until a chain start by subtracting the current time from
+	 * the chain start time; both of which are seconds since midnight. Because
+	 * the timer uses the 24 hour cyclical system, this function faces the
+	 * design problem of deciding whether the chain start time is ahead or
+	 * behind the local time when past midnight.
+	 * @param object pChain to get start time.
+	 * @returns int seconds remaining, negative if it started already.
+	 * @pre Chain's scheduleKeys array was refreshed with the earliest start
+	 * time at the first index.
+	 */
+	getSecondsUntilChainStarts: function(pChain)
+	{
+		var secondschain = (T.convertScheduleKeyToLocalSeconds(pChain.scheduleKeys[0]));
+		var secondscurrent = T.getTimeOffsetSinceMidnight("local", "seconds");
+		var rolloverthreshold = (T.cSECONDS_IN_TIMEFRAME * T.cNUM_TIMEFRAMES_IN_HOUR); // This is 3600 seconds
+		
+		/*
+		 * It is known that the program looks at most 4 chains ahead of the
+		 * current to display the clock icons. Deal with the midnight problem by
+		 * enforcing a one hour threshold before and after midnight, so for
+		 * example the current time is 23:00:00 and the target chain starts at
+		 * 00:15:00, it would return 01:15:00 (in seconds). Without the
+		 * threshold, it would return -22:45:00.
+		 */
+		if (secondschain >= (T.cSECONDS_IN_DAY - rolloverthreshold)
+			&& secondscurrent <= rolloverthreshold)
+		{
+			return (T.cSECONDS_IN_DAY - secondschain) + secondscurrent;
+		}
+		if (secondscurrent >= (T.cSECONDS_IN_DAY - rolloverthreshold)
+			&& secondschain <= rolloverthreshold)
+		{
+			return (T.cSECONDS_IN_DAY - secondscurrent) + secondschain;
+		}
+		
+		return secondschain - secondscurrent;
+	},
+	
+	/*
+	 * Gets a readable string of minutes and hours until a chain starts.
+	 * @param object pChain to tell time.
+	 * @param string pFormat of the time words.
+	 * @returns string time string.
+	 */
+	getTimeTillChainFormatted: function(pChain, pFormat)
+	{
+		var secondsleft = T.getSecondsUntilChainStarts(pChain);
+		var min = ~~(secondsleft / 60) % 60;
+		var hour = ~~(secondsleft / 3600);
+		var minword = "m";
+		var hourword = "h";
+		
+		if (pFormat === "speech")
+		{
+			minword = " minute";
+			hourword = " hour";
+			if (Math.abs(min) > 1)
+			{
+				minword += "s";
+			}
+			if (Math.abs(hour) > 1)
+			{
+				hourword += "s";
+			}
+			if (hour === 0 && Math.abs(min) === 30)
+			{
+				min = "half an hour";
+				minword = "";
+				hourword = "";
+			}
+		}
+		hourword += " ";
+
+		min = min + minword;
+		if (Math.abs(secondsleft) >= T.cSECONDS_IN_HOUR)
+		{
+			hour = hour + hourword;
+		}
+		else
+		{
+			hour = "";
+		}
+		
+		if (secondsleft < 0)
+		{
+			return " " + hour + min + " ago";
+		}
+		return " in " + hour + min;
+	},
+	
+	/*
+	 * Adjusts an integer so that it is within 0 to the specified limit. Example:
+	 * Integer 26 with Limit 24 returns 2. Integer -4 with Limit 24 returns 20.
+	 * For use in circular arrays.
+	 * @param int pInteger to readjust within limit.
+	 * @param int pMax limit of the quantity.
+	 * @returns int natural number rolled over.
+	 */
+	wrapInteger: function(pInteger, pMax)
+	{
+		var i = pInteger;
+		// Rollover
+		i = i % pMax;
+		
+		// Adjust for negative
+		if (i < 0)
+		{
+			i = pMax + i;
+		}
+		
+		return i;
+	},
+	
+	/*
+	 * Converts a time string to seconds.
+	 * @param string pTime in X:XX:XX or X:XX or 0 format.
+	 * @returns int seconds totaled.
+	 * @pre Time string contains at most 1 "~" and at most 2 ":".
+	 */
+	parseEventTime: function(pTime)
+	{
+		/*
+		 * Time string with the ~ are preformatted as the minimum time plus the
+		 * window time (two time strings), for example "1:30:00~30:00" is 1.5 hour
+		 * wait, and 0.5 hour window during which the next event can happen.
+		 */
+		var time = new Array();
+		if (pTime.indexOf("~") !== -1)
+		{
+			time = pTime.split("~");
+			// Sum the minimum wait with the expected (half) time of the window
+			return T.parseEventTime(time[0]) + ~~(T.parseEventTime(time[1]) / 2);
+		}
+		if (pTime === "*")
+		{
+			return 0;
+		}
+		// If just a number without colons, assume it is already seconds
+		if (pTime.indexOf(":") === -1)
+		{
+			return parseInt(pTime, 10);
+		}
+
+		time = pTime.split(":");
+		if (time.length === 2)
+		{
+			return parseInt(time[0], T.cBASE_10) * T.cSECONDS_IN_MINUTE
+				+ parseInt(time[1], T.cBASE_10);
+		}
+		if (time.length === 3)
+		{
+			return parseInt(time[0]) * T.cSECONDS_IN_HOUR
+				+ parseInt(time[1], T.cBASE_10) * T.cSECONDS_IN_MINUTE
+				+ parseInt(time[2], T.cBASE_10);
+		}
+		return NaN;
+	},
+	
+	/*
+	 * Converts "XX:XX" (hours:minutes) to minutes.
+	 * @param string pTime to convert.
+	 * @returns int minutes totaled.
+	 */
+	parseChainTime: function(pTime)
+	{
+		var time = pTime.split(":");
+		return parseInt(time[0], T.cBASE_10) * T.cMINUTES_IN_HOUR
+				+ parseInt(time[1], T.cBASE_10);
+	},
 
 	/*
 	 * The DST global integer is added to the server hour, which is incremented if
@@ -3870,12 +4145,8 @@ T = {
 				{
 					sec = now.getSeconds();
 					min = now.getMinutes();
-					hour = (now.getUTCHours() + T.cUTC_OFFSET_SERVER + T.DST_IN_EFFECT)
-						% T.cHOURS_IN_DAY;
-					if (hour < 0)
-					{
-						hour = T.cHOURS_IN_DAY + hour;
-					}
+					hour = now.getUTCHours() + T.cUTC_OFFSET_SERVER + T.DST_IN_EFFECT;
+					hour = T.wrapInteger(hour, T.cHOURS_IN_DAY);
 				} break;
 				case "utc":
 				{
@@ -3888,11 +4159,7 @@ T = {
 		else
 		{
 			// Account for negative input
-			pArgs.customTimeInSeconds = pArgs.customTimeInSeconds % T.cSECONDS_IN_DAY;
-			if (pArgs.customTimeInSeconds < 0)
-			{
-				pArgs.customTimeInSeconds = T.cSECONDS_IN_DAY + pArgs.customTimeInSeconds;
-			}
+			pArgs.customTimeInSeconds = T.wrapInteger(pArgs.customTimeInSeconds, T.cSECONDS_IN_DAY);
 			/*
 			 * Convert specified seconds to time units. The ~~ gets rid of the
 			 * decimal so / behaves like integer divide.
@@ -3996,10 +4263,7 @@ T = {
 				 sec = now.getSeconds();
 			} break;
 		}
-		if (hour < 0)
-		{
-			hour = hour + T.cHOURS_IN_DAY; // Rollover because hour can be calculated to negative
-		}
+		hour = T.wrapInteger(hour, T.cHOURS_IN_DAY);
 
 		if (pTimeUnit === "hours")
 		{ 
@@ -4127,17 +4391,17 @@ K = {
 		var chain3 = C.NextChain3;
 		var chain4 = C.NextChain4;
 		K.wpChain0.setAttribute(K.cWpClipboardDataAttribute, chain0.waypoint
-			+ " " + chain0.alias + C.getTimeTillChainFormatted(chain0) + " then " + chain1.alias
-			+ C.getTimeTillChainFormatted(chain1) + " - " + I.cSiteName);
+			+ " " + chain0.alias + T.getTimeTillChainFormatted(chain0) + " then " + chain1.alias
+			+ T.getTimeTillChainFormatted(chain1) + " - " + I.cSiteName);
 		K.wpChain1.setAttribute(K.cWpClipboardDataAttribute, chain1.waypoint
-			+ " " + chain1.alias + C.getTimeTillChainFormatted(chain1) + " then " + chain2.alias
-			+ C.getTimeTillChainFormatted(chain2) + " - " + I.cSiteName);
+			+ " " + chain1.alias + T.getTimeTillChainFormatted(chain1) + " then " + chain2.alias
+			+ T.getTimeTillChainFormatted(chain2) + " - " + I.cSiteName);
 		K.wpChain2.setAttribute(K.cWpClipboardDataAttribute, chain2.waypoint
-			+ " " + chain2.alias + C.getTimeTillChainFormatted(chain2) + " then " + chain3.alias
-			+ C.getTimeTillChainFormatted(chain3) + " - " + I.cSiteName);
+			+ " " + chain2.alias + T.getTimeTillChainFormatted(chain2) + " then " + chain3.alias
+			+ T.getTimeTillChainFormatted(chain3) + " - " + I.cSiteName);
 		K.wpChain3.setAttribute(K.cWpClipboardDataAttribute, chain3.waypoint
-			+ " " + chain3.alias + C.getTimeTillChainFormatted(chain3) + " then " + chain4.alias
-			+ C.getTimeTillChainFormatted(chain4) + " - " + I.cSiteName);
+			+ " " + chain3.alias + T.getTimeTillChainFormatted(chain3) + " then " + chain4.alias
+			+ T.getTimeTillChainFormatted(chain4) + " - " + I.cSiteName);
 	},
 	
 	/*
@@ -4153,9 +4417,9 @@ K = {
 		var i;
 		var chain;
 		var iconchain;
-		for (i = 0; i < T.cNUMFRAMES_IN_HOUR; i++)
+		for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 		{
-			chain = C.getCurrentChain(i);
+			chain = T.getStandardChain(i);
 			iconchain = K.iconChains[i];
 			if (pAlias === chain.alias)
 			{
@@ -4218,11 +4482,11 @@ K = {
 		K.rotateClockElement(hourhand, hourangle);
 		
 		// Opacity value 0.0 through 1.0 based on how far into the 15 minutes frame
-		var opacityAdd = 1 - ((min % T.cMINUTES_IN_FRAME)*60 + sec) / (T.cSECONDS_IN_FRAME);
+		var opacityAdd = 1 - ((min % T.cMINUTES_IN_TIMEFRAME)*60 + sec) / (T.cSECONDS_IN_TIMEFRAME);
 		var clockbackground = document.getElementById("paneClockBackground");
 		
 		// If crossing a 15 minute mark (IMPORTANT)
-		if (min % T.cMINUTES_IN_FRAME === 0 && sec === 0)
+		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
 		{
 			if (O.Options.int_setClockBackground === 0)
 			{
@@ -4257,26 +4521,26 @@ K = {
 		{
 			if (pMinutes > 0)
 			{
-				var minutestill = T.cMINUTES_IN_FRAME - C.getCurrentChainElapsedTime("minutes");
+				var minutestill = T.cMINUTES_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime("minutes");
 				var chain = C.NextChain1;
-				if (pMinutes > T.cMINUTES_IN_FRAME)
+				if (pMinutes > T.cMINUTES_IN_TIMEFRAME)
 				{
 					chain = C.NextChain2;
-					minutestill += T.cMINUTES_IN_FRAME;
+					minutestill += T.cMINUTES_IN_TIMEFRAME;
 				}
 				
 				if (C.isChainSubscribed(chain) && C.isChainUnchecked(chain)
 					&& pMinutes === minutestill)
 				{
 					return "Subscribed world boss " + chain.pronunciation
-						+ ", will start " + C.getTimeTillChainFormatted(chain, "speech");
+						+ ", will start " + T.getTimeTillChainFormatted(chain, "speech");
 				}
 			}
 			return null;
 		};
 		
 		// If crossing a 1 second mark (given)
-		C.updateCurrentChainTimeHTML();
+		C.CurrentChains.forEach(C.updateCurrentChainTimeHTML);
 		
 		// If crossing a 1 minute mark
 		if (sec === 0)
@@ -4377,19 +4641,25 @@ K = {
 		O.checkResetTimestamp();
 		
 		// Remember current chain to reference variable
-		C.PreviousChain2 = C.getCurrentChain(-2);
-		C.PreviousChain1 = C.getCurrentChain(-1);
-		C.CurrentChain = C.getCurrentChain();
-		C.NextChain1 = C.getCurrentChain(1);
-		C.NextChain2 = C.getCurrentChain(2);
-		C.NextChain3 = C.getCurrentChain(3);
-		C.NextChain4 = C.getCurrentChain(4);
+		C.CurrentChain = T.getStandardChain();
+		C.NextChain1 = T.getStandardChain(1);
+		C.NextChain2 = T.getStandardChain(2);
+		C.NextChain3 = T.getStandardChain(3);
+		C.NextChain4 = T.getStandardChain(4);
+		
+		C.PreviousChains2 = T.getTimeframeChains(-2);
+		C.PreviousChains1 = T.getTimeframeChains(-1);
+		C.CurrentChains = T.getTimeframeChains();
+		C.NextChains1 = T.getTimeframeChains(1);
+		C.NextChains2 = T.getTimeframeChains(2);
+		C.NextChains3 = T.getTimeframeChains(3);
+		C.NextChains4 = T.getTimeframeChains(4);
 		
 		// Sort the chains list
 		C.sortChainsListHTML();
 		
 		// Queue the highlighting of the current chain's events
-		C.queueEventsHighlight();
+		C.CurrentChains.forEach(C.queueEventsHighlight);
 		
 		// Alert current chain
 		if (O.Options.bol_alertAtEnd && O.Options.bol_alertSubscribed === false
@@ -4543,14 +4813,14 @@ K = {
 		// Rebind the clock chain icons to view map event when clicked
 		var i;
 		var coord;
-		for (i = 0; i < T.cNUMFRAMES_IN_HOUR; i++)
+		for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 		{
 			K.iconChains[i].unbind("click");
 			(function(pIndex)
 			{
 				K.iconChains[pIndex].click(function()
 				{
-					coord = C.getCurrentChain(pIndex).primaryEvents[0].path[0];
+					coord = T.getStandardChain(pIndex).primaryEvents[0].path[0];
 					M.goToView(coord, M.PinEvent);
 				});
 			})(i);
@@ -4667,7 +4937,7 @@ I = {
 	userSmallDevice: false,
 	cSMALL_DEVICE_WIDTH: 800,
 	cSMALL_DEVICE_HEIGHT: 600,
-	cSMALL_DISPLAY_HEIGHT: 900,
+	cBIG_DISPLAY_HEIGHT: 1200,
 	
 	/*
 	 * Does things that need to be done before everything else.
@@ -4688,7 +4958,7 @@ I = {
 		}
 		
 		/*
-		 * Loaded stored server sensitive timestamp if it exists, is a number,
+		 * Load stored server sensitive timestamp if it exists, is a number,
 		 * and not from the future, else initialize it.
 		 */ 
 		var currenttimestamp = T.getUNIXSeconds();
@@ -4735,9 +5005,9 @@ I = {
 			O.Options.bol_showMap = false;
 		}
 		// Detect small displays
-		if (window.innerHeight <= I.cSMALL_DISPLAY_HEIGHT)
+		if (window.innerHeight > I.cBIG_DISPLAY_HEIGHT)
 		{
-			O.Options.bol_compactClock = true;
+			O.Options.bol_compactClock = false;
 		}
 		
 		// Remember user's browser maker
@@ -4758,9 +5028,6 @@ I = {
 		{
 			I.userBrowser = I.BrowserEnum.Opera;
 		}
-		
-		// Update and notify user of version change
-		O.enforceProgramVersion();
 		
 		// Default content layer
 		I.contentCurrent = I.ContentEnum.Chains;
@@ -4797,6 +5064,9 @@ I = {
 		
 		// Clean the localStorage of unrecognized variables
 		O.cleanLocalStorage();
+		
+		// Update and notify user of version change
+		O.enforceProgramVersion();
 	},
 	
 	/*
@@ -5688,7 +5958,7 @@ I = {
  * ============================================================= */
 I.initializeFirst(); // initialize variables that need to be first
 O.initializeOptions(); // load stored or default options to the HTML input
-C.initializeSchedule(); // compute event data and write HTML
+T.initializeSchedule(); // compute event data and write HTML
 M.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
