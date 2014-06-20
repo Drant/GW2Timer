@@ -137,6 +137,13 @@ O = {
 			valueDefault: new Array()
 		}
 	},
+	PredictorEnum:
+	{
+		Auto: 0,
+		Min: 1,
+		MinAvg: 2,
+		Avg: 3
+	},
 	ChecklistEnum:
 	{
 		Unchecked: "0",
@@ -168,11 +175,36 @@ O = {
 			I.write(I.cSiteName + " was updated since your last visit.<br />"
 			+ "This version: " + currentversion + "<br />"
 			+ "Your version: " + usersversion + "<br />"
-			+ "Would you like to see the <a id='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />", 15);
+			+ "Would you like to see the <a id='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />", 20);
 			I.convertExternalLink("#urlUpdates");
 		}
 		
 		localStorage[O.Utilities.programVersion.key] = O.Utilities.programVersion.value;
+	},
+	
+	/*
+	 * Reads the stored language and write the default if does not exist, else
+	 * the stored language becomes the program's language.
+	 */
+	enforceProgramLanguage: function()
+	{
+		var i;
+		var match = false;
+		var storedlanguage = localStorage[O.Utilities.programLanguage.key];
+		
+		for (i in O.LanguageEnum)
+		{
+			if (O.LanguageEnum[i] === storedlanguage)
+			{
+				O.Utilities.programLanguage.value = localStorage[O.Utilities.programLanguage.key];
+				match = true;
+				break;
+			}
+		}
+		if (match === false)
+		{
+			localStorage[O.Utilities.programLanguage.key] = O.Utilities.programLanguage.value;
+		}
 	},
 	
 	/*
@@ -893,7 +925,6 @@ O = {
 						thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
 						$(this).addClass("chnChecked");
 						O.setChecklistItem(O.Checklists.Chain, index, O.ChecklistEnum.Checked);
-						
 					} break;
 					case O.ChecklistEnum.Checked:
 					{
@@ -920,7 +951,7 @@ O = {
 					}
 				}
 				// Update the icons on the clock too
-				K.checkoffChainIcon(alias);
+				K.checkoffChainIcon(index);
 			});
 			
 			// Bind the delete chain text button [x]
@@ -934,7 +965,7 @@ O = {
 				O.setChecklistItem(O.Checklists.Chain, index, O.ChecklistEnum.Disabled);
 				
 				// Also update the clock icon
-				K.checkoffChainIcon(alias);
+				K.checkoffChainIcon(index);
 			});
 		}
 	},
@@ -1295,7 +1326,12 @@ O = {
 			// Also unfade the clock icons, which are the current first four bosses
 			for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 			{
-				K.checkoffChainIcon(T.getStandardChains(i));
+				K.checkoffChainIcon(T.getStandardChain(i).index);
+				var chainhardcore = T.getHardcoreChain(i);
+				if (chainhardcore)
+				{
+					K.checkoffChainIcon(chainhardcore.index);
+				}
 			}
 			$("#menuChains").trigger("click");
 		});
@@ -1377,17 +1413,23 @@ O = {
 		{
 			// Reposition clock items
 			I.bulkAnimate([
-				{s: "#itemClockFace img", p: {"border-radius": "32px"}},
+				{s: "#itemClockFace .iconSD", p: {"border-radius": "32px"}},
+				{s: "#itemClockFace .iconHC", p: {"border-radius": "24px"}},
 				{s: "#itemClock", p: {top: "0px"}},
-				{s: "#itemClockIcon0", p: {top: "4px", left: "290px"}},
-				{s: "#itemClockIcon1", p: {top: "148px", left: "290px"}},
-				{s: "#itemClockIcon2", p: {top: "148px", left: "4px"}},
-				{s: "#itemClockIcon3", p: {top: "4px", left: "4px"}},
+				{s: "#itemClockIconStandard0", p: {top: "4px", left: "290px"}},
+				{s: "#itemClockIconStandard1", p: {top: "148px", left: "290px"}},
+				{s: "#itemClockIconStandard2", p: {top: "148px", left: "4px"}},
+				{s: "#itemClockIconStandard3", p: {top: "4px", left: "4px"}},
+				{s: "#itemClockIconHardcore0", p: {top: "52px", left: "306px"}},
+				{s: "#itemClockIconHardcore1", p: {top: "132px", left: "306px"}},
+				{s: "#itemClockIconHardcore2", p: {top: "132px", left: "20px"}},
+				{s: "#itemClockIconHardcore3", p: {top: "52px", left: "20px"}},
 				{s: "#itemClockWaypoint0", p: {top: "24px", left: "274px"}},
 				{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
 				{s: "#itemClockWaypoint2", p: {top: "164px", left: "52px"}},
 				{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}}
 			], animationspeed);
+			$("#itemClockFace .iconHC").css({width: "32px", height: "32px"});
 			$("#itemTimeLocal").css({
 				width: "100%",
 				left: "auto", bottom: "90px",
@@ -1434,17 +1476,23 @@ O = {
 		{
 			// Reposition clock items
 			I.bulkAnimate([
-				{s: "#itemClockFace img", p: {"border-radius": "12px"}},
+				{s: "#itemClockFace .iconSD", p: {"border-radius": "12px"}},
+				{s: "#itemClockFace .iconHC", p: {"border-radius": "12px"}},
 				{s: "#itemClock", p: {top: "70px"}},
-				{s: "#itemClockIcon0", p: {top: "4px", left: "148px"}},
-				{s: "#itemClockIcon1", p: {top: "148px", left: "290px"}},
-				{s: "#itemClockIcon2", p: {top: "290px", left: "148px"}},
-				{s: "#itemClockIcon3", p: {top: "148px", left: "4px"}},
+				{s: "#itemClockIconStandard0", p: {top: "4px", left: "148px"}},
+				{s: "#itemClockIconStandard1", p: {top: "148px", left: "290px"}},
+				{s: "#itemClockIconStandard2", p: {top: "290px", left: "148px"}},
+				{s: "#itemClockIconStandard3", p: {top: "148px", left: "4px"}},
+				{s: "#itemClockIconHardcore0", p: {top: "12px", left: "212px"}},
+				{s: "#itemClockIconHardcore1", p: {top: "212px", left: "298px"}},
+				{s: "#itemClockIconHardcore2", p: {top: "298px", left: "100px"}},
+				{s: "#itemClockIconHardcore3", p: {top: "100px", left: "12px"}},
 				{s: "#itemClockWaypoint0", p: {top: "52px", left: "164px"}},
 				{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
 				{s: "#itemClockWaypoint2", p: {top: "274px", left: "164px"}},
 				{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}}
 			], animationspeed);
+			$("#itemClockFace .iconHC").css({width: "48px", height: "48px"});
 			$("#itemTimeLocal").css({
 				width: "auto",
 				left: "10px", bottom: "10px",
@@ -1572,24 +1620,26 @@ C = {
 	 * This is referred to by the variable "C.Chains".
 	 */
 	Chains: GW2T_CHAINS_DATA,
-	CurrentChain: {},
-	NextChain1: {},
-	NextChain2: {},
-	NextChain3: {},
-	NextChain4: {},
+	CurrentSDChain: {},
+	NextSDChain1: {},
+	NextSDChain2: {},
+	NextSDChain3: {},
+	NextSDChain4: {},
+	CurrentHCChain: {},
+	NextHCChain1: {},
+	NextHCChain2: {},
+	NextHCChain3: {},
+	NextHCChain4: {},
 	CurrentChains: [],
 	PreviousChains1: [],
 	PreviousChains2: [],
 	NextChains1: [],
-	NextChains2: [],
-	NextChains3: [],
-	NextChains4: [],
 	cChainTitleCharLimit: 30,
-	CurrentPrimaryEvent: {},
 	ChainSeriesEnum:
 	{
 		Temple: 0, // Unscheduled Orr temples
 		Legacy: 1, // Unscheduled chains that still gives a rare
+		ScheduledCutoff: 2,
 		Standard: 2, // Scheduled non-hardcore chains
 		Hardcore: 3, // Scheduled challenging chains with a separate schedule from non-hardcores
 		Story: 4 // Scheduled Living Story chains
@@ -1813,9 +1863,16 @@ C = {
 		 * events and create HTML elements so they can be displayed in totality.
 		 */
 		ii = 0;
-		// Scheduled events need to remember concurrent events
-		if (pChain.series !== C.ChainSeriesEnum.Temple
-			&& pChain.series !== C.ChainSeriesEnum.Legacy)
+		// Unscheduled events don't need queued accessing
+		if (pChain.series === C.ChainSeriesEnum.Temple
+			|| pChain.series === C.ChainSeriesEnum.Legacy)
+		{
+			for (i in pChain.events)
+			{
+				insertEventToBarHTML(pChain, pChain.events[i]);
+			}
+		}
+		else // Scheduled events need to remember concurrent events
 		{
 			C.ScheduledChains.push(pChain); // Initialize the shortcut reference array
 			
@@ -1842,13 +1899,6 @@ C = {
 				}
 			}
 		}
-		else // Unscheduled events don't need queued accessing
-		{
-			for (i in pChain.events)
-			{
-				insertEventToBarHTML(pChain, pChain.events[i]);
-			}
-		}
 	}, // End of initializeChains()
 
 	/*
@@ -1869,7 +1919,7 @@ C = {
 				C.Chains[i].events[ii].step = parseInt(C.Chains[i].events[ii].num.charAt(0)) - 1;
 			}
 			
-			C.Chains[i].index = i;
+			C.Chains[i].index = parseInt(i);
 			C.Chains[i].isSorted = false;
 			C.Chains[i].primaryEvents = new Array();
 			C.Chains[i].scheduleKeys = new Array();
@@ -1997,22 +2047,33 @@ C = {
 	},
 	
 	/*
-	 * Updates the current chain bar's time as a countup since it began.
+	 * Updates the current chain bar's time as a countdown until the chain is
+	 * predicted to finish, or until the next chain starts if finished.
 	 */
 	updateCurrentChainTimeHTML: function(pChain)
 	{
+		var elapsed = T.getCurrentTimeframeElapsedTime();
+		var remaining = pChain.countdownToFinish - elapsed;
+		var time = remaining;
+		var sign = "-";
 		var wantletters = false;
+		
 		if (O.Options.int_setTimeStyle === 0)
 		{
 			wantletters = true;
 		}
+		if (remaining <= 0)
+		{
+			time = T.cSECONDS_IN_TIMEFRAME - elapsed;
+			sign = "−";
+		}
 		
-		$("#chnTime_" + pChain.alias).text("-" + T.getTimeFormatted(
+		$("#chnTime_" + pChain.alias).text(sign + T.getTimeFormatted(
 			{
 				want24: true,
 				wantHours: false,
 				wantLetters: wantletters,
-				customTimeInSeconds: T.getCurrentTimeframeElapsedTime()
+				customTimeInSeconds: time
 			})
 		);
 	},
@@ -2301,7 +2362,7 @@ C = {
 		
 		if (pPrimaryEventIndex > -1) // -1 means the final event's finish time
 		{
-			C.CurrentPrimaryEvent = pChain.primaryEvents[pPrimaryEventIndex];
+			pChain.CurrentPrimaryEvent = pChain.primaryEvents[pPrimaryEventIndex];
 			
 			// Recolor past events
 			for (i = 0; i < pPrimaryEventIndex; i++)
@@ -2332,11 +2393,13 @@ C = {
 			if (O.Options.bol_tourPrediction && I.contentCurrent === I.ContentEnum.Chains
 					&& M.isMapAJAXDone)
 			{
-				$("#chnEvent_" + pChain.alias + "_" + C.CurrentPrimaryEvent.num).trigger("click");
+				$("#chnEvent_" + pChain.alias + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
 		}
 		else // Finish time
 		{
+			pChain.CurrentPrimaryEvent = pChain.primaryEvents[pChain.primaryEvents.length - 1];
+			
 			$("#chnEvents_" + pChain.alias + " li").removeClass("chnEventCurrent")
 				.addClass("chnEventPast").last().css({opacity: 1}).animate({opacity: 0.5}, 500);
 			
@@ -2344,21 +2407,21 @@ C = {
 			 * Announce the next world boss and the time until it, only if it's
 			 * not past the timeframe, and the subscription option is off.
 			 */
-			if (O.Options.bol_alertAtEnd && pChain.alias === C.CurrentChain.alias
+			if (O.Options.bol_alertAtEnd && pChain.alias === C.CurrentSDChain.alias
 				&& O.Options.bol_alertSubscribed === false
 				&& O.Options.bol_enableSound)
 			{
 				var checked = "";
 				
-				if (O.getChainChecklistState(C.NextChain1) !== O.ChecklistEnum.Unchecked)
+				if (O.getChainChecklistState(C.NextSDChain1) !== O.ChecklistEnum.Unchecked)
 				{
 					checked = ", checked";
 				}
 				// Don't alert if next boss is checked off and user opted not to hear
 				if ( ! (checked.length > 0 && O.Options.bol_alertChecked === false))
 				{
-					I.speak("Next world boss is " + C.NextChain1.pronunciation
-						+ ", " + T.getTimeTillChainFormatted(C.NextChain1, "speech") + checked);
+					I.speak("Next world boss is " + C.NextSDChain1.pronunciation
+						+ ", " + T.getTimeTillChainFormatted(C.NextSDChain1, "speech") + checked);
 				}
 			}
 		}
@@ -2378,7 +2441,7 @@ C = {
 		{
 			switch (O.Options.int_setPredictor)
 			{
-				case 0:
+				case O.PredictorEnum.Auto:
 				{
 					// North American playtime in server hour
 					if (hour >= 16 && hour < 20)
@@ -2398,15 +2461,15 @@ C = {
 						return pChain.primaryEvents[pIndex].minavgSum;
 					}
 				} break;
-				case 1:
+				case O.PredictorEnum.Min:
 				{
 					return pChain.primaryEvents[pIndex].minSum;
 				} break;
-				case 2:
+				case O.PredictorEnum.MinAvg:
 				{
 					return pChain.primaryEvents[pIndex].minavgSum;
 				} break;
-				case 3:
+				case O.PredictorEnum.Avg:
 				{
 					return pChain.primaryEvents[pIndex].avgSum;
 				} break;
@@ -2416,35 +2479,42 @@ C = {
 		{
 			switch (O.Options.int_setPredictor)
 			{
-				case 0:
+				case O.PredictorEnum.Auto:
 				{
 					if (hour >= 16 && hour < 20)
 					{
+						pChain.countdownToFinish = pChain.minFinish;
 						return pChain.minFinish;
 					}
 					if (hour >= 20 && hour < 23)
 					{
+						pChain.countdownToFinish = pChain.minavgFinish;
 						return pChain.minavgFinish;
 					}
 					if (hour >= 23 || hour < 12)
 					{
+						pChain.countdownToFinish = pChain.avgFinish;
 						return pChain.avgFinish;
 					}
 					if (hour >= 12 && hour < 16)
 					{
+						pChain.countdownToFinish = pChain.minavgFinish;
 						return pChain.minavgFinish;
 					}
 				} break;
-				case 1:
+				case O.PredictorEnum.Min:
 				{
+					pChain.countdownToFinish = pChain.minFinish;
 					return pChain.minFinish;
 				} break;
-				case 2:
+				case O.PredictorEnum.MinAvg:
 				{
+					pChain.countdownToFinish = pChain.minavgFinish;
 					return pChain.minavgFinish;
 				} break;
-				case 3:
+				case O.PredictorEnum.Avg:
 				{
+					pChain.countdownToFinish = pChain.avgFinish;
 					return pChain.avgFinish;
 				} break;
 			}
@@ -2556,7 +2626,7 @@ M = {
 		/*
 		 * Go to the coordinates in the bar when user presses enter.
 		 */
-		$("#mapCoordinatesStatic").bind("enterKey", function(pEvent)
+		$("#mapCoordinatesStatic").bind("enterKey", function()
 		{
 			var coord = M.parseCoordinates($(this).val());
 			if (coord[0] !== "" && coord.length === 2)
@@ -2973,25 +3043,25 @@ M = {
 			{
 				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
 			}
+			
+			if (O.Options.bol_tourPrediction && I.contentCurrent === I.ContentEnum.Chains)
+			{
+				// Initialize the "current moused zone" variable for showing waypoints
+				M.showCurrentZone(M.getZoneCenter("la"));
+				// The zoomend event handler doesn't detect the first zoom by prediction
+				for (var i in M.WaypointEntities)
+				{
+					M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.cLEAFLET_ICON_SIZE);
+				}
+				// Tour to the event on the map if opted
+				$("#chnEvent_" + C.CurrentSDChain.alias + "_"
+					+ C.CurrentSDChain.CurrentPrimaryEvent.num).trigger("click");
+			}
 			/*
 			 * Start tooltip plugin after the markers were loaded, because it
 			 * reads the title attribute and convert them into a div "tooltip".
 			 */
 			I.qTip.init(".leaflet-marker-icon");
-			// The zoomend event handler doesn't detect the first zoom by prediction
-			if (O.Options.bol_tourPrediction && I.contentCurrent === I.ContentEnum.Chains
-				&& C.CurrentPrimaryEvent.num !== undefined)
-			{
-				for (var i in M.WaypointEntities)
-				{
-					M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.cLEAFLET_ICON_SIZE);
-				}
-			}
-			// Tour to the event on the map if opted
-			if (O.Options.bol_tourPrediction && I.contentCurrent === I.ContentEnum.Chains)
-			{
-				$("#chnEvent_" + C.CurrentChain.alias + "_" + C.CurrentPrimaryEvent.num).trigger("click");
-			}
 		}).fail(function(){
 			I.write(
 				"Guild Wars 2 API server is unreachable.<br />"
@@ -3111,7 +3181,7 @@ M = {
 					// Assign a data attribute to the event name
 					var coord = event.path[0];
 					$(this).attr("data-coord", coord[0] + "," + coord[1]);
-					// Read the attribute and use the coordinate when clicked
+					// Read the attribute and use the coordinate when clicked for touring
 					M.bindMapLinkBehavior($(this), M.PinEvent);
 				});
 			}
@@ -3581,11 +3651,11 @@ T = {
 	cSECONDS_IN_TIMEFRAME: 900,
 	cMINUTES_IN_TIMEFRAME: 15,
 	cNUM_TIMEFRAMES_IN_HOUR: 4,
-	cSECS_F1_MARK: 0,
-	cSECS_F2_MARK: 900,
-	cSECS_F3_MARK: 1800,
-	cSECS_F4_MARK: 2700,
-	cSECS_F0_MARK: 3599,
+	cSECS_MARK_0: 0,
+	cSECS_MARK_1: 900,
+	cSECS_MARK_2: 1800,
+	cSECS_MARK_3: 2700,
+	cSECS_MARK_4: 3599,
 	cBASE_10: 10,
 	
 	Schedule: {},
@@ -3765,6 +3835,8 @@ T = {
 		
 		// Finally bind event handlers for the chain checklist
 		O.initializeChainChecklist();
+		// Initialize for the touring function to access current active event
+		C.CurrentSDChain = T.getStandardChain();
 	},
 	
 	/*
@@ -3846,6 +3918,10 @@ T = {
 	},
 	getHardcoreChain: function(pOffset)
 	{
+		/*
+		 * Because there are gaps in the "hardcore schedule", the return needs
+		 * to be checked before using since it can be null.
+		 */
 		return T.getTimeframeChainBySeries(pOffset, C.ChainSeriesEnum.Hardcore);
 	},
 	
@@ -3938,8 +4014,8 @@ T = {
 	getTimeTillChainFormatted: function(pChain, pFormat)
 	{
 		var secondsleft = T.getSecondsUntilChainStarts(pChain);
-		var min = ~~(secondsleft / 60) % 60;
-		var hour = ~~(secondsleft / 3600);
+		var min = ~~(secondsleft / T.cSECONDS_IN_MINUTE) % T.cSECONDS_IN_MINUTE;
+		var hour = ~~(secondsleft / T.cSECONDS_IN_HOUR);
 		var minword = "m";
 		var hourword = "h";
 		
@@ -4031,7 +4107,7 @@ T = {
 		// If just a number without colons, assume it is already seconds
 		if (pTime.indexOf(":") === -1)
 		{
-			return parseInt(pTime, 10);
+			return parseInt(pTime, T.cBASE_10);
 		}
 
 		time = pTime.split(":");
@@ -4293,26 +4369,22 @@ T = {
 K = {
 	
 	tickerFrequency: 250, // Must be a divisor of 1000 milliseconds
-	tickerSecondPrevious: undefined,
+	tickerSecondPrevious: null,
 	awakeTimestampPrevious: 0,
 	awakeTimestampTolerance: 5,
 	currentFrameOffsetMinutes: 0,
-	cClockEventsLimit: 4, // Number of events on the clock
+	cCLOCK_EVENTS_LIMIT: 4, // Number of events on the clock
 	iconOpacityChecked: 0.4,
 	iconOpacitySpeed: 200,
-	wp0: document.getElementById("itemClockWaypoint0"),
-	wp1: document.getElementById("itemClockWaypoint1"),
-	wp2: document.getElementById("itemClockWaypoint2"),
-	wp3: document.getElementById("itemClockWaypoint3"),
-	wpChain0: {}, // These will be DOM elements
-	wpChain1: {},
-	wpChain2: {},
-	wpChain3: {},
-	iconChain0: {}, // These will be jQuery "elements"
-	iconChain1: {},
-	iconChain2: {},
-	iconChain3: {},
-	iconChains: new Array(),
+	cDEGREES_IN_QUADRANT: 90,
+	
+	// These will be DOM elements
+	wpChain0: {}, wpChain1: {}, wpChain2: {}, wpChain3: {},
+	// These will be jQuery "elements"
+	iconSD0: {}, iconSD1: {}, iconSD2: {}, iconSD3: {},
+	iconHC0: {}, iconHC1: {}, iconHC2: {}, iconHC3: {},
+	iconsStandard: new Array(),
+	iconsHardcore: new Array(),
 	wpClipboards: [],
 	cWpClipboardDataAttribute: "data-clipboard-text", // Defined by ZeroClipboard
 	tickerTimeout: {},
@@ -4371,12 +4443,10 @@ K = {
 	 */
 	initializeClockItems: function()
 	{
-		K.iconChains = null;
-		K.iconChains = new Array();
-		K.iconChains.push(K.iconChain0);
-		K.iconChains.push(K.iconChain1);
-		K.iconChains.push(K.iconChain2);
-		K.iconChains.push(K.iconChain3);
+		K.iconsStandard = null;
+		K.iconsHardcore = null;
+		K.iconsStandard = new Array(K.iconSD0, K.iconSD1, K.iconSD2, K.iconSD3);
+		K.iconsHardcore = new Array(K.iconHC0, K.iconHC1, K.iconHC2, K.iconHC3);
 	},
 	
 	/*
@@ -4385,11 +4455,11 @@ K = {
 	 */
 	updateWaypointsClipboard: function()
 	{
-		var chain0 = C.CurrentChain;
-		var chain1 = C.NextChain1;
-		var chain2 = C.NextChain2;
-		var chain3 = C.NextChain3;
-		var chain4 = C.NextChain4;
+		var chain0 = C.CurrentSDChain;
+		var chain1 = C.NextSDChain1;
+		var chain2 = C.NextSDChain2;
+		var chain3 = C.NextSDChain3;
+		var chain4 = C.NextSDChain4;
 		K.wpChain0.setAttribute(K.cWpClipboardDataAttribute, chain0.waypoint
 			+ " " + chain0.alias + T.getTimeTillChainFormatted(chain0) + " then " + chain1.alias
 			+ T.getTimeTillChainFormatted(chain1) + " - " + I.cSiteName);
@@ -4408,30 +4478,49 @@ K = {
 	 * Called when the user checks a chain on the checklist, this will see if
 	 * that chain is on the clock, and if it is, change visual based on the
 	 * check state.
-	 * @param string pAlias of the chain to check off in the clock.
+	 * @param string pIndex of the chain to check off in the clock.
 	 * @pre iconChains jQuery objects array was initialized and icons are in
 	 * proper clock position.
 	 */
-	checkoffChainIcon: function(pAlias)
+	checkoffChainIcon: function(pIndex)
 	{
 		var i;
-		var chain;
+		var chain = C.Chains[pIndex]; // Chain that is clicked on checklist
+		var ithchain; // Chain that is on the clock
 		var iconchain;
-		for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
+		
+		if (chain.series === C.ChainSeriesEnum.Standard
+			|| chain.series === C.ChainSeriesEnum.Hardcore)
 		{
-			chain = T.getStandardChain(i);
-			iconchain = K.iconChains[i];
-			if (pAlias === chain.alias)
+			for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 			{
-				if (O.getChainChecklistState(chain) !== O.ChecklistEnum.Unchecked)
+				switch (chain.series)
 				{
-					iconchain.css({opacity: 1})
-						.animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
+					case C.ChainSeriesEnum.Standard:
+					{
+						ithchain = T.getStandardChain(i);
+						iconchain = K.iconsStandard[i];
+					} break;
+					case C.ChainSeriesEnum.Hardcore:
+					{
+						ithchain = T.getHardcoreChain(i);
+						iconchain = K.iconsHardcore[i];
+					} break;
 				}
-				else
+
+				// If clicked chain is on the clock
+				if (ithchain && pIndex === ithchain.index)
 				{
-					iconchain.css({opacity: K.iconOpacityChecked})
-						.animate({opacity: 1}, K.iconOpacitySpeed);
+					if (O.getChainChecklistState(ithchain) !== O.ChecklistEnum.Unchecked)
+					{
+						iconchain.css({opacity: 1})
+							.animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
+					}
+					else
+					{
+						iconchain.css({opacity: K.iconOpacityChecked})
+							.animate({opacity: 1}, K.iconOpacitySpeed);
+					}
 				}
 			}
 		}
@@ -4522,10 +4611,10 @@ K = {
 			if (pMinutes > 0)
 			{
 				var minutestill = T.cMINUTES_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime("minutes");
-				var chain = C.NextChain1;
+				var chain = C.NextSDChain1;
 				if (pMinutes > T.cMINUTES_IN_TIMEFRAME)
 				{
-					chain = C.NextChain2;
+					chain = C.NextSDChain2;
 					minutestill += T.cMINUTES_IN_TIMEFRAME;
 				}
 				
@@ -4607,16 +4696,16 @@ K = {
 		
 		// Change the minute hand if passing colored marker
 		if (secinhour >= K.currentFrameOffsetMinutes
-			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentChain.minFinish))
+			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentSDChain.minFinish))
 		{
 			minhand.style.stroke = "lime";
 		}
-		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentChain.minFinish)
-			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentChain.avgFinish))
+		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentSDChain.minFinish)
+			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentSDChain.avgFinish))
 		{
 			minhand.style.stroke = "orange";
 		}
-		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentChain.avgFinish))
+		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentSDChain.avgFinish))
 		{
 			minhand.style.stroke = "red";
 		}
@@ -4641,19 +4730,22 @@ K = {
 		O.checkResetTimestamp();
 		
 		// Remember current chain to reference variable
-		C.CurrentChain = T.getStandardChain();
-		C.NextChain1 = T.getStandardChain(1);
-		C.NextChain2 = T.getStandardChain(2);
-		C.NextChain3 = T.getStandardChain(3);
-		C.NextChain4 = T.getStandardChain(4);
+		C.CurrentSDChain = T.getStandardChain();
+		C.NextSDChain1 = T.getStandardChain(1);
+		C.NextSDChain2 = T.getStandardChain(2);
+		C.NextSDChain3 = T.getStandardChain(3);
+		C.NextSDChain4 = T.getStandardChain(4);
+		
+		C.CurrentHCChain = T.getHardcoreChain();
+		C.NextHCChain1 = T.getHardcoreChain(1);
+		C.NextHCChain2 = T.getHardcoreChain(2);
+		C.NextHCChain3 = T.getHardcoreChain(3);
+		C.NextHCChain4 = T.getHardcoreChain(4);
 		
 		C.PreviousChains2 = T.getTimeframeChains(-2);
 		C.PreviousChains1 = T.getTimeframeChains(-1);
 		C.CurrentChains = T.getTimeframeChains();
 		C.NextChains1 = T.getTimeframeChains(1);
-		C.NextChains2 = T.getTimeframeChains(2);
-		C.NextChains3 = T.getTimeframeChains(3);
-		C.NextChains4 = T.getTimeframeChains(4);
 		
 		// Sort the chains list
 		C.sortChainsListHTML();
@@ -4667,19 +4759,19 @@ K = {
 		{
 			var checkedcurrent = "";
 			var checkednext = "";
-			if (C.isChainUnchecked(C.CurrentChain) === false)
+			if (C.isChainUnchecked(C.CurrentSDChain) === false)
 			{
 				checkedcurrent = ", checked";
 			}
-			if (C.isChainUnchecked(C.NextChain1) === false)
+			if (C.isChainUnchecked(C.NextSDChain1) === false)
 			{
 				checkednext = ", checked";
 			}
 			// Don't alert if current boss is checked off and user opted not to hear
 			if ( ! (checkedcurrent.length > 0 && O.Options.bol_alertChecked === false))
 			{
-				I.speak("Current world boss is " + C.CurrentChain.pronunciation
-					+ checkedcurrent + ". Followed by " + C.NextChain1.pronunciation + checkednext);
+				I.speak("Current world boss is " + C.CurrentSDChain.pronunciation
+					+ checkedcurrent + ". Followed by " + C.NextSDChain1.pronunciation + checkednext);
 			}
 		}
 		
@@ -4691,119 +4783,137 @@ K = {
 		{
 			$(this).attr("stroke", "black");
 		});
-		$("#itemClockFace img").each(function()
+		$("#itemClockFace .iconSD").css(
 		{
-			$(this).css(
-			{
-				"border": "1px solid black",
-				"box-shadow": "0px 0px 10px black"
-			});
+			"border": "1px solid black",
+			"box-shadow": "0px 0px 10px black"
 		});
+		$("#itemClockFace .iconHC").css(
+		{
+			"border": "1px solid black",
+			"box-shadow": "0px 0px 10px black"
+		});
+		
 		// Macro function for the following conditionals
-		var restyleClock = function(pMarkerStart, pMarker0A, pMarker0B, pMarkerNext,
+		var repositionMarkers = function(pMarkerStart, pMarker0A, pMarker0B, pMarkerNext,
 			pMarker1A, pMarker1B, pMarker2A, pMarker2B, pMarker3A, pMarker3B,
 			pOffsetMark0, pOffsetMark1, pOffsetMark2, pOffsetMark3)
 		{
 			// Highlight active chain icon
-			K.iconChain0.css(
+			$([K.iconSD0, K.iconHC0]).each(function()
 			{
-				"border": "1px solid lime",
-				"box-shadow": "0px 0px 10px lime"
-			});
-			K.iconChain1.css(
-			{
-				"border": "1px solid green",
-				"box-shadow": "0px 0px 10px green"
-			});
-			// Chain shortcuts
-			var chain0 = C.CurrentChain;
-			var chain1 = C.NextChain1;
-			var chain2 = C.NextChain2;
-			var chain3 = C.NextChain3;
-			// Update chain markers
-			K.setMarkerAngle(pMarker0A, chain0.minFinish + pOffsetMark0);
-			K.setMarkerAngle(pMarker0B, chain0.avgFinish + pOffsetMark0);
-			K.setMarkerAngle(pMarker1A, chain1.minFinish + pOffsetMark1);
-			K.setMarkerAngle(pMarker1B, chain1.avgFinish + pOffsetMark1);
-			K.setMarkerAngle(pMarker2A, chain2.minFinish + pOffsetMark2);
-			K.setMarkerAngle(pMarker2B, chain2.avgFinish + pOffsetMark2);
-			K.setMarkerAngle(pMarker3A, chain3.minFinish + pOffsetMark3);
-			K.setMarkerAngle(pMarker3B, chain3.avgFinish + pOffsetMark3);
-			// Update chain icons, fade if checked off
-			var fadeIcons = function(pChain, pIcon)
-			{
-				if (O.getChainChecklistState(pChain) !== O.ChecklistEnum.Unchecked)
+				$(this).css(
 				{
-					$(pIcon).css({opacity: K.iconOpacityChecked});
+					"border": "1px solid lime",
+					"box-shadow": "0px 0px 10px lime"
+				});
+			});
+			$([K.iconSD1, K.iconHC1]).each(function()
+			{
+				$(this).css(
+				{
+					"border": "1px solid green",
+					"box-shadow": "0px 0px 10px green"
+				});
+			});
+			
+			// Update chain markers
+			K.setMarkerAngle(pMarker0A, C.CurrentSDChain.minFinish + pOffsetMark0);
+			K.setMarkerAngle(pMarker0B, C.CurrentSDChain.avgFinish + pOffsetMark0);
+			K.setMarkerAngle(pMarker1A, C.NextSDChain1.minFinish + pOffsetMark1);
+			K.setMarkerAngle(pMarker1B, C.NextSDChain1.avgFinish + pOffsetMark1);
+			K.setMarkerAngle(pMarker2A, C.NextSDChain2.minFinish + pOffsetMark2);
+			K.setMarkerAngle(pMarker2B, C.NextSDChain2.avgFinish + pOffsetMark2);
+			K.setMarkerAngle(pMarker3A, C.NextSDChain3.minFinish + pOffsetMark3);
+			K.setMarkerAngle(pMarker3B, C.NextSDChain3.avgFinish + pOffsetMark3);
+			// Update chain icons, fade if checked off
+			var restyleIcon = function(pChain, pIcon)
+			{
+				if (pChain === null)
+				{
+					// Don't show icon if hardcore boss is not scheduled at that timeframe
+					pIcon.hide();
 				}
 				else
 				{
-					$(pIcon).css({opacity: 1});
+					pIcon.show();
+					pIcon.attr("src", "img/chain/" + pChain.alias.toLowerCase() + I.cImageMainExtension);
+
+					if (O.getChainChecklistState(pChain) !== O.ChecklistEnum.Unchecked)
+					{
+						pIcon.css({opacity: K.iconOpacityChecked});
+					}
+					else
+					{
+						pIcon.css({opacity: 1});
+					}
 				}
 			};
-			K.iconChain0.attr("src", "img/chain/" + chain0.alias.toLowerCase() + I.cImageMainExtension);
-			K.iconChain1.attr("src", "img/chain/" + chain1.alias.toLowerCase() + I.cImageMainExtension);
-			K.iconChain2.attr("src", "img/chain/" + chain2.alias.toLowerCase() + I.cImageMainExtension);
-			K.iconChain3.attr("src", "img/chain/" + chain3.alias.toLowerCase() + I.cImageMainExtension);
-			fadeIcons(chain0, K.iconChain0);
-			fadeIcons(chain1, K.iconChain1);
-			fadeIcons(chain2, K.iconChain2);
-			fadeIcons(chain3, K.iconChain3);
+			restyleIcon(C.CurrentSDChain, K.iconSD0);
+			restyleIcon(C.NextSDChain1, K.iconSD1);
+			restyleIcon(C.NextSDChain2, K.iconSD2);
+			restyleIcon(C.NextSDChain3, K.iconSD3);
+			restyleIcon(C.CurrentHCChain, K.iconHC0);
+			restyleIcon(C.NextHCChain1, K.iconHC1);
+			restyleIcon(C.NextHCChain2, K.iconHC2);
+			restyleIcon(C.NextHCChain3, K.iconHC3);
 			// Colorize the active chain's markers
 			$(pMarkerStart).attr("stroke", "lime");
 			$(pMarker0A).attr("stroke", "orange");
 			$(pMarker0B).attr("stroke", "red");
 			$(pMarkerNext).attr("stroke", "green");
 		};
+		
+		// Macro function for styling various clock pane elements
+		var restyleClock = function(pTimeframeMark)
+		{
+			var i0, i1, i2, i3;
+			switch (pTimeframeMark)
+			{
+				case T.cSECS_MARK_0: { i0 = "0"; i1 = "1"; i2 = "2"; i3 = "3"; } break;
+				case T.cSECS_MARK_1: { i0 = "1"; i1 = "2"; i2 = "3"; i3 = "0"; } break;
+				case T.cSECS_MARK_2: { i0 = "2"; i1 = "3"; i2 = "0"; i3 = "1"; } break;
+				case T.cSECS_MARK_3: { i0 = "3"; i1 = "0"; i2 = "1"; i3 = "2"; } break;
+			}
+			var angle = parseInt(i0) * K.cDEGREES_IN_QUADRANT;
+			K.currentFrameOffsetMinutes = pTimeframeMark;
+
+			K.wpChain0 = $("#itemClockWaypoint" + i0)[0]; K.iconSD0 = $("#itemClockIconStandard" + i0);
+			K.wpChain1 = $("#itemClockWaypoint" + i1)[0]; K.iconSD1 = $("#itemClockIconStandard" + i1);
+			K.wpChain2 = $("#itemClockWaypoint" + i2)[0]; K.iconSD2 = $("#itemClockIconStandard" + i2);
+			K.wpChain3 = $("#itemClockWaypoint" + i3)[0]; K.iconSD3 = $("#itemClockIconStandard" + i3);
+			K.iconHC0 = $("#itemClockIconHardcore" + i0);
+			K.iconHC1 = $("#itemClockIconHardcore" + i1);
+			K.iconHC2 = $("#itemClockIconHardcore" + i2);
+			K.iconHC3 = $("#itemClockIconHardcore" + i3);
+			
+			K.rotateClockElement($("#clkSector")[0], angle);
+			repositionMarkers(
+				$("#clkMarker" + i0), $("#clkMarker" + i0 + "A"), $("#clkMarker" + i0 + "B"),
+				$("#clkMarker" + i1), $("#clkMarker" + i1 + "A"), $("#clkMarker" + i1 + "B"),
+				$("#clkMarker" + i2 + "A"), $("#clkMarker" + i2 + "B"),
+				$("#clkMarker" + i3 + "A"), $("#clkMarker" + i3 + "B"),
+				T["cSECS_MARK_" + i0], T["cSECS_MARK_" + i1], T["cSECS_MARK_" + i2], T["cSECS_MARK_" + i3]
+			);
+		};
+		
 		// Recolor the active event's markers and rotate clock sector
 		// Note that clock elements' IDs are suffixed with numbers 0-3 for easy iteration
-		if (secinhour >= T.cSECS_F1_MARK && secinhour < T.cSECS_F2_MARK)
+		if (secinhour >= T.cSECS_MARK_0 && secinhour < T.cSECS_MARK_1)
 		{
-			K.currentFrameOffsetMinutes = T.cSECS_F1_MARK;
-			K.wpChain0 = K.wp0; K.iconChain0 = $("#itemClockIcon0");
-			K.wpChain1 = K.wp1; K.iconChain1 = $("#itemClockIcon1");
-			K.wpChain2 = K.wp2; K.iconChain2 = $("#itemClockIcon2");
-			K.wpChain3 = K.wp3; K.iconChain3 = $("#itemClockIcon3");
-			K.rotateClockElement($("#clkSector")[0], 0);
-			restyleClock($("#clkMarker0"), $("#clkMarker0A"), $("#clkMarker0B"), $("#clkMarker1"),
-				$("#clkMarker1A"), $("#clkMarker1B"), $("#clkMarker2A"), $("#clkMarker2B"), $("#clkMarker3A"), $("#clkMarker3B"),
-				T.cSECS_F1_MARK, T.cSECS_F2_MARK, T.cSECS_F3_MARK, T.cSECS_F4_MARK);
+			restyleClock(T.cSECS_MARK_0);
 		}
-		else if (secinhour >= T.cSECS_F2_MARK && secinhour < T.cSECS_F3_MARK)
+		else if (secinhour >= T.cSECS_MARK_1 && secinhour < T.cSECS_MARK_2)
 		{
-			K.currentFrameOffsetMinutes = T.cSECS_F2_MARK;
-			K.wpChain0 = K.wp1; K.iconChain0 = $("#itemClockIcon1");
-			K.wpChain1 = K.wp2; K.iconChain1 = $("#itemClockIcon2");
-			K.wpChain2 = K.wp3; K.iconChain2 = $("#itemClockIcon3");
-			K.wpChain3 = K.wp0; K.iconChain3 = $("#itemClockIcon0");
-			K.rotateClockElement($("#clkSector")[0], 90);
-			restyleClock($("#clkMarker1"), $("#clkMarker1A"), $("#clkMarker1B"), $("#clkMarker2"),
-				$("#clkMarker2A"), $("#clkMarker2B"), $("#clkMarker3A"), $("#clkMarker3B"), $("#clkMarker0A"), $("#clkMarker0B"),
-				T.cSECS_F2_MARK, T.cSECS_F3_MARK, T.cSECS_F4_MARK, T.cSECS_F1_MARK);
+			restyleClock(T.cSECS_MARK_1);
 		}
-		else if (secinhour >= T.cSECS_F3_MARK && secinhour < T.cSECS_F4_MARK)
+		else if (secinhour >= T.cSECS_MARK_2 && secinhour < T.cSECS_MARK_3)
 		{
-			K.currentFrameOffsetMinutes = T.cSECS_F3_MARK;
-			K.wpChain0 = K.wp2; K.iconChain0 = $("#itemClockIcon2");
-			K.wpChain1 = K.wp3; K.iconChain1 = $("#itemClockIcon3");
-			K.wpChain2 = K.wp0; K.iconChain2 = $("#itemClockIcon0");
-			K.wpChain3 = K.wp1; K.iconChain3 = $("#itemClockIcon1");
-			K.rotateClockElement($("#clkSector")[0], 180);
-			restyleClock($("#clkMarker2"), $("#clkMarker2A"), $("#clkMarker2B"), $("#clkMarker3"),
-				$("#clkMarker3A"), $("#clkMarker3B"), $("#clkMarker0A"), $("#clkMarker0B"), $("#clkMarker1A"), $("#clkMarker1B"),
-				T.cSECS_F3_MARK, T.cSECS_F4_MARK, T.cSECS_F1_MARK, T.cSECS_F2_MARK);
+			restyleClock(T.cSECS_MARK_2);
 		}
-		else if (secinhour >= T.cSECS_F4_MARK && secinhour <= T.cSECS_F0_MARK)
+		else if (secinhour >= T.cSECS_MARK_3 && secinhour <= T.cSECS_MARK_4)
 		{
-			K.currentFrameOffsetMinutes = T.cSECS_F4_MARK;
-			K.wpChain0 = K.wp3; K.iconChain0 = $("#itemClockIcon3");
-			K.wpChain1 = K.wp0; K.iconChain1 = $("#itemClockIcon0");
-			K.wpChain2 = K.wp1; K.iconChain2 = $("#itemClockIcon1");
-			K.wpChain3 = K.wp2; K.iconChain3 = $("#itemClockIcon2");
-			K.rotateClockElement($("#clkSector")[0], 270);
-			restyleClock($("#clkMarker3"), $("#clkMarker3A"), $("#clkMarker3B"), $("#clkMarker0"),
-				$("#clkMarker0A"), $("#clkMarker0B"), $("#clkMarker1A"), $("#clkMarker1B"), $("#clkMarker2A"), $("#clkMarker2B"),
-				T.cSECS_F4_MARK, T.cSECS_F1_MARK, T.cSECS_F2_MARK, T.cSECS_F3_MARK);
+			restyleClock(T.cSECS_MARK_3);
 		}
 		
 		// Refresh waypoints because the icon's clock position changed
@@ -4815,12 +4925,21 @@ K = {
 		var coord;
 		for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 		{
-			K.iconChains[i].unbind("click");
+			K.iconsStandard[i].unbind("click");
 			(function(pIndex)
 			{
-				K.iconChains[pIndex].click(function()
+				K.iconsStandard[pIndex].click(function()
 				{
 					coord = T.getStandardChain(pIndex).primaryEvents[0].path[0];
+					M.goToView(coord, M.PinEvent);
+				});
+			})(i);
+			K.iconsHardcore[i].unbind("click");
+			(function(pIndex)
+			{
+				K.iconsHardcore[pIndex].click(function()
+				{
+					coord = T.getHardcoreChain(pIndex).primaryEvents[0].path[0];
 					M.goToView(coord, M.PinEvent);
 				});
 			})(i);
@@ -4834,7 +4953,7 @@ K = {
 	 */
 	initializeClipboard: function()
 	{
-		for (var i = 0; i < K.cClockEventsLimit; i++)
+		for (var i = 0; i < K.cCLOCK_EVENTS_LIMIT; i++)
 		{
 			K.wpClipboards.push
 			(
@@ -5028,6 +5147,9 @@ I = {
 		{
 			I.userBrowser = I.BrowserEnum.Opera;
 		}
+		
+		// Verify language
+		O.enforceProgramLanguage();
 		
 		// Default content layer
 		I.contentCurrent = I.ContentEnum.Chains;
@@ -5600,8 +5722,8 @@ I = {
 						 */ 
 						if (O.Options.bol_tourPrediction)
 						{
-							$("#chnEvent_" + C.CurrentChain.alias + "_"
-								+ C.CurrentPrimaryEvent.num).trigger("click");
+							$("#chnEvent_" + C.CurrentSDChain.alias + "_"
+								+ C.CurrentSDChain.CurrentPrimaryEvent.num).trigger("click");
 						}
 					} break;
 					case I.ContentEnum.Help:
@@ -5950,6 +6072,39 @@ I = {
 		{
 			this.a && (this.a.innerHTML = "", this.a.style.display = "none");
 		}
+	},
+	
+	/*
+	 * Dictionary of user readable/listenable words used in this web application.
+	 */
+	Text:
+	{
+		s_also: {en: "also"},
+		s_and: {en: "and"},
+		s_current: {en: "current"},
+		s_followedby: {en: "followed by"},
+		s_in: {en: "in"},
+		s_is: {en: "is"},
+		s_subscribed: {en: "subscribed"},
+		s_then: {en: "then"},
+		s_willstart: {en: "will start"},
+		s_worldboss: {en: "world boss"}
+	},
+	
+	/*
+	 * Gets a phrase translated based on the opted language.
+	 * @param string pText text to translate without spaces.
+	 * @returns string translated text.
+	 */
+	translate: function(pText)
+	{
+		var entry;
+		if (I.Text["s_" + pText])
+		{
+			entry = I.Text["s_" + pText];
+			return entry[O.Utilities.programLanguage.value];
+		}
+		return "notranslation";
 	}
 };
 

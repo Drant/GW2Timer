@@ -279,23 +279,42 @@ input#mapCoordinatesRegion {
 	background: url("img/background/face.png") no-repeat center;
 }
 
-#itemClockFace img {
-	position: absolute;
-	width: 64px; height: 64px;
-	border: 1px solid black;
+.iconHC {
+	width: 48px; height: 48px;
 	border-radius: 12px;
 }
-#itemClockIcon0 {
+.iconSD {
+	width: 64px; height: 64px;
+	border-radius: 12px;
+}
+#itemClockFace img {
+	position: absolute;
+	border: 1px solid black;
+	box-shadow: 0px 0px 10px black;
+}
+#itemClockIconStandard0 {
 	top: 4px; left: 148px;
 }
-#itemClockIcon1 {
+#itemClockIconStandard1 {
 	top: 148px; left: 290px;
 }
-#itemClockIcon2 {
+#itemClockIconStandard2 {
 	top: 290px; left: 148px;
 }
-#itemClockIcon3 {
+#itemClockIconStandard3 {
 	top: 148px; left: 4px;
+}
+#itemClockIconHardcore0 {
+	top: 12px; left: 212px;
+}
+#itemClockIconHardcore1 {
+	top: 212px; left: 298px;
+}
+#itemClockIconHardcore2 {
+	top: 298px; left: 100px;
+}
+#itemClockIconHardcore3 {
+	top: 100px; left: 12px;
 }
 
 #itemClockWaypoints img {

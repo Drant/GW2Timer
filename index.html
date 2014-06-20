@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- Meta -->
-	<title>GW2Timer.com - World Boss Timers and Daily Map Guide</title>
+	<title>gw2timer.com - World Boss Timers and Daily Map Guide</title>
 	<meta charset="utf-8" />
 	<meta name="robots" content="index, follow, noarchive" />
 	<meta name="description" content="Guild Wars 2 timers and clock for world boss meta events, with walkthroughs, daily achievements, jumping puzzles gathering map, and personal checklists." />
@@ -60,7 +60,7 @@
 				<input id="mapCoordinatesRegion" type="text" />
 			</div>
 			<div id="itemMapButtons">
-				<a title="<dfn>Go to Forum</dfn>" href="http://forum.renaka.com/forum/368355/">GW2Timer.com</a>
+				<a title="<dfn>Go to Forum</dfn>" href="http://forum.renaka.com/forum/368355/">gw2timer.com</a>
 				<img title="<dfn>Toggle Right Panel</dfn>" id="mapCompassButton" src="img/map/compass.png" alt="compass" />
 			</div>
 		</section>
@@ -72,10 +72,14 @@
 			<div id="paneClockBack" class="clkSizeRegular"></div>
 			<div id="paneClockBackground" class="clkSizeRegular"></div>
 			<div id="itemClockFace" class="clkSizeRegular">
-				<img id="itemClockIcon0" src="img/chain/tbd.png" alt="X:00 Chain" />
-				<img id="itemClockIcon1" src="img/chain/tbd.png" alt="X:15 Chain" />
-				<img id="itemClockIcon2" src="img/chain/tbd.png" alt="X:30 Chain" />
-				<img id="itemClockIcon3" src="img/chain/tbd.png" alt="X:45 Chain" />
+				<img id="itemClockIconStandard0" class="iconSD" src="img/chain/tbd.png" alt="X:00" />
+				<img id="itemClockIconStandard1" class="iconSD" src="img/chain/tbd.png" alt="X:15" />
+				<img id="itemClockIconStandard2" class="iconSD" src="img/chain/tbd.png" alt="X:30" />
+				<img id="itemClockIconStandard3" class="iconSD" src="img/chain/tbd.png" alt="X:45" />
+				<img id="itemClockIconHardcore0" class="iconHC" src="img/chain/tbd.png" alt="X:00" />
+				<img id="itemClockIconHardcore1" class="iconHC" src="img/chain/tbd.png" alt="X:15" />
+				<img id="itemClockIconHardcore2" class="iconHC" src="img/chain/tbd.png" alt="X:30" />
+				<img id="itemClockIconHardcore3" class="iconHC" src="img/chain/tbd.png" alt="X:45" />
 			</div>
 			<svg id="itemClock" viewBox="0 0 100 100"><!-- x=50,y=50 is the center -->
 				<defs><!-- Shadow filters -->
@@ -182,7 +186,7 @@
 					<label title="<dfn>Alarm Mode:</dfn><br />If <input type='checkbox' /> Announce the next world boss (checklist mode).<br />If <input type='checkbox' checked='checked' /> Announce bosses whose time you clicked (subscription mode). Speaker icon must be checked to hear sound.">
 						<input id="opt_bol_alertSubscribed" type="checkbox" />
 					</label>
-					<label title="<dfn>Alarm Toggle:</dfn><br />If <input type='checkbox' /> Disabled Alarm<br />If <input type='checkbox' checked='checked' /> Enabled Alarm<br />Go to Options page &gt; Alarm section for more info.">
+					<label title="<dfn>Alarm Toggle:</dfn><br />If <input type='checkbox' /> Sound Off<br />If <input type='checkbox' checked='checked' /> Sound On<br />Go to Options page &gt; Alarm section for more info.">
 						<input id="opt_bol_enableSound" type="checkbox" /><img src="img/ui/speaker.png" alt="Mute"/>&zwnj;
 					</label>
 				</div>
