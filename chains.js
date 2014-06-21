@@ -901,7 +901,7 @@ var GW2T_CHAINS_DATA = [
 	]
 },
 {
-	alias: "Karka",
+	alias: "Queen",
 	pronunciation: "karka queen",
 	series: 3,
 	waypoint: "[&BNcGAAA=]",

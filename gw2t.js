@@ -35,12 +35,13 @@
 	TABLE OF CONTENTS (Ctrl+F "AtsignAtsignLetter" to jump to section)
 
 	O - Options for user
+	X - Checklists
+	D - Dictionary for translations
 	C - Chains events
 	M - Map Leaflet
 	T - Time utilities
 	K - Clock SVG
 	I - Interface UI
-	X - Executions of functions to load the application
 
 */
 
@@ -50,6 +51,8 @@ $(window).on("load", function() {
  *  Single letter objects serve as namespaces.
  * ========================================================================== */
 var O = {}; // options
+var X = {}; // checklists
+var D = {}; // dictionary
 var C = {}; // chains
 var M = {}; // map
 var T = {}; // time
@@ -57,7 +60,7 @@ var K = {}; // clock
 var I = {}; // interface
 
 /* =============================================================================
- * @@Options for the user, anything that persists after reloading the website.
+ * @@Options for the user
  * ========================================================================== */
 O = {
 	lengthOfPrefixes: 3,
@@ -66,13 +69,12 @@ O = {
 
 	/*
 	 * These utility variables will also be stored in localStorage.
-	 * O.Utilities, O.Options, and O.Checklists share a namespace in localStorage
+	 * O.Utilities, O.Options, and X.Checklists share a namespace in localStorage
 	 * and must together have unique variable names.
 	 */
 	Utilities:
 	{
 		programVersion: {key: "int_utlProgramVersion", value: 140618},
-		programLanguage: {key: "str_utlProgramLanguage", value: "en"},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -83,6 +85,8 @@ O = {
 	 */
 	Options:
 	{
+		// Generic
+		enu_Language: "en",
 		// Timer
 		bol_hideChecked: false,
 		bol_use24Hour: true,
@@ -114,52 +118,44 @@ O = {
 	 * function O.initializeOptions() that initializes HTML input tags.
 	 */
 	OptionRange: {},
-	
 	/*
-	 * A checklist is a set of checkboxes that can have the usual unchecked,
-	 * checked, and disabled states. These states are recorded as a single
-	 * character in a string of numbers representing those states, and the index
-	 * of a character is that checkbox's "ID". The Checklists object stores
-	 * checklists with such a string and a key for localStorage.
+	 * All Options of an enumerated type ("enu") must have a matching named
+	 * object of enums here.
 	 */
-	Checklists:
+	OptionEnum:
 	{
-		// localStorage key-value pairs (key is required)
-		Chain: { key: "str_chlChain", value: "" },
-		ChainSubscription: { key: "str_chlChainSubscription", value: "" },
-		JP: { key: "str_chlJP", value: "" },
-		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
-		Custom: { key: "str_chlCustom", value: "" },
-		CustomText:
+		Language:
 		{
-			key: "str_chlCustomText",
-			value: new Array(),
-			valueDefault: new Array()
+			English: "en",
+			German: "de",
+			Spanish: "es",
+			French: "fr",
+			Dutch: "nl",
+			Polish: "pl",
+			Russian: "ru",
+			Mandarin: "zh"
 		}
 	},
-	PredictorEnum:
-	{
-		Auto: 0,
-		Min: 1,
-		MinAvg: 2,
-		Avg: 3
-	},
-	ChecklistEnum:
-	{
-		Unchecked: "0",
-		Checked: "1",
-		Disabled: "2"
-	},
 	
-	LanguageEnum:
+	/*
+	 * Checks if the specified value is within the enum object, and returns it
+	 * if found, or returns the default if not.
+	 * @param string pEnumName of the enum object.
+	 * @param string pEnumValue to check.
+	 * @returns string valid enum or the default.
+	 */
+	validateEnum: function(pEnumName, pValue)
 	{
-		English: "en",
-		French: "fr",
-		German: "de",
-		Mandarin: "zh",
-		Polish: "pl",
-		Russian: "ru",
-		Spanish: "es"
+		var i;
+		var enumobject = O.OptionEnum[pEnumName];
+		for (i in enumobject)
+		{
+			if (enumobject[i] === pValue)
+			{
+				return pValue;
+			}
+		}
+		return O.Options["enu_" + pEnumName];
 	},
 	
 	/*
@@ -183,27 +179,17 @@ O = {
 	},
 	
 	/*
-	 * Reads the stored language and write the default if does not exist, else
-	 * the stored language becomes the program's language.
+	 * Parses and stores the URL arguments then do appropriate changes.
 	 */
-	enforceProgramLanguage: function()
+	enforceURLArgumentsFirst: function()
 	{
-		var i;
-		var match = false;
-		var storedlanguage = localStorage[O.Utilities.programLanguage.key];
+		O.URLArguments = O.getURLArguments();
 		
-		for (i in O.LanguageEnum)
+		// Consolidate elements for overlay mode
+		if (O.URLArguments[I.URLKeyMode] === I.programModeEnum.Overlay)
 		{
-			if (O.LanguageEnum[i] === storedlanguage)
-			{
-				O.Utilities.programLanguage.value = localStorage[O.Utilities.programLanguage.key];
-				match = true;
-				break;
-			}
-		}
-		if (match === false)
-		{
-			localStorage[O.Utilities.programLanguage.key] = O.Utilities.programLanguage.value;
+			I.programMode = I.programModeEnum.Overlay;
+			$("#itemSocial").hide();
 		}
 	},
 	
@@ -223,9 +209,9 @@ O = {
 		{
 			O.legalLocalStorageKeys.push(i);
 		}
-		for (i in O.Checklists)
+		for (i in X.Checklists)
 		{
-			O.legalLocalStorageKeys.push(O.Checklists[i].key);
+			O.legalLocalStorageKeys.push(X.Checklists[i].key);
 		}
 	},
 	
@@ -327,7 +313,7 @@ O = {
 						return integer.toString();
 					}
 				}
-				return O.OptionRange[pKey][0].toString(); // Default number
+				return O.Options[pKey].toString(); // Default number
 			} break;
 			case "flt":
 			{
@@ -339,7 +325,12 @@ O = {
 						return float.toString();
 					}
 				}
-				return O.OptionRange[pKey][0].toString(); // Default number
+				return O.Options[pKey].toString(); // Default number
+			} break;
+			case "enu":
+			{
+				var enumname = pKey.split("_")[1];
+				return O.validateEnum(enumname, pValue);
 			} break;
 			case "str":
 			{
@@ -608,605 +599,6 @@ O = {
 	},
 	
 	/*
-	 * Creates a string for a checklist object with each character representing
-	 * a state, and each index representing a check item. Also initializes the
-	 * localStorage or load it as the checklist if already stored.
-	 * @param object pChecklist to initialize.
-	 * @param int pLength of the checklist string to construct.
-	 * @returns string new checklist to be assigned to a checklist variable.
-	 */
-	initializeChecklist: function(pChecklist, pLength)
-	{		
-		pChecklist.length = pLength;
-		/*
-		 * If localStorage doesn't have the checklist already or if it's an
-		 * improper length then it gets a default checklist string of 0's.
-		 */
-		if (localStorage[pChecklist.key] === undefined
-			|| localStorage[pChecklist.key].length !== pLength)
-		{
-			O.clearChecklist(pChecklist);
-		}
-		else
-		{
-			pChecklist.value = localStorage[pChecklist.key];
-		}
-	},
-	
-	/*
-	 * Replaces a character in a checklist string and updates the localStorage.
-	 * @param object pChecklist to modify.
-	 * @param int pIndex of the character in the string.
-	 * @param string pCharacter to replace the current.
-	 * @returns string new checklist to be assigned to a checklist variable.
-	 */
-	setChecklistItem: function(pChecklist, pIndex, pCharacter)
-	{
-		// A character must be length 1 and different from the current
-		var char = pCharacter.toString();
-		if (char.length === 1 && pChecklist.value[pIndex] !== char)
-		{
-			var checklist = O.replaceCharAt(pChecklist.value, pIndex, char);
-			localStorage[pChecklist.key] = checklist;
-			pChecklist.value = checklist;
-		}
-	},
-	
-	/*
-	 * Gets the character in a checklist string at specified index.
-	 * @param object pChecklist to extract.
-	 * @param int pIndex of the character.
-	 * @param string pConversion to convert that character to a type.
-	 * @returns dynamic depending on conversion param.
-	 */
-	getChecklistItem: function(pChecklist, pIndex, pConversion)
-	{
-		var char = pChecklist.value.charAt(pIndex);
-		
-		if (pConversion === undefined)
-		{
-			return char;
-		}
-		if (pConversion === "int")
-		{
-			return parseInt(char);
-		}
-		if (pConversion === "boolean")
-		{
-			return O.intToBool(parseInt(char));
-		}
-		return char;
-	},
-	
-	/*
-	 * Sets a checklist object's list to all 0's.
-	 * @param object pChecklist to clear.
-	 * @param boolean pJob whether to just 0 out the checked items only.
-	 * @pre Checklist length attribute was initialized.
-	 */
-	clearChecklist: function(pChecklist, pJob)
-	{
-		var i;
-		var checklist = "";
-		var value = "";
-		
-		switch (pJob)
-		{
-			case "uncheck":
-			{
-				for (i = 0; i < pChecklist.length; i++)
-				{
-					if (pChecklist.value[i] === O.ChecklistEnum.Checked)
-					{
-						checklist += O.ChecklistEnum.Unchecked;
-					}
-					else
-					{
-						checklist += pChecklist.value[i];
-					}
-				}
-			} break;
-			case "preuncheck":
-			{
-				value = localStorage[pChecklist.key];
-				if (value !== undefined)
-				{
-					for (i = 0; i < value.length; i++)
-					{
-						if (value[i] === O.ChecklistEnum.Checked)
-						{
-							checklist += O.ChecklistEnum.Unchecked;
-						}
-						else
-						{
-							checklist += value[i];
-						}
-					}
-				}
-			} break;
-			default:
-			{
-				for (i = 0; i < pChecklist.length; i++)
-				{
-					checklist += O.ChecklistEnum.Unchecked;
-				}
-			}
-		}
-		
-		pChecklist.value = checklist;
-		localStorage[pChecklist.key] = checklist;
-	},
-	
-	/*
-	 * Reads a checkbox element and return its checklist enum state.
-	 * @param jqobject pElement to read.
-	 * @returns int checklist enum.
-	 */
-	getCheckboxEnumState: function(pElement)
-	{
-		if (pElement.prop("disabled") === true)
-		{
-			return O.ChecklistEnum.Disabled;
-		}
-		if (pElement.prop("checked") === true)
-		{
-			return O.ChecklistEnum.Checked;
-		}
-		return O.ChecklistEnum.Unchecked;
-	},
-	
-	/*
-	 * Sets an input tag checkbox checked/disabled states based on specified enum.
-	 * @param jqobject pElement checkbox to change.
-	 * @param int pChecklistEnum to apply.
-	 */
-	setCheckboxEnumState: function(pElement, pChecklistEnum)
-	{
-		switch (pChecklistEnum)
-		{
-			case O.ChecklistEnum.Disabled:
-			{
-				pElement.prop("disabled", true);
-				pElement.prop("checked", false);
-			} break;
-			case O.ChecklistEnum.Checked:
-			{
-				pElement.prop("checked", true);
-			} break;
-			default: pElement.prop("checked", false);
-		}
-	},
-	
-	/*
-	 * Sets a checkbox to a desired state by reading it then manually triggering it.
-	 * @param jqobject pElement checkbox to manipulate.
-	 * @param int pState checkbox enum.
-	 */
-	triggerCheckbox: function(pElement, pState)
-	{
-		var checkboxstate = O.getCheckboxEnumState(pElement);
-		
-		if ( (pState === O.ChecklistEnum.Checked && (checkboxstate === O.ChecklistEnum.Unchecked))
-			|| (pState === O.ChecklistEnum.Unchecked && (checkboxstate === O.ChecklistEnum.Checked)) )
-		{
-			pElement.trigger("click");
-		}
-		else if (pState === O.ChecklistEnum.Disabled && checkboxstate !== O.ChecklistEnum.Disabled)
-		{
-			pElement.trigger("dblclick");
-		}
-	},
-	
-	/*
-	 * Triggers a checkbox based on associated state in a checklist.
-	 * @param object pChecklist as target state.
-	 * @param int pIndex of a state in checklist.
-	 * @param jqobject pElement checkbox to manipulate.
-	 */
-	triggerCheckboxEnumState: function(pChecklist, pIndex, pElement)
-	{
-		var checkliststate = O.getChecklistItem(pChecklist, pIndex);
-		O.triggerCheckbox(pElement, checkliststate);
-	},
-	
-	/*
-	 * Adds style classes to a label that wraps a checkbox depending on its state.
-	 * @param object pChecklist to get state.
-	 * @param int pIndex of state.
-	 * @param jqobject pElement checkbox label to style.
-	 * @pre In format <label><input type="checkbox" />ExampleLabel</label>.
-	 */
-	styleCheckbox: function(pChecklist, pIndex, pElement)
-	{
-		var state = O.getChecklistItem(pChecklist, pIndex);
-		switch (state)
-		{
-			case O.ChecklistEnum.Disabled:
-			{
-				pElement.parent().removeClass("chlCheckboxChecked")
-					.addClass("chlCheckboxDisabled");
-			} break;
-			case O.ChecklistEnum.Checked:
-			{
-				pElement.parent().removeClass("chlCheckboxDisabled")
-					.addClass("chlCheckboxChecked");
-			} break;
-			default:
-			{
-				pElement.parent().removeClass("chlCheckboxDisabled")
-					.removeClass("chlCheckboxChecked");
-			}
-		}
-	},
-	
-	/*
-	 * Loads chain checklist state as recorded in localStorage, and binds
-	 * clicking behavior to the div faux checkboxes.
-	 * @pre Chains have been initialized.
-	 */
-	initializeChainChecklist: function()
-	{
-		var i;
-		var chain;
-		
-		O.initializeChecklist(O.Checklists.Chain, C.Chains.length);
-		O.initializeChecklist(O.Checklists.ChainSubscription, C.Chains.length);
-		
-		for (i in C.Chains)
-		{
-			chain = C.Chains[i];
-			
-			var bar = $("#barChain_" + chain.alias);
-			var check = $("#chnCheck_" + chain.alias);
-			var time = $("#chnTime_" + chain.alias);
-			
-			// Set the checkbox visual state as stored
-			switch (O.getChecklistItem(O.Checklists.Chain, chain.index))
-			{
-				case O.ChecklistEnum.Unchecked:
-				{
-					// Chain is not checked off, so don't do anything
-				} break;
-				case O.ChecklistEnum.Checked:
-				{
-					bar.css({opacity: K.iconOpacityChecked});
-					check.addClass("chnChecked");
-					if (O.Options.bol_hideChecked)
-					{
-						bar.hide();
-					}
-				} break;
-				case O.ChecklistEnum.Disabled:
-				{
-					bar.hide();
-				} break;
-			}
-			
-			// Set the time visual state as stored (subscribed or not)
-			if (O.getChecklistItem(O.Checklists.ChainSubscription, chain.index) ===
-					O.ChecklistEnum.Checked)
-			{
-				time.addClass("chnTimeSubscribed");
-			}
-			
-			/*
-			 * Bind event handler for the time clickable for subscription.
-			 */
-			time.click(function()
-			{
-				var index = $(this).data("index");
-				
-				if (O.getChecklistItem(O.Checklists.ChainSubscription, index) === O.ChecklistEnum.Checked)
-				{
-					$(this).removeClass("chnTimeSubscribed");
-					O.setChecklistItem(O.Checklists.ChainSubscription, index, O.ChecklistEnum.Unchecked);
-				}
-				else
-				{
-					$(this).addClass("chnTimeSubscribed");
-					O.setChecklistItem(O.Checklists.ChainSubscription, index, O.ChecklistEnum.Checked);
-				}
-			});
-			
-			/*
-			 * Bind event handler for the div "checkboxes".
-			 */
-			check.click(function()
-			{
-				// The ID was named so by the chain initializer, get the chain alias
-				var alias = I.getIndexFromHTMLID($(this));
-				var index = $(this).data("index");
-				var thisbar = $("#barChain_" + alias);
-				// State of the div is stored in the Checklist object rather in the element itself
-				switch (O.getChecklistItem(O.Checklists.Chain, index))
-				{
-					case O.ChecklistEnum.Unchecked:
-					{
-						thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
-						$(this).addClass("chnChecked");
-						O.setChecklistItem(O.Checklists.Chain, index, O.ChecklistEnum.Checked);
-					} break;
-					case O.ChecklistEnum.Checked:
-					{
-						thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
-						$(this).removeClass("chnChecked");
-						O.setChecklistItem(O.Checklists.Chain, index, O.ChecklistEnum.Unchecked);
-					} break;
-					case O.ChecklistEnum.Disabled:
-					{
-						thisbar.show("fast");
-						O.setChecklistItem(O.Checklists.Chain, index, O.ChecklistEnum.Disabled);
-					} break;
-				}
-				// Also autohide the chain bar if opted
-				if (O.getChecklistItem(O.Checklists.Chain, index) === O.ChecklistEnum.Checked)
-				{
-					if (O.Options.bol_hideChecked)
-					{
-						thisbar.hide("fast");
-					}
-					else
-					{
-						thisbar.show("fast");
-					}
-				}
-				// Update the icons on the clock too
-				K.checkoffChainIcon(index);
-			});
-			
-			// Bind the delete chain text button [x]
-			$("#chnDelete_" + chain.alias).click(function()
-			{
-				var alias = I.getIndexFromHTMLID($(this));
-				var index = $(this).data("index");
-				var thisbar = $("#barChain_" + alias);
-
-				thisbar.hide("slow");
-				O.setChecklistItem(O.Checklists.Chain, index, O.ChecklistEnum.Disabled);
-				
-				// Also update the clock icon
-				K.checkoffChainIcon(index);
-			});
-		}
-	},
-	
-	/*
-	 * Gets the checklist state of a chain.
-	 * @param object pChain chain to test.
-	 * @returns int state (use enum).
-	 */
-	getChainChecklistState: function(pChain)
-	{
-		return O.getChecklistItem(O.Checklists.Chain, pChain.index);
-	},
-	
-	/*
-	 * Binds dungeon checkbox storage and calculator behavior.
-	 */
-	initializeDungeonChecklist: function()
-	{
-		O.initializeChecklist(O.Checklists.Dungeon, $("#chlDungeon input").length);
-		
-		// Load dungeon icons on demand because they are pretty large
-		$("#chlDungeon .chlDungeonBar").each(function()
-		{
-			$(this).prepend("<img src='img/dungeon/"
-				+ $(this).data("name").toLowerCase() + I.cImageMainExtension + "' />");
-		});
-		
-		var updateCalculator = function()
-		{
-			var money = O.Checklists.Dungeon.money;
-			var gold = ~~(money / 10000);
-			var silver = ~~(money / 100) % 100;
-			var copper = money % 100;
-			$("#chlDungeonCalculator_Gold").text(gold);
-			$("#chlDungeonCalculator_Silver").text(silver);
-			$("#chlDungeonCalculator_Copper").text(copper);
-		};
-		
-		// Update checkbox visual and do the calculation when clicked
-		$("#chlDungeon input").each(function(pIndex)
-		{
-			// Bind checkbox behavior
-			$(this).change(function()
-			{
-				var state = O.getCheckboxEnumState($(this));
-				
-				O.setChecklistItem(O.Checklists.Dungeon, pIndex, state);
-				O.styleCheckbox(O.Checklists.Dungeon, pIndex, $(this));
-				
-				// Sum the checkbox's path money
-				var calc = $("#chlDungeonCalculator");
-				var money = O.Checklists.Dungeon.money;
-				var sum = $(this).data("money");
-				
-				switch ($(this).data("mode"))
-				{
-					case "E": sum += calc.data("moneyaddexp"); break;
-				}
-				
-				switch (state)
-				{
-					case O.ChecklistEnum.Disabled:
-					{
-						O.Checklists.Dungeon.money = money - sum;
-					} break;
-					case O.ChecklistEnum.Checked:
-					{
-						O.Checklists.Dungeon.money = money + sum;
-					} break;
-					default:
-					{
-						O.Checklists.Dungeon.money = money - sum;
-					}
-				}
-				updateCalculator();
-			});
-		});
-		// Double click a label (which wraps an input tag) to en/disable the checkbox
-		$("#chlDungeon label").each(function(pIndex)
-		{
-			$(this).dblclick(function()
-			{
-				var checkbox = $(this).find("input:first-child");
-
-				if (checkbox.prop("disabled") === false)
-				{
-					/*
-					 * The double click triggers the click event, which causes
-					 * the calculator to count the disabled checkbox, so trigger
-					 * the unchecking of it first before disabling.
-					 */
-					if (checkbox.prop("checked") === true)
-					{
-						O.triggerCheckbox(checkbox, O.ChecklistEnum.Unchecked);
-					}
-					checkbox.prop("disabled", true).prop("checked", false);
-				}
-				else
-				{
-					checkbox.prop("disabled", false);
-				}
-				O.setChecklistItem(O.Checklists.Dungeon, pIndex, O.getCheckboxEnumState(checkbox));
-				O.styleCheckbox(O.Checklists.Dungeon, pIndex, checkbox);
-			});
-		});
-		
-		// Restore checklist state from stored by triggering the checkboxes (behaviors already bound)
-		$("#chlDungeon input").each(function(pIndex)
-		{
-			O.triggerCheckboxEnumState(O.Checklists.Dungeon, pIndex, $(this));
-		});
-		
-		// Bind uncheck all button
-		$("#chlDungeonUncheck").click(function()
-		{
-			O.clearChecklist(O.Checklists.Dungeon, "uncheck");
-			$("#chlDungeon input").each(function(pIndex)
-			{
-				if ($(this).prop("checked") === true)
-				{
-					$(this).trigger("click");
-				};
-				O.styleCheckbox(O.Checklists.Dungeon, pIndex, $(this));
-			});
-		});
-	},
-	
-	/*
-	 * Binds checkbox and text field joined behavior.
-	 */
-	initializeCustomChecklist: function()
-	{
-		var checkboxes = $("#chlCustom input:checkbox");
-		O.initializeChecklist(O.Checklists.Custom, checkboxes.length);
-		
-		checkboxes.each(function(pIndex)
-		{
-			$(this).change(function()
-			{
-				var state = O.getCheckboxEnumState($(this));
-				
-				O.setChecklistItem(O.Checklists.Custom, pIndex, state);
-				O.styleCheckbox(O.Checklists.Custom, pIndex, $(this));
-				
-				if (state === O.ChecklistEnum.Checked)
-				{
-					$(this).parent().next().addClass("chlCustomTextChecked");
-				}
-				else
-				{
-					$(this).parent().next().removeClass("chlCustomTextChecked");
-				}
-			});
-			
-			// Now that this checkbox is bounded, trigger it as the state in checklist
-			O.triggerCheckboxEnumState(O.Checklists.Custom, pIndex, $(this));
-			
-			// Initialize default value of associated text field
-			var text = $(this).parent().next().val();
-			O.Checklists.CustomText.value.push(text);
-			O.Checklists.CustomText.valueDefault.push(text);
-		});
-		
-		// Bind uncheck all button
-		$("#chlCustomUncheck").click(function()
-		{
-			O.clearChecklist(O.Checklists.Custom, "uncheck");
-			$("#chlCustom input:checkbox").each(function(pIndex)
-			{
-				if ($(this).prop("checked") === true)
-				{
-					$(this).trigger("click");
-				};
-				O.styleCheckbox(O.Checklists.Custom, pIndex, $(this));
-			});
-		});
-		
-		/*
-		 * Each text fields' value will become a delimited substring in one
-		 * single string to be stored in localStorage.
-		 */
-		var i;
-		if (localStorage[O.Checklists.CustomText.key] === undefined)
-		{
-			// If localStorage value is empty, replace with original values in text field
-			localStorage[O.Checklists.CustomText.key] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
-		}
-		else
-		{
-			var storedtextarray = localStorage[O.Checklists.CustomText.key].split(I.cTextDelimiter);
-			if (storedtextarray.length === O.Checklists.CustomText.value.length)
-			{
-				// Load the stored text if it has same number of strings as there are text fields
-				for (i in storedtextarray)
-				{
-					O.Checklists.CustomText.value[i] = storedtextarray[i];
-				}
-			}
-			else
-			{
-				localStorage[O.Checklists.CustomText.key] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
-			}
-		}
-		
-		var updateStoredText = function()
-		{
-			var regex = "/\\" + I.cTextDelimiter + "/g";
-			// Read every text fields and rewrite the string of substrings again
-			$("#chlCustom input:text").each(function(pIndex)
-			{
-				O.Checklists.CustomText.value[pIndex] = $(this).val().replace(regex, "");
-			});
-			localStorage[O.Checklists.CustomText.key] = O.Checklists.CustomText.value.join(I.cTextDelimiter);
-		};
-		
-		// Bind text fields behavior
-		$("#chlCustom input:text").each(function(pIndex)
-		{
-			// Set number of characters allowed in the text field
-			$(this).attr("maxlength", 48);
-			$(this).val(O.Checklists.CustomText.value[pIndex]); // Load initialized text
-			
-			$(this).change(function()
-			{
-				I.write("Custom checklist item #" + (pIndex + 1) + " updated.");
-				updateStoredText();
-			});
-		});
-		
-		// Bind restore text button
-		$("#chlCustomRestore").click(function()
-		{
-			$("#chlCustom input:text").each(function(pIndex)
-			{
-				$(this).val(O.Checklists.CustomText.valueDefault[pIndex]).trigger("change");
-			});
-		});
-	},
-	
-	/*
 	 * Unchecks the time sensitive checklists and clear variables, ignoring
 	 * the disabled/deleted ones.
 	 * by the user.
@@ -1225,12 +617,12 @@ O = {
 				chain = C.Chains[i];
 				$("#chnCheck_" + chain.alias).removeClass("chnChecked");
 				$("#barChain_" + chain.alias).css({opacity: 1});
-				if (O.getChecklistItem(O.Checklists.Chain, chain.index) !== O.ChecklistEnum.Disabled)
+				if (X.getChecklistItem(X.Checklists.Chain, chain.index) !== X.ChecklistEnum.Disabled)
 				{
 					$("#barChain_" + chain.alias).show();
 				}
 			}
-			O.clearChecklist(O.Checklists.Chain, "uncheck");
+			X.clearChecklist(X.Checklists.Chain, "uncheck");
 			I.write("Chains checklist cleared as opted.", messagetime);
 		}
 		
@@ -1244,11 +636,12 @@ O = {
 			}
 			else
 			{
-				O.clearChecklist(O.Checklists.Dungeon, "preuncheck");
-				O.clearChecklist(O.Checklists.Custom, "preuncheck");
+				X.clearChecklist(X.Checklists.Dungeon, "preuncheck");
+				X.clearChecklist(X.Checklists.Custom, "preuncheck");
 			}
 			I.write("Personal checklist cleared as opted.", messagetime);
 		}
+		I.write("", messagetime);
 		
 		O.updateLocalResetTimestamp();
 	},
@@ -1322,7 +715,7 @@ O = {
 				$("#chnCheck_" + chain.alias).removeClass("chnChecked");
 				$("#barChain_" + chain.alias).show().css({opacity: 1});
 			}
-			O.clearChecklist(O.Checklists.Chain);
+			X.clearChecklist(X.Checklists.Chain);
 			// Also unfade the clock icons, which are the current first four bosses
 			for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 			{
@@ -1382,8 +775,8 @@ O = {
 	{
 		$(".barChain").each(function()
 		{
-			if (O.getChecklistItem(O.Checklists.Chain, $(this).data("index"))
-				=== O.ChecklistEnum.Checked)
+			if (X.getChecklistItem(X.Checklists.Chain, $(this).data("index"))
+				=== X.ChecklistEnum.Checked)
 			{
 				if (O.Options.bol_hideChecked)
 				{
@@ -1444,6 +837,7 @@ O = {
 				color: "#eee",
 				opacity: 0.5
 			});
+			$("#itemLanguage").css({ bottom: "98px", left: "10px" });
 			$("#itemSocial").css({ bottom: "98px", right: "10px" });
 			
 			// Resize panes by animation
@@ -1507,6 +901,7 @@ O = {
 				color: "#bbcc77",
 				opacity: 1
 			});
+			$("#itemLanguage").css({ bottom: "28px", left: "10px" });
 			$("#itemSocial").css({ bottom: "28px", right: "10px" });
 			
 			// Resize panes by animation
@@ -1610,6 +1005,989 @@ O = {
 };
 
 /* =============================================================================
+ * @@Checklist management
+ * ========================================================================== */
+X = {
+	
+	/*
+	 * A checklist is a set of checkboxes that can have the usual unchecked,
+	 * checked, and disabled states. These states are recorded as a single
+	 * character in a string of numbers representing those states, and the index
+	 * of a character is that checkbox's "ID". The Checklists object stores
+	 * checklists with such a string and a key for localStorage.
+	 */
+	Checklists:
+	{
+		// localStorage key-value pairs (key is required)
+		Chain: { key: "str_chlChain", value: "" },
+		ChainSubscription: { key: "str_chlChainSubscription", value: "" },
+		JP: { key: "str_chlJP", value: "" },
+		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
+		Custom: { key: "str_chlCustom", value: "" },
+		CustomText:
+		{
+			key: "str_chlCustomText",
+			value: new Array(),
+			valueDefault: new Array()
+		}
+	},
+	ChecklistEnum:
+	{
+		Unchecked: "0",
+		Checked: "1",
+		Disabled: "2"
+	},
+	
+	/*
+	 * Creates a string for a checklist object with each character representing
+	 * a state, and each index representing a check item. Also initializes the
+	 * localStorage or load it as the checklist if already stored.
+	 * @param object pChecklist to initialize.
+	 * @param int pLength of the checklist string to construct.
+	 * @returns string new checklist to be assigned to a checklist variable.
+	 */
+	initializeChecklist: function(pChecklist, pLength)
+	{		
+		pChecklist.length = pLength;
+		/*
+		 * If localStorage doesn't have the checklist already or if it's an
+		 * improper length then it gets a default checklist string of 0's.
+		 */
+		if (localStorage[pChecklist.key] === undefined
+			|| localStorage[pChecklist.key].length !== pLength)
+		{
+			X.clearChecklist(pChecklist);
+		}
+		else
+		{
+			pChecklist.value = localStorage[pChecklist.key];
+		}
+	},
+	
+	/*
+	 * Replaces a character in a checklist string and updates the localStorage.
+	 * @param object pChecklist to modify.
+	 * @param int pIndex of the character in the string.
+	 * @param string pCharacter to replace the current.
+	 * @returns string new checklist to be assigned to a checklist variable.
+	 */
+	setChecklistItem: function(pChecklist, pIndex, pCharacter)
+	{
+		// A character must be length 1 and different from the current
+		var char = pCharacter.toString();
+		if (char.length === 1 && pChecklist.value[pIndex] !== char)
+		{
+			var checklist = O.replaceCharAt(pChecklist.value, pIndex, char);
+			localStorage[pChecklist.key] = checklist;
+			pChecklist.value = checklist;
+		}
+	},
+	
+	/*
+	 * Gets the character in a checklist string at specified index.
+	 * @param object pChecklist to extract.
+	 * @param int pIndex of the character.
+	 * @param string pConversion to convert that character to a type.
+	 * @returns dynamic depending on conversion param.
+	 */
+	getChecklistItem: function(pChecklist, pIndex, pConversion)
+	{
+		var char = pChecklist.value.charAt(pIndex);
+		
+		if (pConversion === undefined)
+		{
+			return char;
+		}
+		if (pConversion === "int")
+		{
+			return parseInt(char);
+		}
+		if (pConversion === "boolean")
+		{
+			return O.intToBool(parseInt(char));
+		}
+		return char;
+	},
+	
+	/*
+	 * Sets a checklist object's list to all 0's.
+	 * @param object pChecklist to clear.
+	 * @param boolean pJob whether to just 0 out the checked items only.
+	 * @pre Checklist length attribute was initialized.
+	 */
+	clearChecklist: function(pChecklist, pJob)
+	{
+		var i;
+		var checklist = "";
+		var value = "";
+		
+		switch (pJob)
+		{
+			case "uncheck":
+			{
+				for (i = 0; i < pChecklist.length; i++)
+				{
+					if (pChecklist.value[i] === X.ChecklistEnum.Checked)
+					{
+						checklist += X.ChecklistEnum.Unchecked;
+					}
+					else
+					{
+						checklist += pChecklist.value[i];
+					}
+				}
+			} break;
+			case "preuncheck":
+			{
+				value = localStorage[pChecklist.key];
+				if (value !== undefined)
+				{
+					for (i = 0; i < value.length; i++)
+					{
+						if (value[i] === X.ChecklistEnum.Checked)
+						{
+							checklist += X.ChecklistEnum.Unchecked;
+						}
+						else
+						{
+							checklist += value[i];
+						}
+					}
+				}
+			} break;
+			default:
+			{
+				for (i = 0; i < pChecklist.length; i++)
+				{
+					checklist += X.ChecklistEnum.Unchecked;
+				}
+			}
+		}
+		
+		pChecklist.value = checklist;
+		localStorage[pChecklist.key] = checklist;
+	},
+	
+	/*
+	 * Reads a checkbox element and return its checklist enum state.
+	 * @param jqobject pElement to read.
+	 * @returns int checklist enum.
+	 */
+	getCheckboxEnumState: function(pElement)
+	{
+		if (pElement.prop("disabled") === true)
+		{
+			return X.ChecklistEnum.Disabled;
+		}
+		if (pElement.prop("checked") === true)
+		{
+			return X.ChecklistEnum.Checked;
+		}
+		return X.ChecklistEnum.Unchecked;
+	},
+	
+	/*
+	 * Sets an input tag checkbox checked/disabled states based on specified enum.
+	 * @param jqobject pElement checkbox to change.
+	 * @param int pChecklistEnum to apply.
+	 */
+	setCheckboxEnumState: function(pElement, pChecklistEnum)
+	{
+		switch (pChecklistEnum)
+		{
+			case X.ChecklistEnum.Disabled:
+			{
+				pElement.prop("disabled", true);
+				pElement.prop("checked", false);
+			} break;
+			case X.ChecklistEnum.Checked:
+			{
+				pElement.prop("checked", true);
+			} break;
+			default: pElement.prop("checked", false);
+		}
+	},
+	
+	/*
+	 * Sets a checkbox to a desired state by reading it then manually triggering it.
+	 * @param jqobject pElement checkbox to manipulate.
+	 * @param int pState checkbox enum.
+	 */
+	triggerCheckbox: function(pElement, pState)
+	{
+		var checkboxstate = X.getCheckboxEnumState(pElement);
+		
+		if ( (pState === X.ChecklistEnum.Checked && (checkboxstate === X.ChecklistEnum.Unchecked))
+			|| (pState === X.ChecklistEnum.Unchecked && (checkboxstate === X.ChecklistEnum.Checked)) )
+		{
+			pElement.trigger("click");
+		}
+		else if (pState === X.ChecklistEnum.Disabled && checkboxstate !== X.ChecklistEnum.Disabled)
+		{
+			pElement.trigger("dblclick");
+		}
+	},
+	
+	/*
+	 * Triggers a checkbox based on associated state in a checklist.
+	 * @param object pChecklist as target state.
+	 * @param int pIndex of a state in checklist.
+	 * @param jqobject pElement checkbox to manipulate.
+	 */
+	triggerCheckboxEnumState: function(pChecklist, pIndex, pElement)
+	{
+		var checkliststate = X.getChecklistItem(pChecklist, pIndex);
+		X.triggerCheckbox(pElement, checkliststate);
+	},
+	
+	/*
+	 * Adds style classes to a label that wraps a checkbox depending on its state.
+	 * @param object pChecklist to get state.
+	 * @param int pIndex of state.
+	 * @param jqobject pElement checkbox label to style.
+	 * @pre In format <label><input type="checkbox" />ExampleLabel</label>.
+	 */
+	styleCheckbox: function(pChecklist, pIndex, pElement)
+	{
+		var state = X.getChecklistItem(pChecklist, pIndex);
+		switch (state)
+		{
+			case X.ChecklistEnum.Disabled:
+			{
+				pElement.parent().removeClass("chlCheckboxChecked")
+					.addClass("chlCheckboxDisabled");
+			} break;
+			case X.ChecklistEnum.Checked:
+			{
+				pElement.parent().removeClass("chlCheckboxDisabled")
+					.addClass("chlCheckboxChecked");
+			} break;
+			default:
+			{
+				pElement.parent().removeClass("chlCheckboxDisabled")
+					.removeClass("chlCheckboxChecked");
+			}
+		}
+	},
+	
+	/*
+	 * Loads chain checklist state as recorded in localStorage, and binds
+	 * clicking behavior to the div faux checkboxes.
+	 * @pre Chains have been initialized.
+	 */
+	initializeChainChecklist: function()
+	{
+		var i;
+		var chain;
+		
+		X.initializeChecklist(X.Checklists.Chain, C.Chains.length);
+		X.initializeChecklist(X.Checklists.ChainSubscription, C.Chains.length);
+		
+		for (i in C.Chains)
+		{
+			chain = C.Chains[i];
+			
+			var bar = $("#barChain_" + chain.alias);
+			var check = $("#chnCheck_" + chain.alias);
+			var time = $("#chnTime_" + chain.alias);
+			
+			// Set the checkbox visual state as stored
+			switch (X.getChecklistItem(X.Checklists.Chain, chain.index))
+			{
+				case X.ChecklistEnum.Unchecked:
+				{
+					// Chain is not checked off, so don't do anything
+				} break;
+				case X.ChecklistEnum.Checked:
+				{
+					bar.css({opacity: K.iconOpacityChecked});
+					check.addClass("chnChecked");
+					if (O.Options.bol_hideChecked)
+					{
+						bar.hide();
+					}
+				} break;
+				case X.ChecklistEnum.Disabled:
+				{
+					bar.hide();
+				} break;
+			}
+			
+			// Set the time visual state as stored (subscribed or not)
+			if (X.getChecklistItem(X.Checklists.ChainSubscription, chain.index) ===
+					X.ChecklistEnum.Checked)
+			{
+				time.addClass("chnTimeSubscribed");
+			}
+			
+			/*
+			 * Bind event handler for the time clickable for subscription.
+			 */
+			time.click(function()
+			{
+				var index = $(this).data("index");
+				
+				if (X.getChecklistItem(X.Checklists.ChainSubscription, index) === X.ChecklistEnum.Checked)
+				{
+					$(this).removeClass("chnTimeSubscribed");
+					X.setChecklistItem(X.Checklists.ChainSubscription, index, X.ChecklistEnum.Unchecked);
+				}
+				else
+				{
+					$(this).addClass("chnTimeSubscribed");
+					X.setChecklistItem(X.Checklists.ChainSubscription, index, X.ChecklistEnum.Checked);
+				}
+			});
+			
+			/*
+			 * Bind event handler for the div "checkboxes".
+			 */
+			check.click(function()
+			{
+				// The ID was named so by the chain initializer, get the chain alias
+				var alias = I.getIndexFromHTMLID($(this));
+				var index = $(this).data("index");
+				var thisbar = $("#barChain_" + alias);
+				// State of the div is stored in the Checklist object rather in the element itself
+				switch (X.getChecklistItem(X.Checklists.Chain, index))
+				{
+					case X.ChecklistEnum.Unchecked:
+					{
+						thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
+						$(this).addClass("chnChecked");
+						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Checked);
+					} break;
+					case X.ChecklistEnum.Checked:
+					{
+						thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
+						$(this).removeClass("chnChecked");
+						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Unchecked);
+					} break;
+					case X.ChecklistEnum.Disabled:
+					{
+						thisbar.show("fast");
+						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Disabled);
+					} break;
+				}
+				// Also autohide the chain bar if opted
+				if (X.getChecklistItem(X.Checklists.Chain, index) === X.ChecklistEnum.Checked)
+				{
+					if (O.Options.bol_hideChecked)
+					{
+						thisbar.hide("fast");
+					}
+					else
+					{
+						thisbar.show("fast");
+					}
+				}
+				// Update the icons on the clock too
+				K.checkoffChainIcon(index);
+			});
+			
+			// Bind the delete chain text button [x]
+			$("#chnDelete_" + chain.alias).click(function()
+			{
+				var alias = I.getIndexFromHTMLID($(this));
+				var index = $(this).data("index");
+				var thisbar = $("#barChain_" + alias);
+
+				thisbar.hide("slow");
+				X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Disabled);
+				
+				// Also update the clock icon
+				K.checkoffChainIcon(index);
+			});
+		}
+	},
+	
+	/*
+	 * Gets the checklist state of a chain.
+	 * @param object pChain chain to test.
+	 * @returns int state (use enum).
+	 */
+	getChainChecklistState: function(pChain)
+	{
+		return X.getChecklistItem(X.Checklists.Chain, pChain.index);
+	},
+	
+	/*
+	 * Binds dungeon checkbox storage and calculator behavior.
+	 */
+	initializeDungeonChecklist: function()
+	{
+		X.initializeChecklist(X.Checklists.Dungeon, $("#chlDungeon input").length);
+		
+		// Load dungeon icons on demand because they are pretty large
+		$("#chlDungeon .chlDungeonBar").each(function()
+		{
+			$(this).prepend("<img src='img/dungeon/"
+				+ $(this).data("name").toLowerCase() + I.cImageMainExtension + "' />");
+		});
+		
+		var updateCalculator = function()
+		{
+			var money = X.Checklists.Dungeon.money;
+			var gold = ~~(money / 10000);
+			var silver = ~~(money / 100) % 100;
+			var copper = money % 100;
+			$("#chlDungeonCalculator_Gold").text(gold);
+			$("#chlDungeonCalculator_Silver").text(silver);
+			$("#chlDungeonCalculator_Copper").text(copper);
+		};
+		
+		// Update checkbox visual and do the calculation when clicked
+		$("#chlDungeon input").each(function(pIndex)
+		{
+			// Bind checkbox behavior
+			$(this).change(function()
+			{
+				var state = X.getCheckboxEnumState($(this));
+				
+				X.setChecklistItem(X.Checklists.Dungeon, pIndex, state);
+				X.styleCheckbox(X.Checklists.Dungeon, pIndex, $(this));
+				
+				// Sum the checkbox's path money
+				var calc = $("#chlDungeonCalculator");
+				var money = X.Checklists.Dungeon.money;
+				var sum = $(this).data("money");
+				
+				switch ($(this).data("mode"))
+				{
+					case "E": sum += calc.data("moneyaddexp"); break;
+				}
+				
+				switch (state)
+				{
+					case X.ChecklistEnum.Disabled:
+					{
+						X.Checklists.Dungeon.money = money - sum;
+					} break;
+					case X.ChecklistEnum.Checked:
+					{
+						X.Checklists.Dungeon.money = money + sum;
+					} break;
+					default:
+					{
+						X.Checklists.Dungeon.money = money - sum;
+					}
+				}
+				updateCalculator();
+			});
+		});
+		// Double click a label (which wraps an input tag) to en/disable the checkbox
+		$("#chlDungeon label").each(function(pIndex)
+		{
+			$(this).dblclick(function()
+			{
+				var checkbox = $(this).find("input:first-child");
+
+				if (checkbox.prop("disabled") === false)
+				{
+					/*
+					 * The double click triggers the click event, which causes
+					 * the calculator to count the disabled checkbox, so trigger
+					 * the unchecking of it first before disabling.
+					 */
+					if (checkbox.prop("checked") === true)
+					{
+						X.triggerCheckbox(checkbox, X.ChecklistEnum.Unchecked);
+					}
+					checkbox.prop("disabled", true).prop("checked", false);
+				}
+				else
+				{
+					checkbox.prop("disabled", false);
+				}
+				X.setChecklistItem(X.Checklists.Dungeon, pIndex, X.getCheckboxEnumState(checkbox));
+				X.styleCheckbox(X.Checklists.Dungeon, pIndex, checkbox);
+			});
+		});
+		
+		// Restore checklist state from stored by triggering the checkboxes (behaviors already bound)
+		$("#chlDungeon input").each(function(pIndex)
+		{
+			X.triggerCheckboxEnumState(X.Checklists.Dungeon, pIndex, $(this));
+		});
+		
+		// Bind uncheck all button
+		$("#chlDungeonUncheck").click(function()
+		{
+			X.clearChecklist(X.Checklists.Dungeon, "uncheck");
+			$("#chlDungeon input").each(function(pIndex)
+			{
+				if ($(this).prop("checked") === true)
+				{
+					$(this).trigger("click");
+				};
+				X.styleCheckbox(X.Checklists.Dungeon, pIndex, $(this));
+			});
+		});
+	},
+	
+	/*
+	 * Binds checkbox and text field joined behavior.
+	 */
+	initializeCustomChecklist: function()
+	{
+		var checkboxes = $("#chlCustom input:checkbox");
+		X.initializeChecklist(X.Checklists.Custom, checkboxes.length);
+		
+		checkboxes.each(function(pIndex)
+		{
+			$(this).change(function()
+			{
+				var state = X.getCheckboxEnumState($(this));
+				
+				X.setChecklistItem(X.Checklists.Custom, pIndex, state);
+				X.styleCheckbox(X.Checklists.Custom, pIndex, $(this));
+				
+				if (state === X.ChecklistEnum.Checked)
+				{
+					$(this).parent().next().addClass("chlCustomTextChecked");
+				}
+				else
+				{
+					$(this).parent().next().removeClass("chlCustomTextChecked");
+				}
+			});
+			
+			// Now that this checkbox is bounded, trigger it as the state in checklist
+			X.triggerCheckboxEnumState(X.Checklists.Custom, pIndex, $(this));
+			
+			// Initialize default value of associated text field
+			var text = $(this).parent().next().val();
+			X.Checklists.CustomText.value.push(text);
+			X.Checklists.CustomText.valueDefault.push(text);
+		});
+		
+		// Bind uncheck all button
+		$("#chlCustomUncheck").click(function()
+		{
+			X.clearChecklist(X.Checklists.Custom, "uncheck");
+			$("#chlCustom input:checkbox").each(function(pIndex)
+			{
+				if ($(this).prop("checked") === true)
+				{
+					$(this).trigger("click");
+				};
+				X.styleCheckbox(X.Checklists.Custom, pIndex, $(this));
+			});
+		});
+		
+		/*
+		 * Each text fields' value will become a delimited substring in one
+		 * single string to be stored in localStorage.
+		 */
+		var i;
+		if (localStorage[X.Checklists.CustomText.key] === undefined)
+		{
+			// If localStorage value is empty, replace with original values in text field
+			localStorage[X.Checklists.CustomText.key] = X.Checklists.CustomText.value.join(I.cTextDelimiter);
+		}
+		else
+		{
+			var storedtextarray = localStorage[X.Checklists.CustomText.key].split(I.cTextDelimiter);
+			if (storedtextarray.length === X.Checklists.CustomText.value.length)
+			{
+				// Load the stored text if it has same number of strings as there are text fields
+				for (i in storedtextarray)
+				{
+					X.Checklists.CustomText.value[i] = storedtextarray[i];
+				}
+			}
+			else
+			{
+				localStorage[X.Checklists.CustomText.key] = X.Checklists.CustomText.value.join(I.cTextDelimiter);
+			}
+		}
+		
+		var updateStoredText = function()
+		{
+			var regex = "/\\" + I.cTextDelimiter + "/g";
+			// Read every text fields and rewrite the string of substrings again
+			$("#chlCustom input:text").each(function(pIndex)
+			{
+				X.Checklists.CustomText.value[pIndex] = $(this).val().replace(regex, "");
+			});
+			localStorage[X.Checklists.CustomText.key] = X.Checklists.CustomText.value.join(I.cTextDelimiter);
+		};
+		
+		// Bind text fields behavior
+		$("#chlCustom input:text").each(function(pIndex)
+		{
+			// Set number of characters allowed in the text field
+			$(this).attr("maxlength", 48);
+			$(this).val(X.Checklists.CustomText.value[pIndex]); // Load initialized text
+			
+			$(this).change(function()
+			{
+				I.write("Custom checklist item #" + (pIndex + 1) + " updated.");
+				updateStoredText();
+			});
+		});
+		
+		// Bind restore text button
+		$("#chlCustomRestore").click(function()
+		{
+			$("#chlCustom input:text").each(function(pIndex)
+			{
+				$(this).val(X.Checklists.CustomText.valueDefault[pIndex]).trigger("change");
+			});
+		});
+	}
+};
+
+/* =============================================================================
+ * @@Dictionary to translate readable/listenable program strings
+ * ========================================================================== */
+D = {
+	
+	/*
+	 * Dictionaries
+	 */
+	Phrase:
+	{
+		s_ago: {en: "ago"},
+		s_also: {en: "also"},
+		s_and: {en: "and"},
+		s_current: {en: "current"},
+		s_followedby: {en: "followed by"},
+		s_in: {en: "in"},
+		s_is: {en: "is"},
+		s_subscribed: {en: "subscribed"},
+		s_then: {en: "then"},
+		s_willstart: {en: "will start"},
+		s_worldboss: {en: "world boss"}
+	},
+	ChainTitle: new Array(),
+	
+	initializeChainTranslation: function()
+	{
+		// Shortcut reference to the chains
+		C.FE =			C.Chains[0];
+		C.Golem =		C.Chains[1];
+		C.Jormag =		C.Chains[2];
+		C.Maw =			C.Chains[3];
+		C.Megades =		C.Chains[4];
+		C.SB =			C.Chains[5];
+		C.Shatterer =	C.Chains[6];
+		C.Taidha =		C.Chains[7];
+		C.Ulgoth =		C.Chains[8];
+		C.Wurm =		C.Chains[9];
+		C.Queen =		C.Chains[10];
+		C.Tequatl =		C.Chains[11];
+		C.Triple =		C.Chains[12];
+		C.FS =			C.Chains[13];
+		C.Foulbear =	C.Chains[14];
+		C.Commissar =	C.Chains[15];
+		C.Eye =			C.Chains[16];
+		C.Lyssa =		C.Chains[17];
+		C.Dwayna =		C.Chains[18];
+		C.Melandru =	C.Chains[19];
+		C.Grenth =		C.Chains[20];
+		C.Arah =		C.Chains[21];
+		C.Balthazar =	C.Chains[22];
+		C.BalthazarN =	C.Chains[23];
+		C.BalthazarC =	C.Chains[24];
+		C.BalthazarS =	C.Chains[25];
+		
+		// Must be in the same order as the chain indexes
+		D.ChainTitle = [
+		{en: C.FE.title,
+			de: "Feuerelementar",
+			es: "Elemental de Fuego",
+			fr: "Elémentaire de Feu",
+			pl: "Żywioł Ognia",
+			nl: "Elementair Brand",
+			ru: "элементный огня",
+			zh: "火元素"},
+		{en: C.Golem.title,
+			de: "Inquestur-Golem Typ II",
+			es: "Gólem serie II de la Inquisa",
+			fr: "Golem Marque II de l'Enqueste",
+			nl: "Inquest Golem Mark II",
+			pl: "Śledztwo Golem Typ II",
+			ru: "Следствие Голем Тип II",
+			zh: "勘驗魔像2型"},
+		{en: C.Jormag.title,
+			de: "Klaue Jormags",
+			es: "Garra de Jormag",
+			fr: "Griffe de Jormag",
+			nl: "Klauw van Jormag",
+			pl: "Pazur Jormag",
+			ru: "Коготь Йормаг",
+			zh: "Jormag 爪"},
+		{en: C.Maw.title,
+			de: "Schamanenoberhaupt der Svanir",
+			es: "Jefe Chamán Svanir",
+			fr: "Chef Chamane de Svanir",
+			nl: "Chief Shaman van Svanir",
+			pl: "Główny Szaman z Svanir",
+			ru: "Главный Шаман Сванир",
+			zh: "Svanir 的首席薩滿"},
+		{en: C.Megades.title,
+			de: "Megazerstörer",
+			es: "Megadestructor",
+			fr: "Mégadestructeur",
+			nl: "Megadestroyer",
+			pl: "Megadestruktor",
+			ru: "Мегадеструктор",
+			zh: "兆豐析構函數"},
+		{en: C.SB.title,
+			de: "Schatten-Behemoth",
+			es: "Behemot de las Sombras",
+			fr: "Béhémoth des Ombres",
+			nl: "Schaduw Behemoth",
+			pl: "Behemoth z Cieniem",
+			ru: "Бегемот из тени",
+			zh: "影子的巨獸"},
+		{en: C.Shatterer.title,
+			de: "Den Zerschmetterer",
+			es: "El Asolador",
+			fr: "Le Destructeur",
+			nl: "De Destructor",
+			pl: "Destruktor",
+			ru: "Разрушитель",
+			zh: "析構函數"},
+		{en: C.Taidha.title,
+			de: "Admiral Taidha Covington",
+			es: "Almirante Taidha Covington",
+			fr: "Amirale Taidha Covington",
+			nl: "Admiraal Taidha Covington",
+			pl: "Admirał Taidha Covington",
+			ru: "Адмирал Таидха Цовингтон",
+			zh: "海軍上將 Taidha Covington"},
+		{en: C.Ulgoth.title,
+			de: "Ulgoth den Modniir",
+			es: "Ulgoth el Modniir",
+			fr: "Ulgoth le Modniir",
+			nl: "Ulgoth de Modniir",
+			pl: "Ulgoth w Modniir",
+			ru: "Улготх в Модниир",
+			zh: "Ulgoth 的 Modniir"},
+		{en: C.Wurm.title,
+			de: "Großen Dschungelwurm",
+			es: "Gran Sierpe de la Selva",
+			fr: "Grande Guivre de la Jungle",
+			nl: "Goede Jungle Worm",
+			pl: "Robak z Dżungli Świetnie",
+			ru: "Великий Червь из джунглей",
+			zh: "大叢林蠕蟲"},
+		{en: C.Queen.title,
+			de: "Karka-Königin",
+			es: "Reina Karka",
+			fr: "Reine Karka",
+			nl: "Koningin Karka",
+			pl: "Królowa Karka",
+			ru: "Королева Карка",
+			zh: "女王 Karka"},
+		{en: C.Tequatl.title,
+			de: "Tequatl den Sonnenlosen",
+			es: "Tequatl el Sombrío",
+			fr: "Tequatl le Sans-soleil",
+			nl: "Tequatl de Zonloze",
+			pl: "Tequatl ma Słońca",
+			ru: "Tequatl Тусклый",
+			zh: "Tequatl 在沒有陽光"},
+		{en: C.Triple.title,
+			de: "Drei Dschungelwurm",
+			es: "Tres Sierpe",
+			fr: "Trois Guivre",
+			nl: "Drie Worm",
+			pl: "Trzy Robak",
+			ru: "Три Червь",
+			zh: "三蠕蟲"},
+		{en: C.FS.title,
+			de: "Feuerschamanen",
+			es: "Chamán de Fuego",
+			fr: "Chamane de feu",
+			nl: "Vuur Sjamaan",
+			pl: "Ognia Szaman",
+			ru: "огня шаман",
+			zh: "火薩滿"},
+		{en: C.Foulbear.title,
+			de: "Faulbär-Häuptling",
+			es: "Cabecilla de Osoinmundo",
+			fr: "Chef Oursefol",
+			nl: "Vuilebeer Hoofdman",
+			pl: "Faulwódz Niedźwiedź",
+			ru: "Фолмедведь Вождь",
+			zh: "臭熊頭目"},
+		{en: C.Commissar.title,
+			de: "Schaufler-Kommissar",
+			es: "Comisario Draga",
+			fr: "Kommissar Draguerre",
+			nl: "Baggeren Commissaris",
+			pl: "Pogłębiarka Komisarza",
+			ru: "Драги Комиссар",
+			zh: "疏通政委"},
+		{en: C.Eye.title,
+			de: "Auge des Zhaitan",
+			es: "Ojo de Zhaitan",
+			fr: "Œil de Zhaïtan",
+			nl: "Oog van Zhaitan",
+			pl: "Oko Zhaitan",
+			ru: "Глаз Жаитан",
+			zh: "Zhaitan 的眼"},
+		{en: C.Lyssa.title,
+			de: "Verderbte Hohepriesterin der Lyssa",
+			es: "Suma Sacerdotisa Corrupta de Lyssa",
+			fr: "Grande Prêtresse Corrompue de Lyssa",
+			nl: "Tempel van Lyssa",
+			pl: "Lyssa Świątynia",
+			ru: "Лысса Храм",
+			zh: "Lyssa 的寺廟"},
+		{en: C.Dwayna.title,
+			de: "Besessene Dwayna-Statue",
+			es: "Estatua Poseída de Dwayna",
+			fr: "Statue Possédée de Dwayna",
+			nl: "Tempel van Dwayna",
+			pl: "Dwayna Świątynia",
+			ru: "Дwаына Храм",
+			zh: "Dwayna 的寺廟"},
+		{en: C.Melandru.title,
+			de: "Auferstandenen Priester der Melandru",
+			es: "Sacerdote de Melandru Resurgido",
+			fr: "Prêtre Revenant de Melandru",
+			nl: "Tempel van Melandru",
+			pl: "Melandru Świątynia",
+			ru: "Меландру Храм",
+			zh: "Melandru 的寺廟"},
+		{en: C.Grenth.title,
+			de: "Auferstandenen Priester des Grenth",
+			es: "Sacerdote de Grenth Resurgido",
+			fr: "Prêtre Revenant de Grenth",
+			nl: "Tempel van Grenth",
+			pl: "Grenth Świątynia",
+			ru: "Грентх Храм",
+			zh: "Grenth 的寺廟"},
+		{en: C.Arah.title,
+			de: "Tore von Arah",
+			es: "Puertas de Arah",
+			fr: "Portes d'Arah",
+			nl: "Poorten van Arah",
+			pl: "Arah Bramy",
+			ru: "Ворота Арах",
+			zh: "Arah 的寺廟"},
+		{en: C.Balthazar.title,
+			de: "Auferstandenen Priester des Balthasar",
+			es: "Sacerdote de Balthazar Resurgido",
+			fr: "Prêtre Revenant de Balthazar",
+			nl: "Tempel van Balthazar",
+			pl: "Świątynia Balthazar",
+			ru: "Балтхазар Храм",
+			zh: "Balthazar 的寺廟"},
+		{en: C.BalthazarN.title,
+			de: "Nord Invasion von Orr",
+			es: "Invasión del Norte de Orr",
+			fr: "Invasion du Nord de Orr",
+			nl: "Noordelijke Invasie van Orr",
+			pl: "Północnej Inwazja Orr",
+			ru: "Северная Вторжение Орр",
+			zh: "北部入侵 Orr"},
+		{en: C.BalthazarC.title,
+			de: "Zentral Invasion von Orr",
+			es: "Invasión Central de Orr",
+			fr: "Invasion Central de Orr",
+			nl: "Centrale Invasie van Orr",
+			pl: "Centralny Inwazja Orr",
+			ru: "Центральный Вторжение Орр",
+			zh: "中部入侵 Orr"},
+		{en: C.BalthazarS.title,
+			de: "Invasion der Südlichen Orr",
+			es: "Invasión del Sur de Orr",
+			fr: "Invasion du Sud de Orr",
+			nl: "Zuidelijke Invasie van Orr",
+			pl: "Południowej Inwazja Orr",
+			ru: "Южный Вторжение Орр",
+			zh: "南部入侵 Orr"}
+		];
+	},
+	
+	/*
+	 * Loads a TTS sound file generated from a TTS web service into a hidden
+	 * iframe. The sound plays automatically after changing the iframe's src via
+	 * the browser's builtin media player.
+	 * @param string pString to convert to speech.
+	 */
+	speak: function(pString)
+	{
+		var url;
+		var tts = document.getElementById("jsTTS");
+
+		if (I.userBrowser === I.BrowserEnum.Chrome)
+		{
+			/*
+			 * Google TTS seems to only work with their browser; using it on
+			 * Firefox gives "Video playback aborted due to a network error"
+			 * Note that GTTS has a 100 character URL limit.
+			 */
+			url = "http://translate.google.com/translate_tts?tl="
+				+ O.Options.enu_Language + "&q=" + escape(pString);
+		}
+		else
+		{
+			url = "http://tts-api.com/tts.mp3?q=" + escape(pString);
+		}
+		tts.src = url;
+	},
+	
+	/*
+	 * Gets a phrase translated based on the opted language.
+	 * @param string pText text to translate without spaces.
+	 * @returns string translated text.
+	 */
+	getTranslation: function(pText, pDictionary)
+	{
+		var entry;
+		var value;
+		var entry = pDictionary["s_" + pText];
+		if (entry)
+		{
+			// Get the text based on user's language
+			value = entry[O.Options.enu_Language];
+			if (value)
+			{
+				return value;
+			}
+			// Language not found so use default instead
+			return entry[D.defaultLanguage];
+		}
+		// No such text exist for translation
+		return "notranslation";
+	},
+	
+	getPhrase: function(pText)
+	{
+		return D.getTranslation(pText, D.Phrase);
+	},
+	
+	getChainTitle: function(pIndex)
+	{
+		return (D.ChainTitle[pIndex])[O.Options.enu_Language];
+	},
+	
+	getChainNick: function(pIndex)
+	{
+		if (O.Options.enu_Language === O.OptionEnum.Language.English)
+		{
+			return C.Chains[pIndex].alias;
+		}
+		return D.getChainTitle(pIndex);
+	},
+	
+	getChainPronunciation: function(pIndex)
+	{
+		if (O.Options.enu_Language === O.OptionEnum.Language.English)
+		{
+			return C.Chains[pIndex].pronunciation;
+		}
+		return D.getChainTitle(pIndex);
+	}
+};
+
+/* =============================================================================
  * @@Chains of events
  * ========================================================================== */
 C = {
@@ -1650,6 +2028,13 @@ C = {
 		Normal: 1, // A concurrent (multiple simultaneous) event that does not take the longest to complete
 		Primary: 2, // An only event at the time or a concurrent event that takes the longest to complete
 		Boss: 3 // The boss event, also considered a primary event
+	},
+	PredictorEnum:
+	{
+		Auto: 0,
+		Min: 1,
+		MinAvg: 2,
+		Avg: 3
 	},
 	
 	/*
@@ -1729,7 +2114,7 @@ C = {
 			+ "<div class='chnTitle'>"
 				+ "<img src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + ".png' />"
 				+ "<div id='chnCheck_" + pChain.alias + "' class='chnCheck' data-index='" + pChain.index + "'></div>"
-				+ "<h1>" + C.truncateTitleString(pChain.title, C.cChainTitleCharLimit) + "</h1>"
+				+ "<h1>" + C.truncateTitleString(D.getChainTitle(pChain.index), C.cChainTitleCharLimit) + "</h1>"
 				+ "<time class='chnTimeFutureFar' id='chnTime_" + pChain.alias + "' data-index='" + pChain.index + "'></time>"
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.alias + "' class='chnDetails'>"
@@ -1955,7 +2340,7 @@ C = {
 	 */
 	isChainUnchecked: function(pChain)
 	{
-		if (O.getChainChecklistState(pChain) === O.ChecklistEnum.Unchecked)
+		if (X.getChainChecklistState(pChain) === X.ChecklistEnum.Unchecked)
 		{
 			return true;
 		}
@@ -1969,8 +2354,8 @@ C = {
 	 */
 	isChainSubscribed: function(pChain)
 	{
-		if (O.getChecklistItem(O.Checklists.ChainSubscription, pChain.index) ===
-			O.ChecklistEnum.Checked)
+		if (X.getChecklistItem(X.Checklists.ChainSubscription, pChain.index) ===
+			X.ChecklistEnum.Checked)
 		{
 			return true;
 		}
@@ -2112,7 +2497,7 @@ C = {
 				"<div class='barChainDummy barChainDummy_" + i + "'>"
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + ".png' />"
-						+ "<h1>" + C.truncateTitleString(ithchain.title, C.cChainTitleCharLimit) + "</h1>"
+						+ "<h1>" + C.truncateTitleString(D.getChainTitle(ithchain.index), C.cChainTitleCharLimit) + "</h1>"
 						+ "<time>" + timestring + "</time>"
 					+ "</div>"
 				+ "</div>");
@@ -2391,7 +2776,7 @@ C = {
 			
 			// Tour to the event on the map if opted
 			if (O.Options.bol_tourPrediction && I.contentCurrent === I.ContentEnum.Chains
-					&& M.isMapAJAXDone)
+				&& M.isMapAJAXDone)
 			{
 				$("#chnEvent_" + pChain.alias + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -2413,14 +2798,14 @@ C = {
 			{
 				var checked = "";
 				
-				if (O.getChainChecklistState(C.NextSDChain1) !== O.ChecklistEnum.Unchecked)
+				if (X.getChainChecklistState(C.NextSDChain1) !== X.ChecklistEnum.Unchecked)
 				{
 					checked = ", checked";
 				}
 				// Don't alert if next boss is checked off and user opted not to hear
 				if ( ! (checked.length > 0 && O.Options.bol_alertChecked === false))
 				{
-					I.speak("Next world boss is " + C.NextSDChain1.pronunciation
+					D.speak("Next world boss is " + C.NextSDChain1.pronunciation
 						+ ", " + T.getTimeTillChainFormatted(C.NextSDChain1, "speech") + checked);
 				}
 			}
@@ -2441,7 +2826,7 @@ C = {
 		{
 			switch (O.Options.int_setPredictor)
 			{
-				case O.PredictorEnum.Auto:
+				case C.PredictorEnum.Auto:
 				{
 					// North American playtime in server hour
 					if (hour >= 16 && hour < 20)
@@ -2461,15 +2846,15 @@ C = {
 						return pChain.primaryEvents[pIndex].minavgSum;
 					}
 				} break;
-				case O.PredictorEnum.Min:
+				case C.PredictorEnum.Min:
 				{
 					return pChain.primaryEvents[pIndex].minSum;
 				} break;
-				case O.PredictorEnum.MinAvg:
+				case C.PredictorEnum.MinAvg:
 				{
 					return pChain.primaryEvents[pIndex].minavgSum;
 				} break;
-				case O.PredictorEnum.Avg:
+				case C.PredictorEnum.Avg:
 				{
 					return pChain.primaryEvents[pIndex].avgSum;
 				} break;
@@ -2479,7 +2864,7 @@ C = {
 		{
 			switch (O.Options.int_setPredictor)
 			{
-				case O.PredictorEnum.Auto:
+				case C.PredictorEnum.Auto:
 				{
 					if (hour >= 16 && hour < 20)
 					{
@@ -2502,17 +2887,17 @@ C = {
 						return pChain.minavgFinish;
 					}
 				} break;
-				case O.PredictorEnum.Min:
+				case C.PredictorEnum.Min:
 				{
 					pChain.countdownToFinish = pChain.minFinish;
 					return pChain.minFinish;
 				} break;
-				case O.PredictorEnum.MinAvg:
+				case C.PredictorEnum.MinAvg:
 				{
 					pChain.countdownToFinish = pChain.minavgFinish;
 					return pChain.minavgFinish;
 				} break;
-				case O.PredictorEnum.Avg:
+				case C.PredictorEnum.Avg:
 				{
 					pChain.countdownToFinish = pChain.avgFinish;
 					return pChain.avgFinish;
@@ -3402,7 +3787,7 @@ M = {
 	 */
 	generateAndInitializeJPs: function()
 	{
-		O.Checklists.JP.length = $(".mapJPList dt").length;
+		X.Checklists.JP.length = $(".mapJPList dt").length;
 		
 		var i;
 		var createJPMarkers = function(pElement, pID, pDifficulty)
@@ -3430,7 +3815,7 @@ M = {
 		};
 		
 		// Create the markers, each set pertains to one "mapJPList"
-		for (i = 0; i < O.Checklists.JP.length; i++)
+		for (i = 0; i < X.Checklists.JP.length; i++)
 		{
 			$("#mapJP_" + i).each(function()
 			{
@@ -3469,10 +3854,10 @@ M = {
 		I.convertExternalLink(".mapJPList a");
 		
 		// Initialize localStorage
-		O.initializeChecklist(O.Checklists.JP, O.Checklists.JP.length);
+		X.initializeChecklist(X.Checklists.JP, X.Checklists.JP.length);
 		
 		var i;
-		for (i = 0; i < O.Checklists.JP.length; i++)
+		for (i = 0; i < X.Checklists.JP.length; i++)
 		{
 			$("#mapJPCheck_" + i).each(function()
 			{
@@ -3480,7 +3865,7 @@ M = {
 				 * Read and enact the state of the JP checklist.
 				 */
 				// Convert the digit at ith position in the checklist string to boolean
-				var stateinstring = O.getChecklistItem(O.Checklists.JP, i, "boolean");
+				var stateinstring = X.getChecklistItem(X.Checklists.JP, i, "boolean");
 				$(this).prop("checked", stateinstring);
 				if (stateinstring === false)
 				{
@@ -3495,9 +3880,9 @@ M = {
 			}).change(function()
 			{
 				// Get the checkbox ID that associates itself with that JP
-				var checkboxstate = O.getCheckboxEnumState($(this));
+				var checkboxstate = X.getCheckboxEnumState($(this));
 				var checkboxindex = parseInt(I.getIndexFromHTMLID($(this)));
-				if (checkboxstate === O.ChecklistEnum.Unchecked)
+				if (checkboxstate === X.ChecklistEnum.Unchecked)
 				{
 					$(this).parent().prev().removeClass("mapJPListNameHover");
 					M.styleJPMarkers(M.JPEntities[checkboxindex], M.JPEntities[checkboxindex].options.dif);
@@ -3509,7 +3894,7 @@ M = {
 				}
 				
 				// Rewrite the checklist string by updating the digit at the ID/index
-				O.setChecklistItem(O.Checklists.JP, checkboxindex, checkboxstate);
+				X.setChecklistItem(X.Checklists.JP, checkboxindex, checkboxstate);
 				
 			}).parent().hover(
 				// Highlight JP name when hovered over checkbox's label
@@ -3553,7 +3938,7 @@ M = {
 		$("#mapJPUncheck").click(function()
 		{
 			var jpchecklist = "";
-			for (i = 0; i < O.Checklists.JP.length; i++)
+			for (i = 0; i < X.Checklists.JP.length; i++)
 			{
 				$("#mapJPCheck_" + i).prop("checked", false)
 					.parent().prev().removeClass("mapJPListNameHover");
@@ -3561,8 +3946,8 @@ M = {
 				
 				jpchecklist += "0";
 			}
-			O.Checklists.JP.value = jpchecklist;
-			localStorage[O.Checklists.JP.key] = O.Checklists.JP.value;
+			X.Checklists.JP.value = jpchecklist;
+			localStorage[X.Checklists.JP.key] = X.Checklists.JP.value;
 		});
 	},
 	
@@ -3648,6 +4033,7 @@ T = {
 	cMINUTES_IN_HOUR: 60,
 	cMINUTES_IN_DAY: 1440,
 	cHOURS_IN_DAY: 24,
+	cHOURS_IN_PERIOD: 12,
 	cSECONDS_IN_TIMEFRAME: 900,
 	cMINUTES_IN_TIMEFRAME: 15,
 	cNUM_TIMEFRAMES_IN_HOUR: 4,
@@ -3662,20 +4048,8 @@ T = {
 	
 	initializeSchedule: function()
 	{
-		// Shortcut reference to the chains
-		C.FE = C.getChainFromAlias("FE");
-		C.Golem = C.getChainFromAlias("Golem");
-		C.Jormag = C.getChainFromAlias("Jormag");
-		C.Karka = C.getChainFromAlias("Karka");
-		C.Maw = C.getChainFromAlias("Maw");
-		C.Megades = C.getChainFromAlias("Megades");
-		C.SB = C.getChainFromAlias("SB");
-		C.Shatterer = C.getChainFromAlias("Shatterer");
-		C.Taidha = C.getChainFromAlias("Taidha");
-		C.Ulgoth = C.getChainFromAlias("Ulgoth");
-		C.Wurm = C.getChainFromAlias("Wurm");
-		C.Tequatl = C.getChainFromAlias("Tequatl");
-		C.Triple = C.getChainFromAlias("TripleWurm");
+		// Assign shortcut variables for chains
+		D.initializeChainTranslation();
 		
 		/*
 		 * This "hash table" contains all time-sensitive chains (a group of
@@ -3697,7 +4071,7 @@ T = {
 			  t90: {t: "01:30", c: [C.Ulgoth]},
 			 t105: {t: "01:45", c: [C.SB]},
 
-			 t120: {t: "02:00", c: [C.Golem, C.Karka]},
+			 t120: {t: "02:00", c: [C.Golem, C.Queen]},
 			 t135: {t: "02:15", c: [C.Maw]},
 			 t150: {t: "02:30", c: [C.Jormag]},
 			 t165: {t: "02:45", c: [C.FE]},
@@ -3717,7 +4091,7 @@ T = {
 			 t330: {t: "05:30", c: [C.Jormag]},
 			 t345: {t: "05:45", c: [C.SB]},
 
-			 t360: {t: "06:00", c: [C.Taidha, C.Karka]},
+			 t360: {t: "06:00", c: [C.Taidha, C.Queen]},
 			 t375: {t: "06:15", c: [C.Maw]},
 			 t390: {t: "06:30", c: [C.Megades]},
 			 t405: {t: "06:45", c: [C.FE]},
@@ -3739,7 +4113,7 @@ T = {
 
 			 t600: {t: "10:00", c: [C.Shatterer]},
 			 t615: {t: "10:15", c: [C.Maw]},
-			 t630: {t: "10:30", c: [C.Ulgoth, C.Karka]},
+			 t630: {t: "10:30", c: [C.Ulgoth, C.Queen]},
 			 t645: {t: "10:45", c: [C.FE]},
 
 			 t660: {t: "11:00", c: [C.Golem]},
@@ -3762,7 +4136,7 @@ T = {
 			 t870: {t: "14:30", c: [C.Jormag]},
 			 t885: {t: "14:45", c: [C.FE]},
 
-			 t900: {t: "15:00", c: [C.Taidha, C.Karka]},
+			 t900: {t: "15:00", c: [C.Taidha, C.Queen]},
 			 t915: {t: "15:15", c: [C.Wurm]},
 			 t930: {t: "15:30", c: [C.Megades]},
 			 t945: {t: "15:45", c: [C.SB]},
@@ -3777,7 +4151,7 @@ T = {
 			t1050: {t: "17:30", c: [C.Jormag]},
 			t1065: {t: "17:45", c: [C.SB]},
 
-			t1080: {t: "18:00", c: [C.Taidha, C.Karka]},
+			t1080: {t: "18:00", c: [C.Taidha, C.Queen]},
 			t1095: {t: "18:15", c: [C.Maw]},
 			t1110: {t: "18:30", c: [C.Megades]},
 			t1125: {t: "18:45", c: [C.FE]},
@@ -3802,7 +4176,7 @@ T = {
 			t1350: {t: "22:30", c: [C.Ulgoth]},
 			t1365: {t: "22:45", c: [C.FE]},
 
-			t1380: {t: "23:00", c: [C.Golem, C.Karka]},
+			t1380: {t: "23:00", c: [C.Golem, C.Queen]},
 			t1395: {t: "23:15", c: [C.Wurm]},
 			t1410: {t: "23:30", c: [C.Jormag]},
 			t1425: {t: "23:45", c: [C.SB]}
@@ -3834,7 +4208,7 @@ T = {
 		}
 		
 		// Finally bind event handlers for the chain checklist
-		O.initializeChainChecklist();
+		X.initializeChainChecklist();
 		// Initialize for the touring function to access current active event
 		C.CurrentSDChain = T.getStandardChain();
 	},
@@ -4240,9 +4614,9 @@ T = {
 			 * Convert specified seconds to time units. The ~~ gets rid of the
 			 * decimal so / behaves like integer divide.
 			 */
-			sec = pArgs.customTimeInSeconds % 60;
-			min = ~~(pArgs.customTimeInSeconds / 60) % 60;
-			hour = ~~(pArgs.customTimeInSeconds / 3600);
+			sec = pArgs.customTimeInSeconds % T.cSECONDS_IN_MINUTE;
+			min = ~~(pArgs.customTimeInSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+			hour = ~~(pArgs.customTimeInSeconds / T.cSECONDS_IN_HOUR);
 		}
 		
 		var minsec = "";
@@ -4262,11 +4636,11 @@ T = {
 			}
 			else if (pArgs.wantHours === false)
 			{
-				minsec = min + "." + ((sec < 10) ? "0" + sec : sec);
+				minsec = min + "." + ((sec < T.cBASE_10) ? "0" + sec : sec);
 			}
 			else
 			{
-				minsec = ((min < 10) ? "0" + min : min) + ":" + ((sec < 10) ? "0" + sec : sec);
+				minsec = ((min < T.cBASE_10) ? "0" + min : min) + ":" + ((sec < T.cBASE_10) ? "0" + sec : sec);
 			}
 		}
 		else
@@ -4277,7 +4651,7 @@ T = {
 			}
 			else
 			{
-				minsec = ((min < 10) ? "0" + min : min);
+				minsec = ((min < T.cBASE_10) ? "0" + min : min);
 			}
 		}
 		
@@ -4300,14 +4674,17 @@ T = {
 		}
 		// Else shift the hour and suffix the meridiem
 		var period = " AM";
-		if (hour > 12)
+		if (hour >= T.cHOURS_IN_PERIOD)
 		{
-			hour = hour % 12;
+			if (hour > T.cHOURS_IN_PERIOD)
+			{
+				hour = hour % T.cHOURS_IN_PERIOD;
+			}
 			period = " PM";
 		}
 		else if (hour === 0)
 		{
-			hour = 12;
+			hour = T.cHOURS_IN_PERIOD;
 		}
 		return hour + ":" + minsec + period;
 	},
@@ -4511,7 +4888,7 @@ K = {
 				// If clicked chain is on the clock
 				if (ithchain && pIndex === ithchain.index)
 				{
-					if (O.getChainChecklistState(ithchain) !== O.ChecklistEnum.Unchecked)
+					if (X.getChainChecklistState(ithchain) !== X.ChecklistEnum.Unchecked)
 					{
 						iconchain.css({opacity: 1})
 							.animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
@@ -4558,7 +4935,7 @@ K = {
 		T.TIMESTAMP_UNIX_SECONDS = T.getUNIXSeconds();
 		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeOffsetSinceMidnight("utc", "seconds");
 		var min = now.getMinutes();
-		var hour = now.getHours() % 12;
+		var hour = now.getHours() % T.cHOURS_IN_PERIOD;
 		var secinhour = min*60 + sec;
 		var secangle = sec*6; // 1 degree per second
 		var minangle = min*6 + sec/10; // 0.1 degrees per second
@@ -4650,11 +5027,11 @@ K = {
 
 				if (speech1 !== null && speech2 === null)
 				{
-					I.speak(speech1);
+					D.speak(speech1);
 				}
 				else if (speech1 === null && speech2 !== null)
 				{
-					I.speak(speech2);
+					D.speak(speech2);
 				}
 				else if (speech1 !== null && speech2 !== null)
 				{
@@ -4662,13 +5039,13 @@ K = {
 					 * If have to speak both bosses then have to split the speech
 					 * because of a 100 character limit for Google TTS
 					 */
-					I.speak(speech1);
+					D.speak(speech1);
 
 					(function(pSpeech, pWait)
 					{
 						setTimeout(function()
 						{
-							I.speak("Also, " + pSpeech);
+							D.speak("Also, " + pSpeech);
 						}, pWait);
 					})(speech2, averagespeechtime);
 				}
@@ -4770,7 +5147,7 @@ K = {
 			// Don't alert if current boss is checked off and user opted not to hear
 			if ( ! (checkedcurrent.length > 0 && O.Options.bol_alertChecked === false))
 			{
-				I.speak("Current world boss is " + C.CurrentSDChain.pronunciation
+				D.speak("Current world boss is " + C.CurrentSDChain.pronunciation
 					+ checkedcurrent + ". Followed by " + C.NextSDChain1.pronunciation + checkednext);
 			}
 		}
@@ -4839,7 +5216,7 @@ K = {
 					pIcon.show();
 					pIcon.attr("src", "img/chain/" + pChain.alias.toLowerCase() + I.cImageMainExtension);
 
-					if (O.getChainChecklistState(pChain) !== O.ChecklistEnum.Unchecked)
+					if (X.getChainChecklistState(pChain) !== X.ChecklistEnum.Unchecked)
 					{
 						pIcon.css({opacity: K.iconOpacityChecked});
 					}
@@ -5002,6 +5379,7 @@ I = {
 	consoleTimeout: {},
 	
 	// HTML/CSS pixel units
+	cPANEL_WIDTH: 360,
 	cPANEL_HEIGHT: 720,
 	cPANE_CLOCK_HEIGHT: 360,
 	cPANE_CLOCK_HEIGHT_COMPACT: 220,
@@ -5097,15 +5475,8 @@ I = {
 		// Initial sync of the sleep detection variable
 		K.awakeTimestampPrevious = currenttimestamp;
 		
-		// Parse and store the URL arguments
-		O.URLArguments = O.getURLArguments();
-		
-		// Consolidate elements for overlay mode
-		if (O.URLArguments[I.URLKeyMode] === I.programModeEnum.Overlay)
-		{
-			I.programMode = I.programModeEnum.Overlay;
-			$("#itemSocial").hide();
-		}
+		// Get URL arguments and do appropriate changes
+		O.enforceURLArgumentsFirst();
 		
 		// Detect small devices
 		if (window.innerWidth <= I.cSMALL_DEVICE_WIDTH && window.innerHeight <= I.cSMALL_DEVICE_HEIGHT
@@ -5148,9 +5519,6 @@ I = {
 			I.userBrowser = I.BrowserEnum.Opera;
 		}
 		
-		// Verify language
-		O.enforceProgramLanguage();
-		
 		// Default content layer
 		I.contentCurrent = I.ContentEnum.Chains;
 	},
@@ -5166,7 +5534,7 @@ I = {
 		I.initializeUIforMenu();
 		I.initializeUIforChains();
 		// Do special commands from the URL
-		I.enactURLArguments();
+		I.enforceURLArgumentsLast();
 		// Clear the non-load warning after everything succeeded
 		$("#paneWarning").remove();
 		// Bind console buttons
@@ -5184,38 +5552,17 @@ I = {
 		// Fix Firefox SVG filter bug
 		K.reapplyFilters();
 		
+		// The menu bar overlaps the language popup, so have to "raise" the clock pane
+		$("#itemLanguage").hover(
+			function() {$("#paneClock").css("z-index", 1);},
+			function() {$("#paneClock").css("z-index", 0);}
+		);
+		
 		// Clean the localStorage of unrecognized variables
 		O.cleanLocalStorage();
 		
 		// Update and notify user of version change
 		O.enforceProgramVersion();
-	},
-	
-	/*
-	 * Loads a TTS sound file generated from a TTS web service into a hidden
-	 * iframe. The sound plays automatically after changing the iframe's src via
-	 * the browser's builtin media player.
-	 * @param string pString to convert to speech.
-	 */
-	speak: function(pString)
-	{
-		var url;
-		var tts = document.getElementById("jsTTS");
-
-		if (I.userBrowser === I.BrowserEnum.Chrome)
-		{
-			/*
-			 * Google TTS seems to only work with their browser; using it on
-			 * Firefox gives "Video playback aborted due to a network error"
-			 * Note that GTTS has a 100 character URL limit.
-			 */
-			url = "http://translate.google.com/translate_tts?tl=en&q=" + escape(pString);
-		}
-		else
-		{
-			url = "http://tts-api.com/tts.mp3?q=" + escape(pString);
-		}
-		tts.src = url;
 	},
 	
 	/*
@@ -5332,7 +5679,7 @@ I = {
 	 * Does the commands within the address bar after the site's domain name.
 	 * @pre URLArguments object was initialized by extraction.
 	 */
-	enactURLArguments: function()
+	enforceURLArgumentsLast: function()
 	{
 		var i;
 		// Go to the page (content layer) requested, as in "openPageFromURL()"
@@ -5661,25 +6008,25 @@ I = {
 		   var cFadeOpacity = 0.5;
 		   // User hovers over the menu bar
 		   $("#paneMenu").hover(
-			   function()
-			   {
-				   $("#paneMenu span").each(function()
-				   {
-					   // Fade icon not being hovered over
-					   if (!$(this).is(":hover"))
-					   {
-						   $(this).animate({opacity: cFadeOpacity}, animationspeed);
-					   }
-				   });
-			   },
-			   function()
-			   {
-				   // User moused outside the menu, so stop the animations
-				   $("#paneMenu span").finish().each(function()
-				   {
-					   $(this).animate({opacity: 1}, animationspeed);
-				   });
-			   }
+				function()
+				{
+					$("#paneMenu span").each(function()
+					{
+						// Fade icon not being hovered over
+						if (!$(this).is(":hover"))
+						{
+							$(this).animate({opacity: cFadeOpacity}, animationspeed);
+						}
+					});
+				},
+				function()
+				{
+					// User moused outside the menu, so stop the animations
+					$("#paneMenu span").finish().each(function()
+					{
+						$(this).animate({opacity: 1}, animationspeed);
+					});
+				}
 		   );
 		   // User hovers over individual menu icons
 		   $("#paneMenu span").hover(
@@ -5855,8 +6202,8 @@ I = {
 			// Create custom checklists
 			$("#headerMap_Personal").one("click", function()
 			{
-				O.initializeDungeonChecklist();
-				O.initializeCustomChecklist();
+				X.initializeDungeonChecklist();
+				X.initializeCustomChecklist();
 				I.isSectionLoadedMap_Personal = true;
 			});
 			
@@ -6072,44 +6419,11 @@ I = {
 		{
 			this.a && (this.a.innerHTML = "", this.a.style.display = "none");
 		}
-	},
-	
-	/*
-	 * Dictionary of user readable/listenable words used in this web application.
-	 */
-	Text:
-	{
-		s_also: {en: "also"},
-		s_and: {en: "and"},
-		s_current: {en: "current"},
-		s_followedby: {en: "followed by"},
-		s_in: {en: "in"},
-		s_is: {en: "is"},
-		s_subscribed: {en: "subscribed"},
-		s_then: {en: "then"},
-		s_willstart: {en: "will start"},
-		s_worldboss: {en: "world boss"}
-	},
-	
-	/*
-	 * Gets a phrase translated based on the opted language.
-	 * @param string pText text to translate without spaces.
-	 * @returns string translated text.
-	 */
-	translate: function(pText)
-	{
-		var entry;
-		if (I.Text["s_" + pText])
-		{
-			entry = I.Text["s_" + pText];
-			return entry[O.Utilities.programLanguage.value];
-		}
-		return "notranslation";
 	}
 };
 
 /* =============================================================
- *  @@Xecutions and jQuery bindings; the order matters!
+ *  Executions and jQuery bindings; the order matters!
  * ============================================================= */
 I.initializeFirst(); // initialize variables that need to be first
 O.initializeOptions(); // load stored or default options to the HTML input

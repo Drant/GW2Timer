@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- Meta -->
-	<title>gw2timer.com - World Boss Timers and Daily Map Guide</title>
+	<title>GW2Timer.com - World Boss Timers and Daily Map Guide</title>
 	<meta charset="utf-8" />
 	<meta name="robots" content="index, follow, noarchive" />
 	<meta name="description" content="Guild Wars 2 timers and clock for world boss meta events, with walkthroughs, daily achievements, jumping puzzles gathering map, and personal checklists." />
@@ -125,7 +125,7 @@
 					<line id="clkMarker1" x1="97.00" y1="50.00" x2="90.00" y2="50.00" />
 					<line id="clkMarker2" x1="50.00" y1="97.00" x2="50.00" y2="90.00" />
 					<line id="clkMarker3" x1="3.00" y1="50.00" x2="10.00" y2="50.00" />
-					<!-- Markers for minimum time event ends and average time event ends -->
+					<!-- Markers for minimum and average time event ends -->
 					<line id="clkMarker0A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
 					<line id="clkMarker0B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
 					<line id="clkMarker1A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
@@ -156,6 +156,19 @@
 			</div>
 			<time id="itemTimeLocal" class="itemTimeDigital">00:00</time>
 			<time id="itemTimeServer" class="itemTimeDigital">16:00</time>
+			<div id="itemLanguage">
+				<a><img src="img/ui/language.png" alt="Language" /> <abbr>Łâñgß</abbr></a>
+				<ul id="itemLanguageChoices">
+					<li><a href="./?enu_Language=en">English</a></li>
+					<li><a href="./?enu_Language=de">Deutsch</a></li>
+					<li><a href="./?enu_Language=es">Español</a></li>
+					<li><a href="./?enu_Language=fr">Français</a></li>
+					<li><a href="./?enu_Language=nl">Nederlands</a></li>
+					<li><a href="./?enu_Language=pl">Polski</a></li>
+					<li><a href="./?enu_Language=ru">Русский</a></li>
+					<li><a href="./?enu_Language=zh">中文</a></li>
+				</ul>
+			</div>
 			<div id="itemSocial">
 				<a title="<dfn>Learn GW2Timer's features :?</dfn>" href="http://i.imgur.com/KvJEr58.png">
 					<img src="img/ui/info.png" alt="Info" />
@@ -171,10 +184,10 @@
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
 		<nav id="paneMenu" class="paneRight">
-			<span id="menuChains" title="<dfn>Chains:</dfn> Timers, Events, Schedule"></span>
-			<span id="menuMap" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, Checklists"></span>
-			<span id="menuHelp" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"></span>
-			<span id="menuOptions" title="<dfn>Options:</dfn> Display, Format, Alarm"></span>
+			<span id="menuChains" class="translateTip" title="<dfn>Chains:</dfn> Timers, Events, Schedule"></span>
+			<span id="menuMap" class="translateTip" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, Checklists"></span>
+			<span id="menuHelp" class="translateTip" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"></span>
+			<span id="menuOptions" class="translateTip" title="<dfn>Options:</dfn> Display, Format, Alarm"></span>
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->
@@ -251,7 +264,7 @@
 					<label title="Show/Hide the map area on the left."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<br />
 					<h2>Alarm</h2>
-					<span>Text-to-Speech requires Chrome or Firefox. Female voice is only available for Chrome. Click the speaker icon on the chains page to toggle sound.</span>
+					<span>Text-to-Speech requires Chrome or Firefox. Multilingualism is only available for Chrome. Click the speaker icon on the chains page to toggle sound.</span>
 					<h3>Checklist Mode</h3>
 					<span>When should the program announce the next chain?</span>
 					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
@@ -275,7 +288,7 @@
 					<br />
 					<h2>Debug</h2>
 					<div class="optButtons">
-						<button id="optPrintLocalStorage" title="Read what is stored in your browser for this website. Most of these name-value pairs can be overriden directly via URL query string. Example: http://gw2timer.com/?bol_showClock=false&amp;int_setPredictor=3">Print Website Memory</button>
+						<button id="optPrintLocalStorage" title="Read what is stored in your browser for this website. Most of these key-value pairs can be overriden directly via URL query string. Example: http://gw2timer.com/?bol_showClock=false&amp;int_setPredictor=3">Print Website Memory</button>
 						<div id="optTimestamps">
 							<div><time id="optTimestampServerReset">00:00</time> Next Server Reset (<time id="optTimeTillReset">00:00</time>)</div>
 							<div><time id="optTimestampUTC">00:00</time> UNIX Timestamp</div>
