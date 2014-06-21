@@ -1788,7 +1788,7 @@ D = {
 			fr: "Tequatl le Sans-soleil",
 			nl: "Tequatl de Zonloze",
 			pl: "Tequatl ma Słońca",
-			ru: "Tequatl Тусклый",
+			ru: "Теqуатл Тусклый",
 			zh: "Tequatl 在沒有陽光"},
 		{en: C.Triple.title,
 			de: "Drei Dschungelwurm",
@@ -1801,7 +1801,7 @@ D = {
 		{en: C.FS.title,
 			de: "Feuerschamanen",
 			es: "Chamán de Fuego",
-			fr: "Chamane de feu",
+			fr: "Chamane de Feu",
 			nl: "Vuur Sjamaan",
 			pl: "Ognia Szaman",
 			ru: "огня шаман",
@@ -1958,16 +1958,31 @@ D = {
 		return "notranslation";
 	},
 	
+	/*
+	 * Gets translation of specified text using phrase dictionary.
+	 * @param string pText to lookup.
+	 * @returns string translated phrase.
+	 */
 	getPhrase: function(pText)
 	{
 		return D.getTranslation(pText, D.Phrase);
 	},
 	
+	/*
+	 * Gets title of chain in opted language.
+	 * @param int pIndex of chain.
+	 * @returns string title.
+	 */
 	getChainTitle: function(pIndex)
 	{
 		return (D.ChainTitle[pIndex])[O.Options.enu_Language];
 	},
 	
+	/*
+	 * Gets short title of chain in opted language.
+	 * @param int pIndex of chain.
+	 * @returns string short title.
+	 */
 	getChainNick: function(pIndex)
 	{
 		if (O.Options.enu_Language === O.OptionEnum.Language.English)
@@ -1977,6 +1992,11 @@ D = {
 		return D.getChainTitle(pIndex);
 	},
 	
+	/*
+	 * Gets pronunciation of chain in opted language.
+	 * @param int pIndex of chain.
+	 * @returns string pronunciation.
+	 */
 	getChainPronunciation: function(pIndex)
 	{
 		if (O.Options.enu_Language === O.OptionEnum.Language.English)
@@ -1984,6 +2004,20 @@ D = {
 			return C.Chains[pIndex].pronunciation;
 		}
 		return D.getChainTitle(pIndex);
+	},
+	
+	/*
+	 * Gets name of event in opted language.
+	 * @param object pEvent to lookup.
+	 * @returns string name.
+	 */
+	getEventName: function(pEvent)
+	{
+		if (pEvent["name_" + O.Options.enu_Language])
+		{
+			return pEvent["name_" + O.Options.enu_Language];
+		}
+		return pEvent["name_en"];
 	}
 };
 
@@ -2147,7 +2181,7 @@ C = {
 				+ w("Avg to Complete: ") + e.avg + b
 				+ w("Min to Complete: ") + e.min + b
 				+ w("Max to Complete: ") + e.max + b
-				+ b + "&amp;quot;" + e.name.replace(/["']/g, "") + "&amp;quot;";
+				+ b + "&amp;quot;" + D.getEventName(e).replace(/["']/g, "") + "&amp;quot;";
 			var indentpixel = 0;
 			var eventnamelimit = 44;
 			var indentEvent = function()
@@ -2184,7 +2218,7 @@ C = {
 			$("#chnEvents_" + pChain.alias).append(
 			"<li id='chnEvent_" + pChain.alias + "_" + e.num + "' class='chnStep_" + pChain.alias + "_" + e.step + "' style='margin-left:" + indentpixel +"px'>"
 				+ "<img src='img/event/" + e.icon + ".png' title='" + eventhtmltitle + "'/>"
-				+ "<span>" + C.truncateTitleString(e.name, eventnamelimit, ".") + "." + "</span>"
+				+ "<span>" + C.truncateTitleString(D.getEventName(e), eventnamelimit, ".") + "." + "</span>"
 			+ "</li>");
 		};
 
@@ -2924,6 +2958,7 @@ M = {
 	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 	cICON_WAYPOINT: "img/map/waypoint.png",
+	cICON_WAYPOINTOVER: "img/map/waypoint_h.png",
 	cLEAFLET_PATH_OPACITY: 0.5,
 	cLEAFLET_ICON_SIZE: 32,
 	cMAP_BOUND: 32768, // The map is a square
@@ -3398,6 +3433,14 @@ M = {
 						// Initially hide all the waypoints
 						waypoint._icon.style.display = "none";
 						// Bind behavior
+						waypoint.on("mouseover", function()
+						{
+							this._icon.src = M.cICON_WAYPOINTOVER;
+						});
+						waypoint.on("mouseout", function()
+						{
+							this._icon.src = M.cICON_WAYPOINT;
+						});
 						waypoint.on("click", function()
 						{
 							$("#mapCoordinatesStatic").val(this.options.link).select();

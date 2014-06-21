@@ -419,6 +419,10 @@ input#mapCoordinatesRegion {
 		1px 1px 0px #000;
 	opacity: 0.9;
 }
+#itemLanguageButton {
+	display: block;
+	width: 72px;
+}
 #itemLanguage img {
 	vertical-align: middle;
 	padding-bottom: 2px;
@@ -426,33 +430,33 @@ input#mapCoordinatesRegion {
 #itemLanguage abbr {
 	opacity: 0.8;
 }
+#itemLanguage:hover abbr {
+	opacity: 1;
+}
 #itemLanguageChoices { /* Popup when hovered over language button */
 	display: none;
 }
 #itemLanguageChoices a {
 	display: block;
-	padding-left: 4px;
-	padding-right: 4px;
+	padding-left: 8px;
+	padding-right: 8px;
 	font-size: 14px;
 	line-height: 150%;
 	text-decoration: none;
-	color: white;
+	color: #e4e0b3;
 }
 #itemLanguageChoices a:hover {
 	color: #ddff77;
-	background: #364852;
-}
-#itemLanguage:hover {
-	padding-bottom: 4px;
+	background: #333;
 }
 #itemLanguage:hover #itemLanguageChoices {
 	display: block;
 	position: absolute;
-	padding: 2px;
+	padding: 4px 2px 4px 2px;
 	border: 2px solid #111;
 	box-shadow: 0px 0px 2px #555;
-	background: #22323d;
-	background: linear-gradient(to right, #001019 0%, #364852 100%);
+	background: #222;
+	background: linear-gradient(to right, #111 0%, #333 100%);
 }
 
 #itemSocial {
