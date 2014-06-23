@@ -166,7 +166,7 @@ a, input, label, button,
  *  Left panel
  * ========================================================================== */
 #panelLeft, #panelRight {
-	background: url("img/background/space.jpg") repeat center;
+	background: #111;
 }
 
 /* @@Map
@@ -291,6 +291,10 @@ input#mapCoordinatesRegion {
 	position: absolute;
 	border: 1px solid black;
 	box-shadow: 0px 0px 10px black;
+}
+#itemClockFace img:hover {
+	border: 1px solid red !important;
+	box-shadow: 0px 0px 10px red !important;
 }
 #itemClockIconStandard0 {
 	top: 4px; left: 148px;
@@ -433,7 +437,7 @@ input#mapCoordinatesRegion {
 #itemLanguage:hover abbr {
 	opacity: 1;
 }
-#itemLanguageChoices { /* Popup when hovered over language button */
+#itemLanguageChoices {
 	display: none;
 }
 #itemLanguageChoices a {
@@ -443,14 +447,18 @@ input#mapCoordinatesRegion {
 	font-size: 14px;
 	line-height: 150%;
 	text-decoration: none;
-	color: #e4e0b3;
+	color: #ffeebb;
 }
 #itemLanguageChoices a:hover {
 	color: #ddff77;
 	background: #333;
 }
-#itemLanguage:hover #itemLanguageChoices {
+#itemLanguageChoices a sub {
+	font-size: 10px;
+}
+#itemLanguage:hover #itemLanguageChoices { /* Popup when hovered over language button */
 	display: block;
+	min-width: 90px;
 	position: absolute;
 	padding: 4px 2px 4px 2px;
 	border: 2px solid #111;
@@ -1019,6 +1027,9 @@ header.cntHeader {
 }
 .chnTimeSubscribed {
 	color: #ddff77 !important;
+}
+.chnTimeSubscribed:after {
+	content: "*";
 }
 
 .chnTimeCurrent:hover, .chnTimeFuture:hover, .chnTimeFutureFar:hover {

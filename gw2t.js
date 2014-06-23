@@ -79,7 +79,7 @@ O = {
 	},
 	
 	/*
-	 * All of these options must have an associated input tag in the HTML that
+	 * All of these options should have an associated input tag in the HTML that
 	 * users interact with, and their IDs are in the form prefixOption + optionkey.
 	 * Note the three letter prefix indicating the option's data type.
 	 */
@@ -126,6 +126,7 @@ O = {
 	{
 		Language:
 		{
+			Default: "en",
 			English: "en",
 			German: "de",
 			Spanish: "es",
@@ -176,21 +177,6 @@ O = {
 		}
 		
 		localStorage[O.Utilities.programVersion.key] = O.Utilities.programVersion.value;
-	},
-	
-	/*
-	 * Parses and stores the URL arguments then do appropriate changes.
-	 */
-	enforceURLArgumentsFirst: function()
-	{
-		O.URLArguments = O.getURLArguments();
-		
-		// Consolidate elements for overlay mode
-		if (O.URLArguments[I.URLKeyMode] === I.programModeEnum.Overlay)
-		{
-			I.programMode = I.programModeEnum.Overlay;
-			$("#itemSocial").hide();
-		}
 	},
 	
 	/*
@@ -251,7 +237,8 @@ O = {
 	 * so if a user enters http://gw2timer.com/?bol_showClock=false then the clock
 	 * will be hidden regardless of previous localStorage or the defaults here.
 	 * Note that "bol_showClock" matches exactly as in the Options, otherwise
-	 * it would have not overridden any Options variable.
+	 * it would have not overridden any Options variable. Values used apart from
+	 * comparison should be sanitized first.
 	 */
 	URLArguments: {},
 	
@@ -278,6 +265,28 @@ O = {
 			argsobject[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
 		}
 		return argsobject;
+	},
+	
+	/*
+	 * Parses and stores the URL arguments then do appropriate changes.
+	 */
+	enforceURLArgumentsFirst: function()
+	{
+		O.URLArguments = O.getURLArguments();
+		
+		var i;
+		// Set up program mode
+		if (O.URLArguments[I.URLKeyMode])
+		{
+			var mode = O.URLArguments[I.URLKeyMode];
+			for (i in I.programModeEnum)
+			{
+				if (I.programModeEnum[i].toLowerCase() === mode.toLowerCase())
+				{
+					I.programMode = I.programModeEnum[i];
+				}
+			}
+		}
 	},
 	
 	/*
@@ -351,6 +360,16 @@ O = {
 	},
 	
 	/*
+	 * Converts a string to be all lower case except the first letter which is capitalized.
+	 * @param string pString to convert.
+	 * @returns string converted.
+	 */
+	toFirstUpperCase: function(pString)
+	{
+		return pString.charAt(0).toUpperCase() + pString.slice(1).toLowerCase();
+	},
+	
+	/*
 	 * Strips a string of HTML special characters for use in printing.
 	 * @param string pString to escape.
 	 * @returns string replaced string.
@@ -413,6 +432,20 @@ O = {
 			return 1;
 		}
 		return 0;
+	},
+	
+	/*
+	 * Returns false if object is undefined or null or falsie, otherwise true.
+	 * @param object pObject to test.
+	 * @returns boolean whether object exists.
+	 */
+	objToBool: function(pObject)
+	{
+		if (pObject)
+		{
+			return true;
+		}
+		return false;
 	},
 	
 	/*
@@ -493,26 +526,41 @@ O = {
 					O.OptionRange[optionkey] = new Array($(this).prop("min"), $(this).prop("max"));
 				}
 			});
+			
 			/*
 			 * URLArguments overrides localStorage, which overrides Options here
-			 * only if such an Options variable exists.
+			 * only if such an Options variable exists. If program is embedded
+			 * then URLArguments overrides Options only, and user preferences
+			 * (localStorage) will not modified.
 			 */
-			if (O.URLArguments[optionkey] !== undefined && I.programMode !== I.programModeEnum.Embedded)
+			if (I.programMode === I.programModeEnum.Embedded)
 			{
-				// Override localStorage
-				localStorage[optionkey] = O.sanitizeURLOptionsValue(
-					optionkey, O.URLArguments[optionkey]);
-			}
-			
-			// Assign default values to localStorage if they are empty
-			if (localStorage[optionkey] === undefined)
-			{
-				localStorage[optionkey] = O.Options[optionkey];
+				if (O.URLArguments[optionkey] !== undefined)
+				{
+					O.Options[optionkey] = O.convertLocalStorageDataType(
+					O.sanitizeURLOptionsValue(optionkey, O.URLArguments[optionkey]));
+				}
 			}
 			else
-			{	// Else user set options from localStorage become the new options
-				O.Options[optionkey] = O.convertLocalStorageDataType(localStorage[optionkey]);
+			{
+				if (O.URLArguments[optionkey] !== undefined)
+				{
+					// Override localStorage
+					localStorage[optionkey] = O.sanitizeURLOptionsValue(
+						optionkey, O.URLArguments[optionkey]);
+				}
+
+				// Assign default values to localStorage if they are empty
+				if (localStorage[optionkey] === undefined)
+				{
+					localStorage[optionkey] = O.Options[optionkey];
+				}
+				else
+				{	// Else user set options from localStorage become the new options
+					O.Options[optionkey] = O.convertLocalStorageDataType(localStorage[optionkey]);
+				}
 			}
+			
 			// Update the inputs of specific types, this "loop" runs once
 			$("#" + O.prefixOption + optionkey).each(function()
 			{
@@ -686,6 +734,8 @@ O = {
 		$("#opt_bol_showMap").change(function()
 		{
 			O.enact_bol_showMap();
+			// Leaflet map breaks when it is shown after being hidden, so have to reload
+			location.reload();
 		});
 		/*
 		 * Run enactors when the page loads (because this an initializer function).
@@ -1639,7 +1689,7 @@ X = {
 };
 
 /* =============================================================================
- * @@Dictionary to translate readable/listenable program strings
+ * @@Dictionary to translate readable/listenable strings
  * ========================================================================== */
 D = {
 	
@@ -1648,289 +1698,39 @@ D = {
 	 */
 	Phrase:
 	{
-		s_ago: {en: "ago"},
-		s_also: {en: "also"},
-		s_and: {en: "and"},
-		s_current: {en: "current"},
-		s_followedby: {en: "followed by"},
-		s_in: {en: "in"},
-		s_is: {en: "is"},
-		s_subscribed: {en: "subscribed"},
-		s_then: {en: "then"},
-		s_willstart: {en: "will start"},
-		s_worldboss: {en: "world boss"}
-	},
-	ChainTitle: new Array(),
-	
-	initializeChainTranslation: function()
-	{
-		// Shortcut reference to the chains
-		C.FE =			C.Chains[0];
-		C.Golem =		C.Chains[1];
-		C.Jormag =		C.Chains[2];
-		C.Maw =			C.Chains[3];
-		C.Megades =		C.Chains[4];
-		C.SB =			C.Chains[5];
-		C.Shatterer =	C.Chains[6];
-		C.Taidha =		C.Chains[7];
-		C.Ulgoth =		C.Chains[8];
-		C.Wurm =		C.Chains[9];
-		C.Queen =		C.Chains[10];
-		C.Tequatl =		C.Chains[11];
-		C.Triple =		C.Chains[12];
-		C.FS =			C.Chains[13];
-		C.Foulbear =	C.Chains[14];
-		C.Commissar =	C.Chains[15];
-		C.Eye =			C.Chains[16];
-		C.Lyssa =		C.Chains[17];
-		C.Dwayna =		C.Chains[18];
-		C.Melandru =	C.Chains[19];
-		C.Grenth =		C.Chains[20];
-		C.Arah =		C.Chains[21];
-		C.Balthazar =	C.Chains[22];
-		C.BalthazarN =	C.Chains[23];
-		C.BalthazarC =	C.Chains[24];
-		C.BalthazarS =	C.Chains[25];
+		s_TEMPLATE: {de: "", es: "", fr: "", pl: "", nl: "", ru: "", zh: ""},
 		
-		// Must be in the same order as the chain indexes
-		D.ChainTitle = [
-		{en: C.FE.title,
-			de: "Feuerelementar",
-			es: "Elemental de Fuego",
-			fr: "Elémentaire de Feu",
-			pl: "Żywioł Ognia",
-			nl: "Elementair Brand",
-			ru: "элементный огня",
-			zh: "火元素"},
-		{en: C.Golem.title,
-			de: "Inquestur-Golem Typ II",
-			es: "Gólem serie II de la Inquisa",
-			fr: "Golem Marque II de l'Enqueste",
-			nl: "Inquest Golem Mark II",
-			pl: "Śledztwo Golem Typ II",
-			ru: "Следствие Голем Тип II",
-			zh: "勘驗魔像2型"},
-		{en: C.Jormag.title,
-			de: "Klaue Jormags",
-			es: "Garra de Jormag",
-			fr: "Griffe de Jormag",
-			nl: "Klauw van Jormag",
-			pl: "Pazur Jormag",
-			ru: "Коготь Йормаг",
-			zh: "Jormag 爪"},
-		{en: C.Maw.title,
-			de: "Schamanenoberhaupt der Svanir",
-			es: "Jefe Chamán Svanir",
-			fr: "Chef Chamane de Svanir",
-			nl: "Chief Shaman van Svanir",
-			pl: "Główny Szaman z Svanir",
-			ru: "Главный Шаман Сванир",
-			zh: "Svanir 的首席薩滿"},
-		{en: C.Megades.title,
-			de: "Megazerstörer",
-			es: "Megadestructor",
-			fr: "Mégadestructeur",
-			nl: "Megadestroyer",
-			pl: "Megadestruktor",
-			ru: "Мегадеструктор",
-			zh: "兆豐析構函數"},
-		{en: C.SB.title,
-			de: "Schatten-Behemoth",
-			es: "Behemot de las Sombras",
-			fr: "Béhémoth des Ombres",
-			nl: "Schaduw Behemoth",
-			pl: "Behemoth z Cieniem",
-			ru: "Бегемот из тени",
-			zh: "影子的巨獸"},
-		{en: C.Shatterer.title,
-			de: "Den Zerschmetterer",
-			es: "El Asolador",
-			fr: "Le Destructeur",
-			nl: "De Destructor",
-			pl: "Destruktor",
-			ru: "Разрушитель",
-			zh: "析構函數"},
-		{en: C.Taidha.title,
-			de: "Admiral Taidha Covington",
-			es: "Almirante Taidha Covington",
-			fr: "Amirale Taidha Covington",
-			nl: "Admiraal Taidha Covington",
-			pl: "Admirał Taidha Covington",
-			ru: "Адмирал Таидха Цовингтон",
-			zh: "海軍上將 Taidha Covington"},
-		{en: C.Ulgoth.title,
-			de: "Ulgoth den Modniir",
-			es: "Ulgoth el Modniir",
-			fr: "Ulgoth le Modniir",
-			nl: "Ulgoth de Modniir",
-			pl: "Ulgoth w Modniir",
-			ru: "Улготх в Модниир",
-			zh: "Ulgoth 的 Modniir"},
-		{en: C.Wurm.title,
-			de: "Großen Dschungelwurm",
-			es: "Gran Sierpe de la Selva",
-			fr: "Grande Guivre de la Jungle",
-			nl: "Goede Jungle Worm",
-			pl: "Robak z Dżungli Świetnie",
-			ru: "Великий Червь из джунглей",
-			zh: "大叢林蠕蟲"},
-		{en: C.Queen.title,
-			de: "Karka-Königin",
-			es: "Reina Karka",
-			fr: "Reine Karka",
-			nl: "Koningin Karka",
-			pl: "Królowa Karka",
-			ru: "Королева Карка",
-			zh: "女王 Karka"},
-		{en: C.Tequatl.title,
-			de: "Tequatl den Sonnenlosen",
-			es: "Tequatl el Sombrío",
-			fr: "Tequatl le Sans-soleil",
-			nl: "Tequatl de Zonloze",
-			pl: "Tequatl ma Słońca",
-			ru: "Теqуатл Тусклый",
-			zh: "Tequatl 在沒有陽光"},
-		{en: C.Triple.title,
-			de: "Drei Dschungelwurm",
-			es: "Tres Sierpe",
-			fr: "Trois Guivre",
-			nl: "Drie Worm",
-			pl: "Trzy Robak",
-			ru: "Три Червь",
-			zh: "三蠕蟲"},
-		{en: C.FS.title,
-			de: "Feuerschamanen",
-			es: "Chamán de Fuego",
-			fr: "Chamane de Feu",
-			nl: "Vuur Sjamaan",
-			pl: "Ognia Szaman",
-			ru: "огня шаман",
-			zh: "火薩滿"},
-		{en: C.Foulbear.title,
-			de: "Faulbär-Häuptling",
-			es: "Cabecilla de Osoinmundo",
-			fr: "Chef Oursefol",
-			nl: "Vuilebeer Hoofdman",
-			pl: "Faulwódz Niedźwiedź",
-			ru: "Фолмедведь Вождь",
-			zh: "臭熊頭目"},
-		{en: C.Commissar.title,
-			de: "Schaufler-Kommissar",
-			es: "Comisario Draga",
-			fr: "Kommissar Draguerre",
-			nl: "Baggeren Commissaris",
-			pl: "Pogłębiarka Komisarza",
-			ru: "Драги Комиссар",
-			zh: "疏通政委"},
-		{en: C.Eye.title,
-			de: "Auge des Zhaitan",
-			es: "Ojo de Zhaitan",
-			fr: "Œil de Zhaïtan",
-			nl: "Oog van Zhaitan",
-			pl: "Oko Zhaitan",
-			ru: "Глаз Жаитан",
-			zh: "Zhaitan 的眼"},
-		{en: C.Lyssa.title,
-			de: "Verderbte Hohepriesterin der Lyssa",
-			es: "Suma Sacerdotisa Corrupta de Lyssa",
-			fr: "Grande Prêtresse Corrompue de Lyssa",
-			nl: "Tempel van Lyssa",
-			pl: "Lyssa Świątynia",
-			ru: "Лысса Храм",
-			zh: "Lyssa 的寺廟"},
-		{en: C.Dwayna.title,
-			de: "Besessene Dwayna-Statue",
-			es: "Estatua Poseída de Dwayna",
-			fr: "Statue Possédée de Dwayna",
-			nl: "Tempel van Dwayna",
-			pl: "Dwayna Świątynia",
-			ru: "Дwаына Храм",
-			zh: "Dwayna 的寺廟"},
-		{en: C.Melandru.title,
-			de: "Auferstandenen Priester der Melandru",
-			es: "Sacerdote de Melandru Resurgido",
-			fr: "Prêtre Revenant de Melandru",
-			nl: "Tempel van Melandru",
-			pl: "Melandru Świątynia",
-			ru: "Меландру Храм",
-			zh: "Melandru 的寺廟"},
-		{en: C.Grenth.title,
-			de: "Auferstandenen Priester des Grenth",
-			es: "Sacerdote de Grenth Resurgido",
-			fr: "Prêtre Revenant de Grenth",
-			nl: "Tempel van Grenth",
-			pl: "Grenth Świątynia",
-			ru: "Грентх Храм",
-			zh: "Grenth 的寺廟"},
-		{en: C.Arah.title,
-			de: "Tore von Arah",
-			es: "Puertas de Arah",
-			fr: "Portes d'Arah",
-			nl: "Poorten van Arah",
-			pl: "Arah Bramy",
-			ru: "Ворота Арах",
-			zh: "Arah 的寺廟"},
-		{en: C.Balthazar.title,
-			de: "Auferstandenen Priester des Balthasar",
-			es: "Sacerdote de Balthazar Resurgido",
-			fr: "Prêtre Revenant de Balthazar",
-			nl: "Tempel van Balthazar",
-			pl: "Świątynia Balthazar",
-			ru: "Балтхазар Храм",
-			zh: "Balthazar 的寺廟"},
-		{en: C.BalthazarN.title,
-			de: "Nord Invasion von Orr",
-			es: "Invasión del Norte de Orr",
-			fr: "Invasion du Nord de Orr",
-			nl: "Noordelijke Invasie van Orr",
-			pl: "Północnej Inwazja Orr",
-			ru: "Северная Вторжение Орр",
-			zh: "北部入侵 Orr"},
-		{en: C.BalthazarC.title,
-			de: "Zentral Invasion von Orr",
-			es: "Invasión Central de Orr",
-			fr: "Invasion Central de Orr",
-			nl: "Centrale Invasie van Orr",
-			pl: "Centralny Inwazja Orr",
-			ru: "Центральный Вторжение Орр",
-			zh: "中部入侵 Orr"},
-		{en: C.BalthazarS.title,
-			de: "Invasion der Südlichen Orr",
-			es: "Invasión del Sur de Orr",
-			fr: "Invasion du Sud de Orr",
-			nl: "Zuidelijke Invasie van Orr",
-			pl: "Południowej Inwazja Orr",
-			ru: "Южный Вторжение Орр",
-			zh: "南部入侵 Orr"}
-		];
-	},
-	
-	/*
-	 * Loads a TTS sound file generated from a TTS web service into a hidden
-	 * iframe. The sound plays automatically after changing the iframe's src via
-	 * the browser's builtin media player.
-	 * @param string pString to convert to speech.
-	 */
-	speak: function(pString)
-	{
-		var url;
-		var tts = document.getElementById("jsTTS");
-
-		if (I.userBrowser === I.BrowserEnum.Chrome)
-		{
-			/*
-			 * Google TTS seems to only work with their browser; using it on
-			 * Firefox gives "Video playback aborted due to a network error"
-			 * Note that GTTS has a 100 character URL limit.
-			 */
-			url = "http://translate.google.com/translate_tts?tl="
-				+ O.Options.enu_Language + "&q=" + escape(pString);
-		}
-		else
-		{
-			url = "http://tts-api.com/tts.mp3?q=" + escape(pString);
-		}
-		tts.src = url;
+		// Time
+		s_s: {de: "s", es: "s", fr: "s", pl: "s", nl: "s", ru: "с", zh: "秒"},
+		s_m: {de: "m", es: "m", fr: "m", pl: "m", nl: "m", ru: "м", zh: "分"},
+		s_h: {de: "s", es: "h", fr: "h", pl: "g", nl: "u", ru: "ч", zh: "時"},
+		s_second: {de: "sekunde", es: "segundo", fr: "seconde", pl: "sekund", nl: "seconde", ru: "секунду", zh: "秒"},
+		s_minute: {de: "minute", es: "minuto", fr: "minute", pl: "minuta", nl: "minuut", ru: "минута", zh: "分"},
+		s_hour: {de: "stunde", es: "hora", fr: "heure", pl: "godzinę", nl: "uur", ru: "час", zh: "時"},
+		s_seconds: {de: "sekunden", es: "segundos", fr: "secondes", pl: "sekund", nl: "seconden", ru: "секунд", zh: "秒"},
+		s_minutes: {de: "minuten", es: "minutos", fr: "minutes", pl: "minut", nl: "minuten", ru: "минут", zh: "分"},
+		s_hours: {de: "studen", es: "horas", fr: "heures", pl: "godzin", nl: "uur", ru: "часов", zh: "時"},
+		s_half_an_hour: {de: "eine halbe stunde", es: "media hora", fr: "demi-heure", pl: "pół godziny", nl: "een half uur", ru: "полчаса", zh: "半小時"},
+		
+		// Nouns
+		s_world_boss: {de: "weltendgegner", es: "jefe mundo", fr: "chef monde", pl: "świat szef", nl: "wereld eindbaas", ru: "мир босс", zh: "世界頭目"},
+		
+		// Verbs
+		s_is: {de: "ist", es: "es", fr: "est", pl: "jest", nl: "is", ru: "является", zh: "是"},
+		s_will_start: {de: "zal starten", es: "se iniciará", fr: "débutera", pl: "rozpocznie się", nl: "zal starten", ru: "начнется", zh: "開始"},
+		
+		// Adjectives and Adverbs
+		s_ago: {de: "vor", es: "hace", fr: "il ya", pl: "temu", nl: "geleden", ru: "назад", zh: "前"},
+		s_also: {de: "auch", es: "también", fr: "aussi", pl: "też", nl: "ook", ru: "то́же", zh: "也"},
+		s_checked: {de: "abgehakt", es: "visto", fr: "coché", pl: "zakończony", nl: "afgevinkt", ru: "галочка", zh: "勾掉"},
+		s_current: {de: "aktuelle", es: "actual", fr: "actuel", pl: "bieżący", nl: "huidige", ru: "текущий", zh: "活期"},
+		s_next: {de: "nächste", es: "siguiente", fr: "prochain", pl: "następny", nl: "volgend", ru: "следующий", zh: "下一"},
+		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit", pl: "subskrypcji", nl: "geabonneerd", ru: "подписал", zh: "訂閱"},
+		s_then: {de: "dann", es: "luego", fr: "puis", pl: "potem", nl: "dan", ru: "затем", zh: "接著"},
+		
+		// Prepositions and Conjunctions
+		s_and: {de: "und", es: "y", fr: "et", pl: "i", nl: "en", ru: "и", zh: "和"},
+		s_in: {de: "in", es: "en", fr: "en", pl: "w", nl: "in", ru: "в", zh: "在"}
 	},
 	
 	/*
@@ -1940,9 +1740,23 @@ D = {
 	 */
 	getTranslation: function(pText, pDictionary)
 	{
+		// If opted language is English then just return the given text
+		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+		{
+			return pText;
+		}
+		
+		// Else look up the text in the dictionary
 		var entry;
 		var value;
-		var entry = pDictionary["s_" + pText];
+		var text = pText;
+		if (text.indexOf(" ") !== -1)
+		{
+			// Spaces become underscores
+			text = text.replace(/ /g, "_");
+		}
+		
+		var entry = pDictionary["s_" + text];
 		if (entry)
 		{
 			// Get the text based on user's language
@@ -1952,7 +1766,7 @@ D = {
 				return value;
 			}
 			// Language not found so use default instead
-			return entry[D.defaultLanguage];
+			return pText;
 		}
 		// No such text exist for translation
 		return "notranslation";
@@ -1968,6 +1782,219 @@ D = {
 		return D.getTranslation(pText, D.Phrase);
 	},
 	
+	// Must be in the same order as the chain indexes
+	ChainTitle: [
+	{
+		de: "Feuerelementar",
+		es: "Elemental de Fuego",
+		fr: "Elémentaire de Feu",
+		pl: "Żywioł Ognia",
+		nl: "Elementair Brand",
+		ru: "элементный огня",
+		zh: "火元素"
+	},{
+		de: "Inquestur-Golem Typ II",
+		es: "Gólem serie II de la Inquisa",
+		fr: "Golem Marque II de l'Enqueste",
+		nl: "Inquest Golem Mark II",
+		pl: "Śledztwo Golem Typ II",
+		ru: "Следствие Голем Тип II",
+		zh: "勘驗魔像2型"
+	},{
+		de: "Klaue Jormags",
+		es: "Garra de Jormag",
+		fr: "Griffe de Jormag",
+		nl: "Klauw van Jormag",
+		pl: "Jormag Pazur",
+		ru: "Йормаг Коготь",
+		zh: "Jormag 爪"
+	},{
+		de: "Schamanenoberhaupt der Svanir",
+		es: "Jefe Chamán Svanir",
+		fr: "Chef Chamane de Svanir",
+		nl: "Chef Sjamaan van Svanir",
+		pl: "Główny Szaman z Svanir",
+		ru: "Главный Шаман Сванир",
+		zh: "Svanir 的首席薩滿"
+	},{
+		de: "Megazerstörer",
+		es: "Megadestructor",
+		fr: "Mégadestructeur",
+		nl: "Megadestroyer",
+		pl: "Megadestruktor",
+		ru: "Мегадеструктор",
+		zh: "兆豐析構函數"
+	},{
+		de: "Schatten-Behemoth",
+		es: "Behemot de las Sombras",
+		fr: "Béhémoth des Ombres",
+		nl: "Schaduw Behemoth",
+		pl: "Behemoth z Cieniem",
+		ru: "Бегемот из тени",
+		zh: "影子的巨獸"
+	},{
+		de: "Den Zerschmetterer",
+		es: "El Asolador",
+		fr: "Le Destructeur",
+		nl: "De Destructor",
+		pl: "Potrzaskać",
+		ru: "Разрушитель",
+		zh: "析構函數"
+	},{
+		de: "Admiral Taidha Covington",
+		es: "Almirante Taidha Covington",
+		fr: "Amirale Taidha Covington",
+		nl: "Admiraal Taidha Covington",
+		pl: "Admirał Taidha Covington",
+		ru: "Адмирал Таидха Цовингтон",
+		zh: "海軍上將 Taidha Covington"
+	},{
+		de: "Ulgoth den Modniir",
+		es: "Ulgoth el Modniir",
+		fr: "Ulgoth le Modniir",
+		nl: "Ulgoth de Modniir",
+		pl: "Ulgoth w Modniir",
+		ru: "Улготх в Модниир",
+		zh: "Ulgoth 的 Modniir"
+	},{
+		de: "Großen Dschungelwurm",
+		es: "Gran Sierpe de la Selva",
+		fr: "Grande Guivre de la Jungle",
+		nl: "Goede Jungle Worm",
+		pl: "Robak z Dżungli Świetnie",
+		ru: "Великий Червь из джунглей",
+		zh: "大叢林蠕蟲"
+	},{
+		de: "Karka-Königin",
+		es: "Reina Karka",
+		fr: "Reine Karka",
+		nl: "Koningin Karka",
+		pl: "Królowa Karka",
+		ru: "Королева Карка",
+		zh: "女王 Karka"
+	},{
+		de: "Tequatl den Sonnenlosen",
+		es: "Tequatl el Sombrío",
+		fr: "Tequatl le Sans-soleil",
+		nl: "Tequatl de Zonloze",
+		pl: "Tequatl ma Słońca",
+		ru: "Теqуатл Тусклый",
+		zh: "Tequatl 在沒有陽光"
+	},{
+		de: "Drei Würmer",
+		es: "Tres Sierpes",
+		fr: "Trois Guivres",
+		nl: "Drie Wormen",
+		pl: "Trzy Robaki",
+		ru: "Три Черви",
+		zh: "三蠕蟲"
+	},{
+		de: "Feuerschamanen",
+		es: "Chamán de Fuego",
+		fr: "Chamane de Feu",
+		nl: "Vuur Sjamaan",
+		pl: "Ognia Szaman",
+		ru: "Oгня Шаман",
+		zh: "火薩滿"
+	},{
+		de: "Faulbär-Häuptling",
+		es: "Cabecilla de Osoinmundo",
+		fr: "Chef Oursefol",
+		nl: "Vuilebeer Hoofdman",
+		pl: "Faulwódz Niedźwiedź",
+		ru: "Фолмедведь Вождь",
+		zh: "臭熊頭目"
+	},{
+		de: "Schaufler-Kommissar",
+		es: "Comisario Draga",
+		fr: "Kommissar Draguerre",
+		nl: "Baggeren Commissaris",
+		pl: "Pogłębiarka Komisarza",
+		ru: "Драги Комиссар",
+		zh: "疏通政委"
+	},{
+		de: "Auge des Zhaitan",
+		es: "Ojo de Zhaitan",
+		fr: "Œil de Zhaïtan",
+		nl: "Oog van Zhaitan",
+		pl: "Oko Zhaitan",
+		ru: "Глаз Жаитан",
+		zh: "Zhaitan 的眼"
+	},{
+		de: "Verderbte Hohepriesterin der Lyssa",
+		es: "Suma Sacerdotisa Corrupta de Lyssa",
+		fr: "Grande Prêtresse Corrompue de Lyssa",
+		nl: "Tempel van Lyssa",
+		pl: "Lyssa Świątynia",
+		ru: "Лысса Храм",
+		zh: "Lyssa 的寺廟"
+	},{
+		de: "Besessene Dwayna-Statue",
+		es: "Estatua Poseída de Dwayna",
+		fr: "Statue Possédée de Dwayna",
+		nl: "Tempel van Dwayna",
+		pl: "Dwayna Świątynia",
+		ru: "Дwаына Храм",
+		zh: "Dwayna 的寺廟"
+	},{
+		de: "Auferstandenen Priester der Melandru",
+		es: "Sacerdote de Melandru Resurgido",
+		fr: "Prêtre Revenant de Melandru",
+		nl: "Tempel van Melandru",
+		pl: "Melandru Świątynia",
+		ru: "Меландру Храм",
+		zh: "Melandru 的寺廟"
+	},{
+		de: "Auferstandenen Priester des Grenth",
+		es: "Sacerdote de Grenth Resurgido",
+		fr: "Prêtre Revenant de Grenth",
+		nl: "Tempel van Grenth",
+		pl: "Grenth Świątynia",
+		ru: "Грентх Храм",
+		zh: "Grenth 的寺廟"
+	},{
+		de: "Tore von Arah",
+		es: "Puertas de Arah",
+		fr: "Portes d'Arah",
+		nl: "Poorten van Arah",
+		pl: "Arah Bramy",
+		ru: "Ворота Арах",
+		zh: "Arah 的寺廟"
+	},{
+		de: "Auferstandenen Priester des Balthasar",
+		es: "Sacerdote de Balthazar Resurgido",
+		fr: "Prêtre Revenant de Balthazar",
+		nl: "Tempel van Balthazar",
+		pl: "Świątynia Balthazar",
+		ru: "Балтхазар Храм",
+		zh: "Balthazar 的寺廟"
+	},{
+		de: "Nord Invasion von Orr",
+		es: "Invasión del Norte de Orr",
+		fr: "Invasion du Nord de Orr",
+		nl: "Noordelijke Invasie van Orr",
+		pl: "Północnej Inwazja Orr",
+		ru: "Северная Вторжение Орр",
+		zh: "北部入侵 Orr"
+	},{
+		de: "Zentral Invasion von Orr",
+		es: "Invasión Central de Orr",
+		fr: "Invasion Central de Orr",
+		nl: "Centrale Invasie van Orr",
+		pl: "Centralny Inwazja Orr",
+		ru: "Центральный Вторжение Орр",
+		zh: "中部入侵 Orr"
+	},{
+		de: "Invasion der Südlichen Orr",
+		es: "Invasión del Sur de Orr",
+		fr: "Invasion du Sud de Orr",
+		nl: "Zuidelijke Invasie van Orr",
+		pl: "Południowej Inwazja Orr",
+		ru: "Южный Вторжение Орр",
+		zh: "南部入侵 Orr"
+	}
+	],
+	
 	/*
 	 * Gets title of chain in opted language.
 	 * @param int pIndex of chain.
@@ -1975,6 +2002,10 @@ D = {
 	 */
 	getChainTitle: function(pIndex)
 	{
+		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+		{
+			return C.Chains[pIndex].title;
+		}
 		return (D.ChainTitle[pIndex])[O.Options.enu_Language];
 	},
 	
@@ -1985,23 +2016,9 @@ D = {
 	 */
 	getChainNick: function(pIndex)
 	{
-		if (O.Options.enu_Language === O.OptionEnum.Language.English)
+		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
 		{
 			return C.Chains[pIndex].alias;
-		}
-		return D.getChainTitle(pIndex);
-	},
-	
-	/*
-	 * Gets pronunciation of chain in opted language.
-	 * @param int pIndex of chain.
-	 * @returns string pronunciation.
-	 */
-	getChainPronunciation: function(pIndex)
-	{
-		if (O.Options.enu_Language === O.OptionEnum.Language.English)
-		{
-			return C.Chains[pIndex].pronunciation;
 		}
 		return D.getChainTitle(pIndex);
 	},
@@ -2018,6 +2035,113 @@ D = {
 			return pEvent["name_" + O.Options.enu_Language];
 		}
 		return pEvent["name_en"];
+	},
+	
+	/*
+	 * Loads a TTS sound file generated from a TTS web service into a hidden
+	 * iframe. The sound plays automatically after changing the iframe's src via
+	 * the browser's builtin media player.
+	 * @param string pString to convert to speech.
+	 * @param float pDuration of the speech in seconds.
+	 * @pre pString does not exceed 100 characters (Google TTS limit).
+	 */
+	speechWait: 0, // In milliseconds
+	speak: function(pString, pDuration)
+	{
+		var doSpeak = function(pStringMacro)
+		{
+			var url;
+			var tts = document.getElementById("jsTTS");
+		
+			if (I.userBrowser === I.BrowserEnum.Chrome)
+			{
+				/*
+				 * Google TTS seems to only work with their browser; using it on
+				 * Firefox gives "Video playback aborted due to a network error"
+				 */
+				url = "http://translate.google.com/translate_tts?tl="
+					+ O.Options.enu_Language + "&q=" + pStringMacro;
+			}
+			else
+			{
+				url = "http://tts-api.com/tts.mp3?q=" + pStringMacro;
+			}
+			tts.src = url;
+		};
+		
+		var durationms = pDuration * T.cMILLISECONDS_IN_SECOND;
+		if (D.speechWait === 0)
+		{
+			// If no speech in queue then speak and add queue time, finally subtract after duration
+			D.speechWait += durationms;
+			doSpeak(pString);
+			setTimeout(function()
+			{
+				D.speechWait -= durationms;
+			}, durationms);
+		}
+		else
+		{
+			// If speech in queue then wait queue time, finally speak and subtract after duration
+			D.speechWait += durationms;
+			setTimeout(function()
+			{
+				doSpeak(pString);
+				D.speechWait -= durationms;
+			}, D.speechWait - durationms);
+		}
+	},
+	
+	/*
+	 * Gets translation for given text if using Chrome (because Google TTS
+	 * is multilingual but only supports Chrome browser), else return given text.
+	 * @param string pText to lookup.
+	 * @param string pModifier optional adjective or adverb.
+	 * @returns string translated text or given text.
+	 */
+	getSpeech: function(pText, pModifier)
+	{
+		if (I.userBrowser === I.BrowserEnum.Chrome)
+		{
+			if (pModifier)
+			{
+				// Reverse the order of adjective-noun or adverb-verb depending on language.
+				if (O.Options.enu_Language === O.OptionEnum.Language.French
+					|| O.Options.enu_Language === O.OptionEnum.Language.Spanish
+					|| O.Options.enu_Language === O.OptionEnum.Language.Mandarin)
+				{
+					return D.getPhrase(pText) + " " + D.getPhrase(pModifier);
+				}
+				else
+				{
+					return D.getPhrase(pModifier) + " " + D.getPhrase(pText);
+				}
+			}
+			return D.getPhrase(pText);
+		}
+		else
+		{
+			if (pModifier)
+			{
+				return pModifier + pText;
+			}
+			return pText;
+		}
+	},
+	
+	/*
+	 * Gets pronunciation of chain in opted language.
+	 * @param object pChain to get.
+	 * @returns string pronunciation.
+	 */
+	getChainPronunciation: function(pChain)
+	{
+		if (O.Options.enu_Language === O.OptionEnum.Language.Default
+			|| I.userBrowser !== I.BrowserEnum.Chrome)
+		{
+			return C.Chains[pChain.index].pronunciation;
+		}
+		return D.getChainTitle(pChain.index);
 	}
 };
 
@@ -2826,21 +2950,49 @@ C = {
 			 * Announce the next world boss and the time until it, only if it's
 			 * not past the timeframe, and the subscription option is off.
 			 */
-			if (O.Options.bol_alertAtEnd && pChain.alias === C.CurrentSDChain.alias
-				&& O.Options.bol_alertSubscribed === false
-				&& O.Options.bol_enableSound)
+			if (O.Options.bol_enableSound && O.Options.bol_alertAtEnd && I.isProgramLoaded
+				&& pChain.alias === C.CurrentSDChain.alias
+				&& O.Options.bol_alertSubscribed === false)
 			{
-				var checked = "";
+				var checked = ", " + D.getSpeech("checked");
+				var checkedsd = "";
+				var checkedhc = "";
+				var wantsd = O.objToBool(C.NextSDChain1);
+				var wanthc = O.objToBool(C.NextHCChain1);
+				var speech = D.getSpeech("world boss", "next") + " " + D.getSpeech("is") + " ";
 				
-				if (X.getChainChecklistState(C.NextSDChain1) !== X.ChecklistEnum.Unchecked)
+				if (C.NextSDChain1 && ( ! C.isChainUnchecked(C.NextSDChain1)))
 				{
-					checked = ", checked";
+					checkedsd = checked;
+				}
+				if (C.NextHCChain1 && ( ! C.isChainUnchecked(C.NextHCChain1)))
+				{
+					checkedhc = checked;
 				}
 				// Don't alert if next boss is checked off and user opted not to hear
-				if ( ! (checked.length > 0 && O.Options.bol_alertChecked === false))
+				if (O.Options.bol_alertChecked)
 				{
-					D.speak("Next world boss is " + C.NextSDChain1.pronunciation
-						+ ", " + T.getTimeTillChainFormatted(C.NextSDChain1, "speech") + checked);
+					if (checkedsd.length > 0) { wantsd = false; }
+					if (checkedhc.length > 0) { wanthc = false; }
+				}
+				
+				if (wantsd && wanthc)
+				{
+					D.speak(speech + D.getChainPronunciation(C.NextSDChain1) + checkedsd, 5);
+					D.speak(D.getSpeech("also") + ", " + D.getChainPronunciation(C.NextHCChain1) + checkedhc, 3);
+				}
+				else if (wantsd)
+				{
+					D.speak(speech + D.getChainPronunciation(C.NextSDChain1) + checkedsd, 5);
+				}
+				else if (wanthc)
+				{
+					D.speak(speech + D.getChainPronunciation(C.NextHCChain1) + checkedhc, 5);
+				}
+				
+				if (wantsd || wanthc)
+				{
+					D.speak(T.getTimeTillChainFormatted(C.NextSDChain1, "speech"), 3);
 				}
 			}
 		}
@@ -2942,7 +3094,7 @@ C = {
 };
 
 /* =============================================================================
- * @@Map and map controls
+ * @@Map and map content
  * ========================================================================== */
 M = {
 	/*
@@ -2963,9 +3115,16 @@ M = {
 	cLEAFLET_ICON_SIZE: 32,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
-	cZOOM_LEVEL_DEFAULT: 3,
-	cZOOM_LEVEL_MAX: 7,
 	cMAP_MOUSEMOVE_RATE: 100,
+	ZoomLevelEnum:
+	{
+		Current: 0, // This variable is dynamic
+		Default: 3,
+		Space: 3,
+		Sky: 5,
+		Ground: 7,
+		Max: 7
+	},
 	
 	// Icons are initially invisible until zoomed in close enough or moused over a zone
 	iconWaypoint: L.icon(
@@ -3001,12 +3160,12 @@ M = {
 		// M.Map is the actual Leaflet map object, initialize it
 		M.Map = L.map("paneMap", {
 			minZoom: 0,
-			maxZoom: M.cZOOM_LEVEL_MAX,
+			maxZoom: M.ZoomLevelEnum.Max,
 			doubleClickZoom: false,
 			zoomControl: false, // the zoom UI
 			attributionControl: false, // the Leaflet link UI
 			crs: L.CRS.Simple
-		}).setView([-128, 128], M.cZOOM_LEVEL_DEFAULT);
+		}).setView([-128, 128], M.ZoomLevelEnum.Default);
 		
 		// Set layers
 		L.tileLayer(M.cURL_API_TILES,
@@ -3165,6 +3324,7 @@ M = {
 		M.Map.on("zoomend", function(pEvent)
 		{
 			var currentzoom = this.getZoom();
+			M.ZoomLevelEnum.Current = currentzoom;
 			M.currentIconSize = 0;
 			
 			// Resize all waypoint icons in all zones
@@ -3263,7 +3423,7 @@ M = {
 	 * View the map at the specifications.
 	 * @param array pCoord two number coordinates.
 	 * @param object pPin which to move to coordinate.
-	 * @param string pZoom level.
+	 * @param enum pZoom level.
 	 */
 	goToView: function(pCoord, pPin, pZoom)
 	{
@@ -3277,11 +3437,13 @@ M = {
 		}
 		
 		var zoom;
-		switch (pZoom)
+		if (pZoom)
 		{
-			case "space": zoom = 3; break;
-			case "sky": zoom = 5; break;
-			default: zoom = M.cZOOM_LEVEL_MAX;
+			zoom = pZoom;
+		}
+		else
+		{
+			zoom = M.ZoomLevelEnum.Ground;
 		}
 		M.Map.setView(M.convertGCtoLC(pCoord), zoom);
 		M.showCurrentZone(pCoord);
@@ -3323,7 +3485,7 @@ M = {
 	 */
 	convertLCtoGC: function(pLatLng)
 	{
-		var coord = M.Map.project(pLatLng, M.cZOOM_LEVEL_MAX);
+		var coord = M.Map.project(pLatLng, M.ZoomLevelEnum.Max);
 		return [coord.x, coord.y];
 	},
 	
@@ -3669,13 +3831,13 @@ M = {
 	{
 		pMarker.on(pEventType, function(pEvent)
 		{
-			if (M.Map.getZoom() === M.cZOOM_LEVEL_MAX)
+			if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
 			{
-				M.Map.setZoom(M.cZOOM_LEVEL_DEFAULT);
+				M.Map.setZoom(M.ZoomLevelEnum.Default);
 			}
 			else
 			{
-				M.Map.setView(pEvent.latlng, M.cZOOM_LEVEL_MAX);
+				M.Map.setView(pEvent.latlng, M.ZoomLevelEnum.Max);
 			}
 		});
 	},
@@ -3965,9 +4127,9 @@ M = {
 				// Zoom in when double clicked
 				M.JPEntities[pIndex].on("dblclick", function()
 				{
-					if (M.Map.getZoom() === M.cZOOM_LEVEL_MAX)
+					if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
 					{
-						M.Map.setZoom(M.cZOOM_LEVEL_DEFAULT);
+						M.Map.setZoom(M.ZoomLevelEnum.Default);
 					}
 					else
 					{
@@ -4091,8 +4253,20 @@ T = {
 	
 	initializeSchedule: function()
 	{
-		// Assign shortcut variables for chains
-		D.initializeChainTranslation();
+		// Shortcut reference to the chains
+		C.FE =			C.Chains[0];
+		C.Golem =		C.Chains[1];
+		C.Jormag =		C.Chains[2];
+		C.Maw =			C.Chains[3];
+		C.Megades =		C.Chains[4];
+		C.SB =			C.Chains[5];
+		C.Shatterer =	C.Chains[6];
+		C.Taidha =		C.Chains[7];
+		C.Ulgoth =		C.Chains[8];
+		C.Wurm =		C.Chains[9];
+		C.Queen =		C.Chains[10];
+		C.Tequatl =		C.Chains[11];
+		C.Triple =		C.Chains[12];
 		
 		/*
 		 * This "hash table" contains all time-sensitive chains (a group of
@@ -4433,24 +4607,24 @@ T = {
 		var secondsleft = T.getSecondsUntilChainStarts(pChain);
 		var min = ~~(secondsleft / T.cSECONDS_IN_MINUTE) % T.cSECONDS_IN_MINUTE;
 		var hour = ~~(secondsleft / T.cSECONDS_IN_HOUR);
-		var minword = "m";
-		var hourword = "h";
+		var minword = D.getPhrase("m");
+		var hourword = D.getPhrase("h");
 		
 		if (pFormat === "speech")
 		{
-			minword = " minute";
-			hourword = " hour";
+			minword = " " + D.getSpeech("minute");
+			hourword = " " + D.getSpeech("hour");
 			if (Math.abs(min) > 1)
 			{
-				minword += "s";
+				minword = " " + D.getSpeech("minutes");
 			}
 			if (Math.abs(hour) > 1)
 			{
-				hourword += "s";
+				hourword = " " + D.getSpeech("hours");
 			}
 			if (hour === 0 && Math.abs(min) === 30)
 			{
-				min = "half an hour";
+				min = D.getSpeech("half an hour");
 				minword = "";
 				hourword = "";
 			}
@@ -4469,9 +4643,9 @@ T = {
 		
 		if (secondsleft < 0)
 		{
-			return " " + hour + min + " ago";
+			return " " + hour + min + " " + D.getPhrase("ago");
 		}
-		return " in " + hour + min;
+		return " " + D.getPhrase("in") + " " + hour + min;
 	},
 	
 	/*
@@ -4793,7 +4967,6 @@ K = {
 	awakeTimestampPrevious: 0,
 	awakeTimestampTolerance: 5,
 	currentFrameOffsetMinutes: 0,
-	cCLOCK_EVENTS_LIMIT: 4, // Number of events on the clock
 	iconOpacityChecked: 0.4,
 	iconOpacitySpeed: 200,
 	cDEGREES_IN_QUADRANT: 90,
@@ -4872,26 +5045,49 @@ K = {
 	/*
 	 * Updates waypoint icons' copy text.
 	 * @pre The waypoint icon's position on the clock was updated.
+	 * Standard bosses' schedule does not have gaps, hardcore may have gaps.
 	 */
 	updateWaypointsClipboard: function()
 	{
-		var chain0 = C.CurrentSDChain;
-		var chain1 = C.NextSDChain1;
-		var chain2 = C.NextSDChain2;
-		var chain3 = C.NextSDChain3;
-		var chain4 = C.NextSDChain4;
-		K.wpChain0.setAttribute(K.cWpClipboardDataAttribute, chain0.waypoint
-			+ " " + chain0.alias + T.getTimeTillChainFormatted(chain0) + " then " + chain1.alias
-			+ T.getTimeTillChainFormatted(chain1) + " - " + I.cSiteName);
-		K.wpChain1.setAttribute(K.cWpClipboardDataAttribute, chain1.waypoint
-			+ " " + chain1.alias + T.getTimeTillChainFormatted(chain1) + " then " + chain2.alias
-			+ T.getTimeTillChainFormatted(chain2) + " - " + I.cSiteName);
-		K.wpChain2.setAttribute(K.cWpClipboardDataAttribute, chain2.waypoint
-			+ " " + chain2.alias + T.getTimeTillChainFormatted(chain2) + " then " + chain3.alias
-			+ T.getTimeTillChainFormatted(chain3) + " - " + I.cSiteName);
-		K.wpChain3.setAttribute(K.cWpClipboardDataAttribute, chain3.waypoint
-			+ " " + chain3.alias + T.getTimeTillChainFormatted(chain3) + " then " + chain4.alias
-			+ T.getTimeTillChainFormatted(chain4) + " - " + I.cSiteName);
+		var updateWaypoint = function(pWaypoint, pChainSD, pChainHC, pChainSDAfter, pChainHCAfter)
+		{
+			var text = "";
+			
+			// Chains for the clicked timeframe
+			text += pChainSD.waypoint + " " + D.getChainNick(pChainSD.index);
+			if ( ! pChainHC)
+			{
+				text += T.getTimeTillChainFormatted(pChainSD);
+			}
+			else
+			{
+				text += " " + D.getPhrase("and") + " " + pChainHC.waypoint
+					+ " " + D.getChainNick(pChainHC.index)
+					+ T.getTimeTillChainFormatted(pChainHC);
+			}
+			
+			// Chains for the timeframe after that
+			text += ", " + D.getPhrase("then") + " " + pChainSDAfter.waypoint
+				+ " " + D.getChainNick(pChainSDAfter.index);
+			if ( ! pChainHCAfter)
+			{
+				text += T.getTimeTillChainFormatted(pChainSDAfter);
+			}
+			else
+			{
+				text += " " + D.getPhrase("and") + " " + pChainHCAfter.waypoint
+					+ " " + D.getChainNick(pChainHCAfter.index)
+					+ T.getTimeTillChainFormatted(pChainHCAfter);
+			}
+			
+			text = text + " - " + I.cSiteName.toLowerCase();
+			pWaypoint.setAttribute(K.cWpClipboardDataAttribute, text);
+		};
+		
+		updateWaypoint(K.wpChain0, C.CurrentSDChain, C.CurrentHCChain, C.NextSDChain1, C.NextHCChain1);
+		updateWaypoint(K.wpChain1, C.NextSDChain1, C.NextHCChain1, C.NextSDChain2, C.NextHCChain2);
+		updateWaypoint(K.wpChain2, C.NextSDChain2, C.NextHCChain2, C.NextSDChain3, C.NextHCChain3);
+		updateWaypoint(K.wpChain3, C.NextSDChain3, C.NextHCChain3, C.NextSDChain4, C.NextHCChain4);
 	},
 	
 	/*
@@ -5026,26 +5222,47 @@ K = {
 		}
 		
 		// Macro function to get a speech if the subscribed boss is within the opted time
-		var getSubscribedSpeech = function(pMinutes)
+		var doSubscribedSpeech = function(pMinutes)
 		{
 			if (pMinutes > 0)
 			{
 				var minutestill = T.cMINUTES_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime("minutes");
-				var chain = C.NextSDChain1;
+				var chainsd = C.NextSDChain1;
+				var chainhc = C.NextHCChain1;
+				var wantsd = C.NextSDChain1 && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
+				var wanthc = C.NextHCChain1 && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
+				
 				if (pMinutes > T.cMINUTES_IN_TIMEFRAME)
 				{
-					chain = C.NextSDChain2;
+					chainsd = C.NextSDChain2;
+					chainhc = C.NextHCChain2;
 					minutestill += T.cMINUTES_IN_TIMEFRAME;
+					wantsd = C.NextSDChain2 && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
+					wanthc = C.NextHCChain2 && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
 				}
 				
-				if (C.isChainSubscribed(chain) && C.isChainUnchecked(chain)
-					&& pMinutes === minutestill)
+				var speech = D.getSpeech("world boss", "subscribed") + " ";
+				var wait = 5;
+				
+				if (pMinutes === minutestill && (wantsd || wanthc))
 				{
-					return "Subscribed world boss " + chain.pronunciation
-						+ ", will start " + T.getTimeTillChainFormatted(chain, "speech");
+					if (wantsd && wanthc)
+					{
+						speech += D.getChainPronunciation(chainsd) + " " + D.getSpeech("and") + " " + D.getChainPronunciation(chainhc);
+						wait = 6;
+					}
+					else if (wantsd)
+					{
+						speech += D.getChainPronunciation(chainsd);
+					}
+					else if (wanthc)
+					{
+						speech += D.getChainPronunciation(chainhc);
+					}
+					D.speak(speech, wait);
+					D.speak(D.getSpeech("will start") + T.getTimeTillChainFormatted(chainsd, "speech"), 3);
 				}
 			}
-			return null;
 		};
 		
 		// If crossing a 1 second mark (given)
@@ -5064,34 +5281,8 @@ K = {
 			// Alert subscribed chain
 			if (O.Options.bol_alertSubscribed === true && O.Options.bol_enableSound)
 			{
-				var speech1 = getSubscribedSpeech(O.Options.int_alertSubscribedFirst);
-				var speech2 = getSubscribedSpeech(O.Options.int_alertSubscribedSecond);
-				var averagespeechtime = 7000;
-
-				if (speech1 !== null && speech2 === null)
-				{
-					D.speak(speech1);
-				}
-				else if (speech1 === null && speech2 !== null)
-				{
-					D.speak(speech2);
-				}
-				else if (speech1 !== null && speech2 !== null)
-				{
-					/*
-					 * If have to speak both bosses then have to split the speech
-					 * because of a 100 character limit for Google TTS
-					 */
-					D.speak(speech1);
-
-					(function(pSpeech, pWait)
-					{
-						setTimeout(function()
-						{
-							D.speak("Also, " + pSpeech);
-						}, pWait);
-					})(speech2, averagespeechtime);
-				}
+				doSubscribedSpeech(O.Options.int_alertSubscribedFirst);
+				doSubscribedSpeech(O.Options.int_alertSubscribedSecond);
 			}
 		}
 		
@@ -5177,21 +5368,73 @@ K = {
 		if (O.Options.bol_alertAtEnd && O.Options.bol_alertSubscribed === false
 			&& O.Options.bol_enableSound)
 		{
-			var checkedcurrent = "";
-			var checkednext = "";
-			if (C.isChainUnchecked(C.CurrentSDChain) === false)
+			var checked = ", " + D.getSpeech("checked");
+			var checkedsdcurrent = "";
+			var checkedsdnext = "";
+			var checkedhccurrent = "";
+			var checkedhcnext = "";
+			var wantsdcurrent = O.objToBool(C.CurrentSDChain);
+			var wanthccurrent = O.objToBool(C.CurrentHCChain);
+			var wantsdnext = O.objToBool(C.NextSDChain1);
+			var wanthcnext = O.objToBool(C.NextHCChain1);
+			var speech = D.getSpeech("world boss", "current") + " " + D.getSpeech("is") + " ";
+			
+			if (C.CurrentSDChain && ( ! C.isChainUnchecked(C.CurrentSDChain)))
 			{
-				checkedcurrent = ", checked";
+				checkedsdcurrent = checked;
 			}
-			if (C.isChainUnchecked(C.NextSDChain1) === false)
+			if (C.CurrentHCChain && ( ! C.isChainUnchecked(C.CurrentHCChain)))
 			{
-				checkednext = ", checked";
+				checkedhccurrent = checked;
+			}
+			if (C.NextSDChain1 && ( ! C.isChainUnchecked(C.NextSDChain1)))
+			{
+				checkedsdnext = checked;
+			}
+			if (C.NextHCChain1 && ( ! C.isChainUnchecked(C.NextHCChain1)))
+			{
+				checkedhcnext = checked;
 			}
 			// Don't alert if current boss is checked off and user opted not to hear
-			if ( ! (checkedcurrent.length > 0 && O.Options.bol_alertChecked === false))
+			if (O.Options.bol_alertChecked === false)
 			{
-				D.speak("Current world boss is " + C.CurrentSDChain.pronunciation
-					+ checkedcurrent + ". Followed by " + C.NextSDChain1.pronunciation + checkednext);
+				if (checkedsdcurrent.length > 0) { wantsdcurrent = false; }
+				if (checkedhccurrent.length > 0) { wanthccurrent = false; }
+				if (checkedsdnext.length > 0) { wantsdnext = false; }
+				if (checkedhcnext.length > 0) { wanthcnext = false; }
+			}
+			
+			// Announce current bosses
+			if (wantsdcurrent && wanthccurrent)
+			{
+				D.speak(speech + D.getChainPronunciation(C.CurrentSDChain) + checkedsdcurrent, 5);
+				D.speak(D.getSpeech("and") + ", " + D.getChainPronunciation(C.CurrentHCChain) + checkedhccurrent, 4);
+			}
+			else if (wantsdcurrent)
+			{
+				D.speak(speech + D.getChainPronunciation(C.CurrentSDChain) + checkedsdcurrent, 5);
+			}
+			else if  (wanthccurrent)
+			{
+				D.speak(speech + D.getChainPronunciation(C.CurrentHCChain) + checkedhccurrent, 5);
+			}
+			
+			// Announce next bosses only if the current has been announced too
+			if (wantsdcurrent || wanthccurrent)
+			{
+				if (wantsdnext && wanthcnext)
+				{
+					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextSDChain1) + checkedsdnext, 4);
+					D.speak(D.getSpeech("and") + ", " + D.getChainPronunciation(C.NextHCChain1) + checkedhcnext, 4);
+				}
+				else if (wantsdnext)
+				{
+					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextSDChain1) + checkedsdnext, 4);
+				}
+				else if (wanthcnext)
+				{
+					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextHCChain1) + checkedhcnext, 4);
+				}
 			}
 		}
 		
@@ -5373,7 +5616,7 @@ K = {
 	 */
 	initializeClipboard: function()
 	{
-		for (var i = 0; i < K.cCLOCK_EVENTS_LIMIT; i++)
+		for (var i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 		{
 			K.wpClipboards.push
 			(
@@ -5434,10 +5677,12 @@ I = {
 	cTOOLTIP_ADD_OFFSET_X: 36,
 	
 	// Content-Layer-Page and Section-Header
+	isProgramLoaded: false,
 	programMode: null,
 	programModeEnum:
 	{
 		Website: "Website",
+		Simple: "Simple",
 		Overlay: "Overlay",
 		Embedded: "Embedded"
 	},
@@ -5469,10 +5714,10 @@ I = {
 	userBrowser: "Unknown",
 	BrowserEnum:
 	{
-		IE: "MSIE",
-		Chrome: "Chrome",
-		Firefox: "Firefox",
-		Opera: "Opera"
+		IE: 0,
+		Opera: 1,
+		Firefox: 2,
+		Chrome: 3
 	},
 	userSmallDevice: false,
 	cSMALL_DEVICE_WIDTH: 800,
@@ -5590,29 +5835,32 @@ I = {
 		{
 			I.selectText("#jsConsole");
 		});
-		I.convertExternalLink("#itemMapButtons a");
-		I.convertExternalLink("#itemSocial a");
+		I.convertExternalLink(".linkExternal");
 		// Fix Firefox SVG filter bug
 		K.reapplyFilters();
 		
 		// The menu bar overlaps the language popup, so have to "raise" the clock pane
 		$("#itemLanguage").hover(
-			function() {$("#paneClock").css("z-index", 1);},
+			function() {$("#paneClock").css("z-index", 3);},
 			function() {$("#paneClock").css("z-index", 0);}
 		);
+		$("#global-zeroclipboard-html-bridge").css("z-index", 2);
 		
 		// Clean the localStorage of unrecognized variables
 		O.cleanLocalStorage();
 		
 		// Update and notify user of version change
 		O.enforceProgramVersion();
+		I.enforceProgramMode();
+		
+		I.isProgramLoaded = true;
 	},
 	
 	/*
 	 * Writes an HTML string to the "console" area in the top left corner of
 	 * the website that disappears after a while.
 	 * @param string pString to write.
-	 * @param int pSeconds to display the console with that string.
+	 * @param float pSeconds to display the console with that string.
 	 * @param boolean pClear to empty the console before printing.
 	 * @pre If input was from an outside source it must be escaped first!
 	 */
@@ -5712,10 +5960,18 @@ I = {
 		{
 			if (O.URLArguments[I.URLKeySection] !== undefined)
 			{
-				$(I.cHeaderPrefix + I.contentCurrent + "_"
-					+ O.URLArguments[I.URLKeySection]).trigger("click");
+				var section = O.stripToAlphanumeric(O.toFirstUpperCase(O.URLArguments[I.URLKeySection]));
+				$(I.cHeaderPrefix + I.contentCurrent + "_" + section).trigger("click");
 			}
 		}, 0);
+	},
+	openPageFromURL: function()
+	{
+		if (O.URLArguments[I.URLKeyPage] !== undefined)
+		{
+			var page = O.stripToAlphanumeric(O.toFirstUpperCase(O.URLArguments[I.URLKeyPage]));
+			$(I.cMenuPrefix + page).trigger("click");
+		}
 	},
 	
 	/*
@@ -5724,18 +5980,7 @@ I = {
 	 */
 	enforceURLArgumentsLast: function()
 	{
-		var i;
-		// Go to the page (content layer) requested, as in "openPageFromURL()"
-		if (O.URLArguments[I.URLKeyPage] !== undefined)
-		{
-			for (i in I.ContentEnum)
-			{
-				if (O.URLArguments[I.URLKeyPage].toLowerCase() === I.ContentEnum[i].toLowerCase())
-				{
-					$(I.cMenuPrefix + I.ContentEnum[i]).trigger("click");
-				}
-			}
-		}
+		I.openPageFromURL();
 	},
 	
 	/*
@@ -6182,7 +6427,7 @@ I = {
 		 */
 		$("#jsCenter").click(function()
 		{
-			M.Map.setView(M.convertGCtoLC(M.cMAP_CENTER), M.cZOOM_LEVEL_DEFAULT);
+			M.Map.setView(M.convertGCtoLC(M.cMAP_CENTER), M.ZoomLevelEnum.Default);
 		});
 	   
 	}, // End of menu initialization
@@ -6230,7 +6475,7 @@ I = {
 			// Bind map zone links
 			$(".mapZones li").each(function()
 			{
-				M.bindMapLinkBehavior($(this), null, "sky");
+				M.bindMapLinkBehavior($(this), null, M.ZoomLevelEnum.Sky);
 			});
 			// Create daily markers
 			$("#headerMap_Daily").one("click", M.generateAndInitializeDailies);
@@ -6337,6 +6582,39 @@ I = {
 		$("#headerTimetable").one("click", function(){
 		   C.initializeTimetableHTML(); 
 		});
+	},
+	
+	/*
+	 * Changes program look based on mode.
+	 */
+	enforceProgramMode: function()
+	{
+		switch (I.programMode)
+		{
+			case I.programModeEnum.Overlay:
+			{
+				$("#itemLanguage, #itemSocial").hide();
+			} break;
+			case I.programModeEnum.Simple:
+			{
+				O.Options.bol_compactClock = false;
+				O.enact_bol_compactClock();
+				
+				$("#panelLeft, #panelRight").css("background", "radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%)");
+				$("#panelRight").css({"text-align": "center"});
+				//$("#panelRight").css({display: "block", width: "360px", height: "360px"});
+				$("#paneClock").css(
+				{
+					display: "inline-block",
+					right: "auto",
+					border: "none",
+					"box-shadow": "none",
+					"vertical-align": "center"
+				});
+				$("#panelLeft, #paneMenu, #paneContent").hide();
+				$(".itemTimeDigital, #itemLanguage, #itemSocial").hide();
+			} break;
+		}
 	},
 	
 	/*
