@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x720, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.06.19 modified - 2014.04.18 created
+	Version: 2014.06.24 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -254,6 +254,36 @@ input#mapCoordinatesRegion {
 	box-shadow: -5px 0px 5px #223;
 }
 
+/* Board (only visible in simple mode)
+----------------------------------------------------------------------------- */
+#paneBoard {
+	display: none;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	font-size: 32px;
+	font-family: Menomonia;
+	color: #ffeebb;
+	text-shadow:
+		1px 1px 0px #000,
+		-1px -1px 0px #000,
+		1px -1px 0px #000,
+		-1px 1px 0px #000,
+		1px 1px 0px #000;
+	opacity: 0.8;
+}
+#itemBoardTime {
+	font-family: sans-serif;
+}
+#itemBoardCurrentSD, #itemBoardCurrentHC {
+	font-weight: bold;
+	color: #ff8844;
+}
+#itemBoardNextSD, #itemBoardNextHC {
+	color: #ff8844;
+	opacity: 0.5;
+}
+
 /* @@Klock
 ----------------------------------------------------------------------------- */
 .clkSizeRegular {
@@ -393,6 +423,7 @@ input#mapCoordinatesRegion {
 	font-family: sans-serif;
 	font-size: 16px;
 	font-weight: bold;
+	text-decoration: none;
 	color: #bbcc77;
 	text-shadow:
 		1px 1px 0px #333,
@@ -401,16 +432,21 @@ input#mapCoordinatesRegion {
 		-1px 1px 0px #333,
 		1px 1px 0px #333;
 }
+#itemTimeLocal:hover {
+	text-decoration: underline;
+}
 #itemTimeLocal {
-	left: 10px; bottom: 10px;
+	right: 10px; bottom: 10px;
 }
 #itemTimeServer {
-	right: 10px; bottom: 10px;
+	left: 10px; bottom: 10px;
 }
 
 #itemLanguage {
 	position: absolute;
-	bottom: 28px;
+	padding-top: 4px;
+	padding-bottom: 28px;
+	bottom: 0px;
 	left: 10px;
 	font-family: sans-serif;
 	font-size: 12px;
@@ -422,10 +458,6 @@ input#mapCoordinatesRegion {
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
 	opacity: 0.9;
-}
-#itemLanguageButton {
-	display: block;
-	width: 72px;
 }
 #itemLanguage img {
 	vertical-align: middle;
@@ -458,8 +490,10 @@ input#mapCoordinatesRegion {
 }
 #itemLanguage:hover #itemLanguageChoices { /* Popup when hovered over language button */
 	display: block;
-	min-width: 90px;
+	width: 90px;
 	position: absolute;
+	left: -98px;
+	top: 0px;
 	padding: 4px 2px 4px 2px;
 	border: 2px solid #111;
 	box-shadow: 0px 0px 2px #555;

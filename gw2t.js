@@ -74,7 +74,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140618},
+		programVersion: {key: "int_utlProgramVersion", value: 140624},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -735,7 +735,10 @@ O = {
 		{
 			O.enact_bol_showMap();
 			// Leaflet map breaks when it is shown after being hidden, so have to reload
-			location.reload();
+			if (O.Options.bol_showMap)
+			{
+				location.reload();
+			}
 		});
 		/*
 		 * Run enactors when the page loads (because this an initializer function).
@@ -850,6 +853,11 @@ O = {
 	},
 	enact_bol_compactClock: function()
 	{
+		if (I.programMode === I.programModeEnum.Simple)
+		{
+			return;
+		}
+		
 		var animationspeed = 200;
 		var clockheight = 0;
 		if (O.Options.bol_compactClock)
@@ -875,20 +883,20 @@ O = {
 			$("#itemClockFace .iconHC").css({width: "32px", height: "32px"});
 			$("#itemTimeLocal").css({
 				width: "100%",
-				left: "auto", bottom: "90px",
+				right: "auto", bottom: "90px",
 				"text-align": "center",
 				color: "#eee",
 				opacity: 0.5
 			});
 			$("#itemTimeServer").css({
 				width: "100%",
-				top: "90px", bottom: "auto", right: "auto",
+				top: "90px", bottom: "auto", left: "auto",
 				"text-align": "center",
 				color: "#eee",
 				opacity: 0.5
 			});
-			$("#itemLanguage").css({ bottom: "98px", left: "10px" });
-			$("#itemSocial").css({ bottom: "98px", right: "10px" });
+			$("#itemLanguage").css({ bottom: "72px", left: "10px" });
+			$("#itemSocial").css({ bottom: "100px", right: "10px" });
 			
 			// Resize panes by animation
 			if (O.Options.bol_showClock)
@@ -939,19 +947,19 @@ O = {
 			$("#itemClockFace .iconHC").css({width: "48px", height: "48px"});
 			$("#itemTimeLocal").css({
 				width: "auto",
-				left: "10px", bottom: "10px",
+				right: "10px", bottom: "10px",
 				"text-align": "left",
 				color: "#bbcc77",
 				opacity: 1
 			});
 			$("#itemTimeServer").css({
 				width: "auto",
-				top: "auto", bottom: "10px", right: "10px",
+				top: "auto", bottom: "10px", left: "10px",
 				"text-align": "left",
 				color: "#bbcc77",
 				opacity: 1
 			});
-			$("#itemLanguage").css({ bottom: "28px", left: "10px" });
+			$("#itemLanguage").css({ bottom: "0px", left: "10px" });
 			$("#itemSocial").css({ bottom: "28px", right: "10px" });
 			
 			// Resize panes by animation
@@ -982,6 +990,10 @@ O = {
 	},
 	enact_bol_showClock: function()
 	{
+		if (I.programMode === I.programModeEnum.Simple)
+		{
+			return;
+		}
 		/*
 		 * There are three panes on the right panel: Clock, Menu, and Content
 		 * all absolutely positioned, so to move them the CSS "top" attribute
@@ -1415,8 +1427,9 @@ X = {
 					} break;
 					case X.ChecklistEnum.Disabled:
 					{
-						thisbar.show("fast");
-						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Disabled);
+						thisbar.css({opacity: 1}).show("fast");
+						$(this).removeClass("chnChecked");
+						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Unchecked);
 					} break;
 				}
 				// Also autohide the chain bar if opted
@@ -1698,39 +1711,61 @@ D = {
 	 */
 	Phrase:
 	{
-		s_TEMPLATE: {de: "", es: "", fr: "", pl: "", nl: "", ru: "", zh: ""},
+		s_TEMPLATE: {de: "", es: "", fr: "", nl: "", pl: "", ru: "", zh: ""},
 		
 		// Time
-		s_s: {de: "s", es: "s", fr: "s", pl: "s", nl: "s", ru: "с", zh: "秒"},
-		s_m: {de: "m", es: "m", fr: "m", pl: "m", nl: "m", ru: "м", zh: "分"},
-		s_h: {de: "s", es: "h", fr: "h", pl: "g", nl: "u", ru: "ч", zh: "時"},
-		s_second: {de: "sekunde", es: "segundo", fr: "seconde", pl: "sekund", nl: "seconde", ru: "секунду", zh: "秒"},
-		s_minute: {de: "minute", es: "minuto", fr: "minute", pl: "minuta", nl: "minuut", ru: "минута", zh: "分"},
-		s_hour: {de: "stunde", es: "hora", fr: "heure", pl: "godzinę", nl: "uur", ru: "час", zh: "時"},
-		s_seconds: {de: "sekunden", es: "segundos", fr: "secondes", pl: "sekund", nl: "seconden", ru: "секунд", zh: "秒"},
-		s_minutes: {de: "minuten", es: "minutos", fr: "minutes", pl: "minut", nl: "minuten", ru: "минут", zh: "分"},
-		s_hours: {de: "studen", es: "horas", fr: "heures", pl: "godzin", nl: "uur", ru: "часов", zh: "時"},
-		s_half_an_hour: {de: "eine halbe stunde", es: "media hora", fr: "demi-heure", pl: "pół godziny", nl: "een half uur", ru: "полчаса", zh: "半小時"},
+		s_s: {de: "s", es: "s", fr: "s", nl: "s", pl: "s", ru: "с", zh: "秒"},
+		s_m: {de: "m", es: "m", fr: "m", nl: "m", pl: "m", ru: "м", zh: "分"},
+		s_h: {de: "s", es: "h", fr: "h", nl: "u", pl: "g", ru: "ч", zh: "時"},
+		s_second: {de: "sekunde", es: "segundo", fr: "seconde", nl: "seconde", pl: "sekund", ru: "секунду", zh: "秒"},
+		s_minute: {de: "minute", es: "minuto", fr: "minute", nl: "minuut", pl: "minuta", ru: "минута", zh: "分"},
+		s_hour: {de: "stunde", es: "hora", fr: "heure", nl: "uur", pl: "godzinę", ru: "час", zh: "時"},
+		s_seconds: {de: "sekunden", es: "segundos", fr: "secondes", nl: "seconden", pl: "sekund", ru: "секунд", zh: "秒"},
+		s_minutes: {de: "minuten", es: "minutos", fr: "minutes", nl: "minuten", pl: "minut", ru: "минут", zh: "分"},
+		s_hours: {de: "studen", es: "horas", fr: "heures", nl: "uur", pl: "godzin", ru: "часов", zh: "時"},
+		s_half_an_hour: {de: "eine halbe stunde", es: "media hora", fr: "demi-heure", nl: "een half uur", pl: "pół godziny", ru: "полчаса", zh: "半小時"},
 		
 		// Nouns
-		s_world_boss: {de: "weltendgegner", es: "jefe mundo", fr: "chef monde", pl: "świat szef", nl: "wereld eindbaas", ru: "мир босс", zh: "世界頭目"},
+		s_world_boss: {de: "weltendgegner", es: "jefe mundo", fr: "chef monde", nl: "wereld eindbaas", pl: "świat szef", ru: "мир босс", zh: "世界頭目"},
+		s_section: {de: "paragraph", es: "sección", fr: "section", nl: "paragraaf", pl: "sekcja", ru: "параграф", zh: "節"},
 		
 		// Verbs
-		s_is: {de: "ist", es: "es", fr: "est", pl: "jest", nl: "is", ru: "является", zh: "是"},
-		s_will_start: {de: "zal starten", es: "se iniciará", fr: "débutera", pl: "rozpocznie się", nl: "zal starten", ru: "начнется", zh: "開始"},
+		s_done_reading: {de: "ende gelesen", es: "terminado de leer", fr: "fini de lire", nl: "afgewerkt lezen", pl: "przeczytaniu", ru: "закончите читать", zh: "讀完"},
+		s_is: {de: "ist", es: "es", fr: "est", nl: "is", pl: "jest", ru: "является", zh: "是"},
+		s_subscribe: {de: "abonnieren", es: "subscribir", fr: "abonner", nl: "abonneren", pl: "abonować", ru: "подписываться", zh: "訂閱"},
+		s_will_start: {de: "wird starten", es: "se iniciará", fr: "débutera", nl: "zal starten", pl: "rozpocznie się", ru: "начнется", zh: "開始"},
 		
 		// Adjectives and Adverbs
-		s_ago: {de: "vor", es: "hace", fr: "il ya", pl: "temu", nl: "geleden", ru: "назад", zh: "前"},
-		s_also: {de: "auch", es: "también", fr: "aussi", pl: "też", nl: "ook", ru: "то́же", zh: "也"},
-		s_checked: {de: "abgehakt", es: "visto", fr: "coché", pl: "zakończony", nl: "afgevinkt", ru: "галочка", zh: "勾掉"},
-		s_current: {de: "aktuelle", es: "actual", fr: "actuel", pl: "bieżący", nl: "huidige", ru: "текущий", zh: "活期"},
-		s_next: {de: "nächste", es: "siguiente", fr: "prochain", pl: "następny", nl: "volgend", ru: "следующий", zh: "下一"},
-		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit", pl: "subskrypcji", nl: "geabonneerd", ru: "подписал", zh: "訂閱"},
-		s_then: {de: "dann", es: "luego", fr: "puis", pl: "potem", nl: "dan", ru: "затем", zh: "接著"},
+		s_ago: {de: "vor", es: "hace", fr: "il ya", nl: "geleden", pl: "temu", ru: "назад", zh: "前"},
+		s_also: {de: "auch", es: "también", fr: "aussi", nl: "ook", pl: "też", ru: "то́же", zh: "也"},
+		s_checked: {de: "abgehakt", es: "visto", fr: "coché", nl: "afgevinkt", pl: "zakończony", ru: "галочка", zh: "勾掉"},
+		s_current: {de: "aktuelle", es: "actual", fr: "actuel", nl: "huidige", pl: "bieżący", ru: "текущий", zh: "活期"},
+		s_next: {de: "nächste", es: "siguiente", fr: "prochain", nl: "volgend", pl: "następny", ru: "следующий", zh: "下一"},
+		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit", nl: "geabonneerd", pl: "subskrypcji", ru: "подписал", zh: "訂閱"},
+		s_then: {de: "dann", es: "luego", fr: "puis", nl: "dan", pl: "potem", ru: "затем", zh: "接著"},
 		
 		// Prepositions and Conjunctions
-		s_and: {de: "und", es: "y", fr: "et", pl: "i", nl: "en", ru: "и", zh: "和"},
-		s_in: {de: "in", es: "en", fr: "en", pl: "w", nl: "in", ru: "в", zh: "在"}
+		s_and: {de: "und", es: "y", fr: "et", nl: "en", pl: "i", ru: "и", zh: "和"},
+		s_in: {de: "in", es: "en", fr: "en", nl: "in", pl: "w", ru: "в", zh: "在"}
+	},
+	
+	Element:
+	{
+		s_TEMPLATE: {de: "", es: "", fr: "", nl: "", pl: "", ru: "", zh: ""},
+
+		s_menuChains: {de: "Zeitplan", es: "Horario", fr: "Horaire", nl: "Dienstregeling", pl: "Harmonogram", ru: "Расписание", zh: "時間表"},
+		s_menuMap: {de: "Werkzeuge", es: "Útiles", fr: "Outils", nl: "Gereedschap", pl: "Narzędzia", ru: "Инструментарий", zh: "工具"},
+		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance", nl: "Hulp", pl: "Pomoc", ru: "Помощь", zh: "輔助"},
+		s_menuOptions: {de: "Optionen", es: "Opciónes", fr: "Options", nl: "Opties", pl: "Opcje", ru: "Опции", zh: "選項"},
+		s_opt_bol_alertSubscribed: {
+			de: "<dfn>Alarm Modus:</dfn><br />☐ = Checkliste<br />☑ = Abonnement",
+			es: "<dfn>Modo de Alarma:</dfn><br />☐ = Lista de Verificación<br />☑ = Suscripción",
+			fr: "<dfn>Mode d'Alarme:</dfn><br />☐ = Check-list<br />☑ = Abonnement",
+			nl: "<dfn>Alarm Modus:</dfn><br />☐ = Checklist<br />☑ = Abonnement",
+			pl: "<dfn>Alarmu Tryb:</dfn><br />☐ = Lista Kontrolna<br />☑ = Abonament",
+			ru: "<dfn>Будильник Режим:</dfn><br />☐ = Контрольный Список<br />☑ = Подписка",
+			zh: "<dfn>鬧鐘方式:</dfn><br />☐ = 清單<br />☑ = 訂閱"
+		}
 	},
 	
 	/*
@@ -1781,26 +1816,72 @@ D = {
 	{
 		return D.getTranslation(pText, D.Phrase);
 	},
+	getSentence: function(pText)
+	{
+		return O.toFirstUpperCase(D.getTranslation(pText, D.Phrase));
+	},
+	getElement: function(pID)
+	{
+		return D.getTranslation(pID, D.Element);
+	},
 	
+	/*
+	 * Translates the header of a page.
+	 * @param enum pLayer to get header.
+	 */
+	translatePageHeader: function(pLayer)
+	{
+		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+		{
+			$("#layer" + pLayer + " .cntHeader").text(D.getElement("menu" + pLayer));
+		}
+	},
+	
+	/*
+	 * Does translations for preloaded (not AJAX or generated) content.
+	 */
+	translateAfter: function()
+	{
+		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+		{
+			return;
+		}
+		
+		$("#paneMenu span").each(function()
+		{
+			$(this).attr("title", "<dfn>" + D.getElement($(this).attr("id")) + "</dfn>");
+			I.qTip.init($(this));
+		});
+		$("#opt_bol_alertSubscribed").each(function()
+		{
+			$(this).parent().attr("title", D.getElement($(this).attr("id")));
+			I.qTip.init($(this).parent());
+		});
+		D.translatePageHeader(I.PageEnum.Options);
+	},
+		
 	// Must be in the same order as the chain indexes
 	ChainTitle: [
 	{
+		en: "Fire Elemental",
 		de: "Feuerelementar",
 		es: "Elemental de Fuego",
 		fr: "Elémentaire de Feu",
-		pl: "Żywioł Ognia",
-		nl: "Elementair Brand",
-		ru: "элементный огня",
+		nl: "Brand Elementair",
+		pl: "Ognia Żywioł",
+		ru: "Огонь Элементаль",
 		zh: "火元素"
 	},{
+		en: "Golem Mark II",
 		de: "Inquestur-Golem Typ II",
-		es: "Gólem serie II de la Inquisa",
+		es: "Gólem Serie II de la Inquisa",
 		fr: "Golem Marque II de l'Enqueste",
 		nl: "Inquest Golem Mark II",
 		pl: "Śledztwo Golem Typ II",
 		ru: "Следствие Голем Тип II",
 		zh: "勘驗魔像2型"
 	},{
+		en: "Claw of Jormag",
 		de: "Klaue Jormags",
 		es: "Garra de Jormag",
 		fr: "Griffe de Jormag",
@@ -1809,6 +1890,7 @@ D = {
 		ru: "Йормаг Коготь",
 		zh: "Jormag 爪"
 	},{
+		en: "Svanir Shaman",
 		de: "Schamanenoberhaupt der Svanir",
 		es: "Jefe Chamán Svanir",
 		fr: "Chef Chamane de Svanir",
@@ -1817,6 +1899,7 @@ D = {
 		ru: "Главный Шаман Сванир",
 		zh: "Svanir 的首席薩滿"
 	},{
+		en: "Megadestroyer",
 		de: "Megazerstörer",
 		es: "Megadestructor",
 		fr: "Mégadestructeur",
@@ -1825,6 +1908,7 @@ D = {
 		ru: "Мегадеструктор",
 		zh: "兆豐析構函數"
 	},{
+		en: "Shadow Behemoth",
 		de: "Schatten-Behemoth",
 		es: "Behemot de las Sombras",
 		fr: "Béhémoth des Ombres",
@@ -1833,6 +1917,7 @@ D = {
 		ru: "Бегемот из тени",
 		zh: "影子的巨獸"
 	},{
+		en: "The Shatterer",
 		de: "Den Zerschmetterer",
 		es: "El Asolador",
 		fr: "Le Destructeur",
@@ -1841,6 +1926,7 @@ D = {
 		ru: "Разрушитель",
 		zh: "析構函數"
 	},{
+		en: "Taidha Covington",
 		de: "Admiral Taidha Covington",
 		es: "Almirante Taidha Covington",
 		fr: "Amirale Taidha Covington",
@@ -1849,6 +1935,7 @@ D = {
 		ru: "Адмирал Таидха Цовингтон",
 		zh: "海軍上將 Taidha Covington"
 	},{
+		en: "Modniir Ulgoth",
 		de: "Ulgoth den Modniir",
 		es: "Ulgoth el Modniir",
 		fr: "Ulgoth le Modniir",
@@ -1857,6 +1944,7 @@ D = {
 		ru: "Улготх в Модниир",
 		zh: "Ulgoth 的 Modniir"
 	},{
+		en: "Great Jungle Wurm",
 		de: "Großen Dschungelwurm",
 		es: "Gran Sierpe de la Selva",
 		fr: "Grande Guivre de la Jungle",
@@ -1865,14 +1953,16 @@ D = {
 		ru: "Великий Червь из джунглей",
 		zh: "大叢林蠕蟲"
 	},{
+		en: "Karka Queen",
 		de: "Karka-Königin",
 		es: "Reina Karka",
 		fr: "Reine Karka",
-		nl: "Koningin Karka",
-		pl: "Królowa Karka",
-		ru: "Королева Карка",
+		nl: "Karka Koningin",
+		pl: "Karka Królowa",
+		ru: "Карка Королева",
 		zh: "女王 Karka"
 	},{
+		en: "Tequatl",
 		de: "Tequatl den Sonnenlosen",
 		es: "Tequatl el Sombrío",
 		fr: "Tequatl le Sans-soleil",
@@ -1881,6 +1971,7 @@ D = {
 		ru: "Теqуатл Тусклый",
 		zh: "Tequatl 在沒有陽光"
 	},{
+		en: "Triple Wurms",
 		de: "Drei Würmer",
 		es: "Tres Sierpes",
 		fr: "Trois Guivres",
@@ -1889,6 +1980,7 @@ D = {
 		ru: "Три Черви",
 		zh: "三蠕蟲"
 	},{
+		en: "Fire Shaman",
 		de: "Feuerschamanen",
 		es: "Chamán de Fuego",
 		fr: "Chamane de Feu",
@@ -1897,6 +1989,7 @@ D = {
 		ru: "Oгня Шаман",
 		zh: "火薩滿"
 	},{
+		en: "Foulbear Chieftain",
 		de: "Faulbär-Häuptling",
 		es: "Cabecilla de Osoinmundo",
 		fr: "Chef Oursefol",
@@ -1905,6 +1998,7 @@ D = {
 		ru: "Фолмедведь Вождь",
 		zh: "臭熊頭目"
 	},{
+		en: "Dredge Commissar",
 		de: "Schaufler-Kommissar",
 		es: "Comisario Draga",
 		fr: "Kommissar Draguerre",
@@ -1913,6 +2007,7 @@ D = {
 		ru: "Драги Комиссар",
 		zh: "疏通政委"
 	},{
+		en: "Eye of Zhaitan",
 		de: "Auge des Zhaitan",
 		es: "Ojo de Zhaitan",
 		fr: "Œil de Zhaïtan",
@@ -1921,6 +2016,7 @@ D = {
 		ru: "Глаз Жаитан",
 		zh: "Zhaitan 的眼"
 	},{
+		en: "Lyssa",
 		de: "Verderbte Hohepriesterin der Lyssa",
 		es: "Suma Sacerdotisa Corrupta de Lyssa",
 		fr: "Grande Prêtresse Corrompue de Lyssa",
@@ -1929,6 +2025,7 @@ D = {
 		ru: "Лысса Храм",
 		zh: "Lyssa 的寺廟"
 	},{
+		en: "Dwayna",
 		de: "Besessene Dwayna-Statue",
 		es: "Estatua Poseída de Dwayna",
 		fr: "Statue Possédée de Dwayna",
@@ -1937,6 +2034,7 @@ D = {
 		ru: "Дwаына Храм",
 		zh: "Dwayna 的寺廟"
 	},{
+		en: "Melandru",
 		de: "Auferstandenen Priester der Melandru",
 		es: "Sacerdote de Melandru Resurgido",
 		fr: "Prêtre Revenant de Melandru",
@@ -1945,6 +2043,7 @@ D = {
 		ru: "Меландру Храм",
 		zh: "Melandru 的寺廟"
 	},{
+		en: "Grenth",
 		de: "Auferstandenen Priester des Grenth",
 		es: "Sacerdote de Grenth Resurgido",
 		fr: "Prêtre Revenant de Grenth",
@@ -1953,6 +2052,7 @@ D = {
 		ru: "Грентх Храм",
 		zh: "Grenth 的寺廟"
 	},{
+		en: "Arah",
 		de: "Tore von Arah",
 		es: "Puertas de Arah",
 		fr: "Portes d'Arah",
@@ -1961,6 +2061,7 @@ D = {
 		ru: "Ворота Арах",
 		zh: "Arah 的寺廟"
 	},{
+		en: "Balthazar",
 		de: "Auferstandenen Priester des Balthasar",
 		es: "Sacerdote de Balthazar Resurgido",
 		fr: "Prêtre Revenant de Balthazar",
@@ -1969,6 +2070,7 @@ D = {
 		ru: "Балтхазар Храм",
 		zh: "Balthazar 的寺廟"
 	},{
+		en: "Balthazar North",
 		de: "Nord Invasion von Orr",
 		es: "Invasión del Norte de Orr",
 		fr: "Invasion du Nord de Orr",
@@ -1977,6 +2079,7 @@ D = {
 		ru: "Северная Вторжение Орр",
 		zh: "北部入侵 Orr"
 	},{
+		en: "Balthazar Central",
 		de: "Zentral Invasion von Orr",
 		es: "Invasión Central de Orr",
 		fr: "Invasion Central de Orr",
@@ -1985,6 +2088,7 @@ D = {
 		ru: "Центральный Вторжение Орр",
 		zh: "中部入侵 Orr"
 	},{
+		en: "Balthazar South",
 		de: "Invasion der Südlichen Orr",
 		es: "Invasión del Sur de Orr",
 		fr: "Invasion du Sud de Orr",
@@ -2006,6 +2110,10 @@ D = {
 		{
 			return C.Chains[pIndex].title;
 		}
+		return (D.ChainTitle[pIndex])[O.Options.enu_Language];
+	},
+	getChainTitleAny: function(pIndex)
+	{
 		return (D.ChainTitle[pIndex])[O.Options.enu_Language];
 	},
 	
@@ -2082,7 +2190,7 @@ D = {
 		}
 		else
 		{
-			// If speech in queue then wait queue time, finally speak and subtract after duration
+			// If speech in queue then wait added queue time, finally speak and subtract after duration
 			D.speechWait += durationms;
 			setTimeout(function()
 			{
@@ -2156,16 +2264,16 @@ C = {
 	 * This is referred to by the variable "C.Chains".
 	 */
 	Chains: GW2T_CHAINS_DATA,
-	CurrentSDChain: {},
-	NextSDChain1: {},
-	NextSDChain2: {},
-	NextSDChain3: {},
-	NextSDChain4: {},
-	CurrentHCChain: {},
-	NextHCChain1: {},
-	NextHCChain2: {},
-	NextHCChain3: {},
-	NextHCChain4: {},
+	CurrentChainSD: {},
+	NextChainSD1: {},
+	NextChainSD2: {},
+	NextChainSD3: {},
+	NextChainSD4: {},
+	CurrentChainHC: {},
+	NextChainHC1: {},
+	NextChainHC2: {},
+	NextChainHC3: {},
+	NextChainHC4: {},
 	CurrentChains: [],
 	PreviousChains1: [],
 	PreviousChains2: [],
@@ -2531,7 +2639,7 @@ C = {
 		var spacer;
 		for (var ii in pChain.scheduleKeys)
 		{
-			spacer = (parseInt(ii) === 0) ? "<dfn>Subscribe?</dfn><br />" : " <br /> ";
+			spacer = (parseInt(ii) === 0) ? "<dfn>" + D.getSentence("subscribe") + "?</dfn><br />" : " <br /> ";
 			minischedulestring = minischedulestring + spacer
 				+ T.getTimeFormatted(
 				{
@@ -2933,7 +3041,7 @@ C = {
 			}
 			
 			// Tour to the event on the map if opted
-			if (O.Options.bol_tourPrediction && I.contentCurrent === I.ContentEnum.Chains
+			if (O.Options.bol_tourPrediction && I.contentCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone)
 			{
 				$("#chnEvent_" + pChain.alias + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
@@ -2951,21 +3059,21 @@ C = {
 			 * not past the timeframe, and the subscription option is off.
 			 */
 			if (O.Options.bol_enableSound && O.Options.bol_alertAtEnd && I.isProgramLoaded
-				&& pChain.alias === C.CurrentSDChain.alias
+				&& pChain.alias === C.CurrentChainSD.alias
 				&& O.Options.bol_alertSubscribed === false)
 			{
 				var checked = ", " + D.getSpeech("checked");
 				var checkedsd = "";
 				var checkedhc = "";
-				var wantsd = O.objToBool(C.NextSDChain1);
-				var wanthc = O.objToBool(C.NextHCChain1);
+				var wantsd = O.objToBool(C.NextChainSD1);
+				var wanthc = O.objToBool(C.NextChainHC1);
 				var speech = D.getSpeech("world boss", "next") + " " + D.getSpeech("is") + " ";
 				
-				if (C.NextSDChain1 && ( ! C.isChainUnchecked(C.NextSDChain1)))
+				if (C.NextChainSD1 && ( ! C.isChainUnchecked(C.NextChainSD1)))
 				{
 					checkedsd = checked;
 				}
-				if (C.NextHCChain1 && ( ! C.isChainUnchecked(C.NextHCChain1)))
+				if (C.NextChainHC1 && ( ! C.isChainUnchecked(C.NextChainHC1)))
 				{
 					checkedhc = checked;
 				}
@@ -2978,21 +3086,21 @@ C = {
 				
 				if (wantsd && wanthc)
 				{
-					D.speak(speech + D.getChainPronunciation(C.NextSDChain1) + checkedsd, 5);
-					D.speak(D.getSpeech("also") + ", " + D.getChainPronunciation(C.NextHCChain1) + checkedhc, 3);
+					D.speak(speech + D.getChainPronunciation(C.NextChainSD1) + checkedsd, 5);
+					D.speak(D.getSpeech("also") + ", " + D.getChainPronunciation(C.NextChainHC1) + checkedhc, 3);
 				}
 				else if (wantsd)
 				{
-					D.speak(speech + D.getChainPronunciation(C.NextSDChain1) + checkedsd, 5);
+					D.speak(speech + D.getChainPronunciation(C.NextChainSD1) + checkedsd, 5);
 				}
 				else if (wanthc)
 				{
-					D.speak(speech + D.getChainPronunciation(C.NextHCChain1) + checkedhc, 5);
+					D.speak(speech + D.getChainPronunciation(C.NextChainHC1) + checkedhc, 5);
 				}
 				
 				if (wantsd || wanthc)
 				{
-					D.speak(T.getTimeTillChainFormatted(C.NextSDChain1, "speech"), 3);
+					D.speak(T.getTimeTillChainFormatted(C.NextChainSD1, "speech"), 3);
 				}
 			}
 		}
@@ -3127,7 +3235,7 @@ M = {
 	},
 	
 	// Icons are initially invisible until zoomed in close enough or moused over a zone
-	iconWaypoint: L.icon(
+	IconWaypoint: L.icon(
 	{
 		iconUrl: "img/map/waypoint.png",
 		iconSize: [16, 16],
@@ -3589,7 +3697,7 @@ M = {
 						{
 							title: "<span class='mapLoc'><dfn>" + poi.name + "</dfn></span>",
 							waypoint: poi.name,
-							icon: M.iconWaypoint,
+							icon: M.IconWaypoint,
 							link: M.getChatlinkFromPoiID(poi.poi_id)
 						}).addTo(M.Map);
 						// Initially hide all the waypoints
@@ -3629,12 +3737,12 @@ M = {
 			 * AJAX takes a while so can use this to advantage to delay graphics
 			 * that seem out of place without a map loaded.
 			 */
-			if (O.Options.bol_showChainPaths === true && I.contentCurrent !== I.ContentEnum.Map)
+			if (O.Options.bol_showChainPaths === true && I.contentCurrent !== I.PageEnum.Map)
 			{
 				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
 			}
 			
-			if (O.Options.bol_tourPrediction && I.contentCurrent === I.ContentEnum.Chains)
+			if (O.Options.bol_tourPrediction && I.contentCurrent === I.PageEnum.Chains)
 			{
 				// Initialize the "current moused zone" variable for showing waypoints
 				M.showCurrentZone(M.getZoneCenter("la"));
@@ -3644,8 +3752,8 @@ M = {
 					M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.cLEAFLET_ICON_SIZE);
 				}
 				// Tour to the event on the map if opted
-				$("#chnEvent_" + C.CurrentSDChain.alias + "_"
-					+ C.CurrentSDChain.CurrentPrimaryEvent.num).trigger("click");
+				$("#chnEvent_" + C.CurrentChainSD.alias + "_"
+					+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
 			}
 			/*
 			 * Start tooltip plugin after the markers were loaded, because it
@@ -4237,8 +4345,8 @@ T = {
 	cSECONDS_IN_DAY: 86400,
 	cMINUTES_IN_HOUR: 60,
 	cMINUTES_IN_DAY: 1440,
+	cHOURS_IN_MERIDIEM: 12,
 	cHOURS_IN_DAY: 24,
-	cHOURS_IN_PERIOD: 12,
 	cSECONDS_IN_TIMEFRAME: 900,
 	cMINUTES_IN_TIMEFRAME: 15,
 	cNUM_TIMEFRAMES_IN_HOUR: 4,
@@ -4427,7 +4535,7 @@ T = {
 		// Finally bind event handlers for the chain checklist
 		X.initializeChainChecklist();
 		// Initialize for the touring function to access current active event
-		C.CurrentSDChain = T.getStandardChain();
+		C.CurrentChainSD = T.getStandardChain();
 	},
 	
 	/*
@@ -4891,17 +4999,17 @@ T = {
 		}
 		// Else shift the hour and suffix the meridiem
 		var period = " AM";
-		if (hour >= T.cHOURS_IN_PERIOD)
+		if (hour >= T.cHOURS_IN_MERIDIEM)
 		{
-			if (hour > T.cHOURS_IN_PERIOD)
+			if (hour > T.cHOURS_IN_MERIDIEM)
 			{
-				hour = hour % T.cHOURS_IN_PERIOD;
+				hour = hour % T.cHOURS_IN_MERIDIEM;
 			}
 			period = " PM";
 		}
 		else if (hour === 0)
 		{
-			hour = T.cHOURS_IN_PERIOD;
+			hour = T.cHOURS_IN_MERIDIEM;
 		}
 		return hour + ":" + minsec + period;
 	},
@@ -4972,15 +5080,15 @@ K = {
 	cDEGREES_IN_QUADRANT: 90,
 	
 	// These will be DOM elements
-	wpChain0: {}, wpChain1: {}, wpChain2: {}, wpChain3: {},
+	WpChain0: {}, WpChain1: {}, WpChain2: {}, WpChain3: {},
 	// These will be jQuery "elements"
-	iconSD0: {}, iconSD1: {}, iconSD2: {}, iconSD3: {},
-	iconHC0: {}, iconHC1: {}, iconHC2: {}, iconHC3: {},
-	iconsStandard: new Array(),
-	iconsHardcore: new Array(),
+	IconSD0: {}, IconSD1: {}, IconSD2: {}, IconSD3: {},
+	IconHC0: {}, IconHC1: {}, IconHC2: {}, IconHC3: {},
+	IconsStandard: new Array(),
+	IconsHardcore: new Array(),
 	wpClipboards: [],
 	cWpClipboardDataAttribute: "data-clipboard-text", // Defined by ZeroClipboard
-	tickerTimeout: {},
+	TickerTimeout: {},
 	
 	/*
 	 * Starts the clock.
@@ -5032,14 +5140,34 @@ K = {
 	},
 	
 	/*
-	 * Initializes array of clock items for iteration.
+	 * Initializes array of clock items for iteration and binds the clock chain
+	 * icons to view map event when clicked, or check off when double clicked.
+	 * @pre data-index attribute of icon was updated to get associated chain object.
 	 */
 	initializeClockItems: function()
 	{
-		K.iconsStandard = null;
-		K.iconsHardcore = null;
-		K.iconsStandard = new Array(K.iconSD0, K.iconSD1, K.iconSD2, K.iconSD3);
-		K.iconsHardcore = new Array(K.iconHC0, K.iconHC1, K.iconHC2, K.iconHC3);
+		K.IconsStandard = null;
+		K.IconsHardcore = null;
+		K.IconsStandard = new Array(K.IconSD0, K.IconSD1, K.IconSD2, K.IconSD3);
+		K.IconsHardcore = new Array(K.IconHC0, K.IconHC1, K.IconHC2, K.IconHC3);
+		
+		var i;
+		var coord;
+		for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
+		{
+			$([K.IconsStandard[i], K.IconsHardcore[i]]).each(function()
+			{
+				$(this).unbind("dblclick").dblclick(function()
+				{
+					coord = C.Chains[$(this).data("index")].primaryEvents[0].path[0];
+					M.goToView(coord, M.PinEvent);
+					
+				}).unbind("click").click(function()
+				{
+					$("#chnCheck_" + C.Chains[$(this).data("index")].alias).trigger("click");
+				});
+			});
+		}
 	},
 	
 	/*
@@ -5084,10 +5212,10 @@ K = {
 			pWaypoint.setAttribute(K.cWpClipboardDataAttribute, text);
 		};
 		
-		updateWaypoint(K.wpChain0, C.CurrentSDChain, C.CurrentHCChain, C.NextSDChain1, C.NextHCChain1);
-		updateWaypoint(K.wpChain1, C.NextSDChain1, C.NextHCChain1, C.NextSDChain2, C.NextHCChain2);
-		updateWaypoint(K.wpChain2, C.NextSDChain2, C.NextHCChain2, C.NextSDChain3, C.NextHCChain3);
-		updateWaypoint(K.wpChain3, C.NextSDChain3, C.NextHCChain3, C.NextSDChain4, C.NextHCChain4);
+		updateWaypoint(K.WpChain0, C.CurrentChainSD, C.CurrentChainHC, C.NextChainSD1, C.NextChainHC1);
+		updateWaypoint(K.WpChain1, C.NextChainSD1, C.NextChainHC1, C.NextChainSD2, C.NextChainHC2);
+		updateWaypoint(K.WpChain2, C.NextChainSD2, C.NextChainHC2, C.NextChainSD3, C.NextChainHC3);
+		updateWaypoint(K.WpChain3, C.NextChainSD3, C.NextChainHC3, C.NextChainSD4, C.NextChainHC4);
 	},
 	
 	/*
@@ -5095,7 +5223,7 @@ K = {
 	 * that chain is on the clock, and if it is, change visual based on the
 	 * check state.
 	 * @param string pIndex of the chain to check off in the clock.
-	 * @pre iconChains jQuery objects array was initialized and icons are in
+	 * @pre Icons jQuery objects array was initialized and icons are in
 	 * proper clock position.
 	 */
 	checkoffChainIcon: function(pIndex)
@@ -5115,12 +5243,12 @@ K = {
 					case C.ChainSeriesEnum.Standard:
 					{
 						ithchain = T.getStandardChain(i);
-						iconchain = K.iconsStandard[i];
+						iconchain = K.IconsStandard[i];
 					} break;
 					case C.ChainSeriesEnum.Hardcore:
 					{
 						ithchain = T.getHardcoreChain(i);
-						iconchain = K.iconsHardcore[i];
+						iconchain = K.IconsHardcore[i];
 					} break;
 				}
 
@@ -5158,7 +5286,7 @@ K = {
 		if (K.tickerSecondPrevious === sec)
 		{
 			// If the Date second has not changed, then don't do the effects
-			K.tickerTimeout = setTimeout(K.tickSecond, K.tickerFrequency);
+			K.TickerTimeout = setTimeout(K.tickSecond, K.tickerFrequency);
 			return;
 		}
 		else
@@ -5174,7 +5302,7 @@ K = {
 		T.TIMESTAMP_UNIX_SECONDS = T.getUNIXSeconds();
 		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeOffsetSinceMidnight("utc", "seconds");
 		var min = now.getMinutes();
-		var hour = now.getHours() % T.cHOURS_IN_PERIOD;
+		var hour = now.getHours() % T.cHOURS_IN_MERIDIEM;
 		var secinhour = min*60 + sec;
 		var secangle = sec*6; // 1 degree per second
 		var minangle = min*6 + sec/10; // 0.1 degrees per second
@@ -5193,7 +5321,7 @@ K = {
 		// If crossing a 15 minute mark (IMPORTANT)
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
 		{
-			if (O.Options.int_setClockBackground === 0)
+			if (O.Options.int_setClockBackground === 0 && I.programMode !== I.programModeEnum.Simple)
 			{
 				$(clockbackground).fadeTo(800, 1);
 			}
@@ -5215,7 +5343,7 @@ K = {
 			K.awakeTimestampPrevious = awaketimestampcurrent;
 			
 			// Dim the clock background
-			if (O.Options.int_setClockBackground === 0)
+			if (O.Options.int_setClockBackground === 0 && I.programMode !== I.programModeEnum.Simple)
 			{
 				clockbackground.style.opacity = opacityAdd;
 			}
@@ -5227,22 +5355,21 @@ K = {
 			if (pMinutes > 0)
 			{
 				var minutestill = T.cMINUTES_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime("minutes");
-				var chainsd = C.NextSDChain1;
-				var chainhc = C.NextHCChain1;
-				var wantsd = C.NextSDChain1 && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
-				var wanthc = C.NextHCChain1 && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
+				var chainsd = C.NextChainSD1;
+				var chainhc = C.NextChainHC1;
+				var wantsd = false;
+				var wanthc = false;
+				var speech = D.getSpeech("world boss", "subscribed") + " ";
+				var wait = 5;
 				
 				if (pMinutes > T.cMINUTES_IN_TIMEFRAME)
 				{
-					chainsd = C.NextSDChain2;
-					chainhc = C.NextHCChain2;
+					chainsd = C.NextChainSD2;
+					chainhc = C.NextChainHC2;
 					minutestill += T.cMINUTES_IN_TIMEFRAME;
-					wantsd = C.NextSDChain2 && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
-					wanthc = C.NextHCChain2 && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
 				}
-				
-				var speech = D.getSpeech("world boss", "subscribed") + " ";
-				var wait = 5;
+				wantsd = O.objToBool(chainsd) && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
+				wanthc = O.objToBool(chainhc) && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
 				
 				if (pMinutes === minutestill && (wantsd || wanthc))
 				{
@@ -5294,6 +5421,14 @@ K = {
 				reference: "server",
 				wantSeconds: false
 			}) + ")";
+		document.getElementById("itemBoardTime").innerHTML =
+			T.getTimeFormatted(
+			{
+				want24: true,
+				wantHours: false,
+				wantLetters: true,
+				customTimeInSeconds: T.cSECONDS_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime()
+			});
 		// Times in the Options page Debug section
 		document.getElementById("optTimestampUTC").innerHTML = T.TIMESTAMP_UNIX_SECONDS;
 		document.getElementById("optTimestampLocalReset").innerHTML =
@@ -5307,22 +5442,22 @@ K = {
 		
 		// Change the minute hand if passing colored marker
 		if (secinhour >= K.currentFrameOffsetMinutes
-			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentSDChain.minFinish))
+			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentChainSD.minFinish))
 		{
 			minhand.style.stroke = "lime";
 		}
-		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentSDChain.minFinish)
-			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentSDChain.avgFinish))
+		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentChainSD.minFinish)
+			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentChainSD.avgFinish))
 		{
 			minhand.style.stroke = "orange";
 		}
-		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentSDChain.avgFinish))
+		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentChainSD.avgFinish))
 		{
 			minhand.style.stroke = "red";
 		}
 
 		// Loop this function, can use variable to halt it
-		K.tickerTimeout = setTimeout(K.tickSecond, K.tickerFrequency);
+		K.TickerTimeout = setTimeout(K.tickSecond, K.tickerFrequency);
 	},
 
 	/*
@@ -5341,17 +5476,17 @@ K = {
 		O.checkResetTimestamp();
 		
 		// Remember current chain to reference variable
-		C.CurrentSDChain = T.getStandardChain();
-		C.NextSDChain1 = T.getStandardChain(1);
-		C.NextSDChain2 = T.getStandardChain(2);
-		C.NextSDChain3 = T.getStandardChain(3);
-		C.NextSDChain4 = T.getStandardChain(4);
+		C.CurrentChainSD = T.getStandardChain();
+		C.NextChainSD1 = T.getStandardChain(1);
+		C.NextChainSD2 = T.getStandardChain(2);
+		C.NextChainSD3 = T.getStandardChain(3);
+		C.NextChainSD4 = T.getStandardChain(4);
 		
-		C.CurrentHCChain = T.getHardcoreChain();
-		C.NextHCChain1 = T.getHardcoreChain(1);
-		C.NextHCChain2 = T.getHardcoreChain(2);
-		C.NextHCChain3 = T.getHardcoreChain(3);
-		C.NextHCChain4 = T.getHardcoreChain(4);
+		C.CurrentChainHC = T.getHardcoreChain();
+		C.NextChainHC1 = T.getHardcoreChain(1);
+		C.NextChainHC2 = T.getHardcoreChain(2);
+		C.NextChainHC3 = T.getHardcoreChain(3);
+		C.NextChainHC4 = T.getHardcoreChain(4);
 		
 		C.PreviousChains2 = T.getTimeframeChains(-2);
 		C.PreviousChains1 = T.getTimeframeChains(-1);
@@ -5364,76 +5499,96 @@ K = {
 		// Queue the highlighting of the current chain's events
 		C.CurrentChains.forEach(C.queueEventsHighlight);
 		
+		// Update board in simple mode
+		$("#itemBoardCurrentSD").text(D.getChainTitleAny(C.CurrentChainSD.index));
+		$("#itemBoardNextSD").text(D.getChainTitleAny(C.NextChainSD1.index));
+		if (C.CurrentChainHC || C.NextChainHC1)
+		{
+			$("#itemBoardHC").show();
+			if (C.CurrentChainHC)
+			{
+				$("#itemBoardCurrentHC").text(D.getChainTitleAny(C.CurrentChainHC.index));
+			}
+			if (C.NextChainHC1)
+			{
+				$("#itemBoardNextHC").text(D.getChainTitleAny(C.NextChainHC1.index));
+			}
+		}
+		else
+		{
+			$("#itemBoardHC").hide();
+		}
+		
 		// Alert current chain
 		if (O.Options.bol_alertAtEnd && O.Options.bol_alertSubscribed === false
 			&& O.Options.bol_enableSound)
 		{
 			var checked = ", " + D.getSpeech("checked");
-			var checkedsdcurrent = "";
-			var checkedsdnext = "";
-			var checkedhccurrent = "";
-			var checkedhcnext = "";
-			var wantsdcurrent = O.objToBool(C.CurrentSDChain);
-			var wanthccurrent = O.objToBool(C.CurrentHCChain);
-			var wantsdnext = O.objToBool(C.NextSDChain1);
-			var wanthcnext = O.objToBool(C.NextHCChain1);
+			var checkedcurrentsd = "";
+			var checkednextsd = "";
+			var checkedcurrenthc = "";
+			var checkednexthc = "";
+			var wantcurrentsd = O.objToBool(C.CurrentChainSD);
+			var wantcurrenthc = O.objToBool(C.CurrentChainHC);
+			var wantnextsd = O.objToBool(C.NextChainSD1);
+			var wantnexthc = O.objToBool(C.NextChainHC1);
 			var speech = D.getSpeech("world boss", "current") + " " + D.getSpeech("is") + " ";
 			
-			if (C.CurrentSDChain && ( ! C.isChainUnchecked(C.CurrentSDChain)))
+			if (C.CurrentChainSD && ( ! C.isChainUnchecked(C.CurrentChainSD)))
 			{
-				checkedsdcurrent = checked;
+				checkedcurrentsd = checked;
 			}
-			if (C.CurrentHCChain && ( ! C.isChainUnchecked(C.CurrentHCChain)))
+			if (C.CurrentChainHC && ( ! C.isChainUnchecked(C.CurrentChainHC)))
 			{
-				checkedhccurrent = checked;
+				checkedcurrenthc = checked;
 			}
-			if (C.NextSDChain1 && ( ! C.isChainUnchecked(C.NextSDChain1)))
+			if (C.NextChainSD1 && ( ! C.isChainUnchecked(C.NextChainSD1)))
 			{
-				checkedsdnext = checked;
+				checkednextsd = checked;
 			}
-			if (C.NextHCChain1 && ( ! C.isChainUnchecked(C.NextHCChain1)))
+			if (C.NextChainHC1 && ( ! C.isChainUnchecked(C.NextChainHC1)))
 			{
-				checkedhcnext = checked;
+				checkednexthc = checked;
 			}
 			// Don't alert if current boss is checked off and user opted not to hear
 			if (O.Options.bol_alertChecked === false)
 			{
-				if (checkedsdcurrent.length > 0) { wantsdcurrent = false; }
-				if (checkedhccurrent.length > 0) { wanthccurrent = false; }
-				if (checkedsdnext.length > 0) { wantsdnext = false; }
-				if (checkedhcnext.length > 0) { wanthcnext = false; }
+				if (checkedcurrentsd.length > 0) { wantcurrentsd = false; }
+				if (checkedcurrenthc.length > 0) { wantcurrenthc = false; }
+				if (checkednextsd.length > 0) { wantnextsd = false; }
+				if (checkednexthc.length > 0) { wantnexthc = false; }
 			}
 			
 			// Announce current bosses
-			if (wantsdcurrent && wanthccurrent)
+			if (wantcurrentsd && wantcurrenthc)
 			{
-				D.speak(speech + D.getChainPronunciation(C.CurrentSDChain) + checkedsdcurrent, 5);
-				D.speak(D.getSpeech("and") + ", " + D.getChainPronunciation(C.CurrentHCChain) + checkedhccurrent, 4);
+				D.speak(speech + D.getChainPronunciation(C.CurrentChainSD) + checkedcurrentsd, 5);
+				D.speak(D.getSpeech("and") + ", " + D.getChainPronunciation(C.CurrentChainHC) + checkedcurrenthc, 4);
 			}
-			else if (wantsdcurrent)
+			else if (wantcurrentsd)
 			{
-				D.speak(speech + D.getChainPronunciation(C.CurrentSDChain) + checkedsdcurrent, 5);
+				D.speak(speech + D.getChainPronunciation(C.CurrentChainSD) + checkedcurrentsd, 5);
 			}
-			else if  (wanthccurrent)
+			else if  (wantcurrenthc)
 			{
-				D.speak(speech + D.getChainPronunciation(C.CurrentHCChain) + checkedhccurrent, 5);
+				D.speak(speech + D.getChainPronunciation(C.CurrentChainHC) + checkedcurrenthc, 5);
 			}
 			
 			// Announce next bosses only if the current has been announced too
-			if (wantsdcurrent || wanthccurrent)
+			if (wantcurrentsd || wantcurrenthc)
 			{
-				if (wantsdnext && wanthcnext)
+				if (wantnextsd && wantnexthc)
 				{
-					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextSDChain1) + checkedsdnext, 4);
-					D.speak(D.getSpeech("and") + ", " + D.getChainPronunciation(C.NextHCChain1) + checkedhcnext, 4);
+					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextChainSD1) + checkednextsd, 4);
+					D.speak(D.getSpeech("and") + ", " + D.getChainPronunciation(C.NextChainHC1) + checkednexthc, 4);
 				}
-				else if (wantsdnext)
+				else if (wantnextsd)
 				{
-					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextSDChain1) + checkedsdnext, 4);
+					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextChainSD1) + checkednextsd, 4);
 				}
-				else if (wanthcnext)
+				else if (wantnexthc)
 				{
-					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextHCChain1) + checkedhcnext, 4);
+					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextChainHC1) + checkednexthc, 4);
 				}
 			}
 		}
@@ -5463,7 +5618,7 @@ K = {
 			pOffsetMark0, pOffsetMark1, pOffsetMark2, pOffsetMark3)
 		{
 			// Highlight active chain icon
-			$([K.iconSD0, K.iconHC0]).each(function()
+			$([K.IconSD0, K.IconHC0]).each(function()
 			{
 				$(this).css(
 				{
@@ -5471,7 +5626,7 @@ K = {
 					"box-shadow": "0px 0px 10px lime"
 				});
 			});
-			$([K.iconSD1, K.iconHC1]).each(function()
+			$([K.IconSD1, K.IconHC1]).each(function()
 			{
 				$(this).css(
 				{
@@ -5481,26 +5636,22 @@ K = {
 			});
 			
 			// Update chain markers
-			K.setMarkerAngle(pMarker0A, C.CurrentSDChain.minFinish + pOffsetMark0);
-			K.setMarkerAngle(pMarker0B, C.CurrentSDChain.avgFinish + pOffsetMark0);
-			K.setMarkerAngle(pMarker1A, C.NextSDChain1.minFinish + pOffsetMark1);
-			K.setMarkerAngle(pMarker1B, C.NextSDChain1.avgFinish + pOffsetMark1);
-			K.setMarkerAngle(pMarker2A, C.NextSDChain2.minFinish + pOffsetMark2);
-			K.setMarkerAngle(pMarker2B, C.NextSDChain2.avgFinish + pOffsetMark2);
-			K.setMarkerAngle(pMarker3A, C.NextSDChain3.minFinish + pOffsetMark3);
-			K.setMarkerAngle(pMarker3B, C.NextSDChain3.avgFinish + pOffsetMark3);
+			K.setMarkerAngle(pMarker0A, C.CurrentChainSD.minFinish + pOffsetMark0);
+			K.setMarkerAngle(pMarker0B, C.CurrentChainSD.avgFinish + pOffsetMark0);
+			K.setMarkerAngle(pMarker1A, C.NextChainSD1.minFinish + pOffsetMark1);
+			K.setMarkerAngle(pMarker1B, C.NextChainSD1.avgFinish + pOffsetMark1);
+			K.setMarkerAngle(pMarker2A, C.NextChainSD2.minFinish + pOffsetMark2);
+			K.setMarkerAngle(pMarker2B, C.NextChainSD2.avgFinish + pOffsetMark2);
+			K.setMarkerAngle(pMarker3A, C.NextChainSD3.minFinish + pOffsetMark3);
+			K.setMarkerAngle(pMarker3B, C.NextChainSD3.avgFinish + pOffsetMark3);
 			// Update chain icons, fade if checked off
 			var restyleIcon = function(pChain, pIcon)
 			{
-				if (pChain === null)
-				{
-					// Don't show icon if hardcore boss is not scheduled at that timeframe
-					pIcon.hide();
-				}
-				else
+				if (pChain)
 				{
 					pIcon.show();
 					pIcon.attr("src", "img/chain/" + pChain.alias.toLowerCase() + I.cImageMainExtension);
+					pIcon.data("index", pChain.index);
 
 					if (X.getChainChecklistState(pChain) !== X.ChecklistEnum.Unchecked)
 					{
@@ -5511,15 +5662,20 @@ K = {
 						pIcon.css({opacity: 1});
 					}
 				}
+				else
+				{
+					// Don't show icon if hardcore boss is not scheduled at that timeframe
+					pIcon.hide();
+				}
 			};
-			restyleIcon(C.CurrentSDChain, K.iconSD0);
-			restyleIcon(C.NextSDChain1, K.iconSD1);
-			restyleIcon(C.NextSDChain2, K.iconSD2);
-			restyleIcon(C.NextSDChain3, K.iconSD3);
-			restyleIcon(C.CurrentHCChain, K.iconHC0);
-			restyleIcon(C.NextHCChain1, K.iconHC1);
-			restyleIcon(C.NextHCChain2, K.iconHC2);
-			restyleIcon(C.NextHCChain3, K.iconHC3);
+			restyleIcon(C.CurrentChainSD, K.IconSD0);
+			restyleIcon(C.NextChainSD1, K.IconSD1);
+			restyleIcon(C.NextChainSD2, K.IconSD2);
+			restyleIcon(C.NextChainSD3, K.IconSD3);
+			restyleIcon(C.CurrentChainHC, K.IconHC0);
+			restyleIcon(C.NextChainHC1, K.IconHC1);
+			restyleIcon(C.NextChainHC2, K.IconHC2);
+			restyleIcon(C.NextChainHC3, K.IconHC3);
 			// Colorize the active chain's markers
 			$(pMarkerStart).attr("stroke", "lime");
 			$(pMarker0A).attr("stroke", "orange");
@@ -5541,14 +5697,14 @@ K = {
 			var angle = parseInt(i0) * K.cDEGREES_IN_QUADRANT;
 			K.currentFrameOffsetMinutes = pTimeframeMark;
 
-			K.wpChain0 = $("#itemClockWaypoint" + i0)[0]; K.iconSD0 = $("#itemClockIconStandard" + i0);
-			K.wpChain1 = $("#itemClockWaypoint" + i1)[0]; K.iconSD1 = $("#itemClockIconStandard" + i1);
-			K.wpChain2 = $("#itemClockWaypoint" + i2)[0]; K.iconSD2 = $("#itemClockIconStandard" + i2);
-			K.wpChain3 = $("#itemClockWaypoint" + i3)[0]; K.iconSD3 = $("#itemClockIconStandard" + i3);
-			K.iconHC0 = $("#itemClockIconHardcore" + i0);
-			K.iconHC1 = $("#itemClockIconHardcore" + i1);
-			K.iconHC2 = $("#itemClockIconHardcore" + i2);
-			K.iconHC3 = $("#itemClockIconHardcore" + i3);
+			K.WpChain0 = $("#itemClockWaypoint" + i0)[0]; K.IconSD0 = $("#itemClockIconStandard" + i0);
+			K.WpChain1 = $("#itemClockWaypoint" + i1)[0]; K.IconSD1 = $("#itemClockIconStandard" + i1);
+			K.WpChain2 = $("#itemClockWaypoint" + i2)[0]; K.IconSD2 = $("#itemClockIconStandard" + i2);
+			K.WpChain3 = $("#itemClockWaypoint" + i3)[0]; K.IconSD3 = $("#itemClockIconStandard" + i3);
+			K.IconHC0 = $("#itemClockIconHardcore" + i0);
+			K.IconHC1 = $("#itemClockIconHardcore" + i1);
+			K.IconHC2 = $("#itemClockIconHardcore" + i2);
+			K.IconHC3 = $("#itemClockIconHardcore" + i3);
 			
 			K.rotateClockElement($("#clkSector")[0], angle);
 			repositionMarkers(
@@ -5582,31 +5738,6 @@ K = {
 		// Refresh waypoints because the icon's clock position changed
 		K.updateWaypointsClipboard();
 		K.initializeClockItems();
-		
-		// Rebind the clock chain icons to view map event when clicked
-		var i;
-		var coord;
-		for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
-		{
-			K.iconsStandard[i].unbind("click");
-			(function(pIndex)
-			{
-				K.iconsStandard[pIndex].click(function()
-				{
-					coord = T.getStandardChain(pIndex).primaryEvents[0].path[0];
-					M.goToView(coord, M.PinEvent);
-				});
-			})(i);
-			K.iconsHardcore[i].unbind("click");
-			(function(pIndex)
-			{
-				K.iconsHardcore[pIndex].click(function()
-				{
-					coord = T.getHardcoreChain(pIndex).primaryEvents[0].path[0];
-					M.goToView(coord, M.PinEvent);
-				});
-			})(i);
-		}
 	},
 
 	/*
@@ -5689,7 +5820,7 @@ I = {
 	cContentPane: "#paneContent",
 	cContentPrefix: "#layer",
 	cMenuPrefix: "#menu",
-	ContentEnum:
+	PageEnum:
 	{
 		// These are the X in "menuX" and "layerX" IDs in the HTML
 		Chains: "Chains",
@@ -5768,7 +5899,8 @@ I = {
 		
 		// Detect small devices
 		if (window.innerWidth <= I.cSMALL_DEVICE_WIDTH && window.innerHeight <= I.cSMALL_DEVICE_HEIGHT
-			&& I.programMode !== I.programModeEnum.Overlay)
+			&& I.programMode !== I.programModeEnum.Overlay
+			&& I.programMode !== I.programModeEnum.Simple)
 		{
 			I.userSmallDevice = true;
 			I.write("Small device detected.<br />"
@@ -5782,7 +5914,7 @@ I = {
 			O.Options.bol_showChainPaths = false;
 			O.Options.bol_showMap = false;
 		}
-		// Detect small displays
+		// Detect big displays
 		if (window.innerHeight > I.cBIG_DISPLAY_HEIGHT)
 		{
 			O.Options.bol_compactClock = false;
@@ -5808,7 +5940,7 @@ I = {
 		}
 		
 		// Default content layer
-		I.contentCurrent = I.ContentEnum.Chains;
+		I.contentCurrent = I.PageEnum.Chains;
 	},
 	
 	/*
@@ -5844,7 +5976,6 @@ I = {
 			function() {$("#paneClock").css("z-index", 3);},
 			function() {$("#paneClock").css("z-index", 0);}
 		);
-		$("#global-zeroclipboard-html-bridge").css("z-index", 2);
 		
 		// Clean the localStorage of unrecognized variables
 		O.cleanLocalStorage();
@@ -5852,6 +5983,9 @@ I = {
 		// Update and notify user of version change
 		O.enforceProgramVersion();
 		I.enforceProgramMode();
+		
+		// Post translations
+		D.translateAfter();
 		
 		I.isProgramLoaded = true;
 	},
@@ -6145,11 +6279,14 @@ I = {
 		$(pLayer + " header.jsSection").each(function()
 		{
 			var header = $(this);
-			var headertext = header.text();
+			var headercontent = $(this).children("var").first();
+			// Translate header if available
+			var headertext = headercontent.data(O.Options.enu_Language) || header.text();
+			headercontent.text(headertext);
 			// Hide the entire collapsible div tag next to the header tag
 			header.next().hide();
 			header.wrapInner("<span></span>");
-			header.append("&nbsp;<sup>[+]</sup>");
+			header.append("<sup>[+]</sup>");
 			
 			// Bind click the header to toggle the sibling collapsible container
 			header.click(function()
@@ -6191,7 +6328,7 @@ I = {
 			});
 			
 			// Create and bind the additional bottom header to collapse the container
-			$("<div class='jsSectionDone'>Done reading " + headertext + "</div>")
+			$("<div class='jsSectionDone'>" + D.getSentence("done reading") + " " + headertext + "</div>")
 				.appendTo(header.next()).click(function()
 				{
 					$(this).parent().prev().trigger("click");
@@ -6205,7 +6342,7 @@ I = {
 			var section = I.getIndexFromHTMLID(header);
 			var src = header.find("img:eq(0)").attr("src");
 			$("<img class='menuBeamIcon' data-section='" + section + "' src='" + src + "' "
-				+ "title='&lt;dfn&gt;Section: &lt;/dfn&gt;" + headertext + "' />")
+				+ "title='&lt;dfn&gt;" + D.getSentence("section") + ": &lt;/dfn&gt;" + headertext + "' />")
 				.appendTo(menubeam).click(function()
 				{
 					// Hide all the collapsible sections
@@ -6348,7 +6485,7 @@ I = {
 				
 				switch (I.contentCurrent)
 				{
-					case I.ContentEnum.Chains:
+					case I.PageEnum.Chains:
 					{
 						$("#jsTop").hide();
 						/*
@@ -6357,15 +6494,15 @@ I = {
 						 */ 
 						if (O.Options.bol_tourPrediction)
 						{
-							$("#chnEvent_" + C.CurrentSDChain.alias + "_"
-								+ C.CurrentSDChain.CurrentPrimaryEvent.num).trigger("click");
+							$("#chnEvent_" + C.CurrentChainSD.alias + "_"
+								+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
 						}
 					} break;
-					case I.ContentEnum.Help:
+					case I.PageEnum.Help:
 					{
 						$("#jsTop").show();
 					} break;
-					case I.ContentEnum.Map:
+					case I.PageEnum.Map:
 					{
 						$("#jsTop").show();
 						$("#jsCenter").trigger("click");
@@ -6393,7 +6530,7 @@ I = {
 				// Also hide chain paths if on the map layer
 				if (O.Options.bol_showChainPaths)
 				{
-					if (I.contentCurrent === I.ContentEnum.Map)
+					if (I.contentCurrent === I.PageEnum.Map)
 					{
 						M.setEntityGroupDisplay(M.ChainPathEntities, "hide");
 					}
@@ -6459,6 +6596,7 @@ I = {
 			I.openSectionFromURL();
 			
 			// Lastly
+			D.translatePageHeader(I.PageEnum.Help);
 			I.isContentLoaded_Help = true;
 		});
 	},
@@ -6522,6 +6660,7 @@ I = {
 			I.openSectionFromURL();
 			
 			// Lastly
+			D.translatePageHeader(I.PageEnum.Map);
 			I.isContentLoaded_Map = true;
 		});
 	},
@@ -6541,7 +6680,7 @@ I = {
 				// Change the toggle icon after finish toggling
 				if ($(this).is(":visible"))
 				{
-					var container = $(I.cContentPrefix + I.ContentEnum.Chains);
+					var container = $(I.cContentPrefix + I.PageEnum.Chains);
 					var header = $(this).prev();
 					header.find("ins").html("[-]");
 					// Automatically scroll to the clicked header
@@ -6596,25 +6735,54 @@ I = {
 				$("#itemLanguage, #itemSocial").hide();
 			} break;
 			case I.programModeEnum.Simple:
-			{
-				O.Options.bol_compactClock = false;
-				O.enact_bol_compactClock();
+			{	
+				// Readjust panels
+				$("#panelLeft, #paneMenu, #paneContent").hide();
+				$("#panelRight").css(
+				{
+					background: "radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%)"
+				});
 				
-				$("#panelLeft, #panelRight").css("background", "radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%)");
-				$("#panelRight").css({"text-align": "center"});
-				//$("#panelRight").css({display: "block", width: "360px", height: "360px"});
+				// Readjust clock pane
 				$("#paneClock").css(
 				{
-					display: "inline-block",
-					right: "auto",
+					top: "auto", right: "auto", bottom: "auto", left: "auto",
 					border: "none",
-					"box-shadow": "none",
-					"vertical-align": "center"
+					"box-shadow": "none"
 				});
-				$("#panelLeft, #paneMenu, #paneContent").hide();
-				$(".itemTimeDigital, #itemLanguage, #itemSocial").hide();
+				I.readjustSimpleClock();
+				$(window).resize(function() { I.readjustSimpleClock(); });
+				$("#paneClockBack, #paneClockBackground").css({opacity: 0});
+				
+				// Readjust clock elements
+				$("#itemTimeServer, #itemLanguage, #itemSocial").hide();
+				$("#itemTimeLocal").css({
+					position: "fixed",
+					color: "#eee",
+					opacity: 0.5
+				}).attr("href", "./");
+				$("#paneBoard").show();
+				
 			} break;
 		}
+	},
+	
+	/*
+	 * Centers the clock in the browser window.
+	 */
+	readjustSimpleClock: function()
+	{
+		var height = $(window).height() / 2;
+		var width = $(window).width() / 2;
+		var half = I.cPANE_CLOCK_HEIGHT / 2;
+		$("#paneBoard").css({
+			"margin-top": height - half - 72
+		});
+		$("#paneClock").css(
+		{
+			"margin-top": height - half,
+			"margin-left": width - half
+		});
 	},
 	
 	/*
@@ -6681,7 +6849,7 @@ I = {
 		/*
 		 * Binds matched elements with title attribute to show a popup div with
 		 * that title as content when hovered over the element.
-		 * @param string s DOM query using standard querySelectorAll function.
+		 * @param string s jQuery selector.
 		 */
 		init: function(s)
 		{
@@ -6696,10 +6864,9 @@ I = {
 				{
 					I.qTip.move(a);
 				};
-				var c = document.querySelectorAll(s);
-				for (var e = 0; e < c.length; e++)
+				$(s).each(function()
 				{
-					if (a = c[e], b = a.getAttribute("title"))
+					if (a = $(this)[0], b = a.getAttribute("title"))
 					{
 						a.setAttribute("tiptitle", b), a.removeAttribute("title"),
 							a.removeAttribute("alt"), a.onmouseover = function()
@@ -6710,7 +6877,7 @@ I = {
 							I.qTip.hide();
 						};
 					}
-				}
+				});
 			}
 		},
 		move: function(a)

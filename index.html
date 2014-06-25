@@ -10,12 +10,12 @@
 
 	<!-- Stylesheets -->
 	<link rel="shortcut icon" type="image/x-icon" href="img/event/boss.png" />
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 	<link rel="stylesheet" media="screen" href="gw2t.css" />
 	
 	<!-- JavaScript  -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
 	<script type="text/javascript" src="zones.js"></script>
@@ -66,6 +66,20 @@
 		</section>
 	</div><!-- End of panelLeft -->
 	<div id="panelRight" class="panelMain">
+		<div id="paneBoard">
+			<div id="itemBoardSD">
+				<var id="itemBoardCurrentSD"></var>
+				<span> ≫ </span>
+				<time id="itemBoardTime">00:00</time>
+				<span> ≫ </span>
+				<var id="itemBoardNextSD"></var>
+			</div>
+			<div id="itemBoardHC">
+				<var id="itemBoardCurrentHC"></var>
+				<span> ≫ </span>
+				<var id="itemBoardNextHC"></var>
+			</div>
+		</div>
 		<!-- Clock
 		==================================================================== -->
 		<section id="paneClock" class="paneRight clkSizeRegular">
@@ -154,10 +168,10 @@
 				<img id="itemClockWaypoint2" src="img/map/waypoint.png" alt="X:30 Waypoint">
 				<img id="itemClockWaypoint3" src="img/map/waypoint.png" alt="X:45 Waypoint">
 			</div>
-			<time id="itemTimeLocal" class="itemTimeDigital">00:00</time>
+			<a id="itemTimeLocal" class="itemTimeDigital" title="<dfn>Change Clock View</dfn>" href="./?mode=Simple">00:00</a>
 			<time id="itemTimeServer" class="itemTimeDigital">16:00</time>
 			<div id="itemLanguage">
-				<a id="itemLanguageButton"><img src="img/ui/language.png" alt="Language" /> <abbr>A ⇔ あ</abbr></a>
+				<img src="img/ui/language.png" alt="Language" /> <abbr>A ⇔ あ</abbr>
 				<ul id="itemLanguageChoices">
 					<li><a href="./?enu_Language=en">English</a></li>
 					<li><a href="./?enu_Language=de">Deutsch</a></li>
@@ -185,10 +199,10 @@
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
 		<nav id="paneMenu" class="paneRight">
-			<span id="menuChains" class="translateTip" title="<dfn>Chains:</dfn> Timers, Events, Schedule"></span>
-			<span id="menuMap" class="translateTip" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, Checklists"></span>
-			<span id="menuHelp" class="translateTip" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"></span>
-			<span id="menuOptions" class="translateTip" title="<dfn>Options:</dfn> Display, Format, Alarm"></span>
+			<span id="menuChains" title="<dfn>Chains:</dfn> Timers, Events, Schedule"></span>
+			<span id="menuMap" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, Checklists"></span>
+			<span id="menuHelp" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"></span>
+			<span id="menuOptions" title="<dfn>Options:</dfn> Display, Format, Alarm"></span>
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->
@@ -197,10 +211,10 @@
 			<a id="jsCenter" title="Map Center"></a>
 			<article id="layerChains"><!-- This layer will be populated by JS -->
 				<div id="optSound">
-					<label title="<dfn>Alarm Mode:</dfn><br />If <input type='checkbox' /> Announce the next world boss (checklist mode).<br />If <input type='checkbox' checked='checked' /> Announce bosses whose time you clicked (subscription mode). Speaker icon must be checked to hear sound.">
+					<label title="<dfn>Alarm Mode:</dfn><br />☐ = Announce the next world boss (checklist mode).<br />☑ = Announce bosses whose time you clicked (subscription mode). Speaker icon must be checked to hear sound.">
 						<input id="opt_bol_alertSubscribed" type="checkbox" />
 					</label>
-					<label title="<dfn>Alarm Toggle:</dfn><br />If <input type='checkbox' /> Sound Off<br />If <input type='checkbox' checked='checked' /> Sound On<br />Go to Options page &gt; Alarm section for more info.">
+					<label title="<dfn>Alarm Toggle:</dfn><br />☐ = Sound Off<br />☑ = Sound On<br />Go to Options page &gt; Alarm section for more info.">
 						<input id="opt_bol_enableSound" type="checkbox" /><img src="img/ui/speaker.png" alt="Mute"/>&zwnj;
 					</label>
 				</div>
@@ -237,7 +251,7 @@
 					<header class="cntHeader">Options</header>
 					<br />
 					<h2>Timer</h2>
-					<label title="Hide the boss bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off chains</label>
+					<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off world bosses</label>
 					<label title="13:00:00 or 1:00:00 PM"><input id="opt_bol_use24Hour" type="checkbox" /> Use 24 hour format</label>
 					<label title="Make the clock area smaller."><input id="opt_bol_compactClock" type="checkbox" /> Compact the clock pane</label>
 					<label title="Show/Hide the entire clock area."><input id="opt_bol_showClock" type="checkbox" /> Show the clock pane</label>
@@ -269,7 +283,7 @@
 					<h3>Checklist Mode</h3>
 					<span>When should the program announce the next chain?</span>
 					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>
-					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current chain finishes</label>
+					<label title="This is based on the prediction."><input id="opt_bol_alertAtEnd" type="checkbox" /> When the current world boss dies</label>
 					<label title="This is for either times."><input id="opt_bol_alertChecked" type="checkbox" /> Alert even if the boss is checked off</label>
 					<h3>Subscription Mode</h3>
 					<span>How many minutes before a subscribed chain starts should you be alerted? Enter 0 to disable an alarm. Checked off bosses are ignored.</span>
