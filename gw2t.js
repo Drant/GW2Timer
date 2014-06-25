@@ -5502,6 +5502,8 @@ K = {
 		// Update board in simple mode
 		$("#itemBoardCurrentSD").text(D.getChainTitleAny(C.CurrentChainSD.index));
 		$("#itemBoardNextSD").text(D.getChainTitleAny(C.NextChainSD1.index));
+		$("#itemBoardCurrentHC").text("");
+		$("#itemBoardNextHC").text("");
 		if (C.CurrentChainHC || C.NextChainHC1)
 		{
 			$("#itemBoardHC").show();
