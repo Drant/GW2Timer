@@ -5654,6 +5654,11 @@ K = {
 					pIcon.show();
 					pIcon.attr("src", "img/chain/" + pChain.alias.toLowerCase() + I.cImageMainExtension);
 					pIcon.data("index", pChain.index);
+					if (I.programMode === I.programModeEnum.Simple)
+					{
+						pIcon.attr("title", D.getChainTitleAny(pChain.index));
+						I.qTip.init(pIcon);
+					}
 
 					if (X.getChainChecklistState(pChain) !== X.ChecklistEnum.Unchecked)
 					{
