@@ -209,6 +209,10 @@ input#mapCoordinatesRegion {
 	color: #ffeebb;
 	opacity: 0.6;
 }
+#itemMapButtons a:hover {
+	color: #ddff77;
+	text-decoration: underline;
+}
 #mapCompassButton {
 	vertical-align: middle;
 	opacity: 0.6;
