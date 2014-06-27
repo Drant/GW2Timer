@@ -430,14 +430,15 @@ input#mapCoordinatesRegion {
 		-1px 1px 0px #333,
 		1px 1px 0px #333;
 }
-#itemTimeLocal:hover {
-	text-decoration: underline;
-}
 #itemTimeLocal {
 	right: 10px; bottom: 10px;
 }
 #itemTimeServer {
 	left: 10px; bottom: 10px;
+}
+#itemTimeLocalExtra a {
+	color: #eee;
+	text-decoration: none;
 }
 
 #itemLanguage {

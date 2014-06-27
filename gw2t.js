@@ -1761,6 +1761,7 @@ D = {
 	{
 		s_TEMPLATE: {de: "", es: "", fr: "", nl: "", pl: "", ru: "", zh: ""},
 
+		s_linkModeSimple: {de: "einfach modus", es: "modo simple", fr: "mode simple", nl: "eenvoudig modus", pl: "prosty tryb", ru: "простой Режим", zh: "方式簡單"},
 		s_menuChains: {de: "Zeitplan", es: "Horario", fr: "Horaire", nl: "Dienstregeling", pl: "Harmonogram", ru: "Расписание", zh: "時間表"},
 		s_menuMap: {de: "Werkzeuge", es: "Útiles", fr: "Outils", nl: "Gereedschap", pl: "Narzędzia", ru: "Инструментарий", zh: "工具"},
 		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance", nl: "Hulp", pl: "Pomoc", ru: "Помощь", zh: "輔助"},
@@ -1855,6 +1856,7 @@ D = {
 			return;
 		}
 		
+		$("#linkModeSimple").text(D.getElement("linkModeSimple"));
 		$("#paneMenu span").each(function()
 		{
 			$(this).attr("title", "<dfn>" + D.getElement($(this).attr("id")) + "</dfn>");
@@ -5426,7 +5428,7 @@ K = {
 		}
 		
 		// Tick the two digital clocks below the analog clock
-		document.getElementById("itemTimeLocal").innerHTML = T.getTimeFormatted();
+		document.getElementById("itemTimeLocalActual").innerHTML = T.getTimeFormatted();
 		document.getElementById("itemTimeServer").innerHTML = "(" +
 			T.getTimeFormatted(
 			{
@@ -6778,7 +6780,8 @@ I = {
 					position: "fixed",
 					color: "#eee",
 					opacity: 0.5
-				}).attr("href", "./");
+				});
+				$("#itemTimeLocalExtra").html(" <a href='./'>[+]</a>");
 				$("#paneBoard").show();
 				
 			} break;
