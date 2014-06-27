@@ -275,6 +275,7 @@ O = {
 		O.URLArguments = O.getURLArguments();
 		
 		var i;
+		var ismodeset = false;
 		// Set up program mode
 		if (O.URLArguments[I.URLKeyMode])
 		{
@@ -284,8 +285,14 @@ O = {
 				if (I.programModeEnum[i].toLowerCase() === mode.toLowerCase())
 				{
 					I.programMode = I.programModeEnum[i];
+					ismodeset = true;
+					break;
 				}
 			}
+		}
+		if (ismodeset === false)
+		{
+			I.programMode = I.programModeEnum.Website;
 		}
 	},
 	
@@ -1421,6 +1428,7 @@ X = {
 					} break;
 					case X.ChecklistEnum.Checked:
 					{
+						thisbar.css({opacity: 1}).show("fast");
 						thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
 						$(this).removeClass("chnChecked");
 						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Unchecked);
@@ -3760,8 +3768,11 @@ M = {
 			 * reads the title attribute and convert them into a div "tooltip".
 			 */
 			I.qTip.init(".leaflet-marker-icon");
-		}).fail(function(){
-			I.write(
+		}).fail(function()
+		{
+			if (I.programMode === I.programModeEnum.Website)
+			{
+				I.write(
 				"Guild Wars 2 API server is unreachable.<br />"
 				+ "Reasons could be:<br />"
 				+ "- The GW2 server is down for maintenance.<br />"
@@ -3769,6 +3780,7 @@ M = {
 				+ "- Your browser is too old (if IE then need 11+).<br />"
 				+ "- This website's code encountered a bug.<br />"
 				+ "Map features will be limited.<br />", 30);
+			}
 		}).always(function() // Do after AJAX regardless of success/failure
 		{
 			M.isMapAJAXDone = true;
@@ -5906,8 +5918,7 @@ I = {
 		
 		// Detect small devices
 		if (window.innerWidth <= I.cSMALL_DEVICE_WIDTH && window.innerHeight <= I.cSMALL_DEVICE_HEIGHT
-			&& I.programMode !== I.programModeEnum.Overlay
-			&& I.programMode !== I.programModeEnum.Simple)
+			&& I.programMode === I.programModeEnum.Website)
 		{
 			I.userSmallDevice = true;
 			I.write("Small device detected.<br />"

@@ -98,9 +98,7 @@ html, body {
 }
 
 /*
- * Style for qTip tooltip JS plugin by Craig Erskine
- * The offset for tooltip placement under the cursor can be changed in
- * plugins.js by the variable offsetX and offsetY in the qTip object.
+ * Style for qTip tooltip JS plugin by Craig Erskine.
  */
 div#qTip {
 	display: none;

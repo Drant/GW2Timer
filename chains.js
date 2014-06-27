@@ -1340,7 +1340,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[16676, 17679]],
+			path: [[16839, 17831]],
 			name_en: "Investigate the rumors of wurm activity in Challdar Gorges",
 			name_de: "Geht den Gerüchten über Wurm-Aktivitäten in den Challdar-Schlünden nach",
 			name_es: "Investiga los rumores sobre las sierpes en los Desfiladeros Challdar",
@@ -1358,7 +1358,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[16676, 17679]],
+			path: [[17295, 17858]],
 			name_en: "Investigate the rumors of wurm activity in Whisperwill Bogs",
 			name_de: "Geht den Gerüchten über Wurm-Aktivitäten in den Wisperwille-Sümpfen nach",
 			name_es: "Investiga los rumores sobre las sierpes en la Ciénaga Voluntad Susurrante",
