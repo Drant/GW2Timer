@@ -6775,7 +6775,20 @@ I = {
 				$("#paneClockBack, #paneClockBackground").css({opacity: 0});
 				
 				// Readjust clock elements
-				$("#itemTimeServer, #itemLanguage, #itemSocial").hide();
+				$("#itemTimeServer, #itemSocial").hide();
+				$("#itemLanguage").css({
+					position: "fixed",
+					top: "10px",
+					right: "10px",
+					bottom: "auto",
+					left: "auto"
+				});
+				$("#itemLanguage span").css({opacity: 0.7});
+				$("#itemLanguageChoices a").each(function()
+				{
+					var link = $(this).attr("href");
+					$(this).attr("href", link + "&mode=Simple");
+				});
 				$("#itemTimeLocal").css({
 					position: "fixed",
 					color: "#eee",
