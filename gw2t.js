@@ -1878,7 +1878,7 @@ D = {
 		es: "Elemental de Fuego",
 		fr: "Elémentaire de Feu",
 		nl: "Brand Elementair",
-		pl: "Ognia Żywioł",
+		pl: "Ognisty Żywioł",
 		ru: "Огонь Элементаль",
 		zh: "火元素"
 	},{
@@ -1887,7 +1887,7 @@ D = {
 		es: "Gólem Serie II de la Inquisa",
 		fr: "Golem Marque II de l'Enqueste",
 		nl: "Inquest Golem Mark II",
-		pl: "Śledztwo Golem Typ II",
+		pl: "Golem Model 2",
 		ru: "Следствие Голем Тип II",
 		zh: "勘驗魔像2型"
 	},{
@@ -1896,7 +1896,7 @@ D = {
 		es: "Garra de Jormag",
 		fr: "Griffe de Jormag",
 		nl: "Klauw van Jormag",
-		pl: "Jormag Pazur",
+		pl: "Szpon Jormaga",
 		ru: "Йормаг Коготь",
 		zh: "Jormag 爪"
 	},{
@@ -1905,7 +1905,7 @@ D = {
 		es: "Jefe Chamán Svanir",
 		fr: "Chef Chamane de Svanir",
 		nl: "Chef Sjamaan van Svanir",
-		pl: "Główny Szaman z Svanir",
+		pl: "Wódz Szamanów Svanira",
 		ru: "Главный Шаман Сванир",
 		zh: "Svanir 的首席薩滿"
 	},{
@@ -1914,7 +1914,7 @@ D = {
 		es: "Megadestructor",
 		fr: "Mégadestructeur",
 		nl: "Megadestroyer",
-		pl: "Megadestruktor",
+		pl: "Wielki Niszczyciel",
 		ru: "Мегадеструктор",
 		zh: "兆豐析構函數"
 	},{
@@ -1923,7 +1923,7 @@ D = {
 		es: "Behemot de las Sombras",
 		fr: "Béhémoth des Ombres",
 		nl: "Schaduw Behemoth",
-		pl: "Behemoth z Cieniem",
+		pl: "Mroczny Behemot",
 		ru: "Бегемот из тени",
 		zh: "影子的巨獸"
 	},{
@@ -1932,7 +1932,7 @@ D = {
 		es: "El Asolador",
 		fr: "Le Destructeur",
 		nl: "De Destructor",
-		pl: "Potrzaskać",
+		pl: "Krystaliczny Smok",
 		ru: "Разрушитель",
 		zh: "析構函數"
 	},{
@@ -1950,7 +1950,7 @@ D = {
 		es: "Ulgoth el Modniir",
 		fr: "Ulgoth le Modniir",
 		nl: "Ulgoth de Modniir",
-		pl: "Ulgoth w Modniir",
+		pl: "Modniir Ulgoth",
 		ru: "Улготх в Модниир",
 		zh: "Ulgoth 的 Modniir"
 	},{
@@ -1959,7 +1959,7 @@ D = {
 		es: "Gran Sierpe de la Selva",
 		fr: "Grande Guivre de la Jungle",
 		nl: "Goede Jungle Worm",
-		pl: "Robak z Dżungli Świetnie",
+		pl: "Wielki Robak z Dżungli",
 		ru: "Великий Червь из джунглей",
 		zh: "大叢林蠕蟲"
 	},{
@@ -1986,7 +1986,7 @@ D = {
 		es: "Tres Sierpes",
 		fr: "Trois Guivres",
 		nl: "Drie Wormen",
-		pl: "Trzy Robaki",
+		pl: "Trzy Wielkie Robaki",
 		ru: "Три Черви",
 		zh: "三蠕蟲"
 	},{
@@ -5925,7 +5925,7 @@ I = {
 			I.userSmallDevice = true;
 			I.write("Small device detected.<br />"
 				+ "Map features have been turned off by default for better performance.<br />"
-				+ "You can re-enable them in the options.<br />", 10);
+				+ "Do you want to use the <a href='./m'>simple clock mode?</a><br />", 15);
 			/*
 			 * Turn off map features if small screen, note that localStorage will
 			 * override these if they were previously stored.
@@ -6781,7 +6781,8 @@ I = {
 					color: "#eee",
 					opacity: 0.5
 				});
-				$("#itemTimeLocalExtra").html(" <a href='./'>[+]</a>");
+				I.qTip.init($("<a title='&lt;dfn&gt;Shortcut to this page&lt;/dfn&gt;: gw2timer.com/m' href='./'> [+]</a>")
+					.appendTo("#itemTimeLocalExtra"));
 				$("#paneBoard").show();
 				
 			} break;
