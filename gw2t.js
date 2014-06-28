@@ -323,10 +323,10 @@ O = {
 			{
 				if (isFinite(s)) // Is a number
 				{
-					var integer = parseInt(s);
-					if (integer >= O.OptionRange[pKey][0] && integer <= O.OptionRange[pKey][1])
+					var theinteger = parseInt(s);
+					if (theinteger >= O.OptionRange[pKey][0] && theinteger <= O.OptionRange[pKey][1])
 					{
-						return integer.toString();
+						return theinteger.toString();
 					}
 				}
 				return O.Options[pKey].toString(); // Default number
@@ -335,10 +335,10 @@ O = {
 			{
 				if (isFinite(s)) // Is a number
 				{
-					var float = parseFloat(s);
-					if (float >= O.OptionRange[pKey][0] && float <= O.OptionRange[pKey][1])
+					var thefloat = parseFloat(s);
+					if (thefloat >= O.OptionRange[pKey][0] && thefloat <= O.OptionRange[pKey][1])
 					{
-						return float.toString();
+						return thefloat.toString();
 					}
 				}
 				return O.Options[pKey].toString(); // Default number
@@ -1143,10 +1143,10 @@ X = {
 	setChecklistItem: function(pChecklist, pIndex, pCharacter)
 	{
 		// A character must be length 1 and different from the current
-		var char = pCharacter.toString();
-		if (char.length === 1 && pChecklist.value[pIndex] !== char)
+		var thechar = pCharacter.toString();
+		if (thechar.length === 1 && pChecklist.value[pIndex] !== thechar)
 		{
-			var checklist = O.replaceCharAt(pChecklist.value, pIndex, char);
+			var checklist = O.replaceCharAt(pChecklist.value, pIndex, thechar);
 			localStorage[pChecklist.key] = checklist;
 			pChecklist.value = checklist;
 		}
@@ -1161,21 +1161,21 @@ X = {
 	 */
 	getChecklistItem: function(pChecklist, pIndex, pConversion)
 	{
-		var char = pChecklist.value.charAt(pIndex);
+		var thechar = pChecklist.value.charAt(pIndex);
 		
 		if (pConversion === undefined)
 		{
-			return char;
+			return thechar;
 		}
 		if (pConversion === "int")
 		{
-			return parseInt(char);
+			return parseInt(thechar);
 		}
 		if (pConversion === "boolean")
 		{
-			return O.intToBool(parseInt(char));
+			return O.intToBool(parseInt(thechar));
 		}
-		return char;
+		return thechar;
 	},
 	
 	/*
@@ -1738,7 +1738,7 @@ D = {
 		s_section: {de: "paragraph", es: "sección", fr: "section", nl: "paragraaf", pl: "sekcja", ru: "параграф", zh: "節"},
 		
 		// Verbs
-		s_done_reading: {de: "ende gelesen", es: "terminado de leer", fr: "fini de lire", nl: "afgewerkt lezen", pl: "przeczytaniu", ru: "закончите читать", zh: "讀完"},
+		s_done_reading: {de: "ende gelesen", es: "terminado de leer", fr: "fini de lire", nl: "klaar met lezen", pl: "przeczytaniu", ru: "закончите читать", zh: "讀完"},
 		s_is: {de: "ist", es: "es", fr: "est", nl: "is", pl: "jest", ru: "является", zh: "是"},
 		s_subscribe: {de: "abonnieren", es: "subscribir", fr: "abonner", nl: "abonneren", pl: "abonować", ru: "подписываться", zh: "訂閱"},
 		s_will_start: {de: "wird starten", es: "se iniciará", fr: "débutera", nl: "zal starten", pl: "rozpocznie się", ru: "начнется", zh: "開始"},
@@ -1748,7 +1748,7 @@ D = {
 		s_also: {de: "auch", es: "también", fr: "aussi", nl: "ook", pl: "też", ru: "то́же", zh: "也"},
 		s_checked: {de: "abgehakt", es: "visto", fr: "coché", nl: "afgevinkt", pl: "zakończony", ru: "галочка", zh: "勾掉"},
 		s_current: {de: "aktuelle", es: "actual", fr: "actuel", nl: "huidige", pl: "bieżący", ru: "текущий", zh: "活期"},
-		s_next: {de: "nächste", es: "siguiente", fr: "prochain", nl: "volgend", pl: "następny", ru: "следующий", zh: "下一"},
+		s_next: {de: "nächste", es: "siguiente", fr: "prochain", nl: "volgende", pl: "następny", ru: "следующий", zh: "下一"},
 		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit", nl: "geabonneerd", pl: "subskrypcji", ru: "подписал", zh: "訂閱"},
 		s_then: {de: "dann", es: "luego", fr: "puis", nl: "dan", pl: "potem", ru: "затем", zh: "接著"},
 		
@@ -1877,7 +1877,7 @@ D = {
 		de: "Feuerelementar",
 		es: "Elemental de Fuego",
 		fr: "Elémentaire de Feu",
-		nl: "Brand Elementair",
+		nl: "Vuurelement",
 		pl: "Ognisty Żywioł",
 		ru: "Огонь Элементаль",
 		zh: "火元素"
@@ -1886,7 +1886,7 @@ D = {
 		de: "Inquestur-Golem Typ II",
 		es: "Gólem Serie II de la Inquisa",
 		fr: "Golem Marque II de l'Enqueste",
-		nl: "Inquest Golem Mark II",
+		nl: "Inquest Golem versie 2",
 		pl: "Golem Model 2",
 		ru: "Следствие Голем Тип II",
 		zh: "勘驗魔像2型"
@@ -1895,7 +1895,7 @@ D = {
 		de: "Klaue Jormags",
 		es: "Garra de Jormag",
 		fr: "Griffe de Jormag",
-		nl: "Klauw van Jormag",
+		nl: "Jormags Klauw",
 		pl: "Szpon Jormaga",
 		ru: "Йормаг Коготь",
 		zh: "Jormag 爪"
@@ -1904,7 +1904,7 @@ D = {
 		de: "Schamanenoberhaupt der Svanir",
 		es: "Jefe Chamán Svanir",
 		fr: "Chef Chamane de Svanir",
-		nl: "Chef Sjamaan van Svanir",
+		nl: "Svanirs Sjamaan",
 		pl: "Wódz Szamanów Svanira",
 		ru: "Главный Шаман Сванир",
 		zh: "Svanir 的首席薩滿"
@@ -1931,9 +1931,9 @@ D = {
 		de: "Den Zerschmetterer",
 		es: "El Asolador",
 		fr: "Le Destructeur",
-		nl: "De Destructor",
-		pl: "Krystaliczny Smok",
-		ru: "Разрушитель",
+		nl: "De Vermorzelaar",
+		pl: "Shatterer",
+		ru: "Шаттерер",
 		zh: "析構函數"
 	},{
 		en: "Taidha Covington",
@@ -1949,7 +1949,7 @@ D = {
 		de: "Ulgoth den Modniir",
 		es: "Ulgoth el Modniir",
 		fr: "Ulgoth le Modniir",
-		nl: "Ulgoth de Modniir",
+		nl: "Modniir Ulgoth",
 		pl: "Modniir Ulgoth",
 		ru: "Улготх в Модниир",
 		zh: "Ulgoth 的 Modniir"
@@ -1958,7 +1958,7 @@ D = {
 		de: "Großen Dschungelwurm",
 		es: "Gran Sierpe de la Selva",
 		fr: "Grande Guivre de la Jungle",
-		nl: "Goede Jungle Worm",
+		nl: "Grote Jungleworm",
 		pl: "Wielki Robak z Dżungli",
 		ru: "Великий Червь из джунглей",
 		zh: "大叢林蠕蟲"
@@ -1967,7 +1967,7 @@ D = {
 		de: "Karka-Königin",
 		es: "Reina Karka",
 		fr: "Reine Karka",
-		nl: "Karka Koningin",
+		nl: "Karkakoningin",
 		pl: "Karka Królowa",
 		ru: "Карка Королева",
 		zh: "女王 Karka"
@@ -1985,7 +1985,7 @@ D = {
 		de: "Drei Würmer",
 		es: "Tres Sierpes",
 		fr: "Trois Guivres",
-		nl: "Drie Wormen",
+		nl: "De drie Wormen",
 		pl: "Trzy Wielkie Robaki",
 		ru: "Три Черви",
 		zh: "三蠕蟲"
@@ -1994,7 +1994,7 @@ D = {
 		de: "Feuerschamanen",
 		es: "Chamán de Fuego",
 		fr: "Chamane de Feu",
-		nl: "Vuur Sjamaan",
+		nl: "Vuursjamaan",
 		pl: "Ognia Szaman",
 		ru: "Oгня Шаман",
 		zh: "火薩滿"
@@ -2003,7 +2003,7 @@ D = {
 		de: "Faulbär-Häuptling",
 		es: "Cabecilla de Osoinmundo",
 		fr: "Chef Oursefol",
-		nl: "Vuilebeer Hoofdman",
+		nl: "Hoofdman foute Beer",
 		pl: "Faulwódz Niedźwiedź",
 		ru: "Фолмедведь Вождь",
 		zh: "臭熊頭目"
@@ -2012,7 +2012,7 @@ D = {
 		de: "Schaufler-Kommissar",
 		es: "Comisario Draga",
 		fr: "Kommissar Draguerre",
-		nl: "Baggeren Commissaris",
+		nl: "Commissaris Baggeraar",
 		pl: "Pogłębiarka Komisarza",
 		ru: "Драги Комиссар",
 		zh: "疏通政委"
@@ -5091,6 +5091,8 @@ K = {
 	currentFrameOffsetMinutes: 0,
 	iconOpacityChecked: 0.4,
 	iconOpacitySpeed: 200,
+	oldSectorAngle: 0,
+	cDEGREES_IN_CIRCLE: 360,
 	cDEGREES_IN_QUADRANT: 90,
 	
 	// These will be DOM elements
@@ -5715,7 +5717,6 @@ K = {
 				case T.cSECS_MARK_2: { i0 = "2"; i1 = "3"; i2 = "0"; i3 = "1"; } break;
 				case T.cSECS_MARK_3: { i0 = "3"; i1 = "0"; i2 = "1"; i3 = "2"; } break;
 			}
-			var angle = parseInt(i0) * K.cDEGREES_IN_QUADRANT;
 			K.currentFrameOffsetMinutes = pTimeframeMark;
 
 			K.WpChain0 = $("#itemClockWaypoint" + i0)[0]; K.IconSD0 = $("#itemClockIconStandard" + i0);
@@ -5727,7 +5728,6 @@ K = {
 			K.IconHC2 = $("#itemClockIconHardcore" + i2);
 			K.IconHC3 = $("#itemClockIconHardcore" + i3);
 			
-			K.rotateClockElement($("#clkSector")[0], angle);
 			repositionMarkers(
 				$("#clkMarker" + i0), $("#clkMarker" + i0 + "A"), $("#clkMarker" + i0 + "B"),
 				$("#clkMarker" + i1), $("#clkMarker" + i1 + "A"), $("#clkMarker" + i1 + "B"),
@@ -5735,6 +5735,25 @@ K = {
 				$("#clkMarker" + i3 + "A"), $("#clkMarker" + i3 + "B"),
 				T["cSECS_MARK_" + i0], T["cSECS_MARK_" + i1], T["cSECS_MARK_" + i2], T["cSECS_MARK_" + i3]
 			);
+	
+			// Animate sector rotation
+			var newsectorangle = parseInt(i0) * K.cDEGREES_IN_QUADRANT;
+			if (newsectorangle === 0 && K.oldSectorAngle !== 0)
+			{
+				newsectorangle = K.cDEGREES_IN_CIRCLE;
+			}
+			
+			$({angle: K.oldSectorAngle}).animate({angle: newsectorangle}, {
+				duration: 600,
+				step: function() { K.rotateClockElement(document.getElementById("clkSector"), this.angle); },
+				done: function() { K.rotateClockElement(document.getElementById("clkSector"), newsectorangle); }
+			});
+			
+			if (newsectorangle === K.cDEGREES_IN_CIRCLE)
+			{
+				newsectorangle = 0;
+			}
+			K.oldSectorAngle = newsectorangle;
 		};
 		
 		// Recolor the active event's markers and rotate clock sector
@@ -5925,7 +5944,7 @@ I = {
 			I.userSmallDevice = true;
 			I.write("Small device detected.<br />"
 				+ "Map features have been turned off by default for better performance.<br />"
-				+ "Do you want to use the <a href='./m'>simple clock mode?</a><br />", 15);
+				+ "Do you want to use the <a href='./?mode=Simple'>simple clock mode?</a><br />", 15);
 			/*
 			 * Turn off map features if small screen, note that localStorage will
 			 * override these if they were previously stored.

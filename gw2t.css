@@ -211,6 +211,8 @@ input#mapCoordinatesRegion {
 }
 #itemMapButtons a:hover {
 	color: #ddff77;
+}
+a#linkModeSimple {
 	text-decoration: underline;
 }
 #mapCompassButton {
