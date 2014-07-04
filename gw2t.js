@@ -2512,7 +2512,7 @@ C = {
 			$("#chnEvents_" + pChain.alias).append(
 			"<li id='chnEvent_" + pChain.alias + "_" + e.num + "' class='chnStep_" + pChain.alias + "_" + e.step + "' style='margin-left:" + indentpixel +"px'>"
 				+ "<img src='img/event/" + e.icon + ".png' title='" + eventhtmltitle + "'/>"
-				+ "<span>" + C.truncateTitleString(D.getEventName(e), eventnamelimit, ".") + "." + "</span>"
+				+ "<span>" + C.truncateTitleString(D.getEventName(e), eventnamelimit, "..") + "</span>"
 			+ "</li>");
 		};
 
