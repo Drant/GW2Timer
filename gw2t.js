@@ -5221,6 +5221,12 @@ K = {
 	cDEGREES_IN_CIRCLE: 360,
 	cDEGREES_IN_QUADRANT: 90,
 	
+	// Clock elements
+	handSecond: {}, handMinute: {}, handHour: {},
+	clockBackground: {},
+	timeLocal: {}, timeServer: {}, timeBoard: {},
+	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
+	
 	// These will be DOM elements
 	WpChain0: {}, WpChain1: {}, WpChain2: {}, WpChain3: {},
 	// These will be jQuery "elements"
@@ -5237,8 +5243,20 @@ K = {
 	 */
 	initializeClock: function()
 	{
+		K.handSecond = $("#clkSecondHand")[0];
+		K.handMinute = $("#clkMinuteHand")[0];
+		K.handHour = $("#clkHourHand")[0];
+		K.clockBackground = $("#paneClockBackground")[0];
+		K.timeLocal = $("#itemTimeLocalActual")[0];
+		K.timeServer = $("#itemTimeServer")[0];
+		K.timeBoard = $("#itemBoardTime")[0];
+		K.timestampUTC = $("#optTimestampUTC")[0];
+		K.timestampLocal = $("#optTimestampLocalReset")[0];
+		K.timestampServer = $("#optTimestampServerReset")[0];
+		K.timestampReset = $("#optTimeTillReset")[0];
+		
 		K.updateTimeFrame(new Date());
-		K.tickSecond();
+		K.tickFrequent();
 		K.initializeClipboard();
 	},
 
@@ -5413,52 +5431,53 @@ K = {
 	},
 
 	/*
-	 * Clock ticker runs every second to update the hands and do effects to the
-	 * clock when appropriate, like when a chain starts at 15 minute mark.
+	 * Although the tick effects are supposed to happen every 1 second, the
+	 * function is actually ran multiple times per second so setTimeout
+	 * is in sync with the Date object.
 	 */
-	tickSecond: function()
+	tickFrequent: function()
 	{
-		/*
-		 * Although the effects are supposed to happen every 1 second, this
-		 * function is actually ran multiple times per second so setTimeout
-		 * is in sync with the Date object.
-		 */
 		var now = new Date();
 		var sec = now.getSeconds();
 		if (K.tickerSecondPrevious === sec)
 		{
 			// If the Date second has not changed, then don't do the effects
-			K.TickerTimeout = setTimeout(K.tickSecond, K.tickerFrequency);
+			K.TickerTimeout = setTimeout(K.tickFrequent, K.tickerFrequency);
 			return;
 		}
 		else
 		{
 			// Else update the second variable and do the effects
 			K.tickerSecondPrevious = sec;
+			K.tickSecond(now);
 		}
-		
+	},
+	
+	/*
+	 * Clock ticker runs every second to update the hands and do effects to the
+	 * clock when appropriate, like when a chain starts at 15 minute mark.
+	 */
+	tickSecond: function(pDate)
+	{
 		/*
 		 * Things in this outer block runs every second, so core JS is used
 		 * instead of jQuery for performance.
 		 */
+		var sec = pDate.getSeconds();
 		T.TIMESTAMP_UNIX_SECONDS = T.getUNIXSeconds();
 		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeOffsetSinceMidnight("utc", "seconds");
-		var min = now.getMinutes();
-		var hour = now.getHours() % T.cHOURS_IN_MERIDIEM;
+		var min = pDate.getMinutes();
+		var hour = pDate.getHours() % T.cHOURS_IN_MERIDIEM;
 		var secinhour = min*60 + sec;
 		var secangle = sec*6; // 1 degree per second
 		var minangle = min*6 + sec/10; // 0.1 degrees per second
 		var hourangle = hour*30 + (min/60)*30; // 0.5 degrees per minute
-		var sechand = document.getElementById("clkSecondHand");
-		var minhand = document.getElementById("clkMinuteHand");
-		var hourhand = document.getElementById("clkHourHand");
-		K.rotateClockElement(sechand, secangle);
-		K.rotateClockElement(minhand, minangle);
-		K.rotateClockElement(hourhand, hourangle);
+		K.rotateClockElement(K.handSecond, secangle);
+		K.rotateClockElement(K.handMinute, minangle);
+		K.rotateClockElement(K.handHour, hourangle);
 		
 		// Opacity value 0.0 through 1.0 based on how far into the 15 minutes frame
 		var opacityAdd = 1 - ((min % T.cMINUTES_IN_TIMEFRAME)*60 + sec) / (T.cSECONDS_IN_TIMEFRAME);
-		var clockbackground = document.getElementById("paneClockBackground");
 		
 		// If crossing a 15 minute mark (IMPORTANT)
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
@@ -5467,9 +5486,9 @@ K = {
 				&& I.programMode !== I.programModeEnum.Simple
 				&& I.programMode !== I.programModeEnum.Overlay)
 			{
-				$(clockbackground).fadeTo(800, 1);
+				$(K.clockBackground).fadeTo(800, 1);
 			}
-			K.updateTimeFrame(now);
+			K.updateTimeFrame(pDate);
 		}
 		else // If crossing a 1 second mark and hasn't crossed the 15 minute mark
 		{
@@ -5481,7 +5500,7 @@ K = {
 			var awaketimestampcurrent = T.TIMESTAMP_UNIX_SECONDS;
 			if (K.awakeTimestampPrevious < (awaketimestampcurrent - K.awakeTimestampTolerance))
 			{
-				K.updateTimeFrame(now);
+				K.updateTimeFrame(pDate);
 			}
 			// Update the timestamp
 			K.awakeTimestampPrevious = awaketimestampcurrent;
@@ -5489,52 +5508,9 @@ K = {
 			// Dim the clock background
 			if (O.Options.int_setClockBackground === 0 && I.programMode !== I.programModeEnum.Simple)
 			{
-				clockbackground.style.opacity = opacityAdd;
+				K.clockBackground.style.opacity = opacityAdd;
 			}
 		}
-		
-		// Macro function to get a speech if the subscribed boss is within the opted time
-		var doSubscribedSpeech = function(pMinutes)
-		{
-			if (pMinutes > 0)
-			{
-				var minutestill = T.cMINUTES_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime("minutes");
-				var chainsd = C.NextChainSD1;
-				var chainhc = C.NextChainHC1;
-				var wantsd = false;
-				var wanthc = false;
-				var speech = D.getSpeech("world boss", "subscribed") + " ";
-				var wait = 5;
-				
-				if (pMinutes > T.cMINUTES_IN_TIMEFRAME)
-				{
-					chainsd = C.NextChainSD2;
-					chainhc = C.NextChainHC2;
-					minutestill += T.cMINUTES_IN_TIMEFRAME;
-				}
-				wantsd = O.objToBool(chainsd) && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
-				wanthc = O.objToBool(chainhc) && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
-				
-				if (pMinutes === minutestill && (wantsd || wanthc))
-				{
-					if (wantsd && wanthc)
-					{
-						speech += D.getChainPronunciation(chainsd) + " " + D.getSpeech("and") + " " + D.getChainPronunciation(chainhc);
-						wait = 6;
-					}
-					else if (wantsd)
-					{
-						speech += D.getChainPronunciation(chainsd);
-					}
-					else if (wanthc)
-					{
-						speech += D.getChainPronunciation(chainhc);
-					}
-					D.speak(speech, wait);
-					D.speak(D.getSpeech("will start") + T.getTimeTillChainFormatted(chainsd, "speech"), 3);
-				}
-			}
-		};
 		
 		// If crossing a 1 second mark (given)
 		C.CurrentChains.forEach(C.updateCurrentChainTimeHTML);
@@ -5552,20 +5528,20 @@ K = {
 			// Alert subscribed chain
 			if (O.Options.bol_alertSubscribed === true && O.Options.bol_enableSound)
 			{
-				doSubscribedSpeech(O.Options.int_alertSubscribedFirst);
-				doSubscribedSpeech(O.Options.int_alertSubscribedSecond);
+				K.doSubscribedSpeech(O.Options.int_alertSubscribedFirst);
+				K.doSubscribedSpeech(O.Options.int_alertSubscribedSecond);
 			}
 		}
 		
 		// Tick the two digital clocks below the analog clock
-		document.getElementById("itemTimeLocalActual").innerHTML = T.getTimeFormatted();
-		document.getElementById("itemTimeServer").innerHTML = "(" +
+		K.timeLocal.innerHTML = T.getTimeFormatted();
+		K.timeServer.innerHTML = "(" +
 			T.getTimeFormatted(
 			{
 				reference: "server",
 				wantSeconds: false
 			}) + ")";
-		document.getElementById("itemBoardTime").innerHTML =
+		K.timeBoard.innerHTML =
 			T.getTimeFormatted(
 			{
 				want24: true,
@@ -5574,12 +5550,10 @@ K = {
 				customTimeInSeconds: T.cSECONDS_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime()
 			});
 		// Times in the Options page Debug section
-		document.getElementById("optTimestampUTC").innerHTML = T.TIMESTAMP_UNIX_SECONDS;
-		document.getElementById("optTimestampLocalReset").innerHTML =
-			O.Utilities.lastLocalResetTimestamp.value;
-		document.getElementById("optTimestampServerReset").innerHTML =
-			T.TIMESTAMP_UNIX_SECONDS + T.SECONDS_TILL_RESET;
-		document.getElementById("optTimeTillReset").innerHTML = T.getTimeFormatted(
+		K.timestampUTC.innerHTML = T.TIMESTAMP_UNIX_SECONDS;
+		K.timestampLocal.innerHTML = O.Utilities.lastLocalResetTimestamp.value;
+		K.timestampServer.innerHTML = T.TIMESTAMP_UNIX_SECONDS + T.SECONDS_TILL_RESET;
+		K.timestampReset.innerHTML = T.getTimeFormatted(
 			{
 				customTimeInSeconds: T.SECONDS_TILL_RESET, want24: true
 			});
@@ -5588,20 +5562,66 @@ K = {
 		if (secinhour >= K.currentFrameOffsetMinutes
 			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentChainSD.minFinish))
 		{
-			minhand.style.stroke = "lime";
+			K.handMinute.style.stroke = "lime";
 		}
 		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentChainSD.minFinish)
 			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentChainSD.avgFinish))
 		{
-			minhand.style.stroke = "orange";
+			K.handMinute.style.stroke = "orange";
 		}
 		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentChainSD.avgFinish))
 		{
-			minhand.style.stroke = "red";
+			K.handMinute.style.stroke = "red";
 		}
 
 		// Loop this function, can use variable to halt it
-		K.TickerTimeout = setTimeout(K.tickSecond, K.tickerFrequency);
+		K.TickerTimeout = setTimeout(K.tickFrequent, K.tickerFrequency);
+	},
+	
+	/*
+	 * Macro function to get a speech if the subscribed boss is within the opted time
+	 * @param int pMinutes before a chain starts as set by the user.
+	 */
+	doSubscribedSpeech: function(pMinutes)
+	{
+		if (pMinutes > 0)
+		{
+			var minutestill = T.cMINUTES_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime("minutes");
+			var chainsd = C.NextChainSD1;
+			var chainhc = C.NextChainHC1;
+			var wantsd = false;
+			var wanthc = false;
+			var speech = D.getSpeech("world boss", "subscribed") + " ";
+			var wait = 5;
+
+			if (pMinutes > T.cMINUTES_IN_TIMEFRAME)
+			{
+				chainsd = C.NextChainSD2;
+				chainhc = C.NextChainHC2;
+				minutestill += T.cMINUTES_IN_TIMEFRAME;
+			}
+			wantsd = O.objToBool(chainsd) && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
+			wanthc = O.objToBool(chainhc) && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
+
+			if (pMinutes === minutestill && (wantsd || wanthc))
+			{
+				if (wantsd && wanthc)
+				{
+					speech += D.getChainPronunciation(chainsd) + " " + D.getSpeech("and") + " " + D.getChainPronunciation(chainhc);
+					wait = 6;
+				}
+				else if (wantsd)
+				{
+					speech += D.getChainPronunciation(chainsd);
+				}
+				else if (wanthc)
+				{
+					speech += D.getChainPronunciation(chainhc);
+				}
+				D.speak(speech, wait);
+				D.speak(D.getSpeech("will start") + T.getTimeTillChainFormatted(chainsd, "speech"), 3);
+			}
+		}
 	},
 
 	/*

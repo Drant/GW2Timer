@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x720, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.06.30 modified - 2014.04.18 created
+	Version: 2014.07.04 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -126,31 +126,41 @@ div#qTip dfn { /* Highlight color for important text in tooltip */
 /* Custom cursors
 ----------------------------------------------------------------------------- */
 
+/* Non-interactive */
 html, body,
 #listChainsTimetable .chnTitle h1,
 .leaflet-container, .leaflet-popup-pane, .leaflet-control {
 	cursor: url("img/cursor/auto.png"), auto;
 }
 
+/* Clickable */
 a, input, label, button,
 #mapCompassButton, #paneMenu span, #itemClockWaypoints img,
-.menuBeam img:hover, .jsSection,
-.jsTableOfContents ol li, .jsSectionDone, .jsHelpCollapsible,
-#layerChains header, .chnCheck:hover, .chnTitle h1, .chnDetailsLinks ins,
+.menuBeam img:hover,
+.jsTableOfContents ol li, .jsSectionDone,
+#layerChains header, .chnCheck:hover, .chnDetailsLinks ins,
 #listChainsScheduled .chnTitle time,
 .leaflet-clickable {
 	cursor: url("img/cursor/pointer.png"), pointer;
 }
 
+/* Toggleable */
+.chnTitle h1, .jsSection, .jsHelpCollapsible {
+	cursor: url("img/cursor/toggle.png"), pointer;
+}
+
+/* Zoomable */
 #paneClockIcons img,
 .cntComposition ins, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
 	cursor: url("img/cursor/zoom.png"), zoom-in;
 }
 
+/* Draggable */
 .leaflet-dragging .leaflet-container, .leaflet-dragging .leaflet-clickable {
 	cursor: url("img/cursor/move.png"), move;
 }
 
+/* Help */
 .jsHelpTooltip,
 .chnDetails ol li img {
 	cursor: url("img/cursor/help.png"), help;

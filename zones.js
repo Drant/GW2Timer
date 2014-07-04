@@ -2,6 +2,12 @@
  * Maps sorted by how far from the top left corner (0,0) it is.
  */
 var GW2T_ZONES_DATA = {
+"dry":
+{
+	name: "Dry Top",
+	region: "Maguuma",
+	rect: [[3840, 14592], [5888, 17152]]
+},
 "rata":
 {
 	name: "Rata Sum",
