@@ -3415,12 +3415,7 @@ M = {
 			zIndexOffset: M.cPinZIndex - 1
 		}).addTo(M.Map);
 		M.SubmapEntities.push(M.SubmapDrytop);
-		
-		// Show submaps only if at max zoomed in level
-		if (M.Map.getZoom() !== M.ZoomLevelEnum.Ground)
-		{
-			M.SubmapDrytop._icon.style.display = "none";
-		}
+		M.SubmapDrytop._icon.style.display = "none";
 	},
 	
 	/*
@@ -3510,6 +3505,20 @@ M = {
 		{
 			M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
 		}));
+		
+		/*
+		 * At the start of a zoom change hide submap if exiting ground level.
+		 */
+		M.Map.on("zoomstart", function(pEvent)
+		{
+			if (M.SubmapEntities.length > 0)
+			{
+				if (this.getZoom() === M.ZoomLevelEnum.Ground)
+				{
+					M.setEntityGroupDisplay(M.SubmapEntities, "hide");
+				}
+			}
+		});
 
 		/*
 		 * At the end of a zoom animation, resize the map waypoint icons
@@ -3542,10 +3551,6 @@ M = {
 				if (currentzoom === M.ZoomLevelEnum.Ground)
 				{
 					M.setEntityGroupDisplay(M.SubmapEntities, "show");
-				}
-				else
-				{
-					M.setEntityGroupDisplay(M.SubmapEntities, "hide");
 				}
 			}
 		});
@@ -3877,6 +3882,11 @@ M = {
 		{
 			M.isMapAJAXDone = true;
 			M.bindMapVisualChanges();
+			// Show submaps only if at max zoomed in level
+			if (M.Map.getZoom() === M.ZoomLevelEnum.Ground)
+			{
+				M.SubmapDrytop._icon.style.display = "block";
+			}
 		});
 		
 		/*
