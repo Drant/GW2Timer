@@ -6072,16 +6072,6 @@ I = {
 			&& I.programMode === I.programModeEnum.Website)
 		{
 			I.userSmallDevice = true;
-			I.write("Small device detected.<br />"
-				+ "Map features have been turned off by default for better performance.<br />"
-				+ "Do you want to use the <a href='./?mode=Simple'>simple clock mode?</a><br />", 15);
-			/*
-			 * Turn off map features if small screen, note that localStorage will
-			 * override these if they were previously stored.
-			 */
-			O.Options.bol_tourPrediction = false;
-			O.Options.bol_showChainPaths = false;
-			O.Options.bol_showMap = false;
 		}
 		// Detect big displays
 		if (window.innerHeight > I.cBIG_DISPLAY_HEIGHT)
