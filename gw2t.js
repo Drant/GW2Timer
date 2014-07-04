@@ -1993,6 +1993,14 @@ D = {
 		ru: "Трехголовый Червь",
 		zh: "蟲三頭"
 	},{
+		// Story0
+	},{
+		// Story1
+	},{
+		// Story2
+	},{
+		// Story3
+	},{
 		en: "Fire Shaman",
 		de: "Feuerschamanen",
 		es: "Chamán de Fuego",
