@@ -1889,7 +1889,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5497, 16338], [5497, 16338], [5181, 16388], [5031, 16741], [4940, 16618]],
+			path: [[4940, 16618], [4940, 16618], [5031, 16741], [5181, 16388], [5497, 16338]],
 			name_en: "Stop the skritt burglar before it escapes with the treasure",
 			icon: "cog",
 			num: "3E",
@@ -1913,7 +1913,7 @@ var GW2T_CHAINS_DATA = [
 	events: [
 		{
 			path: [[5045, 16708], [5045, 16708]],
-			name_en: "Defeat the champion devourer queen",
+			name_en: "Defeat the champion devourer queen (Tier 2)",
 			icon: "boss",
 			num: "1",
 			sGotoNum: ["2"],
@@ -1928,7 +1928,7 @@ var GW2T_CHAINS_DATA = [
 		},
 		{
 			path: [[5187, 16498], [5187, 16498]],
-			name_en: "Defeat the dust mite twister",
+			name_en: "Defeat the dust mite twister (Tier 3)",
 			icon: "boss",
 			num: "2A",
 			sGotoNum: ["3"],
@@ -1958,7 +1958,7 @@ var GW2T_CHAINS_DATA = [
 		},
 		{
 			path: [[5203, 16408], [5203, 16408]],
-			name_en: "Defeat the dust monster",
+			name_en: "Defeat the dust monster (Tier 4)",
 			icon: "boss",
 			num: "3",
 			sGotoNum: ["1#"],
