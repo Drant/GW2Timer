@@ -2368,7 +2368,7 @@ C = {
 	 * @param string pNumber of the event.
 	 * @returns string integer of the event.
 	 */
-	getEventNumberInteger: function(pNumber)
+	getEventStepNumber: function(pNumber)
 	{
 		if (pNumber.length === 1)
 		{
@@ -2488,9 +2488,11 @@ C = {
 			 * "1" except 1A1. Events numbered like 1A 1B are short for 1A1 1B1.
 			 */
 			// If the event number is an integer without concurrent letters
-			if (C.getEventNumberInteger(e.num).length !== e.num.length)
+			var step = C.getEventStepNumber(e.num);
+			if (step.length !== e.num.length)
 			{
-				var subnum = e.num.slice(1);
+				
+				var subnum = e.num.slice(step.length);
 				if (e.num.indexOf(".") !== -1) // Always indent failure events
 				{
 					indentEvent();
@@ -2593,8 +2595,8 @@ C = {
 				if (pChain.events[i].primacy !== C.EventPrimacyEnum.Optional)
 				{
 					// Compare the first character of their event number
-					if (C.getEventNumberInteger(pChain.events[i].num)
-						!== C.getEventNumberInteger(pChain.primaryEvents[ii].num))
+					if (C.getEventStepNumber(pChain.events[i].num)
+						!== C.getEventStepNumber(pChain.primaryEvents[ii].num))
 					{
 						ii++;
 					}
@@ -2628,7 +2630,7 @@ C = {
 			for (var ii in C.Chains[i].events)
 			{
 				// Minus 1 because the event numbers are 1 indexed
-				C.Chains[i].events[ii].step = parseInt(C.getEventNumberInteger(C.Chains[i].events[ii].num)) - 1;
+				C.Chains[i].events[ii].step = parseInt(C.getEventStepNumber(C.Chains[i].events[ii].num)) - 1;
 			}
 			
 			C.Chains[i].index = parseInt(i);
@@ -3071,6 +3073,7 @@ C = {
 		var i;
 		var animationspeed = 500;
 		var eventnamewidth = 320;
+		var finalstep = pChain.primaryEvents.length - 1;
 		
 		if (pPrimaryEventIndex > -1) // -1 means the final event's finish time
 		{
@@ -3110,10 +3113,13 @@ C = {
 		}
 		else // Finish time
 		{
-			pChain.CurrentPrimaryEvent = pChain.primaryEvents[pChain.primaryEvents.length - 1];
+			pChain.CurrentPrimaryEvent = pChain.primaryEvents[finalstep];
 			
-			$("#chnEvents_" + pChain.alias + " li").removeClass("chnEventCurrent")
-				.addClass("chnEventPast").last().css({opacity: 1}).animate({opacity: 0.5}, 500);
+			// Recolor all events
+			$("#chnEvents_" + pChain.alias + " li").removeClass("chnEventCurrent").addClass("chnEventPast");
+			// Recolor current (final) events as past
+			$(".chnStep_" + pChain.alias + "_" + finalstep)
+				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
 			
 			/*
 			 * Announce the next world boss and the time until it, only if it's
@@ -3307,7 +3313,6 @@ M = {
 	 * Waypoint markers will be stored in the M.Zones object for each zone.
 	 * This is a shortcut reference array for all the waypoints.
 	 */
-	cPinZIndex: 10,
 	PinPersonal: {},
 	PinProgram: {},
 	PinEvent: {},
@@ -3419,8 +3424,7 @@ M = {
 				iconAnchor: [0, 0]
 			}),
 			draggable: false,
-			clickable: false,
-			zIndexOffset: M.cPinZIndex - 1
+			clickable: false
 		}).addTo(M.Map);
 		M.SubmapEntities.push(M.SubmapDrytop);
 		M.SubmapDrytop._icon.style.display = "none";
@@ -3600,8 +3604,7 @@ M = {
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}),
-			draggable: true,
-			zIndexOffset: M.cPinZIndex
+			draggable: true
 		}).addTo(M.Map);
 	},
 	
@@ -3912,8 +3915,7 @@ M = {
 				iconSize: [128, 128],
 				iconAnchor: [64, 64]
 			}),
-			draggable: true,
-			zIndexOffset: M.cPinZIndex
+			draggable: true
 		}).addTo(M.Map);
 		
 		// Add to array for iteration
@@ -4154,7 +4156,7 @@ M = {
 					resource.NodeEntities.push(marker);
 				}
 			}
-			// Resources with only zone locations (dummy marker in the center)
+			// Resources with only zone locations (marker centered in map)
 			else if (resource.zones !== undefined)
 			{
 				for (ii in resource.zones)

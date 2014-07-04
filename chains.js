@@ -1433,10 +1433,9 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "StoryXXX0",
-	pronunciation: "gates of magooma",
 	series: 4,
 	waypoint: "[&BHYAAAA=]",
-	title: "Gates of Maguuma X:00",
+	title: "Gates of Maguuma Q1",
 	events: [
 		{
 			path: [[4981, 16498], [4981, 16498]],
@@ -1454,7 +1453,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[5488, 16049]],
+			path: [[5328, 16375]],
 			name_en: "Race against the Inquest to collect crystal shards for the Zephyrites",
 			icon: "collect",
 			num: "1B",
@@ -1484,7 +1483,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[4998, 16647], [4998, 16647]],
+			path: [[4931, 16744], [4931, 16744]],
 			name_en: "Challenge and spar with Nochtli",
 			icon: "fist",
 			num: "2A",
@@ -1577,10 +1576,9 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "StoryXXX1",
-	pronunciation: "gates of magooma",
 	series: 4,
 	waypoint: "[&BHYAAAA=]",
-	title: "Gates of Maguuma X:15",
+	title: "Gates of Maguuma Q2",
 	events: [
 		{
 			path: [[4981, 16498], [4981, 16498]],
@@ -1598,7 +1596,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[5488, 16049]],
+			path: [[5328, 16375]],
 			name_en: "Race against the Inquest to collect crystal shards for the Zephyrites",
 			icon: "collect",
 			num: "1B",
@@ -1628,7 +1626,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[4998, 16647], [4998, 16647]],
+			path: [[4931, 16744], [4931, 16744]],
 			name_en: "Challenge and spar with Nochtli",
 			icon: "fist",
 			num: "2A",
@@ -1721,10 +1719,9 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "StoryXXX2",
-	pronunciation: "gates of magooma",
 	series: 4,
 	waypoint: "[&BHYAAAA=]",
-	title: "Gates of Maguuma X:30",
+	title: "Gates of Maguuma Q3",
 	events: [
 		{
 			path: [[4981, 16498], [4981, 16498]],
@@ -1742,7 +1739,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[5488, 16049]],
+			path: [[5328, 16375]],
 			name_en: "Race against the Inquest to collect crystal shards for the Zephyrites",
 			icon: "collect",
 			num: "1B",
@@ -1772,7 +1769,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[4998, 16647], [4998, 16647]],
+			path: [[4931, 16744], [4931, 16744]],
 			name_en: "Challenge and spar with Nochtli",
 			icon: "fist",
 			num: "2A",
@@ -1832,9 +1829,9 @@ var GW2T_CHAINS_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5329, 16693]],
-			name_en: "Carry and detonate explosives to demolish the cave-in debris while avoiding tunneling devourers",
-			icon: "cog",
+			path: [[5165, 16475]],
+			name_en: "Sandstorm!",
+			icon: "cross",
 			num: "3A",
 			sGotoNum: ["1#"],
 			fGotoNum: "1#",
@@ -1847,10 +1844,55 @@ var GW2T_CHAINS_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5487, 16000], [5487, 16000]],
+			path: [[5214, 16386]],
+			name_en: "Cull the encroaching dust mites threatening the Zephyrites",
+			icon: "swords",
+			num: "3B",
+			sGotoNum: ["1#"],
+			fGotoNum: "1#",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "40:00",
+			avg: "5:00",
+			min: "5:00",
+			max: "5:00",
+			primacy: 1
+		},
+		{
+			path: [[5460, 16243]],
+			name_en: "Carry and detonate explosives to demolish the cave-in debris while avoiding tunneling devourers",
+			icon: "cog",
+			num: "3C",
+			sGotoNum: ["1#"],
+			fGotoNum: "1#",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "40:00",
+			avg: "5:00",
+			min: "5:00",
+			max: "5:00",
+			primacy: 1
+		},
+		{
+			path: [[5469, 16377], [5469, 16377]],
 			name_en: "Escort Haze to safety",
 			icon: "shield",
-			num: "3B",
+			num: "3D",
+			sGotoNum: ["1#"],
+			fGotoNum: "1#",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "40:00",
+			avg: "5:00",
+			min: "5:00",
+			max: "5:00",
+			primacy: 1
+		},
+		{
+			path: [[5497, 16338], [5497, 16338], [5181, 16388], [5031, 16741], [4940, 16618]],
+			name_en: "Stop the skritt burglar before it escapes with the treasure",
+			icon: "cog",
+			num: "3E",
 			sGotoNum: ["1#"],
 			fGotoNum: "1#",
 			sInterim: ["0"],
@@ -1865,10 +1907,9 @@ var GW2T_CHAINS_DATA = [
 },
 {
 	alias: "StoryXXX3",
-	pronunciation: "gates of magooma",
 	series: 4,
 	waypoint: "[&BHYAAAA=]",
-	title: "Gates of Maguuma X:45",
+	title: "Gates of Maguuma Q4",
 	events: [
 		{
 			path: [[5045, 16708], [5045, 16708]],
@@ -1886,10 +1927,10 @@ var GW2T_CHAINS_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[5203, 16408], [5203, 16408]],
+			path: [[5187, 16498], [5187, 16498]],
 			name_en: "Defeat the dust mite twister",
 			icon: "boss",
-			num: "2",
+			num: "2A",
 			sGotoNum: ["3"],
 			fGotoNum: "1#",
 			sInterim: ["0"],
@@ -1899,6 +1940,21 @@ var GW2T_CHAINS_DATA = [
 			min: "5:00",
 			max: "5:00",
 			primacy: 2
+		},
+		{
+			path: [[5469, 16377], [5469, 16377]],
+			name_en: "Escort Haze to safety",
+			icon: "shield",
+			num: "2B",
+			sGotoNum: ["3"],
+			fGotoNum: "1#",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "50:00",
+			avg: "5:00",
+			min: "5:00",
+			max: "5:00",
+			primacy: 1
 		},
 		{
 			path: [[5203, 16408], [5203, 16408]],
