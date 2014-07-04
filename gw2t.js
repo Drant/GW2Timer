@@ -860,7 +860,8 @@ O = {
 	},
 	enact_bol_compactClock: function()
 	{
-		if (I.programMode === I.programModeEnum.Simple)
+		if (I.programMode === I.programModeEnum.Simple
+			|| I.programMode === I.programModeEnum.Overlay)
 		{
 			return;
 		}
@@ -871,8 +872,8 @@ O = {
 		{
 			// Reposition clock items
 			I.bulkAnimate([
-				{s: "#itemClockFace .iconSD", p: {"border-radius": "32px"}},
-				{s: "#itemClockFace .iconHC", p: {"border-radius": "24px"}},
+				{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
+				{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
 				{s: "#itemClock", p: {top: "0px"}},
 				{s: "#itemClockIconStandard0", p: {top: "4px", left: "290px"}},
 				{s: "#itemClockIconStandard1", p: {top: "148px", left: "290px"}},
@@ -887,7 +888,7 @@ O = {
 				{s: "#itemClockWaypoint2", p: {top: "164px", left: "52px"}},
 				{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}}
 			], animationspeed);
-			$("#itemClockFace .iconHC").css({width: "32px", height: "32px"});
+			$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
 			$("#itemTimeLocal").css({
 				width: "100%",
 				right: "auto", bottom: "90px",
@@ -911,7 +912,7 @@ O = {
 				clockheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
 			}
 			$("#paneMenu").animate({top: clockheight}, animationspeed);
-			$("#paneClock, #paneClockBack, #paneClockBackground, #itemClockFace")
+			$("#paneClock, #paneClockBack, #paneClockBackground, #paneClockFace, #paneClockIcons")
 				.animate({height: I.cPANE_CLOCK_HEIGHT_COMPACT}, animationspeed);
 			
 			// Readjust content pane
@@ -935,8 +936,8 @@ O = {
 		{
 			// Reposition clock items
 			I.bulkAnimate([
-				{s: "#itemClockFace .iconSD", p: {"border-radius": "12px"}},
-				{s: "#itemClockFace .iconHC", p: {"border-radius": "12px"}},
+				{s: "#paneClockIcons .iconSD", p: {"border-radius": "12px"}},
+				{s: "#paneClockIcons .iconHC", p: {"border-radius": "12px"}},
 				{s: "#itemClock", p: {top: "70px"}},
 				{s: "#itemClockIconStandard0", p: {top: "4px", left: "148px"}},
 				{s: "#itemClockIconStandard1", p: {top: "148px", left: "290px"}},
@@ -951,7 +952,7 @@ O = {
 				{s: "#itemClockWaypoint2", p: {top: "274px", left: "164px"}},
 				{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}}
 			], animationspeed);
-			$("#itemClockFace .iconHC").css({width: "48px", height: "48px"});
+			$("#paneClockIcons .iconHC").css({width: "48px", height: "48px"});
 			$("#itemTimeLocal").css({
 				width: "auto",
 				right: "10px", bottom: "10px",
@@ -975,7 +976,7 @@ O = {
 				clockheight = I.cPANE_CLOCK_HEIGHT;
 			}
 			$("#paneMenu").animate({top: clockheight}, animationspeed);
-			$("#paneClock, #paneClockBack, #paneClockBackground, #itemClockFace")
+			$("#paneClock, #paneClockBack, #paneClockBackground, #paneClockIcons")
 				.animate({height: I.cPANE_CLOCK_HEIGHT}, animationspeed);
 		
 			// Readjust content pane
@@ -997,7 +998,8 @@ O = {
 	},
 	enact_bol_showClock: function()
 	{
-		if (I.programMode === I.programModeEnum.Simple)
+		if (I.programMode === I.programModeEnum.Simple
+			|| I.programMode === I.programModeEnum.Overlay)
 		{
 			return;
 		}
@@ -1102,6 +1104,7 @@ X = {
 	},
 	ChecklistEnum:
 	{
+		// Must be 1 character long
 		Unchecked: "0",
 		Checked: "1",
 		Disabled: "2"
@@ -1889,7 +1892,7 @@ D = {
 		nl: "Inquest Golem versie 2",
 		pl: "Golem Model 2",
 		ru: "Следствие Голем Тип II",
-		zh: "勘驗魔像2型"
+		zh: "Inquest 的魔像2型"
 	},{
 		en: "Claw of Jormag",
 		de: "Klaue Jormags",
@@ -1898,7 +1901,7 @@ D = {
 		nl: "Jormags Klauw",
 		pl: "Szpon Jormaga",
 		ru: "Йормаг Коготь",
-		zh: "Jormag 爪"
+		zh: "爪的 Jormag"
 	},{
 		en: "Svanir Shaman",
 		de: "Schamanenoberhaupt der Svanir",
@@ -1916,7 +1919,7 @@ D = {
 		nl: "Megadestroyer",
 		pl: "Wielki Niszczyciel",
 		ru: "Мегадеструктор",
-		zh: "兆豐析構函數"
+		zh: "Megadestroyer"
 	},{
 		en: "Shadow Behemoth",
 		de: "Schatten-Behemoth",
@@ -1934,7 +1937,7 @@ D = {
 		nl: "De Vermorzelaar",
 		pl: "Shatterer",
 		ru: "Шаттерер",
-		zh: "析構函數"
+		zh: "Shatterer"
 	},{
 		en: "Taidha Covington",
 		de: "Admiral Taidha Covington",
@@ -1972,23 +1975,23 @@ D = {
 		ru: "Карка Королева",
 		zh: "女王 Karka"
 	},{
-		en: "Tequatl",
+		en: "Tequatl the Sunless",
 		de: "Tequatl den Sonnenlosen",
 		es: "Tequatl el Sombrío",
 		fr: "Tequatl le Sans-soleil",
 		nl: "Tequatl de Zonloze",
 		pl: "Tequatl ma Słońca",
 		ru: "Теqуатл Тусклый",
-		zh: "Tequatl 在沒有陽光"
+		zh: "Tequatl 沒有陽光"
 	},{
-		en: "Triple Wurms",
-		de: "Drei Würmer",
-		es: "Tres Sierpes",
-		fr: "Trois Guivres",
-		nl: "De drie Wormen",
-		pl: "Trzy Wielkie Robaki",
-		ru: "Три Черви",
-		zh: "三蠕蟲"
+		en: "Three Headed Wurm",
+		de: "Dreiköpfig Wurm",
+		es: "Sierpe de Tres Cabezas",
+		fr: "Guivre à Trois Têtes",
+		nl: "Driekoppige Worm",
+		pl: "Trzygłowy Robak",
+		ru: "Трехголовый Червь",
+		zh: "蟲三頭"
 	},{
 		en: "Fire Shaman",
 		de: "Feuerschamanen",
@@ -2015,7 +2018,7 @@ D = {
 		nl: "Commissaris Baggeraar",
 		pl: "Pogłębiarka Komisarza",
 		ru: "Драги Комиссар",
-		zh: "疏通政委"
+		zh: "疏浚政委"
 	},{
 		en: "Eye of Zhaitan",
 		de: "Auge des Zhaitan",
@@ -2024,7 +2027,7 @@ D = {
 		nl: "Oog van Zhaitan",
 		pl: "Oko Zhaitan",
 		ru: "Глаз Жаитан",
-		zh: "Zhaitan 的眼"
+		zh: "眼的 Zhaitan"
 	},{
 		en: "Lyssa",
 		de: "Verderbte Hohepriesterin der Lyssa",
@@ -2116,6 +2119,10 @@ D = {
 	 */
 	getChainTitle: function(pIndex)
 	{
+		if (C.Chains[pIndex].series === C.ChainSeriesEnum.Story)
+		{
+			return C.Chains[pIndex].title;
+		}
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
 		{
 			return C.Chains[pIndex].title;
@@ -2124,6 +2131,10 @@ D = {
 	},
 	getChainTitleAny: function(pIndex)
 	{
+		if (C.Chains[pIndex].series === C.ChainSeriesEnum.Story)
+		{
+			return C.Chains[pIndex].title;
+		}
 		return (D.ChainTitle[pIndex])[O.Options.enu_Language];
 	},
 	
@@ -2345,6 +2356,36 @@ C = {
 	},
 	
 	/*
+	 * Gets the integer part of an event number, for example: "10A2" returns "10".
+	 * @param string pNumber of the event.
+	 * @returns string integer of the event.
+	 */
+	getEventNumberInteger: function(pNumber)
+	{
+		if (pNumber.length === 1)
+		{
+			return pNumber;
+		}
+		else
+		{
+			var i;
+			var integer = "";
+			for (i = 0; i < pNumber.length; i++)
+			{
+				if (isFinite(pNumber.charAt(i)))
+				{
+					integer += pNumber.charAt(i);
+				}
+				else
+				{
+					return integer;
+				}
+			}
+			return integer;
+		}
+	},
+	
+	/*
 	 * Shortens a title/name string so it fits the chain bar and add ellipses.
 	 * @param string pString.
 	 * @returns string truncated if it's too long.
@@ -2438,7 +2479,8 @@ C = {
 			 * at the same time. For simplicity, indent all events starting with
 			 * "1" except 1A1. Events numbered like 1A 1B are short for 1A1 1B1.
 			 */
-			if (e.num.length > 1)
+			// If the event number is an integer without concurrent letters
+			if (C.getEventNumberInteger(e.num).length !== e.num.length)
 			{
 				var subnum = e.num.slice(1);
 				if (e.num.indexOf(".") !== -1) // Always indent failure events
@@ -2543,7 +2585,8 @@ C = {
 				if (pChain.events[i].primacy !== C.EventPrimacyEnum.Optional)
 				{
 					// Compare the first character of their event number
-					if (pChain.events[i].num.charAt(0) !== pChain.primaryEvents[ii].num.charAt(0))
+					if (C.getEventNumberInteger(pChain.events[i].num)
+						!== C.getEventNumberInteger(pChain.primaryEvents[ii].num))
 					{
 						ii++;
 					}
@@ -2577,7 +2620,7 @@ C = {
 			for (var ii in C.Chains[i].events)
 			{
 				// Minus 1 because the event numbers are 1 indexed
-				C.Chains[i].events[ii].step = parseInt(C.Chains[i].events[ii].num.charAt(0)) - 1;
+				C.Chains[i].events[ii].step = parseInt(C.getEventNumberInteger(C.Chains[i].events[ii].num)) - 1;
 			}
 			
 			C.Chains[i].index = parseInt(i);
@@ -2773,7 +2816,7 @@ C = {
 				"<div class='barChainDummy barChainDummy_" + i + "'>"
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + ".png' />"
-						+ "<h1>" + C.truncateTitleString(D.getChainTitle(ithchain.index), C.cChainTitleCharLimit) + "</h1>"
+						+ "<h1>" + C.truncateTitleString(D.getChainTitleAny(ithchain.index), C.cChainTitleCharLimit) + "</h1>"
 						+ "<time>" + timestring + "</time>"
 					+ "</div>"
 				+ "</div>");
@@ -3052,7 +3095,7 @@ C = {
 			
 			// Tour to the event on the map if opted
 			if (O.Options.bol_tourPrediction && I.contentCurrent === I.PageEnum.Chains
-				&& M.isMapAJAXDone)
+				&& M.isMapAJAXDone && pChain.series !== C.ChainSeriesEnum.Story)
 			{
 				$("#chnEvent_" + pChain.alias + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -3070,6 +3113,7 @@ C = {
 			 */
 			if (O.Options.bol_enableSound && O.Options.bol_alertAtEnd && I.isProgramLoaded
 				&& pChain.alias === C.CurrentChainSD.alias
+				&& pChain.series !== C.ChainSeriesEnum.Story
 				&& O.Options.bol_alertSubscribed === false)
 			{
 				var checked = ", " + D.getSpeech("checked");
@@ -3270,6 +3314,10 @@ M = {
 	isShowingIconsForResource: false,
 	isShowingIconsForJP: true,
 	
+	// Submap for showing maps that aren't in the API (actually Leaflet markers)
+	SubmapEntities: new Array(),
+	SubmapDrytop: {},
+	
 	/*
 	 * Initializes the Leaflet map, adds markers, and binds events.
 	 */
@@ -3300,6 +3348,7 @@ M = {
 		// Do other initialization functions
 		M.populateMap();
 		M.drawChainPaths();
+		M.createSubmaps();
 
 		/*
 		 * Clicking an empty place on the map highlight its coordinate.
@@ -3346,6 +3395,33 @@ M = {
 			$("#panelRight").toggle();
 		});
 	}, // End of map initialization
+	
+	/*
+	 * Create submaps that are giant markers with an image of a map area.
+	 * Used for temporary zones that hasn't been put in the API tileset.
+	 */
+	createSubmaps: function()
+	{
+		M.SubmapDrytop = L.marker(M.convertGCtoLC([4644, 15842]),
+		{
+			icon: L.icon(
+			{
+				iconUrl: "http://i.imgur.com/cQKFxO6.jpg",
+				iconSize: [1260, 1260],
+				iconAnchor: [0, 0]
+			}),
+			draggable: false,
+			clickable: false,
+			zIndexOffset: M.cPinZIndex - 1
+		}).addTo(M.Map);
+		M.SubmapEntities.push(M.SubmapDrytop);
+		
+		// Show submaps only if at max zoomed in level
+		if (M.Map.getZoom() !== M.ZoomLevelEnum.Ground)
+		{
+			M.SubmapDrytop._icon.style.display = "none";
+		}
+	},
 	
 	/*
 	 * Finds what zone the specified point is in by comparing it to the top left
@@ -3441,6 +3517,7 @@ M = {
 		 */
 		M.Map.on("zoomend", function(pEvent)
 		{
+			var i;
 			var currentzoom = this.getZoom();
 			M.ZoomLevelEnum.Current = currentzoom;
 			M.currentIconSize = 0;
@@ -3454,9 +3531,22 @@ M = {
 				case 4: M.currentIconSize = 20; break;
 				case 3: M.currentIconSize = 16; break;
 			}
-			for (var i in M.WaypointEntities)
+			for (i in M.WaypointEntities)
 			{
 				M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.currentIconSize);
+			}
+			
+			// Show submaps only if at max zoom in level
+			if (M.SubmapEntities.length > 0)
+			{
+				if (currentzoom === M.ZoomLevelEnum.Ground)
+				{
+					M.setEntityGroupDisplay(M.SubmapEntities, "show");
+				}
+				else
+				{
+					M.setEntityGroupDisplay(M.SubmapEntities, "hide");
+				}
 			}
 		});
 	},
@@ -3828,8 +3918,7 @@ M = {
 			{
 				this.setLatLng(M.convertGCtoLC([0,0]));
 			});
-		}
-		
+		}	
 	}, // End of populateMap
 	
 	/*
@@ -4389,6 +4478,10 @@ T = {
 		C.Queen =		C.Chains[10];
 		C.Tequatl =		C.Chains[11];
 		C.Triple =		C.Chains[12];
+		C.Story0 =		C.Chains[13];
+		C.Story1 =		C.Chains[14];
+		C.Story2 =		C.Chains[15];
+		C.Story3 =		C.Chains[16];
 		
 		/*
 		 * This "hash table" contains all time-sensitive chains (a group of
@@ -4521,11 +4614,24 @@ T = {
 			t1425: {t: "23:45", c: [C.SB]}
 		};
 		
+		var i, ii, iii;
+		var quarter = 0;
+		var slot;
+		
+		// Add story chains to the schedule
+		for (i in T.Schedule)
+		{
+			T.Schedule[i].c.push(C["Story" + (quarter)]);
+			quarter++;
+			if (quarter > T.cNUM_TIMEFRAMES_IN_HOUR - 1)
+			{
+				quarter = 0;
+			}
+		}
+		
+		// Initialize chains
 		C.ScheduledChains = new Array();
 		C.initializeAllChains();
-		
-		var i, ii, iii;
-		var slot;
 		
 		for (i in T.Schedule)
 		{
@@ -5337,7 +5443,9 @@ K = {
 		// If crossing a 15 minute mark (IMPORTANT)
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
 		{
-			if (O.Options.int_setClockBackground === 0 && I.programMode !== I.programModeEnum.Simple)
+			if (O.Options.int_setClockBackground === 0
+				&& I.programMode !== I.programModeEnum.Simple
+				&& I.programMode !== I.programModeEnum.Overlay)
 			{
 				$(clockbackground).fadeTo(800, 1);
 			}
@@ -5619,12 +5727,12 @@ K = {
 		{
 			$(this).attr("stroke", "black");
 		});
-		$("#itemClockFace .iconSD").css(
+		$("#paneClockIcons .iconSD").css(
 		{
 			"border": "1px solid black",
 			"box-shadow": "0px 0px 10px black"
 		});
-		$("#itemClockFace .iconHC").css(
+		$("#paneClockIcons .iconHC").css(
 		{
 			"border": "1px solid black",
 			"box-shadow": "0px 0px 10px black"
@@ -5737,6 +5845,7 @@ K = {
 			);
 	
 			// Animate sector rotation
+			var sector = document.getElementById("clkSector");
 			var newsectorangle = parseInt(i0) * K.cDEGREES_IN_QUADRANT;
 			if (newsectorangle === 0 && K.oldSectorAngle !== 0)
 			{
@@ -5745,8 +5854,8 @@ K = {
 			
 			$({angle: K.oldSectorAngle}).animate({angle: newsectorangle}, {
 				duration: 600,
-				step: function() { K.rotateClockElement(document.getElementById("clkSector"), this.angle); },
-				done: function() { K.rotateClockElement(document.getElementById("clkSector"), newsectorangle); }
+				step: function() { K.rotateClockElement(sector, this.angle); },
+				done: function() { K.rotateClockElement(sector, newsectorangle); }
 			});
 			
 			if (newsectorangle === K.cDEGREES_IN_CIRCLE)
@@ -5840,6 +5949,7 @@ I = {
 	cPANEL_HEIGHT: 720,
 	cPANE_CLOCK_HEIGHT: 360,
 	cPANE_CLOCK_HEIGHT_COMPACT: 220,
+	cPANE_CLOCK_HEIGHT_COMPRESS: 85,
 	cPANE_MENU_HEIGHT: 48,
 	cPANE_BEAM_LEFT: -41,
 	cTOOLTIP_DEFAULT_OFFSET_X: -180,
@@ -5938,7 +6048,7 @@ I = {
 		O.enforceURLArgumentsFirst();
 		
 		// Detect small devices
-		if (window.innerWidth <= I.cSMALL_DEVICE_WIDTH && window.innerHeight <= I.cSMALL_DEVICE_HEIGHT
+		if (screen.width <= I.cSMALL_DEVICE_WIDTH && screen.height <= I.cSMALL_DEVICE_HEIGHT
 			&& I.programMode === I.programModeEnum.Website)
 		{
 			I.userSmallDevice = true;
@@ -6133,7 +6243,7 @@ I = {
 		{
 			if (O.URLArguments[I.URLKeySection] !== undefined)
 			{
-				var section = O.stripToAlphanumeric(O.toFirstUpperCase(O.URLArguments[I.URLKeySection]));
+				var section = O.stripToAlphanumeric(O.URLArguments[I.URLKeySection]);
 				$(I.cHeaderPrefix + I.contentCurrent + "_" + section).trigger("click");
 			}
 		}, 0);
@@ -6142,7 +6252,7 @@ I = {
 	{
 		if (O.URLArguments[I.URLKeyPage] !== undefined)
 		{
-			var page = O.stripToAlphanumeric(O.toFirstUpperCase(O.URLArguments[I.URLKeyPage]));
+			var page = O.stripToAlphanumeric(O.URLArguments[I.URLKeyPage]);
 			$(I.cMenuPrefix + page).trigger("click");
 		}
 	},
@@ -6767,11 +6877,73 @@ I = {
 	 */
 	enforceProgramMode: function()
 	{
+		var animationspeed = 200;
+		var clockheight = 0;
+		
 		switch (I.programMode)
 		{
 			case I.programModeEnum.Overlay:
 			{
-				$("#itemLanguage, #itemSocial").hide();
+				// 4 + 64 + 14 + 64 + 6 + 64 + 6 + 64 + 6 + 64 + 4
+				$("#itemLanguage, #itemSocial, #paneClockBackground").hide();
+				$("#itemClock").css({
+					width: "85px", height: "85px",
+					top: "0px", left: "0px"
+				});
+				$("#paneClockFace").css({
+					width: "85px", height: "85px",
+					"background-size": "132px 132px"
+				});
+				I.bulkAnimate([
+					{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
+					{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
+					{s: "#itemClock", p: {top: "0px"}},
+					{s: "#itemClockIconStandard0", p: {top: "0px", left: "82px"}},
+					{s: "#itemClockIconStandard1", p: {top: "0px", left: "152px"}},
+					{s: "#itemClockIconStandard2", p: {top: "0px", left: "222px"}},
+					{s: "#itemClockIconStandard3", p: {top: "0px", left: "292px"}},
+					{s: "#itemClockIconHardcore0", p: {top: "48px", left: "98px"}},
+					{s: "#itemClockIconHardcore1", p: {top: "48px", left: "168px"}},
+					{s: "#itemClockIconHardcore2", p: {top: "48px", left: "238px"}},
+					{s: "#itemClockIconHardcore3", p: {top: "48px", left: "308px"}},
+					{s: "#itemClockWaypoint0", p: {top: "-16px", left: "98px"}},
+					{s: "#itemClockWaypoint1", p: {top: "-16px", left: "168px"}},
+					{s: "#itemClockWaypoint2", p: {top: "-16px", left: "238px"}},
+					{s: "#itemClockWaypoint3", p: {top: "-16px", left: "308px"}}
+				], animationspeed);
+				$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
+				$("#itemTimeLocal").css({
+					width: "100%",
+					right: "auto", bottom: "90px",
+					"text-align": "center",
+					color: "#eee",
+					opacity: 0.5
+				});
+				$("#itemTimeServer").css({
+					width: "100%",
+					top: "90px", bottom: "auto", left: "auto",
+					"text-align": "center",
+					color: "#eee",
+					opacity: 0.5
+				});
+				$("#itemLanguage").css({ bottom: "72px", left: "10px" });
+				$("#itemSocial").css({ bottom: "100px", right: "10px" });
+
+				// Resize panes by animation
+				clockheight = I.cPANE_CLOCK_HEIGHT_COMPRESS;
+				$("#paneMenu").animate({top: clockheight}, animationspeed);
+				$("#paneClock, #paneClockBack, #paneClockBackground, #paneClockFace, #paneClockIcons")
+					.animate({height: I.cPANE_CLOCK_HEIGHT_COMPRESS}, animationspeed);
+
+				// Readjust content pane
+				$(I.cContentPane).css({"min-height": I.cPANEL_HEIGHT
+					- (I.cPANE_CLOCK_HEIGHT_COMPRESS + I.cPANE_MENU_HEIGHT) + "px"});
+
+				// Readjust content pane
+				$(I.cContentPane).animate({top: clockheight + I.cPANE_MENU_HEIGHT,
+					"min-height": I.cPANEL_HEIGHT
+					- (I.cPANE_CLOCK_HEIGHT_COMPRESS + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+				
 			} break;
 			case I.programModeEnum.Simple:
 			{	
