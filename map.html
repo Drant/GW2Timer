@@ -1,5 +1,5 @@
 <script type="text/javascript">
-var GW2T_RESOURCES_DATA = {
+var GW2T_RESOURCE_DATA = {
 	Copper: {
 		nodes: [
 		[8526, 17275], // metrica
@@ -244,7 +244,46 @@ var GW2T_RESOURCES_DATA = {
 		[11069, 27131]
 		], type: "Plant"
 	}
-	
+}
+
+var GW2T_COLLECTIBLE_DATA = {
+	// Must have same name as a Checklist object
+	Collectible0: 
+	{
+		name: "Dry Top Lost Coin",
+		needles: [
+		{n: 1, c: [5525, 16723]},
+		{n: 2, c: [5413, 16656]},
+		{n: 3, c: [5415, 16783]},
+		{n: 4, c: [5286, 16560]},
+		{n: 5, c: [5218, 16667]},
+		{n: 6, c: [5249, 16549]},
+		{n: 7, c: [5240, 16427]},
+		{n: 8, c: [5109, 16734]},
+		{n: 9, c: [5139, 16775]},
+		{n: 10, c: [5153, 16703]},
+		{n: 11, c: [4970, 16655]},
+		{n: 12, c: [4925, 16726]},
+		{n: 13, c: [4916, 16697]},
+		{n: 14, c: [4888, 16545]},
+		{n: 15, c: [5096, 16487]},
+		{n: 16, c: [5177, 16275]},
+		{n: 17, c: [5282, 16174]},
+		{n: 18, c: [5412, 16187]},
+		{n: 19, c: [5346, 16214]},
+		{n: 20, c: [5555, 16077]},
+		{n: 21, c: [5520, 16281]},
+		{n: 22, c: [5668, 16191]},
+		{n: 23, c: [5528, 16455]},
+		{n: 24, c: [5393, 16558]},
+		{n: 25, c: [5473, 16462]},
+		{n: 26, c: [5548, 16538]},
+		{n: 27, c: [5557, 16434]},
+		{n: 28, c: [5560, 16511]},
+		{n: 29, c: [5382, 16406]},
+		{n: 30, c: [5367, 16565]}
+		]
+	}
 }
 </script>
 
@@ -281,6 +320,7 @@ var GW2T_RESOURCES_DATA = {
 	<br />
 	<h2>Maguuma</h2>
 	<ul class="mapZones">
+	<li data-coord="[4864, 15872]">Dry Top</li>
 	<li data-coord="[8256, 18816]">Metrica Province</li>
 	<li data-coord="[5888, 20928]">Rata Sum</li>
 	<li data-coord="[10304, 18112]">Caledon Forest</li>
@@ -553,6 +593,29 @@ A marathon of intricate jumps.
 
 
 
+<header id="headerMap_Collectible" class="jsSection"><img src="img/ui/ls.png" alt="Collectible" /><var
+	data-de="Sammlerstücke"
+	data-es="Artículos de Colección"
+	data-fr="Objets de Collection"
+	data-nl="Collectible Items"
+	data-pl="Kolekcjonowania"
+	data-ru="Коллекционные"
+	data-zh="珍藏品"
+	>Collectible Items</var>
+</header>
+<section>
+
+<div style="width:100%;height:32px"><button id="mapToggle_Collectible" class="cssRight">Toggle Icons</button></div>
+<p><strong>This section is still being worked on.</strong></p>
+<div id="mapCollectibleList">
+	<div id="mapCollectible_Collectible0"></div>
+</div>
+	
+</section>
+
+
+
+
 <header id="headerMap_Personal" class="jsSection"><img src="img/ui/checklist.png" alt="Personal" /><var
 	data-de="Persönliche Checkliste"
 	data-es="Lista Personal"
@@ -657,23 +720,6 @@ A marathon of intricate jumps.
 </div>
 <br />
 </section>
-
-
-
-
-<!--<header id="headerMap_Story" class="jsSection"><img src="img/ui/ls.png" alt="Living Story" /><var
-	data-de="Erzählung"
-	data-es="Historia"
-	data-fr="Histoire"
-	data-nl="Verhaal"
-	data-pl="Historia"
-	data-ru="Рассказ"
-	data-zh="故事"
-	>Living Story</var>
-</header>
-<section>
-
-</section>-->
 
 
 

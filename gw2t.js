@@ -39,8 +39,8 @@
 	D - Dictionary for translations
 	C - Chains events
 	M - Map Leaflet
-	T - Time utilities
-	K - Clock SVG
+	T - Time utilities and schedule
+	K - Clock ticker
 	I - Interface UI
 
 */
@@ -976,7 +976,7 @@ O = {
 				clockheight = I.cPANE_CLOCK_HEIGHT;
 			}
 			$("#paneMenu").animate({top: clockheight}, animationspeed);
-			$("#paneClock, #paneClockBack, #paneClockBackground, #paneClockIcons")
+			$("#paneClock, #paneClockBack, #paneClockBackground, #paneClockFace, #paneClockIcons")
 				.animate({height: I.cPANE_CLOCK_HEIGHT}, animationspeed);
 		
 			// Readjust content pane
@@ -1100,7 +1100,8 @@ X = {
 			key: "str_chlCustomText",
 			value: new Array(),
 			valueDefault: new Array()
-		}
+		},
+		Collectible0: { key: "str_chlLostCoins", value: "" }
 	},
 	ChecklistEnum:
 	{
@@ -1426,6 +1427,7 @@ X = {
 					case X.ChecklistEnum.Unchecked:
 					{
 						thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
+						$("#chnDetails_" + alias).hide("fast");
 						$(this).addClass("chnChecked");
 						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Checked);
 					} break;
@@ -1433,12 +1435,14 @@ X = {
 					{
 						thisbar.css({opacity: 1}).show("fast");
 						thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
+						$("#chnDetails_" + alias).show("fast");
 						$(this).removeClass("chnChecked");
 						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Unchecked);
 					} break;
 					case X.ChecklistEnum.Disabled:
 					{
 						thisbar.css({opacity: 1}).show("fast");
+						$("#chnDetails_" + alias).show("fast");
 						$(this).removeClass("chnChecked");
 						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Unchecked);
 					} break;
@@ -1496,7 +1500,7 @@ X = {
 		$("#chlDungeon .chlDungeonBar").each(function()
 		{
 			$(this).prepend("<img src='img/dungeon/"
-				+ $(this).data("name").toLowerCase() + I.cImageMainExtension + "' />");
+				+ $(this).data("name").toLowerCase() + I.cPNG + "' />");
 		});
 		
 		var updateCalculator = function()
@@ -2292,7 +2296,7 @@ C = {
 	 * which themselves contain an array of their events.
 	 * This is referred to by the variable "C.Chains".
 	 */
-	Chains: GW2T_CHAINS_DATA,
+	Chains: GW2T_CHAIN_DATA,
 	CurrentChainSD: {},
 	NextChainSD1: {},
 	NextChainSD2: {},
@@ -2437,7 +2441,7 @@ C = {
 		$(chainhtmlid).append(
 		"<div id='barChain_" + pChain.alias + "' class='barChain' data-index='" + pChain.index + "'>"
 			+ "<div class='chnTitle'>"
-				+ "<img src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + ".png' />"
+				+ "<img src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
 				+ "<div id='chnCheck_" + pChain.alias + "' class='chnCheck' data-index='" + pChain.index + "'></div>"
 				+ "<h1>" + C.truncateTitleString(D.getChainTitle(pChain.index), C.cChainTitleCharLimit) + "</h1>"
 				+ "<time class='chnTimeFutureFar' id='chnTime_" + pChain.alias + "' data-index='" + pChain.index + "'></time>"
@@ -2511,7 +2515,7 @@ C = {
 			}
 			$("#chnEvents_" + pChain.alias).append(
 			"<li id='chnEvent_" + pChain.alias + "_" + e.num + "' class='chnStep_" + pChain.alias + "_" + e.step + "' style='margin-left:" + indentpixel +"px'>"
-				+ "<img src='img/event/" + e.icon + ".png' title='" + eventhtmltitle + "'/>"
+				+ "<img src='img/event/" + e.icon + I.cPNG + "' title='" + eventhtmltitle + "'/>"
 				+ "<span>" + C.truncateTitleString(D.getEventName(e), eventnamelimit, "..") + "</span>"
 			+ "</li>");
 		};
@@ -2825,7 +2829,7 @@ C = {
 				$("#listChainsTimetable").append(
 				"<div class='barChainDummy barChainDummy_" + i + "'>"
 					+ "<div class='chnTitle'>"
-						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + ".png' />"
+						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
 						+ "<h1>" + C.truncateTitleString(D.getChainTitleAny(ithchain.index), C.cChainTitleCharLimit) + "</h1>"
 						+ "<time>" + timestring + "</time>"
 					+ "</div>"
@@ -2835,6 +2839,8 @@ C = {
 		// Highlight current chain
 		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey())
 			.addClass("chnBarCurrent");
+		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey() + " .chnTitle h1")
+			.addClass("chnTitleCurrent");
 	},
    
 	/*
@@ -2960,9 +2966,14 @@ C = {
 		}
 		
 		// Also highlight timetable chain bar
-		$("#listChainsTimetable .barChainDummy").removeClass("chnBarCurrent");
+		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(-1))
+			.removeClass("chnBarCurrent");
 		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey())
 			.addClass("chnBarCurrent");
+		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(-1) + " .chnTitle h1")
+			.removeClass("chnTitleCurrent");
+		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey() + " .chnTitle h1")
+			.addClass("chnTitleCurrent");
 	},
 	
 	/*
@@ -3106,7 +3117,8 @@ C = {
 			
 			// Tour to the event on the map if opted
 			if (O.Options.bol_tourPrediction && I.contentCurrent === I.PageEnum.Chains
-				&& M.isMapAJAXDone && pChain.series !== C.ChainSeriesEnum.Story)
+				&& M.isMapAJAXDone && C.isChainUnchecked(pChain)
+				&& pChain.series !== C.ChainSeriesEnum.Story)
 			{
 				$("#chnEvent_" + pChain.alias + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -3278,8 +3290,9 @@ M = {
 	 * with their rectangular coordinates.
 	 * This is referred to by the variable "M.Zones".
 	 */
-	Zones: GW2T_ZONES_DATA,
+	Zones: GW2T_ZONE_DATA,
 	Resources: {},
+	Collectibles: {},
 	isMapAJAXDone: false,
 	mousedZoneIndex: null,
 	currentIconSize: 32,
@@ -3326,6 +3339,7 @@ M = {
 	isShowingIconsForDaily: true,
 	isShowingIconsForResource: false,
 	isShowingIconsForJP: true,
+	isShowingIconsForCollectible: false,
 	
 	// Submap for showing maps that aren't in the API (actually Leaflet markers)
 	SubmapEntities: new Array(),
@@ -4090,7 +4104,7 @@ M = {
 			}).addTo(M.Map);
 			marker.setIcon(new L.icon(
 			{
-				iconUrl: "img/daily/" + type.toLowerCase() + I.cImageMainExtension,
+				iconUrl: "img/daily/" + type.toLowerCase() + I.cPNG,
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}));
@@ -4116,7 +4130,7 @@ M = {
 	 */
 	generateAndInitializeResourceNodes: function()
 	{
-		M.Resources = GW2T_RESOURCES_DATA; // This object is embedded in the map HTML file
+		M.Resources = GW2T_RESOURCE_DATA; // This object is embedded in the map HTML file
 		var i, ii;
 		var resource; // A type of resource, like copper ore
 		var marker;
@@ -4125,7 +4139,7 @@ M = {
 		{
 			pMarker.setIcon(new L.icon(
 			{
-				iconUrl: "img/node/" + pResource.toLowerCase() + I.cImageMainExtension,
+				iconUrl: "img/node/" + pResource.toLowerCase() + I.cPNG,
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}));
@@ -4177,9 +4191,9 @@ M = {
 		// Create checkboxes
 		for (i in M.Resources)
 		{
-			var resource = M.Resources[i];
+			resource = M.Resources[i];
 			$("#mapResource_" + resource.type).append(
-				"<label><input id='nod_" + i + "' type='checkbox' /> <img src='img/node/" + i.toLowerCase() + ".png' /> " + i + "</label>");
+				"<label><input id='nod_" + i + "' type='checkbox' /> <img src='img/node/" + i.toLowerCase() + I.cPNG + "' /> " + i + "</label>");
 		}
 		// Bind checkboxes
 		for (i in M.Resources)
@@ -4234,7 +4248,7 @@ M = {
 				id: pID,
 				dif: pDifficulty,
 				title: "<div class='mapLoc'><dfn>JP:</dfn> " + pElement.text()
-					+ "<img src='" + I.cImageHost + pElement.data("img") + I.cImageMainExtension + "' /></div>"
+					+ "<img src='" + I.cImageHost + pElement.data("img") + I.cPNG + "' /></div>"
 			}).addTo(M.Map);
 			marker.setIcon(new L.icon(
 			{
@@ -4388,6 +4402,90 @@ M = {
 	},
 	
 	/*
+	 * Populates the map with collectible markers and create HTML checkboxes
+	 * to toggle their display on the map. The markers themselves act as
+	 * checklist checkboxes to tracking collected ones.
+	 */
+	generateAndInitializeCollectibles: function()
+	{
+		M.Collectibles = GW2T_COLLECTIBLE_DATA; // This object is embedded in the map HTML file
+		var i, ii;
+		var collectible;
+		var marker;
+		
+		var styleMarker = function(pMarker, pIndex)
+		{
+			pMarker.setIcon(new L.divIcon(
+			{
+				className: "mapNeedle",
+				html: pIndex,
+				iconSize: [16, 16],
+				iconAnchor: [8, 8]
+			}));
+			pMarker._icon.style.borderRadius = "16px";
+			pMarker._icon.style.opacity = "0.9";
+			pMarker._icon.style.border = "2px solid lime";
+			
+			pMarker.on("click", function(pEvent)
+			{
+				if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
+				{
+					M.Map.setZoom(M.ZoomLevelEnum.Default);
+				}
+				else
+				{
+					M.Map.setView(pEvent.latlng, M.ZoomLevelEnum.Max);
+				}
+			});
+			
+			M.bindMarkerZoomBehavior(pMarker, "dblclick");
+		};
+		
+		for (i in M.Collectibles)
+		{
+			X.Checklists[i].length = M.Collectibles[i].needles.length;
+			X.initializeChecklist(X.Checklists[i], X.Checklists[i].length);
+		
+			collectible = M.Collectibles[i];
+			collectible.NeedleEntities = new Array();
+			
+			for (ii in collectible.needles)
+			{
+				marker = L.marker(M.convertGCtoLC(collectible.needles[ii].c)).addTo(M.Map);
+				styleMarker(marker, collectible.needles[ii].n);
+				// Add to array
+				collectible.NeedleEntities.push(marker);
+			}
+		}
+		
+		// Create checkboxes
+		for (i in M.Collectibles)
+		{
+			collectible = M.Collectibles[i];
+			$("#mapCollectible_" + i).append(
+				"<label><input id='ned_" + i + "' type='checkbox' /> " + collectible.name + "</label>");
+		}
+		// Bind checkboxes
+		for (i in M.Collectibles)
+		{
+			$("#ned_" + i).change(function()
+			{
+				var thiscollectible = I.getIndexFromHTMLID($(this));
+				M.setEntityGroupDisplay(M.Collectibles[thiscollectible].NeedleEntities, $(this).prop("checked"));
+			});
+		}
+		$("#mapToggle_Collectible").click(function()
+		{
+			M.isShowingIconsForCollectible = !(M.isShowingIconsForCollectible);
+			for (i in M.Collectibles)
+			{
+				$("#ned_" + i).prop("checked", M.isShowingIconsForCollectible);
+				M.setEntityGroupDisplay(M.Collectibles[i].NeedleEntities, M.isShowingIconsForCollectible);
+			}
+		});
+	},
+	
+	/*
 	 * Hides all the map icons by triggering the toggle button of each map section.
 	 */
 	displayIcons: function(pSection, pWantShow)
@@ -4409,6 +4507,15 @@ M = {
 				$("#mapToggle_Resource").trigger("click").trigger("click");
 			}
 			
+			if (M.isShowingIconsForCollectible)
+			{
+				$("#mapToggle_Collectible").trigger("click");
+			}
+			else
+			{
+				$("#mapToggle_Collectible").trigger("click").trigger("click");
+			}
+			
 			if (M.isShowingIconsForJP)
 			{
 				$("#mapToggle_JP").trigger("click");
@@ -4426,6 +4533,17 @@ M = {
 			else
 			{
 				if (pSection === "Resource")
+				{
+					if (M["isShowingIconsFor" + pSection])
+					{
+						$("#mapToggle_" + pSection).trigger("click");
+					}
+					else
+					{
+						$("#mapToggle_" + pSection).trigger("click").trigger("click");
+					}
+				}
+				else if (pSection === "Collectible")
 				{
 					if (M["isShowingIconsFor" + pSection])
 					{
@@ -5816,7 +5934,7 @@ K = {
 				if (pChain)
 				{
 					pIcon.show();
-					pIcon.attr("src", "img/chain/" + pChain.alias.toLowerCase() + I.cImageMainExtension);
+					pIcon.attr("src", "img/chain/" + pChain.alias.toLowerCase() + I.cPNG);
 					pIcon.data("index", pChain.index);
 					if (I.programMode === I.programModeEnum.Simple)
 					{
@@ -5980,7 +6098,7 @@ I = {
 	cPageURLMap: "map.html",
 	cPageURLHelp: "help.html",
 	cImageHost: "http://i.imgur.com/",
-	cImageMainExtension: ".png", // Almost all used images are PNG
+	cPNG: ".png", // Almost all used images are PNG
 	cTextDelimiter: "|",
 	consoleTimeout: {},
 	
@@ -6017,6 +6135,27 @@ I = {
 		Map: "Map",
 		Help: "Help",
 		Options: "Options"
+	},
+	SectionEnum:
+	{
+		Map:
+		{
+			Zone: "Zone",
+			Daily: "Daily",
+			Resource: "Resource",
+			JP: "JP",
+			Personal: "Personal",
+			Collectible: "Collectible"
+		},
+		Help:
+		{
+			FAQ: "FAQ",
+			About: "About",
+			Scheduled: "Scheduled",
+			Unscheduled: "Unscheduled",
+			Temples: "Temples",
+			Dungeons: "Dungeons"
+		}
 	},
 	contentCurrent: "",
 	contentCurrentLayer: "", // This is cContentPrefix + contentCurrent
@@ -6811,9 +6950,11 @@ I = {
 				X.initializeCustomChecklist();
 				I.isSectionLoadedMap_Personal = true;
 			});
+			// Create collectible markers and checkboxes
+			$("#headerMap_Collectible").one("click", M.generateAndInitializeCollectibles);
 			
 			// Bind show map icons when clicked on header
-			$("#headerMap_Daily, #headerMap_Resource, #headerMap_JP").each(function()
+			$("#headerMap_Daily, #headerMap_Resource, #headerMap_JP, #headerMap_Collectible").each(function()
 			{
 				$(this).click(function()
 				{

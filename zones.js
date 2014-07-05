@@ -1,7 +1,7 @@
 /* This file is used by gw2t.js and is based on http://atlas.guildwars2.com
  * Maps sorted by how far from the top left corner (0,0) it is.
  */
-var GW2T_ZONES_DATA = {
+var GW2T_ZONE_DATA = {
 "dry":
 {
 	name: "Dry Top",

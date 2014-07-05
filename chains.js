@@ -1,5 +1,5 @@
 /* This file is used by gw2t.js */
-var GW2T_CHAINS_DATA = [
+var GW2T_CHAIN_DATA = [
 {
 	alias: "FE",
 	pronunciation: "fire elemental",
@@ -2012,7 +2012,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5435, 16403], [5435, 16403]],
+			path: [[5435, 16403]],
 			name_en: "Escort Haze to safety.",
 			name_de: "Bringt Dunst in Sicherheit.",
 			name_es: "Escolta a Bruma hasta un lugar seguro.",
@@ -2146,7 +2146,7 @@ var GW2T_CHAINS_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[5435, 16403], [5435, 16403]],
+			path: [[5435, 16403]],
 			name_en: "Escort Haze to safety.",
 			name_de: "Bringt Dunst in Sicherheit.",
 			name_es: "Escolta a Bruma hasta un lugar seguro.",
