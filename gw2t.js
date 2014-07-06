@@ -89,7 +89,7 @@ O = {
 		enu_Language: "en",
 		// Timer
 		bol_hideChecked: false,
-		bol_use24Hour: true,
+		bol_expandEvents: true,
 		bol_compactClock: true,
 		bol_showClock: true,
 		int_setClockBackground: 0,
@@ -110,7 +110,8 @@ O = {
 		// Advanced
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
-		bol_detectDST: true
+		bol_detectDST: true,
+		bol_use24Hour: true
 	},
 	/*
 	 * All Options of a numeric type must have an associated legal range to be
@@ -139,7 +140,7 @@ O = {
 	},
 	
 	/*
-	 * Checks if the specified value is within the enum object, and returns it
+	 * Checks if the specified value is in the enum object, and returns it
 	 * if found, or returns the default if not.
 	 * @param string pEnumName of the enum object.
 	 * @param string pEnumValue to check.
@@ -167,7 +168,8 @@ O = {
 		var currentversion = O.Utilities.programVersion.value;
 		var usersversion = parseInt(localStorage[O.Utilities.programVersion.key]);
 		// If not first visit and version is mismatch, notify new version
-		if (isFinite(usersversion) && usersversion !== currentversion)
+		if (isFinite(usersversion) && usersversion !== currentversion
+			&& I.ProgramMode !== I.ProgramModeEnum.Overlay)
 		{
 			I.write(I.cSiteName + " was updated since your last visit.<br />"
 			+ "This version: " + currentversion + "<br />"
@@ -420,9 +422,9 @@ O = {
 	},
 	
 	/*
-	 * Converts an integer to boolean. For use by radio buttons with two choices.
+	 * Converts an integer to boolean.
 	 * @param int pInteger to convert.
-	 * @returns boolean boolean of integer.
+	 * @returns boolean true only if integer is greater than 0.
 	 */
 	intToBool: function(pInteger)
 	{
@@ -442,7 +444,7 @@ O = {
 	},
 	
 	/*
-	 * Returns false if object is undefined or null or falsie, otherwise true.
+	 * Returns false if object is undefined or null or falsy, otherwise true.
 	 * @param object pObject to test.
 	 * @returns boolean whether object exists.
 	 */
@@ -706,57 +708,35 @@ O = {
 	 */
 	bindOptionsInputs: function()
 	{
-		$("#opt_bol_hideChecked").change(function()
+		var i;
+		// The Enact object has functions with the same name as the Options variables
+		for (i in O.Enact)
 		{
-			O.enact_bol_hideChecked();
-		});
-		$("#opt_bol_use24Hour").change(function()
-		{
-			O.enact_bol_use24Hour();
-		});
-		$("#opt_bol_detectDST").change(function()
-		{
-			O.enact_bol_detectDST();
-		});
-		$("#opt_bol_compactClock").change(function()
-		{
-			O.enact_bol_compactClock();
-		});
-		$("#opt_bol_showClock").change(function()
-		{
-			O.enact_bol_showClock();
-		});
-		$("fieldset[name=int_setClockBackground]").change(function()
-		{
-			O.enact_int_setClockBackground();
-		});
-		$("fieldset[name=int_setTimeStyle]").change(function()
-		{
-			O.enact_int_setTimeStyle();
-		});
-		$("#opt_bol_showChainPaths").change(function()
-		{
-			O.enact_bol_showChainPaths();
-		});
+			(function(pFunction){
+				$("#" + O.prefixOption + pFunction).change(function()
+				{
+					O.Enact[pFunction]();
+				});
+			})(i);
+		}
+		// Leaflet map breaks when it is shown after being hidden, so have to reload
 		$("#opt_bol_showMap").change(function()
 		{
-			O.enact_bol_showMap();
-			// Leaflet map breaks when it is shown after being hidden, so have to reload
 			if (O.Options.bol_showMap)
 			{
 				location.reload();
 			}
 		});
 		/*
-		 * Run enactors when the page loads (because this an initializer function).
+		 * Run some enactors when the page loads (because this an initializer function).
 		 * Will have to place it elsewhere if it requires data to be loaded first.
 		 */
-		O.enact_bol_hideChecked();
-		O.enact_bol_detectDST();
-		O.enact_bol_compactClock();
-		O.enact_bol_showClock();
-		O.enact_int_setClockBackground();
-		O.enact_bol_showMap();
+		O.Enact.bol_hideChecked();
+		O.Enact.bol_detectDST();
+		O.Enact.bol_compactClock();
+		O.Enact.bol_showClock();
+		O.Enact.int_setClockBackground();
+		O.Enact.bol_showMap();
 		
 		/*
 		 * Button event handlers bindings (buttons don't have stored values).
@@ -828,249 +808,259 @@ O = {
 	
 	/*
 	 * Functions to enact the options, for which a simple variable change is
-	 * not enough.
+	 * not enough. Placed inside an object so they can be iterated.
 	 * -------------------------------------------------------------------------
 	 */
-	enact_bol_hideChecked: function()
+	Enact:
 	{
-		$(".barChain").each(function()
+		bol_hideChecked: function()
 		{
-			if (X.getChecklistItem(X.Checklists.Chain, I.getSubintegerFromHTMLID($(this)))
-				=== X.ChecklistEnum.Checked)
+			$(".barChain").each(function()
 			{
-				if (O.Options.bol_hideChecked)
+				if (X.getChecklistItem(X.Checklists.Chain, I.getSubintegerFromHTMLID($(this)))
+					=== X.ChecklistEnum.Checked)
 				{
-					$(this).hide();
+					if (O.Options.bol_hideChecked)
+					{
+						$(this).hide();
+					}
+					else
+					{
+						$(this).show();
+					}
+				}
+			});
+		},
+		bol_expandEvents: function()
+		{
+			for (var i in C.CurrentChains)
+			{
+				$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_expandEvents);
+			}
+		},
+		bol_use24Hour: function()
+		{
+			C.initializeTimetableHTML();
+			C.updateChainsTimeHTML();
+		},
+		bol_detectDST: function()
+		{
+			T.DST_IN_EFFECT = (O.Options.bol_detectDST) ? 1 : 0;
+		},
+		bol_compactClock: function()
+		{
+			if (I.ProgramMode === I.ProgramModeEnum.Simple
+				|| I.ProgramMode === I.ProgramModeEnum.Overlay)
+			{
+				return;
+			}
+
+			var animationspeed = 200;
+			var clockheight = 0;
+			if (O.Options.bol_compactClock)
+			{
+				// Reposition clock items
+				I.bulkAnimate([
+					{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
+					{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
+					{s: "#itemClock", p: {top: "0px"}},
+					{s: "#itemClockIconStandard0", p: {top: "4px", left: "290px"}},
+					{s: "#itemClockIconStandard1", p: {top: "148px", left: "290px"}},
+					{s: "#itemClockIconStandard2", p: {top: "148px", left: "4px"}},
+					{s: "#itemClockIconStandard3", p: {top: "4px", left: "4px"}},
+					{s: "#itemClockIconHardcore0", p: {top: "52px", left: "306px"}},
+					{s: "#itemClockIconHardcore1", p: {top: "132px", left: "306px"}},
+					{s: "#itemClockIconHardcore2", p: {top: "132px", left: "20px"}},
+					{s: "#itemClockIconHardcore3", p: {top: "52px", left: "20px"}},
+					{s: "#itemClockWaypoint0", p: {top: "24px", left: "274px"}},
+					{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
+					{s: "#itemClockWaypoint2", p: {top: "164px", left: "52px"}},
+					{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}}
+				], animationspeed);
+				$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
+				$("#itemTimeLocal").css({
+					width: "100%",
+					right: "auto", bottom: "90px",
+					"text-align": "center",
+					color: "#eee",
+					opacity: 0.5
+				});
+				$("#itemTimeServer").css({
+					width: "100%",
+					top: "90px", bottom: "auto", left: "auto",
+					"text-align": "center",
+					color: "#eee",
+					opacity: 0.5
+				});
+				$("#itemLanguage").css({ bottom: "72px", left: "10px" });
+				$("#itemSocial").css({ bottom: "100px", right: "10px" });
+
+				// Resize panes by animation
+				if (O.Options.bol_showClock)
+				{
+					clockheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
+				}
+				$("#paneMenu").animate({top: clockheight}, animationspeed);
+				$("#paneClock, #paneClockBack, #paneClockBackground, #paneClockFace, #paneClockIcons")
+					.animate({height: I.cPANE_CLOCK_HEIGHT_COMPACT}, animationspeed);
+
+				// Readjust content pane
+				$(I.cContentPane).css({"min-height": I.cPANEL_HEIGHT
+					- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"});
+
+				// Readjust content pane
+				if (O.Options.bol_showClock)
+				{
+					$(I.cContentPane).animate({top: clockheight + I.cPANE_MENU_HEIGHT,
+						"min-height": I.cPANEL_HEIGHT
+						- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 				}
 				else
 				{
-					$(this).show();
+					$(I.cContentPane).animate({top: clockheight + I.cPANE_MENU_HEIGHT}, animationspeed)
+						.css({"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"});
 				}
 			}
-		});
-	},
-	enact_bol_use24Hour: function()
-	{
-		C.initializeTimetableHTML();
-		C.updateChainsTimeHTML();
-	},
-	enact_bol_detectDST: function()
-	{
-		T.DST_IN_EFFECT = (O.Options.bol_detectDST) ? 1 : 0;
-	},
-	enact_bol_compactClock: function()
-	{
-		if (I.ProgramMode === I.ProgramModeEnum.Simple
-			|| I.ProgramMode === I.ProgramModeEnum.Overlay)
-		{
-			return;
-		}
-		
-		var animationspeed = 200;
-		var clockheight = 0;
-		if (O.Options.bol_compactClock)
-		{
-			// Reposition clock items
-			I.bulkAnimate([
-				{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
-				{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
-				{s: "#itemClock", p: {top: "0px"}},
-				{s: "#itemClockIconStandard0", p: {top: "4px", left: "290px"}},
-				{s: "#itemClockIconStandard1", p: {top: "148px", left: "290px"}},
-				{s: "#itemClockIconStandard2", p: {top: "148px", left: "4px"}},
-				{s: "#itemClockIconStandard3", p: {top: "4px", left: "4px"}},
-				{s: "#itemClockIconHardcore0", p: {top: "52px", left: "306px"}},
-				{s: "#itemClockIconHardcore1", p: {top: "132px", left: "306px"}},
-				{s: "#itemClockIconHardcore2", p: {top: "132px", left: "20px"}},
-				{s: "#itemClockIconHardcore3", p: {top: "52px", left: "20px"}},
-				{s: "#itemClockWaypoint0", p: {top: "24px", left: "274px"}},
-				{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
-				{s: "#itemClockWaypoint2", p: {top: "164px", left: "52px"}},
-				{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}}
-			], animationspeed);
-			$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
-			$("#itemTimeLocal").css({
-				width: "100%",
-				right: "auto", bottom: "90px",
-				"text-align": "center",
-				color: "#eee",
-				opacity: 0.5
-			});
-			$("#itemTimeServer").css({
-				width: "100%",
-				top: "90px", bottom: "auto", left: "auto",
-				"text-align": "center",
-				color: "#eee",
-				opacity: 0.5
-			});
-			$("#itemLanguage").css({ bottom: "72px", left: "10px" });
-			$("#itemSocial").css({ bottom: "100px", right: "10px" });
-			
-			// Resize panes by animation
-			if (O.Options.bol_showClock)
+			else
 			{
-				clockheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
+				// Reposition clock items
+				I.bulkAnimate([
+					{s: "#paneClockIcons .iconSD", p: {"border-radius": "12px"}},
+					{s: "#paneClockIcons .iconHC", p: {"border-radius": "12px"}},
+					{s: "#itemClock", p: {top: "70px"}},
+					{s: "#itemClockIconStandard0", p: {top: "4px", left: "148px"}},
+					{s: "#itemClockIconStandard1", p: {top: "148px", left: "290px"}},
+					{s: "#itemClockIconStandard2", p: {top: "290px", left: "148px"}},
+					{s: "#itemClockIconStandard3", p: {top: "148px", left: "4px"}},
+					{s: "#itemClockIconHardcore0", p: {top: "12px", left: "212px"}},
+					{s: "#itemClockIconHardcore1", p: {top: "212px", left: "298px"}},
+					{s: "#itemClockIconHardcore2", p: {top: "298px", left: "100px"}},
+					{s: "#itemClockIconHardcore3", p: {top: "100px", left: "12px"}},
+					{s: "#itemClockWaypoint0", p: {top: "52px", left: "164px"}},
+					{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
+					{s: "#itemClockWaypoint2", p: {top: "274px", left: "164px"}},
+					{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}}
+				], animationspeed);
+				$("#paneClockIcons .iconHC").css({width: "48px", height: "48px"});
+				$("#itemTimeLocal").css({
+					width: "auto",
+					right: "10px", bottom: "10px",
+					"text-align": "left",
+					color: "#bbcc77",
+					opacity: 1
+				});
+				$("#itemTimeServer").css({
+					width: "auto",
+					top: "auto", bottom: "10px", left: "10px",
+					"text-align": "left",
+					color: "#bbcc77",
+					opacity: 1
+				});
+				$("#itemLanguage").css({ bottom: "0px", left: "10px" });
+				$("#itemSocial").css({ bottom: "28px", right: "10px" });
+
+				// Resize panes by animation
+				if (O.Options.bol_showClock)
+				{
+					clockheight = I.cPANE_CLOCK_HEIGHT;
+				}
+				$("#paneMenu").animate({top: clockheight}, animationspeed);
+				$("#paneClock, #paneClockBack, #paneClockBackground, #paneClockFace, #paneClockIcons")
+					.animate({height: I.cPANE_CLOCK_HEIGHT}, animationspeed);
+
+				// Readjust content pane
+				if (O.Options.bol_showClock)
+				{
+					$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+						"min-height": I.cPANEL_HEIGHT
+						- (I.cPANE_CLOCK_HEIGHT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+				}
+				else
+				{
+					$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+						"min-height": I.cPANEL_HEIGHT
+						- (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+				}
 			}
-			$("#paneMenu").animate({top: clockheight}, animationspeed);
-			$("#paneClock, #paneClockBack, #paneClockBackground, #paneClockFace, #paneClockIcons")
-				.animate({height: I.cPANE_CLOCK_HEIGHT_COMPACT}, animationspeed);
-			
-			// Readjust content pane
-			$(I.cContentPane).css({"min-height": I.cPANEL_HEIGHT
-				- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"});
-	
-			// Readjust content pane
+
+			K.reapplyFilters();
+		},
+		bol_showClock: function()
+		{
+			if (I.ProgramMode === I.ProgramModeEnum.Simple
+				|| I.ProgramMode === I.ProgramModeEnum.Overlay)
+			{
+				return;
+			}
+			/*
+			 * There are three panes on the right panel: Clock, Menu, and Content
+			 * all absolutely positioned, so to move them the CSS "top" attribute
+			 * needs to be changed: less to go up, more to go down.
+			 */
+			var animationspeed = 200;
 			if (O.Options.bol_showClock)
 			{
-				$(I.cContentPane).animate({top: clockheight + I.cPANE_MENU_HEIGHT,
-					"min-height": I.cPANEL_HEIGHT
-					- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+				var clockheight = I.cPANE_CLOCK_HEIGHT;
+				if (O.Options.bol_compactClock)
+				{
+					clockheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
+				}
+				$("#paneClock").show();
+				$("#paneMenu").animate({top: clockheight}, animationspeed);
+
+				// Readjust content pane
+				if (O.Options.bol_compactClock)
+				{
+					$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+						"min-height": I.cPANEL_HEIGHT
+						- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+				}
+				else
+				{
+					$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
+						"min-height": I.cPANEL_HEIGHT
+						- (I.cPANE_CLOCK_HEIGHT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+				}
 			}
 			else
 			{
-				$(I.cContentPane).animate({top: clockheight + I.cPANE_MENU_HEIGHT}, animationspeed)
-					.css({"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"});
+				$("#paneMenu").animate({top: 0}, animationspeed);
+				$(I.cContentPane).animate({top: I.cPANE_MENU_HEIGHT,
+					"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed,
+				function()
+				{
+					$("#paneClock").hide();
+				});
 			}
-		}
-		else
+
+			K.reapplyFilters();
+		},
+		int_setClockBackground: function()
 		{
-			// Reposition clock items
-			I.bulkAnimate([
-				{s: "#paneClockIcons .iconSD", p: {"border-radius": "12px"}},
-				{s: "#paneClockIcons .iconHC", p: {"border-radius": "12px"}},
-				{s: "#itemClock", p: {top: "70px"}},
-				{s: "#itemClockIconStandard0", p: {top: "4px", left: "148px"}},
-				{s: "#itemClockIconStandard1", p: {top: "148px", left: "290px"}},
-				{s: "#itemClockIconStandard2", p: {top: "290px", left: "148px"}},
-				{s: "#itemClockIconStandard3", p: {top: "148px", left: "4px"}},
-				{s: "#itemClockIconHardcore0", p: {top: "12px", left: "212px"}},
-				{s: "#itemClockIconHardcore1", p: {top: "212px", left: "298px"}},
-				{s: "#itemClockIconHardcore2", p: {top: "298px", left: "100px"}},
-				{s: "#itemClockIconHardcore3", p: {top: "100px", left: "12px"}},
-				{s: "#itemClockWaypoint0", p: {top: "52px", left: "164px"}},
-				{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
-				{s: "#itemClockWaypoint2", p: {top: "274px", left: "164px"}},
-				{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}}
-			], animationspeed);
-			$("#paneClockIcons .iconHC").css({width: "48px", height: "48px"});
-			$("#itemTimeLocal").css({
-				width: "auto",
-				right: "10px", bottom: "10px",
-				"text-align": "left",
-				color: "#bbcc77",
-				opacity: 1
-			});
-			$("#itemTimeServer").css({
-				width: "auto",
-				top: "auto", bottom: "10px", left: "10px",
-				"text-align": "left",
-				color: "#bbcc77",
-				opacity: 1
-			});
-			$("#itemLanguage").css({ bottom: "0px", left: "10px" });
-			$("#itemSocial").css({ bottom: "28px", right: "10px" });
-			
-			// Resize panes by animation
-			if (O.Options.bol_showClock)
+			switch (O.Options.int_setClockBackground)
 			{
-				clockheight = I.cPANE_CLOCK_HEIGHT;
+				case 1: $("#paneClockBackground").css({opacity: 1}); break;
+				case 2: $("#paneClockBackground").css({opacity: 0}); break;
 			}
-			$("#paneMenu").animate({top: clockheight}, animationspeed);
-			$("#paneClock, #paneClockBack, #paneClockBackground, #paneClockFace, #paneClockIcons")
-				.animate({height: I.cPANE_CLOCK_HEIGHT}, animationspeed);
-		
-			// Readjust content pane
-			if (O.Options.bol_showClock)
+		},
+		int_setTimeStyle: function()
+		{
+			C.updateChainsTimeHTML();
+		},
+		bol_showChainPaths: function()
+		{
+			M.setEntityGroupDisplay(M.ChainPathEntities, O.Options.bol_showChainPaths);
+		},
+		bol_showMap: function()
+		{
+			if (O.Options.bol_showMap)
 			{
-				$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
-					"min-height": I.cPANEL_HEIGHT
-					- (I.cPANE_CLOCK_HEIGHT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+				$("#paneMap").show();
 			}
 			else
 			{
-				$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
-					"min-height": I.cPANEL_HEIGHT
-					- (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+				$("#paneMap").hide();
 			}
-		}
-		
-		K.reapplyFilters();
-	},
-	enact_bol_showClock: function()
-	{
-		if (I.ProgramMode === I.ProgramModeEnum.Simple
-			|| I.ProgramMode === I.ProgramModeEnum.Overlay)
-		{
-			return;
-		}
-		/*
-		 * There are three panes on the right panel: Clock, Menu, and Content
-		 * all absolutely positioned, so to move them the CSS "top" attribute
-		 * needs to be changed: less to go up, more to go down.
-		 */
-		var animationspeed = 200;
-		if (O.Options.bol_showClock)
-		{
-			var clockheight = I.cPANE_CLOCK_HEIGHT;
-			if (O.Options.bol_compactClock)
-			{
-				clockheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
-			}
-			$("#paneClock").show();
-			$("#paneMenu").animate({top: clockheight}, animationspeed);
-			
-			// Readjust content pane
-			if (O.Options.bol_compactClock)
-			{
-				$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
-					"min-height": I.cPANEL_HEIGHT
-					- (I.cPANE_CLOCK_HEIGHT_COMPACT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
-			}
-			else
-			{
-				$(I.cContentPane).animate({top: (clockheight + I.cPANE_MENU_HEIGHT),
-					"min-height": I.cPANEL_HEIGHT
-					- (I.cPANE_CLOCK_HEIGHT + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
-			}
-		}
-		else
-		{
-			$("#paneMenu").animate({top: 0}, animationspeed);
-			$(I.cContentPane).animate({top: I.cPANE_MENU_HEIGHT,
-				"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed,
-			function()
-			{
-				$("#paneClock").hide();
-			});
-		}
-		
-		K.reapplyFilters();
-	},
-	enact_int_setClockBackground: function()
-	{
-		switch (O.Options.int_setClockBackground)
-		{
-			case 1: $("#paneClockBackground").css({opacity: 1}); break;
-			case 2: $("#paneClockBackground").css({opacity: 0}); break;
-		}
-	},
-	enact_int_setTimeStyle: function()
-	{
-		C.updateChainsTimeHTML();
-	},
-	enact_bol_showChainPaths: function()
-	{
-		M.setEntityGroupDisplay(M.ChainPathEntities, O.Options.bol_showChainPaths);
-	},
-	enact_bol_showMap: function()
-	{
-		if (O.Options.bol_showMap)
-		{
-			$("#paneMap").show();
-		}
-		else
-		{
-			$("#paneMap").hide();
 		}
 	}
 };
@@ -2980,7 +2970,7 @@ C = {
 			}
 		}
 		// Update chain time HTML
-		O.enact_int_setTimeStyle();
+		O.Enact.int_setTimeStyle();
 		
 		/*
 		 * Now that the chains are sorted, do cosmetic updates.
@@ -2988,10 +2978,10 @@ C = {
 		for (i in C.CurrentChains)
 		{
 			ithchain = C.CurrentChains[i];
-			// Highlight and show the current chain bar
+			// Highlight
 			$("#barChain_" + ithchain.nexus).addClass("chnBarCurrent");
-			// Show the current chain's pre events (details)
-			if (C.isChainUnchecked(ithchain))
+			// Show the events (details)
+			if (C.isChainUnchecked(ithchain) && O.Options.bol_expandEvents)
 			{
 				$("#chnDetails_" + ithchain.nexus).show("fast");
 			}
@@ -3009,7 +2999,11 @@ C = {
 			// Still highlight the previous chain bar but collapse it
 			$("#barChain_" + ithchain.nexus)
 				.removeClass("chnBarCurrent").addClass("chnBarPrevious");
-			$("#chnDetails_" + ithchain.nexus).hide();
+			// Hide previous chains if opted to automatically expand before
+			if (O.Options.bol_expandEvents)
+			{
+				$("#chnDetails_" + ithchain.nexus).hide();
+			}
 			
 			// Style the title and time
 			$("#barChain_" + ithchain.nexus + " h1").first()
@@ -6405,6 +6399,7 @@ I = {
 	{
 		// Initializes all UI
 		I.initializeTooltip();
+		I.bindHelpButtons("#layerOptions");
 		I.initializeUIforMenu();
 		I.initializeUIforChains();
 		// Do special commands from the URL

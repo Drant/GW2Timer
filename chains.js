@@ -1434,7 +1434,7 @@ var GW2T_CHAIN_DATA = [
 {
 	alias: "StoryXXX0",
 	series: 4,
-	waypoint: "[&BHYAAAA=]",
+	waypoint: "[&BHoHAAA=]",
 	title: "Gates of Maguuma Q1",
 	events: [
 		{
@@ -1622,7 +1622,7 @@ var GW2T_CHAIN_DATA = [
 {
 	alias: "StoryXXX1",
 	series: 4,
-	waypoint: "[&BHYAAAA=]",
+	waypoint: "[&BHoHAAA=]",
 	title: "Gates of Maguuma Q2",
 	events: [
 		{
@@ -1810,7 +1810,7 @@ var GW2T_CHAIN_DATA = [
 {
 	alias: "StoryXXX2",
 	series: 4,
-	waypoint: "[&BHYAAAA=]",
+	waypoint: "[&BHoHAAA=]",
 	title: "Gates of Maguuma Q3",
 	events: [
 		{
@@ -1994,12 +1994,12 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5460, 16243]],
-			name_en: "Carry and detonate explosives to demolish the cave-in debris while avoiding tunneling devourers.",
-			name_de: "Transportiert Sprengstoff und sprengt damit das Geröll, während Ihr Buddelnden Verschlingern ausweicht.",
-			name_es: "Coloca explosivos y detónalos para demoler los escombros de la cueva mientras evitas a los devoradores de los túneles.",
-			name_fr: "Apporter et utiliser des explosifs pour dégager les éboulis tout en évitant les dévoreurs tunneliers.",
-			icon: "cog",
+			path: [[5435, 16403]],
+			name_en: "Escort Haze to safety.",
+			name_de: "Bringt Dunst in Sicherheit.",
+			name_es: "Escolta a Bruma hasta un lugar seguro.",
+			name_fr: "Escorter Haze en lieu sûr.",
+			icon: "shield",
 			num: "3C",
 			sGotoNum: ["1#"],
 			fGotoNum: "1#",
@@ -2012,12 +2012,12 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5435, 16403]],
-			name_en: "Escort Haze to safety.",
-			name_de: "Bringt Dunst in Sicherheit.",
-			name_es: "Escolta a Bruma hasta un lugar seguro.",
-			name_fr: "Escorter Haze en lieu sûr.",
-			icon: "shield",
+			path: [[5460, 16243]],
+			name_en: "Carry and detonate explosives to demolish the cave-in debris while avoiding tunneling devourers.",
+			name_de: "Transportiert Sprengstoff und sprengt damit das Geröll, während Ihr Buddelnden Verschlingern ausweicht.",
+			name_es: "Coloca explosivos y detónalos para demoler los escombros de la cueva mientras evitas a los devoradores de los túneles.",
+			name_fr: "Apporter et utiliser des explosifs pour dégager les éboulis tout en évitant les dévoreurs tunneliers.",
+			icon: "cog",
 			num: "3D",
 			sGotoNum: ["1#"],
 			fGotoNum: "1#",
@@ -2066,7 +2066,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5225, 16389]],
+			path: [[5095, 16734]],
 			name_en: "Stop the skritt burglar before it escapes with the treasure.",
 			name_de: "Haltet die Skritt-Einbrecherin auf, bevor sie mit dem Schatz fliehen kann.",
 			name_es: "Detén a la ladrona skritt antes de que escape con el tesoro.",
@@ -2084,13 +2084,31 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5474, 16339], [5474, 16339]],
+			path: [[5225, 16389]],
 			name_en: "Stop the skritt burglar before it escapes with the treasure.",
 			name_de: "Haltet die Skritt-Einbrecherin auf, bevor sie mit dem Schatz fliehen kann.",
 			name_es: "Detén a la ladrona skritt antes de que escape con el tesoro.",
 			name_fr: "Empêcher la cambrioleuse skritt de s'échapper avec le trésor.",
 			icon: "cog",
 			num: "3H",
+			sGotoNum: ["1#"],
+			fGotoNum: "1#",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "40:00",
+			avg: "5:00",
+			min: "5:00",
+			max: "5:00",
+			primacy: 1
+		},
+		{
+			path: [[5474, 16339], [5474, 16339]],
+			name_en: "Stop the skritt burglar before it escapes with the treasure.",
+			name_de: "Haltet die Skritt-Einbrecherin auf, bevor sie mit dem Schatz fliehen kann.",
+			name_es: "Detén a la ladrona skritt antes de que escape con el tesoro.",
+			name_fr: "Empêcher la cambrioleuse skritt de s'échapper avec le trésor.",
+			icon: "cog",
+			num: "3I",
 			sGotoNum: ["1#"],
 			fGotoNum: "1#",
 			sInterim: ["0"],
@@ -2106,7 +2124,7 @@ var GW2T_CHAIN_DATA = [
 {
 	alias: "StoryXXX3",
 	series: 4,
-	waypoint: "[&BHYAAAA=]",
+	waypoint: "[&BHoHAAA=]",
 	title: "Gates of Maguuma Q4",
 	events: [
 		{
