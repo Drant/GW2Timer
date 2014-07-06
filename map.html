@@ -66,7 +66,8 @@ var GW2T_RESOURCE_DATA = {
 		[27720, 9664], // blazeridge
 		[29092, 9608], // blazeridge
 		[24681, 9350], // fireheart
-		[26973, 9894] // fireheart
+		[26946, 9879], // fireheart
+		[27050, 10067] // fireheart
 		], type: "Metal"
 	},
 	Mithril: {
@@ -250,7 +251,9 @@ var GW2T_COLLECTIBLE_DATA = {
 	// Must have same name as a Checklist object
 	Collectible0: 
 	{
-		name: "Dry Top Lost Coin",
+		name: "Coin Collector",
+		color: "yellow",
+		wiki: "http://wiki.guildwars2.com/wiki/Dry_Top_(achievements)",
 		needles: [
 		{n: 1, c: [5525, 16723]},
 		{n: 2, c: [5413, 16656]},
@@ -283,8 +286,54 @@ var GW2T_COLLECTIBLE_DATA = {
 		{n: 29, c: [5382, 16406]},
 		{n: 30, c: [5367, 16565]}
 		]
+	},
+	Collectible1: 
+	{
+		name: "Dive Master",
+		color: "cyan",
+		wiki: "http://wiki.guildwars2.com/wiki/Diving_Goggles",
+		needles: [
+		{n: 1, c: [15607, 15318]},
+		{n: 2, c: [13146, 15900]},
+		{n: 3, c: [15695, 13046]},
+		{n: 4, c: [16469, 12439]},
+		{n: 5, c: [14990, 14190]},
+		{n: 6, c: [16062, 12060]},
+		{n: 7, c: [14375, 9834]},
+		{n: 8, c: [16963, 16684]},
+		{n: 9, c: [26569, 15226]},
+		{n: 10, c: [28131, 15222]},
+		{n: 11, c: [26793, 13105]},
+		{n: 12, c: [25549, 11860]},
+		{n: 13, c: [29308, 16619]},
+		{n: 14, c: [30140, 17677]},
+		{n: 15, c: [27340, 13094]},
+		{n: 16, c: [28380, 12791]},
+		{n: 17, c: [25996, 10811]},
+		{n: 18, c: [5883, 21497]},
+		{n: 19, c: [10457, 21153]},
+		{n: 20, c: [10990, 17783]},
+		{n: 21, c: [8730, 17361]},
+		{n: 22, c: [8167, 19743]},
+		{n: 23, c: [7811, 15779]},
+		{n: 24, c: [8400, 15603]},
+		{n: 25, c: [21477, 21556]},
+		{n: 26, c: [21420, 21843]},
+		{n: 27, c: [22900, 13658]},
+		{n: 28, c: [23132, 14749]},
+		{n: 29, c: [17861, 17772]},
+		{n: 30, c: [18151, 16810]},
+		{n: 31, c: [19818, 18380]},
+		{n: 32, c: [20517, 20715]},
+		{n: 33, c: [22068, 9102]},
+		{n: 34, c: [16938, 23647]},
+		{n: 35, c: [16402, 24431]},
+		{n: 36, c: [11759, 23978]},
+		{n: 37, c: [11107, 28694]},
+		{n: 38, c: [11304, 26657]}
+		]
 	}
-}
+};
 </script>
 
 <div class="cntComposition">
@@ -452,7 +501,7 @@ Use your sword2/focus4 mesmer to do these quickly.
 <br />
 
 <h2><img src="img/daily/reviver.png" alt="Reviver" /> Reviver</h2>
-If there are others doing the daily, you should revive to 20% then move to the next body, so more people can get credit. * indicates the dead NPC icons are not shown on the minimap. If the NPCs are still alive, try to lure enemies to kill them. You can find more revive spots at <a href="http://google.com/search?num=100&amp;q=site%3Awiki.guildwars2.com+revive+%22Renown+NPC%22">Renown Hearts</a>.
+If there are others doing the daily, you should revive to 20% then move to the next body so more people can get credit. * indicates the dead NPC icons are not shown on the minimap. If the NPCs are still alive, try to lure enemies to kill them. Skills that <a href="http://wiki.guildwars2.com/wiki/Revive#Skills_that_revive_allies">revive allies</a> also works on NPCs. You can find more revive spots at <a href="http://google.com/search?num=100&amp;q=site%3Awiki.guildwars2.com+revive+%22Renown+NPC%22">Renown Hearts</a>.
 <dl id="mapDailyList_Reviver">
 	<dt data-coord="[8698, 20360]">Jetzar Falls</dt><dd>Metrica Obsolete SCRAP-BOTs</dd>
 	<dt data-coord="[7617, 17607]">Thaumanova Reactor</dt><dd>Metrica irradiated asura</dd>
@@ -606,11 +655,10 @@ A marathon of intricate jumps.
 <section>
 
 <div style="width:100%;height:32px"><button id="mapToggle_Collectible" class="cssRight">Toggle Icons</button></div>
-<p><strong>This section is still being worked on.</strong></p>
-<div id="mapCollectibleList">
-	<div id="mapCollectible_Collectible0"></div>
-</div>
-	
+<div id="mapCollectibleList"></div>
+<br />
+<p>Many achievements require you to go around the world to collect or interact with scattered or hidden landmarks or items. These are some of them, including the current Living Story ones if available. When in game, hold the Ctrl key to see the item's name appear.</p>
+<p>Every type of collectible is its own checklist. The map markers can be clicked three times to alternate between three ring colors representing an <em>Unfound</em>, <em>Tracked</em>, and <em>Found</em> state. Click Uncheck All to reset the rings for that collectible type.</p>
 </section>
 
 

@@ -74,7 +74,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140624},
+		programVersion: {key: "int_utlProgramVersion", value: 140705},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -280,11 +280,11 @@ O = {
 		if (O.URLArguments[I.URLKeyMode])
 		{
 			var mode = O.URLArguments[I.URLKeyMode];
-			for (i in I.programModeEnum)
+			for (i in I.ProgramModeEnum)
 			{
-				if (I.programModeEnum[i].toLowerCase() === mode.toLowerCase())
+				if (I.ProgramModeEnum[i].toLowerCase() === mode.toLowerCase())
 				{
-					I.programMode = I.programModeEnum[i];
+					I.ProgramMode = I.ProgramModeEnum[i];
 					ismodeset = true;
 					break;
 				}
@@ -292,7 +292,7 @@ O = {
 		}
 		if (ismodeset === false)
 		{
-			I.programMode = I.programModeEnum.Website;
+			I.ProgramMode = I.ProgramModeEnum.Website;
 		}
 	},
 	
@@ -482,7 +482,7 @@ O = {
 	 */
 	checkResetTimestamp: function()
 	{
-		var yesterdaysserverresettime = T.getUNIXSeconds() - T.getTimeOffsetSinceMidnight("utc", "seconds");
+		var yesterdaysserverresettime = T.getUNIXSeconds() - T.getTimeOffsetSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
 		
 		// Local reset timestamp is outdated if it's before yesterday's server reset time
 		if (O.Utilities.lastLocalResetTimestamp.value < yesterdaysserverresettime)
@@ -540,7 +540,7 @@ O = {
 			 * then URLArguments overrides Options only, and user preferences
 			 * (localStorage) will not modified.
 			 */
-			if (I.programMode === I.programModeEnum.Embedded)
+			if (I.ProgramMode === I.ProgramModeEnum.Embedded)
 			{
 				if (O.URLArguments[optionkey] !== undefined)
 				{
@@ -670,11 +670,11 @@ O = {
 			for (i in C.Chains)
 			{
 				chain = C.Chains[i];
-				$("#chnCheck_" + chain.alias).removeClass("chnChecked");
-				$("#barChain_" + chain.alias).css({opacity: 1});
-				if (X.getChecklistItem(X.Checklists.Chain, chain.index) !== X.ChecklistEnum.Disabled)
+				$("#chnCheck_" + chain.nexus).removeClass("chnChecked");
+				$("#barChain_" + chain.nexus).css({opacity: 1});
+				if (X.getChecklistItem(X.Checklists.Chain, chain.nexus) !== X.ChecklistEnum.Disabled)
 				{
-					$("#barChain_" + chain.alias).show();
+					$("#barChain_" + chain.nexus).show();
 				}
 			}
 			X.clearChecklist(X.Checklists.Chain, "uncheck");
@@ -772,18 +772,18 @@ O = {
 			for (var i in C.Chains)
 			{
 				chain = C.Chains[i];
-				$("#chnCheck_" + chain.alias).removeClass("chnChecked");
-				$("#barChain_" + chain.alias).show().css({opacity: 1});
+				$("#chnCheck_" + chain.nexus).removeClass("chnChecked");
+				$("#barChain_" + chain.nexus).show().css({opacity: 1});
 			}
 			X.clearChecklist(X.Checklists.Chain);
 			// Also unfade the clock icons, which are the current first four bosses
 			for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 			{
-				K.checkoffChainIcon(T.getStandardChain(i).index);
+				K.checkoffChainIcon(T.getStandardChain(i).nexus);
 				var chainhardcore = T.getHardcoreChain(i);
 				if (chainhardcore)
 				{
-					K.checkoffChainIcon(chainhardcore.index);
+					K.checkoffChainIcon(chainhardcore.nexus);
 				}
 			}
 			$("#menuChains").trigger("click");
@@ -835,7 +835,7 @@ O = {
 	{
 		$(".barChain").each(function()
 		{
-			if (X.getChecklistItem(X.Checklists.Chain, $(this).data("index"))
+			if (X.getChecklistItem(X.Checklists.Chain, I.getSubintegerFromHTMLID($(this)))
 				=== X.ChecklistEnum.Checked)
 			{
 				if (O.Options.bol_hideChecked)
@@ -860,8 +860,8 @@ O = {
 	},
 	enact_bol_compactClock: function()
 	{
-		if (I.programMode === I.programModeEnum.Simple
-			|| I.programMode === I.programModeEnum.Overlay)
+		if (I.ProgramMode === I.ProgramModeEnum.Simple
+			|| I.ProgramMode === I.ProgramModeEnum.Overlay)
 		{
 			return;
 		}
@@ -998,8 +998,8 @@ O = {
 	},
 	enact_bol_showClock: function()
 	{
-		if (I.programMode === I.programModeEnum.Simple
-			|| I.programMode === I.programModeEnum.Overlay)
+		if (I.ProgramMode === I.ProgramModeEnum.Simple
+			|| I.ProgramMode === I.ProgramModeEnum.Overlay)
 		{
 			return;
 		}
@@ -1085,7 +1085,8 @@ X = {
 	 * checked, and disabled states. These states are recorded as a single
 	 * character in a string of numbers representing those states, and the index
 	 * of a character is that checkbox's "ID". The Checklists object stores
-	 * checklists with such a string and a key for localStorage.
+	 * checklists with such a string and a key for localStorage, along with
+	 * supplementary objects.
 	 */
 	Checklists:
 	{
@@ -1101,14 +1102,20 @@ X = {
 			value: new Array(),
 			valueDefault: new Array()
 		},
-		Collectible0: { key: "str_chlLostCoins", value: "" }
+		// Collectible checklists must have the same variable name as in the map page's data
+		Collectible0: { key: "str_chlCoinCollector", value: "", cushion: new Array() },
+		Collectible1: { key: "str_chlDiveMaster", value: "", cushion: new Array() }
 	},
 	ChecklistEnum:
 	{
 		// Must be 1 character long
 		Unchecked: "0",
 		Checked: "1",
-		Disabled: "2"
+		Disabled: "2",
+		
+		Unfound: "0",
+		Tracked: "1",
+		Found: "2"
 	},
 	
 	/*
@@ -1142,18 +1149,44 @@ X = {
 	 * @param object pChecklist to modify.
 	 * @param int pIndex of the character in the string.
 	 * @param string pCharacter to replace the current.
-	 * @returns string new checklist to be assigned to a checklist variable.
 	 */
 	setChecklistItem: function(pChecklist, pIndex, pCharacter)
 	{
-		// A character must be length 1 and different from the current
+		pIndex = parseInt(pIndex);
 		var thechar = pCharacter.toString();
+		// A character must be length 1 and different from the current
 		if (thechar.length === 1 && pChecklist.value[pIndex] !== thechar)
 		{
 			var checklist = O.replaceCharAt(pChecklist.value, pIndex, thechar);
 			localStorage[pChecklist.key] = checklist;
 			pChecklist.value = checklist;
 		}
+	},
+	
+	/*
+	 * Toggles a character in a checklist string and updates the localStorage
+	 * between three possible states.
+	 * @param object pChecklist to modify.
+	 * @param int pIndex of the character in the string.
+	 * @returns enum the new state.
+	 */
+	trackChecklistItem: function(pChecklist, pIndex)
+	{
+		pIndex = parseInt(pIndex);
+		var thechar = pChecklist.value.charAt(pIndex);
+		switch (thechar)
+		{
+			case X.ChecklistEnum.Unfound: thechar = X.ChecklistEnum.Tracked; break;
+			case X.ChecklistEnum.Tracked: thechar = X.ChecklistEnum.Found; break;
+			case X.ChecklistEnum.Found: thechar = X.ChecklistEnum.Unfound; break;
+			default: thechar = X.ChecklistEnum.Unfound;
+		}
+		
+		var checklist = O.replaceCharAt(pChecklist.value, pIndex, thechar);
+		localStorage[pChecklist.key] = checklist;
+		pChecklist.value = checklist;
+		
+		return thechar;
 	},
 	
 	/*
@@ -1177,6 +1210,7 @@ X = {
 		}
 		if (pConversion === "boolean")
 		{
+			// Returns false only if unchecked
 			return O.intToBool(parseInt(thechar));
 		}
 		return thechar;
@@ -1360,12 +1394,12 @@ X = {
 		{
 			chain = C.Chains[i];
 			
-			var bar = $("#barChain_" + chain.alias);
-			var check = $("#chnCheck_" + chain.alias);
-			var time = $("#chnTime_" + chain.alias);
+			var bar = $("#barChain_" + chain.nexus);
+			var check = $("#chnCheck_" + chain.nexus);
+			var time = $("#chnTime_" + chain.nexus);
 			
 			// Set the checkbox visual state as stored
-			switch (X.getChecklistItem(X.Checklists.Chain, chain.index))
+			switch (X.getChecklistItem(X.Checklists.Chain, chain.nexus))
 			{
 				case X.ChecklistEnum.Unchecked:
 				{
@@ -1387,7 +1421,7 @@ X = {
 			}
 			
 			// Set the time visual state as stored (subscribed or not)
-			if (X.getChecklistItem(X.Checklists.ChainSubscription, chain.index) ===
+			if (X.getChecklistItem(X.Checklists.ChainSubscription, chain.nexus) ===
 					X.ChecklistEnum.Checked)
 			{
 				time.addClass("chnTimeSubscribed");
@@ -1398,17 +1432,17 @@ X = {
 			 */
 			time.click(function()
 			{
-				var index = $(this).data("index");
+				var nexus = I.getSubintegerFromHTMLID($(this));
 				
-				if (X.getChecklistItem(X.Checklists.ChainSubscription, index) === X.ChecklistEnum.Checked)
+				if (X.getChecklistItem(X.Checklists.ChainSubscription, nexus) === X.ChecklistEnum.Checked)
 				{
 					$(this).removeClass("chnTimeSubscribed");
-					X.setChecklistItem(X.Checklists.ChainSubscription, index, X.ChecklistEnum.Unchecked);
+					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Unchecked);
 				}
 				else
 				{
 					$(this).addClass("chnTimeSubscribed");
-					X.setChecklistItem(X.Checklists.ChainSubscription, index, X.ChecklistEnum.Checked);
+					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
 				}
 			});
 			
@@ -1417,38 +1451,37 @@ X = {
 			 */
 			check.click(function()
 			{
-				// The ID was named so by the chain initializer, get the chain alias
-				var alias = I.getIndexFromHTMLID($(this));
-				var index = $(this).data("index");
-				var thisbar = $("#barChain_" + alias);
+				// The ID was named so by the chain initializer, get the chain nexus
+				var nexus = I.getSubintegerFromHTMLID($(this));
+				var thisbar = $("#barChain_" + nexus);
 				// State of the div is stored in the Checklist object rather in the element itself
-				switch (X.getChecklistItem(X.Checklists.Chain, index))
+				switch (X.getChecklistItem(X.Checklists.Chain, nexus))
 				{
 					case X.ChecklistEnum.Unchecked:
 					{
 						thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
-						$("#chnDetails_" + alias).hide("fast");
+						$("#chnDetails_" + nexus).hide("fast");
 						$(this).addClass("chnChecked");
-						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Checked);
+						X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Checked);
 					} break;
 					case X.ChecklistEnum.Checked:
 					{
 						thisbar.css({opacity: 1}).show("fast");
 						thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
-						$("#chnDetails_" + alias).show("fast");
+						$("#chnDetails_" + nexus).show("fast");
 						$(this).removeClass("chnChecked");
-						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Unchecked);
+						X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
 					} break;
 					case X.ChecklistEnum.Disabled:
 					{
 						thisbar.css({opacity: 1}).show("fast");
-						$("#chnDetails_" + alias).show("fast");
+						$("#chnDetails_" + nexus).show("fast");
 						$(this).removeClass("chnChecked");
-						X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Unchecked);
+						X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
 					} break;
 				}
 				// Also autohide the chain bar if opted
-				if (X.getChecklistItem(X.Checklists.Chain, index) === X.ChecklistEnum.Checked)
+				if (X.getChecklistItem(X.Checklists.Chain, nexus) === X.ChecklistEnum.Checked)
 				{
 					if (O.Options.bol_hideChecked)
 					{
@@ -1460,21 +1493,20 @@ X = {
 					}
 				}
 				// Update the icons on the clock too
-				K.checkoffChainIcon(index);
+				K.checkoffChainIcon(nexus);
 			});
 			
 			// Bind the delete chain text button [x]
-			$("#chnDelete_" + chain.alias).click(function()
+			$("#chnDelete_" + chain.nexus).click(function()
 			{
-				var alias = I.getIndexFromHTMLID($(this));
-				var index = $(this).data("index");
-				var thisbar = $("#barChain_" + alias);
+				var nexus = I.getSubintegerFromHTMLID($(this));
+				var thisbar = $("#barChain_" + nexus);
 
 				thisbar.hide("slow");
-				X.setChecklistItem(X.Checklists.Chain, index, X.ChecklistEnum.Disabled);
+				X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Disabled);
 				
 				// Also update the clock icon
-				K.checkoffChainIcon(index);
+				K.checkoffChainIcon(nexus);
 			});
 		}
 	},
@@ -1486,7 +1518,7 @@ X = {
 	 */
 	getChainChecklistState: function(pChain)
 	{
-		return X.getChecklistItem(X.Checklists.Chain, pChain.index);
+		return X.getChecklistItem(X.Checklists.Chain, pChain.nexus);
 	},
 	
 	/*
@@ -1682,6 +1714,7 @@ X = {
 		
 		var updateStoredText = function()
 		{
+			// This regex is for removing all delimiter character from user input
 			var regex = "/\\" + I.cTextDelimiter + "/g";
 			// Read every text fields and rewrite the string of substrings again
 			$("#chlCustom input:text").each(function(pIndex)
@@ -1877,7 +1910,7 @@ D = {
 		D.translatePageHeader(I.PageEnum.Options);
 	},
 		
-	// Must be in the same order as the chain indexes
+	// Must be in the same order as the chain nexuses
 	ChainTitle: [
 	{
 		en: "Fire Elemental",
@@ -2155,7 +2188,7 @@ D = {
 	 * @param int pIndex of chain.
 	 * @returns string short title.
 	 */
-	getChainNick: function(pIndex)
+	getChainAlias: function(pIndex)
 	{
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
 		{
@@ -2280,9 +2313,9 @@ D = {
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default
 			|| I.userBrowser !== I.BrowserEnum.Chrome)
 		{
-			return C.Chains[pChain.index].pronunciation;
+			return C.Chains[pChain.nexus].pronunciation;
 		}
-		return D.getChainTitle(pChain.index);
+		return D.getChainTitle(pChain.nexus);
 	}
 };
 
@@ -2297,6 +2330,8 @@ C = {
 	 * This is referred to by the variable "C.Chains".
 	 */
 	Chains: GW2T_CHAIN_DATA,
+	// The word and variable "nexus" is simply a chain's index number in the Chains array
+	cIndexSynonym: "nexus",
 	CurrentChainSD: {},
 	NextChainSD1: {},
 	NextChainSD2: {},
@@ -2312,11 +2347,14 @@ C = {
 	PreviousChains2: [],
 	NextChains1: [],
 	cChainTitleCharLimit: 30,
+	ScheduledChains: [],
+	LegacyChains: [],
+	TempleChains: [],
 	ChainSeriesEnum:
 	{
 		Temple: 0, // Unscheduled Orr temples
 		Legacy: 1, // Unscheduled chains that still gives a rare
-		ScheduledCutoff: 2,
+		ScheduledCutoff: 1,
 		Standard: 2, // Scheduled non-hardcore chains
 		Hardcore: 3, // Scheduled challenging chains with a separate schedule from non-hardcores
 		Story: 4 // Scheduled Living Story chains
@@ -2337,20 +2375,18 @@ C = {
 	},
 	
 	/*
-	* Gets a chain object from the big chain object array.
-	* @param string pAlias alias of the chain.
-	* @returns object chain.
-	*/
-	getChainFromAlias: function(pAlias)
+	 * Tells if a chain is timed by the schedule.
+	 * @param object pChain to check.
+	 * @returns boolean true if scheduled else false.
+	 */
+	isChainScheduled: function(pChain)
 	{
-		for (var i in C.Chains)
+		if (pChain.series > C.ChainSeriesEnum.ScheduledCutoff)
 		{
-			if (C.Chains[i].alias === pAlias)
-			{
-				return C.Chains[i];
-			}
+			return true;
 		}
-	 },
+		return false;
+	},
 	
 	/*
 	 * Returns the substring before the "XXX" delimiter in a chain alias.
@@ -2411,6 +2447,16 @@ C = {
 		}
 		return pString;
 	},
+	
+	/*
+	 * Sets the chain bar icon to the proper.
+	 * @param object pChain to reference.
+	 */
+	styleBarIcon: function(pChain)
+	{
+		document.getElementById("chnIcon_" + pChain.nexus).src = "img/chain/"
+			+ C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG;
+	},
 
 	/*
 	 * Initializes the chain HTML layer presentation with chains and their
@@ -2422,15 +2468,35 @@ C = {
 	{
 		var i, ii;
 		var event;
-		var chainhtmlid = "";
+		var chainlistid = "";
 		
 		switch (pChain.series)
 		{
-			case C.ChainSeriesEnum.Standard: chainhtmlid = "#listChainsScheduled"; break;
-			case C.ChainSeriesEnum.Hardcore: chainhtmlid = "#listChainsScheduled"; break;
-			case C.ChainSeriesEnum.Story: chainhtmlid = "#listChainsScheduled"; break;
-			case C.ChainSeriesEnum.Legacy: chainhtmlid = "#listChainsUnscheduled"; break;
-			case C.ChainSeriesEnum.Temple: chainhtmlid = "#listChainsTemple"; break;
+			case C.ChainSeriesEnum.Standard:
+			{
+				chainlistid = "#listChainsScheduled";
+				C.ScheduledChains.push(pChain);
+			} break;
+			case C.ChainSeriesEnum.Hardcore:
+			{
+				chainlistid = "#listChainsScheduled";
+				C.ScheduledChains.push(pChain);
+			} break;
+			case C.ChainSeriesEnum.Story:
+			{
+				chainlistid = "#listChainsScheduled";
+				C.ScheduledChains.push(pChain);
+			} break;
+			case C.ChainSeriesEnum.Legacy:
+			{
+				chainlistid = "#listChainsLegacy";
+				C.LegacyChains.push(pChain);
+			} break;
+			case C.ChainSeriesEnum.Temple:
+			{
+				chainlistid = "#listChainsTemple";
+				C.TempleChains.push(pChain);
+			} break;
 		}
 		
 		/*
@@ -2438,25 +2504,30 @@ C = {
 		 * chain title, time, individual events listed, and other elements.
 		 * Lots of CSS IDs and classes here, so update if the CSS changed.
 		 */
-		$(chainhtmlid).append(
-		"<div id='barChain_" + pChain.alias + "' class='barChain' data-index='" + pChain.index + "'>"
+		$(chainlistid).append(
+		"<div id='barChain_" + pChain.nexus + "' class='barChain'>"
 			+ "<div class='chnTitle'>"
-				+ "<img src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
-				+ "<div id='chnCheck_" + pChain.alias + "' class='chnCheck' data-index='" + pChain.index + "'></div>"
-				+ "<h1>" + C.truncateTitleString(D.getChainTitle(pChain.index), C.cChainTitleCharLimit) + "</h1>"
-				+ "<time class='chnTimeFutureFar' id='chnTime_" + pChain.alias + "' data-index='" + pChain.index + "'></time>"
+				+ "<img id='chnIcon_" + pChain.nexus + "' src='' />"
+				+ "<div id='chnCheck_" + pChain.nexus + "' class='chnCheck'></div>"
+				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + C.truncateTitleString(D.getChainTitle(pChain.nexus), C.cChainTitleCharLimit) + "</h1>"
+				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
 			+ "</div>"
-			+ "<div id='chnDetails_" + pChain.alias + "' class='chnDetails'>"
-				+ "<ol id='chnEvents_" + pChain.alias + "' class='chnEvents'></ol>"
+			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
+				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsLinks'>"
-					+ "<ins id='chnDelete_" + pChain.alias + "' data-index='" + pChain.index + "' title='Permanently hide this event chain (can undo in Options).'>[x]</ins>"
+					+ "<ins id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options).'>[x]</ins>"
 				+ "</div>"
 		+ "</div>");
+		// Initially only show/download icons for the scheduled chains list
+		if (C.isChainScheduled(pChain))
+		{
+			C.styleBarIcon(pChain);
+		}
 
 		/*
 		 * Inserts an event with icon and necessary indentation into the ol.
 		 * @param string pEventListHTMLID of the ordered list.
-		 * @param object pEvent to extract data.
+		 * @param object pEvent to extract information.
 		 */
 		var insertEventToBarHTML = function(pChain, pEvent)
 		{
@@ -2513,8 +2584,8 @@ C = {
 					indentEvent();
 				}
 			}
-			$("#chnEvents_" + pChain.alias).append(
-			"<li id='chnEvent_" + pChain.alias + "_" + e.num + "' class='chnStep_" + pChain.alias + "_" + e.step + "' style='margin-left:" + indentpixel +"px'>"
+			$("#chnEvents_" + pChain.nexus).append(
+			"<li id='chnEvent_" + pChain.nexus + "_" + e.num + "' class='chnStep_" + pChain.nexus + "_" + e.step + "' style='margin-left:" + indentpixel +"px'>"
 				+ "<img src='img/event/" + e.icon + I.cPNG + "' title='" + eventhtmltitle + "'/>"
 				+ "<span>" + C.truncateTitleString(D.getEventName(e), eventnamelimit, "..") + "</span>"
 			+ "</li>");
@@ -2581,8 +2652,7 @@ C = {
 		 */
 		ii = 0;
 		// Unscheduled events don't need queued accessing
-		if (pChain.series === C.ChainSeriesEnum.Temple
-			|| pChain.series === C.ChainSeriesEnum.Legacy)
+		if ( ! C.isChainScheduled(pChain))
 		{
 			for (i in pChain.events)
 			{
@@ -2591,8 +2661,6 @@ C = {
 		}
 		else // Scheduled events need to remember concurrent events
 		{
-			C.ScheduledChains.push(pChain); // Initialize the shortcut reference array
-			
 			for (i in pChain.events)
 			{
 				// Ignore failure events and optional defense events
@@ -2637,7 +2705,7 @@ C = {
 				C.Chains[i].events[ii].step = parseInt(C.getEventStepNumber(C.Chains[i].events[ii].num)) - 1;
 			}
 			
-			C.Chains[i].index = parseInt(i);
+			C.Chains[i].nexus = parseInt(i);
 			C.Chains[i].isSorted = false;
 			C.Chains[i].primaryEvents = new Array();
 			C.Chains[i].scheduleKeys = new Array();
@@ -2650,7 +2718,7 @@ C = {
 	},
 	
 	/*
-	 * Tells if a chain is an active on the chains list.
+	 * Tells if a chain is active on the chain bars list.
 	 * @param object pChain to verify.
 	 * @returns boolean current or not.
 	 */
@@ -2658,7 +2726,7 @@ C = {
 	{
 		for (var i in C.CurrentChains)
 		{
-			if (pChain.alias === C.CurrentChains[i].alias)
+			if (pChain.nexus === C.CurrentChains[i].nexus)
 			{
 				return true;
 			}
@@ -2687,7 +2755,7 @@ C = {
 	 */
 	isChainSubscribed: function(pChain)
 	{
-		if (X.getChecklistItem(X.Checklists.ChainSubscription, pChain.index) ===
+		if (X.getChecklistItem(X.Checklists.ChainSubscription, pChain.nexus) ===
 			X.ChecklistEnum.Checked)
 		{
 			return true;
@@ -2715,7 +2783,7 @@ C = {
 						pChain.scheduleKeys[ii])
 				});
 		}
-		$("#chnTime_" + pChain.alias).prop("title", minischedulestring);
+		$("#chnTime_" + pChain.nexus).prop("title", minischedulestring);
 	},
 	
 	/*
@@ -2751,7 +2819,7 @@ C = {
 				} break;
 			}
 			
-			$("#chnTime_" + ithchain.alias).text(T.getTimeFormatted(
+			$("#chnTime_" + ithchain.nexus).text(T.getTimeFormatted(
 				{
 					wantLetters: wantletters,
 					wantSeconds: false,
@@ -2786,7 +2854,7 @@ C = {
 			sign = "−";
 		}
 		
-		$("#chnTime_" + pChain.alias).text(sign + T.getTimeFormatted(
+		$("#chnTime_" + pChain.nexus).text(sign + T.getTimeFormatted(
 			{
 				want24: true,
 				wantHours: false,
@@ -2830,7 +2898,7 @@ C = {
 				"<div class='barChainDummy barChainDummy_" + i + "'>"
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
-						+ "<h1>" + C.truncateTitleString(D.getChainTitleAny(ithchain.index), C.cChainTitleCharLimit) + "</h1>"
+						+ "<h1>" + C.truncateTitleString(D.getChainTitleAny(ithchain.nexus), C.cChainTitleCharLimit) + "</h1>"
 						+ "<time>" + timestring + "</time>"
 					+ "</div>"
 				+ "</div>");
@@ -2841,6 +2909,8 @@ C = {
 			.addClass("chnBarCurrent");
 		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey() + " .chnTitle h1")
 			.addClass("chnTitleCurrent");
+		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(1) + " .chnTitle h1")
+			.addClass("chnTitleFuture");
 	},
    
 	/*
@@ -2877,7 +2947,7 @@ C = {
 				ithchain = chains[ii];
 				if (ithchain.isSorted === false)
 				{
-					$("#barChain_" + ithchain.alias).appendTo("#listChainsScheduled");
+					$("#barChain_" + ithchain.nexus).appendTo("#listChainsScheduled");
 					ithchain.isSorted = true;
 					ithchain.scheduleKeyImmediate = T.getTimeframeKey(i);
 					numchainssorted++;
@@ -2919,17 +2989,17 @@ C = {
 		{
 			ithchain = C.CurrentChains[i];
 			// Highlight and show the current chain bar
-			$("#barChain_" + ithchain.alias).addClass("chnBarCurrent");
+			$("#barChain_" + ithchain.nexus).addClass("chnBarCurrent");
 			// Show the current chain's pre events (details)
 			if (C.isChainUnchecked(ithchain))
 			{
-				$("#chnDetails_" + ithchain.alias).show("fast");
+				$("#chnDetails_" + ithchain.nexus).show("fast");
 			}
 			
 			// Style the title and time
-			$("#barChain_" + ithchain.alias + " h1").first()
+			$("#barChain_" + ithchain.nexus + " h1").first()
 				.removeClass("chnTitleFuture chnTitleFutureFar").addClass("chnTitleCurrent");
-			$("#barChain_" + ithchain.alias + " time").first()
+			$("#barChain_" + ithchain.nexus + " time").first()
 				.removeClass("chnTimeFuture chnTimeFutureFar").addClass("chnTimeCurrent");
 		}
 
@@ -2937,14 +3007,14 @@ C = {
 		{
 			ithchain = C.PreviousChains1[i];
 			// Still highlight the previous chain bar but collapse it
-			$("#barChain_" + ithchain.alias)
+			$("#barChain_" + ithchain.nexus)
 				.removeClass("chnBarCurrent").addClass("chnBarPrevious");
-			$("#chnDetails_" + ithchain.alias).hide();
+			$("#chnDetails_" + ithchain.nexus).hide();
 			
 			// Style the title and time
-			$("#barChain_" + ithchain.alias + " h1").first()
+			$("#barChain_" + ithchain.nexus + " h1").first()
 				.removeClass("chnTitleCurrent").addClass("chnTitleFutureFar");
-			$("#barChain_" + ithchain.alias + " time").first()
+			$("#barChain_" + ithchain.nexus + " time").first()
 				.removeClass("chnTimeCurrent").addClass("chnTimeFutureFar");
 		}
 		
@@ -2952,16 +3022,16 @@ C = {
 		{
 			ithchain = C.PreviousChains2[i];
 			// Stop highlighting the previous previous chain bar
-			$("#barChain_" + ithchain.alias).removeClass("chnBarPrevious");
+			$("#barChain_" + ithchain.nexus).removeClass("chnBarPrevious");
 		}
 		
 		for (i in C.NextChains1)
 		{
 			ithchain = C.NextChains1[i];
 			// Style the title and time
-			$("#barChain_" + ithchain.alias + " h1").first()
+			$("#barChain_" + ithchain.nexus + " h1").first()
 				.removeClass("chnTitleFutureFar").addClass("chnTitleFuture");
-			$("#barChain_" + ithchain.alias + " time").first()
+			$("#barChain_" + ithchain.nexus + " time").first()
 				.removeClass("chnTimeFutureFar").addClass("chnTimeFuture");
 		}
 		
@@ -2970,10 +3040,14 @@ C = {
 			.removeClass("chnBarCurrent");
 		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey())
 			.addClass("chnBarCurrent");
+		// Current chain title
 		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(-1) + " .chnTitle h1")
 			.removeClass("chnTitleCurrent");
 		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey() + " .chnTitle h1")
-			.addClass("chnTitleCurrent");
+			.removeClass("chnTitleFuture").addClass("chnTitleCurrent");
+		// Future chain title
+		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(1) + " .chnTitle h1")
+			.addClass("chnTitleFuture");
 	},
 	
 	/*
@@ -3093,14 +3167,14 @@ C = {
 			// Recolor past events
 			for (i = 0; i < pPrimaryEventIndex; i++)
 			{
-				$(".chnStep_" + pChain.alias + "_" + i)
+				$(".chnStep_" + pChain.nexus + "_" + i)
 					.removeClass("chnEventCurrent").addClass("chnEventPast");
 			}
-			$(".chnStep_" + pChain.alias + "_" + (pPrimaryEventIndex - 1))
+			$(".chnStep_" + pChain.nexus + "_" + (pPrimaryEventIndex - 1))
 				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
 			
 			// Recolor current events and animate transition
-			$(".chnStep_" + pChain.alias + "_" + pPrimaryEventIndex)
+			$(".chnStep_" + pChain.nexus + "_" + pPrimaryEventIndex)
 				.removeClass("chnEventPast chnEventFuture").addClass("chnEventCurrent")
 				.css({width: 0, opacity: 0.5}).animate({width: eventnamewidth, opacity: 1}, animationspeed)
 				.css({width: "auto"});
@@ -3110,7 +3184,7 @@ C = {
 			{
 				for (i = (pPrimaryEventIndex + 1); i < pChain.primaryEvents.length; i++)
 				{
-					$(".chnStep_" + pChain.alias + "_" + i)
+					$(".chnStep_" + pChain.nexus + "_" + i)
 						.removeClass("chnEventCurrent").addClass("chnEventFuture");
 				}
 			}
@@ -3120,7 +3194,7 @@ C = {
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain)
 				&& pChain.series !== C.ChainSeriesEnum.Story)
 			{
-				$("#chnEvent_" + pChain.alias + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
+				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
 		}
 		else // Finish time
@@ -3128,9 +3202,9 @@ C = {
 			pChain.CurrentPrimaryEvent = pChain.primaryEvents[finalstep];
 			
 			// Recolor all events
-			$("#chnEvents_" + pChain.alias + " li").removeClass("chnEventCurrent").addClass("chnEventPast");
+			$("#chnEvents_" + pChain.nexus + " li").removeClass("chnEventCurrent").addClass("chnEventPast");
 			// Recolor current (final) events as past
-			$(".chnStep_" + pChain.alias + "_" + finalstep)
+			$(".chnStep_" + pChain.nexus + "_" + finalstep)
 				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
 			
 			/*
@@ -3138,7 +3212,7 @@ C = {
 			 * not past the timeframe, and the subscription option is off.
 			 */
 			if (O.Options.bol_enableSound && O.Options.bol_alertAtEnd && I.isProgramLoaded
-				&& pChain.alias === C.CurrentChainSD.alias
+				&& pChain.nexus === C.CurrentChainSD.nexus
 				&& pChain.series !== C.ChainSeriesEnum.Story
 				&& O.Options.bol_alertSubscribed === false)
 			{
@@ -3194,7 +3268,7 @@ C = {
 	 */
 	getSumBasedOnOptions: function(pChain, pIndex)
 	{
-		var hour = T.getTimeOffsetSinceMidnight("server", "hours");
+		var hour = T.getTimeOffsetSinceMidnight(T.ReferenceEnum.Server, T.UnitEnum.Hours);
 		
 		if (pIndex > -1)
 		{
@@ -3882,7 +3956,7 @@ M = {
 					M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.cLEAFLET_ICON_SIZE);
 				}
 				// Tour to the event on the map if opted
-				$("#chnEvent_" + C.CurrentChainSD.alias + "_"
+				$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
 					+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
 			}
 			/*
@@ -3892,7 +3966,7 @@ M = {
 			I.qTip.init(".leaflet-marker-icon");
 		}).fail(function()
 		{
-			if (I.programMode === I.programModeEnum.Website)
+			if (I.ProgramMode === I.ProgramModeEnum.Website)
 			{
 				I.write(
 				"Guild Wars 2 API server is unreachable.<br />"
@@ -4011,7 +4085,7 @@ M = {
 					// jQuery thinks the period is a class, escape it
 					eventnum = eventnum.replace(".", "\\.");
 				}
-				$("#chnEvent_" + chain.alias + "_" + eventnum).each(function()
+				$("#chnEvent_" + chain.nexus + "_" + eventnum).each(function()
 				{
 					// Assign a data attribute to the event name
 					var coord = event.path[0];
@@ -4097,7 +4171,7 @@ M = {
 			M.bindMapLinkBehavior($(this), null);
 			
 			var coord = M.getElementCoordinates($(this));
-			var type = I.getIndexFromHTMLID($(this).parent());
+			var type = I.getSubstringFromHTMLID($(this).parent());
 			var marker = L.marker(M.convertGCtoLC(coord),
 			{
 				title: "<div class='mapLoc'><dfn>Daily:</dfn> " + type + "</div>"
@@ -4200,7 +4274,7 @@ M = {
 		{
 			$("#nod_" + i).change(function()
 			{
-				var thisresource = I.getIndexFromHTMLID($(this));
+				var thisresource = I.getSubstringFromHTMLID($(this));
 				M.setEntityGroupDisplay(M.Resources[thisresource].NodeEntities, $(this).prop("checked"));
 			});
 		}
@@ -4269,7 +4343,7 @@ M = {
 		{
 			$("#mapJP_" + i).each(function()
 			{
-				createJPMarkers($(this), I.getIndexFromHTMLID($(this)),
+				createJPMarkers($(this), I.getSubstringFromHTMLID($(this)),
 					$(this).parent().data("jpdif"));
 			});
 		}
@@ -4294,12 +4368,12 @@ M = {
 		{
 			var term = $(this).text();
 			$(this).after("&nbsp;<cite><a href='"
-				+ I.getYouTubeLink(term + " Guild Wars 2") + "' target='_blank'>[Y]</a> <a href='"
+				+ I.getYouTubeLink(term + " " + I.cGameName) + "' target='_blank'>[Y]</a> <a href='"
 				+ I.getWikiLink(term) + "' target='_blank'>[W]</a></cite>");
 			M.bindMapLinkBehavior($(this), null);
 			
 			// Make checkboxes
-			$(this).after("<label><input type='checkbox' id='mapJPCheck_" + I.getIndexFromHTMLID($(this)) + "' /></label>");
+			$(this).after("<label><input type='checkbox' id='mapJPCheck_" + I.getSubstringFromHTMLID($(this)) + "' /></label>");
 		});
 		I.convertExternalLink(".mapJPList a");
 		
@@ -4331,7 +4405,7 @@ M = {
 			{
 				// Get the checkbox ID that associates itself with that JP
 				var checkboxstate = X.getCheckboxEnumState($(this));
-				var checkboxindex = parseInt(I.getIndexFromHTMLID($(this)));
+				var checkboxindex = I.getSubintegerFromHTMLID($(this));
 				if (checkboxstate === X.ChecklistEnum.Unchecked)
 				{
 					$(this).parent().prev().removeClass("mapJPListNameHover");
@@ -4402,40 +4476,53 @@ M = {
 	},
 	
 	/*
+	 * Styles the border color of collectible markers based on state.
+	 * @param object pMarker to recolor.
+	 * @param enum pState for color.
+	 */
+	styleCollectibleMarker: function(pMarker, pState)
+	{
+		switch (pState)
+		{
+			case X.ChecklistEnum.Unfound: pMarker._icon.style.border = "2px solid lime"; break;
+			case X.ChecklistEnum.Tracked: pMarker._icon.style.border = "2px solid red"; break;
+			case X.ChecklistEnum.Found: pMarker._icon.style.border = "2px solid white"; break;
+		}
+	},
+	
+	/*
 	 * Populates the map with collectible markers and create HTML checkboxes
-	 * to toggle their display on the map. The markers themselves act as
-	 * checklist checkboxes to tracking collected ones.
+	 * to toggle their display on the map. Each collectible type has a "cushion"
+	 * array to store "needle" markers, which act as checkboxes in the map.
 	 */
 	generateAndInitializeCollectibles: function()
 	{
 		M.Collectibles = GW2T_COLLECTIBLE_DATA; // This object is embedded in the map HTML file
 		var i, ii;
-		var collectible;
+		var ithcollectible;
+		var ithneedle;
+		var stateinstring;
 		var marker;
 		
-		var styleMarker = function(pMarker, pIndex)
+		var styleMarker = function(pMarker, pIndex, pState, pColor)
 		{
 			pMarker.setIcon(new L.divIcon(
 			{
 				className: "mapNeedle",
-				html: pIndex,
+				html: "<span style='color:" + pColor + "'>" + (parseInt(pIndex) + 1) + "</span>",
 				iconSize: [16, 16],
 				iconAnchor: [8, 8]
 			}));
 			pMarker._icon.style.borderRadius = "16px";
 			pMarker._icon.style.opacity = "0.9";
-			pMarker._icon.style.border = "2px solid lime";
+			M.styleCollectibleMarker(pMarker, pState);
 			
 			pMarker.on("click", function(pEvent)
 			{
-				if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
-				{
-					M.Map.setZoom(M.ZoomLevelEnum.Default);
-				}
-				else
-				{
-					M.Map.setView(pEvent.latlng, M.ZoomLevelEnum.Max);
-				}
+				var type = this.options.needleType;
+				var index = this.options.needleIndex;
+				var newstate = X.trackChecklistItem(X.Checklists[type], index);
+				M.styleCollectibleMarker(this, newstate);
 			});
 			
 			M.bindMarkerZoomBehavior(pMarker, "dblclick");
@@ -4446,34 +4533,57 @@ M = {
 			X.Checklists[i].length = M.Collectibles[i].needles.length;
 			X.initializeChecklist(X.Checklists[i], X.Checklists[i].length);
 		
-			collectible = M.Collectibles[i];
-			collectible.NeedleEntities = new Array();
+			ithcollectible = M.Collectibles[i];
+			ithcollectible.NeedleEntities = new Array();
 			
-			for (ii in collectible.needles)
+			for (ii in ithcollectible.needles)
 			{
-				marker = L.marker(M.convertGCtoLC(collectible.needles[ii].c)).addTo(M.Map);
-				styleMarker(marker, collectible.needles[ii].n);
-				// Add to array
-				collectible.NeedleEntities.push(marker);
+				/*
+				 * Read and enact the state of the ith collectible checklist.
+				 */
+				ithneedle = ithcollectible.needles[ii];
+				stateinstring = X.getChecklistItem(X.Checklists[i], ii);
+				
+				marker = L.marker(M.convertGCtoLC(ithneedle.c),
+				{
+					needleIndex: ii,
+					needleType: i
+				}).addTo(M.Map);
+				styleMarker(marker, ii, stateinstring, ithcollectible.color);
+				// Add to arrays
+				X.Checklists[i].cushion.push(marker);
+				ithcollectible.NeedleEntities.push(marker);
 			}
-		}
-		
-		// Create checkboxes
-		for (i in M.Collectibles)
-		{
-			collectible = M.Collectibles[i];
-			$("#mapCollectible_" + i).append(
-				"<label><input id='ned_" + i + "' type='checkbox' /> " + collectible.name + "</label>");
-		}
-		// Bind checkboxes
-		for (i in M.Collectibles)
-		{
+			
+			// Create checkboxes
+			ithcollectible = M.Collectibles[i];
+			$("#mapCollectibleList").append(
+				"<div><label style='color:" + ithcollectible.color + "'><input id='ned_" + i + "' type='checkbox' /> " + ithcollectible.name + "</label>"
+				+ "<span class='cssRight'><cite>"
+					+ "<a href='" + I.getYouTubeLink(ithcollectible.name + " " + I.cGameName) + "'>[Y]</a>&nbsp;"
+					+ "<a href='" + ithcollectible.wiki + "'>[W]</a>&nbsp;&nbsp;-&nbsp;&nbsp;</cite>"
+					+ "<a id='nedUncheck_" + i + "' class='cssRight'>Uncheck All</a>"
+				+ "</span></div>");
+			
+			// Bind checkboxes
 			$("#ned_" + i).change(function()
 			{
-				var thiscollectible = I.getIndexFromHTMLID($(this));
-				M.setEntityGroupDisplay(M.Collectibles[thiscollectible].NeedleEntities, $(this).prop("checked"));
+				var collectibletype = I.getSubstringFromHTMLID($(this));
+				M.setEntityGroupDisplay(M.Collectibles[collectibletype].NeedleEntities, $(this).prop("checked"));
+			});
+			$("#nedUncheck_" + i).click(function()
+			{
+				var collectibletype = I.getSubstringFromHTMLID($(this));
+				var thiscushion = X.Checklists[collectibletype].cushion;
+				for (var thisi in thiscushion)
+				{
+					M.styleCollectibleMarker(thiscushion[thisi], X.ChecklistEnum.Unfound);
+				}
+				X.clearChecklist(X.Checklists[collectibletype]);
 			});
 		}
+		I.convertExternalLink("#mapCollectibleList cite a");
+		
 		$("#mapToggle_Collectible").click(function()
 		{
 			M.isShowingIconsForCollectible = !(M.isShowingIconsForCollectible);
@@ -4597,6 +4707,19 @@ T = {
 	cSECS_MARK_3: 2700,
 	cSECS_MARK_4: 3599,
 	cBASE_10: 10,
+	ReferenceEnum:
+	{
+		UTC: 0,
+		Local: 1,
+		Server: 2
+	},
+	UnitEnum:
+	{
+		Milliseconds: 0,
+		Seconds: 1,
+		Minutes: 2,
+		Hours: 3
+	},
 	
 	Schedule: {},
 	
@@ -4781,7 +4904,7 @@ T = {
 			{
 				for (iii in slot.c)
 				{
-					if (C.ScheduledChains[ii].alias === slot.c[iii].alias)
+					if (C.ScheduledChains[ii].nexus === slot.c[iii].nexus)
 					{
 						C.ScheduledChains[ii].scheduleKeys.push(i);
 						break;
@@ -4823,7 +4946,7 @@ T = {
 	 */
 	getCurrentTimeframe: function()
 	{
-		var minutes = T.getTimeOffsetSinceMidnight("utc", "minutes");
+		var minutes = T.getTimeOffsetSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
 		return minutes - (minutes % T.cMINUTES_IN_TIMEFRAME);
 	},
 	
@@ -4885,7 +5008,7 @@ T = {
 	/*
 	 * Gets the key from current timeframe offset.
 	 * @param int pOffset number of timeframes from the current.
-	 * @returns int key for the schedule slot.
+	 * @returns string key for the schedule slot.
 	 */
 	getTimeframeKey: function(pOffset)
 	{
@@ -4916,7 +5039,7 @@ T = {
 		var min = now.getUTCMinutes();
 		var sec = now.getUTCSeconds();
 		
-		if (pUnit === "minutes")
+		if (pUnit === T.UnitEnum.Minutes)
 		{
 			return min % T.cMINUTES_IN_TIMEFRAME;
 		}
@@ -4937,7 +5060,7 @@ T = {
 	getSecondsUntilChainStarts: function(pChain)
 	{
 		var secondschain = (T.convertScheduleKeyToLocalSeconds(pChain.scheduleKeys[0]));
-		var secondscurrent = T.getTimeOffsetSinceMidnight("local", "seconds");
+		var secondscurrent = T.getTimeOffsetSinceMidnight(T.ReferenceEnum.Local, T.UnitEnum.Seconds);
 		var rolloverthreshold = (T.cSECONDS_IN_TIMEFRAME * T.cNUM_TIMEFRAMES_IN_HOUR); // This is 3600 seconds
 		
 		/*
@@ -5012,6 +5135,17 @@ T = {
 			return " " + hour + min + " " + D.getPhrase("ago");
 		}
 		return " " + D.getPhrase("in") + " " + hour + min;
+	},
+	
+	/*
+	 * Gets a random integer between inclusive range.
+	 * @param int pMin value.
+	 * @param int pMax value.
+	 * @returns int random.
+	 */
+	randIntRange: function(pMin, pMax)
+	{
+	   return Math.floor(Math.random() * (pMax - pMin + 1)) + pMin;
 	},
 	
 	/*
@@ -5142,7 +5276,7 @@ T = {
 		pArgs = pArgs || {};
 		if (pArgs.reference === undefined)
 		{
-			pArgs.reference = "local";
+			pArgs.reference = T.ReferenceEnum.Local;
 		}
 		if (pArgs.want24 === undefined)
 		{
@@ -5168,20 +5302,20 @@ T = {
 		{
 			switch (pArgs.reference)
 			{
-				case "local":
+				case T.ReferenceEnum.Local:
 				{
 					sec = now.getSeconds();
 					min = now.getMinutes();
 					hour = now.getHours();
 				} break;
-				case "server":
+				case T.ReferenceEnum.Server:
 				{
 					sec = now.getSeconds();
 					min = now.getMinutes();
 					hour = now.getUTCHours() + T.cUTC_OFFSET_SERVER + T.DST_IN_EFFECT;
 					hour = T.wrapInteger(hour, T.cHOURS_IN_DAY);
 				} break;
-				case "utc":
+				case T.ReferenceEnum.UTC:
 				{
 					sec = now.getUTCSeconds();
 					min = now.getUTCMinutes();
@@ -5280,8 +5414,8 @@ T = {
 	 */
 	getTimeOffsetSinceMidnight: function(pReference, pTimeUnit)
 	{
-		pTimeUnit = pTimeUnit || "seconds";
-		pReference = pReference || "utc";
+		pTimeUnit = pTimeUnit || T.UnitEnum.Seconds;
+		pReference = pReference || T.ReferenceEnum.UTC;
 		
 		var now = new Date();
 		var hour = now.getUTCHours();
@@ -5290,9 +5424,9 @@ T = {
 		
 		switch (pReference)
 		{
-			case "server": hour = hour + T.cUTC_OFFSET_SERVER + T.DST_IN_EFFECT; break;
-			case "utc": break;
-			case "local":
+			case T.ReferenceEnum.Server: hour = hour + T.cUTC_OFFSET_SERVER + T.DST_IN_EFFECT; break;
+			case T.ReferenceEnum.UTC: break;
+			case T.ReferenceEnum.Local:
 			{
 				 hour = now.getHours();
 				 min = now.getMinutes();
@@ -5301,11 +5435,11 @@ T = {
 		}
 		hour = T.wrapInteger(hour, T.cHOURS_IN_DAY);
 
-		if (pTimeUnit === "hours")
+		if (pTimeUnit === T.UnitEnum.Hours)
 		{ 
 			return hour;
 		}
-		if (pTimeUnit === "minutes")
+		if (pTimeUnit === T.UnitEnum.Minutes)
 		{
 			return (hour * T.cMINUTES_IN_HOUR) + min;
 		}
@@ -5339,7 +5473,7 @@ K = {
 	cDEGREES_IN_CIRCLE: 360,
 	cDEGREES_IN_QUADRANT: 90,
 	
-	// Clock elements
+	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
 	clockBackground: {},
 	timeLocal: {}, timeServer: {}, timeBoard: {},
@@ -5361,6 +5495,7 @@ K = {
 	 */
 	initializeClock: function()
 	{
+		// Remember frequently accessed elements
 		K.handSecond = $("#clkSecondHand")[0];
 		K.handMinute = $("#clkMinuteHand")[0];
 		K.handHour = $("#clkHourHand")[0];
@@ -5420,7 +5555,7 @@ K = {
 	/*
 	 * Initializes array of clock items for iteration and binds the clock chain
 	 * icons to view map event when clicked, or check off when double clicked.
-	 * @pre data-index attribute of icon was updated to get associated chain object.
+	 * @pre data attribute of icon was updated to get associated chain object.
 	 */
 	initializeClockItems: function()
 	{
@@ -5437,12 +5572,12 @@ K = {
 			{
 				$(this).unbind("dblclick").dblclick(function()
 				{
-					coord = C.Chains[$(this).data("index")].primaryEvents[0].path[0];
+					coord = C.Chains[$(this).data(C.cIndexSynonym)].primaryEvents[0].path[0];
 					M.goToView(coord, M.PinEvent);
 					
 				}).unbind("click").click(function()
 				{
-					$("#chnCheck_" + C.Chains[$(this).data("index")].alias).trigger("click");
+					$("#chnCheck_" + C.Chains[$(this).data(C.cIndexSynonym)].nexus).trigger("click");
 				});
 			});
 		}
@@ -5460,7 +5595,7 @@ K = {
 			var text = "";
 			
 			// Chains for the clicked timeframe
-			text += pChainSD.waypoint + " " + D.getChainNick(pChainSD.index);
+			text += pChainSD.waypoint + " " + D.getChainAlias(pChainSD.nexus);
 			if ( ! pChainHC)
 			{
 				text += T.getTimeTillChainFormatted(pChainSD);
@@ -5468,13 +5603,13 @@ K = {
 			else
 			{
 				text += " " + D.getPhrase("and") + " " + pChainHC.waypoint
-					+ " " + D.getChainNick(pChainHC.index)
+					+ " " + D.getChainAlias(pChainHC.nexus)
 					+ T.getTimeTillChainFormatted(pChainHC);
 			}
 			
 			// Chains for the timeframe after that
 			text += ", " + D.getPhrase("then") + " " + pChainSDAfter.waypoint
-				+ " " + D.getChainNick(pChainSDAfter.index);
+				+ " " + D.getChainAlias(pChainSDAfter.nexus);
 			if ( ! pChainHCAfter)
 			{
 				text += T.getTimeTillChainFormatted(pChainSDAfter);
@@ -5482,7 +5617,7 @@ K = {
 			else
 			{
 				text += " " + D.getPhrase("and") + " " + pChainHCAfter.waypoint
-					+ " " + D.getChainNick(pChainHCAfter.index)
+					+ " " + D.getChainAlias(pChainHCAfter.nexus)
 					+ T.getTimeTillChainFormatted(pChainHCAfter);
 			}
 			
@@ -5531,7 +5666,7 @@ K = {
 				}
 
 				// If clicked chain is on the clock
-				if (ithchain && pIndex === ithchain.index)
+				if (ithchain && pIndex === ithchain.nexus)
 				{
 					if (X.getChainChecklistState(ithchain) !== X.ChecklistEnum.Unchecked)
 					{
@@ -5583,7 +5718,7 @@ K = {
 		 */
 		var sec = pDate.getSeconds();
 		T.TIMESTAMP_UNIX_SECONDS = T.getUNIXSeconds();
-		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeOffsetSinceMidnight("utc", "seconds");
+		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeOffsetSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
 		var min = pDate.getMinutes();
 		var hour = pDate.getHours() % T.cHOURS_IN_MERIDIEM;
 		var secinhour = min*60 + sec;
@@ -5601,8 +5736,8 @@ K = {
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
 		{
 			if (O.Options.int_setClockBackground === 0
-				&& I.programMode !== I.programModeEnum.Simple
-				&& I.programMode !== I.programModeEnum.Overlay)
+				&& I.ProgramMode !== I.ProgramModeEnum.Simple
+				&& I.ProgramMode !== I.ProgramModeEnum.Overlay)
 			{
 				$(K.clockBackground).fadeTo(800, 1);
 			}
@@ -5624,7 +5759,7 @@ K = {
 			K.awakeTimestampPrevious = awaketimestampcurrent;
 			
 			// Dim the clock background
-			if (O.Options.int_setClockBackground === 0 && I.programMode !== I.programModeEnum.Simple)
+			if (O.Options.int_setClockBackground === 0 && I.ProgramMode !== I.ProgramModeEnum.Simple)
 			{
 				K.clockBackground.style.opacity = opacityAdd;
 			}
@@ -5656,7 +5791,7 @@ K = {
 		K.timeServer.innerHTML = "(" +
 			T.getTimeFormatted(
 			{
-				reference: "server",
+				reference: T.ReferenceEnum.Server,
 				wantSeconds: false
 			}) + ")";
 		K.timeBoard.innerHTML =
@@ -5704,7 +5839,7 @@ K = {
 	{
 		if (pMinutes > 0)
 		{
-			var minutestill = T.cMINUTES_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime("minutes");
+			var minutestill = T.cMINUTES_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime(T.UnitEnum.Minutes);
 			var chainsd = C.NextChainSD1;
 			var chainhc = C.NextChainHC1;
 			var wantsd = false;
@@ -5782,8 +5917,8 @@ K = {
 		C.CurrentChains.forEach(C.queueEventsHighlight);
 		
 		// Update board in simple mode
-		$("#itemBoardCurrentSD").text(D.getChainTitleAny(C.CurrentChainSD.index));
-		$("#itemBoardNextSD").text(D.getChainTitleAny(C.NextChainSD1.index));
+		$("#itemBoardCurrentSD").text(D.getChainTitleAny(C.CurrentChainSD.nexus));
+		$("#itemBoardNextSD").text(D.getChainTitleAny(C.NextChainSD1.nexus));
 		$("#itemBoardCurrentHC").text("");
 		$("#itemBoardNextHC").text("");
 		if (C.CurrentChainHC || C.NextChainHC1)
@@ -5791,11 +5926,11 @@ K = {
 			$("#itemBoardHC").show();
 			if (C.CurrentChainHC)
 			{
-				$("#itemBoardCurrentHC").text(D.getChainTitleAny(C.CurrentChainHC.index));
+				$("#itemBoardCurrentHC").text(D.getChainTitleAny(C.CurrentChainHC.nexus));
 			}
 			if (C.NextChainHC1)
 			{
-				$("#itemBoardNextHC").text(D.getChainTitleAny(C.NextChainHC1.index));
+				$("#itemBoardNextHC").text(D.getChainTitleAny(C.NextChainHC1.nexus));
 			}
 		}
 		else
@@ -5935,10 +6070,10 @@ K = {
 				{
 					pIcon.show();
 					pIcon.attr("src", "img/chain/" + pChain.alias.toLowerCase() + I.cPNG);
-					pIcon.data("index", pChain.index);
-					if (I.programMode === I.programModeEnum.Simple)
+					pIcon.data(C.cIndexSynonym, pChain.nexus);
+					if (I.ProgramMode === I.ProgramModeEnum.Simple)
 					{
-						pIcon.attr("title", D.getChainTitleAny(pChain.index));
+						pIcon.attr("title", D.getChainTitleAny(pChain.nexus));
 						I.qTip.init(pIcon);
 					}
 
@@ -6098,6 +6233,7 @@ I = {
 	cPageURLMap: "map.html",
 	cPageURLHelp: "help.html",
 	cImageHost: "http://i.imgur.com/",
+	cGameName: "Guild Wars 2",
 	cPNG: ".png", // Almost all used images are PNG
 	cTextDelimiter: "|",
 	consoleTimeout: {},
@@ -6117,8 +6253,8 @@ I = {
 	
 	// Content-Layer-Page and Section-Header
 	isProgramLoaded: false,
-	programMode: null,
-	programModeEnum:
+	ProgramMode: null,
+	ProgramModeEnum:
 	{
 		Website: "Website",
 		Simple: "Simple",
@@ -6152,7 +6288,7 @@ I = {
 			FAQ: "FAQ",
 			About: "About",
 			Scheduled: "Scheduled",
-			Unscheduled: "Unscheduled",
+			Legacy: "Legacy",
 			Temples: "Temples",
 			Dungeons: "Dungeons"
 		}
@@ -6179,7 +6315,7 @@ I = {
 		Firefox: 2,
 		Chrome: 3
 	},
-	userSmallDevice: false,
+	isOnSmallDevice: false,
 	cSMALL_DEVICE_WIDTH: 800,
 	cSMALL_DEVICE_HEIGHT: 600,
 	cBIG_DISPLAY_HEIGHT: 1200,
@@ -6199,7 +6335,7 @@ I = {
 		// Detect iFrame embedding
 		if (window !== window.top)
 		{
-			I.programMode = I.programModeEnum.Embedded;
+			I.ProgramMode = I.ProgramModeEnum.Embedded;
 		}
 		
 		/*
@@ -6228,9 +6364,9 @@ I = {
 		
 		// Detect small devices
 		if (screen.width <= I.cSMALL_DEVICE_WIDTH && screen.height <= I.cSMALL_DEVICE_HEIGHT
-			&& I.programMode === I.programModeEnum.Website)
+			&& I.ProgramMode === I.ProgramModeEnum.Website)
 		{
-			I.userSmallDevice = true;
+			I.isOnSmallDevice = true;
 		}
 		// Detect big displays
 		if (window.innerHeight > I.cBIG_DISPLAY_HEIGHT)
@@ -6361,7 +6497,7 @@ I = {
 	},
 	
 	/*
-	 * Alias for I.write but used for testing and easier to find and remove.
+	 * Alternative for I.write but used for testing and easier to find and remove.
 	 */
 	log: function(pString, pSeconds, pClear)
 	{
@@ -6451,14 +6587,23 @@ I = {
 	},
 	
 	/*
-	 * Extracts the "index" part of an HTML element's ID. Most iterable elements'
-	 * IDs were manually named as [prefix]_[Index].
+	 * Extracts the "identifier" part of an HTML element's ID. Most iterable
+	 * elements' IDs were manually named as [prefix]_[Index].
 	 * @param jqobject pElement to extract.
-	 * @returns string pseudoindex of the element's ID.
+	 * @returns string identifier of the element's ID.
 	 */
-	getIndexFromHTMLID: function(pElement)
+	getSubstringFromHTMLID: function(pElement)
 	{
 		return pElement.attr("id").split("_")[1];
+	},
+	/*
+	 * Integer version of the ID extraction function.
+	 * @param jqobject pElement to extract.
+	 * @returns int identifier of the element's ID.
+	 */
+	getSubintegerFromHTMLID: function(pElement)
+	{
+		return parseInt(pElement.attr("id").split("_")[1]);
 	},
 	
 	/*
@@ -6568,7 +6713,7 @@ I = {
 	
 	/*
 	 * Binds headers with the jsSection class to toggle display of its sibling
-	 * container element. Creates a vertical side menu as an alias for clicking
+	 * container element. Creates a vertical side menu as an alternate for clicking
 	 * the headers; also creates another button-like text at the bottom of the
 	 * container to collapse it again.
 	 * Example: <header class="jsSection">Example Title</header><div></div>
@@ -6609,7 +6754,7 @@ I = {
 			// Bind click the header to toggle the sibling collapsible container
 			header.click(function()
 			{	
-				var section = I.getIndexFromHTMLID($(this));
+				var section = I.getSubstringFromHTMLID($(this));
 				$(pLayer + " .menuBeamIcon").removeClass("menuBeamIconActive");
 				
 				if ($(this).next().is(":visible"))
@@ -6653,11 +6798,11 @@ I = {
 				});;
 			
 			/*
-			 * Side menu icons as alias for headers. Clicking an icon shows the
+			 * Side menu icons as alternate for headers. Clicking an icon shows the
 			 * associated header's sibling container (section) by triggering
 			 * that header's handler.
 			 */
-			var section = I.getIndexFromHTMLID(header);
+			var section = I.getSubstringFromHTMLID(header);
 			var src = header.find("img:eq(0)").attr("src");
 			$("<img class='menuBeamIcon' data-section='" + section + "' src='" + src + "' "
 				+ "title='&lt;dfn&gt;" + D.getSentence("section") + ": &lt;/dfn&gt;" + headertext + "' />")
@@ -6812,7 +6957,7 @@ I = {
 						 */ 
 						if (O.Options.bol_tourPrediction)
 						{
-							$("#chnEvent_" + C.CurrentChainSD.alias + "_"
+							$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
 								+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
 						}
 					} break;
@@ -6961,7 +7106,7 @@ I = {
 					// Show only if the section is about to be expanded
 					if ($(this).children("sup").text() === "[-]")
 					{
-						M.displayIcons(I.getIndexFromHTMLID($(this)), true);
+						M.displayIcons(I.getSubstringFromHTMLID($(this)), true);
 					}
 				});
 			});
@@ -6969,8 +7114,7 @@ I = {
 			// Create additional map related side menu icon
 			$("<img class='menuBeamIcon menuBeamIconCenter' src='img/map/star.png' "
 				+ "title='&lt;dfn&gt;Map Center&lt;/dfn&gt;' />")
-				.appendTo("#menuBeam_Map")
-			.click(function()
+				.appendTo("#menuBeam_Map").click(function()
 			{
 				$("#jsCenter").trigger("click");
 			});
@@ -6991,10 +7135,10 @@ I = {
 	initializeUIforChains: function()
 	{
 		/*
-		* Chains list collapsible headers.
-		*/
-	   $("#layerChains header").click(function()
-	   {
+		 * Chains list collapsible headers.
+		 */
+		$("#layerChains header").click(function()
+		{
 			$(this).next().slideToggle("fast", function()
 			{
 				// Change the toggle icon after finish toggling
@@ -7011,20 +7155,30 @@ I = {
 					$(this).prev().find("ins").html("[+]");
 				}
 			});
-	   });
+		});
 	   
 	   /*
 		* Add collapse text icon to headers; first one is pre-expanded.
 		*/
-	   $("#layerChains header:not(:first)").each(function()
-	   {
-		   $(this).next().toggle(0);
-		   $(this).find("ins").html("[+]");
-	   });
-	   $("#layerChains header:first").each(function()
-	   {
-		   $(this).find("ins").html("[-]");
-	   });
+		$("#layerChains header:not(:first)").each(function()
+		{
+			$(this).next().toggle(0);
+			$(this).find("ins").html("[+]");
+		});
+		$("#layerChains header:first").each(function()
+		{
+			$(this).find("ins").html("[-]");
+		});
+
+		// Download chain bar icons for unscheduled chains only when manually expanded the header
+		$("#listChainsLegacy").prev().one("click", function()
+		{
+			C.LegacyChains.forEach(C.styleBarIcon);
+		});
+		$("#listChainsTemple").prev().one("click", function()
+		{
+			C.TempleChains.forEach(C.styleBarIcon);
+		});
 
 		/*
 		 * Show individual events of a chain bar if clicked on, or
@@ -7051,9 +7205,9 @@ I = {
 		var animationspeed = 200;
 		var clockheight = 0;
 		
-		switch (I.programMode)
+		switch (I.ProgramMode)
 		{
-			case I.programModeEnum.Overlay:
+			case I.ProgramModeEnum.Overlay:
 			{
 				// 4 + 64 + 14 + 64 + 6 + 64 + 6 + 64 + 6 + 64 + 4
 				$("#itemLanguage, #itemSocial, #paneClockBackground").hide();
@@ -7116,7 +7270,7 @@ I = {
 					- (I.cPANE_CLOCK_HEIGHT_COMPRESS + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 				
 			} break;
-			case I.programModeEnum.Simple:
+			case I.ProgramModeEnum.Simple:
 			{	
 				// Readjust panels
 				$("#panelLeft, #paneMenu, #paneContent").hide();

@@ -255,7 +255,6 @@ a#linkModeSimple {
 	font-size: 12px;
 	text-align: center;
 	background: none;
-	color: white;
 	text-shadow:
 		1px 1px 0px #000,
 		-1px -1px 0px #000,
@@ -1005,8 +1004,8 @@ header.cntHeader {
 	padding-left: 8px;
 	vertical-align: middle;
 }
-.chnTitle h1:hover, .barChainDummy h1.chnTitleCurrent:hover {
-	color: #eee;
+.chnTitle h1:hover {
+	color: #eee !important;
 }
 
 .chnTitle time {
@@ -1065,7 +1064,7 @@ header.cntHeader {
 	color: #ffaa22;
 	opacity: 1;
 }
-.chnTitleFuture {
+.chnTitleFuture, .barChainDummy h1.chnTitleFuture {
 	color: #ffaa22;
 	opacity: 0.5;
 }
@@ -1160,6 +1159,21 @@ dt.mapJPListNameHover {
 	display: inline-block;
 	width: 64px; height: 2px;
 	margin: auto 12px 5px 6px;
+}
+
+#mapCollectibleList div {
+	display: block;
+}
+#mapCollectibleList div label {
+	display: inline-block;
+	clear: none;
+	width: auto;
+}
+#mapCollectibleList div a {
+	text-decoration: underline;
+}
+#mapCollectibleList div:hover label {
+	font-weight: bold;
 }
 
 /* Personal checklist
