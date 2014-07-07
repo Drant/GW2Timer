@@ -791,9 +791,12 @@ O = {
 		 */
 		O.Enact.bol_hideChecked();
 		O.Enact.bol_detectDST();
-		O.Enact.int_setClock();
-		O.Enact.int_setDimming();
-		O.Enact.bol_showMap();
+		if (I.ProgramMode !== I.ProgramModeEnum.Simple)
+		{
+			O.Enact.int_setClock();
+			O.Enact.int_setDimming();
+			O.Enact.bol_showMap();
+		}
 		
 		/*
 		 * Button event handlers bindings (buttons don't have stored values).
@@ -7213,15 +7216,10 @@ I = {
 	 */
 	enforceProgramMode: function()
 	{
-		var animationspeed = 200;
-		var clockheight = 0;
-		
 		switch (I.ProgramMode)
 		{
 			case I.ProgramModeEnum.Overlay:
 			{
-				// 4 + 64 + 14 + 64 + 6 + 64 + 6 + 64 + 6 + 64 + 4
-				
 				
 			} break;
 			case I.ProgramModeEnum.Simple:
