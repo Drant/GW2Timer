@@ -138,7 +138,7 @@ html, body,
 
 /* Clickable */
 a, input, label, button,
-#mapCompassButton, #paneMenu span, #itemClockWaypoints img,
+#mapCompassButton, .menuButton, #itemClockWaypoints img,
 .menuBeam img:hover,
 .jsTableOfContents ol li, .jsSectionDone,
 .chnCheck:hover, .chnDetailsLinks ins,
@@ -325,7 +325,7 @@ a#linkModeSimple {
 	top: 0px;
 }
 
-#paneClockBack {
+#paneClockWall {
 	background: #333;
 	background: radial-gradient(ellipse at center, #4c4c4c 0%, #444444 50%, #131313 100%);
 }
@@ -333,10 +333,6 @@ a#linkModeSimple {
 #paneClockBackground {
 	background: url("img/background/globe.jpg") no-repeat center;
 	opacity: 0;
-}
-
-#paneClockFace {
-	background: url("img/background/face.png") no-repeat center;
 }
 
 .iconHC {
@@ -356,28 +352,28 @@ a#linkModeSimple {
 	border: 1px solid red !important;
 	box-shadow: 0px 0px 10px red !important;
 }
-#itemClockIconStandard0 {
+#itemClockIconSD0 {
 	top: 4px; left: 148px;
 }
-#itemClockIconStandard1 {
+#itemClockIconSD1 {
 	top: 148px; left: 290px;
 }
-#itemClockIconStandard2 {
+#itemClockIconSD2 {
 	top: 290px; left: 148px;
 }
-#itemClockIconStandard3 {
+#itemClockIconSD3 {
 	top: 148px; left: 4px;
 }
-#itemClockIconHardcore0 {
+#itemClockIconHC0 {
 	top: 12px; left: 212px;
 }
-#itemClockIconHardcore1 {
+#itemClockIconHC1 {
 	top: 212px; left: 298px;
 }
-#itemClockIconHardcore2 {
+#itemClockIconHC2 {
 	top: 298px; left: 100px;
 }
-#itemClockIconHardcore3 {
+#itemClockIconHC3 {
 	top: 100px; left: 12px;
 }
 
@@ -557,15 +553,15 @@ a#linkModeSimple {
 	background: linear-gradient(to bottom, #111 0%, #444 50%, #111 100%);
 }
 
-#paneMenu span {
+.menuButton {
 	display: inline-block;
 	float: left;
 	width: 90px; height: 48px;
 }
-#paneMenu span:hover {
+.menuButton:hover {
 	box-shadow: 0px 0px 10px #e7e3bd;
 }
-#paneMenu span:active {
+.menuButton:active {
 	box-shadow: 0px 0px 10px white;
 }
 

@@ -84,18 +84,18 @@
 		<!-- Clock
 		==================================================================== -->
 		<section id="paneClock" class="paneRight clkSizeRegular">
-			<div id="paneClockBack" class="clkSizeRegular"></div>
+			<div id="paneClockWall" class="clkSizeRegular"></div>
 			<div id="paneClockBackground" class="clkSizeRegular"></div>
-			<div id="paneClockFace" class="clkSizeRegular"></div>
+			<img id="paneClockFace" class="clkSizeRegular" src="img/background/face.png" alt="Clock Face">
 			<div id="paneClockIcons" class="clkSizeRegular">
-				<img id="itemClockIconStandard0" class="iconSD" src="img/chain/tbd.png" alt="X:00" />
-				<img id="itemClockIconStandard1" class="iconSD" src="img/chain/tbd.png" alt="X:15" />
-				<img id="itemClockIconStandard2" class="iconSD" src="img/chain/tbd.png" alt="X:30" />
-				<img id="itemClockIconStandard3" class="iconSD" src="img/chain/tbd.png" alt="X:45" />
-				<img id="itemClockIconHardcore0" class="iconHC" src="img/chain/tbd.png" alt="X:00" />
-				<img id="itemClockIconHardcore1" class="iconHC" src="img/chain/tbd.png" alt="X:15" />
-				<img id="itemClockIconHardcore2" class="iconHC" src="img/chain/tbd.png" alt="X:30" />
-				<img id="itemClockIconHardcore3" class="iconHC" src="img/chain/tbd.png" alt="X:45" />
+				<img id="itemClockIconSD0" class="iconSD" src="img/chain/tbd.png" alt="X:00" />
+				<img id="itemClockIconSD1" class="iconSD" src="img/chain/tbd.png" alt="X:15" />
+				<img id="itemClockIconSD2" class="iconSD" src="img/chain/tbd.png" alt="X:30" />
+				<img id="itemClockIconSD3" class="iconSD" src="img/chain/tbd.png" alt="X:45" />
+				<img id="itemClockIconHC0" class="iconHC" src="img/chain/tbd.png" alt="X:00" />
+				<img id="itemClockIconHC1" class="iconHC" src="img/chain/tbd.png" alt="X:15" />
+				<img id="itemClockIconHC2" class="iconHC" src="img/chain/tbd.png" alt="X:30" />
+				<img id="itemClockIconHC3" class="iconHC" src="img/chain/tbd.png" alt="X:45" />
 			</div>
 			<svg id="itemClock" viewBox="0 0 100 100"><!-- x=50,y=50 is the center -->
 				<defs><!-- Shadow filters -->
@@ -201,10 +201,10 @@
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
 		<nav id="paneMenu" class="paneRight">
-			<span id="menuChains" title="<dfn>Chains:</dfn> Timers, Events, Schedule"></span>
-			<span id="menuMap" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, Checklists"></span>
-			<span id="menuHelp" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"></span>
-			<span id="menuOptions" title="<dfn>Options:</dfn> Display, Format, Alarm"></span>
+			<div id="menuChains" class="menuButton" title="<dfn>Chains:</dfn> Timers, Events, Schedule"></div>
+			<div id="menuMap" class="menuButton" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, Checklists"></div>
+			<div id="menuHelp" class="menuButton" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"></div>
+			<div id="menuOptions" class="menuButton" title="<dfn>Options:</dfn> Display, Format, Alarm"></div>
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->
@@ -255,9 +255,8 @@
 					<br />
 					<h2>Timer</h2>
 					<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off world bosses</label>
-					<label title="Automatically expand orange chain bars and collapse gray ones at every quarter hour."><input id="opt_bol_expandEvents" type="checkbox" /> Expand events for active chains</label>
-					<label title="Make the clock area smaller."><input id="opt_bol_compactClock" type="checkbox" /> Compact the clock pane</label>
-					<label title="Show/Hide the entire clock area."><input id="opt_bol_showClock" type="checkbox" /> Show the clock pane</label>
+					<label title="Automatically expand orange chain bars and collapse gray ones."><input id="opt_bol_expandEvents" type="checkbox" /> Expand events for active chains</label>
+					<label title="Display the countdown to when a chain starts or the soonest scheduled time."><input id="opt_bol_useCountdown" type="checkbox" /> Countdown to future chains</label>
 					<div class="optFieldsets">
 						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain? Auto will use the North American time of day to choose. Changes will take effect when the next chain starts. &lt;br /&gt;Min: for full population map&lt;br /&gt;Min-Avg: Min + (Avg - Min)/2&lt;br /&gt;Avg: for regular zerg size"><legend>Predictor</legend>
 							<label><input id="opt_int_setPredictor" type="radio" name="int_setPredictor" /> Auto</label>
@@ -265,14 +264,16 @@
 							<label><input type="radio" name="int_setPredictor" /> Min-Avg</label>
 							<label><input type="radio" name="int_setPredictor" /> Avg</label>
 						</fieldset>
-						<fieldset name="int_setTimeStyle" title="Display the countdown to when a chain starts or the soonest scheduled time?"><legend>Chain Times</legend>
-							<label><input id="opt_int_setTimeStyle" type="radio" name="int_setTimeStyle" /> Countdown</label>
-							<label><input type="radio" name="int_setTimeStyle" /> Schedule</label>
+						<fieldset name="int_setClock" title="Set the clock pane's size."><legend>Clock Pane</legend>
+							<label><input id="opt_int_setClock" type="radio" name="int_setClock" /> Compact</label>
+							<label><input type="radio" name="int_setClock" /> Full</label>
+							<label><input type="radio" name="int_setClock" /> Bar</label>
+							<label><input type="radio" name="int_setClock" /> None</label>
 						</fieldset>
-						<fieldset name="int_setClockBackground" title="Dim the clock background from bright to dark within 15 minutes or stay as so?"><legend>Clock Bg</legend>
-							<label><input id="opt_int_setClockBackground" type="radio" name="int_setClockBackground" /> Auto-dim</label>
-							<label><input type="radio" name="int_setClockBackground" /> Bright</label>
-							<label><input type="radio" name="int_setClockBackground" /> Dark</label>
+						<fieldset name="int_setDimming" title="Dim the clock background from bright to dark within 15 minutes or stay as so?"><legend>Clock Bg</legend>
+							<label><input id="opt_int_setDimming" type="radio" name="int_setDimming" /> Auto-dim</label>
+							<label><input type="radio" name="int_setDimming" /> Bright</label>
+							<label><input type="radio" name="int_setDimming" /> Dark</label>
 						</fieldset>
 					</div>
 					<br />
