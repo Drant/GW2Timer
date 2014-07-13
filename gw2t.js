@@ -74,7 +74,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140705},
+		programVersion: {key: "int_utlProgramVersion", value: 140712},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -217,8 +217,10 @@ O = {
 			I.write(I.cSiteName + " was updated since your last visit.<br />"
 			+ "This version: " + currentversion + "<br />"
 			+ "Your version: " + usersversion + "<br />"
-			+ "Would you like to see the <a id='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />", 20);
-			I.convertExternalLink("#urlUpdates");
+			+ "Would you like to see the <a class='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />"
+			+ "<br />"
+			+ "GW2Timer Overlay App has been released! <a class='urlUpdates' href='http://forum.renaka.com/topic/5546166/'>Download it now!</a><br />", 20);
+			I.convertExternalLink(".urlUpdates");
 		}
 		
 		localStorage[O.Utilities.programVersion.key] = O.Utilities.programVersion.value;
@@ -247,7 +249,7 @@ O = {
 	},
 	
 	/*
-	 * Checks localStorage for unrecognized variables and remove them.
+	 * Checks localStorage for unrecognized variables and removes them.
 	 */
 	cleanLocalStorage: function()
 	{
@@ -1061,6 +1063,10 @@ O = {
 				$(I.cContentPane).animate({top: clockpaneheight + I.cPANE_MENU_HEIGHT,
 					"min-height": I.cPANEL_HEIGHT - (clockpaneheight + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 			}
+			if (I.ProgramMode === I.ProgramModeEnum.Overlay)
+			{
+				$("#itemSocial").hide();
+			}
 
 			K.reapplyFilters();
 		},
@@ -1820,11 +1826,11 @@ D = {
 	{
 		s_TEMPLATE: {de: "", es: "", fr: "", nl: "", pl: "", ru: "", zh: ""},
 
-		s_linkModeSimple: {de: "einfach modus", es: "modo simple", fr: "mode simple", nl: "eenvoudig modus", pl: "prosty tryb", ru: "простой Режим", zh: "方式簡單"},
+		s_linkModeSimple: {de: "einfach modus", es: "modo simple", fr: "mode simple", nl: "eenvoudig modus", pl: "prosty tryb", ru: "простой режим", zh: "方式簡單"},
 		s_menuChains: {de: "Zeitplan", es: "Horario", fr: "Horaire", nl: "Dienstregeling", pl: "Harmonogram", ru: "Расписание", zh: "時間表"},
 		s_menuMap: {de: "Werkzeuge", es: "Útiles", fr: "Outils", nl: "Gereedschap", pl: "Narzędzia", ru: "Инструментарий", zh: "工具"},
 		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance", nl: "Hulp", pl: "Pomoc", ru: "Помощь", zh: "輔助"},
-		s_menuOptions: {de: "Optionen", es: "Opciónes", fr: "Options", nl: "Opties", pl: "Opcje", ru: "Опции", zh: "選項"},
+		s_menuOptions: {de: "Optionen", es: "Opciónes", fr: "Options", nl: "Opties", pl: "Opcje", ru: "	Параметры", zh: "選項"},
 		s_opt_bol_alertSubscribed: {
 			de: "<dfn>Alarm Modus:</dfn><br />☐ = Checkliste<br />☑ = Abonnement",
 			es: "<dfn>Modo de Alarma:</dfn><br />☐ = Lista de Verificación<br />☑ = Suscripción",
@@ -2350,16 +2356,8 @@ C = {
 	Chains: GW2T_CHAIN_DATA,
 	// The word and variable "nexus" is simply a chain's index number in the Chains array
 	cIndexSynonym: "nexus",
-	CurrentChainSD: {},
-	NextChainSD1: {},
-	NextChainSD2: {},
-	NextChainSD3: {},
-	NextChainSD4: {},
-	CurrentChainHC: {},
-	NextChainHC1: {},
-	NextChainHC2: {},
-	NextChainHC3: {},
-	NextChainHC4: {},
+	CurrentChainSD: {}, NextChainSD1: {}, NextChainSD2: {}, NextChainSD3: {}, NextChainSD4: {},
+	CurrentChainHC: {}, NextChainHC1: {}, NextChainHC2: {}, NextChainHC3: {}, NextChainHC4: {},
 	CurrentChains: [],
 	PreviousChains1: [],
 	PreviousChains2: [],
@@ -2850,12 +2848,7 @@ C = {
 		var remaining = pChain.countdownToFinish - elapsed;
 		var time = remaining;
 		var sign = "-";
-		var wantletters = false;
 		
-		if (O.Options.bol_useCountdown)
-		{
-			wantletters = true;
-		}
 		if (remaining <= 0)
 		{
 			time = T.cSECONDS_IN_TIMEFRAME - elapsed;
@@ -2864,9 +2857,8 @@ C = {
 		
 		$("#chnTime_" + pChain.nexus).text(sign + T.getTimeFormatted(
 			{
-				want24: true,
 				wantHours: false,
-				wantLetters: wantletters,
+				wantLetters: true,
 				customTimeInSeconds: time
 			})
 		);
@@ -3095,7 +3087,7 @@ C = {
 				wait = C.getSumBasedOnOptions(chain, i);
 				if (wait >= elapsed)
 				{
-					if (i > 0)
+					if (i > 0) // Disregard the first event in the chain
 					{
 						C.highlightEvents(chain, parseInt(i-1));
 						hasfoundcurrentprimaryindex = true;
@@ -3429,7 +3421,7 @@ M = {
 	
 	// Submap for showing maps that aren't in the API (actually Leaflet markers)
 	SubmapEntities: new Array(),
-	SubmapDrytop: {},
+	SubmapTemp: {},
 	
 	/*
 	 * Initializes the Leaflet map, adds markers, and binds events.
@@ -3461,7 +3453,7 @@ M = {
 		// Do other initialization functions
 		M.populateMap();
 		M.drawChainPaths();
-		M.createSubmaps();
+		//M.createSubmaps();
 
 		/*
 		 * Clicking an empty place on the map highlight its coordinate.
@@ -3515,19 +3507,19 @@ M = {
 	 */
 	createSubmaps: function()
 	{
-		M.SubmapDrytop = L.marker(M.convertGCtoLC([4644, 15842]),
+		M.SubmapTemp = L.marker(M.convertGCtoLC([0, 0]),
 		{
 			icon: L.icon(
 			{
-				iconUrl: "http://i.imgur.com/cQKFxO6.jpg",
-				iconSize: [1260, 1260],
+				iconUrl: "",
+				iconSize: [0, 0],
 				iconAnchor: [0, 0]
 			}),
 			draggable: false,
 			clickable: false
 		}).addTo(M.Map);
-		M.SubmapEntities.push(M.SubmapDrytop);
-		M.SubmapDrytop._icon.style.display = "none";
+		M.SubmapEntities.push(M.SubmapTemp);
+		M.SubmapTemp._icon.style.display = "none";
 	},
 	
 	/*
@@ -3994,9 +3986,9 @@ M = {
 			M.isMapAJAXDone = true;
 			M.bindMapVisualChanges();
 			// Show submaps only if at max zoomed in level
-			if (M.Map.getZoom() === M.ZoomLevelEnum.Ground)
+			if (M.SubmapEntities.length > 0 && M.Map.getZoom() === M.ZoomLevelEnum.Ground)
 			{
-				M.SubmapDrytop._icon.style.display = "block";
+				M.SubmapTemp._icon.style.display = "block";
 			}
 		});
 		
@@ -4573,8 +4565,10 @@ M = {
 				"<div><label style='color:" + ithcollectible.color + "'><input id='ned_" + i + "' type='checkbox' /> " + ithcollectible.name + "</label>"
 				+ "<span class='cssRight'><cite>"
 					+ "<a href='" + I.getYouTubeLink(ithcollectible.name + " " + I.cGameName) + "'>[Y]</a>&nbsp;"
-					+ "<a href='" + ithcollectible.wiki + "'>[W]</a>&nbsp;&nbsp;-&nbsp;&nbsp;</cite>"
-					+ "<a id='nedUncheck_" + i + "' class='cssRight'>Uncheck All</a>"
+					+ "<a href='" + ithcollectible.wiki + "'>[W]</a>&nbsp;"
+					+ "<a href='" + ithcollectible.credit + "'>[C]</a>&nbsp;"
+					+ "&nbsp;-&nbsp;&nbsp;</cite>"
+					+ "<a id='nedUncheck_" + i + "' class='cssRight'>Reset</a>"
 				+ "</span></div>");
 			
 			// Bind checkboxes
@@ -5276,7 +5270,7 @@ T = {
 	 * Gets a formatted time string, arguments are taken as key-value pairs.
 	 * @objparam string reference place to offset the time, default is local.
 	 * @objparam boolean want24 to format as 24 hour or not (AM/PM).
-	 * @objparam boolean wantLetters to format #h #m #s instead of colons.
+	 * @objparam boolean wantLetters to format #h #m #s instead of colons. Overrides want24.
 	 * @objparam boolean wantSeconds to include the seconds.
 	 * @objparam int customTimeInSeconds to convert to a time string, will use
 	 * current time if undefined.
@@ -5365,7 +5359,7 @@ T = {
 			}
 			else if (pArgs.wantHours === false)
 			{
-				minsec = min + "." + ((sec < T.cBASE_10) ? "0" + sec : sec);
+				minsec = min + ":" + ((sec < T.cBASE_10) ? "0" + sec : sec);
 			}
 			else
 			{
@@ -5487,7 +5481,7 @@ K = {
 	
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
-	clockBackground: {},
+	clockBackground: {}, clockCircumference: {},
 	timeLocal: {}, timeServer: {}, timeBoard: {},
 	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
 	
@@ -5512,6 +5506,7 @@ K = {
 		K.handMinute = $("#clkMinuteHand")[0];
 		K.handHour = $("#clkHourHand")[0];
 		K.clockBackground = $("#paneClockBackground")[0];
+		K.clockCircumference = $("#clkCircumference")[0];
 		K.timeLocal = $("#itemTimeLocalActual")[0];
 		K.timeServer = $("#itemTimeServer")[0];
 		K.timeBoard = $("#itemBoardTime")[0];
@@ -5737,6 +5732,7 @@ K = {
 		var secangle = sec*6; // 1 degree per second
 		var minangle = min*6 + sec/10; // 0.1 degrees per second
 		var hourangle = hour*30 + (min/60)*30; // 0.5 degrees per minute
+		K.rotateClockElement(K.clockCircumference, minangle);
 		K.rotateClockElement(K.handSecond, secangle);
 		K.rotateClockElement(K.handMinute, minangle);
 		K.rotateClockElement(K.handHour, hourangle);
@@ -6211,10 +6207,10 @@ K = {
 				})
 			);
 			/*
-			 * Zero Clipboard works by overlaying an invisible Flash object over the
-			 * target (the waypoint icons). When a user click on it the data
-			 * attribute of the target is loaded to the user's clipboard. The code
-			 * below are additional stuff to execute after.
+			 * Zero Clipboard works by superimposing an invisible Flash object 
+			 * over the target (the waypoint icons). When a user click on it the
+			 * data attribute of the target is loaded to the user's clipboard.
+			 * The code below are additional stuff to execute after.
 			 */
 			// Adobe Flash is loaded to enable copy to clipboard
 			K.wpClipboards[i].on("load", function(pClient)
@@ -6252,7 +6248,7 @@ I = {
 	
 	// HTML/CSS pixel units
 	cPANEL_WIDTH: 360,
-	cPANEL_HEIGHT: 720,
+	cPANEL_HEIGHT: 580,
 	cPANE_CLOCK_HEIGHT: 360,
 	cPANE_CLOCK_HEIGHT_COMPACT: 220,
 	cPANE_CLOCK_HEIGHT_BAR: 85,
@@ -6374,6 +6370,7 @@ I = {
 		
 		// Get URL arguments and do appropriate changes
 		O.enforceURLArgumentsFirst();
+		I.enforceProgramMode();
 		
 		// Detect small devices
 		if (screen.width <= I.cSMALL_DEVICE_WIDTH && screen.height <= I.cSMALL_DEVICE_HEIGHT
@@ -6450,7 +6447,6 @@ I = {
 		
 		// Update and notify user of version change
 		O.enforceProgramVersion();
-		I.enforceProgramMode();
 		
 		// Post translations
 		D.translateAfter();
@@ -7220,6 +7216,8 @@ I = {
 		{
 			case I.ProgramModeEnum.Overlay:
 			{
+				// Remove elements extraneous or intrusive to overlay mode
+				$(".itemMapLinks a, #itemSocial").hide();
 				
 			} break;
 			case I.ProgramModeEnum.Simple:
@@ -7297,9 +7295,9 @@ I = {
 		I.qTip.init("a, ins, span, img, fieldset, label, input, button, .menuButton");
 		
 		/*
-		 * Make the tooltip appear top of the cursor instead of below if it's too
-		 * near the bottom of the window (to avoid overflow).
-		*/
+		 * Make the tooltip appear within the visible window by detecting current
+		 * tooltip size and mouse position.
+		 */
 		$("#panelRight").mousemove(function(pEvent)
 		{
 			/*
@@ -7307,6 +7305,7 @@ I = {
 				+ $("#qTip").width() + ", " + $("#qTip").height() + "<br />"
 				+ $(window).width() + ", " + $(window).height());
 			*/
+			// Tooltip overflows bottom edge
 			if ($("#qTip").height() + pEvent.pageY + I.cTOOLTIP_ADD_OFFSET_Y
 				> $(window).height())
 			{
@@ -7320,6 +7319,7 @@ I = {
 		});
 		$("#panelLeft").mousemove(function(pEvent)
 		{
+			// Tooltip overflows right edge
 			if ($("#qTip").width() + pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $("#paneMap").width())
 			{
 				I.qTip.offsetX = -($("#qTip").width()) - I.cTOOLTIP_ADD_OFFSET_X;
@@ -7328,9 +7328,15 @@ I = {
 			{
 				I.qTip.offsetX = 24;
 			}
+			// Tooltip overflows bottom edge
 			if ($("#qTip").height() - 24 + pEvent.pageY > $(window).height())
 			{
 				I.qTip.offsetY = -($("#qTip").height()) - I.cTOOLTIP_ADD_OFFSET_Y;
+			}
+			// Tooltip overflows top edge
+			else if (pEvent.pageY < 42)
+			{
+				I.qTip.offsetY = 32;
 			}
 			else
 			{
@@ -7414,7 +7420,7 @@ I = {
 };
 
 /* =============================================================
- *  Executions and jQuery bindings; the order matters!
+ *  Executions, the order matters!
  * ============================================================= */
 I.initializeFirst(); // initialize variables that need to be first
 O.initializeOptions(); // load stored or default options to the HTML input
