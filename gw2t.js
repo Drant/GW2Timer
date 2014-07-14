@@ -322,9 +322,14 @@ O = {
 		O.URLArguments = O.getURLArguments();
 		
 		var i;
-		var ismodeset = false;
+		
+		// Detect iFrame embedding, overrides all other modes
+		if (window !== window.top)
+		{
+			I.ProgramMode = I.ProgramModeEnum.Embedded;
+		}
 		// Set up program mode
-		if (O.URLArguments[I.URLKeyMode])
+		else if (O.URLArguments[I.URLKeyMode])
 		{
 			var mode = O.URLArguments[I.URLKeyMode];
 			for (i in I.ProgramModeEnum)
@@ -332,12 +337,12 @@ O = {
 				if (I.ProgramModeEnum[i].toLowerCase() === mode.toLowerCase())
 				{
 					I.ProgramMode = I.ProgramModeEnum[i];
-					ismodeset = true;
 					break;
 				}
 			}
 		}
-		if (ismodeset === false)
+		
+		if (I.ProgramMode === null)
 		{
 			I.ProgramMode = I.ProgramModeEnum.Website;
 		}
@@ -594,7 +599,7 @@ O = {
 				if (O.URLArguments[optionkey] !== undefined)
 				{
 					O.Options[optionkey] = O.convertLocalStorageDataType(
-					O.sanitizeURLOptionsValue(optionkey, O.URLArguments[optionkey]));
+						O.sanitizeURLOptionsValue(optionkey, O.URLArguments[optionkey]));
 				}
 			}
 			else
@@ -4208,7 +4213,7 @@ M = {
 	 */
 	generateAndInitializeResourceNodes: function()
 	{
-		M.Resources = GW2T_RESOURCE_DATA; // This object is embedded in the map HTML file
+		M.Resources = GW2T_RESOURCE_DATA; // This object is inline in the map HTML file
 		var i, ii;
 		var resource; // A type of resource, like copper ore
 		var marker;
@@ -4501,7 +4506,7 @@ M = {
 	 */
 	generateAndInitializeCollectibles: function()
 	{
-		M.Collectibles = GW2T_COLLECTIBLE_DATA; // This object is embedded in the map HTML file
+		M.Collectibles = GW2T_COLLECTIBLE_DATA; // This object is inline in the map HTML file
 		var i, ii;
 		var ithcollectible;
 		var ithneedle;
@@ -6267,7 +6272,7 @@ I = {
 		Website: "Website",
 		Simple: "Simple",
 		Overlay: "Overlay",
-		Embedded: "Embedded"
+		Embedded: "Framed"
 	},
 	cContentPane: "#paneContent",
 	cContentPrefix: "#layer",
@@ -6340,12 +6345,6 @@ I = {
 		
 		// Tell if DST is in effect
 		T.checkDST();
-		
-		// Detect iFrame embedding
-		if (window !== window.top)
-		{
-			I.ProgramMode = I.ProgramModeEnum.Embedded;
-		}
 		
 		/*
 		 * Load stored server sensitive timestamp if it exists, is a number,
@@ -7064,6 +7063,10 @@ I = {
 		$("#layerHelp").load(I.cPageURLHelp, function()
 		{
 			I.bindAfterAJAXContent("#layerHelp");
+			$(".copyCode").click(function()
+			{
+				$(this).select();
+			});
 			
 			// Expand a header if requested in the URL
 			I.openSectionFromURL();
