@@ -74,7 +74,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140712},
+		programVersion: {key: "int_utlProgramVersion", value: 140715},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -211,15 +211,20 @@ O = {
 		var currentversion = O.Utilities.programVersion.value;
 		var usersversion = parseInt(localStorage[O.Utilities.programVersion.key]);
 		// If not first visit and version is mismatch, notify new version
-		if (isFinite(usersversion) && usersversion !== currentversion
-			&& I.ProgramMode !== I.ProgramModeEnum.Overlay)
+		if (isFinite(usersversion) && usersversion !== currentversion)
 		{
+			var wait = 20;
+			if (I.ProgramMode === I.ProgramModeEnum.Overlay)
+			{
+				wait = 10;
+			}
 			I.write(I.cSiteName + " was updated since your last visit.<br />"
-			+ "This version: " + currentversion + "<br />"
-			+ "Your version: " + usersversion + "<br />"
-			+ "Would you like to see the <a class='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />"
-			+ "<br />"
-			+ "GW2Timer Overlay App has been released! <a class='urlUpdates' href='http://forum.renaka.com/topic/5546166/'>Download it now!</a><br />", 20);
+				+ "This version: " + currentversion + "<br />"
+				+ "Your version: " + usersversion + "<br />"
+				+ "Would you like to see the <a class='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />"
+				+ "<br />"
+				+ "Voice Alarm should work on <a class='urlUpdates' href='http://forum.renaka.com/topic/5546166/'>Overlay App</a>/Internet Explorer now.<br />",
+				wait);
 			I.convertExternalLink(".urlUpdates");
 		}
 		
@@ -733,7 +738,6 @@ O = {
 				}
 			}
 			X.clearChecklist(X.Checklists.Chain, "uncheck");
-			I.write("Chains checklist cleared as opted.", messagetime);
 		}
 		
 		if (O.Options.bol_clearPersonalChecklistOnReset)
@@ -749,7 +753,6 @@ O = {
 				X.clearChecklist(X.Checklists.Dungeon, "preuncheck");
 				X.clearChecklist(X.Checklists.Custom, "preuncheck");
 			}
-			I.write("Personal checklist cleared as opted.", messagetime);
 		}
 		I.write("", messagetime);
 		
@@ -1133,8 +1136,10 @@ X = {
 			valueDefault: new Array()
 		},
 		// Collectible checklists must have the same variable name as in the map page's data
-		Collectible0: { key: "str_chlCoinCollector", value: "", cushion: new Array() },
-		Collectible1: { key: "str_chlDiveMaster", value: "", cushion: new Array() }
+		Collectible0: { key: "str_chlDiveMaster", value: "", cushion: new Array() },
+		Collectible1: { key: "str_chlCoinProspect", value: "", cushion: new Array() },
+		Collectible2: { key: "str_chlCoinUplands", value: "", cushion: new Array() }
+		
 	},
 	ChecklistEnum:
 	{
@@ -2254,7 +2259,7 @@ D = {
 		var doSpeak = function(pStringMacro)
 		{
 			var url;
-			var tts = document.getElementById("jsTTS");
+			var tts;
 		
 			if (I.userBrowser === I.BrowserEnum.Chrome)
 			{
@@ -2262,14 +2267,19 @@ D = {
 				 * Google TTS seems to only work with their browser; using it on
 				 * Firefox gives "Video playback aborted due to a network error"
 				 */
+				tts = document.getElementById("jsTTSFrame");
 				url = "http://translate.google.com/translate_tts?tl="
 					+ O.Options.enu_Language + "&q=" + pStringMacro;
+				tts.src = url;
 			}
 			else
 			{
+				tts = document.getElementById("jsTTSAudio");
 				url = "http://tts-api.com/tts.mp3?q=" + pStringMacro;
+				tts.src = url;
+				tts.load();
+				tts.play();
 			}
-			tts.src = url;
 		};
 		
 		var durationms = pDuration * T.cMILLISECONDS_IN_SECOND;
@@ -3458,7 +3468,7 @@ M = {
 		// Do other initialization functions
 		M.populateMap();
 		M.drawChainPaths();
-		//M.createSubmaps();
+		M.createSubmaps();
 
 		/*
 		 * Clicking an empty place on the map highlight its coordinate.
@@ -3512,12 +3522,12 @@ M = {
 	 */
 	createSubmaps: function()
 	{
-		M.SubmapTemp = L.marker(M.convertGCtoLC([0, 0]),
+		M.SubmapTemp = L.marker(M.convertGCtoLC([3792, 15675]),
 		{
 			icon: L.icon(
 			{
-				iconUrl: "",
-				iconSize: [0, 0],
+				iconUrl: "http://i.imgur.com/2IXZvAM.jpg",
+				iconSize: [2048, 1536],
 				iconAnchor: [0, 0]
 			}),
 			draggable: false,
@@ -6341,7 +6351,7 @@ I = {
 	initializeFirst: function()
 	{
 		// Manually clear the TTS iframe to prevent old sound from playing
-		document.getElementById("jsTTS").src = "";
+		document.getElementById("jsTTSFrame").src = "";
 		
 		// Tell if DST is in effect
 		T.checkDST();
@@ -7063,7 +7073,7 @@ I = {
 		$("#layerHelp").load(I.cPageURLHelp, function()
 		{
 			I.bindAfterAJAXContent("#layerHelp");
-			$(".copyCode").click(function()
+			$(".jsCopyCode").click(function()
 			{
 				$(this).select();
 			});
@@ -7221,6 +7231,7 @@ I = {
 			{
 				// Remove elements extraneous or intrusive to overlay mode
 				$(".itemMapLinks a, #itemSocial").hide();
+				$("#jsConsole").css("font-size", "12px");
 				
 			} break;
 			case I.ProgramModeEnum.Simple:

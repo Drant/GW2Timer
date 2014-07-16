@@ -82,6 +82,7 @@ body {
 	z-index: 10;
 	left: 24px;
 	bottom: 48px;
+	color: red;
 }
 #jsConsole a, #paneWarning a {
 	color: limegreen;
@@ -89,7 +90,7 @@ body {
 #jsConsole a:hover, #paneWarning a:hover {
 	color: greenyellow;
 }
-#jsTTS {
+#jsTTSFrame, #jsTTSAudio {
 	display: none;
 }
 
@@ -885,6 +886,12 @@ header.cntHeader {
 .jsHelpCollapsible:hover {
 	color: #ddff77;
 	text-decoration: underline;
+}
+
+.jsCopyCode {
+	border: 1px solid #555;
+	background: #222;
+	color: #ddff77;
 }
 
 /* @@Chains layer
