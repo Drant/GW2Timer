@@ -3210,8 +3210,7 @@ C = {
 			
 			// Tour to the event on the map if opted
 			if (O.Options.bol_tourPrediction && I.contentCurrent === I.PageEnum.Chains
-				&& M.isMapAJAXDone && C.isChainUnchecked(pChain)
-				&& pChain.series !== C.ChainSeriesEnum.Story)
+				&& M.isMapAJAXDone && C.isChainUnchecked(pChain))
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
