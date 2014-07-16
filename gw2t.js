@@ -1032,10 +1032,10 @@ O = {
 						{s: "#itemClockIconHC1", p: {top: "48px", left: "168px"}},
 						{s: "#itemClockIconHC2", p: {top: "48px", left: "238px"}},
 						{s: "#itemClockIconHC3", p: {top: "48px", left: "308px"}},
-						{s: "#itemClockWaypoint0", p: {top: "-16px", left: "98px"}},
-						{s: "#itemClockWaypoint1", p: {top: "-16px", left: "168px"}},
-						{s: "#itemClockWaypoint2", p: {top: "-16px", left: "238px"}},
-						{s: "#itemClockWaypoint3", p: {top: "-16px", left: "308px"}}
+						{s: "#itemClockWaypoint0", p: {top: "-8px", left: "98px"}},
+						{s: "#itemClockWaypoint1", p: {top: "-8px", left: "168px"}},
+						{s: "#itemClockWaypoint2", p: {top: "-8px", left: "238px"}},
+						{s: "#itemClockWaypoint3", p: {top: "-8px", left: "308px"}}
 					], animationspeed);
 					$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
 
@@ -3074,7 +3074,7 @@ C = {
 	 * an event of it starts. Because the time a chain starts is known, these
 	 * statistical times can be used to predict when events happen and end.
 	 * @param object pChainOuter to queue.
-	 * @pre The sum statistics have been computed.
+	 * @pre The sum statistics have been computed. Chains list has been sorted.
 	 */
 	queueEventsHighlight: function(pChainOuter)
 	{
@@ -3090,7 +3090,7 @@ C = {
 		if (elapsed > 0)
 		{
 			// Gray out all of the scheduled chain's events
-			$("#listChainsScheduled .chnEvents li").addClass("chnEventPast");
+			$(".barChain:not(.barChainCurrent) .chnEvents li").addClass("chnEventPast");
 			// Find the current active event and highlight it
 			for (i in chain.primaryEvents)
 			{
@@ -6211,14 +6211,12 @@ K = {
 	 */
 	initializeClipboard: function()
 	{
+		ZeroClipboard.config({swfPath: "bin/ZeroClipboard.swf"});
 		for (var i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 		{
 			K.wpClipboards.push
 			(
-				new ZeroClipboard(document.getElementById("itemClockWaypoint" + i),
-				{
-					moviePath: "bin/ZeroClipboard.swf"
-				})
+				new ZeroClipboard(document.getElementById("itemClockWaypoint" + i))
 			);
 			/*
 			 * Zero Clipboard works by superimposing an invisible Flash object 
@@ -6226,21 +6224,9 @@ K = {
 			 * data attribute of the target is loaded to the user's clipboard.
 			 * The code below are additional stuff to execute after.
 			 */
-			// Adobe Flash is loaded to enable copy to clipboard
-			K.wpClipboards[i].on("load", function(pClient)
+			K.wpClipboards[i].on("aftercopy", function(pEvent)
 			{
-				pClient.on("complete", function(pClientInner, pArgs)
-				{
-					// Temporarily change the waypoint icon to a copy/paste icon
-					$(this).attr("src", "img/ui/copy.png");
-					var elm = this;
-					setTimeout(function()
-					{
-						$(elm).attr("src", M.cICON_WAYPOINT);
-					}, 400);
-					I.write("Chat link copied to clipboard :)<br />"
-						+ this.getAttribute(K.cWpClipboardDataAttribute), 5);
-				});
+				I.write("Chat link copied to clipboard :)<br />" + pEvent.data["text/plain"], 5);
 			});
 		}
 	}

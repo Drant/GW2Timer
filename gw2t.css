@@ -84,6 +84,9 @@ body {
 	bottom: 48px;
 	color: red;
 }
+#jsConsoleButtons a:hover {
+	color: white;
+}
 #jsConsole a, #paneWarning a {
 	color: limegreen;
 }
@@ -143,7 +146,7 @@ html, body,
 
 /* Clickable */
 a, input, label, button,
-#mapCompassButton, .menuButton, #itemClockWaypoints img,
+#mapCompassButton, .menuButton,
 .menuBeam img:hover,
 .jsTableOfContents ol li, .jsSectionDone,
 .chnCheck:hover, .chnDetailsLinks ins,
@@ -416,6 +419,18 @@ a#linkModeSimple {
 }
 #itemClockWaypoint3 {
 	top: 164px; left: 52px;
+}
+
+.itemClockWaypointClip {
+	background: url("img/map/waypoint.png");
+	background-size: 32px 32px;
+	cursor: url("img/cursor/pointer.png"), pointer;
+}
+.itemClockWaypointClip.zeroclipboard-is-hover {
+	background: url("img/ui/copy.png");
+}
+.itemClockWaypointClip.zeroclipboard-is-active {
+	opacity: 0.5;
 }
 
 #itemClock { /* The clock */
