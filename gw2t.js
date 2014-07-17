@@ -2601,7 +2601,6 @@ C = {
 			var step = C.getEventStepNumber(e.num);
 			if (step.length !== e.num.length)
 			{
-				
 				var subnum = e.num.slice(step.length);
 				if (e.num.indexOf(".") !== -1) // Always indent failure events
 				{
@@ -2875,19 +2874,32 @@ C = {
 		var time = remaining;
 		var sign = "-";
 		
-		if (remaining <= 0)
+		if (pChain.series === C.ChainSeriesEnum.Story)
 		{
-			time = T.cSECONDS_IN_TIMEFRAME - elapsed;
-			sign = "−";
+			$("#chnTime_" + pChain.nexus).text(T.getTimeFormatted(
+				{
+					reference: T.ReferenceEnum.UTC,
+					want24: true,
+					wantHours: false
+				})
+			);
 		}
-		
-		$("#chnTime_" + pChain.nexus).text(sign + T.getTimeFormatted(
+		else
+		{
+			if (remaining <= 0)
 			{
-				wantHours: false,
-				wantLetters: true,
-				customTimeInSeconds: time
-			})
-		);
+				time = T.cSECONDS_IN_TIMEFRAME - elapsed;
+				sign = "−";
+			}
+
+			$("#chnTime_" + pChain.nexus).text(sign + T.getTimeFormatted(
+				{
+					wantHours: false,
+					wantLetters: true,
+					customTimeInSeconds: time
+				})
+			);
+		}
 	},
 	
 	/*
@@ -3261,7 +3273,7 @@ C = {
 					checkedhc = checked;
 				}
 				// Don't alert if next boss is checked off and user opted not to hear
-				if (O.Options.bol_alertChecked)
+				if (O.Options.bol_alertChecked === false)
 				{
 					if (checkedsd.length > 0) { wantsd = false; }
 					if (checkedhc.length > 0) { wanthc = false; }
@@ -5763,7 +5775,7 @@ K = {
 		K.rotateClockElement(K.handHour, hourangle);
 		
 		// Opacity value 0.0 through 1.0 based on how far into the 15 minutes frame
-		var opacityAdd = 1 - ((min % T.cMINUTES_IN_TIMEFRAME)*60 + sec) / (T.cSECONDS_IN_TIMEFRAME);
+		var opacityadd = 1 - ((min % T.cMINUTES_IN_TIMEFRAME)*60 + sec) / (T.cSECONDS_IN_TIMEFRAME);
 		
 		// If crossing a 15 minute mark (IMPORTANT)
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
@@ -5792,9 +5804,10 @@ K = {
 			K.awakeTimestampPrevious = awaketimestampcurrent;
 			
 			// Dim the clock background
-			if (O.Options.int_setDimming === 0 && I.ProgramMode !== I.ProgramModeEnum.Simple)
+			if (O.Options.int_setDimming === 0
+				&& I.ProgramMode !== I.ProgramModeEnum.Simple)
 			{
-				K.clockBackground.style.opacity = opacityAdd;
+				K.clockBackground.style.opacity = opacityadd;
 			}
 		}
 		
