@@ -2261,7 +2261,7 @@ D = {
 			var url;
 			var tts;
 		
-			if (I.userBrowser === I.BrowserEnum.Chrome)
+			if (I.BrowserUser === I.BrowserEnum.Chrome)
 			{
 				/*
 				 * Google TTS seems to only work with their browser; using it on
@@ -2314,7 +2314,7 @@ D = {
 	 */
 	getSpeech: function(pText, pModifier)
 	{
-		if (I.userBrowser === I.BrowserEnum.Chrome)
+		if (I.BrowserUser === I.BrowserEnum.Chrome)
 		{
 			if (pModifier)
 			{
@@ -2350,7 +2350,7 @@ D = {
 	getChainPronunciation: function(pChain)
 	{
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default
-			|| I.userBrowser !== I.BrowserEnum.Chrome)
+			|| I.BrowserUser !== I.BrowserEnum.Chrome)
 		{
 			return C.Chains[pChain.nexus].pronunciation;
 		}
@@ -2550,7 +2550,7 @@ C = {
 
 		/*
 		 * Inserts an event with icon and necessary indentation into the ol.
-		 * @param string pEventListHTMLID of the ordered list.
+		 * @param object pChain to get chain info.
 		 * @param object pEvent to extract information.
 		 */
 		var insertEventToBarHTML = function(pChain, pEvent)
@@ -2562,16 +2562,27 @@ C = {
 				return "&lt;dfn&gt;" + pS + "&lt;/dfn&gt;";
 			};
 			// Tooltip when user hovers over the tiny orange event icon
-			var eventhtmltitle = w("Event Number: ") + e.num + b
-				+ w("If Success Go To: ") + e.sGotoNum + b
-				+ w("If Failure Go To: ") + e.fGotoNum + b
-				+ w("If Success Wait: ") + e.sInterim + b
-				+ w("If Failure Wait: ") + e.fInterim + b
-				+ w("Time Limit: ") + e.lim + b
-				+ w("Avg to Complete: ") + e.avg + b
-				+ w("Min to Complete: ") + e.min + b
-				+ w("Max to Complete: ") + e.max + b
-				+ b + "&amp;quot;" + D.getEventName(e).replace(/["']/g, "") + "&amp;quot;";
+			var eventhtmltitle = "";
+			if (pChain.series === C.ChainSeriesEnum.Story)
+			{
+				eventhtmltitle = w("Event Number: ") + e.num + b
+					+ w("Start Time: ") + e.lim + b
+					+ b + "&amp;quot;" + D.getEventName(e).replace(/["']/g, "") + "&amp;quot;";
+			}
+			else
+			{
+				eventhtmltitle = w("Event Number: ") + e.num + b
+					+ w("If Success Go To: ") + e.sGotoNum + b
+					+ w("If Failure Go To: ") + e.fGotoNum + b
+					+ w("If Success Wait: ") + e.sInterim + b
+					+ w("If Failure Wait: ") + e.fInterim + b
+					+ w("Time Limit: ") + e.lim + b
+					+ w("Avg to Complete: ") + e.avg + b
+					+ w("Min to Complete: ") + e.min + b
+					+ w("Max to Complete: ") + e.max + b
+					+ b + "&amp;quot;" + D.getEventName(e).replace(/["']/g, "") + "&amp;quot;";
+			}
+			
 			var indentpixel = 0;
 			var eventnamelimit = 44;
 			var indentEvent = function()
@@ -5562,7 +5573,7 @@ K = {
 	 */
 	reapplyFilters: function()
 	{
-		if (I.userBrowser === I.BrowserEnum.Firefox)
+		if (I.BrowserUser === I.BrowserEnum.Firefox)
 		{
 			var e1 = $("#clkCircumference");
 			var e2 = $("#clkHands");
@@ -6315,7 +6326,7 @@ I = {
 	URLKeyMode: "mode",
 	
 	// User information
-	userBrowser: "Unknown",
+	BrowserUser: "Unknown",
 	BrowserEnum:
 	{
 		IE: 0,
@@ -6382,19 +6393,19 @@ I = {
 		var useragent = navigator.userAgent;
 		if (useragent.indexOf("MSIE") !== -1)
 		{
-			I.userBrowser = I.BrowserEnum.IE;
+			I.BrowserUser = I.BrowserEnum.IE;
 		}
 		else if (useragent.indexOf("Chrome") !== -1)
 		{
-			I.userBrowser = I.BrowserEnum.Chrome;
+			I.BrowserUser = I.BrowserEnum.Chrome;
 		}
 		else if (useragent.indexOf("Firefox") !== -1)
 		{
-			I.userBrowser = I.BrowserEnum.Firefox;
+			I.BrowserUser = I.BrowserEnum.Firefox;
 		}
 		else if (useragent.indexOf("Opera") !== -1)
 		{
-			I.userBrowser = I.BrowserEnum.Opera;
+			I.BrowserUser = I.BrowserEnum.Opera;
 		}
 		
 		// Default content layer
@@ -6802,9 +6813,9 @@ I = {
 				});;
 			
 			/*
-			 * Side menu icons as alternate for headers. Clicking an icon shows the
-			 * associated header's sibling container (section) by triggering
-			 * that header's handler.
+			 * Side menu icons as alternative for headers. Clicking an icon
+			 * shows the associated header's sibling container (section) by
+			 * triggering that header's handler.
 			 */
 			var section = I.getSubstringFromHTMLID(header);
 			var src = header.find("img:eq(0)").attr("src");
@@ -7216,7 +7227,16 @@ I = {
 			{
 				// Remove elements extraneous or intrusive to overlay mode
 				$(".itemMapLinks a, #itemSocial").hide();
-				$("#jsConsole").css("font-size", "12px");
+				// Resize fonts and positions appropriate for smaller view
+				$("#jsConsole").css(
+				{
+					top: "12px", left: "12px",
+					"font-size": "12px"
+				});
+				$("#jsConsoleButtons").css(
+				{
+					right: "0px", left: "auto", bottom: "0px"
+				});
 				
 			} break;
 			case I.ProgramModeEnum.Simple:

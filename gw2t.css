@@ -59,8 +59,8 @@ body {
 #jsConsole, #paneWarning {
 	position: absolute;
 	z-index: 9;
-	margin-top: 24px;
-	margin-left: 24px;
+	top: 24px;
+	left: 24px;
 }
 #paneWarning {
 	background: #111;
@@ -141,7 +141,7 @@ div#qTip dfn { /* Highlight color for important text in tooltip */
 html, body,
 #listChainsTimetable .chnTitle h1,
 .leaflet-container, .leaflet-popup-pane, .leaflet-control {
-	cursor: url("img/cursor/auto.png"), auto;
+	cursor: url("img/cursor/auto.cur"), auto;
 }
 
 /* Clickable */
@@ -152,29 +152,28 @@ a, input, label, button,
 .chnCheck:hover, .chnDetailsLinks ins,
 #listChainsScheduled .chnTitle time,
 .leaflet-clickable {
-	cursor: url("img/cursor/pointer.png"), pointer;
+	cursor: url("img/cursor/pointer.cur"), pointer;
 }
 
 /* Toggleable */
 #layerChains header, .chnTitle h1, .jsSection, .jsHelpCollapsible {
-	cursor: url("img/cursor/toggle.png"), pointer;
+	cursor: url("img/cursor/toggle.cur"), pointer;
 }
 
 /* Zoomable */
 #paneClockIcons img,
 .cntComposition ins, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
-	cursor: url("img/cursor/zoom.png"), zoom-in;
+	cursor: url("img/cursor/zoom.cur"), pointer;
 }
 
 /* Draggable */
 .leaflet-dragging .leaflet-container, .leaflet-dragging .leaflet-clickable {
-	cursor: url("img/cursor/move.png"), move;
+	cursor: url("img/cursor/move.cur"), move;
 }
 
 /* Help */
-.jsHelpTooltip,
-.chnDetails ol li img {
-	cursor: url("img/cursor/help.png"), help;
+.jsHelpTooltip, .chnDetails ol li img {
+	cursor: url("img/cursor/help.cur"), help;
 }
 
 ::selection {
@@ -401,13 +400,6 @@ a#linkModeSimple {
 	top: 100px; left: 12px;
 }
 
-#itemClockWaypoints img {
-	position: absolute;
-	width: 32px; height: 32px;
-}
-#itemClockWaypoints img:active {
-	opacity: 0.5;
-}
 #itemClockWaypoint0 {
 	top: 52px; left: 164px;
 }
@@ -422,11 +414,15 @@ a#linkModeSimple {
 }
 
 .itemClockWaypointClip {
+	position: absolute;
+	width: 32px; height: 32px;
 	background: url("img/map/waypoint.png");
 	background-size: 32px 32px;
 	cursor: url("img/cursor/pointer.png"), pointer;
 }
 .itemClockWaypointClip.zeroclipboard-is-hover {
+	border-radius: 16px;
+	box-shadow: 0px 0px 5px white;
 	background: url("img/ui/copy.png");
 }
 .itemClockWaypointClip.zeroclipboard-is-active {
