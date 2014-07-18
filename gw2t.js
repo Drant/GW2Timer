@@ -1093,6 +1093,7 @@ O = {
 		bol_showChainPaths: function()
 		{
 			M.setEntityGroupDisplay(M.ChainPathEntities, O.Options.bol_showChainPaths);
+			M.setEntityGroupDisplay(M.StoryEventActive, O.Options.bol_showChainPaths);
 		},
 		bol_showMap: function()
 		{
@@ -3190,7 +3191,8 @@ C = {
 	
 	/*
 	 * Does cosmestic effects to event names as they transition and view the
-	 * event on the map. Also plays the alarm if it is the final event finishing.
+	 * event on the map. Also shows/hides event icons if the story chains exists.
+	 * Also plays the alarm if it is the final event finishing.
 	 * @param object pChain to read from.
 	 * @param int pPrimaryEventIndex of the current active event.
 	 * @pre Events HTML is generated and map is loaded.
@@ -3201,8 +3203,23 @@ C = {
 		var animationspeed = 500;
 		var eventnamewidth = 320;
 		var finalstep = pChain.primaryEvents.length - 1;
+		var event;
 		
-		if (pPrimaryEventIndex > -1) // -1 means the final event's finish time
+		// Hide past events' markers
+		if (pChain.series === C.ChainSeriesEnum.Story)
+		{
+			for (i in pChain.events)
+			{
+				event = pChain.events[i];
+				event.eventicon._icon.style.display = "none";
+				event.eventring._icon.style.display = "none";
+			}
+			M.StoryEventActive = null;
+			M.StoryEventActive = new Array();
+		}
+		
+		// Do event highlights, -1 means the final event's finish time
+		if (pPrimaryEventIndex > -1)
 		{
 			pChain.CurrentPrimaryEvent = pChain.primaryEvents[pPrimaryEventIndex];
 			
@@ -3216,10 +3233,22 @@ C = {
 				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
 			
 			// Recolor current events and animate transition
-			$(".chnStep_" + pChain.nexus + "_" + pPrimaryEventIndex)
-				.removeClass("chnEventPast chnEventFuture").addClass("chnEventCurrent")
-				.css({width: 0, opacity: 0.5}).animate({width: eventnamewidth, opacity: 1}, animationspeed)
-				.css({width: "auto"});
+			$(".chnStep_" + pChain.nexus + "_" + pPrimaryEventIndex).each(function()
+			{
+				$(this).removeClass("chnEventPast chnEventFuture").addClass("chnEventCurrent")
+					.css({width: 0, opacity: 0.5}).animate({width: eventnamewidth, opacity: 1}, animationspeed)
+					.css({width: "auto"});
+				// Also show current events' markers
+				if (pChain.series === C.ChainSeriesEnum.Story)
+				{
+					event = pChain.events[$(this).attr("data-eventindex")];
+					event.eventicon._icon.style.display = "block";
+					event.eventring._icon.style.display = "block";
+					// Add active events to iterable array
+					M.StoryEventActive.push(event.eventicon);
+					M.StoryEventActive.push(event.eventring);
+				}
+			});
 		
 			// Recolor future events
 			if (pPrimaryEventIndex < pChain.primaryEvents.length)
@@ -3411,6 +3440,7 @@ M = {
 	isMapAJAXDone: false,
 	mousedZoneIndex: null,
 	currentIconSize: 32,
+	currentRingSize: 128,
 	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 	cICON_WAYPOINT: "img/map/waypoint.png",
@@ -3434,7 +3464,7 @@ M = {
 	IconWaypoint: L.icon(
 	{
 		iconUrl: "img/map/waypoint.png",
-		iconSize: [16, 16],
+		iconSize: [16, 16], // Initial size corresponding to default zoom level
 		iconAnchor: [8, 8]
 	}),
 	/*
@@ -3459,6 +3489,11 @@ M = {
 	// Submap for showing maps that aren't in the API (actually Leaflet markers)
 	SubmapEntities: new Array(),
 	SubmapTemp: {},
+	
+	// Story event icons and event rings map entities
+	StoryEventIcons: new Array(),
+	StoryEventRings: new Array(),
+	StoryEventActive: new Array(),
 	
 	/*
 	 * Initializes the Leaflet map, adds markers, and binds events.
@@ -3670,7 +3705,7 @@ M = {
 			var i;
 			var currentzoom = this.getZoom();
 			M.ZoomLevelEnum.Current = currentzoom;
-			M.currentIconSize = 0;
+			var icon;
 			
 			// Resize all waypoint icons in all zones
 			switch (currentzoom)
@@ -3680,10 +3715,34 @@ M = {
 				case 5: M.currentIconSize = 24; break;
 				case 4: M.currentIconSize = 20; break;
 				case 3: M.currentIconSize = 16; break;
+				default: M.currentIconSize = 0;
 			}
 			for (i in M.WaypointEntities)
 			{
 				M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.currentIconSize);
+			}
+			
+			// Resize story event icons if exist
+			if (M.StoryEventIcons.length > 0)
+			{
+				// Event icons are same size as waypoints, but their rings are bigger
+				switch (currentzoom)
+				{
+					case 7: M.currentRingSize = 128; break;
+					case 6: M.currentRingSize = 104; break;
+					case 5: M.currentRingSize = 80; break;
+					case 4: M.currentRingSize = 56; break;
+					case 3: M.currentRingSize = 32; break;
+					default: M.currentRingSize = 0;
+				}
+				
+				for (i in M.StoryEventIcons)
+				{
+					icon = M.StoryEventIcons[i];
+					M.changeMarkerIcon(icon, icon._icon.src, M.currentIconSize);
+					icon = M.StoryEventRings[i];
+					M.changeMarkerIcon(icon, icon._icon.src, M.currentRingSize);
+				}
 			}
 			
 			// Show submaps only if at max zoom in level
@@ -3982,6 +4041,8 @@ M = {
 			 * AJAX takes a while so can use this to advantage to delay graphics
 			 * that seem out of place without a map loaded.
 			 */
+			var i;
+			
 			if (O.Options.bol_showChainPaths === true && I.contentCurrent !== I.PageEnum.Map)
 			{
 				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
@@ -3992,7 +4053,7 @@ M = {
 				// Initialize the "current moused zone" variable for showing waypoints
 				M.showCurrentZone(M.getZoneCenter("la"));
 				// The zoomend event handler doesn't detect the first zoom by prediction
-				for (var i in M.WaypointEntities)
+				for (i in M.WaypointEntities)
 				{
 					M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.cLEAFLET_ICON_SIZE);
 				}
@@ -4073,7 +4134,7 @@ M = {
 	/*
 	 * Creates polylines for the map based on event's path data, then add event
 	 * coordinates to the event names HTML so the map views the location when
-	 * user clicks on it.
+	 * user clicks on it. Also creates icons for story events if exist.
 	 */
 	drawChainPaths: function()
 	{
@@ -4131,9 +4192,40 @@ M = {
 					// Assign a data attribute to the event name
 					var coord = event.path[0];
 					$(this).attr("data-coord", coord[0] + "," + coord[1]);
+					$(this).attr("data-eventindex", ii);
 					// Read the attribute and use the coordinate when clicked for touring
 					M.bindMapLinkBehavior($(this), M.PinEvent);
 				});
+				
+				// Create event icons for story chains, they will be resized by the zoomend function
+				if (chain.series === C.ChainSeriesEnum.Story)
+				{
+					event.eventring = L.marker(M.convertGCtoLC(event.path[0]),
+					{
+						clickable: false,
+						icon: L.icon(
+						{
+							iconUrl: "img/map/pin_event.png",
+							iconSize: [32, 32],
+							iconAnchor: [16, 16]
+						})
+					}).addTo(M.Map);
+					event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
+					{
+						title: "<span class='mapEvent'>" + D.getEventName(event) + "</span>",
+						icon: L.icon(
+						{
+							iconUrl: "img/event/" + event.icon + I.cPNG,
+							iconSize: [16, 16],
+							iconAnchor: [8, 8]
+						})
+					}).addTo(M.Map);
+					// Initially hide all event icons, the highlight event functions will show them
+					event.eventring._icon.style.display = "none";
+					event.eventicon._icon.style.display = "none";
+					M.StoryEventRings.push(event.eventring);
+					M.StoryEventIcons.push(event.eventicon);
+				}
 			}
 		}
 		
@@ -7024,10 +7116,12 @@ I = {
 					if (I.contentCurrent === I.PageEnum.Map)
 					{
 						M.setEntityGroupDisplay(M.ChainPathEntities, "hide");
+						M.setEntityGroupDisplay(M.StoryEventActive, "hide");
 					}
 					else
 					{
 						M.setEntityGroupDisplay(M.ChainPathEntities, "show");
+						M.setEntityGroupDisplay(M.StoryEventActive, "show");
 					}
 				}
 			});

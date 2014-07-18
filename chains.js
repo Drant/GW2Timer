@@ -1509,7 +1509,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5328, 16375]],
+			path: [[5395, 16393]],
 			name_en: "Race against the Inquest to collect crystal shards for the Zephyrites.",
 			name_de: "Wetteifert mit der Inquestur, um die Kristall-Scherben für die Zephyriten einzusammeln.",
 			name_es: "Adelántate a la Inquisa y recoge las esquirlas de cristal de los Cefiritas.",
@@ -1840,7 +1840,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5328, 16375]],
+			path: [[5395, 16393]],
 			name_en: "Race against the Inquest to collect crystal shards for the Zephyrites.",
 			name_de: "Wetteifert mit der Inquestur, um die Kristall-Scherben für die Zephyriten einzusammeln.",
 			name_es: "Adelántate a la Inquisa y recoge las esquirlas de cristal de los Cefiritas.",
@@ -2171,7 +2171,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5328, 16375]],
+			path: [[5395, 16393]],
 			name_en: "Race against the Inquest to collect crystal shards for the Zephyrites.",
 			name_de: "Wetteifert mit der Inquestur, um die Kristall-Scherben für die Zephyriten einzusammeln.",
 			name_es: "Adelántate a la Inquisa y recoge las esquirlas de cristal de los Cefiritas.",
@@ -2510,96 +2510,6 @@ var GW2T_CHAIN_DATA = [
 			avg: "5:00",
 			min: "5:00",
 			max: "5:00",
-			primacy: 1
-		},
-		{
-			path: [[4914, 16612]],
-			name_en: "Stop the skritt burglar before it escapes with the treasure.",
-			name_de: "Haltet die Skritt-Einbrecherin auf, bevor sie mit dem Schatz fliehen kann.",
-			name_es: "Detén a la ladrona skritt antes de que escape con el tesoro.",
-			name_fr: "Empêcher la cambrioleuse skritt de s'échapper avec le trésor.",
-			icon: "fist",
-			num: "3J",
-			sGotoNum: [""],
-			fGotoNum: "",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "40:00",
-			avg: "5:00",
-			min: "5:00",
-			max: "5:00",
-			primacy: 1
-		},
-		{
-			path: [[5026, 16373]],
-			name_en: "Stop the skritt burglar before it escapes with the treasure.",
-			name_de: "Haltet die Skritt-Einbrecherin auf, bevor sie mit dem Schatz fliehen kann.",
-			name_es: "Detén a la ladrona skritt antes de que escape con el tesoro.",
-			name_fr: "Empêcher la cambrioleuse skritt de s'échapper avec le trésor.",
-			icon: "fist",
-			num: "3K",
-			sGotoNum: [""],
-			fGotoNum: "",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "40:00",
-			avg: "5:00",
-			min: "5:00",
-			max: "5:00",
-			primacy: 1
-		},
-		{
-			path: [[5095, 16734]],
-			name_en: "Stop the skritt burglar before it escapes with the treasure.",
-			name_de: "Haltet die Skritt-Einbrecherin auf, bevor sie mit dem Schatz fliehen kann.",
-			name_es: "Detén a la ladrona skritt antes de que escape con el tesoro.",
-			name_fr: "Empêcher la cambrioleuse skritt de s'échapper avec le trésor.",
-			icon: "fist",
-			num: "3L",
-			sGotoNum: [""],
-			fGotoNum: "",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "40:00",
-			avg: "5:00",
-			min: "5:00",
-			max: "5:00",
-			primacy: 1
-		},
-		{
-			path: [[5225, 16389]],
-			name_en: "Stop the skritt burglar before it escapes with the treasure.",
-			name_de: "Haltet die Skritt-Einbrecherin auf, bevor sie mit dem Schatz fliehen kann.",
-			name_es: "Detén a la ladrona skritt antes de que escape con el tesoro.",
-			name_fr: "Empêcher la cambrioleuse skritt de s'échapper avec le trésor.",
-			icon: "fist",
-			num: "3M",
-			sGotoNum: [""],
-			fGotoNum: "",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "40:00",
-			avg: "5:00",
-			min: "5:00",
-			max: "5:00",
-			primacy: 1
-		},
-		{
-			path: [[5474, 16339]],
-			name_en: "Stop the skritt burglar before it escapes with the treasure.",
-			name_de: "Haltet die Skritt-Einbrecherin auf, bevor sie mit dem Schatz fliehen kann.",
-			name_es: "Detén a la ladrona skritt antes de que escape con el tesoro.",
-			name_fr: "Empêcher la cambrioleuse skritt de s'échapper avec le trésor.",
-			icon: "fist",
-			num: "3N",
-			sGotoNum: [""],
-			fGotoNum: "",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "40:00",
-			avg: "5:00",
-			min: "5:00",
-			max: "5:00",
 			primacy: 3
 		}
 	]
@@ -2754,7 +2664,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5187, 16498]],
+			path: [[5193, 16447]],
 			name_en: "Defeat the dust mite twister! (Tier 3)",
 			name_de: "Besiegt den Staubmilben-Wirbelwind!",
 			name_es: "¡Derrota al huracán de ácaros de polvo!",

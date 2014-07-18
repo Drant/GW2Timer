@@ -276,6 +276,17 @@ a#linkModeSimple {
 	border-radius: 8px;
 }
 
+.mapEvent {
+	font-family: Menomonia;
+	font-size: 18px;
+	line-height: 110%;
+	letter-spacing: -1px;
+	color: white;
+	text-shadow:
+		0px 0px 2px black,
+		1px 1px 1px black;
+}
+
 .mapNeedle {
 	font-family: sans-serif;
 	font-size: 12px;
