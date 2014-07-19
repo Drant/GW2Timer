@@ -1494,7 +1494,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[4981, 16498], [4981, 16498]],
+			path: [[4981, 16498]],
 			name_en: "Defeat Three-Toed Tootsie.",
 			name_de: "Besiegt Dreizehen-Tootsie.",
 			name_es: "Derrota a Ñique Tresdedos.",
@@ -1608,7 +1608,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[4931, 16744], [4931, 16744]],
+			path: [[4931, 16744]],
 			name_en: "Challenge and spar with Nochtli.",
 			name_de: "Fordert Nochtli zu einem Übungskampf heraus.",
 			name_es: "Desafía a Nochtli y entrena con ella.",
@@ -1746,7 +1746,7 @@ var GW2T_CHAIN_DATA = [
 			name_de: "Beschützt den Drachenkorb mit Vorräten vor der Inquestur.",
 			name_es: "Defiende las cestas cometa de suministros frente a la Inquisa.",
 			name_fr: "Défendre le panier cerf-volant rempli de provisions contre l'Enqueste.",
-			icon: "swords",
+			icon: "shield",
 			ring: "c_m",
 			num: "3C",
 			sGotoNum: [""],
@@ -1760,7 +1760,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5487, 16000], [5487, 16000]],
+			path: [[5487, 16000]],
 			name_en: "Rescue injured Zephyrites from the Inquest inside the mine and escort them outside.",
 			name_de: "Rettet verletzte Zephyriten in der Mine vor der Inquestur und eskortiert sie nach draußen.",
 			name_es: "Protege a los Cefiritas heridos frente a la Inquisa y escóltalos hasta que salgan de la mina.",
@@ -1843,7 +1843,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[4981, 16498], [4981, 16498]],
+			path: [[4981, 16498]],
 			name_en: "Defeat Three-Toed Tootsie.",
 			name_de: "Besiegt Dreizehen-Tootsie.",
 			name_es: "Derrota a Ñique Tresdedos.",
@@ -1957,7 +1957,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[4931, 16744], [4931, 16744]],
+			path: [[4931, 16744]],
 			name_en: "Challenge and spar with Nochtli.",
 			name_de: "Fordert Nochtli zu einem Übungskampf heraus.",
 			name_es: "Desafía a Nochtli y entrena con ella.",
@@ -2095,7 +2095,7 @@ var GW2T_CHAIN_DATA = [
 			name_de: "Beschützt den Drachenkorb mit Vorräten vor der Inquestur.",
 			name_es: "Defiende las cestas cometa de suministros frente a la Inquisa.",
 			name_fr: "Défendre le panier cerf-volant rempli de provisions contre l'Enqueste.",
-			icon: "swords",
+			icon: "shield",
 			ring: "c_m",
 			num: "3C",
 			sGotoNum: [""],
@@ -2109,7 +2109,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5487, 16000], [5487, 16000]],
+			path: [[5487, 16000]],
 			name_en: "Rescue injured Zephyrites from the Inquest inside the mine and escort them outside.",
 			name_de: "Rettet verletzte Zephyriten in der Mine vor der Inquestur und eskortiert sie nach draußen.",
 			name_es: "Protege a los Cefiritas heridos frente a la Inquisa y escóltalos hasta que salgan de la mina.",

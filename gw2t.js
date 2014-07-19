@@ -3860,7 +3860,7 @@ M = {
 	},
 	
 	/*
-	 * View the map at the specifications.
+	 * Views the map at the specifications.
 	 * @param array pCoord two number coordinates.
 	 * @param object pPin which to move to coordinate.
 	 * @param enum pZoom level.
@@ -3887,6 +3887,38 @@ M = {
 		}
 		M.Map.setView(M.convertGCtoLC(pCoord), zoom);
 		M.showCurrentZone(pCoord);
+	},
+	
+	/*
+	 * Views the map at the given URL coordinates if exist.
+	 * URL should be in the form of http://gw2timer.com/?go=[4874,16436,1]
+	 * coords[0] = x coordinate.
+	 * coords[1] = y coordinate.
+	 * coords[2] = z coordinate (zoom level, lower value equals greater zoom-in).
+	 */
+	goToURLCoords: function()
+	{
+		var args = O.URLArguments[I.URLKeyGo];
+		var coords = [];
+		if (args)
+		{
+			coords = M.parseCoordinates(args);
+			if (coords.length === 2)
+			{
+				if (isFinite(coords[0]) && isFinite(coords[1]))
+				{
+					M.goToView(coords, M.PinPersonal);
+				}
+			}
+			else if (coords.length >= 3)
+			{
+				if (isFinite(coords[0]) && isFinite(coords[1]) && isFinite(coords[2]))
+				{
+					var zoomlevel = M.ZoomLevelEnum.Max - T.wrapInteger(coords[2], M.ZoomLevelEnum.Max);
+					M.goToView([coords[0], coords[1]], M.PinPersonal, zoomlevel);
+				}
+			}
+		}
 	},
 	
 	/*
@@ -3932,7 +3964,7 @@ M = {
 	/*
 	 * Converts a coordinate string to array coordinates.
 	 * @param string pString coordinates in the form of "[X, Y]" GW2 coords.
-	 * @returns array pCoord array of two numbers.
+	 * @returns array pCoord array of numbers.
 	 */
 	parseCoordinates: function(pString)
 	{
@@ -4074,14 +4106,13 @@ M = {
 			 * AJAX takes a while so can use this to advantage to delay graphics
 			 * that seem out of place without a map loaded.
 			 */
-			var i;
-			
 			if (O.Options.bol_showChainPaths === true && I.contentCurrent !== I.PageEnum.Map)
 			{
 				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
 			}
 			
-			if (O.Options.bol_tourPrediction && I.contentCurrent === I.PageEnum.Chains)
+			if (O.Options.bol_tourPrediction && I.contentCurrent === I.PageEnum.Chains
+				&& O.URLArguments[I.URLKeyGo] === undefined)
 			{
 				// Initialize the "current moused zone" variable for showing waypoints
 				M.showCurrentZone(M.getZoneCenter("la"));
@@ -4112,6 +4143,7 @@ M = {
 			M.isMapAJAXDone = true;
 			M.bindMapVisualChanges();
 			M.adjustZoom();
+			M.goToURLCoords();
 		});
 		
 		/*
@@ -6453,6 +6485,7 @@ I = {
 	URLKeyPage: "page",
 	URLKeySection: "section",
 	URLKeyMode: "mode",
+	URLKeyGo: "go",
 	
 	// User information
 	BrowserUser: "Unknown",
