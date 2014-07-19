@@ -3693,15 +3693,17 @@ M = {
 	},
 	
 	/*
-	 * Resizes markers so it scales with the current zoom level.
+	 * Resizes markers so they scale with the current zoom level.
 	 */
 	adjustZoom: function()
 	{
 		var i;
 		var currentzoom = M.Map.getZoom();
 		var icon;
-
-		// Resize all waypoint icons in all zones
+		var submap;
+		var submapwidth;
+		var submapheight;
+		
 		switch (currentzoom)
 		{
 			case 7: M.currentIconSize = 32; break;
@@ -3711,32 +3713,8 @@ M = {
 			case 3: M.currentIconSize = 16; break;
 			default: M.currentIconSize = 0;
 		}
-		for (i in M.WaypointEntities)
-		{
-			M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.currentIconSize);
-		}
-
-		// Resize story event icons if exist
-		if (M.StoryEventIcons.length > 0)
-		{
-			// Event icons are same size as waypoints, but their rings are bigger
-			M.currentRingSize = M.scaleDimension(M.cRING_SIZE_MAX);
-
-			for (i in M.StoryEventIcons)
-			{
-				icon = M.StoryEventIcons[i];
-				M.changeMarkerIcon(icon, icon._icon.src, M.currentIconSize);
-				icon = M.StoryEventRings[i];
-				M.changeMarkerIcon(icon, icon._icon.src, M.currentRingSize);
-				// Don't make the rings overlap clickable waypoints
-				M.StoryEventRings[i]._icon.style.zIndex = 1;
-			}
-		}
-
+		
 		// Rescale submaps if exist
-		var submap;
-		var submapwidth;
-		var submapheight;
 		if (M.SubmapEntities.length > 0)
 		{
 			for (i in M.SubmapEntities)
@@ -3755,11 +3733,29 @@ M = {
 				M.SubmapEntities[i]._icon.style.zIndex = 0;
 			}
 		}
-	},
-	
-	stackStoryIcons: function()
-	{
 		
+		// Resize story event icons if exist
+		if (M.StoryEventIcons.length > 0)
+		{
+			// Event icons are same size as waypoints, but their rings are bigger
+			M.currentRingSize = M.scaleDimension(M.cRING_SIZE_MAX);
+
+			for (i in M.StoryEventIcons)
+			{
+				icon = M.StoryEventIcons[i];
+				M.changeMarkerIcon(icon, icon._icon.src, M.currentIconSize);
+				icon = M.StoryEventRings[i];
+				M.changeMarkerIcon(icon, icon._icon.src, M.currentRingSize);
+				// Don't make the rings overlap clickable waypoints
+				M.StoryEventRings[i]._icon.style.zIndex = 1;
+			}
+		}
+
+		// Resize all waypoint icons in all zones
+		for (i in M.WaypointEntities)
+		{
+			M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.currentIconSize);
+		}
 	},
 	
 	/*
@@ -7367,6 +7363,7 @@ I = {
 			case I.ProgramModeEnum.Overlay:
 			{
 				// Remove elements extraneous or intrusive to overlay mode
+				$("#paneWarning").remove();
 				$(".itemMapLinks a, #itemSocial").hide();
 				// Resize fonts and positions appropriate for smaller view
 				$("#jsConsole").css(
@@ -7430,6 +7427,7 @@ I = {
 		// Also streamline other UI elements if website is embedded in another website
 		if (I.isProgramEmbedded)
 		{
+			$("#paneWarning").remove();
 			$(".itemMapLinks a").hide();
 		}
 	},

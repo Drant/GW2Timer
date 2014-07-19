@@ -1595,7 +1595,7 @@ var GW2T_CHAIN_DATA = [
 			name_es: "Derrota al gólem de la Inquisa imbuido de luz que bloquea el paso al centro de líneas ley.",
 			name_fr: "Vaincre le golem de l'Enqueste imprégné de lumière qui bloque l'accès au point de convergence des lignes de force.",
 			icon: "boss",
-			ring: "c_m",
+			ring: "c_s",
 			num: "2C",
 			sGotoNum: [""],
 			fGotoNum: "",
