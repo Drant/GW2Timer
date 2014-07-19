@@ -2077,7 +2077,7 @@ var GW2T_CHAIN_DATA = [
 			name_es: "Despeja Prosperidad de zarcillos de la selva y mordrem.",
 			name_fr: "Débarrasser Prospérité des vrilles de la jungle et des mordrems.",
 			icon: "boss",
-			ring: "c_s",
+			ring: "c_m",
 			num: "3B",
 			sGotoNum: [""],
 			fGotoNum: "",
@@ -2401,7 +2401,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5165, 16475]],
+			path: [[3792, 15675]],
 			name_en: "Sandstorm!",
 			name_de: "Sandsturm!",
 			name_es: "¡Una tormenta de arena!",

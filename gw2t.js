@@ -593,7 +593,7 @@ O = {
 			 * then URLArguments overrides Options only, and user preferences
 			 * (localStorage) will not modified.
 			 */
-			if (I.ProgramMode === I.ProgramModeEnum.Embedded)
+			if (I.isProgramEmbedded)
 			{
 				if (O.URLArguments[optionkey] !== undefined)
 				{
@@ -3242,6 +3242,14 @@ C = {
 					M.StoryEventActive.push(event.eventicon);
 					M.StoryEventActive.push(event.eventring);
 				}
+				// Bury the submaps so other markers are visible
+				if (M.SubmapEntities.length > 0)
+				{
+					for (i in M.SubmapEntities)
+					{
+						M.SubmapEntities[i]._icon.style.zIndex = 0;
+					}
+				}
 			});
 		
 			// Recolor future events
@@ -3747,6 +3755,11 @@ M = {
 				M.SubmapEntities[i]._icon.style.zIndex = 0;
 			}
 		}
+	},
+	
+	stackStoryIcons: function()
+	{
+		
 	},
 	
 	/*
