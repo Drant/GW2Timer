@@ -327,16 +327,10 @@ O = {
 		O.URLArguments = O.getURLArguments();
 		
 		var i;
-		
-		// Detect iFrame embedding, overrides all other modes
-		if (window !== window.top)
-		{
-			I.ProgramMode = I.ProgramModeEnum.Embedded;
-		}
 		// Set up program mode
-		else if (O.URLArguments[I.URLKeyMode])
+		var mode = O.URLArguments[I.URLKeyMode];
+		if (mode)
 		{
-			var mode = O.URLArguments[I.URLKeyMode];
 			for (i in I.ProgramModeEnum)
 			{
 				if (I.ProgramModeEnum[i].toLowerCase() === mode.toLowerCase())
@@ -1810,7 +1804,7 @@ D = {
 		s_half_an_hour: {de: "eine halbe stunde", es: "media hora", fr: "demi-heure", nl: "een half uur", pl: "pół godziny", ru: "полчаса", zh: "半小時"},
 		
 		// Nouns
-		s_world_boss: {de: "weltendgegner", es: "jefe mundo", fr: "chef monde", nl: "wereld eindbaas", pl: "świat szef", ru: "мир босс", zh: "世界頭目"},
+		s_world_boss: {de: "weltboss", es: "jefe mundo", fr: "chef monde", nl: "wereld eindbaas", pl: "świat szef", ru: "мир босс", zh: "世界頭目"},
 		s_section: {de: "paragraph", es: "sección", fr: "section", nl: "paragraaf", pl: "sekcja", ru: "параграф", zh: "節"},
 		
 		// Verbs
@@ -3435,24 +3429,27 @@ M = {
 	 * This is referred to by the variable "M.Zones".
 	 */
 	Zones: GW2T_ZONE_DATA,
+	Map: {},
 	Resources: {},
 	Collectibles: {},
 	isMapAJAXDone: false,
 	mousedZoneIndex: null,
 	currentIconSize: 32,
-	currentRingSize: 128,
+	currentRingSize: 256,
+	cICON_SIZE_MAX: 32,
+	cRING_SIZE_MAX: 256,
 	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 	cICON_WAYPOINT: "img/map/waypoint.png",
 	cICON_WAYPOINTOVER: "img/map/waypoint_h.png",
 	cLEAFLET_PATH_OPACITY: 0.5,
-	cLEAFLET_ICON_SIZE: 32,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
 	cMAP_MOUSEMOVE_RATE: 100,
+	cZoomLevelBase: 2,
 	ZoomLevelEnum:
 	{
-		Current: 0, // This variable is dynamic
+		Min: 0,
 		Default: 3,
 		Space: 3,
 		Sky: 5,
@@ -3460,17 +3457,6 @@ M = {
 		Max: 7
 	},
 	
-	// Icons are initially invisible until zoomed in close enough or moused over a zone
-	IconWaypoint: L.icon(
-	{
-		iconUrl: "img/map/waypoint.png",
-		iconSize: [16, 16], // Initial size corresponding to default zoom level
-		iconAnchor: [8, 8]
-	}),
-	/*
-	 * Waypoint markers will be stored in the M.Zones object for each zone.
-	 * This is a shortcut reference array for all the waypoints.
-	 */
 	PinPersonal: {},
 	PinProgram: {},
 	PinEvent: {},
@@ -3523,9 +3509,9 @@ M = {
 		}
 		
 		// Do other initialization functions
+		M.createSubmaps();
 		M.populateMap();
 		M.drawChainPaths();
-		M.createSubmaps();
 
 		/*
 		 * Clicking an empty place on the map highlight its coordinate.
@@ -3579,19 +3565,34 @@ M = {
 	 */
 	createSubmaps: function()
 	{
-		M.SubmapTemp = L.marker(M.convertGCtoLC([3792, 15675]),
+		M.SubmapTemp = M.createSubmap([2048, 1536], [3792, 15675], "http://i.imgur.com/2IXZvAM.jpg");
+	},
+	
+	/*
+	 * Creates and returns a submap.
+	 * @param int[] pDimensions width and height array.
+	 * @param int[] pCoord x,y array.
+	 * @param string pURL image of submap.
+	 * @returns object Leaflet marker.
+	 */
+	createSubmap: function(pDimensions, pCoord, pURL)
+	{
+		var width = M.scaleDimension(pDimensions[0]);
+		var height = M.scaleDimension(pDimensions[1]);
+		var submap = L.marker(M.convertGCtoLC([pCoord[0], pCoord[1]]),
 		{
 			icon: L.icon(
 			{
-				iconUrl: "http://i.imgur.com/2IXZvAM.jpg",
-				iconSize: [2048, 1536],
+				iconUrl: pURL,
+				iconSize: [width, height],
 				iconAnchor: [0, 0]
 			}),
 			draggable: false,
 			clickable: false
 		}).addTo(M.Map);
-		M.SubmapEntities.push(M.SubmapTemp);
-		M.SubmapTemp._icon.style.display = "none";
+		submap.spatiality = {maxwidth: pDimensions[0], maxheight: pDimensions[1]};
+		M.SubmapEntities.push(submap);
+		return submap;
 	},
 	
 	/*
@@ -3667,6 +3668,88 @@ M = {
 	},
 	
 	/*
+	 * Gets the dimension (of say a marker) adjusted to the specified zoom level.
+	 * For example, a submap must be resized so that it is the same scale as
+	 * the map's tileset. It is known that every zoom down doubles the size of
+	 * the map, and vice versa. The formula below is:
+	 * maxdimension / (2 ^ (maxzoomlevel - currentzoomlevel))
+	 * Each zoom down increases the dimension toward the maxdimension, so when
+	 * it's at maxzoomlevel, the returned dimension equals maxdimension.
+	 * @param int pMaxDimension to rescale.
+	 * @param int or enum pZoomLevel for adjustment.
+	 */
+	scaleDimension: function(pMaxDimension, pZoomLevel)
+	{
+		pZoomLevel = pZoomLevel || M.Map.getZoom();
+		return parseInt(pMaxDimension / (Math.pow(M.cZoomLevelBase, (M.ZoomLevelEnum.Max) - pZoomLevel)));
+	},
+	
+	/*
+	 * Resizes markers so it scales with the current zoom level.
+	 */
+	adjustZoom: function()
+	{
+		var i;
+		var currentzoom = M.Map.getZoom();
+		var icon;
+
+		// Resize all waypoint icons in all zones
+		switch (currentzoom)
+		{
+			case 7: M.currentIconSize = 32; break;
+			case 6: M.currentIconSize = 28; break;
+			case 5: M.currentIconSize = 24; break;
+			case 4: M.currentIconSize = 20; break;
+			case 3: M.currentIconSize = 16; break;
+			default: M.currentIconSize = 0;
+		}
+		for (i in M.WaypointEntities)
+		{
+			M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.currentIconSize);
+		}
+
+		// Resize story event icons if exist
+		if (M.StoryEventIcons.length > 0)
+		{
+			// Event icons are same size as waypoints, but their rings are bigger
+			M.currentRingSize = M.scaleDimension(M.cRING_SIZE_MAX);
+
+			for (i in M.StoryEventIcons)
+			{
+				icon = M.StoryEventIcons[i];
+				M.changeMarkerIcon(icon, icon._icon.src, M.currentIconSize);
+				icon = M.StoryEventRings[i];
+				M.changeMarkerIcon(icon, icon._icon.src, M.currentRingSize);
+				// Don't make the rings overlap clickable waypoints
+				M.StoryEventRings[i]._icon.style.zIndex = 1;
+			}
+		}
+
+		// Rescale submaps if exist
+		var submap;
+		var submapwidth;
+		var submapheight;
+		if (M.SubmapEntities.length > 0)
+		{
+			for (i in M.SubmapEntities)
+			{
+				submap = M.SubmapEntities[i];
+				submapwidth = M.scaleDimension(submap.spatiality.maxwidth);
+				submapheight = M.scaleDimension(submap.spatiality.maxheight);
+
+				submap.setIcon(new L.icon(
+				{
+					iconUrl: submap._icon.src,
+					iconSize: [submapwidth, submapheight],
+					iconAnchor: [0, 0]
+				}));
+				// Bury the submaps so other markers are visible
+				M.SubmapEntities[i]._icon.style.zIndex = 0;
+			}
+		}
+	},
+	
+	/*
 	 * Bindings for map events that need to be done after AJAX has loaded the
 	 * API-generated markers.
 	 */
@@ -3681,20 +3764,6 @@ M = {
 		{
 			M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
 		}));
-		
-		/*
-		 * At the start of a zoom change hide submap if exiting ground level.
-		 */
-		M.Map.on("zoomstart", function(pEvent)
-		{
-			if (M.SubmapEntities.length > 0)
-			{
-				if (this.getZoom() === M.ZoomLevelEnum.Ground)
-				{
-					M.setEntityGroupDisplay(M.SubmapEntities, "hide");
-				}
-			}
-		});
 
 		/*
 		 * At the end of a zoom animation, resize the map waypoint icons
@@ -3702,57 +3771,7 @@ M = {
 		 */
 		M.Map.on("zoomend", function(pEvent)
 		{
-			var i;
-			var currentzoom = this.getZoom();
-			M.ZoomLevelEnum.Current = currentzoom;
-			var icon;
-			
-			// Resize all waypoint icons in all zones
-			switch (currentzoom)
-			{
-				case 7: M.currentIconSize = 32; break;
-				case 6: M.currentIconSize = 28; break;
-				case 5: M.currentIconSize = 24; break;
-				case 4: M.currentIconSize = 20; break;
-				case 3: M.currentIconSize = 16; break;
-				default: M.currentIconSize = 0;
-			}
-			for (i in M.WaypointEntities)
-			{
-				M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.currentIconSize);
-			}
-			
-			// Resize story event icons if exist
-			if (M.StoryEventIcons.length > 0)
-			{
-				// Event icons are same size as waypoints, but their rings are bigger
-				switch (currentzoom)
-				{
-					case 7: M.currentRingSize = 128; break;
-					case 6: M.currentRingSize = 104; break;
-					case 5: M.currentRingSize = 80; break;
-					case 4: M.currentRingSize = 56; break;
-					case 3: M.currentRingSize = 32; break;
-					default: M.currentRingSize = 0;
-				}
-				
-				for (i in M.StoryEventIcons)
-				{
-					icon = M.StoryEventIcons[i];
-					M.changeMarkerIcon(icon, icon._icon.src, M.currentIconSize);
-					icon = M.StoryEventRings[i];
-					M.changeMarkerIcon(icon, icon._icon.src, M.currentRingSize);
-				}
-			}
-			
-			// Show submaps only if at max zoom in level
-			if (M.SubmapEntities.length > 0)
-			{
-				if (currentzoom === M.ZoomLevelEnum.Ground)
-				{
-					M.setEntityGroupDisplay(M.SubmapEntities, "show");
-				}
-			}
+			M.adjustZoom();
 		});
 	},
 	
@@ -3766,7 +3785,7 @@ M = {
 	{
 		if (pSize === undefined)
 		{
-			pSize = M.cLEAFLET_ICON_SIZE;
+			pSize = M.cICON_SIZE_MAX;
 		}
 		
 		pMarker.setIcon(new L.icon(
@@ -4001,7 +4020,12 @@ M = {
 						{
 							title: "<span class='mapLoc'><dfn>" + poi.name + "</dfn></span>",
 							waypoint: poi.name,
-							icon: M.IconWaypoint,
+							icon: L.icon(
+							{
+								iconUrl: M.cICON_WAYPOINT,
+								iconSize: [16, 16], // Initial size corresponding to default zoom level
+								iconAnchor: [8, 8]
+							}),
 							link: M.getChatlinkFromPoiID(poi.poi_id)
 						}).addTo(M.Map);
 						// Initially hide all the waypoints
@@ -4052,11 +4076,6 @@ M = {
 			{
 				// Initialize the "current moused zone" variable for showing waypoints
 				M.showCurrentZone(M.getZoneCenter("la"));
-				// The zoomend event handler doesn't detect the first zoom by prediction
-				for (i in M.WaypointEntities)
-				{
-					M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.cLEAFLET_ICON_SIZE);
-				}
 				// Tour to the event on the map if opted
 				$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
 					+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
@@ -4083,11 +4102,7 @@ M = {
 		{
 			M.isMapAJAXDone = true;
 			M.bindMapVisualChanges();
-			// Show submaps only if at max zoomed in level
-			if (M.SubmapEntities.length > 0 && M.Map.getZoom() === M.ZoomLevelEnum.Ground)
-			{
-				M.SubmapTemp._icon.style.display = "block";
-			}
+			M.adjustZoom();
 		});
 		
 		/*
@@ -4205,7 +4220,7 @@ M = {
 						clickable: false,
 						icon: L.icon(
 						{
-							iconUrl: "img/map/pin_event.png",
+							iconUrl: "img/ring/" + event.ring + I.cPNG,
 							iconSize: [32, 32],
 							iconAnchor: [16, 16]
 						})
@@ -6377,13 +6392,13 @@ I = {
 	
 	// Content-Layer-Page and Section-Header
 	isProgramLoaded: false,
+	isProgramEmbedded: false,
 	ProgramMode: null,
 	ProgramModeEnum:
 	{
 		Website: "Website",
 		Simple: "Simple",
 		Overlay: "Overlay",
-		Embedded: "Framed"
 	},
 	cContentPane: "#paneContent",
 	cContentPrefix: "#layer",
@@ -6456,6 +6471,12 @@ I = {
 		
 		// Tell if DST is in effect
 		T.checkDST();
+		
+		// Detect iFrame embedding
+		if (window !== window.top)
+		{
+			I.isProgramEmbedded = true;
+		}
 		
 		/*
 		 * Load stored server sensitive timestamp if it exists, is a number,
@@ -7391,6 +7412,12 @@ I = {
 				$("#paneBoard").show();
 				
 			} break;
+		}
+		
+		// Also streamline other UI elements if website is embedded in another website
+		if (I.isProgramEmbedded)
+		{
+			$(".itemMapLinks a").hide();
 		}
 	},
 	
