@@ -214,6 +214,7 @@
 		<nav id="paneMenu" class="paneRight">
 			<div id="menuChains" class="menuButton" title="<dfn>Chains:</dfn> Timers, Events, Schedule"></div>
 			<div id="menuMap" class="menuButton" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, Checklists"></div>
+			<!--<div id="menuWvW" class="menuButton" title="<dfn>WvW:</dfn> Map, Tracer, Stats"></div>-->
 			<div id="menuHelp" class="menuButton" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"></div>
 			<div id="menuOptions" class="menuButton" title="<dfn>Options:</dfn> Display, Format, Alarm"></div>
 		</nav>
@@ -258,6 +259,7 @@
 				<div id="listDummyBottom"></div>
 			</article>
 			<article id="layerMap"></article><!-- Empty layers will be populated by AJAX -->
+			<article id="layerWvW"></article>
 			<article id="layerHelp"></article>
 			<article id="layerOptions">
 				<div class="cntComposition">
@@ -293,7 +295,7 @@
 					<label title="Show/Hide the map area on the left."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<br />
 					<h2>Alarm</h2>
-					<span>Voice announcement requires Chrome or Firefox. Multilingualism is only available for Chrome. Click the speaker icon on the chains page to toggle sound.</span>
+					<span>Voice announcement requires Chrome, Firefox, or IE9+. Multilingualism is only available for Chrome. Click the speaker icon on the chains page to toggle sound.</span>
 					<h3>Checklist Mode</h3>
 					<span>When should the program announce the next chain?</span>
 					<label title="This is every 15 minutes."><input id="opt_bol_alertAtStart" type="checkbox" /> When a new chain begins</label>

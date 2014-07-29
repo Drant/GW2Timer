@@ -1834,6 +1834,7 @@ D = {
 		s_linkModeSimple: {de: "einfach modus", es: "modo simple", fr: "mode simple", nl: "eenvoudig modus", pl: "prosty tryb", ru: "простой режим", zh: "方式簡單"},
 		s_menuChains: {de: "Zeitplan", es: "Horario", fr: "Horaire", nl: "Dienstregeling", pl: "Harmonogram", ru: "Расписание", zh: "時間表"},
 		s_menuMap: {de: "Werkzeuge", es: "Útiles", fr: "Outils", nl: "Gereedschap", pl: "Narzędzia", ru: "Инструментарий", zh: "工具"},
+		s_menuWvW: {de: "WvW", es: "WvW", fr: "WvW", nl: "WvW", pl: "WvW", ru: "WvW", zh: "WvW"},
 		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance", nl: "Hulp", pl: "Pomoc", ru: "Помощь", zh: "輔助"},
 		s_menuOptions: {de: "Optionen", es: "Opciónes", fr: "Options", nl: "Opties", pl: "Opcje", ru: "	Параметры", zh: "選項"},
 		s_opt_bol_alertSubscribed: {
@@ -2059,13 +2060,25 @@ D = {
 		ru: "Трехголовый Червь",
 		zh: "蟲三頭"
 	},{
-		// Story0
+		en: "The Dragon's Reach I Q1",
+		de: "Im Bann des Drachen I Q1",
+		es: "El Alcance del Dragón I Q1",
+		fr: "L'ombre du Dragon I Q1"
 	},{
-		// Story1
+		en: "The Dragon's Reach I Q2",
+		de: "Im Bann des Drachen I Q2",
+		es: "El Alcance del Dragón I Q2",
+		fr: "L'ombre du Dragon I Q2"
 	},{
-		// Story2
+		en: "The Dragon's Reach I Q3",
+		de: "Im Bann des Drachen I Q3",
+		es: "El Alcance del Dragón I Q3",
+		fr: "L'ombre du Dragon I Q3"
 	},{
-		// Story3
+		en: "The Dragon's Reach I Q4",
+		de: "Im Bann des Drachen I Q4",
+		es: "El Alcance del Dragón I Q4",
+		fr: "L'ombre du Dragon I Q4"
 	},{
 		en: "Fire Shaman",
 		de: "Feuerschamanen",
@@ -2195,7 +2208,17 @@ D = {
 	{
 		if (C.Chains[pIndex].series === C.ChainSeriesEnum.Story)
 		{
-			return C.Chains[pIndex].title;
+			if (O.Options.enu_Language === O.OptionEnum.Language.English
+				|| O.Options.enu_Language === O.OptionEnum.Language.German
+				|| O.Options.enu_Language === O.OptionEnum.Language.Spanish
+				|| O.Options.enu_Language === O.OptionEnum.Language.French)
+			{
+				return (D.ChainTitle[pIndex])[O.Options.enu_Language];
+			}
+			else
+			{
+				return (D.ChainTitle[pIndex])[O.OptionEnum.Language.Default];
+			}
 		}
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
 		{
@@ -3747,6 +3770,7 @@ M = {
 				icon = M.StoryEventRings[i];
 				M.changeMarkerIcon(icon, icon._icon.src, M.currentRingSize);
 				// Don't make the rings overlap clickable waypoints
+				M.StoryEventIcons[i]._icon.style.zIndex = 1000;
 				M.StoryEventRings[i]._icon.style.zIndex = 1;
 			}
 		}
@@ -3900,6 +3924,7 @@ M = {
 	{
 		var args = O.URLArguments[I.URLKeyGo];
 		var coords = [];
+		var zone;
 		if (args)
 		{
 			coords = M.parseCoordinates(args);
@@ -3916,6 +3941,15 @@ M = {
 				{
 					var zoomlevel = M.ZoomLevelEnum.Max - T.wrapInteger(coords[2], M.ZoomLevelEnum.Max);
 					M.goToView([coords[0], coords[1]], M.PinPersonal, zoomlevel);
+				}
+			}
+			else
+			{
+				// Else assume the argument is a short name for the zone
+				zone = args.toLowerCase();
+				if (M.Zones[zone])
+				{
+					M.goToView(M.getZoneCenter(zone), null, M.ZoomLevelEnum.Sky);
 				}
 			}
 		}
@@ -6439,7 +6473,7 @@ I = {
 	{
 		Website: "Website",
 		Simple: "Simple",
-		Overlay: "Overlay",
+		Overlay: "Overlay"
 	},
 	cContentPane: "#paneContent",
 	cContentPrefix: "#layer",
@@ -6449,6 +6483,7 @@ I = {
 		// These are the X in "menuX" and "layerX" IDs in the HTML
 		Chains: "Chains",
 		Map: "Map",
+		WvW: "WvW",
 		Help: "Help",
 		Options: "Options"
 	},
@@ -6777,7 +6812,7 @@ I = {
 	 */
 	getSubstringFromHTMLID: function(pElement)
 	{
-		return O.getVariableSuffix(pElement.attr("id"))
+		return O.getVariableSuffix(pElement.attr("id"));
 	},
 	/*
 	 * Integer version of the ID extraction function.
@@ -7144,16 +7179,24 @@ I = {
 								+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
 						}
 					} break;
-					case I.PageEnum.Help:
-					{
-						$("#jsTop").show();
-					} break;
+					
 					case I.PageEnum.Map:
 					{
 						$("#jsTop").show();
 						$("#jsCenter").trigger("click");
 						M.PinEvent.setLatLng(M.convertGCtoLC([0,0]));
 					} break;
+					
+					case I.PageEnum.WvW:
+					{
+						$("#jsTop").hide();
+					} break;
+					
+					case I.PageEnum.Help:
+					{
+						$("#jsTop").show();
+					} break;
+					
 					default:
 					{
 						$("#jsTop").hide();
@@ -7566,13 +7609,19 @@ I = {
 				document.getElementsByTagName("body").item(0).appendChild(b));
 			if (document.getElementById)
 			{
-				if (this.a = document.getElementById(this.name)) document.onmousemove = function(a)
+				this.a = document.getElementById(this.name);
+				if (this.a)
 				{
-					I.qTip.move(a);
-				};
+					document.onmousemove = function(a)
+					{
+						I.qTip.move(a);
+					};
+				}
 				$(s).each(function()
 				{
-					if (a = $(this)[0], b = a.getAttribute("title"))
+					a = $(this)[0];
+					b = a.getAttribute("title");
+					if (a && b)
 					{
 						a.setAttribute("tiptitle", b), a.removeAttribute("title"),
 							a.removeAttribute("alt"), a.onmouseover = function()

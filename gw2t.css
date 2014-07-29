@@ -49,7 +49,7 @@ body > windowMain
 
 html, body {
 	height: 100%;
-	background: #111;
+	background: url("img/background/space.jpg") repeat center;
 }
 
 body {
@@ -614,6 +614,9 @@ a#linkModeSimple {
 #menuMap {
 	background: url("img/ui/map.png") no-repeat center;
 }
+#menuWvW {
+	background: url("img/ui/wvw.png") no-repeat center;
+}
 #menuOptions {
 	background: url("img/ui/options.png") no-repeat center;
 }
@@ -712,7 +715,7 @@ header.jsSection sup {
 #layerChains {
 	display: block; /* Chains layer is the first to be displayed, others are hidden */
 }
-#layerMap, #layerHelp, #layerOptions {
+#layerMap, #layerWvW, #layerHelp, #layerOptions {
 	display: none;
 }
 
