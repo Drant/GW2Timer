@@ -1133,7 +1133,8 @@ X = {
 		// Collectible checklists must have the same variable name as in the map page's data
 		Collectible0: { key: "str_chlDiveMaster", value: "", cushion: new Array() },
 		Collectible1: { key: "str_chlCoinProspect", value: "", cushion: new Array() },
-		Collectible2: { key: "str_chlCoinUplands", value: "", cushion: new Array() }
+		Collectible2: { key: "str_chlCoinUplands", value: "", cushion: new Array() },
+		Collectible3: { key: "str_chlBuriedChest", value: "", cushion: new Array() }
 		
 	},
 	ChecklistEnum:
@@ -4770,7 +4771,8 @@ M = {
 				marker = L.marker(M.convertGCtoLC(ithneedle.c),
 				{
 					needleIndex: ii,
-					needleType: i
+					needleType: i,
+					title: ithneedle.t
 				}).addTo(M.Map);
 				styleMarker(marker, ii, stateinstring, ithcollectible.color);
 				// Add to arrays
@@ -4807,6 +4809,7 @@ M = {
 				X.clearChecklist(X.Checklists[collectibletype]);
 			});
 		}
+		I.qTip.init(".leaflet-marker-icon");
 		I.convertExternalLink("#mapCollectibleList cite a");
 		
 		$("#mapToggle_Collectible").click(function()
@@ -7204,8 +7207,7 @@ I = {
 				}
 				
 				$("#paneContent article").hide(); // Hide all layers
-				$(I.contentCurrentLayer + " .cntHeader").css({opacity: 0})
-					.animate( // Fade page title
+				$(I.contentCurrentLayer + " .cntHeader").css({opacity: 0}).animate( // Fade page title
 				{
 					opacity: 1
 				}, 400);
@@ -7222,7 +7224,8 @@ I = {
 					if (I.contentCurrent === I.PageEnum.Map)
 					{
 						M.setEntityGroupDisplay(M.ChainPathEntities, "hide");
-						M.setEntityGroupDisplay(M.StoryEventActive, "hide");
+						M.setEntityGroupDisplay(M.StoryEventIcons, "hide");
+						M.setEntityGroupDisplay(M.StoryEventRings, "hide");
 					}
 					else
 					{
