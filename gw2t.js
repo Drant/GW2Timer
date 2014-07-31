@@ -4809,7 +4809,7 @@ M = {
 				X.clearChecklist(X.Checklists[collectibletype]);
 			});
 		}
-		I.qTip.init(".leaflet-marker-icon");
+		I.qTip.init(".mapNeedle");
 		I.convertExternalLink("#mapCollectibleList cite a");
 		
 		$("#mapToggle_Collectible").click(function()
