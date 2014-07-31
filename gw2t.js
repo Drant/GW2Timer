@@ -6447,8 +6447,9 @@ K = {
 I = {
 	cSiteName: "GW2Timer.com",
 	cSiteURL: "http://gw2timer.com/",
-	cPageURLMap: "map.html",
-	cPageURLHelp: "help.html",
+	cPageURLMap: "mapsrc.html",
+	cPageURLHelp: "helpsrc.html",
+	cPageURLWvW: "wvwsrc.html",
 	cImageHost: "http://i.imgur.com/",
 	cGameName: "Guild Wars 2",
 	cPNG: ".png", // Almost all used images are PNG
