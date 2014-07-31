@@ -4019,9 +4019,9 @@ M = {
 	},
 
 	/*
-	* Converts a poi_id number from maps_floor.json to a valid chat link.
-	* Code from http://virtus-gilde.de/gw2map
-	*/ 
+	 * Converts a poi_id number from maps_floor.json to a valid chat link.
+	 * Code from http://virtus-gilde.de/gw2map
+	 */ 
 	getChatlinkFromPoiID: function(pPoiID)
 	{
 	   var chatcode = String.fromCharCode(4);

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- Meta -->
-	<title>GW2Timer.com 404</title>
+	<title>GW2Timer.com URL</title>
 	<meta charset="utf-8" />
 	<meta name="robots" content="noindex, nofollow, noarchive" />
 <!-- Google Analytics -->
@@ -16,7 +16,79 @@
   ga('send', 'pageview');
 
 </script>
-<script type="text/javascript">setTimeout("window.location = 'http://gw2timer.com'", 1000);</script>
+<script type="text/javascript">
+	/*
+	 * Converts a string to be all lower case except the first letter which is capitalized.
+	 * @param string pString to convert.
+	 * @returns string converted.
+	 */
+	var toFirstUpperCase = function(pString)
+	{
+		return pString.charAt(0).toUpperCase() + pString.slice(1).toLowerCase();
+	};
+	
+	/*
+	 * Converts directory style URL to site base URL with query string to content.
+	 * Example:
+	 * http://gw2timer.com/map/collectible/372,44,27 becomes
+	 * http://gw2timer.com/?page=Map&section=Collectible&go=372,44,27
+	 * This works because this 404 page is displayed for non-existent directories,
+	 * and it is assumed the requested URL directories do not exist.
+	 * @returns string of new location.
+	 */
+	var getNewLocation = function()
+	{
+		var loc = document.location;
+		var newloc = "";
+		var base = "http://gw2timer.com/";
+		var primer = "gw2timer.com/";
+		var primerindex = loc.indexOf(primer);
+
+		var params;
+		var page, section;
+		var coords;
+
+		if (primerindex !== -1)
+		{
+			params = loc.substring(primerindex + primer.length, loc.length).split("/");
+			if ((params[0]).indexOf(",") !== -1) // If first param is a coordinate
+			{
+				newloc = base + "?go=" + params[0];
+			}
+			else // If params are in order: page/section/coordinates
+			{
+				if (params.length >= 1)
+				{
+					page = toFirstUpperCase(params[0]);
+				}
+				if (params.length >= 2)
+				{
+					section = toFirstUpperCase(params[1]);
+				}
+				if (params.length >= 3)
+				{
+					coords = params[2];
+				}
+
+				switch (params.length)
+				{
+					case 1: newloc = base + "?page=" + page; break;
+					case 2: newloc = base + "?page=" + page + "&section=" + section; break;
+					default: newloc = base + "?page=" + page + "&section=" + section + "&go=" + coords; break;
+				}
+			}
+		}
+		else
+		{
+			newloc = base;
+		}
+		
+		return newloc;
+	};
+	
+	// Go to proper URL
+	setTimeout("window.location = '" + getNewLocation() + "'", 250);
+</script>
 </head>
 
 <body></body>
