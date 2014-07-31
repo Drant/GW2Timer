@@ -6800,11 +6800,14 @@ I = {
 	 */
 	convertExternalLink: function(pSelector)
 	{
-		$(pSelector).each(function()
+		if (I.ProgramMode !== I.ProgramModeEnum.Overlay)
 		{
-			$(this).attr("href", I.cSiteURL + "out?" + escape($(this).attr("href")));
-			$(this).attr("target", "_blank");
-		});
+			$(pSelector).each(function()
+			{
+				$(this).attr("href", I.cSiteURL + "out?" + escape($(this).attr("href")));
+				$(this).attr("target", "_blank");
+			});
+		}
 	},
 	
 	/*
