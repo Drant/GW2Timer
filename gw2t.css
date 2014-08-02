@@ -285,18 +285,8 @@ a#linkModeSimple {
 		0px 0px 2px black,
 		1px 1px 1px black;
 }
-.mapPoi {
-	font-family: Menomonia;
-	font-size: 18px;
-	line-height: 110%;
-	letter-spacing: -1px;
-	color: white;
-	text-shadow:
-		0px 0px 2px black,
-		1px 1px 1px black;
-}
 
-.mapEvent {
+.mapPoi, .mapEvent, .mapTip {
 	font-family: Menomonia;
 	font-size: 18px;
 	line-height: 110%;

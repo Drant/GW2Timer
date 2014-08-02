@@ -3636,6 +3636,12 @@ M = {
 		$("#mapCoordinatesStatic").bind("enterKey", function()
 		{
 			var coord = M.parseCoordinates($(this).val());
+			coord[0] = Math.floor(coord[0]);
+			coord[1] = Math.floor(coord[1]);
+			$("#mapCoordinatesStatic")
+				.val("[" + coord[0] + ", " + coord[1] + "]")
+				.select();
+			
 			if (coord[0] !== "" && coord.length === 2)
 			{
 				M.goToView(coord, M.PinPersonal);
@@ -4099,6 +4105,8 @@ M = {
 				}
 			}
 		}
+		// Only execute this function once
+		O.URLArguments[I.URLKeyEnum.Go] = null;
 	},
 	
 	/*
@@ -4148,8 +4156,8 @@ M = {
 	 */
 	parseCoordinates: function(pString)
 	{
-		// The regex strips all characters except digits, comma, and minus sign
-		var coord = pString.replace(/[^\d,-]/g, "");
+		// The regex strips all characters except digits, commas, periods, and minus sign
+		var coord = pString.replace(/[^\d,-.]/g, "");
 		return coord.split(",");
 	},
 	
@@ -4962,15 +4970,16 @@ M = {
 				ithneedle = ithcollectible.needles[ii];
 				stateinstring = X.getChecklistItem(X.Checklists[i], ii);
 				
+				markertitle = "<div class='mapLoc'><dfn>" + ithcollectible.name + ":</dfn> #" + ithneedle.n;
 				if (ithneedle.i)
 				{
-					markertitle = "<div class='mapLoc'><dfn>" + ithcollectible.name + ":</dfn> #" + ithneedle.n
-						+ "<img src='" + I.getImageHosted(ithneedle.i) + "' /></div>";
+					markertitle += "<img src='" + I.getImageHosted(ithneedle.i) + "' />";
 				}
-				else
+				else if (ithneedle.t)
 				{
-					markertitle = "<div class='mapLoc'><dfn>" + ithcollectible.name + ":</dfn> #" + ithneedle.n + "</div>";
+					markertitle += "<br /><span class='mapTip'>" + ithneedle.t + " (User Contributed)</span>";
 				}
+				markertitle += "</div>";
 				
 				marker = L.marker(M.convertGCtoLC(ithneedle.c),
 				{
@@ -7111,16 +7120,28 @@ I = {
 		if (I.PageCurrent !== "")
 		{
 			var section = I[I.sectionPrefix + I.PageCurrent];
+			var article = O.URLArguments[I.URLKeyEnum.Article];
+			var go = O.URLArguments[I.URLKeyEnum.Go];
+
 			var pagestring = "?" + I.URLKeyEnum.Page + "=" + I.PageCurrent;
-			var sectionstring = "&" + I.URLKeyEnum.Section + "=" + section;
-			if (section !== "" && section !== undefined)
+			var sectionstring = "";
+			var articlestring = "";
+			var gostring = "";
+
+			if (section)
 			{
-				history.replaceState("", null, pagestring + sectionstring);
+				sectionstring = "&" + I.URLKeyEnum.Section + "=" + section;
 			}
-			else
+			if (article)
 			{
-				history.replaceState("", null, pagestring);
-			}			
+				articlestring = "&" + I.URLKeyEnum.Article + "=" + article;
+			}
+			if (go)
+			{
+				gostring = "&" + I.URLKeyEnum.Go + "=" + go;
+			}
+			
+			history.replaceState("", null, pagestring + sectionstring + articlestring + gostring);
 		}
 	},
 	
