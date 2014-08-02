@@ -275,6 +275,26 @@ a#linkModeSimple {
 	border: 1px solid #e4e0b3;
 	border-radius: 8px;
 }
+.mapWp {
+	font-family: Menomonia;
+	font-size: 20px;
+	line-height: 110%;
+	letter-spacing: -1px;
+	color: #ffcc77;
+	text-shadow:
+		0px 0px 2px black,
+		1px 1px 1px black;
+}
+.mapPoi {
+	font-family: Menomonia;
+	font-size: 18px;
+	line-height: 110%;
+	letter-spacing: -1px;
+	color: white;
+	text-shadow:
+		0px 0px 2px black,
+		1px 1px 1px black;
+}
 
 .mapEvent {
 	font-family: Menomonia;
@@ -423,7 +443,6 @@ a#linkModeSimple {
 #itemClockWaypoint3 {
 	top: 164px; left: 52px;
 }
-
 .itemClockWaypointClip {
 	position: absolute;
 	width: 32px; height: 32px;
@@ -437,6 +456,28 @@ a#linkModeSimple {
 	background: url("img/ui/copy.png");
 }
 .itemClockWaypointClip.zeroclipboard-is-active {
+	opacity: 0.5;
+}
+
+#itemClockStar0 {
+	top: 280px; left: 296px;
+}
+#itemClockStar1 {
+	top: 280px; left: 328px;
+}
+.itemClockStarClip {
+	position: absolute;
+	width: 32px; height: 32px;
+	background: url("img/chain/story.png");
+	background-size: 32px 32px;
+	cursor: url("img/cursor/pointer.png"), pointer;
+}
+.itemClockStarClip.zeroclipboard-is-hover {
+	border-radius: 16px;
+	box-shadow: 0px 0px 5px white;
+	background: url("img/ui/copy.png");
+}
+.itemClockStarClip.zeroclipboard-is-active {
 	opacity: 0.5;
 }
 

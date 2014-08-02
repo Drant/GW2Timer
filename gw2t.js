@@ -74,7 +74,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140715},
+		programVersion: {key: "int_utlProgramVersion", value: 140801},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -98,6 +98,7 @@ O = {
 		bol_tourPrediction: true,
 		bol_showChainPaths: true,
 		bol_showMap: true,
+		bol_showPOIs: false,
 		// Alarm
 		bol_enableSound: false,
 		bol_alertAtStart: true,
@@ -109,6 +110,7 @@ O = {
 		// Advanced
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
+		bol_useSiteTag: true,
 		bol_detectDST: true,
 		bol_use24Hour: true
 	},
@@ -214,7 +216,7 @@ O = {
 		if (isFinite(usersversion) && usersversion !== currentversion)
 		{
 			var wait = 20;
-			if (I.ProgramMode === I.ProgramModeEnum.Overlay)
+			if (I.ModeCurrent === I.ModeEnum.Overlay)
 			{
 				wait = 10;
 			}
@@ -223,8 +225,10 @@ O = {
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />"
 				+ "<br />"
-				+ "Voice Alarm should work on <a class='urlUpdates' href='http://forum.renaka.com/topic/5546166/'>Overlay App</a>/Internet Explorer now.<br />",
-				wait);
+				+ "New in this version:<br />"
+				+ "- Click a star icon on the clock to auto-copy Dry Top events to clipboard.<br />"
+				+ "- <a href='http://gw2timer.com/?page=Map&section=Collectible&article=4&go=4816,16443,1'>Buried Locked Chest</a> locations with screenshots.<br />"
+				, wait);
 			I.convertExternalLink(".urlUpdates");
 		}
 		
@@ -328,22 +332,30 @@ O = {
 		
 		var i;
 		// Set up program mode
-		var mode = O.URLArguments[I.URLKeyMode];
+		var mode = O.URLArguments[I.URLKeyEnum.Mode];
 		if (mode)
 		{
-			for (i in I.ProgramModeEnum)
+			for (i in I.ModeEnum)
 			{
-				if (I.ProgramModeEnum[i].toLowerCase() === mode.toLowerCase())
+				if (I.ModeEnum[i].toLowerCase() === mode.toLowerCase())
 				{
-					I.ProgramMode = I.ProgramModeEnum[i];
+					I.ModeCurrent = I.ModeEnum[i];
 					break;
 				}
 			}
 		}
 		
-		if (I.ProgramMode === null)
+		if (I.ModeCurrent === null)
 		{
-			I.ProgramMode = I.ProgramModeEnum.Website;
+			I.ModeCurrent = I.ModeEnum.Website;
+		}
+		
+		// Store article value, if exists
+		I.ArticleCurrent = parseInt(O.URLArguments[I.URLKeyEnum.Article]);
+		
+		if (isFinite(I.ArticleCurrent))
+		{
+			I.ArticleCurrent = I.ArticleCurrent - 1;
 		}
 	},
 	
@@ -789,13 +801,19 @@ O = {
 				location.reload();
 			}
 		});
+		// POIs are created on site load
+		$("#opt_bol_showPOIs").change(function()
+		{
+			location.reload();
+		});
 		/*
-		 * Run some enactors when the page loads (because this an initializer function).
+		 * Run some enactors when the site loads (because this an initializer function).
 		 * Will have to place it elsewhere if it requires data to be loaded first.
 		 */
 		O.Enact.bol_hideChecked();
 		O.Enact.bol_detectDST();
-		if (I.ProgramMode !== I.ProgramModeEnum.Simple)
+		O.Enact.bol_useSiteTag();
+		if (I.ModeCurrent !== I.ModeEnum.Simple)
 		{
 			O.Enact.int_setClock();
 			O.Enact.int_setDimming();
@@ -939,7 +957,9 @@ O = {
 						{s: "#itemClockWaypoint0", p: {top: "24px", left: "274px"}},
 						{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
 						{s: "#itemClockWaypoint2", p: {top: "164px", left: "52px"}},
-						{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}}
+						{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}},
+						{s: "#itemClockStar0", p: {top: "-10px", left: "138px"}},
+						{s: "#itemClockStar1", p: {top: "-10px", left: "190px"}}
 					], animationspeed);
 					$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
 					// Restyle text items
@@ -984,7 +1004,9 @@ O = {
 						{s: "#itemClockWaypoint0", p: {top: "52px", left: "164px"}},
 						{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
 						{s: "#itemClockWaypoint2", p: {top: "274px", left: "164px"}},
-						{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}}
+						{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}},
+						{s: "#itemClockStar0", p: {top: "280px", left: "286px"}},
+						{s: "#itemClockStar1", p: {top: "280px", left: "328px"}}
 					], animationspeed);
 					$("#paneClockIcons .iconHC").css({width: "48px", height: "48px"});
 					// Restyle text items
@@ -1029,7 +1051,9 @@ O = {
 						{s: "#itemClockWaypoint0", p: {top: "-8px", left: "98px"}},
 						{s: "#itemClockWaypoint1", p: {top: "-8px", left: "168px"}},
 						{s: "#itemClockWaypoint2", p: {top: "-8px", left: "238px"}},
-						{s: "#itemClockWaypoint3", p: {top: "-8px", left: "308px"}}
+						{s: "#itemClockWaypoint3", p: {top: "-8px", left: "308px"}},
+						{s: "#itemClockStar0", p: {top: "-16px", left: "0px"}},
+						{s: "#itemClockStar1", p: {top: "-16px", left: "53px"}}
 					], animationspeed);
 					$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
 
@@ -1065,7 +1089,7 @@ O = {
 				$(I.cContentPane).animate({top: clockpaneheight + I.cPANE_MENU_HEIGHT,
 					"min-height": I.cPANEL_HEIGHT - (clockpaneheight + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 			}
-			if (I.ProgramMode === I.ProgramModeEnum.Overlay)
+			if (I.ModeCurrent === I.ModeEnum.Overlay)
 			{
 				$("#itemSocial").hide();
 			}
@@ -1098,6 +1122,17 @@ O = {
 			else
 			{
 				$("#paneMap").hide();
+			}
+		},
+		bol_useSiteTag: function()
+		{
+			if (O.Options.bol_useSiteTag)
+			{
+				I.siteTagCurrent = I.siteTagDefault;
+			}
+			else
+			{
+				I.siteTagCurrent = "";
 			}
 		}
 	}
@@ -1940,6 +1975,23 @@ D = {
 			D.translatePageHeader(I.PageEnum.Options);
 		}
 	},
+	
+	/*
+	 * Tells if the user's opted language is an GW2 supported language
+	 * which has translations already done.
+	 * @returns boolean if fully supported.
+	 */
+	isLanguageFullySupported: function()
+	{
+		if (O.Options.enu_Language === O.OptionEnum.Language.English
+			|| O.Options.enu_Language === O.OptionEnum.Language.German
+			|| O.Options.enu_Language === O.OptionEnum.Language.Spanish
+			|| O.Options.enu_Language === O.OptionEnum.Language.French)
+		{
+			return true;
+		}
+		return false;
+	},
 		
 	// Must be in the same order as the chain nexuses
 	ChainTitle: [
@@ -2209,10 +2261,7 @@ D = {
 	{
 		if (C.Chains[pIndex].series === C.ChainSeriesEnum.Story)
 		{
-			if (O.Options.enu_Language === O.OptionEnum.Language.English
-				|| O.Options.enu_Language === O.OptionEnum.Language.German
-				|| O.Options.enu_Language === O.OptionEnum.Language.Spanish
-				|| O.Options.enu_Language === O.OptionEnum.Language.French)
+			if (D.isLanguageFullySupported())
 			{
 				return (D.ChainTitle[pIndex])[O.Options.enu_Language];
 			}
@@ -2398,6 +2447,7 @@ C = {
 	NextChains1: [],
 	cChainTitleCharLimit: 30,
 	ScheduledChains: [],
+	StoryChains: [],
 	LegacyChains: [],
 	TempleChains: [],
 	ChainSeriesEnum:
@@ -2529,6 +2579,7 @@ C = {
 			{
 				chainlistid = "#listChainsScheduled";
 				C.ScheduledChains.push(pChain);
+				C.StoryChains.push(pChain);
 			} break;
 			case C.ChainSeriesEnum.Legacy:
 			{
@@ -3260,20 +3311,18 @@ C = {
 				if (pChain.series === C.ChainSeriesEnum.Story)
 				{
 					event = pChain.events[$(this).attr("data-eventindex")];
-					event.eventicon._icon.style.display = "block";
-					event.eventring._icon.style.display = "block";
 					// Add active events to iterable array
 					M.StoryEventActive.push(event.eventicon);
 					M.StoryEventActive.push(event.eventring);
-				}
-				// Bury the submaps so other markers are visible
-				if (M.SubmapEntities.length > 0)
-				{
-					for (i in M.SubmapEntities)
+					
+					// Show only if not on map page
+					if (I.PageCurrent !== I.PageEnum.Map)
 					{
-						M.SubmapEntities[i]._icon.style.zIndex = 0;
+						event.eventicon._icon.style.display = "block";
+						event.eventring._icon.style.display = "block";
 					}
 				}
+				M.burySubmaps();
 			});
 		
 			// Recolor future events
@@ -3287,7 +3336,7 @@ C = {
 			}
 			
 			// Tour to the event on the map if opted
-			if (O.Options.bol_tourPrediction && I.contentCurrent === I.PageEnum.Chains
+			if (O.Options.bol_tourPrediction && I.PageCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain))
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
@@ -3465,6 +3514,7 @@ M = {
 	Resources: {},
 	Collectibles: {},
 	isMapAJAXDone: false,
+	ZoneCurrent: {},
 	mousedZoneIndex: null,
 	currentIconSize: 32,
 	currentRingSize: 256,
@@ -3474,6 +3524,8 @@ M = {
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 	cICON_WAYPOINT: "img/map/waypoint.png",
 	cICON_WAYPOINTOVER: "img/map/waypoint_h.png",
+	cICON_LANDMARK: "img/map/landmark.png",
+	cICON_LANDMARKOVER: "img/map/landmark_h.png",
 	cLEAFLET_PATH_OPACITY: 0.5,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
@@ -3485,17 +3537,31 @@ M = {
 		Default: 3,
 		Space: 3,
 		Sky: 5,
+		Bird: 6,
 		Ground: 7,
 		Max: 7
 	},
+	cZIndexBury: -999999,
 	
 	PinPersonal: {},
 	PinProgram: {},
 	PinEvent: {},
 	PinOver: {},
-	// All objects in the map (such as paths and markers) shall be called "entities"
+	/*
+	 * All objects in the map (such as paths and markers) shall be called "entities".
+	 * Markers can have custom properties assigned; they can be accessed using
+	 * "THEMARKER.options.THEPROPERTY" format.
+	 */
+	MappingEntities: new Array(),
+	MappingEnum:
+	{
+		Waypoint: "waypoint",
+		Landmark: "landmark"
+	},
 	WaypointEntities: new Array(),
-	PinEntities: new Array(), // Utility pin markers, looks like GW2 personal waypoints
+	LandmarkEntities: new Array(),
+	// Utility pin markers, looks like GW2 personal waypoints
+	PinEntities: new Array(),
 	DailyEntities: new Array(),
 	JPEntities: new Array(),
 	ChainPathEntities: new Array(),
@@ -3537,7 +3603,7 @@ M = {
 		// Initialize array in zones to later hold waypoint map markers
 		for (var i in M.Zones)
 		{
-			M.Zones[i].waypoints = new Array();
+			M.Zones[i].MappingEntities = new Array();
 		}
 		
 		// Do other initialization functions
@@ -3663,22 +3729,26 @@ M = {
 					if (M.mousedZoneIndex !== null)
 					{
 						// Hide the waypoints of the previously moused zone
-						for (ii1 in M.Zones[M.mousedZoneIndex].waypoints)
+						for (ii1 in M.Zones[M.mousedZoneIndex].MappingEntities)
 						{
-							M.Zones[M.mousedZoneIndex].waypoints[ii1]
+							M.Zones[M.mousedZoneIndex].MappingEntities[ii1]
 								._icon.style.display = "none";
 						}
 					}
 					// Update the master moused zone index to the current index
 					M.mousedZoneIndex = i;
-					var mousedzone = M.Zones[i];
+					M.ZoneCurrent = M.Zones[i];
 					document.getElementById("mapCoordinatesRegion")
-						.value = mousedzone.name;
+						.value = M.ZoneCurrent.name;
+				
 					// Reveal moused zone waypoints
-					for (ii2 in mousedzone.waypoints)
+					for (ii2 in M.ZoneCurrent.MappingEntities)
 					{
-						mousedzone.waypoints[ii2]._icon.style.display = "block";
+						M.ZoneCurrent.MappingEntities[ii2]._icon.style.display = "block";
 					}
+					
+					// Rescale current moused mapping markers
+					M.adjustZoomMapping();
 				}
 				return; // Already found zone so stop searching
 			}
@@ -3717,30 +3787,85 @@ M = {
 	},
 	
 	/*
-	 * Resizes markers so they scale with the current zoom level.
+	 * Resizes mapping markers so they scale with the current zoom level.
 	 */
-	adjustZoom: function()
+	adjustZoomMapping: function()
+	{
+		var i;
+		var entity;
+		var currentzoom = M.Map.getZoom();
+		var waypointsize, landmarksize;
+		
+		switch (currentzoom)
+		{
+			case 7: waypointsize = 32; landmarksize = 32; break;
+			case 6: waypointsize = 28; landmarksize = 24; break;
+			case 5: waypointsize = 24; landmarksize = 16; break;
+			case 4: waypointsize = 20; landmarksize = 0; break;
+			case 3: waypointsize = 16; landmarksize = 0; break;
+			default: { waypointsize = 0; landmarksize = 0; }
+		}
+
+		// Resize mapping icons in moused zone
+		for (i in M.ZoneCurrent.MappingEntities)
+		{
+			entity = M.ZoneCurrent.MappingEntities[i];
+			switch (entity.options.mappingtype)
+			{
+				case M.MappingEnum.Waypoint:
+				{
+					M.changeMarkerIcon(entity, M.cICON_WAYPOINT, waypointsize);
+				} break;
+				
+				case M.MappingEnum.Landmark:
+				{
+					M.changeMarkerIcon(entity, M.cICON_LANDMARK, landmarksize);
+					// Fade icon if not in max zoom
+					if (currentzoom < M.ZoomLevelEnum.Max)
+					{
+						entity._icon.style.opacity = 0.5;
+					}
+					else
+					{
+						entity._icon.style.opacity = 0.8;
+					}
+				} break;
+			}
+		}
+		M.burySubmaps();
+	},
+	
+	/*
+	 * Resizes story markers and submaps so they scale with the current zoom level.
+	 */
+	adjustZoomStory: function()
 	{
 		var i;
 		var currentzoom = M.Map.getZoom();
 		var icon;
+		var landmarksize;
 		var submap;
 		var submapwidth;
 		var submapheight;
 		
 		switch (currentzoom)
 		{
-			case 7: M.currentIconSize = 32; break;
-			case 6: M.currentIconSize = 28; break;
-			case 5: M.currentIconSize = 24; break;
-			case 4: M.currentIconSize = 20; break;
-			case 3: M.currentIconSize = 16; break;
-			default: M.currentIconSize = 0;
+			case 7: M.currentIconSize = 32; landmarksize = 32; break;
+			case 6: M.currentIconSize = 28; landmarksize = 24; break;
+			case 5: M.currentIconSize = 24; landmarksize = 16; break;
+			case 4: M.currentIconSize = 20; landmarksize = 0; break;
+			case 3: M.currentIconSize = 16; landmarksize = 0; break;
+			default:
+			{
+				M.currentIconSize = 0;
+				landmarksize = 0;
+			}
 		}
 		
 		// Rescale submaps if exist
 		if (M.SubmapEntities.length > 0)
 		{
+			M.setEntityGroupDisplay(M.SubmapEntities, "show");
 			for (i in M.SubmapEntities)
 			{
 				submap = M.SubmapEntities[i];
@@ -3754,7 +3879,7 @@ M = {
 					iconAnchor: [0, 0]
 				}));
 				// Bury the submaps so other markers are visible
-				M.SubmapEntities[i]._icon.style.zIndex = 0;
+				M.SubmapEntities[i]._icon.style.zIndex = M.cZIndexBury;
 			}
 		}
 		
@@ -3775,11 +3900,19 @@ M = {
 				M.StoryEventRings[i]._icon.style.zIndex = 1;
 			}
 		}
-
-		// Resize all waypoint icons in all zones
-		for (i in M.WaypointEntities)
+	},
+	
+	/*
+	 * Sets the submaps' z-index extremely low so other markers are visible.
+	 */
+	burySubmaps: function()
+	{
+		if (M.SubmapEntities.length > 0)
 		{
-			M.changeMarkerIcon(M.WaypointEntities[i], M.cICON_WAYPOINT, M.currentIconSize);
+			for (var i in M.SubmapEntities)
+			{
+				M.SubmapEntities[i]._icon.style.zIndex = M.cZIndexBury;
+			}
 		}
 	},
 	
@@ -3798,6 +3931,17 @@ M = {
 		{
 			M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
 		}));
+		
+		/*
+		 * At the start of a zoom change hide submaps so they do not cover the map.
+		 */
+		M.Map.on("zoomstart", function(pEvent)
+		{
+			if (M.SubmapEntities.length > 0)
+			{
+				M.setEntityGroupDisplay(M.SubmapEntities, "hide");
+			}
+		});
 
 		/*
 		 * At the end of a zoom animation, resize the map waypoint icons
@@ -3805,7 +3949,8 @@ M = {
 		 */
 		M.Map.on("zoomend", function(pEvent)
 		{
-			M.adjustZoom();
+			M.adjustZoomMapping();
+			M.adjustZoomStory();
 		});
 	},
 	
@@ -3923,7 +4068,7 @@ M = {
 	 */
 	goToURLCoords: function()
 	{
-		var args = O.URLArguments[I.URLKeyGo];
+		var args = O.URLArguments[I.URLKeyEnum.Go];
 		var coords = [];
 		var zone;
 		if (args)
@@ -3950,7 +4095,7 @@ M = {
 				zone = args.toLowerCase();
 				if (M.Zones[zone])
 				{
-					M.goToView(M.getZoneCenter(zone), null, M.ZoomLevelEnum.Sky);
+					M.goToView(M.getZoneCenter(zone), null, M.ZoomLevelEnum.Bird);
 				}
 			}
 		}
@@ -4073,6 +4218,10 @@ M = {
 		$.getJSON(M.cURL_API_MAPFLOOR, function(pData)
 		{
 			var region, gamemap, i, ii, numofpois, poi;
+			var mappingentity;
+			var icon;
+			var cssclass;
+			var mappingtype;
 
 			for (region in pData.regions)
 			{
@@ -4087,51 +4236,94 @@ M = {
 					{
 						poi = gamemap.points_of_interest[i];
 
-						if (poi.type !== "waypoint")
+						// Properties assignment based on POI's type
+						switch (poi.type)
 						{
-							continue;
+							case M.MappingEnum.Waypoint:
+								{
+									mappingtype = M.MappingEnum.Waypoint;
+									icon = M.cICON_WAYPOINT;
+									cssclass = "mapWp";
+								} break;
+							case M.MappingEnum.Landmark:
+								{
+									if (O.Options.bol_showPOIs === false)
+									{
+										continue; // Don't create POIs if not opted
+									}
+									mappingtype = M.MappingEnum.Landmark;
+									icon = M.cICON_LANDMARK;
+									cssclass = "mapPoi";
+								} break;
+							default: continue; // Don't create marker if not desired type
 						}
 
-						var waypoint = L.marker(M.convertGCtoLC(poi.coord),
+						mappingentity = L.marker(M.convertGCtoLC(poi.coord),
 						{
-							title: "<span class='mapLoc'><dfn>" + poi.name + "</dfn></span>",
+							title: "<span class='" + cssclass + "'>" + poi.name + "</span>",
 							waypoint: poi.name,
+							mappingtype: mappingtype,
 							icon: L.icon(
 							{
-								iconUrl: M.cICON_WAYPOINT,
+								iconUrl: icon,
 								iconSize: [16, 16], // Initial size corresponding to default zoom level
 								iconAnchor: [8, 8]
 							}),
 							link: M.getChatlinkFromPoiID(poi.poi_id)
 						}).addTo(M.Map);
 						// Initially hide all the waypoints
-						waypoint._icon.style.display = "none";
+						mappingentity._icon.style.display = "none";
 						// Bind behavior
-						waypoint.on("mouseover", function()
+						switch (poi.type)
 						{
-							this._icon.src = M.cICON_WAYPOINTOVER;
-						});
-						waypoint.on("mouseout", function()
-						{
-							this._icon.src = M.cICON_WAYPOINT;
-						});
-						waypoint.on("click", function()
+							case "waypoint":
+							{
+								mappingentity.on("mouseout", function()
+								{
+									this._icon.src = M.cICON_WAYPOINT;
+								});
+								mappingentity.on("mouseover", function()
+								{
+									this._icon.src = M.cICON_WAYPOINTOVER;
+								});
+							} break;
+							case "landmark":
+							{
+								mappingentity.on("mouseout", function()
+								{
+									this._icon.src = M.cICON_LANDMARK;
+								});
+								mappingentity.on("mouseover", function()
+								{
+									this._icon.src = M.cICON_LANDMARKOVER;
+								});
+							} break;
+							default: continue;
+						}
+						mappingentity.on("click", function()
 						{
 							$("#mapCoordinatesStatic").val(this.options.link).select();
 							$("#mapCoordinatesRegion").val(this.options.waypoint);
 						});
-						M.bindMarkerZoomBehavior(waypoint, "dblclick");
+						M.bindMarkerZoomBehavior(mappingentity, "dblclick");
 						
 						// Assign the waypoint to its zone
 						for (ii in M.Zones)
 						{
 							if (M.Zones[ii].name === gamemap.name)
 							{
-								M.Zones[ii].waypoints.push(waypoint);
+								M.Zones[ii].MappingEntities.push(mappingentity);
 							}
 						}
-						// Assign the waypoint to a single pool
-						M.WaypointEntities.push(waypoint);
+						// Assign the waypoint to a specific pool
+						switch (poi.type)
+						{
+							case M.MappingEnum.Waypoint: M.WaypointEntities.push(mappingentity); break;
+							case M.MappingEnum.Landmark: M.LandmarkEntities.push(mappingentity); break;
+						}
+						// General pool of mapping entities
+						M.MappingEntities.push(mappingentity);
+						
 					}
 				}
 			}
@@ -4141,13 +4333,13 @@ M = {
 			 * AJAX takes a while so can use this to advantage to delay graphics
 			 * that seem out of place without a map loaded.
 			 */
-			if (O.Options.bol_showChainPaths === true && I.contentCurrent !== I.PageEnum.Map)
+			if (O.Options.bol_showChainPaths === true && I.PageCurrent !== I.PageEnum.Map)
 			{
 				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
 			}
 			
-			if (O.Options.bol_tourPrediction && I.contentCurrent === I.PageEnum.Chains
-				&& O.URLArguments[I.URLKeyGo] === undefined)
+			if (O.Options.bol_tourPrediction && I.PageCurrent === I.PageEnum.Chains
+				&& O.URLArguments[I.URLKeyEnum.Go] === undefined)
 			{
 				// Initialize the "current moused zone" variable for showing waypoints
 				M.showCurrentZone(M.getZoneCenter("la"));
@@ -4162,7 +4354,7 @@ M = {
 			I.qTip.init(".leaflet-marker-icon");
 		}).fail(function()
 		{
-			if (I.ProgramMode === I.ProgramModeEnum.Website)
+			if (I.ModeCurrent === I.ModeEnum.Website)
 			{
 				I.write(
 				"Guild Wars 2 API server is unreachable.<br />"
@@ -4177,7 +4369,8 @@ M = {
 		{
 			M.isMapAJAXDone = true;
 			M.bindMapVisualChanges();
-			M.adjustZoom();
+			M.adjustZoomMapping();
+			M.adjustZoomStory();
 			M.goToURLCoords();
 		});
 		
@@ -4546,7 +4739,7 @@ M = {
 				id: pID,
 				dif: pDifficulty,
 				title: "<div class='mapLoc'><dfn>JP:</dfn> " + pElement.text()
-					+ "<img src='" + I.cImageHost + pElement.data("img") + I.cPNG + "' /></div>"
+					+ "<img src='" + I.getImageHosted(pElement.data("img")) + "' /></div>"
 			}).addTo(M.Map);
 			marker.setIcon(new L.icon(
 			{
@@ -4727,6 +4920,7 @@ M = {
 		var ithneedle;
 		var stateinstring;
 		var marker;
+		var markertitle;
 		
 		var styleMarker = function(pMarker, pIndex, pState, pColor)
 		{
@@ -4768,11 +4962,21 @@ M = {
 				ithneedle = ithcollectible.needles[ii];
 				stateinstring = X.getChecklistItem(X.Checklists[i], ii);
 				
+				if (ithneedle.i)
+				{
+					markertitle = "<div class='mapLoc'><dfn>" + ithcollectible.name + ":</dfn> #" + ithneedle.n
+						+ "<img src='" + I.getImageHosted(ithneedle.i) + "' /></div>";
+				}
+				else
+				{
+					markertitle = "<div class='mapLoc'><dfn>" + ithcollectible.name + ":</dfn> #" + ithneedle.n + "</div>";
+				}
+				
 				marker = L.marker(M.convertGCtoLC(ithneedle.c),
 				{
 					needleIndex: ii,
 					needleType: i,
-					title: ithneedle.t
+					title: markertitle
 				}).addTo(M.Map);
 				styleMarker(marker, ii, stateinstring, ithcollectible.color);
 				// Add to arrays
@@ -4828,6 +5032,7 @@ M = {
 	 */
 	displayIcons: function(pSection, pWantShow)
 	{
+		var i;
 		// Hide all icons if no parameters given
 		if (pSection === undefined || pSection === null)
 		{
@@ -4866,6 +5071,27 @@ M = {
 				if ( ! M["isShowingIconsFor" + pSection])
 				{
 					$("#mapToggle_" + pSection).trigger("click");
+				}
+				
+				// If article URL query string exists, only show collectible of specified index
+				if (I.ArticleCurrent >= 0)
+				{
+					switch (pSection)
+					{
+						case "Collectible":
+						{
+							for (i in M.Collectibles)
+							{
+								if ("Collectible" + I.ArticleCurrent !== i)
+								{
+									// Trigger the unchecking of the non-target collectible type, thereby hiding it
+									$("#ned_" + i).trigger("click");
+								}
+							}
+						} break;
+					}
+					// Nullify article value so this selective display only executes once
+					O.URLArguments[I.URLKeyEnum.Article] = null;
 				}
 			}
 			else
@@ -4907,7 +5133,7 @@ M = {
 };
 
 /* =============================================================================
- * @@Time utilities and constants
+ * @@Time utilities and schedule
  * ========================================================================== */
 T = {
 
@@ -4928,6 +5154,7 @@ T = {
 	cHOURS_IN_DAY: 24,
 	cSECONDS_IN_TIMEFRAME: 900,
 	cMINUTES_IN_TIMEFRAME: 15,
+	cMINUTES_IN_EVENTFRAME: 5,
 	cNUM_TIMEFRAMES_IN_HOUR: 4,
 	cSECS_MARK_0: 0,
 	cSECS_MARK_1: 900,
@@ -4949,8 +5176,100 @@ T = {
 		Hours: 3
 	},
 	
+	Events:
+	{
+		numOfSets: 7,
+		
+		en0: "TendrilW@[&BIYHAAA=] Shaman@[&BIsHAAA=] Victims@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Crystals@[&BHIHAAA=] TendrilSE@[&BHMHAAA=]",
+		en1: "Bridge@[&BIkHAAA=] Experiment@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocal@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
+		en2: "Leyline@[&BIMHAAA=] Town@[&BH4HAAA=] Basket@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
+		en3: "Giant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Mites@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosives@[&BH4HAAA=]",
+		en4: "Devourer@[&BHkHAAA=] Giant@[&BIwHAAA=]",
+		en5: "Chrii'kkt@[&BIoHAAA=] Skritts@[&BIwHAAA=] Chickenado@[&BI4HAAA=] Twister@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		en6: "Monster@[&BHoHAAA=]",
+		
+		de0: "DschungelrankeW@[&BIYHAAA=] Schamanin@[&BIsHAAA=] Unfallopfer@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Kristalle@[&BHIHAAA=] DschungelrankeSO@[&BHMHAAA=]",
+		de1: "Rankenbrücke@[&BIkHAAA=] Experimente@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocal@[&BHwHAAA=] Serene@[&BHQHAAA=] MinenO@[&BHsHAAA=]",
+		de2: "Leylinien@[&BIMHAAA=] Kleinstadt@[&BH4HAAA=] Drachenkorb@[&BHMHAAA=] MinenNO@[&BH0HAAA=]",
+		de3: "Riesen@[&BIwHAAA=] Skritt@[&BIwHAAA=] Staubmilben@[&BHUHAAA=] Dunst@[&BHIHAAA=] Sprengstoff@[&BH4HAAA=]",
+		de4: "Verschlinger@[&BHkHAAA=] Riesen@[&BIwHAAA=]",
+		de5: "Chrii'kkt@[&BIoHAAA=] Skritt@[&BIwHAAA=] Hühnerwirbelwind@[&BI4HAAA=] Staubwirbelwind@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		de6: "Staubmonster@[&BHoHAAA=]",
+		
+		es0: "ZarcilloO@[&BIYHAAA=] Chamán@[&BIsHAAA=] Víctimas@[&BIwHAAA=] Ñique@[&BHYHAAA=] Cristales@[&BHIHAAA=] ZarcilloSE@[&BHMHAAA=]",
+		es1: "Puente@[&BIkHAAA=] Experimento@[&BIwHAAA=] Gólem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocal@[&BHwHAAA=] Serene@[&BHQHAAA=] MinaE@[&BHsHAAA=]",
+		es2: "Líneasley@[&BIMHAAA=] Villa@[&BH4HAAA=] Cestas@[&BHMHAAA=] MinaNE@[&BH0HAAA=]",
+		es3: "Gigante@[&BIwHAAA=] Skritt@[&BIwHAAA=] Ácaros@[&BHUHAAA=] Bruma@[&BHIHAAA=] Explosivos@[&BH4HAAA=]",
+		es4: "Devoradora@[&BHkHAAA=] Gigante@[&BIwHAAA=]",
+		es5: "Chrii'kkt@[&BIoHAAA=] Skritt@[&BIwHAAA=] Huracánpollo@[&BI4HAAA=] Huracán@[&BHoHAAA=] Bruma@[&BHIHAAA=]",
+		es6: "Monstruo@[&BHoHAAA=]",
+		
+		fr0: "VrilleO@[&BIYHAAA=] Chamane@[&BIsHAAA=] Survivants@[&BIwHAAA=] Bipbip@[&BHYHAAA=] Cristales@[&BHIHAAA=] VrilleSE@[&BHMHAAA=]",
+		fr1: "Pont@[&BIkHAAA=] Expériences@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocale@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
+		fr2: "Lignesforce@[&BIMHAAA=] Bourg@[&BH4HAAA=] Panier@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
+		fr3: "Géant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Acarides@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosifs@[&BH4HAAA=]",
+		fr4: "Dévoreuse@[&BHkHAAA=] Géant@[&BIwHAAA=]",
+		fr5: "Chrii'kkt@[&BIoHAAA=] Skritts@[&BIwHAAA=] Tournoiementpoule@[&BI4HAAA=] Tornade@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		fr6: "Monstre@[&BHoHAAA=]"
+	},
 	Schedule: {},
+	Hourly: {},
 	
+	/**
+	 * Gets a clipboard text of the current Living Story events.
+	 * @param pOffset from the current event frame.
+	 * @returns string of events for that event frame.
+	 */
+	getCurrentStoryEvents: function(pOffset)
+	{
+		pOffset = pOffset || 0;
+		
+		var now = new Date();
+		var min = now.getUTCMinutes();
+		var eventframe = (~~(min / T.cMINUTES_IN_EVENTFRAME) * T.cMINUTES_IN_EVENTFRAME)
+			+ (pOffset * T.cMINUTES_IN_EVENTFRAME);
+	
+		return T.Hourly["t" + T.wrapInteger(eventframe, T.cMINUTES_IN_HOUR)] + I.siteTagCurrent;
+	},
+	
+	// Living Story events
+	initializeHourly: function()
+	{
+		if (C.StoryChains.length <= 0)
+		{
+			return;
+		}
+		
+		var i;
+		var language = O.OptionEnum.Language.Default;
+
+		if (D.isLanguageFullySupported())
+		{
+			language = O.Options.enu_Language;
+		}
+		for (i = 0; i < T.Events.numOfSets; i++)
+		{
+			T.Events["Set" + i] = T.Events[language + i];
+		}
+		
+		T.Hourly =
+		{
+			 t0: ":00 " + T.Events.Set1,
+			 t5: ":05 " + T.Events.Set2,
+			t10: ":10 " + T.Events.Set3,
+			t15: ":15 " + T.Events.Set1,
+			t20: ":20 " + T.Events.Set2,
+			t25: ":25 " + T.Events.Set3,
+			t30: ":30 " + T.Events.Set1,
+			t35: ":35 " + T.Events.Set2,
+			t40: ":40 " + T.Events.Set4,
+			t45: ":45 " + T.Events.Set5,
+			t50: ":50 " + T.Events.Set6,
+			t55: ":55 " + T.Events.Set7
+		};
+	},
+	
+	// World boss chains
 	initializeSchedule: function()
 	{
 		// Shortcut reference to the chains
@@ -5145,6 +5464,9 @@ T = {
 		X.initializeChainChecklist();
 		// Initialize for the touring function to access current active event
 		C.CurrentChainSD = T.getStandardChain();
+		
+		// Initialize Living Story schedule
+		T.initializeHourly();
 	},
 	
 	/*
@@ -5715,7 +6037,8 @@ K = {
 	IconsStandard: new Array(),
 	IconsHardcore: new Array(),
 	wpClipboards: [],
-	cWpClipboardDataAttribute: "data-clipboard-text", // Defined by ZeroClipboard
+	lsClipboards: [],
+	cZeroClipboardDataAttribute: "data-clipboard-text", // Defined by ZeroClipboard
 	TickerTimeout: {},
 	
 	/*
@@ -5810,54 +6133,6 @@ K = {
 				});
 			});
 		}
-	},
-	
-	/*
-	 * Updates waypoint icons' copy text.
-	 * @pre The waypoint icon's position on the clock was updated.
-	 * Standard bosses' schedule does not have gaps, hardcore may have gaps.
-	 */
-	updateWaypointsClipboard: function()
-	{
-		var updateWaypoint = function(pWaypoint, pChainSD, pChainHC, pChainSDAfter, pChainHCAfter)
-		{
-			var text = "";
-			
-			// Chains for the clicked timeframe
-			text += pChainSD.waypoint + " " + D.getChainAlias(pChainSD.nexus);
-			if ( ! pChainHC)
-			{
-				text += T.getTimeTillChainFormatted(pChainSD);
-			}
-			else
-			{
-				text += " " + D.getPhrase("and") + " " + pChainHC.waypoint
-					+ " " + D.getChainAlias(pChainHC.nexus)
-					+ T.getTimeTillChainFormatted(pChainHC);
-			}
-			
-			// Chains for the timeframe after that
-			text += ", " + D.getPhrase("then") + " " + pChainSDAfter.waypoint
-				+ " " + D.getChainAlias(pChainSDAfter.nexus);
-			if ( ! pChainHCAfter)
-			{
-				text += T.getTimeTillChainFormatted(pChainSDAfter);
-			}
-			else
-			{
-				text += " " + D.getPhrase("and") + " " + pChainHCAfter.waypoint
-					+ " " + D.getChainAlias(pChainHCAfter.nexus)
-					+ T.getTimeTillChainFormatted(pChainHCAfter);
-			}
-			
-			text = text + " - " + I.cSiteName.toLowerCase();
-			pWaypoint.setAttribute(K.cWpClipboardDataAttribute, text);
-		};
-		
-		updateWaypoint(K.WpChain0, C.CurrentChainSD, C.CurrentChainHC, C.NextChainSD1, C.NextChainHC1);
-		updateWaypoint(K.WpChain1, C.NextChainSD1, C.NextChainHC1, C.NextChainSD2, C.NextChainHC2);
-		updateWaypoint(K.WpChain2, C.NextChainSD2, C.NextChainHC2, C.NextChainSD3, C.NextChainHC3);
-		updateWaypoint(K.WpChain3, C.NextChainSD3, C.NextChainHC3, C.NextChainSD4, C.NextChainHC4);
 	},
 	
 	/*
@@ -5966,8 +6241,8 @@ K = {
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
 		{
 			if (O.Options.int_setDimming === 0
-				&& I.ProgramMode !== I.ProgramModeEnum.Simple
-				&& I.ProgramMode !== I.ProgramModeEnum.Overlay)
+				&& I.ModeCurrent !== I.ModeEnum.Simple
+				&& I.ModeCurrent !== I.ModeEnum.Overlay)
 			{
 				$(K.clockBackground).fadeTo(800, 1);
 			}
@@ -5990,7 +6265,7 @@ K = {
 			
 			// Dim the clock background
 			if (O.Options.int_setDimming === 0
-				&& I.ProgramMode !== I.ProgramModeEnum.Simple)
+				&& I.ModeCurrent !== I.ModeEnum.Simple)
 			{
 				K.clockBackground.style.opacity = opacityadd;
 			}
@@ -6014,6 +6289,12 @@ K = {
 			{
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedFirst);
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedSecond);
+			}
+			
+			// If crossing a 5 minute mark
+			if (min % T.cMINUTES_IN_EVENTFRAME === 0)
+			{
+				K.updateStoryClipboard();
 			}
 		}
 		
@@ -6302,7 +6583,7 @@ K = {
 					pIcon.show();
 					pIcon.attr("src", "img/chain/" + pChain.alias.toLowerCase() + I.cPNG);
 					pIcon.data(C.cIndexSynonym, pChain.nexus);
-					if (I.ProgramMode === I.ProgramModeEnum.Simple)
+					if (I.ModeCurrent === I.ModeEnum.Simple)
 					{
 						pIcon.attr("title", D.getChainTitleAny(pChain.nexus));
 						I.qTip.init(pIcon);
@@ -6410,6 +6691,7 @@ K = {
 		
 		// Refresh waypoints because the icon's clock position changed
 		K.updateWaypointsClipboard();
+		K.updateStoryClipboard();
 		K.initializeClockItems();
 	},
 
@@ -6438,6 +6720,83 @@ K = {
 				I.write("Chat link copied to clipboard :)<br />" + pEvent.data["text/plain"], 5);
 			});
 		}
+		
+		if (C.StoryChains.length > 0)
+		{
+			for (var i = 0; i < 2; i++)
+			{
+				K.lsClipboards.push
+				(
+					new ZeroClipboard(document.getElementById("itemClockStar" + i))
+				);
+				K.lsClipboards[i].on("aftercopy", function(pEvent)
+				{
+					I.write("Chat link copied to clipboard :)<br />" + pEvent.data["text/plain"], 5);
+				});
+			}
+		}
+	},
+	
+	/*
+	 * Updates waypoint icons' copy text.
+	 * @pre The waypoint icon's position on the clock was updated.
+	 * Standard bosses' schedule does not have gaps, hardcore may have gaps.
+	 */
+	updateWaypointsClipboard: function()
+	{
+		var updateWaypoint = function(pWaypoint, pChainSD, pChainHC, pChainSDAfter, pChainHCAfter)
+		{
+			var text = "";
+			
+			// Chains for the clicked timeframe
+			text += pChainSD.waypoint + " " + D.getChainAlias(pChainSD.nexus);
+			if ( ! pChainHC)
+			{
+				text += T.getTimeTillChainFormatted(pChainSD);
+			}
+			else
+			{
+				text += " " + D.getPhrase("and") + " " + pChainHC.waypoint
+					+ " " + D.getChainAlias(pChainHC.nexus)
+					+ T.getTimeTillChainFormatted(pChainHC);
+			}
+			
+			// Chains for the timeframe after that
+			text += ", " + D.getPhrase("then") + " " + pChainSDAfter.waypoint
+				+ " " + D.getChainAlias(pChainSDAfter.nexus);
+			if ( ! pChainHCAfter)
+			{
+				text += T.getTimeTillChainFormatted(pChainSDAfter);
+			}
+			else
+			{
+				text += " " + D.getPhrase("and") + " " + pChainHCAfter.waypoint
+					+ " " + D.getChainAlias(pChainHCAfter.nexus)
+					+ T.getTimeTillChainFormatted(pChainHCAfter);
+			}
+			
+			text = text + I.siteTagCurrent;
+			pWaypoint.setAttribute(K.cZeroClipboardDataAttribute, text);
+		};
+		
+		updateWaypoint(K.WpChain0, C.CurrentChainSD, C.CurrentChainHC, C.NextChainSD1, C.NextChainHC1);
+		updateWaypoint(K.WpChain1, C.NextChainSD1, C.NextChainHC1, C.NextChainSD2, C.NextChainHC2);
+		updateWaypoint(K.WpChain2, C.NextChainSD2, C.NextChainHC2, C.NextChainSD3, C.NextChainHC3);
+		updateWaypoint(K.WpChain3, C.NextChainSD3, C.NextChainHC3, C.NextChainSD4, C.NextChainHC4);
+	},
+	
+	/*
+	 * Updates the current and next story events icons' clipboard text.
+	 */
+	updateStoryClipboard: function()
+	{
+		if (C.StoryChains.length > 0)
+		{
+			document.getElementById("itemClockStar0")
+				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentStoryEvents());
+			document.getElementById("itemClockStar1")
+				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentStoryEvents(1));
+		}
 	}
 };
 
@@ -6455,6 +6814,8 @@ I = {
 	cPNG: ".png", // Almost all used images are PNG
 	cTextDelimiter: "|",
 	consoleTimeout: {},
+	siteTagDefault: " - gw2timer.com",
+	siteTagCurrent: " - gw2timer.com",
 	
 	// HTML/CSS pixel units
 	cPANEL_WIDTH: 360,
@@ -6472,8 +6833,8 @@ I = {
 	// Content-Layer-Page and Section-Header
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
-	ProgramMode: null,
-	ProgramModeEnum:
+	ModeCurrent: null,
+	ModeEnum:
 	{
 		Website: "Website",
 		Simple: "Simple",
@@ -6482,6 +6843,7 @@ I = {
 	cContentPane: "#paneContent",
 	cContentPrefix: "#layer",
 	cMenuPrefix: "#menu",
+	PageCurrent: "",
 	PageEnum:
 	{
 		// These are the X in "menuX" and "layerX" IDs in the HTML
@@ -6512,7 +6874,19 @@ I = {
 			Dungeons: "Dungeons"
 		}
 	},
-	contentCurrent: "",
+	/*
+	 * Number used to open a section's subcontent, written as 1-indexed via
+	 * query string, but used as 0-indexed.
+	 */
+	ArticleCurrent: null,
+	URLKeyEnum:
+	{
+		Page: "page",
+		Section: "section",
+		Article: "article",
+		Mode: "mode",
+		Go: "go"
+	},
 	contentCurrentLayer: "", // This is cContentPrefix + contentCurrent
 	isContentLoaded_Map: false,
 	isContentLoaded_Help: false,
@@ -6521,10 +6895,6 @@ I = {
 	sectionCurrent_Map: "",
 	sectionCurrent_Help: "",
 	cHeaderPrefix: "#header",
-	URLKeyPage: "page",
-	URLKeySection: "section",
-	URLKeyMode: "mode",
-	URLKeyGo: "go",
 	
 	// User information
 	BrowserUser: "Unknown",
@@ -6586,7 +6956,7 @@ I = {
 		
 		// Detect small devices
 		if (screen.width <= I.cSMALL_DEVICE_WIDTH && screen.height <= I.cSMALL_DEVICE_HEIGHT
-			&& I.ProgramMode === I.ProgramModeEnum.Website)
+			&& I.ModeCurrent === I.ModeEnum.Website)
 		{
 			I.isOnSmallDevice = true;
 		}
@@ -6616,7 +6986,7 @@ I = {
 		}
 		
 		// Default content layer
-		I.contentCurrent = I.PageEnum.Chains;
+		I.PageCurrent = I.PageEnum.Chains;
 	},
 	
 	/*
@@ -6680,7 +7050,7 @@ I = {
 		var console = $("#jsConsole");
 		var characterspersecond = 24;
 		
-		if (pString === undefined)
+		if (pString === undefined || pString === null)
 		{
 			pString = "emptystring";
 		}
@@ -6738,11 +7108,11 @@ I = {
 	 */
 	updateAddressBar: function()
 	{
-		if (I.contentCurrent !== "")
+		if (I.PageCurrent !== "")
 		{
-			var section = I[I.sectionPrefix + I.contentCurrent];
-			var pagestring = "?" + I.URLKeyPage + "=" + I.contentCurrent;
-			var sectionstring = "&" + I.URLKeySection + "=" + section;
+			var section = I[I.sectionPrefix + I.PageCurrent];
+			var pagestring = "?" + I.URLKeyEnum.Page + "=" + I.PageCurrent;
+			var sectionstring = "&" + I.URLKeyEnum.Section + "=" + section;
 			if (section !== "" && section !== undefined)
 			{
 				history.replaceState("", null, pagestring + sectionstring);
@@ -6768,18 +7138,18 @@ I = {
 		 */
 		setTimeout(function()
 		{
-			if (O.URLArguments[I.URLKeySection] !== undefined)
+			if (O.URLArguments[I.URLKeyEnum.Section] !== undefined)
 			{
-				var section = O.stripToAlphanumeric(O.URLArguments[I.URLKeySection]);
-				$(I.cHeaderPrefix + I.contentCurrent + "_" + section).trigger("click");
+				var section = O.stripToAlphanumeric(O.URLArguments[I.URLKeyEnum.Section]);
+				$(I.cHeaderPrefix + I.PageCurrent + "_" + section).trigger("click");
 			}
 		}, 0);
 	},
 	openPageFromURL: function()
 	{
-		if (O.URLArguments[I.URLKeyPage] !== undefined)
+		if (O.URLArguments[I.URLKeyEnum.Page] !== undefined)
 		{
-			var page = O.stripToAlphanumeric(O.URLArguments[I.URLKeyPage]);
+			var page = O.stripToAlphanumeric(O.URLArguments[I.URLKeyEnum.Page]);
 			$(I.cMenuPrefix + page).trigger("click");
 		}
 	},
@@ -6801,7 +7171,7 @@ I = {
 	 */
 	convertExternalLink: function(pSelector)
 	{
-		if (I.ProgramMode !== I.ProgramModeEnum.Overlay)
+		if (I.ModeCurrent !== I.ModeEnum.Overlay)
 		{
 			$(pSelector).each(function()
 			{
@@ -6829,6 +7199,17 @@ I = {
 	getSubintegerFromHTMLID: function(pElement)
 	{
 		return parseInt(O.getVariableSuffix(pElement.attr("id")));
+	},
+	
+	/*
+	 * Gets a direct link to a hosted image file.
+	 * @param string pCode image code.
+	 * @returns URL to image.
+	 * @pre image is of png format.
+	 */
+	getImageHosted: function(pCode)
+	{
+		return I.cImageHost + pCode + I.cPNG;
 	},
 	
 	/*
@@ -6923,7 +7304,7 @@ I = {
 				$(this).html(headertext + "<span class='tocTop'> \u2191</span>");
 				$(this).click(function()
 				{
-					I.scrollToElement($("#jsTOC_" + I.contentCurrent), $(I.contentCurrentLayer), "fast");
+					I.scrollToElement($("#jsTOC_" + I.PageCurrent), $(I.contentCurrentLayer), "fast");
 				}).attr("id", "toc_" + layername + "_" + headertextstripped);
 				// Add ToC list entries that scrolls to the headers when clicked
 				$("<li>" + headertext + "</li>").appendTo($(pLayer + " .jsTableOfContents ol"))
@@ -6961,7 +7342,7 @@ I = {
 		// Bind beam menu animation when clicked on the bar menu icon
 		$(I.cMenuPrefix + layer).click(function()
 		{
-			$("#menuBeam_" + I.contentCurrent).css({left: 0}).animate({left: I.cPANE_BEAM_LEFT}, "fast");
+			$("#menuBeam_" + I.PageCurrent).css({left: 0}).animate({left: I.cPANE_BEAM_LEFT}, "fast");
 		});
 		
 		$(pLayer + " header.jsSection").each(function()
@@ -7168,10 +7549,10 @@ I = {
 			$(this).click(function()
 			{
 				var layer = $(this).attr("id");
-				I.contentCurrent = layer.substring(I.cMenuPrefix.length-1, layer.length);
-				I.contentCurrentLayer = I.cContentPrefix + I.contentCurrent;
+				I.PageCurrent = layer.substring(I.cMenuPrefix.length-1, layer.length);
+				I.contentCurrentLayer = I.cContentPrefix + I.PageCurrent;
 				
-				switch (I.contentCurrent)
+				switch (I.PageCurrent)
 				{
 					case I.PageEnum.Chains:
 					{
@@ -7225,7 +7606,7 @@ I = {
 				// Also hide chain paths if on the map layer
 				if (O.Options.bol_showChainPaths)
 				{
-					if (I.contentCurrent === I.PageEnum.Map)
+					if (I.PageCurrent === I.PageEnum.Map)
 					{
 						M.setEntityGroupDisplay(M.ChainPathEntities, "hide");
 						M.setEntityGroupDisplay(M.StoryEventIcons, "hide");
@@ -7441,9 +7822,9 @@ I = {
 	 */
 	enforceProgramMode: function()
 	{
-		switch (I.ProgramMode)
+		switch (I.ModeCurrent)
 		{
-			case I.ProgramModeEnum.Overlay:
+			case I.ModeEnum.Overlay:
 			{
 				// Remove elements extraneous or intrusive to overlay mode
 				$("#paneWarning").remove();
@@ -7460,7 +7841,7 @@ I = {
 				});
 				
 			} break;
-			case I.ProgramModeEnum.Simple:
+			case I.ModeEnum.Simple:
 			{	
 				// Readjust panels
 				$("#panelLeft, #paneMenu, #paneContent").hide();
@@ -7567,7 +7948,7 @@ I = {
 		$("#panelLeft").mousemove(function(pEvent)
 		{
 			// Tooltip overflows right edge
-			if ($("#qTip").width() + pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $("#paneMap").width())
+			if ($("#qTip").width() + pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $(window).width())
 			{
 				I.qTip.offsetX = -($("#qTip").width()) - I.cTOOLTIP_ADD_OFFSET_X;
 			}

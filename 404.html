@@ -45,7 +45,7 @@
 		var primerindex = loc.indexOf(primer);
 
 		var params;
-		var page, section;
+		var page, section, article;
 		var coords;
 
 		if (primerindex !== -1)
@@ -67,14 +67,30 @@
 				}
 				if (params.length >= 3)
 				{
-					coords = params[2];
+					article = params[2];
+				}
+				if (params.length >= 4)
+				{
+					coords = params[3];
 				}
 
 				switch (params.length)
 				{
 					case 1: newloc = base + "?page=" + page; break;
 					case 2: newloc = base + "?page=" + page + "&section=" + section; break;
-					default: newloc = base + "?page=" + page + "&section=" + section + "&go=" + coords; break;
+					case 3:
+					{
+						// Third argument can be a comma separated coordinates, a map zone, or an article index
+						if (article.indexOf(",") !== -1 || (!isFinite(parseInt(article))))
+						{
+							newloc = base + "?page=" + page + "&section=" + section + "&go=" + article;
+						}
+						else
+						{
+							newloc = base + "?page=" + page + "&section=" + section + "&article=" + article;
+						}
+					} break;
+					default: newloc = base + "?page=" + page + "&section=" + section + "&article=" + article + "&go=" + coords;
 				}
 			}
 		}
