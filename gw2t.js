@@ -4138,7 +4138,7 @@ M = {
 	convertLCtoGC: function(pLatLng)
 	{
 		var coord = M.Map.project(pLatLng, M.ZoomLevelEnum.Max);
-		return [coord.x, coord.y];
+		return [Math.floor(coord.x), Math.floor(coord.y)];
 	},
 	
 	/*
@@ -7865,11 +7865,10 @@ I = {
 				$("#itemTimeServer, #itemSocial").hide();
 				$("#itemLanguage").css({
 					position: "fixed",
-					top: "10px",
-					right: "10px",
-					bottom: "auto",
-					left: "auto"
+					top: "10px", right: "10px", bottom: "auto", left: "auto"
 				});
+				$("#itemClockStar0").css({ top: "68px", left: "122px" });
+				$("#itemClockStar1").css({ top: "68px", left: "206px" });
 				$("#itemLanguage span").css({opacity: 0.7});
 				$("#itemLanguageChoices a").each(function()
 				{
