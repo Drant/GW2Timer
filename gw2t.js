@@ -5254,18 +5254,18 @@ T = {
 		
 		T.Hourly =
 		{
-			 t0: ":00 " + T.Events.Set1,
-			 t5: ":05 " + T.Events.Set2,
-			t10: ":10 " + T.Events.Set3,
-			t15: ":15 " + T.Events.Set1,
-			t20: ":20 " + T.Events.Set2,
-			t25: ":25 " + T.Events.Set3,
-			t30: ":30 " + T.Events.Set1,
-			t35: ":35 " + T.Events.Set2,
-			t40: ":40 " + T.Events.Set4,
-			t45: ":45 " + T.Events.Set5,
-			t50: ":50 " + T.Events.Set6,
-			t55: ":55 " + T.Events.Set7
+			 t0: ":00 " + T.Events.Set0,
+			 t5: ":05 " + T.Events.Set1,
+			t10: ":10 " + T.Events.Set2,
+			t15: ":15 " + T.Events.Set0,
+			t20: ":20 " + T.Events.Set1,
+			t25: ":25 " + T.Events.Set2,
+			t30: ":30 " + T.Events.Set0,
+			t35: ":35 " + T.Events.Set1,
+			t40: ":40 " + T.Events.Set3,
+			t45: ":45 " + T.Events.Set4,
+			t50: ":50 " + T.Events.Set5,
+			t55: ":55 " + T.Events.Set6
 		};
 	},
 	
