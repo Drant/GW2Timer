@@ -4965,10 +4965,26 @@ M = {
 			
 			pMarker.on("click", function(pEvent)
 			{
+				var i;
 				var type = this.options.needleType;
+				var key = this.options.needleKey;
 				var index = this.options.needleIndex;
 				var newstate = X.trackChecklistItem(X.Checklists[type], index);
 				M.styleCollectibleMarker(this, newstate);
+				
+				// Update URL bar with list of numbers of checked markers
+				var pings = "";
+				var markerlist = X.Checklists[type].value;
+				for (i = 0; i < markerlist.length; i++)
+				{
+					if (markerlist[i] !== X.ChecklistEnum.Unchecked)
+					{
+						pings += (i+1) + ",";
+					}
+				}
+				pings = pings.slice(0, -1); // Trim last extra comma
+				
+				history.replaceState("", null, "?" + key + "=" + pings);
 			});
 			
 			M.bindMarkerZoomBehavior(pMarker, "dblclick");
@@ -5026,6 +5042,7 @@ M = {
 				{
 					needleIndex: ii,
 					needleType: i,
+					needleKey: X.Checklists[i].urlkey,
 					title: markertitle
 				}).addTo(M.Map);
 				styleMarker(marker, ii, stateinstring, ithcollectible.color);
