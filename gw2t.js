@@ -329,6 +329,7 @@ O = {
 	enforceURLArgumentsFirst: function()
 	{
 		O.URLArguments = O.getURLArguments();
+		O.enforceURLArgumentsSpecial();
 		
 		var i;
 		// Set up program mode
@@ -356,6 +357,21 @@ O = {
 		if (isFinite(I.ArticleCurrent))
 		{
 			I.ArticleCurrent = I.ArticleCurrent - 1;
+		}
+	},
+	
+	/*
+	 * Special URL keys that override others.
+	 */
+	enforceURLArgumentsSpecial: function()
+	{
+		var chests = O.URLArguments[X.Checklists.Collectible3.urlkey];
+		if (chests)
+		{
+			O.URLArguments[I.URLKeyEnum.Page] = I.PageEnum.Map;
+			O.URLArguments[I.URLKeyEnum.Section] = I.SectionEnum.Map.Collectible;
+			O.URLArguments[I.URLKeyEnum.Article] = "4";
+			O.URLArguments[I.URLKeyEnum.Go] = "4816,16443,1";
 		}
 	},
 	
@@ -1165,12 +1181,14 @@ X = {
 			value: new Array(),
 			valueDefault: new Array()
 		},
-		// Collectible checklists must have the same variable name as in the map page's data
-		Collectible0: { key: "str_chlDiveMaster", value: "", cushion: new Array() },
-		Collectible1: { key: "str_chlCoinProspect", value: "", cushion: new Array() },
-		Collectible2: { key: "str_chlCoinUplands", value: "", cushion: new Array() },
-		Collectible3: { key: "str_chlBuriedChest", value: "", cushion: new Array() }
-		
+		/*
+		 * Collectible checklists must have the same variable name as in the map page's data.
+		 * The urlkey properties must be unique from the global URLKeyEnum.
+		 */
+		Collectible0: { key: "str_chlDiveMaster", urlkey: "divemaster", value: "", cushion: new Array() },
+		Collectible1: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: "", cushion: new Array() },
+		Collectible2: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: "", cushion: new Array() },
+		Collectible3: { key: "str_chlBuriedChest", urlkey: "chests", value: "", cushion: new Array() }
 	},
 	ChecklistEnum:
 	{
@@ -1221,7 +1239,9 @@ X = {
 		pIndex = parseInt(pIndex);
 		var thechar = pCharacter.toString();
 		// A character must be length 1 and different from the current
-		if (thechar.length === 1 && pChecklist.value[pIndex] !== thechar)
+		if (thechar.length === 1 && pChecklist.value[pIndex] !== thechar
+			&& pIndex >= 0
+			&& pIndex <= pChecklist.value.length - 1)
 		{
 			var checklist = O.replaceCharAt(pChecklist.value, pIndex, thechar);
 			localStorage[pChecklist.key] = checklist;
@@ -3518,7 +3538,7 @@ M = {
 	mousedZoneIndex: null,
 	currentIconSize: 32,
 	currentRingSize: 256,
-	cICON_SIZE_MAX: 32,
+	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
 	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
@@ -3804,9 +3824,9 @@ M = {
 		
 		switch (currentzoom)
 		{
-			case 7: waypointsize = 32; landmarksize = 32; break;
-			case 6: waypointsize = 28; landmarksize = 24; break;
-			case 5: waypointsize = 24; landmarksize = 16; break;
+			case 7: waypointsize = 40; landmarksize = 32; break;
+			case 6: waypointsize = 32; landmarksize = 24; break;
+			case 5: waypointsize = 26; landmarksize = 16; break;
 			case 4: waypointsize = 20; landmarksize = 0; break;
 			case 3: waypointsize = 16; landmarksize = 0; break;
 			default: { waypointsize = 0; landmarksize = 0; }
@@ -3970,7 +3990,7 @@ M = {
 	{
 		if (pSize === undefined)
 		{
-			pSize = M.cICON_SIZE_MAX;
+			pSize = M.cICON_SIZE_STANDARD;
 		}
 		
 		pMarker.setIcon(new L.icon(
@@ -4923,7 +4943,7 @@ M = {
 	generateAndInitializeCollectibles: function()
 	{
 		M.Collectibles = GW2T_COLLECTIBLE_DATA; // This object is inline in the map HTML file
-		var i, ii;
+		var i, ii, n;
 		var ithcollectible;
 		var ithneedle;
 		var stateinstring;
@@ -4961,6 +4981,27 @@ M = {
 		
 			ithcollectible = M.Collectibles[i];
 			ithcollectible.NeedleEntities = new Array();
+			
+			/*
+			 * If URL query string to ping (pre-mark) the markers exists, then override checklist
+			 */
+			var pingsurl = O.URLArguments[X.Checklists[i].urlkey];
+			var pings;
+			var number;
+			if (pingsurl)
+			{
+				X.clearChecklist(X.Checklists[i]);
+				pings = pingsurl.split(",");
+
+				for (n in pings)
+				{
+					number = parseInt(pings[n]);
+					if (isFinite(number))
+					{
+						X.setChecklistItem(X.Checklists[i], number - 1, X.ChecklistEnum.Tracked);
+					}
+				}
+			}
 			
 			for (ii in ithcollectible.needles)
 			{
@@ -5193,33 +5234,33 @@ T = {
 		en1: "Bridge@[&BIkHAAA=] Experiment@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocal@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
 		en2: "Leyline@[&BIMHAAA=] Town@[&BH4HAAA=] Basket@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
 		en3: "Giant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Mites@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosives@[&BH4HAAA=]",
-		en4: "Devourer@[&BHkHAAA=] Giant@[&BIwHAAA=]",
-		en5: "Chrii'kkt@[&BIoHAAA=] Skritts@[&BIwHAAA=] Chickenado@[&BI4HAAA=] Twister@[&BHoHAAA=] Haze@[&BHIHAAA=]",
-		en6: "Monster@[&BHoHAAA=]",
+		en4: "Devourer(2)@[&BHkHAAA=] Giant@[&BIwHAAA=]",
+		en5: "Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Chickenado@[&BI4HAAA=] Twister(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		en6: "Monster(4)@[&BHoHAAA=]",
 		
 		de0: "DschungelrankeW@[&BIYHAAA=] Schamanin@[&BIsHAAA=] Unfallopfer@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Kristalle@[&BHIHAAA=] DschungelrankeSO@[&BHMHAAA=]",
 		de1: "Rankenbrücke@[&BIkHAAA=] Experimente@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocal@[&BHwHAAA=] Serene@[&BHQHAAA=] MinenO@[&BHsHAAA=]",
 		de2: "Leylinien@[&BIMHAAA=] Kleinstadt@[&BH4HAAA=] Drachenkorb@[&BHMHAAA=] MinenNO@[&BH0HAAA=]",
 		de3: "Riesen@[&BIwHAAA=] Skritt@[&BIwHAAA=] Staubmilben@[&BHUHAAA=] Dunst@[&BHIHAAA=] Sprengstoff@[&BH4HAAA=]",
-		de4: "Verschlinger@[&BHkHAAA=] Riesen@[&BIwHAAA=]",
-		de5: "Chrii'kkt@[&BIoHAAA=] Skritt@[&BIwHAAA=] Hühnerwirbelwind@[&BI4HAAA=] Staubwirbelwind@[&BHoHAAA=] Haze@[&BHIHAAA=]",
-		de6: "Staubmonster@[&BHoHAAA=]",
+		de4: "Verschlinger(2)@[&BHkHAAA=] Riesen@[&BIwHAAA=]",
+		de5: "Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Hühnerwirbelwind@[&BI4HAAA=] Staubwirbelwind(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		de6: "Staubmonster(4)@[&BHoHAAA=]",
 		
 		es0: "ZarcilloO@[&BIYHAAA=] Chamán@[&BIsHAAA=] Víctimas@[&BIwHAAA=] Ñique@[&BHYHAAA=] Cristales@[&BHIHAAA=] ZarcilloSE@[&BHMHAAA=]",
 		es1: "Puente@[&BIkHAAA=] Experimento@[&BIwHAAA=] Gólem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocal@[&BHwHAAA=] Serene@[&BHQHAAA=] MinaE@[&BHsHAAA=]",
 		es2: "Líneasley@[&BIMHAAA=] Villa@[&BH4HAAA=] Cestas@[&BHMHAAA=] MinaNE@[&BH0HAAA=]",
 		es3: "Gigante@[&BIwHAAA=] Skritt@[&BIwHAAA=] Ácaros@[&BHUHAAA=] Bruma@[&BHIHAAA=] Explosivos@[&BH4HAAA=]",
-		es4: "Devoradora@[&BHkHAAA=] Gigante@[&BIwHAAA=]",
-		es5: "Chrii'kkt@[&BIoHAAA=] Skritt@[&BIwHAAA=] Huracánpollo@[&BI4HAAA=] Huracán@[&BHoHAAA=] Bruma@[&BHIHAAA=]",
-		es6: "Monstruo@[&BHoHAAA=]",
+		es4: "Devoradora(2)@[&BHkHAAA=] Gigante@[&BIwHAAA=]",
+		es5: "Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Huracánpollo@[&BI4HAAA=] Huracán(3)@[&BHoHAAA=] Bruma@[&BHIHAAA=]",
+		es6: "Monstruo(4)@[&BHoHAAA=]",
 		
 		fr0: "VrilleO@[&BIYHAAA=] Chamane@[&BIsHAAA=] Survivants@[&BIwHAAA=] Bipbip@[&BHYHAAA=] Cristales@[&BHIHAAA=] VrilleSE@[&BHMHAAA=]",
 		fr1: "Pont@[&BIkHAAA=] Expériences@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocale@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
 		fr2: "Lignesforce@[&BIMHAAA=] Bourg@[&BH4HAAA=] Panier@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
 		fr3: "Géant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Acarides@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosifs@[&BH4HAAA=]",
-		fr4: "Dévoreuse@[&BHkHAAA=] Géant@[&BIwHAAA=]",
-		fr5: "Chrii'kkt@[&BIoHAAA=] Skritts@[&BIwHAAA=] Tournoiementpoule@[&BI4HAAA=] Tornade@[&BHoHAAA=] Haze@[&BHIHAAA=]",
-		fr6: "Monstre@[&BHoHAAA=]"
+		fr4: "Dévoreuse(2)@[&BHkHAAA=] Géant@[&BIwHAAA=]",
+		fr5: "Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Tournoiementpoule@[&BI4HAAA=] Tornade(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		fr6: "Monstre(4)@[&BHoHAAA=]"
 	},
 	Schedule: {},
 	Hourly: {},
