@@ -236,10 +236,13 @@ input#mapCoordinatesRegion {
 	width: 32px; height: 32px;
 	vertical-align: middle;
 }
-.itemMapLinks a { /* Website name */
+.itemMapLinks { /* Links on the map pane */
 	vertical-align: middle;
 	font-family: Menomonia;
 	font-size: 18px;
+	color: #ffeebb;
+}
+.itemMapLinks a, .itemMapLinks span {
 	text-decoration: none;
 	color: #ffeebb;
 	opacity: 0.6;
@@ -247,9 +250,6 @@ input#mapCoordinatesRegion {
 .itemMapLinks a:hover {
 	color: #ddff77;
 	opacity: 0.9;
-}
-a#linkModeSimple {
-	text-decoration: underline;
 }
 #mapCompassButton {
 	vertical-align: middle;
