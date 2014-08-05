@@ -133,8 +133,10 @@ O = {
 			German: "de",
 			Spanish: "es",
 			French: "fr",
-			Dutch: "nl",
+			Czech: "cs",
+			Italian: "it",
 			Polish: "pl",
+			Portuguese: "pt",
 			Russian: "ru",
 			Mandarin: "zh"
 		}
@@ -1208,16 +1210,35 @@ X = {
 	 * localStorage or load it as the checklist if already stored.
 	 * @param object pChecklist to initialize.
 	 * @param int pLength of the checklist string to construct.
+	 * @param string pCustomList comma separated list of indexes (1-indexed) to be set as checked.
 	 * @returns string new checklist to be assigned to a checklist variable.
 	 */
-	initializeChecklist: function(pChecklist, pLength)
-	{		
+	initializeChecklist: function(pChecklist, pLength, pCustomList)
+	{
+		var i;
+		var indexes;
+		var index;
 		pChecklist.length = pLength;
+		
+		if (pCustomList)
+		{
+			X.clearChecklist(pChecklist);
+			indexes = pCustomList.split(",");
+
+			for (i in indexes)
+			{
+				index = parseInt(indexes[i]);
+				if (isFinite(index))
+				{
+					X.setChecklistItem(pChecklist, index - 1, X.ChecklistEnum.Checked);
+				}
+			}
+		}
 		/*
 		 * If localStorage doesn't have the checklist already or if it's an
 		 * improper length then it gets a default checklist string of 0's.
 		 */
-		if (localStorage[pChecklist.key] === undefined
+		else if (localStorage[pChecklist.key] === undefined
 			|| localStorage[pChecklist.key].length !== pLength)
 		{
 			X.clearChecklist(pChecklist);
@@ -1300,6 +1321,27 @@ X = {
 			return O.intToBool(parseInt(thechar));
 		}
 		return thechar;
+	},
+	
+	/*
+	 * Gets indexes in a checklist that has its value as "checked".
+	 * @param object pChecklist to extract.
+	 * @returns string comma separated string of index numbers (1-indexed).
+	 */
+	getCheckedIndexes: function(pChecklist)
+	{
+		var i;
+		var indexes = "";
+		var list = pChecklist.value;
+		for (i = 0; i < list.length; i++)
+		{
+			if (list[i] === X.ChecklistEnum.Checked)
+			{
+				indexes += (i+1) + ",";
+			}
+		}
+		indexes = indexes.slice(0, -1); // Trim last extra comma
+		return indexes;
 	},
 	
 	/*
@@ -1845,60 +1887,84 @@ D = {
 	 */
 	Phrase:
 	{
-		s_TEMPLATE: {de: "", es: "", fr: "", nl: "", pl: "", ru: "", zh: ""},
+		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 		
 		// Time
-		s_s: {de: "s", es: "s", fr: "s", nl: "s", pl: "s", ru: "с", zh: "秒"},
-		s_m: {de: "m", es: "m", fr: "m", nl: "m", pl: "m", ru: "м", zh: "分"},
-		s_h: {de: "s", es: "h", fr: "h", nl: "u", pl: "g", ru: "ч", zh: "時"},
-		s_second: {de: "sekunde", es: "segundo", fr: "seconde", nl: "seconde", pl: "sekund", ru: "секунду", zh: "秒"},
-		s_minute: {de: "minute", es: "minuto", fr: "minute", nl: "minuut", pl: "minuta", ru: "минута", zh: "分"},
-		s_hour: {de: "stunde", es: "hora", fr: "heure", nl: "uur", pl: "godzinę", ru: "час", zh: "時"},
-		s_seconds: {de: "sekunden", es: "segundos", fr: "secondes", nl: "seconden", pl: "sekund", ru: "секунд", zh: "秒"},
-		s_minutes: {de: "minuten", es: "minutos", fr: "minutes", nl: "minuten", pl: "minut", ru: "минут", zh: "分"},
-		s_hours: {de: "studen", es: "horas", fr: "heures", nl: "uur", pl: "godzin", ru: "часов", zh: "時"},
-		s_half_an_hour: {de: "eine halbe stunde", es: "media hora", fr: "demi-heure", nl: "een half uur", pl: "pół godziny", ru: "полчаса", zh: "半小時"},
+		s_h: {de: "s", es: "h", fr: "h", cs: "h", it: "o", pl: "g", pt: "h", ru: "ч", zh: "時"},
+		s_m: {de: "m", es: "m", fr: "m", cs: "m", it: "m", pl: "m", pt: "m", ru: "м", zh: "分"},
+		s_s: {de: "s", es: "s", fr: "s", cs: "s", it: "s", pl: "s", pt: "s", ru: "с", zh: "秒"},
+		s_hour: {de: "stunde", es: "hora", fr: "heure", cs: "hodina", it: "ora", pl: "godzinę", pt: "hora", ru: "час", zh: "時"},
+		s_minute: {de: "minute", es: "minuto", fr: "minute", cs: "minuta", it: "minuto", pl: "minuta", pt: "minuto", ru: "минута", zh: "分"},
+		s_second: {de: "sekunde", es: "segundo", fr: "seconde", cs: "sekunda", it: "secondo", pl: "sekund", pt: "segundo", ru: "секунду", zh: "秒"},
+		s_hours: {de: "studen", es: "horas", fr: "heures", cs: "hodin", it: "secondi", pl: "godzin", pt: "horas", ru: "часов", zh: "時"},
+		s_minutes: {de: "minuten", es: "minutos", fr: "minutes", cs: "minut", it: "minuti", pl: "minut", pt: "minutos", ru: "минут", zh: "分"},
+		s_seconds: {de: "sekunden", es: "segundos", fr: "secondes", cs: "sekund", it: "ore", pl: "sekund", pt: "segundos", ru: "секунд", zh: "秒"},
+		s_half_an_hour: {de: "eine halbe stunde", es: "media hora", fr: "demi-heure",
+			cs: "půl hodiny", it: "mezz'ora", pl: "pół godziny", pt: "meia hora", ru: "полчаса", zh: "半小時"},
 		
 		// Nouns
-		s_world_boss: {de: "weltboss", es: "jefe mundo", fr: "chef monde", nl: "wereld eindbaas", pl: "świat szef", ru: "мир босс", zh: "世界頭目"},
-		s_section: {de: "paragraph", es: "sección", fr: "section", nl: "paragraaf", pl: "sekcja", ru: "параграф", zh: "節"},
+		s_world_boss: {de: "weltboss", es: "jefe mundo", fr: "chef monde",
+			cs: "svět boss", it: "boss mondo", pl: "świat szef", pt: "chefe mundo", ru: "мир босс", zh: "世界頭目"},
+		s_section: {de: "paragraph", es: "sección", fr: "section",
+			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "параграф", zh: "節"},
 		
 		// Verbs
-		s_done_reading: {de: "ende gelesen", es: "terminado de leer", fr: "fini de lire", nl: "klaar met lezen", pl: "przeczytaniu", ru: "закончите читать", zh: "讀完"},
-		s_is: {de: "ist", es: "es", fr: "est", nl: "is", pl: "jest", ru: "является", zh: "是"},
-		s_subscribe: {de: "abonnieren", es: "subscribir", fr: "abonner", nl: "abonneren", pl: "abonować", ru: "подписываться", zh: "訂閱"},
-		s_will_start: {de: "wird starten", es: "se iniciará", fr: "débutera", nl: "zal starten", pl: "rozpocznie się", ru: "начнется", zh: "開始"},
+		s_done_reading: {de: "ende gelesen", es: "terminado de leer", fr: "fini de lire",
+			cs: "dokončil čtení", it: "finito di leggere", pl: "przeczytaniu", pt: "leitura terminou", ru: "закончите читать", zh: "讀完"},
+		s_is: {de: "ist", es: "es", fr: "est",
+			cs: "je", it: "è", pl: "jest", pt: "é", ru: "является", zh: "是"},
+		s_subscribe: {de: "abonnieren", es: "subscribir", fr: "abonner",
+			cs: "předplatit si", it: "sottoscrivere", pl: "abonować", pt: "assinar", ru: "подписываться", zh: "訂閱"},
+		s_will_start: {de: "wird starten", es: "se iniciará", fr: "débutera",
+			cs: "začne", it: "inizierà", pl: "rozpocznie się", pt: "começará", ru: "начнется", zh: "開始"},
 		
 		// Adjectives and Adverbs
-		s_ago: {de: "vor", es: "hace", fr: "il ya", nl: "geleden", pl: "temu", ru: "назад", zh: "前"},
-		s_also: {de: "auch", es: "también", fr: "aussi", nl: "ook", pl: "też", ru: "то́же", zh: "也"},
-		s_checked: {de: "abgehakt", es: "visto", fr: "coché", nl: "afgevinkt", pl: "zakończony", ru: "галочка", zh: "勾掉"},
-		s_current: {de: "aktuelle", es: "actual", fr: "actuel", nl: "huidige", pl: "bieżący", ru: "текущий", zh: "活期"},
-		s_next: {de: "nächste", es: "siguiente", fr: "prochain", nl: "volgende", pl: "następny", ru: "следующий", zh: "下一"},
-		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit", nl: "geabonneerd", pl: "subskrypcji", ru: "подписал", zh: "訂閱"},
-		s_then: {de: "dann", es: "luego", fr: "puis", nl: "dan", pl: "potem", ru: "затем", zh: "接著"},
+		s_ago: {de: "vor", es: "hace", fr: "il ya",
+			cs: "před", it: "fa", pl: "temu", pt: "há", ru: "назад", zh: "前"},
+		s_also: {de: "auch", es: "también", fr: "aussi",
+			cs: "také", it: "anche", pl: "też", pt: "também", ru: "то́же", zh: "也"},
+		s_checked: {de: "abgehakt", es: "visto", fr: "coché",
+			cs: "odškrtnout", it: "controllato", pl: "zakończony", pt: "marcado", ru: "галочка", zh: "勾掉"},
+		s_current: {de: "aktuelle", es: "actual", fr: "actuel",
+			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", zh: "活期"},
+		s_next: {de: "nächste", es: "siguiente", fr: "prochain",
+			cs: "příští", it: "seguente", pl: "następny", pt: "próximo", ru: "следующий", zh: "下一"},
+		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit",
+			cs: "odebírané", it: "sottoscritti", pl: "subskrypcji", pt: "assinado", ru: "подписал", zh: "訂閱"},
+		s_then: {de: "dann", es: "luego", fr: "puis",
+			cs: "pak", it: "poi", pl: "potem", pt: "então", ru: "затем", zh: "接著"},
 		
 		// Prepositions and Conjunctions
-		s_and: {de: "und", es: "y", fr: "et", nl: "en", pl: "i", ru: "и", zh: "和"},
-		s_in: {de: "in", es: "en", fr: "en", nl: "in", pl: "w", ru: "в", zh: "在"}
+		s_and: {de: "und", es: "y", fr: "et",
+			cs: "a", it: "e", pl: "i", pt: "e", ru: "и", zh: "和"},
+		s_in: {de: "in", es: "en", fr: "en",
+			cs: "za", it: "in", pl: "w", pt: "em", ru: "в", zh: "在"}
 	},
 	
 	Element:
 	{
-		s_TEMPLATE: {de: "", es: "", fr: "", nl: "", pl: "", ru: "", zh: ""},
+		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 
-		s_linkModeSimple: {de: "einfach modus", es: "modo simple", fr: "mode simple", nl: "eenvoudig modus", pl: "prosty tryb", ru: "простой режим", zh: "方式簡單"},
-		s_menuChains: {de: "Zeitplan", es: "Horario", fr: "Horaire", nl: "Dienstregeling", pl: "Harmonogram", ru: "Расписание", zh: "時間表"},
-		s_menuMap: {de: "Werkzeuge", es: "Útiles", fr: "Outils", nl: "Gereedschap", pl: "Narzędzia", ru: "Инструментарий", zh: "工具"},
-		s_menuWvW: {de: "WvW", es: "WvW", fr: "WvW", nl: "WvW", pl: "WvW", ru: "WvW", zh: "WvW"},
-		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance", nl: "Hulp", pl: "Pomoc", ru: "Помощь", zh: "輔助"},
-		s_menuOptions: {de: "Optionen", es: "Opciónes", fr: "Options", nl: "Opties", pl: "Opcje", ru: "	Параметры", zh: "選項"},
+		s_linkModeSimple: {de: "einfach modus", es: "modo simple", fr: "mode simple",
+			cs: "prostý režim", it: "modalità semplice", pl: "prosty tryb", pt: "modo simples", ru: "простой режим", zh: "方式簡單"},
+		s_menuChains: {de: "Zeitplan", es: "Horario", fr: "Horaire",
+			cs: "Rozvrhhodin", it: "Orario", pl: "Harmonogram", pt: "Horários", ru: "Расписание", zh: "時間表"},
+		s_menuMap: {de: "Werkzeuge", es: "Útiles", fr: "Outils",
+			cs: "Nástroje", it: "Strumenti", pl: "Narzędzia", pt: "Ferramentas", ru: "Инструментарий", zh: "工具"},
+		s_menuWvW: {de: "WvW", es: "WvW", fr: "WvW",
+			cs: "WvW", it: "WvW", pl: "WvW", pt: "WvW", ru: "WvW", zh: "WvW"},
+		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance",
+			cs: "Pomoci", it: "Guida", pl: "Pomoc", pt: "Ajuda", ru: "Помощь", zh: "輔助"},
+		s_menuOptions: {de: "Optionen", es: "Opciónes", fr: "Options",
+			cs: "Možnosti", it: "Opzioni", pl: "Opcje", pt: "Opções", ru: "Параметры", zh: "選項"},
 		s_opt_bol_alertSubscribed: {
 			de: "<dfn>Alarm Modus:</dfn><br />☐ = Checkliste<br />☑ = Abonnement",
 			es: "<dfn>Modo de Alarma:</dfn><br />☐ = Lista de Verificación<br />☑ = Suscripción",
 			fr: "<dfn>Mode d'Alarme:</dfn><br />☐ = Check-list<br />☑ = Abonnement",
-			nl: "<dfn>Alarm Modus:</dfn><br />☐ = Checklist<br />☑ = Abonnement",
+			cs: "<dfn>Režim Alarmu:</dfn><br />☐ = Kontrolní Seznam<br />☑ = Předplatné",
+			it: "<dfn>Modalità di Allarme:</dfn><br />☐ = Elenco di Controllo<br />☑ = Sottoscrizione",
 			pl: "<dfn>Alarmu Tryb:</dfn><br />☐ = Lista Kontrolna<br />☑ = Abonament",
+			pt: "<dfn>Modo de Alarme:</dfn><br />☐ = Lista de Verificação<br />☑ = Assinatura",
 			ru: "<dfn>Будильник Режим:</dfn><br />☐ = Контрольный Список<br />☑ = Подписка",
 			zh: "<dfn>鬧鐘方式:</dfn><br />☐ = 清單<br />☑ = 訂閱"
 		}
@@ -2012,6 +2078,24 @@ D = {
 		}
 		return false;
 	},
+	
+	/*
+	 * Tells if adjective-noun or adverb-verb modifier is before the modified
+	 * depending on opted language.
+	 * @returns boolean true if modifier before the modified.
+	 */
+	isLanguageModifierFirst: function()
+	{
+		if (O.Options.enu_Language === O.OptionEnum.Language.French
+			|| O.Options.enu_Language === O.OptionEnum.Language.Spanish
+			|| O.Options.enu_Language === O.OptionEnum.Language.Italian
+			|| O.Options.enu_Language === O.OptionEnum.Language.Portuguese
+			|| O.Options.enu_Language === O.OptionEnum.Language.Mandarin)
+		{
+			return false;
+		}
+		return true;
+	},
 		
 	// Must be in the same order as the chain nexuses
 	ChainTitle: [
@@ -2020,8 +2104,10 @@ D = {
 		de: "Feuerelementar",
 		es: "Elemental de Fuego",
 		fr: "Elémentaire de Feu",
-		nl: "Vuurelement",
+		cs: "Ohnivý Elementál",
+		it: "Elementale del Fuoco",
 		pl: "Ognisty Żywioł",
+		pt: "Fogo Elemental",
 		ru: "Огонь Элементаль",
 		zh: "火元素"
 	},{
@@ -2029,8 +2115,10 @@ D = {
 		de: "Inquestur-Golem Typ II",
 		es: "Gólem Serie II de la Inquisa",
 		fr: "Golem Marque II de l'Enqueste",
-		nl: "Inquest Golem versie 2",
-		pl: "Golem Model 2",
+		cs: "Golem Typu II",
+		it: "Golem Tipo II",
+		pl: "Golem Model II",
+		pt: "Golem Tipo II",
 		ru: "Следствие Голем Тип II",
 		zh: "Inquest 的魔像2型"
 	},{
@@ -2038,8 +2126,10 @@ D = {
 		de: "Klaue Jormags",
 		es: "Garra de Jormag",
 		fr: "Griffe de Jormag",
-		nl: "Jormags Klauw",
+		cs: "Dráp Jormag",
+		it: "Artiglio di Jormag",
 		pl: "Szpon Jormaga",
+		pt: "Garra de Jormag",
 		ru: "Йормаг Коготь",
 		zh: "爪的 Jormag"
 	},{
@@ -2047,8 +2137,10 @@ D = {
 		de: "Schamanenoberhaupt der Svanir",
 		es: "Jefe Chamán Svanir",
 		fr: "Chef Chamane de Svanir",
-		nl: "Svanirs Sjamaan",
+		cs: "Hlavní Svanir Šaman",
+		it: "Capo Sciamano Svanir",
 		pl: "Wódz Szamanów Svanira",
+		pt: "Chefe Xamã Svanir",
 		ru: "Главный Шаман Сванир",
 		zh: "Svanir 的首席薩滿"
 	},{
@@ -2056,8 +2148,10 @@ D = {
 		de: "Megazerstörer",
 		es: "Megadestructor",
 		fr: "Mégadestructeur",
-		nl: "Megadestroyer",
-		pl: "Wielki Niszczyciel",
+		cs: "Meganičitel",
+		it: "Megadistruttore",
+		pl: "Wielkiniszczyciel",
+		pt: "Megadestruidor",
 		ru: "Мегадеструктор",
 		zh: "Megadestroyer"
 	},{
@@ -2065,8 +2159,10 @@ D = {
 		de: "Schatten-Behemoth",
 		es: "Behemot de las Sombras",
 		fr: "Béhémoth des Ombres",
-		nl: "Schaduw Behemoth",
+		cs: "Stín Behemoth",
+		it: "Behemoth d'Ombra",
 		pl: "Mroczny Behemot",
+		pt: "Behemoth de Sombra",
 		ru: "Бегемот из тени",
 		zh: "影子的巨獸"
 	},{
@@ -2074,8 +2170,10 @@ D = {
 		de: "Den Zerschmetterer",
 		es: "El Asolador",
 		fr: "Le Destructeur",
-		nl: "De Vermorzelaar",
+		cs: "Shatterer",
+		it: "Il Shatterer",
 		pl: "Shatterer",
+		pt: "O Shatterer",
 		ru: "Шаттерер",
 		zh: "Shatterer"
 	},{
@@ -2083,8 +2181,10 @@ D = {
 		de: "Admiral Taidha Covington",
 		es: "Almirante Taidha Covington",
 		fr: "Amirale Taidha Covington",
-		nl: "Admiraal Taidha Covington",
+		cs: "Admirál Taidha Covington",
+		it: "Ammiraglio Taidha Covington",
 		pl: "Admirał Taidha Covington",
+		pt: "Almirante Taidha Covington",
 		ru: "Адмирал Таидха Цовингтон",
 		zh: "海軍上將 Taidha Covington"
 	},{
@@ -2092,8 +2192,10 @@ D = {
 		de: "Ulgoth den Modniir",
 		es: "Ulgoth el Modniir",
 		fr: "Ulgoth le Modniir",
-		nl: "Modniir Ulgoth",
+		cs: "Ulgoth na Modniir",
+		it: "Ulgoth il Modniir",
 		pl: "Modniir Ulgoth",
+		pt: "Ulgoth o Modniir",
 		ru: "Улготх в Модниир",
 		zh: "Ulgoth 的 Modniir"
 	},{
@@ -2101,8 +2203,10 @@ D = {
 		de: "Großen Dschungelwurm",
 		es: "Gran Sierpe de la Selva",
 		fr: "Grande Guivre de la Jungle",
-		nl: "Grote Jungleworm",
+		cs: "Velká Džungle Červ",
+		it: "Grande Verme Giungla",
 		pl: "Wielki Robak z Dżungli",
+		pt: "Grande Verme Selva",
 		ru: "Великий Червь из джунглей",
 		zh: "大叢林蠕蟲"
 	},{
@@ -2110,8 +2214,10 @@ D = {
 		de: "Karka-Königin",
 		es: "Reina Karka",
 		fr: "Reine Karka",
-		nl: "Karkakoningin",
+		cs: "Karka Královna",
+		it: "Regina Karka",
 		pl: "Karka Królowa",
+		pt: "Rainha Karka",
 		ru: "Карка Королева",
 		zh: "女王 Karka"
 	},{
@@ -2119,8 +2225,10 @@ D = {
 		de: "Tequatl den Sonnenlosen",
 		es: "Tequatl el Sombrío",
 		fr: "Tequatl le Sans-soleil",
-		nl: "Tequatl de Zonloze",
+		cs: "Tequatl Bez Slunce",
+		it: "Tequatl il Senza Sole",
 		pl: "Tequatl ma Słońca",
+		pt: "Tequatl o Sem Sol",
 		ru: "Теqуатл Тусклый",
 		zh: "Tequatl 沒有陽光"
 	},{
@@ -2128,8 +2236,10 @@ D = {
 		de: "Dreiköpfig Wurm",
 		es: "Sierpe de Tres Cabezas",
 		fr: "Guivre à Trois Têtes",
-		nl: "Driekoppige Worm",
+		cs: "Tři Vedl Červ",
+		it: "Verme a Tre Teste",
 		pl: "Trzygłowy Robak",
+		pt: "Verme de Três Cabeças",
 		ru: "Трехголовый Червь",
 		zh: "蟲三頭"
 	},{
@@ -2157,8 +2267,10 @@ D = {
 		de: "Feuerschamanen",
 		es: "Chamán de Fuego",
 		fr: "Chamane de Feu",
-		nl: "Vuursjamaan",
+		cs: "Požární Šaman",
+		it: "Sciamano Fuoco",
 		pl: "Ognia Szaman",
+		pt: "Xamã Fogo",
 		ru: "Oгня Шаман",
 		zh: "火薩滿"
 	},{
@@ -2166,8 +2278,10 @@ D = {
 		de: "Faulbär-Häuptling",
 		es: "Cabecilla de Osoinmundo",
 		fr: "Chef Oursefol",
-		nl: "Hoofdman foute Beer",
+		cs: "Foulbear Náčelník",
+		it: "Capo Foulbear",
 		pl: "Faulwódz Niedźwiedź",
+		pt: "Chefe Foulbear",
 		ru: "Фолмедведь Вождь",
 		zh: "臭熊頭目"
 	},{
@@ -2175,8 +2289,10 @@ D = {
 		de: "Schaufler-Kommissar",
 		es: "Comisario Draga",
 		fr: "Kommissar Draguerre",
-		nl: "Commissaris Baggeraar",
+		cs: "Vybagrovat Komisař",
+		it: "Commissario Dragare",
 		pl: "Pogłębiarka Komisarza",
+		pt: "Comissário Dragar",
 		ru: "Драги Комиссар",
 		zh: "疏浚政委"
 	},{
@@ -2184,8 +2300,10 @@ D = {
 		de: "Auge des Zhaitan",
 		es: "Ojo de Zhaitan",
 		fr: "Œil de Zhaïtan",
-		nl: "Oog van Zhaitan",
+		cs: "Oko Zhaitan",
+		it: "Occhio Zhaitan",
 		pl: "Oko Zhaitan",
+		pt: "Olho de Zhaitan",
 		ru: "Глаз Жаитан",
 		zh: "眼的 Zhaitan"
 	},{
@@ -2193,8 +2311,10 @@ D = {
 		de: "Verderbte Hohepriesterin der Lyssa",
 		es: "Suma Sacerdotisa Corrupta de Lyssa",
 		fr: "Grande Prêtresse Corrompue de Lyssa",
-		nl: "Tempel van Lyssa",
+		cs: "Lyssa Chrám",
+		it: "Tempio di Lyssa",
 		pl: "Lyssa Świątynia",
+		pt: "Templo de Lyssa",
 		ru: "Лысса Храм",
 		zh: "Lyssa 的寺廟"
 	},{
@@ -2202,8 +2322,10 @@ D = {
 		de: "Besessene Dwayna-Statue",
 		es: "Estatua Poseída de Dwayna",
 		fr: "Statue Possédée de Dwayna",
-		nl: "Tempel van Dwayna",
+		cs: "Dwayna Chrám",
+		it: "Tempio di Dwayna",
 		pl: "Dwayna Świątynia",
+		pt: "Templo de Dwayna",
 		ru: "Дwаына Храм",
 		zh: "Dwayna 的寺廟"
 	},{
@@ -2211,8 +2333,10 @@ D = {
 		de: "Auferstandenen Priester der Melandru",
 		es: "Sacerdote de Melandru Resurgido",
 		fr: "Prêtre Revenant de Melandru",
-		nl: "Tempel van Melandru",
+		cs: "Melandru Chrám",
+		it: "Tempio di Melandru",
 		pl: "Melandru Świątynia",
+		pt: "Templo de Melandru",
 		ru: "Меландру Храм",
 		zh: "Melandru 的寺廟"
 	},{
@@ -2220,8 +2344,10 @@ D = {
 		de: "Auferstandenen Priester des Grenth",
 		es: "Sacerdote de Grenth Resurgido",
 		fr: "Prêtre Revenant de Grenth",
-		nl: "Tempel van Grenth",
+		cs: "Grenth Chrám",
+		it: "Tempio di Grenth",
 		pl: "Grenth Świątynia",
+		pt: "Templo de Grenth",
 		ru: "Грентх Храм",
 		zh: "Grenth 的寺廟"
 	},{
@@ -2229,8 +2355,10 @@ D = {
 		de: "Tore von Arah",
 		es: "Puertas de Arah",
 		fr: "Portes d'Arah",
-		nl: "Poorten van Arah",
+		cs: "Arah Brány",
+		it: "Porte di Arah",
 		pl: "Arah Bramy",
+		pt: "Portões de Ará",
 		ru: "Ворота Арах",
 		zh: "Arah 的寺廟"
 	},{
@@ -2238,8 +2366,10 @@ D = {
 		de: "Auferstandenen Priester des Balthasar",
 		es: "Sacerdote de Balthazar Resurgido",
 		fr: "Prêtre Revenant de Balthazar",
-		nl: "Tempel van Balthazar",
+		cs: "Balthazar Chrám",
+		it: "Tempio di Balthazar",
 		pl: "Świątynia Balthazar",
+		pt: "Templo de Balthazar",
 		ru: "Балтхазар Храм",
 		zh: "Balthazar 的寺廟"
 	},{
@@ -2247,8 +2377,10 @@ D = {
 		de: "Nord Invasion von Orr",
 		es: "Invasión del Norte de Orr",
 		fr: "Invasion du Nord de Orr",
-		nl: "Noordelijke Invasie van Orr",
+		cs: "Severní Invaze Orr",
+		it: "Invasione Settentrionale di Orr",
 		pl: "Północnej Inwazja Orr",
+		pt: "Invasão Norte de Orr",
 		ru: "Северная Вторжение Орр",
 		zh: "北部入侵 Orr"
 	},{
@@ -2256,8 +2388,10 @@ D = {
 		de: "Zentral Invasion von Orr",
 		es: "Invasión Central de Orr",
 		fr: "Invasion Central de Orr",
-		nl: "Centrale Invasie van Orr",
+		cs: "Centrální Invaze Orr",
+		it: "Invasione Centrale di Orr",
 		pl: "Centralny Inwazja Orr",
+		pt: "Invasão Central Orr",
 		ru: "Центральный Вторжение Орр",
 		zh: "中部入侵 Orr"
 	},{
@@ -2265,8 +2399,10 @@ D = {
 		de: "Invasion der Südlichen Orr",
 		es: "Invasión del Sur de Orr",
 		fr: "Invasion du Sud de Orr",
-		nl: "Zuidelijke Invasie van Orr",
+		cs: "Jižní Invaze Orr",
+		it: "Invasione del Sud di Orr",
 		pl: "Południowej Inwazja Orr",
+		pt: "Invasão do Sul de Orr",
 		ru: "Южный Вторжение Орр",
 		zh: "南部入侵 Orr"
 	}
@@ -2406,16 +2542,13 @@ D = {
 		{
 			if (pModifier)
 			{
-				// Reverse the order of adjective-noun or adverb-verb depending on language.
-				if (O.Options.enu_Language === O.OptionEnum.Language.French
-					|| O.Options.enu_Language === O.OptionEnum.Language.Spanish
-					|| O.Options.enu_Language === O.OptionEnum.Language.Mandarin)
+				if (D.isLanguageModifierFirst())
 				{
-					return D.getPhrase(pText) + " " + D.getPhrase(pModifier);
+					return D.getPhrase(pModifier) + " " + D.getPhrase(pText);
 				}
 				else
 				{
-					return D.getPhrase(pModifier) + " " + D.getPhrase(pText);
+					return D.getPhrase(pText) + " " + D.getPhrase(pModifier);
 				}
 			}
 			return D.getPhrase(pText);
@@ -4943,7 +5076,8 @@ M = {
 	generateAndInitializeCollectibles: function()
 	{
 		M.Collectibles = GW2T_COLLECTIBLE_DATA; // This object is inline in the map HTML file
-		var i, ii, n;
+		var i, ii;
+		var customlist;
 		var ithcollectible;
 		var ithneedle;
 		var stateinstring;
@@ -4963,9 +5097,9 @@ M = {
 			pMarker._icon.style.opacity = "0.9";
 			M.styleCollectibleMarker(pMarker, pState);
 			
+			// Bind marker behavior
 			pMarker.on("click", function(pEvent)
 			{
-				var i;
 				var type = this.options.needleType;
 				var key = this.options.needleKey;
 				var index = this.options.needleIndex;
@@ -4973,51 +5107,26 @@ M = {
 				M.styleCollectibleMarker(this, newstate);
 				
 				// Update URL bar with list of numbers of checked markers
-				var pings = "";
-				var markerlist = X.Checklists[type].value;
-				for (i = 0; i < markerlist.length; i++)
+				var pings = X.getCheckedIndexes(X.Checklists[type]);
+				if (pings.length === 0)
 				{
-					if (markerlist[i] !== X.ChecklistEnum.Unchecked)
-					{
-						pings += (i+1) + ",";
-					}
+					I.updateAddressBar();
 				}
-				pings = pings.slice(0, -1); // Trim last extra comma
-				
-				history.replaceState("", null, "?" + key + "=" + pings);
+				else
+				{
+					history.replaceState("", null, "?" + key + "=" + pings);
+				}
 			});
-			
-			M.bindMarkerZoomBehavior(pMarker, "dblclick");
 		};
 		
 		for (i in M.Collectibles)
 		{
+			customlist = O.URLArguments[X.Checklists[i].urlkey];
 			X.Checklists[i].length = M.Collectibles[i].needles.length;
-			X.initializeChecklist(X.Checklists[i], X.Checklists[i].length);
+			X.initializeChecklist(X.Checklists[i], X.Checklists[i].length, customlist);
 		
 			ithcollectible = M.Collectibles[i];
 			ithcollectible.NeedleEntities = new Array();
-			
-			/*
-			 * If URL query string to ping (pre-mark) the markers exists, then override checklist
-			 */
-			var pingsurl = O.URLArguments[X.Checklists[i].urlkey];
-			var pings;
-			var number;
-			if (pingsurl)
-			{
-				X.clearChecklist(X.Checklists[i]);
-				pings = pingsurl.split(",");
-
-				for (n in pings)
-				{
-					number = parseInt(pings[n]);
-					if (isFinite(number))
-					{
-						X.setChecklistItem(X.Checklists[i], number - 1, X.ChecklistEnum.Tracked);
-					}
-				}
-			}
 			
 			for (ii in ithcollectible.needles)
 			{
@@ -5078,6 +5187,7 @@ M = {
 					M.styleCollectibleMarker(thiscushion[thisi], X.ChecklistEnum.Unfound);
 				}
 				X.clearChecklist(X.Checklists[collectibletype]);
+				I.updateAddressBar();
 			});
 		}
 		I.qTip.init(".mapNeedle");

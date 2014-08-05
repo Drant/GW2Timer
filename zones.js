@@ -6,7 +6,7 @@ var GW2T_ZONE_DATA = {
 {
 	name: "Dry Top",
 	region: "Maguuma",
-	rect: [[3840, 14592], [5888, 17152]]
+	rect: [[3840, 15675], [5888, 17152]]//[3840, 14592]
 },
 "rata":
 {
