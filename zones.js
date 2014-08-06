@@ -92,7 +92,7 @@ var GW2T_ZONE_DATA = {
 	region: "Orr",
 	rect: [[14464, 22400], [17792, 25216]]
 },
-"la":
+"lions":
 {
 	name: "Lion's Arch",
 	region: "Kryta",
