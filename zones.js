@@ -1,5 +1,48 @@
 /* This file is used by gw2t.js and is based on http://atlas.guildwars2.com
- * Maps sorted by how far from the top left corner (0,0) it is.
+ */
+
+/*
+ * This associates the zone's nick with their ID number in the API JSON for
+ * access in constant time.
+ */
+var GW2T_ZONE_ASSOCIATION = {
+	"15": "queensdale",
+	"17": "harathi",
+	"18": "divinity",
+	"19": "ashford",
+	"20": "blazeridge",
+	"21": "fields",
+	"22": "fireheart",
+	"23": "kessex",
+	"24": "gendarran",
+	"25": "marches",
+	"26": "dredgehaunt",
+	"27": "lornar",
+	"28": "wayfarer",
+	"29": "timberline",
+	"30": "frostgorge",
+	"31": "snowden",
+	"32": "diessa",
+	"34": "caledon",
+	"35": "metrica",
+	"39": "maelstrom",
+	"50": "lion",
+	"51": "straits",
+	"53": "sparkfly",
+	"54": "brisban",
+	"62": "cursed",
+	"65": "malchor",
+	"73": "bloodtide",
+	"91": "grove",
+	"139": "rata",
+	"218": "citadel",
+	"326": "hoelbrak",
+	"873": "southsun",
+	"988": "dry"
+};
+
+/*
+ * Zones are sorted by how far from the top left corner (0,0) it is.
  */
 var GW2T_ZONE_DATA = {
 "dry":
@@ -92,7 +135,7 @@ var GW2T_ZONE_DATA = {
 	region: "Orr",
 	rect: [[14464, 22400], [17792, 25216]]
 },
-"lions":
+"lion":
 {
 	name: "Lion's Arch",
 	region: "Kryta",

@@ -76,7 +76,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140801},
+		programVersion: {key: "int_utlProgramVersion", value: 140806},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -100,7 +100,12 @@ O = {
 		bol_tourPrediction: true,
 		bol_showChainPaths: true,
 		bol_showMap: true,
-		bol_showPOIs: false,
+		bol_showCompletion: false,
+		bol_displayWaypoints: true,
+		bol_displayPOIs: true,
+		bol_displayVistas: true,
+		bol_displaySkills: true,
+		bol_displayHearts: true,
 		// Alarm
 		bol_enableSound: false,
 		bol_alertAtStart: true,
@@ -230,8 +235,8 @@ O = {
 				+ "Would you like to see the <a class='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />"
 				+ "<br />"
 				+ "New in this version:<br />"
-				+ "- Click a star icon on the clock to auto-copy Dry Top events to clipboard.<br />"
-				+ "- <a href='./?page=Chests'>Buried Locked Chest</a> locations with screenshots.<br />"
+				+ "- Map completion <a href='./?bol_showCompletion=true'>option to display</a> POIs, Vistas, Skill Points, and Hearts.<br />"
+				+ "- More languages: <a href='./?enu_Language=cs'>Čeština</a>, <a href='./?enu_Language=it'>Italiano</a>, <a href='./?enu_Language=it'>Português</a>.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -628,7 +633,7 @@ O = {
 			}
 		});
 		// POIs are created on site load
-		$("#opt_bol_showPOIs").change(function()
+		$("#opt_bol_showCompletion").change(function()
 		{
 			location.reload();
 		});
@@ -1715,6 +1720,8 @@ D = {
 			cs: "svět boss", it: "boss mondo", pl: "świat szef", pt: "chefe mundo", ru: "мир босс", zh: "世界頭目"},
 		s_section: {de: "paragraph", es: "sección", fr: "section",
 			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "параграф", zh: "節"},
+		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama"},
+		s_Skill_Challenge: {de: "Fertigkeitspunkt", es: "Desafío de habilidad", fr: "Défi de compétence"},
 		
 		// Verbs
 		s_done_reading: {de: "ende gelesen", es: "terminado de leer", fr: "fini de lire",
@@ -1891,9 +1898,37 @@ D = {
 	},
 	
 	/*
+	 * Gets the language code of the opted fully supported language, or the default if isn't.
+	 * @returns string language code.
+	 */
+	getFullySupportedLanguage: function()
+	{
+		if (D.isLanguageFullySupported())
+		{
+			return O.Options.enu_Language;
+		}
+		return O.OptionEnum.Language.Default;
+	},
+	
+	/*
+	 * Tells if the user's opted language is fully supported but not the default.
+	 * @returns true if so.
+	 */
+	isLanguageSecondary: function()
+	{
+		if (O.Options.enu_Language === O.OptionEnum.Language.German
+			|| O.Options.enu_Language === O.OptionEnum.Language.Spanish
+			|| O.Options.enu_Language === O.OptionEnum.Language.French)
+		{
+			return true;
+		}
+		return false;
+	},
+	
+	/*
 	 * Tells if adjective-noun or adverb-verb modifier is before the modified
 	 * depending on opted language.
-	 * @returns boolean true if modifier before the modified.
+	 * @returns boolean true if modifier is before the modified.
 	 */
 	isLanguageModifierFirst: function()
 	{
@@ -3474,7 +3509,8 @@ M = {
 	 * This is referred to by the variable "M.Zones".
 	 */
 	Zones: GW2T_ZONE_DATA,
-	cInitialZone: "lions",
+	ZoneAssociations: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
+	cInitialZone: "lion",
 	Map: {},
 	Resources: {},
 	Collectibles: {},
@@ -3487,10 +3523,14 @@ M = {
 	cRING_SIZE_MAX: 256,
 	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
+	isAPIRetrieved_MAPFLOOR: false,
 	cICON_WAYPOINT: "img/map/waypoint.png",
 	cICON_WAYPOINTOVER: "img/map/waypoint_h.png",
 	cICON_LANDMARK: "img/map/landmark.png",
 	cICON_LANDMARKOVER: "img/map/landmark_h.png",
+	cICON_VISTA: "img/map/vista.png",
+	cICON_SKILL: "img/map/skill.png",
+	cICON_HEART: "img/map/heart.png",
 	cLEAFLET_PATH_OPACITY: 0.5,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
@@ -3517,14 +3557,22 @@ M = {
 	 * Markers can have custom properties assigned; they can be accessed using
 	 * "THEMARKER.options.THEPROPERTY" format.
 	 */
-	MappingEntities: new Array(),
 	MappingEnum:
 	{
-		Waypoint: "waypoint",
-		Landmark: "landmark"
+		Waypoint: 0,
+		Landmark: 1,
+		Vista: 2,
+		Skill: 3,
+		Heart: 4
 	},
-	WaypointEntities: new Array(),
-	LandmarkEntities: new Array(),
+	APIPOIEnum:
+	{
+		Waypoint: "waypoint",
+		Landmark: "landmark",
+		Vista: "vista",
+		Skill: "skill_challenges",
+		Heart: "tasks"
+	},
 	// Utility pin markers, looks like GW2 personal waypoints
 	PinEntities: new Array(),
 	DailyEntities: new Array(),
@@ -3543,6 +3591,15 @@ M = {
 	StoryEventIcons: new Array(),
 	StoryEventRings: new Array(),
 	StoryEventActive: new Array(),
+	
+	/*
+	 * Gets a GW2T zone object from an API zone ID.
+	 * @param pString zone ID.
+	 */
+	getZoneFromID: function(pString)
+	{
+		return M.Zones[M.ZoneAssociations[pString]];
+	},
 	
 	/*
 	 * Initializes the Leaflet map, adds markers, and binds events.
@@ -3568,7 +3625,7 @@ M = {
 		// Initialize array in zones to later hold waypoint map markers
 		for (var i in M.Zones)
 		{
-			M.Zones[i].MappingEntities = new Array();
+			M.Zones[i].ZoneEntities = new Array();
 		}
 		
 		// Do other initialization functions
@@ -3675,6 +3732,9 @@ M = {
 			.value = pCoord[0] + ", " + pCoord[1];
 		
 		var i, ii1, ii2;
+		var zonename = "";
+		var entity;
+		var entitytype;
 		
 		for (i in M.Zones)
 		{
@@ -3700,22 +3760,40 @@ M = {
 					if (M.mousedZoneIndex !== null)
 					{
 						// Hide the waypoints of the previously moused zone
-						for (ii1 in M.Zones[M.mousedZoneIndex].MappingEntities)
+						for (ii1 in M.Zones[M.mousedZoneIndex].ZoneEntities)
 						{
-							M.Zones[M.mousedZoneIndex].MappingEntities[ii1]
+							M.Zones[M.mousedZoneIndex].ZoneEntities[ii1]
 								._icon.style.display = "none";
 						}
 					}
 					// Update the master moused zone index to the current index
 					M.mousedZoneIndex = i;
 					M.ZoneCurrent = M.Zones[i];
-					document.getElementById("mapCoordinatesRegion")
-						.value = M.ZoneCurrent.name;
-				
-					// Reveal moused zone waypoints
-					for (ii2 in M.ZoneCurrent.MappingEntities)
+					if (M.isAPIRetrieved_MAPFLOOR && D.isLanguageSecondary() === true)
 					{
-						M.ZoneCurrent.MappingEntities[ii2]._icon.style.display = "block";
+						zonename = M.ZoneCurrent["name_" + D.getFullySupportedLanguage()];
+					}
+					else
+					{
+						zonename = M.ZoneCurrent["name"];
+					}
+					document.getElementById("mapCoordinatesRegion")
+						.value = zonename;
+					
+				
+					// Reveal moused zone's icons
+					for (ii2 in M.ZoneCurrent.ZoneEntities)
+					{
+						entity = M.ZoneCurrent.ZoneEntities[ii2];
+						entitytype = entity.options.mappingtype;
+						if ( (entitytype === M.MappingEnum.Waypoint && O.Options.bol_displayWaypoints)
+							|| (entitytype === M.MappingEnum.Landmark && O.Options.bol_displayPOIs)
+							|| (entitytype === M.MappingEnum.Vista && O.Options.bol_displayVistas)
+							|| (entitytype === M.MappingEnum.Skill && O.Options.bol_displaySkills)
+							|| (entitytype === M.MappingEnum.Heart && O.Options.bol_displayHearts) )
+						{
+							entity._icon.style.display = "block";
+						}
 					}
 					
 					// Rescale current moused mapping markers
@@ -3778,9 +3856,9 @@ M = {
 		}
 
 		// Resize mapping icons in moused zone
-		for (i in M.ZoneCurrent.MappingEntities)
+		for (i in M.ZoneCurrent.ZoneEntities)
 		{
-			entity = M.ZoneCurrent.MappingEntities[i];
+			entity = M.ZoneCurrent.ZoneEntities[i];
 			switch (entity.options.mappingtype)
 			{
 				case M.MappingEnum.Waypoint:
@@ -3800,6 +3878,21 @@ M = {
 					{
 						entity._icon.style.opacity = 0.8;
 					}
+				} break;
+				
+				case M.MappingEnum.Vista:
+				{
+					M.changeMarkerIcon(entity, M.cICON_VISTA, landmarksize);
+				} break;
+				
+				case M.MappingEnum.Skill:
+				{
+					M.changeMarkerIcon(entity, M.cICON_SKILL, landmarksize);
+				} break;
+				
+				case M.MappingEnum.Heart:
+				{
+					M.changeMarkerIcon(entity, M.cICON_HEART, landmarksize);
 				} break;
 			}
 		}
@@ -4159,6 +4252,7 @@ M = {
 	 */
 	populateMap: function()
 	{
+		M.cURL_API_MAPFLOOR += "&lang=" + D.getFullySupportedLanguage();
 		/*
 		 * map_floor.json sample structure of desired data
 		 * Code based on API documentation.
@@ -4189,52 +4283,86 @@ M = {
 			}
 		}*/
 		$.getJSON(M.cURL_API_MAPFLOOR, function(pData)
-		{
-			var region, gamemap, i, ii, numofpois, poi;
+		{//
+			var i;
+			var region, zoneid, zone, poi;
+			var numofpois;
 			var mappingentity;
 			var icon;
 			var cssclass;
 			var mappingtype;
+			var tooltip;
 
 			for (region in pData.regions)
 			{
 				region = pData.regions[region];
 
-				for (gamemap in region.maps)
+				for (zoneid in region.maps)
 				{
-					gamemap = region.maps[gamemap];
-
-					numofpois = gamemap.points_of_interest.length;
+					// Don't bother parsing if not a regular world zone
+					if ( ! M.ZoneAssociations[zoneid])
+					{
+						continue;
+					}
+					
+					zone = region.maps[zoneid];
+					// Remember zone name
+					if (D.isLanguageSecondary())
+					{
+						M.getZoneFromID(zoneid)["name_" + D.getFullySupportedLanguage()] = zone.name;
+					}
+					
+					/* 
+					 * For waypoints, points of interest, and vistas.
+					 */
+					numofpois = zone.points_of_interest.length;
 					for (i = 0; i < numofpois; i++)
 					{
-						poi = gamemap.points_of_interest[i];
+						poi = zone.points_of_interest[i];
 
 						// Properties assignment based on POI's type
 						switch (poi.type)
 						{
-							case M.MappingEnum.Waypoint:
+							case M.APIPOIEnum.Waypoint:
+							{
+								// Waypoints are always created, others are optional
+								mappingtype = M.MappingEnum.Waypoint;
+								icon = M.cICON_WAYPOINT;
+								cssclass = "mapWp";
+								tooltip = poi.name;
+							} break;
+							
+							case M.APIPOIEnum.Landmark:
+							{
+								if (O.Options.bol_showCompletion === false)
 								{
-									mappingtype = M.MappingEnum.Waypoint;
-									icon = M.cICON_WAYPOINT;
-									cssclass = "mapWp";
-								} break;
-							case M.MappingEnum.Landmark:
+									continue;
+								}
+								mappingtype = M.MappingEnum.Landmark;
+								icon = M.cICON_LANDMARK;
+								cssclass = "mapPoi";
+								tooltip = poi.name;
+							} break;
+							
+							case M.APIPOIEnum.Vista:
+							{
+								if (O.Options.bol_showCompletion === false)
 								{
-									if (O.Options.bol_showPOIs === false)
-									{
-										continue; // Don't create POIs if not opted
-									}
-									mappingtype = M.MappingEnum.Landmark;
-									icon = M.cICON_LANDMARK;
-									cssclass = "mapPoi";
-								} break;
+									continue;
+								}
+								mappingtype = M.MappingEnum.Vista;
+								icon = M.cICON_VISTA;
+								cssclass = "mapPoi";
+								tooltip = D.getPhrase("Vista");
+							} break;
+							
 							default: continue; // Don't create marker if not desired type
 						}
 
 						mappingentity = L.marker(M.convertGCtoLC(poi.coord),
 						{
-							title: "<span class='" + cssclass + "'>" + poi.name + "</span>",
-							waypoint: poi.name,
+							title: "<span class='" + cssclass + "'>" + tooltip + "</span>",
+							entityname: poi.name,
 							mappingtype: mappingtype,
 							icon: L.icon(
 							{
@@ -4244,7 +4372,7 @@ M = {
 							}),
 							link: M.getChatlinkFromPoiID(poi.poi_id)
 						}).addTo(M.Map);
-						// Initially hide all the waypoints
+						// Initially hide all the icons
 						mappingentity._icon.style.display = "none";
 						// Bind behavior
 						switch (poi.type)
@@ -4271,55 +4399,81 @@ M = {
 									this._icon.src = M.cICON_LANDMARKOVER;
 								});
 							} break;
-							default: continue;
 						}
-						mappingentity.on("click", function()
+						// Clicking on waypoints or POIs gives a chatcode
+						if (poi.type === "waypoint" || poi.type === "landmark")
 						{
-							$("#mapCoordinatesStatic").val(this.options.link).select();
-							$("#mapCoordinatesRegion").val(this.options.waypoint);
-						});
-						M.bindMarkerZoomBehavior(mappingentity, "dblclick");
+							mappingentity.on("click", function()
+							{
+								$("#mapCoordinatesStatic").val(this.options.link).select();
+								$("#mapCoordinatesRegion").val(this.options.entityname);
+							});
+							M.bindMappingZoomBehavior(mappingentity, "dblclick");
+						}
+						else
+						{
+							M.bindMappingZoomBehavior(mappingentity, "click");
+						}
 						
 						// Assign the waypoint to its zone
-						for (ii in M.Zones)
+						M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
+					}
+					
+					/*
+					 * For skill challenges and heart tasks.
+					 */
+					if (O.Options.bol_showCompletion)
+					{
+						numofpois = zone.skill_challenges.length;
+						for (i = 0; i < numofpois; i++)
 						{
-							if (M.Zones[ii].name === gamemap.name)
+							poi = zone.skill_challenges[i];
+							mappingentity = L.marker(M.convertGCtoLC(poi.coord),
 							{
-								M.Zones[ii].MappingEntities.push(mappingentity);
-							}
+								title: "<span class='" + "mapPoi" + "'>" + D.getPhrase("Skill Challenge") + "</span>",
+								mappingtype: M.MappingEnum.Skill,
+								icon: L.icon(
+								{
+									iconUrl: M.cICON_SKILL,
+									iconSize: [16, 16],
+									iconAnchor: [8, 8]
+								})
+							}).addTo(M.Map);
+							mappingentity._icon.style.display = "none";
+							M.bindMappingZoomBehavior(mappingentity, "click");
+							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
 						}
-						// Assign the waypoint to a specific pool
-						switch (poi.type)
-						{
-							case M.MappingEnum.Waypoint: M.WaypointEntities.push(mappingentity); break;
-							case M.MappingEnum.Landmark: M.LandmarkEntities.push(mappingentity); break;
-						}
-						// General pool of mapping entities
-						M.MappingEntities.push(mappingentity);
 						
+						numofpois = zone.tasks.length;
+						for (i = 0; i < numofpois; i++)
+						{
+							poi = zone.tasks[i];
+							mappingentity = L.marker(M.convertGCtoLC(poi.coord),
+							{
+								title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
+								task: poi.objective,
+								mappingtype: M.MappingEnum.Heart,
+								icon: L.icon(
+								{
+									iconUrl: M.cICON_HEART,
+									iconSize: [16, 16],
+									iconAnchor: [8, 8]
+								})
+							}).addTo(M.Map);
+							mappingentity._icon.style.display = "none";
+							mappingentity.on("click", function(pEvent)
+							{
+								var heartname = this.options.task.slice(0, -1);
+								window.open(U.convertExternalURL(U.getWikiLanguageLink(heartname)), "_blank");
+							});
+							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
+						}
 					}
 				}
 			}
 		}).done(function() // Map is populated by AJAX
 		{
-			/*
-			 * AJAX takes a while so can use this to advantage to delay graphics
-			 * that seem out of place without a map loaded.
-			 */
-			if (O.Options.bol_showChainPaths === true && I.PageCurrent !== I.PageEnum.Map)
-			{
-				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
-			}
-			
-			if (O.Options.bol_tourPrediction && I.PageCurrent === I.PageEnum.Chains
-				&& U.Args[U.KeyEnum.Go] === undefined)
-			{
-				// Initialize the "current moused zone" variable for showing waypoints
-				M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
-				// Tour to the event on the map if opted
-				$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
-					+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
-			}
+			M.isAPIRetrieved_MAPFLOOR = true;
 			/*
 			 * Start tooltip plugin after the markers were loaded, because it
 			 * reads the title attribute and convert them into a div "tooltip".
@@ -4340,6 +4494,25 @@ M = {
 			}
 		}).always(function() // Do after AJAX regardless of success/failure
 		{
+			/*
+			 * AJAX takes a while so can use this to advantage to delay graphics
+			 * that seem out of place without a map loaded.
+			 */
+			if (O.Options.bol_showChainPaths === true && I.PageCurrent !== I.PageEnum.Map)
+			{
+				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
+			}
+			
+			if (O.Options.bol_tourPrediction && I.PageCurrent === I.PageEnum.Chains
+				&& U.Args[U.KeyEnum.Go] === undefined)
+			{
+				// Initialize the "current moused zone" variable for showing waypoints
+				M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
+				// Tour to the event on the map if opted
+				$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
+					+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
+			}
+			
 			M.isMapAJAXDone = true;
 			M.bindMapVisualChanges();
 			M.adjustZoomMapping();
@@ -4543,6 +4716,20 @@ M = {
 			if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
 			{
 				M.Map.setZoom(M.ZoomLevelEnum.Default);
+			}
+			else
+			{
+				M.Map.setView(pEvent.latlng, M.ZoomLevelEnum.Max);
+			}
+		});
+	},
+	bindMappingZoomBehavior: function(pMarker, pEventType)
+	{
+		pMarker.on(pEventType, function(pEvent)
+		{
+			if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
+			{
+				M.Map.setZoom(M.ZoomLevelEnum.Sky);
 			}
 			else
 			{
@@ -5171,35 +5358,35 @@ T = {
 		numOfSets: 7,
 		
 		en0: "TendrilW@[&BIYHAAA=] Shaman@[&BIsHAAA=] Victims@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Crystals@[&BHIHAAA=] TendrilSE@[&BHMHAAA=]",
-		en1: "Bridge@[&BIkHAAA=] Experiment@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocal@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
+		en1: "Bridge@[&BIkHAAA=] Experiment@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
 		en2: "Leyline@[&BIMHAAA=] Town@[&BH4HAAA=] Basket@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
 		en3: "Giant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Mites@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosives@[&BH4HAAA=]",
-		en4: "Devourer(2)@[&BHkHAAA=] Giant@[&BIwHAAA=]",
-		en5: "Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Chickenado@[&BI4HAAA=] Twister(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		en4: "DEVOURER(2)@[&BHkHAAA=] Giant@[&BIwHAAA=]",
+		en5: "Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Chickenado@[&BI4HAAA=] TWISTER(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
 		en6: "Monster(4)@[&BHoHAAA=]",
 		
 		de0: "DschungelrankeW@[&BIYHAAA=] Schamanin@[&BIsHAAA=] Unfallopfer@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Kristalle@[&BHIHAAA=] DschungelrankeSO@[&BHMHAAA=]",
-		de1: "Rankenbrücke@[&BIkHAAA=] Experimente@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocal@[&BHwHAAA=] Serene@[&BHQHAAA=] MinenO@[&BHsHAAA=]",
+		de1: "Rankenbrücke@[&BIkHAAA=] Experimente@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MinenO@[&BHsHAAA=]",
 		de2: "Leylinien@[&BIMHAAA=] Kleinstadt@[&BH4HAAA=] Drachenkorb@[&BHMHAAA=] MinenNO@[&BH0HAAA=]",
 		de3: "Riesen@[&BIwHAAA=] Skritt@[&BIwHAAA=] Staubmilben@[&BHUHAAA=] Dunst@[&BHIHAAA=] Sprengstoff@[&BH4HAAA=]",
-		de4: "Verschlinger(2)@[&BHkHAAA=] Riesen@[&BIwHAAA=]",
-		de5: "Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Hühnerwirbelwind@[&BI4HAAA=] Staubwirbelwind(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		de4: "VERSCHLINGER(2)@[&BHkHAAA=] Riesen@[&BIwHAAA=]",
+		de5: "Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Hühnerwirbelwind@[&BI4HAAA=] STAUBWIRBELWIND(3)@[&BHoHAAA=] Dunst@[&BHIHAAA=]",
 		de6: "Staubmonster(4)@[&BHoHAAA=]",
 		
 		es0: "ZarcilloO@[&BIYHAAA=] Chamán@[&BIsHAAA=] Víctimas@[&BIwHAAA=] Ñique@[&BHYHAAA=] Cristales@[&BHIHAAA=] ZarcilloSE@[&BHMHAAA=]",
-		es1: "Puente@[&BIkHAAA=] Experimento@[&BIwHAAA=] Gólem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocal@[&BHwHAAA=] Serene@[&BHQHAAA=] MinaE@[&BHsHAAA=]",
+		es1: "Puente@[&BIkHAAA=] Experimento@[&BIwHAAA=] Gólem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MinaE@[&BHsHAAA=]",
 		es2: "Líneasley@[&BIMHAAA=] Villa@[&BH4HAAA=] Cestas@[&BHMHAAA=] MinaNE@[&BH0HAAA=]",
 		es3: "Gigante@[&BIwHAAA=] Skritt@[&BIwHAAA=] Ácaros@[&BHUHAAA=] Bruma@[&BHIHAAA=] Explosivos@[&BH4HAAA=]",
-		es4: "Devoradora(2)@[&BHkHAAA=] Gigante@[&BIwHAAA=]",
-		es5: "Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Huracánpollo@[&BI4HAAA=] Huracán(3)@[&BHoHAAA=] Bruma@[&BHIHAAA=]",
+		es4: "DEVORADORA(2)@[&BHkHAAA=] Gigante@[&BIwHAAA=]",
+		es5: "Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Huracánpollo@[&BI4HAAA=] HURACÁN(3)@[&BHoHAAA=] Bruma@[&BHIHAAA=]",
 		es6: "Monstruo(4)@[&BHoHAAA=]",
 		
 		fr0: "VrilleO@[&BIYHAAA=] Chamane@[&BIsHAAA=] Survivants@[&BIwHAAA=] Bipbip@[&BHYHAAA=] Cristales@[&BHIHAAA=] VrilleSE@[&BHMHAAA=]",
-		fr1: "Pont@[&BIkHAAA=] Expériences@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] Colocale@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
+		fr1: "Pont@[&BIkHAAA=] Expériences@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] COLOCALe@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
 		fr2: "Lignesforce@[&BIMHAAA=] Bourg@[&BH4HAAA=] Panier@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
 		fr3: "Géant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Acarides@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosifs@[&BH4HAAA=]",
-		fr4: "Dévoreuse(2)@[&BHkHAAA=] Géant@[&BIwHAAA=]",
-		fr5: "Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Tournoiementpoule@[&BI4HAAA=] Tornade(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		fr4: "DÉVOREUSE(2)@[&BHkHAAA=] Géant@[&BIwHAAA=]",
+		fr5: "Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Tournoiementpoule@[&BI4HAAA=] TORNADE(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
 		fr6: "Monstre(4)@[&BHoHAAA=]"
 	},
 	Schedule: {},
@@ -7153,6 +7340,14 @@ U = {
 			});
 		}
 	},
+	convertExternalURL: function(pURL)
+	{
+		if (I.ModeCurrent !== I.ModeEnum.Overlay)
+		{
+			return I.cSiteURL + "out?" + escape(pURL);
+		}
+		return pURL;
+	},
 	
 	/*
 	 * Extracts the "identifier" part of an HTML element's ID. Most iterable
@@ -7194,6 +7389,11 @@ U = {
 	{
 		pString = pString.replace(/ /g, "_"); // Replace spaces with underscores
 		return "http://wiki.guildwars2.com/wiki/" + escape(pString);
+	},
+	getWikiLanguageLink: function(pString)
+	{
+		pString = pString.replace(/ /g, "_");
+		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/wiki/" + escape(pString);
 	},
 	
 	/*
@@ -7735,7 +7935,6 @@ I = {
 				if ($(this).next().is(":visible"))
 				{
 					$(this).text("[?-]");
-					I.scrollToElement($(this), $(pLayer), "fast");
 				}
 				else
 				{
@@ -8144,10 +8343,12 @@ I = {
 				});
 				$("#itemTimeLocal").css({
 					position: "fixed",
+					bottom: "0px",
 					color: "#eee",
 					opacity: 0.5
 				});
-				I.qTip.init($("<a title='&lt;dfn&gt;Shortcut to this page&lt;/dfn&gt;: gw2timer.com/m' href='./'> [+]</a>")
+				I.qTip.init($("<a title='&lt;dfn&gt;Shortcut to this page&lt;/dfn&gt;: gw2timer.com/m' href='./'>"
+					+ " <img id='iconSimpleHome' src='img/ui/about.png' /></a>")
 					.appendTo("#itemTimeLocalExtra"));
 				$("#paneBoard").show();
 				

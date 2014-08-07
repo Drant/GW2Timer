@@ -17,7 +17,6 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 	<!-- Web application files  -->
-	<script type="text/javascript" src="config.js"></script>
 	<script type="text/javascript" src="plugins.js"></script>
 	<script type="text/javascript" src="zones.js"></script>
 	<script type="text/javascript" src="chains.js"></script>
@@ -36,18 +35,17 @@
 </head>
 
 <body>
+	<div id="jsConsole"></div>
+	<div id="jsConsoleButtons">
+		<a title="<dfn>Close Console<dfn>" id="jsConsoleButtonClose">[x]</a><a title="<dfn>Select Console<dfn>" id="jsConsoleButtonSelect">[s]</a>
+	</div>
 	<div id="paneWarning">
 		If you can read this then <strong>maybe</strong>:<br />
 		- You are still loading the website (slowly); ignore this message.<br />
 		- You are using Internet Explorer 10 or lower; please <a href="http://microsoft.com/ie">upgrade</a> to IE11 or higher.<br />
 		- Your browser's adblocker is blocking the leaflet.js map script; please whitelist it.<br />
-		- You have JavaScript disabled; this whole application runs in JavaScript!<br />
 		- This web application encountered a bug; try refreshing, or <a href="bin/clear.html">clearing</a> its localStorage.<br />
 		Do you want to <a href="http://forum.renaka.com/topic/5476238/">report</a> this problem?<br />
-	</div>
-	<div id="jsConsole"></div>
-	<div id="jsConsoleButtons">
-		<a title="<dfn>Close Console<dfn>" id="jsConsoleButtonClose">[x]</a><a title="<dfn>Select Console<dfn>" id="jsConsoleButtonSelect">[s]</a>
 	</div>
 	<iframe id="jsTTSFrame"></iframe>
 	<audio id="jsTTSAudio"></audio>
@@ -298,7 +296,15 @@
 					<label title="Automatically scroll the map to the next predicted event. You'll need to be on the chains page."><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
 					<label title="Show/Hide the colored lines of the event paths."><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths and event icons</label>
 					<label title="Show/Hide the map area on the left."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
-					<label title="Show/Hide the POIs (Points of Interest). Will increase initial site load time if enabled."><input id="opt_bol_showPOIs" type="checkbox" /> Show POIs markers</label>
+					<label title="Show/Hide map icons for world completion. Will increase initial site load time if enabled."><input id="opt_bol_showCompletion" type="checkbox" /> Display map completion icons</label>
+					<samp class="jsHelpCollapsible"></samp>
+					<div>
+						<label><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
+						<label><input id="opt_bol_displayPOIs" type="checkbox" /> POIs</label>
+						<label><input id="opt_bol_displayVistas" type="checkbox" /> Vistas</label>
+						<label><input id="opt_bol_displaySkills" type="checkbox" /> Skill Challenges</label>
+						<label><input id="opt_bol_displayHearts" type="checkbox" /> Renown Hearts</label>
+					</div>
 					<br />
 					<h2>Alarm</h2>
 					<span>Voice announcement requires Chrome, Firefox, or IE9+. Multilingualism is only available for Chrome. Click the speaker icon on the chains page to toggle sound.</span>

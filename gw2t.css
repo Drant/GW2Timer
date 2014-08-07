@@ -358,6 +358,12 @@ input#mapCoordinatesRegion {
 	opacity: 0.5;
 }
 
+#iconSimpleHome {
+	margin-bottom: 6px;
+	width: 24px; height: 24px;
+	vertical-align: middle;
+}
+
 /* @@Klock
 ----------------------------------------------------------------------------- */
 .clkSizeRegular {
