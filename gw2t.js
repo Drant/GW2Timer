@@ -236,7 +236,7 @@ O = {
 				+ "<br />"
 				+ "New in this version:<br />"
 				+ "- Map completion <a href='./?bol_showCompletion=true'>option to display</a> POIs, Vistas, Skill Points, and Hearts.<br />"
-				+ "- More languages: <a href='./?enu_Language=cs'>Čeština</a>, <a href='./?enu_Language=it'>Italiano</a>, <a href='./?enu_Language=it'>Português</a>.<br />"
+				+ "- More languages: <a href='./?enu_Language=cs'>Čeština</a>, <a href='./?enu_Language=it'>Italiano</a>, <a href='./?enu_Language=pt'>Português</a>.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -4463,7 +4463,12 @@ M = {
 							mappingentity._icon.style.display = "none";
 							mappingentity.on("click", function(pEvent)
 							{
-								var heartname = this.options.task.slice(0, -1);
+								var heartname = this.options.task;
+								// Trim trailing period if exists
+								if (heartname.indexOf(".") === heartname.length - 1)
+								{
+									heartname = heartname.slice(0, -1);
+								}
 								window.open(U.convertExternalURL(U.getWikiLanguageLink(heartname)), "_blank");
 							});
 							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
