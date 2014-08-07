@@ -39,6 +39,7 @@
 	D - Dictionary for translations
 	C - Chains events
 	M - Map Leaflet
+	P - Populate map
 	T - Time utilities and schedule
 	K - Clock ticker
 	U - URL management
@@ -56,6 +57,7 @@ var X = {}; // checklists
 var D = {}; // dictionary
 var C = {}; // chains
 var M = {}; // map
+var P = {}; // populate
 var T = {}; // time
 var K = {}; // clock
 var U = {}; // URL
@@ -229,6 +231,7 @@ O = {
 			{
 				wait = 10;
 			}
+			I.clear();
 			I.write(I.cSiteName + " was updated since your last visit.<br />"
 				+ "This version: " + currentversion + "<br />"
 				+ "Your version: " + usersversion + "<br />"
@@ -1753,19 +1756,31 @@ D = {
 		s_and: {de: "und", es: "y", fr: "et",
 			cs: "a", it: "e", pl: "i", pt: "e", ru: "и", zh: "和"},
 		s_in: {de: "in", es: "en", fr: "en",
-			cs: "za", it: "in", pl: "w", pt: "em", ru: "в", zh: "在"}
+			cs: "za", it: "in", pl: "w", pt: "em", ru: "в", zh: "在"},
+		
+		// Automatic
+		s_Scheduled_Bosses: {de: "Geplant", es: "Programado", fr: "Planifié",
+			cs: "Plánované", it: "Pianificata", pl: "Zaplanowane", pt: "Agendado", ru: "Запланирован", zh: "已排程"},
+		s_Legacy_Bosses: {de: "Legacy", es: "Heredado", fr: "Hérité",
+			cs: "Starší", it: "Legacy", pl: "Starsze", pt: "Herdado", ru: "Устаревший", zh: "舊版"},
+		s_Orr_Temples: {de: "Tempel", es: "Templos", fr: "Temples",
+			cs: "Chrámy", it: "Templi", pl: "Świątynie", pt: "Templos", ru: "Храмы", zh: "寺廟"},
+		s_Full_Timetable: {de: "Zeitplan", es: "Horario", fr: "Horaire",
+			cs: "Plán", it: "Programma", pl: "Harmonogram", pt: "Horário", ru: "Расписание", zh: "時間表"},
+		s_news: {de: "nachrichten", es: "noticia", fr: "actualité",
+			cs: "zprávy", it: "notizia", pl: "wiadomości", pt: "notícias", ru: "новости", zh: "新聞"},
+		s_simple_mode: {de: "einfach modus", es: "modo simple", fr: "mode simple",
+			cs: "prostý režim", it: "modalità semplice", pl: "prosty tryb", pt: "modo simples", ru: "простой режим", zh: "方式簡單"},
+		s_chests: {de: "schatztruhen", es: "cofres del tesoro", fr: "coffres au trésor",
+			cs: "truhly", it: "scrigni del tesoro", pl: "skrzynie", pt: "baús de tesouro", ru: "сундуки с сокровищами", zh: "寶箱"}
 	},
 	
 	Element:
 	{
 		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 
-		s_linkModeSimple: {de: "einfach modus", es: "modo simple", fr: "mode simple",
-			cs: "prostý režim", it: "modalità semplice", pl: "prosty tryb", pt: "modo simples", ru: "простой режим", zh: "方式簡單"},
-		s_linkCollectibleChests: {de: "schatztruhen", es: "cofres del tesoro", fr: "coffres au trésor",
-			cs: "truhly", it: "scrigni del tesoro", pl: "skrzynie", pt: "baús de tesouro", ru: "сундуки с сокровищами", zh: "寶箱"},
-		s_menuChains: {de: "Zeitplan", es: "Horario", fr: "Horaire",
-			cs: "Rozvrhhodin", it: "Orario", pl: "Harmonogram", pt: "Horários", ru: "Расписание", zh: "時間表"},
+		s_menuChains: {de: "Ketten", es: "Cadenas", fr: "Chaînes",
+			cs: "Řetězy", it: "Catene", pl: "Łańcuchy", pt: "Cadeias", ru: "Цепи", zh: "鏈"},
 		s_menuMap: {de: "Werkzeuge", es: "Útiles", fr: "Outils",
 			cs: "Nástroje", it: "Strumenti", pl: "Narzędzia", pt: "Ferramentas", ru: "Инструментарий", zh: "工具"},
 		s_menuWvW: {de: "WvW", es: "WvW", fr: "WvW",
@@ -1864,8 +1879,13 @@ D = {
 	{
 		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
 		{
-			$("#linkModeSimple").text(D.getElement("linkModeSimple"));
-			$("#linkCollectibleChests").text(D.getElement("linkCollectibleChests"));
+			// Translate text in single HTML elements
+			$(".jsTranslate").each(function()
+			{
+				$(this).text(D.getPhrase($(this).text()));
+			});
+			
+			// Translate tooltips
 			$(".menuButton").each(function()
 			{
 				$(this).attr("title", "<dfn>" + D.getElement($(this).attr("id")) + "</dfn>");
@@ -3500,7 +3520,7 @@ C = {
 };
 
 /* =============================================================================
- * @@Map and map content
+ * @@Map and map control
  * ========================================================================== */
 M = {
 	/*
@@ -3629,9 +3649,9 @@ M = {
 		}
 		
 		// Do other initialization functions
-		M.createSubmaps();
-		M.populateMap();
-		M.drawChainPaths();
+		P.generateSubmaps();
+		P.populateMap();
+		P.drawChainPaths();
 
 		/*
 		 * Clicking an empty place on the map highlight its coordinate.
@@ -3684,42 +3704,6 @@ M = {
 			$("#panelRight").toggle();
 		});
 	}, // End of map initialization
-	
-	/*
-	 * Create submaps that are giant markers with an image of a map area.
-	 * Used for temporary zones that hasn't been put in the API tileset.
-	 */
-	createSubmaps: function()
-	{
-		M.SubmapTemp = M.createSubmap([2048, 1536], [3792, 15675], "http://i.imgur.com/2IXZvAM.jpg");
-	},
-	
-	/*
-	 * Creates and returns a submap.
-	 * @param int[] pDimensions width and height array.
-	 * @param int[] pCoord x,y array.
-	 * @param string pURL image of submap.
-	 * @returns object Leaflet marker.
-	 */
-	createSubmap: function(pDimensions, pCoord, pURL)
-	{
-		var width = M.scaleDimension(pDimensions[0]);
-		var height = M.scaleDimension(pDimensions[1]);
-		var submap = L.marker(M.convertGCtoLC([pCoord[0], pCoord[1]]),
-		{
-			icon: L.icon(
-			{
-				iconUrl: pURL,
-				iconSize: [width, height],
-				iconAnchor: [0, 0]
-			}),
-			draggable: false,
-			clickable: false
-		}).addTo(M.Map);
-		submap.spatiality = {maxwidth: pDimensions[0], maxheight: pDimensions[1]};
-		M.SubmapEntities.push(submap);
-		return submap;
-	},
 	
 	/*
 	 * Finds what zone the specified point is in by comparing it to the top left
@@ -4040,25 +4024,6 @@ M = {
 	},
 	
 	/*
-	 * Creates a pin in the map to be assigned to a reference object.
-	 * @param string pIconURL image of the marker.
-	 * @returns object Leaflet marker.
-	 */
-	createPin: function(pIconURL)
-	{
-		return L.marker(M.convertGCtoLC([0,0]),
-		{
-			icon: L.icon(
-			{
-				iconUrl: pIconURL,
-				iconSize: [32, 32],
-				iconAnchor: [16, 16]
-			}),
-			draggable: true
-		}).addTo(M.Map);
-	},
-	
-	/*
 	 * Macro function for toggling map entities display (Leaflet doesn't have a
 	 * hide/show markers and paths method except through its own UI).
 	 * @param array pEntityGroup objects like paths and markers.
@@ -4245,6 +4210,246 @@ M = {
 
 	   // Return base64 string with chat code tags
 	   return "[&" + btoa(chatcode) + "]";
+	},
+	
+	/*
+	 * Binds map view event handlers to all map links (ins tag reserved) in the
+	 * specified container.
+	 * @param string pContainer element ID.
+	 */
+	bindMapLinks: function(pContainer)
+	{
+		$(pContainer + " ins").each(function()
+		{
+			$(this).text("[" + $(this).text() + "]");
+			M.bindMapLinkBehavior($(this), M.PinProgram);
+		});
+	},
+	
+	/*
+	 * Binds specified link to move a pinpoint to the location when hovered, and
+	 * to view the map location when clicked.
+	 * @param jqobject pLink to bind.
+	 * @param object pPin marker to move.
+	 * @param string pZoom level when viewed location.
+	 */
+	bindMapLinkBehavior: function(pLink, pPin, pZoom)
+	{
+		pLink.click(function()
+		{
+			var thiscoord = M.getElementCoordinates($(this));
+			M.goToView(thiscoord, pPin, pZoom);
+		});
+		
+		// Move a point pin to that location as a preview
+		pLink.mouseover(function()
+		{
+			var thiscoord = M.getElementCoordinates($(this));
+			M.PinOver.setLatLng(M.convertGCtoLC(thiscoord));
+		});
+		pLink.mouseout(function()
+		{
+			M.PinOver.setLatLng(M.convertGCtoLC([0,0]));
+		});
+	},
+	
+	/*
+	 * Binds standard zoom in/out when user do something to an icon on the map.
+	 * @param object pMarker to bind.
+	 * @param string pEventType like "click" or "dblclick".
+	 */
+	bindMarkerZoomBehavior: function(pMarker, pEventType)
+	{
+		pMarker.on(pEventType, function(pEvent)
+		{
+			if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
+			{
+				M.Map.setZoom(M.ZoomLevelEnum.Default);
+			}
+			else
+			{
+				M.Map.setView(pEvent.latlng, M.ZoomLevelEnum.Max);
+			}
+		});
+	},
+	bindMappingZoomBehavior: function(pMarker, pEventType)
+	{
+		pMarker.on(pEventType, function(pEvent)
+		{
+			if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
+			{
+				M.Map.setZoom(M.ZoomLevelEnum.Sky);
+			}
+			else
+			{
+				M.Map.setView(pEvent.latlng, M.ZoomLevelEnum.Max);
+			}
+		});
+	},
+	
+	/*
+	 * Hides all the map icons by triggering the toggle button of each map section.
+	 */
+	displayIcons: function(pSection, pWantShow)
+	{
+		var i;
+		// Hide all icons if no parameters given
+		if (pSection === undefined || pSection === null)
+		{
+			if (M.isShowingIconsForDaily)
+			{
+				$("#mapToggle_Daily").trigger("click");
+			}
+			
+			if (M.isShowingIconsForResource)
+			{
+				$("#mapToggle_Resource").trigger("click");
+			}
+			else
+			{
+				$("#mapToggle_Resource").trigger("click").trigger("click");
+			}
+			
+			if (M.isShowingIconsForCollectible)
+			{
+				$("#mapToggle_Collectible").trigger("click");
+			}
+			else
+			{
+				$("#mapToggle_Collectible").trigger("click").trigger("click");
+			}
+			
+			if (M.isShowingIconsForJP)
+			{
+				$("#mapToggle_JP").trigger("click");
+			}
+		}
+		else
+		{
+			if (pWantShow)
+			{
+				if ( ! M["isShowingIconsFor" + pSection])
+				{
+					$("#mapToggle_" + pSection).trigger("click");
+				}
+				
+				// If article URL query string exists, only show collectible of specified index
+				if (I.ArticleCurrent >= 0)
+				{
+					switch (pSection)
+					{
+						case "Collectible":
+						{
+							for (i in M.Collectibles)
+							{
+								if ("Collectible" + I.ArticleCurrent !== i)
+								{
+									// Trigger the unchecking of the non-target collectible type, thereby hiding it
+									$("#ned_" + i).trigger("click");
+								}
+							}
+						} break;
+					}
+					// Nullify article value so this selective display only executes once
+					U.Args[U.KeyEnum.Article] = null;
+				}
+			}
+			else
+			{
+				if (pSection === "Resource")
+				{
+					if (M["isShowingIconsFor" + pSection])
+					{
+						$("#mapToggle_" + pSection).trigger("click");
+					}
+					else
+					{
+						$("#mapToggle_" + pSection).trigger("click").trigger("click");
+					}
+				}
+				else if (pSection === "Collectible")
+				{
+					if (M["isShowingIconsFor" + pSection])
+					{
+						$("#mapToggle_" + pSection).trigger("click");
+					}
+					else
+					{
+						$("#mapToggle_" + pSection).trigger("click").trigger("click");
+					}
+				}
+				else
+				{
+					if (M["isShowingIconsFor" + pSection])
+					{
+						$("#mapToggle_" + pSection).trigger("click");
+					}
+				}
+				
+			}
+		}
+	}
+	
+};
+
+/* =============================================================================
+ * @@Populate map functions (Leaflet markers)
+ * ========================================================================== */
+P = {
+	
+	/*
+	 * Create submaps that are giant markers with an image of a map area.
+	 * Used for temporary zones that hasn't been put in the API tileset.
+	 */
+	generateSubmaps: function()
+	{
+		M.SubmapTemp = P.createSubmap([2048, 1536], [3792, 15675], "http://i.imgur.com/2IXZvAM.jpg");
+	},
+	
+	/*
+	 * Creates and returns a submap.
+	 * @param int[] pDimensions width and height array.
+	 * @param int[] pCoord x,y array.
+	 * @param string pURL image of submap.
+	 * @returns object Leaflet marker.
+	 */
+	createSubmap: function(pDimensions, pCoord, pURL)
+	{
+		var width = M.scaleDimension(pDimensions[0]);
+		var height = M.scaleDimension(pDimensions[1]);
+		var submap = L.marker(M.convertGCtoLC([pCoord[0], pCoord[1]]),
+		{
+			icon: L.icon(
+			{
+				iconUrl: pURL,
+				iconSize: [width, height],
+				iconAnchor: [0, 0]
+			}),
+			draggable: false,
+			clickable: false
+		}).addTo(M.Map);
+		submap.spatiality = {maxwidth: pDimensions[0], maxheight: pDimensions[1]};
+		M.SubmapEntities.push(submap);
+		return submap;
+	},
+	
+	/*
+	 * Creates a pin in the map to be assigned to a reference object.
+	 * @param string pIconURL image of the marker.
+	 * @returns object Leaflet marker.
+	 */
+	createPin: function(pIconURL)
+	{
+		return L.marker(M.convertGCtoLC([0,0]),
+		{
+			icon: L.icon(
+			{
+				iconUrl: pIconURL,
+				iconSize: [32, 32],
+				iconAnchor: [16, 16]
+			}),
+			draggable: true
+		}).addTo(M.Map);
 	},
 	
 	/*
@@ -4479,26 +4684,7 @@ M = {
 		}).done(function() // Map is populated by AJAX
 		{
 			M.isAPIRetrieved_MAPFLOOR = true;
-			/*
-			 * Start tooltip plugin after the markers were loaded, because it
-			 * reads the title attribute and convert them into a div "tooltip".
-			 */
-			I.qTip.init(".leaflet-marker-icon");
-		}).fail(function()
-		{
-			if (I.ModeCurrent === I.ModeEnum.Website)
-			{
-				I.write(
-				"Guild Wars 2 API server is unreachable.<br />"
-				+ "Reasons could be:<br />"
-				+ "- The GW2 server is down for maintenance.<br />"
-				+ "- Your computer's time is out of sync.<br />"
-				+ "- Your browser is too old (if IE then need 11+).<br />"
-				+ "- This website's code encountered a bug.<br />"
-				+ "Map features will be limited.<br />", 30);
-			}
-		}).always(function() // Do after AJAX regardless of success/failure
-		{
+			
 			/*
 			 * AJAX takes a while so can use this to advantage to delay graphics
 			 * that seem out of place without a map loaded.
@@ -4517,7 +4703,26 @@ M = {
 				$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
 					+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
 			}
-			
+			/*
+			 * Start tooltip plugin after the markers were loaded, because it
+			 * reads the title attribute and convert them into a div "tooltip".
+			 */
+			I.qTip.init(".leaflet-marker-icon");
+		}).fail(function()
+		{
+			if (I.ModeCurrent === I.ModeEnum.Website)
+			{
+				I.write(
+				"Guild Wars 2 API server is unreachable.<br />"
+				+ "Reasons could be:<br />"
+				+ "- The GW2 server is down for maintenance.<br />"
+				+ "- Your browser is too old (if IE then need 11+).<br />"
+				+ "- Your computer's time is out of sync.<br />"
+				+ "- This website's code encountered a bug.<br />"
+				+ "Map features will be limited.<br />", 30);
+			}
+		}).always(function() // Do after AJAX regardless of success/failure
+		{
 			M.isMapAJAXDone = true;
 			M.bindMapVisualChanges();
 			M.adjustZoomMapping();
@@ -4529,9 +4734,9 @@ M = {
 		 * Create pin markers that can be moved by user or program.
 		 * ---------------------------------------------------------------------
 		 */
-		M.PinPersonal = M.createPin("img/map/pin_white.png");
-		M.PinProgram = M.createPin("img/map/pin_blue.png");
-		M.PinEvent = M.createPin("img/map/pin_green.png");
+		M.PinPersonal = P.createPin("img/map/pin_white.png");
+		M.PinProgram = P.createPin("img/map/pin_blue.png");
+		M.PinEvent = P.createPin("img/map/pin_green.png");
 		M.PinOver = L.marker(M.convertGCtoLC([0,0]),
 		{
 			icon: L.icon(
@@ -4666,81 +4871,6 @@ M = {
 		
 		// Initially hide paths, unhide when map populating is complete
 		M.setEntityGroupDisplay(M.ChainPathEntities, "hide");
-	},
-	
-	/*
-	 * Binds map view event handlers to all map links (ins tag reserved) in the
-	 * specified container.
-	 * @param string pContainer element ID.
-	 */
-	bindMapLinks: function(pContainer)
-	{
-		$(pContainer + " ins").each(function()
-		{
-			$(this).text("[" + $(this).text() + "]");
-			M.bindMapLinkBehavior($(this), M.PinProgram);
-		});
-	},
-	
-	/*
-	 * Binds specified link to move a pinpoint to the location when hovered, and
-	 * to view the map location when clicked.
-	 * @param jqobject pLink to bind.
-	 * @param object pPin marker to move.
-	 * @param string pZoom level when viewed location.
-	 */
-	bindMapLinkBehavior: function(pLink, pPin, pZoom)
-	{
-		pLink.click(function()
-		{
-			var thiscoord = M.getElementCoordinates($(this));
-			M.goToView(thiscoord, pPin, pZoom);
-		});
-		
-		// Move a point pin to that location as a preview
-		pLink.mouseover(function()
-		{
-			var thiscoord = M.getElementCoordinates($(this));
-			M.PinOver.setLatLng(M.convertGCtoLC(thiscoord));
-		});
-		pLink.mouseout(function()
-		{
-			M.PinOver.setLatLng(M.convertGCtoLC([0,0]));
-		});
-	},
-	
-	/*
-	 * Binds standard zoom in/out when user do something to an icon on the map.
-	 * @param object pMarker to bind.
-	 * @param string pEventType like "click" or "dblclick".
-	 */
-	bindMarkerZoomBehavior: function(pMarker, pEventType)
-	{
-		pMarker.on(pEventType, function(pEvent)
-		{
-			if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
-			{
-				M.Map.setZoom(M.ZoomLevelEnum.Default);
-			}
-			else
-			{
-				M.Map.setView(pEvent.latlng, M.ZoomLevelEnum.Max);
-			}
-		});
-	},
-	bindMappingZoomBehavior: function(pMarker, pEventType)
-	{
-		pMarker.on(pEventType, function(pEvent)
-		{
-			if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
-			{
-				M.Map.setZoom(M.ZoomLevelEnum.Sky);
-			}
-			else
-			{
-				M.Map.setView(pEvent.latlng, M.ZoomLevelEnum.Max);
-			}
-		});
 	},
 	
 	/*
@@ -4914,7 +5044,7 @@ M = {
 			}));
 			marker._icon.style.borderRadius = "50%";
 			marker._icon.style.opacity = "0.9";
-			M.styleJPMarkers(marker, pDifficulty);
+			P.styleJPMarkers(marker, pDifficulty);
 			
 			// Add to array
 			M.JPEntities.push(marker);
@@ -4991,7 +5121,7 @@ M = {
 				if (checkboxstate === X.ChecklistEnum.Unchecked)
 				{
 					$(this).parent().prev().removeClass("mapJPListNameHover");
-					M.styleJPMarkers(M.JPEntities[checkboxindex], M.JPEntities[checkboxindex].options.dif);
+					P.styleJPMarkers(M.JPEntities[checkboxindex], M.JPEntities[checkboxindex].options.dif);
 				}
 				else
 				{
@@ -5048,7 +5178,7 @@ M = {
 			{
 				$("#mapJPCheck_" + i).prop("checked", false)
 					.parent().prev().removeClass("mapJPListNameHover");
-				M.styleJPMarkers(M.JPEntities[i], M.JPEntities[i].options.dif);
+				P.styleJPMarkers(M.JPEntities[i], M.JPEntities[i].options.dif);
 				
 				jpchecklist += "0";
 			}
@@ -5099,7 +5229,7 @@ M = {
 			}));
 			pMarker._icon.style.borderRadius = "16px";
 			pMarker._icon.style.opacity = "0.9";
-			M.styleCollectibleMarker(pMarker, pState);
+			P.styleCollectibleMarker(pMarker, pState);
 			
 			// Bind marker behavior
 			pMarker.on("click", function(pEvent)
@@ -5108,7 +5238,7 @@ M = {
 				var key = this.options.needleKey;
 				var index = this.options.needleIndex;
 				var newstate = X.trackChecklistItem(X.Checklists[type], index);
-				M.styleCollectibleMarker(this, newstate);
+				P.styleCollectibleMarker(this, newstate);
 				
 				// Update URL bar with list of numbers of checked markers
 				var pings = X.getCheckedIndexes(X.Checklists[type]);
@@ -5189,7 +5319,7 @@ M = {
 				var thiscushion = X.Checklists[collectibletype].cushion;
 				for (var thisi in thiscushion)
 				{
-					M.styleCollectibleMarker(thiscushion[thisi], X.ChecklistEnum.Unfound);
+					P.styleCollectibleMarker(thiscushion[thisi], X.ChecklistEnum.Unfound);
 				}
 				X.clearChecklist(X.Checklists[collectibletype]);
 				U.updateAddressBar();
@@ -5207,111 +5337,7 @@ M = {
 				M.setEntityGroupDisplay(M.Collectibles[i].NeedleEntities, M.isShowingIconsForCollectible);
 			}
 		});
-	},
-	
-	/*
-	 * Hides all the map icons by triggering the toggle button of each map section.
-	 */
-	displayIcons: function(pSection, pWantShow)
-	{
-		var i;
-		// Hide all icons if no parameters given
-		if (pSection === undefined || pSection === null)
-		{
-			if (M.isShowingIconsForDaily)
-			{
-				$("#mapToggle_Daily").trigger("click");
-			}
-			
-			if (M.isShowingIconsForResource)
-			{
-				$("#mapToggle_Resource").trigger("click");
-			}
-			else
-			{
-				$("#mapToggle_Resource").trigger("click").trigger("click");
-			}
-			
-			if (M.isShowingIconsForCollectible)
-			{
-				$("#mapToggle_Collectible").trigger("click");
-			}
-			else
-			{
-				$("#mapToggle_Collectible").trigger("click").trigger("click");
-			}
-			
-			if (M.isShowingIconsForJP)
-			{
-				$("#mapToggle_JP").trigger("click");
-			}
-		}
-		else
-		{
-			if (pWantShow)
-			{
-				if ( ! M["isShowingIconsFor" + pSection])
-				{
-					$("#mapToggle_" + pSection).trigger("click");
-				}
-				
-				// If article URL query string exists, only show collectible of specified index
-				if (I.ArticleCurrent >= 0)
-				{
-					switch (pSection)
-					{
-						case "Collectible":
-						{
-							for (i in M.Collectibles)
-							{
-								if ("Collectible" + I.ArticleCurrent !== i)
-								{
-									// Trigger the unchecking of the non-target collectible type, thereby hiding it
-									$("#ned_" + i).trigger("click");
-								}
-							}
-						} break;
-					}
-					// Nullify article value so this selective display only executes once
-					U.Args[U.KeyEnum.Article] = null;
-				}
-			}
-			else
-			{
-				if (pSection === "Resource")
-				{
-					if (M["isShowingIconsFor" + pSection])
-					{
-						$("#mapToggle_" + pSection).trigger("click");
-					}
-					else
-					{
-						$("#mapToggle_" + pSection).trigger("click").trigger("click");
-					}
-				}
-				else if (pSection === "Collectible")
-				{
-					if (M["isShowingIconsFor" + pSection])
-					{
-						$("#mapToggle_" + pSection).trigger("click");
-					}
-					else
-					{
-						$("#mapToggle_" + pSection).trigger("click").trigger("click");
-					}
-				}
-				else
-				{
-					if (M["isShowingIconsFor" + pSection])
-					{
-						$("#mapToggle_" + pSection).trigger("click");
-					}
-				}
-				
-			}
-		}
 	}
-	
 };
 
 /* =============================================================================
@@ -7612,8 +7638,7 @@ I = {
 		// Bind console buttons
 		$("#jsConsoleButtonClose").click(function()
 		{
-			$("#jsConsoleButtons").hide();
-			$("#jsConsole").empty();
+			I.clear();
 		});
 		$("#jsConsoleButtonSelect").click(function()
 		{
@@ -7691,6 +7716,16 @@ I = {
 				$("#jsConsoleButtons").hide();
 			});
 		}, pSeconds * T.cMILLISECONDS_IN_SECOND);
+	},
+	
+	/*
+	 * Clears the console of all previous text.
+	 */
+	clear: function()
+	{
+		window.clearTimeout(I.consoleTimeout);
+		$("#jsConsoleButtons").hide();
+		$("#jsConsole").empty();
 	},
 	
 	/*
@@ -8170,14 +8205,14 @@ I = {
 				M.bindMapLinkBehavior($(this), null, M.ZoomLevelEnum.Sky);
 			});
 			// Create daily markers
-			$("#headerMap_Daily").one("click", M.generateAndInitializeDailies);
+			$("#headerMap_Daily").one("click", P.generateAndInitializeDailies);
 			// Create node markers and checkboxes
-			$("#headerMap_Resource").one("click", M.generateAndInitializeResourceNodes);
+			$("#headerMap_Resource").one("click", P.generateAndInitializeResourceNodes);
 			// Create JP checklist
 			$("#headerMap_JP").one("click", function()
 			{
-				M.generateAndInitializeJPs();
-				M.generateAndInitializeJPChecklistHTML();
+				P.generateAndInitializeJPs();
+				P.generateAndInitializeJPChecklistHTML();
 			});
 			// Create custom checklists
 			$("#headerMap_Personal").one("click", function()
@@ -8187,7 +8222,7 @@ I = {
 				I.isSectionLoadedMap_Personal = true;
 			});
 			// Create collectible markers and checkboxes
-			$("#headerMap_Collectible").one("click", M.generateAndInitializeCollectibles);
+			$("#headerMap_Collectible").one("click", P.generateAndInitializeCollectibles);
 			
 			// Bind show map icons when clicked on header
 			$("#headerMap_Daily, #headerMap_Resource, #headerMap_JP, #headerMap_Collectible").each(function()
