@@ -102,7 +102,7 @@ O = {
 		bol_tourPrediction: true,
 		bol_showChainPaths: true,
 		bol_showMap: true,
-		bol_showCompletion: false,
+		bol_showMappingIcons: false,
 		bol_displayWaypoints: true,
 		bol_displayPOIs: true,
 		bol_displayVistas: true,
@@ -238,7 +238,7 @@ O = {
 				+ "Would you like to see the <a class='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />"
 				+ "<br />"
 				+ "New in this version:<br />"
-				+ "- Map completion <a href='./?bol_showCompletion=true'>option to display</a> POIs, Vistas, Skill Points, and Hearts.<br />"
+				+ "- Map completion <a href='./?bol_showMappingIcons=true'>option to display</a> POIs, Vistas, Skill Points, and Hearts.<br />"
 				+ "- More languages: <a href='./?enu_Language=cs'>Čeština</a>, <a href='./?enu_Language=it'>Italiano</a>, <a href='./?enu_Language=pt'>Português</a>.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
@@ -636,7 +636,7 @@ O = {
 			}
 		});
 		// POIs are created on site load
-		$("#opt_bol_showCompletion").change(function()
+		$("#opt_bol_showMappingIcons").change(function()
 		{
 			location.reload();
 		});
@@ -993,12 +993,8 @@ X = {
 		JP: { key: "str_chlJP", value: "" },
 		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
 		Custom: { key: "str_chlCustom", value: "" },
-		CustomText:
-		{
-			key: "str_chlCustomText",
-			value: new Array(),
-			valueDefault: new Array()
-		},
+		CustomText: { key: "str_chlCustomText", value: new Array(), valueDefault: new Array() },
+		NotepadText: { key: "str_chlNotepadText", value: new Array(), valueDefault: new Array() },
 		/*
 		 * Collectible checklists must have the same variable name as in the map page's data.
 		 * The urlkey properties must be unique from the global KeyEnum.
@@ -1608,11 +1604,6 @@ X = {
 			
 			// Now that this checkbox is bounded, trigger it as the state in checklist
 			X.triggerCheckboxEnumState(X.Checklists.Custom, pIndex, $(this));
-			
-			// Initialize default value of associated text field
-			var text = $(this).parent().next().val();
-			X.Checklists.CustomText.value.push(text);
-			X.Checklists.CustomText.valueDefault.push(text);
 		});
 		
 		// Bind uncheck all button
@@ -1629,65 +1620,112 @@ X = {
 			});
 		});
 		
+		// Bind text fields behavior
+		var items = $("#chlCustom input:text");
+		var restore = $("#chlCustomRestore");
+		X.initializeText(X.Checklists.CustomText, items, "Custom checklist item", 48, restore);
+	},
+	
+	/*
+	 * Binds notepad textarea behavior and button pages behavior.
+	 */
+	initializeNotepad: function()
+	{
+		// Numbered buttons' behavior
+		$("#chlNotepadButtons button").each(function(pIndex)
+		{
+			$(this).click(function()
+			{
+				// Show selected number's sheet
+				$("#chlNotepadSheets textarea").hide().eq(pIndex).show()
+					.css({opacity: 0.5}).animate({opacity: 1}, 400);
+				$("#chlNotepadButtons button").removeClass("btnFocused");
+				$(this).addClass("btnFocused");
+			});
+		}).first().click(); // First sheet is default view
+		
+		// Bind text fields behavior
+		var items = $("#chlNotepadSheets textarea");
+		var restore = $("#chlNotepadRestore");
+		items.first().show();
+		X.initializeText(X.Checklists.NotepadText, items, "Notepad sheet", 4096, restore);
+	},
+	
+	/*
+	 * Stores text and binds default behavior for a standard set of text fields.
+	 * @param object pChecklistText for storing text in memory and storage.
+	 * @param jqobject pTextFields input or textarea elements to iterate and read text.
+	 * @param string pFieldName name of the text fields for notifying of change.
+	 * @param int pMaxLength of characters in a text field.
+	 * @param jqobject pRestoreButton to reset all text fields.
+	 */
+	initializeText: function(pChecklistText, pTextFields, pFieldName, pMaxLength, pRestoreButton)
+	{
+		// Initialize the pre-written text in the text fields
+		pTextFields.each(function()
+		{
+			var text = $(this).val();
+			pChecklistText.value.push(text);
+			pChecklistText.valueDefault.push(text);
+		});
+		
 		/*
 		 * Each text fields' value will become a delimited substring in one
 		 * single string to be stored in localStorage.
 		 */
 		var i;
-		if (localStorage[X.Checklists.CustomText.key] === undefined)
+		if (localStorage[pChecklistText.key] === undefined)
 		{
 			// If localStorage value is empty, replace with original values in text field
-			localStorage[X.Checklists.CustomText.key] = X.Checklists.CustomText.value.join(I.cTextDelimiter);
+			localStorage[pChecklistText.key] = pChecklistText.value.join(I.cTextDelimiterChar);
 		}
 		else
 		{
-			var storedtextarray = localStorage[X.Checklists.CustomText.key].split(I.cTextDelimiter);
-			if (storedtextarray.length === X.Checklists.CustomText.value.length)
+			var storedtextarray = localStorage[pChecklistText.key].split(I.cTextDelimiterChar);
+			if (storedtextarray.length === pTextFields.length)
 			{
 				// Load the stored text if it has same number of strings as there are text fields
 				for (i in storedtextarray)
 				{
-					X.Checklists.CustomText.value[i] = storedtextarray[i];
+					pChecklistText.value[i] = storedtextarray[i];
 				}
 			}
 			else
 			{
-				localStorage[X.Checklists.CustomText.key] = X.Checklists.CustomText.value.join(I.cTextDelimiter);
+				localStorage[pChecklistText.key] = pChecklistText.value.join(I.cTextDelimiterChar);
 			}
 		}
 		
 		var updateStoredText = function()
 		{
-			// This regex is for removing all delimiter character from user input
-			var regex = "/\\" + I.cTextDelimiter + "/g";
 			// Read every text fields and rewrite the string of substrings again
-			$("#chlCustom input:text").each(function(pIndex)
+			pTextFields.each(function(pIndex)
 			{
-				X.Checklists.CustomText.value[pIndex] = $(this).val().replace(regex, "");
+				pChecklistText.value[pIndex] = $(this).val().replace(I.cTextDelimiterRegex, "");
 			});
-			localStorage[X.Checklists.CustomText.key] = X.Checklists.CustomText.value.join(I.cTextDelimiter);
+			localStorage[pChecklistText.key] = pChecklistText.value.join(I.cTextDelimiterChar);
 		};
 		
 		// Bind text fields behavior
-		$("#chlCustom input:text").each(function(pIndex)
+		pTextFields.each(function(pIndex)
 		{
 			// Set number of characters allowed in the text field
-			$(this).attr("maxlength", 48);
-			$(this).val(X.Checklists.CustomText.value[pIndex]); // Load initialized text
+			$(this).attr("maxlength", pMaxLength);
+			$(this).val(pChecklistText.value[pIndex]); // Load initialized text
 			
 			$(this).change(function()
 			{
-				I.write("Custom checklist item #" + (pIndex + 1) + " updated.");
+				I.write(pFieldName + " #" + (pIndex + 1) + " updated.");
 				updateStoredText();
 			});
 		});
 		
-		// Bind restore text button
-		$("#chlCustomRestore").click(function()
+		// Bind restore button
+		pRestoreButton.click(function()
 		{
-			$("#chlCustom input:text").each(function(pIndex)
+			pTextFields.each(function(pIndex)
 			{
-				$(this).val(X.Checklists.CustomText.valueDefault[pIndex]).trigger("change");
+				$(this).val(pChecklistText.valueDefault[pIndex]).trigger("change");
 			});
 		});
 	}
@@ -1767,8 +1805,8 @@ D = {
 			cs: "Chrámy", it: "Templi", pl: "Świątynie", pt: "Templos", ru: "Храмы", zh: "寺廟"},
 		s_Full_Timetable: {de: "Zeitplan", es: "Horario", fr: "Horaire",
 			cs: "Plán", it: "Programma", pl: "Harmonogram", pt: "Horário", ru: "Расписание", zh: "時間表"},
-		s_news: {de: "nachrichten", es: "noticia", fr: "actualité",
-			cs: "zprávy", it: "notizia", pl: "wiadomości", pt: "notícias", ru: "новости", zh: "新聞"},
+		s_news: {de: "nachrichten", es: "noticias", fr: "actualités",
+			cs: "zprávy", it: "notizie", pl: "wiadomości", pt: "notícias", ru: "новости", zh: "新聞"},
 		s_simple_mode: {de: "einfach modus", es: "modo simple", fr: "mode simple",
 			cs: "prostý režim", it: "modalità semplice", pl: "prosty tryb", pt: "modo simples", ru: "простой режим", zh: "方式簡單"},
 		s_chests: {de: "schatztruhen", es: "cofres del tesoro", fr: "coffres au trésor",
@@ -1782,7 +1820,7 @@ D = {
 		s_menuChains: {de: "Ketten", es: "Cadenas", fr: "Chaînes",
 			cs: "Řetězy", it: "Catene", pl: "Łańcuchy", pt: "Cadeias", ru: "Цепи", zh: "鏈"},
 		s_menuMap: {de: "Werkzeuge", es: "Útiles", fr: "Outils",
-			cs: "Nástroje", it: "Strumenti", pl: "Narzędzia", pt: "Ferramentas", ru: "Инструментарий", zh: "工具"},
+			cs: "Nástroje", it: "Strumenti", pl: "Narzędzia", pt: "Ferramentas", ru: "Средства", zh: "工具"},
 		s_menuWvW: {de: "WvW", es: "WvW", fr: "WvW",
 			cs: "WvW", it: "WvW", pl: "WvW", pt: "WvW", ru: "WvW", zh: "WvW"},
 		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance",
@@ -3733,10 +3771,10 @@ M = {
 				&& pCoord[1] <= zoney2)
 			{
 				/*
-				 * If got here then i is the index of the current moused
-				 * zone. To not waste computation, only update the
-				 * coordinates bar and reveal the zone waypoints if the
-				 * found zone is different from the previously moused zone.
+				 * If got here then i is the index of the current moused zone.
+				 * To not waste computation, only update the coordinates bar and
+				 * reveal the zone waypoints if the found zone is different from
+				 * the previously moused zone.
 				 */
 				if (i !== M.mousedZoneIndex)
 				{
@@ -4393,7 +4431,7 @@ M = {
 };
 
 /* =============================================================================
- * @@Populate map functions (Leaflet markers)
+ * @@Populate map functions and Map page
  * ========================================================================== */
 P = {
 	
@@ -4539,7 +4577,7 @@ P = {
 							
 							case M.APIPOIEnum.Landmark:
 							{
-								if (O.Options.bol_showCompletion === false)
+								if (O.Options.bol_showMappingIcons === false)
 								{
 									continue;
 								}
@@ -4551,7 +4589,7 @@ P = {
 							
 							case M.APIPOIEnum.Vista:
 							{
-								if (O.Options.bol_showCompletion === false)
+								if (O.Options.bol_showMappingIcons === false)
 								{
 									continue;
 								}
@@ -4627,7 +4665,7 @@ P = {
 					/*
 					 * For skill challenges and heart tasks.
 					 */
-					if (O.Options.bol_showCompletion)
+					if (O.Options.bol_showMappingIcons)
 					{
 						numofpois = zone.skill_challenges.length;
 						for (i = 0; i < numofpois; i++)
@@ -7341,7 +7379,7 @@ U = {
 			if (U.Args[U.KeyEnum.Section] !== undefined)
 			{
 				var section = U.stripToAlphanumeric(U.Args[U.KeyEnum.Section]);
-				$(I.cHeaderPrefix + I.PageCurrent + "_" + section).trigger("click");
+				$(I.cHeaderPrefix + I.PageCurrent + "_" + U.toFirstUpperCase(section)).trigger("click");
 			}
 		}, 0);
 	},
@@ -7350,7 +7388,7 @@ U = {
 		if (U.Args[U.KeyEnum.Page] !== undefined)
 		{
 			var page = U.stripToAlphanumeric(U.Args[U.KeyEnum.Page]);
-			$(I.cMenuPrefix + page).trigger("click");
+			$(I.cMenuPrefix + U.toFirstUpperCase(page)).trigger("click");
 		}
 	},
 	
@@ -7451,7 +7489,8 @@ I = {
 	cImageHost: "http://i.imgur.com/",
 	cGameName: "Guild Wars 2",
 	cPNG: ".png", // Almost all used images are PNG
-	cTextDelimiter: "|",
+	cTextDelimiterChar: "|",
+	cTextDelimiterRegex: /[|]/g,
 	consoleTimeout: {},
 	siteTagDefault: " - gw2timer.com",
 	siteTagCurrent: " - gw2timer.com",
@@ -8166,6 +8205,7 @@ I = {
 		M.bindMapLinks(pLayer);
 		// Open links on new window
 		U.convertExternalLink(pLayer + " a");
+		I.qTip.init("button");
 	},
 	
 	/*
@@ -8220,6 +8260,11 @@ I = {
 				X.initializeDungeonChecklist();
 				X.initializeCustomChecklist();
 				I.isSectionLoadedMap_Personal = true;
+			});
+			// Create notepad
+			$("#headerMap_Notepad").one("click", function()
+			{
+				X.initializeNotepad();
 			});
 			// Create collectible markers and checkboxes
 			$("#headerMap_Collectible").one("click", P.generateAndInitializeCollectibles);

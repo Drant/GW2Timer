@@ -146,6 +146,7 @@ var GW2T_RESOURCE_DATA = {
 	Ancient: {
 		approx: true,
 		nodes: [
+		[5063, 16666], // dry
 		[12214, 20258], // southsun
 		[12906, 19772],
 		[13161, 19435],
@@ -508,6 +509,7 @@ var GW2T_COLLECTIBLE_DATA = {
 	>Map Zones</var>
 </header>
 <section>
+<samp class="jsHelpTooltip" title="To display map completion icons such as POIs, Vistas, Skill Challenges, and Hearts, go to the Options page and under Map, tick the related checkbox."></samp>
 <div class="mapZoneList mapLinks">
 	<div>
 	<h2>Kryta</h2>
@@ -592,6 +594,7 @@ var GW2T_COLLECTIBLE_DATA = {
 <dl id="mapDailyList_Killer">
 	<dt data-coord="[10055, 13446]">Altar's Windings</dt><dd>Kryta-Queensdale troll cave grubs, spiders, bandit camp</dd>
 	<dt data-coord="[9993, 16259]">Wychmire Swamp</dt><dd>Maguuma-Caledon spiders nest</dd>
+	<dt data-coord="[8364, 19878]">Loch Jezt</dt><dd>Maguuma-Metrica hylek tribe</dd>
 	<dt data-coord="[22587, 15535]">Outcast's Cleft</dt><dd>Shiverpeaks-Wayfarer svanirs</dd>
 	<dt data-coord="[23136, 13562]">Grawlenfjord</dt><dd>Shiverpeaks-Wayfarer arctodus and barracudas</dd>
 	<dt data-coord="[27618, 15147]">Windrock Maze</dt><dd>Ascalon-Ashford various mobs</dd>
@@ -662,7 +665,7 @@ Use your sword2/focus4 mesmer to do these quickly.
 <h2><img src="img/daily/reviver.png" alt="Reviver" /> Reviver</h2>
 If there are others doing the daily, you should revive to 20% then move to the next body so more people can get credit. * indicates the dead NPC icons are not shown on the minimap. If the NPCs are still alive, try to lure enemies to kill them. Skills that <a href="http://wiki.guildwars2.com/wiki/Revive#Skills_that_revive_allies">revive allies</a> also works on NPCs. You can find more revive spots at <a href="http://google.com/search?num=100&amp;q=site%3Awiki.guildwars2.com+revive+%22Renown+NPC%22">Renown Hearts</a>.
 <dl id="mapDailyList_Reviver">
-	<dt data-coord="[8698, 20360]">Jetzar Falls</dt><dd>Metrica Obsolete SCRAP-BOTs</dd>
+	<dt data-coord="[8665, 20317]">Jetzar Falls</dt><dd>Metrica Obsolete SCRAP-BOTs</dd>
 	<dt data-coord="[7617, 17607]">Thaumanova Reactor</dt><dd>Metrica irradiated asura</dd>
 	<dt data-coord="[6385, 15874]">Vandal's Claim</dt><dd>Brisban minefield</dd>
 	<dt data-coord="[14143, 13005]">The Bloodfields</dt><dd>Gendarran seraphs battlefield*</dd>
@@ -939,11 +942,47 @@ A marathon of intricate jumps.
 
 
 
+<header id="headerMap_Notepad" class="jsSection"><img src="img/ui/notepad.png" alt="Notepad" /><var
+	data-de="Notizblock"
+	data-es="Bloc de Notas"
+	data-fr="Bloc-notes"
+	data-cs="Poznámkový blok"
+	data-it="Blocco note"
+	data-pl="Notatnik"
+	data-pt="Bloco de Notas"
+	data-ru="Блокнот"
+	data-zh="記事本"
+	>Notepad</var>
+</header>
+<section>
+<div id="chlNotepad">
+	<div id="chlNotepadButtons">
+		<button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button>
+	</div>
+	<button id="chlNotepadSave">Save</button>
+	<div id="chlNotepadSheets">
+		<textarea>This is your notepad. You can put your game notes here. The buttons above will view that numbered sheet, and clicking any buttons will do a save.</textarea>
+		<textarea>Sheet 2</textarea>
+		<textarea>Sheet 3</textarea>
+		<textarea>Sheet 4</textarea>
+		<textarea>Sheet 5</textarea>
+		<textarea>Sheet 6</textarea>
+		<textarea>Sheet 7</textarea>
+		<textarea>Sheet 8</textarea>
+		<textarea>Sheet 9</textarea>
+	</div>
+	<br />
+	<button id="chlNotepadRestore" class="cssRight" title="Erases all your notes and restores the default text. Make sure you want to!">Wipe Notepad</button>
+</div>
+</section>
+
+
+
 <br />
 <samp class="jsHelpCollapsible"></samp>
 <div>
 <h2>Checklists</h2>
-<p>All checklists are automatically saved in your browser and are restored when you revisit this site. Use the Uncheck All button at every checklists, or go to Options under Defaults to clear everything.</p>
+<p>Notepad and checklists are automatically saved in your browser and are restored when you revisit this site. Use the Uncheck All button at every checklists, or go to Options under Defaults to clear everything.</p>
 <h2>Map</h2>
 <p>The map works like Google Maps: you can drag the map to pan, and you can scroll your mouse wheel to zoom. No UI map controls are included in order to maximize viewing. For default view and zoom, click the star button <img class="cntIconExample" src="img/map/star.png" alt="Icon" /> on the side menu or the map page button.
 <h2>Icons</h2>	

@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x580, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.08.02 modified - 2014.04.18 created
+	Version: 2014.08.08 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -57,6 +57,7 @@ body {
 }
 
 #jsConsole, #paneWarning {
+	max-width: 62%;
 	position: absolute;
 	z-index: 9;
 	top: 24px;
@@ -216,7 +217,7 @@ a, input, label, button,
 	opacity: 0.6;
 }
 input#mapCoordinatesRegion {
-	width: 120px; 
+	width: 145px; 
 }
 
 #itemMapLinksNorth {
@@ -786,7 +787,33 @@ header.jsSection sup {
 }
 
 .cntComposition button {
-	text-shadow: none;
+	min-width: 24px; min-height: 24px;
+	margin: 0;
+	padding-left: 4px;
+	padding-right: 4px;
+	vertical-align: middle;
+	border: 1px solid #222;
+	border-radius: 4px;
+	background: #333;
+	background: linear-gradient(to bottom, #444 0%, #333 100%);
+	color: white;
+	text-shadow:
+		1px 1px 0px #000,
+		-1px -1px 0px #000,
+		1px -1px 0px #000,
+		-1px 1px 0px #000,
+		1px 1px 0px #000;
+}
+.cntComposition button:hover {
+	border: 1px solid red;
+}
+.cntComposition button:active {
+	background: #444;
+	background: linear-gradient(to bottom, #333 0%, #444 100%);
+}
+
+.cntComposition button.btnFocused {
+	border: 1px solid #ddff77;
 }
 
 .cntComposition hr {
@@ -1380,6 +1407,27 @@ dt.mapJPListNameHover {
 	border: 1px solid #ddff77;
 }
 
+#chlNotepadButtons {
+	display: inline-block;
+	margin-top: 4px;
+}
+#chlNotepadSheets {
+	margin-top: 10px;
+}
+#chlNotepadButtons button {
+	margin-right: 2px;
+}
+#chlNotepad textarea {
+	display: none;
+	width: 300px; height: 500px;
+	padding: 4px;
+	border: 1px solid #555;
+	font-family: sans-serif;
+	font-size: 12px;
+	background: #222;
+	color: #ffddcc;
+}
+
 /* @@Options layer
 ----------------------------------------------------------------------------- */
 .optFieldsets fieldset {
@@ -1420,6 +1468,9 @@ label:hover {
 }
 .cssRight {
 	float: right;
+}
+.cssIndent {
+	margin-left: 16px;
 }
 
 /* =============================================================================
