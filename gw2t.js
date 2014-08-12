@@ -52,16 +52,7 @@ $(window).on("load", function() {
 /* =============================================================================
  *  Single letter objects serve as namespaces.
  * ========================================================================== */
-var O = {}; // options
-var X = {}; // checklists
-var D = {}; // dictionary
-var C = {}; // chains
-var M = {}; // map
-var P = {}; // populate
-var T = {}; // time
-var K = {}; // clock
-var U = {}; // URL
-var I = {}; // interface
+var O, X, D, C, M, P, T, K, U, I = {};
 
 /* =============================================================================
  * @@Options for the user
@@ -103,6 +94,7 @@ O = {
 		bol_showChainPaths: true,
 		bol_showMap: true,
 		bol_showMappingIcons: false,
+		bol_displaySectors: true,
 		bol_displayWaypoints: true,
 		bol_displayPOIs: true,
 		bol_displayVistas: true,
@@ -927,8 +919,6 @@ O = {
 			{
 				$("#itemSocial").hide();
 			}
-
-			K.reapplyFilters();
 		},
 		int_setDimming: function()
 		{
@@ -2067,7 +2057,7 @@ D = {
 		it: "Behemoth d'Ombra",
 		pl: "Mroczny Behemot",
 		pt: "Behemoth de Sombra",
-		ru: "Бегемот из тени",
+		ru: "Бегемот из Тени",
 		zh: "影子的巨獸"
 	},{
 		en: "The Shatterer",
@@ -2111,7 +2101,7 @@ D = {
 		it: "Grande Verme Giungla",
 		pl: "Wielki Robak z Dżungli",
 		pt: "Grande Verme Selva",
-		ru: "Великий Червь из джунглей",
+		ru: "Великий Червь из Джунглей",
 		zh: "大叢林蠕蟲"
 	},{
 		en: "Karka Queen",
@@ -3617,14 +3607,16 @@ M = {
 	 */
 	MappingEnum:
 	{
-		Waypoint: 0,
-		Landmark: 1,
-		Vista: 2,
-		Skill: 3,
-		Heart: 4
+		Sector: 0,
+		Waypoint: 1,
+		Landmark: 2,
+		Vista: 3,
+		Skill: 4,
+		Heart: 5
 	},
 	APIPOIEnum:
 	{
+		Sector: "sectors",
 		Waypoint: "waypoint",
 		Landmark: "landmark",
 		Vista: "vista",
@@ -3666,11 +3658,12 @@ M = {
 	{
 		// M.Map is the actual Leaflet map object, initialize it
 		M.Map = L.map("paneMap", {
-			minZoom: 0,
+			minZoom: M.ZoomLevelEnum.Min,
 			maxZoom: M.ZoomLevelEnum.Max,
+			inertiaThreshold: 100, // Milliseconds between drag and release to flick pan
 			doubleClickZoom: false,
-			zoomControl: false, // the zoom UI
-			attributionControl: false, // the Leaflet link UI
+			zoomControl: false, // Hide the zoom UI
+			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
 		}).setView([-128, 128], M.ZoomLevelEnum.Default);
 		
@@ -3781,7 +3774,7 @@ M = {
 					// Note that the master index was initialized as null
 					if (M.mousedZoneIndex !== null)
 					{
-						// Hide the waypoints of the previously moused zone
+						// Hide the icons of the previously moused zone
 						for (ii1 in M.Zones[M.mousedZoneIndex].ZoneEntities)
 						{
 							M.Zones[M.mousedZoneIndex].ZoneEntities[ii1]
@@ -3812,7 +3805,8 @@ M = {
 							|| (entitytype === M.MappingEnum.Landmark && O.Options.bol_displayPOIs)
 							|| (entitytype === M.MappingEnum.Vista && O.Options.bol_displayVistas)
 							|| (entitytype === M.MappingEnum.Skill && O.Options.bol_displaySkills)
-							|| (entitytype === M.MappingEnum.Heart && O.Options.bol_displayHearts) )
+							|| (entitytype === M.MappingEnum.Heart && O.Options.bol_displayHearts)
+							|| (entitytype === M.MappingEnum.Sector && O.Options.bol_displaySectors) )
 						{
 							entity._icon.style.display = "block";
 						}
@@ -3866,6 +3860,7 @@ M = {
 		var entity;
 		var currentzoom = M.Map.getZoom();
 		var waypointsize, landmarksize;
+		var sectorfontsize, sectoropacity;
 		
 		switch (currentzoom)
 		{
@@ -3916,6 +3911,24 @@ M = {
 				{
 					M.changeMarkerIcon(entity, M.cICON_HEART, landmarksize);
 				} break;
+				
+				case M.MappingEnum.Sector:
+				{
+					switch (currentzoom)
+					{
+						case 7: sectorfontsize = "28px"; sectoropacity = 0.9; break;
+						case 6: sectorfontsize = "20px"; sectoropacity = 0.6; break;
+						case 5: sectorfontsize = "16px"; sectoropacity = 0.3; break;
+						default: { sectorfontsize = "0px"; sectoropacity = 0;  }
+					}
+					entity._icon.style.fontSize = sectorfontsize;
+					entity._icon.style.opacity = sectoropacity;
+					entity._icon.style.zIndex = M.cZIndexBury + 1; // Don't cover other icons
+					if (O.Options.bol_displaySectors)
+					{
+						entity._icon.style.display = "table"; // For middle vertical alignment
+					}
+				} break;
 			}
 		}
 		M.burySubmaps();
@@ -3924,27 +3937,25 @@ M = {
 	/*
 	 * Resizes story markers and submaps so they scale with the current zoom level.
 	 */
-	adjustZoomStory: function()
+	adjustZoomEvent: function()
 	{
 		var i;
 		var currentzoom = M.Map.getZoom();
 		var icon;
-		var landmarksize;
 		var submap;
 		var submapwidth;
 		var submapheight;
 		
 		switch (currentzoom)
 		{
-			case 7: M.currentIconSize = 32; landmarksize = 32; break;
-			case 6: M.currentIconSize = 28; landmarksize = 24; break;
-			case 5: M.currentIconSize = 24; landmarksize = 16; break;
-			case 4: M.currentIconSize = 20; landmarksize = 0; break;
-			case 3: M.currentIconSize = 16; landmarksize = 0; break;
+			case 7: M.currentIconSize = 32; break;
+			case 6: M.currentIconSize = 28; break;
+			case 5: M.currentIconSize = 24; break;
+			case 4: M.currentIconSize = 20; break;
+			case 3: M.currentIconSize = 16; break;
 			default:
 			{
 				M.currentIconSize = 0;
-				landmarksize = 0;
 			}
 		}
 		
@@ -4036,7 +4047,7 @@ M = {
 		M.Map.on("zoomend", function(pEvent)
 		{
 			M.adjustZoomMapping();
-			M.adjustZoomStory();
+			M.adjustZoomEvent();
 		});
 	},
 	
@@ -4326,7 +4337,7 @@ M = {
 	},
 	
 	/*
-	 * Hides all the map icons by triggering the toggle button of each map section.
+	 * Hides all the Map page's section icons by triggering the toggle button of each section.
 	 */
 	displayIcons: function(pSection, pWantShow)
 	{
@@ -4663,10 +4674,11 @@ P = {
 					}
 					
 					/*
-					 * For skill challenges and heart tasks.
+					 * For API separate arrays for pois.
 					 */
 					if (O.Options.bol_showMappingIcons)
 					{
+						// Skill Challenges
 						numofpois = zone.skill_challenges.length;
 						for (i = 0; i < numofpois; i++)
 						{
@@ -4687,6 +4699,7 @@ P = {
 							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
 						}
 						
+						// Renown Hearts
 						numofpois = zone.tasks.length;
 						for (i = 0; i < numofpois; i++)
 						{
@@ -4714,6 +4727,27 @@ P = {
 								}
 								window.open(U.convertExternalURL(U.getWikiLanguageLink(heartname)), "_blank");
 							});
+							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
+						}
+						
+						// Sector Names
+						numofpois = zone.sectors.length;
+						for (i = 0; i < numofpois; i++)
+						{
+							poi = zone.sectors[i];
+							mappingentity = L.marker(M.convertGCtoLC(poi.coord),
+							{
+								clickable: false,
+								mappingtype: M.MappingEnum.Sector,
+								icon: L.divIcon(
+								{
+									className: "mapSec",
+									html: "<span class='mapSecIn'>" + poi.name + "</span>",
+									iconSize: [512, 64],
+									iconAnchor: [256, 32]
+								})
+							}).addTo(M.Map);
+							mappingentity._icon.style.display = "none";
 							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
 						}
 					}
@@ -4764,7 +4798,7 @@ P = {
 			M.isMapAJAXDone = true;
 			M.bindMapVisualChanges();
 			M.adjustZoomMapping();
-			M.adjustZoomStory();
+			M.adjustZoomEvent();
 			M.goToURLCoords();
 		});
 		
@@ -5282,11 +5316,11 @@ P = {
 				var pings = X.getCheckedIndexes(X.Checklists[type]);
 				if (pings.length === 0)
 				{
-					U.updateAddressBar();
+					U.updateQueryString();
 				}
 				else
 				{
-					history.replaceState("", null, "?" + key + "=" + pings);
+					U.updateAddressBar("?" + key + "=" + pings);
 				}
 			});
 		};
@@ -5360,7 +5394,7 @@ P = {
 					P.styleCollectibleMarker(thiscushion[thisi], X.ChecklistEnum.Unfound);
 				}
 				X.clearChecklist(X.Checklists[collectibletype]);
-				U.updateAddressBar();
+				U.updateQueryString();
 			});
 		}
 		I.qTip.init(".mapNeedle");
@@ -6265,7 +6299,7 @@ K = {
 	currentFrameOffsetMinutes: 0,
 	iconOpacityChecked: 0.4,
 	iconOpacitySpeed: 200,
-	oldSectorAngle: 0,
+	oldQuadrantAngle: 0,
 	cDEGREES_IN_CIRCLE: 360,
 	cDEGREES_IN_QUADRANT: 90,
 	
@@ -6333,20 +6367,21 @@ K = {
 	
 	/*
 	 * Removes the filter attribute from SVG elements that have them (as in
-	 * the shadow effect), then re-adds the filter. This is used because Firefox
-	 * has a bug that causes the clock's circumference and hand to disappear
-	 * when the whole clock is moved visually.
+	 * the shadow effect), then re-adds the filter. Workaround for a Firefox bug
+	 * https://bugzilla.mozilla.org/show_bug.cgi?id=652991
 	 */
 	reapplyFilters: function()
 	{
 		if (I.BrowserUser === I.BrowserEnum.Firefox)
 		{
-			var e1 = $("#clkCircumference");
-			var e2 = $("#clkHands");
-			var f1 = e1.attr("filter");
-			var f2 = e2.attr("filter");
-			e1.removeAttr("filter").attr("filter", f1);
-			e2.removeAttr("filter").attr("filter", f2);
+			var c = $("#clkCircumference");
+			var h = $("#clkHands");
+			var f1 = "url(#clkFilterShadowOuter)";
+			var f2 = "url(#clkGradientCircumference)";
+			var f3 = "url(#clkFilterShadowHand)";
+			c.removeAttr("filter").attr("filter", f1);
+			c.css("stroke", f2);
+			h.removeAttr("filter").attr("filter", f3);
 		}
 	},
 	
@@ -6895,28 +6930,28 @@ K = {
 				T["cSECS_MARK_" + i0], T["cSECS_MARK_" + i1], T["cSECS_MARK_" + i2], T["cSECS_MARK_" + i3]
 			);
 	
-			// Animate sector rotation
-			var sector = document.getElementById("clkSector");
-			var newsectorangle = parseInt(i0) * K.cDEGREES_IN_QUADRANT;
-			if (newsectorangle === 0 && K.oldSectorAngle !== 0)
+			// Animate quadrant rotation
+			var quad = document.getElementById("clkQuadrant");
+			var newquadangle = parseInt(i0) * K.cDEGREES_IN_QUADRANT;
+			if (newquadangle === 0 && K.oldQuadrantAngle !== 0)
 			{
-				newsectorangle = K.cDEGREES_IN_CIRCLE;
+				newquadangle = K.cDEGREES_IN_CIRCLE;
 			}
 			
-			$({angle: K.oldSectorAngle}).animate({angle: newsectorangle}, {
+			$({angle: K.oldQuadrantAngle}).animate({angle: newquadangle}, {
 				duration: 600,
-				step: function() { K.rotateClockElement(sector, this.angle); },
-				done: function() { K.rotateClockElement(sector, newsectorangle); }
+				step: function() { K.rotateClockElement(quad, this.angle); },
+				done: function() { K.rotateClockElement(quad, newquadangle); }
 			});
 			
-			if (newsectorangle === K.cDEGREES_IN_CIRCLE)
+			if (newquadangle === K.cDEGREES_IN_CIRCLE)
 			{
-				newsectorangle = 0;
+				newquadangle = 0;
 			}
-			K.oldSectorAngle = newsectorangle;
+			K.oldQuadrantAngle = newquadangle;
 		};
 		
-		// Recolor the active event's markers and rotate clock sector
+		// Recolor the active event's markers and rotate clock quadrant
 		// Note that clock elements' IDs are suffixed with numbers 0-3 for easy iteration
 		if (secinhour >= T.cSECS_MARK_0 && secinhour < T.cSECS_MARK_1)
 		{
@@ -7032,7 +7067,7 @@ K = {
 	},
 	
 	/*
-	 * Updates the current and next story events icons' clipboard text.
+	 * Updates the current and next Living Story events icons' clipboard text.
 	 */
 	updateStoryClipboard: function()
 	{
@@ -7326,13 +7361,25 @@ U = {
 		return pString.substr(0, pIndex) + pCharacter + pString.substr(pIndex + pCharacter.length);
 	},
 	
-		/*
+	/*
+	 * Updates the address bar with the given string affixed to the site base URL.
+	 * This should be the only place the "history" global variable is used.
+	 * @param string pString URL query string.
+	 */
+	updateAddressBar: function(pString)
+	{
+		history.replaceState("", null, pString);
+		// Workaround Firefox SVG url bug
+		K.reapplyFilters();
+	},
+	
+	/*
 	 * Rewrites the URL in the address bar to show the current page and section.
 	 * Does not actually load anything and is only a visual effect; however, if
 	 * the user presses enter with that URL (go to such a link), a separate
 	 * function will load that page (content layer) and expand that section.
 	 */
-	updateAddressBar: function()
+	updateQueryString: function()
 	{
 		if (I.PageCurrent !== "")
 		{
@@ -7358,7 +7405,7 @@ U = {
 				gostring = "&" + U.KeyEnum.Go + "=" + go;
 			}
 			
-			history.replaceState("", null, pagestring + sectionstring + articlestring + gostring);
+			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring);
 		}
 	},
 	
@@ -7507,6 +7554,7 @@ I = {
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
 	cTOOLTIP_ADD_OFFSET_Y: 42,
 	cTOOLTIP_ADD_OFFSET_X: 36,
+	cTOOLTIP_MOUSEMOVE_RATE: 50,
 	
 	// Content-Layer-Page and Section-Header
 	isProgramLoaded: false,
@@ -7684,8 +7732,6 @@ I = {
 			I.selectText("#jsConsole");
 		});
 		U.convertExternalLink(".linkExternal");
-		// Fix Firefox SVG filter bug
-		K.reapplyFilters();
 		
 		// The menu bar overlaps the language popup, so have to "raise" the clock pane
 		$("#itemLanguage").hover(
@@ -7927,7 +7973,7 @@ I = {
 					
 					I[I.sectionPrefix + layer] = section;
 				}
-				U.updateAddressBar();
+				U.updateQueryString();
 				
 				// Do the collapse/expand
 				if ($(this).data("donotanimate") !== "true")
@@ -8146,7 +8192,7 @@ I = {
 					width: "show"
 				}, 200);
 				// Update the address bar URL with the current layer name
-				U.updateAddressBar();
+				U.updateQueryString();
 				
 				// Also hide chain paths if on the map layer
 				if (O.Options.bol_showChainPaths)
@@ -8478,7 +8524,7 @@ I = {
 		 * Make the tooltip appear within the visible window by detecting current
 		 * tooltip size and mouse position.
 		 */
-		$("#panelRight").mousemove(function(pEvent)
+		$("#panelRight").mousemove($.throttle(I.cTOOLTIP_MOUSEMOVE_RATE, function(pEvent)
 		{
 			/*
 			$("#jsConsole").html(pEvent.pageX + ", " + pEvent.pageY + "<br />"
@@ -8496,8 +8542,8 @@ I = {
 				I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 			}
 			I.qTip.offsetX = I.cTOOLTIP_DEFAULT_OFFSET_X;
-		});
-		$("#panelLeft").mousemove(function(pEvent)
+		}));
+		$("#panelLeft").mousemove($.throttle(I.cTOOLTIP_MOUSEMOVE_RATE, function(pEvent)
 		{
 			// Tooltip overflows right edge
 			if ($("#qTip").width() + pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $(window).width())
@@ -8522,7 +8568,7 @@ I = {
 			{
 				I.qTip.offsetY = -42;
 			}
-		});
+		}));
 	},
 	
 	/*

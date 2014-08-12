@@ -104,7 +104,7 @@
 				<img id="itemClockIconHC3" class="iconHC" src="img/chain/tbd.png" alt="X:45" />
 			</div>
 			<svg id="itemClock" viewBox="0 0 100 100"><!-- x=50,y=50 is the center -->
-				<defs><!-- Shadow filters -->
+				<defs id="clkDefinitions"><!-- Shadow filters -->
 					<filter id="clkFilterShadowOuter" height="130%">
 						<feGaussianBlur in="SourceAlpha" stdDeviation="3" />
 						<feOffset dx="0" dy="0" result="offsetblur" />
@@ -130,7 +130,7 @@
 					</linearGradient>
 				</defs>
 				<circle id="clkCircumference" cx="50" cy="50" r="45" filter="url(#clkFilterShadowOuter)" style="stroke:url(#clkGradientCircumference)" />
-				<path id="clkSector" d="M50,50 L50,6 A44,44 0,0 1 94,50 z" /><!-- 1/4 slice of a circle -->
+				<path id="clkQuadrant" d="M50,50 L50,6 A44,44 0,0 1 94,50 z" /><!-- 1/4 slice of a circle -->
 				<g id="clkTicks"><!-- 12 hour tick marks -->
 					<line x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
 					<line x1="72.50" y1="11.03" x2="70.00" y2="15.36" />
@@ -296,6 +296,7 @@
 					<label style="display:inline-block" title="Show/Hide map icons for world completion. Will increase initial site load time if enabled."><input id="opt_bol_showMappingIcons" type="checkbox" /> Display map completion icons</label>
 					<samp class="jsHelpCollapsible"></samp>
 					<div class="cssIndent">
+						<label><input id="opt_bol_displaySectors" type="checkbox" /> Sector Names</label>
 						<label><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
 						<label><input id="opt_bol_displayPOIs" type="checkbox" /> POIs</label>
 						<label><input id="opt_bol_displayVistas" type="checkbox" /> Vistas</label>

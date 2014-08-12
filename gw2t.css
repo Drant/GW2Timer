@@ -1,4 +1,4 @@
-/*
+map/*
 	Design: "Synchronicity" with Guild Wars 2 assets and motifs.
 	Website: GW2Timer world boss timer and map guide.
 	Measurements: minimum window size is 360x580, which is only enough for the
@@ -65,6 +65,7 @@ body {
 }
 #paneWarning {
 	background: #111;
+	opacity: 0.3;
 }
 #jsConsole, #jsConsoleButtons, #paneWarning {
 	font-family: monospace;
@@ -177,7 +178,7 @@ a, input, label, button,
 	cursor: url("img/cursor/help.cur"), help;
 }
 
-::selection {
+.cntComposition ::selection {
 	color: #576976;
 }
 
@@ -258,6 +259,25 @@ input#mapCoordinatesRegion {
 }
 #mapCompassButton:hover {
 	opacity: 1;
+}
+
+.mapSec {
+	font-family: Menomonia;
+	font-size: 0px;
+	font-style: italic;
+	text-align: center;
+	color: white;
+	text-shadow:
+		1px 1px 1px #000,
+		-1px -1px 1px #000,
+		1px -1px 1px #000,
+		-1px 1px 1px #000,
+		1px 1px 1px #000;
+}
+
+.mapSecIn {
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .mapLoc {
@@ -490,7 +510,7 @@ input#mapCoordinatesRegion {
 #clkCircumference { /* Clock circumference */
 	stroke-width: 2px;
 }
-#clkSector { /* Quadrant slice of the clock */
+#clkQuadrant { /* Quadrant slice of the clock */
 	stroke-width: 1px;
 	stroke: chartreuse ;
 	fill: lime;
