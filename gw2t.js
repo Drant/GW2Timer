@@ -69,7 +69,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140806},
+		programVersion: {key: "int_utlProgramVersion", value: 140812},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -230,8 +230,8 @@ O = {
 				+ "Would you like to see the <a class='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />"
 				+ "<br />"
 				+ "New in this version:<br />"
+				+ "- Dry Top Challenger Cliffs events. Click the gold stars on the clock area to auto-copy chatlinks.<br />"
 				+ "- Map completion <a href='./?bol_showMappingIcons=true'>option to display</a> POIs, Vistas, Skill Points, and Hearts.<br />"
-				+ "- More languages: <a href='./?enu_Language=cs'>Čeština</a>, <a href='./?enu_Language=it'>Italiano</a>, <a href='./?enu_Language=pt'>Português</a>.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -990,9 +990,10 @@ X = {
 		 * The urlkey properties must be unique from the global KeyEnum.
 		 */
 		Collectible0: { key: "str_chlDiveMaster", urlkey: "divemaster", value: "", cushion: new Array() },
-		Collectible1: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: "", cushion: new Array() },
-		Collectible2: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: "", cushion: new Array() },
-		Collectible3: { key: "str_chlBuriedChest", urlkey: "chests", value: "", cushion: new Array() }
+		Collectible1: { key: "str_chlBuriedChest", urlkey: "chests", value: "", cushion: new Array() },
+		Collectible2: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: "", cushion: new Array() },
+		Collectible3: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: "", cushion: new Array() },
+		Collectible4: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: "", cushion: new Array() }
 	},
 	ChecklistEnum:
 	{
@@ -2137,25 +2138,25 @@ D = {
 		ru: "Трехголовый Червь",
 		zh: "蟲三頭"
 	},{
-		en: "The Dragon's Reach I Q1",
-		de: "Im Bann des Drachen I Q1",
-		es: "El Alcance del Dragón I Q1",
-		fr: "L'ombre du Dragon I Q1"
+		en: "The Dragon's Reach II Q1",
+		de: "Im Bann des Drachen II Q1",
+		es: "El Alcance del Dragón II Q1",
+		fr: "L'ombre du Dragon II Q1"
 	},{
-		en: "The Dragon's Reach I Q2",
-		de: "Im Bann des Drachen I Q2",
-		es: "El Alcance del Dragón I Q2",
-		fr: "L'ombre du Dragon I Q2"
+		en: "The Dragon's Reach II Q2",
+		de: "Im Bann des Drachen II Q2",
+		es: "El Alcance del Dragón II Q2",
+		fr: "L'ombre du Dragon II Q2"
 	},{
-		en: "The Dragon's Reach I Q3",
-		de: "Im Bann des Drachen I Q3",
-		es: "El Alcance del Dragón I Q3",
-		fr: "L'ombre du Dragon I Q3"
+		en: "The Dragon's Reach II Q3",
+		de: "Im Bann des Drachen II Q3",
+		es: "El Alcance del Dragón II Q3",
+		fr: "L'ombre du Dragon II Q3"
 	},{
-		en: "The Dragon's Reach I Q4",
-		de: "Im Bann des Drachen I Q4",
-		es: "El Alcance del Dragón I Q4",
-		fr: "L'ombre du Dragon I Q4"
+		en: "The Dragon's Reach II Q4",
+		de: "Im Bann des Drachen II Q4",
+		es: "El Alcance del Dragón II Q4",
+		fr: "L'ombre du Dragon II Q4"
 	},{
 		en: "Fire Shaman",
 		de: "Feuerschamanen",
@@ -3583,7 +3584,7 @@ M = {
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
 	cMAP_MOUSEMOVE_RATE: 100,
-	cZoomLevelBase: 2,
+	cZoomLevelFactor: 2,
 	ZoomLevelEnum:
 	{
 		Min: 0,
@@ -3649,6 +3650,39 @@ M = {
 	getZoneFromID: function(pString)
 	{
 		return M.Zones[M.ZoneAssociations[pString]];
+	},
+	
+	/*
+	 * Gets a zone's translated name if available.
+	 * @param string pNick name of the zone to retrieve, or a zone object itself.
+	 * @returns string zone name.
+	 */
+	getZoneName: function(pNick)
+	{
+		// Polymorphic function
+		var zone;
+		if (typeof(pNick) === "string" && M.Zones[pNick])
+		{
+			zone = M.Zones[pNick];
+		}
+		else if (pNick["name"])
+		{
+			zone = pNick;
+		}
+		else
+		{
+			return "nozonename";
+		}
+		
+		// Now get the name
+		if (M.isAPIRetrieved_MAPFLOOR && D.isLanguageSecondary() === true)
+		{
+			return zone["name_" + D.getFullySupportedLanguage()];
+		}
+		else
+		{
+			return zone["name"];
+		}
 	},
 	
 	/*
@@ -3784,14 +3818,7 @@ M = {
 					// Update the master moused zone index to the current index
 					M.mousedZoneIndex = i;
 					M.ZoneCurrent = M.Zones[i];
-					if (M.isAPIRetrieved_MAPFLOOR && D.isLanguageSecondary() === true)
-					{
-						zonename = M.ZoneCurrent["name_" + D.getFullySupportedLanguage()];
-					}
-					else
-					{
-						zonename = M.ZoneCurrent["name"];
-					}
+					zonename = M.getZoneName(M.ZoneCurrent);
 					document.getElementById("mapCoordinatesRegion")
 						.value = zonename;
 					
@@ -3848,7 +3875,7 @@ M = {
 	scaleDimension: function(pMaxDimension, pZoomLevel)
 	{
 		pZoomLevel = pZoomLevel || M.Map.getZoom();
-		return parseInt(pMaxDimension / (Math.pow(M.cZoomLevelBase, (M.ZoomLevelEnum.Max) - pZoomLevel)));
+		return parseInt(pMaxDimension / (Math.pow(M.cZoomLevelFactor, (M.ZoomLevelEnum.Max) - pZoomLevel)));
 	},
 	
 	/*
@@ -4337,6 +4364,21 @@ M = {
 	},
 	
 	/*
+	 * Translates the zones list in the Map page and bind click zoom behavior.
+	 * @pre The translated names from the API was retrieved.
+	 */
+	bindZoneList: function()
+	{
+		$("#layerMap .mapZones li").each(function()
+		{
+			var zonenick = $(this).attr("data-zone");
+			$(this).text(M.getZoneName(zonenick));
+			$(this).attr("data-coord", M.getZoneCenter(zonenick).toString());
+			M.bindMapLinkBehavior($(this), null, M.ZoomLevelEnum.Sky);
+		});
+	},
+	
+	/*
 	 * Hides all the Map page's section icons by triggering the toggle button of each section.
 	 */
 	displayIcons: function(pSection, pWantShow)
@@ -4452,7 +4494,7 @@ P = {
 	 */
 	generateSubmaps: function()
 	{
-		M.SubmapTemp = P.createSubmap([2048, 1536], [3792, 15675], "http://i.imgur.com/2IXZvAM.jpg");
+		M.SubmapTemp = P.createSubmap([2048, 1536], [3713, 15681], "http://i.imgur.com/nB9kM3O.jpg");
 	},
 	
 	/*
@@ -5460,34 +5502,42 @@ T = {
 	{
 		numOfSets: 7,
 		
-		en0: "TendrilW@[&BIYHAAA=] Shaman@[&BIsHAAA=] Victims@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Crystals@[&BHIHAAA=] TendrilSE@[&BHMHAAA=]",
-		en1: "Bridge@[&BIkHAAA=] Experiment@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
-		en2: "Leyline@[&BIMHAAA=] Town@[&BH4HAAA=] Basket@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
-		en3: "Giant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Mites@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosives@[&BH4HAAA=]",
+		en0: "Supplies@[&BJcHAAA=] Rustbucket@[&BJYHAAA=] TendrilW@[&BIYHAAA=] Shaman@[&BIsHAAA=]"
+			+ " Victims@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Crystals@[&BHIHAAA=] TendrilSE@[&BHMHAAA=]",
+		en1: "Beetles@[&BJYHAAA=] Bridge@[&BIkHAAA=] Experiment@[&BIwHAAA=] Golem@[&BIoHAAA=]"
+			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
+		en2: "Suit@[&BJMHAAA=] Leyline@[&BIMHAAA=] Town@[&BH4HAAA=] Basket@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
+		en3: "Eway@[&BJcHAAA=] Giant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Mites@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosives@[&BH4HAAA=]",
 		en4: "DEVOURER(2)@[&BHkHAAA=] Giant@[&BIwHAAA=]",
 		en5: "Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Chickenado@[&BI4HAAA=] TWISTER(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
 		en6: "Monster(4)@[&BHoHAAA=]",
 		
-		de0: "DschungelrankeW@[&BIYHAAA=] Schamanin@[&BIsHAAA=] Unfallopfer@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Kristalle@[&BHIHAAA=] DschungelrankeSO@[&BHMHAAA=]",
-		de1: "Rankenbrücke@[&BIkHAAA=] Experimente@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MinenO@[&BHsHAAA=]",
-		de2: "Leylinien@[&BIMHAAA=] Kleinstadt@[&BH4HAAA=] Drachenkorb@[&BHMHAAA=] MinenNO@[&BH0HAAA=]",
-		de3: "Riesen@[&BIwHAAA=] Skritt@[&BIwHAAA=] Staubmilben@[&BHUHAAA=] Dunst@[&BHIHAAA=] Sprengstoff@[&BH4HAAA=]",
+		de0: "Vorräte@[&BJcHAAA=] Schrotteimer@[&BJYHAAA=] DschungelrankeW@[&BIYHAAA=] Schamanin@[&BIsHAAA=]"
+			+ " Unfallopfer@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Kristalle@[&BHIHAAA=] DschungelrankeSO@[&BHMHAAA=]",
+		de1: "Käfern@[&BJYHAAA=] Rankenbrücke@[&BIkHAAA=] Experimente@[&BIwHAAA=] Golem@[&BIoHAAA=]"
+			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MinenO@[&BHsHAAA=]",
+		de2: "Aspektanzug@[&BJMHAAA=] Leylinien@[&BIMHAAA=] Kleinstadt@[&BH4HAAA=] Drachenkorb@[&BHMHAAA=] MinenNO@[&BH0HAAA=]",
+		de3: "Eway@[&BJcHAAA=] Riesen@[&BIwHAAA=] Skritt@[&BIwHAAA=] Staubmilben@[&BHUHAAA=] Dunst@[&BHIHAAA=] Sprengstoff@[&BH4HAAA=]",
 		de4: "VERSCHLINGER(2)@[&BHkHAAA=] Riesen@[&BIwHAAA=]",
 		de5: "Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Hühnerwirbelwind@[&BI4HAAA=] STAUBWIRBELWIND(3)@[&BHoHAAA=] Dunst@[&BHIHAAA=]",
 		de6: "Staubmonster(4)@[&BHoHAAA=]",
 		
-		es0: "ZarcilloO@[&BIYHAAA=] Chamán@[&BIsHAAA=] Víctimas@[&BIwHAAA=] Ñique@[&BHYHAAA=] Cristales@[&BHIHAAA=] ZarcilloSE@[&BHMHAAA=]",
-		es1: "Puente@[&BIkHAAA=] Experimento@[&BIwHAAA=] Gólem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MinaE@[&BHsHAAA=]",
-		es2: "Líneasley@[&BIMHAAA=] Villa@[&BH4HAAA=] Cestas@[&BHMHAAA=] MinaNE@[&BH0HAAA=]",
-		es3: "Gigante@[&BIwHAAA=] Skritt@[&BIwHAAA=] Ácaros@[&BHUHAAA=] Bruma@[&BHIHAAA=] Explosivos@[&BH4HAAA=]",
+		es0: "Suministros@[&BJcHAAA=] Chatarro@[&BJYHAAA=] ZarcilloO@[&BIYHAAA=] Chamán@[&BIsHAAA=]"
+			+ " Víctimas@[&BIwHAAA=] Ñique@[&BHYHAAA=] Cristales@[&BHIHAAA=] ZarcilloSE@[&BHMHAAA=]",
+		es1: "Escarabajos@[&BJYHAAA=] Puente@[&BIkHAAA=] Experimento@[&BIwHAAA=] Gólem@[&BIoHAAA=]"
+			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MinaE@[&BHsHAAA=]",
+		es2: "Traje@[&BJMHAAA=] Líneasley@[&BIMHAAA=] Villa@[&BH4HAAA=] Cestas@[&BHMHAAA=] MinaNE@[&BH0HAAA=]",
+		es3: "Eway@[&BJcHAAA=] Gigante@[&BIwHAAA=] Skritt@[&BIwHAAA=] Ácaros@[&BHUHAAA=] Bruma@[&BHIHAAA=] Explosivos@[&BH4HAAA=]",
 		es4: "DEVORADORA(2)@[&BHkHAAA=] Gigante@[&BIwHAAA=]",
 		es5: "Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Huracánpollo@[&BI4HAAA=] HURACÁN(3)@[&BHoHAAA=] Bruma@[&BHIHAAA=]",
 		es6: "Monstruo(4)@[&BHoHAAA=]",
 		
-		fr0: "VrilleO@[&BIYHAAA=] Chamane@[&BIsHAAA=] Survivants@[&BIwHAAA=] Bipbip@[&BHYHAAA=] Cristales@[&BHIHAAA=] VrilleSE@[&BHMHAAA=]",
-		fr1: "Pont@[&BIkHAAA=] Expériences@[&BIwHAAA=] Golem@[&BIoHAAA=] Nochtli@[&BHkHAAA=] COLOCALe@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
-		fr2: "Lignesforce@[&BIMHAAA=] Bourg@[&BH4HAAA=] Panier@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
-		fr3: "Géant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Acarides@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosifs@[&BH4HAAA=]",
+		fr0: "Provisions@[&BJcHAAA=] Tadrouille@[&BJYHAAA=] VrilleO@[&BIYHAAA=] Chamane@[&BIsHAAA=]"
+			+ " Survivants@[&BIwHAAA=] Bipbip@[&BHYHAAA=] Cristales@[&BHIHAAA=] VrilleSE@[&BHMHAAA=]",
+		fr1: "Scarabées@[&BJYHAAA=] Pont@[&BIkHAAA=] Expériences@[&BIwHAAA=] Golem@[&BIoHAAA=]"
+			+ " Nochtli@[&BHkHAAA=] COLOCALe@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
+		fr2: "Combinaison@[&BJMHAAA=] Lignesforce@[&BIMHAAA=] Bourg@[&BH4HAAA=] Panier@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
+		fr3: "Eway@[&BJcHAAA=] Géant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Acarides@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosifs@[&BH4HAAA=]",
 		fr4: "DÉVOREUSE(2)@[&BHkHAAA=] Géant@[&BIwHAAA=]",
 		fr5: "Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Tournoiementpoule@[&BI4HAAA=] TORNADE(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
 		fr6: "Monstre(4)@[&BHoHAAA=]"
@@ -7228,7 +7278,7 @@ U = {
 			}
 			else if (page === "chests")
 			{
-				U.Args[X.Checklists.Collectible3.urlkey] = "true";
+				U.Args[X.Checklists.Collectible1.urlkey] = "true";
 			}
 			else
 			{
@@ -7245,12 +7295,12 @@ U = {
 		}
 		
 		// Else if special page is not specified
-		var chests = U.Args[X.Checklists.Collectible3.urlkey];
+		var chests = U.Args[X.Checklists.Collectible1.urlkey];
 		if (chests)
 		{
 			U.Args[U.KeyEnum.Page] = I.PageEnum.Map;
 			U.Args[U.KeyEnum.Section] = I.SectionEnum.Map.Collectible;
-			U.Args[U.KeyEnum.Article] = "4";
+			U.Args[U.KeyEnum.Article] = "2";
 			U.Args[U.KeyEnum.Go] = "4816,16443,1";
 		}
 	},
@@ -7554,7 +7604,7 @@ I = {
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
 	cTOOLTIP_ADD_OFFSET_Y: 42,
 	cTOOLTIP_ADD_OFFSET_X: 36,
-	cTOOLTIP_MOUSEMOVE_RATE: 50,
+	cTOOLTIP_MOUSEMOVE_RATE: 10,
 	
 	// Content-Layer-Page and Section-Header
 	isProgramLoaded: false,
@@ -8284,12 +8334,9 @@ I = {
 		$("#layerMap").load(I.cPageURLMap, function()
 		{
 			I.bindAfterAJAXContent("#layerMap");
-
-			// Bind map zone links
-			$(".mapZones li").each(function()
-			{
-				M.bindMapLinkBehavior($(this), null, M.ZoomLevelEnum.Sky);
-			});
+			
+			// Translate and bind map zones list
+			$("#headerMap_Zone").one("click", M.bindZoneList);
 			// Create daily markers
 			$("#headerMap_Daily").one("click", P.generateAndInitializeDailies);
 			// Create node markers and checkboxes
@@ -8327,7 +8374,7 @@ I = {
 					}
 				});
 			});
-
+			
 			// Create additional map related side menu icon
 			$("<img class='menuBeamIcon menuBeamIconCenter' src='img/map/star.png' "
 				+ "title='&lt;dfn&gt;Map Center&lt;/dfn&gt;' />")
