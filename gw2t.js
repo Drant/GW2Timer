@@ -93,7 +93,7 @@ O = {
 		bol_tourPrediction: true,
 		bol_showChainPaths: true,
 		bol_showMap: true,
-		bol_showMappingIcons: false,
+		bol_showWorldCompletion: false,
 		bol_displaySectors: true,
 		bol_displayWaypoints: true,
 		bol_displayPOIs: true,
@@ -231,7 +231,7 @@ O = {
 				+ "<br />"
 				+ "New in this version:<br />"
 				+ "- Dry Top Challenger Cliffs events. Click the gold stars on the clock area to auto-copy chatlinks.<br />"
-				+ "- Map completion <a href='./?bol_showMappingIcons=true'>option to display</a> POIs, Vistas, Skill Points, and Hearts.<br />"
+				+ "- Map completion icons. Hover over the compass button on the map to see map options.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -628,9 +628,32 @@ O = {
 			}
 		});
 		// POIs are created on site load
-		$("#opt_bol_showMappingIcons").change(function()
+		$("#opt_bol_showWorldCompletion").change(function()
 		{
-			location.reload();
+			if (O.Options.bol_showWorldCompletion === true
+				&& M.isMappingIconsGenerated === false)
+			{
+				location.reload();
+			}
+			
+			$("#mapOptionsDisplay label input").each(function()
+			{
+				X.setCheckboxEnumState($(this), X.boolToChecklistEnum(O.Options.bol_showWorldCompletion));
+			});
+		});
+		// Trigger zone in and out of current zone to toggle the icon's display
+		$("#mapOptionsDisplay label input").each(function()
+		{
+			$(this).change(function()
+			{
+				if (M.isAPIRetrieved_MAPFLOOR)
+				{
+					var currentcoord = M.ZoneCurrent.center;
+					M.showCurrentZone(M.getZoneCenter("dry"));
+					M.showCurrentZone(M.getZoneCenter("rata"));
+					M.showCurrentZone(currentcoord);
+				}
+			});
 		});
 		/*
 		 * Run some enactors when the site loads (because this an initializer function).
@@ -1008,6 +1031,20 @@ X = {
 	},
 	
 	/*
+	 * Converts a boolean to a checklist enum.
+	 * @param string pBoolean to convert.
+	 * @returns enum.
+	 */
+	boolToChecklistEnum: function(pBoolean)
+	{
+		if (pBoolean)
+		{
+			return X.ChecklistEnum.Checked;
+		}
+		return X.ChecklistEnum.Unchecked;
+	},
+	
+	/*
 	 * Creates a string for a checklist object with each character representing
 	 * a state, and each index representing a check item. Also initializes the
 	 * localStorage or load it as the checklist if already stored.
@@ -1244,6 +1281,7 @@ X = {
 			} break;
 			default: pElement.prop("checked", false);
 		}
+		pElement.trigger("change");
 	},
 	
 	/*
@@ -3573,6 +3611,7 @@ M = {
 	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 	isAPIRetrieved_MAPFLOOR: false,
+	isMappingIconsGenerated: false,
 	cICON_WAYPOINT: "img/map/waypoint.png",
 	cICON_WAYPOINTOVER: "img/map/waypoint_h.png",
 	cICON_LANDMARK: "img/map/landmark.png",
@@ -3711,6 +3750,8 @@ M = {
 		for (var i in M.Zones)
 		{
 			M.Zones[i].ZoneEntities = new Array();
+			M.Zones[i].center = M.getZoneCenter(i);
+			M.Zones[i].nick = i;
 		}
 		
 		// Do other initialization functions
@@ -3774,6 +3815,7 @@ M = {
 	 * Finds what zone the specified point is in by comparing it to the top left
 	 * and bottom right coordinates of the zones, then show the zone's visuals.
 	 * @param array pCoord containing x and y coordinates.
+	 * @pre Zone perimeters do not intersect.
 	 */
 	showCurrentZone: function(pCoord)
 	{
@@ -3849,12 +3891,12 @@ M = {
 	
 	/*
 	 * Gets the center coordinates of a zone.
-	 * @param string pZone nickname of the map.
+	 * @param string pNick short name of the zone.
 	 * @returns array of x and y coordinates.
 	 */
-	getZoneCenter: function(pZone)
+	getZoneCenter: function(pNick)
 	{
-		var rect = M.Zones[pZone].rect;
+		var rect = M.Zones[pNick].rect;
 		// x = OffsetX + (WidthOfZone/2), y = OffsetY + (HeightOfZone/2)
 		var x = rect[0][0] + ~~((rect[1][0] - rect[0][0]) / 2);
 		var y = rect[0][1] + ~~((rect[1][1] - rect[0][1]) / 2);
@@ -4630,7 +4672,7 @@ P = {
 							
 							case M.APIPOIEnum.Landmark:
 							{
-								if (O.Options.bol_showMappingIcons === false)
+								if (O.Options.bol_showWorldCompletion === false)
 								{
 									continue;
 								}
@@ -4642,7 +4684,7 @@ P = {
 							
 							case M.APIPOIEnum.Vista:
 							{
-								if (O.Options.bol_showMappingIcons === false)
+								if (O.Options.bol_showWorldCompletion === false)
 								{
 									continue;
 								}
@@ -4718,7 +4760,7 @@ P = {
 					/*
 					 * For API separate arrays for pois.
 					 */
-					if (O.Options.bol_showMappingIcons)
+					if (O.Options.bol_showWorldCompletion)
 					{
 						// Skill Challenges
 						numofpois = zone.skill_challenges.length;
@@ -4792,6 +4834,8 @@ P = {
 							mappingentity._icon.style.display = "none";
 							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
 						}
+						
+						M.isMappingIconsGenerated = true;
 					}
 				}
 			}
@@ -5509,8 +5553,8 @@ T = {
 		en2: "Suit@[&BJMHAAA=] Leyline@[&BIMHAAA=] Town@[&BH4HAAA=] Basket@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
 		en3: "Eway@[&BJcHAAA=] Giant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Mites@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosives@[&BH4HAAA=]",
 		en4: "DEVOURER(2)@[&BHkHAAA=] Giant@[&BIwHAAA=]",
-		en5: "Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Chickenado@[&BI4HAAA=] TWISTER(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
-		en6: "Monster(4)@[&BHoHAAA=]",
+		en5: "Eway@[&BJcHAAA=] Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Chickenado@[&BI4HAAA=] TWISTER(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		en6: "Beetle(5)@[&BJcHAAA=] Monster(4)@[&BHoHAAA=]",
 		
 		de0: "Vorräte@[&BJcHAAA=] Schrotteimer@[&BJYHAAA=] DschungelrankeW@[&BIYHAAA=] Schamanin@[&BIsHAAA=]"
 			+ " Unfallopfer@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Kristalle@[&BHIHAAA=] DschungelrankeSO@[&BHMHAAA=]",
@@ -5519,8 +5563,8 @@ T = {
 		de2: "Aspektanzug@[&BJMHAAA=] Leylinien@[&BIMHAAA=] Kleinstadt@[&BH4HAAA=] Drachenkorb@[&BHMHAAA=] MinenNO@[&BH0HAAA=]",
 		de3: "Eway@[&BJcHAAA=] Riesen@[&BIwHAAA=] Skritt@[&BIwHAAA=] Staubmilben@[&BHUHAAA=] Dunst@[&BHIHAAA=] Sprengstoff@[&BH4HAAA=]",
 		de4: "VERSCHLINGER(2)@[&BHkHAAA=] Riesen@[&BIwHAAA=]",
-		de5: "Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Hühnerwirbelwind@[&BI4HAAA=] STAUBWIRBELWIND(3)@[&BHoHAAA=] Dunst@[&BHIHAAA=]",
-		de6: "Staubmonster(4)@[&BHoHAAA=]",
+		de5: "Eway@[&BJcHAAA=] Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Hühnado@[&BI4HAAA=] STAUBWIRBELWIND(3)@[&BHoHAAA=] Dunst@[&BHIHAAA=]",
+		de6: "Riesenkäfer(5)@[&BJcHAAA=] Staubmonster(4)@[&BHoHAAA=]",
 		
 		es0: "Suministros@[&BJcHAAA=] Chatarro@[&BJYHAAA=] ZarcilloO@[&BIYHAAA=] Chamán@[&BIsHAAA=]"
 			+ " Víctimas@[&BIwHAAA=] Ñique@[&BHYHAAA=] Cristales@[&BHIHAAA=] ZarcilloSE@[&BHMHAAA=]",
@@ -5529,18 +5573,18 @@ T = {
 		es2: "Traje@[&BJMHAAA=] Líneasley@[&BIMHAAA=] Villa@[&BH4HAAA=] Cestas@[&BHMHAAA=] MinaNE@[&BH0HAAA=]",
 		es3: "Eway@[&BJcHAAA=] Gigante@[&BIwHAAA=] Skritt@[&BIwHAAA=] Ácaros@[&BHUHAAA=] Bruma@[&BHIHAAA=] Explosivos@[&BH4HAAA=]",
 		es4: "DEVORADORA(2)@[&BHkHAAA=] Gigante@[&BIwHAAA=]",
-		es5: "Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Huracánpollo@[&BI4HAAA=] HURACÁN(3)@[&BHoHAAA=] Bruma@[&BHIHAAA=]",
-		es6: "Monstruo(4)@[&BHoHAAA=]",
+		es5: "Eway@[&BJcHAAA=] Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Pollonado@[&BI4HAAA=] HURACÁN(3)@[&BHoHAAA=] Bruma@[&BHIHAAA=]",
+		es6: "Escarabajo(5)@[&BJcHAAA=] Monstruo(4)@[&BHoHAAA=]",
 		
 		fr0: "Provisions@[&BJcHAAA=] Tadrouille@[&BJYHAAA=] VrilleO@[&BIYHAAA=] Chamane@[&BIsHAAA=]"
 			+ " Survivants@[&BIwHAAA=] Bipbip@[&BHYHAAA=] Cristales@[&BHIHAAA=] VrilleSE@[&BHMHAAA=]",
 		fr1: "Scarabées@[&BJYHAAA=] Pont@[&BIkHAAA=] Expériences@[&BIwHAAA=] Golem@[&BIoHAAA=]"
-			+ " Nochtli@[&BHkHAAA=] COLOCALe@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
+			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
 		fr2: "Combinaison@[&BJMHAAA=] Lignesforce@[&BIMHAAA=] Bourg@[&BH4HAAA=] Panier@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
 		fr3: "Eway@[&BJcHAAA=] Géant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Acarides@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosifs@[&BH4HAAA=]",
 		fr4: "DÉVOREUSE(2)@[&BHkHAAA=] Géant@[&BIwHAAA=]",
-		fr5: "Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Tournoiementpoule@[&BI4HAAA=] TORNADE(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
-		fr6: "Monstre(4)@[&BHoHAAA=]"
+		fr5: "Eway@[&BJcHAAA=] Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Poulenade@[&BI4HAAA=] TORNADE(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
+		fr6: "Scarabée(5)@[&BJcHAAA=] Monstre(4)@[&BHoHAAA=]"
 	},
 	Schedule: {},
 	Hourly: {},
@@ -7600,6 +7644,7 @@ I = {
 	cPANE_CLOCK_HEIGHT_BAR: 85,
 	cPANE_MENU_HEIGHT: 48,
 	cPANE_BEAM_LEFT: -41,
+	cTOOLTIP_MAX_WIDTH: 360,
 	cTOOLTIP_DEFAULT_OFFSET_X: -180,
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
 	cTOOLTIP_ADD_OFFSET_Y: 42,
@@ -8472,7 +8517,7 @@ I = {
 			{
 				// Remove elements extraneous or intrusive to overlay mode
 				$("#paneWarning").remove();
-				$(".itemMapLinks a, #itemSocial").hide();
+				$(".itemMapLinks a, .itemMapLinks span, #itemSocial").hide();
 				// Resize fonts and positions appropriate for smaller view
 				$("#jsConsole").css(
 				{
@@ -8537,7 +8582,7 @@ I = {
 		if (I.isProgramEmbedded)
 		{
 			$("#paneWarning").remove();
-			$(".itemMapLinks a").hide();
+			$(".itemMapLinks a, .itemMapLinks span").hide();
 		}
 	},
 	
@@ -8593,9 +8638,9 @@ I = {
 		$("#panelLeft").mousemove($.throttle(I.cTOOLTIP_MOUSEMOVE_RATE, function(pEvent)
 		{
 			// Tooltip overflows right edge
-			if ($("#qTip").width() + pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $(window).width())
+			if (I.cTOOLTIP_MAX_WIDTH + pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $(window).width())
 			{
-				I.qTip.offsetX = -($("#qTip").width()) - I.cTOOLTIP_ADD_OFFSET_X;
+				I.qTip.offsetX = -(I.cTOOLTIP_MAX_WIDTH) - I.cTOOLTIP_ADD_OFFSET_X;
 			}
 			else
 			{

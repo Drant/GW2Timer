@@ -67,7 +67,7 @@ body {
 	background: #111;
 	opacity: 0.3;
 }
-#jsConsole, #jsConsoleButtons, #paneWarning {
+#jsConsole, #paneWarning {
 	font-family: monospace;
 	font-size: 16px;
 	color: lime;
@@ -84,10 +84,12 @@ body {
 	z-index: 10;
 	left: 24px;
 	bottom: 48px;
-	color: red;
 }
-#jsConsoleButtons a:hover {
-	color: white;
+#jsConsoleButtons img {
+	opacity: 0.8;
+}
+#jsConsoleButtons img:hover {
+	opacity: 1;
 }
 #jsConsole a, #paneWarning a {
 	color: limegreen;
@@ -259,6 +261,39 @@ input#mapCoordinatesRegion {
 }
 #mapCompassButton:hover {
 	opacity: 1;
+}
+
+#mapOptions {
+	display: inline;
+}
+#mapOptionsPopup {
+	display: none;
+}
+#mapOptions:hover #mapOptionsPopup {
+	position: absolute;
+	top: 16px; right: 16px;
+	display: block;
+	width: 160px;
+	margin: 0;
+	padding: 10px;
+	box-shadow: 0px 0px 2px #555;
+	opacity: 0.8;
+}
+#mapOptionsDisplay {
+	margin-top: 6px;
+	margin-bottom: 8px;
+}
+#mapOptionsDisplay label {
+	margin: 0;
+	padding: 0;
+}
+#mapOptionsOther label {
+	margin-bottom: 4px;
+}
+#mapOptionsPopup label img {
+	width: 24px; height: 24px;
+	margin-right: 4px;
+	vertical-align: middle;
 }
 
 .mapSec {
