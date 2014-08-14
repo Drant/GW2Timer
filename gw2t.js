@@ -2165,16 +2165,16 @@ D = {
 		ru: "Теqуатл Тусклый",
 		zh: "Tequatl 沒有陽光"
 	},{
-		en: "Three Headed Wurm",
-		de: "Dreiköpfig Wurm",
-		es: "Sierpe de Tres Cabezas",
-		fr: "Guivre à Trois Têtes",
-		cs: "Tři Vedl Červ",
-		it: "Verme a Tre Teste",
-		pl: "Trzygłowy Robak",
-		pt: "Verme de Três Cabeças",
-		ru: "Трехголовый Червь",
-		zh: "蟲三頭"
+		en: "Triple Wurm",
+		de: "Dreifach Wurm",
+		es: "Sierpe Triple",
+		fr: "Guivre Triple",
+		cs: "Trojitý Červ",
+		it: "Verme Triplo",
+		pl: "Potrójne Robak",
+		pt: "Verme Triplo",
+		ru: "Тройной Червь",
+		zh: "三蟲"
 	},{
 		en: "The Dragon's Reach II Q1",
 		de: "Im Bann des Drachen II Q1",
@@ -3603,7 +3603,6 @@ M = {
 	Collectibles: {},
 	isMapAJAXDone: false,
 	ZoneCurrent: {},
-	mousedZoneIndex: null,
 	currentIconSize: 32,
 	currentRingSize: 256,
 	cICON_SIZE_STANDARD: 32,
@@ -3753,6 +3752,7 @@ M = {
 			M.Zones[i].center = M.getZoneCenter(i);
 			M.Zones[i].nick = i;
 		}
+		M.ZoneCurrent = M.Zones[M.cInitialZone];
 		
 		// Do other initialization functions
 		P.generateSubmaps();
@@ -3821,70 +3821,61 @@ M = {
 	{
 		document.getElementById("mapCoordinatesDynamic")
 			.value = pCoord[0] + ", " + pCoord[1];
+	
+		// Don't continue if mouse is still in the same zone
+		if (pCoord[0] >= M.ZoneCurrent.rect[0][0] // x1
+			&& pCoord[1] >= M.ZoneCurrent.rect[0][1] // y1
+			&& pCoord[0] <= M.ZoneCurrent.rect[1][0] // x2
+			&& pCoord[1] <= M.ZoneCurrent.rect[1][1]) // y2
+		{
+			return;
+		}
 		
+		// Else search for new moused zone
 		var i, ii1, ii2;
+		var previouszone = M.ZoneCurrent.nick;
 		var zonename = "";
 		var entity;
 		var entitytype;
 		
-		for (i in M.Zones)
+		for (i in M.Zones) // i is the index and nickname of the zone
 		{
-			var zonex1 = M.Zones[i].rect[0][0];
-			var zoney1 = M.Zones[i].rect[0][1];
-			var zonex2 = M.Zones[i].rect[1][0];
-			var zoney2 = M.Zones[i].rect[1][1];
-
-			if (pCoord[0] >= zonex1
-				&& pCoord[0] <= zonex2
-				&& pCoord[1] >= zoney1
-				&& pCoord[1] <= zoney2)
+			if (pCoord[0] >= M.Zones[i].rect[0][0]
+				&& pCoord[1] >= M.Zones[i].rect[0][1]
+				&& pCoord[0] <= M.Zones[i].rect[1][0]
+				&& pCoord[1] <= M.Zones[i].rect[1][1])
 			{
-				/*
-				 * If got here then i is the index of the current moused zone.
-				 * To not waste computation, only update the coordinates bar and
-				 * reveal the zone waypoints if the found zone is different from
-				 * the previously moused zone.
-				 */
-				if (i !== M.mousedZoneIndex)
+				// Hide the icons of the previously moused zone
+				for (ii1 in M.Zones[previouszone].ZoneEntities)
 				{
-					// Note that the master index was initialized as null
-					if (M.mousedZoneIndex !== null)
-					{
-						// Hide the icons of the previously moused zone
-						for (ii1 in M.Zones[M.mousedZoneIndex].ZoneEntities)
-						{
-							M.Zones[M.mousedZoneIndex].ZoneEntities[ii1]
-								._icon.style.display = "none";
-						}
-					}
-					// Update the master moused zone index to the current index
-					M.mousedZoneIndex = i;
-					M.ZoneCurrent = M.Zones[i];
-					zonename = M.getZoneName(M.ZoneCurrent);
-					document.getElementById("mapCoordinatesRegion")
-						.value = zonename;
-					
-				
-					// Reveal moused zone's icons
-					for (ii2 in M.ZoneCurrent.ZoneEntities)
-					{
-						entity = M.ZoneCurrent.ZoneEntities[ii2];
-						entitytype = entity.options.mappingtype;
-						if ( (entitytype === M.MappingEnum.Waypoint && O.Options.bol_displayWaypoints)
-							|| (entitytype === M.MappingEnum.Landmark && O.Options.bol_displayPOIs)
-							|| (entitytype === M.MappingEnum.Vista && O.Options.bol_displayVistas)
-							|| (entitytype === M.MappingEnum.Skill && O.Options.bol_displaySkills)
-							|| (entitytype === M.MappingEnum.Heart && O.Options.bol_displayHearts)
-							|| (entitytype === M.MappingEnum.Sector && O.Options.bol_displaySectors) )
-						{
-							entity._icon.style.display = "block";
-						}
-					}
-					
-					// Rescale current moused mapping markers
-					M.adjustZoomMapping();
+					M.Zones[previouszone].ZoneEntities[ii1]
+						._icon.style.display = "none";
 				}
-				return; // Already found zone so stop searching
+				// Update current zone object
+				M.ZoneCurrent = M.Zones[i];
+				zonename = M.getZoneName(M.ZoneCurrent);
+				document.getElementById("mapCoordinatesRegion")
+					.value = zonename;
+
+				// Reveal moused zone's icons
+				for (ii2 in M.ZoneCurrent.ZoneEntities)
+				{
+					entity = M.ZoneCurrent.ZoneEntities[ii2];
+					entitytype = entity.options.mappingtype;
+					if ( (entitytype === M.MappingEnum.Waypoint && O.Options.bol_displayWaypoints)
+						|| (entitytype === M.MappingEnum.Landmark && O.Options.bol_displayPOIs)
+						|| (entitytype === M.MappingEnum.Vista && O.Options.bol_displayVistas)
+						|| (entitytype === M.MappingEnum.Skill && O.Options.bol_displaySkills)
+						|| (entitytype === M.MappingEnum.Heart && O.Options.bol_displayHearts)
+						|| (entitytype === M.MappingEnum.Sector && O.Options.bol_displaySectors) )
+					{
+						entity._icon.style.display = "block";
+					}
+				}
+
+				// Rescale current moused mapping markers
+				M.adjustZoomMapping();
+				break; // Already found zone so stop searching
 			}
 		}
 	},
