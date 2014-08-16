@@ -1,6 +1,14 @@
 /* This file is used by gw2t.js and is based on http://atlas.guildwars2.com
  */
 
+var GW2T_REGION_DATA = {
+"maguuma": { en: "Maguuma", de: "Maguuma", es: "Maguuma", fr: "Maguuma" },
+"kryta": { en: "Kryta", de: "Kryta", es: "Kryta", fr: "Kryte" },
+"orr": { en: "Orr", de: "Orr", es: "Orr", fr: "Orr" },
+"shiverpeaks": { en: "Shiverpeaks", de: "Zittergipfelgebirge", es: "Picosescalofriantes", fr: "Cimefroides" },
+"ascalon": { en: "Ascalon", de: "Ascalon", es: "Ascalon", fr: "Ascalon" }
+};
+
 /*
  * This associates the zone's nick with their ID number in the API JSON for
  * access in constant time.
@@ -48,199 +56,199 @@ var GW2T_ZONE_DATA = {
 "dry":
 {
 	name: "Dry Top",
-	region: "Maguuma",
+	region: "maguuma",
 	rect: [[3713, 15681], [5888, 17152]]//[3840, 14592]
 },
 "rata":
 {
 	name: "Rata Sum",
-	region: "Maguuma",
+	region: "maguuma",
 	rect: [[4608, 19648], [7168, 22208]]
 },
 "brisban":
 {
 	name: "Brisban Wildlands",
-	region: "Maguuma",
+	region: "maguuma",
 	rect: [[5888, 14464], [9344, 17152]]
 },
 "metrica":
 {
 	name: "Metrica Province",
-	region: "Maguuma",
+	region: "maguuma",
 	rect: [[7168, 17152], [9344, 20480]]
 },
 "caledon":
 {
 	name: "Caledon Forest",
-	region: "Maguuma",
+	region: "maguuma",
 	rect: [[9344, 16128], [11264, 20096]]
 },
 "kessex":
 {
 	name: "Kessex Hills",
-	region: "Kryta",
+	region: "kryta",
 	rect: [[9344, 14080], [13440, 16128]]
 },
 "grove":
 {
 	name: "The Grove",
-	region: "Maguuma",
+	region: "maguuma",
 	rect: [[9728, 20096], [11136, 22144]]
 },
 "queensdale":
 {
 	name: "Queensdale",
-	region: "Kryta",
+	region: "kryta",
 	rect: [[9856, 11648], [13440, 14080]]
 },
 "cursed":
 {
 	name: "Cursed Shore",
-	region: "Orr",
+	region: "orr",
 	rect: [[10112, 25216], [12160, 29312]]
 },
 "divinity":
 {
 	name: "Divinity's Reach",
-	region: "Kryta",
+	region: "kryta",
 	rect: [[10240, 9856], [12160, 11648]]
 },
 "malchor":
 {
 	name: "Malchor's Leap",
-	region: "Orr",
+	region: "orr",
 	rect: [[10368, 23168], [14464, 25216]]
 },
 "southsun":
 {
 	name: "Southsun Cove",
-	region: "Kryta",
+	region: "kryta",
 	rect: [[11520, 18944], [14208, 20736]]
 },
 "harathi":
 {
 	name: "Harathi Hinterlands",
-	region: "Kryta",
+	region: "kryta",
 	rect: [[13440, 9472], [16640, 12288]]
 },
 "gendarran":
 {
 	name: "Gendarran Fields",
-	region: "Kryta",
+	region: "kryta",
 	rect: [[13440, 12288], [17664, 14336]]
 },
 "straits":
 {
 	name: "Straits of Devastation",
-	region: "Orr",
+	region: "orr",
 	rect: [[14464, 22400], [17792, 25216]]
 },
 "lion":
 {
 	name: "Lion's Arch",
-	region: "Kryta",
+	region: "kryta",
 	rect: [[15232, 14336], [17664, 15872]]
 },
 "bloodtide":
 {
 	name: "Bloodtide Coast",
-	region: "Kryta",
+	region: "kryta",
 	rect: [[15232, 15872], [17664, 19072]]
 },
 "sparkfly":
 {
 	name: "Sparkfly Fen",
-	region: "Maguuma",
+	region: "maguuma",
 	rect: [[15232, 19072], [17792, 22400]]
 },
 "lornar":
 {
 	name: "Lornar's Pass",
-	region: "Shiverpeaks",
+	region: "shiverpeaks",
 	rect: [[17664, 13312], [19456, 18176]]
 },
 "snowden":
 {
 	name: "Snowden Drifts",
-	region: "Shiverpeaks",
+	region: "shiverpeaks",
 	rect: [[17664, 11264], [21760, 13312]]
 },
 "maelstrom":
 {
 	name: "Mount Maelstrom",
-	region: "Maguuma",
+	region: "maguuma",
 	rect: [[17792, 21376], [21632, 23808]]
 },
 "timberline":
 {
 	name: "Timberline Falls",
-	region: "Shiverpeaks",
+	region: "shiverpeaks",
 	rect: [[18944, 18176], [21248, 21376]]
 },
 "hoelbrak":
 {
 	name: "Hoelbrak",
-	region: "Shiverpeaks",
+	region: "shiverpeaks",
 	rect: [[19456, 13312], [21760, 14976]]
 },
 "dredgehaunt":
 {
 	name: "Dredgehaunt Cliffs",
-	region: "Shiverpeaks",
+	region: "shiverpeaks",
 	rect: [[19456, 14976], [21760, 18176]]
 },
 "frostgorge":
 {
 	name: "Frostgorge Sound",
-	region: "Shiverpeaks",
+	region: "shiverpeaks",
 	rect: [[20736, 8192], [23808, 11264]]
 },
 "wayfarer":
 {
 	name: "Wayfarer Foothills",
-	region: "Shiverpeaks",
+	region: "shiverpeaks",
 	rect: [[21760, 11264], [23552, 15872]]
 },
 "citadel":
 {
 	name: "Black Citadel",
-	region: "Ascalon",
+	region: "ascalon",
 	rect: [[23552, 13568], [25088, 15616]]
 },
 "diessa":
 {
 	name: "Diessa Plateau",
-	region: "Ascalon",
+	region: "ascalon",
 	rect: [[23552, 11264], [27136, 13568]]
 },
 "fireheart":
 {
 	name: "Fireheart Rise",
-	region: "Ascalon",
+	region: "ascalon",
 	rect: [[23808, 8448], [27136, 11264]]
 },
 "ashford":
 {
 	name: "Plains of Ashford",
-	region: "Ascalon",
+	region: "ascalon",
 	rect: [[25088, 13568], [29184, 15616]]
 },
 "marches":
 {
 	name: "Iron Marches",
-	region: "Ascalon",
+	region: "ascalon",
 	rect: [[27136, 9472], [29184, 13568]]
 },
 "fields":
 {
 	name: "Fields of Ruin",
-	region: "Ascalon",
+	region: "ascalon",
 	rect: [[28672, 16256], [31744, 19328]]
 },
 "blazeridge":
 {
 	name: "Blazeridge Steppes",
-	region: "Ascalon",
+	region: "ascalon",
 	rect: [[29184, 12160], [31232, 16256]]
 }
 };

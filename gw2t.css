@@ -149,7 +149,7 @@ html, body,
 
 /* Clickable */
 a, input, label, button,
-#mapCompassButton, .menuButton,
+#mapDisplayButton, .menuButton,
 .menuBeam img:hover,
 .jsTableOfContents ol li, .jsSectionDone,
 .chnCheck:hover, .chnDetailsLinks ins,
@@ -201,10 +201,14 @@ a, input, label, button,
 	background: url("img/background/space.jpg") repeat center;
 }
 
+/* Bottom left corner: Coordinates bar */
 #itemMapCoordinates {
 	position: absolute;
 	bottom: 12px; left: 12px;
 	z-index: 9;
+}
+#itemMapCoordinates ::selection {
+	background: #66aaff;
 }
 #itemMapCoordinates input {
 	display: inline-block;
@@ -218,10 +222,11 @@ a, input, label, button,
 	color: #ddff77;
 	opacity: 0.6;
 }
-input#mapCoordinatesRegion {
+input#mapCoordinatesName {
 	width: 145px; 
 }
 
+/* Right side: Misc links */
 #itemMapLinksNorth {
 	position: absolute;
 	top: 4px; right: 12px;
@@ -254,14 +259,15 @@ input#mapCoordinatesRegion {
 	color: #ddff77;
 	opacity: 0.9;
 }
-#mapCompassButton {
+
+/* Map options */
+#mapDisplayButton {
 	vertical-align: middle;
 	opacity: 0.6;
 }
-#mapCompassButton:hover {
+#mapOptions:hover #mapDisplayButton {
 	opacity: 1;
 }
-
 #mapOptions {
 	display: inline;
 }
@@ -270,16 +276,15 @@ input#mapCoordinatesRegion {
 }
 #mapOptions:hover #mapOptionsPopup {
 	position: absolute;
-	top: 16px; right: 16px;
+	right: 0px;
 	display: block;
 	width: 160px;
 	margin: 0;
 	padding: 10px;
 	box-shadow: 0px 0px 2px #555;
-	opacity: 0.8;
+	opacity: 0;
 }
 #mapOptionsDisplay {
-	margin-top: 6px;
 	margin-bottom: 8px;
 }
 #mapOptionsDisplay label {
@@ -295,6 +300,49 @@ input#mapCoordinatesRegion {
 	vertical-align: middle;
 }
 
+/* Map zones list */
+#mapCompassButton {
+	width: 32px; height: 32px;
+	margin-left: -8px;
+	vertical-align: middle;
+	opacity: 0.6;
+}
+#mapZones:hover #mapCompassButton {
+	opacity: 1;
+}
+#mapZones {
+	display: inline;
+}
+#mapZonesPopup {
+	display: none;
+}
+#mapZones:hover #mapZonesPopup {
+	position: absolute;
+	right: 0px;
+	display: block;
+	min-width: 260px;
+	max-width: 340px;
+	margin: 0;
+	padding-top: 0px;
+	padding-right: 8px;
+	padding-bottom: 6px;
+	padding-left: 8px;
+	box-shadow: 0px 0px 2px #555;
+	opacity: 0;
+}
+#mapZoneList {
+	border-spacing: 12px;
+}
+#mapZoneList div, .mapResourceList div {
+	display: table-cell;
+}
+#mapZoneList ul {
+	min-width: 120px;
+	max-width: 160px;
+}
+
+/* Marker classes
+----------------------------------------------------------------------------- */
 .mapSec {
 	font-family: Menomonia;
 	font-size: 0px;
@@ -783,6 +831,9 @@ header.jsSection sup {
 	text-decoration: underline;
 	text-shadow: 0px 0px 2px #e4e0b3;
 }
+.jsSectionDone img {
+	vertical-align: middle;
+}
 
 /* =============================================================================
  *  Bottom right content subpanel; the contents are layered and requires
@@ -953,7 +1004,7 @@ header.cntHeader {
 }
 
 .cntIconExample {
-	width: 16px; height: 16px;
+	width: 24px; height: 24px;
 	vertical-align: middle;
 }
 
@@ -1283,13 +1334,6 @@ header.cntHeader {
 
 /* @@Map layer
 ----------------------------------------------------------------------------- */
-.mapZoneList {
-	border-spacing: 12px;
-}
-.mapZoneList div, .mapResourceList div {
-	display: table-cell;
-}
-
 .mapDailyLists h2 img {
 	width: 24px; height: 24px;
 	vertical-align: middle;
@@ -1547,7 +1591,7 @@ paletteText {
 	color: #ffeebb; /* Cream window and UI title */
 	color: #ffeeaa; /* Cream guild chat and item count */
 	color: #ffaa22; /* Yellow orange chain title in event panel */
-	color: #ffff00; /* Yellow chat squad name */
+	color: #ffff00; /* Yellow chat squad name and game notices */
 	color: #ffff66; /* Yellow chat squad */
 	color: #44dd44; /* Green laurel */
 	color: #009900; /* Green stats */

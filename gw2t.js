@@ -231,7 +231,7 @@ O = {
 				+ "<br />"
 				+ "New in this version:<br />"
 				+ "- Dry Top Challenger Cliffs events. Click the gold stars on the clock area to auto-copy chatlinks.<br />"
-				+ "- Map completion icons. Hover over the compass button on the map to see map options.<br />"
+				+ "- Map options and zones list moved into popups on the top right corner of the map pane.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -543,6 +543,7 @@ O = {
 		
 		// Supplementary event handlers for some inputs
 		O.bindOptionsInputs();
+		U.initializeAPIURLs();
 	},
 	
 	/*
@@ -982,6 +983,475 @@ O = {
 				I.siteTagCurrent = "";
 			}
 		}
+	}
+};
+
+/* =============================================================================
+ * @@URL management for links and string manipulation
+ * ========================================================================== */
+U = {
+	
+	URL_API:
+	{
+		Tiles: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
+		MapFloor: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
+		EventNames: "https://api.guildwars2.com/v1/event_names.json",
+		EventDetails: "https://api.guildwars2.com/v1/event_details.json"
+	},
+	
+	URL_IMG:
+	{
+		Waypoint: "img/map/waypoint.png",
+		WaypointOver: "img/map/waypoint_h.png",
+		Landmark: "img/map/landmark.png",
+		LandmarkOver: "img/map/landmark_h.png",
+		Vista: "img/map/vista.png",
+		Skill: "img/map/skill.png",
+		Heart: "img/map/heart.png"
+	},
+	
+	initializeAPIURLs: function()
+	{
+		var lang = D.getFullySupportedLanguage();
+		U.URL_API.MapFloor += "&lang=" + lang;
+		U.URL_API.EventNames += "?lang=" + lang;
+		U.URL_API.EventDetails += "?lang=" + lang;
+	},
+
+	/*
+	 * URLArguments (Args) may contain Options object's variables. In the form of:
+	 * http://example.com/?ExampleKey=ExampleValue&MoreExampleKey=MoreExampleValue
+	 * so if a user enters http://gw2timer.com/?bol_showMap=false then the map
+	 * will be hidden regardless of previous localStorage or the defaults here.
+	 * Note that "bol_bol_showMap" matches exactly as in the Options, otherwise
+	 * it would have not overridden any Options variable. Values used apart from
+	 * comparison should be sanitized first.
+	 */
+	Args: {},
+	KeyEnum:
+	{
+		Page: "page",
+		Section: "section",
+		Article: "article",
+		Mode: "mode",
+		Go: "go"
+	},
+	
+	/*
+	 * Tells if a string is an enum of an enum object.
+	 * @param string pString to test for inclusion.
+	 * @param object pEnum container of enums.
+	 * @returns boolean true if within.
+	 */
+	isEnumWithin: function(pString, pEnum)
+	{
+		for (var i in pEnum)
+		{
+			if (pEnum[i].toLowerCase() === pString.toLowerCase())
+			{
+				return true;
+			}
+		}
+		return false;
+	},
+	
+	/*
+	 * Extracts arguments from a https://en.wikipedia.org/wiki/Query_string
+	 * @returns object containing the key-value pairs.
+	 */
+	getURLArguments: function()
+	{
+		var urlargs = window.location.search.substr(1).split("&");
+		if (urlargs === "")
+		{
+			return {};
+		}
+		
+		var argsobject = {};
+		for (var i = 0; i < urlargs.length; ++i)
+		{
+			var p = urlargs[i].split("=");
+			if (p.length !== 2)
+			{
+				continue;
+			}
+			argsobject[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+		}
+		return argsobject;
+	},
+	
+	/*
+	 * Parses and stores the URL arguments then do appropriate changes.
+	 */
+	enforceURLArgumentsFirst: function()
+	{
+		U.Args = U.getURLArguments();
+		U.enforceURLArgumentsSpecial();
+		
+		var i;
+		// Set up program mode
+		var mode = U.Args[U.KeyEnum.Mode];
+		if (mode)
+		{
+			for (i in I.ModeEnum)
+			{
+				if (I.ModeEnum[i].toLowerCase() === mode.toLowerCase())
+				{
+					I.ModeCurrent = I.ModeEnum[i];
+					break;
+				}
+			}
+		}
+		
+		if (I.ModeCurrent === null)
+		{
+			I.ModeCurrent = I.ModeEnum.Website;
+		}
+		
+		// Store article value, if exists
+		I.ArticleCurrent = parseInt(U.Args[U.KeyEnum.Article]);
+		
+		if (isFinite(I.ArticleCurrent))
+		{
+			I.ArticleCurrent = I.ArticleCurrent - 1;
+		}
+	},
+	
+	/*
+	 * Does the commands within the address bar after the site's domain name.
+	 * @pre URLArguments object was initialized by extraction.
+	 */
+	enforceURLArgumentsLast: function()
+	{
+		U.openPageFromURL();
+	},
+	
+	/*
+	 * Special URL keys that override others.
+	 */
+	enforceURLArgumentsSpecial: function()
+	{
+		/*
+		 * The page key could've been written by the 404 webpage, which converts
+		 * forward slash (/) separated directories into query strings, with
+		 * the first argument as the page value. So if a user goes to the URL
+		 * http://gw2timer.com/navi they will be redirected to http://gw2timer.com/?page=Navi
+		 * These special pages must have unique names from the content pages.
+		 */
+		var i;
+		var go = function(pURL)
+		{
+			$("body").hide();
+			document.location = pURL;
+		};
+		
+		var page = U.Args[U.KeyEnum.Page];
+		// Only proceed if "page" is not an actual content page
+		if (page && U.isEnumWithin(page, I.PageEnum) === false)
+		{	
+			page = page.toLowerCase();
+			if (page === "navi")
+			{
+				go("http://forum.renaka.com/topic/5546166/");
+			}
+			else if (page === "m" || page === "simple")
+			{
+				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Simple;
+			}
+			else if (page === "chests")
+			{
+				U.Args[X.Checklists.Collectible1.urlkey] = "true";
+			}
+			else
+			{
+				// Also check if the special page is actually a zone name
+				for (i in M.Zones)
+				{
+					if (page.indexOf(i) !== -1)
+					{
+						U.Args[U.KeyEnum.Go] = i;
+						break;
+					}
+				}
+			}
+		}
+		
+		// Else if special page is not specified
+		var chests = U.Args[X.Checklists.Collectible1.urlkey];
+		if (chests)
+		{
+			U.Args[U.KeyEnum.Page] = I.PageEnum.Map;
+			U.Args[U.KeyEnum.Section] = I.SectionEnum.Map.Collectible;
+			U.Args[U.KeyEnum.Article] = "2";
+			U.Args[U.KeyEnum.Go] = "4816,16443,1";
+		}
+	},
+	
+	/*
+	 * Sanitizes URLArguments value part before overriding. For example:
+	 * http://gw2timer.com/?bol_showMap=falsse "falsse" defaults to "true"
+	 * @param string pKey of an option.
+	 * @param string pValue of that option.
+	 * @returns string sanitized value.
+	 * @pre The key-value pair matches the Options object's, and numeric values
+	 * have the OptionRange object initialized for legal numbers.
+	 */
+	sanitizeURLOptionsValue: function(pKey, pValue)
+	{
+		var datatype = pKey.substring(0, O.lengthOfPrefixes);
+		var s = pValue.toLowerCase();
+		switch (datatype)
+		{
+			case O.TypeEnum.isBoolean:
+			{
+				if (s === "true" || s === "false")
+				{
+					return s;
+				}
+				return O.Options[pKey].toString(); // Default boolean
+			} break;
+			case O.TypeEnum.isInteger:
+			{
+				if (isFinite(s)) // Is a number
+				{
+					var theinteger = parseInt(s);
+					if (theinteger >= O.OptionRange[pKey][0] && theinteger <= O.OptionRange[pKey][1])
+					{
+						return theinteger.toString();
+					}
+				}
+				return O.Options[pKey].toString(); // Default number
+			} break;
+			case O.TypeEnum.isFloat:
+			{
+				if (isFinite(s)) // Is a number
+				{
+					var thefloat = parseFloat(s);
+					if (thefloat >= O.OptionRange[pKey][0] && thefloat <= O.OptionRange[pKey][1])
+					{
+						return thefloat.toString();
+					}
+				}
+				return O.Options[pKey].toString(); // Default number
+			} break;
+			case O.TypeEnum.isEnum:
+			{
+				return O.validateEnum(pKey, pValue);
+			} break;
+			case O.TypeEnum.isString:
+			{
+				return U.escapeHTML(pValue);
+			} break;
+		}
+		return "null";
+	},
+	
+	/*
+	 * Strips all non-alphabet and non-numbers from a string using regex.
+	 * @param string pString to strip.
+	 * @return string stripped.
+	 */
+	stripToAlphanumeric: function(pString)
+	{
+		return pString.replace(/\W/g, "");
+	},
+	
+	/*
+	 * Converts a string to be all lower case except the first letter which is capitalized.
+	 * @param string pString to convert.
+	 * @returns string converted.
+	 */
+	toFirstUpperCase: function(pString)
+	{
+		return pString.charAt(0).toUpperCase() + pString.slice(1).toLowerCase();
+	},
+	
+	/*
+	 * Strips a string of HTML special characters for use in printing.
+	 * @param string pString to escape.
+	 * @returns string replaced string.
+	 */
+	escapeHTML: function(pString)
+	{
+		return pString
+			.replace(/&/g, "&amp;")
+			.replace(/</g, "&lt;")
+			.replace(/>/g, "&gt;")
+			.replace(/"/g, "&quot;")
+			.replace(/'/g, "&#039;");
+	},
+	
+		/*
+	 * Replaces a character in a string with a specified character.
+	 * @param string pString to manipulate.
+	 * @param int pIndex of the target character.
+	 * @param string pCharacter the replacement.
+	 * @returns string with a character at index replaced.
+	 */
+	replaceCharAt: function(pString, pIndex, pCharacter)
+	{
+		return pString.substr(0, pIndex) + pCharacter + pString.substr(pIndex + pCharacter.length);
+	},
+	
+	/*
+	 * Updates the address bar with the given string affixed to the site base URL.
+	 * This should be the only place the "history" global variable is used.
+	 * @param string pString URL query string.
+	 */
+	updateAddressBar: function(pString)
+	{
+		history.replaceState("", null, pString);
+		// Workaround Firefox SVG url bug
+		K.reapplyFilters();
+	},
+	
+	/*
+	 * Rewrites the URL in the address bar to show the current page and section.
+	 * Does not actually load anything and is only a visual effect; however, if
+	 * the user presses enter with that URL (go to such a link), a separate
+	 * function will load that page (content layer) and expand that section.
+	 */
+	updateQueryString: function()
+	{
+		if (I.PageCurrent !== "")
+		{
+			var section = I[I.sectionPrefix + I.PageCurrent];
+			var article = U.Args[U.KeyEnum.Article];
+			var go = U.Args[U.KeyEnum.Go];
+
+			var pagestring = "?" + U.KeyEnum.Page + "=" + I.PageCurrent;
+			var sectionstring = "";
+			var articlestring = "";
+			var gostring = "";
+
+			if (section)
+			{
+				sectionstring = "&" + U.KeyEnum.Section + "=" + section;
+			}
+			if (article)
+			{
+				articlestring = "&" + U.KeyEnum.Article + "=" + article;
+			}
+			if (go)
+			{
+				gostring = "&" + U.KeyEnum.Go + "=" + go;
+			}
+			
+			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring);
+		}
+	},
+	
+	/*
+	 * Triggers the header tag associated with the requested page and section,
+	 * which will cause the section beside the header to expand. This is to be
+	 * called after a page has been AJAX loaded and bindings completed.
+	 */
+	openSectionFromURL: function()
+	{
+		/*
+		 * Enclosed in setTimeout because without it the scroll to element
+		 * animation function is glitchy (the function is called when the header
+		 * is clicked so the page automatically scrolls to the header).
+		 */
+		setTimeout(function()
+		{
+			if (U.Args[U.KeyEnum.Section] !== undefined)
+			{
+				var section = U.stripToAlphanumeric(U.Args[U.KeyEnum.Section]);
+				$(I.cHeaderPrefix + I.PageCurrent + "_" + U.toFirstUpperCase(section)).trigger("click");
+			}
+		}, 0);
+	},
+	openPageFromURL: function()
+	{
+		if (U.Args[U.KeyEnum.Page] !== undefined)
+		{
+			var page = U.stripToAlphanumeric(U.Args[U.KeyEnum.Page]);
+			$(I.cMenuPrefix + U.toFirstUpperCase(page)).trigger("click");
+		}
+	},
+	
+	/*
+	 * Makes links open a new tab on an HTML page with analytics to record
+	 * what link the user clicked on, then almost instantly redirect them to
+	 * the proper address of the link.
+	 * @param string pSelector to find tags to convert.
+	 */
+	convertExternalLink: function(pSelector)
+	{
+		if (I.ModeCurrent !== I.ModeEnum.Overlay)
+		{
+			$(pSelector).each(function()
+			{
+				$(this).attr("href", I.cSiteURL + "out?" + escape($(this).attr("href")));
+				$(this).attr("target", "_blank");
+			});
+		}
+	},
+	convertExternalURL: function(pURL)
+	{
+		if (I.ModeCurrent !== I.ModeEnum.Overlay)
+		{
+			return I.cSiteURL + "out?" + escape(pURL);
+		}
+		return pURL;
+	},
+	
+	/*
+	 * Extracts the "identifier" part of an HTML element's ID. Most iterable
+	 * elements' IDs were manually named as [prefix]_[Index].
+	 * @param jqobject pElement to extract.
+	 * @returns string identifier of the element's ID.
+	 */
+	getSubstringFromHTMLID: function(pElement)
+	{
+		return O.getVariableSuffix(pElement.attr("id"));
+	},
+	/*
+	 * Integer version of the ID extraction function.
+	 * @param jqobject pElement to extract.
+	 * @returns int identifier of the element's ID.
+	 */
+	getSubintegerFromHTMLID: function(pElement)
+	{
+		return parseInt(O.getVariableSuffix(pElement.attr("id")));
+	},
+	
+	/*
+	 * Gets a direct link to a hosted image file.
+	 * @param string pCode image code.
+	 * @returns URL to image.
+	 * @pre image is of png format.
+	 */
+	getImageHosted: function(pCode)
+	{
+		return I.cImageHost + pCode + I.cPNG;
+	},
+	
+	/*
+	 * Converts a search query to GW2 wiki http link.
+	 * @param string pString search entry.
+	 * @returns string wiki link.
+	 */
+	getWikiLink: function(pString)
+	{
+		pString = pString.replace(/ /g, "_"); // Replace spaces with underscores
+		return "http://wiki.guildwars2.com/wiki/" + escape(pString);
+	},
+	getWikiLanguageLink: function(pString)
+	{
+		pString = pString.replace(/ /g, "_");
+		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/wiki/" + escape(pString);
+	},
+	
+	/*
+	 * Converts a search query to YouTube http link.
+	 * @param string pString search entry.
+	 * @returns string youtube link.
+	 */
+	getYouTubeLink: function(pString)
+	{
+		return "http://www.youtube.com/results?search_query=" + escape(pString);
 	}
 };
 
@@ -1794,8 +2264,6 @@ D = {
 		s_Skill_Challenge: {de: "Fertigkeitspunkt", es: "Desafío de habilidad", fr: "Défi de compétence"},
 		
 		// Verbs
-		s_done_reading: {de: "ende gelesen", es: "terminado de leer", fr: "fini de lire",
-			cs: "dokončil čtení", it: "finito di leggere", pl: "przeczytaniu", pt: "leitura terminou", ru: "закончите читать", zh: "讀完"},
 		s_is: {de: "ist", es: "es", fr: "est",
 			cs: "je", it: "è", pl: "jest", pt: "é", ru: "является", zh: "是"},
 		s_subscribe: {de: "abonnieren", es: "subscribir", fr: "abonner",
@@ -2045,15 +2513,15 @@ D = {
 		zh: "火元素"
 	},{
 		en: "Golem Mark II",
-		de: "Inquestur-Golem Typ II",
-		es: "Gólem Serie II de la Inquisa",
-		fr: "Golem Marque II de l'Enqueste",
+		de: "Golem Typ II",
+		es: "Gólem Serie II",
+		fr: "Golem Marque II",
 		cs: "Golem Typu II",
 		it: "Golem Tipo II",
 		pl: "Golem Model II",
 		pt: "Golem Tipo II",
-		ru: "Следствие Голем Тип II",
-		zh: "Inquest 的魔像2型"
+		ru: "Голем Тип II",
+		zh: "Golem 2型"
 	},{
 		en: "Claw of Jormag",
 		de: "Klaue Jormags",
@@ -3597,27 +4065,20 @@ M = {
 	 */
 	Zones: GW2T_ZONE_DATA,
 	ZoneAssociations: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
+	Regions: GW2T_REGION_DATA,
 	cInitialZone: "lion",
 	Map: {},
 	Resources: {},
 	Collectibles: {},
-	isMapAJAXDone: false,
 	ZoneCurrent: {},
 	currentIconSize: 32,
 	currentRingSize: 256,
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
-	cURL_API_TILES: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
-	cURL_API_MAPFLOOR: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
+	isMouseOnHUD: false,
+	isMapAJAXDone: false,
 	isAPIRetrieved_MAPFLOOR: false,
 	isMappingIconsGenerated: false,
-	cICON_WAYPOINT: "img/map/waypoint.png",
-	cICON_WAYPOINTOVER: "img/map/waypoint_h.png",
-	cICON_LANDMARK: "img/map/landmark.png",
-	cICON_LANDMARKOVER: "img/map/landmark_h.png",
-	cICON_VISTA: "img/map/vista.png",
-	cICON_SKILL: "img/map/skill.png",
-	cICON_HEART: "img/map/heart.png",
 	cLEAFLET_PATH_OPACITY: 0.5,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
@@ -3724,6 +4185,24 @@ M = {
 	},
 	
 	/*
+	 * Gets a region's translated name if available.
+	 * @param string pNick name of the region to retrieve.
+	 * @returns string region name.
+	 */
+	getRegionName: function(pNick)
+	{
+		var region = M.Regions[pNick];
+		if (D.isLanguageSecondary() === true)
+		{
+			return region[D.getFullySupportedLanguage()];
+		}
+		else
+		{
+			return region[O.OptionEnum.Language.Default];
+		}
+	},
+	
+	/*
 	 * Initializes the Leaflet map, adds markers, and binds events.
 	 */
 	initializeMap: function()
@@ -3740,7 +4219,7 @@ M = {
 		}).setView([-128, 128], M.ZoomLevelEnum.Default);
 		
 		// Set layers
-		L.tileLayer(M.cURL_API_TILES,
+		L.tileLayer(U.URL_API.Tiles,
 		{
 			continuousWorld: true
 		}).addTo(M.Map);
@@ -3755,6 +4234,7 @@ M = {
 		M.ZoneCurrent = M.Zones[M.cInitialZone];
 		
 		// Do other initialization functions
+		M.bindHUDEventCanceler();
 		P.generateSubmaps();
 		P.populateMap();
 		P.drawChainPaths();
@@ -3764,8 +4244,9 @@ M = {
 		 */
 		M.Map.on("click", function(pEvent)
 		{
+			if (M.isMouseOnHUD) { return; }
 			var coord = M.convertLCtoGC(pEvent.latlng);
-			$("#mapCoordinatesStatic")
+			$("#mapCoordinatesCopy")
 				.val("[" + coord[0] + ", " + coord[1] + "]")
 				.select();
 		});
@@ -3775,18 +4256,19 @@ M = {
 		 */
 		M.Map.on("dblclick", function(pEvent)
 		{
+			if (M.isMouseOnHUD) { return; }
 			M.PinPersonal.setLatLng(pEvent.latlng);
 		});
 		
 		/*
 		 * Go to the coordinates in the bar when user presses enter.
 		 */
-		$("#mapCoordinatesStatic").bind("enterKey", function()
+		$("#mapCoordinatesCopy").bind("enterKey", function()
 		{
 			var coord = M.parseCoordinates($(this).val());
 			coord[0] = Math.floor(coord[0]);
 			coord[1] = Math.floor(coord[1]);
-			$("#mapCoordinatesStatic")
+			$("#mapCoordinatesCopy")
 				.val("[" + coord[0] + ", " + coord[1] + "]")
 				.select();
 			
@@ -3805,11 +4287,67 @@ M = {
 		/*
 		 * Hide the right panel if click on the map compass.
 		 */
-		$("#mapCompassButton").click(function()
+		$("#mapDisplayButton").click(function()
 		{
 			$("#panelRight").toggle();
 		});
 	}, // End of map initialization
+	
+	/*
+	 * Turns a boolean on when mouse entered any GUI elements on the map, so
+	 * map event handlers can ignore actions on those elements.
+	 */
+	bindHUDEventCanceler: function()
+	{
+		var hud = document.getElementById("paneHUD");
+		hud.onmouseover = function()
+		{
+			M.isMouseOnHUD = true;
+		};
+		hud.onmouseout = function()
+		{
+			M.isMouseOnHUD = false;
+		};
+	},
+	
+	/*
+	 * Bindings for map events that need to be done after AJAX has loaded the
+	 * API-generated markers.
+	 */
+	bindMapVisualChanges: function()
+	{
+		/*
+		 * Bind the mousemove event to update the map coordinate bar.
+		 * Note that the throttle function is from a separate script. It permits
+		 * the event handler to only run once every so specified milliseconds.
+		 */
+		M.Map.on("mousemove", $.throttle(M.cMAP_MOUSEMOVE_RATE, function(pEvent)
+		{
+			if (M.isMouseOnHUD) { return; }
+			M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
+		}));
+		
+		/*
+		 * At the start of a zoom change hide submaps so they do not cover the map.
+		 */
+		M.Map.on("zoomstart", function(pEvent)
+		{
+			if (M.SubmapEntities.length > 0)
+			{
+				M.setEntityGroupDisplay(M.SubmapEntities, "hide");
+			}
+		});
+
+		/*
+		 * At the end of a zoom animation, resize the map waypoint icons
+		 * depending on zoom level. Hide if zoomed too far.
+		 */
+		M.Map.on("zoomend", function(pEvent)
+		{
+			M.adjustZoomMapping();
+			M.adjustZoomEvent();
+		});
+	},
 	
 	/*
 	 * Finds what zone the specified point is in by comparing it to the top left
@@ -3819,7 +4357,7 @@ M = {
 	 */
 	showCurrentZone: function(pCoord)
 	{
-		document.getElementById("mapCoordinatesDynamic")
+		document.getElementById("mapCoordinatesMouse")
 			.value = pCoord[0] + ", " + pCoord[1];
 	
 		// Don't continue if mouse is still in the same zone
@@ -3854,7 +4392,7 @@ M = {
 				// Update current zone object
 				M.ZoneCurrent = M.Zones[i];
 				zonename = M.getZoneName(M.ZoneCurrent);
-				document.getElementById("mapCoordinatesRegion")
+				document.getElementById("mapCoordinatesName")
 					.value = zonename;
 
 				// Reveal moused zone's icons
@@ -3940,12 +4478,12 @@ M = {
 			{
 				case M.MappingEnum.Waypoint:
 				{
-					M.changeMarkerIcon(entity, M.cICON_WAYPOINT, waypointsize);
+					M.changeMarkerIcon(entity, U.URL_IMG.Waypoint, waypointsize);
 				} break;
 				
 				case M.MappingEnum.Landmark:
 				{
-					M.changeMarkerIcon(entity, M.cICON_LANDMARK, landmarksize);
+					M.changeMarkerIcon(entity, U.URL_IMG.Landmark, landmarksize);
 					// Fade icon if not in max zoom
 					if (currentzoom < M.ZoomLevelEnum.Max)
 					{
@@ -3959,17 +4497,17 @@ M = {
 				
 				case M.MappingEnum.Vista:
 				{
-					M.changeMarkerIcon(entity, M.cICON_VISTA, landmarksize);
+					M.changeMarkerIcon(entity, U.URL_IMG.Vista, landmarksize);
 				} break;
 				
 				case M.MappingEnum.Skill:
 				{
-					M.changeMarkerIcon(entity, M.cICON_SKILL, landmarksize);
+					M.changeMarkerIcon(entity, U.URL_IMG.Skill, landmarksize);
 				} break;
 				
 				case M.MappingEnum.Heart:
 				{
-					M.changeMarkerIcon(entity, M.cICON_HEART, landmarksize);
+					M.changeMarkerIcon(entity, U.URL_IMG.Heart, landmarksize);
 				} break;
 				
 				case M.MappingEnum.Sector:
@@ -4071,44 +4609,6 @@ M = {
 				M.SubmapEntities[i]._icon.style.zIndex = M.cZIndexBury;
 			}
 		}
-	},
-	
-	/*
-	 * Bindings for map events that need to be done after AJAX has loaded the
-	 * API-generated markers.
-	 */
-	bindMapVisualChanges: function()
-	{
-		/*
-		 * Bind the mousemove event to update the map coordinate bar.
-		 * Note that the throttle function is from a separate script. It permits
-		 * the event handler to only run once every so specified milliseconds.
-		 */
-		M.Map.on("mousemove", $.throttle(M.cMAP_MOUSEMOVE_RATE, function(pEvent)
-		{
-			M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
-		}));
-		
-		/*
-		 * At the start of a zoom change hide submaps so they do not cover the map.
-		 */
-		M.Map.on("zoomstart", function(pEvent)
-		{
-			if (M.SubmapEntities.length > 0)
-			{
-				M.setEntityGroupDisplay(M.SubmapEntities, "hide");
-			}
-		});
-
-		/*
-		 * At the end of a zoom animation, resize the map waypoint icons
-		 * depending on zoom level. Hide if zoomed too far.
-		 */
-		M.Map.on("zoomend", function(pEvent)
-		{
-			M.adjustZoomMapping();
-			M.adjustZoomEvent();
-		});
 	},
 	
 	/*
@@ -4402,12 +4902,17 @@ M = {
 	 */
 	bindZoneList: function()
 	{
-		$("#layerMap .mapZones li").each(function()
+		$("#mapZoneList li").each(function()
 		{
 			var zonenick = $(this).attr("data-zone");
 			$(this).text(M.getZoneName(zonenick));
 			$(this).attr("data-coord", M.getZoneCenter(zonenick).toString());
 			M.bindMapLinkBehavior($(this), null, M.ZoomLevelEnum.Sky);
+		});
+		$("#mapZoneList h2").each(function()
+		{
+			var regionnick = $(this).attr("data-region");
+			$(this).text(M.getRegionName(regionnick));
 		});
 	},
 	
@@ -4581,7 +5086,6 @@ P = {
 	 */
 	populateMap: function()
 	{
-		M.cURL_API_MAPFLOOR += "&lang=" + D.getFullySupportedLanguage();
 		/*
 		 * map_floor.json sample structure of desired data
 		 * Code based on API documentation.
@@ -4611,10 +5115,10 @@ P = {
 				}
 			}
 		}*/
-		$.getJSON(M.cURL_API_MAPFLOOR, function(pData)
-		{//
+		$.getJSON(U.URL_API.MapFloor, function(pData)
+		{
 			var i;
-			var region, zoneid, zone, poi;
+			var regionid, region, zoneid, zone, poi;
 			var numofpois;
 			var mappingentity;
 			var icon;
@@ -4622,9 +5126,9 @@ P = {
 			var mappingtype;
 			var tooltip;
 
-			for (region in pData.regions)
+			for (regionid in pData.regions)
 			{
-				region = pData.regions[region];
+				region = pData.regions[regionid];
 
 				for (zoneid in region.maps)
 				{
@@ -4656,7 +5160,7 @@ P = {
 							{
 								// Waypoints are always created, others are optional
 								mappingtype = M.MappingEnum.Waypoint;
-								icon = M.cICON_WAYPOINT;
+								icon = U.URL_IMG.Waypoint;
 								cssclass = "mapWp";
 								tooltip = poi.name;
 							} break;
@@ -4668,7 +5172,7 @@ P = {
 									continue;
 								}
 								mappingtype = M.MappingEnum.Landmark;
-								icon = M.cICON_LANDMARK;
+								icon = U.URL_IMG.Landmark;
 								cssclass = "mapPoi";
 								tooltip = poi.name;
 							} break;
@@ -4680,7 +5184,7 @@ P = {
 									continue;
 								}
 								mappingtype = M.MappingEnum.Vista;
-								icon = M.cICON_VISTA;
+								icon = U.URL_IMG.Vista;
 								cssclass = "mapPoi";
 								tooltip = D.getPhrase("Vista");
 							} break;
@@ -4710,22 +5214,22 @@ P = {
 							{
 								mappingentity.on("mouseout", function()
 								{
-									this._icon.src = M.cICON_WAYPOINT;
+									this._icon.src = U.URL_IMG.Waypoint;
 								});
 								mappingentity.on("mouseover", function()
 								{
-									this._icon.src = M.cICON_WAYPOINTOVER;
+									this._icon.src = U.URL_IMG.WaypointOver;
 								});
 							} break;
 							case "landmark":
 							{
 								mappingentity.on("mouseout", function()
 								{
-									this._icon.src = M.cICON_LANDMARK;
+									this._icon.src = U.URL_IMG.Landmark;
 								});
 								mappingentity.on("mouseover", function()
 								{
-									this._icon.src = M.cICON_LANDMARKOVER;
+									this._icon.src = U.URL_IMG.LandmarkOver;
 								});
 							} break;
 						}
@@ -4734,8 +5238,8 @@ P = {
 						{
 							mappingentity.on("click", function()
 							{
-								$("#mapCoordinatesStatic").val(this.options.link).select();
-								$("#mapCoordinatesRegion").val(this.options.entityname);
+								$("#mapCoordinatesCopy").val(this.options.link).select();
+								$("#mapCoordinatesName").val(this.options.entityname);
 							});
 							M.bindMappingZoomBehavior(mappingentity, "dblclick");
 						}
@@ -4764,7 +5268,7 @@ P = {
 								mappingtype: M.MappingEnum.Skill,
 								icon: L.icon(
 								{
-									iconUrl: M.cICON_SKILL,
+									iconUrl: U.URL_IMG.Skill,
 									iconSize: [16, 16],
 									iconAnchor: [8, 8]
 								})
@@ -4786,7 +5290,7 @@ P = {
 								mappingtype: M.MappingEnum.Heart,
 								icon: L.icon(
 								{
-									iconUrl: M.cICON_HEART,
+									iconUrl: U.URL_IMG.Heart,
 									iconSize: [16, 16],
 									iconAnchor: [8, 8]
 								})
@@ -4909,7 +5413,7 @@ P = {
 			M.PinEntities[i].on("click", function()
 			{
 				var coord = M.convertLCtoGC(this.getLatLng());
-				$("#mapCoordinatesStatic")
+				$("#mapCoordinatesCopy")
 					.val("[" + coord[0] + ", " + coord[1] + "]")
 					.select();
 			});
@@ -7167,448 +7671,6 @@ K = {
 };
 
 /* =============================================================================
- * @@URL management for links and string manipulation
- * ========================================================================== */
-U = {
-
-	/*
-	 * URLArguments (Args) may contain Options object's variables. In the form of:
-	 * http://example.com/?ExampleKey=ExampleValue&MoreExampleKey=MoreExampleValue
-	 * so if a user enters http://gw2timer.com/?bol_showMap=false then the map
-	 * will be hidden regardless of previous localStorage or the defaults here.
-	 * Note that "bol_bol_showMap" matches exactly as in the Options, otherwise
-	 * it would have not overridden any Options variable. Values used apart from
-	 * comparison should be sanitized first.
-	 */
-	Args: {},
-	KeyEnum:
-	{
-		Page: "page",
-		Section: "section",
-		Article: "article",
-		Mode: "mode",
-		Go: "go"
-	},
-	
-	/*
-	 * Tells if a string is an enum of an enum object.
-	 * @param string pString to test for inclusion.
-	 * @param object pEnum container of enums.
-	 * @returns boolean true if within.
-	 */
-	isEnumWithin: function(pString, pEnum)
-	{
-		for (var i in pEnum)
-		{
-			if (pEnum[i].toLowerCase() === pString.toLowerCase())
-			{
-				return true;
-			}
-		}
-		return false;
-	},
-	
-	/*
-	 * Extracts arguments from a https://en.wikipedia.org/wiki/Query_string
-	 * @returns object containing the key-value pairs.
-	 */
-	getURLArguments: function()
-	{
-		var urlargs = window.location.search.substr(1).split("&");
-		if (urlargs === "")
-		{
-			return {};
-		}
-		
-		var argsobject = {};
-		for (var i = 0; i < urlargs.length; ++i)
-		{
-			var p = urlargs[i].split("=");
-			if (p.length !== 2)
-			{
-				continue;
-			}
-			argsobject[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-		}
-		return argsobject;
-	},
-	
-	/*
-	 * Parses and stores the URL arguments then do appropriate changes.
-	 */
-	enforceURLArgumentsFirst: function()
-	{
-		U.Args = U.getURLArguments();
-		U.enforceURLArgumentsSpecial();
-		
-		var i;
-		// Set up program mode
-		var mode = U.Args[U.KeyEnum.Mode];
-		if (mode)
-		{
-			for (i in I.ModeEnum)
-			{
-				if (I.ModeEnum[i].toLowerCase() === mode.toLowerCase())
-				{
-					I.ModeCurrent = I.ModeEnum[i];
-					break;
-				}
-			}
-		}
-		
-		if (I.ModeCurrent === null)
-		{
-			I.ModeCurrent = I.ModeEnum.Website;
-		}
-		
-		// Store article value, if exists
-		I.ArticleCurrent = parseInt(U.Args[U.KeyEnum.Article]);
-		
-		if (isFinite(I.ArticleCurrent))
-		{
-			I.ArticleCurrent = I.ArticleCurrent - 1;
-		}
-	},
-	
-	/*
-	 * Does the commands within the address bar after the site's domain name.
-	 * @pre URLArguments object was initialized by extraction.
-	 */
-	enforceURLArgumentsLast: function()
-	{
-		U.openPageFromURL();
-	},
-	
-	/*
-	 * Special URL keys that override others.
-	 */
-	enforceURLArgumentsSpecial: function()
-	{
-		/*
-		 * The page key could've been written by the 404 webpage, which converts
-		 * forward slash (/) separated directories into query strings, with
-		 * the first argument as the page value. So if a user goes to the URL
-		 * http://gw2timer.com/navi they will be redirected to http://gw2timer.com/?page=Navi
-		 * These special pages must have unique names from the content pages.
-		 */
-		var i;
-		var go = function(pURL)
-		{
-			$("body").hide();
-			document.location = pURL;
-		};
-		
-		var page = U.Args[U.KeyEnum.Page];
-		// Only proceed if "page" is not an actual content page
-		if (page && U.isEnumWithin(page, I.PageEnum) === false)
-		{	
-			page = page.toLowerCase();
-			if (page === "navi")
-			{
-				go("http://forum.renaka.com/topic/5546166/");
-			}
-			else if (page === "m" || page === "simple")
-			{
-				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Simple;
-			}
-			else if (page === "chests")
-			{
-				U.Args[X.Checklists.Collectible1.urlkey] = "true";
-			}
-			else
-			{
-				// Also check if the special page is actually a zone name
-				for (i in M.Zones)
-				{
-					if (page.indexOf(i) !== -1)
-					{
-						U.Args[U.KeyEnum.Go] = i;
-						break;
-					}
-				}
-			}
-		}
-		
-		// Else if special page is not specified
-		var chests = U.Args[X.Checklists.Collectible1.urlkey];
-		if (chests)
-		{
-			U.Args[U.KeyEnum.Page] = I.PageEnum.Map;
-			U.Args[U.KeyEnum.Section] = I.SectionEnum.Map.Collectible;
-			U.Args[U.KeyEnum.Article] = "2";
-			U.Args[U.KeyEnum.Go] = "4816,16443,1";
-		}
-	},
-	
-	/*
-	 * Sanitizes URLArguments value part before overriding. For example:
-	 * http://gw2timer.com/?bol_showMap=falsse "falsse" defaults to "true"
-	 * @param string pKey of an option.
-	 * @param string pValue of that option.
-	 * @returns string sanitized value.
-	 * @pre The key-value pair matches the Options object's, and numeric values
-	 * have the OptionRange object initialized for legal numbers.
-	 */
-	sanitizeURLOptionsValue: function(pKey, pValue)
-	{
-		var datatype = pKey.substring(0, O.lengthOfPrefixes);
-		var s = pValue.toLowerCase();
-		switch (datatype)
-		{
-			case O.TypeEnum.isBoolean:
-			{
-				if (s === "true" || s === "false")
-				{
-					return s;
-				}
-				return O.Options[pKey].toString(); // Default boolean
-			} break;
-			case O.TypeEnum.isInteger:
-			{
-				if (isFinite(s)) // Is a number
-				{
-					var theinteger = parseInt(s);
-					if (theinteger >= O.OptionRange[pKey][0] && theinteger <= O.OptionRange[pKey][1])
-					{
-						return theinteger.toString();
-					}
-				}
-				return O.Options[pKey].toString(); // Default number
-			} break;
-			case O.TypeEnum.isFloat:
-			{
-				if (isFinite(s)) // Is a number
-				{
-					var thefloat = parseFloat(s);
-					if (thefloat >= O.OptionRange[pKey][0] && thefloat <= O.OptionRange[pKey][1])
-					{
-						return thefloat.toString();
-					}
-				}
-				return O.Options[pKey].toString(); // Default number
-			} break;
-			case O.TypeEnum.isEnum:
-			{
-				return O.validateEnum(pKey, pValue);
-			} break;
-			case O.TypeEnum.isString:
-			{
-				return U.escapeHTML(pValue);
-			} break;
-		}
-		return "null";
-	},
-	
-	/*
-	 * Strips all non-alphabet and non-numbers from a string using regex.
-	 * @param string pString to strip.
-	 * @return string stripped.
-	 */
-	stripToAlphanumeric: function(pString)
-	{
-		return pString.replace(/\W/g, "");
-	},
-	
-	/*
-	 * Converts a string to be all lower case except the first letter which is capitalized.
-	 * @param string pString to convert.
-	 * @returns string converted.
-	 */
-	toFirstUpperCase: function(pString)
-	{
-		return pString.charAt(0).toUpperCase() + pString.slice(1).toLowerCase();
-	},
-	
-	/*
-	 * Strips a string of HTML special characters for use in printing.
-	 * @param string pString to escape.
-	 * @returns string replaced string.
-	 */
-	escapeHTML: function(pString)
-	{
-		return pString
-			.replace(/&/g, "&amp;")
-			.replace(/</g, "&lt;")
-			.replace(/>/g, "&gt;")
-			.replace(/"/g, "&quot;")
-			.replace(/'/g, "&#039;");
-	},
-	
-		/*
-	 * Replaces a character in a string with a specified character.
-	 * @param string pString to manipulate.
-	 * @param int pIndex of the target character.
-	 * @param string pCharacter the replacement.
-	 * @returns string with a character at index replaced.
-	 */
-	replaceCharAt: function(pString, pIndex, pCharacter)
-	{
-		return pString.substr(0, pIndex) + pCharacter + pString.substr(pIndex + pCharacter.length);
-	},
-	
-	/*
-	 * Updates the address bar with the given string affixed to the site base URL.
-	 * This should be the only place the "history" global variable is used.
-	 * @param string pString URL query string.
-	 */
-	updateAddressBar: function(pString)
-	{
-		history.replaceState("", null, pString);
-		// Workaround Firefox SVG url bug
-		K.reapplyFilters();
-	},
-	
-	/*
-	 * Rewrites the URL in the address bar to show the current page and section.
-	 * Does not actually load anything and is only a visual effect; however, if
-	 * the user presses enter with that URL (go to such a link), a separate
-	 * function will load that page (content layer) and expand that section.
-	 */
-	updateQueryString: function()
-	{
-		if (I.PageCurrent !== "")
-		{
-			var section = I[I.sectionPrefix + I.PageCurrent];
-			var article = U.Args[U.KeyEnum.Article];
-			var go = U.Args[U.KeyEnum.Go];
-
-			var pagestring = "?" + U.KeyEnum.Page + "=" + I.PageCurrent;
-			var sectionstring = "";
-			var articlestring = "";
-			var gostring = "";
-
-			if (section)
-			{
-				sectionstring = "&" + U.KeyEnum.Section + "=" + section;
-			}
-			if (article)
-			{
-				articlestring = "&" + U.KeyEnum.Article + "=" + article;
-			}
-			if (go)
-			{
-				gostring = "&" + U.KeyEnum.Go + "=" + go;
-			}
-			
-			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring);
-		}
-	},
-	
-	/*
-	 * Triggers the header tag associated with the requested page and section,
-	 * which will cause the section beside the header to expand. This is to be
-	 * called after a page has been AJAX loaded and bindings completed.
-	 */
-	openSectionFromURL: function()
-	{
-		/*
-		 * Enclosed in setTimeout because without it the scroll to element
-		 * animation function is glitchy (the function is called when the header
-		 * is clicked so the page automatically scrolls to the header).
-		 */
-		setTimeout(function()
-		{
-			if (U.Args[U.KeyEnum.Section] !== undefined)
-			{
-				var section = U.stripToAlphanumeric(U.Args[U.KeyEnum.Section]);
-				$(I.cHeaderPrefix + I.PageCurrent + "_" + U.toFirstUpperCase(section)).trigger("click");
-			}
-		}, 0);
-	},
-	openPageFromURL: function()
-	{
-		if (U.Args[U.KeyEnum.Page] !== undefined)
-		{
-			var page = U.stripToAlphanumeric(U.Args[U.KeyEnum.Page]);
-			$(I.cMenuPrefix + U.toFirstUpperCase(page)).trigger("click");
-		}
-	},
-	
-	/*
-	 * Makes links open a new tab on an HTML page with analytics to record
-	 * what link the user clicked on, then almost instantly redirect them to
-	 * the proper address of the link.
-	 * @param string pSelector to find tags to convert.
-	 */
-	convertExternalLink: function(pSelector)
-	{
-		if (I.ModeCurrent !== I.ModeEnum.Overlay)
-		{
-			$(pSelector).each(function()
-			{
-				$(this).attr("href", I.cSiteURL + "out?" + escape($(this).attr("href")));
-				$(this).attr("target", "_blank");
-			});
-		}
-	},
-	convertExternalURL: function(pURL)
-	{
-		if (I.ModeCurrent !== I.ModeEnum.Overlay)
-		{
-			return I.cSiteURL + "out?" + escape(pURL);
-		}
-		return pURL;
-	},
-	
-	/*
-	 * Extracts the "identifier" part of an HTML element's ID. Most iterable
-	 * elements' IDs were manually named as [prefix]_[Index].
-	 * @param jqobject pElement to extract.
-	 * @returns string identifier of the element's ID.
-	 */
-	getSubstringFromHTMLID: function(pElement)
-	{
-		return O.getVariableSuffix(pElement.attr("id"));
-	},
-	/*
-	 * Integer version of the ID extraction function.
-	 * @param jqobject pElement to extract.
-	 * @returns int identifier of the element's ID.
-	 */
-	getSubintegerFromHTMLID: function(pElement)
-	{
-		return parseInt(O.getVariableSuffix(pElement.attr("id")));
-	},
-	
-	/*
-	 * Gets a direct link to a hosted image file.
-	 * @param string pCode image code.
-	 * @returns URL to image.
-	 * @pre image is of png format.
-	 */
-	getImageHosted: function(pCode)
-	{
-		return I.cImageHost + pCode + I.cPNG;
-	},
-	
-	/*
-	 * Converts a search query to GW2 wiki http link.
-	 * @param string pString search entry.
-	 * @returns string wiki link.
-	 */
-	getWikiLink: function(pString)
-	{
-		pString = pString.replace(/ /g, "_"); // Replace spaces with underscores
-		return "http://wiki.guildwars2.com/wiki/" + escape(pString);
-	},
-	getWikiLanguageLink: function(pString)
-	{
-		pString = pString.replace(/ /g, "_");
-		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/wiki/" + escape(pString);
-	},
-	
-	/*
-	 * Converts a search query to YouTube http link.
-	 * @param string pString search entry.
-	 * @returns string youtube link.
-	 */
-	getYouTubeLink: function(pString)
-	{
-		return "http://www.youtube.com/results?search_query=" + escape(pString);
-	}
-};
-
-/* =============================================================================
  * @@Interface HTML and CSS content manipulation
  * ========================================================================== */
 I = {
@@ -7804,6 +7866,7 @@ I = {
 		I.bindHelpButtons("#layerOptions");
 		I.initializeUIforMenu();
 		I.initializeUIforChains();
+		I.initializeUIForHUD();
 		// Do special commands from the URL
 		U.enforceURLArgumentsLast();
 		// Clear the non-load warning after everything succeeded
@@ -7818,6 +7881,12 @@ I = {
 			I.selectText("#jsConsole");
 		});
 		U.convertExternalLink(".linkExternal");
+		
+		// Translate and bind map zones list
+		$("#mapCompassButton").one("mouseenter", M.bindZoneList).click(function()
+		{
+			$("#jsCenter").trigger("click");
+		});
 		
 		// The menu bar overlaps the language popup, so have to "raise" the clock pane
 		$("#itemLanguage").hover(
@@ -8075,7 +8144,7 @@ I = {
 			});
 			
 			// Create and bind the additional bottom header to collapse the container
-			$("<div class='jsSectionDone'>" + D.getSentence("done reading") + " " + headertext + "</div>")
+			$("<div class='jsSectionDone'><img src='img/ui/close.png' />" + headertext + "</div>")
 				.appendTo(header.next()).click(function()
 				{
 					$(this).parent().prev().trigger("click");
@@ -8371,8 +8440,6 @@ I = {
 		{
 			I.bindAfterAJAXContent("#layerMap");
 			
-			// Translate and bind map zones list
-			$("#headerMap_Zone").one("click", M.bindZoneList);
 			// Create daily markers
 			$("#headerMap_Daily").one("click", P.generateAndInitializeDailies);
 			// Create node markers and checkboxes
@@ -8495,6 +8562,22 @@ I = {
 		$("#headerTimetable").one("click", function(){
 		   C.initializeTimetableHTML(); 
 		});
+	},
+	
+	/*
+	 * Binds Map pane special effects on HUD GUI elements.
+	 */
+	initializeUIForHUD: function()
+	{
+		var animationspeed = 200;
+		$("#mapOptions").hover(
+			function() { $("#mapOptionsPopup").show().animate({opacity: 0.8}, animationspeed); },
+			function() { $("#mapOptionsPopup").animate({opacity: 0}, animationspeed); }
+		);
+		$("#mapZones").hover(
+			 function() { $("#mapZonesPopup").animate({opacity: 0.8}, animationspeed); },
+			 function() { $("#mapZonesPopup").animate({opacity: 0}, animationspeed); }
+		);
 	},
 	
 	/*

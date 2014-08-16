@@ -10,12 +10,15 @@
 
 	<!-- Stylesheets -->
 	<link rel="shortcut icon" type="image/x-icon" href="img/ui/favicon.png" />
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+	<link rel="stylesheet" href="bin/leaflet.css" />
 	<link rel="stylesheet" media="screen" href="gw2t.css" />
 	
-	<!-- JavaScript  -->
+	<!-- JavaScript -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+	<!-- CDN Fallbacks -->
+	<script>window.jQuery || document.write('<script src="bin/jquery.min.js"><\/script>');</script>
+	<script>window.L || document.write('<script src="bin/leaflet.js"><\/script>');</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
 	<script type="text/javascript" src="zones.js"></script>
@@ -54,22 +57,23 @@
 		<!-- Map, the dummy nbsp is required or Leaflet won't show
 		==================================================================== -->
 		<section id="paneMap">&nbsp;
+			<article id="paneHUD">
 			<div id="itemMapCoordinates">
-				<input id="mapCoordinatesDynamic" type="text" />
-				<input id="mapCoordinatesStatic" type="text" />
-				<input id="mapCoordinatesRegion" type="text" />
+				<input id="mapCoordinatesMouse" type="text" />
+				<input id="mapCoordinatesCopy" type="text" />
+				<input id="mapCoordinatesName" type="text" />
 			</div>
 			<div id="itemMapLinksNorth" class="itemMapLinks">
 				<a class="jsTranslate linkExternal" title="<dfn>Go to Forum</dfn>" href="http://forum.renaka.com/forum/368355/">news</a><span> /</span>
 				<u><a class="jsTranslate" title="<dfn>Switch to Simple Clock Mode</dfn>" href="./?mode=Simple">simple mode</a></u><span> /</span>
 				<u><a class="jsTranslate" title="<dfn>Dry Top Buried Locked Chests</dfn>" href="./?page=Chests">chests</a></u>
 				<div id="mapOptions">
-					<img title="<dfn>Click for Full Map</dfn>" id="mapCompassButton" src="img/map/compass.png" alt="compass" />
+					<img title="<dfn>Click for Full Map</dfn>" id="mapDisplayButton" src="img/map/display.png" alt="display" />
 					<div id="mapOptionsPopup" class="cntComposition">
 						<label title="Show/Hide all icons listed below. Will increase initial site load time if enabled."><input id="opt_bol_showWorldCompletion" type="checkbox" /> Display world icons</label>
 						<div id="mapOptionsDisplay">
 							<label><img src="img/map/scope.png" alt="" /><input id="opt_bol_displaySectors" type="checkbox" /> Sector Names</label>
-							<label><img src="img/map/waypoint.png" alt="" /><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
+							<label><img src="img/map/waypoint_h.png" alt="" /><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
 							<label><img src="img/map/landmark.png" alt="" /><input id="opt_bol_displayPOIs" type="checkbox" /> POIs</label>
 							<label><img src="img/map/vista.png" alt="" /><input id="opt_bol_displayVistas" type="checkbox" /> Vistas</label>
 							<label><img src="img/map/skill.png" alt="" /><input id="opt_bol_displaySkills" type="checkbox" /> Skill Challenges</label>
@@ -81,12 +85,76 @@
 						</div>
 					</div>
 				</div>
+				<div id="mapZones">
+					<img title="<dfn>Click to Center Map</dfn>" id="mapCompassButton" src="img/map/compass.png" alt="compass" />
+					<div id="mapZonesPopup" class="cntComposition">
+						<div id="mapZoneList" class="mapLinks">
+							<div>
+							<h2 data-region="kryta"></h2>
+							<ul>
+							<li data-zone="queensdale"></li>
+							<li data-zone="divinity"></li>
+							<li data-zone="kessex"></li>
+							<li data-zone="gendarran"></li>
+							<li data-zone="harathi"></li>
+							<li data-zone="lion"></li>
+							<li data-zone="bloodtide"></li>
+							<li data-zone="southsun"></li>
+							</ul>
+							<br />
+							<h2 data-region="maguuma"></h2>
+							<ul>
+							<li data-zone="dry"></li>
+							<li data-zone="metrica"></li>
+							<li data-zone="rata"></li>
+							<li data-zone="caledon"></li>
+							<li data-zone="grove"></li>
+							<li data-zone="brisban"></li>
+							<li data-zone="sparkfly"></li>
+							<li data-zone="maelstrom"></li>
+							</ul>
+							<br />
+							<h2 data-region="orr"></h2>
+							<ul>
+							<li data-zone="straits"></li>
+							<li data-zone="malchor"></li>
+							<li data-zone="cursed"></li>
+							</ul>
+							</div>
+
+							<div>
+							<h2 data-region="shiverpeaks"></h2>
+							<ul>
+							<li data-zone="wayfarer"></li>
+							<li data-zone="hoelbrak"></li>
+							<li data-zone="snowden"></li>
+							<li data-zone="lornar"></li>
+							<li data-zone="dredgehaunt"></li>
+							<li data-zone="timberline"></li>
+							<li data-zone="frostgorge"></li>
+							</ul>
+							<br />
+							<h2 data-region="ascalon"></h2>
+							<ul>
+							<li data-zone="ashford"></li>
+							<li data-zone="citadel"></li>
+							<li data-zone="diessa"></li>
+							<li data-zone="fields"></li>
+							<li data-zone="marches"></li>
+							<li data-zone="blazeridge"></li>
+							<li data-zone="fireheart"></li>
+							</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div id="itemMapLinksSouth" class="itemMapLinks">
 				<a class="linkExternal" title="<dfn>Download the app to run GW2Timer inside Guild Wars 2!</dfn>" href="http://forum.renaka.com/topic/5546166/">
 					<img id="itemLogo" src="img/ui/logo.png" alt="Overlay Application" />gw2timer.com <u>overlay</u>
 				</a>
 			</div>
+			</article>
 		</section>
 	</div><!-- End of panelLeft -->
 	<div id="panelRight" class="panelMain">
@@ -311,7 +379,7 @@
 					<br />
 					<h2>Map</h2>
 					<label title="Show/Hide the map area on the left."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
-					<span>For map options, hover over the compass button <img class="cntIconExample" src="img/map/compass.png" alt="Icon" /> on the top right corner of the map pane.</span><br />
+					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane.</span><br />
 					<br />
 					<h2>Alarm</h2>
 					<span>Voice announcement requires Chrome, Firefox, or IE9+. Multilingualism is only available for Chrome. Click the speaker icon on the chains page to toggle sound.</span>

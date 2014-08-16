@@ -92,9 +92,9 @@ var GW2T_CHAIN_DATA = [
 			sInterim: ["*"],
 			fInterim: "*",
 			lim: "15:00",
-			avg: "2:00",
-			min: "1:00",
-			max: "3:30",
+			avg: "1:30",
+			min: "0:30",
+			max: "3:00",
 			primacy: 3
 		}
 	]
@@ -2610,7 +2610,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[3792, 15675]],
+			path: [[3713, 15681]],
 			name_en: "Sandstorm!",
 			name_de: "Sandsturm!",
 			name_es: "¡Una tormenta de arena!",

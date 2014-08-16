@@ -89,6 +89,7 @@ var GW2T_RESOURCE_DATA = {
 		[3910, 16726], // dry
 		[3916, 16397],
 		[4008, 16245],
+		[4294, 16430],
 		[5023, 16529],
 		[5170, 16294],
 		[11939, 20363], // southsun
@@ -412,12 +413,14 @@ var GW2T_COLLECTIBLE_DATA = {
 		{n: 97, c: [4202, 16012], t: "Top of this rock in Oasis. Use jump crystal hidden in grass behind the rock to get up there."},
 		{n: 98, c: [3918, 16134], t: "Top of this rock ledge, jump to get there."},
 		
-		{n: 99, c: [3944, 16756], t: "Under cave tree near Inquest tents."},
-		{n: 100, c: [4054, 16416], t: "In pile of rocks by cliff wall."},
-		{n: 101, c: [4112, 16726], t: "On layered ledges same level as south Vista."},
-		{n: 102, c: [4202, 16803], t: "Top of wall ledges."},
-		{n: 103, c: [4295, 16429], t: "Corner of rock slabs and upper cliff."},
-		{n: 104, c: [4329, 16619], t: "In pile of rocks by bamboo."}
+		{n: 99, c: [3944, 16756], t: "Inside cave under tree near Inquest tents."},
+		{n: 100, c: [3991, 16813], t: "Second topmost ledge accessible by jump crystal above Vista."},
+		{n: 101, c: [4054, 16416], t: "In pile of rocks by cliff wall."},
+		{n: 102, c: [4112, 16726], t: "On layered ledges same level as south Vista."},
+		{n: 103, c: [4165, 16635], t: "Inside cave on wall ledge, use jump crystal nearby."},
+		{n: 104, c: [4202, 16803], t: "Top of wall ledges."},
+		{n: 105, c: [4295, 16429], t: "Corner of rock slabs and upper cliff."},
+		{n: 106, c: [4329, 16619], t: "In pile of rocks by bamboo."}
 		]
 	},
 	Collectible2: 
@@ -524,83 +527,6 @@ var GW2T_COLLECTIBLE_DATA = {
 
 <div class="cntComposition">
 <header class="cntHeader">Map</header>
-
-
-
-
-<header id="headerMap_Zone" class="jsSection"><img src="img/map/completion.png" alt="Map Zones" /><var
-	data-de="Karte Zonen"
-	data-es="Zonas del Mapa"
-	data-fr="Carte des Zones"
-	data-cs="Mapa Zóny"
-	data-it="Zone di Mappa"
-	data-pl="Mapa Strefy"
-	data-pt="Zonas Mapa"
-	data-ru="Зоны на Карте"
-	data-zh="圖區"
-	>Map Zones</var>
-</header>
-<section>
-<samp class="jsHelpTooltip" title="To display map completion icons such as POIs, Vistas, Skill Challenges, and Hearts, hover over the compass button on the map."></samp>
-<div class="mapZoneList mapLinks">
-	<div>
-	<h2>Kryta</h2>
-	<ul class="mapZones">
-	<li data-zone="queensdale"></li>
-	<li data-zone="divinity"></li>
-	<li data-zone="kessex"></li>
-	<li data-zone="gendarran"></li>
-	<li data-zone="harathi"></li>
-	<li data-zone="lion"></li>
-	<li data-zone="bloodtide"></li>
-	<li data-zone="southsun"></li>
-	</ul>
-	<br />
-	<h2>Maguuma</h2>
-	<ul class="mapZones">
-	<li data-zone="dry"></li>
-	<li data-zone="metrica"></li>
-	<li data-zone="rata"></li>
-	<li data-zone="caledon"></li>
-	<li data-zone="grove"></li>
-	<li data-zone="brisban"></li>
-	<li data-zone="sparkfly"></li>
-	<li data-zone="maelstrom"></li>
-	</ul>
-	<br />
-	<h2>Orr</h2>
-	<ul class="mapZones">
-	<li data-zone="straits"></li>
-	<li data-zone="malchor"></li>
-	<li data-zone="cursed"></li>
-	</ul>
-	</div>
-
-	<div>
-	<h2>Shiverspeaks</h2>
-	<ul class="mapZones">
-	<li data-zone="wayfarer"></li>
-	<li data-zone="hoelbrak"></li>
-	<li data-zone="snowden"></li>
-	<li data-zone="lornar"></li>
-	<li data-zone="dredgehaunt"></li>
-	<li data-zone="timberline"></li>
-	<li data-zone="frostgorge"></li>
-	</ul>
-	<br />
-	<h2>Ascalon</h2>
-	<ul class="mapZones">
-	<li data-zone="ashford"></li>
-	<li data-zone="citadel"></li>
-	<li data-zone="diessa"></li>
-	<li data-zone="fields"></li>
-	<li data-zone="marches"></li>
-	<li data-zone="blazeridge"></li>
-	<li data-zone="fireheart"></li>
-	</ul>
-	</div>
-</div>
-</section>
 
 
 
@@ -785,7 +711,7 @@ You may need to complete the heart before you can purchase.
 
 <div class="mapLinks">
 <h2>Easy <span class="mapLegendLine" style="border-bottom: 2px solid lime"></span></h2>
-Simple jumps.
+Simple or short jumps.
 <dl data-jpdif="0" class="mapJPList"><!-- JP IDs are sorted by X coordinate (latitude) -->
 	<dt id="mapJP_19" data-coord="[17399, 14591]" data-img="yjaAbBF">Urmaug's Secret</dt><dd>LA short climbs up cave cliff</dd>
 	<dt id="mapJP_8" data-coord="[13202, 13674]" data-img="Bme6j1E">Demongrub Pits</dt><dd>Queensdale small cave with grubs and skelks</dd>
@@ -861,10 +787,12 @@ A marathon of intricate jumps.
 <section>
 <div style="width:100%;height:32px"><button id="mapToggle_Collectible" class="cssRight">Toggle All</button></div>
 <div id="mapCollectibleList"></div>
-<br />
+<p><strong>Links:</strong> [Y]outube [W]iki [C]redit</p>
+<samp class="jsHelpCollapsible"></samp>
+<div>
 <p>Many achievements require you to go around the world to collect or interact with scattered or hidden landmarks or items. These are some of them, including the current Living Story ones if available. When in game, hold the Ctrl key to see the item's name appear.</p>
 <p>Every type of collectible is its own checklist. The map markers can be clicked three times to alternate between three ring colors representing an <em>Unfound</em>, <em>Tracked</em>, and <em>Found</em> state, and your address bar will be updated with a shareable URL for those marked. Click Reset for all the rings of that collectible type to be Unfounded again.</p>
-<p><strong>Links:</strong> [Y]outube [W]iki [C]redit</p>
+</div>
 </section>
 
 
