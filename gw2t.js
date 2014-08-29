@@ -9030,10 +9030,17 @@ I = {
 			{
 				I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 			}
-			// Tooltip overflows left edge
-			if (($(window).width() - pEvent.pageX) > (I.cPANEL_WIDTH / 2))
+			// Tooltip overflows panel left edge
+			if (I.ModeCurrent === I.ModeEnum.Overlay)
 			{
-				I.qTip.offsetX = ($(window).width() - pEvent.pageX) - I.cPANEL_WIDTH;
+				if (($(window).width() - pEvent.pageX) > (I.cPANEL_WIDTH / 2))
+				{
+					I.qTip.offsetX = ($(window).width() - pEvent.pageX) - I.cPANEL_WIDTH;
+				}
+				else
+				{
+					I.qTip.offsetX = I.cTOOLTIP_DEFAULT_OFFSET_X;
+				}
 			}
 			else
 			{

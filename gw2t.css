@@ -781,7 +781,6 @@ input#mapCoordinatesName {
 .menuBeam img { /* Clickable icon, its src is duplicated from an img tag in a header */
 	display: inline-block;
 	width: 32px; height: 32px;
-	margin-bottom: 2px;
 	opacity: 0.8;
 }
 .menuBeam img:hover {
@@ -1634,15 +1633,20 @@ label:hover {
 /* =============================================================================
  *  @@Utility styles
  * ========================================================================== */
+b {
+	font-weight: bold;
+}
 code, .cssMonospace {
 	font-family: monospace;
 }
+
 .cssRight {
 	float: right;
 }
 .cssIndent {
 	margin-left: 16px;
 }
+
 copper, silver, gold {
 	display: inline-block;
 	width: 16px; height: 16px;
