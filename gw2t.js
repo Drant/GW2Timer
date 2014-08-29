@@ -69,7 +69,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140812},
+		programVersion: {key: "int_utlProgramVersion", value: 140828},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -111,9 +111,9 @@ O = {
 		// Advanced
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
-		bol_useSiteTag: true,
+		bol_use24Hour: true,
 		bol_detectDST: true,
-		bol_use24Hour: true
+		bol_useSiteTag: true
 	},
 	/*
 	 * All Options of a numeric type must have an associated legal range to be
@@ -230,8 +230,8 @@ O = {
 				+ "Would you like to see the <a class='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />"
 				+ "<br />"
 				+ "New in this version:<br />"
-				+ "- Dry Top Challenger Cliffs events. Click the gold stars on the clock area to auto-copy chatlinks.<br />"
-				+ "- Map options and zones list moved into popups on the top right corner of the map pane.<br />"
+				+ "- Trading Post calculator <a class='urlUpdates' href='http://gw2timer.com/tp'>http://gw2timer.com/tp</a><br />"
+				+ "Use it with the <a class='urlUpdates' href='http://forum.renaka.com/topic/5546166/'>overlay app</a> in game!<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -706,8 +706,11 @@ O = {
 		 */
 		$("#optClearLocalStorage").click(function()
 		{
-			localStorage.clear();
-			location.reload();
+			if (confirm(I.cSiteName + " Reset: This is will clear all options and everything you have written in this website. Continue?"))
+			{
+				localStorage.clear();
+				location.reload();
+			}
 		});
 		
 		/*
@@ -781,168 +784,7 @@ O = {
 		},
 		int_setClock: function()
 		{
-			var animationspeed = 200;
-			var clockpaneheight = 0;
-			
-			switch (O.Options.int_setClock)
-			{
-				case O.IntEnum.Clock.Compact:
-				{
-					$("#paneClock").show();
-					$("#itemTimeLocal, #itemTimeServer, #itemLanguage, #itemSocial").show();
-					// Reposition clock items
-					I.bulkAnimate([
-						{s: "#itemClock", p: {top: "0px", left: "70px", width: "220px", height: "220px"}},
-						{s: "#paneClockFace", p: {width: "360px", height: "360px", top: "-70px", left: "0px"}},
-						{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
-						{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
-						{s: "#itemClockIconSD0", p: {top: "4px", left: "290px"}},
-						{s: "#itemClockIconSD1", p: {top: "148px", left: "290px"}},
-						{s: "#itemClockIconSD2", p: {top: "148px", left: "4px"}},
-						{s: "#itemClockIconSD3", p: {top: "4px", left: "4px"}},
-						{s: "#itemClockIconHC0", p: {top: "52px", left: "306px"}},
-						{s: "#itemClockIconHC1", p: {top: "132px", left: "306px"}},
-						{s: "#itemClockIconHC2", p: {top: "132px", left: "20px"}},
-						{s: "#itemClockIconHC3", p: {top: "52px", left: "20px"}},
-						{s: "#itemClockWaypoint0", p: {top: "24px", left: "274px"}},
-						{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
-						{s: "#itemClockWaypoint2", p: {top: "164px", left: "52px"}},
-						{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}},
-						{s: "#itemClockStar0", p: {top: "-10px", left: "138px"}},
-						{s: "#itemClockStar1", p: {top: "-10px", left: "190px"}}
-					], animationspeed);
-					$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
-					// Restyle text items
-					$("#itemTimeLocal").css({
-						width: "100%",
-						right: "auto", bottom: "90px",
-						"text-align": "center",
-						color: "#eee",
-						opacity: 0.5
-					});
-					$("#itemTimeServer").css({
-						width: "100%",
-						top: "90px", bottom: "auto", left: "auto",
-						"text-align": "center",
-						color: "#eee",
-						opacity: 0.5
-					});
-					$("#itemLanguage").css({ bottom: "72px", left: "10px" });
-					$("#itemSocial").css({ bottom: "100px", right: "10px" });
-
-					clockpaneheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
-				} break;
-
-				case O.IntEnum.Clock.Full:
-				{
-					$("#paneClock").show();
-					$("#itemTimeLocal, #itemTimeServer, #itemLanguage, #itemSocial").show();
-					// Reposition clock items
-					I.bulkAnimate([
-						{s: "#itemClock", p: {top: "70px", left: "70px", width: "220px", height: "220px"}},
-						{s: "#paneClockFace", p: {width: "360px", height: "360px", top: "0px", left: "0px"}},
-						{s: "#paneClockIcons .iconSD", p: {"border-radius": "12px"}},
-						{s: "#paneClockIcons .iconHC", p: {"border-radius": "12px"}},
-						{s: "#itemClockIconSD0", p: {top: "4px", left: "148px"}},
-						{s: "#itemClockIconSD1", p: {top: "148px", left: "290px"}},
-						{s: "#itemClockIconSD2", p: {top: "290px", left: "148px"}},
-						{s: "#itemClockIconSD3", p: {top: "148px", left: "4px"}},
-						{s: "#itemClockIconHC0", p: {top: "12px", left: "212px"}},
-						{s: "#itemClockIconHC1", p: {top: "212px", left: "298px"}},
-						{s: "#itemClockIconHC2", p: {top: "298px", left: "100px"}},
-						{s: "#itemClockIconHC3", p: {top: "100px", left: "12px"}},
-						{s: "#itemClockWaypoint0", p: {top: "52px", left: "164px"}},
-						{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
-						{s: "#itemClockWaypoint2", p: {top: "274px", left: "164px"}},
-						{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}},
-						{s: "#itemClockStar0", p: {top: "280px", left: "286px"}},
-						{s: "#itemClockStar1", p: {top: "280px", left: "328px"}}
-					], animationspeed);
-					$("#paneClockIcons .iconHC").css({width: "48px", height: "48px"});
-					// Restyle text items
-					$("#itemTimeLocal").css({
-						width: "auto",
-						right: "10px", bottom: "10px",
-						"text-align": "left",
-						color: "#bbcc77",
-						opacity: 1
-					});
-					$("#itemTimeServer").css({
-						width: "auto",
-						top: "auto", bottom: "10px", left: "10px",
-						"text-align": "left",
-						color: "#bbcc77",
-						opacity: 1
-					});
-					$("#itemLanguage").css({ bottom: "0px", left: "10px" });
-					$("#itemSocial").css({ bottom: "28px", right: "10px" });
-
-					clockpaneheight = I.cPANE_CLOCK_HEIGHT;
-				} break;
-
-				case O.IntEnum.Clock.Bar:
-				{
-					$("#paneClock").show();
-					$("#itemTimeLocal, #itemTimeServer, #itemLanguage, #itemSocial").hide();
-					// Reposition clock items
-					I.bulkAnimate([
-						{s: "#itemClock", p: {top: "0px", left: "0px", width: "85px", height: "85px"}},
-						{s: "#paneClockFace", p: {width: "132px", height: "132px", top: "-24px", left: "-24px"}},
-						{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
-						{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
-						{s: "#itemClockIconSD0", p: {top: "0px", left: "82px"}},
-						{s: "#itemClockIconSD1", p: {top: "0px", left: "152px"}},
-						{s: "#itemClockIconSD2", p: {top: "0px", left: "222px"}},
-						{s: "#itemClockIconSD3", p: {top: "0px", left: "292px"}},
-						{s: "#itemClockIconHC0", p: {top: "48px", left: "98px"}},
-						{s: "#itemClockIconHC1", p: {top: "48px", left: "168px"}},
-						{s: "#itemClockIconHC2", p: {top: "48px", left: "238px"}},
-						{s: "#itemClockIconHC3", p: {top: "48px", left: "308px"}},
-						{s: "#itemClockWaypoint0", p: {top: "-8px", left: "98px"}},
-						{s: "#itemClockWaypoint1", p: {top: "-8px", left: "168px"}},
-						{s: "#itemClockWaypoint2", p: {top: "-8px", left: "238px"}},
-						{s: "#itemClockWaypoint3", p: {top: "-8px", left: "308px"}},
-						{s: "#itemClockStar0", p: {top: "-16px", left: "0px"}},
-						{s: "#itemClockStar1", p: {top: "-16px", left: "53px"}}
-					], animationspeed);
-					$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
-
-					clockpaneheight = I.cPANE_CLOCK_HEIGHT_BAR;
-				} break;
-
-				case O.IntEnum.Clock.None:
-				{
-					/*
-					 * There are three panes on the right panel: Clock, Menu, and Content
-					 * all absolutely positioned, so to move them the CSS "top" attribute
-					 * needs to be changed: less to go up, more to go down.
-					 */
-					$("#paneMenu").animate({top: 0}, animationspeed);
-					$(I.cContentPane).animate({top: I.cPANE_MENU_HEIGHT,
-						"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed,
-						function()
-						{
-							$("#paneClock").hide();
-						});
-				} break;
-			}
-
-			// Readjust panes to new height if showing clock
-			if (O.Options.int_setClock !== O.IntEnum.Clock.None)
-			{
-				// Resize panes by animation
-				$("#paneMenu").animate({top: clockpaneheight}, animationspeed);
-				$("#paneClock, #paneClockWall, #paneClockBackground, #paneClockIcons")
-					.animate({height: clockpaneheight}, animationspeed);
-			
-				// Readjust content pane
-				$(I.cContentPane).animate({top: clockpaneheight + I.cPANE_MENU_HEIGHT,
-					"min-height": I.cPANEL_HEIGHT - (clockpaneheight + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
-			}
-			if (I.ModeCurrent === I.ModeEnum.Overlay)
-			{
-				$("#itemSocial").hide();
-			}
+			K.setClock();
 		},
 		int_setDimming: function()
 		{
@@ -1138,7 +980,8 @@ U = {
 		 * http://gw2timer.com/navi they will be redirected to http://gw2timer.com/?page=Navi
 		 * These special pages must have unique names from the content pages.
 		 */
-		var i;
+		var i, ii;
+		var ithpage;
 		var go = function(pURL)
 		{
 			$("body").hide();
@@ -1164,13 +1007,28 @@ U = {
 			}
 			else
 			{
-				// Also check if the special page is actually a zone name
+				// Check if the special page is actually a section
+				for (i in I.SectionEnum)
+				{
+					ithpage = I.SectionEnum[i];
+					for (ii in ithpage)
+					{
+						if (ii.toLowerCase() === page)
+						{
+							U.Args[U.KeyEnum.Page] = i;
+							U.Args[U.KeyEnum.Section] = ii;
+							return;
+						}
+					}
+				}
+				
+				// Check if the special page is actually a zone name
 				for (i in M.Zones)
 				{
 					if (page.indexOf(i) !== -1)
 					{
 						U.Args[U.KeyEnum.Go] = i;
-						break;
+						return;
 					}
 				}
 			}
@@ -1358,7 +1216,14 @@ U = {
 			if (U.Args[U.KeyEnum.Section] !== undefined)
 			{
 				var section = U.stripToAlphanumeric(U.Args[U.KeyEnum.Section]);
-				$(I.cHeaderPrefix + I.PageCurrent + "_" + U.toFirstUpperCase(section)).trigger("click");
+				// Try going to a section name in sentence letter case
+				var elem = $(I.cHeaderPrefix + I.PageCurrent + "_" + U.toFirstUpperCase(section));
+				if ( ! elem.length)
+				{
+					// Else try going to a section name in all caps
+					elem = $(I.cHeaderPrefix + I.PageCurrent + "_" + section.toUpperCase());
+				}
+				elem.trigger("click");
 			}
 		}, 0);
 	},
@@ -1388,13 +1253,19 @@ U = {
 			});
 		}
 	},
-	convertExternalURL: function(pURL)
+	
+	/*
+	 * Opens a new browser tab with the requested URL.
+	 * @param string pURL to go to.
+	 */
+	openExternalURL: function(pURL)
 	{
+		var url = pURL;
 		if (I.ModeCurrent !== I.ModeEnum.Overlay)
 		{
-			return I.cSiteURL + "out?" + escape(pURL);
+			url = I.cSiteURL + "out?" + escape(pURL);
 		}
-		return pURL;
+		window.open(url, "_blank");
 	},
 	
 	/*
@@ -1443,6 +1314,11 @@ U = {
 		pString = pString.replace(/ /g, "_");
 		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/wiki/" + escape(pString);
 	},
+	getWikiSearchLink: function(pString)
+	{
+		pString = pString.replace(/ /g, "+"); // Replace spaces with underscores
+		return "http://wiki.guildwars2.com/index.php?title=Special%3ASearch&search=" + escape(pString);
+	},
 	
 	/*
 	 * Converts a search query to YouTube http link.
@@ -1452,11 +1328,21 @@ U = {
 	getYouTubeLink: function(pString)
 	{
 		return "http://www.youtube.com/results?search_query=" + escape(pString);
+	},
+	
+	/*
+	 * Converts a search query to Trading Post http link.
+	 * @param string pString search entry.
+	 * @returns string trading link.
+	 */
+	getTradingLink: function(pString)
+	{
+		return "http://www.gw2spidy.com/search/" + escape(pString);
 	}
 };
 
 /* =============================================================================
- * @@Checklist management
+ * @@Checklist management and calculations
  * ========================================================================== */
 X = {
 	
@@ -1478,6 +1364,10 @@ X = {
 		Custom: { key: "str_chlCustom", value: "" },
 		CustomText: { key: "str_chlCustomText", value: new Array(), valueDefault: new Array() },
 		NotepadText: { key: "str_chlNotepadText", value: new Array(), valueDefault: new Array() },
+		TradingName: { key: "str_chlTradingName", value: new Array(), valueDefault: new Array() },
+		TradingBuy: { key: "str_chlTradingBuy", value: new Array(), valueDefault: new Array() },
+		TradingSell: { key: "str_chlTradingSell", value: new Array(), valueDefault: new Array() },
+		TradingQuantity: { key: "str_chlTradingQuantity", value: new Array(), valueDefault: new Array() },
 		/*
 		 * Collectible checklists must have the same variable name as in the map page's data.
 		 * The urlkey properties must be unique from the global KeyEnum.
@@ -1498,6 +1388,12 @@ X = {
 		Unfound: "0",
 		Tracked: "1",
 		Found: "2"
+	},
+	Money:
+	{
+		COPPER_IN_SILVER: 100,
+		COPPER_IN_GOLD: 10000,
+		SILVER_IN_GOLD: 100
 	},
 	
 	/*
@@ -1977,9 +1873,9 @@ X = {
 		var updateCalculator = function()
 		{
 			var money = X.Checklists.Dungeon.money;
-			var gold = ~~(money / 10000);
-			var silver = ~~(money / 100) % 100;
-			var copper = money % 100;
+			var gold = ~~(money / X.Money.COPPER_IN_GOLD);
+			var silver = ~~(money / X.Money.SILVER_IN_GOLD) % X.Money.COPPER_IN_SILVER;
+			var copper = money % X.Money.COPPER_IN_SILVER;
 			$("#chlDungeonCalculator_Gold").text(gold);
 			$("#chlDungeonCalculator_Silver").text(silver);
 			$("#chlDungeonCalculator_Copper").text(copper);
@@ -2126,6 +2022,229 @@ X = {
 	},
 	
 	/*
+	 * Parses a period separated string representing those units.
+	 * @param string pString to parse.
+	 * @returns int the money in copper value for calculating.
+	 * @pre String does not contain negative numbers.
+	 */
+	parseMoneyString: function(pString)
+	{
+		if (pString === undefined || pString === null)
+		{
+			return 0;
+		}
+		
+		var str = pString.split(".");
+		var len = str.length;
+		var copper = 0, silver = 0, gold = 0;
+		
+		if (len === 0)
+		{
+			return 0;
+		}
+		if (len === 1)
+		{
+			silver = parseInt(str[0]);
+		}
+		
+		if (len >= 2)
+		{
+			copper = parseInt(str[len-1]);
+			silver = parseInt(str[len-2]);
+		}
+		if (len === 2 && str[len-1].length === 1)
+		{
+			copper = copper * T.cBASE_10; // 0.1 = 10 copper
+		}
+		if (len >= 3)
+		{
+			gold = parseInt(str[len-3]);
+		}
+		
+		if ( ! isFinite(copper)) { copper = 0; }
+		if ( ! isFinite(silver)) { silver = 0; }
+		if ( ! isFinite(gold)) { gold = 0; }
+		
+		return copper + (silver * X.Money.COPPER_IN_SILVER) + (gold * X.Money.COPPER_IN_GOLD);
+	},
+	parseQuantityString: function(pString)
+	{
+		var quantity = parseInt(pString);
+		if ( ! isFinite(quantity)) { quantity = 1; }
+		return quantity;
+	},
+	
+	/*
+	 * Converts a money amount in copper to a period separated string.
+	 * @param int pAmount of money.
+	 * @returns string money for displaying.
+	 */
+	createMoneyString: function(pAmount)
+	{
+		var gold = Math.abs(~~(pAmount / X.Money.COPPER_IN_GOLD));
+		var silver = Math.abs(~~(pAmount / X.Money.SILVER_IN_GOLD) % X.Money.COPPER_IN_SILVER);
+		var copper = Math.abs(pAmount % X.Money.COPPER_IN_SILVER);
+		var sign = "";
+		if (pAmount < 0)
+		{
+			sign = "−";
+		}
+		
+		if (gold > 0 && silver < T.cBASE_10)
+		{
+			silver = "00";
+		}
+		if (copper < T.cBASE_10)
+		{
+			copper = "0" + copper;
+		}
+		
+		if (gold > 0)
+		{
+			return sign + gold + "." + silver + "." + copper;
+		}
+		if (silver > 0)
+		{
+			return sign + silver + "." + copper;
+		}
+		return sign + "0." + copper;
+	},
+	
+	/*
+	 * Updates the trading calculator's output textboxes using input textboxes' values.
+	 * @param string pIndex of trading calculator.
+	 */
+	calculateTrading: function(pIndex)
+	{
+		// Constants
+		var cListFee = 0.05;
+		var cSellTax = 0.10;
+		var cTotalTax = cListFee + cSellTax;
+		var cInvertedTax = 1 - cTotalTax;
+		
+		// Computable data
+		var entry = "#trdEntry_" + pIndex;
+		var buy = X.parseMoneyString($(entry + " .trdBuy").first().val());
+		var sell = X.parseMoneyString($(entry + " .trdSell").first().val());
+		var quantity = X.parseQuantityString($(entry + " .trdQuantity").first().val());
+		
+		// Output elements
+		var cost = $(entry + " .trdCost").first();
+		var tax = $(entry + " .trdTax").first();
+		var revenue = $(entry + " .trdRevenue").first();
+		var profit = $(entry + " .trdProfit").first();
+		var breakpoint = $(entry + " .trdBreak").first();
+		
+		var profitamount = Math.floor((sell - (sell * cTotalTax) - buy) * quantity);
+		
+		// Do calculation and put them in outputs
+		cost.val("−" + X.createMoneyString(Math.floor(
+			buy * quantity
+		)));
+		tax.val("−" + X.createMoneyString(Math.floor(
+			(sell * cListFee) * quantity
+			)) + " + −" + X.createMoneyString(Math.floor(
+			(sell * cSellTax) * quantity
+		)));
+		breakpoint.val(X.createMoneyString(Math.floor(
+			buy / cInvertedTax
+		)));
+		revenue.val(X.createMoneyString(Math.floor(
+			(sell - (sell * cTotalTax)) * quantity
+		)));
+		profit.val(X.createMoneyString(
+			profitamount
+		));
+		
+		profit.removeClass("trdZero trdGain trdLoss");
+		if (profitamount === 0) { profit.addClass("trdZero"); }
+		else if (profitamount > 0) { profit.addClass("trdGain"); }
+		else if (profitamount < 0) { profit.addClass("trdLoss"); }
+	},
+	
+	/*
+	 * Binds notepad textarea behavior and button pages behavior.
+	 */
+	initializeTrading: function()
+	{
+		var i;
+		var numofcalcs = 48;
+		var entry = "";
+		var name, buy, sell, quantity;
+		
+		for (i = 0; i < numofcalcs; i++)
+		{
+			entry = "#trdEntry_" + i;
+			// Generate individual calculators
+			$("#trdList").append(
+				"<div id='trdEntry_" + i + "' class='trdEntry'>"
+					+ "<samp title='<dfn>" + D.getSentence("name") + "</dfn>'>#" + (i+1) + "</samp><input class='trdName' type='text' />"
+					+ "<button class='trdSearch' tabindex='-1'>S</button><button class='trdWiki' tabindex='-1'>W</button><br />"
+					+ "<samp title='<dfn>" + D.getSentence("buy") + "</dfn>'>$~O</samp>"
+						+ "<input class='trdBuy' type='text' />"
+					+ "<samp title='<dfn>" + D.getSentence("cost") + "</dfn>: Money needed to buy the items.'>−$~</samp>"
+						+ "<input class='trdCost trdOutput' type='text' tabindex='-1' /><br />"
+					+ "<samp title='<dfn>" + D.getSentence("sell") + "</dfn>'>O~$</samp>"
+						+ "<input class='trdSell' type='text' />"
+					+ "<samp title='<dfn>" + D.getSentence("breakpoint") + "</dfn>: Sell higher than this to make a profit.'>$=$</samp>"
+						+ "<input class='trdBreak trdOutput' type='text' tabindex='-1' /><br />"
+					+ "<samp title='<dfn>" + D.getSentence("quantity") + "</dfn>'>×</samp>"
+						+ "<input class='trdQuantity' type='text' />"
+					+ "<samp title='<dfn>" + D.getSentence("tax") + "</dfn>: Pay 5% of sell price to list, and deduct 10% of sell price when sold.'>−$%</samp>"
+						+ "<input class='trdTax trdOutput' type='text' tabindex='-1' /><br />"
+					+ "<samp title='<dfn>" + D.getSentence("profit") + "</dfn>: Gains after losses from buying and tax.'>+$</samp>"
+						+ "<input class='trdProfit trdOutput' type='text' tabindex='-1' />"
+					+ "<samp title='<dfn>" + D.getSentence("revenue") + "</dfn>: What you will receive at the trader.'>=$</samp>"
+						+ "<input class='trdRevenue trdOutput' type='text' tabindex='-1' /><br />"
+				+ "</div><br />"
+			);
+			I.qTip.init($(entry + " samp"));
+			
+			name = $(entry + " .trdName").first();
+			buy = $(entry + " .trdBuy").first();
+			sell = $(entry + " .trdSell").first();
+			quantity = $(entry + " .trdQuantity").first();
+			
+			// Bind search button behavior for ith calculator
+			$(entry + " .trdWiki").click(function()
+			{
+				var index = U.getSubstringFromHTMLID($(this).parent());
+				var query = $("#trdEntry_" + index + " .trdName").first().val();
+				U.openExternalURL(U.getWikiSearchLink(query));
+			});
+			$(entry + " .trdSearch").click(function()
+			{
+				var index = U.getSubstringFromHTMLID($(this).parent());
+				var query = $("#trdEntry_" + index + " .trdName").first().val();
+				U.openExternalURL(U.getTradingLink(query));
+			});
+			
+			// Bind input textboxes calculate behavior
+			$([name, buy, sell, quantity]).each(function()
+			{
+				$(this).on("input", function()
+				{
+					var index = U.getSubstringFromHTMLID($(this).parent());
+					X.calculateTrading(index);
+				});
+				$(this).click(function()
+				{
+					$(this).select();
+				});
+			});
+		}
+		
+		// Initialize storage behavior of the input textboxes
+		X.initializeText(X.Checklists.TradingName, $("#trdList .trdName"), null, 128);
+		X.initializeText(X.Checklists.TradingBuy, $("#trdList .trdBuy"), null, 16);
+		X.initializeText(X.Checklists.TradingSell, $("#trdList .trdSell"), null, 16);
+		X.initializeText(X.Checklists.TradingQuantity, $("#trdList .trdQuantity"), null, 16);
+		
+		// Trigger an input textbox to make the output textboxes update
+		$("#trdList .trdSell").trigger("input");
+	},
+	
+	/*
 	 * Binds notepad textarea behavior and button pages behavior.
 	 */
 	initializeNotepad: function()
@@ -2214,19 +2333,25 @@ X = {
 			
 			$(this).change(function()
 			{
-				I.write(pFieldName + " #" + (pIndex + 1) + " updated.");
+				if (pFieldName)
+				{
+					I.write(pFieldName + " #" + (pIndex + 1) + " updated.");
+				}
 				updateStoredText();
 			});
 		});
 		
 		// Bind restore button
-		pRestoreButton.click(function()
+		if (pRestoreButton)
 		{
-			pTextFields.each(function(pIndex)
+			pRestoreButton.click(function()
 			{
-				$(this).val(pChecklistText.valueDefault[pIndex]).trigger("change");
+				pTextFields.each(function(pIndex)
+				{
+					$(this).val(pChecklistText.valueDefault[pIndex]).trigger("change");
+				});
 			});
-		});
+		}
 	}
 };
 
@@ -2307,7 +2432,27 @@ D = {
 		s_simple_mode: {de: "einfach modus", es: "modo simple", fr: "mode simple",
 			cs: "prostý režim", it: "modalità semplice", pl: "prosty tryb", pt: "modo simples", ru: "простой режим", zh: "方式簡單"},
 		s_chests: {de: "schatztruhen", es: "cofres del tesoro", fr: "coffres au trésor",
-			cs: "truhly", it: "scrigni del tesoro", pl: "skrzynie", pt: "baús de tesouro", ru: "сундуки с сокровищами", zh: "寶箱"}
+			cs: "truhly", it: "scrigni del tesoro", pl: "skrzynie", pt: "baús de tesouro", ru: "сундуки с сокровищами", zh: "寶箱"},
+		
+		// Trading Calculator
+		s_name: {de: "namen", es: "nombre", fr: "nom",
+			cs: "název", it: "nome", pl: "nazwa", pt: "nome", ru: "имя", zh: "名"},
+		s_buy: {de: "kaufen", es: "comprar", fr: "acheter",
+			cs: "koupit", it: "comprare", pl: "kupić", pt: "comprar", ru: "купить", zh: "買"},
+		s_sell: {de: "verkaufen", es: "vender", fr: "vendre",
+			cs: "prodat", it: "vendere", pl: "sprzedać", pt: "vender", ru: "продать", zh: "賣"},
+		s_quantity: {de: "quantität", es: "cantidad", fr: "quantité",
+			cs: "množství", it: "quantità", pl: "ilość", pt: "quantidade", ru: "количество", zh: "量"},
+		s_profit: {de: "gewinn", es: "beneficio", fr: "profit",
+			cs: "zisk", it: "profitto", pl: "zysk", pt: "lucro", ru: "прибыль", zh: "利潤"},
+		s_cost: {de: "kosten", es: "costo", fr: "coût",
+			cs: "náklady", it: "costo", pl: "koszt", pt: "custo", ru: "стоимость", zh: "成本"},
+		s_breakpoint: {de: "gewinnschwelle", es: "punto muerto", fr: "seuil de rentabilité",
+			cs: "bod zvratu", it: "punto di pareggio", pl: "próg rentowności", pt: "ponto de equilíbrio", ru: "точка безубыточности", zh: "收支平衡點"},
+		s_tax: {de: "steuer", es: "impuestos", fr: "impôt",
+			cs: "daň", it: "fiscale", pl: "podatek", pt: "fiscal", ru: "налог", zh: "稅"},
+		s_revenue: {de: "einnahmen", es: "ingresos", fr: "revenus",
+			cs: "příjmy", it: "entrate", pl: "dochody", pt: "receita", ru: "доходов", zh: "收入"}
 	},
 	
 	Element:
@@ -2579,15 +2724,15 @@ D = {
 		zh: "Shatterer"
 	},{
 		en: "Taidha Covington",
-		de: "Admiral Taidha Covington",
-		es: "Almirante Taidha Covington",
-		fr: "Amirale Taidha Covington",
-		cs: "Admirál Taidha Covington",
-		it: "Ammiraglio Taidha Covington",
-		pl: "Admirał Taidha Covington",
-		pt: "Almirante Taidha Covington",
-		ru: "Адмирал Таидха Цовингтон",
-		zh: "海軍上將 Taidha Covington"
+		de: "Taidha Covington",
+		es: "Taidha Covington",
+		fr: "Taidha Covington",
+		cs: "Taidha Covington",
+		it: "Taidha Covington",
+		pl: "Taidha Covington",
+		pt: "Taidha Covington",
+		ru: "Таидха Цовингтон",
+		zh: "Taidha Covington"
 	},{
 		en: "Modniir Ulgoth",
 		de: "Ulgoth den Modniir",
@@ -3430,9 +3575,14 @@ C = {
 		// Update the title tootlip with that chain's schedule
 		var minischedulestring = "";
 		var spacer;
+		var subscribetext = "<dfn>" + D.getSentence("subscribe") + "?</dfn><br />";
+		if (pChain.series === C.ChainSeriesEnum.Story)
+		{
+			subscribetext = "";
+		}
 		for (var ii in pChain.scheduleKeys)
 		{
-			spacer = (parseInt(ii) === 0) ? "<dfn>" + D.getSentence("subscribe") + "?</dfn><br />" : " <br /> ";
+			spacer = (parseInt(ii) === 0) ? subscribetext : " <br /> ";
 			minischedulestring = minischedulestring + spacer
 				+ T.getTimeFormatted(
 				{
@@ -4285,13 +4435,15 @@ M = {
 		});
 		
 		/*
-		 * Hide the right panel if click on the map compass.
+		 * Hide the right panel if click on the display button.
 		 */
 		$("#mapDisplayButton").click(function()
 		{
 			$("#panelRight").toggle();
+			// Inform Leaflet that the map pane was resized so it can load tiles properly
+			M.Map.invalidateSize();
 		});
-	}, // End of map initialization
+	},
 	
 	/*
 	 * Turns a boolean on when mouse entered any GUI elements on the map, so
@@ -4300,14 +4452,8 @@ M = {
 	bindHUDEventCanceler: function()
 	{
 		var hud = document.getElementById("paneHUD");
-		hud.onmouseover = function()
-		{
-			M.isMouseOnHUD = true;
-		};
-		hud.onmouseout = function()
-		{
-			M.isMouseOnHUD = false;
-		};
+		hud.onmouseover = function() { M.isMouseOnHUD = true; };
+		hud.onmouseout = function() { M.isMouseOnHUD = false; };
 	},
 	
 	/*
@@ -5304,7 +5450,7 @@ P = {
 								{
 									heartname = heartname.slice(0, -1);
 								}
-								window.open(U.convertExternalURL(U.getWikiLanguageLink(heartname)), "_blank");
+								U.openExternalURL(U.getWikiLanguageLink(heartname));
 							});
 							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
 						}
@@ -5372,7 +5518,7 @@ P = {
 				+ "- Your browser is too old (if IE then need 11+).<br />"
 				+ "- Your computer's time is out of sync.<br />"
 				+ "- This website's code encountered a bug.<br />"
-				+ "Map features will be limited.<br />", 30);
+				+ "Map features will be limited.<br />", 15);
 			}
 		}).always(function() // Do after AJAX regardless of success/failure
 		{
@@ -6933,6 +7079,175 @@ K = {
 		K.tickFrequent();
 		K.initializeClipboard();
 	},
+	
+	/*
+	 * Sets the clock pane's dimension and element positions according to options.
+	 */
+	setClock: function()
+	{
+		var animationspeed = 200;
+		var clockpaneheight = 0;
+
+		switch (O.Options.int_setClock)
+		{
+			case O.IntEnum.Clock.Compact:
+			{
+				$("#paneClock").show();
+				$("#itemTimeLocal, #itemTimeServer, #itemLanguage, #itemSocial").show();
+				// Reposition clock items
+				I.bulkAnimate([
+					{s: "#itemClock", p: {top: "0px", left: "70px", width: "220px", height: "220px"}},
+					{s: "#paneClockFace", p: {width: "360px", height: "360px", top: "-70px", left: "0px"}},
+					{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
+					{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
+					{s: "#itemClockIconSD0", p: {top: "4px", left: "290px"}},
+					{s: "#itemClockIconSD1", p: {top: "148px", left: "290px"}},
+					{s: "#itemClockIconSD2", p: {top: "148px", left: "4px"}},
+					{s: "#itemClockIconSD3", p: {top: "4px", left: "4px"}},
+					{s: "#itemClockIconHC0", p: {top: "52px", left: "306px"}},
+					{s: "#itemClockIconHC1", p: {top: "132px", left: "306px"}},
+					{s: "#itemClockIconHC2", p: {top: "132px", left: "20px"}},
+					{s: "#itemClockIconHC3", p: {top: "52px", left: "20px"}},
+					{s: "#itemClockWaypoint0", p: {top: "24px", left: "274px"}},
+					{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
+					{s: "#itemClockWaypoint2", p: {top: "164px", left: "52px"}},
+					{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}},
+					{s: "#itemClockStar0", p: {top: "-10px", left: "138px"}},
+					{s: "#itemClockStar1", p: {top: "-10px", left: "190px"}}
+				], animationspeed);
+				$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
+				// Restyle text items
+				$("#itemTimeLocal").css({
+					width: "100%",
+					right: "auto", bottom: "90px",
+					"text-align": "center",
+					color: "#eee",
+					opacity: 0.5
+				});
+				$("#itemTimeServer").css({
+					width: "100%",
+					top: "90px", bottom: "auto", left: "auto",
+					"text-align": "center",
+					color: "#eee",
+					opacity: 0.5
+				});
+				$("#itemLanguage").css({ bottom: "72px", left: "10px" });
+				$("#itemSocial").css({ bottom: "100px", right: "10px" });
+
+				clockpaneheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
+			} break;
+
+			case O.IntEnum.Clock.Full:
+			{
+				$("#paneClock").show();
+				$("#itemTimeLocal, #itemTimeServer, #itemLanguage, #itemSocial").show();
+				// Reposition clock items
+				I.bulkAnimate([
+					{s: "#itemClock", p: {top: "70px", left: "70px", width: "220px", height: "220px"}},
+					{s: "#paneClockFace", p: {width: "360px", height: "360px", top: "0px", left: "0px"}},
+					{s: "#paneClockIcons .iconSD", p: {"border-radius": "12px"}},
+					{s: "#paneClockIcons .iconHC", p: {"border-radius": "12px"}},
+					{s: "#itemClockIconSD0", p: {top: "4px", left: "148px"}},
+					{s: "#itemClockIconSD1", p: {top: "148px", left: "290px"}},
+					{s: "#itemClockIconSD2", p: {top: "290px", left: "148px"}},
+					{s: "#itemClockIconSD3", p: {top: "148px", left: "4px"}},
+					{s: "#itemClockIconHC0", p: {top: "12px", left: "212px"}},
+					{s: "#itemClockIconHC1", p: {top: "212px", left: "298px"}},
+					{s: "#itemClockIconHC2", p: {top: "298px", left: "100px"}},
+					{s: "#itemClockIconHC3", p: {top: "100px", left: "12px"}},
+					{s: "#itemClockWaypoint0", p: {top: "52px", left: "164px"}},
+					{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
+					{s: "#itemClockWaypoint2", p: {top: "274px", left: "164px"}},
+					{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}},
+					{s: "#itemClockStar0", p: {top: "280px", left: "286px"}},
+					{s: "#itemClockStar1", p: {top: "280px", left: "328px"}}
+				], animationspeed);
+				$("#paneClockIcons .iconHC").css({width: "48px", height: "48px"});
+				// Restyle text items
+				$("#itemTimeLocal").css({
+					width: "auto",
+					right: "10px", bottom: "10px",
+					"text-align": "left",
+					color: "#bbcc77",
+					opacity: 1
+				});
+				$("#itemTimeServer").css({
+					width: "auto",
+					top: "auto", bottom: "10px", left: "10px",
+					"text-align": "left",
+					color: "#bbcc77",
+					opacity: 1
+				});
+				$("#itemLanguage").css({ bottom: "0px", left: "10px" });
+				$("#itemSocial").css({ bottom: "28px", right: "10px" });
+
+				clockpaneheight = I.cPANE_CLOCK_HEIGHT;
+			} break;
+
+			case O.IntEnum.Clock.Bar:
+			{
+				$("#paneClock").show();
+				$("#itemTimeLocal, #itemTimeServer, #itemLanguage, #itemSocial").hide();
+				// Reposition clock items
+				I.bulkAnimate([
+					{s: "#itemClock", p: {top: "0px", left: "0px", width: "85px", height: "85px"}},
+					{s: "#paneClockFace", p: {width: "132px", height: "132px", top: "-24px", left: "-24px"}},
+					{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
+					{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
+					{s: "#itemClockIconSD0", p: {top: "0px", left: "82px"}},
+					{s: "#itemClockIconSD1", p: {top: "0px", left: "152px"}},
+					{s: "#itemClockIconSD2", p: {top: "0px", left: "222px"}},
+					{s: "#itemClockIconSD3", p: {top: "0px", left: "292px"}},
+					{s: "#itemClockIconHC0", p: {top: "48px", left: "98px"}},
+					{s: "#itemClockIconHC1", p: {top: "48px", left: "168px"}},
+					{s: "#itemClockIconHC2", p: {top: "48px", left: "238px"}},
+					{s: "#itemClockIconHC3", p: {top: "48px", left: "308px"}},
+					{s: "#itemClockWaypoint0", p: {top: "-8px", left: "98px"}},
+					{s: "#itemClockWaypoint1", p: {top: "-8px", left: "168px"}},
+					{s: "#itemClockWaypoint2", p: {top: "-8px", left: "238px"}},
+					{s: "#itemClockWaypoint3", p: {top: "-8px", left: "308px"}},
+					{s: "#itemClockStar0", p: {top: "-16px", left: "0px"}},
+					{s: "#itemClockStar1", p: {top: "-16px", left: "53px"}}
+				], animationspeed);
+				$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
+
+				clockpaneheight = I.cPANE_CLOCK_HEIGHT_BAR;
+			} break;
+
+			case O.IntEnum.Clock.None:
+			{
+				/*
+				 * There are three panes on the right panel: Clock, Menu, and Content
+				 * all absolutely positioned, so to move them the CSS "top" attribute
+				 * needs to be changed: less to go up, more to go down.
+				 */
+				$("#paneMenu").animate({top: 0}, animationspeed);
+				$(I.cContentPane).animate({top: I.cPANE_MENU_HEIGHT,
+					"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed,
+					function()
+					{
+						$("#paneClock").hide();
+					});
+			} break;
+		}
+
+		// Readjust panes to new height if showing clock
+		if (O.Options.int_setClock !== O.IntEnum.Clock.None)
+		{
+			// Resize panes by animation
+			$("#paneMenu").animate({top: clockpaneheight}, animationspeed);
+			$("#paneClock, #paneClockWall, #paneClockBackground, #paneClockIcons")
+				.animate({height: clockpaneheight}, animationspeed);
+
+			// Readjust content pane
+			$(I.cContentPane).animate({top: clockpaneheight + I.cPANE_MENU_HEIGHT,
+				"min-height": I.cPANEL_HEIGHT - (clockpaneheight + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+		}
+		if (I.ModeCurrent === I.ModeEnum.Overlay)
+		{
+			$("#itemSocial").hide();
+		}
+	},
 
 	/*
 	 * Sets a marker (small spikes at clock circumference) to specified angle.
@@ -7727,16 +8042,19 @@ I = {
 		Help: "Help",
 		Options: "Options"
 	},
+	// Section names must be unique, and may either be in sentence case or all caps
 	SectionEnum:
 	{
 		Map:
 		{
-			Zone: "Zone",
 			Daily: "Daily",
 			Resource: "Resource",
 			JP: "JP",
-			Personal: "Personal",
-			Collectible: "Collectible"
+			Collectible: "Collectible",
+			TP: "TP",
+			Notepad: "Notepad",
+			Personal: "Personal"
+			
 		},
 		Help:
 		{
@@ -8457,6 +8775,11 @@ I = {
 				X.initializeCustomChecklist();
 				I.isSectionLoadedMap_Personal = true;
 			});
+			// Create trading calculator
+			$("#headerMap_TP").one("click", function()
+			{
+				X.initializeTrading();
+			});
 			// Create notepad
 			$("#headerMap_Notepad").one("click", function()
 			{
@@ -8479,7 +8802,7 @@ I = {
 			});
 			
 			// Create additional map related side menu icon
-			$("<img class='menuBeamIcon menuBeamIconCenter' src='img/map/star.png' "
+			$("<img class='menuBeamIcon menuBeamIconCenter' src='img/ui/star.png' "
 				+ "title='&lt;dfn&gt;Map Center&lt;/dfn&gt;' />")
 				.appendTo("#menuBeam_Map").click(function()
 			{
@@ -8707,7 +9030,15 @@ I = {
 			{
 				I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 			}
-			I.qTip.offsetX = I.cTOOLTIP_DEFAULT_OFFSET_X;
+			// Tooltip overflows left edge
+			if (($(window).width() - pEvent.pageX) > (I.cPANEL_WIDTH / 2))
+			{
+				I.qTip.offsetX = ($(window).width() - pEvent.pageX) - I.cPANEL_WIDTH;
+			}
+			else
+			{
+				I.qTip.offsetX = I.cTOOLTIP_DEFAULT_OFFSET_X;
+			}
 		}));
 		$("#panelLeft").mousemove($.throttle(I.cTOOLTIP_MOUSEMOVE_RATE, function(pEvent)
 		{

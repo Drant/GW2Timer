@@ -40,7 +40,7 @@
 <body>
 	<div id="jsConsole"></div>
 	<div id="jsConsoleButtons">
-		<img title="<dfn>Close Console<dfn>" id="jsConsoleButtonClose" src="img/ui/console_close.png" alt="Close Console" /><img title="<dfn>Select Console<dfn>" id="jsConsoleButtonSelect" src="img/ui/console_select.png" alt="Select Console" />
+		<img title="<dfn>Select Console<dfn>" id="jsConsoleButtonSelect" src="img/ui/console_select.png" alt="Select Console" /><img title="<dfn>Close Console<dfn>" id="jsConsoleButtonClose" src="img/ui/console_close.png" alt="Close Console" />
 	</div>
 	<div id="paneWarning">
 		If you can read this then <strong>maybe</strong>:<br />
@@ -286,7 +286,7 @@
 				</ul>
 			</div>
 			<div id="itemSocial">
-				<a class="linkExternal" title="<dfn>Learn GW2Timer's features :?</dfn>" href="http://i.imgur.com/KvJEr58.png">
+				<a class="linkExternal" title="<dfn>Learn GW2Timer's features :?</dfn>" href="http://forum.renaka.com/topic/5602037/">
 					<img src="img/ui/info.png" alt="Info" />
 				</a>
 				<a class="linkExternal" title="<dfn>Like GW2Timer on Facebook :)</dfn>" href="http://www.facebook.com/gw2timer">
@@ -356,7 +356,7 @@
 					<h2>Timer</h2>
 					<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off world bosses</label>
 					<label title="Automatically expand orange chain bars and collapse gray ones."><input id="opt_bol_expandEvents" type="checkbox" /> Expand events for active chains</label>
-					<label title="Display the countdown to when a chain starts or the soonest scheduled time."><input id="opt_bol_useCountdown" type="checkbox" /> Countdown to future chains</label>
+					<label title="Display the countdown to when a chain starts or the soonest scheduled time?"><input id="opt_bol_useCountdown" type="checkbox" /> Countdown to future chains</label>
 					<div class="optFieldsets">
 						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain? Auto will use the North American time of day to choose. Changes will take effect when the next chain starts. &lt;br /&gt;Min: for full population map&lt;br /&gt;Min-Avg: Min + (Avg - Min)/2&lt;br /&gt;Avg: for regular zerg size"><legend>Predictor</legend>
 							<label><input id="opt_int_setPredictor" type="radio" name="int_setPredictor" /> Auto</label>
@@ -398,9 +398,9 @@
 					<label title="Automatically clear the dungeon and custom checklist on the daily reset time."><input id="opt_bol_clearPersonalChecklistOnReset" type="checkbox" /> Clear personal checklist on server reset</label>
 					<br />
 					<h2>Advanced</h2>
-					<label title="Promote GW2Timer.com by including the site's name in auto-copied clipboard text. Changes will take effect when the next chain starts."><input id="opt_bol_useSiteTag" type="checkbox" /> Affix site tag to clipboard text</label>
-					<label title="DST for showing ArenaNet Washington-US time."><input id="opt_bol_detectDST" type="checkbox" /> Detect Daylight Saving Time</label>
 					<label title="13:00:00 or 1:00:00 PM"><input id="opt_bol_use24Hour" type="checkbox" /> Use 24 hour format</label>
+					<label title="DST for showing ArenaNet Washington-US time."><input id="opt_bol_detectDST" type="checkbox" /> Detect Daylight Saving Time</label>
+					<label title="Promote GW2Timer.com by including the site's name in auto-copied clipboard text. Changes will take effect when the next chain starts."><input id="opt_bol_useSiteTag" type="checkbox" /> Affix site tag to clipboard text</label>
 					<br />
 					<h2>Defaults</h2>
 					<div class="optButtons">
@@ -410,7 +410,7 @@
 					<br />
 					<h2>Debug</h2>
 					<div class="optButtons">
-						<button id="optPrintLocalStorage" title="Read what is stored in your browser for this website. Most of these key-value pairs can be overriden directly via URL query string. Example: http://gw2timer.com/?bol_showMap=false&amp;int_setPredictor=3">Print Website Memory</button>
+						<button id="optPrintLocalStorage" title="Read what is stored in your browser for this website. Most of these key-value pairs can be overriden directly via URL query string. Example: http://gw2timer.com/?bol_showMap=false&amp;int_setClock=3">Print Website Memory</button>
 						<div id="optTimestamps">
 							<div><time id="optTimestampServerReset">00:00</time> Next Server Reset (<time id="optTimeTillReset">00:00</time>)</div>
 							<div><time id="optTimestampUTC">00:00</time> UNIX Timestamp</div>

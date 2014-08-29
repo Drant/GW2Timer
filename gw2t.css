@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x580, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.08.08 modified - 2014.04.18 created
+	Version: 2014.08.25 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -25,8 +25,8 @@
 	M - Map pane
 	K - Clock pane
 	B - Menu bar pane
-	C - Chains layer
-	O - Options layer
+	C - Chains page
+	O - Options page
 	U - Utility styles
 	P - Color palette
 */
@@ -53,6 +53,10 @@ html, body {
 
 body {
 	overflow-x: hidden; // For IE
+}
+
+.cntComposition ::selection {
+	background: #66aaff;
 }
 
 #jsConsole, #paneWarning {
@@ -175,12 +179,8 @@ a, input, label, button,
 }
 
 /* Help */
-.jsHelpTooltip, .chnDetails ol li img {
+.jsHelpTooltip, .chnDetails ol li img, .trdEntry samp {
 	cursor: url("img/cursor/help.cur"), help;
-}
-
-.cntComposition ::selection {
-	color: #576976;
 }
 
 /* =============================================================================
@@ -193,7 +193,7 @@ a, input, label, button,
 	background: linear-gradient(to right, #000 0%, #111 100%);
 }
 
-/* @@Map
+/* @@Map pane
 ----------------------------------------------------------------------------- */
 #paneMap {
 	height: 100%;
@@ -206,9 +206,6 @@ a, input, label, button,
 	position: absolute;
 	bottom: 12px; left: 12px;
 	z-index: 9;
-}
-#itemMapCoordinates ::selection {
-	background: #66aaff;
 }
 #itemMapCoordinates input {
 	display: inline-block;
@@ -878,6 +875,20 @@ header.jsSection sup {
 	text-shadow: 0px 0px 2px black;
 }
 
+.cntComposition input[type="text"], .cntComposition textarea {
+	width: auto;
+	margin: 0;
+	padding: 2px;
+	border: 1px solid #555;
+	background: #222;
+	font-family: sans-serif;
+	color: #ffddcc;
+}
+
+.cntComposition input[type="text"]:hover, .cntComposition textarea:hover {
+	border: 1px solid red;
+}
+
 .cntComposition fieldset {
 	display: inline-block;
 	padding: 4px;
@@ -1082,9 +1093,8 @@ header.cntHeader {
 	text-decoration: underline;
 }
 
-.jsCopyCode {
-	border: 1px solid #555;
-	background: #222;
+textarea.jsCopyCode {
+	font-family: monospace;
 	color: #ddff77;
 }
 
@@ -1332,8 +1342,14 @@ header.cntHeader {
 	color: #ffcc77 !important;
 }
 
-/* @@Map layer
+/* @@Map page
 ----------------------------------------------------------------------------- */
+button.btnToggle {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	width: 62%;
+}
+
 .mapDailyLists h2 img {
 	width: 24px; height: 24px;
 	vertical-align: middle;
@@ -1391,6 +1407,72 @@ dt.mapJPListNameHover {
 
 /* Personal checklist
 ----------------------------------------------------------------------------- */
+
+.trdEntry button {
+	width: 24px; height: 24px;
+}
+.trdEntry input[type="text"] {
+	width: 103px;
+	margin: 2px;
+	padding: 2px;
+	padding-right: 4px;
+	text-align: right;
+	font-family: sans-serif;
+	border-radius: 4px;
+	color: #ffeebb;
+}
+.trdEntry samp {
+	display: inline-block;
+	width: 36px;
+	margin-right: 4px;
+	text-align: right;
+	font-family: monospace;
+	font-size: 16px;
+	color: #888;
+}
+.trdEntry samp:hover {
+	color: #e4e0b3;
+}
+input[type="text"].trdName {
+	width: 204px;
+	text-align: center;
+	font-weight: bold;
+	color: #ffddcc;
+}
+button.trdSearch {
+	margin-left: 2px;
+	margin-right: 2px;
+}
+input[type="text"].trdBuy, input[type="text"].trdSell {
+	color: #ffddcc;
+}
+input[type="text"].trdOutput {
+	border: 1px dashed #555;
+	background: #333;
+}
+input[type="text"].trdOutput:hover {
+	border: 1px dashed #555;
+}
+input[type="text"].trdQuantity {
+	width: 64px;
+	margin-right: 2px;
+	color: #ffddcc;
+}
+input[type="text"].trdTax {
+	width: 142px;
+}
+input[type="text"].trdRevenue {
+	color: #ffcc77;
+}
+input[type="text"].trdZero {
+	color: white;
+}
+input[type="text"].trdGain {
+	color: #44dd44;
+}
+input[type="text"].trdLoss {
+	color: #ff2200;
+}
 
 #chlDungeon {
 	margin-top: 12px;
@@ -1473,14 +1555,6 @@ dt.mapJPListNameHover {
 	padding: 4px;
 	margin-left: 8px;
 	margin-bottom: 4px;
-	border: 1px solid #555;
-	background: #222;
-	font-family: sans-serif;
-	color: #ffddcc;
-}
-
-#chlCustom input[type="text"]:hover {
-	border: 1px solid red;
 }
 
 #chlCustom input[type="text"].chlCustomTextChecked {
@@ -1519,14 +1593,13 @@ dt.mapJPListNameHover {
 	display: none;
 	width: 300px; height: 500px;
 	padding: 4px;
-	border: 1px solid #555;
+	border-radius: 4px;
 	font-family: sans-serif;
 	font-size: 12px;
-	background: #222;
 	color: #ffddcc;
 }
 
-/* @@Options layer
+/* @@Options page
 ----------------------------------------------------------------------------- */
 .optFieldsets fieldset {
 	margin-right: 8px;
@@ -1561,7 +1634,7 @@ label:hover {
 /* =============================================================================
  *  @@Utility styles
  * ========================================================================== */
-.cssMonospace {
+code, .cssMonospace {
 	font-family: monospace;
 }
 .cssRight {
@@ -1569,6 +1642,23 @@ label:hover {
 }
 .cssIndent {
 	margin-left: 16px;
+}
+copper, silver, gold {
+	display: inline-block;
+	width: 16px; height: 16px;
+	vertical-align: bottom;
+}
+copper {
+	background: url("img/ui/coin_copper.png");
+	background-size: 16px 16px;
+}
+silver {
+	background: url("img/ui/coin_silver.png");
+	background-size: 16px 16px;
+}
+gold {
+	background: url("img/ui/coin_gold.png");
+	background-size: 16px 16px;
 }
 
 /* =============================================================================

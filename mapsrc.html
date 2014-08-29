@@ -2,25 +2,25 @@
 var GW2T_RESOURCE_DATA = {
 	Copper: {
 		nodes: [
-		[8526, 17275], // metrica
 		[7576, 18624], // metrica
-		[7333, 18850], // metrica
+		[8526, 17275],
+		[7333, 18850],
 		[9860, 16199], // caledon
-		[10138, 17684], // caledon
+		[10138, 17684],
 		[11750, 13108], // queensdale 
-		[12787, 14004], // queensdale
+		[12787, 14004],
 		[21988, 13629], // wayfarer
-		[22096, 11512], // wayfarer
+		[22096, 11512],
 		[25767, 15370], // ashford
-		[27540, 15135] // ashford
+		[27540, 15135]
 		], type: "Metal"
 	},	
 	Iron: {
 		nodes: [
 		[6317, 15049], // brisban
 		[9584, 15076], // kessex
-		[12661, 15573], // kessex
-		[12679, 15914], // kessex
+		[12661, 15573],
+		[12679, 15914],
 		[16935, 14020], // gendarran
 		[13543, 11115], // harathi
 		[18351, 13415], // lornar
@@ -35,8 +35,8 @@ var GW2T_RESOURCE_DATA = {
 		nodes: [
 		[6955, 14737], // brisban
 		[9575, 15073], // kessex
-		[12621, 15597], // kessex
-		[12653, 15915], // kessex
+		[12621, 15597],
+		[12653, 15915],
 		[17407, 14141], // gendarran
 		[19589, 12765], // snowden
 		[17685, 14703], // lornar
@@ -55,32 +55,33 @@ var GW2T_RESOURCE_DATA = {
 	},
 	Platinum: {
 		nodes: [
-		[16427, 18188], // bloodtide
 		[16186, 17581], // bloodtide
+		[16427, 18188],
 		[15599, 20283], // sparkfly
-		[17300, 20347], // sparkfly
+		[17300, 20347],
 		[17938, 22158], // maelstrom
-		[20931, 22505], // maelstrom
+		[20931, 22505],
 		[19154, 19245], // timberline
-		[20840, 18479], // timberline
+		[20840, 18479],
 		[27720, 9664], // blazeridge
-		[29092, 9608], // blazeridge
+		[29092, 9608],
 		[24681, 9350], // fireheart
-		[26946, 9879], // fireheart
-		[27050, 10067] // fireheart
+		[26946, 9879],
+		[27050, 10067]
 		], type: "Metal"
 	},
 	Mithril: {
 		nodes: [
 		[21340, 10767], // frostgorge
-		[22193, 9463], // frostgorge
+		[22193, 9463],
 		[27087, 9023], // fireheart
 		[15003, 22732], // straits
-		[14259, 23476], // malchor
 		[11008, 23944], // malchor
+		[13617, 25044],
+		[14259, 23476],
 		[10722, 27467], // cursed
-		[11313, 26808], // cursed
-		[11658, 29144] // cursed
+		[11313, 26808],
+		[11658, 29144]
 		], type: "Metal"
 	},
 	Orichalcum: {
@@ -89,6 +90,7 @@ var GW2T_RESOURCE_DATA = {
 		[3910, 16726], // dry
 		[3916, 16397],
 		[4008, 16245],
+		[4065, 16491],
 		[4294, 16430],
 		[5023, 16529],
 		[5170, 16294],
@@ -110,9 +112,11 @@ var GW2T_RESOURCE_DATA = {
 		[11812, 25099],
 		[12618, 24950],
 		[13464, 24281],
-		[13548, 24842],
+		[13546, 24793],
 		[13320, 23362],
 		[13851, 23643],
+		[13972, 24954],
+		[14207, 24067],
 		[10324, 25702], // cursed
 		[11500, 25959],
 		[10578, 27706],
@@ -150,7 +154,9 @@ var GW2T_RESOURCE_DATA = {
 	Ancient: {
 		approx: true,
 		nodes: [
-		[4551, 16215], // dry
+		[4504, 16715], // dry
+		[4541, 15930],
+		[4551, 16215],
 		[5063, 16666],
 		[12214, 20258], // southsun
 		[12906, 19772],
@@ -175,7 +181,7 @@ var GW2T_RESOURCE_DATA = {
 		nodes: [
 		[4011, 15893], // dry
 		[10569, 16278], // queensdale
-		[13101, 12254] // queensdale
+		[13101, 12254]
 		], type: "Plant"
 	},
 	Potato: {
@@ -215,9 +221,9 @@ var GW2T_RESOURCE_DATA = {
 	Vanilla: {
 		approx: true,
 		nodes: [
-		[20567, 22235], // maelstrom
 		[19833, 22345], // maelstrom
-		[19839, 22821] // maelstrom
+		[19839, 22821],
+		[20567, 22235]
 		], type: "Plant"
 	},
 	Pumpkin: {
@@ -672,7 +678,7 @@ You may need to complete the heart before you can purchase.
 	>Resource Nodes</var>
 </header>
 <section>
-<div style="width:100%;height:32px"><button id="mapToggle_Resource" class="cssRight">Toggle All</button></div>
+<button id="mapToggle_Resource" class="btnToggle">Toggle All</button>
 <div class="mapResourceList">
 	<div id="mapResource_Metal"></div>
 	<div id="mapResource_Plant"></div>
@@ -785,13 +791,75 @@ A marathon of intricate jumps.
 	>Collectible Items</var>
 </header>
 <section>
-<div style="width:100%;height:32px"><button id="mapToggle_Collectible" class="cssRight">Toggle All</button></div>
+<button id="mapToggle_Collectible" class="btnToggle">Toggle All</button>
 <div id="mapCollectibleList"></div>
-<p><strong>Links:</strong> [Y]outube [W]iki [C]redit</p>
-<samp class="jsHelpCollapsible"></samp>
-<div>
+<p style="text-align: right;"><strong>Links:</strong> [Y]outube [W]iki [C]redit</p>
 <p>Many achievements require you to go around the world to collect or interact with scattered or hidden landmarks or items. These are some of them, including the current Living Story ones if available. When in game, hold the Ctrl key to see the item's name appear.</p>
 <p>Every type of collectible is its own checklist. The map markers can be clicked three times to alternate between three ring colors representing an <em>Unfound</em>, <em>Tracked</em>, and <em>Found</em> state, and your address bar will be updated with a shareable URL for those marked. Click Reset for all the rings of that collectible type to be Unfounded again.</p>
+</section>
+
+
+
+
+<header id="headerMap_TP" class="jsSection"><img src="img/ui/tp.png" alt="TP" /><var
+	data-de="Handelsrechner"
+	data-es="Calculadora Comercio"
+	data-fr="Calculatrice de Commerce"
+	data-cs="Obchodní Kalkulačka"
+	data-it="Calcolatrice Commercio"
+	data-pl="Kalkulator Handlu"
+	data-pt="Calculadora Comércio"
+	data-ru="Торговля Калькулятор"
+	data-zh="貿易計算器"
+	>Trading Calculator</var>
+</header>
+<section>
+	<samp class="jsHelpTooltip" title="Use periods (.) to separate units:<br /><br />
+	0.1 = 10<copper /><br />
+	.01 = 1<copper /><br />
+	1 = 1<silver /><br />
+	1.55 = 1<silver /> 55<copper /><br />
+	2.4.7 = 2<gold /> 4<silver /> 7<copper /><br />
+	2..6 = 2<gold /> 6<copper /><br />
+	230.6 = 2<gold /> 30<silver /> 60<copper />"></samp>
+	<br />
+	<div id="trdList"></div>
+</section>
+
+
+
+
+<header id="headerMap_Notepad" class="jsSection"><img src="img/ui/notepad.png" alt="Notepad" /><var
+	data-de="Mein Notizblock"
+	data-es="Mi Bloc de Notas"
+	data-fr="Mon Bloc-notes"
+	data-cs="Můj Poznámkový blok"
+	data-it="Mio Blocco note"
+	data-pl="Mój Notatnik"
+	data-pt="Meu Bloco de Notas"
+	data-ru="Мой Блокнот"
+	data-zh="我的記事本"
+	>My Notepad</var>
+</header>
+<section>
+<div id="chlNotepad">
+	<div id="chlNotepadButtons">
+		<button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button>
+	</div>
+	<button id="chlNotepadSave">Save</button>
+	<div id="chlNotepadSheets">
+		<textarea>This is your notepad. You can store your game notes here. The buttons above will view that numbered sheet, and clicking any buttons will do a save.</textarea>
+		<textarea>Sheet 2</textarea>
+		<textarea>Sheet 3</textarea>
+		<textarea>Sheet 4</textarea>
+		<textarea>Sheet 5</textarea>
+		<textarea>Sheet 6</textarea>
+		<textarea>Sheet 7</textarea>
+		<textarea>Sheet 8</textarea>
+		<textarea>Sheet 9</textarea>
+	</div>
+	<br />
+	<button id="chlNotepadRestore" class="cssRight" title="Erase all your notes and restore the default text. Make sure you want to!">Wipe Notepad</button>
 </div>
 </section>
 
@@ -888,7 +956,7 @@ A marathon of intricate jumps.
 	<label><input type="checkbox" />&zwnj;</label><input type="text" value="Did dailies" />
 	<label><input type="checkbox" />&zwnj;</label><input type="text" value="Gathered home nodes" />
 	<label><input type="checkbox" />&zwnj;</label><input type="text" value="Crafted timegates" />
-	<label><input type="checkbox" />&zwnj;</label><input type="text" value="Played dungeons" />
+	<label><input type="checkbox" />&zwnj;</label><input type="text" value="Fed Mawdrey" />
 	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
 	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
 	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
@@ -899,48 +967,12 @@ A marathon of intricate jumps.
 	<label><input type="checkbox" />&zwnj;</label><input type="text" value="" />
 	<br />
 	<br />
-	<button id="chlCustomRestore">Default Text</button>
-	<button id="chlCustomUncheck" class="cssRight">Uncheck All</button>
+	<button id="chlCustomRestore" class="cssRight">Default Text</button>
+	<button id="chlCustomUncheck">Uncheck All</button>
 </div>
 <br />
 </section>
 
-
-
-
-<header id="headerMap_Notepad" class="jsSection"><img src="img/ui/notepad.png" alt="Notepad" /><var
-	data-de="Mein Notizblock"
-	data-es="Mi Bloc de Notas"
-	data-fr="Mon Bloc-notes"
-	data-cs="Můj Poznámkový blok"
-	data-it="Mio Blocco note"
-	data-pl="Mój Notatnik"
-	data-pt="Meu Bloco de Notas"
-	data-ru="Мой Блокнот"
-	data-zh="我的記事本"
-	>My Notepad</var>
-</header>
-<section>
-<div id="chlNotepad">
-	<div id="chlNotepadButtons">
-		<button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button>
-	</div>
-	<button id="chlNotepadSave">Save</button>
-	<div id="chlNotepadSheets">
-		<textarea>This is your notepad. You can store your game notes here. The buttons above will view that numbered sheet, and clicking any buttons will do a save.</textarea>
-		<textarea>Sheet 2</textarea>
-		<textarea>Sheet 3</textarea>
-		<textarea>Sheet 4</textarea>
-		<textarea>Sheet 5</textarea>
-		<textarea>Sheet 6</textarea>
-		<textarea>Sheet 7</textarea>
-		<textarea>Sheet 8</textarea>
-		<textarea>Sheet 9</textarea>
-	</div>
-	<br />
-	<button id="chlNotepadRestore" class="cssRight" title="Erase all your notes and restore the default text. Make sure you want to!">Wipe Notepad</button>
-</div>
-</section>
 
 
 
@@ -950,7 +982,7 @@ A marathon of intricate jumps.
 <h2>Checklists</h2>
 <p>Notepad and checklists are automatically saved in your browser and are restored when you revisit this site. Use the Uncheck All button at every checklists, or go to Options under Defaults to clear everything.</p>
 <h2>Map</h2>
-<p>The map works like Google Maps: you can drag the map to pan, and you can scroll your mouse wheel to zoom. No UI map controls are included in order to maximize viewing. For default view and zoom, click the star button <img class="cntIconExample" src="img/map/star.png" alt="Icon" /> on the side menu or the map page button.
+<p>The map works like Google Maps: you can drag the map to pan, and you can scroll your mouse wheel to zoom. No UI map controls are included in order to maximize viewing. For default view and zoom, click the star button <img class="cntIconExample" src="img/ui/star.png" alt="Icon" /> on the side menu or the map page button.
 <h2>Icons</h2>	
 <p>Expanding a section will show that section's map icons, and collapsing a section hides them. To view multiple sections' icons, click the section names and keep them expanded. Else, use the sidebar menu to view one section at a time.</p>
 <p>Map icons are interactive by clicking/double clicking, most of which causes the map to zoom in that icon, or zoom out back to default. &quot;Pins&quot; look like the colored star symbols you see in the GW2 minimap and are draggable and can be hidden by double clicking; you can lay your own personal pin by double clicking an empty map area.</p>
