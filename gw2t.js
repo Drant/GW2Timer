@@ -100,6 +100,8 @@ O = {
 		bol_displayVistas: true,
 		bol_displaySkills: true,
 		bol_displayHearts: true,
+		// Tools
+		int_numTradingCalculators: 12,
 		// Alarm
 		bol_enableSound: false,
 		bol_alertAtStart: true,
@@ -838,7 +840,8 @@ U = {
 		Tiles: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 		MapFloor: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 		EventNames: "https://api.guildwars2.com/v1/event_names.json",
-		EventDetails: "https://api.guildwars2.com/v1/event_details.json"
+		EventDetails: "https://api.guildwars2.com/v1/event_details.json",
+		Prices: "http://www.gw2spidy.com/api/v0.9/json/item/"
 	},
 	
 	URL_IMG:
@@ -2168,11 +2171,10 @@ X = {
 	initializeTrading: function()
 	{
 		var i;
-		var numofcalcs = 48;
 		var entry = "";
 		var name, buy, sell, quantity;
 		
-		for (i = 0; i < numofcalcs; i++)
+		for (i = 0; i < O.Options.int_numTradingCalculators; i++)
 		{
 			entry = "#trdEntry_" + i;
 			// Generate individual calculators
@@ -2210,7 +2212,7 @@ X = {
 			{
 				var index = U.getSubstringFromHTMLID($(this).parent());
 				var query = $("#trdEntry_" + index + " .trdName").first().val();
-				U.openExternalURL(U.getWikiSearchLink(query));
+				U.openExternalURL(U.getWikiLanguageLink(query));
 			});
 			$(entry + " .trdSearch").click(function()
 			{
@@ -2234,13 +2236,20 @@ X = {
 			});
 		}
 		
+		// Set the first entry with initial text as an example
+		entry = "#trdEntry_" + 0;
+		$(entry + " .trdName").first().val("Bifrost");
+		$(entry + " .trdBuy").first().val("4500.37.68");
+		$(entry + " .trdSell").first().val("550037.68");
+		$(entry + " .trdQuantity").first().val("1");
+		
 		// Initialize storage behavior of the input textboxes
 		X.initializeText(X.Checklists.TradingName, $("#trdList .trdName"), null, 128);
 		X.initializeText(X.Checklists.TradingBuy, $("#trdList .trdBuy"), null, 16);
 		X.initializeText(X.Checklists.TradingSell, $("#trdList .trdSell"), null, 16);
 		X.initializeText(X.Checklists.TradingQuantity, $("#trdList .trdQuantity"), null, 16);
 		
-		// Trigger an input textbox to make the output textboxes update
+		// Trigger input textboxes to make the output textboxes update
 		$("#trdList .trdSell").trigger("input");
 	},
 	
@@ -2300,18 +2309,19 @@ X = {
 		else
 		{
 			var storedtextarray = localStorage[pChecklistText.key].split(I.cTextDelimiterChar);
-			if (storedtextarray.length === pTextFields.length)
+			// Load the stored text and account for missing entries
+			for (i = 0; i < pChecklistText.value.length; i++)
 			{
-				// Load the stored text if it has same number of strings as there are text fields
-				for (i in storedtextarray)
+				if (storedtextarray[i])
 				{
 					pChecklistText.value[i] = storedtextarray[i];
 				}
+				else
+				{
+					pChecklistText.value[i] = "";
+				}
 			}
-			else
-			{
-				localStorage[pChecklistText.key] = pChecklistText.value.join(I.cTextDelimiterChar);
-			}
+			localStorage[pChecklistText.key] = pChecklistText.value.join(I.cTextDelimiterChar);
 		}
 		
 		var updateStoredText = function()
@@ -5879,7 +5889,7 @@ P = {
 		{
 			var term = $(this).text();
 			$(this).after("&nbsp;<cite><a href='"
-				+ U.getYouTubeLink(term + " " + I.cGameName) + "' target='_blank'>[Y]</a> <a href='"
+				+ U.getYouTubeLink(term + " " + I.cGameNick) + "' target='_blank'>[Y]</a> <a href='"
 				+ U.getWikiLink(term) + "' target='_blank'>[W]</a></cite>");
 			M.bindMapLinkBehavior($(this), null);
 			
@@ -6099,7 +6109,7 @@ P = {
 			$("#mapCollectibleList").append(
 				"<div><label style='color:" + ithcollectible.color + "'><input id='ned_" + i + "' type='checkbox' /> " + ithcollectible.name + "</label>"
 				+ "<span class='cssRight'><cite>"
-					+ "<a href='" + U.getYouTubeLink(ithcollectible.name + " " + I.cGameName) + "'>[Y]</a>&nbsp;"
+					+ "<a href='" + U.getYouTubeLink(ithcollectible.name + " " + I.cGameNick) + "'>[Y]</a>&nbsp;"
 					+ "<a href='" + ithcollectible.wiki + "'>[W]</a>&nbsp;"
 					+ "<a href='" + ithcollectible.credit + "'>[C]</a>&nbsp;"
 					+ "&nbsp;-&nbsp;&nbsp;</cite>"
@@ -7997,6 +8007,7 @@ I = {
 	cPageURLWvW: "wvwsrc.html",
 	cImageHost: "http://i.imgur.com/",
 	cGameName: "Guild Wars 2",
+	cGameNick: "GW2",
 	cPNG: ".png", // Almost all used images are PNG
 	cTextDelimiterChar: "|",
 	cTextDelimiterRegex: /[|]/g,
