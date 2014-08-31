@@ -101,7 +101,7 @@ O = {
 		bol_displaySkills: true,
 		bol_displayHearts: true,
 		// Tools
-		int_numTradingCalculators: 12,
+		int_numTradingCalculators: 24,
 		// Alarm
 		bol_enableSound: false,
 		bol_alertAtStart: true,
