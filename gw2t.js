@@ -859,13 +859,14 @@ U = {
 		MapFloor: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 		EventNames: "https://api.guildwars2.com/v1/event_names.json",
 		EventDetails: "https://api.guildwars2.com/v1/event_details.json",
-		ItemListing: "http://api.guildwars2.com/v2/commerce/listings/",
+		ItemListing: "https://api.guildwars2.com/v2/commerce/listings/",
 		ItemDetails: "https://api.guildwars2.com/v1/item_details.json?item_id=",
 		ItemRender: "https://render.guildwars2.com/file/",
 		GoldPrice: "http://api.guildwars2.com/v2/commerce/exchange/gems?quantity=100",
 		GemPrice: "http://api.guildwars2.com/v2/commerce/exchange/coin?quantity=10000",
 		
-		ItemSearch: "http://www.gw2spidy.com/api/v0.9/json/item-search/"
+		ItemSearch: "http://www.gw2spidy.com/api/v0.9/json/item-search/",
+		ItemData: "http://www.gw2spidy.com/api/v0.9/json/item/"
 	},
 	
 	URL_IMG:
