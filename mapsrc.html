@@ -816,19 +816,27 @@ A marathon of intricate jumps.
 <section>
 <samp class="jsHelpCollapsible"></samp>
 <div>
-	<br />There are four input boxes (dark shaded) from top to bottom: <b>Name</b> of the item, <b>Buy</b> price, <b>Sell</b> price, and <b>Quantity</b> (defaults to 1 if empty). Hover over the $ labels to see their meaning. Click the buttons next to the name box to search for that item. The buy and sell boxes have a specific syntax; use periods (.) to separate units:<br />
+	<br /><p>Each of the line below is a calculator, hover over them to see input (black shaded) and output (gray shaded) boxes. The <strong>topmost calculator contains hoverable tooltips</strong> about the boxes' function.</p>
+	<p>To enter an item into a calculator, click the longest input box, which is the name box, and type your search. A list of results will appear, click on one to accept that item, or continue typing to refine your search. The name box also acts as a search bar--press Enter to go to the charts site, and Esc to clear search results.</p>
+	<p>Once you have chosen an item, the current buy and sell prices will animate in color. You can either <b>use the calculator</b> by putting in your own buy and sell prices in the boxes below the name box, or <b>get notifications</b> if the item price is lower or higher than the current prices by typing your price next them. The prices have a specific syntax, use periods (.) to separate units:</p>
 	<div class="cssIndent">
-	0.1 = 10<copper /><br />
-	.01 = 1<copper /><br />
-	1 = 1<silver /><br />
-	1.55 = 1<silver /> 55<copper /><br />
-	2.4.7 = 2<gold /> 4<silver /> 7<copper /><br />
-	2..6 = 2<gold /> 0<silver /> 6<copper /><br />
-	230.6 = 2<gold /> 30<silver /> 60<copper />
+	0.1 = 10<coppercoin /><br />
+	.01 = 1<coppercoin /><br />
+	1 = 1<silvercoin /><br />
+	1.55 = 1<silvercoin /> 55<coppercoin /><br />
+	2.4.7 = 2<goldcoin /> 4<silvercoin /> 7<coppercoin /><br />
+	2..6 = 2<goldcoin /> 0<silvercoin /> 6<coppercoin /><br />
+	230.6 = 2<goldcoin /> 30<silvercoin /> 60<coppercoin /><br />
+	920.. = 920<goldcoin />
 	</div>
-	All input data are saved automatically. To show more calculators, go to Options page, Tools section.
+	<br />
+	All input data are saved automatically. To show more calculators or search results, go to Options page, Trading section.
 </div>
 	<br />
+	<button id="trdToggle" class="trdButton" title="Toggle all calculators view."><img src="img/ui/toggle.png" alt="Toggle" /></button>
+	<button id="trdRefresh" class="trdButton" title="Manually refresh current prices."><img src="img/ui/refresh.png" alt="Refresh" /></button>
+	<button id="trdMute" class="trdButton" title="Stop current notification speech."><img src="img/ui/mute.png" alt="Mute" /></button>
+	<br /><br />
 	<div id="trdList"></div>
 </section>
 

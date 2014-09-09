@@ -36,6 +36,7 @@
 
 	O - Options for user
 	X - Checklists
+	E - Economy
 	D - Dictionary for translations
 	C - Chains events
 	M - Map Leaflet
@@ -52,7 +53,7 @@ $(window).on("load", function() {
 /* =============================================================================
  *  Single letter objects serve as namespaces.
  * ========================================================================== */
-var O, X, D, C, M, P, T, K, U, I = {};
+var O, X, E, D, C, M, P, T, K, U, I = {};
 
 /* =============================================================================
  * @@Options for the user
@@ -64,12 +65,12 @@ O = {
 
 	/*
 	 * These utility variables will also be stored in localStorage.
-	 * O.Utilities, O.Options, and X.Checklists share a namespace in localStorage
-	 * and must together have unique variable names.
+	 * O.Utilities, O.Options, and X.Checklists/Textlists share a namespace in
+	 * localStorage and must together have unique variable names.
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140828},
+		programVersion: {key: "int_utlProgramVersion", value: 140908},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -100,16 +101,21 @@ O = {
 		bol_displayVistas: true,
 		bol_displaySkills: true,
 		bol_displayHearts: true,
-		// Tools
-		int_numTradingCalculators: 24,
 		// Alarm
-		bol_enableSound: false,
+		int_setAlarm: 0,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
-		bol_alertChecked: true,
-		bol_alertSubscribed: false,
+		bol_alertChecked: false,
 		int_alertSubscribedFirst: 5,
 		int_alertSubscribedSecond: 15,
+		// Tools
+		int_sizeNotepadFont: 12,
+		int_sizeNotepadHeight: 500,
+		// Trading
+		bol_refreshPrices: true,
+		int_numTradingCalculators: 25,
+		int_numTradingResults: 15,
+		int_secTradingRefresh: 30,
 		// Advanced
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
@@ -162,6 +168,12 @@ O = {
 			Full: 1,
 			Bar: 2,
 			None: 3
+		},
+		Alarm:
+		{
+			Off: 0,
+			Checklist: 1,
+			Subscription: 2
 		}
 	},
 	
@@ -229,11 +241,12 @@ O = {
 			I.write(I.cSiteName + " was updated since your last visit.<br />"
 				+ "This version: " + currentversion + "<br />"
 				+ "Your version: " + usersversion + "<br />"
-				+ "Would you like to see the <a class='urlUpdates' href='http://forum.renaka.com/topic/5500046/'>changes</a>?<br />"
+				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
 				+ "New in this version:<br />"
-				+ "- Trading Post calculator <a class='urlUpdates' href='http://gw2timer.com/tp'>http://gw2timer.com/tp</a><br />"
-				+ "Use it with the <a class='urlUpdates' href='http://forum.renaka.com/topic/5546166/'>overlay app</a> in game!<br />"
+				+ "- Trading Post calculator (Beta) <a href='http://gw2timer.com/tp'>http://gw2timer.com/tp</a><br />"
+				+ "- Uses new official API to retrieve current prices every few seconds!<br />"
+				+ "Use it with the <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>overlay app</a> in game!<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -260,6 +273,10 @@ O = {
 		for (i in X.Checklists)
 		{
 			O.legalLocalStorageKeys.push(X.Checklists[i].key);
+		}
+		for (i in X.Textlists)
+		{
+			O.legalLocalStorageKeys.push(X.Textlists[i].key);
 		}
 	},
 	
@@ -572,22 +589,13 @@ O = {
 					$("#barChain_" + chain.nexus).show();
 				}
 			}
-			X.clearChecklist(X.Checklists.Chain, "uncheck");
+			X.clearChecklist(X.Checklists.Chain, X.ChecklistJob.UncheckTheChecked);
 		}
 		
 		if (O.Options.bol_clearPersonalChecklistOnReset)
 		{
-			
-			if (I.isSectionLoadedMap_Personal === true)
-			{
-				$("#chlDungeonUncheck").trigger("click");
-				$("#chlCustomUncheck").trigger("click");
-			}
-			else
-			{
-				X.clearChecklist(X.Checklists.Dungeon, "preuncheck");
-				X.clearChecklist(X.Checklists.Custom, "preuncheck");
-			}
+			X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
+			X.clearChecklist(X.Checklists.Custom, X.ChecklistJob.UncheckTheChecked);
 		}
 		I.write("", messagetime);
 		
@@ -622,14 +630,6 @@ O = {
 				});
 			})(i);
 		}
-		// Leaflet map breaks when it is shown after being hidden, so have to reload
-		$("#opt_bol_showMap").change(function()
-		{
-			if (O.Options.bol_showMap)
-			{
-				location.reload();
-			}
-		});
 		// POIs are created on site load
 		$("#opt_bol_showWorldCompletion").change(function()
 		{
@@ -662,6 +662,7 @@ O = {
 		 * Run some enactors when the site loads (because this an initializer function).
 		 * Will have to place it elsewhere if it requires data to be loaded first.
 		 */
+		O.Enact.int_setAlarm();
 		O.Enact.bol_hideChecked();
 		O.Enact.bol_detectDST();
 		O.Enact.bol_useSiteTag();
@@ -750,6 +751,16 @@ O = {
 	 */
 	Enact:
 	{
+		int_setAlarm: function()
+		{
+			var icon = "img/ui/placeholder.png";
+			switch (O.Options.int_setAlarm)
+			{
+				case O.IntEnum.Alarm.Checklist: icon = "img/ui/check.png"; break;
+				case O.IntEnum.Alarm.Subscription: icon = "img/ui/subscription.png"; break;
+			}
+			$("#optAlarmIcon").attr("src", icon);
+		},
 		bol_hideChecked: function()
 		{
 			$(".barChain").each(function()
@@ -810,6 +821,7 @@ O = {
 			if (O.Options.bol_showMap)
 			{
 				$("#paneMap").show();
+				M.refreshMap();
 			}
 			else
 			{
@@ -835,17 +847,30 @@ O = {
  * ========================================================================== */
 U = {
 	
+	URL_META:
+	{
+		News: "http://forum.renaka.com/topic/5500046/",
+		Overlay: "http://forum.renaka.com/topic/5546166/"
+	},
+	
 	URL_API:
 	{
 		Tiles: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 		MapFloor: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 		EventNames: "https://api.guildwars2.com/v1/event_names.json",
 		EventDetails: "https://api.guildwars2.com/v1/event_details.json",
-		Prices: "http://www.gw2spidy.com/api/v0.9/json/item/"
+		ItemListing: "http://api.guildwars2.com/v2/commerce/listings/",
+		ItemDetails: "https://api.guildwars2.com/v1/item_details.json?item_id=",
+		ItemRender: "https://render.guildwars2.com/file/",
+		GoldPrice: "http://api.guildwars2.com/v2/commerce/exchange/gems?quantity=100",
+		GemPrice: "http://api.guildwars2.com/v2/commerce/exchange/coin?quantity=10000",
+		
+		ItemSearch: "http://www.gw2spidy.com/api/v0.9/json/item-search/"
 	},
 	
 	URL_IMG:
 	{
+		Placeholder: "img/ui/placeholder.png",
 		Waypoint: "img/map/waypoint.png",
 		WaypointOver: "img/map/waypoint_h.png",
 		Landmark: "img/map/landmark.png",
@@ -880,6 +905,19 @@ U = {
 		Article: "article",
 		Mode: "mode",
 		Go: "go"
+	},
+	
+	/*
+	 * Capitalization case style enum
+	 */
+	CaseEnum:
+	{
+		None: 0,
+		Lower: 1,
+		Sentence: 2,
+		Title: 3,
+		Every: 4,
+		All: 5
 	},
 	
 	/*
@@ -998,7 +1036,7 @@ U = {
 			page = page.toLowerCase();
 			if (page === "navi")
 			{
-				go("http://forum.renaka.com/topic/5546166/");
+				go(U.URL_META.Overlay);
 			}
 			else if (page === "m" || page === "simple")
 			{
@@ -1128,6 +1166,98 @@ U = {
 	},
 	
 	/*
+	 * Changes letter case of a word or sentence.
+	 * @param string pString to change.
+	 * @returns string changed.
+	 * @pre String is a readable text that starts with a letter.
+	 */
+	changeCase: function(pString, pCase)
+	{
+		var i;
+		var str = [];
+		
+		if (pCase === undefined || pCase === U.CaseEnum.None)
+		{
+			return pString;
+		}
+		if (pCase === U.CaseEnum.Title || pCase === U.CaseEnum.Every)
+		{
+			str = pString.split(" ");
+		}
+		
+		switch (pCase)
+		{
+			case U.CaseEnum.Lower: return pString.toLowerCase();
+			case U.CaseEnum.Sentence: return U.toFirstUpperCase(pString);
+			case U.CaseEnum.Title:
+			{
+				// Capitalize the first word and the rest, but don't capitalize 2-letter words
+				if (str.length > 1)
+				{
+					str[0] = U.toFirstUpperCase(str[0]);
+					for (i = 1; i < str.length; i++)
+					{
+						if (str[i].length !== 2)
+						{
+							str[i] = U.toFirstUpperCase(str[i]);
+						}
+					}
+					return str.join(" ");
+				}
+				else
+				{
+					return U.toFirstUpperCase(pString);
+				}
+			}
+			case U.CaseEnum.Every:
+			{
+				if (str.length > 1)
+				{
+					for (i in str)
+					{
+						str[i] = U.toFirstUpperCase(str[i]);
+					}
+					return str.join(" ");
+				}
+				else
+				{
+					return U.toFirstUpperCase(pString);
+				}
+			}
+			case U.CaseEnum.All: return pString.toUpperCase();
+		}
+	},
+	
+	/*
+	 * Wraps a substring with a tag if substring is found in a string.
+	 * @param string pString to search in.
+	 * @param string pSubstring to wrap.
+	 * @param string pTag HTML tag.
+	 * @returns string with substring wrapped with tag.
+	 */
+	wrapSubstringHTML: function(pString, pSubstring, pTag)
+	{
+		var start = pString.toLowerCase().indexOf(pSubstring.toLowerCase());
+		var end = start + pSubstring.length;
+		var str = "";
+		if (start !== -1)
+		{
+			if (pTag === undefined)
+			{
+				pTag = "u";
+			}
+			str = pString.substring(0, start)
+				+ "<" + pTag + ">" + pString.substring(start, end) + "</" + pTag + ">"
+				+ pString.substring(end, pString.length);
+		}
+		else
+		{
+			str = pString;
+		}
+		return str;
+	},
+	
+	/*
 	 * Strips a string of HTML special characters for use in printing.
 	 * @param string pString to escape.
 	 * @returns string replaced string.
@@ -1142,7 +1272,7 @@ U = {
 			.replace(/'/g, "&#039;");
 	},
 	
-		/*
+	/*
 	 * Replaces a character in a string with a specified character.
 	 * @param string pString to manipulate.
 	 * @param int pIndex of the target character.
@@ -1152,6 +1282,17 @@ U = {
 	replaceCharAt: function(pString, pIndex, pCharacter)
 	{
 		return pString.substr(0, pIndex) + pCharacter + pString.substr(pIndex + pCharacter.length);
+	},
+	
+	/*
+	 * Creates a string of specified length containing only the specified character.
+	 * @param string pChar to write.
+	 * @param int pLength of returned string.
+	 * @returns string of repeated character.
+	 */
+	repeatChar: function(pChar, pLength)
+	{
+		return Array(pLength + 1).join(pChar);
 	},
 	
 	/*
@@ -1336,16 +1477,68 @@ U = {
 	/*
 	 * Converts a search query to Trading Post http link.
 	 * @param string pString search entry.
-	 * @returns string trading link.
+	 * @returns string search link.
 	 */
-	getTradingLink: function(pString)
+	getTradingSearchLink: function(pString)
 	{
 		return "http://www.gw2spidy.com/search/" + escape(pString);
+	},
+	
+	/*
+	 * Gets a URL to an item page from an item's ID.
+	 * @param string pString ID of the item.
+	 * @returns string item page link.
+	 */
+	getTradingItemLink: function(pString)
+	{
+		return "http://www.gw2spidy.com/item/" + escape(pString);
+	},
+	
+	/*
+	 * Converts a poi_id number from maps_floor.json to a valid chat link.
+	 * Code from http://virtus-gilde.de/gw2map
+	 * @param int pID of the poi.
+	 * @returns string chatcode.
+	 */
+	getChatlinkFromPoiID: function(pID)
+	{
+		var chatcode = String.fromCharCode(4);
+		// Create unicode characters from the id
+		for (var i = 0; i < 4; i++)
+		{
+			chatcode += String.fromCharCode((pID >> (i * 8)) & 255);
+		}
+		// Return base64 string with chat code tags
+		return "[&" + btoa(chatcode) + "]";
+	},
+	
+	/*
+	 * Converts an item id from items.json to a valid chat link.
+	 * Code from http://redd.it/zy8gb
+	 * @param int pID of the item.
+	 * @returns string chatcode.
+	 */ 
+	getChatlinkFromItemID: function(pID)
+	{
+		return "[&" + btoa(String.fromCharCode(2) + String.fromCharCode(1)
+			+ String.fromCharCode(pID % 256) + String.fromCharCode(Math.floor(pID / 256))
+			+ String.fromCharCode(0) + String.fromCharCode(0)) + "]";
+	},
+	
+	/*
+	 * Gets the image URL for an GW2 item.
+	 * @param object pItemDetails obtained from the API.
+	 * @returns string URL.
+	 */
+	getAssetIconURL: function(pItemDetails)
+	{
+		return U.URL_API.ItemRender + pItemDetails.icon_file_signature
+			+ "/" + pItemDetails.icon_file_id + ".png";
 	}
 };
 
 /* =============================================================================
- * @@Checklist management and calculations
+ * @@Checklist management and generation
  * ========================================================================== */
 X = {
 	
@@ -1365,12 +1558,6 @@ X = {
 		JP: { key: "str_chlJP", value: "" },
 		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
 		Custom: { key: "str_chlCustom", value: "" },
-		CustomText: { key: "str_chlCustomText", value: new Array(), valueDefault: new Array() },
-		NotepadText: { key: "str_chlNotepadText", value: new Array(), valueDefault: new Array() },
-		TradingName: { key: "str_chlTradingName", value: new Array(), valueDefault: new Array() },
-		TradingBuy: { key: "str_chlTradingBuy", value: new Array(), valueDefault: new Array() },
-		TradingSell: { key: "str_chlTradingSell", value: new Array(), valueDefault: new Array() },
-		TradingQuantity: { key: "str_chlTradingQuantity", value: new Array(), valueDefault: new Array() },
 		/*
 		 * Collectible checklists must have the same variable name as in the map page's data.
 		 * The urlkey properties must be unique from the global KeyEnum.
@@ -1379,7 +1566,10 @@ X = {
 		Collectible1: { key: "str_chlBuriedChest", urlkey: "chests", value: "", cushion: new Array() },
 		Collectible2: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: "", cushion: new Array() },
 		Collectible3: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: "", cushion: new Array() },
-		Collectible4: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: "", cushion: new Array() }
+		Collectible4: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: "", cushion: new Array() },
+		// Individual calculator's settings
+		TradingOverwrite: { key: "str_chlTradingOverwrite", value: "" },
+		TradingNotify: { key: "str_chlTradingNotify", value: "" }
 	},
 	ChecklistEnum:
 	{
@@ -1392,11 +1582,32 @@ X = {
 		Tracked: "1",
 		Found: "2"
 	},
-	Money:
+	ChecklistJob:
 	{
-		COPPER_IN_SILVER: 100,
-		COPPER_IN_GOLD: 10000,
-		SILVER_IN_GOLD: 100
+		AllUnchecked: 0,
+		AllChecked: 1,
+		UncheckTheChecked: 2
+	},
+	
+	/*
+	 * A textlist is a set of text inputs or textareas that user writes in.
+	 * These are stored as substrings separated by "|" in a single long string.
+	 * The index between the separators represent the substring's (textarea's
+	 * content) ID. Other than that, its working is similar to checklists.
+	 */
+	Textlists:
+	{
+		CustomText: { key: "str_txlCustomText", value: new Array(), valueDefault: new Array() },
+		NotepadText: { key: "str_txlNotepadText", value: new Array(), valueDefault: new Array() },
+		TradingItem: { key: "str_txlTradingItem", value: new Array() },
+		TradingName: { key: "str_txlTradingName", value: new Array() },
+		TradingBuy: { key: "str_txlTradingBuy", value: new Array() },
+		TradingSell: { key: "str_txlTradingSell", value: new Array() },
+		TradingQuantity: { key: "str_txlTradingQuantity", value: new Array() },
+		NotifyBuyLow: { key: "str_txlNotifyBuyLow", value: new Array() },
+		NotifyBuyHigh: { key: "str_txlNotifyBuyHigh", value: new Array() },
+		NotifySellLow: { key: "str_txlNotifySellLow", value: new Array() },
+		NotifySellHigh: { key: "str_txlNotifySellHigh", value: new Array() }
 	},
 	
 	/*
@@ -1422,11 +1633,12 @@ X = {
 	 * @param string pCustomList comma separated list of indexes (1-indexed) to be set as checked.
 	 * @returns string new checklist to be assigned to a checklist variable.
 	 */
-	initializeChecklist: function(pChecklist, pLength, pCustomList)
+	initializeChecklist: function(pChecklist, pLength, pCustomList, pJob)
 	{
 		var i;
 		var indexes;
 		var index;
+		var storedlist = localStorage[pChecklist.key];
 		pChecklist.length = pLength;
 		
 		if (pCustomList)
@@ -1444,18 +1656,27 @@ X = {
 			}
 		}
 		/*
-		 * If localStorage doesn't have the checklist already or if it's an
-		 * improper length then it gets a default checklist string of 0's.
+		 * If localStorage doesn't have the checklist already then it gets a
+		 * default checklist string of 0's.
 		 */
-		else if (localStorage[pChecklist.key] === undefined
-			|| localStorage[pChecklist.key].length !== pLength)
+		else if (storedlist === undefined)
 		{
-			X.clearChecklist(pChecklist);
+			X.clearChecklist(pChecklist, pJob);
 		}
-		else
+		// If stored list is longer than requested, then truncate it to the left
+		else if (storedlist.length > pLength)
 		{
-			pChecklist.value = localStorage[pChecklist.key];
+			localStorage[pChecklist.key] = storedlist.substring(0, pLength);
 		}
+		// If stored list is shorter than requested, then concatenate it with 0's so its new length equals so
+		else if (storedlist.length < pLength)
+		{
+			var padding = U.repeatChar(pLength - storedlist.length, X.ChecklistEnum.Unchecked);
+			localStorage[pChecklist.key] = storedlist + padding;
+		}
+		
+		// Either way, the stored list becomes the program's list
+		pChecklist.value = localStorage[pChecklist.key];
 	},
 	
 	/*
@@ -1471,7 +1692,7 @@ X = {
 		// A character must be length 1 and different from the current
 		if (thechar.length === 1 && pChecklist.value[pIndex] !== thechar
 			&& pIndex >= 0
-			&& pIndex <= pChecklist.value.length - 1)
+			&& pIndex < pChecklist.value.length)
 		{
 			var checklist = U.replaceCharAt(pChecklist.value, pIndex, thechar);
 			localStorage[pChecklist.key] = checklist;
@@ -1533,6 +1754,22 @@ X = {
 	},
 	
 	/*
+	 * Tells if an element with a checkbox has checked state.
+	 * @param object pChecklist to lookup.
+	 * @param jqobject pEntry to extract checkbox index in checklist.
+	 * @returns boolean true if checked.
+	 */
+	isChecked: function(pChecklist, pEntry)
+	{
+		var index = U.getSubintegerFromHTMLID(pEntry);
+		if (X.getChecklistItem(pChecklist, index) === X.ChecklistEnum.Checked)
+		{
+			return true;
+		}
+		return false;
+	},
+	
+	/*
 	 * Gets indexes in a checklist that has its value as "checked".
 	 * @param object pChecklist to extract.
 	 * @returns string comma separated string of index numbers (1-indexed).
@@ -1554,9 +1791,9 @@ X = {
 	},
 	
 	/*
-	 * Sets a checklist object's list to all 0's.
+	 * Sets a checklist object's list a desired mass state.
 	 * @param object pChecklist to clear.
-	 * @param boolean pJob whether to just 0 out the checked items only.
+	 * @param string pJob to check or uncheck the checklist.
 	 * @pre Checklist length attribute was initialized.
 	 */
 	clearChecklist: function(pChecklist, pJob)
@@ -1567,35 +1804,34 @@ X = {
 		
 		switch (pJob)
 		{
-			case "uncheck":
+			case X.ChecklistJob.AllChecked:
 			{
 				for (i = 0; i < pChecklist.length; i++)
 				{
-					if (pChecklist.value[i] === X.ChecklistEnum.Checked)
+					checklist += X.ChecklistEnum.Checked;
+				}
+			} break;
+			case X.ChecklistJob.UncheckTheChecked:
+			{
+				// Only sets unchecked state on checked ones
+				if (localStorage[pChecklist.key] !== undefined)
+				{
+					value = localStorage[pChecklist.key];
+				}
+				else
+				{
+					value = pChecklist.value;
+				}
+				
+				for (i = 0; i < value.length; i++)
+				{
+					if (value[i] === X.ChecklistEnum.Checked)
 					{
 						checklist += X.ChecklistEnum.Unchecked;
 					}
 					else
 					{
-						checklist += pChecklist.value[i];
-					}
-				}
-			} break;
-			case "preuncheck":
-			{
-				value = localStorage[pChecklist.key];
-				if (value !== undefined)
-				{
-					for (i = 0; i < value.length; i++)
-					{
-						if (value[i] === X.ChecklistEnum.Checked)
-						{
-							checklist += X.ChecklistEnum.Unchecked;
-						}
-						else
-						{
-							checklist += value[i];
-						}
+						checklist += value[i];
 					}
 				}
 			} break;
@@ -1712,6 +1948,121 @@ X = {
 				pElement.parent().removeClass("chlCheckboxDisabled")
 					.removeClass("chlCheckboxChecked");
 			}
+		}
+	},
+	
+	/*
+	 * Initializes the checklist for a set of checkboxes and bind their standard storage behavior.
+	 * @param object pChecklist for storing state.
+	 * @param jqobject pCheckboxes input to bind behavior.
+	 * @param enum pJob initial checkbox state.
+	 * @pre These checkboxes can only have a checked and unchecked state only.
+	 */
+	initializeCheckboxlist: function(pChecklist, pCheckboxes, pJob)
+	{
+		X.initializeChecklist(pChecklist, pCheckboxes.length, null, pJob);
+		
+		pCheckboxes.each(function(pIndex)
+		{
+			$(this).change(function()
+			{
+				var state = X.getCheckboxEnumState($(this));
+				
+				X.setChecklistItem(pChecklist, pIndex, state);
+			});
+			
+			// Now that this checkbox is bound, trigger it as the state in checklist
+			X.triggerCheckboxEnumState(pChecklist, pIndex, $(this));
+		});
+	},
+	
+	/*
+	 * Stores text and binds default behavior for a standard set of text fields.
+	 * @param object pChecklistText for storing text in memory and storage.
+	 * @param jqobject pTextFields input or textarea elements to iterate and read text.
+	 * @param string pFieldName name of the text fields for notifying of change.
+	 * @param int pMaxLength of characters in a text field.
+	 * @param jqobject pRestoreButton to reset all text fields.
+	 */
+	initializeTextlist: function(pTextlist, pTextFields, pFieldName, pMaxLength, pRestoreButton)
+	{
+		// Initialize the pre-written text in the text fields
+		pTextFields.each(function()
+		{
+			var text = $(this).val();
+			pTextlist.value.push(text);
+			if (pTextlist.valueDefault)
+			{
+				pTextlist.valueDefault.push(text);
+			}
+		});
+		
+		/*
+		 * Each text fields' value will become a delimited substring in one
+		 * single string to be stored in localStorage.
+		 */
+		var i;
+		if (localStorage[pTextlist.key] === undefined)
+		{
+			// If localStorage value is empty, replace with original values in text field
+			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
+		}
+		else
+		{
+			var storedtextarray = localStorage[pTextlist.key].split(I.cTextDelimiterChar);
+			// Load the stored text and account for missing entries
+			for (i = 0; i < pTextlist.value.length; i++)
+			{
+				if (storedtextarray[i])
+				{
+					pTextlist.value[i] = storedtextarray[i];
+				}
+				else
+				{
+					pTextlist.value[i] = "";
+				}
+			}
+			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
+		}
+		
+		var updateStoredText = function()
+		{
+			// Read every text fields and rewrite the string of substrings again
+			pTextFields.each(function(pIndex)
+			{
+				// Do not allow delimiter in the stored string
+				pTextlist.value[pIndex] = $(this).val().replace(I.cTextDelimiterRegex, "");
+			});
+			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
+		};
+		
+		// Bind text fields behavior
+		pTextFields.each(function(pIndex)
+		{
+			// Set number of characters allowed in the text field
+			$(this).attr("maxlength", pMaxLength);
+			$(this).val(pTextlist.value[pIndex]); // Load initialized text
+			
+			$(this).change(function()
+			{
+				if (pFieldName)
+				{
+					I.write(pFieldName + " #" + (pIndex + 1) + " updated.");
+				}
+				updateStoredText();
+			});
+		});
+		
+		// Bind restore default values button
+		if (pRestoreButton)
+		{
+			pRestoreButton.click(function()
+			{
+				pTextFields.each(function(pIndex)
+				{
+					$(this).val(pTextlist.valueDefault[pIndex]).trigger("change");
+				});
+			});
 		}
 	},
 	
@@ -1876,9 +2227,9 @@ X = {
 		var updateCalculator = function()
 		{
 			var money = X.Checklists.Dungeon.money;
-			var gold = ~~(money / X.Money.COPPER_IN_GOLD);
-			var silver = ~~(money / X.Money.SILVER_IN_GOLD) % X.Money.COPPER_IN_SILVER;
-			var copper = money % X.Money.COPPER_IN_SILVER;
+			var gold = ~~(money / E.Money.COPPER_IN_GOLD);
+			var silver = ~~(money / E.Money.SILVER_IN_GOLD) % E.Money.COPPER_IN_SILVER;
+			var copper = money % E.Money.COPPER_IN_SILVER;
 			$("#chlDungeonCalculator_Gold").text(gold);
 			$("#chlDungeonCalculator_Silver").text(silver);
 			$("#chlDungeonCalculator_Copper").text(copper);
@@ -1961,7 +2312,7 @@ X = {
 		// Bind uncheck all button
 		$("#chlDungeonUncheck").click(function()
 		{
-			X.clearChecklist(X.Checklists.Dungeon, "uncheck");
+			X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
 			$("#chlDungeon input").each(function(pIndex)
 			{
 				if ($(this).prop("checked") === true)
@@ -2000,14 +2351,14 @@ X = {
 				}
 			});
 			
-			// Now that this checkbox is bounded, trigger it as the state in checklist
+			// Now that this checkbox is bound, trigger it as the state in checklist
 			X.triggerCheckboxEnumState(X.Checklists.Custom, pIndex, $(this));
 		});
 		
 		// Bind uncheck all button
 		$("#chlCustomUncheck").click(function()
 		{
-			X.clearChecklist(X.Checklists.Custom, "uncheck");
+			X.clearChecklist(X.Checklists.Custom, X.ChecklistJob.UncheckTheChecked);
 			$("#chlCustom input:checkbox").each(function(pIndex)
 			{
 				if ($(this).prop("checked") === true)
@@ -2021,8 +2372,69 @@ X = {
 		// Bind text fields behavior
 		var items = $("#chlCustom input:text");
 		var restore = $("#chlCustomRestore");
-		X.initializeText(X.Checklists.CustomText, items, "Custom checklist item", 48, restore);
+		X.initializeTextlist(X.Textlists.CustomText, items, "Custom checklist item", 48, restore);
 	},
+	
+	/*
+	 * Binds notepad textarea behavior and button pages behavior.
+	 */
+	initializeNotepad: function()
+	{
+		// Numbered buttons' behavior
+		$("#chlNotepadButtons button").each(function(pIndex)
+		{
+			$(this).click(function()
+			{
+				// Show selected number's sheet
+				$("#chlNotepadSheets textarea").hide().eq(pIndex).show()
+					.css({opacity: 0.5}).animate({opacity: 1}, 400);
+				$("#chlNotepadButtons button").removeClass("btnFocused");
+				$(this).addClass("btnFocused");
+			});
+		}).first().click(); // First sheet is default view
+		
+		// Bind text fields behavior
+		var items = $("#chlNotepadSheets textarea");
+		var restore = $("#chlNotepadRestore");
+		X.initializeTextlist(X.Textlists.NotepadText, items, "Notepad sheet", 4096, restore);
+		// Customize notepad according to options
+		items.css("height", O.Options.int_sizeNotepadHeight);
+		items.css("font-size", O.Options.int_sizeNotepadFont);
+		items.first().show();
+	}
+};
+
+/* =============================================================================
+ * @@Economy Trading Post and money
+ * ========================================================================== */
+E = {
+	
+	Money:
+	{
+		COPPER_IN_SILVER: 100,
+		COPPER_IN_GOLD: 10000,
+		SILVER_IN_GOLD: 100
+	},
+	Rarity:
+	{
+		Junk: 0,
+		Basic: 1,
+		Fine: 2,
+		Masterwork: 3,
+		Rare: 4,
+		Exotic: 5,
+		Ascended: 6,
+		Legendary: 7
+	},
+	cNUM_ITEM_RARITIES: 8,
+	cREFRESH_LIMIT_MILLISECONDS: 5000, // Time before user is allowed to call API again
+	cSEARCH_LIMIT_MILLISECONDS: 750, // Time before "as you type" search executes again
+	isTradingCalculatorsInitialized: false,
+	RefreshTimeout: {},
+	
+	copper: function(pString) { return "<copper>" + pString + "</copper>"; },
+	silver: function(pString) { return "<silver>" + pString + "</silver>"; },
+	gold: function(pString) { return "<gold>" + pString + "</gold>"; },
 	
 	/*
 	 * Parses a period separated string representing those units.
@@ -2068,7 +2480,7 @@ X = {
 		if ( ! isFinite(silver)) { silver = 0; }
 		if ( ! isFinite(gold)) { gold = 0; }
 		
-		return copper + (silver * X.Money.COPPER_IN_SILVER) + (gold * X.Money.COPPER_IN_GOLD);
+		return copper + (silver * E.Money.COPPER_IN_SILVER) + (gold * E.Money.COPPER_IN_GOLD);
 	},
 	parseQuantityString: function(pString)
 	{
@@ -2084,14 +2496,15 @@ X = {
 	 */
 	createMoneyString: function(pAmount)
 	{
-		var gold = Math.abs(~~(pAmount / X.Money.COPPER_IN_GOLD));
-		var silver = Math.abs(~~(pAmount / X.Money.SILVER_IN_GOLD) % X.Money.COPPER_IN_SILVER);
-		var copper = Math.abs(pAmount % X.Money.COPPER_IN_SILVER);
-		var sign = "";
-		if (pAmount < 0)
+		if (pAmount === undefined || isFinite(pAmount) === false)
 		{
-			sign = "−";
+			return "0.00";
 		}
+		
+		var gold = Math.abs(~~(pAmount / E.Money.COPPER_IN_GOLD));
+		var silver = Math.abs(~~(pAmount / E.Money.SILVER_IN_GOLD) % E.Money.COPPER_IN_SILVER);
+		var copper = Math.abs(pAmount % E.Money.COPPER_IN_SILVER);
+		var sign = (pAmount < 0) ? "−" : "";
 		
 		if (gold > 0 && silver < T.cBASE_10)
 		{
@@ -2114,10 +2527,51 @@ X = {
 	},
 	
 	/*
-	 * Updates the trading calculator's output textboxes using input textboxes' values.
-	 * @param string pIndex of trading calculator.
+	 * Converts a decimal number into a decimal-less percentage.
+	 * @param float pNumber to convert.
+	 * @param int pPlaces decimal to keep.
+	 * @returns string percentage.
 	 */
-	calculateTrading: function(pIndex)
+	createPercentString: function(pNumber, pPlaces)
+	{
+		if (pNumber === undefined || isFinite(pNumber) === false)
+		{
+			return "0%";
+		}
+		if (pPlaces === undefined)
+		{
+			pPlaces = 0;
+		}
+		
+		var sign = (pNumber < 0) ? "−" : "";
+		return sign + Math.abs(pNumber * 100).toFixed(pPlaces) + "%";
+	},
+	
+	/*
+	 * Sets an object with an item rarity CSS class. Removes all if level is not provided.
+	 * @param jqobject pEntry to remove.
+	 * @param int pLevel of rarity.
+	 */
+	setRarityClass: function(pEntry, pLevel)
+	{
+		pEntry.each(function()
+		{
+			for (var i = 0; i < E.cNUM_ITEM_RARITIES; i++)
+			{
+				$(this).removeClass("rarity" + i.toString());
+			}
+		});
+		if (E.Rarity[pLevel] !== undefined)
+		{
+			pEntry.addClass("rarity" + (E.Rarity[pLevel]).toString());
+		}
+	},
+	
+	/*
+	 * Calculates the trading calculator's output textboxes using input textboxes' values.
+	 * @param jqobject pEntry trading calculator HTML parent.
+	 */
+	calculateTrading: function(pEntry)
 	{
 		// Constants
 		var cListFee = 0.05;
@@ -2126,47 +2580,216 @@ X = {
 		var cInvertedTax = 1 - cTotalTax;
 		
 		// Computable data
-		var entry = "#trdEntry_" + pIndex;
-		var buy = X.parseMoneyString($(entry + " .trdBuy").first().val());
-		var sell = X.parseMoneyString($(entry + " .trdSell").first().val());
-		var quantity = X.parseQuantityString($(entry + " .trdQuantity").first().val());
+		var buy = E.parseMoneyString(pEntry.find(".trdBuy").val());
+		var sell = E.parseMoneyString(pEntry.find(".trdSell").val());
+		var quantity = E.parseQuantityString(pEntry.find(".trdQuantity").val());
 		
 		// Output elements
-		var cost = $(entry + " .trdCost").first();
-		var tax = $(entry + " .trdTax").first();
-		var revenue = $(entry + " .trdRevenue").first();
-		var profit = $(entry + " .trdProfit").first();
-		var breakpoint = $(entry + " .trdBreak").first();
+		var cost = pEntry.find(".trdCost");
+		var tax = pEntry.find(".trdTax");
+		var revenue = pEntry.find(".trdRevenue");
+		var profit = pEntry.find(".trdProfit");
+		var breakpoint = pEntry.find(".trdBreak");
+		var margin = pEntry.find(".trdMargin");
 		
-		var profitamount = Math.floor((sell - (sell * cTotalTax) - buy) * quantity);
+		var profitamount = (sell - (sell * cTotalTax) - buy) * quantity;
+		var revenueamount = (sell - (sell * cSellTax)) * quantity;
+		var costamount = buy * quantity;
+		var listamount = (sell * cListFee) * quantity;
+		var taxamount = (sell * cSellTax) * quantity;
 		
 		// Do calculation and put them in outputs
-		cost.val("−" + X.createMoneyString(Math.floor(
-			buy * quantity
+		cost.val("−" + E.createMoneyString(Math.round(
+			costamount
 		)));
-		tax.val("−" + X.createMoneyString(Math.floor(
-			(sell * cListFee) * quantity
-			)) + " + −" + X.createMoneyString(Math.floor(
-			(sell * cSellTax) * quantity
+		tax.val("−" + E.createMoneyString(Math.round(
+			listamount
+			)) + " + −" + E.createMoneyString(Math.round(
+			taxamount
 		)));
-		breakpoint.val(X.createMoneyString(Math.floor(
+		breakpoint.val(E.createMoneyString(Math.round(
 			buy / cInvertedTax
 		)));
-		revenue.val(X.createMoneyString(Math.floor(
-			(sell - (sell * cTotalTax)) * quantity
+		revenue.val(E.createMoneyString(Math.round(
+			revenueamount
 		)));
-		profit.val(X.createMoneyString(
+		profit.val(E.createMoneyString(Math.round(
 			profitamount
+		)));
+		margin.val(E.createPercentString(
+			(revenueamount / (costamount + listamount)) - 1, 2
 		));
-		
-		profit.removeClass("trdZero trdGain trdLoss");
-		if (profitamount === 0) { profit.addClass("trdZero"); }
-		else if (profitamount > 0) { profit.addClass("trdGain"); }
-		else if (profitamount < 0) { profit.addClass("trdLoss"); }
+
+		$([profit, margin]).each(function()
+		{
+			var roundedprofit = Math.round(profitamount);
+			$(this).removeClass("trdZero trdGain trdLoss");
+			if (roundedprofit === 0) { $(this).addClass("trdZero"); }
+			else if (roundedprofit > 0) { $(this).addClass("trdGain"); }
+			else if (roundedprofit < 0) { $(this).addClass("trdLoss"); }
+		});
 	},
 	
 	/*
-	 * Binds notepad textarea behavior and button pages behavior.
+	 * Retrieves non-price information about the item and updates those boxes.
+	 * @param jqobject pEntry trading calculator HTML parent.
+	 */
+	updateTradingDetails: function(pEntry)
+	{
+		var name = pEntry.find(".trdName").val();
+		var id = pEntry.find(".trdItem").val();
+		if (isFinite(parseInt(id)) === false || name.length === 0)
+		{
+			return;
+		}
+		
+		$.getJSON(U.URL_API.ItemDetails + id, function(pData)
+		{
+			E.setRarityClass(pEntry.find(".trdName"), pData.rarity);
+			pEntry.find(".trdIcon").attr("src", U.getAssetIconURL(pData));
+			pEntry.find(".trdLink").val(U.getChatlinkFromItemID(id));
+		});
+	},
+	
+	/*
+	 * Retrieves prices from API and updates those boxes.
+	 * @param jqobject pEntry trading calculator HTML parent.
+	 */
+	updateTradingPrices: function(pEntry)
+	{
+		var name = U.escapeHTML(pEntry.find(".trdName").val());
+		var id = pEntry.find(".trdItem").val();
+		if (isFinite(parseInt(id)) === false || name.length === 0)
+		{
+			return;
+		}
+		
+		var animationspeed1 = 5000;
+		var animationspeed2 = 1000;
+		var previousbuy = 0, previoussell = 0;
+		var currentbuy = 0, currentsell = 0;
+		var buyelm = pEntry.find(".trdCurrentBuy");
+		var sellelm = pEntry.find(".trdCurrentSell");
+		var buylowelm = pEntry.find(".trdNotifyBuyLow");
+		var buyhighelm = pEntry.find(".trdNotifyBuyHigh");
+		var selllowelm = pEntry.find(".trdNotifySellLow");
+		var sellhighelm = pEntry.find(".trdNotifySellHigh");
+		var buylow = E.parseMoneyString(buylowelm.val());
+		var buyhigh = E.parseMoneyString(buyhighelm.val());
+		var selllow = E.parseMoneyString(selllowelm.val());
+		var sellhigh = E.parseMoneyString(sellhighelm.val());
+
+		$.getJSON(U.URL_API.ItemListing + id, function(pData)
+		{
+			previousbuy = E.parseMoneyString(pEntry.find(".trdCurrentBuy").first().val());
+			previoussell = E.parseMoneyString(pEntry.find(".trdCurrentSell").first().val());
+			if (pData.buys !== undefined)
+			{
+				currentbuy = parseInt(pData.buys[0].unit_price);
+			}
+			if (pData.sells !== undefined)
+			{
+				currentsell = parseInt(pData.sells[0].unit_price);
+			}
+			buyelm.val(E.createMoneyString(currentbuy));
+			sellelm.val(E.createMoneyString(currentsell));
+			
+			// Overwrite calculator buy and sell prices if opted
+			if (X.getChecklistItem(X.Checklists.TradingOverwrite, U.getSubintegerFromHTMLID(pEntry))
+					=== X.ChecklistEnum.Checked)
+			{
+				pEntry.find(".trdBuy").val(buyelm.val()).trigger("change").trigger("input");
+				pEntry.find(".trdSell").val(sellelm.val()).trigger("change").trigger("input");
+			}
+		}).done(function()
+		{
+			// Animate prices that have changed
+			if (currentbuy < previousbuy) { buyelm.css({color: "#ff2200"}).animate({color: "#ffeebb"}, animationspeed1); }
+			else if (currentbuy > previousbuy ) { buyelm.css({color: "#44dd44"}).animate({color: "#ffeebb"}, animationspeed1); }
+			else { buyelm.css({"border-radius": 32}).animate({"border-radius": 4}, animationspeed2); }
+			
+			if (currentsell < previoussell) { sellelm.css({color: "#ff2200"}).animate({color: "#ffeebb"}, animationspeed1); }
+			else if (currentsell > previoussell) { sellelm.css({color: "#44dd44"}).animate({color: "#ffeebb"}, animationspeed1); }
+			else { sellelm.css({"border-radius": 32}).animate({"border-radius": 4}, animationspeed2); }
+			
+			// Notify if tracked price is within range
+			if (X.isChecked(X.Checklists.TradingNotify, pEntry))
+			{
+				if (currentbuy <= buylow && buylow !== 0)
+				{
+					buylowelm.addClass("trdMatched");
+					D.speak(D.getString("buy low") + " " + name);
+				}
+				else
+				{
+					buylowelm.removeClass("trdMatched");
+				}
+
+				if (currentbuy >= buyhigh && buyhigh !== 0)
+				{
+					buyhighelm.addClass("trdMatched");
+					D.speak(D.getString("buy high") + " " + name);
+				}
+				else
+				{
+					buyhighelm.removeClass("trdMatched");
+				}
+
+				if (currentsell <= selllow && selllow !== 0)
+				{
+					selllowelm.addClass("trdMatched");
+					D.speak(D.getString("sell high") + " " + name);
+				}
+				else
+				{
+					selllowelm.removeClass("trdMatched");
+				}
+
+				if (currentsell >= sellhigh && sellhigh !== 0)
+				{
+					sellhighelm.addClass("trdMatched");
+					D.speak(D.getString("sell high") + " " + name);
+				}
+				else
+				{
+					sellhighelm.removeClass("trdMatched");
+				}
+			}
+		}).fail(function()
+		{
+			I.write("Error retrieving API data for " + U.escapeHTML(pEntry.find(".trdName").val()));
+		});
+	},
+	updateAllTradingDetails: function()
+	{
+		$("#trdList .trdEntry").each(function(){ E.updateTradingDetails($(this)); });
+	},
+	updateAllTradingPrices: function()
+	{
+		$("#trdList .trdEntry").each(function(){ E.updateTradingPrices($(this)); });
+	},
+	
+	/*
+	 * Erases unneeded data from the calculator.
+	 * @param jqobject pEntry of a calculator.
+	 */
+	clearCalculator: function(pEntry)
+	{
+		E.setRarityClass(pEntry.find(".trdName"));
+		pEntry.find(".trdIcon").attr("src", U.URL_IMG.Placeholder);
+		pEntry.find(".trdItem").val("").trigger("change");
+		pEntry.find(".trdCurrentBuy").val("");
+		pEntry.find(".trdCurrentSell").val("");
+		pEntry.find(".trdResultsContainer").remove();
+		
+		pEntry.find(".trdNotifyBuyLow").val("").trigger("change").removeClass("trdMatched");
+		pEntry.find(".trdNotifyBuyHigh").val("").trigger("change").removeClass("trdMatched");
+		pEntry.find(".trdNotifySellLow").val("").trigger("change").removeClass("trdMatched");
+		pEntry.find(".trdNotifySellHigh").val("").trigger("change").removeClass("trdMatched");
+	},
+	
+	/*
+	 * Generates calculators and binds behavior.
 	 */
 	initializeTrading: function()
 	{
@@ -2180,187 +2803,245 @@ X = {
 			// Generate individual calculators
 			$("#trdList").append(
 				"<div id='trdEntry_" + i + "' class='trdEntry'>"
-					+ "<samp title='<dfn>" + D.getSentence("name") + "</dfn>'>#" + (i+1) + "</samp><input class='trdName' type='text' />"
-					+ "<button class='trdSearch' tabindex='-1'>S</button><button class='trdWiki' tabindex='-1'>W</button><br />"
-					+ "<samp title='<dfn>" + D.getSentence("buy") + "</dfn>'>$~O</samp>"
-						+ "<input class='trdBuy' type='text' />"
-					+ "<samp title='<dfn>" + D.getSentence("cost") + "</dfn>: Money needed to buy the items.'>−$~</samp>"
-						+ "<input class='trdCost trdOutput' type='text' tabindex='-1' /><br />"
-					+ "<samp title='<dfn>" + D.getSentence("sell") + "</dfn>'>O~$</samp>"
-						+ "<input class='trdSell' type='text' />"
-					+ "<samp title='<dfn>" + D.getSentence("breakpoint") + "</dfn>: Sell higher than this to make a profit.'>$=$</samp>"
-						+ "<input class='trdBreak trdOutput' type='text' tabindex='-1' /><br />"
-					+ "<samp title='<dfn>" + D.getSentence("quantity") + "</dfn>'>×</samp>"
-						+ "<input class='trdQuantity' type='text' />"
-					+ "<samp title='<dfn>" + D.getSentence("tax") + "</dfn>: Pay 5% of sell price to list, and deduct 10% of sell price when sold.'>−$%</samp>"
-						+ "<input class='trdTax trdOutput' type='text' tabindex='-1' /><br />"
-					+ "<samp title='<dfn>" + D.getSentence("profit") + "</dfn>: Gains after losses from buying and tax.'>+$</samp>"
-						+ "<input class='trdProfit trdOutput' type='text' tabindex='-1' />"
-					+ "<samp title='<dfn>" + D.getSentence("revenue") + "</dfn>: What you will receive at the trader.'>=$</samp>"
-						+ "<input class='trdRevenue trdOutput' type='text' tabindex='-1' /><br />"
-				+ "</div><br />"
+					+ "<div class='trdAccordion trdAccordionShut'>"
+						+ "<samp><img class='trdIcon' src='" + U.URL_IMG.Placeholder + "' /></samp>"
+							+ "<input class='trdItem' type='text' />"
+							+ "<div class='trdResultsFocus'><input class='trdName' type='text' /></div>"
+						+ "<div class='trdButtons'>"
+							+ "<button class='trdSearch' tabindex='-1'>S</button><button class='trdWiki' tabindex='-1'>W</button><br />"
+						+ "</div>"
+						+ "<div class='trdExpand'>"
+							+ "<samp>$~O</samp><input class='trdBuy' type='text' />"
+							+ "<samp>−$~</samp><input class='trdCost trdOutput' type='text' tabindex='-1' /><br />"
+							+ "<samp>O~$</samp><input class='trdSell' type='text' />"
+							+ "<samp>$=$</samp><input class='trdBreak trdOutput' type='text' tabindex='-1' /><br />"
+							+ "<samp>×</samp><input class='trdQuantity' type='text' />"
+							+ "<samp>−$%</samp><input class='trdTax trdOutput' type='text' tabindex='-1' /><br />"
+							+ "<samp>+$</samp><input class='trdProfit trdOutput' type='text' tabindex='-1' />"
+							+ "<samp>=$</samp><input class='trdRevenue trdOutput' type='text' tabindex='-1' /><br />"
+							+ "<samp>+$%</samp><input class='trdMargin trdOutput' type='text' tabindex='-1' />"
+							+ "<samp>[]</samp><input class='trdLink trdOutput' type='text' tabindex='-1' /><br />"
+							+ "<samp>$~!</samp>"
+								+ "<input class='trdNotifyBuyHigh' type='text' />"
+								+ "<input class='trdCurrentBuy trdOutput' type='text' tabindex='-1' />"
+								+ "<input class='trdNotifyBuyLow' type='text' />"
+								+ "<label title='<dfn>" + D.getSentence("overwrite") + "</dfn>: Replace the calculator buy and sell prices with the current prices when refreshing.'>"
+									+ "<input class='trdOverwrite' type='checkbox' tabindex='-1' />&zwnj;</label>"
+							+ "<samp>!~$</samp>"
+								+ "<input class='trdNotifySellHigh' type='text' />"
+								+ "<input class='trdCurrentSell trdOutput' type='text' tabindex='-1' />"
+								+ "<input class='trdNotifySellLow' type='text' />"
+								+ "<label title='<dfn>" + D.getSentence("notify") + "</dfn>: Turn on sound notification for this item.'>"
+									+"<input class='trdNotify' type='checkbox' tabindex='-1' />&zwnj;</label>"
+						+ "<br /><br /></div>"
+					+ "</div>"
+					+ "<div class='trdPreview'>"
+						+ "<input class='trdCurrentBuy trdOutput' type='text' tabindex='-1' />"
+						+ "<input class='trdCurrentSell trdOutput' type='text' tabindex='-1' />"
+					+ "</div>"
+				+ "</div>"
 			);
-			I.qTip.init($(entry + " samp"));
+			I.qTip.init($(entry + " .trdOverwrite").parent());
+			I.qTip.init($(entry + " .trdNotify").parent());
 			
-			name = $(entry + " .trdName").first();
-			buy = $(entry + " .trdBuy").first();
-			sell = $(entry + " .trdSell").first();
-			quantity = $(entry + " .trdQuantity").first();
+			name = $(entry + " .trdName");
+			buy = $(entry + " .trdBuy");
+			sell = $(entry + " .trdSell");
+			quantity = $(entry + " .trdQuantity");
+			
+			// Bind click to select all text behavior
+			$(entry + " input").click(function()
+			{
+				$(this).select();
+			});
 			
 			// Bind search button behavior for ith calculator
 			$(entry + " .trdWiki").click(function()
 			{
-				var index = U.getSubstringFromHTMLID($(this).parent());
-				var query = $("#trdEntry_" + index + " .trdName").first().val();
+				var query = $(this).parents(".trdEntry").find(".trdName").val();
 				U.openExternalURL(U.getWikiLanguageLink(query));
 			});
 			$(entry + " .trdSearch").click(function()
 			{
-				var index = U.getSubstringFromHTMLID($(this).parent());
-				var query = $("#trdEntry_" + index + " .trdName").first().val();
-				U.openExternalURL(U.getTradingLink(query));
+				var query = $(this).parents(".trdEntry").find(".trdItem").val();
+				U.openExternalURL(U.getTradingItemLink(query));
 			});
 			
 			// Bind input textboxes calculate behavior
-			$([name, buy, sell, quantity]).each(function()
+			$([buy, sell, quantity]).each(function()
 			{
 				$(this).on("input", function()
 				{
-					var index = U.getSubstringFromHTMLID($(this).parent());
-					X.calculateTrading(index);
+					E.calculateTrading($(this).parent());
 				});
-				$(this).click(function()
+			});
+			
+			// Bind name search box behavior
+			$(name).on("input", $.throttle(E.cSEARCH_LIMIT_MILLISECONDS, function()
+			{
+				var query = $(this).val();
+				var entry = $(this).parents(".trdEntry");
+				var resultscontainer, results;
+				if (query.length < 3) // Don't search if keywords are below this length
 				{
-					$(this).select();
+					// Reset API output boxes
+					E.clearCalculator(entry);
+					return;
+				}
+
+				$.getJSON(U.URL_API.ItemSearch + query, function(pData)
+				{
+					entry.find(".trdResultsContainer").remove();
+					var thisi;
+					var result, resultline;
+					if (pData.results.length > 0)
+					{
+						// Create popup container for the items result list
+						resultscontainer = $("<div class='trdResultsContainer jsRemovable'></div>")
+							.insertAfter(entry.find(".trdName"));
+						results = $("<div class='trdResults cntPopup'></div>").appendTo(resultscontainer);
+
+						// Add items to the results list
+						for (thisi = 0; thisi < pData.results.length && thisi < O.Options.int_numTradingResults; thisi++)
+						{
+							result = pData.results[thisi];
+							resultline =  $("<ins class='rarity" + result.rarity + "' data-id='" + result.data_id + "' "
+								+ "data-buy='" + E.createMoneyString(result.max_offer_unit_price) + "' "
+								+ "data-sell='" + E.createMoneyString(result.min_sale_unit_price) + "'>"
+								+ "<img src='" + result.img + "'>"
+								+ U.wrapSubstringHTML(result.name, query, "u") + "</ins>").appendTo(results);
+							// Bind click a result to memorize the item's ID and name
+							resultline.click(function()
+							{
+								var resultspopup = $(this).parents(".trdResultsContainer");
+								var entry = resultspopup.parents(".trdEntry");
+								// Change triggers the storage, input triggers the calculation
+								entry.find(".trdItem").val($(this).data("id")).trigger("change");
+								entry.find(".trdName").val($(this).text()).trigger("change");
+								E.updateTradingDetails(entry);
+								E.updateTradingPrices(entry);
+								resultspopup.remove();
+							});
+						}
+					}
 				});
+			})).onEnterKey(function()
+			{
+				U.openExternalURL(U.getTradingSearchLink($(this).val()));
+			}).onEscapeKey(function()
+			{
+				$(this).parents(".trdEntry").find(".trdResultsContainer").remove();
+			}).click(function()
+			{
+				// Clicking name box also triggers the search
+				$(this).trigger("input");
 			});
 		}
 		
 		// Set the first entry with initial text as an example
 		entry = "#trdEntry_" + 0;
-		$(entry + " .trdName").first().val("Bifrost");
-		$(entry + " .trdBuy").first().val("4500.37.68");
-		$(entry + " .trdSell").first().val("550037.68");
-		$(entry + " .trdQuantity").first().val("1");
+		$(entry + " .trdIcon").attr("src", "img/ui/faq.png");
+		$(entry + " .trdName").val("Bifrost");
+		$(entry + " .trdBuy").val("4500.37.68");
+		$(entry + " .trdSell").val("550037.68");
+		$(entry + " .trdQuantity").val("1");
+		$(entry).css("margin-bottom", "6px");
+		
+		// Set tooltip only for the first entry
+		var tip = function(pBoxName, pWord, pInfo)
+		{
+			if (pInfo === undefined)
+			{
+				pInfo = "";
+			}
+			else
+			{
+				pInfo = ": " + pInfo;
+			}
+			$(entry + " .trd" + pBoxName).attr("title", "<dfn>" + D.getString(pWord) + "</dfn>" + pInfo);
+		};
+		tip("Name", "name");
+		tip("Buy", "buy");
+		tip("Sell", "sell");
+		tip("Quantity", "quantity");
+		tip("Cost", "cost", "Money needed to buy the items.");
+		tip("Break", "breakpoint" , "Sell higher than this to make a profit.");
+		tip("Tax", "tax", "Pay 5% fee of sell price to list, and deduct 10% tax of sell price when sold.");
+		tip("Profit", "profit", "Gains after losses from buying and tax.");
+		tip("Margin", "margin", "Revenue over cost and fee.");
+		tip("Revenue", "revenue", "What you will receive at the trader.");
+		tip("Link", "chat link", "Paste this in game chat to see the item.");
+		tip("NotifyBuyLow", "buy low", "Notify you if current BUY price is LOWER than this.");
+		tip("NotifyBuyHigh", "buy high", "Notify you if current BUY price is HIGHER than this.");
+		tip("NotifySellLow", "sell low", "Notify you if current SELL price is LOWER than this.");
+		tip("NotifySellHigh", "sell high", "Notify you if current SELL price is HIGHER than this.");
+		tip("CurrentBuy", "current buy");
+		tip("CurrentSell", "current sell");
+		I.qTip.init($(entry + " input"));
 		
 		// Initialize storage behavior of the input textboxes
-		X.initializeText(X.Checklists.TradingName, $("#trdList .trdName"), null, 128);
-		X.initializeText(X.Checklists.TradingBuy, $("#trdList .trdBuy"), null, 16);
-		X.initializeText(X.Checklists.TradingSell, $("#trdList .trdSell"), null, 16);
-		X.initializeText(X.Checklists.TradingQuantity, $("#trdList .trdQuantity"), null, 16);
+		X.initializeTextlist(X.Textlists.TradingItem, $("#trdList .trdItem"), null, 16);
+		X.initializeTextlist(X.Textlists.TradingName, $("#trdList .trdName"), null, 64);
+		X.initializeTextlist(X.Textlists.TradingBuy, $("#trdList .trdBuy"), null, 16);
+		X.initializeTextlist(X.Textlists.TradingSell, $("#trdList .trdSell"), null, 16);
+		X.initializeTextlist(X.Textlists.TradingQuantity, $("#trdList .trdQuantity"), null, 16);
+		X.initializeTextlist(X.Textlists.NotifyBuyLow, $("#trdList .trdNotifyBuyLow"), null, 16);
+		X.initializeTextlist(X.Textlists.NotifyBuyHigh, $("#trdList .trdNotifyBuyHigh"), null, 16);
+		X.initializeTextlist(X.Textlists.NotifySellLow, $("#trdList .trdNotifySellLow"), null, 16);
+		X.initializeTextlist(X.Textlists.NotifySellHigh, $("#trdList .trdNotifySellHigh"), null, 16);
+		
+		X.initializeCheckboxlist(X.Checklists.TradingOverwrite, $("#trdList .trdOverwrite"), X.ChecklistJob.AllChecked);
+		X.initializeCheckboxlist(X.Checklists.TradingNotify, $("#trdList .trdNotify"), X.ChecklistJob.AllChecked);
 		
 		// Trigger input textboxes to make the output textboxes update
 		$("#trdList .trdSell").trigger("input");
-	},
-	
-	/*
-	 * Binds notepad textarea behavior and button pages behavior.
-	 */
-	initializeNotepad: function()
-	{
-		// Numbered buttons' behavior
-		$("#chlNotepadButtons button").each(function(pIndex)
-		{
-			$(this).click(function()
-			{
-				// Show selected number's sheet
-				$("#chlNotepadSheets textarea").hide().eq(pIndex).show()
-					.css({opacity: 0.5}).animate({opacity: 1}, 400);
-				$("#chlNotepadButtons button").removeClass("btnFocused");
-				$(this).addClass("btnFocused");
-			});
-		}).first().click(); // First sheet is default view
+		E.updateAllTradingDetails();
+		E.updateAllTradingPrices();
 		
-		// Bind text fields behavior
-		var items = $("#chlNotepadSheets textarea");
-		var restore = $("#chlNotepadRestore");
-		items.first().show();
-		X.initializeText(X.Checklists.NotepadText, items, "Notepad sheet", 4096, restore);
-	},
-	
-	/*
-	 * Stores text and binds default behavior for a standard set of text fields.
-	 * @param object pChecklistText for storing text in memory and storage.
-	 * @param jqobject pTextFields input or textarea elements to iterate and read text.
-	 * @param string pFieldName name of the text fields for notifying of change.
-	 * @param int pMaxLength of characters in a text field.
-	 * @param jqobject pRestoreButton to reset all text fields.
-	 */
-	initializeText: function(pChecklistText, pTextFields, pFieldName, pMaxLength, pRestoreButton)
-	{
-		// Initialize the pre-written text in the text fields
-		pTextFields.each(function()
+		// Bind button to switch between accordion view or open list view of the calculators
+		$("#trdToggle").click(function()
 		{
-			var text = $(this).val();
-			pChecklistText.value.push(text);
-			pChecklistText.valueDefault.push(text);
+			if ($("#trdEntry_0 .trdBuy").is(":visible"))
+			{
+				$(".trdAccordion").addClass("trdAccordionShut").removeClass("trdAccordionOpen");
+				$(".trdPreview").removeClass("cssHidden");
+			}
+			else
+			{
+				$(".trdAccordion").removeClass("trdAccordionShut").addClass("trdAccordionOpen");
+				$(".trdPreview").addClass("cssHidden");
+			}
 		});
 		
-		/*
-		 * Each text fields' value will become a delimited substring in one
-		 * single string to be stored in localStorage.
-		 */
-		var i;
-		if (localStorage[pChecklistText.key] === undefined)
+		// Bind button to re-download API data to refresh the calculators
+		$("#trdRefresh").click($.throttle(E.cREFRESH_LIMIT_MILLISECONDS, function()
 		{
-			// If localStorage value is empty, replace with original values in text field
-			localStorage[pChecklistText.key] = pChecklistText.value.join(I.cTextDelimiterChar);
+			E.updateAllTradingPrices();
+		}));
+		$("#trdMute").click(function()
+		{
+			D.resetSpeechQueue();
+		});
+		
+		// Finally, loop the refresh function
+		E.isTradingCalculatorsInitialized = true;
+		E.loopRefresh();
+	},
+	
+	/*
+	 * Calls the refresh calculator function on regular intervals.
+	 */
+	loopRefresh: function()
+	{
+		if (O.Options.bol_refreshPrices)
+		{
+			$("#trdRefresh").trigger("click");
+			E.RefreshTimeout = setTimeout(E.loopRefresh,
+				O.Options.int_secTradingRefresh * T.cMILLISECONDS_IN_SECOND);
 		}
 		else
 		{
-			var storedtextarray = localStorage[pChecklistText.key].split(I.cTextDelimiterChar);
-			// Load the stored text and account for missing entries
-			for (i = 0; i < pChecklistText.value.length; i++)
-			{
-				if (storedtextarray[i])
-				{
-					pChecklistText.value[i] = storedtextarray[i];
-				}
-				else
-				{
-					pChecklistText.value[i] = "";
-				}
-			}
-			localStorage[pChecklistText.key] = pChecklistText.value.join(I.cTextDelimiterChar);
-		}
-		
-		var updateStoredText = function()
-		{
-			// Read every text fields and rewrite the string of substrings again
-			pTextFields.each(function(pIndex)
-			{
-				pChecklistText.value[pIndex] = $(this).val().replace(I.cTextDelimiterRegex, "");
-			});
-			localStorage[pChecklistText.key] = pChecklistText.value.join(I.cTextDelimiterChar);
-		};
-		
-		// Bind text fields behavior
-		pTextFields.each(function(pIndex)
-		{
-			// Set number of characters allowed in the text field
-			$(this).attr("maxlength", pMaxLength);
-			$(this).val(pChecklistText.value[pIndex]); // Load initialized text
-			
-			$(this).change(function()
-			{
-				if (pFieldName)
-				{
-					I.write(pFieldName + " #" + (pIndex + 1) + " updated.");
-				}
-				updateStoredText();
-			});
-		});
-		
-		// Bind restore button
-		if (pRestoreButton)
-		{
-			pRestoreButton.click(function()
-			{
-				pTextFields.each(function(pIndex)
-				{
-					$(this).val(pChecklistText.valueDefault[pIndex]).trigger("change");
-				});
-			});
+			window.clearTimeout(E.RefreshTimeout);
 		}
 	}
 };
@@ -2397,6 +3078,16 @@ D = {
 			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "параграф", zh: "節"},
 		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama"},
 		s_Skill_Challenge: {de: "Fertigkeitspunkt", es: "Desafío de habilidad", fr: "Défi de compétence"},
+		s_checklist: {de: "prüfliste", es: "lista de comprobación", fr: "liste de contrôle",
+			cs: "kontrolní seznam", it: "elenco di controllo", pl: "lista kontrolna", pt: "lista de verificação", ru: "контрольный список", zh: "檢查清單"},
+		s_subscription: {de: "abonnement", es: "suscripción", fr: "abonnement",
+			cs: "předplatné", it: "sottoscrizione", pl: "abonament", pt: "assinatura", ru: "подписка", zh: "訂閱"},
+		s_alarm: {de: "alarm", es: "alarma", fr: "alarme",
+			cs: "alarmu", it: "allarme", pl: "alarmu", pt: "alarme", ru: "будильник", zh: "鬧鐘"},
+		s_mode: {de: "modus", es: "modo", fr: "mode",
+			cs: "režim", it: "modalità", pl: "tryb", pt: "modo", ru: "режим", zh: "方式"},
+		s_chat_link: {de: "chatlink", es: "vínculo chat", fr: "lien chat",
+			cs: "chat odkaz", it: "collegamento chat", pl: "czat łącze", pt: "link bate-papo", ru: "чат связь", zh: "連結聊天"},
 		
 		// Verbs
 		s_is: {de: "ist", es: "es", fr: "est",
@@ -2417,6 +3108,8 @@ D = {
 			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", zh: "活期"},
 		s_next: {de: "nächste", es: "siguiente", fr: "prochain",
 			cs: "příští", it: "seguente", pl: "następny", pt: "próximo", ru: "следующий", zh: "下一"},
+		s_off: {de: "aus", es: "desactivado", fr: "désactivé",
+			cs: "vypnuto", it: "disattivato", pl: "wyłączany", pt: "desativado", ru: "выключено", zh: "關"},
 		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit",
 			cs: "odebírané", it: "sottoscritti", pl: "subskrypcji", pt: "assinado", ru: "подписал", zh: "訂閱"},
 		s_then: {de: "dann", es: "luego", fr: "puis",
@@ -2444,7 +3137,7 @@ D = {
 		s_chests: {de: "schatztruhen", es: "cofres del tesoro", fr: "coffres au trésor",
 			cs: "truhly", it: "scrigni del tesoro", pl: "skrzynie", pt: "baús de tesouro", ru: "сундуки с сокровищами", zh: "寶箱"},
 		
-		// Trading Calculator
+		// Economy
 		s_name: {de: "namen", es: "nombre", fr: "nom",
 			cs: "název", it: "nome", pl: "nazwa", pt: "nome", ru: "имя", zh: "名"},
 		s_buy: {de: "kaufen", es: "comprar", fr: "acheter",
@@ -2462,7 +3155,17 @@ D = {
 		s_tax: {de: "steuer", es: "impuestos", fr: "impôt",
 			cs: "daň", it: "fiscale", pl: "podatek", pt: "fiscal", ru: "налог", zh: "稅"},
 		s_revenue: {de: "einnahmen", es: "ingresos", fr: "revenus",
-			cs: "příjmy", it: "entrate", pl: "dochody", pt: "receita", ru: "доходов", zh: "收入"}
+			cs: "příjmy", it: "entrate", pl: "dochody", pt: "receita", ru: "доходов", zh: "收入"},
+		s_margin: {de: "marge", es: "margen", fr: "marge",
+			cs: "marže", it: "margine", pl: "marża", pt: "margem", ru: "валовая", zh: "邊際"},
+		s_low: {de: "niedrigen", es: "bajo", fr: "bas",
+			cs: "nízký", it: "bassa", pl: "niski", pt: "baixa", ru: "низкая", zh: "低"},
+		s_high: {de: "hohen", es: "alta", fr: "haut",
+			cs: "vysoký", it: "alta", pl: "wysoki", pt: "alta", ru: "высокая", zh: "高"},
+		s_notify: {de: "benachrichtigen", es: "notificar", fr: "notifier",
+			cs: "oznámit", it: "notifica", pl: "powiadom", pt: "notificar", ru: "уведомить", zh: "通知"},
+		s_overwrite: {de: "überschreiben", es: "sobrescribir", fr: "remplacer",
+			cs: "přepsat", it: "sovrascrivi", pl: "zastąp", pt: "substituir", ru: "перезаписать", zh: "覆寫"}
 	},
 	
 	Element:
@@ -2478,18 +3181,7 @@ D = {
 		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance",
 			cs: "Pomoci", it: "Guida", pl: "Pomoc", pt: "Ajuda", ru: "Помощь", zh: "輔助"},
 		s_menuOptions: {de: "Optionen", es: "Opciónes", fr: "Options",
-			cs: "Možnosti", it: "Opzioni", pl: "Opcje", pt: "Opções", ru: "Параметры", zh: "選項"},
-		s_opt_bol_alertSubscribed: {
-			de: "<dfn>Alarm Modus:</dfn><br />☐ = Checkliste<br />☑ = Abonnement",
-			es: "<dfn>Modo de Alarma:</dfn><br />☐ = Lista de Verificación<br />☑ = Suscripción",
-			fr: "<dfn>Mode d'Alarme:</dfn><br />☐ = Check-list<br />☑ = Abonnement",
-			cs: "<dfn>Režim Alarmu:</dfn><br />☐ = Kontrolní Seznam<br />☑ = Předplatné",
-			it: "<dfn>Modalità di Allarme:</dfn><br />☐ = Elenco di Controllo<br />☑ = Sottoscrizione",
-			pl: "<dfn>Alarmu Tryb:</dfn><br />☐ = Lista Kontrolna<br />☑ = Abonament",
-			pt: "<dfn>Modo de Alarme:</dfn><br />☐ = Lista de Verificação<br />☑ = Assinatura",
-			ru: "<dfn>Будильник Режим:</dfn><br />☐ = Контрольный Список<br />☑ = Подписка",
-			zh: "<dfn>鬧鐘方式:</dfn><br />☐ = 清單<br />☑ = 訂閱"
-		}
+			cs: "Možnosti", it: "Opzioni", pl: "Opcje", pt: "Opções", ru: "Параметры", zh: "選項"}
 	},
 	
 	/*
@@ -2550,6 +3242,51 @@ D = {
 	},
 	
 	/*
+	 * Translates multiple space separated words.
+	 * @param string pString of words.
+	 * @param enum pCase to change capitalization.
+	 * @returns string translated.
+	 */
+	getString: function(pString, pCase)
+	{
+		if (pCase === undefined)
+		{
+			pCase = U.CaseEnum.Every;
+		}
+		
+		var str = pString.split(" ");
+		for (var i in str)
+		{
+			str[i] = D.getTranslation(str[i], D.Phrase);
+		}
+		return U.changeCase(str.join(" "), pCase);
+	},
+	
+	/*
+	 * Gets a word and modifier string in language-dependent order in specified case.
+	 * @param string pText a noun for example.
+	 * @param string pModifier an adjective for example.
+	 * @param enum pCase to change the phrase's capitalization.
+	 * @returns string modified word phrase.
+	 */
+	getModifiedWord: function(pText, pModifier, pCase)
+	{
+		var str = "";
+		if (pModifier)
+		{
+			var text = D.getPhrase(pText);
+			var modifier = D.getPhrase(pModifier);
+			str = D.isLanguageModifierFirst() ? (modifier + " " + text) : (text + " " + modifier);
+		}
+		else
+		{
+			str = D.getPhrase(pText);
+		}
+		
+		return U.changeCase(str, pCase);
+	},
+	
+	/*
 	 * Translates the header of a page.
 	 * @param enum pLayer to get header.
 	 */
@@ -2581,13 +3318,13 @@ D = {
 				$(this).attr("title", "<dfn>" + D.getElement($(this).attr("id")) + "</dfn>");
 				I.qTip.init($(this));
 			});
-			$("#opt_bol_alertSubscribed").each(function()
-			{
-				$(this).parent().attr("title", D.getElement($(this).attr("id")));
-				I.qTip.init($(this).parent());
-			});
 			D.translatePageHeader(I.PageEnum.Options);
 		}
+		
+		$("#optAlarmLegend").text(D.getModifiedWord("mode", "alarm", U.CaseEnum.Every));
+		$("#opt_int_setAlarm").after(" " + D.getSentence("off"));
+		$("#optAlarmChecklist").after(" " + D.getSentence("checklist"));
+		$("#optAlarmSubscription").after(" " + D.getSentence("subscription"));
 	},
 	
 	/*
@@ -2799,25 +3536,25 @@ D = {
 		ru: "Тройной Червь",
 		zh: "三蟲"
 	},{
-		en: "The Dragon's Reach II Q1",
-		de: "Im Bann des Drachen II Q1",
-		es: "El Alcance del Dragón II Q1",
-		fr: "L'ombre du Dragon II Q1"
+		en: "Dry Top Q1",
+		de: "Trockenkuppe Q1",
+		es: "Cima Seca Q1",
+		fr: "Col Aride Q1"
 	},{
-		en: "The Dragon's Reach II Q2",
-		de: "Im Bann des Drachen II Q2",
-		es: "El Alcance del Dragón II Q2",
-		fr: "L'ombre du Dragon II Q2"
+		en: "Dry Top Q2",
+		de: "Trockenkuppe Q2",
+		es: "Cima Seca Q2",
+		fr: "Col Aride Q2"
 	},{
-		en: "The Dragon's Reach II Q3",
-		de: "Im Bann des Drachen II Q3",
-		es: "El Alcance del Dragón II Q3",
-		fr: "L'ombre du Dragon II Q3"
+		en: "Dry Top Q3",
+		de: "Trockenkuppe Q3",
+		es: "Cima Seca Q3",
+		fr: "Col Aride Q3"
 	},{
-		en: "The Dragon's Reach II Q4",
-		de: "Im Bann des Drachen II Q4",
-		es: "El Alcance del Dragón II Q4",
-		fr: "L'ombre du Dragon II Q4"
+		en: "Dry Top Q4",
+		de: "Trockenkuppe Q4",
+		es: "Cima Seca Q4",
+		fr: "Col Aride Q4"
 	},{
 		en: "Fire Shaman",
 		de: "Feuerschamanen",
@@ -3062,6 +3799,13 @@ D = {
 			}
 		};
 		
+		// If no duration is given, then estimate speech length
+		if (pDuration === undefined)
+		{
+			var letterspersecond = 12;
+			pDuration = 1 + (Math.round(pString.length / letterspersecond));
+		}
+		
 		var durationms = pDuration * T.cMILLISECONDS_IN_SECOND;
 		if (D.speechWait === 0)
 		{
@@ -3079,11 +3823,46 @@ D = {
 			D.speechWait += durationms;
 			setTimeout(function()
 			{
-				doSpeak(pString);
-				D.speechWait -= durationms;
+				if (D.speechWait > 0)
+				{
+					doSpeak(pString);
+					D.speechWait -= durationms;
+				}
 			}, D.speechWait - durationms);
 		}
 	},
+	isSpeaking: function()
+	{
+		if (D.speechWait === 0)
+		{
+			return false;
+		}
+		return true;
+	},
+	stopSpeech: function()
+	{
+		document.getElementById("jsTTSFrame").src = "";
+		document.getElementById("jsTTSAudio").src = "";
+	},
+	
+	/*
+	 * Stops speech if the wait time is over the threshold.
+	 * @param int pSeconds threshold.
+	 */
+	resetSpeechQueue: function(pSeconds)
+	{
+		if (pSeconds === undefined)
+		{
+			pSeconds = 0;
+		}
+		
+		if (D.speechWait > (pSeconds * T.cMILLISECONDS_IN_SECOND))
+		{
+			D.speechWait = 0;
+			D.stopSpeech();
+		}
+	},
+	
 	
 	/*
 	 * Gets translation for given text if using Chrome (because Google TTS
@@ -3098,14 +3877,7 @@ D = {
 		{
 			if (pModifier)
 			{
-				if (D.isLanguageModifierFirst())
-				{
-					return D.getPhrase(pModifier) + " " + D.getPhrase(pText);
-				}
-				else
-				{
-					return D.getPhrase(pText) + " " + D.getPhrase(pModifier);
-				}
+				return D.getModifiedWord(pText, pModifier);
 			}
 			return D.getPhrase(pText);
 		}
@@ -4070,10 +4842,10 @@ C = {
 			 * Announce the next world boss and the time until it, only if it's
 			 * not past the timeframe, and the subscription option is off.
 			 */
-			if (O.Options.bol_enableSound && O.Options.bol_alertAtEnd && I.isProgramLoaded
+			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Checklist
+				&& O.Options.bol_alertAtEnd && I.isProgramLoaded
 				&& pChain.nexus === C.CurrentChainSD.nexus
-				&& pChain.series !== C.ChainSeriesEnum.Story
-				&& O.Options.bol_alertSubscribed === false)
+				&& pChain.series !== C.ChainSeriesEnum.Story)
 			{
 				var checked = ", " + D.getSpeech("checked");
 				var checkedsd = "";
@@ -4235,6 +5007,7 @@ M = {
 	currentRingSize: 256,
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
+	isMapInitialized: false,
 	isMouseOnHUD: false,
 	isMapAJAXDone: false,
 	isAPIRetrieved_MAPFLOOR: false,
@@ -4423,7 +5196,7 @@ M = {
 		/*
 		 * Go to the coordinates in the bar when user presses enter.
 		 */
-		$("#mapCoordinatesCopy").bind("enterKey", function()
+		$("#mapCoordinatesCopy").onEnterKey(function()
 		{
 			var coord = M.parseCoordinates($(this).val());
 			coord[0] = Math.floor(coord[0]);
@@ -4436,12 +5209,6 @@ M = {
 			{
 				M.goToView(coord, M.PinPersonal);
 			}
-		}).keyup(function(pEvent)
-		{
-			if(pEvent.keyCode === 13) // code for Enter key
-			{
-				$(this).trigger("enterKey");
-			}
 		});
 		
 		/*
@@ -4450,9 +5217,22 @@ M = {
 		$("#mapDisplayButton").click(function()
 		{
 			$("#panelRight").toggle();
-			// Inform Leaflet that the map pane was resized so it can load tiles properly
-			M.Map.invalidateSize();
+			M.refreshMap();
 		});
+		
+		// Finally
+		M.isMapInitialized = true;
+	},
+	
+	/*
+	 * Informs Leaflet that the map pane was resized so it can load tiles properly.
+	 */
+	refreshMap: function()
+	{
+		if (M.isMapInitialized)
+		{
+			M.Map.invalidateSize();
+		}
 	},
 	
 	/*
@@ -4958,24 +5738,6 @@ M = {
 	{
 		return M.parseCoordinates(pElement.attr("data-coord"));
 	},
-
-	/*
-	 * Converts a poi_id number from maps_floor.json to a valid chat link.
-	 * Code from http://virtus-gilde.de/gw2map
-	 */ 
-	getChatlinkFromPoiID: function(pPoiID)
-	{
-	   var chatcode = String.fromCharCode(4);
-
-		// Create unicode characters from the id
-	   for (var i = 0; i < 4; i++)
-	   {
-		   chatcode += String.fromCharCode((pPoiID >> (i * 8)) & 255);
-	   }
-
-	   // Return base64 string with chat code tags
-	   return "[&" + btoa(chatcode) + "]";
-	},
 	
 	/*
 	 * Binds map view event handlers to all map links (ins tag reserved) in the
@@ -5359,7 +6121,7 @@ P = {
 								iconSize: [16, 16], // Initial size corresponding to default zoom level
 								iconAnchor: [8, 8]
 							}),
-							link: M.getChatlinkFromPoiID(poi.poi_id)
+							link: U.getChatlinkFromPoiID(poi.poi_id)
 						}).addTo(M.Map);
 						// Initially hide all the icons
 						mappingentity._icon.style.display = "none";
@@ -7480,7 +8242,7 @@ K = {
 			K.updateWaypointsClipboard();
 			
 			// Alert subscribed chain
-			if (O.Options.bol_alertSubscribed === true && O.Options.bol_enableSound)
+			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription)
 			{
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedFirst);
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedSecond);
@@ -7646,8 +8408,7 @@ K = {
 		}
 		
 		// Alert current chain
-		if (O.Options.bol_alertAtEnd && O.Options.bol_alertSubscribed === false
-			&& O.Options.bol_enableSound)
+		if (O.Options.int_setAlarm === O.IntEnum.Alarm.Checklist && O.Options.bol_alertAtEnd)
 		{
 			var checked = ", " + D.getSpeech("checked");
 			var checkedcurrentsd = "";
@@ -8085,7 +8846,6 @@ I = {
 	contentCurrentLayer: "", // This is cContentPrefix + contentCurrent
 	isContentLoaded_Map: false,
 	isContentLoaded_Help: false,
-	isSectionLoadedMap_Personal: false,
 	sectionPrefix: "sectionCurrent_",
 	sectionCurrent_Map: "",
 	sectionCurrent_Help: "",
@@ -8113,7 +8873,7 @@ I = {
 	initializeFirst: function()
 	{
 		// Manually clear the TTS iframe to prevent old sound from playing
-		document.getElementById("jsTTSFrame").src = "";
+		D.stopSpeech();
 
 		// Detect iFrame embedding
 		if (window !== window.top)
@@ -8210,6 +8970,16 @@ I = {
 			I.selectText("#jsConsole");
 		});
 		U.convertExternalLink(".linkExternal");
+		
+		// Bind special popup elements that can be removed if user clicks anywhere not on it
+		$(document).mouseup(function(pEvent)
+		{
+			var elm = $(".jsRemovable");
+			if (!elm.is(pEvent.target) && elm.has(pEvent.target).length === 0)
+			{
+				elm.remove();
+			}
+		});
 		
 		// Translate and bind map zones list
 		$("#mapCompassButton").one("mouseenter", M.bindZoneList).click(function()
@@ -8784,12 +9554,11 @@ I = {
 			{
 				X.initializeDungeonChecklist();
 				X.initializeCustomChecklist();
-				I.isSectionLoadedMap_Personal = true;
 			});
 			// Create trading calculator
 			$("#headerMap_TP").one("click", function()
 			{
-				X.initializeTrading();
+				E.initializeTrading();
 			});
 			// Create notepad
 			$("#headerMap_Notepad").one("click", function()
@@ -8967,7 +9736,7 @@ I = {
 				$("#itemClockStar0").css({ top: "68px", left: "122px" });
 				$("#itemClockStar1").css({ top: "68px", left: "206px" });
 				$("#itemLanguage span").css({opacity: 0.7});
-				$("#itemLanguageChoices a").each(function()
+				$("#itemLanguagePopup a").each(function()
 				{
 					var link = $(this).attr("href");
 					$(this).attr("href", link + "&mode=Simple");

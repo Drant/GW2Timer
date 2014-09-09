@@ -5,7 +5,7 @@
 	<title>GW2Timer.com - Advanced GW2 Timer and Daily Map Guide</title>
 	<meta charset="utf-8" />
 	<meta name="robots" content="index, follow, noarchive" />
-	<meta name="description" content="Guild Wars 2 timers and clock for world boss meta events, with walkthroughs, daily achievements, jumping puzzles gathering map, and personal checklists." />
+	<meta name="description" content="Guild Wars 2 timers and clock overlay for world boss meta events, with daily achievements checklists, JP gathering map, and Trading Post tracker." />
 	<meta name="google-site-verification" content="hPcBd74DxlBzpTu6wO6DkIcOVFLu9SOMT-GQ1MI3fbg" />
 
 	<!-- Stylesheets -->
@@ -270,7 +270,7 @@
 			<time id="itemTimeServer" class="itemTimeDigital">16:00</time>
 			<div id="itemLanguage">
 				<span><img src="img/ui/language.png" alt="Language" /></span>
-				<ul id="itemLanguageChoices">
+				<ul id="itemLanguagePopup" class="cntPopup">
 					<li><a href="./?enu_Language=en">English</a></li>
 					<li><a href="./?enu_Language=de">Deutsch</a></li>
 					<li><a href="./?enu_Language=es">Español</a></li>
@@ -300,7 +300,7 @@
 		==================================================================== -->
 		<nav id="paneMenu" class="paneRight">
 			<div id="menuChains" class="menuButton" title="<dfn>Chains:</dfn> Timers, Events, Schedule"></div>
-			<div id="menuMap" class="menuButton" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, Checklists"></div>
+			<div id="menuMap" class="menuButton" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, TP, Checklists"></div>
 			<!--<div id="menuWvW" class="menuButton" title="<dfn>WvW:</dfn> Map, Tracer, Stats"></div>-->
 			<div id="menuHelp" class="menuButton" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"></div>
 			<div id="menuOptions" class="menuButton" title="<dfn>Options:</dfn> Display, Format, Alarm"></div>
@@ -311,13 +311,15 @@
 			<a id="jsTop" title="Scroll Top">&uarr;</a>
 			<a id="jsCenter" title="Map Center"></a>
 			<article id="layerChains"><!-- This layer will be populated by JS -->
-				<div id="optSound">
-					<label title="<dfn>Alarm Mode:</dfn><br />☐ = Announce the next world boss (checklist mode).<br />☑ = Announce bosses whose time you clicked (subscription mode). Speaker icon must be checked to hear sound.">
-						<input id="opt_bol_alertSubscribed" type="checkbox" />
-					</label>
-					<label title="<dfn>Alarm Toggle:</dfn><br />☐ = Sound Off<br />☑ = Sound On<br />Go to Options page &gt; Alarm section for more info.">
-						<input id="opt_bol_enableSound" type="checkbox" /><img src="img/ui/speaker.png" alt="Mute"/>&zwnj;
-					</label>
+				<div id="optAlarm">
+					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" src="img/ui/speaker.png" alt="Alarm"/>
+					<div id="itemAlarmPopup" class="cntComposition cntPopup">
+						<fieldset name="int_setAlarm"><legend id="optAlarmLegend">Alarm Mode</legend>
+							<label title="Turn off the alarm. Go to Options page, Alarm section for more info."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /></label>
+							<label title="Alert you when an unchecked chain starts. You can checkmark a chain by clicking its boss icon (left side of chain name)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /></label>
+							<label title="Alert you X minutes before a subscribed chain starts. You can subscribe to a chain by clicking its time (right side of chain name)."><input id="optAlarmSubscription" type="radio" name="int_setAlarm" /></label>
+						</fieldset>
+					</div>
 				</div>
 				<header>
 					<img src="img/ui/scheduled.png" alt="Scheduled Bosses" />
@@ -380,9 +382,6 @@
 					<label title="Show/Hide the map area on the left."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane.</span><br />
 					<br />
-					<h2>Tools</h2>
-					<label title="How many calculators to show? If you pick a number lower than the current, data from the higher numbered calculators will be erased! Refresh the website to see changes."><input id="opt_int_numTradingCalculators" type="number" min="1" max="96" step="1" /> Number of TP Calculators</label>
-					<br />
 					<h2>Alarm</h2>
 					<span>Voice announcement requires Chrome, Firefox, or IE9+. Multilingualism is only available for Chrome. Click the speaker icon on the chains page to toggle sound.</span>
 					<h3>Checklist Mode</h3>
@@ -394,6 +393,15 @@
 					<span>How many minutes before a subscribed chain starts should you be alerted? Enter 0 to disable an alarm. Checked off bosses are ignored.</span>
 					<label><input id="opt_int_alertSubscribedFirst" type="number" min="0" max="30" step="1" /> First Alarm</label>
 					<label><input id="opt_int_alertSubscribedSecond" type="number" min="0" max="30" step="1" /> Second Alarm</label>
+					<br />
+					<h2>Trading</h2>
+					<label title="Regularly get the current buy and sell prices. This option must be enabled for notification of desired price range to work."><input id="opt_bol_refreshPrices" type="checkbox" /> Auto-refresh prices and enable notification</label>
+					<label title="How many calculators to show? If you pick a number lower than the current, data from the higher numbered calculators will be erased! Reload page to see changes."><input id="opt_int_numTradingCalculators" type="number" min="1" max="250" step="1" /> Number of TP Calculators</label>
+					<label title="How many items to show in the TP search result?"><input id="opt_int_numTradingResults" type="number" min="1" max="50" step="1" /> Number of TP search results</label>
+					<label title="How many seconds before the program refreshes price data?"><input id="opt_int_secTradingRefresh" type="number" min="10" max="600" step="1" /> Seconds between price refreshes</label>
+					<h2>Tools</h2>
+					<label title="Reload page to see changes."><input id="opt_int_sizeNotepadFont" type="number" min="8" max="32" step="1" /> Notepad font size</label>
+					<label title="Reload page to see changes."><input id="opt_int_sizeNotepadHeight" type="number" min="180" max="1080" step="1" /> Notepad height (pixels)</label>
 					<br />
 					<h2>Daily</h2>
 					<label title="Automatically clear the boss checklist on the daily reset time."><input id="opt_bol_clearChainChecklistOnReset" type="checkbox" /> Clear boss checklist on server reset (Midnight UTC)</label>

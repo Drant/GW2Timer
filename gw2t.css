@@ -4,11 +4,12 @@
 	Measurements: minimum window size is 360x580, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.08.25 modified - 2014.04.18 created
+	Version: 2014.09.03 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
 	extracted using https://github.com/kytulendu/Gw2Browser
+	PNGs are compressed using http://www.smushit.com
 	Gradient generated with colorzilla.com/gradient-editor
 	Design influenced by http://gw2stuff.com by WintrySnowman
 
@@ -33,7 +34,17 @@
 
 /* Reset styles
 ----------------------------------------------------------------------------- */
-a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;outline:0;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,
+caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,
+figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,
+label,legend,li,mark,menu,nav,object,ol,p,pre,q,s,samp,section,small,span,strike,
+strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video
+{margin:0;padding:0;border:0;outline:0;font:inherit;vertical-align:baseline}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,
+section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,
+q{quotes:none}blockquote:after,blockquote:before,q:after,
+q:before{content:'';content:none}ins{text-decoration:none}
+del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 /* Structure (same order as browser view)
 body > windowMain
@@ -124,6 +135,7 @@ div#qTip {
 	max-width: 360px;
 	padding: 4px 6px 4px 6px;
 	border: 2px solid #111;
+	border-radius: 2px;
 	background: #22323d;
 	background: linear-gradient(to right, #001019 0%, #364852 100%);
 	text-align: left;
@@ -146,14 +158,14 @@ div#qTip dfn { /* Highlight color for important text in tooltip */
 
 /* Non-interactive */
 html, body,
-#listChainsTimetable .chnTitle h1,
+#listChainsTimetable .chnTitle h1, input[type="text"].trdOutput,
 .leaflet-container, .leaflet-popup-pane, .leaflet-control {
 	cursor: url("img/cursor/auto.cur"), auto;
 }
 
 /* Clickable */
 a, input, label, button,
-#mapDisplayButton, .menuButton,
+#mapDisplayButton, #mapCompassButton, .menuButton,
 .menuBeam img:hover,
 .jsTableOfContents ol li, .jsSectionDone,
 .chnCheck:hover, .chnDetailsLinks ins,
@@ -179,7 +191,7 @@ a, input, label, button,
 }
 
 /* Help */
-.jsHelpTooltip, .chnDetails ol li img, .trdEntry samp {
+.jsHelpTooltip, .chnDetails ol li img {
 	cursor: url("img/cursor/help.cur"), help;
 }
 
@@ -673,10 +685,10 @@ input#mapCoordinatesName {
 #itemLanguage:hover img {
 	opacity: 1;
 }
-#itemLanguageChoices {
+#itemLanguagePopup {
 	display: none;
 }
-#itemLanguageChoices a {
+#itemLanguagePopup a {
 	display: block;
 	padding-left: 8px;
 	padding-right: 8px;
@@ -685,25 +697,20 @@ input#mapCoordinatesName {
 	text-decoration: none;
 	color: #ffeebb;
 }
-#itemLanguageChoices a:hover {
+#itemLanguagePopup a:hover {
 	color: #ddff77;
 	background: #333;
 }
-#itemLanguageChoices a sub {
+#itemLanguagePopup a sub {
 	font-size: 10px;
 }
-#itemLanguage:hover #itemLanguageChoices { /* Popup when hovered over language button */
+#itemLanguage:hover #itemLanguagePopup { /* Popup when hovered over language button */
 	display: block;
 	width: 90px;
 	position: absolute;
 	left: -98px;
 	top: 0px;
 	padding: 4px 2px 4px 2px;
-	border: 2px solid #111;
-	box-shadow: 0px 0px 2px #555;
-	background: #222;
-	background: linear-gradient(to right, #111 0%, #333 100%);
-	opacity: 0.9;
 }
 
 #itemSocial {
@@ -874,6 +881,15 @@ header.jsSection sup {
 	text-shadow: 0px 0px 2px black;
 }
 
+.cntPopup {
+	border: 2px solid #111;
+	border-radius: 4px;
+	box-shadow: 0px 0px 2px #555;
+	background: #222;
+	background: linear-gradient(to right, #111 0%, #333 100%);
+	opacity: 0.9;
+}
+
 .cntComposition input[type="text"], .cntComposition textarea {
 	width: auto;
 	margin: 0;
@@ -893,6 +909,12 @@ header.jsSection sup {
 	padding: 4px;
 	margin-bottom: 16px;
 	border: 1px solid gray;
+}
+.cntComposition fieldset legend {
+	font-weight: bold;
+}
+.cntComposition fieldset label:hover {
+	background: #333;
 }
 
 .cntComposition label {
@@ -1099,29 +1121,38 @@ textarea.jsCopyCode {
 
 /* @@Chains layer
 ----------------------------------------------------------------------------- */
-#optSound {
+#optAlarm {
 	float: right;
-	padding: 7px 4px 6px 2px;
+	padding: 7px 4px 6px 0px;
 	opacity: 0.5;
 }
-#optSound:hover {
+#optAlarm:hover {
 	opacity: 1;
 }
-#optSound label {
-	padding-top: 1px;
-	padding-bottom: 4px;
-	border: 1px solid transparent;
-	border-radius: 4px;
+#optAlarm img {
+	vertical-align: middle;
 }
-#optSound label:hover {
-	border: 1px solid red;
-}
-#optSound img {
+#optAlarmSpeaker {
 	width: 24px; height: 24px;
-	vertical-align: middle;
 }
-#opt_bol_enableSound, #opt_bol_alertSubscribed {
-	vertical-align: middle;
+#optAlarmIcon {
+	width: 16px; height: 16px;
+}
+#itemAlarmPopup {
+	display: none;
+}
+#optAlarm:hover #itemAlarmPopup {
+	display: block;
+	right: 0;
+	position: absolute;
+	margin: 0;
+	padding: 6px;
+	z-index: 2; /* So the event names don't overlap the popup */
+}
+#itemAlarmPopup fieldset {
+	min-width: 120px;
+	margin: 0;
+	border: none;
 }
 
 #layerChains header {
@@ -1404,9 +1435,73 @@ dt.mapJPListNameHover {
 	font-weight: bold;
 }
 
-/* Personal checklist
+/* Trading calculator
 ----------------------------------------------------------------------------- */
-
+#trdToggle {
+	width: 128px;
+}
+#trdRefresh {
+	width: 96px;
+}
+#trdMute {
+	width: 64px;
+}
+.trdButton img {
+	width: 24px; height: 24px;
+	vertical-align: middle;
+}
+.trdResultsFocus {
+	display: inline-block;
+}
+.trdResultsContainer {
+	position: relative;
+}
+.trdResults {
+	position: absolute;
+	width: 270px;
+	max-height: 220px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 4px;
+}
+.trdResults ins {
+	display: block;
+}
+.trdResults ins img {
+	width: 16px; height: 16px;
+	margin-right: 8px;
+	vertical-align: middle;
+}
+.trdItem {
+	display: none;
+}
+.trdAccordionShut {
+	display: inline-block;
+}
+.trdAccordionShut:hover {
+	padding-top: 8px;
+	border-left: 1px solid red;
+	border-top: 1px solid red;
+	border-bottom: 1px solid red;
+	border-radius: 8px;
+}
+.trdAccordionShut .trdExpand,
+.trdAccordionShut button,
+.trdAccordionShut:hover + .trdPreview {
+	display: none;
+}
+.trdAccordionShut:hover .trdExpand, .trdAccordionOpen .trdExpand {
+	display: block;
+}
+.trdAccordionShut:hover input[type="text"].trdName, .trdAccordionOpen input[type="text"].trdName {
+	width: 204px;
+}
+.trdAccordionShut:hover button, .trdAccordionOpen button, .trdPreview,  .trdButtons {
+	display: inline-block;
+}
+.trdPreview input[type="text"].trdCurrentBuy, .trdPreview input[type="text"].trdCurrentSell {
+	width: 67px;
+}
 .trdEntry button {
 	width: 24px; height: 24px;
 }
@@ -1429,11 +1524,13 @@ dt.mapJPListNameHover {
 	font-size: 16px;
 	color: #888;
 }
-.trdEntry samp:hover {
-	color: #e4e0b3;
+.trdEntry img.trdIcon {
+	width: 24px; height: 24px;
+	vertical-align: middle;
+	border-radius: 4px;
 }
 input[type="text"].trdName {
-	width: 204px;
+	width: 100px;
 	text-align: center;
 	font-weight: bold;
 	color: #ffddcc;
@@ -1451,6 +1548,15 @@ input[type="text"].trdOutput {
 }
 input[type="text"].trdOutput:hover {
 	border: 1px dashed #555;
+	text-shadow:
+		1px 1px 0px #000,
+		-1px -1px 0px #000,
+		1px -1px 0px #000,
+		-1px 1px 0px #000,
+		1px 1px 0px #000;
+}
+.trdPreview input[type="text"].trdOutput:hover {
+	text-shadow: none;
 }
 input[type="text"].trdQuantity {
 	width: 64px;
@@ -1472,7 +1578,23 @@ input[type="text"].trdGain {
 input[type="text"].trdLoss {
 	color: #ff2200;
 }
+input[type="text"].trdLink {
+	color: #888;
+}
+input[type="text"].trdCurrentBuy, input[type="text"].trdNotifyBuyLow, input[type="text"].trdNotifyBuyHigh,
+input[type="text"].trdCurrentSell, input[type="text"].trdNotifySellLow, input[type="text"].trdNotifySellHigh {
+	width: 68px;
+}
+input[type="text"].trdCurrentBuy, input[type="text"].trdCurrentSell,
+input[type="text"].trdCurrentBuy:hover, input[type="text"].trdCurrentSell:hover{
+	border: 1px dotted #555;
+}
+input[type="text"].trdMatched {
+	border: 1px solid #ee55cc;
+}
 
+/* Personal checklist
+----------------------------------------------------------------------------- */
 #chlDungeon {
 	margin-top: 12px;
 	margin-left: 12px;
@@ -1560,7 +1682,7 @@ input[type="text"].trdLoss {
 	color: red;
 }
 
-#chlCustom label {
+#chlCustom label, .trdEntry label {
 	display: inline;
 	padding-top: 4px;
 	padding-right: 2px;
@@ -1570,11 +1692,11 @@ input[type="text"].trdLoss {
 	border-radius: 4px;
 }
 
-#chlCustom label:hover {
+#chlCustom label:hover, .trdEntry label:hover {
 	border: 1px solid red;
 }
 
-#chlCustom label.chlCheckboxChecked {
+#chlCustom label.chlCheckboxChecked, label.chlCheckboxChecked {
 	border: 1px solid #ddff77;
 }
 
@@ -1640,6 +1762,9 @@ code, .cssMonospace {
 	font-family: monospace;
 }
 
+.cssHidden {
+	display: none;
+}
 .cssRight {
 	float: right;
 }
@@ -1647,23 +1772,42 @@ code, .cssMonospace {
 	margin-left: 16px;
 }
 
-copper, silver, gold {
+copper {
+	color: #bb6622;
+}
+silver {
+	color: #aaaaaa;
+}
+gold {
+	color: #ddbb44;
+}
+
+coppercoin, silvercoin, goldcoin {
 	display: inline-block;
 	width: 16px; height: 16px;
 	vertical-align: bottom;
 }
-copper {
+coppercoin {
 	background: url("img/ui/coin_copper.png");
 	background-size: 16px 16px;
 }
-silver {
+silvercoin {
 	background: url("img/ui/coin_silver.png");
 	background-size: 16px 16px;
 }
-gold {
+goldcoin {
 	background: url("img/ui/coin_gold.png");
 	background-size: 16px 16px;
 }
+
+ins.rarity0, input[type="text"].rarity0 { color: #aaaaaa; /* junk gray */ }
+ins.rarity1, input[type="text"].rarity1 { color: #ffffff; /* basic white */ }
+ins.rarity2, input[type="text"].rarity2 { color: #5599ff; /* fine blue */ }
+ins.rarity3, input[type="text"].rarity3 { color: #33cc11; /* masterwork green */ }
+ins.rarity4, input[type="text"].rarity4 { color: #ffdd22; /* rare yellow */ }
+ins.rarity5, input[type="text"].rarity5 { color: #ffaa00; /* exotic orange */ }
+ins.rarity6, input[type="text"].rarity6 { color: #ff4488; /* ascended magenta */ }
+ins.rarity7, input[type="text"].rarity7 { color: #9933ff; /* legendary violet */ }
 
 /* =============================================================================
  *  @@Palette color derived from GW2 user interface.
