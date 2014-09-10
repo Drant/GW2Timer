@@ -23,7 +23,7 @@
 	<script type="text/javascript" src="plugins.js"></script>
 	<script type="text/javascript" src="zones.js"></script>
 	<script type="text/javascript" src="chains.js"></script>
-	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
+	<script type="text/javascript" src="gw2t.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 <!-- Google Analytics -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -396,9 +396,9 @@
 					<br />
 					<h2>Trading</h2>
 					<label title="Regularly get the current buy and sell prices. This option must be enabled for notification of desired price range to work."><input id="opt_bol_refreshPrices" type="checkbox" /> Auto-refresh prices and enable notification</label>
+					<label title="How many seconds before the program refreshes price data?"><input id="opt_int_secTradingRefresh" type="number" min="10" max="600" step="1" /> Seconds between price refreshes</label>
 					<label title="How many calculators to show? If you pick a number lower than the current, data from the higher numbered calculators will be erased! Reload page to see changes."><input id="opt_int_numTradingCalculators" type="number" min="1" max="250" step="1" /> Number of TP Calculators</label>
 					<label title="How many items to show in the TP search result?"><input id="opt_int_numTradingResults" type="number" min="1" max="50" step="1" /> Number of TP search results</label>
-					<label title="How many seconds before the program refreshes price data?"><input id="opt_int_secTradingRefresh" type="number" min="10" max="600" step="1" /> Seconds between price refreshes</label>
 					<h2>Tools</h2>
 					<label title="Reload page to see changes."><input id="opt_int_sizeNotepadFont" type="number" min="8" max="32" step="1" /> Notepad font size</label>
 					<label title="Reload page to see changes."><input id="opt_int_sizeNotepadHeight" type="number" min="180" max="1080" step="1" /> Notepad height (pixels)</label>
