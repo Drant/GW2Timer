@@ -2865,7 +2865,15 @@ E = {
 			$(entry + " .trdSearch").click(function()
 			{
 				var query = $(this).parents(".trdEntry").find(".trdItem").val();
-				U.openExternalURL(U.getTradingItemLink(query));
+				if (query.length === 0)
+				{
+					query = $(this).parents(".trdEntry").find(".trdName").val();
+					U.openExternalURL(U.getTradingSearchLink(query));
+				}
+				else
+				{
+					U.openExternalURL(U.getTradingItemLink(query));
+				}
 			});
 			
 			// Bind input textboxes calculate behavior
@@ -3390,6 +3398,19 @@ D = {
 		}
 		return true;
 	},
+	
+	/*
+	 * Tells if a language uses logograms instead of letters.
+	 * @returns true if logographic.
+	 */
+	isLanguageLogographic: function()
+	{
+		if (O.Options.enu_Language === O.OptionEnum.Language.Mandarin)
+		{
+			return true;
+		}
+		return false;
+	},
 		
 	// Must be in the same order as the chain nexuses
 	ChainTitle: [
@@ -3803,8 +3824,8 @@ D = {
 		// If no duration is given, then estimate speech length
 		if (pDuration === undefined)
 		{
-			var letterspersecond = 12;
-			pDuration = 1 + (Math.round(pString.length / letterspersecond));
+			var charspersecond = (D.isLanguageLogographic()) ? 4 : 12;
+			pDuration = 1 + (Math.round(pString.length / charspersecond));
 		}
 		
 		var durationms = pDuration * T.cMILLISECONDS_IN_SECOND;
