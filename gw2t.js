@@ -1157,6 +1157,16 @@ U = {
 	},
 	
 	/*
+	 * Strips to alphanumeric and allow spaces and some punctuation marks.
+	 * @param string pString to strip.
+	 * @returns string stripped.
+	 */
+	stripToSentence: function(pString)
+	{
+		return pString.replace(/[^\w\s\'\"\:\,]/gi, "");
+	},
+	
+	/*
 	 * Converts a string to be all lower case except the first letter which is capitalized.
 	 * @param string pString to convert.
 	 * @returns string converted.
@@ -1487,12 +1497,13 @@ U = {
 	
 	/*
 	 * Gets a URL to an item page from an item's ID.
-	 * @param string pString ID of the item.
+	 * @param string pID of the item.
+	 * @param string pName of the item.
 	 * @returns string item page link.
 	 */
-	getTradingItemLink: function(pString)
+	getTradingItemLink: function(pID, pName)
 	{
-		return "http://www.gw2spidy.com/item/" + escape(pString);
+		return "http://www.gw2spidy.com/item/" + escape(pID) + "#" + U.stripToSentence(pName);
 	},
 	
 	/*
@@ -2684,12 +2695,15 @@ E = {
 		{
 			previousbuy = E.parseMoneyString(pEntry.find(".trdCurrentBuy").first().val());
 			previoussell = E.parseMoneyString(pEntry.find(".trdCurrentSell").first().val());
+			// Prices in the API are sorted low to high
 			if (pData.buys !== undefined)
 			{
-				currentbuy = parseInt(pData.buys[0].unit_price);
+				// Get highest buy order
+				currentbuy = parseInt(pData.buys[pData.buys.length - 1].unit_price);
 			}
 			if (pData.sells !== undefined)
 			{
+				// Get lowest sell listing
 				currentsell = parseInt(pData.sells[0].unit_price);
 			}
 			buyelm.val(E.createMoneyString(currentbuy));
@@ -2864,15 +2878,15 @@ E = {
 			});
 			$(entry + " .trdSearch").click(function()
 			{
-				var query = $(this).parents(".trdEntry").find(".trdItem").val();
-				if (query.length === 0)
+				var id = $(this).parents(".trdEntry").find(".trdItem").val();
+				var query = $(this).parents(".trdEntry").find(".trdName").val();
+				if (id.length === 0)
 				{
-					query = $(this).parents(".trdEntry").find(".trdName").val();
 					U.openExternalURL(U.getTradingSearchLink(query));
 				}
 				else
 				{
-					U.openExternalURL(U.getTradingItemLink(query));
+					U.openExternalURL(U.getTradingItemLink(id, query));
 				}
 			});
 			
@@ -3007,7 +3021,7 @@ E = {
 		E.updateAllTradingDetails();
 		E.updateAllTradingPrices();
 		
-		// Bind button to switch between accordion view or open list view of the calculators
+		// Bind toggle button to switch between accordion view or open list view of the calculators
 		$("#trdToggle").click(function()
 		{
 			if ($("#trdEntry_0 .trdBuy").is(":visible"))
@@ -3022,7 +3036,7 @@ E = {
 			}
 		});
 		
-		// Bind button to re-download API data to refresh the calculators
+		// Bind refresh button to re-download API data to refresh the calculators
 		$("#trdRefresh").click($.throttle(E.cREFRESH_LIMIT_MILLISECONDS, function()
 		{
 			E.updateAllTradingPrices();
