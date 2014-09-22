@@ -828,6 +828,17 @@ O = {
 				$("#paneMap").hide();
 			}
 		},
+		bol_refreshPrices: function()
+		{
+			if (O.Options.bol_refreshPrices && E.isTradingCalculatorsInitialized)
+			{
+				E.loopRefresh();
+			}
+			else
+			{
+				E.cancelLoopRefresh();
+			}
+		},
 		bol_useSiteTag: function()
 		{
 			if (O.Options.bol_useSiteTag)
@@ -862,8 +873,8 @@ U = {
 		ItemListing: "https://api.guildwars2.com/v2/commerce/listings/",
 		ItemDetails: "https://api.guildwars2.com/v1/item_details.json?item_id=",
 		ItemRender: "https://render.guildwars2.com/file/",
-		GoldPrice: "http://api.guildwars2.com/v2/commerce/exchange/gems?quantity=100",
-		GemPrice: "http://api.guildwars2.com/v2/commerce/exchange/coin?quantity=10000",
+		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
+		GemPrice: "https://api.guildwars2.com/v2/commerce/exchange/coins?quantity=",
 		
 		ItemSearch: "http://www.gw2spidy.com/api/v0.9/json/item-search/",
 		ItemData: "http://www.gw2spidy.com/api/v0.9/json/item/"
@@ -1035,7 +1046,7 @@ U = {
 		if (page && U.isEnumWithin(page, I.PageEnum) === false)
 		{	
 			page = page.toLowerCase();
-			if (page === "navi")
+			if (page === "navi" || page === "overlay")
 			{
 				go(U.URL_META.Overlay);
 			}
@@ -1471,7 +1482,7 @@ U = {
 	},
 	getWikiSearchLink: function(pString)
 	{
-		pString = pString.replace(/ /g, "+"); // Replace spaces with underscores
+		pString = pString.replace(/ /g, "+"); // Replace spaces with plus sign
 		return "http://wiki.guildwars2.com/index.php?title=Special%3ASearch&search=" + escape(pString);
 	},
 	
@@ -1619,7 +1630,8 @@ X = {
 		NotifyBuyLow: { key: "str_txlNotifyBuyLow", value: new Array() },
 		NotifyBuyHigh: { key: "str_txlNotifyBuyHigh", value: new Array() },
 		NotifySellLow: { key: "str_txlNotifySellLow", value: new Array() },
-		NotifySellHigh: { key: "str_txlNotifySellHigh", value: new Array() }
+		NotifySellHigh: { key: "str_txlNotifySellHigh", value: new Array() },
+		ExchangeUnit: { key: "str_txlExchangeUnit", value: new Array() }
 	},
 	
 	/*
@@ -2239,9 +2251,9 @@ X = {
 		var updateCalculator = function()
 		{
 			var money = X.Checklists.Dungeon.money;
-			var gold = ~~(money / E.Money.COPPER_IN_GOLD);
-			var silver = ~~(money / E.Money.SILVER_IN_GOLD) % E.Money.COPPER_IN_SILVER;
-			var copper = money % E.Money.COPPER_IN_SILVER;
+			var gold = ~~(money / E.Exchange.COPPER_IN_GOLD);
+			var silver = ~~(money / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER;
+			var copper = money % E.Exchange.COPPER_IN_SILVER;
 			$("#chlDungeonCalculator_Gold").text(gold);
 			$("#chlDungeonCalculator_Silver").text(silver);
 			$("#chlDungeonCalculator_Copper").text(copper);
@@ -2421,11 +2433,16 @@ X = {
  * ========================================================================== */
 E = {
 	
-	Money:
+	Exchange:
 	{
 		COPPER_IN_SILVER: 100,
 		COPPER_IN_GOLD: 10000,
-		SILVER_IN_GOLD: 100
+		SILVER_IN_GOLD: 100,
+		
+		CENTS_IN_DOLLAR: 100,
+		
+		GEM_PER_DOLLAR: 0.80,
+		DOLLAR_PER_GEM: 1.25
 	},
 	Rarity:
 	{
@@ -2439,8 +2456,12 @@ E = {
 		Legendary: 7
 	},
 	cNUM_ITEM_RARITIES: 8,
-	cREFRESH_LIMIT_MILLISECONDS: 5000, // Time before user is allowed to call API again
-	cSEARCH_LIMIT_MILLISECONDS: 750, // Time before "as you type" search executes again
+	
+	// Timings in milliseconds
+	cREFRESH_LIMIT: 5000, // Time before user is allowed to call API again
+	cSEARCH_LIMIT: 750, // Time before "as you type" search executes again
+	cEXCHANGE_LIMIT: 250, // Time before "as you type" exchange executes again
+	
 	isTradingCalculatorsInitialized: false,
 	RefreshTimeout: {},
 	
@@ -2454,7 +2475,7 @@ E = {
 	 * @returns int the money in copper value for calculating.
 	 * @pre String does not contain negative numbers.
 	 */
-	parseMoneyString: function(pString)
+	parseCoinString: function(pString)
 	{
 		if (pString === undefined || pString === null)
 		{
@@ -2492,7 +2513,7 @@ E = {
 		if ( ! isFinite(silver)) { silver = 0; }
 		if ( ! isFinite(gold)) { gold = 0; }
 		
-		return copper + (silver * E.Money.COPPER_IN_SILVER) + (gold * E.Money.COPPER_IN_GOLD);
+		return parseInt(copper + (silver * E.Exchange.COPPER_IN_SILVER) + (gold * E.Exchange.COPPER_IN_GOLD));
 	},
 	parseQuantityString: function(pString)
 	{
@@ -2502,25 +2523,27 @@ E = {
 	},
 	
 	/*
-	 * Converts a money amount in copper to a period separated string.
-	 * @param int pAmount of money.
-	 * @returns string money for displaying.
+	 * Converts a coin amount in copper to a period separated string.
+	 * @param int pAmount of copper.
+	 * @returns string coin for displaying.
 	 */
-	createMoneyString: function(pAmount)
+	createCoinString: function(pAmount)
 	{
 		if (pAmount === undefined || isFinite(pAmount) === false)
 		{
 			return "0.00";
 		}
+		pAmount = parseInt(pAmount);
 		
-		var gold = Math.abs(~~(pAmount / E.Money.COPPER_IN_GOLD));
-		var silver = Math.abs(~~(pAmount / E.Money.SILVER_IN_GOLD) % E.Money.COPPER_IN_SILVER);
-		var copper = Math.abs(pAmount % E.Money.COPPER_IN_SILVER);
+		var gold = Math.abs(~~(pAmount / E.Exchange.COPPER_IN_GOLD));
+		var silver = Math.abs(~~(pAmount / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER);
+		var copper = Math.abs(pAmount % E.Exchange.COPPER_IN_SILVER);
 		var sign = (pAmount < 0) ? "−" : "";
 		
+		// Leading zero for units that are right side of the leftmost unit
 		if (gold > 0 && silver < T.cBASE_10)
 		{
-			silver = "00";
+			silver = "0" + silver;
 		}
 		if (copper < T.cBASE_10)
 		{
@@ -2536,6 +2559,76 @@ E = {
 			return sign + silver + "." + copper;
 		}
 		return sign + "0." + copper;
+	},
+	
+	/*
+	 * Parses a period separated dollars and cents string.
+	 * @param string pString to parse.
+	 * @returns int the money in cent value for calculating.
+	 * @pre String does not contain negative numbers.
+	 */
+	parseMoneyString: function(pString)
+	{
+		if (pString === undefined || pString === null)
+		{
+			return 0;
+		}
+		
+		var str = pString.split(".");
+		var len = str.length;
+		var cent = 0, dollar = 0;
+		
+		if (len === 0)
+		{
+			return 0;
+		}
+		if (len === 1)
+		{
+			dollar = parseInt(str[0]);
+		}
+		
+		if (len >= 2)
+		{
+			cent = parseInt(str[len-1]);
+			dollar = parseInt(str[len-2]);
+		}
+		if (len >= 2 && str[len-1].length === 1)
+		{
+			cent = cent * T.cBASE_10; // 0.1 = 10 cent
+		}
+		else if (len >= 2 && str[len-1].length >= 2)
+		{
+			cent = parseInt(cent.toString().substring(0, 2)); // Only accept first two digits of cent
+		}
+		
+		if ( ! isFinite(cent)) { cent = 0; }
+		if ( ! isFinite(dollar)) { dollar = 0; }
+		
+		return parseInt(cent + (dollar * E.Exchange.CENTS_IN_DOLLAR));
+	},
+	
+	/*
+	 * Converts a money amount in cents to dollars period separated cents string.
+	 * @param int pAmount of cents.
+	 * @returns string money for displaying.
+	 */
+	createMoneyString: function(pAmount)
+	{
+		if (pAmount === undefined || isFinite(pAmount) === false)
+		{
+			return "0.00";
+		}
+		pAmount = parseInt(pAmount);
+		
+		var dollar = Math.abs(~~(pAmount / E.Exchange.CENTS_IN_DOLLAR));
+		var cent = Math.abs(pAmount % E.Exchange.CENTS_IN_DOLLAR);
+		var sign = (pAmount < 0) ? "−" : "";
+		
+		if (cent < T.cBASE_10)
+		{
+			cent = "0" + cent;
+		}
+		return sign + dollar + "." + cent;
 	},
 	
 	/*
@@ -2580,6 +2673,31 @@ E = {
 	},
 	
 	/*
+	 * Animates the input box's value or the box itself depending change.
+	 * @param int pOldValue for comparison.
+	 * @param int pNewValue for comparison.
+	 * @param jqobject pInput to manipulate.
+	 */
+	animateValue: function(pInput, pOldValue, pNewValue)
+	{
+		if (pNewValue < pOldValue)
+		{
+			// Red if value went down
+			pInput.css({color: "#ff2200"}).animate({color: "#ffeebb"}, 5000);
+		}
+		else if (pNewValue > pOldValue )
+		{
+			// Green if value went up
+			pInput.css({color: "#44dd44"}).animate({color: "#ffeebb"}, 5000);
+		}
+		else
+		{
+			// Round the box if no change
+			pInput.css({"border-radius": 32}).animate({"border-radius": 4}, 1000);
+		}
+	},
+	
+	/*
 	 * Calculates the trading calculator's output textboxes using input textboxes' values.
 	 * @param jqobject pEntry trading calculator HTML parent.
 	 */
@@ -2592,8 +2710,8 @@ E = {
 		var cInvertedTax = 1 - cTotalTax;
 		
 		// Computable data
-		var buy = E.parseMoneyString(pEntry.find(".trdBuy").val());
-		var sell = E.parseMoneyString(pEntry.find(".trdSell").val());
+		var buy = E.parseCoinString(pEntry.find(".trdBuy").val());
+		var sell = E.parseCoinString(pEntry.find(".trdSell").val());
 		var quantity = E.parseQuantityString(pEntry.find(".trdQuantity").val());
 		
 		// Output elements
@@ -2611,27 +2729,28 @@ E = {
 		var taxamount = (sell * cSellTax) * quantity;
 		
 		// Do calculation and put them in outputs
-		cost.val("−" + E.createMoneyString(Math.round(
+		cost.val("−" + E.createCoinString(Math.round(
 			costamount
 		)));
-		tax.val("−" + E.createMoneyString(Math.round(
+		tax.val("−" + E.createCoinString(Math.round(
 			listamount
-			)) + " + −" + E.createMoneyString(Math.round(
+			)) + " + −" + E.createCoinString(Math.round(
 			taxamount
 		)));
-		breakpoint.val(E.createMoneyString(Math.round(
+		breakpoint.val(E.createCoinString(Math.round(
 			buy / cInvertedTax
 		)));
-		revenue.val(E.createMoneyString(Math.round(
+		revenue.val(E.createCoinString(Math.round(
 			revenueamount
 		)));
-		profit.val(E.createMoneyString(Math.round(
+		profit.val(E.createCoinString(Math.round(
 			profitamount
 		)));
 		margin.val(E.createPercentString(
 			(revenueamount / (costamount + listamount)) - 1, 2
 		));
 
+		// Color the output numbers depending on sign
 		$([profit, margin]).each(function()
 		{
 			var roundedprofit = Math.round(profitamount);
@@ -2676,8 +2795,6 @@ E = {
 			return;
 		}
 		
-		var animationspeed1 = 5000;
-		var animationspeed2 = 1000;
 		var previousbuy = 0, previoussell = 0;
 		var currentbuy = 0, currentsell = 0;
 		var buyelm = pEntry.find(".trdCurrentBuy");
@@ -2686,15 +2803,15 @@ E = {
 		var buyhighelm = pEntry.find(".trdNotifyBuyHigh");
 		var selllowelm = pEntry.find(".trdNotifySellLow");
 		var sellhighelm = pEntry.find(".trdNotifySellHigh");
-		var buylow = E.parseMoneyString(buylowelm.val());
-		var buyhigh = E.parseMoneyString(buyhighelm.val());
-		var selllow = E.parseMoneyString(selllowelm.val());
-		var sellhigh = E.parseMoneyString(sellhighelm.val());
+		var buylow = E.parseCoinString(buylowelm.val());
+		var buyhigh = E.parseCoinString(buyhighelm.val());
+		var selllow = E.parseCoinString(selllowelm.val());
+		var sellhigh = E.parseCoinString(sellhighelm.val());
 
 		$.getJSON(U.URL_API.ItemListing + id, function(pData)
 		{
-			previousbuy = E.parseMoneyString(pEntry.find(".trdCurrentBuy").first().val());
-			previoussell = E.parseMoneyString(pEntry.find(".trdCurrentSell").first().val());
+			previousbuy = E.parseCoinString(pEntry.find(".trdCurrentBuy").first().val());
+			previoussell = E.parseCoinString(pEntry.find(".trdCurrentSell").first().val());
 			// Prices in the API are sorted low to high
 			if (pData.buys !== undefined)
 			{
@@ -2706,8 +2823,8 @@ E = {
 				// Get lowest sell listing
 				currentsell = parseInt(pData.sells[0].unit_price);
 			}
-			buyelm.val(E.createMoneyString(currentbuy));
-			sellelm.val(E.createMoneyString(currentsell));
+			buyelm.val(E.createCoinString(currentbuy));
+			sellelm.val(E.createCoinString(currentsell));
 			
 			// Overwrite calculator buy and sell prices if opted
 			if (X.getChecklistItem(X.Checklists.TradingOverwrite, U.getSubintegerFromHTMLID(pEntry))
@@ -2719,18 +2836,13 @@ E = {
 		}).done(function()
 		{
 			// Animate prices that have changed
-			if (currentbuy < previousbuy) { buyelm.css({color: "#ff2200"}).animate({color: "#ffeebb"}, animationspeed1); }
-			else if (currentbuy > previousbuy ) { buyelm.css({color: "#44dd44"}).animate({color: "#ffeebb"}, animationspeed1); }
-			else { buyelm.css({"border-radius": 32}).animate({"border-radius": 4}, animationspeed2); }
-			
-			if (currentsell < previoussell) { sellelm.css({color: "#ff2200"}).animate({color: "#ffeebb"}, animationspeed1); }
-			else if (currentsell > previoussell) { sellelm.css({color: "#44dd44"}).animate({color: "#ffeebb"}, animationspeed1); }
-			else { sellelm.css({"border-radius": 32}).animate({"border-radius": 4}, animationspeed2); }
+			E.animateValue(buyelm, previousbuy, currentbuy);
+			E.animateValue(sellelm, previoussell, currentsell);
 			
 			// Notify if tracked price is within range
 			if (X.isChecked(X.Checklists.TradingNotify, pEntry))
 			{
-				if (currentbuy <= buylow && buylow !== 0)
+				if (currentbuy <= buylow && buylow !== 0 && currentbuy !== 0)
 				{
 					buylowelm.addClass("trdMatched");
 					D.speak(D.getString("buy low") + " " + name);
@@ -2740,7 +2852,7 @@ E = {
 					buylowelm.removeClass("trdMatched");
 				}
 
-				if (currentbuy >= buyhigh && buyhigh !== 0)
+				if (currentbuy >= buyhigh && buyhigh !== 0 && currentbuy !== 0)
 				{
 					buyhighelm.addClass("trdMatched");
 					D.speak(D.getString("buy high") + " " + name);
@@ -2750,17 +2862,17 @@ E = {
 					buyhighelm.removeClass("trdMatched");
 				}
 
-				if (currentsell <= selllow && selllow !== 0)
+				if (currentsell <= selllow && selllow !== 0 && currentsell !== 0)
 				{
 					selllowelm.addClass("trdMatched");
-					D.speak(D.getString("sell high") + " " + name);
+					D.speak(D.getString("sell low") + " " + name);
 				}
 				else
 				{
 					selllowelm.removeClass("trdMatched");
 				}
 
-				if (currentsell >= sellhigh && sellhigh !== 0)
+				if (currentsell >= sellhigh && sellhigh !== 0 && currentsell !== 0)
 				{
 					sellhighelm.addClass("trdMatched");
 					D.speak(D.getString("sell high") + " " + name);
@@ -2900,7 +3012,7 @@ E = {
 			});
 			
 			// Bind name search box behavior
-			$(name).on("input", $.throttle(E.cSEARCH_LIMIT_MILLISECONDS, function()
+			$(name).on("input", $.throttle(E.cSEARCH_LIMIT, function()
 			{
 				var query = $(this).val();
 				var entry = $(this).parents(".trdEntry");
@@ -2929,8 +3041,8 @@ E = {
 						{
 							result = pData.results[thisi];
 							resultline =  $("<ins class='rarity" + result.rarity + "' data-id='" + result.data_id + "' "
-								+ "data-buy='" + E.createMoneyString(result.max_offer_unit_price) + "' "
-								+ "data-sell='" + E.createMoneyString(result.min_sale_unit_price) + "'>"
+								+ "data-buy='" + E.createCoinString(result.max_offer_unit_price) + "' "
+								+ "data-sell='" + E.createCoinString(result.min_sale_unit_price) + "'>"
 								+ "<img src='" + result.img + "'>"
 								+ U.wrapSubstringHTML(result.name, query, "u") + "</ins>").appendTo(results);
 							// Bind click a result to memorize the item's ID and name
@@ -2984,8 +3096,8 @@ E = {
 			$(entry + " .trd" + pBoxName).attr("title", "<dfn>" + D.getString(pWord) + "</dfn>" + pInfo);
 		};
 		tip("Name", "name");
-		tip("Buy", "buy");
-		tip("Sell", "sell");
+		tip("Buy", "your buy");
+		tip("Sell", "your sell");
 		tip("Quantity", "quantity");
 		tip("Cost", "cost", "Money needed to buy the items.");
 		tip("Break", "breakpoint" , "Sell higher than this to make a profit.");
@@ -2993,7 +3105,7 @@ E = {
 		tip("Profit", "profit", "Gains after losses from buying and tax.");
 		tip("Margin", "margin", "Revenue over cost and fee.");
 		tip("Revenue", "revenue", "What you will receive at the trader.");
-		tip("Link", "chat link", "Paste this in game chat to see the item.");
+		tip("Link", "chatlink", "Paste this in game chat to see the item.");
 		tip("NotifyBuyLow", "buy low", "Notify you if current BUY price is LOWER than this.");
 		tip("NotifyBuyHigh", "buy high", "Notify you if current BUY price is HIGHER than this.");
 		tip("NotifySellLow", "sell low", "Notify you if current SELL price is LOWER than this.");
@@ -3037,14 +3149,205 @@ E = {
 		});
 		
 		// Bind refresh button to re-download API data to refresh the calculators
-		$("#trdRefresh").click($.throttle(E.cREFRESH_LIMIT_MILLISECONDS, function()
+		$("#trdRefresh").click($.throttle(E.cREFRESH_LIMIT, function()
 		{
-			E.updateAllTradingPrices();
+			E.loopRefresh();
 		}));
 		$("#trdMute").click(function()
 		{
 			D.resetSpeechQueue();
 		});
+	},
+	
+	/*
+	 * Updates the respective exchanges using the input from top row.
+	 */
+	updateCoinTo: function(pWantAnimate)
+	{
+		var previousgem = 0, currentgem = 0;
+		var previousmoney = 0, currentmoney = 0;
+		var cointo = $("#trdExchange .trdCoinTo");
+		var cointogem = $("#trdExchange .trdCoinToGem");
+		var cointomoney = $("#trdExchange .trdCoinToMoney");
+		
+		var cointoamount = E.parseCoinString(cointo.val());
+		if (cointoamount === 0)
+		{
+			cointogem.val("");
+			cointomoney.val("");
+		}
+		else
+		{
+			$.getJSON(U.URL_API.GemPrice + cointoamount, function(pData)
+			{
+				previousgem = parseInt(cointogem.val());
+				previousmoney = E.parseMoneyString(cointomoney.val());
+				
+				if (pData.quantity !== undefined)
+				{
+					currentgem = parseInt(pData.quantity);
+					currentmoney = parseInt(currentgem * E.Exchange.DOLLAR_PER_GEM);
+					cointogem.val(currentgem);
+					cointomoney.val(E.createMoneyString(currentmoney));
+				}
+			}).always(function()
+			{
+				if (pWantAnimate === undefined || pWantAnimate)
+				{
+					E.animateValue(cointogem, previousgem, currentgem);
+					E.animateValue(cointomoney, previousmoney, currentmoney);
+				}
+				
+				if (currentgem === 0)
+				{
+					// Got here if value is too low be exchanged
+					cointogem.val("0");
+					cointomoney.val("0");
+				}
+			});
+		}
+	},
+	updateGemTo: function(pWantAnimate)
+	{
+		var previouscoin = 0, currentcoin = 0;
+		var previousmoney = 0, currentmoney = 0;
+		var gemto = $("#trdExchange .trdGemTo");
+		var gemtocoin = $("#trdExchange .trdGemToCoin");
+		var gemtomoney = $("#trdExchange .trdGemToMoney");
+		
+		var gemtoamount = gemto.val();
+		if (gemtoamount === 0)
+		{
+			gemtocoin.val("");
+			gemtomoney.val("");
+		}
+		else
+		{
+			$.getJSON(U.URL_API.CoinPrice + gemtoamount, function(pData)
+			{
+				previouscoin = E.parseCoinString(gemtocoin.val());
+				previousmoney = E.parseMoneyString(gemtomoney.val());
+				
+				if (pData.quantity !== undefined)
+				{
+					currentcoin = parseInt(pData.quantity);
+					currentmoney = parseInt(gemtoamount * E.Exchange.DOLLAR_PER_GEM);
+					gemtocoin.val(E.createCoinString(currentcoin));
+					gemtomoney.val(E.createMoneyString(currentmoney));
+				}
+			}).always(function()
+			{
+				if (pWantAnimate === undefined || pWantAnimate)
+				{
+					E.animateValue(gemtocoin, previouscoin, currentcoin);
+					E.animateValue(gemtomoney, previousmoney, currentmoney);
+				}
+				
+				if (currentcoin === 0)
+				{
+					// Got here if value is too low be exchanged
+					gemtocoin.val("0");
+					gemtomoney.val("0");
+				}
+			});
+		}
+	},
+	updateMoneyTo: function(pWantAnimate)
+	{
+		var previousgem = 0, currentgem = 0;
+		var previouscoin = 0, currentcoin = 0;
+		var moneyto = $("#trdExchange .trdMoneyTo");
+		var moneytogem = $("#trdExchange .trdMoneyToGem");
+		var moneytocoin = $("#trdExchange .trdMoneyToCoin");
+		
+		var moneytoamount = E.parseMoneyString(moneyto.val());
+		var gems = moneytoamount * E.Exchange.GEM_PER_DOLLAR;
+		if (moneytoamount === 0)
+		{
+			moneytogem.val("");
+			moneytocoin.val("");
+		}
+		else
+		{
+			$.getJSON(U.URL_API.CoinPrice + gems, function(pData)
+			{
+				previousgem = parseInt(moneytogem.val());
+				previouscoin = E.parseCoinString(moneytocoin.val());
+				
+				if (pData.quantity !== undefined)
+				{
+					currentgem = gems;
+					currentcoin = parseInt(pData.quantity);
+					moneytogem.val(gems);
+					moneytocoin.val(E.createCoinString(currentcoin));
+				}
+			}).always(function()
+			{
+				if (pWantAnimate === undefined || pWantAnimate)
+				{
+					E.animateValue(moneytogem, previousgem, currentgem);
+					E.animateValue(moneytocoin, previouscoin, currentcoin);
+				}
+				
+				if (currentcoin === 0)
+				{
+					// Got here if value is too low be exchanged
+					moneytogem.val("0");
+					moneytocoin.val("0");
+				}
+			});
+		}
+	},
+	updateAllExchange: function()
+	{
+		E.updateCoinTo();
+		E.updateGemTo();
+		E.updateMoneyTo();
+	},
+	
+	initializeExchange: function()
+	{
+		var cointo = $("#trdExchange .trdCoinTo");
+		var gemto = $("#trdExchange .trdGemTo");
+		var moneyto = $("#trdExchange .trdMoneyTo");
+		
+		// Initial values as an example
+		cointo.val("200..");
+		gemto.val("4000");
+		moneyto.val("50");
+		
+		// Bind behavior
+		$("#trdExchange input").click(function()
+		{
+			$(this).select();
+		});
+		
+		cointo.on("input", $.throttle(E.cEXCHANGE_LIMIT, function()
+		{
+			E.updateCoinTo(false);
+		})).onEnterKey($.throttle(E.cEXCHANGE_LIMIT, function()
+		{
+			E.updateCoinTo();
+		}));
+		
+		gemto.on("input", $.throttle(E.cEXCHANGE_LIMIT, function()
+		{
+			E.updateGemTo(false);
+		})).onEnterKey($.throttle(E.cEXCHANGE_LIMIT, function()
+		{
+			E.updateGemTo();
+		}));
+		
+		moneyto.on("input", $.throttle(E.cEXCHANGE_LIMIT, function()
+		{
+			E.updateMoneyTo(false);
+		})).onEnterKey($.throttle(E.cEXCHANGE_LIMIT, function()
+		{
+			E.updateMoneyTo();
+		}));
+		
+		// Initialize storage behavior of inputs
+		X.initializeTextlist(X.Textlists.ExchangeUnit, $([cointo, gemto, moneyto]), null, 16);
 		
 		// Finally, loop the refresh function
 		E.isTradingCalculatorsInitialized = true;
@@ -3052,19 +3355,30 @@ E = {
 	},
 	
 	/*
+	 * Cancels current loop refresh and progress bar.
+	 */
+	cancelLoopRefresh: function()
+	{
+		window.clearTimeout(E.RefreshTimeout);
+		$(".trdProgress").stop().css({width: "100%"});
+	},
+	
+	/*
 	 * Calls the refresh calculator function on regular intervals.
 	 */
 	loopRefresh: function()
 	{
+		E.cancelLoopRefresh();
+		
 		if (O.Options.bol_refreshPrices)
 		{
-			$("#trdRefresh").trigger("click");
-			E.RefreshTimeout = setTimeout(E.loopRefresh,
-				O.Options.int_secTradingRefresh * T.cMILLISECONDS_IN_SECOND);
-		}
-		else
-		{
-			window.clearTimeout(E.RefreshTimeout);
+			E.updateAllTradingPrices();
+			E.updateAllExchange();
+			var wait = O.Options.int_secTradingRefresh * T.cMILLISECONDS_IN_SECOND;
+			// Animate progress bar with same duration as refresh wait time
+			$(".trdProgress").animate({width: "0%"}, wait);
+			// Repeat this function
+			E.RefreshTimeout = setTimeout(E.loopRefresh, wait);
 		}
 	}
 };
@@ -3109,7 +3423,7 @@ D = {
 			cs: "alarmu", it: "allarme", pl: "alarmu", pt: "alarme", ru: "будильник", zh: "鬧鐘"},
 		s_mode: {de: "modus", es: "modo", fr: "mode",
 			cs: "režim", it: "modalità", pl: "tryb", pt: "modo", ru: "режим", zh: "方式"},
-		s_chat_link: {de: "chatlink", es: "vínculo chat", fr: "lien chat",
+		s_chatlink: {de: "chatlink", es: "vínculo chat", fr: "lien chat",
 			cs: "chat odkaz", it: "collegamento chat", pl: "czat łącze", pt: "link bate-papo", ru: "чат связь", zh: "連結聊天"},
 		
 		// Verbs
@@ -3161,6 +3475,8 @@ D = {
 			cs: "truhly", it: "scrigni del tesoro", pl: "skrzynie", pt: "baús de tesouro", ru: "сундуки с сокровищами", zh: "寶箱"},
 		
 		// Economy
+		s_your: {de: "dein", es: "tu", fr: "ton",
+			cs: "tvůj", it: "tuo", pl: "twój", pt: "teu", ru: "твой", zh: "你的"},
 		s_name: {de: "namen", es: "nombre", fr: "nom",
 			cs: "název", it: "nome", pl: "nazwa", pt: "nome", ru: "имя", zh: "名"},
 		s_buy: {de: "kaufen", es: "comprar", fr: "acheter",
@@ -3592,50 +3908,6 @@ D = {
 		es: "Cima Seca Q4",
 		fr: "Col Aride Q4"
 	},{
-		en: "Fire Shaman",
-		de: "Feuerschamanen",
-		es: "Chamán de Fuego",
-		fr: "Chamane de Feu",
-		cs: "Požární Šaman",
-		it: "Sciamano Fuoco",
-		pl: "Ognia Szaman",
-		pt: "Xamã Fogo",
-		ru: "Oгня Шаман",
-		zh: "火薩滿"
-	},{
-		en: "Foulbear Chieftain",
-		de: "Faulbär-Häuptling",
-		es: "Cabecilla de Osoinmundo",
-		fr: "Chef Oursefol",
-		cs: "Foulbear Náčelník",
-		it: "Capo Foulbear",
-		pl: "Faulwódz Niedźwiedź",
-		pt: "Chefe Foulbear",
-		ru: "Фолмедведь Вождь",
-		zh: "臭熊頭目"
-	},{
-		en: "Dredge Commissar",
-		de: "Schaufler-Kommissar",
-		es: "Comisario Draga",
-		fr: "Kommissar Draguerre",
-		cs: "Vybagrovat Komisař",
-		it: "Commissario Dragare",
-		pl: "Pogłębiarka Komisarza",
-		pt: "Comissário Dragar",
-		ru: "Драги Комиссар",
-		zh: "疏浚政委"
-	},{
-		en: "Eye of Zhaitan",
-		de: "Auge des Zhaitan",
-		es: "Ojo de Zhaitan",
-		fr: "Œil de Zhaïtan",
-		cs: "Oko Zhaitan",
-		it: "Occhio Zhaitan",
-		pl: "Oko Zhaitan",
-		pt: "Olho de Zhaitan",
-		ru: "Глаз Жаитан",
-		zh: "眼的 Zhaitan"
-	},{
 		en: "Lyssa",
 		de: "Verderbte Hohepriesterin der Lyssa",
 		es: "Suma Sacerdotisa Corrupta de Lyssa",
@@ -3734,6 +4006,72 @@ D = {
 		pt: "Invasão do Sul de Orr",
 		ru: "Южный Вторжение Орр",
 		zh: "南部入侵 Orr"
+	},{
+		en: "Fire Shaman",
+		de: "Feuerschamanen",
+		es: "Chamán de Fuego",
+		fr: "Chamane de Feu",
+		cs: "Požární Šaman",
+		it: "Sciamano Fuoco",
+		pl: "Ognia Szaman",
+		pt: "Xamã Fogo",
+		ru: "Oгня Шаман",
+		zh: "火薩滿"
+	},{
+		en: "Rhendak the Crazed",
+		de: "Rhendak den Verrückten",
+		es: "Rhendak el Perturbado",
+		fr: "Rhendak le Fou",
+		cs: "Poblázněný Rhendak",
+		it: "Rhendak il Folle",
+		pl: "Szalony Rhendak",
+		pt: "Rhendak o Enlouquecido",
+		ru: "Сумасшедший Рхендак",
+		zh: "瘋狂 Rhendak"
+	},{
+		en: "Foulbear Chieftain",
+		de: "Faulbär-Häuptling",
+		es: "Cabecilla de Osoinmundo",
+		fr: "Chef Oursefol",
+		cs: "Foulbear Náčelník",
+		it: "Capo Foulbear",
+		pl: "Faulwódz Niedźwiedź",
+		pt: "Chefe Foulbear",
+		ru: "Фолмедведь Вождь",
+		zh: "臭熊頭目"
+	},{
+		en: "Dredge Commissar",
+		de: "Schaufler-Kommissar",
+		es: "Comisario Draga",
+		fr: "Kommissar Draguerre",
+		cs: "Vybagrovat Komisař",
+		it: "Commissario Dragare",
+		pl: "Pogłębiarka Komisarza",
+		pt: "Comissário Dragar",
+		ru: "Драги Комиссар",
+		zh: "疏浚政委"
+	},{
+		en: "Nebo Terrace",
+		de: "Nebo-Terrasse",
+		es: "Terraza de Nebo",
+		fr: "Terrasse de Nebo",
+		cs: "Nebo Terasa",
+		it: "Terrazzo di Nebo",
+		pl: "Nebo Taras",
+		pt: "Esplanada de Nebo",
+		ru: "Нево Терраса",
+		zh: "階地 Nebo"
+	},{
+		en: "Eye of Zhaitan",
+		de: "Auge des Zhaitan",
+		es: "Ojo de Zhaitan",
+		fr: "Œil de Zhaïtan",
+		cs: "Oko Zhaitan",
+		it: "Occhio Zhaitan",
+		pl: "Oko Zhaitan",
+		pt: "Olho de Zhaitan",
+		ru: "Глаз Жаитан",
+		zh: "眼的 Zhaitan"
 	}
 	],
 	
@@ -9595,6 +9933,7 @@ I = {
 			$("#headerMap_TP").one("click", function()
 			{
 				E.initializeTrading();
+				E.initializeExchange();
 			});
 			// Create notepad
 			$("#headerMap_Notepad").one("click", function()

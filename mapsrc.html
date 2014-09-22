@@ -46,6 +46,7 @@ var GW2T_RESOURCE_DATA = {
 	},
 	Gold: {
 		nodes: [
+		[16534, 9911], // harathi
 		[15933, 16436], // bloodtide
 		[17916, 17952], // lornar
 		[20062, 17212], // dredgehaunt
@@ -551,7 +552,7 @@ var GW2T_COLLECTIBLE_DATA = {
 </header>
 <section>
 <p>These are some places to complete dailies quickly; the top of each list should be the fastest. Most of the places are based on the <a href="http://wiki.guildwars2.com/wiki/Daily">wiki</a>; if you know a good spot, please <a href="http://forum.renaka.com/topic/5476238/">share it</a>. Click a daily icon on the map to zoom in/out.</p>
-<button id="mapToggle_Daily" class="cssRight">Toggle Icons</button>
+<button id="mapToggle_Daily" class="cssRight"><img src="img/map/display.png" alt="Toggle" /></button>
 
 <div class="mapDailyLists mapLinks">
 <h2><img src="img/daily/killer.png" alt="Killer" /> Killer</h2>
@@ -678,7 +679,7 @@ You may need to complete the heart before you can purchase.
 	>Resource Nodes</var>
 </header>
 <section>
-<button id="mapToggle_Resource" class="btnToggle">Toggle All</button>
+<button id="mapToggle_Resource" class="btnToggle"><img src="img/map/display.png" alt="Toggle" /></button>
 <div class="mapResourceList">
 	<div id="mapResource_Metal"></div>
 	<div id="mapResource_Plant"></div>
@@ -713,7 +714,7 @@ You may need to complete the heart before you can purchase.
 </header>
 <section>
 <p>The JP map icons point to the entrance. Click on a checkbox here or a JP icon on the map to check off a JP. Double click a JP icon to zoom in/out.<br /><strong>Links:</strong> [Y]outube [W]iki.</p>
-<button id="mapToggle_JP" class="cssRight">Toggle Icons</button>
+<button id="mapJPUncheck" class="cssRight">Uncheck All</button>
 
 <div class="mapLinks">
 <h2>Easy <span class="mapLegendLine" style="border-bottom: 2px solid lime"></span></h2>
@@ -770,7 +771,7 @@ A marathon of intricate jumps.
 	<dt id="mapJP_6" data-coord="[12780, 19377]" data-img="dxTDLqJ">Skipping Stones</dt><dd>Southsun stones gushed up by geysers</dd>
 	<dt id="mapJP_10" data-coord="[13610, 25044]" data-img="kDX7ZEq">Scavenger's Chasm</dt><dd>Malchor's convoluted orrian ruins cave collecting 12 orbs</dd>
 </dl>
-<button id="mapJPUncheck" class="cssRight">Uncheck All</button>
+<button id="mapToggle_JP" class="cssRight"><img src="img/map/display.png" alt="Toggle" /></button>
 <br />
 </div>
 </section>
@@ -791,7 +792,7 @@ A marathon of intricate jumps.
 	>Collectible Items</var>
 </header>
 <section>
-<button id="mapToggle_Collectible" class="btnToggle">Toggle All</button>
+<button id="mapToggle_Collectible" class="btnToggle"><img src="img/map/display.png" alt="Toggle" /></button>
 <div id="mapCollectibleList"></div>
 <p style="text-align: right;"><strong>Links:</strong> [Y]outube [W]iki [C]redit</p>
 <p>Many achievements require you to go around the world to collect or interact with scattered or hidden landmarks or items. These are some of them, including the current Living Story ones if available. When in game, hold the Ctrl key to see the item's name appear.</p>
@@ -818,7 +819,8 @@ A marathon of intricate jumps.
 <div>
 	<br /><p>Each of the row below is a calculator, hover over them to see input (black shaded) and output (gray shaded) boxes. The <strong>topmost calculator contains hoverable tooltips</strong> about the boxes' function.</p>
 	<p>To enter an item into a calculator, click the longest input box, which is the name box, and type your search. A list of results will appear, click on one to accept that item, or continue typing to refine your search. The name box also acts as a search bar--press Enter to go to the charts site, and Esc to clear search results.</p>
-	<p>Once you have chosen an item, the current buy and sell prices will animate in color. You can either <b>use the calculator</b> by putting in your own buy and sell prices in the boxes below the name box, or <b>get notifications</b> if the item price is lower or higher than the current prices by typing your price next them. The prices have a specific syntax, use periods (.) to separate units:</p>
+	<p>Once you have chosen an item, the current buy and sell prices will animate in color. You can either <b>use the calculator</b> by putting in your own buy and sell prices in the boxes below the name box, or <b>get notifications</b> if the item price is lower or higher than the current prices by typing your price next them.</p>
+	<p>The prices have a specific syntax, use periods (.) to separate units:</p>
 	<div class="cssIndent">
 	0.1 = 10<coppercoin /><br />
 	.01 = 1<coppercoin /><br />
@@ -833,11 +835,40 @@ A marathon of intricate jumps.
 	All input data are saved automatically. To show more calculators or search results, go to Options page, Trading section.
 </div>
 	<br />
+	<div class="trdProgressBar"><div class="trdProgress"></div></div>
 	<button id="trdToggle" class="trdButton" title="Toggle all calculators view."><img src="img/ui/toggle.png" alt="Toggle" /></button>
 	<button id="trdRefresh" class="trdButton" title="Manually refresh current prices."><img src="img/ui/refresh.png" alt="Refresh" /></button>
 	<button id="trdMute" class="trdButton" title="Stop current notification speech."><img src="img/ui/mute.png" alt="Mute" /></button>
 	<br /><br />
+	
 	<div id="trdList"></div>
+	
+	<div id="trdExchange">
+		<br />
+		<div class="trdProgressBar"><div class="trdProgress"></div></div>
+		<section>
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdCoinTo" type='text' />
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdGemTo" type='text' />
+			<img src="img/ui/money.png" alt="Money" /><input class="trdMoneyTo" type='text' />
+		</section>
+		<section>
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdCoinToGem trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdGemToCoin trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdMoneyToGem trdOutput" type='text' tabindex='-1' />
+		</section>
+		<section>
+			<img src="img/ui/money.png" alt="Money" /><input class="trdCoinToMoney trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/money.png" alt="Money" /><input class="trdGemToMoney trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdMoneyToCoin trdOutput" type='text' tabindex='-1' />
+		</section>
+		<!--<section>
+			<img src="img/ui/gem.png" alt="Gem" style="opacity:0.5"/><input class="trdCoinToGemInverse trdOutput" type='text' tabindex='-1' />
+		</section>
+		<section>
+			<img src="img/ui/money.png" alt="Money" style="opacity:0.5"/><input class="trdCoinToMoneyInverse trdOutput" type='text' tabindex='-1' />
+		</section>-->
+		<br />
+	</div>
 </section>
 
 

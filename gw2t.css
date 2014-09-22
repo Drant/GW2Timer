@@ -828,6 +828,7 @@ header.jsSection sup {
 	vertical-align: super;
 }
 .jsSectionDone {
+	display: inline-block;
 	margin-top: 8px;
 	margin-bottom: 16px;
 	font-size: 16px;
@@ -948,9 +949,12 @@ header.jsSection sup {
 	background: #444;
 	background: linear-gradient(to bottom, #333 0%, #444 100%);
 }
-
 .cntComposition button.btnFocused {
 	border: 1px solid #ddff77;
+}
+.cntComposition button img {
+	width: 24px; height: 24px;
+	vertical-align: middle;
 }
 
 .cntComposition hr {
@@ -1435,8 +1439,44 @@ dt.mapJPListNameHover {
 	font-weight: bold;
 }
 
+/* Gem exchange
+----------------------------------------------------------------------------- */
+#trdExchange input[type="text"] {
+	width: 68px;
+	padding-right: 4px;
+	text-align: right;
+	font-family: sans-serif;
+	border-radius: 4px;
+	color: #ffddcc;
+}
+#trdExchange input[type="text"].trdOutput {
+	border: 1px dotted #555;
+	color: #ffeebb;
+}
+#trdExchange img {
+	width: 24px; height: 24px;
+	vertical-align: middle;
+}
+
+#trdExchange section {
+	margin-top: 2px;
+}
+
 /* Trading calculator
 ----------------------------------------------------------------------------- */
+.trdProgressBar {
+	width: 292px; height: 4px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	border: 1px solid #222;
+}
+.trdProgress {
+	width: 100%; height: 4px;
+	border-radius: 2px;
+	background: black;
+	box-shadow: 0px 0px 4px #444;
+}
+
 #trdToggle {
 	width: 128px;
 }
@@ -1445,10 +1485,6 @@ dt.mapJPListNameHover {
 }
 #trdMute {
 	width: 64px;
-}
-.trdButton img {
-	width: 24px; height: 24px;
-	vertical-align: middle;
 }
 .trdResultsFocus {
 	display: inline-block;
@@ -1848,5 +1884,6 @@ paletteBackground {
 	color: #d19600; /* Gold experience progress bar */
 	color: #ee7924; /* Orange event progress bar */
 	color: #bfd47a; /* Green event progress bar */
+	color: #eadf86; /* Cream crafting progress bar */
 	color: #e4e0b3; /* Cream menu icons top left corner */
 }
