@@ -2464,6 +2464,9 @@ E = {
 	
 	isTradingCalculatorsInitialized: false,
 	RefreshTimeout: {},
+	ProgressTimeout: {},
+	ProgressWait: 0,
+	ProgressTick: 0,
 	
 	copper: function(pString) { return "<copper>" + pString + "</copper>"; },
 	silver: function(pString) { return "<silver>" + pString + "</silver>"; },
@@ -2812,11 +2815,10 @@ E = {
 		{
 			previousbuy = E.parseCoinString(pEntry.find(".trdCurrentBuy").first().val());
 			previoussell = E.parseCoinString(pEntry.find(".trdCurrentSell").first().val());
-			// Prices in the API are sorted low to high
 			if (pData.buys !== undefined)
 			{
 				// Get highest buy order
-				currentbuy = parseInt(pData.buys[pData.buys.length - 1].unit_price);
+				currentbuy = parseInt(pData.buys[0].unit_price);
 			}
 			if (pData.sells !== undefined)
 			{
@@ -3350,6 +3352,7 @@ E = {
 		X.initializeTextlist(X.Textlists.ExchangeUnit, $([cointo, gemto, moneyto]), null, 16);
 		
 		// Finally, loop the refresh function
+		$(".trdProgress").data("width", $(".trdProgress").width());
 		E.isTradingCalculatorsInitialized = true;
 		E.loopRefresh();
 	},
@@ -3359,8 +3362,25 @@ E = {
 	 */
 	cancelLoopRefresh: function()
 	{
+		window.clearTimeout(E.ProgressTimeout);
 		window.clearTimeout(E.RefreshTimeout);
-		$(".trdProgress").stop().css({width: "100%"});
+		$(".trdProgress").width($(".trdProgress").data("width"));
+	},
+	
+	/*
+	 * Decreases the width of the progress line every second for the duration
+	 * of the refresh wait time.
+	 */
+	animateProgress: function()
+	{
+		var progress = $(".trdProgress");
+		if (E.ProgressTick < E.ProgressWait)
+		{
+			progress.width(progress.width() - (progress.data("width") / E.ProgressWait));
+		}
+		E.ProgressTick -= 1;
+		
+		E.ProgressTimeout = setTimeout(E.animateProgress, T.cMILLISECONDS_IN_SECOND);
 	},
 	
 	/*
@@ -3376,7 +3396,9 @@ E = {
 			E.updateAllExchange();
 			var wait = O.Options.int_secTradingRefresh * T.cMILLISECONDS_IN_SECOND;
 			// Animate progress bar with same duration as refresh wait time
-			$(".trdProgress").animate({width: "0%"}, wait);
+			E.ProgressTick = O.Options.int_secTradingRefresh;
+			E.ProgressWait = O.Options.int_secTradingRefresh;
+			E.animateProgress();
 			// Repeat this function
 			E.RefreshTimeout = setTimeout(E.loopRefresh, wait);
 		}
