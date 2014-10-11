@@ -6415,7 +6415,7 @@ P = {
 	 */
 	generateSubmaps: function()
 	{
-		M.SubmapTemp = P.createSubmap([2048, 1536], [3713, 15681], "http://i.imgur.com/nB9kM3O.jpg");
+		//M.SubmapTemp = P.createSubmap([2048, 1536], [3713, 15681], "http://i.imgur.com/nB9kM3O.jpg");
 	},
 	
 	/*
