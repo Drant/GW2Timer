@@ -803,24 +803,23 @@ A marathon of intricate jumps.
 
 
 <header id="headerMap_TP" class="jsSection"><img src="img/ui/tp.png" alt="TP" /><var
-	data-de="Handelsrechner"
-	data-es="Calculadora Comercio"
-	data-fr="Calculatrice de Commerce"
-	data-cs="Obchodní Kalkulačka"
-	data-it="Calcolatrice Commercio"
-	data-pl="Kalkulator Handlu"
-	data-pt="Calculadora Comércio"
-	data-ru="Торговля Калькулятор"
-	data-zh="貿易計算器"
-	>Trading Calculator</var>
+	data-de="Handelstracker"
+	data-es="Rastreador Comercio"
+	data-fr="Suivi de la Commerce"
+	data-cs="Obchodní Tracker"
+	data-it="Inseguitore di Commercio"
+	data-pl="Handlu Tracker"
+	data-pt="Rastreador de Comércio"
+	data-ru="Торговля Трекер"
+	data-zh="交易跟踪"
+	>Trading Tracker</var>
 </header>
 <section>
 <samp class="jsHelpCollapsible"></samp>
 <div>
 	<br /><p>Each of the row below is a calculator, hover over them to see input (black shaded) and output (gray shaded) boxes. The <strong>topmost calculator contains hoverable tooltips</strong> about the boxes' function.</p>
 	<p>To enter an item into a calculator, click the longest input box, which is the name box, and type your search. A list of results will appear, click on one to accept that item, or continue typing to refine your search. The name box also acts as a search bar--press Enter to go to the charts site, and Esc to clear search results.</p>
-	<p>Once you have chosen an item, the current buy and sell prices will animate in color. You can either <b>use the calculator</b> by putting in your own buy and sell prices in the boxes below the name box, or <b>get notifications</b> if the item price is lower or higher than the current prices by typing your price next them.</p>
-	<p>The prices have a specific syntax, use periods (.) to separate units:</p>
+	<p>Once you have chosen an item, the current buy and sell prices will animate in color. You can either <b>use the calculator</b> by putting in your own buy and sell prices in the boxes below the name box, or <b>get notifications</b> if the item price is lower or higher than the current prices by typing your price next them. The prices have a specific syntax, use periods (.) to separate units:</p>
 	<div class="cssIndent">
 	0.1 = 10<coppercoin /><br />
 	.01 = 1<coppercoin /><br />
@@ -861,13 +860,26 @@ A marathon of intricate jumps.
 			<img src="img/ui/money.png" alt="Money" /><input class="trdGemToMoney trdOutput" type='text' tabindex='-1' />
 			<img src="img/ui/coin.png" alt="Coin" /><input class="trdMoneyToCoin trdOutput" type='text' tabindex='-1' />
 		</section>
-		<!--<section>
-			<img src="img/ui/gem.png" alt="Gem" style="opacity:0.5"/><input class="trdCoinToGemInverse trdOutput" type='text' tabindex='-1' />
+		<section>
+			<img src="img/ui/gem.png" alt="Gem" style="transform: rotate(180deg);"/><input class="trdCoinToGemInverse trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/coin.png" alt="Coin" style="transform: rotate(180deg);"/><input class="trdGemToCoinInverse trdOutput" type='text' tabindex='-1' />
 		</section>
 		<section>
-			<img src="img/ui/money.png" alt="Money" style="opacity:0.5"/><input class="trdCoinToMoneyInverse trdOutput" type='text' tabindex='-1' />
-		</section>-->
+			<img src="img/ui/money.png" alt="Money" style="transform: rotate(180deg);"/><input class="trdCoinToMoneyInverse trdOutput" type='text' tabindex='-1' />
+		</section>
 		<br />
+		<!--<section>
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdCoinTo" type='text' />
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdGemTo" type='text' />
+		</section>
+		<section>
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdCoinToGem trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdGemToCoin trdOutput" type='text' tabindex='-1' />
+		</section>
+		<section>
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdCoinToGem" type='text' tabindex='-1' />
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdGemToCoin" type='text' tabindex='-1' />
+		</section>-->
 	</div>
 </section>
 

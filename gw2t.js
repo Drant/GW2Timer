@@ -2442,7 +2442,10 @@ E = {
 		CENTS_IN_DOLLAR: 100,
 		
 		GEM_PER_DOLLAR: 0.80,
-		DOLLAR_PER_GEM: 1.25
+		DOLLAR_PER_GEM: 1.25,
+		
+		GEM_SAMPLE: 100, // 100 gem
+		COIN_SAMPLE: 1000000 // 100 gold
 	},
 	Rarity:
 	{
@@ -2458,7 +2461,7 @@ E = {
 	cNUM_ITEM_RARITIES: 8,
 	
 	// Timings in milliseconds
-	cREFRESH_LIMIT: 5000, // Time before user is allowed to call API again
+	cREFRESH_LIMIT: 5000, // Time before user is allowed to refresh all outputs again
 	cSEARCH_LIMIT: 750, // Time before "as you type" search executes again
 	cEXCHANGE_LIMIT: 250, // Time before "as you type" exchange executes again
 	
@@ -2954,7 +2957,7 @@ E = {
 								+ "<input class='trdNotifyBuyHigh' type='text' />"
 								+ "<input class='trdCurrentBuy trdOutput' type='text' tabindex='-1' />"
 								+ "<input class='trdNotifyBuyLow' type='text' />"
-								+ "<label title='<dfn>" + D.getSentence("overwrite") + "</dfn>: Replace the calculator buy and sell prices with the current prices when refreshing.'>"
+								+ "<label title='<dfn>" + D.getSentence("overwrite") + "</dfn>: Replace your buy and sell prices with the current prices when refreshing.'>"
 									+ "<input class='trdOverwrite' type='checkbox' tabindex='-1' />&zwnj;</label>"
 							+ "<samp>!~$</samp>"
 								+ "<input class='trdNotifySellHigh' type='text' />"
@@ -3108,10 +3111,10 @@ E = {
 		tip("Margin", "margin", "Revenue over cost and fee.");
 		tip("Revenue", "revenue", "What you will receive at the trader.");
 		tip("Link", "chatlink", "Paste this in game chat to see the item.");
-		tip("NotifyBuyLow", "buy low", "Notify you if current BUY price is LOWER than this.");
-		tip("NotifyBuyHigh", "buy high", "Notify you if current BUY price is HIGHER than this.");
-		tip("NotifySellLow", "sell low", "Notify you if current SELL price is LOWER than this.");
-		tip("NotifySellHigh", "sell high", "Notify you if current SELL price is HIGHER than this.");
+		tip("NotifyBuyLow", "notify if current buy < this buy");
+		tip("NotifyBuyHigh", "notify if this buy < current buy");
+		tip("NotifySellLow", "notify if current sell < this sell");
+		tip("NotifySellHigh", "notify if this sell < current sell");
 		tip("CurrentBuy", "current buy");
 		tip("CurrentSell", "current sell");
 		I.qTip.init($(entry + " input"));
@@ -3168,27 +3171,35 @@ E = {
 	{
 		var previousgem = 0, currentgem = 0;
 		var previousmoney = 0, currentmoney = 0;
+		var previousgeminverse = 0, currentgeminverse = 0;
+		var previousmoneyinverse = 0, currentmoneyinverse = 0;
 		var cointo = $("#trdExchange .trdCoinTo");
 		var cointogem = $("#trdExchange .trdCoinToGem");
 		var cointomoney = $("#trdExchange .trdCoinToMoney");
+		var cointogeminverse = $("#trdExchange .trdCoinToGemInverse");
+		var cointomoneyinverse = $("#trdExchange .trdCoinToMoneyInverse");
+		var ratio = 0;
 		
 		var cointoamount = E.parseCoinString(cointo.val());
 		if (cointoamount === 0)
 		{
 			cointogem.val("");
 			cointomoney.val("");
+			cointogeminverse.val("");
+			cointomoneyinverse.val("");
 		}
 		else
 		{
+			// User's coin to gem
 			$.getJSON(U.URL_API.GemPrice + cointoamount, function(pData)
 			{
-				previousgem = parseInt(cointogem.val());
-				previousmoney = E.parseMoneyString(cointomoney.val());
-				
 				if (pData.quantity !== undefined)
 				{
+					previousgem = parseInt(cointogem.val());
+					previousmoney = E.parseMoneyString(cointomoney.val());
 					currentgem = parseInt(pData.quantity);
-					currentmoney = parseInt(currentgem * E.Exchange.DOLLAR_PER_GEM);
+					currentmoney = Math.round(currentgem * E.Exchange.DOLLAR_PER_GEM);
+					
 					cointogem.val(currentgem);
 					cointomoney.val(E.createMoneyString(currentmoney));
 				}
@@ -3207,15 +3218,45 @@ E = {
 					cointomoney.val("0");
 				}
 			});
+			
+			// Gem to user's coin
+			$.getJSON(U.URL_API.CoinPrice + E.Exchange.GEM_SAMPLE, function(pData)
+			{
+				if (pData.quantity !== undefined)
+				{
+					ratio = E.Exchange.GEM_SAMPLE / pData.quantity;
+				}
+			}).always(function()
+			{
+				if (ratio !== 0)
+				{
+					previousgeminverse = parseInt(cointogeminverse.val());
+					previousmoneyinverse = E.parseMoneyString(cointomoneyinverse.val());
+					
+					currentgeminverse = Math.round(cointoamount * ratio);
+					currentmoneyinverse = Math.round(currentgeminverse * E.Exchange.DOLLAR_PER_GEM);
+					cointogeminverse.val(currentgeminverse);
+					cointomoneyinverse.val(E.createMoneyString(currentmoneyinverse));
+					
+					if (pWantAnimate === undefined || pWantAnimate)
+					{
+						E.animateValue(cointogeminverse, previousgeminverse, currentgeminverse);
+						E.animateValue(cointomoneyinverse, previousmoneyinverse, currentmoneyinverse);
+					}
+				}
+			});
 		}
 	},
 	updateGemTo: function(pWantAnimate)
 	{
 		var previouscoin = 0, currentcoin = 0;
 		var previousmoney = 0, currentmoney = 0;
+		var previouscoininverse = 0, currentcoininverse = 0;
 		var gemto = $("#trdExchange .trdGemTo");
 		var gemtocoin = $("#trdExchange .trdGemToCoin");
 		var gemtomoney = $("#trdExchange .trdGemToMoney");
+		var gemtocoininverse = $("#trdExchange .trdGemToCoinInverse");
+		var ratio = 0;
 		
 		var gemtoamount = gemto.val();
 		if (gemtoamount === 0)
@@ -3225,15 +3266,16 @@ E = {
 		}
 		else
 		{
+			// User's gem to coin
 			$.getJSON(U.URL_API.CoinPrice + gemtoamount, function(pData)
 			{
-				previouscoin = E.parseCoinString(gemtocoin.val());
-				previousmoney = E.parseMoneyString(gemtomoney.val());
-				
 				if (pData.quantity !== undefined)
 				{
+					previouscoin = E.parseCoinString(gemtocoin.val());
+					previousmoney = E.parseMoneyString(gemtomoney.val());
 					currentcoin = parseInt(pData.quantity);
 					currentmoney = parseInt(gemtoamount * E.Exchange.DOLLAR_PER_GEM);
+					
 					gemtocoin.val(E.createCoinString(currentcoin));
 					gemtomoney.val(E.createMoneyString(currentmoney));
 				}
@@ -3250,6 +3292,28 @@ E = {
 					// Got here if value is too low be exchanged
 					gemtocoin.val("0");
 					gemtomoney.val("0");
+				}
+			});
+			
+			// Coin to user's gem
+			$.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
+			{
+				if (pData.quantity !== undefined)
+				{
+					ratio = E.Exchange.COIN_SAMPLE / pData.quantity;
+				}
+			}).always(function()
+			{
+				if (ratio !== 0)
+				{
+					previouscoininverse = E.parseCoinString(gemtocoininverse.val());
+					currentcoininverse = Math.round(gemtoamount * ratio);
+					gemtocoininverse.val(E.createCoinString(currentcoininverse));
+					
+					if (pWantAnimate === undefined || pWantAnimate)
+					{
+						E.animateValue(gemtocoininverse, previouscoininverse, currentcoininverse);
+					}
 				}
 			});
 		}
@@ -3273,13 +3337,13 @@ E = {
 		{
 			$.getJSON(U.URL_API.CoinPrice + gems, function(pData)
 			{
-				previousgem = parseInt(moneytogem.val());
-				previouscoin = E.parseCoinString(moneytocoin.val());
-				
 				if (pData.quantity !== undefined)
 				{
+					previousgem = parseInt(moneytogem.val());
+					previouscoin = E.parseCoinString(moneytocoin.val());
 					currentgem = gems;
 					currentcoin = parseInt(pData.quantity);
+					
 					moneytogem.val(gems);
 					moneytocoin.val(E.createCoinString(currentcoin));
 				}
@@ -3307,6 +3371,9 @@ E = {
 		E.updateMoneyTo();
 	},
 	
+	/*
+	 * Binds behavior of exchange input boxes.
+	 */
 	initializeExchange: function()
 	{
 		var cointo = $("#trdExchange .trdCoinTo");
@@ -3384,7 +3451,7 @@ E = {
 	},
 	
 	/*
-	 * Calls the refresh calculator function on regular intervals.
+	 * Calls the refresh calculator function on regular interval.
 	 */
 	loopRefresh: function()
 	{
@@ -3497,6 +3564,10 @@ D = {
 			cs: "truhly", it: "scrigni del tesoro", pl: "skrzynie", pt: "baús de tesouro", ru: "сундуки с сокровищами", zh: "寶箱"},
 		
 		// Economy
+		s_if: {de: "wenn", es: "si", fr: "si",
+			cs: "jestliže", it: "se", pl: "jeśli", pt: "se", ru: "если", zh: "如果"},
+		s_this: {de: "dieses", es: "esto", fr: "ce",
+			cs: "toto", it: "questo", pl: "to", pt: "isto", ru: "это", zh: "這"},
 		s_your: {de: "dein", es: "tu", fr: "ton",
 			cs: "tvůj", it: "tuo", pl: "twój", pt: "teu", ru: "твой", zh: "你的"},
 		s_name: {de: "namen", es: "nombre", fr: "nom",
@@ -3577,11 +3648,9 @@ D = {
 			{
 				return value;
 			}
-			// Language not found so use default instead
-			return pText;
 		}
-		// No such text exist for translation
-		return "notranslation";
+		// Language not found so use default instead
+		return pText;
 	},
 	
 	/*
