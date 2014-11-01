@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x580, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.09.03 modified - 2014.04.18 created
+	Version: 2014.10.31 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -375,7 +375,6 @@ input#mapCoordinatesName {
 	font-family: Menomonia;
 	font-size: 20px;
 	line-height: 110%;
-	letter-spacing: -1px;
 	color: white;
 	text-shadow:
 		0px 0px 2px black,
@@ -391,7 +390,6 @@ input#mapCoordinatesName {
 	font-family: Menomonia;
 	font-size: 20px;
 	line-height: 110%;
-	letter-spacing: -1px;
 	color: #ffcc77;
 	text-shadow:
 		0px 0px 2px black,
@@ -402,7 +400,6 @@ input#mapCoordinatesName {
 	font-family: Menomonia;
 	font-size: 18px;
 	line-height: 110%;
-	letter-spacing: -1px;
 	color: white;
 	text-shadow:
 		0px 0px 2px black,
@@ -1439,6 +1436,27 @@ dt.mapJPListNameHover {
 	font-weight: bold;
 }
 
+/* Calculator
+----------------------------------------------------------------------------- */
+#trdCalculation img {
+	vertical-align: middle;
+}
+
+#trdCalculation .trdCalculator {
+	width: 220px;
+	margin-right: 4px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border-radius: 4px;
+	color: white;
+}
+
+#trdCalculation .trdCalcSubmit {
+	padding: 4px;
+}
+
 /* Gem exchange
 ----------------------------------------------------------------------------- */
 #trdExchange input[type="text"] {
@@ -1469,11 +1487,12 @@ dt.mapJPListNameHover {
 	margin-top: 8px;
 	margin-bottom: 8px;
 	border: 1px solid #222;
+	background: #493114;
 }
 .trdProgress {
 	width: 100%; height: 4px;
 	border-radius: 2px;
-	background: black;
+	background: #eadf86;
 	box-shadow: 0px 0px 4px #444;
 }
 

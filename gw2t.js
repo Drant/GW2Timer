@@ -114,8 +114,8 @@ O = {
 		// Trading
 		bol_refreshPrices: true,
 		int_numTradingCalculators: 25,
-		int_numTradingResults: 15,
-		int_secTradingRefresh: 30,
+		int_numTradingResults: 30,
+		int_secTradingRefresh: 60,
 		// Advanced
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
@@ -567,8 +567,7 @@ O = {
 	
 	/*
 	 * Unchecks the time sensitive checklists and clear variables, ignoring
-	 * the disabled/deleted ones.
-	 * by the user.
+	 * the disabled/deleted ones by the user.
 	 */
 	clearServerSensitiveOptions: function()
 	{
@@ -594,6 +593,8 @@ O = {
 		
 		if (O.Options.bol_clearPersonalChecklistOnReset)
 		{
+			$("#chlDungeonUncheck").trigger("click");
+			$("#chlCustomUncheck").trigger("click");
 			X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
 			X.clearChecklist(X.Checklists.Custom, X.ChecklistJob.UncheckTheChecked);
 		}
@@ -1175,6 +1176,16 @@ U = {
 	stripToSentence: function(pString)
 	{
 		return pString.replace(/[^\w\s\'\"\:\,]/gi, "");
+	},
+	
+	/*
+	 * Allows only numbers, arithmetic operators, and parantheses.
+	 * @param string pString arithmetic expression.
+	 * @returns string stripped.
+	 */
+	stripToCalculation: function(pString)
+	{
+		return pString.replace(/[^0-9.()\-+/*]/gi, "");
 	},
 	
 	/*
@@ -2471,6 +2482,9 @@ E = {
 	ProgressWait: 0,
 	ProgressTick: 0,
 	
+	CalculatorHistoryArray: new Array(64),
+	CalcHistoryIndex: 0,
+	
 	copper: function(pString) { return "<copper>" + pString + "</copper>"; },
 	silver: function(pString) { return "<silver>" + pString + "</silver>"; },
 	gold: function(pString) { return "<gold>" + pString + "</gold>"; },
@@ -2520,6 +2534,18 @@ E = {
 		if ( ! isFinite(gold)) { gold = 0; }
 		
 		return parseInt(copper + (silver * E.Exchange.COPPER_IN_SILVER) + (gold * E.Exchange.COPPER_IN_GOLD));
+	},
+	parseGemString: function(pString)
+	{
+		if (pString === undefined || pString === null)
+		{
+			return 0;
+		}
+		if ( ! isFinite(parseInt(pString)))
+		{
+			return 0;
+		}
+		return parseInt(pString);
 	},
 	parseQuantityString: function(pString)
 	{
@@ -2912,6 +2938,7 @@ E = {
 		pEntry.find(".trdItem").val("").trigger("change");
 		pEntry.find(".trdCurrentBuy").val("");
 		pEntry.find(".trdCurrentSell").val("");
+		pEntry.find(".trdLink").val("");
 		pEntry.find(".trdResultsContainer").remove();
 		
 		pEntry.find(".trdNotifyBuyLow").val("").trigger("change").removeClass("trdMatched");
@@ -3016,6 +3043,21 @@ E = {
 				});
 			});
 			
+			// Bind current buy/sell prices change auto flanking
+			$(entry + " .trdCurrentBuy, " + entry + " .trdCurrentSell").each(function()
+			{
+				$(this).dblclick(function()
+				{
+					var price = E.parseCoinString($(this).val());
+					if (price !== 0)
+					{
+						// Assume the inputs are siblings
+						$(this).prev().val(E.createCoinString(price + 1)).trigger("change");
+						$(this).next().val(E.createCoinString(price - 1)).trigger("change");
+					}
+				});
+			});
+			
 			// Bind name search box behavior
 			$(name).on("input", $.throttle(E.cSEARCH_LIMIT, function()
 			{
@@ -3115,8 +3157,8 @@ E = {
 		tip("NotifyBuyHigh", "notify if this buy < current buy");
 		tip("NotifySellLow", "notify if current sell < this sell");
 		tip("NotifySellHigh", "notify if this sell < current sell");
-		tip("CurrentBuy", "current buy");
-		tip("CurrentSell", "current sell");
+		tip("CurrentBuy", "current buy", "Double click to flank price.");
+		tip("CurrentSell", "current sell", "Double click to flank price.");
 		I.qTip.init($(entry + " input"));
 		
 		// Initialize storage behavior of the input textboxes
@@ -3364,11 +3406,114 @@ E = {
 			});
 		}
 	},
+	updateNotifyCoinTo: function(pWantAnimate)
+	{
+		var previousgem = 0, currentgem = 0;
+		var cointo = $("#trdExchange .trdNotifyCoinTo");
+		var cointogem = $("#trdExchange .trdNotifyCoinToGem");
+		
+		var gemhighelm = $("#trdExchange .trdNotifyCoinToGemHigh");
+		var gemhigh = E.parseGemString(gemhighelm.val());
+		
+		var cointoamount = E.parseCoinString(cointo.val());
+		if (cointoamount === 0)
+		{
+			cointogem.val("");
+		}
+		else
+		{
+			// User's coin to gem
+			$.getJSON(U.URL_API.GemPrice + cointoamount, function(pData)
+			{
+				if (pData.quantity !== undefined)
+				{
+					previousgem = parseInt(cointogem.val());
+					currentgem = parseInt(pData.quantity);
+					
+					cointogem.val(currentgem);
+				}
+			}).always(function()
+			{
+				if (pWantAnimate === undefined || pWantAnimate)
+				{
+					E.animateValue(cointogem, previousgem, currentgem);
+				}
+				
+				if (currentgem === 0)
+				{
+					// Got here if value is too low be exchanged
+					cointogem.val("0");
+				}
+				else if (currentgem >= gemhigh && gemhigh !== 0)
+				{
+					gemhighelm.addClass("trdMatched");
+					D.speak(D.getString("buy gem high"));
+				}
+				else
+				{
+					gemhighelm.removeClass("trdMatched");
+				}
+			});
+		}
+	},
+	updateNotifyGemTo: function(pWantAnimate)
+	{
+		var previouscoin = 0, currentcoin = 0;
+		var gemto = $("#trdExchange .trdNotifyGemTo");
+		var gemtocoin = $("#trdExchange .trdNotifyGemToCoin");
+		
+		var coinhighelm = $("#trdExchange .trdNotifyGemToCoinHigh");
+		var coinhigh = E.parseCoinString(coinhighelm.val());
+		
+		var gemtoamount = gemto.val();
+		if (gemtoamount === 0)
+		{
+			gemtocoin.val("");
+		}
+		else
+		{
+			// User's gem to coin
+			$.getJSON(U.URL_API.CoinPrice + gemtoamount, function(pData)
+			{
+				if (pData.quantity !== undefined)
+				{
+					previouscoin = E.parseCoinString(gemtocoin.val());
+					currentcoin = parseInt(pData.quantity);
+					
+					gemtocoin.val(E.createCoinString(currentcoin));
+				}
+			}).always(function()
+			{
+				if (pWantAnimate === undefined || pWantAnimate)
+				{
+					E.animateValue(gemtocoin, previouscoin, currentcoin);
+				}
+				
+				if (currentcoin === 0)
+				{
+					// Got here if value is too low be exchanged
+					gemtocoin.val("0");
+				}
+				else if (currentcoin >= coinhigh && coinhigh !== 0)
+				{
+					coinhighelm.addClass("trdMatched");
+					D.speak(D.getString("buy coin high"));
+				}
+				else
+				{
+					coinhighelm.removeClass("trdMatched");
+				}
+			});
+		}
+	},
 	updateAllExchange: function()
 	{
 		E.updateCoinTo();
 		E.updateGemTo();
 		E.updateMoneyTo();
+		
+		E.updateNotifyCoinTo();
+		E.updateNotifyGemTo();
 	},
 	
 	/*
@@ -3379,11 +3524,40 @@ E = {
 		var cointo = $("#trdExchange .trdCoinTo");
 		var gemto = $("#trdExchange .trdGemTo");
 		var moneyto = $("#trdExchange .trdMoneyTo");
+		var notifycointo = $("#trdExchange .trdNotifyCoinTo");
+		var notifygemto = $("#trdExchange .trdNotifyGemTo");
+		var notifycointogemhigh = $("#trdExchange .trdNotifyCoinToGemHigh");
+		var notifygemtocoinhigh = $("#trdExchange .trdNotifyGemToCoinHigh");
 		
 		// Initial values as an example
 		cointo.val("200..");
 		gemto.val("4000");
 		moneyto.val("50");
+		
+		var tip = function(pBoxName, pPhrase)
+		{
+			$("#trdExchange .trd" + pBoxName).attr("title", "<dfn>" + D.getString(pPhrase) + "</dfn>");
+		};
+		tip("CoinTo", "your coin");
+		tip("GemTo", "your gem");
+		tip("MoneyTo", "your dollar");
+		tip("CoinToGem", "your coin to gem");
+		tip("GemToCoin", "your gem to coin");
+		tip("MoneyToGem", "your dollar to gem");
+		tip("CoinToMoney", "your coin to dollar");
+		tip("GemToMoney", "your gem to dollar");
+		tip("MoneyToCoin", "your dollar to coin");
+		tip("CoinToGemInverse", "gem to your coin");
+		tip("GemToCoinInverse", "coin to your gem");
+		tip("CoinToMoneyInverse", "dollar to your coin");
+		
+		tip("NotifyCoinTo", "your coin");
+		tip("NotifyGemTo", "your gem");
+		tip("NotifyCoinToGem", "your coin to current gem");
+		tip("NotifyGemToCoin", "your gem to current coin");
+		tip("NotifyCoinToGemHigh", "notify if this gem > current gem");
+		tip("NotifyGemToCoinHigh", "notify if this coin > current coin");
+		I.qTip.init($("#trdExchange input"));
 		
 		// Bind behavior
 		$("#trdExchange input").click(function()
@@ -3415,8 +3589,25 @@ E = {
 			E.updateMoneyTo();
 		}));
 		
+		notifycointo.on("input", $.throttle(E.cEXCHANGE_LIMIT, function()
+		{
+			E.updateNotifyCoinTo(false);
+		})).onEnterKey($.throttle(E.cEXCHANGE_LIMIT, function()
+		{
+			E.updateNotifyCoinTo();
+		}));
+		
+		notifygemto.on("input", $.throttle(E.cEXCHANGE_LIMIT, function()
+		{
+			E.updateNotifyGemTo(false);
+		})).onEnterKey($.throttle(E.cEXCHANGE_LIMIT, function()
+		{
+			E.updateNotifyGemTo();
+		}));
+		
 		// Initialize storage behavior of inputs
-		X.initializeTextlist(X.Textlists.ExchangeUnit, $([cointo, gemto, moneyto]), null, 16);
+		X.initializeTextlist(X.Textlists.ExchangeUnit,
+			$([cointo, gemto, moneyto, notifycointo, notifygemto, notifycointogemhigh, notifygemtocoinhigh]), null, 16);
 		
 		// Finally, loop the refresh function
 		$(".trdProgress").data("width", $(".trdProgress").width());
@@ -3468,6 +3659,82 @@ E = {
 			E.animateProgress();
 			// Repeat this function
 			E.RefreshTimeout = setTimeout(E.loopRefresh, wait);
+		}
+	},
+	
+	/*
+	 * Binds behavior of the generic calculator.
+	 */
+	initializeCalculator: function()
+	{
+		// Calculation behavior
+		$("#trdCalculation .trdCalculator").onEnterKey(function()
+		{
+			E.doCalculation($(this));
+		}).click(function()
+		{
+			$(this).select();
+		});
+		// Assume expression input box is left sibling of the submit button
+		$("#trdCalculation .trdCalcSubmit").click(function()
+		{
+			E.doCalculation($(this).prev());
+		});
+		
+		// History behavior
+		for (var i in E.CalculatorHistoryArray)
+		{
+			E.CalculatorHistoryArray[i] = "";
+		}
+		
+		$("#trdCalculation .trdCalculator").onArrowUpKey(function()
+		{
+			if (E.CalcHistoryIndex === 0)
+			{
+				var expression = U.stripToCalculation($(this).val());
+				if (E.CalculatorHistoryArray[0] !== $(this).val().toString())
+				{
+					E.CalculatorHistoryArray.pop();
+					E.CalculatorHistoryArray.unshift(expression);
+				}
+			}
+			if (E.CalcHistoryIndex + 1 < E.CalculatorHistoryArray.length)
+			{
+				E.CalcHistoryIndex++;
+				$(this).val(E.CalculatorHistoryArray[E.CalcHistoryIndex]);
+			}
+		});
+		$("#trdCalculation .trdCalculator").onArrowDownKey(function()
+		{
+			if (E.CalcHistoryIndex - 1 >= 0)
+			{
+				E.CalcHistoryIndex--;
+				$(this).val(E.CalculatorHistoryArray[E.CalcHistoryIndex]);
+			}
+		});
+	},
+	
+	/*
+	 * Performs the expression on a generic calculator.
+	 * This function uses eval(), so must sanitize user input.
+	 * @param jqobject pCalculator input box containing user's expression.
+	 */
+	doCalculation: function(pCalculator)
+	{
+		var expression = U.stripToCalculation(pCalculator.val());
+		var result = "";
+		try
+		{
+			result = eval(expression);
+		}
+		catch (pException) {}
+		
+		pCalculator.val(parseFloat(result)).select();
+		if (result.toString().length > 0)
+		{
+			E.CalculatorHistoryArray.pop();
+			E.CalculatorHistoryArray.unshift(expression);
+			E.CalcHistoryIndex = 0;
 		}
 	}
 };
@@ -3544,8 +3811,12 @@ D = {
 		// Prepositions and Conjunctions
 		s_and: {de: "und", es: "y", fr: "et",
 			cs: "a", it: "e", pl: "i", pt: "e", ru: "и", zh: "和"},
+		s_if: {de: "wenn", es: "si", fr: "si",
+			cs: "jestliže", it: "se", pl: "jeśli", pt: "se", ru: "если", zh: "如果"},
 		s_in: {de: "in", es: "en", fr: "en",
 			cs: "za", it: "in", pl: "w", pt: "em", ru: "в", zh: "在"},
+		s_to: {de: "zu", es: "a", fr: "contre",
+			cs: "ku", it: "a", pl: "na", pt: "a", ru: "до", zh: "比"},
 		
 		// Automatic
 		s_Scheduled_Bosses: {de: "Geplant", es: "Programado", fr: "Planifié",
@@ -3564,8 +3835,7 @@ D = {
 			cs: "truhly", it: "scrigni del tesoro", pl: "skrzynie", pt: "baús de tesouro", ru: "сундуки с сокровищами", zh: "寶箱"},
 		
 		// Economy
-		s_if: {de: "wenn", es: "si", fr: "si",
-			cs: "jestliže", it: "se", pl: "jeśli", pt: "se", ru: "если", zh: "如果"},
+		
 		s_this: {de: "dieses", es: "esto", fr: "ce",
 			cs: "toto", it: "questo", pl: "to", pt: "isto", ru: "это", zh: "這"},
 		s_your: {de: "dein", es: "tu", fr: "ton",
@@ -3597,7 +3867,13 @@ D = {
 		s_notify: {de: "benachrichtigen", es: "notificar", fr: "notifier",
 			cs: "oznámit", it: "notifica", pl: "powiadom", pt: "notificar", ru: "уведомить", zh: "通知"},
 		s_overwrite: {de: "überschreiben", es: "sobrescribir", fr: "remplacer",
-			cs: "přepsat", it: "sovrascrivi", pl: "zastąp", pt: "substituir", ru: "перезаписать", zh: "覆寫"}
+			cs: "přepsat", it: "sovrascrivi", pl: "zastąp", pt: "substituir", ru: "перезаписать", zh: "覆寫"},
+		s_gem: {de: "edelsteine", es: "gema", fr: "gemme",
+			cs: "klenot", it: "gemma", pl: "klejnot", pt: "gema", ru: "самоцвет", zh: "寶石"},
+		s_coin: {de: "münze", es: "moneda", fr: "monnaie",
+			cs: "mince", it: "moneta", pl: "moneta", pt: "moeda", ru: "монета", zh: "硬幣"},
+		s_dollar: {de: "dollar", es: "dólar", fr: "dollar",
+			cs: "dolar", it: "dollaro", pl: "polar", pt: "dólar", ru: "доллар", zh: "元"}
 	},
 	
 	Element:
@@ -10023,6 +10299,7 @@ I = {
 			// Create trading calculator
 			$("#headerMap_TP").one("click", function()
 			{
+				E.initializeCalculator();
 				E.initializeTrading();
 				E.initializeExchange();
 			});

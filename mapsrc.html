@@ -2,9 +2,7 @@
 var GW2T_RESOURCE_DATA = {
 	Copper: {
 		nodes: [
-		[7576, 18624], // metrica
-		[8526, 17275],
-		[7333, 18850],
+		[8526, 17275], // metrica
 		[9860, 16199], // caledon
 		[10138, 17684],
 		[11750, 13108], // queensdale 
@@ -815,9 +813,23 @@ A marathon of intricate jumps.
 	>Trading Tracker</var>
 </header>
 <section>
+	
 <samp class="jsHelpCollapsible"></samp>
 <div>
-	<br /><p>Each of the row below is a calculator, hover over them to see input (black shaded) and output (gray shaded) boxes. The <strong>topmost calculator contains hoverable tooltips</strong> about the boxes' function.</p>
+	<br />
+	<p>The basic calculator below does +-*/ operations and accepts parantheses wrapping. You can press the ↑ and ↓ arrow keyboard keys to go through your expressions history.</p>
+	Example expression: 66+(250*8)-125/5<br />Then press Enter or the = button to perform the expression.
+</div>
+
+	<br />
+	<div id="trdCalculation">
+		<img src="img/ui/calculator.png" alt="Calculator" /><input class="trdCalculator" type="text" maxlength="128" /><button class="trdCalcSubmit">=</button>
+	</div>
+	
+<samp class="jsHelpCollapsible"></samp>
+<div>
+	<br />
+	<p>Each of the row below is a calculator, hover over them to see input (black shaded) and output (gray shaded) boxes. The <strong>topmost calculator contains hoverable tooltips</strong> about the boxes' function.</p>
 	<p>To enter an item into a calculator, click the longest input box, which is the name box, and type your search. A list of results will appear, click on one to accept that item, or continue typing to refine your search. The name box also acts as a search bar--press Enter to go to the charts site, and Esc to clear search results.</p>
 	<p>Once you have chosen an item, the current buy and sell prices will animate in color. You can either <b>use the calculator</b> by putting in your own buy and sell prices in the boxes below the name box, or <b>get notifications</b> if the item price is lower or higher than the current prices by typing your price next them. The prices have a specific syntax, use periods (.) to separate units:</p>
 	<div class="cssIndent">
@@ -833,6 +845,7 @@ A marathon of intricate jumps.
 	<br />
 	All input data are saved automatically. To show more calculators or search results, go to Options page, Trading section.
 </div>
+
 	<br />
 	<div class="trdProgressBar"><div class="trdProgress"></div></div>
 	<button id="trdToggle" class="trdButton" title="Toggle all calculators view."><img src="img/ui/toggle.png" alt="Toggle" /></button>
@@ -846,40 +859,40 @@ A marathon of intricate jumps.
 		<br />
 		<div class="trdProgressBar"><div class="trdProgress"></div></div>
 		<section>
-			<img src="img/ui/coin.png" alt="Coin" /><input class="trdCoinTo" type='text' />
-			<img src="img/ui/gem.png" alt="Gem" /><input class="trdGemTo" type='text' />
-			<img src="img/ui/money.png" alt="Money" /><input class="trdMoneyTo" type='text' />
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdCoinTo" type="text" />
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdGemTo" type="text" />
+			<img src="img/ui/money.png" alt="Money" /><input class="trdMoneyTo" type="text" />
 		</section>
 		<section>
-			<img src="img/ui/gem.png" alt="Gem" /><input class="trdCoinToGem trdOutput" type='text' tabindex='-1' />
-			<img src="img/ui/coin.png" alt="Coin" /><input class="trdGemToCoin trdOutput" type='text' tabindex='-1' />
-			<img src="img/ui/gem.png" alt="Gem" /><input class="trdMoneyToGem trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdCoinToGem trdOutput" type="text" tabindex="-1" />
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdGemToCoin trdOutput" type="text" tabindex="-1" />
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdMoneyToGem trdOutput" type="text" tabindex="-1" />
 		</section>
 		<section>
-			<img src="img/ui/money.png" alt="Money" /><input class="trdCoinToMoney trdOutput" type='text' tabindex='-1' />
-			<img src="img/ui/money.png" alt="Money" /><input class="trdGemToMoney trdOutput" type='text' tabindex='-1' />
-			<img src="img/ui/coin.png" alt="Coin" /><input class="trdMoneyToCoin trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/money.png" alt="Money" /><input class="trdCoinToMoney trdOutput" type="text" tabindex="-1" />
+			<img src="img/ui/money.png" alt="Money" /><input class="trdGemToMoney trdOutput" type="text" tabindex="-1" />
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdMoneyToCoin trdOutput" type="text" tabindex="-1" />
 		</section>
 		<section>
-			<img src="img/ui/gem.png" alt="Gem" style="transform: rotate(180deg);"/><input class="trdCoinToGemInverse trdOutput" type='text' tabindex='-1' />
-			<img src="img/ui/coin.png" alt="Coin" style="transform: rotate(180deg);"/><input class="trdGemToCoinInverse trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/gem.png" alt="Gem" style="transform: rotate(180deg);"/><input class="trdCoinToGemInverse trdOutput" type="text" tabindex="-1" />
+			<img src="img/ui/coin.png" alt="Coin" style="transform: rotate(180deg);"/><input class="trdGemToCoinInverse trdOutput" type="text" tabindex="-1" />
 		</section>
 		<section>
-			<img src="img/ui/money.png" alt="Money" style="transform: rotate(180deg);"/><input class="trdCoinToMoneyInverse trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/money.png" alt="Money" style="transform: rotate(180deg);"/><input class="trdCoinToMoneyInverse trdOutput" type="text" tabindex="-1" />
 		</section>
 		<br />
-		<!--<section>
-			<img src="img/ui/coin.png" alt="Coin" /><input class="trdCoinTo" type='text' />
-			<img src="img/ui/gem.png" alt="Gem" /><input class="trdGemTo" type='text' />
+		<section>
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdNotifyCoinTo" type="text" />
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdNotifyGemTo" type="text" />
 		</section>
 		<section>
-			<img src="img/ui/gem.png" alt="Gem" /><input class="trdCoinToGem trdOutput" type='text' tabindex='-1' />
-			<img src="img/ui/coin.png" alt="Coin" /><input class="trdGemToCoin trdOutput" type='text' tabindex='-1' />
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdNotifyCoinToGem trdOutput" type="text" tabindex="-1" />
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdNotifyGemToCoin trdOutput" type="text" tabindex="-1" />
 		</section>
 		<section>
-			<img src="img/ui/gem.png" alt="Gem" /><input class="trdCoinToGem" type='text' tabindex='-1' />
-			<img src="img/ui/coin.png" alt="Coin" /><input class="trdGemToCoin" type='text' tabindex='-1' />
-		</section>-->
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdNotifyCoinToGemHigh" type="text" tabindex="-1" />
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdNotifyGemToCoinHigh" type="text" tabindex="-1" />
+		</section>
 	</div>
 </section>
 
