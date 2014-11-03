@@ -794,7 +794,7 @@ O = {
 		},
 		bol_detectDST: function()
 		{
-			T.DST_IN_EFFECT = (O.Options.bol_detectDST) ? 1 : 0;
+			T.checkDST();
 		},
 		int_setClock: function()
 		{
@@ -3555,8 +3555,8 @@ E = {
 		tip("NotifyGemTo", "your gem");
 		tip("NotifyCoinToGem", "your coin to current gem");
 		tip("NotifyGemToCoin", "your gem to current coin");
-		tip("NotifyCoinToGemHigh", "notify if this gem > current gem");
-		tip("NotifyGemToCoinHigh", "notify if this coin > current coin");
+		tip("NotifyCoinToGemHigh", "notify if current gem > this gem");
+		tip("NotifyGemToCoinHigh", "notify if current coin > this coin");
 		I.qTip.init($("#trdExchange input"));
 		
 		// Bind behavior
@@ -8324,18 +8324,7 @@ T = {
 		};
 
 		var now = new Date();
-		if (now.dst() && O.Options.bol_detectDST === false)
-		{
-			T.DST_IN_EFFECT = 1;
-		}
-		
-		// If user lives in the Americas then use AM/PM time format by default
-		T.cUTC_OFFSET_USER = -((new Date()).getTimezoneOffset() / T.cMINUTES_IN_HOUR);
-		if (T.cUTC_OFFSET_USER <= T.cUTC_OFFSET_EASTERN
-			&& T.cUTC_OFFSET_USER >= T.cUTC_OFFSET_HAWAII)
-		{
-			O.Options.bol_use24Hour = false;
-		}
+		T.DST_IN_EFFECT = (now.dst() && O.Options.bol_detectDST === false) ? 1 : 0;
 	},
 
 	/*
@@ -9628,6 +9617,13 @@ I = {
 		
 		// Tell if DST is in effect
 		T.checkDST();
+		// If user lives in the Americas then use AM/PM time format by default
+		T.cUTC_OFFSET_USER = -((new Date()).getTimezoneOffset() / T.cMINUTES_IN_HOUR);
+		if (T.cUTC_OFFSET_USER <= T.cUTC_OFFSET_EASTERN
+			&& T.cUTC_OFFSET_USER >= T.cUTC_OFFSET_HAWAII)
+		{
+			O.Options.bol_use24Hour = false;
+		}
 		
 		/*
 		 * Load stored server sensitive timestamp if it exists, is a number,

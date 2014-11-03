@@ -7,8 +7,7 @@ var GW2T_RESOURCE_DATA = {
 		[10138, 17684],
 		[11750, 13108], // queensdale 
 		[12787, 14004],
-		[21988, 13629], // wayfarer
-		[22096, 11512],
+		[22096, 11512], // wayfarer
 		[25767, 15370], // ashford
 		[27540, 15135]
 		], type: "Metal"
@@ -817,13 +816,13 @@ A marathon of intricate jumps.
 <samp class="jsHelpCollapsible"></samp>
 <div>
 	<br />
-	<p>The basic calculator below does +-*/ operations and accepts parantheses wrapping. You can press the ↑ and ↓ arrow keyboard keys to go through your expressions history.</p>
-	Example expression: 66+(250*8)-125/5<br />Then press Enter or the = button to perform the expression.
+	<p>The basic calculator below does +-*/ operations and accepts parantheses wrapping. You can press the ↑ and ↓ arrow keyboard keys to go through your expression history.</p>
+	Example expression: 66+(250*8)-125/5<br />Then press Enter or the = button to perform it.
 </div>
 
 	<br />
 	<div id="trdCalculation">
-		<img src="img/ui/calculator.png" alt="Calculator" /><input class="trdCalculator" type="text" maxlength="128" /><button class="trdCalcSubmit">=</button>
+		<img src="img/ui/calculator.png" alt="Calculator" /><input class="trdCalculator" type="text" maxlength="128" value="0" /><button class="trdCalcSubmit">=</button>
 	</div>
 	
 <samp class="jsHelpCollapsible"></samp>
@@ -893,8 +892,8 @@ A marathon of intricate jumps.
 			<img src="img/ui/coin.png" alt="Coin" /><input class="trdNotifyGemToCoin trdOutput" type="text" tabindex="-1" />
 		</section>
 		<section>
-			<img src="img/ui/gem.png" alt="Gem" /><input class="trdNotifyCoinToGemHigh" type="text" tabindex="-1" />
-			<img src="img/ui/coin.png" alt="Coin" /><input class="trdNotifyGemToCoinHigh" type="text" tabindex="-1" />
+			<img src="img/ui/gem.png" alt="Gem" /><input class="trdNotifyCoinToGemHigh" type="text" />
+			<img src="img/ui/coin.png" alt="Coin" /><input class="trdNotifyGemToCoinHigh" type="text" />
 		</section>
 	</div>
 </section>
