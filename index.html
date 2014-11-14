@@ -7,6 +7,7 @@
 	<meta name="robots" content="index, follow, noarchive" />
 	<meta name="description" content="Guild Wars 2 timers and clock overlay for world boss meta events, with daily achievements checklists, JP gathering map, and Trading Post tracker." />
 	<meta name="google-site-verification" content="hPcBd74DxlBzpTu6wO6DkIcOVFLu9SOMT-GQ1MI3fbg" />
+	<meta name="msvalidate.01" content="95E5C0E89A8A24688EC00F2A69986A17" />
 
 	<!-- Stylesheets -->
 	<link rel="shortcut icon" type="image/x-icon" href="img/ui/favicon.png" />
@@ -355,8 +356,10 @@
 					<header class="cntHeader">Options</header>
 					<br />
 					<h2>Timer</h2>
-					<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off world bosses</label>
-					<label title="Automatically expand orange chain bars and collapse gray ones."><input id="opt_bol_expandEvents" type="checkbox" /> Expand events for active chains</label>
+					<label><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off world bosses</label>
+					<label><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand active World Boss chain bars</label>
+					<label><input id="opt_bol_expandLS" type="checkbox" /> Auto-expand active Living Story chain bars</label>
+					<label><input id="opt_bol_collapseChains" type="checkbox" /> Auto-collapse inactive chain bars</label>
 					<label title="Display the countdown to when a chain starts or the soonest scheduled time?"><input id="opt_bol_useCountdown" type="checkbox" /> Countdown to future chains</label>
 					<div class="optFieldsets">
 						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain? Auto will use the North American time of day to choose. Changes will take effect when the next chain starts. &lt;br /&gt;Min: for full population map&lt;br /&gt;Min-Avg: Min + (Avg - Min)/2&lt;br /&gt;Avg: for regular zerg size"><legend>Predictor</legend>

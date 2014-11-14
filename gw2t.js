@@ -70,7 +70,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 140908},
+		programVersion: {key: "int_utlProgramVersion", value: 141113},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -85,7 +85,9 @@ O = {
 		enu_Language: "en",
 		// Timer
 		bol_hideChecked: false,
-		bol_expandEvents: true,
+		bol_expandWB: true,
+		bol_expandLS: true,
+		bol_collapseChains: true,
 		bol_useCountdown: true,
 		int_setClock: 0,
 		int_setDimming: 0,
@@ -242,11 +244,6 @@ O = {
 				+ "This version: " + currentversion + "<br />"
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
-				+ "<br />"
-				+ "New in this version:<br />"
-				+ "- Trading Post calculator (Beta) <a href='http://gw2timer.com/tp'>http://gw2timer.com/tp</a><br />"
-				+ "- Uses new official API to retrieve current prices every few seconds!<br />"
-				+ "Use it with the <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>overlay app</a> in game!<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -780,11 +777,11 @@ O = {
 				}
 			});
 		},
-		bol_expandEvents: function()
+		bol_collapseChains: function()
 		{
 			for (var i in C.CurrentChains)
 			{
-				$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_expandEvents);
+				$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_collapseChains);
 			}
 		},
 		bol_use24Hour: function()
@@ -1329,6 +1326,17 @@ U = {
 	},
 	
 	/*
+	 * Counts the occurences of a string within a string.
+	 * @param string pString to look in.
+	 * @param string pMatch to look for.
+	 * @returns int count.
+	 */
+	countOccurrence: function(pString, pMatch)
+	{
+		return pString.split(pMatch).length - 1;
+	},
+	
+	/*
 	 * Updates the address bar with the given string affixed to the site base URL.
 	 * This should be the only place the "history" global variable is used.
 	 * @param string pString URL query string.
@@ -1514,7 +1522,7 @@ U = {
 	 */
 	getTradingSearchLink: function(pString)
 	{
-		return "http://www.gw2spidy.com/search/" + escape(pString);
+		return "https://www.gw2tp.com/search?name=" + escape(pString);
 	},
 	
 	/*
@@ -1525,6 +1533,7 @@ U = {
 	 */
 	getTradingItemLink: function(pID, pName)
 	{
+		//return "https://www.gw2tp.com/item/" + escape(pID) + "#" + U.stripToSentence(pName);
 		return "http://www.gw2spidy.com/item/" + escape(pID) + "#" + U.stripToSentence(pName);
 	},
 	
@@ -1881,6 +1890,17 @@ X = {
 		
 		pChecklist.value = checklist;
 		localStorage[pChecklist.key] = checklist;
+	},
+	
+	/*
+	 * Counts the checked type in a checklist.
+	 * @param object pChecklist to look in.
+	 * @param enum pCheckType to look for.
+	 * @returns int count.
+	 */
+	countChecklist: function(pChecklist, pCheckType)
+	{
+		return U.countOccurrence(pChecklist.value, pCheckType);
 	},
 	
 	/*
@@ -5326,9 +5346,13 @@ C = {
 			// Highlight
 			$("#barChain_" + ithchain.nexus).addClass("chnBarCurrent");
 			// Show the events (details)
-			if (C.isChainUnchecked(ithchain) && O.Options.bol_expandEvents)
+			if (C.isChainUnchecked(ithchain))
 			{
-				$("#chnDetails_" + ithchain.nexus).show("fast");
+				if ((ithchain.series === C.ChainSeriesEnum.Story && O.Options.bol_expandLS)
+					|| (ithchain.series !== C.ChainSeriesEnum.Story && O.Options.bol_expandWB))
+				{
+					$("#chnDetails_" + ithchain.nexus).show("fast");
+				}
 			}
 			
 			// Style the title and time
@@ -5345,7 +5369,7 @@ C = {
 			$("#barChain_" + ithchain.nexus)
 				.removeClass("chnBarCurrent").addClass("chnBarPrevious");
 			// Hide previous chains if opted to automatically expand before
-			if (O.Options.bol_expandEvents)
+			if (O.Options.bol_collapseChains)
 			{
 				$("#chnDetails_" + ithchain.nexus).hide();
 			}
@@ -5887,7 +5911,8 @@ M = {
 			maxZoom: M.ZoomLevelEnum.Max,
 			inertiaThreshold: 100, // Milliseconds between drag and release to flick pan
 			doubleClickZoom: false,
-			zoomControl: false, // Hide the zoom UI
+			touchZoom: false, // Disable pinch to zoom
+			zoomControl: I.isOnSmallDevice, // Hide the zoom UI
 			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
 		}).setView([-128, 128], M.ZoomLevelEnum.Default);
@@ -7404,6 +7429,14 @@ P = {
 		// Initialize localStorage
 		X.initializeChecklist(X.Checklists.JP, X.Checklists.JP.length);
 		
+		// Count completed JPs function
+		var updateJPCount = function()
+		{
+			var completed = X.countChecklist(X.Checklists.JP, X.ChecklistEnum.Checked);
+			var total = X.Checklists.JP.length;
+			$("#mapJPCounter").text(completed + "/" + total);
+		};
+		
 		var i;
 		for (i = 0; i < X.Checklists.JP.length; i++)
 		{
@@ -7443,6 +7476,7 @@ P = {
 				
 				// Rewrite the checklist string by updating the digit at the ID/index
 				X.setChecklistItem(X.Checklists.JP, checkboxindex, checkboxstate);
+				updateJPCount();
 				
 			}).parent().hover(
 				// Highlight JP name when hovered over checkbox's label
@@ -7496,7 +7530,11 @@ P = {
 			}
 			X.Checklists.JP.value = jpchecklist;
 			localStorage[X.Checklists.JP.key] = X.Checklists.JP.value;
+			
+			updateJPCount();
 		});
+		
+		updateJPCount();
 	},
 	
 	/*

@@ -46,7 +46,8 @@ var GW2T_ZONE_ASSOCIATION = {
 	"218": "citadel",
 	"326": "hoelbrak",
 	"873": "southsun",
-	"988": "dry"
+	"988": "dry",
+	"1015": "silverwastes"
 };
 
 /*
@@ -57,7 +58,13 @@ var GW2T_ZONE_DATA = {
 {
 	name: "Dry Top",
 	region: "maguuma",
-	rect: [[3713, 15681], [5888, 17152]]//[3840, 14592]
+	rect: [[3840, 15742], [5888, 17152]]//[3840, 14592]
+},
+"silverwastes":
+{
+	name: "The Silverwastes",
+	region: "maguuma",
+	rect: [[3838, 14206], [5886, 15742]]
 },
 "rata":
 {
