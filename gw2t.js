@@ -777,11 +777,24 @@ O = {
 				}
 			});
 		},
-		bol_collapseChains: function()
+		bol_expandWB: function()
 		{
 			for (var i in C.CurrentChains)
 			{
-				$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_collapseChains);
+				if (C.CurrentChains[i].series !== C.ChainSeriesEnum.Story)
+				{
+					$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_expandWB);
+				}
+			}
+		},
+		bol_expandLS: function()
+		{
+			for (var i in C.CurrentChains)
+			{
+				if (C.CurrentChains[i].series === C.ChainSeriesEnum.Story)
+				{
+					$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_expandLS);
+				}
 			}
 		},
 		bol_use24Hour: function()
@@ -818,12 +831,12 @@ O = {
 		{
 			if (O.Options.bol_showMap)
 			{
-				$("#paneMap").show();
+				$("#panelLeft").show();
 				M.refreshMap();
 			}
 			else
 			{
-				$("#paneMap").hide();
+				$("#panelLeft").hide();
 			}
 		},
 		bol_refreshPrices: function()
@@ -2840,7 +2853,7 @@ E = {
 	 */
 	updateTradingPrices: function(pEntry)
 	{
-		var name = U.escapeHTML(pEntry.find(".trdName").val());
+		var name = encodeURIComponent(pEntry.find(".trdName").val());
 		var id = pEntry.find(".trdItem").val();
 		if (isFinite(parseInt(id)) === false || name.length === 0)
 		{
@@ -2849,6 +2862,7 @@ E = {
 		
 		var previousbuy = 0, previoussell = 0;
 		var currentbuy = 0, currentsell = 0;
+		var nameelm = pEntry.find(".trdName");
 		var buyelm = pEntry.find(".trdCurrentBuy");
 		var sellelm = pEntry.find(".trdCurrentSell");
 		var buylowelm = pEntry.find(".trdNotifyBuyLow");
@@ -2881,8 +2895,8 @@ E = {
 			if (X.getChecklistItem(X.Checklists.TradingOverwrite, U.getSubintegerFromHTMLID(pEntry))
 					=== X.ChecklistEnum.Checked)
 			{
-				pEntry.find(".trdBuy").val(buyelm.val()).trigger("change").trigger("input");
-				pEntry.find(".trdSell").val(sellelm.val()).trigger("change").trigger("input");
+				pEntry.find(".trdBuy").val(buyelm.val()).trigger("change");
+				pEntry.find(".trdSell").val(sellelm.val()).trigger("change");
 			}
 		}).done(function()
 		{
@@ -2893,8 +2907,11 @@ E = {
 			// Notify if tracked price is within range
 			if (X.isChecked(X.Checklists.TradingNotify, pEntry))
 			{
+				nameelm.removeClass("trdMatched");
+				
 				if (currentbuy <= buylow && buylow !== 0 && currentbuy !== 0)
 				{
+					nameelm.addClass("trdMatched");
 					buylowelm.addClass("trdMatched");
 					D.speak(D.getString("buy low") + " " + name);
 				}
@@ -2905,6 +2922,7 @@ E = {
 
 				if (currentbuy >= buyhigh && buyhigh !== 0 && currentbuy !== 0)
 				{
+					nameelm.addClass("trdMatched");
 					buyhighelm.addClass("trdMatched");
 					D.speak(D.getString("buy high") + " " + name);
 				}
@@ -2915,6 +2933,7 @@ E = {
 
 				if (currentsell <= selllow && selllow !== 0 && currentsell !== 0)
 				{
+					nameelm.addClass("trdMatched");
 					selllowelm.addClass("trdMatched");
 					D.speak(D.getString("sell low") + " " + name);
 				}
@@ -2925,6 +2944,7 @@ E = {
 
 				if (currentsell >= sellhigh && sellhigh !== 0 && currentsell !== 0)
 				{
+					nameelm.addClass("trdMatched");
 					sellhighelm.addClass("trdMatched");
 					D.speak(D.getString("sell high") + " " + name);
 				}
@@ -2961,6 +2981,7 @@ E = {
 		pEntry.find(".trdLink").val("");
 		pEntry.find(".trdResultsContainer").remove();
 		
+		pEntry.find(".trdName").removeClass("trdMatched");
 		pEntry.find(".trdNotifyBuyLow").val("").trigger("change").removeClass("trdMatched");
 		pEntry.find(".trdNotifyBuyHigh").val("").trigger("change").removeClass("trdMatched");
 		pEntry.find(".trdNotifySellLow").val("").trigger("change").removeClass("trdMatched");
@@ -3198,7 +3219,6 @@ E = {
 		// Trigger input textboxes to make the output textboxes update
 		$("#trdList .trdSell").trigger("input");
 		E.updateAllTradingDetails();
-		E.updateAllTradingPrices();
 		
 		// Bind toggle button to switch between accordion view or open list view of the calculators
 		$("#trdToggle").click(function()
@@ -5590,7 +5610,11 @@ C = {
 			if (O.Options.bol_tourPrediction && I.PageCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain))
 			{
-				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
+				if ((pChain.series === C.ChainSeriesEnum.Story && O.Options.bol_expandLS)
+						|| pChain.series !== C.ChainSeriesEnum.Story)
+				{
+					$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
+				}
 			}
 		}
 		else // Finish time
