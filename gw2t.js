@@ -3059,7 +3059,7 @@ E = {
 			$(entry + " .trdWiki").click(function()
 			{
 				var query = $(this).parents(".trdEntry").find(".trdName").val();
-				U.openExternalURL(U.getWikiLanguageLink(query));
+				U.openExternalURL(U.getWikiLink(query));
 			});
 			$(entry + " .trdSearch").click(function()
 			{
@@ -3095,6 +3095,7 @@ E = {
 						// Assume the inputs are siblings
 						$(this).prev().val(E.createCoinString(price + 1)).trigger("change");
 						$(this).next().val(E.createCoinString(price - 1)).trigger("change");
+						E.updateTradingPrices($(this).parents(".trdEntry"));
 					}
 				});
 			});
@@ -3238,7 +3239,7 @@ E = {
 		// Bind refresh button to re-download API data to refresh the calculators
 		$("#trdRefresh").click($.throttle(E.cREFRESH_LIMIT, function()
 		{
-			E.loopRefresh();
+			E.loopRefresh(true);
 		}));
 		$("#trdMute").click(function()
 		{
@@ -3684,21 +3685,25 @@ E = {
 	/*
 	 * Calls the refresh calculator function on regular interval.
 	 */
-	loopRefresh: function()
+	loopRefresh: function(pForce)
 	{
 		E.cancelLoopRefresh();
 		
-		if (O.Options.bol_refreshPrices)
+		if (pForce === true || O.Options.bol_refreshPrices)
 		{
 			E.updateAllTradingPrices();
 			E.updateAllExchange();
-			var wait = O.Options.int_secTradingRefresh * T.cMILLISECONDS_IN_SECOND;
-			// Animate progress bar with same duration as refresh wait time
-			E.ProgressTick = O.Options.int_secTradingRefresh;
-			E.ProgressWait = O.Options.int_secTradingRefresh;
-			E.animateProgress();
-			// Repeat this function
-			E.RefreshTimeout = setTimeout(E.loopRefresh, wait);
+			
+			if (O.Options.bol_refreshPrices)
+			{
+				var wait = O.Options.int_secTradingRefresh * T.cMILLISECONDS_IN_SECOND;
+				// Animate progress bar with same duration as refresh wait time
+				E.ProgressTick = O.Options.int_secTradingRefresh;
+				E.ProgressWait = O.Options.int_secTradingRefresh;
+				E.animateProgress();
+				// Repeat this function
+				E.RefreshTimeout = setTimeout(E.loopRefresh, wait);
+			}
 		}
 	},
 	
