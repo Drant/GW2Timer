@@ -2895,8 +2895,8 @@ E = {
 			if (X.getChecklistItem(X.Checklists.TradingOverwrite, U.getSubintegerFromHTMLID(pEntry))
 					=== X.ChecklistEnum.Checked)
 			{
-				pEntry.find(".trdBuy").val(buyelm.val()).trigger("change");
-				pEntry.find(".trdSell").val(sellelm.val()).trigger("change");
+				pEntry.find(".trdBuy").val(buyelm.val()).trigger("input");
+				pEntry.find(".trdSell").val(sellelm.val()).trigger("input");
 			}
 		}).done(function()
 		{
