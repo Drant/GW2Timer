@@ -757,6 +757,14 @@ O = {
 				case O.IntEnum.Alarm.Checklist: icon = "img/ui/check.png"; break;
 				case O.IntEnum.Alarm.Subscription: icon = "img/ui/subscription.png"; break;
 			}
+			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Off)
+			{
+				$("#optAlarmSpeaker").attr("src", "img/ui/mute.png");
+			}
+			else
+			{
+				$("#optAlarmSpeaker").attr("src", "img/ui/speaker.png");
+			}
 			$("#optAlarmIcon").attr("src", icon);
 		},
 		bol_hideChecked: function()
@@ -916,7 +924,7 @@ U = {
 	 * http://example.com/?ExampleKey=ExampleValue&MoreExampleKey=MoreExampleValue
 	 * so if a user enters http://gw2timer.com/?bol_showMap=false then the map
 	 * will be hidden regardless of previous localStorage or the defaults here.
-	 * Note that "bol_bol_showMap" matches exactly as in the Options, otherwise
+	 * Note that "bol_showMap" matches exactly as in the Options, otherwise
 	 * it would have not overridden any Options variable. Values used apart from
 	 * comparison should be sanitized first.
 	 */
@@ -1379,6 +1387,12 @@ U = {
 			var sectionstring = "";
 			var articlestring = "";
 			var gostring = "";
+			var modestring = "";
+			
+			if (I.ModeCurrent === I.ModeEnum.Overlay)
+			{
+				modestring = "&mode=Overlay";
+			}
 
 			if (section)
 			{
@@ -1393,7 +1407,7 @@ U = {
 				gostring = "&" + U.KeyEnum.Go + "=" + go;
 			}
 			
-			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring);
+			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring + modestring);
 		}
 	},
 	
@@ -1442,14 +1456,11 @@ U = {
 	 */
 	convertExternalLink: function(pSelector)
 	{
-		if (I.ModeCurrent !== I.ModeEnum.Overlay)
+		$(pSelector).each(function()
 		{
-			$(pSelector).each(function()
-			{
-				$(this).attr("href", I.cSiteURL + "out?" + escape($(this).attr("href")));
-				$(this).attr("target", "_blank");
-			});
-		}
+			$(this).attr("href", I.cSiteURL + "out?" + escape($(this).attr("href")));
+			$(this).attr("target", "_blank");
+		});
 	},
 	
 	/*
@@ -1588,8 +1599,8 @@ U = {
 	 */
 	getAssetIconURL: function(pItemDetails)
 	{
-		return U.URL_API.ItemRender + pItemDetails.icon_file_signature
-			+ "/" + pItemDetails.icon_file_id + ".png";
+		return U.URL_API.ItemRender + pItemDetails["icon_file_signature"]
+			+ "/" + pItemDetails["icon_file_id"] + ".png";
 	}
 };
 
@@ -6741,7 +6752,7 @@ P = {
 	
 	/*
 	 * Create submaps that are giant markers with an image of a map area.
-	 * Used for temporary zones that hasn't been put in the API tileset.
+	 * Used for temporary zones that haven't been put in the API tileset.
 	 */
 	generateSubmaps: function()
 	{
