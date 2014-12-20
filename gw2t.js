@@ -70,7 +70,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 141113},
+		programVersion: {key: "int_utlProgramVersion", value: 141219},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -103,6 +103,7 @@ O = {
 		bol_displayVistas: true,
 		bol_displaySkills: true,
 		bol_displayHearts: true,
+		bol_displayEvents: false,
 		// Alarm
 		int_setAlarm: 0,
 		bol_alertAtStart: true,
@@ -642,6 +643,18 @@ O = {
 				X.setCheckboxEnumState($(this), X.boolToChecklistEnum(O.Options.bol_showWorldCompletion));
 			});
 		});
+		$("#opt_bol_displayEvents").change(function()
+		{
+			if (O.Options.bol_displayEvents === true
+				&& M.isEventIconsGenerated === false)
+			{
+				location.reload();
+			}
+			if (M.isEventIconsGenerated)
+			{
+				M.refreshCurrentZone();
+			}
+		});
 		// Trigger zone in and out of current zone to toggle the icon's display
 		$("#mapOptionsDisplay label input").each(function()
 		{
@@ -649,10 +662,7 @@ O = {
 			{
 				if (M.isAPIRetrieved_MAPFLOOR)
 				{
-					var currentcoord = M.ZoneCurrent.center;
-					M.showCurrentZone(M.getZoneCenter("dry"));
-					M.showCurrentZone(M.getZoneCenter("rata"));
-					M.showCurrentZone(currentcoord);
+					M.refreshCurrentZone();
 				}
 			});
 		});
@@ -916,7 +926,6 @@ U = {
 		var lang = D.getFullySupportedLanguage();
 		U.URL_API.MapFloor += "&lang=" + lang;
 		U.URL_API.EventNames += "?lang=" + lang;
-		U.URL_API.EventDetails += "?lang=" + lang;
 	},
 
 	/*
@@ -2889,12 +2898,12 @@ E = {
 		{
 			previousbuy = E.parseCoinString(pEntry.find(".trdCurrentBuy").first().val());
 			previoussell = E.parseCoinString(pEntry.find(".trdCurrentSell").first().val());
-			if (pData.buys !== undefined)
+			if (pData.buys !== undefined && pData.buys.length > 0)
 			{
 				// Get highest buy order
 				currentbuy = parseInt(pData.buys[0].unit_price);
 			}
-			if (pData.sells !== undefined)
+			if (pData.sells !== undefined && pData.sells.length > 0)
 			{
 				// Get lowest sell listing
 				currentsell = parseInt(pData.sells[0].unit_price);
@@ -5805,6 +5814,7 @@ M = {
 	Regions: GW2T_REGION_DATA,
 	cInitialZone: "lion",
 	Map: {},
+	Events: {},
 	Resources: {},
 	Collectibles: {},
 	ZoneCurrent: {},
@@ -5817,6 +5827,7 @@ M = {
 	isMapAJAXDone: false,
 	isAPIRetrieved_MAPFLOOR: false,
 	isMappingIconsGenerated: false,
+	isEventIconsGenerated: false,
 	cLEAFLET_PATH_OPACITY: 0.5,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
@@ -5850,7 +5861,9 @@ M = {
 		Landmark: 2,
 		Vista: 3,
 		Skill: 4,
-		Heart: 5
+		Heart: 5,
+		EventIcon: 6,
+		EventRing: 7
 	},
 	APIPOIEnum:
 	{
@@ -5963,7 +5976,7 @@ M = {
 			continuousWorld: true
 		}).addTo(M.Map);
 		
-		// Initialize array in zones to later hold waypoint map markers
+		// Initialize array in zones to later hold world completion and dynamic event icons
 		for (var i in M.Zones)
 		{
 			M.Zones[i].ZoneEntities = new Array();
@@ -6087,7 +6100,7 @@ M = {
 		M.Map.on("zoomend", function(pEvent)
 		{
 			M.adjustZoomMapping();
-			M.adjustZoomEvent();
+			M.adjustZoomStory();
 		});
 	},
 	
@@ -6147,7 +6160,9 @@ M = {
 						|| (entitytype === M.MappingEnum.Vista && O.Options.bol_displayVistas)
 						|| (entitytype === M.MappingEnum.Skill && O.Options.bol_displaySkills)
 						|| (entitytype === M.MappingEnum.Heart && O.Options.bol_displayHearts)
-						|| (entitytype === M.MappingEnum.Sector && O.Options.bol_displaySectors) )
+						|| (entitytype === M.MappingEnum.Sector && O.Options.bol_displaySectors)
+						|| (entitytype === M.MappingEnum.EventIcon && O.Options.bol_displayEvents)
+						|| (entitytype === M.MappingEnum.EventRing && O.Options.bol_displayEvents))
 					{
 						entity._icon.style.display = "block";
 					}
@@ -6158,6 +6173,18 @@ M = {
 				break; // Already found zone so stop searching
 			}
 		}
+	},
+	
+	/*
+	 * Simulates the action of moving the mouse outside the current zone to
+	 * another and back again, so as to trigger the icon adjustment functions.
+	 */
+	refreshCurrentZone: function()
+	{
+		var currentcoord = M.ZoneCurrent.center;
+		M.showCurrentZone(M.getZoneCenter("dry"));
+		M.showCurrentZone(M.getZoneCenter("rata"));
+		M.showCurrentZone(currentcoord);
 	},
 	
 	/*
@@ -6172,6 +6199,26 @@ M = {
 		var x = rect[0][0] + ~~((rect[1][0] - rect[0][0]) / 2);
 		var y = rect[0][1] + ~~((rect[1][1] - rect[0][1]) / 2);
 		return [x, y];
+	},
+	
+	/*
+	 * Gets the center coordinates of an event.
+	 * @param object pEvent an event from event_details.json
+	 * @returns array of x and y coordinates.
+	 * @pre map_floor.json was extracted to the M.Zones object.
+	 */
+	getEventCenter: function(pEvent)
+	{
+		var zone = M.getZoneFromID(pEvent.map_id);
+		var cr = zone.continent_rect; // 2D float array
+		var mr = zone.map_rect; // 2D float array
+		var p = pEvent.location.center; // 3D float array
+		
+		// Code from http://gw2.chillerlan.net/examples/gw2maps-jquery.html
+		return M.convertGCtoLC([
+			(cr[0][0]+(cr[1][0]-cr[0][0])*(p[0]-mr[0][0])/(mr[1][0]-mr[0][0])),
+			(cr[0][1]+(cr[1][1]-cr[0][1])*(1-(p[1]-mr [0][1])/(mr[1][1]-mr[0][1])))
+		]);
 	},
 	
 	/*
@@ -6199,17 +6246,25 @@ M = {
 		var i;
 		var entity;
 		var currentzoom = M.Map.getZoom();
-		var waypointsize, landmarksize;
+		var waypointsize, landmarksize, eventiconsize, eventringsize;
 		var sectorfontsize, sectoropacity;
 		
 		switch (currentzoom)
 		{
-			case 7: waypointsize = 40; landmarksize = 32; break;
-			case 6: waypointsize = 32; landmarksize = 24; break;
-			case 5: waypointsize = 26; landmarksize = 16; break;
-			case 4: waypointsize = 20; landmarksize = 0; break;
-			case 3: waypointsize = 16; landmarksize = 0; break;
-			default: { waypointsize = 0; landmarksize = 0; }
+			case 7: waypointsize = 40; landmarksize = 32; eventiconsize = 32; eventringsize = 256; break;
+			case 6: waypointsize = 32; landmarksize = 24; eventiconsize = 24; eventringsize = 128; break;
+			case 5: waypointsize = 26; landmarksize = 16; eventiconsize = 16; eventringsize = 64; break;
+			case 4: waypointsize = 20; landmarksize = 0; eventiconsize = 12; eventringsize = 32; break;
+			case 3: waypointsize = 16; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
+			default: { waypointsize = 0; landmarksize = 0; eventiconsize = 0; eventringsize = 0; }
+		}
+		
+		switch (currentzoom)
+		{
+			case 7: sectorfontsize = "28px"; sectoropacity = 0.9; break;
+			case 6: sectorfontsize = "20px"; sectoropacity = 0.6; break;
+			case 5: sectorfontsize = "16px"; sectoropacity = 0.3; break;
+			default: { sectorfontsize = "0px"; sectoropacity = 0; }
 		}
 
 		// Resize mapping icons in moused zone
@@ -6254,13 +6309,6 @@ M = {
 				
 				case M.MappingEnum.Sector:
 				{
-					switch (currentzoom)
-					{
-						case 7: sectorfontsize = "28px"; sectoropacity = 0.9; break;
-						case 6: sectorfontsize = "20px"; sectoropacity = 0.6; break;
-						case 5: sectorfontsize = "16px"; sectoropacity = 0.3; break;
-						default: { sectorfontsize = "0px"; sectoropacity = 0;  }
-					}
 					entity._icon.style.fontSize = sectorfontsize;
 					entity._icon.style.opacity = sectoropacity;
 					entity._icon.style.zIndex = M.cZIndexBury + 1; // Don't cover other icons
@@ -6268,6 +6316,18 @@ M = {
 					{
 						entity._icon.style.display = "table"; // For middle vertical alignment
 					}
+				} break;
+				
+				case M.MappingEnum.EventIcon:
+				{
+					M.changeMarkerIcon(entity, entity._icon.src, eventiconsize);
+					entity._icon.style.zIndex = 1000;
+				} break;
+				
+				case M.MappingEnum.EventRing:
+				{
+					M.changeMarkerIcon(entity, entity._icon.src, eventringsize);
+					entity._icon.style.zIndex = -10000;
 				} break;
 			}
 		}
@@ -6277,7 +6337,7 @@ M = {
 	/*
 	 * Resizes story markers and submaps so they scale with the current zoom level.
 	 */
-	adjustZoomEvent: function()
+	adjustZoomStory: function()
 	{
 		var i;
 		var currentzoom = M.Map.getZoom();
@@ -6806,7 +6866,7 @@ P = {
 	},
 	
 	/*
-	 * Initializes map waypoints and other markers from the GW2 server API files.
+	 * Generates map waypoints and other markers from the GW2 server API files.
 	 */
 	populateMap: function()
 	{
@@ -6868,6 +6928,9 @@ P = {
 					{
 						M.getZoneFromID(zoneid)["name_" + D.getFullySupportedLanguage()] = zone.name;
 					}
+					// Store zone dimension data for locating events
+					M.getZoneFromID(zoneid).map_rect = zone.map_rect;
+					M.getZoneFromID(zoneid).continent_rect = zone.continent_rect;
 					
 					/* 
 					 * For waypoints, points of interest, and vistas.
@@ -7071,20 +7134,6 @@ P = {
 				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
 			}
 			
-			if (O.Options.bol_tourPrediction && I.PageCurrent === I.PageEnum.Chains
-				&& U.Args[U.KeyEnum.Go] === undefined)
-			{
-				// Initialize the "current moused zone" variable for showing waypoints
-				M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
-				// Tour to the event on the map if opted
-				$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
-					+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
-			}
-			/*
-			 * Start tooltip plugin after the markers were loaded, because it
-			 * reads the title attribute and convert them into a div "tooltip".
-			 */
-			I.qTip.init(".leaflet-marker-icon");
 		}).fail(function()
 		{
 			if (I.ModeCurrent === I.ModeEnum.Website)
@@ -7100,11 +7149,14 @@ P = {
 			}
 		}).always(function() // Do after AJAX regardless of success/failure
 		{
-			M.isMapAJAXDone = true;
-			M.bindMapVisualChanges();
-			M.adjustZoomMapping();
-			M.adjustZoomEvent();
-			M.goToURLCoords();
+			if (O.Options.bol_displayEvents === true)
+			{
+				P.populateEvents();
+			}
+			else
+			{
+				P.finishPopulation();
+			}
 		});
 		
 		/*
@@ -7147,6 +7199,198 @@ P = {
 			});
 		}	
 	}, // End of populateMap
+	
+	/*
+	 * Generates icons and rings for all dynamic events.
+	 */
+	populateEvents: function()
+	{
+		// Function to filter out unwanted events
+		var isEventUnwanted = function(pName)
+		{
+			if (pName.indexOf("guild") !== -1 || // Guild missions
+				pName.indexOf("subdue") !== -1 || // Guild bounty
+				pName.indexOf("skill") !== -1 || // Skill challenges
+				pName.indexOf("offshoot") !== -1 || // Obsolete Living Story events
+				pName.indexOf("vigil en") !== -1 ||
+				pName.indexOf("haunted") !== -1)
+			{
+				return true;
+			}
+			return false;
+		};
+		
+		// Function to guess an event's icon (not provided by the API) based on its name
+		var determineEventIcon = function(pName)
+		{
+			if (pName.indexOf("burglar") !== -1) return "img/event/fist.png";
+			if (pName.indexOf("free") !== -1) return "img/event/release.png";
+			if (pName.indexOf("rescue") !== -1) return "img/event/release.png";
+			if (pName.indexOf("capture") !== -1) return "img/event/flag.png";
+			if (pName.indexOf("retake") !== -1) return "img/event/flag.png";
+			if (pName.indexOf("reclaim") !== -1) return "img/event/flag.png";
+			if (pName.indexOf("liberate") !== -1) return "img/event/flag.png";
+			if (pName.indexOf("protect") !== -1) return "img/event/shield.png";
+			if (pName.indexOf("defend") !== -1) return "img/event/shield.png";
+			if (pName.indexOf("escort") !== -1) return "img/event/shield.png";
+			if (pName.indexOf("kill") !== -1) return "img/event/boss.png";
+			if (pName.indexOf("slay") !== -1) return "img/event/boss.png";
+			if (pName.indexOf("defeat") !== -1) return "img/event/boss.png";
+			if (pName.indexOf("help") !== -1) return "img/event/star.png";
+			if (pName.indexOf("destroy") !== -1) return "img/event/cog.png";
+			if (pName.indexOf("collect") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("gather") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("bring") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("recover") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("return") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("retrieve") !== -1) return "img/event/collect.png";
+			return "img/event/swords.png";
+		};
+		
+		// Function to approximate the event ring as viewed in the game's minimap
+		var determineEventRing = function(pEvent)
+		{
+			var r = pEvent.location.radius;
+			switch (pEvent.location.type)
+			{
+				case "sphere": {
+					if (r < 2000) return "img/ring/c_s.png";
+					return "img/ring/c_m.png";
+				}
+				
+				case "cylinder": {
+					return "img/ring/e_m_h.png";
+				}
+				
+				case "poly": {
+					return "img/ring/e_l_h.png";
+				}
+			}
+			
+			return "img/ring/c_m.png";
+		};
+		
+		// First, store the event names in user's language
+		// Note that event_names.json does not contain obsolete events, unlike event_details.json
+		$.getJSON(U.URL_API.EventNames, function(pData)
+		{
+			var i;
+			for (i in pData)
+			{
+				M.Events[(pData[i].id)] = {};
+				M.Events[(pData[i].id)].name = pData[i].name;
+			}
+		}).done(function()
+		{
+			// Second, retrieve the event details in the default language for filtering events
+			$.getJSON(U.URL_API.EventDetails, function(pDataInner)
+			{
+				var i;
+				var event;
+				var searchname;
+				var newname;
+				var mappingentity;
+				var coord;
+
+				var zoneobj;
+
+				for (i in pDataInner.events)
+				{
+					event = pDataInner.events[i];
+					searchname = event.name.toLowerCase();
+					newname = (M.Events[i] !== undefined) ? M.Events[i].name : event.name;
+					zoneobj = M.getZoneFromID(event.map_id);
+					// Skip iterated event if...
+					if (M.Events[i] === undefined // Event is not in event_names.json also
+						|| zoneobj === undefined // Event is not in a world map zone
+						|| isEventUnwanted(searchname) // Event is obsolete
+						|| event.map_id === 988 // Ignore Dry Top
+						|| event.map_id === 50) // LA
+					{
+						continue;
+					}
+
+					coord = M.getEventCenter(event);
+
+					// Create event's ring
+					mappingentity = L.marker(coord,
+					{
+						clickable: false,
+						mappingtype: M.MappingEnum.EventRing,
+						icon: L.icon(
+						{
+							iconUrl: determineEventRing(event),
+							iconSize: [256, 256],
+							iconAnchor: [128, 128]
+						})
+					}).addTo(M.Map);
+					mappingentity._icon.style.display = "none";
+					zoneobj.ZoneEntities.push(mappingentity);
+
+					// Create event's icon
+					mappingentity = L.marker(coord,
+					{
+						title: "<span class='" + "mapPoi" + "'>" + newname + " (" + event.level + ")" + "</span>",
+						mappingtype: M.MappingEnum.EventIcon,
+						icon: L.icon(
+						{
+							iconUrl: determineEventIcon(searchname),
+							iconSize: [48, 48],
+							iconAnchor: [24, 24]
+						})
+					}).addTo(M.Map);
+					mappingentity._icon.style.display = "none";
+					M.bindMappingZoomBehavior(mappingentity, "click");
+					zoneobj.ZoneEntities.push(mappingentity);
+				}
+				M.isEventIconsGenerated = true;
+
+			}).done(function()
+			{
+
+			}).fail(function()
+			{
+
+			}).always(function()
+			{
+				P.finishPopulation();
+			});
+		}).fail(function()
+		{
+			P.finishPopulation();
+		}).always(function()
+		{
+			
+		});
+	},
+	
+	/*
+	 * Does final touches to the map after the zone icons have been generated.
+	 */
+	finishPopulation: function()
+	{
+		/*
+		 * Start tooltip plugin after the markers were loaded, because it
+		 * reads the title attribute and convert them into a div "tooltip".
+		 */
+		I.qTip.init(".leaflet-marker-icon");
+		
+		if (O.Options.bol_tourPrediction && I.PageCurrent === I.PageEnum.Chains
+			&& U.Args[U.KeyEnum.Go] === undefined)
+		{
+			// Initialize the "current moused zone" variable for showing waypoints
+			M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
+			// Tour to the event on the map if opted
+			$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
+				+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
+		}
+		
+		M.isMapAJAXDone = true;
+		M.bindMapVisualChanges();
+		M.adjustZoomMapping();
+		M.adjustZoomStory();
+		M.goToURLCoords();
+	},
 	
 	/*
 	 * Creates polylines for the map based on event's path data, then add event
