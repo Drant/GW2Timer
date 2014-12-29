@@ -900,6 +900,7 @@ U = {
 		EventNames: "https://api.guildwars2.com/v1/event_names.json",
 		EventDetails: "https://api.guildwars2.com/v1/event_details.json",
 		ItemListing: "https://api.guildwars2.com/v2/commerce/listings/",
+		ItemPrices: "https://api.guildwars2.com/v2/commerce/prices/",
 		ItemDetails: "https://api.guildwars2.com/v1/item_details.json?item_id=",
 		ItemRender: "https://render.guildwars2.com/file/",
 		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
@@ -2894,19 +2895,19 @@ E = {
 		var selllow = E.parseCoinString(selllowelm.val());
 		var sellhigh = E.parseCoinString(sellhighelm.val());
 
-		$.getJSON(U.URL_API.ItemListing + id, function(pData)
+		$.getJSON(U.URL_API.ItemPrices + id, function(pData)
 		{
 			previousbuy = E.parseCoinString(pEntry.find(".trdCurrentBuy").first().val());
 			previoussell = E.parseCoinString(pEntry.find(".trdCurrentSell").first().val());
-			if (pData.buys !== undefined && pData.buys.length > 0)
+			if (pData.buys !== undefined)
 			{
 				// Get highest buy order
-				currentbuy = parseInt(pData.buys[0].unit_price);
+				currentbuy = parseInt(pData.buys.unit_price);
 			}
-			if (pData.sells !== undefined && pData.sells.length > 0)
+			if (pData.sells !== undefined)
 			{
 				// Get lowest sell listing
-				currentsell = parseInt(pData.sells[0].unit_price);
+				currentsell = parseInt(pData.sells.unit_price);
 			}
 			buyelm.val(E.createCoinString(currentbuy));
 			sellelm.val(E.createCoinString(currentsell));
@@ -4186,7 +4187,7 @@ D = {
 		pl: "Ognisty Żywioł",
 		pt: "Fogo Elemental",
 		ru: "Огонь Элементаль",
-		zh: "火元素"
+		zh: "火焰元素"
 	},{
 		en: "Golem Mark II",
 		de: "Golem Typ II",
@@ -4197,7 +4198,7 @@ D = {
 		pl: "Golem Model II",
 		pt: "Golem Tipo II",
 		ru: "Голем Тип II",
-		zh: "Golem 2型"
+		zh: "魔像馬克II型"
 	},{
 		en: "Claw of Jormag",
 		de: "Klaue Jormags",
@@ -4208,7 +4209,7 @@ D = {
 		pl: "Szpon Jormaga",
 		pt: "Garra de Jormag",
 		ru: "Йормаг Коготь",
-		zh: "爪的 Jormag"
+		zh: "卓瑪之爪"
 	},{
 		en: "Svanir Shaman",
 		de: "Schamanenoberhaupt der Svanir",
@@ -4219,7 +4220,7 @@ D = {
 		pl: "Wódz Szamanów Svanira",
 		pt: "Chefe Xamã Svanir",
 		ru: "Главный Шаман Сванир",
-		zh: "Svanir 的首席薩滿"
+		zh: "斯瓦尼亞薩滿"
 	},{
 		en: "Megadestroyer",
 		de: "Megazerstörer",
@@ -4230,7 +4231,7 @@ D = {
 		pl: "Wielkiniszczyciel",
 		pt: "Megadestruidor",
 		ru: "Мегадеструктор",
-		zh: "Megadestroyer"
+		zh: "超能毀滅者"
 	},{
 		en: "Shadow Behemoth",
 		de: "Schatten-Behemoth",
@@ -4241,7 +4242,7 @@ D = {
 		pl: "Mroczny Behemot",
 		pt: "Behemoth de Sombra",
 		ru: "Бегемот из Тени",
-		zh: "影子的巨獸"
+		zh: "暗影巨獸"
 	},{
 		en: "The Shatterer",
 		de: "Den Zerschmetterer",
@@ -4252,7 +4253,7 @@ D = {
 		pl: "Shatterer",
 		pt: "O Shatterer",
 		ru: "Шаттерер",
-		zh: "Shatterer"
+		zh: "碎裂巨獸"
 	},{
 		en: "Taidha Covington",
 		de: "Taidha Covington",
@@ -4263,7 +4264,7 @@ D = {
 		pl: "Taidha Covington",
 		pt: "Taidha Covington",
 		ru: "Таидха Цовингтон",
-		zh: "Taidha Covington"
+		zh: "泰達·科文頓"
 	},{
 		en: "Modniir Ulgoth",
 		de: "Ulgoth den Modniir",
@@ -4274,7 +4275,7 @@ D = {
 		pl: "Modniir Ulgoth",
 		pt: "Ulgoth o Modniir",
 		ru: "Улготх в Модниир",
-		zh: "Ulgoth 的 Modniir"
+		zh: "莫迪爾沃爾格斯"
 	},{
 		en: "Great Jungle Wurm",
 		de: "Großen Dschungelwurm",
@@ -4285,7 +4286,7 @@ D = {
 		pl: "Wielki Robak z Dżungli",
 		pt: "Grande Verme Selva",
 		ru: "Великий Червь из Джунглей",
-		zh: "大叢林蠕蟲"
+		zh: "巨型叢林地虫"
 	},{
 		en: "Karka Queen",
 		de: "Karka-Königin",
@@ -4296,7 +4297,7 @@ D = {
 		pl: "Karka Królowa",
 		pt: "Rainha Karka",
 		ru: "Карка Королева",
-		zh: "女王 Karka"
+		zh: "喀殼虫女王"
 	},{
 		en: "Tequatl the Sunless",
 		de: "Tequatl den Sonnenlosen",
@@ -4307,7 +4308,7 @@ D = {
 		pl: "Tequatl ma Słońca",
 		pt: "Tequatl o Sem Sol",
 		ru: "Теqуатл Тусклый",
-		zh: "Tequatl 沒有陽光"
+		zh: "吞噬托"
 	},{
 		en: "Triple Wurm",
 		de: "Dreifach Wurm",
@@ -4318,7 +4319,7 @@ D = {
 		pl: "Potrójne Robak",
 		pt: "Verme Triplo",
 		ru: "Тройной Червь",
-		zh: "三蟲"
+		zh: "進化巨型叢林地虫"
 	},{
 		en: "Dry Top Q1",
 		de: "Trockenkuppe Q1",
@@ -7223,7 +7224,6 @@ P = {
 		// Function to guess an event's icon (not provided by the API) based on its name
 		var determineEventIcon = function(pName)
 		{
-			if (pName.indexOf("burglar") !== -1) return "img/event/fist.png";
 			if (pName.indexOf("free") !== -1) return "img/event/release.png";
 			if (pName.indexOf("rescue") !== -1) return "img/event/release.png";
 			if (pName.indexOf("capture") !== -1) return "img/event/flag.png";
@@ -7236,14 +7236,15 @@ P = {
 			if (pName.indexOf("kill") !== -1) return "img/event/boss.png";
 			if (pName.indexOf("slay") !== -1) return "img/event/boss.png";
 			if (pName.indexOf("defeat") !== -1) return "img/event/boss.png";
+			if (pName.indexOf("collect") !== -1) return "img/event/collect.png";
 			if (pName.indexOf("help") !== -1) return "img/event/star.png";
 			if (pName.indexOf("destroy") !== -1) return "img/event/cog.png";
-			if (pName.indexOf("collect") !== -1) return "img/event/collect.png";
 			if (pName.indexOf("gather") !== -1) return "img/event/collect.png";
 			if (pName.indexOf("bring") !== -1) return "img/event/collect.png";
 			if (pName.indexOf("recover") !== -1) return "img/event/collect.png";
 			if (pName.indexOf("return") !== -1) return "img/event/collect.png";
 			if (pName.indexOf("retrieve") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("burglar") !== -1) return "img/event/fist.png";
 			return "img/event/swords.png";
 		};
 		

@@ -2,6 +2,7 @@
  */
 
 var GW2T_REGION_DATA = {
+"wastes": { en: "Maguuma Wastes", de: "Maguuma-Einöde", es: "Páramos Maguuma", fr: "Contrées sauvages de Maguuma" },
 "maguuma": { en: "Maguuma", de: "Maguuma", es: "Maguuma", fr: "Maguuma" },
 "kryta": { en: "Kryta", de: "Kryta", es: "Kryta", fr: "Kryte" },
 "orr": { en: "Orr", de: "Orr", es: "Orr", fr: "Orr" },
@@ -57,13 +58,13 @@ var GW2T_ZONE_DATA = {
 "dry":
 {
 	name: "Dry Top",
-	region: "maguuma",
+	region: "wastes",
 	rect: [[3840, 15742], [5888, 17152]]//[3840, 14592]
 },
 "silverwastes":
 {
 	name: "The Silverwastes",
-	region: "maguuma",
+	region: "wastes",
 	rect: [[3838, 14206], [5886, 15742]]
 },
 "rata":
