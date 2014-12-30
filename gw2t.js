@@ -7134,6 +7134,10 @@ P = {
 			{
 				M.setEntityGroupDisplay(M.ChainPathEntities, "show");
 			}
+			if (O.Options.bol_displayEvents === false)
+			{
+				P.donePopulation();
+			}
 			
 		}).fail(function()
 		{
@@ -7348,7 +7352,7 @@ P = {
 
 			}).done(function()
 			{
-
+				P.donePopulation();
 			}).fail(function()
 			{
 
@@ -7368,7 +7372,7 @@ P = {
 	/*
 	 * Does final touches to the map after the zone icons have been generated.
 	 */
-	finishPopulation: function()
+	donePopulation: function()
 	{
 		/*
 		 * Start tooltip plugin after the markers were loaded, because it
@@ -7385,7 +7389,9 @@ P = {
 			$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
 				+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
 		}
-		
+	},
+	finishPopulation: function()
+	{
 		M.isMapAJAXDone = true;
 		M.bindMapVisualChanges();
 		M.adjustZoomMapping();
