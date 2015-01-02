@@ -120,6 +120,7 @@ O = {
 		int_numTradingResults: 30,
 		int_secTradingRefresh: 60,
 		// Advanced
+		int_shiftLogin: 0,
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
 		bol_use24Hour: true,
@@ -7506,6 +7507,33 @@ P = {
 	 */
 	generateAndInitializeDailies: function()
 	{
+		var DAYS_IN_TRACK = 28;
+		var LOGIN_START_UNIX = 1418774400; // 2014-12-17:0000 UTC or 2014-12-16:1600 PST
+		var DAYS_SINCE_START = ~~((T.getUNIXSeconds() - LOGIN_START_UNIX) / T.cSECONDS_IN_DAY) - O.Options.int_shiftLogin;
+		var TRACKS_SINCE_START = ~~(DAYS_SINCE_START / DAYS_IN_TRACK);
+		var CURRENT_DAY_IN_TRACK = T.wrapInteger(DAYS_SINCE_START, DAYS_IN_TRACK);
+		
+		// Highlight unlocked days
+		var i = 0;
+		$("#mapLoginCalendar img").each(function()
+		{
+			if (i === CURRENT_DAY_IN_TRACK + 1)
+			{
+				return false; // Break from each loop
+			}
+			else if (i === CURRENT_DAY_IN_TRACK)
+			{
+				$(this).css({border: "1px solid #44dd44"}); // Current day is highlighted
+			}
+			$(this).css({opacity: 1}); // Days unlocked becomes fully opaque
+			
+			i++;
+		});
+		
+		// Show statistics
+		$("#mapLoginRecord").text((CURRENT_DAY_IN_TRACK + 1) + " / " + DAYS_IN_TRACK + " (" + (DAYS_SINCE_START + 1) + ")");
+		
+		// Obsolete dailies map locations
 		$(".mapDailyLists dt").each(function()
 		{
 			M.bindMapLinkBehavior($(this), null);
@@ -7535,7 +7563,7 @@ P = {
 			M.setEntityGroupDisplay(M.DailyEntities, M.isShowingIconsForDaily);
 		});
 		
-		I.qTip.init(".leaflet-marker-icon");
+		I.qTip.init("#mapLoginCalendar img");
 	},
 	
 	/*
@@ -10271,7 +10299,7 @@ I = {
 			
 			// Bind click the header to toggle the sibling collapsible container
 			header.click(function()
-			{	
+			{
 				var section = U.getSubstringFromHTMLID($(this));
 				$(pLayer + " .menuBeamIcon").removeClass("menuBeamIconActive");
 				
@@ -10306,6 +10334,12 @@ I = {
 					$(this).next().toggle();
 				}
 				$(this).removeData("donotanimate");
+			});
+			
+			// Opening the section at least once will load that section's img tags
+			header.one("click", function()
+			{
+				I.loadSectionImg($(this));
 			});
 			
 			// Create and bind the additional bottom header to collapse the container
@@ -10359,6 +10393,22 @@ I = {
 		
 		// Make tooltips for the beam menu icons
 		I.qTip.init(pLayer + " .menuBeamIcon");
+	},
+	
+	/*
+	 * Loads images in a toggleable section, whose src attributes were initially
+	 * written in the data attribute.
+	 * @param jqobject pHeader to find the adjacent section tag.
+	 */
+	loadSectionImg: function(pHeader)
+	{
+		pHeader.next().find("img").each(function()
+		{
+			if ($(this).attr("data-src"))
+			{
+				$(this)[0].src = $(this).data("src");
+			}
+		});
 	},
 	
 	/*
@@ -10606,9 +10656,15 @@ I = {
 			I.bindAfterAJAXContent("#layerMap");
 			
 			// Create daily markers
-			$("#headerMap_Daily").one("click", P.generateAndInitializeDailies);
+			$("#headerMap_Daily").one("click", function()
+			{
+				P.generateAndInitializeDailies();
+			});
 			// Create node markers and checkboxes
-			$("#headerMap_Resource").one("click", P.generateAndInitializeResourceNodes);
+			$("#headerMap_Resource").one("click", function()
+			{
+				P.generateAndInitializeResourceNodes();
+			});
 			// Create JP checklist
 			$("#headerMap_JP").one("click", function()
 			{
@@ -10634,7 +10690,10 @@ I = {
 				X.initializeNotepad();
 			});
 			// Create collectible markers and checkboxes
-			$("#headerMap_Collectible").one("click", P.generateAndInitializeCollectibles);
+			$("#headerMap_Collectible").one("click", function()
+			{
+				P.generateAndInitializeCollectibles();
+			});
 			
 			// Bind show map icons when clicked on header
 			$("#headerMap_Daily, #headerMap_Resource, #headerMap_JP, #headerMap_Collectible").each(function()

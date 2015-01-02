@@ -571,7 +571,7 @@ var GW2T_CHAIN_DATA = [
 	alias: "SB",
 	pronunciation: "shadow behemoth",
 	series: 2,
-	waypoint: "[&BPMAAAA=]",
+	waypoint: "[&BPcAAAA=]",
 	title: "Secrets in the Swamp",
 	events: [
 		{

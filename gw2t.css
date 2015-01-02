@@ -191,7 +191,7 @@ a, input, label, button,
 }
 
 /* Help */
-.jsHelpTooltip, .chnDetails ol li img {
+.jsHelpTooltip, .chnDetails ol li img, #mapLoginCalendar img {
 	cursor: url("img/cursor/help.cur"), help;
 }
 
@@ -1383,6 +1383,47 @@ button.btnToggle {
 
 .mapDailyLists h2 img {
 	width: 24px; height: 24px;
+	vertical-align: middle;
+}
+
+#mapLoginRecord {
+	margin-top: 8px;
+	font-size: 18px;
+	text-align: center;
+	color: #ffeeaa;
+}
+
+#mapLoginCalendar {
+	margin-top: 8px;
+}
+
+#mapLoginCalendar img {
+	width: 32px; height: 32px;
+	margin-right: 8px;
+	vertical-align: middle;
+	border: 1px dashed #ffff66;
+	opacity: 0.3;
+}
+
+#mapLoginCalendar img.mapLoginWeekend {
+	border: 1px dashed #66aaff;
+}
+
+#mapLoginCalendar img:hover {
+	border: 1px solid #ffff66;
+}
+
+#mapLoginCalendar span {
+	display: block;
+	margin-bottom: 8px;
+}
+
+.mapLoginTip {
+	font-size: 16px;
+}
+
+.mapLoginTip img {
+	width: 32px; height: 32px;
 	vertical-align: middle;
 }
 
