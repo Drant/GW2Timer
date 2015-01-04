@@ -558,11 +558,11 @@ var GW2T_COLLECTIBLE_DATA = {
 <section>
 <samp class="jsHelpCollapsible"></samp>
 <div>
-	<p>Each day that you login to Guild Wars 2, you advance the Login Rewards track by one square and receive a reward for that square in the track. The track below is as appear to someone who has never missed a day since the Login Rewards system started. If you want to synchronize it with your track as in the game, you can shift the number of missed squares in the Options page under Daily.</p>
+	<p>Each day that you login to Guild Wars 2, you advance the Login Rewards track by one square and receive a reward for that square. The track below is as appear to someone who has never missed a day (white square) since the Login Rewards system started. The track advances automatically at server reset. You can synchronize it with your in-game track (green square) by clicking the appropriate square.</p>
 </div>
 <h2>Login Rewards Track</h2>
-	<div id="mapLoginRecord"></div>
-	<div id="mapLoginCalendar">
+	<div id="mapLoginRecord"><span id="mapLoginRecordCurrent"></span>&nbsp;<span id="mapLoginRecordHover"></span></div>
+	<div id="mapLoginTrack">
 		<span>
 		<img data-src="img/login/coin.png" title="<span class='mapLoginTip'>2x <img src='img/login/coin_i.png' /></span>" />
 		<img data-src="img/login/laurel.png" title="<span class='mapLoginTip'>1x <img src='img/login/laurel_i.png' /></span>" />
@@ -597,7 +597,7 @@ var GW2T_COLLECTIBLE_DATA = {
 		<img data-src="img/login/bl.png" title="<span class='mapLoginTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
 		<img data-src="img/login/transmutation.png" title="<span class='mapLoginTip'>3x <img src='img/login/bl_transmutation.png' /></span>" />
 		<img data-src="img/login/experience.png" title="<span class='mapLoginTip'>4x <img src='img/login/experience_i.png' /></span>" />
-		<img data-src="img/login/loyalty.png" title="<span class='mapLoginTip'>2% <img src='img/login/loyalty_coin.png' /><br />------------<br />1 <img src='img/login/loyalty_vision.png' /><br />1? <img src='img/login/loyalty_damask.png' /><br />1? <img src='img/login/loyalty_deldrimor.png' /><br />1? <img src='img/login/loyalty_elonian.png' /><br />1? <img src='img/login/loyalty_spiritwood.png' /><br /><br />1-3 <img src='img/login/loyalty_shard.png' /><br />1-3 <img src='img/login/loyalty_clover.png' /><br /><br />20x <img src='img/login/laurel_i.png' /><br /><br />6x <img src='img/login/experience_i.png' /><br /></span>" class="mapLoginWeekend" />
+		<img data-src="img/login/loyalty.png" title="<span class='mapLoginTip'>2% <img src='img/login/loyalty_coin.png' /><br /><hr /><br />1 <img src='img/login/loyalty_vision.png' /><br />1? <img src='img/login/loyalty_damask.png' /><br />1? <img src='img/login/loyalty_deldrimor.png' /><br />1? <img src='img/login/loyalty_elonian.png' /><br />1? <img src='img/login/loyalty_spiritwood.png' /><br /><br />1-3 <img src='img/login/loyalty_shard.png' /><br />1-3 <img src='img/login/loyalty_clover.png' /><br /><br />20x <img src='img/login/laurel_i.png' /><br /><br />6x <img src='img/login/experience_i.png' /><br /></span>" class="mapLoginWeekend" />
 		</span>
 	</div>
 <br />

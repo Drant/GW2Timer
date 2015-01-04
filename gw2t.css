@@ -191,7 +191,7 @@ a, input, label, button,
 }
 
 /* Help */
-.jsHelpTooltip, .chnDetails ol li img, #mapLoginCalendar img {
+.jsHelpTooltip, .chnDetails ol li img, #mapLoginTrack img {
 	cursor: url("img/cursor/help.cur"), help;
 }
 
@@ -1393,27 +1393,37 @@ button.btnToggle {
 	color: #ffeeaa;
 }
 
-#mapLoginCalendar {
+#mapLoginTrack {
 	margin-top: 8px;
 }
 
-#mapLoginCalendar img {
+#mapLoginTrack img {
 	width: 32px; height: 32px;
 	margin-right: 8px;
 	vertical-align: middle;
 	border: 1px dashed #ffff66;
-	opacity: 0.3;
 }
 
-#mapLoginCalendar img.mapLoginWeekend {
+#mapLoginTrack img.mapLoginWeekend {
 	border: 1px dashed #66aaff;
 }
 
-#mapLoginCalendar img:hover {
-	border: 1px solid #ffff66;
+#mapLoginTrack img.mapLoginOfficial {
+	border: 1px solid #fff;
+	box-shadow: 0px 0px 4px #fff;
 }
 
-#mapLoginCalendar span {
+#mapLoginTrack img.mapLoginCurrent {
+	border: 1px solid #44dd44;
+	box-shadow: 0px 0px 4px #44dd44;
+}
+
+#mapLoginTrack img:hover {
+	border: 1px solid #ffff66;
+	box-shadow: 0px 0px 4px #ffff66;
+}
+
+#mapLoginTrack span {
 	display: block;
 	margin-bottom: 8px;
 }

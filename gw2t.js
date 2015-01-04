@@ -573,6 +573,7 @@ O = {
 		var messagetime = 10;
 		I.write("Daily Reset / Timestamp Expired!", messagetime);
 		
+		// Chains checklist
 		var i;
 		if (O.Options.bol_clearChainChecklistOnReset)
 		{
@@ -590,6 +591,7 @@ O = {
 			X.clearChecklist(X.Checklists.Chain, X.ChecklistJob.UncheckTheChecked);
 		}
 		
+		// Dungeon and Personal Checklists
 		if (O.Options.bol_clearPersonalChecklistOnReset)
 		{
 			$("#chlDungeonUncheck").trigger("click");
@@ -597,8 +599,11 @@ O = {
 			X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
 			X.clearChecklist(X.Checklists.Custom, X.ChecklistJob.UncheckTheChecked);
 		}
-		I.write("", messagetime);
+		// Login rewards
+		P.shiftLoginTrack();
 		
+		// Finally
+		I.write("", messagetime);
 		O.updateLocalResetTimestamp();
 	},
 	
@@ -868,6 +873,10 @@ O = {
 			{
 				E.cancelLoopRefresh();
 			}
+		},
+		int_shiftLogin: function()
+		{
+			P.shiftLoginTrack();
 		},
 		bol_useSiteTag: function()
 		{
@@ -7507,31 +7516,19 @@ P = {
 	 */
 	generateAndInitializeDailies: function()
 	{
-		var DAYS_IN_TRACK = 28;
-		var LOGIN_START_UNIX = 1418774400; // 2014-12-17:0000 UTC or 2014-12-16:1600 PST
-		var DAYS_SINCE_START = ~~((T.getUNIXSeconds() - LOGIN_START_UNIX) / T.cSECONDS_IN_DAY) - O.Options.int_shiftLogin;
-		var TRACKS_SINCE_START = ~~(DAYS_SINCE_START / DAYS_IN_TRACK);
-		var CURRENT_DAY_IN_TRACK = T.wrapInteger(DAYS_SINCE_START, DAYS_IN_TRACK);
-		
-		// Highlight unlocked days
-		var i = 0;
-		$("#mapLoginCalendar img").each(function()
+		P.shiftLoginTrack();
+		$("#mapLoginTrack img").each(function()
 		{
-			if (i === CURRENT_DAY_IN_TRACK + 1)
+			$(this).click(function(){
+				P.shiftLoginValue(parseInt($(this).data("i")));
+			}).mouseenter(function()
 			{
-				return false; // Break from each loop
-			}
-			else if (i === CURRENT_DAY_IN_TRACK)
+				$("#mapLoginRecordHover").text("(" + (parseInt($(this).data("i")) + 1) + ")");
+			}).mouseleave(function()
 			{
-				$(this).css({border: "1px solid #44dd44"}); // Current day is highlighted
-			}
-			$(this).css({opacity: 1}); // Days unlocked becomes fully opaque
-			
-			i++;
+				$("#mapLoginRecordHover").text("");
+			});
 		});
-		
-		// Show statistics
-		$("#mapLoginRecord").text((CURRENT_DAY_IN_TRACK + 1) + " / " + DAYS_IN_TRACK + " (" + (DAYS_SINCE_START + 1) + ")");
 		
 		// Obsolete dailies map locations
 		$(".mapDailyLists dt").each(function()
@@ -7563,7 +7560,55 @@ P = {
 			M.setEntityGroupDisplay(M.DailyEntities, M.isShowingIconsForDaily);
 		});
 		
-		I.qTip.init("#mapLoginCalendar img");
+		I.qTip.init("#mapLoginTrack img");
+	},
+	shiftLoginTrack: function()
+	{
+		var DAYS_IN_TRACK = 28;
+		var LOGIN_START_UNIX = 1418774400; // 2014-12-17:0000 UTC or 2014-12-16:1600 PST
+		var DAYS_SINCE_START = ~~((T.getUNIXSeconds() - LOGIN_START_UNIX) / T.cSECONDS_IN_DAY);
+		var CURRENT_DAY_IN_TRACK = T.wrapInteger(DAYS_SINCE_START - O.Options.int_shiftLogin, DAYS_IN_TRACK);
+		var OFFICIAL_DAY_IN_TRACK = T.wrapInteger(DAYS_SINCE_START, DAYS_IN_TRACK);
+		
+		var icurrent = 0;
+		var iofficial = 0;
+		// Initial CSS
+		$("#mapLoginTrack img").each(function()
+		{
+			$(this).css({"border-radius": "auto", opacity: 0.3})
+				.removeClass("mapLoginCurrent mapLoginOfficial").data("i", iofficial);
+			if (iofficial === OFFICIAL_DAY_IN_TRACK)
+			{
+				$(this).addClass("mapLoginOfficial");
+				T.loginTrackOfficial = iofficial;
+			}
+			iofficial++;
+		});
+		// Track CSS
+		$("#mapLoginTrack img").each(function()
+		{
+			if (icurrent === CURRENT_DAY_IN_TRACK + 1)
+			{
+				return false; // Break from each loop
+			}
+			else if (icurrent === CURRENT_DAY_IN_TRACK)
+			{
+				$(this).addClass("mapLoginCurrent"); // Current day is highlighted
+			}
+			$(this).css({opacity: 1}); // Days unlocked becomes fully opaque
+			
+			icurrent++;
+		});
+		
+		// Show statistics
+		$("#mapLoginRecordCurrent").text((CURRENT_DAY_IN_TRACK + 1) + " / " + DAYS_IN_TRACK);
+	},
+	shiftLoginValue: function(pCurrent)
+	{
+		var DAYS_IN_TRACK = 28;
+		var newshift = T.wrapInteger((T.loginTrackOfficial - pCurrent), DAYS_IN_TRACK);
+		$("#opt_int_shiftLogin").val(newshift).trigger("change");
+		P.shiftLoginTrack();
 	},
 	
 	/*
@@ -8052,6 +8097,7 @@ T = {
 		Minutes: 2,
 		Hours: 3
 	},
+	loginTrackOfficial: 0,
 	
 	Events:
 	{
