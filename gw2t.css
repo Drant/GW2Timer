@@ -169,7 +169,7 @@ a, input, label, button,
 .menuBeam img:hover,
 .jsTableOfContents ol li, .jsSectionDone,
 .chnCheck:hover, .chnDetailsLinks ins,
-#listChainsScheduled .chnTitle time,
+#listChainsScheduled .chnTitle time, #mapLoginTrack img,
 .leaflet-clickable {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
@@ -191,7 +191,7 @@ a, input, label, button,
 }
 
 /* Help */
-.jsHelpTooltip, .chnDetails ol li img, #mapLoginTrack img {
+.jsHelpTooltip, .chnDetails ol li img {
 	cursor: url("img/cursor/help.cur"), help;
 }
 

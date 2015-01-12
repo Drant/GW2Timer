@@ -109,7 +109,7 @@ O = {
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
 		bol_alertChecked: false,
-		int_alertSubscribedFirst: 5,
+		int_alertSubscribedFirst: 1,
 		int_alertSubscribedSecond: 15,
 		// Tools
 		int_sizeNotepadFont: 12,
@@ -7512,11 +7512,13 @@ P = {
 	},
 	
 	/*
-	 * Populates the map with dailies location markers.
+	 * Initializes Login Rewards track and populates the map with dailies location markers.
 	 */
 	generateAndInitializeDailies: function()
 	{
+		// Adjust the squares progress
 		P.shiftLoginTrack();
+		// Bind click squares behavior
 		$("#mapLoginTrack img").each(function()
 		{
 			$(this).click(function(){
@@ -7524,10 +7526,11 @@ P = {
 			}).mouseenter(function()
 			{
 				$("#mapLoginRecordHover").text("(" + (parseInt($(this).data("i")) + 1) + ")");
-			}).mouseleave(function()
-			{
-				$("#mapLoginRecordHover").text("");
 			});
+		});
+		$("#mapLoginTrack").mouseleave(function()
+		{
+			$("#mapLoginRecordHover").text("");
 		});
 		
 		// Obsolete dailies map locations
@@ -10881,7 +10884,7 @@ I = {
 				
 			} break;
 			case I.ModeEnum.Simple:
-			{	
+			{
 				// Readjust panels
 				$("#panelLeft, #paneMenu, #paneContent").hide();
 				$("#panelRight").css(
