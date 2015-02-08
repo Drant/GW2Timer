@@ -9347,6 +9347,9 @@ K = {
 					});
 			} break;
 		}
+		
+		// Height for repositioning the beam menu, which is fixed position
+		I.CLOCK_AND_MENU_HEIGHT = clockpaneheight + I.cPANE_MENU_HEIGHT;
 
 		// Readjust panes to new height if showing clock
 		if (O.Options.int_setClock !== O.IntEnum.Clock.None)
@@ -10135,6 +10138,7 @@ I = {
 	cTOOLTIP_ADD_OFFSET_Y: 42,
 	cTOOLTIP_ADD_OFFSET_X: 36,
 	cTOOLTIP_MOUSEMOVE_RATE: 10,
+	CLOCK_AND_MENU_HEIGHT: 0,
 	
 	// Content-Layer-Page and Section-Header
 	isProgramLoaded: false,
@@ -10275,7 +10279,7 @@ I = {
 		
 		// Remember user's browser maker
 		var useragent = navigator.userAgent;
-		if (useragent.indexOf("MSIE") !== -1)
+		if (useragent.indexOf("MSIE") !== -1 || useragent.indexOf("Trident") !== -1)
 		{
 			I.BrowserCurrent = I.BrowserEnum.IE;
 		}
@@ -10483,14 +10487,16 @@ I = {
 	 */
 	initializeScrollbar: function(pObject)
 	{
-		var wheelspeed = 3;
+		var wheelspeed = 1;
 		switch (I.BrowserCurrent)
 		{
-			case I.BrowserEnum.Chrome: wheelspeed = 1;
+			case I.BrowserEnum.Opera: wheelspeed = 3; break;
+			case I.BrowserEnum.Firefox: wheelspeed = 3; break;
 		}
 		
 		$(pObject).perfectScrollbar({
-			wheelSpeed: wheelspeed
+			wheelSpeed: wheelspeed,
+			suppressScrollX: true
 		});
 	},
 	
@@ -10554,13 +10560,17 @@ I = {
 		// Bind beam menu animation when clicked on the bar menu icon
 		if (I.ModeCurrent === I.ModeEnum.Website)
 		{
+			menubeam.css({right: I.cPANEL_WIDTH, top: I.CLOCK_AND_MENU_HEIGHT});
 			$(I.cMenuPrefix + layer).click(function()
 			{
-				$("#menuBeam_" + I.PageCurrent).css({left: 0}).animate({left: I.cPANE_BEAM_LEFT}, "fast");
+				$("#menuBeam_" + I.PageCurrent)
+					.css({right: I.cPANEL_WIDTH + I.cPANE_BEAM_LEFT, top: I.CLOCK_AND_MENU_HEIGHT})
+					.animate({right: I.cPANEL_WIDTH}, "fast");
 			});
 		}
 		else
 		{
+			// Don't show the beam menu for other modes
 			menubeam.hide();
 		}
 		
@@ -10889,6 +10899,7 @@ I = {
 	{
 		I.generateTableOfContent(pLayer);
 		I.generateSectionMenu(pLayer);
+		I.initializeScrollbar($(pLayer));
 		I.bindHelpButtons(pLayer);
 		M.bindMapLinks(pLayer);
 		// Open links on new window
@@ -10914,7 +10925,6 @@ I = {
 			
 			// Lastly
 			D.translatePageHeader(I.PageEnum.Help);
-			I.initializeScrollbar($(this));
 			I.isContentLoaded_Help = true;
 		});
 	},
@@ -10995,7 +11005,6 @@ I = {
 			
 			// Lastly
 			D.translatePageHeader(I.PageEnum.Map);
-			I.initializeScrollbar($(this));
 			I.isContentLoaded_Map = true;
 		});
 	},

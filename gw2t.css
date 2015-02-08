@@ -830,9 +830,9 @@ input#mapCoordinatesName {
 ----------------------------------------------------------------------------- */
 
 .menuBeam {
-	position: absolute;
+	position: fixed;
 	top: 0px; /* Without this set Firefox would make the beam go up and down */
-	left: -41px;
+	right: 360px;
 	width: 40px;
 	padding-top: 4px;
 	text-align: center;
