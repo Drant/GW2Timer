@@ -70,7 +70,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 141219},
+		programVersion: {key: "int_utlProgramVersion", value: 150207},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -104,6 +104,10 @@ O = {
 		bol_displaySkills: true,
 		bol_displayHearts: true,
 		bol_displayEvents: false,
+		// GPS
+		bol_displayCharacter: true,
+		bol_followCharacter: false,
+		int_msecGPSRefresh: 250,
 		// Alarm
 		int_setAlarm: 0,
 		bol_alertAtStart: true,
@@ -246,6 +250,8 @@ O = {
 				+ "This version: " + currentversion + "<br />"
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
+				+ "<br />"
+				+ "GW2Navi Guild Wars 2 overlay updated! <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>Download now</a>.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -850,6 +856,14 @@ O = {
 		{
 			M.setEntityGroupDisplay(M.ChainPathEntities, O.Options.bol_showChainPaths);
 			M.setEntityGroupDisplay(M.StoryEventActive, O.Options.bol_showChainPaths);
+		},
+		bol_displayCharacter: function()
+		{
+			if ( ! O.Options.bol_displayCharacter)
+			{
+				M.movePin(M.PinCharacter);
+				M.movePin(M.PinCamera);
+			}
 		},
 		bol_showMap: function()
 		{
@@ -4595,7 +4609,7 @@ D = {
 			var url;
 			var tts;
 		
-			if (I.BrowserUser === I.BrowserEnum.Chrome)
+			if (I.BrowserCurrent === I.BrowserEnum.Chrome)
 			{
 				/*
 				 * Google TTS seems to only work with their browser; using it on
@@ -4690,7 +4704,7 @@ D = {
 	 */
 	getSpeech: function(pText, pModifier)
 	{
-		if (I.BrowserUser === I.BrowserEnum.Chrome)
+		if (I.BrowserCurrent === I.BrowserEnum.Chrome)
 		{
 			if (pModifier)
 			{
@@ -4716,7 +4730,7 @@ D = {
 	getChainPronunciation: function(pChain)
 	{
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default
-			|| I.BrowserUser !== I.BrowserEnum.Chrome)
+			|| I.BrowserCurrent !== I.BrowserEnum.Chrome)
 		{
 			return C.Chains[pChain.nexus].pronunciation;
 		}
@@ -4907,7 +4921,7 @@ C = {
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsLinks'>"
-					+ "<ins id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options).'>[x]</ins>"
+					+ "<ins id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options, Defaults).'>[x]</ins>"
 				+ "</div>"
 		+ "</div>");
 		// Initially only show/download icons for the scheduled chains list
@@ -5643,7 +5657,8 @@ C = {
 			}
 			
 			// Tour to the event on the map if opted
-			if (O.Options.bol_tourPrediction && I.PageCurrent === I.PageEnum.Chains
+			if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
+				&& I.PageCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain))
 			{
 				if ((pChain.series === C.ChainSeriesEnum.Story && O.Options.bol_expandLS)
@@ -5854,17 +5869,28 @@ M = {
 		Ground: 7,
 		Max: 7
 	},
+	cZIndexRaise: 999999,
 	cZIndexBury: -999999,
 	
-	PinPersonal: {},
-	PinProgram: {},
-	PinEvent: {},
-	PinOver: {},
+	// MumbleLink data assigned by overlay program
+	cMETER_TO_INCH: 39.3701,
+	cCIRCLE_RIGHT_DEGREE: 90,
+	cCIRCLE_HALF_DEGREE: 180,
+	cCIRCLE_FULL_DEGREE: 360,
+	cRADIAN_TO_DEGREE: 180 / Math.PI,
+	GPSTimeout: {},
+	
 	/*
 	 * All objects in the map (such as paths and markers) shall be called "entities".
 	 * Markers can have custom properties assigned; they can be accessed using
 	 * "THEMARKER.options.THEPROPERTY" format.
 	 */
+	PinPersonal: {},
+	PinProgram: {},
+	PinEvent: {},
+	PinOver: {},
+	PinCharacter: {},
+	PinCamera: {},
 	MappingEnum:
 	{
 		Sector: 0,
@@ -5905,12 +5931,27 @@ M = {
 	StoryEventActive: new Array(),
 	
 	/*
-	 * Gets a GW2T zone object from an API zone ID.
-	 * @param pString zone ID.
+	 * Tells if the specified zone exists within the listing.
+	 * @param string pZoneID to look up.
+	 * @returns true if exists.
 	 */
-	getZoneFromID: function(pString)
+	isZoneValid: function(pZoneID)
 	{
-		return M.Zones[M.ZoneAssociations[pString]];
+		if (M.ZoneAssociations[pZoneID] === undefined)
+		{
+			return false;
+		}
+		return true;
+	},
+	
+	/*
+	 * Gets a GW2T zone object from an API zone ID.
+	 * @param string pZoneID to look up.
+	 * @returns object zone.
+	 */
+	getZoneFromID: function(pZoneID)
+	{
+		return M.Zones[M.ZoneAssociations[pZoneID]];
 	},
 	
 	/*
@@ -6042,12 +6083,23 @@ M = {
 		});
 		
 		/*
-		 * Hide the right panel if click on the display button.
+		 * Bind map HUD buttons functions.
 		 */
+		$("#mapGPSButton").click(function()
+		{
+			// Go to character if cliked on GPS button.
+			M.goToPlayer(true);
+		});
 		$("#mapDisplayButton").click(function()
 		{
+			// Hide the right panel if click on the display button.
 			$("#panelRight").toggle();
 			M.refreshMap();
+		});
+		$("#mapCompassButton").one("mouseenter", M.bindZoneList).click(function()
+		{
+			// Translate and bind map zones list
+			M.goToDefault();
 		});
 		
 		// Finally
@@ -6221,15 +6273,9 @@ M = {
 	getEventCenter: function(pEvent)
 	{
 		var zone = M.getZoneFromID(pEvent.map_id);
-		var cr = zone.continent_rect; // 2D float array
-		var mr = zone.map_rect; // 2D float array
 		var p = pEvent.location.center; // 3D float array
-		
-		// Code from http://gw2.chillerlan.net/examples/gw2maps-jquery.html
-		return M.convertGCtoLC([
-			(cr[0][0]+(cr[1][0]-cr[0][0])*(p[0]-mr[0][0])/(mr[1][0]-mr[0][0])),
-			(cr[0][1]+(cr[1][1]-cr[0][1])*(1-(p[1]-mr [0][1])/(mr[1][1]-mr[0][1])))
-		]);
+
+		return M.convertEventCoord(p, zone);
 	},
 	
 	/*
@@ -6481,8 +6527,23 @@ M = {
 	},
 	
 	/*
+	 * Moves a pin to a map coordinate.
+	 * @param object pPin to move.
+	 * @param 2D array pCoord coordinates.
+	 */
+	movePin: function(pPin, pCoord)
+	{
+		if (pCoord === undefined)
+		{
+			pCoord = [0,0];
+		}
+		pPin.setLatLng(M.convertGCtoLC(pCoord));
+		pPin._icon.style.zIndex = M.cZIndexRaise;
+	},
+	
+	/*
 	 * Views the map at the specifications.
-	 * @param array pCoord two number coordinates.
+	 * @param 2D array pCoord coordinates.
 	 * @param object pPin which to move to coordinate.
 	 * @param enum pZoom level.
 	 */
@@ -6494,7 +6555,7 @@ M = {
 		}
 		if (pPin !== null)
 		{
-			pPin.setLatLng(M.convertGCtoLC(pCoord));
+			M.movePin(pPin, pCoord);
 		}
 		
 		var zoom;
@@ -6508,6 +6569,74 @@ M = {
 		}
 		M.Map.setView(M.convertGCtoLC(pCoord), zoom);
 		M.showCurrentZone(pCoord);
+	},
+	
+	/*
+	 * Views the map at the player's position in game, as directed by the overlay.
+	 * @param boolean pForce to view character regardless of options.
+	 */
+	goToPlayer: function(pForce)
+	{
+		// Verify the GPS coordinates
+		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3)
+		{
+			return;
+		}
+		/*
+		 * Sample structure of JSON:
+		 * {"name": "Character Name","profession": 1,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false}
+		 */
+		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
+		{
+			return;
+		}
+		if ( ! M.isZoneValid(GPSIdentityJSON["map_id"]))
+		{
+			M.movePin(M.PinCharacter);
+			M.movePin(M.PinCamera);
+			return;
+		}
+		
+		var coord = M.convertPlayerCoord(GPSPositionArray, GPSIdentityJSON["map_id"]);
+		if (coord[0] > M.cMAP_BOUND || coord[0] <= 0
+			|| coord[1] > M.cMAP_BOUND || coord[1] <= 0)
+		{
+			return;
+		}
+		
+		// Follow character if opted
+		if (O.Options.bol_followCharacter || pForce)
+		{
+			M.goToView(coord, null, M.Map.getZoom());
+		}
+		
+		// Pin character if opted
+		if (O.Options.bol_displayCharacter)
+		{
+			M.movePin(M.PinCharacter, coord);
+			M.movePin(M.PinCamera, coord);
+			M.PinCamera._icon.style.zIndex = M.cZIndexBury;
+		}
+		var angleplayer = -(M.convertPlayerAngle(GPSDirectionArray));
+		var anglecamera = -(M.convertPlayerAngle(GPSCameraArray));
+		var pintransplayer = M.PinCharacter._icon.style.transform.toString();
+		var pintranscamera = M.PinCamera._icon.style.transform.toString();
+		if (pintransplayer.indexOf("rotate") === -1)
+		{
+			M.PinCharacter._icon.style.transform = pintransplayer + " rotate(" + angleplayer + "deg)";
+		}
+		if (pintranscamera.indexOf("rotate") === -1)
+		{
+			M.PinCamera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
+		}
+	},
+	
+	/*
+	 * Views the default view.
+	 */
+	goToDefault: function()
+	{
+		M.Map.setView(M.convertGCtoLC(M.cMAP_CENTER), M.ZoomLevelEnum.Default);
 	},
 	
 	/*
@@ -6595,6 +6724,62 @@ M = {
 	},
 	
 	/*
+	 * Converts a map_floor.json event coordinates to the map coordinates system.
+	 * @param object pZone to translate coordinates.
+	 * @param 3D float array pPos event center. Only uses [0] and [1] values.
+	 * @returns 2D int array map coordinates.
+	 * @pre pZone was initialized (this is asynchronous).
+	 */
+	convertEventCoord: function(pPos, pZone)
+	{
+		var cr = pZone.continent_rect; // 2D float array
+		var mr = pZone.map_rect; // 2D float array
+		
+		// Code from http://gw2.chillerlan.net/examples/gw2maps-jquery.html
+		return [
+			~~(cr[0][0]+(cr[1][0]-cr[0][0])*(pPos[0]-mr[0][0])/(mr[1][0]-mr[0][0])),
+			~~(cr[0][1]+(cr[1][1]-cr[0][1])*(1-(pPos[1]-mr [0][1])/(mr[1][1]-mr[0][1])))
+		];
+	},
+	
+	/*
+	 * Converts a MumbleLink player coordinates to the map coordinates system.
+	 * @param 3D float array pPos [latitude altitude longitude] player position.
+	 * @param string pZoneID of the zone the player is in.
+	 * @returns 2D int array map coordinates.
+	 */
+	convertPlayerCoord: function(pPos, pZoneID)
+	{
+		var zone = M.getZoneFromID(pZoneID);
+		var coord = new Array(3);
+		coord[0] = pPos[0] * M.cMETER_TO_INCH; // x coordinate
+		coord[1] = pPos[2] * M.cMETER_TO_INCH; // y coordinate
+		coord[2] = pPos[1] * M.cMETER_TO_INCH; // z coordinate
+		return M.convertEventCoord(coord, zone);
+	},
+	
+	/*
+	 * Converts a MumbleLink unit circle values to degrees of rotation.
+	 * @param 3D array pVector [cos(t), unused, sin(t)].
+	 * @returns int degrees.
+	 */
+	convertPlayerAngle: function(pVector)
+	{
+		var x = pVector[0];
+		var y = pVector[2];
+		if (y >= 0)
+		{
+			// Quadrant I and II
+			return ~~(Math.acos(x) * M.cRADIAN_TO_DEGREE);
+		}
+		else
+		{
+			// Quadrant III and IV
+			return ~~(M.cCIRCLE_FULL_DEGREE - Math.acos(x) * M.cRADIAN_TO_DEGREE);
+		}
+	},
+	
+	/*
 	 * Converts a coordinate string to array coordinates.
 	 * @param string pString coordinates in the form of "[X, Y]" GW2 coords.
 	 * @returns array pCoord array of numbers.
@@ -6649,11 +6834,11 @@ M = {
 		pLink.mouseover(function()
 		{
 			var thiscoord = M.getElementCoordinates($(this));
-			M.PinOver.setLatLng(M.convertGCtoLC(thiscoord));
+			M.movePin(M.PinOver, thiscoord);
 		});
 		pLink.mouseout(function()
 		{
-			M.PinOver.setLatLng(M.convertGCtoLC([0,0]));
+			M.movePin(M.PinOver);
 		});
 	},
 	
@@ -6812,6 +6997,19 @@ M = {
 				
 			}
 		}
+	},
+	
+	/*
+	 * Executes GPS functions every specified milliseconds.
+	 */
+	tickGPS: function()
+	{
+		if (O.Options.bol_followCharacter || O.Options.bol_displayCharacter)
+		{
+			M.goToPlayer();
+			window.clearTimeout(M.GPSTimeout);
+			M.GPSTimeout = setTimeout(M.tickGPS, O.Options.int_msecGPSRefresh);
+		}
 	}
 	
 };
@@ -6860,17 +7058,22 @@ P = {
 	/*
 	 * Creates a pin in the map to be assigned to a reference object.
 	 * @param string pIconURL image of the marker.
+	 * @param 2D array pDimension width and height of pin.
 	 * @returns object Leaflet marker.
 	 */
-	createPin: function(pIconURL)
+	createPin: function(pIconURL, pDimension)
 	{
+		if (pDimension === undefined)
+		{
+			pDimension = [32, 32];
+		}
 		return L.marker(M.convertGCtoLC([0,0]),
 		{
 			icon: L.icon(
 			{
 				iconUrl: pIconURL,
-				iconSize: [32, 32],
-				iconAnchor: [16, 16]
+				iconSize: pDimension,
+				iconAnchor: [(pDimension[0])/2, (pDimension[1])/2]
 			}),
 			draggable: true
 		}).addTo(M.Map);
@@ -7181,15 +7384,17 @@ P = {
 		M.PinPersonal = P.createPin("img/map/pin_white.png");
 		M.PinProgram = P.createPin("img/map/pin_blue.png");
 		M.PinEvent = P.createPin("img/map/pin_green.png");
-		M.PinOver = L.marker(M.convertGCtoLC([0,0]),
+		M.PinOver = P.createPin("img/map/pin_over.png", [128,128]);
+		M.PinCharacter = P.createPin("img/map/pin_character.png", [40,40]);
+		M.PinCamera = L.marker(M.convertGCtoLC([0,0]),
 		{
 			icon: L.icon(
 			{
-				iconUrl: "img/map/pin_over.png",
-				iconSize: [128, 128],
-				iconAnchor: [64, 64]
+				iconUrl: "img/map/pin_camera.png",
+				iconSize: [256,256],
+				iconAnchor: [128,128]
 			}),
-			draggable: true
+			clickable: false,
 		}).addTo(M.Map);
 		
 		// Add to array for iteration
@@ -7197,6 +7402,8 @@ P = {
 		M.PinEntities.push(M.PinProgram);
 		M.PinEntities.push(M.PinEvent);
 		M.PinEntities.push(M.PinOver);
+		M.PinEntities.push(M.PinCharacter);
+		M.PinEntities.push(M.PinCamera);
 		
 		// Bind pin click event to get coordinates in the coordinates bar
 		for (var i in M.PinEntities)
@@ -7210,7 +7417,7 @@ P = {
 			});
 			M.PinEntities[i].on("dblclick", function()
 			{
-				this.setLatLng(M.convertGCtoLC([0,0]));
+				M.movePin(this);
 			});
 		}	
 	}, // End of populateMap
@@ -7325,7 +7532,7 @@ P = {
 						continue;
 					}
 
-					coord = M.getEventCenter(event);
+					coord = M.convertGCtoLC(M.getEventCenter(event));
 
 					// Create event's ring
 					mappingentity = L.marker(coord,
@@ -7390,7 +7597,8 @@ P = {
 		 */
 		I.qTip.init(".leaflet-marker-icon");
 		
-		if (O.Options.bol_tourPrediction && I.PageCurrent === I.PageEnum.Chains
+		if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
+			&& I.PageCurrent === I.PageEnum.Chains
 			&& U.Args[U.KeyEnum.Go] === undefined)
 		{
 			// Initialize the "current moused zone" variable for showing waypoints
@@ -7407,6 +7615,7 @@ P = {
 		M.adjustZoomMapping();
 		M.adjustZoomStory();
 		M.goToURLCoords();
+		M.tickGPS();
 	},
 	
 	/*
@@ -9184,7 +9393,7 @@ K = {
 	 */
 	reapplyFilters: function()
 	{
-		if (I.BrowserUser === I.BrowserEnum.Firefox)
+		if (I.BrowserCurrent === I.BrowserEnum.Firefox)
 		{
 			var c = $("#clkCircumference");
 			var h = $("#clkHands");
@@ -9988,7 +10197,7 @@ I = {
 	cHeaderPrefix: "#header",
 	
 	// User information
-	BrowserUser: "Unknown",
+	BrowserCurrent: "Unknown",
 	BrowserEnum:
 	{
 		IE: 0,
@@ -10068,19 +10277,19 @@ I = {
 		var useragent = navigator.userAgent;
 		if (useragent.indexOf("MSIE") !== -1)
 		{
-			I.BrowserUser = I.BrowserEnum.IE;
+			I.BrowserCurrent = I.BrowserEnum.IE;
 		}
 		else if (useragent.indexOf("Chrome") !== -1)
 		{
-			I.BrowserUser = I.BrowserEnum.Chrome;
+			I.BrowserCurrent = I.BrowserEnum.Chrome;
 		}
 		else if (useragent.indexOf("Firefox") !== -1)
 		{
-			I.BrowserUser = I.BrowserEnum.Firefox;
+			I.BrowserCurrent = I.BrowserEnum.Firefox;
 		}
 		else if (useragent.indexOf("Opera") !== -1)
 		{
-			I.BrowserUser = I.BrowserEnum.Opera;
+			I.BrowserCurrent = I.BrowserEnum.Opera;
 		}
 		
 		// Default content layer
@@ -10124,17 +10333,14 @@ I = {
 			}
 		});
 		
-		// Translate and bind map zones list
-		$("#mapCompassButton").one("mouseenter", M.bindZoneList).click(function()
-		{
-			$("#jsCenter").trigger("click");
-		});
-		
 		// The menu bar overlaps the language popup, so have to "raise" the clock pane
 		$("#itemLanguage").hover(
 			function() {$("#paneClock").css("z-index", 3);},
 			function() {$("#paneClock").css("z-index", 0);}
 		);
+
+		// Initialize scroll bars for pre-loaded layers
+		I.initializeScrollbar($("body, #layerChains, #layerOptions"));
 		
 		// Clean the localStorage of unrecognized variables
 		O.cleanLocalStorage();
@@ -10272,6 +10478,23 @@ I = {
 	},
 	
 	/*
+	 * Initializes custom scroll bar for specified element using defined settings.
+	 * @param jqobject pObject to initialize.
+	 */
+	initializeScrollbar: function(pObject)
+	{
+		var wheelspeed = 3;
+		switch (I.BrowserCurrent)
+		{
+			case I.BrowserEnum.Chrome: wheelspeed = 1;
+		}
+		
+		$(pObject).perfectScrollbar({
+			wheelSpeed: wheelspeed
+		});
+	},
+	
+	/*
 	 * Creates a single-level table of content for a composition (writings) layer.
 	 * Example: <div class="jsTableOfContents" id="jsTOC_LAYERNAME"></div>
 	 * will be filled with links to the h1 headers in that layer.
@@ -10329,10 +10552,17 @@ I = {
 		var menubeam = $("<div class='menuBeam' id='" + beamid + "'></div>").prependTo(pLayer);
 		
 		// Bind beam menu animation when clicked on the bar menu icon
-		$(I.cMenuPrefix + layer).click(function()
+		if (I.ModeCurrent === I.ModeEnum.Website)
 		{
-			$("#menuBeam_" + I.PageCurrent).css({left: 0}).animate({left: I.cPANE_BEAM_LEFT}, "fast");
-		});
+			$(I.cMenuPrefix + layer).click(function()
+			{
+				$("#menuBeam_" + I.PageCurrent).css({left: 0}).animate({left: I.cPANE_BEAM_LEFT}, "fast");
+			});
+		}
+		else
+		{
+			menubeam.hide();
+		}
 		
 		$(pLayer + " header.jsSection").each(function()
 		{
@@ -10571,7 +10801,7 @@ I = {
 						 * Get the current event map view it by triggering
 						 * the binded event names.
 						 */ 
-						if (O.Options.bol_tourPrediction)
+						if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter)
 						{
 							$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
 								+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
@@ -10581,8 +10811,8 @@ I = {
 					case I.PageEnum.Map:
 					{
 						$("#jsTop").show();
-						$("#jsCenter").trigger("click");
-						M.PinEvent.setLatLng(M.convertGCtoLC([0,0]));
+						M.goToDefault();
+						M.movePin(M.PinEvent);
 					} break;
 					
 					case I.PageEnum.WvW:
@@ -10648,14 +10878,7 @@ I = {
 		{
 			$(I.contentCurrentLayer).animate({scrollTop: 0}, "fast");
 		});
-		/*
-		 * Center view the map button.
-		 */
-		$("#jsCenter").click(function()
-		{
-			M.Map.setView(M.convertGCtoLC(M.cMAP_CENTER), M.ZoomLevelEnum.Default);
-		});
-	   
+		
 	}, // End of menu initialization
 	
 	/*
@@ -10691,6 +10914,7 @@ I = {
 			
 			// Lastly
 			D.translatePageHeader(I.PageEnum.Help);
+			I.initializeScrollbar($(this));
 			I.isContentLoaded_Help = true;
 		});
 	},
@@ -10762,7 +10986,7 @@ I = {
 				+ "title='&lt;dfn&gt;Map Center&lt;/dfn&gt;' />")
 				.appendTo("#menuBeam_Map").click(function()
 			{
-				$("#jsCenter").trigger("click");
+				M.goToDefault();
 			});
 			I.qTip.init("#layerMap .menuBeamIconCenter, #layerMap label");
 			
@@ -10771,6 +10995,7 @@ I = {
 			
 			// Lastly
 			D.translatePageHeader(I.PageEnum.Map);
+			I.initializeScrollbar($(this));
 			I.isContentLoaded_Map = true;
 		});
 	},
@@ -10849,14 +11074,13 @@ I = {
 	initializeUIForHUD: function()
 	{
 		var animationspeed = 200;
-		$("#mapOptions").hover(
-			function() { $("#mapOptionsPopup").show().animate({opacity: 0.8}, animationspeed); },
-			function() { $("#mapOptionsPopup").animate({opacity: 0}, animationspeed); }
-		);
-		$("#mapZones").hover(
-			 function() { $("#mapZonesPopup").animate({opacity: 0.8}, animationspeed); },
-			 function() { $("#mapZonesPopup").animate({opacity: 0}, animationspeed); }
-		);
+		$("#mapOptions, #mapZones, #mapGPS").each(function()
+		{
+			$(this).hover(
+				function() { $(this).find(".cntComposition").show().animate({opacity: 0.8}, animationspeed); },
+				function() { $(this).find(".cntComposition").animate({opacity: 0}, animationspeed); }
+			);
+		});
 	},
 	
 	/*
@@ -10928,6 +11152,10 @@ I = {
 					.appendTo("#itemTimeLocalExtra"));
 				$("#paneBoard").show();
 				
+			} break;
+			case I.ModeEnum.Website:
+			{
+				$("#mapGPSButton").hide();
 			} break;
 		}
 		
@@ -11006,9 +11234,9 @@ I = {
 		$("#panelLeft").mousemove($.throttle(I.cTOOLTIP_MOUSEMOVE_RATE, function(pEvent)
 		{
 			// Tooltip overflows right edge
-			if (I.cTOOLTIP_MAX_WIDTH + pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $(window).width())
+			if (pEvent.pageX + I.cTOOLTIP_ADD_OFFSET_X > $(window).width())
 			{
-				I.qTip.offsetX = -(I.cTOOLTIP_MAX_WIDTH) - I.cTOOLTIP_ADD_OFFSET_X;
+				I.qTip.offsetX = -(I.cTOOLTIP_MAX_WIDTH / 2) - I.cTOOLTIP_ADD_OFFSET_X;
 			}
 			else
 			{

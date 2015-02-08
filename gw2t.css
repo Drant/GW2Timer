@@ -63,7 +63,8 @@ html, body {
 }
 
 body {
-	overflow-x: hidden; // For IE
+	position: relative;
+	overflow: hidden;
 }
 
 .cntComposition ::selection {
@@ -153,6 +154,77 @@ div#qTip dfn { /* Highlight color for important text in tooltip */
 	color: #ffcc77;
 }
 
+/*
+ * Style for perfect-scrollbar JS plugin by Hyunje Alex Jun.
+ */
+.ps-container.ps-active-x > .ps-scrollbar-x-rail, .ps-container.ps-active-y > .ps-scrollbar-y-rail {
+	display: block;
+}
+.ps-container > .ps-scrollbar-x-rail {
+	display: none;
+	position: absolute;
+	border-radius: 4px;
+	opacity: 0;
+	transition: background-color 0.2s linear, opacity 0.2s linear;
+	bottom: 3px;
+	height: 8px;
+}
+.ps-container > .ps-scrollbar-x-rail > .ps-scrollbar-x {
+	position: absolute;
+	background-color: #aaa;
+	border-radius: 4px;
+	transition: background-color 0.2s linear;
+	bottom: 0;
+	height: 8px;
+}
+.ps-container > .ps-scrollbar-x-rail.in-scrolling {
+	background-color: #eee;
+	opacity: 0.9;
+}
+.ps-container > .ps-scrollbar-y-rail {
+	display: none;
+	position: absolute;
+	border-radius: 4px;
+	opacity: 0;
+	transition: background-color 0.2s linear, opacity 0.2s linear;
+	right: 0px;
+	width: 8px;
+}
+.ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
+	position: absolute;
+	background-color: #aaa;
+	border-radius: 4px;
+	transition: background-color 0.2s linear;
+	right: 0;
+	width: 8px;
+}
+.ps-container > .ps-scrollbar-y-rail.in-scrolling {
+	background-color: #eee;
+	opacity: 0.9;
+}
+.ps-container:hover > .ps-scrollbar-x-rail, .ps-container:hover > .ps-scrollbar-y-rail {
+	opacity: 0.6;
+}
+.ps-container:hover > .ps-scrollbar-x-rail.in-scrolling, .ps-container:hover > .ps-scrollbar-y-rail.in-scrolling {
+	background-color: #eee;
+	opacity: 0.9;
+}
+.ps-container:hover > .ps-scrollbar-x-rail:hover {
+	background-color: #eee;
+	opacity: 0.9;
+}
+.ps-container:hover > .ps-scrollbar-x-rail:hover > .ps-scrollbar-x {
+	background-color: #999;
+}
+.ps-container:hover > .ps-scrollbar-y-rail:hover {
+	background-color: #eee;
+	opacity: 0.9;
+}
+.ps-container:hover > .ps-scrollbar-y-rail:hover > .ps-scrollbar-y {
+	background-color: #999;
+}
+
+
 /* Custom cursors
 ----------------------------------------------------------------------------- */
 
@@ -165,7 +237,7 @@ html, body,
 
 /* Clickable */
 a, input, label, button,
-#mapDisplayButton, #mapCompassButton, .menuButton,
+.mapHUDButton, .menuButton,
 .menuBeam img:hover,
 .jsTableOfContents ol li, .jsSectionDone,
 .chnCheck:hover, .chnDetailsLinks ins,
@@ -209,7 +281,7 @@ a, input, label, button,
 ----------------------------------------------------------------------------- */
 #paneMap {
 	height: 100%;
-	min-height: 580px;
+	min-height: 220px;
 	background: url("img/background/space.jpg") repeat center;
 }
 
@@ -269,21 +341,21 @@ input#mapCoordinatesName {
 	opacity: 0.9;
 }
 
-/* Map options */
-#mapDisplayButton {
+/* Map HUD */
+.mapHUDButton {
 	vertical-align: middle;
 	opacity: 0.6;
 }
-#mapOptions:hover #mapDisplayButton {
+.mapHUDContainer:hover .mapHUDButton {
 	opacity: 1;
 }
-#mapOptions {
+.mapHUDContainer {
 	display: inline;
 }
-#mapOptionsPopup {
+.mapHUDPopup {
 	display: none;
 }
-#mapOptions:hover #mapOptionsPopup {
+.mapHUDContainer:hover .mapHUDPopup {
 	position: absolute;
 	right: 0px;
 	display: block;
@@ -293,6 +365,13 @@ input#mapCoordinatesName {
 	box-shadow: 0px 0px 2px #555;
 	opacity: 0;
 }
+
+/* Map GPS */
+#mapGPSButton {
+	margin-right: -8px;
+}
+
+/* Map options */
 #mapOptionsDisplay {
 	margin-bottom: 8px;
 }
@@ -311,33 +390,15 @@ input#mapCoordinatesName {
 
 /* Map zones list */
 #mapCompassButton {
-	width: 32px; height: 32px;
 	margin-left: -8px;
-	vertical-align: middle;
-	opacity: 0.6;
-}
-#mapZones:hover #mapCompassButton {
-	opacity: 1;
-}
-#mapZones {
-	display: inline;
-}
-#mapZonesPopup {
-	display: none;
 }
 #mapZones:hover #mapZonesPopup {
-	position: absolute;
-	right: 0px;
-	display: block;
 	min-width: 260px;
 	max-width: 340px;
-	margin: 0;
 	padding-top: 0px;
 	padding-right: 8px;
 	padding-bottom: 6px;
 	padding-left: 8px;
-	box-shadow: 0px 0px 2px #555;
-	opacity: 0;
 }
 #mapZoneList {
 	border-spacing: 12px;
@@ -852,8 +913,9 @@ header.jsSection sup {
 }
 
 #paneContent article {
+	position: relative;
 	width: 360px; height: 100%;
-	overflow-y: auto;
+	overflow: hidden;
 }
 
 #layerChains {
@@ -892,6 +954,7 @@ header.jsSection sup {
 	width: auto;
 	margin: 0;
 	padding: 2px;
+	overflow: hidden;
 	border: 1px solid #555;
 	background: #222;
 	font-family: sans-serif;
@@ -1395,11 +1458,12 @@ button.btnToggle {
 
 #mapLoginTrack {
 	margin-top: 8px;
+	margin-left: 16px;
 }
 
 #mapLoginTrack img {
 	width: 32px; height: 32px;
-	margin-right: 8px;
+	margin-right: 7px;
 	vertical-align: middle;
 	border: 1px dashed #ffff66;
 }
@@ -1851,7 +1915,7 @@ input[type="text"].trdMatched {
 	color: #bbcc77;
 }
 
-#layerOptions input[type="number"] {
+input[type="number"] {
 	width: 48px;
 	margin-right: 4px;
 	text-align: right;
