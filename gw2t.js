@@ -811,7 +811,7 @@ O = {
 		{
 			for (var i in C.CurrentChains)
 			{
-				if (C.CurrentChains[i].series !== C.ChainSeriesEnum.Story)
+				if (C.CurrentChains[i].series !== C.ChainSeriesEnum.DryTop)
 				{
 					$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_expandWB);
 				}
@@ -821,7 +821,7 @@ O = {
 		{
 			for (var i in C.CurrentChains)
 			{
-				if (C.CurrentChains[i].series === C.ChainSeriesEnum.Story)
+				if (C.CurrentChains[i].series === C.ChainSeriesEnum.DryTop)
 				{
 					$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_expandLS);
 				}
@@ -855,7 +855,7 @@ O = {
 		bol_showChainPaths: function()
 		{
 			M.setEntityGroupDisplay(M.ChainPathEntities, O.Options.bol_showChainPaths);
-			M.setEntityGroupDisplay(M.StoryEventActive, O.Options.bol_showChainPaths);
+			M.setEntityGroupDisplay(M.DryTopEventActive, O.Options.bol_showChainPaths);
 		},
 		bol_displayCharacter: function()
 		{
@@ -863,6 +863,10 @@ O = {
 			{
 				M.movePin(M.PinCharacter);
 				M.movePin(M.PinCamera);
+			}
+			else
+			{
+				M.tickGPS();
 			}
 		},
 		bol_showMap: function()
@@ -3911,6 +3915,7 @@ D = {
 		// Automatic
 		s_Scheduled_Bosses: {de: "Geplant", es: "Programado", fr: "Planifié",
 			cs: "Plánované", it: "Pianificata", pl: "Zaplanowane", pt: "Agendado", ru: "Запланирован", zh: "已排程"},
+		s_Dry_Top: {de: "Trockenkuppe", es: "Cima Seca", fr: "Col Aride"},
 		s_Legacy_Bosses: {de: "Legacy", es: "Heredado", fr: "Hérité",
 			cs: "Starší", it: "Legacy", pl: "Starsze", pt: "Herdado", ru: "Устаревший", zh: "舊版"},
 		s_Orr_Temples: {de: "Tempel", es: "Templos", fr: "Temples",
@@ -4539,7 +4544,7 @@ D = {
 	 */
 	getChainTitle: function(pIndex)
 	{
-		if (C.Chains[pIndex].series === C.ChainSeriesEnum.Story)
+		if (C.Chains[pIndex].series === C.ChainSeriesEnum.DryTop)
 		{
 			if (D.isLanguageFullySupported())
 			{
@@ -4558,7 +4563,7 @@ D = {
 	},
 	getChainTitleAny: function(pIndex)
 	{
-		if (C.Chains[pIndex].series === C.ChainSeriesEnum.Story)
+		if (C.Chains[pIndex].series === C.ChainSeriesEnum.DryTop)
 		{
 			return C.Chains[pIndex].title;
 		}
@@ -4759,7 +4764,7 @@ C = {
 	NextChains1: [],
 	cChainTitleCharLimit: 30,
 	ScheduledChains: [],
-	StoryChains: [],
+	DryTopChains: [],
 	LegacyChains: [],
 	TempleChains: [],
 	ChainSeriesEnum:
@@ -4769,7 +4774,7 @@ C = {
 		ScheduledCutoff: 1,
 		Standard: 2, // Scheduled non-hardcore chains
 		Hardcore: 3, // Scheduled challenging chains with a separate schedule from non-hardcores
-		Story: 4 // Scheduled Living Story chains
+		DryTop: 4 // Scheduled Dry Top chains
 	},
 	EventPrimacyEnum:
 	{
@@ -4887,11 +4892,11 @@ C = {
 				chainlistid = "#listChainsScheduled";
 				C.ScheduledChains.push(pChain);
 			} break;
-			case C.ChainSeriesEnum.Story:
+			case C.ChainSeriesEnum.DryTop:
 			{
-				chainlistid = "#listChainsScheduled";
+				chainlistid = "#listChainsDryTop";
 				C.ScheduledChains.push(pChain);
-				C.StoryChains.push(pChain);
+				C.DryTopChains.push(pChain);
 			} break;
 			case C.ChainSeriesEnum.Legacy:
 			{
@@ -4945,7 +4950,7 @@ C = {
 			};
 			// Tooltip when user hovers over the tiny orange event icon
 			var eventhtmltitle = "";
-			if (pChain.series === C.ChainSeriesEnum.Story)
+			if (pChain.series === C.ChainSeriesEnum.DryTop)
 			{
 				eventhtmltitle = w("Event Number: ") + e.num + b
 					+ w("Start Time: ") + e.lim + b
@@ -5130,7 +5135,8 @@ C = {
 		// Collapse all chain bars
 		$(".chnDetails").hide();
 		// Initial recoloring of chain titles
-		$("#listChainsScheduled .barChain h1").addClass("chnTitleFutureFar");
+		$("#listChainsScheduled .barChain h1, #listChainsDryTop .barChain h1")
+			.addClass("chnTitleFutureFar");
 	},
 	
 	/*
@@ -5181,7 +5187,7 @@ C = {
 	
 	/*
 	 * Updates a chain bar's time tooltip with a pre-sorted subschedule.
-	 * @pre scheduleKeys array is sorted and first element is the soonest
+	 * @pre scheduleKeys array is sorted and first element is the soonest.
 	 */
 	updateChainTimeTooltipHTML: function(pChain)
 	{
@@ -5189,7 +5195,7 @@ C = {
 		var minischedulestring = "";
 		var spacer;
 		var subscribetext = "<dfn>" + D.getSentence("subscribe") + "?</dfn><br />";
-		if (pChain.series === C.ChainSeriesEnum.Story)
+		if (pChain.series === C.ChainSeriesEnum.DryTop)
 		{
 			subscribetext = "";
 		}
@@ -5261,7 +5267,7 @@ C = {
 		var time = remaining;
 		var sign = "-";
 		
-		if (pChain.series === C.ChainSeriesEnum.Story)
+		if (pChain.series === C.ChainSeriesEnum.DryTop)
 		{
 			$("#chnTime_" + pChain.nexus).text(T.getTimeFormatted(
 				{
@@ -5350,6 +5356,7 @@ C = {
 		var ii = 0;
 		var chains;
 		var ithchain;
+		var chaintab = "";
 		/*
 		 * Look at the schedule and start with the current active chain; move
 		 * that chain's HTML to the bottom of the HTML chains list, then look at
@@ -5372,7 +5379,13 @@ C = {
 				ithchain = chains[ii];
 				if (ithchain.isSorted === false)
 				{
-					$("#barChain_" + ithchain.nexus).appendTo("#listChainsScheduled");
+					switch (ithchain.series)
+					{
+						case C.ChainSeriesEnum.DryTop: chaintab = "#listChainsDryTop"; break;
+						default: chaintab = "#listChainsScheduled";
+					}
+					$("#barChain_" + ithchain.nexus).appendTo(chaintab);
+					
 					ithchain.isSorted = true;
 					ithchain.scheduleKeyImmediate = T.getTimeframeKey(i);
 					numchainssorted++;
@@ -5418,8 +5431,8 @@ C = {
 			// Show the events (details)
 			if (C.isChainUnchecked(ithchain))
 			{
-				if ((ithchain.series === C.ChainSeriesEnum.Story && O.Options.bol_expandLS)
-					|| (ithchain.series !== C.ChainSeriesEnum.Story && O.Options.bol_expandWB))
+				if ((ithchain.series === C.ChainSeriesEnum.DryTop && O.Options.bol_expandLS)
+					|| (ithchain.series !== C.ChainSeriesEnum.DryTop && O.Options.bol_expandWB))
 				{
 					$("#chnDetails_" + ithchain.nexus).show("fast");
 				}
@@ -5581,7 +5594,7 @@ C = {
 	
 	/*
 	 * Does cosmestic effects to event names as they transition and view the
-	 * event on the map. Also shows/hides event icons if the story chains exists.
+	 * event on the map. Also shows/hides Dry Top event icons.
 	 * Also plays the alarm if it is the final event finishing.
 	 * @param object pChain to read from.
 	 * @param int pPrimaryEventIndex of the current active event.
@@ -5596,7 +5609,7 @@ C = {
 		var event;
 		
 		// Hide past events' markers
-		if (pChain.series === C.ChainSeriesEnum.Story)
+		if (pChain.series === C.ChainSeriesEnum.DryTop)
 		{
 			for (i in pChain.events)
 			{
@@ -5604,8 +5617,8 @@ C = {
 				event.eventicon._icon.style.display = "none";
 				event.eventring._icon.style.display = "none";
 			}
-			M.StoryEventActive = null;
-			M.StoryEventActive = new Array();
+			M.DryTopEventActive = null;
+			M.DryTopEventActive = new Array();
 		}
 		
 		// Do event highlights, -1 means the final event's finish time
@@ -5620,21 +5633,29 @@ C = {
 					.removeClass("chnEventCurrent").addClass("chnEventPast");
 			}
 			$(".chnStep_" + pChain.nexus + "_" + (pPrimaryEventIndex - 1))
-				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
+				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed,
+				function()
+				{
+					if (pChain.series === C.ChainSeriesEnum.DryTop)
+					{
+						// Also hide the past events after fading if it is Dry Top events
+						$(this).hide();
+					}
+				});
 			
 			// Recolor current events and animate transition
 			$(".chnStep_" + pChain.nexus + "_" + pPrimaryEventIndex).each(function()
 			{
-				$(this).removeClass("chnEventPast chnEventFuture").addClass("chnEventCurrent")
+				$(this).removeClass("chnEventPast chnEventFuture").addClass("chnEventCurrent").show()
 					.css({width: 0, opacity: 0.5}).animate({width: eventnamewidth, opacity: 1}, animationspeed)
 					.css({width: "auto"});
 				// Also show current events' markers
-				if (pChain.series === C.ChainSeriesEnum.Story)
+				if (pChain.series === C.ChainSeriesEnum.DryTop)
 				{
 					event = pChain.events[$(this).attr("data-eventindex")];
 					// Add active events to iterable array
-					M.StoryEventActive.push(event.eventicon);
-					M.StoryEventActive.push(event.eventring);
+					M.DryTopEventActive.push(event.eventicon);
+					M.DryTopEventActive.push(event.eventring);
 					
 					// Show only if not on map page
 					if (I.PageCurrent !== I.PageEnum.Map)
@@ -5651,7 +5672,7 @@ C = {
 			{
 				for (i = (pPrimaryEventIndex + 1); i < pChain.primaryEvents.length; i++)
 				{
-					$(".chnStep_" + pChain.nexus + "_" + i)
+					$(".chnStep_" + pChain.nexus + "_" + i).show()
 						.removeClass("chnEventCurrent").addClass("chnEventFuture");
 				}
 			}
@@ -5659,10 +5680,12 @@ C = {
 			// Tour to the event on the map if opted
 			if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
 				&& I.PageCurrent === I.PageEnum.Chains
-				&& M.isMapAJAXDone && C.isChainUnchecked(pChain))
+				&& M.isMapAJAXDone && C.isChainUnchecked(pChain)
+				&& pChain.series !== C.ChainSeriesEnum.DryTop
+				&& $("#listChainsDryTop").is(":visible") === false)
 			{
-				if ((pChain.series === C.ChainSeriesEnum.Story && O.Options.bol_expandLS)
-						|| pChain.series !== C.ChainSeriesEnum.Story)
+				if ((pChain.series === C.ChainSeriesEnum.DryTop && O.Options.bol_expandLS)
+						|| pChain.series !== C.ChainSeriesEnum.DryTop)
 				{
 					$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 				}
@@ -5673,7 +5696,8 @@ C = {
 			pChain.CurrentPrimaryEvent = pChain.primaryEvents[finalstep];
 			
 			// Recolor all events
-			$("#chnEvents_" + pChain.nexus + " li").removeClass("chnEventCurrent").addClass("chnEventPast");
+			$("#chnEvents_" + pChain.nexus + " li").show()
+				.removeClass("chnEventCurrent").addClass("chnEventPast");
 			// Recolor current (final) events as past
 			$(".chnStep_" + pChain.nexus + "_" + finalstep)
 				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
@@ -5685,7 +5709,7 @@ C = {
 			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Checklist
 				&& O.Options.bol_alertAtEnd && I.isProgramLoaded
 				&& pChain.nexus === C.CurrentChainSD.nexus
-				&& pChain.series !== C.ChainSeriesEnum.Story)
+				&& pChain.series !== C.ChainSeriesEnum.DryTop)
 			{
 				var checked = ", " + D.getSpeech("checked");
 				var checkedsd = "";
@@ -5925,10 +5949,10 @@ M = {
 	SubmapEntities: new Array(),
 	SubmapTemp: {},
 	
-	// Story event icons and event rings map entities
-	StoryEventIcons: new Array(),
-	StoryEventRings: new Array(),
-	StoryEventActive: new Array(),
+	// Dry Top event icons and event rings map entities
+	DryTopEventIcons: new Array(),
+	DryTopEventRings: new Array(),
+	DryTopEventActive: new Array(),
 	
 	/*
 	 * Tells if the specified zone exists within the listing.
@@ -6021,6 +6045,11 @@ M = {
 			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
 		}).setView([-128, 128], M.ZoomLevelEnum.Default);
+		if (I.isOnSmallDevice)
+		{
+			// Because the map will interfere with scrolling the website on touch devices
+			M.Map.dragging.disable();
+		}
 		
 		// Set layers
 		L.tileLayer(U.URL_API.Tiles,
@@ -6163,7 +6192,7 @@ M = {
 		M.Map.on("zoomend", function(pEvent)
 		{
 			M.adjustZoomMapping();
-			M.adjustZoomStory();
+			M.adjustZoomDryTop();
 		});
 	},
 	
@@ -6392,9 +6421,9 @@ M = {
 	},
 	
 	/*
-	 * Resizes story markers and submaps so they scale with the current zoom level.
+	 * Resizes Dry Top markers and submaps so they scale with the current zoom level.
 	 */
-	adjustZoomStory: function()
+	adjustZoomDryTop: function()
 	{
 		var i;
 		var currentzoom = M.Map.getZoom();
@@ -6437,21 +6466,21 @@ M = {
 			}
 		}
 		
-		// Resize story event icons if exist
-		if (M.StoryEventIcons.length > 0)
+		// Resize Dry Top event icons
+		if (M.DryTopEventIcons.length > 0)
 		{
 			// Event icons are same size as waypoints, but their rings are bigger
 			M.currentRingSize = M.scaleDimension(M.cRING_SIZE_MAX);
 
-			for (i in M.StoryEventIcons)
+			for (i in M.DryTopEventIcons)
 			{
-				icon = M.StoryEventIcons[i];
+				icon = M.DryTopEventIcons[i];
 				M.changeMarkerIcon(icon, icon._icon.src, M.currentIconSize);
-				icon = M.StoryEventRings[i];
+				icon = M.DryTopEventRings[i];
 				M.changeMarkerIcon(icon, icon._icon.src, M.currentRingSize);
 				// Don't make the rings overlap clickable waypoints
-				M.StoryEventIcons[i]._icon.style.zIndex = 1000;
-				M.StoryEventRings[i]._icon.style.zIndex = 1;
+				M.DryTopEventIcons[i]._icon.style.zIndex = 1000;
+				M.DryTopEventRings[i]._icon.style.zIndex = 1;
 			}
 		}
 	},
@@ -6569,6 +6598,18 @@ M = {
 		}
 		M.Map.setView(M.convertGCtoLC(pCoord), zoom);
 		M.showCurrentZone(pCoord);
+	},
+	
+	/*
+	 * Views the map at the zone.
+	 * @param string pNick of the zone.
+	 * @param enum pZoom level.
+	 */
+	goToZone: function(pNick, pZoom)
+	{
+		var coord = M.getZoneCenter(pNick);
+		M.showCurrentZone(coord);
+		M.goToView(coord, null, pZoom);
 	},
 	
 	/*
@@ -7613,7 +7654,7 @@ P = {
 		M.isMapAJAXDone = true;
 		M.bindMapVisualChanges();
 		M.adjustZoomMapping();
-		M.adjustZoomStory();
+		M.adjustZoomDryTop();
 		M.goToURLCoords();
 		M.tickGPS();
 	},
@@ -7621,7 +7662,7 @@ P = {
 	/*
 	 * Creates polylines for the map based on event's path data, then add event
 	 * coordinates to the event names HTML so the map views the location when
-	 * user clicks on it. Also creates icons for story events if exist.
+	 * user clicks on it. Also creates icons for Dry Top events.
 	 */
 	drawChainPaths: function()
 	{
@@ -7684,8 +7725,8 @@ P = {
 					M.bindMapLinkBehavior($(this), M.PinEvent);
 				});
 				
-				// Create event icons for story chains, they will be resized by the zoomend function
-				if (chain.series === C.ChainSeriesEnum.Story)
+				// Create event icons for Dry Top chains, they will be resized by the zoomend function
+				if (chain.series === C.ChainSeriesEnum.DryTop)
 				{
 					event.eventring = L.marker(M.convertGCtoLC(event.path[0]),
 					{
@@ -7710,8 +7751,8 @@ P = {
 					// Initially hide all event icons, the highlight event functions will show them
 					event.eventring._icon.style.display = "none";
 					event.eventicon._icon.style.display = "none";
-					M.StoryEventRings.push(event.eventring);
-					M.StoryEventIcons.push(event.eventicon);
+					M.DryTopEventRings.push(event.eventring);
+					M.DryTopEventIcons.push(event.eventicon);
 				}
 			}
 		}
@@ -8359,11 +8400,11 @@ T = {
 	Hourly: {},
 	
 	/**
-	 * Gets a clipboard text of the current Living Story events.
+	 * Gets a clipboard text of the current Dry Top events.
 	 * @param pOffset from the current event frame.
 	 * @returns string of events for that event frame.
 	 */
-	getCurrentStoryEvents: function(pOffset)
+	getCurrentDryTopEvents: function(pOffset)
 	{
 		pOffset = pOffset || 0;
 		
@@ -8375,10 +8416,10 @@ T = {
 		return T.Hourly["t" + T.wrapInteger(eventframe, T.cMINUTES_IN_HOUR)] + I.siteTagCurrent;
 	},
 	
-	// Living Story events
-	initializeHourly: function()
+	// Dry Top events
+	initializeHourlyDryTop: function()
 	{
-		if (C.StoryChains.length <= 0)
+		if (C.DryTopChains.length <= 0)
 		{
 			return;
 		}
@@ -8429,10 +8470,10 @@ T = {
 		C.Queen =		C.Chains[10];
 		C.Tequatl =		C.Chains[11];
 		C.Triple =		C.Chains[12];
-		C.Story0 =		C.Chains[13];
-		C.Story1 =		C.Chains[14];
-		C.Story2 =		C.Chains[15];
-		C.Story3 =		C.Chains[16];
+		C.DryTop0 =		C.Chains[13];
+		C.DryTop1 =		C.Chains[14];
+		C.DryTop2 =		C.Chains[15];
+		C.DryTop3 =		C.Chains[16];
 		
 		/*
 		 * This "hash table" contains all time-sensitive chains (a group of
@@ -8569,10 +8610,10 @@ T = {
 		var quarter = 0;
 		var slot;
 		
-		// Add story chains to the schedule
+		// Add Dry Top chains to the schedule
 		for (i in T.Schedule)
 		{
-			T.Schedule[i].c.push(C["Story" + (quarter)]);
+			T.Schedule[i].c.push(C["DryTop" + (quarter)]);
 			quarter++;
 			if (quarter > T.cNUM_TIMEFRAMES_IN_HOUR - 1)
 			{
@@ -8608,8 +8649,8 @@ T = {
 		// Initialize for the touring function to access current active event
 		C.CurrentChainSD = T.getStandardChain();
 		
-		// Initialize Living Story schedule
-		T.initializeHourly();
+		// Initialize Dry Top schedule
+		T.initializeHourlyDryTop();
 	},
 	
 	/*
@@ -9599,7 +9640,7 @@ K = {
 			// If crossing a 5 minute mark
 			if (min % T.cMINUTES_IN_EVENTFRAME === 0)
 			{
-				K.updateStoryClipboard();
+				K.updateDryTopClipboard();
 			}
 		}
 		
@@ -9995,7 +10036,7 @@ K = {
 		
 		// Refresh waypoints because the icon's clock position changed
 		K.updateWaypointsClipboard();
-		K.updateStoryClipboard();
+		K.updateDryTopClipboard();
 		K.initializeClockItems();
 	},
 
@@ -10025,7 +10066,7 @@ K = {
 			});
 		}
 		
-		if (C.StoryChains.length > 0)
+		if (C.DryTopChains.length > 0)
 		{
 			for (var i = 0; i < 2; i++)
 			{
@@ -10090,16 +10131,16 @@ K = {
 	},
 	
 	/*
-	 * Updates the current and next Living Story events icons' clipboard text.
+	 * Updates the current and next Dry Top events icons' clipboard text.
 	 */
-	updateStoryClipboard: function()
+	updateDryTopClipboard: function()
 	{
-		if (C.StoryChains.length > 0)
+		if (C.DryTopChains.length > 0)
 		{
 			document.getElementById("itemClockStar0")
-				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentStoryEvents());
+				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentDryTopEvents());
 			document.getElementById("itemClockStar1")
-				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentStoryEvents(1));
+				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentDryTopEvents(1));
 		}
 	}
 };
@@ -10859,13 +10900,13 @@ I = {
 					if (I.PageCurrent === I.PageEnum.Map)
 					{
 						M.setEntityGroupDisplay(M.ChainPathEntities, "hide");
-						M.setEntityGroupDisplay(M.StoryEventIcons, "hide");
-						M.setEntityGroupDisplay(M.StoryEventRings, "hide");
+						M.setEntityGroupDisplay(M.DryTopEventIcons, "hide");
+						M.setEntityGroupDisplay(M.DryTopEventRings, "hide");
 					}
 					else
 					{
 						M.setEntityGroupDisplay(M.ChainPathEntities, "show");
-						M.setEntityGroupDisplay(M.StoryEventActive, "show");
+						M.setEntityGroupDisplay(M.DryTopEventActive, "show");
 					}
 				}
 			});
@@ -11029,6 +11070,12 @@ I = {
 					header.find("ins").html("[-]");
 					// Automatically scroll to the clicked header
 					I.scrollToElement(header, container, "fast");
+					
+					// Scroll the map to Dry Top if it is that chain list
+					if ($(this).attr("id") === "listChainsDryTop")
+					{
+						M.goToZone("dry", M.ZoomLevelEnum.Sky);
+					}
 				}
 				else
 				{
@@ -11114,6 +11161,11 @@ I = {
 				{
 					right: "0px", left: "auto", bottom: "0px"
 				});
+				$("#itemLanguagePopup a").each(function()
+				{
+					var link = $(this).attr("href");
+					$(this).attr("href", link + "&mode=" + I.ModeEnum.Overlay);
+				});
 				
 			} break;
 			case I.ModeEnum.Simple:
@@ -11148,7 +11200,7 @@ I = {
 				$("#itemLanguagePopup a").each(function()
 				{
 					var link = $(this).attr("href");
-					$(this).attr("href", link + "&mode=Simple");
+					$(this).attr("href", link + "&mode=" + I.ModeEnum.Simple);
 				});
 				$("#itemTimeLocal").css({
 					position: "fixed",

@@ -722,9 +722,9 @@ var GW2T_CHAIN_DATA = [
 			sInterim: ["*"],
 			fInterim: "*",
 			lim: "15:00",
-			avg: "8:00",
-			min: "5:00",
-			max: "10:00",
+			avg: "6:00",
+			min: "4:00",
+			max: "8:00",
 			primacy: 3
 		}
 	]
@@ -1432,9 +1432,9 @@ var GW2T_CHAIN_DATA = [
 	]
 },
 {
-	alias: "StoryXXX0",
+	alias: "DryTopXXX0",
 	series: 4,
-	title: "Entanglement Q1",
+	title: "Dry Top Q1",
 	events: [
 		{
 			path: [[3979, 16464]],
@@ -1857,9 +1857,9 @@ var GW2T_CHAIN_DATA = [
 	]
 },
 {
-	alias: "StoryXXX1",
+	alias: "DryTopXXX1",
 	series: 4,
-	title: "Entanglement Q2",
+	title: "Dry Top Q2",
 	events: [
 		{
 			path: [[3979, 16464]],
@@ -2282,9 +2282,9 @@ var GW2T_CHAIN_DATA = [
 	]
 },
 {
-	alias: "StoryXXX2",
+	alias: "DryTopXXX2",
 	series: 4,
-	title: "Entanglement Q3",
+	title: "Dry Top Q3",
 	events: [
 		{
 			path: [[3979, 16464]],
@@ -2802,9 +2802,9 @@ var GW2T_CHAIN_DATA = [
 	]
 },
 {
-	alias: "StoryXXX3",
+	alias: "DryTopXXX3",
 	series: 4,
-	title: "Entanglement Q4",
+	title: "Dry Top Q4",
 	events: [
 		{
 			path: [[4515, 16526]],

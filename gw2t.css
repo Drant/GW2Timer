@@ -1179,6 +1179,7 @@ header.cntHeader {
 }
 
 textarea.jsCopyCode {
+	width: 300px;
 	font-family: monospace;
 	color: #ddff77;
 }
