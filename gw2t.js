@@ -871,14 +871,29 @@ O = {
 		},
 		bol_showMap: function()
 		{
-			if (O.Options.bol_showMap)
+			if (I.ModeCurrent !== I.ModeEnum.Mobile)
 			{
-				$("#panelLeft").show();
-				M.refreshMap();
+				if (O.Options.bol_showMap)
+				{
+					$("#panelLeft").show();
+					M.refreshMap();
+				}
+				else
+				{
+					$("#panelLeft").hide();
+				}
 			}
 			else
 			{
-				$("#panelLeft").hide();
+				if (O.Options.bol_showMap)
+				{
+					$("#paneMapAlternate").show();
+					M.refreshMap();
+				}
+				else
+				{
+					$("#paneMapAlternate").hide();
+				}
 			}
 		},
 		bol_refreshPrices: function()
@@ -1107,7 +1122,11 @@ U = {
 			{
 				go(U.URL_META.Overlay);
 			}
-			else if (page === "m" || page === "simple")
+			else if (page === "m" || page === "mobile")
+			{
+				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Mobile;
+			}
+			else if (page === "simple")
 			{
 				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Simple;
 			}
@@ -1427,9 +1446,10 @@ U = {
 			var gostring = "";
 			var modestring = "";
 			
-			if (I.ModeCurrent === I.ModeEnum.Overlay)
+			if (I.ModeCurrent === I.ModeEnum.Overlay ||
+				I.ModeCurrent === I.ModeEnum.Mobile)
 			{
-				modestring = "&mode=Overlay";
+				modestring = "&mode=" + I.ModeCurrent;
 			}
 
 			if (section)
@@ -3075,7 +3095,7 @@ E = {
 								+ "<input class='trdCurrentBuy trdOutput' type='text' tabindex='-1' />"
 								+ "<input class='trdNotifyBuyLow' type='text' />"
 								+ "<label title='<dfn>" + D.getSentence("overwrite") + "</dfn>: Replace your buy and sell prices with the current prices when refreshing.'>"
-									+ "<input class='trdOverwrite' type='checkbox' tabindex='-1' />&zwnj;</label>"
+									+ "<input class='trdOverwrite' type='checkbox' tabindex='-1' />&zwnj;</label><br />"
 							+ "<samp>!~$</samp>"
 								+ "<input class='trdNotifySellHigh' type='text' />"
 								+ "<input class='trdCurrentSell trdOutput' type='text' tabindex='-1' />"
@@ -3924,8 +3944,10 @@ D = {
 			cs: "Plán", it: "Programma", pl: "Harmonogram", pt: "Horário", ru: "Расписание", zh: "時間表"},
 		s_news: {de: "nachrichten", es: "noticias", fr: "actualités",
 			cs: "zprávy", it: "notizie", pl: "wiadomości", pt: "notícias", ru: "новости", zh: "新聞"},
-		s_simple_mode: {de: "einfach modus", es: "modo simple", fr: "mode simple",
-			cs: "prostý režim", it: "modalità semplice", pl: "prosty tryb", pt: "modo simples", ru: "простой режим", zh: "方式簡單"},
+		s_simple: {de: "einfach", es: "simple", fr: "simple",
+			cs: "prostý", it: "semplice", pl: "prosty", pt: "simples", ru: "простой", zh: "簡單"},
+		s_mobile: {de: "mobil", es: "móvil", fr: "mobile",
+			cs: "mobilní", it: "mobile", pl: "mobilna", pt: "móvel", ru: "мобильный", zh: "行動"},
 		s_chests: {de: "schatztruhen", es: "cofres del tesoro", fr: "coffres au trésor",
 			cs: "truhly", it: "scrigni del tesoro", pl: "skrzynie", pt: "baús de tesouro", ru: "сундуки с сокровищами", zh: "寶箱"},
 		
@@ -4763,6 +4785,8 @@ C = {
 	PreviousChains2: [],
 	NextChains1: [],
 	cChainTitleCharLimit: 30,
+	cEventTitleCharLimit: 44,
+	cEventNameWidth: 320,
 	ScheduledChains: [],
 	DryTopChains: [],
 	LegacyChains: [],
@@ -4971,11 +4995,11 @@ C = {
 			}
 			
 			var indentpixel = 0;
-			var eventnamelimit = 44;
+			var eventnamelimit = C.cEventTitleCharLimit;
 			var indentEvent = function()
 			{
 				indentpixel = 12;
-				eventnamelimit = 40;
+				eventnamelimit = C.cEventTitleCharLimit - 4;
 			};
 			
 			/*
@@ -5604,7 +5628,7 @@ C = {
 	{
 		var i;
 		var animationspeed = 500;
-		var eventnamewidth = 320;
+		var eventnamewidth = C.cEventNameWidth;
 		var finalstep = pChain.primaryEvents.length - 1;
 		var event;
 		
@@ -6071,27 +6095,30 @@ M = {
 		P.generateSubmaps();
 		P.populateMap();
 		P.drawChainPaths();
-
-		/*
-		 * Clicking an empty place on the map highlight its coordinate.
-		 */
-		M.Map.on("click", function(pEvent)
-		{
-			if (M.isMouseOnHUD) { return; }
-			var coord = M.convertLCtoGC(pEvent.latlng);
-			$("#mapCoordinatesCopy")
-				.val("[" + coord[0] + ", " + coord[1] + "]")
-				.select();
-		});
 		
-		/*
-		 * Move the personal pin marker to where the user double clicks.
-		 */
-		M.Map.on("dblclick", function(pEvent)
+		if ( ! I.isOnSmallDevice)
 		{
-			if (M.isMouseOnHUD) { return; }
-			M.PinPersonal.setLatLng(pEvent.latlng);
-		});
+			/*
+			 * Clicking an empty place on the map highlight its coordinate.
+			 */
+			M.Map.on("click", function(pEvent)
+			{
+				if (M.isMouseOnHUD) { return; }
+				var coord = M.convertLCtoGC(pEvent.latlng);
+				$("#mapCoordinatesCopy")
+					.val("[" + coord[0] + ", " + coord[1] + "]")
+					.select();
+			});
+
+			/*
+			 * Move the personal pin marker to where the user double clicks.
+			 */
+			M.Map.on("dblclick", function(pEvent)
+			{
+				if (M.isMouseOnHUD) { return; }
+				M.PinPersonal.setLatLng(pEvent.latlng);
+			});
+		}
 		
 		/*
 		 * Go to the coordinates in the bar when user presses enter.
@@ -6122,8 +6149,15 @@ M = {
 		$("#mapDisplayButton").click(function()
 		{
 			// Hide the right panel if click on the display button.
-			$("#panelRight").toggle();
-			M.refreshMap();
+			if (I.ModeCurrent !== I.ModeEnum.Mobile)
+			{
+				$("#panelRight").toggle();
+				M.refreshMap();
+			}
+			else
+			{
+				document.location = I.cSiteURL;
+			}
 		});
 		$("#mapCompassButton").one("mouseenter", M.bindZoneList).click(function()
 		{
@@ -9385,6 +9419,10 @@ K = {
 					function()
 					{
 						$("#paneClock").hide();
+						if (I.ModeCurrent === I.ModeEnum.Mobile)
+						{
+							$("#paneMapAlternate").hide();
+						}
 					});
 			} break;
 		}
@@ -9404,9 +9442,19 @@ K = {
 			$(I.cContentPane).animate({top: clockpaneheight + I.cPANE_MENU_HEIGHT,
 				"min-height": I.cPANEL_HEIGHT - (clockpaneheight + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 		}
-		if (I.ModeCurrent === I.ModeEnum.Overlay)
+		
+		// Other associated elements
+		switch (I.ModeCurrent)
 		{
-			$("#itemSocial").hide();
+			case I.ModeEnum.Overlay: $("#itemSocial").hide(); break;
+			case I.ModeEnum.Mobile: {
+				$("#paneMap").css({"min-height": clockpaneheight});
+				if (O.Options.bol_showMap)
+				{
+					$("#paneMapAlternate").show();
+					M.refreshMap();
+				}
+			} break;
 		}
 	},
 
@@ -10176,6 +10224,7 @@ I = {
 	cTOOLTIP_MAX_WIDTH: 360,
 	cTOOLTIP_DEFAULT_OFFSET_X: -180,
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
+	cTOOLTIP_ALTERNATE_OFFSET_X: 24,
 	cTOOLTIP_ADD_OFFSET_Y: 42,
 	cTOOLTIP_ADD_OFFSET_X: 36,
 	cTOOLTIP_MOUSEMOVE_RATE: 10,
@@ -10188,6 +10237,7 @@ I = {
 	ModeEnum:
 	{
 		Website: "Website",
+		Mobile: "Mobile",
 		Simple: "Simple",
 		Overlay: "Overlay"
 	},
@@ -11161,11 +11211,7 @@ I = {
 				{
 					right: "0px", left: "auto", bottom: "0px"
 				});
-				$("#itemLanguagePopup a").each(function()
-				{
-					var link = $(this).attr("href");
-					$(this).attr("href", link + "&mode=" + I.ModeEnum.Overlay);
-				});
+				$("#mapGPSButton").show();
 				
 			} break;
 			case I.ModeEnum.Simple:
@@ -11197,26 +11243,44 @@ I = {
 				$("#itemClockStar0").css({ top: "68px", left: "122px" });
 				$("#itemClockStar1").css({ top: "68px", left: "206px" });
 				$("#itemLanguage span").css({opacity: 0.7});
-				$("#itemLanguagePopup a").each(function()
-				{
-					var link = $(this).attr("href");
-					$(this).attr("href", link + "&mode=" + I.ModeEnum.Simple);
-				});
 				$("#itemTimeLocal").css({
 					position: "fixed",
 					bottom: "0px",
 					color: "#eee",
 					opacity: 0.5
 				});
-				I.qTip.init($("<a title='&lt;dfn&gt;Shortcut to this page&lt;/dfn&gt;: gw2timer.com/m' href='./'>"
+				I.qTip.init($("<a title='&lt;dfn&gt;Shortcut to this page&lt;/dfn&gt;: gw2timer.com/simple' href='./'>"
 					+ " <img id='iconSimpleHome' src='img/ui/about.png' /></a>")
 					.appendTo("#itemTimeLocalExtra"));
 				$("#paneBoard").show();
 				
 			} break;
-			case I.ModeEnum.Website:
+			case I.ModeEnum.Mobile:
 			{
-				$("#mapGPSButton").hide();
+				$("#panelLeft, .itemMapLinks a, .itemMapLinks span").hide();
+				$("#paneMapAlternate").show();
+				$("#paneMap").appendTo("#paneMapAlternate");
+				$("#panelRight, #paneMenu, #paneContent, #paneContent article").css({
+					width: "100%"
+				});
+				$(".paneRight").css({
+					right: "auto",
+					"border-left": "none"
+				});
+				$("#itemLanguagePopup").css({
+					left: "64px"
+				});
+				$("#paneMap").css({
+					"border-left": "1px solid #444",
+					"box-shadow": "-5px 0px 5px #223"
+				});
+				$("#paneClock").css({
+					"border-right": "1px solid #444",
+					"box-shadow": "5px 0px 5px #223"
+				});
+				C.cChainTitleCharLimit = 999;
+				C.cEventTitleCharLimit = 999;
+				C.cEventNameWidth = "auto";
 			} break;
 		}
 		
@@ -11225,6 +11289,16 @@ I = {
 		{
 			$("#paneWarning").remove();
 			$(".itemMapLinks a, .itemMapLinks span").hide();
+		}
+		
+		// Include program mode in Language link
+		if (I.ModeCurrent !== I.ModeEnum.Website)
+		{
+			$("#itemLanguagePopup a").each(function()
+			{
+				var link = $(this).attr("href");
+				$(this).attr("href", link + "&mode=" + I.ModeCurrent);
+			});
 		}
 	},
 	
@@ -11276,16 +11350,9 @@ I = {
 				I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 			}
 			// Tooltip overflows panel left edge
-			if (I.ModeCurrent === I.ModeEnum.Overlay)
+			if (($(window).width() - pEvent.pageX) > (I.cPANEL_WIDTH / 2))
 			{
-				if (($(window).width() - pEvent.pageX) > (I.cPANEL_WIDTH / 2))
-				{
-					I.qTip.offsetX = ($(window).width() - pEvent.pageX) - I.cPANEL_WIDTH;
-				}
-				else
-				{
-					I.qTip.offsetX = I.cTOOLTIP_DEFAULT_OFFSET_X;
-				}
+				I.qTip.offsetX = I.cTOOLTIP_ALTERNATE_OFFSET_X;
 			}
 			else
 			{
@@ -11301,21 +11368,21 @@ I = {
 			}
 			else
 			{
-				I.qTip.offsetX = 24;
+				I.qTip.offsetX = I.cTOOLTIP_ALTERNATE_OFFSET_X;
 			}
 			// Tooltip overflows bottom edge
-			if ($("#qTip").height() - 24 + pEvent.pageY > $(window).height())
+			if ($("#qTip").height() - I.cTOOLTIP_ALTERNATE_OFFSET_X + pEvent.pageY > $(window).height())
 			{
 				I.qTip.offsetY = -($("#qTip").height()) - I.cTOOLTIP_ADD_OFFSET_Y;
 			}
 			// Tooltip overflows top edge
-			else if (pEvent.pageY < 42)
+			else if (pEvent.pageY < I.cTOOLTIP_ADD_OFFSET_Y)
 			{
-				I.qTip.offsetY = 32;
+				I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 			}
 			else
 			{
-				I.qTip.offsetY = -42;
+				I.qTip.offsetY = -I.cTOOLTIP_ADD_OFFSET_Y;
 			}
 		}));
 	},

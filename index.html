@@ -66,7 +66,8 @@
 			</div>
 			<div id="itemMapLinksNorth" class="itemMapLinks">
 				<a class="jsTranslate linkExternal" title="<dfn>Go to Forum</dfn>" href="http://forum.renaka.com/forum/368355/">news</a><span> /</span>
-				<u><a class="jsTranslate" title="<dfn>Switch to Simple Clock Mode</dfn>" href="./?mode=Simple">simple mode</a></u><span> /</span>
+				<u><a class="jsTranslate" title="<dfn>Switch to Simple Mode (clock only)</dfn>" href="./?mode=Simple">simple</a></u><span> /</span>
+				<u><a class="jsTranslate" title="<dfn>Switch to Mobile Mode (right panel only)</dfn>" href="./?mode=Mobile">mobile</a></u><span> /</span>
 				<u><a class="jsTranslate" title="<dfn>Dry Top Buried Locked Chests</dfn>" href="./?page=Chests">chests</a></u>
 				<div id="mapGPS" class="mapHUDContainer">
 					<img title="<dfn>Click to Center Self</dfn>" id="mapGPSButton" class="mapHUDButton" src="img/map/gps.png" alt="GPS" />
@@ -311,6 +312,7 @@
 				</a>
 			</div>
 		</section>
+		<section id="paneMapAlternate"></section>
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
 		<nav id="paneMenu" class="paneRight">
@@ -338,7 +340,7 @@
 				<header>
 					<img src="img/ui/scheduled.png" alt="Scheduled Bosses" />
 					<span class="jsTranslate">Scheduled Bosses</span>
-					<ins></ins>
+					<ins id="listChainsFirstButton"></ins>
 				</header>
 				<div id="listChainsScheduled" class="listChains"></div>
 				<header>
@@ -437,7 +439,7 @@
 					<br />
 					<h2>Defaults</h2>
 					<div class="optButtons">
-						<button id="optRestoreAllChains" title="Unhide all world bosses and uncheck them.">Restore All Chains</button>
+						<button id="optRestoreAllChains" title="Unhide all world bosses and uncheck them.">Restore All Chains</button><br />
 						<button id="optClearLocalStorage" title="Clear the localStorage which stores options and states, as if you visited for the first time.">Clear Website Memory</button>
 					</div>
 					<br />
