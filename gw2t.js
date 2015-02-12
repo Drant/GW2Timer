@@ -6072,7 +6072,8 @@ M = {
 		if (I.isOnSmallDevice)
 		{
 			// Because the map will interfere with scrolling the website on touch devices
-			M.Map.dragging.disable();
+			M.Map.touchZoom.disable();
+			M.Map.tap.disable();
 		}
 		
 		// Set layers
