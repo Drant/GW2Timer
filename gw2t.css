@@ -58,6 +58,7 @@ body > windowMain
 }
 
 html, body {
+	width: 100%;
 	height: 100%;
 	background: black;
 }
@@ -271,7 +272,7 @@ a, input, label, button,
  *  Left panel
  * ========================================================================== */
 #panelLeft, #panelRight {
-	background: #111;
+	background: none;
 }
 #panelLeft {
 	background: linear-gradient(to right, #000 0%, #111 100%);
@@ -283,11 +284,6 @@ a, input, label, button,
 	height: 100%;
 	min-height: 220px;
 	background: url("img/background/space.jpg") repeat center;
-}
-
-#paneMapAlternate {
-	display: none;
-	margin-left: 360px;
 }
 
 /* Bottom left corner: Coordinates bar */
@@ -373,6 +369,7 @@ input#mapCoordinatesName {
 
 #mapGPSButton {
 	display: none;
+	margin-right: -8px;
 }
 
 /* Map options */

@@ -883,18 +883,6 @@ O = {
 					$("#panelLeft").hide();
 				}
 			}
-			else
-			{
-				if (O.Options.bol_showMap)
-				{
-					$("#paneMapAlternate").show();
-					M.refreshMap();
-				}
-				else
-				{
-					$("#paneMapAlternate").hide();
-				}
-			}
 		},
 		bol_refreshPrices: function()
 		{
@@ -1126,7 +1114,7 @@ U = {
 			{
 				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Mobile;
 			}
-			else if (page === "simple")
+			else if (page === "s" || page === "simple")
 			{
 				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Simple;
 			}
@@ -6069,10 +6057,10 @@ M = {
 			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
 		}).setView([-128, 128], M.ZoomLevelEnum.Default);
-		if (I.isOnSmallDevice)
+		// Because the map will interfere with scrolling the website on touch devices
+		M.Map.touchZoom.disable();
+		if (M.Map.tap)
 		{
-			// Because the map will interfere with scrolling the website on touch devices
-			M.Map.touchZoom.disable();
 			M.Map.tap.disable();
 		}
 		
@@ -6157,7 +6145,7 @@ M = {
 			}
 			else
 			{
-				document.location = I.cSiteURL;
+				document.location = "./";
 			}
 		});
 		$("#mapCompassButton").one("mouseenter", M.bindZoneList).click(function()
@@ -7757,7 +7745,10 @@ P = {
 					$(this).attr("data-coord", coord[0] + "," + coord[1]);
 					$(this).attr("data-eventindex", ii);
 					// Read the attribute and use the coordinate when clicked for touring
-					M.bindMapLinkBehavior($(this), M.PinEvent);
+					if (I.ModeCurrent !== I.ModeEnum.Mobile)
+					{
+						M.bindMapLinkBehavior($(this), M.PinEvent);
+					}
 				});
 				
 				// Create event icons for Dry Top chains, they will be resized by the zoomend function
@@ -9415,15 +9406,11 @@ K = {
 				 * needs to be changed: less to go up, more to go down.
 				 */
 				$("#paneMenu").animate({top: 0}, animationspeed);
-				$(I.cContentPane).animate({top: I.cPANE_MENU_HEIGHT,
+				$("#paneContent").animate({top: I.cPANE_MENU_HEIGHT,
 					"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed,
 					function()
 					{
 						$("#paneClock").hide();
-						if (I.ModeCurrent === I.ModeEnum.Mobile)
-						{
-							$("#paneMapAlternate").hide();
-						}
 					});
 			} break;
 		}
@@ -9440,7 +9427,7 @@ K = {
 				.animate({height: clockpaneheight}, animationspeed);
 
 			// Readjust content pane
-			$(I.cContentPane).animate({top: clockpaneheight + I.cPANE_MENU_HEIGHT,
+			$("#paneContent").animate({top: clockpaneheight + I.cPANE_MENU_HEIGHT,
 				"min-height": I.cPANEL_HEIGHT - (clockpaneheight + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 		}
 		
@@ -9448,14 +9435,6 @@ K = {
 		switch (I.ModeCurrent)
 		{
 			case I.ModeEnum.Overlay: $("#itemSocial").hide(); break;
-			case I.ModeEnum.Mobile: {
-				$("#paneMap").css({"min-height": clockpaneheight});
-				if (O.Options.bol_showMap)
-				{
-					$("#paneMapAlternate").show();
-					M.refreshMap();
-				}
-			} break;
 		}
 	},
 
@@ -10242,7 +10221,6 @@ I = {
 		Simple: "Simple",
 		Overlay: "Overlay"
 	},
-	cContentPane: "#paneContent",
 	cContentPrefix: "#layer",
 	cMenuPrefix: "#menu",
 	PageCurrent: "",
@@ -10579,6 +10557,11 @@ I = {
 	 */
 	initializeScrollbar: function(pObject)
 	{
+		if (I.ModeCurrent === I.ModeEnum.Mobile)
+		{
+			return;
+		}
+		
 		var wheelspeed = 1;
 		switch (I.BrowserCurrent)
 		{
@@ -11250,7 +11233,7 @@ I = {
 					color: "#eee",
 					opacity: 0.5
 				});
-				I.qTip.init($("<a title='&lt;dfn&gt;Shortcut to this page&lt;/dfn&gt;: gw2timer.com/simple' href='./'>"
+				I.qTip.init($("<a title='&lt;dfn&gt;Shortcut to this page&lt;/dfn&gt;: gw2timer.com/s' href='./'>"
 					+ " <img id='iconSimpleHome' src='img/ui/about.png' /></a>")
 					.appendTo("#itemTimeLocalExtra"));
 				$("#paneBoard").show();
@@ -11258,30 +11241,20 @@ I = {
 			} break;
 			case I.ModeEnum.Mobile:
 			{
-				$("#panelLeft, .itemMapLinks a, .itemMapLinks span").hide();
-				$("#paneMapAlternate").show();
-				$("#paneMap").appendTo("#paneMapAlternate");
-				$("#panelRight, #paneMenu, #paneContent, #paneContent article").css({
-					width: "100%"
-				});
-				$(".paneRight").css({
-					right: "auto",
-					"border-left": "none"
-				});
-				$("#itemLanguagePopup").css({
-					left: "64px"
-				});
-				$("#paneMap").css({
+				$("#panelLeft").hide();
+				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1, width=360'>");
+				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>");
+				/*$("#paneMap").css({
 					"border-left": "1px solid #444",
 					"box-shadow": "-5px 0px 5px #223"
-				});
-				$("#paneClock").css({
+				});*/
+				/*$("#paneClock").css({
 					"border-right": "1px solid #444",
 					"box-shadow": "5px 0px 5px #223"
-				});
-				C.cChainTitleCharLimit = 999;
+				});*/
+				/*C.cChainTitleCharLimit = 999;
 				C.cEventTitleCharLimit = 999;
-				C.cEventNameWidth = "auto";
+				C.cEventNameWidth = "auto";*/
 			} break;
 		}
 		

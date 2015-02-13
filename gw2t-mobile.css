@@ -1,0 +1,105 @@
+/*
+	http://gw2timer.com/mobile
+	Mobile Devices stylesheet to tailor for small vertical touchscreens.
+*/
+
+/* Restructure to fit */
+
+#panelLeft, #itemClockWaypoints {
+	display: none;
+}
+
+body, #paneContent article {
+	overflow: visible;
+}
+
+body, html, .panelMain, #windowMain, #paneContent article {
+	height: auto;
+}
+
+#paneContent {
+	position: relative;
+}
+
+.paneRight {
+	right: auto;
+	border-left: none;
+}
+
+/* Element resize */
+
+#itemLanguage:hover #itemLanguagePopup {
+	left: 64px;
+}
+
+#optAlarm {
+	margin-left: 260px;
+}
+#itemAlarmPopup {
+	font-size: 18px;
+}
+#itemAlarmPopup fieldset {
+	min-width: 180px;
+}
+#optAlarmSpeaker {
+	width: 32px; height: 32px;
+}
+#optAlarmIcon {
+	width: 24px; height: 24px;
+}
+
+.barChain, .barChainDummy {
+	margin-bottom: 8px;
+}
+
+.chnTitle img {
+	width: 64px; height: 64px;
+	border-radius: 8px;
+}
+
+.chnCheck, .chnChecked {
+	display: inline-block;
+	margin-left: -64px;
+	width: 64px; height: 64px;
+	opacity: 0.6;
+}
+
+.chnTitle h1 {
+	width: 178px;
+}
+
+.chnTitle time {
+	font-size: 18px;
+}
+
+#layerChains header {
+	height: 48px;
+	margin-bottom: 16px;
+}
+
+/* Options page */
+
+#layerOptions .cntComposition {
+	font-size: 18px;
+}
+
+input[type=checkbox] {
+	transform: scale(1.5);
+}
+
+input[type="number"] {
+	width: 64px;
+	font-size: 18px;
+}
+
+#layerOptions .cntComposition button {
+	min-height: 32px;
+	font-size: 18px;
+}
+
+/* Page elements */
+
+header.jsSection {
+	padding-top: 0;
+	margin-top: 12px;
+}
