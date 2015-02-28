@@ -32,6 +32,15 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	left: 64px;
 }
 
+#itemLanguagePopup a {
+	font-size: 18px;
+	line-height: 100%;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
 #optAlarm {
 	margin-left: 260px;
 }
@@ -77,6 +86,10 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	margin-bottom: 16px;
 }
 
+#layerChains header span {
+	visibility: visible;
+}
+
 /* Options page */
 
 #layerOptions .cntComposition {
@@ -102,4 +115,12 @@ input[type="number"] {
 header.jsSection {
 	padding-top: 0;
 	margin-top: 12px;
+}
+
+.chlDungeonBar {
+	margin-bottom: 8px;
+}
+
+.chlDungeonBar label {
+	margin-right: 8px;
 }

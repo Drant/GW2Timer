@@ -1,7 +1,7 @@
 /*
 	GW2Timer.com timer, map, and misc single-page application driver.
 	jQuery-dependent (v1.11.0), with other plugins in plugins.js.
-	Coded in NetBeans; debugged in Opera Dragonfly.
+	Coded in NetBeans; debugged in Chrome Developer Tools.
 	IDE recommended for viewing and collapsing code sections.
 	Version: see int_utlProgramVersion - 2014.04.18 created
 
@@ -35,15 +35,16 @@
 	TABLE OF CONTENTS (Ctrl+F "AtsignAtsignLetter" to jump to section)
 
 	O - Options for user
+	U - URL management
 	X - Checklists
 	E - Economy
 	D - Dictionary for translations
 	C - Chains events
 	M - Map Leaflet
 	P - Populate map
+	W - World vs World
 	T - Time utilities and schedule
 	K - Clock ticker
-	U - URL management
 	I - Interface UI
 
 */
@@ -53,7 +54,7 @@ $(window).on("load", function() {
 /* =============================================================================
  *  Single letter objects serve as namespaces.
  * ========================================================================== */
-var O, X, E, D, C, M, P, T, K, U, I = {};
+var O, U, X, E, D, C, M, P, W, T, K, I = {};
 
 /* =============================================================================
  * @@Options for the user
@@ -70,7 +71,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 150207},
+		programVersion: {key: "int_utlProgramVersion", value: 150228},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -86,7 +87,7 @@ O = {
 		// Timer
 		bol_hideChecked: false,
 		bol_expandWB: true,
-		bol_expandLS: true,
+		bol_expandDT: true,
 		bol_collapseChains: true,
 		bol_useCountdown: true,
 		int_setClock: 0,
@@ -115,6 +116,7 @@ O = {
 		bol_alertChecked: false,
 		int_alertSubscribedFirst: 1,
 		int_alertSubscribedSecond: 15,
+		bol_alertUnsubscribe: false,
 		// Tools
 		int_sizeNotepadFont: 12,
 		int_sizeNotepadHeight: 500,
@@ -251,7 +253,7 @@ O = {
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
-				+ "GW2Navi Guild Wars 2 overlay updated! <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>Download now</a>.<br />"
+				+ "GW2Navi Guild Wars 2 overlay updated (2015.02.07) <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>Download now</a>.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -817,13 +819,13 @@ O = {
 				}
 			}
 		},
-		bol_expandLS: function()
+		bol_expandDT: function()
 		{
 			for (var i in C.CurrentChains)
 			{
 				if (C.CurrentChains[i].series === C.ChainSeriesEnum.DryTop)
 				{
-					$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_expandLS);
+					$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_expandDT);
 				}
 			}
 		},
@@ -831,6 +833,7 @@ O = {
 		{
 			C.initializeTimetableHTML();
 			C.updateChainsTimeHTML();
+			K.updateDigitalClockMinutely();
 		},
 		bol_detectDST: function()
 		{
@@ -926,19 +929,28 @@ U = {
 	
 	URL_API:
 	{
-		Tiles: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
-		MapFloor: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
+		// Map
+		TilesTyria: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
+		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
+		TilesMists: "https://tiles.guildwars2.com/2/1/{z}/{x}/{y}.jpg",
+		MapFloorMists: "https://api.guildwars2.com/v1/map_floor.json?continent_id=2&floor=1",
 		EventNames: "https://api.guildwars2.com/v1/event_names.json",
 		EventDetails: "https://api.guildwars2.com/v1/event_details.json",
+		
+		// Exchange
 		ItemListing: "https://api.guildwars2.com/v2/commerce/listings/",
 		ItemPrices: "https://api.guildwars2.com/v2/commerce/prices/",
 		ItemDetails: "https://api.guildwars2.com/v1/item_details.json?item_id=",
 		ItemRender: "https://render.guildwars2.com/file/",
 		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
 		GemPrice: "https://api.guildwars2.com/v2/commerce/exchange/coins?quantity=",
-		
 		ItemSearch: "http://www.gw2spidy.com/api/v0.9/json/item-search/",
-		ItemData: "http://www.gw2spidy.com/api/v0.9/json/item/"
+		ItemData: "http://www.gw2spidy.com/api/v0.9/json/item/",
+		
+		// WvW
+		WvWMatches: "https://api.guildwars2.com/v1/wvw/matches.json",
+		WvWMatchDetails: "https://api.guildwars2.com/v1/wvw/match_details.json?match_id=",
+		GuildDetails: "https://api.guildwars2.com/v1/guild_details.json?guild_id="
 	},
 	
 	URL_IMG:
@@ -953,10 +965,17 @@ U = {
 		Heart: "img/map/heart.png"
 	},
 	
+	URL_DATA:
+	{
+		Resource: "data/resource.js",
+		Collectible: "data/collectible.js"
+	},
+	
 	initializeAPIURLs: function()
 	{
 		var lang = D.getFullySupportedLanguage();
-		U.URL_API.MapFloor += "&lang=" + lang;
+		U.URL_API.MapFloorTyria += "&lang=" + lang;
+		U.URL_API.MapFloorMists += "&lang=" + lang;
 		U.URL_API.EventNames += "?lang=" + lang;
 	},
 
@@ -1489,8 +1508,15 @@ U = {
 	{
 		if (U.Args[U.KeyEnum.Page] !== undefined)
 		{
-			var page = U.stripToAlphanumeric(U.Args[U.KeyEnum.Page]);
-			$(I.cMenuPrefix + U.toFirstUpperCase(page)).trigger("click");
+			var request = U.stripToAlphanumeric(U.Args[U.KeyEnum.Page]);
+			for (var i in I.PageEnum)
+			{
+				if (request.toLowerCase() === (I.PageEnum[i]).toLowerCase())
+				{
+					$(I.cMenuPrefix + I.PageEnum[i]).trigger("click");
+					return;
+				}
+			}
 		}
 	},
 	
@@ -1661,7 +1687,7 @@ X = {
 	 * character in a string of numbers representing those states, and the index
 	 * of a character is that checkbox's "ID". The Checklists object stores
 	 * checklists with such a string and a key for localStorage, along with
-	 * supplementary objects.
+	 * supplementary attributes.
 	 */
 	Checklists:
 	{
@@ -3940,7 +3966,6 @@ D = {
 			cs: "truhly", it: "scrigni del tesoro", pl: "skrzynie", pt: "baús de tesouro", ru: "сундуки с сокровищами", zh: "寶箱"},
 		
 		// Economy
-		
 		s_this: {de: "dieses", es: "esto", fr: "ce",
 			cs: "toto", it: "questo", pl: "to", pt: "isto", ru: "это", zh: "這"},
 		s_your: {de: "dein", es: "tu", fr: "ton",
@@ -4759,7 +4784,7 @@ D = {
 C = {
 	
 	/*
-	 * http://gw2timer.com/chains.js holds an array of meta event chain objects,
+	 * http://gw2timer.com/data/chains.js holds an array of meta event chain objects,
 	 * which themselves contain an array of their events.
 	 * This is referred to by the variable "C.Chains".
 	 */
@@ -5443,7 +5468,7 @@ C = {
 			// Show the events (details)
 			if (C.isChainUnchecked(ithchain))
 			{
-				if ((ithchain.series === C.ChainSeriesEnum.DryTop && O.Options.bol_expandLS)
+				if ((ithchain.series === C.ChainSeriesEnum.DryTop && O.Options.bol_expandDT)
 					|| (ithchain.series !== C.ChainSeriesEnum.DryTop && O.Options.bol_expandWB))
 				{
 					$("#chnDetails_" + ithchain.nexus).show("fast");
@@ -5696,7 +5721,7 @@ C = {
 				&& pChain.series !== C.ChainSeriesEnum.DryTop
 				&& $("#listChainsDryTop").is(":visible") === false)
 			{
-				if ((pChain.series === C.ChainSeriesEnum.DryTop && O.Options.bol_expandLS)
+				if ((pChain.series === C.ChainSeriesEnum.DryTop && O.Options.bol_expandDT)
 						|| pChain.series !== C.ChainSeriesEnum.DryTop)
 				{
 					$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
@@ -5863,11 +5888,11 @@ C = {
 };
 
 /* =============================================================================
- * @@Map and map control
+ * @@Map of Tyria and map control
  * ========================================================================== */
 M = {
 	/*
-	 * http://gw2timer.com/zones.js contains zone (e.g. Queensdale, LA) objects
+	 * http://gw2timer.com/data/zones.js contains zone (e.g. Queensdale, LA) objects
 	 * with their rectangular coordinates.
 	 * This is referred to by the variable "M.Zones".
 	 */
@@ -5894,6 +5919,7 @@ M = {
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
 	cMAP_MOUSEMOVE_RATE: 100,
+	cInertiaThreshold: 100, // Milliseconds between drag and release to flick pan
 	cZoomLevelFactor: 2,
 	ZoomLevelEnum:
 	{
@@ -5914,6 +5940,8 @@ M = {
 	cCIRCLE_HALF_DEGREE: 180,
 	cCIRCLE_FULL_DEGREE: 360,
 	cRADIAN_TO_DEGREE: 180 / Math.PI,
+	cUNITS_TO_POINTS: 208 / 5000,
+	cPOINTS_TO_UNITS: 5000 / 208,
 	GPSTimeout: {},
 	
 	/*
@@ -5952,6 +5980,12 @@ M = {
 	DailyEntities: new Array(),
 	JPEntities: new Array(),
 	ChainPathEntities: new Array(),
+	// AJAX generated sections' icons must be set to false
+	isIconsGeneratedForDaily: true,
+	isIconsGeneratedForResource: false,
+	isIconsGeneratedForJP: true,
+	isIconsGeneratedForCollectible: false,
+	// Boolean to display map page icons
 	isShowingIconsForDaily: true,
 	isShowingIconsForResource: false,
 	isShowingIconsForJP: true,
@@ -6050,7 +6084,7 @@ M = {
 		M.Map = L.map("paneMap", {
 			minZoom: M.ZoomLevelEnum.Min,
 			maxZoom: M.ZoomLevelEnum.Max,
-			inertiaThreshold: 100, // Milliseconds between drag and release to flick pan
+			inertiaThreshold: M.cInertiaThreshold,
 			doubleClickZoom: false,
 			touchZoom: false, // Disable pinch to zoom
 			zoomControl: I.isOnSmallDevice, // Hide the zoom UI
@@ -6065,7 +6099,7 @@ M = {
 		}
 		
 		// Set layers
-		L.tileLayer(U.URL_API.Tiles,
+		L.tileLayer(U.URL_API.TilesTyria,
 		{
 			continuousWorld: true
 		}).addTo(M.Map);
@@ -6175,9 +6209,10 @@ M = {
 	 */
 	bindHUDEventCanceler: function()
 	{
-		var hud = document.getElementById("paneHUD");
-		hud.onmouseover = function() { M.isMouseOnHUD = true; };
-		hud.onmouseout = function() { M.isMouseOnHUD = false; };
+		$("#paneHUDMap").hover(
+			function() { M.isMouseOnHUD = true; },
+			function() { M.isMouseOnHUD = false; }
+		);
 	},
 	
 	/*
@@ -6363,7 +6398,7 @@ M = {
 			case 7: waypointsize = 40; landmarksize = 32; eventiconsize = 32; eventringsize = 256; break;
 			case 6: waypointsize = 32; landmarksize = 24; eventiconsize = 24; eventringsize = 128; break;
 			case 5: waypointsize = 26; landmarksize = 16; eventiconsize = 16; eventringsize = 64; break;
-			case 4: waypointsize = 20; landmarksize = 0; eventiconsize = 12; eventringsize = 32; break;
+			case 4: waypointsize = 20; landmarksize = 12; eventiconsize = 12; eventringsize = 32; break;
 			case 3: waypointsize = 16; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
 			default: { waypointsize = 0; landmarksize = 0; eventiconsize = 0; eventringsize = 0; }
 		}
@@ -7177,7 +7212,7 @@ P = {
 				}
 			}
 		}*/
-		$.getJSON(U.URL_API.MapFloor, function(pData)
+		$.getJSON(U.URL_API.MapFloorTyria, function(pData)
 		{
 			var i;
 			var regionid, region, zoneid, zone, poi;
@@ -7896,6 +7931,8 @@ P = {
 	 */
 	generateAndInitializeResourceNodes: function()
 	{
+		$.getScript(U.URL_DATA.Resource).done(function(){
+		
 		M.Resources = GW2T_RESOURCE_DATA; // This object is inline in the map HTML file
 		var i, ii;
 		var resource; // A type of resource, like copper ore
@@ -7978,6 +8015,11 @@ P = {
 				$("#nod_" + i).prop("checked", M.isShowingIconsForResource);
 				M.setEntityGroupDisplay(M.Resources[i].NodeEntities, M.isShowingIconsForResource);
 			}
+		});
+		
+		// Reinitialize show icons boolean
+		M.displayIcons("Resource", true);
+		
 		});
 	},
 	
@@ -8202,6 +8244,8 @@ P = {
 	 */
 	generateAndInitializeCollectibles: function()
 	{
+		$.getScript(U.URL_DATA.Collectible).done(function(){
+			
 		M.Collectibles = GW2T_COLLECTIBLE_DATA; // This object is inline in the map HTML file
 		var i, ii, number;
 		var customlist;
@@ -8330,7 +8374,203 @@ P = {
 				M.setEntityGroupDisplay(M.Collectibles[i].NeedleEntities, M.isShowingIconsForCollectible);
 			}
 		});
+		
+		// Reinitialize show icons boolean
+		M.displayIcons("Collectible", true);
+		
+		});
 	}
+};
+
+/* =============================================================================
+ * @@World vs World map and objectives
+ * ========================================================================== */
+W = {
+	
+	Map: {},
+	isMapInitialized: false,
+	isMouseOnHUD: false,
+	isMapAJAXDone: false,
+	isAPIRetrieved_MAPFLOOR: false,
+	isMappingIconsGenerated: false,
+	isEventIconsGenerated: false,
+	cMAP_BOUND: 16384, // The map is a square
+	cMAP_CENTER: [8192, 8192],
+	cWVW_CENTER: [10500, 12300],
+	cZoomLevelFactor: 2,
+	ZoomLevelEnum:
+	{
+		Min: 0,
+		Default: 3,
+		Space: 3,
+		Sky: 4,
+		Bird: 5,
+		Ground: 6,
+		Max: 6
+	},
+	
+	initializeMap: function()
+	{
+		$("#paneMap").hide();
+		$("#paneWvW").show();
+		
+		// W.World is the actual Leaflet map object, initialize it
+		W.Map = L.map("paneWvW", {
+			minZoom: W.ZoomLevelEnum.Min,
+			maxZoom: W.ZoomLevelEnum.Max,
+			inertiaThreshold: M.cInertiaThreshold,
+			doubleClickZoom: false,
+			touchZoom: false, // Disable pinch to zoom
+			zoomControl: I.isOnSmallDevice, // Hide the zoom UI
+			attributionControl: false, // Hide the Leaflet link UI
+			crs: L.CRS.Simple
+		}).setView([-192, 164], W.ZoomLevelEnum.Default);
+		// Because the map will interfere with scrolling the website on touch devices
+		W.Map.touchZoom.disable();
+		if (W.Map.tap)
+		{
+			W.Map.tap.disable();
+		}
+		
+		// Set layers
+		L.tileLayer(U.URL_API.TilesMists,
+		{
+			continuousWorld: true
+		}).addTo(W.Map);
+		
+		if ( ! I.isOnSmallDevice)
+		{
+			/*
+			 * Clicking an empty place on the map highlight its coordinate.
+			 */
+			W.Map.on("click", function(pEvent)
+			{
+				if (W.isMouseOnHUD) { return; }
+				var coord = W.convertLCtoGC(pEvent.latlng);
+				$("#wvwCoordinatesCopy")
+					.val("[" + coord[0] + ", " + coord[1] + "]")
+					.select();
+			});
+
+			/*
+			 * Move the personal pin marker to where the user double clicks.
+			 */
+			W.Map.on("dblclick", function(pEvent)
+			{
+				if (W.isMouseOnHUD) { return; }
+				W.PinPersonal.setLatLng(pEvent.latlng);
+			});
+		}
+		
+		/*
+		 * Go to the coordinates in the bar when user presses enter.
+		 */
+		$("#wvwCoordinatesCopy").onEnterKey(function()
+		{
+			var coord = M.parseCoordinates($(this).val());
+			coord[0] = Math.floor(coord[0]);
+			coord[1] = Math.floor(coord[1]);
+			$("#wvwCoordinatesCopy")
+				.val("[" + coord[0] + ", " + coord[1] + "]")
+				.select();
+			
+			if (coord[0] !== "" && coord.length === 2)
+			{
+				//M.goToView(coord, M.PinPersonal);
+			}
+		});
+		
+		// Finally
+		W.isMapInitialized = true;
+		
+		W.bindMapVisualChanges();
+	},
+	
+	/*
+	 * Informs Leaflet that the map pane was resized so it can load tiles properly.
+	 */
+	refreshMap: function()
+	{
+		if (W.isMapInitialized)
+		{
+			W.Map.invalidateSize();
+		}
+	},
+	
+	/*
+	 * Turns a boolean on when mouse entered any GUI elements on the map, so
+	 * map event handlers can ignore actions on those elements.
+	 */
+	bindHUDEventCanceler: function()
+	{
+		$("#paneHUDWvW").hover(
+			function() { W.isMouseOnHUD = true; },
+			function() { W.isMouseOnHUD = false; }
+		);
+	},
+	
+	/*
+	 * Bindings for map events that need to be done after AJAX has loaded the
+	 * API-generated markers.
+	 */
+	bindMapVisualChanges: function()
+	{
+		/*
+		 * Bind the mousemove event to update the map coordinate bar.
+		 * Note that the throttle function is from a separate script. It permits
+		 * the event handler to only run once every so specified milliseconds.
+		 */
+		W.Map.on("mousemove", $.throttle(M.cMAP_MOUSEMOVE_RATE, function(pEvent)
+		{
+			if (W.isMouseOnHUD) { return; }
+			var coord = W.convertLCtoGC(pEvent.latlng);
+			document.getElementById("wvwCoordinatesMouse")
+				.value = coord[0] + ", " + coord[1];
+			//M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
+		}));
+		
+		/*
+		 * At the start of a zoom change hide submaps so they do not cover the map.
+		 */
+		W.Map.on("zoomstart", function(pEvent)
+		{
+			/*if (M.SubmapEntities.length > 0)
+			{
+				M.setEntityGroupDisplay(M.SubmapEntities, "hide");
+			}*/
+		});
+
+		/*
+		 * At the end of a zoom animation, resize the map waypoint icons
+		 * depending on zoom level. Hide if zoomed too far.
+		 */
+		W.Map.on("zoomend", function(pEvent)
+		{
+			/*M.adjustZoomMapping();
+			M.adjustZoomDryTop();*/
+		});
+	},
+	
+	/*
+	 * Converts GW2's coordinates XXXXX,XXXXX to Leaflet LatLng coordinates XXX,XXX.
+	 * @param array pCoord array of two numbers.
+	 * @returns LatLng Leaflet object.
+	 */
+	convertGCtoLC: function(pCoord)
+	{
+		return W.Map.unproject(pCoord, W.Map.getMaxZoom());
+	},
+	
+	/*
+	 * Converts Leaflet LatLng to GW2's 2 unit array coordinates.
+	 * @param object pLatLng from Leaflet.
+	 * @returns array of x and y coordinates.
+	 */
+	convertLCtoGC: function(pLatLng)
+	{
+		var coord = W.Map.project(pLatLng, W.ZoomLevelEnum.Max);
+		return [Math.floor(coord.x), Math.floor(coord.y)];
+	},
 };
 
 /* =============================================================================
@@ -8362,6 +8602,8 @@ T = {
 	cSECS_MARK_2: 1800,
 	cSECS_MARK_3: 2700,
 	cSECS_MARK_4: 3599,
+	cDAYTIME_DAY_MINUTES: 80,
+	cDAYTIME_NIGHT_MINUTES: 40,
 	cBASE_10: 10,
 	ReferenceEnum:
 	{
@@ -9154,6 +9396,67 @@ T = {
 		}
 		return hour + ":" + minsec + period;
 	},
+	
+	/*
+	 * Tells if current UTC time is daytime in game or not (night).
+	 * @returns true if daytime.
+	 */
+	isDaylight: function()
+	{
+		var now = new Date();
+		var hour = now.getUTCHours();
+		var min = now.getUTCMinutes();
+		if (hour % 2 === 0) // If hour is even
+		{
+			if (min >= 25)
+			{
+				return true;
+			}
+		}
+		else // If hour is odd
+		{
+			if (min < 45)
+			{
+				return true;
+			}
+		}
+		return false;
+	},
+	
+	/*
+	 * Gets a preformatted string of the minutes of daylight or night remaining.
+	 * @returns string.
+	 */
+	getDayPeriodRemaining: function()
+	{
+		var now = new Date();
+		var hour = now.getUTCHours();
+		var min = now.getUTCMinutes();
+		var str = "";
+		if (hour % 2 === 0)
+		{
+			if (min >= 25)
+			{
+				str = (25 + T.cDAYTIME_DAY_MINUTES - min);
+			}
+			else
+			{
+				str = (25 - min);
+			}
+		}
+		else
+		{
+			if (min < 45)
+			{
+				str = (45 - min);
+			}
+			else
+			{
+				str = (45 + T.cDAYTIME_NIGHT_MINUTES - min);
+			}
+		}
+		return str + "m";
+	},
 
 	/*
 	 * Gets the time in units since midnight at the point of reference.
@@ -9225,7 +9528,7 @@ K = {
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
 	clockBackground: {}, clockCircumference: {},
-	timeLocal: {}, timeServer: {}, timeBoard: {},
+	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeBoard: {},
 	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
 	
 	// These will be DOM elements
@@ -9252,7 +9555,7 @@ K = {
 		K.clockBackground = $("#paneClockBackground")[0];
 		K.clockCircumference = $("#clkCircumference")[0];
 		K.timeLocal = $("#itemTimeLocalActual")[0];
-		K.timeServer = $("#itemTimeServer")[0];
+		K.timeDaytime = $("#itemTimeDayTime")[0];
 		K.timeBoard = $("#itemBoardTime")[0];
 		K.timestampUTC = $("#optTimestampUTC")[0];
 		K.timestampLocal = $("#optTimestampLocalReset")[0];
@@ -9260,6 +9563,8 @@ K = {
 		K.timestampReset = $("#optTimeTillReset")[0];
 		
 		K.updateTimeFrame(new Date());
+		K.updateDigitalClockMinutely();
+		K.updateDaytimeIcon();
 		K.tickFrequent();
 		K.initializeClipboard();
 	},
@@ -9277,7 +9582,7 @@ K = {
 			case O.IntEnum.Clock.Compact:
 			{
 				$("#paneClock").show();
-				$("#itemTimeLocal, #itemTimeServer, #itemLanguage, #itemSocial").show();
+				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").show();
 				// Reposition clock items
 				I.bulkAnimate([
 					{s: "#itemClock", p: {top: "0px", left: "70px", width: "220px", height: "220px"}},
@@ -9295,9 +9600,7 @@ K = {
 					{s: "#itemClockWaypoint0", p: {top: "24px", left: "274px"}},
 					{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
 					{s: "#itemClockWaypoint2", p: {top: "164px", left: "52px"}},
-					{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}},
-					{s: "#itemClockStar0", p: {top: "-10px", left: "138px"}},
-					{s: "#itemClockStar1", p: {top: "-10px", left: "190px"}}
+					{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}}
 				], animationspeed);
 				$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
 				// Restyle text items
@@ -9308,7 +9611,7 @@ K = {
 					color: "#eee",
 					opacity: 0.5
 				});
-				$("#itemTimeServer").css({
+				$("#itemTimeDaytime").css({
 					width: "100%",
 					top: "90px", bottom: "auto", left: "auto",
 					"text-align": "center",
@@ -9324,7 +9627,7 @@ K = {
 			case O.IntEnum.Clock.Full:
 			{
 				$("#paneClock").show();
-				$("#itemTimeLocal, #itemTimeServer, #itemLanguage, #itemSocial").show();
+				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").show();
 				// Reposition clock items
 				I.bulkAnimate([
 					{s: "#itemClock", p: {top: "70px", left: "70px", width: "220px", height: "220px"}},
@@ -9342,9 +9645,7 @@ K = {
 					{s: "#itemClockWaypoint0", p: {top: "52px", left: "164px"}},
 					{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
 					{s: "#itemClockWaypoint2", p: {top: "274px", left: "164px"}},
-					{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}},
-					{s: "#itemClockStar0", p: {top: "280px", left: "286px"}},
-					{s: "#itemClockStar1", p: {top: "280px", left: "328px"}}
+					{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}}
 				], animationspeed);
 				$("#paneClockIcons .iconHC").css({width: "48px", height: "48px"});
 				// Restyle text items
@@ -9355,7 +9656,7 @@ K = {
 					color: "#bbcc77",
 					opacity: 1
 				});
-				$("#itemTimeServer").css({
+				$("#itemTimeDaytime").css({
 					width: "auto",
 					top: "auto", bottom: "10px", left: "10px",
 					"text-align": "left",
@@ -9371,7 +9672,7 @@ K = {
 			case O.IntEnum.Clock.Bar:
 			{
 				$("#paneClock").show();
-				$("#itemTimeLocal, #itemTimeServer, #itemLanguage, #itemSocial").hide();
+				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").hide();
 				// Reposition clock items
 				I.bulkAnimate([
 					{s: "#itemClock", p: {top: "0px", left: "0px", width: "85px", height: "85px"}},
@@ -9389,9 +9690,7 @@ K = {
 					{s: "#itemClockWaypoint0", p: {top: "-8px", left: "98px"}},
 					{s: "#itemClockWaypoint1", p: {top: "-8px", left: "168px"}},
 					{s: "#itemClockWaypoint2", p: {top: "-8px", left: "238px"}},
-					{s: "#itemClockWaypoint3", p: {top: "-8px", left: "308px"}},
-					{s: "#itemClockStar0", p: {top: "-16px", left: "0px"}},
-					{s: "#itemClockStar1", p: {top: "-16px", left: "53px"}}
+					{s: "#itemClockWaypoint3", p: {top: "-8px", left: "308px"}}
 				], animationspeed);
 				$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
 
@@ -9492,16 +9791,27 @@ K = {
 		
 		var i;
 		var coord;
+		
+		// Change behavior of overlay mode because the user uses the clock more
+		var checkbossbehavior = "click";
+		var zoombossbehavior = "dblclick";
+		if (I.ModeCurrent === I.ModeEnum.Website && I.isProgramEmbedded === false)
+		{
+			checkbossbehavior = "dblclick";
+			zoombossbehavior = "click";
+		}
+		
+		// Bind behavior
 		for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 		{
 			$([K.IconsStandard[i], K.IconsHardcore[i]]).each(function()
 			{
-				$(this).unbind("dblclick").dblclick(function()
+				$(this).unbind(zoombossbehavior).on(zoombossbehavior, function()
 				{
 					coord = C.Chains[$(this).data(C.cIndexSynonym)].primaryEvents[0].path[0];
 					M.goToView(coord, M.PinEvent);
 					
-				}).unbind("click").click(function()
+				}).unbind(checkbossbehavior).on(checkbossbehavior, function()
 				{
 					$("#chnCheck_" + C.Chains[$(this).data(C.cIndexSynonym)].nexus).trigger("click");
 				});
@@ -9651,6 +9961,7 @@ K = {
 		// If crossing a 1 minute mark
 		if (sec === 0)
 		{
+			K.updateDigitalClockMinutely();
 			// Refresh the chain time countdown opted
 			if (O.Options.bol_useCountdown)
 			{
@@ -9668,18 +9979,13 @@ K = {
 			// If crossing a 5 minute mark
 			if (min % T.cMINUTES_IN_EVENTFRAME === 0)
 			{
+				K.updateDaytimeIcon();
 				K.updateDryTopClipboard();
 			}
 		}
 		
 		// Tick the two digital clocks below the analog clock
 		K.timeLocal.innerHTML = T.getTimeFormatted();
-		K.timeServer.innerHTML = "(" +
-			T.getTimeFormatted(
-			{
-				reference: T.ReferenceEnum.Server,
-				wantSeconds: false
-			}) + ")";
 		K.timeBoard.innerHTML =
 			T.getTimeFormatted(
 			{
@@ -9759,6 +10065,27 @@ K = {
 				}
 				D.speak(speech, wait);
 				D.speak(D.getSpeech("will start") + T.getTimeTillChainFormatted(chainsd, "speech"), 3);
+				
+				// Also unsubscribe if opted
+				if (O.Options.bol_alertUnsubscribe)
+				{
+					// Make sure it is the last alarm to ring
+					if ((pMinutes === O.Options.int_alertSubscribedFirst &&
+						(pMinutes <= O.Options.int_alertSubscribedSecond || O.Options.int_alertSubscribedSecond === 0))
+						||
+						(pMinutes === O.Options.int_alertSubscribedSecond &&
+						(pMinutes <= O.Options.int_alertSubscribedFirst || O.Options.int_alertSubscribedFirst === 0)))
+					{
+						if (wantsd)
+						{
+							$("#chnTime_" + chainsd.nexus).trigger("click");
+						}
+						if (wanthc)
+						{
+							$("#chnTime_" + chainhc.nexus).trigger("click");
+						}
+					}
+				}
 			}
 		}
 	},
@@ -10111,6 +10438,42 @@ K = {
 	},
 	
 	/*
+	 * Updates the daytime icon based on current game daylight.
+	 */
+	updateDaytimeIcon: function()
+	{
+		var src = "img/ui/moon.png";
+		if (T.isDaylight())
+		{
+			src = "img/ui/sun.png";
+		}
+		$("#itemTimeDayIcon").attr("src", src);
+	},
+	
+	/*
+	 * Updates the digital clock with minutely information.
+	 */
+	updateDigitalClockMinutely: function()
+	{
+		// Daytime clock updates time remaining
+		K.timeDaytime.innerHTML = T.getDayPeriodRemaining();
+		// Local clock updates additional times in tooltip
+		K.timeLocal.title =
+			"Anet: " + T.getTimeFormatted(
+			{
+				reference: T.ReferenceEnum.Server,
+				wantSeconds: false
+			}) + "<br />" +
+			"UTC: " + T.getTimeFormatted(
+			{
+				reference: T.ReferenceEnum.UTC,
+				wantSeconds: false,
+				want24: true
+			});
+		I.qTip.init(K.timeLocal);
+	},
+	
+	/*
 	 * Updates waypoint icons' copy text.
 	 * @pre The waypoint icon's position on the clock was updated.
 	 * Standard bosses' schedule does not have gaps, hardcore may have gaps.
@@ -10221,7 +10584,7 @@ I = {
 		Simple: "Simple",
 		Overlay: "Overlay"
 	},
-	cContentPrefix: "#layer",
+	cPagePrefix: "#layer",
 	cMenuPrefix: "#menu",
 	PageCurrent: "",
 	PageEnum:
@@ -10245,6 +10608,10 @@ I = {
 			TP: "TP",
 			Notepad: "Notepad",
 			Personal: "Personal"
+			
+		},
+		WvW:
+		{
 			
 		},
 		Help:
@@ -10628,7 +10995,7 @@ I = {
 			return;
 		}
 		
-		var layer = pLayer.substring(I.cContentPrefix.length, pLayer.length);
+		var layer = pLayer.substring(I.cPagePrefix.length, pLayer.length);
 		var beamid = "menuBeam_" + layer;
 		var menubeam = $("<div class='menuBeam' id='" + beamid + "'></div>").prependTo(pLayer);
 		
@@ -10874,8 +11241,9 @@ I = {
 			$(this).click(function()
 			{
 				var layer = $(this).attr("id");
+				var pageprevious = I.PageCurrent;
 				I.PageCurrent = layer.substring(I.cMenuPrefix.length-1, layer.length);
-				I.contentCurrentLayer = I.cContentPrefix + I.PageCurrent;
+				I.contentCurrentLayer = I.cPagePrefix + I.PageCurrent;
 				
 				switch (I.PageCurrent)
 				{
@@ -10896,7 +11264,6 @@ I = {
 					case I.PageEnum.Map:
 					{
 						$("#jsTop").show();
-						M.goToDefault();
 						M.movePin(M.PinEvent);
 					} break;
 					
@@ -10914,6 +11281,21 @@ I = {
 					{
 						$("#jsTop").hide();
 					} break;
+				}
+				
+				// Show appropriate map pane
+				if (I.PageCurrent === I.PageEnum.WvW && $("#paneMap").is(":visible"))
+				{
+					$("#paneMap").hide();
+					$("#paneWvW").show();
+					W.refreshMap();
+				}
+				if ((I.PageCurrent === I.PageEnum.Chains ||
+					I.PageCurrent === I.PageEnum.Map) && $("#paneWvW").is(":visible"))
+				{
+					$("#paneWvW").hide();
+					$("#paneMap").show();
+					M.refreshMap();
 				}
 				
 				$("#paneContent article").hide(); // Hide all layers
@@ -10953,6 +11335,8 @@ I = {
 		*/
 		// Map layer
 		$("#menuMap").one("click", I.loadMapLayer);
+		// WvW layer
+		$("#menuWvW").one("click", I.loadWvWLayer);
 		// Help layer
 		$("#menuHelp").one("click", I.loadHelpLayer);
 	   
@@ -10970,38 +11354,21 @@ I = {
 	 * Macro function for various written content added functionality. Must be
 	 * run at the beginning of any load function's done block.
 	 */
-	bindAfterAJAXContent: function(pLayer)
+	bindAfterAJAXContent: function(pPageEnum)
 	{
-		I.generateTableOfContent(pLayer);
-		I.generateSectionMenu(pLayer);
-		I.initializeScrollbar($(pLayer));
-		I.bindHelpButtons(pLayer);
-		M.bindMapLinks(pLayer);
+		var layer = I.cPagePrefix + pPageEnum;
+		I.generateTableOfContent(layer);
+		I.generateSectionMenu(layer);
+		I.initializeScrollbar($(layer));
+		I.bindHelpButtons(layer);
+		M.bindMapLinks(layer);
 		// Open links on new window
-		U.convertExternalLink(pLayer + " a");
+		U.convertExternalLink(layer + " a");
 		I.qTip.init("button");
-	},
-	
-	/*
-	 * Loads the help page into the help content layer.
-	 */
-	loadHelpLayer: function()
-	{
-		$("#layerHelp").load(I.cPageURLHelp, function()
-		{
-			I.bindAfterAJAXContent("#layerHelp");
-			$(".jsCopyCode").click(function()
-			{
-				$(this).select();
-			});
-			
-			// Expand a header if requested in the URL
-			U.openSectionFromURL();
-			
-			// Lastly
-			D.translatePageHeader(I.PageEnum.Help);
-			I.isContentLoaded_Help = true;
-		});
+		
+		// Expand a header if requested in the URL
+		U.openSectionFromURL();
+		D.translatePageHeader(pPageEnum);
 	},
 	
 	/*
@@ -11011,7 +11378,7 @@ I = {
 	{
 		$("#layerMap").load(I.cPageURLMap, function()
 		{
-			I.bindAfterAJAXContent("#layerMap");
+			I.bindAfterAJAXContent(I.PageEnum.Map);
 			
 			// Create daily markers
 			$("#headerMap_Daily").one("click", function()
@@ -11061,26 +11428,50 @@ I = {
 					// Show only if the section is about to be expanded
 					if ($(this).children("sup").text() === "[-]")
 					{
-						M.displayIcons(U.getSubstringFromHTMLID($(this)), true);
+						var section = U.getSubstringFromHTMLID($(this));
+						if (M["isIconsGeneratedFor" + section])
+						{
+							M.displayIcons(section, true);
+						}
 					}
 				});
 			});
 			
 			// Create additional map related side menu icon
-			$("<img class='menuBeamIcon menuBeamIconCenter' src='img/ui/star.png' "
+			$("<img class='menuBeamIcon menuBeamIconCenter' src='img/map/compass.png' "
 				+ "title='&lt;dfn&gt;Map Center&lt;/dfn&gt;' />")
 				.appendTo("#menuBeam_Map").click(function()
 			{
 				M.goToDefault();
 			});
 			I.qTip.init("#layerMap .menuBeamIconCenter, #layerMap label");
-			
-			// Expand a header if requested in the URL
-			U.openSectionFromURL();
-			
-			// Lastly
-			D.translatePageHeader(I.PageEnum.Map);
-			I.isContentLoaded_Map = true;
+		});
+	},
+	
+	/*
+	 * Loads the map page into the map content layer.
+	 */
+	loadWvWLayer: function()
+	{
+		$("#layerWvW").load(I.cPageURLWvW, function()
+		{
+			W.initializeMap();
+			I.bindAfterAJAXContent(I.PageEnum.WvW);
+		});
+	},
+	
+	/*
+	 * Loads the help page into the help content layer.
+	 */
+	loadHelpLayer: function()
+	{
+		$("#layerHelp").load(I.cPageURLHelp, function()
+		{
+			I.bindAfterAJAXContent(I.PageEnum.Help);
+			$(".jsCopyCode").click(function()
+			{
+				$(this).select();
+			});
 		});
 	},
 	
@@ -11099,7 +11490,7 @@ I = {
 				// Change the toggle icon after finish toggling
 				if ($(this).is(":visible"))
 				{
-					var container = $(I.cContentPrefix + I.PageEnum.Chains);
+					var container = $(I.cPagePrefix + I.PageEnum.Chains);
 					var header = $(this).prev();
 					header.find("ins").html("[-]");
 					// Automatically scroll to the clicked header
@@ -11219,13 +11610,11 @@ I = {
 				$("#paneClockWall, #paneClockBackground").css({opacity: 0});
 				
 				// Readjust clock elements
-				$("#itemTimeServer, #itemSocial").hide();
+				$("#itemTimeDaytime, #itemSocial").hide();
 				$("#itemLanguage").css({
 					position: "fixed",
 					top: "10px", right: "10px", bottom: "auto", left: "auto"
 				});
-				$("#itemClockStar0").css({ top: "68px", left: "122px" });
-				$("#itemClockStar1").css({ top: "68px", left: "206px" });
 				$("#itemLanguage span").css({opacity: 0.7});
 				$("#itemTimeLocal").css({
 					position: "fixed",
@@ -11242,20 +11631,20 @@ I = {
 			case I.ModeEnum.Mobile:
 			{
 				$("#panelLeft").hide();
-				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1, width=360'>");
+				$("#jsTop").remove();
+				$("head").append("<meta name='viewport' content='initial-scale=1.0, user-scalable=0, maximum-scale=1.0, width=device-width'>");
 				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>");
-				/*$("#paneMap").css({
-					"border-left": "1px solid #444",
-					"box-shadow": "-5px 0px 5px #223"
-				});*/
-				/*$("#paneClock").css({
-					"border-right": "1px solid #444",
-					"box-shadow": "5px 0px 5px #223"
-				});*/
-				/*C.cChainTitleCharLimit = 999;
-				C.cEventTitleCharLimit = 999;
-				C.cEventNameWidth = "auto";*/
 			} break;
+		}
+		
+		// Change CSS for overlay specific
+		if (I.ModeCurrent === I.ModeEnum.Website && I.isProgramEmbedded === false)
+		{
+			$("#paneClockIcons img").addClass("curZoomable");
+		}
+		else
+		{
+			$("#paneClockIcons img").addClass("curClickable");
 		}
 		
 		// Also streamline other UI elements if website is embedded in another website

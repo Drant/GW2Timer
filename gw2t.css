@@ -154,6 +154,9 @@ div#qTip dfn { /* Highlight color for important text in tooltip */
 	background: none;
 	color: #ffcc77;
 }
+div#qTip img {
+	vertical-align: middle;
+}
 
 /*
  * Style for perfect-scrollbar JS plugin by Hyunje Alex Jun.
@@ -237,7 +240,7 @@ html, body,
 }
 
 /* Clickable */
-a, input, label, button,
+.curClickable, a, input, label, button,
 .mapHUDButton, .menuButton,
 .menuBeam img:hover,
 .jsTableOfContents ol li, .jsSectionDone,
@@ -248,23 +251,22 @@ a, input, label, button,
 }
 
 /* Toggleable */
-#layerChains header, .chnTitle h1, .jsSection, .jsHelpCollapsible {
+.curToggleable, #layerChains header, .chnTitle h1, .jsSection, .jsHelpCollapsible {
 	cursor: url("img/cursor/toggle.cur"), pointer;
 }
 
 /* Zoomable */
-#paneClockIcons img,
-.cntComposition ins, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
+.curZoomable, .cntComposition ins, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
 	cursor: url("img/cursor/zoom.cur"), pointer;
 }
 
 /* Draggable */
-.leaflet-dragging .leaflet-container, .leaflet-dragging .leaflet-clickable {
+.curDraggable, .leaflet-dragging .leaflet-container, .leaflet-dragging .leaflet-clickable {
 	cursor: url("img/cursor/move.cur"), move;
 }
 
 /* Help */
-.jsHelpTooltip, .chnDetails ol li img {
+.curHelp, .jsHelpTooltip, .chnDetails ol li img {
 	cursor: url("img/cursor/help.cur"), help;
 }
 
@@ -280,19 +282,26 @@ a, input, label, button,
 
 /* @@Map pane
 ----------------------------------------------------------------------------- */
-#paneMap {
+#paneMap, #paneWvW {
 	height: 100%;
 	min-height: 220px;
 	background: url("img/background/space.jpg") repeat center;
 }
+#paneWvW {
+	background: white;
+}
+
+#paneWvW {
+	display: none;
+}
 
 /* Bottom left corner: Coordinates bar */
-#itemMapCoordinates {
+#itemMapCoordinates, #itemWvWCoordinates {
 	position: absolute;
 	bottom: 12px; left: 12px;
 	z-index: 9;
 }
-#itemMapCoordinates input {
+#itemMapCoordinates input, #itemWvWCoordinates input {
 	display: inline-block;
 	width: 90px;
 	height: 16px;
@@ -304,7 +313,7 @@ a, input, label, button,
 	color: #ddff77;
 	opacity: 0.6;
 }
-input#mapCoordinatesName {
+input#mapCoordinatesName, input#wvwCoordinatesName {
 	width: 145px; 
 }
 
@@ -627,10 +636,10 @@ input#mapCoordinatesName {
 }
 
 #itemClockStar0 {
-	top: 280px; left: 286px;
+	margin-left: 250px;
 }
 #itemClockStar1 {
-	top: 280px; left: 328px;
+	margin-left: 290px;
 }
 .itemClockStarClip {
 	position: absolute;
@@ -669,7 +678,10 @@ input#mapCoordinatesName {
 #clkTicks { /* Hour separator lines */
 	stroke-width: 2px;
 	opacity: 0.2;
-} 
+}
+#clkMarkers {
+	stroke-width: 2px;
+}
 #clkHourHand {
 	stroke-width: 4px;
 	opacity: 0.1;
@@ -683,16 +695,18 @@ input#mapCoordinatesName {
 	stroke: red;
 	opacity: 0; /* Second hand is not used */
 } 
-#clkNumbers {
+#clkHours, #clkHoursPrime {
 	font-family: sans-serif;
-	font-size: 7pt;
-	font-weight: bold; 
+	font-size: 5pt;
+	font-weight: bold;
 	text-anchor: middle;
 	stroke: none;
 	fill: black;
+	opacity: 0.2;
 }
-#clkMarkers {
-	stroke-width: 2px;
+#clkHoursPrime {
+	font-size: 6pt;
+	opacity: 1;
 }
 
 .itemTimeDigital {
@@ -712,8 +726,12 @@ input#mapCoordinatesName {
 #itemTimeLocal {
 	right: 10px; bottom: 10px;
 }
-#itemTimeServer {
+#itemTimeDaytime {
 	left: 10px; bottom: 10px;
+}
+#itemTimeDaytime img {
+	width: 18px; height: 18px;
+	vertical-align: middle;
 }
 #itemTimeLocalExtra a {
 	color: #eee;
@@ -727,7 +745,6 @@ input#mapCoordinatesName {
 	bottom: 0px;
 	left: 10px;
 	font-family: sans-serif;
-	font-size: 12px;
 	color: #e4e0b3;
 	text-shadow:
 		1px 1px 0px #000,
@@ -1147,16 +1164,6 @@ header.cntHeader {
 	text-align: center;
 	color: #e4e0b3;
 	text-shadow: 0px 0px 2px #e4e0b3;
-	opacity: 0.9;
-}
-
-#jsCenter {
-	display: none;
-	position: fixed;
-	width: 32px; height: 32px;
-	background: url("img/map/star.png") no-repeat center;
-	bottom: 8px;
-	right: 28px;
 	opacity: 0.9;
 }
 
