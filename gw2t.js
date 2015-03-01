@@ -11632,6 +11632,15 @@ I = {
 					color: "#eee",
 					opacity: 0.5
 				});
+				$("#itemTimeLocalExtra").css({
+					position: "fixed",
+					bottom: "0px", right: "10px",
+					color: "#eee",
+					opacity: 0.5
+				});
+				I.qTip.init($("<a title='&lt;dfn&gt;Switch back to full site&lt;/dfn&gt;' href='./'>"
+					+ " <img id='iconSimpleHome' src='img/ui/about.png' /></a>")
+					.appendTo("#itemTimeLocalExtra"));
 				$("#paneBoard").show();
 				
 			} break;
