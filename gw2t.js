@@ -11618,21 +11618,20 @@ I = {
 					top: "10px", right: "10px", bottom: "auto", left: "auto"
 				});
 				$("#itemLanguage span").css({opacity: 0.7});
-				$("#itemTimeDaytime").css({
-					position: "fixed",
-					bottom: "30px", right: "10px", left: "auto",
-					color: "#eee",
-					opacity: 0.5
-				});
 				$("#itemTimeLocal").css({
-					position: "fixed",
-					bottom: "0px",
+					width: "100%",
+					right: "auto", bottom: "160px",
+					"text-align": "center",
 					color: "#eee",
 					opacity: 0.5
 				});
-				I.qTip.init($("<a title='&lt;dfn&gt;Shortcut to this page&lt;/dfn&gt;: gw2timer.com/s' href='./'>"
-					+ " <img id='iconSimpleHome' src='img/ui/about.png' /></a>")
-					.appendTo("#itemTimeLocalExtra"));
+				$("#itemTimeDaytime").css({
+					width: "100%",
+					top: "160px", bottom: "auto", left: "auto",
+					"text-align": "center",
+					color: "#eee",
+					opacity: 0.5
+				});
 				$("#paneBoard").show();
 				
 			} break;
