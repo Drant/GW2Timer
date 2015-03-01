@@ -8602,8 +8602,10 @@ T = {
 	cSECS_MARK_2: 1800,
 	cSECS_MARK_3: 2700,
 	cSECS_MARK_4: 3599,
-	cDAYTIME_DAY_MINUTES: 80,
-	cDAYTIME_NIGHT_MINUTES: 40,
+	cDAYTIME_DAY_MINUTES: 75,
+	cDAYTIME_NIGHT_MINUTES: 45,
+	cDAYTIME_DAY_START: 30,
+	cDAYTIME_NIGHT_START: 45,
 	cBASE_10: 10,
 	ReferenceEnum:
 	{
@@ -9408,14 +9410,14 @@ T = {
 		var min = now.getUTCMinutes();
 		if (hour % 2 === 0) // If hour is even
 		{
-			if (min >= 25)
+			if (min >= T.cDAYTIME_DAY_START)
 			{
 				return true;
 			}
 		}
 		else // If hour is odd
 		{
-			if (min < 45)
+			if (min < T.cDAYTIME_NIGHT_START)
 			{
 				return true;
 			}
@@ -9428,31 +9430,31 @@ T = {
 	 * @returns string.
 	 */
 	getDayPeriodRemaining: function()
-	{
+	{//
 		var now = new Date();
 		var hour = now.getUTCHours();
 		var min = now.getUTCMinutes();
 		var str = "";
 		if (hour % 2 === 0)
 		{
-			if (min >= 25)
+			if (min >= T.cDAYTIME_DAY_START)
 			{
-				str = (25 + T.cDAYTIME_DAY_MINUTES - min);
+				str = (T.cDAYTIME_DAY_START + T.cDAYTIME_DAY_MINUTES - min);
 			}
 			else
 			{
-				str = (25 - min);
+				str = (T.cDAYTIME_DAY_START - min);
 			}
 		}
 		else
 		{
-			if (min < 45)
+			if (min < T.cDAYTIME_NIGHT_START)
 			{
-				str = (45 - min);
+				str = (T.cDAYTIME_NIGHT_START - min);
 			}
 			else
 			{
-				str = (45 + T.cDAYTIME_NIGHT_MINUTES - min);
+				str = (T.cDAYTIME_NIGHT_START + T.cDAYTIME_NIGHT_MINUTES - min);
 			}
 		}
 		return str + "m";
@@ -11610,12 +11612,18 @@ I = {
 				$("#paneClockWall, #paneClockBackground").css({opacity: 0});
 				
 				// Readjust clock elements
-				$("#itemTimeDaytime, #itemSocial").hide();
+				$("#itemSocial").hide();
 				$("#itemLanguage").css({
 					position: "fixed",
 					top: "10px", right: "10px", bottom: "auto", left: "auto"
 				});
 				$("#itemLanguage span").css({opacity: 0.7});
+				$("#itemTimeDaytime").css({
+					position: "fixed",
+					bottom: "30px", right: "10px", left: "auto",
+					color: "#eee",
+					opacity: 0.5
+				});
 				$("#itemTimeLocal").css({
 					position: "fixed",
 					bottom: "0px",
