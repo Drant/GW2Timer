@@ -607,8 +607,12 @@ O = {
 			X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
 			X.clearChecklist(X.Checklists.Custom, X.ChecklistJob.UncheckTheChecked);
 		}
-		// Login rewards
-		P.shiftLoginTrack();
+		// Login rewards and dailies calendar
+		if (I.isSectionLoaded_Daily)
+		{
+			P.shiftLoginTrack();
+			P.regenerateDailiesCalendar();
+		}
 		
 		// Finally
 		I.write("", messagetime);
@@ -1279,6 +1283,22 @@ U = {
 	{
 		return pString.charAt(0).toUpperCase() + pString.slice(1).toLowerCase();
 	},
+	toEveryUpperCase: function(pString)
+	{
+		var str = pString.split(" ");
+		if (str.length > 1)
+		{
+			for (var i in str)
+			{
+				str[i] = U.toFirstUpperCase(str[i]);
+			}
+			return str.join(" ");
+		}
+		else
+		{
+			return U.toFirstUpperCase(pString);
+		}
+	},
 	
 	/*
 	 * Changes letter case of a word or sentence.
@@ -1286,7 +1306,7 @@ U = {
 	 * @returns string changed.
 	 * @pre String is a readable text that starts with a letter.
 	 */
-	changeCase: function(pString, pCase)
+	toCase: function(pString, pCase)
 	{
 		var i;
 		var str = [];
@@ -4058,6 +4078,15 @@ D = {
 		// Language not found so use default instead
 		return pText;
 	},
+	getWord: function(pText)
+	{
+		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+		{
+			return pText;
+		}
+		// No error checking, assume entry exists
+		return (D.Phrase["s_" + pText])[O.Options.enu_Language];
+	},
 	
 	/*
 	 * Gets translation of specified text using phrase dictionary.
@@ -4095,7 +4124,7 @@ D = {
 		{
 			str[i] = D.getTranslation(str[i], D.Phrase);
 		}
-		return U.changeCase(str.join(" "), pCase);
+		return U.toCase(str.join(" "), pCase);
 	},
 	
 	/*
@@ -4119,7 +4148,7 @@ D = {
 			str = D.getPhrase(pText);
 		}
 		
-		return U.changeCase(str, pCase);
+		return U.toCase(str, pCase);
 	},
 	
 	/*
@@ -4794,6 +4823,7 @@ C = {
 	CurrentChainSD: {}, NextChainSD1: {}, NextChainSD2: {}, NextChainSD3: {}, NextChainSD4: {},
 	CurrentChainHC: {}, NextChainHC1: {}, NextChainHC2: {}, NextChainHC3: {}, NextChainHC4: {},
 	CurrentChains: [],
+	CurrentChainsSD: [],
 	PreviousChains1: [],
 	PreviousChains2: [],
 	NextChains1: [],
@@ -4819,6 +4849,73 @@ C = {
 		Normal: 1, // A concurrent (multiple simultaneous) event that does not take the longest to complete
 		Primary: 2, // An only event at the time or a concurrent event that takes the longest to complete
 		Boss: 3 // The boss event, also considered a primary event
+	},
+	
+	/*
+	 * Gets a chain from its alias.
+	 * @param string pAlias.
+	 * @returns object chain.
+	 * @pre ChainAssociation object has the requested chain.
+	 */
+	getChainByAlias: function(pAlias)
+	{
+		return C.Chains[T.ChainAssociation[pAlias.toLowerCase()]];
+	},
+	
+	/*
+	 * Gets today's daily world boss chain using the daily calendar.
+	 * @returns object chain.
+	 */
+	getChainToday: function()
+	{
+		var dayofmonth = (new Date()).getUTCDate();
+		var boss = (T.DailyCalendar[dayofmonth].pve[3].split(" "))[0].toLowerCase();
+		if (T.ChainAssociation[boss] !== undefined)
+		{
+			return C.Chains[T.ChainAssociation[boss]];
+		}
+		return null;
+	},
+	
+	/*
+	 * Tells if specified chain is today's daily world boss.
+	 * @param object pChain to compare.
+	 * @returns true if daily.
+	 */
+	isChainToday: function(pChain)
+	{
+		if (pChain.nexus === (C.getChainToday().nexus || -1))
+		{
+			return true;
+		}
+		return false;
+	},
+	
+	/*
+	 * Shows the daily icon for today's daily boss, if available.
+	 * @pre Used variables has been reinitialized.
+	 */
+	showChainDailyIcon: function()
+	{
+		$(".chnDaily").hide();
+		var chaintoday = C.getChainToday();
+		if (chaintoday)
+		{
+			// Reimage the waypoint icon if boss on clock is daily
+			for (var i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
+			{
+				if (C.isChainToday(C.CurrentChainsSD[i]))
+				{
+					(K["WpChain" + i]).addClass("clkWaypointClipDaily");
+				}
+				else
+				{
+					(K["WpChain" + i]).removeClass("clkWaypointClipDaily");
+				}
+			}
+			// Chain bar
+			$("#chnDaily_" + chaintoday.nexus).show();
+		}
 	},
 	
 	/*
@@ -4959,6 +5056,7 @@ C = {
 				+ "<div id='chnCheck_" + pChain.nexus + "' class='chnCheck'></div>"
 				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + C.truncateTitleString(D.getChainTitle(pChain.nexus), C.cChainTitleCharLimit) + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
+				+ "<img id='chnDaily_" + pChain.nexus + "' class='chnDaily' src='img/daily/daily.png' />"
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
@@ -5897,7 +5995,7 @@ M = {
 	 * This is referred to by the variable "M.Zones".
 	 */
 	Zones: GW2T_ZONE_DATA,
-	ZoneAssociations: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
+	ZoneAssociation: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
 	Regions: GW2T_REGION_DATA,
 	cInitialZone: "lion",
 	Map: {},
@@ -6007,7 +6105,7 @@ M = {
 	 */
 	isZoneValid: function(pZoneID)
 	{
-		if (M.ZoneAssociations[pZoneID] === undefined)
+		if (M.ZoneAssociation[pZoneID] === undefined)
 		{
 			return false;
 		}
@@ -6021,7 +6119,7 @@ M = {
 	 */
 	getZoneFromID: function(pZoneID)
 	{
-		return M.Zones[M.ZoneAssociations[pZoneID]];
+		return M.Zones[M.ZoneAssociation[pZoneID]];
 	},
 	
 	/*
@@ -6897,7 +6995,12 @@ M = {
 	 */
 	getElementCoordinates: function(pElement)
 	{
-		return M.parseCoordinates(pElement.attr("data-coord"));
+		var coordstring = pElement.attr("data-coord");
+		if (M.Zones[coordstring])
+		{
+			return M.getZoneCenter(coordstring);
+		}
+		return M.parseCoordinates(coordstring);
 	},
 	
 	/*
@@ -7114,7 +7217,7 @@ M = {
 };
 
 /* =============================================================================
- * @@Populate map functions and Map page
+ * @@Populate map functions and Map page generation
  * ========================================================================== */
 P = {
 	
@@ -7230,7 +7333,7 @@ P = {
 				for (zoneid in region.maps)
 				{
 					// Don't bother parsing if not a regular world zone
-					if ( ! M.ZoneAssociations[zoneid])
+					if ( ! M.ZoneAssociation[zoneid])
 					{
 						continue;
 					}
@@ -7823,25 +7926,25 @@ P = {
 	},
 	
 	/*
-	 * Initializes Login Rewards track and populates the map with dailies location markers.
+	 * Initializes Login Rewards track and Dailies Calendar.
 	 */
 	generateAndInitializeDailies: function()
 	{
 		// Adjust the squares progress
 		P.shiftLoginTrack();
 		// Bind click squares behavior
-		$("#mapLoginTrack img").each(function()
+		$("#lgnTrack img").each(function()
 		{
 			$(this).click(function(){
 				P.shiftLoginValue(parseInt($(this).data("i")));
 			}).mouseenter(function()
 			{
-				$("#mapLoginRecordHover").text("(" + (parseInt($(this).data("i")) + 1) + ")");
+				$("#lgnRecordHover").text("(" + (parseInt($(this).data("i")) + 1) + ")");
 			});
 		});
-		$("#mapLoginTrack").mouseleave(function()
+		$("#lgnTrack").mouseleave(function()
 		{
-			$("#mapLoginRecordHover").text("");
+			$("#lgnRecordHover").text("");
 		});
 		
 		// Obsolete dailies map locations
@@ -7874,32 +7977,35 @@ P = {
 			M.setEntityGroupDisplay(M.DailyEntities, M.isShowingIconsForDaily);
 		});
 		
-		I.qTip.init("#mapLoginTrack img");
+		I.qTip.init("#lgnTrack img");
+		
+		// Generate dailies calendar
+		P.regenerateDailiesCalendar();
 	},
 	shiftLoginTrack: function()
 	{
 		var DAYS_IN_TRACK = 28;
-		var LOGIN_START_UNIX = 1418774400; // 2014-12-17:0000 UTC or 2014-12-16:1600 PST
-		var DAYS_SINCE_START = ~~((T.getUNIXSeconds() - LOGIN_START_UNIX) / T.cSECONDS_IN_DAY);
-		var CURRENT_DAY_IN_TRACK = T.wrapInteger(DAYS_SINCE_START - O.Options.int_shiftLogin, DAYS_IN_TRACK);
-		var OFFICIAL_DAY_IN_TRACK = T.wrapInteger(DAYS_SINCE_START, DAYS_IN_TRACK);
+		var LOGIN_START_UNIX = T.DAILY_START_UNIX;
+		T.DAYS_SINCE_DAILY_START = ~~((T.getUNIXSeconds() - LOGIN_START_UNIX) / T.cSECONDS_IN_DAY);
+		var CURRENT_DAY_IN_TRACK = T.wrapInteger(T.DAYS_SINCE_DAILY_START - O.Options.int_shiftLogin, DAYS_IN_TRACK);
+		var OFFICIAL_DAY_IN_TRACK = T.wrapInteger(T.DAYS_SINCE_DAILY_START, DAYS_IN_TRACK);
 		
 		var icurrent = 0;
 		var iofficial = 0;
 		// Initial CSS
-		$("#mapLoginTrack img").each(function()
+		$("#lgnTrack img").each(function()
 		{
 			$(this).css({"border-radius": "auto", opacity: 0.3})
-				.removeClass("mapLoginCurrent mapLoginOfficial").data("i", iofficial);
+				.removeClass("lgnCurrent lgnOfficial").data("i", iofficial);
 			if (iofficial === OFFICIAL_DAY_IN_TRACK)
 			{
-				$(this).addClass("mapLoginOfficial");
+				$(this).addClass("lgnOfficial");
 				T.loginTrackOfficial = iofficial;
 			}
 			iofficial++;
 		});
 		// Track CSS
-		$("#mapLoginTrack img").each(function()
+		$("#lgnTrack img").each(function()
 		{
 			if (icurrent === CURRENT_DAY_IN_TRACK + 1)
 			{
@@ -7907,7 +8013,7 @@ P = {
 			}
 			else if (icurrent === CURRENT_DAY_IN_TRACK)
 			{
-				$(this).addClass("mapLoginCurrent"); // Current day is highlighted
+				$(this).addClass("lgnCurrent"); // Current day is highlighted
 			}
 			$(this).css({opacity: 1}); // Days unlocked becomes fully opaque
 			
@@ -7915,7 +8021,7 @@ P = {
 		});
 		
 		// Show statistics
-		$("#mapLoginRecordCurrent").text((CURRENT_DAY_IN_TRACK + 1) + " / " + DAYS_IN_TRACK);
+		$("#lgnRecordCurrent").text((CURRENT_DAY_IN_TRACK + 1) + " / " + DAYS_IN_TRACK);
 	},
 	shiftLoginValue: function(pCurrent)
 	{
@@ -7923,6 +8029,104 @@ P = {
 		var newshift = T.wrapInteger((T.loginTrackOfficial - pCurrent), DAYS_IN_TRACK);
 		$("#opt_int_shiftLogin").val(newshift).trigger("change");
 		P.shiftLoginTrack();
+	},
+	regenerateDailiesCalendar: function()
+	{
+		$("#dlyCalendar").empty();
+		
+		var i;
+		var dayofmonth = 0;
+		var ithdate;
+		var DAYS_TO_SHOW = 32;
+		
+		for (i = 0; i < DAYS_TO_SHOW; i++)
+		{
+			ithdate = T.addDaysToDate(new Date(), i);
+			dayofmonth = ithdate.getUTCDate();
+			P.insertDailyDay(T.DailyCalendar[dayofmonth], ithdate);
+		}
+		
+		$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
+		$("#dlyCalendar .dlyEvent").each(function()
+		{
+			M.bindMapLinkBehavior($(this), null, M.ZoomLevelEnum.Sky);
+		});
+		I.qTip.init("#dlyCalendar img");
+	},
+	
+	/*
+	 * Inserts a "day" div into the dailies calendar.
+	 * @param object pDaily daily object from zones.js
+	 * @param object pDate of the day.
+	 */
+	insertDailyDay: function(pDaily, pDate)
+	{
+		var pve, pvp, wvw; // Daily types
+		var gather, activity, boss; // Regional dailies
+		// Prepare variables
+		var dayclass = "";
+		var gatherclass = "";
+		var activityclass = "";
+		var bosssrc = "";
+		var bossclass = "";
+		var bosshtml = "";
+		var eventclass = "";
+
+		// The rows
+		pve = pDaily["pve"];
+		pvp = pDaily["pvp"];
+		wvw = pDaily["wvw"];
+		
+		// Some cells
+		gather = pve[0].split(" ");
+		activity = pve[1].split(" ");
+		boss = pve[3].split(" ");
+		if (activity[0] === "Vista")
+		{
+			activityclass = "dlyRegion_" + (activity[1]).toLowerCase();
+		}
+		gatherclass = "dlyRegion_" + (gather[1]).toLowerCase();
+		if (boss[0] === "Fractal")
+		{
+			bosssrc = "img/daily/pve_" + boss[0] + "_" + boss[1] + I.cPNG;
+		}
+		else
+		{
+			bosssrc = "img/daily/pve_boss.png";
+			bossclass = "dlyRegion_" + (boss[1]).toLowerCase();
+			bosshtml = "<ins><img src='img/chain/" + boss[0] + I.cPNG + "' /></ins>";
+		}
+		eventclass = "dlyRegion_" + (M.Zones[(pve[2]).toLowerCase()])["region"];
+		
+		if (pDate.getUTCDay() === 0)
+		{
+			dayclass = "dlySunday";
+		}
+
+		// Generate HTML
+		$("#dlyCalendar").append("<div>"
+			// Day
+			+ "<aside></aside>" + bosshtml + "<var class='" + dayclass + "'>" + pDate.getUTCDate() + "</var>"
+			// PvE
+			+ "<span><img src='img/daily/daily_pve.png' />"
+			+ "<img class='" + gatherclass + "' src='img/daily/pve_" + gather[0] + I.cPNG + "' title='" + pve[0] + "' />"
+			+ "<img class='" + activityclass + "' src='img/daily/pve_" + activity[0] + I.cPNG + "' title='" + pve[1] + "' />"
+			+ "<img class='dlyEvent curZoomable " + eventclass + "' src='img/daily/pve_event.png' title='" + pve[2] + " Events'"
+				+ "data-coord='" + (pve[2]).toLowerCase() + "' />"
+			+ "<img class='" + bossclass + "' src='" + bosssrc + "' title='" + pve[3] + "' /></span>"
+			// PvP
+			+ "<span><img src='img/daily/daily_pvp.png' />"
+			+ "<img src='img/daily/pvp_" + pvp[0] + ".png' title='" + pvp[0] + "' />"
+			+ "<img src='img/daily/pvp_" + pvp[1] + ".png' title='" + pvp[1] + "' />"
+			+ "<img src='img/daily/pvp_" + pvp[2] + ".png' title='" + pvp[2] + "' />"
+			+ "<img src='img/daily/pvp_" + pvp[3] + ".png' title='" + pvp[3] + "' /></span>"
+			// WvW
+			+ "<span><img src='img/daily/daily_wvw.png' />"
+			+ "<img src='img/daily/wvw_" + wvw[0] + ".png' title='" + wvw[0] + "' />"
+			+ "<img src='img/daily/wvw_" + wvw[1] + ".png' title='" + wvw[1] + "' />"
+			+ "<img src='img/daily/wvw_" + wvw[2] + ".png' title='" + wvw[2] + "' />"
+			+ "<img src='img/daily/wvw_" + wvw[3] + ".png' title='" + wvw[3] + "' /></span>"
+			+ "</div>");
 	},
 	
 	/*
@@ -8578,6 +8782,7 @@ W = {
  * ========================================================================== */
 T = {
 
+	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
 	SECONDS_TILL_RESET: 0,
 	TIMESTAMP_UNIX_SECONDS: 0,
@@ -8585,6 +8790,7 @@ T = {
 	cUTC_OFFSET_SERVER: -8, // Server is Pacific Time, 8 hours behind UTC
 	cUTC_OFFSET_HAWAII: -10,
 	cUTC_OFFSET_EASTERN: -4,
+	// Natural constants
 	cMILLISECONDS_IN_SECOND: 1000,
 	cSECONDS_IN_MINUTE: 60,
 	cSECONDS_IN_HOUR: 3600,
@@ -8602,11 +8808,14 @@ T = {
 	cSECS_MARK_2: 1800,
 	cSECS_MARK_3: 2700,
 	cSECS_MARK_4: 3599,
+	cBASE_10: 10,
+	// Game constants
+	DAILY_START_UNIX: 1418774400, // 2014-12-17:0000 UTC or 2014-12-16:1600 PST
+	DAYS_SINCE_DAILY_START: 0,
 	cDAYTIME_DAY_MINUTES: 80,
 	cDAYTIME_NIGHT_MINUTES: 40,
 	cDAYTIME_DAY_START: 25,
 	cDAYTIME_NIGHT_START: 45,
-	cBASE_10: 10,
 	ReferenceEnum:
 	{
 		UTC: 0,
@@ -8721,6 +8930,22 @@ T = {
 			t50: ":50 " + T.Events.Set5,
 			t55: ":55 " + T.Events.Set6
 		};
+	},
+	
+	ChainAssociation: {
+		"fe": 0,
+		"golem": 1,
+		"jormag": 2,
+		"maw": 3,
+		"megades": 4,
+		"sb": 5,
+		"shatterer": 6,
+		"taidha": 7,
+		"ulgoth": 8,
+		"wurm": 9,
+		"queen": 10,
+		"tequatl": 11,
+		"triple": 12
 	},
 	
 	// World boss chains
@@ -9337,11 +9562,11 @@ T = {
 			{
 				if (hour === 0 && min === 0)
 				{
-					minsec = sec + "s";
+					minsec = sec + D.getWord("s");
 				}
 				else
 				{
-					minsec = min + "m" + " " + sec + "s";
+					minsec = min + D.getWord("m") + " " + sec + D.getWord("s");
 				}
 			}
 			else if (pArgs.wantHours === false)
@@ -9357,7 +9582,7 @@ T = {
 		{
 			if (pArgs.wantLetters)
 			{
-				minsec = min + "m";
+				minsec = min + D.getWord("m");
 			}
 			else
 			{
@@ -9372,7 +9597,7 @@ T = {
 			{
 				return minsec;
 			}
-			return hour + "h " + minsec;
+			return hour + D.getWord("h") + " " + minsec;
 		}
 		if (pArgs.want24)
 		{
@@ -9457,7 +9682,7 @@ T = {
 				str = (T.cDAYTIME_NIGHT_START + T.cDAYTIME_NIGHT_MINUTES - min);
 			}
 		}
-		return str + "m";
+		return str + D.getWord("m");
 	},
 
 	/*
@@ -9508,6 +9733,19 @@ T = {
 	getUNIXSeconds: function()
 	{
 		return ~~((new Date()).getTime() / T.cMILLISECONDS_IN_SECOND);
+	},
+	
+	/*
+	 * Increments a Date object by number of days.
+	 * @param object pDate.
+	 * @param int pDays to increment. Can be negative.
+	 * @returns object Date.
+	 */
+	addDaysToDate: function(pDate, pDays)
+	{
+		var newdate = new Date(pDate);
+		newdate.setDate(pDate.getDate() + pDays);
+		return newdate;
 	}
 };
 
@@ -9587,22 +9825,22 @@ K = {
 				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").show();
 				// Reposition clock items
 				I.bulkAnimate([
-					{s: "#itemClock", p: {top: "0px", left: "70px", width: "220px", height: "220px"}},
+					{s: "#clk", p: {top: "0px", left: "70px", width: "220px", height: "220px"}},
 					{s: "#paneClockFace", p: {width: "360px", height: "360px", top: "-70px", left: "0px"}},
 					{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
 					{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
-					{s: "#itemClockIconSD0", p: {top: "4px", left: "290px"}},
-					{s: "#itemClockIconSD1", p: {top: "148px", left: "290px"}},
-					{s: "#itemClockIconSD2", p: {top: "148px", left: "4px"}},
-					{s: "#itemClockIconSD3", p: {top: "4px", left: "4px"}},
-					{s: "#itemClockIconHC0", p: {top: "52px", left: "306px"}},
-					{s: "#itemClockIconHC1", p: {top: "132px", left: "306px"}},
-					{s: "#itemClockIconHC2", p: {top: "132px", left: "20px"}},
-					{s: "#itemClockIconHC3", p: {top: "52px", left: "20px"}},
-					{s: "#itemClockWaypoint0", p: {top: "24px", left: "274px"}},
-					{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
-					{s: "#itemClockWaypoint2", p: {top: "164px", left: "52px"}},
-					{s: "#itemClockWaypoint3", p: {top: "24px", left: "52px"}}
+					{s: "#clkIconSD0", p: {top: "4px", left: "290px"}},
+					{s: "#clkIconSD1", p: {top: "148px", left: "290px"}},
+					{s: "#clkIconSD2", p: {top: "148px", left: "4px"}},
+					{s: "#clkIconSD3", p: {top: "4px", left: "4px"}},
+					{s: "#clkIconHC0", p: {top: "52px", left: "306px"}},
+					{s: "#clkIconHC1", p: {top: "132px", left: "306px"}},
+					{s: "#clkIconHC2", p: {top: "132px", left: "20px"}},
+					{s: "#clkIconHC3", p: {top: "52px", left: "20px"}},
+					{s: "#clkWaypoint0", p: {top: "24px", left: "274px"}},
+					{s: "#clkWaypoint1", p: {top: "164px", left: "274px"}},
+					{s: "#clkWaypoint2", p: {top: "164px", left: "52px"}},
+					{s: "#clkWaypoint3", p: {top: "24px", left: "52px"}}
 				], animationspeed);
 				$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
 				// Restyle text items
@@ -9632,22 +9870,22 @@ K = {
 				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").show();
 				// Reposition clock items
 				I.bulkAnimate([
-					{s: "#itemClock", p: {top: "70px", left: "70px", width: "220px", height: "220px"}},
+					{s: "#clk", p: {top: "70px", left: "70px", width: "220px", height: "220px"}},
 					{s: "#paneClockFace", p: {width: "360px", height: "360px", top: "0px", left: "0px"}},
 					{s: "#paneClockIcons .iconSD", p: {"border-radius": "12px"}},
 					{s: "#paneClockIcons .iconHC", p: {"border-radius": "12px"}},
-					{s: "#itemClockIconSD0", p: {top: "4px", left: "148px"}},
-					{s: "#itemClockIconSD1", p: {top: "148px", left: "290px"}},
-					{s: "#itemClockIconSD2", p: {top: "290px", left: "148px"}},
-					{s: "#itemClockIconSD3", p: {top: "148px", left: "4px"}},
-					{s: "#itemClockIconHC0", p: {top: "12px", left: "212px"}},
-					{s: "#itemClockIconHC1", p: {top: "212px", left: "298px"}},
-					{s: "#itemClockIconHC2", p: {top: "298px", left: "100px"}},
-					{s: "#itemClockIconHC3", p: {top: "100px", left: "12px"}},
-					{s: "#itemClockWaypoint0", p: {top: "52px", left: "164px"}},
-					{s: "#itemClockWaypoint1", p: {top: "164px", left: "274px"}},
-					{s: "#itemClockWaypoint2", p: {top: "274px", left: "164px"}},
-					{s: "#itemClockWaypoint3", p: {top: "164px", left: "52px"}}
+					{s: "#clkIconSD0", p: {top: "4px", left: "148px"}},
+					{s: "#clkIconSD1", p: {top: "148px", left: "290px"}},
+					{s: "#clkIconSD2", p: {top: "290px", left: "148px"}},
+					{s: "#clkIconSD3", p: {top: "148px", left: "4px"}},
+					{s: "#clkIconHC0", p: {top: "12px", left: "212px"}},
+					{s: "#clkIconHC1", p: {top: "212px", left: "298px"}},
+					{s: "#clkIconHC2", p: {top: "298px", left: "100px"}},
+					{s: "#clkIconHC3", p: {top: "100px", left: "12px"}},
+					{s: "#clkWaypoint0", p: {top: "52px", left: "164px"}},
+					{s: "#clkWaypoint1", p: {top: "164px", left: "274px"}},
+					{s: "#clkWaypoint2", p: {top: "274px", left: "164px"}},
+					{s: "#clkWaypoint3", p: {top: "164px", left: "52px"}}
 				], animationspeed);
 				$("#paneClockIcons .iconHC").css({width: "48px", height: "48px"});
 				// Restyle text items
@@ -9677,22 +9915,22 @@ K = {
 				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").hide();
 				// Reposition clock items
 				I.bulkAnimate([
-					{s: "#itemClock", p: {top: "0px", left: "0px", width: "85px", height: "85px"}},
+					{s: "#clk", p: {top: "0px", left: "0px", width: "85px", height: "85px"}},
 					{s: "#paneClockFace", p: {width: "132px", height: "132px", top: "-24px", left: "-24px"}},
 					{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
 					{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
-					{s: "#itemClockIconSD0", p: {top: "0px", left: "82px"}},
-					{s: "#itemClockIconSD1", p: {top: "0px", left: "152px"}},
-					{s: "#itemClockIconSD2", p: {top: "0px", left: "222px"}},
-					{s: "#itemClockIconSD3", p: {top: "0px", left: "292px"}},
-					{s: "#itemClockIconHC0", p: {top: "48px", left: "98px"}},
-					{s: "#itemClockIconHC1", p: {top: "48px", left: "168px"}},
-					{s: "#itemClockIconHC2", p: {top: "48px", left: "238px"}},
-					{s: "#itemClockIconHC3", p: {top: "48px", left: "308px"}},
-					{s: "#itemClockWaypoint0", p: {top: "-8px", left: "98px"}},
-					{s: "#itemClockWaypoint1", p: {top: "-8px", left: "168px"}},
-					{s: "#itemClockWaypoint2", p: {top: "-8px", left: "238px"}},
-					{s: "#itemClockWaypoint3", p: {top: "-8px", left: "308px"}}
+					{s: "#clkIconSD0", p: {top: "0px", left: "82px"}},
+					{s: "#clkIconSD1", p: {top: "0px", left: "152px"}},
+					{s: "#clkIconSD2", p: {top: "0px", left: "222px"}},
+					{s: "#clkIconSD3", p: {top: "0px", left: "292px"}},
+					{s: "#clkIconHC0", p: {top: "48px", left: "98px"}},
+					{s: "#clkIconHC1", p: {top: "48px", left: "168px"}},
+					{s: "#clkIconHC2", p: {top: "48px", left: "238px"}},
+					{s: "#clkIconHC3", p: {top: "48px", left: "308px"}},
+					{s: "#clkWaypoint0", p: {top: "-8px", left: "98px"}},
+					{s: "#clkWaypoint1", p: {top: "-8px", left: "168px"}},
+					{s: "#clkWaypoint2", p: {top: "-8px", left: "238px"}},
+					{s: "#clkWaypoint3", p: {top: "-8px", left: "308px"}}
 				], animationspeed);
 				$("#paneClockIcons .iconHC").css({width: "32px", height: "32px"});
 
@@ -10113,6 +10351,7 @@ K = {
 		C.NextChainSD2 = T.getStandardChain(2);
 		C.NextChainSD3 = T.getStandardChain(3);
 		C.NextChainSD4 = T.getStandardChain(4);
+		C.CurrentChainsSD = [C.CurrentChainSD, C.NextChainSD1, C.NextChainSD2, C.NextChainSD3];
 		
 		C.CurrentChainHC = T.getHardcoreChain();
 		C.NextChainHC1 = T.getHardcoreChain(1);
@@ -10234,16 +10473,8 @@ K = {
 		{
 			$(this).attr("stroke", "black");
 		});
-		$("#paneClockIcons .iconSD").css(
-		{
-			"border": "1px solid black",
-			"box-shadow": "0px 0px 10px black"
-		});
-		$("#paneClockIcons .iconHC").css(
-		{
-			"border": "1px solid black",
-			"box-shadow": "0px 0px 10px black"
-		});
+		$("#paneClockIcons .iconSD").removeClass("clkIconCurrent clkIconNext");
+		$("#paneClockIcons .iconHC").removeClass("clkIconCurrent clkIconNext");
 		
 		// Macro function for the following conditionals
 		var repositionMarkers = function(pMarkerStart, pMarker0A, pMarker0B, pMarkerNext,
@@ -10253,19 +10484,11 @@ K = {
 			// Highlight active chain icon
 			$([K.IconSD0, K.IconHC0]).each(function()
 			{
-				$(this).css(
-				{
-					"border": "1px solid lime",
-					"box-shadow": "0px 0px 10px lime"
-				});
+				$(this).addClass("clkIconCurrent");
 			});
 			$([K.IconSD1, K.IconHC1]).each(function()
 			{
-				$(this).css(
-				{
-					"border": "1px solid green",
-					"box-shadow": "0px 0px 10px green"
-				});
+				$(this).addClass("clkIconNext");
 			});
 			
 			// Update chain markers
@@ -10334,14 +10557,16 @@ K = {
 			}
 			K.currentFrameOffsetMinutes = pTimeframeMark;
 
-			K.WpChain0 = $("#itemClockWaypoint" + i0)[0]; K.IconSD0 = $("#itemClockIconSD" + i0);
-			K.WpChain1 = $("#itemClockWaypoint" + i1)[0]; K.IconSD1 = $("#itemClockIconSD" + i1);
-			K.WpChain2 = $("#itemClockWaypoint" + i2)[0]; K.IconSD2 = $("#itemClockIconSD" + i2);
-			K.WpChain3 = $("#itemClockWaypoint" + i3)[0]; K.IconSD3 = $("#itemClockIconSD" + i3);
-			K.IconHC0 = $("#itemClockIconHC" + i0);
-			K.IconHC1 = $("#itemClockIconHC" + i1);
-			K.IconHC2 = $("#itemClockIconHC" + i2);
-			K.IconHC3 = $("#itemClockIconHC" + i3);
+			K.WpChain0 = $("#clkWaypoint" + i0); K.IconSD0 = $("#clkIconSD" + i0);
+			K.WpChain1 = $("#clkWaypoint" + i1); K.IconSD1 = $("#clkIconSD" + i1);
+			K.WpChain2 = $("#clkWaypoint" + i2); K.IconSD2 = $("#clkIconSD" + i2);
+			K.WpChain3 = $("#clkWaypoint" + i3); K.IconSD3 = $("#clkIconSD" + i3);
+			K.IconHC0 = $("#clkIconHC" + i0);
+			K.IconHC1 = $("#clkIconHC" + i1);
+			K.IconHC2 = $("#clkIconHC" + i2);
+			K.IconHC3 = $("#clkIconHC" + i3);
+			
+			C.showChainDailyIcon();
 			
 			repositionMarkers(
 				$("#clkMarker" + i0), $("#clkMarker" + i0 + "A"), $("#clkMarker" + i0 + "B"),
@@ -10409,7 +10634,7 @@ K = {
 		{
 			K.wpClipboards.push
 			(
-				new ZeroClipboard(document.getElementById("itemClockWaypoint" + i))
+				new ZeroClipboard(document.getElementById("clkWaypoint" + i))
 			);
 			/*
 			 * Zero Clipboard works by superimposing an invisible Flash object 
@@ -10429,7 +10654,7 @@ K = {
 			{
 				K.lsClipboards.push
 				(
-					new ZeroClipboard(document.getElementById("itemClockStar" + i))
+					new ZeroClipboard(document.getElementById("clkStar" + i))
 				);
 				K.lsClipboards[i].on("aftercopy", function(pEvent)
 				{
@@ -10514,7 +10739,7 @@ K = {
 			}
 			
 			text = text + I.siteTagCurrent;
-			pWaypoint.setAttribute(K.cZeroClipboardDataAttribute, text);
+			pWaypoint.attr(K.cZeroClipboardDataAttribute, text);
 		};
 		
 		updateWaypoint(K.WpChain0, C.CurrentChainSD, C.CurrentChainHC, C.NextChainSD1, C.NextChainHC1);
@@ -10530,9 +10755,9 @@ K = {
 	{
 		if (C.DryTopChains.length > 0)
 		{
-			document.getElementById("itemClockStar0")
+			document.getElementById("clkStar0")
 				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentDryTopEvents());
-			document.getElementById("itemClockStar1")
+			document.getElementById("clkStar1")
 				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentDryTopEvents(1));
 		}
 	}
@@ -10634,9 +10859,8 @@ I = {
 	contentCurrentLayer: "", // This is cContentPrefix + contentCurrent
 	isContentLoaded_Map: false,
 	isContentLoaded_Help: false,
+	isSectionLoaded_Daily: false,
 	sectionPrefix: "sectionCurrent_",
-	sectionCurrent_Map: "",
-	sectionCurrent_Help: "",
 	cHeaderPrefix: "#header",
 	
 	// User information
@@ -11251,37 +11475,27 @@ I = {
 				{
 					case I.PageEnum.Chains:
 					{
-						$("#jsTop").hide();
-						/*
-						 * Get the current event map view it by triggering
-						 * the binded event names.
-						 */ 
-						if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter)
-						{
-							$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
-								+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
-						}
+						
 					} break;
 					
 					case I.PageEnum.Map:
 					{
-						$("#jsTop").show();
 						M.movePin(M.PinEvent);
 					} break;
 					
 					case I.PageEnum.WvW:
 					{
-						$("#jsTop").hide();
+						
 					} break;
 					
 					case I.PageEnum.Help:
 					{
-						$("#jsTop").show();
+						
 					} break;
 					
 					default:
 					{
-						$("#jsTop").hide();
+						
 					} break;
 				}
 				
@@ -11341,14 +11555,6 @@ I = {
 		$("#menuWvW").one("click", I.loadWvWLayer);
 		// Help layer
 		$("#menuHelp").one("click", I.loadHelpLayer);
-	   
-	   /*
-		* Scroll to top arrow text button.
-		*/
-		$("#jsTop").click(function()
-		{
-			$(I.contentCurrentLayer).animate({scrollTop: 0}, "fast");
-		});
 		
 	}, // End of menu initialization
 	
@@ -11386,6 +11592,7 @@ I = {
 			$("#headerMap_Daily").one("click", function()
 			{
 				P.generateAndInitializeDailies();
+				I.isSectionLoaded_Daily = true;
 			});
 			// Create node markers and checkboxes
 			$("#headerMap_Resource").one("click", function()
@@ -11619,15 +11826,15 @@ I = {
 				});
 				$("#itemLanguage span").css({opacity: 0.7});
 				$("#itemTimeLocal").css({
-					width: "100%",
-					right: "auto", bottom: "160px",
+					width: "220px",
+					right: "auto", bottom: "160px", left: "70px",
 					"text-align": "center",
 					color: "#eee",
 					opacity: 0.5
 				});
 				$("#itemTimeDaytime").css({
-					width: "100%",
-					top: "160px", bottom: "auto", left: "auto",
+					width: "220px",
+					top: "160px", bottom: "auto", left: "70px",
 					"text-align": "center",
 					color: "#eee",
 					opacity: 0.5
@@ -11647,7 +11854,6 @@ I = {
 			case I.ModeEnum.Mobile:
 			{
 				$("#panelLeft").hide();
-				$("#jsTop").remove();
 				$("head").append("<meta name='viewport' content='initial-scale=1.0, user-scalable=0, maximum-scale=1.0, width=device-width'>");
 				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>");
 			} break;

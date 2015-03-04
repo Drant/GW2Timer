@@ -22,49 +22,56 @@
 	<p>Each day that you login to Guild Wars 2, you advance the Login Rewards track by one square and receive a reward for that square. The track below is as appear to someone who has never missed a day (white square) since the Login Rewards system started. The track advances automatically at server reset. If you missed some days, you can synchronize it with your in-game track (green square) by clicking the appropriate square.</p>
 </div>
 <h2>Login Rewards Track</h2>
-	<div id="mapLoginRecord"><span id="mapLoginRecordCurrent"></span>&nbsp;<span id="mapLoginRecordHover"></span></div>
-	<div id="mapLoginTrack">
+	<div id="lgnRecord"><span id="mapLoginRecordCurrent"></span>&nbsp;<span id="mapLoginRecordHover"></span></div>
+	<div id="lgnTrack">
 		<span>
-		<img data-src="img/login/coin.png" title="<span class='mapLoginTip'>2x <img src='img/login/coin_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='mapLoginTip'>1x <img src='img/login/laurel_i.png' /></span>" />
-		<img data-src="img/login/luck.png" title="<span class='mapLoginTip'>1x <img src='img/login/luck_i.png' /></span>" />
-		<img data-src="img/login/bl.png" title="<span class='mapLoginTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
-		<img data-src="img/login/material.png" title="<span class='mapLoginTip'>1-5 <img src='img/login/material_t1.png' /><br />1-5 <img src='img/login/material_t2.png' /><br />1-5 <img src='img/login/material_t3.png' /><br />1-5 <img src='img/login/material_t4.png' /><br />1-5 <img src='img/login/material_t5.png' /><br />1-5 <img src='img/login/material_t6.png' /></span>" />
-		<img data-src="img/login/experience.png" title="<span class='mapLoginTip'>1x <img src='img/login/experience_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='mapLoginTip'>10x <img src='img/login/laurel_i.png' /></span>" class="mapLoginWeekend" />
+		<img data-src="img/login/coin.png" title="<span class='lgnTip'>2x <img src='img/login/coin_i.png' /></span>" />
+		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>1x <img src='img/login/laurel_i.png' /></span>" />
+		<img data-src="img/login/luck.png" title="<span class='lgnTip'>1x <img src='img/login/luck_i.png' /></span>" />
+		<img data-src="img/login/bl.png" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
+		<img data-src="img/login/material.png" title="<span class='lgnTip'>1-5 <img src='img/login/material_t1.png' /><br />1-5 <img src='img/login/material_t2.png' /><br />1-5 <img src='img/login/material_t3.png' /><br />1-5 <img src='img/login/material_t4.png' /><br />1-5 <img src='img/login/material_t5.png' /><br />1-5 <img src='img/login/material_t6.png' /></span>" />
+		<img data-src="img/login/experience.png" title="<span class='lgnTip'>1x <img src='img/login/experience_i.png' /></span>" />
+		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>10x <img src='img/login/laurel_i.png' /></span>" class="lgnWeekend" />
 		</span>
 		<span>
-		<img data-src="img/login/coin.png" title="<span class='mapLoginTip'>4x <img src='img/login/coin_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='mapLoginTip'>2x <img src='img/login/laurel_i.png' /></span>" />
-		<img data-src="img/login/luck.png" title="<span class='mapLoginTip'>2x <img src='img/login/luck_i.png' /></span>" />
-		<img data-src="img/login/bl.png" title="<span class='mapLoginTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
-		<img data-src="img/login/material.png" title="<span class='mapLoginTip'>1-6 <img src='img/login/material_t1.png' /><br />1-6 <img src='img/login/material_t2.png' /><br />1-6 <img src='img/login/material_t3.png' /><br />1-6 <img src='img/login/material_t4.png' /><br />1-6 <img src='img/login/material_t5.png' /><br />1-6 <img src='img/login/material_t6.png' /></span>" />
-		<img data-src="img/login/experience.png" title="<span class='mapLoginTip'>2x <img src='img/login/experience_i.png' /></span>" />
-		<img data-src="img/login/exotic.png" title="<span class='mapLoginTip'>1x <img src='img/login/exotic_war.png' /></span>" class="mapLoginWeekend" />
+		<img data-src="img/login/coin.png" title="<span class='lgnTip'>4x <img src='img/login/coin_i.png' /></span>" />
+		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>2x <img src='img/login/laurel_i.png' /></span>" />
+		<img data-src="img/login/luck.png" title="<span class='lgnTip'>2x <img src='img/login/luck_i.png' /></span>" />
+		<img data-src="img/login/bl.png" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
+		<img data-src="img/login/material.png" title="<span class='lgnTip'>1-6 <img src='img/login/material_t1.png' /><br />1-6 <img src='img/login/material_t2.png' /><br />1-6 <img src='img/login/material_t3.png' /><br />1-6 <img src='img/login/material_t4.png' /><br />1-6 <img src='img/login/material_t5.png' /><br />1-6 <img src='img/login/material_t6.png' /></span>" />
+		<img data-src="img/login/experience.png" title="<span class='lgnTip'>2x <img src='img/login/experience_i.png' /></span>" />
+		<img data-src="img/login/exotic.png" title="<span class='lgnTip'>1x <img src='img/login/exotic_war.png' /></span>" class="lgnWeekend" />
 		</span>
 		<span>
-		<img data-src="img/login/coin.png" title="<span class='mapLoginTip'>6x <img src='img/login/coin_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='mapLoginTip'>3x <img src='img/login/laurel_i.png' /></span>" />
-		<img data-src="img/login/luck.png" title="<span class='mapLoginTip'>3x <img src='img/login/luck_i.png' /></span>" />
-		<img data-src="img/login/bl.png" title="<span class='mapLoginTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
-		<img data-src="img/login/celebration.png" title="<span class='mapLoginTip'>1x <img src='img/login/celebration_i.png' /></span>" />
-		<img data-src="img/login/experience.png" title="<span class='mapLoginTip'>3x <img src='img/login/experience_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='mapLoginTip'>15x <img src='img/login/laurel_i.png' /></span>" class="mapLoginWeekend" />
+		<img data-src="img/login/coin.png" title="<span class='lgnTip'>6x <img src='img/login/coin_i.png' /></span>" />
+		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>3x <img src='img/login/laurel_i.png' /></span>" />
+		<img data-src="img/login/luck.png" title="<span class='lgnTip'>3x <img src='img/login/luck_i.png' /></span>" />
+		<img data-src="img/login/bl.png" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
+		<img data-src="img/login/celebration.png" title="<span class='lgnTip'>1x <img src='img/login/celebration_i.png' /></span>" />
+		<img data-src="img/login/experience.png" title="<span class='lgnTip'>3x <img src='img/login/experience_i.png' /></span>" />
+		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>15x <img src='img/login/laurel_i.png' /></span>" class="lgnWeekend" />
 		</span>
 		<span>
-		<img data-src="img/login/coin.png" title="<span class='mapLoginTip'>8x <img src='img/login/coin_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='mapLoginTip'>4x <img src='img/login/laurel_i.png' /></span>" />
-		<img data-src="img/login/luck.png" title="<span class='mapLoginTip'>4x <img src='img/login/luck_i.png' /></span>" />
-		<img data-src="img/login/bl.png" title="<span class='mapLoginTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
-		<img data-src="img/login/transmutation.png" title="<span class='mapLoginTip'>3x <img src='img/login/bl_transmutation.png' /></span>" />
-		<img data-src="img/login/experience.png" title="<span class='mapLoginTip'>4x <img src='img/login/experience_i.png' /></span>" />
-		<img data-src="img/login/loyalty.png" title="<span class='mapLoginTip'>2% <img src='img/login/loyalty_coin.png' /><br /><hr /><br />1x <img src='img/login/loyalty_vision.png' /><br />1-2? <img src='img/login/loyalty_damask.png' /><br />1-2? <img src='img/login/loyalty_deldrimor.png' /><br />1-2? <img src='img/login/loyalty_elonian.png' /><br />1-2? <img src='img/login/loyalty_spiritwood.png' /><br /><br />8x <img src='img/login/loyalty_shard.png' /><br />7x <img src='img/login/loyalty_clover.png' /><br /><br />20x <img src='img/login/laurel_i.png' /><br /><br />6x <img src='img/login/experience_i.png' /><br /></span>" class="mapLoginWeekend" />
+		<img data-src="img/login/coin.png" title="<span class='lgnTip'>8x <img src='img/login/coin_i.png' /></span>" />
+		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>4x <img src='img/login/laurel_i.png' /></span>" />
+		<img data-src="img/login/luck.png" title="<span class='lgnTip'>4x <img src='img/login/luck_i.png' /></span>" />
+		<img data-src="img/login/bl.png" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
+		<img data-src="img/login/transmutation.png" title="<span class='lgnTip'>3x <img src='img/login/bl_transmutation.png' /></span>" />
+		<img data-src="img/login/experience.png" title="<span class='lgnTip'>4x <img src='img/login/experience_i.png' /></span>" />
+		<img data-src="img/login/loyalty.png" title="<span class='lgnTip'>2% <img src='img/login/loyalty_coin.png' /><br /><hr /><br />1x <img src='img/login/loyalty_vision.png' /><br />1-2? <img src='img/login/loyalty_damask.png' /><br />1-2? <img src='img/login/loyalty_deldrimor.png' /><br />1-2? <img src='img/login/loyalty_elonian.png' /><br />1-2? <img src='img/login/loyalty_spiritwood.png' /><br /><br />8x <img src='img/login/loyalty_shard.png' /><br />7x <img src='img/login/loyalty_clover.png' /><br /><br />20x <img src='img/login/laurel_i.png' /><br /><br />6x <img src='img/login/experience_i.png' /><br /></span>" class="lgnWeekend" />
 		</span>
 	</div>
 <br />
+
+
+<samp class="jsHelpCollapsible"></samp>
+<div>
 <div class="mapDailyLists mapLinks">
+<h2>Calendar</h2>
+<p>The Dailies Calendar shows the daily achievements for that UTC day of the month. All months have the same dailies, based on the numbered day of the month. Hover over an icon to see its achievement name.</p>
+
 <h2><img data-src="img/event/swords.png" alt="Events" /> Events</h2>
-<p>In this website, hover over the <img class="cntIconExample" data-src="img/map/display.png" alt="Display"> icon on the map pane and checkmark the option <img class="cntIconExample" data-src="img/event/swords.png" alt="Icon" /> to show Dynamic Events. Then, hover over the <img class="cntIconExample" data-src="img/map/compass.png" alt="Compass"> icon to view the list of zones sorted by their regions. Click a zone name under the region of today's Event Completer to show where events can happen and find them in game. Alternatively you can do world bosses for their high number of chained events.</p>
+<p>Hover over the <img class="cntIconExample" data-src="img/map/display.png" alt="Display"> icon on the map pane and checkmark the option <img class="cntIconExample" data-src="img/event/swords.png" alt="Icon" /> to show Dynamic Events. Then, hover over the <img class="cntIconExample" data-src="img/map/compass.png" alt="Compass"> icon to view the list of zones sorted by their regions. Click a zone name under the region of today's Event Completer to show where events can happen and find them in game. Alternatively you can do world bosses for their high number of chained events.</p>
 
 <h2><img data-src="img/map/vista.png" alt="Vista" /> Vista</h2>
 <p>Hover over the <img class="cntIconExample" data-src="img/map/display.png" alt="Display"> icon on the map pane and checkmark the option to display World Completion icons. The fastest vista to view should be the ones next to asura gates in <a href="http://wiki.guildwars2.com/wiki/City">cities</a>.</p>
@@ -90,6 +97,14 @@
 	<dt>Big Spender<dt><dd>Go to the Armor/Weapon Master NPC at the citadel of your borderland and buy the skins (not the armor). Alternatively, replenish your deployable traps.</dd>
 	<dt>Story Dungeon<dt><dd>Play on a character that needs it. <a href="http://wiki.guildwars2.com/wiki/Caudecus's_Manor_(story)">Caudecus' Manor</a> may be the shortest.</dd>
 </dl>
+<br />
+</div>
+
+<h2>Dailies Calendar</h2>
+<br />
+	<div id="dlyCalendar"></div>
+<br />
+
 </section>
 
 

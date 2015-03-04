@@ -1,4 +1,5 @@
 /* This file is used by gw2t.js and is based on http://atlas.guildwars2.com
+ * Contains PVE map zone, region, and dailies data.
  */
 
 var GW2T_REGION_DATA = {
@@ -258,5 +259,169 @@ var GW2T_ZONE_DATA = {
 	name: "Blazeridge Steppes",
 	region: "ascalon",
 	rect: [[29184, 12160], [31232, 16256]]
+}
+};
+
+/*
+ * A month's achievements with associated days. Example of format:
+ * pve: ["GATHER REGION", "ACTIVITY OPTIONALREGION", "EVENTREGION", "BOSS"],
+ * pvp: ["PVP1", "PVP2", "PROFESSION1", "PROFESSION2"],
+ * wvw: ["WVW1", "WVW2", "WVW3", "WVW4"]
+ */
+var GW2T_DAILY_CALENDAR = {
+"1": {
+	pve: ["Forager Orr", "Forger", "Sparkfly", "Wurm Maguuma"],
+	pvp: ["Kills", "Capture", "Thief", "Engineer"],
+	wvw: ["Guard", "Creature", "Keep", "Defender"]
+},
+"2": {
+	pve: ["Miner Maguuma", "Fractal", "Harathi", "SB Kryta"],
+	pvp: ["Rank", "Defender", "Guardian", "Engineer"],
+	wvw: ["Spender", "Ruins", "Camp", "Keep"]
+},
+"3": {
+	pve: ["Lumberer Kryta", "Vista Kryta", "Metrica", "Fractal 1-10"],
+	pvp: ["Reward", "Defender", "Thief", "Warrior"],
+	wvw: ["Land", "Creature", "Defender", "Tower"]
+},
+"4": {
+	pve: ["Miner Shiverpeaks", "Activity", "Kessex", "Maw Shiverpeaks"],
+	pvp: ["Rank", "Kills", "Ranger", "Warrior"],
+	wvw: ["Ruins", "Guard", "Defender", "Camp"]
+},
+"5": {
+	pve: ["Forager Ascalon", "Vista Wastes", "Malchor", "FE Maguuma"],
+	pvp: ["Capture", "Rank", "Guardian", "Engineer"],
+	wvw: ["Land", "Kills", "Tower", "Defender"]
+},
+"6": {
+	pve: ["Miner Shiverpeaks", "Vista Maguuma", "Snowden", "Golem Maguuma"],
+	pvp: ["Defender", "Kills", "Thief", "Warrior"],
+	wvw: ["Ruins", "Guard", "Camp", "Tower"]
+},
+"7": {
+	pve: ["Lumberer Kryta", "Activity", "Dredgehaunt", "FE Maguuma"],
+	pvp: ["Reward", "Rank", "Ranger", "Elementalist"],
+	wvw: ["Ruins", "Kills", "Tower", "Defender"]
+},
+"8": {
+	pve: ["Miner Kryta", "Vista Ascalon", "Frostgorge", "Fractal 1-10"],
+	pvp: ["Capture", "Kills", "Guardian", "Engineer"],
+	wvw: ["Land", "Caravan", "Defender", "Keep"]
+},
+"9": {
+	pve: ["Lumberer Ascalon", "Forger", "Ashford", "SB Kryta"],
+	pvp: ["Capture", "Defender", "Thief", "Engineer"],
+	wvw: ["Ruins", "Spender", "Camp", "Tower"]
+},
+"10": {
+	pve: ["Forager Kryta", "Fractal", "Brisban", "Fractal 21-30"],
+	pvp: ["Rank", "Kills", "Thief", "Necromancer"],
+	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
+},
+"11": {
+	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", "FE Maguuma"],
+	pvp: ["Rank", "Reward", "Ranger", "Engineer"],
+	wvw: ["Caravan", "Guard", "Defender", "Tower"]
+},
+"12": {
+	pve: ["Miner Ascalon", "Forger", "Sparkfly", "Fractal 1-10"],
+	pvp: ["Capture", "Kills", "Guardian", "Elementalist"],
+	wvw: ["Spender", "Kills", "Keep", "Defender"]
+},
+"13": {
+	pve: ["Forager Orr", "Vista Kryta", "Snowden", "Shatterer Ascalon"],
+	pvp: ["Defender", "Rank", "Thief", "Necromancer"],
+	wvw: ["Land", "Kills", "Tower", "Camp"]
+},
+"14": {
+	pve: ["Miner Kryta", "Fractal", "Bloodtide", "Megades Maguuma"],
+	pvp: ["Kills", "Reward", "Mesmer", "Elementalist"],
+	wvw: ["Guard", "Ruins", "Tower", "Defender"]
+},
+"15": {
+	pve: ["Lumberer Maguuma", "Vista Maguuma", "Kessex", "Fractal 1-10"],
+	pvp: ["Rank", "Capture", "Guardian", "Elementalist"],
+	wvw: ["Creature", "Caravan", "Camp", "Tower"]
+},
+"16": {
+	pve: ["Forager Maguuma", "Forger", "Queensdale", "Wurm Maguuma"],
+	pvp: ["Defender", "Capture", "Thief", "Engineer"],
+	wvw: ["Land", "Ruins", "Keep", "Camp"]
+},
+"17": {
+	pve: ["Lumberer Kryta", "Vista Ascalon", "Silverwastes", "Fractal 11-20"],
+	pvp: ["Capture", "Rank", "Guardian", "Necromancer"],
+	wvw: ["Spender", "Land", "Tower", "Defender"]
+},
+"18": {
+	pve: ["Miner Ascalon", "Vista Kryta", "Marches", "Maw Shiverpeaks"],
+	pvp: ["Reward", "Kills", "Mesmer", "Warrior"],
+	wvw: ["Guard", "Kills", "Defender", "Camp"]
+},
+"19": {
+	pve: ["Forager Kryta", "Vista Shiverpeaks", "Bloodtide", "SB Kryta"],
+	pvp: ["Capture", "Defender", "Guardian", "Necromancer"],
+	wvw: ["Spender", "Ruins", "Camp", "Tower"]
+},
+"20": {
+	pve: ["Miner Shiverpeaks", "Activity", "Caledon", "Jormag Shiverpeaks"],
+	pvp: ["Defender", "Reward", "Ranger", "Elementalist"],
+	wvw: ["Ruins", "Creature", "Camp", "Keep"]
+},
+"21": {
+	pve: ["Lumberer Ascalon", "Vista Maguuma", "Southsun", "Maw Shiverpeaks"],
+	pvp: ["Reward", "Kills", "Guardian", "Warrior"],
+	wvw: ["Land", "Caravan", "Keep", "Defender"]
+},
+"22": {
+	pve: ["Miner Shiverpeaks", "Fractal", "Fields", "SB Kryta"],
+	pvp: ["Rank", "Defender", "Thief", "Warrior"],
+	wvw: ["Guard", "Kills", "Tower", "Camp"]
+},
+"23": {
+	pve: ["Forager Ascalon", "Forger", "Frostgorge", "Fractal 1-10"],
+	pvp: ["Rank", "Capture", "Thief", "Engineer"],
+	wvw: ["Caravan", "Land", "Keep", "Camp"]
+},
+"24": {
+	pve: ["Miner Ascalon", "Vista Ascalon", "Sparkfly", "Golem Maguuma"],
+	pvp: ["Reward", "Kills", "Mesmer", "Engineer"],
+	wvw: ["Ruins", "Caravan", "Defender", "Camp"]
+},
+"25": {
+	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Wayfarer", "Wurm Maguuma"],
+	pvp: ["Reward", "Defender", "Ranger", "Elementalist"],
+	wvw: ["Caravan", "Spender", "Camp", "Tower"]
+},
+"26": {
+	pve: ["Miner Maguuma", "Fractal", "Brisban", "Fractal 1-10"],
+	pvp: ["Kills", "Capture", "Guardian", "Elementalist"],
+	wvw: ["Land", "Caravan", "Tower", "Keep"]
+},
+"27": {
+	pve: ["Lumberer Kryta", "Activity", "Metrica", "Maw Shiverpeaks"],
+	pvp: ["Defender", "Rank", "Guardian", "Engineer"],
+	wvw: ["Ruins", "Land", "Camp", "Tower"]
+},
+"28": {
+	pve: ["Miner Shiverpeaks", "Vista Kryta", "Gendarran", "FE Maguuma"],
+	pvp: ["Rank", "Kills", "Thief", "Warrior"],
+	wvw: ["Guard", "Caravan", "Defender", "Keep"]
+},
+"29": {
+	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Snowden", "Fractal 11-20"],
+	pvp: ["Defender", "Kills", "Mesmer", "Elementalist"],
+	wvw: ["Ruins", "Kills", "Camp", "Tower"]
+},
+"30": {
+	pve: ["Forager Kryta", "Vista Orr", "Kessex", "Jormag Shiverpeaks"],
+	pvp: ["Reward", "Rank", "Ranger", "Elementalist"],
+	wvw: ["Caravan", "Spender", "Camp", "Defender"]
+},
+"31": {
+	pve: ["Miner Shiverpeaks", "Forger", "Timberline", "Golem Maguuma"],
+	pvp: ["Defender", "Reward", "Guardian", "Engineer"],
+	wvw: ["Spender", "Land", "Tower", "Defender"]
 }
 };

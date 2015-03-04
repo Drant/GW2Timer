@@ -23,7 +23,7 @@
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
 	<script type="text/javascript" src="data/zones.js"></script>
-	<script type="text/javascript" src="data/chains.js"></script>
+	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 <!-- Google Analytics -->
 <script>
@@ -203,16 +203,16 @@
 			<div id="paneClockBackground" class="clkSizeRegular"></div>
 			<img id="paneClockFace" class="clkSizeRegular" src="img/background/face.png" alt="Clock Face">
 			<div id="paneClockIcons" class="clkSizeRegular">
-				<img id="itemClockIconSD0" class="iconSD" src="img/chain/tbd.png" alt="X:00" />
-				<img id="itemClockIconSD1" class="iconSD" src="img/chain/tbd.png" alt="X:15" />
-				<img id="itemClockIconSD2" class="iconSD" src="img/chain/tbd.png" alt="X:30" />
-				<img id="itemClockIconSD3" class="iconSD" src="img/chain/tbd.png" alt="X:45" />
-				<img id="itemClockIconHC0" class="iconHC" src="img/chain/tbd.png" alt="X:00" />
-				<img id="itemClockIconHC1" class="iconHC" src="img/chain/tbd.png" alt="X:15" />
-				<img id="itemClockIconHC2" class="iconHC" src="img/chain/tbd.png" alt="X:30" />
-				<img id="itemClockIconHC3" class="iconHC" src="img/chain/tbd.png" alt="X:45" />
+				<img id="clkIconSD0" class="iconSD" src="img/chain/tbd.png" alt="X:00" />
+				<img id="clkIconSD1" class="iconSD" src="img/chain/tbd.png" alt="X:15" />
+				<img id="clkIconSD2" class="iconSD" src="img/chain/tbd.png" alt="X:30" />
+				<img id="clkIconSD3" class="iconSD" src="img/chain/tbd.png" alt="X:45" />
+				<img id="clkIconHC0" class="iconHC" src="img/chain/tbd.png" alt="X:00" />
+				<img id="clkIconHC1" class="iconHC" src="img/chain/tbd.png" alt="X:15" />
+				<img id="clkIconHC2" class="iconHC" src="img/chain/tbd.png" alt="X:30" />
+				<img id="clkIconHC3" class="iconHC" src="img/chain/tbd.png" alt="X:45" />
 			</div>
-			<svg id="itemClock" viewBox="0 0 100 100"><!-- x=50,y=50 is the center -->
+			<svg id="clk" viewBox="0 0 100 100"><!-- x=50,y=50 is the center -->
 				<defs id="clkDefinitions"><!-- Shadow filters -->
 					<filter id="clkFilterShadowOuter" height="130%">
 						<feGaussianBlur in="SourceAlpha" stdDeviation="3" />
@@ -293,11 +293,11 @@
 					<line id="clkSecondHand" x1="50" y1="50" x2="50" y2="16"/>
 				</g>
 			</svg>
-			<div id="itemClockWaypoints">
-				<img id="itemClockWaypoint0" class="itemClockWaypointClip" src="img/ui/placeholder.png" alt="X:00 Waypoint">
-				<img id="itemClockWaypoint1" class="itemClockWaypointClip" src="img/ui/placeholder.png" alt="X:15 Waypoint">
-				<img id="itemClockWaypoint2" class="itemClockWaypointClip" src="img/ui/placeholder.png" alt="X:30 Waypoint">
-				<img id="itemClockWaypoint3" class="itemClockWaypointClip" src="img/ui/placeholder.png" alt="X:45 Waypoint">
+			<div id="clkWaypoints">
+				<img id="clkWaypoint0" class="clkWaypointClip" src="img/ui/placeholder.png" alt="X:00 Waypoint">
+				<img id="clkWaypoint1" class="clkWaypointClip" src="img/ui/placeholder.png" alt="X:15 Waypoint">
+				<img id="clkWaypoint2" class="clkWaypointClip" src="img/ui/placeholder.png" alt="X:30 Waypoint">
+				<img id="clkWaypoint3" class="clkWaypointClip" src="img/ui/placeholder.png" alt="X:45 Waypoint">
 			</div>
 			<time id="itemTimeLocal" class="itemTimeDigital">
 				<var id="itemTimeLocalActual" class="curHelp">00:00</var>
@@ -346,7 +346,6 @@
 		<!-- Content mini-pane
 		==================================================================== -->
 		<section id="paneContent" class="paneRight">
-			<a id="jsTop" title="Scroll Top">&uarr;</a>
 			<article id="layerChains"><!-- This layer will be populated by JS -->
 				<div id="optAlarm">
 					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" src="img/ui/speaker.png" alt="Alarm"/>
@@ -364,9 +363,9 @@
 					<ins id="listChainsFirstButton"></ins>
 				</header>
 				<div id="listChainsScheduled" class="listChains"></div>
-				<div id="itemStar">
-					<img id="itemClockStar0" class="itemClockStarClip" src="img/ui/placeholder.png" alt="X:00 Waypoint">
-					<img id="itemClockStar1" class="itemClockStarClip" src="img/ui/placeholder.png" alt="X:15 Waypoint">
+				<div id="itemDryTopClip">
+					<img id="clkStar0" class="clkStarClip" src="img/ui/placeholder.png" alt="X:00 Waypoint">
+					<img id="clkStar1" class="clkStarClip" src="img/ui/placeholder.png" alt="X:15 Waypoint">
 				</div>
 				<header>
 					<img src="img/ui/drytop.png" alt="Dry Top" />

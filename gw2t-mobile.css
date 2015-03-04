@@ -5,7 +5,7 @@
 
 /* Restructure to fit */
 
-#panelLeft, #itemClockWaypoints {
+#panelLeft {
 	display: none;
 }
 

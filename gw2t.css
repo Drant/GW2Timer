@@ -245,7 +245,7 @@ html, body,
 .menuBeam img:hover,
 .jsTableOfContents ol li, .jsSectionDone,
 .chnCheck:hover, .chnDetailsLinks ins,
-#listChainsScheduled .chnTitle time, #mapLoginTrack img,
+#listChainsScheduled .chnTitle time, #lgnTrack img,
 .leaflet-clickable {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
@@ -298,7 +298,7 @@ html, body,
 /* Bottom left corner: Coordinates bar */
 #itemMapCoordinates, #itemWvWCoordinates {
 	position: absolute;
-	bottom: 12px; left: 12px;
+	bottom: 7px; left: 12px;
 	z-index: 9;
 }
 #itemMapCoordinates input, #itemWvWCoordinates input {
@@ -582,82 +582,95 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	border: 1px solid red !important;
 	box-shadow: 0px 0px 10px red !important;
 }
-#itemClockIconSD0 {
+#paneClockIcons img.clkIconCurrent {
+	border: 1px solid lime;
+	box-shadow: 0px 0px 10px lime;
+}
+#paneClockIcons img.clkIconNext {
+	border: 1px solid green;
+	box-shadow: 0px 0px 10px green;
+}
+#clkIconSD0 {
 	top: 4px; left: 148px;
 }
-#itemClockIconSD1 {
+#clkIconSD1 {
 	top: 148px; left: 290px;
 }
-#itemClockIconSD2 {
+#clkIconSD2 {
 	top: 290px; left: 148px;
 }
-#itemClockIconSD3 {
+#clkIconSD3 {
 	top: 148px; left: 4px;
 }
-#itemClockIconHC0 {
+#clkIconHC0 {
 	top: 12px; left: 212px;
 }
-#itemClockIconHC1 {
+#clkIconHC1 {
 	top: 212px; left: 298px;
 }
-#itemClockIconHC2 {
+#clkIconHC2 {
 	top: 298px; left: 100px;
 }
-#itemClockIconHC3 {
+#clkIconHC3 {
 	top: 100px; left: 12px;
 }
 
-#itemClockWaypoint0 {
+#clkWaypoint0 {
 	top: 52px; left: 164px;
 }
-#itemClockWaypoint1 {
+#clkWaypoint1 {
 	top: 164px; left: 274px;
 }
-#itemClockWaypoint2 {
+#clkWaypoint2 {
 	top: 274px; left: 164px;
 }
-#itemClockWaypoint3 {
+#clkWaypoint3 {
 	top: 164px; left: 52px;
 }
-.itemClockWaypointClip {
+.clkWaypointClip {
 	position: absolute;
 	width: 32px; height: 32px;
 	background: url("img/map/waypoint.png");
 	background-size: 32px 32px;
 	cursor: url("img/cursor/pointer.png"), pointer;
 }
-.itemClockWaypointClip.zeroclipboard-is-hover {
+.clkWaypointClipDaily {
+	background: url("img/daily/daily.png");
+	background-size: 32px 32px;
+}
+.clkWaypointClip.zeroclipboard-is-hover {
 	border-radius: 16px;
 	box-shadow: 0px 0px 5px white;
 	background: url("img/ui/copy.png");
 }
-.itemClockWaypointClip.zeroclipboard-is-active {
+.clkWaypointClip.zeroclipboard-is-active {
 	opacity: 0.5;
 }
 
-#itemClockStar0 {
+#clkStar0 {
 	margin-left: 250px;
 }
-#itemClockStar1 {
+#clkStar1 {
 	margin-left: 290px;
 }
-.itemClockStarClip {
+.clkStarClip {
 	position: absolute;
 	width: 32px; height: 32px;
 	background: url("img/chain/story.png");
 	background-size: 32px 32px;
 	cursor: url("img/cursor/pointer.png"), pointer;
+	opacity: 0.9;
 }
-.itemClockStarClip.zeroclipboard-is-hover {
+.clkStarClip.zeroclipboard-is-hover {
 	border-radius: 16px;
 	box-shadow: 0px 0px 5px white;
 	background: url("img/ui/copy.png");
 }
-.itemClockStarClip.zeroclipboard-is-active {
+.clkStarClip.zeroclipboard-is-active {
 	opacity: 0.5;
 }
 
-#itemClock { /* The clock */
+#clk { /* The clock */
 	position: absolute;
 	top: 70px; left: 70px;
 	width: 220px; height: 220px;
@@ -1153,24 +1166,6 @@ header.cntHeader {
 	text-decoration: none;
 }
 
-#jsTop {
-	display: none;
-	position: fixed;
-	width: 24px; height: 24px;
-	bottom: 8px;
-	right: 24px;
-	font-size: 18px;
-	font-weight: bold;
-	text-align: center;
-	color: #e4e0b3;
-	text-shadow: 0px 0px 2px #e4e0b3;
-	opacity: 0.9;
-}
-
-#jsTop:hover, #jsCenter:hover {
-	opacity: 1;
-}
-
 .jsHelpTooltip, .jsHelpCollapsible {
 	float: right;
 	font-family: sans-serif;
@@ -1348,6 +1343,11 @@ textarea.jsCopyCode {
 	text-align: right;
 }
 
+.chnDaily {
+	display: none;
+	opacity: 0.8;
+}
+
 .chnDetails ol {
 	margin-top: 8px;
 }
@@ -1459,58 +1459,161 @@ button.btnToggle {
 	vertical-align: middle;
 }
 
-#mapLoginRecord {
+/* Login Track */
+#lgnRecord {
 	margin-left: 140px;
 	margin-top: 8px;
 	font-size: 18px;
 	color: #ffeeaa;
 }
 
-#mapLoginTrack {
+#lgnTrack {
 	margin-top: 8px;
 	margin-left: 16px;
 }
 
-#mapLoginTrack img {
+#lgnTrack img {
 	width: 32px; height: 32px;
 	margin-right: 7px;
 	vertical-align: middle;
 	border: 1px dashed #ffff66;
 }
 
-#mapLoginTrack img.mapLoginWeekend {
+#lgnTrack img.lgnWeekend {
 	border: 1px dashed #66aaff;
 }
 
-#mapLoginTrack img.mapLoginOfficial {
+#lgnTrack img.lgnOfficial {
 	border: 1px solid #fff;
 	box-shadow: 0px 0px 4px #fff;
 }
 
-#mapLoginTrack img.mapLoginCurrent {
+#lgnTrack img.lgnCurrent {
 	border: 1px solid #44dd44;
 	box-shadow: 0px 0px 4px #44dd44;
 }
 
-#mapLoginTrack img:hover {
+#lgnTrack img:hover {
 	border: 1px solid #ffff66;
 	box-shadow: 0px 0px 4px #ffff66;
 }
 
-#mapLoginTrack span {
+#lgnTrack span {
 	display: block;
 	margin-bottom: 8px;
 }
 
-.mapLoginTip {
+.lgnTip {
 	font-size: 16px;
 }
 
-.mapLoginTip img {
+.lgnTip img, #dlyCalendar img {
 	width: 32px; height: 32px;
 	vertical-align: middle;
 }
 
+/* Daily Calendar */
+#dlyCalendar div { /* A day */
+	margin-bottom: 16px;
+	border-radius: 16px;
+	padding: 4px;
+	background: linear-gradient(to top, #111 0%, #333 100%);
+}
+#dlyCalendar div:hover {
+	background: linear-gradient(to bottom, #111 0%, #333 100%);
+}
+#dlyCalendar div.dlyCurrent {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border: 2px solid lime;
+	box-shadow: 0px 0px 8px lime;
+}
+#dlyCalendar div.dlyNext {
+	border: 2px solid green;
+	box-shadow: 0px 0px 8px green;
+}
+#dlyCalendar span { /* Daily category */
+	display: block;
+	width: 220px;
+	border-bottom: 1px dotted #333;
+}
+#dlyCalendar span:hover {
+	border-radius: 16px;
+	background-color: rgba(255, 255, 102, 0.1);
+	box-shadow: 0px 0px 4px #ffff66;
+}
+#dlyCalendar img { /* Daily */
+	margin-right: 8px;
+	border: 1px solid transparent;
+	border-radius: 8px;
+}
+#dlyCalendar img:hover {
+	border: 1px solid #ffff66;
+	box-shadow: 0px 0px 4px #ffff66;
+}
+#dlyCalendar div aside, /* Day background */
+#dlyCalendar div var, /* Day number */
+#dlyCalendar div ins { /* Boss icon */
+	display: block;
+	position: absolute;
+	width: 80px; height: 64px;
+	margin-top: 12px;
+	margin-left: 230px;
+	border-top: 16px solid #3e75bc;
+	border-radius: 8px;
+	font-family: sans-serif;
+	line-height: 100%;
+	text-align: center;
+	color: #3b83f3;
+	background: #333;
+}
+#dlyCalendar div var,
+#dlyCalendar div ins {
+	background: transparent;
+}
+#dlyCalendar div var {
+	font-size: 60px;
+	opacity: 0.9;
+}
+#dlyCalendar div var.dlySunday {
+	color: #cc3322;
+}
+#dlyCalendar ins img {
+	width: 64px; height: 64px;
+	margin: 0;
+	border: none;
+	opacity: 0.2;
+}
+#dlyCalendar ins img:hover {
+	border: none;
+}
+#dlyCalendar div:hover var {
+	opacity: 0.2;
+}
+#dlyCalendar div:hover ins img {
+	opacity: 1;
+}
+
+.dlyRegion_ascalon {
+	background: url("img/daily/region_ascalon.png");
+}
+.dlyRegion_kryta {
+	background: url("img/daily/region_kryta.png");
+}
+.dlyRegion_shiverpeaks {
+	background: url("img/daily/region_shiverpeaks.png");
+}
+.dlyRegion_maguuma {
+	background: url("img/daily/region_maguuma.png");
+}
+.dlyRegion_orr {
+	background: url("img/daily/region_orr.png");
+}
+.dlyRegion_wastes {
+	background: url("img/daily/region_wastes.png");
+}
+
+/* JP */
 dt.mapJPListNameHover {
 	color: #ffff00;
 }
