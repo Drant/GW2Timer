@@ -4884,7 +4884,8 @@ C = {
 	 */
 	isChainToday: function(pChain)
 	{
-		if (pChain.nexus === (C.getChainToday().nexus || -1))
+		var chaintoday = C.getChainToday();
+		if (chaintoday && pChain.nexus === chaintoday.nexus)
 		{
 			return true;
 		}
@@ -8093,8 +8094,8 @@ P = {
 		else
 		{
 			bosssrc = "img/daily/pve_boss.png";
-			bossclass = "dlyRegion_" + (boss[1]).toLowerCase();
-			bosshtml = "<ins><img src='img/chain/" + boss[0] + I.cPNG + "' /></ins>";
+			bossclass = "dlyRegion_" + boss[1].toLowerCase();
+			bosshtml = "<ins><img src='img/chain/" + boss[0].toLowerCase() + I.cPNG + "' /></ins>";
 		}
 		eventclass = "dlyRegion_" + (M.Zones[(pve[2]).toLowerCase()])["region"];
 		
@@ -8109,23 +8110,23 @@ P = {
 			+ "<aside></aside>" + bosshtml + "<var class='" + dayclass + "'>" + pDate.getUTCDate() + "</var>"
 			// PvE
 			+ "<span><img src='img/daily/daily_pve.png' />"
-			+ "<img class='" + gatherclass + "' src='img/daily/pve_" + gather[0] + I.cPNG + "' title='" + pve[0] + "' />"
-			+ "<img class='" + activityclass + "' src='img/daily/pve_" + activity[0] + I.cPNG + "' title='" + pve[1] + "' />"
+			+ "<img class='" + gatherclass + "' src='img/daily/pve_" + gather[0].toLowerCase() + I.cPNG + "' title='" + pve[0] + "' />"
+			+ "<img class='" + activityclass + "' src='img/daily/pve_" + activity[0].toLowerCase() + I.cPNG + "' title='" + pve[1] + "' />"
 			+ "<img class='dlyEvent curZoomable " + eventclass + "' src='img/daily/pve_event.png' title='" + pve[2] + " Events'"
 				+ "data-coord='" + (pve[2]).toLowerCase() + "' />"
 			+ "<img class='" + bossclass + "' src='" + bosssrc + "' title='" + pve[3] + "' /></span>"
 			// PvP
 			+ "<span><img src='img/daily/daily_pvp.png' />"
-			+ "<img src='img/daily/pvp_" + pvp[0] + ".png' title='" + pvp[0] + "' />"
-			+ "<img src='img/daily/pvp_" + pvp[1] + ".png' title='" + pvp[1] + "' />"
-			+ "<img src='img/daily/pvp_" + pvp[2] + ".png' title='" + pvp[2] + "' />"
-			+ "<img src='img/daily/pvp_" + pvp[3] + ".png' title='" + pvp[3] + "' /></span>"
+			+ "<img src='img/daily/pvp_" + pvp[0].toLowerCase() + ".png' title='" + pvp[0] + "' />"
+			+ "<img src='img/daily/pvp_" + pvp[1].toLowerCase() + ".png' title='" + pvp[1] + "' />"
+			+ "<img src='img/daily/pvp_" + pvp[2].toLowerCase() + ".png' title='" + pvp[2] + "' />"
+			+ "<img src='img/daily/pvp_" + pvp[3].toLowerCase() + ".png' title='" + pvp[3] + "' /></span>"
 			// WvW
 			+ "<span><img src='img/daily/daily_wvw.png' />"
-			+ "<img src='img/daily/wvw_" + wvw[0] + ".png' title='" + wvw[0] + "' />"
-			+ "<img src='img/daily/wvw_" + wvw[1] + ".png' title='" + wvw[1] + "' />"
-			+ "<img src='img/daily/wvw_" + wvw[2] + ".png' title='" + wvw[2] + "' />"
-			+ "<img src='img/daily/wvw_" + wvw[3] + ".png' title='" + wvw[3] + "' /></span>"
+			+ "<img src='img/daily/wvw_" + wvw[0].toLowerCase() + ".png' title='" + wvw[0] + "' />"
+			+ "<img src='img/daily/wvw_" + wvw[1].toLowerCase() + ".png' title='" + wvw[1] + "' />"
+			+ "<img src='img/daily/wvw_" + wvw[2].toLowerCase() + ".png' title='" + wvw[2] + "' />"
+			+ "<img src='img/daily/wvw_" + wvw[3].toLowerCase() + ".png' title='" + wvw[3] + "' /></span>"
 			+ "</div>");
 	},
 	
