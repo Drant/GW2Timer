@@ -298,7 +298,7 @@ html, body,
 /* Bottom left corner: Coordinates bar */
 #itemMapCoordinates, #itemWvWCoordinates {
 	position: absolute;
-	bottom: 7px; left: 12px;
+	bottom: 12px; left: 12px;
 	z-index: 9;
 }
 #itemMapCoordinates input, #itemWvWCoordinates input {
@@ -1343,8 +1343,9 @@ textarea.jsCopyCode {
 	text-align: right;
 }
 
-.chnDaily {
+.chnTitle img.chnDaily {
 	display: none;
+	width: 32px; height: 32px;
 	opacity: 0.8;
 }
 
@@ -1954,6 +1955,10 @@ input[type="text"].trdMatched {
 }
 .chlDungeonBar label.chlCheckboxDisabled {
 	opacity: 0.3;
+}
+
+#chlCustom span {
+	display: block;
 }
 
 #chlCustom input {

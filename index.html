@@ -425,7 +425,6 @@
 							<label><input type="radio" name="int_setDimming" /> Dark</label>
 						</fieldset>
 					</div>
-					<br />
 					<h2>Map</h2>
 					<label title="Show/Hide the map area on the left."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane.</span><br />
@@ -441,6 +440,7 @@
 					<span>How many minutes before a subscribed chain starts should you be alerted? Enter 0 to disable an alarm. Checked off bosses are ignored.</span>
 					<label><input id="opt_int_alertSubscribedFirst" type="number" min="0" max="30" step="1" /> First Alarm</label>
 					<label><input id="opt_int_alertSubscribedSecond" type="number" min="0" max="30" step="1" /> Second Alarm</label>
+					<label title="This happens at server reset or timestamp expiration."><input id="opt_bol_alertAutosubscribe" type="checkbox" /> Autosubscribe to today's daily world boss</label>
 					<label title="After the lowest minutes alarm."><input id="opt_bol_alertUnsubscribe" type="checkbox" /> Unsubscribe from boss after the final alarm</label>
 					<br />
 					<h2>Trading</h2>

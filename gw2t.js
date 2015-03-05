@@ -116,7 +116,8 @@ O = {
 		bol_alertChecked: false,
 		int_alertSubscribedFirst: 1,
 		int_alertSubscribedSecond: 15,
-		bol_alertUnsubscribe: false,
+		bol_alertAutosubscribe: true,
+		bol_alertUnsubscribe: true,
 		// Tools
 		int_sizeNotepadFont: 12,
 		int_sizeNotepadHeight: 500,
@@ -583,9 +584,10 @@ O = {
 		
 		// Chains checklist
 		var i;
+		var chain;
+		var time;
 		if (O.Options.bol_clearChainChecklistOnReset)
 		{
-			var chain;
 			for (i in C.Chains)
 			{
 				chain = C.Chains[i];
@@ -597,6 +599,21 @@ O = {
 				}
 			}
 			X.clearChecklist(X.Checklists.Chain, X.ChecklistJob.UncheckTheChecked);
+		}
+		
+		// Subscribe to daily chain
+		if (O.Options.bol_alertAutosubscribe)
+		{
+			chain = C.getChainToday();
+			if (chain)
+			{
+				time = $("#chnTime_" + chain.nexus);
+				if ( ! time.hasClass("chnTimeSubscribed"))
+				{
+					I.write("Autosubscribed to Daily World Boss: " + chain.alias);
+					time.trigger("click");
+				}
+			}
 		}
 		
 		// Dungeon and Personal Checklists
@@ -5401,7 +5418,7 @@ C = {
 		var elapsed = T.getCurrentTimeframeElapsedTime();
 		var remaining = pChain.countdownToFinish - elapsed;
 		var time = remaining;
-		var sign = "-";
+		var sign = "⇑ ";
 		
 		if (pChain.series === C.ChainSeriesEnum.DryTop)
 		{
@@ -5418,7 +5435,7 @@ C = {
 			if (remaining <= 0)
 			{
 				time = T.cSECONDS_IN_TIMEFRAME - elapsed;
-				sign = "−";
+				sign = "⇓ ";
 			}
 
 			$("#chnTime_" + pChain.nexus).text(sign + T.getTimeFormatted(
@@ -8089,7 +8106,7 @@ P = {
 		gatherclass = "dlyRegion_" + (gather[1]).toLowerCase();
 		if (boss[0] === "Fractal")
 		{
-			bosssrc = "img/daily/pve_" + boss[0] + "_" + boss[1] + I.cPNG;
+			bosssrc = "img/daily/pve_" + boss[0].toLowerCase() + "_" + boss[1] + I.cPNG;
 		}
 		else
 		{
@@ -11516,14 +11533,21 @@ I = {
 				}
 				
 				$("#paneContent article").hide(); // Hide all layers
+				
+				
 				$(I.contentCurrentLayer + " .cntHeader").css({opacity: 0}).animate( // Fade page title
 				{
 					opacity: 1
 				}, 400);
-				$(I.contentCurrentLayer).animate( // Show clicked layer
+				if (I.ModeCurrent === I.ModeEnum.Website)
 				{
-					width: "show"
-				}, 200);
+					$(I.contentCurrentLayer).animate( // Show clicked layer
+					{
+						width: "show"
+					}, 200);
+				}
+				$(I.contentCurrentLayer).show();
+				
 				// Update the address bar URL with the current layer name
 				U.updateQueryString();
 				
@@ -11588,6 +11612,12 @@ I = {
 		$("#layerMap").load(I.cPageURLMap, function()
 		{
 			I.bindAfterAJAXContent(I.PageEnum.Map);
+			
+			// Hide map dependent sections in mobile mode
+			if (I.ModeCurrent === I.ModeEnum.Mobile)
+			{
+				$(".mapOnly").hide();
+			}
 			
 			// Create daily markers
 			$("#headerMap_Daily").one("click", function()
@@ -11855,7 +11885,7 @@ I = {
 			case I.ModeEnum.Mobile:
 			{
 				$("#panelLeft").hide();
-				$("head").append("<meta name='viewport' content='initial-scale=1.0, user-scalable=0, maximum-scale=1.0, width=device-width'>");
+				$("head").append("<meta name='viewport' content='initial-scale=1.0, width=device-width'>");
 				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>");
 			} break;
 		}
