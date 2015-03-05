@@ -602,7 +602,8 @@ O = {
 		}
 		
 		// Subscribe to daily chain
-		if (O.Options.bol_alertAutosubscribe)
+		if (O.Options.bol_alertAutosubscribe &&
+			O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription)
 		{
 			chain = C.getChainToday();
 			if (chain)
