@@ -1343,6 +1343,11 @@ textarea.jsCopyCode {
 	text-align: right;
 }
 
+.chnTitle aside {
+	display: table-cell;
+	vertical-align: middle;
+}
+
 .chnTitle img.chnDaily {
 	display: none;
 	width: 32px; height: 32px;

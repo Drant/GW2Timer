@@ -5075,7 +5075,7 @@ C = {
 				+ "<div id='chnCheck_" + pChain.nexus + "' class='chnCheck'></div>"
 				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + C.truncateTitleString(D.getChainTitle(pChain.nexus), C.cChainTitleCharLimit) + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
-				+ "<img id='chnDaily_" + pChain.nexus + "' class='chnDaily' src='img/daily/daily.png' />"
+				+ "<aside><img id='chnDaily_" + pChain.nexus + "' class='chnDaily' src='img/daily/daily.png' /></aside>"
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
@@ -11137,12 +11137,15 @@ I = {
 	 */
 	scrollToElement: function(pElement, pContainerOfElement, pTime)
 	{
-		var rate = pTime || 0;
-		pContainerOfElement.animate(
+		if (I.ModeCurrent !== I.ModeEnum.Mobile)
 		{
-			scrollTop: pElement.offset().top - pContainerOfElement.offset().top
-				+ pContainerOfElement.scrollTop()
-		}, rate);
+			var rate = pTime || 0;
+			pContainerOfElement.animate(
+			{
+				scrollTop: pElement.offset().top - pContainerOfElement.offset().top
+					+ pContainerOfElement.scrollTop()
+			}, rate);
+		}
 	},
 	
 	/*
@@ -11185,41 +11188,6 @@ I = {
 			wheelSpeed: wheelspeed,
 			suppressScrollX: true
 		});
-	},
-	
-	/*
-	 * Creates a single-level table of content for a composition (writings) layer.
-	 * Example: <div class="jsTableOfContents" id="jsTOC_LAYERNAME"></div>
-	 * will be filled with links to the h1 headers in that layer.
-	 * @param string pLayer HTML ID of layer in the content pane.
-	 */
-	generateTableOfContent: function(pLayer)
-	{
-		if ($(pLayer + " .jsTableOfContents").hasClass("jsTableOfContents"))
-		{
-			var layername = pLayer.substring(1, pLayer.length);
-			$(pLayer + " .jsTableOfContents").append("<h2>Table of Contents</h2><ol></ol>");
-
-			// Convert every h1 tag
-			$(pLayer + " h1").each(function()
-			{
-				// Scroll to top when clicked the header
-				var headertext = $(this).text();
-				var headertextstripped = U.stripToAlphanumeric(headertext);
-				$(this).html(headertext + "<span class='tocTop'> \u2191</span>");
-				$(this).click(function()
-				{
-					I.scrollToElement($("#jsTOC_" + I.PageCurrent), $(I.contentCurrentLayer), "fast");
-				}).attr("id", "toc_" + layername + "_" + headertextstripped);
-				// Add ToC list entries that scrolls to the headers when clicked
-				$("<li>" + headertext + "</li>").appendTo($(pLayer + " .jsTableOfContents ol"))
-					.click(function()
-					{
-						I.scrollToElement($("#toc_" + layername + "_" + headertextstripped),
-							$(I.contentCurrentLayer), "fast");
-					});
-			});
-		}
 	},
 	
 	/*
@@ -11302,7 +11270,14 @@ I = {
 				// Do the collapse/expand
 				if ($(this).data("donotanimate") !== "true")
 				{
-					$(this).next().toggle("fast");
+					if (I.ModeCurrent === I.ModeEnum.Website)
+					{
+						$(this).next().toggle("fast");
+					}
+					else
+					{
+						$(this).next().toggle();
+					}
 					I.scrollToElement($(this), $(pLayer), "fast");
 				}
 				else
@@ -11591,7 +11566,6 @@ I = {
 	bindAfterAJAXContent: function(pPageEnum)
 	{
 		var layer = I.cPagePrefix + pPageEnum;
-		I.generateTableOfContent(layer);
 		I.generateSectionMenu(layer);
 		I.initializeScrollbar($(layer));
 		I.bindHelpButtons(layer);
