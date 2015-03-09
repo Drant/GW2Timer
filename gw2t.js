@@ -9494,7 +9494,7 @@ T = {
 		};
 
 		var now = new Date();
-		T.DST_IN_EFFECT = (now.dst() && O.Options.bol_detectDST === false) ? 1 : 0;
+		T.DST_IN_EFFECT = (now.dst() && O.Options.bol_detectDST) ? 1 : 0;
 	},
 
 	/*

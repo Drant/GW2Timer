@@ -123,7 +123,6 @@ body, html, .panelMain, #windowMain, #paneContent article {
 
 #layerChains header {
 	height: 48px;
-	margin-bottom: 16px;
 }
 
 #layerChains header span {
@@ -137,7 +136,15 @@ body, html, .panelMain, #windowMain, #paneContent article {
 /* Options page */
 
 #layerOptions .cntComposition {
-	font-size: 18px;
+	font-size: 16px;
+}
+
+#layerOptions .cntComposition h2 {
+	font-size: 20px;
+}
+
+#layerOptions .cntComposition h3 {
+	font-size: 16px;
 }
 
 input[type=checkbox] {
@@ -170,7 +177,7 @@ header.jsSection {
 }
 
 #chlCustom input[type="text"] {
-	font-size: 16px;
+	font-size: 14px;
 }
 
 #chlCustom span {
