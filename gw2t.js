@@ -2410,8 +2410,7 @@ X = {
 		// Load dungeon icons on demand because they are pretty large
 		$("#chlDungeon .chlDungeonBar").each(function()
 		{
-			$(this).prepend("<img src='img/dungeon/"
-				+ $(this).data("name").toLowerCase() + I.cPNG + "' />");
+			$(this).prepend("<ins class='chl_" + $(this).data("name").toLowerCase() + "'></ins>");
 		});
 		
 		var updateCalculator = function()
@@ -4197,7 +4196,7 @@ D = {
 			});
 			
 			// Translate tooltips
-			$(".menuButton").each(function()
+			$("#paneMenu kbd").each(function()
 			{
 				$(this).attr("title", "<dfn>" + D.getElement($(this).attr("id")) + "</dfn>");
 				I.qTip.init($(this));
@@ -5083,11 +5082,12 @@ C = {
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsLinks'>"
-					+ "<kbd class='curClickable' id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options, Defaults).'>[x]</kbd>"
+					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options, Defaults).'>[x]</kbd>"
 				+ "</div>"
 		+ "</div>");
 		// Initially only show/download icons for the scheduled chains list
-		if (C.isChainScheduled(pChain))
+		if (pChain.series === C.ChainSeriesEnum.Standard ||
+			pChain.series === C.ChainSeriesEnum.Hardcore)
 		{
 			C.styleBarIcon(pChain);
 		}
@@ -6869,6 +6869,7 @@ M = {
 	 */
 	goToURLCoords: function()
 	{
+		var i;
 		var args = U.Args[U.KeyEnum.Go];
 		var coords = [];
 		var zone;
@@ -6894,9 +6895,13 @@ M = {
 			{
 				// Else assume the argument is a short name for the zone
 				zone = args.toLowerCase();
-				if (M.Zones[zone])
+				for (i in M.Zones)
 				{
-					M.goToView(M.getZoneCenter(zone), null, M.ZoomLevelEnum.Bird);
+					if (zone.indexOf(i) !== -1)
+					{
+						M.goToView(M.getZoneCenter(i), null, M.ZoomLevelEnum.Bird);
+						break;
+					}
 				}
 			}
 		}
@@ -8111,9 +8116,10 @@ P = {
 			bosshtml = "<em><img src='img/chain/" + boss[0].toLowerCase() + I.cPNG + "' /></em>";
 		}
 		
-		if (pDate.getUTCDay() === 0)
+		switch (pDate.getUTCDay())
 		{
-			dayclass = "dlySunday";
+			case 0: dayclass = "dlySunday"; break;
+			case 6: dayclass = "dlySaturday"; break;
 		}
 
 		// Generate HTML
@@ -9668,7 +9674,7 @@ T = {
 	 * @returns string.
 	 */
 	getDayPeriodRemaining: function()
-	{//
+	{
 		var now = new Date();
 		var hour = now.getUTCHours();
 		var min = now.getUTCMinutes();
@@ -9838,7 +9844,7 @@ K = {
 				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").show();
 				// Reposition clock items
 				I.bulkAnimate([
-					{s: "#clk", p: {top: "0px", left: "70px", width: "220px", height: "220px"}},
+					{s: "#clock", p: {top: "0px", left: "70px", width: "220px", height: "220px"}},
 					{s: "#paneClockFace", p: {width: "360px", height: "360px", top: "-70px", left: "0px"}},
 					{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
 					{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
@@ -9883,7 +9889,7 @@ K = {
 				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").show();
 				// Reposition clock items
 				I.bulkAnimate([
-					{s: "#clk", p: {top: "70px", left: "70px", width: "220px", height: "220px"}},
+					{s: "#clock", p: {top: "70px", left: "70px", width: "220px", height: "220px"}},
 					{s: "#paneClockFace", p: {width: "360px", height: "360px", top: "0px", left: "0px"}},
 					{s: "#paneClockIcons .iconSD", p: {"border-radius": "12px"}},
 					{s: "#paneClockIcons .iconHC", p: {"border-radius": "12px"}},
@@ -9928,7 +9934,7 @@ K = {
 				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").hide();
 				// Reposition clock items
 				I.bulkAnimate([
-					{s: "#clk", p: {top: "0px", left: "0px", width: "85px", height: "85px"}},
+					{s: "#clock", p: {top: "0px", left: "0px", width: "85px", height: "85px"}},
 					{s: "#paneClockFace", p: {width: "132px", height: "132px", top: "-24px", left: "-24px"}},
 					{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
 					{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
@@ -10667,7 +10673,7 @@ K = {
 			{
 				K.lsClipboards.push
 				(
-					new ZeroClipboard(document.getElementById("clkStar" + i))
+					new ZeroClipboard(document.getElementById("chnDryTopWaypoint" + i))
 				);
 				K.lsClipboards[i].on("aftercopy", function(pEvent)
 				{
@@ -10768,9 +10774,9 @@ K = {
 	{
 		if (C.DryTopChains.length > 0)
 		{
-			document.getElementById("clkStar0")
+			document.getElementById("chnDryTopWaypoint0")
 				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentDryTopEvents());
-			document.getElementById("clkStar1")
+			document.getElementById("chnDryTopWaypoint1")
 				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentDryTopEvents(1));
 		}
 	}
@@ -10971,6 +10977,11 @@ I = {
 		{
 			I.BrowserCurrent = I.BrowserEnum.Opera;
 		}
+		
+		$("#layerMap, #layerWvW, #layerHelp").each(function()
+		{
+			$(this).append("<div class='itemThrobber'><em></em></div>");
+		});
 		
 		// Default content layer
 		I.PageCurrent = I.PageEnum.Chains;
@@ -11410,7 +11421,7 @@ I = {
 		   $("#paneMenu").hover(
 				function()
 				{
-					$(".menuButton").each(function()
+					$("#paneMenu kbd").each(function()
 					{
 						// Fade icon not being hovered over
 						if (!$(this).is(":hover"))
@@ -11422,14 +11433,14 @@ I = {
 				function()
 				{
 					// User moused outside the menu, so stop the animations
-					$(".menuButton").finish().each(function()
+					$("#paneMenu kbd").finish().each(function()
 					{
 						$(this).animate({opacity: 1}, animationspeed);
 					});
 				}
 		   );
 		   // User hovers over individual menu icons
-		   $(".menuButton").hover(
+		   $("#paneMenu kbd").hover(
 			   function()
 			   {
 				   $(this).animate({opacity: 1}, animationspeed);
@@ -11450,7 +11461,7 @@ I = {
 		/*
 		 * Menu click icon to show respective content layer (page).
 		 */
-		$(".menuButton").each(function()
+		$("#paneMenu kbd").each(function()
 		{
 			$(this).click(function()
 			{
@@ -11732,6 +11743,10 @@ I = {
 		});
 
 		// Download chain bar icons for unscheduled chains only when manually expanded the header
+		$("#listChainsDryTop").prev().one("click", function()
+		{
+			C.DryTopChains.forEach(C.styleBarIcon);
+		});
 		$("#listChainsLegacy").prev().one("click", function()
 		{
 			C.LegacyChains.forEach(C.styleBarIcon);
@@ -11911,7 +11926,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind the following tags with the title attribute for tooltip
-		I.qTip.init("a, ins, span, img, fieldset, label, input, button, .menuButton");
+		I.qTip.init("a, kbd, ins, span, img, fieldset, label, input, button");
 		
 		/*
 		 * Make the tooltip appear within the visible window by detecting current

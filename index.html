@@ -212,7 +212,7 @@
 				<img id="clkIconHC2" class="iconHC" src="img/ui/placeholder.png" alt="X:30" />
 				<img id="clkIconHC3" class="iconHC" src="img/ui/placeholder.png" alt="X:45" />
 			</div>
-			<svg id="clk" viewBox="0 0 100 100"><!-- x=50,y=50 is the center -->
+			<svg id="clock" viewBox="0 0 100 100"><!-- x=50,y=50 is the center -->
 				<defs id="clkDefinitions"><!-- Shadow filters -->
 					<filter id="clkFilterShadowOuter" height="130%">
 						<feGaussianBlur in="SourceAlpha" stdDeviation="3" />
@@ -337,11 +337,11 @@
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
 		<nav id="paneMenu" class="paneRight">
-			<div id="menuChains" class="menuButton" title="<dfn>Chains:</dfn> Timers, Events, Schedule"></div>
-			<div id="menuMap" class="menuButton" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, TP, Checklists"></div>
-			<!--<div id="menuWvW" class="menuButton" title="<dfn>WvW:</dfn> Map, Tracer, Siege"></div>-->
-			<div id="menuHelp" class="menuButton" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"></div>
-			<div id="menuOptions" class="menuButton" title="<dfn>Options:</dfn> Display, Format, Alarm"></div>
+			<kbd id="menuChains" title="<dfn>Chains:</dfn> Timers, Events, Schedule"><ins></ins></kbd>
+			<kbd id="menuMap" title="<dfn>Map:</dfn> Dailies, Gathering, JPs, TP, Checklists"><ins></ins></kbd>
+			<!--<kbd id="menuWvW" title="<dfn>WvW:</dfn> Map, Tracer, Siege"><ins></ins></kbd>-->
+			<kbd id="menuHelp" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"><ins></ins></kbd>
+			<kbd id="menuOptions" title="<dfn>Options:</dfn> Display, Format, Alarm"><ins></ins></kbd>
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->
@@ -358,35 +358,35 @@
 					</div>
 				</div>
 				<header>
-					<img src="img/ui/scheduled.png" alt="Scheduled Bosses" />
+					<ins class="chn_scheduled"></ins>
 					<span class="jsTranslate">Scheduled Bosses</span>
 					<kbd id="listChainsFirstButton"></kbd>
 				</header>
 				<div id="listChainsScheduled" class="listChains"></div>
 				<div id="itemDryTopClip">
-					<img id="clkStar0" class="clkStarClip" src="img/ui/placeholder.png" alt="X:00 Waypoint">
-					<img id="clkStar1" class="clkStarClip" src="img/ui/placeholder.png" alt="X:15 Waypoint">
+					<img id="chnDryTopWaypoint0" class="chnDryTopWaypoint" src="img/ui/placeholder.png" alt="X:00 Waypoint">
+					<img id="chnDryTopWaypoint1" class="chnDryTopWaypoint" src="img/ui/placeholder.png" alt="X:15 Waypoint">
 				</div>
 				<header>
-					<img src="img/ui/drytop.png" alt="Dry Top" />
+					<ins class="chn_drytop"></ins>
 					<span class="jsTranslate">Dry Top</span>
 					<kbd></kbd>
 				</header>
 				<div id="listChainsDryTop" class="listChains"></div>
 				<header>
-					<img src="img/event/boss.png" alt="Legacy Bosses" />
+					<ins class="chn_legacy"></ins>
 					<span class="jsTranslate">Legacy Bosses</span>
 					<kbd></kbd>
 				</header>
 				<div id="listChainsLegacy" class="listChains"></div>
 				<header>
-					<img src="img/chain/temple.png" alt="Orr Temples" />
+					<ins class="chn_temple"></ins>
 					<span class="jsTranslate">Orr Temples</span>
 					<kbd></kbd>
 				</header>
 				<div id="listChainsTemple" class="listChains"></div>
 				<header id="headerTimetable">
-					<img src="img/ui/clock.png" alt="Timetable" />
+					<ins class="chn_timetable"></ins>
 					<span class="jsTranslate">Full Timetable</span>
 					<kbd></kbd>
 				</header>
