@@ -21,6 +21,13 @@
 	30, 36, 40, 45, 60, 72, 90, 120, 180.
 	four-values order: top, right, bottom, left;
 
+	RESERVED TAGS:
+	<ins> sprite images
+	<var> mutable text
+	<dfn> map coordinates link
+	<kbd> button-like text
+	<aside> appended content
+
 	TABLE OF CONTENTS (Ctrl+F "AtsignAtsignLetter" to jump to section)
 
 	M - Map pane
@@ -244,7 +251,7 @@ html, body,
 .mapHUDButton, .menuButton,
 .menuBeam img:hover,
 .jsTableOfContents ol li, .jsSectionDone,
-.chnCheck:hover, .chnDetailsLinks ins,
+.chnCheck:hover,
 #listChainsScheduled .chnTitle time, #lgnTrack img,
 .leaflet-clickable {
 	cursor: url("img/cursor/pointer.cur"), pointer;
@@ -256,7 +263,7 @@ html, body,
 }
 
 /* Zoomable */
-.curZoomable, .cntComposition ins, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
+.curZoomable, .cntComposition dfn, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
 	cursor: url("img/cursor/zoom.cur"), pointer;
 }
 
@@ -635,7 +642,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	cursor: url("img/cursor/pointer.png"), pointer;
 }
 .clkWaypointClipDaily {
-	background: url("img/daily/daily.png");
+	background: url("img/ui/daily.png");
 	background-size: 32px 32px;
 }
 .clkWaypointClip.zeroclipboard-is-hover {
@@ -1048,6 +1055,14 @@ header.jsSection sup {
 	vertical-align: middle;
 }
 
+.cntComposition ins { /* the tag <i> is reserved for sprite images */
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	vertical-align: middle;
+    background-repeat: no-repeat;
+}
+
 .cntComposition hr {
 	margin-top: 8px;
 	margin-bottom: 4px;
@@ -1106,10 +1121,6 @@ header.cntHeader {
 	color: white;
 }
 
-.cntComposition i {
-	opacity: 0.5;
-}
-
 .cntComposition dt {
 	display: inline;
 	font-weight: bold;
@@ -1119,14 +1130,14 @@ header.cntHeader {
 	margin-left: 12px;
 }
 
-.cntComposition ins, .mapLinks li, .mapLinks dt {
+.cntComposition dfn, .mapLinks li, .mapLinks dt {
 	font-weight: bold;
 	color: #ffcc77;
 }
-.cntComposition ins:hover, .mapLinks li:hover, .mapLinks dt:hover {
+.cntComposition dfn:hover, .mapLinks li:hover, .mapLinks dt:hover {
 	color: #ffdda6;
 }
-.cntComposition ins:active, .mapLinks li:active, .mapLinks dt:active {
+.cntComposition dfn:active, .mapLinks li:active, .mapLinks dt:active {
 	color: white;
 }
 
@@ -1259,7 +1270,7 @@ textarea.jsCopyCode {
 #layerChains header span:active {
 	color: white;
 }
-#layerChains header ins { /* The collapse/expand category button */
+#layerChains header kbd { /* The collapse/expand category button */
 	margin-top: 8px;
 	float: right;
 	font-family: monospace;
@@ -1382,7 +1393,7 @@ textarea.jsCopyCode {
 	margin-bottom: 8px;
 	text-align: right;
 }
-.chnDetailsLinks ins {
+.chnDetailsLinks kbd {
 	margin-right: 6px;
 	font-family: monospace;
 	font-size: 12px;
@@ -1432,7 +1443,7 @@ textarea.jsCopyCode {
 }
 
 .chnTimeCurrent:hover, .chnTimeFuture:hover, .chnTimeFutureFar:hover,
-.chnDetailsLinks ins:hover {
+.chnDetailsLinks kbd:hover {
 	color: white;
 }
 
@@ -1478,28 +1489,37 @@ button.btnToggle {
 	margin-left: 16px;
 }
 
-#lgnTrack img {
+#lgnTrack ins {
 	width: 32px; height: 32px;
 	margin-right: 7px;
-	vertical-align: middle;
 	border: 1px dashed #ffff66;
+	background-image: url("img/login/rewards.png");
 }
+.lgn_celebration { background-position: -32px 0; }
+.lgn_exotic { background-position: -64px 0; }
+.lgn_experience { background-position: -96px 0; }
+.lgn_laurel { background-position: -128px 0; }
+.lgn_loyalty { background-position: -160px 0; }
+.lgn_luck { background-position: -192px 0; }
+.lgn_material { background-position: -224px 0; }
+.lgn_mystic { background-position: -256px 0; }
+.lgn_transmutation { background-position: -288px 0; }
 
-#lgnTrack img.lgnWeekend {
+#lgnTrack ins.lgnWeekend {
 	border: 1px dashed #66aaff;
 }
 
-#lgnTrack img.lgnOfficial {
+#lgnTrack ins.lgnOfficial {
 	border: 1px solid #fff;
 	box-shadow: 0px 0px 4px #fff;
 }
 
-#lgnTrack img.lgnCurrent {
+#lgnTrack ins.lgnCurrent {
 	border: 1px solid #44dd44;
 	box-shadow: 0px 0px 4px #44dd44;
 }
 
-#lgnTrack img:hover {
+#lgnTrack ins:hover {
 	border: 1px solid #ffff66;
 	box-shadow: 0px 0px 4px #ffff66;
 }
@@ -1548,18 +1568,21 @@ button.btnToggle {
 	background-color: rgba(255, 255, 102, 0.1);
 	box-shadow: 0px 0px 4px #ffff66;
 }
-#dlyCalendar img { /* Daily */
+#dlyCalendar ins { /* Daily */
+	display: inline-block;
+	width: 32px; height: 32px;
 	margin-right: 8px;
 	border: 1px solid transparent;
 	border-radius: 8px;
+	background-image: url("img/daily/dailies.png");
 }
-#dlyCalendar img:hover {
+#dlyCalendar ins:hover {
 	border: 1px solid #ffff66;
 	box-shadow: 0px 0px 4px #ffff66;
 }
 #dlyCalendar div aside, /* Day background */
 #dlyCalendar div var, /* Day number */
-#dlyCalendar div ins { /* Boss icon */
+#dlyCalendar div em { /* Boss icon */
 	display: block;
 	position: absolute;
 	width: 80px; height: 64px;
@@ -1574,7 +1597,7 @@ button.btnToggle {
 	background: #333;
 }
 #dlyCalendar div var,
-#dlyCalendar div ins {
+#dlyCalendar div em {
 	background: transparent;
 }
 #dlyCalendar div var {
@@ -1584,40 +1607,83 @@ button.btnToggle {
 #dlyCalendar div var.dlySunday {
 	color: #cc3322;
 }
-#dlyCalendar ins img {
+#dlyCalendar em img {
 	width: 64px; height: 64px;
 	margin: 0;
 	border: none;
 	opacity: 0.2;
 }
-#dlyCalendar ins img:hover {
+#dlyCalendar em img:hover {
 	border: none;
 }
 #dlyCalendar div:hover var {
 	opacity: 0.2;
 }
-#dlyCalendar div:hover ins img {
+#dlyCalendar div:hover em img {
 	opacity: 1;
 }
 
-.dlyRegion_ascalon {
-	background: url("img/daily/region_ascalon.png");
+#dlyCalendar ins.dlyRegion {
+	background-image: url("img/daily/regions.png");
 }
-.dlyRegion_kryta {
-	background: url("img/daily/region_kryta.png");
+.dly_region_ascalon {
+	background-position: 0 0;
 }
-.dlyRegion_shiverpeaks {
-	background: url("img/daily/region_shiverpeaks.png");
+.dly_region_kryta {
+	background-position: -32px 0;
 }
-.dlyRegion_maguuma {
-	background: url("img/daily/region_maguuma.png");
+.dly_region_maguuma {
+	background-position: -64px 0;
 }
-.dlyRegion_orr {
-	background: url("img/daily/region_orr.png");
+.dly_region_orr {
+	background-position: -96px 0;
 }
-.dlyRegion_wastes {
-	background: url("img/daily/region_wastes.png");
+.dly_region_shiverpeaks {
+	background-position: -128px 0;
 }
+.dly_region_wastes {
+	background-position: -160px 0;
+}
+
+.dly_daily_pve { background-position: 0 0; }
+.dly_daily_pvp { background-position: -32px 0; }
+.dly_daily_wvw { background-position: -64px 0; }
+.dly_pve_activity { background-position: -96px 0; }
+.dly_pve_boss { background-position: -128px 0; }
+.dly_pve_event { background-position: -160px 0; }
+.dly_pve_forager { background-position: -192px 0; }
+.dly_pve_forger { background-position: -224px 0; }
+.dly_pve_fractal { background-position: -256px 0; }
+.dly_pve_fractal_1-10 { background-position: -288px 0; }
+.dly_pve_fractal_11-20 { background-position: -320px 0; }
+.dly_pve_fractal_21-30 { background-position: -352px 0; }
+.dly_pve_lumberer { background-position: -384px 0; }
+.dly_pve_miner { background-position: -416px 0; }
+.dly_pve_vista { background-position: -448px 0; }
+.dly_pvp_capture { background-position: -480px 0; }
+.dly_pvp_defender { background-position: -512px 0; }
+.dly_pvp_elementalist { background-position: -544px 0; }
+.dly_pvp_engineer { background-position: -576px 0; }
+.dly_pvp_guardian { background-position: -608px 0; }
+.dly_pvp_kills { background-position: -640px 0; }
+.dly_pvp_mesmer { background-position: -672px 0; }
+.dly_pvp_necromancer { background-position: -704px 0; }
+.dly_pvp_ranger { background-position: -736px 0; }
+.dly_pvp_rank { background-position: -768px 0; }
+.dly_pvp_reward { background-position: -800px 0; }
+.dly_pvp_thief { background-position: -832px 0; }
+.dly_pvp_warrior { background-position: -864px 0; }
+.dly_wvw_camp { background-position: -896px 0; }
+.dly_wvw_caravan { background-position: -928px 0; }
+.dly_wvw_creature { background-position: -960px 0; }
+.dly_wvw_defender { background-position: -992px 0; }
+.dly_wvw_guard { background-position: -1024px 0; }
+.dly_wvw_keep { background-position: -1056px 0; }
+.dly_wvw_kills { background-position: -1088px 0; }
+.dly_wvw_land { background-position: -1120px 0; }
+.dly_wvw_ruins { background-position: -1152px 0; }
+.dly_wvw_spender { background-position: -1184px 0; }
+.dly_wvw_tower { background-position: -1216px 0; }
 
 /* JP */
 dt.mapJPListNameHover {
@@ -1759,10 +1825,10 @@ dt.mapJPListNameHover {
 	overflow-x: hidden;
 	padding: 4px;
 }
-.trdResults ins {
+.trdResults dfn {
 	display: block;
 }
-.trdResults ins img {
+.trdResults dfn img {
 	width: 16px; height: 16px;
 	margin-right: 8px;
 	vertical-align: middle;
@@ -2100,14 +2166,14 @@ goldcoin {
 	background-size: 16px 16px;
 }
 
-ins.rarity0, input[type="text"].rarity0 { color: #aaaaaa; /* junk gray */ }
-ins.rarity1, input[type="text"].rarity1 { color: #ffffff; /* basic white */ }
-ins.rarity2, input[type="text"].rarity2 { color: #5599ff; /* fine blue */ }
-ins.rarity3, input[type="text"].rarity3 { color: #33cc11; /* masterwork green */ }
-ins.rarity4, input[type="text"].rarity4 { color: #ffdd22; /* rare yellow */ }
-ins.rarity5, input[type="text"].rarity5 { color: #ffaa00; /* exotic orange */ }
-ins.rarity6, input[type="text"].rarity6 { color: #ff4488; /* ascended magenta */ }
-ins.rarity7, input[type="text"].rarity7 { color: #9933ff; /* legendary violet */ }
+dfn.rarity0, input[type="text"].rarity0 { color: #aaaaaa; /* junk gray */ }
+dfn.rarity1, input[type="text"].rarity1 { color: #ffffff; /* basic white */ }
+dfn.rarity2, input[type="text"].rarity2 { color: #5599ff; /* fine blue */ }
+dfn.rarity3, input[type="text"].rarity3 { color: #33cc11; /* masterwork green */ }
+dfn.rarity4, input[type="text"].rarity4 { color: #ffdd22; /* rare yellow */ }
+dfn.rarity5, input[type="text"].rarity5 { color: #ffaa00; /* exotic orange */ }
+dfn.rarity6, input[type="text"].rarity6 { color: #ff4488; /* ascended magenta */ }
+dfn.rarity7, input[type="text"].rarity7 { color: #9933ff; /* legendary violet */ }
 
 /* =============================================================================
  *  @@Palette color derived from GW2 user interface.

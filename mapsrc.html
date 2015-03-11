@@ -17,54 +17,54 @@
 	>Daily Achievements</var>
 </header>
 <section>
-<samp class="jsHelpCollapsible"></samp>
+<kbd class="jsHelpCollapsible"></kbd>
 <div>
 	<p>Each day that you login to Guild Wars 2, you advance the Login Rewards track by one square and receive a reward for that square. The track below is as appear to someone who has never missed a day (white square) since the Login Rewards system started. The track advances automatically at server reset. If you missed some days, you can synchronize it with your in-game track (green square) by clicking the appropriate square.</p>
 </div>
 <h2>Login Rewards Track</h2>
-	<div id="lgnRecord"><span id="mapLoginRecordCurrent"></span>&nbsp;<span id="mapLoginRecordHover"></span></div>
+	<div id="lgnRecord"><span id="lgnRecordCurrent"></span>&nbsp;<span id="lgnRecordHover"></span></div>
 	<div id="lgnTrack">
 		<span>
-		<img data-src="img/login/coin.png" title="<span class='lgnTip'>2x <img src='img/login/coin_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>1x <img src='img/login/laurel_i.png' /></span>" />
-		<img data-src="img/login/luck.png" title="<span class='lgnTip'>1x <img src='img/login/luck_i.png' /></span>" />
-		<img data-src="img/login/bl.png" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
-		<img data-src="img/login/material.png" title="<span class='lgnTip'>1-5 <img src='img/login/material_t1.png' /><br />1-5 <img src='img/login/material_t2.png' /><br />1-5 <img src='img/login/material_t3.png' /><br />1-5 <img src='img/login/material_t4.png' /><br />1-5 <img src='img/login/material_t5.png' /><br />1-5 <img src='img/login/material_t6.png' /></span>" />
-		<img data-src="img/login/experience.png" title="<span class='lgnTip'>1x <img src='img/login/experience_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>10x <img src='img/login/laurel_i.png' /></span>" class="lgnWeekend" />
+		<ins class="lgn_mystic" title="<span class='lgnTip'>2x <img src='img/login/mystic_i.png' /></span>"></ins>
+		<ins class="lgn_laurel" title="<span class='lgnTip'>1x <img src='img/login/laurel_i.png' /></span>"></ins>
+		<ins class="lgn_luck" title="<span class='lgnTip'>1x <img src='img/login/luck_i.png' /></span>"></ins>
+		<ins class="lgn_bl" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>"></ins>
+		<ins class="lgn_material" title="<span class='lgnTip'>1-5 <img src='img/login/material_t1.png' /><br />1-5 <img src='img/login/material_t2.png' /><br />1-5 <img src='img/login/material_t3.png' /><br />1-5 <img src='img/login/material_t4.png' /><br />1-5 <img src='img/login/material_t5.png' /><br />1-5 <img src='img/login/material_t6.png' /></span>"></ins>
+		<ins class="lgn_experience" title="<span class='lgnTip'>1x <img src='img/login/experience_i.png' /></span>"></ins>
+		<ins class="lgn_laurel lgnWeekend" title="<span class='lgnTip'>10x <img src='img/login/laurel_i.png' /></span>"></ins>
 		</span>
 		<span>
-		<img data-src="img/login/coin.png" title="<span class='lgnTip'>4x <img src='img/login/coin_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>2x <img src='img/login/laurel_i.png' /></span>" />
-		<img data-src="img/login/luck.png" title="<span class='lgnTip'>2x <img src='img/login/luck_i.png' /></span>" />
-		<img data-src="img/login/bl.png" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
-		<img data-src="img/login/material.png" title="<span class='lgnTip'>1-6 <img src='img/login/material_t1.png' /><br />1-6 <img src='img/login/material_t2.png' /><br />1-6 <img src='img/login/material_t3.png' /><br />1-6 <img src='img/login/material_t4.png' /><br />1-6 <img src='img/login/material_t5.png' /><br />1-6 <img src='img/login/material_t6.png' /></span>" />
-		<img data-src="img/login/experience.png" title="<span class='lgnTip'>2x <img src='img/login/experience_i.png' /></span>" />
-		<img data-src="img/login/exotic.png" title="<span class='lgnTip'>1x <img src='img/login/exotic_war.png' /></span>" class="lgnWeekend" />
+		<ins class="lgn_mystic" title="<span class='lgnTip'>4x <img src='img/login/mystic_i.png' /></span>"></ins>
+		<ins class="lgn_laurel" title="<span class='lgnTip'>2x <img src='img/login/laurel_i.png' /></span>"></ins>
+		<ins class="lgn_luck" title="<span class='lgnTip'>2x <img src='img/login/luck_i.png' /></span>"></ins>
+		<ins class="lgn_bl" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>"></ins>
+		<ins class="lgn_material" title="<span class='lgnTip'>1-6 <img src='img/login/material_t1.png' /><br />1-6 <img src='img/login/material_t2.png' /><br />1-6 <img src='img/login/material_t3.png' /><br />1-6 <img src='img/login/material_t4.png' /><br />1-6 <img src='img/login/material_t5.png' /><br />1-6 <img src='img/login/material_t6.png' /></span>"></ins>
+		<ins class="lgn_experience" title="<span class='lgnTip'>2x <img src='img/login/experience_i.png' /></span>"></ins>
+		<ins class="lgn_exotic lgnWeekend" title="<span class='lgnTip'>1x <img src='img/login/exotic_war.png' /></span>"></ins>
 		</span>
 		<span>
-		<img data-src="img/login/coin.png" title="<span class='lgnTip'>6x <img src='img/login/coin_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>3x <img src='img/login/laurel_i.png' /></span>" />
-		<img data-src="img/login/luck.png" title="<span class='lgnTip'>3x <img src='img/login/luck_i.png' /></span>" />
-		<img data-src="img/login/bl.png" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
-		<img data-src="img/login/celebration.png" title="<span class='lgnTip'>1x <img src='img/login/celebration_i.png' /></span>" />
-		<img data-src="img/login/experience.png" title="<span class='lgnTip'>3x <img src='img/login/experience_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>15x <img src='img/login/laurel_i.png' /></span>" class="lgnWeekend" />
+		<ins class="lgn_mystic" title="<span class='lgnTip'>6x <img src='img/login/mystic_i.png' /></span>"></ins>
+		<ins class="lgn_laurel" title="<span class='lgnTip'>3x <img src='img/login/laurel_i.png' /></span>"></ins>
+		<ins class="lgn_luck" title="<span class='lgnTip'>3x <img src='img/login/luck_i.png' /></span>"></ins>
+		<ins class="lgn_bl" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>"></ins>
+		<ins class="lgn_celebration" title="<span class='lgnTip'>1x <img src='img/login/celebration_i.png' /></span>"></ins>
+		<ins class="lgn_experience" title="<span class='lgnTip'>3x <img src='img/login/experience_i.png' /></span>"></ins>
+		<ins class="lgn_laurel lgnWeekend" title="<span class='lgnTip'>15x <img src='img/login/laurel_i.png' /></span>"></ins>
 		</span>
 		<span>
-		<img data-src="img/login/coin.png" title="<span class='lgnTip'>8x <img src='img/login/coin_i.png' /></span>" />
-		<img data-src="img/login/laurel.png" title="<span class='lgnTip'>4x <img src='img/login/laurel_i.png' /></span>" />
-		<img data-src="img/login/luck.png" title="<span class='lgnTip'>4x <img src='img/login/luck_i.png' /></span>" />
-		<img data-src="img/login/bl.png" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>" />
-		<img data-src="img/login/transmutation.png" title="<span class='lgnTip'>3x <img src='img/login/bl_transmutation.png' /></span>" />
-		<img data-src="img/login/experience.png" title="<span class='lgnTip'>4x <img src='img/login/experience_i.png' /></span>" />
-		<img data-src="img/login/loyalty.png" title="<span class='lgnTip'>2% <img src='img/login/loyalty_coin.png' /><br /><hr /><br />1x <img src='img/login/loyalty_vision.png' /><br />1-2? <img src='img/login/loyalty_damask.png' /><br />1-2? <img src='img/login/loyalty_deldrimor.png' /><br />1-2? <img src='img/login/loyalty_elonian.png' /><br />1-2? <img src='img/login/loyalty_spiritwood.png' /><br /><br />8x <img src='img/login/loyalty_shard.png' /><br />7x <img src='img/login/loyalty_clover.png' /><br /><br />20x <img src='img/login/laurel_i.png' /><br /><br />6x <img src='img/login/experience_i.png' /><br /></span>" class="lgnWeekend" />
+		<ins class="lgn_mystic" title="<span class='lgnTip'>8x <img src='img/login/mystic_i.png' /></span>"></ins>
+		<ins class="lgn_laurel" title="<span class='lgnTip'>4x <img src='img/login/laurel_i.png' /></span>"></ins>
+		<ins class="lgn_luck" title="<span class='lgnTip'>4x <img src='img/login/luck_i.png' /></span>"></ins>
+		<ins class="lgn_bl" title="<span class='lgnTip'>1? <img src='img/login/bl_stone.png' /><br />1? <img src='img/login/bl_key.png' /><br />1? <img src='img/login/bl_transmutation.png' /><br />1? <img src='img/login/bl_fun.png' /><br />1? <img src='img/login/bl_merchant.png' /><br />1? <img src='img/login/bl_bank.png' /><br />1? <img src='img/login/bl_kit.png' /><br />1? <img src='img/login/bl_tp.png' /><br />1? <img src='img/login/bl_repair.png' /><br />1? <img src='img/login/bl_revive.png' /><br /></span>"></ins>
+		<ins class="lgn_transmutation" title="<span class='lgnTip'>3x <img src='img/login/bl_transmutation.png' /></span>"></ins>
+		<ins class="lgn_experience" title="<span class='lgnTip'>4x <img src='img/login/experience_i.png' /></span>"></ins>
+		<ins class="lgn_loyalty lgnWeekend" title="<span class='lgnTip'>2% <img src='img/login/loyalty_coin.png' /><br /><hr /><br />1x <img src='img/login/loyalty_vision.png' /><br />1-2? <img src='img/login/loyalty_damask.png' /><br />1-2? <img src='img/login/loyalty_deldrimor.png' /><br />1-2? <img src='img/login/loyalty_elonian.png' /><br />1-2? <img src='img/login/loyalty_spiritwood.png' /><br /><br />8x <img src='img/login/loyalty_shard.png' /><br />7x <img src='img/login/loyalty_clover.png' /><br /><br />20x <img src='img/login/laurel_i.png' /><br /><br />6x <img src='img/login/experience_i.png' /><br /></span>"></ins>
 		</span>
 	</div>
 <br />
 
 
-<samp class="jsHelpCollapsible"></samp>
+<kbd class="jsHelpCollapsible"></kbd>
 <div>
 <div class="mapDailyLists mapLinks">
 <h2>Calendar</h2>
@@ -77,7 +77,7 @@
 <p>Hover over the <img class="cntIconExample" data-src="img/map/display.png" alt="Display"> icon on the map pane and checkmark the option to display World Completion icons. The fastest vista to view should be the ones next to asura gates in <a href="http://wiki.guildwars2.com/wiki/City">cities</a>.</p>
 
 <h2><img data-src="img/ui/resource.png" alt="Gatherer" /> Gathering</h2>
-<p>Open the Resource Nodes section of this page to show rich metal nodes or plant farms.</p>
+<p>Open the Resource Nodes section of this page to show rich metal nodes or plant farms. Nodes in your home instance (regardless of your character's race) counts as region gatherer: Divinity's Reach is Kryta, Black Citadel is Ascalon, Hoelbrak is Shiverpeaks, Rata Sum and The Grove are Maguuma Jungle.</p>
 </div>
 
 <h2>Miscellaneous</h2>
@@ -132,7 +132,7 @@
 <div class="mapLegendLine" style="border-bottom: 2px solid lime"></div> <strong>Exact</strong> location of that node<br />
 <div class="mapLegendLine" style="border-bottom: 2px dotted lime"></div> <strong>Possible</strong> vicinity of that node<br />
 <div class="mapLegendLine" style="border-bottom: 2px dashed lime"></div> <strong>Map</strong> has that resource (not a node)<br />
-<samp class="jsHelpCollapsible"></samp>
+<kbd class="jsHelpCollapsible"></kbd>
 <div>
 	T6 nodes on the map are <em>possible</em> and approximate locations, and only 3-4 of them spawn per zone. Other nodes are permanent rich metal veins or plant farms.<br />
 	<br />
@@ -171,7 +171,7 @@ Simple or short jumps.
 	<dt id="mapJP_2" data-coord="[10635, 20000]" data-img="SkOg8q8">Spelunker's Delve</dt><dd>Caledon giant mushrooms water cavern. Entrance is an underground hole covered by shrubs</dd>
 	<dt id="mapJP_29" data-coord="[22074, 13584]" data-img="0vGbgNn">Shamans Rookery</dt><dd>Wayfarer raven knockbacks from rock pillars</dd>
 	<dt id="mapJP_28" data-coord="[21490, 12271]" data-img="y7bmCXv">King Jalis's Refuge</dt><dd>Snowden Priory site with looters</dd>
-	<dt id="mapJP_25" data-coord="[20756, 20878]" data-img="iWXzOXM">Coddler's Cove</dt><dd>Timberline skip jump over quaggan lanterns. Entrance is underwater. <ins data-coord="[20685, 21217]">Inner cove</ins> <a href="http://i.imgur.com/1CRkPDo.png">entrance note</a></dd>
+	<dt id="mapJP_25" data-coord="[20756, 20878]" data-img="iWXzOXM">Coddler's Cove</dt><dd>Timberline skip jump over quaggan lanterns. Entrance is underwater. <dfn data-coord="[20685, 21217]">Inner cove</dfn> <a href="http://i.imgur.com/1CRkPDo.png">entrance note</a></dd>
 	<dt id="mapJP_30" data-coord="[22075, 9112]" data-img="sV7XcGd">Shattered Ice Ruins</dt><dd>Frostgorge ice cave with trolls  skelks oozes</dd>
 	<dt id="mapJP_34" data-coord="[26258, 13026]" data-img="CETyR64">Crimson Plateau</dt><dd>Diessa grawl plateau with rocks and ruins</dd>
 	<dt id="mapJP_31" data-coord="[25136, 12227]" data-img="7Qxd1Wx">Grendich Gamble</dt><dd>Diessa ruined Ascalonian stone tower climb</dd>
@@ -187,10 +187,10 @@ Tricky jumps or interaction required.
 <dl data-jpdif="1" class="mapJPList">
 	<dt id="mapJP_15" data-coord="[16300, 14605]" data-img="8RKUmMH">Troll's End</dt><dd>LA stalactite cave with planks</dd>
 	<dt id="mapJP_18" data-coord="[17210, 15481]" data-img="Asnph3I">Weyandt's Revenge</dt><dd>LA huge pirate themed cave</dd>
-	<dt id="mapJP_17" data-coord="[16670, 14183]" data-img="19dLq1S">Swashbuckler's Cove</dt><dd>Gendarran light torches and swim in time. <ins data-coord="[16510, 14221]">Cave entrance</ins> faces east</dd>
+	<dt id="mapJP_17" data-coord="[16670, 14183]" data-img="19dLq1S">Swashbuckler's Cove</dt><dd>Gendarran light torches and swim in time. <dfn data-coord="[16510, 14221]">Cave entrance</dfn> faces east</dd>
 	<dt id="mapJP_12" data-coord="[14330, 9653]" data-img="vHwaBOm">Fawcett's Bounty</dt><dd>Harathi pirate ship in underground lake</dd>
 	<dt id="mapJP_14" data-coord="[15726, 16423]" data-img="3uEgh6s">Professor Portmatt's Lab</dt><dd>Bloodtide underwater number puzzle force fields</dd>
-	<dt id="mapJP_4" data-coord="[11020, 19349]" data-img="vJ9pk02">Morgan's Leap</dt><dd>Caledon spiral tree and floating rocks in the sky. Escort <ins data-coord="[10696, 19663]">Brugh</ins> to regrow the leaf stairs</dd>
+	<dt id="mapJP_4" data-coord="[11020, 19349]" data-img="vJ9pk02">Morgan's Leap</dt><dd>Caledon spiral tree and floating rocks in the sky. Escort <dfn data-coord="[10696, 19663]">Brugh</dfn> to regrow the leaf stairs</dd>
 	<dt id="mapJP_1" data-coord="[9492, 18652]" data-img="wiRtb7r">Spekks's Laboratory</dt><dd>Caledon asuran light platforms with lava below</dd>
 	<dt id="mapJP_21" data-coord="[17958, 21624]" data-img="xE1n8zJ">Conundrum Cubed</dt><dd>Maelstrom floating cubes and electricity</dd>
 	<dt id="mapJP_20" data-coord="[17545, 21917]" data-img="LlN43yV">Hexfoundry Unhinged</dt><dd>Sparkfly destroyed Inquest facility</dd>
@@ -211,7 +211,7 @@ A marathon of intricate jumps.
 	<dt id="mapJP_13" data-coord="[15379, 14282]" data-img="wEG8PMR">Not So Secret</dt><dd>Gendarran aetherblade hideout with trampolines</dd>
 	<dt id="mapJP_0" data-coord="[9235, 18967]" data-img="782GdE5">Goemm's Lab</dt><dd>Metrica floating landmasses in the sky as asura weather stations</dd>
 	<dt id="mapJP_3" data-coord="[10963, 19197]" data-img="KcUE585">Dark Reverie</dt><dd>Caledon nightmare court blue hideout after Morgan's Spiral</dd>
-	<dt id="mapJP_27" data-coord="[21357, 21885]" data-img="ZgnQGFR">Hidden Garden</dt><dd>Maelstrom unlock four element cantles. Keeper portal to JP locations: <ins data-coord="[18335, 22125]">Earth</ins>, <ins data-coord="[19514, 22714]">Light</ins>, <ins data-coord="[20143, 22209]">Waves</ins>, <ins data-coord="[20770, 23385]">Winds</ins>. Cantals are at sky and ground level of the center, southeast waterfalls, and north lake</dd>
+	<dt id="mapJP_27" data-coord="[21357, 21885]" data-img="ZgnQGFR">Hidden Garden</dt><dd>Maelstrom unlock four element cantles. Keeper portal to JP locations: <dfn data-coord="[18335, 22125]">Earth</dfn>, <dfn data-coord="[19514, 22714]">Light</dfn>, <dfn data-coord="[20143, 22209]">Waves</dfn>, <dfn data-coord="[20770, 23385]">Winds</dfn>. Cantals are at sky and ground level of the center, southeast waterfalls, and north lake</dd>
 	<dt id="mapJP_6" data-coord="[12780, 19377]" data-img="dxTDLqJ">Skipping Stones</dt><dd>Southsun stones gushed up by geysers</dd>
 	<dt id="mapJP_10" data-coord="[13610, 25044]" data-img="kDX7ZEq">Scavenger's Chasm</dt><dd>Malchor's convoluted orrian ruins cave collecting 12 orbs</dd>
 </dl>
@@ -260,7 +260,7 @@ A marathon of intricate jumps.
 </header>
 <section>
 	
-<samp class="jsHelpCollapsible"></samp>
+<kbd class="jsHelpCollapsible"></kbd>
 <div>
 	<br />
 	<p>The basic calculator below does +-*/ operations and accepts parentheses wrapping. You can press the ↑ and ↓ arrow keyboard keys to go through your expression history.</p>
@@ -272,7 +272,7 @@ A marathon of intricate jumps.
 		<img data-src="img/ui/calculator.png" alt="Calculator" /><input class="trdCalculator" type="text" maxlength="128" value="0" /><button class="trdCalcSubmit">=</button>
 	</div>
 	
-<samp class="jsHelpCollapsible"></samp>
+<kbd class="jsHelpCollapsible"></kbd>
 <div>
 	<br />
 	<p>Each of the row below is a calculator, hover over them to see input (black shaded) and output (gray shaded) boxes. The <strong>topmost calculator contains hoverable tooltips</strong> about the boxes' function.</p>
@@ -399,7 +399,7 @@ A marathon of intricate jumps.
 </header>
 <section>
 
-<samp class="jsHelpCollapsible"></samp>
+<kbd class="jsHelpCollapsible"></kbd>
 <div><br /><p>You can <strong>disable</strong> a checkbox by double clicking it (for dungeon paths you never do), and you can <strong>re-enable</strong> a checkbox by double clicking the number next to it.</p>
 <p>Money sum is daily path reward (26 silver + bonus chest) and does not count Bag of Coins, loot, etc. Each numbered path gives 40+20 tokens. More on <a href="http://wiki.guildwars2.com/wiki/Dungeon">dungeon rewards</a>.</p>
 <p>The personal checklist is automatically cleared after server reset, unless set otherwise in the Options.</p>
@@ -469,7 +469,7 @@ A marathon of intricate jumps.
 	</div>
 </div>
 
-<samp class="jsHelpTooltip" title="Type your own text in the boxes then press Enter to make a custom daily checklist."></samp>
+<kbd class="jsHelpTooltip" title="Type your own text in the boxes then press Enter to make a custom daily checklist."></kbd>
 <br />
 <div id="chlCustom"><!-- &zwnj; is an invisible character, used because empty label appears without a right border in Chrome -->
 	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="Did dailies" /></span>
@@ -495,7 +495,7 @@ A marathon of intricate jumps.
 
 
 <br />
-<samp class="jsHelpCollapsible"></samp>
+<kbd class="jsHelpCollapsible"></kbd>
 <div>
 <h2>Checklists</h2>
 <p>Notepad and checklists are automatically saved in your browser and are restored when you revisit this site. Use the Uncheck All button at every checklists, or go to Options under Defaults to clear everything.</p>

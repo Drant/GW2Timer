@@ -600,13 +600,14 @@ O = {
 			}
 			X.clearChecklist(X.Checklists.Chain, X.ChecklistJob.UncheckTheChecked);
 		}
+		// Update the today's chain shortcut object
+		C.updateChainToday();
 		
 		// Subscribe to daily chain
 		if (O.Options.bol_alertAutosubscribe &&
 			O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription)
 		{
-			chain = C.getChainToday();
-			if (chain)
+			if (C.ChainToday)
 			{
 				time = $("#chnTime_" + chain.nexus);
 				if ( ! time.hasClass("chnTimeSubscribed"))
@@ -3250,11 +3251,11 @@ E = {
 						for (thisi = 0; thisi < pData.results.length && thisi < O.Options.int_numTradingResults; thisi++)
 						{
 							result = pData.results[thisi];
-							resultline =  $("<ins class='rarity" + result.rarity + "' data-id='" + result.data_id + "' "
+							resultline =  $("<dfn class='rarity" + result.rarity + "' data-id='" + result.data_id + "' "
 								+ "data-buy='" + E.createCoinString(result.max_offer_unit_price) + "' "
 								+ "data-sell='" + E.createCoinString(result.min_sale_unit_price) + "'>"
 								+ "<img src='" + result.img + "'>"
-								+ U.wrapSubstringHTML(result.name, query, "u") + "</ins>").appendTo(results);
+								+ U.wrapSubstringHTML(result.name, query, "u") + "</dfn>").appendTo(results);
 							// Bind click a result to memorize the item's ID and name
 							resultline.click(function()
 							{
@@ -4838,6 +4839,7 @@ C = {
 	Chains: GW2T_CHAIN_DATA,
 	// The word and variable "nexus" is simply a chain's index number in the Chains array
 	cIndexSynonym: "nexus",
+	ChainToday: null,
 	CurrentChainSD: {}, NextChainSD1: {}, NextChainSD2: {}, NextChainSD3: {}, NextChainSD4: {},
 	CurrentChainHC: {}, NextChainHC1: {}, NextChainHC2: {}, NextChainHC3: {}, NextChainHC4: {},
 	CurrentChains: [],
@@ -4881,18 +4883,20 @@ C = {
 	},
 	
 	/*
-	 * Gets today's daily world boss chain using the daily calendar.
-	 * @returns object chain.
+	 * Refers today's chain object to the calendar's world boss, if available.
 	 */
-	getChainToday: function()
+	updateChainToday: function()
 	{
 		var dayofmonth = (new Date()).getUTCDate();
 		var boss = (T.DailyCalendar[dayofmonth].pve[3].split(" "))[0].toLowerCase();
 		if (T.ChainAssociation[boss] !== undefined)
 		{
-			return C.Chains[T.ChainAssociation[boss]];
+			C.ChainToday = C.Chains[T.ChainAssociation[boss]];
 		}
-		return null;
+		else
+		{
+			C.ChainToday = null;
+		}
 	},
 	
 	/*
@@ -4902,8 +4906,7 @@ C = {
 	 */
 	isChainToday: function(pChain)
 	{
-		var chaintoday = C.getChainToday();
-		if (chaintoday && pChain.nexus === chaintoday.nexus)
+		if (C.ChainToday && pChain.nexus === C.ChainToday.nexus)
 		{
 			return true;
 		}
@@ -4916,24 +4919,24 @@ C = {
 	 */
 	showChainDailyIcon: function()
 	{
-		$(".chnDaily").hide();
-		var chaintoday = C.getChainToday();
-		if (chaintoday)
+		// Reimage the waypoint icon if boss on clock is daily
+		for (var i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 		{
-			// Reimage the waypoint icon if boss on clock is daily
-			for (var i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
+			if (C.isChainToday(C.CurrentChainsSD[i]))
 			{
-				if (C.isChainToday(C.CurrentChainsSD[i]))
-				{
-					(K["WpChain" + i]).addClass("clkWaypointClipDaily");
-				}
-				else
-				{
-					(K["WpChain" + i]).removeClass("clkWaypointClipDaily");
-				}
+				(K["WpChain" + i]).addClass("clkWaypointClipDaily");
 			}
-			// Chain bar
-			$("#chnDaily_" + chaintoday.nexus).show();
+			else
+			{
+				(K["WpChain" + i]).removeClass("clkWaypointClipDaily");
+			}
+		}
+
+		// Chain bar
+		$(".chnDaily").hide();
+		if (C.ChainToday)
+		{
+			$("#chnDaily_" + C.ChainToday.nexus).show();
 		}
 	},
 	
@@ -5075,12 +5078,12 @@ C = {
 				+ "<div id='chnCheck_" + pChain.nexus + "' class='chnCheck'></div>"
 				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + C.truncateTitleString(D.getChainTitle(pChain.nexus), C.cChainTitleCharLimit) + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
-				+ "<aside><img id='chnDaily_" + pChain.nexus + "' class='chnDaily' src='img/daily/daily.png' /></aside>"
+				+ "<aside><img id='chnDaily_" + pChain.nexus + "' class='chnDaily' src='img/ui/daily.png' /></aside>"
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsLinks'>"
-					+ "<ins id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options, Defaults).'>[x]</ins>"
+					+ "<kbd class='curClickable' id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options, Defaults).'>[x]</kbd>"
 				+ "</div>"
 		+ "</div>");
 		// Initially only show/download icons for the scheduled chains list
@@ -5286,6 +5289,8 @@ C = {
 			C.Chains[i].scheduleKeys = new Array();
 			C.initializeChainAndHTML(C.Chains[i]);
 		}
+		// Initialize today's chain shortcut object
+		C.updateChainToday();
 		// Collapse all chain bars
 		$(".chnDetails").hide();
 		// Initial recoloring of chain titles
@@ -7029,7 +7034,7 @@ M = {
 	 */
 	bindMapLinks: function(pContainer)
 	{
-		$(pContainer + " ins").each(function()
+		$(pContainer + " dfn").each(function()
 		{
 			$(this).text("[" + $(this).text() + "]");
 			M.bindMapLinkBehavior($(this), M.PinProgram);
@@ -7337,7 +7342,10 @@ P = {
 		$.getJSON(U.URL_API.MapFloorTyria, function(pData)
 		{
 			var i;
-			var regionid, region, zoneid, zone, poi;
+			var regionid, region, zoneid, ithzone, poi;
+			var zoneobj;
+			var nameinlang = "name_" + D.getFullySupportedLanguage();
+			var issecondarylang = D.isLanguageSecondary();
 			var numofpois;
 			var mappingentity;
 			var icon;
@@ -7357,23 +7365,24 @@ P = {
 						continue;
 					}
 					
-					zone = region.maps[zoneid];
+					ithzone = region.maps[zoneid];
+					zoneobj = M.getZoneFromID(zoneid);
 					// Remember zone name
-					if (D.isLanguageSecondary())
+					if (issecondarylang)
 					{
-						M.getZoneFromID(zoneid)["name_" + D.getFullySupportedLanguage()] = zone.name;
+						zoneobj[nameinlang] = ithzone.name;
 					}
 					// Store zone dimension data for locating events
-					M.getZoneFromID(zoneid).map_rect = zone.map_rect;
-					M.getZoneFromID(zoneid).continent_rect = zone.continent_rect;
+					zoneobj.map_rect = ithzone.map_rect;
+					zoneobj.continent_rect = ithzone.continent_rect;
 					
 					/* 
 					 * For waypoints, points of interest, and vistas.
 					 */
-					numofpois = zone.points_of_interest.length;
+					numofpois = ithzone.points_of_interest.length;
 					for (i = 0; i < numofpois; i++)
 					{
-						poi = zone.points_of_interest[i];
+						poi = ithzone.points_of_interest[i];
 
 						// Properties assignment based on POI's type
 						switch (poi.type)
@@ -7471,7 +7480,7 @@ P = {
 						}
 						
 						// Assign the waypoint to its zone
-						M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
+						zoneobj.ZoneEntities.push(mappingentity);
 					}
 					
 					/*
@@ -7480,10 +7489,10 @@ P = {
 					if (O.Options.bol_showWorldCompletion)
 					{
 						// Skill Challenges
-						numofpois = zone.skill_challenges.length;
+						numofpois = ithzone.skill_challenges.length;
 						for (i = 0; i < numofpois; i++)
 						{
-							poi = zone.skill_challenges[i];
+							poi = ithzone.skill_challenges[i];
 							mappingentity = L.marker(M.convertGCtoLC(poi.coord),
 							{
 								title: "<span class='" + "mapPoi" + "'>" + D.getPhrase("Skill Challenge") + "</span>",
@@ -7497,14 +7506,14 @@ P = {
 							}).addTo(M.Map);
 							mappingentity._icon.style.display = "none";
 							M.bindMappingZoomBehavior(mappingentity, "click");
-							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
+							zoneobj.ZoneEntities.push(mappingentity);
 						}
 						
 						// Renown Hearts
-						numofpois = zone.tasks.length;
+						numofpois = ithzone.tasks.length;
 						for (i = 0; i < numofpois; i++)
 						{
-							poi = zone.tasks[i];
+							poi = ithzone.tasks[i];
 							mappingentity = L.marker(M.convertGCtoLC(poi.coord),
 							{
 								title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
@@ -7528,14 +7537,14 @@ P = {
 								}
 								U.openExternalURL(U.getWikiLanguageLink(heartname));
 							});
-							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
+							zoneobj.ZoneEntities.push(mappingentity);
 						}
 						
 						// Sector Names
-						numofpois = zone.sectors.length;
+						numofpois = ithzone.sectors.length;
 						for (i = 0; i < numofpois; i++)
 						{
-							poi = zone.sectors[i];
+							poi = ithzone.sectors[i];
 							mappingentity = L.marker(M.convertGCtoLC(poi.coord),
 							{
 								clickable: false,
@@ -7549,7 +7558,7 @@ P = {
 								})
 							}).addTo(M.Map);
 							mappingentity._icon.style.display = "none";
-							M.getZoneFromID(zoneid).ZoneEntities.push(mappingentity);
+							zoneobj.ZoneEntities.push(mappingentity);
 						}
 						
 						M.isMappingIconsGenerated = true;
@@ -7952,7 +7961,7 @@ P = {
 		// Adjust the squares progress
 		P.shiftLoginTrack();
 		// Bind click squares behavior
-		$("#lgnTrack img").each(function()
+		$("#lgnTrack ins").each(function()
 		{
 			$(this).click(function(){
 				P.shiftLoginValue(parseInt($(this).data("i")));
@@ -7966,37 +7975,13 @@ P = {
 			$("#lgnRecordHover").text("");
 		});
 		
-		// Obsolete dailies map locations
-		$(".mapDailyLists dt").each(function()
-		{
-			M.bindMapLinkBehavior($(this), null);
-			
-			var coord = M.getElementCoordinates($(this));
-			var type = U.getSubstringFromHTMLID($(this).parent());
-			var marker = L.marker(M.convertGCtoLC(coord),
-			{
-				title: "<div class='mapLoc'><dfn>Daily:</dfn> " + type + "</div>"
-			}).addTo(M.Map);
-			marker.setIcon(new L.icon(
-			{
-				iconUrl: "img/daily/" + type.toLowerCase() + I.cPNG,
-				iconSize: [32, 32],
-				iconAnchor: [16, 16]
-			}));
-			marker._icon.style.opacity = "0.9";
-			M.bindMarkerZoomBehavior(marker, "click");
-			
-			// Add to array
-			M.DailyEntities.push(marker);
-		});
-		
 		$("#mapToggle_Daily").click(function()
 		{
 			M.isShowingIconsForDaily = !(M.isShowingIconsForDaily);
 			M.setEntityGroupDisplay(M.DailyEntities, M.isShowingIconsForDaily);
 		});
 		
-		I.qTip.init("#lgnTrack img");
+		I.qTip.init("#lgnTrack ins");
 		
 		// Generate dailies calendar
 		P.regenerateDailiesCalendar();
@@ -8012,7 +7997,7 @@ P = {
 		var icurrent = 0;
 		var iofficial = 0;
 		// Initial CSS
-		$("#lgnTrack img").each(function()
+		$("#lgnTrack ins").each(function()
 		{
 			$(this).css({"border-radius": "auto", opacity: 0.3})
 				.removeClass("lgnCurrent lgnOfficial").data("i", iofficial);
@@ -8024,7 +8009,7 @@ P = {
 			iofficial++;
 		});
 		// Track CSS
-		$("#lgnTrack img").each(function()
+		$("#lgnTrack ins").each(function()
 		{
 			if (icurrent === CURRENT_DAY_IN_TRACK + 1)
 			{
@@ -8070,7 +8055,7 @@ P = {
 		{
 			M.bindMapLinkBehavior($(this), null, M.ZoomLevelEnum.Sky);
 		});
-		I.qTip.init("#dlyCalendar img");
+		I.qTip.init("#dlyCalendar ins");
 	},
 	
 	/*
@@ -8084,12 +8069,19 @@ P = {
 		var gather, activity, boss; // Regional dailies
 		// Prepare variables
 		var dayclass = "";
-		var gatherclass = "";
-		var activityclass = "";
 		var bosssrc = "";
-		var bossclass = "";
 		var bosshtml = "";
-		var eventclass = "";
+		
+		// Wrapper tags that provide the region background image
+		var gatherregion = "";
+		var activityregion = "";
+		var eventregion = "";
+		var bossregion = "";
+		var gatherregionclose = "</ins>";
+		var activityregionclose = "";
+		var eventregionclose = "</ins>";
+		var bossregionclose = "";
+		
 
 		// The rows
 		pve = pDaily["pve"];
@@ -8100,22 +8092,24 @@ P = {
 		gather = pve[0].split(" ");
 		activity = pve[1].split(" ");
 		boss = pve[3].split(" ");
+		gatherregion = "<ins class='dlyRegion dly_region_" + gather[1].toLowerCase() + "'>";
 		if (activity[0] === "Vista")
 		{
-			activityclass = "dlyRegion_" + (activity[1]).toLowerCase();
+			activityregion = "<ins class='dlyRegion dly_region_" + activity[1].toLowerCase() + "'>";
+			activityregionclose = "</ins>";
 		}
-		gatherclass = "dlyRegion_" + (gather[1]).toLowerCase();
+		eventregion = "<ins class='dlyRegion dly_region_" + (M.Zones[(pve[2]).toLowerCase()])["region"] + "'>";
 		if (boss[0] === "Fractal")
 		{
-			bosssrc = "img/daily/pve_" + boss[0].toLowerCase() + "_" + boss[1] + I.cPNG;
+			bosssrc = "dly_pve_" + boss[0].toLowerCase() + "_" + boss[1];
 		}
 		else
 		{
-			bosssrc = "img/daily/pve_boss.png";
-			bossclass = "dlyRegion_" + boss[1].toLowerCase();
-			bosshtml = "<ins><img src='img/chain/" + boss[0].toLowerCase() + I.cPNG + "' /></ins>";
+			bosssrc = "dly_pve_boss";
+			bossregion = "<ins class='dlyRegion dly_region_" + boss[1].toLowerCase() + "'>";
+			bossregionclose = "</ins>";
+			bosshtml = "<em><img src='img/chain/" + boss[0].toLowerCase() + I.cPNG + "' /></em>";
 		}
-		eventclass = "dlyRegion_" + (M.Zones[(pve[2]).toLowerCase()])["region"];
 		
 		if (pDate.getUTCDay() === 0)
 		{
@@ -8127,24 +8121,24 @@ P = {
 			// Day
 			+ "<aside></aside>" + bosshtml + "<var class='" + dayclass + "'>" + pDate.getUTCDate() + "</var>"
 			// PvE
-			+ "<span><img src='img/daily/daily_pve.png' />"
-			+ "<img class='" + gatherclass + "' src='img/daily/pve_" + gather[0].toLowerCase() + I.cPNG + "' title='" + pve[0] + "' />"
-			+ "<img class='" + activityclass + "' src='img/daily/pve_" + activity[0].toLowerCase() + I.cPNG + "' title='" + pve[1] + "' />"
-			+ "<img class='dlyEvent curZoomable " + eventclass + "' src='img/daily/pve_event.png' title='" + pve[2] + " Events'"
-				+ "data-coord='" + (pve[2]).toLowerCase() + "' />"
-			+ "<img class='" + bossclass + "' src='" + bosssrc + "' title='" + pve[3] + "' /></span>"
+			+ "<span><ins class='dly_daily_pve'></ins>"
+			+ gatherregion + "<ins class='dly_pve_" + gather[0].toLowerCase() + "' title='" + pve[0] + "'></ins>" + gatherregionclose
+			+ activityregion + "<ins class='dly_pve_" + activity[0].toLowerCase() + "' title='" + pve[1] + "'></ins>" + activityregionclose
+			+ eventregion + "<ins class='dly_pve_event dlyEvent curZoomable' title='" + pve[2] + " Events'"
+				+ "data-coord='" + (pve[2]).toLowerCase() + "'></ins>" + eventregionclose
+			+ bossregion + "<ins class='" + bosssrc + "' title='" + pve[3] + "'></ins>" + bossregionclose + "</span>"
 			// PvP
-			+ "<span><img src='img/daily/daily_pvp.png' />"
-			+ "<img src='img/daily/pvp_" + pvp[0].toLowerCase() + ".png' title='" + pvp[0] + "' />"
-			+ "<img src='img/daily/pvp_" + pvp[1].toLowerCase() + ".png' title='" + pvp[1] + "' />"
-			+ "<img src='img/daily/pvp_" + pvp[2].toLowerCase() + ".png' title='" + pvp[2] + "' />"
-			+ "<img src='img/daily/pvp_" + pvp[3].toLowerCase() + ".png' title='" + pvp[3] + "' /></span>"
+			+ "<span><ins class='dly_daily_pvp'></ins>"
+			+ "<ins class='dly_pvp_" + pvp[0].toLowerCase() + "' title='" + pvp[0] + "'></ins>"
+			+ "<ins class='dly_pvp_" + pvp[1].toLowerCase() + "' title='" + pvp[1] + "'></ins>"
+			+ "<ins class='dly_pvp_" + pvp[2].toLowerCase() + "' title='" + pvp[2] + "'></ins>"
+			+ "<ins class='dly_pvp_" + pvp[3].toLowerCase() + "' title='" + pvp[3] + "'></ins></span>"
 			// WvW
-			+ "<span><img src='img/daily/daily_wvw.png' />"
-			+ "<img src='img/daily/wvw_" + wvw[0].toLowerCase() + ".png' title='" + wvw[0] + "' />"
-			+ "<img src='img/daily/wvw_" + wvw[1].toLowerCase() + ".png' title='" + wvw[1] + "' />"
-			+ "<img src='img/daily/wvw_" + wvw[2].toLowerCase() + ".png' title='" + wvw[2] + "' />"
-			+ "<img src='img/daily/wvw_" + wvw[3].toLowerCase() + ".png' title='" + wvw[3] + "' /></span>"
+			+ "<span><ins class='dly_daily_wvw'></ins>"
+			+ "<ins class='dly_wvw_" + wvw[0].toLowerCase() + "' title='" + wvw[0] + "'></ins>"
+			+ "<ins class='dly_wvw_" + wvw[1].toLowerCase() + "' title='" + wvw[1] + "'></ins>"
+			+ "<ins class='dly_wvw_" + wvw[2].toLowerCase() + "' title='" + wvw[2] + "'></ins>"
+			+ "<ins class='dly_wvw_" + wvw[3].toLowerCase() + "' title='" + wvw[3] + "'></ins></span>"
 			+ "</div>");
 	},
 	
@@ -11707,7 +11701,7 @@ I = {
 				{
 					var container = $(I.cPagePrefix + I.PageEnum.Chains);
 					var header = $(this).prev();
-					header.find("ins").html("[-]");
+					header.find("kbd").html("[-]");
 					// Automatically scroll to the clicked header
 					I.scrollToElement(header, container, "fast");
 					
@@ -11719,7 +11713,7 @@ I = {
 				}
 				else
 				{
-					$(this).prev().find("ins").html("[+]");
+					$(this).prev().find("kbd").html("[+]");
 				}
 			});
 		});
@@ -11730,11 +11724,11 @@ I = {
 		$("#layerChains header:not(:first)").each(function()
 		{
 			$(this).next().toggle(0);
-			$(this).find("ins").html("[+]");
+			$(this).find("kbd").html("[+]");
 		});
 		$("#layerChains header:first").each(function()
 		{
-			$(this).find("ins").html("[-]");
+			$(this).find("kbd").html("[-]");
 		});
 
 		// Download chain bar icons for unscheduled chains only when manually expanded the header
