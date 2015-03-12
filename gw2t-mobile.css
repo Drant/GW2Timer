@@ -121,29 +121,29 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	font-size: 18px;
 }
 
-#layerChains header {
+#plateChains header {
 	height: 48px;
 }
 
-#layerChains header span {
+#plateChains header span {
 	visibility: visible;
 	color: #666;
 }
-#layerChains header:hover span {
+#plateChains header:hover span {
 	color: white;
 }
 
 /* Options page */
 
-#layerOptions .cntComposition {
+#plateOptions .cntComposition {
 	font-size: 16px;
 }
 
-#layerOptions .cntComposition h2 {
+#plateOptions .cntComposition h2 {
 	font-size: 20px;
 }
 
-#layerOptions .cntComposition h3 {
+#plateOptions .cntComposition h3 {
 	font-size: 16px;
 }
 
@@ -156,7 +156,7 @@ input[type="number"] {
 	font-size: 18px;
 }
 
-#layerOptions .cntComposition button {
+#plateOptions .cntComposition button {
 	min-height: 32px;
 	font-size: 18px;
 }

@@ -76,6 +76,20 @@ body {
 	overflow: hidden;
 }
 
+b {
+	font-weight: bold;
+}
+code, .cssMonospace {
+	font-family: monospace;
+}
+ins {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+}
+
 .cntComposition ::selection {
 	background: #66aaff;
 }
@@ -258,7 +272,7 @@ html, body,
 }
 
 /* Toggleable */
-.curToggleable, #layerChains header, .chnTitle h1, .jsSection, .jsHelpCollapsible {
+.curToggleable, #plateChains header, .chnTitle h1, .jsSection, .jsHelpCollapsible {
 	cursor: url("img/cursor/toggle.cur"), pointer;
 }
 
@@ -795,11 +809,10 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #itemSocial a {
 	text-decoration: none;
 }
-#itemSocial a img {
-	display: inline-block;
-	width: 16px; height: 16px;
+#itemSocial a ins {
+	vertical-align: baseline;
 }
-#itemSocial a img:hover {
+#itemSocial a ins:hover {
 	padding-bottom: 4px;
 }
 
@@ -825,11 +838,9 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	box-shadow: 0px 0px 10px white;
 }
 #paneMenu ins {
-	display: inline-block;
 	width: 32px; height: 32px;
 	margin-top: 8px;
 	background-image: url("img/ui/pages.png");
-	background-repeat: no-repeat;
 }
 #menuChains ins { background-position: 0 0; }
 #menuHelp ins { background-position: -32px 0; }
@@ -909,7 +920,7 @@ header.jsSection sup {
 }
 
 /* =============================================================================
- *  Bottom right content subpanel; the contents are layered and requires
+ *  Bottom right content subpanel; the contents are "plated" and requires
  *  JavaScript to toggle their display based on what menu icon was clicked.
  * ========================================================================== */
 #paneContent {
@@ -929,10 +940,10 @@ header.jsSection sup {
 	overflow: hidden;
 }
 
-#layerChains {
-	display: block; /* Chains layer is the first to be displayed, others are hidden */
+#plateChains {
+	display: block; /* The first plate to be displayed, others are hidden */
 }
-#layerMap, #layerWvW, #layerHelp, #layerOptions {
+#plateMap, #plateWvW, #plateHelp, #plateOptions {
 	display: none;
 }
 
@@ -1028,14 +1039,6 @@ header.jsSection sup {
 	vertical-align: middle;
 }
 
-.cntComposition ins { /* the tag <i> is reserved for sprite images */
-	display: inline-block;
-	padding: 0;
-	margin: 0;
-	vertical-align: middle;
-    background-repeat: no-repeat;
-}
-
 .cntComposition hr {
 	margin-top: 8px;
 	margin-bottom: 4px;
@@ -1119,12 +1122,12 @@ header.cntHeader {
 	vertical-align: middle;
 }
 
-.itemThrobber {
-	display: block;
+#itemThrobber {
+	display: none;
 	width: 100%; height: 64px;
 	text-align: center;
 }
-.itemThrobber em {
+#itemThrobber em {
 	display: inline-block;
 	width: 64px; height: 64px;
 	background: url("img/ui/favicon.png");
@@ -1157,7 +1160,7 @@ textarea.jsCopyCode {
 	color: #ddff77;
 }
 
-/* @@Chains layer
+/* @@Chains plate
 ----------------------------------------------------------------------------- */
 #optAlarm {
 	position: absolute;
@@ -1194,7 +1197,7 @@ textarea.jsCopyCode {
 	border: none;
 }
 
-#layerChains header {
+#plateChains header {
 	display: block;
 	width: auto; height: 36px;
 	margin-bottom: 8px;
@@ -1204,7 +1207,7 @@ textarea.jsCopyCode {
 	background: #444;
 	background: linear-gradient(to bottom, #222 0%, #383838 100%);
 }
-#layerChains header ins {
+#plateChains header ins {
 	width: 32px; height: 32px;
 	margin-top: 2px;
 	float: left;
@@ -1215,7 +1218,7 @@ textarea.jsCopyCode {
 .chn_scheduled { background-position: -64px 0; }
 .chn_temple { background-position: -96px 0; }
 .chn_timetable { background-position: -128px 0; }
-#layerChains header span { /* Hidden header for each chain categories */
+#plateChains header span { /* Hidden header for each chain categories */
 	display: inline-block;
 	padding: 8px 0px 6px 16px;
 	font-family: Menomonia;
@@ -1229,13 +1232,13 @@ textarea.jsCopyCode {
 		1px 1px 0px #000;
 	visibility: hidden;
 }
-#layerChains header:hover span {
+#plateChains header:hover span {
 	visibility: visible;
 }
-#layerChains header span:active {
+#plateChains header span:active {
 	color: white;
 }
-#layerChains header kbd { /* The collapse/expand category button */
+#plateChains header kbd { /* The collapse/expand category button */
 	margin-top: 8px;
 	float: right;
 	font-family: monospace;
@@ -1378,14 +1381,19 @@ textarea.jsCopyCode {
 }
 
 .chnDetailsLinks { /* Small gray link bottom right of a chain bar */
+	margin-top: 8px;
 	margin-bottom: 8px;
 	text-align: right;
+	font-family: monospace;
+	font-size: 12px;
+	color: #888;
+}
+.chnDetailsLinks ins {
+	margin-left: 2px;
+	border-radius: 4px;
 }
 .chnDetailsLinks kbd {
 	margin-right: 6px;
-	font-family: monospace;
-	font-size: 12px;
-	color: #777;
 }
 
 /* JavaScript added classes */
@@ -1450,6 +1458,17 @@ textarea.jsCopyCode {
 .chnEvents li:hover {
 	color: #ffcc77 !important;
 }
+
+.sixteen {
+	width: 16px; height: 16px;
+	background-image: url("img/ui/sixteen.png");
+}
+.sixt_ch { background-position: 0 0; }
+.sixt_dg { background-position: -16px 0; }
+.sixt_ec { background-position: -32px 0; }
+.sixt_fb { background-position: -48px 0; }
+.sixt_in { background-position: -64px 0; }
+.sixt_tt { background-position: -80px 0; }
 
 /* @@Map page
 ----------------------------------------------------------------------------- */
@@ -2119,13 +2138,6 @@ label:hover {
 /* =============================================================================
  *  @@Utility styles
  * ========================================================================== */
-b {
-	font-weight: bold;
-}
-code, .cssMonospace {
-	font-family: monospace;
-}
-
 .cssHidden {
 	display: none;
 }

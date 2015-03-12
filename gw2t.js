@@ -71,7 +71,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 150228},
+		programVersion: {key: "int_utlProgramVersion", value: 150312},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -254,7 +254,8 @@ O = {
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
-				+ "GW2Navi Guild Wars 2 overlay updated (2015.02.07) <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>Download now</a>.<br />"
+				+ "World Boss Rewards have been added to the chain bars.<br />"
+				+ "Please <a href='http://forum.renaka.com/topic/5775595/'>report any incorrect information</a>."
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -1476,7 +1477,7 @@ U = {
 	 * Rewrites the URL in the address bar to show the current page and section.
 	 * Does not actually load anything and is only a visual effect; however, if
 	 * the user presses enter with that URL (go to such a link), a separate
-	 * function will load that page (content layer) and expand that section.
+	 * function will load that page (content plate) and expand that section.
 	 */
 	updateQueryString: function()
 	{
@@ -4171,13 +4172,13 @@ D = {
 	
 	/*
 	 * Translates the header of a page.
-	 * @param enum pLayer to get header.
+	 * @param enum pPlate to get header.
 	 */
-	translatePageHeader: function(pLayer)
+	translatePageHeader: function(pPlate)
 	{
 		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
 		{
-			$("#layer" + pLayer + " .cntHeader").text(D.getElement("menu" + pLayer));
+			$("#plate" + pPlate + " .cntHeader").text(D.getElement("menu" + pPlate));
 		}
 	},
 	
@@ -4274,7 +4275,7 @@ D = {
 	},
 	
 	/*
-	 * Tells if a language uses logograms instead of letters.
+	 * Tells if current language uses logograms instead of letters.
 	 * @returns true if logographic.
 	 */
 	isLanguageLogographic: function()
@@ -5024,7 +5025,7 @@ C = {
 	},
 
 	/*
-	 * Initializes the chain HTML layer presentation with chains and their
+	 * Initializes the chain HTML plate presentation with chains and their
 	 * individual events. Calculates time sums for chains and pushes to array
 	 * for later accessing by the ticker. 
 	 * @param object pChain chain to initialize.
@@ -5034,6 +5035,7 @@ C = {
 		var i, ii;
 		var event;
 		var chainlistid = "";
+		var chaindetails = "";
 		
 		switch (pChain.series)
 		{
@@ -5065,6 +5067,14 @@ C = {
 			} break;
 		}
 		
+		if (pChain.series !== C.ChainSeriesEnum.DryTop)
+		{
+			chaindetails = "(" + pChain.details[0] + ") "
+				+ pChain.details[1] + "<ins class='sixteen sixt_ec'></ins>" + " "
+				+ pChain.details[2] + "<ins class='sixteen sixt_ch'></ins>" + " "
+				+ pChain.details[3] + "<ins class='sixteen sixt_dg'></ins>" + " ";
+		}
+		
 		/*
 		 * A chain bar (HTML) is a rectangle that contains the event chain icon,
 		 * chain title, time, individual events listed, and other elements.
@@ -5082,6 +5092,7 @@ C = {
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsLinks'>"
+					+ chaindetails
 					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options, Defaults).'>[x]</kbd>"
 				+ "</div>"
 		+ "</div>");
@@ -5504,7 +5515,7 @@ C = {
 	},
    
 	/*
-	 * Sorts the scheduled chains list in the chains content layer. This is
+	 * Sorts the scheduled chains list in the chains plate. This is
 	 * called by the ticker every timeframe.
 	 */
 	sortChainsListHTML: function()
@@ -6220,7 +6231,7 @@ M = {
 			M.Map.tap.disable();
 		}
 		
-		// Set layers
+		// Set tile
 		L.tileLayer(U.URL_API.TilesTyria,
 		{
 			continuousWorld: true
@@ -8655,7 +8666,7 @@ W = {
 			W.Map.tap.disable();
 		}
 		
-		// Set layers
+		// Set tile
 		L.tileLayer(U.URL_API.TilesMists,
 		{
 			continuousWorld: true
@@ -10819,7 +10830,7 @@ I = {
 	cTOOLTIP_MOUSEMOVE_RATE: 10,
 	CLOCK_AND_MENU_HEIGHT: 0,
 	
-	// Content-Layer-Page and Section-Header
+	// Content-Plate-Page and Section-Header
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
 	ModeCurrent: null,
@@ -10830,12 +10841,12 @@ I = {
 		Simple: "Simple",
 		Overlay: "Overlay"
 	},
-	cPagePrefix: "#layer",
+	cPagePrefix: "#plate",
 	cMenuPrefix: "#menu",
 	PageCurrent: "",
 	PageEnum:
 	{
-		// These are the X in "menuX" and "layerX" IDs in the HTML
+		// These are the X in "menuX" and "plateX" IDs in the HTML
 		Chains: "Chains",
 		Map: "Map",
 		WvW: "WvW",
@@ -10875,7 +10886,7 @@ I = {
 	 * query string, but used as 0-indexed.
 	 */
 	ArticleCurrent: null,
-	contentCurrentLayer: "", // This is cContentPrefix + contentCurrent
+	contentCurrentPlate: "", // This is cContentPrefix + contentCurrent
 	isContentLoaded_Map: false,
 	isContentLoaded_Help: false,
 	isSectionLoaded_Daily: false,
@@ -10978,12 +10989,13 @@ I = {
 			I.BrowserCurrent = I.BrowserEnum.Opera;
 		}
 		
-		$("#layerMap, #layerWvW, #layerHelp").each(function()
+		// Add throbber to AJAX loaded pages
+		$("#plateMap, #plateWvW, #plateHelp").each(function()
 		{
 			$(this).append("<div class='itemThrobber'><em></em></div>");
 		});
 		
-		// Default content layer
+		// Default content plate
 		I.PageCurrent = I.PageEnum.Chains;
 	},
 	
@@ -10995,7 +11007,7 @@ I = {
 	{
 		// Initializes all UI
 		I.initializeTooltip();
-		I.bindHelpButtons("#layerOptions");
+		I.bindHelpButtons("#plateOptions");
 		I.initializeUIforMenu();
 		I.initializeUIforChains();
 		I.initializeUIForHUD();
@@ -11030,8 +11042,8 @@ I = {
 			function() {$("#paneClock").css("z-index", 0);}
 		);
 
-		// Initialize scroll bars for pre-loaded layers
-		I.initializeScrollbar($("body, #layerChains, #layerOptions"));
+		// Initialize scroll bars for pre-loaded plates
+		I.initializeScrollbar($("body, #plateChains, #plateOptions"));
 		
 		// Clean the localStorage of unrecognized variables
 		O.cleanLocalStorage();
@@ -11203,25 +11215,25 @@ I = {
 	 * Example: <header class="jsSection">Example Title</header><div></div>
 	 * That container div should contain everything that needs to be collapsed/expanded
 	 * by clicking that header tag.
-	 * @param string pLayer HTML ID of layer in the content pane.
+	 * @param string pPlate HTML ID of plate in the content pane.
 	 */
-	generateSectionMenu: function(pLayer)
+	generateSectionMenu: function(pPlate)
 	{
 		// Don't bind unless there exists
-		if ($(pLayer + " header.jsSection").length <= 0)
+		if ($(pPlate + " header.jsSection").length <= 0)
 		{
 			return;
 		}
 		
-		var layer = pLayer.substring(I.cPagePrefix.length, pLayer.length);
-		var beamid = "menuBeam_" + layer;
-		var menubeam = $("<div class='menuBeam' id='" + beamid + "'></div>").prependTo(pLayer);
+		var plate = pPlate.substring(I.cPagePrefix.length, pPlate.length);
+		var beamid = "menuBeam_" + plate;
+		var menubeam = $("<div class='menuBeam' id='" + beamid + "'></div>").prependTo(pPlate);
 		
 		// Bind beam menu animation when clicked on the bar menu icon
 		if (I.ModeCurrent === I.ModeEnum.Website)
 		{
 			menubeam.css({right: I.cPANEL_WIDTH, top: I.CLOCK_AND_MENU_HEIGHT});
-			$(I.cMenuPrefix + layer).click(function()
+			$(I.cMenuPrefix + plate).click(function()
 			{
 				$("#menuBeam_" + I.PageCurrent)
 					.css({right: I.cPANEL_WIDTH + I.cPANE_BEAM_LEFT, top: I.CLOCK_AND_MENU_HEIGHT})
@@ -11234,7 +11246,7 @@ I = {
 			menubeam.hide();
 		}
 		
-		$(pLayer + " header.jsSection").each(function()
+		$(pPlate + " header.jsSection").each(function()
 		{
 			var header = $(this);
 			var headercontent = $(this).children("var").first();
@@ -11250,7 +11262,7 @@ I = {
 			header.click(function()
 			{
 				var section = U.getSubstringFromHTMLID($(this));
-				$(pLayer + " .menuBeamIcon").removeClass("menuBeamIconActive");
+				$(pPlate + " .menuBeamIcon").removeClass("menuBeamIconActive");
 				
 				if ($(this).next().is(":visible"))
 				{
@@ -11259,16 +11271,16 @@ I = {
 					
 					M.displayIcons(section, false); // Hide this section's map icons
 					
-					I[I.sectionPrefix + layer] = ""; // Nullify current section variable
+					I[I.sectionPrefix + plate] = ""; // Nullify current section variable
 				}
 				else
 				{
 					// To be expanded
 					$(this).children("sup").text("[-]");
-					$(pLayer + " .menuBeamIcon[data-section='" + section + "']")
+					$(pPlate + " .menuBeamIcon[data-section='" + section + "']")
 						.addClass("menuBeamIconActive");
 					
-					I[I.sectionPrefix + layer] = section;
+					I[I.sectionPrefix + plate] = section;
 				}
 				U.updateQueryString();
 				
@@ -11283,7 +11295,7 @@ I = {
 					{
 						$(this).next().toggle();
 					}
-					I.scrollToElement($(this), $(pLayer), "fast");
+					I.scrollToElement($(this), $(pPlate), "fast");
 				}
 				else
 				{
@@ -11317,7 +11329,7 @@ I = {
 				.appendTo(menubeam).click(function()
 				{
 					// Hide all the collapsible sections
-					$(pLayer + " header.jsSection").each(function()
+					$(pPlate + " header.jsSection").each(function()
 					{
 						if ($(this).next().is(":visible") && $(this).attr("id") !== header.attr("id"))
 						{
@@ -11336,19 +11348,19 @@ I = {
 			+ "title='&lt;dfn&gt;Close All Sections&lt;/dfn&gt;' />")
 			.appendTo(menubeam).click(function()
 			{
-				$(pLayer + " header.jsSection").each(function()
+				$(pPlate + " header.jsSection").each(function()
 				{
 					if ($(this).next().is(":visible"))
 					{
 						$(this).trigger("click");
 					}
 				});
-				$(pLayer + " .menuBeamIcon").removeClass("menuBeamIconActive");
+				$(pPlate + " .menuBeamIcon").removeClass("menuBeamIconActive");
 			});
 		
 		
 		// Make tooltips for the beam menu icons
-		I.qTip.init(pLayer + " .menuBeamIcon");
+		I.qTip.init(pPlate + " .menuBeamIcon");
 	},
 	
 	/*
@@ -11369,12 +11381,12 @@ I = {
 	
 	/*
 	 * Bind tooltip or expand collapsible behavior for [?] "buttons".
-	 * @param string pLayer HTML ID of layer in the content pane.
+	 * @param string pPlate HTML ID of plate in the content pane.
 	 */
-	bindHelpButtons: function(pLayer)
+	bindHelpButtons: function(pPlate)
 	{
 		// These buttons expand its sibling container which is initially hidden
-		$(pLayer + " .jsHelpCollapsible").each(function()
+		$(pPlate + " .jsHelpCollapsible").each(function()
 		{
 			$(this).text("[?+]").attr("title", "<dfn>More Info</dfn>");
 			
@@ -11395,14 +11407,14 @@ I = {
 		});
 		
 		// These buttons show a tooltip with description when hovered
-		$(pLayer + " .jsHelpTooltip").each(function()
+		$(pPlate + " .jsHelpTooltip").each(function()
 		{
 			var title = "<dfn>Info:</dfn> " + $(this).attr("title");
 			$(this).text("[?]").attr("title", title);
 		});
 		
-		I.qTip.init(pLayer + " .jsHelpCollapsible");
-		I.qTip.init(pLayer + " .jsHelpTooltip");
+		I.qTip.init(pPlate + " .jsHelpCollapsible");
+		I.qTip.init(pPlate + " .jsHelpTooltip");
 	},
 	
 	/*
@@ -11459,16 +11471,16 @@ I = {
 		})();
 
 		/*
-		 * Menu click icon to show respective content layer (page).
+		 * Menu click icon to show respective content plate (page).
 		 */
 		$("#paneMenu kbd").each(function()
 		{
 			$(this).click(function()
 			{
-				var layer = $(this).attr("id");
+				var plate = $(this).attr("id");
 				var pageprevious = I.PageCurrent;
-				I.PageCurrent = layer.substring(I.cMenuPrefix.length-1, layer.length);
-				I.contentCurrentLayer = I.cPagePrefix + I.PageCurrent;
+				I.PageCurrent = plate.substring(I.cMenuPrefix.length-1, plate.length);
+				I.contentCurrentPlate = I.cPagePrefix + I.PageCurrent;
 				
 				switch (I.PageCurrent)
 				{
@@ -11513,26 +11525,26 @@ I = {
 					M.refreshMap();
 				}
 				
-				$("#paneContent article").hide(); // Hide all layers
+				$("#paneContent article").hide(); // Hide all plates
 				
 				
-				$(I.contentCurrentLayer + " .cntHeader").css({opacity: 0}).animate( // Fade page title
+				$(I.contentCurrentPlate + " .cntHeader").css({opacity: 0}).animate( // Fade page title
 				{
 					opacity: 1
 				}, 400);
 				if (I.ModeCurrent === I.ModeEnum.Website)
 				{
-					$(I.contentCurrentLayer).animate( // Show clicked layer
+					$(I.contentCurrentPlate).animate( // Show requested page
 					{
 						width: "show"
 					}, 200);
 				}
-				$(I.contentCurrentLayer).show();
+				$(I.contentCurrentPlate).show();
 				
-				// Update the address bar URL with the current layer name
+				// Update the address bar URL with the current page name
 				U.updateQueryString();
 				
-				// Also hide chain paths if on the map layer
+				// Also hide chain paths if on the map page
 				if (O.Options.bol_showChainPaths)
 				{
 					if (I.PageCurrent === I.PageEnum.Map)
@@ -11551,16 +11563,16 @@ I = {
 		});
 
 	   /*
-		* AJAX load the separate HTML files into the content layer when user
+		* AJAX load the separate HTML files into the content plate when user
 		* clicks on respective menu icon. Most content are not generated until
 		* the user expand a section of the content.
 		*/
-		// Map layer
-		$("#menuMap").one("click", I.loadMapLayer);
-		// WvW layer
-		$("#menuWvW").one("click", I.loadWvWLayer);
-		// Help layer
-		$("#menuHelp").one("click", I.loadHelpLayer);
+		// Map plate
+		$("#menuMap").one("click", I.loadMapPlate);
+		// WvW plate
+		$("#menuWvW").one("click", I.loadWvWPlate);
+		// Help plate
+		$("#menuHelp").one("click", I.loadHelpPlate);
 		
 	}, // End of menu initialization
 	
@@ -11570,13 +11582,13 @@ I = {
 	 */
 	bindAfterAJAXContent: function(pPageEnum)
 	{
-		var layer = I.cPagePrefix + pPageEnum;
-		I.generateSectionMenu(layer);
-		I.initializeScrollbar($(layer));
-		I.bindHelpButtons(layer);
-		M.bindMapLinks(layer);
+		var plate = I.cPagePrefix + pPageEnum;
+		I.generateSectionMenu(plate);
+		I.initializeScrollbar($(plate));
+		I.bindHelpButtons(plate);
+		M.bindMapLinks(plate);
 		// Open links on new window
-		U.convertExternalLink(layer + " a");
+		U.convertExternalLink(plate + " a");
 		I.qTip.init("button");
 		
 		// Expand a header if requested in the URL
@@ -11585,11 +11597,11 @@ I = {
 	},
 	
 	/*
-	 * Loads the map page into the map content layer.
+	 * Loads the map page into the map content plate.
 	 */
-	loadMapLayer: function()
+	loadMapPlate: function()
 	{
-		$("#layerMap").load(I.cPageURLMap, function()
+		$("#plateMap").load(I.cPageURLMap, function()
 		{
 			I.bindAfterAJAXContent(I.PageEnum.Map);
 			
@@ -11664,16 +11676,16 @@ I = {
 			{
 				M.goToDefault();
 			});
-			I.qTip.init("#layerMap .menuBeamIconCenter, #layerMap label");
+			I.qTip.init("#plateMap .menuBeamIconCenter, #plateMap label");
 		});
 	},
 	
 	/*
-	 * Loads the map page into the map content layer.
+	 * Loads the map page into the map content plate.
 	 */
-	loadWvWLayer: function()
+	loadWvWPlate: function()
 	{
-		$("#layerWvW").load(I.cPageURLWvW, function()
+		$("#plateWvW").load(I.cPageURLWvW, function()
 		{
 			W.initializeMap();
 			I.bindAfterAJAXContent(I.PageEnum.WvW);
@@ -11681,11 +11693,11 @@ I = {
 	},
 	
 	/*
-	 * Loads the help page into the help content layer.
+	 * Loads the help page into the help content plate.
 	 */
-	loadHelpLayer: function()
+	loadHelpPlate: function()
 	{
-		$("#layerHelp").load(I.cPageURLHelp, function()
+		$("#plateHelp").load(I.cPageURLHelp, function()
 		{
 			I.bindAfterAJAXContent(I.PageEnum.Help);
 			$(".jsCopyCode").click(function()
@@ -11703,7 +11715,7 @@ I = {
 		/*
 		 * Chains list collapsible headers.
 		 */
-		$("#layerChains header").click(function()
+		$("#plateChains header").click(function()
 		{
 			$(this).next().slideToggle("fast", function()
 			{
@@ -11732,12 +11744,12 @@ I = {
 	   /*
 		* Add collapse text icon to headers; first one is pre-expanded.
 		*/
-		$("#layerChains header:not(:first)").each(function()
+		$("#plateChains header:not(:first)").each(function()
 		{
 			$(this).next().toggle(0);
 			$(this).find("kbd").html("[+]");
 		});
-		$("#layerChains header:first").each(function()
+		$("#plateChains header:first").each(function()
 		{
 			$(this).find("kbd").html("[-]");
 		});
