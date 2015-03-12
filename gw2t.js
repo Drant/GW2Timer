@@ -255,7 +255,7 @@ O = {
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
 				+ "World Boss Rewards have been added to the chain bars.<br />"
-				+ "Please <a href='http://forum.renaka.com/topic/5775595/'>report any incorrect information</a>."
+				+ "Please <a class='urlUpdates' href='http://forum.renaka.com/topic/5775595/'>report any incorrect information</a>."
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
