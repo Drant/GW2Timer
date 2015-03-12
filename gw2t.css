@@ -1122,12 +1122,12 @@ header.cntHeader {
 	vertical-align: middle;
 }
 
-#itemThrobber {
+.itemThrobber {
 	display: none;
 	width: 100%; height: 64px;
 	text-align: center;
 }
-#itemThrobber em {
+.itemThrobber em {
 	display: inline-block;
 	width: 64px; height: 64px;
 	background: url("img/ui/favicon.png");
