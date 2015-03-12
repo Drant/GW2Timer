@@ -1123,7 +1123,7 @@ header.cntHeader {
 }
 
 .itemThrobber {
-	display: none;
+	display: block;
 	width: 100%; height: 64px;
 	text-align: center;
 }
