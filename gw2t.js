@@ -111,6 +111,7 @@ O = {
 		int_msecGPSRefresh: 250,
 		// Alarm
 		int_setAlarm: 0,
+		bol_alertArrival: false,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
 		bol_alertChecked: false,
@@ -3932,6 +3933,8 @@ D = {
 			cs: "půl hodiny", it: "mezz'ora", pl: "pół godziny", pt: "meia hora", ru: "полчаса", zh: "半小時"},
 		
 		// Nouns
+		s_arrival: {de: "ankunft", es: "llegada", fr: "arrivée",
+			cs: "příjezd", it: "arrivo", pl: "przyjazd", pt: "chegada", ru: "прибытие", zh: "到來"},
 		s_world_boss: {de: "weltboss", es: "jefe mundo", fr: "chef monde",
 			cs: "svět boss", it: "boss mondo", pl: "świat szef", pt: "chefe mundo", ru: "мир босс", zh: "世界頭目"},
 		s_section: {de: "paragraph", es: "sección", fr: "section",
@@ -3970,6 +3973,8 @@ D = {
 			cs: "příští", it: "seguente", pl: "następny", pt: "próximo", ru: "следующий", zh: "下一"},
 		s_off: {de: "aus", es: "desactivado", fr: "désactivé",
 			cs: "vypnuto", it: "disattivato", pl: "wyłączany", pt: "desativado", ru: "выключено", zh: "關"},
+		s_predicted: {de: "vorhergesagt", es: "previsto", fr: "prédit",
+			cs: "předpovídal", it: "previsto", pl: "przewiduje", pt: "predito", ru: "предсказанный", zh: "預測"},
 		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit",
 			cs: "odebírané", it: "sottoscritti", pl: "subskrypcji", pt: "assinado", ru: "подписал", zh: "訂閱"},
 		s_then: {de: "dann", es: "luego", fr: "puis",
@@ -5858,6 +5863,18 @@ C = {
 						|| pChain.series !== C.ChainSeriesEnum.DryTop)
 				{
 					$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
+				}
+			}
+			
+			// If the final event is just starting, alert if opted
+			if (pPrimaryEventIndex === finalstep && O.Options.bol_alertArrival)
+			{
+				if ((O.Options.int_setAlarm === O.IntEnum.Alarm.Checklist
+						&& C.isChainUnchecked(pChain))
+					|| (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription
+						&& C.isChainSubscribed(pChain) && C.isChainUnchecked(pChain)))
+				{
+					D.speak(D.getChainPronunciation(pChain) + " " + D.getSpeech("arrival") + " " + D.getSpeech("predicted"));
 				}
 			}
 		}
@@ -11030,7 +11047,7 @@ I = {
 		$(document).mouseup(function(pEvent)
 		{
 			var elm = $(".jsRemovable");
-			if (!elm.is(pEvent.target) && elm.has(pEvent.target).length === 0)
+			if ( ! elm.is(pEvent.target) && elm.has(pEvent.target).length === 0)
 			{
 				elm.remove();
 			}
@@ -11436,7 +11453,7 @@ I = {
 					$("#paneMenu kbd").each(function()
 					{
 						// Fade icon not being hovered over
-						if (!$(this).is(":hover"))
+						if ( ! $(this).is(":hover"))
 						{
 							$(this).animate({opacity: cFadeOpacity}, animationspeed);
 						}
