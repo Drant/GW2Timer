@@ -111,7 +111,7 @@ O = {
 		int_msecGPSRefresh: 250,
 		// Alarm
 		int_setAlarm: 0,
-		bol_alertArrival: false,
+		bol_alertArrival: true,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
 		bol_alertChecked: false,
@@ -5791,6 +5791,7 @@ C = {
 		var eventnamewidth = C.cEventNameWidth;
 		var finalstep = pChain.primaryEvents.length - 1;
 		var event;
+		var isregularchain = C.isChainRegular(pChain);
 		
 		// Hide past events' markers
 		if (pChain.series === C.ChainSeriesEnum.DryTop)
@@ -5864,14 +5865,14 @@ C = {
 			// Tour to the event on the map if opted
 			if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
 				&& I.PageCurrent === I.PageEnum.Chains
-				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && C.isChainRegular(pChain)
+				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && isregularchain
 				&& $("#listChainsDryTop").is(":visible") === false)
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
 			
 			// If the final event is just starting, alert if opted
-			if (pPrimaryEventIndex === finalstep && O.Options.bol_alertArrival && C.isChainRegular(pChain))
+			if (pPrimaryEventIndex === finalstep && O.Options.bol_alertArrival && isregularchain)
 			{
 				if ((O.Options.int_setAlarm === O.IntEnum.Alarm.Checklist
 						&& C.isChainUnchecked(pChain))
@@ -5900,7 +5901,7 @@ C = {
 			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Checklist
 				&& O.Options.bol_alertAtEnd && I.isProgramLoaded
 				&& pChain.nexus === C.CurrentChainSD.nexus
-				&& C.isChainRegular(pChain))
+				&& isregularchain)
 			{
 				var checked = ", " + D.getSpeech("checked");
 				var checkedsd = "";
@@ -5942,6 +5943,13 @@ C = {
 				{
 					D.speak(T.getTimeTillChainFormatted(C.NextChainSD1, "speech"), 3);
 				}
+			}
+			
+			// Also unsubscribe if opted
+			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription && I.isProgramLoaded &&
+				O.Options.bol_alertUnsubscribe && isregularchain && C.isChainSubscribed(pChain))
+			{
+				$("#chnTime_" + pChain.nexus).trigger("click");
 			}
 		}
 	},
@@ -10356,27 +10364,6 @@ K = {
 				}
 				D.speak(speech, wait);
 				D.speak(D.getSpeech("will start") + T.getTimeTillChainFormatted(chainsd, "speech"), 3);
-				
-				// Also unsubscribe if opted
-				if (O.Options.bol_alertUnsubscribe)
-				{
-					// Make sure it is the last alarm to ring
-					if ((pMinutes === O.Options.int_alertSubscribedFirst &&
-						(pMinutes <= O.Options.int_alertSubscribedSecond || O.Options.int_alertSubscribedSecond === 0))
-						||
-						(pMinutes === O.Options.int_alertSubscribedSecond &&
-						(pMinutes <= O.Options.int_alertSubscribedFirst || O.Options.int_alertSubscribedFirst === 0)))
-					{
-						if (wantsd)
-						{
-							$("#chnTime_" + chainsd.nexus).trigger("click");
-						}
-						if (wanthc)
-						{
-							$("#chnTime_" + chainhc.nexus).trigger("click");
-						}
-					}
-				}
 			}
 		}
 	},
