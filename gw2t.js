@@ -610,10 +610,10 @@ O = {
 		{
 			if (C.ChainToday)
 			{
-				time = $("#chnTime_" + chain.nexus);
+				time = $("#chnTime_" + C.ChainToday.nexus);
 				if ( ! time.hasClass("chnTimeSubscribed"))
 				{
-					I.write("Autosubscribed to Daily World Boss: " + chain.alias);
+					I.write("Autosubscribed to Daily World Boss: " + C.ChainToday.alias);
 					time.trigger("click");
 				}
 			}
@@ -5035,7 +5035,7 @@ C = {
 		var i, ii;
 		var event;
 		var chainlistid = "";
-		var chaindetails = "";
+		var chainextra = "";
 		
 		switch (pChain.series)
 		{
@@ -5069,10 +5069,10 @@ C = {
 		
 		if (pChain.series !== C.ChainSeriesEnum.DryTop)
 		{
-			chaindetails = "(" + pChain.details[0] + ") "
-				+ pChain.details[1] + "<ins class='sixteen sixt_ec'></ins>" + " "
-				+ pChain.details[2] + "<ins class='sixteen sixt_ch'></ins>" + " "
-				+ pChain.details[3] + "<ins class='sixteen sixt_dg'></ins>" + " ";
+			chainextra = "(" + pChain.extra[0] + ") "
+				+ pChain.extra[1] + "<ins class='sixteen sixt_ec'></ins>" + " "
+				+ pChain.extra[2] + "<ins class='sixteen sixt_ch'></ins>" + " "
+				+ pChain.extra[3] + "<ins class='sixteen sixt_dg'></ins>" + " ";
 		}
 		
 		/*
@@ -5091,8 +5091,8 @@ C = {
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
-				+ "<div class='chnDetailsLinks'>"
-					+ chaindetails
+				+ "<div class='chnDetailsExtra'>"
+					+ chainextra
 					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options, Defaults).'>[x]</kbd>"
 				+ "</div>"
 		+ "</div>");

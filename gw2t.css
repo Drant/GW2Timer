@@ -1380,7 +1380,7 @@ textarea.jsCopyCode {
 	vertical-align: middle;
 }
 
-.chnDetailsLinks { /* Small gray link bottom right of a chain bar */
+.chnDetailsExtra { /* Small gray texts bottom right of a chain bar */
 	margin-top: 8px;
 	margin-bottom: 8px;
 	text-align: right;
@@ -1388,11 +1388,12 @@ textarea.jsCopyCode {
 	font-size: 12px;
 	color: #888;
 }
-.chnDetailsLinks ins {
+.chnDetailsExtra ins {
 	margin-left: 2px;
 	border-radius: 4px;
+	opacity: 0.5;
 }
-.chnDetailsLinks kbd {
+.chnDetailsExtra kbd {
 	margin-right: 6px;
 }
 
@@ -1439,7 +1440,7 @@ textarea.jsCopyCode {
 }
 
 .chnTimeCurrent:hover, .chnTimeFuture:hover, .chnTimeFutureFar:hover,
-.chnDetailsLinks kbd:hover {
+.chnDetailsExtra kbd:hover {
 	color: white;
 }
 
