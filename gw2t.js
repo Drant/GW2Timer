@@ -838,7 +838,7 @@ O = {
 		{
 			for (var i in C.CurrentChains)
 			{
-				if (C.CurrentChains[i].series !== C.ChainSeriesEnum.DryTop)
+				if (C.isChainRegular(C.CurrentChains[i]))
 				{
 					$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_expandWB);
 				}
@@ -4958,6 +4958,15 @@ C = {
 		}
 		return false;
 	},
+	isChainRegular: function(pChain)
+	{
+		if (pChain.series === C.ChainSeriesEnum.Standard ||
+			pChain.series === C.ChainSeriesEnum.Hardcore)
+		{
+			return true;
+		}
+		return false;
+	},
 	
 	/*
 	 * Returns the substring before the "XXX" delimiter in a chain alias.
@@ -5855,19 +5864,14 @@ C = {
 			// Tour to the event on the map if opted
 			if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
 				&& I.PageCurrent === I.PageEnum.Chains
-				&& M.isMapAJAXDone && C.isChainUnchecked(pChain)
-				&& pChain.series !== C.ChainSeriesEnum.DryTop
+				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && C.isChainRegular(pChain)
 				&& $("#listChainsDryTop").is(":visible") === false)
 			{
-				if ((pChain.series === C.ChainSeriesEnum.DryTop && O.Options.bol_expandDT)
-						|| pChain.series !== C.ChainSeriesEnum.DryTop)
-				{
-					$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
-				}
+				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
 			
 			// If the final event is just starting, alert if opted
-			if (pPrimaryEventIndex === finalstep && O.Options.bol_alertArrival)
+			if (pPrimaryEventIndex === finalstep && O.Options.bol_alertArrival && C.isChainRegular(pChain))
 			{
 				if ((O.Options.int_setAlarm === O.IntEnum.Alarm.Checklist
 						&& C.isChainUnchecked(pChain))
@@ -5896,7 +5900,7 @@ C = {
 			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Checklist
 				&& O.Options.bol_alertAtEnd && I.isProgramLoaded
 				&& pChain.nexus === C.CurrentChainSD.nexus
-				&& pChain.series !== C.ChainSeriesEnum.DryTop)
+				&& C.isChainRegular(pChain))
 			{
 				var checked = ", " + D.getSpeech("checked");
 				var checkedsd = "";
