@@ -5974,11 +5974,11 @@ C = {
 			{
 				case O.IntEnum.Predictor.Auto:
 				{
-					if (hour >= 10 && hour < 20)
+					if (hour >= 12 && hour < 18)
 					{
-						return (O.randomBool()) ? pChain.primaryEvents[pIndex].minSum : pChain.primaryEvents[pIndex].minavgSum;
+						return pChain.primaryEvents[pIndex].minSum;
 					}
-					if (hour >= 20)
+					if (hour >= 18)
 					{
 						return pChain.primaryEvents[pIndex].minavgSum;
 					}
@@ -5986,7 +5986,7 @@ C = {
 					{
 						return pChain.primaryEvents[pIndex].avgSum;
 					}
-					if (hour >= 6 && hour < 10)
+					if (hour >= 6 && hour < 12)
 					{
 						return pChain.primaryEvents[pIndex].minavgSum;
 					}
@@ -6013,12 +6013,12 @@ C = {
 			{
 				case O.IntEnum.Predictor.Auto:
 				{
-					if (hour >= 10 && hour < 20)
+					if (hour >= 12 && hour < 18)
 					{
 						pChain.countdownToFinish = pChain.minFinish;
 						return pChain.minFinish;
 					}
-					if (hour >= 20)
+					if (hour >= 18)
 					{
 						pChain.countdownToFinish = pChain.minavgFinish;
 						return pChain.minavgFinish;
@@ -6028,7 +6028,7 @@ C = {
 						pChain.countdownToFinish = pChain.avgFinish;
 						return pChain.avgFinish;
 					}
-					if (hour >= 6 && hour < 10)
+					if (hour >= 6 && hour < 12)
 					{
 						pChain.countdownToFinish = pChain.minavgFinish;
 						return pChain.minavgFinish;
@@ -6052,6 +6052,7 @@ C = {
 			}
 			// Failsafe
 			pChain.countdownToFinish = pChain.minavgFinish;
+			return pChain.minavgFinish;
 		}
 	}
 };

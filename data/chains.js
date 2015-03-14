@@ -759,7 +759,7 @@ var GW2T_CHAIN_DATA = [
 	pronunciation: "tai da, covington",
 	series: 2,
 	waypoint: "[&BKgBAAA=]",
-	extra: ["50", "1", "1", "3-5"],
+	extra: ["50", "1", "0", "3-5"],
 	title: "The Campaign Against Taidha Covington",
 	events: [
 		{
@@ -1095,7 +1095,7 @@ var GW2T_CHAIN_DATA = [
 	pronunciation: "karka queen",
 	series: 3,
 	waypoint: "[&BNcGAAA=]",
-	extra: ["80", "2", "4", "30"],
+	extra: ["80", "2", "5", "30"],
 	title: "Island Control",
 	events: [
 		{
@@ -1321,7 +1321,7 @@ var GW2T_CHAIN_DATA = [
 	pronunciation: "tecquatle",
 	series: 3,
 	waypoint: "[&BNABAAA=]",
-	extra: ["65", "2", "2", "15-25"],
+	extra: ["65", "3", "4", "38"],
 	title: "Danger at Fabled Djannor",
 	events: [
 		{
@@ -1349,7 +1349,7 @@ var GW2T_CHAIN_DATA = [
 	pronunciation: "triple worm",
 	series: 3,
 	waypoint: "[&BKoBAAA=]",
-	extra: ["55", "2", "2", "30"],
+	extra: ["55", "4", "6", "78"],
 	title: "Triple Trouble",
 	events: [
 		{
