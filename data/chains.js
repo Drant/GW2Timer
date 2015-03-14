@@ -245,7 +245,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[23171, 9087], [22942, 9098], [23171, 9087], [23209, 9108], [23239, 9048]],
+			path: [[23171, 9087], [22942, 9098], [23171, 9087]],
 			name_en: "Lure out the Claws of Jormag by destroying the final dragon crystal.",
 			name_de: "Lockt die Klauen Jormags hervor, indem Ihr den letzten Drachenkristall zerstört.",
 			name_es: "Atrae a una de las Garras de Jormag destruyendo el último cristal del dragón.",
@@ -263,21 +263,39 @@ var GW2T_CHAIN_DATA = [
 			primacy: 2
 		},
 		{
+			path: [[23209, 9108], [23171, 9087], [23209, 9108], [23239, 9048]],
+			name_en: "Break the barrier!",
+			name_de: "Brechen die barriere!",
+			name_es: "¡Romper la barrera!",
+			name_fr: "Briser la barrière!",
+			icon: "swords",
+			num: "3",
+			sGotoNum: ["4"],
+			fGotoNum: "1#",
+			sInterim: ["0:40"],
+			fInterim: "*",
+			lim: "30:00",
+			avg: "7:00",
+			min: "5:00",
+			max: "9:00",
+			primacy: 2
+		},
+		{
 			path: [[23007, 8969], [23239, 9048], [23007, 8969], [22987, 8899]],
 			name_en: "Defeat the Claw of Jormag.",
 			name_de: "Besiegt die Klaue Jormags.",
 			name_es: "Derrota a la Garra de Jormag.",
 			name_fr: "Vaincre la Griffe de Jormag.",
 			icon: "boss",
-			num: "3",
+			num: "4",
 			sGotoNum: ["1#"],
 			fGotoNum: "1#",
 			sInterim: ["*"],
 			fInterim: "*",
 			lim: "30:00",
-			avg: "14:00",
-			min: "10:00",
-			max: "18:00",
+			avg: "6:00",
+			min: "4:00",
+			max: "7:00",
 			primacy: 3
 		}
 	]

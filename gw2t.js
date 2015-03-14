@@ -369,6 +369,10 @@ O = {
 		}
 		return 0;
 	},
+	randomBool: function()
+	{
+		return (Math.random() > 0.5) ? true : false;
+	},
 	
 	/*
 	 * Returns false if object is undefined or null or falsy, otherwise true.
@@ -5962,7 +5966,7 @@ C = {
 	 */
 	getSumBasedOnOptions: function(pChain, pIndex)
 	{
-		var hour = T.getTimeOffsetSinceMidnight(T.ReferenceEnum.Server, T.UnitEnum.Hours);
+		var hour = T.getTimeOffsetSinceMidnight(T.ReferenceEnum.Local, T.UnitEnum.Hours);
 		
 		if (pIndex > -1)
 		{
@@ -5970,20 +5974,19 @@ C = {
 			{
 				case O.IntEnum.Predictor.Auto:
 				{
-					// North American playtime in server hour
-					if (hour >= 16 && hour < 20)
+					if (hour >= 10 && hour < 20)
 					{
-						return pChain.primaryEvents[pIndex].minSum;
+						return (O.randomBool()) ? pChain.primaryEvents[pIndex].minSum : pChain.primaryEvents[pIndex].minavgSum;
 					}
-					if (hour >= 20 && hour < 23)
+					if (hour >= 20)
 					{
 						return pChain.primaryEvents[pIndex].minavgSum;
 					}
-					if (hour >= 23 || hour < 12)
+					if (hour >= 0 && hour < 6)
 					{
 						return pChain.primaryEvents[pIndex].avgSum;
 					}
-					if (hour >= 12 && hour < 16)
+					if (hour >= 6 && hour < 10)
 					{
 						return pChain.primaryEvents[pIndex].minavgSum;
 					}
@@ -6001,6 +6004,8 @@ C = {
 					return pChain.primaryEvents[pIndex].avgSum;
 				} break;
 			}
+			// Failsafe
+			return pChain.primaryEvents[pIndex].minavgSum;
 		}
 		else
 		{
@@ -6008,22 +6013,22 @@ C = {
 			{
 				case O.IntEnum.Predictor.Auto:
 				{
-					if (hour >= 16 && hour < 20)
+					if (hour >= 10 && hour < 20)
 					{
 						pChain.countdownToFinish = pChain.minFinish;
 						return pChain.minFinish;
 					}
-					if (hour >= 20 && hour < 23)
+					if (hour >= 20)
 					{
 						pChain.countdownToFinish = pChain.minavgFinish;
 						return pChain.minavgFinish;
 					}
-					if (hour >= 23 || hour < 12)
+					if (hour >= 0 && hour < 6)
 					{
 						pChain.countdownToFinish = pChain.avgFinish;
 						return pChain.avgFinish;
 					}
-					if (hour >= 12 && hour < 16)
+					if (hour >= 6 && hour < 10)
 					{
 						pChain.countdownToFinish = pChain.minavgFinish;
 						return pChain.minavgFinish;
@@ -6045,6 +6050,8 @@ C = {
 					return pChain.avgFinish;
 				} break;
 			}
+			// Failsafe
+			pChain.countdownToFinish = pChain.minavgFinish;
 		}
 	}
 };
