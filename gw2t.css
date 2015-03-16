@@ -653,7 +653,6 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	width: 32px; height: 32px;
 	background: url("img/map/waypoint.png");
 	background-size: 32px 32px;
-	cursor: url("img/cursor/pointer.png"), pointer;
 }
 .clkWaypointClipDaily {
 	background: url("img/ui/daily.png");
@@ -1258,7 +1257,6 @@ textarea.jsCopyCode {
 	width: 32px; height: 32px;
 	background: url("img/map/waypoint.png");
 	background-size: 32px 32px;
-	cursor: url("img/cursor/pointer.png"), pointer;
 	opacity: 0.9;
 }
 .chnDryTopWaypoint.zeroclipboard-is-hover {

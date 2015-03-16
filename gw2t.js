@@ -11133,6 +11133,13 @@ I = {
 		{
 			I.selectText("#jsConsole");
 		});
+		$("#mapOptions").one("mouseenter", function()
+		{
+			$("#mapOptionsPopup img").each(function()
+			{
+				$(this).attr("src", $(this).attr("data-src"));
+			});
+		});
 		U.convertExternalLink(".linkExternal");
 		
 		// Bind special popup elements that can be removed if user clicks anywhere not on it
@@ -11989,7 +11996,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind the following tags with the title attribute for tooltip
-		I.qTip.init("a, ins, span, fieldset, label, input, button");
+		I.qTip.init("a, ins, kbd, span, fieldset, label, input, button");
 		
 		/*
 		 * Make the tooltip appear within the visible window by detecting current
