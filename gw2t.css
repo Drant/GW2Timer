@@ -287,7 +287,7 @@ html, body,
 }
 
 /* Help */
-.curHelp, .jsHelpTooltip, .chnDetails ol li img {
+.curHelp, .jsHelpTooltip, .chnDetails ol li ins {
 	cursor: url("img/cursor/help.cur"), help;
 }
 
@@ -1335,7 +1335,7 @@ textarea.jsCopyCode {
 	vertical-align: middle;
 }
 .chnTitle h1:hover {
-	color: #eee !important;
+	color: #eee;
 }
 
 .chnTitle time {
@@ -1363,18 +1363,33 @@ textarea.jsCopyCode {
 	margin-bottom: 4px;
 	white-space: nowrap;
     overflow: hidden;
-	color: #ff8844;
 }
-.chnDetails ol li:hover {
-	color: #eee;
-}
-.chnDetails ol li img { /* Orange event icon */
-	vertical-align: middle;
+.chnDetails ol li ins { /* Orange event icon */
 	width: 16px; height: 16px;
+	background-image: url("img/event/events.png");
 }
-.chnDetails ol li img:hover {
+.chnDetails ol li ins:hover {
 	box-shadow: 0px 0px 4px #ee7924;
 }
+.evt_boss { background-position: 0 0; }
+.evt_boss_red { background-position: -16px 0; }
+.evt_cog { background-position: -32px 0; }
+.evt_cog_red { background-position: -48px 0; }
+.evt_collect { background-position: -64px 0; }
+.evt_cross { background-position: -80px 0; }
+.evt_fist { background-position: -96px 0; }
+.evt_flag { background-position: -112px 0; }
+.evt_release { background-position: -128px 0; }
+.evt_shield { background-position: -144px 0; }
+.evt_shield_red { background-position: -160px 0; }
+.evt_skull_red { background-position: -176px 0; }
+.evt_special { background-position: -192px 0; }
+.evt_star { background-position: -208px 0; }
+.evt_star_red { background-position: -224px 0; }
+.evt_swords { background-position: -240px 0; }
+.evt_swords_red { background-position: -256px 0; }
+.evt_wrench { background-position: -272px 0; }
+
 .chnDetails ol li span { /* Event name */
 	margin-left: 4px;
 	vertical-align: middle;
@@ -1433,7 +1448,7 @@ textarea.jsCopyCode {
 	opacity: 1;
 }
 .chnTimeSubscribed {
-	color: #ddff77 !important;
+	color: #ddff77;
 }
 .chnTimeSubscribed:after {
 	content: "*";
@@ -1444,20 +1459,20 @@ textarea.jsCopyCode {
 	color: white;
 }
 
-.chnEventPast {
-	color: #bbb !important;
+.chnEvents li { /* Default style for event name (past/inactive events) */
+	color: #bbb;
 	opacity: 0.5;
 }
-.chnEventCurrent {
-	color: #ff8844 !important;
+.chnEvents li.chnEventCurrent {
+	color: #ff8844;
 	opacity: 1;
 }
-.chnEventFuture {
-	color: #ff8844 !important;
+.chnEvents li.chnEventFuture {
+	color: #ff8844;
 	opacity: 0.5;
 }
 .chnEvents li:hover {
-	color: #ffcc77 !important;
+	color: #ffcc77;
 }
 
 .sixteen {
@@ -1634,24 +1649,12 @@ button.btnToggle {
 	border: 1px solid transparent;
 	box-shadow: none;
 }
-.dly_region_ascalon {
-	background-position: 0 0;
-}
-.dly_region_kryta {
-	background-position: -32px 0;
-}
-.dly_region_maguuma {
-	background-position: -64px 0;
-}
-.dly_region_orr {
-	background-position: -96px 0;
-}
-.dly_region_shiverpeaks {
-	background-position: -128px 0;
-}
-.dly_region_wastes {
-	background-position: -160px 0;
-}
+.dly_region_ascalon { background-position: 0 0; }
+.dly_region_kryta { background-position: -32px 0; }
+.dly_region_maguuma { background-position: -64px 0; }
+.dly_region_orr { background-position: -96px 0; }
+.dly_region_shiverpeaks { background-position: -128px 0; }
+.dly_region_wastes { background-position: -160px 0; }
 
 .dly_daily_pve { background-position: 0 0; }
 .dly_daily_pvp { background-position: -32px 0; }

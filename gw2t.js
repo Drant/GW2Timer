@@ -1549,18 +1549,34 @@ U = {
 			}
 		}, 0);
 	},
+	
+	/*
+	 * Opens a page by triggering the clicking of the menu button.
+	 * @pre All HTML has been generated.
+	 */
 	openPageFromURL: function()
 	{
 		if (U.Args[U.KeyEnum.Page] !== undefined)
 		{
-			var request = U.stripToAlphanumeric(U.Args[U.KeyEnum.Page]);
+			var page = U.stripToAlphanumeric(U.Args[U.KeyEnum.Page]);
 			for (var i in I.PageEnum)
 			{
-				if (request.toLowerCase() === (I.PageEnum[i]).toLowerCase())
+				if (page.toLowerCase() === (I.PageEnum[i]).toLowerCase())
 				{
+					// Found proper page, so go to it by clicking the menu button
 					$(I.cMenuPrefix + I.PageEnum[i]).trigger("click");
 					return;
 				}
+			}
+			
+			// Special "page" which does not match a proper page name
+			page = page.toLowerCase();
+			switch (page)
+			{
+				case "drytop": {
+					$("#listChainsScheduled").prev().trigger("click"); // Hide scheduled chains list
+					$("#listChainsDryTop").prev().trigger("click"); // Show Dry Top list
+				} break;
 			}
 		}
 	},
@@ -2265,135 +2281,125 @@ X = {
 	/*
 	 * Loads chain checklist state as recorded in localStorage, and binds
 	 * clicking behavior to the div faux checkboxes.
-	 * @pre Chains have been initialized.
+	 * @param object pChain to initialize.
+	 * @pre Chains HTML have been initialized.
 	 */
-	initializeChainChecklist: function()
+	initializeChainChecklist: function(pChain)
 	{
-		var i;
-		var chain;
-		
-		X.initializeChecklist(X.Checklists.Chain, C.Chains.length);
-		X.initializeChecklist(X.Checklists.ChainSubscription, C.Chains.length);
-		
-		for (i in C.Chains)
+		var bar = $("#barChain_" + pChain.nexus);
+		var check = $("#chnCheck_" + pChain.nexus);
+		var time = $("#chnTime_" + pChain.nexus);
+
+		// Set the checkbox visual state as stored
+		switch (X.getChecklistItem(X.Checklists.Chain, pChain.nexus))
 		{
-			chain = C.Chains[i];
-			
-			var bar = $("#barChain_" + chain.nexus);
-			var check = $("#chnCheck_" + chain.nexus);
-			var time = $("#chnTime_" + chain.nexus);
-			
-			// Set the checkbox visual state as stored
-			switch (X.getChecklistItem(X.Checklists.Chain, chain.nexus))
+			case X.ChecklistEnum.Unchecked:
+			{
+				// Chain is not checked off, so don't do anything
+			} break;
+			case X.ChecklistEnum.Checked:
+			{
+				bar.css({opacity: K.iconOpacityChecked});
+				check.addClass("chnChecked");
+				if (O.Options.bol_hideChecked)
+				{
+					bar.hide();
+				}
+			} break;
+			case X.ChecklistEnum.Disabled:
+			{
+				bar.hide();
+			} break;
+		}
+
+		// Set the time visual state as stored (subscribed or not)
+		if (X.getChecklistItem(X.Checklists.ChainSubscription, pChain.nexus) ===
+				X.ChecklistEnum.Checked)
+		{
+			time.addClass("chnTimeSubscribed");
+		}
+
+		/*
+		 * Bind event handler for the time clickable for subscription.
+		 */
+		time.click(function()
+		{
+			var nexus = U.getSubintegerFromHTMLID($(this));
+
+			if (X.getChecklistItem(X.Checklists.ChainSubscription, nexus) === X.ChecklistEnum.Checked)
+			{
+				$(this).removeClass("chnTimeSubscribed");
+				X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Unchecked);
+			}
+			else
+			{
+				$(this).addClass("chnTimeSubscribed");
+				X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
+			}
+		});
+
+		/*
+		 * Bind event handler for the div "checkboxes".
+		 */
+		check.click(function()
+		{
+			// The ID was named so by the chain initializer, get the chain nexus
+			var nexus = U.getSubintegerFromHTMLID($(this));
+			var thisbar = $("#barChain_" + nexus);
+			// State of the div is stored in the Checklist object rather in the element itself
+			switch (X.getChecklistItem(X.Checklists.Chain, nexus))
 			{
 				case X.ChecklistEnum.Unchecked:
 				{
-					// Chain is not checked off, so don't do anything
+					thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
+					$("#chnDetails_" + nexus).hide("fast");
+					$(this).addClass("chnChecked");
+					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Checked);
 				} break;
 				case X.ChecklistEnum.Checked:
 				{
-					bar.css({opacity: K.iconOpacityChecked});
-					check.addClass("chnChecked");
-					if (O.Options.bol_hideChecked)
-					{
-						bar.hide();
-					}
+					thisbar.css({opacity: 1}).show("fast");
+					thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
+					$("#chnDetails_" + nexus).show("fast");
+					$(this).removeClass("chnChecked");
+					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
 				} break;
 				case X.ChecklistEnum.Disabled:
 				{
-					bar.hide();
+					thisbar.css({opacity: 1}).show("fast");
+					$("#chnDetails_" + nexus).show("fast");
+					$(this).removeClass("chnChecked");
+					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
 				} break;
 			}
-			
-			// Set the time visual state as stored (subscribed or not)
-			if (X.getChecklistItem(X.Checklists.ChainSubscription, chain.nexus) ===
-					X.ChecklistEnum.Checked)
+			// Also autohide the chain bar if opted
+			if (X.getChecklistItem(X.Checklists.Chain, nexus) === X.ChecklistEnum.Checked)
 			{
-				time.addClass("chnTimeSubscribed");
-			}
-			
-			/*
-			 * Bind event handler for the time clickable for subscription.
-			 */
-			time.click(function()
-			{
-				var nexus = U.getSubintegerFromHTMLID($(this));
-				
-				if (X.getChecklistItem(X.Checklists.ChainSubscription, nexus) === X.ChecklistEnum.Checked)
+				if (O.Options.bol_hideChecked)
 				{
-					$(this).removeClass("chnTimeSubscribed");
-					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Unchecked);
+					thisbar.hide("fast");
 				}
 				else
 				{
-					$(this).addClass("chnTimeSubscribed");
-					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
+					thisbar.show("fast");
 				}
-			});
-			
-			/*
-			 * Bind event handler for the div "checkboxes".
-			 */
-			check.click(function()
-			{
-				// The ID was named so by the chain initializer, get the chain nexus
-				var nexus = U.getSubintegerFromHTMLID($(this));
-				var thisbar = $("#barChain_" + nexus);
-				// State of the div is stored in the Checklist object rather in the element itself
-				switch (X.getChecklistItem(X.Checklists.Chain, nexus))
-				{
-					case X.ChecklistEnum.Unchecked:
-					{
-						thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
-						$("#chnDetails_" + nexus).hide("fast");
-						$(this).addClass("chnChecked");
-						X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Checked);
-					} break;
-					case X.ChecklistEnum.Checked:
-					{
-						thisbar.css({opacity: 1}).show("fast");
-						thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
-						$("#chnDetails_" + nexus).show("fast");
-						$(this).removeClass("chnChecked");
-						X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
-					} break;
-					case X.ChecklistEnum.Disabled:
-					{
-						thisbar.css({opacity: 1}).show("fast");
-						$("#chnDetails_" + nexus).show("fast");
-						$(this).removeClass("chnChecked");
-						X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
-					} break;
-				}
-				// Also autohide the chain bar if opted
-				if (X.getChecklistItem(X.Checklists.Chain, nexus) === X.ChecklistEnum.Checked)
-				{
-					if (O.Options.bol_hideChecked)
-					{
-						thisbar.hide("fast");
-					}
-					else
-					{
-						thisbar.show("fast");
-					}
-				}
-				// Update the icons on the clock too
-				K.checkoffChainIcon(nexus);
-			});
-			
-			// Bind the delete chain text button [x]
-			$("#chnDelete_" + chain.nexus).click(function()
-			{
-				var nexus = U.getSubintegerFromHTMLID($(this));
-				var thisbar = $("#barChain_" + nexus);
+			}
+			// Update the icons on the clock too
+			K.checkoffChainIcon(nexus);
+		});
 
-				thisbar.hide("slow");
-				X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Disabled);
-				
-				// Also update the clock icon
-				K.checkoffChainIcon(nexus);
-			});
-		}
+		// Bind the delete chain text button [x]
+		$("#chnDelete_" + pChain.nexus).click(function()
+		{
+			var nexus = U.getSubintegerFromHTMLID($(this));
+			var thisbar = $("#barChain_" + nexus);
+
+			thisbar.hide("slow");
+			X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Disabled);
+
+			// Also update the clock icon
+			K.checkoffChainIcon(nexus);
+		});
 	},
 	
 	/*
@@ -4879,6 +4885,7 @@ C = {
 		Primary: 2, // An only event at the time or a concurrent event that takes the longest to complete
 		Boss: 3 // The boss event, also considered a primary event
 	},
+	isDryTopExpanded: false,
 	
 	/*
 	 * Gets a chain from its alias.
@@ -5031,59 +5038,17 @@ C = {
 		}
 		return pString;
 	},
-	
-	/*
-	 * Sets the chain bar icon to the proper.
-	 * @param object pChain to reference.
-	 */
-	styleBarIcon: function(pChain)
-	{
-		document.getElementById("chnIcon_" + pChain.nexus).src = "img/chain/"
-			+ C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG;
-	},
 
 	/*
-	 * Initializes the chain HTML plate presentation with chains and their
-	 * individual events. Calculates time sums for chains and pushes to array
-	 * for later accessing by the ticker. 
+	 * Initializes the chain HTML plate with chains and their individual events.
+	 * Calculates time sums for chains and pushes to array for later accessing by the ticker.
 	 * @param object pChain chain to initialize.
 	 */
-	initializeChainAndHTML: function(pChain)
+	initializeChain: function(pChain)
 	{
 		var i, ii;
 		var event;
-		var chainlistid = "";
 		var chainextra = "";
-		
-		switch (pChain.series)
-		{
-			case C.ChainSeriesEnum.Standard:
-			{
-				chainlistid = "#listChainsScheduled";
-				C.ScheduledChains.push(pChain);
-			} break;
-			case C.ChainSeriesEnum.Hardcore:
-			{
-				chainlistid = "#listChainsScheduled";
-				C.ScheduledChains.push(pChain);
-			} break;
-			case C.ChainSeriesEnum.DryTop:
-			{
-				chainlistid = "#listChainsDryTop";
-				C.ScheduledChains.push(pChain);
-				C.DryTopChains.push(pChain);
-			} break;
-			case C.ChainSeriesEnum.Legacy:
-			{
-				chainlistid = "#listChainsLegacy";
-				C.LegacyChains.push(pChain);
-			} break;
-			case C.ChainSeriesEnum.Temple:
-			{
-				chainlistid = "#listChainsTemple";
-				C.TempleChains.push(pChain);
-			} break;
-		}
 		
 		if (pChain.series !== C.ChainSeriesEnum.DryTop)
 		{
@@ -5098,10 +5063,10 @@ C = {
 		 * chain title, time, individual events listed, and other elements.
 		 * Lots of CSS IDs and classes here, so update if the CSS changed.
 		 */
-		$(chainlistid).append(
+		$(pChain.htmllist).append(
 		"<div id='barChain_" + pChain.nexus + "' class='barChain'>"
 			+ "<div class='chnTitle'>"
-				+ "<img id='chnIcon_" + pChain.nexus + "' src='' />"
+				+ "<img id='chnIcon_" + pChain.nexus + "' src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
 				+ "<div id='chnCheck_" + pChain.nexus + "' class='chnCheck'></div>"
 				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + C.truncateTitleString(D.getChainTitle(pChain.nexus), C.cChainTitleCharLimit) + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
@@ -5114,12 +5079,6 @@ C = {
 					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options, Defaults).'>[x]</kbd>"
 				+ "</div>"
 		+ "</div>");
-		// Initially only show/download icons for the scheduled chains list
-		if (pChain.series === C.ChainSeriesEnum.Standard ||
-			pChain.series === C.ChainSeriesEnum.Hardcore)
-		{
-			C.styleBarIcon(pChain);
-		}
 
 		/*
 		 * Inserts an event with icon and necessary indentation into the ol.
@@ -5193,7 +5152,7 @@ C = {
 			}
 			$("#chnEvents_" + pChain.nexus).append(
 			"<li id='chnEvent_" + pChain.nexus + "_" + e.num + "' class='chnStep_" + pChain.nexus + "_" + e.step + "' style='margin-left:" + indentpixel +"px'>"
-				+ "<img src='img/event/" + e.icon + I.cPNG + "' title='" + eventhtmltitle + "'/>"
+				+ "<ins class='evt_" + e.icon + "' title='" + eventhtmltitle + "'></ins>"
 				+ "<span>" + C.truncateTitleString(D.getEventName(e), eventnamelimit, "..") + "</span>"
 			+ "</li>");
 		};
@@ -5292,7 +5251,97 @@ C = {
 				}
 			}
 		}
-	}, // End of initializeChains()
+		
+		/*
+		 * Show individual events of a chain bar if clicked on, or
+		 * automatically shown by the ticker function.
+		 */
+		$("#chnTitle_" + pChain.nexus).click(function()
+		{
+			$(this).parent().next().slideToggle(100);
+		});
+		$("#chnDetails_" + pChain.nexus).hide();
+		
+		// Initialize tooltips
+		I.qTip.init($("#chnEvents_" + pChain.nexus + " img"));
+		I.qTip.init($("#chnDetails_" + pChain.nexus + " kbd"));
+		
+		// Finally intialize its checklist state
+		X.initializeChainChecklist(pChain);
+		
+	}, // End of initializeChain()
+	
+	/*
+	 * Binds chains list expansion behavior.
+	 */
+	initializeUI: function()
+	{
+		/*
+		 * Chains list collapsible headers.
+		 */
+		$("#plateChains header").click(function()
+		{
+			$(this).next().slideToggle("fast", function()
+			{
+				// Change the toggle icon after finish toggling
+				if ($(this).is(":visible"))
+				{
+					var container = $(I.cPagePrefix + I.PageEnum.Chains);
+					var header = $(this).prev();
+					header.find("kbd").html("[-]");
+					// Automatically scroll to the clicked header
+					I.scrollToElement(header, container, "fast");
+					
+					// Scroll the map to Dry Top if it is that chain list
+					if ($(this).attr("id") === "listChainsDryTop")
+					{
+						M.goToZone("dry", M.ZoomLevelEnum.Sky);
+					}
+				}
+				else
+				{
+					$(this).prev().find("kbd").html("[+]");
+				}
+			});
+		});
+	   
+	   /*
+		* Add collapse text icon to headers; first one is pre-expanded.
+		*/
+		$("#plateChains header:not(:first)").each(function()
+		{
+			$(this).next().toggle(0);
+			$(this).find("kbd").html("[+]");
+		});
+		$("#plateChains header:first").each(function()
+		{
+			$(this).find("kbd").html("[-]");
+		});
+
+		// Create chain bars for unscheduled chains only when manually expanded the header
+		$("#listChainsDryTop").prev().one("click", function()
+		{
+			P.generateDryTopIcons();
+			C.isDryTopExpanded = true;
+		});
+		$("#listChainsLegacy").prev().one("click", function()
+		{
+			C.LegacyChains.forEach(C.initializeChain);
+			C.LegacyChains.forEach(P.drawChainPaths);
+		});
+		$("#listChainsTemple").prev().one("click", function()
+		{
+			C.TempleChains.forEach(C.initializeChain);
+			C.TempleChains.forEach(P.drawChainPaths);
+		});
+
+		/*
+		 * Generate a full timetable of the chains when clicked on that header.
+		 */
+		$("#headerTimetable").one("click", function(){
+		   C.initializeTimetableHTML(); 
+		});
+	},
 
 	/*
 	 * Initializes every chain and create additional informative arrays for them.
@@ -5300,28 +5349,68 @@ C = {
 	 */
 	initializeAllChains: function()
 	{
+		X.initializeChecklist(X.Checklists.Chain, C.Chains.length);
+		X.initializeChecklist(X.Checklists.ChainSubscription, C.Chains.length);
+		
+		var chain;
 		for (var i in C.Chains)
 		{
+			chain = C.Chains[i];
 			/*
 			 * Initialize step attribute (the first number in an event
 			 * number, as in "2" in "2A1"), will be used to access events HTML.
 			 */
-			for (var ii in C.Chains[i].events)
+			for (var ii in chain.events)
 			{
 				// Minus 1 because the event numbers are 1 indexed
-				C.Chains[i].events[ii].step = parseInt(C.getEventStepNumber(C.Chains[i].events[ii].num)) - 1;
+				chain.events[ii].step = parseInt(C.getEventStepNumber(chain.events[ii].num)) - 1;
 			}
 			
-			C.Chains[i].nexus = parseInt(i);
-			C.Chains[i].isSorted = false;
-			C.Chains[i].primaryEvents = new Array();
-			C.Chains[i].scheduleKeys = new Array();
-			C.initializeChainAndHTML(C.Chains[i]);
+			chain.nexus = parseInt(i);
+			chain.isSorted = false;
+			chain.primaryEvents = new Array();
+			chain.scheduleKeys = new Array();
+			
+			switch (chain.series)
+			{
+				case C.ChainSeriesEnum.Standard:
+				{
+					chain.htmllist = "#listChainsScheduled";
+					C.ScheduledChains.push(chain);
+				} break;
+				case C.ChainSeriesEnum.Hardcore:
+				{
+					chain.htmllist = "#listChainsScheduled";
+					C.ScheduledChains.push(chain);
+				} break;
+				case C.ChainSeriesEnum.DryTop:
+				{
+					chain.htmllist = "#listChainsDryTop";
+					C.ScheduledChains.push(chain);
+					C.DryTopChains.push(chain);
+				} break;
+				case C.ChainSeriesEnum.Legacy:
+				{
+					chain.htmllist = "#listChainsLegacy";
+					C.LegacyChains.push(chain);
+				} break;
+				case C.ChainSeriesEnum.Temple:
+				{
+					chain.htmllist = "#listChainsTemple";
+					C.TempleChains.push(chain);
+				} break;
+			}
+
+			// Unschedule chains will be initialized when their headers are clicked on
+			if (C.isChainScheduled(chain))
+			{
+				C.initializeChain(chain);
+			}
 		}
+		
+		C.initializeUI();
 		// Initialize today's chain shortcut object
 		C.updateChainToday();
-		// Collapse all chain bars
-		$(".chnDetails").hide();
 		// Initial recoloring of chain titles
 		$("#listChainsScheduled .barChain h1, #listChainsDryTop .barChain h1")
 			.addClass("chnTitleFutureFar");
@@ -5704,8 +5793,6 @@ C = {
 		 */
 		if (elapsed > 0)
 		{
-			// Gray out all of the scheduled chain's events
-			$(".barChain:not(.barChainCurrent) .chnEvents li").addClass("chnEventPast");
 			// Find the current active event and highlight it
 			for (i in chain.primaryEvents)
 			{
@@ -5798,7 +5885,7 @@ C = {
 		var isregularchain = C.isChainRegular(pChain);
 		
 		// Hide past events' markers
-		if (pChain.series === C.ChainSeriesEnum.DryTop)
+		if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopExpanded)
 		{
 			for (i in pChain.events)
 			{
@@ -5819,7 +5906,7 @@ C = {
 			for (i = 0; i < pPrimaryEventIndex; i++)
 			{
 				$(".chnStep_" + pChain.nexus + "_" + i)
-					.removeClass("chnEventCurrent").addClass("chnEventPast");
+					.removeClass("chnEventCurrent");
 			}
 			$(".chnStep_" + pChain.nexus + "_" + (pPrimaryEventIndex - 1))
 				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed,
@@ -5835,11 +5922,11 @@ C = {
 			// Recolor current events and animate transition
 			$(".chnStep_" + pChain.nexus + "_" + pPrimaryEventIndex).each(function()
 			{
-				$(this).removeClass("chnEventPast chnEventFuture").addClass("chnEventCurrent").show()
+				$(this).removeClass("chnEventFuture").addClass("chnEventCurrent").show()
 					.css({width: 0, opacity: 0.5}).animate({width: eventnamewidth, opacity: 1}, animationspeed)
 					.css({width: "auto"});
 				// Also show current events' markers
-				if (pChain.series === C.ChainSeriesEnum.DryTop)
+				if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopExpanded)
 				{
 					event = pChain.events[$(this).attr("data-eventindex")];
 					// Add active events to iterable array
@@ -5893,7 +5980,7 @@ C = {
 			
 			// Recolor all events
 			$("#chnEvents_" + pChain.nexus + " li").show()
-				.removeClass("chnEventCurrent").addClass("chnEventPast");
+				.removeClass("chnEventCurrent");
 			// Recolor current (final) events as past
 			$(".chnStep_" + pChain.nexus + "_" + finalstep)
 				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
@@ -6287,7 +6374,7 @@ M = {
 		M.bindHUDEventCanceler();
 		P.generateSubmaps();
 		P.populateMap();
-		P.drawChainPaths();
+		C.ScheduledChains.forEach(P.drawChainPaths)
 		
 		if ( ! I.isOnSmallDevice)
 		{
@@ -7081,7 +7168,7 @@ M = {
 	},
 	
 	/*
-	 * Binds map view event handlers to all map links (ins tag reserved) in the
+	 * Binds map view event handlers to all map links (dfn tag reserved) in the
 	 * specified container.
 	 * @param string pContainer element ID.
 	 */
@@ -7906,104 +7993,113 @@ P = {
 	 * coordinates to the event names HTML so the map views the location when
 	 * user clicks on it. Also creates icons for Dry Top events.
 	 */
-	drawChainPaths: function()
+	drawChainPaths: function(pChain)
 	{
-		var i, ii;
-		var chain, event, primaryevent;
+		var i;
+		var event, primaryevent;
 		var color;
 		var coords;
 		
-		for (i in C.Chains)
+		for (i = 0; i < pChain.primaryEvents.length; i++)
 		{
-			chain = C.Chains[i];
-			for (ii = 0; ii < chain.primaryEvents.length; ii++)
+			primaryevent = pChain.primaryEvents[i];
+
+			switch (i)
 			{
-				primaryevent = chain.primaryEvents[ii];
-
-				switch (ii)
-				{
-					case 0: color = "red"; break;
-					case 1: color = "orange"; break;
-					case 2: color = "yellow"; break;
-					case 3: color = "lime"; break;
-					case 4: color = "cyan"; break;
-					case 5: color = "blue"; break;
-					case 6: color = "violet"; break;
-					case 7: color = "purple"; break;
-					default: color = "white";
-				}
-
-				/*
-				 * An event's path in the Chains object is an array of coordinates
-				 * (which are themselves array of two numbers x and y). For primary
-				 * events: the first entry is the event's location, the rest is
-				 * the visual path of the step. Nonprimary events contain
-				 * only a single entry, that is, their location.
-				 */
-				coords = M.convertGCtoLCMulti(primaryevent.path, 1);
-				M.ChainPathEntities.push(L.polyline(coords, {color: color}).addTo(M.Map));
+				case 0: color = "red"; break;
+				case 1: color = "orange"; break;
+				case 2: color = "yellow"; break;
+				case 3: color = "lime"; break;
+				case 4: color = "cyan"; break;
+				case 5: color = "blue"; break;
+				case 6: color = "violet"; break;
+				case 7: color = "purple"; break;
+				default: color = "white";
 			}
-			
+
 			/*
-			 * Go to the event location when clicked on event name.
+			 * An event's path in the Chains object is an array of coordinates
+			 * (which are themselves array of two numbers x and y). For primary
+			 * events: the first entry is the event's location, the rest is
+			 * the visual path of the step. Nonprimary events contain
+			 * only a single entry, that is, their location.
 			 */
-			var eventnum;
+			coords = M.convertGCtoLCMulti(primaryevent.path, 1);
+			M.ChainPathEntities.push(L.polyline(coords, {color: color}).addTo(M.Map));
+		}
+
+		/*
+		 * Go to the event location when clicked on event name.
+		 */
+		var eventnum;
+		for (i in pChain.events)
+		{
+			event = pChain.events[i];
+			eventnum = event.num;
+			if (eventnum.indexOf(".") !== -1)
+			{
+				// jQuery thinks the period is a class, escape it
+				eventnum = eventnum.replace(".", "\\.");
+			}
+			$("#chnEvent_" + pChain.nexus + "_" + eventnum).each(function()
+			{
+				// Assign a data attribute to the event name
+				var coord = event.path[0];
+				$(this).attr("data-coord", coord[0] + "," + coord[1]);
+				$(this).attr("data-eventindex", i);
+				// Read the attribute and use the coordinate when clicked for touring
+				if (I.ModeCurrent !== I.ModeEnum.Mobile)
+				{
+					M.bindMapLinkBehavior($(this), M.PinEvent);
+				}
+			});
+		}
+	},
+	
+	/*
+	 * Creates event icons for Dry Top chains, they will be resized by the zoomend function
+	 */
+	generateDryTopIcons: function()
+	{
+		var i, ii;
+		var chain, event;
+		for (i in C.DryTopChains)
+		{
+			chain = C.DryTopChains[i];
 			for (ii in chain.events)
 			{
 				event = chain.events[ii];
-				eventnum = event.num;
-				if (eventnum.indexOf(".") !== -1)
+				event.eventring = L.marker(M.convertGCtoLC(event.path[0]),
 				{
-					// jQuery thinks the period is a class, escape it
-					eventnum = eventnum.replace(".", "\\.");
-				}
-				$("#chnEvent_" + chain.nexus + "_" + eventnum).each(function()
+					clickable: false,
+					icon: L.icon(
+					{
+						iconUrl: "img/ring/" + event.ring + I.cPNG,
+						iconSize: [32, 32],
+						iconAnchor: [16, 16]
+					})
+				}).addTo(M.Map);
+				event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
 				{
-					// Assign a data attribute to the event name
-					var coord = event.path[0];
-					$(this).attr("data-coord", coord[0] + "," + coord[1]);
-					$(this).attr("data-eventindex", ii);
-					// Read the attribute and use the coordinate when clicked for touring
-					if (I.ModeCurrent !== I.ModeEnum.Mobile)
+					title: "<span class='mapEvent'>" + D.getEventName(event) + "</span>",
+					icon: L.icon(
 					{
-						M.bindMapLinkBehavior($(this), M.PinEvent);
-					}
-				});
-				
-				// Create event icons for Dry Top chains, they will be resized by the zoomend function
-				if (chain.series === C.ChainSeriesEnum.DryTop)
+						iconUrl: "img/event/" + event.icon + I.cPNG,
+						iconSize: [16, 16],
+						iconAnchor: [8, 8]
+					})
+				}).addTo(M.Map);
+				// Initially hide all event icons, the highlight event functions will show them
+				if ( ! $("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
 				{
-					event.eventring = L.marker(M.convertGCtoLC(event.path[0]),
-					{
-						clickable: false,
-						icon: L.icon(
-						{
-							iconUrl: "img/ring/" + event.ring + I.cPNG,
-							iconSize: [32, 32],
-							iconAnchor: [16, 16]
-						})
-					}).addTo(M.Map);
-					event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
-					{
-						title: "<span class='mapEvent'>" + D.getEventName(event) + "</span>",
-						icon: L.icon(
-						{
-							iconUrl: "img/event/" + event.icon + I.cPNG,
-							iconSize: [16, 16],
-							iconAnchor: [8, 8]
-						})
-					}).addTo(M.Map);
-					// Initially hide all event icons, the highlight event functions will show them
 					event.eventring._icon.style.display = "none";
 					event.eventicon._icon.style.display = "none";
-					M.DryTopEventRings.push(event.eventring);
-					M.DryTopEventIcons.push(event.eventicon);
 				}
+				M.DryTopEventRings.push(event.eventring);
+				M.DryTopEventIcons.push(event.eventicon);
 			}
 		}
-		
-		// Initially hide paths, unhide when map populating is complete
-		M.setEntityGroupDisplay(M.ChainPathEntities, "hide");
+		I.qTip.init(".leaflet-marker-icon");
 	},
 	
 	/*
@@ -9206,8 +9302,6 @@ T = {
 			}
 		}
 		
-		// Finally bind event handlers for the chain checklist
-		X.initializeChainChecklist();
 		// Initialize for the touring function to access current active event
 		C.CurrentChainSD = T.getStandardChain();
 		
@@ -11025,7 +11119,6 @@ I = {
 		I.initializeTooltip();
 		I.bindHelpButtons("#plateOptions");
 		I.initializeUIforMenu();
-		I.initializeUIforChains();
 		I.initializeUIForHUD();
 		// Do special commands from the URL
 		U.enforceURLArgumentsLast();
@@ -11170,14 +11263,23 @@ I = {
 	 */
 	scrollToElement: function(pElement, pContainerOfElement, pTime)
 	{
+		// Don't scroll in mobile mode because the webpage's height is dynamic
 		if (I.ModeCurrent !== I.ModeEnum.Mobile)
 		{
 			var rate = pTime || 0;
-			pContainerOfElement.animate(
+			if (pContainerOfElement)
 			{
-				scrollTop: pElement.offset().top - pContainerOfElement.offset().top
-					+ pContainerOfElement.scrollTop()
-			}, rate);
+				pContainerOfElement.animate(
+				{
+					scrollTop: pElement.offset().top - pContainerOfElement.offset().top
+						+ pContainerOfElement.scrollTop()
+				}, rate);
+			}
+			else
+			{
+				// Scroll to top of element without animation
+				pElement.scrollTop(0);
+			}
 		}
 	},
 	
@@ -11201,9 +11303,9 @@ I = {
 	
 	/*
 	 * Initializes custom scroll bar for specified element using defined settings.
-	 * @param jqobject pObject to initialize.
+	 * @param jqobject pElement to initialize.
 	 */
-	initializeScrollbar: function(pObject)
+	initializeScrollbar: function(pElement)
 	{
 		if (I.ModeCurrent === I.ModeEnum.Mobile)
 		{
@@ -11217,7 +11319,7 @@ I = {
 			case I.BrowserEnum.Firefox: wheelspeed = 3; break;
 		}
 		
-		$(pObject).perfectScrollbar({
+		$(pElement).perfectScrollbar({
 			wheelSpeed: wheelspeed,
 			suppressScrollX: true
 		});
@@ -11277,6 +11379,7 @@ I = {
 			// Bind click the header to toggle the sibling collapsible container
 			header.click(function()
 			{
+				var istobeexpanded = false;
 				var section = U.getSubstringFromHTMLID($(this));
 				$(pPlate + " .menuBeamIcon").removeClass("menuBeamIconActive");
 				
@@ -11292,6 +11395,7 @@ I = {
 				else
 				{
 					// To be expanded
+					istobeexpanded = true;
 					$(this).children("sup").text("[-]");
 					$(pPlate + " .menuBeamIcon[data-section='" + section + "']")
 						.addClass("menuBeamIconActive");
@@ -11311,13 +11415,22 @@ I = {
 					{
 						$(this).next().toggle();
 					}
-					I.scrollToElement($(this), $(pPlate), "fast");
 				}
 				else
 				{
 					$(this).next().toggle();
 				}
 				$(this).removeData("donotanimate");
+				
+				// Scroll to header if expanding, top of page if collapsing
+				if (istobeexpanded)
+				{
+					I.scrollToElement($(this), $(pPlate), "fast");
+				}
+				else
+				{
+					I.scrollToElement($(pPlate));
+				}
 			});
 			
 			// Opening the section at least once will load that section's img tags
@@ -11724,84 +11837,6 @@ I = {
 	},
 	
 	/*
-	 * Events' event handlers and UI postchanges.
-	 */
-	initializeUIforChains: function()
-	{
-		/*
-		 * Chains list collapsible headers.
-		 */
-		$("#plateChains header").click(function()
-		{
-			$(this).next().slideToggle("fast", function()
-			{
-				// Change the toggle icon after finish toggling
-				if ($(this).is(":visible"))
-				{
-					var container = $(I.cPagePrefix + I.PageEnum.Chains);
-					var header = $(this).prev();
-					header.find("kbd").html("[-]");
-					// Automatically scroll to the clicked header
-					I.scrollToElement(header, container, "fast");
-					
-					// Scroll the map to Dry Top if it is that chain list
-					if ($(this).attr("id") === "listChainsDryTop")
-					{
-						M.goToZone("dry", M.ZoomLevelEnum.Sky);
-					}
-				}
-				else
-				{
-					$(this).prev().find("kbd").html("[+]");
-				}
-			});
-		});
-	   
-	   /*
-		* Add collapse text icon to headers; first one is pre-expanded.
-		*/
-		$("#plateChains header:not(:first)").each(function()
-		{
-			$(this).next().toggle(0);
-			$(this).find("kbd").html("[+]");
-		});
-		$("#plateChains header:first").each(function()
-		{
-			$(this).find("kbd").html("[-]");
-		});
-
-		// Download chain bar icons for unscheduled chains only when manually expanded the header
-		$("#listChainsDryTop").prev().one("click", function()
-		{
-			C.DryTopChains.forEach(C.styleBarIcon);
-		});
-		$("#listChainsLegacy").prev().one("click", function()
-		{
-			C.LegacyChains.forEach(C.styleBarIcon);
-		});
-		$("#listChainsTemple").prev().one("click", function()
-		{
-			C.TempleChains.forEach(C.styleBarIcon);
-		});
-
-		/*
-		 * Show individual events of a chain bar if clicked on, or
-		 * automatically shown by the ticker function.
-		 */
-		$(".chnTitle h1").click(function()
-		{
-			$(this).parent().next().slideToggle(100);
-		});
-
-		/*
-		 * Generate a full timetable of the chains when clicked on that header.
-		 */
-		$("#headerTimetable").one("click", function(){
-		   C.initializeTimetableHTML(); 
-		});
-	},
-	
-	/*
 	 * Binds Map pane special effects on HUD GUI elements.
 	 */
 	initializeUIForHUD: function()
@@ -11954,7 +11989,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind the following tags with the title attribute for tooltip
-		I.qTip.init("a, kbd, ins, span, img, fieldset, label, input, button");
+		I.qTip.init("a, ins, span, fieldset, label, input, button");
 		
 		/*
 		 * Make the tooltip appear within the visible window by detecting current

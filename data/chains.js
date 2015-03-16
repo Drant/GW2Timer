@@ -169,7 +169,7 @@ var GW2T_CHAIN_DATA = [
 	pronunciation: "claw of jor mag",
 	series: 2,
 	waypoint: "[&BHoCAAA=]",
-	extra: ["80", "1", "2", "15-25"],
+	extra: ["80", "1", "3", "15-25"],
 	title: "Breaking the Claw of Jormag",
 	events: [
 		{
