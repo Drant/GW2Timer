@@ -3930,7 +3930,7 @@ D = {
 		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 		
 		// Time
-		s_h: {de: "s", es: "h", fr: "h", cs: "h", it: "o", pl: "g", pt: "h", ru: "ч", zh: "時"},
+		s_h: {de: "h", es: "h", fr: "h", cs: "h", it: "o", pl: "g", pt: "h", ru: "ч", zh: "時"},
 		s_m: {de: "m", es: "m", fr: "m", cs: "m", it: "m", pl: "m", pt: "m", ru: "м", zh: "分"},
 		s_s: {de: "s", es: "s", fr: "s", cs: "s", it: "s", pl: "s", pt: "s", ru: "с", zh: "秒"},
 		s_hour: {de: "stunde", es: "hora", fr: "heure", cs: "hodina", it: "ora", pl: "godzinę", pt: "hora", ru: "час", zh: "時"},
@@ -6333,6 +6333,21 @@ M = {
 	},
 	
 	/*
+	 * Conditions needed to do the initial zoom to event on pageload.
+	 * @returns true if qualify.
+	 */
+	wantZoomToFirstEvent: function()
+	{
+		if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
+			&& I.PageCurrent === I.PageEnum.Chains
+			&& U.Args[U.KeyEnum.Go] === undefined)
+		{
+			return true;
+		}
+		return false;
+	},
+	
+	/*
 	 * Initializes the Leaflet map, adds markers, and binds events.
 	 */
 	initializeMap: function()
@@ -6347,7 +6362,7 @@ M = {
 			zoomControl: I.isOnSmallDevice, // Hide the zoom UI
 			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
-		}).setView([-128, 128], M.ZoomLevelEnum.Default);
+		}).setView([1024, -1024], M.ZoomLevelEnum.Default); // Out of map boundary so browser doesn't download tiles yet
 		// Because the map will interfere with scrolling the website on touch devices
 		M.Map.touchZoom.disable();
 		if (M.Map.tap)
@@ -6374,7 +6389,7 @@ M = {
 		M.bindHUDEventCanceler();
 		P.generateSubmaps();
 		P.populateMap();
-		C.ScheduledChains.forEach(P.drawChainPaths)
+		C.ScheduledChains.forEach(P.drawChainPaths);
 		
 		if ( ! I.isOnSmallDevice)
 		{
@@ -7967,9 +7982,7 @@ P = {
 		 */
 		I.qTip.init(".leaflet-marker-icon");
 		
-		if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
-			&& I.PageCurrent === I.PageEnum.Chains
-			&& U.Args[U.KeyEnum.Go] === undefined)
+		if (M.wantZoomToFirstEvent())
 		{
 			// Initialize the "current moused zone" variable for showing waypoints
 			M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
@@ -11170,6 +11183,18 @@ I = {
 		// Post translations
 		D.translateAfter();
 		
+		// View map event or map center
+		if (M.wantZoomToFirstEvent())
+		{
+			$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
+				+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
+		}
+		else
+		{
+			M.goToDefault();
+		}
+		
+		// Finally
 		I.isProgramLoaded = true;
 	},
 	
@@ -11996,7 +12021,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind the following tags with the title attribute for tooltip
-		I.qTip.init("a, ins, kbd, span, fieldset, label, input, button");
+		I.qTip.init(".mapHUDButton, a, ins, kbd, span, fieldset, label, input, button");
 		
 		/*
 		 * Make the tooltip appear within the visible window by detecting current
