@@ -618,10 +618,20 @@ O = {
 				time = $("#chnTime_" + C.ChainToday.nexus);
 				if ( ! time.hasClass("chnTimeSubscribed"))
 				{
-					I.write("Autosubscribed to Daily World Boss: " + C.ChainToday.alias);
 					time.trigger("click");
 				}
 			}
+		}
+		if (C.ChainToday)
+		{
+			I.write(D.getModifiedWord("world boss", "daily", U.CaseEnum.Sentence) + " "
+				+ D.getChainAlias(C.ChainToday.nexus) + " " + D.getPhrase("will start") + " " + D.getWord("at") + " "
+				+ T.getTimeFormatted(
+				{
+					wantSeconds: false,
+					customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
+				}),
+			messagetime);
 		}
 		
 		// Dungeon and Personal Checklists
@@ -3979,6 +3989,8 @@ D = {
 			cs: "odškrtnout", it: "controllato", pl: "zakończony", pt: "marcado", ru: "галочка", zh: "勾掉"},
 		s_current: {de: "aktuelle", es: "actual", fr: "actuel",
 			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", zh: "活期"},
+		s_daily: {de: "täglich", es: "diaria", fr: "quotidien",
+			cs: "denní", it: "giornaliero", pl: "dzienny", pt: "diário", ru: "ежедневно", zh: "每天"},
 		s_next: {de: "nächste", es: "siguiente", fr: "prochain",
 			cs: "příští", it: "seguente", pl: "następny", pt: "próximo", ru: "следующий", zh: "下一"},
 		s_off: {de: "aus", es: "desactivado", fr: "désactivé",
@@ -3991,6 +4003,8 @@ D = {
 			cs: "pak", it: "poi", pl: "potem", pt: "então", ru: "затем", zh: "接著"},
 		
 		// Prepositions and Conjunctions
+		s_at: {de: "um", es: "a", fr: "à",
+			cs: "v", it: "a", pl: "o", pt: "a", ru: "в", zh: "在"},
 		s_and: {de: "und", es: "y", fr: "et",
 			cs: "a", it: "e", pl: "i", pt: "e", ru: "и", zh: "和"},
 		s_if: {de: "wenn", es: "si", fr: "si",
@@ -6369,12 +6383,6 @@ M = {
 		{
 			M.Map.tap.disable();
 		}
-		
-		// Set tile
-		L.tileLayer(U.URL_API.TilesTyria,
-		{
-			continuousWorld: true
-		}).addTo(M.Map);
 		
 		// Initialize array in zones to later hold world completion and dynamic event icons
 		for (var i in M.Zones)
@@ -11193,6 +11201,11 @@ I = {
 		{
 			M.goToDefault();
 		}
+		// Set tile after viewing the coordinate so it downloads the tiles last
+		L.tileLayer(U.URL_API.TilesTyria,
+		{
+			continuousWorld: true
+		}).addTo(M.Map);
 		
 		// Finally
 		I.isProgramLoaded = true;
