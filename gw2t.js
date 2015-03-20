@@ -63,6 +63,7 @@ O = {
 	lengthOfPrefixes: 3,
 	prefixOption: "opt_",
 	legalLocalStorageKeys: new Array(),
+	isServerReset: false,
 
 	/*
 	 * These utility variables will also be stored in localStorage.
@@ -585,6 +586,7 @@ O = {
 	 */
 	clearServerSensitiveOptions: function()
 	{
+		O.isServerReset = true;
 		var messagetime = 10;
 		I.write("Daily Reset / Timestamp Expired!", messagetime);
 		
@@ -621,17 +623,6 @@ O = {
 					time.trigger("click");
 				}
 			}
-		}
-		if (C.ChainToday)
-		{
-			I.write(D.getModifiedWord("world boss", "daily", U.CaseEnum.Sentence) + " "
-				+ D.getChainAlias(C.ChainToday.nexus) + " " + D.getPhrase("will start") + " " + D.getWord("at") + " "
-				+ T.getTimeFormatted(
-				{
-					wantSeconds: false,
-					customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
-				}),
-			messagetime);
 		}
 		
 		// Dungeon and Personal Checklists
@@ -11206,6 +11197,22 @@ I = {
 		{
 			continuousWorld: true
 		}).addTo(M.Map);
+		
+		// Tells today's world boss closest scheduled time if server resetted
+		if (O.isServerReset)
+		{
+			if (C.ChainToday)
+			{
+				I.write(D.getModifiedWord("world boss", "daily", U.CaseEnum.Sentence) + " "
+					+ D.getChainAlias(C.ChainToday.nexus) + " " + D.getPhrase("will start") + " " + D.getPhrase("at") + " "
+					+ T.getTimeFormatted(
+					{
+						wantSeconds: false,
+						customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
+					}),
+				10);
+			}
+		}
 		
 		// Finally
 		I.isProgramLoaded = true;
