@@ -5,7 +5,7 @@
 
 
 <header id="headerMap_Daily" class="jsSection"><img src="img/ui/ap.png" alt="Daily Achievements" /><var
-	data-de="Täglich Leistungen"
+	data-de="Täglich Erfolge"
 	data-es="Logros Diarios"
 	data-fr="Succèses Quotidiennes"
 	data-cs="Denní Úspěchy"
@@ -110,7 +110,7 @@
 
 
 
-<header id="headerMap_Resource" class="jsSection mapOnly"><img src="img/ui/resource.png" alt="Resource Nodes" /><var
+<header id="headerMap_Resource" class="jsSection mapOnly"><img src="img/node/resource_metal.png" alt="Resource Nodes" /><var
 	data-de="Ressourcenknoten"
 	data-es="Nodos de Recursos"
 	data-fr="Noeuds de Ressources"
@@ -123,12 +123,12 @@
 	>Resource Nodes</var>
 </header>
 <section>
-<button id="mapToggle_Resource" class="btnToggle"><img data-src="img/map/display.png" alt="Toggle" /></button>
 <div class="mapResourceList">
-	<div id="mapResource_Metal"></div>
-	<div id="mapResource_Plant"></div>
-	<div id="mapResource_Wood"></div>
+	<div id="mapResource_Metal"><button id="mapToggle_ResourceMetal"><img data-src="img/node/resource_metal.png" alt="Toggle" /></button></div>
+	<div id="mapResource_Plant"><button id="mapToggle_ResourcePlant"><img data-src="img/node/resource_plant.png" alt="Toggle" /></button></div>
+	<div id="mapResource_Wood"><button id="mapToggle_ResourceWood"><img data-src="img/node/resource_wood.png" alt="Toggle" /></button></div>
 </div>
+<button id="mapToggle_Resource" class="btnToggle"><img data-src="img/map/display.png" alt="Toggle" /></button><br />
 <div class="mapLegendLine" style="border-bottom: 2px solid lime"></div> <strong>Exact</strong> location of that node<br />
 <div class="mapLegendLine" style="border-bottom: 2px dotted lime"></div> <strong>Possible</strong> vicinity of that node<br />
 <div class="mapLegendLine" style="border-bottom: 2px dashed lime"></div> <strong>Map</strong> has that resource (not a node)<br />
@@ -144,10 +144,10 @@
 
 
 
-<header id="headerMap_JP" class="jsSection mapOnly"><img src="img/ui/jp.png" alt="Jumping Puzzles" /><var
-	data-de="Rätsel Springen"
-	data-es="Rompecabezas Saltos"
-	data-fr="Énigmes Sauts"
+<header id="headerMap_JP" class="jsSection mapOnly"><img src="img/map/jp.png" alt="Jumping Puzzles" /><var
+	data-de="Sprung-Rätsel"
+	data-es="Prueba de Salto"
+	data-fr="Puzzle de Saut"
 	data-cs="Skákání Hlavolam"
 	data-it="Rompicapo Saltando"
 	data-pl="Skoki Zagadki"
@@ -157,64 +157,33 @@
 	 >Jumping Puzzles</var>
 </header>
 <section>
-<p>The JP map icons point to the entrance. Click on a checkbox here or a JP icon on the map to check off a JP. Double click a JP icon to zoom in/out.<br /><strong>Links:</strong> [Y]outube [W]iki.<span id="mapJPCounter"></span></p>
-<button id="mapJPUncheck" class="cssRight">Uncheck All</button>
+<p>The JP map icons point to the entrance. Click on a checkbox here or a JP icon on the map to check off a JP. Double click a JP icon to zoom in/out. Chests refresh at daily reset time.<br /><strong>Links:</strong> [Y]outube [W]iki.<span id="mapJPCounter"></span></p>
+<button id="mapJPToggleJP" style="width:120px"><img data-src="img/map/jp.png" alt="Toggle" /></button>&nbsp;
+<button id="mapJPToggleChest" style="width:120px"><img data-src="img/map/chest.png" alt="Toggle" /></button>&nbsp;
+<button id="mapJPUncheck" class="btnUncheck cssRight"><img data-src="img/ui/uncheck.png" /></button>
 
 <div class="mapLinks">
 <h2>Easy <span class="mapLegendLine" style="border-bottom: 2px solid lime"></span></h2>
 Simple or short jumps.
-<dl data-jpdif="0" class="mapJPList"><!-- JP IDs are sorted by X coordinate (latitude) -->
-	<dt id="mapJP_19" data-coord="[17399, 14591]" data-img="yjaAbBF">Urmaug's Secret</dt><dd>LA short climbs up cave cliff</dd>
-	<dt id="mapJP_8" data-coord="[13202, 13674]" data-img="Bme6j1E">Demongrub Pits</dt><dd>Queensdale small cave with grubs and skelks</dd>
-	<dt id="mapJP_7" data-coord="[12781, 15876]" data-img="4JUI2Ba">The Collapsed Observatory</dt><dd>Kessex cave ruins behind a river</dd>
-	<dt id="mapJP_11" data-coord="[13884, 20428]" data-img="omyJBSk">Under New Management</dt><dd>Southsun short climb up the Consortium building</dd>
-	<dt id="mapJP_2" data-coord="[10635, 20000]" data-img="SkOg8q8">Spelunker's Delve</dt><dd>Caledon giant mushrooms water cavern. Entrance is an underground hole covered by shrubs</dd>
-	<dt id="mapJP_29" data-coord="[22074, 13584]" data-img="0vGbgNn">Shamans Rookery</dt><dd>Wayfarer raven knockbacks from rock pillars</dd>
-	<dt id="mapJP_28" data-coord="[21490, 12271]" data-img="y7bmCXv">King Jalis's Refuge</dt><dd>Snowden Priory site with looters</dd>
-	<dt id="mapJP_25" data-coord="[20756, 20878]" data-img="iWXzOXM">Coddler's Cove</dt><dd>Timberline skip jump over quaggan lanterns. Entrance is underwater. <dfn data-coord="[20685, 21217]">Inner cove</dfn> <a href="http://i.imgur.com/1CRkPDo.png">entrance note</a></dd>
-	<dt id="mapJP_30" data-coord="[22075, 9112]" data-img="sV7XcGd">Shattered Ice Ruins</dt><dd>Frostgorge ice cave with trolls  skelks oozes</dd>
-	<dt id="mapJP_34" data-coord="[26258, 13026]" data-img="CETyR64">Crimson Plateau</dt><dd>Diessa grawl plateau with rocks and ruins</dd>
-	<dt id="mapJP_31" data-coord="[25136, 12227]" data-img="7Qxd1Wx">Grendich Gamble</dt><dd>Diessa ruined Ascalonian stone tower climb</dd>
-	<dt id="mapJP_32" data-coord="[25530, 13388]" data-img="c8sAP6V">Wall Breach Blitz</dt><dd>Diessa long Ascalonian wall with vista at end</dd>
-	<dt id="mapJP_39" data-coord="[31116, 15198]" data-img="5AOBdga">Behem Gauntlet</dt><dd>Blazeridge deep spider bat cave</dd>
-	<dt id="mapJP_33" data-coord="[25986, 10719]" data-img="0RIGbvR">Pig Iron Quarry</dt><dd>Fireheart suspended carts high over two hills</dd>
-	<dt id="mapJP_16" data-coord="[16325, 24485]" data-img="1whVJrb">Vizier's Tower</dt><dd>Straits coral climb up a plateau tower</dd>
-	<dt id="mapJP_5" data-coord="[11078, 29012]" data-img="5AAMpcO">Buried Archives</dt><dd>Cursed wall coral jump through risens eagles</dd>
-</dl>
-<br />
+	<dl id="mapJPList_0" class="mapJPList"></dl>
+	<br />
 <h2>Medium <span class="mapLegendLine" style="border-bottom: 2px solid orange"></span></h2>
 Tricky jumps or interaction required.
-<dl data-jpdif="1" class="mapJPList">
-	<dt id="mapJP_15" data-coord="[16300, 14605]" data-img="8RKUmMH">Troll's End</dt><dd>LA stalactite cave with planks</dd>
-	<dt id="mapJP_18" data-coord="[17210, 15481]" data-img="Asnph3I">Weyandt's Revenge</dt><dd>LA huge pirate themed cave</dd>
-	<dt id="mapJP_17" data-coord="[16670, 14183]" data-img="19dLq1S">Swashbuckler's Cove</dt><dd>Gendarran light torches and swim in time. <dfn data-coord="[16510, 14221]">Cave entrance</dfn> faces east</dd>
-	<dt id="mapJP_12" data-coord="[14330, 9653]" data-img="vHwaBOm">Fawcett's Bounty</dt><dd>Harathi pirate ship in underground lake</dd>
-	<dt id="mapJP_14" data-coord="[15726, 16423]" data-img="3uEgh6s">Professor Portmatt's Lab</dt><dd>Bloodtide underwater number puzzle force fields</dd>
-	<dt id="mapJP_4" data-coord="[11020, 19349]" data-img="vJ9pk02">Morgan's Leap</dt><dd>Caledon spiral tree and floating rocks in the sky. Escort <dfn data-coord="[10696, 19663]">Brugh</dfn> to regrow the leaf stairs</dd>
-	<dt id="mapJP_1" data-coord="[9492, 18652]" data-img="wiRtb7r">Spekks's Laboratory</dt><dd>Caledon asuran light platforms with lava below</dd>
-	<dt id="mapJP_21" data-coord="[17958, 21624]" data-img="xE1n8zJ">Conundrum Cubed</dt><dd>Maelstrom floating cubes and electricity</dd>
-	<dt id="mapJP_20" data-coord="[17545, 21917]" data-img="LlN43yV">Hexfoundry Unhinged</dt><dd>Sparkfly destroyed Inquest facility</dd>
-	<dt id="mapJP_22" data-coord="[18077, 17118]" data-img="fR9doXu">Griffonrook Run</dt><dd>Lornar's steep griffons rock pillars. <a href="http://i.imgur.com/rJk97wh.png">Entrance note</a></dd>
-	<dt id="mapJP_24" data-coord="[19819, 17950]" data-img="2XMfX13">Tribulation Rift Scaffolding</dt><dd>Dredgehaunt tall tower scaffold planks</dd>
-	<dt id="mapJP_23" data-coord="[19718, 17986]" data-img="2jLd6zm">Tribulation Caverns</dt><dd>Dredgehaunt ice cave after the scaffold JP</dd>
-	<dt id="mapJP_26" data-coord="[21080, 18861]" data-img="jG5uLNJ">Only Zuhl</dt><dd>Timberline ice cave then lava dredge/destroyer mine. You have to kill a champ at the end to get credit</dd>
-	<dt id="mapJP_36" data-coord="[28465, 15425]" data-img="dtnDiEQ">Loreclaw Expanse</dt><dd>Ashford water cavern Ascalonian ruins with traps</dd>
-	<dt id="mapJP_37" data-coord="[28948, 16834]" data-img="QATS0uY">Branded Mine</dt><dd>Fields metal platforms jaggedly hung on chains</dd>
-	<dt id="mapJP_35" data-coord="[27345, 13106]" data-img="S0JZgxG">Chaos Crystal Cavern</dt><dd>Marches skip rocks jumps with character transformations. <a href="http://i.imgur.com/hQKO6Mi.png">Shortcut note</a></dd>
-	<dt id="mapJP_38" data-coord="[30901, 12471]" data-img="2Q5FzbJ">Craze's Folly</dt><dd>Blazeridge Separatists hideout and troll cave. <a href="http://i.imgur.com/WNCAQlk.png">Grand Chest note</a></dd>
-	<dt id="mapJP_9" data-coord="[13598, 24798]" data-img="JlHp1Jb">Antre of Adjournment</dt><dd>Malchor's cave wall climb with mini treasure chests</dd>
-</dl>
-<br />
+	<dl id="mapJPList_1" class="mapJPList"></dl>
+	<br />
 <h2>Hard <span class="mapLegendLine" style="border-bottom: 2px solid red"></span></h2>
 A marathon of intricate jumps.
-<dl data-jpdif="2" class="mapJPList">
-	<dt id="mapJP_13" data-coord="[15379, 14282]" data-img="wEG8PMR">Not So Secret</dt><dd>Gendarran aetherblade hideout with trampolines</dd>
-	<dt id="mapJP_0" data-coord="[9235, 18967]" data-img="782GdE5">Goemm's Lab</dt><dd>Metrica floating landmasses in the sky as asura weather stations</dd>
-	<dt id="mapJP_3" data-coord="[10963, 19197]" data-img="KcUE585">Dark Reverie</dt><dd>Caledon nightmare court blue hideout after Morgan's Spiral</dd>
-	<dt id="mapJP_27" data-coord="[21357, 21885]" data-img="ZgnQGFR">Hidden Garden</dt><dd>Maelstrom unlock four element cantles. Keeper portal to JP locations: <dfn data-coord="[18335, 22125]">Earth</dfn>, <dfn data-coord="[19514, 22714]">Light</dfn>, <dfn data-coord="[20143, 22209]">Waves</dfn>, <dfn data-coord="[20770, 23385]">Winds</dfn>. Cantals are at sky and ground level of the center, southeast waterfalls, and north lake</dd>
-	<dt id="mapJP_6" data-coord="[12780, 19377]" data-img="dxTDLqJ">Skipping Stones</dt><dd>Southsun stones gushed up by geysers</dd>
-	<dt id="mapJP_10" data-coord="[13610, 25044]" data-img="kDX7ZEq">Scavenger's Chasm</dt><dd>Malchor's convoluted orrian ruins cave collecting 12 orbs</dd>
-</dl>
+	<dl id="mapJPList_2" class="mapJPList"></dl>
+	<br />
+<h2>Explorer <span class="mapLegendLine" style="border-bottom: 2px solid purple"></span></h2>
+Mini-Dungeons and Explorer Achievements that have chests: less jump, more fight.
+	<dl id="mapJPList_3" class="mapJPList"></dl>
+	<br />
+<h2>Chests</h2>
+<img class="cntIconExample" data-src="img/map/chest.png" /> &nbsp; <a href="http://wiki.guildwars2.com/wiki/List_of_basic_chests">Basics chests</a> lightly guarded.<br />
+<img class="cntIconExample" data-src="img/map/chest.png" style="box-shadow: 0px 0px 10px gold; border-radius: 16px;" /> &nbsp; <a href="http://wiki.guildwars2.com/wiki/Splendid_Chest">Splendid chests</a> heavily guarded.<br />
+These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hold Ctrl when you're in the area ingame to see the chest name appears. Kill mobs guarding the chest or use stealth/invulnerability to open it.
+	<br />
 <button id="mapToggle_JP" class="cssRight"><img data-src="img/map/display.png" alt="Toggle" /></button>
 <br />
 </div>
@@ -237,10 +206,18 @@ A marathon of intricate jumps.
 </header>
 <section>
 <button id="mapToggle_Collectible" class="btnToggle"><img data-src="img/map/display.png" alt="Toggle" /></button>
+<div class="cssRight"><strong>Links:</strong> [Y]outube [W]iki [C]redit</div>
 <div id="mapCollectibleList"></div>
-<p style="text-align: right;"><strong>Links:</strong> [Y]outube [W]iki [C]redit</p>
-<p>Many achievements require you to go around the world to collect or interact with scattered or hidden landmarks or items. These are some of them, including the current Living Story ones if available. When in game, hold the Ctrl key to see the item's name appear.</p>
-<p>Every type of collectible is its own checklist. The map markers can be clicked three times to alternate between three ring colors representing an <em>Unfound</em>, <em>Tracked</em>, and <em>Found</em> state, and your address bar will be updated with a shareable URL for those marked. Click Reset for all the rings of that collectible type to be Unfounded again.</p>
+<kbd class="jsHelpCollapsible"></kbd>
+<div>
+	<p>Many achievements require you to go around the world to collect or interact with scattered or hidden landmarks or items. These are some of them, including the current Living Story ones if available. When in game, hold the Ctrl key to see the item's name appear.</p>
+	<p>Every type of collectible is its own checklist. The map markers can be clicked three times to alternate between three ring colors representing an <em>Unfound</em>, <em>Tracked</em>, and <em>Found</em> state, and your address bar will be updated with a shareable URL for those marked. Click Reset for all the rings of that collectible type to be Unfounded again.</p>
+	<p><b>Coordinates credit goes to:</b><br />
+	<a href="http://dulfy.net/category/gw2/">Dulfy</a>: Dive Master, Coins<br />
+	<a href="http://www.mattsta.ninja/">Mattsta</a>: Buried Chests, Coins<br />
+	<a href="http://www.palingenesis.webspace.virginmedia.com/Tim/GW2/Manual/Manual.html">Palingenesis</a>: Badges
+	</p>
+</div>
 </section>
 
 
@@ -378,7 +355,7 @@ A marathon of intricate jumps.
 		<textarea>Sheet 9</textarea>
 	</div>
 	<br />
-	<button id="chlNotepadRestore" class="cssRight" title="Erase all your notes and restore the default text. Make sure you want to!">Wipe Notepad</button>
+	<button id="chlNotepadRestore" class="btnDefault cssRight" title="Erase all your notes and restore the default text. Make sure you want to!"><img data-src="img/ui/default.png" /></button>
 </div>
 </section>
 
@@ -410,7 +387,7 @@ A marathon of intricate jumps.
 		<span><var id="chlDungeonCalculator_Silver">0</var><img data-src="img/ui/coin_silver.png" alt="Silver" /></span>
 		<span><var id="chlDungeonCalculator_Copper">0</var><img data-src="img/ui/coin_copper.png" alt="Copper" /></span>
 	</div>
-	<button id="chlDungeonUncheck" class="cssRight">Uncheck All</button>
+	<button id="chlDungeonUncheck" class="cssRight btnUncheck"><img data-src="img/ui/uncheck.png" /></button>
 	<div class="chlDungeonBar" data-name="AC">
 		<label title="Hodgins"><input data-money="15500" data-mode="E" type="checkbox" />1</label>
 		<label title="Detha"><input data-money="15500" data-mode="E" type="checkbox" />2</label>
@@ -485,8 +462,8 @@ A marathon of intricate jumps.
 	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="" /></span>
 	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="" /></span>
 	<br />
-	<button id="chlCustomRestore" class="cssRight">Default Text</button>
-	<button id="chlCustomUncheck">Uncheck All</button>
+	<button id="chlCustomRestore" class="btnDefault cssRight" title="Restore example checklist items."><img data-src="img/ui/default.png" /></button>
+	<button id="chlCustomUncheck" class="btnUncheck"><img data-src="img/ui/uncheck.png" /></button>
 </div>
 <br />
 </section>

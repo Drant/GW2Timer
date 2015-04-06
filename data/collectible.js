@@ -1,9 +1,12 @@
 var GW2T_COLLECTIBLE_DATA = {
 // Must have same name as a Checklist object
-Collectible0: 
-{
-	name: "Dive Master",
+DiveMaster: {
+	name_en: "Dive Master",
+	name_de: "Tauchmeisterin",
+	name_es: "Maestra Submarinista",
+	name_fr: "Maître de la plongée",
 	color: "cyan",
+	view: "default",
 	wiki: "http://wiki.guildwars2.com/wiki/Diving_Goggles",
 	credit: "http://dulfy.net/2012/11/05/gw2-dive-master-achievement-guide/",
 	needles: [
@@ -47,10 +50,13 @@ Collectible0:
 	{n: 38, c: [11304, 26657]}
 	]
 },
-Collectible1: 
-{
-	name: "Buried Locked Chest",
+BuriedChests: {
+	name_en: "Dry Top Buried Locked Chest",
+	name_de: "Trockenkuppe Vergrabene Truhen",
+	name_es: "Cima Seca Cofres Enterrados",
+	name_fr: "Cimesèche Coffres Enterrés",
 	color: "cornsilk",
+	view: "dry",
 	wiki: "http://wiki.guildwars2.com/wiki/Buried_Locked_Chest",
 	credit: "http://www.mattsta.ninja/dry-top/",
 	needles: [
@@ -164,10 +170,13 @@ Collectible1:
 	{n: 106, c: [4329, 16619], t: "In pile of rocks by bamboo."}
 	]
 },
-Collectible2: 
-{
-	name: "Coin Collector: Prospect Valley",
+CoinProspect: {
+	name_en: "Coin Collector: Prospect Valley",
+	name_de: "Münzensammlerin: Schürftal",
+	name_es: "Monedas: el Valle de las Promesas",
+	name_fr: "Pièces: Vallée du prospecteur",
 	color: "yellow",
+	view: "dry",
 	wiki: "http://wiki.guildwars2.com/wiki/Lost_coin",
 	credit: "http://dulfy.net/2014/07/01/gw2-coin-collector-prospect-valley-achievement-guide/",
 	needles: [
@@ -203,10 +212,13 @@ Collectible2:
 	{n: 30, c: [5367, 16565]}
 	]
 },
-Collectible3: 
-{
-	name: "Coin Collector: Uplands",
+CoinUplands: {
+	name_en: "Coin Collector: Uplands",
+	name_de: "Münzensammlerin: Hochland",
+	name_es: "Monedas: Altiplanos",
+	name_fr: "Pièces: Hauteurs",
 	color: "orange",
+	view: "dry",
 	wiki: "http://wiki.guildwars2.com/wiki/Lost_coin",
 	credit: "http://www.guildnews.de/guides/die-verschlingung-der-grosse-guide/730/3/die-muenzen-aus-dem-hochland/",
 	needles: [
@@ -242,10 +254,13 @@ Collectible3:
 	{n: 30, c: [4464, 16790]}
 	]
 },
-Collectible4: 
-{
-	name: "Coin Collector: Challenger Cliffs",
+CoinChallenger: {
+	name_en: "Coin Collector: Challenger Cliffs",
+	name_de: "Münzensammlerin: Herausfordererklippen",
+	name_es: "Monedas: Acantilados del Desafío",
+	name_fr: "Pièces: Falaises du combattant",
 	color: "tomato",
+	view: "dry",
 	wiki: "http://wiki.guildwars2.com/wiki/Lost_coin",
 	credit: "http://www.mattsta.ninja/dry-top/",
 	needles: [
@@ -261,6 +276,90 @@ Collectible4:
 	{n: 10, c: [4256, 16487]},
 	{n: 11, c: [4070, 16480]},
 	{n: 12, c: [3908, 16594]}
+	]
+},
+LostBadges: {
+	name_en: "Lost Badges",
+	name_de: "Verlorene Abzeichen",
+	name_es: "Insignias perdidas",
+	name_fr: "Insigne perdu",
+	color: "silver",
+	view: "silverwastes",
+	wiki: "http://wiki.guildwars2.com/wiki/Lost_Badge",
+	credit: "http://dulfy.net/2014/11/04/gw2-lost-badge-silverwastes-achievement-guide/",
+	needles: [
+	{n: 1, c: [5671, 15408]},
+	{n: 2, c: [5798, 15625]},
+	{n: 3, c: [5778, 15145]},
+	{n: 4, c: [5525, 15636]},
+	{n: 5, c: [5276, 15582]},
+	{n: 6, c: [5086, 15506]},
+	{n: 7, c: [4956, 15459]},
+	{n: 8, c: [4722, 15309]},
+	{n: 9, c: [4891, 15313]},
+	{n: 10, c: [4858, 15560]},
+	{n: 11, c: [4576, 15468]},
+	{n: 12, c: [4587, 15326]},
+	{n: 13, c: [4436, 15144]},
+	{n: 14, c: [4672, 15254]},
+	{n: 15, c: [4588, 15247]},
+	{n: 16, c: [4705, 14927]},
+	{n: 17, c: [4334, 14816]},
+	{n: 18, c: [4474, 14683]},
+	{n: 19, c: [4408, 14491]},
+	{n: 20, c: [4798, 14584]},
+	{n: 21, c: [4840, 14730]},
+	{n: 22, c: [4974, 14784]},
+	{n: 23, c: [5145, 14897]},
+	{n: 24, c: [5247, 14972]},
+	{n: 25, c: [5801, 15011]},
+	{n: 26, c: [5821, 15033]},
+	{n: 27, c: [5742, 15013]},
+	{n: 28, c: [5537, 15053]},
+	{n: 29, c: [5508, 15191]},
+	{n: 30, c: [5062, 15297]}
+	]
+},
+GoldenLostBadges: {
+	name_en: "Golden Lost Badges",
+	name_de: "Goldenen Verlorenen Abzeichen",
+	name_es: "Insignias de oro perdidas",
+	name_fr: "Insignes dorés perdus",
+	color: "gold",
+	view: "silverwastes",
+	wiki: "http://wiki.guildwars2.com/wiki/Golden_Lost_Badge",
+	credit: "http://dulfy.net/2014/12/04/gw2-go-for-the-gold-golden-badges-achievement-guide/",
+	needles: [
+	{n: 1, c: [5308, 14809]},
+	{n: 2, c: [5312, 14696]},
+	{n: 3, c: [5203, 14732]},
+	{n: 4, c: [5280, 15022]},
+	{n: 5, c: [5557, 14923]},
+	{n: 6, c: [5508, 14895]},
+	{n: 7, c: [5266, 14962]},
+	{n: 8, c: [5297, 15253]},
+	{n: 9, c: [5475, 15125]},
+	{n: 10, c: [5441, 15467]},
+	{n: 11, c: [5363, 15653]},
+	{n: 12, c: [5670, 15547]},
+	{n: 13, c: [5588, 15378]},
+	{n: 14, c: [5256, 15231]},
+	{n: 15, c: [4785, 15081]},
+	{n: 16, c: [4654, 15056]},
+	{n: 17, c: [4824, 14975]},
+	{n: 18, c: [4980, 15086]},
+	{n: 19, c: [4852, 14900]},
+	{n: 20, c: [4582, 15100]},
+	{n: 21, c: [4413, 15008]},
+	{n: 22, c: [4140, 15177]},
+	{n: 23, c: [3973, 15317]},
+	{n: 24, c: [3913, 15360]},
+	{n: 25, c: [4040, 15556]},
+	{n: 26, c: [4068, 15414]},
+	{n: 27, c: [5215, 14538]},
+	{n: 28, c: [5220, 14307]},
+	{n: 29, c: [4825, 14215]},
+	{n: 30, c: [5533, 14701]}
 	]
 }
 };

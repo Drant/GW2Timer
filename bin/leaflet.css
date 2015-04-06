@@ -156,28 +156,6 @@
 	visibility: hidden;
 	}
 
-
-/* cursors */
-
-.leaflet-clickable {
-	cursor: pointer;
-	}
-.leaflet-container {
-	cursor: -webkit-grab;
-	cursor:    -moz-grab;
-	}
-.leaflet-popup-pane,
-.leaflet-control {
-	cursor: auto;
-	}
-.leaflet-dragging .leaflet-container,
-.leaflet-dragging .leaflet-clickable {
-	cursor: move;
-	cursor: -webkit-grabbing;
-	cursor:    -moz-grabbing;
-	}
-
-
 /* visual tweaks */
 
 .leaflet-container {

@@ -5,7 +5,7 @@
 	<title>GW2Timer.com - Advanced GW2 Timer and Daily Map Guide</title>
 	<meta charset="utf-8" />
 	<meta name="robots" content="index, follow, noarchive" />
-	<meta name="description" content="Guild Wars 2 dragon timer for world boss meta events, with daily achievements checklists, JP gathering map, and Trading Post tracker overlay." />
+	<meta name="description" content="Guild Wars 2 dragon timer for world boss meta events, with daily achievements checklists, JP nodes map, and Trading Post tracker overlay." />
 	<meta name="google-site-verification" content="hPcBd74DxlBzpTu6wO6DkIcOVFLu9SOMT-GQ1MI3fbg" />
 	<meta name="msvalidate.01" content="95E5C0E89A8A24688EC00F2A69986A17" />
 
@@ -70,15 +70,15 @@
 				<u><a class="jsTranslate" title="<dfn>Switch to Mobile Mode (right panel only)</dfn><br />gw2timer.com/m" href="./?mode=Mobile">mobile</a></u><span> /</span>
 				<u><a class="jsTranslate" title="<dfn>Dry Top Buried Locked Chests</dfn>" href="./?page=Chests">chests</a></u>
 				<div id="mapGPS" class="mapHUDContainer">
-					<img id="mapGPSButton" class="mapHUDButton" title="<dfn>Click to Center Self</dfn>" src="img/map/gps.png" alt="GPS" />
+					<img id="mapGPSButton" class="mapHUDButton" data-title="click to center character" src="img/map/gps.png" alt="GPS" />
 					<div id="mapGPSPopup" class="mapHUDPopup cntComposition">
-						<label title="Automatically move the map character pin to your in-game location."><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
 						<label title="Automatically scroll the map to your in-game location."><input id="opt_bol_followCharacter" type="checkbox" />Follow Game Character</label>
-						<label title="Rate at which your character is pinpointed. This should not be faster than the overlay's rate."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Rate (ms)</label>
+						<label title="Automatically move the map character pin to your in-game location."><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
+						<label title="Delay between when your character is pinpointed again. This should not be faster than the overlay's rate."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Rate (ms)</label>
 					</div>
 				</div>
 				<div id="mapOptions" class="mapHUDContainer">
-					<img id="mapDisplayButton" class="mapHUDButton" title="<dfn>Click for Full Map</dfn>" src="img/map/display.png" alt="display" />
+					<img id="mapDisplayButton" class="mapHUDButton" data-title="click to expand map" src="img/map/display.png" alt="display" />
 					<div id="mapOptionsPopup" class="mapHUDPopup cntComposition">
 						<label title="Show/Hide all icons listed below (except events). Will increase initial site load time if enabled."><input id="opt_bol_showWorldCompletion" type="checkbox" /> Display world icons...</label>
 						<div id="mapOptionsDisplay">
@@ -97,7 +97,7 @@
 					</div>
 				</div>
 				<div id="mapZones" class="mapHUDContainer">
-					<img title="<dfn>Click to Center Map</dfn>" id="mapCompassButton" class="mapHUDButton" src="img/map/compass.png" alt="compass" />
+					<img id="mapCompassButton" class="mapHUDButton" data-title="click to center map" src="img/map/compass.png" alt="compass" />
 					<div id="mapZonesPopup" class="mapHUDPopup cntComposition">
 						<div id="mapZoneList" class="mapLinks">
 							<div>
@@ -166,7 +166,7 @@
 			</div>
 			<div id="itemMapLinksSouth" class="itemMapLinks">
 				<a class="linkExternal" title="<dfn>Download the app to run GW2Timer inside Guild Wars 2!</dfn>" href="http://forum.renaka.com/topic/5546166/">
-					<img id="itemLogo" src="img/ui/logo.png" alt="Overlay Application" />gw2timer.com <u>overlay</u>
+					<img id="itemLogo" src="img/ui/favicon.png" alt="Overlay Application" />gw2timer.com <u>overlay</u>
 				</a>
 			</div>
 			</article>
@@ -300,7 +300,7 @@
 				<img id="clkWaypoint3" class="clkWaypointClip" src="img/ui/placeholder.png" alt="X:45 Waypoint">
 			</div>
 			<time id="itemTimeLocal" class="itemTimeDigital">
-				<var id="itemTimeLocalActual" class="curHelp">00:00</var>
+				<var id="itemTimeLocalActual" class="curToggle">00:00</var>
 			</time>
 			<time id="itemTimeDaytime" class="itemTimeDigital">
 				<span class="curHelp" title="<img src='img/ui/sun.png'> Daylight<br /><img src='img/ui/moon.png'> Nighttime<br />(Minutes Remaining)"><img id="itemTimeDayIcon" src="img/ui/sun.png" />&nbsp;<var id="itemTimeDayTime">16:00</var></span>
@@ -402,9 +402,8 @@
 					<br />
 					<h2>Timer</h2>
 					<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off world bosses</label>
-					<label title="Includes all scheduled world bosses."><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand active World Boss chain bars</label>
-					<label title="Includes Dry Top map events."><input id="opt_bol_expandDT" type="checkbox" /> Auto-expand active Dry Top chain bars</label>
-					<label title="Inactive/Gray chain bars."><input id="opt_bol_collapseChains" type="checkbox" /> Auto-collapse inactive chain bars</label>
+					<label title="Active/orange scheduled bosses."><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand active World Boss chain bars</label>
+					<label title="Inactive/gray chain bars."><input id="opt_bol_collapseChains" type="checkbox" /> Auto-collapse inactive chain bars</label>
 					<label title="Display the countdown to when a chain starts or the soonest scheduled time?"><input id="opt_bol_useCountdown" type="checkbox" /> Countdown to future chains</label>
 					<div class="optFieldsets">
 						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain? Auto will use your time of day to choose. Changes will take effect when the next chain starts. &lt;br /&gt;Min: for full population map&lt;br /&gt;Min-Avg: Min + (Avg - Min)/2&lt;br /&gt;Avg: for regular zerg size"><legend>Predictor</legend>

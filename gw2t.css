@@ -256,33 +256,31 @@ div#qTip img {
 
 /* Non-interactive */
 html, body,
-#listChainsTimetable .chnTitle h1, input[type="text"].trdOutput,
-.leaflet-container, .leaflet-popup-pane, .leaflet-control {
+#listChainsTimetable .chnTitle h1, input[type="text"].trdOutput {
 	cursor: url("img/cursor/auto.cur"), auto;
 }
 
 /* Clickable */
-.curClickable, a, kbd, input, label, button,
+.curClick, a, kbd, input, label, button,
 .mapHUDButton,
 .menuBeam img:hover, .jsSectionDone,
 .chnCheck:hover,
-#listChainsScheduled .chnTitle time, #lgnTrack img,
-.leaflet-clickable {
+#listChainsScheduled .chnTitle time, #lgnTrack ins {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
 
 /* Toggleable */
-.curToggleable, #plateChains header, .chnTitle h1, .jsSection, .jsHelpCollapsible {
+.curToggle, #plateChains header, .chnTitle h1, .jsSection, .jsHelpCollapsible {
 	cursor: url("img/cursor/toggle.cur"), pointer;
 }
 
 /* Zoomable */
-.curZoomable, .cntComposition dfn, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
+.curZoom, .cntComposition dfn, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
 	cursor: url("img/cursor/zoom.cur"), pointer;
 }
 
 /* Draggable */
-.curDraggable, .leaflet-dragging .leaflet-container, .leaflet-dragging .leaflet-clickable {
+.curDrag, .leaflet-dragging .leaflet-container {
 	cursor: url("img/cursor/move.cur"), move;
 }
 
@@ -290,6 +288,7 @@ html, body,
 .curHelp, .jsHelpTooltip, .chnDetails ol li ins {
 	cursor: url("img/cursor/help.cur"), help;
 }
+
 
 /* =============================================================================
  *  Left panel
@@ -496,6 +495,24 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	text-shadow:
 		0px 0px 2px black,
 		1px 1px 1px black;
+}
+
+.mapNode img, .mapNodeApprox img, .mapNodeZone img, .mapChestBasic img, .mapChestSplendid img {
+	width: 32px; height: 32px;
+	border-radius: 16px;
+	opacity: 0.9;
+}
+.mapNode img {
+	border: 2px solid lime;
+}
+.mapNodeApprox img {
+	border: 2px dotted lime;
+}
+.mapNodeZone img {
+	border: 2px dashed lime;
+}
+.mapChestSplendid img {
+	box-shadow: 0px 0px 10px gold;
 }
 
 .mapNeedle {
@@ -971,6 +988,10 @@ header.jsSection sup {
 	opacity: 0.9;
 }
 
+.cntComposition img {
+	vertical-align: middle;
+}
+
 .cntComposition input[type="text"], .cntComposition textarea {
 	width: auto;
 	margin: 0;
@@ -1036,6 +1057,12 @@ header.jsSection sup {
 .cntComposition button img {
 	width: 24px; height: 24px;
 	vertical-align: middle;
+}
+.cntComposition button.btnUncheck img {
+	width: 64px; height: 32px;
+}
+.cntComposition button.btnDefault img {
+	width: 32px; height: 32px;
 }
 
 .cntComposition hr {
@@ -1118,7 +1145,6 @@ header.cntHeader {
 
 .cntIconExample {
 	width: 24px; height: 24px;
-	vertical-align: middle;
 }
 
 .itemThrobber {
@@ -1695,8 +1721,11 @@ button.btnToggle {
 .dly_wvw_tower { background-position: -1216px 0; }
 
 /* JP */
-dt.mapJPListNameHover {
+dt.mapJPListNameChecked {
 	color: #ffff00;
+}
+dt.mapJPListNameHover {
+	color: #66aaff;
 }
 
 .mapJPList cite a {
@@ -1722,8 +1751,17 @@ dt.mapJPListNameHover {
 	color: #ffeebb;
 }
 
+/* Resource */
 .mapResourceList {
 	font-size: 11px;
+}
+.mapResourceList div {
+	min-width: 110px;
+}
+.mapResourceList button {
+	width: 84px;
+	margin-top: 8px;
+	margin-bottom: 8px;
 }
 .mapResourceList img {
 	width: 16px; height: 16px;
@@ -1736,19 +1774,33 @@ dt.mapJPListNameHover {
 	margin: auto 12px 5px 6px;
 }
 
+/* Collectible */
 #mapCollectibleList div {
 	display: block;
 }
 #mapCollectibleList div label {
-	display: inline-block;
-	clear: none;
+	display: block;
 	width: auto;
+	margin: 0;
+}
+#mapCollectibleList img {
+	margin-right: 4px;
+	border-radius: 8px;
 }
 #mapCollectibleList div a {
 	text-decoration: underline;
 }
 #mapCollectibleList div:hover label {
 	font-weight: bold;
+}
+#mapCollectibleList div:hover img {
+	box-shadow: 0px 0px 4px #ffff66;
+}
+#mapCollectibleList div span {
+	display: block;
+	padding-bottom: 4px;
+	border-bottom: 1px solid #111;
+	text-align: right;
 }
 
 /* Arithmetic Calculator

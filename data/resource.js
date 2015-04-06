@@ -1,271 +1,380 @@
 var GW2T_RESOURCE_DATA = {
 Copper: {
+	name_en: "Copper",
+	name_de: "Kupfer",
+	name_es: "Cobre",
+	name_fr: "Cuivre",
 	nodes: [
-	[8526, 17275], // metrica
-	[9860, 16199], // caledon
-	[10138, 17684],
-	[11750, 13108], // queensdale 
-	[12787, 14004],
-	[22096, 11512], // wayfarer
-	[25767, 15370], // ashford
-	[26651, 15357],
-	[27369, 14606],
-	[27540, 15135],
-	[28614, 13657]
+	{c: [9860, 16199]}, // caledon
+	{c: [10138, 17684]},
+	{c: [11750, 13108]}, // queensdale 
+	{c: [12787, 14004]},
+	{c: [25767, 15370]}, // ashford
+	{c: [26651, 15357]},
+	{c: [27369, 14606]},
+	{c: [27540, 15135]},
+	{c: [28614, 13657]}
 	], type: "Metal"
 },	
 Iron: {
+	name_en: "Iron",
+	name_de: "Eisen",
+	name_es: "Hierro",
+	name_fr: "Fer",
 	nodes: [
-	[6317, 15049], // brisban
-	[9584, 15076], // kessex
-	[12661, 15573],
-	[12679, 15914],
-	[16935, 14020], // gendarran
-	[13543, 11115], // harathi
-	[18351, 13415], // lornar
-	[20911, 12454], // snowden
-	[20374, 15751], // dredgehaunt
-	[23766, 12745], // diessa
-	[24470, 13451],
-	[28949, 17363], // fields
-	[30905, 15375], // blazeridge
-	[31180, 15023] 
+	{c: [6317, 15049]}, // brisban
+	{c: [9584, 15076]}, // kessex
+	{c: [12661, 15573]},
+	{c: [12679, 15914]},
+	{c: [16935, 14020]}, // gendarran
+	{c: [13543, 11115]}, // harathi
+	{c: [16489, 10086]},
+	{c: [17774, 16366]}, // lornar
+	{c: [18351, 13415]},
+	{c: [20911, 12454]}, // snowden
+	{c: [20374, 15751]}, // dredgehaunt
+	{c: [23766, 12745]}, // diessa
+	{c: [24470, 13451]},
+	{c: [28949, 17363]}, // fields
+	{c: [30905, 15375]}, // blazeridge
+	{c: [31180, 15023]} 
 	], type: "Metal"
 },
 Silver: {
+	name_en: "Silver",
+	name_de: "Silber",
+	name_es: "Plata",
+	name_fr: "Argent",
+	potential: [
+		{c: [20857, 12888]}
+	],
 	nodes: [
-	[6955, 14737], // brisban
-	[9575, 15073], // kessex
-	[12621, 15597],
-	[12653, 15915],
-	[17407, 14141], // gendarran
-	[19589, 12765], // snowden
-	[17685, 14703], // lornar
-	[25154, 12247], // diessa
-	[26885, 13159],
-	[31100, 16455] // fields
+	{c: [6955, 14737]}, // brisban
+	{c: [9575, 15073]}, // kessex
+	{c: [12621, 15597]},
+	{c: [12653, 15915]},
+	{c: [17407, 14141]}, // gendarran
+	{c: [19589, 12765]}, // snowden
+	{c: [17685, 14703]}, // lornar
+	{c: [25154, 12247]}, // diessa
+	{c: [26885, 13159]},
+	{c: [31100, 16455]} // fields
 	], type: "Metal"
 },
 Gold: {
+	name_en: "Gold",
+	name_de: "Gold",
+	name_es: "Oro",
+	name_fr: "Or",
 	nodes: [
-	[16534, 9911], // harathi
-	[15933, 16436], // bloodtide
-	[17916, 17952], // lornar
-	[20062, 17212], // dredgehaunt
-	[31648, 17373], // fields
-	[31100, 12304] // blazeridge
+	{c: [16534, 9911]}, // harathi
+	{c: [15933, 16436]}, // bloodtide
+	{c: [17916, 17952]}, // lornar
+	{c: [20062, 17212]}, // dredgehaunt
+	{c: [31648, 17373]}, // fields
+	{c: [31100, 12304]} // blazeridge
 	], type: "Metal"
 },
 Platinum: {
+	name_en: "Platinum",
+	name_de: "Platin",
+	name_es: "Platino",
+	name_fr: "Platine",
+	potential: [
+		{c: [19181, 23244]}
+	],
 	nodes: [
-	[16186, 17581], // bloodtide
-	[16427, 18188],
-	[15599, 20283], // sparkfly
-	[17300, 20347],
-	[17938, 22158], // maelstrom
-	[20931, 22505],
-	[19154, 19245], // timberline
-	[20840, 18479],
-	[27720, 9664], // blazeridge
-	[29092, 9608],
-	[24681, 9350], // fireheart
-	[26946, 9879],
-	[27050, 10067]
+	{c: [16186, 17581]}, // bloodtide
+	{c: [16427, 18188]},
+	{c: [15599, 20283]}, // sparkfly
+	{c: [17300, 20347]},
+	{c: [17938, 22158]}, // maelstrom
+	{c: [20931, 22505]},
+	{c: [19154, 19245]}, // timberline
+	{c: [20840, 18479]},
+	{c: [27720, 9664]}, // blazeridge
+	{c: [27231, 13285]},
+	{c: [29092, 9608]},
+	{c: [24681, 9350]}, // fireheart
+	{c: [26946, 9879]},
+	{c: [27050, 10067]}
 	], type: "Metal"
 },
 Mithril: {
+	name_en: "Mithril",
+	name_de: "Mithril",
+	name_es: "Mithril",
+	name_fr: "Mithril",
 	nodes: [
-	[21340, 10767], // frostgorge
-	[22193, 9463],
-	[27087, 9023], // fireheart
-	[15003, 22732], // straits
-	[11008, 23944], // malchor
-	[13617, 25044],
-	[14259, 23476],
-	[10722, 27467], // cursed
-	[11313, 26808],
-	[11658, 29144]
+	{c: [5275, 16130]}, // dry
+	{c: [21340, 10767]}, // frostgorge
+	{c: [22193, 9463]},
+	{c: [27087, 9023]}, // fireheart
+	{c: [15003, 22732]}, // straits
+	{c: [11008, 23944]}, // malchor
+	{c: [13617, 25044]},
+	{c: [14259, 23476]},
+	{c: [10722, 27467]}, // cursed
+	{c: [11313, 26808]},
+	{c: [11658, 29144]}
 	], type: "Metal"
 },
 Orichalcum: {
-	approx: true,
+	name_en: "Orichalcum",
+	name_de: "Orichalcum",
+	name_es: "Oricalco",
+	name_fr: "Orichalque",
+	isApprox: true,
 	nodes: [
-	[4833, 14596], // silver
-	[4834, 14890],
-	[4879, 15386],
-	[3910, 16726], // dry
-	[3916, 16397],
-	[4008, 16245],
-	[4065, 16491],
-	[4294, 16430],
-	[5023, 16529],
-	[5170, 16294],
-	[11939, 20363], // southsun
-	[12409, 19473],
-	[12032, 19858],
-	[12530, 20204],
-	[13142, 20027],
-	[13293, 20430],
-	[21241, 9412], // frostgorge
-	[21321, 8478],
-	[21813, 8866],
-	[22965, 9086],
-	[23446, 9405],
-	[23551, 8690],
-	[11123, 24294], // malchor
-	[11615, 24632],
-	[11766, 24151],
-	[11812, 25099],
-	[12618, 24950],
-	[13464, 24281],
-	[13546, 24793],
-	[13320, 23362],
-	[13851, 23643],
-	[13972, 24954],
-	[14207, 24067],
-	[10324, 25702], // cursed
-	[11500, 25959],
-	[10578, 27706],
-	[11197, 28168],
-	[11885, 28403]
+	{c: [4833, 14596]}, // silver
+	{c: [4834, 14890]},
+	{c: [4879, 15386]},
+	{c: [3910, 16726]}, // dry
+	{c: [3916, 16397]},
+	{c: [4008, 16245]},
+	{c: [4065, 16491]},
+	{c: [4294, 16430]},
+	{c: [5023, 16529]},
+	{c: [5170, 16294]},
+	{c: [11939, 20363]}, // southsun
+	{c: [12409, 19473]},
+	{c: [12032, 19858]},
+	{c: [12530, 20204]},
+	{c: [13142, 20027]},
+	{c: [13293, 20430]},
+	{c: [21241, 9412]}, // frostgorge
+	{c: [21321, 8478]},
+	{c: [21813, 8866]},
+	{c: [22965, 9086]},
+	{c: [23446, 9405]},
+	{c: [23551, 8690]},
+	{c: [11123, 24294]}, // malchor
+	{c: [11615, 24632]},
+	{c: [11766, 24151]},
+	{c: [11812, 25099]},
+	{c: [12618, 24950]},
+	{c: [13464, 24281]},
+	{c: [13546, 24793]},
+	{c: [13320, 23362]},
+	{c: [13851, 23643]},
+	{c: [13972, 24954]},
+	{c: [14207, 24067]},
+	{c: [10324, 25702]}, // cursed
+	{c: [10578, 27706]},
+	{c: [10849, 25595]},
+	{c: [11197, 28168]},
+	{c: [11500, 25959]},
+	{c: [11885, 28403]}
 	], type: "Metal"
 },
 Green: {
+	name_en: "Green",
+	name_de: "Grüner",
+	name_es: "Verde",
+	name_fr: "Vert",
 	zones: ["metrica", "caledon", "brisban", "queensdale", "kessex", "wayfarer", "snowden", "ashford", "diessa"],
 	offset: [0, 128],
 	type: "Wood"
 },
 Soft: {
+	name_en: "Soft",
+	name_de: "Geschmeidiger",
+	name_es: "Blanda",
+	name_fr: "Tendre",
 	zones: ["brisban", "kessex", "gendarran", "harathi", "snowden", "lornar", "diessa", "fields"],
 	offset: [128, 0],
 	type: "Wood"
 },
 Seasoned: {
+	name_en: "Seasoned",
+	name_de: "Abgelagerter",
+	name_es: "Curtida",
+	name_fr: "Séché",
 	zones: ["harathi", "bloodtide", "lornar", "dredgehaunt", "timberline", "fields", "blazeridge", "marches"],
 	offset: [0, -128],
 	type: "Wood"
 },
 Hard: {
+	name_en: "Hard",
+	name_de: "Harter",
+	name_es: "Sólida",
+	name_fr: "Dur",
 	zones: ["sparkfly", "maelstrom", "bloodtide", "timberline", "fireheart", "marches"],
 	offset: [-128, 0],
 	type: "Wood"
 },
 Elder: {
+	name_en: "Elder",
+	name_de: "Alter",
+	name_es: "Ancestral",
+	name_fr: "Ancestral",
 	nodes: [
-	[20139, 21809], // maelstrom
-	[15575, 24851], // straits
-	[13808, 24941] // malchor
+	{c: [20139, 21809]}, // maelstrom
+	{c: [15575, 24851]}, // straits
+	{c: [13808, 24941]} // malchor
 	], type: "Wood"
 },
 Ancient: {
-	approx: true,
+	name_en: "Ancient",
+	name_de: "Antiker",
+	name_es: "Antigua",
+	name_fr: "Ancien",
+	isApprox: true,
 	nodes: [
-	[4135, 14680], // silver
-	[4504, 16715], // dry
-	[4541, 15930],
-	[4551, 16215],
-	[5063, 16666],
-	[12214, 20258], // southsun
-	[12906, 19772],
-	[13161, 19435],
-	[21241, 8590], // frostgorge
-	[21319, 9152],
-	[22779, 8416],
-	[22397, 9072],
-	[23027, 9141],
-	[23612, 8600],
-	[12614, 23543], // malchor
-	[12339, 24633],
-	[13155, 24745],
-	[14041, 24646],
-	[10566, 26077], // cursed
-	[10967, 27113],
-	[11134, 28079],
-	[11750, 28675]
+	{c: [4135, 14680]}, // silver
+	{c: [4504, 16715]}, // dry
+	{c: [4541, 15930]},
+	{c: [4551, 16215]},
+	{c: [5063, 16666]},
+	{c: [12214, 20258]}, // southsun
+	{c: [12906, 19772]},
+	{c: [13161, 19435]},
+	{c: [21241, 8590]}, // frostgorge
+	{c: [21319, 9152]},
+	{c: [22779, 8416]},
+	{c: [22397, 9072]},
+	{c: [23027, 9141]},
+	{c: [23612, 8600]},
+	{c: [12614, 23543]}, // malchor
+	{c: [12339, 24633]},
+	{c: [13155, 24745]},
+	{c: [14041, 24646]},
+	{c: [10566, 26077]}, // cursed
+	{c: [10967, 27113]},
+	{c: [11134, 28079]},
+	{c: [11750, 28675]}
 	], type: "Wood"
 },
 Lettuce: {
+	name_en: "Lettuce",
+	name_de: "Salatkopf",
+	name_es: "Lechuga",
+	name_fr: "Laitue",
 	nodes: [
-	[4011, 15893], // dry
-	[10569, 16278], // queensdale
-	[13101, 12254]
+	{c: [4011, 15893]}, // dry
+	{c: [10569, 16278]}, // queensdale
+	{c: [13101, 12254]}
 	], type: "Plant"
 },
 Potato: {
+	name_en: "Potato",
+	name_de: "Kartoffel",
+	name_es: "Patata",
+	name_fr: "Patate",
 	nodes: [
-	[8862, 19448], // metrica
-	[21930, 13888], // wayfarer
-	[28361, 15485] // ashford
+	{c: [8862, 19448]}, // metrica
+	{c: [21930, 13888]}, // wayfarer
+	{c: [28361, 15485]} // ashford
 	], type: "Plant"
 },
 Strawberry: {
+	name_en: "Strawberry",
+	name_de: "Erdbeere",
+	name_es: "Fresa",
+	name_fr: "Fraise",
 	nodes: [
-	[13175, 15839], // kessex
-	[20960, 13010], // snowden
-	[23621, 13438] // diessa
+	{c: [13175, 15839]}, // kessex
+	{c: [20960, 13010]}, // snowden
+	{c: [23621, 13438]} // diessa
 	], type: "Plant"
 },
 Spinach: {
+	name_en: "Spinach",
+	name_de: "Spinat",
+	name_es: "Espinaca",
+	name_fr: "Épinard",
 	nodes: [
-	[9115, 17065], // brisban
-	[15420, 12390] // gendarran
+	{c: [9115, 17065]}, // brisban
+	{c: [15420, 12390]} // gendarran
 	], type: "Plant"
 },
 Grape: {
+	name_en: "Grape",
+	name_de: "Traube",
+	name_es: "Uva",
+	name_fr: "Raisin",
 	nodes: [
-	[17832, 17426], // lornar
-	[31099, 19162] // fields
+	{c: [17832, 17426]}, // lornar
+	{c: [31099, 19162]} // fields
 	], type: "Plant"
 },
 Cabbage: {
+	name_en: "Cabbage",
+	name_de: "Kohlkopf",
+	name_es: "Repollo",
+	name_fr: "Chou",
 	nodes: [
-	[4001, 15893], // dry
-	[13880, 11060], // harathi
-	[21212, 16264], // dredgehaunt
-	[30955, 13247] // blazeridge
+	{c: [4001, 15893]}, // dry
+	{c: [13880, 11060]}, // harathi
+	{c: [21212, 16264]}, // dredgehaunt
+	{c: [30955, 13247]} // blazeridge
 	], type: "Plant"
 },
 Vanilla: {
-	approx: true,
+	name_en: "Vanilla",
+	name_de: "Vanille",
+	name_es: "Vainilla",
+	name_fr: "Vanille",
+	isApprox: true,
 	nodes: [
-	[19833, 22345], // maelstrom
-	[19839, 22821],
-	[20567, 22235]
+	{c: [19833, 22345]}, // maelstrom
+	{c: [19839, 22821]},
+	{c: [20567, 22235]}
 	], type: "Plant"
 },
 Pumpkin: {
+	name_en: "Pumpkin",
+	name_de: "Zuckerkürbis",
+	name_es: "Calabaza",
+	name_fr: "Potiron",
 	nodes: [
-	[17406, 17518], // bloodtide
-	[27484, 10330] // blazeridge
+	{c: [17406, 17518]}, // bloodtide
+	{c: [27484, 10330]} // blazeridge
 	], type: "Plant"
 },
 Cauliflower: {
+	name_en: "Cauliflower",
+	name_de: "Blumenkohl",
+	name_es: "Coliflor",
+	name_fr: "Chou-fleur",
 	nodes: [
-	[15626, 19889], // sparkfly
-	[19179, 19204] // timberline
+	{c: [15626, 19889]}, // sparkfly
+	{c: [19179, 19204]} // timberline
 	], type: "Plant"
 },
 Butternut: {
+	name_en: "Butternut",
+	name_de: "Butternuss",
+	name_es: "Moscada",
+	name_fr: "Courge",
 	nodes: [
-	[23310, 10745], // frostgorge
-	[24342, 11048] // fireheart
+	{c: [23310, 10745]}, // frostgorge
+	{c: [24342, 11048]} // fireheart
 	], type: "Plant"
 },
 Artichoke: {
+	name_en: "Artichoke",
+	name_de: "Artischocke",
+	name_es: "Alcachofa",
+	name_fr: "Artichaut",
 	nodes: [
-	[20076, 22914], // maelstrom
-	[17476, 22679] // straits
+	{c: [20076, 22914]}, // maelstrom
+	{c: [17476, 22679]} // straits
 	], type: "Plant"
 },
 Omnomberry: {
-	approx: true,
+	name_en: "Omnomberry",
+	name_de: "Omnombeere",
+	name_es: "Omnom",
+	name_fr: "Omnom",
+	isApprox: true,
 	nodes: [
-	[12001, 24499], // malchor
-	[12873, 24592],
-	[13230, 24861],
-	[13983, 24719],
-	[10567, 26268], // cursed
-	[11069, 27131]
+	{c: [12001, 24499]}, // malchor
+	{c: [12873, 24592]},
+	{c: [13230, 24861]},
+	{c: [13983, 24719]},
+	{c: [10567, 26268]}, // cursed
+	{c: [11069, 27131]}
 	], type: "Plant"
 }
 };
