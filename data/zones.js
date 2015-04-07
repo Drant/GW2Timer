@@ -72,7 +72,7 @@ var GW2T_ZONE_DATA = {
 {
 	name: "Rata Sum",
 	region: "maguuma",
-	rect: [[4608, 19648], [7168, 22208]]
+	rect: [[4608, 19710], [7168, 22270]]
 },
 "brisban":
 {

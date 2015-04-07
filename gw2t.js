@@ -121,9 +121,10 @@ O = {
 		bol_alertUnsubscribe: true,
 		// Tools
 		int_sizeNotepadFont: 12,
-		int_sizeNotepadHeight: 500,
+		int_sizeNotepadHeight: 400,
 		// Trading
 		bol_refreshPrices: true,
+		bol_useMainTPSearch: true,
 		int_numTradingCalculators: 25,
 		int_numTradingResults: 30,
 		int_secTradingRefresh: 60,
@@ -977,17 +978,19 @@ U = {
 		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 		TilesMists: "https://tiles.guildwars2.com/2/1/{z}/{x}/{y}.jpg",
 		MapFloorMists: "https://api.guildwars2.com/v1/map_floor.json?continent_id=2&floor=1",
+		MapsList: "https://api.guildwars2.com/v1/maps.json",
 		EventNames: "https://api.guildwars2.com/v1/event_names.json",
 		EventDetails: "https://api.guildwars2.com/v1/event_details.json",
 		
 		// Exchange
 		ItemListing: "https://api.guildwars2.com/v2/commerce/listings/",
 		ItemPrices: "https://api.guildwars2.com/v2/commerce/prices/",
-		ItemDetails: "https://api.guildwars2.com/v1/item_details.json?item_id=",
+		ItemDetails: "https://api.guildwars2.com/v2/items/",
 		ItemRender: "https://render.guildwars2.com/file/",
 		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
 		GemPrice: "https://api.guildwars2.com/v2/commerce/exchange/coins?quantity=",
 		ItemSearch: "http://www.gw2spidy.com/api/v0.9/json/item-search/",
+		ItemSearchFallback: "http://www.gw2shinies.com/api/idbyname/",
 		ItemData: "http://www.gw2spidy.com/api/v0.9/json/item/",
 		
 		// WvW
@@ -1756,20 +1759,14 @@ U = {
 	 */ 
 	getChatlinkFromItemID: function(pID)
 	{
-		return "[&" + btoa(String.fromCharCode(2) + String.fromCharCode(1)
+		var str = "";
+		try // To ignore "Failed to execute 'btoa' on 'Window'" exception
+		{
+			str = "[&" + btoa(String.fromCharCode(2) + String.fromCharCode(1)
 			+ String.fromCharCode(pID % 256) + String.fromCharCode(Math.floor(pID / 256))
 			+ String.fromCharCode(0) + String.fromCharCode(0)) + "]";
-	},
-	
-	/*
-	 * Gets the image URL for an GW2 item.
-	 * @param object pItemDetails obtained from the API.
-	 * @returns string URL.
-	 */
-	getAssetIconURL: function(pItemDetails)
-	{
-		return U.URL_API.ItemRender + pItemDetails["icon_file_signature"]
-			+ "/" + pItemDetails["icon_file_id"] + ".png";
+		} catch(e){};
+		return str;
 	}
 };
 
@@ -3013,7 +3010,7 @@ E = {
 		$.getJSON(U.URL_API.ItemDetails + id, function(pData)
 		{
 			E.setRarityClass(pEntry.find(".trdName"), pData.rarity);
-			pEntry.find(".trdIcon").attr("src", U.getAssetIconURL(pData));
+			pEntry.find(".trdIcon").attr("src", pData.icon);
 			pEntry.find(".trdLink").val(U.getChatlinkFromItemID(id));
 		});
 	},
@@ -3274,6 +3271,7 @@ E = {
 			// Bind name search box behavior
 			$(name).on("input", $.throttle(E.cSEARCH_LIMIT, function()
 			{
+				
 				var query = $(this).val();
 				var entry = $(this).parents(".trdEntry");
 				var resultscontainer, results;
@@ -3283,13 +3281,61 @@ E = {
 					E.clearCalculator(entry);
 					return;
 				}
+				var serviceurl;
+				var keyname_id;
+				if (O.Options.bol_useMainTPSearch)
+				{
+					/*
+					 * Main API return example:
+						{
+							"count"     : 50,
+							"page"      : 1,
+							"last_page" : 3,
+							"results"     : [{
+								"data_id"              : 23654,
+								"name"                 : "Fake Item",
+								"rarity"               : 3,
+								"restriction_level"    : 72,
+								"img"                  : "http://www.url-to-offical-gw2-site.com/img.png",
+								"type_id"              : 1,
+								"sub_type_id"          : 2,
+								"price_last_changed"   : "YYYY-MM-DD HH:II:SS UTC",
+								"max_offer_unit_price" : 6523,
+								"min_sale_unit_price"  : 9345,
+								"offer_availability"   : 1235232,
+								"sale_availability"    : 203203,
+								"sale_price_change_last_hour"  : 40,
+								"offer_price_change_last_hour" : 70
+							, {...}]
+						}
+					 */
+					serviceurl = U.URL_API.ItemSearch + query;
+					keyname_id = "data_id";
+				}
+				else
+				{
+					/*
+					 * Backup API return example:
+						[{"name":"Gift of Sunrise","item_id":"19647"},
+						* {"name":"Sunrise Breeze Dye","item_id":"20641"}]
+					 */
+					serviceurl = U.URL_API.ItemSearchFallback + query;
+					keyname_id = "item_id";
+				}
 
-				$.getJSON(U.URL_API.ItemSearch + query, function(pData)
+				$.ajax({
+					dataType: "json",
+					url: serviceurl,
+					timeout: 5000,
+					success:
+				function(pData)
 				{
 					entry.find(".trdResultsContainer").remove();
 					var thisi;
-					var result, resultline;
-					if (pData.results.length > 0)
+					var resultid, resultitem, outputline;
+					var resultarray = (O.Options.bol_useMainTPSearch) ? pData.results : pData;
+					
+					if (resultarray && resultarray.length > 0)
 					{
 						// Create popup container for the items result list
 						resultscontainer = $("<div class='trdResultsContainer jsRemovable'></div>")
@@ -3297,28 +3343,35 @@ E = {
 						results = $("<div class='trdResults cntPopup'></div>").appendTo(resultscontainer);
 
 						// Add items to the results list
-						for (thisi = 0; thisi < pData.results.length && thisi < O.Options.int_numTradingResults; thisi++)
+						for (thisi = 0; thisi < resultarray.length && thisi < O.Options.int_numTradingResults; thisi++)
 						{
-							result = pData.results[thisi];
-							resultline =  $("<dfn class='rarity" + result.rarity + "' data-id='" + result.data_id + "' "
-								+ "data-buy='" + E.createCoinString(result.max_offer_unit_price) + "' "
-								+ "data-sell='" + E.createCoinString(result.min_sale_unit_price) + "'>"
-								+ "<img src='" + result.img + "'>"
-								+ U.wrapSubstringHTML(result.name, query, "u") + "</dfn>").appendTo(results);
-							// Bind click a result to memorize the item's ID and name
-							resultline.click(function()
+							resultitem = resultarray[thisi];
+							resultid = resultitem[keyname_id];
+							// Get metadata of each item in the returned search result array
+							$.getJSON(U.URL_API.ItemDetails + resultid, function(pDataInner)
 							{
-								var resultspopup = $(this).parents(".trdResultsContainer");
-								var entry = resultspopup.parents(".trdEntry");
-								// Change triggers the storage, input triggers the calculation
-								entry.find(".trdItem").val($(this).data("id")).trigger("change");
-								entry.find(".trdName").val($(this).text()).trigger("change");
-								E.updateTradingDetails(entry);
-								E.updateTradingPrices(entry);
-								resultspopup.remove();
+								outputline =  $("<dfn class='rarity" + E.Rarity[pDataInner.rarity] + "' data-id='" + pDataInner.id + "'>"
+								+ "<img src='" + pDataInner.icon + "'>"
+								+ U.wrapSubstringHTML(pDataInner.name, query, "u") + "</dfn>").appendTo(results);
+								// Bind click a result to memorize the item's ID and name
+								outputline.click(function()
+								{
+									var resultspopup = $(this).parents(".trdResultsContainer");
+									var entry = resultspopup.parents(".trdEntry");
+									// Change triggers the storage, input triggers the calculation
+									entry.find(".trdItem").val($(this).data("id")).trigger("change");
+									entry.find(".trdName").val($(this).text()).trigger("change");
+									E.updateTradingDetails(entry);
+									E.updateTradingPrices(entry);
+									resultspopup.remove();
+								});
 							});
 						}
 					}
+				}}).fail(function()
+				{
+					I.write("Error retrieving search results. Main search provider may be down.<br />Switching to backup provider...");
+					$("#opt_bol_useMainTPSearch").trigger("click"); // In effect toggles between main and backup for each failure
 				});
 			})).onEnterKey(function()
 			{
@@ -8792,6 +8845,7 @@ P = {
 					{
 						// Trigger the associated checkbox so the markers are generated
 						$("#ned_" + i).trigger("click");
+						U.Args[U.KeyEnum.Article] = null;
 					}
 				}
 			}
