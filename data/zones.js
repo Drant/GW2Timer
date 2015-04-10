@@ -56,17 +56,17 @@ var GW2T_ZONE_ASSOCIATION = {
  * Zones are sorted by how far from the top left corner (0,0) it is.
  */
 var GW2T_ZONE_DATA = {
-"dry":
-{
-	name: "Dry Top",
-	region: "wastes",
-	rect: [[3840, 15742], [5888, 17152]]//[3840, 14592]
-},
 "silverwastes":
 {
 	name: "The Silverwastes",
 	region: "wastes",
 	rect: [[3838, 14206], [5886, 15742]]
+},
+"dry":
+{
+	name: "Dry Top",
+	region: "wastes",
+	rect: [[3840, 15742], [5888, 17152]]//[3840, 14592]
 },
 "rata":
 {
@@ -264,7 +264,7 @@ var GW2T_ZONE_DATA = {
 
 /*
  * A month's achievements with associated days. Example of format:
- * pve: ["GATHER REGION", "ACTIVITY OPTIONALREGION", "EVENTREGION", "BOSS"],
+ * pve: ["GATHER REGION", "ACTIVITY CONDITIONALREGION", "EVENTREGION", "BOSS REGION"],
  * pvp: ["PVP1", "PVP2", "PROFESSION1", "PROFESSION2"],
  * wvw: ["WVW1", "WVW2", "WVW3", "WVW4"]
  */

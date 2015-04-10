@@ -72,7 +72,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 150312},
+		programVersion: {key: "int_utlProgramVersion", value: 150409},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -241,8 +241,7 @@ O = {
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
-				+ "World Boss Rewards have been added to the chain bars.<br />"
-				+ "Please <a class='urlUpdates' href='http://forum.renaka.com/topic/5775595/'>report any incorrect information</a>."
+				+ "GW2Navi Overlay updated. <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>Download Now</a><br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -1501,7 +1500,7 @@ U = {
 		if (I.PageCurrent !== "")
 		{
 			var section = I[I.sectionPrefix + I.PageCurrent];
-			var article = U.Args[U.KeyEnum.Article];
+			var article = I.ArticleCurrent;
 			var go = U.Args[U.KeyEnum.Go];
 
 			var pagestring = "?" + U.KeyEnum.Page + "=" + I.PageCurrent;
@@ -4110,7 +4109,7 @@ D = {
 		// Automatic
 		s_Scheduled_Bosses: {de: "Geplant", es: "Programado", fr: "Planifié",
 			cs: "Plánované", it: "Pianificata", pl: "Zaplanowane", pt: "Agendado", ru: "Запланирован", zh: "已排程"},
-		s_Dry_Top: {de: "Trockenkuppe", es: "Cima Seca", fr: "Col Aride"},
+		s_Dry_Top: {de: "Trockenkuppe", es: "Cima Seca", fr: "Cimesèche"},
 		s_Legacy_Bosses: {de: "Legacy", es: "Heredado", fr: "Hérité",
 			cs: "Starší", it: "Legacy", pl: "Starsze", pt: "Herdado", ru: "Устаревший", zh: "舊版"},
 		s_Orr_Temples: {de: "Tempel", es: "Templos", fr: "Temples",
@@ -4575,22 +4574,22 @@ D = {
 		en: "Dry Top Q1",
 		de: "Trockenkuppe Q1",
 		es: "Cima Seca Q1",
-		fr: "Col Aride Q1"
+		fr: "Cimesèche Q1"
 	},{
 		en: "Dry Top Q2",
 		de: "Trockenkuppe Q2",
 		es: "Cima Seca Q2",
-		fr: "Col Aride Q2"
+		fr: "Cimesèche Q2"
 	},{
 		en: "Dry Top Q3",
 		de: "Trockenkuppe Q3",
 		es: "Cima Seca Q3",
-		fr: "Col Aride Q3"
+		fr: "Cimesèche Q3"
 	},{
 		en: "Dry Top Q4",
 		de: "Trockenkuppe Q4",
 		es: "Cima Seca Q4",
-		fr: "Col Aride Q4"
+		fr: "Cimesèche Q4"
 	},{
 		en: "Lyssa",
 		de: "Verderbte Hohepriesterin der Lyssa",
@@ -8839,13 +8838,13 @@ P = {
 				});
 				
 				// If article URL query string exists, show collectible of specified index
-				if (I.ArticleCurrent !== undefined)
+				if (I.ArticleCurrent)
 				{
 					if (I.ArticleCurrent.toLowerCase() === X.Checklists[i].urlkey)
 					{
 						// Trigger the associated checkbox so the markers are generated
 						$("#ned_" + i).trigger("click");
-						U.Args[U.KeyEnum.Article] = null;
+						I.ArticleCurrent = null;
 					}
 				}
 			}

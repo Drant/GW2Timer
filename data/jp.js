@@ -509,7 +509,7 @@ var GW2T_JP_DATA = {
 	coord: "[10126, 17694]",
 	img: "2bWLIdI",
 	chest: "splendid asura",
-	description: "Caledon skritt cave with asura experiments. Take electric sphere from container and throw it at the shanty gate to enter (Easy)"
+	description: "Caledon skritt junk cave with golem room. Take the electric sphere from the glass container and throw it at the shanty gate to enter (Easy)"
 },
 "verarium": {
 	id: 49,
@@ -521,7 +521,7 @@ var GW2T_JP_DATA = {
 	coord: "[15583, 20191]",
 	img: "PJVbyuO",
 	chest: "wood",
-	description: "Sparkfly ruined tomb. Follow the <dfn data-coord='[15647, 19631]'>path</dfn> to the cliff vista, then jump down south from the vista where the boars are for the entrance (Easy)"
+	description: "Sparkfly ruined tomb. Follow the cave <dfn data-coord='[15647, 19631]'>path</dfn> to the cliff vista, then jump down south from the vista where the boars are for the entrance (Easy)"
 },
 "seclusion": {
 	id: 56,
