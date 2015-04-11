@@ -679,6 +679,8 @@ var GW2T_JP_DATA = {
 
 var GW2T_CHEST_DATA = {
 Basic: [
+	{c: [4637, 17091], t: "Climb the wall edge south of the POI and climb eastward"},
+	{c: [5134, 16200], t: "In crevice of a cliff wall, use jump crystal to access"},
 	{c: [5136, 16789]},
 	{c: [8251, 15639]},
 	{c: [9303, 18943], t: "Continue jumping on the floating rocks to the end asura gate to find the chest"},

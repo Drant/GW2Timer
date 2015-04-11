@@ -989,7 +989,7 @@ U = {
 		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
 		GemPrice: "https://api.guildwars2.com/v2/commerce/exchange/coins?quantity=",
 		ItemSearch: "http://www.gw2spidy.com/api/v0.9/json/item-search/",
-		ItemSearchFallback: "http://www.gw2shinies.com/api/idbyname/",
+		ItemSearchFallback: "http://www.gw2shinies.com/api/json/idbyname/",
 		ItemData: "http://www.gw2spidy.com/api/v0.9/json/item/",
 		
 		// WvW
@@ -2658,7 +2658,7 @@ E = {
 		GEM_SAMPLE: 100, // 100 gem
 		COIN_SAMPLE: 1000000 // 100 gold
 	},
-	Rarity:
+	Rarity: // Corresponds to API names for rarity levels
 	{
 		Junk: 0,
 		Basic: 1,
@@ -3339,7 +3339,7 @@ E = {
 						// Create popup container for the items result list
 						resultscontainer = $("<div class='trdResultsContainer jsRemovable'></div>")
 							.insertAfter(entry.find(".trdName"));
-						results = $("<div class='trdResults cntPopup'></div>").appendTo(resultscontainer);
+						results = $("<div class='trdResults cntPopup'>" + I.cThrobber + "</div>").appendTo(resultscontainer);
 
 						// Add items to the results list
 						for (thisi = 0; thisi < resultarray.length && thisi < O.Options.int_numTradingResults; thisi++)
@@ -3349,6 +3349,7 @@ E = {
 							// Get metadata of each item in the returned search result array
 							$.getJSON(U.URL_API.ItemDetails + resultid, function(pDataInner)
 							{
+								$(".trdResults .itemThrobber").remove();
 								outputline =  $("<dfn class='rarity" + E.Rarity[pDataInner.rarity] + "' data-id='" + pDataInner.id + "'>"
 								+ "<img src='" + pDataInner.icon + "'>"
 								+ U.wrapSubstringHTML(pDataInner.name, query, "u") + "</dfn>").appendTo(results);
@@ -3369,7 +3370,7 @@ E = {
 					}
 				}}).fail(function()
 				{
-					I.write("Error retrieving search results. Main search provider may be down.<br />Switching to backup provider...");
+					I.write("Error retrieving search results. Current search provider may be down.<br />Switching to alternate provider...");
 					$("#opt_bol_useMainTPSearch").trigger("click"); // In effect toggles between main and backup for each failure
 				});
 			})).onEnterKey(function()
@@ -11154,6 +11155,7 @@ I = {
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
 	cPNG: ".png", // Almost all used images are PNG
+	cThrobber: "<div class='itemThrobber'><em></em></div>",
 	cTextDelimiterChar: "|",
 	cTextDelimiterRegex: /[|]/g,
 	consoleTimeout: {},
@@ -11340,7 +11342,7 @@ I = {
 		// Add throbber to AJAX loaded pages
 		$("#plateMap, #plateWvW, #plateHelp").each(function()
 		{
-			$(this).append("<div class='itemThrobber'><em></em></div>");
+			$(this).append(I.cThrobber);
 		});
 		I.qTip.start();
 		
@@ -11691,7 +11693,10 @@ I = {
 				{
 					if (I.ModeCurrent === I.ModeEnum.Website)
 					{
-						$(this).next().toggle("fast");
+						$(this).next().toggle("fast", function()
+						{
+							$(pPlate).perfectScrollbar("update");
+						});
 					}
 					else
 					{
@@ -11708,10 +11713,6 @@ I = {
 				if (istobeexpanded)
 				{
 					I.scrollToElement($(this), $(pPlate), "fast");
-				}
-				else
-				{
-					I.scrollToElement($(pPlate));
 				}
 			});
 			
