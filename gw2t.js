@@ -12,6 +12,7 @@
 	Craig Erskine - qTip tooltip
 	David Flanagan - SVG clock based on example from "JavaScript The Definitive Guide 6e"
 	Jon Rohan, James M. Greene - ZeroClipboard
+	Hyunje Alex Jun - JS scroll bar
 	Cliff Spradlin - GW2 API Documentation
 	Google and TTS-API.COM - Text-To-Speech service
 
@@ -269,6 +270,10 @@ O = {
 		{
 			O.legalLocalStorageKeys.push(X.Checklists[i].key);
 		}
+		for (i in X.Collectibles)
+		{
+			O.legalLocalStorageKeys.push(X.Collectibles[i].key);
+		}
 		for (i in X.Textlists)
 		{
 			O.legalLocalStorageKeys.push(X.Textlists[i].key);
@@ -389,6 +394,10 @@ O = {
 	{
 		return (Math.random() > 0.5) ? true : false;
 	},
+	isInteger: function(pValue)
+	{
+		return !isNaN(pValue) && (function(x) { return (x | 0) === x; })(parseFloat(pValue));
+	},
 	
 	/*
 	 * Returns false if object is undefined or null or falsy, otherwise true.
@@ -419,7 +428,7 @@ O = {
 	 */
 	checkResetTimestamp: function()
 	{
-		var midnightoffset = T.getTimeOffsetSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
+		var midnightoffset = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
 		var yesterdaysserverresettime = T.getUNIXSeconds() - midnightoffset;
 		
 		// Local reset timestamp is outdated if it's before yesterday's server reset time
@@ -1012,9 +1021,11 @@ U = {
 	
 	URL_DATA:
 	{
+		// Data to load when opening a map section
 		Resource: "data/resource.js",
 		JP: "data/jp.js",
-		Collectible: "data/collectible.js"
+		Collectible: "data/collectible.js",
+		Guild: "data/guild.js"
 	},
 	
 	initializeAPIURLs: function()
@@ -1164,7 +1175,7 @@ U = {
 		var page = U.Args[U.KeyEnum.Page];
 		// Only proceed if "page" is not an actual content page
 		if (page && U.isEnumWithin(page, I.PageEnum) === false)
-		{	
+		{
 			page = page.toLowerCase();
 			if (page === "navi" || page === "overlay")
 			{
@@ -1177,10 +1188,6 @@ U = {
 			else if (page === "s" || page === "simple")
 			{
 				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Simple;
-			}
-			else if (page === "chests")
-			{
-				U.Args[X.Checklists.BuriedChests.urlkey] = "true";
 			}
 			else
 			{
@@ -1211,13 +1218,18 @@ U = {
 			}
 		}
 		
-		// Else if special page is not specified
-		var chests = U.Args[X.Checklists.BuriedChests.urlkey];
-		if (chests)
+		// Check if the special page is actually a collectible
+		for (i in X.Collectibles)
 		{
-			U.Args[U.KeyEnum.Page] = I.PageEnum.Map;
-			U.Args[U.KeyEnum.Section] = I.SectionEnum.Map.Collectible;
-			U.Args[U.KeyEnum.Article] = "chests";
+			ithpage = X.Collectibles[i].urlkey;
+			if (ithpage === page || U.Args[ithpage] !== undefined)
+			{
+				U.Args[U.KeyEnum.Page] = I.PageEnum.Map;
+				U.Args[U.KeyEnum.Section] = I.SectionEnum.Map.Collectible;
+				// Setting the article key will tell the generate collectibles function to do so for that one
+				U.Args[U.KeyEnum.Article] = ithpage;
+				return;
+			}
 		}
 	},
 	
@@ -1602,7 +1614,7 @@ U = {
 	{
 		$(pSelector).each(function()
 		{
-			$(this).attr("href", I.cSiteURL + "out?" + escape($(this).attr("href")));
+			$(this).attr("href", I.cSiteURL + "out?" + encodeURI($(this).attr("href")));
 			$(this).attr("target", "_blank");
 		});
 	},
@@ -1616,7 +1628,7 @@ U = {
 		var url = pURL;
 		if (I.ModeCurrent !== I.ModeEnum.Overlay)
 		{
-			url = I.cSiteURL + "out?" + escape(pURL);
+			url = I.cSiteURL + "out?" + encodeURI(pURL);
 		}
 		window.open(url, "_blank");
 	},
@@ -1790,20 +1802,28 @@ X = {
 		JP: { key: "str_chlJP", value: "" },
 		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
 		Custom: { key: "str_chlCustom", value: "" },
-		/*
-		 * Collectible checklists must have the same variable name as in the map page's data.
-		 * The urlkey properties must be unique from the global KeyEnum.
-		 */
-		DiveMaster: { key: "str_chlDiveMaster", urlkey: "divemaster", value: "", cushion: new Array() },
-		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: "", cushion: new Array() },
-		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: "", cushion: new Array() },
-		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: "", cushion: new Array() },
-		CoinChallenger: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: "", cushion: new Array() },
-		LostBadges: { key: "str_chlLostBadges", urlkey: "lostbadges", value: "", cushion: new Array() },
-		GoldenLostBadges: { key: "str_chlGoldenLostBadges", urlkey: "goldenlostbadges", value: "", cushion: new Array() },
 		// Individual calculator's settings
 		TradingOverwrite: { key: "str_chlTradingOverwrite", value: "" },
 		TradingNotify: { key: "str_chlTradingNotify", value: "" }
+	},
+	/*
+	 * Collectible checklists must have the same variable name as in the map page's data.
+	 * The urlkey properties must be unique from the global KeyEnum.
+	 */
+	Collectibles:
+	{
+		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: "", cushion: null },
+		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: "", cushion: null },
+		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: "", cushion: null },
+		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: "", cushion: null },
+		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: "", cushion: null },
+		CoinChallenger: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: "", cushion: null },
+		LostBadges: { key: "str_chlLostBadges", urlkey: "lostbadges", value: "", cushion: null },
+		GoldenLostBadges: { key: "str_chlGoldenLostBadges", urlkey: "goldenlostbadges", value: "", cushion: null },
+		DiveMaster: { key: "str_chlDiveMaster", urlkey: "divemaster", value: "", cushion: null },
+		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader", value: "", cushion: null },
+		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup", value: "", cushion: null },
+		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: "", cushion: null }
 	},
 	ChecklistEnum:
 	{
@@ -3122,7 +3142,7 @@ E = {
 			}
 		}).fail(function()
 		{
-			I.write("Error retrieving API data for " + U.escapeHTML(pEntry.find(".trdName").val()));
+			I.write("&quot;" + U.escapeHTML(pEntry.find(".trdName").val()) + "&quot; is not a tradeable item.");
 		});
 	},
 	updateAllTradingDetails: function()
@@ -3163,6 +3183,32 @@ E = {
 		var i;
 		var entry = "";
 		var name, buy, sell, quantity;
+		
+		var createSearchContainer = function(pCalculator)
+		{
+			var resultscontainer = $("<div class='trdResultsContainer jsRemovable'></div>")
+				.insertAfter(pCalculator.find(".trdName"));
+			return $("<div class='trdResults cntPopup'>" + I.cThrobber + "</div>").appendTo(resultscontainer);
+		};
+		var insertSearchResult = function(pData, pQuery, pResultsList)
+		{
+			$(".trdResults .itemThrobber").remove();
+			var outputline =  $("<dfn class='rarity" + E.Rarity[pData.rarity] + "' data-id='" + pData.id + "'>"
+			+ "<img src='" + pData.icon + "'>"
+			+ U.wrapSubstringHTML(pData.name, pQuery, "u") + "</dfn>").appendTo(pResultsList);
+			// Bind click a result to memorize the item's ID and name
+			outputline.click(function()
+			{
+				var resultspopup = $(this).parents(".trdResultsContainer");
+				var entry = resultspopup.parents(".trdEntry");
+				// Change triggers the storage, input triggers the calculation
+				entry.find(".trdItem").val($(this).data("id")).trigger("change");
+				entry.find(".trdName").val($(this).text()).trigger("change");
+				E.updateTradingDetails(entry);
+				E.updateTradingPrices(entry);
+				resultspopup.remove();
+			});
+		};
 		
 		for (i = 0; i < O.Options.int_numTradingCalculators; i++)
 		{
@@ -3270,16 +3316,33 @@ E = {
 			// Bind name search box behavior
 			$(name).on("input", $.throttle(E.cSEARCH_LIMIT, function()
 			{
-				
 				var query = $(this).val();
 				var entry = $(this).parents(".trdEntry");
-				var resultscontainer, results;
-				if (query.length < 3) // Don't search if keywords are below this length
+				var resultscontainer, resultslist;
+				// If keywords are below this length then ignore
+				if (query.length < 3)
 				{
 					// Reset API output boxes
 					E.clearCalculator(entry);
 					return;
 				}
+				// If entering an item ID
+				if (query.length >= 3 && O.isInteger(query))
+				{
+					// Create popup container for the items result list
+					entry.find(".trdResultsContainer").remove();
+					resultslist = createSearchContainer(entry);
+					
+					$.getJSON(U.URL_API.ItemDetails + query, function(pDataInner)
+					{
+						insertSearchResult(pDataInner, query, resultslist);
+					}).fail(function()
+					{
+						resultscontainer.remove();
+					});
+					return;
+				}
+				// Else search for item name
 				var serviceurl;
 				var keyname_id;
 				if (O.Options.bol_useMainTPSearch)
@@ -3316,7 +3379,7 @@ E = {
 					/*
 					 * Backup API return example:
 						[{"name":"Gift of Sunrise","item_id":"19647"},
-						* {"name":"Sunrise Breeze Dye","item_id":"20641"}]
+						{"name":"Sunrise Breeze Dye","item_id":"20641"}]
 					 */
 					serviceurl = U.URL_API.ItemSearchFallback + query;
 					keyname_id = "item_id";
@@ -3326,45 +3389,27 @@ E = {
 					dataType: "json",
 					url: serviceurl,
 					timeout: 5000,
-					success:
-				function(pData)
+					success: function(pData)
 				{
 					entry.find(".trdResultsContainer").remove();
 					var thisi;
-					var resultid, resultitem, outputline;
+					var resultid, resultitem;
 					var resultarray = (O.Options.bol_useMainTPSearch) ? pData.results : pData;
 					
 					if (resultarray && resultarray.length > 0)
 					{
 						// Create popup container for the items result list
-						resultscontainer = $("<div class='trdResultsContainer jsRemovable'></div>")
-							.insertAfter(entry.find(".trdName"));
-						results = $("<div class='trdResults cntPopup'>" + I.cThrobber + "</div>").appendTo(resultscontainer);
+						resultslist = createSearchContainer(entry);
 
 						// Add items to the results list
 						for (thisi = 0; thisi < resultarray.length && thisi < O.Options.int_numTradingResults; thisi++)
 						{
 							resultitem = resultarray[thisi];
-							resultid = resultitem[keyname_id];
+							resultid = parseInt(resultitem[keyname_id]);
 							// Get metadata of each item in the returned search result array
 							$.getJSON(U.URL_API.ItemDetails + resultid, function(pDataInner)
 							{
-								$(".trdResults .itemThrobber").remove();
-								outputline =  $("<dfn class='rarity" + E.Rarity[pDataInner.rarity] + "' data-id='" + pDataInner.id + "'>"
-								+ "<img src='" + pDataInner.icon + "'>"
-								+ U.wrapSubstringHTML(pDataInner.name, query, "u") + "</dfn>").appendTo(results);
-								// Bind click a result to memorize the item's ID and name
-								outputline.click(function()
-								{
-									var resultspopup = $(this).parents(".trdResultsContainer");
-									var entry = resultspopup.parents(".trdEntry");
-									// Change triggers the storage, input triggers the calculation
-									entry.find(".trdItem").val($(this).data("id")).trigger("change");
-									entry.find(".trdName").val($(this).text()).trigger("change");
-									E.updateTradingDetails(entry);
-									E.updateTradingPrices(entry);
-									resultspopup.remove();
-								});
+								insertSearchResult(pDataInner, query, resultslist);
 							});
 						}
 					}
@@ -3468,6 +3513,27 @@ E = {
 		$("#trdMute").click(function()
 		{
 			D.resetSpeechQueue();
+		});
+		// Button to print all saved calculator data to console as Comma Separated Values (CSV)
+		$("#trdPrint").click(function()
+		{
+			I.clear();
+			I.write("ItemID,Name,Buy,Sell,Quantity,BuyLow,BuyHigh,SellLow,SellHigh");
+			var length = X.Textlists.TradingItem.value.length;
+			for (var i = 0; i < length; i++)
+			{
+				I.write(
+					U.escapeHTML(X.Textlists.TradingItem.value[i]) + "," +
+					U.escapeHTML(X.Textlists.TradingName.value[i]) + "," +
+					U.escapeHTML(X.Textlists.TradingBuy.value[i]) + "," +
+					U.escapeHTML(X.Textlists.TradingSell.value[i]) + "," +
+					U.escapeHTML(X.Textlists.TradingQuantity.value[i]) + "," +
+					U.escapeHTML(X.Textlists.NotifyBuyLow.value[i]) + "," +
+					U.escapeHTML(X.Textlists.NotifyBuyHigh.value[i]) + "," +
+					U.escapeHTML(X.Textlists.NotifySellLow.value[i]) + "," +
+					U.escapeHTML(X.Textlists.NotifySellHigh.value[i])
+				, 30);
+			}
 		});
 	},
 	
@@ -4986,7 +5052,6 @@ C = {
 	PreviousChains1: [],
 	PreviousChains2: [],
 	NextChains1: [],
-	cChainTitleCharLimit: 30,
 	cEventTitleCharLimit: 44,
 	cEventNameWidth: 320,
 	ScheduledChains: [],
@@ -5201,7 +5266,7 @@ C = {
 			+ "<div class='chnTitle'>"
 				+ "<img id='chnIcon_" + pChain.nexus + "' src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
 				+ "<div id='chnCheck_" + pChain.nexus + "' class='chnCheck'></div>"
-				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + C.truncateTitleString(D.getChainTitle(pChain.nexus), C.cChainTitleCharLimit) + "</h1>"
+				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + D.getChainTitle(pChain.nexus) + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
 				+ "<aside><img id='chnDaily_" + pChain.nexus + "' class='chnDaily' src='img/ui/daily.png' /></aside>"
 			+ "</div>"
@@ -5396,7 +5461,7 @@ C = {
 		$("#chnDetails_" + pChain.nexus).hide();
 		
 		// Initialize tooltips
-		I.qTip.init($("#chnEvents_" + pChain.nexus + " img"));
+		I.qTip.init($("#chnEvents_" + pChain.nexus + " ins"));
 		I.qTip.init($("#chnDetails_" + pChain.nexus + " kbd"));
 		
 		// Finally intialize its checklist state
@@ -5434,6 +5499,7 @@ C = {
 				else
 				{
 					$(this).prev().find("kbd").html("[+]");
+					I.updateScrollbar("#plateChains");
 				}
 			});
 		});
@@ -5739,7 +5805,7 @@ C = {
 				"<div class='barChainDummy barChainDummy_" + i + "'>"
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
-						+ "<h1>" + C.truncateTitleString(D.getChainTitleAny(ithchain.nexus), C.cChainTitleCharLimit) + "</h1>"
+						+ "<h1>" + D.getChainTitleAny(ithchain.nexus) + "</h1>"
 						+ "<time>" + timestring + "</time>"
 					+ "</div>"
 				+ "</div>");
@@ -6066,12 +6132,9 @@ C = {
 					M.DryTopEventActive.push(event.eventicon);
 					M.DryTopEventActive.push(event.eventring);
 					
-					// Show only if not on map page
-					if (I.PageCurrent !== I.PageEnum.Map)
-					{
-						event.eventicon._icon.style.display = "block";
-						event.eventring._icon.style.display = "block";
-					}
+					// Show active Dry Top events
+					event.eventicon._icon.style.display = "block";
+					event.eventring._icon.style.display = "block";
 				}
 				M.burySubmaps();
 			});
@@ -6090,7 +6153,7 @@ C = {
 			if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
 				&& I.PageCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && isregularchain
-				&& $("#listChainsDryTop").is(":visible") === false)
+				&& C.isDryTopExpanded === false)
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -6186,7 +6249,7 @@ C = {
 	 */
 	getSumBasedOnOptions: function(pChain, pIndex)
 	{
-		var hour = T.getTimeOffsetSinceMidnight(T.ReferenceEnum.Local, T.UnitEnum.Hours);
+		var hour = T.getTimeSinceMidnight(T.ReferenceEnum.Local, T.UnitEnum.Hours);
 		
 		if (pIndex > -1)
 		{
@@ -7346,6 +7409,51 @@ M = {
 		// The regex strips all characters except digits, commas, periods, and minus sign
 		var coord = pString.replace(/[^\d,-.]/g, "");
 		return coord.split(",");
+	},
+	
+	/*
+	 * Sorts an array of GW2 coordinates.
+	 * @param 2D array pArray to sort.
+	 */
+	sortCoordinates: function(pArray)
+	{
+		var coord;
+		// Convert to integer
+		for (var i in pArray)
+		{
+			coord = pArray[i];
+			coord[0] = Math.round(coord[0]);
+			coord[1] = Math.round(coord[1]);
+		}
+		// Sort the array
+		pArray.sort(function (a, b)
+		{
+			if (a[0] > b[0])
+			{
+				return 1;
+			}
+			if (a[0] < b[0])
+			{
+				return -1;
+			}
+			return 0;
+		});
+		// Print the result formatted
+		for (var i in pArray)
+		{
+			M.printCoordinates(pArray[i], i);
+		}
+	},
+	printCushion: function(pCushion)
+	{
+		for (var i in pCushion)
+		{
+			M.printCoordinates((pCushion[i]).c, i);
+		}
+	},
+	printCoordinates: function(pCoord, i)
+	{
+		I.write("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},");
 	},
 	
 	/*
@@ -8799,11 +8907,11 @@ P = {
 	},
 	
 	/*
-	 * Populates the map with collectible markers and create HTML checkboxes
-	 * to toggle their display on the map. Each collectible type has a "cushion"
-	 * array to store "needle" markers, which act as checkboxes in the map.
+	 * Create list of collectibles and checkbox to toggle their display. The
+	 * first checkbox click generates the icon. Each collectible type has a
+	 * "cushion" array to store "needle" markers.
 	 */
-	generateAndInitializeCollectibles: function()
+	generateCollectiblesUI: function()
 	{
 		$.getScript(U.URL_DATA.Collectible).done(function()
 		{
@@ -8820,7 +8928,7 @@ P = {
 				$("#mapCollectibleList").append(
 					"<div>"
 					+ "<label style='color:" + collectible.color + "'>"
-						+ "<img src='img/collectible/" + i.toLowerCase() + I.cPNG + "' /><input id='ned_" + i + "' type='checkbox' /> " + translatedname
+						+ "<ins class='col_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
 					+ "</label>"
 					+ "<span><cite>"
 						+ "<a href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "'>[Y]</a>&nbsp;"
@@ -8841,7 +8949,7 @@ P = {
 				// If article URL query string exists, show collectible of specified index
 				if (I.ArticleCurrent)
 				{
-					if (I.ArticleCurrent.toLowerCase() === X.Checklists[i].urlkey)
+					if (I.ArticleCurrent.toLowerCase() === X.Collectibles[i].urlkey)
 					{
 						// Trigger the associated checkbox so the markers are generated
 						$("#ned_" + i).trigger("click");
@@ -8872,7 +8980,7 @@ P = {
 	generateCollectibles: function(pType)
 	{
 		var i, number;
-		var customlist = U.Args[X.Checklists[pType].urlkey];
+		var customlist = U.Args[X.Collectibles[pType].urlkey];
 		var collectible = M.Collectibles[pType];
 		var ithneedle;
 		var stateinstring;
@@ -8881,12 +8989,12 @@ P = {
 		var translatedname = D.getObjectName(collectible);
 		var path = new Array();
 		
-		var styleMarker = function(pMarker, pIndex, pState, pColor)
+		var styleMarker = function(pMarker, pLabel, pState, pColor)
 		{
 			pMarker.setIcon(new L.divIcon(
 			{
 				className: "mapNeedle",
-				html: "<span style='color:" + pColor + "'>" + pIndex + "</span>",
+				html: "<span style='color:" + pColor + "'>" + pLabel + "</span>",
 				iconSize: [16, 16],
 				iconAnchor: [8, 8]
 			}));
@@ -8900,11 +9008,11 @@ P = {
 				var type = this.options.needleType;
 				var key = this.options.needleKey;
 				var index = this.options.needleIndex;
-				var newstate = X.trackChecklistItem(X.Checklists[type], index);
+				var newstate = X.trackChecklistItem(X.Collectibles[type], index);
 				P.styleCollectibleMarker(this, newstate);
 				
 				// Update URL bar with list of numbers of checked markers
-				var pings = X.getCheckedIndexes(X.Checklists[type]);
+				var pings = X.getCheckedIndexes(X.Collectibles[type]);
 				if (pings.length === 0)
 				{
 					U.updateQueryString();
@@ -8916,8 +9024,9 @@ P = {
 			});
 		};
 		
-		X.Checklists[pType].length = M.Collectibles[pType].needles.length;
-		X.initializeChecklist(X.Checklists[pType], X.Checklists[pType].length, customlist);
+		X.Collectibles[pType].length = M.Collectibles[pType].needles.length;
+		X.Collectibles[pType].cushion = new Array();
+		X.initializeChecklist(X.Collectibles[pType], X.Collectibles[pType].length, customlist);
 
 		M.Entity[pType] = new Array(); // Hold markers
 		M.Layer[pType] = new L.layerGroup(); // Hold path
@@ -8927,7 +9036,7 @@ P = {
 			// Read and enact the state of the ith collectible checklist
 			number = parseInt(i) + 1;
 			ithneedle = collectible.needles[i];
-			stateinstring = X.getChecklistItem(X.Checklists[pType], i);
+			stateinstring = X.getChecklistItem(X.Collectibles[pType], i);
 
 			markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + number;
 			if (ithneedle.i)
@@ -8936,7 +9045,7 @@ P = {
 			}
 			else if (ithneedle.t)
 			{
-				markertitle += "<br /><span class='mapTip'>" + ithneedle.t + " (User Contributed)</span>";
+				markertitle += "<br /><span class='mapTip'>" + ithneedle.t + "</span>";
 			}
 			markertitle += "</div>";
 
@@ -8944,12 +9053,16 @@ P = {
 			{
 				needleIndex: i,
 				needleType: pType,
-				needleKey: X.Checklists[pType].urlkey,
+				needleKey: X.Collectibles[pType].urlkey,
 				title: markertitle
 			}).addTo(M.Map);
+			if (ithneedle.l)
+			{
+				number = ithneedle.l;
+			}
 			styleMarker(marker, number, stateinstring, collectible.color);
 			// Add to arrays
-			X.Checklists[pType].cushion.push(marker);
+			X.Collectibles[pType].cushion.push(marker);
 			M.Entity[pType].push(marker);
 			
 			// Compile coordinates for path lines
@@ -8982,13 +9095,31 @@ P = {
 		$("#nedUncheck_" + pType).click(function()
 		{
 			var type = U.getSubstringFromHTMLID($(this));
-			var thiscushion = X.Checklists[type].cushion;
+			var thiscushion = X.Collectibles[type].cushion;
 			for (var thisi in thiscushion)
 			{
 				P.styleCollectibleMarker(thiscushion[thisi], X.ChecklistEnum.Unfound);
 			}
-			X.clearChecklist(X.Checklists[type]);
+			X.clearChecklist(X.Collectibles[type]);
 			U.updateQueryString();
+		});
+	},
+	
+	/*
+	 * Create list of guild mission types, and mission checkboxes for each type.
+	 * First checkbox click generates the mission's data into the map.
+	 */
+	generateGuildUI: function()
+	{
+		/*
+		 * Setting this boolean will tell the clock ticker function to call the
+		 * HTML timer update function.
+		 */
+		T.isGuildTimerStarted = true;
+		
+		$.getScript(U.URL_DATA.Guild).done(function()
+		{
+			
 		});
 	}
 };
@@ -9190,10 +9321,12 @@ T = {
 	cSECONDS_IN_MINUTE: 60,
 	cSECONDS_IN_HOUR: 3600,
 	cSECONDS_IN_DAY: 86400,
+	cSECONDS_IN_WEEK: 604800,
 	cMINUTES_IN_HOUR: 60,
 	cMINUTES_IN_DAY: 1440,
 	cHOURS_IN_MERIDIEM: 12,
 	cHOURS_IN_DAY: 24,
+	cDAYS_IN_WEEK: 7,
 	cSECONDS_IN_TIMEFRAME: 900,
 	cMINUTES_IN_TIMEFRAME: 15,
 	cMINUTES_IN_EVENTFRAME: 5,
@@ -9224,7 +9357,19 @@ T = {
 		Minutes: 2,
 		Hours: 3
 	},
+	DayEnum:
+	{
+		Sunday: 0,
+		Monday: 1,
+		Tuesday: 2,
+		Wednesday: 3,
+		Thursday: 4,
+		Friday: 5,
+		Saturday: 6
+	},
 	loginTrackOfficial: 0,
+	secondsTillGuildReset: -1,
+	isGuildTimerStarted: false,
 	
 	Events:
 	{
@@ -9568,7 +9713,7 @@ T = {
 	 */
 	getCurrentTimeframe: function()
 	{
-		var minutes = T.getTimeOffsetSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
+		var minutes = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
 		return minutes - (minutes % T.cMINUTES_IN_TIMEFRAME);
 	},
 	
@@ -9682,7 +9827,7 @@ T = {
 	getSecondsUntilChainStarts: function(pChain)
 	{
 		var secondschain = (T.convertScheduleKeyToLocalSeconds(pChain.scheduleKeys[0]));
-		var secondscurrent = T.getTimeOffsetSinceMidnight(T.ReferenceEnum.Local, T.UnitEnum.Seconds);
+		var secondscurrent = T.getTimeSinceMidnight(T.ReferenceEnum.Local, T.UnitEnum.Seconds);
 		var rolloverthreshold = (T.cSECONDS_IN_TIMEFRAME * T.cNUM_TIMEFRAMES_IN_HOUR); // This is 3600 seconds
 		
 		/*
@@ -10018,6 +10163,56 @@ T = {
 	},
 	
 	/*
+	 * Gets a Days:Hours:Minutes:Seconds string from seconds.
+	 * @param int pSeconds of time.
+	 * @returns string formatted time.
+	 */
+	formatSeconds: function(pSeconds)
+	{
+		var day, hour, min, sec;
+		var daystr = "";
+		var hourstr = "";
+		var minstr = "";
+		var secstr = "";
+		
+		if (pSeconds >= T.cSECONDS_IN_DAY)
+		{
+			day = ~~(pSeconds / T.cSECONDS_IN_DAY);
+			daystr = day + "::";
+		}
+		if (pSeconds >= T.cSECONDS_IN_HOUR)
+		{
+			hour = ~~(pSeconds / T.cSECONDS_IN_HOUR) % T.cHOURS_IN_DAY;
+			hourstr = hour + ":";
+			if (daystr !== "" && hour < T.cBASE_10)
+			{
+				hourstr = "0" + hourstr;
+			}
+		}
+		if (pSeconds >= T.cSECONDS_IN_MINUTE)
+		{
+			min = ~~(pSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+			minstr = min + ":";
+			if (hourstr !== "" && min < T.cBASE_10)
+			{
+				minstr = "0" + minstr;
+			}
+		}
+		else
+		{
+			minstr = "0:";
+		}
+		sec = pSeconds % T.cSECONDS_IN_MINUTE;
+		secstr = sec.toString();
+		if (sec < T.cBASE_10)
+		{
+			secstr = "0" + secstr;
+		}
+		
+		return daystr + hourstr + minstr + secstr;
+	},
+	
+	/*
 	 * Tells if current UTC time is daytime in game or not (night).
 	 * @returns true if daytime.
 	 */
@@ -10084,7 +10279,7 @@ T = {
 	 * @param string pReference place to offset the time, default is UTC.
 	 * @returns number seconds, minutes, or hours.
 	 */
-	getTimeOffsetSinceMidnight: function(pReference, pTimeUnit)
+	getTimeSinceMidnight: function(pReference, pTimeUnit)
 	{
 		pTimeUnit = pTimeUnit || T.UnitEnum.Seconds;
 		pReference = pReference || T.ReferenceEnum.UTC;
@@ -10139,6 +10334,58 @@ T = {
 		var newdate = new Date(pDate);
 		newdate.setDate(pDate.getDate() + pDays);
 		return newdate;
+	},
+	
+	/*
+	 * Gets the seconds until a time in a day of the week.
+	 * @param int pDay of week.
+	 * @param int pOffsetSeconds since midnight (start) of that day.
+	 * @returns int seconds.
+	 */
+	getSecondsTillWeekday: function(pTargetDay, pOffsetSeconds)
+	{
+		if (pOffsetSeconds === undefined)
+		{
+			pOffsetSeconds = 0;
+		}
+		var now = new Date();
+		var todaysecondselapsed = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
+		var todaysecondsremaining = T.cSECONDS_IN_DAY - todaysecondselapsed;
+		var currentdayofweek = now.getUTCDay();
+		var wholedaysecondsbetween = 0;
+		if (pTargetDay > currentdayofweek)
+		{
+			wholedaysecondsbetween = (pTargetDay - currentdayofweek - 1) * T.cSECONDS_IN_DAY;
+			return todaysecondsremaining + wholedaysecondsbetween + pOffsetSeconds;
+		}
+		else if (pTargetDay < currentdayofweek)
+		{
+			wholedaysecondsbetween = ((currentdayofweek + pTargetDay) % (T.cDAYS_IN_WEEK - 1)) * T.cSECONDS_IN_DAY;
+			return todaysecondsremaining + wholedaysecondsbetween + pOffsetSeconds;
+		}
+		// If target day is same as today
+		if (pOffsetSeconds >= todaysecondselapsed)
+		{
+			return pOffsetSeconds - todaysecondselapsed;
+		}
+		else
+		{
+			return T.cSECONDS_IN_WEEK - (todaysecondselapsed - pOffsetSeconds);
+		}
+	},
+	
+	/*
+	 * Counts down till guild mission reset.
+	 */
+	updateGuildTimer: function()
+	{
+		if (T.secondsTillGuildReset < 0)
+		{
+			T.secondsTillGuildReset = T.getSecondsTillWeekday(T.DayEnum.Sunday);
+		}
+		$("#mapGuildTimer").text(T.formatSeconds(T.secondsTillGuildReset));
+		// Decrement global variable to countdown, instead of calling the compute function every time
+		T.secondsTillGuildReset--;
 	}
 };
 
@@ -10545,7 +10792,7 @@ K = {
 		 */
 		var sec = pDate.getSeconds();
 		T.TIMESTAMP_UNIX_SECONDS = T.getUNIXSeconds();
-		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeOffsetSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
+		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
 		var min = pDate.getMinutes();
 		var hour = pDate.getHours() % T.cHOURS_IN_MERIDIEM;
 		var secinhour = min*60 + sec;
@@ -10656,6 +10903,12 @@ K = {
 		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentChainSD.avgFinish))
 		{
 			K.handMinute.style.stroke = "red";
+		}
+		
+		// Trigger other ticking functions
+		if (T.isGuildTimerStarted)
+		{
+			T.updateGuildTimer();
 		}
 
 		// Loop this function, can use variable to halt it
@@ -11212,10 +11465,10 @@ I = {
 			Resource: "Resource",
 			JP: "JP",
 			Collectible: "Collectible",
+			Guild: "Guild",
 			TP: "TP",
 			Notepad: "Notepad",
 			Personal: "Personal"
-			
 		},
 		WvW:
 		{
@@ -11406,7 +11659,7 @@ I = {
 		);
 
 		// Initialize scroll bars for pre-loaded plates
-		I.initializeScrollbar($("body, #plateChains, #plateOptions"));
+		I.initializeScrollbar($("#jsConsole, #plateChains, #plateOptions"));
 		
 		// Clean the localStorage of unrecognized variables
 		O.cleanLocalStorage();
@@ -11489,6 +11742,7 @@ I = {
 			pSeconds = 3 + parseInt(pString.length / characterspersecond);
 		}
 		console.append(pString + "<br />");
+		I.updateScrollbar(console);
 		
 		// Ignore previous display time, which is how long before the console is cleared
 		window.clearTimeout(I.consoleTimeout);
@@ -11595,18 +11849,33 @@ I = {
 		{
 			return;
 		}
-		
-		var wheelspeed = 1;
-		switch (I.BrowserCurrent)
-		{
-			case I.BrowserEnum.Opera: wheelspeed = 3; break;
-			case I.BrowserEnum.Firefox: wheelspeed = 3; break;
+		try
+		{	
+			var wheelspeed = 1;
+			switch (I.BrowserCurrent)
+			{
+				case I.BrowserEnum.Opera: wheelspeed = 3; break;
+				case I.BrowserEnum.Firefox: wheelspeed = 3; break;
+			}
+
+			$(pElement).perfectScrollbar({
+				wheelSpeed: wheelspeed,
+				suppressScrollX: true
+			});
 		}
-		
-		$(pElement).perfectScrollbar({
-			wheelSpeed: wheelspeed,
-			suppressScrollX: true
-		});
+		catch (e) {}
+	},
+	updateScrollbar: function(pElement)
+	{
+		if (I.ModeCurrent === I.ModeEnum.Mobile)
+		{
+			return;
+		}
+		try
+		{
+			$(pElement).perfectScrollbar("update");
+		}
+		catch (e) {}
 	},
 	
 	/*
@@ -11695,12 +11964,13 @@ I = {
 					{
 						$(this).next().toggle("fast", function()
 						{
-							$(pPlate).perfectScrollbar("update");
+							I.updateScrollbar(pPlate);
 						});
 					}
 					else
 					{
 						$(this).next().toggle();
+						I.updateScrollbar(pPlate);
 					}
 				}
 				else
@@ -12060,7 +12330,12 @@ I = {
 			// Create collectible markers and checkboxes
 			$("#headerMap_Collectible").one("click", function()
 			{
-				P.generateAndInitializeCollectibles();
+				P.generateCollectiblesUI();
+			});
+			// Create guild mission subsections
+			$("#headerMap_Guild").one("click", function()
+			{
+				P.generateGuildUI();
 			});
 			
 			// Bind show map icons when clicked on header

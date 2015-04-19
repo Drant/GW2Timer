@@ -679,6 +679,7 @@ var GW2T_JP_DATA = {
 
 var GW2T_CHEST_DATA = {
 Basic: [
+	{c: [3863, 16630], t: "In entangled cave, entrance opens rarely during sandstorm"},
 	{c: [4637, 17091], t: "Climb the wall edge south of the POI and climb eastward"},
 	{c: [5134, 16200], t: "In crevice of a cliff wall, use jump crystal to access"},
 	{c: [5136, 16789]},
@@ -737,7 +738,6 @@ Basic: [
 	{c: [23434, 14670]},
 	{c: [23903, 10917]},
 	{c: [24771, 11088]},
-	{c: [25910, 11468]},
 	{c: [26025, 10706]},
 	{c: [26116, 12600]},
 	{c: [26120, 14461], t: "Inside the crypt"},

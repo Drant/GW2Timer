@@ -96,7 +96,8 @@ ins {
 
 #jsConsole, #paneWarning {
 	max-width: 62%;
-	position: absolute;
+	max-height: 95%;
+	position: fixed;
 	z-index: 9;
 	top: 24px;
 	left: 24px;
@@ -189,9 +190,6 @@ div#qTip img {
 .ps-container.ps-active-x > .ps-scrollbar-x-rail, .ps-container.ps-active-y > .ps-scrollbar-y-rail {
 	display: block;
 }
-.ps-container.ps-in-scrolling {
-	pointer-events: none;
-}
 .ps-container.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail {
 	background-color: #eee;
 	opacity: 0.9;
@@ -239,9 +237,6 @@ div#qTip img {
 	transition: background-color .2s linear;
 	right: 0;
 	width: 8px;
-}
-.ps-container:hover.ps-in-scrolling {
-	pointer-events: none;
 }
 .ps-container:hover.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail {
 	background-color: #eee;
@@ -333,20 +328,17 @@ html, body,
 	background: url("img/background/space.jpg") repeat center;
 }
 #paneWvW {
+	display: none;
 	background: white;
 }
 
-#paneWvW {
-	display: none;
-}
-
 /* Bottom left corner: Coordinates bar */
-#itemMapCoordinates, #itemWvWCoordinates {
+#itemMapCoordinates {
 	position: absolute;
 	bottom: 12px; left: 12px;
 	z-index: 9;
 }
-#itemMapCoordinates input, #itemWvWCoordinates input {
+#itemMapCoordinates input {
 	display: inline-block;
 	width: 90px;
 	height: 16px;
@@ -358,7 +350,10 @@ html, body,
 	color: #ddff77;
 	opacity: 0.6;
 }
-input#mapCoordinatesName, input#wvwCoordinatesName {
+#itemMapCoordinates input::selection {
+	background: #66aaff;
+}
+input#mapCoordinatesName {
 	width: 145px; 
 }
 
@@ -1565,7 +1560,7 @@ button.btnToggle {
 	width: 32px; height: 32px;
 	margin-right: 7px;
 	border: 1px dashed #ffff66;
-	background-image: url("img/login/rewards.png");
+	background-image: url("img/daily/rewards.png");
 }
 .lgn_celebration { background-position: -32px 0; }
 .lgn_exotic { background-position: -64px 0; }
@@ -1808,9 +1803,11 @@ dt.mapJPListNameHover {
 	width: auto;
 	margin: 0;
 }
-#mapCollectibleList img {
+#mapCollectibleList ins {
+	width: 32px; height: 32px;
 	margin-right: 4px;
 	border-radius: 8px;
+	background-image: url(img/collectible/collectibles.png);
 }
 #mapCollectibleList div a {
 	text-decoration: underline;
@@ -1818,14 +1815,37 @@ dt.mapJPListNameHover {
 #mapCollectibleList div:hover label {
 	font-weight: bold;
 }
-#mapCollectibleList div:hover img {
+#mapCollectibleList div:hover ins {
 	box-shadow: 0px 0px 4px #ffff66;
 }
-#mapCollectibleList div span {
+#mapCollectibleList div span { /* Text buttons line */
 	display: block;
+	margin-top: -4px;
 	padding-bottom: 4px;
 	border-bottom: 1px solid #111;
 	text-align: right;
+}
+
+.col_banditchests { background-position: 0 0; }
+.col_buriedchests { background-position: -32px 0; }
+.col_cleaningup { background-position: -64px 0; }
+.col_coinchallenger { background-position: -96px 0; }
+.col_coinprospect { background-position: -128px 0; }
+.col_coinuplands { background-position: -160px 0; }
+.col_divemaster { background-position: -192px 0; }
+.col_goldenlostbadges { background-position: -224px 0; }
+.col_historybuff { background-position: -256px 0; }
+.col_lostbadges { background-position: -288px 0; }
+.col_matrixcubekey { background-position: -320px 0; }
+.col_speedyreader { background-position: -352px 0; }
+
+/* Guild */
+#mapGuildTimer {
+	margin: 12px;
+	text-align: center;
+	font-size: 32px;
+	color: #bbcc77;
+	text-shadow: 0px 0px 2px black;
 }
 
 /* Arithmetic Calculator
@@ -1889,13 +1909,16 @@ dt.mapJPListNameHover {
 }
 
 #trdToggle {
-	width: 128px;
+	width: 96px;
 }
 #trdRefresh {
 	width: 96px;
 }
 #trdMute {
 	width: 64px;
+}
+#trdPrint {
+	width: 64px; height: 28px;
 }
 .trdResultsFocus {
 	display: inline-block;

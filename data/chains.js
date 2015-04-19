@@ -438,7 +438,7 @@ var GW2T_CHAIN_DATA = [
 },
 {
 	alias: "Megades",
-	pronunciation: "megadestroyer",
+	pronunciation: "mega destroyer",
 	series: 2,
 	waypoint: "[&BM0CAAA=]",
 	extra: ["maelstrom", "66", "1", "1", "0"],
@@ -799,7 +799,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[15993, 17080], [16124, 17388], [15937, 17380], [15945, 17200], [15913, 17153], [15914, 16894], [15840, 16924], [15774, 17082], [15726, 17082], [15720, 17058], [15747, 17098], [15993, 17080]],
+			path: [[15993, 17080], [16124, 17388], [15945, 17384], [15933, 17343], [15851, 17296], [15828, 17180], [15919, 16941], [15914, 16894], [15840, 16924], [15774, 17082], [15726, 17082], [15720, 17058], [15747, 17098], [15993, 17080]],
 			name_en: "Defend the galleon and help it destroy Taidha's gate.",
 			name_de: "Verteidigt die Galeone und helft, damit Taidhas Tor zu zerstören.",
 			name_es: "Defiende el galeón y ayúdalo a destruir la puerta de Taidha.",
