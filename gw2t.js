@@ -641,8 +641,6 @@ O = {
 			}
 			X.clearChecklist(X.Checklists.Chain, X.ChecklistJob.UncheckTheChecked);
 		}
-		// Update the today's chain shortcut object
-		C.updateChainToday();
 		
 		// Subscribe to daily chain
 		if (O.Options.bol_alertAutosubscribe &&
@@ -1521,6 +1519,8 @@ U = {
 			var gostring = "";
 			var modestring = "";
 			
+			var title = I.PageCurrent;
+			
 			if (I.ModeCurrent === I.ModeEnum.Overlay ||
 				I.ModeCurrent === I.ModeEnum.Mobile)
 			{
@@ -1530,6 +1530,7 @@ U = {
 			if (section)
 			{
 				sectionstring = "&" + U.KeyEnum.Section + "=" + section;
+				title = section;
 			}
 			if (article)
 			{
@@ -1541,7 +1542,12 @@ U = {
 			}
 			
 			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring + modestring);
+			U.updateTitle(title);
 		}
+	},
+	updateTitle: function(pTitle)
+	{
+		document.title = I.cSiteName + "/" + pTitle;
 	},
 	
 	/*
@@ -2324,10 +2330,13 @@ X = {
 		{
 			pRestoreButton.click(function()
 			{
-				pTextFields.each(function(pIndex)
+				if (confirm("Reset texts to default?"))
 				{
-					$(this).val(pTextlist.valueDefault[pIndex]).trigger("change");
-				});
+					pTextFields.each(function(pIndex)
+					{
+						$(this).val(pTextlist.valueDefault[pIndex]).trigger("change");
+					});
+				}
 			});
 		}
 	},
@@ -4843,7 +4852,8 @@ D = {
 				return (D.ChainTitle[pIndex])[O.OptionEnum.Language.Default];
 			}
 		}
-		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+		if (O.Options.enu_Language === O.OptionEnum.Language.Default &&
+			I.ModeCurrent !== I.ModeEnum.Mobile)
 		{
 			return C.Chains[pIndex].title;
 		}
@@ -5089,18 +5099,60 @@ C = {
 	},
 	
 	/*
-	 * Refers today's chain object to the calendar's world boss, if available.
+	 * Assigns today's chain object to the calendar's world boss, if available.
+	 * @param boolean pIsTomorrow whether today's boss won't spawn before reset.
 	 */
-	updateChainToday: function()
+	updateChainToday: function(pIsTomorrow)
 	{
-		var dayofmonth = (new Date()).getUTCDate();
-		var boss = (T.DailyCalendar[dayofmonth].pve[3].split(" "))[0].toLowerCase();
-		if (T.ChainAssociation[boss] !== undefined)
+		
+		C.ChainToday = null;
+		return;
+		
+		var date = new Date();
+		pIsTomorrow = pIsTomorrow || false;
+		if (pIsTomorrow === true)
 		{
-			C.ChainToday = C.Chains[T.ChainAssociation[boss]];
+			date = T.addDaysToDate(date, 1);
+		}
+		var dayofmonth = date.getUTCDate();
+		var alias = (T.DailyCalendar[dayofmonth].pve[3].split(" "))[0].toLowerCase();
+		var chain;
+		
+		var currentmins = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
+		var startmins;
+		
+		if (T.ChainAssociation[alias] !== undefined)
+		{
+			chain = C.Chains[T.ChainAssociation[alias]];
+			startmins = T.convertScheduleKeyToUTCMinutes(chain.scheduleKeys[0]);
+			if (pIsTomorrow === false)
+			{
+				if (startmins >= currentmins)
+				{
+					// Make sure today's boss can still spawn before server reset at UTC midnight
+					C.ChainToday = chain;
+				}
+				else
+				{
+					// Else get tomorrow's boss
+					C.updateChainToday(true);
+				}
+			}
+			else
+			{
+				if (startmins + T.cMINUTES_IN_TIMEFRAME < currentmins)
+				{
+					C.ChainToday = chain;
+				}
+				else
+				{
+					C.ChainToday = null;
+				}
+			}
 		}
 		else
 		{
+			// No boss for this day
 			C.ChainToday = null;
 		}
 	},
@@ -5494,6 +5546,9 @@ C = {
 					if ($(this).attr("id") === "listChainsDryTop")
 					{
 						M.goToZone("dry", M.ZoomLevelEnum.Sky);
+						I.PageCurrent = "DryTop";
+						U.updateQueryString();
+						U.updateTitle("DryTop");
 					}
 				}
 				else
@@ -5608,8 +5663,6 @@ C = {
 		}
 		
 		C.initializeUI();
-		// Initialize today's chain shortcut object
-		C.updateChainToday();
 		// Initial recoloring of chain titles
 		$("#listChainsScheduled .barChain h1, #listChainsDryTop .barChain h1")
 			.addClass("chnTitleFutureFar");
@@ -6490,13 +6543,14 @@ M = {
 	 */
 	getZoneName: function(pNick)
 	{
-		// Polymorphic function
+		// If pNick is an alias of a zone
 		var zone;
 		if (typeof(pNick) === "string" && M.Zones[pNick])
 		{
 			zone = M.Zones[pNick];
 		}
-		else if (pNick["name"])
+		// If pNick is a zone that has the property
+		else if (pNick["rect"])
 		{
 			zone = pNick;
 		}
@@ -6506,14 +6560,7 @@ M = {
 		}
 		
 		// Now get the name
-		if (M.isAPIRetrieved_MAPFLOOR && D.isLanguageSecondary() === true)
-		{
-			return zone["name_" + D.getFullySupportedLanguage()];
-		}
-		else
-		{
-			return zone["name"];
-		}
+		return D.getObjectName(zone);
 	},
 	
 	/*
@@ -6628,17 +6675,7 @@ M = {
 		 */
 		$("#mapCoordinatesCopy").onEnterKey(function()
 		{
-			var coord = M.parseCoordinates($(this).val());
-			coord[0] = Math.floor(coord[0]);
-			coord[1] = Math.floor(coord[1]);
-			$("#mapCoordinatesCopy")
-				.val("[" + coord[0] + ", " + coord[1] + "]")
-				.select();
-			
-			if (coord[0] !== "" && coord.length === 2)
-			{
-				M.goToView(coord, M.PinPersonal);
-			}
+			M.goToArguments($(this).val());
 		});
 		
 		/*
@@ -7339,7 +7376,6 @@ M = {
 		{
 			latlngs.push(M.convertGCtoLC(pCoordArray[i]));
 		}
-		
 		return latlngs;
 	},
 	
@@ -7351,7 +7387,16 @@ M = {
 	convertLCtoGC: function(pLatLng)
 	{
 		var coord = M.Map.project(pLatLng, M.ZoomLevelEnum.Max);
-		return [Math.floor(coord.x), Math.floor(coord.y)];
+		return [Math.round(coord.x), Math.round(coord.y)];
+	},
+	convertLCtoGCMulti: function(pCoordArray)
+	{
+		var coords = new Array();
+		for (var i = 0; i < pCoordArray.length; i++)
+		{
+			coords.push(M.convertLCtoGC(pCoordArray[i]));
+		}
+		return coords;
 	},
 	
 	/*
@@ -7454,6 +7499,23 @@ M = {
 	printCoordinates: function(pCoord, i)
 	{
 		I.write("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},");
+	},
+	
+	/*
+	 * Converts and prints an array of LatLngs to GW2 coordinates.
+	 * @param 2D array pArray.
+	 * @returns 2D array.
+	 */
+	convertLatLngs: function(pArray)
+	{
+		var coords = M.convertLCtoGCMulti(pArray);
+		var output = "";
+		for (var i in coords)
+		{
+			output = output + "[" + (coords[i])[0] + "," + (coords[i])[1] + "],";
+		}
+		output = output.substring(0, output.length - 1); // Trim last comma
+		I.write("[" + output + "]", 30);
 	},
 	
 	/*
@@ -7745,8 +7807,6 @@ P = {
 			var i;
 			var regionid, region, zoneid, ithzone, poi;
 			var zoneobj;
-			var nameinlang = "name_" + D.getFullySupportedLanguage();
-			var issecondarylang = D.isLanguageSecondary();
 			var numofpois;
 			var marker;
 			var icon;
@@ -7768,11 +7828,6 @@ P = {
 					
 					ithzone = region.maps[zoneid];
 					zoneobj = M.getZoneFromID(zoneid);
-					// Remember zone name
-					if (issecondarylang)
-					{
-						zoneobj[nameinlang] = ithzone.name;
-					}
 					// Store zone dimension data for locating events
 					zoneobj.map_rect = ithzone.map_rect;
 					zoneobj.continent_rect = ithzone.continent_rect;
@@ -9299,7 +9354,7 @@ W = {
 	convertLCtoGC: function(pLatLng)
 	{
 		var coord = W.Map.project(pLatLng, W.ZoomLevelEnum.Max);
-		return [Math.floor(coord.x), Math.floor(coord.y)];
+		return [Math.round(coord.x), Math.round(coord.y)];
 	},
 };
 
@@ -9512,9 +9567,9 @@ T = {
 		
 		/*
 		 * This "hash table" contains all time-sensitive chains (a group of
-		 * events). The "key"/slot is the time in minutes, and the "value" is an 
-		 * object with the minutes (again for access) and the array of chains
-		 * that start at that time.
+		 * events). The "key"/slot is the time in minutes since UTC midnight,
+		 * and the "value" is an object with the minutes (again for access) and
+		 * the array of chains that start at that time.
 		 * A "Timeframe" is the quarter of an hour that a regular chain(s) is
 		 * considered current and before it is replaced by the next chain(s).
 		 */
@@ -9794,6 +9849,11 @@ T = {
 		time = T.wrapInteger(time, T.cSECONDS_IN_DAY);
 
 		return time;
+	},
+	convertScheduleKeyToUTCMinutes: function(pKey)
+	{
+		// Removes the "t" from the key to get the minutes
+		return parseInt(pKey.substring(1, pKey.length));
 	},
 	
 	/*
@@ -10360,7 +10420,7 @@ T = {
 		}
 		else if (pTargetDay < currentdayofweek)
 		{
-			wholedaysecondsbetween = ((currentdayofweek + pTargetDay) % (T.cDAYS_IN_WEEK - 1)) * T.cSECONDS_IN_DAY;
+			wholedaysecondsbetween = ((T.cDAYS_IN_WEEK - 1 - currentdayofweek) + pTargetDay) * T.cSECONDS_IN_DAY;
 			return todaysecondsremaining + wholedaysecondsbetween + pOffsetSeconds;
 		}
 		// If target day is same as today
@@ -10443,9 +10503,9 @@ K = {
 		K.timestampReset = $("#optTimeTillReset")[0];
 		
 		K.updateTimeFrame(new Date());
-		K.updateDigitalClockMinutely();
 		K.updateDaytimeIcon();
 		K.tickFrequent();
+		K.updateDigitalClockMinutely();
 		K.initializeClipboard();
 		
 		// Other clickable elements
@@ -10997,6 +11057,8 @@ K = {
 		
 		// Sort the chains list
 		C.sortChainsListHTML();
+		// Initialize today's chain shortcut object
+		C.updateChainToday();
 		
 		// Queue the highlighting of the current chain's events
 		C.CurrentChains.forEach(C.queueEventsHighlight);
@@ -11327,7 +11389,11 @@ K = {
 				reference: T.ReferenceEnum.UTC,
 				wantSeconds: false,
 				want24: true
-			});
+			}) + "<br />" +
+			"Reset: " + T.getTimeFormatted(
+			{
+				customTimeInSeconds: T.SECONDS_TILL_RESET, wantSeconds: false, wantLetters: true
+			});;
 		I.qTip.init(K.timeLocal);
 	},
 	
@@ -11436,6 +11502,7 @@ I = {
 	isMouseOnPanel: false,
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
+	isMapEnabled: true,
 	ModeCurrent: null,
 	ModeEnum:
 	{
@@ -11478,6 +11545,7 @@ I = {
 		{
 			FAQ: "FAQ",
 			About: "About",
+			Embed: "Embed",
 			Scheduled: "Scheduled",
 			Legacy: "Legacy",
 			Temples: "Temples",
@@ -11854,7 +11922,7 @@ I = {
 			var wheelspeed = 1;
 			switch (I.BrowserCurrent)
 			{
-				case I.BrowserEnum.Opera: wheelspeed = 3; break;
+				case I.BrowserEnum.Opera: wheelspeed = 5; break;
 				case I.BrowserEnum.Firefox: wheelspeed = 3; break;
 			}
 
@@ -12427,11 +12495,22 @@ I = {
 				{
 					right: "0px", left: "auto", bottom: "0px"
 				});
+				// Lower the menu bar's height
+				$("#paneMenu").css(
+				{
+					height: "32px"
+				});
+				$("#paneMenu ins").css(
+				{
+					"margin-top": "0px"
+				});
+				I.cPANE_MENU_HEIGHT = 32;
 				$("#mapGPSButton").show();
 				
 			} break;
 			case I.ModeEnum.Simple:
 			{
+				I.isMapEnabled = false;
 				// Readjust panels
 				$("#panelLeft, #paneMenu, #paneContent").hide();
 				$("#panelRight").css(
@@ -12485,8 +12564,8 @@ I = {
 			} break;
 			case I.ModeEnum.Mobile:
 			{
+				I.isMapEnabled = false;
 				$("#panelLeft").hide();
-				$("head").append("<meta name='viewport' content='initial-scale=1.0, width=device-width'>");
 				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>");
 			} break;
 		}
@@ -12508,7 +12587,7 @@ I = {
 			$(".itemMapLinks a, .itemMapLinks span").hide();
 		}
 		
-		// Include program mode in Language link
+		// Include program mode in Language links
 		if (I.ModeCurrent !== I.ModeEnum.Website)
 		{
 			$("#itemLanguagePopup a").each(function()
@@ -12694,6 +12773,7 @@ T.initializeSchedule(); // compute event data and write HTML
 M.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
+
 
 
 

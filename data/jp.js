@@ -352,7 +352,7 @@ var GW2T_JP_DATA = {
 	name_fr: "Mine stigmatisée",
 	coord: "[28948, 16834]",
 	img: "QATS0uY",
-	description: "Fields metal platforms jaggedly hung on chains"
+	description: "Ruin metal platforms jaggedly hung on chains"
 },
 "crystal": {
 	id: 35,

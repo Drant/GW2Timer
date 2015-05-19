@@ -253,8 +253,8 @@ BanditChests: {
 MatrixCubeKey: {
 	name_en: "Matrix Cube Key",
 	name_de: "Matrixwürfel-Schlüssel",
-	name_es: "Matriz cubo clave",
-	name_fr: "Matrice cube clé",
+	name_es: "Llave de cubo matricial",
+	name_fr: "Clé matricielle cubique",
 	color: "greenyellow",
 	view: "[7588, 17619]",
 	wiki: "http://wiki.guildwars2.com/wiki/Matrix_Cube_Key",
