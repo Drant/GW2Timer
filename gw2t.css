@@ -1374,7 +1374,7 @@ textarea.jsCopyCode {
 }
 .chnTitle h1 {
 	display: table-cell;
-	width: 210px; /* This pushes the time to the right */
+	width: 192px; /* This pushes the time to the right */
 	padding-left: 8px;
 	vertical-align: middle;
 }
@@ -1384,7 +1384,7 @@ textarea.jsCopyCode {
 
 .chnTitle time {
 	display: table-cell;
-	width: 74px;
+	width: 92px;
 	vertical-align: middle;
 	text-align: right;
 }

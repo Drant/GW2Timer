@@ -5510,10 +5510,13 @@ C = {
 			$(this).parent().next().slideToggle(100);
 		});
 		$("#chnDetails_" + pChain.nexus).hide();
-		$("#barChain_" + pChain.nexus).hover(
-			function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain.nexus)) },
-			function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitleAny(pChain.nexus)) }
-		);
+		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+		{
+			$("#barChain_" + pChain.nexus).hover(
+				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain.nexus)) },
+				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitleAny(pChain.nexus)) }
+			);
+		}
 		
 		// Initialize tooltips
 		I.qTip.init($("#chnEvents_" + pChain.nexus + " ins"));
