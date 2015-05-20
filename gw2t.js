@@ -4852,8 +4852,7 @@ D = {
 				return (D.ChainTitle[pIndex])[O.OptionEnum.Language.Default];
 			}
 		}
-		if (O.Options.enu_Language === O.OptionEnum.Language.Default &&
-			I.ModeCurrent !== I.ModeEnum.Mobile)
+		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
 		{
 			return C.Chains[pIndex].title;
 		}
@@ -5318,7 +5317,7 @@ C = {
 			+ "<div class='chnTitle'>"
 				+ "<img id='chnIcon_" + pChain.nexus + "' src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
 				+ "<div id='chnCheck_" + pChain.nexus + "' class='chnCheck'></div>"
-				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + D.getChainTitle(pChain.nexus) + "</h1>"
+				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + D.getChainTitleAny(pChain.nexus) + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
 				+ "<aside><img id='chnDaily_" + pChain.nexus + "' class='chnDaily' src='img/ui/daily.png' /></aside>"
 			+ "</div>"
@@ -5511,6 +5510,10 @@ C = {
 			$(this).parent().next().slideToggle(100);
 		});
 		$("#chnDetails_" + pChain.nexus).hide();
+		$("#barChain_" + pChain.nexus).hover(
+			function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain.nexus)) },
+			function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitleAny(pChain.nexus)) }
+		);
 		
 		// Initialize tooltips
 		I.qTip.init($("#chnEvents_" + pChain.nexus + " ins"));

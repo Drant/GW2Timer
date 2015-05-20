@@ -1244,8 +1244,8 @@ textarea.jsCopyCode {
 
 #plateChains header {
 	display: block;
-	width: auto; height: 36px;
-	margin-bottom: 8px;
+	width: auto; height: 32px;
+	margin-bottom: 4px;
 	padding: 0px 12px 0px 4px;
 	border: 1px solid #111;
 	border-radius: 4px;
@@ -1315,8 +1315,8 @@ textarea.jsCopyCode {
 }
 
 .listChains {
-	margin-bottom: 24px;
-	font-family: "Times New Roman", Times, Georgia, serif;
+	margin-bottom: 12px;
+	font-family: Menomonia;
 	text-shadow:
 		1px 1px 0px #000,
 		-1px -1px 0px #000,
@@ -1407,6 +1407,7 @@ textarea.jsCopyCode {
 	margin-bottom: 4px;
 	white-space: nowrap;
     overflow: hidden;
+	font-family: "Times New Roman", Times, Georgia, serif;
 }
 .chnDetails ol li ins { /* Orange event icon */
 	width: 16px; height: 16px;
@@ -1475,7 +1476,7 @@ textarea.jsCopyCode {
 	opacity: 0.5;
 }
 .chnTitleFutureFar, .barChainDummy h1 {
-	color: #888;
+	color: #999;
 	opacity: 1;
 }
 
@@ -1488,7 +1489,7 @@ textarea.jsCopyCode {
 	opacity: 0.75;
 }
 .chnTimeFutureFar, .barChainDummy time {
-	color: #999;
+	color: #aaa;
 	opacity: 1;
 }
 .chnTimeSubscribed {
