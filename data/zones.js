@@ -21,7 +21,7 @@ var GW2T_ZONE_ASSOCIATION = {
 	"18": "divinity",
 	"19": "ashford",
 	"20": "blazeridge",
-	"21": "ruin",
+	"21": "fields",
 	"22": "fireheart",
 	"23": "kessex",
 	"24": "gendarran",
@@ -344,7 +344,7 @@ var GW2T_ZONE_DATA = {
 	region: "ascalon",
 	rect: [[27136, 9472], [29184, 13568]]
 },
-"ruin":
+"fields":
 {
 	name_en: "Fields of Ruin",
 	name_de: "Felder der Verwüstung",
@@ -477,7 +477,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Caravan", "Keep", "Defender"]
 },
 "22": {
-	pve: ["Miner Shiverpeaks", "Fractal", "Ruin", "SB Kryta"],
+	pve: ["Miner Shiverpeaks", "Fractal", "Fields", "SB Kryta"],
 	pvp: ["Rank", "Defender", "Thief", "Warrior"],
 	wvw: ["Guard", "Kills", "Tower", "Camp"]
 },

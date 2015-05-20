@@ -35,7 +35,7 @@ Iron: {
 	{c: [20374, 15751]}, // dredgehaunt
 	{c: [23766, 12745]}, // diessa
 	{c: [24470, 13451]},
-	{c: [28949, 17363]}, // ruin
+	{c: [28949, 17363]}, // fields
 	{c: [30905, 15375]}, // blazeridge
 	{c: [31180, 15023]} 
 	], type: "Metal"
@@ -58,7 +58,7 @@ Silver: {
 	{c: [17685, 14703]}, // lornar
 	{c: [25154, 12247]}, // diessa
 	{c: [26885, 13159]},
-	{c: [31100, 16455]} // ruin
+	{c: [31100, 16455]} // fields
 	], type: "Metal"
 },
 Gold: {
@@ -71,7 +71,7 @@ Gold: {
 	{c: [15933, 16436]}, // bloodtide
 	{c: [17916, 17952]}, // lornar
 	{c: [20062, 17212]}, // dredgehaunt
-	{c: [31648, 17373]}, // ruin
+	{c: [31648, 17373]}, // fields
 	{c: [31100, 12304]} // blazeridge
 	], type: "Metal"
 },
@@ -181,7 +181,7 @@ Soft: {
 	name_de: "Geschmeidiger",
 	name_es: "Blanda",
 	name_fr: "Tendre",
-	zones: ["brisban", "kessex", "gendarran", "harathi", "snowden", "lornar", "diessa", "ruin"],
+	zones: ["brisban", "kessex", "gendarran", "harathi", "snowden", "lornar", "diessa", "fields"],
 	offset: [128, 0],
 	type: "Wood"
 },
@@ -190,7 +190,7 @@ Seasoned: {
 	name_de: "Abgelagerter",
 	name_es: "Curtida",
 	name_fr: "Séché",
-	zones: ["harathi", "bloodtide", "lornar", "dredgehaunt", "timberline", "ruin", "blazeridge", "marches"],
+	zones: ["harathi", "bloodtide", "lornar", "dredgehaunt", "timberline", "fields", "blazeridge", "marches"],
 	offset: [0, -128],
 	type: "Wood"
 },
@@ -295,7 +295,7 @@ Grape: {
 	name_fr: "Raisin",
 	nodes: [
 	{c: [17832, 17426]}, // lornar
-	{c: [31099, 19162]} // ruin
+	{c: [31099, 19162]} // fields
 	], type: "Plant"
 },
 Cabbage: {

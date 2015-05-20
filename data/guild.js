@@ -152,7 +152,7 @@ Bounty: {
 		name_de: "Trillia Midwell",
 		name_es: "Trillia Midwell",
 		name_fr: "Trillia Mylieu",
-		view: "ruin",
+		view: "fields",
 		path: [],
 		isClockwise: true
 	},
@@ -161,7 +161,7 @@ Bounty: {
 		name_de: "Yanonka die Rattenhüterin",
 		name_es: "Yanonka la mayoral de ratas",
 		name_fr: "Yanonka la Palefrenière de Rats",
-		view: "ruin",
+		view: "fields",
 		spawn: []
 	}
 	}

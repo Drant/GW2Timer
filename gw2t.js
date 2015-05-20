@@ -12480,6 +12480,10 @@ I = {
 	{
 		switch (I.ModeCurrent)
 		{
+			case I.ModeEnum.Website:
+			{
+				$("head").append("<link rel='alternate' media='only screen and (max-width: 640px)' href='http://gw2timer.com/?mode=Mobile'>");
+			} break;
 			case I.ModeEnum.Overlay:
 			{
 				// Remove elements extraneous or intrusive to overlay mode
@@ -12566,7 +12570,8 @@ I = {
 			{
 				I.isMapEnabled = false;
 				$("#panelLeft").hide();
-				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>");
+				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>")
+					.append("<link rel='canonical' href='http://gw2timer.com'>");
 			} break;
 		}
 		
