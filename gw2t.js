@@ -5103,10 +5103,6 @@ C = {
 	 */
 	updateChainToday: function(pIsTomorrow)
 	{
-		
-		C.ChainToday = null;
-		return;
-		
 		var date = new Date();
 		pIsTomorrow = pIsTomorrow || false;
 		if (pIsTomorrow === true)
@@ -5134,7 +5130,8 @@ C = {
 				else
 				{
 					// Else get tomorrow's boss
-					C.updateChainToday(true);
+					C.ChainToday = null;
+					//C.updateChainToday(true);
 				}
 			}
 			else
@@ -5770,12 +5767,12 @@ C = {
 			if (O.Options.bol_useCountdown)
 			{
 				time = T.getSecondsUntilChainStarts(ithchain);
-					wantletters = true;
+				wantletters = true;
 			}
 			else
 			{
 				time = T.convertScheduleKeyToLocalSeconds(ithchain.scheduleKeys[0]);
-					wantletters = false;
+				wantletters = false;
 			}
 			
 			$("#chnTime_" + ithchain.nexus).text(T.getTimeFormatted(
@@ -8513,6 +8510,7 @@ P = {
 	{
 		var pve, pvp, wvw; // Daily types
 		var gather, activity, boss; // Regional dailies
+		var prof0, prof1;
 		// Prepare variables
 		var dayclass = "";
 		var bosssrc = "";
@@ -8557,6 +8555,9 @@ P = {
 			bosshtml = "<em><img src='img/chain/" + boss[0].toLowerCase() + I.cPNG + "' /></em>";
 		}
 		
+		prof0 = pvp[2].split(" ");
+		prof1 = pvp[3].split(" ");
+		
 		switch (pDate.getUTCDay())
 		{
 			case 0: dayclass = "dlySunday"; break;
@@ -8578,8 +8579,10 @@ P = {
 			+ "<span><ins class='dly_daily_pvp'></ins>"
 			+ "<ins class='dly_pvp_" + pvp[0].toLowerCase() + "' title='" + pvp[0] + "'></ins>"
 			+ "<ins class='dly_pvp_" + pvp[1].toLowerCase() + "' title='" + pvp[1] + "'></ins>"
-			+ "<ins class='dly_pvp_" + pvp[2].toLowerCase() + "' title='" + pvp[2] + "'></ins>"
-			+ "<ins class='dly_pvp_" + pvp[3].toLowerCase() + "' title='" + pvp[3] + "'></ins></span>"
+			+ "<ins class='dly_pvp_profession_" + prof0[0].toLowerCase() + "_0' title='" + pvp[2] + "'>"
+				+ "<ins class='dly_pvp_profession_" + prof0[1].toLowerCase() + "_1'></ins>" + "</ins>"
+			+ "<ins class='dly_pvp_profession_" + prof1[0].toLowerCase() + "_0' title='" + pvp[3] + "'>"
+				+ "<ins class='dly_pvp_profession_" + prof1[1].toLowerCase() + "_1'></ins>" + "</ins></span>"
 			// WvW
 			+ "<span><ins class='dly_daily_wvw'></ins>"
 			+ "<ins class='dly_wvw_" + wvw[0].toLowerCase() + "' title='" + wvw[0] + "'></ins>"
@@ -11769,6 +11772,12 @@ I = {
 				{
 					wantSeconds: false,
 					customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
+				}) + " " + D.getPhrase("in") + " "
+				+ T.getTimeFormatted(
+				{
+					wantLetters: true,
+					wantSeconds: false,
+					customTimeInSeconds: T.getSecondsUntilChainStarts(C.ChainToday)
 				}),
 			10);
 		}
