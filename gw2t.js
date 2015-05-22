@@ -6649,7 +6649,7 @@ M = {
 		P.populateMap();
 		C.ScheduledChains.forEach(P.drawChainPaths);
 		
-		if ( ! I.isOnSmallDevice)
+		if ( ! M.Map.tap)
 		{
 			/*
 			 * Clicking an empty place on the map highlight its coordinate.
@@ -7805,6 +7805,8 @@ P = {
 				}
 			}
 		}*/
+		if (I.isMapEnabled)
+		{
 		$.getJSON(U.URL_API.MapFloorTyria, function(pData)
 		{
 			var i;
@@ -8060,6 +8062,7 @@ P = {
 				P.finishPopulation();
 			}
 		});
+		}
 		
 		/*
 		 * Create pin markers that can be moved by user or program.
@@ -9185,7 +9188,12 @@ P = {
 		{
 			
 		});
-	}
+	},
+	
+	drawDirectedPath: function()
+	{
+		
+	},
 };
 
 /* =============================================================================
@@ -12585,7 +12593,8 @@ I = {
 			{
 				I.isMapEnabled = false;
 				$("#panelLeft").hide();
-				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>")
+				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1'>")
+					.append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>")
 					.append("<link rel='canonical' href='http://gw2timer.com'>");
 			} break;
 		}
