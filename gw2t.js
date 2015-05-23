@@ -5122,7 +5122,7 @@ C = {
 			startmins = T.convertScheduleKeyToUTCMinutes(chain.scheduleKeys[0]);
 			if (pIsTomorrow === false)
 			{
-				if (startmins >= currentmins)
+				if (startmins + T.cMINUTES_IN_TIMEFRAME >= currentmins)
 				{
 					// Make sure today's boss can still spawn before server reset at UTC midnight
 					C.ChainToday = chain;
@@ -11941,7 +11941,7 @@ I = {
 			return;
 		}
 		try
-		{	
+		{
 			var wheelspeed = 1;
 			switch (I.BrowserCurrent)
 			{
