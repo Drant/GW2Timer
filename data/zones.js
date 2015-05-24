@@ -487,9 +487,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Spender", "Camp", "Defender"]
 },
 "24": {
-	pve: ["Miner Ascalon", "Vista Ascalon", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Reward", "Kills", "Mesmer Mesmer", "Engineer Engineer"],
-	wvw: ["Ruins", "Caravan", "Defender", "Camp"]
+	pve: ["Lumberer Kryta", "Activity", "Bloodtide", "Shatterer Ascalon"],
+	pvp: ["Reward", "Capture", "Engineer Thief", "Elementalist Necromancer"],
+	wvw: ["Land", "Creature", "Defender", "Tower"]
 },
 "25": {
 	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Wayfarer", "Fractal 1-10"],

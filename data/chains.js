@@ -992,7 +992,7 @@ var GW2T_CHAIN_DATA = [
 },
 {
 	alias: "Wurm",
-	pronunciation: "cal ley don worm",
+	pronunciation: "cal la don worm",
 	series: 2,
 	waypoint: "[&BEEFAAA=]",
 	extra: ["caledon", "15", "1", "4", "3-5"],
