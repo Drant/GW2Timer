@@ -492,9 +492,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Creature", "Defender", "Tower"]
 },
 "25": {
-	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Wayfarer", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Ranger Ranger", "Elementalist Elementalist"],
-	wvw: ["Caravan", "Spender", "Camp", "Tower"]
+	pve: ["Miner Shiverpeaks", "Forger", "Silverwastes", "SB Kryta"],
+	pvp: ["Rank", "Reward", "Warrior Thief", "Guardian Ranger"],
+	wvw: ["Caravan", "Kills", "Tower", "Camp"]
 },
 "26": {
 	pve: ["Miner Maguuma", "Fractal", "Brisban", "Fractal 1-10"],
