@@ -10542,27 +10542,10 @@ T = {
 	 */
 	initializeGenericCountdown: function()
 	{
-		var now = new Date();
 		for (var i in T.Countdown)
 		{
-			T.Countdown[i].Seconds = ~~((T.Countdown[i].Time.getTime() - now.getTime()) / T.cMILLISECONDS_IN_SECOND);
 			T.Countdown[i].String = T.Countdown[i].Time.toLocaleString();
 		}
-	},
-	/*
-	 * Counts down to a custom time. This is called by the clock ticker function.
-	 */
-	updateGenericCountdown: function()
-	{
-		// Beta times
-		document.getElementById("itemCountdown").innerHTML =
-			"Beta 1 - <b>" + T.formatSeconds(T.Countdown.Beta0.Seconds) + "</b> @ " + T.Countdown.Beta0.String + "<br />" +
-			"Beta 2 - <b>" + T.formatSeconds(T.Countdown.Beta1.Seconds) + "</b> @ " + T.Countdown.Beta1.String + "<br />" +
-			"Beta 3 - <b>" + T.formatSeconds(T.Countdown.Beta2.Seconds) + "</b> @ " + T.Countdown.Beta2.String + "<br />";
-		// Subtract one second per tick
-		T.Countdown.Beta0.Seconds--;
-		T.Countdown.Beta1.Seconds--;
-		T.Countdown.Beta2.Seconds--;
 	}
 };
 
@@ -11087,7 +11070,12 @@ K = {
 		{
 			T.updateGuildTimer();
 		}
-		T.updateGenericCountdown();
+		// Beta times
+		var time1 = ~~((T.Countdown.Beta1.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND);
+		var time2 = ~~((T.Countdown.Beta2.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND);
+		document.getElementById("itemCountdown").innerHTML =
+			"Beta 2 - <b>" + T.formatSeconds(time1) + "</b> @ " + T.Countdown.Beta1.String + "<br />" +
+			"Beta 3 - <b>" + T.formatSeconds(time2) + "</b> @ " + T.Countdown.Beta2.String + "<br />";
 		
 		// Loop this function, can use variable to halt it
 		K.TickerTimeout = setTimeout(K.tickFrequent, K.tickerFrequency);
@@ -11725,7 +11713,6 @@ I = {
 		{
 			O.Options.bol_use24Hour = false;
 		}
-		// Initialize generic countdown object if available
 		T.initializeGenericCountdown();
 		
 		/*
