@@ -10552,7 +10552,7 @@ T = {
 	/*
 	 * Counts down to a custom time. This is called by the clock ticker function.
 	 */
-	updateGenericCountdown: function(pDate)
+	updateGenericCountdown: function()
 	{
 		// Beta times
 		document.getElementById("itemCountdown").innerHTML =
@@ -10560,10 +10560,9 @@ T = {
 			"Beta 2 - <b>" + T.formatSeconds(T.Countdown.Beta1.Seconds) + "</b> @ " + T.Countdown.Beta1.String + "<br />" +
 			"Beta 3 - <b>" + T.formatSeconds(T.Countdown.Beta2.Seconds) + "</b> @ " + T.Countdown.Beta2.String + "<br />";
 		// Subtract one second per tick
-		for (var i in T.Countdown)
-		{
-			T.Countdown[i].Seconds = T.Countdown[i].Seconds - 1;
-		}
+		T.Countdown.Beta0.Seconds--;
+		T.Countdown.Beta1.Seconds--;
+		T.Countdown.Beta2.Seconds--;
 	}
 };
 
@@ -11088,7 +11087,7 @@ K = {
 		{
 			T.updateGuildTimer();
 		}
-		T.updateGenericCountdown(pDate);
+		T.updateGenericCountdown();
 		
 		// Loop this function, can use variable to halt it
 		K.TickerTimeout = setTimeout(K.tickFrequent, K.tickerFrequency);
@@ -11879,7 +11878,7 @@ I = {
 		if (O.isServerReset && C.ChainToday)
 		{
 			I.write(D.getModifiedWord("world boss", "daily", U.CaseEnum.Sentence) + " "
-				+ D.getChainAlias(C.ChainToday.nexus) + " " + D.getPhrase("will start") + " " + D.getPhrase("at") + " "
+				+ D.getChainTitleAny(C.ChainToday.nexus) + " " + D.getPhrase("will start") + " " + D.getPhrase("at") + " "
 				+ T.getTimeFormatted(
 				{
 					wantSeconds: false,
