@@ -332,6 +332,16 @@ html, body,
 	background: white;
 }
 
+#itemMapCountdown {
+	position: absolute;
+	top: 32px; right: 12px;
+	z-index: 9;
+	font-family: Menomonia;
+	font-size: 16px;
+	color: #bbcc77;
+	text-shadow: 0px 0px 4px black;
+}
+
 /* Bottom left corner: Coordinates bar */
 #itemMapCoordinates {
 	position: absolute;

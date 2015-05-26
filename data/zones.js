@@ -497,9 +497,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Kills", "Tower", "Camp"]
 },
 "26": {
-	pve: ["Miner Maguuma", "Fractal", "Brisban", "Fractal 1-10"],
-	pvp: ["Kills", "Capture", "Guardian Guardian", "Elementalist Elementalist"],
-	wvw: ["Land", "Caravan", "Tower", "Keep"]
+	pve: ["Forager Orr", "Vista Ascalon", "Malchor", "Megades Maguuma"],
+	pvp: ["Defender", "Kills", "Engineer Mesmer", "Guardian Elementalist"],
+	wvw: ["Ruins", "Caravan", "Keep", "Defender"]
 },
 "27": {
 	pve: ["Lumberer Kryta", "Activity", "Metrica", "Fractal 1-10"],
