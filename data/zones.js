@@ -502,9 +502,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Caravan", "Keep", "Defender"]
 },
 "27": {
-	pve: ["Lumberer Kryta", "Activity", "Metrica", "Fractal 1-10"],
-	pvp: ["Defender", "Rank", "Guardian Guardian", "Engineer Engineer"],
-	wvw: ["Ruins", "Land", "Camp", "Tower"]
+	pve: ["Lumberer Shiverpeaks", "Fractal", "Snowden", "Fractal 21-30"],
+	pvp: ["Rank", "Defender", "Warrior Elementalist", "Engineer Necromancer"],
+	wvw: ["Guard", "Spender", "Tower", "Camp"]
 },
 "28": {
 	pve: ["Miner Shiverpeaks", "Vista Kryta", "Gendarran", "Fractal 1-10"],

@@ -9439,12 +9439,6 @@ W = {
  * @@Time utilities and schedule
  * ========================================================================== */
 T = {
-
-	Countdown: { // Generic countdown
-		Beta0: { Time: new Date("2015-05-26T18:30:00Z") },
-		Beta1: { Time: new Date("2015-05-26T22:30:00Z") },
-		Beta2: { Time: new Date("2015-05-27T02:30:00Z") }
-	},
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -10535,17 +10529,6 @@ T = {
 		$("#mapGuildTimer").text(T.formatSeconds(T.secondsTillGuildReset));
 		// Decrement global variable to countdown, instead of calling the compute function every time
 		T.secondsTillGuildReset--;
-	},
-	
-	/*
-	 * Initializes the countdown object properties to be accessed later.
-	 */
-	initializeGenericCountdown: function()
-	{
-		for (var i in T.Countdown)
-		{
-			T.Countdown[i].String = T.Countdown[i].Time.toLocaleString();
-		}
 	}
 };
 
@@ -11064,18 +11047,6 @@ K = {
 		{
 			K.handMinute.style.stroke = "red";
 		}
-		
-		// Trigger other ticking functions
-		if (T.isGuildTimerStarted)
-		{
-			T.updateGuildTimer();
-		}
-		// Beta times
-		var time1 = ~~((T.Countdown.Beta1.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND);
-		var time2 = ~~((T.Countdown.Beta2.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND);
-		document.getElementById("itemCountdown").innerHTML =
-			"Beta 2 - <b>" + T.formatSeconds(time1) + "</b> @ " + T.Countdown.Beta1.String + "<br />" +
-			"Beta 3 - <b>" + T.formatSeconds(time2) + "</b> @ " + T.Countdown.Beta2.String + "<br />";
 		
 		// Loop this function, can use variable to halt it
 		K.TickerTimeout = setTimeout(K.tickFrequent, K.tickerFrequency);
@@ -11713,7 +11684,6 @@ I = {
 		{
 			O.Options.bol_use24Hour = false;
 		}
-		T.initializeGenericCountdown();
 		
 		/*
 		 * Load stored server sensitive timestamp if it exists, is a number,

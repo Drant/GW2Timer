@@ -4,6 +4,10 @@ Bounty: {
 	name_de: "Kopfgeldjagd",
 	name_es: "Caza de recompensas",
 	name_fr: "Chasse à la prime",
+	url_en: "http://wiki.guildwars2.com/wiki/Guild_Bounty",
+	url_de: "http://wiki-de.guildwars2.com/wiki/Gilden-Kopfgeldjagd",
+	url_es: "http://www.guildwars2-spain.com/manuales/627-guía-de-misión-de-clan-cazarrecompensas",
+	url_fr: "http://wiki-fr.guildwars2.com/wiki/Chasseur_de_prime_en_guilde",
 	data: {
 	OneOneFourOne: {
 		name_en: "Prisoner 1141",
@@ -186,14 +190,13 @@ Trek: {
 	name_de: "Gilden-Reise",
 	name_es: "Expedición de clan",
 	name_fr: "Randonnée de guilde",
-	data: [
-	{
-		name_en: "Ander &quot;Wildman&quot; Westward",
-		name_de: "",
-		name_es: "",
-		name_fr: ""
+	url_en: "http://wiki.guildwars2.com/wiki/Guild_Trek",
+	url_de: "http://invisible-coop.de/index.php?Reise",
+	url_es: "http://dgea.es/inicio/index.php/component/content/article?id=203:expedicion-de-clan",
+	url_fr: "http://gw2-menestrels.com/guide-des-randonnees/",
+	data: {
+	
 	}
-	]
 },
 Challenge: {
 	name_en: "Guild Challenge",
