@@ -5514,8 +5514,8 @@ C = {
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
 		{
 			$("#barChain_" + pChain.nexus).hover(
-				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain.nexus)) },
-				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitleAny(pChain.nexus)) }
+				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain.nexus)); },
+				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitleAny(pChain.nexus)); }
 			);
 		}
 		
@@ -9432,7 +9432,7 @@ W = {
 	{
 		var coord = W.Map.project(pLatLng, W.ZoomLevelEnum.Max);
 		return [Math.round(coord.x), Math.round(coord.y)];
-	},
+	}
 };
 
 /* =============================================================================
