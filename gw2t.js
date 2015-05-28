@@ -4541,7 +4541,7 @@ D = {
 		ru: "Йормаг Коготь",
 		zh: "卓瑪之爪"
 	},{
-		en: "Frozen Maw",
+		en: "The Frozen Maw",
 		de: "Svanir-Schamane",
 		es: "Chamán Svanir",
 		fr: "Chamane de Svanir",
@@ -7515,7 +7515,7 @@ M = {
 	{
 		I.write("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},");
 	},
-	printCoordinates: function(pCoords)
+	compileCoordinates: function(pCoords)
 	{
 		var output = "";
 		for (var i in pCoords)
@@ -7523,7 +7523,11 @@ M = {
 			output = output + "[" + (pCoords[i])[0] + "," + (pCoords[i])[1] + "],";
 		}
 		output = output.substring(0, output.length - 1); // Trim last comma
-		I.write("[" + output + "]", 30);
+		return "[" + output + "]";
+	},
+	printCoordinates: function(pCoords)
+	{
+		I.write(M.compileCoordinates(pCoords), 30);
 	},
 	
 	/*
