@@ -203,7 +203,7 @@ Trek: {
 		coord: [11028, 12885],
 		path: [[11028,12886],[11038,12914],[11052,12941],[11062,12970],[11047,12996],[11023,13016],[10998,13036],[10971,13054],[10942,13069],[10914,13080],[10885,13091],[10856,13104],[10830,13122],[10817,13135],[10817,13135]],
 		wp: "[&BPIAAAA=]",
-		img: "Tfj1dUQ"
+		img: "http://i.imgur.com/Tfj1dUQ.png"
 	},
 	anthem: {
 		name_en: "Anthem's Hold",
@@ -213,7 +213,7 @@ Trek: {
 		coord: [11575, 28833],
 		path: [[11848,29057],[11820,29043],[11793,29027],[11773,29003],[11754,28980],[11734,28956],[11730,28926],[11723,28896],[11714,28867],[11702,28839],[11686,28813],[11668,28789],[11646,28768],[11621,28750],[11593,28738],[11565,28751],[11557,28780],[11570,28808],[11559,28779],[11530,28772],[11526,28802],[11555,28809],[11574,28833]],
 		wp: "[&BOQGAAA=]",
-		img: "FxE8fvi"
+		img: "http://i.imgur.com/FxE8fvi.png"
 	},
 	anya: {
 		name_en: "Anya's Patch",
@@ -223,7 +223,7 @@ Trek: {
 		coord: [23598, 13431],
 		path: [[24112,13286],[24086,13303],[24057,13316],[24028,13307],[23999,13298],[23976,13318],[23946,13326],[23916,13336],[23893,13357],[23882,13385],[23874,13415],[23869,13445],[23847,13467],[23844,13498],[23828,13524],[23798,13524],[23767,13520],[23749,13494],[23737,13522],[23713,13541],[23693,13517],[23667,13502],[23643,13481],[23621,13460],[23604,13435]],
 		wp: "[&BN4AAAA=]",
-		img: "zJwX28K"
+		img: "http://i.imgur.com/zJwX28K.png"
 	},
 	arctodus: {
 		name_en: "Arctodus Haunt",
@@ -233,699 +233,699 @@ Trek: {
 		coord: [23476, 13262],
 		path: [[23476,13262],[23423,13279],[23397,13295],[23368,13302],[23337,13299],[23308,13290],[23280,13277],[23252,13265],[23225,13251],[23197,13237],[23170,13224]],
 		wp: "[&BH4BAAA=]",
-		img: "VTsBBQe"
+		img: "http://i.imgur.com/VTsBBQe.png"
 	},
 	backroot: {
 		name_en: "Backroot Fountain",
 		name_de: "Hinterwurzel-Brunnen",
-		name_es: "",
-		name_fr: "",
+		name_es: "Fuente Anteraiz",
+		name_fr: "Fontaine des racines cachées",
 		coord: [10662, 21217],
 		path: [[10662,21216],[10636,21231],[10608,21244],[10581,21259],[10552,21271],[10531,21247],[10539,21218],[10560,21196],[10580,21173],[10601,21151],[10607,21121],[10581,21103],[10550,21108],[10520,21099],[10494,21084],[10468,21068]],
 		wp: "[&BLsEAAA=]",
-		img: ""
+		img: "http://i.imgur.com/UsIOurQ.png"
 	},
-	BadjellyKelpbed: {
+	badjelly: {
 		name_en: "Badjelly Kelpbed",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Fiesquallen-Tangbeet",
+		name_es: "Lecho de las Medusas Funestas",
+		name_fr: "Banc de Varech de Malméduse",
 		coord: [19914, 12896],
 		path: [[19914,12896],[19857,12908],[19826,12903],[19795,12900],[19764,12899],[19734,12896],[19704,12887],[19675,12878],[19646,12871],[19616,12866]],
-		wp: "",
-		img: ""
+		wp: "[&BLwAAAA=]",
+		img: "http://i.imgur.com/NznTK0O.png"
 	},
-	BanditsCabbagePatch: {
+	bandit: {
 		name_en: "Bandit's Cabbage Patch",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Banditen-Kohlfeld",
+		name_es: "Parcela de Repollos del Bandido",
+		name_fr: "Carré de chou du bandit",
 		coord: [13795, 11089],
 		path: [[13796,11088],[13817,11107],[13827,11092],[13855,11079],[13878,11060],[13894,11033],[13902,11004],[13907,10974],[13909,10943],[13912,10912],[13940,10901],[13969,10912],[13997,10923],[14026,10935],[14054,10946],[14082,10958],[14109,10972],[14130,10983],[14130,10983]],
-		wp: "",
-		img: ""
+		wp: "[&BKgAAAA=]",
+		img: "http://i.imgur.com/AvAwuIF.png"
 	},
-	BeetlestoneMirador: {
+	beetlestone: {
 		name_en: "Beetlestone Mirador",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Beetlestone-Belvedere",
+		name_es: "Miradero Piedramazo",
+		name_fr: "Mirador Beetletun",
 		coord: [13034, 11929],
 		path: [[13034,11929],[13095,11938],[13120,11955],[13145,11974],[13169,11996],[13191,12019]],
-		wp: "",
-		img: ""
+		wp: "[&BPoAAAA=]",
+		img: "http://i.imgur.com/3abjWYN.png"
 	},
-	BlackbladeButte: {
+	blackblade: {
 		name_en: "Blackblade Butte",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Schwarzklingen-Kuppe",
+		name_es: "Cerrillo de Filonegro",
+		name_fr: "Motte de Lamenoire",
 		coord: [25790, 11835],
 		path: [[25985,11532],[25963,11553],[25943,11576],[25925,11602],[25906,11626],[25922,11652],[25912,11682],[25900,11710],[25870,11717],[25842,11730],[25822,11755],[25807,11783],[25794,11811],[25790,11835]],
-		wp: "",
-		img: ""
+		wp: "[&BNwAAAA=]",
+		img: "http://i.imgur.com/IGxcd3d.png"
 	},
-	BlackLionRootCellar: {
+	blacklion: {
 		name_en: "Black Lion Root Cellar",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Schwarzlöwen Wurzelkeller",
+		name_es: "Bodega del León Negro",
+		name_fr: "Cellier du Lion noir",
 		coord: [10423, 20945],
 		path: [[10423,20946],[10400,20965],[10377,20986],[10385,21015],[10404,21039],[10403,21070]],
-		wp: "",
-		img: ""
+		wp: "[&BLsEAAA=]",
+		img: "http://i.imgur.com/4sukknH.png"
 	},
-	BlastedSepulchre: {
+	blasted: {
 		name_en: "Blasted Sepulchre",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Verdammnis-Grabkammer",
+		name_es: "Sepulcro Maldito",
+		name_fr: "Sépulcre ravagé",
 		coord: [24932, 12338],
 		path: [[25077,12346],[25088,12317],[25098,12288],[25072,12271],[25042,12272],[25012,12269],[24982,12274],[24969,12301],[24952,12326],[24932,12338]],
-		wp: "",
-		img: ""
+		wp: "[&BNoAAAA=]",
+		img: "http://i.imgur.com/8z7Xq5r.png"
 	},
-	BloodOozeGallery: {
+	blood: {
 		name_en: "Blood Ooze Gallery",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Blutschleim-Galerie",
+		name_es: "Galería de Légamo de sangre",
+		name_fr: "Galerie du limon sanglant",
 		coord: [16420, 18209],
 		path: [[16420,18209],[16396,18167],[16368,18178],[16340,18168],[16316,18149],[16291,18129],[16275,18103],[16277,18073],[16280,18042],[16284,18011],[16300,17985],[16316,17958],[16328,17931],[16338,17902],[16363,17883],[16381,17908],[16392,17937],[16401,17966],[16406,17996],[16399,18026],[16386,18054],[16370,18082],[16355,18109],[16336,18134],[16311,18152],[16288,18172],[16266,18195],[16242,18214],[16218,18232],[16203,18259],[16187,18284],[16173,18312],[16184,18341],[16213,18348]],
-		wp: "",
-		img: ""
+		wp: "[&BK0BAAA=]",
+		img: "http://i.imgur.com/zdp2cob.png"
 	},
-	BluupsComeuppance: {
+	bluups: {
 		name_en: "Bluup's Comeuppance",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Bluups Strafe",
+		name_es: "Merecido de Blupp",
+		name_fr: "Châtiment de Bluup",
 		coord: [5858, 20579],
 		path: [[5858,20579],[5812,20538],[5788,20519],[5765,20500],[5755,20471],[5785,20476],[5807,20497],[5830,20518],[5853,20539],[5850,20570],[5839,20598],[5827,20626]],
-		wp: "",
-		img: ""
+		wp: "[&BLgEAAA=]",
+		img: "http://i.imgur.com/BfmjMic.png"
 	},
-	BrandstrikeDigs: {
+	brandstrike: {
 		name_en: "Brandstrike Digs",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Brandschlag-Grube",
+		name_es: "Excavación de Golpe Marcado",
+		name_fr: "Fouilles de Stigmafrappe",
 		coord: [28682, 16810],
 		path: [[28682,16810],[28741,16795],[28773,16791],[28804,16783],[28821,16807],[28833,16836],[28853,16859],[28884,16855],[28913,16847],[28942,16839],[28972,16831],[28998,16815],[28992,16785],[28989,16754],[29000,16725],[29012,16697],[29022,16668],[29027,16639],[29048,16616],[29073,16598],[29102,16590],[29133,16594],[29162,16604],[29189,16588],[29213,16568],[29244,16569],[29269,16584],[29294,16604]],
-		wp: "",
-		img: ""
+		wp: "[&BEsBAAA=]",
+		img: "http://i.imgur.com/XTZKZmR.png"
 	},
-	BriarthornBarrier: {
+	briarthorn: {
 		name_en: "Briarthorn Barrier",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Wilddorn-Barriere",
+		name_es: "Barrera de Espinazarza",
+		name_fr: "Barrière de Bercebruyère",
 		coord: [11185, 18808],
 		path: [[10991,19183],[10998,19151],[11013,19124],[11028,19097],[11028,19066],[11026,19036],[11025,19005],[11026,18975],[11061,18947],[11081,18924],[11102,18902],[11124,18881],[11135,18852],[11132,18822],[11126,18793],[11137,18764],[11165,18751],[11196,18755],[11211,18782],[11186,18799],[11185,18808]],
-		wp: "",
-		img: ""
+		wp: "[&BDUBAAA=]",
+		img: "http://i.imgur.com/X2dkQl0.png"
 	},
-	BroodmotherFalls: {
-		name_en: "Broodmother Falls",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
-		coord: [23552, 10286],
-		path: [[23279,10283],[23300,10306],[23320,10329],[23342,10349],[23369,10363],[23399,10367],[23429,10363],[23458,10356],[23488,10348],[23516,10337],[23535,10313],[23550,10287]],
-		wp: "",
-		img: ""
-	},
-	BrokenFallsCourtyard: {
+	broken: {
 		name_en: "Broken Falls Courtyard",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Schwundfallhof",
+		name_es: "Patio de las Cataratas Rotas",
+		name_fr: "Cour des Chutes brisées",
 		coord: [24197, 14955],
 		path: [[24112,14825],[24139,14839],[24168,14853],[24179,14881],[24170,14910],[24174,14940],[24197,14955],[24197,14955]],
-		wp: "",
-		img: ""
+		wp: "[&BKwDAAA=]",
+		img: "http://i.imgur.com/xDH0guc.png"
 	},
-	BrothersNotch: {
+	broodmother: {
+		name_en: "Broodmother Falls",
+		name_de: "Brutmutter-Fälle",
+		name_es: "Cataratas de la Progenitora",
+		name_fr: "Chutes de la Génitrice",
+		coord: [23552, 10286],
+		path: [[23279,10283],[23300,10306],[23320,10329],[23342,10349],[23369,10363],[23399,10367],[23429,10363],[23458,10356],[23488,10348],[23516,10337],[23535,10313],[23550,10287]],
+		wp: "[&BIQCAAA=]",
+		img: "http://i.imgur.com/sc72zfv.png"
+	},
+	brother: {
 		name_en: "Brother's Notch",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Brüder-Engpass",
+		name_es: "Muesca de los Hermanos",
+		name_fr: "Col des Frères",
 		coord: [20439, 13574],
 		path: [[20281,13957],[20308,13943],[20314,13913],[20309,13883],[20324,13856],[20347,13836],[20370,13816],[20398,13804],[20427,13794],[20453,13778],[20474,13755],[20492,13731],[20507,13702],[20518,13673],[20522,13643],[20525,13612],[20523,13582],[20519,13552],[20489,13544],[20462,13559],[20441,13573],[20441,13573]],
-		wp: "",
-		img: ""
+		wp: "[&BJADAAA=]",
+		img: "http://i.imgur.com/YO9fCn2.png"
 	},
-	BurstbubbleBlind: {
+	burstbubble: {
 		name_en: "Burstbubble Blind",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Sackgasse der geplatzten Träume",
+		name_es: "Persiana explotaburbujas",
+		name_fr: "Refuge percebul",
 		coord: [29678, 15500],
 		path: [[30105,15421],[30074,15425],[30043,15425],[30015,15413],[29988,15398],[29970,15374],[29950,15352],[29921,15340],[29891,15348],[29864,15361],[29842,15382],[29824,15407],[29803,15430],[29783,15453],[29764,15477],[29744,15500],[29721,15521],[29691,15528],[29678,15500]],
-		wp: "",
-		img: ""
+		wp: "[&BPsBAAA=]",
+		img: "http://i.imgur.com/G7vDiUR.png"
 	},
-	CacheOfThePursued: {
+	cache: {
 		name_en: "Cache of the Pursued",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Vorratslager der Verfolgten",
+		name_es: "Escondite de los Perseguidos",
+		name_fr: "Cache du fugitif",
 		coord: [11944, 25934],
 		path: [[11356,25806],[11388,25803],[11415,25788],[11440,25771],[11469,25762],[11501,25758],[11530,25755],[11561,25750],[11585,25769],[11606,25792],[11629,25813],[11662,25816],[11690,25829],[11715,25848],[11741,25867],[11764,25888],[11773,25917],[11794,25940],[11824,25948],[11855,25952],[11886,25952],[11915,25959],[11938,25939]],
-		wp: "",
-		img: ""
+		wp: "[&BCEDAAA=]",
+		img: "http://i.imgur.com/2I31Wjc.png"
 	},
-	CademkrallOverlook: {
+	cademkrall: {
 		name_en: "Cademkrall Overlook",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Cademkrall-Aussichtspunkt",
+		name_es: "Mirador del Corral Cadem",
+		name_fr: "Plateau de Krallcamden",
 		coord: [29006, 14470],
 		path: [[29006,14470],[28986,14492],[28962,14513],[28935,14499],[28908,14513],[28886,14534],[28870,14560],[28867,14591],[28864,14622],[28862,14652],[28861,14683],[28862,14714],[28868,14744],[28886,14769],[28907,14791],[28926,14814],[28936,14843],[28936,14874]],
-		wp: "",
-		img: ""
+		wp: "[&BIgBAAA=]",
+		img: "http://i.imgur.com/Qx5vM1y.png"
 	},
-	CanyonwebCave: {
+	canyonweb: {
 		name_en: "Canyonweb Cave",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Netzschluchthöhle",
+		name_es: "Cueva Telaraña del Cañón",
+		name_fr: "Grotte de Gorgetoile",
 		coord: [29318, 13595],
 		path: [[29318,13595],[29377,13610],[29408,13618],[29436,13606],[29446,13577],[29453,13547],[29457,13516]],
-		wp: "",
-		img: ""
+		wp: "[&BAQCAAA=]",
+		img: "http://i.imgur.com/3CAEBHs.png"
 	},
-	CaptainsBerth: {
+	captain: {
 		name_en: "Captain's Berth",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Koje des Kapitäns",
+		name_es: "Embarcadero del capitán",
+		name_fr: "Mouillage du Capitaine",
 		coord: [10782, 24220],
 		path: [[10782,24222],[10813,24223],[10843,24229],[10873,24236],[10902,24245],[10931,24254],[10961,24263],[10990,24272],[11018,24282],[11047,24292],[11076,24302],[11105,24313],[11133,24323],[11162,24333],[11191,24343],[11220,24354],[11249,24364],[11278,24375],[11307,24385],[11333,24398],[11360,24413],[11387,24428],[11414,24442],[11441,24458],[11466,24474],[11493,24491],[11519,24507],[11549,24515],[11580,24518],[11610,24512],[11639,24503],[11669,24496],[11699,24489],[11718,24466],[11724,24436]],
-		wp: "",
-		img: ""
+		wp: "[&BLICAAA=]",
+		img: "http://i.imgur.com/plIWICr.png"
 	},
-	CastavallCorner: {
+	castavall: {
 		name_en: "Castavall Corner",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Castavall-Ecke",
+		name_es: "Esquina Castavall",
+		name_fr: "Coin de Castavall",
 		coord: [16005, 18442],
 		path: [[16005,18442],[16007,18502],[16009,18533],[16008,18563],[16035,18577],[16063,18590],[16094,18591],[16124,18585],[16154,18583],[16184,18580],[16213,18574],[16243,18568]],
-		wp: "",
-		img: ""
+		wp: "[&BK4BAAA=]",
+		img: "http://i.imgur.com/JGVRiCQ.png"
 	},
-	CathedralsCavity: {
+	cathedral: {
 		name_en: "Cathedral's Cavity",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Kathedralenraum",
+		name_es: "Cavidad de la Catedral",
+		name_fr: "Cavité de la cathédrale",
 		coord: [13072, 24116],
 		path: [[12772,24396],[12799,24381],[12817,24405],[12836,24428],[12862,24445],[12892,24446],[12923,24446],[12954,24446],[12984,24452],[13013,24460],[13044,24462],[13075,24455],[13106,24447],[13135,24435],[13159,24415],[13180,24393],[13199,24370],[13218,24346],[13238,24322],[13257,24299],[13277,24276],[13297,24251],[13318,24229],[13336,24205],[13352,24178],[13347,24148],[13330,24123],[13312,24098],[13291,24075],[13266,24058],[13241,24039],[13213,24029],[13200,24057],[13169,24060],[13144,24077],[13117,24091],[13098,24115],[13070,24125],[13072,24116]],
-		wp: "",
-		img: ""
+		wp: "[&BKwCAAA=]",
+		img: "http://i.imgur.com/nluYOPB.png"
 	},
-	CaveBearCache: {
+	cavebear: {
 		name_en: "Cave Bear Cache",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Schneeheuler-Bau",
+		name_es: "Escondite de la Osa",
+		name_fr: "Cache de l'Ours des cavernes",
 		coord: [20906, 12450],
 		path: [[20906,12451],[20897,12481],[20898,12480],[20868,12484],[20841,12470],[20822,12445],[20807,12419],[20796,12391],[20805,12361],[20826,12338],[20844,12311],[20862,12286],[20882,12263],[20896,12236],[20905,12205],[20907,12175]],
-		wp: "",
-		img: ""
+		wp: "[&BL8AAAA=]",
+		img: "http://i.imgur.com/0gQ6jWP.png"
 	},
-	CaveSpiderNidus: {
+	cavespider: {
 		name_en: "Cave Spider Nidus",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Höhlenspinnen-Nest",
+		name_es: "Nidus de la Araña de Cueva",
+		name_fr: "Nid d'araignée cavernicole",
 		coord: [19111, 14381],
 		path: [[19111,14381],[19139,14436],[19149,14465],[19157,14495],[19141,14521],[19117,14541],[19093,14559],[19067,14577],[19042,14593],[19011,14595],[18981,14593],[18951,14596],[18919,14599],[18892,14586],[18878,14559]],
-		wp: "",
-		img: ""
+		wp: "[&BJgBAAA=]",
+		img: "http://i.imgur.com/B4KGzL5.png"
 	},
-	ClaypoolBailey: {
+	claypool: {
 		name_en: "Claypool Bailey",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Tonteich-Außenhof",
+		name_es: "Patio del Arcillar",
+		name_fr: "Mur d'enceinte de Claypool",
 		coord: [10838, 13585],
 		path: [[10713,13588],[10745,13588],[10776,13595],[10806,13600],[10833,13616],[10848,13644],[10866,13668],[10881,13685],[10891,13675],[10875,13657],[10879,13653],[10900,13671],[10904,13666],[10876,13639],[10838,13586],[10838,13586]],
-		wp: "",
-		img: ""
+		wp: "[&BPYAAAA=]",
+		img: "http://i.imgur.com/Ge9iL2V.png"
 	},
-	ConstellationParapet: {
+	constellation: {
 		name_en: "Constellation Parapet",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Sternbildrüstung",
+		name_es: "Parapeto Constelación",
+		name_fr: "Parapet des constellations",
 		coord: [10400, 21300],
 		path: [[10400,21300],[10431,21290],[10462,21290],[10450,21262],[10462,21234],[10475,21204],[10488,21177],[10500,21148],[10506,21117],[10500,21086],[10481,21062],[10453,21051],[10422,21054],[10394,21066]],
-		wp: "",
-		img: ""
+		wp: "[&BLsEAAA=]",
+		img: "http://i.imgur.com/mlplWZk.png"
 	},
-	CorruptionsTeeth: {
+	corruption: {
 		name_en: "Corruption's Teeth",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Zähne der Verderbnis",
+		name_es: "Dientes de la Corrupción",
+		name_fr: "Dents de la corruption",
 		coord: [21351, 8269],
 		path: [[21351,8269],[21329,8248],[21300,8258],[21270,8264],[21240,8267],[21209,8271],[21178,8273],[21148,8276],[21117,8279],[21086,8281],[21056,8285],[21026,8289],[20995,8293],[20965,8297],[20935,8301],[20904,8305],[20874,8308],[20843,8305],[20817,8289],[20794,8269]],
-		wp: "",
-		img: ""
+		wp: "[&BIYCAAA=]",
+		img: "http://i.imgur.com/iaAVWia.png"
 	},
-	CovingtonsStowage: {
+	covington: {
 		name_en: "Covington's Stowage",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Covingtons Stauraum",
+		name_es: "Estiba de Covington",
+		name_fr: "Mouillage de Covington",
 		coord: [15933, 17228],
 		path: [[16132,17392],[16100,17396],[16070,17395],[16039,17395],[16009,17392],[15978,17389],[15947,17383],[15932,17357],[15911,17334],[15881,17329],[15854,17314],[15840,17287],[15842,17256],[15862,17232],[15890,17219],[15913,17239],[15917,17209],[15941,17191],[15934,17222],[15933,17228],[15933,17228]],
-		wp: "",
-		img: ""
+		wp: "[&BKgBAAA=]",
+		img: "http://i.imgur.com/9lingDj.png"
 	},
-	CutthroatsRest: {
+	cutthroat: {
 		name_en: "Cutthroat's Rest",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Halsabschneiders Ruhestatt",
+		name_es: "Descanso del Sanguinario",
+		name_fr: "Halte de Coupegorge",
 		coord: [15733, 13084],
 		path: [[15733,13084],[15754,13059],[15773,13035],[15801,13049],[15832,13045],[15859,13029],[15867,13000],[15870,12969],[15868,12938],[15866,12908],[15864,12894]],
-		wp: "",
-		img: ""
+		wp: "[&BM0DAAA=]",
+		img: "http://i.imgur.com/HeA3UFO.png"
 	},
-	CymbelsGlen: {
+	cymbel: {
 		name_en: "Cymbel's Glen",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Cymbels Schlucht",
+		name_es: "Cañada de Cymbel",
+		name_fr: "Vallon de Cymbel",
 		coord: [31325, 18572],
 		path: [[31325,18572],[31357,18571],[31389,18571],[31409,18596],[31433,18618],[31460,18633],[31490,18634],[31520,18625],[31544,18606],[31567,18585],[31587,18562],[31607,18539],[31623,18512],[31625,18481],[31611,18453],[31591,18430],[31565,18415],[31537,18403],[31509,18391],[31480,18380],[31450,18369],[31420,18358],[31392,18349],[31361,18344],[31329,18348],[31299,18354],[31276,18333],[31281,18303],[31289,18273],[31300,18244],[31312,18216],[31328,18189],[31330,18159],[31319,18130],[31311,18111],[31311,18111]],
-		wp: "",
-		img: ""
+		wp: "[&BE8BAAA=]",
+		img: "http://i.imgur.com/teCQSm1.png"
 	},
-	DawngleamPergola: {
+	dawngleam: {
 		name_en: "Dawngleam Pergola",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Morgenrot-Pergola",
+		name_es: "Pérgola del Amanecer Refulgente",
+		name_fr: "Pergola d'Aubeluit",
 		coord: [10386, 20764],
 		path: [[10386,20764],[10363,20786],[10341,20808],[10324,20833],[10323,20865],[10323,20895],[10342,20921],[10354,20949],[10361,20979],[10375,21007],[10391,21034],[10417,21050],[10445,21064],[10446,21065],[10446,21065]],
-		wp: "",
-		img: ""
+		wp: "[&BLwEAAA=]",
+		img: "http://i.imgur.com/mjC35Rp.png"
 	},
-	DeepmireDiver: {
+	deepmire: {
 		name_en: "Deepmire Diver",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Tiefschlamm-Taucher",
+		name_es: "Submarinista del lodazal",
+		name_fr: "Plongeur focebourbié",
 		coord: [20003, 22662],
 		path: [[20003,22662],[20007,22632],[20003,22601],[20027,22607],[20027,22607]],
-		wp: "",
-		img: ""
+		wp: "[&BNECAAA=]",
+		img: "http://i.imgur.com/6ysVpDj.png"
 	},
-	DefiledDelve: {
+	defiled: {
 		name_en: "Defiled Delve",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Entweihte Senke",
+		name_es: "Socavón Profanado",
+		name_fr: "Excavation profanée",
 		coord: [13404, 15229],
 		path: [[13404,15229],[13425,15251],[13418,15280],[13387,15287],[13358,15280],[13328,15272],[13301,15260],[13272,15249],[13244,15238],[13228,15212],[13231,15196],[13231,15196]],
-		wp: "",
-		img: ""
+		wp: "[&BBEAAAA=]",
+		img: "http://i.imgur.com/DUfTEcM.png"
 	},
-	DelightsBalcony: {
+	delight: {
 		name_en: "Delight's Balcony",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Balkon des Wohlgefallens",
+		name_es: "Balcón del Deleite",
+		name_fr: "Balcon des délices",
 		coord: [13984, 24964],
 		path: [[13984,24964],[14014,24965],[14041,24949],[14071,24953],[14101,24956],[14084,24929],[14115,24922],[14144,24914],[14163,24890],[14163,24859],[14156,24829],[14147,24800],[14117,24790],[14099,24793],[14099,24793]],
-		wp: "",
-		img: ""
+		wp: "[&BKYCAAA=]",
+		img: "http://i.imgur.com/ppsiSnp.png"
 	},
-	DestinysGuildhall: {
+	destiny: {
 		name_en: "Destiny's Guildhall",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Stadthalle des Schicksals",
+		name_es: "Sala del Clan del Destino",
+		name_fr: "Hall de Guilde du Destin",
 		coord: [10752, 12075],
 		path: [[10752,12075],[10724,12066],[10698,12083],[10680,12107],[10654,12126],[10625,12138],[10596,12145],[10565,12152],[10535,12159],[10509,12175],[10524,12202],[10545,12225],[10567,12247],[10590,12268],[10609,12293],[10611,12324],[10589,12337],[10589,12337]],
-		wp: "",
-		img: ""
+		wp: "[&BO8AAAA=]",
+		img: "http://i.imgur.com/z0bP2RI.png"
 	},
-	DirtclawCleft: {
+	dirtclaw: {
 		name_en: "Dirtclaw Cleft",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Schmutzklauenkluft",
+		name_es: "Grieta Garrasucia",
+		name_fr: "Faille de Pouacregriffe",
 		coord: [29076, 13040],
 		path: [[29076,13040],[29051,13020],[29027,13001],[29009,13025],[28989,13047],[28967,13070],[28945,13091],[28919,13110],[28897,13131],[28876,13152],[28855,13175],[28832,13196],[28805,13210],[28773,13215],[28756,13214],[28756,13214]],
-		wp: "",
-		img: ""
+		wp: "[&BOMBAAA=]",
+		img: "http://i.imgur.com/G1GVQLa.png"
 	},
-	DoefallsCourt: {
+	doefalls: {
 		name_en: "Doefalls Court",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Damfall-Hof",
+		name_es: "Corte de las Cataratas de la Cierva",
+		name_fr: "Cour des Chutes de la Biche",
 		coord: [29138, 13610],
 		path: [[29138,13610],[29109,13609],[29096,13636],[29087,13666],[29093,13696],[29109,13722],[29122,13751],[29101,13774],[29073,13788],[29048,13770],[29025,13749],[29000,13731],[28976,13714],[28951,13696],[28919,13693],[28891,13703],[28865,13719],[28842,13741],[28819,13763],[28793,13779],[28764,13788],[28734,13790],[28702,13790],[28220,13769],[28220,13769]],
-		wp: "",
-		img: ""
+		wp: "[&BIcBAAA=]",
+		img: "http://i.imgur.com/4ASl9l7.png"
 	},
-	DrakecleftShelf: {
+	drakecleft: {
 		name_en: "Drakecleft Shelf",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Lindwurmschlund-Riff",
+		name_es: "Balda Grietadraco",
+		name_fr: "Saut de Drakefaille",
 		coord: [31245, 17348],
 		path: [[31245,17348],[31259,17376],[31278,17401],[31294,17427],[31297,17458],[31293,17489],[31288,17519],[31278,17547],[31264,17575],[31245,17601],[31223,17624],[31197,17642],[31171,17657],[31143,17669],[31114,17676],[31082,17683],[31052,17688],[31027,17705],[31008,17730],[30989,17754],[30976,17781],[30974,17812],[30979,17842],[30990,17871],[31001,17899],[31020,17924],[31047,17938],[31062,17965],[31065,17997],[31062,18027],[31063,18058],[31073,18086],[31102,18097],[31131,18104],[31161,18104],[31192,18104],[31221,18114],[31248,18132],[31271,18152],[31293,18173],[31314,18196],[31339,18180],[31324,18153],[31315,18122],[31313,18113],[31313,18113]],
-		wp: "",
-		img: ""
+		wp: "[&BEwBAAA=]",
+		img: "http://i.imgur.com/Z37m4CA.png"
 	},
-	DrakehatchShore: {
+	drakehatch: {
 		name_en: "Drakehatch Shore",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Lindwurmnest-Küste",
+		name_es: "Ribera de los Saurios",
+		name_fr: "Côte de Couvedrake",
 		coord: [27043, 13000],
 		path: [[27043,13000],[27013,13008],[27007,13038],[27000,13068],[26977,13088],[26952,13107],[26927,13122],[26899,13134],[26869,13137],[26839,13134],[26808,13140],[26783,13156],[26756,13173],[26730,13189],[26708,13210],[26704,13240],[26705,13270],[26707,13301],[26697,13330],[26685,13358],[26672,13386],[26673,13418],[26695,13438],[26703,13445],[26703,13445]],
-		wp: "",
-		img: ""
+		wp: "[&BGQBAAA=]",
+		img: "http://i.imgur.com/EjLuCwi.png"
 	},
-	DroknahsGate: {
+	droknah: {
 		name_en: "Droknah's Gate",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Droknar-Tor",
+		name_es: "Puerta de Droknar",
+		name_fr: "Porte de Droknah",
 		coord: [20983, 22460],
 		path: [[20983,22460],[20966,22485],[20951,22512],[20935,22538],[20914,22561],[20894,22584],[20872,22606],[20851,22628],[20847,22659],[20859,22687],[20879,22710],[20900,22733],[20921,22755],[20943,22778],[20964,22800],[20985,22822],[21006,22845],[21027,22867],[21048,22889],[21073,22909],[21099,22926],[21129,22926],[21149,22917],[21149,22917]],
-		wp: "",
-		img: ""
+		wp: "[&BNQCAAA=]",
+		img: "http://i.imgur.com/n19ndHW.png"
 	},
-	DrownedPlaza: {
+	drowned: {
 		name_en: "Drowned Plaza",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Platz des Ertrinkens 	 ",
+		name_es: "Plaza Aguada",
+		name_fr: "Place engloutie",
 		coord: [15496, 22737],
 		path: [[15496,22737],[15526,22743],[15554,22752],[15583,22764],[16197,22955],[16227,22957],[16254,22943],[16280,22928],[16306,22911],[16330,22892],[16349,22868],[16363,22840],[16376,22813],[16388,22785],[16388,22754],[16381,22724],[16369,22695],[16355,22668],[16354,22667],[16354,22667]],
-		wp: "",
-		img: ""
+		wp: "[&BPMCAAA=]",
+		img: "http://i.imgur.com/YrSQC2E.png"
 	},
-	DwaynasFount: {
+	dwayna: {
 		name_en: "Dwayna's Fount",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Dwaynas Quelle",
+		name_es: "Fuente de Dwayna",
+		name_fr: "Source de Dwayna",
 		coord: [10775, 11215],
 		path: [[10775,11215],[10803,11201],[10830,11184],[10860,11175],[10889,11167],[10917,11156],[10940,11136],[10971,11136],[11002,11135],[11033,11136],[11061,11149],[11089,11163],[11115,11177],[11140,11194],[11149,11199],[11149,11199]],
-		wp: "",
-		img: ""
+		wp: "[&BCoDAAA=]",
+		img: "http://i.imgur.com/h4YejfE.png"
 	},
-	EastEndFalls: {
+	eastend: {
 		name_en: "East End Falls",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Ostend-Fälle",
+		name_es: "Cataratas Orientales",
+		name_fr: "Chute d'East End",
 		coord: [8413, 15676],
 		path: [[8507,15600],[8480,15584],[8453,15599],[8449,15631],[8450,15661],[8424,15677],[8413,15676],[8413,15676]],
-		wp: "",
-		img: ""
+		wp: "[&BGAAAAA=]",
+		img: "http://i.imgur.com/K0FBr7j.png"
 	},
-	EastLurkAlley: {
+	eastlurk: {
 		name_en: "East Lurk Alley",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Ostlauergasse",
+		name_es: "Callejón Acechoriental",
+		name_fr: "Ruelle du vadrouilleur de l'est",
 		coord: [11387, 11306],
 		path: [[11387,11306],[11388,11337],[11393,11367],[11365,11382],[11336,11370],[11321,11345],[11322,11314],[11317,11283],[11286,11278],[11255,11277],[11250,11247],[11252,11216],[11225,11202],[11195,11200],[11164,11198],[11150,11199],[11150,11199]],
-		wp: "",
-		img: ""
+		wp: "[&BCMDAAA=]",
+		img: "http://i.imgur.com/TWIsgd0.png"
 	},
-	ElisesSurprise: {
+	elise: {
 		name_en: "Elise's Surprise",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Elises Überraschung",
+		name_es: "La Sorpresa de Elise",
+		name_fr: "Surprise d'Elise",
 		coord: [13508, 11818],
 		path: [[13738,11255],[13711,11268],[13703,11298],[13704,11328],[13717,11356],[13733,11382],[13749,11407],[13751,11438],[13755,11468],[13759,11498],[13767,11527],[13777,11555],[13778,11586],[13767,11615],[13742,11632],[13711,11637],[13682,11647],[13656,11662],[13639,11687],[13626,11715],[13615,11744],[13610,11774],[13585,11791],[13558,11807],[13527,11811],[13508,11818],[13508,11818]],
-		wp: "",
-		img: ""
+		wp: "[&BKsAAAA=]",
+		img: "http://i.imgur.com/ijDwmlj.png"
 	},
-	EttinbreathLair: {
+	ettinbreath: {
 		name_en: "Ettinbreath Lair",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Ettinodem-Versteck",
+		name_es: "Guarida del Suspiro del Ettin",
+		name_fr: "Repaire de Soufflettin",
 		coord: [18280, 17917],
 		path: [[17901,17698],[17901,17667],[17896,17638],[17892,17608],[17889,17578],[17914,17561],[17940,17578],[17959,17601],[17985,17617],[18012,17630],[18039,17645],[18065,17661],[18071,17691],[18065,17720],[18056,17749],[18055,17779],[18055,17810],[18062,17840],[18071,17869],[18082,17897],[18093,17927],[18102,17957],[18109,17988],[18136,18004],[18164,17994],[18192,17983],[18219,17966],[18244,17948],[18270,17931],[18280,17917],[18280,17917]],
-		wp: "",
-		img: ""
+		wp: "[&BOYAAAA=]",
+		img: "http://i.imgur.com/ev9xgfO.png"
 	},
-	FathomFiveForcefield: {
+	fathom: {
 		name_en: "Fathom Five Forcefield",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Fünf-Klafter-Kraftfeld",
+		name_es: "Campo de Fuerza Cinco Brazas",
+		name_fr: "Champ de force de la cinquième brasse",
 		coord: [16820, 23813],
 		path: [[17293,23620],[17323,23623],[17341,23598],[17339,23567],[17330,23538],[17305,23520],[17279,23504],[17251,23491],[17239,23462],[17251,23433],[17262,23405],[17241,23384],[17215,23399],[17188,23414],[17169,23438],[17148,23461],[17123,23477],[17096,23492],[17067,23500],[17037,23509],[17009,23523],[16980,23533],[16950,23541],[16920,23549],[16890,23556],[16861,23564],[16831,23573],[16802,23581],[16773,23589],[16743,23598],[16713,23605],[16682,23610],[16653,23618],[16625,23628],[16595,23638],[16565,23640],[16535,23633],[16506,23627],[16528,23648],[16554,23666],[16574,23690],[16592,23714],[16623,23721],[16650,23734],[16678,23748],[16703,23765],[16728,23783],[16749,23805],[16770,23827],[16801,23827],[16824,23808],[16820,23813],[16820,23813]],
-		wp: "",
-		img: ""
+		wp: "[&BPICAAA=]",
+		img: "http://i.imgur.com/9dZNRRx.png"
 	},
-	FawcettsPorch: {
+	fawcett: {
 		name_en: "Fawcett's Porch",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Fawcetts Vordach",
+		name_es: "Porche de Fawcett",
+		name_fr: "Porche de Fawcett",
 		coord: [13833, 9549],
 		path: [[13731,9757],[13739,9786],[13766,9802],[13795,9809],[13824,9818],[13853,9831],[13877,9851],[13899,9871],[13922,9892],[13948,9909],[13977,9920],[14006,9927],[14036,9933],[14067,9934],[14097,9928],[14127,9918],[14154,9904],[14181,9888],[14205,9870],[14230,9851],[14254,9833],[14278,9814],[14302,9794],[14325,9775],[14349,9755],[14367,9731],[14366,9701],[14345,9677],[14329,9651],[14351,9628],[14371,9605],[14400,9616],[14371,9605],[14396,9586],[14425,9574],[14445,9552],[14419,9569],[14393,9551],[14385,9522],[14355,9516],[14326,9524],[14295,9521],[14265,9522],[14235,9527],[14215,9549],[14185,9555],[14156,9561],[14126,9555],[14108,9530],[14078,9533],[14048,9541],[14017,9545],[14003,9573],[14002,9604],[13999,9634],[13980,9610],[14002,9589],[14032,9580],[14057,9596],[14077,9621],[14046,9617],[14016,9623],[13997,9647],[13938,9646],[13938,9646],[13911,9630],[13893,9606],[13870,9586],[13843,9572],[13847,9542],[13833,9549],[13833,9549]],
-		wp: "",
-		img: ""
+		wp: "[&BMMAAAA=]",
+		img: "http://i.imgur.com/KyEhSna.png"
 	},
-	FireImpPocket: {
+	fireimp: {
 		name_en: "Fire Imp Pocket",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Feuer-Kobolds Schlupfloch",
+		name_es: "Cauce Diablillo de Fuego",
+		name_fr: "Poche de diablotin de feu",
 		coord: [19181, 23199],
 		path: [[19181,23199],[19184,23229],[19155,23236],[19143,23208],[19137,23177],[19158,23155],[19186,23145],[19214,23134],[19219,23132],[19219,23132]],
-		wp: "",
-		img: ""
+		wp: "[&BM0CAAA=]",
+		img: "http://i.imgur.com/CNsSn8u.png"
 	},
-	FirefrogSprings: {
+	firefrog: {
 		name_en: "Firefrog Springs",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Feuerfrosch-Quellen",
+		name_es: "Manantiales Rana Ígnea",
+		name_fr: "Source de Brûlereinette",
 		coord: [17723, 20785],
 		path: [[17466,20700],[17494,20686],[17522,20674],[17552,20678],[17580,20690],[17607,20705],[17633,20720],[17659,20735],[17680,20759],[17703,20779],[17723,20785],[17723,20785]],
-		wp: "",
-		img: ""
+		wp: "[&BMwBAAA=]",
+		img: "http://i.imgur.com/l1LzBHC.png"
 	},
-	FirewatchFlybridge: {
+	firewatch: {
 		name_en: "Firewatch Flybridge",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Feuerwacht-Brücke",
+		name_es: "Pasarela de Vigilafuegos",
+		name_fr: "Pont du Guet-du-feu",
 		coord: [28021, 10554],
 		path: [[28021,10554],[28001,10557],[28001,10553],[28023,10556],[27999,10556],[27998,10561],[27991,10562],[27982,10566],[27982,10566]],
-		wp: "",
-		img: ""
+		wp: "[&BO0BAAA=]",
+		img: "http://i.imgur.com/rCHAW0l.png"
 	},
-	FishersCrag: {
+	fisher: {
 		name_en: "Fisher's Crag",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Fischers Klippe",
+		name_es: "Peñasco del Pescador",
+		name_fr: "Escarpement du pêcheur",
 		coord: [7302, 18854],
 		path: [[7620,19365],[7613,19336],[7606,19306],[7599,19277],[7591,19248],[7580,19219],[7558,19198],[7534,19179],[7508,19160],[7482,19143],[7457,19124],[7435,19103],[7413,19081],[7392,19060],[7371,19038],[7351,19014],[7333,18990],[7314,18966],[7295,18942],[7279,18916],[7274,18886],[7281,18856],[7302,18854],[7302,18854]],
-		wp: "",
-		img: ""
+		wp: "[&BK4EAAA=]",
+		img: "http://i.imgur.com/l5pbW3U.png"
 	},
-	FlakksLapidaryNook: {
+	flakk: {
 		name_en: "Flakk's Lapidary Nook",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Flakks Steinschneider-Eck",
+		name_es: "Rincón Lapidario de Flakk",
+		name_fr: "Recoin lapidaire de Flakk",
 		coord: [5797, 20512],
 		path: [[5797,20512],[5802,20542],[5826,20564],[5854,20579],[5879,20597],[5904,20616],[5931,20631],[5959,20645],[5975,20653],[5975,20653]],
-		wp: "",
-		img: ""
+		wp: "[&BLYEAAA=]",
+		img: "http://i.imgur.com/7lLtxfV.png"
 	},
-	ForagersMidden: {
+	forager: {
 		name_en: "Forager's Midden",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Abfallhaufen des Sammlers",
+		name_es: "Escombrera del Forrajeador",
+		name_fr: "Fouilleur de fumier",
 		coord: [19590, 17609],
 		path: [[19936,17105],[19913,17084],[19894,17060],[19879,17032],[19867,17004],[19858,16974],[19851,16945],[19844,16915],[19841,16885],[19835,16854],[19817,16830],[19790,16843],[19768,16864],[19743,16883],[19719,16902],[19695,16922],[19671,16942],[19648,16963],[19625,16984],[19603,17005],[19604,17035],[19619,17062],[19621,17093],[19616,17123],[19609,17153],[19614,17183],[19630,17208],[19626,17238],[19651,17258],[19655,17288],[19651,17318],[19644,17348],[19640,17379],[19636,17408],[19648,17438],[19631,17464],[19610,17487],[19641,17488],[19632,17516],[19606,17534],[19616,17562],[19605,17591],[19590,17609],[19590,17609]],
-		wp: "",
-		img: ""
+		wp: "[&BFsCAAA=]",
+		img: "http://i.imgur.com/I1QNNED.png"
 	},
-	ForbiddenShear: {
+	forbidden: {
 		name_en: "Forbidden Shear",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Verbotene Schneide",
+		name_es: "Grieta Prohibida",
+		name_fr: "Cisaillement interdit",
 		coord: [11077, 23941],
 		path: [[11873,23739],[11845,23727],[11815,23724],[11787,23737],[11766,23760],[11746,23782],[11725,23805],[11704,23828],[11680,23847],[11656,23865],[11629,23879],[11603,23894],[11577,23909],[11550,23924],[11524,23939],[11497,23954],[11470,23969],[11443,23983],[11414,23992],[11384,24000],[11355,24008],[11325,24015],[11295,24020],[11265,24023],[11234,24025],[11203,24027],[11173,24025],[11142,24019],[11112,24013],[11082,24012],[11053,24004],[11024,23992],[10995,23984],[10975,23961],[10946,23953],[10976,23945],[11006,23952],[11035,23960],[11064,23948],[11077,23941],[11077,23941]],
-		wp: "",
-		img: ""
+		wp: "[&BK8CAAA=]",
+		img: "http://i.imgur.com/27fEs6H.png"
 	},
-	ForemansRecess: {
+	foreman: {
 		name_en: "Foreman's Recess",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Vorarbeiters Rast",
+		name_es: "Nicho del Capataz",
+		name_fr: "Cavité du Contremaître",
 		coord: [21146, 17869],
 		path: [[21240,17651],[21259,17674],[21277,17698],[21290,17727],[21306,17754],[21323,17778],[21332,17807],[21335,17840],[21325,17869],[21304,17891],[21276,17903],[21268,17874],[21265,17844],[21234,17844],[21208,17861],[21182,17876],[21167,17871],[21153,17875],[21164,17877],[21163,17874],[21154,17869],[21154,17875],[21164,17877],[21160,17869],[21146,17869],[21146,17869]],
-		wp: "",
-		img: ""
+		wp: "[&BFgCAAA=]",
+		img: "http://i.imgur.com/dviWA3k.png"
 	},
-	ForgottenGrotto: {
+	forgotten: {
 		name_en: "Forgotten Grotto",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Vergessene Grotte",
+		name_es: "Gruta Olvidada",
+		name_fr: "Grotte Oubliée",
 		coord: [31129, 12299],
 		path: [[30766,12700],[30790,12683],[30816,12667],[30834,12642],[30849,12616],[30842,12586],[30842,12555],[30845,12524],[30862,12499],[30889,12485],[30919,12482],[30950,12481],[30981,12484],[31003,12496],[31008,12479],[31006,12496],[30985,12489],[30984,12478],[30999,12473],[31011,12475],[31017,12484],[31050,12452],[31043,12423],[31049,12393],[31060,12365],[31058,12334],[31056,12304],[31063,12275],[31092,12263],[31122,12257],[31151,12261],[31160,12291],[31131,12300],[31129,12299],[31129,12299]],
-		wp: "",
-		img: ""
+		wp: "[&BAECAAA=]",
+		img: "http://i.imgur.com/nR7YzTg.png"
 	},
-	FoundersFlagonHearth: {
+	founder: {
 		name_en: "Founder's Flagon Hearth",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Flaschenhals-Feuerstelle des Gründers",
+		name_es: "Hogar la Jarra del Fundador",
+		name_fr: "Coeur du flacon du fondateur",
 		coord: [29496, 18922],
 		path: [[29597,18800],[29578,18824],[29576,18856],[29587,18886],[29595,18916],[29582,18943],[29564,18968],[29546,18994],[29526,19018],[29494,19012],[29491,18981],[29491,18954],[29532,18956],[29531,18945],[29505,18946],[29504,18935],[29495,18935],[29496,18922],[29496,18922]],
-		wp: "",
-		img: ""
+		wp: "[&BD0EAAA=]",
+		img: "http://i.imgur.com/SyNE0n7.png"
 	},
-	FreestandScaffold: {
+	freestand: {
 		name_en: "Freestand Scaffold",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Freistehendes Gerüst",
+		name_es: "Cadalso Suspendido",
+		name_fr: "Échafaudage autoporteur",
 		coord: [24110, 14600],
 		path: [[24112,14825],[24092,14851],[24066,14868],[24036,14865],[24004,14859],[23974,14856],[23943,14853],[23913,14846],[23889,14826],[23870,14803],[23854,14776],[23846,14747],[23845,14717],[23844,14686],[23844,14656],[23844,14624],[23840,14593],[23839,14563],[23853,14536],[23880,14523],[23909,14532],[23933,14552],[23955,14574],[23983,14585],[24014,14582],[24044,14580],[24074,14577],[24104,14581],[24110,14604],[24116,14599],[24111,14594],[24105,14598],[24109,14605],[24110,14600],[24110,14600]],
-		wp: "",
-		img: ""
+		wp: "[&BKwDAAA=]",
+		img: "http://i.imgur.com/rYnCcx4.png"
 	},
-	FrozenAntrum: {
+	frozen: {
 		name_en: "Frozen Antrum",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Gefrorene Höhle",
+		name_es: "Antrum Congelado",
+		name_fr: "Retraite Gelée",
 		coord: [20393, 18629],
 		path: [[20315,19053],[20343,19047],[20373,19045],[20403,19035],[20427,19017],[20442,18990],[20447,18960],[20456,18930],[20469,18901],[20469,18871],[20445,18850],[20422,18870],[20395,18885],[20375,18861],[20363,18833],[20356,18802],[20366,18773],[20384,18748],[20376,18718],[20372,18688],[20361,18659],[20384,18638],[20393,18629],[20393,18629]],
-		wp: "",
-		img: ""
+		wp: "[&BE8CAAA=]",
+		img: "http://i.imgur.com/I0i3Tnd.png"
 	},
-	GallowCanyons: {
+	gallow: {
 		name_en: "Gallow Canyons",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Galgenschluchten",
+		name_es: "Cañones Macabros",
+		name_fr: "Canyons de Gallow",
 		coord: [6248, 15238],
 		path: [[6407,14962],[6421,14990],[6413,15020],[6384,15031],[6356,15042],[6328,15055],[6306,15077],[6289,15104],[6278,15132],[6266,15160],[6254,15189],[6255,15219],[6248,15238],[6248,15238]],
-		wp: "",
-		img: ""
+		wp: "[&BGMAAAA=]",
+		img: "http://i.imgur.com/hgAXhuN.png"
 	},
-	GardenrootAlcove: {
+	gardenroot: {
 		name_en: "Gardenroot Alcove",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Gartenwurzel-Alkoven",
+		name_es: "Alcoba Huertoraíz",
+		name_fr: "Alcôve de Courtilleracine",
 		coord: [10208, 20749],
 		path: [[10404,21061],[10384,21035],[10368,21007],[10355,20980],[10332,20959],[10307,20942],[10281,20925],[10256,20907],[10235,20884],[10217,20860],[10199,20834],[10195,20804],[10192,20773],[10208,20749],[10208,20749]],
-		wp: "",
-		img: ""
+		wp: "[&BLsEAAA=]",
+		img: "http://i.imgur.com/ES5wvfM.png"
 	},
-	GnasharsViewpoint: {
+	gnashar: {
 		name_en: "Gnashar's Viewpoint",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Gnashar-Aussichtspunkt",
+		name_es: "Puesto de observación de Gnashar",
+		name_fr: "Point de vue de Gnashar",
 		coord: [8520, 14697],
 		path: [[8520,14697],[8507,14724],[8495,14753],[8491,14783],[8522,14787],[8552,14782],[8582,14777],[8613,14776],[8643,14779],[8675,14783],[8705,14787],[8737,14782],[8761,14763],[8785,14743],[8811,14727],[8835,14708],[8866,14710],[8897,14710],[8927,14707],[8958,14703],[8988,14696],[9017,14685],[9046,14675],[9076,14680],[9105,14688],[9129,14706],[9137,14737],[9138,14767],[9139,14799],[9140,14808],[9140,14808]],
-		wp: "",
-		img: ""
+		wp: "[&BF0AAAA=]",
+		img: "http://i.imgur.com/9bn0egU.png"
 	},
-	GreenMoaPaddock: {
+	greenmoa: {
 		name_en: "Green Moa Paddock",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Grünmoa-Koppel",
+		name_es: "Prado de Moa Verde",
+		name_fr: "Paddock du moa vert",
 		coord: [10139, 17335],
 		path: [[9891,17442],[10082,17346],[10098,17318],[10114,17292],[10144,17286],[10151,17316],[10139,17335],[10139,17335]],
-		wp: "",
-		img: ""
+		wp: "[&BDwBAAA=]",
+		img: "http://i.imgur.com/ojWDivG.png"
 	},
-	GrenthsPavillion: {
+	grenth: {
 		name_en: "Grenth's Pavillion",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Grenths Pavillion",
+		name_es: "Pabellón de Grenth",
+		name_fr: "Pavillon de Grenth",
 		coord: [11142, 10191],
 		path: [[11275,10115],[11264,10143],[11233,10147],[11204,10138],[11193,10166],[11194,10198],[11196,10228],[11196,10258],[11195,10290],[11165,10286],[11146,10263],[11140,10232],[11141,10202],[11142,10191],[11142,10191]],
-		wp: "",
-		img: ""
+		wp: "[&BCQDAAA=]",
+		img: "http://i.imgur.com/mUYzVf3.png"
 	},
-	GrimdottirsDuty: {
+	grimdottir: {
 		name_en: "Grimdottir's Duty",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Grimsdottirs Pflicht",
+		name_es: "Labor de Grimdottir",
+		name_fr: "Le devoir de Morndottir",
 		coord: [21689, 13768],
 		path: [[21503,13626],[21525,13646],[21547,13668],[21569,13689],[21596,13705],[21626,13711],[21651,13728],[21674,13749],[21689,13768],[21689,13768]],
-		wp: "",
-		img: ""
+		wp: "[&BIsDAAA=]",
+		img: "http://i.imgur.com/XllSt4T.png"
 	},
-	GuardianOverwatch: {
+	guardian: {
 		name_en: "Guardian Overwatch",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Achtgebender Wächter",
+		name_es: "Sobrevigilancia del Guardián",
+		name_fr: "Camp principal du gardien",
 		coord: [15553, 11391],
 		path: [[15776,10915],[15751,10933],[15725,10948],[15695,10959],[15665,10969],[15636,10977],[15606,10984],[15577,10994],[15559,11019],[15551,11050],[15550,11082],[15553,11113],[15562,11142],[15572,11170],[15591,11195],[15608,11221],[15612,11251],[15611,11282],[15605,11312],[15595,11341],[15569,11357],[15563,11386],[15553,11391],[15553,11391]],
-		wp: "",
-		img: ""
+		wp: "[&BKkAAAA=]",
+		img: "http://i.imgur.com/IpMKUsM.png"
 	},
-	HawkeyePerch: {
+	hawkeye: {
 		name_en: "Hawkeye Perch",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Falkenaugen-Warte",
+		name_es: "Nido de grifos ojodehalcón",
+		name_fr: "Perchoir d'œil-de-faucon",
 		coord: [20140, 20844],
 		path: [[19935,20988],[19921,20962],[19930,20933],[19943,20906],[19972,20893],[20001,20882],[20032,20878],[20061,20868],[20076,20841],[20106,20846],[20138,20845],[20140,20844],[20140,20844]],
-		wp: "",
-		img: ""
+		wp: "[&BEUCAAA=]",
+		img: "http://i.imgur.com/cBrqZQl.png"
 	},
-	HeartSpeaksNotch: {
+	heartspeaks: {
 		name_en: "Heart Speaks Notch",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Stummherz-Engpass",
+		name_es: "Muesca Algarabía del Corazón",
+		name_fr: "Col du Coeur criant",
 		coord: [24546, 10079],
 		path: [[24393,10615],[24405,10585],[24415,10555],[24423,10525],[24428,10495],[24432,10464],[24441,10435],[24451,10405],[24461,10376],[24470,10347],[24477,10317],[24483,10288],[24491,10257],[24497,10227],[24504,10197],[24512,10166],[24518,10136],[24525,10106],[24544,10081],[24546,10079],[24546,10079]],
-		wp: "",
-		img: ""
+		wp: "[&BB0CAAA=]",
+		img: "http://i.imgur.com/ovdHOog.png"
 	},
-	HeartwoodHoneyCache: {
+	heartwood: {
 		name_en: "Heartwood Honey Cache",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Herzwald-Honigspeicher",
+		name_es: "Escondite Ápido de los Bosques Duramen",
+		name_fr: "Cache à miel de Boisecoeur",
 		coord: [11479, 13535],
 		path: [[11781,13422],[11752,13433],[11723,13442],[11693,13447],[11661,13452],[11631,13456],[11600,13459],[11570,13462],[11540,13465],[11509,13469],[11504,13499],[11487,13524],[11478,13535],[11478,13535]],
-		wp: "",
-		img: ""
+		wp: "[&BPMAAAA=]",
+		img: "http://i.imgur.com/p1YpClo.png"
 	},
-	HeidisShowpiece: {
+	heidi: {
 		name_en: "Heidi's Showpiece",
 		name_de: "",
 		name_es: "",
@@ -935,7 +935,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	HermitsRoost: {
+	hermit: {
 		name_en: "Hermit's Roost",
 		name_de: "",
 		name_es: "",
@@ -945,7 +945,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	HiddenOwlDistillery: {
+	hidden: {
 		name_en: "Hidden Owl Distillery",
 		name_de: "",
 		name_es: "",
@@ -955,7 +955,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	HolystoneSanctum: {
+	holystone: {
 		name_en: "Holystone Sanctum",
 		name_de: "",
 		name_es: "",
@@ -965,7 +965,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	IcewurmTrench: {
+	icewurm: {
 		name_en: "Icewurm Trench",
 		name_de: "",
 		name_es: "",
@@ -975,7 +975,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	IdeationLeap: {
+	ideation: {
 		name_en: "Ideation Leap",
 		name_de: "",
 		name_es: "",
@@ -985,7 +985,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ImphauntHallow: {
+	imphaunt: {
 		name_en: "Imphaunt Hallow",
 		name_de: "",
 		name_es: "",
@@ -995,7 +995,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	IrondockViewpoint: {
+	irondock: {
 		name_en: "Irondock Viewpoint",
 		name_de: "",
 		name_es: "",
@@ -1005,7 +1005,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	IsenfellWash: {
+	isenfell: {
 		name_en: "Isenfell Wash",
 		name_de: "",
 		name_es: "",
@@ -1015,7 +1015,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	IsgarrenViewpoint: {
+	isgarren: {
 		name_en: "Isgarren Viewpoint",
 		name_de: "",
 		name_es: "",
@@ -1025,7 +1025,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	JaguarPrideDen: {
+	jaguar: {
 		name_en: "Jaguar Pride Den",
 		name_de: "",
 		name_es: "",
@@ -1035,7 +1035,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	JunkersApex: {
+	junker: {
 		name_en: "Junker's Apex",
 		name_de: "",
 		name_es: "",
@@ -1045,7 +1045,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	KaldarsHotSeat: {
+	kaldar: {
 		name_en: "Kaldar's Hot Seat",
 		name_de: "",
 		name_es: "",
@@ -1055,7 +1055,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	KarisHotSpot: {
+	kari: {
 		name_en: "Kari's Hot Spot",
 		name_de: "",
 		name_es: "",
@@ -1065,7 +1065,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	KegbrawlWatch: {
+	kegbrawl: {
 		name_en: "Kegbrawl Watch",
 		name_de: "",
 		name_es: "",
@@ -1075,7 +1075,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	KevachsStrongroom: {
+	kevach: {
 		name_en: "Kevach's Strongroom",
 		name_de: "",
 		name_es: "",
@@ -1085,7 +1085,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	LakebottomUnderpass: {
+	lakebottom: {
 		name_en: "Lakebottom Underpass",
 		name_de: "",
 		name_es: "",
@@ -1095,7 +1095,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	LawenGrotto: {
+	lawen: {
 		name_en: "Lawen Grotto",
 		name_de: "",
 		name_es: "",
@@ -1105,7 +1105,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	LightfootDock: {
+	lightfoot: {
 		name_en: "Lightfoot Dock ",
 		name_de: "",
 		name_es: "",
@@ -1115,7 +1115,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	LilysBivvy: {
+	lily: {
 		name_en: "Lily's Bivvy",
 		name_de: "",
 		name_es: "",
@@ -1125,7 +1125,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	LionguardLarder: {
+	lionguard: {
 		name_en: "Lionguard Larder",
 		name_de: "",
 		name_es: "",
@@ -1135,7 +1135,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	LychcroftWardenship: {
+	lychcroft: {
 		name_en: "Lychcroft Wardenship",
 		name_de: "",
 		name_es: "",
@@ -1145,7 +1145,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	MagihedronCorner: {
+	magihedron: {
 		name_en: "Magihedron Corner",
 		name_de: "",
 		name_es: "",
@@ -1155,7 +1155,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	MasterControlLIN39: {
+	master: {
 		name_en: "Master Control LIN39",
 		name_de: "",
 		name_es: "",
@@ -1165,7 +1165,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	MeltwaterCave: {
+	meltwater: {
 		name_en: "Meltwater Cave",
 		name_de: "",
 		name_es: "",
@@ -1175,7 +1175,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	MinasTargetShoot: {
+	mina: {
 		name_en: "Mina's Target Shoot",
 		name_de: "",
 		name_es: "",
@@ -1185,7 +1185,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	MistrivenShelf: {
+	mistriven: {
 		name_en: "Mistriven Shelf",
 		name_de: "",
 		name_es: "",
@@ -1195,7 +1195,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	MoleberiaPrison: {
+	moleberia: {
 		name_en: "Moleberia Prison",
 		name_de: "",
 		name_es: "",
@@ -1205,7 +1205,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	MonumentToTheAncientOne: {
+	monument: {
 		name_en: "Monument to the Ancient One",
 		name_de: "",
 		name_es: "",
@@ -1215,7 +1215,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	NarrowkraalCrossing: {
+	narrowkraal: {
 		name_en: "Narrowkraal Crossing",
 		name_de: "",
 		name_es: "",
@@ -1225,7 +1225,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	NecrolithLanding: {
+	necrolith: {
 		name_en: "Necrolith Landing",
 		name_de: "",
 		name_es: "",
@@ -1235,7 +1235,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	OrecartHoist: {
+	orecart: {
 		name_en: "Orecart Hoist",
 		name_de: "",
 		name_es: "",
@@ -1245,7 +1245,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	OrvanicSourcewaters: {
+	orvanic: {
 		name_en: "Orvanic Sourcewaters",
 		name_de: "",
 		name_es: "",
@@ -1255,7 +1255,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	OsenfoldCounterweights: {
+	osenfold: {
 		name_en: "Osenfold Counterweights",
 		name_de: "",
 		name_es: "",
@@ -1265,7 +1265,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	OverlordLodge: {
+	overlord: {
 		name_en: "Overlord Lodge",
 		name_de: "",
 		name_es: "",
@@ -1275,7 +1275,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	PhasmatisProspect: {
+	phasmatis: {
 		name_en: "Phasmatis Prospect",
 		name_de: "",
 		name_es: "",
@@ -1285,7 +1285,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	PochtecatlsDesire: {
+	pochtecatl: {
 		name_en: "Pochtecatl's Desire",
 		name_de: "",
 		name_es: "",
@@ -1295,7 +1295,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	PortAuthorityLostAndFound: {
+	port: {
 		name_en: "Port Authority Lost and Found",
 		name_de: "",
 		name_es: "",
@@ -1305,7 +1305,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	PortmattsPromontory: {
+	portmatt: {
 		name_en: "Portmatt's Promontory",
 		name_de: "",
 		name_es: "",
@@ -1315,7 +1315,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ProvatumCarcer: {
+	provatum: {
 		name_en: "Provatum Carcer",
 		name_de: "",
 		name_es: "",
@@ -1325,7 +1325,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	RamviewPeak: {
+	ramview: {
 		name_en: "Ramview Peak",
 		name_de: "",
 		name_es: "",
@@ -1335,7 +1335,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	RaptorsAerie: {
+	raptorsaerie: {
 		name_en: "Raptor's Aerie",
 		name_de: "",
 		name_es: "",
@@ -1345,7 +1345,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	RaptorsPerch: {
+	raptorsperch: {
 		name_en: "Raptor's Perch",
 		name_de: "",
 		name_es: "",
@@ -1355,7 +1355,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	RataPtenPortico: {
+	rata: {
 		name_en: "Rata Pten Portico",
 		name_de: "",
 		name_es: "",
@@ -1365,7 +1365,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	RavenNook: {
+	raven: {
 		name_en: "Raven Nook",
 		name_de: "",
 		name_es: "",
@@ -1375,7 +1375,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ReefDrakeDen: {
+	reef: {
 		name_en: "Reef Drake Den",
 		name_de: "",
 		name_es: "",
@@ -1385,7 +1385,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	RestlessFootings: {
+	restless: {
 		name_en: "Restless Footings",
 		name_de: "",
 		name_es: "",
@@ -1395,7 +1395,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ReverberantsWatch: {
+	reverberant: {
 		name_en: "Reverberant's Watch",
 		name_de: "",
 		name_es: "",
@@ -1405,7 +1405,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	RisewildGreen: {
+	risewild: {
 		name_en: "Risewild Green",
 		name_de: "",
 		name_es: "",
@@ -1415,7 +1415,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	RuriksView: {
+	rurik: {
 		name_en: "Rurik's View",
 		name_de: "",
 		name_es: "",
@@ -1425,7 +1425,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SaltfloodAltar: {
+	saltflood: {
 		name_en: "Saltflood Altar",
 		name_de: "",
 		name_es: "",
@@ -1435,7 +1435,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SandwurmProwl: {
+	sandwurm: {
 		name_en: "Sandwurm Prowl",
 		name_de: "",
 		name_es: "",
@@ -1445,7 +1445,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ScholarsBlind: {
+	scholar: {
 		name_en: "Scholar's Blind",
 		name_de: "",
 		name_es: "",
@@ -1455,7 +1455,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ScourgejawWatchtower: {
+	scourgejaw: {
 		name_en: "Scourgejaw Watchtower",
 		name_de: "",
 		name_es: "",
@@ -1465,7 +1465,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ScriptoriumNook: {
+	scriptorium: {
 		name_en: "Scriptorium Nook",
 		name_de: "",
 		name_es: "",
@@ -1475,7 +1475,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SeaScorpionsEye: {
+	seascorpion: {
 		name_en: "Sea Scorpion's Eye",
 		name_de: "",
 		name_es: "",
@@ -1485,7 +1485,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SentinelSink: {
+	sentinel: {
 		name_en: "Sentinel Sink",
 		name_de: "",
 		name_es: "",
@@ -1495,7 +1495,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SepulchreSkylight: {
+	sepulchre: {
 		name_en: "Sepulchre Skylight",
 		name_de: "",
 		name_es: "",
@@ -1505,7 +1505,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SharkhollowsEdge: {
+	sharkhollow: {
 		name_en: "Sharkhollow's Edge",
 		name_de: "",
 		name_es: "",
@@ -1515,7 +1515,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ShatteredLoft: {
+	shattered: {
 		name_en: "Shattered Loft",
 		name_de: "",
 		name_es: "",
@@ -1525,7 +1525,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SiamothRefuge: {
+	siamoth: {
 		name_en: "Siamoth Refuge",
 		name_de: "",
 		name_es: "",
@@ -1535,7 +1535,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SkalecatchButcherShop: {
+	skalecatch: {
 		name_en: "Skalecatch Butcher Shop",
 		name_de: "",
 		name_es: "",
@@ -1545,7 +1545,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SkalefoundCove: {
+	skalefound: {
 		name_en: "Skalefound Cove",
 		name_de: "",
 		name_es: "",
@@ -1555,7 +1555,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SkalesplashFalls: {
+	skalesplash: {
 		name_en: "Skalesplash Falls",
 		name_de: "",
 		name_es: "",
@@ -1565,7 +1565,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SkalestashHideaway: {
+	skalestash: {
 		name_en: "Skalestash Hideaway",
 		name_de: "",
 		name_es: "",
@@ -1575,7 +1575,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SkelknestBorehole: {
+	skelknest: {
 		name_en: "Skelknest Borehole",
 		name_de: "",
 		name_es: "",
@@ -1585,7 +1585,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SkiboHallDormitory: {
+	skibo: {
 		name_en: "Skibo Hall Dormitory",
 		name_de: "",
 		name_es: "",
@@ -1595,7 +1595,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SkyshineScratch: {
+	skyshine: {
 		name_en: "Skyshine Scratch",
 		name_de: "",
 		name_es: "",
@@ -1605,7 +1605,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SnowdenSafehouse: {
+	snowden: {
 		name_en: "Snowden Safehouse",
 		name_de: "",
 		name_es: "",
@@ -1615,7 +1615,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SnowhowlDen: {
+	snowhowl: {
 		name_en: "Snowhowl Den",
 		name_de: "",
 		name_es: "",
@@ -1625,7 +1625,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SoggorsortRotunda: {
+	soggorsort: {
 		name_en: "Soggorsort Rotunda",
 		name_de: "",
 		name_es: "",
@@ -1635,7 +1635,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SorenDraaRestShop: {
+	soren: {
 		name_en: "Soren Draa Rest Shop",
 		name_de: "",
 		name_es: "",
@@ -1645,7 +1645,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SourceOfLament: {
+	source: {
 		name_en: "Source of Lament",
 		name_de: "",
 		name_es: "",
@@ -1655,7 +1655,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SparwindsLounge: {
+	sparwinds: {
 		name_en: "Sparwind's Lounge",
 		name_de: "",
 		name_es: "",
@@ -1665,7 +1665,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SpectrehauntSocket: {
+	spectrehaunt: {
 		name_en: "Spectrehaunt Socket",
 		name_de: "",
 		name_es: "",
@@ -1675,7 +1675,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SteampipePerch: {
+	steampipe: {
 		name_en: "Steampipe Perch",
 		name_de: "",
 		name_es: "",
@@ -1685,7 +1685,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SteamscrapOverlook: {
+	steamscrap: {
 		name_en: "Steamscrap Overlook",
 		name_de: "",
 		name_es: "",
@@ -1695,7 +1695,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SteamySteps: {
+	steamy: {
 		name_en: "Steamy Steps",
 		name_de: "",
 		name_es: "",
@@ -1705,7 +1705,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	SteelbandsTunnel: {
+	steelband: {
 		name_en: "Steelband's Tunnel",
 		name_de: "",
 		name_es: "",
@@ -1715,7 +1715,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	StentorShelter: {
+	stentor: {
 		name_en: "Stentor Shelter",
 		name_de: "",
 		name_es: "",
@@ -1725,7 +1725,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	StoneboreSpiderhole: {
+	stonebore: {
 		name_en: "Stonebore Spiderhole",
 		name_de: "",
 		name_es: "",
@@ -1735,7 +1735,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	StrongpawsGarden: {
+	strongpaw: {
 		name_en: "Strongpaw's Garden",
 		name_de: "",
 		name_es: "",
@@ -1745,7 +1745,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TacticalRetreat: {
+	tactical: {
 		name_en: "Tactical Retreat",
 		name_de: "",
 		name_es: "",
@@ -1755,7 +1755,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TagotlShore: {
+	tagotl: {
 		name_en: "Tagotl Shore",
 		name_de: "",
 		name_es: "",
@@ -1765,7 +1765,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TalusSteps: {
+	talus: {
 		name_en: "Talus Steps",
 		name_de: "",
 		name_es: "",
@@ -1775,7 +1775,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TarstarCopse: {
+	tarstar: {
 		name_en: "Tarstar Copse",
 		name_de: "",
 		name_es: "",
@@ -1785,7 +1785,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TekkisDrawingBoard: {
+	tekkis: {
 		name_en: "Tekki's Drawing Board",
 		name_de: "",
 		name_es: "",
@@ -1795,7 +1795,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ThaumanovaSpillway: {
+	thaumanova: {
 		name_en: "Thaumanova Spillway",
 		name_de: "",
 		name_es: "",
@@ -1805,7 +1805,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TheKarkaClub: {
+	thekarka: {
 		name_en: "The Karka Club",
 		name_de: "",
 		name_es: "",
@@ -1815,7 +1815,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ThePeoplesDeadlock: {
+	thepeople: {
 		name_en: "The People's Deadlock",
 		name_de: "",
 		name_es: "",
@@ -1825,7 +1825,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TheWorkersStores: {
+	theworkers: {
 		name_en: "The Workers' Stores",
 		name_de: "",
 		name_es: "",
@@ -1835,7 +1835,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TowerOfTribulation: {
+	tower: {
 		name_en: "Tower of Tribulation",
 		name_de: "",
 		name_es: "",
@@ -1845,7 +1845,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ToxalSpill: {
+	toxal: {
 		name_en: "Toxal Spill",
 		name_de: "",
 		name_es: "",
@@ -1855,7 +1855,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TradersStash: {
+	trader: {
 		name_en: "Trader's Stash",
 		name_de: "",
 		name_es: "",
@@ -1865,7 +1865,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TrolltrapPit: {
+	trolltrap: {
 		name_en: "Trolltrap Pit",
 		name_de: "",
 		name_es: "",
@@ -1875,7 +1875,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	TuraiTavernStillroom: {
+	turai: {
 		name_en: "Turai Tavern Stillroom",
 		name_de: "",
 		name_es: "",
@@ -1885,7 +1885,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	UltaScraproom: {
+	ulta: {
 		name_en: "Ulta Scraproom",
 		name_de: "",
 		name_es: "",
@@ -1895,7 +1895,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	UnseenScratch: {
+	unseen: {
 		name_en: "Unseen Scratch",
 		name_de: "",
 		name_es: "",
@@ -1905,7 +1905,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	UpsilonHyperboloid: {
+	upsilon: {
 		name_en: "Upsilon Hyperboloid",
 		name_de: "",
 		name_es: "",
@@ -1915,7 +1915,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	UsharrsThreshold: {
+	usharr: {
 		name_en: "Usharr's Threshold",
 		name_de: "",
 		name_es: "",
@@ -1925,7 +1925,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	VacantHermitage: {
+	vacant: {
 		name_en: "Vacant Hermitage",
 		name_de: "",
 		name_es: "",
@@ -1935,7 +1935,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	VerdanceFont: {
+	verdance: {
 		name_en: "Verdance Font",
 		name_de: "",
 		name_es: "",
@@ -1945,7 +1945,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	VenisonHollow: {
+	venison: {
 		name_en: "Venison Hollow",
 		name_de: "",
 		name_es: "",
@@ -1955,7 +1955,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	ViziersAnteport: {
+	vizier: {
 		name_en: "Vizier's Anteport",
 		name_de: "",
 		name_es: "",
@@ -1965,7 +1965,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	WassasTerrace: {
+	wassa: {
 		name_en: "Wassa's Terrace",
 		name_de: "",
 		name_es: "",
@@ -1975,7 +1975,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	WatchpointDecimus: {
+	watchpoint: {
 		name_en: "Watchpoint Decimus",
 		name_de: "",
 		name_es: "",
@@ -1985,7 +1985,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	WheelportPub: {
+	wheelport: {
 		name_en: "Wheelport Pub",
 		name_de: "",
 		name_es: "",
@@ -1995,7 +1995,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	WhitlandSinkhole: {
+	whitland: {
 		name_en: "Whitland Sinkhole",
 		name_de: "",
 		name_es: "",
@@ -2005,7 +2005,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	WiddsFolly: {
+	widd: {
 		name_en: "Widd's Folly",
 		name_de: "",
 		name_es: "",
@@ -2015,7 +2015,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	WikksGate: {
+	wikk: {
 		name_en: "Wikk's Gate",
 		name_de: "",
 		name_es: "",
@@ -2025,7 +2025,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	WildflameMonitor: {
+	wildflame: {
 		name_en: "Wildflame Monitor",
 		name_de: "",
 		name_es: "",
@@ -2035,7 +2035,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	WinterknellImpasse: {
+	winterknell: {
 		name_en: "Winterknell Impasse",
 		name_de: "",
 		name_es: "",
@@ -2045,7 +2045,7 @@ Trek: {
 		wp: "",
 		img: ""
 	},
-	WrelksSalon: {
+	wrelks: {
 		name_en: "Wrelk's Salon",
 		name_de: "",
 		name_es: "",

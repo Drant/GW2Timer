@@ -4541,7 +4541,7 @@ D = {
 		ru: "Йормаг Коготь",
 		zh: "卓瑪之爪"
 	},{
-		en: "The Frozen Maw",
+		en: "Frozen Maw",
 		de: "Svanir-Schamane",
 		es: "Chamán Svanir",
 		fr: "Chamane de Svanir",

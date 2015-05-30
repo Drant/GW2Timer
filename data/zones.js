@@ -517,9 +517,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Land", "Keep", "Tower"]
 },
 "30": {
-	pve: ["Forager Kryta", "Vista Orr", "Kessex", "Fractal 1-10"],
-	pvp: ["Reward", "Rank", "Ranger Ranger", "Elementalist Elementalist"],
-	wvw: ["Caravan", "Spender", "Camp", "Defender"]
+	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Kessex", "Megades Maguuma"],
+	pvp: ["Reward", "Capture", "Thief Necromancer", "Elementalist Ranger"],
+	wvw: ["Caravan", "Spender", "Defender", "Camp"]
 },
 "31": {
 	pve: ["Miner Shiverpeaks", "Forger", "Timberline", "Fractal 1-10"],
