@@ -927,203 +927,203 @@ Trek: {
 	},
 	heidi: {
 		name_en: "Heidi's Showpiece",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Heidis Meisterwerk",
+		name_es: "Pieza estrella de Heidi",
+		name_fr: "Œuvre d'Heidi",
 		coord: [13735, 10224],
 		path: [[13802,10212],[13772,10202],[13772,10238],[13742,10237],[13742,10210],[13734,10210],[13735,10224]],
-		wp: "",
-		img: ""
+		wp: "[&BKcAAAA=]",
+		img: "http://i.imgur.com/hEPd7Vc.png"
 	},
 	hermit: {
 		name_en: "Hermit's Roost",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Eremiten-Schlafplatz",
+		name_es: "Nido del Ermitaño",
+		name_fr: "Perchoir de l'Ermite",
 		coord: [31243, 16641],
 		path: [[30803,16573],[30832,16561],[30861,16555],[30892,16563],[30921,16576],[30951,16578],[30969,16572],[30948,16564],[30952,16552],[30963,16555],[30973,16527],[30982,16498],[31012,16506],[31042,16499],[31062,16477],[31063,16477],[31083,16477],[31093,16479],[31102,16487],[31116,16484],[31123,16484],[31127,16482],[31131,16473],[31134,16470],[31151,16459],[31177,16461],[31186,16490],[31194,16519],[31202,16548],[31211,16578],[31220,16607],[31238,16632],[31243,16641]],
-		wp: "",
-		img: ""
+		wp: "[&BNgAAAA=]",
+		img: "http://i.imgur.com/sALlUnS.png"
 	},
 	hidden: {
 		name_en: "Hidden Owl Distillery",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Versteckte Eulenbrennerei",
+		name_es: "Destilería Oculta de la Lechuza",
+		name_fr: "Distillerie de la Chouette cachée",
 		coord: [21657, 12947],
 		path: [[21479,12924],[21509,12921],[21532,12940],[21551,12966],[21573,12987],[21600,13003],[21630,12999],[21645,12973],[21661,12947],[21657,12947],[21657,12947]],
-		wp: "",
-		img: ""
+		wp: "[&BMEAAAA=]",
+		img: "http://i.imgur.com/Cg0TZC7.png"
 	},
 	holystone: {
 		name_en: "Holystone Sanctum",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Heiligstein-Refugium",
+		name_es: "Sagrario de Piedrasanta",
+		name_fr: "Sanctuaire piersacrée",
 		coord: [26801, 12113],
 		path: [[26722,12181],[26750,12167],[26777,12153],[26803,12138],[26801,12113],[26801,12113]],
-		wp: "",
-		img: ""
+		wp: "[&BMUDAAA=]",
+		img: "http://i.imgur.com/RZBWmZ3.png"
 	},
 	icewurm: {
 		name_en: "Icewurm Trench",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Eiswurmgraben",
+		name_es: "Trinchera de la Sierpe de Hielo",
+		name_fr: "Fosse de la guivre des glaces",
 		coord: [21321, 9040],
 		path: [[21233,9113],[21246,9086],[21273,9071],[21303,9065],[21320,9040],[21321,9040],[21321,9040]],
-		wp: "",
-		img: ""
+		wp: "[&BH8CAAA=]",
+		img: "http://i.imgur.com/YbZZq7j.png"
 	},
 	ideation: {
 		name_en: "Ideation Leap",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Gedankensprung",
+		name_es: "Salto Ideación",
+		name_fr: "Saut de la conceptualisation",
 		coord: [5968, 21513],
 		path: [[5934,21515],[5968,21513]],
-		wp: "",
-		img: ""
+		wp: "[&BLUEAAA=]",
+		img: "http://i.imgur.com/GahzUh5.png"
 	},
 	imphaunt: {
 		name_en: "Imphaunt Hallow",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Koboldspuk-Mulde",
+		name_es: "Ermita del Diablillo Encantado",
+		name_fr: "Sanctuaire hanté par un diablotin",
 		coord: [9420, 16529],
 		path: [[9485,16296],[9501,16322],[9516,16350],[9517,16381],[9518,16413],[9504,16440],[9483,16461],[9459,16482],[9437,16504],[9420,16529],[9420,16529],[9420,16529]],
-		wp: "",
-		img: ""
+		wp: "[&BEEBAAA=]",
+		img: "http://i.imgur.com/l0ntdRi.png"
 	},
 	irondock: {
 		name_en: "Irondock Viewpoint",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Eisendock-Aussichtspunkt",
+		name_es: "Puesto de Observación de Hierromuelle",
+		name_fr: "Point de vue de Dockfer",
 		coord: [28431, 14698],
 		path: [[28745,14435],[28725,14457],[28718,14488],[28703,14516],[28684,14540],[28664,14563],[28644,14586],[28623,14607],[28595,14621],[28566,14627],[28536,14635],[28510,14651],[28525,14679],[28540,14706],[28519,14728],[28488,14729],[28462,14713],[28435,14700],[28431,14698],[28431,14698]],
-		wp: "",
-		img: ""
+		wp: "[&BIkBAAA=]",
+		img: "http://i.imgur.com/FaEum4t.png"
 	},
 	isenfell: {
 		name_en: "Isenfell Wash",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Isenfell-Gerinne",
+		name_es: "Cauce de Isenfell",
+		name_fr: "Crique d'Isenfell",
 		coord: [19423, 11464],
 		path: [[18982,11654],[19006,11634],[19031,11614],[19056,11594],[19082,11577],[19106,11558],[19131,11541],[19157,11526],[19184,11511],[19211,11497],[19238,11483],[19267,11468],[19295,11456],[19323,11444],[19353,11437],[19382,11444],[19410,11456],[19423,11464],[19423,11464]],
-		wp: "",
-		img: ""
+		wp: "[&BLgAAAA=]",
+		img: "http://i.imgur.com/UtGJHUv.png"
 	},
 	isgarren: {
 		name_en: "Isgarren Viewpoint",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Isgarren-Aussichtspunkt",
+		name_es: "Puesto de Observación de Isgarren",
+		name_fr: "Point de vue d'Isgarren",
 		coord: [13375, 15824],
 		path: [[13375,15824],[13379,15793],[13361,15767],[13337,15749],[13341,15718],[13341,15686],[13336,15656],[13332,15625],[13330,15594],[13329,15563],[13330,15533],[13331,15502],[13322,15473],[13320,15443],[13332,15413],[13335,15383],[13333,15353],[13317,15328],[13288,15315],[13269,15290],[13257,15262],[13238,15238],[13230,15208],[13231,15196],[13231,15196]],
-		wp: "",
-		img: ""
+		wp: "[&BBEAAAA=]",
+		img: "http://i.imgur.com/eDw93uD.png"
 	},
 	jaguar: {
 		name_en: "Jaguar Pride Den",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Jaguarstolz-Bau",
+		name_es: "Cubil del Orgullo del Jaguar",
+		name_fr: "Fière tanière du jaguar",
 		coord: [8457, 17595],
 		path: [[8248,17954],[8260,17925],[8272,17897],[8285,17867],[8300,17841],[8320,17818],[8341,17796],[8356,17770],[8365,17740],[8367,17710],[8363,17680],[8356,17651],[8352,17620],[8362,17590],[8383,17568],[8411,17555],[8439,17568],[8459,17591],[8457,17595],[8457,17595]],
-		wp: "",
-		img: ""
+		wp: "[&BEcAAAA=]",
+		img: "http://i.imgur.com/EVB8dEr.png"
 	},
 	junker: {
 		name_en: "Junker's Apex",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Rümplers Gipfel",
+		name_es: "Cima de Basurero",
+		name_fr: "Sommet de l'Epave",
 		coord: [24475, 14682],
 		path: [[24475,14682],[24494,14672],[24511,14693],[24519,14685],[24500,14664],[24490,14675],[24490,14675]],
-		wp: "",
-		img: ""
+		wp: "[&BDcEAAA=]",
+		img: "http://i.imgur.com/KksCWMx.png"
 	},
 	kaldar: {
 		name_en: "Kaldar's Hot Seat",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Kaldars Schleudersitz",
+		name_es: "Asiento caliente de Kaldar",
+		name_fr: "La sellette de Kaldar",
 		coord: [21664, 14640],
 		path: [[21406,14538],[21378,14551],[21351,14568],[21341,14597],[21356,14623],[21380,14643],[21405,14661],[21432,14674],[21460,14685],[21490,14690],[21520,14683],[21547,14670],[21575,14657],[21604,14645],[21633,14635],[21663,14640],[21664,14640],[21664,14640]],
-		wp: "",
-		img: ""
+		wp: "[&BI0DAAA=]",
+		img: "http://i.imgur.com/EAB6hCC.png"
 	},
 	kari: {
 		name_en: "Kari's Hot Spot",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Karis Brennpunkt",
+		name_es: "Punto clave de Kari",
+		name_fr: "Foyer de Kari",
 		coord: [12811, 15688],
 		path: [[12760,15567],[12806,15669],[12814,15659],[12811,15688]],
-		wp: "",
-		img: ""
+		wp: "[&BBIAAAA=]",
+		img: "http://i.imgur.com/9w7v6w9.png"
 	},
 	kegbrawl: {
 		name_en: "Kegbrawl Watch",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Fasskeilerei-Wacht",
+		name_es: "Atalaya de la Pelea de Barricas",
+		name_fr: "Guet de la bagarre de barils",
 		coord: [19993, 13684],
 		path: [[20281,13956],[20311,13947],[20319,13918],[20295,13898],[20264,13902],[20235,13911],[20205,13914],[20174,13912],[20149,13896],[20140,13866],[20132,13837],[20122,13808],[20100,13787],[20073,13770],[20047,13755],[20021,13739],[19997,13719],[19992,13690],[19993,13684]],
-		wp: "",
-		img: ""
+		wp: "[&BJADAAA=]",
+		img: "http://i.imgur.com/8a2KN2C.png"
 	},
 	kevach: {
 		name_en: "Kevach's Strongroom",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Kevachs Stahlkammer",
+		name_es: "Cámara acorazada de Kevach",
+		name_fr: "Coffre-fort de Kevach",
 		coord: [22971, 12491],
 		path: [[22886,12330],[22916,12334],[22947,12339],[22974,12354],[22986,12383],[22997,12411],[23008,12439],[23018,12468],[22988,12471],[22970,12472],[22962,12483],[22971,12491]],
-		wp: "",
-		img: ""
+		wp: "[&BMEDAAA=]",
+		img: "http://i.imgur.com/oG63Ury.png"
 	},
 	lakebottom: {
 		name_en: "Lakebottom Underpass",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Seegrundtunnel",
+		name_es: "Paso Subterráneo del Lago",
+		name_fr: "Tunnel sous le lac",
 		coord: [11721, 12126],
 		path: [[11947,12233],[11897,12184],[11752,12128],[11719,12133],[11721,12126]],
-		wp: "",
-		img: ""
+		wp: "[&BPkAAAA=]",
+		img: "http://i.imgur.com/YVdgpCN.png"
 	},
 	lawen: {
 		name_en: "Lawen Grotto",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Lawen-Grotte",
+		name_es: "Gruta de Lawen",
+		name_fr: "Grotte de lawen",
 		coord: [14210, 14259],
 		path: [[13926,13822],[13960,13843],[14068,13901],[14162,14139],[14164,14182],[14210,14258]],
-		wp: "",
-		img: ""
+		wp: "[&BIsBAAA=]",
+		img: "http://i.imgur.com/rPJjbgs.png"
 	},
 	lightfoot: {
 		name_en: "Lightfoot Dock ",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Leichtfuß-Dock",
+		name_es: "Muelle Pasoligero",
+		name_fr: "Quai de Lestepied",
 		coord: [17526, 24336],
 		path: [[17526,24336],[17526,24305],[17519,24275],[17504,24248],[17488,24222],[17470,24196],[17441,24189],[17415,24207],[17393,24229],[17366,24244],[17336,24251],[17304,24250],[17274,24246],[17245,24237],[17223,24216],[17205,24191],[17192,24162],[17186,24131],[17191,24047],[17169,24025],[17161,24020]],
-		wp: "",
-		img: ""
+		wp: "[&BPACAAA=]",
+		img: "http://i.imgur.com/NO3BgxR.png"
 	},
 	lily: {
 		name_en: "Lily's Bivvy",
-		name_de: "",
-		name_es: "",
-		name_fr: "",
+		name_de: "Lilys Biwak",
+		name_es: "Carpa de Lily",
+		name_fr: "Bivouac du Lys",
 		coord: [24252, 8516],
 		path: [[24353,8781],[24371,8756],[24384,8727],[24391,8697],[24396,8667],[24392,8637],[24375,8612],[24344,8604],[24314,8603],[24284,8599],[24281,8564],[24292,8536],[24266,8520],[24252,8516]],
-		wp: "",
-		img: ""
+		wp: "[&BCACAAA=]",
+		img: "http://i.imgur.com/8BhtP5z.png"
 	},
 	lionguard: {
 		name_en: "Lionguard Larder",

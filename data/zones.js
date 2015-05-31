@@ -522,8 +522,8 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Spender", "Defender", "Camp"]
 },
 "31": {
-	pve: ["Miner Shiverpeaks", "Forger", "Timberline", "Fractal 1-10"],
-	pvp: ["Defender", "Reward", "Guardian Guardian", "Engineer Engineer"],
-	wvw: ["Spender", "Land", "Tower", "Defender"]
+	pve: ["Miner Maguuma", "Fractal", "Sparkfly", "FE Maguuma"],
+	pvp: ["Capture", "Reward", "Warrior Necromancer", "Thief Mesmer"],
+	wvw: ["Spender", "Land", "Defender", "Tower"]
 }
 };
