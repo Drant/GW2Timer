@@ -6440,6 +6440,7 @@ M = {
 	cZoomLevelFactor: 2,
 	ZoomLevelEnum:
 	{
+		Same: -1,
 		Min: 0,
 		Default: 3,
 		Space: 3,
@@ -7211,17 +7212,29 @@ M = {
 			M.movePin(pPin, pCoord);
 		}
 		
-		var zoom;
-		if (pZoom)
+		if (pZoom === undefined)
 		{
-			zoom = pZoom;
+			pZoom = M.ZoomLevelEnum.Ground;
 		}
-		else
+		if (pZoom === M.ZoomLevelEnum.Same)
 		{
-			zoom = M.ZoomLevelEnum.Ground;
+			pZoom = M.Map.getZoom();
 		}
-		M.Map.setView(M.convertGCtoLC(pCoord), zoom);
+		M.Map.setView(M.convertGCtoLC(pCoord), pZoom);
 		M.showCurrentZone(pCoord);
+	},
+	goToLatLng: function(pLatLng, pZoom)
+	{
+		if (pZoom === undefined)
+		{
+			pZoom = M.ZoomLevelEnum.Ground;
+		}
+		if (pZoom === M.ZoomLevelEnum.Same)
+		{
+			pZoom = M.Map.getZoom();
+		}
+		M.Map.setView(pLatLng, pZoom);
+		M.showCurrentZone(M.convertLCtoGC(pLatLng));
 	},
 	
 	/*
@@ -7561,12 +7574,12 @@ M = {
 	 * specified container.
 	 * @param string pContainer element ID.
 	 */
-	bindMapLinks: function(pContainer)
+	bindMapLinks: function(pContainer, pZoom)
 	{
 		$(pContainer + " dfn").each(function()
 		{
 			$(this).text("[" + $(this).text() + "]");
-			M.bindMapLinkBehavior($(this), M.PinProgram);
+			M.bindMapLinkBehavior($(this), M.PinProgram, pZoom);
 		});
 	},
 	
@@ -8788,6 +8801,7 @@ P = {
 			};
 
 			// Create the markers, each set pertains to one "mapJPList"
+			var jplink;
 			for (i in M.JPs)
 			{
 				jp = M.JPs[i];
@@ -8801,10 +8815,13 @@ P = {
 					+ U.getWikiLanguageLink(translatedname) + "' target='_blank'>[W]</a></cite>"
 					+ "<dd>" + jp.description + "</dd>"
 				);
-				M.bindMapLinkBehavior($("#mapJP_" + jp.id), null);
+				jplink = $("#mapJP_" + jp.id);
+				jplink.attr("title", "<div class='mapLoc'><img src='" + U.getImageHosted(jp.img) + "' /></div>");
+				M.bindMapLinkBehavior(jplink, null, M.ZoomLevelEnum.Same);
 			}
 			M.bindMapLinks(".mapJPList");
 			U.convertExternalLink(".mapJPList a");
+			I.qTip.init(".mapJPList dt");
 			
 			// Create markers for chests
 			var createChestMarker = function(pObject, pType)
@@ -8951,7 +8968,7 @@ P = {
 					}
 					else
 					{
-						$("#mapJP_" + pIndex).trigger("click");
+						M.goToLatLng(this.getLatLng());
 					}
 				});
 			})(i);
@@ -11571,6 +11588,7 @@ I = {
 	cPANE_MENU_HEIGHT: 48,
 	cPANE_BEAM_LEFT: -41,
 	cTOOLTIP_MAX_WIDTH: 360,
+	cTOOLTIP_MAX_OVERFLOW: 10,
 	cTOOLTIP_DEFAULT_OFFSET_X: -180,
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
 	cTOOLTIP_ALTERNATE_OFFSET_X: 24,
@@ -12807,7 +12825,11 @@ I = {
 					I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 				}
 				// Tooltip overflows panel left edge
-				if (($(window).width() - a.pageX) > (I.cPANEL_WIDTH / 2))
+				if ($("#qTip").width() >= I.cPANEL_WIDTH)
+				{
+					I.qTip.offsetX = ($(window).width() - a.pageX) - I.cPANEL_WIDTH - I.cTOOLTIP_MAX_OVERFLOW;
+				}
+				else if (($(window).width() - a.pageX) > (I.cPANEL_WIDTH / 2))
 				{
 					I.qTip.offsetX = I.cTOOLTIP_ALTERNATE_OFFSET_X;
 				}

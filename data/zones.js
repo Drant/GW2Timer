@@ -372,9 +372,9 @@ var GW2T_ZONE_DATA = {
  */
 var GW2T_DAILY_CALENDAR = {
 "1": {
-	pve: ["Forager Orr", "Forger", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Kills", "Capture", "Thief Thief", "Engineer Engineer"],
-	wvw: ["Guard", "Creature", "Keep", "Defender"]
+	pve: ["Forager Orr", "Forger", "Ashford", "Wurm Maguuma"],
+	pvp: ["Capture", "Defender", "Warrior Engineer", "Ranger Engineer"],
+	wvw: ["Land", "Creature", "Keep", "Defender"]
 },
 "2": {
 	pve: ["Miner Maguuma", "Fractal", "Harathi", "Fractal 1-10"],
