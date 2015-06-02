@@ -2073,7 +2073,8 @@ Challenge: {
 		name_es: "Quebranta Plagagua",
 		name_fr: "Brise-attaque des eaux du Tourment",
 		limit: "20:00",
-		coord: ""
+		coord: "",
+		wp: "[&BPsBAAA=]"
 	},
 	branded: {
 		name_en: "Branded for Termination",

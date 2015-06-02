@@ -377,9 +377,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Creature", "Keep", "Defender"]
 },
 "2": {
-	pve: ["Miner Maguuma", "Fractal", "Harathi", "Fractal 1-10"],
-	pvp: ["Rank", "Defender", "Guardian Guardian", "Engineer Engineer"],
-	wvw: ["Spender", "Ruins", "Camp", "Keep"]
+	pve: ["Lumberer Wastes", "Vista Orr", "Southsun", "Maw Shiverpeaks"],
+	pvp: ["Kills", "Capture", "Elementalist Mesmer", "Guardian Thief"],
+	wvw: ["Land", "Caravan", "Tower", "Keep"]
 },
 "3": {
 	pve: ["Lumberer Kryta", "Vista Kryta", "Metrica", "Fractal 1-10"],
