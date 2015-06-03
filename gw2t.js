@@ -11131,6 +11131,8 @@ K = {
 	 */
 	updateTimeFrame: function(pTime)
 	{
+		// Initialize today's chain shortcut object
+		C.updateChainToday();
 		// Check if server reset happened
 		O.checkResetTimestamp();
 		
@@ -11155,8 +11157,6 @@ K = {
 		
 		// Sort the chains list
 		C.sortChainsListHTML();
-		// Initialize today's chain shortcut object
-		C.updateChainToday();
 		
 		// Queue the highlighting of the current chain's events
 		C.CurrentChains.forEach(C.queueEventsHighlight);

@@ -2073,38 +2073,53 @@ Challenge: {
 		name_es: "Quebranta Plagagua",
 		name_fr: "Brise-attaque des eaux du Tourment",
 		limit: "20:00",
-		coord: "",
+		coord: [29547, 15931],
 		wp: "[&BPsBAAA=]"
 	},
 	branded: {
 		name_en: "Branded for Termination",
 		name_de: "Gebrandmarkt für das Ende",
 		name_es: "Marcado para la eliminación",
-		name_fr: "Stigmatisation et mise à mort"
+		name_fr: "Stigmatisation et mise à mort",
+		limit: "15:00",
+		coord: [28953, 16832],
+		wp: "[&BEsBAAA=]"
 	},
 	deep: {
 		name_en: "Deep Trouble",
 		name_de: "Großer Ärger",
 		name_es: "Con el agua hasta el cuello",
-		name_fr: "De gros problèmes"
+		name_fr: "De gros problèmes",
+		limit: "10:00",
+		coord: [20459, 22818],
+		wp: "[&BNICAAA=]"
 	},
 	save: {
 		name_en: "Save Our Supplies",
 		name_de: "Rettet unseren Nachschub",
 		name_es: "Guarda nuestros suministros",
-		name_fr: "Sauvetage de ravitaillement"
+		name_fr: "Sauvetage de ravitaillement",
+		limit: "11:40",
+		coord: [28253, 10800],
+		wp: "[&BOoBAAA=]"
 	},
 	scratch: {
 		name_en: "Scratch Sentry Defense",
 		name_de: "Verteidigung des Riss-Wachposten",
 		name_es: "Defensa vigía de la fisura",
-		name_fr: "Défendez la sentinelle de la Brèche"
+		name_fr: "Défendez la sentinelle de la Brèche",
+		limit: "0:00",
+		coord: [19967, 19324],
+		wp: "[&BEYEAAA=]"
 	},
 	southsun: {
 		name_en: "Southsun Crab Toss",
 		name_de: "Südlicht-Krabbenwerfen",
 		name_es: "Lanzamiento de cangrejos del Sol Austral",
-		name_fr: "Lancer de crabe à Sud-Soleil"
+		name_fr: "Lancer de crabe à Sud-Soleil",
+		limit: "5:00",
+		coord: [13272, 19427],
+		wp: "[&BNwGAAA=]"
 	}
 	}
 },
@@ -2113,20 +2128,70 @@ Rush: {
 	name_de: "Gilden-Sprint",
 	name_es: "Carrera de clan",
 	name_fr: "Course de guilde",
-	data: [
-	{
-		name_en: "",
+	url_en: "http://wiki.guildwars2.com/wiki/Guild_Rush",
+	url_de: "",
+	url_es: "",
+	url_fr: "",
+	data: {
+	bear: {
+		name_en: "Bear Lope",
+		name_de: "",
+		name_es: "",
+		name_fr: "",
+		coord: dddd,
+		path: dddd,
+		traps0: dddd,
+		traps1: dddd,
+		flags: dddd,
+		wp: ""
+	},
+	chicken: {
+		name_en: "Chicken Run",
+		name_de: "",
+		name_es: "",
+		name_fr: ""
+	},
+	crab: {
+		name_en: "Crab Scuttle",
+		name_de: "",
+		name_es: "",
+		name_fr: ""
+	},
+	devourer: {
+		name_en: "Devourer Burrow",
+		name_de: "",
+		name_es: "",
+		name_fr: ""
+	},
+	quaggan: {
+		name_en: "Quaggan Paddle",
+		name_de: "",
+		name_es: "",
+		name_fr: ""
+	},
+	spider: {
+		name_en: "Spider Scurry",
+		name_de: "",
+		name_es: "",
+		name_fr: ""
+	},
+	wolf: {
+		name_en: "Ghost Wolf Run",
 		name_de: "",
 		name_es: "",
 		name_fr: ""
 	}
-	]
+	}
 },
 Puzzle: {
 	name_en: "Guild Puzzle",
 	name_de: "Gilden-Rätsel",
 	name_es: "Prueba de clan",
 	name_fr: "Puzzle de guilde",
+	url_en: "",
+	url_de: "",
+	url_es: "",
+	url_fr: "",
 	data: [
 	{
 		name_en: "",

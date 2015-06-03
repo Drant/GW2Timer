@@ -382,9 +382,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Caravan", "Tower", "Keep"]
 },
 "3": {
-	pve: ["Lumberer Kryta", "Vista Kryta", "Metrica", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Thief Thief", "Warrior Warrior"],
-	wvw: ["Land", "Creature", "Defender", "Tower"]
+	pve: ["Miner Shiverpeaks", "Activity", "Kessex", "Fractal 1-10"],
+	pvp: ["Rank", "Defender", "Engineer Thief", "Ranger Engineer"],
+	wvw: ["Kills", "Creature", "Defender", "Tower"]
 },
 "4": {
 	pve: ["Miner Shiverpeaks", "Activity", "Kessex", "Fractal 1-10"],
