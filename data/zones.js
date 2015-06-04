@@ -387,9 +387,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Kills", "Creature", "Defender", "Tower"]
 },
 "4": {
-	pve: ["Miner Shiverpeaks", "Activity", "Kessex", "Fractal 1-10"],
-	pvp: ["Rank", "Kills", "Ranger Ranger", "Warrior Warrior"],
-	wvw: ["Ruins", "Guard", "Defender", "Camp"]
+	pve: ["Forager Wastes", "Forger", "Maelstrom", "Golem Maguuma"],
+	pvp: ["Rank", "Capture", "Warrior Guardian", "Ranger Engineer"],
+	wvw: ["Land", "Ruins", "Camp", "Defender"]
 },
 "5": {
 	pve: ["Forager Ascalon", "Vista Wastes", "Malchor", "Fractal 1-10"],
