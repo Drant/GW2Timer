@@ -90,7 +90,6 @@ O = {
 		bol_hideChecked: false,
 		bol_expandWB: true,
 		bol_collapseChains: true,
-		bol_useCountdown: true,
 		int_setClock: 0,
 		int_setDimming: 0,
 		int_setPredictor: 0,
@@ -646,6 +645,7 @@ O = {
 		if (O.Options.bol_alertAutosubscribe &&
 			O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription)
 		{
+			C.updateChainToday();
 			if (C.ChainToday)
 			{
 				time = $("#chnTime_" + C.ChainToday.nexus);
@@ -901,10 +901,6 @@ O = {
 				case 1: $("#paneClockBackground").css({opacity: 1}); break;
 				case 2: $("#paneClockBackground").css({opacity: 0}); break;
 			}
-		},
-		bol_useCountdown: function()
-		{
-			C.updateChainsTimeHTML();
 		},
 		bol_showChainPaths: function()
 		{
@@ -5722,69 +5718,59 @@ C = {
 	},
 	
 	/*
-	 * Updates a chain bar's time tooltip with a pre-sorted subschedule.
-	 * @pre scheduleKeys array is sorted and first element is the soonest.
-	 */
-	updateChainTimeTooltipHTML: function(pChain)
-	{
-		// Update the title tootlip with that chain's schedule
-		var minischedulestring = "";
-		var spacer;
-		var subscribetext = "<dfn>" + D.getSentence("subscribe") + "?</dfn><br />";
-		if (pChain.series === C.ChainSeriesEnum.DryTop)
-		{
-			subscribetext = "";
-		}
-		for (var ii in pChain.scheduleKeys)
-		{
-			spacer = (parseInt(ii) === 0) ? subscribetext : " <br /> ";
-			minischedulestring = minischedulestring + spacer
-				+ T.getTimeFormatted(
-				{
-					wantSeconds: false,
-					customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(
-						pChain.scheduleKeys[ii])
-				});
-		}
-		$("#chnTime_" + pChain.nexus).prop("title", minischedulestring);
-	},
-	
-	/*
 	 * Updates the time in the chain bars for all chains.
+	 * @pre scheduleKeys array is sorted and first element is the soonest.
 	 */
 	updateChainsTimeHTML: function()
 	{
 		var i;
 		var ithchain;
+		var countdown;
 		var time;
-		var wantletters = false;
+		
+		var subscribedefault = "<dfn>" + D.getString("click to") + "<br />" + D.getSentence("subscribe") + "</dfn><br />";
+		var subscribetext;
+		
 		for (i in C.ScheduledChains)
 		{
 			ithchain = C.ScheduledChains[i];
-			C.updateChainTimeTooltipHTML(ithchain);
+			// Update the title tootlip with that chain's schedule
+			var minischedulestring = "";
+			var spacer;
+			subscribetext = (ithchain.series === C.ChainSeriesEnum.DryTop) ? "" : subscribedefault;
+			for (var ii in ithchain.scheduleKeys)
+			{
+				spacer = (parseInt(ii) === 0) ? subscribetext : " <br /> ";
+				minischedulestring = minischedulestring + spacer
+					+ T.getTimeFormatted(
+					{
+						wantSeconds: false,
+						customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(
+							ithchain.scheduleKeys[ii])
+					});
+			}
+			$("#chnTime_" + ithchain.nexus).prop("title", minischedulestring);
+
 			// Don't change the active bars
 			if (C.isChainCurrent(ithchain))
 			{
 				continue;
 			}
-			
-			if (O.Options.bol_useCountdown)
+			countdown = T.getTimeFormatted(
 			{
-				time = T.getSecondsUntilChainStarts(ithchain);
-				wantletters = true;
-			}
-			else
+				wantLetters: true,
+				wantSeconds: false,
+				customTimeInSeconds: T.getSecondsUntilChainStarts(ithchain)
+			});
+			time = T.getTimeFormatted(
 			{
-				time = T.convertScheduleKeyToLocalSeconds(ithchain.scheduleKeys[0]);
-				wantletters = false;
-			}
+				wantLetters: false,
+				wantSeconds: false,
+				customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(ithchain.scheduleKeys[0])
+			});
 			
-			$("#chnTime_" + ithchain.nexus).text(T.getTimeFormatted(
-				{
-					wantLetters: wantletters,
-					wantSeconds: false,
-					customTimeInSeconds: time
-				})
+			$("#chnTime_" + ithchain.nexus).html(
+				countdown + "<br />" + "<sup>" + time + "</sup>"
 			);
 		}
 		
@@ -5954,7 +5940,7 @@ C = {
 			}
 		}
 		// Update chain time HTML
-		O.Enact.bol_useCountdown();
+		C.updateChainsTimeHTML();
 		
 		/*
 		 * Now that the chains are sorted, do cosmetic updates.
@@ -11013,10 +10999,7 @@ K = {
 		{
 			K.updateDigitalClockMinutely();
 			// Refresh the chain time countdown opted
-			if (O.Options.bol_useCountdown)
-			{
-				C.updateChainsTimeHTML();
-			}
+			C.updateChainsTimeHTML();
 			K.updateWaypointsClipboard();
 			
 			// Alert subscribed chain
@@ -11131,8 +11114,6 @@ K = {
 	 */
 	updateTimeFrame: function(pTime)
 	{
-		// Initialize today's chain shortcut object
-		C.updateChainToday();
 		// Check if server reset happened
 		O.checkResetTimestamp();
 		
@@ -11157,6 +11138,8 @@ K = {
 		
 		// Sort the chains list
 		C.sortChainsListHTML();
+		// Initialize today's chain shortcut object
+		C.updateChainToday();
 		
 		// Queue the highlighting of the current chain's events
 		C.CurrentChains.forEach(C.queueEventsHighlight);

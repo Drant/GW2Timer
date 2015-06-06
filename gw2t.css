@@ -1398,6 +1398,10 @@ textarea.jsCopyCode {
 	vertical-align: middle;
 	text-align: right;
 }
+.chnTitle time sup {
+	font-size: 14px;
+	opacity: 0.4;
+}
 
 .chnTitle aside {
 	display: table-cell;
