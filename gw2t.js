@@ -11784,6 +11784,11 @@ I = {
 				$(this).attr("src", $(this).attr("data-src"));
 			});
 		});
+		// Speaker icon click to preview audio
+		$("#optAlarmSpeaker").click(function()
+		{
+			D.speak(D.getWord("alarm"));
+		});
 		U.convertExternalLink(".linkExternal");
 		
 		// Cursors on these Leaflet elements cause slowdown in IE, only add them for other browsers
@@ -12716,7 +12721,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind the following tags with the title attribute for tooltip
-		I.qTip.init("#jsConsoleButtons img, a, ins, kbd, span, fieldset, label, input, button");
+		I.qTip.init("#jsConsoleButtons img, #optAlarmSpeaker, a, ins, kbd, span, fieldset, label, input, button");
 		$("#panelRight").hover(
 			function() { I.isMouseOnPanel = true; },
 			function() { I.isMouseOnPanel = false; }

@@ -122,6 +122,9 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	width: 88px;
 	font-size: 18px;
 }
+.chnTitle time sup {
+	font-size: 16px;
+}
 
 #plateChains header {
 	height: 48px;
