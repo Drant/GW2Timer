@@ -4248,8 +4248,8 @@ D = {
 
 		s_menuChains: {de: "Ketten", es: "Cadenas", fr: "Chaînes",
 			cs: "Řetězy", it: "Catene", pl: "Łańcuchy", pt: "Cadeias", ru: "Цепи", zh: "鏈"},
-		s_menuMap: {de: "Werkzeuge", es: "Útiles", fr: "Outils",
-			cs: "Nástroje", it: "Strumenti", pl: "Narzędzia", pt: "Ferramentas", ru: "Средства", zh: "工具"},
+		s_menuMap: {de: "Extras", es: "Herramientas", fr: "Outils",
+			cs: "Nástroje", it: "Strumenti", pl: "Narzędzia", pt: "Ferramentas", ru: "Инструменты", zh: "工具"},
 		s_menuWvW: {de: "WvW", es: "WvW", fr: "WvW",
 			cs: "WvW", it: "WvW", pl: "WvW", pt: "WvW", ru: "WvW", zh: "WvW"},
 		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance",

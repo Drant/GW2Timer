@@ -407,9 +407,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Ruins", "Tower", "Keep"]
 },
 "8": {
-	pve: ["Miner Kryta", "Vista Ascalon", "Frostgorge", "Fractal 1-10"],
-	pvp: ["Capture", "Kills", "Guardian Guardian", "Engineer Engineer"],
-	wvw: ["Land", "Caravan", "Defender", "Keep"]
+	pve: ["Lumberer Wastes", "Vista Orr", "Harathi", "SB Kryta"],
+	pvp: ["Defender", "Rank", "Warrior Engineer", "Ranger Necromancer"],
+	wvw: ["Guard", "Caravan", "Defender", "Keep"]
 },
 "9": {
 	pve: ["Lumberer Ascalon", "Forger", "Ashford", "Fractal 1-10"],
