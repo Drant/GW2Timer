@@ -417,9 +417,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Kills", "Tower", "Defender"]
 },
 "10": {
-	pve: ["Forager Kryta", "Fractal", "Brisban", "Fractal 1-10"],
-	pvp: ["Rank", "Kills", "Thief Thief", "Necromancer Necromancer"],
-	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
+	pve: ["Forager Kryta", "Activity", "Kessex", "Maw Shiverpeaks"],
+	pvp: ["Kills", "Rank", "Engineer Thief", "Elementalist Necromancer"],
+	wvw: ["Spender", "Caravan", "Tower", "Camp"]
 },
 "11": {
 	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", "Fractal 1-10"],
