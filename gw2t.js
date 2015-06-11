@@ -6016,6 +6016,8 @@ C = {
 		// Future chain title
 		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(1) + " .chnTitle h1")
 			.addClass("chnTitleFuture");
+	
+		I.updateScrollbar("#plateChains");
 	},
 	
 	/*

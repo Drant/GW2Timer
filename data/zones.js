@@ -422,9 +422,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Caravan", "Tower", "Camp"]
 },
 "11": {
-	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", "Fractal 1-10"],
-	pvp: ["Rank", "Reward", "Ranger Ranger", "Engineer Engineer"],
-	wvw: ["Caravan", "Guard", "Defender", "Tower"]
+	pve: ["Miner Maguuma", "Vista Kryta", "Snowden", "Fractal 1-10"],
+	pvp: ["Reward", "Capture", "Warrior Thief", "Guardian Ranger"],
+	wvw: ["Guard", "Kills", "Keep", "Defender"]
 },
 "12": {
 	pve: ["Miner Ascalon", "Forger", "Sparkfly", "Fractal 1-10"],
