@@ -2156,11 +2156,11 @@ Rush: {
 		name_de: "",
 		name_es: "",
 		name_fr: "",
-		coord: dddd,
-		path: dddd,
-		traps0: dddd,
-		traps1: dddd,
-		flags: dddd,
+		coord: "",
+		path: "",
+		traps0: "",
+		traps1: "",
+		flags: "",
 		wp: ""
 	},
 	chicken: {

@@ -39,6 +39,7 @@
 	U - URL management
 	X - Checklists
 	E - Economy
+	G - Guild
 	D - Dictionary for translations
 	C - Chains events
 	M - Map Leaflet
@@ -55,7 +56,7 @@ $(window).on("load", function() {
 /* =============================================================================
  *  Single letter objects serve as namespaces.
  * ========================================================================== */
-var O, U, X, E, D, C, M, P, W, T, K, I = {};
+var O, U, X, E, G, D, C, M, P, W, T, K, I = {};
 
 /* =============================================================================
  * @@Options for the user
@@ -4084,6 +4085,39 @@ E = {
 };
 
 /* =============================================================================
+ * @@Guild missions and management
+ * ========================================================================== */
+G = {
+	
+	/*
+	 * Create list of guild mission types, and mission checkboxes for each type.
+	 * First checkbox click generates the mission's data into the map.
+	 */
+	generateGuildUI: function()
+	{
+		/*
+		 * Setting this boolean will tell the clock ticker function to call the
+		 * HTML timer update function.
+		 */
+		T.isGuildTimerStarted = true;
+		
+		$.getScript(U.URL_DATA.Guild).done(function()
+		{
+			M.Guild = GW2T_GUILD_DATA;
+			var i;
+			var missiontype;
+			for (i in M.Guild)
+			{
+				missiontype = M.Guild[i];
+				$("#mapGuildButtons").append("<button title='<dfn>" + D.getObjectName(missiontype)
+					+ "</dfn>'><img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>");
+			}
+			I.qTip.init("#mapGuildButtons button");
+		});
+	},
+};
+
+/* =============================================================================
  * @@Dictionary to translate readable/listenable strings
  * ========================================================================== */
 D = {
@@ -6016,8 +6050,6 @@ C = {
 		// Future chain title
 		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(1) + " .chnTitle h1")
 			.addClass("chnTitleFuture");
-	
-		I.updateScrollbar("#plateChains");
 	},
 	
 	/*
@@ -6407,6 +6439,7 @@ M = {
 	JPs: {},
 	Chests: {},
 	Collectibles: {},
+	Guild: {},
 	ZoneCurrent: {},
 	currentIconSize: 32,
 	currentRingSize: 256,
@@ -7790,6 +7823,55 @@ P = {
 		});
 		M.Layer.Pin.addLayer(marker);
 		return marker;
+	},
+	
+	/*
+	 * Draws a path with each link of increasing or decreasing weight, to
+	 * simulate a worm crawling in a clockwise or counterclockwise direction.
+	 * @param array pCoords GW2 coordinates.
+	 * @param boolean pIsClockwise or not.
+	 * @returns LayerGroup path.
+	 * @pre Path has enough links to distinguish themselves.
+	 */
+	drawDirectedPath: function(pCoords, pIsClockwise, pColor)
+	{
+		var latlngs = M.convertGCtoLCMulti(pCoords);
+		var layergroup = new L.layerGroup();
+		var numofsegments = 8;
+		var iweight = (pIsClockwise) ? 0 : numofsegments-1;
+		pColor = pColor || "lime";
+		
+		for (var i = 0; i < latlngs.length - 1; i++)
+		{
+			layergroup.addLayer(L.polyline([latlngs[i], latlngs[i+1]], {color: pColor, weight: (iweight+2)*2}));
+			iweight = (pIsClockwise) ? (iweight+1) : (iweight-1);
+			if (pIsClockwise && iweight >= numofsegments)
+			{
+				iweight = 0;
+			}
+			else if (!pIsClockwise && iweight < 0)
+			{
+				iweight = numofsegments-1;
+			}
+		}
+		return layergroup;
+	},
+	
+	/*
+	 * Draws spots representing an interactable item in the game world.
+	 * @param array pCoords GW2 coordinates.
+	 * @returns LayerGroup circles.
+	 */
+	drawnSpawns: function(pCoords)
+	{
+		var latlngs = M.convertGCtoLCMulti(pCoords);
+		var layergroup = new L.layerGroup();
+		
+		for (var i in latlngs)
+		{
+			layergroup.addLayer(L.circleMarker(latlngs[i], {radius: 10, color: "lime", weight: 4}));
+		}
+		return layergroup;
 	},
 	
 	/*
@@ -9195,73 +9277,6 @@ P = {
 			X.clearChecklist(X.Collectibles[type]);
 			U.updateQueryString();
 		});
-	},
-	
-	/*
-	 * Create list of guild mission types, and mission checkboxes for each type.
-	 * First checkbox click generates the mission's data into the map.
-	 */
-	generateGuildUI: function()
-	{
-		/*
-		 * Setting this boolean will tell the clock ticker function to call the
-		 * HTML timer update function.
-		 */
-		T.isGuildTimerStarted = true;
-		
-		$.getScript(U.URL_DATA.Guild).done(function()
-		{
-			
-		});
-	},
-	
-	/*
-	 * Draws a path with each link of increasing or decreasing weight, to
-	 * simulate a worm crawling in a clockwise or counterclockwise direction.
-	 * @param array pCoords GW2 coordinates.
-	 * @param boolean pIsClockwise or not.
-	 * @returns LayerGroup path.
-	 * @pre Path has enough links to distinguish themselves.
-	 */
-	drawDirectedPath: function(pCoords, pIsClockwise, pColor)
-	{
-		var latlngs = M.convertGCtoLCMulti(pCoords);
-		var layergroup = new L.layerGroup();
-		var numofsegments = 8;
-		var iweight = (pIsClockwise) ? 0 : numofsegments-1;
-		pColor = pColor || "lime";
-		
-		for (var i = 0; i < latlngs.length - 1; i++)
-		{
-			layergroup.addLayer(L.polyline([latlngs[i], latlngs[i+1]], {color: pColor, weight: (iweight+2)*2}));
-			iweight = (pIsClockwise) ? (iweight+1) : (iweight-1);
-			if (pIsClockwise && iweight >= numofsegments)
-			{
-				iweight = 0;
-			}
-			else if (!pIsClockwise && iweight < 0)
-			{
-				iweight = numofsegments-1;
-			}
-		}
-		return layergroup;
-	},
-	
-	/*
-	 * Draws spots representing an interactable item in the game world.
-	 * @param array pCoords GW2 coordinates.
-	 * @returns LayerGroup circles.
-	 */
-	drawnSpawns: function(pCoords)
-	{
-		var latlngs = M.convertGCtoLCMulti(pCoords);
-		var layergroup = new L.layerGroup();
-		
-		for (var i in latlngs)
-		{
-			layergroup.addLayer(L.circleMarker(latlngs[i], {radius: 10, color: "lime", weight: 4}));
-		}
-		return layergroup;
 	}
 };
 
@@ -11054,6 +11069,12 @@ K = {
 			K.handMinute.style.stroke = "red";
 		}
 		
+		// Trigger other ticking functions
+		if (T.isGuildTimerStarted)
+		{
+			T.updateGuildTimer();
+		}
+		
 		// Loop this function, can use variable to halt it
 		K.TickerTimeout = setTimeout(K.tickFrequent, K.tickerFrequency);
 	},
@@ -12498,7 +12519,7 @@ I = {
 			// Create guild mission subsections
 			$("#headerMap_Guild").one("click", function()
 			{
-				P.generateGuildUI();
+				G.generateGuildUI();
 			});
 			
 			// Bind show map icons when clicked on header

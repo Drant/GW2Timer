@@ -427,9 +427,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Kills", "Keep", "Defender"]
 },
 "12": {
-	pve: ["Miner Ascalon", "Forger", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Capture", "Kills", "Guardian Guardian", "Elementalist Elementalist"],
-	wvw: ["Spender", "Kills", "Keep", "Defender"]
+	pve: ["Lumberer Maguuma", "Fractal", "Sparkfly", "SB Kryta"],
+	pvp: ["Rank", "Capture", "Engineer Mesmer", "Guardian Elementalist"],
+	wvw: ["Land", "Guard", "Defender", "Camp"]
 },
 "13": {
 	pve: ["Forager Orr", "Vista Kryta", "Snowden", "Fractal 1-10"],

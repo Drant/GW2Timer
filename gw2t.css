@@ -1873,6 +1873,21 @@ dt.mapJPListNameHover {
 	text-shadow: 0px 0px 2px black;
 }
 
+#mapGuildButtons {
+	text-align: center;
+}
+#mapGuildButtons button {
+	width: 48px;
+	margin-right: 8px;
+}
+#mapGuildButtons button img {
+	width: 32px; height: 32px;
+}
+
+#mapGuildInfluence input[type="text"] {
+	width: 120px;
+}
+
 /* Arithmetic Calculator
 ----------------------------------------------------------------------------- */
 #trdCalculation img {
@@ -2037,7 +2052,12 @@ button.trdSearch {
 input[type="text"].trdBuy, input[type="text"].trdSell {
 	color: #ffddcc;
 }
+input[type="text"].trdInput {
+	border-radius: 4px;
+	color: #ffeebb;
+}
 input[type="text"].trdOutput {
+	border-radius: 4px;
 	border: 1px dashed #555;
 	background: #333;
 }
