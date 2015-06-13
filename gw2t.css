@@ -695,22 +695,27 @@ input#mapCoordinatesName {
 #clkWaypoint3 {
 	top: 164px; left: 52px;
 }
-.clkWaypointClip {
+#clkWaypoints .cssWaypoint, #clkWaypoints .cssWaypoint.zeroclipboard-is-hover {
 	position: absolute;
 	width: 32px; height: 32px;
-	background: url("img/map/waypoint.png");
 	background-size: 32px 32px;
 }
-.clkWaypointClipDaily {
+.cssWaypoint {
+	width: 24px; height: 24px;
+	background: url("img/map/waypoint.png");
+	background-size: 24px 24px;
+}
+.clkWaypointDaily {
 	background: url("img/ui/daily.png");
 	background-size: 32px 32px;
 }
-.clkWaypointClip.zeroclipboard-is-hover {
+.cssWaypoint.zeroclipboard-is-hover {
 	border-radius: 16px;
 	box-shadow: 0px 0px 5px white;
 	background: url("img/ui/copy.png");
+	background-size: 24px 24px;
 }
-.clkWaypointClip.zeroclipboard-is-active {
+.cssWaypoint.zeroclipboard-is-active {
 	opacity: 0.5;
 }
 
@@ -1056,7 +1061,7 @@ header.jsSection sup {
 	margin-bottom: 8px;
 }
 
-.cntComposition button {
+.cntComposition button, .cssButton {
 	min-width: 24px; min-height: 24px;
 	margin: 0;
 	padding-left: 4px;
@@ -1067,6 +1072,7 @@ header.jsSection sup {
 	background: #333;
 	background: linear-gradient(to bottom, #444 0%, #333 100%);
 	color: white;
+	text-decoration: none;
 	text-shadow:
 		1px 1px 0px #000,
 		-1px -1px 0px #000,
@@ -1876,16 +1882,32 @@ dt.mapJPListNameHover {
 #mapGuildButtons {
 	text-align: center;
 }
+#mapGuildButtons div {
+	display: inline-block;
+	width: 50px;
+	margin-right: 8px;
+}
+#mapGuildBook a {
+	text-decoration: none;
+}
 #mapGuildButtons button {
 	width: 48px;
-	margin-right: 8px;
 }
 #mapGuildButtons button img {
 	width: 32px; height: 32px;
 }
 
 #mapGuildInfluence input[type="text"] {
-	width: 120px;
+	width: 100px;
+	padding-right: 4px;
+	margin-right: 8px;
+	text-align: right;
+}
+#mapGuildBook input[type="text"].gldWaypoint {
+	width: 90px;
+	margin-bottom: 4px;
+	margin-right: 8px;
+	color: #888;
 }
 
 /* Arithmetic Calculator

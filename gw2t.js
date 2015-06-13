@@ -39,11 +39,11 @@
 	U - URL management
 	X - Checklists
 	E - Economy
-	G - Guild
 	D - Dictionary for translations
 	C - Chains events
 	M - Map Leaflet
 	P - Populate map
+	G - Generated content
 	W - World vs World
 	T - Time utilities and schedule
 	K - Clock ticker
@@ -56,7 +56,7 @@ $(window).on("load", function() {
 /* =============================================================================
  *  Single letter objects serve as namespaces.
  * ========================================================================== */
-var O, U, X, E, G, D, C, M, P, W, T, K, I = {};
+var O, U, X, E, D, C, M, P, G, W, T, K, I = {};
 
 /* =============================================================================
  * @@Options for the user
@@ -668,8 +668,8 @@ O = {
 		// Login rewards and dailies calendar
 		if (I.isSectionLoaded_Daily)
 		{
-			P.shiftLoginTrack();
-			P.regenerateDailiesCalendar();
+			G.shiftLoginTrack();
+			G.regenerateDailiesCalendar();
 		}
 		
 		// Finally
@@ -947,7 +947,7 @@ O = {
 		},
 		int_shiftLogin: function()
 		{
-			P.shiftLoginTrack();
+			G.shiftLoginTrack();
 		},
 		bol_useSiteTag: function()
 		{
@@ -2686,7 +2686,10 @@ E = {
 		DOLLAR_PER_GEM: 1.25,
 		
 		GEM_SAMPLE: 100, // 100 gem
-		COIN_SAMPLE: 1000000 // 100 gold
+		COIN_SAMPLE: 1000000, // 100 gold
+		
+		INFLUENCE_PER_COPPER: 0.05,
+		COPPER_PER_INFLUENCE: 20
 	},
 	Rarity: // Corresponds to API names for rarity levels
 	{
@@ -4085,39 +4088,6 @@ E = {
 };
 
 /* =============================================================================
- * @@Guild missions and management
- * ========================================================================== */
-G = {
-	
-	/*
-	 * Create list of guild mission types, and mission checkboxes for each type.
-	 * First checkbox click generates the mission's data into the map.
-	 */
-	generateGuildUI: function()
-	{
-		/*
-		 * Setting this boolean will tell the clock ticker function to call the
-		 * HTML timer update function.
-		 */
-		T.isGuildTimerStarted = true;
-		
-		$.getScript(U.URL_DATA.Guild).done(function()
-		{
-			M.Guild = GW2T_GUILD_DATA;
-			var i;
-			var missiontype;
-			for (i in M.Guild)
-			{
-				missiontype = M.Guild[i];
-				$("#mapGuildButtons").append("<button title='<dfn>" + D.getObjectName(missiontype)
-					+ "</dfn>'><img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>");
-			}
-			I.qTip.init("#mapGuildButtons button");
-		});
-	},
-};
-
-/* =============================================================================
  * @@Dictionary to translate readable/listenable strings
  * ========================================================================== */
 D = {
@@ -4487,6 +4457,14 @@ D = {
 	getObjectName: function(pObject)
 	{
 		return pObject["name_" + D.getFullySupportedLanguage()];
+	},
+	getDefaultObjectName: function(pObject)
+	{
+		return pObject["name_" + O.OptionEnum.Language.Default];
+	},
+	getObjectURL: function(pObject)
+	{
+		return pObject["url_" + D.getFullySupportedLanguage()];
 	},
 	
 	/*
@@ -5164,8 +5142,7 @@ C = {
 				else
 				{
 					// Else get tomorrow's boss
-					C.ChainToday = null;
-					//C.updateChainToday(true);
+					C.updateChainToday(true);
 				}
 			}
 			else
@@ -5212,11 +5189,11 @@ C = {
 		{
 			if (C.isChainToday(C.CurrentChainsSD[i]))
 			{
-				(K["WpChain" + i]).addClass("clkWaypointClipDaily");
+				(K["WpChain" + i]).addClass("clkWaypointDaily");
 			}
 			else
 			{
-				(K["WpChain" + i]).removeClass("clkWaypointClipDaily");
+				(K["WpChain" + i]).removeClass("clkWaypointDaily");
 			}
 		}
 
@@ -7758,7 +7735,7 @@ M = {
 };
 
 /* =============================================================================
- * @@Populate map functions and Map page generation
+ * @@Populate map functions
  * ========================================================================== */
 P = {
 	
@@ -8506,7 +8483,13 @@ P = {
 			}
 		}
 		I.qTip.init(".leaflet-marker-icon");
-	},
+	}
+};
+
+/* =============================================================================
+ * @@Generate content for the sections on Map page
+ * ========================================================================== */
+G = {
 	
 	/*
 	 * Initializes Login Rewards track and Dailies Calendar.
@@ -8514,12 +8497,12 @@ P = {
 	generateAndInitializeDailies: function()
 	{
 		// Adjust the squares progress
-		P.shiftLoginTrack();
+		G.shiftLoginTrack();
 		// Bind click squares behavior
 		$("#lgnTrack ins").each(function()
 		{
 			$(this).click(function(){
-				P.shiftLoginValue(parseInt($(this).data("i")));
+				G.shiftLoginValue(parseInt($(this).data("i")));
 			}).mouseenter(function()
 			{
 				$("#lgnRecordHover").text("(" + (parseInt($(this).data("i")) + 1) + ")");
@@ -8533,7 +8516,7 @@ P = {
 		I.qTip.init("#lgnTrack ins");
 		
 		// Generate dailies calendar
-		P.regenerateDailiesCalendar();
+		G.regenerateDailiesCalendar();
 	},
 	shiftLoginTrack: function()
 	{
@@ -8581,7 +8564,7 @@ P = {
 		var DAYS_IN_TRACK = 28;
 		var newshift = T.wrapInteger((T.loginTrackOfficial - pCurrent), DAYS_IN_TRACK);
 		$("#opt_int_shiftLogin").val(newshift).trigger("change");
-		P.shiftLoginTrack();
+		G.shiftLoginTrack();
 	},
 	regenerateDailiesCalendar: function()
 	{
@@ -8596,7 +8579,7 @@ P = {
 		{
 			ithdate = T.addDaysToDate(new Date(), i);
 			dayofmonth = ithdate.getUTCDate();
-			P.insertDailyDay(T.DailyCalendar[dayofmonth], ithdate);
+			G.insertDailyDay(T.DailyCalendar[dayofmonth], ithdate);
 		}
 		
 		$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
@@ -8864,7 +8847,7 @@ P = {
 				}));
 				marker._icon.style.borderRadius = "50%";
 				marker._icon.style.opacity = "0.9";
-				P.styleJPMarkers(marker, pObject.difficulty);
+				G.styleJPMarkers(marker, pObject.difficulty);
 
 				// Add to array
 				M.Entity.JP[pObject.id] = marker;
@@ -8944,7 +8927,7 @@ P = {
 			});
 
 			I.qTip.init(".leaflet-marker-icon");
-			P.initializeJPChecklist();
+			G.initializeJPChecklist();
 		});
 	},
 	
@@ -8993,7 +8976,7 @@ P = {
 				if (checkboxstate === X.ChecklistEnum.Unchecked)
 				{
 					$(this).parent().prev().removeClass("mapJPListNameChecked");
-					P.styleJPMarkers(M.Entity.JP[checkboxindex], M.Entity.JP[checkboxindex].options.difficulty);
+					G.styleJPMarkers(M.Entity.JP[checkboxindex], M.Entity.JP[checkboxindex].options.difficulty);
 				}
 				else
 				{
@@ -9052,7 +9035,7 @@ P = {
 			{
 				$("#mapJPCheck_" + i).prop("checked", false)
 					.parent().prev().removeClass("mapJPListNameChecked");
-				P.styleJPMarkers(M.Entity.JP[i], M.Entity.JP[i].options.difficulty);
+				G.styleJPMarkers(M.Entity.JP[i], M.Entity.JP[i].options.difficulty);
 				
 				jpchecklist += "0";
 			}
@@ -9116,7 +9099,7 @@ P = {
 				$("#ned_" + i).one("click", function()
 				{
 					var type = U.getSubstringFromHTMLID($(this));
-					P.generateCollectibles(type);
+					G.generateCollectibles(type);
 					M.goToArguments(M.Collectibles[type].view);
 				});
 				
@@ -9174,7 +9157,7 @@ P = {
 			}));
 			pMarker._icon.style.borderRadius = "16px";
 			pMarker._icon.style.opacity = "0.9";
-			P.styleCollectibleMarker(pMarker, pState);
+			G.styleCollectibleMarker(pMarker, pState);
 			
 			// Bind marker behavior
 			pMarker.on("click", function(pEvent)
@@ -9183,7 +9166,7 @@ P = {
 				var key = this.options.needleKey;
 				var index = this.options.needleIndex;
 				var newstate = X.trackChecklistItem(X.Collectibles[type], index);
-				P.styleCollectibleMarker(this, newstate);
+				G.styleCollectibleMarker(this, newstate);
 				
 				// Update URL bar with list of numbers of checked markers
 				var pings = X.getCheckedIndexes(X.Collectibles[type]);
@@ -9272,10 +9255,107 @@ P = {
 			var thiscushion = X.Collectibles[type].cushion;
 			for (var thisi in thiscushion)
 			{
-				P.styleCollectibleMarker(thiscushion[thisi], X.ChecklistEnum.Unfound);
+				G.styleCollectibleMarker(thiscushion[thisi], X.ChecklistEnum.Unfound);
 			}
 			X.clearChecklist(X.Collectibles[type]);
 			U.updateQueryString();
+		});
+	},
+	
+	/*
+	 * Create list of guild mission types, and mission checkboxes for each type.
+	 * First checkbox click generates the mission's data into the map.
+	 */
+	generateGuildUI: function()
+	{
+		/*
+		 * Setting this boolean will tell the clock ticker function to call the
+		 * HTML timer update function.
+		 */
+		T.isGuildTimerStarted = true;
+		
+		$.getScript(U.URL_DATA.Guild).done(function()
+		{
+			M.Guild = GW2T_GUILD_DATA;
+			var i;
+			// Create buttons for each mission type, which generates content when first clicked
+			for (i in M.Guild)
+			{
+				var missiontype = M.Guild[i];
+				var translatedname = D.getObjectName(missiontype);
+				$("#mapGuildButtons").append("<div>"
+					+ "<button id='gldButton" + i + "' title='<dfn>" + translatedname
+					+ "</dfn>'><img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>"
+					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "' target='_blank'>Y</a>&nbsp;"
+					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "' target='_blank'>W</a>"
+					+ "</div>");
+				$("#mapGuildBook").append("<div class='mapGuildBook' id='mapGuildBook_" + i + "'></div>");
+			}
+			I.qTip.init("#mapGuildButtons button");
+			U.convertExternalLink("#mapGuildButtons a");
+			
+			/*
+			 * Bounty generation.
+			 */
+			$("#gldButtonBounty").one("click", function()
+			{
+				for (var i in M.Guild.Bounty.data)
+				{
+					var mission = M.Guild.Bounty.data[i];
+					var name = D.getDefaultObjectName(mission);
+					var translatedname = D.getObjectName(mission);
+					
+					$("#mapGuildBook_Bounty").append(
+						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
+						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+						+ "<dfn id='gldBounty_" + i + "' title='" + "'>" + translatedname + "</dfn> "
+						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
+						+ "<a href='" + U.getWikiLanguageLink(translatedname) + "' target='_blank'>[W]</a>"
+						+ "</div>"
+					);
+					$("#gldBounty_" + i).attr("title", "<div class='mapLoc'><img src='" + mission.img + "' /></div>");
+					
+					if (mission.paths !== undefined)
+					{
+						for (var ii in mission.paths)
+						{
+							M.Layer.GuildBountyPath.addLayer(P.drawDirectedPath(mission.paths[ii]));
+						}
+					}
+					if (mission.spawn !== undefined)
+					{
+						M.Layer.GuildBountyPath.addLayer(P.drawnSpawns(mission.spawn));
+					}
+				}
+				
+				U.convertExternalLink("#mapGuildBook_Bounty a");
+				I.qTip.init("#mapGuildBook_Bounty dfn");
+				// Initialize clipboard for each waypoint
+				$("#mapGuildBook_Bounty .cssWaypoint").each(function()
+				{
+					(new ZeroClipboard($(this)[0])).on("aftercopy", function(pEvent)
+					{
+						I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
+					});
+				});
+				//M.toggleLayer(M.Layer.GuildBountyPath);
+			});
+			
+			/*
+			 * Initialize influence-coin exchange.
+			 */
+			$("#mapGuildInfluence input").click(function()
+			{
+				$(this).select();
+			});
+			$("#gldInfluenceToCoinInput").on("input", function()
+			{
+				$("#gldInfluenceToCoinOutput").val(E.createCoinString($(this).val() * E.Exchange.COPPER_PER_INFLUENCE));
+			});
+			$("#gldCoinToInfluenceInput").on("input", function()
+			{
+				$("#gldCoinToInfluenceOutput").val(E.parseCoinString($(this).val()) * E.Exchange.INFLUENCE_PER_COPPER);
+			});
 		});
 	}
 };
@@ -10588,6 +10668,7 @@ K = {
 	wpClipboards: [],
 	lsClipboards: [],
 	cZeroClipboardDataAttribute: "data-clipboard-text", // Defined by ZeroClipboard
+	cZeroClipboardSuccessText: "Chat link copied to clipboard :)<br />",
 	TickerTimeout: {},
 	
 	/*
@@ -11441,7 +11522,7 @@ K = {
 			 */
 			K.wpClipboards[i].on("aftercopy", function(pEvent)
 			{
-				I.write("Chat link copied to clipboard :)<br />" + pEvent.data["text/plain"], 5);
+				I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
 			});
 		}
 		
@@ -11455,7 +11536,7 @@ K = {
 				);
 				K.lsClipboards[i].on("aftercopy", function(pEvent)
 				{
-					I.write("Chat link copied to clipboard :)<br />" + pEvent.data["text/plain"], 5);
+					I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
 				});
 			}
 		}
@@ -11594,6 +11675,7 @@ I = {
 	cPANE_MENU_HEIGHT: 48,
 	cPANE_BEAM_LEFT: -41,
 	cTOOLTIP_MAX_WIDTH: 360,
+	cTOOLTIP_OVERFLOW_WIDTH: 240,
 	cTOOLTIP_MAX_OVERFLOW: 10,
 	cTOOLTIP_DEFAULT_OFFSET_X: -180,
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
@@ -12480,18 +12562,18 @@ I = {
 			// Create daily markers
 			$("#headerMap_Daily").one("click", function()
 			{
-				P.generateAndInitializeDailies();
+				G.generateAndInitializeDailies();
 				I.isSectionLoaded_Daily = true;
 			});
 			// Create node markers and checkboxes
 			$("#headerMap_Resource").one("click", function()
 			{
-				P.generateAndInitializeResources();
+				G.generateAndInitializeResources();
 			});
 			// Create JP checklist
 			$("#headerMap_JP").one("click", function()
 			{
-				P.generateAndInitializeJPs();
+				G.generateAndInitializeJPs();
 			});
 			// Create custom checklists
 			$("#headerMap_Personal").one("click", function()
@@ -12514,7 +12596,7 @@ I = {
 			// Create collectible markers and checkboxes
 			$("#headerMap_Collectible").one("click", function()
 			{
-				P.generateCollectiblesUI();
+				G.generateCollectiblesUI();
 			});
 			// Create guild mission subsections
 			$("#headerMap_Guild").one("click", function()
@@ -12836,7 +12918,7 @@ I = {
 					I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 				}
 				// Tooltip overflows panel left edge
-				if ($("#qTip").width() >= I.cPANEL_WIDTH)
+				if ($("#qTip").width() >= I.cTOOLTIP_OVERFLOW_WIDTH)
 				{
 					I.qTip.offsetX = ($(window).width() - a.pageX) - I.cPANEL_WIDTH - I.cTOOLTIP_MAX_OVERFLOW;
 				}

@@ -432,9 +432,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Defender", "Camp"]
 },
 "13": {
-	pve: ["Forager Orr", "Vista Kryta", "Snowden", "Fractal 1-10"],
-	pvp: ["Defender", "Rank", "Thief Thief", "Necromancer Necromancer"],
-	wvw: ["Land", "Kills", "Tower", "Camp"]
+	pve: ["Forager Orr", "Forger", "Straits", "Fractal 11-20"],
+	pvp: ["Rank", "Defender", "Warrior Elementalist", "Engineer Necromancer"],
+	wvw: ["Creature", "Caravan", "Defender", "Tower"]
 },
 "14": {
 	pve: ["Miner Kryta", "Fractal", "Bloodtide", "Fractal 1-10"],
