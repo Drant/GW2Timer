@@ -6470,15 +6470,16 @@ M = {
 	Layer: {
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		Submap: new L.layerGroup(), // Screenshot of a GW2 map section that's not in API yet
-		Chest: new L.layerGroup(), // Open world basic chests
-		GuildBountyPath: new L.layerGroup()
+		Chest: new L.layerGroup() // Open world basic chests
 	},
 	LayerArray: {
 		Path: new Array(),
 		Resource: new Array(),
 		Resource_Metal: new Array(),
 		Resource_Plant: new Array(),
-		Resource_Wood: new Array()
+		Resource_Wood: new Array(),
+		GuildBounty: new Array(),
+		GuildRush: new Array()
 	},
 	/*
 	 * Entity is a group of markers created into the map only once and are never
@@ -6906,6 +6907,16 @@ M = {
 	},
 	
 	/*
+	 * Converts a zoom level where 0 is ground level to proper level.
+	 * @param int zoom level inverted.
+	 * @returns int zoom level proper.
+	 */
+	invertZoomLevel: function(pZoomLevel)
+	{
+		return M.ZoomLevelEnum.Max - T.wrapInteger(pZoomLevel, M.ZoomLevelEnum.Max);
+	},
+	
+	/*
 	 * Resizes mapping markers so they scale with the current zoom level.
 	 */
 	adjustZoomMapping: function()
@@ -7322,11 +7333,15 @@ M = {
 	 * coords[1] = y coordinate.
 	 * coords[2] = z coordinate (zoom level, lower value equals greater zoom-in).
 	 */
-	goToArguments: function(pArguments)
+	goToArguments: function(pArguments, pPin)
 	{
 		var i;
 		var coords = [];
 		var zone;
+		if (pPin === undefined)
+		{
+			pPin = M.PinPersonal;
+		}
 		if (pArguments)
 		{
 			coords = M.parseCoordinates(pArguments);
@@ -7334,15 +7349,16 @@ M = {
 			{
 				if (isFinite(coords[0]) && isFinite(coords[1]))
 				{
-					M.goToView(coords, M.PinPersonal);
+					M.goToView(coords, pPin);
 				}
 			}
 			else if (coords.length >= 3)
 			{
 				if (isFinite(coords[0]) && isFinite(coords[1]) && isFinite(coords[2]))
 				{
-					var zoomlevel = M.ZoomLevelEnum.Max - T.wrapInteger(coords[2], M.ZoomLevelEnum.Max);
-					M.goToView([coords[0], coords[1]], M.PinPersonal, zoomlevel);
+					// Zoom level 0 is ground level (opposite the enum)
+					var zoomlevel = M.invertZoomLevel(coords[2]);
+					M.goToView([coords[0], coords[1]], pPin, zoomlevel);
 				}
 			}
 			else
@@ -7471,7 +7487,7 @@ M = {
 	parseCoordinates: function(pString)
 	{
 		// The regex strips all characters except digits, commas, periods, and minus sign
-		var coord = pString.replace(/[^\d,-.]/g, "");
+		var coord = pString.toString().replace(/[^\d,-.]/g, "");
 		return coord.split(",");
 	},
 	
@@ -9284,12 +9300,12 @@ G = {
 				var missiontype = M.Guild[i];
 				var translatedname = D.getObjectName(missiontype);
 				$("#mapGuildButtons").append("<div>"
-					+ "<button id='gldButton" + i + "' title='<dfn>" + translatedname
+					+ "<button id='gldButton_" + i + "' title='<dfn>" + translatedname
 					+ "</dfn>'><img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>"
 					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "' target='_blank'>Y</a>&nbsp;"
 					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "' target='_blank'>W</a>"
 					+ "</div>");
-				$("#mapGuildBook").append("<div class='mapGuildBook' id='mapGuildBook_" + i + "'></div>");
+				$("#mapGuildBooks").append("<div class='gldBook' id='gldBook_" + i + "'></div>");
 			}
 			I.qTip.init("#mapGuildButtons button");
 			U.convertExternalLink("#mapGuildButtons a");
@@ -9297,48 +9313,68 @@ G = {
 			/*
 			 * Bounty generation.
 			 */
-			$("#gldButtonBounty").one("click", function()
+			$("#gldButton_Bounty").one("click", function()
 			{
+				var index = 0;
 				for (var i in M.Guild.Bounty.data)
 				{
 					var mission = M.Guild.Bounty.data[i];
 					var name = D.getDefaultObjectName(mission);
 					var translatedname = D.getObjectName(mission);
 					
-					$("#mapGuildBook_Bounty").append(
+					$("#gldBook_Bounty").append(
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
-						+ "<dfn id='gldBounty_" + i + "' title='" + "'>" + translatedname + "</dfn> "
+						+ "<dfn id='gldBounty_" + i + "' data-index='" + index + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
-						+ "<a href='" + U.getWikiLanguageLink(translatedname) + "' target='_blank'>[W]</a>"
+						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
 						+ "</div>"
 					);
-					$("#gldBounty_" + i).attr("title", "<div class='mapLoc'><img src='" + mission.img + "' /></div>");
 					
+					var layergroup = new L.layerGroup();
 					if (mission.paths !== undefined)
 					{
 						for (var ii in mission.paths)
 						{
-							M.Layer.GuildBountyPath.addLayer(P.drawDirectedPath(mission.paths[ii]));
+							layergroup.addLayer(P.drawDirectedPath(mission.paths[ii]));
 						}
 					}
 					if (mission.spawn !== undefined)
 					{
-						M.Layer.GuildBountyPath.addLayer(P.drawnSpawns(mission.spawn));
+						layergroup.addLayer(P.drawnSpawns(mission.spawn));
 					}
+					M.LayerArray.GuildBounty.push(layergroup);
+					
+					// Bind this bounty's behavior
+					var elm = $("#gldBounty_" + i);
+					elm.attr("title", "<div class='mapLoc'><img src='" + mission.img + "' /></div>")
+						.click(function()
+					{
+						I.toggleHighlight($(this));
+						M.toggleLayer(M.LayerArray.GuildBounty[$(this).data("index")]);
+					});
+					M.bindMapLinkBehavior(elm, null, M.invertZoomLevel(mission.coord[2]));
+					
+					index++;
 				}
 				
-				U.convertExternalLink("#mapGuildBook_Bounty a");
-				I.qTip.init("#mapGuildBook_Bounty dfn");
+				U.convertExternalLink("#gldBook_Bounty a");
+				I.qTip.init("#gldBook_Bounty dfn");
 				// Initialize clipboard for each waypoint
-				$("#mapGuildBook_Bounty .cssWaypoint").each(function()
+				$("#gldBook_Bounty .cssWaypoint").each(function()
 				{
 					(new ZeroClipboard($(this)[0])).on("aftercopy", function(pEvent)
 					{
 						I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
 					});
 				});
-				//M.toggleLayer(M.Layer.GuildBountyPath);
+			});
+			
+			// Show the guild mission type when clicked on button
+			$("#gldButton_Bounty, #gldButton_Trek, #gldButton_Challenge, #gldButton_Rush, #gldButton_Puzzle").click(function()
+			{
+				$("#gldBook_Bounty, #gldBook_Trek, #gldBook_Challenge, #gldBook_Rush, #gldBook_Puzzle").hide();
+				$("#gldBook_" + U.getSubstringFromHTMLID($(this))).show();
 			});
 			
 			/*
@@ -12102,6 +12138,22 @@ I = {
 		{
 			r = pRequests[i];
 			$(r.s).animate(r.p, {duration: pSpeed, queue: false});
+		}
+	},
+	
+	/*
+	 * Toggles a generic highlight class to an element.
+	 * @param jqobject pElement to toggle.
+	 */
+	toggleHighlight: function(pElement)
+	{
+		if (pElement.hasClass("cssHighlight"))
+		{
+			pElement.removeClass("cssHighlight");
+		}
+		else
+		{
+			pElement.addClass("cssHighlight");
 		}
 	},
 	

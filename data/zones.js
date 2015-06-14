@@ -437,9 +437,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Caravan", "Defender", "Tower"]
 },
 "14": {
-	pve: ["Miner Kryta", "Fractal", "Bloodtide", "Fractal 1-10"],
-	pvp: ["Kills", "Reward", "Mesmer Mesmer", "Elementalist Elementalist"],
-	wvw: ["Guard", "Ruins", "Tower", "Defender"]
+	pve: ["Miner Orr", "Vista Ascalon", "Brisban", "Maw Shiverpeaks"],
+	pvp: ["Reward", "Defender", "Thief Elementalist", "Guardian Mesmer"],
+	wvw: ["Ruins", "Guard", "Keep", "Defender"]
 },
 "15": {
 	pve: ["Lumberer Maguuma", "Vista Maguuma", "Kessex", "Fractal 1-10"],

@@ -4,13 +4,13 @@
 	Measurements: minimum window size is 360x580, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2014.11.13 modified - 2014.04.18 created
+	Version: 2015.06.12 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
 	extracted using https://github.com/kytulendu/Gw2Browser
-	PNGs are compressed using http://www.smushit.com
-	Gradient generated with colorzilla.com/gradient-editor
+	PNGs are compressed using http://pnggauntlet.com
+	Gradient generated with http://colorzilla.com/gradient-editor
 	Design influenced by http://gw2stuff.com by WintrySnowman
 
 	CONVENTIONS:
@@ -1080,10 +1080,10 @@ header.jsSection sup {
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
 }
-.cntComposition button:hover {
+.cntComposition button:hover, .cssButton:hover {
 	border: 1px solid red;
 }
-.cntComposition button:active {
+.cntComposition button:active, .cssButton:active {
 	background: #444;
 	background: linear-gradient(to bottom, #333 0%, #444 100%);
 }
@@ -1192,9 +1192,9 @@ header.cntHeader {
 	display: inline-block;
 	width: 64px; height: 64px;
 	background: url("img/ui/favicon.png");
-	-webkit-animation:spin 1s linear infinite;
-    -moz-animation:spin 1s linear infinite;
-    animation:spin 1s linear infinite;
+	-webkit-animation: spin 1s linear infinite;
+    -moz-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
 }
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
@@ -1406,7 +1406,7 @@ textarea.jsCopyCode {
 }
 .chnTitle time sup {
 	font-size: 14px;
-	opacity: 0.4;
+	opacity: 0.5;
 }
 
 .chnTitle aside {
@@ -1772,7 +1772,7 @@ button.btnToggle {
 .dly_wvw_tower { background-position: -1536px 0; }
 
 /* JP */
-dt.mapJPListNameChecked {
+dt.mapJPListNameChecked, dfn.cssHighlight {
 	color: #ffff00;
 }
 dt.mapJPListNameHover {
@@ -1887,7 +1887,7 @@ dt.mapJPListNameHover {
 	width: 50px;
 	margin-right: 8px;
 }
-#mapGuildBook a {
+#mapGuildBooks a {
 	text-decoration: none;
 }
 #mapGuildButtons button {
@@ -1903,7 +1903,7 @@ dt.mapJPListNameHover {
 	margin-right: 8px;
 	text-align: right;
 }
-#mapGuildBook input[type="text"].gldWaypoint {
+#mapGuildBooks input[type="text"].gldWaypoint {
 	width: 90px;
 	margin-bottom: 4px;
 	margin-right: 8px;
