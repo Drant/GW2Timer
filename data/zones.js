@@ -442,9 +442,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Guard", "Keep", "Defender"]
 },
 "15": {
-	pve: ["Lumberer Maguuma", "Vista Maguuma", "Kessex", "Fractal 1-10"],
-	pvp: ["Rank", "Capture", "Guardian Guardian", "Elementalist Elementalist"],
-	wvw: ["Creature", "Caravan", "Camp", "Tower"]
+	pve: ["Lumberer Ascalon", "Fractal", "Bloodtide", "Fractal 1-10"],
+	pvp: ["Kills", "Defender", "Warrior Mesmer", "Ranger Necromancer"],
+	wvw: ["Kills", "Caravan", "Camp", "Defender"]
 },
 "16": {
 	pve: ["Forager Maguuma", "Forger", "Queensdale", "Fractal 1-10"],
