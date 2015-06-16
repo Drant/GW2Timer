@@ -447,9 +447,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Kills", "Caravan", "Camp", "Defender"]
 },
 "16": {
-	pve: ["Forager Maguuma", "Forger", "Queensdale", "Fractal 1-10"],
-	pvp: ["Defender", "Capture", "Thief Thief", "Engineer Engineer"],
-	wvw: ["Land", "Ruins", "Keep", "Camp"]
+	pve: ["Forager Kryta", "Vista Shiverpeaks", "Dredgehaunt", "Wurm Maguuma"],
+	pvp: ["Rank", "Capture", "Thief Necromancer", "Elementalist Ranger"],
+	wvw: ["Kills", "Caravan", "Tower", "Camp"]
 },
 "17": {
 	pve: ["Lumberer Kryta", "Vista Ascalon", "Silverwastes", "Fractal 1-10"],
