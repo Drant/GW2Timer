@@ -452,9 +452,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Kills", "Caravan", "Tower", "Camp"]
 },
 "17": {
-	pve: ["Lumberer Kryta", "Vista Ascalon", "Silverwastes", "Fractal 1-10"],
-	pvp: ["Capture", "Rank", "Guardian Guardian", "Necromancer Necromancer"],
-	wvw: ["Spender", "Land", "Tower", "Defender"]
+	pve: ["Miner Orr", "Vista Maguuma", "Wayfarer", "Megades Maguuma"],
+	pvp: ["Capture", "Kills", "Warrior Necromancer", "Thief Mesmer"],
+	wvw: ["Caravan", "Land", "Camp", "Defender"]
 },
 "18": {
 	pve: ["Miner Ascalon", "Vista Kryta", "Marches", "Fractal 1-10"],
