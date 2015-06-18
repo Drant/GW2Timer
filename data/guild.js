@@ -8,8 +8,8 @@ Bounty: {
 	url_de: "http://wiki-de.guildwars2.com/wiki/Gilden-Kopfgeldjagd",
 	url_es: "http://www.guildwars2-spain.com/manuales/627-guía-de-misión-de-clan-cazarrecompensas",
 	url_fr: "http://wiki-fr.guildwars2.com/wiki/Chasseur_de_prime_en_guilde",
-	data: {
-	OneOneFourOne: {
+	data: [
+	{
 		name_en: "Prisoner 1141",
 		name_de: "Gefangene 1141",
 		name_es: "Prisionera 1141",
@@ -22,7 +22,7 @@ Bounty: {
 		wp: "[&BOkBAAA=]",
 		img: "http://i.imgur.com/KbjkO94.png"
 	},
-	TwoMult: {
+	{
 		name_en: "2-MULT",
 		name_de: "2-MULT",
 		name_es: "D-SORDEN",
@@ -34,7 +34,7 @@ Bounty: {
 		wp: "[&BEwCAAA=]",
 		img: "http://i.imgur.com/KDs0PPn.png"
 	},
-	Ander: {
+	{
 		name_en: "Ander &quot;Wildman&quot; Westward",
 		name_de: "Ander &quot;Wildmann&quot; Westward",
 		name_es: "Ander &quot;Salvaje&quot; Guardaoeste",
@@ -44,7 +44,7 @@ Bounty: {
 		wp: "[&BNgGAAA=]",
 		img: "http://i.imgur.com/bHyewQC.png"
 	},
-	Arderus: {
+	{
 		name_en: "Shaman Arderus",
 		name_de: "Schamane Arderus",
 		name_es: "Chamán Arderus",
@@ -56,7 +56,7 @@ Bounty: {
 		wp: "[&BCYCAAA=]",
 		img: "http://i.imgur.com/PiW3ayT.png"
 	},
-	Brekkabek: {
+	{
 		name_en: "Brekkabek",
 		name_de: "Brekkabek",
 		name_es: "Brekkabek",
@@ -68,7 +68,7 @@ Bounty: {
 		wp: "[&BKcAAAA=]",
 		img: "http://i.imgur.com/y5uhWNe.png"
 	},
-	Brooke: {
+	{
 		name_en: "&quot;Deputy&quot; Brooke",
 		name_de: "&quot;Unterkonstabler&quot; Brooke",
 		name_es: "&quot;Subalguacil&quot; Brooke",
@@ -80,7 +80,7 @@ Bounty: {
 		wp: "[&BLkAAAA=]",
 		img: "http://i.imgur.com/2RRgMRc.png"
 	},
-	Bwikki: {
+	{
 		name_en: "Bookworm Bwikki",
 		name_de: "Bücherwurm Bwikki",
 		name_es: "Bwikki la Devoralibros",
@@ -92,7 +92,7 @@ Bounty: {
 		wp: "[&BFMGAAA=]",
 		img: "http://i.imgur.com/fAvnYAt.png"
 	},
-	Felix: {
+	{
 		name_en: "Short-Fuse Felix",
 		name_de: "Jähzorniger Felix",
 		name_es: "Félix el Malas pulgas",
@@ -104,7 +104,7 @@ Bounty: {
 		wp: "[&BJoDAAA=]",
 		img: "http://i.imgur.com/8jB4p2D.png"
 	},
-	Komali: {
+	{
 		name_en: "Half-Baked Komali",
 		name_de: "Halbgare Komali",
 		name_es: "Komali la Imprudente",
@@ -116,7 +116,7 @@ Bounty: {
 		wp: "[&BMoCAAA=]",
 		img: "http://i.imgur.com/bAmOycI.png"
 	},
-	Mayana: {
+	{
 		name_en: "Big Mayana",
 		name_de: "Großer Mayana",
 		name_es: "Gran Mayana",
@@ -126,7 +126,7 @@ Bounty: {
 		wp: "[&BMgBAAA=]",
 		img: "http://i.imgur.com/gZsjD0O.png"
 	},
-	Michiele: {
+	{
 		name_en: "Crusader Michiele",
 		name_de: "Reckin Michiele",
 		name_es: "Cruzada Michiele",
@@ -138,7 +138,7 @@ Bounty: {
 		wp: "[&BMwBAAA=]",
 		img: "http://i.imgur.com/ZQJpOig.png"
 	},
-	Poobadoo: {
+	{
 		name_en: "Poobadoo",
 		name_de: "Puubaduu",
 		name_es: "Poobadoo",
@@ -150,7 +150,7 @@ Bounty: {
 		wp: "[&BAoAAAA=]",
 		img: "http://i.imgur.com/5HvUj4a.png"
 	},
-	Sotzz: {
+	{
 		name_en: "Sotzz the Scallywag",
 		name_de: "Sotzz das Schlitzohr",
 		name_es: "Sotzz el Canalla",
@@ -160,7 +160,7 @@ Bounty: {
 		wp: "[&BJEBAAA=]",
 		img: "http://i.imgur.com/AN17EY6.png"
 	},
-	Tarban: {
+	{
 		name_en: "Diplomat Tarban",
 		name_de: "Diplomat Tarban",
 		name_es: "Diplomático Tarban",
@@ -172,7 +172,7 @@ Bounty: {
 		wp: "[&BFwAAAA=]",
 		img: "http://i.imgur.com/RZ9mUoC.png"
 	},
-	Teesa: {
+	{
 		name_en: "Devious Teesa",
 		name_de: "Verschlagene Teesa",
 		name_es: "Teesa la Astuta",
@@ -184,7 +184,7 @@ Bounty: {
 		wp: "[&BIECAAA=]",
 		img: "http://i.imgur.com/C2kEKsW.png"
 	},
-	Trekksa: {
+	{
 		name_en: "Tricksy Trekksa",
 		name_de: "Tricksende Trekksa",
 		name_es: "Trekksa la Diablesa",
@@ -197,7 +197,7 @@ Bounty: {
 		wp: "[&BAUCAAA=]",
 		img: "http://i.imgur.com/GrisAwQ.png"
 	},
-	Trillia: {
+	{
 		name_en: "Trillia Midwell",
 		name_de: "Trillia Midwell",
 		name_es: "Trillia Midwell",
@@ -209,7 +209,7 @@ Bounty: {
 		wp: "[&BNMAAAA=]",
 		img: "http://i.imgur.com/pwPhLhr.png"
 	},
-	Yanonka: {
+	{
 		name_en: "Yanonka the Rat-Wrangler",
 		name_de: "Yanonka die Rattenhüterin",
 		name_es: "Yanonka la mayoral de ratas",
@@ -219,7 +219,7 @@ Bounty: {
 		wp: "[&BE8BAAA=]",
 		img: "http://i.imgur.com/IJMD23U.png"
 	}
-	}
+	]
 },
 Trek: {
 	name_en: "Guild Trek",
@@ -230,8 +230,8 @@ Trek: {
 	url_de: "https://wiki-de.guildwars2.com/wiki/GW2Wiki:Projekte/Gilden-Missionen",
 	url_es: "http://dgea.es/inicio/index.php/component/content/article?id=203:expedicion-de-clan",
 	url_fr: "http://gw2-menestrels.com/guide-des-randonnees/",
-	data: {
-	altar: {
+	data: [
+	{
 		name_en: "Altar Brook Lair",
 		name_de: "Altarbachhöhle",
 		name_es: "Guarida Valle del Altar",
@@ -241,7 +241,7 @@ Trek: {
 		wp: "[&BPIAAAA=]",
 		img: "http://i.imgur.com/Tfj1dUQ.png"
 	},
-	anthem: {
+	{
 		name_en: "Anthem's Hold",
 		name_de: "Hymnenfeste",
 		name_es: "Himno Sostenido",
@@ -251,7 +251,7 @@ Trek: {
 		wp: "[&BOQGAAA=]",
 		img: "http://i.imgur.com/FxE8fvi.png"
 	},
-	anya: {
+	{
 		name_en: "Anya's Patch",
 		name_de: "Anyas Beet",
 		name_es: "Parcela de Anya",
@@ -261,7 +261,7 @@ Trek: {
 		wp: "[&BN4AAAA=]",
 		img: "http://i.imgur.com/zJwX28K.png"
 	},
-	arctodus: {
+	{
 		name_en: "Arctodus Haunt",
 		name_de: "Arctodus-Schlupfwinkel",
 		name_es: "Encanto de Arctodus",
@@ -271,7 +271,7 @@ Trek: {
 		wp: "[&BH4BAAA=]",
 		img: "http://i.imgur.com/VTsBBQe.png"
 	},
-	backroot: {
+	{
 		name_en: "Backroot Fountain",
 		name_de: "Hinterwurzel-Brunnen",
 		name_es: "Fuente Anteraiz",
@@ -279,9 +279,9 @@ Trek: {
 		coord: [10662, 21217],
 		path: [[10662,21216],[10636,21231],[10608,21244],[10581,21259],[10552,21271],[10531,21247],[10539,21218],[10560,21196],[10580,21173],[10601,21151],[10607,21121],[10581,21103],[10550,21108],[10520,21099],[10494,21084],[10468,21068]],
 		wp: "[&BLsEAAA=]",
-		img: "http://i.imgur.com/UsIOurQ.png"
+		img: "http://i.imgur.com/jBENyJc.png"
 	},
-	badjelly: {
+	{
 		name_en: "Badjelly Kelpbed",
 		name_de: "Fiesquallen-Tangbeet",
 		name_es: "Lecho de las Medusas Funestas",
@@ -291,7 +291,7 @@ Trek: {
 		wp: "[&BLwAAAA=]",
 		img: "http://i.imgur.com/NznTK0O.png"
 	},
-	bandit: {
+	{
 		name_en: "Bandit's Cabbage Patch",
 		name_de: "Banditen-Kohlfeld",
 		name_es: "Parcela de Repollos del Bandido",
@@ -301,7 +301,7 @@ Trek: {
 		wp: "[&BKgAAAA=]",
 		img: "http://i.imgur.com/AvAwuIF.png"
 	},
-	beetlestone: {
+	{
 		name_en: "Beetlestone Mirador",
 		name_de: "Beetlestone-Belvedere",
 		name_es: "Miradero Piedramazo",
@@ -311,7 +311,7 @@ Trek: {
 		wp: "[&BPoAAAA=]",
 		img: "http://i.imgur.com/3abjWYN.png"
 	},
-	blackblade: {
+	{
 		name_en: "Blackblade Butte",
 		name_de: "Schwarzklingen-Kuppe",
 		name_es: "Cerrillo de Filonegro",
@@ -321,7 +321,7 @@ Trek: {
 		wp: "[&BNwAAAA=]",
 		img: "http://i.imgur.com/IGxcd3d.png"
 	},
-	blacklion: {
+	{
 		name_en: "Black Lion Root Cellar",
 		name_de: "Schwarzlöwen Wurzelkeller",
 		name_es: "Bodega del León Negro",
@@ -331,7 +331,7 @@ Trek: {
 		wp: "[&BLsEAAA=]",
 		img: "http://i.imgur.com/4sukknH.png"
 	},
-	blasted: {
+	{
 		name_en: "Blasted Sepulchre",
 		name_de: "Verdammnis-Grabkammer",
 		name_es: "Sepulcro Maldito",
@@ -341,7 +341,7 @@ Trek: {
 		wp: "[&BNoAAAA=]",
 		img: "http://i.imgur.com/8z7Xq5r.png"
 	},
-	blood: {
+	{
 		name_en: "Blood Ooze Gallery",
 		name_de: "Blutschleim-Galerie",
 		name_es: "Galería de Légamo de sangre",
@@ -351,7 +351,7 @@ Trek: {
 		wp: "[&BK0BAAA=]",
 		img: "http://i.imgur.com/zdp2cob.png"
 	},
-	bluups: {
+	{
 		name_en: "Bluup's Comeuppance",
 		name_de: "Bluups Strafe",
 		name_es: "Merecido de Blupp",
@@ -361,7 +361,7 @@ Trek: {
 		wp: "[&BLgEAAA=]",
 		img: "http://i.imgur.com/BfmjMic.png"
 	},
-	brandstrike: {
+	{
 		name_en: "Brandstrike Digs",
 		name_de: "Brandschlag-Grube",
 		name_es: "Excavación de Golpe Marcado",
@@ -371,7 +371,7 @@ Trek: {
 		wp: "[&BEsBAAA=]",
 		img: "http://i.imgur.com/XTZKZmR.png"
 	},
-	briarthorn: {
+	{
 		name_en: "Briarthorn Barrier",
 		name_de: "Wilddorn-Barriere",
 		name_es: "Barrera de Espinazarza",
@@ -381,7 +381,7 @@ Trek: {
 		wp: "[&BDUBAAA=]",
 		img: "http://i.imgur.com/X2dkQl0.png"
 	},
-	broken: {
+	{
 		name_en: "Broken Falls Courtyard",
 		name_de: "Schwundfallhof",
 		name_es: "Patio de las Cataratas Rotas",
@@ -391,7 +391,7 @@ Trek: {
 		wp: "[&BKwDAAA=]",
 		img: "http://i.imgur.com/xDH0guc.png"
 	},
-	broodmother: {
+	{
 		name_en: "Broodmother Falls",
 		name_de: "Brutmutter-Fälle",
 		name_es: "Cataratas de la Progenitora",
@@ -401,7 +401,7 @@ Trek: {
 		wp: "[&BIQCAAA=]",
 		img: "http://i.imgur.com/sc72zfv.png"
 	},
-	brother: {
+	{
 		name_en: "Brother's Notch",
 		name_de: "Brüder-Engpass",
 		name_es: "Muesca de los Hermanos",
@@ -411,7 +411,7 @@ Trek: {
 		wp: "[&BJADAAA=]",
 		img: "http://i.imgur.com/YO9fCn2.png"
 	},
-	burstbubble: {
+	{
 		name_en: "Burstbubble Blind",
 		name_de: "Sackgasse der geplatzten Träume",
 		name_es: "Persiana explotaburbujas",
@@ -421,7 +421,7 @@ Trek: {
 		wp: "[&BPsBAAA=]",
 		img: "http://i.imgur.com/G7vDiUR.png"
 	},
-	cache: {
+	{
 		name_en: "Cache of the Pursued",
 		name_de: "Vorratslager der Verfolgten",
 		name_es: "Escondite de los Perseguidos",
@@ -431,7 +431,7 @@ Trek: {
 		wp: "[&BCEDAAA=]",
 		img: "http://i.imgur.com/2I31Wjc.png"
 	},
-	cademkrall: {
+	{
 		name_en: "Cademkrall Overlook",
 		name_de: "Cademkrall-Aussichtspunkt",
 		name_es: "Mirador del Corral Cadem",
@@ -441,7 +441,7 @@ Trek: {
 		wp: "[&BIgBAAA=]",
 		img: "http://i.imgur.com/Qx5vM1y.png"
 	},
-	canyonweb: {
+	{
 		name_en: "Canyonweb Cave",
 		name_de: "Netzschluchthöhle",
 		name_es: "Cueva Telaraña del Cañón",
@@ -451,7 +451,7 @@ Trek: {
 		wp: "[&BAQCAAA=]",
 		img: "http://i.imgur.com/3CAEBHs.png"
 	},
-	captain: {
+	{
 		name_en: "Captain's Berth",
 		name_de: "Koje des Kapitäns",
 		name_es: "Embarcadero del capitán",
@@ -461,7 +461,7 @@ Trek: {
 		wp: "[&BLICAAA=]",
 		img: "http://i.imgur.com/plIWICr.png"
 	},
-	castavall: {
+	{
 		name_en: "Castavall Corner",
 		name_de: "Castavall-Ecke",
 		name_es: "Esquina Castavall",
@@ -471,7 +471,7 @@ Trek: {
 		wp: "[&BK4BAAA=]",
 		img: "http://i.imgur.com/JGVRiCQ.png"
 	},
-	cathedral: {
+	{
 		name_en: "Cathedral's Cavity",
 		name_de: "Kathedralenraum",
 		name_es: "Cavidad de la Catedral",
@@ -481,7 +481,7 @@ Trek: {
 		wp: "[&BKwCAAA=]",
 		img: "http://i.imgur.com/nluYOPB.png"
 	},
-	cavebear: {
+	{
 		name_en: "Cave Bear Cache",
 		name_de: "Schneeheuler-Bau",
 		name_es: "Escondite de la Osa",
@@ -491,7 +491,7 @@ Trek: {
 		wp: "[&BL8AAAA=]",
 		img: "http://i.imgur.com/0gQ6jWP.png"
 	},
-	cavespider: {
+	{
 		name_en: "Cave Spider Nidus",
 		name_de: "Höhlenspinnen-Nest",
 		name_es: "Nidus de la Araña de Cueva",
@@ -501,7 +501,7 @@ Trek: {
 		wp: "[&BJgBAAA=]",
 		img: "http://i.imgur.com/B4KGzL5.png"
 	},
-	claypool: {
+	{
 		name_en: "Claypool Bailey",
 		name_de: "Tonteich-Außenhof",
 		name_es: "Patio del Arcillar",
@@ -511,7 +511,7 @@ Trek: {
 		wp: "[&BPYAAAA=]",
 		img: "http://i.imgur.com/Ge9iL2V.png"
 	},
-	constellation: {
+	{
 		name_en: "Constellation Parapet",
 		name_de: "Sternbildrüstung",
 		name_es: "Parapeto Constelación",
@@ -521,7 +521,7 @@ Trek: {
 		wp: "[&BLsEAAA=]",
 		img: "http://i.imgur.com/mlplWZk.png"
 	},
-	corruption: {
+	{
 		name_en: "Corruption's Teeth",
 		name_de: "Zähne der Verderbnis",
 		name_es: "Dientes de la Corrupción",
@@ -531,7 +531,7 @@ Trek: {
 		wp: "[&BIYCAAA=]",
 		img: "http://i.imgur.com/iaAVWia.png"
 	},
-	covington: {
+	{
 		name_en: "Covington's Stowage",
 		name_de: "Covingtons Stauraum",
 		name_es: "Estiba de Covington",
@@ -541,7 +541,7 @@ Trek: {
 		wp: "[&BKgBAAA=]",
 		img: "http://i.imgur.com/9lingDj.png"
 	},
-	cutthroat: {
+	{
 		name_en: "Cutthroat's Rest",
 		name_de: "Halsabschneiders Ruhestatt",
 		name_es: "Descanso del Sanguinario",
@@ -551,7 +551,7 @@ Trek: {
 		wp: "[&BM0DAAA=]",
 		img: "http://i.imgur.com/HeA3UFO.png"
 	},
-	cymbel: {
+	{
 		name_en: "Cymbel's Glen",
 		name_de: "Cymbels Schlucht",
 		name_es: "Cañada de Cymbel",
@@ -561,7 +561,7 @@ Trek: {
 		wp: "[&BE8BAAA=]",
 		img: "http://i.imgur.com/teCQSm1.png"
 	},
-	dawngleam: {
+	{
 		name_en: "Dawngleam Pergola",
 		name_de: "Morgenrot-Pergola",
 		name_es: "Pérgola del Amanecer Refulgente",
@@ -571,7 +571,7 @@ Trek: {
 		wp: "[&BLwEAAA=]",
 		img: "http://i.imgur.com/mjC35Rp.png"
 	},
-	deepmire: {
+	{
 		name_en: "Deepmire Diver",
 		name_de: "Tiefschlamm-Taucher",
 		name_es: "Submarinista del lodazal",
@@ -581,7 +581,7 @@ Trek: {
 		wp: "[&BNECAAA=]",
 		img: "http://i.imgur.com/6ysVpDj.png"
 	},
-	defiled: {
+	{
 		name_en: "Defiled Delve",
 		name_de: "Entweihte Senke",
 		name_es: "Socavón Profanado",
@@ -591,7 +591,7 @@ Trek: {
 		wp: "[&BBEAAAA=]",
 		img: "http://i.imgur.com/DUfTEcM.png"
 	},
-	delight: {
+	{
 		name_en: "Delight's Balcony",
 		name_de: "Balkon des Wohlgefallens",
 		name_es: "Balcón del Deleite",
@@ -601,7 +601,7 @@ Trek: {
 		wp: "[&BKYCAAA=]",
 		img: "http://i.imgur.com/ppsiSnp.png"
 	},
-	destiny: {
+	{
 		name_en: "Destiny's Guildhall",
 		name_de: "Stadthalle des Schicksals",
 		name_es: "Sala del Clan del Destino",
@@ -611,7 +611,7 @@ Trek: {
 		wp: "[&BO8AAAA=]",
 		img: "http://i.imgur.com/z0bP2RI.png"
 	},
-	dirtclaw: {
+	{
 		name_en: "Dirtclaw Cleft",
 		name_de: "Schmutzklauenkluft",
 		name_es: "Grieta Garrasucia",
@@ -621,7 +621,7 @@ Trek: {
 		wp: "[&BOMBAAA=]",
 		img: "http://i.imgur.com/G1GVQLa.png"
 	},
-	doefalls: {
+	{
 		name_en: "Doefalls Court",
 		name_de: "Damfall-Hof",
 		name_es: "Corte de las Cataratas de la Cierva",
@@ -631,7 +631,7 @@ Trek: {
 		wp: "[&BIcBAAA=]",
 		img: "http://i.imgur.com/4ASl9l7.png"
 	},
-	drakecleft: {
+	{
 		name_en: "Drakecleft Shelf",
 		name_de: "Lindwurmschlund-Riff",
 		name_es: "Balda Grietadraco",
@@ -641,7 +641,7 @@ Trek: {
 		wp: "[&BEwBAAA=]",
 		img: "http://i.imgur.com/Z37m4CA.png"
 	},
-	drakehatch: {
+	{
 		name_en: "Drakehatch Shore",
 		name_de: "Lindwurmnest-Küste",
 		name_es: "Ribera de los Saurios",
@@ -651,7 +651,7 @@ Trek: {
 		wp: "[&BGQBAAA=]",
 		img: "http://i.imgur.com/EjLuCwi.png"
 	},
-	droknah: {
+	{
 		name_en: "Droknah's Gate",
 		name_de: "Droknar-Tor",
 		name_es: "Puerta de Droknar",
@@ -661,7 +661,7 @@ Trek: {
 		wp: "[&BNQCAAA=]",
 		img: "http://i.imgur.com/n19ndHW.png"
 	},
-	drowned: {
+	{
 		name_en: "Drowned Plaza",
 		name_de: "Platz des Ertrinkens",
 		name_es: "Plaza Aguada",
@@ -671,7 +671,7 @@ Trek: {
 		wp: "[&BPMCAAA=]",
 		img: "http://i.imgur.com/YrSQC2E.png"
 	},
-	dwayna: {
+	{
 		name_en: "Dwayna's Fount",
 		name_de: "Dwaynas Quelle",
 		name_es: "Fuente de Dwayna",
@@ -681,7 +681,7 @@ Trek: {
 		wp: "[&BCoDAAA=]",
 		img: "http://i.imgur.com/h4YejfE.png"
 	},
-	eastend: {
+	{
 		name_en: "East End Falls",
 		name_de: "Ostend-Fälle",
 		name_es: "Cataratas Orientales",
@@ -691,7 +691,7 @@ Trek: {
 		wp: "[&BGAAAAA=]",
 		img: "http://i.imgur.com/K0FBr7j.png"
 	},
-	eastlurk: {
+	{
 		name_en: "East Lurk Alley",
 		name_de: "Ostlauergasse",
 		name_es: "Callejón Acechoriental",
@@ -701,7 +701,7 @@ Trek: {
 		wp: "[&BCMDAAA=]",
 		img: "http://i.imgur.com/TWIsgd0.png"
 	},
-	elise: {
+	{
 		name_en: "Elise's Surprise",
 		name_de: "Elises Überraschung",
 		name_es: "La Sorpresa de Elise",
@@ -711,7 +711,7 @@ Trek: {
 		wp: "[&BKsAAAA=]",
 		img: "http://i.imgur.com/ijDwmlj.png"
 	},
-	ettinbreath: {
+	{
 		name_en: "Ettinbreath Lair",
 		name_de: "Ettinodem-Versteck",
 		name_es: "Guarida del Suspiro del Ettin",
@@ -721,7 +721,7 @@ Trek: {
 		wp: "[&BOYAAAA=]",
 		img: "http://i.imgur.com/ev9xgfO.png"
 	},
-	fathom: {
+	{
 		name_en: "Fathom Five Forcefield",
 		name_de: "Fünf-Klafter-Kraftfeld",
 		name_es: "Campo de Fuerza Cinco Brazas",
@@ -731,7 +731,7 @@ Trek: {
 		wp: "[&BPICAAA=]",
 		img: "http://i.imgur.com/9dZNRRx.png"
 	},
-	fawcett: {
+	{
 		name_en: "Fawcett's Porch",
 		name_de: "Fawcetts Vordach",
 		name_es: "Porche de Fawcett",
@@ -741,7 +741,7 @@ Trek: {
 		wp: "[&BMMAAAA=]",
 		img: "http://i.imgur.com/KyEhSna.png"
 	},
-	fireimp: {
+	{
 		name_en: "Fire Imp Pocket",
 		name_de: "Feuer-Kobolds Schlupfloch",
 		name_es: "Cauce Diablillo de Fuego",
@@ -751,7 +751,7 @@ Trek: {
 		wp: "[&BM0CAAA=]",
 		img: "http://i.imgur.com/CNsSn8u.png"
 	},
-	firefrog: {
+	{
 		name_en: "Firefrog Springs",
 		name_de: "Feuerfrosch-Quellen",
 		name_es: "Manantiales Rana Ígnea",
@@ -761,7 +761,7 @@ Trek: {
 		wp: "[&BMwBAAA=]",
 		img: "http://i.imgur.com/l1LzBHC.png"
 	},
-	firewatch: {
+	{
 		name_en: "Firewatch Flybridge",
 		name_de: "Feuerwacht-Brücke",
 		name_es: "Pasarela de Vigilafuegos",
@@ -771,7 +771,7 @@ Trek: {
 		wp: "[&BO0BAAA=]",
 		img: "http://i.imgur.com/rCHAW0l.png"
 	},
-	fisher: {
+	{
 		name_en: "Fisher's Crag",
 		name_de: "Fischers Klippe",
 		name_es: "Peñasco del Pescador",
@@ -781,7 +781,7 @@ Trek: {
 		wp: "[&BK4EAAA=]",
 		img: "http://i.imgur.com/l5pbW3U.png"
 	},
-	flakk: {
+	{
 		name_en: "Flakk's Lapidary Nook",
 		name_de: "Flakks Steinschneider-Eck",
 		name_es: "Rincón Lapidario de Flakk",
@@ -791,7 +791,7 @@ Trek: {
 		wp: "[&BLYEAAA=]",
 		img: "http://i.imgur.com/7lLtxfV.png"
 	},
-	forager: {
+	{
 		name_en: "Forager's Midden",
 		name_de: "Abfallhaufen des Sammlers",
 		name_es: "Escombrera del Forrajeador",
@@ -801,7 +801,7 @@ Trek: {
 		wp: "[&BFsCAAA=]",
 		img: "http://i.imgur.com/I1QNNED.png"
 	},
-	forbidden: {
+	{
 		name_en: "Forbidden Shear",
 		name_de: "Verbotene Schneide",
 		name_es: "Grieta Prohibida",
@@ -811,7 +811,7 @@ Trek: {
 		wp: "[&BK8CAAA=]",
 		img: "http://i.imgur.com/27fEs6H.png"
 	},
-	foreman: {
+	{
 		name_en: "Foreman's Recess",
 		name_de: "Vorarbeiters Rast",
 		name_es: "Nicho del Capataz",
@@ -821,7 +821,7 @@ Trek: {
 		wp: "[&BFgCAAA=]",
 		img: "http://i.imgur.com/dviWA3k.png"
 	},
-	forgotten: {
+	{
 		name_en: "Forgotten Grotto",
 		name_de: "Vergessene Grotte",
 		name_es: "Gruta Olvidada",
@@ -831,7 +831,7 @@ Trek: {
 		wp: "[&BAECAAA=]",
 		img: "http://i.imgur.com/nR7YzTg.png"
 	},
-	founder: {
+	{
 		name_en: "Founder's Flagon Hearth",
 		name_de: "Flaschenhals-Feuerstelle des Gründers",
 		name_es: "Hogar la Jarra del Fundador",
@@ -841,7 +841,7 @@ Trek: {
 		wp: "[&BD0EAAA=]",
 		img: "http://i.imgur.com/SyNE0n7.png"
 	},
-	freestand: {
+	{
 		name_en: "Freestand Scaffold",
 		name_de: "Freistehendes Gerüst",
 		name_es: "Cadalso Suspendido",
@@ -851,7 +851,7 @@ Trek: {
 		wp: "[&BKwDAAA=]",
 		img: "http://i.imgur.com/rYnCcx4.png"
 	},
-	frozen: {
+	{
 		name_en: "Frozen Antrum",
 		name_de: "Gefrorene Höhle",
 		name_es: "Antrum Congelado",
@@ -861,7 +861,7 @@ Trek: {
 		wp: "[&BE8CAAA=]",
 		img: "http://i.imgur.com/I0i3Tnd.png"
 	},
-	gallow: {
+	{
 		name_en: "Gallow Canyons",
 		name_de: "Galgenschluchten",
 		name_es: "Cañones Macabros",
@@ -871,7 +871,7 @@ Trek: {
 		wp: "[&BGMAAAA=]",
 		img: "http://i.imgur.com/hgAXhuN.png"
 	},
-	gardenroot: {
+	{
 		name_en: "Gardenroot Alcove",
 		name_de: "Gartenwurzel-Alkoven",
 		name_es: "Alcoba Huertoraíz",
@@ -881,7 +881,7 @@ Trek: {
 		wp: "[&BLsEAAA=]",
 		img: "http://i.imgur.com/ES5wvfM.png"
 	},
-	gnashar: {
+	{
 		name_en: "Gnashar's Viewpoint",
 		name_de: "Gnashar-Aussichtspunkt",
 		name_es: "Puesto de observación de Gnashar",
@@ -891,7 +891,7 @@ Trek: {
 		wp: "[&BF0AAAA=]",
 		img: "http://i.imgur.com/9bn0egU.png"
 	},
-	greenmoa: {
+	{
 		name_en: "Green Moa Paddock",
 		name_de: "Grünmoa-Koppel",
 		name_es: "Prado de Moa Verde",
@@ -901,7 +901,7 @@ Trek: {
 		wp: "[&BDwBAAA=]",
 		img: "http://i.imgur.com/ojWDivG.png"
 	},
-	grenth: {
+	{
 		name_en: "Grenth's Pavillion",
 		name_de: "Grenths Pavillion",
 		name_es: "Pabellón de Grenth",
@@ -911,7 +911,7 @@ Trek: {
 		wp: "[&BCQDAAA=]",
 		img: "http://i.imgur.com/mUYzVf3.png"
 	},
-	grimdottir: {
+	{
 		name_en: "Grimdottir's Duty",
 		name_de: "Grimsdottirs Pflicht",
 		name_es: "Labor de Grimdottir",
@@ -921,7 +921,7 @@ Trek: {
 		wp: "[&BIsDAAA=]",
 		img: "http://i.imgur.com/XllSt4T.png"
 	},
-	guardian: {
+	{
 		name_en: "Guardian Overwatch",
 		name_de: "Achtgebender Wächter",
 		name_es: "Sobrevigilancia del Guardián",
@@ -931,7 +931,7 @@ Trek: {
 		wp: "[&BKkAAAA=]",
 		img: "http://i.imgur.com/IpMKUsM.png"
 	},
-	hawkeye: {
+	{
 		name_en: "Hawkeye Perch",
 		name_de: "Falkenaugen-Warte",
 		name_es: "Nido de grifos ojodehalcón",
@@ -941,7 +941,7 @@ Trek: {
 		wp: "[&BEUCAAA=]",
 		img: "http://i.imgur.com/cBrqZQl.png"
 	},
-	heartspeaks: {
+	{
 		name_en: "Heart Speaks Notch",
 		name_de: "Stummherz-Engpass",
 		name_es: "Muesca Algarabía del Corazón",
@@ -951,7 +951,7 @@ Trek: {
 		wp: "[&BB0CAAA=]",
 		img: "http://i.imgur.com/ovdHOog.png"
 	},
-	heartwood: {
+	{
 		name_en: "Heartwood Honey Cache",
 		name_de: "Herzwald-Honigspeicher",
 		name_es: "Escondite Ápido de los Bosques Duramen",
@@ -961,7 +961,7 @@ Trek: {
 		wp: "[&BPMAAAA=]",
 		img: "http://i.imgur.com/p1YpClo.png"
 	},
-	heidi: {
+	{
 		name_en: "Heidi's Showpiece",
 		name_de: "Heidis Meisterwerk",
 		name_es: "Pieza estrella de Heidi",
@@ -971,7 +971,7 @@ Trek: {
 		wp: "[&BKcAAAA=]",
 		img: "http://i.imgur.com/hEPd7Vc.png"
 	},
-	hermit: {
+	{
 		name_en: "Hermit's Roost",
 		name_de: "Eremiten-Schlafplatz",
 		name_es: "Nido del Ermitaño",
@@ -981,7 +981,7 @@ Trek: {
 		wp: "[&BNgAAAA=]",
 		img: "http://i.imgur.com/sALlUnS.png"
 	},
-	hidden: {
+	{
 		name_en: "Hidden Owl Distillery",
 		name_de: "Versteckte Eulenbrennerei",
 		name_es: "Destilería Oculta de la Lechuza",
@@ -991,7 +991,7 @@ Trek: {
 		wp: "[&BMEAAAA=]",
 		img: "http://i.imgur.com/Cg0TZC7.png"
 	},
-	holystone: {
+	{
 		name_en: "Holystone Sanctum",
 		name_de: "Heiligstein-Refugium",
 		name_es: "Sagrario de Piedrasanta",
@@ -1001,7 +1001,7 @@ Trek: {
 		wp: "[&BMUDAAA=]",
 		img: "http://i.imgur.com/RZBWmZ3.png"
 	},
-	icewurm: {
+	{
 		name_en: "Icewurm Trench",
 		name_de: "Eiswurmgraben",
 		name_es: "Trinchera de la Sierpe de Hielo",
@@ -1011,7 +1011,7 @@ Trek: {
 		wp: "[&BH8CAAA=]",
 		img: "http://i.imgur.com/YbZZq7j.png"
 	},
-	ideation: {
+	{
 		name_en: "Ideation Leap",
 		name_de: "Gedankensprung",
 		name_es: "Salto Ideación",
@@ -1021,7 +1021,7 @@ Trek: {
 		wp: "[&BLUEAAA=]",
 		img: "http://i.imgur.com/GahzUh5.png"
 	},
-	imphaunt: {
+	{
 		name_en: "Imphaunt Hallow",
 		name_de: "Koboldspuk-Mulde",
 		name_es: "Ermita del Diablillo Encantado",
@@ -1031,7 +1031,7 @@ Trek: {
 		wp: "[&BEEBAAA=]",
 		img: "http://i.imgur.com/l0ntdRi.png"
 	},
-	irondock: {
+	{
 		name_en: "Irondock Viewpoint",
 		name_de: "Eisendock-Aussichtspunkt",
 		name_es: "Puesto de Observación de Hierromuelle",
@@ -1041,7 +1041,7 @@ Trek: {
 		wp: "[&BIkBAAA=]",
 		img: "http://i.imgur.com/FaEum4t.png"
 	},
-	isenfell: {
+	{
 		name_en: "Isenfell Wash",
 		name_de: "Isenfell-Gerinne",
 		name_es: "Cauce de Isenfell",
@@ -1051,7 +1051,7 @@ Trek: {
 		wp: "[&BLgAAAA=]",
 		img: "http://i.imgur.com/UtGJHUv.png"
 	},
-	isgarren: {
+	{
 		name_en: "Isgarren Viewpoint",
 		name_de: "Isgarren-Aussichtspunkt",
 		name_es: "Puesto de Observación de Isgarren",
@@ -1061,7 +1061,7 @@ Trek: {
 		wp: "[&BBEAAAA=]",
 		img: "http://i.imgur.com/eDw93uD.png"
 	},
-	jaguar: {
+	{
 		name_en: "Jaguar Pride Den",
 		name_de: "Jaguarstolz-Bau",
 		name_es: "Cubil del Orgullo del Jaguar",
@@ -1071,7 +1071,7 @@ Trek: {
 		wp: "[&BEcAAAA=]",
 		img: "http://i.imgur.com/EVB8dEr.png"
 	},
-	junker: {
+	{
 		name_en: "Junker's Apex",
 		name_de: "Rümplers Gipfel",
 		name_es: "Cima de Basurero",
@@ -1081,7 +1081,7 @@ Trek: {
 		wp: "[&BDcEAAA=]",
 		img: "http://i.imgur.com/KksCWMx.png"
 	},
-	kaldar: {
+	{
 		name_en: "Kaldar's Hot Seat",
 		name_de: "Kaldars Schleudersitz",
 		name_es: "Asiento caliente de Kaldar",
@@ -1091,7 +1091,7 @@ Trek: {
 		wp: "[&BI0DAAA=]",
 		img: "http://i.imgur.com/EAB6hCC.png"
 	},
-	kari: {
+	{
 		name_en: "Kari's Hot Spot",
 		name_de: "Karis Brennpunkt",
 		name_es: "Punto clave de Kari",
@@ -1101,7 +1101,7 @@ Trek: {
 		wp: "[&BBIAAAA=]",
 		img: "http://i.imgur.com/9w7v6w9.png"
 	},
-	kegbrawl: {
+	{
 		name_en: "Kegbrawl Watch",
 		name_de: "Fasskeilerei-Wacht",
 		name_es: "Atalaya de la Pelea de Barricas",
@@ -1111,7 +1111,7 @@ Trek: {
 		wp: "[&BJADAAA=]",
 		img: "http://i.imgur.com/8a2KN2C.png"
 	},
-	kevach: {
+	{
 		name_en: "Kevach's Strongroom",
 		name_de: "Kevachs Stahlkammer",
 		name_es: "Cámara acorazada de Kevach",
@@ -1121,7 +1121,7 @@ Trek: {
 		wp: "[&BMEDAAA=]",
 		img: "http://i.imgur.com/oG63Ury.png"
 	},
-	lakebottom: {
+	{
 		name_en: "Lakebottom Underpass",
 		name_de: "Seegrundtunnel",
 		name_es: "Paso Subterráneo del Lago",
@@ -1131,7 +1131,7 @@ Trek: {
 		wp: "[&BPkAAAA=]",
 		img: "http://i.imgur.com/YVdgpCN.png"
 	},
-	lawen: {
+	{
 		name_en: "Lawen Grotto",
 		name_de: "Lawen-Grotte",
 		name_es: "Gruta de Lawen",
@@ -1141,7 +1141,7 @@ Trek: {
 		wp: "[&BIsBAAA=]",
 		img: "http://i.imgur.com/rPJjbgs.png"
 	},
-	lightfoot: {
+	{
 		name_en: "Lightfoot Dock ",
 		name_de: "Leichtfuß-Dock",
 		name_es: "Muelle Pasoligero",
@@ -1151,7 +1151,7 @@ Trek: {
 		wp: "[&BPACAAA=]",
 		img: "http://i.imgur.com/NO3BgxR.png"
 	},
-	lily: {
+	{
 		name_en: "Lily's Bivvy",
 		name_de: "Lilys Biwak",
 		name_es: "Carpa de Lily",
@@ -1161,7 +1161,7 @@ Trek: {
 		wp: "[&BCACAAA=]",
 		img: "http://i.imgur.com/8BhtP5z.png"
 	},
-	lionguard: {
+	{
 		name_en: "Lionguard Larder",
 		name_de: "Löwengarden-Speisekammer",
 		name_es: "Despensa de la Guardia del León",
@@ -1171,7 +1171,7 @@ Trek: {
 		wp: "[&BH0BAAA=]",
 		img: "http://i.imgur.com/jNrwHcg.png"
 	},
-	lychcroft: {
+	{
 		name_en: "Lychcroft Wardenship",
 		name_de: "Leichenhof-Wachposten",
 		name_es: "Garita Fincadaver",
@@ -1181,7 +1181,7 @@ Trek: {
 		wp: "[&BAwAAAA=]",
 		img: "http://i.imgur.com/zBZj0AC.png"
 	},
-	magihedron: {
+	{
 		name_en: "Magihedron Corner",
 		name_de: "Magihedron-Ecke",
 		name_es: "Esquina de Magihedro",
@@ -1191,7 +1191,7 @@ Trek: {
 		wp: "[&BBMEAAA=]",
 		img: "http://i.imgur.com/lysGO2Q.png"
 	},
-	master: {
+	{
 		name_en: "Master Control LIN39",
 		name_de: "Hauptkontrollkonsole LIN39",
 		name_es: "Control maestro LIN39",
@@ -1201,7 +1201,7 @@ Trek: {
 		wp: "[&BEcAAAA=]",
 		img: "http://i.imgur.com/BwbPNnQ.png"
 	},
-	meltwater: {
+	{
 		name_en: "Meltwater Cave",
 		name_de: "Schmelzwasser-Kaverne",
 		name_es: "Cueva Fusionanieve",
@@ -1211,7 +1211,7 @@ Trek: {
 		wp: "[&BEgCAAA=]",
 		img: "http://i.imgur.com/z4Vxix7.png"
 	},
-	mina: {
+	{
 		name_en: "Mina's Target Shoot",
 		name_de: "Minas Schießstand",
 		name_es: "Tiro al Blanco de Mina",
@@ -1221,7 +1221,7 @@ Trek: {
 		wp: "[&BCoDAAA=]",
 		img: "http://i.imgur.com/kJoIRs9.png"
 	},
-	mistriven: {
+	{
 		name_en: "Mistriven Shelf",
 		name_de: "Nebelschleier-Riff",
 		name_es: "Balda Nieblahendida",
@@ -1231,7 +1231,7 @@ Trek: {
 		wp: "[&BJkBAAA=]",
 		img: "http://i.imgur.com/08XTlMy.png"
 	},
-	moleberia: {
+	{
 		name_en: "Moleberia Prison",
 		name_de: "Maulberia-Gefängnis",
 		name_es: "Prisión Topoberia",
@@ -1241,7 +1241,7 @@ Trek: {
 		wp: "[&BHgBAAA=]",
 		img: "http://i.imgur.com/U4iewbj.png"
 	},
-	monument: {
+	{
 		name_en: "Monument to the Ancient One",
 		name_de: "Monument des Alten",
 		name_es: "Monumento al Ancestro ",
@@ -1251,7 +1251,7 @@ Trek: {
 		wp: "[&BNgGAAA=]",
 		img: "http://i.imgur.com/DM9zbwx.png"
 	},
-	narrowkraal: {
+	{
 		name_en: "Narrowkraal Crossing",
 		name_de: "Engkral-Kreuzung",
 		name_es: "Cruce de Corralestrech",
@@ -1261,7 +1261,7 @@ Trek: {
 		wp: "[&BE8BAAA=]",
 		img: "http://i.imgur.com/KcPXvE6.png"
 	},
-	necrolith: {
+	{
 		name_en: "Necrolith Landing",
 		name_de: "Nekrolithen-Anlegestelle",
 		name_es: "Desembarcadero Necrolith",
@@ -1271,7 +1271,7 @@ Trek: {
 		wp: "[&BBIEAAA=]",
 		img: "http://i.imgur.com/o9sl5J9.png"
 	},
-	orecart: {
+	{
 		name_en: "Orecart Hoist",
 		name_de: "Erzwagen-Winde",
 		name_es: "Montacargas para carros de minerales",
@@ -1281,7 +1281,7 @@ Trek: {
 		wp: "[&BBcCAAA=]",
 		img: "http://i.imgur.com/Ps5oxOO.png"
 	},
-	orvanic: {
+	{
 		name_en: "Orvanic Sourcewaters",
 		name_de: "Orvanische Gewässer",
 		name_es: "Fuente de Agua de Orvar",
@@ -1291,7 +1291,7 @@ Trek: {
 		wp: "[&BMkBAAA=]",
 		img: "http://i.imgur.com/W41lVXa.png"
 	},
-	osenfold: {
+	{
 		name_en: "Osenfold Counterweights",
 		name_de: "Osenfold-Gegengewichte",
 		name_es: "Contrapeso de Osenfold",
@@ -1301,7 +1301,7 @@ Trek: {
 		wp: "[&BAEEAAA=]",
 		img: "http://i.imgur.com/CZS3Zy6.png"
 	},
-	overlord: {
+	{
 		name_en: "Overlord Lodge",
 		name_de: "Oberherren-Halle",
 		name_es: "Albergue del Jefe Supremo",
@@ -1311,7 +1311,7 @@ Trek: {
 		wp: "[&BAQAAAA=]",
 		img: "http://i.imgur.com/TJ7uLUH.png"
 	},
-	phasmatis: {
+	{
 		name_en: "Phasmatis Prospect",
 		name_de: "Phasmatis-Fernblick",
 		name_es: "Panorama de Phasmatis",
@@ -1321,7 +1321,7 @@ Trek: {
 		wp: "[&BIoBAAA=]",
 		img: "http://i.imgur.com/BEFWCfO.png"
 	},
-	pochtecatl: {
+	{
 		name_en: "Pochtecatl's Desire",
 		name_de: "Pochtecatls Begehr",
 		name_es: "Deseo de Pochtecatl",
@@ -1331,7 +1331,7 @@ Trek: {
 		wp: "[&BK8BAAA=]",
 		img: "http://i.imgur.com/3YkfUOj.png"
 	},
-	port: {
+	{
 		name_en: "Port Authority Lost and Found",
 		name_de: "Fundbüro der Hafenbehörde",
 		name_es: "Autoridad Portuaria de Objetos Perdidos",
@@ -1341,7 +1341,7 @@ Trek: {
 		wp: "[&BAcFAAA=]",
 		img: "http://i.imgur.com/U1fDnhh.png"
 	},
-	portmatt: {
+	{
 		name_en: "Portmatt's Promontory",
 		name_de: "Portmatts Kap",
 		name_es: "Promontorio de Portmatt",
@@ -1351,7 +1351,7 @@ Trek: {
 		wp: "[&BKQBAAA=]",
 		img: "http://i.imgur.com/FQmSx25.png"
 	},
-	provatum: {
+	{
 		name_en: "Provatum Carcer",
 		name_de: "Provatum Carcer",
 		name_es: "Provatum Carcer",
@@ -1361,7 +1361,7 @@ Trek: {
 		wp: "[&BCYCAAA=]",
 		img: "http://i.imgur.com/r03TK0T.png"
 	},
-	ramview: {
+	{
 		name_en: "Ramview Peak",
 		name_de: "Widderblickgipfel",
 		name_es: "Velocista de las cumbres",
@@ -1371,7 +1371,7 @@ Trek: {
 		wp: "[&BGQCAAA=]",
 		img: "http://i.imgur.com/ZlyAKZA.png"
 	},
-	raptorsaerie: {
+	{
 		name_en: "Raptor's Aerie",
 		name_de: "Raptorenhorst",
 		name_es: "Nido del Raptor",
@@ -1381,7 +1381,7 @@ Trek: {
 		wp: "[&BOsBAAA=]",
 		img: "http://i.imgur.com/xUINjzg.png"
 	},
-	raptorsperch: {
+	{
 		name_en: "Raptor's Perch",
 		name_de: "Raptorwarte",
 		name_es: "Percha del Raptor",
@@ -1391,7 +1391,7 @@ Trek: {
 		wp: "[&BO4AAAA=]",
 		img: "http://i.imgur.com/fmOpGPl.png"
 	},
-	rata: {
+	{
 		name_en: "Rata Pten Portico",
 		name_de: "Rata Pten-Kolonnade",
 		name_es: "Pórtico de Rata Pten",
@@ -1401,7 +1401,7 @@ Trek: {
 		wp: "[&BMkCAAA=]",
 		img: "http://i.imgur.com/HHkq45i.png"
 	},
-	raven: {
+	{
 		name_en: "Raven Nook",
 		name_de: "Rabenwinkel",
 		name_es: "Rincón del Cuervo",
@@ -1411,7 +1411,7 @@ Trek: {
 		wp: "[&BIgDAAA=]",
 		img: "http://i.imgur.com/pqU7H9K.png"
 	},
-	reef: {
+	{
 		name_en: "Reef Drake Den",
 		name_de: "Rifflindwurm-Brutstätte",
 		name_es: "Criadero de dracos de arrecife",
@@ -1421,7 +1421,7 @@ Trek: {
 		wp: "[&BNUGAAA=]",
 		img: "http://i.imgur.com/6VVdGo3.png"
 	},
-	restless: {
+	{
 		name_en: "Restless Footings",
 		name_de: "Ruhelose Pfade",
 		name_es: "Pasos Inquietos",
@@ -1431,7 +1431,7 @@ Trek: {
 		wp: "[&BNICAAA=]",
 		img: "http://i.imgur.com/9tgTZor.png"
 	},
-	reverberant: {
+	{
 		name_en: "Reverberant's Watch",
 		name_de: "Hallerzeuger-Wacht",
 		name_es: "Atalaya del Reverberante",
@@ -1441,7 +1441,7 @@ Trek: {
 		wp: "[&BHUBAAA=]",
 		img: "http://i.imgur.com/ZuMhvf7.png"
 	},
-	risewild: {
+	{
 		name_en: "Risewild Green",
 		name_de: "Stiegwild-Anger",
 		name_es: "Prado Selvalzada",
@@ -1451,7 +1451,7 @@ Trek: {
 		wp: "[&BKcBAAA=]",
 		img: "http://i.imgur.com/TWQkqB5.png"
 	},
-	rurik: {
+	{
 		name_en: "Rurik's View",
 		name_de: "Ruriks Ausblick",
 		name_es: "Vista de Rurik",
@@ -1461,7 +1461,7 @@ Trek: {
 		wp: "[&BCsDAAA=]",
 		img: "http://i.imgur.com/VXfiiaa.png"
 	},
-	saltflood: {
+	{
 		name_en: "Saltflood Altar",
 		name_de: "Salzflut-Altar",
 		name_es: "Altar Inundasal",
@@ -1471,7 +1471,7 @@ Trek: {
 		wp: "[&BMcBAAA=]",
 		img: "http://i.imgur.com/8vwpVmM.png"
 	},
-	sandwurm: {
+	{
 		name_en: "Sandwurm Prowl",
 		name_de: "Sandwurmjagd",
 		name_es: "Sierpe de arena merodeadora",
@@ -1481,7 +1481,7 @@ Trek: {
 		wp: "[&BNUGAAA=]",
 		img: "http://i.imgur.com/xYNVGOX.png"
 	},
-	scholar: {
+	{
 		name_en: "Scholar's Blind",
 		name_de: "Forscher-Ansitz",
 		name_es: "Ceguera del Erudito",
@@ -1491,7 +1491,7 @@ Trek: {
 		wp: "[&BFsCAAA=]",
 		img: "http://i.imgur.com/5vjwW0V.png"
 	},
-	scourgejaw: {
+	{
 		name_en: "Scourgejaw Watchtower",
 		name_de: "Geißelkiefer-Wachturm",
 		name_es: "Torre de Vigilancia de Rompemandíbulas",
@@ -1501,7 +1501,7 @@ Trek: {
 		wp: "[&BOgBAAA=]",
 		img: "http://i.imgur.com/0CEVDxh.png"
 	},
-	scriptorium: {
+	{
 		name_en: "Scriptorium Nook",
 		name_de: "Skriptorium-Winkel",
 		name_es: "Rincón Scriptorium",
@@ -1511,7 +1511,7 @@ Trek: {
 		wp: "[&BKcDAAA=]",
 		img: "http://i.imgur.com/QPvcBWX.png"
 	},
-	seascorpion: {
+	{
 		name_en: "Sea Scorpion's Eye",
 		name_de: "Auge des Meeresskorpions",
 		name_es: "Ojo del Escorpión de Mar",
@@ -1521,7 +1521,7 @@ Trek: {
 		wp: "[&BB4DAAA=]",
 		img: "http://i.imgur.com/UlSXXQd.png"
 	},
-	sentinel: {
+	{
 		name_en: "Sentinel Sink",
 		name_de: "Schildwächtersenke",
 		name_es: "Naufragio Centinela",
@@ -1531,7 +1531,7 @@ Trek: {
 		wp: "[&BOkBAAA=]",
 		img: "http://i.imgur.com/TjJxa29.png"
 	},
-	sepulchre: {
+	{
 		name_en: "Sepulchre Skylight",
 		name_de: "Grabkammernluke",
 		name_es: "Sepulcro de luz celestial",
@@ -1541,7 +1541,7 @@ Trek: {
 		wp: "[&BNIEAAA=]",
 		img: "http://i.imgur.com/G0dvRdI.png"
 	},
-	sharkhollow: {
+	{
 		name_en: "Sharkhollow's Edge",
 		name_de: "Haitiefen-Schneide",
 		name_es: "Punto de Observación Decimus",
@@ -1551,7 +1551,7 @@ Trek: {
 		wp: "[&BFEDAAA=]",
 		img: "http://i.imgur.com/mMUvorZ.png"
 	},
-	shattered: {
+	{
 		name_en: "Shattered Loft",
 		name_de: "Zertrümmerter Speicher",
 		name_es: "Desván Destrozado",
@@ -1561,7 +1561,7 @@ Trek: {
 		wp: "[&BMUBAAA=]",
 		img: "http://i.imgur.com/E9tKxAf.png"
 	},
-	siamoth: {
+	{
 		name_en: "Siamoth Refuge",
 		name_de: "Siamoth-Zuflucht",
 		name_es: "Refugio de Siamoth",
@@ -1571,7 +1571,7 @@ Trek: {
 		wp: "[&BM4BAAA=]",
 		img: "http://i.imgur.com/sKx8Ige.png"
 	},
-	skalecatch: {
+	{
 		name_en: "Skalecatch Butcher Shop",
 		name_de: "Skalfang-Metzgerei",
 		name_es: "Carnicería de presas saurianas",
@@ -1581,7 +1581,7 @@ Trek: {
 		wp: "[&BOcBAAA=]",
 		img: "http://i.imgur.com/Lkq9Gvb.png"
 	},
-	skalefound: {
+	{
 		name_en: "Skalefound Cove",
 		name_de: "Skalfund-Bucht",
 		name_es: "Cala de los Saurios Encontrados",
@@ -1591,7 +1591,7 @@ Trek: {
 		wp: "[&BBgCAAA=]",
 		img: "http://i.imgur.com/snCztzB.png"
 	},
-	skalesplash: {
+	{
 		name_en: "Skalesplash Falls",
 		name_de: "Skalschwall-Fälle",
 		name_es: "Cataratas Salpicasaurios",
@@ -1601,7 +1601,7 @@ Trek: {
 		wp: "[&BEYCAAA=]",
 		img: "http://i.imgur.com/IUm2LZo.png"
 	},
-	skalestash: {
+	{
 		name_en: "Skalestash Hideaway",
 		name_de: "Skallager-Versteck",
 		name_es: "Reserva Oculta de los Saurios",
@@ -1611,7 +1611,7 @@ Trek: {
 		wp: "[&BJcDAAA=]",
 		img: "http://i.imgur.com/BEqc2gC.png"
 	},
-	skelknest: {
+	{
 		name_en: "Skelknest Borehole",
 		name_de: "Skelknest-Bohrloch",
 		name_es: "Perforación de Nido de Skelk",
@@ -1621,7 +1621,7 @@ Trek: {
 		wp: "[&BHwCAAA=]",
 		img: "http://i.imgur.com/7hu1lPP.png"
 	},
-	skibo: {
+	{
 		name_en: "Skibo Hall Dormitory",
 		name_de: "Schlafsaal der Skibo-Halle",
 		name_es: "Dormitorio de la Sala de Skibo",
@@ -1631,7 +1631,7 @@ Trek: {
 		wp: "[&BLkEAAA=]",
 		img: "http://i.imgur.com/DK0R40w.png"
 	},
-	skyshine: {
+	{
 		name_en: "Skyshine Scratch",
 		name_de: "Himmelsschimmer-Riss",
 		name_es: "Fisura Cielorefulgente",
@@ -1641,7 +1641,7 @@ Trek: {
 		wp: "[&BKkAAAA=]",
 		img: "http://i.imgur.com/nAjpwkr.png"
 	},
-	snowden: {
+	{
 		name_en: "Snowden Safehouse",
 		name_de: "Schneekuhlen-Unterschlupf",
 		name_es: "Refugio de Guaridanieve",
@@ -1651,7 +1651,7 @@ Trek: {
 		wp: "[&BLUAAAA=]",
 		img: "http://i.imgur.com/kBkOPsR.png"
 	},
-	snowhowl: {
+	{
 		name_en: "Snowhowl Den",
 		name_de: "Schneeeulen-Höhle",
 		name_es: "Guarida de Aullido de Nieve",
@@ -1661,7 +1661,7 @@ Trek: {
 		wp: "[&BL8AAAA=]",
 		img: "http://i.imgur.com/SiJ7d0I.png"
 	},
-	soggorsort: {
+	{
 		name_en: "Soggorsort Rotunda",
 		name_de: "Soggorsort-Rundbau",
 		name_es: "Rotonda de Soggorsort",
@@ -1671,7 +1671,7 @@ Trek: {
 		wp: "[&BD8BAAA=]",
 		img: "http://i.imgur.com/DpYSX2k.png"
 	},
-	soren: {
+	{
 		name_en: "Soren Draa Rest Shop",
 		name_de: "Soren Draa-Raststätte",
 		name_es: "Descanso de Soren Draa",
@@ -1681,7 +1681,7 @@ Trek: {
 		wp: "[&BEAAAAA=]",
 		img: "http://i.imgur.com/NnFX589.png"
 	},
-	source: {
+	{
 		name_en: "Source of Lament",
 		name_de: "Quelle der Klage",
 		name_es: "Fuente de los Lamentos",
@@ -1691,7 +1691,7 @@ Trek: {
 		wp: "[&BIECAAA=]",
 		img: "http://i.imgur.com/YsD065v.png"
 	},
-	sparwind: {
+	{
 		name_en: "Sparwind's Lounge",
 		name_de: "Spatwinds Stube",
 		name_es: "Salón de Vientopalo",
@@ -1701,7 +1701,7 @@ Trek: {
 		wp: "[&BK0DAAA=]",
 		img: "http://i.imgur.com/Sp0c8Qx.png"
 	},
-	spectrehaunt: {
+	{
 		name_en: "Spectrehaunt Socket",
 		name_de: "Gespensterjagd-Socke",
 		name_es: "Cavidad Guaridaespectral",
@@ -1711,7 +1711,7 @@ Trek: {
 		wp: "[&BLICAAA=]",
 		img: "http://i.imgur.com/rYNIVSQ.png"
 	},
-	steampipe: {
+	{
 		name_en: "Steampipe Perch",
 		name_de: "Dampfrohr-Warte",
 		name_es: "Percha humareda",
@@ -1721,7 +1721,7 @@ Trek: {
 		wp: "[&BNwGAAA=]",
 		img: "http://i.imgur.com/Z7YvjX9.png"
 	},
-	steamscrap: {
+	{
 		name_en: "Steamscrap Overlook",
 		name_de: "Dampfschotter-Aussichtspunkt",
 		name_es: "Mirador Jironesvapor",
@@ -1731,7 +1731,7 @@ Trek: {
 		wp: "[&BOoAAAA=]",
 		img: "http://i.imgur.com/HC01rGQ.png"
 	},
-	steamy: {
+	{
 		name_en: "Steamy Steps",
 		name_de: "Dampfstufen",
 		name_es: "Pasos humeantes",
@@ -1741,7 +1741,7 @@ Trek: {
 		wp: "[&BNAGAAA=]",
 		img: "http://i.imgur.com/0dbTKQY.png"
 	},
-	steelband: {
+	{
 		name_en: "Steelband's Tunnel",
 		name_de: "Stahlband-Tunnel",
 		name_es: "Gatillo fácil",
@@ -1751,7 +1751,7 @@ Trek: {
 		wp: "[&BPsBAAA=]",
 		img: "http://i.imgur.com/TxtKqSO.png"
 	},
-	stentor: {
+	{
 		name_en: "Stentor Shelter",
 		name_de: "Stentor-Unterschlupf",
 		name_es: "Refugio de Stentor",
@@ -1761,7 +1761,7 @@ Trek: {
 		wp: "[&BO0CAAA=]",
 		img: "http://i.imgur.com/bZ567jL.png"
 	},
-	stonebore: {
+	{
 		name_en: "Stonebore Spiderhole",
 		name_de: "Steinbohrungs-Spinnenloch",
 		name_es: "Ratonera Perforapiedra",
@@ -1771,7 +1771,7 @@ Trek: {
 		wp: "[&BIwBAAA=]",
 		img: "http://i.imgur.com/TH0cA4o.png"
 	},
-	strongpaw: {
+	{
 		name_en: "Strongpaw's Garden",
 		name_de: "Starkprankes Garten",
 		name_es: "Jardín de Zarpafuerte",
@@ -1781,7 +1781,7 @@ Trek: {
 		wp: "[&BN0AAAA=]",
 		img: "http://i.imgur.com/FfLOXwV.png"
 	},
-	tactical: {
+	{
 		name_en: "Tactical Retreat",
 		name_de: "Taktischer Rückzug",
 		name_es: "Retirada Táctica",
@@ -1791,7 +1791,7 @@ Trek: {
 		wp: "[&BOQGAAA=]",
 		img: "http://i.imgur.com/e71DqgK.png"
 	},
-	talus: {
+	{
 		name_en: "Talus Steps",
 		name_de: "Talus-Stufen",
 		name_es: "Bancales de Astrágalo",
@@ -1801,7 +1801,7 @@ Trek: {
 		wp: "[&BEQCAAA=]",
 		img: "http://i.imgur.com/cnzQL4r.png"
 	},
-	tarstar: {
+	{
 		name_en: "Tarstar Copse",
 		name_de: "Tarstarwäldchen",
 		name_es: "Soto Tarstar",
@@ -1811,7 +1811,7 @@ Trek: {
 		wp: "[&BB0CAAA=]",
 		img: "http://i.imgur.com/liB4i69.png"
 	},
-	tekki: {
+	{
 		name_en: "Tekki's Drawing Board",
 		name_de: "Tekkis Reissbrett",
 		name_es: "Pizarra de Tekki",
@@ -1821,7 +1821,7 @@ Trek: {
 		wp: "[&BGUAAAA=]",
 		img: "http://i.imgur.com/of0U8Xa.png"
 	},
-	thaumanova: {
+	{
 		name_en: "Thaumanova Spillway",
 		name_de: "Thaumanova-Überlauf",
 		name_es: "Grada Taumanova",
@@ -1831,7 +1831,7 @@ Trek: {
 		wp: "[&BEcAAAA=]",
 		img: "http://i.imgur.com/LVgizpK.png"
 	},
-	thekarka: {
+	{
 		name_en: "The Karka Club",
 		name_de: "Der Karka-Klub",
 		name_es: "El klub karka",
@@ -1841,7 +1841,7 @@ Trek: {
 		wp: "[&BNUGAAA=]",
 		img: "http://i.imgur.com/jnGo3Tl.png"
 	},
-	thepeople: {
+	{
 		name_en: "The People's Deadlock",
 		name_de: "Sackgasse der Massen",
 		name_es: "Punto Muerto del Pueblo",
@@ -1851,7 +1851,7 @@ Trek: {
 		wp: "[&BHkCAAA=]",
 		img: "http://i.imgur.com/Zu5GIFG.png"
 	},
-	theworkers: {
+	{
 		name_en: "The Workers' Stores",
 		name_de: "Geschäfte der Arbeiter",
 		name_es: "Las Tiendas de los Obreros",
@@ -1861,7 +1861,7 @@ Trek: {
 		wp: "[&BFoCAAA=]",
 		img: "http://i.imgur.com/RYWjXSi.png"
 	},
-	togatl: {
+	{
 		name_en: "Togatl Shore",
 		name_de: "Togatl-Ufer",
 		name_es: "Côte de Togatl",
@@ -1871,7 +1871,7 @@ Trek: {
 		wp: "[&BBAAAAA=]",
 		img: "http://i.imgur.com/EGaCFAa.png"
 	},
-	tower: {
+	{
 		name_en: "Tower of Tribulation",
 		name_de: "Turm der Trübsal",
 		name_es: "Torre de la Tribulación",
@@ -1881,7 +1881,7 @@ Trek: {
 		wp: "[&BFYCAAA=]",
 		img: "http://i.imgur.com/qFHlMYy.png"
 	},
-	toxal: {
+	{
 		name_en: "Toxal Spill",
 		name_de: "Toxal-Überlauf",
 		name_es: "Derrame de Toxal",
@@ -1891,7 +1891,7 @@ Trek: {
 		wp: "[&BHYAAAA=]",
 		img: "http://i.imgur.com/qd9Kzu3.png"
 	},
-	trader: {
+	{
 		name_en: "Trader's Stash",
 		name_de: "Händlervorrat",
 		name_es: "Alijo del Comerciante",
@@ -1901,7 +1901,7 @@ Trek: {
 		wp: "[&BI8DAAA=]",
 		img: "http://i.imgur.com/4uf3Eym.png"
 	},
-	trolltrap: {
+	{
 		name_en: "Trolltrap Pit",
 		name_de: "Trollfallen-Grube",
 		name_es: "Foso de la Trampa del Trol",
@@ -1911,7 +1911,7 @@ Trek: {
 		wp: "[&BOkAAAA=]",
 		img: "http://i.imgur.com/2F2nrbK.png"
 	},
-	turai: {
+	{
 		name_en: "Turai Tavern Stillroom",
 		name_de: "Branntweinzimmer der Turai-Taverne",
 		name_es: "Bodega de la Taberna de Turai",
@@ -1921,7 +1921,7 @@ Trek: {
 		wp: "[&BCgDAAA=]",
 		img: "http://i.imgur.com/zcB4Loy.png"
 	},
-	ulta: {
+	{
 		name_en: "Ulta Scraproom",
 		name_de: "Ulta-Schrottkammer",
 		name_es: "Cuarto de Desechos de Ulta",
@@ -1931,7 +1931,7 @@ Trek: {
 		wp: "[&BGUAAAA=]",
 		img: "http://i.imgur.com/TrNeSij.png"
 	},
-	unseen: {
+	{
 		name_en: "Unseen Scratch",
 		name_de: "Unsichtbarer Riss",
 		name_es: "Fisura Oculta",
@@ -1941,7 +1941,7 @@ Trek: {
 		wp: "[&BDwBAAA=]",
 		img: "http://i.imgur.com/8Gyno5D.png"
 	},
-	upsilon: {
+	{
 		name_en: "Upsilon Hyperboloid",
 		name_de: "Upsilon-Hyperboloid",
 		name_es: "Hiperboloide de Upsilon",
@@ -1951,7 +1951,7 @@ Trek: {
 		wp: "[&BKgCAAA=]",
 		img: "http://i.imgur.com/jvWfVxT.png"
 	},
-	usharr: {
+	{
 		name_en: "Usharr's Threshold",
 		name_de: "Usharrs Schwelle",
 		name_es: "Umbral de Usharr",
@@ -1961,7 +1961,7 @@ Trek: {
 		wp: "[&BMsBAAA=]",
 		img: "http://i.imgur.com/GctEl6c.png"
 	},
-	vacant: {
+	{
 		name_en: "Vacant Hermitage",
 		name_de: "Leerstehende Einsiedelei",
 		name_es: "Retiro Vacante",
@@ -1971,7 +1971,7 @@ Trek: {
 		wp: "[&BP8BAAA=]",
 		img: "http://i.imgur.com/q8dEXZO.png"
 	},
-	venison: {
+	{
 		name_en: "Venison Hollow",
 		name_de: "Wildbret-Senke",
 		name_es: "Hondonada del Venado",
@@ -1981,7 +1981,7 @@ Trek: {
 		wp: "[&BOUAAAA=]",
 		img: "http://i.imgur.com/2fIcibq.png"
 	},
-	verdance: {
+	{
 		name_en: "Verdance Font",
 		name_de: "Becken der Grünen Kathedrale",
 		name_es: "Fuente Verdosa",
@@ -1991,7 +1991,7 @@ Trek: {
 		wp: "[&BBsDAAA=]",
 		img: "http://i.imgur.com/faNTPys.png"
 	},
-	vizier: {
+	{
 		name_en: "Vizier's Anteport",
 		name_de: "Wesirs Vortor",
 		name_es: "Antepuerta de Visir",
@@ -2001,7 +2001,7 @@ Trek: {
 		wp: "[&BPcCAAA=]",
 		img: "http://i.imgur.com/q75WUvp.png"
 	},
-	wassa: {
+	{
 		name_en: "Wassa's Terrace",
 		name_de: "Wassas Terrasse",
 		name_es: "Terraza de Wassa",
@@ -2011,7 +2011,7 @@ Trek: {
 		wp: "[&BIsBAAA=]",
 		img: "http://i.imgur.com/j27UVME.png"
 	},
-	watchpoint: {
+	{
 		name_en: "Watchpoint Decimus",
 		name_de: "Wachposten Decimus",
 		name_es: "Puesto de Observación de Decimus",
@@ -2021,7 +2021,7 @@ Trek: {
 		wp: "[&BJgDAAA=]",
 		img: "http://i.imgur.com/xp7mAYC.png"
 	},
-	wheelport: {
+	{
 		name_en: "Wheelport Pub",
 		name_de: "Radhafen-Schänke",
 		name_es: "Taberna Puerto Timón",
@@ -2031,7 +2031,7 @@ Trek: {
 		wp: "[&BKUDAAA=]",
 		img: "http://i.imgur.com/hFX2D0M.png"
 	},
-	whitland: {
+	{
 		name_en: "Whitland Sinkhole",
 		name_de: "Winzland-Krater",
 		name_es: "Sumidero de Whitland",
@@ -2041,7 +2041,7 @@ Trek: {
 		wp: "[&BNQCAAA=]",
 		img: "http://i.imgur.com/jdghuiW.png"
 	},
-	widd: {
+	{
 		name_en: "Widd's Folly",
 		name_de: "Widds Torheit",
 		name_es: "Capricho de Widd",
@@ -2051,7 +2051,7 @@ Trek: {
 		wp: "[&BDoBAAA=]",
 		img: "http://i.imgur.com/4y13pvY.png"
 	},
-	wikk: {
+	{
 		name_en: "Wikk's Gate",
 		name_de: "Wikks Tor",
 		name_es: "Puerta de Wikk",
@@ -2061,7 +2061,7 @@ Trek: {
 		wp: "[&BEwCAAA=]",
 		img: "http://i.imgur.com/UwuYf4e.png"
 	},
-	wildflame: {
+	{
 		name_en: "Wildflame Monitor",
 		name_de: "Wildflammenwächter",
 		name_es: "Monitor Llamasalvaje",
@@ -2071,7 +2071,7 @@ Trek: {
 		wp: "[&BEAAAAA=]",
 		img: "http://i.imgur.com/pKHS4VY.png"
 	},
-	winterknell: {
+	{
 		name_en: "Winterknell Impasse",
 		name_de: "Wintertotengeläut-Sackgasse",
 		name_es: "Atolladero del Repique Invernal",
@@ -2081,7 +2081,7 @@ Trek: {
 		wp: "[&BBgDAAA=]",
 		img: "http://i.imgur.com/dj8hbNR.png"
 	},
-	wrelk: {
+	{
 		name_en: "Wrelk's Salon",
 		name_de: "Wrelks Salon",
 		name_es: "Salón de Wrelk",
@@ -2091,7 +2091,7 @@ Trek: {
 		wp: "[&BJQBAAA=]",
 		img: "http://i.imgur.com/ri3MbwI.png"
 	}
-	}
+	]
 },
 Challenge: {
 	name_en: "Guild Challenge",
@@ -2102,8 +2102,8 @@ Challenge: {
 	url_de: "http://www.wartower.de/artikel/artikel.php?id=716",
 	url_es: "http://dgea.es/inicio/index.php/guild-wars-2/clanes/misiones-de-clan/desafio",
 	url_fr: "http://gw2-menestrels.com/guide-des-defis/",
-	data: {
-	blightwater: {
+	data: [
+	{
 		name_en: "Blightwater Shatterstrike",
 		name_de: "Faulwasser-Trümmerschlag",
 		name_es: "Quebranta Plagagua",
@@ -2112,7 +2112,7 @@ Challenge: {
 		coord: [29547, 15931],
 		wp: "[&BPsBAAA=]"
 	},
-	branded: {
+	{
 		name_en: "Branded for Termination",
 		name_de: "Gebrandmarkt für das Ende",
 		name_es: "Marcado para la eliminación",
@@ -2121,7 +2121,7 @@ Challenge: {
 		coord: [28953, 16832],
 		wp: "[&BEsBAAA=]"
 	},
-	deep: {
+	{
 		name_en: "Deep Trouble",
 		name_de: "Großer Ärger",
 		name_es: "Con el agua hasta el cuello",
@@ -2130,7 +2130,7 @@ Challenge: {
 		coord: [20459, 22818],
 		wp: "[&BNICAAA=]"
 	},
-	save: {
+	{
 		name_en: "Save Our Supplies",
 		name_de: "Rettet unseren Nachschub",
 		name_es: "Guarda nuestros suministros",
@@ -2139,7 +2139,7 @@ Challenge: {
 		coord: [28253, 10800],
 		wp: "[&BOoBAAA=]"
 	},
-	scratch: {
+	{
 		name_en: "Scratch Sentry Defense",
 		name_de: "Verteidigung des Riss-Wachposten",
 		name_es: "Defensa vigía de la fisura",
@@ -2148,7 +2148,7 @@ Challenge: {
 		coord: [19967, 19324],
 		wp: "[&BEYEAAA=]"
 	},
-	southsun: {
+	{
 		name_en: "Southsun Crab Toss",
 		name_de: "Südlicht-Krabbenwerfen",
 		name_es: "Lanzamiento de cangrejos del Sol Austral",
@@ -2157,7 +2157,7 @@ Challenge: {
 		coord: [13272, 19427],
 		wp: "[&BNwGAAA=]"
 	}
-	}
+	]
 },
 Rush: {
 	name_en: "Guild Rush",
@@ -2168,8 +2168,8 @@ Rush: {
 	url_de: "http://wiki-de.guildwars2.com/wiki/Gilden-Sprint",
 	url_es: "http://www.guildwars2-spain.com/manuales/644-guía-de-misión-de-clan-carrera",
 	url_fr: "http://www.lebusmagique.fr/pages/missions-de-guilde/les-courses-de-guilde.html",
-	data: {
-	bear: {
+	data: [
+	{
 		name_en: "Bear Lope",
 		name_de: "Bärengalopp",
 		name_es: "Galope de Oso",
@@ -2181,43 +2181,43 @@ Rush: {
 		flags: "",
 		wp: ""
 	},
-	chicken: {
+	{
 		name_en: "Chicken Run",
 		name_de: "Hühnerlauf",
 		name_es: "Pollito en fuga",
 		name_fr: "Poulet en fuite"
 	},
-	crab: {
+	{
 		name_en: "Crab Scuttle",
 		name_de: "Krebs-Luke",
 		name_es: "Cangrejo al escape",
 		name_fr: "Fugue du crabe"
 	},
-	devourer: {
+	{
 		name_en: "Devourer Burrow",
 		name_de: "Verschlinger-Bau",
 		name_es: "Devorador escarbador",
 		name_fr: "Terrier du Dévoreur"
 	},
-	quaggan: {
+	{
 		name_en: "Quaggan Paddle",
 		name_de: "Quaggan-Paddel",
 		name_es: "Canoa Quaggan",
 		name_fr: "Pagaie quaggan"
 	},
-	spider: {
+	{
 		name_en: "Spider Scurry",
 		name_de: "Spinnenspurt",
 		name_es: "Araña huidiza",
 		name_fr: "Course arachnide"
 	},
-	wolf: {
+	{
 		name_en: "Ghost Wolf Run",
 		name_de: "Geisterwolf-Lauf",
 		name_es: "Lobo Fantasmal en Fuga",
 		name_fr: "Fuite du loup fantôme"
 	}
-	}
+	]
 },
 Puzzle: {
 	name_en: "Guild Puzzle",
@@ -2228,28 +2228,28 @@ Puzzle: {
 	url_de: "https://wiki-de.guildwars2.com/wiki/Gilden-Rätsel",
 	url_es: "http://www.guildwars2-spain.com/manuales/671-guía-de-misión-de-clan-prueba",
 	url_fr: "http://www.lebusmagique.fr/pages/missions-de-guilde/les-puzzles-de-guilde.html",
-	data: {
-	angvar: {
+	data: [
+	{
 		name_en: "Angvar's Trove",
 		name_de: "Angvars Schatzkammer",
 		name_es: "Tesoro de Angvar",
 		name_fr: "Cache d’Angvar",
 		wp: "[&BP8GAAA=]"
 	},
-	langmar: {
+	{
 		name_en: "Langmar Estate",
 		name_de: "Langmar-Anwesens",
 		name_es: "Hacienda de Langmar",
 		name_fr: "Domaine de Langmar",
 		wp: "[&BPgGAAA=]"
 	},
-	proxemics: {
+	{
 		name_en: "Proxemics Lab",
 		name_de: "Proxemik-Labors",
 		name_es: "Laboratorio de Proxémica",
 		name_fr: "Laboratoire de Proxémie",
 		wp: "[&BPkGAAA=]"
 	}
-	}
+	]
 }
 };

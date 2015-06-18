@@ -120,10 +120,10 @@ body, html, .panelMain, #windowMain, #paneContent article {
 
 .chnTitle time {
 	width: 88px;
-	font-size: 18px;
+	font-size: 20px;
 }
 .chnTitle time sup {
-	font-size: 16px;
+	font-size: 18px;
 }
 
 #plateChains header {

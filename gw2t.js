@@ -5049,6 +5049,27 @@ D = {
 			return C.Chains[pChain.nexus].pronunciation;
 		}
 		return D.getChainTitle(pChain.nexus);
+	},
+	
+	/*
+	 * Sorts an array of objects by its language name.
+	 * @param array pObjects.
+	 */
+	sortObjects: function(pObjects)
+	{
+		var key = "name_" + D.getFullySupportedLanguage();
+		pObjects.sort(function (a, b)
+		{
+			if (a[key] > b[key])
+			{
+				return 1;
+			}
+			if (a[key] < b[key])
+			{
+				return -1;
+			}
+			return 0;
+		});
 	}
 };
 
@@ -7612,6 +7633,19 @@ M = {
 			M.goToView(thiscoord, pPin, pZoom);
 		});
 		
+		pLink.dblclick(function()
+		{
+			var thiscoord = M.getElementCoordinates($(this));
+			if (M.Map.getZoom() === M.ZoomLevelEnum.Max)
+			{
+				M.goToView(thiscoord, pPin, M.ZoomLevelEnum.Default);
+			}
+			else
+			{
+				M.goToView(thiscoord, pPin, M.ZoomLevelEnum.Ground);
+			}
+		});
+		
 		// Move a point pin to that location as a preview
 		pLink.mouseover(function()
 		{
@@ -9300,7 +9334,7 @@ G = {
 				var missiontype = M.Guild[i];
 				var translatedname = D.getObjectName(missiontype);
 				$("#mapGuildButtons").append("<div>"
-					+ "<button id='gldButton_" + i + "' title='<dfn>" + translatedname
+					+ "<button class='gldButton' id='gldButton_" + i + "' title='<dfn>" + translatedname
 					+ "</dfn>'><img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>"
 					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "' target='_blank'>Y</a>&nbsp;"
 					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "' target='_blank'>W</a>"
@@ -9370,10 +9404,61 @@ G = {
 				});
 			});
 			
-			// Show the guild mission type when clicked on button
-			$("#gldButton_Bounty, #gldButton_Trek, #gldButton_Challenge, #gldButton_Rush, #gldButton_Puzzle").click(function()
+			/*
+			 * Trek generation.
+			 */
+			$("#gldButton_Trek").one("click", function()
 			{
-				$("#gldBook_Bounty, #gldBook_Trek, #gldBook_Challenge, #gldBook_Rush, #gldBook_Puzzle").hide();
+				var index = 0;
+				for (var i in M.Guild.Trek.data)
+				{
+					var mission = M.Guild.Trek.data[i];
+					var name = D.getDefaultObjectName(mission);
+					var translatedname = D.getObjectName(mission);
+					
+					$("#gldBook_Trek").append(
+						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
+						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Trek) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+						+ "<dfn id='gldTrek_" + i + "' data-index='" + index + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn>"
+						+ "</div>"
+					);
+					
+					/*var layergroup = new L.layerGroup();
+					for (var ii in mission.path)
+					{
+						layergroup.addLayer(P.drawDirectedPath(mission.path[ii]));
+					}
+					M.LayerArray.GuildTrek.push(layergroup);*/
+					
+					// Bind this Trek's behavior
+					var elm = $("#gldTrek_" + i);
+					elm.attr("title", "<div class='mapLoc'><img src='" + mission.img + "' /></div>")
+						.click(function()
+					{
+						I.toggleHighlight($(this));
+						//M.toggleLayer(M.LayerArray.GuildTrek[$(this).data("index")]);
+					});
+					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Same);
+					
+					index++;
+				}
+				
+				U.convertExternalLink("#gldBook_Trek a");
+				I.qTip.init("#gldBook_Trek dfn");
+				// Initialize clipboard for each waypoint
+				$("#gldBook_Trek .cssWaypoint").each(function()
+				{
+					(new ZeroClipboard($(this)[0])).on("aftercopy", function(pEvent)
+					{
+						I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
+					});
+				});
+			});
+			
+			// Show the guild mission type when clicked on button
+			$(".gldButton").click(function()
+			{
+				$(".gldBook").hide();
 				$("#gldBook_" + U.getSubstringFromHTMLID($(this))).show();
 			});
 			
