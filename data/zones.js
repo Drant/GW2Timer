@@ -462,9 +462,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Keep", "Defender"]
 },
 "19": {
-	pve: ["Lumberer Maguuma", "Vista Ascalon", "Fields", "Fractal 1-10"],
-	pvp: ["Capture", "Defender", "Engineer Elementalist", "Ranger Thief"],
-	wvw: ["Spender", "Ruins", "Camp", "Keep"]
+	pve: ["Lumberer Kryta", "Fractal", "Frostgorge", "SB Kryta"],
+	pvp: ["Reward", "Capture", "Ranger Thief", "Engineer Elementalist"],
+	wvw: ["Defender", "Ruins", "Tower", "Camp"]
 },
 "20": {
 	pve: ["Miner Shiverpeaks", "Activity", "Dry", "Shatterer Ascalon"],

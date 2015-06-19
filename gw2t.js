@@ -5163,7 +5163,8 @@ C = {
 				else
 				{
 					// Else get tomorrow's boss
-					C.updateChainToday(true);
+					C.ChainToday = null;
+					//C.updateChainToday(true);
 				}
 			}
 			else
@@ -6214,7 +6215,6 @@ C = {
 					event.eventicon._icon.style.display = "block";
 					event.eventring._icon.style.display = "block";
 				}
-				M.burySubmaps();
 			});
 		
 			// Recolor future events
@@ -6450,7 +6450,6 @@ M = {
 	isAPIRetrieved_MAPFLOOR: false,
 	isMappingIconsGenerated: false,
 	isEventIconsGenerated: false,
-	isUsingSubmaps: false,
 	cLEAFLET_PATH_OPACITY: 0.5,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
@@ -6490,7 +6489,6 @@ M = {
 	 */
 	Layer: {
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
-		Submap: new L.layerGroup(), // Screenshot of a GW2 map section that's not in API yet
 		Chest: new L.layerGroup() // Open world basic chests
 	},
 	LayerArray: {
@@ -6500,7 +6498,9 @@ M = {
 		Resource_Plant: new Array(),
 		Resource_Wood: new Array(),
 		GuildBounty: new Array(),
-		GuildRush: new Array()
+		GuildTrek: new Array(),
+		GuildRush: new Array(),
+		GuildPuzzle: new Array()
 	},
 	/*
 	 * Entity is a group of markers created into the map only once and are never
@@ -6671,7 +6671,6 @@ M = {
 		M.ZoneCurrent = M.Zones[M.cInitialZone];
 		
 		// Do other initialization functions
-		//P.generateSubmaps();
 		P.populateMap();
 		C.ScheduledChains.forEach(P.drawChainPaths);
 		
@@ -6781,17 +6780,6 @@ M = {
 			if (M.isMouseOnHUD || M.isUserDragging) { return; }
 			M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
 		}));
-		
-		/*
-		 * At the start of a zoom change hide submaps so they do not cover the map.
-		 */
-		M.Map.on("zoomstart", function(pEvent)
-		{
-			if (M.isUsingSubmaps)
-			{
-				M.toggleLayer(M.Layer.Submap, false);
-			}
-		});
 
 		/*
 		 * At the end of a zoom animation, resize the map waypoint icons
@@ -6911,23 +6899,6 @@ M = {
 	},
 	
 	/*
-	 * Gets the dimension (of say a marker) adjusted to the specified zoom level.
-	 * For example, a submap must be resized so that it is the same scale as
-	 * the map's tileset. It is known that every zoom down doubles the size of
-	 * the map, and vice versa. The formula below is:
-	 * maxdimension / (2 ^ (maxzoomlevel - currentzoomlevel))
-	 * Each zoom down increases the dimension toward the maxdimension, so when
-	 * it's at maxzoomlevel, the returned dimension equals maxdimension.
-	 * @param int pMaxDimension to rescale.
-	 * @param int or enum pZoomLevel for adjustment.
-	 */
-	scaleDimension: function(pMaxDimension, pZoomLevel)
-	{
-		pZoomLevel = pZoomLevel || M.Map.getZoom();
-		return parseInt(pMaxDimension / (Math.pow(M.cZoomLevelFactor, (M.ZoomLevelEnum.Max) - pZoomLevel)));
-	},
-	
-	/*
 	 * Converts a zoom level where 0 is ground level to proper level.
 	 * @param int zoom level inverted.
 	 * @returns int zoom level proper.
@@ -7024,20 +6995,16 @@ M = {
 				layer._icon.style.zIndex = -10000;
 			}
 		});
-		
-		M.burySubmaps();
 	},
 	
 	/*
-	 * Resizes Dry Top markers and submaps so they scale with the current zoom level.
+	 * Resizes Dry Top markers so they scale with the current zoom level.
 	 */
 	adjustZoomDryTop: function()
 	{
 		var i;
 		var currentzoom = M.Map.getZoom();
 		var icon;
-		var submapwidth;
-		var submapheight;
 		
 		switch (currentzoom)
 		{
@@ -7050,26 +7017,6 @@ M = {
 			{
 				M.currentIconSize = 0;
 			}
-		}
-		
-		// Rescale submaps if exist
-		if (M.isUsingSubmaps)
-		{
-			M.toggleLayer(M.Layer.Submap, true);
-			M.Layer.Submap.eachLayer(function(pMarker)
-			{
-				submapwidth = M.scaleDimension(pMarker.spatiality.maxwidth);
-				submapheight = M.scaleDimension(pMarker.spatiality.maxheight);
-
-				pMarker.setIcon(new L.icon(
-				{
-					iconUrl: pMarker._icon.src,
-					iconSize: [submapwidth, submapheight],
-					iconAnchor: [0, 0]
-				}));
-				// Bury the submaps so other markers are visible
-				pMarker._icon.style.zIndex = M.cZIndexBury;
-			});
 		}
 		
 		// Resize Dry Top event icons
@@ -7088,20 +7035,6 @@ M = {
 				M.DryTopEventIcons[i]._icon.style.zIndex = 1000;
 				M.DryTopEventRings[i]._icon.style.zIndex = 1;
 			}
-		}
-	},
-	
-	/*
-	 * Sets the submaps' z-index extremely low so other markers are visible.
-	 */
-	burySubmaps: function()
-	{
-		if (M.isUsingSubmaps)
-		{
-			M.Layer.Submap.eachLayer(function(pSubmap)
-			{
-				pSubmap._icon.style.zIndex = M.cZIndexBury;
-			});
 		}
 	},
 	
@@ -7788,43 +7721,6 @@ M = {
  * @@Populate map functions
  * ========================================================================== */
 P = {
-	
-	/*
-	 * Create submaps that are giant markers with an image of a map area.
-	 * Used for temporary zones that haven't been put in the API tileset.
-	 */
-	generateSubmaps: function()
-	{
-		M.SubmapTemp = P.createSubmap([2048, 1536], [3713, 15681], "http://i.imgur.com/nB9kM3O.jpg");
-		M.toggleLayer(M.Layer.Submap, true);
-	},
-	
-	/*
-	 * Creates and returns a submap.
-	 * @param int[] pDimensions width and height array.
-	 * @param int[] pCoord x,y array.
-	 * @param string pURL image of submap.
-	 * @returns object Leaflet marker.
-	 */
-	createSubmap: function(pDimensions, pCoord, pURL)
-	{
-		var width = M.scaleDimension(pDimensions[0]);
-		var height = M.scaleDimension(pDimensions[1]);
-		var submap = L.marker(M.convertGCtoLC([pCoord[0], pCoord[1]]),
-		{
-			icon: L.icon(
-			{
-				iconUrl: pURL,
-				iconSize: [width, height],
-				iconAnchor: [0, 0]
-			}),
-			draggable: false,
-			clickable: false
-		});
-		submap.spatiality = {maxwidth: pDimensions[0], maxheight: pDimensions[1]};
-		M.Layer.Submap.addLayer(submap);
-		return submap;
-	},
 	
 	/*
 	 * Creates a pin in the map to be assigned to a reference object.
@@ -9313,6 +9209,24 @@ G = {
 	},
 	
 	/*
+	 * Does additional UI bindings to a guild mission type.
+	 * @param string pBook mission type.
+	 */
+	finalizeGuildBook: function(pBook)
+	{
+		U.convertExternalLink("#gldBook_" + pBook + " a");
+		I.qTip.init("#gldBook_" + pBook + " dfn");
+		// Initialize clipboard for each waypoint
+		$("#gldBook_" + pBook + " .cssWaypoint").each(function()
+		{
+			(new ZeroClipboard($(this)[0])).on("aftercopy", function(pEvent)
+			{
+				I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
+			});
+		});
+	},
+	
+	/*
 	 * Create list of guild mission types, and mission checkboxes for each type.
 	 * First checkbox click generates the mission's data into the map.
 	 */
@@ -9350,6 +9264,7 @@ G = {
 			$("#gldButton_Bounty").one("click", function()
 			{
 				var index = 0;
+				D.sortObjects(M.Guild.Bounty.data);
 				for (var i in M.Guild.Bounty.data)
 				{
 					var mission = M.Guild.Bounty.data[i];
@@ -9391,17 +9306,7 @@ G = {
 					
 					index++;
 				}
-				
-				U.convertExternalLink("#gldBook_Bounty a");
-				I.qTip.init("#gldBook_Bounty dfn");
-				// Initialize clipboard for each waypoint
-				$("#gldBook_Bounty .cssWaypoint").each(function()
-				{
-					(new ZeroClipboard($(this)[0])).on("aftercopy", function(pEvent)
-					{
-						I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
-					});
-				});
+				G.finalizeGuildBook("Bounty");
 			});
 			
 			/*
@@ -9410,10 +9315,10 @@ G = {
 			$("#gldButton_Trek").one("click", function()
 			{
 				var index = 0;
+				D.sortObjects(M.Guild.Trek.data);
 				for (var i in M.Guild.Trek.data)
 				{
 					var mission = M.Guild.Trek.data[i];
-					var name = D.getDefaultObjectName(mission);
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Trek").append(
@@ -9423,12 +9328,9 @@ G = {
 						+ "</div>"
 					);
 					
-					/*var layergroup = new L.layerGroup();
-					for (var ii in mission.path)
-					{
-						layergroup.addLayer(P.drawDirectedPath(mission.path[ii]));
-					}
-					M.LayerArray.GuildTrek.push(layergroup);*/
+					var layergroup = new L.layerGroup();
+					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
+					M.LayerArray.GuildTrek.push(layergroup);
 					
 					// Bind this Trek's behavior
 					var elm = $("#gldTrek_" + i);
@@ -9436,23 +9338,41 @@ G = {
 						.click(function()
 					{
 						I.toggleHighlight($(this));
-						//M.toggleLayer(M.LayerArray.GuildTrek[$(this).data("index")]);
+						M.toggleLayer(M.LayerArray.GuildTrek[$(this).data("index")]);
 					});
 					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Same);
 					
 					index++;
 				}
-				
-				U.convertExternalLink("#gldBook_Trek a");
-				I.qTip.init("#gldBook_Trek dfn");
-				// Initialize clipboard for each waypoint
-				$("#gldBook_Trek .cssWaypoint").each(function()
+				G.finalizeGuildBook("Trek");
+			});
+			
+			/*
+			 * Challenge generation.
+			 */
+			$("#gldButton_Challenge").one("click", function()
+			{
+				D.sortObjects(M.Guild.Challenge.data);
+				for (var i in M.Guild.Challenge.data)
 				{
-					(new ZeroClipboard($(this)[0])).on("aftercopy", function(pEvent)
-					{
-						I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
-					});
-				});
+					var mission = M.Guild.Challenge.data[i];
+					var name = D.getDefaultObjectName(mission);
+					var translatedname = D.getObjectName(mission);
+					
+					$("#gldBook_Challenge").append(
+						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
+						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
+						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
+						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
+						+ "</div>"
+					);
+					
+					// Bind this Challenge's behavior
+					var elm = $("#gldChallenge_" + i);
+					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Same);
+				}
+				G.finalizeGuildBook("Challenge");
 			});
 			
 			// Show the guild mission type when clicked on button
