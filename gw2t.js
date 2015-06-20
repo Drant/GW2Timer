@@ -6899,6 +6899,23 @@ M = {
 	},
 	
 	/*
+	 * Gets the dimension (of say a marker) adjusted to the specified zoom level.
+	 * For example, a submap must be resized so that it is the same scale as
+	 * the map's tileset. It is known that every zoom down doubles the size of
+	 * the map, and vice versa. The formula below is:
+	 * maxdimension / (2 ^ (maxzoomlevel - currentzoomlevel))
+	 * Each zoom down increases the dimension toward the maxdimension, so when
+	 * it's at maxzoomlevel, the returned dimension equals maxdimension.
+	 * @param int pMaxDimension to rescale.
+	 * @param int or enum pZoomLevel for adjustment.
+	 */
+	scaleDimension: function(pMaxDimension, pZoomLevel)
+	{
+		pZoomLevel = pZoomLevel || M.Map.getZoom();
+		return parseInt(pMaxDimension / (Math.pow(M.cZoomLevelFactor, (M.ZoomLevelEnum.Max) - pZoomLevel)));
+	},
+	
+	/*
 	 * Converts a zoom level where 0 is ground level to proper level.
 	 * @param int zoom level inverted.
 	 * @returns int zoom level proper.
@@ -7484,6 +7501,19 @@ M = {
 		{
 			M.printCoordinates(pArray);
 		}
+	},
+	roundCoordinates: function(pArray)
+	{
+		var coord;
+		// Convert to integer
+		for (var i in pArray)
+		{
+			coord = pArray[i];
+			coord[0] = Math.round(coord[0]);
+			coord[1] = Math.round(coord[1]);
+		}
+		// Print the result formatted
+		M.printCoordinates(pArray);
 	},
 	printCushion: function(pCushion)
 	{
@@ -8519,7 +8549,7 @@ G = {
 		var i;
 		var dayofmonth = 0;
 		var ithdate;
-		var DAYS_TO_SHOW = 32;
+		var DAYS_TO_SHOW = 3;
 		
 		for (i = 0; i < DAYS_TO_SHOW; i++)
 		{
