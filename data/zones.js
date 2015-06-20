@@ -372,12 +372,12 @@ var GW2T_ZONE_DATA = {
  */
 var GW2T_DAILY_CALENDAR = {
 "1": {
-	pve: ["Forager Orr", "Forger", "Ashford", "Wurm Maguuma"],
+	pve: ["Forager Orr", "Forger", "Ashford", "Fractal 1-10"],
 	pvp: ["Capture", "Defender", "Warrior Engineer", "Ranger Engineer"],
 	wvw: ["Land", "Creature", "Keep", "Defender"]
 },
 "2": {
-	pve: ["Lumberer Wastes", "Vista Orr", "Southsun", "Maw Shiverpeaks"],
+	pve: ["Lumberer Wastes", "Vista Orr", "Southsun", "Fractal 1-10"],
 	pvp: ["Kills", "Capture", "Elementalist Mesmer", "Guardian Thief"],
 	wvw: ["Land", "Caravan", "Tower", "Keep"]
 },
@@ -387,12 +387,12 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Kills", "Creature", "Defender", "Tower"]
 },
 "4": {
-	pve: ["Forager Wastes", "Forger", "Maelstrom", "Golem Maguuma"],
+	pve: ["Forager Wastes", "Forger", "Maelstrom", "Fractal 1-10"],
 	pvp: ["Rank", "Capture", "Warrior Guardian", "Ranger Engineer"],
 	wvw: ["Land", "Ruins", "Camp", "Defender"]
 },
 "5": {
-	pve: ["Forager Orr", "Vista Kryta", "Caledon", "Shatterer Ascalon"],
+	pve: ["Forager Orr", "Vista Kryta", "Caledon", "Fractal 1-10"],
 	pvp: ["Reward", "Kills", "Ranger Thief", "Engineer Elementalist"],
 	wvw: ["Ruins", "Creature", "Keep", "Defender"]
 },
@@ -402,22 +402,22 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Guard", "Keep", "Camp"]
 },
 "7": {
-	pve: ["Forager Kryta", "Forger", "Queensdale", "Megades Maguuma"],
+	pve: ["Forager Kryta", "Forger", "Queensdale", "Fractal 1-10"],
 	pvp: ["Defender", "Reward", "Ranger Mesmer", "Guardian Engineer"],
 	wvw: ["Land", "Ruins", "Tower", "Keep"]
 },
 "8": {
-	pve: ["Lumberer Wastes", "Vista Orr", "Harathi", "SB Kryta"],
+	pve: ["Lumberer Wastes", "Vista Orr", "Harathi", "Fractal 1-10"],
 	pvp: ["Defender", "Rank", "Warrior Engineer", "Ranger Necromancer"],
 	wvw: ["Guard", "Caravan", "Defender", "Keep"]
 },
 "9": {
-	pve: ["Miner Maguuma", "Vista Ascalon", "Bloodtide", "Wurm Maguuma"],
+	pve: ["Miner Maguuma", "Vista Ascalon", "Bloodtide", "Fractal 1-10"],
 	pvp: ["Defender", "Kills", "Elementalist Mesmer", "Guardian Thief"],
 	wvw: ["Ruins", "Kills", "Tower", "Defender"]
 },
 "10": {
-	pve: ["Forager Kryta", "Activity", "Kessex", "Maw Shiverpeaks"],
+	pve: ["Forager Kryta", "Activity", "Kessex", "Fractal 1-10"],
 	pvp: ["Kills", "Rank", "Engineer Thief", "Elementalist Necromancer"],
 	wvw: ["Spender", "Caravan", "Tower", "Camp"]
 },
@@ -427,7 +427,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Kills", "Keep", "Defender"]
 },
 "12": {
-	pve: ["Lumberer Maguuma", "Fractal", "Sparkfly", "SB Kryta"],
+	pve: ["Lumberer Maguuma", "Fractal", "Sparkfly", "Fractal 1-10"],
 	pvp: ["Rank", "Capture", "Engineer Mesmer", "Guardian Elementalist"],
 	wvw: ["Land", "Guard", "Defender", "Camp"]
 },
@@ -437,7 +437,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Caravan", "Defender", "Tower"]
 },
 "14": {
-	pve: ["Miner Orr", "Vista Ascalon", "Brisban", "Maw Shiverpeaks"],
+	pve: ["Miner Orr", "Vista Ascalon", "Brisban", "Fractal 1-10"],
 	pvp: ["Reward", "Defender", "Thief Elementalist", "Guardian Mesmer"],
 	wvw: ["Ruins", "Guard", "Keep", "Defender"]
 },
@@ -447,12 +447,12 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Kills", "Caravan", "Camp", "Defender"]
 },
 "16": {
-	pve: ["Forager Kryta", "Vista Shiverpeaks", "Dredgehaunt", "Wurm Maguuma"],
+	pve: ["Forager Kryta", "Vista Shiverpeaks", "Dredgehaunt", "Fractal 1-10"],
 	pvp: ["Rank", "Capture", "Thief Necromancer", "Elementalist Ranger"],
 	wvw: ["Kills", "Caravan", "Tower", "Camp"]
 },
 "17": {
-	pve: ["Miner Orr", "Vista Maguuma", "Wayfarer", "Megades Maguuma"],
+	pve: ["Miner Orr", "Vista Maguuma", "Wayfarer", "Fractal 1-10"],
 	pvp: ["Capture", "Kills", "Warrior Necromancer", "Thief Mesmer"],
 	wvw: ["Caravan", "Land", "Camp", "Defender"]
 },
@@ -467,9 +467,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Defender", "Ruins", "Tower", "Camp"]
 },
 "20": {
-	pve: ["Miner Shiverpeaks", "Activity", "Dry", "Shatterer Ascalon"],
-	pvp: ["Reward", "Capture", "Warrior Ranger", "Guardian Necromancer"],
-	wvw: ["Ruins", "Guard", "Defender", "Camp"]
+	pve: ["Miner Wastes", "Vista Ascalon", "Metrica", "Golem Maguuma"],
+	pvp: ["Defender", "Kills", "Warrior Ranger", "Guardian Necromancer"],
+	wvw: ["Caravan", "Ruins", "Keep", "Defender"]
 },
 "21": {
 	pve: ["Forager Kryta", "Fractal", "Queensdale", "Fractal 21-30"],
@@ -477,7 +477,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Caravan", "Camp", "Defender"]
 },
 "22": {
-	pve: ["Miner Orr", "Vista Shiverpeaks", "Southsun", "Golem Maguuma"],
+	pve: ["Miner Orr", "Vista Shiverpeaks", "Southsun", "Fractal 1-10"],
 	pvp: ["Capture", "Reward", "Warrior Engineer", "Ranger Necromancer"],
 	wvw: ["Land", "Guard", "Defender", "Tower"]
 },
@@ -487,17 +487,17 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Spender", "Camp", "Defender"]
 },
 "24": {
-	pve: ["Lumberer Kryta", "Activity", "Bloodtide", "Shatterer Ascalon"],
+	pve: ["Lumberer Kryta", "Activity", "Bloodtide", "Fractal 1-10"],
 	pvp: ["Reward", "Capture", "Engineer Thief", "Elementalist Necromancer"],
 	wvw: ["Land", "Creature", "Defender", "Tower"]
 },
 "25": {
-	pve: ["Miner Shiverpeaks", "Forger", "Silverwastes", "SB Kryta"],
+	pve: ["Miner Shiverpeaks", "Forger", "Silverwastes", "Fractal 1-10"],
 	pvp: ["Rank", "Reward", "Warrior Thief", "Guardian Ranger"],
 	wvw: ["Caravan", "Kills", "Tower", "Camp"]
 },
 "26": {
-	pve: ["Forager Orr", "Vista Ascalon", "Malchor", "Megades Maguuma"],
+	pve: ["Forager Orr", "Vista Ascalon", "Malchor", "Fractal 1-10"],
 	pvp: ["Defender", "Kills", "Engineer Mesmer", "Guardian Elementalist"],
 	wvw: ["Ruins", "Caravan", "Keep", "Defender"]
 },
@@ -507,22 +507,22 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Spender", "Tower", "Camp"]
 },
 "28": {
-	pve: ["Miner Shiverpeaks", "Activity", "Frostgorge", "SB Kryta"],
+	pve: ["Miner Shiverpeaks", "Activity", "Frostgorge", "Fractal 1-10"],
 	pvp: ["Defender", "Capture", "Thief Elementalist", "Guardian Mesmer"],
 	wvw: ["Ruins", "Guard", "Defender", "Camp"]
 },
 "29": {
-	pve: ["Forager Kryta", "Vista Kryta", "Fields", "Maw Shiverpeaks"],
+	pve: ["Forager Kryta", "Vista Kryta", "Fields", "Fractal 1-10"],
 	pvp: ["Defender", "Kills", "Warrior Mesmer", "Guardian Necromancer"],
 	wvw: ["Creature", "Land", "Keep", "Tower"]
 },
 "30": {
-	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Kessex", "Megades Maguuma"],
+	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Kessex", "Fractal 1-10"],
 	pvp: ["Reward", "Capture", "Thief Necromancer", "Elementalist Ranger"],
 	wvw: ["Caravan", "Spender", "Defender", "Camp"]
 },
 "31": {
-	pve: ["Miner Maguuma", "Fractal", "Sparkfly", "FE Maguuma"],
+	pve: ["Miner Maguuma", "Fractal", "Sparkfly", "Fractal 1-10"],
 	pvp: ["Capture", "Reward", "Warrior Necromancer", "Thief Mesmer"],
 	wvw: ["Spender", "Land", "Defender", "Tower"]
 }

@@ -9258,6 +9258,8 @@ G = {
 			I.qTip.init("#mapGuildButtons button");
 			U.convertExternalLink("#mapGuildButtons a");
 			
+			$("#gldButton_Rush, #gldButton_Puzzle").css({opacity: 0.3});
+			
 			/*
 			 * Bounty generation.
 			 */
