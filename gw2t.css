@@ -1910,6 +1910,14 @@ dt.mapJPListNameHover {
 	color: #888;
 }
 
+#mapGuildButtons .gldHide {
+	width: 48px;
+}
+
+#mapGuildButtons .gldHide img {
+	width: 24px; height: 24px;
+}
+
 /* Arithmetic Calculator
 ----------------------------------------------------------------------------- */
 #trdCalculation img {

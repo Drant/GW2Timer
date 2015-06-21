@@ -125,11 +125,11 @@
 </header>
 <section>
 <div class="mapResourceList">
-	<div id="mapResource_Metal"><button id="mapToggle_ResourceMetal"><img data-src="img/node/resource_metal.png" alt="Toggle" /></button></div>
-	<div id="mapResource_Plant"><button id="mapToggle_ResourcePlant"><img data-src="img/node/resource_plant.png" alt="Toggle" /></button></div>
-	<div id="mapResource_Wood"><button id="mapToggle_ResourceWood"><img data-src="img/node/resource_wood.png" alt="Toggle" /></button></div>
+	<div id="mapResource_Metal"><button id="mapToggle_ResourceMetal" class="curToggle"><img data-src="img/node/resource_metal.png" alt="Toggle" /></button></div>
+	<div id="mapResource_Plant"><button id="mapToggle_ResourcePlant" class="curToggle"><img data-src="img/node/resource_plant.png" alt="Toggle" /></button></div>
+	<div id="mapResource_Wood"><button id="mapToggle_ResourceWood" class="curToggle"><img data-src="img/node/resource_wood.png" alt="Toggle" /></button></div>
 </div>
-<button id="mapToggle_Resource" class="btnToggle"><img data-src="img/map/display.png" alt="Toggle" /></button><br />
+<button id="mapToggle_Resource" class="btnToggle curToggle"><img data-src="img/map/display.png" alt="Toggle" /></button><br />
 <div class="mapLegendLine" style="border-bottom: 2px solid lime"></div> <strong>Exact</strong> location of that node<br />
 <div class="mapLegendLine" style="border-bottom: 2px dotted lime"></div> <strong>Possible</strong> vicinity of that node<br />
 <div class="mapLegendLine" style="border-bottom: 2px dashed lime"></div> <strong>Map</strong> has that resource (not a node)<br />
@@ -159,8 +159,8 @@
 </header>
 <section>
 <p>The JP map icons point to the entrance. Click on a checkbox here or a JP icon on the map to check off a JP. Double click a JP icon to zoom in/out. Chests refresh at daily reset time.<br /><strong>Links:</strong> [Y]outube [W]iki.<span id="mapJPCounter"></span></p>
-<button id="mapJPToggleJP" style="width:120px"><img data-src="img/map/jp.png" alt="Toggle" /></button>&nbsp;
-<button id="mapJPToggleChest" style="width:120px"><img data-src="img/map/chest.png" alt="Toggle" /></button>&nbsp;
+<button id="mapJPToggleJP" class="curToggle" style="width:120px"><img data-src="img/map/jp.png" alt="Toggle" /></button>&nbsp;
+<button id="mapJPToggleChest" class="curToggle" style="width:120px"><img data-src="img/map/chest.png" alt="Toggle" /></button>&nbsp;
 <button id="mapJPUncheck" class="btnUncheck cssRight"><img data-src="img/ui/uncheck.png" /></button>
 
 <div class="mapLinks">
@@ -243,7 +243,8 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 <br />
 <kbd class="jsHelpCollapsible"></kbd>
 <div>
-	<p>Click a button above to view that <b>guild mission type</b>. Click on a <b>mission name</b> (gold colored) to view the map location and toggle its path; double click the mission name to zoom in/out.</p>
+	<p>Click a button above to view that <b>guild mission type</b>; click the button again to hide that mission type.</p>
+	<p>Click on a <b>mission name</b> (gold colored) to view the map location and toggle its path; double click the mission name to zoom in/out.</p>
 	<p><b>Credits:</b><br />
 	<a href="http://www.palingenesis.webspace.virginmedia.com/Tim/GW2/Manual/Manual.html">Palingenesis</a>: coordinates, paths, map data<br />
 	<a href="http://gw2-menestrels.com/guide-des-randonnees/">Guild Wars 2 Ménestrels</a>: screenshots
@@ -259,6 +260,8 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 	<img data-src="img/ui/coin.png" alt="Coin" /><input id="gldInfluenceToCoinOutput" class="trdOutput" type="text" maxlength="32" value="0" />
 	<img data-src="img/ui/influence.png" alt="Influence" /><input id="gldCoinToInfluenceOutput" class="trdOutput" type="text" maxlength="32" value="0" />
 </div>
+<br />
+<button id="mapToggle_Guild" class="btnToggle"><img data-src="img/map/display_hide.png" alt="Toggle" /></button>
 
 </section>
 

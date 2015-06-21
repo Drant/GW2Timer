@@ -472,9 +472,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Ruins", "Keep", "Defender"]
 },
 "21": {
-	pve: ["Forager Kryta", "Fractal", "Queensdale", "Fractal 21-30"],
-	pvp: ["Defender", "Kills", "Ranger Mesmer", "Guardian Engineer"],
-	wvw: ["Creature", "Caravan", "Camp", "Defender"]
+	pve: ["Forager Kryta", "Vista Shiverpeaks", "Snowden", "Shatterer Ascalon"],
+	pvp: ["Defender", "Rank", "Ranger Mesmer", "Guardian Engineer"],
+	wvw: ["Caravan", "Creature", "Camp", "Tower"]
 },
 "22": {
 	pve: ["Miner Orr", "Vista Shiverpeaks", "Southsun", "Fractal 1-10"],

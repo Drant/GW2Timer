@@ -4894,20 +4894,6 @@ D = {
 	},
 	
 	/*
-	 * Gets name of event in opted language.
-	 * @param object pEvent to lookup.
-	 * @returns string name.
-	 */
-	getEventName: function(pEvent)
-	{
-		if (pEvent["name_" + O.Options.enu_Language])
-		{
-			return pEvent["name_" + O.Options.enu_Language];
-		}
-		return pEvent["name_en"];
-	},
-	
-	/*
 	 * Loads a TTS sound file generated from a TTS web service into a hidden
 	 * iframe. The sound plays automatically after changing the iframe's src via
 	 * the browser's builtin media player.
@@ -5378,7 +5364,7 @@ C = {
 			{
 				eventhtmltitle = w("Event Number: ") + e.num + b
 					+ w("Start Time: ") + e.lim + b
-					+ b + "&amp;quot;" + D.getEventName(e).replace(/["']/g, "") + "&amp;quot;";
+					+ b + "&amp;quot;" + D.getObjectName(e).replace(/["']/g, "") + "&amp;quot;";
 			}
 			else
 			{
@@ -5391,7 +5377,7 @@ C = {
 					+ w("Avg to Complete: ") + e.avg + b
 					+ w("Min to Complete: ") + e.min + b
 					+ w("Max to Complete: ") + e.max + b
-					+ b + "&amp;quot;" + D.getEventName(e).replace(/["']/g, "") + "&amp;quot;";
+					+ b + "&amp;quot;" + D.getObjectName(e).replace(/["']/g, "") + "&amp;quot;";
 			}
 			
 			var indentpixel = 0;
@@ -5432,7 +5418,7 @@ C = {
 			$("#chnEvents_" + pChain.nexus).append(
 			"<li id='chnEvent_" + pChain.nexus + "_" + e.num + "' class='chnStep_" + pChain.nexus + "_" + e.step + "' style='margin-left:" + indentpixel +"px'>"
 				+ "<ins class='evt_" + e.icon + "' title='" + eventhtmltitle + "'></ins>"
-				+ "<span>" + C.truncateTitleString(D.getEventName(e), eventnamelimit, "..") + "</span>"
+				+ "<span>" + C.truncateTitleString(D.getObjectName(e), eventnamelimit, "..") + "</span>"
 			+ "</li>");
 		};
 
@@ -5590,7 +5576,7 @@ C = {
 				else
 				{
 					$(this).prev().find("kbd").html("[+]");
-					I.updateScrollbar("#plateChains");
+					I.updateScrollbar();
 				}
 			});
 		});
@@ -6497,10 +6483,11 @@ M = {
 		Resource_Metal: new Array(),
 		Resource_Plant: new Array(),
 		Resource_Wood: new Array(),
-		GuildBounty: new Array(),
-		GuildTrek: new Array(),
-		GuildRush: new Array(),
-		GuildPuzzle: new Array()
+		Guild_Bounty: new Array(),
+		Guild_Trek: new Array(),
+		Guild_Challenge: new Array(),
+		Guild_Rush: new Array(),
+		Guild_Puzzle: new Array()
 	},
 	/*
 	 * Entity is a group of markers created into the map only once and are never
@@ -7815,14 +7802,15 @@ P = {
 	 * @param array pCoords GW2 coordinates.
 	 * @returns LayerGroup circles.
 	 */
-	drawnSpawns: function(pCoords)
+	drawSpawns: function(pCoords, pColor)
 	{
 		var latlngs = M.convertGCtoLCMulti(pCoords);
 		var layergroup = new L.layerGroup();
+		pColor = pColor || "lime";
 		
 		for (var i in latlngs)
 		{
-			layergroup.addLayer(L.circleMarker(latlngs[i], {radius: 10, color: "lime", weight: 4}));
+			layergroup.addLayer(L.circleMarker(latlngs[i], {radius: 10, color: pColor, weight: 4}));
 		}
 		return layergroup;
 	},
@@ -8440,7 +8428,7 @@ P = {
 				}).addTo(M.Map);
 				event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
 				{
-					title: "<span class='mapEvent'>" + D.getEventName(event) + "</span>",
+					title: "<span class='mapEvent'>" + D.getObjectName(event) + "</span>",
 					icon: L.icon(
 					{
 						iconUrl: "img/event/" + event.icon + I.cPNG,
@@ -8549,7 +8537,7 @@ G = {
 		var i;
 		var dayofmonth = 0;
 		var ithdate;
-		var DAYS_TO_SHOW = 3;
+		var DAYS_TO_SHOW = 32;
 		
 		for (i = 0; i < DAYS_TO_SHOW; i++)
 		{
@@ -9239,24 +9227,6 @@ G = {
 	},
 	
 	/*
-	 * Does additional UI bindings to a guild mission type.
-	 * @param string pBook mission type.
-	 */
-	finalizeGuildBook: function(pBook)
-	{
-		U.convertExternalLink("#gldBook_" + pBook + " a");
-		I.qTip.init("#gldBook_" + pBook + " dfn");
-		// Initialize clipboard for each waypoint
-		$("#gldBook_" + pBook + " .cssWaypoint").each(function()
-		{
-			(new ZeroClipboard($(this)[0])).on("aftercopy", function(pEvent)
-			{
-				I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
-			});
-		});
-	},
-	
-	/*
 	 * Create list of guild mission types, and mission checkboxes for each type.
 	 * First checkbox click generates the mission's data into the map.
 	 */
@@ -9268,6 +9238,29 @@ G = {
 		 */
 		T.isGuildTimerStarted = true;
 		
+		hideGuildMapDrawings = function(pBook)
+		{
+			M.toggleLayerArray(M.LayerArray["Guild_" + pBook], false);
+			$("#gldBook_" + pBook + " dfn").each(function()
+			{
+				I.toggleHighlight($(this), false);
+			});
+		},
+				
+		finalizeGuildBook = function(pBook)
+		{
+			U.convertExternalLink("#gldBook_" + pBook + " a");
+			I.qTip.init("#gldBook_" + pBook + " dfn");
+			// Initialize clipboard for each waypoint
+			$("#gldBook_" + pBook + " .cssWaypoint").each(function()
+			{
+				(new ZeroClipboard($(this)[0])).on("aftercopy", function(pEvent)
+				{
+					I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
+				});
+			});
+		},
+		
 		$.getScript(U.URL_DATA.Guild).done(function()
 		{
 			M.Guild = GW2T_GUILD_DATA;
@@ -9278,24 +9271,58 @@ G = {
 				var missiontype = M.Guild[i];
 				var translatedname = D.getObjectName(missiontype);
 				$("#mapGuildButtons").append("<div>"
-					+ "<button class='gldButton' id='gldButton_" + i + "' title='<dfn>" + translatedname
+					+ "<button class='gldButton curToggle' id='gldButton_" + i + "' title='<dfn>" + translatedname
 					+ "</dfn>'><img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>"
 					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "' target='_blank'>Y</a>&nbsp;"
 					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "' target='_blank'>W</a>"
 					+ "</div>");
 				$("#mapGuildBooks").append("<div class='gldBook' id='gldBook_" + i + "'></div>");
+				$("#gldHide_" + i).click(function()
+				{
+					
+				});
 			}
+			$(".gldBook").hide();
 			I.qTip.init("#mapGuildButtons button");
 			U.convertExternalLink("#mapGuildButtons a");
 			
 			$("#gldButton_Rush, #gldButton_Puzzle").css({opacity: 0.3});
+			
+			// Show the guild mission type when clicked on button
+			$(".gldButton").click(function()
+			{
+				var missiontype = U.getSubstringFromHTMLID($(this));
+				var wantshow = true;
+				// If current mission type is already showing
+				if ($("#gldBook_" + missiontype).is(":visible"))
+				{
+					hideGuildMapDrawings(missiontype);
+					wantshow = false;
+				}
+				$(".gldBook").hide();
+				if (wantshow)
+				{
+					$("#gldBook_" + missiontype).show();
+				}
+				I.updateScrollbar();
+			});
+			
+			// Bind button to hide all guild map drawings
+			$("#mapToggle_Guild").data("hideonly", true).click(function()
+			{
+				$(".gldButton").each(function()
+				{
+					hideGuildMapDrawings(U.getSubstringFromHTMLID($(this)));
+					$(".gldBook").hide();
+					I.updateScrollbar();
+				});
+			});
 			
 			/*
 			 * Bounty generation.
 			 */
 			$("#gldButton_Bounty").one("click", function()
 			{
-				var index = 0;
 				D.sortObjects(M.Guild.Bounty.data);
 				for (var i in M.Guild.Bounty.data)
 				{
@@ -9306,7 +9333,7 @@ G = {
 					$("#gldBook_Bounty").append(
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
-						+ "<dfn id='gldBounty_" + i + "' data-index='" + index + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
+						+ "<dfn id='gldBounty_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
 						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
 						+ "</div>"
@@ -9322,9 +9349,9 @@ G = {
 					}
 					if (mission.spawn !== undefined)
 					{
-						layergroup.addLayer(P.drawnSpawns(mission.spawn));
+						layergroup.addLayer(P.drawSpawns(mission.spawn));
 					}
-					M.LayerArray.GuildBounty.push(layergroup);
+					M.LayerArray.Guild_Bounty.push(layergroup);
 					
 					// Bind this bounty's behavior
 					var elm = $("#gldBounty_" + i);
@@ -9332,13 +9359,11 @@ G = {
 						.click(function()
 					{
 						I.toggleHighlight($(this));
-						M.toggleLayer(M.LayerArray.GuildBounty[$(this).data("index")]);
+						M.toggleLayer(M.LayerArray.Guild_Bounty[U.getSubintegerFromHTMLID($(this))]);
 					});
 					M.bindMapLinkBehavior(elm, null, M.invertZoomLevel(mission.coord[2]));
-					
-					index++;
 				}
-				G.finalizeGuildBook("Bounty");
+				finalizeGuildBook("Bounty");
 			});
 			
 			/*
@@ -9346,7 +9371,6 @@ G = {
 			 */
 			$("#gldButton_Trek").one("click", function()
 			{
-				var index = 0;
 				D.sortObjects(M.Guild.Trek.data);
 				for (var i in M.Guild.Trek.data)
 				{
@@ -9356,13 +9380,13 @@ G = {
 					$("#gldBook_Trek").append(
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Trek) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
-						+ "<dfn id='gldTrek_" + i + "' data-index='" + index + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn>"
+						+ "<dfn id='gldTrek_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn>"
 						+ "</div>"
 					);
 					
 					var layergroup = new L.layerGroup();
 					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
-					M.LayerArray.GuildTrek.push(layergroup);
+					M.LayerArray.Guild_Trek.push(layergroup);
 					
 					// Bind this Trek's behavior
 					var elm = $("#gldTrek_" + i);
@@ -9370,13 +9394,11 @@ G = {
 						.click(function()
 					{
 						I.toggleHighlight($(this));
-						M.toggleLayer(M.LayerArray.GuildTrek[$(this).data("index")]);
+						M.toggleLayer(M.LayerArray.Guild_Trek[U.getSubintegerFromHTMLID($(this))]);
 					});
 					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Same);
-					
-					index++;
 				}
-				G.finalizeGuildBook("Trek");
+				finalizeGuildBook("Trek");
 			});
 			
 			/*
@@ -9400,18 +9422,21 @@ G = {
 						+ "</div>"
 					);
 					
+					var layergroup = new L.layerGroup();
+					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
+					layergroup.addLayer(P.drawSpawns(mission.spawn, "gold"));
+					M.LayerArray.Guild_Challenge.push(layergroup);
+					
 					// Bind this Challenge's behavior
 					var elm = $("#gldChallenge_" + i);
-					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Same);
+					elm.click(function()
+					{
+						I.toggleHighlight($(this));
+						M.toggleLayer(M.LayerArray.Guild_Challenge[U.getSubintegerFromHTMLID($(this))]);
+					});
+					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Ground);
 				}
-				G.finalizeGuildBook("Challenge");
-			});
-			
-			// Show the guild mission type when clicked on button
-			$(".gldButton").click(function()
-			{
-				$(".gldBook").hide();
-				$("#gldBook_" + U.getSubstringFromHTMLID($(this))).show();
+				finalizeGuildBook("Challenge");
 			});
 			
 			/*
@@ -12181,16 +12206,31 @@ I = {
 	/*
 	 * Toggles a generic highlight class to an element.
 	 * @param jqobject pElement to toggle.
+	 * @param boolean pBoolean manual.
 	 */
-	toggleHighlight: function(pElement)
+	toggleHighlight: function(pElement, pBoolean)
 	{
-		if (pElement.hasClass("cssHighlight"))
+		if (pBoolean === undefined)
 		{
-			pElement.removeClass("cssHighlight");
+			if (pElement.hasClass("cssHighlight"))
+			{
+				pElement.removeClass("cssHighlight");
+			}
+			else
+			{
+				pElement.addClass("cssHighlight");
+			}
 		}
 		else
 		{
-			pElement.addClass("cssHighlight");
+			if (pBoolean)
+			{
+				pElement.addClass("cssHighlight");
+			}
+			else
+			{
+				pElement.removeClass("cssHighlight");
+			}
 		}
 	},
 	
@@ -12228,7 +12268,18 @@ I = {
 		}
 		try
 		{
-			$(pElement).perfectScrollbar("update");
+			// Update the pages if element is not specified
+			if (pElement === undefined)
+			{
+				$("#plateMap").perfectScrollbar("update");
+				$("#plateChains").perfectScrollbar("update");
+				$("#plateHelp").perfectScrollbar("update");
+				$("#plateOptions").perfectScrollbar("update");
+			}
+			else
+			{
+				$(pElement).perfectScrollbar("update");
+			}
 		}
 		catch (e) {}
 	},
