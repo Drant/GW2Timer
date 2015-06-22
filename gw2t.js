@@ -1198,6 +1198,11 @@ U = {
 					{
 						if (ii.toLowerCase() === page)
 						{
+							// Page part becomes the section, section part becomes the article
+							if (U.Args[U.KeyEnum.Section] !== undefined)
+							{
+								U.Args[U.KeyEnum.Article] = U.Args[U.KeyEnum.Section];
+							}
 							U.Args[U.KeyEnum.Page] = i;
 							U.Args[U.KeyEnum.Section] = ii;
 							return;
