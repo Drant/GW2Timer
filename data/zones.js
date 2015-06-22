@@ -53,29 +53,49 @@ var GW2T_ZONE_ASSOCIATION = {
 };
 
 var GW2T_SUBMAP_DATA = {
-posternuscaverns: {
-	img: "http://i.imgur.com/rFdG4jD.png",
-	bounds: [[17665,14295],[18065,15115]]
-},
-highdencaves: {
-	img: "http://i.imgur.com/V71MHb1.png",
-	bounds: [[31230, 16900],[31730, 17700]]
-},
-sawtoothbaycaves: {
-	img: "http://i.imgur.com/SnaczAR.png",
-	bounds: [[13245, 19980],[13445, 20180]]
-},
-spidernestcavern: {
-	img: "http://i.imgur.com/XCSCoDD.png",
-	bounds: [[25141, 11313],[25641, 11753]]
-},
-dostoevskypeak: {
-	img: "http://i.imgur.com/l0PyKxS.png",
-	bounds: [[20120, 16395],[20920, 17195]]
+angvarstrove: {
+	img: "http://i.imgur.com/LuiwbAK.png", 
+	bounds: [[17660, 11230], [18610, 11930]]
 },
 bonerattlercaverns: {
-	img: "http://i.imgur.com/TyGZI9H.png",
-	bounds: [[13482, 11605],[15032, 12205]]
+	img: "http://i.imgur.com/TyGZI9H.png", 
+	bounds: [[13482, 11605], [15032, 12205]]
+},
+brandedmine: {
+	img: "http://i.imgur.com/XdXqXTL.png",
+	bounds: [[28674, 16701], [28984, 16951]]
+},
+dostoevskypeak: {
+	img: "http://i.imgur.com/l0PyKxS.png", 
+	bounds: [[20120, 16395], [20920, 17195]]
+},
+fionnghualascratch: {
+	img: "http://i.imgur.com/6ELssZW.png",
+	bounds: [[19718, 19035], [20268, 19785]]
+},
+highdencaves: {
+	img: "http://i.imgur.com/V71MHb1.png", 
+	bounds: [[31230, 16900], [31730, 17700]]
+},
+langmarestate: {
+	img: "http://i.imgur.com/KUMY9HD.png", 
+	bounds: [[25054, 14859], [25804, 15659]]
+},
+posternuscaverns: {
+	img: "http://i.imgur.com/rFdG4jD.png", 
+	bounds: [[17665, 14295], [18065, 15115]]
+},
+proxemicslab: {
+	img: "http://i.imgur.com/shk8IVE.png", 
+	bounds: [[5880, 14440], [6230, 15290]]
+},
+sawtoothbaycaves: {
+	img: "http://i.imgur.com/SnaczAR.png", 
+	bounds: [[13245, 19980], [13445, 20180]]
+},
+spidernestcavern: {
+	img: "http://i.imgur.com/XCSCoDD.png", 
+	bounds: [[25141, 11313], [25641, 11753]]
 }
 };
 

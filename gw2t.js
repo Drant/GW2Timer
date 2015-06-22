@@ -74,7 +74,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 150409},
+		programVersion: {key: "int_utlProgramVersion", value: 150622},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -242,7 +242,7 @@ O = {
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
-				+ "GW2Navi Overlay updated. <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>Download Now</a><br />"
+				+ "<a href='http://gw2timer.com/?page=Map&section=Guild'>Guild missions</a> now available.<br />Try them with the <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>GPS overlay app</a>.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -9348,18 +9348,12 @@ G = {
 					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "' target='_blank'>W</a>"
 					+ "</div>");
 				$("#mapGuildBooks").append("<div class='gldBook' id='gldBook_" + i + "'></div>");
-				$("#gldHide_" + i).click(function()
-				{
-					
-				});
 			}
 			$(".gldBook").hide();
 			I.qTip.init("#mapGuildButtons button");
 			U.convertExternalLink("#mapGuildButtons a");
 			
-			$("#gldButton_Puzzle").css({opacity: 0.3});
-			
-			// Show the guild mission type when clicked on button
+			// Bind button to show the guild mission type
 			$(".gldButton").click(function()
 			{
 				var missiontype = U.getSubstringFromHTMLID($(this));
@@ -9478,6 +9472,7 @@ G = {
 			 */
 			$("#gldButton_Challenge").one("click", function()
 			{
+				M.Guild.Challenge.usedSubmaps = new Array();
 				D.sortObjects(M.Guild.Challenge.data);
 				for (var i in M.Guild.Challenge.data)
 				{
@@ -9493,6 +9488,13 @@ G = {
 						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
 						+ "</div>"
 					);
+			
+					// Submap image of interior map
+					if (mission.submap !== undefined)
+					{
+						M.toggleSubmap(mission.submap, false);
+						M.Guild.Challenge.usedSubmaps.push(mission.submap);
+					}
 					
 					var layergroup = new L.layerGroup();
 					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
@@ -9503,8 +9505,14 @@ G = {
 					var elm = $("#gldChallenge_" + i);
 					elm.click(function()
 					{
-						I.toggleHighlight($(this));
-						M.toggleLayer(M.LayerArray.Guild_Challenge[U.getSubintegerFromHTMLID($(this))]);
+						var index = U.getSubintegerFromHTMLID($(this));
+						var submap = M.Guild.Challenge.data[index].submap;
+						var state = I.toggleHighlight($(this));
+						if (submap !== undefined)
+						{
+							M.toggleSubmap(submap, state);
+						}
+						M.toggleLayer(M.LayerArray.Guild_Challenge[index]);
 					});
 					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Ground);
 				}
@@ -9568,16 +9576,71 @@ G = {
 					{
 						var index = U.getSubintegerFromHTMLID($(this));
 						var submap = M.Guild.Rush.data[index].submap;
-						I.toggleHighlight($(this));
+						var state = I.toggleHighlight($(this));
 						if (submap !== undefined)
 						{
-							M.toggleSubmap(submap);
+							M.toggleSubmap(submap, state);
 						}
 						M.toggleLayer(M.LayerArray.Guild_Rush[index]);
 					});
 					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Ground);
 				}
 				finalizeGuildBook("Rush");
+			});
+			
+			/*
+			 * Puzzle generation.
+			 */
+			$("#gldButton_Puzzle").one("click", function()
+			{
+				M.Guild.Puzzle.usedSubmaps = new Array();
+				D.sortObjects(M.Guild.Puzzle.data);
+				for (var i in M.Guild.Puzzle.data)
+				{
+					var mission = M.Guild.Puzzle.data[i];
+					var name = D.getDefaultObjectName(mission);
+					var translatedname = D.getObjectName(mission);
+					
+					$("#gldBook_Puzzle").append(
+						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
+						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Puzzle) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+						+ "<dfn id='gldPuzzle_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
+						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
+						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
+						+ "</div>"
+					);
+					
+					// Submap image of interior map
+					if (mission.submap !== undefined)
+					{
+						M.toggleSubmap(mission.submap, false);
+						M.Guild.Puzzle.usedSubmaps.push(mission.submap);
+					}
+					
+					var layergroup = new L.layerGroup();
+					// Circles for interactive objects
+					layergroup.addLayer(P.drawSpots(mission.interactions, {color: "gold"}));
+					// Markers for finish chest
+					layergroup.addLayer(L.marker(M.convertGCtoLC(mission.finish), {icon: M.createStandardIcon("img/map/chest.png")}));
+					
+					M.LayerArray.Guild_Puzzle.push(layergroup);
+					
+					// Bind this mission's behavior
+					var elm = $("#gldPuzzle_" + i);
+					elm.click(function()
+					{
+						var index = U.getSubintegerFromHTMLID($(this));
+						var submap = M.Guild.Puzzle.data[index].submap;
+						var state = I.toggleHighlight($(this));
+						if (submap !== undefined)
+						{
+							M.toggleSubmap(submap, state);
+						}
+						M.toggleLayer(M.LayerArray.Guild_Puzzle[index]);
+					});
+					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Ground);
+				}
+				finalizeGuildBook("Puzzle");
 			});
 			
 			/*
@@ -9595,6 +9658,23 @@ G = {
 			{
 				$("#gldCoinToInfluenceOutput").val(E.parseCoinString($(this).val()) * E.Exchange.INFLUENCE_PER_COPPER);
 			});
+			
+			/*
+			 * Open the guild mission type if article query string is present.
+			 */
+			if (I.ArticleCurrent)
+			{
+				for (i in M.Guild)
+				{
+					if (I.ArticleCurrent.toLowerCase() === i.toLowerCase())
+					{
+						// Trigger the associated guild mission type button
+						$("#gldButton_" + i).trigger("click");
+						I.ArticleCurrent = null;
+						break;
+					}
+				}
+			}
 		});
 	}
 };
@@ -12348,29 +12428,36 @@ I = {
 	 * Toggles a generic highlight class to an element.
 	 * @param jqobject pElement to toggle.
 	 * @param boolean pBoolean manual.
+	 * @returns boolean new highlight state.
 	 */
 	toggleHighlight: function(pElement, pBoolean)
 	{
 		if (pBoolean === undefined)
 		{
+			// Toggle
 			if (pElement.hasClass("cssHighlight"))
 			{
 				pElement.removeClass("cssHighlight");
+				return false;
 			}
 			else
 			{
 				pElement.addClass("cssHighlight");
+				return true;
 			}
 		}
 		else
 		{
+			// Use boolean
 			if (pBoolean)
 			{
 				pElement.addClass("cssHighlight");
+				return true;
 			}
 			else
 			{
 				pElement.removeClass("cssHighlight");
+				return false;
 			}
 		}
 	},
