@@ -6416,6 +6416,7 @@ M = {
 	Zones: GW2T_ZONE_DATA,
 	ZoneAssociation: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
 	Regions: GW2T_REGION_DATA,
+	Submaps: GW2T_SUBMAP_DATA,
 	cInitialZone: "lion",
 	Map: {},
 	Events: {},
@@ -7043,6 +7044,20 @@ M = {
 	},
 	
 	/*
+	 * Returns a common sized Leafet icon.
+	 * @param string pIconURL of the icon image.
+	 * @returns object Leaflet icon.
+	 */
+	createStandardIcon: function(pIconURL)
+	{
+		return L.icon({
+			iconUrl: pIconURL,
+			iconSize: [32, 32],
+			iconAnchor: [16, 16]
+		});
+	},
+	
+	/*
 	 * Changes the marker icon's image and size (Leaflet does not have this method).
 	 * @param object pMarker Leaflet marker.
 	 * @param string pIconURL of the icon image.
@@ -7091,6 +7106,47 @@ M = {
 		for (var i in pLayerArray)
 		{
 			M.toggleLayer(pLayerArray[i], pBoolean);
+		}
+	},
+	
+	/*
+	 * Initializes or toggle a submap, which is a Leaflet ImageOverlay over the map.
+	 * Look at zones.js for submap declarations.
+	 * @param string pName of the submap.
+	 * @param boolean pBoolean to show or hide.
+	 */
+	toggleSubmap: function(pName, pBoolean)
+	{
+		var submap = M.Submaps[pName];
+		if (submap.ImageOverlay === undefined)
+		{
+			submap.ImageOverlay = L.imageOverlay(submap.img, M.convertGCtoLCMulti(submap.bounds));
+			M.toggleSubmap(pName, pBoolean);
+		}
+		else
+		{
+			// No boolean provided so assumes toggle
+			if (pBoolean === undefined)
+			{
+				pBoolean = !(M.Map.hasLayer(submap.ImageOverlay));
+			}
+
+			// Show if true, hide if false
+			if (pBoolean)
+			{
+				submap.ImageOverlay.addTo(M.Map).bringToBack();
+			}
+			else
+			{
+				M.Map.removeLayer(submap.ImageOverlay);
+			}
+		}
+	},
+	toggleSubmapArray: function(pNames, pBoolean)
+	{
+		for (var i in pNames)
+		{
+			M.toggleSubmap(pNames[i], pBoolean);
 		}
 	},
 	
@@ -7767,29 +7823,33 @@ P = {
 	
 	/*
 	 * Draws a path with each link of increasing or decreasing weight, to
-	 * simulate a worm crawling in a clockwise or counterclockwise direction.
+	 * simulate a worm crawling in a direction.
 	 * @param array pCoords GW2 coordinates.
-	 * @param boolean pIsClockwise or not.
+	 * @param boolean pIsObverse or reversed.
 	 * @returns LayerGroup path.
 	 * @pre Path has enough links to distinguish themselves.
 	 */
-	drawDirectedPath: function(pCoords, pIsClockwise, pColor)
+	drawDirectedPath: function(pCoords, pIsObverse, pColor)
 	{
+		if (pIsObverse === undefined)
+		{
+			pIsObverse = true;
+		}
 		var latlngs = M.convertGCtoLCMulti(pCoords);
 		var layergroup = new L.layerGroup();
 		var numofsegments = 8;
-		var iweight = (pIsClockwise) ? 0 : numofsegments-1;
+		var iweight = (pIsObverse) ? 0 : numofsegments-1;
 		pColor = pColor || "lime";
 		
 		for (var i = 0; i < latlngs.length - 1; i++)
 		{
 			layergroup.addLayer(L.polyline([latlngs[i], latlngs[i+1]], {color: pColor, weight: (iweight+2)*2}));
-			iweight = (pIsClockwise) ? (iweight+1) : (iweight-1);
-			if (pIsClockwise && iweight >= numofsegments)
+			iweight = (pIsObverse) ? (iweight+1) : (iweight-1);
+			if (pIsObverse && iweight >= numofsegments)
 			{
 				iweight = 0;
 			}
-			else if (!pIsClockwise && iweight < 0)
+			else if (!pIsObverse && iweight < 0)
 			{
 				iweight = numofsegments-1;
 			}
@@ -7802,15 +7862,22 @@ P = {
 	 * @param array pCoords GW2 coordinates.
 	 * @returns LayerGroup circles.
 	 */
-	drawSpawns: function(pCoords, pColor)
+	drawSpots: function(pCoords, pOptions)
 	{
 		var latlngs = M.convertGCtoLCMulti(pCoords);
 		var layergroup = new L.layerGroup();
-		pColor = pColor || "lime";
+		var Options = {radius: 10, color: "lime", weight: 4};
+		if (pOptions !== undefined)
+		{
+			for (var i in pOptions)
+			{
+				Options[i] = pOptions[i];
+			}
+		}
 		
 		for (var i in latlngs)
 		{
-			layergroup.addLayer(L.circleMarker(latlngs[i], {radius: 10, color: pColor, weight: 4}));
+			layergroup.addLayer(L.circleMarker(latlngs[i], Options));
 		}
 		return layergroup;
 	},
@@ -9245,6 +9312,10 @@ G = {
 			{
 				I.toggleHighlight($(this), false);
 			});
+			if (M.Guild[pBook].usedSubmaps !== undefined)
+			{
+				M.toggleSubmapArray(M.Guild[pBook].usedSubmaps, false);
+			}
 		},
 				
 		finalizeGuildBook = function(pBook)
@@ -9286,7 +9357,7 @@ G = {
 			I.qTip.init("#mapGuildButtons button");
 			U.convertExternalLink("#mapGuildButtons a");
 			
-			$("#gldButton_Rush, #gldButton_Puzzle").css({opacity: 0.3});
+			$("#gldButton_Puzzle").css({opacity: 0.3});
 			
 			// Show the guild mission type when clicked on button
 			$(".gldButton").click(function()
@@ -9316,6 +9387,7 @@ G = {
 					$(".gldBook").hide();
 					I.updateScrollbar();
 				});
+				M.movePin(M.PinProgram);
 			});
 			
 			/*
@@ -9349,11 +9421,11 @@ G = {
 					}
 					if (mission.spawn !== undefined)
 					{
-						layergroup.addLayer(P.drawSpawns(mission.spawn));
+						layergroup.addLayer(P.drawSpots(mission.spawn));
 					}
 					M.LayerArray.Guild_Bounty.push(layergroup);
 					
-					// Bind this bounty's behavior
+					// Bind this mission's behavior
 					var elm = $("#gldBounty_" + i);
 					elm.attr("title", "<div class='mapLoc'><img src='" + mission.img + "' /></div>")
 						.click(function()
@@ -9388,7 +9460,7 @@ G = {
 					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
 					M.LayerArray.Guild_Trek.push(layergroup);
 					
-					// Bind this Trek's behavior
+					// Bind this mission's behavior
 					var elm = $("#gldTrek_" + i);
 					elm.attr("title", "<div class='mapLoc'><img src='" + mission.img + "' /></div>")
 						.click(function()
@@ -9416,7 +9488,7 @@ G = {
 					$("#gldBook_Challenge").append(
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
-						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
+						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
 						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
 						+ "</div>"
@@ -9424,10 +9496,10 @@ G = {
 					
 					var layergroup = new L.layerGroup();
 					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
-					layergroup.addLayer(P.drawSpawns(mission.spawn, "gold"));
+					layergroup.addLayer(P.drawSpots(mission.spawn, {color: "gold"}));
 					M.LayerArray.Guild_Challenge.push(layergroup);
 					
-					// Bind this Challenge's behavior
+					// Bind this mission's behavior
 					var elm = $("#gldChallenge_" + i);
 					elm.click(function()
 					{
@@ -9437,6 +9509,75 @@ G = {
 					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Ground);
 				}
 				finalizeGuildBook("Challenge");
+			});
+			
+			/*
+			 * Rush generation.
+			 */
+			$("#gldButton_Rush").one("click", function()
+			{
+				M.Guild.Rush.usedSubmaps = new Array();
+				D.sortObjects(M.Guild.Rush.data);
+				for (var i in M.Guild.Rush.data)
+				{
+					var mission = M.Guild.Rush.data[i];
+					var name = D.getDefaultObjectName(mission);
+					var translatedname = D.getObjectName(mission);
+					
+					$("#gldBook_Rush").append(
+						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
+						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Rush) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+						+ "<dfn id='gldRush_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
+						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
+						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
+						+ "</div>"
+					);
+					
+					// Submap image of interior map
+					if (mission.submap !== undefined)
+					{
+						M.toggleSubmap(mission.submap, false);
+						M.Guild.Rush.usedSubmaps.push(mission.submap);
+					}
+					
+					var layergroup = new L.layerGroup();
+					// Path from waypoint to start
+					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
+					// Path from start to finish
+					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.track), {color: "lime", dashArray: "5,10"}));
+					// Markers for finish chest
+					layergroup.addLayer(L.marker(M.convertGCtoLC(mission.finish), {icon: M.createStandardIcon("img/map/chest.png")}));
+					// Circles for small traps
+					if (mission.traps0 !== undefined)
+					{
+						layergroup.addLayer(P.drawSpots(mission.traps0, {radius: 5, color: "red", weight: 1, opacity: 1}));
+					}
+					// Circles for big traps
+					if (mission.traps1 !== undefined)
+					{
+						layergroup.addLayer(P.drawSpots(mission.traps1, {radius: 10, color: "red", weight: 1, opacity: 1}));
+					}
+					// Circles for flag checkpoints
+					layergroup.addLayer(P.drawSpots(mission.flags, {radius: 2, color: "gold", weight: 2, opacity: 1}));
+					
+					M.LayerArray.Guild_Rush.push(layergroup);
+					
+					// Bind this mission's behavior
+					var elm = $("#gldRush_" + i);
+					elm.click(function()
+					{
+						var index = U.getSubintegerFromHTMLID($(this));
+						var submap = M.Guild.Rush.data[index].submap;
+						I.toggleHighlight($(this));
+						if (submap !== undefined)
+						{
+							M.toggleSubmap(submap);
+						}
+						M.toggleLayer(M.LayerArray.Guild_Rush[index]);
+					});
+					M.bindMapLinkBehavior(elm, M.PinProgram, M.ZoomLevelEnum.Ground);
+				}
+				finalizeGuildBook("Rush");
 			});
 			
 			/*

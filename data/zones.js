@@ -52,6 +52,33 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1015": "silverwastes"
 };
 
+var GW2T_SUBMAP_DATA = {
+posternuscaverns: {
+	img: "http://i.imgur.com/rFdG4jD.png",
+	bounds: [[17665,14295],[18065,15115]]
+},
+highdencaves: {
+	img: "http://i.imgur.com/V71MHb1.png",
+	bounds: [[31230, 16900],[31730, 17700]]
+},
+sawtoothbaycaves: {
+	img: "http://i.imgur.com/SnaczAR.png",
+	bounds: [[13245, 19980],[13445, 20180]]
+},
+spidernestcavern: {
+	img: "http://i.imgur.com/XCSCoDD.png",
+	bounds: [[25141, 11313],[25641, 11753]]
+},
+dostoevskypeak: {
+	img: "http://i.imgur.com/l0PyKxS.png",
+	bounds: [[20120, 16395],[20920, 17195]]
+},
+bonerattlercaverns: {
+	img: "http://i.imgur.com/TyGZI9H.png",
+	bounds: [[13482, 11605],[15032, 12205]]
+}
+};
+
 /*
  * Zones are sorted by how far from the top left corner (0,0) it is.
  */
@@ -477,9 +504,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Creature", "Camp", "Tower"]
 },
 "22": {
-	pve: ["Miner Orr", "Vista Shiverpeaks", "Southsun", "Fractal 1-10"],
-	pvp: ["Capture", "Reward", "Warrior Engineer", "Ranger Necromancer"],
-	wvw: ["Land", "Guard", "Defender", "Tower"]
+	pve: ["Miner Orr", "Activity", "Cursed", "Fractal 1-10"],
+	pvp: ["Rank", "Defender", "Warrior Engineer", "Necromancer Ranger"],
+	wvw: ["Guard", "Land", "Tower", "Camp"]
 },
 "23": {
 	pve: ["Forager Ascalon", "Vista Orr", "Metrica", "Fractal 11-20"],
