@@ -9347,8 +9347,9 @@ G = {
 				var missiontype = M.Guild[i];
 				var translatedname = D.getObjectName(missiontype);
 				$("#mapGuildButtons").append("<div>"
-					+ "<button class='gldButton curToggle' id='gldButton_" + i + "' title='<dfn>" + translatedname
-					+ "</dfn>'><img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>"
+					+ "<button class='gldButton curToggle' id='gldButton_" + i + "' "
+					+ "title='<dfn>" + translatedname + "</dfn><br />gw2timer.com/guild/" + i.toLowerCase() + "'>"
+					+ "<img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>"
 					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "' target='_blank'>Y</a>&nbsp;"
 					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "' target='_blank'>W</a>"
 					+ "</div>");
