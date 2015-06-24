@@ -534,9 +534,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Creature", "Keep", "Tower"]
 },
 "24": {
-	pve: ["Lumberer Kryta", "Activity", "Bloodtide", "Fractal 1-10"],
-	pvp: ["Reward", "Capture", "Engineer Thief", "Elementalist Necromancer"],
-	wvw: ["Land", "Creature", "Defender", "Tower"]
+	pve: ["Miner Kryta", "Forger", "Snowden", "Shatterer Ascalon"],
+	pvp: ["Rank", "Kills", "Engineer Thief", "Elementalist Necromancer"],
+	wvw: ["Creature", "Ruins", "Tower", "Camp"]
 },
 "25": {
 	pve: ["Miner Shiverpeaks", "Forger", "Silverwastes", "Fractal 1-10"],
