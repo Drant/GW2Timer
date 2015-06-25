@@ -103,7 +103,7 @@ O = {
 		bol_displayWaypoints: true,
 		bol_displayPOIs: true,
 		bol_displayVistas: true,
-		bol_displaySkills: true,
+		bol_displayChallenges: true,
 		bol_displayHearts: true,
 		bol_displayEvents: false,
 		// GPS
@@ -1010,7 +1010,7 @@ U = {
 		Landmark: "img/map/landmark.png",
 		LandmarkOver: "img/map/landmark_h.png",
 		Vista: "img/map/vista.png",
-		Skill: "img/map/skill.png",
+		Challenge: "img/map/challenge.png",
 		Heart: "img/map/heart.png"
 	},
 	
@@ -1827,6 +1827,7 @@ X = {
 		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: "", cushion: null },
 		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: "", cushion: null },
 		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: "", cushion: null },
+		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator", value: "", cushion: null },
 		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: "", cushion: null },
 		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: "", cushion: null },
 		CoinChallenger: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: "", cushion: null },
@@ -4131,7 +4132,7 @@ D = {
 		s_character: {de: "person", es: "personaje", fr: "personnage",
 			cs: "postava", it: "personaggio", pl: "postać", pt: "personagem", ru: "персона́ж", zh: "人物"},
 		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama"},
-		s_Skill_Challenge: {de: "Fertigkeitspunkt", es: "Desafío de habilidad", fr: "Défi de compétence"},
+		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros"},
 		s_checklist: {de: "prüfliste", es: "lista de comprobación", fr: "liste de contrôle",
 			cs: "kontrolní seznam", it: "elenco di controllo", pl: "lista kontrolna", pt: "lista de verificação", ru: "контрольный список", zh: "檢查清單"},
 		s_subscription: {de: "abonnement", es: "suscripción", fr: "abonnement",
@@ -6222,7 +6223,7 @@ C = {
 			if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
 				&& I.PageCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && isregularchain
-				&& C.isDryTopExpanded === false)
+				&& $("#listChainsDryTop").is(":visible") === false)
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -6515,7 +6516,7 @@ M = {
 		Waypoint: 1,
 		Landmark: 2,
 		Vista: 3,
-		Skill: 4,
+		Challenge: 4,
 		Heart: 5,
 		EventIcon: 6,
 		EventRing: 7
@@ -6526,7 +6527,7 @@ M = {
 		Waypoint: "waypoint",
 		Landmark: "landmark",
 		Vista: "vista",
-		Skill: "skill_challenges",
+		Challenge: "skill_challenges",
 		Heart: "tasks"
 	},
 	// Dry Top event icons and event rings map entities
@@ -6653,7 +6654,7 @@ M = {
 				Waypoint: new L.layerGroup(),
 				Landmark: new L.layerGroup(),
 				Vista: new L.layerGroup(),
-				Skill: new L.layerGroup(),
+				Challenge: new L.layerGroup(),
 				Heart: new L.layerGroup(),
 				Sector: new L.layerGroup(),
 				EventIcon: new L.layerGroup(),
@@ -6834,7 +6835,7 @@ M = {
 				if (O.Options.bol_displayWaypoints) { M.ZoneCurrent.Layers.Waypoint.addTo(M.Map); }
 				if (O.Options.bol_displayPOIs) { M.ZoneCurrent.Layers.Landmark.addTo(M.Map); }
 				if (O.Options.bol_displayVistas) { M.ZoneCurrent.Layers.Vista.addTo(M.Map); }
-				if (O.Options.bol_displaySkills) { M.ZoneCurrent.Layers.Skill.addTo(M.Map); }
+				if (O.Options.bol_displayChallenges) { M.ZoneCurrent.Layers.Challenge.addTo(M.Map); }
 				if (O.Options.bol_displayHearts) { M.ZoneCurrent.Layers.Heart.addTo(M.Map); }
 				if (O.Options.bol_displaySectors) { M.ZoneCurrent.Layers.Sector.addTo(M.Map); }
 				if (O.Options.bol_displayEvents) {
@@ -6964,9 +6965,9 @@ M = {
 			M.changeMarkerIcon(layer, U.URL_IMG.Vista, landmarksize);
 		});
 		
-		// Skill
-		M.ZoneCurrent.Layers.Skill.eachLayer(function(layer) {
-			M.changeMarkerIcon(layer, U.URL_IMG.Skill, landmarksize);
+		// Challenge
+		M.ZoneCurrent.Layers.Challenge.eachLayer(function(layer) {
+			M.changeMarkerIcon(layer, U.URL_IMG.Challenge, landmarksize);
 		});
 		
 		// Heart
@@ -8067,24 +8068,24 @@ P = {
 					 */
 					if (O.Options.bol_showWorldCompletion)
 					{
-						// Skill Challenges
+						// Hero Challenges
 						numofpois = ithzone.skill_challenges.length;
 						for (i = 0; i < numofpois; i++)
 						{
 							poi = ithzone.skill_challenges[i];
 							marker = L.marker(M.convertGCtoLC(poi.coord),
 							{
-								title: "<span class='" + "mapPoi" + "'>" + D.getPhrase("Skill Challenge") + "</span>",
-								mappingtype: M.MappingEnum.Skill,
+								title: "<span class='" + "mapPoi" + "'>" + D.getPhrase("Hero Challenge") + "</span>",
+								mappingtype: M.MappingEnum.Challenge,
 								icon: L.icon(
 								{
-									iconUrl: U.URL_IMG.Skill,
+									iconUrl: U.URL_IMG.Challenge,
 									iconSize: [16, 16],
 									iconAnchor: [8, 8]
 								})
 							});
 							M.bindMappingZoomBehavior(marker, "click");
-							zoneobj.Layers.Skill.addLayer(marker);
+							zoneobj.Layers.Challenge.addLayer(marker);
 						}
 						
 						// Renown Hearts
@@ -8226,7 +8227,7 @@ P = {
 		{
 			if (pName.indexOf("guild") !== -1 || // Guild missions
 				pName.indexOf("subdue") !== -1 || // Guild bounty
-				pName.indexOf("skill") !== -1 || // Skill challenges
+				pName.indexOf("skill") !== -1 || // Hero challenges
 				pName.indexOf("offshoot") !== -1 || // Obsolete Living Story events
 				pName.indexOf("vigil en") !== -1 ||
 				pName.indexOf("haunted") !== -1)
@@ -13291,8 +13292,8 @@ I = {
 				{
 					I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 				}
-				// Tooltip overflows panel left edge
-				if ($("#qTip").width() >= I.cTOOLTIP_OVERFLOW_WIDTH)
+				// Tooltip overflows panel right edge
+				if ($("#qTip").width() >= I.cTOOLTIP_OVERFLOW_WIDTH && I.isMapEnabled)
 				{
 					I.qTip.offsetX = ($(window).width() - a.pageX) - I.cPANEL_WIDTH - I.cTOOLTIP_MAX_OVERFLOW;
 				}

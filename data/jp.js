@@ -189,17 +189,6 @@ var GW2T_JP_DATA = {
 	chest: "grand",
 	description: "Dry Top aspect crystal jump on bamboo beams to top plateau"
 },
-"troll": {
-	id: 15,
-	difficulty: 1,
-	name_en: "Troll's End",
-	name_de: "Die Trollgasse",
-	name_es: "Final del Trol",
-	name_fr: "Impasse du troll",
-	coord: "[16300, 14605]",
-	img: "8RKUmMH",
-	description: "LA stalactite cave with planks"
-},
 "weyandt": {
 	id: 18,
 	difficulty: 1,
@@ -397,6 +386,17 @@ var GW2T_JP_DATA = {
 	coord: "[5850, 14793]",
 	img: "iWbwwAY",
 	description: "Silverwastes map-size desert JP with checkpoints. <dfn data-coord='[5257, 14952]'>Inner entrance</dfn> is left side of the ship's roof"
+},
+"troll": {
+	id: 15,
+	difficulty: 2,
+	name_en: "Troll's Revenge",
+	name_de: "Rache des Trolls",
+	name_es: "Venganza del trol",
+	name_fr: "Vengeance du troll",
+	coord: "[16611, 15124]",
+	img: "zho486P",
+	description: "LA city-wide rooftop jumps. Open four mini-chests to open final chest"
 },
 "secret": {
 	id: 13,
