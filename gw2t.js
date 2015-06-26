@@ -6163,8 +6163,8 @@ C = {
 				event.eventicon._icon.style.display = "none";
 				event.eventring._icon.style.display = "none";
 			}
-			M.DryTopEventActive = null;
-			M.DryTopEventActive = new Array();
+			M.Entity.DryTopActive = null;
+			M.Entity.DryTopActive = new Array();
 		}
 		
 		// Do event highlights, -1 means the final event's finish time
@@ -6200,8 +6200,8 @@ C = {
 				{
 					event = pChain.events[$(this).attr("data-eventindex")];
 					// Add active events to iterable array
-					M.DryTopEventActive.push(event.eventicon);
-					M.DryTopEventActive.push(event.eventring);
+					M.Entity.DryTopActive.push(event.eventicon);
+					M.Entity.DryTopActive.push(event.eventring);
 					
 					// Show active Dry Top events
 					event.eventicon._icon.style.display = "block";
@@ -6223,7 +6223,7 @@ C = {
 			if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
 				&& I.PageCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && isregularchain
-				&& $("#listChainsDryTop").is(":visible") === false)
+				&& ($("#listChainsDryTop").is(":visible") === false))
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -6502,6 +6502,10 @@ M = {
 	 * They are hidden or shown using the toggleEntity function.
 	 */
 	Entity: {
+		// Dry Top event icons and event rings map entities
+		DryTopIcons: new Array(),
+		DryTopRings: new Array(),
+		DryTopActive: new Array(),
 		JP: new Array()
 	},
 	PinPersonal: {},
@@ -6530,10 +6534,6 @@ M = {
 		Challenge: "skill_challenges",
 		Heart: "tasks"
 	},
-	// Dry Top event icons and event rings map entities
-	DryTopEventIcons: new Array(),
-	DryTopEventRings: new Array(),
-	DryTopEventActive: new Array(),
 	
 	/*
 	 * Tells if the specified zone exists within the listing.
@@ -7031,20 +7031,20 @@ M = {
 		}
 		
 		// Resize Dry Top event icons
-		if (M.DryTopEventIcons.length > 0)
+		if (M.Entity.DryTopIcons.length > 0)
 		{
 			// Event icons are same size as waypoints, but their rings are bigger
 			M.currentRingSize = M.scaleDimension(M.cRING_SIZE_MAX);
 
-			for (i in M.DryTopEventIcons)
+			for (i in M.Entity.DryTopIcons)
 			{
-				icon = M.DryTopEventIcons[i];
+				icon = M.Entity.DryTopIcons[i];
 				M.changeMarkerIcon(icon, icon._icon.src, M.currentIconSize);
-				icon = M.DryTopEventRings[i];
+				icon = M.Entity.DryTopRings[i];
 				M.changeMarkerIcon(icon, icon._icon.src, M.currentRingSize);
 				// Don't make the rings overlap clickable waypoints
-				M.DryTopEventIcons[i]._icon.style.zIndex = 1000;
-				M.DryTopEventRings[i]._icon.style.zIndex = 1;
+				M.Entity.DryTopIcons[i]._icon.style.zIndex = 1000;
+				M.Entity.DryTopRings[i]._icon.style.zIndex = 1;
 			}
 		}
 	},
@@ -8515,8 +8515,8 @@ P = {
 					event.eventring._icon.style.display = "none";
 					event.eventicon._icon.style.display = "none";
 				}
-				M.DryTopEventRings.push(event.eventring);
-				M.DryTopEventIcons.push(event.eventicon);
+				M.Entity.DryTopRings.push(event.eventring);
+				M.Entity.DryTopIcons.push(event.eventicon);
 			}
 		}
 		I.qTip.init(".leaflet-marker-icon");

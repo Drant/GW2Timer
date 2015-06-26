@@ -544,9 +544,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Kills", "Camp", "Defender"]
 },
 "26": {
-	pve: ["Forager Orr", "Vista Ascalon", "Malchor", "Fractal 1-10"],
-	pvp: ["Defender", "Kills", "Engineer Mesmer", "Guardian Elementalist"],
-	wvw: ["Ruins", "Caravan", "Keep", "Defender"]
+	pve: ["Lumberer Shiverpeaks", "Vista Wastes", "Kessex", "Fractal 1-10"],
+	pvp: ["Reward", "Rank", "Engineer Mesmer", "Guardian Elementalist"],
+	wvw: ["Land", "Guard", "Camp", "Tower"]
 },
 "27": {
 	pve: ["Lumberer Shiverpeaks", "Fractal", "Snowden", "Fractal 21-30"],

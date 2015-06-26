@@ -817,7 +817,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[16117, 17134], [15993,17080], [16073, 17130], [16117, 17134], [16148, 17197]],
+			path: [[15929, 17058], [15993,17080], [16073, 17130], [16092, 17149], [16097, 17191], [16148, 17197]],
 			name_en: "Kill Admiral Taidha Covington.",
 			name_de: "Tötet Admiral Taidha Covington.",
 			name_es: "Mata a la almirante Taidha Covington.",
