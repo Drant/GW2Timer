@@ -8561,8 +8561,8 @@ P = {
 			I.qTip.init(".leaflet-marker-icon");
 			
 			// Finally
-			M.adjustZoomDryTop();
 			C.isDryTopGenerated = true;
+			M.adjustZoomDryTop();
 		});
 	}
 };
