@@ -486,8 +486,21 @@ input#mapCoordinatesName {
 		-1px 1px 1px #000,
 		1px 1px 1px #000;
 }
+.mapNick {
+	font-family: Menomonia;
+	font-size: 0px;
+	text-align: center;
+	line-height: 90%;
+	color: white;
+	text-shadow:
+		1px 1px 1px #000,
+		-1px -1px 1px #000,
+		1px -1px 1px #000,
+		-1px 1px 1px #000,
+		1px 1px 1px #000;
+}
 
-.mapSecIn {
+.mapSecIn, .mapNickIn {
 	display: table-cell;
 	vertical-align: middle;
 }

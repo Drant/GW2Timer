@@ -549,9 +549,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Camp", "Tower"]
 },
 "27": {
-	pve: ["Lumberer Shiverpeaks", "Fractal", "Snowden", "Fractal 21-30"],
-	pvp: ["Rank", "Defender", "Warrior Elementalist", "Engineer Necromancer"],
-	wvw: ["Guard", "Spender", "Tower", "Camp"]
+	pve: ["Miner Shiverpeaks", "Vista Shiverpeaks", "Maelstrom", "Shatterer Ascalon"],
+	pvp: ["Capture", "Defender", "Warrior Elementalist", "Engineer Necromancer"],
+	wvw: ["Ruins", "Spender", "Defender", "Tower"]
 },
 "28": {
 	pve: ["Miner Shiverpeaks", "Activity", "Frostgorge", "Fractal 1-10"],

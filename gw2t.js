@@ -1017,6 +1017,7 @@ U = {
 	URL_DATA:
 	{
 		// Data to load when opening a map section
+		DryTop: "data/drytop.js",
 		Resource: "data/resource.js",
 		JP: "data/jp.js",
 		Collectible: "data/collectible.js",
@@ -5109,7 +5110,7 @@ C = {
 		Primary: 2, // An only event at the time or a concurrent event that takes the longest to complete
 		Boss: 3 // The boss event, also considered a primary event
 	},
-	isDryTopExpanded: false,
+	isDryTopGenerated: false,
 	
 	/*
 	 * Gets a chain from its alias.
@@ -5603,8 +5604,7 @@ C = {
 		// Create chain bars for unscheduled chains only when manually expanded the header
 		$("#listChainsDryTop").prev().one("click", function()
 		{
-			P.generateDryTopIcons();
-			C.isDryTopExpanded = true;
+			P.generateDryTop();
 		});
 		$("#listChainsLegacy").prev().one("click", function()
 		{
@@ -6155,7 +6155,7 @@ C = {
 		var isregularchain = C.isChainRegular(pChain);
 		
 		// Hide past events' markers
-		if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopExpanded)
+		if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopGenerated)
 		{
 			for (i in pChain.events)
 			{
@@ -6196,7 +6196,7 @@ C = {
 					.css({width: 0, opacity: 0.5}).animate({width: eventnamewidth, opacity: 1}, animationspeed)
 					.css({width: "auto"});
 				// Also show current events' markers
-				if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopExpanded)
+				if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopGenerated)
 				{
 					event = pChain.events[$(this).attr("data-eventindex")];
 					// Add active events to iterable array
@@ -6426,6 +6426,7 @@ M = {
 	cInitialZone: "lion",
 	Map: {},
 	Events: {},
+	DryTop: {},
 	Resources: {},
 	JPs: {},
 	Chests: {},
@@ -6481,6 +6482,7 @@ M = {
 	 * To assign marker properties: MARKER.options.PROPERTY
 	 */
 	Layer: {
+		DryTopNicks: new L.layerGroup(), // Dry Top event names and timestamps
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		Chest: new L.layerGroup() // Open world basic chests
 	},
@@ -6502,7 +6504,6 @@ M = {
 	 * They are hidden or shown using the toggleEntity function.
 	 */
 	Entity: {
-		// Dry Top event icons and event rings map entities
 		DryTopIcons: new Array(),
 		DryTopRings: new Array(),
 		DryTopActive: new Array(),
@@ -7013,39 +7014,51 @@ M = {
 	 */
 	adjustZoomDryTop: function()
 	{
-		var i;
-		var currentzoom = M.Map.getZoom();
-		var icon;
-		
-		switch (currentzoom)
+		if (C.isDryTopGenerated)
 		{
-			case 7: M.currentIconSize = 32; break;
-			case 6: M.currentIconSize = 28; break;
-			case 5: M.currentIconSize = 24; break;
-			case 4: M.currentIconSize = 20; break;
-			case 3: M.currentIconSize = 16; break;
-			default:
+			var i;
+			var currentzoom = M.Map.getZoom();
+			var icon;
+			var nickfontsize, nickopacity;
+
+			switch (currentzoom)
 			{
-				M.currentIconSize = 0;
+				case 7: M.currentIconSize = 32; nickfontsize = "20px"; nickopacity = 0.9; break;
+				case 6: M.currentIconSize = 28; nickfontsize = "16px"; nickopacity = 0.8; break;
+				case 5: M.currentIconSize = 24; nickfontsize = "12px"; nickopacity = 0.6; break;
+				case 4: M.currentIconSize = 20; nickfontsize = "0px"; nickopacity = 0; break;
+				case 3: M.currentIconSize = 16; nickfontsize = "0px"; nickopacity = 0; break;
+				default:
+				{
+					M.currentIconSize = 0; nickfontsize = "0px"; nickopacity = 0;
+				}
 			}
-		}
-		
-		// Resize Dry Top event icons
-		if (M.Entity.DryTopIcons.length > 0)
-		{
+			
 			// Event icons are same size as waypoints, but their rings are bigger
 			M.currentRingSize = M.scaleDimension(M.cRING_SIZE_MAX);
 
 			for (i in M.Entity.DryTopIcons)
 			{
+				// Icons
 				icon = M.Entity.DryTopIcons[i];
 				M.changeMarkerIcon(icon, icon._icon.src, M.currentIconSize);
+				// Rings
 				icon = M.Entity.DryTopRings[i];
 				M.changeMarkerIcon(icon, icon._icon.src, M.currentRingSize);
 				// Don't make the rings overlap clickable waypoints
 				M.Entity.DryTopIcons[i]._icon.style.zIndex = 1000;
 				M.Entity.DryTopRings[i]._icon.style.zIndex = 1;
 			}
+			
+			M.Layer.DryTopNicks.eachLayer(function(layer) {
+				if (layer._icon)
+				{
+					layer._icon.style.fontSize = nickfontsize;
+					layer._icon.style.opacity = nickopacity;
+					layer._icon.style.zIndex = M.cZIndexBury + 1; // Don't cover other icons
+					layer._icon.style.display = "table"; // For middle vertical alignment
+				}
+			});
 		}
 	},
 	
@@ -7116,47 +7129,6 @@ M = {
 	},
 	
 	/*
-	 * Initializes or toggle a submap, which is a Leaflet ImageOverlay over the map.
-	 * Look at zones.js for submap declarations.
-	 * @param string pName of the submap.
-	 * @param boolean pBoolean to show or hide.
-	 */
-	toggleSubmap: function(pName, pBoolean)
-	{
-		var submap = M.Submaps[pName];
-		if (submap.ImageOverlay === undefined)
-		{
-			submap.ImageOverlay = L.imageOverlay(submap.img, M.convertGCtoLCMulti(submap.bounds));
-			M.toggleSubmap(pName, pBoolean);
-		}
-		else
-		{
-			// No boolean provided so assumes toggle
-			if (pBoolean === undefined)
-			{
-				pBoolean = !(M.Map.hasLayer(submap.ImageOverlay));
-			}
-
-			// Show if true, hide if false
-			if (pBoolean)
-			{
-				submap.ImageOverlay.addTo(M.Map).bringToBack();
-			}
-			else
-			{
-				M.Map.removeLayer(submap.ImageOverlay);
-			}
-		}
-	},
-	toggleSubmapArray: function(pNames, pBoolean)
-	{
-		for (var i in pNames)
-		{
-			M.toggleSubmap(pNames[i], pBoolean);
-		}
-	},
-	
-	/*
 	 * Macro function for toggling map entities display (Leaflet doesn't have a
 	 * hide/show markers and paths method except through less flexible layer groups.
 	 * @param array pEntityGroup objects like paths and markers.
@@ -7206,6 +7178,47 @@ M = {
 				pEntityGroup[i]._container.style.display = display;
 			}
 			
+		}
+	},
+	
+	/*
+	 * Initializes or toggle a submap, which is a Leaflet ImageOverlay over the map.
+	 * Look at zones.js for submap declarations.
+	 * @param string pName of the submap.
+	 * @param boolean pBoolean to show or hide.
+	 */
+	toggleSubmap: function(pName, pBoolean)
+	{
+		var submap = M.Submaps[pName];
+		if (submap.ImageOverlay === undefined)
+		{
+			submap.ImageOverlay = L.imageOverlay(submap.img, M.convertGCtoLCMulti(submap.bounds));
+			M.toggleSubmap(pName, pBoolean);
+		}
+		else
+		{
+			// No boolean provided so assumes toggle
+			if (pBoolean === undefined)
+			{
+				pBoolean = !(M.Map.hasLayer(submap.ImageOverlay));
+			}
+
+			// Show if true, hide if false
+			if (pBoolean)
+			{
+				submap.ImageOverlay.addTo(M.Map).bringToBack();
+			}
+			else
+			{
+				M.Map.removeLayer(submap.ImageOverlay);
+			}
+		}
+	},
+	toggleSubmapArray: function(pNames, pBoolean)
+	{
+		for (var i in pNames)
+		{
+			M.toggleSubmap(pNames[i], pBoolean);
 		}
 	},
 	
@@ -8479,47 +8492,78 @@ P = {
 	/*
 	 * Creates event icons for Dry Top chains, they will be resized by the zoomend function
 	 */
-	generateDryTopIcons: function()
+	generateDryTop: function()
 	{
-		var i, ii;
-		var chain, event;
-		for (i in C.DryTopChains)
+		$.getScript(U.URL_DATA.DryTop).done(function()
 		{
-			chain = C.DryTopChains[i];
-			for (ii in chain.events)
+			M.DryTop = GW2T_DRYTOP_DATA;
+			var i, ii;
+			var chain, event, nick;
+			
+			// Event nicks are independent of the events themselves and are always shown on the map
+			for (i in M.DryTop)
 			{
-				event = chain.events[ii];
-				event.eventring = L.marker(M.convertGCtoLC(event.path[0]),
+				event = M.DryTop[i];
+				nick = L.marker(M.convertGCtoLC(event.coord),
 				{
 					clickable: false,
-					icon: L.icon(
+					icon: L.divIcon(
 					{
-						iconUrl: "img/ring/" + event.ring + I.cPNG,
-						iconSize: [32, 32],
-						iconAnchor: [16, 16]
+						className: "mapNick",
+						html: "<span class='mapNickIn'>" + D.getObjectName(event)
+							+ "<br /><ins style='color:" + event.color + "'>" + event.time + "</ins></span>",
+						iconSize: [512, 64],
+						iconAnchor: [256, 32]
 					})
-				}).addTo(M.Map);
-				event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
-				{
-					title: "<span class='mapEvent'>" + D.getObjectName(event) + "</span>",
-					icon: L.icon(
-					{
-						iconUrl: "img/event/" + event.icon + I.cPNG,
-						iconSize: [16, 16],
-						iconAnchor: [8, 8]
-					})
-				}).addTo(M.Map);
-				// Initially hide all event icons, the highlight event functions will show them
-				if ( ! $("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
-				{
-					event.eventring._icon.style.display = "none";
-					event.eventicon._icon.style.display = "none";
-				}
-				M.Entity.DryTopRings.push(event.eventring);
-				M.Entity.DryTopIcons.push(event.eventicon);
+				});
+				M.Layer.DryTopNicks.addLayer(nick);
 			}
-		}
-		I.qTip.init(".leaflet-marker-icon");
+			M.toggleLayer(M.Layer.DryTopNicks, true);
+			
+			for (i in C.DryTopChains)
+			{
+				chain = C.DryTopChains[i];
+				for (ii in chain.events)
+				{
+					event = chain.events[ii];
+					
+					event.eventring = L.marker(M.convertGCtoLC(event.path[0]),
+					{
+						clickable: false,
+						icon: L.icon(
+						{
+							iconUrl: "img/ring/" + event.ring + I.cPNG,
+							iconSize: [32, 32],
+							iconAnchor: [16, 16]
+						})
+					}).addTo(M.Map);
+					event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
+					{
+						title: "<span class='mapEvent'>" + D.getObjectName(event) + "</span>",
+						icon: L.icon(
+						{
+							iconUrl: "img/event/" + event.icon + I.cPNG,
+							iconSize: [16, 16],
+							iconAnchor: [8, 8]
+						})
+					}).addTo(M.Map);
+					// Initially hide all event icons, the highlight event functions will show them
+					if ( ! $("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
+					{
+						event.eventring._icon.style.display = "none";
+						event.eventicon._icon.style.display = "none";
+					}
+					
+					M.Entity.DryTopRings.push(event.eventring);
+					M.Entity.DryTopIcons.push(event.eventicon);
+				}
+			}
+			I.qTip.init(".leaflet-marker-icon");
+			
+			// Finally
+			M.adjustZoomDryTop();
+			C.isDryTopGenerated = true;
+		});
 	}
 };
 
@@ -9933,13 +9977,13 @@ T = {
 	secondsTillGuildReset: -1,
 	isGuildTimerStarted: false,
 	
-	Events:
+	DryTopChat:
 	{
 		numOfSets: 7,
 		
 		en0: "Supplies@[&BJcHAAA=] Rustbucket@[&BJYHAAA=] TendrilW@[&BIYHAAA=] Shaman@[&BIsHAAA=]"
 			+ " Victims@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Crystals@[&BHIHAAA=] TendrilSE@[&BHMHAAA=]",
-		en1: "Beetles@[&BJYHAAA=] Bridge@[&BIkHAAA=] Experiment@[&BIwHAAA=] Golem@[&BIoHAAA=]"
+		en1: "Insects@[&BJYHAAA=] Bridge@[&BIkHAAA=] Experiment@[&BIwHAAA=] Golem@[&BIoHAAA=]"
 			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
 		en2: "Suit@[&BJMHAAA=] Leyline@[&BIMHAAA=] Town@[&BH4HAAA=] Basket@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
 		en3: "Eway@[&BJcHAAA=] Giant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Mites@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosives@[&BH4HAAA=]",
@@ -9949,7 +9993,7 @@ T = {
 		
 		de0: "Vorräte@[&BJcHAAA=] Schrotteimer@[&BJYHAAA=] DschungelrankeW@[&BIYHAAA=] Schamanin@[&BIsHAAA=]"
 			+ " Unfallopfer@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Kristalle@[&BHIHAAA=] DschungelrankeSO@[&BHMHAAA=]",
-		de1: "Käfern@[&BJYHAAA=] Rankenbrücke@[&BIkHAAA=] Experimente@[&BIwHAAA=] Golem@[&BIoHAAA=]"
+		de1: "Insekten@[&BJYHAAA=] Rankenbrücke@[&BIkHAAA=] Experimente@[&BIwHAAA=] Golem@[&BIoHAAA=]"
 			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MinenO@[&BHsHAAA=]",
 		de2: "Aspektanzug@[&BJMHAAA=] Leylinien@[&BIMHAAA=] Kleinstadt@[&BH4HAAA=] Drachenkorb@[&BHMHAAA=] MinenNO@[&BH0HAAA=]",
 		de3: "Eway@[&BJcHAAA=] Riesen@[&BIwHAAA=] Skritt@[&BIwHAAA=] Staubmilben@[&BHUHAAA=] Dunst@[&BHIHAAA=] Sprengstoff@[&BH4HAAA=]",
@@ -9959,7 +10003,7 @@ T = {
 		
 		es0: "Suministros@[&BJcHAAA=] Chatarro@[&BJYHAAA=] ZarcilloO@[&BIYHAAA=] Chamán@[&BIsHAAA=]"
 			+ " Víctimas@[&BIwHAAA=] Ñique@[&BHYHAAA=] Cristales@[&BHIHAAA=] ZarcilloSE@[&BHMHAAA=]",
-		es1: "Escarabajos@[&BJYHAAA=] Puente@[&BIkHAAA=] Experimento@[&BIwHAAA=] Gólem@[&BIoHAAA=]"
+		es1: "Insectos@[&BJYHAAA=] Puente@[&BIkHAAA=] Experimento@[&BIwHAAA=] Gólem@[&BIoHAAA=]"
 			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MinaE@[&BHsHAAA=]",
 		es2: "Traje@[&BJMHAAA=] Líneasley@[&BIMHAAA=] Villa@[&BH4HAAA=] Cestas@[&BHMHAAA=] MinaNE@[&BH0HAAA=]",
 		es3: "Eway@[&BJcHAAA=] Gigante@[&BIwHAAA=] Skritt@[&BIwHAAA=] Ácaros@[&BHUHAAA=] Bruma@[&BHIHAAA=] Explosivos@[&BH4HAAA=]",
@@ -9969,7 +10013,7 @@ T = {
 		
 		fr0: "Provisions@[&BJcHAAA=] Tadrouille@[&BJYHAAA=] VrilleO@[&BIYHAAA=] Chamane@[&BIsHAAA=]"
 			+ " Survivants@[&BIwHAAA=] Bipbip@[&BHYHAAA=] Cristales@[&BHIHAAA=] VrilleSE@[&BHMHAAA=]",
-		fr1: "Scarabées@[&BJYHAAA=] Pont@[&BIkHAAA=] Expériences@[&BIwHAAA=] Golem@[&BIoHAAA=]"
+		fr1: "Insectes@[&BJYHAAA=] Pont@[&BIkHAAA=] Expériences@[&BIwHAAA=] Golem@[&BIoHAAA=]"
 			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
 		fr2: "Combinaison@[&BJMHAAA=] Lignesforce@[&BIMHAAA=] Bourg@[&BH4HAAA=] Panier@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
 		fr3: "Eway@[&BJcHAAA=] Géant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Acarides@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosifs@[&BH4HAAA=]",
@@ -10012,25 +10056,25 @@ T = {
 		{
 			language = O.Options.enu_Language;
 		}
-		for (i = 0; i < T.Events.numOfSets; i++)
+		for (i = 0; i < T.DryTopChat.numOfSets; i++)
 		{
-			T.Events["Set" + i] = T.Events[language + i];
+			T.DryTopChat["Set" + i] = T.DryTopChat[language + i];
 		}
 		
 		T.Hourly =
 		{
-			 t0: ":00 " + T.Events.Set0,
-			 t5: ":05 " + T.Events.Set1,
-			t10: ":10 " + T.Events.Set2,
-			t15: ":15 " + T.Events.Set0,
-			t20: ":20 " + T.Events.Set1,
-			t25: ":25 " + T.Events.Set2,
-			t30: ":30 " + T.Events.Set0,
-			t35: ":35 " + T.Events.Set1,
-			t40: ":40 " + T.Events.Set3,
-			t45: ":45 " + T.Events.Set4,
-			t50: ":50 " + T.Events.Set5,
-			t55: ":55 " + T.Events.Set6
+			 t0: ":00 " + T.DryTopChat.Set0,
+			 t5: ":05 " + T.DryTopChat.Set1,
+			t10: ":10 " + T.DryTopChat.Set2,
+			t15: ":15 " + T.DryTopChat.Set0,
+			t20: ":20 " + T.DryTopChat.Set1,
+			t25: ":25 " + T.DryTopChat.Set2,
+			t30: ":30 " + T.DryTopChat.Set0,
+			t35: ":35 " + T.DryTopChat.Set1,
+			t40: ":40 " + T.DryTopChat.Set3,
+			t45: ":45 " + T.DryTopChat.Set4,
+			t50: ":50 " + T.DryTopChat.Set5,
+			t55: ":55 " + T.DryTopChat.Set6
 		};
 	},
 	
