@@ -5816,13 +5816,15 @@ C = {
 		
 		if (pChain.series === C.ChainSeriesEnum.DryTop)
 		{
-			$("#chnTime_" + pChain.nexus).text(T.getTimeFormatted(
-				{
-					reference: T.ReferenceEnum.UTC,
-					want24: true,
-					wantHours: false
-				})
-			);
+			var drytopminute = T.getDryTopMinute();
+			var timetext = "(:" + drytopminute + ") " + T.getTimeFormatted(
+			{
+				reference: T.ReferenceEnum.UTC,
+				want24: true,
+				wantHours: false
+			});
+			$("#chnTime_" + pChain.nexus).text(timetext);
+			$("#mapDryTopTimer").text(timetext);
 		}
 		else
 		{
@@ -6427,6 +6429,7 @@ M = {
 	Map: {},
 	Events: {},
 	DryTop: {},
+	DryTopTimer: {},
 	Resources: {},
 	JPs: {},
 	Chests: {},
@@ -6941,10 +6944,10 @@ M = {
 		
 		switch (currentzoom)
 		{
-			case 7: sectorfontsize = "28px"; sectoropacity = 0.9; break;
-			case 6: sectorfontsize = "20px"; sectoropacity = 0.6; break;
-			case 5: sectorfontsize = "16px"; sectoropacity = 0.3; break;
-			default: { sectorfontsize = "0px"; sectoropacity = 0; }
+			case 7: sectorfontsize = 28; sectoropacity = 0.9; break;
+			case 6: sectorfontsize = 20; sectoropacity = 0.6; break;
+			case 5: sectorfontsize = 16; sectoropacity = 0.3; break;
+			default: { sectorfontsize = 0; sectoropacity = 0; }
 		}
 
 		// Waypoints
@@ -6980,7 +6983,7 @@ M = {
 		M.ZoneCurrent.Layers.Sector.eachLayer(function(layer) {
 			if (layer._icon)
 			{
-				layer._icon.style.fontSize = sectorfontsize;
+				layer._icon.style.fontSize = sectorfontsize + "px";
 				layer._icon.style.opacity = sectoropacity;
 				layer._icon.style.zIndex = M.cZIndexBury + 1; // Don't cover other icons
 				if (O.Options.bol_displaySectors)
@@ -7023,14 +7026,14 @@ M = {
 
 			switch (currentzoom)
 			{
-				case 7: M.currentIconSize = 32; nickfontsize = "20px"; nickopacity = 0.9; break;
-				case 6: M.currentIconSize = 28; nickfontsize = "16px"; nickopacity = 0.8; break;
-				case 5: M.currentIconSize = 24; nickfontsize = "12px"; nickopacity = 0.6; break;
-				case 4: M.currentIconSize = 20; nickfontsize = "0px"; nickopacity = 0; break;
-				case 3: M.currentIconSize = 16; nickfontsize = "0px"; nickopacity = 0; break;
+				case 7: M.currentIconSize = 32; nickfontsize = 20; nickopacity = 0.9; break;
+				case 6: M.currentIconSize = 28; nickfontsize = 16; nickopacity = 0.8; break;
+				case 5: M.currentIconSize = 24; nickfontsize = 12; nickopacity = 0.6; break;
+				case 4: M.currentIconSize = 20; nickfontsize = 0; nickopacity = 0; break;
+				case 3: M.currentIconSize = 16; nickfontsize = 0; nickopacity = 0; break;
 				default:
 				{
-					M.currentIconSize = 0; nickfontsize = "0px"; nickopacity = 0;
+					M.currentIconSize = 0; nickfontsize = 0; nickopacity = 0;
 				}
 			}
 			
@@ -7053,12 +7056,16 @@ M = {
 			M.Layer.DryTopNicks.eachLayer(function(layer) {
 				if (layer._icon)
 				{
-					layer._icon.style.fontSize = nickfontsize;
+					layer._icon.style.fontSize = nickfontsize + "px";
 					layer._icon.style.opacity = nickopacity;
 					layer._icon.style.zIndex = M.cZIndexBury + 1; // Don't cover other icons
 					layer._icon.style.display = "table"; // For middle vertical alignment
 				}
 			});
+			M.DryTopTimer._icon.style.fontSize = (nickfontsize*2) + "px";
+			M.DryTopTimer._icon.style.opacity = nickopacity;
+			M.DryTopTimer._icon.style.zIndex = M.cZIndexBury + 1;
+			M.DryTopTimer._icon.style.display = "table";
 		}
 	},
 	
@@ -8498,13 +8505,13 @@ P = {
 		{
 			M.DryTop = GW2T_DRYTOP_DATA;
 			var i, ii;
-			var chain, event, nick;
+			var chain, event, marker;
 			
 			// Event nicks are independent of the events themselves and are always shown on the map
 			for (i in M.DryTop)
 			{
 				event = M.DryTop[i];
-				nick = L.marker(M.convertGCtoLC(event.coord),
+				marker = L.marker(M.convertGCtoLC(event.coord),
 				{
 					clickable: false,
 					icon: L.divIcon(
@@ -8516,10 +8523,24 @@ P = {
 						iconAnchor: [256, 32]
 					})
 				});
-				M.Layer.DryTopNicks.addLayer(nick);
+				M.Layer.DryTopNicks.addLayer(marker);
 			}
 			M.toggleLayer(M.Layer.DryTopNicks, true);
 			
+			// Timer integrated on the map
+			M.DryTopTimer = L.marker(M.convertGCtoLC(M.getZoneCenter("dry")),
+			{
+				clickable: false,
+				icon: L.divIcon(
+				{
+					className: "mapNick",
+					html: "<span class='mapNickIn' id='mapDryTopTimer'></span>",
+					iconSize: [512, 64],
+					iconAnchor: [256, 32]
+				})
+			}).addTo(M.Map);
+			
+			// Create icons
 			for (i in C.DryTopChains)
 			{
 				chain = C.DryTopChains[i];
@@ -9935,7 +9956,7 @@ T = {
 	cDAYS_IN_WEEK: 7,
 	cSECONDS_IN_TIMEFRAME: 900,
 	cMINUTES_IN_TIMEFRAME: 15,
-	cMINUTES_IN_EVENTFRAME: 5,
+	cMINUTES_IN_DRYTOPFRAME: 5,
 	cNUM_TIMEFRAMES_IN_HOUR: 4,
 	cSECS_MARK_0: 0,
 	cSECS_MARK_1: 900,
@@ -10032,13 +10053,15 @@ T = {
 	getCurrentDryTopEvents: function(pOffset)
 	{
 		pOffset = pOffset || 0;
-		
-		var now = new Date();
-		var min = now.getUTCMinutes();
-		var eventframe = (~~(min / T.cMINUTES_IN_EVENTFRAME) * T.cMINUTES_IN_EVENTFRAME)
-			+ (pOffset * T.cMINUTES_IN_EVENTFRAME);
+		var eventframe = T.getDryTopMinute() + (pOffset * T.cMINUTES_IN_DRYTOPFRAME);
 	
 		return T.Hourly["t" + T.wrapInteger(eventframe, T.cMINUTES_IN_HOUR)] + I.siteTagCurrent;
+	},
+	getDryTopMinute: function()
+	{
+		var now = new Date();
+		var min = now.getUTCMinutes();
+		return (~~(min / T.cMINUTES_IN_DRYTOPFRAME) * T.cMINUTES_IN_DRYTOPFRAME);
 	},
 	
 	// Dry Top events
@@ -11478,7 +11501,7 @@ K = {
 			}
 			
 			// If crossing a 5 minute mark
-			if (min % T.cMINUTES_IN_EVENTFRAME === 0)
+			if (min % T.cMINUTES_IN_DRYTOPFRAME === 0)
 			{
 				K.updateDaytimeIcon();
 				K.updateDryTopClipboard();

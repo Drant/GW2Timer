@@ -18,10 +18,10 @@ var GW2T_DRYTOP_DATA = {
 		color: "red"
 	},
 	TendrilW: {
-		name_en: "TendrilW*",
-		name_de: "DschungelrankeW*",
-		name_es: "ZarcilloO*",
-		name_fr: "VrilleO*",
+		name_en: "TendrilW★",
+		name_de: "DschungelrankeW★",
+		name_es: "ZarcilloO★",
+		name_fr: "VrilleO★",
 		time: ":00 :15 :30",
 		coord: [4200, 16251],
 		color: "red"
@@ -54,19 +54,19 @@ var GW2T_DRYTOP_DATA = {
 		color: "red"
 	},
 	Crystals: {
-		name_en: "Crystals*",
-		name_de: "Kristalle*",
-		name_es: "Cristales*",
-		name_fr: "Cristales*",
+		name_en: "Crystals★",
+		name_de: "Kristalle★",
+		name_es: "Cristales★",
+		name_fr: "Cristales★",
 		time: ":00 :15 :30",
 		coord: [5395, 16393],
 		color: "red"
 	},
 	TendrilSE: {
-		name_en: "TendrilSE*",
-		name_de: "DschungelrankeSO*",
-		name_es: "ZarcilloSE*",
-		name_fr: "VrilleSE*",
+		name_en: "TendrilSE★",
+		name_de: "DschungelrankeSO★",
+		name_es: "ZarcilloSE★",
+		name_fr: "VrilleSE★",
 		time: ":00 :15 :30",
 		coord: [5399, 16743],
 		color: "red"
@@ -171,19 +171,19 @@ var GW2T_DRYTOP_DATA = {
 		color: "yellow"
 	},
 	Basket: {
-		name_en: "Basket*",
-		name_de: "Drachenkorb*",
-		name_es: "Cestas*",
-		name_fr: "Panier*",
+		name_en: "Basket★",
+		name_de: "Drachenkorb★",
+		name_es: "Cestas★",
+		name_fr: "Panier★",
 		time: ":10 :25",
 		coord: [5305, 16714],
 		color: "yellow"
 	},
 	MineNE: {
-		name_en: "MineNE*",
-		name_de: "MinenNO*",
-		name_es: "MinaNE*",
-		name_fr: "MineNE*",
+		name_en: "MineNE★",
+		name_de: "MinenNO★",
+		name_es: "MinaNE★",
+		name_fr: "MineNE★",
 		time: ":10 :25",
 		coord: [5487, 16000],
 		color: "yellow"
