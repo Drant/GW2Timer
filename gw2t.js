@@ -2406,6 +2406,11 @@ X = {
 			{
 				$(this).addClass("chnTimeSubscribed");
 				X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
+				if (O.Options.int_setAlarm !== O.IntEnum.Alarm.Subscription)
+				{
+					I.write("Please set " + D.getString("alarm mode") + " to &quot;"
+						+ D.getSentence("subscription") + "&quot; to enable alarm.");
+				}
 			}
 		});
 
@@ -5816,8 +5821,12 @@ C = {
 		
 		if (pChain.series === C.ChainSeriesEnum.DryTop)
 		{
-			var drytopminute = T.getDryTopMinute();
-			var timetext = "(:" + drytopminute + ") " + T.getTimeFormatted(
+			var minute = T.getDryTopMinute();
+			if (minute < T.cBASE_10)
+			{
+				minute = "0" + minute.toString();
+			}
+			var timetext = "(:" + minute + ") " + T.getTimeFormatted(
 			{
 				reference: T.ReferenceEnum.UTC,
 				want24: true,

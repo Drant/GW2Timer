@@ -559,9 +559,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Kills", "Land", "Camp", "Defender"]
 },
 "29": {
-	pve: ["Forager Kryta", "Vista Kryta", "Fields", "Fractal 1-10"],
-	pvp: ["Defender", "Kills", "Warrior Mesmer", "Guardian Necromancer"],
-	wvw: ["Creature", "Land", "Keep", "Tower"]
+	pve: ["Miner Shiverpeaks", "Activity", "Sparkfly", "Golem Maguuma"],
+	pvp: ["Reward", "Defender", "Warrior Mesmer", "Guardian Necromancer"],
+	wvw: ["Creature", "Guard", "Tower", "Camp"]
 },
 "30": {
 	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Kessex", "Fractal 1-10"],
