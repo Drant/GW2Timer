@@ -101,12 +101,6 @@ ins {
 	z-index: 9;
 	top: 24px;
 	left: 24px;
-}
-#paneWarning {
-	background: #111;
-	opacity: 0.3;
-}
-#jsConsole, #paneWarning {
 	font-family: monospace;
 	font-size: 16px;
 	color: lime;
@@ -116,6 +110,13 @@ ins {
 		1px -1px 0px #333,
 		-1px 1px 0px #333,
 		1px 1px 0px #333;
+}
+#jsConsole img, #paneWarning img {
+	vertical-align: middle;
+}
+#paneWarning {
+	background: #111;
+	opacity: 0.3;
 }
 #jsConsoleButtons {
 	display: none;
@@ -2056,8 +2057,30 @@ dt.mapJPListNameHover {
 .trdPreview input[type="text"].trdCurrentBuy, .trdPreview input[type="text"].trdCurrentSell {
 	width: 67px;
 }
-.trdEntry button {
+.trdButtons button {
 	width: 24px; height: 24px;
+}
+.trdSwap {
+	display: inline-block;
+	width: 20px; height: 24px;
+	vertical-align: bottom;
+}
+.trdEntry button.trdSwapUp, .trdEntry button.trdSwapDown {
+	display: block;
+	min-width: 18px; min-height: 12px;
+	font-size: 8px;
+}
+.trdEntry button.trdSwapUp {
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.trdEntry button.trdSwapDown {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
 }
 .trdEntry input[type="text"] {
 	width: 103px;

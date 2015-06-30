@@ -2408,7 +2408,7 @@ X = {
 				X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
 				if (O.Options.int_setAlarm !== O.IntEnum.Alarm.Subscription)
 				{
-					I.write("Please set " + D.getString("alarm mode") + " to &quot;"
+					I.write("Please set <img src='img/ui/speaker.png' /> to &quot;"
 						+ D.getSentence("subscription") + "&quot; to enable alarm.");
 				}
 			}
@@ -3276,6 +3276,9 @@ E = {
 					+ "<div class='trdPreview'>"
 						+ "<input class='trdCurrentBuy trdOutput' type='text' tabindex='-1' />"
 						+ "<input class='trdCurrentSell trdOutput' type='text' tabindex='-1' />"
+						+ "<div class='trdSwap'>"
+							+ "<button class='trdSwapUp' tabindex='-1'></button><button class='trdSwapDown' tabindex='-1'></button>"
+						+ "</div>"
 					+ "</div>"
 				+ "</div>"
 			);
@@ -3326,6 +3329,22 @@ E = {
 			$(entry + " .trdCurrentBuy, " + entry + " .trdCurrentSell").each(function()
 			{
 				$(this).dblclick(function()
+				{
+					var price = E.parseCoinString($(this).val());
+					if (price !== 0)
+					{
+						// Assume the inputs are siblings
+						$(this).prev().val(E.createCoinString(price + 1)).trigger("change");
+						$(this).next().val(E.createCoinString(price - 1)).trigger("change");
+						E.updateTradingPrices($(this).parents(".trdEntry"));
+					}
+				});
+			});
+			
+			// Bind swap up/down buttons to swap data between calculators (for manual rearranging)
+			$(entry + " .trdSwapUp, " + entry + " .trdSwapDown").each(function()
+			{
+				$(this).click(function()
 				{
 					var price = E.parseCoinString($(this).val());
 					if (price !== 0)
@@ -9211,7 +9230,7 @@ G = {
 				{
 					var type = U.getSubstringFromHTMLID($(this));
 					G.generateCollectibles(type);
-					M.goToArguments(M.Collectibles[type].view);
+					M.goToArguments(M.Collectibles[type].view, null);
 				});
 				
 				// If article URL query string exists, show collectible of specified index
@@ -9357,7 +9376,7 @@ G = {
 			// Also views the map location of the collectible if box is checked
 			if (state)
 			{
-				M.goToArguments(M.Collectibles[type].view);
+				M.goToArguments(M.Collectibles[type].view, null);
 			}
 		});
 		$("#nedUncheck_" + pType).click(function()
@@ -13147,6 +13166,18 @@ I = {
 				$("#jsConsoleButtons").css(
 				{
 					right: "0px", left: "auto", bottom: "0px"
+				});
+				$("#itemMapCoordinates").css(
+				{
+					bottom: "6px", left: "6px"
+				});
+				$("#itemMapCoordinates input").css(
+				{
+					width: "80px", height: "12px", marginLeft: "5px", fontSize: 12
+				});
+				$("#mapCoordinatesName").css(
+				{
+					width: "116px"
 				});
 				// Lower the menu bar's height
 				$("#paneMenu").css(
