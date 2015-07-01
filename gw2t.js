@@ -2932,7 +2932,7 @@ E = {
 	/*
 	 * Sets an object with an item rarity CSS class. Removes all if level is not provided.
 	 * @param jqobject pEntry to remove.
-	 * @param int pLevel of rarity.
+	 * @param string pLevel of rarity.
 	 */
 	setRarityClass: function(pEntry, pLevel)
 	{
@@ -2950,7 +2950,7 @@ E = {
 	},
 	
 	/*
-	 * Animates the input box's value or the box itself depending change.
+	 * Animates the input box's value or the box itself depending on difference.
 	 * @param int pOldValue for comparison.
 	 * @param int pNewValue for comparison.
 	 * @param jqobject pInput to manipulate.
@@ -3054,6 +3054,7 @@ E = {
 		$.getJSON(U.URL_API.ItemDetails + id, function(pData)
 		{
 			E.setRarityClass(pEntry.find(".trdName"), pData.rarity);
+			pEntry.attr("data-rarity", pData.rarity);
 			pEntry.find(".trdIcon").attr("src", pData.icon);
 			pEntry.find(".trdLink").val(U.getChatlinkFromItemID(id));
 		});
@@ -3193,11 +3194,19 @@ E = {
 		pEntry.find(".trdLink").val("");
 		pEntry.find(".trdResultsContainer").remove();
 		
+		pEntry.find(".trdNotifyBuyLow").val("").trigger("change");
+		pEntry.find(".trdNotifyBuyHigh").val("").trigger("change");
+		pEntry.find(".trdNotifySellLow").val("").trigger("change");
+		pEntry.find(".trdNotifySellHigh").val("").trigger("change");
+		E.clearMatched(pEntry);
+	},
+	clearMatched: function(pEntry)
+	{
 		pEntry.find(".trdName").removeClass("trdMatched");
-		pEntry.find(".trdNotifyBuyLow").val("").trigger("change").removeClass("trdMatched");
-		pEntry.find(".trdNotifyBuyHigh").val("").trigger("change").removeClass("trdMatched");
-		pEntry.find(".trdNotifySellLow").val("").trigger("change").removeClass("trdMatched");
-		pEntry.find(".trdNotifySellHigh").val("").trigger("change").removeClass("trdMatched");
+		pEntry.find(".trdNotifyBuyLow").removeClass("trdMatched");
+		pEntry.find(".trdNotifyBuyHigh").removeClass("trdMatched");
+		pEntry.find(".trdNotifySellLow").removeClass("trdMatched");
+		pEntry.find(".trdNotifySellHigh").removeClass("trdMatched");
 	},
 	
 	/*
@@ -3346,14 +3355,61 @@ E = {
 			{
 				$(this).click(function()
 				{
-					var price = E.parseCoinString($(this).val());
-					if (price !== 0)
+					var i = U.getSubintegerFromHTMLID($(this).parents(".trdEntry"));
+					var isUp = ($(this).hasClass("trdSwapUp")) ? true : false;
+					
+					// Do not allow swapping outside of range
+					if (isUp && i === 0)
 					{
-						// Assume the inputs are siblings
-						$(this).prev().val(E.createCoinString(price + 1)).trigger("change");
-						$(this).next().val(E.createCoinString(price - 1)).trigger("change");
-						E.updateTradingPrices($(this).parents(".trdEntry"));
+						return;
 					}
+					if (!isUp === $(".trdEntry").length - 1) 
+					{
+						return;
+					}
+					
+					var j = isUp ? (i-1) : (i+1);
+					var calcA = $("#trdEntry_" + i);
+					var calcB = $("#trdEntry_" + j);
+					
+					// Swap text data from inputs
+					var dataA = new Array();
+					var dataB = new Array();
+					var counterA = 0;
+					var counterB = 0;
+					calcA.find("input[type='text']").each(function()
+					{
+						dataA.push($(this).val());
+					});
+					calcB.find("input[type='text']").each(function()
+					{
+						dataB.push($(this).val());
+					});
+					calcA.find("input[type='text']").each(function()
+					{
+						$(this).val(dataB[counterA]).trigger("change");
+						counterA++;
+					});
+					calcB.find("input[type='text']").each(function()
+					{
+						$(this).val(dataA[counterB]).trigger("change");
+						counterB++;
+					});
+					// Swap item icon
+					var imgA = calcA.find(".trdIcon").attr("src");
+					var imgB = calcB.find(".trdIcon").attr("src");
+					calcA.find(".trdIcon").attr("src", imgB);
+					calcB.find(".trdIcon").attr("src", imgA);
+					// Swap rarity color code of the item name
+					var rarityA = calcA.attr("data-rarity");
+					var rarityB = calcB.attr("data-rarity");
+					calcA.attr("data-rarity", rarityB);
+					calcB.attr("data-rarity", rarityA);
+					E.setRarityClass(calcA.find(".trdName"), rarityB);
+					E.setRarityClass(calcB.find(".trdName"), rarityA);
+					// Clear matched price styles
+					E.clearMatched(calcA);
+					E.clearMatched(calcB);
 				});
 			});
 			
@@ -5101,6 +5157,7 @@ C = {
 	 * This is referred to by the variable "C.Chains".
 	 */
 	Chains: GW2T_CHAIN_DATA,
+	DryTop: {},
 	// The word and variable "nexus" is simply a chain's index number in the Chains array
 	cIndexSynonym: "nexus",
 	ChainToday: null,
@@ -6456,7 +6513,6 @@ M = {
 	cInitialZone: "lion",
 	Map: {},
 	Events: {},
-	DryTop: {},
 	DryTopTimer: {},
 	Resources: {},
 	JPs: {},
@@ -8531,14 +8587,14 @@ P = {
 	{
 		$.getScript(U.URL_DATA.DryTop).done(function()
 		{
-			M.DryTop = GW2T_DRYTOP_DATA;
+			C.DryTop = GW2T_DRYTOP_DATA;
 			var i, ii;
 			var chain, event, marker;
 			
 			// Event nicks are independent of the events themselves and are always shown on the map
-			for (i in M.DryTop)
+			for (i in C.DryTop)
 			{
-				event = M.DryTop[i];
+				event = C.DryTop[i];
 				marker = L.marker(M.convertGCtoLC(event.coord),
 				{
 					clickable: false,
@@ -8611,6 +8667,7 @@ P = {
 			
 			// Finally
 			C.isDryTopGenerated = true;
+			T.initializeDryTopStrings();
 			M.adjustZoomDryTop();
 		});
 	}
@@ -10026,56 +10083,13 @@ T = {
 	secondsTillGuildReset: -1,
 	isGuildTimerStarted: false,
 	
-	DryTopChat:
-	{
-		numOfSets: 7,
-		
-		en0: "Supplies@[&BJcHAAA=] Rustbucket@[&BJYHAAA=] TendrilW@[&BIYHAAA=] Shaman@[&BIsHAAA=]"
-			+ " Victims@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Crystals@[&BHIHAAA=] TendrilSE@[&BHMHAAA=]",
-		en1: "Insects@[&BJYHAAA=] Bridge@[&BIkHAAA=] Experiment@[&BIwHAAA=] Golem@[&BIoHAAA=]"
-			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
-		en2: "Suit@[&BJMHAAA=] Leyline@[&BIMHAAA=] Town@[&BH4HAAA=] Basket@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
-		en3: "Eway@[&BJcHAAA=] Giant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Mites@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosives@[&BH4HAAA=]",
-		en4: "DEVOURER(2)@[&BHkHAAA=] Giant@[&BIwHAAA=]",
-		en5: "Eway@[&BJcHAAA=] Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Chickenado@[&BI4HAAA=] TWISTER(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
-		en6: "Beetle(5)@[&BJcHAAA=] Monster(4)@[&BHoHAAA=]",
-		
-		de0: "Vorräte@[&BJcHAAA=] Schrotteimer@[&BJYHAAA=] DschungelrankeW@[&BIYHAAA=] Schamanin@[&BIsHAAA=]"
-			+ " Unfallopfer@[&BIwHAAA=] Tootsie@[&BHYHAAA=] Kristalle@[&BHIHAAA=] DschungelrankeSO@[&BHMHAAA=]",
-		de1: "Insekten@[&BJYHAAA=] Rankenbrücke@[&BIkHAAA=] Experimente@[&BIwHAAA=] Golem@[&BIoHAAA=]"
-			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MinenO@[&BHsHAAA=]",
-		de2: "Aspektanzug@[&BJMHAAA=] Leylinien@[&BIMHAAA=] Kleinstadt@[&BH4HAAA=] Drachenkorb@[&BHMHAAA=] MinenNO@[&BH0HAAA=]",
-		de3: "Eway@[&BJcHAAA=] Riesen@[&BIwHAAA=] Skritt@[&BIwHAAA=] Staubmilben@[&BHUHAAA=] Dunst@[&BHIHAAA=] Sprengstoff@[&BH4HAAA=]",
-		de4: "VERSCHLINGER(2)@[&BHkHAAA=] Riesen@[&BIwHAAA=]",
-		de5: "Eway@[&BJcHAAA=] Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Hühnado@[&BI4HAAA=] STAUBWIRBELWIND(3)@[&BHoHAAA=] Dunst@[&BHIHAAA=]",
-		de6: "Riesenkäfer(5)@[&BJcHAAA=] Staubmonster(4)@[&BHoHAAA=]",
-		
-		es0: "Suministros@[&BJcHAAA=] Chatarro@[&BJYHAAA=] ZarcilloO@[&BIYHAAA=] Chamán@[&BIsHAAA=]"
-			+ " Víctimas@[&BIwHAAA=] Ñique@[&BHYHAAA=] Cristales@[&BHIHAAA=] ZarcilloSE@[&BHMHAAA=]",
-		es1: "Insectos@[&BJYHAAA=] Puente@[&BIkHAAA=] Experimento@[&BIwHAAA=] Gólem@[&BIoHAAA=]"
-			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MinaE@[&BHsHAAA=]",
-		es2: "Traje@[&BJMHAAA=] Líneasley@[&BIMHAAA=] Villa@[&BH4HAAA=] Cestas@[&BHMHAAA=] MinaNE@[&BH0HAAA=]",
-		es3: "Eway@[&BJcHAAA=] Gigante@[&BIwHAAA=] Skritt@[&BIwHAAA=] Ácaros@[&BHUHAAA=] Bruma@[&BHIHAAA=] Explosivos@[&BH4HAAA=]",
-		es4: "DEVORADORA(2)@[&BHkHAAA=] Gigante@[&BIwHAAA=]",
-		es5: "Eway@[&BJcHAAA=] Chrii'kkt(4)@[&BIoHAAA=] Skritt@[&BIwHAAA=] Pollonado@[&BI4HAAA=] HURACÁN(3)@[&BHoHAAA=] Bruma@[&BHIHAAA=]",
-		es6: "Escarabajo(5)@[&BJcHAAA=] Monstruo(4)@[&BHoHAAA=]",
-		
-		fr0: "Provisions@[&BJcHAAA=] Tadrouille@[&BJYHAAA=] VrilleO@[&BIYHAAA=] Chamane@[&BIsHAAA=]"
-			+ " Survivants@[&BIwHAAA=] Bipbip@[&BHYHAAA=] Cristales@[&BHIHAAA=] VrilleSE@[&BHMHAAA=]",
-		fr1: "Insectes@[&BJYHAAA=] Pont@[&BIkHAAA=] Expériences@[&BIwHAAA=] Golem@[&BIoHAAA=]"
-			+ " Nochtli@[&BHkHAAA=] COLOCAL@[&BHwHAAA=] Serene@[&BHQHAAA=] MineE@[&BHsHAAA=]",
-		fr2: "Combinaison@[&BJMHAAA=] Lignesforce@[&BIMHAAA=] Bourg@[&BH4HAAA=] Panier@[&BHMHAAA=] MineNE@[&BH0HAAA=]",
-		fr3: "Eway@[&BJcHAAA=] Géant@[&BIwHAAA=] Skritts@[&BIwHAAA=] Acarides@[&BHUHAAA=] Haze@[&BHIHAAA=] Explosifs@[&BH4HAAA=]",
-		fr4: "DÉVOREUSE(2)@[&BHkHAAA=] Géant@[&BIwHAAA=]",
-		fr5: "Eway@[&BJcHAAA=] Chrii'kkt(4)@[&BIoHAAA=] Skritts@[&BIwHAAA=] Poulenade@[&BI4HAAA=] TORNADE(3)@[&BHoHAAA=] Haze@[&BHIHAAA=]",
-		fr6: "Scarabée(5)@[&BJcHAAA=] Monstre(4)@[&BHoHAAA=]"
-	},
+	DryTopSets: {},
+	DryTopStrings: {},
 	Schedule: {},
-	Hourly: {},
 	
-	/**
+	/*
 	 * Gets a clipboard text of the current Dry Top events.
-	 * @param pOffset from the current event frame.
+	 * @param int pOffset frames from the current.
 	 * @returns string of events for that event frame.
 	 */
 	getCurrentDryTopEvents: function(pOffset)
@@ -10083,7 +10097,7 @@ T = {
 		pOffset = pOffset || 0;
 		var eventframe = T.getDryTopMinute() + (pOffset * T.cMINUTES_IN_DRYTOPFRAME);
 	
-		return T.Hourly["t" + T.wrapInteger(eventframe, T.cMINUTES_IN_HOUR)] + I.siteTagCurrent;
+		return T.DryTopStrings["t" + T.wrapInteger(eventframe, T.cMINUTES_IN_HOUR)] + I.siteTagCurrent;
 	},
 	getDryTopMinute: function()
 	{
@@ -10092,41 +10106,62 @@ T = {
 		return (~~(min / T.cMINUTES_IN_DRYTOPFRAME) * T.cMINUTES_IN_DRYTOPFRAME);
 	},
 	
-	// Dry Top events
-	initializeHourlyDryTop: function()
+	/*
+	 * Initializes Dry Top event sets to be used in clipboard text.
+	 */
+	initializeDryTopStrings: function()
 	{
-		if (C.DryTopChains.length <= 0)
+		getDryTopSet = function(pSet)
 		{
-			return;
-		}
-		
-		var i;
-		var language = O.OptionEnum.Language.Default;
-
-		if (D.isLanguageFullySupported())
-		{
-			language = O.Options.enu_Language;
-		}
-		for (i = 0; i < T.DryTopChat.numOfSets; i++)
-		{
-			T.DryTopChat["Set" + i] = T.DryTopChat[language + i];
-		}
-		
-		T.Hourly =
-		{
-			 t0: ":00 " + T.DryTopChat.Set0,
-			 t5: ":05 " + T.DryTopChat.Set1,
-			t10: ":10 " + T.DryTopChat.Set2,
-			t15: ":15 " + T.DryTopChat.Set0,
-			t20: ":20 " + T.DryTopChat.Set1,
-			t25: ":25 " + T.DryTopChat.Set2,
-			t30: ":30 " + T.DryTopChat.Set0,
-			t35: ":35 " + T.DryTopChat.Set1,
-			t40: ":40 " + T.DryTopChat.Set3,
-			t45: ":45 " + T.DryTopChat.Set4,
-			t50: ":50 " + T.DryTopChat.Set5,
-			t55: ":55 " + T.DryTopChat.Set6
+			var events = T.DryTopSets[pSet];
+			var str = "";
+			for (var i in events)
+			{
+				str += D.getObjectName(events[i]) + "@" + events[i].wp + " ";
+			}
+			return str.trim();
 		};
+
+		T.DryTopSets = [
+			[
+				C.DryTop.Victims, C.DryTop.Crystals, C.DryTop.Supplies, C.DryTop.Rustbucket,
+				C.DryTop.Shaman, C.DryTop.TendrilW, C.DryTop.TendrilSE, C.DryTop.Tootsie
+			],[
+				C.DryTop.MineE, C.DryTop.Serene, C.DryTop.Insects, C.DryTop.Bridge,
+				C.DryTop.Experiment, C.DryTop.Golem, C.DryTop.Nochtli, C.DryTop.Colocal
+			],[
+				C.DryTop.MineNE, C.DryTop.Basket, C.DryTop.Suit, C.DryTop.Leyline, C.DryTop.Town
+			],[
+				C.DryTop.Mites, C.DryTop.Haze, C.DryTop.Eway, C.DryTop.Skritts0, C.DryTop.Skritts1,
+				C.DryTop.Skritts2, C.DryTop.Skritts3, C.DryTop.Explosives, C.DryTop.Giant
+			],[
+				C.DryTop.Devourer
+			],[
+				C.DryTop.Mites, C.DryTop.Haze, C.DryTop.Twister, C.DryTop.Chriikkt, C.DryTop.Eway,
+				C.DryTop.Skritts0, C.DryTop.Skritts1, C.DryTop.Skritts2, C.DryTop.Skritts3, C.DryTop.Chickenado
+			],[
+				C.DryTop.Beetle, C.DryTop.Monster
+			]
+		];
+		
+		T.DryTopStrings =
+		{
+			 t0: ":00 " + getDryTopSet(0),
+			 t5: ":05 " + getDryTopSet(1),
+			t10: ":10 " + getDryTopSet(2),
+			t15: ":15 " + getDryTopSet(0),
+			t20: ":20 " + getDryTopSet(1),
+			t25: ":25 " + getDryTopSet(2),
+			t30: ":30 " + getDryTopSet(0),
+			t35: ":35 " + getDryTopSet(1),
+			t40: ":40 " + getDryTopSet(3),
+			t45: ":45 " + getDryTopSet(4),
+			t50: ":50 " + getDryTopSet(5),
+			t55: ":55 " + getDryTopSet(6)
+		};
+		
+		K.updateDryTopClipboard();
+		$("#itemDryTopClip").show();
 	},
 	
 	ChainAssociation: {
@@ -10338,9 +10373,6 @@ T = {
 		
 		// Initialize for the touring function to access current active event
 		C.CurrentChainSD = T.getStandardChain();
-		
-		// Initialize Dry Top schedule
-		T.initializeHourlyDryTop();
 	},
 	
 	/*
@@ -12056,7 +12088,7 @@ K = {
 	 */
 	updateDryTopClipboard: function()
 	{
-		if (C.DryTopChains.length > 0)
+		if (C.isDryTopGenerated)
 		{
 			document.getElementById("chnDryTopWaypoint0")
 				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentDryTopEvents());

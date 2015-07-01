@@ -419,9 +419,9 @@ var GW2T_ZONE_DATA = {
  */
 var GW2T_DAILY_CALENDAR = {
 "1": {
-	pve: ["Forager Orr", "Forger", "Ashford", "Fractal 1-10"],
-	pvp: ["Capture", "Defender", "Warrior Engineer", "Ranger Engineer"],
-	wvw: ["Land", "Creature", "Keep", "Defender"]
+	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Cursed", "Shatterer Ascalon"],
+	pvp: ["Reward", "Defender", "Warrior Necromancer", "Thief Mesmer"],
+	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "2": {
 	pve: ["Lumberer Wastes", "Vista Orr", "Southsun", "Fractal 1-10"],

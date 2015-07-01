@@ -1468,7 +1468,7 @@ var GW2T_CHAIN_DATA = [
 	title: "Dry Top Q1",
 	events: [
 		{
-			path: [[3979, 16464]],
+			path: [[3979, 16424]],
 			name_en: "Prevent skritt from stealing supplies.",
 			name_de: "Haltet die Skritt davon ab, Vorräte zu stehlen.",
 			name_es: "Evita que los skritt roben suministros.",
@@ -1734,7 +1734,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[5384, 16469]],
+			path: [[5498, 16525]],
 			name_en: "Protect Serene as she recovers crystals lost in the crash.",
 			name_de: "Beschützt Serene, während sie beim Absturz verloren gegangene Kristalle zurückholt.",
 			name_es: "Protege a Serene mientras recupera los cristales perdidos en el accidente.",
@@ -1893,7 +1893,7 @@ var GW2T_CHAIN_DATA = [
 	title: "Dry Top Q2",
 	events: [
 		{
-			path: [[3979, 16464]],
+			path: [[3979, 16424]],
 			name_en: "Prevent skritt from stealing supplies.",
 			name_de: "Haltet die Skritt davon ab, Vorräte zu stehlen.",
 			name_es: "Evita que los skritt roben suministros.",
@@ -2159,7 +2159,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[5384, 16469]],
+			path: [[5498, 16525]],
 			name_en: "Protect Serene as she recovers crystals lost in the crash.",
 			name_de: "Beschützt Serene, während sie beim Absturz verloren gegangene Kristalle zurückholt.",
 			name_es: "Protege a Serene mientras recupera los cristales perdidos en el accidente.",
@@ -2318,7 +2318,7 @@ var GW2T_CHAIN_DATA = [
 	title: "Dry Top Q3",
 	events: [
 		{
-			path: [[3979, 16464]],
+			path: [[3979, 16424]],
 			name_en: "Prevent skritt from stealing supplies.",
 			name_de: "Haltet die Skritt davon ab, Vorräte zu stehlen.",
 			name_es: "Evita que los skritt roben suministros.",
@@ -2584,7 +2584,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 2
 		},
 		{
-			path: [[5384, 16469]],
+			path: [[5498, 16525]],
 			name_en: "Protect Serene as she recovers crystals lost in the crash.",
 			name_de: "Beschützt Serene, während sie beim Absturz verloren gegangene Kristalle zurückholt.",
 			name_es: "Protege a Serene mientras recupera los cristales perdidos en el accidente.",
@@ -2793,7 +2793,7 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5435, 16403]],
+			path: [[5475, 16403]],
 			name_en: "Escort Haze to safety.",
 			name_de: "Bringt Dunst in Sicherheit.",
 			name_es: "Escolta a Bruma hasta un lugar seguro.",
@@ -3009,13 +3009,13 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		},
 		{
-			path: [[5193, 16447]],
-			name_en: "Defeat the dust mite twister! (Tier 3)",
-			name_de: "Besiegt den Staubmilben-Wirbelwind! (3)",
-			name_es: "¡Derrota al huracán de ácaros de polvo! (3)",
-			name_fr: "Vaincre la tornade d'acarides ! (3)",
-			icon: "boss",
-			ring: "c_s",
+			path: [[5302, 16630]],
+			name_en: "Cull the encroaching dust mites threatening the Zephyrites.",
+			name_de: "Erschlagt die eindringenden Staubmilben, die die Zephyriten bedrohen.",
+			name_es: "Acaba con los ácaros de polvo que amenazan a los Cefiritas.",
+			name_fr: "Repousser l'invasion des acarides qui menacent les Zéphyrites.",
+			icon: "swords",
+			ring: "c_m",
 			num: "2H",
 			sGotoNum: [""],
 			fGotoNum: "",
@@ -3025,10 +3025,10 @@ var GW2T_CHAIN_DATA = [
 			avg: "5:00",
 			min: "5:00",
 			max: "5:00",
-			primacy: 2
+			primacy: 1
 		},
 		{
-			path: [[5435, 16403]],
+			path: [[5475, 16403]],
 			name_en: "Escort Haze to safety.",
 			name_de: "Bringt Dunst in Sicherheit.",
 			name_es: "Escolta a Bruma hasta un lugar seguro.",
@@ -3045,6 +3045,44 @@ var GW2T_CHAIN_DATA = [
 			min: "5:00",
 			max: "5:00",
 			primacy: 1
+		},
+		{
+			path: [[5460, 16243]],
+			name_en: "Carry and detonate explosives to demolish the cave-in debris while avoiding tunneling devourers.",
+			name_de: "Transportiert Sprengstoff und sprengt damit das Geröll, während Ihr Buddelnden Verschlingern ausweicht.",
+			name_es: "Coloca explosivos y detónalos para demoler los escombros de la cueva mientras evitas a los devoradores de los túneles.",
+			name_fr: "Apporter et utiliser des explosifs pour dégager les éboulis tout en évitant les dévoreurs tunneliers.",
+			icon: "cog",
+			ring: "e_m_h",
+			num: "2J",
+			sGotoNum: [""],
+			fGotoNum: "",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "50:00",
+			avg: "5:00",
+			min: "5:00",
+			max: "5:00",
+			primacy: 1
+		},
+		{
+			path: [[5193, 16447]],
+			name_en: "Defeat the dust mite twister! (Tier 3)",
+			name_de: "Besiegt den Staubmilben-Wirbelwind! (3)",
+			name_es: "¡Derrota al huracán de ácaros de polvo! (3)",
+			name_fr: "Vaincre la tornade d'acarides ! (3)",
+			icon: "boss",
+			ring: "c_s",
+			num: "2K",
+			sGotoNum: [""],
+			fGotoNum: "",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "50:00",
+			avg: "5:00",
+			min: "5:00",
+			max: "5:00",
+			primacy: 2
 		},
 		{
 			path: [[4231, 16299]],
