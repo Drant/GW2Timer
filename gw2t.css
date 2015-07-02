@@ -2174,6 +2174,9 @@ input[type="text"].trdCurrentBuy:hover, input[type="text"].trdCurrentSell:hover{
 input[type="text"].trdMatched {
 	border: 1px solid #ee55cc;
 }
+input[type="text"].trdHovered {
+	border: 1px solid red;
+}
 
 /* Personal checklist
 ----------------------------------------------------------------------------- */

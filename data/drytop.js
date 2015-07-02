@@ -1,13 +1,13 @@
 var GW2T_DRYTOP_DATA = {
 Supplies: {
-		name_en: "Supplies",
-		name_de: "Vorräte",
-		name_es: "Suministros",
-		name_fr: "Provisions",
-		time: ":00 :15 :30",
-		coord: [3979, 16424],
-		wp: "[&BJcHAAA=]",
-		color: "red"
+	name_en: "Supplies",
+	name_de: "Vorräte",
+	name_es: "Suministros",
+	name_fr: "Provisions",
+	time: ":00 :15 :30",
+	coord: [3979, 16424],
+	wp: "[&BJcHAAA=]",
+	color: "red"
 },
 Rustbucket: {
 	name_en: "Rustbucket",

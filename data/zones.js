@@ -424,11 +424,11 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "2": {
-	pve: ["Lumberer Wastes", "Vista Orr", "Southsun", "Fractal 1-10"],
-	pvp: ["Kills", "Capture", "Elementalist Mesmer", "Guardian Thief"],
-	wvw: ["Land", "Caravan", "Tower", "Keep"]
+	pve: ["Forager Ascalon", "Forger", "Gendarran", "Megades Maguuma"],
+	pvp: ["Defender", "Kills", "Warrior Engineer", "Ranger Engineer"],
+	wvw: ["Ruins", "Land", "Defender", "Camp"]
 },
-"3": {
+"3": {//"Elementalist Mesmer", "Guardian Thief"
 	pve: ["Miner Shiverpeaks", "Activity", "Kessex", "Fractal 1-10"],
 	pvp: ["Rank", "Defender", "Engineer Thief", "Ranger Engineer"],
 	wvw: ["Kills", "Creature", "Defender", "Tower"]

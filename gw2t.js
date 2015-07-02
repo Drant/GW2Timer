@@ -2726,6 +2726,7 @@ E = {
 	ProgressTimeout: {},
 	ProgressWait: 0,
 	ProgressTick: 0,
+	SwapIndex: -1,
 	
 	CalculatorHistoryArray: new Array(64),
 	CalcHistoryIndex: 0,
@@ -3350,12 +3351,25 @@ E = {
 				});
 			});
 			
+			// Initial registering of the swap index variable
+			$(entry + " .trdSwap").hover(
+				function()
+				{
+					$(this).parents(".trdEntry").find(".trdName").addClass("trdHovered");
+					E.SwapIndex = U.getSubintegerFromHTMLID($(this).parents(".trdEntry"));
+				},
+				function()
+				{
+					$(".trdName").removeClass("trdHovered");
+				}
+			);
+			
 			// Bind swap up/down buttons to swap data between calculators (for manual rearranging)
 			$(entry + " .trdSwapUp, " + entry + " .trdSwapDown").each(function()
 			{
 				$(this).click(function()
 				{
-					var i = U.getSubintegerFromHTMLID($(this).parents(".trdEntry"));
+					var i = E.SwapIndex;
 					var isUp = ($(this).hasClass("trdSwapUp")) ? true : false;
 					
 					// Do not allow swapping outside of range
@@ -3410,6 +3424,11 @@ E = {
 					// Clear matched price styles
 					E.clearMatched(calcA);
 					E.clearMatched(calcB);
+					
+					// Adjust swap index
+					calcA.find(".trdName").removeClass("trdHovered");
+					calcB.find(".trdName").addClass("trdHovered");
+					E.SwapIndex = isUp ? (E.SwapIndex-1) : (E.SwapIndex+1);
 				});
 			});
 			
@@ -4607,143 +4626,78 @@ D = {
 		de: "Feuerelementar",
 		es: "Elemental de Fuego",
 		fr: "Elémentaire de Feu",
-		cs: "Ohnivý Elementál",
-		it: "Elementale del Fuoco",
-		pl: "Ognisty Żywioł",
-		pt: "Fogo Elemental",
-		ru: "Огонь Элементаль",
 		zh: "火焰元素"
 	},{
 		en: "Golem Mark II",
 		de: "Golem Typ II",
 		es: "Gólem Serie II",
 		fr: "Golem Marque II",
-		cs: "Golem Typu II",
-		it: "Golem Tipo II",
-		pl: "Golem Model II",
-		pt: "Golem Tipo II",
-		ru: "Голем Тип II",
 		zh: "魔像馬克II型"
 	},{
 		en: "Claw of Jormag",
 		de: "Klaue Jormags",
 		es: "Garra de Jormag",
 		fr: "Griffe de Jormag",
-		cs: "Dráp Jormag",
-		it: "Artiglio di Jormag",
-		pl: "Szpon Jormaga",
-		pt: "Garra de Jormag",
-		ru: "Йормаг Коготь",
 		zh: "卓瑪之爪"
 	},{
 		en: "Frozen Maw",
 		de: "Svanir-Schamane",
 		es: "Chamán Svanir",
 		fr: "Chamane de Svanir",
-		cs: "Svanir Šaman",
-		it: "Sciamano Svanir",
-		pl: "Szamanów Svanira",
-		pt: "Xamã Svanir",
-		ru: "Шаман Сванир",
 		zh: "斯瓦尼亞薩滿"
 	},{
 		en: "Megadestroyer",
 		de: "Megazerstörer",
 		es: "Megadestructor",
 		fr: "Mégadestructeur",
-		cs: "Meganičitel",
-		it: "Megadistruttore",
-		pl: "Wielkiniszczyciel",
-		pt: "Megadestruidor",
-		ru: "Мегадеструктор",
 		zh: "超能毀滅者"
 	},{
 		en: "Shadow Behemoth",
 		de: "Schatten-Behemoth",
 		es: "Behemot de las Sombras",
 		fr: "Béhémoth des Ombres",
-		cs: "Stín Behemoth",
-		it: "Behemoth d'Ombra",
-		pl: "Mroczny Behemot",
-		pt: "Behemoth de Sombra",
-		ru: "Бегемот из Тени",
 		zh: "暗影巨獸"
 	},{
 		en: "The Shatterer",
 		de: "Den Zerschmetterer",
 		es: "El Asolador",
 		fr: "Le Destructeur",
-		cs: "Shatterer",
-		it: "Il Shatterer",
-		pl: "Shatterer",
-		pt: "O Shatterer",
-		ru: "Шаттерер",
 		zh: "碎裂巨獸"
 	},{
 		en: "Taidha Covington",
 		de: "Taidha Covington",
 		es: "Taidha Covington",
 		fr: "Taidha Covington",
-		cs: "Taidha Covington",
-		it: "Taidha Covington",
-		pl: "Taidha Covington",
-		pt: "Taidha Covington",
-		ru: "Таидха Цовингтон",
 		zh: "泰達·科文頓"
 	},{
 		en: "Modniir Ulgoth",
 		de: "Ulgoth den Modniir",
 		es: "Ulgoth el Modniir",
 		fr: "Ulgoth le Modniir",
-		cs: "Ulgoth na Modniir",
-		it: "Ulgoth il Modniir",
-		pl: "Modniir Ulgoth",
-		pt: "Ulgoth o Modniir",
-		ru: "Улготх в Модниир",
 		zh: "莫迪爾沃爾格斯"
 	},{
 		en: "Great Jungle Wurm",
 		de: "Großen Dschungelwurm",
 		es: "Gran Sierpe de la Selva",
 		fr: "Grande Guivre de la Jungle",
-		cs: "Velká Džungle Červ",
-		it: "Grande Verme Giungla",
-		pl: "Wielki Robak z Dżungli",
-		pt: "Grande Verme Selva",
-		ru: "Великий Червь из Джунглей",
 		zh: "巨型叢林地虫"
 	},{
 		en: "Karka Queen",
 		de: "Karka-Königin",
 		es: "Reina Karka",
 		fr: "Reine Karka",
-		cs: "Karka Královna",
-		it: "Regina Karka",
-		pl: "Karka Królowa",
-		pt: "Rainha Karka",
-		ru: "Карка Королева",
 		zh: "喀殼虫女王"
 	},{
 		en: "Tequatl the Sunless",
 		de: "Tequatl den Sonnenlosen",
 		es: "Tequatl el Sombrío",
 		fr: "Tequatl le Sans-soleil",
-		cs: "Tequatl Bez Slunce",
-		it: "Tequatl il Senza Sole",
-		pl: "Tequatl ma Słońca",
-		pt: "Tequatl o Sem Sol",
-		ru: "Теqуатл Тусклый",
 		zh: "吞噬托"
 	},{
 		en: "Triple Wurm",
 		de: "Dreifach Wurm",
 		es: "Sierpe Triple",
 		fr: "Guivre Triple",
-		cs: "Trojitý Červ",
-		it: "Verme Triplo",
-		pl: "Potrójne Robak",
-		pt: "Verme Triplo",
-		ru: "Тройной Червь",
 		zh: "進化巨型叢林地虫"
 	},{
 		en: "Dry Top Q1",
@@ -4770,165 +4724,90 @@ D = {
 		de: "Verderbte Hohepriesterin der Lyssa",
 		es: "Suma Sacerdotisa Corrupta de Lyssa",
 		fr: "Grande Prêtresse Corrompue de Lyssa",
-		cs: "Lyssa Chrám",
-		it: "Tempio di Lyssa",
-		pl: "Lyssa Świątynia",
-		pt: "Templo de Lyssa",
-		ru: "Лысса Храм",
 		zh: "Lyssa 的寺廟"
 	},{
 		en: "Dwayna",
 		de: "Besessene Dwayna-Statue",
 		es: "Estatua Poseída de Dwayna",
 		fr: "Statue Possédée de Dwayna",
-		cs: "Dwayna Chrám",
-		it: "Tempio di Dwayna",
-		pl: "Dwayna Świątynia",
-		pt: "Templo de Dwayna",
-		ru: "Дwаына Храм",
 		zh: "Dwayna 的寺廟"
 	},{
 		en: "Melandru",
 		de: "Auferstandenen Priester der Melandru",
 		es: "Sacerdote de Melandru Resurgido",
 		fr: "Prêtre Revenant de Melandru",
-		cs: "Melandru Chrám",
-		it: "Tempio di Melandru",
-		pl: "Melandru Świątynia",
-		pt: "Templo de Melandru",
-		ru: "Меландру Храм",
 		zh: "Melandru 的寺廟"
 	},{
 		en: "Grenth",
 		de: "Auferstandenen Priester des Grenth",
 		es: "Sacerdote de Grenth Resurgido",
 		fr: "Prêtre Revenant de Grenth",
-		cs: "Grenth Chrám",
-		it: "Tempio di Grenth",
-		pl: "Grenth Świątynia",
-		pt: "Templo de Grenth",
-		ru: "Грентх Храм",
 		zh: "Grenth 的寺廟"
 	},{
 		en: "Arah",
 		de: "Tore von Arah",
 		es: "Puertas de Arah",
 		fr: "Portes d'Arah",
-		cs: "Arah Brány",
-		it: "Porte di Arah",
-		pl: "Arah Bramy",
-		pt: "Portões de Ará",
-		ru: "Ворота Арах",
 		zh: "Arah 的寺廟"
 	},{
 		en: "Balthazar",
 		de: "Auferstandenen Priester des Balthasar",
 		es: "Sacerdote de Balthazar Resurgido",
 		fr: "Prêtre Revenant de Balthazar",
-		cs: "Balthazar Chrám",
-		it: "Tempio di Balthazar",
-		pl: "Świątynia Balthazar",
-		pt: "Templo de Balthazar",
-		ru: "Балтхазар Храм",
 		zh: "Balthazar 的寺廟"
 	},{
 		en: "Balthazar North",
 		de: "Nord Invasion von Orr",
 		es: "Invasión del Norte de Orr",
 		fr: "Invasion du Nord de Orr",
-		cs: "Severní Invaze Orr",
-		it: "Invasione Settentrionale di Orr",
-		pl: "Północnej Inwazja Orr",
-		pt: "Invasão Norte de Orr",
-		ru: "Северная Вторжение Орр",
 		zh: "北部入侵 Orr"
 	},{
 		en: "Balthazar Central",
 		de: "Zentral Invasion von Orr",
 		es: "Invasión Central de Orr",
 		fr: "Invasion Central de Orr",
-		cs: "Centrální Invaze Orr",
-		it: "Invasione Centrale di Orr",
-		pl: "Centralny Inwazja Orr",
-		pt: "Invasão Central Orr",
-		ru: "Центральный Вторжение Орр",
 		zh: "中部入侵 Orr"
 	},{
 		en: "Balthazar South",
 		de: "Invasion der Südlichen Orr",
 		es: "Invasión del Sur de Orr",
 		fr: "Invasion du Sud de Orr",
-		cs: "Jižní Invaze Orr",
-		it: "Invasione del Sud di Orr",
-		pl: "Południowej Inwazja Orr",
-		pt: "Invasão do Sul de Orr",
-		ru: "Южный Вторжение Орр",
 		zh: "南部入侵 Orr"
 	},{
 		en: "Fire Shaman",
 		de: "Feuerschamanen",
 		es: "Chamán de Fuego",
 		fr: "Chamane de Feu",
-		cs: "Požární Šaman",
-		it: "Sciamano Fuoco",
-		pl: "Ognia Szaman",
-		pt: "Xamã Fogo",
-		ru: "Oгня Шаман",
 		zh: "火薩滿"
 	},{
 		en: "Rhendak the Crazed",
 		de: "Rhendak den Verrückten",
 		es: "Rhendak el Perturbado",
 		fr: "Rhendak le Fou",
-		cs: "Poblázněný Rhendak",
-		it: "Rhendak il Folle",
-		pl: "Szalony Rhendak",
-		pt: "Rhendak o Enlouquecido",
-		ru: "Сумасшедший Рхендак",
 		zh: "瘋狂 Rhendak"
 	},{
 		en: "Foulbear Chieftain",
 		de: "Faulbär-Häuptling",
 		es: "Cabecilla de Osoinmundo",
 		fr: "Chef Oursefol",
-		cs: "Foulbear Náčelník",
-		it: "Capo Foulbear",
-		pl: "Faulwódz Niedźwiedź",
-		pt: "Chefe Foulbear",
-		ru: "Фолмедведь Вождь",
 		zh: "臭熊頭目"
 	},{
 		en: "Dredge Commissar",
 		de: "Schaufler-Kommissar",
 		es: "Comisario Draga",
 		fr: "Kommissar Draguerre",
-		cs: "Vybagrovat Komisař",
-		it: "Commissario Dragare",
-		pl: "Pogłębiarka Komisarza",
-		pt: "Comissário Dragar",
-		ru: "Драги Комиссар",
 		zh: "疏浚政委"
 	},{
 		en: "Nebo Terrace",
 		de: "Nebo-Terrasse",
 		es: "Terraza de Nebo",
 		fr: "Terrasse de Nebo",
-		cs: "Nebo Terasa",
-		it: "Terrazzo di Nebo",
-		pl: "Nebo Taras",
-		pt: "Esplanada de Nebo",
-		ru: "Нево Терраса",
 		zh: "階地 Nebo"
 	},{
 		en: "Eye of Zhaitan",
 		de: "Auge des Zhaitan",
 		es: "Ojo de Zhaitan",
 		fr: "Œil de Zhaïtan",
-		cs: "Oko Zhaitan",
-		it: "Occhio Zhaitan",
-		pl: "Oko Zhaitan",
-		pt: "Olho de Zhaitan",
-		ru: "Глаз Жаитан",
 		zh: "眼的 Zhaitan"
 	}
 	],
@@ -4955,7 +4834,7 @@ D = {
 		{
 			return C.Chains[pIndex].title;
 		}
-		return (D.ChainTitle[pIndex])[O.Options.enu_Language];
+		return D.getChainTitleAny(pIndex);
 	},
 	getChainTitleAny: function(pIndex)
 	{
@@ -4963,7 +4842,12 @@ D = {
 		{
 			return C.Chains[pIndex].title;
 		}
-		return (D.ChainTitle[pIndex])[O.Options.enu_Language];
+		if (D.isLanguageFullySupported()
+			|| O.Options.enu_Language === O.OptionEnum.Language.Mandarin)
+		{
+			return (D.ChainTitle[pIndex])[O.Options.enu_Language];
+		}
+		return (D.ChainTitle[pIndex])[O.OptionEnum.Language.Default];
 	},
 	
 	/*
@@ -13197,7 +13081,7 @@ I = {
 				});
 				$("#jsConsoleButtons").css(
 				{
-					right: "0px", left: "auto", bottom: "0px"
+					left: "0px", left: "auto", bottom: "0px"
 				});
 				$("#itemMapCoordinates").css(
 				{
