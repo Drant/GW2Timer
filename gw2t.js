@@ -12433,9 +12433,8 @@ I = {
 	 */
 	bulkAnimate: function(pRequests, pSpeed)
 	{
-		var i;
 		var r;
-		for (i in pRequests)
+		for (var i in pRequests)
 		{
 			r = pRequests[i];
 			$(r.s).animate(r.p, {duration: pSpeed, queue: false});
@@ -12550,24 +12549,8 @@ I = {
 		
 		var plate = pPlate.substring(I.cPagePrefix.length, pPlate.length);
 		var beamid = "menuBeam_" + plate;
-		var menubeam = $("<div class='menuBeam' id='" + beamid + "'></div>").prependTo(pPlate);
-		
-		// Bind beam menu animation when clicked on the bar menu icon
-		if (I.ModeCurrent === I.ModeEnum.Website)
-		{
-			menubeam.css({right: I.cPANEL_WIDTH, top: I.CLOCK_AND_MENU_HEIGHT});
-			$(I.cMenuPrefix + plate).click(function()
-			{
-				$("#menuBeam_" + I.PageCurrent)
-					.css({right: I.cPANEL_WIDTH + I.cPANE_BEAM_LEFT, top: I.CLOCK_AND_MENU_HEIGHT})
-					.animate({right: I.cPANEL_WIDTH}, "fast");
-			});
-		}
-		else
-		{
-			// Don't show the beam menu for other modes
-			menubeam.hide();
-		}
+		var beamcontainer = $("<div class='menuBeamContainer'></div>").prependTo(pPlate);
+		var menubeam = $("<div class='menuBeam' id='" + beamid + "'></div>").prependTo(beamcontainer);
 		
 		$(pPlate + " header.jsSection").each(function()
 		{

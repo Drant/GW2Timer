@@ -428,12 +428,12 @@ var GW2T_DAILY_CALENDAR = {
 	pvp: ["Defender", "Kills", "Warrior Engineer", "Ranger Engineer"],
 	wvw: ["Ruins", "Land", "Defender", "Camp"]
 },
-"3": {//"Elementalist Mesmer", "Guardian Thief"
-	pve: ["Miner Shiverpeaks", "Activity", "Kessex", "Fractal 1-10"],
-	pvp: ["Rank", "Defender", "Engineer Thief", "Ranger Engineer"],
-	wvw: ["Kills", "Creature", "Defender", "Tower"]
+"3": {
+	pve: ["Lumberer Wastes", "Fractal", "Bloodtide", "Fractal 1-10"],
+	pvp: ["Rank", "Defender", "Elementalist Mesmer", "Guardian Thief"],
+	wvw: ["Spender", "Kills", "Camp", "Keep"]
 },
-"4": {
+"4": {//"Engineer Thief", "Ranger Engineer"
 	pve: ["Forager Wastes", "Forger", "Maelstrom", "Fractal 1-10"],
 	pvp: ["Rank", "Capture", "Warrior Guardian", "Ranger Engineer"],
 	wvw: ["Land", "Ruins", "Camp", "Defender"]
