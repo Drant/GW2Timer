@@ -3424,10 +3424,10 @@ E = {
 					// Clear matched price styles
 					E.clearMatched(calcA);
 					E.clearMatched(calcB);
-					
-					// Adjust swap index
 					calcA.find(".trdName").removeClass("trdHovered");
 					calcB.find(".trdName").addClass("trdHovered");
+					
+					// Adjust swap index
 					E.SwapIndex = isUp ? (E.SwapIndex-1) : (E.SwapIndex+1);
 				});
 			});
@@ -12010,7 +12010,6 @@ I = {
 	cPANE_CLOCK_HEIGHT_COMPACT: 220,
 	cPANE_CLOCK_HEIGHT_BAR: 85,
 	cPANE_MENU_HEIGHT: 48,
-	cPANE_BEAM_LEFT: -41,
 	cTOOLTIP_MAX_WIDTH: 360,
 	cTOOLTIP_OVERFLOW_WIDTH: 240,
 	cTOOLTIP_MAX_OVERFLOW: 10,
@@ -12531,7 +12530,7 @@ I = {
 	
 	/*
 	 * Binds headers with the jsSection class to toggle display of its sibling
-	 * container element. Creates a vertical side menu as an alternate for clicking
+	 * container element. Creates a submenu as an alternate for clicking
 	 * the headers; also creates another button-like text at the bottom of the
 	 * container to collapse it again.
 	 * Example: <header class="jsSection">Example Title</header><div></div>
@@ -12579,6 +12578,10 @@ I = {
 					M.displayIcons(section, false); // Hide this section's map icons
 					
 					I[I.sectionPrefix + plate] = ""; // Nullify current section variable
+					
+					// Show all headers again
+					$(pPlate + " header.jsSection").show();
+					$(pPlate + " header.cntHeader").show();
 				}
 				else
 				{
@@ -12589,11 +12592,19 @@ I = {
 						.addClass("menuBeamIconActive");
 					
 					I[I.sectionPrefix + plate] = section;
+					
+					// If clicked from beam menu then hide the other headers to save space
+					if ($(this).data("beamclicked") === true)
+					{
+						$(pPlate + " header.jsSection").not(this).hide();
+						$(pPlate + " header.cntHeader").hide();
+						$(this).removeData("beamclicked");
+					}
 				}
 				U.updateQueryString();
 				
 				// Do the collapse/expand
-				if ($(this).data("donotanimate") !== "true")
+				if ($(this).data("donotanimate") !== true)
 				{
 					if (I.ModeCurrent === I.ModeEnum.Website)
 					{
@@ -12629,10 +12640,10 @@ I = {
 			
 			// Create and bind the additional bottom header to collapse the container
 			$("<div class='jsSectionDone'><img src='img/ui/close.png' />" + headertext + "</div>")
-				.appendTo(header.next()).click(function()
-				{
-					$(this).parent().prev().trigger("click");
-				});;
+			.appendTo(header.next()).click(function()
+			{
+				$(this).parent().prev().trigger("click");
+			});;
 			
 			/*
 			 * Side menu icons as alternative for headers. Clicking an icon
@@ -12641,7 +12652,9 @@ I = {
 			 */
 			var section = U.getSubstringFromHTMLID(header);
 			var src = header.find("img:eq(0)").attr("src");
-			$("<img class='menuBeamIcon' data-section='" + section + "' src='" + src + "' "
+			if (I.isMapEnabled || header.hasClass("mapOnly") === false)
+			{
+				$("<img class='menuBeamIcon' data-section='" + section + "' src='" + src + "' "
 				+ "title='&lt;dfn&gt;" + D.getSentence("section") + ": &lt;/dfn&gt;" + headertext + "' />")
 				.appendTo(menubeam).click(function()
 				{
@@ -12651,29 +12664,31 @@ I = {
 						if ($(this).next().is(":visible") && $(this).attr("id") !== header.attr("id"))
 						{
 							// Don't animate so the scrolling to the section-to-be-opened works properly
-							$(this).data("donotanimate", "true");
+							$(this).data("donotanimate", true);
 							$(this).trigger("click");
 						}
 					});
 					// Show the requested section
+					header.data("beamclicked", true);
 					header.trigger("click");
 				});
+			}
 		});
 
 		// Side menu icon to close all the sections
 		$("<img class='menuBeamIcon' src='img/ui/exit.png' "
 			+ "title='&lt;dfn&gt;" + D.getString("collapse section") + "&lt;/dfn&gt;' />")
-			.appendTo(menubeam).click(function()
+		.prependTo(menubeam).click(function()
+		{
+			$(pPlate + " header.jsSection").each(function()
 			{
-				$(pPlate + " header.jsSection").each(function()
+				if ($(this).next().is(":visible"))
 				{
-					if ($(this).next().is(":visible"))
-					{
-						$(this).trigger("click");
-					}
-				});
-				$(pPlate + " .menuBeamIcon").removeClass("menuBeamIconActive");
+					$(this).trigger("click");
+				}
 			});
+			$(pPlate + " .menuBeamIcon").removeClass("menuBeamIconActive");
+		});
 		
 		
 		// Make tooltips for the beam menu icons
@@ -12925,7 +12940,7 @@ I = {
 			// Hide map dependent sections in mobile mode
 			if (I.ModeCurrent === I.ModeEnum.Mobile)
 			{
-				$(".mapOnly").hide();
+				$(".mapOnly").remove();
 			}
 			
 			// Create daily markers
@@ -12988,12 +13003,15 @@ I = {
 			});
 			
 			// Create additional map related side menu icon
-			$("<img class='menuBeamIcon menuBeamIconCenter' src='img/map/compass.png' "
-				+ "title='&lt;dfn&gt;" + D.getModifiedWord("center", "map", U.CaseEnum.Every) + "&lt;/dfn&gt;' />")
-				.appendTo("#menuBeam_Map").click(function()
+			if (I.isMapEnabled)
 			{
-				M.goToDefault();
-			});
+				$("<img class='menuBeamIcon menuBeamIconCenter' src='img/map/compass.png' "
+				+ "title='&lt;dfn&gt;" + D.getModifiedWord("center", "map", U.CaseEnum.Every) + "&lt;/dfn&gt;' />")
+				.prependTo("#menuBeam_Map").click(function()
+				{
+					M.goToDefault();
+				});
+			}
 			I.qTip.init("#plateMap .menuBeamIconCenter, #plateMap label");
 		});
 	},
