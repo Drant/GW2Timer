@@ -438,12 +438,12 @@ var GW2T_DAILY_CALENDAR = {
 	pvp: ["Capture", "Reward", "Engineer Thief", "Ranger Engineer"],
 	wvw: ["Spender", "Land", "Tower", "Defender"]
 },
-"5": {//"Warrior Guardian", "Ranger Engineer"
-	pve: ["Forager Orr", "Vista Kryta", "Caledon", "Fractal 1-10"],
-	pvp: ["Reward", "Kills", "Ranger Thief", "Engineer Elementalist"],
-	wvw: ["Ruins", "Creature", "Keep", "Defender"]
+"5": {
+	pve: ["Forager Orr", "Vista Shiverpeaks", "Ashford", "Fractal 11-20"],
+	pvp: ["Capture", "Rank", "Warrior Guardian", "Ranger Engineer"],
+	wvw: ["Land", "Kills", "Keep", "Tower"]
 },
-"6": {
+"6": {//"Ranger Thief", "Engineer Elementalist"
 	pve: ["Miner Kryta", "Fractal", "Gendarran", "Fractal 1-10"],
 	pvp: ["Reward", "Rank", "Warrior Ranger", "Guardian Necromancer"],
 	wvw: ["Spender", "Guard", "Keep", "Camp"]

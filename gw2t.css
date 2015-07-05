@@ -919,7 +919,7 @@ input#mapCoordinatesName {
 .menuBeamContainer {
 	position: fixed;
 	width: 360px;
-	min-height: 12px;
+	min-height: 10px;
 	background-image: url("img/ui/toggle.png");
 	background-color: black;
 	background-repeat: no-repeat;

@@ -1684,6 +1684,16 @@ U = {
 	},
 	
 	/*
+	 * Gets the URL directory of the HTML source file
+	 * @param string pPage name.
+	 * @returns string path.
+	 */
+	getPageSrc: function(pPage)
+	{
+		return pPage.toLowerCase() + "src.html";
+	},
+	
+	/*
 	 * Gets a direct link to a hosted image file.
 	 * @param string pCode image code.
 	 * @returns URL to image.
@@ -5539,7 +5549,7 @@ C = {
 					// Scroll the map to Dry Top if it is that chain list
 					if ($(this).attr("id") === "listChainsDryTop")
 					{
-						M.goToZone("dry", M.ZoomLevelEnum.Sky);
+						M.goToZone("dry", M.ZoomLevelEnum.Bird);
 						I.PageCurrent = "DryTop";
 						U.updateQueryString();
 						U.updateTitle("DryTop");
@@ -6693,9 +6703,9 @@ M = {
 				document.location = "./";
 			}
 		});
+		// Translate and bind map zones list
 		$("#mapCompassButton").one("mouseenter", M.bindZoneList).click(function()
 		{
-			// Translate and bind map zones list
 			M.goToDefault();
 		});
 		
@@ -8999,6 +9009,7 @@ G = {
 
 			I.qTip.init(".leaflet-marker-icon");
 			G.initializeJPChecklist();
+			M.goToDefault();
 		});
 	},
 	
@@ -11989,9 +12000,6 @@ I = {
 	
 	cSiteName: "GW2Timer.com",
 	cSiteURL: "http://gw2timer.com/",
-	cPageURLMap: "mapsrc.html",
-	cPageURLHelp: "helpsrc.html",
-	cPageURLWvW: "wvwsrc.html",
 	cImageHost: "http://i.imgur.com/",
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
@@ -12933,7 +12941,7 @@ I = {
 	 */
 	loadMapPlate: function()
 	{
-		$("#plateMap").load(I.cPageURLMap, function()
+		$("#plateMap").load(U.getPageSrc("map"), function()
 		{
 			I.bindAfterAJAXContent(I.PageEnum.Map);
 			
@@ -13021,7 +13029,7 @@ I = {
 	 */
 	loadWvWPlate: function()
 	{
-		$("#plateWvW").load(I.cPageURLWvW, function()
+		$("#plateWvW").load(U.getPageSrc("wvw"), function()
 		{
 			W.initializeMap();
 			I.bindAfterAJAXContent(I.PageEnum.WvW);
@@ -13033,7 +13041,7 @@ I = {
 	 */
 	loadHelpPlate: function()
 	{
-		$("#plateHelp").load(I.cPageURLHelp, function()
+		$("#plateHelp").load(U.getPageSrc("help"), function()
 		{
 			I.bindAfterAJAXContent(I.PageEnum.Help);
 			$(".jsCopyCode").click(function()
