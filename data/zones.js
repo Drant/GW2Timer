@@ -443,12 +443,12 @@ var GW2T_DAILY_CALENDAR = {
 	pvp: ["Capture", "Rank", "Warrior Guardian", "Ranger Engineer"],
 	wvw: ["Land", "Kills", "Keep", "Tower"]
 },
-"6": {//"Ranger Thief", "Engineer Elementalist"
-	pve: ["Miner Kryta", "Fractal", "Gendarran", "Fractal 1-10"],
-	pvp: ["Reward", "Rank", "Warrior Ranger", "Guardian Necromancer"],
-	wvw: ["Spender", "Guard", "Keep", "Camp"]
+"6": {
+	pve: ["Lumberer Ascalon", "Activity", "Frostgorge", "SB Kryta"],
+	pvp: ["Reward", "Rank", "Ranger Thief", "Engineer Elementalist"],
+	wvw: ["Creature", "Guard", "Defender", "Camp"]
 },
-"7": {
+"7": {//"Warrior Ranger", "Guardian Necromancer"
 	pve: ["Forager Kryta", "Forger", "Queensdale", "Fractal 1-10"],
 	pvp: ["Defender", "Reward", "Ranger Mesmer", "Guardian Engineer"],
 	wvw: ["Land", "Ruins", "Tower", "Keep"]
