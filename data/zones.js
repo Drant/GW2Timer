@@ -448,12 +448,12 @@ var GW2T_DAILY_CALENDAR = {
 	pvp: ["Reward", "Rank", "Ranger Thief", "Engineer Elementalist"],
 	wvw: ["Creature", "Guard", "Defender", "Camp"]
 },
-"7": {//"Warrior Ranger", "Guardian Necromancer"
-	pve: ["Forager Kryta", "Forger", "Queensdale", "Fractal 1-10"],
-	pvp: ["Defender", "Reward", "Ranger Mesmer", "Guardian Engineer"],
-	wvw: ["Land", "Ruins", "Tower", "Keep"]
+"7": {
+	pve: ["Forager Maguuma", "Vista Shiverpeaks", "Fields", "Maw Shiverpeaks"],
+	pvp: ["Defender", "Reward", "Warrior Ranger", "Guardian Necromancer"],
+	wvw: ["Ruins", "Creature", "Camp", "Defender"]
 },
-"8": {
+"8": {//"Ranger Mesmer", "Guardian Engineer"
 	pve: ["Lumberer Wastes", "Vista Orr", "Harathi", "Fractal 1-10"],
 	pvp: ["Defender", "Rank", "Warrior Engineer", "Ranger Necromancer"],
 	wvw: ["Guard", "Caravan", "Defender", "Keep"]
