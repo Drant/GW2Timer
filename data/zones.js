@@ -453,12 +453,12 @@ var GW2T_DAILY_CALENDAR = {
 	pvp: ["Defender", "Reward", "Warrior Ranger", "Guardian Necromancer"],
 	wvw: ["Ruins", "Creature", "Camp", "Defender"]
 },
-"8": {//"Ranger Mesmer", "Guardian Engineer"
-	pve: ["Lumberer Wastes", "Vista Orr", "Harathi", "Fractal 1-10"],
-	pvp: ["Defender", "Rank", "Warrior Engineer", "Ranger Necromancer"],
-	wvw: ["Guard", "Caravan", "Defender", "Keep"]
+"8": {
+	pve: ["Miner Maguuma", "Vista Orr", "Sparkfly", "Fractal 1-10"],
+	pvp: ["Defender", "Capture", "Ranger Mesmer", "Guardian Engineer"],
+	wvw: ["Land", "Guard", "Keep", "Camp"]
 },
-"9": {
+"9": {//"Warrior Engineer", "Ranger Necromancer"
 	pve: ["Miner Maguuma", "Vista Ascalon", "Bloodtide", "Fractal 1-10"],
 	pvp: ["Defender", "Kills", "Elementalist Mesmer", "Guardian Thief"],
 	wvw: ["Ruins", "Kills", "Tower", "Defender"]

@@ -4253,6 +4253,8 @@ D = {
 			cs: "režim", it: "modalità", pl: "tryb", pt: "modo", ru: "режим", zh: "方式"},
 		s_chatlink: {de: "chatlink", es: "vínculo chat", fr: "lien chat",
 			cs: "chat odkaz", it: "collegamento chat", pl: "czat łącze", pt: "link bate-papo", ru: "чат связь", zh: "連結聊天"},
+		s_wvw: {de: "WvW", es: "McM", fr: "McM",
+			cs: "SpS", it: "McM", pl: "SkS", pt: "McM", ru: "МпМ", zh: "世界戰場"},
 		
 		// Verbs
 		s_is: {de: "ist", es: "es", fr: "est",
@@ -6454,6 +6456,7 @@ M = {
 	cUNITS_TO_POINTS: 208 / 5000,
 	cPOINTS_TO_UNITS: 5000 / 208,
 	GPSTimeout: {},
+	GPSPreviousCoord: [],
 	
 	/*
 	 * All objects in the map are called "markers". Some markers are grouped into iterable "layers".
@@ -7312,7 +7315,12 @@ M = {
 		// Follow character if opted
 		if (O.Options.bol_followCharacter || pForce)
 		{
-			M.goToView(coord, null, M.Map.getZoom());
+			if ((M.GPSPreviousCoord[0] !== coord[0]
+				&& M.GPSPreviousCoord[1] !== coord[1]) || pForce)
+			{
+				M.Map.setView(M.convertGCtoLC(coord), M.Map.getZoom());
+				M.showCurrentZone(coord);
+			}
 		}
 		// Pin character if opted
 		if (O.Options.bol_displayCharacter)
@@ -7333,6 +7341,7 @@ M = {
 		{
 			M.PinCamera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
 		}
+		M.GPSPreviousCoord = coord;
 	},
 	
 	/*
@@ -9280,7 +9289,7 @@ G = {
 			markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + number;
 			if (ithneedle.i)
 			{
-				markertitle += "<img src='" + U.getImageHosted(ithneedle.i) + "' />";
+				markertitle += "<img src='" + ithneedle.i + "' />";
 			}
 			else if (ithneedle.t)
 			{
@@ -9914,6 +9923,18 @@ W = {
  * @@Time utilities and schedule
  * ========================================================================== */
 T = {
+	
+	GenericCountdown: [
+		{
+			Name: "WvW Stress Test",
+			Time: new Date("2015-07-09T21:00:00Z")
+		},
+		{
+			Name: "Beta Weekend",
+			Time: new Date("2015-07-10T19:00:00Z")
+		}
+	],
+	isGenericCountdownEnabled: true,
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -10981,6 +11002,37 @@ T = {
 		$("#mapGuildTimer").text(T.formatSeconds(T.secondsTillGuildReset));
 		// Decrement global variable to countdown, instead of calling the compute function every time
 		T.secondsTillGuildReset--;
+	},
+	
+	/*
+	 * Initializes the countdown object properties to be accessed later.
+	 */
+	initializeGenericCountdown: function()
+	{
+		if (T.isGenericCountdownEnabled)
+		{
+			for (var i in T.GenericCountdown)
+			{
+				T.GenericCountdown[i].String = T.GenericCountdown[i].Time.toLocaleString();
+			}
+		}
+	},
+	updateGenericCountdown: function(pDate)
+	{
+		var str = "";
+		var ithtime = "";
+		var ctd;
+		for (var i in T.GenericCountdown)
+		{
+			ctd = T.GenericCountdown[i];
+			// Don't generate countdown for those that are past the start time
+			if (pDate < ctd.Time)
+			{
+				ithtime = T.formatSeconds(~~((ctd.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND));
+				str += ctd.Name + " - <b>" + ithtime + "</b> @ " + ctd.String + "<br />";
+			}
+		}
+		document.getElementById("itemCountdown").innerHTML = str;
 	}
 };
 
@@ -11038,6 +11090,7 @@ K = {
 		K.timestampServer = $("#optTimestampServerReset")[0];
 		K.timestampReset = $("#optTimeTillReset")[0];
 		
+		T.initializeGenericCountdown();
 		K.updateTimeFrame(new Date());
 		K.updateDaytimeIcon();
 		K.tickFrequent();
@@ -11502,6 +11555,10 @@ K = {
 		if (T.isGuildTimerStarted)
 		{
 			T.updateGuildTimer();
+		}
+		if (T.isGenericCountdownEnabled)
+		{
+			T.updateGenericCountdown(pDate);
 		}
 		
 		// Loop this function, can use variable to halt it
@@ -12309,6 +12366,19 @@ I = {
 			10);
 		}
 		
+		// Hides generic countdown after a time
+		if (T.isGenericCountdownEnabled)
+		{
+			setTimeout(function()
+			{
+				T.isGenericCountdownEnabled = false;
+				$("#itemMapCountdown").animate({opacity: 0}, 1000, function()
+				{
+					$(this).remove();
+				});
+			}, T.cMILLISECONDS_IN_SECOND * 30);
+		}
+		
 		// Finally
 		I.isProgramLoaded = true;
 	},
@@ -13057,7 +13127,7 @@ I = {
 	initializeUIForHUD: function()
 	{
 		var animationspeed = 200;
-		$("#mapOptions, #mapZones, #mapGPS").each(function()
+		$(".mapHUDContainer").each(function()
 		{
 			$(this).hover(
 				function() { $(this).find(".cntComposition").show().animate({opacity: 0.8}, animationspeed); },
@@ -13114,7 +13184,7 @@ I = {
 					"margin-top": "0px"
 				});
 				I.cPANE_MENU_HEIGHT = 32;
-				$("#mapGPSButton").show();
+				$("#mapGPS").css({display: "inline-block"});
 				
 			} break;
 			case I.ModeEnum.Simple:
@@ -13299,6 +13369,10 @@ I = {
 		{
 			var x = a.pageX;
 			var y = a.pageY;
+			var tipwidth = $("#qTip").width();
+			var tipheight = $("#qTip").height();
+			var winwidth = $(window).width();
+			var winheight = $(window).height();
 			
 			/*
 			 * Make the tooltip appear within the visible window by detecting current
@@ -13315,21 +13389,20 @@ I = {
 					+ $(window).width() + ", " + $(window).height());
 				*/
 				// Tooltip overflows bottom edge
-				if ($("#qTip").height() + a.pageY + I.cTOOLTIP_ADD_OFFSET_Y
-					> $(window).height())
+				if (tipheight + y + I.cTOOLTIP_ADD_OFFSET_Y > winheight)
 				{
-					I.qTip.offsetY = -($("#qTip").height()) - I.cTOOLTIP_ADD_OFFSET_Y;
+					I.qTip.offsetY = -(tipheight) - I.cTOOLTIP_ADD_OFFSET_Y;
 				}
 				else
 				{
 					I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 				}
 				// Tooltip overflows panel right edge
-				if ($("#qTip").width() >= I.cTOOLTIP_OVERFLOW_WIDTH && I.isMapEnabled)
+				if (tipwidth >= I.cTOOLTIP_OVERFLOW_WIDTH && I.isMapEnabled)
 				{
-					I.qTip.offsetX = ($(window).width() - a.pageX) - I.cPANEL_WIDTH - I.cTOOLTIP_MAX_OVERFLOW;
+					I.qTip.offsetX = (winwidth - x) - I.cPANEL_WIDTH - I.cTOOLTIP_MAX_OVERFLOW;
 				}
-				else if (($(window).width() - a.pageX) > (I.cPANEL_WIDTH / 2))
+				else if ((winwidth - x) > (I.cPANEL_WIDTH / 2))
 				{
 					I.qTip.offsetX = I.cTOOLTIP_ALTERNATE_OFFSET_X;
 				}
@@ -13338,21 +13411,21 @@ I = {
 					I.qTip.offsetX = I.cTOOLTIP_DEFAULT_OFFSET_X;
 				}
 			}
-			else
+			else // Mouse is on the map pane
 			{
 				// Tooltip overflows right edge
-				if (x + I.cTOOLTIP_ADD_OFFSET_X > $(window).width())
+				if (x + I.cTOOLTIP_ADD_OFFSET_X + tipwidth > winwidth && tipwidth > I.cTOOLTIP_MAX_WIDTH)
 				{
-					I.qTip.offsetX = -(I.cTOOLTIP_MAX_WIDTH / 2) - I.cTOOLTIP_ADD_OFFSET_X;
+					I.qTip.offsetX = -(tipwidth) - I.cTOOLTIP_ADD_OFFSET_X;
 				}
 				else
 				{
 					I.qTip.offsetX = I.cTOOLTIP_ALTERNATE_OFFSET_X;
 				}
 				// Tooltip overflows bottom edge
-				if ($("#qTip").height() - I.cTOOLTIP_ALTERNATE_OFFSET_X + a.pageY > $(window).height())
+				if (tipheight - I.cTOOLTIP_ALTERNATE_OFFSET_X + y > winheight)
 				{
-					I.qTip.offsetY = -($("#qTip").height()) - I.cTOOLTIP_ADD_OFFSET_Y;
+					I.qTip.offsetY = -(tipheight) - I.cTOOLTIP_ADD_OFFSET_Y;
 				}
 				// Tooltip overflows top edge
 				else if (y < I.cTOOLTIP_ADD_OFFSET_Y)
