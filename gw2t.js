@@ -6692,6 +6692,16 @@ M = {
 		{
 			// Go to character if cliked on GPS button.
 			M.updateCharacter(true);
+		}).dblclick(function()
+		{
+			if (M.Map.getZoom() !== M.ZoomLevelEnum.Ground)
+			{
+				M.Map.setZoom(M.ZoomLevelEnum.Ground);
+			}
+			else
+			{
+				M.Map.setZoom(M.ZoomLevelEnum.Default);
+			}
 		});
 		$("#mapDisplayButton").click(function()
 		{
@@ -12378,7 +12388,7 @@ I = {
 				{
 					$(this).remove();
 				});
-			}, T.cMILLISECONDS_IN_SECOND * 60);
+			}, T.cMILLISECONDS_IN_SECOND * 180);
 		}
 		
 		// Finally
@@ -12756,7 +12766,7 @@ I = {
 		});
 
 		// Side menu icon to close all the sections
-		$("<img class='menuBeamIcon' src='img/ui/exit.png' "
+		$("<img class='menuBeamIcon menuBeamIconCollapse' src='img/ui/exit.png' "
 			+ "title='&lt;dfn&gt;" + D.getString("collapse section") + "&lt;/dfn&gt;' />")
 		.prependTo(menubeam).click(function()
 		{
@@ -13081,18 +13091,7 @@ I = {
 					}
 				});
 			});
-			
-			// Create additional map related side menu icon
-			if (I.isMapEnabled)
-			{
-				$("<img class='menuBeamIcon menuBeamIconCenter' src='img/map/compass.png' "
-				+ "title='&lt;dfn&gt;" + D.getModifiedWord("center", "map", U.CaseEnum.Every) + "&lt;/dfn&gt;' />")
-				.prependTo("#menuBeam_Map").click(function()
-				{
-					M.goToDefault();
-				});
-			}
-			I.qTip.init("#plateMap .menuBeamIconCenter, #plateMap label");
+			I.qTip.init("#plateMap label");
 		});
 	},
 	

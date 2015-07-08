@@ -955,7 +955,7 @@ input#mapCoordinatesName {
 .menuBeam {
 	margin-left: -1px;
 	padding-top: 4px;
-	text-align: center;
+	text-align: left;
 	border-left: 1px solid #444;
 	border-top: 1px solid #444;
 	border-bottom: 1px solid #444;
@@ -981,6 +981,9 @@ input#mapCoordinatesName {
 	padding-right: 4px;
 	background: black;
 	opacity: 1;
+}
+.menuBeamIconCollapse {
+	float: right;
 }
 
 header.jsSection {
