@@ -6691,7 +6691,7 @@ M = {
 		$("#mapGPSButton").click(function()
 		{
 			// Go to character if cliked on GPS button.
-			M.goToCharacter(true);
+			M.updateCharacter(true);
 		});
 		$("#mapDisplayButton").click(function()
 		{
@@ -7283,7 +7283,7 @@ M = {
 	 * Views the map at the character's position in game, as directed by the overlay.
 	 * @param boolean pForce to view character regardless of options.
 	 */
-	goToCharacter: function(pForce)
+	updateCharacter: function(pForce)
 	{
 		// Verify the GPS coordinates
 		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || M.isUserDragging)
@@ -7298,13 +7298,12 @@ M = {
 		{
 			return;
 		}
-		if ( ! M.isZoneValid(GPSIdentityJSON["map_id"]))
+		if (M.isZoneValid(GPSIdentityJSON["map_id"]) === false)
 		{
 			M.movePin(M.PinCharacter);
 			M.movePin(M.PinCamera);
 			return;
 		}
-		
 		var coord = M.convertGPSCoord(GPSPositionArray, GPSIdentityJSON["map_id"]);
 		if (coord[0] > M.cMAP_BOUND || coord[0] <= 0
 			|| coord[1] > M.cMAP_BOUND || coord[1] <= 0)
@@ -7312,40 +7311,39 @@ M = {
 			return;
 		}
 		
-		// Follow character if opted
-		if (O.Options.bol_followCharacter || pForce)
+		// Follow character if opted and character has changed position (moved)
+		if ((O.Options.bol_followCharacter && M.GPSPreviousCoord[0] !== coord[0] && M.GPSPreviousCoord[1] !== coord[1])
+			|| pForce)
 		{
-			if ((M.GPSPreviousCoord[0] !== coord[0]
-				&& M.GPSPreviousCoord[1] !== coord[1]) || pForce)
-			{
-				M.Map.setView(M.convertGCtoLC(coord), M.Map.getZoom());
-				M.showCurrentZone(coord);
-			}
+			M.Map.setView(M.convertGCtoLC(coord), M.Map.getZoom());
+			M.showCurrentZone(coord);
+			M.GPSPreviousCoord = coord;
 		}
+		
 		// Pin character if opted
 		if (O.Options.bol_displayCharacter)
 		{
 			M.movePin(M.PinCharacter, coord);
 			M.movePin(M.PinCamera, coord);
 			M.PinCamera._icon.style.zIndex = M.cZIndexBury;
+			
+			var angleavatar = -(M.convertGPSAngle(GPSDirectionArray));
+			var anglecamera = -(M.convertGPSAngle(GPSCameraArray));
+			var pintransavatar = M.PinCharacter._icon.style.transform.toString();
+			var pintranscamera = M.PinCamera._icon.style.transform.toString();
+			if (pintransavatar.indexOf("rotate") === -1)
+			{
+				M.PinCharacter._icon.style.transform = pintransavatar + " rotate(" + angleavatar + "deg)";
+			}
+			if (pintranscamera.indexOf("rotate") === -1)
+			{
+				M.PinCamera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
+			}
 		}
-		var angleavatar = -(M.convertGPSAngle(GPSDirectionArray));
-		var anglecamera = -(M.convertGPSAngle(GPSCameraArray));
-		var pintransavatar = M.PinCharacter._icon.style.transform.toString();
-		var pintranscamera = M.PinCamera._icon.style.transform.toString();
-		if (pintransavatar.indexOf("rotate") === -1)
-		{
-			M.PinCharacter._icon.style.transform = pintransavatar + " rotate(" + angleavatar + "deg)";
-		}
-		if (pintranscamera.indexOf("rotate") === -1)
-		{
-			M.PinCamera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
-		}
-		M.GPSPreviousCoord = coord;
 	},
 	
 	/*
-	 * Views the default view.
+	 * Views the default map view.
 	 */
 	goToDefault: function()
 	{
@@ -7795,7 +7793,7 @@ M = {
 	{
 		if (O.Options.bol_followCharacter || O.Options.bol_displayCharacter)
 		{
-			M.goToCharacter();
+			M.updateCharacter();
 			window.clearTimeout(M.GPSTimeout);
 			M.GPSTimeout = setTimeout(M.tickGPS, O.Options.int_msecGPSRefresh);
 		}
@@ -9932,6 +9930,10 @@ T = {
 		{
 			Name: "Beta Weekend",
 			Time: new Date("2015-07-10T19:00:00Z")
+		},
+		{
+			Name: "Golem Rush",
+			Time: new Date("2015-07-18T01:00:00Z")
 		}
 	],
 	isGenericCountdownEnabled: true,
@@ -11029,7 +11031,7 @@ T = {
 			if (pDate < ctd.Time)
 			{
 				ithtime = T.formatSeconds(~~((ctd.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND));
-				str += ctd.Name + " - <b>" + ithtime + "</b> @ " + ctd.String + "<br />";
+				str += ctd.Name + " - <span>" + ithtime + "</span> @ " + ctd.String + "<br />";
 			}
 		}
 		document.getElementById("itemCountdown").innerHTML = str;
@@ -12376,7 +12378,7 @@ I = {
 				{
 					$(this).remove();
 				});
-			}, T.cMILLISECONDS_IN_SECOND * 30);
+			}, T.cMILLISECONDS_IN_SECOND * 60);
 		}
 		
 		// Finally
@@ -13266,6 +13268,7 @@ I = {
 		{
 			$("#paneWarning").remove();
 			$(".itemMapLinks a, .itemMapLinks span").hide();
+			T.isGenericCountdownEnabled = false;
 		}
 		
 		// Include program mode in Language links

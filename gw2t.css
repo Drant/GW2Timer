@@ -337,10 +337,19 @@ html, body,
 	position: absolute;
 	top: 32px; right: 12px;
 	z-index: 9;
+	margin-top: 4px;
+	padding: 4px 10px 4px 10px;
 	font-family: Menomonia;
 	font-size: 16px;
 	color: #bbcc77;
 	text-shadow: 0px 0px 4px black;
+	background: rgba(0, 0, 0, 0.4);
+	border-radius: 8px;
+}
+#itemMapCountdown span {
+	font-family: monospace;
+	font-size: 18px;
+	color: #ddff77;
 }
 
 /* Bottom left corner: Coordinates bar */
@@ -470,12 +479,9 @@ input#mapCoordinatesName {
 #mapZoneList div, .mapResourceList div {
 	display: table-cell;
 }
-#mapZoneList h2 {
-	width: 120px;
-}
-#mapZoneList ul {
+#mapZoneList ul, #mapZoneList h2 {
 	min-width: 120px;
-	max-width: 160px;
+	max-width: 140px;
 }
 
 /* Marker classes

@@ -1325,7 +1325,7 @@ var GW2T_CHAIN_DATA = [
 	title: "Danger at Fabled Djannor",
 	events: [
 		{
-			path: [[15671, 22204], [15865, 21992], [15768, 22115], [15650, 22028], [15758, 21966], [15956, 21910], [15654, 21781], [15384, 21934], [15671, 22204]],
+			path: [[15638, 22180], [15865, 21992], [15768, 22115], [15650, 22028], [15758, 21966], [15956, 21910], [15654, 21781], [15384, 21934], [15638, 22180]],
 			name_en: "Defeat Tequatl the Sunless.",
 			name_de: "Besiegt Tequatl den Sonnenlosen.",
 			name_es: "Derrota a Tequatl el Sombrío.",
