@@ -422,12 +422,12 @@ var GW2T_ZONE_DATA = {
  */
 var GW2T_DAILY_CALENDAR = {
 "1": {
-	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Cursed", "Shatterer Ascalon"],
+	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Cursed", "Shatterer"],
 	pvp: ["Reward", "Defender", "Warrior Necromancer", "Thief Mesmer"],
 	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "2": {
-	pve: ["Forager Ascalon", "Forger", "Gendarran", "Megades Maguuma"],
+	pve: ["Forager Ascalon", "Forger", "Gendarran", "Megades"],
 	pvp: ["Defender", "Kills", "Warrior Engineer", "Ranger Engineer"],
 	wvw: ["Ruins", "Land", "Defender", "Camp"]
 },
@@ -437,7 +437,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Kills", "Camp", "Keep"]
 },
 "4": {
-	pve: ["Forager Ascalon", "Vista Ascalon", "Harathi", "Jormag Shiverpeaks"],
+	pve: ["Forager Ascalon", "Vista Ascalon", "Harathi", "Jormag"],
 	pvp: ["Capture", "Reward", "Engineer Thief", "Ranger Engineer"],
 	wvw: ["Spender", "Land", "Tower", "Defender"]
 },
@@ -447,12 +447,12 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Kills", "Keep", "Tower"]
 },
 "6": {
-	pve: ["Lumberer Ascalon", "Activity", "Frostgorge", "SB Kryta"],
+	pve: ["Lumberer Ascalon", "Activity", "Frostgorge", "SB"],
 	pvp: ["Reward", "Rank", "Ranger Thief", "Engineer Elementalist"],
 	wvw: ["Creature", "Guard", "Defender", "Camp"]
 },
 "7": {
-	pve: ["Forager Maguuma", "Vista Shiverpeaks", "Fields", "Maw Shiverpeaks"],
+	pve: ["Forager Maguuma", "Vista Shiverpeaks", "Fields", "Maw"],
 	pvp: ["Defender", "Reward", "Warrior Ranger", "Guardian Necromancer"],
 	wvw: ["Ruins", "Creature", "Camp", "Defender"]
 },
@@ -462,7 +462,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Keep", "Camp"]
 },
 "9": {
-	pve: ["Forager Kryta", "Forger", "Caledon", "Wurm Maguuma"],
+	pve: ["Forager Kryta", "Forger", "Caledon", "Wurm"],
 	pvp: ["Kills", "Reward", "Warrior Engineer", "Ranger Necromancer"],
 	wvw: ["Guard", "Caravan", "Tower", "Defender"]
 },
@@ -512,17 +512,17 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Keep", "Defender"]
 },
 "19": {
-	pve: ["Lumberer Kryta", "Fractal", "Frostgorge", "SB Kryta"],
+	pve: ["Lumberer Kryta", "Fractal", "Frostgorge", "SB"],
 	pvp: ["Reward", "Capture", "Ranger Thief", "Engineer Elementalist"],
 	wvw: ["Defender", "Ruins", "Tower", "Camp"]
 },
 "20": {
-	pve: ["Miner Wastes", "Vista Ascalon", "Metrica", "Golem Maguuma"],
+	pve: ["Miner Wastes", "Vista Ascalon", "Metrica", "Golem"],
 	pvp: ["Defender", "Kills", "Warrior Ranger", "Guardian Necromancer"],
 	wvw: ["Caravan", "Ruins", "Keep", "Defender"]
 },
 "21": {
-	pve: ["Forager Kryta", "Vista Shiverpeaks", "Snowden", "Shatterer Ascalon"],
+	pve: ["Forager Kryta", "Vista Shiverpeaks", "Snowden", "Shatterer"],
 	pvp: ["Defender", "Rank", "Ranger Mesmer", "Guardian Engineer"],
 	wvw: ["Caravan", "Creature", "Camp", "Tower"]
 },
@@ -532,17 +532,17 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Land", "Tower", "Camp"]
 },
 "23": {
-	pve: ["Lumberer Maguuma", "Vista Maguuma", "Marches", "Maw Shiverpeaks"],
+	pve: ["Lumberer Maguuma", "Vista Maguuma", "Marches", "Maw"],
 	pvp: ["Reward", "Defender", "Elementalist Mesmer", "Guardian Thief"],
 	wvw: ["Ruins", "Creature", "Keep", "Tower"]
 },
 "24": {
-	pve: ["Miner Kryta", "Forger", "Snowden", "Shatterer Ascalon"],
+	pve: ["Miner Kryta", "Forger", "Snowden", "Shatterer"],
 	pvp: ["Rank", "Kills", "Engineer Thief", "Elementalist Necromancer"],
 	wvw: ["Creature", "Ruins", "Tower", "Camp"]
 },
 "25": {
-	pve: ["Forager Kryta", "Fractal", "Southsun", "Wurm Maguuma"],
+	pve: ["Forager Kryta", "Fractal", "Southsun", "Wurm"],
 	pvp: ["Rank", "Capture", "Warrior Thief", "Guardian Ranger"],
 	wvw: ["Spender", "Kills", "Camp", "Defender"]
 },
@@ -552,17 +552,17 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Camp", "Tower"]
 },
 "27": {
-	pve: ["Miner Shiverpeaks", "Vista Shiverpeaks", "Maelstrom", "Shatterer Ascalon"],
+	pve: ["Miner Shiverpeaks", "Vista Shiverpeaks", "Maelstrom", "Shatterer"],
 	pvp: ["Capture", "Defender", "Warrior Elementalist", "Engineer Necromancer"],
 	wvw: ["Ruins", "Spender", "Defender", "Tower"]
 },
 "28": {
-	pve: ["Lumberer Shiverpeaks", "Vista Ascalon", "Fields", "Maw Shiverpeaks"],
+	pve: ["Lumberer Shiverpeaks", "Vista Ascalon", "Fields", "Maw"],
 	pvp: ["Capture", "Kills", "Thief Elementalist", "Guardian Mesmer"],
 	wvw: ["Kills", "Land", "Camp", "Defender"]
 },
 "29": {
-	pve: ["Miner Shiverpeaks", "Activity", "Sparkfly", "Golem Maguuma"],
+	pve: ["Miner Shiverpeaks", "Activity", "Sparkfly", "Golem"],
 	pvp: ["Reward", "Defender", "Warrior Mesmer", "Guardian Necromancer"],
 	wvw: ["Creature", "Guard", "Tower", "Camp"]
 },
@@ -579,7 +579,7 @@ var GW2T_DAILY_CALENDAR = {
 };
 
 /*
- * GW2 special events, such as those announced on the official site.
+ * GW2 special events, such as those announced on GuildWars2.com.
  */
 var GW2T_COUNTDOWN_DATA = [
 {

@@ -5123,6 +5123,10 @@ C = {
 	{
 		return C.Chains[T.ChainAssociation[pAlias.toLowerCase()]];
 	},
+	getChainRegion: function(pChain)
+	{
+		return M.getZoneRegion(pChain.extra[0]);
+	},
 	
 	/*
 	 * Assigns today's chain object to the calendar's world boss, if available.
@@ -6614,6 +6618,10 @@ M = {
 			return region[O.OptionEnum.Language.Default];
 		}
 	},
+	getZoneRegion: function(pNick)
+	{
+		return M.Zones[(pNick.toLowerCase())].region;
+	},
 	
 	/*
 	 * Conditions needed to do the initial zoom to event on pageload.
@@ -6717,7 +6725,7 @@ M = {
 		$("#mapGPSButton").click(function()
 		{
 			// Go to character if cliked on GPS button.
-			M.updateCharacter(true);
+			M.updateCharacter(1);
 		}).dblclick(function()
 		{
 			if (M.Map.getZoom() !== M.ZoomLevelEnum.Ground)
@@ -7027,6 +7035,9 @@ M = {
 				layer._icon.style.zIndex = -10000;
 			}
 		});
+		
+		// Character pin and camera FOV
+		M.updateCharacter(-1);
 	},
 	
 	/*
@@ -7316,20 +7327,24 @@ M = {
 	},
 	
 	/*
-	 * Views the map at the character's position in game, as directed by the overlay.
-	 * @param boolean pForce to view character regardless of options.
+	 * Imitates the character pin as in the game minimap, as directed by the overlay.
+	 * @param int pForceCode 1 to force update position, -1 angle, 0 both, undefined neither.
 	 */
-	updateCharacter: function(pForce)
+	updateCharacter: function(pForceCode)
 	{
-		// Verify the GPS coordinates
+		/*
+		 * Validate the GPS data before allowing updates.
+		 * Sample structure of position, character angle, and camera angle:
+		 * fAvatarPosition: [116.662186, 44.60492, -104.502495]
+		 * fAvatarFront: [0.070094235, 0.0, 0.99754035]
+		 * fCameraFront: [-0.2597584, 0.02722733, 0.9652897]
+		 * Sample structure of JSON:
+		 * {"name": "Character Name","profession": 1,"race": 2,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false,"fov": 0.873}
+		 */
 		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || M.isUserDragging)
 		{
 			return;
 		}
-		/*
-		 * Sample structure of JSON:
-		 * {"name": "Character Name","profession": 1,"race": 2,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false,"fov": 0.873}
-		 */
 		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
 		{
 			return;
@@ -7347,22 +7362,23 @@ M = {
 			return;
 		}
 		
-		// Follow character if opted and character has changed position (moved)
+		// Follow character if opted and position has changed (character moved)
 		if ((O.Options.bol_followCharacter && M.GPSPreviousCoord[0] !== coord[0] && M.GPSPreviousCoord[1] !== coord[1])
-			|| pForce)
+			|| pForceCode >= 0)
 		{
 			M.Map.setView(M.convertGCtoLC(coord), M.Map.getZoom());
 			M.showCurrentZone(coord);
 			M.GPSPreviousCoord = coord;
 		}
 		
-		// Pin character if opted
+		// Pin character if opted and angle has changed (character turned)
 		if (O.Options.bol_displayCharacter)
 		{
 			var anglecharacter = -(M.convertGPSAngle(GPSDirectionArray));
 			var anglecamera = -(M.convertGPSAngle(GPSCameraArray));
 			if (M.GPSPreviousAngleCharacter !== anglecharacter
-				|| M.GPSPreviousAngleCamera !== anglecamera)
+				|| M.GPSPreviousAngleCamera !== anglecamera
+				|| pForceCode <= 0)
 			{
 				M.movePin(M.PinCharacter, coord);
 				M.movePin(M.PinCamera, coord);
@@ -8760,7 +8776,7 @@ G = {
 			activityregion = "<ins class='dlyRegion dly_region_" + activity[1].toLowerCase() + "'>";
 			activityregionclose = "</ins>";
 		}
-		eventregion = "<ins class='dlyRegion dly_region_" + (M.Zones[(pve[2]).toLowerCase()])["region"] + "'>";
+		eventregion = "<ins class='dlyRegion dly_region_" + M.getZoneRegion(pve[2]) + "'>";
 		if (boss[0] === "Fractal")
 		{
 			bosssrc = "dly_pve_" + boss[0].toLowerCase() + "_" + boss[1];
@@ -8768,7 +8784,7 @@ G = {
 		else
 		{
 			bosssrc = "dly_pve_boss";
-			bossregion = "<ins class='dlyRegion dly_region_" + boss[1].toLowerCase() + "'>";
+			bossregion = "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(boss[0])) + "'>";
 			bossregionclose = "</ins>";
 			bosshtml = "<em><img src='img/chain/" + boss[0].toLowerCase() + I.cPNG + "' /></em>";
 		}
@@ -11099,7 +11115,10 @@ T = {
 	 */
 	initializeGenericCountdown: function()
 	{
-		T.isGenericCountdownSystemEnabled = (T.GenericCountdown.length > 0);
+		if (T.GenericCountdown.length === 0)
+		{
+			T.isGenericCountdownSystemEnabled = false;
+		}
 		T.isGenericCountdownTickEnabled = T.isGenericCountdownSystemEnabled;
 		if (T.isGenericCountdownSystemEnabled)
 		{
@@ -13342,6 +13361,7 @@ I = {
 				var link = $(this).attr("href");
 				$(this).attr("href", link + "&mode=" + I.ModeCurrent);
 			});
+			T.isGenericCountdownSystemEnabled = false;
 		}
 	},
 	
