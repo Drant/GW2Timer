@@ -346,6 +346,9 @@ html, body,
 	background: rgba(0, 0, 0, 0.4);
 	border-radius: 8px;
 }
+#itemMapCountdown a {
+	color: #bbcc77;
+}
 #itemMapCountdown span {
 	font-family: Consolas, monospace;
 	font-size: 18px;

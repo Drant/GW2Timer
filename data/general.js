@@ -52,6 +52,9 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1015": "silverwastes"
 };
 
+/*
+ * Images that are overlayed on the map, such as underground areas.
+ */
 var GW2T_SUBMAP_DATA = {
 angvarstrove: {
 	img: "http://i.imgur.com/LuiwbAK.png", 
@@ -574,3 +577,36 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Land", "Defender", "Tower"]
 }
 };
+
+/*
+ * GW2 special events, such as those announced on the official site.
+ */
+var GW2T_COUNTDOWN_DATA = [
+{
+	name_en: "WvW Stress Test",
+	name_de: "WvW Stresstests",
+	name_es: "Prueba de rendimiento WvW",
+	name_fr: "Stress-test McM",
+	news: "announcing-the-first-worldvs-world-borderlands-stress-test/",
+	Time: new Date("2015-07-09T21:00:00Z")
+},
+{
+	name_en: "Beta Weekend",
+	name_de: "Beta Weekend",
+	name_es: "Beta de fin de semana",
+	name_fr: "Week-end de bêta",
+	news: "announcing-the-guild-wars-2-revenant-and-stronghold-test-weekend/",
+	Time: new Date("2015-07-10T19:00:00Z")
+},
+{
+	name_en: "Golem Rush",
+	name_de: "Golem-Ansturm",
+	name_es: "Acelerón de gólem",
+	name_fr: "Ruée de golem",
+	url_en: "https://forum-en.guildwars2.com/forum/info/updates/Game-Update-Notes-July-7-2015",
+	url_de: "https://forum-de.guildwars2.com/forum/info/updates/Release-Notes-zum-Spiel-7-Juli-2015",
+	url_es: "https://forum-es.guildwars2.com/forum/info/updates/Notas-de-actualizaci-n-del-juego-7-de-julio",
+	url_fr: "https://forum-fr.guildwars2.com/forum/info/updates/Mise-jour-du-jeu-7-juillet-2015",
+	Time: new Date("2015-07-18T01:00:00Z")
+}
+];

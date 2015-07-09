@@ -1631,6 +1631,10 @@ U = {
 			$(this).attr("target", "_blank");
 		});
 	},
+	convertExternalURL: function(pURL)
+	{
+		return I.cSiteURL + "out?" + encodeURI(pURL);
+	},
 	
 	/*
 	 * Opens a new browser tab with the requested URL.
@@ -1733,6 +1737,16 @@ U = {
 	{
 		pString = pString.replace(/ /g, "+"); // Replace spaces with plus sign
 		return "http://wiki.guildwars2.com/index.php?title=Special%3ASearch&search=" + U.encodeURL(pString);
+	},
+	
+	/*
+	 * Generates a link to news article at the GuildWars2.com site.
+	 * @param string pString suffix.
+	 * @returns string URL.
+	 */
+	getGW2NewsLink: function(pString)
+	{
+		return "https://www.guildwars2.com/" + D.getFullySupportedLanguage() + "/news/" + pString;
 	},
 	
 	/*
@@ -6408,7 +6422,7 @@ C = {
  * ========================================================================== */
 M = {
 	/*
-	 * http://gw2timer.com/data/zones.js contains zone (e.g. Queensdale, LA) objects
+	 * http://gw2timer.com/data/general.js contains zone (e.g. Queensdale, LA) objects
 	 * with their rectangular coordinates.
 	 * This is referred to by the variable "M.Zones".
 	 */
@@ -7193,7 +7207,7 @@ M = {
 	
 	/*
 	 * Initializes or toggle a submap, which is a Leaflet ImageOverlay over the map.
-	 * Look at zones.js for submap declarations.
+	 * Look at general.js for submap declarations.
 	 * @param string pName of the submap.
 	 * @param boolean pBoolean to show or hide.
 	 */
@@ -7757,7 +7771,7 @@ M = {
 			var zonenick = $(this).attr("data-zone");
 			$(this).text(M.getZoneName(zonenick));
 			$(this).attr("data-coord", M.getZoneCenter(zonenick).toString());
-			M.bindMapLinkBehavior($(this), null, M.ZoomLevelEnum.Sky);
+			M.bindMapLinkBehavior($(this), null, M.ZoomLevelEnum.Same);
 		});
 		$("#mapZoneList h2").each(function()
 		{
@@ -8707,7 +8721,7 @@ G = {
 	
 	/*
 	 * Inserts a "day" div into the dailies calendar.
-	 * @param object pDaily daily object from zones.js
+	 * @param object pDaily daily object from general.js
 	 * @param object pDate of the day.
 	 */
 	insertDailyDay: function(pDaily, pDate)
@@ -9949,30 +9963,9 @@ W = {
  * ========================================================================== */
 T = {
 	
-	GenericCountdown: [
-		{
-			name_en: "WvW Stress Test",
-			name_de: "WvW Stresstests",
-			name_es: "Prueba de rendimiento WvW",
-			name_fr: "Stress-test McM",
-			Time: new Date("2015-07-09T21:00:00Z")
-		},
-		{
-			name_en: "Beta Weekend",
-			name_de: "Beta Weekend",
-			name_es: "Beta de fin de semana",
-			name_fr: "Week-end de bêta",
-			Time: new Date("2015-07-10T19:00:00Z")
-		},
-		{
-			name_en: "Golem Rush",
-			name_de: "Golem-Ansturm",
-			name_es: "Acelerón de gólem",
-			name_fr: "Ruée de golem",
-			Time: new Date("2015-07-18T01:00:00Z")
-		}
-	],
-	isGenericCountdownEnabled: true,
+	GenericCountdown: GW2T_COUNTDOWN_DATA,
+	isGenericCountdownSystemEnabled: true,
+	isGenericCountdownTickEnabled: null,
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -11106,17 +11099,21 @@ T = {
 	 */
 	initializeGenericCountdown: function()
 	{
-		if (T.isGenericCountdownEnabled)
+		T.isGenericCountdownSystemEnabled = (T.GenericCountdown.length > 0);
+		T.isGenericCountdownTickEnabled = T.isGenericCountdownSystemEnabled;
+		if (T.isGenericCountdownSystemEnabled)
 		{
+			var namekey = D.getNameKey();
+			var urlkey = D.getURLKey();
+			var ctd;
+			var url;
 			for (var i in T.GenericCountdown)
 			{
-				T.GenericCountdown[i].String = T.GenericCountdown[i].Time.toLocaleString();
+				ctd = T.GenericCountdown[i];
+				ctd.String = ctd.Time.toLocaleString();
+				url = (ctd.news === undefined) ? ctd[urlkey] : U.getGW2NewsLink(ctd.news); 
+				ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + ctd[namekey] + "</a>"
 			}
-			$("#itemMapCountdown").click(function()
-			{
-				T.isGenericCountdownEnabled = false;
-				$(this).remove();
-			});
 		}
 	},
 	updateGenericCountdown: function(pDate)
@@ -11124,7 +11121,6 @@ T = {
 		var str = "";
 		var ithtime = "";
 		var ctd;
-		var namekey = D.getNameKey();
 		for (var i in T.GenericCountdown)
 		{
 			ctd = T.GenericCountdown[i];
@@ -11132,7 +11128,7 @@ T = {
 			if (pDate < ctd.Time)
 			{
 				ithtime = T.formatSeconds(~~((ctd.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
-				str += ctd[namekey] + " - <span>" + ithtime + "</span> @ " + ctd.String + "<br />";
+				str += ctd.Anchor + " - <span>" + ithtime + "</span> @ " + ctd.String + "<br />";
 			}
 		}
 		document.getElementById("itemCountdown").innerHTML = str;
@@ -11659,7 +11655,7 @@ K = {
 		{
 			T.updateGuildTimer();
 		}
-		if (T.isGenericCountdownEnabled)
+		if (T.isGenericCountdownTickEnabled)
 		{
 			T.updateGenericCountdown(pDate);
 		}
@@ -12465,14 +12461,14 @@ I = {
 		}
 		
 		// Hides generic countdown after a time
-		if (T.isGenericCountdownEnabled)
+		if (T.isGenericCountdownTickEnabled)
 		{
 			setTimeout(function()
 			{
-				T.isGenericCountdownEnabled = false;
+				T.isGenericCountdownTickEnabled = false;
 				$("#itemMapCountdown").animate({opacity: 0}, 1000, function()
 				{
-					$(this).remove();
+					$(this).hide();
 				});
 			}, T.cMILLISECONDS_IN_SECOND * 180);
 		}
@@ -13014,11 +13010,6 @@ I = {
 						M.movePin(M.PinEvent);
 					} break;
 					
-					case I.PageEnum.WvW:
-					{
-						
-					} break;
-					
 					case I.PageEnum.Help:
 					{
 						
@@ -13029,22 +13020,6 @@ I = {
 						
 					} break;
 				}
-				
-				// Show appropriate map pane
-				if (I.PageCurrent === I.PageEnum.WvW && $("#paneMap").is(":visible"))
-				{
-					$("#paneMap").hide();
-					$("#paneWvW").show();
-					W.refreshMap();
-				}
-				if ((I.PageCurrent === I.PageEnum.Chains ||
-					I.PageCurrent === I.PageEnum.Map) && $("#paneWvW").is(":visible"))
-				{
-					$("#paneWvW").hide();
-					$("#paneMap").show();
-					M.refreshMap();
-				}
-				
 				$("#paneContent article").hide(); // Hide all plates
 				
 				// Only do animations if on regular website (to save computation)
@@ -13077,10 +13052,25 @@ I = {
 		*/
 		// Map plate
 		$("#menuMap").one("click", I.loadMapPlate);
-		// WvW plate
-		$("#menuWvW").one("click", I.loadWvWPlate);
 		// Help plate
 		$("#menuHelp").one("click", I.loadHelpPlate);
+		
+		// Show generic countdown when hovered over chains page menu button
+		if (T.isGenericCountdownSystemEnabled)
+		{
+			$("#menuChains").hover(function()
+			{
+				T.isGenericCountdownTickEnabled = true;
+				$("#itemMapCountdown").show().css({opacity: 0}).animate({opacity: 1}, 200);
+			}, function()
+			{
+				T.isGenericCountdownTickEnabled = false;
+				$("#itemMapCountdown").css({opacity: 1}).animate({opacity: 0}, 200, function()
+				{
+					$(this).hide();
+				});
+			});
+		}
 		
 	}, // End of menu initialization
 	
@@ -13178,18 +13168,6 @@ I = {
 				});
 			});
 			I.qTip.init("#plateMap label");
-		});
-	},
-	
-	/*
-	 * Loads the map page into the map content plate.
-	 */
-	loadWvWPlate: function()
-	{
-		$("#plateWvW").load(U.getPageSrc("wvw"), function()
-		{
-			W.initializeMap();
-			I.bindAfterAJAXContent(I.PageEnum.WvW);
 		});
 	},
 	
@@ -13353,7 +13331,7 @@ I = {
 		{
 			$("#paneWarning").remove();
 			$(".itemMapLinks a, .itemMapLinks span").hide();
-			T.isGenericCountdownEnabled = false;
+			T.isGenericCountdownSystemEnabled = false;
 		}
 		
 		// Include program mode in Language links
