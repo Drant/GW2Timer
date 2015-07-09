@@ -4216,6 +4216,8 @@ D = {
 		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 		
 		// Time
+		s_w: {de: "w", es: "s", fr: "s", cs: "t", it: "s", pl: "t", pt: "s", ru: "н", zh: "週"},
+		s_d: {de: "t", es: "d", fr: "j", cs: "d", it: "g", pl: "d", pt: "d", ru: "д", zh: "日"},
 		s_h: {de: "h", es: "h", fr: "h", cs: "h", it: "o", pl: "g", pt: "h", ru: "ч", zh: "時"},
 		s_m: {de: "m", es: "m", fr: "m", cs: "m", it: "m", pl: "m", pt: "m", ru: "м", zh: "分"},
 		s_s: {de: "s", es: "s", fr: "s", cs: "s", it: "s", pl: "s", pt: "s", ru: "с", zh: "秒"},
@@ -4572,6 +4574,14 @@ D = {
 	 * @param object pObject to extract name.
 	 * @returns name in user's language.
 	 */
+	getNameKey: function()
+	{
+		return "name_" + D.getFullySupportedLanguage();
+	},
+	getURLKey: function()
+	{
+		return "url_" + D.getFullySupportedLanguage();
+	},
 	getObjectName: function(pObject)
 	{
 		return pObject["name_" + D.getFullySupportedLanguage()];
@@ -5026,7 +5036,7 @@ D = {
 	 */
 	sortObjects: function(pObjects)
 	{
-		var key = "name_" + D.getFullySupportedLanguage();
+		var key = D.getNameKey();
 		pObjects.sort(function (a, b)
 		{
 			if (a[key] > b[key])
@@ -6457,6 +6467,8 @@ M = {
 	cPOINTS_TO_UNITS: 5000 / 208,
 	GPSTimeout: {},
 	GPSPreviousCoord: [],
+	GPSPreviousAngleCharacter: 0,
+	GPSPreviousAngleCamera: 0,
 	
 	/*
 	 * All objects in the map are called "markers". Some markers are grouped into iterable "layers".
@@ -7333,21 +7345,26 @@ M = {
 		// Pin character if opted
 		if (O.Options.bol_displayCharacter)
 		{
-			M.movePin(M.PinCharacter, coord);
-			M.movePin(M.PinCamera, coord);
-			M.PinCamera._icon.style.zIndex = M.cZIndexBury;
-			
-			var angleavatar = -(M.convertGPSAngle(GPSDirectionArray));
+			var anglecharacter = -(M.convertGPSAngle(GPSDirectionArray));
 			var anglecamera = -(M.convertGPSAngle(GPSCameraArray));
-			var pintransavatar = M.PinCharacter._icon.style.transform.toString();
-			var pintranscamera = M.PinCamera._icon.style.transform.toString();
-			if (pintransavatar.indexOf("rotate") === -1)
+			if (M.GPSPreviousAngleCharacter !== anglecharacter
+				|| M.GPSPreviousAngleCamera !== anglecamera)
 			{
-				M.PinCharacter._icon.style.transform = pintransavatar + " rotate(" + angleavatar + "deg)";
-			}
-			if (pintranscamera.indexOf("rotate") === -1)
-			{
-				M.PinCamera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
+				M.movePin(M.PinCharacter, coord);
+				M.movePin(M.PinCamera, coord);
+				M.PinCamera._icon.style.zIndex = M.cZIndexBury;
+				var pintranscharacter = M.PinCharacter._icon.style.transform.toString();
+				var pintranscamera = M.PinCamera._icon.style.transform.toString();
+				if (pintranscharacter.indexOf("rotate") === -1)
+				{
+					M.PinCharacter._icon.style.transform = pintranscharacter + " rotate(" + anglecharacter + "deg)";
+				}
+				if (pintranscamera.indexOf("rotate") === -1)
+				{
+					M.PinCamera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
+				}
+				M.GPSPreviousAngleCharacter = anglecharacter;
+				M.GPSPreviousAngleCamera = anglecamera;
 			}
 		}
 	},
@@ -9934,15 +9951,24 @@ T = {
 	
 	GenericCountdown: [
 		{
-			Name: "WvW Stress Test",
+			name_en: "WvW Stress Test",
+			name_de: "WvW Stresstests",
+			name_es: "Prueba de rendimiento WvW",
+			name_fr: "Stress-test McM",
 			Time: new Date("2015-07-09T21:00:00Z")
 		},
 		{
-			Name: "Beta Weekend",
+			name_en: "Beta Weekend",
+			name_de: "Beta Weekend",
+			name_es: "Beta de fin de semana",
+			name_fr: "Week-end de bêta",
 			Time: new Date("2015-07-10T19:00:00Z")
 		},
 		{
-			Name: "Golem Rush",
+			name_en: "Golem Rush",
+			name_de: "Golem-Ansturm",
+			name_es: "Acelerón de gólem",
+			name_fr: "Ruée de golem",
 			Time: new Date("2015-07-18T01:00:00Z")
 		}
 	],
@@ -10785,41 +10811,44 @@ T = {
 	},
 	
 	/*
-	 * Gets a Days:Hours:Minutes:Seconds string from seconds.
-	 * @param int pSeconds of time.
+	 * Gets a "Days:Hours:Minutes:Seconds" string from seconds.
+	 * @param int pMilliseconds of time.
 	 * @returns string formatted time.
 	 */
-	formatSeconds: function(pSeconds)
+	formatMilliseconds: function(pMilliseconds, pWantDeciseconds)
 	{
+		var seconds = ~~(pMilliseconds / T.cMILLISECONDS_IN_SECOND);
+		var deciseconds = ~~((pMilliseconds % T.cMILLISECONDS_IN_SECOND) / T.cBASE_10);
 		var day, hour, min, sec;
 		var daystr = "";
 		var hourstr = "";
 		var minstr = "";
 		var secstr = "";
+		var msstr = "";
 		var signstr = "";
 		
-		if (pSeconds < 0)
+		if (seconds < 0)
 		{
-			pSeconds = pSeconds * -1;
+			seconds = seconds * -1;
 			signstr = "−";
 		}
-		if (pSeconds >= T.cSECONDS_IN_DAY)
+		if (seconds >= T.cSECONDS_IN_DAY)
 		{
-			day = ~~(pSeconds / T.cSECONDS_IN_DAY);
+			day = ~~(seconds / T.cSECONDS_IN_DAY);
 			daystr = day + "::";
 		}
-		if (pSeconds >= T.cSECONDS_IN_HOUR)
+		if (seconds >= T.cSECONDS_IN_HOUR)
 		{
-			hour = ~~(pSeconds / T.cSECONDS_IN_HOUR) % T.cHOURS_IN_DAY;
+			hour = ~~(seconds / T.cSECONDS_IN_HOUR) % T.cHOURS_IN_DAY;
 			hourstr = hour + ":";
 			if (daystr !== "" && hour < T.cBASE_10)
 			{
 				hourstr = "0" + hourstr;
 			}
 		}
-		if (pSeconds >= T.cSECONDS_IN_MINUTE)
+		if (seconds >= T.cSECONDS_IN_MINUTE)
 		{
-			min = ~~(pSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+			min = ~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
 			minstr = min + ":";
 			if (hourstr !== "" && min < T.cBASE_10)
 			{
@@ -10830,14 +10859,70 @@ T = {
 		{
 			minstr = "0:";
 		}
-		sec = pSeconds % T.cSECONDS_IN_MINUTE;
+		sec = seconds % T.cSECONDS_IN_MINUTE;
 		secstr = sec.toString();
 		if (sec < T.cBASE_10)
 		{
 			secstr = "0" + secstr;
 		}
+		if (pWantDeciseconds)
+		{
+			msstr = "." + deciseconds;
+			if (deciseconds < T.cBASE_10)
+			{
+				msstr = ".0" + deciseconds;
+			}
+		}
 		
-		return signstr + daystr + hourstr + minstr + secstr;
+		return signstr + daystr + hourstr + minstr + secstr + msstr;
+	},
+	
+	/*
+	 * Gets a "1w 7d 24h 60m 60s" string from seconds.
+	 * @param int pSeconds of time.
+	 * @returns string formatted time.
+	 */
+	formatSeconds: function(pSeconds, pWantSeconds)
+	{
+		var seconds = pSeconds;
+		var week, day, hour, min, sec;
+		var weekstr = "";
+		var daystr = "";
+		var hourstr = "";
+		var minstr = "";
+		var secstr = "";
+		
+		if (seconds >= T.cSECONDS_IN_WEEK)
+		{
+			week = ~~(seconds / T.cSECONDS_IN_WEEK);
+			weekstr = week + D.getWord("w") + " ";
+		}
+		if (seconds >= T.cSECONDS_IN_DAY)
+		{
+			day = ~~(seconds / T.cSECONDS_IN_DAY) % T.cDAYS_IN_WEEK;
+			daystr = day + D.getWord("d") + " ";
+		}
+		if (seconds >= T.cSECONDS_IN_HOUR)
+		{
+			hour = ~~(seconds / T.cSECONDS_IN_HOUR) % T.cHOURS_IN_DAY;
+			hourstr = hour + D.getWord("h") + " ";
+		}
+		if (seconds >= T.cSECONDS_IN_MINUTE)
+		{
+			min = ~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+			minstr = min + D.getWord("m") + " ";
+		}
+		else
+		{
+			minstr = "0:";
+		}
+		if (pWantSeconds)
+		{
+			sec = seconds % T.cSECONDS_IN_MINUTE;
+			secstr = sec.toString() + D.getWord("s");
+		}
+		
+		return weekstr + daystr + hourstr + minstr + secstr;
 	},
 	
 	/*
@@ -11011,7 +11096,7 @@ T = {
 		{
 			T.secondsTillGuildReset = T.getSecondsTillWeekday(T.DayEnum.Sunday);
 		}
-		$("#mapGuildTimer").text(T.formatSeconds(T.secondsTillGuildReset));
+		$("#mapGuildTimer").text(T.formatSeconds(T.secondsTillGuildReset, true));
 		// Decrement global variable to countdown, instead of calling the compute function every time
 		T.secondsTillGuildReset--;
 	},
@@ -11027,6 +11112,11 @@ T = {
 			{
 				T.GenericCountdown[i].String = T.GenericCountdown[i].Time.toLocaleString();
 			}
+			$("#itemMapCountdown").click(function()
+			{
+				T.isGenericCountdownEnabled = false;
+				$(this).remove();
+			});
 		}
 	},
 	updateGenericCountdown: function(pDate)
@@ -11034,14 +11124,15 @@ T = {
 		var str = "";
 		var ithtime = "";
 		var ctd;
+		var namekey = D.getNameKey();
 		for (var i in T.GenericCountdown)
 		{
 			ctd = T.GenericCountdown[i];
 			// Don't generate countdown for those that are past the start time
 			if (pDate < ctd.Time)
 			{
-				ithtime = T.formatSeconds(~~((ctd.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND));
-				str += ctd.Name + " - <span>" + ithtime + "</span> @ " + ctd.String + "<br />";
+				ithtime = T.formatSeconds(~~((ctd.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
+				str += ctd[namekey] + " - <span>" + ithtime + "</span> @ " + ctd.String + "<br />";
 			}
 		}
 		document.getElementById("itemCountdown").innerHTML = str;
@@ -11253,7 +11344,7 @@ K = {
 				 */
 				$("#paneMenu").animate({top: 0}, animationspeed);
 				$("#paneContent").animate({top: I.cPANE_MENU_HEIGHT,
-					"min-height": I.cPANEL_HEIGHT - (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed,
+					"min-height": I.cPANEL_HEIGHT_MIN - (I.cPANE_MENU_HEIGHT) + "px"}, animationspeed,
 					function()
 					{
 						$("#paneClock").hide();
@@ -11274,7 +11365,7 @@ K = {
 
 			// Readjust content pane
 			$("#paneContent").animate({top: clockpaneheight + I.cPANE_MENU_HEIGHT,
-				"min-height": I.cPANEL_HEIGHT - (clockpaneheight + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
+				"min-height": I.cPANEL_HEIGHT_MIN - (clockpaneheight + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
 		}
 		
 		// Other associated elements
@@ -12082,14 +12173,14 @@ I = {
 	
 	// HTML/CSS pixel units
 	cPANEL_WIDTH: 360,
-	cPANEL_HEIGHT: 580,
+	cPANEL_HEIGHT_MIN: 220,
 	cPANE_CLOCK_HEIGHT: 360,
 	cPANE_CLOCK_HEIGHT_COMPACT: 220,
 	cPANE_CLOCK_HEIGHT_BAR: 85,
 	cPANE_MENU_HEIGHT: 48,
-	cTOOLTIP_MAX_WIDTH: 360,
+	cTOOLTIP_WIDTH_MAX: 360,
 	cTOOLTIP_OVERFLOW_WIDTH: 240,
-	cTOOLTIP_MAX_OVERFLOW: 10,
+	cTOOLTIP_OVERFLOW_MAX: 10,
 	cTOOLTIP_DEFAULT_OFFSET_X: -180,
 	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
 	cTOOLTIP_ALTERNATE_OFFSET_X: 24,
@@ -12119,7 +12210,6 @@ I = {
 		// These are the X in "menuX" and "plateX" IDs in the HTML
 		Chains: "Chains",
 		Map: "Map",
-		WvW: "WvW",
 		Help: "Help",
 		Options: "Options"
 	},
@@ -12136,10 +12226,6 @@ I = {
 			TP: "TP",
 			Notepad: "Notepad",
 			Personal: "Personal"
-		},
-		WvW:
-		{
-			
 		},
 		Help:
 		{
@@ -13402,7 +13488,7 @@ I = {
 				// Tooltip overflows panel right edge
 				if (tipwidth >= I.cTOOLTIP_OVERFLOW_WIDTH && I.isMapEnabled)
 				{
-					I.qTip.offsetX = (winwidth - x) - I.cPANEL_WIDTH - I.cTOOLTIP_MAX_OVERFLOW;
+					I.qTip.offsetX = (winwidth - x) - I.cPANEL_WIDTH - I.cTOOLTIP_OVERFLOW_MAX;
 				}
 				else if ((winwidth - x) > (I.cPANEL_WIDTH / 2))
 				{
@@ -13416,7 +13502,7 @@ I = {
 			else // Mouse is on the map pane
 			{
 				// Tooltip overflows right edge
-				if (x + I.cTOOLTIP_ADD_OFFSET_X + tipwidth > winwidth && tipwidth > I.cTOOLTIP_MAX_WIDTH)
+				if (x + I.cTOOLTIP_ADD_OFFSET_X + tipwidth > winwidth && tipwidth > I.cTOOLTIP_WIDTH_MAX)
 				{
 					I.qTip.offsetX = -(tipwidth) - I.cTOOLTIP_ADD_OFFSET_X;
 				}
