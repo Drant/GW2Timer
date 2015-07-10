@@ -9982,6 +9982,7 @@ T = {
 	GenericCountdown: GW2T_COUNTDOWN_DATA,
 	isGenericCountdownSystemEnabled: true,
 	isGenericCountdownTickEnabled: null,
+	GenericCountdownGracePeriod: 3600000, // One hour in milliseconds
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -9993,6 +9994,7 @@ T = {
 	cUTC_OFFSET_EASTERN: -4,
 	// Natural constants
 	cMILLISECONDS_IN_SECOND: 1000,
+	cMILLISECONDS_IN_MINUTE: 60000,
 	cSECONDS_IN_MINUTE: 60,
 	cSECONDS_IN_HOUR: 3600,
 	cSECONDS_IN_DAY: 86400,
@@ -10900,7 +10902,13 @@ T = {
 		var hourstr = "";
 		var minstr = "";
 		var secstr = "";
+		var signstr = "";
 		
+		if (seconds < 0)
+		{
+			seconds = seconds * -1;
+			signstr = "−";
+		}
 		if (seconds >= T.cSECONDS_IN_WEEK)
 		{
 			week = ~~(seconds / T.cSECONDS_IN_WEEK);
@@ -10921,17 +10929,13 @@ T = {
 			min = ~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
 			minstr = min + D.getWord("m") + " ";
 		}
-		else
-		{
-			minstr = "0:";
-		}
 		if (pWantSeconds)
 		{
 			sec = seconds % T.cSECONDS_IN_MINUTE;
 			secstr = sec.toString() + D.getWord("s");
 		}
 		
-		return weekstr + daystr + hourstr + minstr + secstr;
+		return signstr + weekstr + daystr + hourstr + minstr + secstr;
 	},
 	
 	/*
@@ -11144,7 +11148,7 @@ T = {
 		{
 			ctd = T.GenericCountdown[i];
 			// Don't generate countdown for those that are past the start time
-			if (pDate < ctd.Time)
+			if (pDate.getTime() < (ctd.Time.getTime() + T.GenericCountdownGracePeriod))
 			{
 				ithtime = T.formatSeconds(~~((ctd.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
 				str += ctd.Anchor + " - <span>" + ithtime + "</span> @ " + ctd.String + "<br />";

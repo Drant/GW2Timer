@@ -466,14 +466,14 @@ var GW2T_DAILY_CALENDAR = {
 	pvp: ["Kills", "Reward", "Warrior Engineer", "Ranger Necromancer"],
 	wvw: ["Guard", "Caravan", "Tower", "Defender"]
 },
-"10": {//"Elementalist Mesmer", "Guardian Thief"
-	pve: ["Forager Kryta", "Activity", "Kessex", "Fractal 1-10"],
-	pvp: ["Kills", "Rank", "Engineer Thief", "Elementalist Necromancer"],
-	wvw: ["Spender", "Caravan", "Tower", "Camp"]
+"10": {//
+	pve: ["Lumberer Maguuma", "Fractal", "Timberline", "Fractal 11-20"],
+	pvp: ["Rank", "Kills", "Elementalist Mesmer", "Guardian Thief"],
+	wvw: ["Creature", "Land", "Keep", "Tower"]
 },
-"11": {
+"11": {//"Warrior Thief", "Guardian Ranger"
 	pve: ["Miner Maguuma", "Vista Kryta", "Snowden", "Fractal 1-10"],
-	pvp: ["Reward", "Capture", "Warrior Thief", "Guardian Ranger"],
+	pvp: ["Reward", "Capture", "Elementalist Mesmer", "Guardian Thief"],
 	wvw: ["Guard", "Kills", "Keep", "Defender"]
 },
 "12": {
@@ -582,14 +582,6 @@ var GW2T_DAILY_CALENDAR = {
  * GW2 special events, such as those announced on GuildWars2.com.
  */
 var GW2T_COUNTDOWN_DATA = [
-{
-	name_en: "WvW Stress Test",
-	name_de: "WvW Stresstests",
-	name_es: "Prueba de rendimiento WvW",
-	name_fr: "Stress-test McM",
-	news: "announcing-the-first-worldvs-world-borderlands-stress-test/",
-	Time: new Date("2015-07-09T21:00:00Z")
-},
 {
 	name_en: "Beta Weekend",
 	name_de: "Beta Weekend",
