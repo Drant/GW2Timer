@@ -9382,6 +9382,9 @@ G = {
 		M.Layer[pType].addLayer(pathline);
 		M.toggleLayer(M.Layer[pType]);
 		
+		// Bind tooltip
+		I.qTip.init(".leaflet-marker-icon");
+		
 		// Bind checkboxes after the markers and paths have been generated for this collectible
 		$("#ned_" + pType).change(function()
 		{
@@ -11133,7 +11136,8 @@ T = {
 			for (var i in T.GenericCountdown)
 			{
 				ctd = T.GenericCountdown[i];
-				ctd.String = ctd.Time.toLocaleString();
+				ctd.StartStamp = ctd.Start.toLocaleString();
+				ctd.FinishStamp = ctd.Finish.toLocaleString();
 				url = (ctd.news === undefined) ? ctd[urlkey] : U.getGW2NewsLink(ctd.news); 
 				ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + ctd[namekey] + "</a>"
 			}
@@ -11148,10 +11152,15 @@ T = {
 		{
 			ctd = T.GenericCountdown[i];
 			// Don't generate countdown for those that are past the start time
-			if (pDate.getTime() < (ctd.Time.getTime() + T.GenericCountdownGracePeriod))
+			if (pDate < ctd.Start)
 			{
-				ithtime = T.formatSeconds(~~((ctd.Time.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
-				str += ctd.Anchor + " - <span>" + ithtime + "</span> @ " + ctd.String + "<br />";
+				ithtime = T.formatSeconds(~~((ctd.Start.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
+				str += "<span>■</span> " + ctd.Anchor + " <time>" + ithtime + "</time> ⇑@ " + ctd.StartStamp + "<br />";
+			}
+			else if (pDate < ctd.Finish)
+			{
+				ithtime = T.formatSeconds(~~((ctd.Finish.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
+				str += "<samp>■</samp> " + ctd.Anchor + " <time>" + ithtime + "</time> ⇓@ " + ctd.FinishStamp + "<br />";
 			}
 		}
 		document.getElementById("itemCountdown").innerHTML = str;

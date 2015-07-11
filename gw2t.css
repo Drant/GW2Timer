@@ -349,10 +349,16 @@ html, body,
 #itemMapCountdown a {
 	color: #bbcc77;
 }
-#itemMapCountdown span {
+#itemMapCountdown time {
 	font-family: Consolas, monospace;
 	font-size: 18px;
 	color: #ddff77;
+}
+#itemMapCountdown span {
+	color: red;
+}
+#itemMapCountdown samp {
+	color: lime;
 }
 
 /* Bottom left corner: Coordinates bar */

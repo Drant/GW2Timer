@@ -466,17 +466,17 @@ var GW2T_DAILY_CALENDAR = {
 	pvp: ["Kills", "Reward", "Warrior Engineer", "Ranger Necromancer"],
 	wvw: ["Guard", "Caravan", "Tower", "Defender"]
 },
-"10": {//
+"10": {
 	pve: ["Lumberer Maguuma", "Fractal", "Timberline", "Fractal 11-20"],
 	pvp: ["Rank", "Kills", "Elementalist Mesmer", "Guardian Thief"],
 	wvw: ["Creature", "Land", "Keep", "Tower"]
 },
-"11": {//"Warrior Thief", "Guardian Ranger"
-	pve: ["Miner Maguuma", "Vista Kryta", "Snowden", "Fractal 1-10"],
-	pvp: ["Reward", "Capture", "Elementalist Mesmer", "Guardian Thief"],
-	wvw: ["Guard", "Kills", "Keep", "Defender"]
+"11": {
+	pve: ["Miner Maguuma", "Vista Orr", "Metrica", "SB"],
+	pvp: ["Reward", "Defender", "Engineer Thief", "Elementalist Necromancer"],
+	wvw: ["Caravan", "Spender", "Camp", "Defender"]
 },
-"12": {
+"12": {//"Elementalist Mesmer", "Guardian Thief"
 	pve: ["Lumberer Maguuma", "Fractal", "Sparkfly", "Fractal 1-10"],
 	pvp: ["Rank", "Capture", "Engineer Mesmer", "Guardian Elementalist"],
 	wvw: ["Land", "Guard", "Defender", "Camp"]
@@ -588,7 +588,8 @@ var GW2T_COUNTDOWN_DATA = [
 	name_es: "Beta de fin de semana",
 	name_fr: "Week-end de bêta",
 	news: "announcing-the-guild-wars-2-revenant-and-stronghold-test-weekend/",
-	Time: new Date("2015-07-10T19:00:00Z")
+	Start: new Date("2015-07-10T19:00:00Z"),
+	Finish: new Date("2015-07-13T19:00:00Z")
 },
 {
 	name_en: "Golem Rush",
@@ -599,6 +600,7 @@ var GW2T_COUNTDOWN_DATA = [
 	url_de: "https://forum-de.guildwars2.com/forum/info/updates/Release-Notes-zum-Spiel-7-Juli-2015",
 	url_es: "https://forum-es.guildwars2.com/forum/info/updates/Notas-de-actualizaci-n-del-juego-7-de-julio",
 	url_fr: "https://forum-fr.guildwars2.com/forum/info/updates/Mise-jour-du-jeu-7-juillet-2015",
-	Time: new Date("2015-07-18T01:00:00Z")
+	Start: new Date("2015-07-18T01:00:00Z"),
+	Finish: new Date("2015-07-25T19:00:00Z")
 }
 ];
