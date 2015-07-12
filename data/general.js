@@ -476,10 +476,10 @@ var GW2T_DAILY_CALENDAR = {
 	pvp: ["Reward", "Defender", "Engineer Thief", "Elementalist Necromancer"],
 	wvw: ["Caravan", "Spender", "Camp", "Defender"]
 },
-"12": {//"Elementalist Mesmer", "Guardian Thief"
-	pve: ["Lumberer Maguuma", "Fractal", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Rank", "Capture", "Engineer Mesmer", "Guardian Elementalist"],
-	wvw: ["Land", "Guard", "Defender", "Camp"]
+"12": {
+	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Harathi", "Fractal 21-30"],
+	pvp: ["Reward", "Kills", "Warrior Thief", "Guardian Ranger"],
+	wvw: ["Ruins", "Kills", "Defender", "Camp"]
 },
 "13": {
 	pve: ["Forager Orr", "Forger", "Straits", "Fractal 11-20"],
@@ -580,6 +580,18 @@ var GW2T_DAILY_CALENDAR = {
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
+ * Format:
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	news: "",
+	url_en: "",
+	url_de: "",
+	url_es: "",
+	url_fr: "",
+	Start: new Date("2015-07-10T19:00:00Z"),
+	Finish: new Date("2015-07-13T19:00:00Z")
  */
 var GW2T_COUNTDOWN_DATA = [
 {

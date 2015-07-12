@@ -6722,6 +6722,15 @@ M = {
 		/*
 		 * Bind map HUD buttons functions.
 		 */
+		$("#mapWvWButton").one("click", function()
+		{
+			W.initializeMap();
+		}).click(function()
+		{
+			$("#paneMap").hide();
+			$("#paneWvW").show();
+			W.refreshMap();
+		});
 		$("#mapGPSButton").click(function()
 		{
 			// Go to character if cliked on GPS button.
@@ -6744,6 +6753,7 @@ M = {
 			{
 				$("#panelRight").toggle();
 				M.refreshMap();
+				W.refreshMap();
 			}
 			else
 			{
@@ -11122,13 +11132,27 @@ T = {
 	 */
 	initializeGenericCountdown: function()
 	{
-		if (T.GenericCountdown.length === 0)
+		// Disable the countdown system if all countdowns have expired
+		var isallcountdownexpired = true;
+		var now = new Date();
+		for (var i in T.GenericCountdown)
+		{
+			if (now < T.GenericCountdown[i].Finish)
+			{
+				isallcountdownexpired = false;
+				break;
+			}
+		}
+		if (isallcountdownexpired)
 		{
 			T.isGenericCountdownSystemEnabled = false;
 		}
 		T.isGenericCountdownTickEnabled = T.isGenericCountdownSystemEnabled;
+		
+		// Initialize if at least one countdown has not expired
 		if (T.isGenericCountdownSystemEnabled)
 		{
+			$("#itemMapCountdown").show();
 			var namekey = D.getNameKey();
 			var urlkey = D.getURLKey();
 			var ctd;
@@ -11139,7 +11163,7 @@ T = {
 				ctd.StartStamp = ctd.Start.toLocaleString();
 				ctd.FinishStamp = ctd.Finish.toLocaleString();
 				url = (ctd.news === undefined) ? ctd[urlkey] : U.getGW2NewsLink(ctd.news); 
-				ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + ctd[namekey] + "</a>"
+				ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + ctd[namekey] + "</a>";
 			}
 		}
 	},
@@ -13097,10 +13121,7 @@ I = {
 			}, function()
 			{
 				T.isGenericCountdownTickEnabled = false;
-				$("#itemMapCountdown").css({opacity: 1}).animate({opacity: 0}, 200, function()
-				{
-					$(this).hide();
-				});
+				$("#itemMapCountdown").hide();
 			});
 		}
 		
