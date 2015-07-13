@@ -482,9 +482,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Kills", "Defender", "Camp"]
 },
 "13": {
-	pve: ["Forager Orr", "Forger", "Straits", "Fractal 11-20"],
-	pvp: ["Rank", "Defender", "Warrior Elementalist", "Engineer Necromancer"],
-	wvw: ["Creature", "Caravan", "Defender", "Tower"]
+	pve: ["Miner Shiverpeaks", "Forger", "Wayfarer", "Megades"],
+	pvp: ["Rank", "Capture", "Engineer Mesmer", "Guardian Elementalist"],
+	wvw: ["Creature", "Caravan", "Keep", "Camp"]
 },
 "14": {
 	pve: ["Miner Orr", "Vista Ascalon", "Brisban", "Fractal 1-10"],
