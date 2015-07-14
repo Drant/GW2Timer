@@ -9837,9 +9837,6 @@ W = {
 	
 	initializeMap: function()
 	{
-		$("#paneMap").hide();
-		$("#paneWvW").show();
-		
 		// W.World is the actual Leaflet map object, initialize it
 		W.Map = L.map("paneWvW", {
 			minZoom: W.ZoomLevelEnum.Min,
@@ -9864,7 +9861,7 @@ W = {
 			continuousWorld: true
 		}).addTo(W.Map);
 		
-		if ( ! I.isOnSmallDevice)
+		if ( ! W.Map.tap)
 		{
 			/*
 			 * Clicking an empty place on the map highlight its coordinate.
@@ -9884,7 +9881,7 @@ W = {
 			W.Map.on("dblclick", function(pEvent)
 			{
 				if (W.isMouseOnHUD) { return; }
-				W.PinPersonal.setLatLng(pEvent.latlng);
+				////////W.PinPersonal.setLatLng(pEvent.latlng);
 			});
 		}
 		
@@ -9893,17 +9890,51 @@ W = {
 		 */
 		$("#wvwCoordinatesCopy").onEnterKey(function()
 		{
-			var coord = M.parseCoordinates($(this).val());
-			coord[0] = Math.floor(coord[0]);
-			coord[1] = Math.floor(coord[1]);
-			$("#wvwCoordinatesCopy")
-				.val("[" + coord[0] + ", " + coord[1] + "]")
-				.select();
-			
-			if (coord[0] !== "" && coord.length === 2)
+			W.goToArguments($(this).val());
+		});
+		
+		/*
+		 * Bind map HUD buttons functions.
+		 */
+		$("#wvwMapButton").click(function()
+		{
+			$("#paneWvW").hide();
+			$("#paneMap").show();
+			M.refreshMap();
+		});
+		$("#wvwGPSButton").click(function()
+		{
+			// Go to character if cliked on GPS button.
+			W.updateCharacter(1);
+		}).dblclick(function()
+		{
+			if (W.Map.getZoom() !== W.ZoomLevelEnum.Ground)
 			{
-				//M.goToView(coord, M.PinPersonal);
+				W.Map.setZoom(W.ZoomLevelEnum.Ground);
 			}
+			else
+			{
+				W.Map.setZoom(W.ZoomLevelEnum.Default);
+			}
+		});
+		$("#wvwDisplayButton").click(function()
+		{
+			// Hide the right panel if click on the display button.
+			if (I.ModeCurrent !== I.ModeEnum.Mobile)
+			{
+				$("#panelRight").toggle();
+				W.refreshMap();
+				M.refreshMap();
+			}
+			else
+			{
+				document.location = "./";
+			}
+		});
+		// Translate and bind map zones list
+		$("#wvwCompassButton").one("mouseenter", W.bindZoneList).click(function()
+		{
+			W.goToDefault();
 		});
 		
 		// Finally
@@ -9984,7 +10015,68 @@ W = {
 	{
 		var coord = W.Map.project(pLatLng, W.ZoomLevelEnum.Max);
 		return [Math.round(coord.x), Math.round(coord.y)];
-	}
+	},
+	
+	/*
+	 * Views the default map view.
+	 */
+	goToDefault: function()
+	{
+		W.Map.setView(W.convertGCtoLC(W.cMAP_CENTER), W.ZoomLevelEnum.Default);
+	},
+	
+	/*
+	 * Views the map at the specifications.
+	 * @param 2D array pCoord coordinates.
+	 * @param object pPin which to move to coordinate.
+	 * @param enum pZoom level.
+	 */
+	goToView: function(pCoord, pZoom)
+	{
+		if (pZoom === undefined)
+		{
+			pZoom = M.ZoomLevelEnum.Ground;
+		}
+		if (pZoom === M.ZoomLevelEnum.Same)
+		{
+			pZoom = M.Map.getZoom();
+		}
+		M.Map.setView(M.convertGCtoLC(pCoord), pZoom);
+		M.showCurrentZone(pCoord);
+	},
+	
+	/*
+	 * Views the map at the given URL coordinates if exist.
+	 * URL should be in the form of http://gw2timer.com/?go=[4874,16436,1]
+	 * @param string pArguments of location to view.
+	 * coords[0] = x coordinate.
+	 * coords[1] = y coordinate.
+	 * coords[2] = z coordinate (zoom level, lower value equals greater zoom-in).
+	 */
+	goToArguments: function(pArguments)
+	{
+		var coords = [];
+		if (pArguments)
+		{
+			coords = M.parseCoordinates(pArguments);
+			if (coords.length === 2)
+			{
+				if (isFinite(coords[0]) && isFinite(coords[1]))
+				{
+					W.goToView(coords);
+				}
+			}
+			else if (coords.length >= 3)
+			{
+				if (isFinite(coords[0]) && isFinite(coords[1]) && isFinite(coords[2]))
+				{
+					// Zoom level 0 is ground level (opposite the enum)
+					var zoomlevel = M.invertZoomLevel(coords[2]);
+					W.goToView([coords[0], coords[1]], zoomlevel);
+				}
+			}
+		}
+	},
 };
 
 /* =============================================================================

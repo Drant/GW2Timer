@@ -487,9 +487,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Caravan", "Keep", "Camp"]
 },
 "14": {
-	pve: ["Miner Orr", "Vista Ascalon", "Brisban", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Thief Elementalist", "Guardian Mesmer"],
-	wvw: ["Ruins", "Guard", "Keep", "Defender"]
+	pve: ["Forager Kryta", "Vista Ascalon", "Brisban", "Wurm"],
+	pvp: ["Defender", "Rank", "Warrior Elementalist", "Engineer Necromancer"],
+	wvw: ["Ruins", "Guard", "Tower", "Keep"]
 },
 "15": {
 	pve: ["Lumberer Ascalon", "Fractal", "Bloodtide", "Fractal 1-10"],
@@ -594,15 +594,6 @@ var GW2T_DAILY_CALENDAR = {
 	Finish: new Date("2015-07-13T19:00:00Z")
  */
 var GW2T_COUNTDOWN_DATA = [
-{
-	name_en: "Beta Weekend",
-	name_de: "Beta Weekend",
-	name_es: "Beta de fin de semana",
-	name_fr: "Week-end de bêta",
-	news: "announcing-the-guild-wars-2-revenant-and-stronghold-test-weekend/",
-	Start: new Date("2015-07-10T19:00:00Z"),
-	Finish: new Date("2015-07-13T19:00:00Z")
-},
 {
 	name_en: "Golem Rush",
 	name_de: "Golem-Ansturm",

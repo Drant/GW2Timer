@@ -363,12 +363,12 @@ html, body,
 }
 
 /* Bottom left corner: Coordinates bar */
-#itemMapCoordinates {
+#itemMapCoordinates, #itemWvWCoordinates {
 	position: absolute;
 	bottom: 12px; left: 12px;
 	z-index: 9;
 }
-#itemMapCoordinates input {
+#itemMapCoordinates input, #itemWvWCoordinates input {
 	display: inline-block;
 	width: 90px;
 	height: 16px;
@@ -380,15 +380,15 @@ html, body,
 	color: #ddff77;
 	opacity: 0.6;
 }
-#itemMapCoordinates input::selection {
+#itemMapCoordinates input::selection, #itemWvWCoordinates input::selection {
 	background: #66aaff;
 }
-input#mapCoordinatesName {
+input#mapCoordinatesName, input#wvwCoordinatesName {
 	width: 145px; 
 }
 
 /* Right side: Misc links */
-#itemMapLinksNorth {
+#itemMapLinksNorth, #itemWvWLinksNorth {
 	position: absolute;
 	top: 4px; right: 12px;
 	z-index: 9;
@@ -453,7 +453,7 @@ input#mapCoordinatesName {
 	opacity: 0;
 }
 
-#mapGPS { /* Only shown in overlay mode */
+#mapGPS, #wvwGPS { /* Only shown in overlay mode */
 	display: none;
 }
 
