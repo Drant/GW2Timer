@@ -1,14 +1,50 @@
 /* This file is used by gw2t.js and is based on http://atlas.guildwars2.com
- * Contains PVE map zone, region, and dailies data.
+ * Contains PVE map zone, region, dailies, and countdown data.
  */
 
 var GW2T_REGION_DATA = {
-"wastes": { en: "Maguuma Wastes", de: "Maguuma-Einöde", es: "Páramos Maguuma", fr: "Contrées sauvages de Maguuma" },
-"maguuma": { en: "Maguuma", de: "Maguuma", es: "Maguuma", fr: "Maguuma" },
-"kryta": { en: "Kryta", de: "Kryta", es: "Kryta", fr: "Kryte" },
-"orr": { en: "Orr", de: "Orr", es: "Orr", fr: "Orr" },
-"shiverpeaks": { en: "Shiverpeaks", de: "Zittergipfelgebirge", es: "Picosescalofriantes", fr: "Cimefroides" },
-"ascalon": { en: "Ascalon", de: "Ascalon", es: "Ascalon", fr: "Ascalon" }
+"wastes": {
+	name_en: "Maguuma Wastes",
+	name_de: "Maguuma-Einöde",
+	name_es: "Páramos Maguuma",
+	name_fr: "Contrées sauvages de Maguuma",
+	color: "wheat"
+},
+"maguuma": {
+	name_en: "Maguuma",
+	name_de: "Maguuma",
+	name_es: "Maguuma",
+	name_fr: "Maguuma",
+	color: "cyan"
+},
+"kryta": {
+	name_en: "Kryta",
+	name_de: "Kryta",
+	name_es: "Kryta",
+	name_fr: "Kryte",
+	color: "lightgreen"
+},
+"orr": {
+	name_en: "Orr",
+	name_de: "Orr",
+	name_es: "Orr",
+	name_fr: "Orr",
+	color: "darkgoldenrod"
+},
+"shiverpeaks": {
+	name_en: "Shiverpeaks",
+	name_de: "Zittergipfelgebirge",
+	name_es: "Picosescalofriantes",
+	name_fr: "Cimefroides",
+	color: "lightskyblue"
+},
+"ascalon": {
+	name_en: "Ascalon",
+	name_de: "Ascalon",
+	name_es: "Ascalon",
+	name_fr: "Ascalon",
+	color: "orange"
+}
 };
 
 /*
@@ -416,7 +452,7 @@ var GW2T_ZONE_DATA = {
 
 /*
  * A month's achievements with associated days. Example of format:
- * pve: ["GATHER REGION", "ACTIVITY CONDITIONALREGION", "EVENTREGION", "BOSS REGION"],
+ * pve: ["GATHER REGION", "ACTIVITY CONDITIONALREGION", "EVENTREGION", "BOSS"],
  * pvp: ["PVP0", "PVP1", "PROFESSIONS0", "PROFESSIONS1"],
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
@@ -492,9 +528,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Guard", "Tower", "Keep"]
 },
 "15": {
-	pve: ["Lumberer Ascalon", "Fractal", "Bloodtide", "Fractal 1-10"],
-	pvp: ["Kills", "Defender", "Warrior Mesmer", "Ranger Necromancer"],
-	wvw: ["Kills", "Caravan", "Camp", "Defender"]
+	pve: ["Forager Ascalon", "Activity", "Malchor", "Shatterer"],
+	pvp: ["Kills", "Defender", "Thief Elementalist", "Guardian Mesmer"],
+	wvw: ["Creature", "Caravan", "Defender", "Camp"]
 },
 "16": {
 	pve: ["Forager Kryta", "Vista Shiverpeaks", "Dredgehaunt", "Fractal 1-10"],
