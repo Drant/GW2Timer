@@ -87,6 +87,7 @@ O = {
 	{
 		// Enumeration is an exception, being set by URL only
 		enu_Language: "en",
+		enu_Server: "1008",
 		// Timer
 		bol_hideChecked: false,
 		bol_expandWB: true,
@@ -110,6 +111,8 @@ O = {
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: false,
+		bol_displayCharacterWvW: true,
+		bol_followCharacterWvW: false,
 		int_msecGPSRefresh: 100,
 		// Alarm
 		int_setAlarm: 0,
@@ -201,6 +204,11 @@ O = {
 	 */
 	validateEnum: function(pEnumName, pValue)
 	{
+		if (pEnumName === "enu_Server")
+		{
+			// The server enum is validated in the WvW initialization
+			return pValue;
+		}
 		var i;
 		var enumobject = O.OptionEnum[U.getVariableSuffix(pEnumName)];
 		for (i in enumobject)
@@ -8011,11 +8019,12 @@ P = {
 					// Store zone dimension data for locating events
 					zoneobj.map_rect = ithzone.map_rect;
 					zoneobj.continent_rect = ithzone.continent_rect;
-					// Cover the zones with a colored rectangle signifying its region
+					// Cover the zone with a colored rectangle signifying its region
 					M.Layer.ZoneRectangle.addLayer(L.rectangle(
 						M.convertGCtoLCMulti(zoneobj.rect), {
+							fill: false,
 							color: M.Regions[zoneobj.region].color,
-							weight: 1,
+							weight: 2,
 							clickable: false
 						}
 					));
@@ -9949,23 +9958,27 @@ W = {
 	},
 	
 	/*
-	 * Turns a boolean on when mouse entered any GUI elements on the map, so
-	 * map event handlers can ignore actions on those elements.
-	 */
-	bindHUDEventCanceler: function()
-	{
-		$("#paneHUDWvW").hover(
-			function() { W.isMouseOnHUD = true; },
-			function() { W.isMouseOnHUD = false; }
-		);
-	},
-	
-	/*
 	 * Bindings for map events that need to be done after AJAX has loaded the
 	 * API-generated markers.
 	 */
 	bindMapVisualChanges: function()
 	{
+		/*
+		 * Booleans to stop some map functions from activating.
+		 */
+		$("#paneHUDWvW").hover(
+			function() { W.isMouseOnHUD = true; },
+			function() { W.isMouseOnHUD = false; }
+		);
+		W.Map.on("dragstart", function()
+		{
+			W.isUserDragging = true;
+		});
+		W.Map.on("dragend", function()
+		{
+			W.isUserDragging = false;
+		});
+		
 		/*
 		 * Bind the mousemove event to update the map coordinate bar.
 		 * Note that the throttle function is from a separate script. It permits
@@ -9973,7 +9986,7 @@ W = {
 		 */
 		W.Map.on("mousemove", $.throttle(M.cMAP_MOUSEMOVE_RATE, function(pEvent)
 		{
-			if (W.isMouseOnHUD) { return; }
+			if (W.isMouseOnHUD || W.isUserDragging) { return; }
 			var coord = W.convertLCtoGC(pEvent.latlng);
 			document.getElementById("wvwCoordinatesMouse")
 				.value = coord[0] + ", " + coord[1];
@@ -10030,14 +10043,14 @@ W = {
 	{
 		if (pZoom === undefined)
 		{
-			pZoom = M.ZoomEnum.Ground;
+			pZoom = W.ZoomEnum.Ground;
 		}
-		if (pZoom === M.ZoomEnum.Same)
+		if (pZoom === W.ZoomEnum.Same)
 		{
-			pZoom = M.Map.getZoom();
+			pZoom = W.Map.getZoom();
 		}
-		M.Map.setView(M.convertGCtoLC(pCoord), pZoom);
-		M.showCurrentZone(pCoord);
+		W.Map.setView(W.convertGCtoLC(pCoord), pZoom);
+		W.showCurrentZone(pCoord);
 	},
 	
 	/*

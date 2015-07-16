@@ -1,8 +1,15 @@
 /* This file is used by gw2t.js and is based on http://atlas.guildwars2.com
- * Contains PVE map zone, region, dailies, and countdown data.
+ * Contains Kryta continent map zone, region, dailies, and countdown data.
  */
 
 var GW2T_REGION_DATA = {
+"heart": {
+	name_en: "Heart of Maguuma",
+	name_de: "Herz von Maguuma",
+	name_es: "Corazón de Maguuma",
+	name_fr: "Cœur de Maguuma",
+	color: "gray"
+},
 "wastes": {
 	name_en: "Maguuma Wastes",
 	name_de: "Maguuma-Einöde",
@@ -10,11 +17,11 @@ var GW2T_REGION_DATA = {
 	name_fr: "Contrées sauvages de Maguuma",
 	color: "wheat"
 },
-"maguuma": {
-	name_en: "Maguuma",
-	name_de: "Maguuma",
-	name_es: "Maguuma",
-	name_fr: "Maguuma",
+"jungle": {
+	name_en: "Maguuma Jungle",
+	name_de: "Maguuma-Dschungel",
+	name_es: "Jungla de Maguuma",
+	name_fr: "Jungle de Maguuma",
 	color: "cyan"
 },
 "kryta": {
@@ -166,7 +173,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Rata Sum",
 	name_es: "Rata Sum",
 	name_fr: "Rata Sum",
-	region: "maguuma",
+	region: "jungle",
 	rect: [[4608, 19710], [7168, 22270]]
 },
 "brisban":
@@ -175,7 +182,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Brisban-Wildnis",
 	name_es: "Selvas Brisbanas",
 	name_fr: "Terres sauvages de Brisban",
-	region: "maguuma",
+	region: "jungle",
 	rect: [[5888, 14464], [9344, 17152]]
 },
 "metrica":
@@ -184,7 +191,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Provinz Metrica",
 	name_es: "Provincia de Métrica",
 	name_fr: "Province de Metrica",
-	region: "maguuma",
+	region: "jungle",
 	rect: [[7168, 17152], [9344, 20480]]
 },
 "caledon":
@@ -193,7 +200,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Caledon-Wald",
 	name_es: "Bosque de Caledon",
 	name_fr: "Forêt de Caledon",
-	region: "maguuma",
+	region: "jungle",
 	rect: [[9344, 16128], [11264, 20096]]
 },
 "kessex":
@@ -211,7 +218,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Der Hain",
 	name_es: "La Arboleda",
 	name_fr: "Le Bosquet",
-	region: "maguuma",
+	region: "jungle",
 	rect: [[9728, 20096], [11136, 22144]]
 },
 "queensdale":
@@ -310,7 +317,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Funkenschwärmersumpf",
 	name_es: "Pantano de las Centellas",
 	name_fr: "Marais de Lumillule",
-	region: "maguuma",
+	region: "jungle",
 	rect: [[15232, 19072], [17792, 22400]]
 },
 "lornar":
@@ -337,7 +344,7 @@ var GW2T_ZONE_DATA = {
 	name_de: "Mahlstromgipfel",
 	name_es: "Monte Vorágine",
 	name_fr: "Mont Maelström",
-	region: "maguuma",
+	region: "jungle",
 	rect: [[17792, 21376], [21632, 23808]]
 },
 "timberline":
@@ -533,9 +540,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Caravan", "Defender", "Camp"]
 },
 "16": {
-	pve: ["Forager Kryta", "Vista Shiverpeaks", "Dredgehaunt", "Fractal 1-10"],
-	pvp: ["Rank", "Capture", "Thief Necromancer", "Elementalist Ranger"],
-	wvw: ["Kills", "Caravan", "Tower", "Camp"]
+	pve: ["Miner Kryta", "Vista Shiverpeaks", "Maelstrom", "SB"],
+	pvp: ["Kills", "Capture", "Warrior Mesmer", "Ranger Necromancer"],
+	wvw: ["Land", "Guard", "Tower", "Defender"]
 },
 "17": {
 	pve: ["Miner Orr", "Vista Maguuma", "Wayfarer", "Fractal 1-10"],
