@@ -316,19 +316,34 @@ var GW2T_SERVER_DATA = {
  * access in constant time.
  */
 var GW2T_LAND_ASSOCIATION = {
+	"38": "eternal",
+	"94": "red",
+	"95": "green",
+	"96": "blue",
 	"350": "lobby",
 	"549": "kyhlo",
 	"554": "niflhel",
 	"795": "foefire",
 	"834": "tutorial",
+	"872": "fractals",
 	"875": "storm",
 	"894": "spirit",
 	"900": "skyhammer",
 	"984": "courtyard",
-	"38": "eternal",
-	"94": "red",
-	"95": "green",
-	"96": "blue",
-	"968": "edge",
-	"872": "fractals",
+	"968": "edge"
 };
+
+/*
+ * Lands are sorted by how far from the bottom right corner it is.
+ */
+var GW2T_ZONE_DATA = {
+"eternal":
+{
+	name_en: "The Silverwastes",
+	name_de: "Die Silberwüste",
+	name_es: "Los Páramos Argentos",
+	name_fr: "Les Contrées sauvages d'Argent",
+	region: "wastes",
+	rect: [[3838, 14206], [5886, 15742]]
+},
+}

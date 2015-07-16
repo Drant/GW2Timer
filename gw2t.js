@@ -7377,6 +7377,7 @@ M = {
 			M.Map.setView(M.convertGCtoLC(coord), M.Map.getZoom());
 			M.showCurrentZone(coord);
 			M.GPSPreviousCoord = coord;
+			pForceCode = -1; // Also update pin position
 		}
 		
 		// Pin character if opted and angle has changed (character turned)

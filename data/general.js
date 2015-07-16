@@ -495,12 +495,12 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Guard", "Defender", "Camp"]
 },
 "7": {
-	pve: ["Forager Maguuma", "Vista Shiverpeaks", "Fields", "Maw"],
+	pve: ["Forager Jungle", "Vista Shiverpeaks", "Fields", "Maw"],
 	pvp: ["Defender", "Reward", "Warrior Ranger", "Guardian Necromancer"],
 	wvw: ["Ruins", "Creature", "Camp", "Defender"]
 },
 "8": {
-	pve: ["Miner Maguuma", "Vista Orr", "Sparkfly", "Fractal 1-10"],
+	pve: ["Miner Jungle", "Vista Orr", "Sparkfly", "Fractal 1-10"],
 	pvp: ["Defender", "Capture", "Ranger Mesmer", "Guardian Engineer"],
 	wvw: ["Land", "Guard", "Keep", "Camp"]
 },
@@ -510,12 +510,12 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Caravan", "Tower", "Defender"]
 },
 "10": {
-	pve: ["Lumberer Maguuma", "Fractal", "Timberline", "Fractal 11-20"],
+	pve: ["Lumberer Jungle", "Fractal", "Timberline", "Fractal 11-20"],
 	pvp: ["Rank", "Kills", "Elementalist Mesmer", "Guardian Thief"],
 	wvw: ["Creature", "Land", "Keep", "Tower"]
 },
 "11": {
-	pve: ["Miner Maguuma", "Vista Orr", "Metrica", "SB"],
+	pve: ["Miner Jungle", "Vista Orr", "Metrica", "SB"],
 	pvp: ["Reward", "Defender", "Engineer Thief", "Elementalist Necromancer"],
 	wvw: ["Caravan", "Spender", "Camp", "Defender"]
 },
@@ -545,7 +545,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Tower", "Defender"]
 },
 "17": {
-	pve: ["Miner Orr", "Vista Maguuma", "Wayfarer", "Fractal 1-10"],
+	pve: ["Miner Orr", "Vista Jungle", "Wayfarer", "Fractal 1-10"],
 	pvp: ["Capture", "Kills", "Warrior Necromancer", "Thief Mesmer"],
 	wvw: ["Caravan", "Land", "Camp", "Defender"]
 },
@@ -575,7 +575,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Land", "Tower", "Camp"]
 },
 "23": {
-	pve: ["Lumberer Maguuma", "Vista Maguuma", "Marches", "Maw"],
+	pve: ["Lumberer Jungle", "Vista Jungle", "Marches", "Maw"],
 	pvp: ["Reward", "Defender", "Elementalist Mesmer", "Guardian Thief"],
 	wvw: ["Ruins", "Creature", "Keep", "Tower"]
 },
@@ -615,7 +615,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Caravan", "Tower", "Defender"]
 },
 "31": {
-	pve: ["Miner Maguuma", "Fractal", "Sparkfly", "Fractal 1-10"],
+	pve: ["Miner Jungle", "Fractal", "Sparkfly", "Fractal 1-10"],
 	pvp: ["Capture", "Reward", "Warrior Necromancer", "Thief Mesmer"],
 	wvw: ["Spender", "Land", "Defender", "Tower"]
 }
@@ -642,11 +642,8 @@ var GW2T_COUNTDOWN_DATA = [
 	name_de: "Golem-Ansturm",
 	name_es: "Acelerón de gólem",
 	name_fr: "Ruée de golem",
-	url_en: "https://forum-en.guildwars2.com/forum/info/updates/Game-Update-Notes-July-7-2015",
-	url_de: "https://forum-de.guildwars2.com/forum/info/updates/Release-Notes-zum-Spiel-7-Juli-2015",
-	url_es: "https://forum-es.guildwars2.com/forum/info/updates/Notas-de-actualizaci-n-del-juego-7-de-julio",
-	url_fr: "https://forum-fr.guildwars2.com/forum/info/updates/Mise-jour-du-jeu-7-juillet-2015",
-	Start: new Date("2015-07-18T01:00:00Z"),
-	Finish: new Date("2015-07-25T19:00:00Z")
+	news: "siege-golems-are-better-faster-and-stronger-in-world-vs-world-between-july17and24/",
+	Start: new Date("2015-07-17T18:00:00Z"),
+	Finish: new Date("2015-07-24T18:00:00Z")
 }
 ];
