@@ -95,11 +95,13 @@ O = {
 		int_setClock: 0,
 		int_setDimming: 0,
 		int_setPredictor: 0,
+		// Panel
+		bol_showPanel: true,
+		bol_showMap: true,
 		// Map
 		bol_tourPrediction: true,
 		bol_showChainPaths: true,
 		bol_showZoneRectangles: false,
-		bol_showMap: true,
 		bol_showWorldCompletion: false,
 		bol_displaySectors: true,
 		bol_displayWaypoints: true,
@@ -723,7 +725,7 @@ O = {
 				location.reload();
 			}
 			
-			$("#mapOptionsDisplay label input").each(function()
+			$("#mapOptionsCompletion label input").each(function()
 			{
 				X.setCheckboxEnumState($(this), X.boolToChecklistEnum(O.Options.bol_showWorldCompletion));
 			});
@@ -741,7 +743,7 @@ O = {
 			}
 		});
 		// Trigger zone in and out of current zone to toggle the icon's display
-		$("#mapOptionsDisplay label input").each(function()
+		$("#mapOptionsCompletion label input").each(function()
 		{
 			$(this).change(function()
 			{
@@ -759,6 +761,7 @@ O = {
 		O.Enact.bol_hideChecked();
 		O.Enact.bol_detectDST();
 		O.Enact.bol_useSiteTag();
+		O.Enact.bol_showPanel();
 		if (I.ModeCurrent !== I.ModeEnum.Simple)
 		{
 			O.Enact.int_setClock();
@@ -932,19 +935,21 @@ O = {
 				M.tickGPS();
 			}
 		},
+		bol_showPanel: function()
+		{
+			if (O.Options.bol_showMap && I.isMapEnabled) // Only hide panel if map is visible
+			{
+				$("#panelRight").toggle(O.Options.bol_showPanel);
+				M.refreshMap();
+				W.refreshMap();
+			}
+		},
 		bol_showMap: function()
 		{
 			if (I.ModeCurrent !== I.ModeEnum.Mobile)
 			{
-				if (O.Options.bol_showMap)
-				{
-					$("#panelLeft").show();
-					M.refreshMap();
-				}
-				else
-				{
-					$("#panelLeft").hide();
-				}
+				$("#panelLeft").toggle(O.Options.bol_showMap);
+				M.refreshMap();
 			}
 		},
 		bol_refreshPrices: function()
@@ -6735,7 +6740,7 @@ M = {
 		});
 		$("#mapGPSButton").click(function()
 		{
-			// Go to character if cliked on GPS button.
+			// Go to character if cliked on GPS button
 			M.updateCharacter(1);
 		}).dblclick(function()
 		{
@@ -6750,17 +6755,8 @@ M = {
 		});
 		$("#mapDisplayButton").click(function()
 		{
-			// Hide the right panel if click on the display button.
-			if (I.ModeCurrent !== I.ModeEnum.Mobile)
-			{
-				$("#panelRight").toggle();
-				M.refreshMap();
-				W.refreshMap();
-			}
-			else
-			{
-				document.location = "./";
-			}
+			// Hide the right panel if click on the display button
+			$("#opt_bol_showPanel").trigger("click");
 		});
 		// Translate and bind map zones list
 		$("#mapCompassButton").one("mouseenter", M.bindZoneList).click(function()
@@ -7335,7 +7331,7 @@ M = {
 	},
 	
 	/*
-	 * Imitates the character pin as in the game minimap, as directed by the overlay.
+	 * Imitates the character pin as in the game minimap, as informed by the overlay.
 	 * @param int pForceCode 1 to force update position, -1 angle, 0 both, undefined neither.
 	 */
 	updateCharacter: function(pForceCode)
@@ -9066,7 +9062,6 @@ G = {
 					createChestMarker((M.Chests[i])[ii], i);
 				}
 			}
-			M.toggleLayer(M.Layer.Chest);
 
 			// Button to toggle markers display
 			$("#mapToggle_JP").data("checked", true).click(function()
@@ -9910,7 +9905,7 @@ W = {
 		$("#wvwGPSButton").click(function()
 		{
 			// Go to character if cliked on GPS button.
-			W.updateCharacter(1);
+			M.updateCharacter(1);
 		}).dblclick(function()
 		{
 			if (W.Map.getZoom() !== W.ZoomEnum.Ground)
@@ -9924,17 +9919,8 @@ W = {
 		});
 		$("#wvwDisplayButton").click(function()
 		{
-			// Hide the right panel if click on the display button.
-			if (I.ModeCurrent !== I.ModeEnum.Mobile)
-			{
-				$("#panelRight").toggle();
-				W.refreshMap();
-				M.refreshMap();
-			}
-			else
-			{
-				document.location = "./";
-			}
+			// Hide the right panel if click on the display button
+			$("#opt_bol_showPanel").trigger("click");
 		});
 		// Translate and bind map zones list
 		$("#wvwCompassButton").one("mouseenter", W.bindZoneList).click(function()
@@ -13370,7 +13356,7 @@ I = {
 			{
 				// Remove elements extraneous or intrusive to overlay mode
 				$("#paneWarning").remove();
-				$("#itemMapCountdown, .itemMapLinks a, .itemMapLinks span, #itemSocial").hide();
+				$("#itemMapCountdown, #mapQuickURL, #itemMapPeripheralSouth, #itemSocial").hide();
 				// Resize fonts and positions appropriate for smaller view
 				$("#jsConsole").css(
 				{
@@ -13379,7 +13365,7 @@ I = {
 				});
 				$("#jsConsoleButtons").css(
 				{
-					left: "0px", left: "auto", bottom: "0px"
+					left: "0px", bottom: "0px"
 				});
 				$("#itemMapCoordinates, #itemWvWCoordinates").css(
 				{
@@ -13484,7 +13470,7 @@ I = {
 		if (I.isProgramEmbedded)
 		{
 			$("#paneWarning").remove();
-			$(".itemMapLinks a, .itemMapLinks span").hide();
+			$(".itemMapPeripheral a, .itemMapPeripheral span").hide();
 			T.isGenericCountdownSystemEnabled = false;
 		}
 		

@@ -67,7 +67,7 @@
 				<input id="mapCoordinatesCopy" type="text" />
 				<input id="mapCoordinatesName" type="text" />
 			</div>
-			<div id="itemMapLinksNorth" class="itemMapLinks">
+			<div id="itemMapPeripheralNorth" class="itemMapPeripheral">
 				<div id="mapQuickURL">
 					<u><a class="jsTranslate linkExternal" title="<dfn>Go to Forum</dfn>" href="http://forum.renaka.com/forum/368355/">news</a></u><span> /</span>
 					<u><a class="jsTranslate" title="<dfn>Switch to Simple Mode (clock only)</dfn><br />gw2timer.com/s<br /><div class='mapLoc'><img src='http://i.imgur.com/ERlYRR3.png' /></div>" href="./?mode=Simple">simple</a></u><span> /</span>
@@ -88,27 +88,31 @@
 				<div id="mapOptions" class="mapHUDContainer">
 					<img id="mapDisplayButton" class="mapHUDButton" data-title="click to expand map" src="img/map/display.png" alt="display" />
 					<div id="mapOptionsPopup" class="mapHUDPopup cntComposition">
-						<label title="Show/Hide all icons listed below (except events). Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
 						<div id="mapOptionsDisplay">
-							<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectors" type="checkbox" /> Sector Names</label>
-							<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
-							<label><img data-src="img/map/landmark.png" /><input id="opt_bol_displayPOIs" type="checkbox" /> POIs</label>
-							<label><img data-src="img/map/vista.png" /><input id="opt_bol_displayVistas" type="checkbox" /> Vistas</label>
-							<label><img data-src="img/map/challenge.png" /><input id="opt_bol_displayChallenges" type="checkbox" /> Hero Challenges</label>
-							<label><img data-src="img/map/heart.png" /><input id="opt_bol_displayHearts" type="checkbox" /> Renown Hearts</label>
+							<label title="Show/Hide all icons listed below (except events). Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
+							<div id="mapOptionsCompletion">
+								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectors" type="checkbox" /> Sector Names</label>
+								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
+								<label><img data-src="img/map/landmark.png" /><input id="opt_bol_displayPOIs" type="checkbox" /> POIs</label>
+								<label><img data-src="img/map/vista.png" /><input id="opt_bol_displayVistas" type="checkbox" /> Vistas</label>
+								<label><img data-src="img/map/challenge.png" /><input id="opt_bol_displayChallenges" type="checkbox" /> Hero Challenges</label>
+								<label><img data-src="img/map/heart.png" /><input id="opt_bol_displayHearts" type="checkbox" /> Renown Hearts</label>
+							</div>
+							<label title="Show/Hide possible event locations. Will increase initial site load time if enabled. Most in-game events have a cooldown of 15 minutes from completion to active again, and can become active by simply being near them."><img data-src="img/event/swords.png" /><input id="opt_bol_displayEvents" type="checkbox" /> Dynamic Events</label>
 						</div>
-						<label title="Show/Hide possible event locations. Will increase initial site load time if enabled. Most in-game events have a cooldown of 15 minutes from completion to active again, and can become active by simply being near them."><img data-src="img/event/swords.png" /><input id="opt_bol_displayEvents" type="checkbox" /> Dynamic Events</label>
 						<div id="mapOptionsOther">
-							<label title="Automatically scroll the map to the next predicted World Boss event. You'll need to be on the chains page."><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
-							<label title="Show/Hide the colored lines of event paths."><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
-							<label title="Show/Hide region-colored rectangles over zones."><input id="opt_bol_showZoneRectangles" type="checkbox" /> Show zone rectangles</label>
+							<label title="Show/Hide the right side app panel."><img data-src="img/map/panel.png" /><input id="opt_bol_showPanel" type="checkbox" /> Show app panel</label>
+							<br />
+							<label title="Automatically scroll the map to the next predicted World Boss event. You'll need to be on the chains page."><img data-src="img/map/pin_green.png" /><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
+							<label title="Show/Hide the colored lines of event paths."><img data-src="img/map/path.png" /><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
+							<label title="Show/Hide region-colored rectangles over zones."><img data-src="img/map/rectangle.png" /><input id="opt_bol_showZoneRectangles" type="checkbox" /> Show zone rectangles</label>
 						</div>
 					</div>
 				</div>
 				<div id="mapZones" class="mapHUDContainer">
 					<img id="mapCompassButton" class="mapHUDButton" data-title="click to center map" src="img/map/compass.png" alt="compass" />
 					<div id="mapZonesPopup" class="mapHUDPopup cntComposition">
-						<div id="mapZoneList" class="mapLinks">
+						<div id="mapZoneList" class="mapZoneLinks">
 							<div>
 							<h2 data-region="kryta"></h2>
 							<ul>
@@ -173,7 +177,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="itemMapLinksSouth" class="itemMapLinks">
+			<div id="itemMapPeripheralSouth" class="itemMapPeripheral">
 				<a class="linkExternal" title="<dfn>Download the app to run GW2Timer in game!</dfn><br /><div class='mapLoc'><img src='http://i.imgur.com/mZ1Tboj.png' /></div>" href="http://forum.renaka.com/topic/5546166/">
 					<img id="itemLogo" src="img/ui/favicon.png" alt="Overlay Application" />gw2timer.com <u>overlay</u>
 				</a>
@@ -187,7 +191,7 @@
 				<input id="wvwCoordinatesCopy" type="text" />
 				<input id="wvwCoordinatesName" type="text" />
 			</div>
-			<div id="itemWvWLinksNorth" class="itemMapLinks">
+			<div id="itemWvWLinksNorth" class="itemMapPeripheral">
 				<div id="wvwMap" class="mapHUDContainer">
 					<img id="wvwMapButton" class="mapHUDButton" data-title="click to map" src="img/ui/pages/map.png" alt="display" />
 				</div>

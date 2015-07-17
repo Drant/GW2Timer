@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x580, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2015.06.27 modified - 2014.04.18 created
+	Version: 2015.07.16 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -296,7 +296,7 @@ html, body,
 }
 
 /* Zoomable */
-.curZoom, .cntComposition dfn, .mapLinks li, .mapLinks dt, .chnDetails ol li span {
+.curZoom, .cntComposition dfn, .mapZoneLinks li, .mapZoneLinks dt, .chnDetails ol li span {
 	cursor: url("img/cursor/zoom.cur"), pointer;
 }
 
@@ -388,12 +388,20 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 
 /* Right side: Misc links */
-#itemMapLinksNorth, #itemWvWLinksNorth {
+.itemMapPeripheral {
+	display: inline-block;
+	width: 100%;
+	text-align: right;
+}
+.itemMapPeripheral div {
+	text-align: left;
+}
+#itemMapPeripheralNorth, #itemWvWLinksNorth {
 	position: absolute;
 	top: 4px; right: 12px;
 	z-index: 9;
 }
-#itemMapLinksSouth {
+#itemMapPeripheralSouth {
 	position: absolute;
 	bottom: 4px; right: 12px;
 	z-index: 9;
@@ -401,22 +409,22 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #itemLogo {
 	margin-right: 2px;
 }
-.itemMapLinks img {
+.itemMapPeripheral img {
 	width: 32px; height: 32px;
 	vertical-align: middle;
 }
-.itemMapLinks { /* Links on the map pane */
+.itemMapPeripheral { /* Links on the map pane */
 	vertical-align: middle;
 	font-family: Menomonia;
 	font-size: 18px;
 	color: #ffeebb;
 }
-.itemMapLinks a, .itemMapLinks span {
+.itemMapPeripheral a, .itemMapPeripheral span {
 	text-decoration: none;
 	color: #ffeebb;
 	opacity: 0.6;
 }
-.itemMapLinks a:hover {
+.itemMapPeripheral a:hover {
 	color: #ddff77;
 	opacity: 0.9;
 }
@@ -436,8 +444,13 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	vertical-align: middle;
 	opacity: 0.6;
 }
+.itemMapPeripheral:hover .mapHUDButton {
+	opacity: 0.8;
+}
 .mapHUDContainer:hover .mapHUDButton {
 	opacity: 1;
+	width: 36px; height: 36px;
+	margin: -4px -4px -4px -1px; /* Subtract to keep its original size of 32px */
 }
 .mapHUDPopup {
 	display: none;
@@ -446,7 +459,6 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	display: block;
 	position: absolute;
 	right: 0px;
-	min-width: 160px;
 	margin: 0;
 	padding: 10px;
 	box-shadow: 0px 0px 2px #555;
@@ -458,10 +470,19 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 
 /* Map options */
+#mapOptionsDisplay, #mapOptionsOther {
+	display: inline-block;
+	vertical-align: top;
+}
 #mapOptionsDisplay {
+	padding-right: 8px;
+	margin-right: 4px;
+	border-right: 1px solid gray;
+}
+#mapOptionsCompletion {
 	margin-bottom: 8px;
 }
-#mapOptionsDisplay label {
+#mapOptionsCompletion label {
 	margin: 0;
 	padding: 0;
 }
@@ -1229,14 +1250,14 @@ header.cntHeader {
 	margin-left: 12px;
 }
 
-.cntComposition dfn, .mapLinks li, .mapLinks dt {
+.cntComposition dfn, .mapZoneLinks li, .mapZoneLinks dt {
 	font-weight: bold;
 	color: #ffcc77;
 }
-.cntComposition dfn:hover, .mapLinks li:hover, .mapLinks dt:hover {
+.cntComposition dfn:hover, .mapZoneLinks li:hover, .mapZoneLinks dt:hover {
 	color: #ffdda6;
 }
-.cntComposition dfn:active, .mapLinks li:active, .mapLinks dt:active {
+.cntComposition dfn:active, .mapZoneLinks li:active, .mapZoneLinks dt:active {
 	color: white;
 }
 

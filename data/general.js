@@ -545,9 +545,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Tower", "Defender"]
 },
 "17": {
-	pve: ["Miner Orr", "Vista Jungle", "Wayfarer", "Fractal 1-10"],
-	pvp: ["Capture", "Kills", "Warrior Necromancer", "Thief Mesmer"],
-	wvw: ["Caravan", "Land", "Camp", "Defender"]
+	pve: ["Lumberer Shiverpeaks", "Vista Kryta", "Cursed", "Fractal 1-10"],
+	pvp: ["Reward", "Defender", "Thief Necromancer", "Elementalist Ranger"],
+	wvw: ["Ruins", "Kills", "Keep", "Camp"]
 },
 "18": {
 	pve: ["Forager Orr", "Activity", "Metrica", "Fractal 1-10"],
