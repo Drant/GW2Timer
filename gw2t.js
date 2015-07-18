@@ -941,7 +941,10 @@ O = {
 			{
 				$("#panelRight").toggle(O.Options.bol_showPanel);
 				M.refreshMap();
-				W.refreshMap();
+				if (W.isMapInitialized)
+				{
+					W.refreshMap();
+				}
 			}
 		},
 		bol_showMap: function()
@@ -1627,6 +1630,9 @@ U = {
 			page = page.toLowerCase();
 			switch (page)
 			{
+				case "wvw": {
+					$("#mapWvWButton").trigger("click");
+				} break;
 				case "drytop": {
 					$("#listChainsScheduled").prev().trigger("click"); // Hide scheduled chains list
 					$("#listChainsDryTop").prev().trigger("click"); // Show Dry Top list
@@ -4406,8 +4412,6 @@ D = {
 			cs: "Řetězy", it: "Catene", pl: "Łańcuchy", pt: "Cadeias", ru: "Цепи", zh: "鏈"},
 		s_menuMap: {de: "Extras", es: "Herramientas", fr: "Outils",
 			cs: "Nástroje", it: "Strumenti", pl: "Narzędzia", pt: "Ferramentas", ru: "Инструменты", zh: "工具"},
-		s_menuWvW: {de: "WvW", es: "WvW", fr: "WvW",
-			cs: "WvW", it: "WvW", pl: "WvW", pt: "WvW", ru: "WvW", zh: "WvW"},
 		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance",
 			cs: "Pomoci", it: "Guida", pl: "Pomoc", pt: "Ajuda", ru: "Помощь", zh: "輔助"},
 		s_menuOptions: {de: "Optionen", es: "Opciónes", fr: "Options",
@@ -5598,9 +5602,9 @@ C = {
 					if ($(this).attr("id") === "listChainsDryTop")
 					{
 						M.goToZone("dry", M.ZoomEnum.Bird);
-						I.PageCurrent = "DryTop";
+						I.PageCurrent = I.SpecialPageEnum.DryTop;
 						U.updateQueryString();
-						U.updateTitle("DryTop");
+						U.updateTitle(I.SpecialPageEnum.DryTop);
 					}
 				}
 				else
@@ -6446,7 +6450,7 @@ M = {
 	/*
 	 * http://gw2timer.com/data/general.js contains zone (e.g. Queensdale, LA) objects
 	 * with their rectangular coordinates.
-	 * This is referred to by the variable "M.Zones".
+	 * This is referred to by the variable "Zones".
 	 */
 	Zones: GW2T_ZONE_DATA,
 	ZoneAssociation: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
@@ -6473,7 +6477,6 @@ M = {
 	isAPIRetrieved_MAPFLOOR: false,
 	isMappingIconsGenerated: false,
 	isEventIconsGenerated: false,
-	cLEAFLET_PATH_OPACITY: 0.5,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
 	cMAP_MOUSEMOVE_RATE: 100,
@@ -6576,7 +6579,7 @@ M = {
 	 */
 	isZoneValid: function(pZoneID)
 	{
-		if (M.ZoneAssociation[pZoneID] === undefined)
+		if (this.ZoneAssociation[pZoneID] === undefined)
 		{
 			return false;
 		}
@@ -6590,7 +6593,7 @@ M = {
 	 */
 	getZoneFromID: function(pZoneID)
 	{
-		return M.Zones[M.ZoneAssociation[pZoneID]];
+		return this.Zones[this.ZoneAssociation[pZoneID]];
 	},
 	
 	/*
@@ -6602,9 +6605,9 @@ M = {
 	{
 		// If pNick is an alias of a zone
 		var zone;
-		if (typeof(pNick) === "string" && M.Zones[pNick])
+		if (typeof(pNick) === "string" && this.Zones[pNick])
 		{
-			zone = M.Zones[pNick];
+			zone = this.Zones[pNick];
 		}
 		// If pNick is a zone that has the property
 		else if (pNick["rect"])
@@ -6627,7 +6630,7 @@ M = {
 	 */
 	getZoneRegion: function(pNick)
 	{
-		return M.Zones[(pNick.toLowerCase())].region;
+		return this.Zones[(pNick.toLowerCase())].region;
 	},
 	
 	/*
@@ -6650,30 +6653,30 @@ M = {
 	 */
 	initializeMap: function()
 	{
-		// M.Map is the actual Leaflet map object, initialize it
-		M.Map = L.map("paneMap", {
-			minZoom: M.ZoomEnum.Min,
-			maxZoom: M.ZoomEnum.Max,
-			inertiaThreshold: M.cInertiaThreshold,
+		// this.Map is the actual Leaflet map object, initialize it
+		this.Map = L.map("paneMap", {
+			minZoom: this.ZoomEnum.Min,
+			maxZoom: this.ZoomEnum.Max,
+			inertiaThreshold: this.cInertiaThreshold,
 			doubleClickZoom: false,
 			touchZoom: false, // Disable pinch to zoom
 			zoomControl: I.isOnSmallDevice, // Hide the zoom UI
 			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
-		}).setView([1024, -1024], M.ZoomEnum.Default); // Out of map boundary so browser doesn't download tiles yet
+		}).setView([1024, -1024], this.ZoomEnum.Default); // Out of map boundary so browser doesn't download tiles yet
 		// Because the map will interfere with scrolling the website on touch devices
-		M.Map.touchZoom.disable();
-		if (M.Map.tap)
+		this.Map.touchZoom.disable();
+		if (this.Map.tap)
 		{
-			M.Map.tap.disable();
+			this.Map.tap.disable();
 		}
 		
 		// Initialize array in zones to later hold world completion and dynamic event icons
 		var zone;
-		for (var i in M.Zones)
+		for (var i in this.Zones)
 		{
-			zone = M.Zones[i];
-			zone.center = M.getZoneCenter(i);
+			zone = this.Zones[i];
+			zone.center = this.getZoneCenter(i);
 			zone.nick = i;
 			zone.Layers = {
 				Path: new L.layerGroup(),
@@ -6686,20 +6689,20 @@ M = {
 				EventIcon: new L.layerGroup(),
 				EventRing: new L.layerGroup()
 			};
-			M.LayerArray.Path.push(zone.Layers.Path);
+			this.LayerArray.Path.push(zone.Layers.Path);
 		}
-		M.ZoneCurrent = M.Zones[M.cInitialZone];
+		this.ZoneCurrent = this.Zones[this.cInitialZone];
 		
 		// Do other initialization functions
-		P.populateMap();
+		M.populateMap();
 		C.ScheduledChains.forEach(P.drawChainPaths);
 		
-		if ( ! M.Map.tap)
+		if ( ! this.Map.tap)
 		{
 			/*
 			 * Clicking an empty place on the map highlight its coordinate.
 			 */
-			M.Map.on("click", function(pEvent)
+			this.Map.on("click", function(pEvent)
 			{
 				if (M.isMouseOnHUD) { return; }
 				var coord = M.convertLCtoGC(pEvent.latlng);
@@ -6711,7 +6714,7 @@ M = {
 			/*
 			 * Move the personal pin marker to where the user double clicks.
 			 */
-			M.Map.on("dblclick", function(pEvent)
+			this.Map.on("dblclick", function(pEvent)
 			{
 				if (M.isMouseOnHUD) { return; }
 				M.PinPersonal.setLatLng(pEvent.latlng);
@@ -6736,7 +6739,14 @@ M = {
 		{
 			$("#paneMap").hide();
 			$("#paneWvW").show();
-			W.refreshMap();
+			if (W.isMapInitialized)
+			{
+				W.refreshMap();
+			}
+			I.PagePrevious = I.PageCurrent;
+			I.PageCurrent = I.SpecialPageEnum.WvW;
+			U.updateQueryString();
+			I.isWvWPage = true;
 		});
 		$("#mapGPSButton").click(function()
 		{
@@ -6765,1196 +6775,13 @@ M = {
 		});
 		
 		// Finally
-		M.isMapInitialized = true;
-	},
-	
-	/*
-	 * Informs Leaflet that the map pane was resized so it can load tiles properly.
-	 */
-	refreshMap: function()
-	{
-		if (M.isMapInitialized)
-		{
-			M.Map.invalidateSize();
-		}
-	},
-	
-	/*
-	 * Bindings for map events that need to be done after AJAX has loaded the
-	 * API-generated markers.
-	 */
-	bindMapVisualChanges: function()
-	{
-		/*
-		 * Booleans to stop some map functions from activating.
-		 */
-		$("#paneHUDMap").hover(
-			function() { M.isMouseOnHUD = true; },
-			function() { M.isMouseOnHUD = false; }
-		);
-		M.Map.on("dragstart", function()
-		{
-			M.isUserDragging = true;
-		});
-		M.Map.on("dragend", function()
-		{
-			M.isUserDragging = false;
-		});
-		
-		/*
-		 * Bind the mousemove event to update the map coordinate bar.
-		 * Note that the throttle function is from a separate script. It permits
-		 * the event handler to only run once every so specified milliseconds.
-		 */
-		M.Map.on("mousemove", $.throttle(M.cMAP_MOUSEMOVE_RATE, function(pEvent)
-		{
-			if (M.isMouseOnHUD || M.isUserDragging) { return; }
-			M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
-		}));
-
-		/*
-		 * At the end of a zoom animation, resize the map waypoint icons
-		 * depending on zoom level. Hide if zoomed too far.
-		 */
-		M.Map.on("zoomend", function(pEvent)
-		{
-			M.adjustZoomMapping();
-			M.adjustZoomDryTop();
-		});
-	},
-	
-	/*
-	 * Finds what zone the specified point is in by comparing it to the top left
-	 * and bottom right coordinates of the zones, then show the zone's visuals.
-	 * @param array pCoord containing x and y coordinates.
-	 * @pre Zone perimeters do not intersect.
-	 */
-	showCurrentZone: function(pCoord)
-	{
-		document.getElementById("mapCoordinatesMouse")
-			.value = pCoord[0] + ", " + pCoord[1];
-	
-		// Don't continue if mouse is still in the same zone
-		if (pCoord[0] >= M.ZoneCurrent.rect[0][0] // x1
-			&& pCoord[1] >= M.ZoneCurrent.rect[0][1] // y1
-			&& pCoord[0] <= M.ZoneCurrent.rect[1][0] // x2
-			&& pCoord[1] <= M.ZoneCurrent.rect[1][1]) // y2
-		{
-			return;
-		}
-		
-		// Else search for new moused zone
-		var i, ii;
-		var previouszone;
-		var zonename = "";
-		
-		for (i in M.Zones) // i is the index and nickname of the zone
-		{
-			if (pCoord[0] >= M.Zones[i].rect[0][0]
-				&& pCoord[1] >= M.Zones[i].rect[0][1]
-				&& pCoord[0] <= M.Zones[i].rect[1][0]
-				&& pCoord[1] <= M.Zones[i].rect[1][1])
-			{
-				// Hide the icons of the previously moused zone
-				previouszone = M.Zones[M.ZoneCurrent.nick];
-				for (ii in previouszone.Layers)
-				{
-					M.Map.removeLayer(previouszone.Layers[ii]);
-				}
-				// Update current zone object
-				M.ZoneCurrent = M.Zones[i];
-				zonename = M.getZoneName(M.ZoneCurrent);
-				document.getElementById("mapCoordinatesName")
-					.value = zonename;
-
-				// Reveal moused zone's icons
-				if (O.Options.bol_showChainPaths && I.PageCurrent !== I.PageEnum.Map) { M.ZoneCurrent.Layers.Path.addTo(M.Map); }
-				if (O.Options.bol_displayWaypoints) { M.ZoneCurrent.Layers.Waypoint.addTo(M.Map); }
-				if (O.Options.bol_displayPOIs) { M.ZoneCurrent.Layers.Landmark.addTo(M.Map); }
-				if (O.Options.bol_displayVistas) { M.ZoneCurrent.Layers.Vista.addTo(M.Map); }
-				if (O.Options.bol_displayChallenges) { M.ZoneCurrent.Layers.Challenge.addTo(M.Map); }
-				if (O.Options.bol_displayHearts) { M.ZoneCurrent.Layers.Heart.addTo(M.Map); }
-				if (O.Options.bol_displaySectors) { M.ZoneCurrent.Layers.Sector.addTo(M.Map); }
-				if (O.Options.bol_displayEvents) {
-					M.ZoneCurrent.Layers.EventIcon.addTo(M.Map);
-					M.ZoneCurrent.Layers.EventRing.addTo(M.Map);
-				}
-
-				// Re-tooltip
-				I.qTip.init(".leaflet-marker-icon");
-				// Rescale current moused mapping markers
-				M.adjustZoomMapping();
-				break; // Already found zone so stop searching
-			}
-		}
-	},
-	
-	/*
-	 * Simulates the action of moving the mouse outside the current zone to
-	 * another and back again, so as to trigger the icon adjustment functions.
-	 */
-	refreshCurrentZone: function()
-	{
-		var currentcoord = M.ZoneCurrent.center;
-		M.showCurrentZone(M.getZoneCenter("dry"));
-		M.showCurrentZone(M.getZoneCenter("rata"));
-		M.showCurrentZone(currentcoord);
-	},
-	
-	/*
-	 * Gets the center coordinates of a zone.
-	 * @param string pNick short name of the zone.
-	 * @returns array of x and y coordinates.
-	 */
-	getZoneCenter: function(pNick)
-	{
-		var rect = M.Zones[pNick].rect;
-		// x = OffsetX + (WidthOfZone/2), y = OffsetY + (HeightOfZone/2)
-		var x = rect[0][0] + ~~((rect[1][0] - rect[0][0]) / 2);
-		var y = rect[0][1] + ~~((rect[1][1] - rect[0][1]) / 2);
-		return [x, y];
-	},
-	
-	/*
-	 * Gets the center coordinates of an event.
-	 * @param object pEvent an event from event_details.json
-	 * @returns array of x and y coordinates.
-	 * @pre map_floor.json was extracted to the M.Zones object.
-	 */
-	getEventCenter: function(pEvent)
-	{
-		var zone = M.getZoneFromID(pEvent.map_id);
-		var p = pEvent.location.center; // 3D float array
-
-		return M.convertEventCoord(p, zone);
-	},
-	
-	/*
-	 * Gets the dimension (of say a marker) adjusted to the specified zoom level.
-	 * For example, a submap must be resized so that it is the same scale as
-	 * the map's tileset. It is known that every zoom down doubles the size of
-	 * the map, and vice versa. The formula below is:
-	 * maxdimension / (2 ^ (maxzoomlevel - currentzoomlevel))
-	 * Each zoom down increases the dimension toward the maxdimension, so when
-	 * it's at maxzoomlevel, the returned dimension equals maxdimension.
-	 * @param int pMaxDimension to rescale.
-	 * @param int or enum pZoomLevel for adjustment.
-	 */
-	scaleDimension: function(pMaxDimension, pZoomLevel)
-	{
-		pZoomLevel = pZoomLevel || M.Map.getZoom();
-		return parseInt(pMaxDimension / (Math.pow(M.cZoomFactor, (M.ZoomEnum.Max) - pZoomLevel)));
-	},
-	
-	/*
-	 * Converts a zoom level where 0 is ground level to proper level.
-	 * @param int zoom level inverted.
-	 * @returns int zoom level proper.
-	 */
-	invertZoomLevel: function(pZoomLevel)
-	{
-		return M.ZoomEnum.Max - T.wrapInteger(pZoomLevel, M.ZoomEnum.Max);
-	},
-	
-	/*
-	 * Resizes mapping markers so they scale with the current zoom level.
-	 */
-	adjustZoomMapping: function()
-	{
-		var currentzoom = M.Map.getZoom();
-		var waypointsize, landmarksize, eventiconsize, eventringsize;
-		var sectorfontsize, sectoropacity;
-		
-		switch (currentzoom)
-		{
-			case 7: waypointsize = 40; landmarksize = 32; eventiconsize = 32; eventringsize = 256; break;
-			case 6: waypointsize = 32; landmarksize = 24; eventiconsize = 24; eventringsize = 128; break;
-			case 5: waypointsize = 26; landmarksize = 16; eventiconsize = 16; eventringsize = 64; break;
-			case 4: waypointsize = 20; landmarksize = 12; eventiconsize = 12; eventringsize = 32; break;
-			case 3: waypointsize = 16; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
-			default: { waypointsize = 0; landmarksize = 0; eventiconsize = 0; eventringsize = 0; }
-		}
-		
-		switch (currentzoom)
-		{
-			case 7: sectorfontsize = 28; sectoropacity = 0.9; break;
-			case 6: sectorfontsize = 20; sectoropacity = 0.6; break;
-			case 5: sectorfontsize = 16; sectoropacity = 0.3; break;
-			default: { sectorfontsize = 0; sectoropacity = 0; }
-		}
-
-		// Waypoints
-		M.ZoneCurrent.Layers.Waypoint.eachLayer(function(layer) {
-			M.changeMarkerIcon(layer, U.URL_IMG.Waypoint, waypointsize);
-		});
-		
-		// Landmarks
-		M.ZoneCurrent.Layers.Landmark.eachLayer(function(layer) {
-			M.changeMarkerIcon(layer, U.URL_IMG.Landmark, landmarksize);
-			if (layer._icon)
-			{
-				layer._icon.style.opacity = (currentzoom < M.ZoomEnum.Max) ? 0.6 : 0.8;
-			}
-		});
-		
-		// Vista
-		M.ZoneCurrent.Layers.Vista.eachLayer(function(layer) {
-			M.changeMarkerIcon(layer, U.URL_IMG.Vista, landmarksize);
-		});
-		
-		// Challenge
-		M.ZoneCurrent.Layers.Challenge.eachLayer(function(layer) {
-			M.changeMarkerIcon(layer, U.URL_IMG.Challenge, landmarksize);
-		});
-		
-		// Heart
-		M.ZoneCurrent.Layers.Heart.eachLayer(function(layer) {
-			M.changeMarkerIcon(layer, U.URL_IMG.Heart, landmarksize);
-		});
-		
-		// Sector
-		M.ZoneCurrent.Layers.Sector.eachLayer(function(layer) {
-			if (layer._icon)
-			{
-				layer._icon.style.fontSize = sectorfontsize + "px";
-				layer._icon.style.opacity = sectoropacity;
-				layer._icon.style.zIndex = M.cZIndexBury + 1; // Don't cover other icons
-				if (O.Options.bol_displaySectors)
-				{
-					layer._icon.style.display = "table"; // For middle vertical alignment
-				}
-			}
-		});
-		
-		// Event Icon
-		M.ZoneCurrent.Layers.EventIcon.eachLayer(function(layer) {
-			M.changeMarkerIcon(layer, layer._icon.src, eventiconsize);
-			if (layer._icon)
-			{
-				layer._icon.style.zIndex = 1000;
-			}
-		});
-		
-		// Event Ring
-		M.ZoneCurrent.Layers.EventRing.eachLayer(function(layer) {
-			M.changeMarkerIcon(layer, layer._icon.src, eventringsize);
-			if (layer._icon)
-			{
-				layer._icon.style.zIndex = -10000;
-			}
-		});
-		
-		// Character pin and camera FOV
-		M.updateCharacter(-1);
-	},
-	
-	/*
-	 * Resizes Dry Top markers so they scale with the current zoom level.
-	 */
-	adjustZoomDryTop: function()
-	{
-		if (C.isDryTopGenerated)
-		{
-			var i;
-			var currentzoom = M.Map.getZoom();
-			var icon;
-			var nickfontsize, nickopacity;
-
-			switch (currentzoom)
-			{
-				case 7: M.currentIconSize = 32; nickfontsize = 20; nickopacity = 0.9; break;
-				case 6: M.currentIconSize = 28; nickfontsize = 16; nickopacity = 0.8; break;
-				case 5: M.currentIconSize = 24; nickfontsize = 12; nickopacity = 0.6; break;
-				case 4: M.currentIconSize = 20; nickfontsize = 0; nickopacity = 0; break;
-				case 3: M.currentIconSize = 16; nickfontsize = 0; nickopacity = 0; break;
-				default:
-				{
-					M.currentIconSize = 0; nickfontsize = 0; nickopacity = 0;
-				}
-			}
-			
-			// Event icons are same size as waypoints, but their rings are bigger
-			M.currentRingSize = M.scaleDimension(M.cRING_SIZE_MAX);
-
-			for (i in M.Entity.DryTopIcons)
-			{
-				// Icons
-				icon = M.Entity.DryTopIcons[i];
-				M.changeMarkerIcon(icon, icon._icon.src, M.currentIconSize);
-				// Rings
-				icon = M.Entity.DryTopRings[i];
-				M.changeMarkerIcon(icon, icon._icon.src, M.currentRingSize);
-				// Don't make the rings overlap clickable waypoints
-				M.Entity.DryTopIcons[i]._icon.style.zIndex = 1000;
-				M.Entity.DryTopRings[i]._icon.style.zIndex = 1;
-			}
-			
-			M.Layer.DryTopNicks.eachLayer(function(layer) {
-				if (layer._icon)
-				{
-					layer._icon.style.fontSize = nickfontsize + "px";
-					layer._icon.style.opacity = nickopacity;
-					layer._icon.style.zIndex = M.cZIndexBury + 1; // Don't cover other icons
-					layer._icon.style.display = "table"; // For middle vertical alignment
-				}
-			});
-			M.DryTopTimer._icon.style.fontSize = (nickfontsize*2) + "px";
-			M.DryTopTimer._icon.style.opacity = nickopacity;
-			M.DryTopTimer._icon.style.zIndex = M.cZIndexBury + 1;
-			M.DryTopTimer._icon.style.display = "table";
-		}
-	},
-	
-	/*
-	 * Returns a common sized Leafet icon.
-	 * @param string pIconURL of the icon image.
-	 * @returns object Leaflet icon.
-	 */
-	createStandardIcon: function(pIconURL)
-	{
-		return L.icon({
-			iconUrl: pIconURL,
-			iconSize: [32, 32],
-			iconAnchor: [16, 16]
-		});
-	},
-	
-	/*
-	 * Changes the marker icon's image and size (Leaflet does not have this method).
-	 * @param object pMarker Leaflet marker.
-	 * @param string pIconURL of the icon image.
-	 * @param int pSize of icon.
-	 */
-	changeMarkerIcon: function(pMarker, pIconURL, pSize)
-	{
-		if (pSize === undefined)
-		{
-			pSize = M.cICON_SIZE_STANDARD;
-		}
-		
-		pMarker.setIcon(new L.icon(
-		{
-			iconUrl: pIconURL,
-			iconSize: [pSize, pSize],
-			iconAnchor: [pSize/2, pSize/2]
-		}));
-	},
-	
-	/*
-	 * Toggles display of layers (a group of markers).
-	 * @param object pLayer of markers.
-	 * @param boolean pBoolean to show or hide.
-	 */
-	toggleLayer: function(pLayer, pBoolean)
-	{
-		// No boolean provided so assumes toggle
-		if (pBoolean === undefined)
-		{
-			pBoolean = !(M.Map.hasLayer(pLayer));
-		}
-		
-		// Show if true, hide if false
-		if (pBoolean)
-		{
-			pLayer.addTo(M.Map);
-		}
-		else
-		{
-			M.Map.removeLayer(pLayer);
-		}
-	},
-	toggleLayerArray: function(pLayerArray, pBoolean)
-	{
-		for (var i in pLayerArray)
-		{
-			M.toggleLayer(pLayerArray[i], pBoolean);
-		}
-	},
-	
-	/*
-	 * Macro function for toggling map entities display (Leaflet doesn't have a
-	 * hide/show markers and paths method except through less flexible layer groups.
-	 * @param array pEntityGroup objects like paths and markers.
-	 * @param string pDisplay to show or hide.
-	 * @pre Array contains only markers or only paths, not both.
-	 */
-	toggleEntity: function(pEntityGroup, pDisplay)
-	{
-		var i;
-		var display;
-		var sample = pEntityGroup[0];
-		var isMarker = (sample._container === undefined); // if false then it's a path
-		
-		if (pDisplay === false || pDisplay === "hide" || pDisplay < 0)
-		{
-			display = "none";
-		}
-		// No display boolean provided, so assume want toggle
-		else if (pDisplay === undefined)
-		{
-			if (isMarker)
-			{
-				display = (sample._icon.style.display === "none") ? "block" : "none";
-			}
-			else
-			{
-				display = (sample._container.style.display === "none") ? "block" : "none";
-			}
-		}
-		else
-		{
-			display = "block";
-		}
-		
-		// Now show or hide as requested
-		if (isMarker)
-		{
-			for (i in pEntityGroup)
-			{
-				pEntityGroup[i]._icon.style.display = display;
-			}
-		}
-		else
-		{
-			for (i in pEntityGroup)
-			{
-				pEntityGroup[i]._container.style.display = display;
-			}
-			
-		}
-	},
-	
-	/*
-	 * Initializes or toggle a submap, which is a Leaflet ImageOverlay over the map.
-	 * Look at general.js for submap declarations.
-	 * @param string pName of the submap.
-	 * @param boolean pBoolean to show or hide.
-	 */
-	toggleSubmap: function(pName, pBoolean)
-	{
-		var submap = M.Submaps[pName];
-		if (submap.ImageOverlay === undefined)
-		{
-			submap.ImageOverlay = L.imageOverlay(submap.img, M.convertGCtoLCMulti(submap.bounds));
-			M.toggleSubmap(pName, pBoolean);
-		}
-		else
-		{
-			// No boolean provided so assumes toggle
-			if (pBoolean === undefined)
-			{
-				pBoolean = !(M.Map.hasLayer(submap.ImageOverlay));
-			}
-
-			// Show if true, hide if false
-			if (pBoolean)
-			{
-				submap.ImageOverlay.addTo(M.Map).bringToBack();
-			}
-			else
-			{
-				M.Map.removeLayer(submap.ImageOverlay);
-			}
-		}
-	},
-	toggleSubmapArray: function(pNames, pBoolean)
-	{
-		for (var i in pNames)
-		{
-			M.toggleSubmap(pNames[i], pBoolean);
-		}
-	},
-	
-	/*
-	 * Moves a pin to a map coordinate.
-	 * @param object pPin to move.
-	 * @param 2D array pCoord coordinates.
-	 */
-	movePin: function(pPin, pCoord)
-	{
-		if (pCoord === undefined)
-		{
-			pCoord = [0,0];
-		}
-		pPin.setLatLng(M.convertGCtoLC(pCoord));
-		pPin._icon.style.zIndex = M.cZIndexRaise;
-	},
-	
-	/*
-	 * Views the map at the specifications.
-	 * @param 2D array pCoord coordinates.
-	 * @param object pPin which to move to coordinate.
-	 * @param enum pZoom level.
-	 */
-	goToView: function(pCoord, pZoom, pPin)
-	{
-		if (pPin !== undefined)
-		{
-			M.movePin(pPin, pCoord);
-		}
-		
-		if (pZoom === undefined)
-		{
-			pZoom = M.ZoomEnum.Ground;
-		}
-		if (pZoom === M.ZoomEnum.Same)
-		{
-			pZoom = M.Map.getZoom();
-		}
-		M.Map.setView(M.convertGCtoLC(pCoord), pZoom);
-		M.showCurrentZone(pCoord);
-	},
-	goToLatLng: function(pLatLng, pZoom)
-	{
-		if (pZoom === undefined)
-		{
-			pZoom = M.ZoomEnum.Ground;
-		}
-		if (pZoom === M.ZoomEnum.Same)
-		{
-			pZoom = M.Map.getZoom();
-		}
-		M.Map.setView(pLatLng, pZoom);
-		M.showCurrentZone(M.convertLCtoGC(pLatLng));
-	},
-	
-	/*
-	 * Views the map at the zone.
-	 * @param string pNick of the zone.
-	 * @param enum pZoom level.
-	 */
-	goToZone: function(pNick, pZoom)
-	{
-		var coord = M.getZoneCenter(pNick);
-		M.showCurrentZone(coord);
-		M.goToView(coord, pZoom);
-	},
-	
-	/*
-	 * Imitates the character pin as in the game minimap, as informed by the overlay.
-	 * @param int pForceCode 1 to force update position, -1 angle, 0 both, undefined neither.
-	 */
-	updateCharacter: function(pForceCode)
-	{
-		/*
-		 * Validate the GPS data before allowing updates.
-		 * Sample structure of position, character angle, and camera angle:
-		 * fAvatarPosition: [116.662186, 44.60492, -104.502495]
-		 * fAvatarFront: [0.070094235, 0.0, 0.99754035]
-		 * fCameraFront: [-0.2597584, 0.02722733, 0.9652897]
-		 * Sample structure of JSON:
-		 * {"name": "Character Name","profession": 1,"race": 2,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false,"fov": 0.873}
-		 */
-		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || M.isUserDragging)
-		{
-			return;
-		}
-		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
-		{
-			return;
-		}
-		if (M.isZoneValid(GPSIdentityJSON["map_id"]) === false)
-		{
-			M.movePin(M.PinCharacter);
-			M.movePin(M.PinCamera);
-			return;
-		}
-		var coord = M.convertGPSCoord(GPSPositionArray, GPSIdentityJSON["map_id"]);
-		if (coord[0] > M.cMAP_BOUND || coord[0] <= 0
-			|| coord[1] > M.cMAP_BOUND || coord[1] <= 0)
-		{
-			return;
-		}
-		
-		// Follow character if opted and position has changed (character moved)
-		if ((O.Options.bol_followCharacter && M.GPSPreviousCoord[0] !== coord[0] && M.GPSPreviousCoord[1] !== coord[1])
-			|| pForceCode >= 0)
-		{
-			M.Map.setView(M.convertGCtoLC(coord), M.Map.getZoom());
-			M.showCurrentZone(coord);
-			M.GPSPreviousCoord = coord;
-			pForceCode = -1; // Also update pin position
-		}
-		
-		// Pin character if opted and angle has changed (character turned)
-		if (O.Options.bol_displayCharacter)
-		{
-			var anglecharacter = -(M.convertGPSAngle(GPSDirectionArray));
-			var anglecamera = -(M.convertGPSAngle(GPSCameraArray));
-			if (M.GPSPreviousAngleCharacter !== anglecharacter
-				|| M.GPSPreviousAngleCamera !== anglecamera
-				|| pForceCode <= 0)
-			{
-				M.movePin(M.PinCharacter, coord);
-				M.movePin(M.PinCamera, coord);
-				M.PinCamera._icon.style.zIndex = M.cZIndexBury;
-				var pintranscharacter = M.PinCharacter._icon.style.transform.toString();
-				var pintranscamera = M.PinCamera._icon.style.transform.toString();
-				if (pintranscharacter.indexOf("rotate") === -1)
-				{
-					M.PinCharacter._icon.style.transform = pintranscharacter + " rotate(" + anglecharacter + "deg)";
-				}
-				if (pintranscamera.indexOf("rotate") === -1)
-				{
-					M.PinCamera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
-				}
-				M.GPSPreviousAngleCharacter = anglecharacter;
-				M.GPSPreviousAngleCamera = anglecamera;
-			}
-		}
-	},
-	
-	/*
-	 * Views the default map view.
-	 */
-	goToDefault: function()
-	{
-		M.Map.setView(M.convertGCtoLC(M.cMAP_CENTER), M.ZoomEnum.Default);
-	},
-	
-	/*
-	 * Views the map at the given URL coordinates if exist.
-	 * URL should be in the form of http://gw2timer.com/?go=4874,16436,1
-	 * @param string pArguments of location to view.
-	 * coords[0] = x coordinate.
-	 * coords[1] = y coordinate.
-	 * coords[2] = z coordinate (zoom level, lower value equals greater zoom-in).
-	 */
-	goToArguments: function(pArguments, pPin)
-	{
-		var i;
-		var coords = [];
-		var zone;
-		if (pArguments)
-		{
-			coords = M.parseCoordinates(pArguments);
-			if (coords.length === 2)
-			{
-				if (isFinite(coords[0]) && isFinite(coords[1]))
-				{
-					M.goToView(coords, M.ZoomEnum.Ground, pPin);
-				}
-			}
-			else if (coords.length >= 3)
-			{
-				if (isFinite(coords[0]) && isFinite(coords[1]) && isFinite(coords[2]))
-				{
-					// Zoom level 0 is ground level (opposite the enum)
-					var zoomlevel = M.invertZoomLevel(coords[2]);
-					M.goToView([coords[0], coords[1]], zoomlevel, pPin);
-				}
-			}
-			else
-			{
-				// Else assume the argument is a short name for the zone
-				zone = pArguments.toLowerCase();
-				if (zone === "default")
-				{
-					M.goToDefault();
-				}
-				else
-				{
-					for (i in M.Zones)
-					{
-						if (zone.indexOf(i) !== -1)
-						{
-							M.goToView(M.getZoneCenter(i), M.ZoomEnum.Bird);
-							break;
-						}
-					}
-				}
-			}
-		}
-		// Only execute this function once
-		U.Args[U.KeyEnum.Go] = null;
-	},
-	
-	/*
-	 * Converts GW2's coordinates XXXXX,XXXXX to Leaflet LatLng coordinates XXX,XXX.
-	 * @param array pCoord array of two numbers.
-	 * @returns LatLng Leaflet object.
-	 */
-	convertGCtoLC: function(pCoord)
-	{
-		return M.Map.unproject(pCoord, M.Map.getMaxZoom());
-	},
-	
-	/*
-	 * Converts multiple GW2 coordinates to multiple LatLng.
-	 * @param array of arrays pCoordArrays to convert.
-	 * @param int pIndexStart starting index.
-	 * @returns array of LatLng.
-	 */
-	convertGCtoLCMulti: function(pCoordArray, pIndexStart)
-	{
-		pIndexStart = pIndexStart || 0;
-		var i;
-		var latlngs = new Array();
-		for (i = pIndexStart; i < pCoordArray.length; i++)
-		{
-			latlngs.push(M.convertGCtoLC(pCoordArray[i]));
-		}
-		return latlngs;
-	},
-	
-	/*
-	 * Converts Leaflet LatLng to GW2's 2 unit array coordinates.
-	 * @param object pLatLng from Leaflet.
-	 * @returns array of x and y coordinates.
-	 */
-	convertLCtoGC: function(pLatLng)
-	{
-		var coord = M.Map.project(pLatLng, M.ZoomEnum.Max);
-		return [Math.round(coord.x), Math.round(coord.y)];
-	},
-	convertLCtoGCMulti: function(pCoordArray)
-	{
-		var coords = new Array();
-		for (var i = 0; i < pCoordArray.length; i++)
-		{
-			coords.push(M.convertLCtoGC(pCoordArray[i]));
-		}
-		return coords;
-	},
-	
-	/*
-	 * Converts a map_floor.json event coordinates to the map coordinates system.
-	 * @param object pZone to translate coordinates.
-	 * @param 3D float array pPos event center. Only uses [0] and [1] values.
-	 * @returns 2D int array map coordinates.
-	 * @pre pZone was initialized (this is asynchronous).
-	 */
-	convertEventCoord: function(pPos, pZone)
-	{
-		var cr = pZone.continent_rect; // 2D float array
-		var mr = pZone.map_rect; // 2D float array
-		
-		// Code from http://gw2.chillerlan.net/examples/gw2maps-jquery.html
-		return [
-			~~(cr[0][0]+(cr[1][0]-cr[0][0])*(pPos[0]-mr[0][0])/(mr[1][0]-mr[0][0])),
-			~~(cr[0][1]+(cr[1][1]-cr[0][1])*(1-(pPos[1]-mr [0][1])/(mr[1][1]-mr[0][1])))
-		];
-	},
-	
-	/*
-	 * Converts a MumbleLink player coordinates to the map coordinates system.
-	 * @param 3D float array pPos [latitude altitude longitude] player position.
-	 * @param string pZoneID of the zone the player is in.
-	 * @returns 2D int array map coordinates.
-	 */
-	convertGPSCoord: function(pPos, pZoneID)
-	{
-		var zone = M.getZoneFromID(pZoneID);
-		var coord = new Array(3);
-		coord[0] = pPos[0] * M.cMETER_TO_INCH; // x coordinate
-		coord[1] = pPos[2] * M.cMETER_TO_INCH; // y coordinate
-		coord[2] = pPos[1] * M.cMETER_TO_INCH; // z coordinate
-		return M.convertEventCoord(coord, zone);
-	},
-	
-	/*
-	 * Converts a MumbleLink 3D vector values to degrees of 2D rotation.
-	 * @param 3D array pVector [x, z, y].
-	 * @returns float degrees.
-	 */
-	convertGPSAngle: function(pVector)
-	{
-		return Math.atan2(pVector[2], pVector[0]) * M.cRADIAN_TO_DEGREE;
-	},
-	
-	/*
-	 * Converts a coordinate string to array coordinates.
-	 * @param string pString coordinates in the form of "[X, Y]" GW2 coords.
-	 * @returns array pCoord array of numbers.
-	 */
-	parseCoordinates: function(pString)
-	{
-		// The regex strips all characters except digits, commas, periods, and minus sign
-		var coord = pString.toString().replace(/[^\d,-.]/g, "");
-		return coord.split(",");
-	},
-	
-	/*
-	 * Sorts an array of GW2 coordinates.
-	 * @param 2D array pArray to sort.
-	 */
-	sortCoordinates: function(pArray, pIsNumbered)
-	{
-		var coord;
-		// Convert to integer
-		for (var i in pArray)
-		{
-			coord = pArray[i];
-			coord[0] = Math.round(coord[0]);
-			coord[1] = Math.round(coord[1]);
-		}
-		// Sort the array
-		pArray.sort(function (a, b)
-		{
-			if (a[0] > b[0])
-			{
-				return 1;
-			}
-			if (a[0] < b[0])
-			{
-				return -1;
-			}
-			return 0;
-		});
-		// Print the result formatted
-		if (pIsNumbered)
-		{
-			for (var i in pArray)
-			{
-				M.printNumberedCoordinates(pArray[i], i);
-			}
-		}
-		else
-		{
-			M.printCoordinates(pArray);
-		}
-	},
-	roundCoordinates: function(pArray)
-	{
-		var coord;
-		// Convert to integer
-		for (var i in pArray)
-		{
-			coord = pArray[i];
-			coord[0] = Math.round(coord[0]);
-			coord[1] = Math.round(coord[1]);
-		}
-		// Print the result formatted
-		M.printCoordinates(pArray);
-	},
-	printCushion: function(pCushion)
-	{
-		for (var i in pCushion)
-		{
-			M.printNumberedCoordinates((pCushion[i]).c, i);
-		}
-	},
-	printNumberedCoordinates: function(pCoord, i)
-	{
-		I.write("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},");
-	},
-	compileCoordinates: function(pCoords)
-	{
-		var output = "";
-		for (var i in pCoords)
-		{
-			output = output + "[" + (pCoords[i])[0] + "," + (pCoords[i])[1] + "],";
-		}
-		output = output.substring(0, output.length - 1); // Trim last comma
-		return "[" + output + "]";
-	},
-	printCoordinates: function(pCoords)
-	{
-		I.write(M.compileCoordinates(pCoords), 30);
-	},
-	
-	/*
-	 * Converts and prints an array of LatLngs to GW2 coordinates.
-	 * @param 2D array pArray.
-	 * @returns 2D array.
-	 */
-	convertLatLngs: function(pArray)
-	{
-		var coords = M.convertLCtoGCMulti(pArray);
-		M.printCoordinates(coords);
-	},
-	
-	/*
-	 * Gets the coordinates from the data attribute of an HTML element.
-	 * @param jqobject pElement to extract from.
-	 * @returns array of GW2 coordinates.
-	 */
-	getElementCoordinates: function(pElement)
-	{
-		var coordstring = pElement.attr("data-coord");
-		if (M.Zones[coordstring])
-		{
-			return M.getZoneCenter(coordstring);
-		}
-		return M.parseCoordinates(coordstring);
-	},
-	
-	/*
-	 * Binds map view event handlers to all map links (dfn tag reserved) in the
-	 * specified container.
-	 * @param string pContainer element ID.
-	 */
-	bindMapLinks: function(pContainer, pZoom)
-	{
-		$(pContainer + " dfn").each(function()
-		{
-			$(this).text("[" + $(this).text() + "]");
-			M.bindMapLinkBehavior($(this), pZoom, M.PinProgram);
-		});
-	},
-	
-	/*
-	 * Binds specified link to move a pinpoint to the location when hovered, and
-	 * to view the map location when clicked.
-	 * @param jqobject pLink to bind.
-	 * @param object pPin marker to move.
-	 * @param string pZoom level when viewed location.
-	 */
-	bindMapLinkBehavior: function(pLink, pZoom, pPin)
-	{
-		pLink.click(function()
-		{
-			var thiscoord = M.getElementCoordinates($(this));
-			M.goToView(thiscoord, pZoom, pPin);
-		});
-		
-		pLink.dblclick(function()
-		{
-			var thiscoord = M.getElementCoordinates($(this));
-			if (M.Map.getZoom() === M.ZoomEnum.Max)
-			{
-				M.goToView(thiscoord, M.ZoomEnum.Default, pPin);
-			}
-			else
-			{
-				M.goToView(thiscoord, M.ZoomEnum.Ground, pPin);
-			}
-		});
-		
-		// Move a point pin to that location as a preview
-		pLink.mouseover(function()
-		{
-			var thiscoord = M.getElementCoordinates($(this));
-			M.movePin(M.PinOver, thiscoord);
-		});
-		pLink.mouseout(function()
-		{
-			M.movePin(M.PinOver);
-		});
-	},
-	
-	/*
-	 * Binds standard zoom in/out when user do something to an icon on the map.
-	 * @param object pMarker to bind.
-	 * @param string pEventType like "click" or "dblclick".
-	 */
-	bindMarkerZoomBehavior: function(pMarker, pEventType)
-	{
-		pMarker.on(pEventType, function(pEvent)
-		{
-			if (M.Map.getZoom() === M.ZoomEnum.Max)
-			{
-				M.Map.setZoom(M.ZoomEnum.Default);
-			}
-			else
-			{
-				M.Map.setView(pEvent.latlng, M.ZoomEnum.Max);
-			}
-		});
-	},
-	bindMappingZoomBehavior: function(pMarker, pEventType)
-	{
-		pMarker.on(pEventType, function(pEvent)
-		{
-			if (M.Map.getZoom() === M.ZoomEnum.Max)
-			{
-				M.Map.setZoom(M.ZoomEnum.Sky);
-			}
-			else
-			{
-				M.Map.setView(pEvent.latlng, M.ZoomEnum.Max);
-			}
-		});
-	},
-	bindMarkerCoordBehavior: function(pMarker, pEventType)
-	{
-		pMarker.on(pEventType, function()
-		{
-			var coord = M.convertLCtoGC(this.getLatLng());
-			$("#mapCoordinatesCopy")
-				.val("[" + coord[0] + ", " + coord[1] + "]")
-				.select();
-		});
-	},
-	
-	/*
-	 * Translates the zones list in the Map page and bind click zoom behavior.
-	 * @pre The translated names from the API was retrieved.
-	 */
-	bindZoneList: function()
-	{
-		$("#mapZoneList li").each(function()
-		{
-			var zonenick = $(this).attr("data-zone");
-			$(this).text(M.getZoneName(zonenick));
-			$(this).attr("data-coord", M.getZoneCenter(zonenick).toString());
-			M.bindMapLinkBehavior($(this), M.ZoomEnum.Same);
-		});
-		$("#mapZoneList h2").each(function()
-		{
-			var regionnick = $(this).attr("data-region");
-			$(this).text(D.getObjectName(M.Regions[regionnick]));
-		});
-	},
-	
-	/*
-	 * Shows or hides a section's map icons by triggering its toggle button.
-	 * Whether the button will hide or show icons depends on its boolean data attribute.
-	 * @param string pSection name.
-	 * @param boolean pWantShow to show or hide its icons.
-	 */
-	displayIcons: function(pSection, pWantShow)
-	{
-		var button = $("#mapToggle_" + pSection);
-		var isshown;
-		var wanthideonly;
-		if (button.length)
-		{
-			isshown = button.data("checked");
-			wanthideonly = button.data("hideonly");
-			
-			// If toggle button only serves to hide icons
-			if (wanthideonly)
-			{
-				if ( ! pWantShow)
-				{
-					button.trigger("click");
-				}
-			}
-			// If toggle button is two-states
-			else
-			{
-				if (pWantShow)
-				{
-					if ( ! isshown)
-					{
-						button.trigger("click");
-						button.data("checked", true);
-					}
-				}
-				else
-				{
-					if (isshown)
-					{
-						button.trigger("click");
-						button.data("checked", false);
-					}
-				}
-			}
-		}
-	},
-	
-	/*
-	 * Executes GPS functions every specified milliseconds.
-	 */
-	tickGPS: function()
-	{
-		if (O.Options.bol_followCharacter || O.Options.bol_displayCharacter)
-		{
-			M.updateCharacter();
-			window.clearTimeout(M.GPSTimeout);
-			M.GPSTimeout = setTimeout(M.tickGPS, O.Options.int_msecGPSRefresh);
-		}
-	}
-	
-};
-
-/* =============================================================================
- * @@Populate map functions
- * ========================================================================== */
-P = {
-	
-	/*
-	 * Creates a pin in the map to be assigned to a reference object.
-	 * @param string pIconURL image of the marker.
-	 * @param 2D array pDimension width and height of pin.
-	 * @returns object Leaflet marker.
-	 */
-	createPin: function(pIconURL, pDimension)
-	{
-		if (pDimension === undefined)
-		{
-			pDimension = [32, 32];
-		}
-		var marker = L.marker(M.convertGCtoLC([0,0]),
-		{
-			icon: L.icon(
-			{
-				iconUrl: pIconURL,
-				iconSize: pDimension,
-				iconAnchor: [(pDimension[0])/2, (pDimension[1])/2]
-			}),
-			draggable: true
-		});
-		M.Layer.Pin.addLayer(marker);
-		return marker;
-	},
-	
-	/*
-	 * Draws a path with each link of increasing or decreasing weight, to
-	 * simulate a worm crawling in a direction.
-	 * @param array pCoords GW2 coordinates.
-	 * @param boolean pIsObverse or reversed.
-	 * @returns LayerGroup path.
-	 * @pre Path has enough links to distinguish themselves.
-	 */
-	drawDirectedPath: function(pCoords, pIsObverse, pColor)
-	{
-		if (pIsObverse === undefined)
-		{
-			pIsObverse = true;
-		}
-		var latlngs = M.convertGCtoLCMulti(pCoords);
-		var layergroup = new L.layerGroup();
-		var numofsegments = 8;
-		var iweight = (pIsObverse) ? 0 : numofsegments-1;
-		pColor = pColor || "lime";
-		
-		for (var i = 0; i < latlngs.length - 1; i++)
-		{
-			layergroup.addLayer(L.polyline([latlngs[i], latlngs[i+1]], {color: pColor, weight: (iweight+2)*2}));
-			iweight = (pIsObverse) ? (iweight+1) : (iweight-1);
-			if (pIsObverse && iweight >= numofsegments)
-			{
-				iweight = 0;
-			}
-			else if (!pIsObverse && iweight < 0)
-			{
-				iweight = numofsegments-1;
-			}
-		}
-		return layergroup;
-	},
-	
-	/*
-	 * Draws spots representing an interactable item in the game world.
-	 * @param array pCoords GW2 coordinates.
-	 * @returns LayerGroup circles.
-	 */
-	drawSpots: function(pCoords, pOptions)
-	{
-		var latlngs = M.convertGCtoLCMulti(pCoords);
-		var layergroup = new L.layerGroup();
-		var Options = {radius: 10, color: "lime", weight: 4};
-		if (pOptions !== undefined)
-		{
-			for (var i in pOptions)
-			{
-				Options[i] = pOptions[i];
-			}
-		}
-		
-		for (var i in latlngs)
-		{
-			layergroup.addLayer(L.circleMarker(latlngs[i], Options));
-		}
-		return layergroup;
+		this.isMapInitialized = true;
 	},
 	
 	/*
 	 * Generates map waypoints and other markers from the GW2 server API files.
 	 */
-	populateMap: function()
+	populateMap: function(pOptions)
 	{
 		/*
 		 * map_floor.json sample structure of desired data
@@ -8288,6 +7115,1197 @@ P = {
 		M.toggleLayer(M.Layer.Pin, true);
 		
 	}, // End of populateMap
+	
+	/*
+	 * Informs Leaflet that the map pane was resized so it can load tiles properly.
+	 */
+	refreshMap: function()
+	{
+		if (this.isMapInitialized)
+		{
+			this.Map.invalidateSize();
+		}
+	},
+	
+	/*
+	 * Bindings for map events that need to be done after AJAX has loaded the
+	 * API-generated markers.
+	 */
+	bindMapVisualChanges: function()
+	{
+		var that = this;
+		/*
+		 * Booleans to stop some map functions from activating.
+		 */
+		$("#paneHUDMap").hover(
+			function() { that.isMouseOnHUD = true; },
+			function() { that.isMouseOnHUD = false; }
+		);
+		this.Map.on("dragstart", function()
+		{
+			that.isUserDragging = true;
+		});
+		this.Map.on("dragend", function()
+		{
+			that.isUserDragging = false;
+		});
+		
+		/*
+		 * Bind the mousemove event to update the map coordinate bar.
+		 * Note that the throttle function is from a separate script. It permits
+		 * the event handler to only run once every so specified milliseconds.
+		 */
+		this.Map.on("mousemove", $.throttle(that.cMAP_MOUSEMOVE_RATE, function(pEvent)
+		{
+			if (that.isMouseOnHUD || that.isUserDragging) { return; }
+			that.showCurrentZone(that.convertLCtoGC(pEvent.latlng));
+		}));
+
+		/*
+		 * At the end of a zoom animation, resize the map waypoint icons
+		 * depending on zoom level. Hide if zoomed too far.
+		 */
+		this.Map.on("zoomend", function(pEvent)
+		{
+			that.adjustZoomMapping();
+			that.adjustZoomDryTop();
+		});
+	},
+	
+	/*
+	 * Finds what zone the specified point is in by comparing it to the top left
+	 * and bottom right coordinates of the zones, then show the zone's visuals.
+	 * @param array pCoord containing x and y coordinates.
+	 * @pre Zone perimeters do not intersect.
+	 */
+	showCurrentZone: function(pCoord)
+	{
+		document.getElementById("mapCoordinatesMouse")
+			.value = pCoord[0] + ", " + pCoord[1];
+	
+		// Don't continue if mouse is still in the same zone
+		if (pCoord[0] >= this.ZoneCurrent.rect[0][0] // x1
+			&& pCoord[1] >= this.ZoneCurrent.rect[0][1] // y1
+			&& pCoord[0] <= this.ZoneCurrent.rect[1][0] // x2
+			&& pCoord[1] <= this.ZoneCurrent.rect[1][1]) // y2
+		{
+			return;
+		}
+		
+		// Else search for new moused zone
+		var i, ii;
+		var previouszone;
+		var zonename = "";
+		
+		for (i in this.Zones) // i is the index and nickname of the zone
+		{
+			if (pCoord[0] >= this.Zones[i].rect[0][0]
+				&& pCoord[1] >= this.Zones[i].rect[0][1]
+				&& pCoord[0] <= this.Zones[i].rect[1][0]
+				&& pCoord[1] <= this.Zones[i].rect[1][1])
+			{
+				// Hide the icons of the previously moused zone
+				previouszone = this.Zones[this.ZoneCurrent.nick];
+				for (ii in previouszone.Layers)
+				{
+					this.Map.removeLayer(previouszone.Layers[ii]);
+				}
+				// Update current zone object
+				this.ZoneCurrent = this.Zones[i];
+				zonename = this.getZoneName(this.ZoneCurrent);
+				document.getElementById("mapCoordinatesName")
+					.value = zonename;
+
+				// Reveal moused zone's icons
+				if (O.Options.bol_showChainPaths && I.PageCurrent !== I.PageEnum.Map) { this.ZoneCurrent.Layers.Path.addTo(this.Map); }
+				if (O.Options.bol_displayWaypoints) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
+				if (O.Options.bol_displayPOIs) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
+				if (O.Options.bol_displayVistas) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
+				if (O.Options.bol_displayChallenges) { this.ZoneCurrent.Layers.Challenge.addTo(this.Map); }
+				if (O.Options.bol_displayHearts) { this.ZoneCurrent.Layers.Heart.addTo(this.Map); }
+				if (O.Options.bol_displaySectors) { this.ZoneCurrent.Layers.Sector.addTo(this.Map); }
+				if (O.Options.bol_displayEvents) {
+					this.ZoneCurrent.Layers.EventIcon.addTo(this.Map);
+					this.ZoneCurrent.Layers.EventRing.addTo(this.Map);
+				}
+
+				// Re-tooltip
+				I.qTip.init(".leaflet-marker-icon");
+				// Rescale current moused mapping markers
+				this.adjustZoomMapping();
+				break; // Already found zone so stop searching
+			}
+		}
+	},
+	
+	/*
+	 * Simulates the action of moving the mouse outside the current zone to
+	 * another and back again, so as to trigger the icon adjustment functions.
+	 */
+	refreshCurrentZone: function()
+	{
+		var currentcoord = this.ZoneCurrent.center;
+		this.showCurrentZone(this.getZoneCenter("dry"));
+		this.showCurrentZone(this.getZoneCenter("rata"));
+		this.showCurrentZone(currentcoord);
+	},
+	
+	/*
+	 * Gets the center coordinates of a zone.
+	 * @param string pNick short name of the zone.
+	 * @returns array of x and y coordinates.
+	 */
+	getZoneCenter: function(pNick)
+	{
+		var rect = this.Zones[pNick].rect;
+		// x = OffsetX + (WidthOfZone/2), y = OffsetY + (HeightOfZone/2)
+		var x = rect[0][0] + ~~((rect[1][0] - rect[0][0]) / 2);
+		var y = rect[0][1] + ~~((rect[1][1] - rect[0][1]) / 2);
+		return [x, y];
+	},
+	
+	/*
+	 * Gets the center coordinates of an event.
+	 * @param object pEvent an event from event_details.json
+	 * @returns array of x and y coordinates.
+	 * @pre map_floor.json was extracted to the this.Zones object.
+	 */
+	getEventCenter: function(pEvent)
+	{
+		var zone = this.getZoneFromID(pEvent.map_id);
+		var p = pEvent.location.center; // 3D float array
+
+		return this.convertEventCoord(p, zone);
+	},
+	
+	/*
+	 * Gets the dimension (of say a marker) adjusted to the specified zoom level.
+	 * For example, a submap must be resized so that it is the same scale as
+	 * the map's tileset. It is known that every zoom down doubles the size of
+	 * the map, and vice versa. The formula below is:
+	 * maxdimension / (2 ^ (maxzoomlevel - currentzoomlevel))
+	 * Each zoom down increases the dimension toward the maxdimension, so when
+	 * it's at maxzoomlevel, the returned dimension equals maxdimension.
+	 * @param int pMaxDimension to rescale.
+	 * @param int or enum pZoomLevel for adjustment.
+	 */
+	scaleDimension: function(pMaxDimension, pZoomLevel)
+	{
+		pZoomLevel = pZoomLevel || this.Map.getZoom();
+		return parseInt(pMaxDimension / (Math.pow(this.cZoomFactor, (this.ZoomEnum.Max) - pZoomLevel)));
+	},
+	
+	/*
+	 * Converts a zoom level where 0 is ground level to proper level.
+	 * @param int zoom level inverted.
+	 * @returns int zoom level proper.
+	 */
+	invertZoomLevel: function(pZoomLevel)
+	{
+		return this.ZoomEnum.Max - T.wrapInteger(pZoomLevel, this.ZoomEnum.Max);
+	},
+	
+	/*
+	 * Resizes mapping markers so they scale with the current zoom level.
+	 */
+	adjustZoomMapping: function()
+	{
+		var that = this;
+		var currentzoom = this.Map.getZoom();
+		var waypointsize, landmarksize, eventiconsize, eventringsize;
+		var sectorfontsize, sectoropacity;
+		
+		switch (currentzoom)
+		{
+			case 7: waypointsize = 40; landmarksize = 32; eventiconsize = 32; eventringsize = 256; break;
+			case 6: waypointsize = 32; landmarksize = 24; eventiconsize = 24; eventringsize = 128; break;
+			case 5: waypointsize = 26; landmarksize = 16; eventiconsize = 16; eventringsize = 64; break;
+			case 4: waypointsize = 20; landmarksize = 12; eventiconsize = 12; eventringsize = 32; break;
+			case 3: waypointsize = 16; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
+			default: { waypointsize = 0; landmarksize = 0; eventiconsize = 0; eventringsize = 0; }
+		}
+		
+		switch (currentzoom)
+		{
+			case 7: sectorfontsize = 28; sectoropacity = 0.9; break;
+			case 6: sectorfontsize = 20; sectoropacity = 0.6; break;
+			case 5: sectorfontsize = 16; sectoropacity = 0.3; break;
+			default: { sectorfontsize = 0; sectoropacity = 0; }
+		}
+
+		// Waypoints
+		this.ZoneCurrent.Layers.Waypoint.eachLayer(function(layer) {
+			that.changeMarkerIcon(layer, U.URL_IMG.Waypoint, waypointsize);
+		});
+		
+		// Landmarks
+		this.ZoneCurrent.Layers.Landmark.eachLayer(function(layer) {
+			that.changeMarkerIcon(layer, U.URL_IMG.Landmark, landmarksize);
+			if (layer._icon)
+			{
+				layer._icon.style.opacity = (currentzoom < that.ZoomEnum.Max) ? 0.6 : 0.8;
+			}
+		});
+		
+		// Vista
+		this.ZoneCurrent.Layers.Vista.eachLayer(function(layer) {
+			that.changeMarkerIcon(layer, U.URL_IMG.Vista, landmarksize);
+		});
+		
+		// Challenge
+		this.ZoneCurrent.Layers.Challenge.eachLayer(function(layer) {
+			that.changeMarkerIcon(layer, U.URL_IMG.Challenge, landmarksize);
+		});
+		
+		// Heart
+		this.ZoneCurrent.Layers.Heart.eachLayer(function(layer) {
+			that.changeMarkerIcon(layer, U.URL_IMG.Heart, landmarksize);
+		});
+		
+		// Sector
+		this.ZoneCurrent.Layers.Sector.eachLayer(function(layer) {
+			if (layer._icon)
+			{
+				layer._icon.style.fontSize = sectorfontsize + "px";
+				layer._icon.style.opacity = sectoropacity;
+				layer._icon.style.zIndex = that.cZIndexBury + 1; // Don't cover other icons
+				if (O.Options.bol_displaySectors)
+				{
+					layer._icon.style.display = "table"; // For middle vertical alignment
+				}
+			}
+		});
+		
+		// Event Icon
+		this.ZoneCurrent.Layers.EventIcon.eachLayer(function(layer) {
+			that.changeMarkerIcon(layer, layer._icon.src, eventiconsize);
+			if (layer._icon)
+			{
+				layer._icon.style.zIndex = 1000;
+			}
+		});
+		
+		// Event Ring
+		this.ZoneCurrent.Layers.EventRing.eachLayer(function(layer) {
+			that.changeMarkerIcon(layer, layer._icon.src, eventringsize);
+			if (layer._icon)
+			{
+				layer._icon.style.zIndex = -10000;
+			}
+		});
+		
+		// Character pin and camera FOV
+		this.updateCharacter(-1);
+	},
+	
+	/*
+	 * Resizes Dry Top markers so they scale with the current zoom level.
+	 */
+	adjustZoomDryTop: function()
+	{
+		var that = this;
+		if (C.isDryTopGenerated)
+		{
+			var i;
+			var currentzoom = this.Map.getZoom();
+			var icon;
+			var nickfontsize, nickopacity;
+
+			switch (currentzoom)
+			{
+				case 7: this.currentIconSize = 32; nickfontsize = 20; nickopacity = 0.9; break;
+				case 6: this.currentIconSize = 28; nickfontsize = 16; nickopacity = 0.8; break;
+				case 5: this.currentIconSize = 24; nickfontsize = 12; nickopacity = 0.6; break;
+				case 4: this.currentIconSize = 20; nickfontsize = 0; nickopacity = 0; break;
+				case 3: this.currentIconSize = 16; nickfontsize = 0; nickopacity = 0; break;
+				default:
+				{
+					this.currentIconSize = 0; nickfontsize = 0; nickopacity = 0;
+				}
+			}
+			
+			// Event icons are same size as waypoints, but their rings are bigger
+			this.currentRingSize = this.scaleDimension(this.cRING_SIZE_MAX);
+
+			for (i in this.Entity.DryTopIcons)
+			{
+				// Icons
+				icon = this.Entity.DryTopIcons[i];
+				this.changeMarkerIcon(icon, icon._icon.src, this.currentIconSize);
+				// Rings
+				icon = this.Entity.DryTopRings[i];
+				this.changeMarkerIcon(icon, icon._icon.src, this.currentRingSize);
+				// Don't make the rings overlap clickable waypoints
+				this.Entity.DryTopIcons[i]._icon.style.zIndex = 1000;
+				this.Entity.DryTopRings[i]._icon.style.zIndex = 1;
+			}
+			
+			this.Layer.DryTopNicks.eachLayer(function(layer) {
+				if (layer._icon)
+				{
+					layer._icon.style.fontSize = nickfontsize + "px";
+					layer._icon.style.opacity = nickopacity;
+					layer._icon.style.zIndex = that.cZIndexBury + 1; // Don't cover other icons
+					layer._icon.style.display = "table"; // For middle vertical alignment
+				}
+			});
+			this.DryTopTimer._icon.style.fontSize = (nickfontsize*2) + "px";
+			this.DryTopTimer._icon.style.opacity = nickopacity;
+			this.DryTopTimer._icon.style.zIndex = this.cZIndexBury + 1;
+			this.DryTopTimer._icon.style.display = "table";
+		}
+	},
+	
+	/*
+	 * Returns a common sized Leafet icon.
+	 * @param string pIconURL of the icon image.
+	 * @returns object Leaflet icon.
+	 */
+	createStandardIcon: function(pIconURL)
+	{
+		return L.icon({
+			iconUrl: pIconURL,
+			iconSize: [32, 32],
+			iconAnchor: [16, 16]
+		});
+	},
+	
+	/*
+	 * Changes the marker icon's image and size (Leaflet does not have this method).
+	 * @param object pMarker Leaflet marker.
+	 * @param string pIconURL of the icon image.
+	 * @param int pSize of icon.
+	 */
+	changeMarkerIcon: function(pMarker, pIconURL, pSize)
+	{
+		if (pSize === undefined)
+		{
+			pSize = this.cICON_SIZE_STANDARD;
+		}
+		
+		pMarker.setIcon(new L.icon(
+		{
+			iconUrl: pIconURL,
+			iconSize: [pSize, pSize],
+			iconAnchor: [pSize/2, pSize/2]
+		}));
+	},
+	
+	/*
+	 * Toggles display of layers (a group of markers).
+	 * @param object pLayer of markers.
+	 * @param boolean pBoolean to show or hide.
+	 */
+	toggleLayer: function(pLayer, pBoolean)
+	{
+		// No boolean provided so assumes toggle
+		if (pBoolean === undefined)
+		{
+			pBoolean = !(this.Map.hasLayer(pLayer));
+		}
+		
+		// Show if true, hide if false
+		if (pBoolean)
+		{
+			pLayer.addTo(this.Map);
+		}
+		else
+		{
+			this.Map.removeLayer(pLayer);
+		}
+	},
+	toggleLayerArray: function(pLayerArray, pBoolean)
+	{
+		for (var i in pLayerArray)
+		{
+			this.toggleLayer(pLayerArray[i], pBoolean);
+		}
+	},
+	
+	/*
+	 * Macro function for toggling map entities display (Leaflet doesn't have a
+	 * hide/show markers and paths method except through less flexible layer groups.
+	 * @param array pEntityGroup objects like paths and markers.
+	 * @param string pDisplay to show or hide.
+	 * @pre Array contains only markers or only paths, not both.
+	 */
+	toggleEntity: function(pEntityGroup, pDisplay)
+	{
+		var i;
+		var display;
+		var sample = pEntityGroup[0];
+		var isMarker = (sample._container === undefined); // if false then it's a path
+		
+		if (pDisplay === false || pDisplay === "hide" || pDisplay < 0)
+		{
+			display = "none";
+		}
+		// No display boolean provided, so assume want toggle
+		else if (pDisplay === undefined)
+		{
+			if (isMarker)
+			{
+				display = (sample._icon.style.display === "none") ? "block" : "none";
+			}
+			else
+			{
+				display = (sample._container.style.display === "none") ? "block" : "none";
+			}
+		}
+		else
+		{
+			display = "block";
+		}
+		
+		// Now show or hide as requested
+		if (isMarker)
+		{
+			for (i in pEntityGroup)
+			{
+				pEntityGroup[i]._icon.style.display = display;
+			}
+		}
+		else
+		{
+			for (i in pEntityGroup)
+			{
+				pEntityGroup[i]._container.style.display = display;
+			}
+			
+		}
+	},
+	
+	/*
+	 * Initializes or toggle a submap, which is a Leaflet ImageOverlay over the map.
+	 * Look at general.js for submap declarations.
+	 * @param string pName of the submap.
+	 * @param boolean pBoolean to show or hide.
+	 */
+	toggleSubmap: function(pName, pBoolean)
+	{
+		var submap = this.Submaps[pName];
+		if (submap.ImageOverlay === undefined)
+		{
+			submap.ImageOverlay = L.imageOverlay(submap.img, this.convertGCtoLCMulti(submap.bounds));
+			this.toggleSubmap(pName, pBoolean);
+		}
+		else
+		{
+			// No boolean provided so assumes toggle
+			if (pBoolean === undefined)
+			{
+				pBoolean = !(this.Map.hasLayer(submap.ImageOverlay));
+			}
+
+			// Show if true, hide if false
+			if (pBoolean)
+			{
+				submap.ImageOverlay.addTo(this.Map).bringToBack();
+			}
+			else
+			{
+				this.Map.removeLayer(submap.ImageOverlay);
+			}
+		}
+	},
+	toggleSubmapArray: function(pNames, pBoolean)
+	{
+		for (var i in pNames)
+		{
+			this.toggleSubmap(pNames[i], pBoolean);
+		}
+	},
+	
+	/*
+	 * Moves a pin to a map coordinate.
+	 * @param object pPin to move.
+	 * @param 2D array pCoord coordinates.
+	 */
+	movePin: function(pPin, pCoord)
+	{
+		if (pCoord === undefined)
+		{
+			pCoord = [0,0];
+		}
+		pPin.setLatLng(this.convertGCtoLC(pCoord));
+		pPin._icon.style.zIndex = this.cZIndexRaise;
+	},
+	
+	/*
+	 * Views the map at the specifications.
+	 * @param 2D array pCoord coordinates.
+	 * @param object pPin which to move to coordinate.
+	 * @param enum pZoom level.
+	 */
+	goToView: function(pCoord, pZoom, pPin)
+	{
+		if (pPin !== undefined)
+		{
+			this.movePin(pPin, pCoord);
+		}
+		
+		if (pZoom === undefined)
+		{
+			pZoom = this.ZoomEnum.Ground;
+		}
+		if (pZoom === this.ZoomEnum.Same)
+		{
+			pZoom = this.Map.getZoom();
+		}
+		this.Map.setView(this.convertGCtoLC(pCoord), pZoom);
+		this.showCurrentZone(pCoord);
+	},
+	goToLatLng: function(pLatLng, pZoom)
+	{
+		if (pZoom === undefined)
+		{
+			pZoom = this.ZoomEnum.Ground;
+		}
+		if (pZoom === this.ZoomEnum.Same)
+		{
+			pZoom = this.Map.getZoom();
+		}
+		this.Map.setView(pLatLng, pZoom);
+		this.showCurrentZone(this.convertLCtoGC(pLatLng));
+	},
+	
+	/*
+	 * Views the map at the zone.
+	 * @param string pNick of the zone.
+	 * @param enum pZoom level.
+	 */
+	goToZone: function(pNick, pZoom)
+	{
+		var coord = this.getZoneCenter(pNick);
+		this.showCurrentZone(coord);
+		this.goToView(coord, pZoom);
+	},
+	
+	/*
+	 * Imitates the character pin as in the game minimap, as informed by the overlay.
+	 * @param int pForceCode 1 to force update position, -1 angle, 0 both, undefined neither.
+	 */
+	updateCharacter: function(pForceCode)
+	{
+		/*
+		 * Validate the GPS data before allowing updates.
+		 * Sample structure of position, character angle, and camera angle:
+		 * fAvatarPosition: [116.662186, 44.60492, -104.502495]
+		 * fAvatarFront: [0.070094235, 0.0, 0.99754035]
+		 * fCameraFront: [-0.2597584, 0.02722733, 0.9652897]
+		 * Sample structure of JSON:
+		 * {"name": "Character Name","profession": 1,"race": 2,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false,"fov": 0.873}
+		 */
+		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || this.isUserDragging)
+		{
+			return;
+		}
+		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
+		{
+			return;
+		}
+		if (this.isZoneValid(GPSIdentityJSON["map_id"]) === false)
+		{
+			this.movePin(this.PinCharacter);
+			this.movePin(this.PinCamera);
+			return;
+		}
+		var coord = this.convertGPSCoord(GPSPositionArray, GPSIdentityJSON["map_id"]);
+		if (coord[0] > this.cMAP_BOUND || coord[0] <= 0
+			|| coord[1] > this.cMAP_BOUND || coord[1] <= 0)
+		{
+			return;
+		}
+		
+		// Follow character if opted and position has changed (character moved)
+		if ((O.Options.bol_followCharacter && this.GPSPreviousCoord[0] !== coord[0] && this.GPSPreviousCoord[1] !== coord[1])
+			|| pForceCode >= 0)
+		{
+			this.Map.setView(this.convertGCtoLC(coord), this.Map.getZoom());
+			this.showCurrentZone(coord);
+			this.GPSPreviousCoord = coord;
+			pForceCode = -1; // Also update pin position
+		}
+		
+		// Pin character if opted and angle has changed (character turned)
+		if (O.Options.bol_displayCharacter)
+		{
+			var anglecharacter = -(this.convertGPSAngle(GPSDirectionArray));
+			var anglecamera = -(this.convertGPSAngle(GPSCameraArray));
+			if (this.GPSPreviousAngleCharacter !== anglecharacter
+				|| this.GPSPreviousAngleCamera !== anglecamera
+				|| pForceCode <= 0)
+			{
+				this.movePin(this.PinCharacter, coord);
+				this.movePin(this.PinCamera, coord);
+				this.PinCamera._icon.style.zIndex = this.cZIndexBury;
+				var pintranscharacter = this.PinCharacter._icon.style.transform.toString();
+				var pintranscamera = this.PinCamera._icon.style.transform.toString();
+				if (pintranscharacter.indexOf("rotate") === -1)
+				{
+					this.PinCharacter._icon.style.transform = pintranscharacter + " rotate(" + anglecharacter + "deg)";
+				}
+				if (pintranscamera.indexOf("rotate") === -1)
+				{
+					this.PinCamera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
+				}
+				this.GPSPreviousAngleCharacter = anglecharacter;
+				this.GPSPreviousAngleCamera = anglecamera;
+			}
+		}
+	},
+	
+	/*
+	 * Views the default map view.
+	 */
+	goToDefault: function()
+	{
+		this.Map.setView(this.convertGCtoLC(this.cMAP_CENTER), this.ZoomEnum.Default);
+	},
+	
+	/*
+	 * Views the map at the given URL coordinates if exist.
+	 * URL should be in the form of http://gw2timer.com/?go=4874,16436,1
+	 * @param string pArguments of location to view.
+	 * coords[0] = x coordinate.
+	 * coords[1] = y coordinate.
+	 * coords[2] = z coordinate (zoom level, lower value equals greater zoom-in).
+	 */
+	goToArguments: function(pArguments, pPin)
+	{
+		var i;
+		var coords = [];
+		var zone;
+		if (pArguments)
+		{
+			coords = this.parseCoordinates(pArguments);
+			if (coords.length === 2)
+			{
+				if (isFinite(coords[0]) && isFinite(coords[1]))
+				{
+					this.goToView(coords, this.ZoomEnum.Ground, pPin);
+				}
+			}
+			else if (coords.length >= 3)
+			{
+				if (isFinite(coords[0]) && isFinite(coords[1]) && isFinite(coords[2]))
+				{
+					// Zoom level 0 is ground level (opposite the enum)
+					var zoomlevel = this.invertZoomLevel(coords[2]);
+					this.goToView([coords[0], coords[1]], zoomlevel, pPin);
+				}
+			}
+			else
+			{
+				// Else assume the argument is a short name for the zone
+				zone = pArguments.toLowerCase();
+				if (zone === "default")
+				{
+					this.goToDefault();
+				}
+				else
+				{
+					for (i in this.Zones)
+					{
+						if (zone.indexOf(i) !== -1)
+						{
+							this.goToView(this.getZoneCenter(i), this.ZoomEnum.Bird);
+							break;
+						}
+					}
+				}
+			}
+		}
+		// Only execute this function once
+		U.Args[U.KeyEnum.Go] = null;
+	},
+	
+	/*
+	 * Converts GW2's coordinates XXXXX,XXXXX to Leaflet LatLng coordinates XXX,XXX.
+	 * @param array pCoord array of two numbers.
+	 * @returns LatLng Leaflet object.
+	 */
+	convertGCtoLC: function(pCoord)
+	{
+		return this.Map.unproject(pCoord, this.Map.getMaxZoom());
+	},
+	
+	/*
+	 * Converts multiple GW2 coordinates to multiple LatLng.
+	 * @param array of arrays pCoordArrays to convert.
+	 * @param int pIndexStart starting index.
+	 * @returns array of LatLng.
+	 */
+	convertGCtoLCMulti: function(pCoordArray, pIndexStart)
+	{
+		pIndexStart = pIndexStart || 0;
+		var i;
+		var latlngs = new Array();
+		for (i = pIndexStart; i < pCoordArray.length; i++)
+		{
+			latlngs.push(this.convertGCtoLC(pCoordArray[i]));
+		}
+		return latlngs;
+	},
+	
+	/*
+	 * Converts Leaflet LatLng to GW2's 2 unit array coordinates.
+	 * @param object pLatLng from Leaflet.
+	 * @returns array of x and y coordinates.
+	 */
+	convertLCtoGC: function(pLatLng)
+	{
+		var coord = this.Map.project(pLatLng, this.ZoomEnum.Max);
+		return [Math.round(coord.x), Math.round(coord.y)];
+	},
+	convertLCtoGCMulti: function(pCoordArray)
+	{
+		var coords = new Array();
+		for (var i = 0; i < pCoordArray.length; i++)
+		{
+			coords.push(this.convertLCtoGC(pCoordArray[i]));
+		}
+		return coords;
+	},
+	
+	/*
+	 * Converts a map_floor.json event coordinates to the map coordinates system.
+	 * @param object pZone to translate coordinates.
+	 * @param 3D float array pPos event center. Only uses [0] and [1] values.
+	 * @returns 2D int array map coordinates.
+	 * @pre pZone was initialized (this is asynchronous).
+	 */
+	convertEventCoord: function(pPos, pZone)
+	{
+		var cr = pZone.continent_rect; // 2D float array
+		var mr = pZone.map_rect; // 2D float array
+		
+		// Code from http://gw2.chillerlan.net/examples/gw2maps-jquery.html
+		return [
+			~~(cr[0][0]+(cr[1][0]-cr[0][0])*(pPos[0]-mr[0][0])/(mr[1][0]-mr[0][0])),
+			~~(cr[0][1]+(cr[1][1]-cr[0][1])*(1-(pPos[1]-mr [0][1])/(mr[1][1]-mr[0][1])))
+		];
+	},
+	
+	/*
+	 * Converts a MumbleLink player coordinates to the map coordinates system.
+	 * @param 3D float array pPos [latitude altitude longitude] player position.
+	 * @param string pZoneID of the zone the player is in.
+	 * @returns 2D int array map coordinates.
+	 */
+	convertGPSCoord: function(pPos, pZoneID)
+	{
+		var zone = this.getZoneFromID(pZoneID);
+		var coord = new Array(3);
+		coord[0] = pPos[0] * this.cMETER_TO_INCH; // x coordinate
+		coord[1] = pPos[2] * this.cMETER_TO_INCH; // y coordinate
+		coord[2] = pPos[1] * this.cMETER_TO_INCH; // z coordinate
+		return this.convertEventCoord(coord, zone);
+	},
+	
+	/*
+	 * Converts a MumbleLink 3D vector values to degrees of 2D rotation.
+	 * @param 3D array pVector [x, z, y].
+	 * @returns float degrees.
+	 */
+	convertGPSAngle: function(pVector)
+	{
+		return Math.atan2(pVector[2], pVector[0]) * this.cRADIAN_TO_DEGREE;
+	},
+	
+	/*
+	 * Converts a coordinate string to array coordinates.
+	 * @param string pString coordinates in the form of "[X, Y]" GW2 coords.
+	 * @returns array pCoord array of numbers.
+	 */
+	parseCoordinates: function(pString)
+	{
+		// The regex strips all characters except digits, commas, periods, and minus sign
+		var coord = pString.toString().replace(/[^\d,-.]/g, "");
+		return coord.split(",");
+	},
+	
+	/*
+	 * Sorts an array of GW2 coordinates.
+	 * @param 2D array pArray to sort.
+	 */
+	sortCoordinates: function(pArray, pIsNumbered)
+	{
+		var coord;
+		// Convert to integer
+		for (var i in pArray)
+		{
+			coord = pArray[i];
+			coord[0] = Math.round(coord[0]);
+			coord[1] = Math.round(coord[1]);
+		}
+		// Sort the array
+		pArray.sort(function (a, b)
+		{
+			if (a[0] > b[0])
+			{
+				return 1;
+			}
+			if (a[0] < b[0])
+			{
+				return -1;
+			}
+			return 0;
+		});
+		// Print the result formatted
+		if (pIsNumbered)
+		{
+			for (var i in pArray)
+			{
+				this.printNumberedCoordinates(pArray[i], i);
+			}
+		}
+		else
+		{
+			this.printCoordinates(pArray);
+		}
+	},
+	roundCoordinates: function(pArray)
+	{
+		var coord;
+		// Convert to integer
+		for (var i in pArray)
+		{
+			coord = pArray[i];
+			coord[0] = Math.round(coord[0]);
+			coord[1] = Math.round(coord[1]);
+		}
+		// Print the result formatted
+		this.printCoordinates(pArray);
+	},
+	printCushion: function(pCushion)
+	{
+		for (var i in pCushion)
+		{
+			this.printNumberedCoordinates((pCushion[i]).c, i);
+		}
+	},
+	printNumberedCoordinates: function(pCoord, i)
+	{
+		I.write("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},");
+	},
+	compileCoordinates: function(pCoords)
+	{
+		var output = "";
+		for (var i in pCoords)
+		{
+			output = output + "[" + (pCoords[i])[0] + "," + (pCoords[i])[1] + "],";
+		}
+		output = output.substring(0, output.length - 1); // Trim last comma
+		return "[" + output + "]";
+	},
+	printCoordinates: function(pCoords)
+	{
+		I.write(this.compileCoordinates(pCoords), 30);
+	},
+	
+	/*
+	 * Converts and prints an array of LatLngs to GW2 coordinates.
+	 * @param 2D array pArray.
+	 * @returns 2D array.
+	 */
+	convertLatLngs: function(pArray)
+	{
+		var coords = this.convertLCtoGCMulti(pArray);
+		this.printCoordinates(coords);
+	},
+	
+	/*
+	 * Gets the coordinates from the data attribute of an HTML element.
+	 * @param jqobject pElement to extract from.
+	 * @returns array of GW2 coordinates.
+	 */
+	getElementCoordinates: function(pElement)
+	{
+		var coordstring = pElement.attr("data-coord");
+		if (this.Zones[coordstring])
+		{
+			return this.getZoneCenter(coordstring);
+		}
+		return this.parseCoordinates(coordstring);
+	},
+	
+	/*
+	 * Binds map view event handlers to all map links (dfn tag reserved) in the
+	 * specified container.
+	 * @param string pContainer element ID.
+	 */
+	bindMapLinks: function(pContainer, pZoom)
+	{
+		var that = this;
+		$(pContainer + " dfn").each(function()
+		{
+			$(this).text("[" + $(this).text() + "]");
+			that.bindMapLinkBehavior($(this), pZoom, that.PinProgram);
+		});
+	},
+	
+	/*
+	 * Binds specified link to move a pinpoint to the location when hovered, and
+	 * to view the map location when clicked.
+	 * @param jqobject pLink to bind.
+	 * @param object pPin marker to move.
+	 * @param string pZoom level when viewed location.
+	 */
+	bindMapLinkBehavior: function(pLink, pZoom, pPin)
+	{
+		var that = this;
+		pLink.click(function()
+		{
+			var thiscoord = that.getElementCoordinates($(this));
+			that.goToView(thiscoord, pZoom, pPin);
+		});
+		
+		pLink.dblclick(function()
+		{
+			var thiscoord = that.getElementCoordinates($(this));
+			if (that.Map.getZoom() === that.ZoomEnum.Max)
+			{
+				that.goToView(thiscoord, that.ZoomEnum.Default, pPin);
+			}
+			else
+			{
+				that.goToView(thiscoord, that.ZoomEnum.Ground, pPin);
+			}
+		});
+		
+		// Move a point pin to that location as a preview
+		pLink.mouseover(function()
+		{
+			var thiscoord = that.getElementCoordinates($(this));
+			that.movePin(that.PinOver, thiscoord);
+		});
+		pLink.mouseout(function()
+		{
+			that.movePin(that.PinOver);
+		});
+	},
+	
+	/*
+	 * Binds standard zoom in/out when user do something to an icon on the map.
+	 * @param object pMarker to bind.
+	 * @param string pEventType like "click" or "dblclick".
+	 */
+	bindMarkerZoomBehavior: function(pMarker, pEventType)
+	{
+		var that = this;
+		pMarker.on(pEventType, function(pEvent)
+		{
+			if (that.Map.getZoom() === that.ZoomEnum.Max)
+			{
+				that.Map.setZoom(that.ZoomEnum.Default);
+			}
+			else
+			{
+				that.Map.setView(pEvent.latlng, that.ZoomEnum.Max);
+			}
+		});
+	},
+	bindMappingZoomBehavior: function(pMarker, pEventType)
+	{
+		var that = this;
+		pMarker.on(pEventType, function(pEvent)
+		{
+			if (that.Map.getZoom() === that.ZoomEnum.Max)
+			{
+				that.Map.setZoom(that.ZoomEnum.Sky);
+			}
+			else
+			{
+				that.Map.setView(pEvent.latlng, that.ZoomEnum.Max);
+			}
+		});
+	},
+	bindMarkerCoordBehavior: function(pMarker, pEventType)
+	{
+		var that = this;
+		pMarker.on(pEventType, function()
+		{
+			var coord = that.convertLCtoGC(that.getLatLng());
+			$("#mapCoordinatesCopy")
+				.val("[" + coord[0] + ", " + coord[1] + "]")
+				.select();
+		});
+	},
+	
+	/*
+	 * Translates the zones list in the Map page and bind click zoom behavior.
+	 * @pre The translated names from the API was retrieved.
+	 */
+	bindZoneList: function()
+	{
+		$("#mapZoneList li").each(function()
+		{
+			var zonenick = $(this).attr("data-zone");
+			$(this).text(M.getZoneName(zonenick));
+			$(this).attr("data-coord", M.getZoneCenter(zonenick).toString());
+			M.bindMapLinkBehavior($(this), M.ZoomEnum.Same);
+		});
+		$("#mapZoneList h2").each(function()
+		{
+			var regionnick = $(this).attr("data-region");
+			$(this).text(D.getObjectName(M.Regions[regionnick]));
+		});
+	},
+	
+	/*
+	 * Shows or hides a section's map icons by triggering its toggle button.
+	 * Whether the button will hide or show icons depends on its boolean data attribute.
+	 * @param string pSection name.
+	 * @param boolean pWantShow to show or hide its icons.
+	 */
+	displayIcons: function(pSection, pWantShow)
+	{
+		var button = $("#mapToggle_" + pSection);
+		var isshown;
+		var wanthideonly;
+		if (button.length)
+		{
+			isshown = button.data("checked");
+			wanthideonly = button.data("hideonly");
+			
+			// If toggle button only serves to hide icons
+			if (wanthideonly)
+			{
+				if ( ! pWantShow)
+				{
+					button.trigger("click");
+				}
+			}
+			// If toggle button is two-states
+			else
+			{
+				if (pWantShow)
+				{
+					if ( ! isshown)
+					{
+						button.trigger("click");
+						button.data("checked", true);
+					}
+				}
+				else
+				{
+					if (isshown)
+					{
+						button.trigger("click");
+						button.data("checked", false);
+					}
+				}
+			}
+		}
+	},
+	
+	/*
+	 * Executes GPS functions every specified milliseconds.
+	 */
+	tickGPS: function()
+	{
+		if (O.Options.bol_followCharacter || O.Options.bol_displayCharacter)
+		{
+			M.updateCharacter();
+			window.clearTimeout(this.GPSTimeout);
+			M.GPSTimeout = setTimeout(M.tickGPS, O.Options.int_msecGPSRefresh);
+		}
+	}
+	
+};
+
+/* =============================================================================
+ * @@Populate map functions
+ * ========================================================================== */
+P = {
+	
+	/*
+	 * Creates a pin in the map to be assigned to a reference object.
+	 * @param string pIconURL image of the marker.
+	 * @param 2D array pDimension width and height of pin.
+	 * @returns object Leaflet marker.
+	 */
+	createPin: function(pIconURL, pDimension)
+	{
+		if (pDimension === undefined)
+		{
+			pDimension = [32, 32];
+		}
+		var marker = L.marker(M.convertGCtoLC([0,0]),
+		{
+			icon: L.icon(
+			{
+				iconUrl: pIconURL,
+				iconSize: pDimension,
+				iconAnchor: [(pDimension[0])/2, (pDimension[1])/2]
+			}),
+			draggable: true
+		});
+		M.Layer.Pin.addLayer(marker);
+		return marker;
+	},
+	
+	/*
+	 * Draws a path with each link of increasing or decreasing weight, to
+	 * simulate a worm crawling in a direction.
+	 * @param array pCoords GW2 coordinates.
+	 * @param boolean pIsObverse or reversed.
+	 * @returns LayerGroup path.
+	 * @pre Path has enough links to distinguish themselves.
+	 */
+	drawDirectedPath: function(pCoords, pIsObverse, pColor)
+	{
+		if (pIsObverse === undefined)
+		{
+			pIsObverse = true;
+		}
+		var latlngs = M.convertGCtoLCMulti(pCoords);
+		var layergroup = new L.layerGroup();
+		var numofsegments = 8;
+		var iweight = (pIsObverse) ? 0 : numofsegments-1;
+		pColor = pColor || "lime";
+		
+		for (var i = 0; i < latlngs.length - 1; i++)
+		{
+			layergroup.addLayer(L.polyline([latlngs[i], latlngs[i+1]], {color: pColor, weight: (iweight+2)*2}));
+			iweight = (pIsObverse) ? (iweight+1) : (iweight-1);
+			if (pIsObverse && iweight >= numofsegments)
+			{
+				iweight = 0;
+			}
+			else if (!pIsObverse && iweight < 0)
+			{
+				iweight = numofsegments-1;
+			}
+		}
+		return layergroup;
+	},
+	
+	/*
+	 * Draws spots representing an interactable item in the game world.
+	 * @param array pCoords GW2 coordinates.
+	 * @returns LayerGroup circles.
+	 */
+	drawSpots: function(pCoords, pOptions)
+	{
+		var latlngs = M.convertGCtoLCMulti(pCoords);
+		var layergroup = new L.layerGroup();
+		var Options = {radius: 10, color: "lime", weight: 4};
+		if (pOptions !== undefined)
+		{
+			for (var i in pOptions)
+			{
+				Options[i] = pOptions[i];
+			}
+		}
+		
+		for (var i in latlngs)
+		{
+			layergroup.addLayer(L.circleMarker(latlngs[i], Options));
+		}
+		return layergroup;
+	},
 	
 	/*
 	 * Generates icons and rings for all dynamic events.
@@ -9809,23 +9827,19 @@ G = {
 };
 
 /* =============================================================================
- * @@World vs World map and objectives
+ * @@World vs World Mists map and objectives, an extension of the M object
  * ========================================================================== */
 W = {
 	
-	Map: {},
-	isMapInitialized: false,
-	isMouseOnHUD: false,
-	isMapAJAXDone: false,
-	isAPIRetrieved_MAPFLOOR: false,
-	isMappingIconsGenerated: false,
-	isEventIconsGenerated: false,
-	cMAP_BOUND: 16384, // The map is a square
-	cMAP_CENTER: [8192, 8192],
-	cWVW_CENTER: [10500, 12300],
-	cZoomLevelFactor: 2,
+	Zones: {},
+	ZoneAssociation: {},
+	cInitialZone: "eternal",
+	cMAP_BOUND: 16384,
+	cMAP_CENTER: [10400, 12400], // This centers at the WvW portion of the map
+	cMAP_CENTER_ACTUAL: [8192, 8192],
 	ZoomEnum:
 	{
+		Same: -1,
 		Min: 0,
 		Default: 3,
 		Space: 3,
@@ -9837,35 +9851,57 @@ W = {
 	
 	initializeMap: function()
 	{
-		// W.World is the actual Leaflet map object, initialize it
+		// Merge W's unique variables and functions into M, and use that new object as W
+		var tempobject = $.extend({}, M, W);
+		$.extend(W, tempobject);
+		
+		// Initialize
 		W.Map = L.map("paneWvW", {
 			minZoom: W.ZoomEnum.Min,
 			maxZoom: W.ZoomEnum.Max,
 			inertiaThreshold: M.cInertiaThreshold,
 			doubleClickZoom: false,
-			touchZoom: false, // Disable pinch to zoom
-			zoomControl: I.isOnSmallDevice, // Hide the zoom UI
-			attributionControl: false, // Hide the Leaflet link UI
+			touchZoom: false,
+			zoomControl: I.isOnSmallDevice,
+			attributionControl: false,
 			crs: L.CRS.Simple
 		}).setView([-192, 164], W.ZoomEnum.Default);
-		// Because the map will interfere with scrolling the website on touch devices
+		
+		// Do other initializations
+		W.populateMap();
+		
 		W.Map.touchZoom.disable();
 		if (W.Map.tap)
 		{
 			W.Map.tap.disable();
 		}
 		
-		// Set tile
 		L.tileLayer(U.URL_API.TilesMists,
 		{
 			continuousWorld: true
 		}).addTo(W.Map);
 		
+		var zone;
+		for (var i in W.Zones)
+		{
+			zone = W.Zones[i];
+			zone.center = M.getZoneCenter(i);
+			zone.nick = i;
+			zone.Layers = {
+				Waypoint: new L.layerGroup(),
+				Landmark: new L.layerGroup(),
+				Vista: new L.layerGroup(),
+				Challenge: new L.layerGroup(),
+				Sector: new L.layerGroup(),
+			};
+			M.LayerArray.Path.push(zone.Layers.Path);
+		}
+		W.ZoneCurrent = M.Zones[M.cInitialZone];
+		
+		//W.populateMap();
+		
 		if ( ! W.Map.tap)
 		{
-			/*
-			 * Clicking an empty place on the map highlight its coordinate.
-			 */
 			W.Map.on("click", function(pEvent)
 			{
 				if (W.isMouseOnHUD) { return; }
@@ -9875,36 +9911,30 @@ W = {
 					.select();
 			});
 
-			/*
-			 * Move the personal pin marker to where the user double clicks.
-			 */
 			W.Map.on("dblclick", function(pEvent)
 			{
 				if (W.isMouseOnHUD) { return; }
 				////////W.PinPersonal.setLatLng(pEvent.latlng);
 			});
 		}
-		
-		/*
-		 * Go to the coordinates in the bar when user presses enter.
-		 */
+
 		$("#wvwCoordinatesCopy").onEnterKey(function()
 		{
 			W.goToArguments($(this).val());
 		});
 		
-		/*
-		 * Bind map HUD buttons functions.
-		 */
 		$("#wvwMapButton").click(function()
 		{
 			$("#paneWvW").hide();
 			$("#paneMap").show();
 			M.refreshMap();
+			I.PageCurrent = I.PagePrevious;
+			I.PagePrevious = I.SpecialPageEnum.WvW;
+			U.updateQueryString();
+			I.isWvWPage = false;
 		});
 		$("#wvwGPSButton").click(function()
 		{
-			// Go to character if cliked on GPS button.
 			M.updateCharacter(1);
 		}).dblclick(function()
 		{
@@ -9919,40 +9949,19 @@ W = {
 		});
 		$("#wvwDisplayButton").click(function()
 		{
-			// Hide the right panel if click on the display button
 			$("#opt_bol_showPanel").trigger("click");
 		});
-		// Translate and bind map zones list
 		$("#wvwCompassButton").one("mouseenter", W.bindZoneList).click(function()
 		{
 			W.goToDefault();
 		});
 		
-		// Finally
 		W.isMapInitialized = true;
 		W.bindMapVisualChanges();
 	},
 	
-	/*
-	 * Informs Leaflet that the map pane was resized so it can load tiles properly.
-	 */
-	refreshMap: function()
-	{
-		if (W.isMapInitialized)
-		{
-			W.Map.invalidateSize();
-		}
-	},
-	
-	/*
-	 * Bindings for map events that need to be done after AJAX has loaded the
-	 * API-generated markers.
-	 */
 	bindMapVisualChanges: function()
 	{
-		/*
-		 * Booleans to stop some map functions from activating.
-		 */
 		$("#paneHUDWvW").hover(
 			function() { W.isMouseOnHUD = true; },
 			function() { W.isMouseOnHUD = false; }
@@ -9966,11 +9975,6 @@ W = {
 			W.isUserDragging = false;
 		});
 		
-		/*
-		 * Bind the mousemove event to update the map coordinate bar.
-		 * Note that the throttle function is from a separate script. It permits
-		 * the event handler to only run once every so specified milliseconds.
-		 */
 		W.Map.on("mousemove", $.throttle(M.cMAP_MOUSEMOVE_RATE, function(pEvent)
 		{
 			if (W.isMouseOnHUD || W.isUserDragging) { return; }
@@ -9980,97 +9984,27 @@ W = {
 			//M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
 		}));
 
-		/*
-		 * At the end of a zoom animation, resize the map waypoint icons
-		 * depending on zoom level. Hide if zoomed too far.
-		 */
 		W.Map.on("zoomend", function(pEvent)
 		{
-			/*M.adjustZoomMapping();
-			M.adjustZoomDryTop();*/
+			/*W.adjustZoomMapping();*/
 		});
 	},
 	
-	/*
-	 * Converts GW2's coordinates XXXXX,XXXXX to Leaflet LatLng coordinates XXX,XXX.
-	 * @param array pCoord array of two numbers.
-	 * @returns LatLng Leaflet object.
-	 */
-	convertGCtoLC: function(pCoord)
+	bindZoneList: function()
 	{
-		return W.Map.unproject(pCoord, W.Map.getMaxZoom());
-	},
-	
-	/*
-	 * Converts Leaflet LatLng to GW2's 2 unit array coordinates.
-	 * @param object pLatLng from Leaflet.
-	 * @returns array of x and y coordinates.
-	 */
-	convertLCtoGC: function(pLatLng)
-	{
-		var coord = W.Map.project(pLatLng, W.ZoomEnum.Max);
-		return [Math.round(coord.x), Math.round(coord.y)];
-	},
-	
-	/*
-	 * Views the default map view.
-	 */
-	goToDefault: function()
-	{
-		W.Map.setView(W.convertGCtoLC(W.cMAP_CENTER), W.ZoomEnum.Default);
-	},
-	
-	/*
-	 * Views the map at the specifications.
-	 * @param 2D array pCoord coordinates.
-	 * @param object pPin which to move to coordinate.
-	 * @param enum pZoom level.
-	 */
-	goToView: function(pCoord, pZoom)
-	{
-		if (pZoom === undefined)
+		/*var that = this;
+		$("#mapZoneList li").each(function()
 		{
-			pZoom = W.ZoomEnum.Ground;
-		}
-		if (pZoom === W.ZoomEnum.Same)
+			var zonenick = $(this).attr("data-zone");
+			$(this).text(that.getZoneName(zonenick));
+			$(this).attr("data-coord", that.getZoneCenter(zonenick).toString());
+			that.bindMapLinkBehavior($(this), that.ZoomEnum.Same);
+		});
+		$("#mapZoneList h2").each(function()
 		{
-			pZoom = W.Map.getZoom();
-		}
-		W.Map.setView(W.convertGCtoLC(pCoord), pZoom);
-		W.showCurrentZone(pCoord);
-	},
-	
-	/*
-	 * Views the map at the given URL coordinates if exist.
-	 * URL should be in the form of http://gw2timer.com/?go=[4874,16436,1]
-	 * @param string pArguments of location to view.
-	 * coords[0] = x coordinate.
-	 * coords[1] = y coordinate.
-	 * coords[2] = z coordinate (zoom level, lower value equals greater zoom-in).
-	 */
-	goToArguments: function(pArguments)
-	{
-		var coords = [];
-		if (pArguments)
-		{
-			coords = M.parseCoordinates(pArguments);
-			if (coords.length === 2)
-			{
-				if (isFinite(coords[0]) && isFinite(coords[1]))
-				{
-					W.goToView(coords);
-				}
-			}
-			else if (coords.length >= 3)
-			{
-				if (isFinite(coords[0]) && isFinite(coords[1]) && isFinite(coords[2]))
-				{
-					// Zoom level 0 is ground level (opposite the enum)
-					var zoomlevel = M.invertZoomLevel(coords[2]);
-					W.goToView([coords[0], coords[1]], zoomlevel);
-				}
-			}
-		}
+			var regionnick = $(this).attr("data-region");
+			$(this).text(D.getObjectName(that.Regions[regionnick]));
+		});*/
 	},
 };
 
@@ -12333,6 +12267,7 @@ I = {
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
 	isMapEnabled: true,
+	isWvWPage: false,
 	ModeCurrent: null,
 	ModeEnum:
 	{
@@ -12344,6 +12279,7 @@ I = {
 	cPagePrefix: "#plate",
 	cMenuPrefix: "#menu",
 	PageCurrent: "",
+	PagePrevious: "",
 	PageEnum:
 	{
 		// These are the X in "menuX" and "plateX" IDs in the HTML
@@ -12351,6 +12287,11 @@ I = {
 		Map: "Map",
 		Help: "Help",
 		Options: "Options"
+	},
+	SpecialPageEnum:
+	{
+		WvW: "WvW",
+		DryTop: "DryTop"
 	},
 	// Section names must be unique, and may either be in sentence case or all caps
 	SectionEnum:
@@ -13137,10 +13078,12 @@ I = {
 			$(this).click(function()
 			{
 				var plate = $(this).attr("id");
-				var pageprevious = I.PageCurrent;
 				I.PageCurrent = plate.substring(I.cMenuPrefix.length-1, plate.length);
 				I.contentCurrentPlate = I.cPagePrefix + I.PageCurrent;
-				
+				if (I.isWvWPage)
+				{
+					I.PagePrevious = I.PageCurrent;
+				}
 				switch (I.PageCurrent)
 				{
 					case I.PageEnum.Chains:

@@ -550,9 +550,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Kills", "Keep", "Camp"]
 },
 "18": {
-	pve: ["Forager Orr", "Activity", "Metrica", "Fractal 1-10"],
-	pvp: ["Capture", "Rank", "Warrior Guardian", "Ranger Engineer"],
-	wvw: ["Land", "Guard", "Keep", "Defender"]
+	pve: ["Forager Ascalon", "Forger", "Southsun", "Megades"],
+	pvp: ["Defender", "Capture", "Warrior Necromancer", "Thief Mesmer"],
+	wvw: ["Spender", "Ruins", "Defender", "Camp"]
 },
 "19": {
 	pve: ["Lumberer Kryta", "Fractal", "Frostgorge", "SB"],

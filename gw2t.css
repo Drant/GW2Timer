@@ -98,7 +98,7 @@ ins {
 	max-width: 62%;
 	max-height: 95%;
 	position: fixed;
-	z-index: 9;
+	z-index: 10;
 	top: 24px;
 	left: 24px;
 	font-family: monospace;
@@ -390,7 +390,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 /* Right side: Misc links */
 .itemMapPeripheral {
 	display: inline-block;
-	width: 100%;
+	width: 520px; /* This becomes the maximum size of the HUD popup divs */
 	text-align: right;
 }
 .itemMapPeripheral div {
