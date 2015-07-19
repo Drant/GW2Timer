@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x580, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2015.07.16 modified - 2014.04.18 created
+	Version: 2015.07.18 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -57,7 +57,7 @@ del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0
 /* Structure (same order as browser view)
 body > windowMain
 {
-	panelLeft[paneMap], panelRight[paneClock, paneMenu, paneContent]
+	panelLeft[mapPane], panelRight[paneClock, paneMenu, paneContent]
 }
 ----------------------------------------------------------------------------- */
 @font-face {
@@ -323,12 +323,12 @@ html, body,
 
 /* @@Map pane
 ----------------------------------------------------------------------------- */
-#paneMap, #paneWvW {
+#mapPane, #wvwPane {
 	height: 100%;
 	min-height: 220px;
 	background: url("img/background/space.jpg") repeat center;
 }
-#paneWvW {
+#wvwPane {
 	display: none;
 	background: white;
 }
@@ -356,7 +356,7 @@ html, body,
 	color: #ddff77;
 }
 #itemMapCountdown span {
-	color: red;
+	color: #7f807f;
 }
 #itemMapCountdown samp {
 	color: lime;
@@ -470,26 +470,27 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 
 /* Map options */
-#mapOptionsDisplay, #mapOptionsOther {
+#mapOptionsDisplay, #mapOptionsOther,
+#wvwOptionsDisplay, #wvwOptionsOther{
 	display: inline-block;
 	vertical-align: top;
 }
-#mapOptionsDisplay {
+#mapOptionsDisplay, #wvwOptionsDisplay {
 	padding-right: 8px;
 	margin-right: 4px;
 	border-right: 1px solid gray;
 }
-#mapOptionsCompletion {
+#mapOptionsCompletion, #wvwOptionsCompletion {
 	margin-bottom: 8px;
 }
-#mapOptionsCompletion label {
+#mapOptionsCompletion label, #wvwOptionsCompletion label {
 	margin: 0;
 	padding: 0;
 }
-#mapOptionsOther label {
+#mapOptionsOther label, #wvwOptionsOther label {
 	margin-bottom: 4px;
 }
-#mapOptionsPopup label img {
+#mapOptionsPopup label img, #wvwOptionsPopup label img {
 	width: 24px; height: 24px;
 	margin-right: 4px;
 	vertical-align: middle;

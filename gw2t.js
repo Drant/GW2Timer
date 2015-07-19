@@ -110,6 +110,12 @@ O = {
 		bol_displayChallenges: true,
 		bol_displayHearts: true,
 		bol_displayEvents: false,
+		bol_showWorldCompletionWvW: false,
+		bol_displaySectorsWvW: true,
+		bol_displayWaypointsWvW: true,
+		bol_displayPOIsWvW: true,
+		bol_displayVistasWvW: true,
+		bol_displayChallengesWvW: true,
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: false,
@@ -168,6 +174,60 @@ O = {
 			Portuguese: "pt",
 			Russian: "ru",
 			Mandarin: "zh"
+		},
+		Server:
+		{
+			AnvilRock: "1001",
+			BorlisPass: "1002",
+			YaksBend: "1003",
+			HengeofDenravi: "1004",
+			Maguuma: "1005",
+			SorrowsFurnace: "1006",
+			GateofMadness: "1007",
+			JadeQuarry: "1008",
+			FortAspenwood: "1009",
+			EhmryBay: "1010",
+			StormbluffIsle: "1011",
+			Darkhaven: "1012",
+			SanctumofRall: "1013",
+			CrystalDesert: "1014",
+			IsleofJanthir: "1015",
+			SeaofSorrows: "1016",
+			TarnishedCoast: "1017",
+			NorthernShiverpeaks: "1018",
+			Blackgate: "1019",
+			FergusonsCrossing: "1020",
+			Dragonbrand: "1021",
+			Kaineng: "1022",
+			DevonasRest: "1023",
+			EredonTerrace: "1024",
+			FissureofWoe: "2001",
+			Desolation: "2002",
+			Gandara: "2003",
+			Blacktide: "2004",
+			RingofFire: "2005",
+			Underworld: "2006",
+			FarShiverpeaks: "2007",
+			WhitesideRidge: "2008",
+			RuinsofSurmia: "2009",
+			SeafarersRest: "2010",
+			Vabbi: "2011",
+			PikenSquare: "2012",
+			AuroraGlade: "2013",
+			GunnarsHold: "2014",
+			JadeSea: "2101",
+			FortRanik: "2102",
+			AuguryRock: "2103",
+			VizunahSquare: "2104",
+			Arborstone: "2105",
+			Kodash: "2201",
+			Riverside: "2202",
+			ElonaReach: "2203",
+			AbaddonsMouth: "2204",
+			DrakkarLake: "2205",
+			MillersSound: "2206",
+			Dzagonur: "2207",
+			BaruchBay: "2301"
 		}
 	},
 	/*
@@ -206,11 +266,6 @@ O = {
 	 */
 	validateEnum: function(pEnumName, pValue)
 	{
-		if (pEnumName === "enu_Server")
-		{
-			// The server enum is validated in the WvW initialization
-			return pValue;
-		}
 		var i;
 		var enumobject = O.OptionEnum[U.getVariableSuffix(pEnumName)];
 		for (i in enumobject)
@@ -1037,6 +1092,7 @@ U = {
 	
 	URL_DATA:
 	{
+		WvW: "data/wvw.js",
 		// Data to load when opening a map section
 		DryTop: "data/drytop.js",
 		Resource: "data/resource.js",
@@ -1631,7 +1687,7 @@ U = {
 			switch (page)
 			{
 				case "wvw": {
-					$("#mapWvWButton").trigger("click");
+					$("#mapSwitchButton").trigger("click");
 				} break;
 				case "drytop": {
 					$("#listChainsScheduled").prev().trigger("click"); // Hide scheduled chains list
@@ -3483,9 +3539,9 @@ E = {
 			// Bind name search box behavior
 			$(name).on("input", $.throttle(E.cSEARCH_LIMIT, function()
 			{
-				var query = $(this).val();
+				var query = U.escapeHTML($(this).val());
 				var entry = $(this).parents(".trdEntry");
-				var resultscontainer, resultslist;
+				var resultslist;
 				// If keywords are below this length then ignore
 				if (query.length < 3)
 				{
@@ -3505,7 +3561,8 @@ E = {
 						insertSearchResult(pDataInner, query, resultslist);
 					}).fail(function()
 					{
-						resultscontainer.remove();
+						I.write("No results found for Item ID: " + query + ".");
+						entry.find(".trdResultsContainer").remove();
 					});
 					return;
 				}
@@ -3579,6 +3636,10 @@ E = {
 								insertSearchResult(pDataInner, query, resultslist);
 							});
 						}
+					}
+					else
+					{
+						I.write("No results found for &quot;" + query + "&quot;.");
 					}
 				}}).fail(function()
 				{
@@ -6444,7 +6505,7 @@ C = {
 };
 
 /* =============================================================================
- * @@Map of Tyria and map control
+ * @@Map and map control template
  * ========================================================================== */
 M = {
 	/*
@@ -6452,6 +6513,7 @@ M = {
 	 * with their rectangular coordinates.
 	 * This is referred to by the variable "Zones".
 	 */
+	MapEnum: "map",
 	Zones: GW2T_ZONE_DATA,
 	ZoneAssociation: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
 	Regions: GW2T_REGION_DATA,
@@ -6466,8 +6528,6 @@ M = {
 	Collectibles: {},
 	Guild: {},
 	ZoneCurrent: {},
-	currentIconSize: 32,
-	currentRingSize: 256,
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
 	isMapInitialized: false,
@@ -6479,6 +6539,7 @@ M = {
 	isEventIconsGenerated: false,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
+	cMAP_CENTER_INITIAL: [-1024, 1024], // Out of map boundary so browser doesn't download tiles yet
 	cMAP_MOUSEMOVE_RATE: 100,
 	cInertiaThreshold: 100, // Milliseconds between drag and release to flick pan
 	cZoomFactor: 2,
@@ -6573,6 +6634,534 @@ M = {
 	},
 	
 	/*
+	 * Initializes the Leaflet map, adds markers, and binds events.
+	 */
+	initializeMap: function()
+	{
+		var that = this;
+		var htmlidprefix = "#" + this.MapEnum;
+		// ?.Map is the actual Leaflet map object, initialize it
+		this.Map = L.map(this.MapEnum + "Pane", {
+			minZoom: this.ZoomEnum.Min,
+			maxZoom: this.ZoomEnum.Max,
+			inertiaThreshold: this.cInertiaThreshold,
+			doubleClickZoom: false,
+			touchZoom: false, // Disable pinch to zoom
+			zoomControl: I.isOnSmallDevice, // Hide the zoom UI
+			attributionControl: false, // Hide the Leaflet link UI
+			crs: L.CRS.Simple
+		}).setView(this.cMAP_CENTER_INITIAL, this.ZoomEnum.Default); // Out of map boundary so browser doesn't download tiles yet
+		// Because the map will interfere with scrolling the website on touch devices
+		this.Map.touchZoom.disable();
+		if (this.Map.tap)
+		{
+			this.Map.tap.disable();
+		}
+		
+		// Initialize array in zones to later hold world completion and dynamic event icons
+		var zone;
+		for (var i in this.Zones)
+		{
+			zone = this.Zones[i];
+			zone.center = this.getZoneCenter(i);
+			zone.nick = i;
+			zone.Layers = {
+				Path: new L.layerGroup(),
+				Waypoint: new L.layerGroup(),
+				Landmark: new L.layerGroup(),
+				Vista: new L.layerGroup(),
+				Challenge: new L.layerGroup(),
+				Heart: new L.layerGroup(),
+				Sector: new L.layerGroup(),
+				EventIcon: new L.layerGroup(),
+				EventRing: new L.layerGroup()
+			};
+			this.LayerArray.Path.push(zone.Layers.Path);
+		}
+		this.ZoneCurrent = this.Zones[this.cInitialZone];
+		
+		// Do other initialization functions
+		switch (this.MapEnum)
+		{
+			case I.MapEnum.Tyria: {
+				this.populateMap(I.MapEnum.Tyria);
+				C.ScheduledChains.forEach(P.drawChainPaths);
+			} break;
+			
+			case I.MapEnum.Mists: {
+				// Set tiles, Tyria tiles is set later to avoid loading extra images
+				L.tileLayer(U.URL_API.TilesMists,
+				{
+					continuousWorld: true
+				}).addTo(W.Map);
+			} break;
+		}
+		
+		if ( ! this.Map.tap)
+		{
+			/*
+			 * Clicking an empty place on the map highlight its coordinate.
+			 */
+			this.Map.on("click", function(pEvent)
+			{
+				if (that.isMouseOnHUD) { return; }
+				var coord = that.convertLCtoGC(pEvent.latlng);
+				$(htmlidprefix + "CoordinatesCopy")
+					.val("[" + coord[0] + ", " + coord[1] + "]")
+					.select();
+			});
+
+			/*
+			 * Move the personal pin marker to where the user double clicks.
+			 */
+			this.Map.on("dblclick", function(pEvent)
+			{
+				if (that.isMouseOnHUD) { return; }
+				that.PinPersonal.setLatLng(pEvent.latlng);
+			});
+		}
+		
+		/*
+		 * Go to the coordinates in the bar when user presses enter.
+		 */
+		$(htmlidprefix + "CoordinatesCopy").onEnterKey(function()
+		{
+			that.goToArguments($(this).val(), that.PinPersonal);
+		});
+		
+		/*
+		 * Bind map HUD buttons functions.
+		 */
+		$(htmlidprefix + "GPSButton").click(function()
+		{
+			// Go to character if cliked on GPS button
+			that.updateCharacter(1);
+		}).dblclick(function()
+		{
+			if (that.Map.getZoom() !== that.ZoomEnum.Ground)
+			{
+				that.Map.setZoom(that.ZoomEnum.Ground);
+			}
+			else
+			{
+				that.Map.setZoom(that.ZoomEnum.Default);
+			}
+		});
+		$(htmlidprefix + "DisplayButton").click(function()
+		{
+			// Hide the right panel if click on the display button
+			$("#opt_bol_showPanel").trigger("click");
+		});
+		// Translate and bind map zones list
+		$(htmlidprefix + "CompassButton").one("mouseenter", that.bindZoneList).click(function()
+		{
+			that.goToDefault();
+		});
+		
+		// Finally
+		this.isMapInitialized = true;
+		this.refreshMap();
+	},
+	
+	/*
+	 * Generates map waypoints and other markers from the GW2 server API files.
+	 */
+	populateMap: function()
+	{
+		var that = this;
+		/*
+		 * map_floor.json sample structure of desired data
+		 * Code based on API documentation.
+		{
+			"regions":
+			{
+				"1":
+				{
+					"name": "Shiverpeak Mountains"
+					"maps":
+					{
+						"26":
+						{
+							"name": "Dredgehaunt Cliffs",
+							"continent_rect": [[19456, 14976], [21760, 18176]],
+							"points_of_interest":
+							[{
+								"poi_id": 602,
+								"name": "Grey Road Waypoint",
+								"type": "waypoint",
+								"coord": [20684.6, 17105.3]
+							},
+							...
+							]
+						}
+					}
+				}
+			}
+		}*/
+		if (I.isMapEnabled)
+		{
+		$.getJSON(U.URL_API.MapFloorTyria, function(pData)
+		{
+			var i;
+			var regionid, region, zoneid, ithzone, poi;
+			var zoneobj;
+			var numofpois;
+			var marker;
+			var icon;
+			var cssclass;
+			var mappingtype;
+			var tooltip;
+
+			for (regionid in pData.regions)
+			{
+				region = pData.regions[regionid];
+
+				for (zoneid in region.maps)
+				{
+					// Don't bother parsing if not a regular world zone
+					if ( ! that.ZoneAssociation[zoneid])
+					{
+						continue;
+					}
+					
+					ithzone = region.maps[zoneid];
+					zoneobj = that.getZoneFromID(zoneid);
+					// Store zone dimension data for locating events
+					zoneobj.map_rect = ithzone.map_rect;
+					zoneobj.continent_rect = ithzone.continent_rect;
+					// Cover the zone with a colored rectangle signifying its region
+					that.Layer.ZoneRectangle.addLayer(L.rectangle(
+						that.convertGCtoLCMulti(zoneobj.rect), {
+							fill: false,
+							color: that.Regions[zoneobj.region].color,
+							weight: 2,
+							clickable: false
+						}
+					));
+					
+					/* 
+					 * For waypoints, points of interest, and vistas.
+					 */
+					numofpois = ithzone.points_of_interest.length;
+					for (i = 0; i < numofpois; i++)
+					{
+						poi = ithzone.points_of_interest[i];
+
+						// Properties assignment based on POI's type
+						switch (poi.type)
+						{
+							case that.APIPOIEnum.Waypoint:
+							{
+								// Waypoints are always created, others are optional
+								mappingtype = that.MappingEnum.Waypoint;
+								icon = U.URL_IMG.Waypoint;
+								cssclass = "mapWp";
+								tooltip = poi.name;
+							} break;
+							
+							case that.APIPOIEnum.Landmark:
+							{
+								if (O.Options.bol_showWorldCompletion === false)
+								{
+									continue;
+								}
+								mappingtype = that.MappingEnum.Landmark;
+								icon = U.URL_IMG.Landmark;
+								cssclass = "mapPoi";
+								tooltip = poi.name;
+							} break;
+							
+							case that.APIPOIEnum.Vista:
+							{
+								if (O.Options.bol_showWorldCompletion === false)
+								{
+									continue;
+								}
+								mappingtype = that.MappingEnum.Vista;
+								icon = U.URL_IMG.Vista;
+								cssclass = "mapPoi";
+								tooltip = D.getPhrase("Vista");
+							} break;
+							
+							default: continue; // Don't create marker if not desired type
+						}
+
+						marker = L.marker(that.convertGCtoLC(poi.coord),
+						{
+							title: "<span class='" + cssclass + "'>" + tooltip + "</span>",
+							markername: poi.name,
+							mappingtype: mappingtype,
+							icon: L.icon(
+							{
+								iconUrl: icon,
+								iconSize: [16, 16], // Initial size corresponding to default zoom level
+								iconAnchor: [8, 8]
+							}),
+							link: U.getChatlinkFromPoiID(poi.poi_id)
+						});
+						
+						// Bind behavior
+						switch (poi.type)
+						{
+							case that.APIPOIEnum.Waypoint:
+							{
+								marker.on("mouseout", function()
+								{
+									this._icon.src = U.URL_IMG.Waypoint;
+								});
+								marker.on("mouseover", function()
+								{
+									this._icon.src = U.URL_IMG.WaypointOver;
+								});
+								zoneobj.Layers.Waypoint.addLayer(marker);
+							} break;
+							case that.APIPOIEnum.Landmark:
+							{
+								marker.on("mouseout", function()
+								{
+									this._icon.src = U.URL_IMG.Landmark;
+								});
+								marker.on("mouseover", function()
+								{
+									this._icon.src = U.URL_IMG.LandmarkOver;
+								});
+								zoneobj.Layers.Landmark.addLayer(marker);
+							} break;
+							case that.APIPOIEnum.Vista:
+							{
+								zoneobj.Layers.Vista.addLayer(marker);
+							} break;
+						}
+						// Clicking on waypoints or POIs gives a chatcode
+						if (poi.type === that.APIPOIEnum.Waypoint || poi.type === that.APIPOIEnum.Landmark)
+						{
+							marker.on("click", function()
+							{
+								$("#mapCoordinatesCopy").val(this.options.link).select();
+								$("#mapCoordinatesName").val(this.options.markername);
+							});
+							that.bindMappingZoomBehavior(marker, "dblclick");
+						}
+						else
+						{
+							that.bindMappingZoomBehavior(marker, "click");
+						}
+					}
+					
+					/*
+					 * For API separate arrays for pois.
+					 */
+					if (O.Options.bol_showWorldCompletion)
+					{
+						// Hero Challenges
+						numofpois = ithzone.skill_challenges.length;
+						for (i = 0; i < numofpois; i++)
+						{
+							poi = ithzone.skill_challenges[i];
+							marker = L.marker(that.convertGCtoLC(poi.coord),
+							{
+								title: "<span class='" + "mapPoi" + "'>" + D.getPhrase("Hero Challenge") + "</span>",
+								mappingtype: that.MappingEnum.Challenge,
+								icon: L.icon(
+								{
+									iconUrl: U.URL_IMG.Challenge,
+									iconSize: [16, 16],
+									iconAnchor: [8, 8]
+								})
+							});
+							that.bindMappingZoomBehavior(marker, "click");
+							zoneobj.Layers.Challenge.addLayer(marker);
+						}
+						
+						// Renown Hearts
+						numofpois = ithzone.tasks.length;
+						for (i = 0; i < numofpois; i++)
+						{
+							poi = ithzone.tasks[i];
+							marker = L.marker(that.convertGCtoLC(poi.coord),
+							{
+								title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
+								task: poi.objective,
+								mappingtype: that.MappingEnum.Heart,
+								icon: L.icon(
+								{
+									iconUrl: U.URL_IMG.Heart,
+									iconSize: [16, 16],
+									iconAnchor: [8, 8]
+								})
+							});
+							marker.on("click", function(pEvent)
+							{
+								var heartname = this.options.task;
+								// Trim trailing period if exists
+								if (heartname.indexOf(".") === heartname.length - 1)
+								{
+									heartname = heartname.slice(0, -1);
+								}
+								U.openExternalURL(U.getWikiLanguageLink(heartname));
+							});
+							zoneobj.Layers.Heart.addLayer(marker);
+						}
+						
+						// Sector Names
+						numofpois = ithzone.sectors.length;
+						for (i = 0; i < numofpois; i++)
+						{
+							poi = ithzone.sectors[i];
+							marker = L.marker(that.convertGCtoLC(poi.coord),
+							{
+								clickable: false,
+								mappingtype: that.MappingEnum.Sector,
+								icon: L.divIcon(
+								{
+									className: "mapSec",
+									html: "<span class='mapSecIn'>" + poi.name + "</span>",
+									iconSize: [512, 64],
+									iconAnchor: [256, 32]
+								})
+							});
+							zoneobj.Layers.Sector.addLayer(marker);
+						}
+						
+						that.isMappingIconsGenerated = true;
+					}
+				}
+			}
+		}).done(function() // Map is populated by AJAX
+		{
+			that.isAPIRetrieved_MAPFLOOR = true;
+			
+			/*
+			 * AJAX takes a while so can use this to advantage to delay graphics
+			 * that seem out of place without a map loaded.
+			 */
+			if (O.Options.bol_displayEvents === false)
+			{
+				P.donePopulation();
+			}
+			
+		}).fail(function()
+		{
+			if (I.ModeCurrent === I.ModeEnum.Website)
+			{
+				I.write(
+				"Guild Wars 2 API server is unreachable.<br />"
+				+ "Reasons could be:<br />"
+				+ "- The GW2 server is down for maintenance.<br />"
+				+ "- Your browser is too old (if IE then need 11+).<br />"
+				+ "- Your computer's time is out of sync.<br />"
+				+ "- This website's code encountered a bug.<br />"
+				+ "Map features will be limited.<br />", 15);
+			}
+		}).always(function() // Do after AJAX regardless of success/failure
+		{
+			if (O.Options.bol_displayEvents === true)
+			{
+				P.populateEvents();
+			}
+			else
+			{
+				P.finishPopulation();
+			}
+		});
+		}
+		
+		/*
+		 * Create pin markers that can be moved by user or program.
+		 * ---------------------------------------------------------------------
+		 */
+		this.PinPersonal = this.createPin("img/map/pin_white.png");
+		this.PinProgram = this.createPin("img/map/pin_blue.png");
+		this.PinEvent = this.createPin("img/map/pin_green.png");
+		this.PinOver = this.createPin("img/map/pin_over.png", [128,128]);
+		this.PinCharacter = this.createPin("img/map/pin_character.png", [40,40]);
+		this.PinCamera = L.marker(this.convertGCtoLC([0,0]),
+		{
+			icon: L.icon(
+			{
+				iconUrl: "img/map/pin_camera.png",
+				iconSize: [256,256],
+				iconAnchor: [128,128]
+			}),
+			clickable: false
+		}).addTo(this.Map);
+		this.Layer.Pin.addLayer(this.PinCamera);
+		
+		// Bind pin click event to get coordinates in the coordinates bar
+		this.Layer.Pin.eachLayer(function(pMarker)
+		{
+			that.bindMarkerCoordBehavior(pMarker, "click");
+			pMarker.on("dblclick", function()
+			{
+				that.movePin(this);
+			});
+		});
+		
+		// Show the pins
+		this.toggleLayer(this.Layer.Pin, true);
+		
+	}, // End of populateMap
+	
+	/*
+	 * Bindings for map events that need to be done after AJAX has loaded the
+	 * API-generated markers.
+	 */
+	bindMapVisualChanges: function(pMapEnum)
+	{
+		var that = this;
+		/*
+		 * Booleans to stop some map functions from activating.
+		 */
+		$("#paneHUDMap").hover(
+			function() { that.isMouseOnHUD = true; },
+			function() { that.isMouseOnHUD = false; }
+		);
+		this.Map.on("dragstart", function()
+		{
+			that.isUserDragging = true;
+		});
+		this.Map.on("dragend", function()
+		{
+			that.isUserDragging = false;
+		});
+		
+		/*
+		 * Bind the mousemove event to update the map coordinate bar.
+		 * Note that the throttle function is from a separate script. It permits
+		 * the event handler to only run once every so specified milliseconds.
+		 */
+		this.Map.on("mousemove", $.throttle(that.cMAP_MOUSEMOVE_RATE, function(pEvent)
+		{
+			if (that.isMouseOnHUD || that.isUserDragging) { return; }
+			that.showCurrentZone(that.convertLCtoGC(pEvent.latlng));
+		}));
+
+		/*
+		 * At the end of a zoom animation, resize the map waypoint icons
+		 * depending on zoom level. Hide if zoomed too far.
+		 */
+		this.Map.on("zoomend", function(pEvent)
+		{
+			that.adjustZoomMapping();
+			if (pMapEnum === I.MapEnum.Tyria)
+			{
+				P.adjustZoomDryTop();
+			}
+		});
+	},
+	
+	/*
+	 * Informs Leaflet that the map pane was resized so it can load tiles properly.
+	 */
+	refreshMap: function()
+	{
+		if (this.isMapInitialized)
+		{
+			this.Map.invalidateSize();
+		}
+	},
+	
+	/*
 	 * Tells if the specified zone exists within the listing.
 	 * @param string pZoneID to look up.
 	 * @returns true if exists.
@@ -6631,545 +7220,6 @@ M = {
 	getZoneRegion: function(pNick)
 	{
 		return this.Zones[(pNick.toLowerCase())].region;
-	},
-	
-	/*
-	 * Conditions needed to do the initial zoom to event on pageload.
-	 * @returns true if qualify.
-	 */
-	wantZoomToFirstEvent: function()
-	{
-		if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
-			&& I.PageCurrent === I.PageEnum.Chains
-			&& U.Args[U.KeyEnum.Go] === undefined)
-		{
-			return true;
-		}
-		return false;
-	},
-	
-	/*
-	 * Initializes the Leaflet map, adds markers, and binds events.
-	 */
-	initializeMap: function()
-	{
-		// this.Map is the actual Leaflet map object, initialize it
-		this.Map = L.map("paneMap", {
-			minZoom: this.ZoomEnum.Min,
-			maxZoom: this.ZoomEnum.Max,
-			inertiaThreshold: this.cInertiaThreshold,
-			doubleClickZoom: false,
-			touchZoom: false, // Disable pinch to zoom
-			zoomControl: I.isOnSmallDevice, // Hide the zoom UI
-			attributionControl: false, // Hide the Leaflet link UI
-			crs: L.CRS.Simple
-		}).setView([1024, -1024], this.ZoomEnum.Default); // Out of map boundary so browser doesn't download tiles yet
-		// Because the map will interfere with scrolling the website on touch devices
-		this.Map.touchZoom.disable();
-		if (this.Map.tap)
-		{
-			this.Map.tap.disable();
-		}
-		
-		// Initialize array in zones to later hold world completion and dynamic event icons
-		var zone;
-		for (var i in this.Zones)
-		{
-			zone = this.Zones[i];
-			zone.center = this.getZoneCenter(i);
-			zone.nick = i;
-			zone.Layers = {
-				Path: new L.layerGroup(),
-				Waypoint: new L.layerGroup(),
-				Landmark: new L.layerGroup(),
-				Vista: new L.layerGroup(),
-				Challenge: new L.layerGroup(),
-				Heart: new L.layerGroup(),
-				Sector: new L.layerGroup(),
-				EventIcon: new L.layerGroup(),
-				EventRing: new L.layerGroup()
-			};
-			this.LayerArray.Path.push(zone.Layers.Path);
-		}
-		this.ZoneCurrent = this.Zones[this.cInitialZone];
-		
-		// Do other initialization functions
-		M.populateMap();
-		C.ScheduledChains.forEach(P.drawChainPaths);
-		
-		if ( ! this.Map.tap)
-		{
-			/*
-			 * Clicking an empty place on the map highlight its coordinate.
-			 */
-			this.Map.on("click", function(pEvent)
-			{
-				if (M.isMouseOnHUD) { return; }
-				var coord = M.convertLCtoGC(pEvent.latlng);
-				$("#mapCoordinatesCopy")
-					.val("[" + coord[0] + ", " + coord[1] + "]")
-					.select();
-			});
-
-			/*
-			 * Move the personal pin marker to where the user double clicks.
-			 */
-			this.Map.on("dblclick", function(pEvent)
-			{
-				if (M.isMouseOnHUD) { return; }
-				M.PinPersonal.setLatLng(pEvent.latlng);
-			});
-		}
-		
-		/*
-		 * Go to the coordinates in the bar when user presses enter.
-		 */
-		$("#mapCoordinatesCopy").onEnterKey(function()
-		{
-			M.goToArguments($(this).val(), M.PinPersonal);
-		});
-		
-		/*
-		 * Bind map HUD buttons functions.
-		 */
-		$("#mapWvWButton").one("click", function()
-		{
-			W.initializeMap();
-		}).click(function()
-		{
-			$("#paneMap").hide();
-			$("#paneWvW").show();
-			if (W.isMapInitialized)
-			{
-				W.refreshMap();
-			}
-			I.PagePrevious = I.PageCurrent;
-			I.PageCurrent = I.SpecialPageEnum.WvW;
-			U.updateQueryString();
-			I.isWvWPage = true;
-		});
-		$("#mapGPSButton").click(function()
-		{
-			// Go to character if cliked on GPS button
-			M.updateCharacter(1);
-		}).dblclick(function()
-		{
-			if (M.Map.getZoom() !== M.ZoomEnum.Ground)
-			{
-				M.Map.setZoom(M.ZoomEnum.Ground);
-			}
-			else
-			{
-				M.Map.setZoom(M.ZoomEnum.Default);
-			}
-		});
-		$("#mapDisplayButton").click(function()
-		{
-			// Hide the right panel if click on the display button
-			$("#opt_bol_showPanel").trigger("click");
-		});
-		// Translate and bind map zones list
-		$("#mapCompassButton").one("mouseenter", M.bindZoneList).click(function()
-		{
-			M.goToDefault();
-		});
-		
-		// Finally
-		this.isMapInitialized = true;
-	},
-	
-	/*
-	 * Generates map waypoints and other markers from the GW2 server API files.
-	 */
-	populateMap: function(pOptions)
-	{
-		/*
-		 * map_floor.json sample structure of desired data
-		 * Code based on API documentation.
-		{
-			"regions":
-			{
-				"1":
-				{
-					"name": "Shiverpeak Mountains"
-					"maps":
-					{
-						"26":
-						{
-							"name": "Dredgehaunt Cliffs",
-							"continent_rect": [[19456, 14976], [21760, 18176]],
-							"points_of_interest":
-							[{
-								"poi_id": 602,
-								"name": "Grey Road Waypoint",
-								"type": "waypoint",
-								"coord": [20684.6, 17105.3]
-							},
-							...
-							]
-						}
-					}
-				}
-			}
-		}*/
-		if (I.isMapEnabled)
-		{
-		$.getJSON(U.URL_API.MapFloorTyria, function(pData)
-		{
-			var i;
-			var regionid, region, zoneid, ithzone, poi;
-			var zoneobj;
-			var numofpois;
-			var marker;
-			var icon;
-			var cssclass;
-			var mappingtype;
-			var tooltip;
-
-			for (regionid in pData.regions)
-			{
-				region = pData.regions[regionid];
-
-				for (zoneid in region.maps)
-				{
-					// Don't bother parsing if not a regular world zone
-					if ( ! M.ZoneAssociation[zoneid])
-					{
-						continue;
-					}
-					
-					ithzone = region.maps[zoneid];
-					zoneobj = M.getZoneFromID(zoneid);
-					// Store zone dimension data for locating events
-					zoneobj.map_rect = ithzone.map_rect;
-					zoneobj.continent_rect = ithzone.continent_rect;
-					// Cover the zone with a colored rectangle signifying its region
-					M.Layer.ZoneRectangle.addLayer(L.rectangle(
-						M.convertGCtoLCMulti(zoneobj.rect), {
-							fill: false,
-							color: M.Regions[zoneobj.region].color,
-							weight: 2,
-							clickable: false
-						}
-					));
-					
-					/* 
-					 * For waypoints, points of interest, and vistas.
-					 */
-					numofpois = ithzone.points_of_interest.length;
-					for (i = 0; i < numofpois; i++)
-					{
-						poi = ithzone.points_of_interest[i];
-
-						// Properties assignment based on POI's type
-						switch (poi.type)
-						{
-							case M.APIPOIEnum.Waypoint:
-							{
-								// Waypoints are always created, others are optional
-								mappingtype = M.MappingEnum.Waypoint;
-								icon = U.URL_IMG.Waypoint;
-								cssclass = "mapWp";
-								tooltip = poi.name;
-							} break;
-							
-							case M.APIPOIEnum.Landmark:
-							{
-								if (O.Options.bol_showWorldCompletion === false)
-								{
-									continue;
-								}
-								mappingtype = M.MappingEnum.Landmark;
-								icon = U.URL_IMG.Landmark;
-								cssclass = "mapPoi";
-								tooltip = poi.name;
-							} break;
-							
-							case M.APIPOIEnum.Vista:
-							{
-								if (O.Options.bol_showWorldCompletion === false)
-								{
-									continue;
-								}
-								mappingtype = M.MappingEnum.Vista;
-								icon = U.URL_IMG.Vista;
-								cssclass = "mapPoi";
-								tooltip = D.getPhrase("Vista");
-							} break;
-							
-							default: continue; // Don't create marker if not desired type
-						}
-
-						marker = L.marker(M.convertGCtoLC(poi.coord),
-						{
-							title: "<span class='" + cssclass + "'>" + tooltip + "</span>",
-							markername: poi.name,
-							mappingtype: mappingtype,
-							icon: L.icon(
-							{
-								iconUrl: icon,
-								iconSize: [16, 16], // Initial size corresponding to default zoom level
-								iconAnchor: [8, 8]
-							}),
-							link: U.getChatlinkFromPoiID(poi.poi_id)
-						});
-						
-						// Bind behavior
-						switch (poi.type)
-						{
-							case M.APIPOIEnum.Waypoint:
-							{
-								marker.on("mouseout", function()
-								{
-									this._icon.src = U.URL_IMG.Waypoint;
-								});
-								marker.on("mouseover", function()
-								{
-									this._icon.src = U.URL_IMG.WaypointOver;
-								});
-								zoneobj.Layers.Waypoint.addLayer(marker);
-							} break;
-							case M.APIPOIEnum.Landmark:
-							{
-								marker.on("mouseout", function()
-								{
-									this._icon.src = U.URL_IMG.Landmark;
-								});
-								marker.on("mouseover", function()
-								{
-									this._icon.src = U.URL_IMG.LandmarkOver;
-								});
-								zoneobj.Layers.Landmark.addLayer(marker);
-							} break;
-							case M.APIPOIEnum.Vista:
-							{
-								zoneobj.Layers.Vista.addLayer(marker);
-							} break;
-						}
-						// Clicking on waypoints or POIs gives a chatcode
-						if (poi.type === M.APIPOIEnum.Waypoint || poi.type === M.APIPOIEnum.Landmark)
-						{
-							marker.on("click", function()
-							{
-								$("#mapCoordinatesCopy").val(this.options.link).select();
-								$("#mapCoordinatesName").val(this.options.markername);
-							});
-							M.bindMappingZoomBehavior(marker, "dblclick");
-						}
-						else
-						{
-							M.bindMappingZoomBehavior(marker, "click");
-						}
-					}
-					
-					/*
-					 * For API separate arrays for pois.
-					 */
-					if (O.Options.bol_showWorldCompletion)
-					{
-						// Hero Challenges
-						numofpois = ithzone.skill_challenges.length;
-						for (i = 0; i < numofpois; i++)
-						{
-							poi = ithzone.skill_challenges[i];
-							marker = L.marker(M.convertGCtoLC(poi.coord),
-							{
-								title: "<span class='" + "mapPoi" + "'>" + D.getPhrase("Hero Challenge") + "</span>",
-								mappingtype: M.MappingEnum.Challenge,
-								icon: L.icon(
-								{
-									iconUrl: U.URL_IMG.Challenge,
-									iconSize: [16, 16],
-									iconAnchor: [8, 8]
-								})
-							});
-							M.bindMappingZoomBehavior(marker, "click");
-							zoneobj.Layers.Challenge.addLayer(marker);
-						}
-						
-						// Renown Hearts
-						numofpois = ithzone.tasks.length;
-						for (i = 0; i < numofpois; i++)
-						{
-							poi = ithzone.tasks[i];
-							marker = L.marker(M.convertGCtoLC(poi.coord),
-							{
-								title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
-								task: poi.objective,
-								mappingtype: M.MappingEnum.Heart,
-								icon: L.icon(
-								{
-									iconUrl: U.URL_IMG.Heart,
-									iconSize: [16, 16],
-									iconAnchor: [8, 8]
-								})
-							});
-							marker.on("click", function(pEvent)
-							{
-								var heartname = this.options.task;
-								// Trim trailing period if exists
-								if (heartname.indexOf(".") === heartname.length - 1)
-								{
-									heartname = heartname.slice(0, -1);
-								}
-								U.openExternalURL(U.getWikiLanguageLink(heartname));
-							});
-							zoneobj.Layers.Heart.addLayer(marker);
-						}
-						
-						// Sector Names
-						numofpois = ithzone.sectors.length;
-						for (i = 0; i < numofpois; i++)
-						{
-							poi = ithzone.sectors[i];
-							marker = L.marker(M.convertGCtoLC(poi.coord),
-							{
-								clickable: false,
-								mappingtype: M.MappingEnum.Sector,
-								icon: L.divIcon(
-								{
-									className: "mapSec",
-									html: "<span class='mapSecIn'>" + poi.name + "</span>",
-									iconSize: [512, 64],
-									iconAnchor: [256, 32]
-								})
-							});
-							zoneobj.Layers.Sector.addLayer(marker);
-						}
-						
-						M.isMappingIconsGenerated = true;
-					}
-				}
-			}
-		}).done(function() // Map is populated by AJAX
-		{
-			M.isAPIRetrieved_MAPFLOOR = true;
-			
-			/*
-			 * AJAX takes a while so can use this to advantage to delay graphics
-			 * that seem out of place without a map loaded.
-			 */
-			if (O.Options.bol_displayEvents === false)
-			{
-				P.donePopulation();
-			}
-			
-		}).fail(function()
-		{
-			if (I.ModeCurrent === I.ModeEnum.Website)
-			{
-				I.write(
-				"Guild Wars 2 API server is unreachable.<br />"
-				+ "Reasons could be:<br />"
-				+ "- The GW2 server is down for maintenance.<br />"
-				+ "- Your browser is too old (if IE then need 11+).<br />"
-				+ "- Your computer's time is out of sync.<br />"
-				+ "- This website's code encountered a bug.<br />"
-				+ "Map features will be limited.<br />", 15);
-			}
-		}).always(function() // Do after AJAX regardless of success/failure
-		{
-			if (O.Options.bol_displayEvents === true)
-			{
-				P.populateEvents();
-			}
-			else
-			{
-				P.finishPopulation();
-			}
-		});
-		}
-		
-		/*
-		 * Create pin markers that can be moved by user or program.
-		 * ---------------------------------------------------------------------
-		 */
-		M.PinPersonal = P.createPin("img/map/pin_white.png");
-		M.PinProgram = P.createPin("img/map/pin_blue.png");
-		M.PinEvent = P.createPin("img/map/pin_green.png");
-		M.PinOver = P.createPin("img/map/pin_over.png", [128,128]);
-		M.PinCharacter = P.createPin("img/map/pin_character.png", [40,40]);
-		M.PinCamera = L.marker(M.convertGCtoLC([0,0]),
-		{
-			icon: L.icon(
-			{
-				iconUrl: "img/map/pin_camera.png",
-				iconSize: [256,256],
-				iconAnchor: [128,128]
-			}),
-			clickable: false
-		}).addTo(M.Map);
-		M.Layer.Pin.addLayer(M.PinCamera);
-		
-		// Bind pin click event to get coordinates in the coordinates bar
-		M.Layer.Pin.eachLayer(function(pMarker)
-		{
-			M.bindMarkerCoordBehavior(pMarker, "click");
-			pMarker.on("dblclick", function()
-			{
-				M.movePin(this);
-			});
-		});
-		
-		// Show the pins
-		M.toggleLayer(M.Layer.Pin, true);
-		
-	}, // End of populateMap
-	
-	/*
-	 * Informs Leaflet that the map pane was resized so it can load tiles properly.
-	 */
-	refreshMap: function()
-	{
-		if (this.isMapInitialized)
-		{
-			this.Map.invalidateSize();
-		}
-	},
-	
-	/*
-	 * Bindings for map events that need to be done after AJAX has loaded the
-	 * API-generated markers.
-	 */
-	bindMapVisualChanges: function()
-	{
-		var that = this;
-		/*
-		 * Booleans to stop some map functions from activating.
-		 */
-		$("#paneHUDMap").hover(
-			function() { that.isMouseOnHUD = true; },
-			function() { that.isMouseOnHUD = false; }
-		);
-		this.Map.on("dragstart", function()
-		{
-			that.isUserDragging = true;
-		});
-		this.Map.on("dragend", function()
-		{
-			that.isUserDragging = false;
-		});
-		
-		/*
-		 * Bind the mousemove event to update the map coordinate bar.
-		 * Note that the throttle function is from a separate script. It permits
-		 * the event handler to only run once every so specified milliseconds.
-		 */
-		this.Map.on("mousemove", $.throttle(that.cMAP_MOUSEMOVE_RATE, function(pEvent)
-		{
-			if (that.isMouseOnHUD || that.isUserDragging) { return; }
-			that.showCurrentZone(that.convertLCtoGC(pEvent.latlng));
-		}));
-
-		/*
-		 * At the end of a zoom animation, resize the map waypoint icons
-		 * depending on zoom level. Hide if zoomed too far.
-		 */
-		this.Map.on("zoomend", function(pEvent)
-		{
-			that.adjustZoomMapping();
-			that.adjustZoomDryTop();
-		});
 	},
 	
 	/*
@@ -7399,64 +7449,6 @@ M = {
 	},
 	
 	/*
-	 * Resizes Dry Top markers so they scale with the current zoom level.
-	 */
-	adjustZoomDryTop: function()
-	{
-		var that = this;
-		if (C.isDryTopGenerated)
-		{
-			var i;
-			var currentzoom = this.Map.getZoom();
-			var icon;
-			var nickfontsize, nickopacity;
-
-			switch (currentzoom)
-			{
-				case 7: this.currentIconSize = 32; nickfontsize = 20; nickopacity = 0.9; break;
-				case 6: this.currentIconSize = 28; nickfontsize = 16; nickopacity = 0.8; break;
-				case 5: this.currentIconSize = 24; nickfontsize = 12; nickopacity = 0.6; break;
-				case 4: this.currentIconSize = 20; nickfontsize = 0; nickopacity = 0; break;
-				case 3: this.currentIconSize = 16; nickfontsize = 0; nickopacity = 0; break;
-				default:
-				{
-					this.currentIconSize = 0; nickfontsize = 0; nickopacity = 0;
-				}
-			}
-			
-			// Event icons are same size as waypoints, but their rings are bigger
-			this.currentRingSize = this.scaleDimension(this.cRING_SIZE_MAX);
-
-			for (i in this.Entity.DryTopIcons)
-			{
-				// Icons
-				icon = this.Entity.DryTopIcons[i];
-				this.changeMarkerIcon(icon, icon._icon.src, this.currentIconSize);
-				// Rings
-				icon = this.Entity.DryTopRings[i];
-				this.changeMarkerIcon(icon, icon._icon.src, this.currentRingSize);
-				// Don't make the rings overlap clickable waypoints
-				this.Entity.DryTopIcons[i]._icon.style.zIndex = 1000;
-				this.Entity.DryTopRings[i]._icon.style.zIndex = 1;
-			}
-			
-			this.Layer.DryTopNicks.eachLayer(function(layer) {
-				if (layer._icon)
-				{
-					layer._icon.style.fontSize = nickfontsize + "px";
-					layer._icon.style.opacity = nickopacity;
-					layer._icon.style.zIndex = that.cZIndexBury + 1; // Don't cover other icons
-					layer._icon.style.display = "table"; // For middle vertical alignment
-				}
-			});
-			this.DryTopTimer._icon.style.fontSize = (nickfontsize*2) + "px";
-			this.DryTopTimer._icon.style.opacity = nickopacity;
-			this.DryTopTimer._icon.style.zIndex = this.cZIndexBury + 1;
-			this.DryTopTimer._icon.style.display = "table";
-		}
-	},
-	
-	/*
 	 * Returns a common sized Leafet icon.
 	 * @param string pIconURL of the icon image.
 	 * @returns object Leaflet icon.
@@ -7468,6 +7460,32 @@ M = {
 			iconSize: [32, 32],
 			iconAnchor: [16, 16]
 		});
+	},
+	
+	/*
+	 * Creates a pin in the map to be assigned to a reference object.
+	 * @param string pIconURL image of the marker.
+	 * @param 2D array pDimension width and height of pin.
+	 * @returns object Leaflet marker.
+	 */
+	createPin: function(pIconURL, pDimension)
+	{
+		if (pDimension === undefined)
+		{
+			pDimension = [32, 32];
+		}
+		var marker = L.marker(this.convertGCtoLC([0,0]),
+		{
+			icon: L.icon(
+			{
+				iconUrl: pIconURL,
+				iconSize: pDimension,
+				iconAnchor: [(pDimension[0])/2, (pDimension[1])/2]
+			}),
+			draggable: true
+		});
+		this.Layer.Pin.addLayer(marker);
+		return marker;
 	},
 	
 	/*
@@ -8126,8 +8144,8 @@ M = {
 		var that = this;
 		pMarker.on(pEventType, function()
 		{
-			var coord = that.convertLCtoGC(that.getLatLng());
-			$("#mapCoordinatesCopy")
+			var coord = that.convertLCtoGC(this.getLatLng());
+			$("#" + that.MapEnum + "CoordinatesCopy")
 				.val("[" + coord[0] + ", " + coord[1] + "]")
 				.select();
 		});
@@ -8154,53 +8172,6 @@ M = {
 	},
 	
 	/*
-	 * Shows or hides a section's map icons by triggering its toggle button.
-	 * Whether the button will hide or show icons depends on its boolean data attribute.
-	 * @param string pSection name.
-	 * @param boolean pWantShow to show or hide its icons.
-	 */
-	displayIcons: function(pSection, pWantShow)
-	{
-		var button = $("#mapToggle_" + pSection);
-		var isshown;
-		var wanthideonly;
-		if (button.length)
-		{
-			isshown = button.data("checked");
-			wanthideonly = button.data("hideonly");
-			
-			// If toggle button only serves to hide icons
-			if (wanthideonly)
-			{
-				if ( ! pWantShow)
-				{
-					button.trigger("click");
-				}
-			}
-			// If toggle button is two-states
-			else
-			{
-				if (pWantShow)
-				{
-					if ( ! isshown)
-					{
-						button.trigger("click");
-						button.data("checked", true);
-					}
-				}
-				else
-				{
-					if (isshown)
-					{
-						button.trigger("click");
-						button.data("checked", false);
-					}
-				}
-			}
-		}
-	},
-	
-	/*
 	 * Executes GPS functions every specified milliseconds.
 	 */
 	tickGPS: function()
@@ -8216,34 +8187,23 @@ M = {
 };
 
 /* =============================================================================
- * @@Populate map functions
+ * @@Populate Tyria-exclusive map functions
  * ========================================================================== */
 P = {
 	
 	/*
-	 * Creates a pin in the map to be assigned to a reference object.
-	 * @param string pIconURL image of the marker.
-	 * @param 2D array pDimension width and height of pin.
-	 * @returns object Leaflet marker.
+	 * Conditions needed to do the initial zoom to event on pageload.
+	 * @returns true if qualify.
 	 */
-	createPin: function(pIconURL, pDimension)
+	wantZoomToFirstEvent: function()
 	{
-		if (pDimension === undefined)
+		if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
+			&& I.PageCurrent === I.PageEnum.Chains
+			&& U.Args[U.KeyEnum.Go] === undefined)
 		{
-			pDimension = [32, 32];
+			return true;
 		}
-		var marker = L.marker(M.convertGCtoLC([0,0]),
-		{
-			icon: L.icon(
-			{
-				iconUrl: pIconURL,
-				iconSize: pDimension,
-				iconAnchor: [(pDimension[0])/2, (pDimension[1])/2]
-			}),
-			draggable: true
-		});
-		M.Layer.Pin.addLayer(marker);
-		return marker;
+		return false;
 	},
 	
 	/*
@@ -8285,6 +8245,7 @@ P = {
 	/*
 	 * Draws spots representing an interactable item in the game world.
 	 * @param array pCoords GW2 coordinates.
+	 * @param object pOptions Leaflet marker options.
 	 * @returns LayerGroup circles.
 	 */
 	drawSpots: function(pCoords, pOptions)
@@ -8475,7 +8436,7 @@ P = {
 	donePopulation: function()
 	{
 		M.toggleLayer(M.Layer.ZoneRectangle, O.Options.bol_showZoneRectangles);
-		if (M.wantZoomToFirstEvent())
+		if (P.wantZoomToFirstEvent())
 		{
 			// Initialize the "current moused zone" variable for showing waypoints
 			M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
@@ -8487,9 +8448,9 @@ P = {
 	finishPopulation: function()
 	{
 		M.isMapAJAXDone = true;
-		M.bindMapVisualChanges();
+		M.bindMapVisualChanges(I.MapEnum.Tyria);
 		M.adjustZoomMapping();
-		M.adjustZoomDryTop();
+		P.adjustZoomDryTop();
 		M.goToArguments(U.Args[U.KeyEnum.Go]);
 		M.tickGPS();
 	},
@@ -8568,6 +8529,53 @@ P = {
 	},
 	
 	/*
+	 * Shows or hides a section's map icons by triggering its toggle button.
+	 * Whether the button will hide or show icons depends on its boolean data attribute.
+	 * @param string pSection name.
+	 * @param boolean pWantShow to show or hide its icons.
+	 */
+	displayIcons: function(pSection, pWantShow)
+	{
+		var button = $("#mapToggle_" + pSection);
+		var isshown;
+		var wanthideonly;
+		if (button.length)
+		{
+			isshown = button.data("checked");
+			wanthideonly = button.data("hideonly");
+			
+			// If toggle button only serves to hide icons
+			if (wanthideonly)
+			{
+				if ( ! pWantShow)
+				{
+					button.trigger("click");
+				}
+			}
+			// If toggle button is two-states
+			else
+			{
+				if (pWantShow)
+				{
+					if ( ! isshown)
+					{
+						button.trigger("click");
+						button.data("checked", true);
+					}
+				}
+				else
+				{
+					if (isshown)
+					{
+						button.trigger("click");
+						button.data("checked", false);
+					}
+				}
+			}
+		}
+	},
+	
+	/*
 	 * Creates event icons for Dry Top chains, they will be resized by the zoomend function
 	 */
 	generateDryTop: function()
@@ -8639,6 +8647,7 @@ P = {
 							iconAnchor: [8, 8]
 						})
 					}).addTo(M.Map);
+					M.bindMappingZoomBehavior(event.eventicon, "click");
 					// Initially hide all event icons, the highlight event functions will show them
 					if ( ! $("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
 					{
@@ -8655,8 +8664,66 @@ P = {
 			// Finally
 			C.isDryTopGenerated = true;
 			T.initializeDryTopStrings();
-			M.adjustZoomDryTop();
+			P.adjustZoomDryTop();
 		});
+	},
+	
+	
+	/*
+	 * Resizes Dry Top markers so they scale with the current zoom level.
+	 */
+	adjustZoomDryTop: function()
+	{
+		if (C.isDryTopGenerated)
+		{
+			var i;
+			var currentzoom = M.Map.getZoom();
+			var icon, iconsize, ringsize;
+			var nickfontsize, nickopacity;
+
+			switch (currentzoom)
+			{
+				case 7: iconsize = 32; nickfontsize = 20; nickopacity = 0.9; break;
+				case 6: iconsize = 28; nickfontsize = 16; nickopacity = 0.8; break;
+				case 5: iconsize = 24; nickfontsize = 12; nickopacity = 0.6; break;
+				case 4: iconsize = 20; nickfontsize = 0; nickopacity = 0; break;
+				case 3: iconsize = 16; nickfontsize = 0; nickopacity = 0; break;
+				default:
+				{
+					iconsize = 0; nickfontsize = 0; nickopacity = 0;
+				}
+			}
+			
+			// Event icons are same size as waypoints, but their rings are bigger
+			ringsize = M.scaleDimension(M.cRING_SIZE_MAX);
+
+			for (i in M.Entity.DryTopIcons)
+			{
+				// Icons
+				icon = M.Entity.DryTopIcons[i];
+				M.changeMarkerIcon(icon, icon._icon.src, iconsize);
+				// Rings
+				icon = M.Entity.DryTopRings[i];
+				M.changeMarkerIcon(icon, icon._icon.src, ringsize);
+				// Don't make the rings overlap clickable waypoints
+				M.Entity.DryTopIcons[i]._icon.style.zIndex = 1000;
+				M.Entity.DryTopRings[i]._icon.style.zIndex = 1;
+			}
+			
+			M.Layer.DryTopNicks.eachLayer(function(layer) {
+				if (layer._icon)
+				{
+					layer._icon.style.fontSize = nickfontsize + "px";
+					layer._icon.style.opacity = nickopacity;
+					layer._icon.style.zIndex = M.cZIndexBury + 1; // Don't cover other icons
+					layer._icon.style.display = "table"; // For middle vertical alignment
+				}
+			});
+			M.DryTopTimer._icon.style.fontSize = (nickfontsize*2) + "px";
+			M.DryTopTimer._icon.style.opacity = nickopacity;
+			M.DryTopTimer._icon.style.zIndex = M.cZIndexBury + 1;
+			M.DryTopTimer._icon.style.display = "table";
+		}
 	}
 };
 
@@ -9831,11 +9898,11 @@ G = {
  * ========================================================================== */
 W = {
 	
-	Zones: {},
-	ZoneAssociation: {},
+	MapEnum: "wvw",
 	cInitialZone: "eternal",
 	cMAP_BOUND: 16384,
 	cMAP_CENTER: [10400, 12400], // This centers at the WvW portion of the map
+	cMAP_CENTER_INITIAL: [-193.75, 162.5],
 	cMAP_CENTER_ACTUAL: [8192, 8192],
 	ZoomEnum:
 	{
@@ -9848,163 +9915,25 @@ W = {
 		Ground: 6,
 		Max: 6
 	},
-	
-	initializeMap: function()
+	ServerRegionThreshold:
 	{
-		// Merge W's unique variables and functions into M, and use that new object as W
-		var tempobject = $.extend({}, M, W);
-		$.extend(W, tempobject);
-		
-		// Initialize
-		W.Map = L.map("paneWvW", {
-			minZoom: W.ZoomEnum.Min,
-			maxZoom: W.ZoomEnum.Max,
-			inertiaThreshold: M.cInertiaThreshold,
-			doubleClickZoom: false,
-			touchZoom: false,
-			zoomControl: I.isOnSmallDevice,
-			attributionControl: false,
-			crs: L.CRS.Simple
-		}).setView([-192, 164], W.ZoomEnum.Default);
-		
-		// Do other initializations
-		W.populateMap();
-		
-		W.Map.touchZoom.disable();
-		if (W.Map.tap)
-		{
-			W.Map.tap.disable();
-		}
-		
-		L.tileLayer(U.URL_API.TilesMists,
-		{
-			continuousWorld: true
-		}).addTo(W.Map);
-		
-		var zone;
-		for (var i in W.Zones)
-		{
-			zone = W.Zones[i];
-			zone.center = M.getZoneCenter(i);
-			zone.nick = i;
-			zone.Layers = {
-				Waypoint: new L.layerGroup(),
-				Landmark: new L.layerGroup(),
-				Vista: new L.layerGroup(),
-				Challenge: new L.layerGroup(),
-				Sector: new L.layerGroup(),
-			};
-			M.LayerArray.Path.push(zone.Layers.Path);
-		}
-		W.ZoneCurrent = M.Zones[M.cInitialZone];
-		
-		//W.populateMap();
-		
-		if ( ! W.Map.tap)
-		{
-			W.Map.on("click", function(pEvent)
-			{
-				if (W.isMouseOnHUD) { return; }
-				var coord = W.convertLCtoGC(pEvent.latlng);
-				$("#wvwCoordinatesCopy")
-					.val("[" + coord[0] + ", " + coord[1] + "]")
-					.select();
-			});
-
-			W.Map.on("dblclick", function(pEvent)
-			{
-				if (W.isMouseOnHUD) { return; }
-				////////W.PinPersonal.setLatLng(pEvent.latlng);
-			});
-		}
-
-		$("#wvwCoordinatesCopy").onEnterKey(function()
-		{
-			W.goToArguments($(this).val());
-		});
-		
-		$("#wvwMapButton").click(function()
-		{
-			$("#paneWvW").hide();
-			$("#paneMap").show();
-			M.refreshMap();
-			I.PageCurrent = I.PagePrevious;
-			I.PagePrevious = I.SpecialPageEnum.WvW;
-			U.updateQueryString();
-			I.isWvWPage = false;
-		});
-		$("#wvwGPSButton").click(function()
-		{
-			M.updateCharacter(1);
-		}).dblclick(function()
-		{
-			if (W.Map.getZoom() !== W.ZoomEnum.Ground)
-			{
-				W.Map.setZoom(W.ZoomEnum.Ground);
-			}
-			else
-			{
-				W.Map.setZoom(W.ZoomEnum.Default);
-			}
-		});
-		$("#wvwDisplayButton").click(function()
-		{
-			$("#opt_bol_showPanel").trigger("click");
-		});
-		$("#wvwCompassButton").one("mouseenter", W.bindZoneList).click(function()
-		{
-			W.goToDefault();
-		});
-		
-		W.isMapInitialized = true;
-		W.bindMapVisualChanges();
+		Range: 99,
+		Americas: 1000,
+		Europe: 2000,
+		France: 2100,
+		Germany: 2200,
+		Spain: 2300
 	},
 	
-	bindMapVisualChanges: function()
+	initializeWvW: function()
 	{
-		$("#paneHUDWvW").hover(
-			function() { W.isMouseOnHUD = true; },
-			function() { W.isMouseOnHUD = false; }
-		);
-		W.Map.on("dragstart", function()
-		{
-			W.isUserDragging = true;
-		});
-		W.Map.on("dragend", function()
-		{
-			W.isUserDragging = false;
-		});
+		// Merge W's unique variables and functions with M, and use that new object as W
+		$.extend(W, $.extend({}, M, W));
+		W.Zones = GW2T_LAND_DATA;
+		W.ZoneAssociation = GW2T_LAND_ASSOCIATION;
+		W.Regions = GW2T_REALM_DATA;
 		
-		W.Map.on("mousemove", $.throttle(M.cMAP_MOUSEMOVE_RATE, function(pEvent)
-		{
-			if (W.isMouseOnHUD || W.isUserDragging) { return; }
-			var coord = W.convertLCtoGC(pEvent.latlng);
-			document.getElementById("wvwCoordinatesMouse")
-				.value = coord[0] + ", " + coord[1];
-			//M.showCurrentZone(M.convertLCtoGC(pEvent.latlng));
-		}));
-
-		W.Map.on("zoomend", function(pEvent)
-		{
-			/*W.adjustZoomMapping();*/
-		});
-	},
-	
-	bindZoneList: function()
-	{
-		/*var that = this;
-		$("#mapZoneList li").each(function()
-		{
-			var zonenick = $(this).attr("data-zone");
-			$(this).text(that.getZoneName(zonenick));
-			$(this).attr("data-coord", that.getZoneCenter(zonenick).toString());
-			that.bindMapLinkBehavior($(this), that.ZoomEnum.Same);
-		});
-		$("#mapZoneList h2").each(function()
-		{
-			var regionnick = $(this).attr("data-region");
-			$(this).text(D.getObjectName(that.Regions[regionnick]));
-		});*/
+		W.initializeMap(I.MapEnum.Mists);
 	},
 };
 
@@ -10719,37 +10648,37 @@ T = {
 	 * current time if undefined.
 	 * @returns 23:59:59 or 11:59:59 PM or 23h 59m 59s time string.
 	 */
-	getTimeFormatted: function(pArgs)
+	getTimeFormatted: function(pOptions)
 	{
 		// Set parameter defaults
-		pArgs = pArgs || {};
-		if (pArgs.reference === undefined)
+		pOptions = pOptions || {};
+		if (pOptions.reference === undefined)
 		{
-			pArgs.reference = T.ReferenceEnum.Local;
+			pOptions.reference = T.ReferenceEnum.Local;
 		}
-		if (pArgs.want24 === undefined)
+		if (pOptions.want24 === undefined)
 		{
-			pArgs.want24 = O.Options.bol_use24Hour;
+			pOptions.want24 = O.Options.bol_use24Hour;
 		}
-		if (pArgs.wantSeconds === undefined)
+		if (pOptions.wantSeconds === undefined)
 		{
-			pArgs.wantSeconds = true;
+			pOptions.wantSeconds = true;
 		}
-		if (pArgs.wantHours === undefined)
+		if (pOptions.wantHours === undefined)
 		{
-			pArgs.wantHours = true;
+			pOptions.wantHours = true;
 		}
-		if (pArgs.wantLetters === undefined)
+		if (pOptions.wantLetters === undefined)
 		{
-			pArgs.wantLetters = false;
+			pOptions.wantLetters = false;
 		}
 		
 		var sec, min, hour;
 		var now = new Date();
 		
-		if (pArgs.customTimeInSeconds === undefined)
+		if (pOptions.customTimeInSeconds === undefined)
 		{
-			switch (pArgs.reference)
+			switch (pOptions.reference)
 			{
 				case T.ReferenceEnum.Local:
 				{
@@ -10775,21 +10704,21 @@ T = {
 		else
 		{
 			// Account for negative input
-			pArgs.customTimeInSeconds = T.wrapInteger(pArgs.customTimeInSeconds, T.cSECONDS_IN_DAY);
+			pOptions.customTimeInSeconds = T.wrapInteger(pOptions.customTimeInSeconds, T.cSECONDS_IN_DAY);
 			/*
 			 * Convert specified seconds to time units. The ~~ gets rid of the
 			 * decimal so / behaves like integer divide.
 			 */
-			sec = pArgs.customTimeInSeconds % T.cSECONDS_IN_MINUTE;
-			min = ~~(pArgs.customTimeInSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
-			hour = ~~(pArgs.customTimeInSeconds / T.cSECONDS_IN_HOUR);
+			sec = pOptions.customTimeInSeconds % T.cSECONDS_IN_MINUTE;
+			min = ~~(pOptions.customTimeInSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+			hour = ~~(pOptions.customTimeInSeconds / T.cSECONDS_IN_HOUR);
 		}
 		
 		var minsec = "";
 		// Include the seconds else don't
-		if (pArgs.wantSeconds)
+		if (pOptions.wantSeconds)
 		{
-			if (pArgs.wantLetters)
+			if (pOptions.wantLetters)
 			{
 				if (hour === 0 && min === 0)
 				{
@@ -10800,7 +10729,7 @@ T = {
 					minsec = min + D.getWord("m") + " " + sec + D.getWord("s");
 				}
 			}
-			else if (pArgs.wantHours === false)
+			else if (pOptions.wantHours === false)
 			{
 				minsec = min + ":" + ((sec < T.cBASE_10) ? "0" + sec : sec);
 			}
@@ -10811,7 +10740,7 @@ T = {
 		}
 		else
 		{
-			if (pArgs.wantLetters)
+			if (pOptions.wantLetters)
 			{
 				minsec = min + D.getWord("m");
 			}
@@ -10822,17 +10751,17 @@ T = {
 		}
 		
 		// Possible returns
-		if (pArgs.wantLetters)
+		if (pOptions.wantLetters)
 		{
-			if (hour === 0 || pArgs.wantHours === false)
+			if (hour === 0 || pOptions.wantHours === false)
 			{
 				return minsec;
 			}
 			return hour + D.getWord("h") + " " + minsec;
 		}
-		if (pArgs.want24)
+		if (pOptions.want24)
 		{
-			if (pArgs.wantHours === false)
+			if (pOptions.wantHours === false)
 			{
 				return minsec;
 			}
@@ -11183,7 +11112,9 @@ T = {
 				ctd = T.GenericCountdown[i];
 				ctd.StartStamp = ctd.Start.toLocaleString();
 				ctd.FinishStamp = ctd.Finish.toLocaleString();
+				// If available, set the URL as the official news page, the translated url, or a regular url
 				url = (ctd.news === undefined) ? ctd[urlkey] : U.getGW2NewsLink(ctd.news); 
+				url = (url === undefined) ? ctd.url : url;
 				ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + ctd[namekey] + "</a>";
 			}
 		}
@@ -12267,7 +12198,6 @@ I = {
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
 	isMapEnabled: true,
-	isWvWPage: false,
 	ModeCurrent: null,
 	ModeEnum:
 	{
@@ -12318,6 +12248,12 @@ I = {
 			Dungeons: "Dungeons"
 		}
 	},
+	MapEnum:
+	{
+		Tyria: "map",
+		Mists: "wvw"
+	},
+	MapCurrent: 0,
 	/*
 	 * Number used to open a section's subcontent, written as 1-indexed via
 	 * query string, but used as 0-indexed.
@@ -12448,8 +12384,25 @@ I = {
 		I.bindHelpButtons("#plateOptions");
 		I.initializeUIforMenu();
 		I.initializeUIForHUD();
+		// Bind switch map buttons
+		$("#mapSwitchButton").one("click", function()
+		{
+			$.getScript(U.URL_DATA.WvW).done(function()
+			{
+				W.initializeWvW();
+			});
+		}).click(function()
+		{
+			I.toggleMap(I.MapEnum.Mists);
+		});
+		$("#wvwSwitchButton").click(function()
+		{
+			I.toggleMap(I.MapEnum.Tyria);
+		});
+		
 		// Do special commands from the URL
 		U.enforceURLArgumentsLast();
+		
 		// Clear the non-load warning after everything succeeded
 		$("#paneWarning").remove();
 		// Bind console buttons
@@ -12461,9 +12414,9 @@ I = {
 		{
 			I.selectText("#jsConsole");
 		});
-		$("#mapOptions").one("mouseenter", function()
+		$("#mapOptions, #wvwOptions").one("mouseenter", function()
 		{
-			$("#mapOptionsPopup img").each(function()
+			$(this).find("img").each(function()
 			{
 				$(this).attr("src", $(this).attr("data-src"));
 			});
@@ -12510,7 +12463,7 @@ I = {
 		D.translateAfter();
 		
 		// View map event or map center
-		if (M.wantZoomToFirstEvent())
+		if (P.wantZoomToFirstEvent())
 		{
 			$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
 				+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
@@ -12831,7 +12784,7 @@ I = {
 					// To be collapsed
 					$(this).children("sup").text("[+]");
 					
-					M.displayIcons(section, false); // Hide this section's map icons
+					P.displayIcons(section, false); // Hide this section's map icons
 					
 					I[I.sectionPrefix + plate] = ""; // Nullify current section variable
 					
@@ -13080,30 +13033,15 @@ I = {
 				var plate = $(this).attr("id");
 				I.PageCurrent = plate.substring(I.cMenuPrefix.length-1, plate.length);
 				I.contentCurrentPlate = I.cPagePrefix + I.PageCurrent;
-				if (I.isWvWPage)
+				if (I.MapCurrent === I.MapEnum.Mists)
 				{
 					I.PagePrevious = I.PageCurrent;
 				}
 				switch (I.PageCurrent)
 				{
-					case I.PageEnum.Chains:
-					{
-						
-					} break;
-					
 					case I.PageEnum.Map:
 					{
 						M.movePin(M.PinEvent);
-					} break;
-					
-					case I.PageEnum.Help:
-					{
-						
-					} break;
-					
-					default:
-					{
-						
 					} break;
 				}
 				$("#paneContent article").hide(); // Hide all plates
@@ -13156,6 +13094,38 @@ I = {
 		}
 		
 	}, // End of menu initialization
+	
+	/*
+	 * Switches between the API continents, and update associated variables.
+	 * @param enum pMapEnum of the map.
+	 */
+	toggleMap: function(pMapEnum)
+	{
+		switch (pMapEnum)
+		{
+			case I.MapEnum.Tyria: {
+				$("#wvwPane").hide();
+				$("#mapPane").show();
+				M.refreshMap();
+				I.PageCurrent = I.PagePrevious;
+				I.PagePrevious = I.SpecialPageEnum.WvW;
+				I.MapCurrent = I.MapEnum.Tyria;
+			} break;
+			
+			case I.MapEnum.Mists: {
+				$("#mapPane").hide();
+				$("#wvwPane").show();
+				if (W.isMapInitialized)
+				{
+					W.refreshMap();
+				}
+				I.PagePrevious = I.PageCurrent;
+				I.PageCurrent = I.SpecialPageEnum.WvW;
+				I.MapCurrent = I.MapEnum.Mists;
+			} break;
+		}
+		U.updateQueryString();
+	},
 	
 	/*
 	 * Macro function for various written content added functionality. Must be
@@ -13246,7 +13216,7 @@ I = {
 					if ($(this).children("sup").text() === "[-]")
 					{
 						var section = U.getSubstringFromHTMLID($(this));
-						M.displayIcons(section, true);
+						P.displayIcons(section, true);
 					}
 				});
 			});

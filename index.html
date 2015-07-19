@@ -57,7 +57,7 @@
 	<div id="panelLeft" class="panelMain">
 		<!-- Map, the dummy nbsp is required or Leaflet won't show
 		==================================================================== -->
-		<section id="paneMap">&nbsp;
+		<section id="mapPane">&nbsp;
 			<article id="paneHUDMap">
 			<div id="itemMapCountdown">
 				<div id="itemCountdown"></div>
@@ -74,22 +74,22 @@
 					<u><a class="jsTranslate" title="<dfn>Switch to Mobile Mode (right panel only)</dfn><br />gw2timer.com/m<br /><div class='mapLoc'><img src='http://i.imgur.com/0QsaeY7.png' /></div>" href="./?mode=Mobile">mobile</a></u><span> /</span>
 					<u><a class="jsTranslate" title="<dfn>Dry Top Buried Locked Chests</dfn>" href="./?page=Chests">chests</a></u>
 				</div>
-				<!--<div id="mapWvW" class="mapHUDContainer">
-					<img id="mapWvWButton" class="mapHUDButton" data-title="click to wvw" src="img/map/wvw.png" alt="display" />
+				<!--<div id="mapSwitch" class="mapHUDContainer">
+					<img id="mapSwitchButton" class="mapHUDButton" data-title="click to wvw" src="img/map/wvw.png" alt="display" />
 				</div>-->
 				<div id="mapGPS" class="mapHUDContainer">
 					<img id="mapGPSButton" class="mapHUDButton" data-title="click to center character" src="img/map/gps.png" alt="GPS" />
 					<div id="mapGPSPopup" class="mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><input id="opt_bol_followCharacter" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the map character pin to your in-game location."><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
-						<label title="Milliseconds before your character is pinpointed again. This should not be faster than the overlay's rate."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Rate (ms)</label>
+						<label title="Milliseconds before your character is pinpointed again.<br />This should not be faster than the overlay's rate."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Rate (ms)</label>
 					</div>
 				</div>
 				<div id="mapOptions" class="mapHUDContainer">
 					<img id="mapDisplayButton" class="mapHUDButton" data-title="click to expand map" src="img/map/display.png" alt="display" />
 					<div id="mapOptionsPopup" class="mapHUDPopup cntComposition">
 						<div id="mapOptionsDisplay">
-							<label title="Show/Hide all icons listed below (except events). Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
+							<label title="Show/Hide all icons listed below (except events).<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
 							<div id="mapOptionsCompletion">
 								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectors" type="checkbox" /> Sector Names</label>
 								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
@@ -98,14 +98,14 @@
 								<label><img data-src="img/map/challenge.png" /><input id="opt_bol_displayChallenges" type="checkbox" /> Hero Challenges</label>
 								<label><img data-src="img/map/heart.png" /><input id="opt_bol_displayHearts" type="checkbox" /> Renown Hearts</label>
 							</div>
-							<label title="Show/Hide possible event locations. Will increase initial site load time if enabled. Most in-game events have a cooldown of 15 minutes from completion to active again, and can become active by simply being near them."><img data-src="img/event/swords.png" /><input id="opt_bol_displayEvents" type="checkbox" /> Dynamic Events</label>
+							<label title="Show/Hide possible event locations.<br />Will increase initial site load time if enabled.<br />Most in-game events have a cooldown of 15 minutes.<br />They can become active by simply being near them."><img data-src="img/event/swords.png" /><input id="opt_bol_displayEvents" type="checkbox" /> Dynamic Events</label>
 						</div>
 						<div id="mapOptionsOther">
-							<label title="Show/Hide the right side app panel."><img data-src="img/map/panel.png" /><input id="opt_bol_showPanel" type="checkbox" /> Show app panel</label>
-							<br />
-							<label title="Automatically scroll the map to the next predicted World Boss event. You'll need to be on the chains page."><img data-src="img/map/pin_green.png" /><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
-							<label title="Show/Hide the colored lines of event paths."><img data-src="img/map/path.png" /><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
 							<label title="Show/Hide region-colored rectangles over zones."><img data-src="img/map/rectangle.png" /><input id="opt_bol_showZoneRectangles" type="checkbox" /> Show zone rectangles</label>
+							<label title="Show/Hide the colored lines of event paths."><img data-src="img/map/path.png" /><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
+							<label title="Automatically scroll the map to the next predicted World Boss event.<br />You'll need to be on the chains page."><img data-src="img/map/pin_green.png" /><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
+							<br />
+							<label title="Show/Hide the right side app panel."><img data-src="img/map/panel.png" /><input id="opt_bol_showPanel" type="checkbox" /> Show app panel</label>
 						</div>
 					</div>
 				</div>
@@ -184,7 +184,7 @@
 			</div>
 			</article>
 		</section>
-		<section id="paneWvW">&nbsp;
+		<section id="wvwPane">&nbsp;
 			<article id="paneHUDWvW">
 			<div id="itemWvWCoordinates">
 				<input id="wvwCoordinatesMouse" type="text" />
@@ -192,8 +192,8 @@
 				<input id="wvwCoordinatesName" type="text" />
 			</div>
 			<div id="itemWvWLinksNorth" class="itemMapPeripheral">
-				<div id="wvwMap" class="mapHUDContainer">
-					<img id="wvwMapButton" class="mapHUDButton" data-title="click to map" src="img/ui/pages/map.png" alt="display" />
+				<div id="wvwSwitch" class="mapHUDContainer">
+					<img id="wvwSwitchButton" class="mapHUDButton" data-title="click to map" src="img/ui/pages/map.png" alt="display" />
 				</div>
 				<div id="wvwGPS" class="mapHUDContainer">
 					<img id="wvwGPSButton" class="mapHUDButton" data-title="click to center character" src="img/map/gps.png" alt="GPS" />
@@ -205,7 +205,16 @@
 				<div id="wvwOptions" class="mapHUDContainer">
 					<img id="wvwDisplayButton" class="mapHUDButton" data-title="click to expand map" src="img/map/display.png" alt="display" />
 					<div id="wvwOptionsPopup" class="mapHUDPopup cntComposition">
-						
+						<div id="wvwOptionsDisplay">
+							<label title="Show/Hide all icons listed below (except events).<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
+							<div id="wvwOptionsCompletion">
+								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectorsWvW" type="checkbox" /> Sector Names</label>
+								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypointsWvW" type="checkbox" /> Waypoints</label>
+								<label><img data-src="img/map/landmark.png" /><input id="opt_bol_displayPOIsWvW" type="checkbox" /> POIs</label>
+								<label><img data-src="img/map/vista.png" /><input id="opt_bol_displayVistasWvW" type="checkbox" /> Vistas</label>
+								<label><img data-src="img/map/challenge.png" /><input id="opt_bol_displayChallengesWvW" type="checkbox" /> Hero Challenges</label>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div id="wvwZones" class="mapHUDContainer">
@@ -382,7 +391,7 @@
 		<section id="paneContent" class="paneRight">
 			<article id="plateChains"><!-- This plate will be populated by JS -->
 				<div id="optAlarm">
-					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio" src="img/ui/speaker.png" alt="Alarm"/>
+					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/speaker.png" alt="Alarm"/>
 					<div id="itemAlarmPopup" class="cntComposition cntPopup">
 						<fieldset name="int_setAlarm"><legend id="optAlarmLegend">Alarm Mode</legend>
 							<label title="Turn off the alarm. Go to Options page, Alarm section for more info."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /></label>
