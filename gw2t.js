@@ -5841,8 +5841,7 @@ C = {
 		var countdown;
 		var time;
 		
-		var subscribedefault = "<dfn>" + D.getString("click to") + "<br />" + D.getSentence("subscribe") + "</dfn><br />";
-		var subscribetext;
+		var subscribetext = "<dfn>" + D.getString("click to") + "<br />" + D.getSentence("subscribe") + "</dfn><br />";
 		
 		for (i in C.ScheduledChains)
 		{
@@ -5850,19 +5849,21 @@ C = {
 			// Update the title tootlip with that chain's schedule
 			var minischedulestring = "";
 			var spacer;
-			subscribetext = (ithchain.series === C.ChainSeriesEnum.DryTop) ? "" : subscribedefault;
-			for (var ii in ithchain.scheduleKeys)
+			if (ithchain.series !== C.ChainSeriesEnum.DryTop)
 			{
-				spacer = (parseInt(ii) === 0) ? subscribetext : " <br /> ";
-				minischedulestring = minischedulestring + spacer
-					+ T.getTimeFormatted(
-					{
-						wantSeconds: false,
-						customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(
-							ithchain.scheduleKeys[ii])
-					});
+				for (var ii in ithchain.scheduleKeys)
+				{
+					spacer = (parseInt(ii) === 0) ? subscribetext : " <br /> ";
+					minischedulestring = minischedulestring + spacer
+						+ T.getTimeFormatted(
+						{
+							wantSeconds: false,
+							customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(
+								ithchain.scheduleKeys[ii])
+						});
+				}
+				$("#chnTime_" + ithchain.nexus).prop("title", minischedulestring);
 			}
-			$("#chnTime_" + ithchain.nexus).prop("title", minischedulestring);
 
 			// Don't change the active bars
 			if (C.isChainCurrent(ithchain))
@@ -5904,22 +5905,27 @@ C = {
 		
 		if (pChain.series === C.ChainSeriesEnum.DryTop)
 		{
-			var minute = T.getDryTopMinute();
-			if (minute < T.cBASE_10)
-			{
-				minute = "0" + minute.toString();
-			}
-			var timetext = "(:" + minute + ") " + T.getTimeFormatted(
+			// Dry Top events
+			var currentframe = T.getDryTopMinute();
+			var nextframe = T.getDryTopMinute(1);
+			time = T.getTimeFormatted(
 			{
 				reference: T.ReferenceEnum.UTC,
 				want24: true,
 				wantHours: false
 			});
-			$("#chnTime_" + pChain.nexus).text(timetext);
-			$("#mapDryTopTimer").text(timetext);
+			
+			$("#chnTime_" + pChain.nexus).text("(:" + currentframe + ") " + time);
+			if (C.isDryTopGenerated)
+			{
+				$("#mapDryTopTimer").html(
+					"<var style='color:" + T.getCurrentDryTopColor() + "'>:" + currentframe + "</var> " + time
+					+ " <var style='color:" + T.getCurrentDryTopColor(1) + "'>:" + nextframe + "</var>");
+			}
 		}
 		else
 		{
+			// Other scheduled chains
 			if (remaining <= 0)
 			{
 				time = T.cSECONDS_IN_TIMEFRAME - elapsed;
@@ -10012,7 +10018,7 @@ T = {
 	isGuildTimerStarted: false,
 	
 	DryTopSets: {},
-	DryTopStrings: {},
+	DryTopCodes: {},
 	Schedule: {},
 	
 	/*
@@ -10022,16 +10028,30 @@ T = {
 	 */
 	getCurrentDryTopEvents: function(pOffset)
 	{
-		pOffset = pOffset || 0;
-		var eventframe = T.getDryTopMinute() + (pOffset * T.cMINUTES_IN_DRYTOPFRAME);
-	
-		return T.DryTopStrings["t" + T.wrapInteger(eventframe, T.cMINUTES_IN_HOUR)] + I.siteTagCurrent;
+		return T.DryTopCodes["t" + T.getDryTopMinute(pOffset)].chat + I.siteTagCurrent;
 	},
-	getDryTopMinute: function()
+	getCurrentDryTopColor: function(pOffset)
 	{
+		return T.DryTopCodes["t" + T.getDryTopMinute(pOffset)].color;
+	},
+	
+	/*
+	 * Gets the minute in the current event frame.
+	 * @param int pOffset from current.
+	 * @returns string minute.
+	 */
+	getDryTopMinute: function(pOffset)
+	{
+		pOffset = pOffset || 0;
 		var now = new Date();
 		var min = now.getUTCMinutes();
-		return (~~(min / T.cMINUTES_IN_DRYTOPFRAME) * T.cMINUTES_IN_DRYTOPFRAME);
+		var minute = (~~(min / T.cMINUTES_IN_DRYTOPFRAME) * T.cMINUTES_IN_DRYTOPFRAME) + (pOffset * T.cMINUTES_IN_DRYTOPFRAME);
+		minute = T.wrapInteger(minute, T.cMINUTES_IN_HOUR);
+		if (minute < T.cBASE_10)
+		{
+			minute += "0";
+		}
+		return minute;
 	},
 	
 	/*
@@ -10072,20 +10092,20 @@ T = {
 			]
 		];
 		
-		T.DryTopStrings =
+		T.DryTopCodes =
 		{
-			 t0: ":00 " + getDryTopSet(0),
-			 t5: ":05 " + getDryTopSet(1),
-			t10: ":10 " + getDryTopSet(2),
-			t15: ":15 " + getDryTopSet(0),
-			t20: ":20 " + getDryTopSet(1),
-			t25: ":25 " + getDryTopSet(2),
-			t30: ":30 " + getDryTopSet(0),
-			t35: ":35 " + getDryTopSet(1),
-			t40: ":40 " + getDryTopSet(3),
-			t45: ":45 " + getDryTopSet(4),
-			t50: ":50 " + getDryTopSet(5),
-			t55: ":55 " + getDryTopSet(6)
+			t00: {chat: ":00 " + getDryTopSet(0), color: "red"},
+			t05: {chat: ":05 " + getDryTopSet(1), color: "orange"},
+			t10: {chat: ":10 " + getDryTopSet(2), color: "yellow"},
+			t15: {chat: ":15 " + getDryTopSet(0), color: "red"},
+			t20: {chat: ":20 " + getDryTopSet(1), color: "orange"},
+			t25: {chat: ":25 " + getDryTopSet(2), color: "yellow"},
+			t30: {chat: ":30 " + getDryTopSet(0), color: "red"},
+			t35: {chat: ":35 " + getDryTopSet(1), color: "orange"},
+			t40: {chat: ":40 " + getDryTopSet(3), color: "lime"},
+			t45: {chat: ":45 " + getDryTopSet(4), color: "limegreen"},
+			t50: {chat: ":50 " + getDryTopSet(5), color: "dodgerblue"},
+			t55: {chat: ":55 " + getDryTopSet(6), color: "orchid"}
 		};
 		
 		K.updateDryTopClipboard();
@@ -12059,10 +12079,10 @@ K = {
 	 */
 	updateDaytimeIcon: function()
 	{
-		var src = "img/ui/moon.png";
+		var src = "img/ui/day_night.png";
 		if (T.isDaylight())
 		{
-			src = "img/ui/sun.png";
+			src = "img/ui/day_light.png";
 		}
 		$("#itemTimeDayIcon").attr("src", src);
 	},
