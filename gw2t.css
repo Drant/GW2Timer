@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x580, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2015.07.18 modified - 2014.04.18 created
+	Version: 2015.07.20 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -314,10 +314,10 @@ html, body,
 /* =============================================================================
  *  Left panel
  * ========================================================================== */
-#panelLeft, #panelRight {
+#panelMap, #panelApp {
 	background: none;
 }
-#panelLeft {
+#panelMap {
 	background: linear-gradient(to right, #000 0%, #111 100%);
 }
 
@@ -624,14 +624,14 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
  *  Clock(360px) + Menu(48px) + Content(fit to bottom). If relatively positioned
  *  the map pane would be pushed down by how tall the panes on the right are.
  * ========================================================================== */
-#panelRight {
+#panelApp {
 	width: 361px; // 1px extra compensating for the border-left
 }
 
-.paneRight {
-	right: 0px;
+.paneApp {
 	border-left: 1px solid #444;
 	box-shadow: -5px 0px 5px #223;
+	z-index: 1;
 }
 
 /* Board (only visible in simple mode)
@@ -883,6 +883,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 #itemLanguagePopup {
 	display: none;
+	left: -98px;
 }
 #itemLanguagePopup a {
 	display: block;
@@ -904,7 +905,6 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	display: block;
 	width: 90px;
 	position: absolute;
-	left: -98px;
 	top: 0px;
 	padding: 4px 2px 4px 2px;
 }

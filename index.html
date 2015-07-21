@@ -54,7 +54,7 @@
 	<iframe id="jsTTSFrame"></iframe>
 	<audio id="jsTTSAudio"></audio>
 	<main id="windowMain">
-	<div id="panelLeft" class="panelMain">
+	<div id="panelMap" class="panelMain">
 		<!-- Map, the dummy nbsp is required or Leaflet won't show
 		==================================================================== -->
 		<section id="mapPane">&nbsp;
@@ -105,7 +105,8 @@
 							<label title="Show/Hide the colored lines of event paths."><img data-src="img/map/path.png" /><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
 							<label title="Automatically scroll the map to the next predicted World Boss event.<br />You'll need to be on the chains page."><img data-src="img/map/pin_green.png" /><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
 							<br />
-							<label title="Show/Hide the right side app panel."><img data-src="img/map/panel.png" /><input id="opt_bol_showPanel" type="checkbox" /> Show app panel</label>
+							<label title="Show/Hide the side app panel."><img data-src="img/map/panel.png" /><input id="opt_bol_showPanel" type="checkbox" /> Show app panel</label>
+							<label title="App panel on the right or left side of the map?"><img data-src="img/map/align.png" /><input id="opt_bol_alignPanelRight" type="checkbox" /> Align panel to the right</label>
 						</div>
 					</div>
 				</div>
@@ -225,7 +226,7 @@
 			</article>
 		</section>
 	</div><!-- End of panelLeft -->
-	<div id="panelRight" class="panelMain">
+	<div id="panelApp" class="panelMain">
 		<div id="paneBoard">
 			<div id="itemBoardSD">
 				<var id="itemBoardCurrentSD"></var>
@@ -242,7 +243,7 @@
 		</div>
 		<!-- Clock
 		==================================================================== -->
-		<section id="paneClock" class="paneRight clkSizeRegular">
+		<section id="paneClock" class="paneApp clkSizeRegular">
 			<div id="paneClockWall" class="clkSizeRegular"></div>
 			<div id="paneClockBackground" class="clkSizeRegular"></div>
 			<img id="paneClockFace" class="clkSizeRegular" src="img/background/face.png" alt="Clock Face">
@@ -380,7 +381,7 @@
 		</section>
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
-		<nav id="paneMenu" class="paneRight">
+		<nav id="paneMenu" class="paneApp">
 			<kbd id="menuChains" title="<dfn>Chains:</dfn> Timers, Events, Schedule"><ins></ins></kbd>
 			<kbd id="menuMap" title="<dfn>Map:</dfn> Dailies, Nodes, JPs, Missions, TP, Checklists"><ins></ins></kbd>
 			<kbd id="menuHelp" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"><ins></ins></kbd>
@@ -388,7 +389,7 @@
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->
-		<section id="paneContent" class="paneRight">
+		<section id="paneContent" class="paneApp">
 			<article id="plateChains"><!-- This plate will be populated by JS -->
 				<div id="optAlarm">
 					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/speaker.png" alt="Alarm"/>

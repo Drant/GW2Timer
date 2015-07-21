@@ -96,6 +96,7 @@ O = {
 		int_setDimming: 0,
 		int_setPredictor: 0,
 		// Panel
+		bol_alignPanelRight: true,
 		bol_showPanel: true,
 		bol_showMap: true,
 		// Map
@@ -816,6 +817,7 @@ O = {
 		O.Enact.bol_hideChecked();
 		O.Enact.bol_detectDST();
 		O.Enact.bol_useSiteTag();
+		O.Enact.bol_alignPanelRight(true);
 		O.Enact.bol_showPanel();
 		if (I.ModeCurrent !== I.ModeEnum.Simple)
 		{
@@ -994,7 +996,7 @@ O = {
 		{
 			if (O.Options.bol_showMap && I.isMapEnabled) // Only hide panel if map is visible
 			{
-				$("#panelRight").toggle(O.Options.bol_showPanel);
+				$("#panelApp").toggle(O.Options.bol_showPanel);
 				M.refreshMap();
 				if (W.isMapInitialized)
 				{
@@ -1002,11 +1004,43 @@ O = {
 				}
 			}
 		},
+		bol_alignPanelRight: function(pInitial)
+		{
+			if (I.isMapEnabled)
+			{
+				if (O.Options.bol_alignPanelRight)
+				{
+					// Don't realign if this function is called initially, because this is the default alignment
+					if (pInitial !== true)
+					{
+						$("#panelApp").insertAfter("#panelMap");
+						$(".paneApp").css({
+							borderLeft: "1px solid #444",
+							borderRight: "none",
+							boxShadow: "-5px 0px 5px #223"
+						});
+						$("#itemLanguagePopup").css({ left: "-98px" });
+						$("#jsConsole, #jsConsoleButtons").css({ left: "24px" });
+					}
+				}
+				else
+				{
+					$("#panelApp").insertBefore("#panelMap");
+					$(".paneApp").css({
+						borderLeft: "none",
+						borderRight: "1px solid #444",
+						boxShadow: "5px 0px 5px #223"
+					});
+					$("#itemLanguagePopup").css({ left: "64px" });
+					$("#jsConsole, #jsConsoleButtons").css({ left: I.cPANEL_WIDTH + 24 + "px" });
+				}
+			}
+		},
 		bol_showMap: function()
 		{
 			if (I.ModeCurrent !== I.ModeEnum.Mobile)
 			{
-				$("#panelLeft").toggle(O.Options.bol_showMap);
+				$("#panelMap").toggle(O.Options.bol_showMap);
 				M.refreshMap();
 			}
 		},
@@ -6729,25 +6763,7 @@ M = {
 			this.Map.on("dblclick", function(pEvent)
 			{
 				if (that.isMouseOnHUD) { return; }
-				
-				// Create a pin at double click location
-				var marker = L.marker(pEvent.latlng, {
-					icon: L.icon(
-					{
-						iconUrl: "img/map/pin_white.png",
-						iconSize: [32, 32],
-						iconAnchor: [16, 16]
-					}),
-					draggable: true
-				});
-				that.toggleLayer(marker, true);
-				// Single click pin: get its coordinates
-				that.bindMarkerCoordBehavior(marker, "click");
-				// Double click pin: remove itself from map
-				marker.on("dblclick", function(pEvent)
-				{
-					that.toggleLayer(this, false);
-				});
+				that.createPersonalPin(pEvent.latlng);
 			});
 		}
 		
@@ -7518,6 +7534,33 @@ M = {
 		var marker = L.marker(this.convertGCtoLC([0,0]), options);
 		this.Layer.Pin.addLayer(marker);
 		return marker;
+	},
+	
+	/*
+	 * Creates a personal pin.
+	 * @param object pLatLng coordinates.
+	 */
+	createPersonalPin: function(pLatLng)
+	{
+		var that = this;
+		// Create a pin at double click location
+		var marker = L.marker(pLatLng, {
+			icon: L.icon(
+			{
+				iconUrl: "img/map/pin_white.png",
+				iconSize: [32, 32],
+				iconAnchor: [16, 16]
+			}),
+			draggable: true
+		});
+		this.toggleLayer(marker, true);
+		// Single click pin: get its coordinates
+		this.bindMarkerCoordBehavior(marker, "click");
+		// Double click pin: remove itself from map
+		marker.on("dblclick", function(pEvent)
+		{
+			that.toggleLayer(this, false);
+		});
 	},
 	
 	/*
@@ -12485,7 +12528,7 @@ I = {
 		// The menu bar overlaps the language popup, so have to "raise" the clock pane
 		$("#itemLanguage").hover(
 			function() {$("#paneClock").css("z-index", 3);},
-			function() {$("#paneClock").css("z-index", 0);}
+			function() {$("#paneClock").css("z-index", 1);}
 		);
 
 		// Initialize scroll bars for pre-loaded plates
@@ -13347,8 +13390,8 @@ I = {
 			{
 				I.isMapEnabled = false;
 				// Readjust panels
-				$("#panelLeft, #paneMenu, #paneContent").hide();
-				$("#panelRight").css(
+				$("#panelMap, #paneMenu, #paneContent").hide();
+				$("#panelApp").css(
 				{
 					background: "radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%)"
 				});
@@ -13400,7 +13443,7 @@ I = {
 			case I.ModeEnum.Mobile:
 			{
 				I.isMapEnabled = false;
-				$("#panelLeft").hide();
+				$("#panelMap").hide();
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1'>")
 					.append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>")
 					.append("<link rel='canonical' href='http://gw2timer.com'>");
@@ -13462,7 +13505,7 @@ I = {
 	{
 		// Bind the following tags with the title attribute for tooltip
 		I.qTip.init("#jsConsoleButtons img, #optAlarmSpeaker, a, ins, kbd, span, fieldset, label, input, button");
-		$("#panelRight").hover(
+		$("#panelApp").hover(
 			function() { I.isMouseOnPanel = true; },
 			function() { I.isMouseOnPanel = false; }
 		);
@@ -13556,7 +13599,7 @@ I = {
 					I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 				}
 				// Tooltip overflows panel right edge
-				if (tipwidth >= I.cTOOLTIP_OVERFLOW_WIDTH && I.isMapEnabled)
+				if (tipwidth >= I.cTOOLTIP_OVERFLOW_WIDTH && I.isMapEnabled && O.Options.bol_alignPanelRight)
 				{
 					I.qTip.offsetX = (winwidth - x) - I.cPANEL_WIDTH - I.cTOOLTIP_OVERFLOW_MAX;
 				}
