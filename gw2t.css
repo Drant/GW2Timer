@@ -629,6 +629,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 
 .paneApp {
+	right: 0px; // This allows the app panel to completely fill the overlay window
 	border-left: 1px solid #444;
 	box-shadow: -5px 0px 5px #223;
 	z-index: 1;

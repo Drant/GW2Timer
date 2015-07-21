@@ -1015,6 +1015,7 @@ O = {
 					{
 						$("#panelApp").insertAfter("#panelMap");
 						$(".paneApp").css({
+							right: "0px",
 							borderLeft: "1px solid #444",
 							borderRight: "none",
 							boxShadow: "-5px 0px 5px #223"
@@ -1027,6 +1028,7 @@ O = {
 				{
 					$("#panelApp").insertBefore("#panelMap");
 					$(".paneApp").css({
+						right: "auto",
 						borderLeft: "none",
 						borderRight: "1px solid #444",
 						boxShadow: "5px 0px 5px #223"
