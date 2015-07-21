@@ -982,8 +982,8 @@ O = {
 		{
 			if ( ! O.Options.bol_displayCharacter)
 			{
-				M.movePin(M.PinCharacter);
-				M.movePin(M.PinCamera);
+				M.movePin(M.Pin.Character);
+				M.movePin(M.Pin.Camera);
 			}
 			else
 			{
@@ -5412,7 +5412,8 @@ C = {
 		
 		if (C.isChainWorldBoss(pChain))
 		{
-			chainextra = "(" + pChain.extra[1] + ") "
+			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + "' />"
+				+ " (" + pChain.extra[1] + ") "
 				+ pChain.extra[2] + "<ins class='sixteen sixt_ec'></ins>" + " "
 				+ pChain.extra[3] + "<ins class='sixteen sixt_ch'></ins>" + " "
 				+ pChain.extra[4] + "<ins class='sixteen sixt_dg'></ins>" + " ";
@@ -5628,6 +5629,10 @@ C = {
 				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitleAny(pChain.nexus)); }
 			);
 		}
+		$("#chnDetails_" + pChain.nexus + " .chnWaypoint").click(function()
+		{
+			$(this).select();
+		});
 		
 		// Initialize tooltips
 		I.qTip.init($("#chnEvents_" + pChain.nexus + " ins"));
@@ -6519,7 +6524,7 @@ M = {
 	 * with their rectangular coordinates.
 	 * This is referred to by the variable "Zones".
 	 */
-	MapEnum: "map",
+	MapEnum: "map", // Type of map this map is
 	Zones: GW2T_ZONE_DATA,
 	ZoneAssociation: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
 	Regions: GW2T_REGION_DATA,
@@ -6612,12 +6617,13 @@ M = {
 		DryTopActive: new Array(),
 		JP: new Array()
 	},
-	PinPersonal: {},
-	PinProgram: {},
-	PinEvent: {},
-	PinOver: {},
-	PinCharacter: {},
-	PinCamera: {},
+	Pin: {
+		Program: {},
+		Event: {},
+		Over: {},
+		Character: {},
+		Camera: {}
+	},
 	MappingEnum:
 	{
 		Sector: 0,
@@ -6718,12 +6724,30 @@ M = {
 			});
 
 			/*
-			 * Move the personal pin marker to where the user double clicks.
+			 * Create a personal pin marker to where the user double clicks.
 			 */
 			this.Map.on("dblclick", function(pEvent)
 			{
 				if (that.isMouseOnHUD) { return; }
-				that.PinPersonal.setLatLng(pEvent.latlng);
+				
+				// Create a pin at double click location
+				var marker = L.marker(pEvent.latlng, {
+					icon: L.icon(
+					{
+						iconUrl: "img/map/pin_white.png",
+						iconSize: [32, 32],
+						iconAnchor: [16, 16]
+					}),
+					draggable: true
+				});
+				that.toggleLayer(marker, true);
+				// Single click pin: get its coordinates
+				that.bindMarkerCoordBehavior(marker, "click");
+				// Double click pin: remove itself from map
+				marker.on("dblclick", function(pEvent)
+				{
+					that.toggleLayer(this, false);
+				});
 			});
 		}
 		
@@ -6732,7 +6756,7 @@ M = {
 		 */
 		$(htmlidprefix + "CoordinatesCopy").onEnterKey(function()
 		{
-			that.goToArguments($(this).val(), that.PinPersonal);
+			that.goToArguments($(this).val(), that.Pin.Program);
 		});
 		
 		/*
@@ -6913,7 +6937,7 @@ M = {
 							{
 								marker.on("mouseout", function()
 								{
-									this._icon.src = U.URL_IMG.Waypoint;
+									try { this._icon.src = U.URL_IMG.Waypoint; } catch(e) {}
 								});
 								marker.on("mouseover", function()
 								{
@@ -6925,7 +6949,8 @@ M = {
 							{
 								marker.on("mouseout", function()
 								{
-									this._icon.src = U.URL_IMG.Landmark;
+									// Workaround a null pointer exception when changing zones
+									try { this._icon.src = U.URL_IMG.Landmark; } catch(e) {}
 								});
 								marker.on("mouseover", function()
 								{
@@ -7076,22 +7101,12 @@ M = {
 		 * Create pin markers that can be moved by user or program.
 		 * ---------------------------------------------------------------------
 		 */
-		this.PinPersonal = this.createPin("img/map/pin_white.png");
-		this.PinProgram = this.createPin("img/map/pin_blue.png");
-		this.PinEvent = this.createPin("img/map/pin_green.png");
-		this.PinOver = this.createPin("img/map/pin_over.png", [128,128]);
-		this.PinCharacter = this.createPin("img/map/pin_character.png", [40,40]);
-		this.PinCamera = L.marker(this.convertGCtoLC([0,0]),
-		{
-			icon: L.icon(
-			{
-				iconUrl: "img/map/pin_camera.png",
-				iconSize: [256,256],
-				iconAnchor: [128,128]
-			}),
-			clickable: false
-		}).addTo(this.Map);
-		this.Layer.Pin.addLayer(this.PinCamera);
+		
+		this.Pin.Program = this.createPin("img/map/pin_blue.png");
+		this.Pin.Event = this.createPin("img/map/pin_green.png");
+		this.Pin.Over = this.createPin("img/map/pin_over.png", [128,128]);
+		this.Pin.Character = this.createPin("img/map/pin_character.png", [40,40]);
+		this.Pin.Camera = this.createPin("img/map/pin_camera.png", [256,256], {clickable: false});
 		
 		// Bind pin click event to get coordinates in the coordinates bar
 		this.Layer.Pin.eachLayer(function(pMarker)
@@ -7102,9 +7117,8 @@ M = {
 				that.movePin(this);
 			});
 		});
-		
-		// Show the pins
-		this.toggleLayer(this.Layer.Pin, true);
+		// Hide the pins, they will be shown when they are moved
+		this.toggleLayer(this.Layer.Pin, false);
 		
 	}, // End of populateMap
 	
@@ -7378,6 +7392,7 @@ M = {
 			case 5: waypointsize = 26; landmarksize = 16; eventiconsize = 16; eventringsize = 64; break;
 			case 4: waypointsize = 20; landmarksize = 12; eventiconsize = 12; eventringsize = 32; break;
 			case 3: waypointsize = 16; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
+			case 2: waypointsize = 12; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
 			default: { waypointsize = 0; landmarksize = 0; eventiconsize = 0; eventringsize = 0; }
 		}
 		
@@ -7472,16 +7487,18 @@ M = {
 	 * Creates a pin in the map to be assigned to a reference object.
 	 * @param string pIconURL image of the marker.
 	 * @param 2D array pDimension width and height of pin.
+	 * @param object pOptions additional marker options.
 	 * @returns object Leaflet marker.
 	 */
-	createPin: function(pIconURL, pDimension)
+	createPin: function(pIconURL, pDimension, pOptions)
 	{
+		
 		if (pDimension === undefined)
 		{
 			pDimension = [32, 32];
 		}
-		var marker = L.marker(this.convertGCtoLC([0,0]),
-		{
+		// Default pin options
+		var options = {
 			icon: L.icon(
 			{
 				iconUrl: pIconURL,
@@ -7489,7 +7506,16 @@ M = {
 				iconAnchor: [(pDimension[0])/2, (pDimension[1])/2]
 			}),
 			draggable: true
-		});
+		};
+		// If additional options was provided then override the default
+		if (pOptions !== undefined)
+		{
+			for (var i in pOptions)
+			{
+				options[i] = pOptions[i];
+			}
+		}
+		var marker = L.marker(this.convertGCtoLC([0,0]), options);
 		this.Layer.Pin.addLayer(marker);
 		return marker;
 	},
@@ -7516,7 +7542,7 @@ M = {
 	},
 	
 	/*
-	 * Toggles display of layers (a group of markers).
+	 * Toggles recreation/destruction of layers (a group of markers).
 	 * @param object pLayer of markers.
 	 * @param boolean pBoolean to show or hide.
 	 */
@@ -7547,34 +7573,25 @@ M = {
 	},
 	
 	/*
-	 * Macro function for toggling map entities display (Leaflet doesn't have a
-	 * hide/show markers and paths method except through less flexible layer groups.
-	 * @param array pEntityGroup objects like paths and markers.
-	 * @param string pDisplay to show or hide.
-	 * @pre Array contains only markers or only paths, not both.
+	 * Macro function for toggling map entities display, for persistent markers.
+	 * @param object or array pEntityGroup a marker or an array of markers.
+	 * @param boolean pDisplay to show or hide.
 	 */
 	toggleEntity: function(pEntityGroup, pDisplay)
 	{
 		var i;
 		var display;
-		var sample = pEntityGroup[0];
-		var isMarker = (sample._container === undefined); // if false then it's a path
+		var group = (Array.isArray(pEntityGroup)) ? pEntityGroup : [pEntityGroup];
+		var sample = group[0];
 		
-		if (pDisplay === false || pDisplay === "hide" || pDisplay < 0)
+		if (pDisplay === false)
 		{
 			display = "none";
 		}
 		// No display boolean provided, so assume want toggle
 		else if (pDisplay === undefined)
 		{
-			if (isMarker)
-			{
-				display = (sample._icon.style.display === "none") ? "block" : "none";
-			}
-			else
-			{
-				display = (sample._container.style.display === "none") ? "block" : "none";
-			}
+			display = (sample._icon.style.display === "none") ? "block" : "none";
 		}
 		else
 		{
@@ -7582,20 +7599,9 @@ M = {
 		}
 		
 		// Now show or hide as requested
-		if (isMarker)
+		for (i in group)
 		{
-			for (i in pEntityGroup)
-			{
-				pEntityGroup[i]._icon.style.display = display;
-			}
-		}
-		else
-		{
-			for (i in pEntityGroup)
-			{
-				pEntityGroup[i]._container.style.display = display;
-			}
-			
+			group[i]._icon.style.display = display;
 		}
 	},
 	
@@ -7643,16 +7649,28 @@ M = {
 	/*
 	 * Moves a pin to a map coordinate.
 	 * @param object pPin to move.
-	 * @param 2D array pCoord coordinates.
+	 * @param 2D array or Leaflet latlng object pCoord coordinates.
 	 */
 	movePin: function(pPin, pCoord)
 	{
 		if (pCoord === undefined)
 		{
-			pCoord = [0,0];
+			// No coordinates given means hide the marker
+			this.toggleLayer(pPin, false);
 		}
-		pPin.setLatLng(this.convertGCtoLC(pCoord));
-		pPin._icon.style.zIndex = this.cZIndexRaise;
+		else
+		{
+			this.toggleLayer(pPin, true);
+			if (Array.isArray(pCoord))
+			{
+				pPin.setLatLng(this.convertGCtoLC(pCoord));
+			}
+			else
+			{
+				pPin.setLatLng(pCoord);
+			}
+			pPin._icon.style.zIndex = this.cZIndexRaise;
+		}
 	},
 	
 	/*
@@ -7730,8 +7748,8 @@ M = {
 		}
 		if (this.isZoneValid(GPSIdentityJSON["map_id"]) === false)
 		{
-			this.movePin(this.PinCharacter);
-			this.movePin(this.PinCamera);
+			this.movePin(this.Pin.Character);
+			this.movePin(this.Pin.Camera);
 			return;
 		}
 		var coord = this.convertGPSCoord(GPSPositionArray, GPSIdentityJSON["map_id"]);
@@ -7760,18 +7778,18 @@ M = {
 				|| this.GPSPreviousAngleCamera !== anglecamera
 				|| pForceCode <= 0)
 			{
-				this.movePin(this.PinCharacter, coord);
-				this.movePin(this.PinCamera, coord);
-				this.PinCamera._icon.style.zIndex = this.cZIndexBury;
-				var pintranscharacter = this.PinCharacter._icon.style.transform.toString();
-				var pintranscamera = this.PinCamera._icon.style.transform.toString();
+				this.movePin(this.Pin.Character, coord);
+				this.movePin(this.Pin.Camera, coord);
+				this.Pin.Camera._icon.style.zIndex = this.cZIndexBury;
+				var pintranscharacter = this.Pin.Character._icon.style.transform.toString();
+				var pintranscamera = this.Pin.Camera._icon.style.transform.toString();
 				if (pintranscharacter.indexOf("rotate") === -1)
 				{
-					this.PinCharacter._icon.style.transform = pintranscharacter + " rotate(" + anglecharacter + "deg)";
+					this.Pin.Character._icon.style.transform = pintranscharacter + " rotate(" + anglecharacter + "deg)";
 				}
 				if (pintranscamera.indexOf("rotate") === -1)
 				{
-					this.PinCamera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
+					this.Pin.Camera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
 				}
 				this.GPSPreviousAngleCharacter = anglecharacter;
 				this.GPSPreviousAngleCamera = anglecamera;
@@ -8065,7 +8083,7 @@ M = {
 		$(pContainer + " dfn").each(function()
 		{
 			$(this).text("[" + $(this).text() + "]");
-			that.bindMapLinkBehavior($(this), pZoom, that.PinProgram);
+			that.bindMapLinkBehavior($(this), pZoom, that.Pin.Program);
 		});
 	},
 	
@@ -8102,11 +8120,11 @@ M = {
 		pLink.mouseover(function()
 		{
 			var thiscoord = that.getElementCoordinates($(this));
-			that.movePin(that.PinOver, thiscoord);
+			that.movePin(that.Pin.Over, thiscoord);
 		});
 		pLink.mouseout(function()
 		{
-			that.movePin(that.PinOver);
+			that.movePin(that.Pin.Over);
 		});
 	},
 	
@@ -8528,7 +8546,7 @@ P = {
 				// Read the attribute and use the coordinate when clicked for touring
 				if (I.ModeCurrent !== I.ModeEnum.Mobile)
 				{
-					M.bindMapLinkBehavior($(this), M.ZoomEnum.Ground, M.PinEvent);
+					M.bindMapLinkBehavior($(this), M.ZoomEnum.Ground, M.Pin.Event);
 				}
 			});
 		}
@@ -9601,7 +9619,7 @@ G = {
 					$(".gldBook").hide();
 					I.updateScrollbar();
 				});
-				M.movePin(M.PinProgram);
+				M.movePin(M.Pin.Program);
 			});
 			
 			/*
@@ -9682,7 +9700,7 @@ G = {
 						I.toggleHighlight($(this));
 						M.toggleLayer(M.LayerArray.Guild_Trek[U.getSubintegerFromHTMLID($(this))]);
 					});
-					M.bindMapLinkBehavior(elm, M.ZoomEnum.Same, M.PinProgram);
+					M.bindMapLinkBehavior(elm, M.ZoomEnum.Same, M.Pin.Program);
 				}
 				finalizeGuildBook("Trek");
 			});
@@ -9734,7 +9752,7 @@ G = {
 						}
 						M.toggleLayer(M.LayerArray.Guild_Challenge[index]);
 					});
-					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.PinProgram);
+					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
 				finalizeGuildBook("Challenge");
 			});
@@ -9803,7 +9821,7 @@ G = {
 						}
 						M.toggleLayer(M.LayerArray.Guild_Rush[index]);
 					});
-					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.PinProgram);
+					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
 				finalizeGuildBook("Rush");
 			});
@@ -9858,7 +9876,7 @@ G = {
 						}
 						M.toggleLayer(M.LayerArray.Guild_Puzzle[index]);
 					});
-					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.PinProgram);
+					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
 				finalizeGuildBook("Puzzle");
 			});
@@ -9939,7 +9957,7 @@ W = {
 		W.ZoneAssociation = GW2T_LAND_ASSOCIATION;
 		W.Regions = GW2T_REALM_DATA;
 		
-		W.initializeMap(I.MapEnum.Mists);
+		W.initializeMap();
 	},
 };
 
@@ -11471,7 +11489,7 @@ K = {
 				$(this).unbind(zoombossbehavior).on(zoombossbehavior, function()
 				{
 					coord = C.Chains[$(this).data(C.cIndexSynonym)].primaryEvents[0].path[0];
-					M.goToView(coord, M.ZoomEnum.Ground, M.PinEvent);
+					M.goToView(coord, M.ZoomEnum.Ground, M.Pin.Event);
 					
 				}).unbind(checkbossbehavior).on(checkbossbehavior, function()
 				{
@@ -13061,7 +13079,7 @@ I = {
 				{
 					case I.PageEnum.Map:
 					{
-						M.movePin(M.PinEvent);
+						M.movePin(M.Pin.Event);
 					} break;
 				}
 				$("#paneContent article").hide(); // Hide all plates

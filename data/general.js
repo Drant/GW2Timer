@@ -565,9 +565,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Guard", "Camp", "Defender"]
 },
 "21": {
-	pve: ["Forager Kryta", "Vista Shiverpeaks", "Snowden", "Fractal 1-10"],
-	pvp: ["Defender", "Rank", "Ranger Mesmer", "Guardian Engineer"],
-	wvw: ["Caravan", "Creature", "Camp", "Tower"]
+	pve: ["Forager Orr", "Vista Orr", "Gendarran", "Fractal 31-40"],
+	pvp: ["Reward", "Capture", "Warrior Ranger", "Guardian Necromancer"],
+	wvw: ["Land", "Spender", "Tower", "Camp"]
 },
 "22": {
 	pve: ["Miner Orr", "Activity", "Cursed", "Fractal 1-10"],
