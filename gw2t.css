@@ -618,11 +618,11 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
  *  the map pane would be pushed down by how tall the panes on the right are.
  * ========================================================================== */
 #panelApp {
-	width: 361px; // 1px extra compensating for the border-left
+	width: 361px; /* 1px extra compensating for the border-left */
 }
 
 .paneApp {
-	right: 0px; // This allows the app panel to completely fill the overlay window
+	right: 0px; /* This allows the app panel to completely fill the overlay window */
 	border-left: 1px solid #444;
 	box-shadow: -5px 0px 5px #223;
 	z-index: 1;

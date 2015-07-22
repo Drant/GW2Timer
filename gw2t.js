@@ -12674,7 +12674,7 @@ I = {
 					wantSeconds: false,
 					customTimeInSeconds: T.getSecondsUntilChainStarts(C.ChainToday)
 				}),
-			10);
+			15);
 		}
 		
 		// Hides generic countdown after a time
