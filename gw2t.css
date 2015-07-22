@@ -89,6 +89,9 @@ ins {
 	vertical-align: middle;
 	background-repeat: no-repeat;
 }
+img {
+	vertical-align: middle;
+}
 
 .cntComposition ::selection {
 	background: #66aaff;
@@ -110,9 +113,6 @@ ins {
 		1px -1px 0px #333,
 		-1px 1px 0px #333,
 		1px 1px 0px #333;
-}
-#jsConsole img, #paneWarning img {
-	vertical-align: middle;
 }
 #paneWarning {
 	background: #111;
@@ -177,9 +177,6 @@ div#qTip {
 div#qTip dfn { /* Highlight color for important text in tooltip */
 	background: none;
 	color: #ffcc77;
-}
-div#qTip img {
-	vertical-align: middle;
 }
 
 /*
@@ -411,10 +408,8 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 .itemMapPeripheral img {
 	width: 32px; height: 32px;
-	vertical-align: middle;
 }
 .itemMapPeripheral { /* Links on the map pane */
-	vertical-align: middle;
 	font-family: Menomonia;
 	font-size: 18px;
 	color: #ffeebb;
@@ -441,7 +436,6 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 .mapHUDButton {
 	display: inline-block;
-	vertical-align: middle;
 	opacity: 0.6;
 }
 .itemMapPeripheral:hover .mapHUDButton {
@@ -493,7 +487,6 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #mapOptionsPopup label img, #wvwOptionsPopup label img {
 	width: 24px; height: 24px;
 	margin-right: 4px;
-	vertical-align: middle;
 }
 
 /* Map zones list */
@@ -668,7 +661,6 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #iconSimpleHome {
 	margin-bottom: 6px;
 	width: 24px; height: 24px;
-	vertical-align: middle;
 }
 
 /* @@Klock
@@ -852,7 +844,6 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 #itemTimeDaytime img {
 	width: 18px; height: 18px;
-	vertical-align: middle;
 }
 #itemTimeLocalExtra a {
 	color: #eee;
@@ -875,7 +866,6 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 		1px 1px 0px #000;
 }
 #itemLanguage img {
-	vertical-align: middle;
 	padding-bottom: 2px;
 	opacity: 0.9;
 }
@@ -964,11 +954,8 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 .menuBeamContainer {
 	position: fixed;
 	width: 360px;
-	min-height: 10px;
-	background-image: url("img/ui/toggle.png");
-	background-color: black;
-	background-repeat: no-repeat;
-	background-position: center;
+	min-height: 32px;
+	background: url("img/ui/toggle.png") no-repeat center;
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
 	opacity: 0.5;
@@ -1034,7 +1021,6 @@ header.jsSection span {
 header.jsSection span img { /* Each header must have inside it an img tag as icon */
 	width: 32px; height: 32px;
 	margin-right: 16px;
-	vertical-align: middle;
 }
 header.jsSection sup {
 	float: right;
@@ -1049,9 +1035,6 @@ header.jsSection sup {
 	font-size: 16px;
 	text-decoration: underline;
 	text-shadow: 0px 0px 2px #e4e0b3;
-}
-.jsSectionDone img {
-	vertical-align: middle;
 }
 
 /* =============================================================================
@@ -1105,10 +1088,6 @@ header.jsSection sup {
 	background: #222;
 	background: linear-gradient(to right, #111 0%, #333 100%);
 	opacity: 0.9;
-}
-
-.cntComposition img {
-	vertical-align: middle;
 }
 
 .cntComposition input[type="text"], .cntComposition textarea {
@@ -1176,7 +1155,6 @@ header.jsSection sup {
 }
 .cntComposition button img {
 	width: 24px; height: 24px;
-	vertical-align: middle;
 }
 .cntComposition button.btnUncheck img {
 	width: 64px; height: 32px;
@@ -1316,9 +1294,6 @@ textarea.jsCopyCode {
 #optAlarm:hover {
 	opacity: 1;
 }
-#optAlarm img {
-	vertical-align: middle;
-}
 #optAlarmSpeaker {
 	width: 24px; height: 24px;
 }
@@ -1451,6 +1426,7 @@ textarea.jsCopyCode {
 .chnTitle img {
 	width: 32px; height: 32px;
 	border-radius: 4px;
+	vertical-align: top;
 }
 
 .chnCheck, .chnChecked {
@@ -1659,7 +1635,6 @@ button.btnToggle {
 
 .mapDailyLists h2 img {
 	width: 24px; height: 24px;
-	vertical-align: middle;
 }
 
 /* Login Track */
@@ -1916,7 +1891,6 @@ dt.mapJPListNameHover {
 }
 .mapResourceList img {
 	width: 16px; height: 16px;
-	vertical-align: middle;
 }
 
 .mapLegendLine {
@@ -2021,10 +1995,6 @@ dt.mapJPListNameHover {
 
 /* Arithmetic Calculator
 ----------------------------------------------------------------------------- */
-#trdCalculation img {
-	vertical-align: middle;
-}
-
 #trdCalculation .trdCalculator {
 	width: 220px;
 	margin-right: 4px;
@@ -2056,7 +2026,6 @@ dt.mapJPListNameHover {
 }
 #trdExchange img {
 	width: 24px; height: 24px;
-	vertical-align: middle;
 }
 
 #trdExchange section {
@@ -2111,7 +2080,6 @@ dt.mapJPListNameHover {
 .trdResults dfn img {
 	width: 16px; height: 16px;
 	margin-right: 8px;
-	vertical-align: middle;
 }
 .trdItem {
 	display: none;
@@ -2189,7 +2157,6 @@ dt.mapJPListNameHover {
 }
 .trdEntry img.trdIcon {
 	width: 24px; height: 24px;
-	vertical-align: middle;
 	border-radius: 4px;
 }
 input[type="text"].trdName {
@@ -2288,7 +2255,6 @@ input[type="text"].trdHovered {
 #chlDungeonCalculator img {
 	width: 24px; height: 24px;
 	margin-left: 2px;
-	vertical-align: middle;
 }
 
 #chlDungeonCalculator span {

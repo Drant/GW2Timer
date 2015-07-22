@@ -74,7 +74,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 150622},
+		programVersion: {key: "int_utlProgramVersion", value: 150721},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -100,9 +100,10 @@ O = {
 		bol_showPanel: true,
 		bol_showMap: true,
 		// Map
-		bol_tourPrediction: true,
-		bol_showChainPaths: true,
 		bol_showZoneRectangles: false,
+		bol_showPersonalPaths: false,
+		bol_showChainPaths: true,
+		bol_tourPrediction: true,
 		bol_showWorldCompletion: false,
 		bol_displaySectors: true,
 		bol_displayWaypoints: true,
@@ -298,18 +299,12 @@ O = {
 		// If not first visit and version is mismatch, notify new version
 		if (isFinite(usersversion) && usersversion !== currentversion)
 		{
-			var wait = 20;
-			if (I.ModeCurrent === I.ModeEnum.Overlay)
-			{
-				wait = 10;
-			}
+			var wait = (I.ModeCurrent === I.ModeEnum.Overlay) ? 10 : 20;
 			I.clear();
 			I.write(I.cSiteName + " was updated since your last visit.<br />"
 				+ "This version: " + currentversion + "<br />"
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
-				+ "<br />"
-				+ "<a href='http://gw2timer.com/?page=Map&section=Guild'>Guild missions</a> now available.<br />Try them with the <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>GPS overlay app</a>.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -972,13 +967,24 @@ O = {
 				case 2: $("#paneClockBackground").css({opacity: 0}); break;
 			}
 		},
-		bol_showChainPaths: function()
-		{
-			M.toggleLayerArray(M.LayerArray.Path, O.Options.bol_showChainPaths);
-		},
 		bol_showZoneRectangles: function()
 		{
 			M.toggleLayer(M.Layer.ZoneRectangle, O.Options.bol_showZoneRectangles);
+		},
+		bol_showPersonalPaths: function()
+		{
+			if (M.isMapInitialized)
+			{
+				M.drawPersonalPath();
+			}
+			if (W.isMapInitialized)
+			{
+				W.drawPersonalPath();
+			}
+		},
+		bol_showChainPaths: function()
+		{
+			M.toggleLayerArray(M.LayerArray.Path, O.Options.bol_showChainPaths);
 		},
 		bol_displayCharacter: function()
 		{
@@ -6625,9 +6631,11 @@ M = {
 	 * To assign marker properties: MARKER.options.PROPERTY
 	 */
 	Layer: {
+		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
+		PersonalPin: new L.layerGroup(),
+		PersonalPath:  new L.layerGroup(), // Path drawn from connecting player-layed pins
 		ZoneRectangle: new L.layerGroup(), // Rectangles colored specific to the zones' region
 		DryTopNicks: new L.layerGroup(), // Dry Top event names and timestamps
-		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		Chest: new L.layerGroup() // Open world basic chests
 	},
 	LayerArray: {
@@ -6724,7 +6732,10 @@ M = {
 				EventIcon: new L.layerGroup(),
 				EventRing: new L.layerGroup()
 			};
-			this.LayerArray.Path.push(zone.Layers.Path);
+			if (that.MapEnum === I.MapEnum.Tyria)
+			{
+				this.LayerArray.Path.push(zone.Layers.Path);
+			}
 		}
 		this.ZoneCurrent = this.Zones[this.cInitialZone];
 		
@@ -7553,16 +7564,79 @@ M = {
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}),
-			draggable: true
+			draggable: true,
+			opacity: 0.9
 		});
 		this.toggleLayer(marker, true);
+		this.Layer.PersonalPin.addLayer(marker);
+		this.drawPersonalPath();
+		
 		// Single click pin: get its coordinates
 		this.bindMarkerCoordBehavior(marker, "click");
 		// Double click pin: remove itself from map
-		marker.on("dblclick", function(pEvent)
+		marker.on("dblclick", function()
 		{
 			that.toggleLayer(this, false);
+			that.Layer.PersonalPin.removeLayer(this);
+			that.drawPersonalPath();
 		});
+		// Right click pin: remove all pins
+		marker.on("contextmenu", function()
+		{
+			that.removePersonalPins();
+		});
+		// Drag pin: redraw the personal path
+		marker.on("drag", function()
+		{
+			that.drawPersonalPath();
+		});
+	},
+	
+	/*
+	 * Removes all personal pins from the map.
+	 */
+	removePersonalPins: function()
+	{
+		var that = this;
+		this.Layer.PersonalPin.eachLayer(function(pPin){
+			that.toggleLayer(pPin, false);
+		});
+		this.Layer.PersonalPin.clearLayers();
+		this.drawPersonalPath();
+	},
+	
+	/*
+	 * Draws a path from the group of personal pins the user layed.
+	 */
+	drawPersonalPath: function()
+	{
+		if (O.Options.bol_showPersonalPaths)
+		{
+			var latlngs = new Array();
+			var length = 0;
+			this.Layer.PersonalPin.eachLayer(function(pPin){
+				latlngs.push(pPin.getLatLng());
+				length++;
+			});
+			if (length > 1)
+			{
+				this.Layer.PersonalPath.clearLayers();
+				this.Layer.PersonalPath.addLayer(L.polyline(latlngs, {
+					color: "white",
+					opacity: 0.4
+				}));
+				this.toggleLayer(this.Layer.PersonalPath, true);
+			}
+			else
+			{
+				this.Layer.PersonalPath.clearLayers();
+			}
+		}
+		else
+		{
+			this.Layer.PersonalPath.clearLayers();
+			this.toggleLayer(this.Layer.PersonalPath, false);
+		}
 	},
 	
 	/*
@@ -7700,7 +7774,7 @@ M = {
 	{
 		if (pCoord === undefined)
 		{
-			// No coordinates given means hide the marker
+			// No coordinates given means hide the pin
 			this.toggleLayer(pPin, false);
 		}
 		else
@@ -9993,10 +10067,33 @@ W = {
 		Germany: 2200,
 		Spain: 2300
 	},
+	Layer: {
+		PersonalPin: new L.layerGroup(),
+		PersonalPath:  new L.layerGroup(),
+		ZoneRectangle: new L.layerGroup(),
+		Pin: new L.layerGroup()
+	},
+	LayerArray: {
+		
+	},
+	Entity: {
+		
+	},
+	Pin: {
+		Program: {},
+		Event: {},
+		Over: {},
+		Character: {},
+		Camera: {}
+	},
 	
 	initializeWvW: function()
 	{
-		// Merge W's unique variables and functions with M, and use that new object as W
+		/*
+		 * Merge W's unique variables and functions with M, and use that new
+		 * object as W. This is a shallow copy, so objects within an object that
+		 * are not shared/modified must be redeclared here in W.
+		 */
 		$.extend(W, $.extend({}, M, W));
 		W.Zones = GW2T_LAND_DATA;
 		W.ZoneAssociation = GW2T_LAND_ASSOCIATION;

@@ -570,9 +570,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Spender", "Tower", "Camp"]
 },
 "22": {
-	pve: ["Miner Orr", "Activity", "Cursed", "Fractal 1-10"],
-	pvp: ["Rank", "Defender", "Warrior Engineer", "Necromancer Ranger"],
-	wvw: ["Guard", "Land", "Tower", "Camp"]
+	pve: ["Lumberer Jungle", "Fractal", "Straits", "FE"],
+	pvp: ["Defender", "Rank", "Ranger Mesmer", "Guardian Engineer"],
+	wvw: ["Ruins", "Kills", "Camp", "Defender"]
 },
 "23": {
 	pve: ["Lumberer Jungle", "Vista Jungle", "Marches", "Fractal 1-10"],
