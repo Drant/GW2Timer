@@ -575,9 +575,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Kills", "Camp", "Defender"]
 },
 "23": {
-	pve: ["Lumberer Jungle", "Vista Jungle", "Marches", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Elementalist Mesmer", "Guardian Thief"],
-	wvw: ["Ruins", "Creature", "Keep", "Tower"]
+	pve: ["Miner Ascalon", "Forger", "Kessex", "Fractal 11-20"],
+	pvp: ["Reward", "Capture", "Warrior Engineer", "Ranger Necromancer"],
+	wvw: ["Land", "Creature", "Keep", "Tower"]
 },
 "24": {
 	pve: ["Miner Kryta", "Forger", "Snowden", "Fractal 1-10"],

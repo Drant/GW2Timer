@@ -4662,6 +4662,10 @@ D = {
 				$(this).attr("title", "<dfn>" + D.getElement($(this).attr("id")) + "</dfn>");
 				I.qTip.init($(this));
 			});
+			$("#paneMenu var").each(function()
+			{
+				$(this).text(D.getElement($(this).parent().attr("id")));
+			});
 			D.translatePageHeader(I.PageEnum.Options);
 		}
 		
@@ -6633,7 +6637,7 @@ M = {
 	Layer: {
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
-		PersonalPath:  new L.layerGroup(), // Path drawn from connecting player-layed pins
+		PersonalPath:  new L.layerGroup(), // Path drawn from connecting player-laid pins
 		ZoneRectangle: new L.layerGroup(), // Rectangles colored specific to the zones' region
 		DryTopNicks: new L.layerGroup(), // Dry Top event names and timestamps
 		Chest: new L.layerGroup() // Open world basic chests
@@ -6766,7 +6770,7 @@ M = {
 				if (that.isMouseOnHUD) { return; }
 				var coord = that.convertLCtoGC(pEvent.latlng);
 				$(htmlidprefix + "CoordinatesCopy")
-					.val("[" + coord[0] + ", " + coord[1] + "]")
+					.val(that.formatCoord(coord))
 					.select();
 			});
 
@@ -6785,7 +6789,21 @@ M = {
 		 */
 		$(htmlidprefix + "CoordinatesCopy").onEnterKey(function()
 		{
-			that.goToArguments($(this).val(), that.Pin.Program);
+			var val = $(this).val();
+			// If input looks like a 2D array of coordinates, then create pins from them
+			var coords = that.parseCoordinatesMulti(val);
+			if (coords !== null)
+			{
+				that.removePersonalPins();
+				for (var i in coords)
+				{
+					that.createPersonalPin(that.convertGCtoLC(coords[i]));
+				}
+			}
+			else
+			{
+				that.goToArguments(val, that.Pin.Program);
+			}
 		});
 		
 		/*
@@ -7521,7 +7539,6 @@ M = {
 	 */
 	createPin: function(pIconURL, pDimension, pOptions)
 	{
-		
 		if (pDimension === undefined)
 		{
 			pDimension = [32, 32];
@@ -7593,6 +7610,32 @@ M = {
 	},
 	
 	/*
+	 * Prints the personal pin's coordinates to the coordinate bar.
+	 */
+	getPersonalCoords: function()
+	{
+		var that = this;
+		var coords = new Array();
+		var length = 0;
+		this.Layer.PersonalPin.eachLayer(function(pPin){
+			coords.push(that.convertLCtoGC(pPin.getLatLng()));
+			length++;
+		});
+		
+		var s = "";
+		if (length > 1)
+		{
+			s = this.compileCoordinates(coords);
+		}
+		else if (length === 1)
+		{
+			s = this.formatCoord(coords[0]);
+		}
+		
+		$("#" + that.MapEnum + "CoordinatesCopy").val(s).select();
+	},
+	
+	/*
 	 * Removes all personal pins from the map.
 	 */
 	removePersonalPins: function()
@@ -7606,12 +7649,14 @@ M = {
 	},
 	
 	/*
-	 * Draws a path from the group of personal pins the user layed.
+	 * Draws a path from the group of personal pins the user laid.
 	 */
 	drawPersonalPath: function()
 	{
+		var that = this;
 		if (O.Options.bol_showPersonalPaths)
 		{
+			var path;
 			var latlngs = new Array();
 			var length = 0;
 			this.Layer.PersonalPin.eachLayer(function(pPin){
@@ -7621,15 +7666,22 @@ M = {
 			if (length > 1)
 			{
 				this.Layer.PersonalPath.clearLayers();
-				this.Layer.PersonalPath.addLayer(L.polyline(latlngs, {
+				path = L.polyline(latlngs, {
 					color: "white",
 					opacity: 0.4
-				}));
+				});
+				// Single click path: get the coordinates of all pins
+				path.on("click", function()
+				{
+					that.getPersonalCoords();
+				});
+				this.Layer.PersonalPath.addLayer(path);
 				this.toggleLayer(this.Layer.PersonalPath, true);
 			}
 			else
 			{
 				this.Layer.PersonalPath.clearLayers();
+				this.toggleLayer(this.Layer.PersonalPath, false);
 			}
 		}
 		else
@@ -7658,6 +7710,16 @@ M = {
 			iconSize: [pSize, pSize],
 			iconAnchor: [pSize/2, pSize/2]
 		}));
+	},
+	
+	/*
+	 * Gets ID of a Leaflet layer.
+	 * @param object pLayer.
+	 * @returns string ID number.
+	 */
+	getLayerId: function(pLayer)
+	{
+		return pLayer["_leaflet_id"];
 	},
 	
 	/*
@@ -7843,80 +7905,6 @@ M = {
 	},
 	
 	/*
-	 * Imitates the character pin as in the game minimap, as informed by the overlay.
-	 * @param int pForceCode 1 to force update position, -1 angle, 0 both, undefined neither.
-	 */
-	updateCharacter: function(pForceCode)
-	{
-		/*
-		 * Validate the GPS data before allowing updates.
-		 * Sample structure of position, character angle, and camera angle:
-		 * fAvatarPosition: [116.662186, 44.60492, -104.502495]
-		 * fAvatarFront: [0.070094235, 0.0, 0.99754035]
-		 * fCameraFront: [-0.2597584, 0.02722733, 0.9652897]
-		 * Sample structure of JSON:
-		 * {"name": "Character Name","profession": 1,"race": 2,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false,"fov": 0.873}
-		 */
-		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || this.isUserDragging)
-		{
-			return;
-		}
-		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
-		{
-			return;
-		}
-		if (this.isZoneValid(GPSIdentityJSON["map_id"]) === false)
-		{
-			this.movePin(this.Pin.Character);
-			this.movePin(this.Pin.Camera);
-			return;
-		}
-		var coord = this.convertGPSCoord(GPSPositionArray, GPSIdentityJSON["map_id"]);
-		if (coord[0] > this.cMAP_BOUND || coord[0] <= 0
-			|| coord[1] > this.cMAP_BOUND || coord[1] <= 0)
-		{
-			return;
-		}
-		
-		// Follow character if opted and position has changed (character moved)
-		if ((O.Options.bol_followCharacter && this.GPSPreviousCoord[0] !== coord[0] && this.GPSPreviousCoord[1] !== coord[1])
-			|| pForceCode >= 0)
-		{
-			this.Map.setView(this.convertGCtoLC(coord), this.Map.getZoom());
-			this.showCurrentZone(coord);
-			this.GPSPreviousCoord = coord;
-			pForceCode = -1; // Also update pin position
-		}
-		
-		// Pin character if opted and angle has changed (character turned)
-		if (O.Options.bol_displayCharacter)
-		{
-			var anglecharacter = -(this.convertGPSAngle(GPSDirectionArray));
-			var anglecamera = -(this.convertGPSAngle(GPSCameraArray));
-			if (this.GPSPreviousAngleCharacter !== anglecharacter
-				|| this.GPSPreviousAngleCamera !== anglecamera
-				|| pForceCode <= 0)
-			{
-				this.movePin(this.Pin.Character, coord);
-				this.movePin(this.Pin.Camera, coord);
-				this.Pin.Camera._icon.style.zIndex = this.cZIndexBury;
-				var pintranscharacter = this.Pin.Character._icon.style.transform.toString();
-				var pintranscamera = this.Pin.Camera._icon.style.transform.toString();
-				if (pintranscharacter.indexOf("rotate") === -1)
-				{
-					this.Pin.Character._icon.style.transform = pintranscharacter + " rotate(" + anglecharacter + "deg)";
-				}
-				if (pintranscamera.indexOf("rotate") === -1)
-				{
-					this.Pin.Camera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
-				}
-				this.GPSPreviousAngleCharacter = anglecharacter;
-				this.GPSPreviousAngleCamera = anglecamera;
-			}
-		}
-	},
-	
-	/*
 	 * Views the default map view.
 	 */
 	goToDefault: function()
@@ -8077,13 +8065,49 @@ M = {
 	/*
 	 * Converts a coordinate string to array coordinates.
 	 * @param string pString coordinates in the form of "[X, Y]" GW2 coords.
-	 * @returns array pCoord array of numbers.
+	 * @returns array of numbers.
 	 */
 	parseCoordinates: function(pString)
 	{
 		// The regex strips all characters except digits, commas, periods, and minus sign
 		var coord = pString.toString().replace(/[^\d,-.]/g, "");
 		return coord.split(",");
+	},
+	
+	/*
+	 * Converts an array of coordinates to a 2D array.
+	 * @param string pString array in the form of "[[X1,Y1],[X2,Y2]]" GW2 coords.
+	 * @returns 2D array of coordinates. null if unable to parse.
+	 */
+	parseCoordinatesMulti: function(pString)
+	{
+		var arraylengthlimit = 13;
+		var s = pString.replace(/\s/g, "");
+		var sarray = new Array();
+		var narray = new Array();
+		var coord;
+		
+		if (s.length >= arraylengthlimit &&
+			(s.charAt(0) === "["
+			&& s.charAt(1) === "["
+			&& s.charAt(s.length-1) === "]"
+			&& s.charAt(s.length-2) === "]"))
+		{
+			s = s.substring(2, s.length-2); // Trim the [[ and ]]
+			sarray = s.split("],["); // Create array from assumed "separator"
+			for (var i in sarray)
+			{
+				coord = sarray[i].split(",");
+				if (coord.length === 2)
+				{
+					coord[0] = parseInt(coord[0]);
+					coord[1] = parseInt(coord[1]);
+					narray.push(coord);
+				}
+			}
+			return narray;
+		}
+		return null;
 	},
 	
 	/*
@@ -8149,6 +8173,10 @@ M = {
 	printNumberedCoordinates: function(pCoord, i)
 	{
 		I.write("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},");
+	},
+	formatCoord: function(pCoord)
+	{
+		return "[" + pCoord[0] + ", " + pCoord[1] + "]";
 	},
 	compileCoordinates: function(pCoords)
 	{
@@ -8289,7 +8317,7 @@ M = {
 		{
 			var coord = that.convertLCtoGC(this.getLatLng());
 			$("#" + that.MapEnum + "CoordinatesCopy")
-				.val("[" + coord[0] + ", " + coord[1] + "]")
+				.val(that.formatCoord(coord))
 				.select();
 		});
 	},
@@ -8315,6 +8343,80 @@ M = {
 	},
 	
 	/*
+	 * Imitates the character pin as in the game minimap, as informed by the overlay.
+	 * @param int pForceCode 1 to force update position, -1 angle, 0 both, undefined neither.
+	 */
+	updateCharacter: function(pForceCode)
+	{
+		/*
+		 * Validate the GPS data before allowing updates.
+		 * Sample structure of position, character angle, and camera angle:
+		 * fAvatarPosition: [116.662186, 44.60492, -104.502495]
+		 * fAvatarFront: [0.070094235, 0.0, 0.99754035]
+		 * fCameraFront: [-0.2597584, 0.02722733, 0.9652897]
+		 * Sample structure of JSON:
+		 * {"name": "Character Name","profession": 1,"race": 2,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false,"fov": 0.873}
+		 */
+		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || this.isUserDragging)
+		{
+			return;
+		}
+		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
+		{
+			return;
+		}
+		if (this.isZoneValid(GPSIdentityJSON["map_id"]) === false)
+		{
+			this.movePin(this.Pin.Character);
+			this.movePin(this.Pin.Camera);
+			return;
+		}
+		var coord = this.convertGPSCoord(GPSPositionArray, GPSIdentityJSON["map_id"]);
+		if (coord[0] > this.cMAP_BOUND || coord[0] <= 0
+			|| coord[1] > this.cMAP_BOUND || coord[1] <= 0)
+		{
+			return;
+		}
+		
+		// Follow character if opted and position has changed (character moved)
+		if ((O.Options.bol_followCharacter && this.GPSPreviousCoord[0] !== coord[0] && this.GPSPreviousCoord[1] !== coord[1])
+			|| pForceCode >= 0)
+		{
+			this.Map.setView(this.convertGCtoLC(coord), this.Map.getZoom());
+			this.showCurrentZone(coord);
+			this.GPSPreviousCoord = coord;
+			pForceCode = -1; // Also update pin position
+		}
+		
+		// Pin character if opted and angle has changed (character turned)
+		if (O.Options.bol_displayCharacter)
+		{
+			var anglecharacter = -(this.convertGPSAngle(GPSDirectionArray));
+			var anglecamera = -(this.convertGPSAngle(GPSCameraArray));
+			if (this.GPSPreviousAngleCharacter !== anglecharacter
+				|| this.GPSPreviousAngleCamera !== anglecamera
+				|| pForceCode <= 0)
+			{
+				this.movePin(this.Pin.Character, coord);
+				this.movePin(this.Pin.Camera, coord);
+				this.Pin.Camera._icon.style.zIndex = this.cZIndexBury;
+				var pintranscharacter = this.Pin.Character._icon.style.transform.toString();
+				var pintranscamera = this.Pin.Camera._icon.style.transform.toString();
+				if (pintranscharacter.indexOf("rotate") === -1)
+				{
+					this.Pin.Character._icon.style.transform = pintranscharacter + " rotate(" + anglecharacter + "deg)";
+				}
+				if (pintranscamera.indexOf("rotate") === -1)
+				{
+					this.Pin.Camera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
+				}
+				this.GPSPreviousAngleCharacter = anglecharacter;
+				this.GPSPreviousAngleCamera = anglecamera;
+			}
+		}
+	},
+	
+	/*
 	 * Executes GPS functions every specified milliseconds.
 	 */
 	tickGPS: function()
@@ -8322,7 +8424,7 @@ M = {
 		if (O.Options.bol_followCharacter || O.Options.bol_displayCharacter)
 		{
 			M.updateCharacter();
-			window.clearTimeout(this.GPSTimeout);
+			window.clearTimeout(M.GPSTimeout);
 			M.GPSTimeout = setTimeout(M.tickGPS, O.Options.int_msecGPSRefresh);
 		}
 	}
@@ -13480,6 +13582,10 @@ I = {
 				$("#paneMenu ins").css(
 				{
 					"margin-top": "0px"
+				});
+				$("#paneMenu var").each(function()
+				{
+					$(this).remove();
 				});
 				I.cPANE_MENU_HEIGHT = 32;
 				$("#mapGPS, #wvwGPS").css({display: "inline-block"});
