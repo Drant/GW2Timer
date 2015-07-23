@@ -6780,7 +6780,7 @@ M = {
 			this.Map.on("dblclick", function(pEvent)
 			{
 				if (that.isMouseOnHUD) { return; }
-				that.createPersonalPin(pEvent.latlng);
+				that.createPersonalPin(pEvent.latlng, true);
 			});
 		}
 		
@@ -6799,6 +6799,7 @@ M = {
 				{
 					that.createPersonalPin(that.convertGCtoLC(coords[i]));
 				}
+				that.drawPersonalPath();
 			}
 			else
 			{
@@ -7280,7 +7281,7 @@ M = {
 	},
 	
 	/*
-	 * Gets the region nick of a zone..
+	 * Gets the region nick of a zone.
 	 * @param string pNick of the zone.
 	 * @returns string region nick.
 	 */
@@ -7569,8 +7570,10 @@ M = {
 	/*
 	 * Creates a personal pin.
 	 * @param object pLatLng coordinates.
+	 * @param boolean pWantDraw to redraw the paths (shouldn't redraw when
+	 * looping this function because that's inefficient).
 	 */
-	createPersonalPin: function(pLatLng)
+	createPersonalPin: function(pLatLng, pWantDraw)
 	{
 		var that = this;
 		// Create a pin at double click location
@@ -7586,7 +7589,10 @@ M = {
 		});
 		this.toggleLayer(marker, true);
 		this.Layer.PersonalPin.addLayer(marker);
-		this.drawPersonalPath();
+		if (pWantDraw)
+		{
+			this.drawPersonalPath();
+		}
 		
 		// Single click pin: get its coordinates
 		this.bindMarkerCoordBehavior(marker, "click");
@@ -7607,6 +7613,102 @@ M = {
 		{
 			that.drawPersonalPath();
 		});
+	},
+	
+	/*
+	 * Inserts a personal pin between a group of pins.
+	 * @param int pPrecede index of the preceding pin.
+	 * @param object pLatLng of the inserted pin.
+	 */
+	insertPersonalPin: function(pPrecede, pLatLng)
+	{
+		var latlngs = new Array();
+		var i = 0;
+		// Recompile pin coordinates for recreation
+		this.Layer.PersonalPin.eachLayer(function(pPin){
+			latlngs.push(pPin.getLatLng());
+			if (i === pPrecede)
+			{
+				// When at the index to insert, push the provided coordinates of the new pin
+				latlngs.push(pLatLng);
+			}
+			i++;
+		});
+		// Redraw the entire series of pins
+		this.removePersonalPins();
+		for (i in latlngs)
+		{
+			this.createPersonalPin(latlngs[i]);
+		}
+		this.drawPersonalPath();
+	},
+	
+	/*
+	 * Removes all personal pins from the map.
+	 */
+	removePersonalPins: function()
+	{
+		var that = this;
+		this.Layer.PersonalPin.eachLayer(function(pPin){
+			that.toggleLayer(pPin, false);
+		});
+		this.Layer.PersonalPin.clearLayers();
+		this.drawPersonalPath();
+	},
+	
+	/*
+	 * Draws a path from the group of personal pins the user laid.
+	 */
+	drawPersonalPath: function()
+	{
+		var that = this;
+		if (O.Options.bol_showPersonalPaths)
+		{
+			var path;
+			var latlngs = new Array();
+			var pinids = new Array();
+			var length = 0;
+			this.Layer.PersonalPin.eachLayer(function(pPin){
+				latlngs.push(pPin.getLatLng());
+				pinids.push(that.getLayerId(pPin));
+				length++;
+			});
+			if (length > 1)
+			{
+				this.Layer.PersonalPath.clearLayers();
+				for (var i = 0; i < length-1; i++)
+				{
+					// Create a single line connecting next two pins
+					path = L.polyline([latlngs[i], latlngs[i+1]], {
+						color: "white",
+						opacity: 0.4,
+						precede: i // Store the index of the preceding pin that connects the path
+					});
+					// Single click path: get the coordinates of all pins
+					path.on("click", function()
+					{
+						that.getPersonalCoords();
+					});
+					// Double click path: insert a pin between the two pins that connect the path
+					path.on("dblclick", function(pEvent)
+					{
+						that.insertPersonalPin(this.options.precede, pEvent.latlng);
+					});
+					this.Layer.PersonalPath.addLayer(path);
+				}
+				this.toggleLayer(this.Layer.PersonalPath, true);
+			}
+			else
+			{
+				this.Layer.PersonalPath.clearLayers();
+				this.toggleLayer(this.Layer.PersonalPath, false);
+			}
+		}
+		else
+		{
+			this.Layer.PersonalPath.clearLayers();
+			this.toggleLayer(this.Layer.PersonalPath, false);
+		}
 	},
 	
 	/*
@@ -7633,62 +7735,6 @@ M = {
 		}
 		
 		$("#" + that.MapEnum + "CoordinatesCopy").val(s).select();
-	},
-	
-	/*
-	 * Removes all personal pins from the map.
-	 */
-	removePersonalPins: function()
-	{
-		var that = this;
-		this.Layer.PersonalPin.eachLayer(function(pPin){
-			that.toggleLayer(pPin, false);
-		});
-		this.Layer.PersonalPin.clearLayers();
-		this.drawPersonalPath();
-	},
-	
-	/*
-	 * Draws a path from the group of personal pins the user laid.
-	 */
-	drawPersonalPath: function()
-	{
-		var that = this;
-		if (O.Options.bol_showPersonalPaths)
-		{
-			var path;
-			var latlngs = new Array();
-			var length = 0;
-			this.Layer.PersonalPin.eachLayer(function(pPin){
-				latlngs.push(pPin.getLatLng());
-				length++;
-			});
-			if (length > 1)
-			{
-				this.Layer.PersonalPath.clearLayers();
-				path = L.polyline(latlngs, {
-					color: "white",
-					opacity: 0.4
-				});
-				// Single click path: get the coordinates of all pins
-				path.on("click", function()
-				{
-					that.getPersonalCoords();
-				});
-				this.Layer.PersonalPath.addLayer(path);
-				this.toggleLayer(this.Layer.PersonalPath, true);
-			}
-			else
-			{
-				this.Layer.PersonalPath.clearLayers();
-				this.toggleLayer(this.Layer.PersonalPath, false);
-			}
-		}
-		else
-		{
-			this.Layer.PersonalPath.clearLayers();
-			this.toggleLayer(this.Layer.PersonalPath, false);
-		}
 	},
 	
 	/*
@@ -10213,7 +10259,6 @@ T = {
 	GenericCountdown: GW2T_COUNTDOWN_DATA,
 	isGenericCountdownSystemEnabled: true,
 	isGenericCountdownTickEnabled: null,
-	GenericCountdownGracePeriod: 3600000, // One hour in milliseconds
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -10311,7 +10356,7 @@ T = {
 		minute = T.wrapInteger(minute, T.cMINUTES_IN_HOUR);
 		if (minute < T.cBASE_10)
 		{
-			minute += "0";
+			minute = "0" + minute;
 		}
 		return minute;
 	},
