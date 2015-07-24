@@ -444,7 +444,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 .mapHUDContainer:hover .mapHUDButton {
 	opacity: 1;
 	width: 36px; height: 36px;
-	margin: -4px -4px -4px 0px; /* Subtract to keep its original size of 32px */
+	margin: -4px 0px -4px -2px; /* Subtract to keep its original size of 32px */
 }
 .mapHUDPopup {
 	display: none;

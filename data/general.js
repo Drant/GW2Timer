@@ -580,9 +580,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Creature", "Keep", "Tower"]
 },
 "24": {
-	pve: ["Miner Kryta", "Forger", "Snowden", "Fractal 1-10"],
-	pvp: ["Rank", "Kills", "Engineer Thief", "Elementalist Necromancer"],
-	wvw: ["Creature", "Ruins", "Tower", "Camp"]
+	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", "Megades"],
+	pvp: ["Defender", "Capture", "Elementalist Mesmer", "Guardian Thief"],
+	wvw: ["Land", "Guard", "Tower", "Camp"]
 },
 "25": {
 	pve: ["Forager Kryta", "Fractal", "Southsun", "Fractal 1-10"],

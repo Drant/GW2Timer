@@ -996,6 +996,7 @@ O = {
 			else
 			{
 				M.tickGPS();
+				M.updateCharacter(0);
 			}
 		},
 		bol_showPanel: function()
@@ -2528,37 +2529,39 @@ X = {
 				bar.hide();
 			} break;
 		}
-
-		// Set the time visual state as stored (subscribed or not)
-		if (X.getChecklistItem(X.Checklists.ChainSubscription, pChain.nexus) ===
-				X.ChecklistEnum.Checked)
+		
+		if (C.isChainRegular(pChain))
 		{
-			time.addClass("chnTimeSubscribed");
-		}
-
-		/*
-		 * Bind event handler for the time clickable for subscription.
-		 */
-		time.click(function()
-		{
-			var nexus = U.getSubintegerFromHTMLID($(this));
-
-			if (X.getChecklistItem(X.Checklists.ChainSubscription, nexus) === X.ChecklistEnum.Checked)
+			// Set the time visual state as stored (subscribed or not)
+			if (X.getChecklistItem(X.Checklists.ChainSubscription, pChain.nexus) ===
+					X.ChecklistEnum.Checked)
 			{
-				$(this).removeClass("chnTimeSubscribed");
-				X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Unchecked);
+				time.addClass("chnTimeSubscribed");
 			}
-			else
+			/*
+			 * Bind event handler for the time clickable for subscription.
+			 */
+			time.click(function()
 			{
-				$(this).addClass("chnTimeSubscribed");
-				X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
-				if (O.Options.int_setAlarm !== O.IntEnum.Alarm.Subscription)
+				var nexus = U.getSubintegerFromHTMLID($(this));
+
+				if (X.getChecklistItem(X.Checklists.ChainSubscription, nexus) === X.ChecklistEnum.Checked)
 				{
-					I.write("Please set <img src='img/ui/speaker.png' /> to &quot;"
-						+ D.getSentence("subscription") + "&quot; to enable alarm.");
+					$(this).removeClass("chnTimeSubscribed");
+					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Unchecked);
 				}
-			}
-		});
+				else
+				{
+					$(this).addClass("chnTimeSubscribed");
+					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
+					if (O.Options.int_setAlarm !== O.IntEnum.Alarm.Subscription)
+					{
+						I.write("Please set <img src='img/ui/speaker.png' /> to &quot;"
+							+ D.getSentence("subscription") + "&quot; to enable alarm.");
+					}
+				}
+			});
+		}
 
 		/*
 		 * Bind event handler for the div "checkboxes".

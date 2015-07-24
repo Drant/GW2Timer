@@ -165,6 +165,17 @@ Orichalcum: {
 	{c: [11885, 28403]}
 	], type: "Metal"
 },
+Quartz: {
+	name_en: "Quartz",
+	name_de: "Quarz",
+	name_es: "Cuarzo",
+	name_fr: "Quartz",
+	isApprox: true,
+	nodes: [
+	{c: [5373, 16541]}, // dry
+	{c: [5347, 16621]}
+	], type: "Metal"
+},
 Green: {
 	name_en: "Green",
 	name_de: "Grüner",
