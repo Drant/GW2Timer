@@ -578,8 +578,13 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 		1px 1px 1px black;
 }
 
-.mapNode img, .mapNodeApprox img, .mapNodeZone img, .mapChestBasic img, .mapChestSplendid img {
+.mapNode img, .mapNodeZone img, .mapChestBasic img, .mapChestSplendid img {
 	width: 32px; height: 32px;
+	border-radius: 16px;
+	opacity: 0.9;
+}
+.mapNodeApprox img {
+	width: 24px; height: 24px;
 	border-radius: 16px;
 	opacity: 0.9;
 }
@@ -1404,6 +1409,20 @@ textarea.jsCopyCode {
 }
 .chnDryTopWaypoint.zeroclipboard-is-active {
 	opacity: 0.5;
+}
+#mapDryTopClip0, #mapDryTopClip1 {
+	width: 32px; height: 16px;
+	padding: 2px;
+	background: rgba(179, 84, 71, 0.5);
+	border: 2px dotted rgba(0, 0, 0, 0.5);
+	border-radius: 4px;
+	font-family: Menomonia;
+	font-weight: bold;
+	color: white;
+	opacity: 0.5;
+}
+#mapDryTopClip0:hover, #mapDryTopClip1:hover {
+	opacity: 1;
 }
 
 .listChains {

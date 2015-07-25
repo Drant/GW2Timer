@@ -101,7 +101,7 @@ O = {
 		bol_showMap: true,
 		// Map
 		bol_showZoneRectangles: false,
-		bol_showPersonalPaths: false,
+		bol_showPersonalPaths: true,
 		bol_showChainPaths: true,
 		bol_tourPrediction: true,
 		bol_showWorldCompletion: false,
@@ -6132,8 +6132,9 @@ C = {
 			// Show the events (details)
 			if (C.isChainUnchecked(ithchain))
 			{
-				if ((ithchain.series === C.ChainSeriesEnum.DryTop)
-					|| (ithchain.series !== C.ChainSeriesEnum.DryTop && O.Options.bol_expandWB))
+				if (I.ModeCurrent !== I.ModeEnum.Mobile
+					&& ((ithchain.series === C.ChainSeriesEnum.DryTop)
+					|| (ithchain.series !== C.ChainSeriesEnum.DryTop && O.Options.bol_expandWB)))
 				{
 					$("#chnDetails_" + ithchain.nexus).show("fast");
 				}
@@ -8219,6 +8220,13 @@ M = {
 			this.printNumberedCoordinates((pCushion[i]).c, i);
 		}
 	},
+	formatNodes: function(pArray)
+	{
+		for (var i in pArray)
+		{
+			I.write("{c: [" + (pArray[i])[0] + ", " + (pArray[i])[1] + "]},");
+		}
+	},
 	printNumberedCoordinates: function(pCoord, i)
 	{
 		I.write("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},");
@@ -8823,53 +8831,6 @@ P = {
 	},
 	
 	/*
-	 * Shows or hides a section's map icons by triggering its toggle button.
-	 * Whether the button will hide or show icons depends on its boolean data attribute.
-	 * @param string pSection name.
-	 * @param boolean pWantShow to show or hide its icons.
-	 */
-	displayIcons: function(pSection, pWantShow)
-	{
-		var button = $("#mapToggle_" + pSection);
-		var isshown;
-		var wanthideonly;
-		if (button.length)
-		{
-			isshown = button.data("checked");
-			wanthideonly = button.data("hideonly");
-			
-			// If toggle button only serves to hide icons
-			if (wanthideonly)
-			{
-				if ( ! pWantShow)
-				{
-					button.trigger("click");
-				}
-			}
-			// If toggle button is two-states
-			else
-			{
-				if (pWantShow)
-				{
-					if ( ! isshown)
-					{
-						button.trigger("click");
-						button.data("checked", true);
-					}
-				}
-				else
-				{
-					if (isshown)
-					{
-						button.trigger("click");
-						button.data("checked", false);
-					}
-				}
-			}
-		}
-	},
-	
-	/*
 	 * Creates event icons for Dry Top chains, they will be resized by the zoomend function
 	 */
 	generateDryTop: function()
@@ -8907,11 +8868,20 @@ P = {
 				icon: L.divIcon(
 				{
 					className: "mapNick",
-					html: "<span class='mapNickIn' id='mapDryTopTimer'></span>",
+					html: "<div class='mapNickIn' id='mapDryTopInfo'><span id='mapDryTopTimer'></span><br />"
+						+ "<input id='mapDryTopClip0' type='text' title='Map chat text for <dfn>current</dfn> events.<br />(Ctrl+C this then Ctrl+V in chat).' > "
+						+ "<input id='mapDryTopClip1' type='text' title='Map chat text for <dfn>upcoming</dfn> events.<br />(Ctrl+C this then Ctrl+V in chat).'></div>",
 					iconSize: [512, 64],
 					iconAnchor: [256, 32]
 				})
 			}).addTo(M.Map);
+			I.qTip.init($("#mapDryTopClip0, #mapDryTopClip1").click(function()
+			{
+				$(this).select();
+			}).hover(
+				function() { M.isMouseOnHUD = true; },
+				function() { M.isMouseOnHUD = false; }
+			));
 			
 			// Create icons
 			for (i in C.DryTopChains)
@@ -9015,7 +8985,7 @@ P = {
 			});
 			M.DryTopTimer._icon.style.fontSize = (nickfontsize*2) + "px";
 			M.DryTopTimer._icon.style.opacity = nickopacity;
-			M.DryTopTimer._icon.style.zIndex = M.cZIndexBury + 1;
+			M.DryTopTimer._icon.style.zIndex = M.cZIndexRaise + 1;
 			M.DryTopTimer._icon.style.display = "table";
 		}
 	}
@@ -9228,7 +9198,7 @@ G = {
 			var i, ii;
 			var resource; // A type of resource, like copper ore
 			var marker;
-			var nodeclass;
+			var nodeclass, nodesize;
 
 			for (i in M.Resources)
 			{
@@ -9239,6 +9209,7 @@ G = {
 				if (resource.nodes !== undefined)
 				{
 					nodeclass = (resource.isApprox) ? "mapNodeApprox" : "mapNode";
+					nodesize = (resource.isApprox) ? 24 : 32;
 					for (ii in resource.nodes)
 					{
 						marker = L.marker(M.convertGCtoLC(resource.nodes[ii].c),
@@ -9247,11 +9218,12 @@ G = {
 							{
 								className: nodeclass,
 								html: "<img src='" + "img/node/" + i.toLowerCase() + I.cPNG + "' />",
-								iconSize: [32, 32],
-								iconAnchor: [16, 16]
+								iconSize: [nodesize, nodesize],
+								iconAnchor: [nodesize/2, nodesize/2]
 							})
 						});
 						M.bindMarkerZoomBehavior(marker, "click");
+						M.bindMarkerCoordBehavior(marker, "contextmenu");
 
 						// Add to array
 						layer.addLayer(marker);
@@ -9279,6 +9251,7 @@ G = {
 							})
 						});
 						M.bindMarkerZoomBehavior(marker, "click");
+						M.bindMarkerCoordBehavior(marker, "contextmenu");
 						// Add to array
 						layer.addLayer(marker);
 					}
@@ -9295,7 +9268,8 @@ G = {
 			{
 				resource = M.Resources[i];
 				$("#mapResource_" + resource.type).append(
-					"<label><input id='nod_" + i + "' type='checkbox' checked='checked' /> <img src='img/node/" + i.toLowerCase() + I.cPNG + "' /> " + D.getObjectName(resource) + "</label>");
+					"<label><input id='nod_" + i + "' type='checkbox' checked='checked' /> <img src='img/node/"
+					+ i.toLowerCase() + I.cPNG + "' /> " + D.getObjectName(resource) + "</label>");
 			}
 			// Bind checkboxes
 			for (i in M.Resources)
@@ -9462,7 +9436,6 @@ G = {
 
 			I.qTip.init(".leaflet-marker-icon");
 			G.initializeJPChecklist();
-			M.goToDefault();
 		});
 	},
 	
@@ -12479,10 +12452,14 @@ K = {
 	{
 		if (C.isDryTopGenerated)
 		{
+			var s0 = T.getCurrentDryTopEvents();
+			var s1 = T.getCurrentDryTopEvents(1);
 			document.getElementById("chnDryTopWaypoint0")
-				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentDryTopEvents());
+				.setAttribute(K.cZeroClipboardDataAttribute, s0);
 			document.getElementById("chnDryTopWaypoint1")
-				.setAttribute(K.cZeroClipboardDataAttribute, T.getCurrentDryTopEvents(1));
+				.setAttribute(K.cZeroClipboardDataAttribute, s1);
+			$("#mapDryTopClip0").val(s0);
+			$("#mapDryTopClip1").val(s1);
 		}
 	}
 };
@@ -13111,11 +13088,10 @@ I = {
 				
 				if ($(this).next().is(":visible"))
 				{
-					// To be collapsed
+					// TO BE COLLAPSED
 					$(this).children("sup").text("[+]");
 					
-					P.displayIcons(section, false); // Hide this section's map icons
-					
+					I.displaySectionMarkers(section, false); // Hide this section's map icons
 					I[I.sectionPrefix + plate] = ""; // Nullify current section variable
 					
 					// Show all headers again
@@ -13124,12 +13100,13 @@ I = {
 				}
 				else
 				{
-					// To be expanded
+					// TO BE EXPANDED
 					istobeexpanded = true;
 					$(this).children("sup").text("[-]");
 					$(pPlate + " .menuBeamIcon[data-section='" + section + "']")
 						.addClass("menuBeamIconActive");
 					
+					I.displaySectionMarkers(section, true); // Show associated map icons
 					I[I.sectionPrefix + plate] = section;
 					
 					// If clicked from beam menu then hide the other headers to save space
@@ -13138,6 +13115,11 @@ I = {
 						$(pPlate + " header.jsSection").not(this).hide();
 						$(pPlate + " header.cntHeader").hide();
 						$(this).removeData("beamclicked");
+					}
+					// Default the map view if the header has this CSS class
+					if ($(this).hasClass("jsMapDefault"))
+					{
+						M.goToDefault();
 					}
 				}
 				U.updateQueryString();
@@ -13171,7 +13153,7 @@ I = {
 				}
 			});
 			
-			// Opening the section at least once will load that section's img tags
+			// Opening the section the first time will load that section's img tags
 			header.one("click", function()
 			{
 				I.loadSectionImg($(this));
@@ -13232,6 +13214,54 @@ I = {
 		
 		// Make tooltips for the beam menu icons
 		I.qTip.init(pPlate + " .menuBeamIcon");
+	},
+	
+		
+	/*
+	 * Shows or hides a section's map icons by triggering its toggle button.
+	 * Whether the button will hide or show icons depends on its boolean data attribute.
+	 * @param string pSection name.
+	 * @param boolean pWantShow to show or hide its icons.
+	 */
+	displaySectionMarkers: function(pSection, pWantShow)
+	{
+		var button = $("#mapToggle_" + pSection);
+		var isshown;
+		var wanthideonly;
+		if (button.length)
+		{
+			isshown = button.data("checked");
+			wanthideonly = button.data("hideonly");
+			
+			// If toggle button only serves to hide icons
+			if (wanthideonly)
+			{
+				if ( ! pWantShow)
+				{
+					button.trigger("click");
+				}
+			}
+			// If toggle button is two-states
+			else
+			{
+				if (pWantShow)
+				{
+					if ( ! isshown)
+					{
+						button.trigger("click");
+						button.data("checked", true);
+					}
+				}
+				else
+				{
+					if (isshown)
+					{
+						button.trigger("click");
+						button.data("checked", false);
+					}
+				}
+			}
+		}
 	},
 	
 	/*
@@ -13535,20 +13565,6 @@ I = {
 			$("#headerMap_Guild").one("click", function()
 			{
 				G.generateGuildUI();
-			});
-			
-			// Bind show map icons when clicked on header
-			$("#headerMap_Daily, #headerMap_Resource, #headerMap_JP, #headerMap_Collectible").each(function()
-			{
-				$(this).click(function()
-				{
-					// Show only if the section is about to be expanded
-					if ($(this).children("sup").text() === "[-]")
-					{
-						var section = U.getSubstringFromHTMLID($(this));
-						P.displayIcons(section, true);
-					}
-				});
 			});
 			I.qTip.init("#plateMap label");
 		});
@@ -13915,7 +13931,6 @@ T.initializeSchedule(); // compute event data and write HTML
 M.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
-
 
 
 

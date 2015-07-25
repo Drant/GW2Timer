@@ -585,9 +585,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Tower", "Camp"]
 },
 "25": {
-	pve: ["Forager Kryta", "Fractal", "Southsun", "Fractal 1-10"],
-	pvp: ["Rank", "Capture", "Warrior Thief", "Guardian Ranger"],
-	wvw: ["Spender", "Kills", "Camp", "Defender"]
+	pve: ["Forager Kryta", "Forger", "Snowden", "Golem"],
+	pvp: ["Kills", "Defender", "Engineer Thief", "Elementalist Necromancer"],
+	wvw: ["Spender", "Kills", "Defender", "Camp"]
 },
 "26": {
 	pve: ["Lumberer Shiverpeaks", "Vista Wastes", "Kessex", "Fractal 1-10"],
@@ -637,14 +637,4 @@ var GW2T_DAILY_CALENDAR = {
 	Start: new Date("2015-07-10T19:00:00Z"),
 	Finish: new Date("2015-07-13T19:00:00Z")
  */
-var GW2T_COUNTDOWN_DATA = [
-{
-	name_en: "Golem Rush",
-	name_de: "Golem-Ansturm",
-	name_es: "Acelerón de gólem",
-	name_fr: "Ruée de golem",
-	news: "siege-golems-are-better-faster-and-stronger-in-world-vs-world-between-july17and24/",
-	Start: new Date("2015-07-17T18:00:00Z"),
-	Finish: new Date("2015-07-24T18:00:00Z")
-}
-];
+var GW2T_COUNTDOWN_DATA = [];

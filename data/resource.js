@@ -172,8 +172,23 @@ Quartz: {
 	name_fr: "Quartz",
 	isApprox: true,
 	nodes: [
+	{c: [11519, 10456]}, // divinity
 	{c: [5373, 16541]}, // dry
-	{c: [5347, 16621]}
+	{c: [5347, 16621]},
+	{c: [4531, 16794]}
+	], type: "Metal"
+},
+Poultry: {
+	name_en: "Poultry",
+	name_de: "Geflügelfleisch",
+	name_es: "Avecarne",
+	name_fr: "Volaille",
+	isApprox: true,
+	nodes: [
+	{c: [27758, 11288]}, // marches
+	{c: [27805, 11398]},
+	{c: [27862, 11429]},
+	{c: [27660, 11413]}
 	], type: "Metal"
 },
 Green: {
@@ -235,6 +250,7 @@ Ancient: {
 	{c: [4541, 15930]},
 	{c: [4551, 16215]},
 	{c: [5063, 16666]},
+	{c: [5097, 14280]},
 	{c: [12214, 20258]}, // southsun
 	{c: [12906, 19772]},
 	{c: [13161, 19435]},
@@ -252,6 +268,17 @@ Ancient: {
 	{c: [10967, 27113]},
 	{c: [11134, 28079]},
 	{c: [11750, 28675]}
+	], type: "Wood"
+},
+Foxfire: {
+	name_en: "Foxfire",
+	name_de: "Leuchtpilz",
+	name_es: "Luminiscentes",
+	name_fr: "Bioluminescent",
+	nodes: [
+	{c: [20189, 21809]}, // maelstrom
+	{c: [15625, 24851]}, // straits
+	{c: [13858, 24941]} // malchor
 	], type: "Wood"
 },
 Lettuce: {
@@ -319,6 +346,16 @@ Cabbage: {
 	{c: [30955, 13247]} // blazeridge
 	], type: "Plant"
 },
+
+Pearlclam: {
+	name_en: "Pearlclam",
+	name_de: "Perlemuschel",
+	name_es: "Almejaperla",
+	name_fr: "Palourdeperle",
+	nodes: [
+	{c: [8515, 16658]}, // brisban
+	], type: "Plant"
+},
 Vanilla: {
 	name_en: "Vanilla",
 	name_de: "Vanille",
@@ -368,7 +405,34 @@ Artichoke: {
 	name_fr: "Artichaut",
 	nodes: [
 	{c: [20076, 22914]}, // maelstrom
-	{c: [17476, 22679]} // straits
+	{c: [17475, 22676]} // straits
+	], type: "Plant"
+},
+Lemongrass: {
+	name_en: "Lemongrass",
+	name_de: "Zitronengras",
+	name_es: "Limoncillo",
+	name_fr: "Citronnelle",
+	isApprox: true,
+	nodes: [
+	{c: [17164, 23181]}, // straits
+	{c: [17327, 23028]},
+	{c: [17242, 22984]},
+	{c: [17140, 22859]},
+	{c: [17322, 24257]}
+	], type: "Plant"
+},
+Truffle: {
+	name_en: "Truffle",
+	name_de: "Trüffel",
+	name_es: "Trufa",
+	name_fr: "Truffe",
+	isApprox: true,
+	nodes: [
+	{c: [15592, 25101]}, // straits
+	{c: [15404, 25051]},
+	{c: [14820, 24726]},
+	{c: [14845, 24448]}
 	], type: "Plant"
 },
 Omnomberry: {
@@ -384,6 +448,57 @@ Omnomberry: {
 	{c: [13983, 24719]},
 	{c: [10567, 26268]}, // cursed
 	{c: [11069, 27131]}
+	], type: "Plant"
+},
+Passiflora: {
+	name_en: "Passiflora",
+	name_de: "Maracujablüte",
+	name_es: "Florpasión",
+	name_fr: "Passiflore",
+	isApprox: true,
+	nodes: [
+	{c: [13627, 20330]}, // southsun
+	{c: [13567, 20141]},
+	{c: [13502, 19993]},
+	{c: [13740, 19938]},
+	{c: [13695, 19800]},
+	{c: [13885, 20059]},
+	{c: [13105, 19913]},
+	{c: [13201, 19787]}
+	], type: "Plant"
+},
+Spore: {
+	name_en: "Spore",
+	name_de: "Spore",
+	name_es: "Espora",
+	name_fr: "Spore",
+	isApprox: true,
+	nodes: [
+	{c: [9786, 14384]}, // kessex
+	{c: [9878, 14406]},
+	{c: [9930, 14502]},
+	{c: [9630, 14850]},
+	{c: [9918, 14790]},
+	{c: [9820, 15200]},
+	{c: [10008, 15140]},
+	{c: [10080, 15560]},
+	{c: [10170, 15748]},
+	{c: [10226, 14684]},
+	{c: [10588, 14776]},
+	{c: [10914, 14798]},
+	{c: [11156, 14938]},
+	{c: [11798, 14886]},
+	{c: [12110, 14364]},
+	{c: [12348, 14472]},
+	{c: [12304, 15158]},
+	{c: [12096, 15526]},
+	{c: [12012, 15822]},
+	{c: [13152, 14452]},
+	{c: [13108, 14752]},
+	{c: [12866, 15332]},
+	{c: [12912, 15362]},
+	{c: [12928, 15838]},
+	{c: [13040, 15848]}
 	], type: "Plant"
 }
 };
