@@ -114,7 +114,8 @@ body, html, .panelMain, #windowMain, #paneContent article {
 
 .chnTitle h1 {
 	width: 178px;
-	font-size: 20px;
+	font-size: 22px;
+	font-weight: bold;
 	text-align: center;
 }
 

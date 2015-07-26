@@ -283,7 +283,7 @@ html, body,
 .mapHUDButton,
 .menuBeam img:hover, .jsSectionDone,
 .chnCheck:hover,
-#listChainsScheduled .chnTitle time, #lgnTrack ins {
+#sectionChains_Scheduled .chnTitle time, #lgnTrack ins {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
 
@@ -578,24 +578,25 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 		1px 1px 1px black;
 }
 
-.mapNode img, .mapNodeZone img, .mapChestBasic img, .mapChestSplendid img {
+.mapNodeRich img, .mapNodeZone img, .mapChestBasic img, .mapChestSplendid img {
 	width: 32px; height: 32px;
 	border-radius: 16px;
 	opacity: 0.9;
 }
-.mapNodeApprox img {
+.mapNodeRegular img {
 	width: 24px; height: 24px;
 	border-radius: 16px;
 	opacity: 0.9;
 }
-.mapNode img {
+.mapNodeRich img {
 	border: 2px solid lime;
 }
-.mapNodeApprox img {
-	border: 2px dotted lime;
+.mapNodeRegular img {
+	border: 2px dotted limegreen;
 }
 .mapNodeZone img {
 	border: 2px dashed lime;
+	border-radius: 4px;
 }
 .mapChestSplendid img {
 	box-shadow: 0px 0px 10px gold;
@@ -1389,6 +1390,17 @@ textarea.jsCopyCode {
 	text-shadow: 0px 0px 2px black;
 }
 
+#plateChains section {
+	margin-bottom: 12px;
+	font-family: Menomonia;
+	text-shadow:
+		1px 1px 0px #000,
+		-1px -1px 0px #000,
+		1px -1px 0px #000,
+		-1px 1px 0px #000,
+		1px 1px 0px #000;
+}
+
 #chnDryTopWaypoint0 {
 	margin-left: 250px;
 }
@@ -1423,17 +1435,6 @@ textarea.jsCopyCode {
 }
 #mapDryTopClip0:hover, #mapDryTopClip1:hover {
 	opacity: 1;
-}
-
-.listChains {
-	margin-bottom: 12px;
-	font-family: Menomonia;
-	text-shadow:
-		1px 1px 0px #000,
-		-1px -1px 0px #000,
-		1px -1px 0px #000,
-		-1px 1px 0px #000,
-		1px 1px 0px #000;
 }
 
 /* A bar containing the chain icon, title, time, and events */
@@ -1922,17 +1923,10 @@ dt.mapJPListNameHover {
 }
 .mapResourceList button {
 	width: 84px;
-	margin-top: 8px;
 	margin-bottom: 8px;
 }
 .mapResourceList img {
 	width: 16px; height: 16px;
-}
-
-.mapLegendLine {
-	display: inline-block;
-	width: 64px; height: 2px;
-	margin: auto 12px 5px 6px;
 }
 
 /* Collectible */

@@ -1701,6 +1701,11 @@ U = {
 					// Else try going to a section name in all caps
 					elem = $(I.cHeaderPrefix + I.PageCurrent + "_" + section.toUpperCase());
 				}
+				if (I.PageCurrent === I.PageEnum.Chains)
+				{
+					// Click the chains header to hide it because it's shown by default
+					$("#headerChains_Scheduled").trigger("click");
+				}
 				elem.trigger("click");
 			}
 		}, 0);
@@ -1733,8 +1738,8 @@ U = {
 					$("#mapSwitchButton").trigger("click");
 				} break;
 				case "drytop": {
-					$("#listChainsScheduled").prev().trigger("click"); // Hide scheduled chains list
-					$("#listChainsDryTop").prev().trigger("click"); // Show Dry Top list
+					$("#headerChains_Scheduled").trigger("click"); // Hide scheduled chains list
+					$("#headerChains_Drytop").trigger("click"); // Show Dry Top list
 				} break;
 			}
 		}
@@ -5691,81 +5696,6 @@ C = {
 		X.initializeChainChecklist(pChain);
 		
 	}, // End of initializeChain()
-	
-	/*
-	 * Binds chains list expansion behavior.
-	 */
-	initializeUI: function()
-	{
-		/*
-		 * Chains list collapsible headers.
-		 */
-		$("#plateChains header").click(function()
-		{
-			$(this).next().slideToggle("fast", function()
-			{
-				// Change the toggle icon after finish toggling
-				if ($(this).is(":visible"))
-				{
-					var container = $(I.cPagePrefix + I.PageEnum.Chains);
-					var header = $(this).prev();
-					header.find("kbd").html("[-]");
-					// Automatically scroll to the clicked header
-					I.scrollToElement(header, container, "fast");
-					
-					// Scroll the map to Dry Top if it is that chain list
-					if ($(this).attr("id") === "listChainsDryTop")
-					{
-						M.goToZone("dry", M.ZoomEnum.Bird);
-						I.PageCurrent = I.SpecialPageEnum.DryTop;
-						U.updateQueryString();
-						U.updateTitle(I.SpecialPageEnum.DryTop);
-					}
-				}
-				else
-				{
-					$(this).prev().find("kbd").html("[+]");
-					I.updateScrollbar();
-				}
-			});
-		});
-	   
-	   /*
-		* Add collapse text icon to headers; first one is pre-expanded.
-		*/
-		$("#plateChains header:not(:first)").each(function()
-		{
-			$(this).next().toggle(0);
-			$(this).find("kbd").html("[+]");
-		});
-		$("#plateChains header:first").each(function()
-		{
-			$(this).find("kbd").html("[-]");
-		});
-
-		// Create chain bars for unscheduled chains only when manually expanded the header
-		$("#listChainsDryTop").prev().one("click", function()
-		{
-			P.generateDryTop();
-		});
-		$("#listChainsLegacy").prev().one("click", function()
-		{
-			C.LegacyChains.forEach(C.initializeChain);
-			C.LegacyChains.forEach(P.drawChainPaths);
-		});
-		$("#listChainsTemple").prev().one("click", function()
-		{
-			C.TempleChains.forEach(C.initializeChain);
-			C.TempleChains.forEach(P.drawChainPaths);
-		});
-
-		/*
-		 * Generate a full timetable of the chains when clicked on that header.
-		 */
-		$("#headerTimetable").one("click", function(){
-		   C.initializeTimetableHTML(); 
-		});
-	},
 
 	/*
 	 * Initializes every chain and create additional informative arrays for them.
@@ -5799,28 +5729,28 @@ C = {
 			{
 				case C.ChainSeriesEnum.Standard:
 				{
-					chain.htmllist = "#listChainsScheduled";
+					chain.htmllist = "#sectionChains_Scheduled";
 					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.Hardcore:
 				{
-					chain.htmllist = "#listChainsScheduled";
+					chain.htmllist = "#sectionChains_Scheduled";
 					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.DryTop:
 				{
-					chain.htmllist = "#listChainsDryTop";
+					chain.htmllist = "#sectionChains_Drytop";
 					C.ScheduledChains.push(chain);
 					C.DryTopChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.Legacy:
 				{
-					chain.htmllist = "#listChainsLegacy";
+					chain.htmllist = "#sectionChains_Legacy";
 					C.LegacyChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.Temple:
 				{
-					chain.htmllist = "#listChainsTemple";
+					chain.htmllist = "#sectionChains_Temple";
 					C.TempleChains.push(chain);
 				} break;
 			}
@@ -5832,9 +5762,9 @@ C = {
 			}
 		}
 		
-		C.initializeUI();
+		I.initializeChainsUI();
 		// Initial recoloring of chain titles
-		$("#listChainsScheduled .barChain h1, #listChainsDryTop .barChain h1")
+		$("#sectionChains_Scheduled .barChain h1, #sectionChains_Drytop .barChain h1")
 			.addClass("chnTitleFutureFar");
 	},
 	
@@ -6002,7 +5932,7 @@ C = {
 	 */
 	initializeTimetableHTML: function()
 	{
-		$("#listChainsTimetable").empty(); // This makes the function reuseable
+		$("#sectionChains_Timetable").empty(); // This makes the function reuseable
 		var i, ii;
 		var chains;
 		var ithchain;
@@ -6026,7 +5956,7 @@ C = {
 					customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(i)
 				});
 
-				$("#listChainsTimetable").append(
+				$("#sectionChains_Timetable").append(
 				"<div class='barChainDummy barChainDummy_" + i + "'>"
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
@@ -6037,11 +5967,11 @@ C = {
 			}
 		}
 		// Highlight current chain
-		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey())
+		$("#sectionChains_Timetable .barChainDummy_" + T.getTimeframeKey())
 			.addClass("chnBarCurrent");
-		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey() + " .chnTitle h1")
+		$("#sectionChains_Timetable .barChainDummy_" + T.getTimeframeKey() + " .chnTitle h1")
 			.addClass("chnTitleCurrent");
-		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(1) + " .chnTitle h1")
+		$("#sectionChains_Timetable .barChainDummy_" + T.getTimeframeKey(1) + " .chnTitle h1")
 			.addClass("chnTitleFuture");
 	},
    
@@ -6082,8 +6012,8 @@ C = {
 				{
 					switch (ithchain.series)
 					{
-						case C.ChainSeriesEnum.DryTop: chaintab = "#listChainsDryTop"; break;
-						default: chaintab = "#listChainsScheduled";
+						case C.ChainSeriesEnum.DryTop: chaintab = "#sectionChains_Drytop"; break;
+						default: chaintab = "#sectionChains_Scheduled";
 					}
 					$("#barChain_" + ithchain.nexus).appendTo(chaintab);
 					
@@ -6184,17 +6114,17 @@ C = {
 		}
 		
 		// Also highlight timetable chain bar
-		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(-1))
+		$("#sectionChains_Timetable .barChainDummy_" + T.getTimeframeKey(-1))
 			.removeClass("chnBarCurrent");
-		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey())
+		$("#sectionChains_Timetable .barChainDummy_" + T.getTimeframeKey())
 			.addClass("chnBarCurrent");
 		// Current chain title
-		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(-1) + " .chnTitle h1")
+		$("#sectionChains_Timetable .barChainDummy_" + T.getTimeframeKey(-1) + " .chnTitle h1")
 			.removeClass("chnTitleCurrent");
-		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey() + " .chnTitle h1")
+		$("#sectionChains_Timetable .barChainDummy_" + T.getTimeframeKey() + " .chnTitle h1")
 			.removeClass("chnTitleFuture").addClass("chnTitleCurrent");
 		// Future chain title
-		$("#listChainsTimetable .barChainDummy_" + T.getTimeframeKey(1) + " .chnTitle h1")
+		$("#sectionChains_Timetable .barChainDummy_" + T.getTimeframeKey(1) + " .chnTitle h1")
 			.addClass("chnTitleFuture");
 	},
 	
@@ -6378,7 +6308,7 @@ C = {
 			if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
 				&& I.PageCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && isregularchain
-				&& ($("#listChainsDryTop").is(":visible") === false))
+				&& ($("#sectionChains_Drytop").is(":visible") === false))
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -6648,10 +6578,6 @@ M = {
 	},
 	LayerArray: {
 		Path: new Array(),
-		Resource: new Array(),
-		Resource_Metal: new Array(),
-		Resource_Plant: new Array(),
-		Resource_Wood: new Array(),
 		Guild_Bounty: new Array(),
 		Guild_Trek: new Array(),
 		Guild_Challenge: new Array(),
@@ -7779,6 +7705,10 @@ M = {
 	 */
 	toggleLayer: function(pLayer, pBoolean)
 	{
+		if (pLayer === undefined)
+		{
+			return;
+		}
 		// No boolean provided so assumes toggle
 		if (pBoolean === undefined)
 		{
@@ -9198,42 +9128,67 @@ G = {
 			var i, ii;
 			var resource; // A type of resource, like copper ore
 			var marker;
-			var nodeclass, nodesize;
+			var layerrich, layerregular, layerzone;
 
 			for (i in M.Resources)
 			{
 				resource = M.Resources[i];
-				var layer = new L.layerGroup();
+				var name = i.toLowerCase();
 
-				// Resources with specific node locations
-				if (resource.nodes !== undefined)
+				// Permanent Rich/Farm nodes
+				if (resource.riches !== undefined && resource.riches.length > 0)
 				{
-					nodeclass = (resource.isApprox) ? "mapNodeApprox" : "mapNode";
-					nodesize = (resource.isApprox) ? 24 : 32;
-					for (ii in resource.nodes)
+					layerrich = new L.layerGroup();
+					for (ii in resource.riches)
 					{
-						marker = L.marker(M.convertGCtoLC(resource.nodes[ii].c),
+						marker = L.marker(M.convertGCtoLC(resource.riches[ii].c),
 						{
 							icon: L.divIcon(
 							{
-								className: nodeclass,
-								html: "<img src='" + "img/node/" + i.toLowerCase() + I.cPNG + "' />",
-								iconSize: [nodesize, nodesize],
-								iconAnchor: [nodesize/2, nodesize/2]
+								className: "mapNodeRich",
+								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
+								iconSize: [32, 32],
+								iconAnchor: [16, 16]
 							})
 						});
 						M.bindMarkerZoomBehavior(marker, "click");
 						M.bindMarkerCoordBehavior(marker, "contextmenu");
 
 						// Add to array
-						layer.addLayer(marker);
+						layerrich.addLayer(marker);
 					}
-					M.Layer["Resource_" + i] = layer;
+					M.toggleLayer(layerrich);
+					M.Layer["Resource_Rich_" + i] = layerrich;
+				}
+				// Regular nodes that may spawn there
+				if (resource.regulars !== undefined && resource.regulars.length > 0)
+				{
+					layerregular = new L.layerGroup();
+					for (ii in resource.regulars)
+					{
+						marker = L.marker(M.convertGCtoLC(resource.regulars[ii].c),
+						{
+							icon: L.divIcon(
+							{
+								className: "mapNodeRegular",
+								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
+								iconSize: [24, 24],
+								iconAnchor: [12, 12]
+							})
+						});
+						M.bindMarkerZoomBehavior(marker, "click");
+						M.bindMarkerCoordBehavior(marker, "contextmenu");
+
+						// Add to array
+						layerregular.addLayer(marker);
+					}
+					M.toggleLayer(layerregular);
+					M.Layer["Resource_Regular_" + i] = layerregular;
 				}
 				// Resources with only zone locations (marker centered in map)
-				else if (resource.zones !== undefined)
+				if (resource.zones !== undefined)
 				{
-					nodeclass = "mapNodeZone";
+					layerzone = new L.layerGroup();
 					for (ii in resource.zones)
 					{
 						var zone = resource.zones[ii];
@@ -9244,8 +9199,8 @@ G = {
 						{
 							icon: L.divIcon(
 							{
-								className: nodeclass,
-								html: "<img src='" + "img/node/" + i.toLowerCase() + I.cPNG + "' />",
+								className: "mapNodeZone",
+								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
 								iconSize: [32, 32],
 								iconAnchor: [16, 16]
 							})
@@ -9253,16 +9208,13 @@ G = {
 						M.bindMarkerZoomBehavior(marker, "click");
 						M.bindMarkerCoordBehavior(marker, "contextmenu");
 						// Add to array
-						layer.addLayer(marker);
+						layerzone.addLayer(marker);
 					}
-					M.Layer["Resource_" + i] = layer;
+					M.toggleLayer(layerzone);
+					M.Layer["Resource_Zone_" + i] = layerzone;
 				}
-
-				M.LayerArray.Resource.push(layer);
-				M.LayerArray["Resource_" + resource.type].push(layer);
-				M.toggleLayer(layer, true);
 			}
-
+			
 			// Create checkboxes
 			for (i in M.Resources)
 			{
@@ -9277,16 +9229,19 @@ G = {
 				$("#nod_" + i).change(function()
 				{
 					var thisresource = U.getSubstringFromHTMLID($(this));
-					M.toggleLayer(M.Layer["Resource_" + thisresource], $(this).prop("checked"));
+					var wantshow = $(this).prop("checked");
+					var wantregular = $("#mapResourceShowRegular").prop("checked");
+					M.toggleLayer(M.Layer["Resource_Rich_" + thisresource], wantshow);
+					M.toggleLayer(M.Layer["Resource_Regular_" + thisresource], (wantshow && wantregular));
+					M.toggleLayer(M.Layer["Resource_Zone_" + thisresource], (wantshow && wantregular));
 				});
 			}
 			$("#mapToggle_Resource").data("checked", true).click(function()
 			{
 				var bool = I.toggleButtonState($(this));
-				M.toggleLayerArray(M.LayerArray.Resource, bool);
 				for (i in M.Resources)
 				{
-					$("#nod_" + i).prop("checked", bool);
+					$("#nod_" + i).prop("checked", bool).trigger("change");
 				}
 			});
 			$("#mapToggle_ResourceMetal").click(function()
@@ -9301,6 +9256,18 @@ G = {
 			{
 				$("#mapResource_Wood input").trigger("click");
 			});
+			
+			// Bind the checkbox to show regular nodes
+			$("#mapResourceShowRegular").change(function()
+			{
+				var wantregular = $(this).prop("checked");
+				for (var i in M.Resources)
+				{
+					var wantshow = $("#nod_" + i).prop("checked");
+					M.toggleLayer(M.Layer["Resource_Regular_" + i], (wantshow && wantregular));
+					M.toggleLayer(M.Layer["Resource_Zone_" + i], (wantshow && wantregular));
+				}
+			}).trigger("change");
 		});
 	},
 	
@@ -12481,6 +12448,12 @@ I = {
 	consoleTimeout: {},
 	siteTagDefault: " - gw2timer.com",
 	siteTagCurrent: " - gw2timer.com",
+	Symbol:
+	{
+		Expand: "[+]",
+		Collapse: "[-]",
+		Help: "[?]"
+	},
 	
 	// HTML/CSS pixel units
 	cPANEL_WIDTH: 360,
@@ -12709,6 +12682,11 @@ I = {
 		
 		// Do special commands from the URL
 		U.enforceURLArgumentsLast();
+		// Open Chains section if on that page
+		if (I.PageCurrent === I.PageEnum.Chains)
+		{
+			U.openSectionFromURL();
+		}
 		
 		// Clear the non-load warning after everything succeeded
 		$("#paneWarning").remove();
@@ -12822,6 +12800,93 @@ I = {
 	},
 	
 	/*
+	 * Binds chains list expansion behavior.
+	 */
+	initializeChainsUI: function()
+	{
+		/*
+		 * Chains list collapsible headers.
+		 */
+		$("#plateChains header").click(function()
+		{
+			var section = U.getSubstringFromHTMLID($(this));
+			
+			$(this).next().slideToggle("fast", function()
+			{
+				// Change the toggle icon after finish toggling
+				if ($(this).is(":visible"))
+				{
+					// EXPANDED
+					var container = $(I.cPagePrefix + I.PageEnum.Chains);
+					var header = $(this).prev();
+					header.find("kbd").html(I.Symbol.Collapse);
+					// Automatically scroll to the clicked header
+					I.scrollToElement(header, container, "fast");
+					
+					// Scroll the map to Dry Top if it is that chain list
+					if ($(this).attr("id") === "sectionChains_Drytop")
+					{
+						M.goToZone("dry", M.ZoomEnum.Bird);
+						I.PageCurrent = I.SpecialPageEnum.DryTop;
+						U.updateTitle(I.SpecialPageEnum.DryTop);
+					}
+					else
+					{
+						// Update current section variable
+						I[I.sectionPrefix + I.PageEnum.Chains] = section;
+					}
+				}
+				else
+				{
+					// COLLAPSED
+					$(this).prev().find("kbd").html(I.Symbol.Expand);
+					I.updateScrollbar();
+					// Reset Dry Top page variable
+					if ($(this).attr("id") === "sectionChains_Drytop")
+					{
+						I.PageCurrent = I.PageEnum.Chains;
+					}
+					// Nullify current section variable
+					I[I.sectionPrefix + I.PageEnum.Chains] = "";
+				}
+				U.updateQueryString();
+			});
+		});
+	   
+		// Add collapse text icon to headers; first one is pre-expanded
+		$("#plateChains header:not(:first)").each(function()
+		{
+			$(this).next().toggle(0);
+			$(this).find("kbd").html(I.Symbol.Expand);
+		});
+		$("#plateChains header:first").each(function()
+		{
+			$(this).find("kbd").html(I.Symbol.Collapse);
+		});
+
+		// Create chain bars for unscheduled chains only when manually expanded the header
+		$("#headerChains_Drytop").one("click", function()
+		{
+			P.generateDryTop();
+		});
+		$("#headerChains_Legacy").one("click", function()
+		{
+			C.LegacyChains.forEach(C.initializeChain);
+			C.LegacyChains.forEach(P.drawChainPaths);
+		});
+		$("#headerChains_Temple").one("click", function()
+		{
+			C.TempleChains.forEach(C.initializeChain);
+			C.TempleChains.forEach(P.drawChainPaths);
+		});
+
+		// Generate a full timetable of the chains when clicked on that header
+		$("#headerChains_Timetable").one("click", function(){
+		   C.initializeTimetableHTML(); 
+		});
+	},
+	
+	/*
 	 * Writes an HTML string to the "console" area in the top left corner of
 	 * the website that disappears after a while.
 	 * @param string pString to write.
@@ -12889,11 +12954,7 @@ I = {
 	 */
 	log: function(pString, pSeconds, pClear)
 	{
-		if (pSeconds === undefined)
-		{
-			pSeconds = 30;
-		}
-		I.write(pString, pSeconds, pClear);
+		I.write(pString, pSeconds || 30, pClear);
 	},
 	
 	/*
@@ -12922,14 +12983,13 @@ I = {
 		// Don't scroll in mobile mode because the webpage's height is dynamic
 		if (I.ModeCurrent !== I.ModeEnum.Mobile)
 		{
-			var rate = pTime || 0;
 			if (pContainerOfElement)
 			{
 				pContainerOfElement.animate(
 				{
 					scrollTop: pElement.offset().top - pContainerOfElement.offset().top
 						+ pContainerOfElement.scrollTop()
-				}, rate);
+				}, pTime || 0);
 			}
 			else
 			{
@@ -12948,10 +13008,9 @@ I = {
 	 */
 	bulkAnimate: function(pRequests, pSpeed)
 	{
-		var r;
 		for (var i in pRequests)
 		{
-			r = pRequests[i];
+			var r = pRequests[i];
 			$(r.s).animate(r.p, {duration: pSpeed, queue: false});
 		}
 	},
@@ -13089,7 +13148,7 @@ I = {
 				if ($(this).next().is(":visible"))
 				{
 					// TO BE COLLAPSED
-					$(this).children("sup").text("[+]");
+					$(this).children("sup").text(I.Symbol.Expand);
 					
 					I.displaySectionMarkers(section, false); // Hide this section's map icons
 					I[I.sectionPrefix + plate] = ""; // Nullify current section variable
@@ -13102,7 +13161,7 @@ I = {
 				{
 					// TO BE EXPANDED
 					istobeexpanded = true;
-					$(this).children("sup").text("[-]");
+					$(this).children("sup").text(I.Symbol.Collapse);
 					$(pPlate + " .menuBeamIcon[data-section='" + section + "']")
 						.addClass("menuBeamIconActive");
 					
@@ -13311,7 +13370,7 @@ I = {
 		$(pPlate + " .jsHelpTooltip").each(function()
 		{
 			var title = "<dfn>Info:</dfn> " + $(this).attr("title");
-			$(this).text("[?]").attr("title", title);
+			$(this).text(I.Symbol.Help).attr("title", title);
 		});
 		
 		I.qTip.init(pPlate + " .jsHelpCollapsible");
@@ -13931,6 +13990,7 @@ T.initializeSchedule(); // compute event data and write HTML
 M.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
+
 
 
 

@@ -124,15 +124,16 @@
 	>Resource Nodes</var>
 </header>
 <section>
+<label style="margin-top:8px"><input id="mapResourceShowRegular" type="checkbox" /> Show non-rich nodes</label>
 <div class="mapResourceList">
 	<div id="mapResource_Metal"><button id="mapToggle_ResourceMetal" class="curToggle"><img data-src="img/node/resource_metal.png" alt="Toggle" /></button></div>
 	<div id="mapResource_Plant"><button id="mapToggle_ResourcePlant" class="curToggle"><img data-src="img/node/resource_plant.png" alt="Toggle" /></button></div>
 	<div id="mapResource_Wood"><button id="mapToggle_ResourceWood" class="curToggle"><img data-src="img/node/resource_wood.png" alt="Toggle" /></button></div>
 </div>
 <button id="mapToggle_Resource" class="btnToggle curToggle"><img data-src="img/map/display.png" alt="Toggle" /></button><br />
-<div class="mapLegendLine" style="border-bottom: 2px solid lime"></div> <strong>Exact</strong> location of that rich node<br />
-<div class="mapLegendLine" style="border-bottom: 2px dotted lime"></div> <strong>Possible</strong> vicinity of that regular node<br />
-<div class="mapLegendLine" style="border-bottom: 2px dashed lime"></div> <strong>Map</strong> has that resource (not a node)<br />
+<p><span class="mapNodeRich"><img data-src="img/node/lettuce.png" /></span> &nbsp; <strong>Rich</strong> vein or plant farms, permanent location</p>
+<p><span class="mapNodeRegular"><img data-src="img/node/orichalcum.png" /></span> &nbsp; <strong>Regular</strong> node, possible location</p>
+<p><span class="mapNodeZone"><img data-src="img/node/soft.png" /></span> &nbsp; <strong>Zone</strong> has that resource (not a node)</p>
 <kbd class="jsHelpCollapsible"></kbd>
 <div>
 	T6 nodes on the map are <em>possible</em> and approximate locations, and only 3-4 of them spawn per zone. Other nodes are permanent rich metal veins or plant farms.<br />
