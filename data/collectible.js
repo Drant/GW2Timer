@@ -1,3 +1,13 @@
+/*
+ * This file is used by http://gw2timer.com/collectible
+ * Collectible items map data. Needle properties:
+ * n: number
+ * c: coordinates
+ * i: image URL (optional)
+ * t: tooltip text (optional)
+ * l: label text (optional, used instead of number over the map marker)
+ */
+
 var GW2T_COLLECTIBLE_DATA = {
 // Must have same name as a Checklist object
 BuriedChests: {

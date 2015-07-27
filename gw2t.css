@@ -274,7 +274,7 @@ div#qTip dfn { /* Highlight color for important text in tooltip */
 
 /* Non-interactive */
 html, body,
-#listChainsTimetable .chnTitle h1, input[type="text"].trdOutput {
+#sectionChains_Timetable .chnTitle h1, input[type="text"].trdOutput {
 	cursor: url("img/cursor/auto.cur"), auto;
 }
 
@@ -1267,6 +1267,18 @@ header.cntHeader {
 .cntIconExample {
 	width: 24px; height: 24px;
 }
+.cntDivider {
+	width: 100%;
+	border-bottom: 1px solid black;
+}
+.cntOptionMini {
+	display: inline-block;
+	padding: 2px 4px 2px 4px;
+	border: 1px solid gray;
+}
+.cntOptionMini label {
+	display: inline;
+}
 
 .itemThrobber {
 	display: block;
@@ -1890,12 +1902,10 @@ dt.mapJPListNameChecked, dfn.cssHighlight {
 dt.mapJPListNameHover {
 	color: #66aaff;
 }
-
 .mapJPList cite a {
 	font-style: normal;
 	text-decoration: none;
 }
-
 .mapJPList label {
 	display: inline;
 	float: right;
@@ -1903,16 +1913,23 @@ dt.mapJPListNameHover {
 	border: 1px solid transparent;
 	border-radius: 4px;
 }
-
 .mapJPList label:hover {
 	border: 1px solid red;
 }
-
 #mapJPCounter {
 	float: right;
 	font-size: 18px;
 	color: #ffeebb;
 }
+.mapJPDifficulty0, .mapJPDifficulty1, .mapJPDifficulty2, .mapJPDifficulty3, .mapJPDifficulty4 {
+	border-radius: 50%;
+	opacity: 0.9;
+}
+.mapJPDifficulty0 { border: 2px solid black; }
+.mapJPDifficulty1 { border: 2px solid lime; }
+.mapJPDifficulty2 { border: 2px solid orange; }
+.mapJPDifficulty3 { border: 2px solid red; }
+.mapJPDifficulty4 { border: 2px solid purple; }
 
 /* Resource */
 .mapResourceList {
@@ -1923,11 +1940,25 @@ dt.mapJPListNameHover {
 }
 .mapResourceList button {
 	width: 84px;
-	margin-bottom: 8px;
 }
 .mapResourceList img {
 	width: 16px; height: 16px;
 }
+.mapResourceList div var { /* Resource name */
+	display: inline;
+}
+.mapResourceList div:hover var {
+	display: none;
+}
+.mapResourceList div samp {
+	display: none;
+} 
+.mapResourceList div:hover samp { /* Resource price */
+	display: inline;
+	margin-left: 2px;
+	font-size: 12px;
+	font-weight: bold;
+} 
 
 /* Collectible */
 #mapCollectibleList div {
@@ -2111,9 +2142,6 @@ dt.mapJPListNameHover {
 	width: 16px; height: 16px;
 	margin-right: 8px;
 }
-.trdItem {
-	display: none;
-}
 .trdAccordionShut {
 	display: inline-block;
 }
@@ -2244,6 +2272,13 @@ input[type="text"].trdLoss {
 	color: #ff2200;
 }
 input[type="text"].trdLink {
+	width: 24px;
+	color: #888;
+}
+input[type="text"].trdItem {
+	width: 67px;
+	font-family: Consolas, monospace;
+	font-size: 14px;
 	color: #888;
 }
 input[type="text"].trdCurrentBuy, input[type="text"].trdNotifyBuyLow, input[type="text"].trdNotifyBuyHigh,

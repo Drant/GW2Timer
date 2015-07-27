@@ -124,23 +124,25 @@
 	>Resource Nodes</var>
 </header>
 <section>
-<label style="margin-top:8px"><input id="mapResourceShowRegular" type="checkbox" /> Show non-rich nodes</label>
+<button id="mapToggle_Resource" class="curToggle" title="Toggle display of all nodes."><img data-src="img/map/display.png" alt="Toggle" /></button>
+<div class="cntOptionMini" style="margin:8px"><label><input id="mapResourceShowRegular" type="checkbox" /> Show non-rich nodes</label></div>
+<button id="mapResourceUncheck" class="btnUncheck cssRight" style="margin-right:32px;" title="Reset map nodes that you have clicked on."><img data-src="img/ui/uncheck.png" /></button><br />
+<div class="cntDivider" style="margin: 4px 0px 8px 0px;"></div>
 <div class="mapResourceList">
 	<div id="mapResource_Metal"><button id="mapToggle_ResourceMetal" class="curToggle"><img data-src="img/node/resource_metal.png" alt="Toggle" /></button></div>
 	<div id="mapResource_Plant"><button id="mapToggle_ResourcePlant" class="curToggle"><img data-src="img/node/resource_plant.png" alt="Toggle" /></button></div>
 	<div id="mapResource_Wood"><button id="mapToggle_ResourceWood" class="curToggle"><img data-src="img/node/resource_wood.png" alt="Toggle" /></button></div>
 </div>
-<button id="mapToggle_Resource" class="btnToggle curToggle"><img data-src="img/map/display.png" alt="Toggle" /></button><br />
+<button id="mapResourceRefresh" class="trdButton cssRight" title="Refresh Trading Post prices."><img data-src="img/ui/refresh.png" alt="Refresh" /></button>
 <p><span class="mapNodeRich"><img data-src="img/node/lettuce.png" /></span> &nbsp; <strong>Rich</strong> vein or plant farms, permanent location</p>
 <p><span class="mapNodeRegular"><img data-src="img/node/orichalcum.png" /></span> &nbsp; <strong>Regular</strong> node, possible location</p>
 <p><span class="mapNodeZone"><img data-src="img/node/soft.png" /></span> &nbsp; <strong>Zone</strong> has that resource (not a node)</p>
+<p>Click a node on the map to hide/unhide it; double click it to zoom in/out. Prices are lowest sell posting after tax. Please <a href="http://forum.renaka.com/topic/5565814/">report</a> bad or missing nodes.</p>
 <kbd class="jsHelpCollapsible"></kbd>
 <div>
-	T6 nodes on the map are <em>possible</em> and approximate locations, and only 3-4 of them spawn per zone. Other nodes are permanent rich metal veins or plant farms.<br />
-	<br />
-	Rich and T6 nodes reset in about 22 hours after gathering; T1-T5 nodes reset in about 1 hour. You can use alts to re-gather any node. More <a href="http://wiki.guildwars2.com/wiki/Resource#Harvesting">plants</a> on the wiki. Click a resource node icon on the map to zoom in/out.<br />
-	<br />
-	<b>Credits:</b> GW2 Wiki (plant farms), jetti91 (rich nodes), sarcasticbots (Toxic Spores), ScionKai (Poultry)
+	<p>Rich and T6 nodes reset in about 22 hours after gathering; T1-T5 nodes reset in about 1 hour. You can use alts to re-gather any node. More <a href="http://wiki.guildwars2.com/wiki/Resource#Harvesting">plants</a> on the wiki.</p>
+	<p>Notice: The map nodes you clicked to hide will be disordered when the site updates the nodes database.</p>
+	<p><b>Credits:</b> GW2 Wiki (plant farms), jetti91 and Gragx (rich nodes), sarcasticbots (Toxic Spores), ScionKai (Poultry)</p>
 </div>
 <br />
 </section>
@@ -162,26 +164,28 @@
 </header>
 <section>
 <p>The JP map icons point to the entrance. Click on a checkbox here or a JP icon on the map to check off a JP. Double click a JP icon to zoom in/out. Chests refresh at daily reset time.<br /><strong>Links:</strong> [Y]outube [W]iki.<span id="mapJPCounter"></span></p>
-<button id="mapJPToggleJP" class="curToggle" style="width:120px"><img data-src="img/map/jp.png" alt="Toggle" /></button>&nbsp;
-<button id="mapJPToggleChest" class="curToggle" style="width:120px"><img data-src="img/map/chest.png" alt="Toggle" /></button>&nbsp;
+<span class="cntOptionMini">
+<label style="margin-right:12px;"><input id="mapJPToggleJP" type="checkbox" checked="checked" /> <img class="cntIconExample" data-src="img/map/jp.png" alt="Toggle" /> Show JPs</label>
+<label><input id="mapJPToggleChest" type="checkbox" /> <img class="cntIconExample" data-src="img/map/chest.png" alt="Toggle" /> Show chests</label>
+</span>
 <button id="mapJPUncheck" class="btnUncheck cssRight"><img data-src="img/ui/uncheck.png" /></button>
 
 <div class="mapZoneLinks">
 <h2>Easy <span class="mapLegendLine" style="border-bottom: 2px solid lime"></span></h2>
 Simple or short jumps.
-	<dl id="mapJPList_0" class="mapJPList"></dl>
+	<dl id="mapJPList_1" class="mapJPList"></dl>
 	<br />
 <h2>Medium <span class="mapLegendLine" style="border-bottom: 2px solid orange"></span></h2>
 Tricky jumps or interaction required.
-	<dl id="mapJPList_1" class="mapJPList"></dl>
+	<dl id="mapJPList_2" class="mapJPList"></dl>
 	<br />
 <h2>Hard <span class="mapLegendLine" style="border-bottom: 2px solid red"></span></h2>
 A marathon of intricate jumps.
-	<dl id="mapJPList_2" class="mapJPList"></dl>
+	<dl id="mapJPList_3" class="mapJPList"></dl>
 	<br />
 <h2>Explorer <span class="mapLegendLine" style="border-bottom: 2px solid purple"></span></h2>
 Mini-Dungeons and Explorer Achievements that have chests: less jump, more fight.
-	<dl id="mapJPList_3" class="mapJPList"></dl>
+	<dl id="mapJPList_4" class="mapJPList"></dl>
 	<br />
 <h2>Chests</h2>
 <img class="cntIconExample" data-src="img/map/chest.png" /> &nbsp; <a href="http://wiki.guildwars2.com/wiki/List_of_basic_chests">Basic chests</a> lightly guarded.<br />
@@ -304,14 +308,14 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 	<p>To enter an item into a calculator, click the longest input box, which is the name box, and type your search. A list of results will appear, click on one to accept that item, or continue typing to refine your search. The name box also acts as a search bar--press Enter to go to the charts site, and Esc to clear search results.</p>
 	<p>Once you have chosen an item, the current buy and sell prices will animate in color. You can either <b>use the calculator</b> by putting in your own buy and sell prices in the boxes below the name box, or <b>get notifications</b> if the item price is lower or higher than the current prices by typing your price next them. The prices have a specific syntax, use periods (.) to separate units:</p>
 	<div class="cssIndent">
-	0.1 = 10<coppercoin /><br />
-	.01 = 1<coppercoin /><br />
-	1 = 1<silvercoin /><br />
-	1.55 = 1<silvercoin /> 55<coppercoin /><br />
-	2.4.7 = 2<goldcoin /> 4<silvercoin /> 7<coppercoin /><br />
-	2..6 = 2<goldcoin /> 0<silvercoin /> 6<coppercoin /><br />
-	230.6 = 2<goldcoin /> 30<silvercoin /> 60<coppercoin /><br />
-	920.. = 920<goldcoin />
+	0.1 = 10<coppercoin></coppercoin><br />
+	.01 = 1<coppercoin></coppercoin><br />
+	1 = 1<silvercoin></silvercoin><br />
+	1.55 = 1<silvercoin></silvercoin> 55<coppercoin></coppercoin><br />
+	2.4.7 = 2<goldcoin></goldcoin> 4<silvercoin></silvercoin> 7<coppercoin></coppercoin><br />
+	2..6 = 2<goldcoin></goldcoin> 0<silvercoin></silvercoin> 6<coppercoin></coppercoin><br />
+	230.6 = 2<goldcoin></goldcoin> 30<silvercoin></silvercoin> 60<coppercoin></coppercoin><br />
+	920.. = 920<goldcoin></goldcoin>
 	</div>
 	<br />
 	All input data are saved automatically. To show more calculators or search results, go to Options page, Trading section. Read the <a href="http://forum.renaka.com/topic/5697040/">user manual</a> for more information.
@@ -523,13 +527,12 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 <br />
 <kbd class="jsHelpCollapsible"></kbd>
 <div>
-<h2>Checklists</h2>
-<p>Notepad and checklists are automatically saved in your browser and are restored when you revisit this site. Use the Uncheck All button at every checklists, or go to Options under Defaults to clear everything.</p>
 <h2>Map</h2>
-<p>The map works like Google Maps: you can drag the map to pan, and you can scroll your mouse wheel to zoom. No UI map controls are included in order to maximize viewing. For default view and zoom, click the compass button <img class="cntIconExample" src="img/map/compass.png" alt="Icon" /> on the side menu or the map pane.
+<p>The map works like the in game map: you can drag the map to pan, and you can scroll your mouse wheel to zoom. You can also enter a location or coordinates in the coordinates bar to go where you want. For default view and zoom, click the compass button <img class="cntIconExample" src="img/map/compass.png" alt="Icon" /> on the map. To show map icons such as hearts and vistas, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> icon and checkmark the box <b>Show completion</b>.
 <h2>Icons</h2>	
-<p>Expanding a section will show that section's map icons, and collapsing a section hides them. To view multiple sections' icons, click the section names and keep them expanded. Else, use the sidebar menu to view one section at a time.</p>
-<p>Map icons are interactive by clicking/double clicking, most of which causes the map to zoom in that icon, or zoom out back to default. &quot;Pins&quot; look like the colored star symbols you see in the GW2 minimap and are draggable and can be hidden by double clicking; you can lay your own personal pin by double clicking an empty map area.</p>
+<p>Expanding a page's section will show that section's map icons, and collapsing a section hides them. To view multiple sections' icons, click the section names and keep them expanded. Else, use the ▼ popup navigation menu to view one section at a time. Map icons are interactive by clicking/double clicking, most of which causes the map to zoom in that icon, or zoom out back to default.</p>
+<h2>Pins</h2>	
+<p>Lay personal pins by double clicking an empty spot on the map. A path is drawn when you laid more than one pin; to insert a pin within a path, double click the path. Move by a pin by click-dragging it, and remove a pin by double clicking it. To get coordinates of a pin or a path, just single click it. You can delete all personal pins by right clicking any pin.</p>
 </div>
 <br />
 

@@ -1,3 +1,8 @@
+/*
+ * This file is used by http://gw2timer.com/guild
+ * Guild missions map data.
+ */
+
 var GW2T_GUILD_DATA = {
 Bounty: {
 	name_en: "Bounty Hunt",

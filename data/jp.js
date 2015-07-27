@@ -1,8 +1,14 @@
+/*
+ * This file is used by http://gw2timer.com/jp
+ * Jumping puzzle data. id property corresponds to checklist index and is sorted
+ * by how far from the west it is; new JPs will be assigned higher id regardless
+ * of location. JP order here will be as presented in HTML.
+ */
+
 var GW2T_JP_DATA = {
-// JPs are same order as presented in HTML. id corresponds to checklist index
 "urmaug": {
 	id: 19,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Urmaug's Secret",
 	name_de: "Urmaugs Geheimnis",
 	name_es: "Secreto de Urmaug",
@@ -13,7 +19,7 @@ var GW2T_JP_DATA = {
 },
 "demongrub": {
 	id: 8,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Demongrub Pits",
 	name_de: "Dämonenraupen-Gruben",
 	name_es: "Fosos Larvademonio",
@@ -25,7 +31,7 @@ var GW2T_JP_DATA = {
 },
 "observatory": {
 	id: 7,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "The Collapsed Observatory",
 	name_de: "Das eingestürzte Observatorium",
 	name_es: "El Observatorio Derrumbado",
@@ -36,7 +42,7 @@ var GW2T_JP_DATA = {
 },
 "management": {
 	id: 11,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Under New Management",
 	name_de: "Unter neuer Leitung",
 	name_es: "Nueva Administración",
@@ -47,7 +53,7 @@ var GW2T_JP_DATA = {
 },
 "spelunker": {
 	id: 2,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Spelunker's Delve",
 	name_de: "Höhlenforscher-Senke",
 	name_es: "Hondonada del Espeleólogo",
@@ -58,7 +64,7 @@ var GW2T_JP_DATA = {
 },
 "rookery": {
 	id: 29,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Shamans Rookery",
 	name_de: "Schamanen-Kolonie",
 	name_es: "Colonia del Chamán",
@@ -69,7 +75,7 @@ var GW2T_JP_DATA = {
 },
 "jalis": {
 	id: 28,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "King Jalis's Refuge",
 	name_de: "König Jalis' Zuflucht",
 	name_es: "Refugio del Rey Jalis",
@@ -80,7 +86,7 @@ var GW2T_JP_DATA = {
 },
 "coddler": {
 	id: 25,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Coddler's Cove",
 	name_de: "Knuddlerbucht",
 	name_es: "Cala del Cuidador",
@@ -91,7 +97,7 @@ var GW2T_JP_DATA = {
 },
 "shattered": {
 	id: 30,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Shattered Ice Ruins",
 	name_de: "Die Zerschmetterten Eisruinen",
 	name_es: "Ruinas de Hielo Destrozadas",
@@ -102,7 +108,7 @@ var GW2T_JP_DATA = {
 },
 "crimson": {
 	id: 34,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Crimson Plateau",
 	name_de: "Purpur-Plateau",
 	name_es: "Meseta Carmesí",
@@ -113,7 +119,7 @@ var GW2T_JP_DATA = {
 },
 "grendich": {
 	id: 31,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Grendich Gamble",
 	name_de: "Grendich-Spiel",
 	name_es: "Apuesta de Grendich",
@@ -124,7 +130,7 @@ var GW2T_JP_DATA = {
 },
 "blitz": {
 	id: 32,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Wall Breach Blitz",
 	name_de: "Wallbrecherblitz",
 	name_es: "Bombardeo de la Brecha del Muro",
@@ -135,7 +141,7 @@ var GW2T_JP_DATA = {
 },
 "behem": {
 	id: 39,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Behem Gauntlet",
 	name_de: "Behem-Spießrutenlauf",
 	name_es: "Desafío de Behem",
@@ -146,7 +152,7 @@ var GW2T_JP_DATA = {
 },
 "pig": {
 	id: 33,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Pig Iron Quarry",
 	name_de: "Die Roheisen-Grube",
 	name_es: "Cantera de Arrabio",
@@ -157,7 +163,7 @@ var GW2T_JP_DATA = {
 },
 "vizier": {
 	id: 16,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Vizier's Tower",
 	name_de: "Der Turm des Wesirs",
 	name_es: "Torre del Visir",
@@ -168,7 +174,7 @@ var GW2T_JP_DATA = {
 },
 "archives": {
 	id: 5,
-	difficulty: 0,
+	difficulty: 1,
 	name_en: "Buried Archives",
 	name_de: "Verschüttete Archive",
 	name_es: "Archivos Enterrados",
@@ -179,7 +185,7 @@ var GW2T_JP_DATA = {
 },
 "crash": {
 	id: 58,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Prospect Valley Crash Site",
 	name_de: "Schürftal-Absturzstellenklettererin",
 	name_es: "Lugar del Impacto del Valle de las Promesas",
@@ -191,7 +197,7 @@ var GW2T_JP_DATA = {
 },
 "weyandt": {
 	id: 18,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Weyandt's Revenge",
 	name_de: "Weyandts Rache",
 	name_es: "Venganza de Weyandt",
@@ -202,7 +208,7 @@ var GW2T_JP_DATA = {
 },
 "swashbuckler": {
 	id: 17,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Swashbuckler's Cove",
 	name_de: "Die Säbelrassler-Bucht",
 	name_es: "Cala del Espadachín",
@@ -213,7 +219,7 @@ var GW2T_JP_DATA = {
 },
 "fawcett": {
 	id: 12,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Fawcett's Bounty",
 	name_de: "Fawcetts Beute",
 	name_es: "Botín de Fawcett",
@@ -224,7 +230,7 @@ var GW2T_JP_DATA = {
 },
 "portmatt": {
 	id: 14,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Professor Portmatt's Lab",
 	name_de: "Professor Portmatts Labor",
 	name_es: "Laboratorio del Profesor Portmatt",
@@ -235,7 +241,7 @@ var GW2T_JP_DATA = {
 },
 "morgan": {
 	id: 4,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Morgan's Leap",
 	name_de: "Morgans Sprung",
 	name_es: "Salto de Morgan",
@@ -246,7 +252,7 @@ var GW2T_JP_DATA = {
 },
 "spekks": {
 	id: 1,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Spekks's Laboratory",
 	name_de: "Spekks' Labor",
 	name_es: "Laboratorio de Spekks",
@@ -257,7 +263,7 @@ var GW2T_JP_DATA = {
 },
 "cubed": {
 	id: 21,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Conundrum Cubed",
 	name_de: "Zwickmühle hoch drei",
 	name_es: "Acertijo al Cubo",
@@ -268,7 +274,7 @@ var GW2T_JP_DATA = {
 },
 "hexfoundry": {
 	id: 20,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Hexfoundry Unhinged",
 	name_de: "Fluchgießerei Abgedreht",
 	name_es: "Hexafundición Destartalada",
@@ -279,7 +285,7 @@ var GW2T_JP_DATA = {
 },
 "griffonrook": {
 	id: 22,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Griffonrook Run",
 	name_de: "Greifenturmstrecke",
 	name_es: "Ruta Torre del Grifo",
@@ -290,7 +296,7 @@ var GW2T_JP_DATA = {
 },
 "scaffolding": {
 	id: 24,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Tribulation Rift Scaffolding",
 	name_de: "Trübsalriss-Gerüst",
 	name_es: "Andamiaje del Abismo de la Tribulación",
@@ -301,7 +307,7 @@ var GW2T_JP_DATA = {
 },
 "tribulation": {
 	id: 23,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Tribulation Caverns",
 	name_de: "Trübsalriss-Höhlen",
 	name_es: "Cavernas de la Aflicción",
@@ -312,7 +318,7 @@ var GW2T_JP_DATA = {
 },
 "zuhl": {
 	id: 26,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Only Zuhl",
 	name_de: "Nur Zuhl",
 	name_es: "Solo Zuhl",
@@ -323,7 +329,7 @@ var GW2T_JP_DATA = {
 },
 "loreclaw": {
 	id: 36,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Loreclaw Expanse",
 	name_de: "Sagenklauen-Weite",
 	name_es: "Extensión de Garrafolclore",
@@ -334,7 +340,7 @@ var GW2T_JP_DATA = {
 },
 "branded": {
 	id: 37,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Branded Mine",
 	name_de: "Die Gebrandmarkte Mine",
 	name_es: "Mina del Marcado",
@@ -345,7 +351,7 @@ var GW2T_JP_DATA = {
 },
 "crystal": {
 	id: 35,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Chaos Crystal Cavern",
 	name_de: "Die Chaoskristallhöhle",
 	name_es: "Caverna del Cristal del Caos",
@@ -356,7 +362,7 @@ var GW2T_JP_DATA = {
 },
 "folly": {
 	id: 38,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Craze's Folly",
 	name_de: "Crazes Torheit",
 	name_es: "Capricho de Insanio",
@@ -367,7 +373,7 @@ var GW2T_JP_DATA = {
 },
 "antre": {
 	id: 9,
-	difficulty: 1,
+	difficulty: 2,
 	name_en: "Antre of Adjournment",
 	name_de: "Kavernöses Refugium",
 	name_es: "Caverna de la Suspensión",
@@ -378,7 +384,7 @@ var GW2T_JP_DATA = {
 },
 "drydock": {
 	id: 59,
-	difficulty: 2,
+	difficulty: 3,
 	name_en: "Drydock Scratch",
 	name_de: "Trockendock-Riss",
 	name_es: "Gruta de Diqueseco",
@@ -389,7 +395,7 @@ var GW2T_JP_DATA = {
 },
 "troll": {
 	id: 15,
-	difficulty: 2,
+	difficulty: 3,
 	name_en: "Troll's Revenge",
 	name_de: "Rache des Trolls",
 	name_es: "Venganza del trol",
@@ -400,7 +406,7 @@ var GW2T_JP_DATA = {
 },
 "secret": {
 	id: 13,
-	difficulty: 2,
+	difficulty: 3,
 	name_en: "Not So Secret",
 	name_de: "Nicht so geheim",
 	name_es: "No Tan Secreta",
@@ -411,7 +417,7 @@ var GW2T_JP_DATA = {
 },
 "goemm": {
 	id: 0,
-	difficulty: 2,
+	difficulty: 3,
 	name_en: "Goemm's Lab",
 	name_de: "Goemms Labor",
 	name_es: "Laboratorio de Goemm",
@@ -422,7 +428,7 @@ var GW2T_JP_DATA = {
 },
 "reverie": {
 	id: 3,
-	difficulty: 2,
+	difficulty: 3,
 	name_en: "Dark Reverie",
 	name_de: "Finsterer Tagtraum",
 	name_es: "Ensoñación Oscura",
@@ -433,7 +439,7 @@ var GW2T_JP_DATA = {
 },
 "garden": {
 	id: 27,
-	difficulty: 2,
+	difficulty: 3,
 	name_en: "Hidden Garden",
 	name_de: "Verborgener Garten",
 	name_es: "Jardín Oculto",
@@ -444,7 +450,7 @@ var GW2T_JP_DATA = {
 },
 "skipping": {
 	id: 6,
-	difficulty: 2,
+	difficulty: 3,
 	name_en: "Skipping Stones",
 	name_de: "Steine hüpfen lassen",
 	name_es: "Haciendo Patitos",
@@ -455,7 +461,7 @@ var GW2T_JP_DATA = {
 },
 "scavenger": {
 	id: 10,
-	difficulty: 2,
+	difficulty: 3,
 	name_en: "Scavenger's Chasm",
 	name_de: "Der Abgrund des Plünderers",
 	name_es: "Sima del Carroñero",
@@ -466,7 +472,7 @@ var GW2T_JP_DATA = {
 },
 "neighborhood": {
 	id: 46,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Bad Neighborhood",
 	name_de: "Miese Nachbarschaft",
 	name_es: "Un vecindario cruel",
@@ -478,7 +484,7 @@ var GW2T_JP_DATA = {
 },
 "goff": {
 	id: 44,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Goff's Loot",
 	name_de: "Goffs Beute",
 	name_es: "El botín de Goff",
@@ -490,7 +496,7 @@ var GW2T_JP_DATA = {
 },
 "provernic": {
 	id: 48,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Provernic Crypt",
 	name_de: "Provern-Gruft",
 	name_es: "Cripta Provérnica",
@@ -501,7 +507,7 @@ var GW2T_JP_DATA = {
 },
 "shiny": {
 	id: 42,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Don't Touch the Shiny",
 	name_de: "Finger weg vom Glänzigen",
 	name_es: "No toques el reluciente",
@@ -513,7 +519,7 @@ var GW2T_JP_DATA = {
 },
 "verarium": {
 	id: 49,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Verarium Delves",
 	name_de: "Verarium-Loch",
 	name_es: "Socavones de Verarium",
@@ -525,7 +531,7 @@ var GW2T_JP_DATA = {
 },
 "seclusion": {
 	id: 56,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Rebel's Seclusion",
 	name_de: "Unterschlupf der Rebellen",
 	name_es: "Aislamiento del Rebelde",
@@ -538,7 +544,7 @@ var GW2T_JP_DATA = {
 },
 "beaker": {
 	id: 51,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Beaker's Empty Belly",
 	name_de: "Riesenschnabel Nimmersatt",
 	name_es: "El buche vacío de Pico",
@@ -549,7 +555,7 @@ var GW2T_JP_DATA = {
 },
 "oola": {
 	id: 40,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Old Oola Lab",
 	name_de: "Oolas altes Labor",
 	name_es: "Antiguo Laboratorio de Oola",
@@ -560,7 +566,7 @@ var GW2T_JP_DATA = {
 },
 "itlaocol": {
 	id: 41,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Tears of Itlaocol",
 	name_de: "Die Tränen Itlaocols",
 	name_es: "Las lágrimas de Itlaocol",
@@ -572,7 +578,7 @@ var GW2T_JP_DATA = {
 },
 "vexa": {
 	id: 55,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Vexa's Lab",
 	name_de: "Vexas Labor",
 	name_es: "Laboratorio de Vexa",
@@ -583,7 +589,7 @@ var GW2T_JP_DATA = {
 },
 "windy": {
 	id: 52,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Windy Cave Treasure",
 	name_de: "Schatz der Zugigen Höhle",
 	name_es: "El tesoro de la Cueva Ventosa",
@@ -595,7 +601,7 @@ var GW2T_JP_DATA = {
 },
 "magellan": {
 	id: 54,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Magellan's Memento",
 	name_de: "Magellans Andenken",
 	name_es: "El recordatorio de Magallanes",
@@ -607,7 +613,7 @@ var GW2T_JP_DATA = {
 },
 "sorrows": {
 	id: 47,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Ship of Sorrows",
 	name_de: "Schiff des Leids",
 	name_es: "El barco de los lamentos",
@@ -619,7 +625,7 @@ var GW2T_JP_DATA = {
 },
 "stream": {
 	id: 43,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Forgotten Stream",
 	name_de: "Der vergessene Fluss",
 	name_es: "El arroyo olvidado",
@@ -631,7 +637,7 @@ var GW2T_JP_DATA = {
 },
 "grounded": {
 	id: 45,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Grounded",
 	name_de: "Geerdet",
 	name_es: "Encallado",
@@ -643,7 +649,7 @@ var GW2T_JP_DATA = {
 },
 "flame": {
 	id: 57,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Flame Temple Tombs",
 	name_de: "Flammentempel-Gruft",
 	name_es: "Tumbas del Templo de la Llama",
@@ -654,7 +660,7 @@ var GW2T_JP_DATA = {
 },
 "forsaken": {
 	id: 53,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "Forsaken Fortune",
 	name_de: "Verdammte Schätze",
 	name_es: "Fortuna abandonada",
@@ -666,7 +672,7 @@ var GW2T_JP_DATA = {
 },
 "long": {
 	id: 50,
-	difficulty: 3,
+	difficulty: 4,
 	name_en: "The Long Way Around",
 	name_de: "Ein großer Umweg",
 	name_es: "El camino más largo",

@@ -1,5 +1,6 @@
 /*
- * World completion route.
+ * This file is used by http://gw2timer.com
+ * World completion route path map data.
  */
 
 var GW2T_COMPLETION_DATA = {

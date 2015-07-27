@@ -1,4 +1,5 @@
-/* This file is used by gw2t.js.
+/*
+ * This file is used by http://gw2timer.com/wvw
  * Contains Mists continent map lands (zone), realm (region), and WvW objectives.
  */
 

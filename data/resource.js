@@ -1,9 +1,22 @@
+/*
+ * This file is used by http://gw2timer.com/resource
+ * Resource nodes map data. Node properties:
+ * c: coordinates
+ * p: path (optional)
+ * q: quantity (optional, number of items yield)
+ */
+
 var GW2T_RESOURCE_DATA = {
+/* =============================================================================
+ * @@METAL
+ * ========================================================================== */
 Copper: {
 	name_en: "Copper",
 	name_de: "Kupfer",
 	name_es: "Cobre",
 	name_fr: "Cuivre",
+	type: "Metal",
+	item: "19697",
 	riches: [
 	{c: [9860, 16199]}, // caledon
 	{c: [10138, 17684]},
@@ -17,13 +30,15 @@ Copper: {
 	],
 	regulars: [
 		
-	], type: "Metal"
+	]
 },	
 Iron: {
 	name_en: "Iron",
 	name_de: "Eisen",
 	name_es: "Hierro",
 	name_fr: "Fer",
+	type: "Metal",
+	item: "19699",
 	riches: [
 	{c: [6317, 15049]}, // brisban
 	{c: [9584, 15076]}, // kessex
@@ -44,16 +59,15 @@ Iron: {
 	],
 	regulars: [
 		
-	], type: "Metal"
+	]
 },
 Silver: {
 	name_en: "Silver",
 	name_de: "Silber",
 	name_es: "Plata",
 	name_fr: "Argent",
-	potential: [
-		{c: [20857, 12888]}
-	],
+	type: "Metal",
+	item: "19703",
 	riches: [
 	{c: [6955, 14737]}, // brisban
 	{c: [9575, 15073]}, // kessex
@@ -65,14 +79,16 @@ Silver: {
 	{c: [31100, 16455]} // fields
 	],
 	regulars: [
-		
-	], type: "Metal"
+	{c: [20857, 12888]}
+	]
 },
 Gold: {
 	name_en: "Gold",
 	name_de: "Gold",
 	name_es: "Oro",
 	name_fr: "Or",
+	type: "Metal",
+	item: "19698",
 	riches: [
 	{c: [16534, 9911]}, // harathi
 	{c: [15933, 16436]}, // bloodtide
@@ -83,13 +99,15 @@ Gold: {
 	],
 	regulars: [
 		
-	], type: "Metal"
+	]
 },
 Platinum: {
 	name_en: "Platinum",
 	name_de: "Platin",
 	name_es: "Platino",
 	name_fr: "Platine",
+	type: "Metal",
+	item: "19702",
 	riches: [
 	{c: [16186, 17581]}, // bloodtide
 	{c: [16427, 18188]},
@@ -108,15 +126,16 @@ Platinum: {
 	],
 	regulars: [
 		{c: [19181, 23244]}
-	], type: "Metal"
+	]
 },
 Mithril: {
 	name_en: "Mithril",
 	name_de: "Mithril",
 	name_es: "Mithril",
 	name_fr: "Mithril",
+	type: "Metal",
+	item: "19700",
 	riches: [
-	{c: [5275, 16130]}, // dry
 	{c: [21340, 10767]}, // frostgorge
 	{c: [22193, 9463]},
 	{c: [27087, 9023]}, // fireheart
@@ -129,14 +148,16 @@ Mithril: {
 	{c: [11658, 29144]}
 	],
 	regulars: [
-		
-	], type: "Metal"
+	{c: [5275, 16130]} // dry
+	]
 },
 Orichalcum: {
 	name_en: "Orichalcum",
 	name_de: "Orichalcum",
 	name_es: "Oricalco",
 	name_fr: "Orichalque",
+	type: "Metal",
+	item: "19701",
 	riches: [
 	{c: [12409, 19473]} // southsun
 	],
@@ -179,13 +200,15 @@ Orichalcum: {
 	{c: [11197, 28168]},
 	{c: [11500, 25959]},
 	{c: [11885, 28403]}
-	], type: "Metal"
+	]
 },
 Quartz: {
 	name_en: "Quartz",
 	name_de: "Quarz",
 	name_es: "Cuarzo",
 	name_fr: "Quartz",
+	type: "Metal",
+	item: "43773",
 	riches: [
 	{c: [4531, 16794]}
 	],
@@ -193,75 +216,100 @@ Quartz: {
 	{c: [11519, 10456]}, // divinity
 	{c: [5373, 16541]}, // dry
 	{c: [5347, 16621]}
-	], type: "Metal"
+	]
+},
+Mixed: {
+	name_en: "Mixed",
+	name_de: "Gemischt",
+	name_es: "Mixto",
+	name_fr: "Mixte",
+	type: "Metal",
+	item: null,
+	regulars: [
+	{c: [20412, 22297]}, // maelstrom
+	{c: [20102, 21960]}
+	]
 },
 Poultry: {
 	name_en: "Poultry",
 	name_de: "Geflügelfleisch",
 	name_es: "Avecarne",
 	name_fr: "Volaille",
+	type: "Metal",
+	item: "24360",
 	regulars: [
 	{c: [27758, 11288]}, // marches
 	{c: [27805, 11398]},
 	{c: [27862, 11429]},
 	{c: [27660, 11413]}
-	], type: "Metal"
+	]
 },
+/* =============================================================================
+ * @@WOOD
+ * ========================================================================== */
 Green: {
 	name_en: "Green",
 	name_de: "Grüner",
 	name_es: "Verde",
 	name_fr: "Vert",
+	type: "Wood",
+	item: "19723",
 	zones: ["metrica", "caledon", "brisban", "queensdale", "kessex", "wayfarer", "snowden", "ashford", "diessa"],
-	offset: [0, 128],
-	type: "Wood"
+	offset: [0, 128]
 },
 Soft: {
 	name_en: "Soft",
 	name_de: "Geschmeidiger",
 	name_es: "Blanda",
 	name_fr: "Tendre",
+	type: "Wood",
+	item: "19726",
 	zones: ["brisban", "kessex", "gendarran", "harathi", "snowden", "lornar", "diessa", "fields"],
-	offset: [128, 0],
-	type: "Wood"
+	offset: [128, 0]
 },
 Seasoned: {
 	name_en: "Seasoned",
 	name_de: "Abgelagerter",
 	name_es: "Curtida",
 	name_fr: "Séché",
+	type: "Wood",
+	item: "19727",
 	zones: ["harathi", "bloodtide", "lornar", "dredgehaunt", "timberline", "fields", "blazeridge", "marches"],
-	offset: [0, -128],
-	type: "Wood"
+	offset: [0, -128]
 },
 Hard: {
 	name_en: "Hard",
 	name_de: "Harter",
 	name_es: "Sólida",
 	name_fr: "Dur",
+	type: "Wood",
+	item: "19724",
 	zones: ["sparkfly", "maelstrom", "bloodtide", "timberline", "fireheart", "marches"],
-	offset: [-128, 0],
-	type: "Wood"
+	offset: [-128, 0]
 },
 Elder: {
 	name_en: "Elder",
 	name_de: "Alter",
 	name_es: "Ancestral",
 	name_fr: "Ancestral",
+	type: "Wood",
+	item: "19722",
 	riches: [
-	{c: [20139, 21809]}, // maelstrom
+	{c: [20165, 21981]}, // maelstrom
 	{c: [15575, 24851]}, // straits
 	{c: [13808, 24941]} // malchor
 	],
 	regulars: [
 		
-	], type: "Wood"
+	]
 },
 Ancient: {
 	name_en: "Ancient",
 	name_de: "Antiker",
 	name_es: "Antigua",
 	name_fr: "Ancien",
+	type: "Wood",
+	item: "19725",
 	riches: [
 	
 	],
@@ -289,41 +337,50 @@ Ancient: {
 	{c: [10967, 27113]},
 	{c: [11134, 28079]},
 	{c: [11750, 28675]}
-	], type: "Wood"
+	]
 },
 Foxfire: {
 	name_en: "Foxfire",
 	name_de: "Leuchtpilz",
 	name_es: "Luminiscentes",
 	name_fr: "Bioluminescent",
+	type: "Wood",
+	item: "66933",
 	riches: [
-	{c: [20189, 21809]}, // maelstrom
+	{c: [20215, 21981]}, // maelstrom
 	{c: [15625, 24851]}, // straits
 	{c: [13858, 24941]} // malchor
 	],
 	regulars: [
 		
-	], type: "Wood"
+	]
 },
+/* =============================================================================
+ * @@PLANT
+ * ========================================================================== */
 Lettuce: {
 	name_en: "Lettuce",
 	name_de: "Salatkopf",
 	name_es: "Lechuga",
 	name_fr: "Laitue",
+	type: "Plant",
+	item: "12238",
 	riches: [
-	{c: [4011, 15893]}, // dry
+	{c: [4031, 15893]}, // dry
 	{c: [10569, 16278]}, // queensdale
 	{c: [13101, 12254]}
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 Potato: {
 	name_en: "Potato",
 	name_de: "Kartoffel",
 	name_es: "Patata",
 	name_fr: "Patate",
+	type: "Plant",
+	item: "12135",
 	riches: [
 	{c: [8862, 19448]}, // metrica
 	{c: [21930, 13888]}, // wayfarer
@@ -331,13 +388,15 @@ Potato: {
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 Strawberry: {
 	name_en: "Strawberry",
 	name_de: "Erdbeere",
 	name_es: "Fresa",
 	name_fr: "Fraise",
+	type: "Plant",
+	item: "12253",
 	riches: [
 	{c: [13175, 15839]}, // kessex
 	{c: [20960, 13010]}, // snowden
@@ -345,39 +404,45 @@ Strawberry: {
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 Spinach: {
 	name_en: "Spinach",
 	name_de: "Spinat",
 	name_es: "Espinaca",
 	name_fr: "Épinard",
+	type: "Plant",
+	item: "12241",
 	riches: [
-	{c: [9115, 17065]}, // brisban
+	{c: [9115, 17065], q: 9, p: [[9070,16326],[9101,16452],[9103,16590],[9153,16674],[9084,16844],[9108,17037]]}, // brisban
 	{c: [15420, 12390], p: [[15762,12465],[15606,12370],[15520,12414],[15394,12393]]} // gendarran
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 Grape: {
 	name_en: "Grape",
 	name_de: "Traube",
 	name_es: "Uva",
 	name_fr: "Raisin",
+	type: "Plant",
+	item: "12341",
 	riches: [
 	{c: [17832, 17426]}, // lornar
 	{c: [31099, 19162]} // fields
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 Cabbage: {
 	name_en: "Cabbage",
 	name_de: "Kohlkopf",
 	name_es: "Repollo",
 	name_fr: "Chou",
+	type: "Plant",
+	item: "12332",
 	riches: [
 	{c: [4001, 15893]}, // dry
 	{c: [13880, 11060]}, // harathi
@@ -386,7 +451,7 @@ Cabbage: {
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 
 Pearlclam: {
@@ -394,18 +459,22 @@ Pearlclam: {
 	name_de: "Perlemuschel",
 	name_es: "Almejaperla",
 	name_fr: "Palourdeperle",
+	type: "Plant",
+	item: "24500",
 	riches: [
 	{c: [8515, 16658]} // brisban
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 Vanilla: {
 	name_en: "Vanilla",
 	name_de: "Vanille",
 	name_es: "Vainilla",
 	name_fr: "Vanille",
+	type: "Plant",
+	item: "12234",
 	riches: [
 	
 	],
@@ -413,65 +482,75 @@ Vanilla: {
 	{c: [19833, 22345]}, // maelstrom
 	{c: [19839, 22821]},
 	{c: [20567, 22235]}
-	], type: "Plant"
+	]
 },
 Pumpkin: {
 	name_en: "Pumpkin",
 	name_de: "Zuckerkürbis",
 	name_es: "Calabaza",
 	name_fr: "Potiron",
+	type: "Plant",
+	item: "12538",
 	riches: [
 	{c: [17406, 17518]}, // bloodtide
 	{c: [27484, 10330]} // blazeridge
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 Cauliflower: {
 	name_en: "Cauliflower",
 	name_de: "Blumenkohl",
 	name_es: "Coliflor",
 	name_fr: "Chou-fleur",
+	type: "Plant",
+	item: "12532",
 	riches: [
 	{c: [15626, 19889]}, // sparkfly
 	{c: [19179, 19204]} // timberline
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 Butternut: {
 	name_en: "Butternut",
 	name_de: "Butternuss",
 	name_es: "Moscada",
 	name_fr: "Courge",
+	type: "Plant",
+	item: "12511",
 	riches: [
 	{c: [23310, 10745]}, // frostgorge
 	{c: [24342, 11048]} // fireheart
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 Artichoke: {
 	name_en: "Artichoke",
 	name_de: "Artischocke",
 	name_es: "Alcachofa",
 	name_fr: "Artichaut",
+	type: "Plant",
+	item: "12512",
 	riches: [
 	{c: [20076, 22914]}, // maelstrom
 	{c: [17475, 22676]} // straits
 	],
 	regulars: [
 		
-	], type: "Plant"
+	]
 },
 Lemongrass: {
 	name_en: "Lemongrass",
 	name_de: "Zitronengras",
 	name_es: "Limoncillo",
 	name_fr: "Citronnelle",
+	type: "Plant",
+	item: "12546",
 	riches: [
 	
 	],
@@ -481,13 +560,15 @@ Lemongrass: {
 	{c: [17242, 22984]},
 	{c: [17140, 22859]},
 	{c: [17322, 24257]}
-	], type: "Plant"
+	]
 },
 Truffle: {
 	name_en: "Truffle",
 	name_de: "Trüffel",
 	name_es: "Trufa",
 	name_fr: "Truffe",
+	type: "Plant",
+	item: "12545",
 	riches: [
 	
 	],
@@ -496,13 +577,15 @@ Truffle: {
 	{c: [15404, 25051]},
 	{c: [14820, 24726]},
 	{c: [14845, 24448]}
-	], type: "Plant"
+	]
 },
 Omnomberry: {
 	name_en: "Omnomberry",
 	name_de: "Omnombeere",
 	name_es: "Omnom",
 	name_fr: "Omnom",
+	type: "Plant",
+	item: "12128",
 	riches: [
 	
 	],
@@ -513,13 +596,15 @@ Omnomberry: {
 	{c: [13983, 24719]},
 	{c: [10567, 26268]}, // cursed
 	{c: [11069, 27131]}
-	], type: "Plant"
+	]
 },
 Passiflora: {
 	name_en: "Passiflora",
 	name_de: "Maracujablüte",
 	name_es: "Florpasión",
 	name_fr: "Passiflore",
+	type: "Plant",
+	item: "37907",
 	riches: [
 	
 	],
@@ -532,13 +617,15 @@ Passiflora: {
 	{c: [13885, 20059]},
 	{c: [13105, 19913]},
 	{c: [13201, 19787]}
-	], type: "Plant"
+	]
 },
 Spore: {
 	name_en: "Spore",
 	name_de: "Spore",
 	name_es: "Espora",
 	name_fr: "Spore",
+	type: "Plant",
+	item: "48884",
 	riches: [
 	
 	],
@@ -568,6 +655,6 @@ Spore: {
 	{c: [12912, 15362]},
 	{c: [12928, 15838]},
 	{c: [13040, 15848]}
-	], type: "Plant"
+	]
 }
 };

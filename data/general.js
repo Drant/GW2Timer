@@ -1,4 +1,5 @@
-/* This file is used by gw2t.js and is based on http://atlas.guildwars2.com
+/*
+ * This file is used by http://gw2timer.com
  * Contains Kryta continent map zone, region, dailies, and countdown data.
  */
 
@@ -595,9 +596,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Caravan", "Defender", "Tower"]
 },
 "27": {
-	pve: ["Miner Shiverpeaks", "Vista Shiverpeaks", "Maelstrom", "Fractal 1-10"],
-	pvp: ["Capture", "Defender", "Warrior Elementalist", "Engineer Necromancer"],
-	wvw: ["Ruins", "Spender", "Defender", "Tower"]
+	pve: ["Miner Orr", "Activity", "Queensdale", "Fractal 21-30"],
+	pvp: ["Reward", "Kills", "Engineer Mesmer", "Guardian Elementalist"],
+	wvw: ["Ruins", "Kills", "Keep", "Camp"]
 },
 "28": {
 	pve: ["Lumberer Shiverpeaks", "Vista Ascalon", "Fields", "Fractal 1-10"],
@@ -624,12 +625,13 @@ var GW2T_DAILY_CALENDAR = {
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
  * Format:
+	name: "", // Language independent, overrides others
 	name_en: "",
 	name_de: "",
 	name_es: "",
 	name_fr: "",
-	news: "",
-	url: "",
+	news: "", // Official GW2 site news link
+	url: "", // Language independent, overrides others
 	url_en: "",
 	url_de: "",
 	url_es: "",
@@ -637,4 +639,15 @@ var GW2T_DAILY_CALENDAR = {
 	Start: new Date("2015-07-10T19:00:00Z"),
 	Finish: new Date("2015-07-13T19:00:00Z")
  */
-var GW2T_COUNTDOWN_DATA = [];
+var GW2T_COUNTDOWN_DATA = {
+	
+Header: "<b>Feature of the Week</b>: Resource Nodes Farm Map<br />",
+Countdowns: [
+{
+	name: "gw2timer.com/resource",
+	url: "http://gw2timer.com/?page=Map&section=Resource",
+	Start: new Date("2015-07-26T00:00:00Z"),
+	Finish: new Date("2015-08-03T00:00:00Z")
+}
+]
+};

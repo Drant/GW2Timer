@@ -984,7 +984,7 @@ O = {
 		},
 		bol_showChainPaths: function()
 		{
-			M.toggleLayerArray(M.LayerArray.Path, O.Options.bol_showChainPaths);
+			M.toggleLayerArray(M.LayerArray.ChainPath, O.Options.bol_showChainPaths);
 		},
 		bol_displayCharacter: function()
 		{
@@ -1965,6 +1965,7 @@ X = {
 		Chain: { key: "str_chlChain", value: "" },
 		ChainSubscription: { key: "str_chlChainSubscription", value: "" },
 		JP: { key: "str_chlJP", value: "" },
+		Resource: { key: "str_chlResource", value: "" },
 		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
 		Custom: { key: "str_chlCustom", value: "" },
 		// Individual calculator's settings
@@ -2854,6 +2855,11 @@ E = {
 		GEM_SAMPLE: 100, // 100 gem
 		COIN_SAMPLE: 1000000, // 100 gold
 		
+		TAX_LIST: 0.05,
+		TAX_SOLD: 0.10,
+		TAX_TOTAL: 0.15,
+		TAX_INVERSE: 0.85,
+		
 		INFLUENCE_PER_COPPER: 0.05,
 		COPPER_PER_INFLUENCE: 20
 	},
@@ -2959,13 +2965,24 @@ E = {
 	 * @param int pAmount of copper.
 	 * @returns string coin for displaying.
 	 */
-	createCoinString: function(pAmount)
+	createCoinString: function(pAmount, pWantColor)
 	{
 		if (pAmount === undefined || isFinite(pAmount) === false)
 		{
 			return "0.00";
 		}
 		pAmount = parseInt(pAmount);
+		
+		var sep = ".";
+		var sg0 = ""; var ss0 = ""; var sc0 = "";
+		var sg1 = ""; var ss1 = ""; var sc1 = "";
+		if (pWantColor)
+		{
+			// Instead of period separating the currency units, use the coin images
+			sep = "";
+			sg0 = "<gold>"; ss0 = "<silver>"; sc0 = "<copper>";
+			sg1 = "</gold><goldcoin></goldcoin>"; ss1 = "</silver><silvercoin></silvercoin>"; sc1 = "</copper><coppercoin></coppercoin>";
+		}
 		
 		var gold = Math.abs(~~(pAmount / E.Exchange.COPPER_IN_GOLD));
 		var silver = Math.abs(~~(pAmount / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER);
@@ -2977,20 +2994,26 @@ E = {
 		{
 			silver = "0" + silver;
 		}
-		if (copper < T.cBASE_10)
+		if ((pWantColor && (silver > 0 && copper < T.cBASE_10))
+			|| (!pWantColor && copper < T.cBASE_10))
 		{
 			copper = "0" + copper;
 		}
 		
 		if (gold > 0)
 		{
-			return sign + gold + "." + silver + "." + copper;
+			return sign + sg0 + gold + sg1 + sep + ss0 + silver + ss1 + sep + sc0 + copper + sc1;
 		}
 		if (silver > 0)
 		{
-			return sign + silver + "." + copper;
+			return sign + ss0 + silver + ss1 + sep + sc0 + copper + sc1;
 		}
-		return sign + "0." + copper;
+		if (pWantColor)
+		{
+			// No 0 silver prefix for copper-only price if showing color
+			return sc0 + copper + sc1;
+		}
+		return sign + ss0 + "0" + sep + ss1 + sc0 + copper + sc1;
 	},
 	
 	/*
@@ -3130,17 +3153,21 @@ E = {
 	},
 	
 	/*
+	 * Deducts Trading Post tax from a value.
+	 * @param int pAmount of copper.
+	 * @returns int taxed value.
+	 */
+	deductTax: function(pAmount)
+	{
+		return parseInt(pAmount - pAmount * E.Exchange.TAX_TOTAL);
+	},
+	
+	/*
 	 * Calculates the trading calculator's output textboxes using input textboxes' values.
 	 * @param jqobject pEntry trading calculator HTML parent.
 	 */
 	calculateTrading: function(pEntry)
 	{
-		// Constants
-		var cListFee = 0.05;
-		var cSellTax = 0.10;
-		var cTotalTax = cListFee + cSellTax;
-		var cInvertedTax = 1 - cTotalTax;
-		
 		// Computable data
 		var buy = E.parseCoinString(pEntry.find(".trdBuy").val());
 		var sell = E.parseCoinString(pEntry.find(".trdSell").val());
@@ -3154,11 +3181,11 @@ E = {
 		var breakpoint = pEntry.find(".trdBreak");
 		var margin = pEntry.find(".trdMargin");
 		
-		var profitamount = (sell - (sell * cTotalTax) - buy) * quantity;
-		var revenueamount = (sell - (sell * cSellTax)) * quantity;
+		var profitamount = (sell - (sell * E.Exchange.TAX_TOTAL) - buy) * quantity;
+		var revenueamount = (sell - (sell * E.Exchange.TAX_SOLD)) * quantity;
 		var costamount = buy * quantity;
-		var listamount = (sell * cListFee) * quantity;
-		var taxamount = (sell * cSellTax) * quantity;
+		var listamount = (sell * E.Exchange.TAX_LIST) * quantity;
+		var taxamount = (sell * E.Exchange.TAX_SOLD) * quantity;
 		
 		// Do calculation and put them in outputs
 		cost.val("−" + E.createCoinString(Math.round(
@@ -3170,7 +3197,7 @@ E = {
 			taxamount
 		)));
 		breakpoint.val(E.createCoinString(Math.round(
-			buy / cInvertedTax
+			buy / E.Exchange.TAX_INVERSE
 		)));
 		revenue.val(E.createCoinString(Math.round(
 			revenueamount
@@ -3407,7 +3434,6 @@ E = {
 				"<div id='trdEntry_" + i + "' class='trdEntry'>"
 					+ "<div class='trdAccordion trdAccordionShut'>"
 						+ "<samp><img class='trdIcon' src='" + U.URL_IMG.Placeholder + "' /></samp>"
-							+ "<input class='trdItem' type='text' />"
 							+ "<div class='trdResultsFocus'><input class='trdName' type='text' /></div>"
 						+ "<div class='trdButtons'>"
 							+ "<button class='trdSearch' tabindex='-1'>S</button><button class='trdWiki' tabindex='-1'>W</button><br />"
@@ -3422,7 +3448,8 @@ E = {
 							+ "<samp>+$</samp><input class='trdProfit trdOutput' type='text' tabindex='-1' />"
 							+ "<samp>=$</samp><input class='trdRevenue trdOutput' type='text' tabindex='-1' /><br />"
 							+ "<samp>+$%</samp><input class='trdMargin trdOutput' type='text' tabindex='-1' />"
-							+ "<samp>[]</samp><input class='trdLink trdOutput' type='text' tabindex='-1' /><br />"
+							+ "<samp>[]</samp><input class='trdLink trdOutput' type='text' tabindex='-1' />"
+							+ "<input class='trdItem trdOutput' type='text' /><br />"
 							+ "<samp>$~!</samp>"
 								+ "<input class='trdNotifyBuyHigh' type='text' />"
 								+ "<input class='trdCurrentBuy trdOutput' type='text' tabindex='-1' />"
@@ -3742,6 +3769,7 @@ E = {
 		tip("Margin", "margin", "Revenue over cost and fee.");
 		tip("Revenue", "revenue", "What you will receive at the trader.");
 		tip("Link", "chatlink", "Paste this in game chat to see the item.");
+		tip("Item", "ID", "API item number.");
 		tip("NotifyBuyLow", "notify if current buy < this buy");
 		tip("NotifyBuyHigh", "notify if this buy < current buy");
 		tip("NotifySellLow", "notify if current sell < this sell");
@@ -6564,7 +6592,7 @@ M = {
 	/*
 	 * All objects in the map are called "markers". Some markers are grouped into iterable "layers".
 	 * Markers in layers are destroyed and recreated into the map using the toggleLayer function.
-	 * This is to reduce memory usage when these markers are not in use.
+	 * This is to reduce CPU usage when these markers are not displayed.
 	 * To iterate layers: LAYER.eachLayer(function(MARKER) { MARKER.dostuff });
 	 * To assign marker properties: MARKER.options.PROPERTY
 	 */
@@ -6577,7 +6605,9 @@ M = {
 		Chest: new L.layerGroup() // Open world basic chests
 	},
 	LayerArray: {
-		Path: new Array(),
+		ChainPath: new Array(),
+		Resource: new Array(),
+		JP: new Array(),
 		Guild_Bounty: new Array(),
 		Guild_Trek: new Array(),
 		Guild_Challenge: new Array(),
@@ -6592,8 +6622,7 @@ M = {
 	Entity: {
 		DryTopIcons: new Array(),
 		DryTopRings: new Array(),
-		DryTopActive: new Array(),
-		JP: new Array()
+		DryTopActive: new Array()
 	},
 	Pin: {
 		Program: {},
@@ -6668,7 +6697,7 @@ M = {
 			};
 			if (that.MapEnum === I.MapEnum.Tyria)
 			{
-				this.LayerArray.Path.push(zone.Layers.Path);
+				this.LayerArray.ChainPath.push(zone.Layers.Path);
 			}
 		}
 		this.ZoneCurrent = this.Zones[this.cInitialZone];
@@ -9122,13 +9151,59 @@ G = {
 	 */
 	generateAndInitializeResources: function()
 	{
+		var clickedopacity = 0.3;
+		var getNodeState = function(pMarker)
+		{
+			return X.getChecklistItem(X.Checklists.Resource, pMarker.options.index);
+		};
+		var setNodeState = function(pMarker, pState)
+		{
+			X.setChecklistItem(X.Checklists.Resource, pMarker.options.index, pState);
+		};
+		var bindNodeBehavior = function(pMarker)
+		{
+			M.bindMarkerZoomBehavior(pMarker, "dblclick");
+			M.bindMarkerCoordBehavior(pMarker, "contextmenu");
+			pMarker.on("click", function()
+			{
+				if (getNodeState(pMarker) === X.ChecklistEnum.Checked)
+				{
+					setNodeState(pMarker, X.ChecklistEnum.Unchecked);
+					this.setOpacity(1);
+				}
+				else
+				{
+					setNodeState(pMarker, X.ChecklistEnum.Checked);
+					this.setOpacity(clickedopacity);
+				}
+			});
+		};
+		var refreshPrices = function()
+		{
+			// Get API prices for each resource type
+			for (var i in M.Resources)
+			{
+				var id = M.Resources[i].item;
+				if (id !== null)
+				{
+					(function(inneri){
+						$.getJSON(U.URL_API.ItemPrices + id, function(pData)
+						{
+							var price = E.deductTax(pData.sells.unit_price);
+							$("#nodPrice_" + inneri).html(E.createCoinString(price, true));
+						});
+					})(i);
+				}
+			}
+		};
+		
 		$.getScript(U.URL_DATA.Resource).done(function()
 		{
 			M.Resources = GW2T_RESOURCE_DATA; // This object is inline in the map HTML file
 			var i, ii;
+			var counter = 0;
 			var resource; // A type of resource, like copper ore
-			var marker;
-			var layerrich, layerregular, layerzone;
+			var layer, marker;
 
 			for (i in M.Resources)
 			{
@@ -9138,11 +9213,12 @@ G = {
 				// Permanent Rich/Farm nodes
 				if (resource.riches !== undefined && resource.riches.length > 0)
 				{
-					layerrich = new L.layerGroup();
+					layer = new L.layerGroup();
 					for (ii in resource.riches)
 					{
 						marker = L.marker(M.convertGCtoLC(resource.riches[ii].c),
 						{
+							index: counter,
 							icon: L.divIcon(
 							{
 								className: "mapNodeRich",
@@ -9151,23 +9227,24 @@ G = {
 								iconAnchor: [16, 16]
 							})
 						});
-						M.bindMarkerZoomBehavior(marker, "click");
-						M.bindMarkerCoordBehavior(marker, "contextmenu");
-
+						bindNodeBehavior(marker);
 						// Add to array
-						layerrich.addLayer(marker);
+						layer.addLayer(marker);
+						counter++;
 					}
-					M.toggleLayer(layerrich);
-					M.Layer["Resource_Rich_" + i] = layerrich;
+					M.toggleLayer(layer);
+					M.Layer["Resource_Rich_" + i] = layer;
+					M.LayerArray.Resource.push(layer);
 				}
 				// Regular nodes that may spawn there
 				if (resource.regulars !== undefined && resource.regulars.length > 0)
 				{
-					layerregular = new L.layerGroup();
+					layer = new L.layerGroup();
 					for (ii in resource.regulars)
 					{
 						marker = L.marker(M.convertGCtoLC(resource.regulars[ii].c),
 						{
+							index: counter,
 							icon: L.divIcon(
 							{
 								className: "mapNodeRegular",
@@ -9176,19 +9253,19 @@ G = {
 								iconAnchor: [12, 12]
 							})
 						});
-						M.bindMarkerZoomBehavior(marker, "click");
-						M.bindMarkerCoordBehavior(marker, "contextmenu");
-
+						bindNodeBehavior(marker);
 						// Add to array
-						layerregular.addLayer(marker);
+						layer.addLayer(marker);
+						counter++;
 					}
-					M.toggleLayer(layerregular);
-					M.Layer["Resource_Regular_" + i] = layerregular;
+					M.toggleLayer(layer);
+					M.Layer["Resource_Regular_" + i] = layer;
+					M.LayerArray.Resource.push(layer);
 				}
 				// Resources with only zone locations (marker centered in map)
 				if (resource.zones !== undefined)
 				{
-					layerzone = new L.layerGroup();
+					layer = new L.layerGroup();
 					for (ii in resource.zones)
 					{
 						var zone = resource.zones[ii];
@@ -9197,6 +9274,7 @@ G = {
 						coord[1] += resource.offset[1];
 						marker = L.marker(M.convertGCtoLC(coord),
 						{
+							index: counter,
 							icon: L.divIcon(
 							{
 								className: "mapNodeZone",
@@ -9205,14 +9283,29 @@ G = {
 								iconAnchor: [16, 16]
 							})
 						});
-						M.bindMarkerZoomBehavior(marker, "click");
-						M.bindMarkerCoordBehavior(marker, "contextmenu");
+						bindNodeBehavior(marker);
 						// Add to array
-						layerzone.addLayer(marker);
+						layer.addLayer(marker);
+						counter++;
 					}
-					M.toggleLayer(layerzone);
-					M.Layer["Resource_Zone_" + i] = layerzone;
+					M.toggleLayer(layer);
+					M.Layer["Resource_Zone_" + i] = layer;
+					M.LayerArray.Resource.push(layer);
 				}
+			}
+			
+			// Initialize checklist for saving nodes clicked state
+			X.initializeChecklist(X.Checklists.Resource, counter);
+			// Fade the node if state is so in checklist
+			for (i in M.LayerArray.Resource)
+			{
+				M.LayerArray.Resource[i].eachLayer(function(pMarker)
+				{
+					if (getNodeState(pMarker) === X.ChecklistEnum.Checked)
+					{
+						pMarker.setOpacity(clickedopacity);
+					}
+				});
 			}
 			
 			// Create checkboxes
@@ -9221,7 +9314,7 @@ G = {
 				resource = M.Resources[i];
 				$("#mapResource_" + resource.type).append(
 					"<label><input id='nod_" + i + "' type='checkbox' checked='checked' /> <img src='img/node/"
-					+ i.toLowerCase() + I.cPNG + "' /> " + D.getObjectName(resource) + "</label>");
+					+ i.toLowerCase() + I.cPNG + "' /> <var>" + D.getObjectName(resource) + "</var><samp id='nodPrice_" + i + "'></samp></label>");
 			}
 			// Bind checkboxes
 			for (i in M.Resources)
@@ -9244,6 +9337,8 @@ G = {
 					$("#nod_" + i).prop("checked", bool).trigger("change");
 				}
 			});
+			
+			// Bind buttons to toggle all checkboxes of that resource category
 			$("#mapToggle_ResourceMetal").click(function()
 			{
 				$("#mapResource_Metal input").trigger("click");
@@ -9268,6 +9363,29 @@ G = {
 					M.toggleLayer(M.Layer["Resource_Zone_" + i], (wantshow && wantregular));
 				}
 			}).trigger("change");
+			
+			// Bind button to show the clicked map nodes again
+			$("#mapResourceUncheck").click(function()
+			{
+				for (var i in M.LayerArray.Resource)
+				{
+					M.LayerArray.Resource[i].eachLayer(function(pMarker)
+					{
+						pMarker.setOpacity(1);
+					});
+				}
+				X.clearChecklist(X.Checklists.Resource);
+			});
+			
+			// Bind button to refresh TP prices
+			$("#mapResourceRefresh").click(function()
+			{
+				refreshPrices();
+				I.write("Prices refreshed.");
+			});
+			
+			// Finally
+			refreshPrices();
 		});
 	},
 	
@@ -9276,16 +9394,32 @@ G = {
 	 * @param object pMarker to recolor.
 	 * @param int pDifficulty for color.
 	 */
-	styleJPMarkers: function(pMarker, pDifficulty)
+	styleJPMarker: function(pMarker, pDifficulty)
 	{
-		var border = "2px solid lime";
-		switch (pDifficulty)
+		pMarker.setIcon(new L.icon(
 		{
-			case 1: border = "2px solid orange"; break;
-			case 2: border = "2px solid red"; break;
-			case 3: border = "2px solid purple"; break;
+			className: "mapJPDifficulty" + pDifficulty,
+			iconUrl: "img/map/jp.png",
+			iconSize: [32, 32],
+			iconAnchor: [16, 16]
+		}));
+	},
+	restyleJPMarkers: function()
+	{
+		for (var i in M.LayerArray.JP)
+		{
+			var marker = M.LayerArray.JP[i];
+			var state = X.getChecklistItem(X.Checklists.JP, marker.options.id);
+			if (state === X.ChecklistEnum.Unchecked)
+			{
+				G.styleJPMarker(marker, marker.options.difficulty);
+			}
+			else
+			{
+				// Difficulty 0 is reserved for checked off JPs
+				G.styleJPMarker(marker, 0);
+			}
 		}
-		pMarker._icon.style.border = border;
 	},
 	
 	/*
@@ -9299,7 +9433,7 @@ G = {
 			M.JPs = GW2T_JP_DATA;
 			M.Chests = GW2T_CHEST_DATA;
 			X.Checklists.JP.length = O.getObjectLength(M.JPs);
-			M.Entity.JP = new Array(X.Checklists.JP.length);
+			M.LayerArray.JP = new Array(X.Checklists.JP.length);
 		
 			var i, ii;
 			var jp;
@@ -9307,7 +9441,7 @@ G = {
 			var createJPMarker = function(pObject)
 			{
 				var coord = M.parseCoordinates(pObject.coord);
-				var type = (pObject.difficulty === 3) ? "Explorer" : "JP";
+				var type = (pObject.difficulty === 4) ? "Explorer" : "JP";
 				var marker = L.marker(M.convertGCtoLC(coord),
 				{
 					id: pObject.id,
@@ -9315,18 +9449,10 @@ G = {
 					title: "<div class='mapLoc'><dfn>" + type + ":</dfn> " + D.getObjectName(pObject)
 						+ "<img src='" + U.getImageHosted(pObject.img) + "' /></div>"
 				}).addTo(M.Map);
-				marker.setIcon(new L.icon(
-				{
-					iconUrl: "img/map/jp.png",
-					iconSize: [32, 32],
-					iconAnchor: [16, 16]
-				}));
-				marker._icon.style.borderRadius = "50%";
-				marker._icon.style.opacity = "0.9";
-				G.styleJPMarkers(marker, pObject.difficulty);
+				G.styleJPMarker(marker, pObject.difficulty);
 
 				// Add to array
-				M.Entity.JP[pObject.id] = marker;
+				M.LayerArray.JP[pObject.id] = marker;
 			};
 
 			// Create the markers, each set pertains to one "mapJPList"
@@ -9383,22 +9509,31 @@ G = {
 				}
 			}
 
+			// Button to toggle JP markers only
+			$("#mapJPToggleJP").change(function()
+			{
+				var state = $(this).prop("checked");
+				M.toggleLayerArray(M.LayerArray.JP, state);
+				if (state)
+				{
+					G.restyleJPMarkers();
+				}
+			});
+			// Button to toggle chest markers only
+			$("#mapJPToggleChest").change(function()
+			{
+				M.toggleLayer(M.Layer.Chest, $(this).prop("checked"));
+			});
 			// Button to toggle markers display
 			$("#mapToggle_JP").data("checked", true).click(function()
 			{
 				var bool = I.toggleButtonState($(this));
-				M.toggleEntity(M.Entity.JP, bool);
-				M.toggleLayer(M.Layer.Chest, bool);
-			});
-			// Button to toggle JP markers only
-			$("#mapJPToggleJP").click(function()
-			{
-				M.toggleEntity(M.Entity.JP);
-			});
-			// Button to toggle chest markers only
-			$("#mapJPToggleChest").click(function()
-			{
-				M.toggleLayer(M.Layer.Chest);
+				$("#mapJPToggleJP").prop("checked", bool).trigger("change");
+				// Chests are not shown by default
+				if ($("#mapJPToggleChest").prop("checked"))
+				{
+					$("#mapJPToggleChest").prop("checked", bool).trigger("change");
+				}
 			});
 
 			I.qTip.init(".leaflet-marker-icon");
@@ -9440,7 +9575,7 @@ G = {
 				else
 				{
 					$(this).parent().prev().addClass("mapJPListNameChecked");
-					M.Entity.JP[i]._icon.style.border = "2px solid black";
+					G.styleJPMarker(M.LayerArray.JP[i], 0);
 				}
 				
 			}).change(function()
@@ -9451,12 +9586,12 @@ G = {
 				if (checkboxstate === X.ChecklistEnum.Unchecked)
 				{
 					$(this).parent().prev().removeClass("mapJPListNameChecked");
-					G.styleJPMarkers(M.Entity.JP[checkboxindex], M.Entity.JP[checkboxindex].options.difficulty);
+					G.styleJPMarker(M.LayerArray.JP[checkboxindex], M.LayerArray.JP[checkboxindex].options.difficulty);
 				}
 				else
 				{
 					$(this).parent().prev().addClass("mapJPListNameChecked");
-					M.Entity.JP[checkboxindex]._icon.style.border = "2px solid black";
+					G.styleJPMarker(M.LayerArray.JP[checkboxindex], 0);
 				}
 				
 				// Rewrite the checklist string by updating the digit at the ID/index
@@ -9482,13 +9617,13 @@ G = {
 			(function(pIndex)
 			{
 				// Click associated checkbox when clicked
-				M.Entity.JP[pIndex].on("click", function()
+				M.LayerArray.JP[pIndex].on("click", function()
 				{
 					$("#mapJPCheck_" + pIndex).trigger("click");
 					I.scrollToElement($("#mapJP_" + this.options.id), $("#plateMap"));
 				});
 				// Zoom in when double clicked
-				M.Entity.JP[pIndex].on("dblclick", function()
+				M.LayerArray.JP[pIndex].on("dblclick", function()
 				{
 					if (M.Map.getZoom() === M.ZoomEnum.Max)
 					{
@@ -9510,7 +9645,7 @@ G = {
 			{
 				$("#mapJPCheck_" + i).prop("checked", false)
 					.parent().prev().removeClass("mapJPListNameChecked");
-				G.styleJPMarkers(M.Entity.JP[i], M.Entity.JP[i].options.difficulty);
+				G.styleJPMarker(M.LayerArray.JP[i], M.LayerArray.JP[i].options.difficulty);
 				
 				jpchecklist += "0";
 			}
@@ -10199,7 +10334,8 @@ W = {
  * ========================================================================== */
 T = {
 	
-	GenericCountdown: GW2T_COUNTDOWN_DATA,
+	GenericCountdown: GW2T_COUNTDOWN_DATA.Countdowns,
+	GenericCountdownHeader: GW2T_COUNTDOWN_DATA.Header,
 	isGenericCountdownSystemEnabled: true,
 	isGenericCountdownTickEnabled: null,
 	
@@ -11376,22 +11512,26 @@ T = {
 			var namekey = D.getNameKey();
 			var urlkey = D.getURLKey();
 			var ctd;
+			var name;
 			var url;
 			for (var i in T.GenericCountdown)
 			{
 				ctd = T.GenericCountdown[i];
 				ctd.StartStamp = ctd.Start.toLocaleString();
 				ctd.FinishStamp = ctd.Finish.toLocaleString();
-				// If available, set the URL as the official news page, the translated url, or a regular url
+				// Use default name if available, or use the translated name
+				name = (ctd.name === undefined) ? ctd[namekey] : ctd.name;
+				// If available: set the URL as the official news page, the translated url, or a regular url
 				url = (ctd.news === undefined) ? ctd[urlkey] : U.getGW2NewsLink(ctd.news); 
 				url = (url === undefined) ? ctd.url : url;
-				ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + ctd[namekey] + "</a>";
+				url = (url.indexOf(I.cSiteURL) !== -1) ? url : U.convertExternalURL(url);
+				ctd.Anchor = "<a href='" + url + "' target='_blank'>" + name + "</a>";
 			}
 		}
 	},
 	updateGenericCountdown: function(pDate)
 	{
-		var str = "";
+		var str = T.GenericCountdownHeader;
 		var ithtime = "";
 		var ctd;
 		for (var i in T.GenericCountdown)
