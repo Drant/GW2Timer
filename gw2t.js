@@ -11524,8 +11524,15 @@ T = {
 				// If available: set the URL as the official news page, the translated url, or a regular url
 				url = (ctd.news === undefined) ? ctd[urlkey] : U.getGW2NewsLink(ctd.news); 
 				url = (url === undefined) ? ctd.url : url;
-				url = (url.indexOf(I.cSiteURL) !== -1) ? url : U.convertExternalURL(url);
-				ctd.Anchor = "<a href='" + url + "' target='_blank'>" + name + "</a>";
+				if (url.indexOf(I.cSiteURL) !== -1)
+				{
+					// Don't externalize URL if self link
+					ctd.Anchor = "<a href='" + url + "'>" + name + "</a>";
+				}
+				else
+				{
+					ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + name + "</a>";
+				}
 			}
 		}
 	},
