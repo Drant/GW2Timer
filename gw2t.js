@@ -5993,7 +5993,7 @@ C = {
 			}
 		}
 		// Special color of the reset time slot
-		$(".chnSlot_0").addClass("chnBarReset");
+		$(".chnSlot_t0").addClass("chnBarReset");
 		C.updateTimetable();
 	},
 	
@@ -6007,10 +6007,9 @@ C = {
 			return;
 		}
 		
-		var previousframe = T.getTimeframe(-1);
-		var currentframe = T.getTimeframe();
-		var nextframe = T.getTimeframe(1);
-		
+		var previousframe = T.getTimeframeKey(-1);
+		var currentframe = T.getTimeframeKey();
+		var nextframe = T.getTimeframeKey(1);
 		// Also highlight timetable chain bar
 		$(".chnSlot_" + previousframe)
 			.removeClass("chnBarCurrent");
@@ -6026,9 +6025,10 @@ C = {
 			.addClass("chnTitleFuture");
 		
 		// Move the past time slots to the bottom, so the current slot(s) is always the top
+		var currenttimeframe = T.getCurrentTimeframe();
 		$(".chnSlot").each(function()
 		{
-			if ($(this).data("timeframe") < T.getCurrentTimeframe())
+			if (T.convertScheduleKeyToUTCMinutes($(this).data("timeframe")) < currenttimeframe)
 			{
 				$(this).appendTo("#sectionChains_Timetable");
 			}
@@ -6083,7 +6083,7 @@ C = {
 					$("#chnBar_" + ithchain.nexus).appendTo(chaintab);
 					
 					ithchain.isSorted = true;
-					ithchain.scheduleKeyImmediate = T.getTimeframe(i);
+					ithchain.scheduleKeyImmediate = T.getTimeframeKey(i);
 					numchainssorted++;
 				}
 			}
@@ -10374,6 +10374,7 @@ W = {
  * ========================================================================== */
 T = {
 	
+	prefixTime: "t", // The prefix in an associative array schedule
 	GenericCountdown: GW2T_COUNTDOWN_DATA.Countdowns,
 	GenericCountdownHeader: GW2T_COUNTDOWN_DATA.Header,
 	isGenericCountdownSystemEnabled: true,
@@ -10454,11 +10455,11 @@ T = {
 	 */
 	getCurrentDryTopEvents: function(pOffset)
 	{
-		return T.DryTopCodes[T.getDryTopMinute(pOffset)].chat + I.siteTagCurrent;
+		return T.DryTopCodes[T.prefixTime + T.getDryTopMinute(pOffset)].chat + I.siteTagCurrent;
 	},
 	getCurrentDryTopColor: function(pOffset)
 	{
-		return T.DryTopCodes[T.getDryTopMinute(pOffset)].color;
+		return T.DryTopCodes[T.prefixTime + T.getDryTopMinute(pOffset)].color;
 	},
 	
 	/*
@@ -10520,18 +10521,18 @@ T = {
 		
 		T.DryTopCodes =
 		{
-			"00": {chat: ":00 " + getDryTopSet(0), color: "red"},
-			"05": {chat: ":05 " + getDryTopSet(1), color: "orange"},
-			"10": {chat: ":10 " + getDryTopSet(2), color: "yellow"},
-			"15": {chat: ":15 " + getDryTopSet(0), color: "red"},
-			"20": {chat: ":20 " + getDryTopSet(1), color: "orange"},
-			"25": {chat: ":25 " + getDryTopSet(2), color: "yellow"},
-			"30": {chat: ":30 " + getDryTopSet(0), color: "red"},
-			"35": {chat: ":35 " + getDryTopSet(1), color: "orange"},
-			"40": {chat: ":40 " + getDryTopSet(3), color: "lime"},
-			"45": {chat: ":45 " + getDryTopSet(4), color: "limegreen"},
-			"50": {chat: ":50 " + getDryTopSet(5), color: "dodgerblue"},
-			"55": {chat: ":55 " + getDryTopSet(6), color: "orchid"}
+			t00: {chat: ":00 " + getDryTopSet(0), color: "red"},
+			t05: {chat: ":05 " + getDryTopSet(1), color: "orange"},
+			t10: {chat: ":10 " + getDryTopSet(2), color: "yellow"},
+			t15: {chat: ":15 " + getDryTopSet(0), color: "red"},
+			t20: {chat: ":20 " + getDryTopSet(1), color: "orange"},
+			t25: {chat: ":25 " + getDryTopSet(2), color: "yellow"},
+			t30: {chat: ":30 " + getDryTopSet(0), color: "red"},
+			t35: {chat: ":35 " + getDryTopSet(1), color: "orange"},
+			t40: {chat: ":40 " + getDryTopSet(3), color: "lime"},
+			t45: {chat: ":45 " + getDryTopSet(4), color: "limegreen"},
+			t50: {chat: ":50 " + getDryTopSet(5), color: "dodgerblue"},
+			t55: {chat: ":55 " + getDryTopSet(6), color: "orchid"}
 		};
 		
 		K.updateDryTopClipboard();
@@ -10577,134 +10578,134 @@ T = {
 		C.DryTop3 =		C.Chains[16];
 		
 		/*
-		 * This "hash table" contains all time-sensitive chains (a group of
+		 * This associative array contains all time-sensitive chains (a group of
 		 * events). The "key"/slot is the time in minutes since UTC midnight,
 		 * and the "value" is an object with the minutes (again for access) and
 		 * the array of chains that start at that time.
-		 * A "Timeframe" is the quarter of an hour that a regular chain(s) is
+		 * A "timeframe" is the quarter of an hour that a regular chain(s) is
 		 * considered current and before it is replaced by the next chain(s).
 		 */
 		T.Schedule =
 		{
-			   "0": {t: "00:00", c: [C.Taidha, C.Tequatl]},
-			  "15": {t: "00:15", c: [C.Maw]},
-			  "30": {t: "00:30", c: [C.Megades]},
-			  "45": {t: "00:45", c: [C.FE]},
+			   t0: {t: "00:00", c: [C.Taidha, C.Tequatl]},
+			  t15: {t: "00:15", c: [C.Maw]},
+			  t30: {t: "00:30", c: [C.Megades]},
+			  t45: {t: "00:45", c: [C.FE]},
 
-			  "60": {t: "01:00", c: [C.Shatterer, C.Triple]},
-			  "75": {t: "01:15", c: [C.Wurm]},
-			  "90": {t: "01:30", c: [C.Ulgoth]},
-			 "105": {t: "01:45", c: [C.SB]},
+			  t60: {t: "01:00", c: [C.Shatterer, C.Triple]},
+			  t75: {t: "01:15", c: [C.Wurm]},
+			  t90: {t: "01:30", c: [C.Ulgoth]},
+			 t105: {t: "01:45", c: [C.SB]},
 
-			 "120": {t: "02:00", c: [C.Golem, C.Queen]},
-			 "135": {t: "02:15", c: [C.Maw]},
-			 "150": {t: "02:30", c: [C.Jormag]},
-			 "165": {t: "02:45", c: [C.FE]},
+			 t120: {t: "02:00", c: [C.Golem, C.Queen]},
+			 t135: {t: "02:15", c: [C.Maw]},
+			 t150: {t: "02:30", c: [C.Jormag]},
+			 t165: {t: "02:45", c: [C.FE]},
 
-			 "180": {t: "03:00", c: [C.Taidha, C.Tequatl]},
-			 "195": {t: "03:15", c: [C.Wurm]},
-			 "210": {t: "03:30", c: [C.Megades]},
-			 "225": {t: "03:45", c: [C.SB]},
+			 t180: {t: "03:00", c: [C.Taidha, C.Tequatl]},
+			 t195: {t: "03:15", c: [C.Wurm]},
+			 t210: {t: "03:30", c: [C.Megades]},
+			 t225: {t: "03:45", c: [C.SB]},
 
-			 "240": {t: "04:00", c: [C.Shatterer, C.Triple]},
-			 "255": {t: "04:15", c: [C.Maw]},
-			 "270": {t: "04:30", c: [C.Ulgoth]},
-			 "285": {t: "04:45", c: [C.FE]},
+			 t240: {t: "04:00", c: [C.Shatterer, C.Triple]},
+			 t255: {t: "04:15", c: [C.Maw]},
+			 t270: {t: "04:30", c: [C.Ulgoth]},
+			 t285: {t: "04:45", c: [C.FE]},
 
-			 "300": {t: "05:00", c: [C.Golem]},
-			 "315": {t: "05:15", c: [C.Wurm]},
-			 "330": {t: "05:30", c: [C.Jormag]},
-			 "345": {t: "05:45", c: [C.SB]},
+			 t300: {t: "05:00", c: [C.Golem]},
+			 t315: {t: "05:15", c: [C.Wurm]},
+			 t330: {t: "05:30", c: [C.Jormag]},
+			 t345: {t: "05:45", c: [C.SB]},
 
-			 "360": {t: "06:00", c: [C.Taidha, C.Queen]},
-			 "375": {t: "06:15", c: [C.Maw]},
-			 "390": {t: "06:30", c: [C.Megades]},
-			 "405": {t: "06:45", c: [C.FE]},
+			 t360: {t: "06:00", c: [C.Taidha, C.Queen]},
+			 t375: {t: "06:15", c: [C.Maw]},
+			 t390: {t: "06:30", c: [C.Megades]},
+			 t405: {t: "06:45", c: [C.FE]},
 
-			 "420": {t: "07:00", c: [C.Shatterer, C.Tequatl]},
-			 "435": {t: "07:15", c: [C.Wurm]},
-			 "450": {t: "07:30", c: [C.Ulgoth]},
-			 "465": {t: "07:45", c: [C.SB]},
+			 t420: {t: "07:00", c: [C.Shatterer, C.Tequatl]},
+			 t435: {t: "07:15", c: [C.Wurm]},
+			 t450: {t: "07:30", c: [C.Ulgoth]},
+			 t465: {t: "07:45", c: [C.SB]},
 
-			 "480": {t: "08:00", c: [C.Golem, C.Triple]},
-			 "495": {t: "08:15", c: [C.Maw]},
-			 "510": {t: "08:30", c: [C.Jormag]},
-			 "525": {t: "08:45", c: [C.FE]},
+			 t480: {t: "08:00", c: [C.Golem, C.Triple]},
+			 t495: {t: "08:15", c: [C.Maw]},
+			 t510: {t: "08:30", c: [C.Jormag]},
+			 t525: {t: "08:45", c: [C.FE]},
 
-			 "540": {t: "09:00", c: [C.Taidha]},
-			 "555": {t: "09:15", c: [C.Wurm]},
-			 "570": {t: "09:30", c: [C.Megades]},
-			 "585": {t: "09:45", c: [C.SB]},
+			 t540: {t: "09:00", c: [C.Taidha]},
+			 t555: {t: "09:15", c: [C.Wurm]},
+			 t570: {t: "09:30", c: [C.Megades]},
+			 t585: {t: "09:45", c: [C.SB]},
 
-			 "600": {t: "10:00", c: [C.Shatterer]},
-			 "615": {t: "10:15", c: [C.Maw]},
-			 "630": {t: "10:30", c: [C.Ulgoth, C.Queen]},
-			 "645": {t: "10:45", c: [C.FE]},
+			 t600: {t: "10:00", c: [C.Shatterer]},
+			 t615: {t: "10:15", c: [C.Maw]},
+			 t630: {t: "10:30", c: [C.Ulgoth, C.Queen]},
+			 t645: {t: "10:45", c: [C.FE]},
 
-			 "660": {t: "11:00", c: [C.Golem]},
-			 "675": {t: "11:15", c: [C.Wurm]},
-			 "690": {t: "11:30", c: [C.Jormag, C.Tequatl]},
-			 "705": {t: "11:45", c: [C.SB]},
+			 t660: {t: "11:00", c: [C.Golem]},
+			 t675: {t: "11:15", c: [C.Wurm]},
+			 t690: {t: "11:30", c: [C.Jormag, C.Tequatl]},
+			 t705: {t: "11:45", c: [C.SB]},
 
-			 "720": {t: "12:00", c: [C.Taidha]},
-			 "735": {t: "12:15", c: [C.Maw]},
-			 "750": {t: "12:30", c: [C.Megades, C.Triple]},
-			 "765": {t: "12:45", c: [C.FE]},
+			 t720: {t: "12:00", c: [C.Taidha]},
+			 t735: {t: "12:15", c: [C.Maw]},
+			 t750: {t: "12:30", c: [C.Megades, C.Triple]},
+			 t765: {t: "12:45", c: [C.FE]},
 
-			 "780": {t: "13:00", c: [C.Shatterer]},
-			 "795": {t: "13:15", c: [C.Wurm]},
-			 "810": {t: "13:30", c: [C.Ulgoth]},
-			 "825": {t: "13:45", c: [C.SB]},
+			 t780: {t: "13:00", c: [C.Shatterer]},
+			 t795: {t: "13:15", c: [C.Wurm]},
+			 t810: {t: "13:30", c: [C.Ulgoth]},
+			 t825: {t: "13:45", c: [C.SB]},
 
-			 "840": {t: "14:00", c: [C.Golem]},
-			 "855": {t: "14:15", c: [C.Maw]},
-			 "870": {t: "14:30", c: [C.Jormag]},
-			 "885": {t: "14:45", c: [C.FE]},
+			 t840: {t: "14:00", c: [C.Golem]},
+			 t855: {t: "14:15", c: [C.Maw]},
+			 t870: {t: "14:30", c: [C.Jormag]},
+			 t885: {t: "14:45", c: [C.FE]},
 
-			 "900": {t: "15:00", c: [C.Taidha, C.Queen]},
-			 "915": {t: "15:15", c: [C.Wurm]},
-			 "930": {t: "15:30", c: [C.Megades]},
-			 "945": {t: "15:45", c: [C.SB]},
+			 t900: {t: "15:00", c: [C.Taidha, C.Queen]},
+			 t915: {t: "15:15", c: [C.Wurm]},
+			 t930: {t: "15:30", c: [C.Megades]},
+			 t945: {t: "15:45", c: [C.SB]},
 
-			 "960": {t: "16:00", c: [C.Shatterer, C.Tequatl]},
-			 "975": {t: "16:15", c: [C.Maw]},
-			 "990": {t: "16:30", c: [C.Ulgoth]},
-			"1005": {t: "16:45", c: [C.FE]},
+			 t960: {t: "16:00", c: [C.Shatterer, C.Tequatl]},
+			 t975: {t: "16:15", c: [C.Maw]},
+			 t990: {t: "16:30", c: [C.Ulgoth]},
+			t1005: {t: "16:45", c: [C.FE]},
 
-			"1020": {t: "17:00", c: [C.Golem, C.Triple]},
-			"1035": {t: "17:15", c: [C.Wurm]},
-			"1050": {t: "17:30", c: [C.Jormag]},
-			"1065": {t: "17:45", c: [C.SB]},
+			t1020: {t: "17:00", c: [C.Golem, C.Triple]},
+			t1035: {t: "17:15", c: [C.Wurm]},
+			t1050: {t: "17:30", c: [C.Jormag]},
+			t1065: {t: "17:45", c: [C.SB]},
 
-			"1080": {t: "18:00", c: [C.Taidha, C.Queen]},
-			"1095": {t: "18:15", c: [C.Maw]},
-			"1110": {t: "18:30", c: [C.Megades]},
-			"1125": {t: "18:45", c: [C.FE]},
+			t1080: {t: "18:00", c: [C.Taidha, C.Queen]},
+			t1095: {t: "18:15", c: [C.Maw]},
+			t1110: {t: "18:30", c: [C.Megades]},
+			t1125: {t: "18:45", c: [C.FE]},
 
-			"1140": {t: "19:00", c: [C.Shatterer, C.Tequatl]},
-			"1155": {t: "19:15", c: [C.Wurm]},
-			"1170": {t: "19:30", c: [C.Ulgoth]},
-			"1185": {t: "19:45", c: [C.SB]},
+			t1140: {t: "19:00", c: [C.Shatterer, C.Tequatl]},
+			t1155: {t: "19:15", c: [C.Wurm]},
+			t1170: {t: "19:30", c: [C.Ulgoth]},
+			t1185: {t: "19:45", c: [C.SB]},
 
-			"1200": {t: "20:00", c: [C.Golem, C.Triple]},
-			"1215": {t: "20:15", c: [C.Maw]},
-			"1230": {t: "20:30", c: [C.Jormag]},
-			"1245": {t: "20:45", c: [C.FE]},
+			t1200: {t: "20:00", c: [C.Golem, C.Triple]},
+			t1215: {t: "20:15", c: [C.Maw]},
+			t1230: {t: "20:30", c: [C.Jormag]},
+			t1245: {t: "20:45", c: [C.FE]},
 
-			"1260": {t: "21:00", c: [C.Taidha]},
-			"1275": {t: "21:15", c: [C.Wurm]},
-			"1290": {t: "21:30", c: [C.Megades]},
-			"1305": {t: "21:45", c: [C.SB]},
+			t1260: {t: "21:00", c: [C.Taidha]},
+			t1275: {t: "21:15", c: [C.Wurm]},
+			t1290: {t: "21:30", c: [C.Megades]},
+			t1305: {t: "21:45", c: [C.SB]},
 
-			"1320": {t: "22:00", c: [C.Shatterer]},
-			"1335": {t: "22:15", c: [C.Maw]},
-			"1350": {t: "22:30", c: [C.Ulgoth]},
-			"1365": {t: "22:45", c: [C.FE]},
+			t1320: {t: "22:00", c: [C.Shatterer]},
+			t1335: {t: "22:15", c: [C.Maw]},
+			t1350: {t: "22:30", c: [C.Ulgoth]},
+			t1365: {t: "22:45", c: [C.FE]},
 
-			"1380": {t: "23:00", c: [C.Golem, C.Queen]},
-			"1395": {t: "23:15", c: [C.Wurm]},
-			"1410": {t: "23:30", c: [C.Jormag]},
-			"1425": {t: "23:45", c: [C.SB]}
+			t1380: {t: "23:00", c: [C.Golem, C.Queen]},
+			t1395: {t: "23:15", c: [C.Wurm]},
+			t1410: {t: "23:30", c: [C.Jormag]},
+			t1425: {t: "23:45", c: [C.SB]}
 		};
 		
 		var i, ii, iii;
@@ -10800,7 +10801,7 @@ T = {
 	 */
 	getTimeframeChains: function(pOffset)
 	{
-		return T.Schedule[T.getTimeframe(pOffset)].c;
+		return T.Schedule[T.prefixTime + T.getTimeframe(pOffset)].c;
 	},
 	
 	/*
@@ -10836,6 +10837,16 @@ T = {
 	},
 	
 	/*
+	 * Gets the key from current timeframe offset.
+	 * @param int pOffset number of timeframes from the current.
+	 * @returns string key for the schedule slot.
+	 */
+	getTimeframeKey: function(pOffset)
+	{
+		return T.prefixTime + T.getTimeframe(pOffset);
+	},
+	
+	/*
 	 * Gets the local time in seconds for when a chain starts in the schedule.
 	 * @param string pKey in the schedule.
 	 * @returns int seconds since midnight local time.
@@ -10850,8 +10861,8 @@ T = {
 	},
 	convertScheduleKeyToUTCMinutes: function(pKey)
 	{
-		// Removes the "t" from the key to get the minutes
-		return parseInt(pKey.substring(1, pKey.length));
+		// Removes the time prefix from the key to get the minutes
+		return parseInt(pKey.substring(T.prefixTime.length, pKey.length));
 	},
 	
 	/*
