@@ -323,7 +323,7 @@ var GW2T_JP_DATA = {
 	name_de: "Nur Zuhl",
 	name_es: "Solo Zuhl",
 	name_fr: "Zuhl au monde",
-	coord: "[21080, 18861]",
+	coord: "[21062, 18805]",
 	img: "jG5uLNJ",
 	description: "Timberline ice cave then lava dredge/destroyer mine. You have to kill a champ at the end to get credit"
 },

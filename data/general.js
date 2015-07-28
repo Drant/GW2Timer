@@ -641,13 +641,22 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_COUNTDOWN_DATA = {
 	
-Header: "<b>Feature of the Week</b>: Resource Nodes Farm Map<br />",
+Header: "<b>Feature of the Week</b>: <a href='http://gw2timer.com/?page=Map&section=Resource'>gw2timer.com/resource</a><br />",
 Countdowns: [
 {
-	name: "gw2timer.com/resource",
+	name: "Resource Nodes Farm Map",
 	url: "http://gw2timer.com/?page=Map&section=Resource",
 	Start: new Date("2015-07-26T00:00:00Z"),
 	Finish: new Date("2015-08-03T00:00:00Z")
+},
+{
+	name_en: "WvW Desert Stress Test",
+	name_de: "WvW Grenzlande Stresstest",
+	name_es: "McM Prueba de Rendimiento Desierto",
+	name_fr: "McM désert Stress-test",
+	news: "catch-the-world-vs-world-desert-borderlands-invitational-live-on-twitch/",
+	Start: new Date("2015-07-30T21:00:00Z"),
+	Finish: new Date("2015-07-31T21:00:00Z"),
 }
 ]
 };
