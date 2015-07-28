@@ -96,7 +96,7 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	width: 24px; height: 24px;
 }
 
-.chnBar, .chnSlot {
+.barChain, .barChainDummy {
 	margin-bottom: 8px;
 }
 

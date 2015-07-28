@@ -1450,7 +1450,7 @@ textarea.jsCopyCode {
 }
 
 /* A bar containing the chain icon, title, time, and events */
-.chnBar, .chnSlot {
+.barChain, .barChainDummy {
 	width: auto;
 	margin-bottom: 4px;
 	padding-left: 8px;
@@ -1461,10 +1461,10 @@ textarea.jsCopyCode {
 	background: linear-gradient(to right, #111 0%, #333 100%);
 }
 
-.chnBarChecked {
+.barChainChecked {
 	opacity: 0.3;
 }
-.chnBarDeleted {
+.barChainDeleted {
 	display: none;
 }
 
@@ -1609,20 +1609,16 @@ textarea.jsCopyCode {
 	background: #3b1e09;
 	background: linear-gradient(to right, #111 0%, #4f280c 100%);
 }
-.chnBarReset {
-	background: #44bbff;
-	background: linear-gradient(to right, #111 0%, #173e55 100%);
-}
 
-.chnTitleCurrent, .chnSlot h1.chnTitleCurrent {
+.chnTitleCurrent, .barChainDummy h1.chnTitleCurrent {
 	color: #ffaa22;
 	opacity: 1;
 }
-.chnTitleFuture, .chnSlot h1.chnTitleFuture {
+.chnTitleFuture, .barChainDummy h1.chnTitleFuture {
 	color: #ffaa22;
 	opacity: 0.5;
 }
-.chnTitleFutureFar, .chnSlot h1 {
+.chnTitleFutureFar, .barChainDummy h1 {
 	color: #999;
 	opacity: 1;
 }
@@ -1635,7 +1631,7 @@ textarea.jsCopyCode {
 	color: #bbcc77;
 	opacity: 0.9;
 }
-.chnTimeFutureFar, .chnSlot time {
+.chnTimeFutureFar, .barChainDummy time {
 	color: #ccc;
 	opacity: 1;
 }
