@@ -601,9 +601,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Kills", "Keep", "Camp"]
 },
 "28": {
-	pve: ["Lumberer Shiverpeaks", "Vista Ascalon", "Fields", "Fractal 1-10"],
-	pvp: ["Capture", "Kills", "Thief Elementalist", "Guardian Mesmer"],
-	wvw: ["Kills", "Land", "Camp", "Defender"]
+	pve: ["Forager Jungle", "Fractal", "Bloodtide", "SB"],
+	pvp: ["Defender", "Rank", "Warrior Elementalist", "Engineer Necromancer"],
+	wvw: ["Ruins", "Creature", "Tower", "Camp"]
 },
 "29": {
 	pve: ["Miner Shiverpeaks", "Activity", "Sparkfly", "Fractal 1-10"],
