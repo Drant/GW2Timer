@@ -12988,14 +12988,22 @@ I = {
 		// Hides generic countdown after a time
 		if (T.isGenericCountdownTickEnabled)
 		{
-			setTimeout(function()
+			if (I.PageCurrent === I.PageEnum.Chains)
+			{
+				setTimeout(function()
+				{
+					T.isGenericCountdownTickEnabled = false;
+					$("#itemMapCountdown").animate({opacity: 0}, 1000, function()
+					{
+						$(this).hide();
+					});
+				}, T.cMILLISECONDS_IN_SECOND * 180);
+			}
+			else
 			{
 				T.isGenericCountdownTickEnabled = false;
-				$("#itemMapCountdown").animate({opacity: 0}, 1000, function()
-				{
-					$(this).hide();
-				});
-			}, T.cMILLISECONDS_IN_SECOND * 180);
+				$("#itemMapCountdown").hide();
+			}
 		}
 		
 		// Finally
