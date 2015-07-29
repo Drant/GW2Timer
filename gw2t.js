@@ -8740,7 +8740,7 @@ P = {
 		M.bindMapVisualChanges(I.MapEnum.Tyria);
 		M.adjustZoomMapping();
 		P.adjustZoomDryTop();
-		M.goToArguments(U.Args[U.KeyEnum.Go]);
+		M.goToArguments(U.Args[U.KeyEnum.Go], M.Pin.Program);
 		M.tickGPS();
 	},
 	
