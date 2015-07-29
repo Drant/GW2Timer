@@ -74,7 +74,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 150721},
+		programVersion: {key: "int_utlProgramVersion", value: 150729},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -161,6 +161,20 @@ O = {
 	 * All Options of an enumerated type ("enu") must have a matching named
 	 * object of enums here.
 	 */
+	LanguageCode:
+	{
+		// This enum corresponds to the language enum and is used for Google TTS
+		en: "en-US",
+		de: "de-DE",
+		es: "es-ES",
+		fr: "fr-FR",
+		cs: "cs-CZ", // Unsupported
+		it: "it-IT",
+		pl: "pl-PL", // Unsupported
+		pt: "pt-BR", // Unsupported
+		ru: "ru-RU", // Unsupported
+		zh: "zh-CN"
+	},
 	OptionEnum:
 	{
 		Language:
@@ -305,6 +319,8 @@ O = {
 				+ "This version: " + currentversion + "<br />"
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
+				+ "<br />"
+				+ "Voice alarm for Chrome has been fixed.<br />Please <a class='urlUpdates' href='http://forum.renaka.com/topic/5837846/'>report</a> problems if you encounter any.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -3242,7 +3258,7 @@ E = {
 	 */
 	updateTradingPrices: function(pEntry)
 	{
-		var name = encodeURIComponent(pEntry.find(".trdName").val());
+		var name = pEntry.find(".trdName").val();
 		var id = pEntry.find(".trdItem").val();
 		if (isFinite(parseInt(id)) === false || name.length === 0)
 		{
@@ -5060,45 +5076,55 @@ D = {
 	},
 	
 	/*
-	 * Loads a TTS sound file generated from a TTS web service into a hidden
-	 * iframe. The sound plays automatically after changing the iframe's src via
-	 * the browser's builtin media player.
+	 * Plays an audio representation of provided string, using Chrome's TTS
+	 * system if the user is running it. Otherwise loads a TTS sound file
+	 * generated from a TTS web service into a hidden iframe. The sound plays
+	 * automatically after changing the iframe's src via the browser's builtin
+	 * media player.
 	 * @param string pString to convert to speech.
 	 * @param float pDuration of the speech in seconds.
-	 * @pre pString does not exceed 100 characters (Google TTS limit).
+	 * https://developers.google.com/web/updates/2014/01/Web-apps-that-talk---Introduction-to-the-Speech-Synthesis-API?hl=en
+	 * Google Speech Synthesis API:
+		var msg = new SpeechSynthesisUtterance();
+		var voices = window.speechSynthesis.getVoices();
+		msg.voice = voices[10]; // Note: some voices don't support altering params
+		msg.voiceURI = "native";
+		msg.volume = 1; // 0 to 1
+		msg.rate = 1; // 0.1 to 10
+		msg.pitch = 2; //0 to 2
+		msg.text = "Hello World";
+		msg.lang = "en-US";
+		speechSynthesis.speak(msg);
 	 */
 	speechWait: 0, // In milliseconds
 	speak: function(pString, pDuration)
 	{
+		// Chrome-only TTS service
+		if (I.isSpeechSynthesisEnabled)
+		{
+			var msg = new SpeechSynthesisUtterance(pString);
+			msg.lang = O.LanguageCode[O.Options.enu_Language];
+			msg.rate = 0.8;
+			window.speechSynthesis.speak(msg);
+			return;
+		}
+		
+		// If using other TTS service then use custom queue system
 		var doSpeak = function(pStringMacro)
 		{
 			var url;
 			var tts;
 		
-			if (I.BrowserCurrent === I.BrowserEnum.Chrome)
-			{
-				/*
-				 * Google TTS seems to only work with their browser; using it on
-				 * Firefox gives "Video playback aborted due to a network error"
-				 */
-				tts = document.getElementById("jsTTSFrame");
-				url = "http://translate.google.com/translate_tts?tl="
-					+ O.Options.enu_Language + "&q=" + pStringMacro;
-				tts.src = url;
-			}
-			else
-			{
-				tts = document.getElementById("jsTTSAudio");
-				url = "http://tts-api.com/tts.mp3?q=" + pStringMacro;
-				tts.src = url;
-				tts.load();
-				tts.play();
-			}
+			tts = document.getElementById("jsTTSAudio");
+			url = "http://tts-api.com/tts.mp3?q=" + pStringMacro;
+			tts.src = url;
+			tts.load();
+			tts.play();
 		};
 		
-		// If no duration is given, then estimate speech length
 		if (pDuration === undefined)
 		{
+			// If no duration is given, then estimate speech length
 			var charspersecond = (D.isLanguageLogographic()) ? 4 : 12;
 			pDuration = 1 + (Math.round(pString.length / charspersecond));
 		}
@@ -5138,8 +5164,14 @@ D = {
 	},
 	stopSpeech: function()
 	{
-		document.getElementById("jsTTSFrame").src = "";
-		document.getElementById("jsTTSAudio").src = "";
+		if (I.isSpeechSynthesisEnabled)
+		{
+			window.speechSynthesis.cancel();
+		}
+		else
+		{
+			document.getElementById("jsTTSAudio").src = "";
+		}
 	},
 	
 	/*
@@ -5170,7 +5202,7 @@ D = {
 	 */
 	getSpeech: function(pText, pModifier)
 	{
-		if (I.BrowserCurrent === I.BrowserEnum.Chrome)
+		if (I.isSpeechSynthesisEnabled)
 		{
 			if (pModifier)
 			{
@@ -12676,6 +12708,7 @@ I = {
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
 	isMapEnabled: true,
+	isSpeechSynthesisEnabled: false,
 	ModeCurrent: null,
 	ModeEnum:
 	{
@@ -12835,6 +12868,7 @@ I = {
 		else if (useragent.indexOf("Chrome") !== -1)
 		{
 			I.BrowserCurrent = I.BrowserEnum.Chrome;
+			I.isSpeechSynthesisEnabled = true;
 		}
 		else if (useragent.indexOf("Firefox") !== -1)
 		{
@@ -12913,6 +12947,14 @@ I = {
 		$("#optAlarmSpeaker").click(function()
 		{
 			D.speak(D.getWord("alarm"));
+		});
+		$("#optMute").click(function()
+		{
+			D.stopSpeech();
+		});
+		$("#optAlarm").one("mouseover", function()
+		{
+			I.loadImg($(this));
 		});
 		U.convertExternalLink(".linkExternal");
 		
@@ -13427,7 +13469,7 @@ I = {
 			// Opening the section the first time will load that section's img tags
 			header.one("click", function()
 			{
-				I.loadSectionImg($(this));
+				I.loadImg($(this).next());
 			});
 			
 			// Create and bind the additional bottom header to collapse the container
@@ -13536,13 +13578,12 @@ I = {
 	},
 	
 	/*
-	 * Loads images in a toggleable section, whose src attributes were initially
-	 * written in the data attribute.
-	 * @param jqobject pHeader to find the adjacent section tag.
+	 * Converts img tags with the data-src attribute to src, thereby loading the image.
+	 * @param jqobject pContainer to find img tags tag.
 	 */
-	loadSectionImg: function(pHeader)
+	loadImg: function(pContainer)
 	{
-		pHeader.next().find("img").each(function()
+		pContainer.find("img").each(function()
 		{
 			if ($(this).attr("data-src"))
 			{

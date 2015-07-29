@@ -1351,6 +1351,9 @@ textarea.jsCopyCode {
 	margin: 0;
 	border: none;
 }
+#optMute {
+	width: 100%;
+}
 
 #plateChains header {
 	display: block;
