@@ -1610,8 +1610,8 @@ textarea.jsCopyCode {
 	background: linear-gradient(to right, #111 0%, #4f280c 100%);
 }
 .chnBarReset {
-	background: #44bbff;
-	background: linear-gradient(to right, #111 0%, #173e55 100%);
+	background: #663b7f;
+	background: linear-gradient(to right, #111 0%, #663b7f 100%);
 }
 
 .chnTitleCurrent, .chnSlot h1.chnTitleCurrent {
@@ -2554,6 +2554,7 @@ paletteText {
 	color: #44bbff; /* Blue chat party name */
 	color: #bbddff; /* Blue chat party */
 	color: #66aaff; /* Blue gem */
+	color: #cc77ff; /* Purple daily */
 	color: #bbbbbb; /* Gray in mob description */
 	color: #888888; /* Gray chat time timestamp */
 }

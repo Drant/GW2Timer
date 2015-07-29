@@ -606,9 +606,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Creature", "Tower", "Camp"]
 },
 "29": {
-	pve: ["Miner Shiverpeaks", "Activity", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Warrior Mesmer", "Guardian Necromancer"],
-	wvw: ["Creature", "Guard", "Tower", "Camp"]
+	pve: ["Miner Shiverpeaks", "Forger", "Harathi", "Golem"],
+	pvp: ["Capture", "Reward", "Thief Elementalist", "Guardian Mesmer"],
+	wvw: ["Kills", "Land", "Defender", "Tower"]
 },
 "30": {
 	pve: ["Forager Ascalon", "Fractal", "Wayfarer", "Fractal 1-10"],
@@ -653,10 +653,10 @@ Countdowns: [
 	name_en: "WvW Desert Stress Test",
 	name_de: "WvW Grenzlande Stresstest",
 	name_es: "McM Prueba de Rendimiento Desierto",
-	name_fr: "McM désert Stress-test",
+	name_fr: "McM Stress-test Désert",
 	news: "catch-the-world-vs-world-desert-borderlands-invitational-live-on-twitch/",
 	Start: new Date("2015-07-30T21:00:00Z"),
-	Finish: new Date("2015-07-31T21:00:00Z"),
+	Finish: new Date("2015-07-31T21:00:00Z")
 }
 ]
 };
