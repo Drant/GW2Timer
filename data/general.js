@@ -467,157 +467,157 @@ var GW2T_ZONE_DATA = {
 var GW2T_DAILY_CALENDAR = {
 "1": {
 	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Cursed", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Warrior Necromancer", "Thief Mesmer"],
+	pvp: ["Reward", "Defender", "War Necro", "Thief Mes"],
 	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "2": {
 	pve: ["Forager Ascalon", "Forger", "Gendarran", "Fractal 1-10"],
-	pvp: ["Defender", "Kills", "Warrior Engineer", "Ranger Engineer"],
+	pvp: ["Defender", "Kills", "War Engi", "Ranger Engi"],
 	wvw: ["Ruins", "Land", "Defender", "Camp"]
 },
 "3": {
 	pve: ["Lumberer Wastes", "Fractal", "Bloodtide", "Fractal 1-10"],
-	pvp: ["Rank", "Defender", "Elementalist Mesmer", "Guardian Thief"],
+	pvp: ["Rank", "Defender", "Ele Mes", "Guard Thief"],
 	wvw: ["Spender", "Kills", "Camp", "Keep"]
 },
 "4": {
 	pve: ["Forager Ascalon", "Vista Ascalon", "Harathi", "Fractal 1-10"],
-	pvp: ["Capture", "Reward", "Engineer Thief", "Ranger Engineer"],
+	pvp: ["Capture", "Reward", "Engi Thief", "Ranger Engi"],
 	wvw: ["Spender", "Land", "Tower", "Defender"]
 },
 "5": {
 	pve: ["Forager Orr", "Vista Shiverpeaks", "Ashford", "Fractal 11-20"],
-	pvp: ["Capture", "Rank", "Warrior Guardian", "Ranger Engineer"],
+	pvp: ["Capture", "Rank", "War Guard", "Ranger Engi"],
 	wvw: ["Land", "Kills", "Keep", "Tower"]
 },
 "6": {
 	pve: ["Lumberer Ascalon", "Activity", "Frostgorge", "Fractal 1-10"],
-	pvp: ["Reward", "Rank", "Ranger Thief", "Engineer Elementalist"],
+	pvp: ["Reward", "Rank", "Ranger Thief", "Engi Ele"],
 	wvw: ["Creature", "Guard", "Defender", "Camp"]
 },
 "7": {
 	pve: ["Forager Jungle", "Vista Shiverpeaks", "Fields", "Fractal 1-10"],
-	pvp: ["Defender", "Reward", "Warrior Ranger", "Guardian Necromancer"],
+	pvp: ["Defender", "Reward", "War Ranger", "Guard Necro"],
 	wvw: ["Ruins", "Creature", "Camp", "Defender"]
 },
 "8": {
 	pve: ["Miner Jungle", "Vista Orr", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Defender", "Capture", "Ranger Mesmer", "Guardian Engineer"],
+	pvp: ["Defender", "Capture", "Ranger Mes", "Guard Engi"],
 	wvw: ["Land", "Guard", "Keep", "Camp"]
 },
 "9": {
 	pve: ["Forager Kryta", "Forger", "Caledon", "Fractal 1-10"],
-	pvp: ["Kills", "Reward", "Warrior Engineer", "Ranger Necromancer"],
+	pvp: ["Kills", "Reward", "War Engi", "Ranger Necro"],
 	wvw: ["Guard", "Caravan", "Tower", "Defender"]
 },
 "10": {
 	pve: ["Lumberer Jungle", "Fractal", "Timberline", "Fractal 11-20"],
-	pvp: ["Rank", "Kills", "Elementalist Mesmer", "Guardian Thief"],
+	pvp: ["Rank", "Kills", "Ele Mes", "Guard Thief"],
 	wvw: ["Creature", "Land", "Keep", "Tower"]
 },
 "11": {
 	pve: ["Miner Jungle", "Vista Orr", "Metrica", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Engineer Thief", "Elementalist Necromancer"],
+	pvp: ["Reward", "Defender", "Engi Thief", "Ele Necro"],
 	wvw: ["Caravan", "Spender", "Camp", "Defender"]
 },
 "12": {
 	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Harathi", "Fractal 21-30"],
-	pvp: ["Reward", "Kills", "Warrior Thief", "Guardian Ranger"],
+	pvp: ["Reward", "Kills", "War Thief", "Guard Ranger"],
 	wvw: ["Ruins", "Kills", "Defender", "Camp"]
 },
 "13": {
 	pve: ["Miner Shiverpeaks", "Forger", "Wayfarer", "Fractal 1-10"],
-	pvp: ["Rank", "Capture", "Engineer Mesmer", "Guardian Elementalist"],
+	pvp: ["Rank", "Capture", "Engi Mes", "Guard Ele"],
 	wvw: ["Creature", "Caravan", "Keep", "Camp"]
 },
 "14": {
 	pve: ["Forager Kryta", "Vista Ascalon", "Brisban", "Fractal 1-10"],
-	pvp: ["Defender", "Rank", "Warrior Elementalist", "Engineer Necromancer"],
+	pvp: ["Defender", "Rank", "War Ele", "Engi Necro"],
 	wvw: ["Ruins", "Guard", "Tower", "Keep"]
 },
 "15": {
 	pve: ["Forager Ascalon", "Activity", "Malchor", "Fractal 1-10"],
-	pvp: ["Kills", "Defender", "Thief Elementalist", "Guardian Mesmer"],
+	pvp: ["Kills", "Defender", "Thief Ele", "Guard Mes"],
 	wvw: ["Creature", "Caravan", "Defender", "Camp"]
 },
 "16": {
 	pve: ["Miner Kryta", "Vista Shiverpeaks", "Maelstrom", "Fractal 1-10"],
-	pvp: ["Kills", "Capture", "Warrior Mesmer", "Ranger Necromancer"],
+	pvp: ["Kills", "Capture", "War Mes", "Ranger Necro"],
 	wvw: ["Land", "Guard", "Tower", "Defender"]
 },
 "17": {
 	pve: ["Lumberer Shiverpeaks", "Vista Kryta", "Cursed", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Thief Necromancer", "Elementalist Ranger"],
+	pvp: ["Reward", "Defender", "Thief Necro", "Ele Ranger"],
 	wvw: ["Ruins", "Kills", "Keep", "Camp"]
 },
 "18": {
 	pve: ["Forager Ascalon", "Forger", "Southsun", "Fractal 1-10"],
-	pvp: ["Defender", "Capture", "Warrior Necromancer", "Thief Mesmer"],
+	pvp: ["Defender", "Capture", "War Necro", "Thief Mes"],
 	wvw: ["Spender", "Ruins", "Defender", "Camp"]
 },
 "19": {
 	pve: ["Miner Shiverpeaks", "Fractal", "Harathi", "Fractal 1-10"],
-	pvp: ["Reward", "Kills", "Warrior Guardian", "Ranger Engineer"],
+	pvp: ["Reward", "Kills", "War Guard", "Ranger Engi"],
 	wvw: ["Ruins", "Guard", "Keep", "Tower"]
 },
 "20": {
 	pve: ["Miner Shiverpeaks", "Vista Kryta", "Sparkfly", "Wurm"],
-	pvp: ["Capture", "Rank", "Ranger Thief", "Engineer Elementalist"],
+	pvp: ["Capture", "Rank", "Ranger Thief", "Engi Ele"],
 	wvw: ["Creature", "Guard", "Camp", "Defender"]
 },
 "21": {
 	pve: ["Forager Orr", "Vista Orr", "Gendarran", "Fractal 31-40"],
-	pvp: ["Reward", "Capture", "Warrior Ranger", "Guardian Necromancer"],
+	pvp: ["Reward", "Capture", "War Ranger", "Guard Necro"],
 	wvw: ["Land", "Spender", "Tower", "Camp"]
 },
 "22": {
 	pve: ["Lumberer Jungle", "Fractal", "Straits", "FE"],
-	pvp: ["Defender", "Rank", "Ranger Mesmer", "Guardian Engineer"],
+	pvp: ["Defender", "Rank", "Ranger Mes", "Guard Engi"],
 	wvw: ["Ruins", "Kills", "Camp", "Defender"]
 },
 "23": {
 	pve: ["Miner Ascalon", "Forger", "Kessex", "Fractal 11-20"],
-	pvp: ["Reward", "Capture", "Warrior Engineer", "Ranger Necromancer"],
+	pvp: ["Reward", "Capture", "War Engi", "Ranger Necro"],
 	wvw: ["Land", "Creature", "Keep", "Tower"]
 },
 "24": {
 	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", "Megades"],
-	pvp: ["Defender", "Capture", "Elementalist Mesmer", "Guardian Thief"],
+	pvp: ["Defender", "Capture", "Ele Mes", "Guard Thief"],
 	wvw: ["Land", "Guard", "Tower", "Camp"]
 },
 "25": {
 	pve: ["Forager Kryta", "Forger", "Snowden", "Golem"],
-	pvp: ["Kills", "Defender", "Engineer Thief", "Elementalist Necromancer"],
+	pvp: ["Kills", "Defender", "Engi Thief", "Ele Necro"],
 	wvw: ["Spender", "Kills", "Defender", "Camp"]
 },
 "26": {
 	pve: ["Lumberer Jungle", "Vista Shiverpeaks", "Fields", "Jormag"],
-	pvp: ["Defender", "Capture", "Warrior Thief", "Guardian Ranger"],
+	pvp: ["Defender", "Capture", "War Thief", "Guard Ranger"],
 	wvw: ["Land", "Caravan", "Defender", "Tower"]
 },
 "27": {
 	pve: ["Miner Orr", "Activity", "Queensdale", "Fractal 21-30"],
-	pvp: ["Reward", "Kills", "Engineer Mesmer", "Guardian Elementalist"],
+	pvp: ["Reward", "Kills", "Engi Mes", "Guard Ele"],
 	wvw: ["Ruins", "Kills", "Keep", "Camp"]
 },
 "28": {
 	pve: ["Forager Jungle", "Fractal", "Bloodtide", "SB"],
-	pvp: ["Defender", "Rank", "Warrior Elementalist", "Engineer Necromancer"],
+	pvp: ["Defender", "Rank", "War Ele", "Engi Necro"],
 	wvw: ["Ruins", "Creature", "Tower", "Camp"]
 },
 "29": {
 	pve: ["Miner Shiverpeaks", "Forger", "Harathi", "Golem"],
-	pvp: ["Capture", "Reward", "Thief Elementalist", "Guardian Mesmer"],
+	pvp: ["Capture", "Reward", "Thief Ele", "Guard Mes"],
 	wvw: ["Kills", "Land", "Defender", "Tower"]
 },
 "30": {
 	pve: ["Lumberer Ascalon", "Vista Shiverpeaks", "Metrica", "FE"],
-	pvp: ["Capture", "Rank", "Warrior Mesmer", "Guardian Necromancer"],
+	pvp: ["Capture", "Rank", "War Mes", "Guard Necro"],
 	wvw: ["Guard", "Ruins", "Defender", "Camp"]
 },
 "31": {
 	pve: ["Miner Shiverpeaks", "Vista Jungle", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Capture", "Defender", "Thief Necromancer", "Elementalist Ranger"],
+	pvp: ["Capture", "Defender", "Thief Necro", "Ele Ranger"],
 	wvw: ["Guard", "Land", "Keep", "Camp"]
 }
 };
@@ -650,13 +650,13 @@ Countdowns: [
 	Finish: new Date("2015-08-03T00:00:00Z")
 },
 {
-	name_en: "WvW Desert Stress Test",
-	name_de: "WvW Grenzlande Stresstest",
-	name_es: "McM Prueba de Rendimiento Desierto",
-	name_fr: "McM Stress-test Désert",
-	news: "catch-the-world-vs-world-desert-borderlands-invitational-live-on-twitch/",
-	Start: new Date("2015-07-30T21:00:00Z"),
-	Finish: new Date("2015-07-31T21:00:00Z")
+	name_en: "Beta Weekend Event",
+	name_de: "Beta Weekend Event",
+	name_es: "Beta de fin de semana",
+	name_fr: "Week-end de bêta",
+	news: "the-first-beta-weekend-event-begins-august-7/",
+	Start: new Date("2015-08-07T19:00:00Z"),
+	Finish: new Date("2015-08-10T19:00:00Z")
 }
 ]
 };

@@ -8626,7 +8626,7 @@ P = {
 		{
 			if (pName.indexOf("guild") !== -1 || // Guild missions
 				pName.indexOf("subdue") !== -1 || // Guild bounty
-				pName.indexOf("skill") !== -1 || // Hero challenges
+				pName.indexOf("challenge") !== -1 || // Hero challenges
 				pName.indexOf("offshoot") !== -1 || // Obsolete Living Story events
 				pName.indexOf("vigil en") !== -1 ||
 				pName.indexOf("haunted") !== -1)
