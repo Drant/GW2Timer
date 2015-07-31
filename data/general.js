@@ -641,14 +641,8 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_COUNTDOWN_DATA = {
 	
-Header: "<b>Feature of the Week</b>: <a href='http://gw2timer.com/?page=Map&section=Resource'>gw2timer.com/resource</a><br />",
+Header: "",
 Countdowns: [
-{
-	name: "Resource Nodes Farm Map",
-	url: "http://gw2timer.com/?page=Map&section=Resource",
-	Start: new Date("2015-07-26T00:00:00Z"),
-	Finish: new Date("2015-08-03T00:00:00Z")
-},
 {
 	name_en: "Beta Weekend Event",
 	name_de: "Beta Weekend Event",
