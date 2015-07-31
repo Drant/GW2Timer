@@ -616,9 +616,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Ruins", "Defender", "Camp"]
 },
 "31": {
-	pve: ["Miner Jungle", "Fractal", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Capture", "Reward", "Warrior Necromancer", "Thief Mesmer"],
-	wvw: ["Spender", "Land", "Defender", "Tower"]
+	pve: ["Miner Shiverpeaks", "Vista Jungle", "Sparkfly", "Fractal 1-10"],
+	pvp: ["Capture", "Defender", "Thief Necromancer", "Elementalist Ranger"],
+	wvw: ["Guard", "Land", "Keep", "Camp"]
 }
 };
 

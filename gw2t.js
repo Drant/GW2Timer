@@ -5413,8 +5413,10 @@ C = {
 		$(".chnDaily").hide();
 		if (C.ChainToday)
 		{
-			$("#chnDaily_" + C.ChainToday.nexus).show();
+			$(".chnDaily_" + C.ChainToday.nexus).show();
 		}
+		// Restyle timetable
+		C.updateTimetable();
 	},
 	
 	/*
@@ -5540,7 +5542,7 @@ C = {
 				+ "<div id='chnCheck_" + pChain.nexus + "' class='chnCheck'></div>"
 				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + D.getChainTitleAny(pChain.nexus) + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
-				+ "<aside><img id='chnDaily_" + pChain.nexus + "' class='chnDaily' src='img/ui/daily.png' /></aside>"
+				+ "<aside><img class='chnDaily chnDaily_" + pChain.nexus + "' src='img/ui/daily.png' /></aside>"
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
@@ -6022,13 +6024,14 @@ C = {
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
 						+ "<h1>" + D.getChainTitleAny(ithchain.nexus) + "</h1>"
 						+ "<time>" + timestring + "</time>"
+						+ "<aside><img class='chnDaily chnDaily_" + ithchain.nexus + "' src='img/ui/daily.png' /></aside>"
 					+ "</div>"
 				+ "</div>");
 			}
 		}
 		// Special color of the reset time slot
 		$(".chnSlot_0").addClass("chnBarReset");
-		C.updateTimetable();
+		C.showChainDailyIcon();
 	},
 	
 	/*
@@ -6072,6 +6075,18 @@ C = {
 				return false;
 			}
 		});
+		
+		// Hide daily world boss beyond today's reset
+		if (C.ChainToday)
+		{
+			$("#sectionChains_Timetable .chnDaily_" + C.ChainToday.nexus).each(function()
+			{
+				if (T.convertScheduleKeyToUTCMinutes($(this).closest(".chnSlot").data("timeframe")) < currenttimeframe)
+				{
+					$(this).hide();
+				}
+			});
+		}
 	},
    
 	/*
@@ -6211,9 +6226,6 @@ C = {
 			$("#chnBar_" + ithchain.nexus + " time").first()
 				.removeClass("chnTimeFutureFar").addClass("chnTimeFuture");
 		}
-		
-		// Restyle timetable
-		C.updateTimetable();
 	},
 	
 	/*
@@ -6492,6 +6504,21 @@ C = {
 	 */
 	getSumBasedOnOptions: function(pChain, pIndex)
 	{
+		// Daily chain will always use min time because more players will do these
+		if (C.isChainToday(pChain))
+		{
+			if (pIndex > -1)
+			{
+				return pChain.primaryEvents[pIndex].minSum;
+			}
+			else
+			{
+				pChain.countdownToFinish = pChain.minFinish;
+				return pChain.minFinish;
+			}
+		}
+		
+		// Else for non daily chains use chosen statistical time
 		var hour = T.getTimeSinceMidnight(T.ReferenceEnum.Local, T.UnitEnum.Hours);
 		
 		if (pIndex > -1)
@@ -12607,11 +12634,12 @@ K = {
 			
 			// Chains for the clicked timeframe
 			text += pChainSD.waypoint + " " + D.getChainAlias(pChainSD.nexus);
-			if ( ! pChainHC)
+			// If hardcore chain doesn't exist or is Triple Wurm
+			if ( ! pChainHC || pChainHC.nexus === C.Triple.nexus)
 			{
 				text += T.getTimeTillChainFormatted(pChainSD);
 			}
-			else
+			else if (pChainHC.nexus !== C.Triple.nexus)
 			{
 				text += " " + D.getPhrase("and") + " " + pChainHC.waypoint
 					+ " " + D.getChainAlias(pChainHC.nexus)
@@ -12621,11 +12649,11 @@ K = {
 			// Chains for the timeframe after that
 			text += ", " + D.getPhrase("then") + " " + pChainSDAfter.waypoint
 				+ " " + D.getChainAlias(pChainSDAfter.nexus);
-			if ( ! pChainHCAfter)
+			if ( ! pChainHCAfter || pChainHCAfter.nexus === C.Triple.nexus)
 			{
 				text += T.getTimeTillChainFormatted(pChainSDAfter);
 			}
-			else
+			else if (pChainHCAfter.nexus !== C.Triple.nexus)
 			{
 				text += " " + D.getPhrase("and") + " " + pChainHCAfter.waypoint
 					+ " " + D.getChainAlias(pChainHCAfter.nexus)
@@ -14015,7 +14043,7 @@ I = {
 					color: "#eee",
 					opacity: 0.5
 				});
-				I.qTip.init($("<a title='&lt;dfn&gt;Switch back to full site&lt;/dfn&gt;' href='./'>"
+				I.qTip.init($("<a title='&lt;dfn&gt;Switch back to full site.&lt;/dfn&gt;' href='./'>"
 					+ " <img id='iconSimpleHome' src='img/ui/about.png' /></a>")
 					.appendTo("#itemTimeLocalExtra"));
 				$("#paneBoard").show();
