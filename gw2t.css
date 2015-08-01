@@ -602,7 +602,17 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	box-shadow: 0px 0px 10px gold;
 }
 
-.mapNeedle {
+.mapJPDifficulty0, .mapJPDifficulty1, .mapJPDifficulty2, .mapJPDifficulty3, .mapJPDifficulty4 {
+	border-radius: 50%;
+	opacity: 0.9;
+}
+.mapJPDifficulty0 { border: 2px solid black; }
+.mapJPDifficulty1 { border: 2px solid lime; }
+.mapJPDifficulty2 { border: 2px solid orange; }
+.mapJPDifficulty3 { border: 2px solid red; }
+.mapJPDifficulty4 { border: 2px solid purple; }
+
+.mapNeedle, .mapNeedle0, .mapNeedle1, .mapNeedle2 {
 	font-family: sans-serif;
 	font-size: 12px;
 	text-align: center;
@@ -614,6 +624,9 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
 }
+.mapNeedle0 { border: 2px solid lime; }
+.mapNeedle1 { border: 2px solid red; }
+.mapNeedle2 { border: 2px solid white; }
 
 
 /* =============================================================================
@@ -1928,15 +1941,6 @@ dt.mapJPListNameHover {
 	font-size: 18px;
 	color: #ffeebb;
 }
-.mapJPDifficulty0, .mapJPDifficulty1, .mapJPDifficulty2, .mapJPDifficulty3, .mapJPDifficulty4 {
-	border-radius: 50%;
-	opacity: 0.9;
-}
-.mapJPDifficulty0 { border: 2px solid black; }
-.mapJPDifficulty1 { border: 2px solid lime; }
-.mapJPDifficulty2 { border: 2px solid orange; }
-.mapJPDifficulty3 { border: 2px solid red; }
-.mapJPDifficulty4 { border: 2px solid purple; }
 
 /* Resource */
 .mapResourceList {

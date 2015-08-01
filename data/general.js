@@ -466,9 +466,9 @@ var GW2T_ZONE_DATA = {
  */
 var GW2T_DAILY_CALENDAR = {
 "1": {
-	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Cursed", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "War Necro", "Thief Mes"],
-	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
+	pve: ["Forager Ascalon", "Activity", "Southsun", "Wurm"],
+	pvp: ["Defender", "Rank", "War Necro", "Thief Mes"],
+	wvw: ["Land", "Ruins", "Camp", "Tower"]
 },
 "2": {
 	pve: ["Forager Ascalon", "Forger", "Gendarran", "Fractal 1-10"],
