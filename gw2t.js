@@ -1988,19 +1988,19 @@ X = {
 	 */
 	Collectibles:
 	{
-		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: "", cushion: null },
-		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: "", cushion: null },
-		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: "", cushion: null },
-		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator", value: "", cushion: null },
-		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: "", cushion: null },
-		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: "", cushion: null },
-		CoinChallenger: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: "", cushion: null },
-		LostBadges: { key: "str_chlLostBadges", urlkey: "lostbadges", value: "", cushion: null },
-		GoldenLostBadges: { key: "str_chlGoldenLostBadges", urlkey: "goldenlostbadges", value: "", cushion: null },
-		DiveMaster: { key: "str_chlDiveMaster", urlkey: "divemaster", value: "", cushion: null },
-		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader", value: "", cushion: null },
-		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup", value: "", cushion: null },
-		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: "", cushion: null }
+		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: ""},
+		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: ""},
+		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: ""},
+		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator", value: ""},
+		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: ""},
+		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: ""},
+		CoinChallenger: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: ""},
+		LostBadges: { key: "str_chlLostBadges", urlkey: "lostbadges", value: ""},
+		GoldenLostBadges: { key: "str_chlGoldenLostBadges", urlkey: "goldenlostbadges", value: ""},
+		DiveMaster: { key: "str_chlDiveMaster", urlkey: "divemaster", value: ""},
+		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader", value: ""},
+		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup", value: ""},
+		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: ""}
 	},
 	ChecklistEnum:
 	{
@@ -8259,11 +8259,11 @@ M = {
 		// Print the result formatted
 		this.printCoordinates(pArray);
 	},
-	printCushion: function(pCushion)
+	printNeedles: function(pNeedles)
 	{
-		for (var i in pCushion)
+		for (var i in pNeedles)
 		{
-			this.printNumberedCoordinates((pCushion[i]).c, i);
+			this.printNumberedCoordinates((pNeedles[i]).c, i);
 		}
 	},
 	formatNodes: function(pArray)
@@ -9238,7 +9238,7 @@ G = {
 	 */
 	generateAndInitializeResources: function()
 	{
-		var clickedopacity = 0.3;
+		var CLICKED_OPACITY = 0.3;
 		var getNodeState = function(pMarker)
 		{
 			return X.getChecklistItem(X.Checklists["Resource" + pMarker.options.grade], pMarker.options.index);
@@ -9261,11 +9261,11 @@ G = {
 				else
 				{
 					setNodeState(pMarker, X.ChecklistEnum.Checked);
-					this.setOpacity(clickedopacity);
+					this.setOpacity(CLICKED_OPACITY);
 				}
 			});
 		};
-		var refreshPrices = function()
+		var refreshResourcePrices = function()
 		{
 			// Get API prices for each resource type
 			for (var i in M.Resources)
@@ -9408,7 +9408,7 @@ G = {
 				{
 					if (pMarker instanceof L.Marker && getNodeState(pMarker) === X.ChecklistEnum.Checked)
 					{
-						pMarker.setOpacity(clickedopacity);
+						pMarker.setOpacity(CLICKED_OPACITY);
 					}
 				});
 			}
@@ -9490,46 +9490,13 @@ G = {
 			// Bind button to refresh TP prices
 			$("#mapResourceRefresh").click(function()
 			{
-				refreshPrices();
+				refreshResourcePrices();
 				I.write("Prices refreshed.");
 			});
 			
 			// Finally
-			refreshPrices();
+			refreshResourcePrices();
 		});
-	},
-	
-	/*
-	 * Styles the border color of JP icons based on difficulty.
-	 * @param object pMarker to recolor.
-	 * @param int pDifficulty for color.
-	 */
-	styleJPMarker: function(pMarker, pDifficulty)
-	{
-		pMarker.setIcon(new L.icon(
-		{
-			className: "mapJPDifficulty" + pDifficulty,
-			iconUrl: "img/map/jp.png",
-			iconSize: [32, 32],
-			iconAnchor: [16, 16]
-		}));
-	},
-	restyleJPMarkers: function()
-	{
-		for (var i in M.LayerArray.JP)
-		{
-			var marker = M.LayerArray.JP[i];
-			var state = X.getChecklistItem(X.Checklists.JP, marker.options.id);
-			if (state === X.ChecklistEnum.Unchecked)
-			{
-				G.styleJPMarker(marker, marker.options.difficulty);
-			}
-			else
-			{
-				// Difficulty 0 is reserved for checked off JPs
-				G.styleJPMarker(marker, 0);
-			}
-		}
 	},
 	
 	/*
@@ -9538,6 +9505,17 @@ G = {
 	 */
 	generateAndInitializeJPs: function()
 	{
+		var styleJPMarker = function(pMarker, pDifficulty)
+		{
+			pMarker.setIcon(new L.icon(
+			{
+				className: "mapJPDifficulty" + pDifficulty,
+				iconUrl: "img/map/jp.png",
+				iconSize: [32, 32],
+				iconAnchor: [16, 16]
+			}));
+		};
+		
 		$.getScript(U.URL_DATA.JP).done(function()
 		{
 			M.JPs = GW2T_JP_DATA;
@@ -9546,32 +9524,29 @@ G = {
 			M.LayerArray.JP = new Array(X.Checklists.JP.length);
 		
 			var i, ii;
-			var jp;
-			var translatedname;
-			var createJPMarker = function(pObject)
+			for (var i in M.JPs)
 			{
-				var coord = M.parseCoordinates(pObject.coord);
-				var type = (pObject.difficulty === 4) ? "Explorer" : "JP";
+				/*
+				 * Create JP markers.
+				 */
+				var jp = M.JPs[i];
+				var coord = M.parseCoordinates(jp.coord);
+				var type = (jp.difficulty === 4) ? "Explorer" : "JP";
 				var marker = L.marker(M.convertGCtoLC(coord),
 				{
-					id: pObject.id,
-					difficulty: pObject.difficulty,
-					title: "<div class='mapLoc'><dfn>" + type + ":</dfn> " + D.getObjectName(pObject)
-						+ "<img src='" + U.getImageHosted(pObject.img) + "' /></div>"
-				}).addTo(M.Map);
-				G.styleJPMarker(marker, pObject.difficulty);
-
-				// Add to array
-				M.LayerArray.JP[pObject.id] = marker;
-			};
-
-			// Create the markers, each set pertains to one "mapJPList"
-			var jplink;
-			for (i in M.JPs)
-			{
-				jp = M.JPs[i];
-				createJPMarker(jp);
-				translatedname = D.getObjectName(jp);
+					id: jp.id,
+					difficulty: jp.difficulty,
+					title: "<div class='mapLoc'><dfn>" + type + ":</dfn> " + D.getObjectName(jp)
+						+ "<img src='" + U.getImageHosted(jp.img) + "' /></div>"
+				});
+				styleJPMarker(marker, jp.difficulty);
+				M.LayerArray.JP[jp.id] = marker;
+				M.toggleLayerArray(M.LayerArray.JP, true);
+				
+				/*
+				 * Create JP HTML entries.
+				 */
+				var translatedname = D.getObjectName(jp);
 				$("#mapJPList_" + jp.difficulty).append(
 					"<dt id='mapJP_" + jp.id + "' data-coord='" + jp.coord + "'>" + translatedname + "</dt>"
 					+ "<label><input type='checkbox' id='mapJPCheck_" + jp.id + "' /></label>"
@@ -9580,7 +9555,7 @@ G = {
 					+ U.getWikiLanguageLink(translatedname) + "' target='_blank'>[W]</a></cite>"
 					+ "<dd>" + jp.description + "</dd>"
 				);
-				jplink = $("#mapJP_" + jp.id);
+				var jplink = $("#mapJP_" + jp.id);
 				jplink.attr("title", "<div class='mapLoc'><img src='" + U.getImageHosted(jp.img) + "' /></div>");
 				M.bindMapLinkBehavior(jplink, M.ZoomEnum.Same);
 			}
@@ -9626,7 +9601,20 @@ G = {
 				M.toggleLayerArray(M.LayerArray.JP, state);
 				if (state)
 				{
-					G.restyleJPMarkers();
+					for (var i in M.LayerArray.JP)
+					{
+						var marker = M.LayerArray.JP[i];
+						var state = X.getChecklistItem(X.Checklists.JP, marker.options.id);
+						if (state === X.ChecklistEnum.Unchecked)
+						{
+							styleJPMarker(marker, marker.options.difficulty);
+						}
+						else
+						{
+							// Difficulty 0 is reserved for checked off JPs
+							styleJPMarker(marker, 0);
+						}
+					}
 				}
 			});
 			// Button to toggle chest markers only
@@ -9647,146 +9635,125 @@ G = {
 			});
 
 			I.qTip.init(".leaflet-marker-icon");
-			G.initializeJPChecklist();
-		});
-	},
-	
-	/*
-	 * Binds JP event handlers for storing their states as a combined string of 0s and 1s.
-	 */
-	initializeJPChecklist: function()
-	{
-		// Initialize localStorage
-		X.initializeChecklist(X.Checklists.JP, X.Checklists.JP.length);
-		
-		// Count completed JPs function
-		var updateJPCount = function()
-		{
-			var completed = X.countChecklist(X.Checklists.JP, X.ChecklistEnum.Checked);
-			var total = X.Checklists.JP.length;
-			$("#mapJPCounter").text(completed + "/" + total);
-		};
-		
-		var i;
-		for (i = 0; i < X.Checklists.JP.length; i++)
-		{
-			$("#mapJPCheck_" + i).each(function()
-			{
-				/*
-				 * Read and enact the state of the JP checklist.
-				 */
-				// Convert the digit at ith position in the checklist string to boolean
-				var stateinstring = X.getChecklistItem(X.Checklists.JP, i, O.TypeEnum.isBoolean);
-				$(this).prop("checked", stateinstring);
-				if (stateinstring === false)
-				{
-					$(this).parent().prev().removeClass("mapJPListNameChecked");
-				}
-				else
-				{
-					$(this).parent().prev().addClass("mapJPListNameChecked");
-					G.styleJPMarker(M.LayerArray.JP[i], 0);
-				}
-				
-			}).change(function()
-			{
-				// Get the checkbox ID that associates itself with that JP
-				var checkboxstate = X.getCheckboxEnumState($(this));
-				var checkboxindex = U.getSubintegerFromHTMLID($(this));
-				if (checkboxstate === X.ChecklistEnum.Unchecked)
-				{
-					$(this).parent().prev().removeClass("mapJPListNameChecked");
-					G.styleJPMarker(M.LayerArray.JP[checkboxindex], M.LayerArray.JP[checkboxindex].options.difficulty);
-				}
-				else
-				{
-					$(this).parent().prev().addClass("mapJPListNameChecked");
-					G.styleJPMarker(M.LayerArray.JP[checkboxindex], 0);
-				}
-				
-				// Rewrite the checklist string by updating the digit at the ID/index
-				X.setChecklistItem(X.Checklists.JP, checkboxindex, checkboxstate);
-				updateJPCount();
-				
-			}).parent().hover(
-				// Highlight JP name when hovered over checkbox's label
-				function()
-				{
-					$(this).prev().css({"text-decoration": "underline"}).trigger("mouseenter");
-				},
-				function()
-				{
-					$(this).prev().css({"text-decoration": "none"}).trigger("mouseleave");
-				}
-			);
-	
+			
 			/*
-			 * Duplicate the behavior of JP checklist and zoom by mirroring the
-			 * action of clicking on the JP icon with the associated HTML element.
+			 * Initialize checklist and bind marker and checkboxes together.
 			 */
-			(function(pIndex)
+			X.initializeChecklist(X.Checklists.JP, X.Checklists.JP.length);
+
+			// Count completed JPs function
+			var updateJPCount = function()
 			{
-				// Click associated checkbox when clicked
-				M.LayerArray.JP[pIndex].on("click", function()
+				var completed = X.countChecklist(X.Checklists.JP, X.ChecklistEnum.Checked);
+				var total = X.Checklists.JP.length;
+				$("#mapJPCounter").text(completed + "/" + total);
+			};
+
+			var i;
+			for (i = 0; i < X.Checklists.JP.length; i++)
+			{
+				$("#mapJPCheck_" + i).each(function()
 				{
-					$("#mapJPCheck_" + pIndex).trigger("click");
-					I.scrollToElement($("#mapJP_" + this.options.id), $("#plateMap"));
-				});
-				// Zoom in when double clicked
-				M.LayerArray.JP[pIndex].on("dblclick", function()
-				{
-					if (M.Map.getZoom() === M.ZoomEnum.Max)
+					/*
+					 * Read and enact the state of the JP checklist.
+					 */
+					// Convert the digit at ith position in the checklist string to boolean
+					var stateinstring = X.getChecklistItem(X.Checklists.JP, i, O.TypeEnum.isBoolean);
+					$(this).prop("checked", stateinstring);
+					if (stateinstring === false)
 					{
-						M.Map.setZoom(M.ZoomEnum.Default);
+						$(this).parent().prev().removeClass("mapJPListNameChecked");
 					}
 					else
 					{
-						M.goToLatLng(this.getLatLng());
+						$(this).parent().prev().addClass("mapJPListNameChecked");
+						styleJPMarker(M.LayerArray.JP[i], 0);
 					}
-				});
-			})(i);
-		}
-		
-		// The button to clear all JP checkboxes
-		$("#mapJPUncheck").click(function()
-		{
-			var jpchecklist = "";
-			for (i = 0; i < X.Checklists.JP.length; i++)
-			{
-				$("#mapJPCheck_" + i).prop("checked", false)
-					.parent().prev().removeClass("mapJPListNameChecked");
-				G.styleJPMarker(M.LayerArray.JP[i], M.LayerArray.JP[i].options.difficulty);
-				
-				jpchecklist += "0";
+
+				}).change(function()
+				{
+					// Get the checkbox ID that associates itself with that JP
+					var checkboxstate = X.getCheckboxEnumState($(this));
+					var checkboxindex = U.getSubintegerFromHTMLID($(this));
+					if (checkboxstate === X.ChecklistEnum.Unchecked)
+					{
+						$(this).parent().prev().removeClass("mapJPListNameChecked");
+						styleJPMarker(M.LayerArray.JP[checkboxindex], M.LayerArray.JP[checkboxindex].options.difficulty);
+					}
+					else
+					{
+						$(this).parent().prev().addClass("mapJPListNameChecked");
+						styleJPMarker(M.LayerArray.JP[checkboxindex], 0);
+					}
+
+					// Rewrite the checklist string by updating the digit at the ID/index
+					X.setChecklistItem(X.Checklists.JP, checkboxindex, checkboxstate);
+					updateJPCount();
+
+				}).parent().hover(
+					// Highlight JP name when hovered over checkbox's label
+					function()
+					{
+						$(this).prev().css({"text-decoration": "underline"}).trigger("mouseenter");
+					},
+					function()
+					{
+						$(this).prev().css({"text-decoration": "none"}).trigger("mouseleave");
+					}
+				);
+
+				/*
+				 * Duplicate the behavior of JP checklist and zoom by mirroring the
+				 * action of clicking on the JP icon with the associated HTML element.
+				 */
+				(function(pIndex)
+				{
+					// Click associated checkbox when clicked
+					M.LayerArray.JP[pIndex].on("click", function()
+					{
+						$("#mapJPCheck_" + pIndex).trigger("click");
+						I.scrollToElement($("#mapJP_" + this.options.id), $("#plateMap"));
+					});
+					// Zoom in when double clicked
+					M.LayerArray.JP[pIndex].on("dblclick", function()
+					{
+						if (M.Map.getZoom() === M.ZoomEnum.Max)
+						{
+							M.Map.setZoom(M.ZoomEnum.Default);
+						}
+						else
+						{
+							M.goToLatLng(this.getLatLng());
+						}
+					});
+				})(i);
 			}
-			X.Checklists.JP.value = jpchecklist;
-			localStorage[X.Checklists.JP.key] = X.Checklists.JP.value;
-			
+
+			// The button to clear all JP checkboxes
+			$("#mapJPUncheck").click(function()
+			{
+				var jpchecklist = "";
+				for (i = 0; i < X.Checklists.JP.length; i++)
+				{
+					$("#mapJPCheck_" + i).prop("checked", false)
+						.parent().prev().removeClass("mapJPListNameChecked");
+					styleJPMarker(M.LayerArray.JP[i], M.LayerArray.JP[i].options.difficulty);
+
+					jpchecklist += "0";
+				}
+				X.Checklists.JP.value = jpchecklist;
+				localStorage[X.Checklists.JP.key] = X.Checklists.JP.value;
+
+				updateJPCount();
+			});
+
 			updateJPCount();
 		});
-		
-		updateJPCount();
-	},
-	
-	/*
-	 * Styles the border color of collectible markers based on state.
-	 * @param object pMarker to recolor.
-	 * @param enum pState for color.
-	 */
-	styleCollectibleMarker: function(pMarker, pState)
-	{
-		switch (pState)
-		{
-			case X.ChecklistEnum.Unfound: pMarker._icon.style.border = "2px solid lime"; break;
-			case X.ChecklistEnum.Tracked: pMarker._icon.style.border = "2px solid red"; break;
-			case X.ChecklistEnum.Found: pMarker._icon.style.border = "2px solid white"; break;
-		}
 	},
 	
 	/*
 	 * Create list of collectibles and checkbox to toggle their display. The
-	 * first checkbox click generates the icon. Each collectible type has a
-	 * "cushion" array to store "needle" markers.
+	 * first checkbox click generates the icon.
 	 */
 	generateCollectiblesUI: function()
 	{
@@ -9864,50 +9831,27 @@ G = {
 		var marker;
 		var markertitle;
 		var translatedname = D.getObjectName(collectible);
-		var path = new Array();
+		var pathcoords = new Array();
 		
-		var styleMarker = function(pMarker, pLabel, pState, pColor)
+		var styleCollectibleMarker = function(pMarker, pState)
 		{
 			pMarker.setIcon(new L.divIcon(
 			{
-				className: "mapNeedle",
-				html: "<span style='color:" + pColor + "'>" + pLabel + "</span>",
+				className: "mapNeedle" + pState,
+				html: "<span style='color:" + pMarker.options.needleColor + "'>"
+					+ pMarker.options.needleLabel + "</span>",
 				iconSize: [16, 16],
 				iconAnchor: [8, 8]
 			}));
-			pMarker._icon.style.borderRadius = "16px";
-			pMarker._icon.style.opacity = "0.9";
-			G.styleCollectibleMarker(pMarker, pState);
-			
-			// Bind marker behavior
-			pMarker.on("click", function(pEvent)
-			{
-				var type = this.options.needleType;
-				var key = this.options.needleKey;
-				var index = this.options.needleIndex;
-				var newstate = X.trackChecklistItem(X.Collectibles[type], index);
-				G.styleCollectibleMarker(this, newstate);
-				
-				// Update URL bar with list of numbers of checked markers
-				var pings = X.getCheckedIndexes(X.Collectibles[type]);
-				if (pings.length === 0)
-				{
-					U.updateQueryString();
-				}
-				else
-				{
-					U.updateAddressBar("?" + key + "=" + pings);
-				}
-			});
 		};
 		
+		// Initialize checklist
 		X.Collectibles[pType].length = M.Collectibles[pType].needles.length;
-		X.Collectibles[pType].cushion = new Array();
 		X.initializeChecklist(X.Collectibles[pType], X.Collectibles[pType].length, customlist);
-
-		M.Entity[pType] = new Array(); // Hold markers
-		M.Layer[pType] = new L.layerGroup(); // Hold path
-
+		
+		M.LayerArray[pType] = new Array(); // Holds markers (needles)
+		M.Layer[pType] = new L.layerGroup(); // Holds path connecting the markers
+		
 		for (i in collectible.needles)
 		{
 			// Read and enact the state of the ith collectible checklist
@@ -9931,30 +9875,46 @@ G = {
 				needleIndex: i,
 				needleType: pType,
 				needleKey: X.Collectibles[pType].urlkey,
+				needleColor: collectible.color,
+				needleLabel: (ithneedle.l === undefined) ? number : ithneedle.l,
 				title: markertitle
-			}).addTo(M.Map);
-			if (ithneedle.l)
+			});
+			styleCollectibleMarker(marker, stateinstring);
+			
+			// Bind marker behavior
+			marker.on("click", function(pEvent)
 			{
-				number = ithneedle.l;
-			}
-			styleMarker(marker, number, stateinstring, collectible.color);
-			// Add to arrays
-			X.Collectibles[pType].cushion.push(marker);
-			M.Entity[pType].push(marker);
+				var newstate = X.trackChecklistItem(X.Collectibles[this.options.needleType], this.options.needleIndex);
+				styleCollectibleMarker(this, newstate);
+				
+				// Update URL bar with list of numbers of checked markers
+				var pings = X.getCheckedIndexes(X.Collectibles[this.options.needleType]);
+				if (pings.length === 0)
+				{
+					U.updateQueryString();
+				}
+				else
+				{
+					U.updateAddressBar("?" + this.options.needleKey + "=" + pings);
+				}
+			});
+			
+			// Add to array
+			M.LayerArray[pType].push(marker);
 			
 			// Compile coordinates for path lines
-			path.push(ithneedle.c);
+			pathcoords.push(ithneedle.c);
 		}
 		
 		// Draw paths from markers numbered low to high
-		var coords = M.convertGCtoLCMulti(path);
-		var pathline = L.polyline(coords,
+		var pathline = L.polyline(M.convertGCtoLCMulti(pathcoords),
 		{
 			color: "white",
 			opacity: 0.2
 		});
 		M.Layer[pType].addLayer(pathline);
-		M.toggleLayer(M.Layer[pType]);
+		M.toggleLayerArray(M.LayerArray[pType], true);
+		M.toggleLayer(M.Layer[pType], true);
 		
 		// Bind tooltip
 		I.qTip.init(".leaflet-marker-icon");
@@ -9964,7 +9924,7 @@ G = {
 		{
 			var state = $(this).prop("checked");
 			var type = U.getSubstringFromHTMLID($(this));
-			M.toggleEntity(M.Entity[type], state);
+			M.toggleLayerArray(M.LayerArray[type], state);
 			M.toggleLayer(M.Layer[type], state);
 			// Also views the map location of the collectible if box is checked
 			if (state)
@@ -9975,10 +9935,10 @@ G = {
 		$("#nedUncheck_" + pType).click(function()
 		{
 			var type = U.getSubstringFromHTMLID($(this));
-			var thiscushion = X.Collectibles[type].cushion;
-			for (var thisi in thiscushion)
+			var markers = M.LayerArray[type];
+			for (var i in markers)
 			{
-				G.styleCollectibleMarker(thiscushion[thisi], X.ChecklistEnum.Unfound);
+				styleCollectibleMarker(markers[i], X.ChecklistEnum.Unfound);
 			}
 			X.clearChecklist(X.Collectibles[type]);
 			U.updateQueryString();

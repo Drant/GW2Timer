@@ -612,7 +612,8 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 .mapJPDifficulty3 { border: 2px solid red; }
 .mapJPDifficulty4 { border: 2px solid purple; }
 
-.mapNeedle, .mapNeedle0, .mapNeedle1, .mapNeedle2 {
+.mapNeedle0, .mapNeedle1, .mapNeedle2 {
+	border-radius: 16px;
 	font-family: sans-serif;
 	font-size: 12px;
 	text-align: center;
@@ -623,6 +624,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 		1px -1px 0px #000,
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
+	opacity: 0.9;
 }
 .mapNeedle0 { border: 2px solid lime; }
 .mapNeedle1 { border: 2px solid red; }
@@ -1696,6 +1698,12 @@ textarea.jsCopyCode {
 
 /* @@Map page
 ----------------------------------------------------------------------------- */
+.mapLegendLine {
+	display: inline-block;
+	width: 64px; height: 2px;
+	margin: auto 12px 5px 6px;
+}
+
 button.btnToggle {
 	margin-top: 8px;
 	margin-bottom: 8px;
@@ -1969,7 +1977,7 @@ dt.mapJPListNameHover {
 	margin-left: 2px;
 	font-size: 12px;
 	font-weight: bold;
-} 
+}
 
 /* Collectible */
 #mapCollectibleList div {

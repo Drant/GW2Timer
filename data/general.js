@@ -471,9 +471,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Ruins", "Camp", "Tower"]
 },
 "2": {
-	pve: ["Forager Ascalon", "Forger", "Gendarran", "Fractal 1-10"],
-	pvp: ["Defender", "Kills", "War Engi", "Ranger Engi"],
-	wvw: ["Ruins", "Land", "Defender", "Camp"]
+	pve: ["Forager Jungle", "Forger", "Frostgorge", "Jormag"],
+	pvp: ["Rank", "Reward", "War Engi", "Ranger Engi"],
+	wvw: ["Creature", "Land", "Defender", "Camp"]
 },
 "3": {
 	pve: ["Lumberer Wastes", "Fractal", "Bloodtide", "Fractal 1-10"],
