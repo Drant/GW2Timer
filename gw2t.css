@@ -1358,7 +1358,7 @@ textarea.jsCopyCode {
 	right: -30px;
 	position: absolute;
 	margin: 0;
-	padding: 6px;
+	padding: 8px;
 	z-index: 2; /* So the event names don't overlap the popup */
 }
 #itemAlarmPopup fieldset {
@@ -1366,7 +1366,7 @@ textarea.jsCopyCode {
 	margin: 0;
 	border: none;
 }
-#optMute {
+#opt_int_volAlarm, #optMute {
 	width: 100%;
 }
 

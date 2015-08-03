@@ -126,6 +126,7 @@ O = {
 		int_msecGPSRefresh: 100,
 		// Alarm
 		int_setAlarm: 0,
+		int_volAlarm: 100,
 		bol_alertArrival: true,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
@@ -932,6 +933,13 @@ O = {
 				$("#optAlarmSpeaker").attr("src", "img/ui/speaker.png");
 			}
 			$("#optAlarmIcon").attr("src", icon);
+		},
+		int_volAlarm: function()
+		{
+			if (D.isSpeaking() === false)
+			{
+				D.speak(D.getWord("alarm"));
+			}
 		},
 		bol_hideChecked: function()
 		{
@@ -5104,6 +5112,7 @@ D = {
 		{
 			var msg = new SpeechSynthesisUtterance(pString);
 			msg.lang = O.LanguageCode[O.Options.enu_Language];
+			msg.volume = O.Options.int_volAlarm / T.cPERCENT_100;
 			msg.rate = 0.8;
 			window.speechSynthesis.speak(msg);
 			return;
@@ -5112,12 +5121,9 @@ D = {
 		// If using other TTS service then use custom queue system
 		var doSpeak = function(pStringMacro)
 		{
-			var url;
-			var tts;
-		
-			tts = document.getElementById("jsTTSAudio");
-			url = "http://tts-api.com/tts.mp3?q=" + pStringMacro;
-			tts.src = url;
+			var tts = document.getElementById("jsTTSAudio");
+			tts.src = "http://tts-api.com/tts.mp3?q=" + pStringMacro;
+			tts.volume = O.Options.int_volAlarm / T.cPERCENT_100;
 			tts.load();
 			tts.play();
 		};
@@ -10439,6 +10445,7 @@ T = {
 	cSECS_MARK_3: 2700,
 	cSECS_MARK_4: 3599,
 	cBASE_10: 10,
+	cPERCENT_100: 100,
 	// Game constants
 	DAILY_START_UNIX: 1418774400, // 2014-12-17:0000 UTC or 2014-12-16:1600 PST
 	DAYS_SINCE_DAILY_START: 0,
@@ -13222,8 +13229,12 @@ I = {
 	 */
 	scrollToElement: function(pElement, pContainerOfElement, pTime)
 	{
-		// Don't scroll in mobile mode because the webpage's height is dynamic
-		if (I.ModeCurrent !== I.ModeEnum.Mobile)
+		// Mobile mode webpage height is dynamic
+		if (I.ModeCurrent === I.ModeEnum.Mobile)
+		{
+			$("body").scrollTop(pElement.offset().top);
+		}
+		else
 		{
 			if (pContainerOfElement)
 			{
@@ -13236,7 +13247,7 @@ I = {
 			else
 			{
 				// Scroll to top of element without animation
-				pElement.scrollTop(0);
+				pContainerOfElement.scrollTop(0);
 			}
 		}
 	},
