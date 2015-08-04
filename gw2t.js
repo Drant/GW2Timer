@@ -5309,6 +5309,7 @@ C = {
 		Boss: 3 // The boss event, also considered a primary event
 	},
 	isDryTopGenerated: false,
+	isDryTopIconsShown: false,
 	isTimetableGenerated: false,
 	
 	/*
@@ -5963,7 +5964,7 @@ C = {
 			});
 			
 			$("#chnTime_" + pChain.nexus).text("(:" + currentframe + ") " + time);
-			if (C.isDryTopGenerated)
+			if (C.isDryTopIconsShown)
 			{
 				$("#mapDryTopTimer").html(
 					"<var style='color:" + T.getCurrentDryTopColor() + "'>:" + currentframe + "</var> " + time
@@ -6348,14 +6349,17 @@ C = {
 		// Hide past events' markers
 		if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopGenerated)
 		{
-			for (i in pChain.events)
+			M.LayerArray.DryTopActive = null;
+			M.LayerArray.DryTopActive = new Array();
+			if (C.isDryTopIconsShown)
 			{
-				event = pChain.events[i];
-				event.eventicon._icon.style.display = "none";
-				event.eventring._icon.style.display = "none";
+				for (i in pChain.events)
+				{
+					event = pChain.events[i];
+					M.toggleLayer(event.eventicon, false);
+					M.toggleLayer(event.eventring, false);
+				}
 			}
-			M.Entity.DryTopActive = null;
-			M.Entity.DryTopActive = new Array();
 		}
 		
 		// Do event highlights, -1 means the final event's finish time
@@ -6391,12 +6395,13 @@ C = {
 				{
 					event = pChain.events[$(this).attr("data-eventindex")];
 					// Add active events to iterable array
-					M.Entity.DryTopActive.push(event.eventicon);
-					M.Entity.DryTopActive.push(event.eventring);
-					
+					M.LayerArray.DryTopActive.push(event.eventicon);
+					M.LayerArray.DryTopActive.push(event.eventring);
 					// Show active Dry Top events
-					event.eventicon._icon.style.display = "block";
-					event.eventring._icon.style.display = "block";
+					if (C.isDryTopIconsShown)
+					{
+						M.toggleLayerArray(M.LayerArray.DryTopActive, true);
+					}
 				}
 			});
 		
@@ -6705,14 +6710,7 @@ M = {
 		Guild_Trek: new Array(),
 		Guild_Challenge: new Array(),
 		Guild_Rush: new Array(),
-		Guild_Puzzle: new Array()
-	},
-	/*
-	 * Entity is a group of markers created into the map only once and are never
-	 * destroyed, because they have special appearances and clickable functionality.
-	 * They are hidden or shown using the toggleEntity function.
-	 */
-	Entity: {
+		Guild_Puzzle: new Array(),
 		DryTopIcons: new Array(),
 		DryTopRings: new Array(),
 		DryTopActive: new Array()
@@ -7856,39 +7854,6 @@ M = {
 	},
 	
 	/*
-	 * Macro function for toggling map entities display, for persistent markers.
-	 * @param object or array pEntityGroup a marker or an array of markers.
-	 * @param boolean pDisplay to show or hide.
-	 */
-	toggleEntity: function(pEntityGroup, pDisplay)
-	{
-		var i;
-		var display;
-		var group = (Array.isArray(pEntityGroup)) ? pEntityGroup : [pEntityGroup];
-		var sample = group[0];
-		
-		if (pDisplay === false)
-		{
-			display = "none";
-		}
-		// No display boolean provided, so assume want toggle
-		else if (pDisplay === undefined)
-		{
-			display = (sample._icon.style.display === "none") ? "block" : "none";
-		}
-		else
-		{
-			display = "block";
-		}
-		
-		// Now show or hide as requested
-		for (i in group)
-		{
-			group[i]._icon.style.display = display;
-		}
-	},
-	
-	/*
 	 * Initializes or toggle a submap, which is a Leaflet ImageOverlay over the map.
 	 * Look at general.js for submap declarations.
 	 * @param string pName of the submap.
@@ -8921,12 +8886,13 @@ P = {
 				{
 					className: "mapNick",
 					html: "<div class='mapNickIn' id='mapDryTopInfo'><span id='mapDryTopTimer'></span><br />"
-						+ "<input id='mapDryTopClip0' type='text' title='Map chat text for <dfn>current</dfn> events.<br />(Ctrl+C this then Ctrl+V in chat).' > "
-						+ "<input id='mapDryTopClip1' type='text' title='Map chat text for <dfn>upcoming</dfn> events.<br />(Ctrl+C this then Ctrl+V in chat).'></div>",
+						+ "<input id='mapDryTopClip0' type='text' /> "
+						+ "<input id='mapDryTopClip1' type='text' /></div>",
 					iconSize: [512, 64],
 					iconAnchor: [256, 32]
 				})
-			}).addTo(M.Map);
+			});
+			M.toggleLayer(M.DryTopTimer, true);
 			I.qTip.init($("#mapDryTopClip0, #mapDryTopClip1").click(function()
 			{
 				$(this).select();
@@ -8945,34 +8911,39 @@ P = {
 					
 					event.eventring = L.marker(M.convertGCtoLC(event.path[0]),
 					{
+						zIndexOffset: M.cZIndexBury,
 						clickable: false,
+						image: "img/ring/" + event.ring + I.cPNG,
 						icon: L.icon(
 						{
 							iconUrl: "img/ring/" + event.ring + I.cPNG,
 							iconSize: [32, 32],
 							iconAnchor: [16, 16]
 						})
-					}).addTo(M.Map);
+					});
 					event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
 					{
 						title: "<span class='mapEvent'>" + D.getObjectName(event) + "</span>",
+						image: "img/event/" + event.icon + I.cPNG,
 						icon: L.icon(
 						{
 							iconUrl: "img/event/" + event.icon + I.cPNG,
 							iconSize: [16, 16],
 							iconAnchor: [8, 8]
 						})
-					}).addTo(M.Map);
+					});
 					M.bindMappingZoomBehavior(event.eventicon, "click");
-					// Initially hide all event icons, the highlight event functions will show them
-					if ( ! $("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
+					// Show only current event icons, the highlight event function will continue this
+					if ($("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
 					{
-						event.eventring._icon.style.display = "none";
-						event.eventicon._icon.style.display = "none";
+						M.LayerArray.DryTopActive.push(event.eventicon);
+						M.LayerArray.DryTopActive.push(event.eventring);
+						M.toggleLayer(event.eventring, true);
+						M.toggleLayer(event.eventicon, true);
 					}
 					
-					M.Entity.DryTopRings.push(event.eventring);
-					M.Entity.DryTopIcons.push(event.eventicon);
+					M.LayerArray.DryTopRings.push(event.eventring);
+					M.LayerArray.DryTopIcons.push(event.eventicon);
 				}
 			}
 			I.qTip.init(".leaflet-marker-icon");
@@ -8984,13 +8955,37 @@ P = {
 		});
 	},
 	
+	/*
+	 * Shows or hides Dry Top associated map markers.
+	 * @param boolean pBoolean.
+	 */
+	toggleDryTopIcons: function(pBoolean)
+	{
+		if (C.isDryTopGenerated)
+		{
+			C.isDryTopIconsShown = pBoolean;
+			M.toggleLayer(M.Layer.DryTopNicks, pBoolean);
+			M.toggleLayer(M.DryTopTimer, pBoolean);
+			if (pBoolean)
+			{
+				M.toggleLayerArray(M.LayerArray.DryTopActive, pBoolean);
+				P.adjustZoomDryTop();
+				K.updateDryTopClipboard();
+			}
+			else
+			{
+				M.toggleLayerArray(M.LayerArray.DryTopIcons, pBoolean);
+				M.toggleLayerArray(M.LayerArray.DryTopRings, pBoolean);
+			}
+		}
+	},
 	
 	/*
 	 * Resizes Dry Top markers so they scale with the current zoom level.
 	 */
 	adjustZoomDryTop: function()
 	{
-		if (C.isDryTopGenerated)
+		if (C.isDryTopIconsShown)
 		{
 			var i;
 			var currentzoom = M.Map.getZoom();
@@ -9013,17 +9008,14 @@ P = {
 			// Event icons are same size as waypoints, but their rings are bigger
 			ringsize = M.scaleDimension(M.cRING_SIZE_MAX);
 
-			for (i in M.Entity.DryTopIcons)
+			for (i in M.LayerArray.DryTopIcons)
 			{
 				// Icons
-				icon = M.Entity.DryTopIcons[i];
-				M.changeMarkerIcon(icon, icon._icon.src, iconsize);
+				icon = M.LayerArray.DryTopIcons[i];
+				M.changeMarkerIcon(icon, icon.options.image, iconsize);
 				// Rings
-				icon = M.Entity.DryTopRings[i];
-				M.changeMarkerIcon(icon, icon._icon.src, ringsize);
-				// Don't make the rings overlap clickable waypoints
-				M.Entity.DryTopIcons[i]._icon.style.zIndex = 1000;
-				M.Entity.DryTopRings[i]._icon.style.zIndex = 1;
+				icon = M.LayerArray.DryTopRings[i];
+				M.changeMarkerIcon(icon, icon.options.image, ringsize);
 			}
 			
 			M.Layer.DryTopNicks.eachLayer(function(layer) {
@@ -10376,9 +10368,6 @@ W = {
 		Pin: new L.layerGroup()
 	},
 	LayerArray: {
-		
-	},
-	Entity: {
 		
 	},
 	Pin: {
@@ -12642,7 +12631,7 @@ K = {
 	 */
 	updateDryTopClipboard: function()
 	{
-		if (C.isDryTopGenerated)
+		if (C.isDryTopIconsShown)
 		{
 			var s0 = T.getCurrentDryTopEvents();
 			var s1 = T.getCurrentDryTopEvents(1);
@@ -13077,6 +13066,7 @@ I = {
 						M.goToZone("dry", M.ZoomEnum.Bird);
 						I.PageCurrent = I.SpecialPageEnum.DryTop;
 						U.updateTitle(I.SpecialPageEnum.DryTop);
+						P.toggleDryTopIcons(true);
 					}
 					else
 					{
@@ -13093,6 +13083,7 @@ I = {
 					if ($(this).attr("id") === "sectionChains_Drytop")
 					{
 						I.PageCurrent = I.PageEnum.Chains;
+						P.toggleDryTopIcons(false);
 					}
 					// Nullify current section variable
 					I[I.sectionPrefix + I.PageEnum.Chains] = "";

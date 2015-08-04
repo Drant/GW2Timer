@@ -481,8 +481,8 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Caravan", "Keep", "Tower"]
 },
 "4": {
-	pve: ["Forager Ascalon", "Vista Ascalon", "Harathi", "Fractal 1-10"],
-	pvp: ["Capture", "Reward", "Engi Thief", "Ranger Engi"],
+	pve: ["Miner Shiverpeaks", "Vista Ascalon", "Wayfarer", "Shatterer"],
+	pvp: ["Reward", "Defender", "Engi Thief", "Ranger Engi"],
 	wvw: ["Spender", "Land", "Tower", "Defender"]
 },
 "5": {
