@@ -76,11 +76,20 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	padding-bottom: 4px;
 }
 
-#itemAlarmPopup {
+#chnOptionsPopup {
 	font-size: 18px;
 }
-#itemAlarmPopup fieldset {
+#chnOptions:hover #chnOptionsPopup {
+	width: auto;
+}
+#chnOptionsPopup fieldset {
 	min-width: 180px;
+}
+#chnOptionsRight {
+	width: auto;
+	margin: 0;
+	margin-bottom: 8px;
+	border: none;
 }
 #optAlarmSpeaker {
 	width: 32px; height: 32px;

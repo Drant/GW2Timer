@@ -392,19 +392,27 @@
 		==================================================================== -->
 		<section id="paneContent" class="paneApp">
 			<article id="plateChains"><!-- This plate will be populated by JS -->
-				<div id="optAlarm">
+				<div id="chnOptions">
 					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/speaker.png" alt="Alarm"/>
 					<img id="optAlarmMore" src="img/ui/toggle.png" alt="More" />
-					<div id="itemAlarmPopup" class="cntComposition cntPopup">
-						<fieldset name="int_setAlarm"><legend id="optAlarmLegend">Alarm Mode</legend>
-							<label title="Turn off the alarm. Go to Options page, Alarm section for more info."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /></label>
-							<label title="Alert you when an unchecked chain starts. You can checkmark a chain by clicking its boss icon (left side of chain name)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /></label>
-							<label title="Alert you X minutes before a subscribed chain starts. You can subscribe to a chain by clicking its time (right side of chain name)."><input id="optAlarmSubscription" type="radio" name="int_setAlarm" /></label>
-						</fieldset>
-						<input id="opt_int_volAlarm" type="range" min="0" max="100" step="1" title="Set volume." />
-						<button id="optMute" class="trdButton" title="Stop any current voices."><img data-src="img/ui/mute.png" alt="Mute" /></button>
-						<button id="optRestoreAllChains" class="btnUncheck" title="Unhide all world bosses and uncheck them."><img data-src="img/ui/uncheck.png" alt="Refresh" /></button>
-						<label title="13:00:00 or 1:00:00 PM"><input id="opt_bol_use24Hour" type="checkbox" /> 24:00 / 12AM</label>
+					<div id="chnOptionsPopup" class="cntComposition cntPopup">
+						<div id="chnOptionsLeft">
+							<b>Chain Options</b>
+							<label title="13:00:00 or 1:00:00 PM"><input id="opt_bol_use24Hour" type="checkbox" /> 24:00 / 12AM</label>
+							<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked bosses</label>
+							<label title="Active/orange scheduled bosses."><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand events</label>
+							<label title="Inactive/gray chain bars."><input id="opt_bol_collapseChains" type="checkbox" /> Auto-collapse events</label>
+							<button id="optRestoreAllChains" class="btnUncheck" title="Unhide all world bosses and uncheck them."><img data-src="img/ui/uncheck.png" alt="Refresh" /></button>
+						</div>
+						<div id="chnOptionsRight">
+							<fieldset name="int_setAlarm"><legend id="optAlarmLegend">Alarm Mode</legend>
+								<label title="Turn off the alarm. Go to Options page, Alarm section for more info."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /></label>
+								<label title="Alert you when an unchecked chain starts. You can checkmark a chain by clicking its boss icon (left side of chain name)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /></label>
+								<label title="Alert you X minutes before a subscribed chain starts. You can subscribe to a chain by clicking its time (right side of chain name)."><input id="optAlarmSubscription" type="radio" name="int_setAlarm" /></label>
+							</fieldset>
+							<input id="opt_int_volAlarm" type="range" min="0" max="100" step="1" title="Set volume." />
+							<button id="optMute" class="trdButton" title="Stop any current voices."><img data-src="img/ui/mute.png" alt="Mute" /></button>
+						</div>
 					</div>
 				</div>
 				<header id="headerChains_Scheduled">
@@ -450,9 +458,6 @@
 					<header class="cntHeader">Options</header>
 					<br />
 					<h2>Timer</h2>
-					<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked off world bosses</label>
-					<label title="Active/orange scheduled bosses."><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand active World Boss chain bars</label>
-					<label title="Inactive/gray chain bars."><input id="opt_bol_collapseChains" type="checkbox" /> Auto-collapse inactive chain bars</label>
 					<div class="optFieldsets">
 						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain? Auto will use your time of day to choose. Changes will take effect when the next chain starts. &lt;br /&gt;Min: for full population map&lt;br /&gt;Min-Avg: Min + (Avg - Min)/2&lt;br /&gt;Avg: for regular zerg size"><legend>Predictor</legend>
 							<label><input id="opt_int_setPredictor" type="radio" name="int_setPredictor" /> Auto</label>

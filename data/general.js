@@ -641,7 +641,7 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_COUNTDOWN_DATA = {
 	
-Header: "",
+Header: "<b>NEW FEATURE</b>: Tile Mode <a href='http://gw2timer.com/?mode=Tile'>http://gw2timer.com/tile</a><br />",
 Countdowns: [
 {
 	name_en: "Beta Weekend Event",

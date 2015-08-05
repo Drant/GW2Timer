@@ -826,7 +826,6 @@ O = {
 		 * Will have to place it elsewhere if it requires data to be loaded first.
 		 */
 		O.Enact.int_setAlarm();
-		O.Enact.bol_hideChecked();
 		O.Enact.bol_detectDST();
 		O.Enact.bol_useSiteTag();
 		O.Enact.bol_alignPanelRight(true);
@@ -849,11 +848,17 @@ O = {
 		$("#optRestoreAllChains").click(function()
 		{
 			var chain;
+			var display = (I.ModeCurrent === I.ModeEnum.Tile) ? "inline-block" : "block";
 			for (var i in C.Chains)
 			{
 				chain = C.Chains[i];
 				$("#chnCheck_" + chain.nexus).removeClass("chnChecked");
-				$("#chnBar_" + chain.nexus).show().css({opacity: 1});
+				$("#chnBar_" + chain.nexus).show().css({opacity: 1}).css({display: display});
+				if (C.isTimetableGenerated)
+				{
+					$(".chnSlot_" + chain.nexus).show().css({opacity: 1}).css({display: display})
+						.find(".chnCheck").removeClass("chnChecked");
+				}
 			}
 			X.clearChecklist(X.Checklists.Chain);
 			// Also unfade the clock icons, which are the current first four bosses
@@ -866,7 +871,6 @@ O = {
 					K.checkoffChainIcon(chainhardcore.nexus);
 				}
 			}
-			$("#menuChains").trigger("click");
 		});
 		
 		/*
@@ -945,18 +949,7 @@ O = {
 		{
 			$(".chnBar").each(function()
 			{
-				if (X.getChecklistItem(X.Checklists.Chain, U.getSubintegerFromHTMLID($(this)))
-					=== X.ChecklistEnum.Checked)
-				{
-					if (O.Options.bol_hideChecked)
-					{
-						$(this).hide();
-					}
-					else
-					{
-						$(this).show();
-					}
-				}
+				X.hideCheckedChain(U.getSubintegerFromHTMLID($(this)));
 			});
 		},
 		bol_expandWB: function()
@@ -2536,26 +2529,7 @@ X = {
 		var time = $("#chnTime_" + pChain.nexus);
 
 		// Set the checkbox visual state as stored
-		switch (X.getChecklistItem(X.Checklists.Chain, pChain.nexus))
-		{
-			case X.ChecklistEnum.Unchecked:
-			{
-				// Chain is not checked off, so don't do anything
-			} break;
-			case X.ChecklistEnum.Checked:
-			{
-				bar.css({opacity: K.iconOpacityChecked});
-				check.addClass("chnChecked");
-				if (O.Options.bol_hideChecked)
-				{
-					bar.hide();
-				}
-			} break;
-			case X.ChecklistEnum.Disabled:
-			{
-				bar.hide();
-			} break;
-		}
+		X.reapplyStateChain(pChain.nexus, bar, check);
 		
 		if (C.isChainRegular(pChain))
 		{
@@ -2598,44 +2572,60 @@ X = {
 			// The ID was named so by the chain initializer, get the chain nexus
 			var nexus = U.getSubintegerFromHTMLID($(this));
 			var thisbar = $("#chnBar_" + nexus);
+			var theseslots = $(".chnSlot_" + nexus);
+			var display = (I.ModeCurrent === I.ModeEnum.Tile) ? "inline-block" : "block";
 			// State of the div is stored in the Checklist object rather in the element itself
 			switch (X.getChecklistItem(X.Checklists.Chain, nexus))
 			{
 				case X.ChecklistEnum.Unchecked:
 				{
 					thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
-					$("#chnDetails_" + nexus).hide("fast");
+					if (I.ModeCurrent !== I.ModeEnum.Tile)
+					{
+						$("#chnDetails_" + nexus).hide("fast");
+					}
 					$(this).addClass("chnChecked");
 					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Checked);
+					if (C.isTimetableGenerated)
+					{
+						theseslots.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed)
+							.find(".chnCheck").addClass("chnChecked");
+					}
 				} break;
 				case X.ChecklistEnum.Checked:
 				{
-					thisbar.css({opacity: 1}).show("fast");
+					thisbar.css({opacity: 1}).show("fast").css({display: display});
 					thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
-					$("#chnDetails_" + nexus).show("fast");
+					if (I.ModeCurrent !== I.ModeEnum.Tile)
+					{
+						$("#chnDetails_" + nexus).show("fast").css({display: display});
+					}
 					$(this).removeClass("chnChecked");
 					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
+					if (C.isTimetableGenerated)
+					{
+						theseslots.show("fast").css({display: display})
+							.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed)
+							.find(".chnCheck").removeClass("chnChecked");
+					}
 				} break;
 				case X.ChecklistEnum.Disabled:
 				{
-					thisbar.css({opacity: 1}).show("fast");
-					$("#chnDetails_" + nexus).show("fast");
+					thisbar.css({opacity: 1}).show("fast").css({display: display});
+					if (I.ModeCurrent !== I.ModeEnum.Tile)
+					{
+						$("#chnDetails_" + nexus).show("fast").css({display: display});
+					}
 					$(this).removeClass("chnChecked");
 					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
+					if (C.isTimetableGenerated)
+					{
+						theseslots.hide().css({opacity: 1})
+							.find(".chnCheck").removeClass("chnChecked");
+					}
 				} break;
 			}
-			// Also autohide the chain bar if opted
-			if (X.getChecklistItem(X.Checklists.Chain, nexus) === X.ChecklistEnum.Checked)
-			{
-				if (O.Options.bol_hideChecked)
-				{
-					thisbar.hide("fast");
-				}
-				else
-				{
-					thisbar.show("fast");
-				}
-			}
+			X.hideCheckedChain(nexus);
 			// Update the icons on the clock too
 			K.checkoffChainIcon(nexus);
 		});
@@ -2644,14 +2634,63 @@ X = {
 		$("#chnDelete_" + pChain.nexus).click(function()
 		{
 			var nexus = U.getSubintegerFromHTMLID($(this));
-			var thisbar = $("#chnBar_" + nexus);
-
-			thisbar.hide("slow");
+			$("#chnBar_" + nexus).hide("slow");
+			if (C.isTimetableGenerated)
+			{
+				$(".chnSlot_" + nexus).hide("slow");
+			}
 			X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Disabled);
 
 			// Also update the clock icon
 			K.checkoffChainIcon(nexus);
 		});
+	},
+	reapplyStateChain: function(pIndex, pBar, pCheck)
+	{
+		switch (X.getChecklistItem(X.Checklists.Chain, pIndex))
+		{
+			case X.ChecklistEnum.Unchecked:
+			{
+				// Bar is not checked off, so don't do anything
+			} break;
+			case X.ChecklistEnum.Checked:
+			{
+				pBar.css({opacity: K.iconOpacityChecked});
+				pCheck.addClass("chnChecked");
+				if (O.Options.bol_hideChecked)
+				{
+					pBar.hide();
+				}
+			} break;
+			case X.ChecklistEnum.Disabled:
+			{
+				pBar.hide();
+			} break;
+		}
+	},
+	hideCheckedChain: function(pIndex)
+	{
+		var display = (I.ModeCurrent === I.ModeEnum.Tile) ? "inline-block" : "block";
+		// Hide the chain bar if opted
+		if (X.getChecklistItem(X.Checklists.Chain, pIndex) === X.ChecklistEnum.Checked)
+		{
+			if (O.Options.bol_hideChecked)
+			{
+				$("#chnBar_" + pIndex).hide("fast");
+				if (C.isTimetableGenerated)
+				{
+					$(".chnSlot_" + pIndex).hide("fast");
+				}
+			}
+			else
+			{
+				$("#chnBar_" + pIndex).show("fast").css({display: display});
+				if (C.isTimetableGenerated)
+				{
+					$(".chnSlot_" + pIndex).show("fast").css({display: display});
+				}
+			}
+		}
 	},
 	
 	/*
@@ -5292,7 +5331,8 @@ C = {
 	NextChains1: [],
 	cEventTitleCharLimit: 44,
 	cEventNameWidth: 320,
-	ScheduledChains: [],
+	RegularChains: [], // Scheduled world bosses
+	ScheduledChains: [], // Any scheduled chain
 	DryTopChains: [],
 	LegacyChains: [],
 	TempleChains: [],
@@ -5560,7 +5600,7 @@ C = {
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsExtra'>"
 					+ chainextra
-					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in Options, Defaults).'>[x]</kbd>"
+					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in ▼ icon above).'>[x]</kbd>"
 				+ "</div>"
 		+ "</div>");
 
@@ -5802,18 +5842,20 @@ C = {
 				case C.ChainSeriesEnum.Standard:
 				{
 					chain.htmllist = "#sectionChains_Scheduled";
+					C.RegularChains.push(chain);
 					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.Hardcore:
 				{
 					chain.htmllist = "#sectionChains_Scheduled";
+					C.RegularChains.push(chain);
 					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.DryTop:
 				{
 					chain.htmllist = "#sectionChains_Drytop";
-					C.ScheduledChains.push(chain);
 					C.DryTopChains.push(chain);
+					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.Legacy:
 				{
@@ -6034,9 +6076,10 @@ C = {
 				});
 
 				$("#sectionChains_Timetable").append(
-				"<div class='chnSlot chnSlot_" + i + " chnSlotNexus_" + ithchain.nexus + "' data-nexus='" + ithchain.nexus + "' data-timeframe='" + i + "'>"
+				"<div class='chnSlot chnSlotTime_" + i + " chnSlot_" + ithchain.nexus + "' data-" + C.cIndexSynonym + "='" + ithchain.nexus + "' data-timeframe='" + i + "'>"
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
+						+ "<div class='chnCheck'></div>"
 						+ "<h1>" + D.getChainTitleAny(ithchain.nexus) + "</h1>"
 						+ "<time>" + timestring + "</time>"
 						+ "<aside><img class='chnDaily chnDaily_" + ithchain.nexus + "' src='img/ui/daily.png' /></aside>"
@@ -6044,13 +6087,26 @@ C = {
 				+ "</div>");
 			}
 		}
+		// Set slot visual state as stored in checklist
+		for (var i in C.RegularChains)
+		{
+			ithchain = C.RegularChains[i];
+			var slots = $(".chnSlot_" + ithchain.nexus);
+			var checks = slots.find(".chnCheck");
+			X.reapplyStateChain(ithchain.nexus, slots, checks);
+		}
 		// Hover on chain slot highlight same bosses
 		$(".chnTitle h1").hover(
-			function() { $(".chnSlotNexus_" + $(this).parent().parent().data("nexus")).addClass("chnBarHover"); },
+			function() { $(".chnSlot_" + $(this).parent().parent().data(C.cIndexSynonym)).addClass("chnBarHover"); },
 			function() { $(".chnSlot").removeClass("chnBarHover"); }
 		);
+		// Mimic check off function
+		$(".chnSlot .chnCheck").click(function()
+		{
+			$("#chnCheck_" + C.Chains[$(this).parent().parent().data(C.cIndexSynonym)].nexus).trigger("click");
+		});
 		// Special color of the reset time slot
-		$(".chnSlot_0").addClass("chnBarReset");
+		$(".chnSlotTime_0").addClass("chnBarReset");
 		C.showChainDailyIcon();
 	},
 	
@@ -6068,17 +6124,17 @@ C = {
 		var currentframe = T.getTimeframeKey();
 		var nextframe = T.getTimeframeKey(1);
 		// Also highlight timetable chain bar
-		$(".chnSlot_" + previousframe)
+		$(".chnSlotTime_" + previousframe)
 			.removeClass("chnBarCurrent");
-		$(".chnSlot_" + currentframe)
+		$(".chnSlotTime_" + currentframe)
 			.addClass("chnBarCurrent");
 		// Current chain title
-		$(".chnSlot_" + previousframe + " .chnTitle h1")
+		$(".chnSlotTime_" + previousframe + " .chnTitle h1")
 			.removeClass("chnTitleCurrent");
-		$(".chnSlot_" + currentframe + " .chnTitle h1")
+		$(".chnSlotTime_" + currentframe + " .chnTitle h1")
 			.removeClass("chnTitleFuture").addClass("chnTitleCurrent");
 		// Future chain title
-		$(".chnSlot_" + nextframe + " .chnTitle h1")
+		$(".chnSlotTime_" + nextframe + " .chnTitle h1")
 			.addClass("chnTitleFuture");
 		
 		// Move the past time slots to the bottom, so the current slot(s) is always the top
@@ -12979,7 +13035,7 @@ I = {
 		{
 			D.stopSpeech();
 		});
-		$("#optAlarm").one("mouseover", function()
+		$("#chnOptions").one("mouseover", function()
 		{
 			I.loadImg($(this));
 		});
@@ -14099,11 +14155,13 @@ I = {
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
 					.append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css' />")
 					.append("<link rel='canonical' href='http://gw2timer.com' />");
+				$("#chnOptionsRight").prependTo("#chnOptionsPopup");
 			} break;
 			case I.ModeEnum.Tile:
 			{
 				I.isMapEnabled = false;
 				I.showHomeLink();
+				K.iconOpacityChecked = 0.2;
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
 					.append("<link rel='stylesheet' type='text/css' href='gw2t-tile.css' />");
 				$("#itemLanguage").prependTo("#plateChains");

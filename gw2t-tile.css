@@ -86,10 +86,13 @@ body, #paneContent article {
 	padding-bottom: 4px;
 }
 
-#itemAlarmPopup {
+#chnOptionsPopup {
 	font-size: 18px;
 }
-#itemAlarmPopup fieldset {
+#chnOptions:hover #chnOptionsPopup {
+	width: 500px;
+}
+#chnOptionsPopup fieldset {
 	min-width: 180px;
 }
 #optAlarmSpeaker {
@@ -100,10 +103,10 @@ body, #paneContent article {
 }
 
 .chnBar, .chnSlot {
+	display: inline-block;
 	width: 30%;
 	min-width: 180px;
 	max-width: 360px;
-	display: inline-block;
 	margin-bottom: 8px;
 	margin-right: 8px;
 	border: 2px solid black;
@@ -144,6 +147,10 @@ body, #paneContent article {
 .chnTimeFutureFar, .chnSlot time {
 	color: #ffcc77;
 }
+.chnTimeSubscribed {
+	color: #ddff77;
+	font-weight: bold;
+}
 
 .chnDetailsExtra {
 	text-align: left;
@@ -151,4 +158,13 @@ body, #paneContent article {
 
 #plateChains section {
 	text-align: center;
+}
+
+input[type=checkbox] {
+	transform: scale(1.25);
+}
+
+input[type="number"] {
+	width: 64px;
+	font-size: 18px;
 }

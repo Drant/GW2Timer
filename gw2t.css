@@ -1343,13 +1343,13 @@ textarea.jsCopyCode {
 
 /* @@Chains plate
 ----------------------------------------------------------------------------- */
-#optAlarm {
+#chnOptions {
 	position: absolute;
 	right: 0;
 	padding: 7px 4px 6px 0px;
 	opacity: 0.5;
 }
-#optAlarm:hover {
+#chnOptions:hover {
 	opacity: 1;
 }
 #optAlarmSpeaker, #optAlarmMore {
@@ -1358,24 +1358,38 @@ textarea.jsCopyCode {
 #optAlarmIcon {
 	width: 16px; height: 16px;
 }
-#itemAlarmPopup {
+#chnOptionsPopup {
 	display: none;
 }
-#optAlarm:hover #itemAlarmPopup {
+#chnOptions:hover #chnOptionsPopup {
 	display: block;
-	right: 0;
 	position: absolute;
+	right: 0;
+	text-align: right;
+	width: 320px;
 	margin: 0;
 	padding: 8px;
 	z-index: 2; /* So the event names don't overlap the popup */
 }
-#itemAlarmPopup fieldset {
+#chnOptionsLeft, #chnOptionsRight {
+	display: inline-block;
+	vertical-align: top;
+	text-align: left;
+}
+#chnOptionsRight {
+	width: 50%;
+	padding-left: 8px;
+	margin-left: 4px;
+	border-left: 1px solid gray;
+}
+#chnOptionsPopup fieldset {
 	min-width: 120px;
 	margin: 0;
 	border: none;
 }
 #opt_int_volAlarm, #optMute, #optRestoreAllChains {
 	width: 100%;
+	margin-bottom: 4px;
 }
 
 #plateChains header {
