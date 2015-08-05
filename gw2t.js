@@ -4870,10 +4870,10 @@ D = {
 		fr: "Chamane de Svanir",
 		zh: "斯瓦尼亞薩滿"
 	},{
-		en: "Megadestroyer",
-		de: "Megazerstörer",
-		es: "Megadestructor",
-		fr: "Mégadestructeur",
+		en: "Mega Destroyer",
+		de: "Mega Zerstörer",
+		es: "Mega Destructor",
+		fr: "Méga Destructeur",
 		zh: "超能毀滅者"
 	},{
 		en: "Shadow Behemoth",
@@ -6045,7 +6045,7 @@ C = {
 			}
 		}
 		// Hover on chain slot highlight same bosses
-		$(".chnTitle img").hover(
+		$(".chnTitle h1").hover(
 			function() { $(".chnSlotNexus_" + $(this).parent().parent().data("nexus")).addClass("chnBarHover"); },
 			function() { $(".chnSlot").removeClass("chnBarHover"); }
 		);
@@ -11060,6 +11060,21 @@ T = {
 	},
 	
 	/*
+	 * Gets a stepped output of a linear equation.
+	 * @param int pX
+	 * @param int pMin
+	 * @param int pMax
+	 * @param int pDivisor
+	 * @param int pMultiplier
+	 * @returns int y, or pMin or pMax if out of these range.
+	 */
+	stepFunction: function(pX, pMin, pMax, pDivisor, pMultiplier)
+	{
+		var result = (~~(pX / pDivisor) * pMultiplier) + pMin;
+		return (result > pMax) ? pMax : result;
+	},
+	
+	/*
 	 * Converts a time string to seconds.
 	 * @param string pTime in X:XX:XX or X:XX or 0 format.
 	 * @returns int seconds totaled.
@@ -13154,18 +13169,22 @@ I = {
 		{
 			C.LegacyChains.forEach(C.initializeChain);
 			C.LegacyChains.forEach(P.drawChainPaths);
+			I.readjustTile();
 		});
 		$("#headerChains_Temple").one("click", function()
 		{
 			C.TempleChains.forEach(C.initializeChain);
 			C.TempleChains.forEach(P.drawChainPaths);
+			I.readjustTile();
 		});
 
 		// Generate a full timetable of the chains when clicked on that header
 		$("#headerChains_Timetable").one("click", function(){
 			C.isTimetableGenerated = true;
 			C.initializeTimetableHTML();
+			I.readjustTile();
 		});
+		I.readjustTile();
 	},
 	
 	/*
@@ -14045,8 +14064,8 @@ I = {
 					border: "none",
 					"box-shadow": "none"
 				});
-				I.readjustSimpleClock();
-				$(window).resize(function() { I.readjustSimpleClock(); });
+				I.readjustSimple();
+				$(window).resize(function() { I.readjustSimple(); });
 				$("#paneClockWall, #paneClockBackground").css({opacity: 0});
 				
 				// Readjust clock elements
@@ -14089,6 +14108,7 @@ I = {
 					.append("<link rel='stylesheet' type='text/css' href='gw2t-tile.css' />");
 				$("#itemLanguage").prependTo("#plateChains");
 				I.initializeScrollbar("#windowMain");
+				$(window).resize(function() { I.readjustTile(); });
 			} break;
 		}
 		
@@ -14125,7 +14145,7 @@ I = {
 	/*
 	 * Centers the clock in the browser window.
 	 */
-	readjustSimpleClock: function()
+	readjustSimple: function()
 	{
 		var height = $(window).height() / 2;
 		var width = $(window).width() / 2;
@@ -14138,6 +14158,15 @@ I = {
 			"margin-top": height - half,
 			"margin-left": width - half
 		});
+	},
+	readjustTile: function()
+	{
+		if (I.ModeCurrent !== I.ModeEnum.Tile)
+		{
+			return;
+		}
+		var result = T.stepFunction($(window).width(), 14, 22, 400, 3);
+		$(".chnTitle h1").css({fontSize: result + "px"});
 	},
 	
 	/*
