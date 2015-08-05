@@ -831,7 +831,7 @@ O = {
 		O.Enact.bol_useSiteTag();
 		O.Enact.bol_alignPanelRight(true);
 		O.Enact.bol_showPanel();
-		if (I.ModeCurrent !== I.ModeEnum.Simple)
+		if (I.ModeCurrent !== I.ModeEnum.Simple & I.ModeCurrent !== I.ModeEnum.Tile)
 		{
 			O.Enact.int_setClock();
 			O.Enact.int_setDimming();
@@ -1071,7 +1071,7 @@ O = {
 		},
 		bol_showMap: function()
 		{
-			if (I.ModeCurrent !== I.ModeEnum.Mobile)
+			if (I.isMapEnabled === false)
 			{
 				$("#panelMap").toggle(O.Options.bol_showMap);
 				M.refreshMap();
@@ -1328,6 +1328,10 @@ U = {
 			else if (page === "s" || page === "simple")
 			{
 				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Simple;
+			}
+			else if (page === "t" || page === "tile")
+			{
+				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Tile;
 			}
 			else
 			{
@@ -1668,8 +1672,7 @@ U = {
 			
 			var title = I.PageCurrent;
 			
-			if (I.ModeCurrent === I.ModeEnum.Overlay ||
-				I.ModeCurrent === I.ModeEnum.Mobile)
+			if (I.ModeCurrent !== I.ModeEnum.Website)
 			{
 				modestring = "&mode=" + I.ModeCurrent;
 			}
@@ -2023,8 +2026,8 @@ X = {
 	},
 	ChecklistJob:
 	{
-		AllUnchecked: 0,
-		AllChecked: 1,
+		UncheckAll: 0,
+		CheckAll: 1,
 		UncheckTheChecked: 2
 	},
 	
@@ -2244,7 +2247,7 @@ X = {
 		
 		switch (pJob)
 		{
-			case X.ChecklistJob.AllChecked:
+			case X.ChecklistJob.CheckAll:
 			{
 				for (i = 0; i < pChecklist.length; i++)
 				{
@@ -3807,8 +3810,8 @@ E = {
 		X.initializeTextlist(X.Textlists.NotifySellLow, $("#trdList .trdNotifySellLow"), null, 16);
 		X.initializeTextlist(X.Textlists.NotifySellHigh, $("#trdList .trdNotifySellHigh"), null, 16);
 		
-		X.initializeCheckboxlist(X.Checklists.TradingOverwrite, $("#trdList .trdOverwrite"), X.ChecklistJob.AllChecked);
-		X.initializeCheckboxlist(X.Checklists.TradingNotify, $("#trdList .trdNotify"), X.ChecklistJob.AllChecked);
+		X.initializeCheckboxlist(X.Checklists.TradingOverwrite, $("#trdList .trdOverwrite"), X.ChecklistJob.CheckAll);
+		X.initializeCheckboxlist(X.Checklists.TradingNotify, $("#trdList .trdNotify"), X.ChecklistJob.CheckAll);
 		
 		// Trigger input textboxes to make the output textboxes update
 		$("#trdList .trdSell").trigger("input");
@@ -4517,6 +4520,8 @@ D = {
 			cs: "prostý", it: "semplice", pl: "prosty", pt: "simples", ru: "простой", zh: "簡單"},
 		s_mobile: {de: "mobil", es: "móvil", fr: "mobile",
 			cs: "mobilní", it: "mobile", pl: "mobilna", pt: "móvel", ru: "мобильный", zh: "行動"},
+		s_tile: {de: "kachel", es: "mosaico", fr: "mosaïque",
+			cs: "dlaždice", it: "affianca", pl: "sąsiadująco", pt: "ladrilho", ru: "замостить", zh: "磚"},
 		s_chests: {de: "truhen", es: "cofres", fr: "coffres",
 			cs: "truhly", it: "scrigni", pl: "skrzynie", pt: "baús", ru: "сундуки", zh: "寶箱"},
 		
@@ -5735,12 +5740,15 @@ C = {
 		 * Show individual events of a chain bar if clicked on, or
 		 * automatically shown by the ticker function.
 		 */
-		$("#chnTitle_" + pChain.nexus).click(function()
+		if (I.ModeCurrent !== I.ModeEnum.Tile)
 		{
-			$(this).parent().next().slideToggle(100);
-		});
-		$("#chnDetails_" + pChain.nexus).hide();
-		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+			$("#chnTitle_" + pChain.nexus).click(function()
+			{
+				$(this).parent().next().slideToggle(100);
+			});
+			$("#chnDetails_" + pChain.nexus).hide();
+		}
+		if (O.Options.enu_Language === O.OptionEnum.Language.Default && I.isMapEnabled)
 		{
 			$("#chnBar_" + pChain.nexus).hover(
 				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain.nexus)); },
@@ -6026,7 +6034,7 @@ C = {
 				});
 
 				$("#sectionChains_Timetable").append(
-				"<div class='chnSlot chnSlot_" + i + "' data-timeframe='" + i + "'>"
+				"<div class='chnSlot chnSlot_" + i + " chnSlotNexus_" + ithchain.nexus + "' data-nexus='" + ithchain.nexus + "' data-timeframe='" + i + "'>"
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
 						+ "<h1>" + D.getChainTitleAny(ithchain.nexus) + "</h1>"
@@ -6036,6 +6044,11 @@ C = {
 				+ "</div>");
 			}
 		}
+		// Hover on chain slot highlight same bosses
+		$(".chnTitle img").hover(
+			function() { $(".chnSlotNexus_" + $(this).parent().parent().data("nexus")).addClass("chnBarHover"); },
+			function() { $(".chnSlot").removeClass("chnBarHover"); }
+		);
 		// Special color of the reset time slot
 		$(".chnSlot_0").addClass("chnBarReset");
 		C.showChainDailyIcon();
@@ -6183,7 +6196,7 @@ C = {
 			// Show the events (details)
 			if (C.isChainUnchecked(ithchain))
 			{
-				if (I.ModeCurrent !== I.ModeEnum.Mobile
+				if (I.ModeCurrent !== I.ModeEnum.Tile
 					&& ((ithchain.series === C.ChainSeriesEnum.DryTop)
 					|| (ithchain.series !== C.ChainSeriesEnum.DryTop && O.Options.bol_expandWB)))
 				{
@@ -6205,7 +6218,7 @@ C = {
 			$("#chnBar_" + ithchain.nexus)
 				.removeClass("chnBarCurrent").addClass("chnBarPrevious");
 			// Hide previous chains if opted to automatically expand before
-			if (O.Options.bol_collapseChains)
+			if (O.Options.bol_collapseChains && I.ModeCurrent !== I.ModeEnum.Tile)
 			{
 				$("#chnDetails_" + ithchain.nexus).hide();
 			}
@@ -8300,6 +8313,7 @@ M = {
 	 */
 	bindMapLinks: function(pContainer, pZoom)
 	{
+		if (I.isMapEnabled === false) { return; }
 		var that = this;
 		$(pContainer + " dfn").each(function()
 		{
@@ -8317,6 +8331,7 @@ M = {
 	 */
 	bindMapLinkBehavior: function(pLink, pZoom, pPin)
 	{
+		if (I.isMapEnabled === false) { return; }
 		var that = this;
 		pLink.click(function()
 		{
@@ -8511,12 +8526,23 @@ M = {
 P = {
 	
 	/*
+	 * Initializes the map only if the boolean set by specific modes is on.
+	 */
+	initializeMap: function()
+	{
+		if (I.isMapEnabled)
+		{
+			M.initializeMap();
+		}
+	},
+	
+	/*
 	 * Conditions needed to do the initial zoom to event on pageload.
 	 * @returns true if qualify.
 	 */
 	wantZoomToFirstEvent: function()
 	{
-		if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
+		if (I.isMapEnabled && O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
 			&& I.PageCurrent === I.PageEnum.Chains
 			&& U.Args[U.KeyEnum.Go] === undefined)
 		{
@@ -8781,6 +8807,7 @@ P = {
 	 */
 	drawChainPaths: function(pChain)
 	{
+		if (I.isMapEnabled === false) { return; }
 		var i;
 		var event, primaryevent;
 		var color;
@@ -11565,7 +11592,7 @@ T = {
 				break;
 			}
 		}
-		if (isallcountdownexpired)
+		if (isallcountdownexpired || I.isMapEnabled === false)
 		{
 			T.isGenericCountdownSystemEnabled = false;
 		}
@@ -12699,6 +12726,7 @@ I = {
 		Website: "Website",
 		Mobile: "Mobile",
 		Simple: "Simple",
+		Tile: "Tile",
 		Overlay: "Overlay"
 	},
 	cPagePrefix: "#plate",
@@ -12965,7 +12993,10 @@ I = {
 		);
 
 		// Initialize scroll bars for pre-loaded plates
-		I.initializeScrollbar($("#jsConsole, #plateChains, #plateOptions"));
+		if (I.isMapEnabled)
+		{
+			I.initializeScrollbar($("#jsConsole, #plateChains, #plateOptions"));
+		}
 		
 		// Clean the localStorage of unrecognized variables
 		O.cleanLocalStorage();
@@ -12982,15 +13013,18 @@ I = {
 			$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
 				+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
 		}
-		else
+		else if (I.isMapEnabled)
 		{
 			M.goToDefault();
 		}
 		// Set tile after viewing the coordinate so it downloads the tiles last
-		L.tileLayer(U.URL_API.TilesTyria,
+		if (I.isMapEnabled)
 		{
-			continuousWorld: true
-		}).addTo(M.Map);
+			L.tileLayer(U.URL_API.TilesTyria,
+			{
+				continuousWorld: true
+			}).addTo(M.Map);
+		}
 		
 		// Tells today's world boss closest scheduled time if server resetted
 		if (O.isServerReset && C.ChainToday)
@@ -13054,6 +13088,7 @@ I = {
 				if ($(this).is(":visible"))
 				{
 					// EXPANDED
+					I.updateScrollbar();
 					var container = $(I.cPagePrefix + I.PageEnum.Chains);
 					var header = $(this).prev();
 					header.find("kbd").html(I.Symbol.Collapse);
@@ -13077,8 +13112,8 @@ I = {
 				else
 				{
 					// COLLAPSED
-					$(this).prev().find("kbd").html(I.Symbol.Expand);
 					I.updateScrollbar();
+					$(this).prev().find("kbd").html(I.Symbol.Expand);
 					// Reset Dry Top page variable
 					if ($(this).attr("id") === "sectionChains_Drytop")
 					{
@@ -13104,10 +13139,17 @@ I = {
 		});
 
 		// Create chain bars for unscheduled chains only when manually expanded the header
-		$("#headerChains_Drytop").one("click", function()
+		if (I.ModeCurrent !== I.ModeEnum.Tile)
 		{
-			P.generateDryTop();
-		});
+			$("#headerChains_Drytop").one("click", function()
+			{
+				P.generateDryTop();
+			});
+		}
+		else
+		{
+			$("#headerChains_Drytop").hide();
+		}
 		$("#headerChains_Legacy").one("click", function()
 		{
 			C.LegacyChains.forEach(C.initializeChain);
@@ -13221,24 +13263,34 @@ I = {
 	scrollToElement: function(pElement, pContainerOfElement, pTime)
 	{
 		// Mobile mode webpage height is dynamic
-		if (I.ModeCurrent === I.ModeEnum.Mobile)
+		switch (I.ModeCurrent)
 		{
-			$("body").scrollTop(pElement.offset().top);
-		}
-		else
-		{
-			if (pContainerOfElement)
-			{
-				pContainerOfElement.animate(
+			case I.ModeEnum.Mobile: {
+				$("body").scrollTop(pElement.offset().top);
+			} break;
+			
+			case I.ModeEnum.Tile: {
+				$("#windowMain").animate(
 				{
-					scrollTop: pElement.offset().top - pContainerOfElement.offset().top
-						+ pContainerOfElement.scrollTop()
+					scrollTop: pElement.offset().top - $("#windowMain").offset().top
+						+ $("#windowMain").scrollTop()
 				}, pTime || 0);
-			}
-			else
-			{
-				// Scroll to top of element without animation
-				pContainerOfElement.scrollTop(0);
+			} break;
+			
+			default: {
+				if (pContainerOfElement)
+				{
+					pContainerOfElement.animate(
+					{
+						scrollTop: pElement.offset().top - pContainerOfElement.offset().top
+							+ pContainerOfElement.scrollTop()
+					}, pTime || 0);
+				}
+				else
+				{
+					// Scroll to top of element without animation
+					pElement.scrollTop(0);
+				}
 			}
 		}
 	},
@@ -13303,10 +13355,6 @@ I = {
 	 */
 	initializeScrollbar: function(pElement)
 	{
-		if (I.ModeCurrent === I.ModeEnum.Mobile)
-		{
-			return;
-		}
 		try
 		{
 			var wheelspeed = 1;
@@ -13325,26 +13373,29 @@ I = {
 	},
 	updateScrollbar: function(pElement)
 	{
-		if (I.ModeCurrent === I.ModeEnum.Mobile)
+		if (I.isMapEnabled)
 		{
-			return;
+			try
+			{
+				// Update the pages if element is not specified
+				if (pElement === undefined)
+				{
+					$("#plateMap").perfectScrollbar("update");
+					$("#plateChains").perfectScrollbar("update");
+					$("#plateHelp").perfectScrollbar("update");
+					$("#plateOptions").perfectScrollbar("update");
+				}
+				else
+				{
+					$(pElement).perfectScrollbar("update");
+				}
+			}
+			catch (e) {}
 		}
-		try
+		else
 		{
-			// Update the pages if element is not specified
-			if (pElement === undefined)
-			{
-				$("#plateMap").perfectScrollbar("update");
-				$("#plateChains").perfectScrollbar("update");
-				$("#plateHelp").perfectScrollbar("update");
-				$("#plateOptions").perfectScrollbar("update");
-			}
-			else
-			{
-				$(pElement).perfectScrollbar("update");
-			}
+			$("#windowMain").perfectScrollbar("update");
 		}
-		catch (e) {}
 	},
 	
 	/*
@@ -13703,7 +13754,10 @@ I = {
 				{
 					case I.PageEnum.Map:
 					{
-						M.movePin(M.Pin.Event);
+						if (I.isMapEnabled)
+						{
+							M.movePin(M.Pin.Event);
+						}
 					} break;
 				}
 				$("#paneContent article").hide(); // Hide all plates
@@ -13726,8 +13780,11 @@ I = {
 				U.updateQueryString();
 				
 				// Also hide chain paths if on the map page
-				M.toggleLayer(M.ZoneCurrent.Layers.Path,
-					(I.PageCurrent !== I.PageEnum.Map && O.Options.bol_showChainPaths));
+				if (I.isMapEnabled)
+				{
+					M.toggleLayer(M.ZoneCurrent.Layers.Path,
+						(I.PageCurrent !== I.PageEnum.Map && O.Options.bol_showChainPaths));
+				}
 			});
 		});
 
@@ -13797,7 +13854,10 @@ I = {
 	{
 		var plate = I.cPagePrefix + pPageEnum;
 		I.generateSectionMenu(plate);
-		I.initializeScrollbar($(plate));
+		if (I.isMapEnabled)
+		{
+			I.initializeScrollbar($(plate));
+		}
 		I.bindHelpButtons(plate);
 		M.bindMapLinks(plate);
 		// Open links on new window
@@ -13903,6 +13963,16 @@ I = {
 	},
 	
 	/*
+	 * Shows an icon link to the main site without URL parameters.
+	 */
+	showHomeLink: function()
+	{
+		I.qTip.init($("<a title='&lt;dfn&gt;Switch back to full site.&lt;/dfn&gt;' href='./'>"
+			+ " <img id='iconSimpleHome' src='img/ui/about.png' /></a>")
+			.appendTo("#itemHome"));
+	},
+	
+	/*
 	 * Changes program look based on mode.
 	 */
 	enforceProgramMode: function()
@@ -13960,6 +14030,7 @@ I = {
 			case I.ModeEnum.Simple:
 			{
 				I.isMapEnabled = false;
+				I.showHomeLink();
 				// Readjust panels
 				$("#panelMap, #paneMenu, #paneContent").hide();
 				$("#panelApp").css(
@@ -13999,25 +14070,25 @@ I = {
 					color: "#eee",
 					opacity: 0.5
 				});
-				$("#itemTimeLocalExtra").css({
-					position: "fixed",
-					bottom: "0px", right: "10px",
-					color: "#eee",
-					opacity: 0.5
-				});
-				I.qTip.init($("<a title='&lt;dfn&gt;Switch back to full site.&lt;/dfn&gt;' href='./'>"
-					+ " <img id='iconSimpleHome' src='img/ui/about.png' /></a>")
-					.appendTo("#itemTimeLocalExtra"));
 				$("#paneBoard").show();
 				
 			} break;
 			case I.ModeEnum.Mobile:
 			{
 				I.isMapEnabled = false;
-				$("#panelMap").hide();
-				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1'>")
-					.append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css'>")
-					.append("<link rel='canonical' href='http://gw2timer.com'>");
+				I.showHomeLink();
+				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
+					.append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css' />")
+					.append("<link rel='canonical' href='http://gw2timer.com' />");
+			} break;
+			case I.ModeEnum.Tile:
+			{
+				I.isMapEnabled = false;
+				I.showHomeLink();
+				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
+					.append("<link rel='stylesheet' type='text/css' href='gw2t-tile.css' />");
+				$("#itemLanguage").prependTo("#plateChains");
+				I.initializeScrollbar("#windowMain");
 			} break;
 		}
 		
@@ -14230,7 +14301,7 @@ I = {
 I.initializeFirst(); // initialize variables that need to be first
 O.initializeOptions(); // load stored or default options to the HTML input
 T.initializeSchedule(); // compute event data and write HTML
-M.initializeMap(); // instantiate the map and populate it
+P.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
 

@@ -866,7 +866,15 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #itemTimeDaytime img {
 	width: 18px; height: 18px;
 }
-#itemTimeLocalExtra a {
+#itemHome {
+	position: fixed;
+	bottom: 0px;
+	right: 10px;
+	color: #eee;
+	opacity: 0.5;
+	z-index: 9;
+}
+#itemHome a {
 	color: #eee;
 	text-decoration: none;
 }
@@ -1337,14 +1345,14 @@ textarea.jsCopyCode {
 ----------------------------------------------------------------------------- */
 #optAlarm {
 	position: absolute;
-	margin-left: 280px;
+	right: 0;
 	padding: 7px 4px 6px 0px;
 	opacity: 0.5;
 }
 #optAlarm:hover {
 	opacity: 1;
 }
-#optAlarmSpeaker {
+#optAlarmSpeaker, #optAlarmMore {
 	width: 24px; height: 24px;
 }
 #optAlarmIcon {
@@ -1355,7 +1363,7 @@ textarea.jsCopyCode {
 }
 #optAlarm:hover #itemAlarmPopup {
 	display: block;
-	right: -30px;
+	right: 0;
 	position: absolute;
 	margin: 0;
 	padding: 8px;
@@ -1366,7 +1374,7 @@ textarea.jsCopyCode {
 	margin: 0;
 	border: none;
 }
-#opt_int_volAlarm, #optMute {
+#opt_int_volAlarm, #optMute, #optRestoreAllChains {
 	width: 100%;
 }
 
@@ -1431,14 +1439,11 @@ textarea.jsCopyCode {
 		1px 1px 0px #000;
 }
 
-#chnDryTopWaypoint0 {
-	margin-left: 250px;
-}
-#chnDryTopWaypoint1 {
-	margin-left: 290px;
+#itemDryTopClip {
+	position: absolute;
+	right: 40px;
 }
 .chnDryTopWaypoint {
-	position: absolute;
 	width: 32px; height: 32px;
 	background: url("img/map/waypoint.png");
 	background-size: 32px 32px;
@@ -1630,6 +1635,10 @@ textarea.jsCopyCode {
 .chnBarReset {
 	background: #663b7f;
 	background: linear-gradient(to right, #111 0%, #663b7f 100%);
+}
+.chnBarHover {
+	background: #66aaff;
+	background: linear-gradient(to right, #111 0%, #66aaff 100%);
 }
 
 .chnTitleCurrent, .chnSlot h1.chnTitleCurrent {

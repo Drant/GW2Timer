@@ -1,6 +1,6 @@
 /*
-	http://gw2timer.com/mobile
-	Mobile phones stylesheet.
+	http://gw2timer.com/tile
+	Laptops and tablets stylesheet.
 */
 
 /* Restructure to fit */
@@ -9,22 +9,26 @@ html, body {
 	background: linear-gradient(to right, #111 0%, #383838 50%, #111 100%);
 }
 
-html {
-	overflow-y: scroll;
-}
 
 #jsConsoleButtons {
 	position: fixed;
 	bottom: 24px;
 }
 
-#panelMap {
+#panelMap, #paneClock, #paneMenu, .chnEvents {
 	display: none;
 }
 
 #windowMain {
+	display: block;
+	position: relative;
 	text-align: center;
 	background: none;
+	height: 100% !important;
+}
+
+.ps-scrollbar-y-rail {
+	z-index: 9;
 }
 
 #panelApp {
@@ -34,12 +38,12 @@ html {
 	background: none;
 }
 
-body, #paneContent article {
-	overflow: visible;
+#panelApp, #paneContent, #paneContent article {
+	width: 100%;
 }
 
-body, html, .panelMain, #windowMain, #paneContent article {
-	height: auto;
+body, #paneContent article {
+	overflow: visible;
 }
 
 .paneApp {
@@ -48,12 +52,9 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	box-shadow: 0px 0px 16px #111;
 }
 
-#paneMenu {
-	border-bottom-right-radius: 8px;
-}
-
 #paneContent {
 	position: relative;
+	top: auto;
 	border-top-right-radius: 8px;
 	border-bottom-right-radius: 8px;
 }
@@ -64,8 +65,17 @@ body, html, .panelMain, #windowMain, #paneContent article {
 
 /* Element resize */
 
+#itemLanguage {
+	position: absolute;
+	padding-top: 16px;
+	right: 96px;
+	bottom: auto;
+	left: auto;
+	z-index: 9;
+}
 #itemLanguage:hover #itemLanguagePopup {
-	left: 64px;
+	top: auto;
+	left: auto;
 }
 #itemLanguagePopup a {
 	font-size: 18px;
@@ -90,7 +100,13 @@ body, html, .panelMain, #windowMain, #paneContent article {
 }
 
 .chnBar, .chnSlot {
+	width: 30%;
+	min-width: 180px;
+	max-width: 360px;
+	display: inline-block;
 	margin-bottom: 8px;
+	margin-right: 8px;
+	border: 2px solid black;
 }
 
 .chnTitle img {
@@ -106,79 +122,33 @@ body, html, .panelMain, #windowMain, #paneContent article {
 }
 
 .chnTitle h1 {
-	width: 178px;
-	font-size: 22px;
+	width: 70%;
+	font-size: 1.5vmax;
 	font-weight: bold;
 	text-align: center;
+	cursor: url("img/cursor/auto.cur"), auto;
 }
 
 .chnTitle time {
-	width: 88px;
+	width: 100%;
+	padding-right: 8px;
 	font-size: 20px;
 }
 .chnTitle time sup {
 	font-size: 18px;
 }
 
-#plateChains header {
-	height: 48px;
+.chnTitleFutureFar, .chnSlot h1 {
+	color: #aaa;
+}
+.chnTimeFutureFar, .chnSlot time {
+	color: #ffcc77;
 }
 
-#plateChains header span {
-	visibility: visible;
-	color: #666;
-}
-#plateChains header:hover span {
-	color: white;
+.chnDetailsExtra {
+	text-align: left;
 }
 
-/* Options page */
-
-#plateOptions .cntComposition {
-	font-size: 16px;
-}
-
-#plateOptions .cntComposition h2 {
-	font-size: 20px;
-}
-
-#plateOptions .cntComposition h3 {
-	font-size: 16px;
-}
-
-input[type=checkbox] {
-	transform: scale(1.25);
-}
-
-input[type="number"] {
-	width: 64px;
-	font-size: 18px;
-}
-
-#plateOptions .cntComposition button {
-	min-height: 32px;
-	font-size: 18px;
-}
-
-/* Page elements */
-
-header.jsSection {
-	padding-top: 0;
-	margin-top: 12px;
-}
-
-.chlDungeonBar {
-	margin-bottom: 8px;
-}
-
-.chlDungeonBar label {
-	margin-right: 8px;
-}
-
-#chlCustom input[type="text"] {
-	font-size: 14px;
-}
-
-#chlCustom span {
-	margin-bottom: 4px;
+#plateChains section {
+	text-align: center;
 }
