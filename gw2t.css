@@ -282,8 +282,7 @@ html, body,
 .curClick, a, kbd, input, label, button,
 .mapHUDButton,
 .menuBeam img:hover, .jsSectionDone,
-.chnCheck:hover,
-#sectionChains_Scheduled .chnTitle time, #lgnTrack ins {
+.chnCheck:hover, .chnTitle time, #lgnTrack ins {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
 
@@ -1344,10 +1343,11 @@ textarea.jsCopyCode {
 /* @@Chains plate
 ----------------------------------------------------------------------------- */
 #chnOptions {
-	position: absolute;
+	position: fixed;
 	right: 0;
 	padding: 7px 4px 6px 0px;
 	opacity: 0.5;
+	z-index: 2;
 }
 #chnOptions:hover {
 	opacity: 1;
@@ -1369,7 +1369,6 @@ textarea.jsCopyCode {
 	width: 320px;
 	margin: 0;
 	padding: 8px;
-	z-index: 2; /* So the event names don't overlap the popup */
 }
 #chnOptionsLeft, #chnOptionsRight {
 	display: inline-block;
@@ -1680,7 +1679,7 @@ textarea.jsCopyCode {
 	color: #ccc;
 	opacity: 1;
 }
-.chnTimeSubscribed {
+.chnTimeSubscribed, .chnSlot time.chnTimeSubscribed {
 	color: #ddff77;
 }
 .chnTimeSubscribed:after {
@@ -1688,7 +1687,7 @@ textarea.jsCopyCode {
 }
 
 .chnTimeCurrent:hover, .chnTimeFuture:hover, .chnTimeFutureFar:hover,
-.chnDetailsExtra kbd:hover {
+.chnSlot time:hover, .chnDetailsExtra kbd:hover {
 	color: white;
 }
 

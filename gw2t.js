@@ -62,6 +62,7 @@ var O, U, X, E, D, C, M, P, G, W, T, K, I = {};
  * @@Options for the user
  * ========================================================================== */
 O = {
+	
 	lengthOfPrefixes: 3,
 	prefixOption: "opt_",
 	legalLocalStorageKeys: new Array(),
@@ -74,8 +75,34 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 150729},
+		programVersion: {key: "int_utlProgramVersion", value: 150805},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
+	},
+	
+	/*
+	 * Updates and notifies user of version change.
+	 */
+	enforceProgramVersion: function()
+	{
+		var currentversion = O.Utilities.programVersion.value;
+		var usersversion = parseInt(localStorage[O.Utilities.programVersion.key]);
+		// If not first visit and version is mismatch, notify new version
+		if (isFinite(usersversion) && usersversion !== currentversion)
+		{
+			var wait = (I.ModeCurrent === I.ModeEnum.Overlay) ? 15 : 30;
+			I.clear();
+			I.write(I.cSiteName + " was updated since your last visit.<br />"
+				+ "This version: " + currentversion + "<br />"
+				+ "Your version: " + usersversion + "<br />"
+				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
+				+ "<br />"
+				+ "Try out the new <a class='urlUpdates' href='http://gw2timer.com/?mode=Tile'>Tile Mode!</a><br />"
+				+ "Auto-scales for laptops, tablets, and small screens."
+				, wait);
+			U.convertExternalLink(".urlUpdates");
+		}
+		
+		localStorage[O.Utilities.programVersion.key] = O.Utilities.programVersion.value;
 	},
 	
 	/*
@@ -302,31 +329,6 @@ O = {
 		isFloat: "flt",
 		isEnum: "enu",
 		isString: "str"
-	},
-	
-	/*
-	 * Updates and notifies user of version change.
-	 */
-	enforceProgramVersion: function()
-	{
-		var currentversion = O.Utilities.programVersion.value;
-		var usersversion = parseInt(localStorage[O.Utilities.programVersion.key]);
-		// If not first visit and version is mismatch, notify new version
-		if (isFinite(usersversion) && usersversion !== currentversion)
-		{
-			var wait = (I.ModeCurrent === I.ModeEnum.Overlay) ? 10 : 20;
-			I.clear();
-			I.write(I.cSiteName + " was updated since your last visit.<br />"
-				+ "This version: " + currentversion + "<br />"
-				+ "Your version: " + usersversion + "<br />"
-				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
-				+ "<br />"
-				+ "Voice alarm for Chrome has been fixed.<br />Please <a class='urlUpdates' href='http://forum.renaka.com/topic/5837846/'>report</a> problems if you encounter any.<br />"
-				, wait);
-			U.convertExternalLink(".urlUpdates");
-		}
-		
-		localStorage[O.Utilities.programVersion.key] = O.Utilities.programVersion.value;
 	},
 	
 	/*
@@ -949,7 +951,7 @@ O = {
 		{
 			$(".chnBar").each(function()
 			{
-				X.hideCheckedChain(U.getSubintegerFromHTMLID($(this)));
+				X.hideCheckedChainBar(U.getSubintegerFromHTMLID($(this)));
 			});
 		},
 		bol_expandWB: function()
@@ -2529,31 +2531,28 @@ X = {
 		var time = $("#chnTime_" + pChain.nexus);
 
 		// Set the checkbox visual state as stored
-		X.reapplyStateChain(pChain.nexus, bar, check);
+		X.reapplyChainBarState(pChain.nexus, bar, check, time);
 		
 		if (C.isChainRegular(pChain))
 		{
-			// Set the time visual state as stored (subscribed or not)
-			if (X.getChecklistItem(X.Checklists.ChainSubscription, pChain.nexus) ===
-					X.ChecklistEnum.Checked)
-			{
-				time.addClass("chnTimeSubscribed");
-			}
 			/*
 			 * Bind event handler for the time clickable for subscription.
 			 */
 			time.click(function()
 			{
 				var nexus = U.getSubintegerFromHTMLID($(this));
+				var slottimes = $(".chnSlot_" + nexus).find("time");
 
 				if (X.getChecklistItem(X.Checklists.ChainSubscription, nexus) === X.ChecklistEnum.Checked)
 				{
 					$(this).removeClass("chnTimeSubscribed");
+					slottimes.removeClass("chnTimeSubscribed");
 					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Unchecked);
 				}
 				else
 				{
 					$(this).addClass("chnTimeSubscribed");
+					slottimes.addClass("chnTimeSubscribed");
 					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
 					if (O.Options.int_setAlarm !== O.IntEnum.Alarm.Subscription)
 					{
@@ -2625,7 +2624,7 @@ X = {
 					}
 				} break;
 			}
-			X.hideCheckedChain(nexus);
+			X.hideCheckedChainBar(nexus);
 			// Update the icons on the clock too
 			K.checkoffChainIcon(nexus);
 		});
@@ -2645,8 +2644,9 @@ X = {
 			K.checkoffChainIcon(nexus);
 		});
 	},
-	reapplyStateChain: function(pIndex, pBar, pCheck)
+	reapplyChainBarState: function(pIndex, pBar, pCheck, pTime)
 	{
+		// Chain check
 		switch (X.getChecklistItem(X.Checklists.Chain, pIndex))
 		{
 			case X.ChecklistEnum.Unchecked:
@@ -2667,8 +2667,15 @@ X = {
 				pBar.hide();
 			} break;
 		}
+		
+		// Chain time
+		if (C.isChainRegular(C.Chains[pIndex]) &&
+			X.getChecklistItem(X.Checklists.ChainSubscription, pIndex) === X.ChecklistEnum.Checked)
+		{
+			pTime.addClass("chnTimeSubscribed");
+		}
 	},
-	hideCheckedChain: function(pIndex)
+	hideCheckedChainBar: function(pIndex)
 	{
 		var display = (I.ModeCurrent === I.ModeEnum.Tile) ? "inline-block" : "block";
 		// Hide the chain bar if opted
@@ -5591,7 +5598,7 @@ C = {
 		"<div id='chnBar_" + pChain.nexus + "' class='chnBar'>"
 			+ "<div class='chnTitle'>"
 				+ "<img id='chnIcon_" + pChain.nexus + "' src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
-				+ "<div id='chnCheck_" + pChain.nexus + "' class='chnCheck'></div>"
+				+ "<samp id='chnCheck_" + pChain.nexus + "' class='chnCheck'></samp>"
 				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + D.getChainTitleAny(pChain.nexus) + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
 				+ "<aside><img class='chnDaily chnDaily_" + pChain.nexus + "' src='img/ui/daily.png' /></aside>"
@@ -6079,7 +6086,7 @@ C = {
 				"<div class='chnSlot chnSlotTime_" + i + " chnSlot_" + ithchain.nexus + "' data-" + C.cIndexSynonym + "='" + ithchain.nexus + "' data-timeframe='" + i + "'>"
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
-						+ "<div class='chnCheck'></div>"
+						+ "<samp class='chnCheck'></samp>"
 						+ "<h1>" + D.getChainTitleAny(ithchain.nexus) + "</h1>"
 						+ "<time>" + timestring + "</time>"
 						+ "<aside><img class='chnDaily chnDaily_" + ithchain.nexus + "' src='img/ui/daily.png' /></aside>"
@@ -6093,7 +6100,8 @@ C = {
 			ithchain = C.RegularChains[i];
 			var slots = $(".chnSlot_" + ithchain.nexus);
 			var checks = slots.find(".chnCheck");
-			X.reapplyStateChain(ithchain.nexus, slots, checks);
+			var times = slots.find("time");
+			X.reapplyChainBarState(ithchain.nexus, slots, checks, times);
 		}
 		// Hover on chain slot highlight same bosses
 		$(".chnTitle h1").hover(
@@ -6101,9 +6109,14 @@ C = {
 			function() { $(".chnSlot").removeClass("chnBarHover"); }
 		);
 		// Mimic check off function
-		$(".chnSlot .chnCheck").click(function()
+		$(".chnSlot samp").click(function()
 		{
 			$("#chnCheck_" + C.Chains[$(this).parent().parent().data(C.cIndexSynonym)].nexus).trigger("click");
+		});
+		// Mimic subscription function
+		$(".chnSlot time").click(function()
+		{
+			$("#chnTime_" + C.Chains[$(this).parent().parent().data(C.cIndexSynonym)].nexus).trigger("click");
 		});
 		// Special color of the reset time slot
 		$(".chnSlotTime_0").addClass("chnBarReset");

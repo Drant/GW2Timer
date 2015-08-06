@@ -491,9 +491,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Guard", "Camp", "Defender"]
 },
 "6": {
-	pve: ["Lumberer Ascalon", "Activity", "Frostgorge", "Fractal 1-10"],
-	pvp: ["Reward", "Rank", "Ranger Thief", "Engi Ele"],
-	wvw: ["Creature", "Guard", "Defender", "Camp"]
+	pve: ["Forager Ascalon", "Activity", "Snowden", "SB"],
+	pvp: ["Defender", "Capture", "Ranger Thief", "Engi Ele"],
+	wvw: ["Ruins", "Creature", "Defender", "Camp"]
 },
 "7": {
 	pve: ["Forager Jungle", "Vista Shiverpeaks", "Fields", "Fractal 1-10"],
@@ -641,7 +641,7 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_COUNTDOWN_DATA = {
 	
-Header: "<b>NEW FEATURE</b>: Tile Mode <a href='http://gw2timer.com/?mode=Tile'>http://gw2timer.com/tile</a><br />",
+Header: "<b>NEW FEATURE</b>: <a href='http://gw2timer.com/?mode=Tile'>Tile Mode</a> http://gw2timer.com/tile<br />",
 Countdowns: [
 {
 	name_en: "Beta Weekend Event",
