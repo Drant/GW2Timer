@@ -394,7 +394,7 @@
 			<article id="plateChains"><!-- This plate will be populated by JS -->
 				<div id="chnOptions">
 					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/speaker.png" alt="Alarm"/>
-					<img id="optAlarmMore" src="img/ui/toggle.png" alt="More" />
+					<img id="optChainsIcon" src="img/ui/toggle.png" alt="Toggle" />
 					<div id="chnOptionsPopup" class="cntComposition cntPopup">
 						<div id="chnOptionsLeft">
 							<b>Chain Options</b>
@@ -405,6 +405,7 @@
 							<button id="optRestoreAllChains" class="btnUncheck" title="Unhide all world bosses and uncheck them."><img data-src="img/ui/uncheck.png" alt="Refresh" /></button>
 						</div>
 						<div id="chnOptionsRight">
+							<div id="optChainsToggle"><button id="optChainsExpand">+</button><button id="optChainsCollapse">−</button></div>
 							<fieldset name="int_setAlarm"><legend id="optAlarmLegend">Alarm Mode</legend>
 								<label title="Turn off the alarm. Go to Options page, Alarm section for more info."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /></label>
 								<label title="Alert you when an unchecked chain starts. You can checkmark a chain by clicking its boss icon (left side of chain name)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /></label>

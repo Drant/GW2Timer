@@ -75,7 +75,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 150805},
+		programVersion: {key: "int_utlProgramVersion", value: 150806},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -97,7 +97,7 @@ O = {
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
 				+ "Try out the new <a class='urlUpdates' href='http://gw2timer.com/?mode=Tile'>Tile Mode!</a><br />"
-				+ "Auto-scales for laptops, tablets, and small screens."
+				+ "Auto-scales for laptops, tablets, and small screens.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -873,6 +873,15 @@ O = {
 					K.checkoffChainIcon(chainhardcore.nexus);
 				}
 			}
+		});
+		$("#optChainsExpand").click(function()
+		{
+			$(".chnDetails").show();
+		});
+		$("#optChainsCollapse").click(function()
+		{
+			$(".chnDetails").hide();
+			I.scrollToElement($("#plateChains"));
 		});
 		
 		/*
@@ -14246,7 +14255,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind the following tags with the title attribute for tooltip
-		I.qTip.init("#jsConsoleButtons img, #optAlarmSpeaker, a, ins, kbd, span, fieldset, label, input, button");
+		I.qTip.init("#jsConsoleButtons img, #chnOptions img, a, ins, kbd, span, fieldset, label, input, button");
 		$("#panelApp").hover(
 			function() { I.isMouseOnPanel = true; },
 			function() { I.isMouseOnPanel = false; }

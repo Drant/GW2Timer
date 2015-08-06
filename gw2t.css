@@ -1352,7 +1352,7 @@ textarea.jsCopyCode {
 #chnOptions:hover {
 	opacity: 1;
 }
-#optAlarmSpeaker, #optAlarmMore {
+#optAlarmSpeaker, #optChainsIcon {
 	width: 24px; height: 24px;
 }
 #optAlarmIcon {
@@ -1385,6 +1385,10 @@ textarea.jsCopyCode {
 	min-width: 120px;
 	margin: 0;
 	border: none;
+}
+#optChainsToggle {
+	position: absolute;
+	right: 0;
 }
 #opt_int_volAlarm, #optMute, #optRestoreAllChains {
 	width: 100%;
