@@ -98,6 +98,10 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	width: 24px; height: 24px;
 }
 
+#chnProgress {
+	height: 4px;
+}
+
 .chnBar, .chnSlot {
 	margin-bottom: 8px;
 }

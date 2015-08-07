@@ -11756,6 +11756,7 @@ K = {
 	awakeTimestampPrevious: 0,
 	awakeTimestampTolerance: 5,
 	currentFrameOffsetMinutes: 0,
+	currentPredictionColor: "",
 	iconOpacityChecked: 0.4,
 	iconOpacitySpeed: 200,
 	oldQuadrantAngle: 0,
@@ -11764,7 +11765,7 @@ K = {
 	
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
-	clockBackground: {}, clockCircumference: {},
+	clockBackground: {}, clockCircumference: {}, timeProgress: {},
 	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeBoard: {},
 	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
 	
@@ -11792,6 +11793,7 @@ K = {
 		K.handHour = $("#clkHourHand")[0];
 		K.clockBackground = $("#paneClockBackground")[0];
 		K.clockCircumference = $("#clkCircumference")[0];
+		K.timeProgress = $("#chnProgress")[0];
 		K.timeLocal = $("#itemTimeLocalActual")[0];
 		K.timeDaytime = $("#itemTimeDayTime")[0];
 		K.timeBoard = $("#itemBoardTime")[0];
@@ -12115,6 +12117,20 @@ K = {
 			}
 		}
 	},
+	
+	/*
+	 * Colors the minute hand and chain progress bar depending on current chain's prediction.
+	 * @param string pColor.
+	 */
+	colorPrediction: function(pColor)
+	{
+		if (pColor !== K.currentPredictionColor)
+		{
+			K.currentPredictionColor = pColor;
+			K.handMinute.style.stroke = pColor;
+			K.timeProgress.style.background = "linear-gradient(to right, black 0%, " + pColor + " 100%)";
+		}
+	},
 
 	/*
 	 * Although the tick effects are supposed to happen every 1 second, the
@@ -12165,6 +12181,10 @@ K = {
 		
 		// Opacity value 0.0 through 1.0 based on how far into the 15 minutes frame
 		var opacityadd = 1 - ((min % T.cMINUTES_IN_TIMEFRAME)*60 + sec) / (T.cSECONDS_IN_TIMEFRAME);
+		// Progress bar over chains page to show how far in timeframe
+		var progress = (I.ModeCurrent === I.ModeEnum.Tile)
+			? ((T.cPERCENT_100 * opacityadd) + "%") : (~~(I.cPANEL_WIDTH * opacityadd) + "px");
+		K.timeProgress.style.width = progress;
 		
 		// If crossing a 15 minute mark (IMPORTANT)
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
@@ -12249,16 +12269,16 @@ K = {
 		if (secinhour >= K.currentFrameOffsetMinutes
 			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentChainSD.minFinish))
 		{
-			K.handMinute.style.stroke = "lime";
+			K.colorPrediction("lime");
 		}
 		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentChainSD.minFinish)
 			&& secinhour < (K.currentFrameOffsetMinutes + C.CurrentChainSD.avgFinish))
 		{
-			K.handMinute.style.stroke = "orange";
+			K.colorPrediction("orange");
 		}
 		else if (secinhour >= (K.currentFrameOffsetMinutes + C.CurrentChainSD.avgFinish))
 		{
-			K.handMinute.style.stroke = "red";
+			K.colorPrediction("red");
 		}
 		
 		// Trigger other ticking functions
@@ -12812,6 +12832,7 @@ I = {
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
 	isMapEnabled: true,
+	isScrollEnabled: false,
 	isSpeechSynthesisEnabled: false,
 	ModeCurrent: null,
 	ModeEnum:
@@ -13452,46 +13473,52 @@ I = {
 	 */
 	initializeScrollbar: function(pElement)
 	{
-		try
-		{
-			var wheelspeed = 1;
-			switch (I.BrowserCurrent)
-			{
-				case I.BrowserEnum.Opera: wheelspeed = 5; break;
-				case I.BrowserEnum.Firefox: wheelspeed = 3; break;
-			}
-
-			$(pElement).perfectScrollbar({
-				wheelSpeed: wheelspeed,
-				suppressScrollX: true
-			});
-		}
-		catch (e) {}
-	},
-	updateScrollbar: function(pElement)
-	{
-		if (I.isMapEnabled)
+		if (I.isScrollEnabled === false)
 		{
 			try
 			{
-				// Update the pages if element is not specified
-				if (pElement === undefined)
+				var wheelspeed = 1;
+				switch (I.BrowserCurrent)
 				{
-					$("#plateMap").perfectScrollbar("update");
-					$("#plateChains").perfectScrollbar("update");
-					$("#plateHelp").perfectScrollbar("update");
-					$("#plateOptions").perfectScrollbar("update");
+					case I.BrowserEnum.Opera: wheelspeed = 5; break;
+					case I.BrowserEnum.Firefox: wheelspeed = 3; break;
 				}
-				else
-				{
-					$(pElement).perfectScrollbar("update");
-				}
+
+				$(pElement).perfectScrollbar({
+					wheelSpeed: wheelspeed,
+					suppressScrollX: true
+				});
 			}
 			catch (e) {}
 		}
-		else
+	},
+	updateScrollbar: function(pElement)
+	{
+		if (I.isScrollEnabled === false)
 		{
-			$("#windowMain").perfectScrollbar("update");
+			if (I.isMapEnabled)
+			{
+				try
+				{
+					// Update the pages if element is not specified
+					if (pElement === undefined)
+					{
+						$("#plateMap").perfectScrollbar("update");
+						$("#plateChains").perfectScrollbar("update");
+						$("#plateHelp").perfectScrollbar("update");
+						$("#plateOptions").perfectScrollbar("update");
+					}
+					else
+					{
+						$(pElement).perfectScrollbar("update");
+					}
+				}
+				catch (e) {}
+			}
+			else
+			{
+				$("#windowMain").perfectScrollbar("update");
+			}
 		}
 	},
 	
@@ -14173,6 +14200,7 @@ I = {
 			case I.ModeEnum.Mobile:
 			{
 				I.isMapEnabled = false;
+				I.isScrollEnabled = true;
 				I.showHomeLink();
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
 					.append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css' />")
@@ -14182,8 +14210,8 @@ I = {
 			case I.ModeEnum.Tile:
 			{
 				I.isMapEnabled = false;
-				I.showHomeLink();
 				K.iconOpacityChecked = 0.2;
+				I.showHomeLink();
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
 					.append("<link rel='stylesheet' type='text/css' href='gw2t-tile.css' />");
 				$("#itemLanguage").prependTo("#plateChains");

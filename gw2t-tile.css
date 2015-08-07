@@ -102,6 +102,10 @@ body, #paneContent article {
 	width: 24px; height: 24px;
 }
 
+#chnProgress {
+	height: 4px;
+}
+
 .chnBar, .chnSlot {
 	display: inline-block;
 	width: 30%;
@@ -125,7 +129,7 @@ body, #paneContent article {
 }
 
 .chnTitle h1 {
-	width: 70%;
+	width: 62%;
 	font-size: 18px;
 	font-weight: bold;
 	text-align: center;

@@ -513,7 +513,7 @@ DiveMaster: {
 	wiki: "http://wiki.guildwars2.com/wiki/Diving_Goggles",
 	credit: "http://dulfy.net/2012/11/05/gw2-dive-master-achievement-guide/",
 	needles: [
-	{n: 1, c: [15607, 15318]},
+	{n: 1, c: [15869, 15719]},
 	{n: 2, c: [13146, 15900]},
 	{n: 3, c: [15695, 13046]},
 	{n: 4, c: [16469, 12439]},
@@ -648,17 +648,17 @@ HistoryBuff: {
 	wiki: "http://wiki.guildwars2.com/wiki/Marriner_Plaque",
 	credit: "http://dulfy.net/2013/06/23/gw2-history-buff-marriner-plaques-achievement-guide/",
 	needles: [
-	{n: 1, c: [15403, 15046]},
-	{n: 2, c: [15886, 15074]},
-	{n: 3, c: [16102, 15087]},
-	{n: 4, c: [16187, 14702]},
-	{n: 5, c: [16526, 14659]},
+	{n: 1, c: [15452, 14883]},
+	{n: 2, c: [15845, 15117]},
+	{n: 3, c: [16123, 15076]},
+	{n: 4, c: [15873, 14806]},
+	{n: 5, c: [16119, 14806]},
 	{n: 6, c: [16974, 15195]},
-	{n: 7, c: [16538, 15186]},
+	{n: 7, c: [16605, 15182]},
 	{n: 8, c: [16296, 15428]},
 	{n: 9, c: [16218, 15436]},
 	{n: 10, c: [16030, 15493]},
-	{n: 11, c: [15897, 15634]},
+	{n: 11, c: [16006, 15653]},
 	{n: 12, c: [10660, 24221]}
 	]
 }
