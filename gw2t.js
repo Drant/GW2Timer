@@ -1012,7 +1012,7 @@ O = {
 		},
 		bol_showChainPaths: function()
 		{
-			M.toggleLayerArray(M.LayerArray.ChainPath, O.Options.bol_showChainPaths);
+			M.toggleLayerArray(P.LayerArray.ChainPath, O.Options.bol_showChainPaths);
 		},
 		bol_displayCharacter: function()
 		{
@@ -6440,8 +6440,8 @@ C = {
 		// Hide past events' markers
 		if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopGenerated)
 		{
-			M.LayerArray.DryTopActive = null;
-			M.LayerArray.DryTopActive = new Array();
+			P.LayerArray.DryTopActive = null;
+			P.LayerArray.DryTopActive = new Array();
 			if (C.isDryTopIconsShown)
 			{
 				for (i in pChain.events)
@@ -6486,12 +6486,12 @@ C = {
 				{
 					event = pChain.events[$(this).attr("data-eventindex")];
 					// Add active events to iterable array
-					M.LayerArray.DryTopActive.push(event.eventicon);
-					M.LayerArray.DryTopActive.push(event.eventring);
+					P.LayerArray.DryTopActive.push(event.eventicon);
+					P.LayerArray.DryTopActive.push(event.eventring);
 					// Show active Dry Top events
 					if (C.isDryTopIconsShown)
 					{
-						M.toggleLayerArray(M.LayerArray.DryTopActive, true);
+						M.toggleLayerArray(P.LayerArray.DryTopActive, true);
 					}
 				}
 			});
@@ -6713,7 +6713,7 @@ C = {
 };
 
 /* =============================================================================
- * @@Map and map control template
+ * @@Map and map control template object
  * ========================================================================== */
 M = {
 	/*
@@ -6728,13 +6728,6 @@ M = {
 	Submaps: GW2T_SUBMAP_DATA,
 	cInitialZone: "lion",
 	Map: {},
-	Events: {},
-	DryTopTimer: {},
-	Resources: {},
-	JPs: {},
-	Chests: {},
-	Collectibles: {},
-	Guild: {},
 	ZoneCurrent: {},
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
@@ -6789,22 +6782,7 @@ M = {
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
 		PersonalPath:  new L.layerGroup(), // Path drawn from connecting player-laid pins
-		ZoneRectangle: new L.layerGroup(), // Rectangles colored specific to the zones' region
-		DryTopNicks: new L.layerGroup(), // Dry Top event names and timestamps
-		Chest: new L.layerGroup() // Open world basic chests
-	},
-	LayerArray: {
-		ChainPath: new Array(),
-		Resource: new Array(),
-		JP: new Array(),
-		Guild_Bounty: new Array(),
-		Guild_Trek: new Array(),
-		Guild_Challenge: new Array(),
-		Guild_Rush: new Array(),
-		Guild_Puzzle: new Array(),
-		DryTopIcons: new Array(),
-		DryTopRings: new Array(),
-		DryTopActive: new Array()
+		ZoneRectangle: new L.layerGroup() // Rectangles colored specific to the zones' region
 	},
 	Pin: {
 		Program: {},
@@ -6879,7 +6857,7 @@ M = {
 			};
 			if (that.MapEnum === I.MapEnum.Tyria)
 			{
-				this.LayerArray.ChainPath.push(zone.Layers.Path);
+				P.LayerArray.ChainPath.push(zone.Layers.Path);
 			}
 		}
 		this.ZoneCurrent = this.Zones[this.cInitialZone];
@@ -8599,9 +8577,35 @@ M = {
 };
 
 /* =============================================================================
- * @@Populate Tyria-exclusive map functions
+ * @@Populate Tyria-exclusive map properties and functions
  * ========================================================================== */
 P = {
+	
+	Layer: {
+		DryTopNicks: new L.layerGroup(), // Dry Top event names and timestamps
+		Chest: new L.layerGroup() // Open world basic chests
+	},
+	LayerArray: {
+		ChainPath: new Array(),
+		Resource: new Array(),
+		JP: new Array(),
+		Guild_Bounty: new Array(),
+		Guild_Trek: new Array(),
+		Guild_Challenge: new Array(),
+		Guild_Rush: new Array(),
+		Guild_Puzzle: new Array(),
+		DryTopIcons: new Array(),
+		DryTopRings: new Array(),
+		DryTopActive: new Array()
+	},
+	
+	Events: {},
+	DryTopTimer: {},
+	Resources: {},
+	JPs: {},
+	Chests: {},
+	Collectibles: {},
+	Guild: {},
 	
 	/*
 	 * Initializes the map only if the boolean set by specific modes is on.
@@ -8768,8 +8772,8 @@ P = {
 			var i;
 			for (i in pData)
 			{
-				M.Events[(pData[i].id)] = {};
-				M.Events[(pData[i].id)].name = pData[i].name;
+				P.Events[(pData[i].id)] = {};
+				P.Events[(pData[i].id)].name = pData[i].name;
 			}
 		}).done(function()
 		{
@@ -8789,10 +8793,10 @@ P = {
 				{
 					event = pDataInner.events[i];
 					searchname = event.name.toLowerCase();
-					newname = (M.Events[i] !== undefined) ? M.Events[i].name : event.name;
+					newname = (P.Events[i] !== undefined) ? P.Events[i].name : event.name;
 					zoneobj = M.getZoneFromID(event.map_id);
 					// Skip iterated event if...
-					if (M.Events[i] === undefined // Event is not in event_names.json also
+					if (P.Events[i] === undefined // Event is not in event_names.json also
 						|| zoneobj === undefined // Event is not in a world map zone
 						|| isEventUnwanted(searchname) // Event is obsolete
 						|| event.map_id === 988 // Ignore Dry Top
@@ -8979,12 +8983,12 @@ P = {
 						iconAnchor: [256, 32]
 					})
 				});
-				M.Layer.DryTopNicks.addLayer(marker);
+				P.Layer.DryTopNicks.addLayer(marker);
 			}
-			M.toggleLayer(M.Layer.DryTopNicks, true);
+			M.toggleLayer(P.Layer.DryTopNicks, true);
 			
 			// Timer integrated on the map
-			M.DryTopTimer = L.marker(M.convertGCtoLC(M.getZoneCenter("dry")),
+			P.DryTopTimer = L.marker(M.convertGCtoLC(M.getZoneCenter("dry")),
 			{
 				clickable: false,
 				icon: L.divIcon(
@@ -8997,7 +9001,7 @@ P = {
 					iconAnchor: [256, 32]
 				})
 			});
-			M.toggleLayer(M.DryTopTimer, true);
+			M.toggleLayer(P.DryTopTimer, true);
 			I.qTip.init($("#mapDryTopClip0, #mapDryTopClip1").click(function()
 			{
 				$(this).select();
@@ -9041,14 +9045,14 @@ P = {
 					// Show only current event icons, the highlight event function will continue this
 					if ($("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
 					{
-						M.LayerArray.DryTopActive.push(event.eventicon);
-						M.LayerArray.DryTopActive.push(event.eventring);
+						P.LayerArray.DryTopActive.push(event.eventicon);
+						P.LayerArray.DryTopActive.push(event.eventring);
 						M.toggleLayer(event.eventring, true);
 						M.toggleLayer(event.eventicon, true);
 					}
 					
-					M.LayerArray.DryTopRings.push(event.eventring);
-					M.LayerArray.DryTopIcons.push(event.eventicon);
+					P.LayerArray.DryTopRings.push(event.eventring);
+					P.LayerArray.DryTopIcons.push(event.eventicon);
 				}
 			}
 			I.qTip.init(".leaflet-marker-icon");
@@ -9069,18 +9073,18 @@ P = {
 		if (C.isDryTopGenerated)
 		{
 			C.isDryTopIconsShown = pBoolean;
-			M.toggleLayer(M.Layer.DryTopNicks, pBoolean);
-			M.toggleLayer(M.DryTopTimer, pBoolean);
+			M.toggleLayer(P.Layer.DryTopNicks, pBoolean);
+			M.toggleLayer(P.DryTopTimer, pBoolean);
 			if (pBoolean)
 			{
-				M.toggleLayerArray(M.LayerArray.DryTopActive, pBoolean);
+				M.toggleLayerArray(P.LayerArray.DryTopActive, pBoolean);
 				P.adjustZoomDryTop();
 				K.updateDryTopClipboard();
 			}
 			else
 			{
-				M.toggleLayerArray(M.LayerArray.DryTopIcons, pBoolean);
-				M.toggleLayerArray(M.LayerArray.DryTopRings, pBoolean);
+				M.toggleLayerArray(P.LayerArray.DryTopIcons, pBoolean);
+				M.toggleLayerArray(P.LayerArray.DryTopRings, pBoolean);
 			}
 		}
 	},
@@ -9113,17 +9117,17 @@ P = {
 			// Event icons are same size as waypoints, but their rings are bigger
 			ringsize = M.scaleDimension(M.cRING_SIZE_MAX);
 
-			for (i in M.LayerArray.DryTopIcons)
+			for (i in P.LayerArray.DryTopIcons)
 			{
 				// Icons
-				icon = M.LayerArray.DryTopIcons[i];
+				icon = P.LayerArray.DryTopIcons[i];
 				M.changeMarkerIcon(icon, icon.options.image, iconsize);
 				// Rings
-				icon = M.LayerArray.DryTopRings[i];
+				icon = P.LayerArray.DryTopRings[i];
 				M.changeMarkerIcon(icon, icon.options.image, ringsize);
 			}
 			
-			M.Layer.DryTopNicks.eachLayer(function(layer) {
+			P.Layer.DryTopNicks.eachLayer(function(layer) {
 				if (layer._icon)
 				{
 					layer._icon.style.fontSize = nickfontsize + "px";
@@ -9132,10 +9136,10 @@ P = {
 					layer._icon.style.display = "table"; // For middle vertical alignment
 				}
 			});
-			M.DryTopTimer._icon.style.fontSize = (nickfontsize*2) + "px";
-			M.DryTopTimer._icon.style.opacity = nickopacity;
-			M.DryTopTimer._icon.style.zIndex = M.cZIndexRaise + 1;
-			M.DryTopTimer._icon.style.display = "table";
+			P.DryTopTimer._icon.style.fontSize = (nickfontsize*2) + "px";
+			P.DryTopTimer._icon.style.opacity = nickopacity;
+			P.DryTopTimer._icon.style.zIndex = M.cZIndexRaise + 1;
+			P.DryTopTimer._icon.style.display = "table";
 		}
 	}
 };
@@ -9371,9 +9375,9 @@ G = {
 		var refreshResourcePrices = function()
 		{
 			// Get API prices for each resource type
-			for (var i in M.Resources)
+			for (var i in P.Resources)
 			{
-				var id = M.Resources[i].item;
+				var id = P.Resources[i].item;
 				if (id !== null)
 				{
 					(function(inneri){
@@ -9389,7 +9393,7 @@ G = {
 		
 		$.getScript(U.URL_DATA.Resource).done(function()
 		{
-			M.Resources = GW2T_RESOURCE_DATA; // This object is inline in the map HTML file
+			P.Resources = GW2T_RESOURCE_DATA; // This object is inline in the map HTML file
 			var i, ii;
 			var counterrich = 0;
 			var counterregular = 0;
@@ -9397,9 +9401,9 @@ G = {
 			var resource; // A type of resource, like copper ore
 			var layer, marker, path;
 
-			for (i in M.Resources)
+			for (i in P.Resources)
 			{
-				resource = M.Resources[i];
+				resource = P.Resources[i];
 				var name = i.toLowerCase();
 
 				// Permanent Rich/Farm nodes
@@ -9437,8 +9441,8 @@ G = {
 						counterrich++;
 					}
 					M.toggleLayer(layer);
-					M.Layer["Resource_Rich_" + i] = layer;
-					M.LayerArray.Resource.push(layer);
+					P.Layer["Resource_Rich_" + i] = layer;
+					P.LayerArray.Resource.push(layer);
 				}
 				// Regular nodes that may spawn there
 				if (resource.regulars !== undefined && resource.regulars.length > 0)
@@ -9464,8 +9468,8 @@ G = {
 						counterregular++;
 					}
 					M.toggleLayer(layer);
-					M.Layer["Resource_Regular_" + i] = layer;
-					M.LayerArray.Resource.push(layer);
+					P.Layer["Resource_Regular_" + i] = layer;
+					P.LayerArray.Resource.push(layer);
 				}
 				// Resources with only zone locations (marker centered in map)
 				if (resource.zones !== undefined)
@@ -9495,8 +9499,8 @@ G = {
 						counterzone++;
 					}
 					M.toggleLayer(layer);
-					M.Layer["Resource_Zone_" + i] = layer;
-					M.LayerArray.Resource.push(layer);
+					P.Layer["Resource_Zone_" + i] = layer;
+					P.LayerArray.Resource.push(layer);
 				}
 			}
 			
@@ -9505,9 +9509,9 @@ G = {
 			X.initializeChecklist(X.Checklists.ResourceRegular, counterregular);
 			X.initializeChecklist(X.Checklists.ResourceZone, counterzone);
 			// Fade the node if state is so in checklist
-			for (i in M.LayerArray.Resource)
+			for (i in P.LayerArray.Resource)
 			{
-				M.LayerArray.Resource[i].eachLayer(function(pMarker)
+				P.LayerArray.Resource[i].eachLayer(function(pMarker)
 				{
 					if (pMarker instanceof L.Marker && getNodeState(pMarker) === X.ChecklistEnum.Checked)
 					{
@@ -9517,30 +9521,30 @@ G = {
 			}
 			
 			// Create checkboxes
-			for (i in M.Resources)
+			for (i in P.Resources)
 			{
-				resource = M.Resources[i];
+				resource = P.Resources[i];
 				$("#mapResource_" + resource.type).append(
 					"<label><input id='nod_" + i + "' type='checkbox' checked='checked' /> <img src='img/node/"
 					+ i.toLowerCase() + I.cPNG + "' /> <var>" + D.getObjectName(resource) + "</var><samp id='nodPrice_" + i + "'></samp></label>");
 			}
 			// Bind checkboxes
-			for (i in M.Resources)
+			for (i in P.Resources)
 			{
 				$("#nod_" + i).change(function()
 				{
 					var thisresource = U.getSubstringFromHTMLID($(this));
 					var wantshow = $(this).prop("checked");
 					var wantregular = $("#mapResourceShowRegular").prop("checked");
-					M.toggleLayer(M.Layer["Resource_Rich_" + thisresource], wantshow);
-					M.toggleLayer(M.Layer["Resource_Regular_" + thisresource], (wantshow && wantregular));
-					M.toggleLayer(M.Layer["Resource_Zone_" + thisresource], (wantshow && wantregular));
+					M.toggleLayer(P.Layer["Resource_Rich_" + thisresource], wantshow);
+					M.toggleLayer(P.Layer["Resource_Regular_" + thisresource], (wantshow && wantregular));
+					M.toggleLayer(P.Layer["Resource_Zone_" + thisresource], (wantshow && wantregular));
 				});
 			}
 			$("#mapToggle_Resource").data("checked", true).click(function()
 			{
 				var bool = I.toggleButtonState($(this));
-				for (i in M.Resources)
+				for (i in P.Resources)
 				{
 					$("#nod_" + i).prop("checked", bool).trigger("change");
 				}
@@ -9564,20 +9568,20 @@ G = {
 			$("#mapResourceShowRegular").change(function()
 			{
 				var wantregular = $(this).prop("checked");
-				for (var i in M.Resources)
+				for (var i in P.Resources)
 				{
 					var wantshow = $("#nod_" + i).prop("checked");
-					M.toggleLayer(M.Layer["Resource_Regular_" + i], (wantshow && wantregular));
-					M.toggleLayer(M.Layer["Resource_Zone_" + i], (wantshow && wantregular));
+					M.toggleLayer(P.Layer["Resource_Regular_" + i], (wantshow && wantregular));
+					M.toggleLayer(P.Layer["Resource_Zone_" + i], (wantshow && wantregular));
 				}
 			}).trigger("change");
 			
 			// Bind button to show the clicked map nodes again
 			$("#mapResourceUncheck").click(function()
 			{
-				for (var i in M.LayerArray.Resource)
+				for (var i in P.LayerArray.Resource)
 				{
-					M.LayerArray.Resource[i].eachLayer(function(pMarker)
+					P.LayerArray.Resource[i].eachLayer(function(pMarker)
 					{
 						if (pMarker instanceof L.Marker)
 						{
@@ -9621,18 +9625,18 @@ G = {
 		
 		$.getScript(U.URL_DATA.JP).done(function()
 		{
-			M.JPs = GW2T_JP_DATA;
-			M.Chests = GW2T_CHEST_DATA;
-			X.Checklists.JP.length = O.getObjectLength(M.JPs);
-			M.LayerArray.JP = new Array(X.Checklists.JP.length);
+			P.JPs = GW2T_JP_DATA;
+			P.Chests = GW2T_CHEST_DATA;
+			X.Checklists.JP.length = O.getObjectLength(P.JPs);
+			P.LayerArray.JP = new Array(X.Checklists.JP.length);
 		
 			var i, ii;
-			for (var i in M.JPs)
+			for (var i in P.JPs)
 			{
 				/*
 				 * Create JP markers.
 				 */
-				var jp = M.JPs[i];
+				var jp = P.JPs[i];
 				var coord = M.parseCoordinates(jp.coord);
 				var type = (jp.difficulty === 4) ? "Explorer" : "JP";
 				var marker = L.marker(M.convertGCtoLC(coord),
@@ -9643,8 +9647,8 @@ G = {
 						+ "<img src='" + U.getImageHosted(jp.img) + "' /></div>"
 				});
 				styleJPMarker(marker, jp.difficulty);
-				M.LayerArray.JP[jp.id] = marker;
-				M.toggleLayerArray(M.LayerArray.JP, true);
+				P.LayerArray.JP[jp.id] = marker;
+				M.toggleLayerArray(P.LayerArray.JP, true);
 				
 				/*
 				 * Create JP HTML entries.
@@ -9687,13 +9691,13 @@ G = {
 					title: newtitle
 				});
 				M.bindMappingZoomBehavior(marker, "click");
-				M.Layer.Chest.addLayer(marker);
+				P.Layer.Chest.addLayer(marker);
 			};
-			for (i in M.Chests)
+			for (i in P.Chests)
 			{
-				for (ii in M.Chests[i])
+				for (ii in P.Chests[i])
 				{
-					createChestMarker((M.Chests[i])[ii], i);
+					createChestMarker((P.Chests[i])[ii], i);
 				}
 			}
 
@@ -9701,12 +9705,12 @@ G = {
 			$("#mapJPToggleJP").change(function()
 			{
 				var state = $(this).prop("checked");
-				M.toggleLayerArray(M.LayerArray.JP, state);
+				M.toggleLayerArray(P.LayerArray.JP, state);
 				if (state)
 				{
-					for (var i in M.LayerArray.JP)
+					for (var i in P.LayerArray.JP)
 					{
-						var marker = M.LayerArray.JP[i];
+						var marker = P.LayerArray.JP[i];
 						var state = X.getChecklistItem(X.Checklists.JP, marker.options.id);
 						if (state === X.ChecklistEnum.Unchecked)
 						{
@@ -9723,7 +9727,7 @@ G = {
 			// Button to toggle chest markers only
 			$("#mapJPToggleChest").change(function()
 			{
-				M.toggleLayer(M.Layer.Chest, $(this).prop("checked"));
+				M.toggleLayer(P.Layer.Chest, $(this).prop("checked"));
 			});
 			// Button to toggle markers display
 			$("#mapToggle_JP").data("checked", true).click(function()
@@ -9770,7 +9774,7 @@ G = {
 					else
 					{
 						$(this).parent().prev().addClass("mapJPListNameChecked");
-						styleJPMarker(M.LayerArray.JP[i], 0);
+						styleJPMarker(P.LayerArray.JP[i], 0);
 					}
 
 				}).change(function()
@@ -9781,12 +9785,12 @@ G = {
 					if (checkboxstate === X.ChecklistEnum.Unchecked)
 					{
 						$(this).parent().prev().removeClass("mapJPListNameChecked");
-						styleJPMarker(M.LayerArray.JP[checkboxindex], M.LayerArray.JP[checkboxindex].options.difficulty);
+						styleJPMarker(P.LayerArray.JP[checkboxindex], P.LayerArray.JP[checkboxindex].options.difficulty);
 					}
 					else
 					{
 						$(this).parent().prev().addClass("mapJPListNameChecked");
-						styleJPMarker(M.LayerArray.JP[checkboxindex], 0);
+						styleJPMarker(P.LayerArray.JP[checkboxindex], 0);
 					}
 
 					// Rewrite the checklist string by updating the digit at the ID/index
@@ -9812,13 +9816,13 @@ G = {
 				(function(pIndex)
 				{
 					// Click associated checkbox when clicked
-					M.LayerArray.JP[pIndex].on("click", function()
+					P.LayerArray.JP[pIndex].on("click", function()
 					{
 						$("#mapJPCheck_" + pIndex).trigger("click");
 						I.scrollToElement($("#mapJP_" + this.options.id), $("#plateMap"));
 					});
 					// Zoom in when double clicked
-					M.LayerArray.JP[pIndex].on("dblclick", function()
+					P.LayerArray.JP[pIndex].on("dblclick", function()
 					{
 						if (M.Map.getZoom() === M.ZoomEnum.Max)
 						{
@@ -9840,7 +9844,7 @@ G = {
 				{
 					$("#mapJPCheck_" + i).prop("checked", false)
 						.parent().prev().removeClass("mapJPListNameChecked");
-					styleJPMarker(M.LayerArray.JP[i], M.LayerArray.JP[i].options.difficulty);
+					styleJPMarker(P.LayerArray.JP[i], P.LayerArray.JP[i].options.difficulty);
 
 					jpchecklist += "0";
 				}
@@ -9862,15 +9866,15 @@ G = {
 	{
 		$.getScript(U.URL_DATA.Collectible).done(function()
 		{
-			M.Collectibles = GW2T_COLLECTIBLE_DATA;
+			P.Collectibles = GW2T_COLLECTIBLE_DATA;
 			var i;
 			var collectible;
 			var translatedname;
 
-			for (i in M.Collectibles)
+			for (i in P.Collectibles)
 			{
 				// Create checkboxes
-				collectible = M.Collectibles[i];
+				collectible = P.Collectibles[i];
 				translatedname = D.getObjectName(collectible);
 				$("#mapCollectibleList").append(
 					"<div>"
@@ -9890,7 +9894,7 @@ G = {
 				{
 					var type = U.getSubstringFromHTMLID($(this));
 					G.generateCollectibles(type);
-					M.goToArguments(M.Collectibles[type].view);
+					M.goToArguments(P.Collectibles[type].view);
 				});
 				
 				// If article URL query string exists, show collectible of specified index
@@ -9909,7 +9913,7 @@ G = {
 			// Toggle button will only hide icons, by unchecking the checked boxes
 			$("#mapToggle_Collectible").data("checked", false).data("hideonly", true).click(function()
 			{
-				for (i in M.Collectibles)
+				for (i in P.Collectibles)
 				{
 					if ($("#ned_" + i).prop("checked"))
 					{
@@ -9928,7 +9932,7 @@ G = {
 	{
 		var i, number;
 		var customlist = U.Args[X.Collectibles[pType].urlkey];
-		var collectible = M.Collectibles[pType];
+		var collectible = P.Collectibles[pType];
 		var ithneedle;
 		var stateinstring;
 		var marker;
@@ -9949,11 +9953,11 @@ G = {
 		};
 		
 		// Initialize checklist
-		X.Collectibles[pType].length = M.Collectibles[pType].needles.length;
+		X.Collectibles[pType].length = P.Collectibles[pType].needles.length;
 		X.initializeChecklist(X.Collectibles[pType], X.Collectibles[pType].length, customlist);
 		
-		M.LayerArray[pType] = new Array(); // Holds markers (needles)
-		M.Layer[pType] = new L.layerGroup(); // Holds path connecting the markers
+		P.LayerArray[pType] = new Array(); // Holds markers (needles)
+		P.Layer[pType] = new L.layerGroup(); // Holds path connecting the markers
 		
 		for (i in collectible.needles)
 		{
@@ -10003,7 +10007,7 @@ G = {
 			});
 			
 			// Add to array
-			M.LayerArray[pType].push(marker);
+			P.LayerArray[pType].push(marker);
 			
 			// Compile coordinates for path lines
 			pathcoords.push(ithneedle.c);
@@ -10015,9 +10019,9 @@ G = {
 			color: "white",
 			opacity: 0.2
 		});
-		M.Layer[pType].addLayer(pathline);
-		M.toggleLayerArray(M.LayerArray[pType], true);
-		M.toggleLayer(M.Layer[pType], true);
+		P.Layer[pType].addLayer(pathline);
+		M.toggleLayerArray(P.LayerArray[pType], true);
+		M.toggleLayer(P.Layer[pType], true);
 		
 		// Bind tooltip
 		I.qTip.init(".leaflet-marker-icon");
@@ -10027,18 +10031,18 @@ G = {
 		{
 			var state = $(this).prop("checked");
 			var type = U.getSubstringFromHTMLID($(this));
-			M.toggleLayerArray(M.LayerArray[type], state);
-			M.toggleLayer(M.Layer[type], state);
+			M.toggleLayerArray(P.LayerArray[type], state);
+			M.toggleLayer(P.Layer[type], state);
 			// Also views the map location of the collectible if box is checked
 			if (state)
 			{
-				M.goToArguments(M.Collectibles[type].view);
+				M.goToArguments(P.Collectibles[type].view);
 			}
 		});
 		$("#nedUncheck_" + pType).click(function()
 		{
 			var type = U.getSubstringFromHTMLID($(this));
-			var markers = M.LayerArray[type];
+			var markers = P.LayerArray[type];
 			for (var i in markers)
 			{
 				styleCollectibleMarker(markers[i], X.ChecklistEnum.Unfound);
@@ -10062,14 +10066,14 @@ G = {
 		
 		hideGuildMapDrawings = function(pBook)
 		{
-			M.toggleLayerArray(M.LayerArray["Guild_" + pBook], false);
+			M.toggleLayerArray(P.LayerArray["Guild_" + pBook], false);
 			$("#gldBook_" + pBook + " dfn").each(function()
 			{
 				I.toggleHighlight($(this), false);
 			});
-			if (M.Guild[pBook].usedSubmaps !== undefined)
+			if (P.Guild[pBook].usedSubmaps !== undefined)
 			{
-				M.toggleSubmapArray(M.Guild[pBook].usedSubmaps, false);
+				M.toggleSubmapArray(P.Guild[pBook].usedSubmaps, false);
 			}
 		},
 				
@@ -10089,12 +10093,12 @@ G = {
 		
 		$.getScript(U.URL_DATA.Guild).done(function()
 		{
-			M.Guild = GW2T_GUILD_DATA;
+			P.Guild = GW2T_GUILD_DATA;
 			var i;
 			// Create buttons for each mission type, which generates content when first clicked
-			for (i in M.Guild)
+			for (i in P.Guild)
 			{
-				var missiontype = M.Guild[i];
+				var missiontype = P.Guild[i];
 				var translatedname = D.getObjectName(missiontype);
 				$("#mapGuildButtons").append("<div>"
 					+ "<button class='gldButton curToggle' id='gldButton_" + i + "' "
@@ -10145,16 +10149,16 @@ G = {
 			 */
 			$("#gldButton_Bounty").one("click", function()
 			{
-				D.sortObjects(M.Guild.Bounty.data);
-				for (var i in M.Guild.Bounty.data)
+				D.sortObjects(P.Guild.Bounty.data);
+				for (var i in P.Guild.Bounty.data)
 				{
-					var mission = M.Guild.Bounty.data[i];
+					var mission = P.Guild.Bounty.data[i];
 					var name = D.getDefaultObjectName(mission);
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Bounty").append(
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
-						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldBounty_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
 						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
@@ -10173,7 +10177,7 @@ G = {
 					{
 						layergroup.addLayer(P.drawSpots(mission.spawn));
 					}
-					M.LayerArray.Guild_Bounty.push(layergroup);
+					P.LayerArray.Guild_Bounty.push(layergroup);
 					
 					// Bind this mission's behavior
 					var elm = $("#gldBounty_" + i);
@@ -10181,7 +10185,7 @@ G = {
 						.click(function()
 					{
 						I.toggleHighlight($(this));
-						M.toggleLayer(M.LayerArray.Guild_Bounty[U.getSubintegerFromHTMLID($(this))]);
+						M.toggleLayer(P.LayerArray.Guild_Bounty[U.getSubintegerFromHTMLID($(this))]);
 					});
 					M.bindMapLinkBehavior(elm, M.invertZoomLevel(mission.coord[2]));
 				}
@@ -10193,22 +10197,22 @@ G = {
 			 */
 			$("#gldButton_Trek").one("click", function()
 			{
-				D.sortObjects(M.Guild.Trek.data);
-				for (var i in M.Guild.Trek.data)
+				D.sortObjects(P.Guild.Trek.data);
+				for (var i in P.Guild.Trek.data)
 				{
-					var mission = M.Guild.Trek.data[i];
+					var mission = P.Guild.Trek.data[i];
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Trek").append(
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
-						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Trek) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Trek) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldTrek_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn>"
 						+ "</div>"
 					);
 					
 					var layergroup = new L.layerGroup();
 					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
-					M.LayerArray.Guild_Trek.push(layergroup);
+					P.LayerArray.Guild_Trek.push(layergroup);
 					
 					// Bind this mission's behavior
 					var elm = $("#gldTrek_" + i);
@@ -10216,7 +10220,7 @@ G = {
 						.click(function()
 					{
 						I.toggleHighlight($(this));
-						M.toggleLayer(M.LayerArray.Guild_Trek[U.getSubintegerFromHTMLID($(this))]);
+						M.toggleLayer(P.LayerArray.Guild_Trek[U.getSubintegerFromHTMLID($(this))]);
 					});
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Same, M.Pin.Program);
 				}
@@ -10228,17 +10232,17 @@ G = {
 			 */
 			$("#gldButton_Challenge").one("click", function()
 			{
-				M.Guild.Challenge.usedSubmaps = new Array();
-				D.sortObjects(M.Guild.Challenge.data);
-				for (var i in M.Guild.Challenge.data)
+				P.Guild.Challenge.usedSubmaps = new Array();
+				D.sortObjects(P.Guild.Challenge.data);
+				for (var i in P.Guild.Challenge.data)
 				{
-					var mission = M.Guild.Challenge.data[i];
+					var mission = P.Guild.Challenge.data[i];
 					var name = D.getDefaultObjectName(mission);
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Challenge").append(
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
-						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
 						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
@@ -10249,26 +10253,26 @@ G = {
 					if (mission.submap !== undefined)
 					{
 						M.toggleSubmap(mission.submap, false);
-						M.Guild.Challenge.usedSubmaps.push(mission.submap);
+						P.Guild.Challenge.usedSubmaps.push(mission.submap);
 					}
 					
 					var layergroup = new L.layerGroup();
 					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
 					layergroup.addLayer(P.drawSpots(mission.spawn, {color: "gold"}));
-					M.LayerArray.Guild_Challenge.push(layergroup);
+					P.LayerArray.Guild_Challenge.push(layergroup);
 					
 					// Bind this mission's behavior
 					var elm = $("#gldChallenge_" + i);
 					elm.click(function()
 					{
 						var index = U.getSubintegerFromHTMLID($(this));
-						var submap = M.Guild.Challenge.data[index].submap;
+						var submap = P.Guild.Challenge.data[index].submap;
 						var state = I.toggleHighlight($(this));
 						if (submap !== undefined)
 						{
 							M.toggleSubmap(submap, state);
 						}
-						M.toggleLayer(M.LayerArray.Guild_Challenge[index]);
+						M.toggleLayer(P.LayerArray.Guild_Challenge[index]);
 					});
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
@@ -10280,17 +10284,17 @@ G = {
 			 */
 			$("#gldButton_Rush").one("click", function()
 			{
-				M.Guild.Rush.usedSubmaps = new Array();
-				D.sortObjects(M.Guild.Rush.data);
-				for (var i in M.Guild.Rush.data)
+				P.Guild.Rush.usedSubmaps = new Array();
+				D.sortObjects(P.Guild.Rush.data);
+				for (var i in P.Guild.Rush.data)
 				{
-					var mission = M.Guild.Rush.data[i];
+					var mission = P.Guild.Rush.data[i];
 					var name = D.getDefaultObjectName(mission);
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Rush").append(
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
-						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Rush) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Rush) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldRush_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
 						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
@@ -10301,7 +10305,7 @@ G = {
 					if (mission.submap !== undefined)
 					{
 						M.toggleSubmap(mission.submap, false);
-						M.Guild.Rush.usedSubmaps.push(mission.submap);
+						P.Guild.Rush.usedSubmaps.push(mission.submap);
 					}
 					
 					var layergroup = new L.layerGroup();
@@ -10324,20 +10328,20 @@ G = {
 					// Circles for flag checkpoints
 					layergroup.addLayer(P.drawSpots(mission.flags, {radius: 2, color: "gold", weight: 2, opacity: 1}));
 					
-					M.LayerArray.Guild_Rush.push(layergroup);
+					P.LayerArray.Guild_Rush.push(layergroup);
 					
 					// Bind this mission's behavior
 					var elm = $("#gldRush_" + i);
 					elm.click(function()
 					{
 						var index = U.getSubintegerFromHTMLID($(this));
-						var submap = M.Guild.Rush.data[index].submap;
+						var submap = P.Guild.Rush.data[index].submap;
 						var state = I.toggleHighlight($(this));
 						if (submap !== undefined)
 						{
 							M.toggleSubmap(submap, state);
 						}
-						M.toggleLayer(M.LayerArray.Guild_Rush[index]);
+						M.toggleLayer(P.LayerArray.Guild_Rush[index]);
 					});
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
@@ -10349,17 +10353,17 @@ G = {
 			 */
 			$("#gldButton_Puzzle").one("click", function()
 			{
-				M.Guild.Puzzle.usedSubmaps = new Array();
-				D.sortObjects(M.Guild.Puzzle.data);
-				for (var i in M.Guild.Puzzle.data)
+				P.Guild.Puzzle.usedSubmaps = new Array();
+				D.sortObjects(P.Guild.Puzzle.data);
+				for (var i in P.Guild.Puzzle.data)
 				{
-					var mission = M.Guild.Puzzle.data[i];
+					var mission = P.Guild.Puzzle.data[i];
 					var name = D.getDefaultObjectName(mission);
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Puzzle").append(
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
-						+ "='" + mission.wp + " " + D.getObjectName(M.Guild.Puzzle) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Puzzle) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldPuzzle_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
 						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
@@ -10370,7 +10374,7 @@ G = {
 					if (mission.submap !== undefined)
 					{
 						M.toggleSubmap(mission.submap, false);
-						M.Guild.Puzzle.usedSubmaps.push(mission.submap);
+						P.Guild.Puzzle.usedSubmaps.push(mission.submap);
 					}
 					
 					var layergroup = new L.layerGroup();
@@ -10379,20 +10383,20 @@ G = {
 					// Markers for finish chest
 					layergroup.addLayer(L.marker(M.convertGCtoLC(mission.finish), {icon: M.createStandardIcon("img/map/chest.png")}));
 					
-					M.LayerArray.Guild_Puzzle.push(layergroup);
+					P.LayerArray.Guild_Puzzle.push(layergroup);
 					
 					// Bind this mission's behavior
 					var elm = $("#gldPuzzle_" + i);
 					elm.click(function()
 					{
 						var index = U.getSubintegerFromHTMLID($(this));
-						var submap = M.Guild.Puzzle.data[index].submap;
+						var submap = P.Guild.Puzzle.data[index].submap;
 						var state = I.toggleHighlight($(this));
 						if (submap !== undefined)
 						{
 							M.toggleSubmap(submap, state);
 						}
-						M.toggleLayer(M.LayerArray.Guild_Puzzle[index]);
+						M.toggleLayer(P.LayerArray.Guild_Puzzle[index]);
 					});
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
@@ -10420,7 +10424,7 @@ G = {
 			 */
 			if (I.ArticleCurrent)
 			{
-				for (i in M.Guild)
+				for (i in P.Guild)
 				{
 					if (I.ArticleCurrent.toLowerCase() === i.toLowerCase())
 					{
@@ -12805,7 +12809,7 @@ I = {
 	Symbol:
 	{
 		Expand: "[+]",
-		Collapse: "[-]",
+		Collapse: "[−]",
 		Help: "[?]"
 	},
 	
@@ -13555,7 +13559,7 @@ I = {
 			// Hide the entire collapsible div tag next to the header tag
 			header.next().hide();
 			header.wrapInner("<span></span>");
-			header.append("<sup>[+]</sup>");
+			header.append("<sup>" + I.Symbol.Expand + "</sup>");
 			
 			// Bind click the header to toggle the sibling collapsible container
 			header.click(function()
