@@ -7615,22 +7615,25 @@ M = {
 		});
 		
 		// Event Icon
-		this.ZoneCurrent.Layers.EventIcon.eachLayer(function(layer) {
-			that.changeMarkerIcon(layer, layer._icon.src, eventiconsize);
-			if (layer._icon)
-			{
-				layer._icon.style.zIndex = 1000;
-			}
-		});
-		
-		// Event Ring
-		this.ZoneCurrent.Layers.EventRing.eachLayer(function(layer) {
-			that.changeMarkerIcon(layer, layer._icon.src, eventringsize);
-			if (layer._icon)
-			{
-				layer._icon.style.zIndex = -10000;
-			}
-		});
+		if (O.Options.bol_displayEvents)
+		{
+			this.ZoneCurrent.Layers.EventIcon.eachLayer(function(layer) {
+				that.changeMarkerIcon(layer, layer._icon.src, eventiconsize);
+				if (layer._icon)
+				{
+					layer._icon.style.zIndex = M.cZIndexRaise;
+				}
+			});
+
+			// Event Ring
+			this.ZoneCurrent.Layers.EventRing.eachLayer(function(layer) {
+				that.changeMarkerIcon(layer, layer._icon.src, eventringsize);
+				if (layer._icon)
+				{
+					layer._icon.style.zIndex = M.cZIndexBury;
+				}
+			});
+		}
 		
 		// Character pin and camera FOV
 		this.updateCharacter(-1);

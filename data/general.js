@@ -501,9 +501,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Land", "Defender", "Tower"]
 },
 "8": {
-	pve: ["Miner Jungle", "Vista Orr", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Defender", "Capture", "Ranger Mes", "Guard Engi"],
-	wvw: ["Land", "Guard", "Keep", "Camp"]
+	pve: ["Miner Jungle", "Vista Orr", "Kessex", "FE"],
+	pvp: ["Rank", "Kills", "Ranger Mes", "Guard Engi"],
+	wvw: ["Ruins", "Kills", "Camp", "Defender"]
 },
 "9": {
 	pve: ["Forager Kryta", "Forger", "Caledon", "Fractal 1-10"],
