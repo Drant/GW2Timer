@@ -506,9 +506,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Kills", "Camp", "Defender"]
 },
 "9": {
-	pve: ["Forager Kryta", "Forger", "Caledon", "Fractal 1-10"],
-	pvp: ["Kills", "Reward", "War Engi", "Ranger Necro"],
-	wvw: ["Guard", "Caravan", "Tower", "Defender"]
+	pve: ["Lumberer Ascalon", "Forger", "Ashford", "Fractal 11-20"],
+	pvp: ["Defender", "Capture", "War Engi", "Ranger Necro"],
+	wvw: ["Creature", "Land", "Camp", "Keep"]
 },
 "10": {
 	pve: ["Lumberer Jungle", "Fractal", "Timberline", "Fractal 11-20"],

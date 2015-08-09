@@ -14219,8 +14219,7 @@ I = {
 				I.isMapEnabled = false;
 				K.iconOpacityChecked = 0.2;
 				I.showHomeLink();
-				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
-					.append("<link rel='stylesheet' type='text/css' href='gw2t-tile.css' />");
+				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-tile.css' />");
 				$("#itemLanguage").prependTo("#plateChains");
 				I.initializeScrollbar("#windowMain");
 				$(window).resize(function() { I.readjustTile(); });
