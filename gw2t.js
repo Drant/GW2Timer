@@ -5146,9 +5146,7 @@ D = {
 	/*
 	 * Plays an audio representation of provided string, using Chrome's TTS
 	 * system if the user is running it. Otherwise loads a TTS sound file
-	 * generated from a TTS web service into a hidden iframe. The sound plays
-	 * automatically after changing the iframe's src via the browser's builtin
-	 * media player.
+	 * generated from a TTS web service into a hidden audio tag.
 	 * @param string pString to convert to speech.
 	 * @param float pDuration of the speech in seconds.
 	 * https://developers.google.com/web/updates/2014/01/Web-apps-that-talk---Introduction-to-the-Speech-Synthesis-API?hl=en
