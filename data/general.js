@@ -516,9 +516,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Spender", "Defender", "Tower"]
 },
 "11": {
-	pve: ["Miner Jungle", "Vista Orr", "Metrica", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Engi Thief", "Ele Necro"],
-	wvw: ["Caravan", "Spender", "Camp", "Defender"]
+	pve: ["Lumberer Wastes", "Fractal", "Caledon", "Fractal 1-10"],
+	pvp: ["Capture", "Rank", "Engi Thief", "Ele Necro"],
+	wvw: ["Kills", "Ruins", "Keep", "Defender"]
 },
 "12": {
 	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Harathi", "Fractal 21-30"],
@@ -641,16 +641,8 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_COUNTDOWN_DATA = {
 	
-Header: "<b>NEW FEATURE</b>: <a href='http://gw2timer.com/?mode=Tile' target='_blank'>Tile Mode</a> http://gw2timer.com/tile<br />",
+Header: "",
 Countdowns: [
-{
-	name_en: "Beta Weekend Event",
-	name_de: "Beta Weekend Event",
-	name_es: "Beta de fin de semana",
-	name_fr: "Week-end de bêta",
-	news: "the-first-beta-weekend-event-begins-august-7/",
-	Start: new Date("2015-08-07T17:00:00Z"),
-	Finish: new Date("2015-08-10T19:00:00Z")
-}
+
 ]
 };
