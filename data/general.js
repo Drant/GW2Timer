@@ -526,9 +526,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Guard", "Defender", "Camp"]
 },
 "13": {
-	pve: ["Miner Shiverpeaks", "Forger", "Wayfarer", "Fractal 1-10"],
-	pvp: ["Rank", "Capture", "Engi Mes", "Guard Ele"],
-	wvw: ["Creature", "Caravan", "Keep", "Camp"]
+	pve: ["Forager Jungle", "Activity", "Snowden", "SB"],
+	pvp: ["Reward", "Capture", "Engi Mes", "Guard Ele"],
+	wvw: ["Guard", "Land", "Defender", "Keep"]
 },
 "14": {
 	pve: ["Forager Kryta", "Vista Ascalon", "Brisban", "Fractal 1-10"],
