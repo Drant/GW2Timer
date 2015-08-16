@@ -91,7 +91,7 @@ O = {
 		{
 			var wait = (I.ModeCurrent === I.ModeEnum.Overlay) ? 15 : 30;
 			I.clear();
-			I.write(I.cSiteName + " was updated since your last visit.<br />"
+			I.greet(I.cSiteName + " was updated since your last visit.<br />"
 				+ "This version: " + currentversion + "<br />"
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
@@ -697,11 +697,11 @@ O = {
 		var messagetime = 10;
 		if (pIsReset)
 		{
-			I.write("Daily Reset!", messagetime);
+			I.greet("Daily Reset!", messagetime);
 		}
 		else
 		{
-			I.write("Daily Timestamp Expired!", messagetime);
+			I.greet("Daily Timestamp Expired!", messagetime);
 		}
 		
 		// Chains checklist
@@ -9061,7 +9061,7 @@ P = {
 			// Finally
 			C.isDryTopGenerated = true;
 			T.initializeDryTopStrings();
-			P.adjustZoomDryTop();
+			P.toggleDryTopIcons(true);
 		});
 	},
 	
@@ -13148,7 +13148,7 @@ I = {
 		// Tells today's world boss closest scheduled time if server resetted
 		if (O.isServerReset && C.ChainToday)
 		{
-			I.write(D.getModifiedWord("world boss", "daily", U.CaseEnum.Sentence) + " "
+			I.greet(D.getModifiedWord("world boss", "daily", U.CaseEnum.Sentence) + " "
 				+ D.getChainTitleAny(C.ChainToday.nexus) + " " + D.getPhrase("will start") + " " + D.getPhrase("at") + " "
 				+ T.getTimeFormatted(
 				{
@@ -13342,6 +13342,14 @@ I = {
 				$("#jsConsoleButtons").hide();
 			});
 		}, pSeconds * T.cMILLISECONDS_IN_SECOND);
+	},
+	greet: function(pString, pSeconds, pClear)
+	{
+		// For messages that are shown when the program has just loaded
+		if (I.isProgramEmbedded === false)
+		{
+			I.write(pString, pSeconds, pClear);
+		}
 	},
 	
 	/*
