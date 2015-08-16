@@ -541,9 +541,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Kills", "Camp", "Tower"]
 },
 "16": {
-	pve: ["Miner Kryta", "Vista Shiverpeaks", "Maelstrom", "Fractal 1-10"],
-	pvp: ["Kills", "Capture", "War Mes", "Ranger Necro"],
-	wvw: ["Land", "Guard", "Tower", "Defender"]
+	pve: ["Miner Shiverpeaks", "Fractal", "Fields", "Jormag"],
+	pvp: ["Reward", "Capture", "War Mes", "Ranger Necro"],
+	wvw: ["Ruins", "Land", "Keep", "Defender"]
 },
 "17": {
 	pve: ["Lumberer Shiverpeaks", "Vista Kryta", "Cursed", "Fractal 1-10"],
