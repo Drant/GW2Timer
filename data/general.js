@@ -546,9 +546,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Land", "Keep", "Defender"]
 },
 "17": {
-	pve: ["Lumberer Shiverpeaks", "Vista Kryta", "Cursed", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Thief Necro", "Ele Ranger"],
-	wvw: ["Ruins", "Kills", "Keep", "Camp"]
+	pve: ["Lumberer Jungle", "Vista Kryta", "Harathi", "SB"],
+	pvp: ["Defender", "Kills", "Thief Necro", "Ele Ranger"],
+	wvw: ["Land", "Guard", "Defender", "Keep"]
 },
 "18": {
 	pve: ["Forager Ascalon", "Forger", "Southsun", "Fractal 1-10"],
