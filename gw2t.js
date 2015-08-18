@@ -1778,13 +1778,13 @@ U = {
 	{
 		$(pSelector).each(function()
 		{
-			$(this).attr("href", I.cSiteURL + "out/?u=" + encodeURI($(this).attr("href")));
+			$(this).attr("href", I.cSiteURL + "out?u=" + encodeURI($(this).attr("href")));
 			$(this).attr("target", "_blank");
 		});
 	},
 	convertExternalURL: function(pURL)
 	{
-		return I.cSiteURL + "out/?u=" + encodeURI(pURL);
+		return I.cSiteURL + "out?u=" + encodeURI(pURL);
 	},
 	
 	/*
@@ -1796,7 +1796,7 @@ U = {
 		var url = pURL;
 		if (I.ModeCurrent !== I.ModeEnum.Overlay)
 		{
-			url = I.cSiteURL + "out/?u=" + encodeURI(pURL);
+			url = I.cSiteURL + "out?u=" + encodeURI(pURL);
 		}
 		window.open(url, "_blank");
 	},
