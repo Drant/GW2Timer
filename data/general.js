@@ -551,9 +551,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Defender", "Keep"]
 },
 "18": {
-	pve: ["Forager Ascalon", "Forger", "Southsun", "Fractal 1-10"],
-	pvp: ["Defender", "Capture", "War Necro", "Thief Mes"],
-	wvw: ["Spender", "Ruins", "Defender", "Camp"]
+	pve: ["Miner Kryta", "Forger", "Bloodtide", "Megades"],
+	pvp: ["Defender", "Rank", "War Necro", "Thief Mes"],
+	wvw: ["Ruins", "Spender", "Tower", "Defender"]
 },
 "19": {
 	pve: ["Miner Shiverpeaks", "Fractal", "Harathi", "Fractal 1-10"],

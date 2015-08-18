@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<!-- Meta -->
@@ -18,13 +18,16 @@
 </script>
 <!-- Redirect -->
 <script type="text/javascript">
+(function()
+{
 	var link;
-	
-	if (document.URL.indexOf("?") !== -1)
+	var primer = "?u=";
+
+	if (document.URL.indexOf(primer) !== -1)
 	{
-		link = unescape(document.URL.substring(document.URL.indexOf("?")+1, document.URL.length));
+		link = unescape(document.URL.substring(document.URL.indexOf(primer)+primer.length, document.URL.length));
 	}
-	
+
 	if (link !== undefined && link !== "")
 	{
 		setTimeout(function()
@@ -36,6 +39,7 @@
 	{
 		window.location = "http://gw2timer.com";
 	}
+})();
 </script>
 </head>
 
