@@ -643,6 +643,14 @@ var GW2T_COUNTDOWN_DATA = {
 	
 Header: "",
 Countdowns: [
-
+{
+	name_en: "Challenging Group Content",
+	name_de: "Fordernde Gruppen-Inhalte",
+	name_es: "Contenido desafiante para grupos",
+	name_fr: "Contenu de groupe exigeant",
+	news: "guild-wars-2the-journey-ahead-at-pax-prime-2015",
+	Start: new Date("2015-08-29T17:30:00Z"),
+	Finish: new Date("2015-08-30T00:00:00Z")
+}
 ]
 };
