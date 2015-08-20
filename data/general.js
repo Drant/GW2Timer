@@ -561,9 +561,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Ruins", "Defender", "Camp"]
 },
 "20": {
-	pve: ["Miner Shiverpeaks", "Vista Kryta", "Sparkfly", "Wurm"],
+	pve: ["Miner Shiverpeaks", "Vista Orr", "Fields", "Wurm"],
 	pvp: ["Capture", "Rank", "Ranger Thief", "Engi Ele"],
-	wvw: ["Creature", "Guard", "Camp", "Defender"]
+	wvw: ["Land", "Caravan", "Defender", "Keep"]
 },
 "21": {
 	pve: ["Forager Orr", "Vista Orr", "Gendarran", "Fractal 31-40"],
