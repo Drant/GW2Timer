@@ -642,7 +642,16 @@ var GW2T_DAILY_CALENDAR = {
 var GW2T_COUNTDOWN_DATA = {
 	
 Header: "",
-Countdowns: [
+Countdowns: [	
+{
+	name_en: "Anniversary Sale",
+	name_de: "Jubiläumsangebote",
+	name_es: "Rebajas de aniversario",
+	name_fr: "Offre spéciale d'anniversaire",
+	news: "anniversary-sale",
+	Start: new Date("2015-08-21T17:00:00Z"),
+	Finish: new Date("2015-09-11T17:00:00Z")
+},
 {
 	name_en: "Challenging Group Content",
 	name_de: "Fordernde Gruppen-Inhalte",
