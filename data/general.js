@@ -571,9 +571,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Guard", "Camp", "Tower"]
 },
 "22": {
-	pve: ["Lumberer Jungle", "Fractal", "Straits", "Fractal 1-10"],
-	pvp: ["Defender", "Rank", "Ranger Mes", "Guard Engi"],
-	wvw: ["Ruins", "Kills", "Camp", "Defender"]
+	pve: ["Miner Ascalon", "Activity", "Dry", "Golem"],
+	pvp: ["Defender", "Reward", "Ranger Mes", "Guard Engi"],
+	wvw: ["Guard", "Kills", "Defender", "Camp"]
 },
 "23": {
 	pve: ["Miner Ascalon", "Forger", "Kessex", "Fractal 1-10"],
