@@ -576,9 +576,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Kills", "Defender", "Camp"]
 },
 "23": {
-	pve: ["Miner Ascalon", "Forger", "Kessex", "Fractal 1-10"],
-	pvp: ["Reward", "Capture", "War Engi", "Ranger Necro"],
-	wvw: ["Land", "Creature", "Keep", "Tower"]
+	pve: ["Forager Kryta", "Fractal", "Gendarran", "FE"],
+	pvp: ["Capture", "Kills", "War Engi", "Ranger Necro"],
+	wvw: ["Land", "Guard", "Camp", "Keep"]
 },
 "24": {
 	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", "Fractal 1-10"],
