@@ -660,6 +660,15 @@ Countdowns: [
 	news: "guild-wars-2the-journey-ahead-at-pax-prime-2015",
 	Start: new Date("2015-08-29T17:30:00Z"),
 	Finish: new Date("2015-08-30T00:00:00Z")
+},
+{
+	name_en: "Beta Weekend Event 2",
+	name_de: "Beta Weekend Event 2",
+	name_es: "Beta de fin de semana 2",
+	name_fr: "Week-end de bêta 2",
+	news: "the-second-beta-weekend-event-begins-september-4",
+	Start: new Date("2015-09-04T19:00:00Z"),
+	Finish: new Date("2015-09-07T06:59:00Z")
 }
 ]
 };

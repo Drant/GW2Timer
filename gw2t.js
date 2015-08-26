@@ -14227,6 +14227,7 @@ I = {
 				I.showHomeLink();
 				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-tile.css' />");
 				$("#itemLanguage").prependTo("#plateChains");
+				$("#chnOptionsRight").prependTo("#chnOptionsPopup");
 				I.initializeScrollbar("#windowMain");
 				$(window).resize(function() { I.readjustTile(); });
 			} break;
