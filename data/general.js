@@ -596,9 +596,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Guard", "Camp", "Defender"]
 },
 "27": {
-	pve: ["Miner Orr", "Activity", "Queensdale", "Fractal 21-30"],
-	pvp: ["Reward", "Kills", "Engi Mes", "Guard Ele"],
-	wvw: ["Ruins", "Kills", "Keep", "Camp"]
+	pve: ["Lumberer Jungle", "Vista Orr", "Harathi", "Wurm"],
+	pvp: ["Kills", "Reward", "Engi Mes", "Guard Ele"],
+	wvw: ["Creature", "Kills", "Defender", "Tower"]
 },
 "28": {
 	pve: ["Forager Jungle", "Fractal", "Bloodtide", "Fractal 1-10"],
