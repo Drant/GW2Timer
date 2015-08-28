@@ -601,9 +601,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Kills", "Defender", "Tower"]
 },
 "28": {
-	pve: ["Forager Jungle", "Fractal", "Bloodtide", "Fractal 1-10"],
-	pvp: ["Defender", "Rank", "War Ele", "Engi Necro"],
-	wvw: ["Ruins", "Creature", "Tower", "Camp"]
+	pve: ["Forager Ascalon", "Forger", "Kessex", "SB"],
+	pvp: ["Kills", "Rank", "War Ele", "Engi Necro"],
+	wvw: ["Land", "Kills", "Keep", "Camp"]
 },
 "29": {
 	pve: ["Miner Shiverpeaks", "Forger", "Harathi", "Fractal 1-10"],
