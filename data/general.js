@@ -669,6 +669,15 @@ Countdowns: [
 	news: "the-second-beta-weekend-event-begins-september-4",
 	Start: new Date("2015-09-04T19:00:00Z"),
 	Finish: new Date("2015-09-07T06:59:00Z")
+},
+{
+	name_en: "Heart of Thorns Release",
+	name_de: "Heart of Thorns Erscheinungs",
+	name_es: "Heart of Thorns lanzamiento",
+	name_fr: "Heart of Thorns sortie",
+	url: "https://twitter.com/GuildWars2/status/637278666070757381",
+	Start: new Date("2015-10-23T07:00:00Z"),
+	Finish: new Date("2015-10-24T07:00:00Z")
 }
 ]
 };
