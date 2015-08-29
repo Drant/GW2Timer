@@ -4487,9 +4487,9 @@ D = {
 		s_arrival: {de: "ankunft", es: "llegada", fr: "arrivée",
 			cs: "příjezd", it: "arrivo", pl: "przyjazd", pt: "chegada", ru: "прибытие", zh: "到來"},
 		s_world_boss: {de: "weltboss", es: "jefe mundo", fr: "chef monde",
-			cs: "svět boss", it: "boss mondo", pl: "świat szef", pt: "chefe mundo", ru: "мир босс", zh: "世界頭目"},
+			cs: "svět boss", it: "boss mondo", pl: "świat szef", pt: "chefe mundo", ru: "мировой босс", zh: "世界頭目"},
 		s_section: {de: "paragraph", es: "sección", fr: "section",
-			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "параграф", zh: "節"},
+			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "раздел", zh: "節"},
 		s_map: {de: "karte", es: "mapa", fr: "carte",
 			cs: "mapa", it: "mappa", pl: "mapa", pt: "mapa", ru: "ка́рта", zh: "地圖"},
 		s_center: {de: "zentrum", es: "centro", fr: "centre",
@@ -4503,7 +4503,7 @@ D = {
 		s_subscription: {de: "abonnement", es: "suscripción", fr: "abonnement",
 			cs: "předplatné", it: "sottoscrizione", pl: "abonament", pt: "assinatura", ru: "подписка", zh: "訂閱"},
 		s_alarm: {de: "alarm", es: "alarma", fr: "alarme",
-			cs: "alarmu", it: "allarme", pl: "alarmu", pt: "alarme", ru: "будильник", zh: "鬧鐘"},
+			cs: "alarmu", it: "allarme", pl: "alarmu", pt: "alarme", ru: "будильника", zh: "鬧鐘"},
 		s_mode: {de: "modus", es: "modo", fr: "mode",
 			cs: "režim", it: "modalità", pl: "tryb", pt: "modo", ru: "режим", zh: "方式"},
 		s_chatlink: {de: "chatlink", es: "vínculo chat", fr: "lien chat",
@@ -4515,7 +4515,7 @@ D = {
 		s_is: {de: "ist", es: "es", fr: "est",
 			cs: "je", it: "è", pl: "jest", pt: "é", ru: "является", zh: "是"},
 		s_subscribe: {de: "abonnieren", es: "subscribir", fr: "abonner",
-			cs: "předplatit si", it: "sottoscrivere", pl: "abonować", pt: "assinar", ru: "подписываться", zh: "訂閱"},
+			cs: "předplatit si", it: "sottoscrivere", pl: "abonować", pt: "assinar", ru: "подписаться", zh: "訂閱"},
 		s_will_start: {de: "wird starten", es: "se iniciará", fr: "débutera",
 			cs: "začne", it: "inizierà", pl: "rozpocznie się", pt: "começará", ru: "начнется", zh: "開始"},
 		s_click: {de: "klicken", es: "clic", fr: "cliquer",
@@ -4531,7 +4531,7 @@ D = {
 		s_also: {de: "auch", es: "también", fr: "aussi",
 			cs: "také", it: "anche", pl: "też", pt: "também", ru: "то́же", zh: "也"},
 		s_checked: {de: "abgehakt", es: "visto", fr: "coché",
-			cs: "odškrtnout", it: "controllato", pl: "zakończony", pt: "marcado", ru: "галочка", zh: "勾掉"},
+			cs: "odškrtnout", it: "controllato", pl: "zakończony", pt: "marcado", ru: "включен", zh: "勾掉"},
 		s_current: {de: "aktuelle", es: "actual", fr: "actuel",
 			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", zh: "活期"},
 		s_daily: {de: "täglich", es: "diaria", fr: "quotidien",
@@ -4543,7 +4543,7 @@ D = {
 		s_predicted: {de: "vorhergesagt", es: "previsto", fr: "prédit",
 			cs: "předpovídal", it: "previsto", pl: "przewiduje", pt: "predito", ru: "предсказанный", zh: "預測"},
 		s_subscribed: {de: "abonniert", es: "suscrito", fr: "souscrit",
-			cs: "odebírané", it: "sottoscritti", pl: "subskrypcji", pt: "assinado", ru: "подписал", zh: "訂閱"},
+			cs: "odebírané", it: "sottoscritti", pl: "subskrypcji", pt: "assinado", ru: "подписан", zh: "訂閱"},
 		s_then: {de: "dann", es: "luego", fr: "puis",
 			cs: "pak", it: "poi", pl: "potem", pt: "então", ru: "затем", zh: "接著"},
 		
@@ -4626,7 +4626,7 @@ D = {
 		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 
 		s_menuChains: {de: "Ketten", es: "Cadenas", fr: "Chaînes",
-			cs: "Řetězy", it: "Catene", pl: "Łańcuchy", pt: "Cadeias", ru: "Цепи", zh: "鏈"},
+			cs: "Řetězy", it: "Catene", pl: "Łańcuchy", pt: "Cadeias", ru: "Расписание", zh: "鏈"},
 		s_menuMap: {de: "Extras", es: "Herramientas", fr: "Outils",
 			cs: "Nástroje", it: "Strumenti", pl: "Narzędzia", pt: "Ferramentas", ru: "Инструменты", zh: "工具"},
 		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance",
@@ -5589,7 +5589,7 @@ C = {
 		
 		if (C.isChainWorldBoss(pChain))
 		{
-			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + "' />"
+			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getChainTitleAny(pChain.nexus) + "' />"
 				+ " (" + pChain.extra[1] + ") "
 				+ pChain.extra[2] + "<ins class='sixteen sixt_ec'></ins>" + " "
 				+ pChain.extra[3] + "<ins class='sixteen sixt_ch'></ins>" + " "
