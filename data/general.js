@@ -649,17 +649,8 @@ Countdowns: [
 	name_es: "Rebajas de aniversario",
 	name_fr: "Offre spéciale d'anniversaire",
 	news: "anniversary-sale",
-	Start: new Date("2015-08-21T17:00:00Z"),
-	Finish: new Date("2015-09-11T17:00:00Z")
-},
-{
-	name_en: "Challenging Group Content",
-	name_de: "Fordernde Gruppen-Inhalte",
-	name_es: "Contenido desafiante para grupos",
-	name_fr: "Contenu de groupe exigeant",
-	news: "guild-wars-2the-journey-ahead-at-pax-prime-2015",
-	Start: new Date("2015-08-29T17:30:00Z"),
-	Finish: new Date("2015-08-30T00:00:00Z")
+	Start: new Date("2015-08-21T16:00:00Z"),
+	Finish: new Date("2015-09-11T16:00:00Z")
 },
 {
 	name_en: "Beta Weekend Event 2",
@@ -675,7 +666,7 @@ Countdowns: [
 	name_de: "Heart of Thorns Erscheinungs",
 	name_es: "Heart of Thorns lanzamiento",
 	name_fr: "Heart of Thorns sortie",
-	url: "https://twitter.com/GuildWars2/status/637278666070757381",
+	url: "https://heartofthorns.guildwars2.com/",
 	Start: new Date("2015-10-23T07:00:00Z"),
 	Finish: new Date("2015-10-24T07:00:00Z")
 }
