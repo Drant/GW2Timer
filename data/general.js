@@ -611,9 +611,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Caravan", "Defender", "Tower"]
 },
 "30": {
-	pve: ["Lumberer Ascalon", "Vista Shiverpeaks", "Metrica", "Fractal 1-10"],
-	pvp: ["Capture", "Rank", "War Mes", "Guard Necro"],
-	wvw: ["Guard", "Ruins", "Defender", "Camp"]
+	pve: ["Forager Orr", "Vista Wastes", "Ashford", "Fractal 11-20"],
+	pvp: ["Capture", "Kills", "War Mes", "Guard Necro"],
+	wvw: ["Spender", "Land", "Defender", "Camp"]
 },
 "31": {
 	pve: ["Miner Shiverpeaks", "Vista Jungle", "Sparkfly", "Fractal 1-10"],
