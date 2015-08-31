@@ -616,9 +616,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Land", "Defender", "Camp"]
 },
 "31": {
-	pve: ["Miner Shiverpeaks", "Vista Jungle", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Capture", "Defender", "Thief Necro", "Ele Ranger"],
-	wvw: ["Guard", "Land", "Keep", "Camp"]
+	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Sparkfly", "Fractal 1-10"],
+	pvp: ["Defender", "Kills", "Thief Necro", "Ele Ranger"],
+	wvw: ["Creature", "Land", "Keep", "Camp"]
 }
 };
 
@@ -641,7 +641,7 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_COUNTDOWN_DATA = {
 	
-Header: "",
+Header: "Do you like using gw2timer.com? Recommend it to your friends and <a href='http://gw2timer.com/out/?u=https://www.guildwars2.com/en/news/play-for-free-today/' target='_blank'>new players</a>!<br />",
 Countdowns: [	
 {
 	name_en: "Anniversary Sale",
@@ -650,7 +650,8 @@ Countdowns: [
 	name_fr: "Offre spéciale d'anniversaire",
 	news: "anniversary-sale",
 	Start: new Date("2015-08-21T16:00:00Z"),
-	Finish: new Date("2015-09-11T16:00:00Z")
+	//Finish: new Date("2015-09-11T16:00:00Z")
+	Finish: new Date("2015-08-31T16:00:00Z")
 },
 {
 	name_en: "Beta Weekend Event 2",
