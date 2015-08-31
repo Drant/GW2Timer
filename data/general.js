@@ -650,8 +650,7 @@ Countdowns: [
 	name_fr: "Offre spéciale d'anniversaire",
 	news: "anniversary-sale",
 	Start: new Date("2015-08-21T16:00:00Z"),
-	//Finish: new Date("2015-09-11T16:00:00Z")
-	Finish: new Date("2015-08-31T16:00:00Z")
+	Finish: new Date("2015-09-11T16:00:00Z")
 },
 {
 	name_en: "Beta Weekend Event 2",
