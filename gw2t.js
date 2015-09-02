@@ -14,7 +14,7 @@
 	Jon Rohan, James M. Greene - ZeroClipboard
 	Hyunje Alex Jun - JS scroll bar
 	Cliff Spradlin - GW2 API Documentation
-	Google and TTS-API.COM - Text-To-Speech service
+	Google and ResponsiveVoice.JS - Text-To-Speech service
 
 	CONVENTIONS:
 	Local variables are all lower case: examplevariable
@@ -75,7 +75,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 150806},
+		programVersion: {key: "int_utlProgramVersion", value: 150901},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -96,8 +96,8 @@ O = {
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
-				+ "Try out the new <a class='urlUpdates' href='http://gw2timer.com/?mode=Tile'>Tile Mode!</a><br />"
-				+ "Auto-scales for laptops, tablets, and small screens.<br />"
+				+ "Voice alarm has been updated for Firefox/IE and the <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>overlay app</a>.<br />"
+				+ "Try out the new <a class='urlUpdates' href='http://gw2timer.com/?mode=Tile'>Tile Mode</a>!<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -5180,7 +5180,7 @@ D = {
 		var doSpeak = function(pStringMacro)
 		{
 			var tts = document.getElementById("jsTTSAudio");
-			tts.src = "http://tts-api.com/tts.mp3?q=" + pStringMacro;
+			tts.src = "http://code.responsivevoice.org/getvoice.php?tl=" + O.LanguageCode[O.Options.enu_Language] + "&sv=&vn=&pitch=0.5&rate=0.5&vol=1&t=" + pStringMacro;
 			tts.volume = O.Options.int_volAlarm / T.cPERCENT_100;
 			tts.load();
 			tts.play();
@@ -5258,30 +5258,18 @@ D = {
 	
 	
 	/*
-	 * Gets translation for given text if using Chrome (because Google TTS
-	 * is multilingual but only supports Chrome browser), else return given text.
+	 * Gets translation for given text to be spoken.
 	 * @param string pText to lookup.
 	 * @param string pModifier optional adjective or adverb.
 	 * @returns string translated text or given text.
 	 */
 	getSpeech: function(pText, pModifier)
 	{
-		if (I.isSpeechSynthesisEnabled)
+		if (pModifier)
 		{
-			if (pModifier)
-			{
-				return D.getModifiedWord(pText, pModifier);
-			}
-			return D.getPhrase(pText);
+			return D.getModifiedWord(pText, pModifier);
 		}
-		else
-		{
-			if (pModifier)
-			{
-				return pModifier + pText;
-			}
-			return pText;
-		}
+		return D.getPhrase(pText);
 	},
 	
 	/*
