@@ -642,7 +642,7 @@ var GW2T_DAILY_CALENDAR = {
 var GW2T_COUNTDOWN_DATA = {
 	
 Header: "Do you like using gw2timer.com? Recommend it to your friends and <a href='http://gw2timer.com/out/?u=https://www.guildwars2.com/en/news/play-for-free-today/' target='_blank'>new players</a>!<br />",
-Countdowns: [	
+Countdowns: [
 {
 	name_en: "Anniversary Sale",
 	name_de: "Jubiläumsangebote",
@@ -660,6 +660,15 @@ Countdowns: [
 	news: "the-second-beta-weekend-event-begins-september-4",
 	Start: new Date("2015-09-04T19:00:00Z"),
 	Finish: new Date("2015-09-07T06:59:00Z")
+},
+{
+	name_en: "WvW Stress Test 3",
+	name_de: "WvW Stresstests 3",
+	name_es: "McM Prueba de rendimiento 3",
+	name_fr: "McM Stress-test 3",
+	news: "announcing-the-third-world-vs-world-borderlands-stress-test",
+	Start: new Date("2015-09-08T18:00:00Z"),
+	Finish: new Date("2015-09-10T18:00:00Z")
 },
 {
 	name_en: "The Mordrem Are Coming",
