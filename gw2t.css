@@ -2518,6 +2518,10 @@ input[type="number"] {
 	text-align: right;
 }
 
+input[type="range"] {
+	padding: 0;
+}
+
 label, input {
 	vertical-align: middle;
 }

@@ -476,9 +476,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Camp", "Tower"]
 },
 "3": {
-	pve: ["Lumberer Kryta", "Fractal", "Marches", "Fractal 11-20"],
-	pvp: ["Rank", "Kills", "Ele Mes", "Guard Thief"],
-	wvw: ["Creature", "Caravan", "Keep", "Tower"]
+	pve: ["Miner Wastes", "Activity", "Brisban", "Fractal 1-10"],
+	pvp: ["Rank", "Defender", "Ele Mes", "Guard Thief"],
+	wvw: ["Creature", "Ruins", "Tower", "Defender"]
 },
 "4": {
 	pve: ["Miner Shiverpeaks", "Vista Ascalon", "Wayfarer", "Fractal 1-10"],
@@ -660,6 +660,15 @@ Countdowns: [
 	news: "the-second-beta-weekend-event-begins-september-4",
 	Start: new Date("2015-09-04T19:00:00Z"),
 	Finish: new Date("2015-09-07T06:59:00Z")
+},
+{
+	name_en: "The Mordrem Are Coming",
+	name_de: "Die Mordrem kommen",
+	name_es: "Se acercan los mordrem",
+	name_fr: "Les mordrems approchent",
+	news: "the-mordrem-are-coming",
+	Start: new Date("2015-09-10T16:00:00Z"),
+	Finish: new Date("2015-09-13T16:00:00Z")
 },
 {
 	name_en: "Heart of Thorns Release",
