@@ -658,7 +658,7 @@ Countdowns: [
 	name_es: "Beta de fin de semana 2",
 	name_fr: "Week-end de bêta 2",
 	news: "the-second-beta-weekend-event-begins-september-4",
-	Start: new Date("2015-09-04T19:00:00Z"),
+	Start: new Date("2015-09-04T17:00:00Z"),
 	Finish: new Date("2015-09-07T06:59:00Z")
 },
 {
