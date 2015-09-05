@@ -486,9 +486,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Land", "Camp", "Keep"]
 },
 "5": {
-	pve: ["Lumberer Jungle", "Vista Kryta", "Dredgehaunt", "Fractal 1-10"],
-	pvp: ["Capture", "Kills", "War Guard", "Ranger Engi"],
-	wvw: ["Ruins", "Guard", "Camp", "Defender"]
+	pve: ["Lumberer Ascalon", "Forger", "Caledon", "Fractal 11-20"],
+	pvp: ["Reward", "Kills", "War Guard", "Ranger Engi"],
+	wvw: ["Ruins", "Land", "Keep", "Defender"]
 },
 "6": {
 	pve: ["Forager Ascalon", "Activity", "Snowden", "Fractal 1-10"],
@@ -648,7 +648,7 @@ Countdowns: [
 	name_de: "Jubiläumsangebote",
 	name_es: "Rebajas de aniversario",
 	name_fr: "Offre spéciale d'anniversaire",
-	news: "anniversary-sale",
+	url: "https://forum-en.guildwars2.com/forum/game/gw2/Anniversary-Sales-Updates",
 	Start: new Date("2015-08-21T16:00:00Z"),
 	Finish: new Date("2015-09-11T16:00:00Z")
 },
