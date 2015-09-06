@@ -5180,7 +5180,7 @@ D = {
 		var doSpeak = function(pStringMacro)
 		{
 			var tts = document.getElementById("jsTTSAudio");
-			tts.src = "http://code.responsivevoice.org/getvoice.php?tl=" + O.LanguageCode[O.Options.enu_Language] + "&sv=&vn=&pitch=0.5&rate=0.5&vol=1&t=" + pStringMacro;
+			tts.src = "http://code.responsivevoice.org/getvoice.php?tl=" + O.LanguageCode[O.Options.enu_Language] + "&sv=&vn=&pitch=0.5&rate=0.4&vol=1&t=" + pStringMacro;
 			tts.volume = O.Options.int_volAlarm / T.cPERCENT_100;
 			tts.load();
 			tts.play();

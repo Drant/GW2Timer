@@ -76,6 +76,9 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	padding-bottom: 4px;
 }
 
+#chnOptions {
+	top: 0;
+}
 #chnOptionsPopup {
 	font-size: 18px;
 }
@@ -99,6 +102,7 @@ body, html, .panelMain, #windowMain, #paneContent article {
 }
 
 #chnProgress {
+	top: 0;
 	height: 4px;
 }
 
