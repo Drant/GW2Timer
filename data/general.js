@@ -496,9 +496,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Kills", "Camp", "Tower"]
 },
 "7": {
-	pve: ["Lumberer Ascalon", "Fractal", "Southsun", "Fractal 1-10"],
+	pve: ["Forager Kryta", "Vista Orr", "Wayfarer", "Jormag"],
 	pvp: ["Capture", "Reward", "War Ranger", "Guard Necro"],
-	wvw: ["Creature", "Land", "Defender", "Tower"]
+	wvw: ["Land", "Guard", "Defender", "Tower"]
 },
 "8": {
 	pve: ["Miner Jungle", "Vista Orr", "Kessex", "Fractal 1-10"],
