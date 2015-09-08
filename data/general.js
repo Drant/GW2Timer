@@ -501,9 +501,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Defender", "Tower"]
 },
 "8": {
-	pve: ["Miner Jungle", "Vista Orr", "Kessex", "Fractal 1-10"],
-	pvp: ["Rank", "Kills", "Ranger Mes", "Guard Engi"],
-	wvw: ["Ruins", "Kills", "Camp", "Defender"]
+	pve: ["Lumberer Ascalon", "Forger", "Fields", "Fractal 21-30"],
+	pvp: ["Defender", "Capture", "Ranger Mes", "Guard Engi"],
+	wvw: ["Land", "Spender", "Camp", "Keep"]
 },
 "9": {
 	pve: ["Lumberer Ascalon", "Forger", "Ashford", "Fractal 11-20"],
@@ -651,15 +651,6 @@ Countdowns: [
 	url: "https://forum-en.guildwars2.com/forum/game/gw2/Anniversary-Sales-Updates",
 	Start: new Date("2015-08-21T16:00:00Z"),
 	Finish: new Date("2015-09-11T16:00:00Z")
-},
-{
-	name_en: "Beta Weekend Event 2",
-	name_de: "Beta Weekend Event 2",
-	name_es: "Beta de fin de semana 2",
-	name_fr: "Week-end de bêta 2",
-	news: "the-second-beta-weekend-event-begins-september-4",
-	Start: new Date("2015-09-04T17:00:00Z"),
-	Finish: new Date("2015-09-07T06:59:00Z")
 },
 {
 	name_en: "WvW Stress Test 3",
