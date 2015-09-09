@@ -127,6 +127,7 @@ O = {
 		bol_showPanel: true,
 		bol_showMap: true,
 		// Map
+		int_setFloor: 1,
 		bol_showZoneRectangles: false,
 		bol_showPersonalPaths: true,
 		bol_showChainPaths: true,
@@ -153,7 +154,7 @@ O = {
 		int_msecGPSRefresh: 100,
 		// Alarm
 		int_setAlarm: 0,
-		int_volAlarm: 100,
+		int_setVolume: 100,
 		bol_alertArrival: true,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
@@ -949,7 +950,7 @@ O = {
 			}
 			$("#optAlarmIcon").attr("src", icon);
 		},
-		int_volAlarm: function()
+		int_setVolume: function()
 		{
 			if (D.isSpeaking() === false)
 			{
@@ -994,6 +995,10 @@ O = {
 				case 1: $("#paneClockBackground").css({opacity: 1}); break;
 				case 2: $("#paneClockBackground").css({opacity: 0}); break;
 			}
+		},
+		int_setFloor: function()
+		{
+			M.changeFloor(O.Options.int_setFloor);
 		},
 		bol_showZoneRectangles: function()
 		{
@@ -1125,7 +1130,7 @@ U = {
 	{
 		// Map
 		TilesTyria: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
-		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
+		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=2",
 		TilesMists: "https://tiles.guildwars2.com/2/1/{z}/{x}/{y}.jpg",
 		MapFloorMists: "https://api.guildwars2.com/v1/map_floor.json?continent_id=2&floor=1",
 		MapsList: "https://api.guildwars2.com/v1/maps.json",
@@ -5170,7 +5175,7 @@ D = {
 		{
 			var msg = new SpeechSynthesisUtterance(pString);
 			msg.lang = O.LanguageCode[O.Options.enu_Language];
-			msg.volume = O.Options.int_volAlarm / T.cPERCENT_100;
+			msg.volume = O.Options.int_setVolume / T.cPERCENT_100;
 			msg.rate = 0.8;
 			window.speechSynthesis.speak(msg);
 			return;
@@ -5181,7 +5186,7 @@ D = {
 		{
 			var tts = document.getElementById("jsTTSAudio");
 			tts.src = "http://code.responsivevoice.org/getvoice.php?tl=" + O.LanguageCode[O.Options.enu_Language] + "&sv=&vn=&pitch=0.5&rate=0.4&vol=1&t=" + pStringMacro;
-			tts.volume = O.Options.int_volAlarm / T.cPERCENT_100;
+			tts.volume = O.Options.int_setVolume / T.cPERCENT_100;
 			tts.load();
 			tts.play();
 		};
@@ -6714,6 +6719,7 @@ M = {
 	Submaps: GW2T_SUBMAP_DATA,
 	cInitialZone: "lion",
 	Map: {},
+	Floors: new Array(),
 	ZoneCurrent: {},
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
@@ -6724,6 +6730,7 @@ M = {
 	isAPIRetrieved_MAPFLOOR: false,
 	isMappingIconsGenerated: false,
 	isEventIconsGenerated: false,
+	cMAP_FLOORS: 4,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
 	cMAP_CENTER_INITIAL: [-1024, 1024], // Out of map boundary so browser doesn't download tiles yet
@@ -6849,14 +6856,17 @@ M = {
 		this.ZoneCurrent = this.Zones[this.cInitialZone];
 		
 		// Do other initialization functions
+		var mapnumber;
 		switch (this.MapEnum)
 		{
 			case I.MapEnum.Tyria: {
+				mapnumber = 1;
 				this.populateMap(I.MapEnum.Tyria);
 				C.ScheduledChains.forEach(P.drawChainPaths);
 			} break;
 			
 			case I.MapEnum.Mists: {
+				mapnumber = 2;
 				// Set tiles, Tyria tiles is set later to avoid loading extra images
 				L.tileLayer(U.URL_API.TilesMists,
 				{
@@ -6865,6 +6875,16 @@ M = {
 			} break;
 		}
 		
+		// Initialize floors for setting the map tiles
+		for (var i = 0; i < this.cMAP_FLOORS; i++)
+		{
+			this.Floors.push(L.tileLayer("https://tiles.guildwars2.com/" + mapnumber + "/" + i + "/{z}/{x}/{y}.jpg",
+			{
+				continuousWorld: true
+			}));
+		}
+		
+		// Touch devices special settings
 		if ( ! this.Map.tap)
 		{
 			/*
@@ -7321,6 +7341,19 @@ M = {
 				P.adjustZoomDryTop();
 			}
 		});
+	},
+	
+	/*
+	 * Changes the floor tile layer.
+	 * @param int pFloor number.
+	 */
+	changeFloor: function(pFloor)
+	{
+		for (var i = 0; i < this.Floors.length; i++)
+		{
+			this.Map.removeLayer(this.Floors[i]);
+		}
+		this.Floors[pFloor].addTo(this.Map);
 	},
 	
 	/*
@@ -13127,10 +13160,7 @@ I = {
 		// Set tile after viewing the coordinate so it downloads the tiles last
 		if (I.isMapEnabled)
 		{
-			L.tileLayer(U.URL_API.TilesTyria,
-			{
-				continuousWorld: true
-			}).addTo(M.Map);
+			M.changeFloor(O.Options.int_setFloor);
 		}
 		
 		// Tells today's world boss closest scheduled time if server resetted

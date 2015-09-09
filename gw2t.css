@@ -1405,6 +1405,9 @@ textarea.jsCopyCode {
 	width: 100%;
 	margin-bottom: 4px;
 }
+#opt_int_setFloor {
+	width: 80%;
+}
 
 #plateChains header {
 	display: block;
@@ -2519,6 +2522,8 @@ input[type="number"] {
 }
 
 input[type="range"] {
+	display: inline;
+	width: 100%;
 	padding: 0;
 }
 

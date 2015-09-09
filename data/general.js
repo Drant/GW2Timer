@@ -506,9 +506,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Spender", "Camp", "Keep"]
 },
 "9": {
-	pve: ["Lumberer Ascalon", "Forger", "Ashford", "Fractal 11-20"],
-	pvp: ["Defender", "Capture", "War Engi", "Ranger Necro"],
-	wvw: ["Creature", "Land", "Camp", "Keep"]
+	pve: ["Miner Jungle", "Activity", "Timberline", "Maw"],
+	pvp: ["Rank", "Defender", "War Engi", "Ranger Necro"],
+	wvw: ["Ruins", "Guard", "Keep", "Camp"]
 },
 "10": {
 	pve: ["Miner Jungle", "Vista Ascalon", "Brisban", "Fractal 1-10"],
