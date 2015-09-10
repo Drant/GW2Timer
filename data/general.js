@@ -694,16 +694,16 @@ Countdowns: [
  */
 Sales: [
 {
-	url: "http://wiki.guildwars2.com/wiki/Plush_Quaggan_Backpack_Cover",
-	img: "https://render.guildwars2.com/file/56D1C1FD2EEB2AE1229136A0BAE61BD5D00CCD1E/534221.png",
-	pricenew: 80,
+	url: "http://wiki.guildwars2.com/wiki/Additional_Crafting_License",
+	img: "https://render.guildwars2.com/file/F23275B76B74B907D8A0BE9F3BA066094CAE90FD/819619.png",
+	pricenew: 560,
 	priceold: 800
 },
 {
-	url: "http://wiki.guildwars2.com/wiki/Permanent_Whump_the_Giant_Finisher",
-	img: "https://render.guildwars2.com/file/FF660872F8A4025E5EB50F937DA66AFB021F15BE/619683.png",
-	pricenew: 90,
-	priceold: 300
+	url: "http://wiki.guildwars2.com/wiki/Tradesman's_Package",
+	img: "https://render.guildwars2.com/file/D2220C0E96E928071992400BBC650AB4070B97DE/598604.png",
+	pricenew: 20,
+	priceold: 100
 }
 ]
 };

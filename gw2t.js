@@ -11776,6 +11776,7 @@ T = {
 							+ " ≈ " + E.createCoinString(Math.round(sale.pricenew * ratio), true)
 						+ "</div>");
 					}
+					U.convertExternalLink("#dsbSale a");
 				}
 			});
 		}
