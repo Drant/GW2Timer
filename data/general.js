@@ -657,15 +657,6 @@ Countdowns: [
 	Finish: new Date("2015-09-14T16:00:00Z")
 },
 {
-	name_en: "WvW Stress Test 3",
-	name_de: "WvW Stresstests 3",
-	name_es: "McM Prueba de rendimiento 3",
-	name_fr: "McM Stress-test 3",
-	news: "announcing-the-third-world-vs-world-borderlands-stress-test",
-	Start: new Date("2015-09-08T18:00:00Z"),
-	Finish: new Date("2015-09-10T18:00:00Z")
-},
-{
 	name_en: "The Mordrem Are Coming",
 	name_de: "Die Mordrem kommen",
 	name_es: "Se acercan los mordrem",

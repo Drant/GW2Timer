@@ -5005,6 +5005,36 @@ D = {
 		es: "Cima Seca Q4",
 		fr: "Cimesèche Q4"
 	},{
+		en: "Mordrem Brisban Q1",
+		de: "Mordrem Brisban Q1",
+		es: "Mordrem Brisbanas Q1",
+		fr: "Mordrems Brisban Q1"
+	},{
+		en: "Mordrem Brisban Q2",
+		de: "Mordrem Brisban Q2",
+		es: "Mordrem Brisbanas Q2",
+		fr: "Mordrems Brisban Q2"
+	},{
+		en: "Mordrem Kessex Q1",
+		de: "Mordrem Kessex Q1",
+		es: "Mordrem Kessex Q1",
+		fr: "Mordrems Kessex Q1"
+	},{
+		en: "Mordrem Kessex Q2",
+		de: "Mordrem Kessex Q2",
+		es: "Mordrem Kessex Q2",
+		fr: "Mordrems Kessex Q2"
+	},{
+		en: "Mordrem Diessa Q1",
+		de: "Mordrem Diessa Q1",
+		es: "Mordrem Diessa Q1",
+		fr: "Mordrems Diessa Q1"
+	},{
+		en: "Mordrem Diessa Q2",
+		de: "Mordrem Diessa Q2",
+		es: "Mordrem Diessa Q2",
+		fr: "Mordrems Diessa Q2"
+	},{
 		en: "Lyssa",
 		de: "Verderbte Hohepriesterin der Lyssa",
 		es: "Suma Sacerdotisa Corrupta de Lyssa",
@@ -5352,7 +5382,8 @@ C = {
 		Standard: 2, // Scheduled non-hardcore chains
 		Hardcore: 3, // Scheduled challenging chains with a separate schedule from non-hardcores
 		ChainCutoff: 4,
-		DryTop: 4 // Scheduled Dry Top chains
+		DryTop: 4, // Scheduled Dry Top chains
+		LivingStory: 5
 	},
 	EventPrimacyEnum:
 	{
@@ -5863,6 +5894,11 @@ C = {
 				{
 					chain.htmllist = "#sectionChains_Drytop";
 					C.DryTopChains.push(chain);
+					C.ScheduledChains.push(chain);
+				} break;
+				case C.ChainSeriesEnum.LivingStory:
+				{
+					chain.htmllist = "#sectionChains_Scheduled";
 					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.Legacy:
@@ -10535,7 +10571,7 @@ T = {
 	DashboardAnnouncement: GW2T_DASHBOARD_DATA.Announcement,
 	DashboardSale: GW2T_DASHBOARD_DATA.Sales,
 	isDashboardEnabled: true,
-	isDashboardCountdownTickEnabled: null,
+	isDashboardCountdownTickEnabled: false,
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -10734,6 +10770,12 @@ T = {
 		C.DryTop1 =		C.Chains[14];
 		C.DryTop2 =		C.Chains[15];
 		C.DryTop3 =		C.Chains[16];
+		C.LivingStory0 = C.Chains[17];
+		C.LivingStory1 = C.Chains[18];
+		C.LivingStory2 = C.Chains[19];
+		C.LivingStory3 = C.Chains[20];
+		C.LivingStory4 = C.Chains[21];
+		C.LivingStory5 = C.Chains[22];
 		
 		/*
 		 * This associative array contains all time-sensitive chains (a group of
@@ -10747,18 +10789,18 @@ T = {
 		{
 			   "0": {t: "00:00", c: [C.Taidha, C.Tequatl]},
 			  "15": {t: "00:15", c: [C.Maw]},
-			  "30": {t: "00:30", c: [C.Megades]},
-			  "45": {t: "00:45", c: [C.FE]},
+			  "30": {t: "00:30", c: [C.LivingStory0, C.Megades]},
+			  "45": {t: "00:45", c: [C.LivingStory1, C.FE]},
 
 			  "60": {t: "01:00", c: [C.Shatterer, C.Triple]},
 			  "75": {t: "01:15", c: [C.Wurm]},
-			  "90": {t: "01:30", c: [C.Ulgoth]},
-			 "105": {t: "01:45", c: [C.SB]},
+			  "90": {t: "01:30", c: [C.LivingStory2, C.Ulgoth]},
+			 "105": {t: "01:45", c: [C.LivingStory3, C.SB]},
 
 			 "120": {t: "02:00", c: [C.Golem, C.Queen]},
 			 "135": {t: "02:15", c: [C.Maw]},
-			 "150": {t: "02:30", c: [C.Jormag]},
-			 "165": {t: "02:45", c: [C.FE]},
+			 "150": {t: "02:30", c: [C.LivingStory4, C.Jormag]},
+			 "165": {t: "02:45", c: [C.LivingStory5, C.FE]},
 
 			 "180": {t: "03:00", c: [C.Taidha, C.Tequatl]},
 			 "195": {t: "03:15", c: [C.Wurm]},
@@ -10767,18 +10809,18 @@ T = {
 
 			 "240": {t: "04:00", c: [C.Shatterer, C.Triple]},
 			 "255": {t: "04:15", c: [C.Maw]},
-			 "270": {t: "04:30", c: [C.Ulgoth]},
-			 "285": {t: "04:45", c: [C.FE]},
+			 "270": {t: "04:30", c: [C.LivingStory0, C.Ulgoth]},
+			 "285": {t: "04:45", c: [C.LivingStory1, C.FE]},
 
 			 "300": {t: "05:00", c: [C.Golem]},
 			 "315": {t: "05:15", c: [C.Wurm]},
-			 "330": {t: "05:30", c: [C.Jormag]},
-			 "345": {t: "05:45", c: [C.SB]},
+			 "330": {t: "05:30", c: [C.LivingStory2, C.Jormag]},
+			 "345": {t: "05:45", c: [C.LivingStory3, C.SB]},
 
 			 "360": {t: "06:00", c: [C.Taidha, C.Queen]},
 			 "375": {t: "06:15", c: [C.Maw]},
-			 "390": {t: "06:30", c: [C.Megades]},
-			 "405": {t: "06:45", c: [C.FE]},
+			 "390": {t: "06:30", c: [C.LivingStory4, C.Megades]},
+			 "405": {t: "06:45", c: [C.LivingStory5, C.FE]},
 
 			 "420": {t: "07:00", c: [C.Shatterer, C.Tequatl]},
 			 "435": {t: "07:15", c: [C.Wurm]},
@@ -10787,18 +10829,18 @@ T = {
 
 			 "480": {t: "08:00", c: [C.Golem, C.Triple]},
 			 "495": {t: "08:15", c: [C.Maw]},
-			 "510": {t: "08:30", c: [C.Jormag]},
-			 "525": {t: "08:45", c: [C.FE]},
+			 "510": {t: "08:30", c: [C.LivingStory0, C.Jormag]},
+			 "525": {t: "08:45", c: [C.LivingStory1, C.FE]},
 
 			 "540": {t: "09:00", c: [C.Taidha]},
 			 "555": {t: "09:15", c: [C.Wurm]},
-			 "570": {t: "09:30", c: [C.Megades]},
-			 "585": {t: "09:45", c: [C.SB]},
+			 "570": {t: "09:30", c: [C.LivingStory2, C.Megades]},
+			 "585": {t: "09:45", c: [C.LivingStory3, C.SB]},
 
 			 "600": {t: "10:00", c: [C.Shatterer]},
 			 "615": {t: "10:15", c: [C.Maw]},
-			 "630": {t: "10:30", c: [C.Ulgoth, C.Queen]},
-			 "645": {t: "10:45", c: [C.FE]},
+			 "630": {t: "10:30", c: [C.LivingStory4, C.Ulgoth, C.Queen]},
+			 "645": {t: "10:45", c: [C.LivingStory5, C.FE]},
 
 			 "660": {t: "11:00", c: [C.Golem]},
 			 "675": {t: "11:15", c: [C.Wurm]},
@@ -10807,18 +10849,18 @@ T = {
 
 			 "720": {t: "12:00", c: [C.Taidha]},
 			 "735": {t: "12:15", c: [C.Maw]},
-			 "750": {t: "12:30", c: [C.Megades, C.Triple]},
-			 "765": {t: "12:45", c: [C.FE]},
+			 "750": {t: "12:30", c: [C.LivingStory0, C.Megades, C.Triple]},
+			 "765": {t: "12:45", c: [C.LivingStory1, C.FE]},
 
 			 "780": {t: "13:00", c: [C.Shatterer]},
 			 "795": {t: "13:15", c: [C.Wurm]},
-			 "810": {t: "13:30", c: [C.Ulgoth]},
-			 "825": {t: "13:45", c: [C.SB]},
+			 "810": {t: "13:30", c: [C.LivingStory2, C.Ulgoth]},
+			 "825": {t: "13:45", c: [C.LivingStory3, C.SB]},
 
 			 "840": {t: "14:00", c: [C.Golem]},
 			 "855": {t: "14:15", c: [C.Maw]},
-			 "870": {t: "14:30", c: [C.Jormag]},
-			 "885": {t: "14:45", c: [C.FE]},
+			 "870": {t: "14:30", c: [C.LivingStory4, C.Jormag]},
+			 "885": {t: "14:45", c: [C.LivingStory5, C.FE]},
 
 			 "900": {t: "15:00", c: [C.Taidha, C.Queen]},
 			 "915": {t: "15:15", c: [C.Wurm]},
@@ -10827,18 +10869,18 @@ T = {
 
 			 "960": {t: "16:00", c: [C.Shatterer, C.Tequatl]},
 			 "975": {t: "16:15", c: [C.Maw]},
-			 "990": {t: "16:30", c: [C.Ulgoth]},
-			"1005": {t: "16:45", c: [C.FE]},
+			 "990": {t: "16:30", c: [C.LivingStory0, C.Ulgoth]},
+			"1005": {t: "16:45", c: [C.LivingStory1, C.FE]},
 
 			"1020": {t: "17:00", c: [C.Golem, C.Triple]},
 			"1035": {t: "17:15", c: [C.Wurm]},
-			"1050": {t: "17:30", c: [C.Jormag]},
-			"1065": {t: "17:45", c: [C.SB]},
+			"1050": {t: "17:30", c: [C.LivingStory2, C.Jormag]},
+			"1065": {t: "17:45", c: [C.LivingStory3, C.SB]},
 
 			"1080": {t: "18:00", c: [C.Taidha, C.Queen]},
 			"1095": {t: "18:15", c: [C.Maw]},
-			"1110": {t: "18:30", c: [C.Megades]},
-			"1125": {t: "18:45", c: [C.FE]},
+			"1110": {t: "18:30", c: [C.LivingStory4, C.Megades]},
+			"1125": {t: "18:45", c: [C.LivingStory5, C.FE]},
 
 			"1140": {t: "19:00", c: [C.Shatterer, C.Tequatl]},
 			"1155": {t: "19:15", c: [C.Wurm]},
@@ -10847,18 +10889,18 @@ T = {
 
 			"1200": {t: "20:00", c: [C.Golem, C.Triple]},
 			"1215": {t: "20:15", c: [C.Maw]},
-			"1230": {t: "20:30", c: [C.Jormag]},
-			"1245": {t: "20:45", c: [C.FE]},
+			"1230": {t: "20:30", c: [C.LivingStory0, C.Jormag]},
+			"1245": {t: "20:45", c: [C.LivingStory1, C.FE]},
 
 			"1260": {t: "21:00", c: [C.Taidha]},
 			"1275": {t: "21:15", c: [C.Wurm]},
-			"1290": {t: "21:30", c: [C.Megades]},
-			"1305": {t: "21:45", c: [C.SB]},
+			"1290": {t: "21:30", c: [C.LivingStory2, C.Megades]},
+			"1305": {t: "21:45", c: [C.LivingStory3, C.SB]},
 
 			"1320": {t: "22:00", c: [C.Shatterer]},
 			"1335": {t: "22:15", c: [C.Maw]},
-			"1350": {t: "22:30", c: [C.Ulgoth]},
-			"1365": {t: "22:45", c: [C.FE]},
+			"1350": {t: "22:30", c: [C.LivingStory4, C.Ulgoth]},
+			"1365": {t: "22:45", c: [C.LivingStory5, C.FE]},
 
 			"1380": {t: "23:00", c: [C.Golem, C.Queen]},
 			"1395": {t: "23:15", c: [C.Wurm]},
@@ -11713,12 +11755,15 @@ T = {
 				break;
 			}
 		}
-		T.isDashboardCountdownTickEnabled = T.isDashboardEnabled;
-		if (isallcountdownexpired || I.isMapEnabled === false || O.Options.bol_showDashboard === false)
+		if (isallcountdownexpired
+			|| T.isDashboardEnabled === false
+			|| I.isMapEnabled === false
+			|| O.Options.bol_showDashboard === false)
 		{
 			T.isDashboardEnabled = false;
 			return;
 		}
+		T.isDashboardCountdownTickEnabled = true;
 		
 		// Initialize countdown if at least one countdown has not expired
 		if (isallcountdownexpired === false)

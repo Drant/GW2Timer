@@ -3233,6 +3233,174 @@ var GW2T_CHAIN_DATA = [
 	]
 },
 {
+	alias: "LivingStoryXXX0",
+	pronunciation: "mordrem brisban",
+	series: 5,
+	waypoint: "[&BFwAAAA=]",
+	extra: ["brisban", "18", "0", "0", "0"],
+	title: "The Mordrem Are Coming to Brisban Wildlands Q1",
+	events: [
+		{
+			path: [[9057, 16233],[9057, 16233]],
+			name_en: "The Mordrem have invaded Brisban Wildlands.",
+			name_de: "Die Mordrem sind in den Brisban-Wildnis eingefallen.",
+			name_es: "Los mordrem han invadido las Selvas Brisbanas.",
+			name_fr: "Les mordrems ont enhavi les Terres sauvages de Brisban.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX1",
+	pronunciation: "mordrem brisban",
+	series: 5,
+	waypoint: "[&BFwAAAA=]",
+	extra: ["brisban", "18", "0", "0", "0"],
+	title: "The Mordrem Are Coming to Brisban Wildlands Q2",
+	events: [
+		{
+			path: [[9057, 16233],[9057, 16233]],
+			name_en: "The Mordrem have invaded Brisban Wildlands.",
+			name_de: "Die Mordrem sind in den Brisban-Wildnis eingefallen.",
+			name_es: "Los mordrem han invadido las Selvas Brisbanas.",
+			name_fr: "Les mordrems ont enhavi les Terres sauvages de Brisban.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX2",
+	pronunciation: "mordrem kessex",
+	series: 5,
+	waypoint: "[&BAoAAAA=]",
+	extra: ["kessex", "18", "0", "0", "0"],
+	title: "The Mordrem Are Coming to Kessex Hills Q1",
+	events: [
+		{
+			path: [[10799, 15941],[10799, 15941]],
+			name_en: "The Mordrem have invaded Kessex Hills.",
+			name_de: "Die Mordrem sind in den Kessex-Hügeln eingefallen.",
+			name_es: "Los mordrem han invadido las Colinas Kessex.",
+			name_fr: "Les mordrems ont enhavi les Collines de Kessex.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX3",
+	pronunciation: "mordrem kessex",
+	series: 5,
+	waypoint: "[&BAoAAAA=]",
+	extra: ["kessex", "18", "0", "0", "0"],
+	title: "The Mordrem Are Coming to Kessex Hills Q2",
+	events: [
+		{
+			path: [[10799, 15941],[10799, 15941]],
+			name_en: "The Mordrem have invaded Kessex Hills.",
+			name_de: "Die Mordrem sind in den Kessex-Hügeln eingefallen.",
+			name_es: "Los mordrem han invadido las Colinas Kessex.",
+			name_fr: "Les mordrems ont enhavi les Collines de Kessex.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX4",
+	pronunciation: "mordrem diessa",
+	series: 5,
+	waypoint: "[&BNkAAAA=]",
+	extra: ["diessa", "18", "0", "0", "0"],
+	title: "The Mordrem Are Coming Diessa Plateau Q1",
+	events: [
+		{
+			path: [[23688, 12042],[23688, 12042]],
+			name_en: "The Mordrem have invaded Diessa Plateau.",
+			name_de: "Die Mordrem sind in den Diessa-Plateau eingefallen.",
+			name_es: "Los mordrem han invadido la Meseta de Diessa.",
+			name_fr: "Les mordrems ont enhavi le Plateau de Diessa.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX5",
+	pronunciation: "mordrem diessa",
+	series: 5,
+	waypoint: "[&BNkAAAA=]",
+	extra: ["diessa", "18", "0", "0", "0"],
+	title: "The Mordrem Are Coming Diessa Plateau Q2",
+	events: [
+		{
+			path: [[23688, 12042],[23688, 12042]],
+			name_en: "The Mordrem have invaded Diessa Plateau.",
+			name_de: "Die Mordrem sind in den Diessa-Plateau eingefallen.",
+			name_es: "Los mordrem han invadido la Meseta de Diessa.",
+			name_fr: "Les mordrems ont enhavi le Plateau de Diessa.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
 	alias: "Lyssa",
 	series: 0,
 	waypoint: "[&BK4CAAA=]",
