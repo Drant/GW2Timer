@@ -1784,13 +1784,13 @@ U = {
 	{
 		$(pSelector).each(function()
 		{
-			$(this).attr("href", I.cSiteURL + "out/?u=" + encodeURI($(this).attr("href")));
+			$(this).attr("href", I.cSiteURL + "out/?u=" + U.encodeURL($(this).attr("href")));
 			$(this).attr("target", "_blank");
 		});
 	},
 	convertExternalURL: function(pURL)
 	{
-		return I.cSiteURL + "out/?u=" + encodeURI(pURL);
+		return I.cSiteURL + "out/?u=" + U.encodeURL(pURL);
 	},
 	
 	/*
@@ -1802,7 +1802,7 @@ U = {
 		var url = pURL;
 		if (I.ModeCurrent !== I.ModeEnum.Overlay)
 		{
-			url = I.cSiteURL + "out/?u=" + encodeURI(pURL);
+			url = I.cSiteURL + "out/?u=" + U.encodeURL(pURL);
 		}
 		window.open(url, "_blank");
 	},
@@ -11770,13 +11770,12 @@ T = {
 					for (var i in T.DashboardSale)
 					{
 						var sale = T.DashboardSale[i];
-						$("#dsbSale").append("<div><a href='" + sale.url + "'><img class='dsbSaleItem' src='" + sale.img + "' /></a> "
+						$("#dsbSale").append("<div><a href='" + U.convertExternalURL(sale.url) + "' target='_blank'><img class='dsbSaleItem' src='" + sale.img + "' /></a> "
 							+ "<span class='dsbSaleOriginal'><del>" + sale.priceold + "</del></span> "
 							+ "<span class='dsbSalePrice'>" + sale.pricenew + "<ins class='s16 s16_gem'></ins></span>"
 							+ " ≈ " + E.createCoinString(Math.round(sale.pricenew * ratio), true)
 						+ "</div>");
 					}
-					U.convertExternalLink("#dsbSale a");
 				}
 			});
 		}
