@@ -5005,35 +5005,35 @@ D = {
 		es: "Cima Seca Q4",
 		fr: "Cimesèche Q4"
 	},{
-		en: "Mordrem Brisban Q1",
-		de: "Mordrem Brisban Q1",
-		es: "Mordrem Brisbanas Q1",
-		fr: "Mordrems Brisban Q1"
+		en: "Mordrem Brisban (1/2)",
+		de: "Mordrem Brisban (1/2)",
+		es: "Mordrem Brisbanas (1/2)",
+		fr: "Mordrems Brisban (1/2)"
 	},{
-		en: "Mordrem Brisban Q2",
-		de: "Mordrem Brisban Q2",
-		es: "Mordrem Brisbanas Q2",
-		fr: "Mordrems Brisban Q2"
+		en: "Mordrem Brisban (2/2)",
+		de: "Mordrem Brisban (2/2)",
+		es: "Mordrem Brisbanas (2/2)",
+		fr: "Mordrems Brisban (2/2)"
 	},{
-		en: "Mordrem Kessex Q1",
-		de: "Mordrem Kessex Q1",
-		es: "Mordrem Kessex Q1",
-		fr: "Mordrems Kessex Q1"
+		en: "Mordrem Kessex (1/2)",
+		de: "Mordrem Kessex (1/2)",
+		es: "Mordrem Kessex (1/2)",
+		fr: "Mordrems Kessex (1/2)"
 	},{
-		en: "Mordrem Kessex Q2",
-		de: "Mordrem Kessex Q2",
-		es: "Mordrem Kessex Q2",
-		fr: "Mordrems Kessex Q2"
+		en: "Mordrem Kessex (2/2)",
+		de: "Mordrem Kessex (2/2)",
+		es: "Mordrem Kessex (2/2)",
+		fr: "Mordrems Kessex (2/2)"
 	},{
-		en: "Mordrem Diessa Q1",
-		de: "Mordrem Diessa Q1",
-		es: "Mordrem Diessa Q1",
-		fr: "Mordrems Diessa Q1"
+		en: "Mordrem Diessa (1/2)",
+		de: "Mordrem Diessa (1/2)",
+		es: "Mordrem Diessa (1/2)",
+		fr: "Mordrems Diessa (1/2)"
 	},{
-		en: "Mordrem Diessa Q2",
-		de: "Mordrem Diessa Q2",
-		es: "Mordrem Diessa Q2",
-		fr: "Mordrems Diessa Q2"
+		en: "Mordrem Diessa (2/2)",
+		de: "Mordrem Diessa (2/2)",
+		es: "Mordrem Diessa (2/2)",
+		fr: "Mordrems Diessa (2/2)"
 	},{
 		en: "Lyssa",
 		de: "Verderbte Hohepriesterin der Lyssa",
