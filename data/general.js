@@ -648,13 +648,13 @@ Announcement: "Do you like using gw2timer.com? Recommend it to your friends and 
  */
 Countdowns: [
 {
-	name_en: "Anniversary Sale",
-	name_de: "Jubiläumsangebote",
-	name_es: "Rebajas de aniversario",
-	name_fr: "Offre spéciale d'anniversaire",
+	name_en: "Encore Sale",
+	name_de: "Verlängern Jubiläumsangebote",
+	name_es: "Un bis de las rebajas",
+	name_fr: "Prolongation de l'offre spéciale",
 	url: "https://forum-en.guildwars2.com/forum/game/gw2/Anniversary-Sales-Updates",
 	Start: new Date("2015-08-21T16:00:00Z"),
-	Finish: new Date("2015-09-11T16:00:00Z")
+	Finish: new Date("2015-09-14T16:00:00Z")
 },
 {
 	name_en: "WvW Stress Test 3",
@@ -672,7 +672,7 @@ Countdowns: [
 	name_fr: "Les mordrems approchent",
 	news: "the-mordrem-are-coming",
 	Start: new Date("2015-09-10T16:00:00Z"),
-	Finish: new Date("2015-09-13T16:00:00Z")
+	Finish: new Date("2015-09-14T16:00:00Z")
 },
 {
 	name_en: "Heart of Thorns Release",
