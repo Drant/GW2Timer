@@ -126,6 +126,7 @@ O = {
 		bol_alignPanelRight: true,
 		bol_showPanel: true,
 		bol_showMap: true,
+		bol_showDashboard: true,
 		// Map
 		int_setFloor: 1,
 		bol_showZoneRectangles: false,
@@ -5584,9 +5585,9 @@ C = {
 		{
 			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getChainTitleAny(pChain.nexus) + "' />"
 				+ " (" + pChain.extra[1] + ") "
-				+ pChain.extra[2] + "<ins class='sixteen sixt_ec'></ins>" + " "
-				+ pChain.extra[3] + "<ins class='sixteen sixt_ch'></ins>" + " "
-				+ pChain.extra[4] + "<ins class='sixteen sixt_dg'></ins>" + " ";
+				+ pChain.extra[2] + "<ins class='s16 s16_ecto'></ins>" + " "
+				+ pChain.extra[3] + "<ins class='s16 s16_loot'></ins>" + " "
+				+ pChain.extra[4] + "<ins class='s16 s16_dragonite'></ins>" + " ";
 		}
 		
 		/*
@@ -11713,7 +11714,7 @@ T = {
 			}
 		}
 		T.isDashboardCountdownTickEnabled = T.isDashboardEnabled;
-		if (isallcountdownexpired || I.isMapEnabled === false)
+		if (isallcountdownexpired || I.isMapEnabled === false || O.Options.bol_showDashboard === false)
 		{
 			T.isDashboardEnabled = false;
 			return;
@@ -11769,10 +11770,10 @@ T = {
 					for (var i in T.DashboardSale)
 					{
 						var sale = T.DashboardSale[i];
-						$("#dsbSale").append("<div><img class='dsbSaleItem' src='" + sale.img + "' /> "
-							+ "<span class='dsbSaleOriginal'><del>" + sale.gem + "</del></span> "
-							+ "<span class='dsbSalePrice'>" + sale.gemsale + "<img src='img/ui/gemsmall.png' /></span>"
-							+ " ≈ " + E.createCoinString(Math.round(sale.gemsale * ratio), true)
+						$("#dsbSale").append("<div><a href='" + sale.url + "'><img class='dsbSaleItem' src='" + sale.img + "' /></a> "
+							+ "<span class='dsbSaleOriginal'><del>" + sale.priceold + "</del></span> "
+							+ "<span class='dsbSalePrice'>" + sale.pricenew + "<ins class='s16 s16_gem'></ins></span>"
+							+ " ≈ " + E.createCoinString(Math.round(sale.pricenew * ratio), true)
 						+ "</div>");
 					}
 				}

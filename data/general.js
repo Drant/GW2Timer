@@ -623,6 +623,13 @@ var GW2T_DAILY_CALENDAR = {
 };
 
 /*
+ * Data for generating the dashboard on the map pane.
+ */
+var GW2T_DASHBOARD_DATA = {
+	
+Announcement: "Do you like using gw2timer.com? Recommend it to your friends and <a href='http://gw2timer.com/out/?u=https://www.guildwars2.com/en/news/play-for-free-today/' target='_blank'>new players</a>!<br />",
+
+/*
  * GW2 special events, such as those announced on GuildWars2.com.
  * Format:
 	name: "", // Language independent, overrides others
@@ -639,9 +646,6 @@ var GW2T_DAILY_CALENDAR = {
 	Start: new Date("2015-07-10T19:00:00Z"),
 	Finish: new Date("2015-07-13T19:00:00Z")
  */
-var GW2T_DASHBOARD_DATA = {
-	
-Announcement: "Do you like using gw2timer.com? Recommend it to your friends and <a href='http://gw2timer.com/out/?u=https://www.guildwars2.com/en/news/play-for-free-today/' target='_blank'>new players</a>!<br />",
 Countdowns: [
 {
 	name_en: "Anniversary Sale",
@@ -680,8 +684,26 @@ Countdowns: [
 	Finish: new Date("2015-10-24T07:00:00Z")
 }
 ],
+/*
+ * GW2 gem store sale items.
+ * Format:
+	url: "", // Usually a wiki link to that item
+	img: "", // ArenaNet hosted item image
+	pricenew: 400, // Gems quantity
+	priceold: 800
+ */
 Sales: [
-{ item: 44878, gem: 800, gemsale: 80, img: "https://render.guildwars2.com/file/56D1C1FD2EEB2AE1229136A0BAE61BD5D00CCD1E/534221.png" }, // whump 
-{ item: 39132, gem: 300, gemsale: 90, img: "https://render.guildwars2.com/file/FF660872F8A4025E5EB50F937DA66AFB021F15BE/619683.png" } // plush 
+{
+	url: "http://wiki.guildwars2.com/wiki/Plush_Quaggan_Backpack_Cover",
+	img: "https://render.guildwars2.com/file/56D1C1FD2EEB2AE1229136A0BAE61BD5D00CCD1E/534221.png",
+	pricenew: 80,
+	priceold: 800
+},
+{
+	url: "http://wiki.guildwars2.com/wiki/Permanent_Whump_the_Giant_Finisher",
+	img: "https://render.guildwars2.com/file/FF660872F8A4025E5EB50F937DA66AFB021F15BE/619683.png",
+	pricenew: 90,
+	priceold: 300
+}
 ]
 };

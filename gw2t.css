@@ -1739,17 +1739,6 @@ textarea.jsCopyCode {
 	color: #ffcc77;
 }
 
-.sixteen {
-	width: 16px; height: 16px;
-	background-image: url("img/ui/sixteen.png");
-}
-.sixt_ch { background-position: 0 0; }
-.sixt_dg { background-position: -16px 0; }
-.sixt_ec { background-position: -32px 0; }
-.sixt_fb { background-position: -48px 0; }
-.sixt_in { background-position: -64px 0; }
-.sixt_tt { background-position: -80px 0; }
-
 /* @@Map page
 ----------------------------------------------------------------------------- */
 .mapLegendLine {
@@ -2571,22 +2560,36 @@ gold {
 	color: #ddbb44;
 }
 
+.s16 {
+	width: 16px; height: 16px;
+	background-image: url("img/ui/sixteen.png");
+}
+.s16_coincopper { background-position: 0 0; }
+.s16_coingold { background-position: -16px 0; }
+.s16_coinsilver { background-position: -32px 0; }
+.s16_dragonite { background-position: -48px 0; }
+.s16_ecto { background-position: -64px 0; }
+.s16_facebook { background-position: -80px 0; }
+.s16_gem { background-position: -96px 0; }
+.s16_info { background-position: -112px 0; }
+.s16_loot { background-position: -128px 0; }
+.s16_money { background-position: -144px 0; }
+.s16_twitter { background-position: -160px 0; }
+
 coppercoin, silvercoin, goldcoin {
 	display: inline-block;
 	width: 16px; height: 16px;
 	vertical-align: bottom;
+	background-image: url("img/ui/sixteen.png");
 }
 coppercoin {
-	background: url("img/ui/coin_copper.png");
-	background-size: 16px 16px;
+	background-position: 0 0;
 }
 silvercoin {
-	background: url("img/ui/coin_silver.png");
-	background-size: 16px 16px;
+	background-position: -32px 0;
 }
 goldcoin {
-	background: url("img/ui/coin_gold.png");
-	background-size: 16px 16px;
+	background-position: -16px 0;
 }
 
 dfn.rarity0, input[type="text"].rarity0 { color: #aaaaaa; /* junk gray */ }
