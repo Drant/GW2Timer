@@ -329,7 +329,7 @@ html, body,
 	background: white;
 }
 
-#itemMapCountdown {
+#itemDashboard {
 	display: none;
 	position: absolute;
 	top: 32px; right: 12px;
@@ -343,19 +343,33 @@ html, body,
 	background: rgba(0, 0, 0, 0.4);
 	border-radius: 8px;
 }
-#itemMapCountdown a {
+#itemDashboard a {
 	color: #bbcc77;
 }
-#itemMapCountdown time {
+#dsbCountdown time {
 	font-family: Consolas, monospace;
 	font-size: 18px;
 	color: #ddff77;
 }
-#itemMapCountdown span {
+#dsbCountdown span {
 	color: #7f807f;
 }
-#itemMapCountdown samp {
+#dsbCountdown samp {
 	color: lime;
+}
+#dsbSale div {
+	display: inline-block;
+	margin-left: 32px;
+}
+.dsbSaleItem {
+	width: 32px; height: 32px;
+	border-radius: 4px;
+}
+.dsbSalePrice {
+	color: white;
+}
+.dsbSaleOriginal {
+	color: #b3a082;
 }
 
 /* Bottom left corner: Coordinates bar */

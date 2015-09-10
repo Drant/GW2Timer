@@ -10530,10 +10530,11 @@ W = {
  * ========================================================================== */
 T = {
 	
-	GenericCountdown: GW2T_COUNTDOWN_DATA.Countdowns,
-	GenericCountdownHeader: GW2T_COUNTDOWN_DATA.Header,
-	isGenericCountdownSystemEnabled: true,
-	isGenericCountdownTickEnabled: null,
+	DashboardCountdown: GW2T_DASHBOARD_DATA.Countdowns,
+	DashboardAnnouncement: GW2T_DASHBOARD_DATA.Announcement,
+	DashboardSale: GW2T_DASHBOARD_DATA.Sales,
+	isDashboardEnabled: true,
+	isDashboardCountdownTickEnabled: null,
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -11698,37 +11699,40 @@ T = {
 	/*
 	 * Initializes the countdown object properties to be accessed later.
 	 */
-	initializeGenericCountdown: function()
+	initializeDashboard: function()
 	{
 		// Disable the countdown system if all countdowns have expired
 		var isallcountdownexpired = true;
 		var now = new Date();
-		for (var i in T.GenericCountdown)
+		for (var i in T.DashboardCountdown)
 		{
-			if (now < T.GenericCountdown[i].Finish)
+			if (now < T.DashboardCountdown[i].Finish)
 			{
 				isallcountdownexpired = false;
 				break;
 			}
 		}
+		T.isDashboardCountdownTickEnabled = T.isDashboardEnabled;
 		if (isallcountdownexpired || I.isMapEnabled === false)
 		{
-			T.isGenericCountdownSystemEnabled = false;
+			T.isDashboardEnabled = false;
+			return;
 		}
-		T.isGenericCountdownTickEnabled = T.isGenericCountdownSystemEnabled;
 		
-		// Initialize if at least one countdown has not expired
-		if (T.isGenericCountdownSystemEnabled)
+		// Initialize countdown if at least one countdown has not expired
+		if (isallcountdownexpired === false)
 		{
-			$("#itemMapCountdown").show();
+			$("#itemDashboard").show();
 			var namekey = D.getNameKey();
 			var urlkey = D.getURLKey();
 			var ctd;
 			var name;
 			var url;
-			for (var i in T.GenericCountdown)
+			$("#dsbAnnouncement").html(T.DashboardAnnouncement);
+			
+			for (var i in T.DashboardCountdown)
 			{
-				ctd = T.GenericCountdown[i];
+				ctd = T.DashboardCountdown[i];
 				ctd.StartStamp = ctd.Start.toLocaleString();
 				ctd.FinishStamp = ctd.Finish.toLocaleString();
 				// Use default name if available, or use the translated name
@@ -11747,15 +11751,42 @@ T = {
 				}
 			}
 		}
+		
+		// Show current gem store sales and coin needed to convert to the gems price
+		if (T.DashboardSale.length > 0)
+		{
+			var ratio = 0;
+			$.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
+			{
+				if (pData.quantity !== undefined)
+				{
+					ratio = E.Exchange.COIN_SAMPLE / pData.quantity;
+				}
+			}).always(function()
+			{
+				if (ratio !== 0)
+				{
+					for (var i in T.DashboardSale)
+					{
+						var sale = T.DashboardSale[i];
+						$("#dsbSale").append("<div><img class='dsbSaleItem' src='" + sale.img + "' /> "
+							+ "<span class='dsbSaleOriginal'><del>" + sale.gem + "</del></span> "
+							+ "<span class='dsbSalePrice'>" + sale.gemsale + "<img src='img/ui/gemsmall.png' /></span>"
+							+ " ≈ " + E.createCoinString(Math.round(sale.gemsale * ratio), true)
+						+ "</div>");
+					}
+				}
+			});
+		}
 	},
-	updateGenericCountdown: function(pDate)
+	updateDashboardCountdown: function(pDate)
 	{
-		var str = T.GenericCountdownHeader;
+		var str = "";
 		var ithtime = "";
 		var ctd;
-		for (var i in T.GenericCountdown)
+		for (var i in T.DashboardCountdown)
 		{
-			ctd = T.GenericCountdown[i];
+			ctd = T.DashboardCountdown[i];
 			// Don't generate countdown for those that are past the start time
 			if (pDate < ctd.Start)
 			{
@@ -11768,7 +11799,7 @@ T = {
 				str += "<samp>■</samp> " + ctd.Anchor + " <time>" + ithtime + "</time> ⇓@ " + ctd.FinishStamp + "<br />";
 			}
 		}
-		document.getElementById("itemCountdown").innerHTML = str;
+		document.getElementById("dsbCountdown").innerHTML = str;
 	}
 };
 
@@ -11828,7 +11859,7 @@ K = {
 		K.timestampServer = $("#optTimestampServerReset")[0];
 		K.timestampReset = $("#optTimeTillReset")[0];
 		
-		T.initializeGenericCountdown();
+		T.initializeDashboard();
 		K.updateTimeFrame(new Date());
 		K.updateDaytimeIcon();
 		K.tickFrequent();
@@ -12312,9 +12343,9 @@ K = {
 		{
 			T.updateGuildTimer();
 		}
-		if (T.isGenericCountdownTickEnabled)
+		if (T.isDashboardCountdownTickEnabled)
 		{
-			T.updateGenericCountdown(pDate);
+			T.updateDashboardCountdown(pDate);
 		}
 		
 		// Loop this function, can use variable to halt it
@@ -13182,15 +13213,15 @@ I = {
 			15);
 		}
 		
-		// Hides generic countdown after a time
-		if (T.isGenericCountdownTickEnabled)
+		// Hides dashboard countdown after a time
+		if (T.isDashboardCountdownTickEnabled)
 		{
 			if (I.PageCurrent === I.PageEnum.Chains)
 			{
 				setTimeout(function()
 				{
-					T.isGenericCountdownTickEnabled = false;
-					$("#itemMapCountdown").animate({opacity: 0}, 1000, function()
+					T.isDashboardCountdownTickEnabled = false;
+					$("#itemDashboard").animate({opacity: 0}, 1000, function()
 					{
 						$(this).hide();
 					});
@@ -13198,8 +13229,8 @@ I = {
 			}
 			else
 			{
-				T.isGenericCountdownTickEnabled = false;
-				$("#itemMapCountdown").hide();
+				T.isDashboardCountdownTickEnabled = false;
+				$("#itemDashboard").hide();
 			}
 		}
 		
@@ -13953,17 +13984,17 @@ I = {
 		// Help plate
 		$("#menuHelp").one("click", I.loadHelpPlate);
 		
-		// Show generic countdown when hovered over chains page menu button
-		if (T.isGenericCountdownSystemEnabled)
+		// Show dashboard countdown when hovered over chains page menu button
+		if (T.isDashboardEnabled)
 		{
 			$("#menuChains").hover(function()
 			{
-				T.isGenericCountdownTickEnabled = true;
-				$("#itemMapCountdown").show().css({opacity: 0}).animate({opacity: 1}, 200);
+				T.isDashboardCountdownTickEnabled = true;
+				$("#itemDashboard").show().css({opacity: 0}).animate({opacity: 1}, 200);
 			}, function()
 			{
-				T.isGenericCountdownTickEnabled = false;
-				$("#itemMapCountdown").hide();
+				T.isDashboardCountdownTickEnabled = false;
+				$("#itemDashboard").hide();
 			});
 		}
 		
@@ -14142,7 +14173,7 @@ I = {
 			{
 				// Remove elements extraneous or intrusive to overlay mode
 				$("#paneWarning").remove();
-				$("#itemMapCountdown, #mapQuickURL, #itemMapPeripheralSouth, #itemSocial").hide();
+				$("#itemDashboard, #mapQuickURL, #itemMapPeripheralSouth, #itemSocial").hide();
 				// Resize fonts and positions appropriate for smaller view
 				$("#jsConsole").css(
 				{
@@ -14266,7 +14297,7 @@ I = {
 		{
 			$("#paneWarning").remove();
 			$(".itemMapPeripheral a, .itemMapPeripheral span").hide();
-			T.isGenericCountdownSystemEnabled = false;
+			T.isDashboardEnabled = false;
 		}
 		
 		// Include program mode in Language links
@@ -14277,7 +14308,7 @@ I = {
 				var link = $(this).attr("href");
 				$(this).attr("href", link + "&mode=" + I.ModeCurrent);
 			});
-			T.isGenericCountdownSystemEnabled = false;
+			T.isDashboardEnabled = false;
 		}
 	},
 	

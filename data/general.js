@@ -511,9 +511,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Guard", "Keep", "Camp"]
 },
 "10": {
-	pve: ["Miner Jungle", "Vista Ascalon", "Brisban", "Fractal 1-10"],
-	pvp: ["Rank", "Reward", "Ele Mes", "Guard Thief"],
-	wvw: ["Ruins", "Spender", "Defender", "Tower"]
+	pve: ["Lumberer Shiverpeaks", "Vista Ascalon", "Metrica", "Fractal 31-40"],
+	pvp: ["Kills", "Rank", "Ele Mes", "Guard Thief"],
+	wvw: ["Caravan", "Kills", "Defender", "Keep"]
 },
 "11": {
 	pve: ["Lumberer Wastes", "Fractal", "Caledon", "Fractal 1-10"],
@@ -639,9 +639,9 @@ var GW2T_DAILY_CALENDAR = {
 	Start: new Date("2015-07-10T19:00:00Z"),
 	Finish: new Date("2015-07-13T19:00:00Z")
  */
-var GW2T_COUNTDOWN_DATA = {
+var GW2T_DASHBOARD_DATA = {
 	
-Header: "Do you like using gw2timer.com? Recommend it to your friends and <a href='http://gw2timer.com/out/?u=https://www.guildwars2.com/en/news/play-for-free-today/' target='_blank'>new players</a>!<br />",
+Announcement: "Do you like using gw2timer.com? Recommend it to your friends and <a href='http://gw2timer.com/out/?u=https://www.guildwars2.com/en/news/play-for-free-today/' target='_blank'>new players</a>!<br />",
 Countdowns: [
 {
 	name_en: "Anniversary Sale",
@@ -679,5 +679,9 @@ Countdowns: [
 	Start: new Date("2015-10-23T07:00:00Z"),
 	Finish: new Date("2015-10-24T07:00:00Z")
 }
+],
+Sales: [
+{ item: 44878, gem: 800, gemsale: 80, img: "https://render.guildwars2.com/file/56D1C1FD2EEB2AE1229136A0BAE61BD5D00CCD1E/534221.png" }, // whump 
+{ item: 39132, gem: 300, gemsale: 90, img: "https://render.guildwars2.com/file/FF660872F8A4025E5EB50F937DA66AFB021F15BE/619683.png" } // plush 
 ]
 };
