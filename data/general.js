@@ -690,28 +690,28 @@ Story:
 		name_de: "Mordrem Brisban-Wildnis",
 		name_es: "Mordrem Selvas Brisbanas",
 		name_fr: "Mordrems Terres sauvages de Brisban",
-		Times: [ "00:30", "04:30", "08:30", "12:30", "16:30", "20:30" ],
+		Occurs: [ "00:30", "04:30", "08:30", "12:30", "16:30", "20:30" ],
 		duration: 30,
-		coord: "[9057, 16233]",
+		coord: [9057, 16233]
 	},
 	{
 		name_en: "Mordrem Kessex Hills",
 		name_de: "Mordrem Kessex-Hügeln",
 		name_es: "Mordrem Colinas Kessex",
 		name_fr: "Mordrems Collines de Kessex",
-		Times: [ "01:30", "05:30", "09:30", "13:30", "17:30", "21:30" ],
+		Occurs: [ "01:30", "05:30", "09:30", "13:30", "17:30", "21:30" ],
 		duration: 30,
-		coord: "[10799, 15941]",
+		coord: [10799, 15941]
 	},
 	{
 		name_en: "Mordrem Diessa Plateau",
 		name_de: "Mordrem Diessa-Plateau",
 		name_es: "Mordrem Meseta de Diessa",
 		name_fr: "Mordrems Plateau de Diessa",
-		Times: [ "02:30", "06:30", "10:30", "14:30", "18:30", "22:30" ],
+		Occurs: [ "02:30", "06:30", "10:30", "14:30", "18:30", "22:30" ],
 		duration: 30,
-		coord: "[23688, 12042]",
-	},
+		coord: [23688, 12042]
+	}
 	]
 },
 /*

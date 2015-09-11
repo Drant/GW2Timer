@@ -5005,35 +5005,35 @@ D = {
 		es: "Cima Seca Q4",
 		fr: "Cimesèche Q4"
 	},{
-		en: "Mordrem Brisban (1/2)",
-		de: "Mordrem Brisban (1/2)",
-		es: "Mordrem Brisbanas (1/2)",
-		fr: "Mordrems Brisban (1/2)"
+		en: "Mordrem Brisban (1/6)",
+		de: "Mordrem Brisban (1/6)",
+		es: "Mordrem Brisbanas (1/6)",
+		fr: "Mordrems Brisban (1/6)"
 	},{
-		en: "Mordrem Brisban (2/2)",
-		de: "Mordrem Brisban (2/2)",
-		es: "Mordrem Brisbanas (2/2)",
-		fr: "Mordrems Brisban (2/2)"
+		en: "Mordrem Brisban (2/6)",
+		de: "Mordrem Brisban (2/6)",
+		es: "Mordrem Brisbanas (2/6)",
+		fr: "Mordrems Brisban (2/6)"
 	},{
-		en: "Mordrem Kessex (1/2)",
-		de: "Mordrem Kessex (1/2)",
-		es: "Mordrem Kessex (1/2)",
-		fr: "Mordrems Kessex (1/2)"
+		en: "Mordrem Kessex (3/6)",
+		de: "Mordrem Kessex (3/6)",
+		es: "Mordrem Kessex (3/6)",
+		fr: "Mordrems Kessex (3/6)"
 	},{
-		en: "Mordrem Kessex (2/2)",
-		de: "Mordrem Kessex (2/2)",
-		es: "Mordrem Kessex (2/2)",
-		fr: "Mordrems Kessex (2/2)"
+		en: "Mordrem Kessex (4/6)",
+		de: "Mordrem Kessex (4/6)",
+		es: "Mordrem Kessex (4/6)",
+		fr: "Mordrems Kessex (4/6)"
 	},{
-		en: "Mordrem Diessa (1/2)",
-		de: "Mordrem Diessa (1/2)",
-		es: "Mordrem Diessa (1/2)",
-		fr: "Mordrems Diessa (1/2)"
+		en: "Mordrem Diessa (5/6)",
+		de: "Mordrem Diessa (5/6)",
+		es: "Mordrem Diessa (5/6)",
+		fr: "Mordrems Diessa (5/6)"
 	},{
-		en: "Mordrem Diessa (2/2)",
-		de: "Mordrem Diessa (2/2)",
-		es: "Mordrem Diessa (2/2)",
-		fr: "Mordrems Diessa (2/2)"
+		en: "Mordrem Diessa (6/6)",
+		de: "Mordrem Diessa (6/6)",
+		es: "Mordrem Diessa (6/6)",
+		fr: "Mordrems Diessa (6/6)"
 	},{
 		en: "Lyssa",
 		de: "Verderbte Hohepriesterin der Lyssa",
@@ -10563,12 +10563,13 @@ W = {
 };
 
 /* =============================================================================
- * @@Time utilities and schedule
+ * @@Time utilities and schedule, Dashboard functions
  * ========================================================================== */
 T = {
 	
-	DashboardCountdown: GW2T_DASHBOARD_DATA.Countdowns,
 	DashboardAnnouncement: GW2T_DASHBOARD_DATA.Announcement,
+	DashboardCountdown: GW2T_DASHBOARD_DATA.Countdowns,
+	DashboardStory: GW2T_DASHBOARD_DATA.Story,
 	DashboardSale: GW2T_DASHBOARD_DATA.Sales,
 	isDashboardEnabled: true,
 	isDashboardCountdownTickEnabled: false,
@@ -11623,6 +11624,15 @@ T = {
 		}
 		return str + D.getWord("m");
 	},
+	
+	/*
+	 * Gets a Date object of the previous UTC midnight
+	 * @returns Date.
+	 */
+	getUTCMidnight: function()
+	{
+		return (new Date()).setUTCHours(0, 0, 0, 0);
+	},
 
 	/*
 	 * Gets the time in units since midnight at the point of reference.
@@ -11768,14 +11778,13 @@ T = {
 		// Hide the dashboard when clicked on the close button
 		$("#dsbClose").click(function()
 		{
-			T.isDashboardCountdownTickEnabled = false;
-			$("#itemDashboard").hide();
+			T.toggleDashboard(false);
 		});
 		
 		// Initialize countdown if at least one countdown has not expired
 		if (isallcountdownexpired === false)
 		{
-			$("#itemDashboard").show();
+			T.toggleDashboard(true);
 			var namekey = D.getNameKey();
 			var urlkey = D.getURLKey();
 			var ctd;
@@ -11805,9 +11814,22 @@ T = {
 			}
 		}
 		
+		// Initialize Living Story events
+		/*for (var i in T.DashboardStory)
+		{
+			var story = T.DashboardStory[i];
+			T.DashboardStory.Schedule = new Array();
+			// Convert the hh:mm format to integer minutes
+			for (var ii in story.Occurs)
+			{
+				story.Occurs[ii] = T.parseChainTime(story.Occurs[ii]);
+			}
+		}*/
+		
 		// Show current gem store sales and coin needed to convert to the gems price
 		if (T.DashboardSale.length > 0)
 		{
+			$("#dsbSale").append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 			var ratio = 0;
 			$.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
 			{
@@ -11822,7 +11844,7 @@ T = {
 					for (var i in T.DashboardSale)
 					{
 						var sale = T.DashboardSale[i];
-						$("#dsbSale").append("<div><a href='" + U.convertExternalURL(sale.url) + "' target='_blank'><img class='dsbSaleItem' src='" + sale.img + "' /></a> "
+						$("#dsbSaleCol" + parseInt(i) % 2).append("<div><a href='" + U.convertExternalURL(sale.url) + "' target='_blank'><img class='dsbSaleItem' src='" + sale.img + "' /></a> "
 							+ "<span class='dsbSaleOriginal'><del>" + sale.priceold + "</del></span> "
 							+ "<span class='dsbSalePrice'>" + sale.pricenew + "<ins class='s16 s16_gem'></ins></span>"
 							+ " ≈ " + E.createCoinString(Math.round(sale.pricenew * ratio), true)
@@ -11836,10 +11858,9 @@ T = {
 	{
 		var str = "";
 		var ithtime = "";
-		var ctd;
 		for (var i in T.DashboardCountdown)
 		{
-			ctd = T.DashboardCountdown[i];
+			var ctd = T.DashboardCountdown[i];
 			// Don't generate countdown for those that are past the start time
 			if (pDate < ctd.Start)
 			{
@@ -11853,6 +11874,35 @@ T = {
 			}
 		}
 		document.getElementById("dsbCountdown").innerHTML = str;
+		
+		// Update Living Story timers
+		/*for (var i in T.DashboardStory)
+		{
+			if (0)
+			{
+				
+			}
+		}*/
+	},
+	
+	/*
+	 * Shows or hides the dashboard.
+	 * @param boolean pBoolean.
+	 */
+	toggleDashboard: function(pBoolean)
+	{
+		if (T.isDashboardEnabled)
+		{
+			T.isDashboardCountdownTickEnabled = pBoolean;
+			if (pBoolean)
+			{
+				$("#itemDashboard").show().css({opacity: 0}).animate({opacity: 1}, 200);
+			}
+			else
+			{
+				$("#itemDashboard").hide();
+			}
+		}
 	}
 };
 
@@ -13266,13 +13316,6 @@ I = {
 			15);
 		}
 		
-		// Hides dashboard countdown after a time
-		if (T.isDashboardCountdownTickEnabled && I.PageCurrent !== I.PageEnum.Chains)
-		{
-			T.isDashboardCountdownTickEnabled = false;
-			$("#itemDashboard").hide();
-		}
-		
 		// Finally
 		I.isProgramLoaded = true;
 	},
@@ -13979,8 +14022,7 @@ I = {
 				{
 					case I.PageEnum.Chains:
 					{
-						T.isDashboardCountdownTickEnabled = true;
-						$("#itemDashboard").show().css({opacity: 0}).animate({opacity: 1}, 200);
+						T.toggleDashboard(true);
 					} break;
 					case I.PageEnum.Map:
 					{
@@ -13993,8 +14035,7 @@ I = {
 				$("#paneContent article").hide(); // Hide all plates
 				if (I.PageCurrent !== I.PageEnum.Chains && T.isDashboardCountdownTickEnabled)
 				{
-					T.isDashboardCountdownTickEnabled = false;
-					$("#itemDashboard").hide();
+					T.toggleDashboard(false);
 				}
 				
 				// Only do animations if on regular website (to save computation)

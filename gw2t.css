@@ -355,7 +355,7 @@ html, body,
 	left: -16px;
 	width: 32px; height: 32px;
 	background: url("img/ui/close.png");
-	opacity: 0.5;
+	opacity: 0.4;
 }
 #dsbClose:hover {
 	opacity: 0.8;
@@ -371,8 +371,12 @@ html, body,
 #dsbCountdown samp {
 	color: lime;
 }
-#dsbSale div {
+#dsbSaleCol0, #dsbSaleCol1 {
 	display: inline-block;
+	width: 256px;
+	vertical-align: top;
+}
+#dsbSaleCol0 {
 	margin-left: 32px;
 }
 .dsbSaleItem {
@@ -380,6 +384,7 @@ html, body,
 	border-radius: 4px;
 }
 .dsbSaleItem:hover {
+	width: 64px; height: 64px;
 	opacity: 0.9;
 	border-radius: 16px;
 }
@@ -2597,7 +2602,8 @@ gold {
 coppercoin, silvercoin, goldcoin {
 	display: inline-block;
 	width: 16px; height: 16px;
-	vertical-align: bottom;
+	margin-bottom: -12px;
+	vertical-align: middle;
 	background-image: url("img/ui/sixteen.png");
 }
 coppercoin {
