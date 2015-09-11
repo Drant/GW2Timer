@@ -395,6 +395,15 @@ html, body,
 	color: #b3a082;
 }
 
+#dsbStory {
+	width: auto; height: 120px;
+}
+#dsbStory .chnBar {
+	width: auto;
+	line-height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+}
+
 /* Bottom left corner: Coordinates bar */
 #itemMapCoordinates, #itemWvWCoordinates {
 	position: absolute;
@@ -1626,7 +1635,7 @@ textarea.jsCopyCode {
 .chnDetails ol li { /* Contains the event icon and event name */
 	margin-bottom: 4px;
 	white-space: nowrap;
-    overflow: hidden;
+	overflow: hidden;
 	font-family: "Times New Roman", Times, Georgia, serif;
 }
 .chnDetails ol li ins { /* Orange event icon */

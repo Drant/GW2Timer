@@ -5898,7 +5898,7 @@ C = {
 				} break;
 				case C.ChainSeriesEnum.LivingStory:
 				{
-					chain.htmllist = "#sectionChains_Scheduled";
+					chain.htmllist = "#dsbStory";
 					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.Legacy:
@@ -6227,7 +6227,6 @@ C = {
 		var ii = 0;
 		var chains;
 		var ithchain;
-		var chaintab = "";
 		/*
 		 * Look at the schedule and start with the current active chain; move
 		 * that chain's HTML to the bottom of the HTML chains list, then look at
@@ -6250,12 +6249,7 @@ C = {
 				ithchain = chains[ii];
 				if (ithchain.isSorted === false)
 				{
-					switch (ithchain.series)
-					{
-						case C.ChainSeriesEnum.DryTop: chaintab = "#sectionChains_Drytop"; break;
-						default: chaintab = "#sectionChains_Scheduled";
-					}
-					$("#chnBar_" + ithchain.nexus).appendTo(chaintab);
+					$("#chnBar_" + ithchain.nexus).appendTo(ithchain.htmllist);
 					
 					ithchain.isSorted = true;
 					ithchain.scheduleKeyImmediate = T.getTimeframeKey(i);
@@ -11815,16 +11809,21 @@ T = {
 		}
 		
 		// Initialize Living Story events
-		/*for (var i in T.DashboardStory)
+		if (T.DashboardStory.Events.length > 0)
 		{
-			var story = T.DashboardStory[i];
-			T.DashboardStory.Schedule = new Array();
-			// Convert the hh:mm format to integer minutes
-			for (var ii in story.Occurs)
+			/*for (var i in T.DashboardStory)
 			{
-				story.Occurs[ii] = T.parseChainTime(story.Occurs[ii]);
-			}
-		}*/
+				var story = T.DashboardStory[i];
+				T.DashboardStory.Schedule = new Array();
+				// Convert the hh:mm format to integer minutes
+				for (var ii in story.Occurs)
+				{
+					story.Occurs[ii] = T.parseChainTime(story.Occurs[ii]);
+				}
+			}*/
+			
+			I.initializeScrollbar($("#dsbStory"));
+		}
 		
 		// Show current gem store sales and coin needed to convert to the gems price
 		if (T.DashboardSale.length > 0)

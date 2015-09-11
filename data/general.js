@@ -661,7 +661,7 @@ Countdowns: [
 	name_de: "Die Mordrem kommen",
 	name_es: "Se acercan los mordrem",
 	name_fr: "Les mordrems approchent",
-	news: "the-mordrem-are-coming",
+	url: "http://wiki.guildwars2.com/wiki/Mordremoth's_Minions_Invade_Tyria",
 	Start: new Date("2015-09-10T16:00:00Z"),
 	Finish: new Date("2015-09-14T16:00:00Z")
 },
@@ -724,16 +724,16 @@ Story:
  */
 Sales: [
 {
-	url: "http://wiki.guildwars2.com/wiki/Additional_Crafting_License",
-	img: "https://render.guildwars2.com/file/F23275B76B74B907D8A0BE9F3BA066094CAE90FD/819619.png",
-	pricenew: 560,
-	priceold: 800
+	url: "http://wiki.guildwars2.com/wiki/Total_Makeover_Kit",
+	img: "https://render.guildwars2.com/file/91BD906F3DB001B01D18B505CC0C9920C4451E97/495503.png",
+	pricenew: 122,
+	priceold: 350
 },
 {
-	url: "http://wiki.guildwars2.com/wiki/Tradesman's_Package",
-	img: "https://render.guildwars2.com/file/D2220C0E96E928071992400BBC650AB4070B97DE/598604.png",
-	pricenew: 20,
-	priceold: 100
+	url: "http://wiki.guildwars2.com/wiki/Heroic_Booster",
+	img: "https://render.guildwars2.com/file/04EB33ACD2E7E6764611DEEB33013D2C1328F8FA/1053298.png",
+	pricenew: 105,
+	priceold: 150
 }
 ]
 };
