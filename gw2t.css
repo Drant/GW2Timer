@@ -346,6 +346,20 @@ html, body,
 #itemDashboard a {
 	color: #bbcc77;
 }
+#itemDashboard a:hover {
+	color: #44dd44;
+}
+#dsbClose {
+	position: absolute;
+	top: -16px;
+	left: -16px;
+	width: 32px; height: 32px;
+	background: url("img/ui/close.png");
+	opacity: 0.5;
+}
+#dsbClose:hover {
+	opacity: 0.8;
+}
 #dsbCountdown time {
 	font-family: Consolas, monospace;
 	font-size: 18px;

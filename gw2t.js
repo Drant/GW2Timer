@@ -11765,6 +11765,13 @@ T = {
 		}
 		T.isDashboardCountdownTickEnabled = true;
 		
+		// Hide the dashboard when clicked on the close button
+		$("#dsbClose").click(function()
+		{
+			T.isDashboardCountdownTickEnabled = false;
+			$("#itemDashboard").hide();
+		});
+		
 		// Initialize countdown if at least one countdown has not expired
 		if (isallcountdownexpired === false)
 		{
@@ -13260,24 +13267,10 @@ I = {
 		}
 		
 		// Hides dashboard countdown after a time
-		if (T.isDashboardCountdownTickEnabled)
+		if (T.isDashboardCountdownTickEnabled && I.PageCurrent !== I.PageEnum.Chains)
 		{
-			if (I.PageCurrent === I.PageEnum.Chains)
-			{
-				setTimeout(function()
-				{
-					T.isDashboardCountdownTickEnabled = false;
-					$("#itemDashboard").animate({opacity: 0}, 1000, function()
-					{
-						$(this).hide();
-					});
-				}, T.cMILLISECONDS_IN_SECOND * 180);
-			}
-			else
-			{
-				T.isDashboardCountdownTickEnabled = false;
-				$("#itemDashboard").hide();
-			}
+			T.isDashboardCountdownTickEnabled = false;
+			$("#itemDashboard").hide();
 		}
 		
 		// Finally
@@ -13984,6 +13977,11 @@ I = {
 				}
 				switch (I.PageCurrent)
 				{
+					case I.PageEnum.Chains:
+					{
+						T.isDashboardCountdownTickEnabled = true;
+						$("#itemDashboard").show().css({opacity: 0}).animate({opacity: 1}, 200);
+					} break;
 					case I.PageEnum.Map:
 					{
 						if (I.isMapEnabled)
@@ -13993,6 +13991,11 @@ I = {
 					} break;
 				}
 				$("#paneContent article").hide(); // Hide all plates
+				if (I.PageCurrent !== I.PageEnum.Chains && T.isDashboardCountdownTickEnabled)
+				{
+					T.isDashboardCountdownTickEnabled = false;
+					$("#itemDashboard").hide();
+				}
 				
 				// Only do animations if on regular website (to save computation)
 				if (I.ModeCurrent === I.ModeEnum.Website)
@@ -14029,20 +14032,6 @@ I = {
 		$("#menuMap").one("click", I.loadMapPlate);
 		// Help plate
 		$("#menuHelp").one("click", I.loadHelpPlate);
-		
-		// Show dashboard countdown when hovered over chains page menu button
-		if (T.isDashboardEnabled)
-		{
-			$("#menuChains").hover(function()
-			{
-				T.isDashboardCountdownTickEnabled = true;
-				$("#itemDashboard").show().css({opacity: 0}).animate({opacity: 1}, 200);
-			}, function()
-			{
-				T.isDashboardCountdownTickEnabled = false;
-				$("#itemDashboard").hide();
-			});
-		}
 		
 	}, // End of menu initialization
 	

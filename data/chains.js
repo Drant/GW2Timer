@@ -3350,7 +3350,7 @@ var GW2T_CHAIN_DATA = [
 	series: 5,
 	waypoint: "[&BNkAAAA=]",
 	extra: ["diessa", "18", "0", "0", "0"],
-	title: "The Mordrem Are Coming Diessa Plateau Q1",
+	title: "The Mordrem Are Coming to Diessa Plateau Q1",
 	events: [
 		{
 			path: [[23688, 12042],[23688, 12042]],
@@ -3378,7 +3378,7 @@ var GW2T_CHAIN_DATA = [
 	series: 5,
 	waypoint: "[&BNkAAAA=]",
 	extra: ["diessa", "18", "0", "0", "0"],
-	title: "The Mordrem Are Coming Diessa Plateau Q2",
+	title: "The Mordrem Are Coming to Diessa Plateau Q2",
 	events: [
 		{
 			path: [[23688, 12042],[23688, 12042]],
