@@ -1081,7 +1081,7 @@ O = {
 		},
 		bol_showMap: function()
 		{
-			if (I.isMapEnabled === false)
+			if (I.isMapEnabled)
 			{
 				$("#panelMap").toggle(O.Options.bol_showMap);
 				M.refreshMap();
@@ -5922,7 +5922,7 @@ C = {
 		
 		I.initializeChainsUI();
 		// Initial recoloring of chain titles
-		$("#sectionChains_Scheduled .chnBar h1, #sectionChains_Drytop .chnBar h1")
+		$("#sectionChains_Scheduled .chnBar h1, #sectionChains_Drytop .chnBar h1, #dsbStory .chnBar h1")
 			.addClass("chnTitleFutureFar");
 	},
 	
@@ -11822,6 +11822,7 @@ T = {
 				}
 			}*/
 			
+			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(T.DashboardStory) + "</div>").show();
 			I.initializeScrollbar($("#dsbStory"));
 		}
 		

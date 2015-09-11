@@ -682,6 +682,10 @@ Countdowns: [
  */
 Story:
 {
+	name_en: "Mordremoth's Minions Invade Tyria",
+	name_de: "Mordremoths Diener fallen in Tyria ein",
+	name_es: "Los siervos de Mordremoth invaden Tyria",
+	name_fr: "Les serviteurs de Mordremoth envahissent la Tyrie",
 	Start: new Date("2015-09-10T16:00:00Z"),
 	Finish: new Date("2015-09-14T16:00:00Z"),
 	Events: [

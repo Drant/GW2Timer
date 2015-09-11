@@ -396,7 +396,19 @@ html, body,
 }
 
 #dsbStory {
+	display: none;
 	width: auto; height: 120px;
+	border-bottom: 1px solid #dd9900;
+}
+#dsbStoryTitle {
+	display: block;
+	width: 100%;
+	margin-top: 4px;
+	border-top: 1px solid #dd9900;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color: #dd9900;
 }
 #dsbStory .chnBar {
 	width: auto;
