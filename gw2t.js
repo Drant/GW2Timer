@@ -13632,7 +13632,7 @@ I = {
 					case I.BrowserEnum.Firefox: wheelspeed = 3; break;
 				}
 
-				$(pElement).css({position: "relative"}).perfectScrollbar({
+				$(pElement).perfectScrollbar({
 					wheelSpeed: wheelspeed,
 					suppressScrollX: true
 				});
