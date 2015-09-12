@@ -5614,11 +5614,14 @@ C = {
 		
 		if (C.isChainWorldBoss(pChain))
 		{
-			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getChainTitleAny(pChain.nexus) + "' />"
+			chainextra = "<div class='chnDetailsExtra'>"
+				+ "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getChainTitleAny(pChain.nexus) + "' />"
 				+ " (" + pChain.extra[1] + ") "
 				+ pChain.extra[2] + "<ins class='s16 s16_ecto'></ins>" + " "
 				+ pChain.extra[3] + "<ins class='s16 s16_loot'></ins>" + " "
-				+ pChain.extra[4] + "<ins class='s16 s16_dragonite'></ins>" + " ";
+				+ pChain.extra[4] + "<ins class='s16 s16_dragonite'></ins>" + " "
+				+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in ▼ icon above).'></kbd>"
+			+ "</div>";
 		}
 		
 		/*
@@ -5637,10 +5640,8 @@ C = {
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
-				+ "<div class='chnDetailsExtra'>"
-					+ chainextra
-					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in ▼ icon above).'>[x]</kbd>"
-				+ "</div>"
+				+ chainextra
+			+ "</div>"
 		+ "</div>");
 
 		/*
@@ -5898,7 +5899,8 @@ C = {
 				} break;
 				case C.ChainSeriesEnum.LivingStory:
 				{
-					chain.htmllist = "#dsbStory";
+					// Show Living Story events in the chains list if site is embedded, otherwise on the dashboard
+					chain.htmllist = (I.isProgramEmbedded) ? "#sectionChains_Scheduled" : "#dsbStory";
 					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.Legacy:
@@ -5991,11 +5993,12 @@ C = {
 			// Update the title tootlip with that chain's schedule
 			var minischedulestring = "";
 			var spacer;
+			var headertext = (C.isChainRegular(ithchain)) ? subscribetext : "";
 			if (ithchain.series !== C.ChainSeriesEnum.DryTop)
 			{
 				for (var ii in ithchain.scheduleKeys)
 				{
-					spacer = (parseInt(ii) === 0) ? subscribetext : " <br /> ";
+					spacer = (parseInt(ii) === 0) ? headertext : " <br /> ";
 					minischedulestring = minischedulestring + spacer
 						+ T.getTimeFormatted(
 						{
@@ -11829,7 +11832,7 @@ T = {
 		// Show current gem store sales and coin needed to convert to the gems price
 		if (T.DashboardSale.length > 0)
 		{
-			$("#dsbSale").append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
+			$("#dsbSale").append("<div id='dsbSaleCol0' class='dsbSaleCol'></div><div id='dsbSaleCol1' class='dsbSaleCol'></div>");
 			var ratio = 0;
 			$.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
 			{
@@ -11844,9 +11847,10 @@ T = {
 					for (var i in T.DashboardSale)
 					{
 						var sale = T.DashboardSale[i];
-						$("#dsbSaleCol" + parseInt(i) % 2).append("<div><a href='" + U.convertExternalURL(sale.url) + "' target='_blank'><img class='dsbSaleItem' src='" + sale.img + "' /></a> "
-							+ "<span class='dsbSaleOriginal'><del>" + sale.priceold + "</del></span> "
-							+ "<span class='dsbSalePrice'>" + sale.pricenew + "<ins class='s16 s16_gem'></ins></span>"
+						$("#dsbSaleCol" + parseInt(i) % 2).append("<div class='dsbSaleEntry'>"
+							+"<a href='" + U.convertExternalURL(sale.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + sale.img + "' /></a> "
+							+ "<span class='dsbSalePriceOld'><del>" + sale.priceold + "</del></span> "
+							+ "<span class='dsbSalePriceNew'>" + sale.pricenew + "<ins class='s16 s16_gem'></ins></span>"
 							+ " ≈ " + E.createCoinString(Math.round(sale.pricenew * ratio), true)
 						+ "</div>");
 					}
@@ -13628,7 +13632,7 @@ I = {
 					case I.BrowserEnum.Firefox: wheelspeed = 3; break;
 				}
 
-				$(pElement).perfectScrollbar({
+				$(pElement).css({position: "relative"}).perfectScrollbar({
 					wheelSpeed: wheelspeed,
 					suppressScrollX: true
 				});
@@ -14384,7 +14388,10 @@ I = {
 				var link = $(this).attr("href");
 				$(this).attr("href", link + "&mode=" + I.ModeCurrent);
 			});
-			T.isDashboardEnabled = false;
+			if (I.ModeCurrent !== I.ModeEnum.Overlay)
+			{
+				T.isDashboardEnabled = false;
+			}
 		}
 	},
 	

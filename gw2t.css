@@ -371,27 +371,30 @@ html, body,
 #dsbCountdown samp {
 	color: lime;
 }
-#dsbSaleCol0, #dsbSaleCol1 {
+.dsbSaleCol {
 	display: inline-block;
-	width: 256px;
 	vertical-align: top;
 }
 #dsbSaleCol0 {
 	margin-left: 32px;
 }
-.dsbSaleItem {
+.dsbSaleEntry {
+	width: 256px;
+	white-space: nowrap;
+}
+.dsbSaleIcon {
 	width: 32px; height: 32px;
 	border-radius: 4px;
 }
-.dsbSaleItem:hover {
+.dsbSaleEntry:hover .dsbSaleIcon, .dsbSaleEntry:hover .dsbSaleIcon {
 	width: 64px; height: 64px;
 	opacity: 0.9;
 	border-radius: 16px;
 }
-.dsbSalePrice {
+.dsbSalePriceNew {
 	color: white;
 }
-.dsbSaleOriginal {
+.dsbSalePriceOld {
 	color: #b3a082;
 }
 
@@ -413,7 +416,7 @@ html, body,
 #dsbStory .chnBar {
 	width: auto;
 	line-height: 100%;
-	background: rgba(0, 0, 0, 0.4);
+	background: rgba(26, 17, 9, 0.4);
 }
 
 /* Bottom left corner: Coordinates bar */
@@ -1156,7 +1159,6 @@ header.jsSection sup {
 }
 
 #paneContent article {
-	position: relative;
 	width: 360px; height: 100%;
 	overflow: hidden;
 }
@@ -1643,6 +1645,7 @@ textarea.jsCopyCode {
 
 .chnDetails ol {
 	margin-top: 8px;
+	margin-bottom: 8px;
 }
 .chnDetails ol li { /* Contains the event icon and event name */
 	margin-bottom: 4px;
@@ -1696,7 +1699,6 @@ textarea.jsCopyCode {
 	opacity: 0.9;
 }
 .chnDetailsExtra { /* Small gray texts bottom right of a chain bar */
-	margin-top: 8px;
 	margin-bottom: 8px;
 	text-align: right;
 	font-family: monospace;
@@ -1709,7 +1711,16 @@ textarea.jsCopyCode {
 	opacity: 0.5;
 }
 .chnDetailsExtra kbd {
+	display: inline-block;
+	width: 16px; height: 16px;
+	vertical-align: middle;
 	margin-right: 6px;
+	background: url("img/ui/close.png");
+	background-size: 16px 16px;
+	opacity: 0.4;
+}
+.chnDetailsExtra kbd:hover {
+	opacity: 0.8;
 }
 
 /* JavaScript added classes */
