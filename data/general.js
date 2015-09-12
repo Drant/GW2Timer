@@ -730,12 +730,14 @@ Sales: [
 {
 	url: "http://wiki.guildwars2.com/wiki/Jungle_Explorer_Outfit",
 	img: "https://render.guildwars2.com/file/06DF543BF76322F4A57AA82F01DE2B9A6996FA01/915570.png",
+	quantity: 1,
 	pricenew: 350,
 	priceold: 700
 },
 {
 	url: "http://wiki.guildwars2.com/wiki/Transmutation_Charge_(item)",
 	img: "https://render.guildwars2.com/file/43BC25495803A7709F700970E1F8C22FFA6A716A/780163.png",
+	quantity: 5,
 	pricenew: 37,
 	priceold: 150
 }

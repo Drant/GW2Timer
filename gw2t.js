@@ -11847,10 +11847,11 @@ T = {
 					for (var i in T.DashboardSale)
 					{
 						var sale = T.DashboardSale[i];
+						var denom = (sale.quantity > 1) ? sale.quantity + "/ " : "";
 						$("#dsbSaleCol" + parseInt(i) % 2).append("<div class='dsbSaleEntry'>"
 							+"<a href='" + U.convertExternalURL(sale.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + sale.img + "' /></a> "
-							+ "<span class='dsbSalePriceOld'><del>" + sale.priceold + "</del></span> "
-							+ "<span class='dsbSalePriceNew'>" + sale.pricenew + "<ins class='s16 s16_gem'></ins></span>"
+							+ "<span class='dsbSalePriceOld'><del>" + denom + sale.priceold + "</del></span> "
+							+ "<span class='dsbSalePriceNew'>" + denom + sale.pricenew + "<ins class='s16 s16_gem'></ins></span>"
 							+ " ≈ " + E.createCoinString(Math.round(sale.pricenew * ratio), true)
 						+ "</div>");
 					}
