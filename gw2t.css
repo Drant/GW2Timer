@@ -329,6 +329,7 @@ html, body,
 	background: white;
 }
 
+/* Top right corner: Dashboard */
 #itemDashboard {
 	display: none;
 	position: absolute;

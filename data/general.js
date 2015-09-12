@@ -728,15 +728,15 @@ Story:
  */
 Sales: [
 {
-	url: "http://wiki.guildwars2.com/wiki/Total_Makeover_Kit",
-	img: "https://render.guildwars2.com/file/91BD906F3DB001B01D18B505CC0C9920C4451E97/495503.png",
-	pricenew: 122,
-	priceold: 350
+	url: "http://wiki.guildwars2.com/wiki/Jungle_Explorer_Outfit",
+	img: "https://render.guildwars2.com/file/06DF543BF76322F4A57AA82F01DE2B9A6996FA01/915570.png",
+	pricenew: 350,
+	priceold: 700
 },
 {
-	url: "http://wiki.guildwars2.com/wiki/Heroic_Booster",
-	img: "https://render.guildwars2.com/file/04EB33ACD2E7E6764611DEEB33013D2C1328F8FA/1053298.png",
-	pricenew: 105,
+	url: "http://wiki.guildwars2.com/wiki/Transmutation_Charge_(item)",
+	img: "https://render.guildwars2.com/file/43BC25495803A7709F700970E1F8C22FFA6A716A/780163.png",
+	pricenew: 37,
 	priceold: 150
 }
 ]
