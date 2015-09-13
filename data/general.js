@@ -709,7 +709,7 @@ Story:
  */
 Sales: [
 {
-	url: "http://wiki.guildwars2.com/wiki/Jungle_Explorer_Outfit",
+	url: "http://dulfy.net/2015/01/16/gw2-shadow-of-the-dragon-helm-shoulders-and-gloves-in-gemstore/",
 	img: "https://render.guildwars2.com/file/A61CB1DDA9BD5ED3B393D9381C1DE1D70680F8F0/930973.png",
 	quantity: 3,
 	pricenew: 350,
