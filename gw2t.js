@@ -5614,14 +5614,11 @@ C = {
 		
 		if (C.isChainWorldBoss(pChain))
 		{
-			chainextra = "<div class='chnDetailsExtra'>"
-				+ "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getChainTitleAny(pChain.nexus) + "' />"
+			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getChainTitleAny(pChain.nexus) + "' />"
 				+ " (" + pChain.extra[1] + ") "
 				+ pChain.extra[2] + "<ins class='s16 s16_ecto'></ins>" + " "
 				+ pChain.extra[3] + "<ins class='s16 s16_loot'></ins>" + " "
-				+ pChain.extra[4] + "<ins class='s16 s16_dragonite'></ins>" + " "
-				+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in ▼ icon above).'></kbd>"
-			+ "</div>";
+				+ pChain.extra[4] + "<ins class='s16 s16_dragonite'></ins>" + " ";
 		}
 		
 		/*
@@ -5640,7 +5637,10 @@ C = {
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
-				+ chainextra
+				+ "<div class='chnDetailsExtra'>"
+					+ chainextra
+					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in ▼ icon above).'></kbd>"	
+				+ "</div>"
 			+ "</div>"
 		+ "</div>");
 
@@ -5899,8 +5899,9 @@ C = {
 				} break;
 				case C.ChainSeriesEnum.LivingStory:
 				{
-					// Show Living Story events in the chains list if site is embedded, otherwise on the dashboard
-					chain.htmllist = (I.isProgramEmbedded) ? "#sectionChains_Scheduled" : "#dsbStory";
+					// Show Living Story events on the dashboard if on website or overlay mode only
+					chain.htmllist = ((I.isProgramEmbedded || (I.ModeCurrent !== I.ModeEnum.Website && I.ModeCurrent !== I.ModeEnum.Overlay)))
+						? "#sectionChains_Scheduled" : "#dsbStory";
 					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.Legacy:

@@ -420,6 +420,9 @@ html, body,
 	line-height: 100%;
 	background: rgba(26, 17, 9, 0.4);
 }
+#dsbStory .chnDetailsExtra {
+	margin-top: -26px;
+}
 
 /* Bottom left corner: Coordinates bar */
 #itemMapCoordinates, #itemWvWCoordinates {
