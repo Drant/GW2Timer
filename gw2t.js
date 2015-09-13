@@ -4853,6 +4853,10 @@ D = {
 	{
 		return pObject["name_" + O.OptionEnum.Language.Default];
 	},
+	getSpecificObjectName: function(pObject, pLanguage)
+	{
+		return pObject["name_" + pLanguage];
+	},
 	getObjectURL: function(pObject)
 	{
 		return pObject["url_" + D.getFullySupportedLanguage()];
@@ -4903,266 +4907,28 @@ D = {
 		}
 		return false;
 	},
-		
-	// Must be in the same order as the chain nexuses
-	ChainTitle: [
-	{
-		en: "Fire Elemental",
-		de: "Feuerelementar",
-		es: "Elemental de Fuego",
-		fr: "Elémentaire de Feu",
-		zh: "火焰元素"
-	},{
-		en: "Golem Mark II",
-		de: "Golem Typ II",
-		es: "Gólem Serie II",
-		fr: "Golem Marque II",
-		zh: "魔像馬克II型"
-	},{
-		en: "Claw of Jormag",
-		de: "Klaue Jormags",
-		es: "Garra de Jormag",
-		fr: "Griffe de Jormag",
-		zh: "卓瑪之爪"
-	},{
-		en: "Frozen Maw",
-		de: "Svanir-Schamane",
-		es: "Chamán Svanir",
-		fr: "Chamane de Svanir",
-		zh: "斯瓦尼亞薩滿"
-	},{
-		en: "Mega Destroyer",
-		de: "Mega Zerstörer",
-		es: "Mega Destructor",
-		fr: "Méga Destructeur",
-		zh: "超能毀滅者"
-	},{
-		en: "Shadow Behemoth",
-		de: "Schatten-Behemoth",
-		es: "Behemot de las Sombras",
-		fr: "Béhémoth des Ombres",
-		zh: "暗影巨獸"
-	},{
-		en: "The Shatterer",
-		de: "Den Zerschmetterer",
-		es: "El Asolador",
-		fr: "Le Destructeur",
-		zh: "碎裂巨獸"
-	},{
-		en: "Taidha Covington",
-		de: "Taidha Covington",
-		es: "Taidha Covington",
-		fr: "Taidha Covington",
-		zh: "泰達·科文頓"
-	},{
-		en: "Modniir Ulgoth",
-		de: "Ulgoth den Modniir",
-		es: "Ulgoth el Modniir",
-		fr: "Ulgoth le Modniir",
-		zh: "莫迪爾沃爾格斯"
-	},{
-		en: "Great Jungle Wurm",
-		de: "Großen Dschungelwurm",
-		es: "Gran Sierpe de la Selva",
-		fr: "Grande Guivre de la Jungle",
-		zh: "巨型叢林地虫"
-	},{
-		en: "Karka Queen",
-		de: "Karka-Königin",
-		es: "Reina Karka",
-		fr: "Reine Karka",
-		zh: "喀殼虫女王"
-	},{
-		en: "Tequatl the Sunless",
-		de: "Tequatl den Sonnenlosen",
-		es: "Tequatl el Sombrío",
-		fr: "Tequatl le Sans-soleil",
-		zh: "吞噬托"
-	},{
-		en: "Triple Wurm",
-		de: "Dreifach Wurm",
-		es: "Sierpe Triple",
-		fr: "Guivre Triple",
-		zh: "進化巨型叢林地虫"
-	},{
-		en: "Dry Top Q1",
-		de: "Trockenkuppe Q1",
-		es: "Cima Seca Q1",
-		fr: "Cimesèche Q1"
-	},{
-		en: "Dry Top Q2",
-		de: "Trockenkuppe Q2",
-		es: "Cima Seca Q2",
-		fr: "Cimesèche Q2"
-	},{
-		en: "Dry Top Q3",
-		de: "Trockenkuppe Q3",
-		es: "Cima Seca Q3",
-		fr: "Cimesèche Q3"
-	},{
-		en: "Dry Top Q4",
-		de: "Trockenkuppe Q4",
-		es: "Cima Seca Q4",
-		fr: "Cimesèche Q4"
-	},{
-		en: "Mordrem Brisban (1/6)",
-		de: "Mordrem Brisban (1/6)",
-		es: "Mordrem Brisbanas (1/6)",
-		fr: "Mordrems Brisban (1/6)"
-	},{
-		en: "Mordrem Brisban (2/6)",
-		de: "Mordrem Brisban (2/6)",
-		es: "Mordrem Brisbanas (2/6)",
-		fr: "Mordrems Brisban (2/6)"
-	},{
-		en: "Mordrem Kessex (3/6)",
-		de: "Mordrem Kessex (3/6)",
-		es: "Mordrem Kessex (3/6)",
-		fr: "Mordrems Kessex (3/6)"
-	},{
-		en: "Mordrem Kessex (4/6)",
-		de: "Mordrem Kessex (4/6)",
-		es: "Mordrem Kessex (4/6)",
-		fr: "Mordrems Kessex (4/6)"
-	},{
-		en: "Mordrem Diessa (5/6)",
-		de: "Mordrem Diessa (5/6)",
-		es: "Mordrem Diessa (5/6)",
-		fr: "Mordrems Diessa (5/6)"
-	},{
-		en: "Mordrem Diessa (6/6)",
-		de: "Mordrem Diessa (6/6)",
-		es: "Mordrem Diessa (6/6)",
-		fr: "Mordrems Diessa (6/6)"
-	},{
-		en: "Lyssa",
-		de: "Verderbte Hohepriesterin der Lyssa",
-		es: "Suma Sacerdotisa Corrupta de Lyssa",
-		fr: "Grande Prêtresse Corrompue de Lyssa",
-		zh: "Lyssa 的寺廟"
-	},{
-		en: "Dwayna",
-		de: "Besessene Dwayna-Statue",
-		es: "Estatua Poseída de Dwayna",
-		fr: "Statue Possédée de Dwayna",
-		zh: "Dwayna 的寺廟"
-	},{
-		en: "Melandru",
-		de: "Auferstandenen Priester der Melandru",
-		es: "Sacerdote de Melandru Resurgido",
-		fr: "Prêtre Revenant de Melandru",
-		zh: "Melandru 的寺廟"
-	},{
-		en: "Grenth",
-		de: "Auferstandenen Priester des Grenth",
-		es: "Sacerdote de Grenth Resurgido",
-		fr: "Prêtre Revenant de Grenth",
-		zh: "Grenth 的寺廟"
-	},{
-		en: "Arah",
-		de: "Tore von Arah",
-		es: "Puertas de Arah",
-		fr: "Portes d'Arah",
-		zh: "Arah 的寺廟"
-	},{
-		en: "Balthazar",
-		de: "Auferstandenen Priester des Balthasar",
-		es: "Sacerdote de Balthazar Resurgido",
-		fr: "Prêtre Revenant de Balthazar",
-		zh: "Balthazar 的寺廟"
-	},{
-		en: "Balthazar North",
-		de: "Nord Invasion von Orr",
-		es: "Invasión del Norte de Orr",
-		fr: "Invasion du Nord de Orr",
-		zh: "北部入侵 Orr"
-	},{
-		en: "Balthazar Central",
-		de: "Zentral Invasion von Orr",
-		es: "Invasión Central de Orr",
-		fr: "Invasion Central de Orr",
-		zh: "中部入侵 Orr"
-	},{
-		en: "Balthazar South",
-		de: "Invasion der Südlichen Orr",
-		es: "Invasión del Sur de Orr",
-		fr: "Invasion du Sud de Orr",
-		zh: "南部入侵 Orr"
-	},{
-		en: "Fire Shaman",
-		de: "Feuerschamanen",
-		es: "Chamán de Fuego",
-		fr: "Chamane de Feu",
-		zh: "火薩滿"
-	},{
-		en: "Rhendak the Crazed",
-		de: "Rhendak den Verrückten",
-		es: "Rhendak el Perturbado",
-		fr: "Rhendak le Fou",
-		zh: "瘋狂 Rhendak"
-	},{
-		en: "Foulbear Chieftain",
-		de: "Faulbär-Häuptling",
-		es: "Cabecilla de Osoinmundo",
-		fr: "Chef Oursefol",
-		zh: "臭熊頭目"
-	},{
-		en: "Dredge Commissar",
-		de: "Schaufler-Kommissar",
-		es: "Comisario Draga",
-		fr: "Kommissar Draguerre",
-		zh: "疏浚政委"
-	},{
-		en: "Nebo Terrace",
-		de: "Nebo-Terrasse",
-		es: "Terraza de Nebo",
-		fr: "Terrasse de Nebo",
-		zh: "階地 Nebo"
-	},{
-		en: "Eye of Zhaitan",
-		de: "Auge des Zhaitan",
-		es: "Ojo de Zhaitan",
-		fr: "Œil de Zhaïtan",
-		zh: "眼的 Zhaitan"
-	}
-	],
 	
 	/*
 	 * Gets title of chain in opted language.
 	 * @param int pIndex of chain.
 	 * @returns string title.
 	 */
-	getChainTitle: function(pIndex)
+	getChainTitle: function(pChain)
 	{
-		if (C.Chains[pIndex].series === C.ChainSeriesEnum.DryTop)
-		{
-			if (D.isLanguageFullySupported())
-			{
-				return (D.ChainTitle[pIndex])[O.Options.enu_Language];
-			}
-			else
-			{
-				return (D.ChainTitle[pIndex])[O.OptionEnum.Language.Default];
-			}
-		}
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
 		{
-			return C.Chains[pIndex].title;
+			return pChain.title;
 		}
-		return D.getChainTitleAny(pIndex);
+		return D.getChainTitleAny(pChain);
 	},
-	getChainTitleAny: function(pIndex)
+	getChainTitleAny: function(pChain)
 	{
-		if (C.Chains[pIndex].series === C.ChainSeriesEnum.DryTop)
+		if (O.Options.enu_Language === O.OptionEnum.Language.Mandarin
+			&& pChain.series !== C.ChainSeriesEnum.LivingStory)
 		{
-			return C.Chains[pIndex].title;
+			return D.getSpecificObjectName(pChain, O.Options.enu_Language);
 		}
-		if (D.isLanguageFullySupported()
-			|| O.Options.enu_Language === O.OptionEnum.Language.Mandarin)
-		{
-			return (D.ChainTitle[pIndex])[O.Options.enu_Language];
-		}
-		return (D.ChainTitle[pIndex])[O.OptionEnum.Language.Default];
+		return D.getObjectName(pChain);
 	},
 	
 	/*
@@ -5170,13 +4936,13 @@ D = {
 	 * @param int pIndex of chain.
 	 * @returns string short title.
 	 */
-	getChainAlias: function(pIndex)
+	getChainAlias: function(pChain)
 	{
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
 		{
-			return C.Chains[pIndex].alias;
+			return pChain.alias;
 		}
-		return D.getChainTitle(pIndex);
+		return D.getChainTitle(pChain);
 	},
 	
 	/*
@@ -5320,7 +5086,7 @@ D = {
 		{
 			return C.Chains[pChain.nexus].pronunciation;
 		}
-		return D.getChainTitle(pChain.nexus);
+		return D.getChainTitle(pChain);
 	},
 	
 	/*
@@ -5374,6 +5140,7 @@ C = {
 	DryTopChains: [],
 	LegacyChains: [],
 	TempleChains: [],
+	LivingStoryChains: [],
 	ChainSeriesEnum:
 	{
 		Temple: 0, // Unscheduled Orr temples
@@ -5614,7 +5381,7 @@ C = {
 		
 		if (C.isChainWorldBoss(pChain))
 		{
-			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getChainTitleAny(pChain.nexus) + "' />"
+			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getChainTitleAny(pChain) + "' />"
 				+ " (" + pChain.extra[1] + ") "
 				+ pChain.extra[2] + "<ins class='s16 s16_ecto'></ins>" + " "
 				+ pChain.extra[3] + "<ins class='s16 s16_loot'></ins>" + " "
@@ -5631,7 +5398,7 @@ C = {
 			+ "<div class='chnTitle'>"
 				+ "<img id='chnIcon_" + pChain.nexus + "' src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
 				+ "<samp id='chnCheck_" + pChain.nexus + "' class='chnCheck'></samp>"
-				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + D.getChainTitleAny(pChain.nexus) + "</h1>"
+				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + D.getChainTitleAny(pChain) + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
 				+ "<aside><img class='chnDaily chnDaily_" + pChain.nexus + "' src='img/ui/daily.png' /></aside>"
 			+ "</div>"
@@ -5831,8 +5598,8 @@ C = {
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default && I.isMapEnabled)
 		{
 			$("#chnBar_" + pChain.nexus).hover(
-				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain.nexus)); },
-				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitleAny(pChain.nexus)); }
+				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain)); },
+				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitleAny(pChain)); }
 			);
 		}
 		$("#chnDetails_" + pChain.nexus + " .chnWaypoint").click(function()
@@ -5899,10 +5666,19 @@ C = {
 				} break;
 				case C.ChainSeriesEnum.LivingStory:
 				{
-					// Show Living Story events on the dashboard if on website or overlay mode only
-					chain.htmllist = ((I.isProgramEmbedded || (I.ModeCurrent !== I.ModeEnum.Website && I.ModeCurrent !== I.ModeEnum.Overlay)))
-						? "#sectionChains_Scheduled" : "#dsbStory";
-					C.ScheduledChains.push(chain);
+					if (T.isDashboardStoryEnabled)
+					{
+						// Show Living Story events on the dashboard if on website or overlay mode only
+						chain.htmllist = ((I.isProgramEmbedded || (I.ModeCurrent !== I.ModeEnum.Website && I.ModeCurrent !== I.ModeEnum.Overlay)))
+							? "#sectionChains_Scheduled" : "#dsbStory";
+						C.LivingStoryChains.push(chain);
+						C.ScheduledChains.push(chain);
+						T.insertChainToSchedule(chain, chain.extra);
+					}
+					else
+					{
+						continue;
+					}
 				} break;
 				case C.ChainSeriesEnum.Legacy:
 				{
@@ -6128,7 +5904,7 @@ C = {
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
 						+ "<samp class='chnCheck'></samp>"
-						+ "<h1>" + D.getChainTitleAny(ithchain.nexus) + "</h1>"
+						+ "<h1>" + D.getChainTitleAny(ithchain) + "</h1>"
 						+ "<time>" + timestring + "</time>"
 						+ "<aside><img class='chnDaily chnDaily_" + ithchain.nexus + "' src='img/ui/daily.png' /></aside>"
 					+ "</div>"
@@ -8763,7 +8539,7 @@ P = {
 			if (pName.indexOf("guild") !== -1 || // Guild missions
 				pName.indexOf("subdue") !== -1 || // Guild bounty
 				pName.indexOf("challenge") !== -1 || // Hero challenges
-				pName.indexOf("offshoot") !== -1 || // Obsolete Living Story events
+				pName.indexOf("offshoot") !== -1 || // Obsolete events
 				pName.indexOf("vigil en") !== -1 ||
 				pName.indexOf("haunted") !== -1)
 			{
@@ -10571,6 +10347,7 @@ T = {
 	DashboardSale: GW2T_DASHBOARD_DATA.Sales,
 	isDashboardEnabled: true,
 	isDashboardCountdownTickEnabled: false,
+	isDashboardStoryEnabled: false,
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -10748,6 +10525,20 @@ T = {
 		"triple": 12
 	},
 	
+	/*
+	 * Inserts a chain into the schedule.
+	 * @param object pChain.
+	 * @param array pTimeArray of strings of HH:MM format.
+	 */
+	insertChainToSchedule: function(pChain, pTimeArray)
+	{
+		for (var i in pTimeArray)
+		{
+			var time = T.parseChainTime(pTimeArray[i]);
+			T.Schedule[time].c.unshift(pChain);
+		}
+	},
+	
 	// World boss chains
 	initializeSchedule: function()
 	{
@@ -10769,12 +10560,6 @@ T = {
 		C.DryTop1 =		C.Chains[14];
 		C.DryTop2 =		C.Chains[15];
 		C.DryTop3 =		C.Chains[16];
-		C.LivingStory0 = C.Chains[17];
-		C.LivingStory1 = C.Chains[18];
-		C.LivingStory2 = C.Chains[19];
-		C.LivingStory3 = C.Chains[20];
-		C.LivingStory4 = C.Chains[21];
-		C.LivingStory5 = C.Chains[22];
 		
 		/*
 		 * This associative array contains all time-sensitive chains (a group of
@@ -10788,18 +10573,18 @@ T = {
 		{
 			   "0": {t: "00:00", c: [C.Taidha, C.Tequatl]},
 			  "15": {t: "00:15", c: [C.Maw]},
-			  "30": {t: "00:30", c: [C.LivingStory0, C.Megades]},
-			  "45": {t: "00:45", c: [C.LivingStory1, C.FE]},
+			  "30": {t: "00:30", c: [C.Megades]},
+			  "45": {t: "00:45", c: [C.FE]},
 
 			  "60": {t: "01:00", c: [C.Shatterer, C.Triple]},
 			  "75": {t: "01:15", c: [C.Wurm]},
-			  "90": {t: "01:30", c: [C.LivingStory2, C.Ulgoth]},
-			 "105": {t: "01:45", c: [C.LivingStory3, C.SB]},
+			  "90": {t: "01:30", c: [C.Ulgoth]},
+			 "105": {t: "01:45", c: [C.SB]},
 
 			 "120": {t: "02:00", c: [C.Golem, C.Queen]},
 			 "135": {t: "02:15", c: [C.Maw]},
-			 "150": {t: "02:30", c: [C.LivingStory4, C.Jormag]},
-			 "165": {t: "02:45", c: [C.LivingStory5, C.FE]},
+			 "150": {t: "02:30", c: [C.Jormag]},
+			 "165": {t: "02:45", c: [C.FE]},
 
 			 "180": {t: "03:00", c: [C.Taidha, C.Tequatl]},
 			 "195": {t: "03:15", c: [C.Wurm]},
@@ -10808,18 +10593,18 @@ T = {
 
 			 "240": {t: "04:00", c: [C.Shatterer, C.Triple]},
 			 "255": {t: "04:15", c: [C.Maw]},
-			 "270": {t: "04:30", c: [C.LivingStory0, C.Ulgoth]},
-			 "285": {t: "04:45", c: [C.LivingStory1, C.FE]},
+			 "270": {t: "04:30", c: [C.Ulgoth]},
+			 "285": {t: "04:45", c: [C.FE]},
 
 			 "300": {t: "05:00", c: [C.Golem]},
 			 "315": {t: "05:15", c: [C.Wurm]},
-			 "330": {t: "05:30", c: [C.LivingStory2, C.Jormag]},
-			 "345": {t: "05:45", c: [C.LivingStory3, C.SB]},
+			 "330": {t: "05:30", c: [C.Jormag]},
+			 "345": {t: "05:45", c: [C.SB]},
 
 			 "360": {t: "06:00", c: [C.Taidha, C.Queen]},
 			 "375": {t: "06:15", c: [C.Maw]},
-			 "390": {t: "06:30", c: [C.LivingStory4, C.Megades]},
-			 "405": {t: "06:45", c: [C.LivingStory5, C.FE]},
+			 "390": {t: "06:30", c: [C.Megades]},
+			 "405": {t: "06:45", c: [C.FE]},
 
 			 "420": {t: "07:00", c: [C.Shatterer, C.Tequatl]},
 			 "435": {t: "07:15", c: [C.Wurm]},
@@ -10828,18 +10613,18 @@ T = {
 
 			 "480": {t: "08:00", c: [C.Golem, C.Triple]},
 			 "495": {t: "08:15", c: [C.Maw]},
-			 "510": {t: "08:30", c: [C.LivingStory0, C.Jormag]},
-			 "525": {t: "08:45", c: [C.LivingStory1, C.FE]},
+			 "510": {t: "08:30", c: [C.Jormag]},
+			 "525": {t: "08:45", c: [C.FE]},
 
 			 "540": {t: "09:00", c: [C.Taidha]},
 			 "555": {t: "09:15", c: [C.Wurm]},
-			 "570": {t: "09:30", c: [C.LivingStory2, C.Megades]},
-			 "585": {t: "09:45", c: [C.LivingStory3, C.SB]},
+			 "570": {t: "09:30", c: [C.Megades]},
+			 "585": {t: "09:45", c: [C.SB]},
 
 			 "600": {t: "10:00", c: [C.Shatterer]},
 			 "615": {t: "10:15", c: [C.Maw]},
-			 "630": {t: "10:30", c: [C.LivingStory4, C.Ulgoth, C.Queen]},
-			 "645": {t: "10:45", c: [C.LivingStory5, C.FE]},
+			 "630": {t: "10:30", c: [C.Ulgoth, C.Queen]},
+			 "645": {t: "10:45", c: [C.FE]},
 
 			 "660": {t: "11:00", c: [C.Golem]},
 			 "675": {t: "11:15", c: [C.Wurm]},
@@ -10848,18 +10633,18 @@ T = {
 
 			 "720": {t: "12:00", c: [C.Taidha]},
 			 "735": {t: "12:15", c: [C.Maw]},
-			 "750": {t: "12:30", c: [C.LivingStory0, C.Megades, C.Triple]},
-			 "765": {t: "12:45", c: [C.LivingStory1, C.FE]},
+			 "750": {t: "12:30", c: [C.Megades, C.Triple]},
+			 "765": {t: "12:45", c: [C.FE]},
 
 			 "780": {t: "13:00", c: [C.Shatterer]},
 			 "795": {t: "13:15", c: [C.Wurm]},
-			 "810": {t: "13:30", c: [C.LivingStory2, C.Ulgoth]},
-			 "825": {t: "13:45", c: [C.LivingStory3, C.SB]},
+			 "810": {t: "13:30", c: [C.Ulgoth]},
+			 "825": {t: "13:45", c: [C.SB]},
 
 			 "840": {t: "14:00", c: [C.Golem]},
 			 "855": {t: "14:15", c: [C.Maw]},
-			 "870": {t: "14:30", c: [C.LivingStory4, C.Jormag]},
-			 "885": {t: "14:45", c: [C.LivingStory5, C.FE]},
+			 "870": {t: "14:30", c: [C.Jormag]},
+			 "885": {t: "14:45", c: [C.FE]},
 
 			 "900": {t: "15:00", c: [C.Taidha, C.Queen]},
 			 "915": {t: "15:15", c: [C.Wurm]},
@@ -10868,18 +10653,18 @@ T = {
 
 			 "960": {t: "16:00", c: [C.Shatterer, C.Tequatl]},
 			 "975": {t: "16:15", c: [C.Maw]},
-			 "990": {t: "16:30", c: [C.LivingStory0, C.Ulgoth]},
-			"1005": {t: "16:45", c: [C.LivingStory1, C.FE]},
+			 "990": {t: "16:30", c: [C.Ulgoth]},
+			"1005": {t: "16:45", c: [C.FE]},
 
 			"1020": {t: "17:00", c: [C.Golem, C.Triple]},
 			"1035": {t: "17:15", c: [C.Wurm]},
-			"1050": {t: "17:30", c: [C.LivingStory2, C.Jormag]},
-			"1065": {t: "17:45", c: [C.LivingStory3, C.SB]},
+			"1050": {t: "17:30", c: [C.Jormag]},
+			"1065": {t: "17:45", c: [C.SB]},
 
 			"1080": {t: "18:00", c: [C.Taidha, C.Queen]},
 			"1095": {t: "18:15", c: [C.Maw]},
-			"1110": {t: "18:30", c: [C.LivingStory4, C.Megades]},
-			"1125": {t: "18:45", c: [C.LivingStory5, C.FE]},
+			"1110": {t: "18:30", c: [C.Megades]},
+			"1125": {t: "18:45", c: [C.FE]},
 
 			"1140": {t: "19:00", c: [C.Shatterer, C.Tequatl]},
 			"1155": {t: "19:15", c: [C.Wurm]},
@@ -10888,18 +10673,18 @@ T = {
 
 			"1200": {t: "20:00", c: [C.Golem, C.Triple]},
 			"1215": {t: "20:15", c: [C.Maw]},
-			"1230": {t: "20:30", c: [C.LivingStory0, C.Jormag]},
-			"1245": {t: "20:45", c: [C.LivingStory1, C.FE]},
+			"1230": {t: "20:30", c: [C.Jormag]},
+			"1245": {t: "20:45", c: [C.FE]},
 
 			"1260": {t: "21:00", c: [C.Taidha]},
 			"1275": {t: "21:15", c: [C.Wurm]},
-			"1290": {t: "21:30", c: [C.LivingStory2, C.Megades]},
-			"1305": {t: "21:45", c: [C.LivingStory3, C.SB]},
+			"1290": {t: "21:30", c: [C.Megades]},
+			"1305": {t: "21:45", c: [C.SB]},
 
 			"1320": {t: "22:00", c: [C.Shatterer]},
 			"1335": {t: "22:15", c: [C.Maw]},
-			"1350": {t: "22:30", c: [C.LivingStory4, C.Ulgoth]},
-			"1365": {t: "22:45", c: [C.LivingStory5, C.FE]},
+			"1350": {t: "22:30", c: [C.Ulgoth]},
+			"1365": {t: "22:45", c: [C.FE]},
 
 			"1380": {t: "23:00", c: [C.Golem, C.Queen]},
 			"1395": {t: "23:15", c: [C.Wurm]},
@@ -10908,6 +10693,7 @@ T = {
 		};
 		
 		var i, ii, iii;
+		var now = new Date();
 		var quarter = 0;
 		var slot;
 		
@@ -10919,6 +10705,15 @@ T = {
 			if (quarter > T.cNUM_TIMEFRAMES_IN_HOUR - 1)
 			{
 				quarter = 0;
+			}
+		}
+		
+		// Initialize Living Story events, if available
+		if (T.DashboardStory.isEnabled)
+		{
+			if (now > T.DashboardStory.Start && now < T.DashboardStory.Finish)
+			{
+				T.isDashboardStoryEnabled = true;
 			}
 		}
 		
@@ -11788,7 +11583,7 @@ T = {
 			var ctd;
 			var name;
 			var url;
-			$("#dsbAnnouncement").html(T.DashboardAnnouncement);
+			U.convertExternalLink($("#dsbAnnouncement").html(T.DashboardAnnouncement).find("a"));
 			
 			for (var i in T.DashboardCountdown)
 			{
@@ -11812,20 +11607,9 @@ T = {
 			}
 		}
 		
-		// Initialize Living Story events
-		if (T.DashboardStory.Events.length > 0)
+		// Initialize Living Story dashboard
+		if (T.isDashboardStoryEnabled)
 		{
-			/*for (var i in T.DashboardStory)
-			{
-				var story = T.DashboardStory[i];
-				T.DashboardStory.Schedule = new Array();
-				// Convert the hh:mm format to integer minutes
-				for (var ii in story.Occurs)
-				{
-					story.Occurs[ii] = T.parseChainTime(story.Occurs[ii]);
-				}
-			}*/
-			
 			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(T.DashboardStory) + "</div>").show();
 			I.initializeScrollbar($("#dsbStory"));
 		}
@@ -11880,15 +11664,6 @@ T = {
 			}
 		}
 		document.getElementById("dsbCountdown").innerHTML = str;
-		
-		// Update Living Story timers
-		/*for (var i in T.DashboardStory)
-		{
-			if (0)
-			{
-				
-			}
-		}*/
 	},
 	
 	/*
@@ -12550,8 +12325,8 @@ K = {
 		C.CurrentChains.forEach(C.queueEventsHighlight);
 		
 		// Update board in simple mode
-		$("#itemBoardCurrentSD").text(D.getChainTitleAny(C.CurrentChainSD.nexus));
-		$("#itemBoardNextSD").text(D.getChainTitleAny(C.NextChainSD1.nexus));
+		$("#itemBoardCurrentSD").text(D.getChainTitleAny(C.CurrentChainSD));
+		$("#itemBoardNextSD").text(D.getChainTitleAny(C.NextChainSD1));
 		$("#itemBoardCurrentHC").text("");
 		$("#itemBoardNextHC").text("");
 		if (C.CurrentChainHC || C.NextChainHC1)
@@ -12559,11 +12334,11 @@ K = {
 			$("#itemBoardHC").show();
 			if (C.CurrentChainHC)
 			{
-				$("#itemBoardCurrentHC").text(D.getChainTitleAny(C.CurrentChainHC.nexus));
+				$("#itemBoardCurrentHC").text(D.getChainTitleAny(C.CurrentChainHC));
 			}
 			if (C.NextChainHC1)
 			{
-				$("#itemBoardNextHC").text(D.getChainTitleAny(C.NextChainHC1.nexus));
+				$("#itemBoardNextHC").text(D.getChainTitleAny(C.NextChainHC1));
 			}
 		}
 		else
@@ -12689,7 +12464,7 @@ K = {
 					pIcon.data(C.cIndexSynonym, pChain.nexus);
 					if (I.ModeCurrent === I.ModeEnum.Simple)
 					{
-						pIcon.attr("title", D.getChainTitleAny(pChain.nexus));
+						pIcon.attr("title", D.getChainTitleAny(pChain));
 						I.qTip.init(pIcon);
 					}
 
@@ -12895,7 +12670,7 @@ K = {
 			var text = "";
 			
 			// Chains for the clicked timeframe
-			text += pChainSD.waypoint + " " + D.getChainAlias(pChainSD.nexus);
+			text += pChainSD.waypoint + " " + D.getChainAlias(pChainSD);
 			// If hardcore chain doesn't exist or is Triple Wurm
 			if ( ! pChainHC || pChainHC.nexus === C.Triple.nexus)
 			{
@@ -12904,13 +12679,13 @@ K = {
 			else if (pChainHC.nexus !== C.Triple.nexus)
 			{
 				text += " " + D.getPhrase("and") + " " + pChainHC.waypoint
-					+ " " + D.getChainAlias(pChainHC.nexus)
+					+ " " + D.getChainAlias(pChainHC)
 					+ T.getTimeTillChainFormatted(pChainHC);
 			}
 			
 			// Chains for the timeframe after that
 			text += ", " + D.getPhrase("then") + " " + pChainSDAfter.waypoint
-				+ " " + D.getChainAlias(pChainSDAfter.nexus);
+				+ " " + D.getChainAlias(pChainSDAfter);
 			if ( ! pChainHCAfter || pChainHCAfter.nexus === C.Triple.nexus)
 			{
 				text += T.getTimeTillChainFormatted(pChainSDAfter);
@@ -12918,7 +12693,7 @@ K = {
 			else if (pChainHCAfter.nexus !== C.Triple.nexus)
 			{
 				text += " " + D.getPhrase("and") + " " + pChainHCAfter.waypoint
-					+ " " + D.getChainAlias(pChainHCAfter.nexus)
+					+ " " + D.getChainAlias(pChainHCAfter)
 					+ T.getTimeTillChainFormatted(pChainHCAfter);
 			}
 			
@@ -13307,7 +13082,7 @@ I = {
 		if (O.isServerReset && C.ChainToday)
 		{
 			I.greet(D.getModifiedWord("world boss", "daily", U.CaseEnum.Sentence) + " "
-				+ D.getChainTitleAny(C.ChainToday.nexus) + " " + D.getPhrase("will start") + " " + D.getPhrase("at") + " "
+				+ D.getChainTitleAny(C.ChainToday) + " " + D.getPhrase("will start") + " " + D.getPhrase("at") + " "
 				+ T.getTimeFormatted(
 				{
 					wantSeconds: false,

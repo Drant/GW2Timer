@@ -627,7 +627,9 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_DASHBOARD_DATA = {
 	
-Announcement: "Do you like using gw2timer.com? Recommend it to your friends and <a href='http://gw2timer.com/out/?u=https://www.guildwars2.com/en/news/play-for-free-today/' target='_blank'>new players</a>!<br />",
+Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
+	+ "<a href='http://www.facebook.com/gw2timer'><ins class='s16 s16_facebook'></ins></a> and "
+	+ "<a href='https://twitter.com/gw2timer'><ins class='s16 s16_twitter'></ins></a>!",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
@@ -678,68 +680,47 @@ Countdowns: [
 /*
  * Living Story events.
  * Format:
- 
+	isEnabled: true, // Manual enable switch
+	name_en: "", // Title to show above the list of Living Story timers
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	Start: new Date("2015-09-10T16:00:00Z"), // Living Story timers will be disabled if not within these times
+	Finish: new Date("2015-09-14T16:00:00Z")
  */
 Story:
 {
+	isEnabled: true,
 	name_en: "Mordremoth's Minions Invade Tyria",
 	name_de: "Mordremoths Diener fallen in Tyria ein",
 	name_es: "Los siervos de Mordremoth invaden Tyria",
 	name_fr: "Les serviteurs de Mordremoth envahissent la Tyrie",
 	Start: new Date("2015-09-10T16:00:00Z"),
-	Finish: new Date("2015-09-14T16:00:00Z"),
-	Events: [
-	{
-		name_en: "Mordrem Brisban Wildlands",
-		name_de: "Mordrem Brisban-Wildnis",
-		name_es: "Mordrem Selvas Brisbanas",
-		name_fr: "Mordrems Terres sauvages de Brisban",
-		Occurs: [ "00:30", "04:30", "08:30", "12:30", "16:30", "20:30" ],
-		duration: 30,
-		coord: [9057, 16233]
-	},
-	{
-		name_en: "Mordrem Kessex Hills",
-		name_de: "Mordrem Kessex-Hügeln",
-		name_es: "Mordrem Colinas Kessex",
-		name_fr: "Mordrems Collines de Kessex",
-		Occurs: [ "01:30", "05:30", "09:30", "13:30", "17:30", "21:30" ],
-		duration: 30,
-		coord: [10799, 15941]
-	},
-	{
-		name_en: "Mordrem Diessa Plateau",
-		name_de: "Mordrem Diessa-Plateau",
-		name_es: "Mordrem Meseta de Diessa",
-		name_fr: "Mordrems Plateau de Diessa",
-		Occurs: [ "02:30", "06:30", "10:30", "14:30", "18:30", "22:30" ],
-		duration: 30,
-		coord: [23688, 12042]
-	}
-	]
+	Finish: new Date("2015-09-14T16:00:00Z")
 },
 /*
  * GW2 gem store sale items.
  * Format:
 	url: "", // Usually a wiki link to that item
 	img: "", // ArenaNet hosted item image
+	quantity: 1, // Batch sales
 	pricenew: 400, // Gems quantity
 	priceold: 800
  */
 Sales: [
 {
 	url: "http://wiki.guildwars2.com/wiki/Jungle_Explorer_Outfit",
-	img: "https://render.guildwars2.com/file/06DF543BF76322F4A57AA82F01DE2B9A6996FA01/915570.png",
-	quantity: 1,
+	img: "https://render.guildwars2.com/file/A61CB1DDA9BD5ED3B393D9381C1DE1D70680F8F0/930973.png",
+	quantity: 3,
 	pricenew: 350,
-	priceold: 700
+	priceold: 900
 },
 {
-	url: "http://wiki.guildwars2.com/wiki/Transmutation_Charge_(item)",
-	img: "https://render.guildwars2.com/file/43BC25495803A7709F700970E1F8C22FFA6A716A/780163.png",
-	quantity: 5,
-	pricenew: 37,
-	priceold: 150
+	url: "http://wiki.guildwars2.com/wiki/Mini_Rock",
+	img: "https://render.guildwars2.com/file/6AF9429A66C1EF5B5817CA0BE94096B3C9393D5D/1001222.png",
+	quantity: 1,
+	pricenew: 87,
+	priceold: 350
 }
 ]
 };

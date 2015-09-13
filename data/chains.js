@@ -7,6 +7,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BEcAAAA=]",
 	extra: ["metrica", "15", "1", "2", "3-5"],
 	title: "Thaumanova Reactor Fallout",
+	name_en: "Fire Elemental",
+	name_de: "Feuerelementar",
+	name_es: "Elemental de Fuego",
+	name_fr: "Elémentaire de Feu",
+	name_zh: "火焰元素",
 	events: [
 		{
 			path: [[7573, 17586]],
@@ -107,6 +112,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BNQCAAA=]",
 	extra: ["maelstrom", "68", "1", "2", "15-25"],
 	title: "Inquest Golem Mark II",
+	name_en: "Golem Mark II",
+	name_de: "Golem Typ II",
+	name_es: "Gólem Serie II",
+	name_fr: "Golem Marque II",
+	name_zh: "魔像馬克II型",
 	events: [
 		{
 			path: [[21220, 22564], [21157, 22898], [21188, 22867], [21220, 22564]],
@@ -171,6 +181,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BHoCAAA=]",
 	extra: ["frostgorge", "80", "1", "3", "15-25"],
 	title: "Breaking the Claw of Jormag",
+	name_en: "Claw of Jormag",
+	name_de: "Klaue Jormags",
+	name_es: "Garra de Jormag",
+	name_fr: "Griffe de Jormag",
+	name_zh: "卓瑪之爪",
 	events: [
 		{
 			path: [[23391, 9352]],
@@ -307,6 +322,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BMIDAAA=]",
 	extra: ["wayfarer", "10", "1-2", "1", "3-5"],
 	title: "The Frozen Maw",
+	name_en: "Frozen Maw",
+	name_de: "Svanir-Schamane",
+	name_es: "Chamán Svanir",
+	name_fr: "Chamane de Svanir",
+	name_zh: "斯瓦尼亞薩滿",
 	events: [
 		{
 			path: [[22930, 12712], [23019, 12725], [22930, 12712], [22996, 12655]],
@@ -443,6 +463,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BM0CAAA=]",
 	extra: ["maelstrom", "66", "1", "1", "0"],
 	title: "The Battle for Mount Maelstrom",
+	name_en: "Mega Destroyer",
+	name_de: "Mega Zerstörer",
+	name_es: "Mega Destructor",
+	name_fr: "Méga Destructeur",
+	name_zh: "超能毀滅者",
 	events: [
 		{
 			path: [[19550, 23259]],
@@ -597,6 +622,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BPcAAAA=]",
 	extra: ["queensdale", "15", "1", "0", "3-5"],
 	title: "Secrets in the Swamp",
+	name_en: "Shadow Behemoth",
+	name_de: "Schatten-Behemoth",
+	name_es: "Behemot de las Sombras",
+	name_fr: "Béhémoth des Ombres",
+	name_zh: "暗影巨獸",
 	events: [
 		{
 			path: [[11491, 13309]],
@@ -697,6 +727,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BE4DAAA=]",
 	extra: ["blazeridge", "50", "1", "0", "15-25"],
 	title: "Kralkatorrik's Legacy",
+	name_en: "The Shatterer",
+	name_de: "Den Zerschmetterer",
+	name_es: "El Asolador",
+	name_fr: "Le Destructeur",
+	name_zh: "碎裂巨獸",
 	events: [
 		{
 			path: [[29631, 13317]],
@@ -761,6 +796,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BKgBAAA=]",
 	extra: ["bloodtide", "50", "1", "0", "3-5"],
 	title: "The Campaign Against Taidha Covington",
+	name_en: "Taidha Covington",
+	name_de: "Taidha Covington",
+	name_es: "Taidha Covington",
+	name_fr: "Taidha Covington",
+	name_zh: "泰達·科文頓",
 	events: [
 		{
 			path: [[15840, 16924]],
@@ -843,6 +883,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BLAAAAA=]",
 	extra: ["harathi", "43", "1", "5", "3-5"],
 	title: "Seraph Assault on Centaur Camps",
+	name_en: "Modniir Ulgoth",
+	name_de: "Ulgoth den Modniir",
+	name_es: "Ulgoth el Modniir",
+	name_fr: "Ulgoth le Modniir",
+	name_zh: "莫迪爾沃爾格斯",
 	events: [
 		{
 			path: [[14142, 10617]],
@@ -997,6 +1042,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BEEFAAA=]",
 	extra: ["caledon", "15", "1", "4", "3-5"],
 	title: "The Battle for Wychmire Swamp",
+	name_en: "Great Jungle Wurm",
+	name_de: "Großen Dschungelwurm",
+	name_es: "Gran Sierpe de la Selva",
+	name_fr: "Grande Guivre de la Jungle",
+	name_zh: "巨型叢林地虫",
 	events: [
 		{
 			path: [[9859, 16576]],
@@ -1097,6 +1147,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BNcGAAA=]",
 	extra: ["southsun", "80", "2", "5", "30"],
 	title: "Island Control",
+	name_en: "Karka Queen",
+	name_de: "Karka-Königin",
+	name_es: "Reina Karka",
+	name_fr: "Reine Karka",
+	name_zh: "喀殼虫女王",
 	events: [
 		{
 			path: [[12901, 20394], [13807, 20425], [13664, 20517], [13509, 20500], [13060, 20377], [13055, 20415], [12901, 20394], [12959, 20349], [12932, 20324], [12878, 20437], [12849, 20354], [12738, 20263], [12764, 20142], [12832, 20033], [13009, 19926], [13037, 19777], [13253, 19648], [13445, 19585], [13576, 19667], [13660, 19440], [13815, 19354]],
@@ -1323,6 +1378,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BNABAAA=]",
 	extra: ["sparkfly", "65", "3", "4", "38"],
 	title: "Danger at Fabled Djannor",
+	name_en: "Tequatl the Sunless",
+	name_de: "Tequatl den Sonnenlosen",
+	name_es: "Tequatl el Sombrío",
+	name_fr: "Tequatl le Sans-soleil",
+	name_zh: "吞噬托",
 	events: [
 		{
 			path: [[15638, 22180], [15865, 21992], [15827, 22063], [15834, 22185], [15665, 21996], [15574, 21985]],
@@ -1459,6 +1519,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BKoBAAA=]",
 	extra: ["bloodtide", "55", "4", "6", "78"],
 	title: "Triple Trouble",
+	name_en: "Triple Wurm",
+	name_de: "Dreifach Wurm",
+	name_es: "Sierpe Triple",
+	name_fr: "Guivre Triple",
+	name_zh: "進化巨型叢林地虫",
 	events: [
 		{
 			path: [[16676, 17679], [16676, 17679], [16470, 17518], [16232, 17658], [15914, 18160], [15655, 18430], [15679, 18624], [15833, 18782], [15910, 18930]],
@@ -1574,6 +1639,11 @@ var GW2T_CHAIN_DATA = [
 	alias: "DryTopXXX0",
 	series: 4,
 	title: "Dry Top Q1",
+	name_en: "Dry Top Q1",
+	name_de: "Trockenkuppe Q1",
+	name_es: "Cima Seca Q1",
+	name_fr: "Cimesèche Q1",
+	name_zh: "干涸高地 1/4",
 	events: [
 		{
 			path: [[3979, 16424]],
@@ -1999,6 +2069,11 @@ var GW2T_CHAIN_DATA = [
 	alias: "DryTopXXX1",
 	series: 4,
 	title: "Dry Top Q2",
+	name_en: "Dry Top Q2",
+	name_de: "Trockenkuppe Q2",
+	name_es: "Cima Seca Q2",
+	name_fr: "Cimesèche Q2",
+	name_zh: "干涸高地 2/4",
 	events: [
 		{
 			path: [[3979, 16424]],
@@ -2424,6 +2499,11 @@ var GW2T_CHAIN_DATA = [
 	alias: "DryTopXXX2",
 	series: 4,
 	title: "Dry Top Q3",
+	name_en: "Dry Top Q3",
+	name_de: "Trockenkuppe Q3",
+	name_es: "Cima Seca Q3",
+	name_fr: "Cimesèche Q3",
+	name_zh: "干涸高地 3/4",
 	events: [
 		{
 			path: [[3979, 16424]],
@@ -2944,6 +3024,11 @@ var GW2T_CHAIN_DATA = [
 	alias: "DryTopXXX3",
 	series: 4,
 	title: "Dry Top Q4",
+	name_en: "Dry Top Q4",
+	name_de: "Trockenkuppe Q4",
+	name_es: "Cima Seca Q4",
+	name_fr: "Cimesèche Q4",
+	name_zh: "干涸高地 4/4",
 	events: [
 		{
 			path: [[4515, 16526]],
@@ -3233,179 +3318,16 @@ var GW2T_CHAIN_DATA = [
 	]
 },
 {
-	alias: "LivingStoryXXX0",
-	pronunciation: "mordrem brisban",
-	series: 5,
-	waypoint: "[&BFwAAAA=]",
-	extra: ["brisban", "18", "0", "0", "0"],
-	title: "The Mordrem Are Coming to Brisban Wildlands Q1",
-	events: [
-		{
-			path: [[9057, 16233],[9057, 16233]],
-			name_en: "The Mordrem have invaded Brisban Wildlands.",
-			name_de: "Die Mordrem sind in den Brisban-Wildnis eingefallen.",
-			name_es: "Los mordrem han invadido las Selvas Brisbanas.",
-			name_fr: "Les mordrems ont enhavi les Terres sauvages de Brisban.",
-			icon: "swords_red",
-			num: "1",
-			sGotoNum: ["1"],
-			fGotoNum: "1",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "15:00",
-			avg: "15:00",
-			min: "15:00",
-			max: "15:00",
-			primacy: 3
-		}
-	]
-},
-{
-	alias: "LivingStoryXXX1",
-	pronunciation: "mordrem brisban",
-	series: 5,
-	waypoint: "[&BFwAAAA=]",
-	extra: ["brisban", "18", "0", "0", "0"],
-	title: "The Mordrem Are Coming to Brisban Wildlands Q2",
-	events: [
-		{
-			path: [[9057, 16233],[9057, 16233]],
-			name_en: "The Mordrem have invaded Brisban Wildlands.",
-			name_de: "Die Mordrem sind in den Brisban-Wildnis eingefallen.",
-			name_es: "Los mordrem han invadido las Selvas Brisbanas.",
-			name_fr: "Les mordrems ont enhavi les Terres sauvages de Brisban.",
-			icon: "swords_red",
-			num: "1",
-			sGotoNum: ["1"],
-			fGotoNum: "1",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "15:00",
-			avg: "15:00",
-			min: "15:00",
-			max: "15:00",
-			primacy: 3
-		}
-	]
-},
-{
-	alias: "LivingStoryXXX2",
-	pronunciation: "mordrem kessex",
-	series: 5,
-	waypoint: "[&BAoAAAA=]",
-	extra: ["kessex", "18", "0", "0", "0"],
-	title: "The Mordrem Are Coming to Kessex Hills Q1",
-	events: [
-		{
-			path: [[10799, 15941],[10799, 15941]],
-			name_en: "The Mordrem have invaded Kessex Hills.",
-			name_de: "Die Mordrem sind in den Kessex-Hügeln eingefallen.",
-			name_es: "Los mordrem han invadido las Colinas Kessex.",
-			name_fr: "Les mordrems ont enhavi les Collines de Kessex.",
-			icon: "swords_red",
-			num: "1",
-			sGotoNum: ["1"],
-			fGotoNum: "1",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "15:00",
-			avg: "15:00",
-			min: "15:00",
-			max: "15:00",
-			primacy: 3
-		}
-	]
-},
-{
-	alias: "LivingStoryXXX3",
-	pronunciation: "mordrem kessex",
-	series: 5,
-	waypoint: "[&BAoAAAA=]",
-	extra: ["kessex", "18", "0", "0", "0"],
-	title: "The Mordrem Are Coming to Kessex Hills Q2",
-	events: [
-		{
-			path: [[10799, 15941],[10799, 15941]],
-			name_en: "The Mordrem have invaded Kessex Hills.",
-			name_de: "Die Mordrem sind in den Kessex-Hügeln eingefallen.",
-			name_es: "Los mordrem han invadido las Colinas Kessex.",
-			name_fr: "Les mordrems ont enhavi les Collines de Kessex.",
-			icon: "swords_red",
-			num: "1",
-			sGotoNum: ["1"],
-			fGotoNum: "1",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "15:00",
-			avg: "15:00",
-			min: "15:00",
-			max: "15:00",
-			primacy: 3
-		}
-	]
-},
-{
-	alias: "LivingStoryXXX4",
-	pronunciation: "mordrem diessa",
-	series: 5,
-	waypoint: "[&BNkAAAA=]",
-	extra: ["diessa", "18", "0", "0", "0"],
-	title: "The Mordrem Are Coming to Diessa Plateau Q1",
-	events: [
-		{
-			path: [[23688, 12042],[23688, 12042]],
-			name_en: "The Mordrem have invaded Diessa Plateau.",
-			name_de: "Die Mordrem sind in den Diessa-Plateau eingefallen.",
-			name_es: "Los mordrem han invadido la Meseta de Diessa.",
-			name_fr: "Les mordrems ont enhavi le Plateau de Diessa.",
-			icon: "swords_red",
-			num: "1",
-			sGotoNum: ["1"],
-			fGotoNum: "1",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "15:00",
-			avg: "15:00",
-			min: "15:00",
-			max: "15:00",
-			primacy: 3
-		}
-	]
-},
-{
-	alias: "LivingStoryXXX5",
-	pronunciation: "mordrem diessa",
-	series: 5,
-	waypoint: "[&BNkAAAA=]",
-	extra: ["diessa", "18", "0", "0", "0"],
-	title: "The Mordrem Are Coming to Diessa Plateau Q2",
-	events: [
-		{
-			path: [[23688, 12042],[23688, 12042]],
-			name_en: "The Mordrem have invaded Diessa Plateau.",
-			name_de: "Die Mordrem sind in den Diessa-Plateau eingefallen.",
-			name_es: "Los mordrem han invadido la Meseta de Diessa.",
-			name_fr: "Les mordrems ont enhavi le Plateau de Diessa.",
-			icon: "swords_red",
-			num: "1",
-			sGotoNum: ["1"],
-			fGotoNum: "1",
-			sInterim: ["0"],
-			fInterim: "*",
-			lim: "15:00",
-			avg: "15:00",
-			min: "15:00",
-			max: "15:00",
-			primacy: 3
-		}
-	]
-},
-{
 	alias: "Lyssa",
 	series: 0,
 	waypoint: "[&BK4CAAA=]",
 	extra: ["malchor", "78", "1", "2", "30"],
 	title: "Cathedral of Eternal Radiance",
+	name_en: "Lyssa",
+	name_de: "Verderbte Hohepriesterin der Lyssa",
+	name_es: "Suma Sacerdotisa Corrupta de Lyssa",
+	name_fr: "Grande Prêtresse Corrompue de Lyssa",
+	name_zh: "Lyssa 的寺廟",
 	events: [
 		{
 			path: [[12811, 23713]],
@@ -3613,6 +3535,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BLICAAA=]",
 	extra: ["malchor", "79", "1", "2", "30"],
 	title: "Cathedral of Zephyrs",
+	name_en: "Dwayna",
+	name_de: "Besessene Dwayna-Statue",
+	name_es: "Estatua Poseída de Dwayna",
+	name_fr: "Statue Possédée de Dwayna",
+	name_zh: "Dwayna 的寺廟",
 	events: [
 		{
 			path: [[12179, 24716], [11723, 24462], [11751, 24510], [12179, 24716], [12073, 24674], [12055, 24510], [11893, 24326], [11904, 24227], [11978, 24273]],
@@ -3730,6 +3657,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BB4DAAA=]",
 	extra: ["cursed", "80", "1", "3", "30"],
 	title: "Cathedral of Verdance",
+	name_en: "Melandru",
+	name_de: "Auferstandenen Priester der Melandru",
+	name_es: "Sacerdote de Melandru Resurgido",
+	name_fr: "Prêtre Revenant de Melandru",
+	name_zh: "Melandru 的寺廟",
 	events: [
 		{
 			path: [[10492, 26541], [11017, 27329], [10948, 27271], [10492, 26541]],
@@ -3919,6 +3851,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BB4DAAA=]",
 	extra: ["cursed", "80", "1", "3", "30"],
 	title: "Cathedral of Silence",
+	name_en: "Grenth",
+	name_de: "Auferstandenen Priester des Grenth",
+	name_es: "Sacerdote de Grenth Resurgido",
+	name_fr: "Prêtre Revenant de Grenth",
+	name_zh: "Grenth 的寺廟",
 	events: [
 		{
 			path: [[10692, 27699], [10997, 27466], [10876, 27515], [10692, 27699], [10579, 28030]],
@@ -4090,6 +4027,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BB4DAAA=]",
 	extra: ["cursed", "80", "1", "4", "0"],
 	title: "Gates of Arah",
+	name_en: "Arah",
+	name_de: "Tore von Arah",
+	name_es: "Puertas de Arah",
+	name_fr: "Portes d'Arah",
+	name_zh: "Arah 的寺廟",
 	events: [
 		{
 			path: [[11062, 27370], [11062, 27370], [11016, 27350], [11027, 27460], [11000, 27598], [11023, 27765]],
@@ -4297,6 +4239,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BNIEAAA=]",
 	extra: ["straits", "75", "1", "2", "30"],
 	title: "Cathedral of Glorious Victory",
+	name_en: "Balthazar",
+	name_de: "Auferstandenen Priester des Balthasar",
+	name_es: "Sacerdote de Balthazar Resurgido",
+	name_fr: "Prêtre Revenant de Balthazar",
+	name_zh: "Balthazar 的寺廟",
 	events: [
 		{
 			path: [[15231, 24062], [15283, 24018], [15231, 24062], [15213, 24160], [15189, 24171], [15229, 24189], [15118, 24212], [15139, 24290], [15126, 24316], [15127, 24355], [15054, 24413], [14984, 24378], [15051, 24428], [15165, 24443], [15066, 24459], [15032, 24489], [15046, 24546]],
@@ -4378,6 +4325,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BFkGAAA=]",
 	extra: ["straits", "75", "0", "0", "0"],
 	title: "Northern Invasion of Orr",
+	name_en: "Balthazar North",
+	name_de: "Nord Invasion von Orr",
+	name_es: "Invasión del Norte de Orr",
+	name_fr: "Invasion du Nord de Orr",
+	name_zh: "北部入侵 Orr",
 	events: [
 		{
 			path: [[16295, 22846], [16951, 22901], [16802, 22909], [16295, 22846]],
@@ -4567,6 +4519,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BO4CAAA=]",
 	extra: ["straits", "75", "0", "1", "0"],
 	title: "Central Invasion of Orr",
+	name_en: "Balthazar Central",
+	name_de: "Zentral Invasion von Orr",
+	name_es: "Invasión Central de Orr",
+	name_fr: "Invasion Central de Orr",
+	name_zh: "中部入侵 Orr",
 	events: [
 		{
 			path: [[17049, 23356], [17310, 23604], [17324, 23522], [17131, 23481], [17118, 23410], [17049, 23356]],
@@ -4738,6 +4695,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BO8CAAA=]",
 	extra: ["straits", "75", "0", "3", "0"],
 	title: "Southern Invasion of Orr",
+	name_en: "Balthazar South",
+	name_de: "Invasion der Südlichen Orr",
+	name_es: "Invasión del Sur de Orr",
+	name_fr: "Invasion du Sud de Orr",
+	name_zh: "南部入侵 Orr",
 	events: [
 		{
 			path: [[17517, 23845], [17315, 23637], [17517, 23845], [17369, 23944], [17240, 23949], [17188, 24037]],
@@ -4945,6 +4907,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BO4BAAA=]",
 	extra: ["marches", "60", "1", "1", "15-25"],
 	title: "Invictus Castrum",
+	name_en: "Fire Shaman",
+	name_de: "Feuerschamanen",
+	name_es: "Chamán de Fuego",
+	name_fr: "Chamane de Feu",
+	name_zh: "火薩滿",
 	events: [
 		{
 			path: [[27461, 9654], [27891, 9914], [27806, 9991], [27761, 10090], [27596, 10001], [27494, 9876], [27456, 9860], [27462, 9660], [27415, 9639], [27461, 9654]],
@@ -4972,6 +4939,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BNwAAAA=]",
 	extra: ["diessa", "25", "1-2", "2", "0"],
 	title: "Flame Legion Battles",
+	name_en: "Rhendak the Crazed",
+	name_de: "Rhendak den Verrückten",
+	name_es: "Rhendak el Perturbado",
+	name_fr: "Rhendak le Fou",
+	name_zh: "瘋狂 Rhendak",
 	events: [
 		{
 			path: [[26223, 12201], [26202, 12192], [26228, 12197]],
@@ -5143,6 +5115,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BDwEAAA=]",
 	extra: ["fields", "34", "1", "4", "0"],
 	title: "Ogre Wars",
+	name_en: "Foulbear Chieftain",
+	name_de: "Faulbär-Häuptling",
+	name_es: "Cabecilla de Osoinmundo",
+	name_fr: "Chef Oursefol",
+	name_zh: "臭熊頭目",
 	events: [
 		{
 			path: [[30189, 18105], [30023, 18319], [30082, 18147], [30100, 18065], [30189, 18105], [30289, 18106], [30327, 18079], [30241, 18121], [30401, 18043], [30452, 18032], [30502, 18076], [30417, 18157], [30445, 18200], [30410, 18276], [30427, 18385]],
@@ -5278,6 +5255,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BD8FAAA=]",
 	extra: ["dredgehaunt", "50", "1", "1", "3-5"],
 	title: "In Pursuit of Knowledge",
+	name_en: "Dredge Commissar",
+	name_de: "Schaufler-Kommissar",
+	name_es: "Comisario Draga",
+	name_fr: "Kommissar Draguerre",
+	name_zh: "疏浚政委",
 	events: [
 		{
 			path: [[20612, 17610]],
@@ -5377,6 +5359,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BIwBAAA=]",
 	extra: ["gendarran", "28", "1", "2", "0"],
 	title: "Assault on Ascalon Settlement",
+	name_en: "Nebo Terrace",
+	name_de: "Nebo-Terrasse",
+	name_es: "Terraza de Nebo",
+	name_fr: "Terrasse de Nebo",
+	name_zh: "階地 Nebo",
 	events: [
 		{
 			path: [[13646, 13210], [13960, 13318], [13814, 13139], [13642, 13136], [13604, 13168], [13646, 13210]],
@@ -5494,6 +5481,11 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BNIEAAA=]",
 	extra: ["straits", "75", "1", "2", "3-5"],
 	title: "Zho'qafa Catacombs",
+	name_en: "Eye of Zhaitan",
+	name_de: "Auge des Zhaitan",
+	name_es: "Ojo de Zhaitan",
+	name_fr: "Œil de Zhaïtan",
+	name_zh: "眼的 Zhaitan",
 	events: [
 		{
 			path: [[15149, 24961], [15307, 24027], [15365, 24181], [15342, 24261], [15365, 24580], [15319, 24772], [15178, 24851], [15073, 24853], [15068, 24960], [15149, 24961]],
@@ -5656,6 +5648,198 @@ var GW2T_CHAIN_DATA = [
 			min: "5:00",
 			max: "7:00",
 			primacy: 1
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX0",
+	pronunciation: "mordrem brisban",
+	series: 5,
+	waypoint: "[&BFwAAAA=]",
+	extra: ["00:30", "04:30", "08:30", "12:30", "16:30", "20:30"],
+	title: "The Mordrem Are Coming to Brisban Wildlands Q1",
+	name_en: "Mordrem Brisban (1/6)",
+	name_de: "Mordrem Brisban (1/6)",
+	name_es: "Mordrem Brisbanas (1/6)",
+	name_fr: "Mordrems Brisban (1/6)",
+	events: [
+		{
+			path: [[9057, 16233],[9057, 16233]],
+			name_en: "The Mordrem have invaded Brisban Wildlands.",
+			name_de: "Die Mordrem sind in den Brisban-Wildnis eingefallen.",
+			name_es: "Los mordrem han invadido las Selvas Brisbanas.",
+			name_fr: "Les mordrems ont enhavi les Terres sauvages de Brisban.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX1",
+	pronunciation: "mordrem brisban",
+	series: 5,
+	waypoint: "[&BFwAAAA=]",
+	extra: ["00:45", "04:45", "08:45", "12:45", "16:45", "20:45"],
+	title: "The Mordrem Are Coming to Brisban Wildlands Q2",
+	name_en: "Mordrem Brisban (2/6)",
+	name_de: "Mordrem Brisban (2/6)",
+	name_es: "Mordrem Brisbanas (2/6)",
+	name_fr: "Mordrems Brisban (2/6)",
+	events: [
+		{
+			path: [[9057, 16233],[9057, 16233]],
+			name_en: "The Mordrem have invaded Brisban Wildlands.",
+			name_de: "Die Mordrem sind in den Brisban-Wildnis eingefallen.",
+			name_es: "Los mordrem han invadido las Selvas Brisbanas.",
+			name_fr: "Les mordrems ont enhavi les Terres sauvages de Brisban.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX2",
+	pronunciation: "mordrem kessex",
+	series: 5,
+	waypoint: "[&BAoAAAA=]",
+	extra: ["01:30", "05:30", "09:30", "13:30", "17:30", "21:30"],
+	title: "The Mordrem Are Coming to Kessex Hills Q1",
+	name_en: "Mordrem Kessex (3/6)",
+	name_de: "Mordrem Kessex (3/6)",
+	name_es: "Mordrem Kessex (3/6)",
+	name_fr: "Mordrems Kessex (3/6)",
+	events: [
+		{
+			path: [[10799, 15941],[10799, 15941]],
+			name_en: "The Mordrem have invaded Kessex Hills.",
+			name_de: "Die Mordrem sind in den Kessex-Hügeln eingefallen.",
+			name_es: "Los mordrem han invadido las Colinas Kessex.",
+			name_fr: "Les mordrems ont enhavi les Collines de Kessex.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX3",
+	pronunciation: "mordrem kessex",
+	series: 5,
+	waypoint: "[&BAoAAAA=]",
+	extra: ["01:45", "05:45", "09:45", "13:45", "17:45", "21:45"],
+	title: "The Mordrem Are Coming to Kessex Hills Q2",
+	name_en: "Mordrem Kessex (4/6)",
+	name_de: "Mordrem Kessex (4/6)",
+	name_es: "Mordrem Kessex (4/6)",
+	name_fr: "Mordrems Kessex (4/6)",
+	events: [
+		{
+			path: [[10799, 15941],[10799, 15941]],
+			name_en: "The Mordrem have invaded Kessex Hills.",
+			name_de: "Die Mordrem sind in den Kessex-Hügeln eingefallen.",
+			name_es: "Los mordrem han invadido las Colinas Kessex.",
+			name_fr: "Les mordrems ont enhavi les Collines de Kessex.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX4",
+	pronunciation: "mordrem diessa",
+	series: 5,
+	waypoint: "[&BNkAAAA=]",
+	extra: ["02:30", "06:30", "10:30", "14:30", "18:30", "22:30"],
+	title: "The Mordrem Are Coming to Diessa Plateau Q1",
+	name_en: "Mordrem Diessa (5/6)",
+	name_de: "Mordrem Diessa (5/6)",
+	name_es: "Mordrem Diessa (5/6)",
+	name_fr: "Mordrems Diessa (5/6)",
+	events: [
+		{
+			path: [[23688, 12042],[23688, 12042]],
+			name_en: "The Mordrem have invaded Diessa Plateau.",
+			name_de: "Die Mordrem sind in den Diessa-Plateau eingefallen.",
+			name_es: "Los mordrem han invadido la Meseta de Diessa.",
+			name_fr: "Les mordrems ont enhavi le Plateau de Diessa.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
+		}
+	]
+},
+{
+	alias: "LivingStoryXXX5",
+	pronunciation: "mordrem diessa",
+	series: 5,
+	waypoint: "[&BNkAAAA=]",
+	extra: ["02:45", "06:45", "10:45", "14:45", "18:45", "22:45"],
+	title: "The Mordrem Are Coming to Diessa Plateau Q2",
+	name_en: "Mordrem Diessa (6/6)",
+	name_de: "Mordrem Diessa (6/6)",
+	name_es: "Mordrem Diessa (6/6)",
+	name_fr: "Mordrems Diessa (6/6)",
+	events: [
+		{
+			path: [[23688, 12042],[23688, 12042]],
+			name_en: "The Mordrem have invaded Diessa Plateau.",
+			name_de: "Die Mordrem sind in den Diessa-Plateau eingefallen.",
+			name_es: "Los mordrem han invadido la Meseta de Diessa.",
+			name_fr: "Les mordrems ont enhavi le Plateau de Diessa.",
+			icon: "swords_red",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "15:00",
+			avg: "15:00",
+			min: "15:00",
+			max: "15:00",
+			primacy: 3
 		}
 	]
 }

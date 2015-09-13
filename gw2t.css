@@ -420,6 +420,9 @@ html, body,
 	line-height: 100%;
 	background: rgba(26, 17, 9, 0.4);
 }
+#dsbStory .chnDetails ol li {
+	overflow: visible;
+}
 #dsbStory .chnDetailsExtra {
 	margin-top: -26px;
 }
