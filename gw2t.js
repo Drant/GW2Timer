@@ -11592,6 +11592,7 @@ T = {
 			var name;
 			var url;
 			U.convertExternalLink($("#dsbAnnouncement").html(T.DashboardAnnouncement).find("a"));
+			M.bindMapLinks("#dsbAnnouncement");
 			
 			for (var i in T.DashboardCountdown)
 			{
@@ -11642,9 +11643,10 @@ T = {
 					{
 						var item = T.DashboardSale.Items[i];
 						var forhowmany = (item.quantity > 1) ? item.quantity + "/ " : "";
+						var prevprice = (item.pricenew < item.priceold) ? item.priceold : "";
 						$("#dsbSaleCol" + parseInt(i) % 2).append("<div class='dsbSaleEntry'>"
 							+"<a href='" + U.convertExternalURL(item.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
-							+ "<span class='dsbSalePriceOld'><del>" + forhowmany + item.priceold + "</del></span> "
+							+ "<span class='dsbSalePriceOld'><del>" + forhowmany + prevprice + "</del></span> "
 							+ "<span class='dsbSalePriceNew'>" + forhowmany + item.pricenew + "<ins class='s16 s16_gem'></ins></span>"
 							+ " ≈ " + E.createCoinString(Math.round(item.pricenew * ratio), true)
 						+ "</div>");

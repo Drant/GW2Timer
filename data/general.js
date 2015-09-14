@@ -629,7 +629,8 @@ var GW2T_DASHBOARD_DATA = {
 	
 Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
 	+ "<a href='http://www.facebook.com/gw2timer'><ins class='s16 s16_facebook'></ins></a> and "
-	+ "<a href='https://twitter.com/gw2timer'><ins class='s16 s16_twitter'></ins></a>!",
+	+ "<a href='https://twitter.com/gw2timer'><ins class='s16 s16_twitter'></ins></a>!<br />"
+	+ "Mordrem event is <a href='https://www.guildwars2.com/en/news/the-mordrem-are-coming/'>over</a>! Spend your bloom tokens at the <dfn data-coord='[17907, 15009]'>Durmand Priory</dfn>.",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
@@ -712,18 +713,18 @@ Sale: {
 	Finish: new Date("2015-09-14T16:00:00Z"),
 	Items: [
 	{
-		url: "http://dulfy.net/2015/01/16/gw2-shadow-of-the-dragon-helm-shoulders-and-gloves-in-gemstore/",
-		img: "https://render.guildwars2.com/file/A61CB1DDA9BD5ED3B393D9381C1DE1D70680F8F0/930973.png",
-		quantity: 3,
-		pricenew: 350,
-		priceold: 900
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Rock",
 		img: "https://render.guildwars2.com/file/6AF9429A66C1EF5B5817CA0BE94096B3C9393D5D/1001222.png",
 		quantity: 1,
 		pricenew: 87,
 		priceold: 350
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Gem",
+		img: "./img/ui/gem.png",
+		quantity: 1,
+		pricenew: 100,
+		priceold: 0
 	}
 	]
 }

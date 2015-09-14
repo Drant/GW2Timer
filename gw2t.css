@@ -350,6 +350,9 @@ html, body,
 #itemDashboard a:hover {
 	color: #44dd44;
 }
+#itemDashboard dfn {
+	text-decoration: underline;
+}
 #dsbClose {
 	position: absolute;
 	top: -16px;
