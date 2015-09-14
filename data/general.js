@@ -531,9 +531,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Spender", "Camp", "Defender"]
 },
 "14": {
-	pve: ["Miner Kryta", "Vista Jungle", "Kessex", "Fractal 1-10"],
-	pvp: ["Reward", "Rank", "War Ele", "Engi Necro"],
-	wvw: ["Spender", "Caravan", "Camp", "Defender"]
+	pve: ["Lumberer Ascalon", "Fractal", "Fields", "Fractal 1-10"],
+	pvp: ["Reward", "Kills", "War Ele", "Engi Necro"],
+	wvw: ["Kills", "Land", "Keep", "Camp"]
 },
 "15": {
 	pve: ["Lumberer Kryta", "Vista Ascalon", "Sparkfly", "Fractal 1-10"],
@@ -707,20 +707,24 @@ Story:
 	pricenew: 400, // Gems quantity
 	priceold: 800
  */
-Sales: [
-{
-	url: "http://dulfy.net/2015/01/16/gw2-shadow-of-the-dragon-helm-shoulders-and-gloves-in-gemstore/",
-	img: "https://render.guildwars2.com/file/A61CB1DDA9BD5ED3B393D9381C1DE1D70680F8F0/930973.png",
-	quantity: 3,
-	pricenew: 350,
-	priceold: 900
-},
-{
-	url: "http://wiki.guildwars2.com/wiki/Mini_Rock",
-	img: "https://render.guildwars2.com/file/6AF9429A66C1EF5B5817CA0BE94096B3C9393D5D/1001222.png",
-	quantity: 1,
-	pricenew: 87,
-	priceold: 350
+Sale: {
+	Start: new Date("2015-09-10T16:00:00Z"),
+	Finish: new Date("2015-09-14T16:00:00Z"),
+	Items: [
+	{
+		url: "http://dulfy.net/2015/01/16/gw2-shadow-of-the-dragon-helm-shoulders-and-gloves-in-gemstore/",
+		img: "https://render.guildwars2.com/file/A61CB1DDA9BD5ED3B393D9381C1DE1D70680F8F0/930973.png",
+		quantity: 3,
+		pricenew: 350,
+		priceold: 900
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mini_Rock",
+		img: "https://render.guildwars2.com/file/6AF9429A66C1EF5B5817CA0BE94096B3C9393D5D/1001222.png",
+		quantity: 1,
+		pricenew: 87,
+		priceold: 350
+	}
+	]
 }
-]
 };

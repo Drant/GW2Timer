@@ -4494,6 +4494,8 @@ D = {
 			cs: "příjezd", it: "arrivo", pl: "przyjazd", pt: "chegada", ru: "прибытие", zh: "到來"},
 		s_world_boss: {de: "weltboss", es: "jefe mundo", fr: "chef monde",
 			cs: "svět boss", it: "boss mondo", pl: "świat szef", pt: "chefe mundo", ru: "мировой босс", zh: "世界頭目"},
+		s_event: {de: "event", es: "evento", fr: "événement",
+			cs: "událost", it: "evento", pl: "wydarzenie", pt: "evento", ru: "собы́тие", zh: "事件"},
 		s_section: {de: "paragraph", es: "sección", fr: "section",
 			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "раздел", zh: "節"},
 		s_map: {de: "karte", es: "mapa", fr: "carte",
@@ -5128,6 +5130,7 @@ C = {
 	ChainToday: null,
 	CurrentChainSD: {}, NextChainSD1: {}, NextChainSD2: {}, NextChainSD3: {}, NextChainSD4: {},
 	CurrentChainHC: {}, NextChainHC1: {}, NextChainHC2: {}, NextChainHC3: {}, NextChainHC4: {},
+	CurrentChainLS: {}, NextChainLS1: {}, NextChainLS2: {},
 	CurrentChains: [],
 	CurrentChainsSD: [],
 	PreviousChains1: [],
@@ -5301,7 +5304,8 @@ C = {
 	isChainRegular: function(pChain)
 	{
 		if (pChain.series === C.ChainSeriesEnum.Standard ||
-			pChain.series === C.ChainSeriesEnum.Hardcore)
+			pChain.series === C.ChainSeriesEnum.Hardcore||
+			pChain.series === C.ChainSeriesEnum.LivingStory)
 		{
 			return true;
 		}
@@ -5770,12 +5774,11 @@ C = {
 			// Update the title tootlip with that chain's schedule
 			var minischedulestring = "";
 			var spacer;
-			var headertext = (C.isChainRegular(ithchain)) ? subscribetext : "";
 			if (ithchain.series !== C.ChainSeriesEnum.DryTop)
 			{
 				for (var ii in ithchain.scheduleKeys)
 				{
-					spacer = (parseInt(ii) === 0) ? headertext : " <br /> ";
+					spacer = (parseInt(ii) === 0) ? subscribetext : " <br /> ";
 					minischedulestring = minischedulestring + spacer
 						+ T.getTimeFormatted(
 						{
@@ -6392,8 +6395,9 @@ C = {
 			}
 			
 			// Also unsubscribe if opted
-			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription && I.isProgramLoaded &&
-				O.Options.bol_alertUnsubscribe && isregularchain && C.isChainSubscribed(pChain))
+			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription && I.isProgramLoaded
+				&& pChain.series !== C.ChainSeriesEnum.LivingStory
+				&& O.Options.bol_alertUnsubscribe && isregularchain && C.isChainSubscribed(pChain))
 			{
 				$("#chnTime_" + pChain.nexus).trigger("click");
 			}
@@ -10344,7 +10348,7 @@ T = {
 	DashboardAnnouncement: GW2T_DASHBOARD_DATA.Announcement,
 	DashboardCountdown: GW2T_DASHBOARD_DATA.Countdowns,
 	DashboardStory: GW2T_DASHBOARD_DATA.Story,
-	DashboardSale: GW2T_DASHBOARD_DATA.Sales,
+	DashboardSale: GW2T_DASHBOARD_DATA.Sale,
 	isDashboardEnabled: true,
 	isDashboardCountdownTickEnabled: false,
 	isDashboardStoryEnabled: false,
@@ -10828,6 +10832,10 @@ T = {
 		 * to be checked before using since it can be null.
 		 */
 		return T.getTimeframeChainBySeries(pOffset, C.ChainSeriesEnum.Hardcore);
+	},
+	getLivingStoryChain: function(pOffset)
+	{
+		return T.getTimeframeChainBySeries(pOffset, C.ChainSeriesEnum.LivingStory);
 	},
 	
 	/*
@@ -11615,7 +11623,8 @@ T = {
 		}
 		
 		// Show current gem store sales and coin needed to convert to the gems price
-		if (T.DashboardSale.length > 0)
+		if (T.DashboardSale.Items.length > 0
+			&& (now > T.DashboardSale.Start && now < T.DashboardSale.Finish))
 		{
 			$("#dsbSale").append("<div id='dsbSaleCol0' class='dsbSaleCol'></div><div id='dsbSaleCol1' class='dsbSaleCol'></div>");
 			var ratio = 0;
@@ -11629,15 +11638,15 @@ T = {
 			{
 				if (ratio !== 0)
 				{
-					for (var i in T.DashboardSale)
+					for (var i in T.DashboardSale.Items)
 					{
-						var sale = T.DashboardSale[i];
-						var denom = (sale.quantity > 1) ? sale.quantity + "/ " : "";
+						var item = T.DashboardSale.Items[i];
+						var forhowmany = (item.quantity > 1) ? item.quantity + "/ " : "";
 						$("#dsbSaleCol" + parseInt(i) % 2).append("<div class='dsbSaleEntry'>"
-							+"<a href='" + U.convertExternalURL(sale.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + sale.img + "' /></a> "
-							+ "<span class='dsbSalePriceOld'><del>" + denom + sale.priceold + "</del></span> "
-							+ "<span class='dsbSalePriceNew'>" + denom + sale.pricenew + "<ins class='s16 s16_gem'></ins></span>"
-							+ " ≈ " + E.createCoinString(Math.round(sale.pricenew * ratio), true)
+							+"<a href='" + U.convertExternalURL(item.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
+							+ "<span class='dsbSalePriceOld'><del>" + forhowmany + item.priceold + "</del></span> "
+							+ "<span class='dsbSalePriceNew'>" + forhowmany + item.pricenew + "<ins class='s16 s16_gem'></ins></span>"
+							+ " ≈ " + E.createCoinString(Math.round(item.pricenew * ratio), true)
 						+ "</div>");
 					}
 				}
@@ -12247,19 +12256,24 @@ K = {
 			var minutestill = T.cMINUTES_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime(T.UnitEnum.Minutes);
 			var chainsd = C.NextChainSD1;
 			var chainhc = C.NextChainHC1;
+			var chainls = C.NextChainLS1;
 			var wantsd = false;
 			var wanthc = false;
+			var wantls = false;
 			var speech = D.getSpeech("world boss", "subscribed") + " ";
 			var wait = 5;
 
+			// If alarm minutes is beyond the timeframe range, check the chains beyond
 			if (pMinutes > T.cMINUTES_IN_TIMEFRAME)
 			{
 				chainsd = C.NextChainSD2;
 				chainhc = C.NextChainHC2;
+				chainls = C.NextChainLS2;
 				minutestill += T.cMINUTES_IN_TIMEFRAME;
 			}
 			wantsd = O.objToBool(chainsd) && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
 			wanthc = O.objToBool(chainhc) && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
+			wantls = O.objToBool(chainls) && (C.isChainSubscribed(chainls) && C.isChainUnchecked(chainls));
 
 			if (pMinutes === minutestill && (wantsd || wanthc))
 			{
@@ -12278,6 +12292,16 @@ K = {
 				}
 				D.speak(speech, wait);
 				D.speak(D.getSpeech("will start") + T.getTimeTillChainFormatted(chainsd, "speech"), 3);
+			}
+			
+			// Living Story subscription comes after
+			if (T.isDashboardStoryEnabled)
+			{
+				if (pMinutes === minutestill && wantls)
+				{
+					D.speak(D.getSpeech("event", "subscribed") + " " + D.getChainPronunciation(chainls), wait);
+					D.speak(D.getSpeech("will start") + T.getTimeTillChainFormatted(chainls, "speech"), 3);
+				}
 			}
 		}
 	},
@@ -12310,6 +12334,13 @@ K = {
 		C.NextChainHC2 = T.getHardcoreChain(2);
 		C.NextChainHC3 = T.getHardcoreChain(3);
 		C.NextChainHC4 = T.getHardcoreChain(4);
+		
+		if (T.isDashboardStoryEnabled)
+		{
+			// These are for subscription alarm reference
+			C.NextChainLS1 = T.getLivingStoryChain(1);
+			C.NextChainLS2 = T.getLivingStoryChain(2);
+		}
 		
 		C.PreviousChains2 = T.getTimeframeChains(-2);
 		C.PreviousChains1 = T.getTimeframeChains(-1);

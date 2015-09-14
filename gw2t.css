@@ -387,7 +387,7 @@ html, body,
 	width: 32px; height: 32px;
 	border-radius: 4px;
 }
-.dsbSaleEntry:hover .dsbSaleIcon, .dsbSaleEntry:hover .dsbSaleIcon {
+.dsbSaleEntry:hover .dsbSaleIcon {
 	width: 64px; height: 64px;
 	opacity: 0.9;
 	border-radius: 16px;
