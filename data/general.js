@@ -709,22 +709,22 @@ Story:
 	priceold: 800
  */
 Sale: {
-	Start: new Date("2015-09-10T16:00:00Z"),
-	Finish: new Date("2015-09-14T16:00:00Z"),
+	Start: new Date("2015-09-14T16:00:00Z"),
+	Finish: new Date("2015-09-15T16:00:00Z"),
 	Items: [
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini_Rock",
-		img: "https://render.guildwars2.com/file/6AF9429A66C1EF5B5817CA0BE94096B3C9393D5D/1001222.png",
-		quantity: 1,
-		pricenew: 87,
-		priceold: 350
-	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
 		pricenew: 100,
 		priceold: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Bag-Slot_Value_Pack",
+		img: "https://render.guildwars2.com/file/6AECEE0A0704F069B3776BC66516EB2F0E0DE644/66588.png",
+		quantity: 1,
+		pricenew: 350,
+		priceold: 700
 	}
 	]
 }

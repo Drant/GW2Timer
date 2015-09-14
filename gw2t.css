@@ -292,7 +292,7 @@ html, body,
 }
 
 /* Zoomable */
-.curZoom, .cntComposition dfn, .mapZoneLinks li, .mapZoneLinks dt, .chnDetails ol li span {
+.curZoom, dfn, .mapZoneLinks li, .mapZoneLinks dt, .chnDetails ol li span {
 	cursor: url("img/cursor/zoom.cur"), pointer;
 }
 
@@ -349,9 +349,6 @@ html, body,
 }
 #itemDashboard a:hover {
 	color: #44dd44;
-}
-#itemDashboard dfn {
-	text-decoration: underline;
 }
 #dsbClose {
 	position: absolute;
@@ -1347,14 +1344,14 @@ header.cntHeader {
 	margin-left: 12px;
 }
 
-.cntComposition dfn, .mapZoneLinks li, .mapZoneLinks dt {
+dfn, .mapZoneLinks li, .mapZoneLinks dt {
 	font-weight: bold;
 	color: #ffcc77;
 }
-.cntComposition dfn:hover, .mapZoneLinks li:hover, .mapZoneLinks dt:hover {
+dfn:hover, .mapZoneLinks li:hover, .mapZoneLinks dt:hover {
 	color: #ffdda6;
 }
-.cntComposition dfn:active, .mapZoneLinks li:active, .mapZoneLinks dt:active {
+dfn:active, .mapZoneLinks li:active, .mapZoneLinks dt:active {
 	color: white;
 }
 
