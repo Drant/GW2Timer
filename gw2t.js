@@ -11671,7 +11671,7 @@ T = {
 		// Initialize sale
 		if (T.isDashboardSaleEnabled)
 		{
-			$("#dsbSale").append("<div id='dsbSaleCol0' class='dsbSaleCol'></div><div id='dsbSaleCol1' class='dsbSaleCol'></div>");
+			$("#dsbSale").append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 			var ratio = 0;
 			$.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
 			{

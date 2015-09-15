@@ -692,15 +692,22 @@ Story:
 	priceold: 800
  */
 Sale: {
-	Start: new Date("2015-09-14T16:00:00Z"),
-	Finish: new Date("2015-09-15T16:00:00Z"),
+	Start: new Date("2015-09-15T16:00:00Z"),
+	Finish: new Date("2015-09-21T16:00:00Z"),
 	Items: [
-	{
+	/*{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
 		pricenew: 100,
 		priceold: 0
+	},*/
+	{
+		url: "http://wiki.guildwars2.com/wiki/Living_World_Season_2_Complete_Pack",
+		img: "http://wiki.guildwars2.com/images/a/aa/Living_World_Season_2_Complete_Pack.jpg",
+		quantity: 1,
+		pricenew: 960,
+		priceold: 1600
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Bag-Slot_Value_Pack",
@@ -708,6 +715,13 @@ Sale: {
 		quantity: 1,
 		pricenew: 350,
 		priceold: 700
+	},
+	{
+		url: "https://wiki.guildwars2.com/wiki/Devil_Horns",
+		img: "https://render.guildwars2.com/file/926298A2090B76A42DBBDBA36E46707B016AF39B/499491.png",
+		quantity: 1,
+		pricenew: 200,
+		priceold: 0
 	}
 	]
 }
