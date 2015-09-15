@@ -536,9 +536,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Kills", "Land", "Keep", "Camp"]
 },
 "15": {
-	pve: ["Lumberer Kryta", "Vista Ascalon", "Sparkfly", "Fractal 1-10"],
-	pvp: ["Rank", "Defender", "Thief Ele", "Guard Mes"],
-	wvw: ["Caravan", "Kills", "Camp", "Tower"]
+	pve: ["Forager Ascalon", "Activity", "Bloodtide", "Megades"],
+	pvp: ["Defender", "Rank", "Thief Ele", "Guard Mes"],
+	wvw: ["Land", "Caravan", "Camp", "Defender"]
 },
 "16": {
 	pve: ["Miner Shiverpeaks", "Fractal", "Fields", "Fractal 1-10"],
@@ -634,6 +634,7 @@ Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
+ * Requirement: Date minutes (MM in HH:MM:SS) must be divisible by 5.
  * Format:
 	name: "", // Language independent, overrides others
 	name_en: "",
@@ -650,24 +651,6 @@ Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
 	Finish: new Date("2015-07-13T19:00:00Z")
  */
 Countdowns: [
-{
-	name_en: "Encore Sale",
-	name_de: "Verlängern Jubiläumsangebote",
-	name_es: "Un bis de las rebajas",
-	name_fr: "Prolongation de l'offre spéciale",
-	url: "https://forum-en.guildwars2.com/forum/game/gw2/Anniversary-Sales-Updates",
-	Start: new Date("2015-08-21T16:00:00Z"),
-	Finish: new Date("2015-09-14T16:00:00Z")
-},
-{
-	name_en: "The Mordrem Are Coming",
-	name_de: "Die Mordrem kommen",
-	name_es: "Se acercan los mordrem",
-	name_fr: "Les mordrems approchent",
-	url: "http://wiki.guildwars2.com/wiki/Mordremoth's_Minions_Invade_Tyria",
-	Start: new Date("2015-09-10T16:00:00Z"),
-	Finish: new Date("2015-09-14T16:00:00Z")
-},
 {
 	name_en: "Heart of Thorns Release",
 	name_de: "Heart of Thorns Erscheinungs",
@@ -691,7 +674,7 @@ Countdowns: [
  */
 Story:
 {
-	isEnabled: true,
+	isEnabled: false,
 	name_en: "Mordremoth's Minions Invade Tyria",
 	name_de: "Mordremoths Diener fallen in Tyria ein",
 	name_es: "Los siervos de Mordremoth invaden Tyria",

@@ -366,10 +366,13 @@ html, body,
 	font-size: 18px;
 	color: #ddff77;
 }
-#dsbCountdown span {
+#dsbCountdown code {
+	margin-right: 8px;
+}
+.dsbCountdownDormant {
 	color: #7f807f;
 }
-#dsbCountdown samp {
+.dsbCountdownActive {
 	color: lime;
 }
 .dsbSaleCol {

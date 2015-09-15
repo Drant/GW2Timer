@@ -10350,8 +10350,11 @@ T = {
 	DashboardStory: GW2T_DASHBOARD_DATA.Story,
 	DashboardSale: GW2T_DASHBOARD_DATA.Sale,
 	isDashboardEnabled: true,
+	isDashboardAnnouncementEnabled: false,
+	isDashboardCountdownEnabled: false,
 	isDashboardCountdownTickEnabled: false,
 	isDashboardStoryEnabled: false,
+	isDashboardSaleEnabled: false,
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -10697,7 +10700,6 @@ T = {
 		};
 		
 		var i, ii, iii;
-		var now = new Date();
 		var quarter = 0;
 		var slot;
 		
@@ -10715,7 +10717,7 @@ T = {
 		// Initialize Living Story events, if available
 		if (T.DashboardStory.isEnabled)
 		{
-			if (now > T.DashboardStory.Start && now < T.DashboardStory.Finish)
+			if (T.isTimely(T.DashboardStory, new Date()))
 			{
 				T.isDashboardStoryEnabled = true;
 			}
@@ -11366,6 +11368,19 @@ T = {
 	},
 	
 	/*
+	 * Checks a time sensitive object if its Start and Finish date objects are
+	 * within the current time.
+	 */
+	isTimely: function(pObject, pDate)
+	{
+		if (pDate >= pObject.Start && pDate <= pObject.Finish)
+		{
+			return true;
+		}
+		return false;
+	},
+	
+	/*
 	 * Tells if current UTC time is daytime in game or not (night).
 	 * @returns true if daytime.
 	 */
@@ -11551,22 +11566,40 @@ T = {
 	},
 	
 	/*
-	 * Initializes the countdown object properties to be accessed later.
+	 * Initializes dashboard components.
+	 * Must be executed before the clock tick function executes.
 	 */
 	initializeDashboard: function()
 	{
-		// Disable the countdown system if all countdowns have expired
-		var isallcountdownexpired = true;
+		// Verify countdown: if at least one countdown has not expired
 		var now = new Date();
 		for (var i in T.DashboardCountdown)
 		{
 			if (now < T.DashboardCountdown[i].Finish)
 			{
-				isallcountdownexpired = false;
+				T.isDashboardCountdownEnabled = true;
 				break;
 			}
 		}
-		if (isallcountdownexpired
+		
+		// Verify announcement: if announcement exists
+		if (T.DashboardAnnouncement.length > 0)
+		{
+			U.convertExternalLink($("#dsbAnnouncement").html(T.DashboardAnnouncement).find("a"));
+			M.bindMapLinks("#dsbAnnouncement");
+			T.isDashboardAnnouncementEnabled = true;
+		}
+		
+		// Verify sale: if sale exists and has not expired
+		if (T.DashboardSale.Items.length > 0 && T.isTimely(T.DashboardSale, now))
+		{
+			T.isDashboardSaleEnabled = true;
+		}
+		
+		// Make sure at least one component of the dashboard is enabled and timely, else disable the dashboard
+		if ((T.isDashboardCountdownEnabled === false
+				&& T.isDashboardAnnouncementEnabled === false
+				&& T.isDashboardSaleEnabled === false)
 			|| T.isDashboardEnabled === false
 			|| I.isMapEnabled === false
 			|| O.Options.bol_showDashboard === false)
@@ -11582,8 +11615,8 @@ T = {
 			T.toggleDashboard(false);
 		});
 		
-		// Initialize countdown if at least one countdown has not expired
-		if (isallcountdownexpired === false)
+		// Initialize countdown entries
+		if (T.isDashboardCountdownEnabled)
 		{
 			T.toggleDashboard(true);
 			var namekey = D.getNameKey();
@@ -11591,12 +11624,12 @@ T = {
 			var ctd;
 			var name;
 			var url;
-			U.convertExternalLink($("#dsbAnnouncement").html(T.DashboardAnnouncement).find("a"));
-			M.bindMapLinks("#dsbAnnouncement");
 			
 			for (var i in T.DashboardCountdown)
 			{
+				// Initialize countdown properties
 				ctd = T.DashboardCountdown[i];
+				ctd.isTimely = true;
 				ctd.StartStamp = ctd.Start.toLocaleString();
 				ctd.FinishStamp = ctd.Finish.toLocaleString();
 				// Use default name if available, or use the translated name
@@ -11613,19 +11646,30 @@ T = {
 				{
 					ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + name + "</a>";
 				}
+				
+				/*
+				 * code: the colored bullet point for activity status
+				 * time: the countdown time
+				 * var: the up or down arrow for start or finish start
+				 * samp: the start or finish time
+				 */
+				$("#dsbCountdown").append(
+					"<div id='dsbCountdown_" + i + "' class='dsbCountdownEntry'>"
+						+ "<code>■</code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> <var></var> <samp></samp>"
+					+ "</div>");
 			}
+			T.refreshDashboard(now);
 		}
 		
-		// Initialize Living Story dashboard
+		// Initialize Living Story
 		if (T.isDashboardStoryEnabled)
 		{
 			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(T.DashboardStory) + "</div>").show();
 			I.initializeScrollbar($("#dsbStory"));
 		}
 		
-		// Show current gem store sales and coin needed to convert to the gems price
-		if (T.DashboardSale.Items.length > 0
-			&& (now > T.DashboardSale.Start && now < T.DashboardSale.Finish))
+		// Initialize sale
+		if (T.isDashboardSaleEnabled)
 		{
 			$("#dsbSale").append("<div id='dsbSaleCol0' class='dsbSaleCol'></div><div id='dsbSaleCol1' class='dsbSaleCol'></div>");
 			var ratio = 0;
@@ -11655,26 +11699,85 @@ T = {
 			});
 		}
 	},
+	
+	/*
+	 * Updates the countdown time in each countdown entries.
+	 * Called by the clock tick function every 1 second.
+	 * @param Date pDate for getting time.
+	 */
 	updateDashboardCountdown: function(pDate)
 	{
-		var str = "";
-		var ithtime = "";
 		for (var i in T.DashboardCountdown)
 		{
 			var ctd = T.DashboardCountdown[i];
-			// Don't generate countdown for those that are past the start time
-			if (pDate < ctd.Start)
+			if (ctd.isTimely)
 			{
-				ithtime = T.formatSeconds(~~((ctd.Start.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
-				str += "<span>■</span> " + ctd.Anchor + " <time>" + ithtime + "</time> ⇑@ " + ctd.StartStamp + "<br />";
-			}
-			else if (pDate < ctd.Finish)
-			{
-				ithtime = T.formatSeconds(~~((ctd.Finish.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
-				str += "<samp>■</samp> " + ctd.Anchor + " <time>" + ithtime + "</time> ⇓@ " + ctd.FinishStamp + "<br />";
+				var ithtime = T.formatSeconds(~~((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
+				document.getElementById("dsbCountdownTime_" + i).innerHTML = ithtime;
 			}
 		}
-		document.getElementById("dsbCountdown").innerHTML = str;
+	},
+	
+	/*
+	 * Refreshes timely components in the dashboard.
+	 * Called by the clock tick function every 5 minutes.
+	 * @param Date pDate to compare with deadlines.
+	 */
+	refreshDashboard: function(pDate)
+	{
+		// Update countdown text elements, or deactivate a countdown entry if expired
+		for (var i in T.DashboardCountdown)
+		{
+			var ctd = T.DashboardCountdown[i];
+			if (ctd.isTimely)
+			{
+				var countdownhtml = $("#dsbCountdown_" + i);
+				var bulletclass;
+				var arrow;
+				var stamp;
+				// Don't generate countdown for those that are past the start time
+				if (pDate < ctd.Start)
+				{
+					ctd.DesiredTime = ctd.Start;
+					bulletclass = "dsbCountdownDormant";
+					arrow = "⇑@";
+					stamp = ctd.StartStamp;
+				}
+				else if (pDate < ctd.Finish)
+				{
+					ctd.DesiredTime = ctd.Finish;
+					bulletclass = "dsbCountdownActive";
+					arrow = "⇓@";
+					stamp = ctd.FinishStamp;
+				}
+				else
+				{
+					ctd.isTimely = false;
+					countdownhtml.remove();
+				}
+
+				if (ctd.isTimely)
+				{
+					countdownhtml.find("code").removeClass().addClass(bulletclass);
+					countdownhtml.find("var").text(arrow);
+					countdownhtml.find("samp").text(stamp);
+				}
+			}
+		}
+		
+		// Deactivate outdated Living Story
+		if (T.isTimely(T.DashboardStory, pDate) === false)
+		{
+			T.isDashboardStoryEnabled = false;
+			$("#dsbStory").hide();
+		}
+		
+		// Deactivate outdated sale
+		if (T.isTimely(T.DashboardSale, pDate) === false)
+		{
+			T.isDashboardSaleEnabled = false;
+			$("#dsbSale").hide();
+		}
 	},
 	
 	/*
@@ -12195,6 +12298,10 @@ K = {
 			{
 				K.updateDaytimeIcon();
 				K.updateDryTopClipboard();
+				if (T.isDashboardEnabled)
+				{
+					T.refreshDashboard(pDate);
+				}
 			}
 		}
 		
