@@ -3243,6 +3243,14 @@ E = {
 	{
 		return parseInt(pAmount - pAmount * E.Exchange.TAX_TOTAL);
 	},
+	convertGemToMoney: function(pAmount)
+	{
+		return E.createMoneyString(Math.round(pAmount * E.Exchange.DOLLAR_PER_GEM));
+	},
+	convertMoneyToGem: function(pAmount)
+	{
+		return parseInt(pAmount * E.Exchange.GEM_PER_DOLLAR);
+	},
 	
 	/*
 	 * Calculates the trading calculator's output textboxes using input textboxes' values.
@@ -11692,7 +11700,8 @@ T = {
 							+"<a href='" + U.convertExternalURL(item.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
 							+ "<span class='dsbSalePriceOld'><del>" + forhowmany + prevprice + "</del></span> "
 							+ "<span class='dsbSalePriceNew'>" + forhowmany + item.pricenew + "<ins class='s16 s16_gem'></ins></span>"
-							+ " ≈ " + E.createCoinString(Math.round(item.pricenew * ratio), true)
+							+ "<span class='dsbSalePriceCoin'> ≈ " + E.createCoinString(Math.round(item.pricenew * ratio), true) + "</span>"
+							+ "<span class='dsbSalePriceMoney'> = " + E.convertGemToMoney(item.pricenew) + "<ins class='s16 s16_money'></ins></span>"
 						+ "</div>");
 					}
 				}

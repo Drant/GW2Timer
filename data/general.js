@@ -541,9 +541,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Caravan", "Camp", "Defender"]
 },
 "16": {
-	pve: ["Miner Shiverpeaks", "Fractal", "Fields", "Fractal 1-10"],
-	pvp: ["Reward", "Capture", "War Mes", "Ranger Necro"],
-	wvw: ["Ruins", "Land", "Keep", "Defender"]
+	pve: ["Lumberer Kryta", "Vista Ascalon", "Metrica", "Fractal 1-10"],
+	pvp: ["Kills", "Capture", "War Mes", "Ranger Necro"],
+	wvw: ["Land", "Guard", "Tower", "Camp"]
 },
 "17": {
 	pve: ["Lumberer Jungle", "Vista Kryta", "Harathi", "Fractal 1-10"],
@@ -717,7 +717,7 @@ Sale: {
 		priceold: 700
 	},
 	{
-		url: "https://wiki.guildwars2.com/wiki/Devil_Horns",
+		url: "http://wiki.guildwars2.com/wiki/Devil_Horns",
 		img: "https://render.guildwars2.com/file/926298A2090B76A42DBBDBA36E46707B016AF39B/499491.png",
 		quantity: 1,
 		pricenew: 200,

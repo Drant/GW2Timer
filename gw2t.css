@@ -395,6 +395,16 @@ html, body,
 	opacity: 0.9;
 	border-radius: 16px;
 }
+.dsbSalePriceMoney {
+	display: none;
+	color: #ffde9d;
+}
+.dsbSaleEntry:hover .dsbSalePriceMoney {
+	display: inline;
+}
+.dsbSaleEntry:hover .dsbSalePriceCoin {
+	display: none;
+}
 .dsbSalePriceNew {
 	color: white;
 }
