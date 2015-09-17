@@ -2670,14 +2670,14 @@ goldcoin {
 	background-position: -16px 0;
 }
 
-dfn.rarity0, input[type="text"].rarity0 { color: #aaaaaa; /* junk gray */ }
-dfn.rarity1, input[type="text"].rarity1 { color: #ffffff; /* basic white */ }
-dfn.rarity2, input[type="text"].rarity2 { color: #5599ff; /* fine blue */ }
-dfn.rarity3, input[type="text"].rarity3 { color: #33cc11; /* masterwork green */ }
-dfn.rarity4, input[type="text"].rarity4 { color: #ffdd22; /* rare yellow */ }
-dfn.rarity5, input[type="text"].rarity5 { color: #ffaa00; /* exotic orange */ }
-dfn.rarity6, input[type="text"].rarity6 { color: #ff4488; /* ascended magenta */ }
-dfn.rarity7, input[type="text"].rarity7 { color: #9933ff; /* legendary violet */ }
+.rarity0, input[type="text"].rarity0 { color: #aaaaaa; /* junk gray */ }
+.rarity1, input[type="text"].rarity1 { color: #ffffff; /* basic white */ }
+.rarity2, input[type="text"].rarity2 { color: #5599ff; /* fine blue */ }
+.rarity3, input[type="text"].rarity3 { color: #33cc11; /* masterwork green */ }
+.rarity4, input[type="text"].rarity4 { color: #ffdd22; /* rare yellow */ }
+.rarity5, input[type="text"].rarity5 { color: #ffaa00; /* exotic orange */ }
+.rarity6, input[type="text"].rarity6 { color: #ff4488; /* ascended magenta */ }
+.rarity7, input[type="text"].rarity7 { color: #9933ff; /* legendary violet */ }
 
 /* =============================================================================
  *  @@Palette color derived from GW2 user interface.

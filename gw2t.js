@@ -11326,7 +11326,7 @@ T = {
 	},
 	
 	/*
-	 * Gets a "1w 7d 24h 60m 60s" string from seconds.
+	 * Gets a "1w 6d 23h 59m 59s" string from seconds.
 	 * @param int pSeconds of time.
 	 * @returns string formatted time.
 	 */
