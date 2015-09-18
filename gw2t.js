@@ -6748,10 +6748,17 @@ M = {
 					that.createPersonalPin(that.convertGCtoLC(coords[i]));
 				}
 				that.drawPersonalPath();
+				// View the first point in the generated path
+				that.goToArguments(coords[0]);
 			}
 			else
 			{
-				that.goToArguments(val, that.Pin.Program);
+				switch (val.toLowerCase())
+				{
+					case "/lock": that.Map.dragging.disable(); I.write("Map locked."); break;
+					case "/unlock": that.Map.dragging.enable(); I.write("Map unlocked."); break;
+					default: that.goToArguments(val, that.Pin.Program);
+				}
 			}
 		});
 		
@@ -11621,6 +11628,7 @@ T = {
 		$("#dsbClose").click(function()
 		{
 			T.toggleDashboard(false);
+			T.isDashboardEnabled = false;
 		});
 		
 		// Initialize countdown entries
