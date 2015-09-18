@@ -1180,7 +1180,7 @@ U = {
 	
 	initializeAPIURLs: function()
 	{
-		var lang = D.getFullySupportedLanguage();
+		var lang = D.getPartiallySupportedLanguage();
 		U.URL_API.MapFloorTyria += "&lang=" + lang;
 		U.URL_API.MapFloorMists += "&lang=" + lang;
 		U.URL_API.EventNames += "?lang=" + lang;
@@ -4512,8 +4512,8 @@ D = {
 			cs: "střed", it: "centro", pl: "środek", pt: "centro", ru: "центр", zh: "中心"},
 		s_character: {de: "person", es: "personaje", fr: "personnage",
 			cs: "postava", it: "personaggio", pl: "postać", pt: "personagem", ru: "персона́ж", zh: "人物"},
-		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama"},
-		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros"},
+		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", zh: "鳥瞰點"},
+		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros", zh: "技能點"},
 		s_checklist: {de: "prüfliste", es: "lista de comprobación", fr: "liste de contrôle",
 			cs: "kontrolní seznam", it: "elenco di controllo", pl: "lista kontrolna", pt: "lista de verificação", ru: "контрольный список", zh: "檢查清單"},
 		s_subscription: {de: "abonnement", es: "suscripción", fr: "abonnement",
@@ -4578,7 +4578,7 @@ D = {
 		// Automatic
 		s_Scheduled_Bosses: {de: "Geplant", es: "Programado", fr: "Planifié",
 			cs: "Plánované", it: "Pianificata", pl: "Zaplanowane", pt: "Agendado", ru: "Запланирован", zh: "已排程"},
-		s_Dry_Top: {de: "Trockenkuppe", es: "Cima Seca", fr: "Cimesèche"},
+		s_Dry_Top: {de: "Trockenkuppe", es: "Cima Seca", fr: "Cimesèche", zh: "干涸高地"},
 		s_Legacy_Bosses: {de: "Legacy", es: "Heredado", fr: "Hérité",
 			cs: "Starší", it: "Legacy", pl: "Starsze", pt: "Herdado", ru: "Устаревший", zh: "舊版"},
 		s_Orr_Temples: {de: "Tempel", es: "Templos", fr: "Temples",
@@ -4840,6 +4840,15 @@ D = {
 		}
 		return O.OptionEnum.Language.Default;
 	},
+	getPartiallySupportedLanguage: function()
+	{
+		if (D.isLanguageFullySupported()
+			|| O.Options.enu_Language === O.OptionEnum.Language.Mandarin)
+		{
+			return O.Options.enu_Language;
+		}
+		return O.OptionEnum.Language.Default;
+	},
 	
 	/*
 	 * Retrieves the name property of an object that was prefixed with a language code.
@@ -4857,15 +4866,15 @@ D = {
 	},
 	getObjectName: function(pObject)
 	{
-		return pObject["name_" + D.getFullySupportedLanguage()];
+		if (pObject["name_" + O.Options.enu_Language] !== undefined)
+		{
+			return pObject["name_" + O.Options.enu_Language];
+		}
+		return D.getDefaultObjectName(pObject);
 	},
 	getDefaultObjectName: function(pObject)
 	{
 		return pObject["name_" + O.OptionEnum.Language.Default];
-	},
-	getSpecificObjectName: function(pObject, pLanguage)
-	{
-		return pObject["name_" + pLanguage];
 	},
 	getObjectURL: function(pObject)
 	{
@@ -4928,15 +4937,6 @@ D = {
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
 		{
 			return pChain.title;
-		}
-		return D.getChainTitleAny(pChain);
-	},
-	getChainTitleAny: function(pChain)
-	{
-		if (O.Options.enu_Language === O.OptionEnum.Language.Mandarin
-			&& pChain.series !== C.ChainSeriesEnum.LivingStory)
-		{
-			return D.getSpecificObjectName(pChain, O.Options.enu_Language);
 		}
 		return D.getObjectName(pChain);
 	},
@@ -5393,7 +5393,7 @@ C = {
 		
 		if (C.isChainWorldBoss(pChain))
 		{
-			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getChainTitleAny(pChain) + "' />"
+			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getObjectName(pChain) + "' />"
 				+ " (" + pChain.extra[1] + ") "
 				+ pChain.extra[2] + "<ins class='s16 s16_ecto'></ins>" + " "
 				+ pChain.extra[3] + "<ins class='s16 s16_loot'></ins>" + " "
@@ -5410,7 +5410,7 @@ C = {
 			+ "<div class='chnTitle'>"
 				+ "<img id='chnIcon_" + pChain.nexus + "' src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
 				+ "<samp id='chnCheck_" + pChain.nexus + "' class='chnCheck'></samp>"
-				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + D.getChainTitleAny(pChain) + "</h1>"
+				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + D.getObjectName(pChain) + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
 				+ "<aside><img class='chnDaily chnDaily_" + pChain.nexus + "' src='img/ui/daily.png' /></aside>"
 			+ "</div>"
@@ -5611,7 +5611,7 @@ C = {
 		{
 			$("#chnBar_" + pChain.nexus).hover(
 				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain)); },
-				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitleAny(pChain)); }
+				function() { $("#chnTitle_" + pChain.nexus).text(D.getObjectName(pChain)); }
 			);
 		}
 		$("#chnDetails_" + pChain.nexus + " .chnWaypoint").click(function()
@@ -5915,7 +5915,7 @@ C = {
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
 						+ "<samp class='chnCheck'></samp>"
-						+ "<h1>" + D.getChainTitleAny(ithchain) + "</h1>"
+						+ "<h1>" + D.getObjectName(ithchain) + "</h1>"
 						+ "<time>" + timestring + "</time>"
 						+ "<aside><img class='chnDaily chnDaily_" + ithchain.nexus + "' src='img/ui/daily.png' /></aside>"
 					+ "</div>"
@@ -12482,8 +12482,8 @@ K = {
 		C.CurrentChains.forEach(C.queueEventsHighlight);
 		
 		// Update board in simple mode
-		$("#itemBoardCurrentSD").text(D.getChainTitleAny(C.CurrentChainSD));
-		$("#itemBoardNextSD").text(D.getChainTitleAny(C.NextChainSD1));
+		$("#itemBoardCurrentSD").text(D.getObjectName(C.CurrentChainSD));
+		$("#itemBoardNextSD").text(D.getObjectName(C.NextChainSD1));
 		$("#itemBoardCurrentHC").text("");
 		$("#itemBoardNextHC").text("");
 		if (C.CurrentChainHC || C.NextChainHC1)
@@ -12491,11 +12491,11 @@ K = {
 			$("#itemBoardHC").show();
 			if (C.CurrentChainHC)
 			{
-				$("#itemBoardCurrentHC").text(D.getChainTitleAny(C.CurrentChainHC));
+				$("#itemBoardCurrentHC").text(D.getObjectName(C.CurrentChainHC));
 			}
 			if (C.NextChainHC1)
 			{
-				$("#itemBoardNextHC").text(D.getChainTitleAny(C.NextChainHC1));
+				$("#itemBoardNextHC").text(D.getObjectName(C.NextChainHC1));
 			}
 		}
 		else
@@ -12621,7 +12621,7 @@ K = {
 					pIcon.data(C.cIndexSynonym, pChain.nexus);
 					if (I.ModeCurrent === I.ModeEnum.Simple)
 					{
-						pIcon.attr("title", D.getChainTitleAny(pChain));
+						pIcon.attr("title", D.getObjectName(pChain));
 						I.qTip.init(pIcon);
 					}
 
@@ -13239,7 +13239,7 @@ I = {
 		if (O.isServerReset && C.ChainToday)
 		{
 			I.greet(D.getModifiedWord("world boss", "daily", U.CaseEnum.Sentence) + " "
-				+ D.getChainTitleAny(C.ChainToday) + " " + D.getPhrase("will start") + " " + D.getPhrase("at") + " "
+				+ D.getObjectName(C.ChainToday) + " " + D.getPhrase("will start") + " " + D.getPhrase("at") + " "
 				+ T.getTimeFormatted(
 				{
 					wantSeconds: false,

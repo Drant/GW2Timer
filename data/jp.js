@@ -336,7 +336,7 @@ var GW2T_JP_DATA = {
 	name_fr: "Etendue de Fablegriffe",
 	coord: "[28465, 15425]",
 	img: "dtnDiEQ",
-	description: "Ashford water cavern Ascalonian ruins with traps"
+	description: "Plains water cavern Ascalonian ruins with traps"
 },
 "branded": {
 	id: 37,

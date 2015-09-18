@@ -9,6 +9,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Herz von Maguuma",
 	name_es: "Corazón de Maguuma",
 	name_fr: "Cœur de Maguuma",
+	name_zh: "邁古瑪的心",
 	color: "gray"
 },
 "wastes": {
@@ -16,6 +17,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Maguuma-Einöde",
 	name_es: "Páramos Maguuma",
 	name_fr: "Contrées sauvages de Maguuma",
+	name_zh: "邁古瑪荒野",
 	color: "wheat"
 },
 "jungle": {
@@ -23,6 +25,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Maguuma-Dschungel",
 	name_es: "Jungla de Maguuma",
 	name_fr: "Jungle de Maguuma",
+	name_zh: "晦暗海岸",
 	color: "cyan"
 },
 "kryta": {
@@ -30,6 +33,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Kryta",
 	name_es: "Kryta",
 	name_fr: "Kryte",
+	name_zh: "科瑞塔",
 	color: "lightgreen"
 },
 "orr": {
@@ -37,6 +41,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Orr",
 	name_es: "Orr",
 	name_fr: "Orr",
+	name_zh: "歐爾遺跡",
 	color: "darkgoldenrod"
 },
 "shiverpeaks": {
@@ -44,6 +49,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Zittergipfelgebirge",
 	name_es: "Picosescalofriantes",
 	name_fr: "Cimefroides",
+	name_zh: "席瓦雪山",
 	color: "lightskyblue"
 },
 "ascalon": {
@@ -51,6 +57,7 @@ var GW2T_REGION_DATA = {
 	name_de: "Ascalon",
 	name_es: "Ascalon",
 	name_fr: "Ascalon",
+	name_zh: "阿斯卡隆",
 	color: "orange"
 }
 };
@@ -63,7 +70,7 @@ var GW2T_ZONE_ASSOCIATION = {
 	"15": "queensdale",
 	"17": "harathi",
 	"18": "divinity",
-	"19": "ashford",
+	"19": "plains",
 	"20": "blazeridge",
 	"21": "fields",
 	"22": "fireheart",
@@ -152,307 +159,375 @@ spidernestcavern: {
 var GW2T_ZONE_DATA = {
 "silverwastes":
 {
+	id: "1015",
 	name_en: "The Silverwastes",
 	name_de: "Die Silberwüste",
 	name_es: "Los Páramos Argentos",
 	name_fr: "Les Contrées sauvages d'Argent",
+	name_zh: "白銀荒地",
 	region: "wastes",
 	rect: [[3838, 14206], [5886, 15742]]
 },
 "dry":
 {
+	id: "988",
 	name_en: "Dry Top",
 	name_de: "Trockenkuppe",
 	name_es: "Cima Seca",
 	name_fr: "Cimesèche",
+	name_zh: "干涸高地",
 	region: "wastes",
 	rect: [[3840, 15742], [5888, 17152]]//[3840, 14592]
 },
 "rata":
 {
+	id: "139",
 	name_en: "Rata Sum",
 	name_de: "Rata Sum",
 	name_es: "Rata Sum",
 	name_fr: "Rata Sum",
+	name_zh: "拉塔索姆",
 	region: "jungle",
 	rect: [[4608, 19710], [7168, 22270]]
 },
 "brisban":
 {
+	id: "54",
 	name_en: "Brisban Wildlands",
 	name_de: "Brisban-Wildnis",
 	name_es: "Selvas Brisbanas",
 	name_fr: "Terres sauvages de Brisban",
+	name_zh: "布裡斯班野地",
 	region: "jungle",
 	rect: [[5888, 14464], [9344, 17152]]
 },
 "metrica":
 {
+	id: "35",
 	name_en: "Metrica Province",
 	name_de: "Provinz Metrica",
 	name_es: "Provincia de Métrica",
 	name_fr: "Province de Metrica",
+	name_zh: "度量領域",
 	region: "jungle",
 	rect: [[7168, 17152], [9344, 20480]]
 },
 "caledon":
 {
+	id: "34",
 	name_en: "Caledon Forest",
 	name_de: "Caledon-Wald",
 	name_es: "Bosque de Caledon",
 	name_fr: "Forêt de Caledon",
+	name_zh: "卡勒頓之森",
 	region: "jungle",
 	rect: [[9344, 16128], [11264, 20096]]
 },
 "kessex":
 {
+	id: "23",
 	name_en: "Kessex Hills",
 	name_de: "Kessex-Hügel",
 	name_es: "Colinas Kessex",
 	name_fr: "Collines de Kessex",
+	name_zh: "凱席斯山",
 	region: "kryta",
 	rect: [[9344, 14080], [13440, 16128]]
 },
 "grove":
 {
+	id: "91",
 	name_en: "The Grove",
 	name_de: "Der Hain",
 	name_es: "La Arboleda",
 	name_fr: "Le Bosquet",
+	name_zh: "聖林之地",
 	region: "jungle",
 	rect: [[9728, 20096], [11136, 22144]]
 },
 "queensdale":
 {
+	id: "15",
 	name_en: "Queensdale",
 	name_de: "Königintal",
 	name_es: "Valle de la Reina",
 	name_fr: "La Vallée de la reine",
+	name_zh: "女王谷",
 	region: "kryta",
 	rect: [[9856, 11648], [13440, 14080]]
 },
 "cursed":
 {
+	id: "62",
 	name_en: "Cursed Shore",
 	name_de: "Fluchküste",
 	name_es: "Ribera Maldita",
 	name_fr: "Rivage maudit",
+	name_zh: "詛咒海岸",
 	region: "orr",
 	rect: [[10112, 25216], [12160, 29312]]
 },
 "divinity":
 {
+	id: "18",
 	name_en: "Divinity's Reach",
 	name_de: "Götterfels",
 	name_es: "Linde de la Divinidad",
 	name_fr: "Le Promontoire divin",
+	name_zh: "神佑之城",
 	region: "kryta",
 	rect: [[10240, 9856], [12160, 11648]]
 },
 "malchor":
 {
+	id: "65",
 	name_en: "Malchor's Leap",
 	name_de: "Malchors Sprung",
 	name_es: "Salto de Malchor",
 	name_fr: "Saut de Malchor",
+	name_zh: "馬爾科之躍",
 	region: "orr",
 	rect: [[10368, 23168], [14464, 25216]]
 },
 "southsun":
 {
+	id: "873",
 	name_en: "Southsun Cove",
 	name_de: "Südlicht-Bucht",
 	name_es: "Cala del Sol Austral",
 	name_fr: "Crique de Sud-Soleil",
+	name_zh: "南陽海灣",
 	region: "kryta",
 	rect: [[11520, 18944], [14208, 20736]]
 },
 "harathi":
 {
+	id: "17",
 	name_en: "Harathi Hinterlands",
 	name_de: "Harathi-Hinterland",
 	name_es: "Interior Harathi",
 	name_fr: "Hinterlands harathis",
+	name_zh: "哈拉希腹地",
 	region: "kryta",
 	rect: [[13440, 9472], [16640, 12288]]
 },
 "gendarran":
 {
+	id: "24",
 	name_en: "Gendarran Fields",
 	name_de: "Gendarran-Felder",
 	name_es: "Campos de Gendarran",
 	name_fr: "Champs de Gendarran",
+	name_zh: "甘達拉戰區",
 	region: "kryta",
 	rect: [[13440, 12288], [17664, 14336]]
 },
 "straits":
 {
+	id: "51",
 	name_en: "Straits of Devastation",
 	name_de: "Meerenge der Verwüstung",
 	name_es: "Estrechos de la Devastación",
 	name_fr: "Détroit de la Dévastation",
+	name_zh: "浩劫海峽",
 	region: "orr",
 	rect: [[14464, 22400], [17792, 25216]]
 },
 "lion":
 {
+	id: "50",
 	name_en: "Lion's Arch",
 	name_de: "Löwenstein",
 	name_es: "Arco del León",
 	name_fr: "L'Arche du Lion",
+	name_zh: "獅子拱門",
 	region: "kryta",
 	rect: [[15232, 14336], [17664, 15872]]
 },
 "bloodtide":
 {
+	id: "73",
 	name_en: "Bloodtide Coast",
 	name_de: "Blutstrom-Küste",
 	name_es: "Costa Mareasangrienta",
 	name_fr: "Côte de la marée sanglante",
+	name_zh: "血潮海岸",
 	region: "kryta",
 	rect: [[15232, 15872], [17664, 19072]]
 },
 "sparkfly":
 {
+	id: "53",
 	name_en: "Sparkfly Fen",
 	name_de: "Funkenschwärmersumpf",
 	name_es: "Pantano de las Centellas",
 	name_fr: "Marais de Lumillule",
+	name_zh: "閃螢沼澤",
 	region: "jungle",
 	rect: [[15232, 19072], [17792, 22400]]
 },
 "lornar":
 {
+	id: "27",
 	name_en: "Lornar's Pass",
 	name_de: "Lornars Pass",
 	name_es: "Paso de Lornar",
 	name_fr: "Passage de Lornar",
+	name_zh: "羅納通道",
 	region: "shiverpeaks",
 	rect: [[17664, 13312], [19456, 18176]]
 },
 "snowden":
 {
+	id: "31",
 	name_en: "Snowden Drifts",
 	name_de: "Schneekuhlenhöhen",
 	name_es: "Cúmulos de Guaridanieve",
 	name_fr: "Congères d'Antreneige",
+	name_zh: "漂流雪境",
 	region: "shiverpeaks",
 	rect: [[17664, 11264], [21760, 13312]]
 },
 "maelstrom":
 {
+	id: "39",
 	name_en: "Mount Maelstrom",
 	name_de: "Mahlstromgipfel",
 	name_es: "Monte Vorágine",
 	name_fr: "Mont Maelström",
+	name_zh: "漩渦山",
 	region: "jungle",
 	rect: [[17792, 21376], [21632, 23808]]
 },
 "timberline":
 {
+	id: "29",
 	name_en: "Timberline Falls",
 	name_de: "Baumgrenzen-Fälle",
 	name_es: "Cataratas de Linarbórea",
 	name_fr: "Chutes de la Canopée",
+	name_zh: "林線瀑布",
 	region: "shiverpeaks",
 	rect: [[18944, 18176], [21248, 21376]]
 },
 "hoelbrak":
 {
+	id: "326",
 	name_en: "Hoelbrak",
 	name_de: "Hoelbrak",
 	name_es: "Hoelbrak",
 	name_fr: "Hoelbrak",
+	name_zh: "霍布雷克",
 	region: "shiverpeaks",
 	rect: [[19456, 13312], [21760, 14976]]
 },
 "dredgehaunt":
 {
+	id: "26",
 	name_en: "Dredgehaunt Cliffs",
 	name_de: "Schauflerschreck-Klippen",
 	name_es: "Acantilados de Guaridadraga",
 	name_fr: "Falaises de Hantedraguerre",
+	name_zh: "掘洞懸崖",
 	region: "shiverpeaks",
 	rect: [[19456, 14976], [21760, 18176]]
 },
 "frostgorge":
 {
+	id: "30",
 	name_en: "Frostgorge Sound",
 	name_de: "Eisklamm-Sund",
 	name_es: "Estrecho de Gorjaescarcha",
 	name_fr: "Détroit des gorges glacées",
+	name_zh: "霜谷之音",
 	region: "shiverpeaks",
 	rect: [[20736, 8192], [23808, 11264]]
 },
 "wayfarer":
 {
+	id: "28",
 	name_en: "Wayfarer Foothills",
 	name_de: "Wanderer-Hügel",
 	name_es: "Colinas del Caminante",
 	name_fr: "Contreforts du Voyageur",
+	name_zh: "旅者丘陵",
 	region: "shiverpeaks",
 	rect: [[21760, 11264], [23552, 15872]]
 },
 "citadel":
 {
+	id: "218",
 	name_en: "Black Citadel",
 	name_de: "Schwarze Zitadelle",
 	name_es: "Ciudadela Negra",
 	name_fr: "La Citadelle noire",
+	name_zh: "黑煙壁壘",
 	region: "ascalon",
 	rect: [[23552, 13568], [25088, 15616]]
 },
 "diessa":
 {
+	id: "32",
 	name_en: "Diessa Plateau",
 	name_de: "Diessa-Plateau",
 	name_es: "Meseta de Diessa",
 	name_fr: "Plateau de Diessa",
+	name_zh: "底耶沙高地",
 	region: "ascalon",
 	rect: [[23552, 11264], [27136, 13568]]
 },
 "fireheart":
 {
+	id: "22",
 	name_en: "Fireheart Rise",
 	name_de: "Feuerherzhügel",
 	name_es: "Colina del Corazón de Fuego",
 	name_fr: "Montée de Flambecœur",
+	name_zh: "炎心高地",
 	region: "ascalon",
 	rect: [[23808, 8448], [27136, 11264]]
 },
-"ashford":
+"plains":
 {
+	id: "19",
 	name_en: "Plains of Ashford",
 	name_de: "Ebenen von Aschfurt",
 	name_es: "Llanuras de Ashford",
 	name_fr: "Plaines d'Ashford",
+	name_zh: "阿什福德平原",
 	region: "ascalon",
 	rect: [[25088, 13568], [29184, 15616]]
 },
 "marches":
 {
+	id: "25",
 	name_en: "Iron Marches",
 	name_de: "Eisenmark",
 	name_es: "Fronteras de Hierro",
 	name_fr: "Marais de fer",
+	name_zh: "鋼鐵平原",
 	region: "ascalon",
 	rect: [[27136, 9472], [29184, 13568]]
 },
 "fields":
 {
+	id: "21",
 	name_en: "Fields of Ruin",
 	name_de: "Felder der Verwüstung",
 	name_es: "Campos de la Ruina",
 	name_fr: "Champs de Ruine",
+	name_zh: "廢墟原野",
 	region: "ascalon",
 	rect: [[28672, 16256], [31744, 19328]]
 },
 "blazeridge":
 {
+	id: "20",
 	name_en: "Blazeridge Steppes",
 	name_de: "Flammenkamm-Steppe",
 	name_es: "Estepas Crestafulgurante",
 	name_fr: "Les Steppes de la Strie flamboyante",
+	name_zh: "裂脊草原",
 	region: "ascalon",
 	rect: [[29184, 12160], [31232, 16256]]
 }
@@ -551,7 +626,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Land", "Tower", "Defender"]
 },
 "18": {
-	pve: ["Forager Jungle", "Forger", "Ashford", "Maw"],
+	pve: ["Forager Jungle", "Forger", "Plains", "Maw"],
 	pvp: ["Reward", "Capture", "War Necro", "Thief Mes"],
 	wvw: ["Land", "Guard", "Defender", "Camp"]
 },
@@ -611,7 +686,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Caravan", "Defender", "Tower"]
 },
 "30": {
-	pve: ["Forager Orr", "Vista Wastes", "Ashford", "Fractal 11-20"],
+	pve: ["Forager Orr", "Vista Wastes", "Plains", "Fractal 11-20"],
 	pvp: ["Capture", "Kills", "War Mes", "Guard Necro"],
 	wvw: ["Spender", "Land", "Defender", "Camp"]
 },
