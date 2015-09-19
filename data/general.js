@@ -631,9 +631,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Defender", "Camp"]
 },
 "19": {
-	pve: ["Lumberer Kryta", "Activity", "Frostgorge", "Fractal 1-10"],
-	pvp: ["Capture", "Reward", "War Guard", "Ranger Engi"],
-	wvw: ["Guard", "Ruins", "Defender", "Camp"]
+	pve: ["Lumberer Ascalon", "Activity", "Kessex", "Golem"],
+	pvp: ["Reward", "Rank", "War Guard", "Ranger Engi"],
+	wvw: ["Kills", "Ruins", "Camp", "Defender"]
 },
 "20": {
 	pve: ["Miner Shiverpeaks", "Vista Orr", "Fields", "Wurm"],

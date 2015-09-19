@@ -1373,7 +1373,7 @@ var GW2T_CHAIN_DATA = [
 },
 {
 	alias: "Tequatl",
-	pronunciation: "tecquatle",
+	pronunciation: "tucquatle",
 	series: 3,
 	waypoint: "[&BNABAAA=]",
 	extra: ["sparkfly", "65", "3", "4", "38"],
