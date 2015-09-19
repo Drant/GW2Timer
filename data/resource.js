@@ -296,7 +296,7 @@ Green: {
 	name_fr: "Vert",
 	type: "Wood",
 	item: "19723",
-	zones: ["metrica", "caledon", "brisban", "queensdale", "kessex", "wayfarer", "snowden", "ashford", "diessa"],
+	zones: ["metrica", "caledon", "brisban", "queensdale", "kessex", "wayfarer", "snowden", "plains", "diessa"],
 	offset: [0, 128]
 },
 Soft: {

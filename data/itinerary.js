@@ -124,7 +124,7 @@ var GW2T_COMPLETION_DATA = {
 {
 	path: []
 },
-"ashford":
+"plains":
 {
 	path: []
 },
