@@ -2738,6 +2738,12 @@ X = {
 	 */
 	initializePersonalChecklist: function()
 	{
+		/*
+		 * Setting this boolean will tell the clock ticker function to call the
+		 * HTML timer update function.
+		 */
+		T.isCountdownToResetStarted = true;
+		
 		// Initially, only show the daily checklist; user clicks the buttons to toggle the various checklists
 		$("#chlDungeon, #chlCustomWeekly").hide();
 		
@@ -10003,12 +10009,6 @@ G = {
 	 */
 	generateGuildUI: function()
 	{
-		/*
-		 * Setting this boolean will tell the clock ticker function to call the
-		 * HTML timer update function.
-		 */
-		T.isGuildTimerStarted = true;
-		
 		hideGuildMapDrawings = function(pBook)
 		{
 			M.toggleLayerArray(P.LayerArray["Guild_" + pBook], false);
@@ -10526,8 +10526,8 @@ T = {
 		Saturday: 6
 	},
 	loginTrackOfficial: 0,
-	secondsTillGuildReset: -1,
-	isGuildTimerStarted: false,
+	secondsTillResetWeekly: -1,
+	isCountdownToResetStarted: false,
 	
 	DryTopSets: {},
 	DryTopCodes: {},
@@ -11660,17 +11660,17 @@ T = {
 	},
 	
 	/*
-	 * Counts down till guild mission reset.
+	 * Counts down till weekly reset. For use by the personal checklist.
 	 */
-	updateGuildTimer: function()
+	updateCountdownToReset: function()
 	{
-		if (T.secondsTillGuildReset < 0)
+		if (T.secondsTillResetWeekly < 0)
 		{
-			T.secondsTillGuildReset = T.getSecondsTillWeekday(T.DayEnum.Sunday);
+			T.secondsTillResetWeekly = T.getSecondsTillWeekday(T.DayEnum.Sunday);
 		}
-		$("#gldTimer").text(T.formatSeconds(T.secondsTillGuildReset, true));
+		$("#chlCountdownToReset").text(T.formatSeconds(T.secondsTillResetWeekly, true));
 		// Decrement global variable to countdown, instead of calling the compute function every time
-		T.secondsTillGuildReset--;
+		T.secondsTillResetWeekly--;
 	},
 	
 	/*
@@ -12452,9 +12452,9 @@ K = {
 		}
 		
 		// Trigger other ticking functions
-		if (T.isGuildTimerStarted)
+		if (T.isCountdownToResetStarted)
 		{
-			T.updateGuildTimer();
+			T.updateCountdownToReset();
 		}
 		if (T.isDashboardCountdownTickEnabled)
 		{

@@ -2146,7 +2146,7 @@ dt.jpzListNameHover {
 .clt_speedyreader { background-position: -384px 0; }
 
 /* Guild */
-#gldTimer {
+#chlCountdownToReset {
 	margin: 12px;
 	text-align: center;
 	font-size: 32px;
@@ -2155,6 +2155,7 @@ dt.jpzListNameHover {
 }
 
 #gldButtons {
+	margin-top: 8px;
 	text-align: center;
 }
 #gldButtons div {

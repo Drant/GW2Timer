@@ -235,12 +235,11 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 	>Guild Missions</var>
 </header>
 <section>
-<div id="gldTimer"></div>
 <div id="gldButtons"></div>
 <br />
 <kbd class="jsHelpCollapsible"></kbd>
 <div>
-	<p>Click a button above to view that <b>guild mission type</b>; click the button again to hide that mission type. The timer above counts down to weekly reset.</p>
+	<p>Click a button above to view that <b>guild mission type</b>; click the button again to hide that mission type.</p>
 	<p>Click on a <b>mission name</b> (gold colored) to view the map location and toggle its path; double click the mission name to zoom in/out.</p>
 	<p><b>Credits:</b><br />
 	<a href="http://www.palingenesis.webspace.virginmedia.com/Tim/GW2/Manual/Manual.html">Palingenesis</a>: coordinates, paths, map data<br />
@@ -419,10 +418,11 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 </header>
 <section>
 
+<div id="chlCountdownToReset"></div>
 <div id="chlCustomButtons">
-	<button id="chlDungeonButton" title="Dungeon checklist (Resets daily at UTC 00:00)."><img data-src="img/ui/dungeon.png" /></button>
-	<button id="chlCustomDailyButton" title="Daily checklist (Resets daily at UTC 00:00).">24</button>
-	<button id="chlCustomWeeklyButton" title="Weekly checklist (Resets weekly at Sunday UTC 00:00).">7</button>
+	<button id="chlDungeonButton" title="Dungeon checklist. Resets when countdown is:<br />Xd 0h 0m 0s"><img data-src="img/ui/dungeon.png" /></button>
+	<button id="chlCustomDailyButton" title="Daily checklist. Resets when countdown is:<br />Xd 0h 0m 0s">24</button>
+	<button id="chlCustomWeeklyButton" title="Weekly checklist. Resets when countdown is:<br />0d 0h 0m 0s">7</button>
 </div>
 
 <div id="chlDungeon">
