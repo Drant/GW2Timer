@@ -508,16 +508,20 @@ O = {
 	/*
 	 * Compares the local reset timestamp with yesterday's server reset time
 	 * (Midnight 00:00 UTC) and do clearings if so.
+	 * @param Date pDate.
 	 */
-	checkResetTimestamp: function()
+	checkResetTimestamp: function(pDate)
 	{
 		var midnightoffset = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
 		var yesterdaysserverresettime = T.getUNIXSeconds() - midnightoffset;
+		var lastweeksserverresettime = yesterdaysserverresettime - (T.cSECONDS_IN_DAY * pDate.getUTCDay());
+		var isdailyreset = (midnightoffset === 0);
+		var isweeklyreset = (O.Utilities.lastLocalResetTimestamp.value < lastweeksserverresettime);
 		
 		// Local reset timestamp is outdated if it's before yesterday's server reset time
 		if (O.Utilities.lastLocalResetTimestamp.value < yesterdaysserverresettime)
 		{
-			O.clearServerSensitiveOptions((midnightoffset === 0));
+			O.clearServerSensitiveOptions(isdailyreset, isweeklyreset);
 		}
 	},
 	
@@ -693,17 +697,17 @@ O = {
 	 * the disabled/deleted ones by the user.
 	 * @param boolean pIsReset whether the program was running during server reset.
 	 */
-	clearServerSensitiveOptions: function(pIsReset)
+	clearServerSensitiveOptions: function(pIsDaily, pIsWeekly)
 	{
 		O.isServerReset = true;
+		// Notify of the reset in console
 		var messagetime = 10;
-		if (pIsReset)
+		var dailymessage = pIsDaily ? "Daily Reset!" : "Daily Timestamp Expired!";
+		I.greet(dailymessage, messagetime);
+		if (pIsWeekly)
 		{
-			I.greet("Daily Reset!", messagetime);
-		}
-		else
-		{
-			I.greet("Daily Timestamp Expired!", messagetime);
+			var weeklymessage = pIsDaily ? "Weekly Reset!" : "Weekly Timestamp Expired!";
+			I.greet(weeklymessage, messagetime);
 		}
 		
 		// Chains checklist
@@ -743,10 +747,12 @@ O = {
 		// Dungeon and Personal Checklists
 		if (O.Options.bol_clearPersonalChecklistOnReset)
 		{
-			$("#chlDungeonUncheck").trigger("click");
-			$("#chlCustomUncheck").trigger("click");
-			X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
-			X.clearChecklist(X.Checklists.Custom, X.ChecklistJob.UncheckTheChecked);
+			X.clearCustomChecklistDaily();
+			// Weekly reset is at UTC midnight on the start of Sunday
+			if (pIsWeekly)
+			{
+				X.clearCustomChecklistWeekly();
+			}
 		}
 		// Login rewards and dailies calendar
 		if (I.isSectionLoaded_Daily)
@@ -1998,7 +2004,8 @@ X = {
 		ResourceRegular: { key: "str_chlResourceRegular", value: "" },
 		ResourceZone: { key: "str_chlResourceZone", value: "" },
 		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
-		Custom: { key: "str_chlCustom", value: "" },
+		CustomDaily: { key: "str_chlCustom", value: "" },
+		CustomWeekly: { key: "str_chlCustomWeekly", value: "" },
 		// Individual calculator's settings
 		TradingOverwrite: { key: "str_chlTradingOverwrite", value: "" },
 		TradingNotify: { key: "str_chlTradingNotify", value: "" }
@@ -2049,7 +2056,8 @@ X = {
 	 */
 	Textlists:
 	{
-		CustomText: { key: "str_txlCustomText", value: new Array(), valueDefault: new Array() },
+		CustomTextDaily: { key: "str_txlCustomText", value: new Array(), valueDefault: new Array() },
+		CustomTextWeekly: { key: "str_txlCustomTextWeekly", value: new Array(), valueDefault: new Array() },
 		NotepadText: { key: "str_txlNotepadText", value: new Array(), valueDefault: new Array() },
 		TradingItem: { key: "str_txlTradingItem", value: new Array() },
 		TradingName: { key: "str_txlTradingName", value: new Array() },
@@ -2726,6 +2734,48 @@ X = {
 	},
 	
 	/*
+	 * Prepares the personal checklist presentation.
+	 */
+	initializePersonalChecklist: function()
+	{
+		// Initially, only show the daily checklist; user clicks the buttons to toggle the various checklists
+		$("#chlDungeon, #chlCustomWeekly").hide();
+		
+		// Buttons to toggle view between daily and weekly checklist
+		$("#chlDungeonButton").click(function()
+		{
+			$("#chlCustomButtons button").removeClass("btnFocused");
+			$(this).addClass("btnFocused");
+			$("#chlCustom").hide();
+			$("#chlDungeon").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+			
+		});
+		$("#chlCustomDailyButton").addClass("btnFocused").click(function()
+		{
+			$("#chlCustomButtons button").removeClass("btnFocused");
+			$(this).addClass("btnFocused");
+			$("#chlDungeon").hide();
+			$("#chlCustom").show();
+			$("#chlCustomWeekly").hide();
+			$("#chlCustomDaily").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+		});
+		$("#chlCustomWeeklyButton").click(function()
+		{
+			$("#chlCustomButtons button").removeClass("btnFocused");
+			$(this).addClass("btnFocused");
+			$("#chlDungeon").hide();
+			$("#chlCustom").show();
+			$("#chlCustomDaily").hide();
+			$("#chlCustomWeekly").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+			
+		});
+		
+		// Initialize the checklists
+		X.initializeDungeonChecklist();
+		X.initializeCustomChecklist();
+	},
+	
+	/*
 	 * Binds dungeon checkbox storage and calculator behavior.
 	 */
 	initializeDungeonChecklist: function()
@@ -2843,50 +2893,93 @@ X = {
 	 */
 	initializeCustomChecklist: function()
 	{
-		var checkboxes = $("#chlCustom input:checkbox");
-		X.initializeChecklist(X.Checklists.Custom, checkboxes.length);
-		
-		checkboxes.each(function(pIndex)
+		// Generate initial set of checkboxes and textboxes
+		var NUM_CHECKBOXES = 12;
+		// &zwnj; is an invisible character, used because empty label appears without a right border in Chrome
+		var checkboxhtml = "<li><label><input type='checkbox' />&zwnj;</label><input type='text' /></li>";
+		for (var i = 0; i < NUM_CHECKBOXES; i++)
 		{
-			$(this).change(function()
-			{
-				var state = X.getCheckboxEnumState($(this));
-				
-				X.setChecklistItem(X.Checklists.Custom, pIndex, state);
-				X.styleCheckbox(X.Checklists.Custom, pIndex, $(this));
-				
-				if (state === X.ChecklistEnum.Checked)
-				{
-					$(this).parent().next().addClass("chlCustomTextChecked");
-				}
-				else
-				{
-					$(this).parent().next().removeClass("chlCustomTextChecked");
-				}
-			});
-			
-			// Now that this checkbox is bound, trigger it as the state in checklist
-			X.triggerCheckboxEnumState(X.Checklists.Custom, pIndex, $(this));
-		});
-		
-		// Bind uncheck all button
-		$("#chlCustomUncheck").click(function()
+			$("#chlCustomListDaily").append(checkboxhtml);
+			$("#chlCustomListWeekly").append(checkboxhtml);
+		}
+		var sampledailylist = ["Did dailies", "Gathered home nodes", "Opened JP chests", "Crafted timegates", "Fed Mawdrey, Star, Princess"];
+		var sampleweeklylist = ["Did guild missions", "Farmed personal story key"];
+		var insertSampleList = function(pList, pSample)
 		{
-			X.clearChecklist(X.Checklists.Custom, X.ChecklistJob.UncheckTheChecked);
-			$("#chlCustom input:checkbox").each(function(pIndex)
+			for (var i in pSample)
 			{
-				if ($(this).prop("checked") === true)
-				{
-					$(this).trigger("click");
-				};
-				X.styleCheckbox(X.Checklists.Custom, pIndex, $(this));
-			});
-		});
+				$(pList + " input[type='text']:eq(" + i + ")").val(pSample[i]);
+			}
+		};
+		insertSampleList("#chlCustomListDaily", sampledailylist);
+		insertSampleList("#chlCustomListWeekly", sampleweeklylist);
 		
-		// Bind text fields behavior
-		var items = $("#chlCustom input:text");
-		var restore = $("#chlCustomRestore");
-		X.initializeTextlist(X.Textlists.CustomText, items, "Custom checklist item", 48, restore);
+		// Bind checkboxes and textboxes behavior
+		var bindCustomChecklistBehavior = function(pChecklist, pTextlist, pListName)
+		{
+			var checkboxes = $("#chlCustomList" + pListName + " input:checkbox");
+			X.initializeChecklist(pChecklist, checkboxes.length);
+
+			checkboxes.each(function(pIndex)
+			{
+				$(this).change(function()
+				{
+					var state = X.getCheckboxEnumState($(this));
+
+					X.setChecklistItem(pChecklist, pIndex, state);
+					X.styleCheckbox(pChecklist, pIndex, $(this));
+
+					if (state === X.ChecklistEnum.Checked)
+					{
+						$(this).parent().next().addClass("chlCustomTextChecked");
+					}
+					else
+					{
+						$(this).parent().next().removeClass("chlCustomTextChecked");
+					}
+				});
+
+				// Now that this checkbox is bound, trigger it as the state in checklist
+				X.triggerCheckboxEnumState(pChecklist, pIndex, $(this));
+			});
+
+			// Bind uncheck all button
+			$("#chlCustomUncheck" + pListName).click(function()
+			{
+				X.clearChecklist(pChecklist, X.ChecklistJob.UncheckTheChecked);
+				$("#chlCustomList" + pListName + " input:checkbox").each(function(pIndex)
+				{
+					if ($(this).prop("checked"))
+					{
+						$(this).trigger("click");
+					};
+					X.styleCheckbox(pChecklist, pIndex, $(this));
+				});
+			});
+
+			// Bind text fields behavior
+			var items = $("#chlCustomList" + pListName + " input:text");
+			var restore = $("#chlCustomRestore" + pListName);
+			X.initializeTextlist(pTextlist, items, "Custom checklist item", 48, restore);
+		};
+		bindCustomChecklistBehavior(X.Checklists.CustomDaily, X.Textlists.CustomTextDaily, "Daily");
+		bindCustomChecklistBehavior(X.Checklists.CustomWeekly, X.Textlists.CustomTextWeekly, "Weekly");
+	},
+	
+	/*
+	 * Clears the daily sensitive checklists. Called by the daily reset function.
+	 */
+	clearCustomChecklistDaily: function()
+	{
+		$("#chlDungeonUncheck").trigger("click");
+		$("#chlCustomUncheckDaily").trigger("click");
+		X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
+		X.clearChecklist(X.Checklists.CustomDaily, X.ChecklistJob.UncheckTheChecked);
+	},
+	clearCustomChecklistWeekly: function()
+	{
+		$("#chlCustomUncheckWeekly").trigger("click");
+		X.clearChecklist(X.Checklists.CustomWeekly, X.ChecklistJob.UncheckTheChecked);
 	},
 	
 	/*
@@ -9159,8 +9252,8 @@ G = {
 		
 		switch (pDate.getUTCDay())
 		{
-			case 0: dayclass = "dlySunday"; break;
-			case 6: dayclass = "dlySaturday"; break;
+			case T.DayEnum.Sunday: dayclass = "dlySunday"; break;
+			case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
 		}
 
 		// Generate HTML
@@ -9270,7 +9363,7 @@ G = {
 							index: counterrich,
 							icon: L.divIcon(
 							{
-								className: "mapNodeRich",
+								className: "nodRich",
 								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
 								iconSize: [32, 32],
 								iconAnchor: [16, 16]
@@ -9308,7 +9401,7 @@ G = {
 							index: counterregular,
 							icon: L.divIcon(
 							{
-								className: "mapNodeRegular",
+								className: "nodRegular",
 								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
 								iconSize: [24, 24],
 								iconAnchor: [12, 12]
@@ -9339,7 +9432,7 @@ G = {
 							index: counterzone,
 							icon: L.divIcon(
 							{
-								className: "mapNodeZone",
+								className: "nodZone",
 								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
 								iconSize: [32, 32],
 								iconAnchor: [16, 16]
@@ -9376,7 +9469,7 @@ G = {
 			for (i in P.Resources)
 			{
 				resource = P.Resources[i];
-				$("#mapResource_" + resource.type).append(
+				$("#nodResource_" + resource.type).append(
 					"<label><input id='nod_" + i + "' type='checkbox' checked='checked' /> <img src='img/node/"
 					+ i.toLowerCase() + I.cPNG + "' /> <var>" + D.getObjectName(resource) + "</var><samp id='nodPrice_" + i + "'></samp></label>");
 			}
@@ -9387,7 +9480,7 @@ G = {
 				{
 					var thisresource = U.getSubstringFromHTMLID($(this));
 					var wantshow = $(this).prop("checked");
-					var wantregular = $("#mapResourceShowRegular").prop("checked");
+					var wantregular = $("#nodShowRegular").prop("checked");
 					M.toggleLayer(P.Layer["Resource_Rich_" + thisresource], wantshow);
 					M.toggleLayer(P.Layer["Resource_Regular_" + thisresource], (wantshow && wantregular));
 					M.toggleLayer(P.Layer["Resource_Zone_" + thisresource], (wantshow && wantregular));
@@ -9403,21 +9496,21 @@ G = {
 			});
 			
 			// Bind buttons to toggle all checkboxes of that resource category
-			$("#mapToggle_ResourceMetal").click(function()
+			$("#nodToggle_ResourceMetal").click(function()
 			{
-				$("#mapResource_Metal input").trigger("click");
+				$("#nodResource_Metal input").trigger("click");
 			});
-			$("#mapToggle_ResourcePlant").click(function()
+			$("#nodToggle_ResourcePlant").click(function()
 			{
-				$("#mapResource_Plant input").trigger("click");
+				$("#nodResource_Plant input").trigger("click");
 			});
-			$("#mapToggle_ResourceWood").click(function()
+			$("#nodToggle_ResourceWood").click(function()
 			{
-				$("#mapResource_Wood input").trigger("click");
+				$("#nodResource_Wood input").trigger("click");
 			});
 			
 			// Bind the checkbox to show regular nodes
-			$("#mapResourceShowRegular").change(function()
+			$("#nodShowRegular").change(function()
 			{
 				var wantregular = $(this).prop("checked");
 				for (var i in P.Resources)
@@ -9429,7 +9522,7 @@ G = {
 			}).trigger("change");
 			
 			// Bind button to show the clicked map nodes again
-			$("#mapResourceUncheck").click(function()
+			$("#nodUncheck").click(function()
 			{
 				for (var i in P.LayerArray.Resource)
 				{
@@ -9447,7 +9540,7 @@ G = {
 			});
 			
 			// Bind button to refresh TP prices
-			$("#mapResourceRefresh").click(function()
+			$("#nodRefresh").click(function()
 			{
 				refreshResourcePrices();
 				I.write("Prices refreshed.");
@@ -9468,7 +9561,7 @@ G = {
 		{
 			pMarker.setIcon(new L.icon(
 			{
-				className: "mapJPDifficulty" + pDifficulty,
+				className: "jpzDifficulty" + pDifficulty,
 				iconUrl: "img/map/jp.png",
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
@@ -9506,21 +9599,21 @@ G = {
 				 * Create JP HTML entries.
 				 */
 				var translatedname = D.getObjectName(jp);
-				$("#mapJPList_" + jp.difficulty).append(
-					"<dt id='mapJP_" + jp.id + "' data-coord='" + jp.coord + "'>" + translatedname + "</dt>"
-					+ "<label><input type='checkbox' id='mapJPCheck_" + jp.id + "' /></label>"
+				$("#jpzList_" + jp.difficulty).append(
+					"<dt id='jpz_" + jp.id + "' data-coord='" + jp.coord + "'>" + translatedname + "</dt>"
+					+ "<label><input type='checkbox' id='jpzCheck_" + jp.id + "' /></label>"
 					+ "&nbsp;<cite><a href='"
 					+ U.getYouTubeLink(translatedname + " " + I.cGameNick) + "' target='_blank'>[Y]</a> <a href='"
 					+ U.getWikiLanguageLink(translatedname) + "' target='_blank'>[W]</a></cite>"
 					+ "<dd>" + jp.description + "</dd>"
 				);
-				var jplink = $("#mapJP_" + jp.id);
+				var jplink = $("#jpz_" + jp.id);
 				jplink.attr("title", "<div class='mapLoc'><img src='" + U.getImageHosted(jp.img) + "' /></div>");
 				M.bindMapLinkBehavior(jplink, M.ZoomEnum.Same);
 			}
-			M.bindMapLinks(".mapJPList");
-			U.convertExternalLink(".mapJPList a");
-			I.qTip.init(".mapJPList dt");
+			M.bindMapLinks(".jpzList");
+			U.convertExternalLink(".jpzList a");
+			I.qTip.init(".jpzList dt");
 			
 			// Create markers for chests
 			var createChestMarker = function(pObject, pType)
@@ -9554,7 +9647,7 @@ G = {
 			}
 
 			// Button to toggle JP markers only
-			$("#mapJPToggleJP").change(function()
+			$("#jpzToggleJP").change(function()
 			{
 				var state = $(this).prop("checked");
 				M.toggleLayerArray(P.LayerArray.JP, state);
@@ -9577,7 +9670,7 @@ G = {
 				}
 			});
 			// Button to toggle chest markers only
-			$("#mapJPToggleChest").change(function()
+			$("#jpzToggleChest").change(function()
 			{
 				M.toggleLayer(P.Layer.Chest, $(this).prop("checked"));
 			});
@@ -9585,11 +9678,11 @@ G = {
 			$("#mapToggle_JP").data("checked", true).click(function()
 			{
 				var bool = I.toggleButtonState($(this));
-				$("#mapJPToggleJP").prop("checked", bool).trigger("change");
+				$("#jpzToggleJP").prop("checked", bool).trigger("change");
 				// Chests are not shown by default
-				if ($("#mapJPToggleChest").prop("checked"))
+				if ($("#jpzToggleChest").prop("checked"))
 				{
-					$("#mapJPToggleChest").prop("checked", bool).trigger("change");
+					$("#jpzToggleChest").prop("checked", bool).trigger("change");
 				}
 			});
 
@@ -9605,13 +9698,13 @@ G = {
 			{
 				var completed = X.countChecklist(X.Checklists.JP, X.ChecklistEnum.Checked);
 				var total = X.Checklists.JP.length;
-				$("#mapJPCounter").text(completed + "/" + total);
+				$("#jpzCounter").text(completed + "/" + total);
 			};
 
 			var i;
 			for (i = 0; i < X.Checklists.JP.length; i++)
 			{
-				$("#mapJPCheck_" + i).each(function()
+				$("#jpzCheck_" + i).each(function()
 				{
 					/*
 					 * Read and enact the state of the JP checklist.
@@ -9621,11 +9714,11 @@ G = {
 					$(this).prop("checked", stateinstring);
 					if (stateinstring === false)
 					{
-						$(this).parent().prev().removeClass("mapJPListNameChecked");
+						$(this).parent().prev().removeClass("jpzListNameChecked");
 					}
 					else
 					{
-						$(this).parent().prev().addClass("mapJPListNameChecked");
+						$(this).parent().prev().addClass("jpzListNameChecked");
 						styleJPMarker(P.LayerArray.JP[i], 0);
 					}
 
@@ -9636,12 +9729,12 @@ G = {
 					var checkboxindex = U.getSubintegerFromHTMLID($(this));
 					if (checkboxstate === X.ChecklistEnum.Unchecked)
 					{
-						$(this).parent().prev().removeClass("mapJPListNameChecked");
+						$(this).parent().prev().removeClass("jpzListNameChecked");
 						styleJPMarker(P.LayerArray.JP[checkboxindex], P.LayerArray.JP[checkboxindex].options.difficulty);
 					}
 					else
 					{
-						$(this).parent().prev().addClass("mapJPListNameChecked");
+						$(this).parent().prev().addClass("jpzListNameChecked");
 						styleJPMarker(P.LayerArray.JP[checkboxindex], 0);
 					}
 
@@ -9670,8 +9763,8 @@ G = {
 					// Click associated checkbox when clicked
 					P.LayerArray.JP[pIndex].on("click", function()
 					{
-						$("#mapJPCheck_" + pIndex).trigger("click");
-						I.scrollToElement($("#mapJP_" + this.options.id), $("#plateMap"));
+						$("#jpzCheck_" + pIndex).trigger("click");
+						I.scrollToElement($("#jpz_" + this.options.id), $("#plateMap"));
 					});
 					// Zoom in when double clicked
 					P.LayerArray.JP[pIndex].on("dblclick", function()
@@ -9689,13 +9782,13 @@ G = {
 			}
 
 			// The button to clear all JP checkboxes
-			$("#mapJPUncheck").click(function()
+			$("#jpzUncheck").click(function()
 			{
 				var jpchecklist = "";
 				for (i = 0; i < X.Checklists.JP.length; i++)
 				{
-					$("#mapJPCheck_" + i).prop("checked", false)
-						.parent().prev().removeClass("mapJPListNameChecked");
+					$("#jpzCheck_" + i).prop("checked", false)
+						.parent().prev().removeClass("jpzListNameChecked");
 					styleJPMarker(P.LayerArray.JP[i], P.LayerArray.JP[i].options.difficulty);
 
 					jpchecklist += "0";
@@ -9728,10 +9821,10 @@ G = {
 				// Create checkboxes
 				collectible = P.Collectibles[i];
 				translatedname = D.getObjectName(collectible);
-				$("#mapCollectibleList").append(
+				$("#cltList").append(
 					"<div>"
 					+ "<label style='color:" + collectible.color + "'>"
-						+ "<ins class='col_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
+						+ "<ins class='clt_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
 					+ "</label>"
 					+ "<span><cite>"
 						+ "<a href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "'>[Y]</a>&nbsp;"
@@ -9760,7 +9853,7 @@ G = {
 					}
 				}
 			}
-			U.convertExternalLink("#mapCollectibleList cite a");
+			U.convertExternalLink("#cltList cite a");
 
 			// Toggle button will only hide icons, by unchecking the checked boxes
 			$("#mapToggle_Collectible").data("checked", false).data("hideonly", true).click(function()
@@ -9952,18 +10045,18 @@ G = {
 			{
 				var missiontype = P.Guild[i];
 				var translatedname = D.getObjectName(missiontype);
-				$("#mapGuildButtons").append("<div>"
+				$("#gldButtons").append("<div>"
 					+ "<button class='gldButton curToggle' id='gldButton_" + i + "' "
 					+ "title='<dfn>" + translatedname + "</dfn><br />gw2timer.com/guild/" + i.toLowerCase() + "'>"
 					+ "<img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>"
 					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "' target='_blank'>Y</a>&nbsp;"
 					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "' target='_blank'>W</a>"
 					+ "</div>");
-				$("#mapGuildBooks").append("<div class='gldBook' id='gldBook_" + i + "'></div>");
+				$("#gldBooks").append("<div class='gldBook' id='gldBook_" + i + "'></div>");
 			}
 			$(".gldBook").hide();
-			I.qTip.init("#mapGuildButtons button");
-			U.convertExternalLink("#mapGuildButtons a");
+			I.qTip.init("#gldButtons button");
+			U.convertExternalLink("#gldButtons a");
 			
 			// Bind button to show the guild mission type
 			$(".gldButton").click(function()
@@ -10258,7 +10351,7 @@ G = {
 			/*
 			 * Initialize influence-coin exchange.
 			 */
-			$("#mapGuildInfluence input").click(function()
+			$("#gldInfluence input").click(function()
 			{
 				$(this).select();
 			});
@@ -11575,7 +11668,7 @@ T = {
 		{
 			T.secondsTillGuildReset = T.getSecondsTillWeekday(T.DayEnum.Sunday);
 		}
-		$("#mapGuildTimer").text(T.formatSeconds(T.secondsTillGuildReset, true));
+		$("#gldTimer").text(T.formatSeconds(T.secondsTillGuildReset, true));
 		// Decrement global variable to countdown, instead of calling the compute function every time
 		T.secondsTillGuildReset--;
 	},
@@ -12443,10 +12536,10 @@ K = {
 	 * Q4: X:45-X:00 (or 9-12 o'clock)
 	 * @param Date pTime to determine the current timeframe.
 	 */
-	updateTimeFrame: function(pTime)
+	updateTimeFrame: function(pDate)
 	{
 		// Check if server reset happened
-		O.checkResetTimestamp();
+		O.checkResetTimestamp(pDate);
 		
 		// Remember current chain to reference variable
 		C.CurrentChainSD = T.getStandardChain();
@@ -12577,8 +12670,8 @@ K = {
 			}
 		}
 		
-		var sec = pTime.getSeconds();
-		var min = pTime.getMinutes();
+		var sec = pDate.getSeconds();
+		var min = pDate.getMinutes();
 		var secinhour = min*60 + sec;
 		// Blacken all markers
 		$("#clkMarkers line").each(function()
@@ -14104,8 +14197,7 @@ I = {
 			// Create custom checklists
 			$("#headerMap_Personal").one("click", function()
 			{
-				X.initializeDungeonChecklist();
-				X.initializeCustomChecklist();
+				X.initializePersonalChecklist();
 			});
 			// Create trading calculator
 			$("#headerMap_TP").one("click", function()

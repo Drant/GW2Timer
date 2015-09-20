@@ -66,7 +66,7 @@
 
 <kbd class="jsHelpCollapsible"></kbd>
 <div>
-<div class="mapDailyLists mapZoneLinks">
+<div class="dlyLists mapZoneLinks">
 <h2>Calendar</h2>
 <p>The Dailies Calendar shows the daily achievements for that UTC day of the month. All months have the same dailies, based on the numbered day of the month. Hover over an icon to see its achievement name.</p>
 
@@ -115,18 +115,18 @@
 </header>
 <section>
 <button id="mapToggle_Resource" class="curToggle" title="Toggle display of all nodes."><img data-src="img/map/display.png" alt="Toggle" /></button>
-<div class="cntOptionMini" style="margin:8px"><label><input id="mapResourceShowRegular" type="checkbox" /> Show non-rich nodes</label></div>
-<button id="mapResourceUncheck" class="btnUncheck cssRight" style="margin-right:32px;" title="Reset map nodes that you have clicked on."><img data-src="img/ui/uncheck.png" /></button><br />
+<div class="cntOptionMini" style="margin:8px"><label><input id="nodShowRegular" type="checkbox" /> Show non-rich nodes</label></div>
+<button id="nodUncheck" class="btnUncheck cssRight" style="margin-right:32px;" title="Reset map nodes that you have clicked on."><img data-src="img/ui/uncheck.png" /></button><br />
 <div class="cntDivider" style="margin: 4px 0px 8px 0px;"></div>
-<div class="mapResourceList">
-	<div id="mapResource_Metal"><button id="mapToggle_ResourceMetal" class="curToggle"><img data-src="img/node/resource_metal.png" alt="Toggle" /></button></div>
-	<div id="mapResource_Plant"><button id="mapToggle_ResourcePlant" class="curToggle"><img data-src="img/node/resource_plant.png" alt="Toggle" /></button></div>
-	<div id="mapResource_Wood"><button id="mapToggle_ResourceWood" class="curToggle"><img data-src="img/node/resource_wood.png" alt="Toggle" /></button></div>
+<div class="nodList">
+	<div id="nodResource_Metal"><button id="nodToggle_ResourceMetal" class="curToggle"><img data-src="img/node/resource_metal.png" alt="Toggle" /></button></div>
+	<div id="nodResource_Plant"><button id="nodToggle_ResourcePlant" class="curToggle"><img data-src="img/node/resource_plant.png" alt="Toggle" /></button></div>
+	<div id="nodResource_Wood"><button id="nodToggle_ResourceWood" class="curToggle"><img data-src="img/node/resource_wood.png" alt="Toggle" /></button></div>
 </div>
-<button id="mapResourceRefresh" class="trdButton cssRight" title="Refresh Trading Post prices."><img data-src="img/ui/refresh.png" alt="Refresh" /></button>
-<p><span class="mapNodeRich"><img data-src="img/node/lettuce.png" /></span> &nbsp; <strong>Rich</strong> vein or plant farms, permanent location</p>
-<p><span class="mapNodeRegular"><img data-src="img/node/orichalcum.png" /></span> &nbsp; <strong>Regular</strong> node, possible location</p>
-<p><span class="mapNodeZone"><img data-src="img/node/soft.png" /></span> &nbsp; <strong>Zone</strong> has that resource (not a node)</p>
+<button id="nodRefresh" class="trdButton cssRight" title="Refresh Trading Post prices."><img data-src="img/ui/refresh.png" alt="Refresh" /></button>
+<p><span class="nodRich"><img data-src="img/node/lettuce.png" /></span> &nbsp; <strong>Rich</strong> vein or plant farms, permanent location</p>
+<p><span class="nodRegular"><img data-src="img/node/orichalcum.png" /></span> &nbsp; <strong>Regular</strong> node, possible location</p>
+<p><span class="nodZone"><img data-src="img/node/soft.png" /></span> &nbsp; <strong>Zone</strong> has that resource (not a node)</p>
 <p>Click a node on the map to hide/unhide it; double click it to zoom in/out. Prices are lowest sell posting after tax. Please <a href="http://forum.renaka.com/topic/5565814/">report</a> bad or missing nodes.</p>
 <kbd class="jsHelpCollapsible"></kbd>
 <div>
@@ -153,29 +153,29 @@
 	 >Jumping Puzzles</var>
 </header>
 <section>
-<p>The JP map icons point to the entrance. Click on a checkbox here or a JP icon on the map to check off a JP. Double click a JP to zoom in/out. Chests refresh at daily reset time.<br /><strong>Links:</strong> [Y]outube [W]iki.<span id="mapJPCounter"></span></p>
+<p>The JP map icons point to the entrance. Click on a checkbox here or a JP icon on the map to check off a JP. Double click a JP to zoom in/out. Chests refresh at daily reset time.<br /><strong>Links:</strong> [Y]outube [W]iki.<span id="jpzCounter"></span></p>
 <span class="cntOptionMini">
-<label style="margin-right:12px;"><input id="mapJPToggleJP" type="checkbox" checked="checked" /> <img class="cntIconExample" data-src="img/map/jp.png" alt="Toggle" /> Show JPs</label>
-<label><input id="mapJPToggleChest" type="checkbox" /> <img class="cntIconExample" data-src="img/map/chest.png" alt="Toggle" /> Show chests</label>
+<label style="margin-right:12px;"><input id="jpzToggleJP" type="checkbox" checked="checked" /> <img class="cntIconExample" data-src="img/map/jp.png" alt="Toggle" /> Show JPs</label>
+<label><input id="jpzToggleChest" type="checkbox" /> <img class="cntIconExample" data-src="img/map/chest.png" alt="Toggle" /> Show chests</label>
 </span>
-<button id="mapJPUncheck" class="btnUncheck cssRight"><img data-src="img/ui/uncheck.png" /></button>
+<button id="jpzUncheck" class="btnUncheck cssRight"><img data-src="img/ui/uncheck.png" /></button>
 
 <div class="mapZoneLinks">
 <h2>Easy <span class="mapLegendLine" style="border-bottom: 2px solid lime"></span></h2>
 Simple or short jumps.
-	<dl id="mapJPList_1" class="mapJPList"></dl>
+	<dl id="jpzList_1" class="jpzList"></dl>
 	<br />
 <h2>Medium <span class="mapLegendLine" style="border-bottom: 2px solid orange"></span></h2>
 Tricky jumps or interaction required.
-	<dl id="mapJPList_2" class="mapJPList"></dl>
+	<dl id="jpzList_2" class="jpzList"></dl>
 	<br />
 <h2>Hard <span class="mapLegendLine" style="border-bottom: 2px solid red"></span></h2>
 A marathon of intricate jumps.
-	<dl id="mapJPList_3" class="mapJPList"></dl>
+	<dl id="jpzList_3" class="jpzList"></dl>
 	<br />
 <h2>Explorer <span class="mapLegendLine" style="border-bottom: 2px solid purple"></span></h2>
 Mini-Dungeons and Explorer Achievements that have chests: less jump, more fight.
-	<dl id="mapJPList_4" class="mapJPList"></dl>
+	<dl id="jpzList_4" class="jpzList"></dl>
 	<br />
 <h2>Chests</h2>
 <img class="cntIconExample" data-src="img/map/chest.png" /> &nbsp; <a href="http://wiki.guildwars2.com/wiki/List_of_basic_chests">Basic chests</a> lightly guarded.<br />
@@ -205,7 +205,7 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 <section>
 <button id="mapToggle_Collectible" class="btnToggle"><img data-src="img/map/display_hide.png" alt="Toggle" /></button>
 <div class="cssRight"><strong>Links:</strong> [Y]outube [W]iki [C]redit</div>
-<div id="mapCollectibleList"></div>
+<div id="cltList"></div>
 <kbd class="jsHelpCollapsible"></kbd>
 <div>
 	<p>Many achievements require you to go around the world to collect or interact with scattered or hidden landmarks or items. These are some of them, including the current Living Story ones if available. When in game, hold the Ctrl key to see the item's name appear. Use the <a href="http://gw2timer.com/navi">overlay GPS program</a> for easier search.</p>
@@ -235,8 +235,8 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 	>Guild Missions</var>
 </header>
 <section>
-<div id="mapGuildTimer"></div>
-<div id="mapGuildButtons"></div>
+<div id="gldTimer"></div>
+<div id="gldButtons"></div>
 <br />
 <kbd class="jsHelpCollapsible"></kbd>
 <div>
@@ -248,9 +248,9 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 	</p>
 </div>
 
-<div id="mapGuildBooks"></div>
+<div id="gldBooks"></div>
 <br />
-<div id="mapGuildInfluence">
+<div id="gldInfluence">
 	<img data-src="img/ui/influence.png" alt="Influence" /><input id="gldInfluenceToCoinInput" class="trdInput" type="text" maxlength="32" value="0" />
 	<img data-src="img/ui/coin.png" alt="Coin" /><input id="gldCoinToInfluenceInput" class="trdInput" type="text" maxlength="32" value="0" />
 	<br />
@@ -419,12 +419,18 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 </header>
 <section>
 
-<kbd class="jsHelpCollapsible"></kbd>
-<div><br /><p>You can <strong>disable</strong> a checkbox by double clicking it (for dungeon paths you never do), and you can <strong>re-enable</strong> a checkbox by double clicking the number next to it.</p>
-<p>Money sum is daily path reward (26 silver + bonus chest) and does not count Bag of Coins, loot, etc. Each numbered path gives 40+20 tokens. More on <a href="http://wiki.guildwars2.com/wiki/Dungeon">dungeon rewards</a>.</p>
-<p>The personal checklist is automatically cleared after server reset, unless set otherwise in the Options.</p>
+<div id="chlCustomButtons">
+	<button id="chlDungeonButton" title="Dungeon checklist (Resets daily at UTC 00:00)."><img data-src="img/ui/dungeon.png" /></button>
+	<button id="chlCustomDailyButton" title="Daily checklist (Resets daily at UTC 00:00).">24</button>
+	<button id="chlCustomWeeklyButton" title="Weekly checklist (Resets weekly at Sunday UTC 00:00).">7</button>
 </div>
+
 <div id="chlDungeon">
+	<kbd class="jsHelpCollapsible"></kbd>
+	<div><br /><p>You can <strong>disable</strong> a checkbox by double clicking it (for dungeon paths you never do), and you can <strong>re-enable</strong> a checkbox by double clicking the number next to it.</p>
+		<p>Money sum is daily path reward (26 silver + bonus chest) and does not count Bag of Coins, loot, etc. Each numbered path gives 40+20 tokens. More on <a href="http://wiki.guildwars2.com/wiki/Dungeon">dungeon rewards</a>.</p>
+		<p>The personal checklist is automatically cleared after server reset, unless set otherwise in the Options.</p>
+	</div>
 	<div id="chlDungeonCalculator" data-moneyaddexp="2600">
 		<span><var id="chlDungeonCalculator_Gold">0</var><img data-src="img/ui/coin_gold.png" alt="Gold" /></span>
 		<span><var id="chlDungeonCalculator_Silver">0</var><img data-src="img/ui/coin_silver.png" alt="Silver" /></span>
@@ -489,24 +495,21 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 	</div>
 </div>
 
-<kbd class="jsHelpTooltip" title="Type your own text in the boxes then press Enter to make a custom daily checklist."></kbd>
-<br />
-<div id="chlCustom"><!-- &zwnj; is an invisible character, used because empty label appears without a right border in Chrome -->
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="Did dailies" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="Gathered home nodes" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="Opened JP chests" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="Crafted timegates" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="Fed Mawdrey, Star, Princess" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="" /></span>
-	<span><label><input type="checkbox" />&zwnj;</label><input type="text" value="" /></span>
+<div id="chlCustom">
+	<kbd class="jsHelpTooltip" title="Type your own text in the boxes then press Enter to make a custom daily checklist."></kbd>
 	<br />
-	<button id="chlCustomRestore" class="btnDefault cssRight" title="Restore example checklist items."><img data-src="img/ui/default.png" /></button>
-	<button id="chlCustomUncheck" class="btnUncheck"><img data-src="img/ui/uncheck.png" /></button>
+	<div id="chlCustomDaily">
+		<ol id="chlCustomListDaily"></ol>
+		<br />
+		<button id="chlCustomRestoreDaily" class="btnDefault cssRight" title="Restore example daily checklist items."><img data-src="img/ui/default.png" /></button>
+		<button id="chlCustomUncheckDaily" class="btnUncheck"><img data-src="img/ui/uncheck.png" /></button>
+	</div>
+	<div id="chlCustomWeekly">
+		<ol id="chlCustomListWeekly"></ol>
+		<br />
+		<button id="chlCustomRestoreWeekly" class="btnDefault cssRight" title="Restore example weekly checklist items."><img data-src="img/ui/default.png" /></button>
+		<button id="chlCustomUncheckWeekly" class="btnUncheck"><img data-src="img/ui/uncheck.png" /></button>
+	</div>
 </div>
 <br />
 </section>

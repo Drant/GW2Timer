@@ -582,7 +582,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #mapZoneList {
 	border-spacing: 12px;
 }
-#mapZoneList div, .mapResourceList div {
+#mapZoneList div, .nodList div {
 	display: table-cell;
 }
 #mapZoneList ul, #mapZoneList h2 {
@@ -659,23 +659,23 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 		1px 1px 1px black;
 }
 
-.mapNodeRich img, .mapNodeZone img, .mapChestBasic img, .mapChestSplendid img {
+.nodRich img, .nodZone img, .mapChestBasic img, .mapChestSplendid img {
 	width: 32px; height: 32px;
 	border-radius: 16px;
 	opacity: 0.9;
 }
-.mapNodeRegular img {
+.nodRegular img {
 	width: 24px; height: 24px;
 	border-radius: 16px;
 	opacity: 0.9;
 }
-.mapNodeRich img {
+.nodRich img {
 	border: 2px solid lime;
 }
-.mapNodeRegular img {
+.nodRegular img {
 	border: 2px dotted limegreen;
 }
-.mapNodeZone img {
+.nodZone img {
 	border: 2px dashed lime;
 	border-radius: 4px;
 }
@@ -683,15 +683,15 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	box-shadow: 0px 0px 10px gold;
 }
 
-.mapJPDifficulty0, .mapJPDifficulty1, .mapJPDifficulty2, .mapJPDifficulty3, .mapJPDifficulty4 {
+.jpzDifficulty0, .jpzDifficulty1, .jpzDifficulty2, .jpzDifficulty3, .jpzDifficulty4 {
 	border-radius: 50%;
 	opacity: 0.9;
 }
-.mapJPDifficulty0 { border: 2px solid black; }
-.mapJPDifficulty1 { border: 2px solid lime; }
-.mapJPDifficulty2 { border: 2px solid orange; }
-.mapJPDifficulty3 { border: 2px solid red; }
-.mapJPDifficulty4 { border: 2px solid purple; }
+.jpzDifficulty0 { border: 2px solid black; }
+.jpzDifficulty1 { border: 2px solid lime; }
+.jpzDifficulty2 { border: 2px solid orange; }
+.jpzDifficulty3 { border: 2px solid red; }
+.jpzDifficulty4 { border: 2px solid purple; }
 
 .mapNeedle0, .mapNeedle1, .mapNeedle2 {
 	border-radius: 16px;
@@ -1830,7 +1830,7 @@ button.btnToggle {
 	width: 220px;
 }
 
-.mapDailyLists h2 img {
+.dlyLists h2 img {
 	width: 24px; height: 24px;
 }
 
@@ -2044,55 +2044,55 @@ button.btnToggle {
 .dly_wvw_tower { background-position: -1600px 0; }
 
 /* JP */
-dt.mapJPListNameChecked, dfn.cssHighlight {
+dt.jpzListNameChecked, dfn.cssHighlight {
 	color: #ffff00;
 }
-dt.mapJPListNameHover {
+dt.jpzListNameHover {
 	color: #66aaff;
 }
-.mapJPList cite a {
+.jpzList cite a {
 	font-style: normal;
 	text-decoration: none;
 }
-.mapJPList label {
+.jpzList label {
 	display: inline;
 	float: right;
 	padding: 4px;
 	border: 1px solid transparent;
 	border-radius: 4px;
 }
-.mapJPList label:hover {
+.jpzList label:hover {
 	border: 1px solid red;
 }
-#mapJPCounter {
+#jpzCounter {
 	float: right;
 	font-size: 18px;
 	color: #ffeebb;
 }
 
 /* Resource */
-.mapResourceList {
+.nodList {
 	font-size: 11px;
 }
-.mapResourceList div {
+.nodList div {
 	min-width: 110px;
 }
-.mapResourceList button {
+.nodList button {
 	width: 84px;
 }
-.mapResourceList img {
+.nodList img {
 	width: 16px; height: 16px;
 }
-.mapResourceList div var { /* Resource name */
+.nodList div var { /* Resource name */
 	display: inline;
 }
-.mapResourceList div:hover var {
+.nodList div:hover var {
 	display: none;
 }
-.mapResourceList div samp {
+.nodList div samp {
 	display: none;
 } 
-.mapResourceList div:hover samp { /* Resource price */
+.nodList div:hover samp { /* Resource price */
 	display: inline;
 	margin-left: 2px;
 	font-size: 12px;
@@ -2100,30 +2100,30 @@ dt.mapJPListNameHover {
 }
 
 /* Collectible */
-#mapCollectibleList div {
+#cltList div {
 	display: block;
 }
-#mapCollectibleList div label {
+#cltList div label {
 	display: block;
 	width: auto;
 	margin: 0;
 }
-#mapCollectibleList ins {
+#cltList ins {
 	width: 32px; height: 32px;
 	margin-right: 4px;
 	border-radius: 8px;
 	background-image: url(img/collectible/collectibles.png);
 }
-#mapCollectibleList div a {
+#cltList div a {
 	text-decoration: underline;
 }
-#mapCollectibleList div:hover label {
+#cltList div:hover label {
 	font-weight: bold;
 }
-#mapCollectibleList div:hover ins {
+#cltList div:hover ins {
 	box-shadow: 0px 0px 4px #ffff66;
 }
-#mapCollectibleList div span { /* Text buttons line */
+#cltList div span { /* Text buttons line */
 	display: block;
 	margin-top: -4px;
 	padding-bottom: 4px;
@@ -2131,22 +2131,22 @@ dt.mapJPListNameHover {
 	text-align: right;
 }
 
-.col_banditchests { background-position: 0 0; }
-.col_buriedchests { background-position: -32px 0; }
-.col_cleaningup { background-position: -64px 0; }
-.col_coinchallenger { background-position: -96px 0; }
-.col_coinprospect { background-position: -128px 0; }
-.col_coinuplands { background-position: -160px 0; }
-.col_divemaster { background-position: -192px 0; }
-.col_goldenlostbadges { background-position: -224px 0; }
-.col_historybuff { background-position: -256px 0; }
-.col_lionsarchexterminator { background-position: -288px 0; }
-.col_lostbadges { background-position: -320px 0; }
-.col_matrixcubekey { background-position: -352px 0; }
-.col_speedyreader { background-position: -384px 0; }
+.clt_banditchests { background-position: 0 0; }
+.clt_buriedchests { background-position: -32px 0; }
+.clt_cleaningup { background-position: -64px 0; }
+.clt_coinchallenger { background-position: -96px 0; }
+.clt_coinprospect { background-position: -128px 0; }
+.clt_coinuplands { background-position: -160px 0; }
+.clt_divemaster { background-position: -192px 0; }
+.clt_goldenlostbadges { background-position: -224px 0; }
+.clt_historybuff { background-position: -256px 0; }
+.clt_lionsarchexterminator { background-position: -288px 0; }
+.clt_lostbadges { background-position: -320px 0; }
+.clt_matrixcubekey { background-position: -352px 0; }
+.clt_speedyreader { background-position: -384px 0; }
 
 /* Guild */
-#mapGuildTimer {
+#gldTimer {
 	margin: 12px;
 	text-align: center;
 	font-size: 32px;
@@ -2154,42 +2154,42 @@ dt.mapJPListNameHover {
 	text-shadow: 0px 0px 2px black;
 }
 
-#mapGuildButtons {
+#gldButtons {
 	text-align: center;
 }
-#mapGuildButtons div {
+#gldButtons div {
 	display: inline-block;
 	width: 50px;
 	margin-right: 8px;
 }
-#mapGuildBooks a {
+#gldBooks a {
 	text-decoration: none;
 }
-#mapGuildButtons button {
+#gldButtons button {
 	width: 48px;
 }
-#mapGuildButtons button img {
+#gldButtons button img {
 	width: 32px; height: 32px;
 }
 
-#mapGuildInfluence input[type="text"] {
+#gldInfluence input[type="text"] {
 	width: 100px;
 	padding-right: 4px;
 	margin-right: 8px;
 	text-align: right;
 }
-#mapGuildBooks input[type="text"].gldWaypoint {
+#gldBooks input[type="text"].gldWaypoint {
 	width: 90px;
 	margin-bottom: 4px;
 	margin-right: 8px;
 	color: #888;
 }
 
-#mapGuildButtons .gldHide {
+#gldButtons .gldHide {
 	width: 48px;
 }
 
-#mapGuildButtons .gldHide img {
+#gldButtons .gldHide img {
 	width: 24px; height: 24px;
 }
 
@@ -2518,8 +2518,14 @@ input[type="text"].trdHovered {
 	opacity: 0.3;
 }
 
-#chlCustom span {
-	display: block;
+/* Custom checklist */
+#chlCustomButtons {
+	margin-top: 4px;
+	text-align: center;
+}
+#chlCustomButtons button {
+	width: 72px; height: 36px;
+	font-size: 24px;
 }
 
 #chlCustom input {

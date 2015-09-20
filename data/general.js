@@ -636,9 +636,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Kills", "Ruins", "Camp", "Defender"]
 },
 "20": {
-	pve: ["Miner Shiverpeaks", "Vista Orr", "Fields", "Wurm"],
-	pvp: ["Capture", "Rank", "Ranger Thief", "Engi Ele"],
-	wvw: ["Land", "Caravan", "Defender", "Keep"]
+	pve: ["Miner Ascalon", "Vista Maguuma", "Frostgorge", "SB"],
+	pvp: ["Rank", "Defender", "Ranger Thief", "Engi Ele"],
+	wvw: ["Guard", "Caravan", "Keep", "Tower"]
 },
 "21": {
 	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Silverwastes", "Maw"],
@@ -704,8 +704,7 @@ var GW2T_DASHBOARD_DATA = {
 	
 Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
 	+ "<a href='http://www.facebook.com/gw2timer'><ins class='s16 s16_facebook'></ins></a> and "
-	+ "<a href='https://twitter.com/gw2timer'><ins class='s16 s16_twitter'></ins></a>!<br />"
-	+ "Mordrem event is <a href='https://www.guildwars2.com/en/news/the-mordrem-are-coming/'>over</a>! Spend your bloom tokens at the <dfn data-coord='[17907, 15009]'>Durmand Priory</dfn>.",
+	+ "<a href='https://twitter.com/gw2timer'><ins class='s16 s16_twitter'></ins></a>!<br />",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
@@ -727,10 +726,10 @@ Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
  */
 Countdowns: [
 {
-	name_en: "Pirate Sale",
-	name_de: "Pirate Verkauf",
-	name_es: "Rebaja Pirata",
-	name_fr: "Vente Pirate",
+	name_en: "Pirate Day Sale",
+	name_de: "Piratentag Verkaufen",
+	name_es: "Día de la venta pirata",
+	name_fr: "Jour de pirate vente",
 	url: "https://en.wikipedia.org/wiki/International_Talk_Like_a_Pirate_Day",
 	Start: new Date("2015-09-19T16:00:00Z"),
 	Finish: new Date("2015-09-20T16:00:00Z")
@@ -776,8 +775,8 @@ Story:
 	priceold: 800
  */
 Sale: {
-	Start: new Date("2015-09-15T16:00:00Z"),
-	Finish: new Date("2015-09-21T16:00:00Z"),
+	Start: new Date("2015-09-19T16:00:00Z"),
+	Finish: new Date("2015-09-20T16:00:00Z"),
 	Items: [
 	/*{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
