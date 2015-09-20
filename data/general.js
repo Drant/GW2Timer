@@ -541,12 +541,12 @@ var GW2T_ZONE_DATA = {
  */
 var GW2T_DAILY_CALENDAR = {
 "1": {
-	pve: ["Lumberer Ascalon", "Fractal", "Malchor", "SB"],
+	pve: ["Lumberer Ascalon", "Fractal", "Malchor", "Fractal 1-10"],
 	pvp: ["Kills", "Reward", "War Necro", "Thief Mes"],
 	wvw: ["Ruins", "Creature", "Camp", "Defender"]
 },
 "2": {
-	pve: ["Lumberer Jungle", "Forger", "Metrica", "Jormag"],
+	pve: ["Lumberer Jungle", "Forger", "Metrica", "Fractal 1-10"],
 	pvp: ["Kills", "Capture", "War Engi", "Ranger Engi"],
 	wvw: ["Land", "Guard", "Camp", "Tower"]
 },
@@ -556,7 +556,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Ruins", "Tower", "Defender"]
 },
 "4": {
-	pve: ["Forager Ascalon", "Vista Ascalon", "Fields", "Golem"],
+	pve: ["Forager Ascalon", "Vista Ascalon", "Fields", "Fractal 1-10"],
 	pvp: ["Defender", "Capture", "Engi Thief", "Ranger Engi"],
 	wvw: ["Spender", "Land", "Camp", "Keep"]
 },
@@ -566,12 +566,12 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Land", "Keep", "Defender"]
 },
 "6": {
-	pve: ["Miner Shiverpeaks", "Fractal", "Snowden", "Wurm"],
+	pve: ["Miner Shiverpeaks", "Fractal", "Snowden", "Fractal 1-10"],
 	pvp: ["Rank", "Reward", "Ranger Thief", "Engi Ele"],
 	wvw: ["Caravan", "Kills", "Camp", "Tower"]
 },
 "7": {
-	pve: ["Forager Kryta", "Vista Orr", "Wayfarer", "Jormag"],
+	pve: ["Forager Kryta", "Vista Orr", "Wayfarer", "Fractal 1-10"],
 	pvp: ["Capture", "Reward", "War Ranger", "Guard Necro"],
 	wvw: ["Land", "Guard", "Defender", "Tower"]
 },
@@ -581,7 +581,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Spender", "Camp", "Keep"]
 },
 "9": {
-	pve: ["Miner Jungle", "Activity", "Timberline", "Maw"],
+	pve: ["Miner Jungle", "Activity", "Timberline", "Fractal 1-10"],
 	pvp: ["Rank", "Defender", "War Engi", "Ranger Necro"],
 	wvw: ["Ruins", "Guard", "Keep", "Camp"]
 },
@@ -591,12 +591,12 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Kills", "Defender", "Keep"]
 },
 "11": {
-	pve: ["Miner Jungle", "Fractal", "Frostgorge", "SB"],
+	pve: ["Miner Jungle", "Fractal", "Frostgorge", "Fractal 1-10"],
 	pvp: ["Capture", "Reward", "Engi Thief", "Ele Necro"],
 	wvw: ["Land", "Caravan", "Camp", "Tower"]
 },
 "12": {
-	pve: ["Forager Jungle", "Forger", "Southsun", "Shatterer"],
+	pve: ["Forager Jungle", "Forger", "Southsun", "Fractal 1-10"],
 	pvp: ["Capture", "Defender", "War Thief", "Guard Ranger"],
 	wvw: ["Spender", "Guard", "Tower", "Defender"]
 },
@@ -611,7 +611,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Kills", "Land", "Keep", "Camp"]
 },
 "15": {
-	pve: ["Forager Ascalon", "Activity", "Bloodtide", "Megades"],
+	pve: ["Forager Ascalon", "Activity", "Bloodtide", "Fractal 1-10"],
 	pvp: ["Defender", "Rank", "Thief Ele", "Guard Mes"],
 	wvw: ["Land", "Caravan", "Camp", "Defender"]
 },
@@ -621,12 +621,12 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Tower", "Camp"]
 },
 "17": {
-	pve: ["Lumberer Jungle", "Activity", "Dredgehaunt", "FE"],
+	pve: ["Lumberer Jungle", "Activity", "Dredgehaunt", "Fractal 1-10"],
 	pvp: ["Kills", "Defender", "Thief Necro", "Ele Ranger"],
 	wvw: ["Caravan", "Land", "Tower", "Defender"]
 },
 "18": {
-	pve: ["Forager Jungle", "Forger", "Plains", "Maw"],
+	pve: ["Forager Jungle", "Forger", "Plains", "Fractal 1-10"],
 	pvp: ["Reward", "Capture", "War Necro", "Thief Mes"],
 	wvw: ["Land", "Guard", "Defender", "Camp"]
 },
@@ -641,17 +641,17 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Caravan", "Keep", "Tower"]
 },
 "21": {
-	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Silverwastes", "Maw"],
+	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Silverwastes", "Fractal 1-10"],
 	pvp: ["Rank", "Kills", "War Ranger", "Guard Necro"],
 	wvw: ["Spender", "Guard", "Camp", "Tower"]
 },
 "22": {
-	pve: ["Miner Ascalon", "Activity", "Dry", "Golem"],
+	pve: ["Miner Ascalon", "Activity", "Dry", "Fractal 1-10"],
 	pvp: ["Defender", "Reward", "Ranger Mes", "Guard Engi"],
 	wvw: ["Guard", "Kills", "Defender", "Camp"]
 },
 "23": {
-	pve: ["Forager Kryta", "Fractal", "Gendarran", "FE"],
+	pve: ["Forager Kryta", "Fractal", "Gendarran", "Fractal 1-10"],
 	pvp: ["Capture", "Kills", "War Engi", "Ranger Necro"],
 	wvw: ["Land", "Guard", "Camp", "Keep"]
 },
@@ -661,27 +661,27 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Spender", "Camp", "Defender"]
 },
 "25": {
-	pve: ["Lumberer Wastes", "Forger", "Bloodtide", "Maw"],
+	pve: ["Lumberer Wastes", "Forger", "Bloodtide", "Fractal 1-10"],
 	pvp: ["Reward", "Defender", "Engi Thief", "Ele Necro"],
 	wvw: ["Land", "Kills", "Defender", "Tower"]
 },
 "26": {
-	pve: ["Miner Shiverpeaks", "Vista Kryta", "Wayfarer", "FE"],
+	pve: ["Miner Shiverpeaks", "Vista Kryta", "Wayfarer", "Fractal 1-10"],
 	pvp: ["Capture", "Rank", "War Thief", "Guard Ranger"],
 	wvw: ["Spender", "Guard", "Camp", "Defender"]
 },
 "27": {
-	pve: ["Lumberer Jungle", "Vista Orr", "Harathi", "Wurm"],
+	pve: ["Lumberer Jungle", "Vista Orr", "Harathi", "Fractal 1-10"],
 	pvp: ["Kills", "Reward", "Engi Mes", "Guard Ele"],
 	wvw: ["Creature", "Kills", "Defender", "Tower"]
 },
 "28": {
-	pve: ["Forager Ascalon", "Forger", "Kessex", "SB"],
+	pve: ["Forager Ascalon", "Forger", "Kessex", "Fractal 1-10"],
 	pvp: ["Kills", "Rank", "War Ele", "Engi Necro"],
 	wvw: ["Land", "Kills", "Keep", "Camp"]
 },
 "29": {
-	pve: ["Lumberer Kryta", "Fractal", "Maelstrom", "Maw"],
+	pve: ["Lumberer Kryta", "Fractal", "Maelstrom", "Fractal 1-10"],
 	pvp: ["Defender", "Reward", "Thief Ele", "Guard Mes"],
 	wvw: ["Land", "Caravan", "Defender", "Tower"]
 },
@@ -726,7 +726,7 @@ Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
  */
 Countdowns: [
 {
-	name: "TwitchCon Guild Wars 2",
+	name: "TwitchCon Final Reveal",
 	url: "https://twitter.com/GuildWars2/status/645281683189682176",
 	Start: new Date("2015-09-25T22:00:00Z"),
 	Finish: new Date("2015-09-25T22:30:00Z")
