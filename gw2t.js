@@ -2004,7 +2004,7 @@ X = {
 		ResourceRegular: { key: "str_chlResourceRegular", value: "" },
 		ResourceZone: { key: "str_chlResourceZone", value: "" },
 		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
-		CustomDaily: { key: "str_chlCustom", value: "" },
+		CustomDaily: { key: "str_chlCustomDaily", value: "" },
 		CustomWeekly: { key: "str_chlCustomWeekly", value: "" },
 		// Individual calculator's settings
 		TradingOverwrite: { key: "str_chlTradingOverwrite", value: "" },
@@ -2056,7 +2056,7 @@ X = {
 	 */
 	Textlists:
 	{
-		CustomTextDaily: { key: "str_txlCustomText", value: new Array(), valueDefault: new Array() },
+		CustomTextDaily: { key: "str_txlCustomTextDaily", value: new Array(), valueDefault: new Array() },
 		CustomTextWeekly: { key: "str_txlCustomTextWeekly", value: new Array(), valueDefault: new Array() },
 		NotepadText: { key: "str_txlNotepadText", value: new Array(), valueDefault: new Array() },
 		TradingItem: { key: "str_txlTradingItem", value: new Array() },
