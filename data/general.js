@@ -726,15 +726,6 @@ Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
  */
 Countdowns: [
 {
-	name_en: "Pirate Day Sale",
-	name_de: "Piratentag Verkaufen",
-	name_es: "Día de la venta pirata",
-	name_fr: "Jour de pirate vente",
-	url: "https://en.wikipedia.org/wiki/International_Talk_Like_a_Pirate_Day",
-	Start: new Date("2015-09-19T16:00:00Z"),
-	Finish: new Date("2015-09-20T16:00:00Z")
-},
-{
 	name_en: "Heart of Thorns Release",
 	name_de: "Heart of Thorns Erscheinungs",
 	name_es: "Heart of Thorns lanzamiento",
@@ -775,87 +766,40 @@ Story:
 	priceold: 800
  */
 Sale: {
-	Start: new Date("2015-09-19T16:00:00Z"),
-	Finish: new Date("2015-09-20T16:00:00Z"),
+	Start: new Date("2015-09-20T16:00:00Z"),
+	Finish: new Date("2015-09-21T16:00:00Z"),
 	Items: [
-	/*{
+	{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
 		pricenew: 100,
-		priceold: 0
-	},*/
+		priceold: 0,
+		col: 1
+	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Captain's_Airship_Pass_(permanent)",
-		img: "https://render.guildwars2.com/file/4A4C46AB044116F138A19F1DC75066A69C0A56A2/740297.png",
+		url: "http://wiki.guildwars2.com/wiki/Devil_Horns",
+		img: "https://render.guildwars2.com/file/926298A2090B76A42DBBDBA36E46707B016AF39B/499491.png",
 		quantity: 1,
-		pricenew: 1000,
-		priceold: 1000,
+		pricenew: 200,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Living_World_Season_2_Complete_Pack",
+		img: "http://wiki.guildwars2.com/images/a/aa/Living_World_Season_2_Complete_Pack.jpg",
+		quantity: 1,
+		pricenew: 960,
+		priceold: 1600,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Captain's_Airship_Pass_(2_weeks)",
-		img: "https://render.guildwars2.com/file/3B0C0B68B818DB93D2B5A4949C11CC5E6FA20DE7/740294.png",
+		url: "http://wiki.guildwars2.com/wiki/Bag-Slot_Value_Pack",
+		img: "https://render.guildwars2.com/file/6AECEE0A0704F069B3776BC66516EB2F0E0DE644/66588.png",
 		quantity: 1,
-		pricenew: 75,
-		priceold: 150,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Aetherblade_Heavy_Armor_Skin",
-		img: "https://render.guildwars2.com/file/C6B7E2F2406F69EAB807D7022780D92B61200A06/591609.png",
-		quantity: 1,
-		pricenew: 640,
-		priceold: 800,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Aetherblade_Medium_Armor_Skin",
-		img: "https://render.guildwars2.com/file/FC3FFC1A3B4F2D1908043191F2ACCFCE264D9F77/591610.png",
-		quantity: 1,
-		pricenew: 640,
-		priceold: 800,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Aetherblade_Light_Armor_Skin",
-		img: "https://render.guildwars2.com/file/2C03E12D440E9CB90399EB740F471ACB71C41CF3/591611.png",
-		quantity: 1,
-		pricenew: 640,
-		priceold: 800,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Pirate_Captain's_Outfit",
-		img: "https://render.guildwars2.com/file/983CE77CC0D921A1EE100D4ECFFE3F01FC61CC6B/66637.png",
-		quantity: 1,
-		pricenew: 490,
+		pricenew: 350,
 		priceold: 700,
-		col: 1
-	},
-	{
-		url: "https://www.youtube.com/results?search_query=Skritt-Scavenger+Finisher",
-		img: "https://render.guildwars2.com/file/9EF204F14C0DF37202EE5C940A582D1C55FF3ECA/919370.png",
-		quantity: 1,
-		pricenew: 455,
-		priceold: 650,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Magnus's_Eye_Patch",
-		img: "https://render.guildwars2.com/file/0891237B76B476424EA05AFF92A55B9397D3FFBA/740296.png",
-		quantity: 1,
-		pricenew: 280,
-		priceold: 400,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Bazaar_Quaggan_Mini_Pack",
-		img: "https://render.guildwars2.com/file/760D01E692A9F8DC000C23E95C29A0933CC63B9B/603294.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 500,
-		col: 1
+		col: 0
 	}
 	]
 }
