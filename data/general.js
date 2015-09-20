@@ -726,6 +726,12 @@ Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
  */
 Countdowns: [
 {
+	name: "TwitchCon Guild Wars 2",
+	url: "https://twitter.com/GuildWars2/status/645281683189682176",
+	Start: new Date("2015-09-25T22:00:00Z"),
+	Finish: new Date("2015-09-25T22:30:00Z")
+},
+{
 	name_en: "Heart of Thorns Release",
 	name_de: "Heart of Thorns Erscheinungs",
 	name_es: "Heart of Thorns lanzamiento",
