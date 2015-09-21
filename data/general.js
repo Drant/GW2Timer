@@ -726,11 +726,26 @@ Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
  */
 Countdowns: [
 {
+	name: "Gem Store Items Removal",
+	url: "http://i.imgur.com/JiZdoza.png",
+	Start: new Date("2015-09-21T16:00:00Z"),
+	Finish: new Date("2015-09-28T16:00:00Z")
+},
+{
 	name: "TwitchCon Final Reveal",
 	url: "https://twitter.com/GuildWars2/status/645281683189682176",
 	Start: new Date("2015-09-25T22:00:00Z"),
 	Finish: new Date("2015-09-25T22:30:00Z")
 },
+/*{
+	name_en: "Beta Weekend Event 3",
+	name_de: "Beta Weekend Event 3",
+	name_es: "Beta de fin de semana 3",
+	name_fr: "Week-end de bêta 3",
+	news: "the-second-beta-weekend-event-begins-september-4",
+	Start: new Date("2015-10-02T19:00:00Z"),
+	Finish: new Date("2015-10-05T06:59:00Z")
+},*/
 {
 	name_en: "Heart of Thorns Release",
 	name_de: "Heart of Thorns Erscheinungs",
@@ -790,14 +805,6 @@ Sale: {
 		pricenew: 200,
 		priceold: 0,
 		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Living_World_Season_2_Complete_Pack",
-		img: "http://wiki.guildwars2.com/images/a/aa/Living_World_Season_2_Complete_Pack.jpg",
-		quantity: 1,
-		pricenew: 960,
-		priceold: 1600,
-		col: 0
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Bag-Slot_Value_Pack",
