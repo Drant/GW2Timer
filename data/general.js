@@ -641,9 +641,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Caravan", "Keep", "Tower"]
 },
 "21": {
-	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Silverwastes", "Fractal 1-10"],
-	pvp: ["Rank", "Kills", "War Ranger", "Guard Necro"],
-	wvw: ["Spender", "Guard", "Camp", "Tower"]
+	pve: ["Lumberer Kryta", "Fractal", "Metrica", "Fractal 1-10"],
+	pvp: ["Kills", "Rank", "War Ranger", "Guard Necro"],
+	wvw: ["Ruins", "Kills", "Tower", "Camp"]
 },
 "22": {
 	pve: ["Miner Ascalon", "Activity", "Dry", "Fractal 1-10"],
