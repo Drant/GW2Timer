@@ -704,7 +704,8 @@ var GW2T_DASHBOARD_DATA = {
 	
 Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
 	+ "<a href='http://www.facebook.com/gw2timer'><ins class='s16 s16_facebook'></ins></a> and "
-	+ "<a href='https://twitter.com/gw2timer'><ins class='s16 s16_twitter'></ins></a>!<br />",
+	+ "<a href='https://twitter.com/gw2timer'><ins class='s16 s16_twitter'></ins></a>!<br />"
+	+ "<a href='http://i.imgur.com/JiZdoza.png'>List of items</a> being removed from the gem store. &quot;<a href='http://wiki.guildwars2.com/wiki/Gem_Store/historical'>Old favorites</a>&quot; returning soon.",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
@@ -726,8 +727,11 @@ Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
  */
 Countdowns: [
 {
-	name: "Gem Store Items Removal",
-	url: "http://i.imgur.com/JiZdoza.png",
+	name_en: "Gem Store Seasonal Transition",
+	name_de: "Edelsteinshop Winter Einzug",
+	name_es: "Tienda de gemas cambio",
+	name_fr: "Boutique aux gemmes l'automne",
+	news: "seasonal-transition-in-the-gem-store",
 	Start: new Date("2015-09-21T16:00:00Z"),
 	Finish: new Date("2015-09-28T16:00:00Z")
 },
