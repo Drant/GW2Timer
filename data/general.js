@@ -737,7 +737,7 @@ Countdowns: [
 },
 {
 	name: "TwitchCon Final Reveal",
-	url: "https://twitter.com/GuildWars2/status/645281683189682176",
+	news: "coming-soon-twitchcon-and-stronghold-beta-event",
 	Start: new Date("2015-09-25T22:00:00Z"),
 	Finish: new Date("2015-09-25T22:30:00Z")
 },
