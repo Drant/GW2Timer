@@ -651,9 +651,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Caravan", "Keep", "Camp"]
 },
 "23": {
-	pve: ["Forager Kryta", "Fractal", "Gendarran", "Fractal 1-10"],
-	pvp: ["Capture", "Kills", "War Engi", "Ranger Necro"],
-	wvw: ["Land", "Guard", "Camp", "Keep"]
+	pve: ["Forager Ascalon", "Forger", "Kessex", "SB"],
+	pvp: ["Kills", "Rank", "War Engi", "Ranger Necro"],
+	wvw: ["Land", "Creature", "Tower", "Defender"]
 },
 "24": {
 	pve: ["Forager Jungle", "Vista Ascalon", "Queensdale", "Fractal 1-10"],

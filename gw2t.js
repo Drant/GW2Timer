@@ -6854,8 +6854,8 @@ M = {
 			{
 				switch (val.toLowerCase())
 				{
-					case "/lock": that.Map.dragging.disable(); I.write("Map locked."); break;
-					case "/unlock": that.Map.dragging.enable(); I.write("Map unlocked."); break;
+					case "/lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
+					case "/unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
 					default: that.goToArguments(val, that.Pin.Program);
 				}
 			}
