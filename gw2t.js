@@ -802,6 +802,10 @@ O = {
 			{
 				location.reload();
 			}
+			if (O.Options.bol_showWorldCompletion === false)
+			{
+				M.toggleLayer(M.Layer.Overview, false);
+			}
 			
 			$("#mapOptionsCompletion label input").each(function()
 			{
@@ -6694,6 +6698,7 @@ M = {
 	 * To assign marker properties: MARKER.options.PROPERTY
 	 */
 	Layer: {
+		Overview: new L.layerGroup(),
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
 		PersonalPath:  new L.layerGroup(), // Path drawn from connecting player-laid pins
@@ -6757,7 +6762,7 @@ M = {
 		for (var i in this.Zones)
 		{
 			zone = this.Zones[i];
-			zone.center = this.getZoneCenter(i);
+			zone.center = this.computeZoneCenter(i);
 			zone.nick = i;
 			zone.Layers = {
 				Path: new L.layerGroup(),
@@ -6941,7 +6946,6 @@ M = {
 			var marker;
 			var icon;
 			var cssclass;
-			var mappingtype;
 			var tooltip;
 
 			for (regionid in pData.regions)
@@ -6961,6 +6965,11 @@ M = {
 					// Store zone dimension data for locating events
 					zoneobj.map_rect = ithzone.map_rect;
 					zoneobj.continent_rect = ithzone.continent_rect;
+					var numheart = 0;
+					var numwaypoint = 0;
+					var numlandmark = 0;
+					var numchallenge = 0;
+					var numvista = 0;
 					// Cover the zone with a colored rectangle signifying its region
 					that.Layer.ZoneRectangle.addLayer(L.rectangle(
 						that.convertGCtoLCMulti(zoneobj.rect), {
@@ -6985,7 +6994,7 @@ M = {
 							case that.APIPOIEnum.Waypoint:
 							{
 								// Waypoints are always created, others are optional
-								mappingtype = that.MappingEnum.Waypoint;
+								numwaypoint++;
 								icon = U.URL_IMG.Waypoint;
 								cssclass = "mapWp";
 								tooltip = poi.name;
@@ -6997,7 +7006,7 @@ M = {
 								{
 									continue;
 								}
-								mappingtype = that.MappingEnum.Landmark;
+								numlandmark++;
 								icon = U.URL_IMG.Landmark;
 								cssclass = "mapPoi";
 								tooltip = poi.name;
@@ -7009,7 +7018,7 @@ M = {
 								{
 									continue;
 								}
-								mappingtype = that.MappingEnum.Vista;
+								numvista++;
 								icon = U.URL_IMG.Vista;
 								cssclass = "mapPoi";
 								tooltip = D.getPhrase("Vista");
@@ -7022,7 +7031,6 @@ M = {
 						{
 							title: "<span class='" + cssclass + "'>" + tooltip + "</span>",
 							markername: poi.name,
-							mappingtype: mappingtype,
 							icon: L.icon(
 							{
 								iconUrl: icon,
@@ -7088,13 +7096,13 @@ M = {
 					{
 						// Hero Challenges
 						numofpois = ithzone.skill_challenges.length;
+						numchallenge = numofpois;
 						for (i = 0; i < numofpois; i++)
 						{
 							poi = ithzone.skill_challenges[i];
 							marker = L.marker(that.convertGCtoLC(poi.coord),
 							{
 								title: "<span class='" + "mapPoi" + "'>" + D.getPhrase("Hero Challenge") + "</span>",
-								mappingtype: that.MappingEnum.Challenge,
 								icon: L.icon(
 								{
 									iconUrl: U.URL_IMG.Challenge,
@@ -7108,6 +7116,7 @@ M = {
 						
 						// Renown Hearts
 						numofpois = ithzone.tasks.length;
+						numheart = numofpois;
 						for (i = 0; i < numofpois; i++)
 						{
 							poi = ithzone.tasks[i];
@@ -7115,7 +7124,6 @@ M = {
 							{
 								title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
 								task: poi.objective,
-								mappingtype: that.MappingEnum.Heart,
 								icon: L.icon(
 								{
 									iconUrl: U.URL_IMG.Heart,
@@ -7144,7 +7152,6 @@ M = {
 							marker = L.marker(that.convertGCtoLC(poi.coord),
 							{
 								clickable: false,
-								mappingtype: that.MappingEnum.Sector,
 								icon: L.divIcon(
 								{
 									className: "mapSec",
@@ -7157,6 +7164,36 @@ M = {
 						}
 						
 						that.isMappingIconsGenerated = true;
+					}
+					
+					// Generate POIs overview for this zone
+					if (O.Options.bol_showWorldCompletion)
+					{
+						marker = L.marker(that.convertGCtoLC(zoneobj.center),
+						{
+							mappingzone: zoneobj.nick,
+							riseOnHover: true,
+							icon: L.divIcon(
+							{
+								className: "mapOverview",
+								html: "<span class='mapOverviewIn'>"
+									+ "<var class='mapOverviewName'>" + D.getObjectName(zoneobj) + "</var>"
+									+ ((ithzone.min_level > 0) ? ("<var class='mapOverviewLevel'>"
+										+ ((ithzone.min_level === 80) ? (ithzone.max_level) : (ithzone.min_level + " - " + ithzone.max_level))
+									+ "</var>") : "")
+									+ ((numheart > 0) ? ("<img src='img/map/heart.png' />" + numheart + " ") : "")
+									+ ((numwaypoint > 0) ? ("<img src='img/map/waypoint.png' />" + numwaypoint + " ") : "")
+									+ ((numlandmark > 0) ? ("<img src='img/map/landmark.png' />" + numlandmark + " ") : "")
+									+ ((numchallenge > 0) ? ("<img src='img/map/challenge.png' />" + numchallenge + " ") : "")
+									+ ((numvista > 0) ? ("<img src='img/map/vista.png' />" + numvista) : "")
+								+ "</span>",
+								iconSize: [256, 64],
+								iconAnchor: [128, 32]
+							})
+						});
+						that.bindOverviewBehavior(marker, "click");
+						that.Layer.Overview.addLayer(marker);
+						that.toggleLayer(that.Layer.Overview, true);
 					}
 				}
 			}
@@ -7440,13 +7477,17 @@ M = {
 	 * @param string pNick short name of the zone.
 	 * @returns array of x and y coordinates.
 	 */
-	getZoneCenter: function(pNick)
+	computeZoneCenter: function(pNick)
 	{
 		var rect = this.Zones[pNick].rect;
 		// x = OffsetX + (WidthOfZone/2), y = OffsetY + (HeightOfZone/2)
 		var x = rect[0][0] + ~~((rect[1][0] - rect[0][0]) / 2);
 		var y = rect[0][1] + ~~((rect[1][1] - rect[0][1]) / 2);
 		return [x, y];
+	},
+	getZoneCenter: function(pNick)
+	{
+		return this.Zones[pNick].center;
 	},
 	
 	/*
@@ -7517,6 +7558,22 @@ M = {
 			case 6: sectorfontsize = 20; sectoropacity = 0.6; break;
 			case 5: sectorfontsize = 16; sectoropacity = 0.3; break;
 			default: { sectorfontsize = 0; sectoropacity = 0; }
+		}
+		
+		// Overview on the zones
+		if (O.Options.bol_showWorldCompletion)
+		{
+			if (currentzoom === this.ZoomEnum.Default)
+			{
+				this.toggleLayer(this.Layer.Overview, true);
+				this.Layer.Overview.eachLayer(function(layer) {
+					layer._icon.style.display = "table";
+				});
+			}
+			else
+			{
+				this.toggleLayer(this.Layer.Overview, false);
+			}
 		}
 
 		// Waypoints
@@ -8376,6 +8433,14 @@ M = {
 	 * @param object pMarker to bind.
 	 * @param string pEventType like "click" or "dblclick".
 	 */
+	bindOverviewBehavior: function(pMarker, pEventType)
+	{
+		var that = this;
+		pMarker.on(pEventType, function(pEvent)
+		{
+			that.goToZone(pMarker.options.mappingzone, that.ZoomEnum.Sky);
+		});
+	},
 	bindMarkerZoomBehavior: function(pMarker, pEventType)
 	{
 		var that = this;
@@ -8762,7 +8827,6 @@ P = {
 					marker = L.marker(coord,
 					{
 						clickable: false,
-						mappingtype: M.MappingEnum.EventRing,
 						icon: L.icon(
 						{
 							iconUrl: determineEventRing(event),
@@ -8776,7 +8840,6 @@ P = {
 					marker = L.marker(coord,
 					{
 						title: "<span class='" + "mapPoi" + "'>" + newname + " (" + event.level + ")" + "</span>",
-						mappingtype: M.MappingEnum.EventIcon,
 						icon: L.icon(
 						{
 							iconUrl: determineEventIcon(searchname),

@@ -592,36 +592,51 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 
 /* Marker classes
 ----------------------------------------------------------------------------- */
-.mapSec {
+.mapOverview, .mapSec, .mapNick {
 	font-family: Menomonia;
+	text-align: center;
+	color: white;
+	text-shadow:
+		1px 1px 1px #000,
+		-1px -1px 1px #000,
+		1px -1px 1px #000,
+		-1px 1px 1px #000,
+		1px 1px 1px #000;
+}
+.mapOverview {
+	font-size: 12px;
+	line-height: 110%;
+}
+.mapSec {
 	font-size: 0px;
 	font-style: italic;
-	text-align: center;
-	color: white;
-	text-shadow:
-		1px 1px 1px #000,
-		-1px -1px 1px #000,
-		1px -1px 1px #000,
-		-1px 1px 1px #000,
-		1px 1px 1px #000;
 }
 .mapNick {
-	font-family: Menomonia;
 	font-size: 0px;
-	text-align: center;
 	line-height: 90%;
-	color: white;
-	text-shadow:
-		1px 1px 1px #000,
-		-1px -1px 1px #000,
-		1px -1px 1px #000,
-		-1px 1px 1px #000,
-		1px 1px 1px #000;
 }
 
-.mapSecIn, .mapNickIn {
+.mapSecIn, .mapNickIn, .mapOverviewIn {
 	display: table-cell;
 	vertical-align: middle;
+}
+
+.mapOverview img {
+	width: 16px; height: 16px;
+}
+.mapOverviewName {
+	display: block;
+	font-size: 16px;
+	color: #ddbb76;
+}
+.mapOverviewLevel {
+	display: block;
+	font-size: 14px;
+	color: #aaa;
+}
+.mapOverview:hover .mapOverviewName {
+	font-size: 18px;
+	color: #44dd44;
 }
 
 .mapLoc {
