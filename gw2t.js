@@ -1353,6 +1353,14 @@ U = {
 			{
 				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Tile;
 			}
+			else if (page === "undefined")
+			{
+				/*
+				 * Malware infected users will have their browser pointing to "undefined".
+				 * Redirect them to a virus scan instead of letting them spam the site.
+				 */
+				go("https://www.google.com/search?q=virus+scan");
+			}
 			else
 			{
 				// Check if the special page is actually a section

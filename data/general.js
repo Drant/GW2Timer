@@ -741,36 +741,6 @@ Countdowns: [
 	Finish: new Date("2015-09-27T01:00:00Z")
 },
 {
-	name: "Starting out in Guild Wars 2",
-	url: "http://www.twitch.tv/guildwars2/",
-	Start: new Date("2015-09-25T17:10:00Z"),
-	Finish: new Date("2015-09-25T17:40:00Z")
-},
-{
-	name: "Quaggan Deep Thoughts",
-	url: "http://www.twitch.tv/guildwars2/",
-	Start: new Date("2015-09-25T17:40:00Z"),
-	Finish: new Date("2015-09-25T17:45:00Z")
-},
-{
-	name: "Guild Wars Game Show",
-	url: "http://www.twitch.tv/guildwars2/",
-	Start: new Date("2015-09-25T17:45:00Z"),
-	Finish: new Date("2015-09-25T18:20:00Z")
-},
-{
-	name: "Ranger Elite Specialization Unveiling",
-	url: "http://www.twitch.tv/guildwars2/",
-	Start: new Date("2015-09-25T18:20:00Z"),
-	Finish: new Date("2015-09-25T19:25:00Z")
-},
-{
-	name: "LIVE at the Crow's Nest",
-	url: "http://www.twitch.tv/guildwars2/",
-	Start: new Date("2015-09-25T19:25:00Z"),
-	Finish: new Date("2015-09-25T20:25:00Z")
-},
-{
 	name: "The Heart of Maguuma",
 	url: "http://www.twitch.tv/guildwars2/",
 	Start: new Date("2015-09-25T20:25:00Z"),
