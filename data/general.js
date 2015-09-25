@@ -762,7 +762,7 @@ Countdowns: [
 	name: "Ranger Elite Specialization Unveiling",
 	url: "http://www.twitch.tv/guildwars2/",
 	Start: new Date("2015-09-25T18:20:00Z"),
-	Finish: new Date("2015-09-25T18:40:00Z")
+	Finish: new Date("2015-09-25T19:25:00Z")
 },
 {
 	name: "LIVE at the Crow's Nest",
