@@ -768,7 +768,19 @@ Countdowns: [
 	name: "LIVE at the Crow's Nest",
 	url: "http://www.twitch.tv/guildwars2/",
 	Start: new Date("2015-09-25T19:25:00Z"),
-	Finish: new Date("2015-09-25T19:45:00Z")
+	Finish: new Date("2015-09-25T20:25:00Z")
+},
+{
+	name: "The Heart of Maguuma",
+	url: "http://www.twitch.tv/guildwars2/",
+	Start: new Date("2015-09-25T20:25:00Z"),
+	Finish: new Date("2015-09-25T20:55:00Z")
+},
+{
+	name: "Most Interesting Norn in Tyria",
+	url: "http://www.twitch.tv/guildwars2/",
+	Start: new Date("2015-09-25T20:55:00Z"),
+	Finish: new Date("2015-09-25T21:10:00Z")
 },
 {
 	name_en: "Heart of Thorns launch trailer",
