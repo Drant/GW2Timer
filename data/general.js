@@ -661,9 +661,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Land", "Defender", "Keep"]
 },
 "25": {
-	pve: ["Lumberer Wastes", "Forger", "Bloodtide", "Fractal 1-10"],
-	pvp: ["Reward", "Defender", "Engi Thief", "Ele Necro"],
-	wvw: ["Land", "Kills", "Defender", "Tower"]
+	pve: ["Lumberer Wastes", "Fractal", "Harathi", "Wurm"],
+	pvp: ["Reward", "Capture", "Engi Thief", "Ele Necro"],
+	wvw: ["Guard", "Ruins", "Keep", "Camp"]
 },
 "26": {
 	pve: ["Miner Shiverpeaks", "Vista Kryta", "Wayfarer", "Fractal 1-10"],
@@ -704,8 +704,7 @@ var GW2T_DASHBOARD_DATA = {
 	
 Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
 	+ "<a href='http://www.facebook.com/gw2timer'><ins class='s16 s16_facebook'></ins></a> and "
-	+ "<a href='https://twitter.com/gw2timer'><ins class='s16 s16_twitter'></ins></a>!<br />"
-	+ "<a href='http://i.imgur.com/JiZdoza.png'>List of items</a> being removed from the gem store. &quot;<a href='http://wiki.guildwars2.com/wiki/Gem_Store/historical'>Old favorites</a>&quot; returning soon.",
+	+ "<a href='https://twitter.com/gw2timer'><ins class='s16 s16_twitter'></ins></a>!<br />",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
@@ -738,6 +737,15 @@ Countdowns: [
 {
 	name: "TwitchCon Final Reveal",
 	news: "coming-soon-twitchcon-and-stronghold-beta-event",
+	Start: new Date("2015-09-25T17:00:00Z"),
+	Finish: new Date("2015-09-27T01:00:00Z")
+},
+{
+	name_en: "Heart of Thorns launch trailer",
+	name_de: "Heart of Thorns Launch-Trailers",
+	name_es: "Heart of Thorns tráiler de lanzamiento",
+	name_fr: "Heart of Thorns bande annonce",
+	url: "http://www.twitch.tv/guildwars2/",
 	Start: new Date("2015-09-25T22:00:00Z"),
 	Finish: new Date("2015-09-25T22:30:00Z")
 },
@@ -801,22 +809,6 @@ Sale: {
 		pricenew: 100,
 		priceold: 0,
 		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Devil_Horns",
-		img: "https://render.guildwars2.com/file/926298A2090B76A42DBBDBA36E46707B016AF39B/499491.png",
-		quantity: 1,
-		pricenew: 200,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Bag-Slot_Value_Pack",
-		img: "https://render.guildwars2.com/file/6AECEE0A0704F069B3776BC66516EB2F0E0DE644/66588.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 700,
-		col: 0
 	}
 	]
 }
