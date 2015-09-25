@@ -735,41 +735,32 @@ Countdowns: [
 	Finish: new Date("2015-09-28T16:00:00Z")
 },
 {
-	name: "TwitchCon Final Reveal",
+	name_en: "Stronghold Beta",
+	name_de: "Festung Beta",
+	name_es: "Bastion Test",
+	name_fr: "Fortaleza Beta",
 	news: "coming-soon-twitchcon-and-stronghold-beta-event",
 	Start: new Date("2015-09-25T17:00:00Z"),
+	Finish: new Date("2015-09-28T17:00:00Z")
+},
+{
+	name_en: "TwitchCon Day 2",
+	name_de: "TwitchCon Tag 2",
+	name_es: "TwitchCon Día 2",
+	name_fr: "TwitchCon Jour 2",
+	url: "http://www.twitch.tv/guildwars2/",
+	Start: new Date("2015-09-26T17:00:00Z"),
 	Finish: new Date("2015-09-27T01:00:00Z")
 },
 {
-	name: "The Heart of Maguuma",
-	url: "http://www.twitch.tv/guildwars2/",
-	Start: new Date("2015-09-25T20:25:00Z"),
-	Finish: new Date("2015-09-25T20:55:00Z")
-},
-{
-	name: "Most Interesting Norn in Tyria",
-	url: "http://www.twitch.tv/guildwars2/",
-	Start: new Date("2015-09-25T20:55:00Z"),
-	Finish: new Date("2015-09-25T21:10:00Z")
-},
-{
-	name_en: "Heart of Thorns launch trailer",
-	name_de: "Heart of Thorns Launch-Trailers",
-	name_es: "Heart of Thorns tráiler de lanzamiento",
-	name_fr: "Heart of Thorns bande annonce",
-	url: "http://www.twitch.tv/guildwars2/",
-	Start: new Date("2015-09-25T22:00:00Z"),
-	Finish: new Date("2015-09-25T22:30:00Z")
-},
-/*{
 	name_en: "Beta Weekend Event 3",
 	name_de: "Beta Weekend Event 3",
 	name_es: "Beta de fin de semana 3",
 	name_fr: "Week-end de bêta 3",
-	news: "the-second-beta-weekend-event-begins-september-4",
-	Start: new Date("2015-10-02T19:00:00Z"),
+	url: "http://www.twitch.tv/guildwars2/",
+	Start: new Date("2015-10-02T17:00:00Z"),
 	Finish: new Date("2015-10-05T06:59:00Z")
-},*/
+},
 {
 	name_en: "Heart of Thorns Release",
 	name_de: "Heart of Thorns Erscheinungs",

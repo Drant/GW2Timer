@@ -1359,7 +1359,7 @@ U = {
 				 * Malware infected users will have their browser pointing to "undefined".
 				 * Redirect them to a virus scan instead of letting them spam the site.
 				 */
-				go("https://www.google.com/search?q=virus+scan");
+				go("http://www.microsoft.com/security/scanner/");
 			}
 			else
 			{
