@@ -753,13 +753,13 @@ Countdowns: [
 	Finish: new Date("2015-09-27T01:00:00Z")
 },
 {
-	name_en: "Beta Weekend Event 3",
-	name_de: "Beta Weekend Event 3",
-	name_es: "Beta de fin de semana 3",
-	name_fr: "Week-end de bêta 3",
-	url: "http://www.twitch.tv/guildwars2/",
+	name_en: "Final Beta Weekend",
+	name_de: "Letzte Beta Weekend",
+	name_es: "Último beta de fin de semana",
+	name_fr: "Dernier week-end de bêta",
+	news: "the-final-beta-weekend-event-begins-october-2",
 	Start: new Date("2015-10-02T17:00:00Z"),
-	Finish: new Date("2015-10-05T06:59:00Z")
+	Finish: new Date("2015-10-05T07:00:00Z")
 },
 {
 	name_en: "Heart of Thorns Release",
