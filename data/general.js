@@ -753,6 +753,36 @@ Countdowns: [
 	Finish: new Date("2015-09-27T01:00:00Z")
 },
 {
+	name: "Legendary Journey",
+	url: "http://www.twitch.tv/guildwars2/",
+	Start: new Date("2015-09-26T20:30:00Z"),
+	Finish: new Date("2015-09-26T20:55:00Z")
+},
+{
+	name: "Most Interesting Norn in Tyria",
+	url: "http://www.twitch.tv/guildwars2/",
+	Start: new Date("2015-09-26T20:55:00Z"),
+	Finish: new Date("2015-09-26T21:00:00Z")
+},
+{
+	name: "A Taste of Tyria",
+	url: "http://www.twitch.tv/guildwars2/",
+	Start: new Date("2015-09-26T21:00:00Z"),
+	Finish: new Date("2015-09-26T21:25:00Z")
+},
+{
+	name: "HoT Story Missions",
+	url: "http://www.twitch.tv/guildwars2/",
+	Start: new Date("2015-09-26T21:25:00Z"),
+	Finish: new Date("2015-09-26T22:00:00Z")
+},
+{
+	name: "Twitch Livestreamer Gameplay",
+	url: "http://www.twitch.tv/guildwars2/",
+	Start: new Date("2015-09-26T22:00:00Z"),
+	Finish: new Date("2015-09-26T23:00:00Z")
+},
+{
 	name_en: "Final Beta Weekend",
 	name_de: "Letzte Beta Weekend",
 	name_es: "Último beta de fin de semana",
