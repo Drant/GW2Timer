@@ -666,9 +666,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Ruins", "Keep", "Camp"]
 },
 "26": {
-	pve: ["Miner Shiverpeaks", "Vista Kryta", "Wayfarer", "Fractal 1-10"],
-	pvp: ["Capture", "Rank", "War Thief", "Guard Ranger"],
-	wvw: ["Spender", "Guard", "Camp", "Defender"]
+	pve: ["Forager Kryta", "Vista Kryta", "Wayfarer", "Jormag"],
+	pvp: ["Capture", "Defender", "War Thief", "Guard Ranger"],
+	wvw: ["Ruins", "Land", "Tower", "Camp"]
 },
 "27": {
 	pve: ["Lumberer Jungle", "Vista Orr", "Harathi", "Fractal 1-10"],
