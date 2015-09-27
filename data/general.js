@@ -702,9 +702,7 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_DASHBOARD_DATA = {
 	
-Announcement: "Do you like using gw2timer.com? Recommend it to your friends on "
-	+ "<a href='http://www.facebook.com/gw2timer'><ins class='s16 s16_facebook'></ins></a> and "
-	+ "<a href='https://twitter.com/gw2timer'><ins class='s16 s16_twitter'></ins></a>!<br />",
+Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic/5547304/'>Add a GW2Timer</a> clock or feature to it!",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
@@ -742,15 +740,6 @@ Countdowns: [
 	news: "coming-soon-twitchcon-and-stronghold-beta-event",
 	Start: new Date("2015-09-25T17:00:00Z"),
 	Finish: new Date("2015-09-28T17:00:00Z")
-},
-{
-	name_en: "TwitchCon Day 2",
-	name_de: "TwitchCon Tag 2",
-	name_es: "TwitchCon Día 2",
-	name_fr: "TwitchCon Jour 2",
-	url: "http://www.twitch.tv/guildwars2/",
-	Start: new Date("2015-09-26T17:00:00Z"),
-	Finish: new Date("2015-09-27T01:00:00Z")
 },
 {
 	name_en: "Final Beta Weekend",
