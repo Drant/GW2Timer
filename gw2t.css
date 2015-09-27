@@ -2498,6 +2498,12 @@ input[type="text"].trdHovered {
 	color: #bb6622;
 }
 
+.chlDungeonNight {
+	position: absolute;
+	width: 16px; height: 16px;
+	margin-left: -16px;
+	margin-top: 16px;
+}
 .chlDungeonBar ins {
 	width: 32px; height: 32px;
 	margin-right: 6px;
