@@ -701,8 +701,12 @@ var GW2T_DAILY_CALENDAR = {
  * Data for generating the dashboard on the map pane.
  */
 var GW2T_DASHBOARD_DATA = {
-	
-Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic/5547304/'>Add a GW2Timer</a> clock or feature to it!",
+
+Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic/5547304/'>Add a GW2Timer</a> clock or feature to it! "
+	+ "<a title='Deutsch' href='http://gw2timer.com/?enu_Language=de'><img src='img/ui/sixteen/langde.png' /></a> "
+	+ "<a title='Español' href='http://gw2timer.com/?enu_Language=es'><img src='img/ui/sixteen/langes.png' /></a> "
+	+ "<a title='Français' href='http://gw2timer.com/?enu_Language=fr'><img src='img/ui/sixteen/langfr.png' /></a> "
+	+ "<a title='繁體中文' href='http://gw2timer.com/?enu_Language=zh'><img src='img/ui/sixteen/langzh.png' /></a>",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.

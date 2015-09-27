@@ -350,6 +350,9 @@ html, body,
 #itemDashboard a:hover {
 	color: #44dd44;
 }
+#dsbAnnouncement img:hover {
+	opacity: 0.8;
+}
 #dsbClose {
 	position: absolute;
 	top: -16px;
