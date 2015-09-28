@@ -728,24 +728,6 @@ Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic
  */
 Countdowns: [
 {
-	name_en: "Gem Store Seasonal Transition",
-	name_de: "Edelsteinshop Winter Einzug",
-	name_es: "Tienda de gemas cambio",
-	name_fr: "Boutique aux gemmes l'automne",
-	news: "seasonal-transition-in-the-gem-store",
-	Start: new Date("2015-09-21T16:00:00Z"),
-	Finish: new Date("2015-09-28T16:00:00Z")
-},
-{
-	name_en: "Stronghold Beta",
-	name_de: "Festung Beta",
-	name_es: "Bastion Test",
-	name_fr: "Fortaleza Beta",
-	news: "coming-soon-twitchcon-and-stronghold-beta-event",
-	Start: new Date("2015-09-25T17:00:00Z"),
-	Finish: new Date("2015-09-28T17:00:00Z")
-},
-{
 	name_en: "Final Beta Weekend",
 	name_de: "Letzte Beta Weekend",
 	name_es: "Último beta de fin de semana",
@@ -795,14 +777,167 @@ Story:
 	priceold: 800
  */
 Sale: {
-	Start: new Date("2015-09-20T16:00:00Z"),
-	Finish: new Date("2015-09-21T16:00:00Z"),
+	isPreshown: false,
+	Start: new Date("2015-09-28T16:00:00Z"),
+	Finish: new Date("2015-09-29T16:00:00Z"),
 	Items: [
-	{
+	/*{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
 		pricenew: 100,
+		priceold: 0,
+		col: 1
+	}*/
+	{
+		url: "http://wiki.guildwars2.com/wiki/Frost_Wasp_Logging_Tool",
+		img: "https://render.guildwars2.com/file/0227CB6C96D2AC7FC20B6D465478E9BBF3ED09D9/771066.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Fused_Molten_Logging_Axe",
+		img: "https://render.guildwars2.com/file/E31818DD403BE127B29E214C7956BFA301F680DA/866829.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Fused_Molten_Sickle",
+		img: "https://render.guildwars2.com/file/51782971EFC6B80F4B5BD0FB080D0CFFA37B1576/866830.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Molten_Alliance_Mining_Pick",
+		img: "https://render.guildwars2.com/file/ACF90CA6BCD9CEEFD4D0DCEF2AA87C97B50BDC56/561815.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Zodiac_Light_Armor_Skin",
+		img: "https://render.guildwars2.com/file/9A22FCFF1B3DDC290D5360DAC77595C86D36F9F8/740304.png",
+		quantity: 1,
+		pricenew: 800,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Zodiac_Medium_Armor_Skin",
+		img: "https://render.guildwars2.com/file/CACA37AA4734936B5E062003940CAB4B11092F6C/740303.png",
+		quantity: 1,
+		pricenew: 800,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Zodiac_Heavy_Armor_Skin",
+		img: "https://render.guildwars2.com/file/2793703E07C7E0D15EA2EE95E6C116DA75674F0C/740302.png",
+		quantity: 1,
+		pricenew: 800,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Profane_Light_Armor_Skin",
+		img: "https://render.guildwars2.com/file/0DA0BEC80AF6FEBA33ABB8D463B00FB8F3F3D861/455867.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Krytan_Medium_Armor_Skin",
+		img: "https://render.guildwars2.com/file/0793E7E47832AFFBFAA71A6801066E2A41606BBA/455866.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Primeval_Heavy_Armor_Skin",
+		img: "https://render.guildwars2.com/file/D57103D6520ECFC07DBA564E5E76F13D96B8B1E7/455865.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Glowing_Crimson_Mask",
+		img: "https://render.guildwars2.com/file/D506EF430E4BAA75E96095DED5665D6EFDBF79BC/771056.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mask_of_the_Crown",
+		img: "https://render.guildwars2.com/file/30EB5309B29F55DB5E060906C660A598A132E842/619590.png",
+		quantity: 1,
+		pricenew: 400,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Warrior_Quaggan_Backpack_Cover",
+		img: "https://render.guildwars2.com/file/ADE839C7FBDE9B18EE07E21FD4B8AC7BA06E29EE/543837.png",
+		quantity: 1,
+		pricenew: 300,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Fuzzy_Bear_Hat",
+		img: "https://render.guildwars2.com/file/D33AB44B1C0DDBFD3D0DB5CDB139D618AF0FE6B2/587062.png",
+		quantity: 1,
+		pricenew: 200,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Fuzzy_Leopard_Hat",
+		img: "https://render.guildwars2.com/file/C4020218F1437D6E154DBE497F9D66B0D6294E17/771064.png",
+		quantity: 1,
+		pricenew: 200,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Sailor's_Beanie",
+		img: "https://render.guildwars2.com/file/6BDB0CE00EB895C9375F1F7336CCB80F0265BD35/220579.png",
+		quantity: 1,
+		pricenew: 200,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Top_Hat",
+		img: "https://render.guildwars2.com/file/B261FBF12505BBE1210D3FB0EADE00D3E5999A0A/340524.png",
+		quantity: 1,
+		pricenew: 200,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Reading_Glasses",
+		img: "https://render.guildwars2.com/file/01DC5C169EBB7D2467FFC95F01B349FB0F52995B/220573.png",
+		quantity: 1,
+		pricenew: 150,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Wintersday_Earmuffs",
+		img: "https://render.guildwars2.com/file/E1590ED73D082F950AA2ED44021A7F795D0DD647/526118.png",
+		quantity: 1,
+		pricenew: 25,
 		priceold: 0,
 		col: 1
 	}
