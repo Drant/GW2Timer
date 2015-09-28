@@ -11154,7 +11154,7 @@ T = {
 	 * @param int pMax value.
 	 * @returns int random.
 	 */
-	randIntRange: function(pMin, pMax)
+	getRandomIntRange: function(pMin, pMax)
 	{
 	   return Math.floor(Math.random() * (pMax - pMin + 1)) + pMin;
 	},
@@ -11851,13 +11851,14 @@ T = {
 			else
 			{
 				// Otherwise let the user trigger the generation
-				var copula = (T.DashboardSale.Items.length > 1) ? "are" : "is";
-				var plural = (T.DashboardSale.Items.length > 1) ? "s" : "";
-				$("#dsbSale").append("<div id='dsbSaleGenerate'> There " + copula + " <u class='curClick'>"
-					+ T.DashboardSale.Items.length + " item" + plural + " being promoted</u> on the gem store.</div>");
-				$("#dsbSaleGenerate").one("click", function()
+				var numitems = (T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1);
+				$("#dsbSale").append("<div id='dsbSaleGenerate' class='curToggle'><img src='img/ui/gemstore.png' /> "
+					+ numitems + "x "
+					+ "(<span class='dsbSalePriceNew'>" + T.DashboardSale.Range[0] + "-" + T.DashboardSale.Range[1] + "<ins class='s16 s16_gem'></ins></span>)"
+					+ "<img src='img/ui/toggle.png' />"
+				+"</div>");
+				$("#dsbSaleGenerate").click(function()
 				{
-					$(this).remove();
 					T.generateDashboardSale();
 				});
 			}
@@ -11869,34 +11870,43 @@ T = {
 	 */
 	generateDashboardSale: function()
 	{
-		$("#dsbSale").append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
-		var ratio = 0;
-		$.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
+		// Toggle the sales column if it already exists
+		if ($("#dsbSaleCol0").length)
 		{
-			if (pData.quantity !== undefined)
-			{
-				ratio = E.Exchange.COIN_SAMPLE / pData.quantity;
-			}
-		}).always(function()
+			$("#dsbSaleCol0, #dsbSaleCol1").toggle();
+		}
+		else
 		{
-			if (ratio !== 0)
+			// Else generate them
+			$("#dsbSale").append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
+			var ratio = 0;
+			$.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
 			{
-				for (var i in T.DashboardSale.Items)
+				if (pData.quantity !== undefined)
 				{
-					var item = T.DashboardSale.Items[i];
-					var forhowmany = (item.quantity > 1) ? item.quantity + "/ " : "";
-					var prevprice = (item.pricenew < item.priceold) ? item.priceold : "";
-					var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
-					$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
-						+"<a href='" + U.convertExternalURL(item.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
-						+ "<span class='dsbSalePriceOld'><del>" + forhowmany + prevprice + "</del></span> "
-						+ "<span class='dsbSalePriceNew'>" + forhowmany + item.pricenew + "<ins class='s16 s16_gem'></ins></span>"
-						+ "<span class='dsbSalePriceCoin'> ≈ " + E.createCoinString(Math.round(item.pricenew * ratio), true) + "</span>"
-						+ "<span class='dsbSalePriceMoney'> = " + E.convertGemToMoney(item.pricenew) + "<ins class='s16 s16_money'></ins></span>"
-					+ "</div>");
+					ratio = E.Exchange.COIN_SAMPLE / pData.quantity;
 				}
-			}
-		});
+			}).always(function()
+			{
+				if (ratio !== 0)
+				{
+					for (var i in T.DashboardSale.Items)
+					{
+						var item = T.DashboardSale.Items[i];
+						var forhowmany = (item.quantity > 1) ? item.quantity + "/ " : "";
+						var prevprice = (item.pricenew < item.priceold) ? item.priceold : "";
+						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
+						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
+							+"<a href='" + U.convertExternalURL(item.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
+							+ "<span class='dsbSalePriceOld'><del>" + forhowmany + prevprice + "</del></span> "
+							+ "<span class='dsbSalePriceNew'>" + forhowmany + item.pricenew + "<ins class='s16 s16_gem'></ins></span>"
+							+ "<span class='dsbSalePriceCoin'> ≈ " + E.createCoinString(Math.round(item.pricenew * ratio), true) + "</span>"
+							+ "<span class='dsbSalePriceMoney'> = " + E.convertGemToMoney(item.pricenew) + "<ins class='s16 s16_money'></ins></span>"
+						+ "</div>");
+					}
+				}
+			});
+		}
 	},
 	
 	/*

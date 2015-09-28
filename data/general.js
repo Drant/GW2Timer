@@ -780,15 +780,17 @@ Sale: {
 	isPreshown: false,
 	Start: new Date("2015-09-28T16:00:00Z"),
 	Finish: new Date("2015-09-29T16:00:00Z"),
+	Range: [25, 1000], // Gem price of the cheapest and most expensive item
 	Items: [
-	/*{
+	{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
 		pricenew: 100,
 		priceold: 0,
-		col: 1
-	}*/
+		col: 1,
+		isExample: true
+	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Frost_Wasp_Logging_Tool",
 		img: "https://render.guildwars2.com/file/0227CB6C96D2AC7FC20B6D465478E9BBF3ED09D9/771066.png",
