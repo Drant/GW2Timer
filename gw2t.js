@@ -3046,7 +3046,11 @@ E = {
 		TAX_INVERSE: 0.85,
 		
 		INFLUENCE_PER_COPPER: 0.05,
-		COPPER_PER_INFLUENCE: 20
+		COPPER_PER_INFLUENCE: 20,
+		
+		// These variable ratios will be set by API functions
+		GemInCoin: 0,
+		CoinInGem: 0
 	},
 	Rarity: // Corresponds to API names for rarity levels
 	{
@@ -3335,6 +3339,31 @@ E = {
 			// Round the box if no change
 			pInput.css({"border-radius": 32}).animate({"border-radius": 4}, 1000);
 		}
+	},
+	
+	/*
+	 * Updates the coin to gem ratio and returns the AJAX object.
+	 * @returns jqXHR object.
+	 */
+	updateCoinInGem: function()
+	{
+		return $.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
+		{
+			if (pData.quantity !== undefined)
+			{
+				E.Exchange.CoinInGem = E.Exchange.COIN_SAMPLE / pData.quantity;
+			}
+		});
+	},
+	updateGemInCoin: function()
+	{
+		return $.getJSON(U.URL_API.CoinPrice + E.Exchange.GEM_SAMPLE, function(pData)
+		{
+			if (pData.quantity !== undefined)
+			{
+				E.Exchange.GemInCoin = E.Exchange.GEM_SAMPLE / pData.quantity;
+			}
+		});
 	},
 	
 	/*
@@ -4050,7 +4079,6 @@ E = {
 		var cointomoney = $("#trdExchange .trdCoinToMoney");
 		var cointogeminverse = $("#trdExchange .trdCoinToGemInverse");
 		var cointomoneyinverse = $("#trdExchange .trdCoinToMoneyInverse");
-		var ratio = 0;
 		
 		var cointoamount = E.parseCoinString(cointo.val());
 		if (cointoamount === 0)
@@ -4092,20 +4120,14 @@ E = {
 			});
 			
 			// Gem to user's coin
-			$.getJSON(U.URL_API.CoinPrice + E.Exchange.GEM_SAMPLE, function(pData)
+			E.updateGemInCoin().always(function()
 			{
-				if (pData.quantity !== undefined)
-				{
-					ratio = E.Exchange.GEM_SAMPLE / pData.quantity;
-				}
-			}).always(function()
-			{
-				if (ratio !== 0)
+				if (E.Exchange.GemInCoin !== 0)
 				{
 					previousgeminverse = parseInt(cointogeminverse.val());
 					previousmoneyinverse = E.parseMoneyString(cointomoneyinverse.val());
 					
-					currentgeminverse = Math.round(cointoamount * ratio);
+					currentgeminverse = Math.round(cointoamount * E.Exchange.GemInCoin);
 					currentmoneyinverse = Math.round(currentgeminverse * E.Exchange.DOLLAR_PER_GEM);
 					cointogeminverse.val(currentgeminverse);
 					cointomoneyinverse.val(E.createMoneyString(currentmoneyinverse));
@@ -4128,7 +4150,6 @@ E = {
 		var gemtocoin = $("#trdExchange .trdGemToCoin");
 		var gemtomoney = $("#trdExchange .trdGemToMoney");
 		var gemtocoininverse = $("#trdExchange .trdGemToCoinInverse");
-		var ratio = 0;
 		
 		var gemtoamount = gemto.val();
 		if (gemtoamount === 0)
@@ -4168,18 +4189,12 @@ E = {
 			});
 			
 			// Coin to user's gem
-			$.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
+			E.updateCoinInGem().always(function()
 			{
-				if (pData.quantity !== undefined)
-				{
-					ratio = E.Exchange.COIN_SAMPLE / pData.quantity;
-				}
-			}).always(function()
-			{
-				if (ratio !== 0)
+				if (E.Exchange.CoinInGem !== 0)
 				{
 					previouscoininverse = E.parseCoinString(gemtocoininverse.val());
-					currentcoininverse = Math.round(gemtoamount * ratio);
+					currentcoininverse = Math.round(gemtoamount * E.Exchange.CoinInGem);
 					gemtocoininverse.val(E.createCoinString(currentcoininverse));
 					
 					if (pWantAnimate === undefined || pWantAnimate)
@@ -4688,6 +4703,8 @@ D = {
 			cs: "Chrámy", it: "Templi", pl: "Świątynie", pt: "Templos", ru: "Храмы", zh: "寺廟"},
 		s_Full_Timetable: {de: "Zeitplan", es: "Horario", fr: "Horaire",
 			cs: "Plán", it: "Programma", pl: "Harmonogram", pt: "Horário", ru: "Расписание", zh: "時間表"},
+		s_Gem_Store_Promotions: {de: "Edelsteinshop Aktionen", es: "Tienda de gemas promociones", fr: "Boutique aux gemmes promotions",
+			cs: "Drahokam Prodejna Propagace", it: "Negozio gemma promozioni", pl: "Klejnot Sklep Promocje", pt: "Loja gema promoções", ru: "Самоцве́т Магази́н Продвижения", zh: "寶石商店促銷"},
 		s_news: {de: "nachrichten", es: "noticias", fr: "actualités",
 			cs: "zprávy", it: "notizie", pl: "wiadomości", pt: "notícias", ru: "новости", zh: "新聞"},
 		s_simple: {de: "einfach", es: "simple", fr: "simple",
@@ -4744,8 +4761,8 @@ D = {
 	{
 		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 
-		s_menuChains: {de: "Ketten", es: "Cadenas", fr: "Chaînes",
-			cs: "Řetězy", it: "Catene", pl: "Łańcuchy", pt: "Cadeias", ru: "Расписание", zh: "鏈"},
+		s_menuChains: {de: "Zeitgeber", es: "Temporizadores", fr: "Minuteurs",
+			cs: "Časovače", it: "Timer", pl: "Czasomierzy", pt: "Temporizadores", ru: "Таймеров", zh: "計時器"},
 		s_menuMap: {de: "Extras", es: "Herramientas", fr: "Outils",
 			cs: "Nástroje", it: "Strumenti", pl: "Narzędzia", pt: "Ferramentas", ru: "Инструменты", zh: "工具"},
 		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance",
@@ -11843,51 +11860,41 @@ T = {
 		// Initialize sale
 		if (T.isDashboardSaleEnabled)
 		{
+			// Create "button" to toggle list of items on sale
+			$("#dsbSale").append("<div id='dsbSaleGenerate' class='curToggle'><img src='img/ui/gemstore.png' /> "
+				+ "<u>" + D.getPhrase("Gem Store Promotions") + "</u> "
+				+ ((T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1)) + "x "
+				+ "(<span class='dsbSalePriceNew'>" + T.DashboardSale.range + "<ins class='s16 s16_gem'></ins></span>)"
+				+ "<img src='img/ui/toggle.png' />"
+			+"</div>");
+			$("#dsbSaleGenerate").click(function()
+			{
+				T.generateDashboardSale();
+			});
 			// Automatically generate the items on sale if the boolean is true
 			if (T.DashboardSale.isPreshown === true)
 			{
 				T.generateDashboardSale();
 			}
-			else
-			{
-				// Otherwise let the user trigger the generation
-				$("#dsbSale").append("<div id='dsbSaleGenerate' class='curToggle'><img src='img/ui/gemstore.png' /> "
-					+ (T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1) + "x "
-					+ "(<span class='dsbSalePriceNew'>" + T.DashboardSale.Range[0] + "-" + T.DashboardSale.Range[1] + "<ins class='s16 s16_gem'></ins></span>)"
-					+ "<img src='img/ui/toggle.png' />"
-				+"</div>");
-				$("#dsbSaleGenerate").click(function()
-				{
-					T.generateDashboardSale();
-				});
-			}
 		}
 	},
 	
 	/*
-	 * Generates the list of items on sale.
+	 * Regenerates the list of items on sale in a toggle manner.
 	 */
 	generateDashboardSale: function()
 	{
-		// Toggle the sales column if it already exists
-		if ($("#dsbSaleCol0").length)
+		if ($("#dsbSaleTable").length)
 		{
-			$("#dsbSaleCol0, #dsbSaleCol1").toggle();
+			$("#dsbSaleTable").remove();
 		}
 		else
 		{
-			// Else generate them
-			$("#dsbSale").append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
-			var ratio = 0;
-			$.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
+			E.updateCoinInGem().always(function()
 			{
-				if (pData.quantity !== undefined)
-				{
-					ratio = E.Exchange.COIN_SAMPLE / pData.quantity;
-				}
-			}).always(function()
-			{
-				if (ratio !== 0)
+				$("#dsbSaleTable").remove();
+				$("#dsbSale").append("<div id='dsbSaleTable'><div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div></div>");
+				if (E.Exchange.CoinInGem !== 0)
 				{
 					for (var i in T.DashboardSale.Items)
 					{
@@ -11899,7 +11906,7 @@ T = {
 							+"<a href='" + U.convertExternalURL(item.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
 							+ "<span class='dsbSalePriceOld'><del>" + forhowmany + prevprice + "</del></span> "
 							+ "<span class='dsbSalePriceNew'>" + forhowmany + item.pricenew + "<ins class='s16 s16_gem'></ins></span>"
-							+ "<span class='dsbSalePriceCoin'> ≈ " + E.createCoinString(Math.round(item.pricenew * ratio), true) + "</span>"
+							+ "<span class='dsbSalePriceCoin'> ≈ " + E.createCoinString(Math.round(item.pricenew * E.Exchange.CoinInGem), true) + "</span>"
 							+ "<span class='dsbSalePriceMoney'> = " + E.convertGemToMoney(item.pricenew) + "<ins class='s16 s16_money'></ins></span>"
 						+ "</div>");
 					}

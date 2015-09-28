@@ -804,10 +804,10 @@ Story:
 	priceold: 800
  */
 Sale: {
-	isPreshown: false,
+	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Start: new Date("2015-09-28T16:00:00Z"),
 	Finish: new Date("2015-09-29T16:00:00Z"),
-	Range: [25, 1000], // Gem price of the cheapest and most expensive item
+	range: "25-1000",
 	Items: [
 	{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
