@@ -11851,9 +11851,8 @@ T = {
 			else
 			{
 				// Otherwise let the user trigger the generation
-				var numitems = (T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1);
 				$("#dsbSale").append("<div id='dsbSaleGenerate' class='curToggle'><img src='img/ui/gemstore.png' /> "
-					+ numitems + "x "
+					+ (T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1) + "x "
 					+ "(<span class='dsbSalePriceNew'>" + T.DashboardSale.Range[0] + "-" + T.DashboardSale.Range[1] + "<ins class='s16 s16_gem'></ins></span>)"
 					+ "<img src='img/ui/toggle.png' />"
 				+"</div>");

@@ -728,6 +728,33 @@ Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic
  */
 Countdowns: [
 {
+	name_en: "Guild Week: Expeditions, Missions",
+	name_de: "Gilden-Woche: Expeditionen, Missionen",
+	name_es: "Semana de clan: Expediciones, Misiónes",
+	name_fr: "Semaine de guilde: Expéditions, Missions",
+	news: "welcome-to-guild-week",
+	Start: new Date("2015-09-29T19:00:00Z"),
+	Finish: new Date("2015-09-29T19:30:00Z")
+},
+{
+	name_en: "Guild Week: Hall, Upgrades",
+	name_de: "Gilden-Woche: Halle, Aufwertungen",
+	name_es: "Semana de clan: Sala, Mejoras",
+	name_fr: "Semaine de guilde: Hall, Améliorations",
+	news: "welcome-to-guild-week",
+	Start: new Date("2015-09-30T19:00:00Z"),
+	Finish: new Date("2015-09-30T19:30:00Z")
+},
+{
+	name_en: "Guild Week: Items, Arenas",
+	name_de: "Gilden-Woche: Gegenständen, Arenen",
+	name_es: "Semana de clan: Objetos, Arenas",
+	name_fr: "Semaine de guilde: Objets, Arènes",
+	news: "welcome-to-guild-week",
+	Start: new Date("2015-10-01T19:00:00Z"),
+	Finish: new Date("2015-10-01T19:30:00Z")
+},
+{
 	name_en: "Final Beta Weekend",
 	name_de: "Letzte Beta Weekend",
 	name_es: "Último beta de fin de semana",
