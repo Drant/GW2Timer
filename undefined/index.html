@@ -4,8 +4,39 @@
 		<title>404 Error</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="noindex, nofollow, noarchive" />
+		<style>
+			html, body {
+				width: 100%; height: 100%;
+				overflow: hidden;
+				background: black;
+				color: white;
+				font-family: sans-serif;
+			}
+			#container {
+				width: 100%; height: 100%;
+				display: table;
+			}
+			#message {
+				display: table-cell;
+				vertical-align: middle;
+				text-align: center;
+				font-size: 24px;
+			}
+			a {
+				color: white;
+			}
+		</style>
 	</head>
-	<body style="background: black">
-		<div></div>
+	<body>
+		<div id="container">
+		<div id="message">
+			<p><b>English:</b> If you arrived here automatically, your web browser may be infected.<br />Please do an <a href="http://www.microsoft.com/security/scanner/">antivirus scan</a> on your system.</p>
+			<p><b>Deutsch:</b> Wenn Sie hier automatisch ankam, kann Ihr Webbrowser infiziert werden.<br />Bitte tun Sie eine <a href="http://www.microsoft.com/security/scanner/">Antivirus-Scan</a> auf Ihrem Computer.</p>
+			<p><b>Español:</b> Si llegaste aquí automáticamente, su navegador web puede estar infectado.<br />Por favor, haga un <a href="http://www.microsoft.com/security/scanner/">escaneo antivirus</a> en su ordenador.</p>
+			<p><b>Français:</b> Si vous êtes arrivé ici automatiquement, votre navigateur web ne peut être infecté.<br />S'il vous plaît faire une <a href="http://www.microsoft.com/security/scanner/">analyse antivirus</a> sur votre ordinateur.</p>
+			<p><b>繁體中文:</b> 如果您在此處自動到達，您的瀏覽器可能被感染。請在您的計算機上執行<a href="http://www.microsoft.com/security/scanner/">防病毒掃描</a>。</p>
+		</div>
+		</div>
 	</body>
 </html>
