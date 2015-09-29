@@ -728,22 +728,13 @@ Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic
  */
 Countdowns: [
 {
-	name_en: "Guild Week: Expeditions, Missions",
-	name_de: "Gilden-Woche: Expeditionen, Missionen",
-	name_es: "Semana de clan: Expediciones, Misiónes",
-	name_fr: "Semaine de guilde: Expéditions, Missions",
-	news: "welcome-to-guild-week",
-	Start: new Date("2015-09-29T19:00:00Z"),
-	Finish: new Date("2015-09-29T19:30:00Z")
-},
-{
 	name_en: "Guild Week: Hall, Upgrades",
 	name_de: "Gilden-Woche: Halle, Aufwertungen",
 	name_es: "Semana de clan: Sala, Mejoras",
 	name_fr: "Semaine de guilde: Hall, Améliorations",
 	news: "welcome-to-guild-week",
 	Start: new Date("2015-09-30T19:00:00Z"),
-	Finish: new Date("2015-09-30T19:30:00Z")
+	Finish: new Date("2015-09-30T19:45:00Z")
 },
 {
 	name_en: "Guild Week: Items, Arenas",
@@ -752,7 +743,7 @@ Countdowns: [
 	name_fr: "Semaine de guilde: Objets, Arènes",
 	news: "welcome-to-guild-week",
 	Start: new Date("2015-10-01T19:00:00Z"),
-	Finish: new Date("2015-10-01T19:30:00Z")
+	Finish: new Date("2015-10-01T19:45:00Z")
 },
 {
 	name_en: "Final Beta Weekend",
@@ -818,7 +809,7 @@ Sale: {
 	Finish: new Date("2015-10-05T16:00:00Z"),
 	range: "25-1000",
 	Items: [
-	{
+	/*{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
@@ -826,7 +817,7 @@ Sale: {
 		priceold: 0,
 		col: 1,
 		isExample: true
-	},
+	},*/
 	{
 		url: "http://wiki.guildwars2.com/wiki/Frost_Wasp_Logging_Tool",
 		img: "https://render.guildwars2.com/file/0227CB6C96D2AC7FC20B6D465478E9BBF3ED09D9/771066.png",
@@ -906,6 +897,14 @@ Sale: {
 		pricenew: 500,
 		priceold: 0,
 		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Raiment_of_the_Lich",
+		img: "https://render.guildwars2.com/file/5A4C04B84D5C7BA4CB7E7C0804D83FC0EE38BA1B/882252.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Glowing_Crimson_Mask",
