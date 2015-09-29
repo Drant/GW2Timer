@@ -11884,9 +11884,13 @@ T = {
 	 */
 	generateDashboardSale: function()
 	{
+		var animationspeed = 200;
 		if ($("#dsbSaleTable").is(":empty") === false)
 		{
-			$("#dsbSaleTable").empty();
+			$("#dsbSaleTable").animate({height: 0}, animationspeed, function()
+			{
+				$(this).css({height: "auto"}).empty();
+			});
 		}
 		else
 		{
@@ -11911,6 +11915,11 @@ T = {
 						+ "</div>");
 					}
 				}
+				var height = $("#dsbSaleTable").height();
+				$("#dsbSaleTable").css({height: 0}).animate({height: height}, animationspeed, function()
+				{
+					$(this).css({height: "auto"});
+				});
 			});
 		}
 	},

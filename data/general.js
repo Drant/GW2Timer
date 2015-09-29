@@ -764,6 +764,15 @@ Countdowns: [
 	Finish: new Date("2015-10-05T07:00:00Z")
 },
 {
+	name_en: "New Guild Mission Reset Time",
+	name_de: "Neue Gilden-Mission Zurücksetzen Zeit",
+	name_es: "Nuevo misión de clan restablecer",
+	name_fr: "Nouveau mission de guilde réinitialiser",
+	url: "https://forum-en.guildwars2.com/forum/game/gw2/Guild-Mission-Reset-Time-Changed/",
+	Start: new Date("2015-10-05T07:30:00Z"),
+	Finish: new Date("2015-10-05T08:00:00Z")
+},
+{
 	name_en: "Heart of Thorns Release",
 	name_de: "Heart of Thorns Erscheinungs",
 	name_es: "Heart of Thorns lanzamiento",
@@ -806,7 +815,7 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Start: new Date("2015-09-28T16:00:00Z"),
-	Finish: new Date("2015-09-29T16:00:00Z"),
+	Finish: new Date("2015-10-05T16:00:00Z"),
 	range: "25-1000",
 	Items: [
 	{

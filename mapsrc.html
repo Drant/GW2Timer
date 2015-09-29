@@ -115,7 +115,7 @@
 </header>
 <section>
 <button id="mapToggle_Resource" class="curToggle" title="Toggle display of all nodes."><img data-src="img/map/display.png" alt="Toggle" /></button>
-<div class="cntOptionMini" style="margin:8px"><label><input id="nodShowRegular" type="checkbox" /> Show non-rich nodes</label></div>
+<div class="cntOptionMini" style="margin:8px"><label><input id="nodShowRegular" type="checkbox" /> Show possible nodes</label></div>
 <button id="nodUncheck" class="btnUncheck cssRight" style="margin-right:32px;" title="Reset map nodes that you have clicked on."><img data-src="img/ui/uncheck.png" /></button><br />
 <div class="cntDivider" style="margin: 4px 0px 8px 0px;"></div>
 <div class="nodList">
@@ -420,9 +420,9 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 
 <div id="chlCountdownToReset"></div>
 <div id="chlCustomButtons">
-	<button id="chlDungeonButton" title="Dungeon checklist. Resets when countdown is:<br />Xd 0h 0m 0s"><img data-src="img/ui/dungeon.png" /></button>
-	<button id="chlCustomDailyButton" title="Daily checklist. Resets when countdown is:<br />Xd 0h 0m 0s">24</button>
-	<button id="chlCustomWeeklyButton" title="Weekly checklist. Resets when countdown is:<br />0d 0h 0m 0s">7</button>
+	<button id="chlDungeonButton"><img data-src="img/ui/dungeon.png" /></button>
+	<button id="chlCustomDailyButton">24</button>
+	<button id="chlCustomWeeklyButton">7</button>
 </div>
 
 <div id="chlDungeon">
@@ -501,7 +501,7 @@ These open world chests are separate from Jumping Puzzles and Mini-Dungeons. Hol
 </div>
 
 <div id="chlCustom">
-	<kbd class="jsHelpTooltip" title="Type your own text in the boxes then press Enter to make a custom daily checklist."></kbd>
+	<kbd class="jsHelpTooltip" title="Type your own text in the boxes then press Enter to make a custom daily checklist. 7/Weekly checklist resets at the Saturday-Sunday daily reset time."></kbd>
 	<br />
 	<div id="chlCustomDaily">
 		<ol id="chlCustomListDaily"></ol>
