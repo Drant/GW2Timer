@@ -11861,13 +11861,13 @@ T = {
 		if (T.isDashboardSaleEnabled)
 		{
 			// Create "button" to toggle list of items on sale
-			$("#dsbSale").append("<div id='dsbSaleGenerate' class='curToggle'><img src='img/ui/gemstore.png' /> "
-				+ "<u>" + D.getPhrase("Gem Store Promotions") + "</u> "
-				+ ((T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1)) + "x "
+			$("#dsbSale").append("<div id='dsbSaleHeader' class='curToggle'><img src='img/ui/gemstore.png' /> "
+				+ "<u>" + ((T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1)) + " "
+				+ D.getPhrase("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceNew'>" + T.DashboardSale.range + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img src='img/ui/toggle.png' />"
-			+"</div>");
-			$("#dsbSaleGenerate").click(function()
+			+"</div><div id='dsbSaleTable'></div>");
+			$("#dsbSaleHeader").click(function()
 			{
 				T.generateDashboardSale();
 			});
@@ -11884,16 +11884,16 @@ T = {
 	 */
 	generateDashboardSale: function()
 	{
-		if ($("#dsbSaleTable").length)
+		if ($("#dsbSaleTable").is(":empty") === false)
 		{
-			$("#dsbSaleTable").remove();
+			$("#dsbSaleTable").empty();
 		}
 		else
 		{
+			$("#dsbSaleTable").append(I.cThrobber);
 			E.updateCoinInGem().always(function()
 			{
-				$("#dsbSaleTable").remove();
-				$("#dsbSale").append("<div id='dsbSaleTable'><div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div></div>");
+				$("#dsbSaleTable").empty().append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				if (E.Exchange.CoinInGem !== 0)
 				{
 					for (var i in T.DashboardSale.Items)

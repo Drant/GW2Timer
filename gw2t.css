@@ -347,7 +347,7 @@ html, body,
 #itemDashboard a {
 	color: #bbcc77;
 }
-#itemDashboard a:hover, #dsbSaleGenerate:hover {
+#itemDashboard a:hover, #dsbSaleHeader:hover {
 	color: #44dd44;
 }
 #dsbAnnouncement img:hover {
@@ -378,7 +378,7 @@ html, body,
 .dsbCountdownActive {
 	color: lime;
 }
-#dsbSaleGenerate:active {
+#dsbSaleHeader:active {
 	opacity: 0.8;
 }
 #dsbSaleCol0, #dsbSaleCol1 {

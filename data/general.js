@@ -681,9 +681,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Caravan", "Camp", "Keep"]
 },
 "29": {
-	pve: ["Lumberer Kryta", "Fractal", "Maelstrom", "Fractal 1-10"],
-	pvp: ["Defender", "Reward", "Thief Ele", "Guard Mes"],
-	wvw: ["Land", "Caravan", "Defender", "Tower"]
+	pve: ["Forager Ascalon", "Activity", "Marches", "Jormag"],
+	pvp: ["Capture", "Reward", "Thief Ele", "Guard Mes"],
+	wvw: ["Land", "Kills", "Defender", "Tower"]
 },
 "30": {
 	pve: ["Forager Orr", "Vista Wastes", "Plains", "Fractal 11-20"],
