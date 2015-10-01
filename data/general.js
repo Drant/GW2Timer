@@ -541,9 +541,9 @@ var GW2T_ZONE_DATA = {
  */
 var GW2T_DAILY_CALENDAR = {
 "1": {
-	pve: ["Lumberer Ascalon", "Fractal", "Malchor", "Fractal 1-10"],
-	pvp: ["Kills", "Reward", "War Necro", "Thief Mes"],
-	wvw: ["Ruins", "Creature", "Camp", "Defender"]
+	pve: ["Miner Shiverpeaks", "Fractal", "Kessex", "SB"],
+	pvp: ["Defender", "Capture", "Thief Necro", "Ele Ranger"],
+	wvw: ["Land", "Guard", "Tower", "Keep"]
 },
 "2": {
 	pve: ["Lumberer Jungle", "Forger", "Metrica", "Fractal 1-10"],
