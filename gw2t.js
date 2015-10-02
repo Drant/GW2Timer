@@ -3179,12 +3179,11 @@ E = {
 		var sign = (pAmount < 0) ? "−" : "";
 		
 		// Leading zero for units that are right side of the leftmost unit
-		if (gold > 0 && silver < T.cBASE_10)
+		if (!pWantColor && (gold > 0 && silver < T.cBASE_10))
 		{
 			silver = "0" + silver;
 		}
-		if ((pWantColor && (silver > 0 && copper < T.cBASE_10))
-			|| (!pWantColor && copper < T.cBASE_10))
+		if (!pWantColor && ((silver > 0 && copper < T.cBASE_10) || (copper < T.cBASE_10)))
 		{
 			copper = "0" + copper;
 		}
