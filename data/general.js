@@ -702,11 +702,7 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_DASHBOARD_DATA = {
 
-Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic/5547304/'>Add a GW2Timer</a> clock or feature to it! "
-	+ "<a title='Deutsch' href='http://gw2timer.com/?enu_Language=de'><img src='img/ui/sixteen/langde.png' /></a> "
-	+ "<a title='Español' href='http://gw2timer.com/?enu_Language=es'><img src='img/ui/sixteen/langes.png' /></a> "
-	+ "<a title='Français' href='http://gw2timer.com/?enu_Language=fr'><img src='img/ui/sixteen/langfr.png' /></a> "
-	+ "<a title='繁體中文' href='http://gw2timer.com/?enu_Language=zh'><img src='img/ui/sixteen/langzh.png' /></a>",
+Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic/5547304/'>Add a GW2Timer</a> clock or feature to it!",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
@@ -751,7 +747,7 @@ Countdowns: [
 	name_es: "Último beta de fin de semana",
 	name_fr: "Dernier week-end de bêta",
 	news: "the-final-beta-weekend-event-begins-october-2",
-	Start: new Date("2015-10-02T17:00:00Z"),
+	Start: new Date("2015-10-02T19:00:00Z"),
 	Finish: new Date("2015-10-05T07:00:00Z")
 },
 {
