@@ -551,9 +551,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Kills", "Camp", "Defender"]
 },
 "3": {
-	pve: ["Miner Wastes", "Activity", "Brisban", "Fractal 1-10"],
-	pvp: ["Rank", "Defender", "Ele Mes", "Guard Thief"],
-	wvw: ["Creature", "Ruins", "Tower", "Defender"]
+	pve: ["Forager Jungle", "Vista Jungle", "Harathi", "FE"],
+	pvp: ["Rank", "Reward", "War Engi", "Ranger Engi"],
+	wvw: ["Ruins", "Kills", "Keep", "Defender"]
 },
 "4": {
 	pve: ["Forager Ascalon", "Vista Ascalon", "Fields", "Fractal 1-10"],
@@ -723,24 +723,6 @@ Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic
 	Finish: new Date("2015-07-13T19:00:00Z")
  */
 Countdowns: [
-{
-	name_en: "Guild Week: Hall, Upgrades",
-	name_de: "Gilden-Woche: Halle, Aufwertungen",
-	name_es: "Semana de clan: Sala, Mejoras",
-	name_fr: "Semaine de guilde: Hall, Améliorations",
-	news: "welcome-to-guild-week",
-	Start: new Date("2015-09-30T19:00:00Z"),
-	Finish: new Date("2015-09-30T19:45:00Z")
-},
-{
-	name_en: "Guild Week: Items, Arenas",
-	name_de: "Gilden-Woche: Gegenständen, Arenen",
-	name_es: "Semana de clan: Objetos, Arenas",
-	name_fr: "Semaine de guilde: Objets, Arènes",
-	news: "welcome-to-guild-week",
-	Start: new Date("2015-10-01T19:00:00Z"),
-	Finish: new Date("2015-10-01T19:45:00Z")
-},
 {
 	name_en: "Final Beta Weekend",
 	name_de: "Letzte Beta Weekend",
