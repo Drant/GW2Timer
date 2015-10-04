@@ -556,9 +556,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Kills", "Keep", "Defender"]
 },
 "4": {
-	pve: ["Forager Ascalon", "Vista Ascalon", "Fields", "Fractal 1-10"],
-	pvp: ["Defender", "Capture", "Engi Thief", "Ranger Engi"],
-	wvw: ["Spender", "Land", "Camp", "Keep"]
+	pve: ["Miner Ascalon", "Vista Ascalon", "Sparkfly", "Fractal 11-20"],
+	pvp: ["Capture", "Kills", "Ele Mes", "Guard Thief"],
+	wvw: ["Ruins", "Guard", "Camp", "Keep"]
 },
 "5": {
 	pve: ["Lumberer Ascalon", "Forger", "Caledon", "Fractal 11-20"],
