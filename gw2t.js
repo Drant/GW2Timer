@@ -54,7 +54,7 @@
 $(window).on("load", function() {
 	
 /* =============================================================================
- *  Single letter objects serve as namespaces.
+ * Single letter objects serve as namespaces.
  * ========================================================================== */
 var O, U, X, E, D, C, M, P, G, W, T, K, I = {};
 
@@ -75,7 +75,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 150901},
+		programVersion: {key: "int_utlProgramVersion", value: 151004},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -96,8 +96,8 @@ O = {
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
-				+ "Voice alarm has been updated for Firefox/IE and the <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>overlay app</a>.<br />"
-				+ "Try out the new <a class='urlUpdates' href='http://gw2timer.com/?mode=Tile'>Tile Mode</a>!<br />"
+				+ "<b>Right click on the map</b> to see the new world completion features.<br />"
+				+ "Use the <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>GPS overlay app</a> for fast world completion!<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -1072,7 +1072,7 @@ O = {
 							boxShadow: "-5px 0px 5px #223"
 						});
 						$("#itemLanguagePopup").css({ left: "-98px" });
-						$("#jsConsole, #jsConsoleButtons").css({ left: "24px" });
+						$("#cslContent").css({ left: "24px" });
 					}
 				}
 				else
@@ -1085,7 +1085,7 @@ O = {
 						boxShadow: "5px 0px 5px #223"
 					});
 					$("#itemLanguagePopup").css({ left: "64px" });
-					$("#jsConsole, #jsConsoleButtons").css({ left: I.cPANEL_WIDTH + 24 + "px" });
+					$("#cslContent").css({ left: I.cPANEL_WIDTH + 24 + "px" });
 				}
 			}
 		},
@@ -1180,6 +1180,7 @@ U = {
 	URL_DATA:
 	{
 		WvW: "data/wvw.js",
+		Itinerary: "data/itinerary.js",
 		// Data to load when opening a map section
 		DryTop: "data/drytop.js",
 		Resource: "data/resource.js",
@@ -3630,7 +3631,7 @@ E = {
 		var insertSearchResult = function(pData, pQuery, pResultsList)
 		{
 			$(".trdResults .itemThrobber").remove();
-			var outputline =  $("<dfn class='rarity" + E.Rarity[pData.rarity] + "' data-id='" + pData.id + "'>"
+			var outputline = $("<dfn class='rarity" + E.Rarity[pData.rarity] + "' data-id='" + pData.id + "'>"
 			+ "<img src='" + pData.icon + "'>"
 			+ U.wrapSubstringHTML(pData.name, pQuery, "u") + "</dfn>").appendTo(pResultsList);
 			// Bind click a result to memorize the item's ID and name
@@ -3872,24 +3873,24 @@ E = {
 					/*
 					 * Main API return example:
 						{
-							"count"     : 50,
-							"page"      : 1,
-							"last_page" : 3,
-							"results"     : [{
-								"data_id"              : 23654,
-								"name"                 : "Fake Item",
-								"rarity"               : 3,
-								"restriction_level"    : 72,
-								"img"                  : "http://www.url-to-offical-gw2-site.com/img.png",
-								"type_id"              : 1,
-								"sub_type_id"          : 2,
-								"price_last_changed"   : "YYYY-MM-DD HH:II:SS UTC",
-								"max_offer_unit_price" : 6523,
-								"min_sale_unit_price"  : 9345,
-								"offer_availability"   : 1235232,
-								"sale_availability"    : 203203,
-								"sale_price_change_last_hour"  : 40,
-								"offer_price_change_last_hour" : 70
+							"count"		: 50,
+							"page"		: 1,
+							"last_page"	: 3,
+							"results"	: [{
+								"data_id"		: 23654,
+								"name"					: "Fake Item",
+								"rarity"				: 3,
+								"restriction_level"		: 72,
+								"img"					: "http://www.url-to-offical-gw2-site.com/img.png",
+								"type_id"				: 1,
+								"sub_type_id"			: 2,
+								"price_last_changed"	: "YYYY-MM-DD HH:II:SS UTC",
+								"max_offer_unit_price"	: 6523,
+								"min_sale_unit_price"	: 9345,
+								"offer_availability"	: 1235232,
+								"sale_availability"		: 203203,
+								"sale_price_change_last_hour"	: 40,
+								"offer_price_change_last_hour"	: 70
 							, {...}]
 						}
 					 */
@@ -6124,7 +6125,7 @@ C = {
 			});
 		}
 	},
-   
+
 	/*
 	 * Sorts the scheduled chains list in the chains plate. This is
 	 * called by the ticker every timeframe.
@@ -6670,9 +6671,11 @@ M = {
 	isUserDragging: false,
 	isMapAJAXDone: false,
 	isAPIRetrieved_MAPFLOOR: false,
+	isItineraryRetrieved: false,
 	isMappingIconsGenerated: false,
 	isEventIconsGenerated: false,
-	cMAP_FLOORS: 4,
+	ContextLatLng: null, // Coordinates to store when user right clicks on the map
+	cMAP_NUMFLOORS: 4,
 	cMAP_BOUND: 32768, // The map is a square
 	cMAP_CENTER: [16384, 16384],
 	cMAP_CENTER_INITIAL: [-1024, 1024], // Out of map boundary so browser doesn't download tiles yet
@@ -6717,7 +6720,7 @@ M = {
 		Overview: new L.layerGroup(),
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
-		PersonalPath:  new L.layerGroup(), // Path drawn from connecting player-laid pins
+		PersonalPath: new L.layerGroup(), // Path drawn from connecting player-laid pins
 		ZoneRectangle: new L.layerGroup() // Rectangles colored specific to the zones' region
 	},
 	Pin: {
@@ -6819,7 +6822,7 @@ M = {
 		}
 		
 		// Initialize floors for setting the map tiles
-		for (var i = 0; i < this.cMAP_FLOORS; i++)
+		for (var i = 0; i < this.cMAP_NUMFLOORS; i++)
 		{
 			this.Floors.push(L.tileLayer("https://tiles.guildwars2.com/" + mapnumber + "/" + i + "/{z}/{x}/{y}.jpg",
 			{
@@ -6827,29 +6830,10 @@ M = {
 			}));
 		}
 		
-		// Touch devices special settings
+		// Bind map click functions for non-touch devices
 		if ( ! this.Map.tap)
 		{
-			/*
-			 * Clicking an empty place on the map highlight its coordinate.
-			 */
-			this.Map.on("click", function(pEvent)
-			{
-				if (that.isMouseOnHUD) { return; }
-				var coord = that.convertLCtoGC(pEvent.latlng);
-				$(htmlidprefix + "CoordinatesCopy")
-					.val(that.formatCoord(coord))
-					.select();
-			});
-
-			/*
-			 * Create a personal pin marker to where the user double clicks.
-			 */
-			this.Map.on("dblclick", function(pEvent)
-			{
-				if (that.isMouseOnHUD) { return; }
-				that.createPersonalPin(pEvent.latlng, true);
-			});
+			this.bindMapClicks(this.MapEnum);
 		}
 		
 		/*
@@ -6862,14 +6846,7 @@ M = {
 			var coords = that.parseCoordinatesMulti(val);
 			if (coords !== null)
 			{
-				that.removePersonalPins();
-				for (var i in coords)
-				{
-					that.createPersonalPin(that.convertGCtoLC(coords[i]));
-				}
-				that.drawPersonalPath();
-				// View the first point in the generated path
-				that.goToArguments(coords[0]);
+				that.redrawPersonalPath(coords);
 			}
 			else
 			{
@@ -7208,6 +7185,7 @@ M = {
 							})
 						});
 						that.bindOverviewBehavior(marker, "click");
+						that.bindOverviewBehavior(marker, "contextmenu");
 						that.Layer.Overview.addLayer(marker);
 						that.toggleLayer(that.Layer.Overview, true);
 					}
@@ -7278,6 +7256,69 @@ M = {
 	}, // End of populateMap
 	
 	/*
+	 * Bind mouse button functions for the map. Also binds the map custom context menu.
+	 * @param enum pMapEnum.
+	 */
+	bindMapClicks: function(pMapEnum)
+	{
+		var that = this;
+		var htmlidprefix = "#" + pMapEnum;
+		/*
+		 * Clicking an empty place on the map highlight its coordinate.
+		 */
+		this.Map.on("click", function(pEvent)
+		{
+			if (that.isMouseOnHUD) { return; }
+			var coord = that.convertLCtoGC(pEvent.latlng);
+			$(htmlidprefix + "CoordinatesCopy")
+				.val(that.formatCoord(coord)).select();
+			$("#ctxMap").hide();
+		});
+
+		/*
+		 * Create a personal pin marker to where the user double clicks.
+		 */
+		this.Map.on("dblclick", function(pEvent)
+		{
+			if (that.isMouseOnHUD) { return; }
+			that.createPersonalPin(pEvent.latlng, true);
+		});
+		
+		/*
+		 * Right clicking the map shows a custom context menu.
+		 */
+		this.Map.on("contextmenu", function(pEvent)
+		{
+			that.ContextLatLng = pEvent.latlng;
+			$("#ctxMap").css({top: I.posY, left: I.posX}).show();
+		});
+		
+		/*
+		 * Bind context menu functions, same order as the HTML.
+		 */
+		$("#ctxMap").click(function()
+		{
+			$(this).hide();
+		});
+		$("#ctxMapCenter").click(function()
+		{
+			that.goToDefault();
+		});
+		$("#ctxMapToggleCompletion").click(function()
+		{
+			$("#opt_bol_showWorldCompletion").trigger("click");
+		});
+		$("#ctxMapDrawCompletion").click(function()
+		{
+			P.drawCompletionRoute();
+		});
+		$("#ctxMapClearPins").click(function()
+		{
+			that.clearPersonalPins();
+		});
+	},
+	
+	/*
 	 * Bindings for map events that need to be done after AJAX has loaded the
 	 * API-generated markers.
 	 */
@@ -7288,6 +7329,10 @@ M = {
 		 * Booleans to stop some map functions from activating.
 		 */
 		$("#paneHUDMap").hover(
+			function() { that.isMouseOnHUD = true; },
+			function() { that.isMouseOnHUD = false; }
+		);
+		$("#ctxMap").hover(
 			function() { that.isMouseOnHUD = true; },
 			function() { that.isMouseOnHUD = false; }
 		);
@@ -7746,13 +7791,21 @@ M = {
 			that.Layer.PersonalPin.removeLayer(this);
 			that.drawPersonalPath();
 		});
-		// Right click pin: remove all pins
+		// Right click pin: centers the pin on GPS character
 		marker.on("contextmenu", function()
 		{
-			that.removePersonalPins();
+			if (that.GPSPreviousCoord.length > 0)
+			{
+				that.movePin(this, that.GPSPreviousCoord);
+			}
+			else
+			{
+				that.movePin(this, that.Map.getCenter());
+			}
+			that.drawPersonalPath();
 		});
 		// Drag pin: redraw the personal path
-		marker.on("drag", function()
+		marker.on("dragend", function()
 		{
 			that.drawPersonalPath();
 		});
@@ -7778,7 +7831,7 @@ M = {
 			i++;
 		});
 		// Redraw the entire series of pins
-		this.removePersonalPins();
+		this.clearPersonalPins();
 		for (i in latlngs)
 		{
 			this.createPersonalPin(latlngs[i]);
@@ -7789,7 +7842,7 @@ M = {
 	/*
 	 * Removes all personal pins from the map.
 	 */
-	removePersonalPins: function()
+	clearPersonalPins: function()
 	{
 		var that = this;
 		this.Layer.PersonalPin.eachLayer(function(pPin){
@@ -7851,6 +7904,29 @@ M = {
 		{
 			this.Layer.PersonalPath.clearLayers();
 			this.toggleLayer(this.Layer.PersonalPath, false);
+		}
+	},
+	
+	/*
+	 * Draws a path from a given set of coordinates.
+	 * @param 2D array pCoords of x y coordinates.
+	 */
+	redrawPersonalPath: function(pCoords)
+	{
+		if (pCoords.length > 0)
+		{
+			this.clearPersonalPins();
+			for (var i in pCoords)
+			{
+				this.createPersonalPin(this.convertGCtoLC(pCoords[i]));
+			}
+			this.drawPersonalPath();
+			// View the first point in the generated path
+			this.goToArguments(pCoords[0]);
+		}
+		else
+		{
+			I.write("Path unavailable.");
 		}
 	},
 	
@@ -8725,6 +8801,31 @@ P = {
 			layergroup.addLayer(L.circleMarker(latlngs[i], Options));
 		}
 		return layergroup;
+	},
+	
+	/*
+	 * Draws a map completion route for the current moused zone, using the
+	 * personal pins system.
+	 */
+	drawCompletionRoute: function()
+	{
+		if (M.isItineraryRetrieved)
+		{
+			M.redrawPersonalPath(M.ZoneCurrent.path);
+		}
+		else
+		{
+			// If route data is not loaded, load it and execute this function again
+			$.getScript(U.URL_DATA.Itinerary).done(function()
+			{
+				for (var i in GW2T_COMPLETION_DATA)
+				{
+					M.Zones[i].path = GW2T_COMPLETION_DATA[i].path;
+				}
+				M.isItineraryRetrieved = true;
+				P.drawCompletionRoute();
+			});
+		}
 	},
 	
 	/*
@@ -10496,7 +10597,7 @@ W = {
 	},
 	Layer: {
 		PersonalPin: new L.layerGroup(),
-		PersonalPath:  new L.layerGroup(),
+		PersonalPath: new L.layerGroup(),
 		ZoneRectangle: new L.layerGroup(),
 		Pin: new L.layerGroup()
 	},
@@ -11172,7 +11273,7 @@ T = {
 	 */
 	getRandomIntRange: function(pMin, pMax)
 	{
-	   return Math.floor(Math.random() * (pMax - pMin + 1)) + pMin;
+		return Math.floor(Math.random() * (pMax - pMin + 1)) + pMin;
 	},
 	
 	/*
@@ -12025,7 +12126,7 @@ T = {
 };
 
 /* =============================================================================
- *  @@Klock analog and by-the-second and frame refreshes
+ * @@Klock analog and by-the-second and frame refreshes
  * ========================================================================== */
 K = {
 	
@@ -12758,7 +12859,7 @@ K = {
 			{
 				D.speak(speech + D.getChainPronunciation(C.CurrentChainSD) + checkedcurrentsd, 5);
 			}
-			else if  (wantcurrenthc)
+			else if (wantcurrenthc)
 			{
 				D.speak(speech + D.getChainPronunciation(C.CurrentChainHC) + checkedcurrenthc, 5);
 			}
@@ -13130,6 +13231,8 @@ I = {
 	cTOOLTIP_ADD_OFFSET_X: 36,
 	cTOOLTIP_MOUSEMOVE_RATE: 20,
 	CLOCK_AND_MENU_HEIGHT: 0,
+	posX: 0, // Mouse position
+	posY: 0,
 	
 	// Content-Plate-Page and Section-Header
 	isMouseOnPanel: false,
@@ -13356,15 +13459,15 @@ I = {
 		}
 		
 		// Clear the non-load warning after everything succeeded
-		$("#paneWarning").remove();
+		$("#itemWarning").remove();
 		// Bind console buttons
-		$("#jsConsoleButtonClose").click(function()
+		$("#cslButtonClose").click(function()
 		{
 			I.clear();
 		});
-		$("#jsConsoleButtonSelect").click(function()
+		$("#cslButtonSelect").click(function()
 		{
-			I.selectText("#jsConsole");
+			I.selectText("#cslContent");
 		});
 		$("#mapOptions, #wvwOptions").one("mouseenter", function()
 		{
@@ -13413,7 +13516,7 @@ I = {
 		// Initialize scroll bars for pre-loaded plates
 		if (I.isMapEnabled)
 		{
-			I.initializeScrollbar($("#jsConsole, #plateChains, #plateOptions"));
+			I.initializeScrollbar($("#cslContent, #plateChains, #plateOptions"));
 		}
 		
 		// Clean the localStorage of unrecognized variables
@@ -13520,7 +13623,7 @@ I = {
 				U.updateQueryString();
 			});
 		});
-	   
+		
 		// Add collapse text icon to headers; first one is pre-expanded
 		$("#plateChains header:not(:first)").each(function()
 		{
@@ -13576,8 +13679,8 @@ I = {
 	 */
 	write: function(pString, pSeconds, pClear)
 	{
-		$("#jsConsoleButtons").show();
-		var console = $("#jsConsole");
+		$("#itemConsole").show();
+		var content = $("#cslContent");
 		var characterspersecond = 24;
 		
 		if (pString === undefined || pString === null)
@@ -13594,7 +13697,7 @@ I = {
 		}
 		if (pClear === true)
 		{
-			console.empty();
+			content.empty();
 		}
 		if (isFinite(pSeconds) === false)
 		{
@@ -13604,17 +13707,17 @@ I = {
 			 */
 			pSeconds = 3 + parseInt(pString.length / characterspersecond);
 		}
-		console.append(pString + "<br />");
-		I.updateScrollbar(console);
+		content.append(pString + "<br />");
+		I.updateScrollbar(content);
 		
 		// Ignore previous display time, which is how long before the console is cleared
 		window.clearTimeout(I.consoleTimeout);
 		I.consoleTimeout = setTimeout(function()
 		{
-			console.css({opacity: 1}).animate({opacity: 0}, 600, function()
+			content.css({opacity: 1}).animate({opacity: 0}, 600, function()
 			{
 				$(this).empty().css({opacity: 1});
-				$("#jsConsoleButtons").hide();
+				$("#itemConsole").hide();
 			});
 		}, pSeconds * T.cMILLISECONDS_IN_SECOND);
 	},
@@ -13633,8 +13736,8 @@ I = {
 	clear: function()
 	{
 		window.clearTimeout(I.consoleTimeout);
-		$("#jsConsoleButtons").hide();
-		$("#jsConsole").empty();
+		$("#itemConsole").hide();
+		$("#cslContent").empty();
 	},
 	
 	/*
@@ -13653,7 +13756,7 @@ I = {
 	selectText: function(pSelector)
 	{
 		var element = document.querySelector(pSelector);
-		var selection = window.getSelection();        
+		var selection = window.getSelection();
 		var range = document.createRange();
 		range.selectNodeContents(element);
 		selection.removeAllRanges();
@@ -14031,6 +14134,15 @@ I = {
 	},
 	
 	/*
+	 * Loads a stylesheet file that was named with a prefix.
+	 * @param string pName without extension.
+	 */
+	loadStylesheet: function(pName)
+	{
+		$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-" + pName +".css' />");
+	},
+	
+	/*
 	 * Converts img tags with the data-src attribute to src, thereby loading the image.
 	 * @param jqobject pContainer to find img tags tag.
 	 */
@@ -14105,10 +14217,10 @@ I = {
 		 */
 		(function()
 		{
-		   var animationspeed = 200;
-		   var cFadeOpacity = 0.5;
-		   // User hovers over the menu bar
-		   $("#paneMenu").hover(
+			var animationspeed = 200;
+			var cFadeOpacity = 0.5;
+			// User hovers over the menu bar
+			$("#paneMenu").hover(
 				function()
 				{
 					$("#paneMenu kbd").each(function()
@@ -14128,24 +14240,24 @@ I = {
 						$(this).animate({opacity: 1}, animationspeed);
 					});
 				}
-		   );
-		   // User hovers over individual menu icons
-		   $("#paneMenu kbd").hover(
-			   function()
-			   {
-				   $(this).animate({opacity: 1}, animationspeed);
-			   },
-			   function()
-			   {
-				   $(this).animate({opacity: cFadeOpacity}, animationspeed);
-			   }
-		   ).mousedown(function()
-		   {
-			   $(this).finish().css({opacity: cFadeOpacity});
-		   }).mouseup(function()
-		   {
-			   $(this).finish().css({opacity: 1});
-		   });
+			);
+			// User hovers over individual menu icons
+			$("#paneMenu kbd").hover(
+				function()
+				{
+					$(this).animate({opacity: 1}, animationspeed);
+				},
+				function()
+				{
+					$(this).animate({opacity: cFadeOpacity}, animationspeed);
+				}
+			).mousedown(function()
+			{
+				$(this).finish().css({opacity: cFadeOpacity});
+			}).mouseup(function()
+			{
+				$(this).finish().css({opacity: 1});
+			});
 		})();
 
 		/*
@@ -14208,10 +14320,10 @@ I = {
 			});
 		});
 
-	   /*
-		* AJAX load the separate HTML files into the content plate when user
-		* clicks on respective menu icon. Most content are not generated until
-		* the user expand a section of the content.
+		/*
+		 * AJAX load the separate HTML files into the content plate when user
+		 * clicks on respective menu icon. Most content are not generated until
+		 * the user expand a section of the content.
 		*/
 		// Map plate
 		$("#menuMap").one("click", I.loadMapPlate);
@@ -14280,6 +14392,7 @@ I = {
 	 */
 	loadMapPlate: function()
 	{
+		I.loadStylesheet("features");
 		$("#plateMap").load(U.getPageSrc("map"), function()
 		{
 			I.bindAfterAJAXContent(I.PageEnum.Map);
@@ -14391,17 +14504,17 @@ I = {
 			case I.ModeEnum.Overlay:
 			{
 				// Remove elements extraneous or intrusive to overlay mode
-				$("#paneWarning").remove();
+				$("#itemWarning").remove();
 				$("#itemDashboard, #mapQuickURL, #itemMapPeripheralSouth, #itemSocial").hide();
 				// Resize fonts and positions appropriate for smaller view
-				$("#jsConsole").css(
+				$("#cslContent").css(
 				{
 					top: "12px", left: "12px",
 					"font-size": "12px"
 				});
-				$("#jsConsoleButtons").css(
+				$("#cslButtons").css(
 				{
-					left: "0px", bottom: "0px"
+					left: "-4px", top: "-4px"
 				});
 				$("#itemMapCoordinates, #itemWvWCoordinates").css(
 				{
@@ -14483,8 +14596,8 @@ I = {
 				I.isMapEnabled = false;
 				I.isScrollEnabled = true;
 				I.showHomeLink();
+				I.loadStylesheet("mobile");
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
-					.append("<link rel='stylesheet' type='text/css' href='gw2t-mobile.css' />")
 					.append("<link rel='canonical' href='http://gw2timer.com' />");
 				$("#chnOptionsRight").prependTo("#chnOptionsPopup");
 			} break;
@@ -14493,7 +14606,7 @@ I = {
 				I.isMapEnabled = false;
 				K.iconOpacityChecked = 0.2;
 				I.showHomeLink();
-				$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-tile.css' />");
+				I.loadStylesheet("tile");
 				$("#itemLanguage").prependTo("#plateChains");
 				$("#chnOptionsRight").prependTo("#chnOptionsPopup");
 				I.initializeScrollbar("#windowMain");
@@ -14514,7 +14627,7 @@ I = {
 		// Also streamline other UI elements if website is embedded in another website
 		if (I.isProgramEmbedded)
 		{
-			$("#paneWarning").remove();
+			$("#itemWarning").remove();
 			$(".itemMapPeripheral a, .itemMapPeripheral span").hide();
 			T.isDashboardEnabled = false;
 		}
@@ -14567,7 +14680,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind the following tags with the title attribute for tooltip
-		I.qTip.init("#jsConsoleButtons img, #chnOptions img, a, ins, kbd, span, fieldset, label, input, button");
+		I.qTip.init("#chnOptions img, a, ins, kbd, span, fieldset, label, input, button");
 		$("#panelApp").hover(
 			function() { I.isMouseOnPanel = true; },
 			function() { I.isMouseOnPanel = false; }
@@ -14631,8 +14744,8 @@ I = {
 		},
 		move: function(a)
 		{
-			var x = a.pageX;
-			var y = a.pageY;
+			I.posX = a.pageX;
+			I.posY = a.pageY;
 			var tipwidth = $("#qTip").width();
 			var tipheight = $("#qTip").height();
 			var winwidth = $(window).width();
@@ -14645,15 +14758,15 @@ I = {
 			if (I.isMouseOnPanel)
 			{
 				/*
-				$("#jsConsole").html(
+				$("#cslContent").html(
 					x + ", " + y + "<br />"
 					+ (this.a.offsetWidth) + ", " + (this.a.offsetHeight) + 
-				$("#jsConsole").html(pEvent.pageX + ", " + pEvent.pageY + "<br />"
+				$("#cslContent").html(pEvent.pageX + ", " + pEvent.pageY + "<br />"
 					+ $("#qTip").width() + ", " + $("#qTip").height() + "<br />"
 					+ $(window).width() + ", " + $(window).height());
 				*/
 				// Tooltip overflows bottom edge
-				if (tipheight + y + I.cTOOLTIP_ADD_OFFSET_Y > winheight)
+				if (tipheight + I.posY + I.cTOOLTIP_ADD_OFFSET_Y > winheight)
 				{
 					I.qTip.offsetY = -(tipheight) - I.cTOOLTIP_ADD_OFFSET_Y;
 				}
@@ -14664,9 +14777,9 @@ I = {
 				// Tooltip overflows panel right edge
 				if (tipwidth >= I.cTOOLTIP_OVERFLOW_WIDTH && I.isMapEnabled && O.Options.bol_alignPanelRight)
 				{
-					I.qTip.offsetX = (winwidth - x) - I.cPANEL_WIDTH - I.cTOOLTIP_OVERFLOW_MAX;
+					I.qTip.offsetX = (winwidth - I.posX) - I.cPANEL_WIDTH - I.cTOOLTIP_OVERFLOW_MAX;
 				}
-				else if ((winwidth - x) > (I.cPANEL_WIDTH / 2))
+				else if ((winwidth - I.posX) > (I.cPANEL_WIDTH / 2))
 				{
 					I.qTip.offsetX = I.cTOOLTIP_ALTERNATE_OFFSET_X;
 				}
@@ -14678,7 +14791,7 @@ I = {
 			else // Mouse is on the map pane
 			{
 				// Tooltip overflows right edge
-				if (x + I.cTOOLTIP_ADD_OFFSET_X + tipwidth > winwidth && tipwidth > I.cTOOLTIP_WIDTH_MAX)
+				if (I.posX + I.cTOOLTIP_ADD_OFFSET_X + tipwidth > winwidth && tipwidth > I.cTOOLTIP_WIDTH_MAX)
 				{
 					I.qTip.offsetX = -(tipwidth) - I.cTOOLTIP_ADD_OFFSET_X;
 				}
@@ -14687,12 +14800,12 @@ I = {
 					I.qTip.offsetX = I.cTOOLTIP_ALTERNATE_OFFSET_X;
 				}
 				// Tooltip overflows bottom edge
-				if (tipheight - I.cTOOLTIP_ALTERNATE_OFFSET_X + y > winheight)
+				if (tipheight - I.cTOOLTIP_ALTERNATE_OFFSET_X + I.posY > winheight)
 				{
 					I.qTip.offsetY = -(tipheight) - I.cTOOLTIP_ADD_OFFSET_Y;
 				}
 				// Tooltip overflows top edge
-				else if (y < I.cTOOLTIP_ADD_OFFSET_Y)
+				else if (I.posY < I.cTOOLTIP_ADD_OFFSET_Y)
 				{
 					I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
 				}
@@ -14702,8 +14815,8 @@ I = {
 				}
 			}
 			
-			this.a.style.left = x + this.offsetX + "px";
-			this.a.style.top = y + this.offsetY + "px";
+			this.a.style.left = I.posX + this.offsetX + "px";
+			this.a.style.top = I.posY + this.offsetY + "px";
 		},
 		show: function(a)
 		{
@@ -14717,7 +14830,7 @@ I = {
 };
 
 /* =============================================================
- *  Executions, the order matters!
+ * Executions, the order matters!
  * ============================================================= */
 I.initializeFirst(); // initialize variables that need to be first
 O.initializeOptions(); // load stored or default options to the HTML input

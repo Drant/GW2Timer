@@ -561,9 +561,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Guard", "Camp", "Keep"]
 },
 "5": {
-	pve: ["Lumberer Ascalon", "Forger", "Caledon", "Fractal 11-20"],
-	pvp: ["Reward", "Kills", "War Guard", "Ranger Engi"],
-	wvw: ["Ruins", "Land", "Keep", "Defender"]
+	pve: ["Lumberer Wastes", "Forger", "Straits", "Maw"],
+	pvp: ["Rank", "Reward", "Engi Thief", "Ranger Engi"],
+	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "6": {
 	pve: ["Miner Shiverpeaks", "Fractal", "Snowden", "Fractal 1-10"],

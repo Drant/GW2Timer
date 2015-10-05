@@ -39,11 +39,14 @@
 </head>
 
 <body>
-	<div id="jsConsole"></div>
-	<div id="jsConsoleButtons">
-		<img id="jsConsoleButtonSelect" title="<dfn>Select Console<dfn>" src="img/ui/select.png" alt="Select Console" /><img title="<dfn>Close Console<dfn>" id="jsConsoleButtonClose" src="img/ui/close.png" alt="Close Console" />
+	<div id="itemConsole">
+	<div id="cslButtons">
+		<kbd id="cslButtonClose" class="curClick" title="<dfn>Close Console<dfn>"></kbd>
+		<kbd id="cslButtonSelect" class="curClick" title="<dfn>Select Console<dfn>"></kbd>
 	</div>
-	<div id="paneWarning">
+	<div id="cslContent"></div>
+	</div>
+	<div id="itemWarning">
 		If you can read this then <strong>maybe</strong>:<br />
 		- You are still loading the website (slowly); ignore this message.<br />
 		- You are using Internet Explorer 10 or lower; please <a href="http://microsoft.com/ie">upgrade</a> to IE11 or higher.<br />
@@ -58,6 +61,14 @@
 		<!-- Map, the dummy nbsp is required or Leaflet won't show
 		==================================================================== -->
 		<section id="mapPane">&nbsp;
+			<div id="ctxMap" class="ctxMenu">
+				<ul>
+					<li id="ctxMapCenter">Center map</li>
+					<li id="ctxMapToggleCompletion">Toggle world completion</li>
+					<li id="ctxMapDrawCompletion">Draw completion route</li>
+					<li id="ctxMapClearPins">Clear all pins</li>
+				</ul>
+			</div>
 			<article id="paneHUDMap">
 			<div id="itemDashboard">
 				<kbd id="dsbClose" class="curClick" title="Close the dashboard. You can hide this permanently by going to Options page, Map section."></kbd>
@@ -286,7 +297,7 @@
 						</feMerge>
 					</filter>
 					<linearGradient id="clkGradientCircumference" x1="0%" y1="0%" x2="0%" y2="100%" spreadMethod="pad">
-						<stop offset="0%"   stop-color="#555" stop-opacity="1"/>
+						<stop offset="0%" stop-color="#555" stop-opacity="1"/>
 						<stop offset="100%" stop-color="#111" stop-opacity="1"/>
 					</linearGradient>
 				</defs>

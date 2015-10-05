@@ -13,7 +13,7 @@ html {
 	overflow-y: scroll;
 }
 
-#jsConsoleButtons {
+#cslButtons {
 	position: fixed;
 	bottom: 24px;
 }
