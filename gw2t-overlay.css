@@ -1,0 +1,42 @@
+/*
+	http://gw2timer.com/navi
+	Overlay app stylesheet.
+*/
+
+/* Remove elements extraneous or intrusive to overlay mode */
+#itemWarning, #itemDashboard, #mapQuickURL, #itemMapPeripheralSouth, #itemSocial,
+#paneMenu var {
+	display: none;
+}
+
+/* Resize fonts and positions appropriate for smaller view */
+#cslContent {
+	top: 12px; left: 12px;
+	font-size: 12px;
+}
+#cslButtons {
+	left: -4px; top: -4px;
+}
+
+#mapGPS, #wvwGPS {
+	display: inline-block;
+}
+#itemMapCoordinates, #itemWvWCoordinates {
+	bottom: 6px; left: 6px;
+}
+#itemMapCoordinates input, #itemWvWCoordinates input {
+	width: 80px; height: 12px;
+	margin-left: 5px;
+	font-size: 12px;
+}
+#mapCoordinatesName, #wvwCoordinatesName {
+	width: 116px;
+}
+
+/* Lower the menu bar's height */
+#paneMenu {
+	height: 32px;
+}
+#paneMenu ins {
+	margin-top: 0px;
+}

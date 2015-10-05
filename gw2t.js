@@ -75,7 +75,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 151004},
+		programVersion: {key: "int_utlProgramVersion", value: 151004, isMajor: true},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -86,8 +86,8 @@ O = {
 	{
 		var currentversion = O.Utilities.programVersion.value;
 		var usersversion = parseInt(localStorage[O.Utilities.programVersion.key]);
-		// If not first visit and version is mismatch, notify new version
-		if (isFinite(usersversion) && usersversion !== currentversion)
+		// If is a major version, not first visit, and version is mismatch, then notify new version
+		if (O.Utilities.programVersion.isMajor && isFinite(usersversion) && usersversion !== currentversion)
 		{
 			var wait = (I.ModeCurrent === I.ModeEnum.Overlay) ? 15 : 30;
 			I.clear();
@@ -13434,6 +13434,7 @@ I = {
 		I.bindHelpButtons("#plateOptions");
 		I.initializeUIforMenu();
 		I.initializeUIForHUD();
+		I.styleContextMenu("#ctxMap");
 		// Bind switch map buttons
 		$("#mapSwitchButton").one("click", function()
 		{
@@ -13461,15 +13462,15 @@ I = {
 		// Clear the non-load warning after everything succeeded
 		$("#itemWarning").remove();
 		// Bind console buttons
-		$("#cslButtonClose").click(function()
+		$("#cslClose").click(function()
 		{
 			I.clear();
 		});
-		$("#cslButtonSelect").click(function()
+		$("#cslSelect").click(function()
 		{
 			I.selectText("#cslContent");
 		});
-		$("#mapOptions, #wvwOptions").one("mouseenter", function()
+		$("#mapOptions, #wvwOptions, #mapGPS, #wvwGPS").one("mouseenter", function()
 		{
 			$(this).find("img").each(function()
 			{
@@ -13859,6 +13860,15 @@ I = {
 	},
 	
 	/*
+	 * Styles a custom context menu.
+	 * @param string pMenu name of the menu.
+	 */
+	styleContextMenu: function(pMenu)
+	{
+		$(pMenu).find("li").prepend("<ins class='s16 s16_bullet'></ins> ");
+	},
+	
+	/*
 	 * Initializes custom scroll bar for specified element using defined settings.
 	 * @param jqobject pElement to initialize.
 	 */
@@ -14135,11 +14145,15 @@ I = {
 	
 	/*
 	 * Loads a stylesheet file that was named with a prefix.
-	 * @param string pName without extension.
+	 * @param string pName filename must be in lowercase and has the prefix.
 	 */
 	loadStylesheet: function(pName)
 	{
-		$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-" + pName +".css' />");
+		if (pName === I.ModeEnum.Website)
+		{
+			return;
+		}
+		$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-" + pName.toLowerCase() + ".css' />");
 	},
 	
 	/*
@@ -14495,6 +14509,8 @@ I = {
 	 */
 	enforceProgramMode: function()
 	{
+		I.loadStylesheet(I.ModeCurrent);
+		
 		switch (I.ModeCurrent)
 		{
 			case I.ModeEnum.Website:
@@ -14503,100 +14519,21 @@ I = {
 			} break;
 			case I.ModeEnum.Overlay:
 			{
-				// Remove elements extraneous or intrusive to overlay mode
-				$("#itemWarning").remove();
-				$("#itemDashboard, #mapQuickURL, #itemMapPeripheralSouth, #itemSocial").hide();
-				// Resize fonts and positions appropriate for smaller view
-				$("#cslContent").css(
-				{
-					top: "12px", left: "12px",
-					"font-size": "12px"
-				});
-				$("#cslButtons").css(
-				{
-					left: "-4px", top: "-4px"
-				});
-				$("#itemMapCoordinates, #itemWvWCoordinates").css(
-				{
-					bottom: "6px", left: "6px"
-				});
-				$("#itemMapCoordinates input, #itemWvWCoordinates input").css(
-				{
-					width: "80px", height: "12px", marginLeft: "5px", fontSize: 12
-				});
-				$("#mapCoordinatesName, #wvwCoordinatesName").css(
-				{
-					width: "116px"
-				});
-				// Lower the menu bar's height
-				$("#paneMenu").css(
-				{
-					height: "32px"
-				});
-				$("#paneMenu ins").css(
-				{
-					"margin-top": "0px"
-				});
-				$("#paneMenu var").each(function()
-				{
-					$(this).remove();
-				});
 				I.cPANE_MENU_HEIGHT = 32;
-				$("#mapGPS, #wvwGPS").css({display: "inline-block"});
-				
 			} break;
 			case I.ModeEnum.Simple:
 			{
 				I.isMapEnabled = false;
 				I.showHomeLink();
 				// Readjust panels
-				$("#panelMap, #paneMenu, #paneContent").hide();
-				$("#panelApp").css(
-				{
-					background: "radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%)"
-				});
-				
-				// Readjust clock pane
-				$("#paneClock").css(
-				{
-					top: "auto", right: "auto", bottom: "auto", left: "auto",
-					border: "none",
-					"box-shadow": "none"
-				});
 				I.readjustSimple();
 				$(window).resize(function() { I.readjustSimple(); });
-				$("#paneClockWall, #paneClockBackground").css({opacity: 0});
-				
-				// Readjust clock elements
-				$("#itemSocial").hide();
-				$("#itemLanguage").css({
-					position: "fixed",
-					top: "10px", right: "10px", bottom: "auto", left: "auto"
-				});
-				$("#itemLanguage span").css({opacity: 0.7});
-				$("#itemTimeLocal").css({
-					width: "220px",
-					right: "auto", bottom: "160px", left: "70px",
-					"text-align": "center",
-					color: "#eee",
-					opacity: 0.5
-				});
-				$("#itemTimeDaytime").css({
-					width: "220px",
-					top: "160px", bottom: "auto", left: "70px",
-					"text-align": "center",
-					color: "#eee",
-					opacity: 0.5
-				});
-				$("#paneBoard").show();
-				
 			} break;
 			case I.ModeEnum.Mobile:
 			{
 				I.isMapEnabled = false;
 				I.isScrollEnabled = true;
 				I.showHomeLink();
-				I.loadStylesheet("mobile");
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
 					.append("<link rel='canonical' href='http://gw2timer.com' />");
 				$("#chnOptionsRight").prependTo("#chnOptionsPopup");
@@ -14606,7 +14543,6 @@ I = {
 				I.isMapEnabled = false;
 				K.iconOpacityChecked = 0.2;
 				I.showHomeLink();
-				I.loadStylesheet("tile");
 				$("#itemLanguage").prependTo("#plateChains");
 				$("#chnOptionsRight").prependTo("#chnOptionsPopup");
 				I.initializeScrollbar("#windowMain");

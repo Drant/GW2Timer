@@ -1,0 +1,50 @@
+/*
+	http://gw2timer.com/simple
+	Clock-only mode.
+*/
+
+#paneBoard {
+	display: block;
+}
+
+/* Hide unrelated elements */
+#panelMap, #paneMenu, #paneContent, #itemSocial {
+	display: none;
+}
+
+#panelApp {
+	background: radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%);
+}
+
+/* Readjust clock pane */
+#paneClock {
+	top: auto; right: auto; bottom: auto; left: auto;
+	border: none;
+	box-shadow: none
+}
+#paneClockWall, #paneClockBackground {
+	opacity: 0;
+}
+
+/* Readjust clock elements */
+#itemLanguage {
+	position: fixed;
+	top: 10px; right: 10px; bottom: auto; left: auto;
+}
+#itemLanguage span {
+	opacity: 0.7;
+}
+#itemTimeLocal {
+	width: 220px;
+	right: auto; bottom: 160px; left: 70px;
+	text-align: center;
+	color: #eee;
+	opacity: 0.5;
+}
+#itemTimeDaytime {
+	width: 220px;
+	top: 160px; bottom: auto; left: 70px;
+	text-align: center;
+	color: #eee;
+	opacity: 0.5
+}

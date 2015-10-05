@@ -138,13 +138,13 @@ img {
 	width: 32px; height: 32px;
 	opacity: 0.4;
 }
-#cslButtonClose {
+#cslClose {
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	background: url("img/ui/close.png");
 }
-#cslButtonSelect {
+#cslSelect {
 	position: absolute;
 	top: 0;
 	left: 32px;
@@ -352,8 +352,6 @@ html, body,
 .ctxMenu li {
 	margin-bottom: 6px;
 	padding: 2px 4px 2px 6px;
-	list-style: url("img/ui/bullet.png") inside;
-	vertical-align: top;
 }
 .ctxMenu li:last-child {
 	margin-bottom: 0;
@@ -628,6 +626,10 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	margin-bottom: 4px;
 }
 #mapOptionsPopup label img, #wvwOptionsPopup label img {
+	width: 24px; height: 24px;
+	margin-right: 4px;
+}
+#mapGPSPopup label img {
 	width: 24px; height: 24px;
 	margin-right: 4px;
 }
@@ -1918,12 +1920,12 @@ gold {
 	width: 16px; height: 16px;
 	background-image: url("img/ui/sixteen.png");
 }
-.s16_coincopper { background-position: 0 0; }
-.s16_coingold { background-position: -16px 0; }
-.s16_coinsilver { background-position: -32px 0; }
-.s16_dragonite { background-position: -48px 0; }
-.s16_ecto { background-position: -64px 0; }
-.s16_facebook { background-position: -80px 0; }
+.s16_bullet { background-position: 0 0; }
+.s16_coincopper { background-position: -16px 0; }
+.s16_coingold { background-position: -32px 0; }
+.s16_coinsilver { background-position: -48px 0; }
+.s16_dragonite { background-position: -64px 0; }
+.s16_ecto { background-position: -80px 0; }
 .s16_gem { background-position: -96px 0; }
 .s16_info { background-position: -112px 0; }
 .s16_loot { background-position: -128px 0; }
@@ -1938,13 +1940,13 @@ coppercoin, silvercoin, goldcoin {
 	background-image: url("img/ui/sixteen.png");
 }
 coppercoin {
-	background-position: 0 0;
+	background-position: -16px 0;
 }
 silvercoin {
 	background-position: -32px 0;
 }
 goldcoin {
-	background-position: -16px 0;
+	background-position: -48px 0;
 }
 
 .rarity0, input[type="text"].rarity0 { color: #aaaaaa; /* junk gray */ }

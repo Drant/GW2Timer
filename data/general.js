@@ -552,7 +552,7 @@ var GW2T_DAILY_CALENDAR = {
 },
 "3": {
 	pve: ["Forager Jungle", "Vista Jungle", "Harathi", "FE"],
-	pvp: ["Rank", "Reward", "War Engi", "Ranger Engi"],
+	pvp: ["Rank", "Reward", "War Eng", "Ranger Eng"],
 	wvw: ["Ruins", "Kills", "Keep", "Defender"]
 },
 "4": {
@@ -562,12 +562,12 @@ var GW2T_DAILY_CALENDAR = {
 },
 "5": {
 	pve: ["Lumberer Wastes", "Forger", "Straits", "Maw"],
-	pvp: ["Rank", "Reward", "Engi Thief", "Ranger Engi"],
+	pvp: ["Rank", "Reward", "Eng Thief", "Ranger Eng"],
 	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "6": {
 	pve: ["Miner Shiverpeaks", "Fractal", "Snowden", "Fractal 1-10"],
-	pvp: ["Rank", "Reward", "Ranger Thief", "Engi Ele"],
+	pvp: ["Rank", "Reward", "Ranger Thief", "Eng Ele"],
 	wvw: ["Caravan", "Kills", "Camp", "Tower"]
 },
 "7": {
@@ -577,12 +577,12 @@ var GW2T_DAILY_CALENDAR = {
 },
 "8": {
 	pve: ["Lumberer Ascalon", "Forger", "Fields", "Fractal 21-30"],
-	pvp: ["Defender", "Capture", "Ranger Mes", "Guard Engi"],
+	pvp: ["Defender", "Capture", "Ranger Mes", "Guard Eng"],
 	wvw: ["Land", "Spender", "Camp", "Keep"]
 },
 "9": {
 	pve: ["Miner Jungle", "Activity", "Timberline", "Fractal 1-10"],
-	pvp: ["Rank", "Defender", "War Engi", "Ranger Necro"],
+	pvp: ["Rank", "Defender", "War Eng", "Ranger Necro"],
 	wvw: ["Ruins", "Guard", "Keep", "Camp"]
 },
 "10": {
@@ -592,7 +592,7 @@ var GW2T_DAILY_CALENDAR = {
 },
 "11": {
 	pve: ["Miner Jungle", "Fractal", "Frostgorge", "Fractal 1-10"],
-	pvp: ["Capture", "Reward", "Engi Thief", "Ele Necro"],
+	pvp: ["Capture", "Reward", "Eng Thief", "Ele Necro"],
 	wvw: ["Land", "Caravan", "Camp", "Tower"]
 },
 "12": {
@@ -602,12 +602,12 @@ var GW2T_DAILY_CALENDAR = {
 },
 "13": {
 	pve: ["Lumberer Kryta", "Vista Kryta", "Snowden", "Fractal 21-30"],
-	pvp: ["Rank", "Defender", "Engi Mes", "Guard Ele"],
+	pvp: ["Rank", "Defender", "Eng Mes", "Guard Ele"],
 	wvw: ["Land", "Spender", "Camp", "Defender"]
 },
 "14": {
 	pve: ["Lumberer Ascalon", "Fractal", "Fields", "Fractal 1-10"],
-	pvp: ["Reward", "Kills", "War Ele", "Engi Necro"],
+	pvp: ["Reward", "Kills", "War Ele", "Eng Necro"],
 	wvw: ["Kills", "Land", "Keep", "Camp"]
 },
 "15": {
@@ -632,12 +632,12 @@ var GW2T_DAILY_CALENDAR = {
 },
 "19": {
 	pve: ["Lumberer Ascalon", "Activity", "Kessex", "Golem"],
-	pvp: ["Reward", "Rank", "War Guard", "Ranger Engi"],
+	pvp: ["Reward", "Rank", "War Guard", "Ranger Eng"],
 	wvw: ["Kills", "Ruins", "Camp", "Defender"]
 },
 "20": {
 	pve: ["Miner Ascalon", "Vista Maguuma", "Frostgorge", "SB"],
-	pvp: ["Rank", "Defender", "Ranger Thief", "Engi Ele"],
+	pvp: ["Rank", "Defender", "Ranger Thief", "Eng Ele"],
 	wvw: ["Guard", "Caravan", "Keep", "Tower"]
 },
 "21": {
@@ -647,12 +647,12 @@ var GW2T_DAILY_CALENDAR = {
 },
 "22": {
 	pve: ["Miner Shiverpeaks", "Vista Wastes", "Snowden", "Shatterer"],
-	pvp: ["Reward", "Capture", "Ranger Mes", "Guard Engi"],
+	pvp: ["Reward", "Capture", "Ranger Mes", "Guard Eng"],
 	wvw: ["Guard", "Caravan", "Keep", "Camp"]
 },
 "23": {
 	pve: ["Forager Ascalon", "Forger", "Kessex", "SB"],
-	pvp: ["Kills", "Rank", "War Engi", "Ranger Necro"],
+	pvp: ["Kills", "Rank", "War Eng", "Ranger Necro"],
 	wvw: ["Land", "Creature", "Tower", "Defender"]
 },
 "24": {
@@ -662,7 +662,7 @@ var GW2T_DAILY_CALENDAR = {
 },
 "25": {
 	pve: ["Lumberer Wastes", "Fractal", "Harathi", "Wurm"],
-	pvp: ["Reward", "Capture", "Engi Thief", "Ele Necro"],
+	pvp: ["Reward", "Capture", "Eng Thief", "Ele Necro"],
 	wvw: ["Guard", "Ruins", "Keep", "Camp"]
 },
 "26": {
@@ -672,12 +672,12 @@ var GW2T_DAILY_CALENDAR = {
 },
 "27": {
 	pve: ["Miner Ascalon", "Vista Shiverpeaks", "Harathi", "Fractal 1-10"],
-	pvp: ["Defender", "Rank", "Engi Mes", "Guard Ele"],
+	pvp: ["Defender", "Rank", "Eng Mes", "Guard Ele"],
 	wvw: ["Caravan", "Creature", "Defender", "Camp"]
 },
 "28": {
 	pve: ["Lumberer Kryta", "Forger", "Queensdale", "Golem"],
-	pvp: ["Capture", "Rank", "War Ele", "Engi Necro"],
+	pvp: ["Capture", "Rank", "War Ele", "Eng Necro"],
 	wvw: ["Spender", "Caravan", "Camp", "Keep"]
 },
 "29": {
@@ -724,13 +724,13 @@ Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic
  */
 Countdowns: [
 {
-	name_en: "Final Beta Weekend",
-	name_de: "Letzte Beta Weekend",
-	name_es: "Último beta de fin de semana",
-	name_fr: "Dernier week-end de bêta",
+	name_en: "Final Beta Weekend + Raids",
+	name_de: "Letzte Beta Weekend + Schlachtzüge",
+	name_es: "Último beta + Incursiones",
+	name_fr: "Dernier bêta + Raids",
 	news: "the-final-beta-weekend-event-begins-october-2",
 	Start: new Date("2015-10-02T19:00:00Z"),
-	Finish: new Date("2015-10-05T07:00:00Z")
+	Finish: new Date("2015-10-05T19:00:00Z")
 },
 {
 	name_en: "New Guild Mission Reset Time",
@@ -738,8 +738,8 @@ Countdowns: [
 	name_es: "Nuevo misión de clan restablecer",
 	name_fr: "Nouveau mission de guilde réinitialiser",
 	url: "https://forum-en.guildwars2.com/forum/game/gw2/Guild-Mission-Reset-Time-Changed/",
-	Start: new Date("2015-10-05T07:30:00Z"),
-	Finish: new Date("2015-10-05T08:00:00Z")
+	Start: new Date("2015-10-12T07:30:00Z"),
+	Finish: new Date("2015-10-12T08:00:00Z")
 },
 {
 	name_en: "Heart of Thorns Release",
