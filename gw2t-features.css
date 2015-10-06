@@ -683,6 +683,15 @@ input[type="text"].trdHovered {
 	border: 1px solid red;
 }
 
+input[type="text"].rarity0 { color: #aaaaaa; /* junk gray */ }
+input[type="text"].rarity1 { color: #ffffff; /* basic white */ }
+input[type="text"].rarity2 { color: #5599ff; /* fine blue */ }
+input[type="text"].rarity3 { color: #33cc11; /* masterwork green */ }
+input[type="text"].rarity4 { color: #ffdd22; /* rare yellow */ }
+input[type="text"].rarity5 { color: #ffaa00; /* exotic orange */ }
+input[type="text"].rarity6 { color: #ff4488; /* ascended magenta */ }
+input[type="text"].rarity7 { color: #9933ff; /* legendary violet */ }
+
 
 /* =============================================================================
  *  Personal Checklist

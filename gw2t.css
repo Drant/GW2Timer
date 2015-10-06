@@ -199,7 +199,7 @@ div#qTip {
 	box-shadow: 0px 0px 2px #555;
 	opacity: 0.9;
 }
-div#qTip dfn { /* Highlight color for important text in tooltip */
+div#qTip dfn { /* Highlight color for emphasis text in tooltip */
 	background: none;
 	color: #ffcc77;
 }
@@ -826,10 +826,6 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	border: 1px solid black;
 	box-shadow: 0px 0px 10px black;
 }
-#paneClockIcons img:hover {
-	border: 1px solid red !important;
-	box-shadow: 0px 0px 10px red !important;
-}
 #paneClockIcons img.clkIconCurrent {
 	border: 1px solid lime;
 	box-shadow: 0px 0px 10px lime;
@@ -837,6 +833,10 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #paneClockIcons img.clkIconNext {
 	border: 1px solid green;
 	box-shadow: 0px 0px 10px green;
+}
+#paneClockIcons img:hover {
+	border: 1px solid red;
+	box-shadow: 0px 0px 10px red;
 }
 #clkIconSD0 {
 	top: 4px; left: 148px;
@@ -1949,14 +1949,14 @@ goldcoin {
 	background-position: -32px 0;
 }
 
-.rarity0 { color: #aaaaaa !important; /* junk gray */ }
-.rarity1 { color: #ffffff !important; /* basic white */ }
-.rarity2 { color: #5599ff !important; /* fine blue */ }
-.rarity3 { color: #33cc11 !important; /* masterwork green */ }
-.rarity4 { color: #ffdd22 !important; /* rare yellow */ }
-.rarity5 { color: #ffaa00 !important; /* exotic orange */ }
-.rarity6 { color: #ff4488 !important; /* ascended magenta */ }
-.rarity7 { color: #9933ff !important; /* legendary violet */ }
+.rarity0 { color: #aaaaaa; /* junk gray */ }
+.rarity1 { color: #ffffff; /* basic white */ }
+.rarity2 { color: #5599ff; /* fine blue */ }
+.rarity3 { color: #33cc11; /* masterwork green */ }
+.rarity4 { color: #ffdd22; /* rare yellow */ }
+.rarity5 { color: #ffaa00; /* exotic orange */ }
+.rarity6 { color: #ff4488; /* ascended magenta */ }
+.rarity7 { color: #9933ff; /* legendary violet */ }
 
 /* =============================================================================
  *  @@Palette color derived from GW2 user interface.

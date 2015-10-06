@@ -774,8 +774,8 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	Start: new Date("2015-09-28T16:00:00Z"),
-	Finish: new Date("2015-10-06T16:00:00Z"),
+	Start: new Date("2015-10-06T16:00:00Z"),
+	Finish: new Date("2015-10-13T16:00:00Z"),
 	range: "25-1000",
 	Items: [
 	/*{
@@ -788,34 +788,58 @@ Sale: {
 		isExample: true
 	},*/
 	{
-		url: "http://wiki.guildwars2.com/wiki/Frost_Wasp_Logging_Tool",
-		img: "https://render.guildwars2.com/file/0227CB6C96D2AC7FC20B6D465478E9BBF3ED09D9/771066.png",
+		url: "http://wiki.guildwars2.com/wiki/Bloody_Prince's_Outfit",
+		img: "https://render.guildwars2.com/file/0297679A65D858DFC61B9C02ECC4964FDEC7AA1A/648158.png",
 		quantity: 1,
-		pricenew: 1000,
+		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Fused_Molten_Logging_Axe",
-		img: "https://render.guildwars2.com/file/E31818DD403BE127B29E214C7956BFA301F680DA/866829.png",
+		url: "http://wiki.guildwars2.com/wiki/Mad_King's_Outfit",
+		img: "https://render.guildwars2.com/file/041DC1695CF0DD1A4438D45ACB036C510E1AFFB4/499488.png",
 		quantity: 1,
-		pricenew: 1000,
+		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Fused_Molten_Sickle",
-		img: "https://render.guildwars2.com/file/51782971EFC6B80F4B5BD0FB080D0CFFA37B1576/866830.png",
+		url: "http://wiki.guildwars2.com/wiki/Witch's_Outfit",
+		img: "https://render.guildwars2.com/file/F90DEF6BD1FA9EE60DC93BA31B0D367EBA60EC7A/499499.png",
 		quantity: 1,
-		pricenew: 1000,
+		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Molten_Alliance_Mining_Pick",
-		img: "https://render.guildwars2.com/file/ACF90CA6BCD9CEEFD4D0DCEF2AA87C97B50BDC56/561815.png",
+		url: "http://wiki.guildwars2.com/wiki/Raiment_of_the_Lich",
+		img: "https://render.guildwars2.com/file/5A4C04B84D5C7BA4CB7E7C0804D83FC0EE38BA1B/882252.png",
 		quantity: 1,
-		pricenew: 1000,
+		pricenew: 700,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Miniature_Spooky_Trio",
+		img: "https://render.guildwars2.com/file/37DEE7E6294BD4D9345001C750BB37991A1931B8/499442.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Phantom's_Hood",
+		img: "https://render.guildwars2.com/file/39961BC2BC1A3090BA9BE1FD54473B2F034BB10F/499492.png",
+		quantity: 1,
+		pricenew: 200,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Devil_Horns",
+		img: "https://render.guildwars2.com/file/926298A2090B76A42DBBDBA36E46707B016AF39B/499491.png",
+		quantity: 1,
+		pricenew: 200,
 		priceold: 0,
 		col: 0
 	},
@@ -868,10 +892,34 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Raiment_of_the_Lich",
-		img: "https://render.guildwars2.com/file/5A4C04B84D5C7BA4CB7E7C0804D83FC0EE38BA1B/882252.png",
+		url: "http://wiki.guildwars2.com/wiki/Frost_Wasp_Logging_Tool",
+		img: "https://render.guildwars2.com/file/0227CB6C96D2AC7FC20B6D465478E9BBF3ED09D9/771066.png",
 		quantity: 1,
-		pricenew: 700,
+		pricenew: 1000,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Fused_Molten_Logging_Axe",
+		img: "https://render.guildwars2.com/file/E31818DD403BE127B29E214C7956BFA301F680DA/866829.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Fused_Molten_Sickle",
+		img: "https://render.guildwars2.com/file/51782971EFC6B80F4B5BD0FB080D0CFFA37B1576/866830.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Molten_Alliance_Mining_Pick",
+		img: "https://render.guildwars2.com/file/ACF90CA6BCD9CEEFD4D0DCEF2AA87C97B50BDC56/561815.png",
+		quantity: 1,
+		pricenew: 1000,
 		priceold: 0,
 		col: 1
 	},

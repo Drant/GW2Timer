@@ -18,6 +18,16 @@
 	left: -4px; top: -4px;
 }
 
+#itemDashboard {
+	line-height: 120%;
+	font-size: 12px;
+}
+#dsbCountdown time {
+	font-size: 14px;
+}
+#dsbClose {
+	left: 0px;
+}
 #mapGPS, #wvwGPS {
 	display: inline-block;
 }

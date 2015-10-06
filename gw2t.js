@@ -3838,7 +3838,8 @@ E = {
 			// Bind name search box behavior
 			$(name).on("input", $.throttle(E.cSEARCH_LIMIT, function()
 			{
-				var query = U.escapeHTML($(this).val());
+				var query = $(this).val();
+				var queryescaped = U.escapeHTML($(this).val());
 				var entry = $(this).parents(".trdEntry");
 				var resultslist;
 				// If keywords are below this length then ignore
@@ -3860,7 +3861,7 @@ E = {
 						insertSearchResult(pDataInner, query, resultslist);
 					}).fail(function()
 					{
-						I.write("No results found for Item ID: " + query + ".");
+						I.write("No results found for Item ID: " + queryescaped + ".");
 						entry.find(".trdResultsContainer").remove();
 					});
 					return;
@@ -3938,7 +3939,7 @@ E = {
 					}
 					else
 					{
-						I.write("No results found for &quot;" + query + "&quot;.");
+						I.write("No results found for &quot;" + queryescaped + "&quot;.");
 					}
 				}}).fail(function()
 				{
@@ -7278,7 +7279,6 @@ M = {
 			var coord = that.convertLCtoGC(pEvent.latlng);
 			$(htmlidprefix + "CoordinatesCopy")
 				.val(that.formatCoord(coord)).select();
-			$("#ctxMap").hide();
 		});
 
 		/*
@@ -7932,7 +7932,7 @@ M = {
 		}
 		else
 		{
-			I.write("Path unavailable.");
+			I.write("Path unavailable for this.");
 		}
 	},
 	
@@ -11972,6 +11972,7 @@ T = {
 				+ D.getPhrase("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceNew'>" + T.DashboardSale.range + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img src='img/ui/toggle.png' />"
+				+ "⇓@ " + T.DashboardSale.Finish.toLocaleString()
 			+"</div><div id='dsbSaleTable'></div>");
 			$("#dsbSaleHeader").click(function()
 			{
@@ -13507,11 +13508,20 @@ I = {
 		// Bind special popup elements that can be removed if user clicks anywhere not on it
 		$(document).mouseup(function(pEvent)
 		{
-			var elm = $(".jsRemovable");
-			if ( ! elm.is(pEvent.target) && elm.has(pEvent.target).length === 0)
+			$(".jsRemovable, .jsHidable").each(function()
 			{
-				elm.remove();
-			}
+				if ( ! $(this).is(pEvent.target) && $(this).has(pEvent.target).length === 0)
+				{
+					if ($(this).hasClass("jsHidable"))
+					{
+						$(this).hide();
+					}
+					if ($(this).hasClass("jsRemovable"))
+					{
+						$(this).remove();
+					}
+				}
+			});
 		});
 		
 		// The menu bar overlaps the language popup, so have to "raise" the clock pane
@@ -13871,7 +13881,7 @@ I = {
 	 */
 	styleContextMenu: function(pMenu)
 	{
-		$(pMenu).find("li").prepend("<ins class='s16 s16_bullet'></ins> ");
+		$(pMenu).addClass("jsHidable").find("li").prepend("<ins class='s16 s16_bullet'></ins> ");
 	},
 	
 	/*
