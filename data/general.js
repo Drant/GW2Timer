@@ -566,9 +566,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "6": {
-	pve: ["Miner Shiverpeaks", "Fractal", "Snowden", "Fractal 1-10"],
-	pvp: ["Rank", "Reward", "Ranger Thief", "Eng Ele"],
-	wvw: ["Caravan", "Kills", "Camp", "Tower"]
+	pve: ["Miner Orr", "Vista Shiverpeaks", "Frostgorge", "Megades"],
+	pvp: ["Kills", "Defender", "War Guard", "Ranger Eng"],
+	wvw: ["Guard", "Caravan", "Defender", "Camp"]
 },
 "7": {
 	pve: ["Forager Kryta", "Vista Orr", "Wayfarer", "Fractal 1-10"],
@@ -724,15 +724,6 @@ Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic
  */
 Countdowns: [
 {
-	name_en: "Final Beta Weekend + Raids",
-	name_de: "Letzte Beta Weekend + Schlachtzüge",
-	name_es: "Último beta + Incursiones",
-	name_fr: "Dernier bêta + Raids",
-	news: "the-final-beta-weekend-event-begins-october-2",
-	Start: new Date("2015-10-02T19:00:00Z"),
-	Finish: new Date("2015-10-05T19:00:00Z")
-},
-{
 	name_en: "New Guild Mission Reset Time",
 	name_de: "Neue Gilden-Mission Zurücksetzen Zeit",
 	name_es: "Nuevo misión de clan restablecer",
@@ -784,7 +775,7 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Start: new Date("2015-09-28T16:00:00Z"),
-	Finish: new Date("2015-10-05T16:00:00Z"),
+	Finish: new Date("2015-10-06T16:00:00Z"),
 	range: "25-1000",
 	Items: [
 	/*{

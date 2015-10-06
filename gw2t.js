@@ -75,7 +75,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 151004, isMajor: true},
+		programVersion: {key: "int_utlProgramVersion", value: 151004},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
 	},
 	
@@ -87,7 +87,7 @@ O = {
 		var currentversion = O.Utilities.programVersion.value;
 		var usersversion = parseInt(localStorage[O.Utilities.programVersion.key]);
 		// If is a major version, not first visit, and version is mismatch, then notify new version
-		if (O.Utilities.programVersion.isMajor && isFinite(usersversion) && usersversion !== currentversion)
+		if (isFinite(usersversion) && usersversion !== currentversion)
 		{
 			var wait = (I.ModeCurrent === I.ModeEnum.Overlay) ? 15 : 30;
 			I.clear();
@@ -7250,6 +7250,12 @@ M = {
 				that.movePin(this);
 			});
 		});
+		// Right clicking on the character pin hides it
+		this.Pin.Character.on("contextmenu", function()
+		{
+			that.movePin(this);
+			that.movePin(that.Pin.Camera);
+		});
 		// Hide the pins, they will be shown when they are moved
 		this.toggleLayer(this.Layer.Pin, false);
 		
@@ -14145,7 +14151,7 @@ I = {
 	
 	/*
 	 * Loads a stylesheet file that was named with a prefix.
-	 * @param string pName filename must be in lowercase and has the prefix.
+	 * @param string pName filename without extension.
 	 */
 	loadStylesheet: function(pName)
 	{
