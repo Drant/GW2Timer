@@ -66,7 +66,7 @@
 					<li id="ctxMapCenter">Center map</li>
 					<li id="ctxMapToggleCompletion">Toggle world completion</li>
 					<li id="ctxMapDrawCompletion">Draw completion route</li>
-					<li id="ctxMapClearPins">Clear all pins</li>
+					<li id="ctxMapClearPins">Clear pins</li>
 				</ul>
 			</div>
 			<article id="paneHUDMap">
@@ -90,10 +90,10 @@
 					<u><a class="jsTranslate" title="<dfn>Switch to Tile Mode (timers only)</dfn><br />gw2timer.com/t<br /><div class='mapLoc'><img src='http://i.imgur.com/SDseVJE.png' /></div>" href="./?mode=Tile">tile</a></u>
 				</div>
 				<!--<div id="mapSwitch" class="mapHUDContainer">
-					<img id="mapSwitchButton" class="mapHUDButton" data-title="click to wvw" src="img/map/wvw.png" alt="display" />
+					<img id="mapSwitchButton" class="mapHUDButton" title="<dfn> Click to WVW </dfn>" src="img/map/wvw.png" alt="display" />
 				</div>-->
 				<div id="mapGPS" class="mapHUDContainer">
-					<img id="mapGPSButton" class="mapHUDButton" data-title="click to center character" src="img/map/gps.png" alt="GPS" />
+					<img id="mapGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
 					<div id="mapGPSPopup" class="mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacter" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the map character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
@@ -101,7 +101,7 @@
 					</div>
 				</div>
 				<div id="mapOptions" class="mapHUDContainer">
-					<img id="mapDisplayButton" class="mapHUDButton" data-title="click to expand map" src="img/map/display.png" alt="display" />
+					<img id="mapDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
 					<div id="mapOptionsPopup" class="mapHUDPopup cntComposition">
 						<div id="mapOptionsDisplay">
 							<label title="Show/Hide all icons listed below (except events).<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
@@ -128,7 +128,7 @@
 					</div>
 				</div>
 				<div id="mapZones" class="mapHUDContainer">
-					<img id="mapCompassButton" class="mapHUDButton" data-title="click to center map" src="img/map/compass.png" alt="compass" />
+					<img id="mapCompassButton" class="mapHUDButton" title="<dfn> Click to Center Map </dfn>" src="img/map/compass.png" alt="compass" />
 					<div id="mapZonesPopup" class="mapHUDPopup cntComposition">
 						<div id="mapZoneList" class="mapZoneLinks">
 							<div>
@@ -211,17 +211,17 @@
 			</div>
 			<div id="itemWvWLinksNorth" class="itemMapPeripheral">
 				<div id="wvwSwitch" class="mapHUDContainer">
-					<img id="wvwSwitchButton" class="mapHUDButton" data-title="click to map" src="img/ui/pages/map.png" alt="display" />
+					<img id="wvwSwitchButton" class="mapHUDButton" title="<dfn> Click to Map </dfn>" src="img/ui/pages/map.png" alt="display" />
 				</div>
 				<div id="wvwGPS" class="mapHUDContainer">
-					<img id="wvwGPSButton" class="mapHUDButton" data-title="click to center character" src="img/map/gps.png" alt="GPS" />
+					<img id="wvwGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
 					<div id="wvwGPSPopup" class="mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacterWvW" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the map character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacterWvW" type="checkbox" />Display Character Pin</label>
 					</div>
 				</div>
 				<div id="wvwOptions" class="mapHUDContainer">
-					<img id="wvwDisplayButton" class="mapHUDButton" data-title="click to expand map" src="img/map/display.png" alt="display" />
+					<img id="wvwDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
 					<div id="wvwOptionsPopup" class="mapHUDPopup cntComposition">
 						<div id="wvwOptionsDisplay">
 							<label title="Show/Hide all icons listed below (except events).<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
@@ -236,7 +236,7 @@
 					</div>
 				</div>
 				<div id="wvwZones" class="mapHUDContainer">
-					<img id="wvwCompassButton" class="mapHUDButton" data-title="click to center map" src="img/map/compass.png" alt="compass" />
+					<img id="wvwCompassButton" class="mapHUDButton" title="<dfn> Click to Center Map </dfn>" src="img/map/compass.png" alt="compass" />
 					
 				</div>
 			</div>
@@ -396,10 +396,10 @@
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
 		<nav id="paneMenu" class="paneApp">
-			<kbd id="menuChains" title="<dfn>Chains:</dfn> Timers, Events, Schedule"><ins></ins><var>Timers</var></kbd>
-			<kbd id="menuMap" title="<dfn>Map:</dfn> Dailies, Nodes, JPs, Missions, TP, Checklists"><ins></ins><var>Tools</var></kbd>
-			<kbd id="menuHelp" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"><ins></ins><var>Help</var></kbd>
-			<kbd id="menuOptions" title="<dfn>Options:</dfn> Display, Format, Alarm"><ins></ins><var>Options</var></kbd>
+			<kbd id="menuChains" title="<dfn>Chains:</dfn> Timers, Events, Schedule"><ins></ins><var class="jsTranslate">Timers</var></kbd>
+			<kbd id="menuMap" title="<dfn>Map:</dfn> Dailies, Nodes, JPs, Missions, TP, Checklists"><ins></ins><var class="jsTranslate">Tools</var></kbd>
+			<kbd id="menuHelp" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"><ins></ins><var class="jsTranslate">Help</var></kbd>
+			<kbd id="menuOptions" title="<dfn>Options:</dfn> Display, Format, Alarm"><ins></ins><var class="jsTranslate">Options</var></kbd>
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->
@@ -420,10 +420,10 @@
 						</div>
 						<div id="chnOptionsRight">
 							<div id="optChainsToggle"><button id="optChainsExpand">+</button><button id="optChainsCollapse">−</button></div>
-							<fieldset name="int_setAlarm"><legend id="optAlarmLegend">Alarm Mode</legend>
-								<label title="Turn off the alarm. Go to Options page, Alarm section for more info."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /></label>
-								<label title="Alert you when an unchecked chain starts. You can checkmark a chain by clicking its boss icon (left side of chain name)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /></label>
-								<label title="Alert you X minutes before a subscribed chain starts. You can subscribe to a chain by clicking its time (right side of chain name). Works with Living Story chains."><input id="optAlarmSubscription" type="radio" name="int_setAlarm" /></label>
+							<fieldset name="int_setAlarm"><legend id="optAlarmLegend" class="jsTranslate">Alarm Mode</legend>
+								<label title="Turn off the alarm. Go to Options page, Alarm section for more info."><input id="opt_int_setAlarm" type="radio" name="int_setAlarm" /><var class="jsTranslate">Off</var></label>
+								<label title="Alert you when an unchecked chain starts. You can checkmark a chain by clicking its boss icon (left side of chain name)."><input id="optAlarmChecklist" type="radio" name="int_setAlarm" /><var class="jsTranslate">Checklist</var></label>
+								<label title="Alert you X minutes before a subscribed chain starts. You can subscribe to a chain by clicking its time (right side of chain name). Works with Living Story chains."><input id="optAlarmSubscription" type="radio" name="int_setAlarm" /><var class="jsTranslate">Subscription</var></label>
 							</fieldset>
 							<input id="opt_int_setVolume" type="range" min="0" max="100" step="5" title="Set volume." />
 							<button id="optMute" class="trdButton" title="Stop any current voices."><img data-src="img/ui/mute.png" alt="Mute" /></button>
@@ -432,7 +432,7 @@
 				</div>
 				<header id="headerChains_Scheduled">
 					<ins class="chn_scheduled"></ins>
-					<span class="jsTranslate">Scheduled Bosses</span>
+					<span class="jsTranslateCompound">Scheduled Bosses</span>
 				</header>
 				<section id="sectionChains_Scheduled">
 				</section>
@@ -442,25 +442,25 @@
 				</div>
 				<header id="headerChains_Drytop">
 					<ins class="chn_drytop"></ins>
-					<span class="jsTranslate">Dry Top</span>
+					<span class="jsTranslateCompound">Dry Top</span>
 					<kbd></kbd>
 				</header>
 				<section id="sectionChains_Drytop"></section>
 				<header id="headerChains_Legacy">
 					<ins class="chn_legacy"></ins>
-					<span class="jsTranslate">Legacy Bosses</span>
+					<span class="jsTranslateCompound">Legacy Bosses</span>
 					<kbd></kbd>
 				</header>
 				<section id="sectionChains_Legacy"></section>
 				<header id="headerChains_Temple">
 					<ins class="chn_temple"></ins>
-					<span class="jsTranslate">Orr Temples</span>
+					<span class="jsTranslateCompound">Orr Temples</span>
 					<kbd></kbd>
 				</header>
 				<section id="sectionChains_Temple"></section>
 				<header id="headerChains_Timetable">
 					<ins class="chn_timetable"></ins>
-					<span class="jsTranslate">Full Timetable</span>
+					<span class="jsTranslateCompound">Full Timetable</span>
 					<kbd></kbd>
 				</header>
 				<section id="sectionChains_Timetable"></section>
@@ -470,7 +470,7 @@
 			<article id="plateHelp"></article>
 			<article id="plateOptions">
 				<div class="cntComposition">
-					<header class="cntHeader">Options</header>
+					<header class="cntHeader jsTranslate">Options</header>
 					<br />
 					<h2>Timer</h2>
 					<div class="optFieldsets">

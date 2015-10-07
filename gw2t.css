@@ -401,7 +401,7 @@ html, body,
 #itemDashboard a {
 	color: #bbcc77;
 }
-#itemDashboard a:hover, #dsbSaleHeader:hover {
+#itemDashboard a:hover, #dsbSaleHeader:hover u {
 	color: #44dd44;
 }
 #dsbAnnouncement img:hover {

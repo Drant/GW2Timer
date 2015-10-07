@@ -1221,6 +1221,7 @@ U = {
 	 */
 	CaseEnum:
 	{
+		Original: -1,
 		None: 0,
 		Lower: 1,
 		Sentence: 2,
@@ -1579,6 +1580,7 @@ U = {
 			}
 			case U.CaseEnum.All: return pString.toUpperCase();
 		}
+		return pString;
 	},
 	
 	/*
@@ -2585,7 +2587,7 @@ X = {
 					if (O.Options.int_setAlarm !== O.IntEnum.Alarm.Subscription)
 					{
 						I.write("Please set <img src='img/ui/speaker.png' /> to &quot;"
-							+ D.getSentence("subscription") + "&quot; to enable alarm.");
+							+ D.getWordCapital("subscription") + "&quot; to enable alarm.");
 					}
 				}
 			});
@@ -3530,7 +3532,7 @@ E = {
 				{
 					nameelm.addClass("trdMatched");
 					buylowelm.addClass("trdMatched");
-					D.speak(D.getString("buy low") + " " + name);
+					D.speak(D.getPhraseTitle("buy low") + " " + name);
 				}
 				else
 				{
@@ -3541,7 +3543,7 @@ E = {
 				{
 					nameelm.addClass("trdMatched");
 					buyhighelm.addClass("trdMatched");
-					D.speak(D.getString("buy high") + " " + name);
+					D.speak(D.getPhraseTitle("buy high") + " " + name);
 				}
 				else
 				{
@@ -3552,7 +3554,7 @@ E = {
 				{
 					nameelm.addClass("trdMatched");
 					selllowelm.addClass("trdMatched");
-					D.speak(D.getString("sell low") + " " + name);
+					D.speak(D.getPhraseTitle("sell low") + " " + name);
 				}
 				else
 				{
@@ -3563,7 +3565,7 @@ E = {
 				{
 					nameelm.addClass("trdMatched");
 					sellhighelm.addClass("trdMatched");
-					D.speak(D.getString("sell high") + " " + name);
+					D.speak(D.getPhraseTitle("sell high") + " " + name);
 				}
 				else
 				{
@@ -3676,13 +3678,13 @@ E = {
 								+ "<input class='trdNotifyBuyHigh' type='text' />"
 								+ "<input class='trdCurrentBuy trdOutput' type='text' tabindex='-1' />"
 								+ "<input class='trdNotifyBuyLow' type='text' />"
-								+ "<label title='<dfn>" + D.getSentence("overwrite") + "</dfn>: Replace your buy and sell prices with the current prices when refreshing.'>"
+								+ "<label title='<dfn>" + D.getWordCapital("overwrite") + "</dfn>: Replace your buy and sell prices with the current prices when refreshing.'>"
 									+ "<input class='trdOverwrite' type='checkbox' tabindex='-1' />&zwnj;</label><br />"
 							+ "<samp>!~$</samp>"
 								+ "<input class='trdNotifySellHigh' type='text' />"
 								+ "<input class='trdCurrentSell trdOutput' type='text' tabindex='-1' />"
 								+ "<input class='trdNotifySellLow' type='text' />"
-								+ "<label title='<dfn>" + D.getSentence("notify") + "</dfn>: Turn on sound notification for this item.'>"
+								+ "<label title='<dfn>" + D.getWordCapital("notify") + "</dfn>: Turn on sound notification for this item.'>"
 									+"<input class='trdNotify' type='checkbox' tabindex='-1' />&zwnj;</label>"
 						+ "<br /><br /></div>"
 					+ "</div>"
@@ -3979,7 +3981,7 @@ E = {
 			{
 				pInfo = ": " + pInfo;
 			}
-			$(entry + " .trd" + pBoxName).attr("title", "<dfn>" + D.getString(pWord) + "</dfn>" + pInfo);
+			$(entry + " .trd" + pBoxName).attr("title", "<dfn>" + D.getPhraseTitle(pWord) + "</dfn>" + pInfo);
 		};
 		tip("Name", "name");
 		tip("Buy", "your buy");
@@ -4293,7 +4295,7 @@ E = {
 				else if (currentgem >= gemhigh && gemhigh !== 0)
 				{
 					gemhighelm.addClass("trdMatched");
-					D.speak(D.getString("buy gem high"));
+					D.speak(D.getPhraseTitle("buy gem high"));
 				}
 				else
 				{
@@ -4343,7 +4345,7 @@ E = {
 				else if (currentcoin >= coinhigh && coinhigh !== 0)
 				{
 					coinhighelm.addClass("trdMatched");
-					D.speak(D.getString("buy coin high"));
+					D.speak(D.getPhraseTitle("buy coin high"));
 				}
 				else
 				{
@@ -4382,7 +4384,7 @@ E = {
 		
 		var tip = function(pBoxName, pPhrase)
 		{
-			$("#trdExchange .trd" + pBoxName).attr("title", "<dfn>" + D.getString(pPhrase) + "</dfn>");
+			$("#trdExchange .trd" + pBoxName).attr("title", "<dfn>" + D.getPhraseTitle(pPhrase) + "</dfn>");
 		};
 		tip("CoinTo", "your coin");
 		tip("GemTo", "your gem");
@@ -4594,10 +4596,7 @@ E = {
  * ========================================================================== */
 D = {
 	
-	/*
-	 * Dictionaries
-	 */
-	Phrase:
+	Dictionary:
 	{
 		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 		
@@ -4617,10 +4616,20 @@ D = {
 			cs: "půl hodiny", it: "mezz'ora", pl: "pół godziny", pt: "meia hora", ru: "полчаса", zh: "半小時"},
 		
 		// Nouns
+		s_timers: {de: "zeitgeber", es: "temporizadores", fr: "minuteurs",
+			cs: "časovače", it: "timer", pl: "czasomierzy", pt: "temporizadores", ru: "таймеров", zh: "計時器"},
+		s_tools: {de: "extras", es: "herramientas", fr: "outils",
+			cs: "nástroje", it: "strumenti", pl: "narzędzia", pt: "ferramentas", ru: "инструменты", zh: "工具"},
+		s_help: {de: "hilfe", es: "ayuda", fr: "assistance",
+			cs: "pomoci", it: "guida", pl: "pomoc", pt: "ajuda", ru: "помощь", zh: "輔助"},
+		s_options: {de: "optionen", es: "opciónes", fr: "options",
+			cs: "možnosti", it: "opzioni", pl: "opcje", pt: "opções", ru: "параметры", zh: "選項"},
 		s_arrival: {de: "ankunft", es: "llegada", fr: "arrivée",
 			cs: "příjezd", it: "arrivo", pl: "przyjazd", pt: "chegada", ru: "прибытие", zh: "到來"},
-		s_world_boss: {de: "weltboss", es: "jefe mundo", fr: "chef monde",
-			cs: "svět boss", it: "boss mondo", pl: "świat szef", pt: "chefe mundo", ru: "мировой босс", zh: "世界頭目"},
+		s_world: {de: "welt", es: "mundo", fr: "monde",
+			cs: "svět", it: "mondo", pl: "świat", pt: "mundo", ru: "босс", zh: "世界"},
+		s_boss: {de: "boss", es: "jefe", fr: "chef",
+			cs: "boss", it: "boss", pl: "szef", pt: "chefe", ru: "мировой", zh: "頭目"},
 		s_event: {de: "event", es: "evento", fr: "événement",
 			cs: "událost", it: "evento", pl: "wydarzenie", pt: "evento", ru: "собы́тие", zh: "事件"},
 		s_section: {de: "paragraph", es: "sección", fr: "section",
@@ -4631,6 +4640,12 @@ D = {
 			cs: "střed", it: "centro", pl: "środek", pt: "centro", ru: "центр", zh: "中心"},
 		s_character: {de: "person", es: "personaje", fr: "personnage",
 			cs: "postava", it: "personaggio", pl: "postać", pt: "personagem", ru: "персона́ж", zh: "人物"},
+		s_completion: {de: "abschluss", es: "finalización", fr: "progression",
+			cs: "dokončení", it: "completamento", pl: "ukończenie", pt: "progressão", ru: "завершение", zh: "完成"},
+		s_route: {de: "route", es: "ruta", fr: "route",
+			cs: "trasa", it: "percorso", pl: "trasa", pt: "rota", ru: "маршру́т", zh: "路線"},
+		s_pins: {de: "nadeln", es: "agujas", fr: "aiguilles",
+			cs: "jehly", it: "aghi", pl: "igły", pt: "agulhas", ru: "иглы", zh: "針"},
 		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", zh: "鳥瞰點"},
 		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros", zh: "技能點"},
 		s_checklist: {de: "prüfliste", es: "lista de comprobación", fr: "liste de contrôle",
@@ -4655,10 +4670,16 @@ D = {
 			cs: "začne", it: "inizierà", pl: "rozpocznie się", pt: "começará", ru: "начнется", zh: "開始"},
 		s_click: {de: "klicken", es: "clic", fr: "cliquer",
 			cs: "kliknout", it: "clic", pl: "klikać", pt: "clicar", ru: "щелкнуть", zh: "按一下"},
+		s_clear: {de: "löschen", es: "borrar", fr: "effacer",
+			cs: "vymazat", it: "cancella", pl: "wyczyść", pt: "limpar", ru: "очистить", zh: "清除"},
+		s_toggle: {de: "umschalten", es: "alternar", fr: "basculer",
+			cs: "přepnout", it: "alterna", pl: "przełączanie", pt: "alternar", ru: "переключить", zh: "切換"},
 		s_expand: {de: "erweitern", es: "expandir", fr: "développer",
 			cs: "rozbalit", it: "espandere", pl: "rozwinąć", pt: "expandir", ru: "развернуть", zh: "展開"},
 		s_collapse: {de: "reduzieren", es: "contraer", fr: "réduire",
 			cs: "sbalit", it: "comprimere", pl: "zwinąć", pt: "recolher", ru: "свернуть", zh: "摺疊"},
+		s_draw: {de: "zeichnen", es: "dibujar", fr: "dessiner",
+			cs: "kreslit", it: "disegnare", pl: "rysować", pt: "desenhar", ru: "рисова́ть", zh: "画"},
 		
 		// Adjectives and Adverbs
 		s_ago: {de: "vor", es: "hace", fr: "il ya",
@@ -4758,26 +4779,12 @@ D = {
 			cs: "dolar", it: "dollaro", pl: "polar", pt: "dólar", ru: "доллар", zh: "元"}
 	},
 	
-	Element:
-	{
-		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
-
-		s_menuChains: {de: "Zeitgeber", es: "Temporizadores", fr: "Minuteurs",
-			cs: "Časovače", it: "Timer", pl: "Czasomierzy", pt: "Temporizadores", ru: "Таймеров", zh: "計時器"},
-		s_menuMap: {de: "Extras", es: "Herramientas", fr: "Outils",
-			cs: "Nástroje", it: "Strumenti", pl: "Narzędzia", pt: "Ferramentas", ru: "Инструменты", zh: "工具"},
-		s_menuHelp: {de: "Hilfe", es: "Ayuda", fr: "Assistance",
-			cs: "Pomoci", it: "Guida", pl: "Pomoc", pt: "Ajuda", ru: "Помощь", zh: "輔助"},
-		s_menuOptions: {de: "Optionen", es: "Opciónes", fr: "Options",
-			cs: "Možnosti", it: "Opzioni", pl: "Opcje", pt: "Opções", ru: "Параметры", zh: "選項"}
-	},
-	
 	/*
-	 * Gets a phrase translated based on the opted language.
+	 * Gets a dictionary entry translated based on the opted language.
 	 * @param string pText text to translate without spaces.
 	 * @returns string translated text.
 	 */
-	getTranslation: function(pText, pDictionary)
+	getTranslation: function(pText)
 	{
 		// If opted language is English then just return the given text
 		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
@@ -4795,7 +4802,7 @@ D = {
 			text = text.replace(/ /g, "_");
 		}
 		
-		var entry = pDictionary["s_" + text];
+		var entry = D.Dictionary["s_" + text];
 		if (entry)
 		{
 			// Get the text based on user's language
@@ -4805,7 +4812,7 @@ D = {
 				return value;
 			}
 		}
-		// Language not found so use default instead
+		// Language not found so use given instead
 		return pText;
 	},
 	getWord: function(pText)
@@ -4815,25 +4822,11 @@ D = {
 			return pText;
 		}
 		// No error checking, assume entry exists
-		return (D.Phrase["s_" + pText])[O.Options.enu_Language];
+		return (D.Dictionary["s_" + pText])[O.Options.enu_Language];
 	},
-	
-	/*
-	 * Gets translation of specified text using phrase dictionary.
-	 * @param string pText to lookup.
-	 * @returns string translated phrase.
-	 */
-	getPhrase: function(pText)
+	getWordCapital: function(pWord)
 	{
-		return D.getTranslation(pText, D.Phrase);
-	},
-	getSentence: function(pText)
-	{
-		return U.toFirstUpperCase(D.getTranslation(pText, D.Phrase));
-	},
-	getElement: function(pID)
-	{
-		return D.getTranslation(pID, D.Element);
+		return U.toFirstUpperCase(D.getTranslation(pWord));
 	},
 	
 	/*
@@ -4842,54 +4835,110 @@ D = {
 	 * @param enum pCase to change capitalization.
 	 * @returns string translated.
 	 */
-	getString: function(pString, pCase)
+	getPhrase: function(pString, pCase)
 	{
 		if (pCase === undefined)
 		{
-			pCase = U.CaseEnum.Every;
+			pCase = U.CaseEnum.None;
 		}
 		
 		var str = pString.split(" ");
-		for (var i in str)
+		if (pCase === U.CaseEnum.Original)
 		{
-			str[i] = D.getTranslation(str[i], D.Phrase);
+			for (var i in str)
+			{
+				str[i] = D.duplicateCase(str[i], D.getTranslation(str[i].toLowerCase()));
+			}
 		}
-		return U.toCase(str.join(" "), pCase);
+		else
+		{
+			for (var i in str)
+			{
+				str[i] = D.getTranslation(str[i]);
+			}
+		}
+		
+		var text = (D.isLanguageLogographic()) ? str.join("") : str.join(" ");
+		if (pCase === U.CaseEnum.None || pCase === U.CaseEnum.Original)
+		{
+			return text;
+		}
+		return U.toCase(text, pCase);
+	},
+	getPhraseTitle: function(pString)
+	{
+		return D.getPhrase(pString, U.CaseEnum.Every);
+	},
+	getPhraseOriginal: function(pString)
+	{
+		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+		{
+			return D.getPhrase(pString, U.CaseEnum.Original);
+		}
+		return pString;
 	},
 	
 	/*
 	 * Gets a word and modifier string in language-dependent order in specified case.
-	 * @param string pText a noun for example.
+	 * @param string pWord a noun for example.
 	 * @param string pModifier an adjective for example.
 	 * @param enum pCase to change the phrase's capitalization.
 	 * @returns string modified word phrase.
 	 */
 	getModifiedWord: function(pWord, pModifier, pCase)
 	{
-		var str = "";
-		if (pModifier)
-		{
-			var text = D.getPhrase(pWord);
-			var modifier = D.getPhrase(pModifier);
-			str = D.isLanguageModifierFirst() ? (modifier + " " + text) : (text + " " + modifier);
-		}
-		else
-		{
-			str = D.getPhrase(pWord);
-		}
-		
-		return U.toCase(str, pCase);
+		return D.getPhrase(D.orderModifier(pWord, pModifier), pCase);
+	},
+	orderModifier: function(pWord, pModifier)
+	{
+		return D.isLanguageModifierFirst() ? (pModifier + " " + pWord) : (pWord + " " + pModifier);
 	},
 	
 	/*
-	 * Translates the header of a page.
-	 * @param enum pPlate to get header.
+	 * Duplicates the case style of a source word to the translated word.
+	 * @param string pSourceWord single and without whitespace.
+	 * @param string pTranslatedWord to format with the same case.
 	 */
-	translatePageHeader: function(pPlate)
+	duplicateCase: function(pSourceWord, pTranslatedWord)
+	{
+		// If first letter is lowercase, assume the whole word is lowercase
+		var firstletter = pSourceWord.charAt(0);
+		if (firstletter === firstletter.toLowerCase())
+		{
+			return pTranslatedWord; // The dictionary is in lowercase by default, so no need to do it again
+		}
+		// If first two letters are capitalized, then assume all caps
+		if (pSourceWord.length > 2 && pTranslatedWord.length > 2)
+		{
+			var secondletter = pSourceWord.charAt(1);
+			if (firstletter === firstletter.toUpperCase() && secondletter === secondletter.toUpperCase())
+			{
+				return pTranslatedWord.toUpperCase();
+			}
+		}
+		// For any other conditions, capitalize the first letter of the translated word
+		return pTranslatedWord.charAt(0).toUpperCase() + pTranslatedWord.slice(1);
+	},
+	
+	/*
+	 * Finds element with the translation CSS class and translates them.
+	 */
+	translateElements: function()
 	{
 		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
 		{
-			$("#plate" + pPlate + " .cntHeader").text(D.getElement("menu" + pPlate));
+			// Translate each word individually for these elements
+			$(".jsTranslate").each(function()
+			{
+				$(this).text(D.getPhraseOriginal($(this).text()))
+					.removeClass("jsTranslate");
+			});
+			// Translate the entire text content as a compound word for these elements
+			$(".jsTranslateCompound").each(function()
+			{
+				$(this).text(D.getTranslation($(this).text()))
+					.removeClass("jsTranslateCompound");
+			});
 		}
 	},
 	
@@ -4901,35 +4950,19 @@ D = {
 	{
 		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
 		{
-			// Translate text in single HTML elements
-			$(".jsTranslate").each(function()
-			{
-				$(this).text(D.getPhrase($(this).text()));
-			});
-			
 			// Translate tooltips
 			$("#paneMenu kbd").each(function()
 			{
-				$(this).attr("title", "<dfn>" + D.getElement($(this).attr("id")) + "</dfn>");
+				$(this).attr("title", "<dfn>" + D.getPhraseOriginal($(this).find(".jsTranslate").text()) + "</dfn>");
 				I.qTip.init($(this));
 			});
-			$("#paneMenu var").each(function()
+			$(".mapHUDButton").each(function()
 			{
-				$(this).text(D.getElement($(this).parent().attr("id")));
+				$(this).attr("title", D.getPhraseOriginal($(this).attr("title")));
 			});
-			D.translatePageHeader(I.PageEnum.Options);
+			D.translateElements();
 		}
-		
-		$(".mapHUDButton").each(function()
-		{
-			var text = $(this).data("title");
-			$(this).attr("title", "<dfn>" + D.getString(text) + "</dfn>");
-			I.qTip.init($(this));
-		});
-		$("#optAlarmLegend").text(D.getModifiedWord("mode", "alarm", U.CaseEnum.Every));
-		$("#opt_int_setAlarm").after(" " + D.getSentence("off"));
-		$("#optAlarmChecklist").after(" " + D.getSentence("checklist"));
-		$("#optAlarmSubscription").after(" " + D.getSentence("subscription"));
+		I.qTip.init(".mapHUDButton");
 	},
 	
 	/*
@@ -5895,7 +5928,7 @@ C = {
 		var countdown;
 		var time;
 		
-		var subscribetext = "<dfn>" + D.getString("click to") + "<br />" + D.getSentence("subscribe") + "</dfn><br />";
+		var subscribetext = "<dfn>" + D.getPhraseTitle("click to <br/> subscribe") + "</dfn><br />";
 		
 		for (i in C.ScheduledChains)
 		{
@@ -6457,7 +6490,7 @@ C = {
 					|| (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription
 						&& C.isChainSubscribed(pChain) && C.isChainUnchecked(pChain)))
 				{
-					D.speak(D.getChainPronunciation(pChain) + " " + D.getSpeech("arrival") + " " + D.getSpeech("predicted"));
+					D.speak(D.getChainPronunciation(pChain) + " " + D.getSpeech("arrival predicted"));
 				}
 			}
 		}
@@ -6486,7 +6519,7 @@ C = {
 				var checkedhc = "";
 				var wantsd = O.objToBool(C.NextChainSD1);
 				var wanthc = O.objToBool(C.NextChainHC1);
-				var speech = D.getSpeech("world boss", "next") + " " + D.getSpeech("is") + " ";
+				var speech = D.getSpeech("next " + D.orderModifier("boss", "world") + " is") + " ";
 				
 				if (C.NextChainSD1 && ( ! C.isChainUnchecked(C.NextChainSD1)))
 				{
@@ -6941,6 +6974,8 @@ M = {
 			var icon;
 			var cssclass;
 			var tooltip;
+			var translationvista = D.getTranslation("Vista");
+			var translationchallenge = D.getTranslation("Hero Challenge");
 
 			for (regionid in pData.regions)
 			{
@@ -7015,7 +7050,7 @@ M = {
 								numvista++;
 								icon = U.URL_IMG.Vista;
 								cssclass = "mapPoi";
-								tooltip = D.getPhrase("Vista");
+								tooltip = translationvista;
 							} break;
 							
 							default: continue; // Don't create marker if not desired type
@@ -7096,7 +7131,7 @@ M = {
 							poi = ithzone.skill_challenges[i];
 							marker = L.marker(that.convertGCtoLC(poi.coord),
 							{
-								title: "<span class='" + "mapPoi" + "'>" + D.getPhrase("Hero Challenge") + "</span>",
+								title: "<span class='" + "mapPoi" + "'>" + translationchallenge + "</span>",
 								icon: L.icon(
 								{
 									iconUrl: U.URL_IMG.Challenge,
@@ -11230,8 +11265,8 @@ T = {
 		var secondsleft = T.getSecondsUntilChainStarts(pChain);
 		var min = ~~(secondsleft / T.cSECONDS_IN_MINUTE) % T.cSECONDS_IN_MINUTE;
 		var hour = ~~(secondsleft / T.cSECONDS_IN_HOUR);
-		var minword = D.getPhrase("m");
-		var hourword = D.getPhrase("h");
+		var minword = D.getTranslation("m");
+		var hourword = D.getTranslation("h");
 		
 		if (pFormat === "speech")
 		{
@@ -11247,7 +11282,7 @@ T = {
 			}
 			if (hour === 0 && Math.abs(min) === 30)
 			{
-				min = D.getSpeech("half an hour");
+				min = D.getTranslation("half an hour");
 				minword = "";
 				hourword = "";
 			}
@@ -11266,9 +11301,9 @@ T = {
 		
 		if (secondsleft < 0)
 		{
-			return " " + hour + min + " " + D.getPhrase("ago");
+			return " " + hour + min + " " + D.getTranslation("ago");
 		}
-		return " " + D.getPhrase("in") + " " + hour + min;
+		return " " + D.getTranslation("in") + " " + hour + min;
 	},
 	
 	/*
@@ -11969,7 +12004,7 @@ T = {
 			// Create "button" to toggle list of items on sale
 			$("#dsbSale").append("<div id='dsbSaleHeader' class='curToggle'><img src='img/ui/gemstore.png' /> "
 				+ "<u>" + ((T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1)) + " "
-				+ D.getPhrase("Gem Store Promotions") + "</u> "
+				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceNew'>" + T.DashboardSale.range + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img src='img/ui/toggle.png' />"
 				+ "⇓@ " + T.DashboardSale.Finish.toLocaleString()
@@ -12700,7 +12735,7 @@ K = {
 			var wantsd = false;
 			var wanthc = false;
 			var wantls = false;
-			var speech = D.getSpeech("world boss", "subscribed") + " ";
+			var speech = D.getSpeech(D.orderModifier(D.orderModifier("boss", "world"), "subscribed")) + " ";
 			var wait = 5;
 
 			// If alarm minutes is beyond the timeframe range, check the chains beyond
@@ -13149,13 +13184,13 @@ K = {
 			}
 			else if (pChainHC.nexus !== C.Triple.nexus)
 			{
-				text += " " + D.getPhrase("and") + " " + pChainHC.waypoint
+				text += " " + D.getTranslation("and") + " " + pChainHC.waypoint
 					+ " " + D.getChainAlias(pChainHC)
 					+ T.getTimeTillChainFormatted(pChainHC);
 			}
 			
 			// Chains for the timeframe after that
-			text += ", " + D.getPhrase("then") + " " + pChainSDAfter.waypoint
+			text += ", " + D.getTranslation("then") + " " + pChainSDAfter.waypoint
 				+ " " + D.getChainAlias(pChainSDAfter);
 			if ( ! pChainHCAfter || pChainHCAfter.nexus === C.Triple.nexus)
 			{
@@ -13163,7 +13198,7 @@ K = {
 			}
 			else if (pChainHCAfter.nexus !== C.Triple.nexus)
 			{
-				text += " " + D.getPhrase("and") + " " + pChainHCAfter.waypoint
+				text += " " + D.getTranslation("and") + " " + pChainHCAfter.waypoint
 					+ " " + D.getChainAlias(pChainHCAfter)
 					+ T.getTimeTillChainFormatted(pChainHCAfter);
 			}
@@ -13564,13 +13599,13 @@ I = {
 		// Tells today's world boss closest scheduled time if server resetted
 		if (O.isServerReset && C.ChainToday)
 		{
-			I.greet(D.getModifiedWord("world boss", "daily", U.CaseEnum.Sentence) + " "
-				+ D.getObjectName(C.ChainToday) + " " + D.getPhrase("will start") + " " + D.getPhrase("at") + " "
+			I.greet(D.getModifiedWord("boss", "daily", U.CaseEnum.Sentence) + " "
+				+ D.getObjectName(C.ChainToday) + " " + D.getTranslation("will start") + " " + D.getTranslation("at") + " "
 				+ T.getTimeFormatted(
 				{
 					wantSeconds: false,
 					customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
-				}) + " " + D.getPhrase("in") + " "
+				}) + " " + D.getTranslation("in") + " "
 				+ T.getTimeFormatted(
 				{
 					wantLetters: true,
@@ -13876,12 +13911,15 @@ I = {
 	},
 	
 	/*
-	 * Styles a custom context menu.
+	 * Styles and translates a custom context menu.
 	 * @param string pMenu name of the menu.
 	 */
 	styleContextMenu: function(pMenu)
 	{
-		$(pMenu).addClass("jsHidable").find("li").prepend("<ins class='s16 s16_bullet'></ins> ");
+		$(pMenu).addClass("jsHidable").find("li").each(function()
+		{
+			$(this).text(D.getPhraseOriginal($(this).text())).prepend("<ins class='s16 s16_bullet'></ins> ");
+		});
 	},
 	
 	/*
@@ -14071,7 +14109,7 @@ I = {
 			if (I.isMapEnabled || header.hasClass("mapOnly") === false)
 			{
 				$("<img class='menuBeamIcon' data-section='" + section + "' src='" + src + "' "
-				+ "title='&lt;dfn&gt;" + D.getSentence("section") + ": &lt;/dfn&gt;" + headertext + "' />")
+				+ "title='&lt;dfn&gt;" + D.getWordCapital("section") + ": &lt;/dfn&gt;" + headertext + "' />")
 				.appendTo(menubeam).click(function()
 				{
 					// Hide all the collapsible sections
@@ -14093,7 +14131,7 @@ I = {
 
 		// Side menu icon to close all the sections
 		$("<img class='menuBeamIcon menuBeamIconCollapse' src='img/ui/exit.png' "
-			+ "title='&lt;dfn&gt;" + D.getString("collapse section") + "&lt;/dfn&gt;' />")
+			+ "title='&lt;dfn&gt;" + D.getPhraseTitle("collapse section") + "&lt;/dfn&gt;' />")
 		.prependTo(menubeam).click(function()
 		{
 			$(pPlate + " header.jsSection").each(function()
@@ -14414,7 +14452,7 @@ I = {
 		
 		// Expand a header if requested in the URL
 		U.openSectionFromURL();
-		D.translatePageHeader(pPageEnum);
+		D.translateElements();
 	},
 	
 	/*

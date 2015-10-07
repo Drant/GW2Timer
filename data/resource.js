@@ -413,8 +413,8 @@ Ancient: {
 Foxfire: {
 	name_en: "Foxfire",
 	name_de: "Leuchtpilz",
-	name_es: "Luminiscentes",
-	name_fr: "Bioluminescent",
+	name_es: "Lumin",
+	name_fr: "Biolumin",
 	type: "Wood",
 	item: "66933",
 	riches: [
