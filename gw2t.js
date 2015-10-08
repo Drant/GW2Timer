@@ -3841,7 +3841,7 @@ E = {
 			$(name).on("input", $.throttle(E.cSEARCH_LIMIT, function()
 			{
 				var query = $(this).val();
-				var queryescaped = U.escapeHTML($(this).val());
+				var queryescaped = U.escapeHTML(query);
 				var entry = $(this).parents(".trdEntry");
 				var resultslist;
 				// If keywords are below this length then ignore
@@ -13918,7 +13918,11 @@ I = {
 	{
 		$(pMenu).addClass("jsHidable").find("li").each(function()
 		{
-			$(this).text(D.getPhraseOriginal($(this).text())).prepend("<ins class='s16 s16_bullet'></ins> ");
+			if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+			{
+				$(this).text(D.getPhraseOriginal($(this).text()));
+			}
+			$(this).prepend("<ins class='s16 s16_bullet'></ins> ");
 		});
 	},
 	
@@ -14207,7 +14211,7 @@ I = {
 		{
 			return;
 		}
-		$("head").append("<link rel='stylesheet' type='text/css' href='gw2t-" + pName.toLowerCase() + ".css' />");
+		$("head").append("<link rel='stylesheet' type='text/css' href='style/" + pName.toLowerCase() + ".css' />");
 	},
 	
 	/*

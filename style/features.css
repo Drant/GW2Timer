@@ -22,7 +22,7 @@
 	width: 32px; height: 32px;
 	margin-right: 7px;
 	border: 1px dashed #ffff66;
-	background-image: url("img/daily/rewards.png");
+	background-image: url("../img/daily/rewards.png");
 }
 .lgn_celebration { background-position: -32px 0; }
 .lgn_exotic { background-position: -64px 0; }
@@ -105,7 +105,7 @@
 	margin-right: 8px;
 	border: 1px solid transparent;
 	border-radius: 8px;
-	background-image: url("img/daily/dailies.png");
+	background-image: url("../img/daily/dailies.png");
 }
 #dlyCalendar ins:hover {
 	border: 1px solid #ffff66;
@@ -158,7 +158,7 @@
 }
 
 #dlyCalendar ins.dlyRegion {
-	background-image: url("img/daily/regions.png");
+	background-image: url("../img/daily/regions.png");
 	border: 1px solid transparent;
 	box-shadow: none;
 }
@@ -750,7 +750,7 @@ input[type="text"].rarity7 { color: #9933ff; /* legendary violet */ }
 	border-bottom: 1px solid #e4e0b3;
 	border-radius: 4px;
 	vertical-align: middle;
-	background-image: url("img/dungeon/dungeons.png");
+	background-image: url("../img/dungeon/dungeons.png");
 }
 .chl_ac { background-position: 0 0; }
 .chl_arah { background-position: -32px 0; }

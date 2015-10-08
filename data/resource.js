@@ -55,6 +55,7 @@ Iron: {
 	regulars: [
 	{c: [16489, 10086]}, // harathi
 	{c: [17774, 16366]}, // lornar
+	{c: [19840, 18082]}, // dredgehaunt
 	{c: [24470, 13451]}, // diessa
 	{c: [30905, 15375]}, // blazeridge
 	]
