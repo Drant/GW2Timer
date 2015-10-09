@@ -6886,6 +6886,7 @@ M = {
 			{
 				switch (val.toLowerCase())
 				{
+					case "/identity": I.write(JSON.stringify(GPSIdentityJSON, null, 2)); break;
 					case "/lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
 					case "/unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
 					default: that.goToArguments(val, that.Pin.Program);
@@ -7823,8 +7824,21 @@ M = {
 			this.drawPersonalPath();
 		}
 		
-		// Single click pin: get its coordinates
+		// Single click pin: get its coordinates and toggle its opacity
 		this.bindMarkerCoordBehavior(marker, "click");
+		marker.on("click", function()
+		{
+			if (this.options.ismarked === undefined || this.options.ismarked === false)
+			{
+				this.options.ismarked = true;
+				this.setOpacity(0.3);
+			}
+			else
+			{
+				this.options.ismarked = false;
+				this.setOpacity(1);
+			}
+		});
 		// Double click pin: remove itself from map
 		marker.on("dblclick", function()
 		{
@@ -9517,7 +9531,7 @@ G = {
 	 */
 	generateAndInitializeResources: function()
 	{
-		var CLICKED_OPACITY = 0.3;
+		var opacityclicked = 0.3;
 		var getNodeState = function(pMarker)
 		{
 			return X.getChecklistItem(X.Checklists["Resource" + pMarker.options.grade], pMarker.options.index);
@@ -9540,7 +9554,7 @@ G = {
 				else
 				{
 					setNodeState(pMarker, X.ChecklistEnum.Checked);
-					this.setOpacity(CLICKED_OPACITY);
+					this.setOpacity(opacityclicked);
 				}
 			});
 		};
@@ -9687,7 +9701,7 @@ G = {
 				{
 					if (pMarker instanceof L.Marker && getNodeState(pMarker) === X.ChecklistEnum.Checked)
 					{
-						pMarker.setOpacity(CLICKED_OPACITY);
+						pMarker.setOpacity(opacityclicked);
 					}
 				});
 			}
@@ -13733,7 +13747,7 @@ I = {
 	{
 		$("#itemConsole").show();
 		var content = $("#cslContent");
-		var characterspersecond = 24;
+		var characterspersecond = 18;
 		
 		if (pString === undefined || pString === null)
 		{
