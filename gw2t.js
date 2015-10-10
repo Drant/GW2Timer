@@ -149,7 +149,7 @@ O = {
 		bol_displayChallengesWvW: true,
 		// GPS
 		bol_displayCharacter: true,
-		bol_followCharacter: false,
+		bol_followCharacter: true,
 		bol_displayCharacterWvW: true,
 		bol_followCharacterWvW: false,
 		int_msecGPSRefresh: 100,
