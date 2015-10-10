@@ -76,7 +76,8 @@ O = {
 	Utilities:
 	{
 		programVersion: {key: "int_utlProgramVersion", value: 151004},
-		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0}
+		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
+		personalPins: {key: "str_utlPersonalPins", value: ""}
 	},
 	
 	/*
@@ -5544,14 +5545,16 @@ C = {
 		var i, ii;
 		var event;
 		var chainextra = "";
+		var chainname = D.getObjectName(pChain);
 		
 		if (C.isChainWorldBoss(pChain))
 		{
-			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + D.getObjectName(pChain) + "' />"
-				+ " (" + pChain.extra[1] + ") "
-				+ pChain.extra[2] + "<ins class='s16 s16_ecto'></ins>" + " "
-				+ pChain.extra[3] + "<ins class='s16 s16_loot'></ins>" + " "
-				+ pChain.extra[4] + "<ins class='s16 s16_dragonite'></ins>" + " ";
+			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
+				+ " (" + pChain.extra[1] + ")"
+				+ "<a href='" + (U.getYouTubeLink(chainname + " " + I.cGameNick)) + "' target='_blank' title='Recommended level. Click for YouTube videos.'><ins class='s16 s16_youtube'></ins></a> "
+				+ pChain.extra[2] + "<ins class='s16 s16_ecto' title='Ecto'></ins>" + " "
+				+ pChain.extra[3] + "<ins class='s16 s16_loot' title='Loot'></ins>" + " "
+				+ pChain.extra[4] + "<ins class='s16 s16_dragonite' title='Dragonite'></ins>" + " ";
 		}
 		
 		/*
@@ -5564,7 +5567,7 @@ C = {
 			+ "<div class='chnTitle'>"
 				+ "<img id='chnIcon_" + pChain.nexus + "' src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
 				+ "<samp id='chnCheck_" + pChain.nexus + "' class='chnCheck'></samp>"
-				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + D.getObjectName(pChain) + "</h1>"
+				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + chainname + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
 				+ "<aside><img class='chnDaily chnDaily_" + pChain.nexus + "' src='img/ui/daily.png' /></aside>"
 			+ "</div>"
@@ -6877,18 +6880,14 @@ M = {
 		{
 			var val = $(this).val();
 			// If input looks like a 2D array of coordinates, then create pins from them
-			var coords = that.parseCoordinatesMulti(val);
-			if (coords !== null)
-			{
-				that.redrawPersonalPath(coords);
-			}
-			else
+			if (that.parsePersonalPath(val) === false)
 			{
 				switch (val.toLowerCase())
 				{
 					case "/identity": I.write(JSON.stringify(GPSIdentityJSON, null, 2)); break;
 					case "/lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
 					case "/unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
+					case "/loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
 					default: that.goToArguments(val, that.Pin.Program);
 				}
 			}
@@ -7798,6 +7797,18 @@ M = {
 	},
 	
 	/*
+	 * Saves the current personal pins to storage.
+	 */
+	savePersonalPins: function()
+	{
+		localStorage[O.Utilities.personalPins.key] = this.getPersonalCoords();
+	},
+	loadPersonalPins: function()
+	{
+		return localStorage[O.Utilities.personalPins.key];
+	},
+	
+	/*
 	 * Creates a personal pin.
 	 * @param object pLatLng coordinates.
 	 * @param boolean pWantDraw to redraw the paths (shouldn't redraw when
@@ -7938,7 +7949,7 @@ M = {
 					// Single click path: get the coordinates of all pins
 					path.on("click", function()
 					{
-						that.getPersonalCoords();
+						$("#" + that.MapEnum + "CoordinatesCopy").val(that.getPersonalCoords()).select();
 					});
 					// Double click path: insert a pin between the two pins that connect the path
 					path.on("dblclick", function(pEvent)
@@ -7960,6 +7971,24 @@ M = {
 			this.Layer.PersonalPath.clearLayers();
 			this.toggleLayer(this.Layer.PersonalPath, false);
 		}
+		// Save when any change was made to the pins
+		this.savePersonalPins();
+	},
+	
+	/*
+	 * Parses a personal path string then draw it if valid.
+	 * @param string pString of coordinates.
+	 * @returns boolean true if valid.
+	 */
+	parsePersonalPath: function(pString)
+	{
+		var coords = this.parseCoordinatesMulti(pString);
+		if (coords !== null)
+		{
+			this.redrawPersonalPath(coords);
+			return true;
+		}
+		return false;
 	},
 	
 	/*
@@ -7986,7 +8015,8 @@ M = {
 	},
 	
 	/*
-	 * Prints the personal pin's coordinates to the coordinate bar.
+	 * Gets the personal pins' coordinates.
+	 * @returns string of the 2D array.
 	 */
 	getPersonalCoords: function()
 	{
@@ -7998,17 +8028,17 @@ M = {
 			length++;
 		});
 		
-		var s = "";
+		var str = "";
 		if (length > 1)
 		{
-			s = this.compileCoordinates(coords);
+			str = this.compileCoordinates(coords);
 		}
 		else if (length === 1)
 		{
-			s = this.formatCoord(coords[0]);
+			str = this.formatCoord(coords[0]);
 		}
 		
-		$("#" + that.MapEnum + "CoordinatesCopy").val(s).select();
+		return str;
 	},
 	
 	/*

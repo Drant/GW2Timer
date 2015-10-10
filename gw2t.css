@@ -1931,6 +1931,8 @@ gold {
 .s16_loot { background-position: -128px 0; }
 .s16_money { background-position: -144px 0; }
 .s16_twitter { background-position: -160px 0; }
+.s16_wiki { background-position: -176px 0; }
+.s16_youtube { background-position: -192px 0; }
 
 coppercoin, silvercoin, goldcoin {
 	display: inline-block;

@@ -334,7 +334,7 @@ dt.jpzListNameHover {
 	width: 32px; height: 32px;
 	margin-right: 4px;
 	border-radius: 8px;
-	background-image: url(img/collectible/collectibles.png);
+	background-image: url("../img/collectible/collectibles.png");
 }
 #cltList div a {
 	text-decoration: underline;
