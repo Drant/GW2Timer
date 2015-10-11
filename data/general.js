@@ -591,9 +591,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Guard", "Camp", "Defender"]
 },
 "11": {
-	pve: ["Miner Jungle", "Fractal", "Frostgorge", "Fractal 1-10"],
-	pvp: ["Capture", "Reward", "Eng Thief", "Ele Necro"],
-	wvw: ["Land", "Caravan", "Camp", "Tower"]
+	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Plains", "SB"],
+	pvp: ["Capture", "Defender", "Ele Mes", "Guard Thief"],
+	wvw: ["Land", "Caravan", "Keep", "Camp"]
 },
 "12": {
 	pve: ["Forager Jungle", "Forger", "Southsun", "Fractal 1-10"],

@@ -1585,6 +1585,21 @@ U = {
 	},
 	
 	/*
+	 * Shortens a title/name string based on limit and add ellipses.
+	 * @param string pString.
+	 * @returns string truncated if it's too long.
+	 */
+	truncateString: function(pString, pLimit, pSuffix)
+	{
+		pSuffix = pSuffix || "";
+		if (pString.length > pLimit)
+		{
+			return pString.substring(0, pLimit) + pSuffix;
+		}
+		return pString;
+	},
+	
+	/*
 	 * Wraps a substring with a tag if substring is found in a string.
 	 * @param string pString to search in.
 	 * @param string pSubstring to wrap.
@@ -5519,21 +5534,6 @@ C = {
 			return integer;
 		}
 	},
-	
-	/*
-	 * Shortens a title/name string so it fits the chain bar and add ellipses.
-	 * @param string pString.
-	 * @returns string truncated if it's too long.
-	 */
-	truncateTitleString: function(pString, pLimit, pSuffix)
-	{
-		pSuffix = pSuffix || "";
-		if (pString.length > pLimit)
-		{
-			return pString.substring(0, pLimit) + pSuffix;
-		}
-		return pString;
-	},
 
 	/*
 	 * Initializes the chain HTML plate with chains and their individual events.
@@ -5551,10 +5551,11 @@ C = {
 		{
 			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
 				+ " (" + pChain.extra[1] + ")"
-				+ "<a href='" + (U.getYouTubeLink(chainname + " " + I.cGameNick)) + "' target='_blank' title='Recommended level. Click for YouTube videos.'><ins class='s16 s16_youtube'></ins></a> "
-				+ pChain.extra[2] + "<ins class='s16 s16_ecto' title='Ecto'></ins>" + " "
-				+ pChain.extra[3] + "<ins class='s16 s16_loot' title='Loot'></ins>" + " "
-				+ pChain.extra[4] + "<ins class='s16 s16_dragonite' title='Dragonite'></ins>" + " ";
+					+ "<a href='" + U.convertExternalURL(U.getYouTubeLink(chainname + " " + I.cGameNick)) + "' target='_blank'>"
+					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> "
+				+ pChain.extra[2] + "<ins class='s16 s16_ecto' title='Ecto'></ins> "
+				+ pChain.extra[3] + "<ins class='s16 s16_loot' title='Loot'></ins> "
+				+ pChain.extra[4] + "<ins class='s16 s16_dragonite' title='Dragonite'></ins> ";
 		}
 		
 		/*
@@ -5615,11 +5616,11 @@ C = {
 					+ b + "&amp;quot;" + D.getObjectName(e).replace(/["']/g, "") + "&amp;quot;";
 			}
 			
-			var indentpixel = 0;
+			var classsubstep = "";
 			var eventnamelimit = C.cEventTitleCharLimit;
 			var indentEvent = function()
 			{
-				indentpixel = 12;
+				classsubstep = "chnSubstep";
 				eventnamelimit = C.cEventTitleCharLimit - 4;
 			};
 			
@@ -5651,9 +5652,9 @@ C = {
 				}
 			}
 			$("#chnEvents_" + pChain.nexus).append(
-			"<li id='chnEvent_" + pChain.nexus + "_" + e.num + "' class='chnStep_" + pChain.nexus + "_" + e.step + "' style='margin-left:" + indentpixel +"px'>"
+			"<li id='chnEvent_" + pChain.nexus + "_" + e.num + "' class='chnStep_" + pChain.nexus + "_" + e.step + " " + classsubstep + "'>"
 				+ "<ins class='evt_" + e.icon + "' title='" + eventhtmltitle + "'></ins>"
-				+ "<span>" + C.truncateTitleString(D.getObjectName(e), eventnamelimit, "..") + "</span>"
+				+ "<span>" + U.truncateString(D.getObjectName(e), eventnamelimit, "..") + "</span>"
 			+ "</li>");
 		};
 
@@ -5777,7 +5778,7 @@ C = {
 		});
 		
 		// Initialize tooltips
-		I.qTip.init($("#chnEvents_" + pChain.nexus + " ins"));
+		I.qTip.init($("#chnDetails_" + pChain.nexus + " ins"));
 		I.qTip.init($("#chnDetails_" + pChain.nexus + " kbd"));
 		
 		// Finally intialize its checklist state

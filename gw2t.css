@@ -1732,6 +1732,9 @@ textarea.jsCopyCode {
 	margin-left: 4px;
 	vertical-align: middle;
 }
+.chnSubstep {
+	margin-left: 12px;
+}
 
 .chnWaypoint {
 	width: 72px; height: 12px;
