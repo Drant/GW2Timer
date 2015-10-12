@@ -5040,9 +5040,9 @@ D = {
 		{
 			return pObject["name_" + O.Options.enu_Language];
 		}
-		return D.getDefaultObjectName(pObject);
+		return D.getObjectDefaultName(pObject);
 	},
-	getDefaultObjectName: function(pObject)
+	getObjectDefaultName: function(pObject)
 	{
 		return pObject["name_" + O.OptionEnum.Language.Default];
 	},
@@ -5551,7 +5551,7 @@ C = {
 		{
 			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
 				+ " (" + pChain.extra[1] + ")"
-					+ "<a href='" + U.convertExternalURL(U.getYouTubeLink(chainname + " " + I.cGameNick)) + "' target='_blank'>"
+					+ "<a href='" + U.convertExternalURL(U.getYouTubeLink(D.getObjectDefaultName(pChain) + " " + I.cGameNick)) + "' target='_blank'>"
 					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> "
 				+ pChain.extra[2] + "<ins class='s16 s16_ecto' title='Ecto'></ins> "
 				+ pChain.extra[3] + "<ins class='s16 s16_loot' title='Loot'></ins> "
@@ -6478,7 +6478,7 @@ C = {
 			}
 			
 			// Tour to the event on the map if opted
-			if (O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
+			if (O.Options.bol_tourPrediction && (I.ModeCurrent !== I.ModeEnum.Overlay)
 				&& I.PageCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && isregularchain
 				&& C.isDryTopIconsShown === false)
@@ -8818,7 +8818,7 @@ P = {
 	 */
 	wantZoomToFirstEvent: function()
 	{
-		if (I.isMapEnabled && O.Options.bol_tourPrediction && !O.Options.bol_followCharacter
+		if (I.isMapEnabled && O.Options.bol_tourPrediction && (I.ModeCurrent !== I.ModeEnum.Overlay)
 			&& I.PageCurrent === I.PageEnum.Chains
 			&& U.Args[U.KeyEnum.Go] === undefined)
 		{
@@ -10240,9 +10240,6 @@ G = {
 		M.toggleLayerArray(P.LayerArray[pType], true);
 		M.toggleLayer(P.Layer[pType], true);
 		
-		// Bind tooltip
-		I.qTip.init(".leaflet-marker-icon");
-		
 		// Bind checkboxes after the markers and paths have been generated for this collectible
 		$("#ned_" + pType).change(function()
 		{
@@ -10254,6 +10251,8 @@ G = {
 			if (state)
 			{
 				M.goToArguments(P.Collectibles[type].view);
+				// Rebind tooltip
+				I.qTip.init(".leaflet-marker-icon");
 			}
 		});
 		$("#nedUncheck_" + pType).click(function()
@@ -10364,7 +10363,7 @@ G = {
 				for (var i in P.Guild.Bounty.data)
 				{
 					var mission = P.Guild.Bounty.data[i];
-					var name = D.getDefaultObjectName(mission);
+					var name = D.getObjectDefaultName(mission);
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Bounty").append(
@@ -10448,7 +10447,7 @@ G = {
 				for (var i in P.Guild.Challenge.data)
 				{
 					var mission = P.Guild.Challenge.data[i];
-					var name = D.getDefaultObjectName(mission);
+					var name = D.getObjectDefaultName(mission);
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Challenge").append(
@@ -10500,7 +10499,7 @@ G = {
 				for (var i in P.Guild.Rush.data)
 				{
 					var mission = P.Guild.Rush.data[i];
-					var name = D.getDefaultObjectName(mission);
+					var name = D.getObjectDefaultName(mission);
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Rush").append(
@@ -10569,7 +10568,7 @@ G = {
 				for (var i in P.Guild.Puzzle.data)
 				{
 					var mission = P.Guild.Puzzle.data[i];
-					var name = D.getDefaultObjectName(mission);
+					var name = D.getObjectDefaultName(mission);
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Puzzle").append(

@@ -596,9 +596,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Caravan", "Keep", "Camp"]
 },
 "12": {
-	pve: ["Forager Jungle", "Forger", "Southsun", "Fractal 1-10"],
-	pvp: ["Capture", "Defender", "War Thief", "Guard Ranger"],
-	wvw: ["Spender", "Guard", "Tower", "Defender"]
+	pve: ["Miner Wastes", "Activity", "Kessex", "Maw"],
+	pvp: ["Capture", "Reward", "Eng Thief", "Ele Necro"],
+	wvw: ["Land", "Guard", "Tower", "Camp"]
 },
 "13": {
 	pve: ["Lumberer Kryta", "Vista Kryta", "Snowden", "Fractal 21-30"],
@@ -702,7 +702,7 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_DASHBOARD_DATA = {
 
-Announcement: "Have a website or a guild? <a href='http://forum.renaka.com/topic/5547304/'>Add a GW2Timer</a> clock or feature to it!",
+Announcement: "<a href='http://forum.renaka.com/topic/5888854/'>GW2Timer Map Guide</a>: GPS world completion, jumping puzzles, nodes, missions.",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.

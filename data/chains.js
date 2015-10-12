@@ -1520,7 +1520,7 @@ var GW2T_CHAIN_DATA = [
 	extra: ["bloodtide", "55", "4", "6", "78"],
 	title: "Triple Trouble",
 	name_en: "Triple Wurm",
-	name_de: "Dreifach Wurm",
+	name_de: "Dreifacher Wurm",
 	name_es: "Sierpe Triple",
 	name_fr: "Guivre Triple",
 	name_zh: "進化巨型叢林地虫",
@@ -3327,7 +3327,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Verderbte Hohepriesterin der Lyssa",
 	name_es: "Suma Sacerdotisa Corrupta de Lyssa",
 	name_fr: "Grande Prêtresse Corrompue de Lyssa",
-	name_zh: "Lyssa 的寺廟",
+	name_zh: "麗莎",
 	events: [
 		{
 			path: [[12811, 23713]],
@@ -3539,7 +3539,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Besessene Dwayna-Statue",
 	name_es: "Estatua Poseída de Dwayna",
 	name_fr: "Statue Possédée de Dwayna",
-	name_zh: "Dwayna 的寺廟",
+	name_zh: "德薇娜",
 	events: [
 		{
 			path: [[12179, 24716], [11723, 24462], [11751, 24510], [12179, 24716], [12073, 24674], [12055, 24510], [11893, 24326], [11904, 24227], [11978, 24273]],
@@ -3661,7 +3661,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Auferstandenen Priester der Melandru",
 	name_es: "Sacerdote de Melandru Resurgido",
 	name_fr: "Prêtre Revenant de Melandru",
-	name_zh: "Melandru 的寺廟",
+	name_zh: "梅蘭朵",
 	events: [
 		{
 			path: [[10492, 26541], [11017, 27329], [10948, 27271], [10492, 26541]],
@@ -3855,7 +3855,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Auferstandenen Priester des Grenth",
 	name_es: "Sacerdote de Grenth Resurgido",
 	name_fr: "Prêtre Revenant de Grenth",
-	name_zh: "Grenth 的寺廟",
+	name_zh: "古蘭斯",
 	events: [
 		{
 			path: [[10692, 27699], [10997, 27466], [10876, 27515], [10692, 27699], [10579, 28030]],
@@ -4031,7 +4031,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Tore von Arah",
 	name_es: "Puertas de Arah",
 	name_fr: "Portes d'Arah",
-	name_zh: "Arah 的寺廟",
+	name_zh: "亞拉",
 	events: [
 		{
 			path: [[11062, 27370], [11062, 27370], [11016, 27350], [11027, 27460], [11000, 27598], [11023, 27765]],
@@ -4243,7 +4243,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Auferstandenen Priester des Balthasar",
 	name_es: "Sacerdote de Balthazar Resurgido",
 	name_fr: "Prêtre Revenant de Balthazar",
-	name_zh: "Balthazar 的寺廟",
+	name_zh: "巴薩澤",
 	events: [
 		{
 			path: [[15231, 24062], [15283, 24018], [15231, 24062], [15213, 24160], [15189, 24171], [15229, 24189], [15118, 24212], [15139, 24290], [15126, 24316], [15127, 24355], [15054, 24413], [14984, 24378], [15051, 24428], [15165, 24443], [15066, 24459], [15032, 24489], [15046, 24546]],
@@ -4329,7 +4329,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Nord Invasion von Orr",
 	name_es: "Invasión del Norte de Orr",
 	name_fr: "Invasion du Nord de Orr",
-	name_zh: "北部入侵 Orr",
+	name_zh: "北部入侵的歐爾",
 	events: [
 		{
 			path: [[16295, 22846], [16951, 22901], [16802, 22909], [16295, 22846]],
@@ -4523,7 +4523,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Zentral Invasion von Orr",
 	name_es: "Invasión Central de Orr",
 	name_fr: "Invasion Central de Orr",
-	name_zh: "中部入侵 Orr",
+	name_zh: "中部入侵的歐爾",
 	events: [
 		{
 			path: [[17049, 23356], [17310, 23604], [17324, 23522], [17131, 23481], [17118, 23410], [17049, 23356]],
@@ -4699,7 +4699,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Invasion der Südlichen Orr",
 	name_es: "Invasión del Sur de Orr",
 	name_fr: "Invasion du Sud de Orr",
-	name_zh: "南部入侵 Orr",
+	name_zh: "南部入侵的歐爾",
 	events: [
 		{
 			path: [[17517, 23845], [17315, 23637], [17517, 23845], [17369, 23944], [17240, 23949], [17188, 24037]],
@@ -4911,7 +4911,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Feuerschamanen",
 	name_es: "Chamán de Fuego",
 	name_fr: "Chamane de Feu",
-	name_zh: "火薩滿",
+	name_zh: "火焰薩滿",
 	events: [
 		{
 			path: [[27461, 9654], [27891, 9914], [27806, 9991], [27761, 10090], [27596, 10001], [27494, 9876], [27456, 9860], [27462, 9660], [27415, 9639], [27461, 9654]],
@@ -4943,7 +4943,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Rhendak den Verrückten",
 	name_es: "Rhendak el Perturbado",
 	name_fr: "Rhendak le Fou",
-	name_zh: "瘋狂 Rhendak",
+	name_zh: "狂人洛漢達克",
 	events: [
 		{
 			path: [[26223, 12201], [26202, 12192], [26228, 12197]],
@@ -5119,7 +5119,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Faulbär-Häuptling",
 	name_es: "Cabecilla de Osoinmundo",
 	name_fr: "Chef Oursefol",
-	name_zh: "臭熊頭目",
+	name_zh: "邪熊酋長",
 	events: [
 		{
 			path: [[30189, 18105], [30023, 18319], [30082, 18147], [30100, 18065], [30189, 18105], [30289, 18106], [30327, 18079], [30241, 18121], [30401, 18043], [30452, 18032], [30502, 18076], [30417, 18157], [30445, 18200], [30410, 18276], [30427, 18385]],
@@ -5259,7 +5259,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Schaufler-Kommissar",
 	name_es: "Comisario Draga",
 	name_fr: "Kommissar Draguerre",
-	name_zh: "疏浚政委",
+	name_zh: "掘洞人委員",
 	events: [
 		{
 			path: [[20612, 17610]],
@@ -5363,7 +5363,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Nebo-Terrasse",
 	name_es: "Terraza de Nebo",
 	name_fr: "Terrasse de Nebo",
-	name_zh: "階地 Nebo",
+	name_zh: "尼波平台",
 	events: [
 		{
 			path: [[13646, 13210], [13960, 13318], [13814, 13139], [13642, 13136], [13604, 13168], [13646, 13210]],
@@ -5485,7 +5485,7 @@ var GW2T_CHAIN_DATA = [
 	name_de: "Auge des Zhaitan",
 	name_es: "Ojo de Zhaitan",
 	name_fr: "Œil de Zhaïtan",
-	name_zh: "眼的 Zhaitan",
+	name_zh: "澤坦之眼",
 	events: [
 		{
 			path: [[15149, 24961], [15307, 24027], [15365, 24181], [15342, 24261], [15365, 24580], [15319, 24772], [15178, 24851], [15073, 24853], [15068, 24960], [15149, 24961]],
