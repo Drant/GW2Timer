@@ -75,10 +75,10 @@
 				<div id="dsbAnnouncement"></div>
 				<div id="dsbCountdown"></div>
 				<div id="dsbSale"></div>
-				<div id="dsbStory"></div>
+				<div id="dsbStory" class="jsScrollable"></div>
 			</div>
+			<time id="itemMapTime"></time>
 			<div id="itemMapCoordinates">
-				<time id="itemMapTime"></time>
 				<input id="mapCoordinatesMouse" type="text" />
 				<input id="mapCoordinatesCopy" type="text" />
 				<input id="mapCoordinatesName" type="text" />
@@ -367,7 +367,7 @@
 				<var id="itemTimeLocalActual" class="curToggle">00:00</var>
 			</time>
 			<time id="itemTimeDaytime" class="itemTimeDigital">
-				<span class="curHelp" title="<img src='img/ui/day_light.png'> Daylight<br /><img src='img/ui/day_night.png'> Nighttime<br />(Minutes Remaining)"><img id="itemTimeDayIcon" src="img/ui/day_light.png" />&nbsp;<var id="itemTimeDayTime">16:00</var></span>
+				<span class="curHelp" title="<dfn>Daylight:</dfn> ☀<br /><dfn>Nighttime:</dfn> ☽<br />(Minutes Remaining)"><var id="itemTimeDayIcon"></var>&nbsp;<var id="itemTimeDayTime">16:00</var></span>
 			</time>
 			<div id="itemLanguage">
 				<span><img src="img/ui/language.png" alt="Language" /></span>
@@ -405,7 +405,7 @@
 		<!-- Content mini-pane
 		==================================================================== -->
 		<section id="paneContent" class="paneApp">
-			<article id="plateChains"><!-- This plate will be populated by JS -->
+			<article id="plateChains" class="jsScrollable"><!-- This plate will be populated by JS -->
 				<div id="chnProgress"></div>
 				<div id="chnOptions">
 					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/speaker.png" alt="Alarm"/>
@@ -467,9 +467,9 @@
 				<section id="sectionChains_Timetable"></section>
 				<br />
 			</article>
-			<article id="plateMap"></article><!-- Empty plates will be populated by AJAX -->
-			<article id="plateHelp"></article>
-			<article id="plateOptions">
+			<article id="plateMap" class="jsScrollable"></article><!-- Empty plates will be populated by AJAX -->
+			<article id="plateHelp" class="jsScrollable"></article>
+			<article id="plateOptions" class="jsScrollable">
 				<div class="cntComposition">
 					<header class="cntHeader jsTranslate">Options</header>
 					<br />

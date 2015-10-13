@@ -724,13 +724,13 @@ Announcement: "<a href='http://forum.renaka.com/topic/5888854/'>GW2Timer Map Gui
  */
 Countdowns: [
 {
-	name_en: "New Guild Mission Reset Time",
-	name_de: "Neue Gilden-Mission Zurücksetzen Zeit",
-	name_es: "Nuevo misión de clan restablecer",
-	name_fr: "Nouveau mission de guilde réinitialiser",
-	url: "https://forum-en.guildwars2.com/forum/game/gw2/Guild-Mission-Reset-Time-Changed/",
-	Start: new Date("2015-10-12T07:30:00Z"),
-	Finish: new Date("2015-10-12T08:00:00Z")
+	name_en: "Halloween Is Coming!",
+	name_de: "Halloween naht!",
+	name_es: "¡Se acerca Halloween!",
+	name_fr: "Halloween approche !",
+	news: "halloween-is-coming",
+	Start: new Date("2015-10-23T07:00:00Z"),
+	Finish: new Date("2015-10-31T07:00:00Z")
 },
 {
 	name_en: "Heart of Thorns Release",
@@ -740,6 +740,18 @@ Countdowns: [
 	url: "https://heartofthorns.guildwars2.com/",
 	Start: new Date("2015-10-23T07:00:00Z"),
 	Finish: new Date("2015-10-24T07:00:00Z")
+},
+{
+	name_en: "ArenaNet at Halloween",
+	name_de: "ArenaNet an Halloween",
+	name_es: "ArenaNet en Halloween",
+	name_fr: "ArenaNet à Halloween",
+	url_en: "https://forum-en.guildwars2.com/forum/game/gw2/Halloween-Event-Yay",
+	url_de: "https://forum-de.guildwars2.com/forum/game/gw2/Halloween-Event-2",
+	url_es: "https://forum-es.guildwars2.com/forum/game/game/Evento-de-Halloween",
+	url_fr: "https://forum-fr.guildwars2.com/forum/game/game/v-nement-d-Halloween",
+	Start: new Date("2015-10-30T16:00:00Z"),
+	Finish: new Date("2015-10-31T07:00:00Z")
 }
 ],
 /*
@@ -775,7 +787,7 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Start: new Date("2015-10-06T16:00:00Z"),
-	Finish: new Date("2015-10-13T16:00:00Z"),
+	Finish: new Date("2015-11-03T16:00:00Z"),
 	range: "25-1000",
 	Items: [
 	/*{
@@ -787,6 +799,14 @@ Sale: {
 		col: 1,
 		isExample: true
 	},*/
+		{
+		url: "http://wiki.guildwars2.com/wiki/Executioner's_Outfit",
+		img: "https://render.guildwars2.com/file/606BC169F95F7FF8470DD2CE6D30016AD5B646EA/648164.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 0
+	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Bloody_Prince's_Outfit",
 		img: "https://render.guildwars2.com/file/0297679A65D858DFC61B9C02ECC4964FDEC7AA1A/648158.png",
@@ -816,6 +836,22 @@ Sale: {
 		img: "https://render.guildwars2.com/file/5A4C04B84D5C7BA4CB7E7C0804D83FC0EE38BA1B/882252.png",
 		quantity: 1,
 		pricenew: 700,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Permanent_Mad_King_Finisher",
+		img: "https://render.guildwars2.com/file/FBF45CE54777DF1FF4940EA1A6083658A574727F/499519.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Permanent_Scarecrow_Finisher",
+		img: "https://render.guildwars2.com/file/3849FBC850B9A872FBEFEFF5F852AE4434F33D51/499518.png",
+		quantity: 1,
+		pricenew: 500,
 		priceold: 0,
 		col: 0
 	},
@@ -890,6 +926,30 @@ Sale: {
 		pricenew: 500,
 		priceold: 0,
 		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Bone_Pick",
+		img: "https://render.guildwars2.com/file/9827C507181C6B305EA026C2F1EB7448AA390CD5/638367.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Tireless_Harvesting_Minion",
+		img: "https://render.guildwars2.com/file/66A0544916B86F1E00F173ABB9555FC6FDCECBE0/882264.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Tireless_Logging_Minion",
+		img: "https://render.guildwars2.com/file/20A17F9B7356EE37FEB1003B66D46DBF755B4D91/882250.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Frost_Wasp_Logging_Tool",

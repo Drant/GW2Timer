@@ -93,6 +93,11 @@ img {
 	vertical-align: middle;
 }
 
+.jsScrollable {
+	position: relative;
+	overflow: hidden;
+}
+
 .cntComposition ::selection {
 	background: #66aaff;
 }
@@ -435,6 +440,9 @@ html, body,
 #dsbSaleHeader:active {
 	opacity: 0.8;
 }
+#dsbSaleTable {
+	max-height: 320px;
+}
 #dsbSaleCol0, #dsbSaleCol1 {
 	display: inline-block;
 	vertical-align: top;
@@ -473,7 +481,6 @@ html, body,
 }
 
 #dsbStory {
-	position: relative;
 	display: none;
 	width: auto; height: 120px;
 	border-bottom: 1px solid #dd9900;
@@ -526,17 +533,6 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 #itemMapTime {
 	display: none;
-	margin-left: 16px;
-	font-family: Menomonia;
-	font-size: 16px;
-	color: white;
-	text-shadow:
-		1px 1px 1px #000,
-		-1px -1px 1px #000,
-		1px -1px 1px #000,
-		-1px 1px 1px #000,
-		1px 1px 1px #000;
-	opacity: 0.9;
 }
 
 /* Right side: Misc links */
@@ -988,6 +984,9 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #itemTimeDaytime img {
 	width: 18px; height: 18px;
 }
+#itemTimeDayIcon {
+	font-weight: normal;
+}
 #itemHome {
 	position: fixed;
 	bottom: 0px;
@@ -1221,9 +1220,7 @@ header.jsSection sup {
 }
 
 #paneContent article {
-	position: relative;
 	width: 360px; height: 100%;
-	overflow: hidden;
 }
 
 #plateChains {

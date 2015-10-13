@@ -43,9 +43,22 @@
 	width: 116px;
 }
 #itemMapTime {
-	display: block;
+	display: inline-block;
+	position: absolute;
+	z-index: 9;
+	bottom: 24px; left: 6px;
 	margin-left: 8px;
 	font-size: 14px;
+	font-family: Menomonia;
+	font-size: 16px;
+	color: white;
+	text-shadow:
+		1px 1px 1px #000,
+		-1px -1px 1px #000,
+		1px -1px 1px #000,
+		-1px 1px 1px #000,
+		1px 1px 1px #000;
+	opacity: 0.9;
 }
 
 /* Lower the menu bar's height */

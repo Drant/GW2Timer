@@ -12052,7 +12052,7 @@ T = {
 				+ "(<span class='dsbSalePriceNew'>" + T.DashboardSale.range + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img src='img/ui/toggle.png' />"
 				+ "⇓@ " + T.DashboardSale.Finish.toLocaleString()
-			+"</div><div id='dsbSaleTable'></div>");
+			+"</div><div id='dsbSaleTable' class='jsScrollable'></div>");
 			$("#dsbSaleHeader").click(function()
 			{
 				T.generateDashboardSale();
@@ -12105,6 +12105,7 @@ T = {
 				$("#dsbSaleTable").css({height: 0}).animate({height: height}, animationspeed, function()
 				{
 					$(this).css({height: "auto"});
+					I.initializeScrollbar($("#dsbSaleTable"));
 				});
 			});
 		}
@@ -12222,6 +12223,7 @@ K = {
 	awakeTimestampTolerance: 5,
 	currentFrameOffsetMinutes: 0,
 	currentPredictionColor: "",
+	currentDaytimeSymbol: "",
 	iconOpacityChecked: 0.4,
 	iconOpacitySpeed: 200,
 	oldQuadrantAngle: 0,
@@ -13180,12 +13182,9 @@ K = {
 	 */
 	updateDaytimeIcon: function()
 	{
-		var src = "img/ui/day_night.png";
-		if (T.isDaylight())
-		{
-			src = "img/ui/day_light.png";
-		}
-		$("#itemTimeDayIcon").attr("src", src);
+		var symbol = (T.isDaylight()) ? I.Symbol.Day : I.Symbol.Night;
+		K.currentDaytimeSymbol = symbol;
+		$("#itemTimeDayIcon").text(symbol);
 	},
 	
 	/*
@@ -13193,24 +13192,26 @@ K = {
 	 */
 	updateDigitalClockMinutely: function()
 	{
-		// Clock on the map shown in overlay mode
-		K.timeMap.innerHTML = T.getTimeFormatted({wantSeconds: false});
 		// Daytime clock updates time remaining
-		K.timeDaytime.innerHTML = T.getDayPeriodRemaining();
+		var daytime = T.getDayPeriodRemaining();
+		K.timeDaytime.innerHTML = daytime;
+		// Clock on the map shown in overlay mode
+		K.timeMap.innerHTML = T.getTimeFormatted({wantSeconds: false}) + " " + K.currentDaytimeSymbol + daytime;
 		// Local clock updates additional times in tooltip
 		K.timeLocal.title =
-			"Anet: " + T.getTimeFormatted(
+			(new Date()).toLocaleString() + "<br />" +
+			"<dfn>Anet:</dfn> " + T.getTimeFormatted(
 			{
 				reference: T.ReferenceEnum.Server,
 				wantSeconds: false
 			}) + "<br />" +
-			"UTC: " + T.getTimeFormatted(
+			"<dfn>UTC:</dfn> " + T.getTimeFormatted(
 			{
 				reference: T.ReferenceEnum.UTC,
 				wantSeconds: false,
 				want24: true
 			}) + "<br />" +
-			"Reset: " + T.getTimeFormatted(
+			"<dfn>Reset:</dfn> " + T.getTimeFormatted(
 			{
 				customTimeInSeconds: T.SECONDS_TILL_RESET, wantSeconds: false, wantLetters: true
 			});
@@ -13304,6 +13305,8 @@ I = {
 	siteTagCurrent: " - gw2timer.com",
 	Symbol:
 	{
+		Day: "☀",
+		Night: "☽",
 		Expand: "[+]",
 		Collapse: "[−]",
 		Help: "[?]"
