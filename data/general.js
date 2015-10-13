@@ -856,6 +856,14 @@ Sale: {
 		col: 0
 	},
 	{
+		url: "http://wiki.guildwars2.com/wiki/Costumed_Mini_3-Pack",
+		img: "https://render.guildwars2.com/file/29F135C235EDCCCCB3C714B70D24EEB907F69B5A/648175.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
 		url: "http://wiki.guildwars2.com/wiki/Miniature_Spooky_Trio",
 		img: "https://render.guildwars2.com/file/37DEE7E6294BD4D9345001C750BB37991A1931B8/499442.png",
 		quantity: 1,
