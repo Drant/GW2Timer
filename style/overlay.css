@@ -42,6 +42,11 @@
 #mapCoordinatesName, #wvwCoordinatesName {
 	width: 116px;
 }
+#itemMapTime {
+	display: block;
+	margin-left: 8px;
+	font-size: 14px;
+}
 
 /* Lower the menu bar's height */
 #paneMenu {

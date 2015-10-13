@@ -524,6 +524,20 @@ html, body,
 input#mapCoordinatesName, input#wvwCoordinatesName {
 	width: 145px; 
 }
+#itemMapTime {
+	display: none;
+	margin-left: 16px;
+	font-family: Menomonia;
+	font-size: 16px;
+	color: white;
+	text-shadow:
+		1px 1px 1px #000,
+		-1px -1px 1px #000,
+		1px -1px 1px #000,
+		-1px 1px 1px #000,
+		1px 1px 1px #000;
+	opacity: 0.9;
+}
 
 /* Right side: Misc links */
 .itemMapPeripheral {
@@ -759,7 +773,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 
 /* Board (only visible in simple mode)
 ----------------------------------------------------------------------------- */
-#paneBoard {
+#paneSimple {
 	display: none;
 	position: absolute;
 	width: 100%;
@@ -775,14 +789,14 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 		1px 1px 0px #000;
 	opacity: 0.8;
 }
-#itemBoardTime {
+#itemSimpleTime {
 	font-family: sans-serif;
 }
-#itemBoardCurrentSD, #itemBoardCurrentHC {
+#itemSimpleCurrentSD, #itemSimpleCurrentHC {
 	font-weight: bold;
 	color: #ff8844;
 }
-#itemBoardNextSD, #itemBoardNextHC {
+#itemSimpleNextSD, #itemSimpleNextHC {
 	color: #ff8844;
 	opacity: 0.5;
 }

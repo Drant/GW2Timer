@@ -601,9 +601,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Guard", "Tower", "Camp"]
 },
 "13": {
-	pve: ["Lumberer Kryta", "Vista Kryta", "Snowden", "Fractal 21-30"],
-	pvp: ["Rank", "Defender", "Eng Mes", "Guard Ele"],
-	wvw: ["Land", "Spender", "Camp", "Defender"]
+	pve: ["Forager Ascalon", "Vista Jungle", "Dredgehaunt", "Fractal 1-10"],
+	pvp: ["Rank", "Reward", "War Thief", "Guard Ranger"],
+	wvw: ["Ruins", "Land", "Tower", "Defender"]
 },
 "14": {
 	pve: ["Lumberer Ascalon", "Fractal", "Fields", "Fractal 1-10"],

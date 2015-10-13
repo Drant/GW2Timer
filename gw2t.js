@@ -12231,7 +12231,7 @@ K = {
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
 	clockBackground: {}, clockCircumference: {}, timeProgress: {},
-	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeBoard: {},
+	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeSimple: {}, timeMap: {},
 	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
 	
 	// These will be DOM elements
@@ -12261,7 +12261,8 @@ K = {
 		K.timeProgress = $("#chnProgress")[0];
 		K.timeLocal = $("#itemTimeLocalActual")[0];
 		K.timeDaytime = $("#itemTimeDayTime")[0];
-		K.timeBoard = $("#itemBoardTime")[0];
+		K.timeSimple = $("#itemSimpleTime")[0];
+		K.timeMap = $("#itemMapTime")[0];
 		K.timestampUTC = $("#optTimestampUTC")[0];
 		K.timestampLocal = $("#optTimestampLocalReset")[0];
 		K.timestampServer = $("#optTimestampServerReset")[0];
@@ -12716,8 +12717,9 @@ K = {
 		}
 		
 		// Tick the two digital clocks below the analog clock
-		K.timeLocal.innerHTML = T.getTimeFormatted();
-		K.timeBoard.innerHTML =
+		if (I.ModeCurrent === I.ModeEnum.Simple)
+		{
+			K.timeSimple.innerHTML =
 			T.getTimeFormatted(
 			{
 				want24: true,
@@ -12725,6 +12727,8 @@ K = {
 				wantLetters: true,
 				customTimeInSeconds: T.cSECONDS_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime()
 			});
+		}
+		K.timeLocal.innerHTML = T.getTimeFormatted();
 		// Times in the Options page Debug section
 		K.timestampUTC.innerHTML = T.TIMESTAMP_UNIX_SECONDS;
 		K.timestampLocal.innerHTML = O.Utilities.lastLocalResetTimestamp.value;
@@ -12875,25 +12879,28 @@ K = {
 		C.CurrentChains.forEach(C.queueEventsHighlight);
 		
 		// Update board in simple mode
-		$("#itemBoardCurrentSD").text(D.getObjectName(C.CurrentChainSD));
-		$("#itemBoardNextSD").text(D.getObjectName(C.NextChainSD1));
-		$("#itemBoardCurrentHC").text("");
-		$("#itemBoardNextHC").text("");
-		if (C.CurrentChainHC || C.NextChainHC1)
+		if (I.ModeCurrent === I.ModeEnum.Simple)
 		{
-			$("#itemBoardHC").show();
-			if (C.CurrentChainHC)
+			$("#itemSimpleCurrentSD").text(D.getObjectName(C.CurrentChainSD));
+			$("#itemSimpleNextSD").text(D.getObjectName(C.NextChainSD1));
+			$("#itemSimpleCurrentHC").text("");
+			$("#itemSimpleNextHC").text("");
+			if (C.CurrentChainHC || C.NextChainHC1)
 			{
-				$("#itemBoardCurrentHC").text(D.getObjectName(C.CurrentChainHC));
+				$("#itemSimpleHC").show();
+				if (C.CurrentChainHC)
+				{
+					$("#itemSimpleCurrentHC").text(D.getObjectName(C.CurrentChainHC));
+				}
+				if (C.NextChainHC1)
+				{
+					$("#itemSimpleNextHC").text(D.getObjectName(C.NextChainHC1));
+				}
 			}
-			if (C.NextChainHC1)
+			else
 			{
-				$("#itemBoardNextHC").text(D.getObjectName(C.NextChainHC1));
+				$("#itemSimpleHC").hide();
 			}
-		}
-		else
-		{
-			$("#itemBoardHC").hide();
 		}
 		
 		// Alert current chain
@@ -13186,6 +13193,8 @@ K = {
 	 */
 	updateDigitalClockMinutely: function()
 	{
+		// Clock on the map shown in overlay mode
+		K.timeMap.innerHTML = T.getTimeFormatted({wantSeconds: false});
 		// Daytime clock updates time remaining
 		K.timeDaytime.innerHTML = T.getDayPeriodRemaining();
 		// Local clock updates additional times in tooltip
@@ -13204,7 +13213,7 @@ K = {
 			"Reset: " + T.getTimeFormatted(
 			{
 				customTimeInSeconds: T.SECONDS_TILL_RESET, wantSeconds: false, wantLetters: true
-			});;
+			});
 		I.qTip.init(K.timeLocal);
 	},
 	
@@ -14693,7 +14702,7 @@ I = {
 		var height = $(window).height() / 2;
 		var width = $(window).width() / 2;
 		var half = I.cPANE_CLOCK_HEIGHT / 2;
-		$("#paneBoard").css({
+		$("#paneSimple").css({
 			"margin-top": height - half - 72
 		});
 		$("#paneClock").css(
