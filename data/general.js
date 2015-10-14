@@ -606,9 +606,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Land", "Tower", "Defender"]
 },
 "14": {
-	pve: ["Lumberer Ascalon", "Fractal", "Fields", "Fractal 1-10"],
-	pvp: ["Reward", "Kills", "War Ele", "Eng Necro"],
-	wvw: ["Kills", "Land", "Keep", "Camp"]
+	pve: ["Lumberer Shiverpeaks", "Forger", "Snowden", "Shatterer"],
+	pvp: ["Kills", "Rank", "Eng Mes", "Guard Ele"],
+	wvw: ["Spender", "Ruins", "Keep", "Defender"]
 },
 "15": {
 	pve: ["Forager Ascalon", "Activity", "Bloodtide", "Fractal 1-10"],
@@ -768,10 +768,10 @@ Countdowns: [
 Story:
 {
 	isEnabled: false,
-	name_en: "Mordremoth's Minions Invade Tyria",
-	name_de: "Mordremoths Diener fallen in Tyria ein",
-	name_es: "Los siervos de Mordremoth invaden Tyria",
-	name_fr: "Les serviteurs de Mordremoth envahissent la Tyrie",
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
 	Start: new Date("2015-09-10T16:00:00Z"),
 	Finish: new Date("2015-09-14T16:00:00Z")
 },
