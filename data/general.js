@@ -724,6 +724,15 @@ Announcement: "<a href='http://forum.renaka.com/topic/5888854/'>GW2Timer Map Gui
  */
 Countdowns: [
 {
+	name_en: "Guild Chat: Counting Down to Launch",
+	name_de: "Guild Chat: Countdown zum Launch",
+	name_es: "Guild Chat: Cuenta atrás lanzamiento",
+	name_fr: "Guild Chat: Compte à rebours sortie",
+	news: "counting-down-to-launch-on-guild-chat",
+	Start: new Date("2015-10-16T19:00:00Z"),
+	Finish: new Date("2015-10-16T19:45:00Z")
+},
+{
 	name_en: "Halloween Is Coming!",
 	name_de: "Halloween naht!",
 	name_es: "¡Se acerca Halloween!",
@@ -737,9 +746,33 @@ Countdowns: [
 	name_de: "Heart of Thorns Erscheinungs",
 	name_es: "Heart of Thorns lanzamiento",
 	name_fr: "Heart of Thorns sortie",
-	url: "https://heartofthorns.guildwars2.com/",
+	news: "its-the-final-countdown",
 	Start: new Date("2015-10-23T07:00:00Z"),
 	Finish: new Date("2015-10-24T07:00:00Z")
+},
+{
+	name_en: "New WvW Reset (NA)",
+	name_de: "Neue WvW Zurücksetzen (NA)",
+	name_es: "Nuevo WvW restablecer (NA)",
+	name_fr: "Nouveau McM réinitialiser (NA)",
+	url_en: "https://forum-en.guildwars2.com/forum/game/wuv/WvW-and-the-Heart-of-Thorns-Release",
+	url_de: "https://forum-de.guildwars2.com/forum/game/wuv/WvW-und-Release-von-Heart-of-Thorns",
+	url_es: "https://forum-es.guildwars2.com/forum/game/wuv/WvW-y-el-lanzamiento-de-Heart-of-Thorns",
+	url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sortie-de-Heart-of-Thorns-et-McM",
+	Start: new Date("2015-10-22T16:00:00Z"),
+	Finish: new Date("2015-10-25T01:00:00Z")
+},
+{
+	name_en: "New WvW Reset (EU)",
+	name_de: "Neue WvW Zurücksetzen (EU)",
+	name_es: "Nuevo WvW restablecer (EU)",
+	name_fr: "Nouveau McM réinitialiser (EU)",
+	url_en: "https://forum-en.guildwars2.com/forum/game/wuv/WvW-and-the-Heart-of-Thorns-Release",
+	url_de: "https://forum-de.guildwars2.com/forum/game/wuv/WvW-und-Release-von-Heart-of-Thorns",
+	url_es: "https://forum-es.guildwars2.com/forum/game/wuv/WvW-y-el-lanzamiento-de-Heart-of-Thorns",
+	url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sortie-de-Heart-of-Thorns-et-McM",
+	Start: new Date("2015-10-22T16:00:00Z"),
+	Finish: new Date("2015-10-24T18:00:00Z")
 },
 {
 	name_en: "ArenaNet at Halloween",
