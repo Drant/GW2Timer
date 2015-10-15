@@ -12039,7 +12039,7 @@ T = {
 		if (T.isDashboardStoryEnabled)
 		{
 			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(T.DashboardStory) + "</div>").show();
-			I.initializeScrollbar($("#dsbStory"));
+			I.initializeScrollbar("#dsbStory");
 		}
 		
 		// Initialize sale
@@ -12105,7 +12105,8 @@ T = {
 				$("#dsbSaleTable").css({height: 0}).animate({height: height}, animationspeed, function()
 				{
 					$(this).css({height: "auto"});
-					I.initializeScrollbar($("#dsbSaleTable"));
+					I.initializeScrollbar("#dsbSaleTable");
+					I.updateScrollbar("#dsbSaleTable");
 				});
 			});
 		}
@@ -13624,7 +13625,7 @@ I = {
 		// Initialize scroll bars for pre-loaded plates
 		if (I.isMapEnabled)
 		{
-			I.initializeScrollbar($("#cslContent, #plateChains, #plateOptions"));
+			I.initializeScrollbar("#cslContent, #plateChains, #plateOptions");
 		}
 		
 		// Clean the localStorage of unrecognized variables
@@ -13986,7 +13987,7 @@ I = {
 	 * Initializes custom scroll bar for specified element using defined settings.
 	 * @param jqobject pElement to initialize.
 	 */
-	initializeScrollbar: function(pElement)
+	initializeScrollbar: function(pSelector)
 	{
 		if (I.isScrollEnabled === false)
 		{
@@ -13999,7 +14000,7 @@ I = {
 					case I.BrowserEnum.Firefox: wheelspeed = 3; break;
 				}
 
-				$(pElement).perfectScrollbar({
+				$(pSelector).perfectScrollbar({
 					wheelSpeed: wheelspeed,
 					suppressScrollX: true
 				});
@@ -14007,7 +14008,7 @@ I = {
 			catch (e) {}
 		}
 	},
-	updateScrollbar: function(pElement)
+	updateScrollbar: function(pSelector)
 	{
 		if (I.isScrollEnabled === false)
 		{
@@ -14016,7 +14017,7 @@ I = {
 				try
 				{
 					// Update the pages if element is not specified
-					if (pElement === undefined)
+					if (pSelector === undefined)
 					{
 						$("#plateMap").perfectScrollbar("update");
 						$("#plateChains").perfectScrollbar("update");
@@ -14025,7 +14026,7 @@ I = {
 					}
 					else
 					{
-						$(pElement).perfectScrollbar("update");
+						$(pSelector).perfectScrollbar("update");
 					}
 				}
 				catch (e) {}
@@ -14502,7 +14503,7 @@ I = {
 		I.generateSectionMenu(plate);
 		if (I.isMapEnabled)
 		{
-			I.initializeScrollbar($(plate));
+			I.initializeScrollbar(plate);
 		}
 		I.bindHelpButtons(plate);
 		M.bindMapLinks(plate);

@@ -18,12 +18,12 @@
 	left: -4px; top: -4px;
 }
 
-#itemDashboard {
+.dsbCountdownEntry {
 	line-height: 120%;
-	font-size: 12px;
+	font-size: 14px;
 }
 #dsbCountdown time {
-	font-size: 14px;
+	font-size: 16px;
 }
 #dsbClose {
 	left: 0px;
