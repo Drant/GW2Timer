@@ -616,9 +616,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Kills", "Keep", "Camp"]
 },
 "16": {
-	pve: ["Lumberer Kryta", "Vista Ascalon", "Metrica", "Fractal 1-10"],
-	pvp: ["Kills", "Capture", "War Mes", "Ranger Necro"],
-	wvw: ["Land", "Guard", "Tower", "Camp"]
+	pve: ["Lumberer Wastes", "Fractal", "Harathi", "Jormag"],
+	pvp: ["Capture", "Rank", "Thief Ele", "Guard Mes"],
+	wvw: ["Ruins", "Land", "Defender", "Tower"]
 },
 "17": {
 	pve: ["Lumberer Jungle", "Activity", "Dredgehaunt", "Fractal 1-10"],
@@ -724,7 +724,7 @@ Announcement: "<a href='http://forum.renaka.com/topic/5888854/'>GW2Timer Map Gui
  */
 Countdowns: [
 {
-	name_en: "Guild Chat: Counting Down to Launch",
+	name_en: "Guild Chat: Countdown to Launch",
 	name_de: "Guild Chat: Countdown zum Launch",
 	name_es: "Guild Chat: Cuenta atrás lanzamiento",
 	name_fr: "Guild Chat: Compte à rebours sortie",
@@ -832,7 +832,7 @@ Sale: {
 		col: 1,
 		isExample: true
 	},*/
-		{
+	{
 		url: "http://wiki.guildwars2.com/wiki/Executioner's_Outfit",
 		img: "https://render.guildwars2.com/file/606BC169F95F7FF8470DD2CE6D30016AD5B646EA/648164.png",
 		quantity: 1,

@@ -12050,7 +12050,7 @@ T = {
 				+ "<u>" + ((T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1)) + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceNew'>" + T.DashboardSale.range + "<ins class='s16 s16_gem'></ins></span>)"
-				+ "<img src='img/ui/toggle.png' />"
+				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' />"
 				+ "⇓@ " + T.DashboardSale.Finish.toLocaleString()
 			+"</div><div id='dsbSaleTable' class='jsScrollable'></div>");
 			$("#dsbSaleHeader").click(function()
@@ -12058,6 +12058,7 @@ T = {
 				T.generateDashboardSale();
 			});
 			// Automatically generate the items on sale if the boolean is true
+			I.toggleToggleIcon("#dsbSaleToggleIcon", T.DashboardSale.isPreshown);
 			if (T.DashboardSale.isPreshown === true)
 			{
 				T.generateDashboardSale();
@@ -12073,6 +12074,7 @@ T = {
 		var animationspeed = 200;
 		if ($("#dsbSaleTable").is(":empty") === false)
 		{
+			I.toggleToggleIcon("#dsbSaleToggleIcon", false);
 			$("#dsbSaleTable").animate({height: 0}, animationspeed, function()
 			{
 				$(this).css({height: "auto"}).empty();
@@ -12083,6 +12085,7 @@ T = {
 			$("#dsbSaleTable").append(I.cThrobber);
 			E.updateCoinInGem().always(function()
 			{
+				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
 				$("#dsbSaleTable").empty().append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				if (E.Exchange.CoinInGem !== 0)
 				{
@@ -13371,7 +13374,10 @@ I = {
 	{
 		Chains:
 		{
+			Scheduled: "Scheduled",
 			DryTop: "DryTop",
+			Legacy: "Legacy",
+			Temple: "Temple",
 			Timetable: "Timetable"
 		},
 		Map:
@@ -13390,8 +13396,8 @@ I = {
 			FAQ: "FAQ",
 			About: "About",
 			Embed: "Embed",
-			Scheduled: "Scheduled",
-			Legacy: "Legacy",
+			Schedules: "Schedules",
+			Legacies: "Legacies",
 			Temples: "Temples",
 			Dungeons: "Dungeons"
 		}
@@ -13926,6 +13932,23 @@ I = {
 		{
 			var r = pRequests[i];
 			$(r.s).animate(r.p, {duration: pSpeed, queue: false});
+		}
+	},
+	
+	/*
+	 * Toggles a standard arrowhead icon by rotating it.
+	 * @param string pSelector of the element.
+	 * @param boolean pBoolean true is open state, false is closed state.
+	 */
+	toggleToggleIcon: function(pSelector, pBoolean)
+	{
+		if (pBoolean)
+		{
+			$(pSelector).animate({rotation: 0}, 200);
+		}
+		else
+		{
+			$(pSelector).animate({rotation: -90}, 200);
 		}
 	},
 	
