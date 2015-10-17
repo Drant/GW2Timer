@@ -846,3 +846,7 @@ input[type="text"].rarity7 { color: #9933ff; /* legendary violet */ }
 	font-size: 12px;
 	color: #ffddcc;
 }
+
+.cssHidden {
+	display: none;
+}

@@ -621,9 +621,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Land", "Defender", "Tower"]
 },
 "17": {
-	pve: ["Lumberer Jungle", "Activity", "Dredgehaunt", "Fractal 1-10"],
-	pvp: ["Kills", "Defender", "Thief Necro", "Ele Ranger"],
-	wvw: ["Caravan", "Land", "Tower", "Defender"]
+	pve: ["Forager Orr", "Vista Orr", "Frostgorge", "Wurm"],
+	pvp: ["Defender", "Kills", "War Mes", "Ranger Necro"],
+	wvw: ["Spender", "Guard", "Camp", "Keep"]
 },
 "18": {
 	pve: ["Forager Jungle", "Forger", "Plains", "Fractal 1-10"],
@@ -724,15 +724,6 @@ Announcement: "<a href='http://forum.renaka.com/topic/5888854/'>GW2Timer Map Gui
  */
 Countdowns: [
 {
-	name_en: "Guild Chat: Countdown to Launch",
-	name_de: "Guild Chat: Countdown zum Launch",
-	name_es: "Guild Chat: Cuenta atrás lanzamiento",
-	name_fr: "Guild Chat: Compte à rebours sortie",
-	news: "counting-down-to-launch-on-guild-chat",
-	Start: new Date("2015-10-16T19:00:00Z"),
-	Finish: new Date("2015-10-16T19:45:00Z")
-},
-{
 	name_en: "Halloween Is Coming!",
 	name_de: "Halloween naht!",
 	name_es: "¡Se acerca Halloween!",
@@ -760,7 +751,7 @@ Countdowns: [
 	url_es: "https://forum-es.guildwars2.com/forum/game/wuv/WvW-y-el-lanzamiento-de-Heart-of-Thorns",
 	url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sortie-de-Heart-of-Thorns-et-McM",
 	Start: new Date("2015-10-22T16:00:00Z"),
-	Finish: new Date("2015-10-25T01:00:00Z")
+	Finish: new Date("2015-10-24T18:00:00Z")
 },
 {
 	name_en: "New WvW Reset (EU)",
@@ -772,7 +763,7 @@ Countdowns: [
 	url_es: "https://forum-es.guildwars2.com/forum/game/wuv/WvW-y-el-lanzamiento-de-Heart-of-Thorns",
 	url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sortie-de-Heart-of-Thorns-et-McM",
 	Start: new Date("2015-10-22T16:00:00Z"),
-	Finish: new Date("2015-10-24T18:00:00Z")
+	Finish: new Date("2015-10-24T10:00:00Z")
 },
 {
 	name_en: "ArenaNet at Halloween",
