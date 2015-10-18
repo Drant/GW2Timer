@@ -626,9 +626,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Guard", "Camp", "Keep"]
 },
 "18": {
-	pve: ["Forager Jungle", "Forger", "Plains", "Fractal 1-10"],
-	pvp: ["Reward", "Capture", "War Necro", "Thief Mes"],
-	wvw: ["Land", "Guard", "Defender", "Camp"]
+	pve: ["Miner Shiverpeaks", "Vista Shiverpeaks", "Queensdale", "Maw"],
+	pvp: ["Capture", "Rank", "Thief Necro", "Ele Ranger"],
+	wvw: ["Ruins", "Land", "Defender", "Camp"]
 },
 "19": {
 	pve: ["Lumberer Ascalon", "Activity", "Kessex", "Golem"],
