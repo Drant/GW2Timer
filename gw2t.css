@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x580, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2015.10.04 modified - 2014.04.18 created
+	Version: 2015.10.17 modified - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -648,10 +648,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #mapZones:hover #mapZonesPopup {
 	min-width: 260px;
 	max-width: 340px;
-	padding-top: 0px;
-	padding-right: 8px;
-	padding-bottom: 6px;
-	padding-left: 8px;
+	padding: 0px 8px 6px 8px;
 }
 #mapZoneList {
 	border-spacing: 12px;

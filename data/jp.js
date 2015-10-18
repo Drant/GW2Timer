@@ -717,6 +717,7 @@ Basic: [
 	{c: [14909, 23830]},
 	{c: [15092, 11907]},
 	{c: [15102, 9942]},
+	{c: [15512, 9538], t: "Start at the jumping stones at [15337, 9773] to get on the next cliff level, then the next set of stones at [15529, 9659]."},
 	{c: [15434, 21620], t: "Bottom platform guarded by champ krait"},
 	{c: [15555, 11262]},
 	{c: [15585, 23728]},
