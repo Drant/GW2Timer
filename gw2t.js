@@ -7111,11 +7111,16 @@ M = {
 								$("#mapCoordinatesCopy").val(this.options.link).select();
 								$("#mapCoordinatesName").val(this.options.markername);
 							});
-							that.bindMappingZoomBehavior(marker, "dblclick");
+							marker.on("dblclick", function(pEvent)
+							{
+								U.openExternalURL(U.getWikiLanguageLink(this.options.markername));
+							});
+							that.bindMappingZoomBehavior(marker, "contextmenu");
 						}
 						else
 						{
 							that.bindMappingZoomBehavior(marker, "click");
+							that.bindMappingZoomBehavior(marker, "contextmenu");
 						}
 					}
 					
@@ -7141,6 +7146,7 @@ M = {
 								})
 							});
 							that.bindMappingZoomBehavior(marker, "click");
+							that.bindMappingZoomBehavior(marker, "contextmenu");
 							zoneobj.Layers.Challenge.addLayer(marker);
 						}
 						
@@ -7171,6 +7177,7 @@ M = {
 								}
 								U.openExternalURL(U.getWikiLanguageLink(heartname));
 							});
+							M.bindMappingZoomBehavior(marker, "contextmenu");
 							zoneobj.Layers.Heart.addLayer(marker);
 						}
 						
@@ -8641,7 +8648,7 @@ M = {
 		{
 			if (that.Map.getZoom() === that.ZoomEnum.Max)
 			{
-				that.Map.setZoom(that.ZoomEnum.Sky);
+				that.Map.setView(pEvent.latlng, that.Map.getZoom());
 			}
 			else
 			{
@@ -9043,6 +9050,7 @@ P = {
 					marker = L.marker(coord,
 					{
 						title: "<span class='" + "mapPoi" + "'>" + newname + " (" + event.level + ")" + "</span>",
+						task: event.name,
 						icon: L.icon(
 						{
 							iconUrl: determineEventIcon(searchname),
@@ -9050,7 +9058,17 @@ P = {
 							iconAnchor: [24, 24]
 						})
 					});
-					M.bindMappingZoomBehavior(marker, "click");
+					marker.on("click", function(pEvent)
+					{
+						var eventname = this.options.task;
+						// Trim trailing period if exists
+						if (eventname.indexOf(".") === eventname.length - 1)
+						{
+							eventname = eventname.slice(0, -1);
+						}
+						U.openExternalURL(U.getWikiLink(eventname));
+					});
+					M.bindMappingZoomBehavior(marker, "contextmenu");
 					zoneobj.Layers.EventIcon.addLayer(marker);
 				}
 				M.isEventIconsGenerated = true;
