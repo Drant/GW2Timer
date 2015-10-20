@@ -6888,6 +6888,7 @@ M = {
 			{
 				switch (val.toLowerCase())
 				{
+					case "/gps": I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray); break;
 					case "/identity": I.write(JSON.stringify(GPSIdentityJSON, null, 2)); break;
 					case "/lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
 					case "/unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
