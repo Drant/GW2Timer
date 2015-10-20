@@ -6249,7 +6249,10 @@ C = {
 					&& ((ithchain.series === C.ChainSeriesEnum.DryTop)
 					|| (ithchain.series !== C.ChainSeriesEnum.DryTop && O.Options.bol_expandWB)))
 				{
-					$("#chnDetails_" + ithchain.nexus).show("fast");
+					$("#chnDetails_" + ithchain.nexus).show("fast", function()
+					{
+						I.updateScrollbar();
+					});
 				}
 			}
 			
@@ -8648,10 +8651,22 @@ M = {
 		{
 			if (that.Map.getZoom() === that.ZoomEnum.Max)
 			{
-				that.Map.setView(pEvent.latlng, that.Map.getZoom());
+				var center = that.Map.getCenter();
+				if (~~(center.lat) === ~~(pEvent.latlng.lat)
+					&& ~~(center.lng) === ~~(pEvent.latlng.lng))
+				{
+					// If maxed zoom and centered on the marker, then zoom out
+					that.Map.setZoom(that.ZoomEnum.Sky);
+				}
+				else
+				{
+					// If maxed zoom and not centered on the marker, then center on the marker
+					that.Map.setView(pEvent.latlng, that.Map.getZoom());
+				}
 			}
 			else
 			{
+				// All other cases zoom and center on the marker
 				that.Map.setView(pEvent.latlng, that.ZoomEnum.Max);
 			}
 		});
@@ -12545,7 +12560,9 @@ K = {
 			{
 				$(this).unbind(zoombossbehavior).on(zoombossbehavior, function()
 				{
-					coord = C.Chains[$(this).data(C.cIndexSynonym)].primaryEvents[0].path[0];
+					// Coordinates of the final event in the chain
+					var event = C.Chains[$(this).data(C.cIndexSynonym)].primaryEvents;
+					coord = event[(event.length-1)].path[0];
 					M.goToView(coord, M.ZoomEnum.Ground, M.Pin.Event);
 					
 				}).unbind(checkbossbehavior).on(checkbossbehavior, function()
@@ -13439,7 +13456,7 @@ I = {
 	cHeaderPrefix: "#header",
 	
 	// User information
-	BrowserCurrent: "Unknown",
+	BrowserCurrent: -1,
 	BrowserEnum:
 	{
 		IE: 0,
