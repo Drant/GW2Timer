@@ -823,6 +823,14 @@ Sale: {
 		col: 1,
 		isExample: true
 	},*/
+		{
+		url: "http://wiki.guildwars2.com/wiki/Butterfly Wings Backpack",
+		img: "http://i.imgur.com/scQUyJU.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Executioner's_Outfit",
 		img: "https://render.guildwars2.com/file/606BC169F95F7FF8470DD2CE6D30016AD5B646EA/648164.png",
