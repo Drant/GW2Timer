@@ -104,6 +104,17 @@ var GW2T_ZONE_ASSOCIATION = {
 };
 
 /*
+ * The zone-to-zone portals.
+ */
+var GW2T_ZONE_CONNECTION = [
+	[[5865, 15283], [5974, 15604]], // silverwastes to brisban
+	[[5559, 16744], [6039, 17105]], // dry to brisban
+	[[8011, 17021], [8082, 17270]], // metrica to brisban
+	[[9218, 14666], [9492, 14615]], // brisban to kessex
+	[[9244, 16368], [9443, 16316]] // brisban to caledon
+];
+
+/*
  * Images that are overlayed on the map, such as underground areas.
  */
 var GW2T_SUBMAP_DATA = {
@@ -641,9 +652,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Spender", "Caravan", "Tower", "Camp"]
 },
 "21": {
-	pve: ["Lumberer Kryta", "Fractal", "Metrica", "Fractal 1-10"],
-	pvp: ["Kills", "Rank", "War Ranger", "Guard Necro"],
-	wvw: ["Ruins", "Kills", "Tower", "Camp"]
+	pve: ["Miner Shiverpeaks", "Forger", "Timberline", "Golem"],
+	pvp: ["Defender", "Reward", "Ranger Thief", "Eng Ele"],
+	wvw: ["Creature", "Guard", "Defender", "Keep"]
 },
 "22": {
 	pve: ["Miner Shiverpeaks", "Vista Wastes", "Snowden", "Fractal 1-10"],

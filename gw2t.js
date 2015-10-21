@@ -130,7 +130,7 @@ O = {
 		bol_showDashboard: true,
 		// Map
 		int_setFloor: 1,
-		bol_showZoneRectangles: false,
+		bol_showZoneBorders: false,
 		bol_showPersonalPaths: true,
 		bol_showChainPaths: true,
 		bol_tourPrediction: true,
@@ -1012,9 +1012,9 @@ O = {
 		{
 			M.changeFloor(O.Options.int_setFloor);
 		},
-		bol_showZoneRectangles: function()
+		bol_showZoneBorders: function()
 		{
-			M.toggleLayer(M.Layer.ZoneRectangle, O.Options.bol_showZoneRectangles);
+			M.toggleLayer(M.Layer.ZoneBorder, O.Options.bol_showZoneBorders);
 		},
 		bol_showPersonalPaths: function()
 		{
@@ -1152,13 +1152,13 @@ U = {
 		// Exchange
 		ItemListing: "https://api.guildwars2.com/v2/commerce/listings/",
 		ItemPrices: "https://api.guildwars2.com/v2/commerce/prices/",
+		ItemDatabase: "https://api.guildwars2.com/v2/items",
 		ItemDetails: "https://api.guildwars2.com/v2/items/",
 		ItemRender: "https://render.guildwars2.com/file/",
 		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
 		GemPrice: "https://api.guildwars2.com/v2/commerce/exchange/coins?quantity=",
 		ItemSearch: "http://www.gw2spidy.com/api/v0.9/json/item-search/",
 		ItemSearchFallback: "http://www.gw2shinies.com/api/json/idbyname/",
-		ItemData: "http://www.gw2spidy.com/api/v0.9/json/item/",
 		
 		// WvW
 		Matches: "https://api.guildwars2.com/v1/wvw/matches.json",
@@ -1462,6 +1462,16 @@ U = {
 			} break;
 		}
 		return "null";
+	},
+	
+	/*
+	 * Gets string representation of JSON object, with default parameters.
+	 * @param object pObject.
+	 * @returns string.
+	 */
+	formatJSON: function(pObject)
+	{
+		return JSON.stringify(pObject, null, 2);
 	},
 	
 	/*
@@ -2051,7 +2061,8 @@ X = {
 		DiveMaster: { key: "str_chlDiveMaster", urlkey: "divemaster", value: ""},
 		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader", value: ""},
 		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup", value: ""},
-		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: ""}
+		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: ""},
+		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge", value: ""}
 	},
 	ChecklistEnum:
 	{
@@ -3090,6 +3101,7 @@ E = {
 	cEXCHANGE_LIMIT: 250, // Time before "as you type" exchange executes again
 	
 	isTradingCalculatorsInitialized: false,
+	ItemsArray: [],
 	RefreshTimeout: {},
 	ProgressTimeout: {},
 	ProgressWait: 0,
@@ -3382,6 +3394,65 @@ E = {
 				E.Exchange.GemInCoin = E.Exchange.GEM_SAMPLE / pData.quantity;
 			}
 		});
+	},
+	
+	/*
+	 * Gets the latest items that was added to the API item database.
+	 * @param int pSmartIndex if positive, will list that many latest items;
+	 * if negative, will list the item at that index, from end of the array.
+	 * @returns string of item details.
+	 */
+	getItemLatest: function(pSmartIndex)
+	{
+		if (O.isInteger(pSmartIndex) === false)
+		{
+			I.write("Invalid reverse index.");
+			return;
+		}
+		else
+		{
+			pSmartIndex = parseInt(pSmartIndex);
+		}
+		
+		if (E.ItemsArray.length === 0)
+		{
+			$.get(U.URL_API.ItemDatabase, function(pData)
+			{
+				E.ItemsArray = pData;
+			}).done(function()
+			{
+				E.getItemLatest(pSmartIndex);
+			}).fail(function()
+			{
+				I.write("Unable to retrieve API items database.");
+			});
+		}
+		else
+		{
+			var requesteditem = 0;
+			if (pSmartIndex <= 0)
+			{
+				requesteditem = E.ItemsArray[E.ItemsArray.length + pSmartIndex - 1];
+				$.getJSON(U.URL_API.ItemDetails + requesteditem, function(pData)
+				{
+					I.write(U.formatJSON(pData));
+					I.write("<img src='" + pData.icon + "' />");
+				});
+			}
+			else
+			{
+				for (var i = 0; i < pSmartIndex; i++)
+				{
+					requesteditem = E.ItemsArray[E.ItemsArray.length - pSmartIndex - 1 - i];
+					$.getJSON(U.URL_API.ItemDetails + requesteditem, function(pData)
+					{
+						I.write(U.formatJSON(pData));
+						I.write("<img src='" + pData.icon + "' />", 60);
+					});
+				}
+			}
+			
+		}
 	},
 	
 	/*
@@ -6762,7 +6833,7 @@ M = {
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(), // Path drawn from connecting player-laid pins
-		ZoneRectangle: new L.layerGroup() // Rectangles colored specific to the zones' region
+		ZoneBorder: new L.layerGroup() // Rectangles colored specific to the zones' region
 	},
 	Pin: {
 		Program: {},
@@ -6886,14 +6957,25 @@ M = {
 			// If input looks like a 2D array of coordinates, then create pins from them
 			if (that.parsePersonalPath(val) === false)
 			{
-				switch (val.toLowerCase())
+				// If input starts with a slash, assume it is a console command
+				if (val.indexOf("/") === 0)
 				{
-					case "/gps": I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray); break;
-					case "/identity": I.write(JSON.stringify(GPSIdentityJSON, null, 2)); break;
-					case "/lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
-					case "/unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
-					case "/loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
-					default: that.goToArguments(val, that.Pin.Program);
+					var command = val.toLowerCase().substring(1, val.length);
+					var args = command.split(" ");
+					switch (args[0])
+					{
+						case "clear": I.clear(); break;
+						case "gps": I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray); break;
+						case "identity": I.write(U.formatJSON(GPSIdentityJSON)); break;
+						case "lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
+						case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
+						case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
+						case "items": E.getItemLatest(args[1]); break;
+					}
+				}
+				else
+				{
+					that.goToArguments(val, that.Pin.Program);
 				}
 			}
 		});
@@ -7004,8 +7086,8 @@ M = {
 					var numlandmark = 0;
 					var numchallenge = 0;
 					var numvista = 0;
-					// Cover the zone with a colored rectangle signifying its region
-					that.Layer.ZoneRectangle.addLayer(L.rectangle(
+					// Cover the zone with a colored border signifying its region
+					that.Layer.ZoneBorder.addLayer(L.rectangle(
 						that.convertGCtoLCMulti(zoneobj.rect), {
 							fill: false,
 							color: that.Regions[zoneobj.region].color,
@@ -7119,12 +7201,12 @@ M = {
 							{
 								U.openExternalURL(U.getWikiLanguageLink(this.options.markername));
 							});
-							that.bindMappingZoomBehavior(marker, "contextmenu");
+							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 						}
 						else
 						{
-							that.bindMappingZoomBehavior(marker, "click");
-							that.bindMappingZoomBehavior(marker, "contextmenu");
+							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
+							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 						}
 					}
 					
@@ -7149,8 +7231,8 @@ M = {
 									iconAnchor: [8, 8]
 								})
 							});
-							that.bindMappingZoomBehavior(marker, "click");
-							that.bindMappingZoomBehavior(marker, "contextmenu");
+							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
+							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 							zoneobj.Layers.Challenge.addLayer(marker);
 						}
 						
@@ -7181,7 +7263,7 @@ M = {
 								}
 								U.openExternalURL(U.getWikiLanguageLink(heartname));
 							});
-							M.bindMappingZoomBehavior(marker, "contextmenu");
+							M.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 							zoneobj.Layers.Heart.addLayer(marker);
 						}
 						
@@ -8408,7 +8490,7 @@ M = {
 	},
 	
 	/*
-	 * Converts an array of coordinates to a 2D array.
+	 * Converts a string of coordinates to a 2D array.
 	 * @param string pString array in the form of "[[X1,Y1],[X2,Y2]]" GW2 coords.
 	 * @returns 2D array of coordinates. null if unable to parse.
 	 */
@@ -8618,7 +8700,7 @@ M = {
 	},
 	
 	/*
-	 * Binds standard zoom in/out when user do something to an icon on the map.
+	 * Binds standard behavior when user do something to an icon on the map.
 	 * @param object pMarker to bind.
 	 * @param string pEventType like "click" or "dblclick".
 	 */
@@ -8630,24 +8712,14 @@ M = {
 			that.goToZone(pMarker.options.mappingzone, that.ZoomEnum.Sky);
 		});
 	},
-	bindMarkerZoomBehavior: function(pMarker, pEventType)
+	bindMarkerZoomBehavior: function(pMarker, pEventType, pZoomOut)
 	{
 		var that = this;
-		pMarker.on(pEventType, function(pEvent)
+		if (pZoomOut === undefined)
 		{
-			if (that.Map.getZoom() === that.ZoomEnum.Max)
-			{
-				that.Map.setZoom(that.ZoomEnum.Default);
-			}
-			else
-			{
-				that.Map.setView(pEvent.latlng, that.ZoomEnum.Max);
-			}
-		});
-	},
-	bindMappingZoomBehavior: function(pMarker, pEventType)
-	{
-		var that = this;
+			pZoomOut = that.ZoomEnum.Default;
+		}
+		
 		pMarker.on(pEventType, function(pEvent)
 		{
 			if (that.Map.getZoom() === that.ZoomEnum.Max)
@@ -8657,7 +8729,7 @@ M = {
 					&& ~~(center.lng) === ~~(pEvent.latlng.lng))
 				{
 					// If maxed zoom and centered on the marker, then zoom out
-					that.Map.setZoom(that.ZoomEnum.Sky);
+					that.Map.setZoom(pZoomOut);
 				}
 				else
 				{
@@ -9084,7 +9156,7 @@ P = {
 						}
 						U.openExternalURL(U.getWikiLink(eventname));
 					});
-					M.bindMappingZoomBehavior(marker, "contextmenu");
+					M.bindMarkerZoomBehavior(marker, "contextmenu");
 					zoneobj.Layers.EventIcon.addLayer(marker);
 				}
 				M.isEventIconsGenerated = true;
@@ -9113,7 +9185,7 @@ P = {
 	 */
 	donePopulation: function()
 	{
-		M.toggleLayer(M.Layer.ZoneRectangle, O.Options.bol_showZoneRectangles);
+		M.toggleLayer(M.Layer.ZoneBorder, O.Options.bol_showZoneBorders);
 		if (P.wantZoomToFirstEvent())
 		{
 			// Initialize the "current moused zone" variable for showing waypoints
@@ -9292,7 +9364,7 @@ P = {
 							iconAnchor: [8, 8]
 						})
 					});
-					M.bindMappingZoomBehavior(event.eventicon, "click");
+					M.bindMarkerZoomBehavior(event.eventicon, "click");
 					// Show only current event icons, the highlight event function will continue this
 					if ($("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
 					{
@@ -9941,7 +10013,7 @@ G = {
 					}),
 					title: newtitle
 				});
-				M.bindMappingZoomBehavior(marker, "click");
+				M.bindMarkerZoomBehavior(marker, "click");
 				P.Layer.Chest.addLayer(marker);
 			};
 			for (i in P.Chests)
@@ -10193,9 +10265,10 @@ G = {
 		
 		var styleCollectibleMarker = function(pMarker, pState)
 		{
+			var specialclass = (pMarker.options.isExtreme) ? " mapNeedleExtreme" : "";
 			pMarker.setIcon(new L.divIcon(
 			{
-				className: "mapNeedle" + pState,
+				className: "mapNeedle" + pState + specialclass,
 				html: "<span style='color:" + pMarker.options.needleColor + "'>"
 					+ pMarker.options.needleLabel + "</span>",
 				iconSize: [16, 16],
@@ -10230,6 +10303,7 @@ G = {
 
 			marker = L.marker(M.convertGCtoLC(ithneedle.c),
 			{
+				isExtreme: (number === 1 || number === collectible.needles.length),
 				needleIndex: i,
 				needleType: pType,
 				needleKey: X.Collectibles[pType].urlkey,
@@ -10256,6 +10330,7 @@ G = {
 					U.updateAddressBar("?" + this.options.needleKey + "=" + pings);
 				}
 			});
+			M.bindMarkerZoomBehavior(marker, "contextmenu");
 			
 			// Add to array
 			P.LayerArray[pType].push(marker);
@@ -10717,7 +10792,7 @@ W = {
 	Layer: {
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(),
-		ZoneRectangle: new L.layerGroup(),
+		ZoneBorder: new L.layerGroup(),
 		Pin: new L.layerGroup()
 	},
 	LayerArray: {
