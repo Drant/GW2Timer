@@ -8413,6 +8413,16 @@ M = {
 	},
 	
 	/*
+	 * Converts two coordinates [[X1, Y2], [X2, Y2]] to two LatLng's.
+	 * @param 2D array pSegmentArray.
+	 * @returns array.
+	 */
+	convertGCtoLCDual: function(pSegmentArray)
+	{
+		return [this.convertGCtoLC(pSegmentArray[0]), this.convertGCtoLC(pSegmentArray[1])];
+	},
+	
+	/*
 	 * Converts Leaflet LatLng to GW2's 2 unit array coordinates.
 	 * @param object pLatLng from Leaflet.
 	 * @returns array of x and y coordinates.
@@ -10253,22 +10263,20 @@ G = {
 	 */
 	generateCollectibles: function(pType)
 	{
-		var i, number;
+		var i, number, extreme;
 		var customlist = U.Args[X.Collectibles[pType].urlkey];
 		var collectible = P.Collectibles[pType];
 		var ithneedle;
 		var stateinstring;
-		var marker;
+		var marker, pathline, pathstyle;
 		var markertitle;
 		var translatedname = D.getObjectName(collectible);
-		var pathcoords = new Array();
 		
 		var styleCollectibleMarker = function(pMarker, pState)
 		{
-			var specialclass = (pMarker.options.isExtreme) ? " mapNeedleExtreme" : "";
 			pMarker.setIcon(new L.divIcon(
 			{
-				className: "mapNeedle" + pState + specialclass,
+				className: "mapNeedle" + pState + " mapNeedleExtreme" + pMarker.options.needleExtreme,
 				html: "<span style='color:" + pMarker.options.needleColor + "'>"
 					+ pMarker.options.needleLabel + "</span>",
 				iconSize: [16, 16],
@@ -10283,10 +10291,10 @@ G = {
 		P.LayerArray[pType] = new Array(); // Holds markers (needles)
 		P.Layer[pType] = new L.layerGroup(); // Holds path connecting the markers
 		
-		for (i in collectible.needles)
+		for (i = 0; i < collectible.needles.length; i++)
 		{
 			// Read and enact the state of the ith collectible checklist
-			number = parseInt(i) + 1;
+			number = i + 1;
 			ithneedle = collectible.needles[i];
 			stateinstring = X.getChecklistItem(X.Collectibles[pType], i);
 
@@ -10301,9 +10309,19 @@ G = {
 			}
 			markertitle += "</div>";
 
+			// The "extreme" enum indicates the needle is an extremity or sub-extremity of the path
+			if ((i === 0 || i === collectible.needles.length - 1))
+			{
+				extreme = 0;
+			}
+			else
+			{
+				extreme = ((ithneedle.e === undefined) ? "" : ithneedle.e);
+			}
+			
 			marker = L.marker(M.convertGCtoLC(ithneedle.c),
 			{
-				isExtreme: (number === 1 || number === collectible.needles.length),
+				needleExtreme: extreme,
 				needleIndex: i,
 				needleType: pType,
 				needleKey: X.Collectibles[pType].urlkey,
@@ -10335,17 +10353,21 @@ G = {
 			// Add to array
 			P.LayerArray[pType].push(marker);
 			
-			// Compile coordinates for path lines
-			pathcoords.push(ithneedle.c);
+			// Draw a segment from the current and next needle's coordinates
+			if (i < collectible.needles.length - 1)
+			{
+				pathstyle = (ithneedle.e === 2) ? "5,15" : "1";
+				pathline = L.polyline(M.convertGCtoLCDual([ithneedle.c, (collectible.needles[i+1]).c]),
+				{
+					color: "lime",
+					dashArray: pathstyle,
+					opacity: 0.5
+				});
+				P.Layer[pType].addLayer(pathline);
+			}
 		}
 		
 		// Draw paths from markers numbered low to high
-		var pathline = L.polyline(M.convertGCtoLCMulti(pathcoords),
-		{
-			color: "white",
-			opacity: 0.2
-		});
-		P.Layer[pType].addLayer(pathline);
 		M.toggleLayerArray(P.LayerArray[pType], true);
 		M.toggleLayer(P.Layer[pType], true);
 		
