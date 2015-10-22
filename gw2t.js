@@ -131,6 +131,7 @@ O = {
 		// Map
 		int_setFloor: 1,
 		bol_showZoneBorders: false,
+		bol_showGateways: false,
 		bol_showPersonalPaths: true,
 		bol_showChainPaths: true,
 		bol_tourPrediction: true,
@@ -1015,6 +1016,10 @@ O = {
 		bol_showZoneBorders: function()
 		{
 			M.toggleLayer(M.Layer.ZoneBorder, O.Options.bol_showZoneBorders);
+		},
+		bol_showGateways: function()
+		{
+			M.toggleLayer(M.Layer.Gateway, O.Options.bol_showGateways);
 		},
 		bol_showPersonalPaths: function()
 		{
@@ -3411,6 +3416,7 @@ E = {
 		}
 		else
 		{
+			I.write("Retrieving items...");
 			pSmartIndex = parseInt(pSmartIndex);
 		}
 		
@@ -6833,7 +6839,8 @@ M = {
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(), // Path drawn from connecting player-laid pins
-		ZoneBorder: new L.layerGroup() // Rectangles colored specific to the zones' region
+		ZoneBorder: new L.layerGroup(), // Rectangles colored specific to the zones' region
+		Gateway: new L.layerGroup() // Interzone and intergate connections
 	},
 	Pin: {
 		Program: {},
@@ -6920,6 +6927,7 @@ M = {
 			case I.MapEnum.Tyria: {
 				mapnumber = 1;
 				this.populateMap(I.MapEnum.Tyria);
+				P.drawGateways();
 				C.ScheduledChains.forEach(P.drawChainPaths);
 			} break;
 			
@@ -9196,6 +9204,7 @@ P = {
 	donePopulation: function()
 	{
 		M.toggleLayer(M.Layer.ZoneBorder, O.Options.bol_showZoneBorders);
+		M.toggleLayer(M.Layer.Gateway, O.Options.bol_showGateways);
 		if (P.wantZoomToFirstEvent())
 		{
 			// Initialize the "current moused zone" variable for showing waypoints
@@ -9213,6 +9222,35 @@ P = {
 		P.adjustZoomDryTop();
 		M.goToArguments(U.Args[U.KeyEnum.Go], M.Pin.Program);
 		M.tickGPS();
+	},
+	
+	/*
+	 * Generate gateway icons.
+	 */
+	drawGateways: function()
+	{
+		var marker;
+		var interzones = GW2T_GATEWAY_CONNECTION.interzones;
+		var intergates = GW2T_GATEWAY_CONNECTION.intergates;
+		
+		for (var i in interzones)
+		{
+			for (var ii in interzones[i])
+			{
+				marker = L.marker(M.convertGCtoLC((interzones[i])[ii]),
+				{
+					clickable: false,
+					icon: L.icon(
+					{
+						iconUrl: "img/map/portal_zone.png",
+						iconSize: [32, 32], // Initial size corresponding to default zoom level
+						iconAnchor: [16, 16]
+					}),
+					opacity: 0.7
+				});
+				M.Layer.Gateway.addLayer(marker);
+			}
+		}
 	},
 	
 	/*

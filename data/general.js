@@ -108,7 +108,7 @@ var GW2T_ZONE_ASSOCIATION = {
  */
 var GW2T_GATEWAY_CONNECTION = {
 	// The light blue vortexes at the edges of zones
-	interzone: [
+	interzones: [
 	[[5865, 15283], [5974, 15604]], // silverwastes to brisban
 	[[5559, 16744], [6039, 17105]], // dry to brisban
 	[[8011, 17021], [8082, 17270]], // metrica to brisban
@@ -119,9 +119,17 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[9130, 17658], [9435, 17664]], // metrica to caledon
 	[[11061, 16191], [11090, 16023]], // caledon to kessex
 	[[12232, 14028], [12234, 14141]], // kessex to queensdale
+	[[10301, 14182], [10476, 13932]], // kessex to queensdale
+	[[13353, 14230], [13561, 14110]], // kessex to gendarran
+	[[13327, 12613], [13523, 12681]], // queensdale to gendarran
+	[[11021, 11934], [11245, 11602]], // queensdale to divinity
+	[[14344, 12335], [14341, 12140]], // gendarran to harathi
+	[[15718, 12361], [15749, 12195]], // gendarran to harathi
+	[[17487, 13631], [17758, 13600]], // gendarran to lornar
+	[[17544, 12749], [17780, 12754]] //gendarran to snowden
 	],
 	// The purple asura gates that mostly connect cities
-	intergate: [
+	intergates: [
 		
 	]
 };
@@ -769,6 +777,15 @@ Countdowns: [
 	url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sortie-de-Heart-of-Thorns-et-McM",
 	Start: new Date("2015-10-22T16:00:00Z"),
 	Finish: new Date("2015-10-24T01:00:00Z")
+},
+{
+	name_en: "Launch Livestream",
+	name_de: "Launch Livestream",
+	name_es: "El lanzamiento livestream",
+	name_fr: "La sortie livestream",
+	news: "countdown-to-launch-live",
+	Start: new Date("2015-10-23T02:00:00Z"),
+	Finish: new Date("2015-10-23T07:30:00Z")
 },
 {
 	name_en: "Halloween Is Coming!",
