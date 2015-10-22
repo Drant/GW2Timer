@@ -764,7 +764,7 @@ Countdowns: [
 	url_es: "https://forum-es.guildwars2.com/forum/game/wuv/WvW-y-el-lanzamiento-de-Heart-of-Thorns",
 	url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sortie-de-Heart-of-Thorns-et-McM",
 	Start: new Date("2015-10-22T16:00:00Z"),
-	Finish: new Date("2015-10-24T18:00:00Z")
+	Finish: new Date("2015-10-24T01:00:00Z")
 },
 {
 	name_en: "New WvW Reset (EU)",
@@ -776,7 +776,7 @@ Countdowns: [
 	url_es: "https://forum-es.guildwars2.com/forum/game/wuv/WvW-y-el-lanzamiento-de-Heart-of-Thorns",
 	url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sortie-de-Heart-of-Thorns-et-McM",
 	Start: new Date("2015-10-22T16:00:00Z"),
-	Finish: new Date("2015-10-24T01:00:00Z")
+	Finish: new Date("2015-10-24T18:00:00Z")
 },
 {
 	name_en: "Launch Livestream",
