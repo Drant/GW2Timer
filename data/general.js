@@ -1,6 +1,6 @@
 /*
  * This file is used by http://gw2timer.com
- * Contains Kryta continent map zone, region, dailies, and countdown data.
+ * Contains Kryta continent map zone, region, dailies, countdown, and sales data.
  */
 
 var GW2T_REGION_DATA = {
@@ -104,18 +104,30 @@ var GW2T_ZONE_ASSOCIATION = {
 };
 
 /*
- * The zone-to-zone portals.
+ * Locations for cross-world map travel. Coordinates are ordered west to east.
  */
-var GW2T_ZONE_CONNECTION = [
+var GW2T_GATEWAY_CONNECTION = {
+	// The light blue vortexes at the edges of zones
+	interzone: [
 	[[5865, 15283], [5974, 15604]], // silverwastes to brisban
 	[[5559, 16744], [6039, 17105]], // dry to brisban
 	[[8011, 17021], [8082, 17270]], // metrica to brisban
 	[[9218, 14666], [9492, 14615]], // brisban to kessex
-	[[9244, 16368], [9443, 16316]] // brisban to caledon
-];
+	[[9244, 16368], [9443, 16316]], // brisban to caledon
+	[[6114, 20837], [7281, 20046]], // rata to metrica
+	[[9926, 20038], [10229, 20633]], // caledon to grove
+	[[9130, 17658], [9435, 17664]], // metrica to caledon
+	[[11061, 16191], [11090, 16023]], // caledon to kessex
+	[[12232, 14028], [12234, 14141]], // kessex to queensdale
+	],
+	// The purple asura gates that mostly connect cities
+	intergate: [
+		
+	]
+};
 
 /*
- * Images that are overlayed on the map, such as underground areas.
+ * Images that are overlaid on the map, such as caves and underground areas.
  */
 var GW2T_SUBMAP_DATA = {
 angvarstrove: {
@@ -657,9 +669,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Guard", "Defender", "Keep"]
 },
 "22": {
-	pve: ["Miner Shiverpeaks", "Vista Wastes", "Snowden", "Fractal 1-10"],
-	pvp: ["Reward", "Capture", "Ranger Mes", "Guard Eng"],
-	wvw: ["Guard", "Caravan", "Keep", "Camp"]
+	pve: ["Lumberer Jungle", "Activity", "Snowden", "Fractal 1-10"],
+	pvp: ["Defender", "Capture", "War Ranger", "Guard Necro"],
+	wvw: ["Caravan", "Kills", "Camp", "Tower"]
 },
 "23": {
 	pve: ["Forager Ascalon", "Forger", "Kessex", "Fractal 1-10"],
@@ -756,7 +768,7 @@ Countdowns: [
 	url_es: "https://forum-es.guildwars2.com/forum/game/wuv/WvW-y-el-lanzamiento-de-Heart-of-Thorns",
 	url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sortie-de-Heart-of-Thorns-et-McM",
 	Start: new Date("2015-10-22T16:00:00Z"),
-	Finish: new Date("2015-10-24T10:00:00Z")
+	Finish: new Date("2015-10-24T01:00:00Z")
 },
 {
 	name_en: "Halloween Is Coming!",

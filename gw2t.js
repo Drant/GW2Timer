@@ -10203,7 +10203,7 @@ G = {
 			var i;
 			var collectible;
 			var translatedname;
-
+			
 			for (i in P.Collectibles)
 			{
 				// Create checkboxes
