@@ -482,7 +482,7 @@ html, body,
 
 #dsbStory {
 	display: none;
-	width: auto; height: 120px;
+	width: auto; max-height: 120px;
 	border-bottom: 1px solid #dd9900;
 }
 #dsbStoryTitle {

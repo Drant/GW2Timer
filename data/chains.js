@@ -5650,6 +5650,38 @@ var GW2T_CHAIN_DATA = [
 			primacy: 1
 		}
 	]
+},
+{
+	alias: "LivingStoryXXX0",
+	pronunciation: "mad king says",
+	series: 5,
+	waypoint: "[&BBEEAAA=]",
+	extra: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"],
+	title: "Shadow of the Mad King",
+	name_en: "Mad King Says",
+	name_de: "Verrückte König Sagt",
+	name_es: "Rey Loco dice",
+	name_fr: "Roi Dément a dit",
+	events: [
+		{
+			path: [[16308, 14788],[16308, 14788]],
+			name_en: "Your Mad King says…",
+			name_de: "Der Verrückte König sagt:",
+			name_es: "Vuestro Rey Loco dice...",
+			name_fr: "Votre Roi Dément a dit...",
+			icon: "boss",
+			num: "1",
+			sGotoNum: ["1"],
+			fGotoNum: "1",
+			sInterim: ["0"],
+			fInterim: "*",
+			lim: "0",
+			avg: "10:00",
+			min: "10:00",
+			max: "10:00",
+			primacy: 3
+		}
+	]
 }
 
 ];

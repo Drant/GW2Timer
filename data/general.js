@@ -858,13 +858,13 @@ Countdowns: [
  */
 Story:
 {
-	isEnabled: false,
-	name_en: "",
-	name_de: "",
-	name_es: "",
-	name_fr: "",
-	Start: new Date("2015-09-10T16:00:00Z"),
-	Finish: new Date("2015-09-14T16:00:00Z")
+	isEnabled: true,
+	name_en: "Shadow of the Mad King",
+	name_de: "Schatten des Verrückten Königs",
+	name_es: "La sombra del Rey Loco",
+	name_fr: "Ombre du Roi Dément",
+	Start: new Date("2015-10-23T07:00:00Z"),
+	Finish: new Date("2015-10-31T07:00:00Z")
 },
 /*
  * GW2 gem store sale items.
@@ -879,7 +879,7 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Start: new Date("2015-10-06T16:00:00Z"),
 	Finish: new Date("2015-11-03T16:00:00Z"),
-	range: "25-1000",
+	range: "500-3500",
 	Items: [
 	/*{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
