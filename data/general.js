@@ -778,7 +778,7 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_DASHBOARD_DATA = {
 
-Announcement: "<a href='http://forum.renaka.com/topic/5888854/'>GW2Timer Map Guide</a>: GPS world completion, jumping puzzles, nodes, missions.",
+Announcement: "Do you like using gw2timer.com? Recommend it your friends and new players!",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
