@@ -120,15 +120,43 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[12232, 14028], [12234, 14141]], // kessex to queensdale
 	[[10301, 14182], [10476, 13932]], // kessex to queensdale
 	[[13353, 14230], [13561, 14110]], // kessex to gendarran
+	[[11245, 11602], [11021, 11934]], // divinity to queensdale
 	[[13327, 12613], [13523, 12681]], // queensdale to gendarran
-	[[11021, 11934], [11245, 11602]], // queensdale to divinity
 	[[14344, 12335], [14341, 12140]], // gendarran to harathi
 	[[15718, 12361], [15749, 12195]], // gendarran to harathi
 	[[17487, 13631], [17758, 13600]], // gendarran to lornar
 	[[17544, 12749], [17780, 12754]], //gendarran to snowden
 	[[15879, 14217], [16119, 14380]], // gendarran to lion
 	[[16823, 15764], [16767, 15921]], // lion to bloodtide
-	[[17448, 15031], [17786, 15120]] // lion to lornar
+	[[17448, 15031], [17786, 15120]], // lion to lornar
+	[[17545, 16082], [17784, 16001]], // bloodtide to lornar
+	[[17602, 17798], [17795, 17828]], // bloodtide to lornar
+	[[15542, 18835], [15529, 19192]], // bloodtide to sparkfly
+	[[19344, 16580], [19618, 16380]], // lornar to dredgehaunt
+	[[19035, 18066], [19184, 18273]], // lornar to timberline
+	[[20665, 17971], [20618, 18243]], // dredgehaunt to timberline
+	[[19107, 13401], [19178, 13188]], // snowden to lornar
+	[[21645, 11577], [22032, 11797]], // snowden to wayfarer
+	[[20977, 11386], [21044, 11204]], // snowden to frostgorge
+	[[21428, 14519], [22148, 14491]], // hoelbrak to wayfarer
+	[[21086, 14721], [20942, 15114]], // hoelbrak to dredgehaunt
+	[[23110, 11450], [23061, 11163]], // wayfarer to frostgorge
+	[[23356, 11968], [23680, 11995]], // wayfarer to diessa
+	[[23706, 9704], [23993, 9741]], // frostgorge to fireheart
+	[[24301, 13685], [24090, 13465]], // citadel to diessa
+	[[25049, 14227], [25270, 14411]], // citadel to plains
+	[[26719, 13660], [26847, 13506]], // plains to diessa
+	[[29104, 14842], [29269, 14884]], // plains to blazeridge
+	[[28217, 13642], [28194, 13489]], // plains to marches
+	[[30932, 16429], [30928, 16180]], // fields to blazeridge
+	[[29314, 12615], [29103, 12452]], // blazeridge to marches
+	[[27235, 10757], [27059, 10748]], // marches to fireheart
+	[[19532, 21222], [19583, 21431]], // timberline to maelstrom
+	[[17643, 21789], [17882, 21744]], // sparkfly to maelstrom
+	[[16978, 22219], [16980, 22547]], // sparkfly to straits
+	[[17870, 23464], [17679, 23537]], // maelstrom to straits
+	[[14575, 24541], [14352, 24600]], // straits to malchor
+	[[11926, 25129], [11731, 25347]], // malchor to cursed
 	],
 	// The purple asura gates that mostly connect cities
 	intergates: [
@@ -700,7 +728,7 @@ var GW2T_DAILY_CALENDAR = {
 },
 "23": {
 	pve: ["Miner Wastes", "Vista Jungle", "Fields", "Jormag"],
-	pvp: ["Kills", "Rank", "Ranger Mes", "Guard Eng"],
+	pvp: ["Kills", "Rank", "War Ele", "Rev Necro"],
 	wvw: ["Spender", "Land", "Tower", "Camp"]
 },
 "24": {
@@ -796,15 +824,6 @@ Countdowns: [
 	Finish: new Date("2015-10-24T18:00:00Z")
 },
 {
-	name_en: "Launch Livestream",
-	name_de: "Launch Livestream",
-	name_es: "El lanzamiento livestream",
-	name_fr: "La sortie livestream",
-	news: "countdown-to-launch-live",
-	Start: new Date("2015-10-23T02:00:00Z"),
-	Finish: new Date("2015-10-23T07:30:00Z")
-},
-{
 	name_en: "Halloween Is Coming!",
 	name_de: "Halloween naht!",
 	name_es: "¡Se acerca Halloween!",
@@ -812,15 +831,6 @@ Countdowns: [
 	news: "halloween-is-coming",
 	Start: new Date("2015-10-23T07:00:00Z"),
 	Finish: new Date("2015-10-31T07:00:00Z")
-},
-{
-	name_en: "Heart of Thorns Release",
-	name_de: "Heart of Thorns Erscheinungs",
-	name_es: "Heart of Thorns lanzamiento",
-	name_fr: "Heart of Thorns sortie",
-	news: "its-the-final-countdown",
-	Start: new Date("2015-10-23T07:00:00Z"),
-	Finish: new Date("2015-10-24T07:00:00Z")
 },
 {
 	name_en: "ArenaNet at Halloween",
@@ -880,11 +890,35 @@ Sale: {
 		col: 1,
 		isExample: true
 	},*/
-		{
+	{
+		url: "http://wiki.guildwars2.com/wiki/Crystal_Arbiter_Appearance_Pack",
+		img: "http://i.imgur.com/AuYSBAV.png",
+		quantity: 1,
+		pricenew: 2000,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Bat_Wings_Glider_Combo",
+		img: "http://i.imgur.com/iVa4PwL.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 0
+	},
+	{
 		url: "http://wiki.guildwars2.com/wiki/Butterfly Wings Backpack",
-		img: "http://i.imgur.com/scQUyJU.png",
+		img: "https://render.guildwars2.com/file/DF22D8F8EFF9FC476372020D4F3555A7074F7521/1024006.png",
 		quantity: 1,
 		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Harbinger_of_Mordremoth_Outfit",
+		img: "https://render.guildwars2.com/file/806576D20DA0426BB1D8E55A1CC50AF52806C33A/1024051.png",
+		quantity: 1,
+		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
@@ -929,12 +963,20 @@ Sale: {
 		col: 0
 	},
 	{
+		url: "http://wiki.guildwars2.com/wiki/Character_Jump_Start",
+		img: "http://i.imgur.com/k4DetY1.png",
+		quantity: 1,
+		pricenew: 3500,
+		priceold: 0,
+		col: 1
+	},
+	{
 		url: "http://wiki.guildwars2.com/wiki/Permanent_Mad_King_Finisher",
 		img: "https://render.guildwars2.com/file/FBF45CE54777DF1FF4940EA1A6083658A574727F/499519.png",
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
-		col: 0
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Permanent_Scarecrow_Finisher",
@@ -942,7 +984,7 @@ Sale: {
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
-		col: 0
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Costumed_Mini_3-Pack",
@@ -950,7 +992,7 @@ Sale: {
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
-		col: 0
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Miniature_Spooky_Trio",
@@ -958,71 +1000,7 @@ Sale: {
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Phantom's_Hood",
-		img: "https://render.guildwars2.com/file/39961BC2BC1A3090BA9BE1FD54473B2F034BB10F/499492.png",
-		quantity: 1,
-		pricenew: 200,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Devil_Horns",
-		img: "https://render.guildwars2.com/file/926298A2090B76A42DBBDBA36E46707B016AF39B/499491.png",
-		quantity: 1,
-		pricenew: 200,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Zodiac_Light_Armor_Skin",
-		img: "https://render.guildwars2.com/file/9A22FCFF1B3DDC290D5360DAC77595C86D36F9F8/740304.png",
-		quantity: 1,
-		pricenew: 800,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Zodiac_Medium_Armor_Skin",
-		img: "https://render.guildwars2.com/file/CACA37AA4734936B5E062003940CAB4B11092F6C/740303.png",
-		quantity: 1,
-		pricenew: 800,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Zodiac_Heavy_Armor_Skin",
-		img: "https://render.guildwars2.com/file/2793703E07C7E0D15EA2EE95E6C116DA75674F0C/740302.png",
-		quantity: 1,
-		pricenew: 800,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Profane_Light_Armor_Skin",
-		img: "https://render.guildwars2.com/file/0DA0BEC80AF6FEBA33ABB8D463B00FB8F3F3D861/455867.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Krytan_Medium_Armor_Skin",
-		img: "https://render.guildwars2.com/file/0793E7E47832AFFBFAA71A6801066E2A41606BBA/455866.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Primeval_Heavy_Armor_Skin",
-		img: "https://render.guildwars2.com/file/D57103D6520ECFC07DBA564E5E76F13D96B8B1E7/455865.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Bone_Pick",
@@ -1045,110 +1023,6 @@ Sale: {
 		img: "https://render.guildwars2.com/file/20A17F9B7356EE37FEB1003B66D46DBF755B4D91/882250.png",
 		quantity: 1,
 		pricenew: 1000,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Frost_Wasp_Logging_Tool",
-		img: "https://render.guildwars2.com/file/0227CB6C96D2AC7FC20B6D465478E9BBF3ED09D9/771066.png",
-		quantity: 1,
-		pricenew: 1000,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Fused_Molten_Logging_Axe",
-		img: "https://render.guildwars2.com/file/E31818DD403BE127B29E214C7956BFA301F680DA/866829.png",
-		quantity: 1,
-		pricenew: 1000,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Fused_Molten_Sickle",
-		img: "https://render.guildwars2.com/file/51782971EFC6B80F4B5BD0FB080D0CFFA37B1576/866830.png",
-		quantity: 1,
-		pricenew: 1000,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Molten_Alliance_Mining_Pick",
-		img: "https://render.guildwars2.com/file/ACF90CA6BCD9CEEFD4D0DCEF2AA87C97B50BDC56/561815.png",
-		quantity: 1,
-		pricenew: 1000,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Glowing_Crimson_Mask",
-		img: "https://render.guildwars2.com/file/D506EF430E4BAA75E96095DED5665D6EFDBF79BC/771056.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mask_of_the_Crown",
-		img: "https://render.guildwars2.com/file/30EB5309B29F55DB5E060906C660A598A132E842/619590.png",
-		quantity: 1,
-		pricenew: 400,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Warrior_Quaggan_Backpack_Cover",
-		img: "https://render.guildwars2.com/file/ADE839C7FBDE9B18EE07E21FD4B8AC7BA06E29EE/543837.png",
-		quantity: 1,
-		pricenew: 300,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Fuzzy_Bear_Hat",
-		img: "https://render.guildwars2.com/file/D33AB44B1C0DDBFD3D0DB5CDB139D618AF0FE6B2/587062.png",
-		quantity: 1,
-		pricenew: 200,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Fuzzy_Leopard_Hat",
-		img: "https://render.guildwars2.com/file/C4020218F1437D6E154DBE497F9D66B0D6294E17/771064.png",
-		quantity: 1,
-		pricenew: 200,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Sailor's_Beanie",
-		img: "https://render.guildwars2.com/file/6BDB0CE00EB895C9375F1F7336CCB80F0265BD35/220579.png",
-		quantity: 1,
-		pricenew: 200,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Top_Hat",
-		img: "https://render.guildwars2.com/file/B261FBF12505BBE1210D3FB0EADE00D3E5999A0A/340524.png",
-		quantity: 1,
-		pricenew: 200,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Reading_Glasses",
-		img: "https://render.guildwars2.com/file/01DC5C169EBB7D2467FFC95F01B349FB0F52995B/220573.png",
-		quantity: 1,
-		pricenew: 150,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Wintersday_Earmuffs",
-		img: "https://render.guildwars2.com/file/E1590ED73D082F950AA2ED44021A7F795D0DD647/526118.png",
-		quantity: 1,
-		pricenew: 25,
 		priceold: 0,
 		col: 1
 	}

@@ -4053,7 +4053,7 @@ E = {
 		
 		// Set the first entry with initial text as an example
 		entry = "#trdEntry_" + 0;
-		$(entry + " .trdIcon").attr("src", "img/ui/faq.png");
+		$(entry + " .trdIcon").attr("src", "img/ui/question.png");
 		$(entry + " .trdName").val("Bifrost");
 		$(entry + " .trdBuy").val("4500.37.68");
 		$(entry + " .trdSell").val("550037.68");
