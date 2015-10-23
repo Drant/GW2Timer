@@ -114,7 +114,6 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[8011, 17021], [8082, 17270]], // metrica to brisban
 	[[9218, 14666], [9492, 14615]], // brisban to kessex
 	[[9244, 16368], [9443, 16316]], // brisban to caledon
-	[[6114, 20837], [7281, 20046]], // rata to metrica
 	[[9926, 20038], [10229, 20633]], // caledon to grove
 	[[9130, 17658], [9435, 17664]], // metrica to caledon
 	[[11061, 16191], [11090, 16023]], // caledon to kessex
@@ -126,11 +125,29 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[14344, 12335], [14341, 12140]], // gendarran to harathi
 	[[15718, 12361], [15749, 12195]], // gendarran to harathi
 	[[17487, 13631], [17758, 13600]], // gendarran to lornar
-	[[17544, 12749], [17780, 12754]] //gendarran to snowden
+	[[17544, 12749], [17780, 12754]], //gendarran to snowden
+	[[15879, 14217], [16119, 14380]], // gendarran to lion
+	[[16823, 15764], [16767, 15921]], // lion to bloodtide
+	[[17448, 15031], [17786, 15120]] // lion to lornar
 	],
 	// The purple asura gates that mostly connect cities
 	intergates: [
-		
+	[[6114, 20837], [7281, 20046]], // rata to metrica
+	[[6095, 20859], [5946, 21489]], // rata to incubationlab
+	[[6073, 20856], [5514, 21765]], // rata to dawnsidequay
+	[[5774, 20768], [5248, 19931]], // rata to applieddevelopmentlab
+	[[5772, 20802], [5407, 20840]], // rata to snaffmemoriallab
+	[[5796, 20806], [5290, 21885]], // rata to antidawnanchorage
+	[[16646, 14662], [13872, 20331]], // lion to southsun
+	[[16680, 14699], [20501, 14271]], // lion to hoelbrak
+	[[16663, 14799], [24051, 14060]], // lion to citadel
+	[[16621, 14815], [10450, 20912]], // lion to grove
+	[[16550, 14759], [6003, 20530]], // lion to rata
+	[[16592, 14666], [11341, 11005]], // lion to divinity
+	[[11937, 10966], [29065, 18418]], // divinity to fields
+	[[17390, 23393], [16706, 12619]], // forttrinity to vigilkeep
+	[[17418, 23392], [16672, 16653]], // forttrinity to chantryofsecrets
+	[[17442, 23401], [17815, 15000]] // forttrinity to durmandpriory
 	]
 };
 
@@ -682,9 +699,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Caravan", "Kills", "Camp", "Tower"]
 },
 "23": {
-	pve: ["Forager Ascalon", "Forger", "Kessex", "Fractal 1-10"],
-	pvp: ["Kills", "Rank", "War Eng", "Ranger Necro"],
-	wvw: ["Land", "Creature", "Tower", "Defender"]
+	pve: ["Miner Wastes", "Vista Jungle", "Fields", "Jormag"],
+	pvp: ["Kills", "Rank", "Ranger Mes", "Guard Eng"],
+	wvw: ["Spender", "Land", "Tower", "Camp"]
 },
 "24": {
 	pve: ["Miner Shiverpeaks", "Vista Orr", "Sparkfly", "Fractal 11-20"],

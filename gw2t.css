@@ -627,6 +627,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 #mapOptionsCompletion, #wvwOptionsCompletion {
 	margin-bottom: 8px;
+	border-bottom: 1px solid gray;
 }
 #mapOptionsCompletion label, #wvwOptionsCompletion label {
 	margin: 0;

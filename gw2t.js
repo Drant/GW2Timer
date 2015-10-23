@@ -131,7 +131,8 @@ O = {
 		// Map
 		int_setFloor: 1,
 		bol_showZoneBorders: false,
-		bol_showGateways: false,
+		bol_showZoneGateways: false,
+		bol_showZoneOverview: true,
 		bol_showPersonalPaths: true,
 		bol_showChainPaths: true,
 		bol_tourPrediction: true,
@@ -804,10 +805,6 @@ O = {
 			{
 				location.reload();
 			}
-			if (O.Options.bol_showWorldCompletion === false)
-			{
-				M.toggleLayer(M.Layer.Overview, false);
-			}
 			
 			$("#mapOptionsCompletion label input").each(function()
 			{
@@ -1015,11 +1012,11 @@ O = {
 		},
 		bol_showZoneBorders: function()
 		{
-			M.toggleLayer(M.Layer.ZoneBorder, O.Options.bol_showZoneBorders);
+			P.drawZoneBorders();
 		},
-		bol_showGateways: function()
+		bol_showZoneGateways: function()
 		{
-			M.toggleLayer(M.Layer.Gateway, O.Options.bol_showGateways);
+			P.drawZoneGateways();
 		},
 		bol_showPersonalPaths: function()
 		{
@@ -6839,8 +6836,6 @@ M = {
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(), // Path drawn from connecting player-laid pins
-		ZoneBorder: new L.layerGroup(), // Rectangles colored specific to the zones' region
-		Gateway: new L.layerGroup() // Interzone and intergate connections
 	},
 	Pin: {
 		Program: {},
@@ -6927,7 +6922,8 @@ M = {
 			case I.MapEnum.Tyria: {
 				mapnumber = 1;
 				this.populateMap(I.MapEnum.Tyria);
-				P.drawGateways();
+				P.drawZoneBorders();
+				P.drawZoneGateways();
 				C.ScheduledChains.forEach(P.drawChainPaths);
 			} break;
 			
@@ -7094,15 +7090,6 @@ M = {
 					var numlandmark = 0;
 					var numchallenge = 0;
 					var numvista = 0;
-					// Cover the zone with a colored border signifying its region
-					that.Layer.ZoneBorder.addLayer(L.rectangle(
-						that.convertGCtoLCMulti(zoneobj.rect), {
-							fill: false,
-							color: that.Regions[zoneobj.region].color,
-							weight: 2,
-							clickable: false
-						}
-					));
 					
 					/* 
 					 * For waypoints, points of interest, and vistas.
@@ -7765,7 +7752,7 @@ M = {
 		}
 		
 		// Overview on the zones
-		if (O.Options.bol_showWorldCompletion)
+		if (O.Options.bol_showWorldCompletion && O.Options.bol_showZoneOverview)
 		{
 			if (currentzoom === this.ZoomEnum.Default)
 			{
@@ -7778,6 +7765,10 @@ M = {
 			{
 				this.toggleLayer(this.Layer.Overview, false);
 			}
+		}
+		else
+		{
+			this.toggleLayer(this.Layer.Overview, false);
 		}
 
 		// Waypoints
@@ -8889,6 +8880,8 @@ M = {
 P = {
 	
 	Layer: {
+		ZoneBorder: new L.layerGroup(), // Rectangles colored specific to the zones' region
+		ZoneGateway: new L.layerGroup(), // Interzone and intergate connections
 		DryTopNicks: new L.layerGroup(), // Dry Top event names and timestamps
 		Chest: new L.layerGroup() // Open world basic chests
 	},
@@ -9203,8 +9196,6 @@ P = {
 	 */
 	donePopulation: function()
 	{
-		M.toggleLayer(M.Layer.ZoneBorder, O.Options.bol_showZoneBorders);
-		M.toggleLayer(M.Layer.Gateway, O.Options.bol_showGateways);
 		if (P.wantZoomToFirstEvent())
 		{
 			// Initialize the "current moused zone" variable for showing waypoints
@@ -9225,32 +9216,84 @@ P = {
 	},
 	
 	/*
-	 * Generate gateway icons.
+	 * Generates border rectangles on initial call. Otherwise toggle visibility.
 	 */
-	drawGateways: function()
+	drawZoneBorders: function()
 	{
-		var marker;
-		var interzones = GW2T_GATEWAY_CONNECTION.interzones;
-		var intergates = GW2T_GATEWAY_CONNECTION.intergates;
-		
-		for (var i in interzones)
+		if (O.Options.bol_showZoneBorders
+			&& P.Layer.ZoneBorder.getLayers().length === 0)
 		{
-			for (var ii in interzones[i])
+			for (var i in M.Zones)
 			{
-				marker = L.marker(M.convertGCtoLC((interzones[i])[ii]),
+				var zoneobj = M.Zones[i];
+				// Cover the zone with a colored border signifying its region
+				P.Layer.ZoneBorder.addLayer(L.rectangle(
+					M.convertGCtoLCMulti(zoneobj.rect), {
+						fill: false,
+						color: M.Regions[zoneobj.region].color,
+						weight: 2,
+						clickable: false
+					}
+				));
+			}
+		}
+		M.toggleLayer(P.Layer.ZoneBorder, O.Options.bol_showZoneBorders);
+	},
+	
+	/*
+	 * Generates gateway icons on initial call. Otherwise toggle visibility.
+	 */
+	drawZoneGateways: function()
+	{
+		if (O.Options.bol_showZoneGateways
+			&& P.Layer.ZoneGateway.getLayers().length === 0)
+		{
+			var marker, path;
+			var interzones = GW2T_GATEWAY_CONNECTION.interzones;
+			var intergates = GW2T_GATEWAY_CONNECTION.intergates;
+			
+			var drawGateway = function(pCoord, pImage)
+			{
+				return L.marker(M.convertGCtoLC(pCoord),
 				{
 					clickable: false,
 					icon: L.icon(
 					{
-						iconUrl: "img/map/portal_zone.png",
+						iconUrl: pImage,
 						iconSize: [32, 32], // Initial size corresponding to default zoom level
 						iconAnchor: [16, 16]
 					}),
-					opacity: 0.7
+					opacity: 0.6
 				});
-				M.Layer.Gateway.addLayer(marker);
+			};
+			
+			for (var i in interzones)
+			{
+				// Draw the two portals
+				for (var ii in interzones[i])
+				{
+					marker = drawGateway((interzones[i])[ii], "img/map/gateway_zone.png");
+					P.Layer.ZoneGateway.addLayer(marker);
+				}
+			}
+			for (var i in intergates)
+			{
+				// Draw the two asura gates
+				for (var ii in intergates[i])
+				{
+					marker = drawGateway((intergates[i])[ii], "img/map/gateway_gate.png");
+					P.Layer.ZoneGateway.addLayer(marker);
+				}
+				// Draw the line connecting the gate
+				path = L.polyline(M.convertGCtoLCDual(intergates[i]),
+				{
+					color: "purple",
+					opacity: 0.2
+				});
+				P.Layer.ZoneGateway.addLayer(path);
 			}
 		}
+		M.toggleLayer(P.Layer.ZoneGateway, O.Options.bol_showZoneGateways);
 	},
 	
 	/*

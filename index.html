@@ -105,8 +105,9 @@
 					<img id="mapDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
 					<div id="mapOptionsPopup" class="mapHUDPopup cntComposition">
 						<div id="mapOptionsDisplay">
-							<label title="Show/Hide all icons listed below (except events).<br /><dfn>Right click on the map</dfn> to show the world completion route."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
+							<label title="Show/Hide all icons listed below.<br /><dfn>Right click on the map</dfn> to show the world completion route."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
 							<div id="mapOptionsCompletion">
+								<label><img data-src="img/ui/question.png" /><input id="opt_bol_showZoneOverview" type="checkbox" /> Zone Overview</label>
 								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectors" type="checkbox" /> Sector Names</label>
 								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
 								<label><img data-src="img/map/landmark.png" /><input id="opt_bol_displayPOIs" type="checkbox" /> POIs</label>
@@ -118,7 +119,7 @@
 						</div>
 						<div id="mapOptionsOther">
 							<label title="Show/Hide region-colored borders over zones."><img data-src="img/map/border.png" /><input id="opt_bol_showZoneBorders" type="checkbox" /> Show zone borders</label>
-							<!--<label title="Show/Hide gateways between zones."><img data-src="img/map/gateway_zone.png" /><input id="opt_bol_showGateways" type="checkbox" /> Show gateways</label>-->
+							<label title="Show/Hide gateways between zones."><img data-src="img/map/gateway_gate.png" /><input id="opt_bol_showZoneGateways" type="checkbox" /> Show zone gateways</label>
 							<label title="Double click on the map to lay/remove a personal pin.<br />This option will draw a path from these pins."><img data-src="img/map/pin_white.png" /><input id="opt_bol_showPersonalPaths" type="checkbox" /> Show personal paths</label>
 							<label title="Show/Hide the colored chain paths of world bosses."><img data-src="img/map/pin_green.png" /><input id="opt_bol_showChainPaths" type="checkbox" /> Show chain paths</label>
 							<label title="Automatically scroll the map to the next predicted world boss event.<br />You'll need to be on the chains page."><img data-src="img/map/path.png" /><input id="opt_bol_tourPrediction" type="checkbox" /> Tour predicted events</label>
@@ -226,7 +227,7 @@
 					<img id="wvwDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
 					<div id="wvwOptionsPopup" class="mapHUDPopup cntComposition">
 						<div id="wvwOptionsDisplay">
-							<label title="Show/Hide all icons listed below (except events).<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
+							<label title="Show/Hide all icons listed below.<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
 							<div id="wvwOptionsCompletion">
 								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectorsWvW" type="checkbox" /> Sector Names</label>
 								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypointsWvW" type="checkbox" /> Waypoints</label>
