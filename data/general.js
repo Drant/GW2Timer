@@ -737,9 +737,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Guard", "Land", "Keep", "Defender"]
 },
 "25": {
-	pve: ["Lumberer Wastes", "Fractal", "Harathi", "Fractal 1-10"],
-	pvp: ["Reward", "Capture", "Eng Thief", "Ele Necro"],
-	wvw: ["Guard", "Ruins", "Keep", "Camp"]
+	pve: ["Lumberer Jungle", "Fractal", "Cursed", "Golem"],
+	pvp: ["Defender", "Rank", "War Guard", "Ele Necro"],
+	wvw: ["Creature", "Caravan", "Defender", "Camp"]
 },
 "26": {
 	pve: ["Forager Kryta", "Vista Kryta", "Wayfarer", "Fractal 1-10"],
