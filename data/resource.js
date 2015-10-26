@@ -749,5 +749,19 @@ Spore: {
 	{c: [12928, 15838]},
 	{c: [13040, 15848]}
 	]
+},
+Flax: {
+	name_en: "Flax",
+	name_de: "Leinsamen",
+	name_es: "Lino",
+	name_fr: "Lin",
+	type: "Plant",
+	item: null,
+	riches: [
+	{c: [3358, 14678]}
+	],
+	regulars: [
+	
+	]
 }
 };
