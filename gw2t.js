@@ -75,7 +75,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 151004},
+		programVersion: {key: "int_utlProgramVersion", value: 151027},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
 		personalPins: {key: "str_utlPersonalPins", value: ""}
 	},
@@ -97,8 +97,8 @@ O = {
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
-				+ "<b>Right click on the map</b> to see the new world completion features.<br />"
-				+ "Use the <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>GPS overlay app</a> for fast world completion!<br />"
+				+ "Heart of Thorns maps now work with GPS. Routes are not available yet.<br />"
+				+ "Try the Chromium version of the <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>GW2Navi overlay</a> with much faster performance.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}

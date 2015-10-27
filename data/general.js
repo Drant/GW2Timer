@@ -826,8 +826,8 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_DASHBOARD_DATA = {
 
-Announcement: "Spoilers! <dfn data-coord='[2740, 15226]'>Heart of Thorns</dfn> explorable zones map and icons added.<br />" +
-	"Hover over<img src='img/map/display.png' />to change views. Use <a href='http://forum.renaka.com/topic/5546166/'>GPS overlay</a> for easier navigation in game.",
+Announcement: "Spoilers! <dfn data-coord='[2740, 15226]'>Heart of Thorns</dfn> explorable zones <a href='http://i.imgur.com/icwLrEm.png'>map and icons</a> added.<br />" +
+	"GPS overlay now available with fast <a href='https://github.com/ffd114/gw2route'>Chrome</a> browser engine.",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
@@ -924,6 +924,14 @@ Sale: {
 		col: 0
 	},
 	{
+		url: "http://wiki.guildwars2.com/wiki/Lunatic_Guard_Outfit",
+		img: "http://i.imgur.com/UYf4LCL.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 0
+	},
+	{
 		url: "http://wiki.guildwars2.com/wiki/Bat_Wings_Glider_Combo",
 		img: "http://i.imgur.com/iVa4PwL.png",
 		quantity: 1,
@@ -992,6 +1000,22 @@ Sale: {
 		img: "http://i.imgur.com/k4DetY1.png",
 		quantity: 1,
 		pricenew: 3500,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Ghoul_Backpack_and_Mini_Set",
+		img: "http://i.imgur.com/fePIIMq.png",
+		quantity: 1,
+		pricenew: 600,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mad_King_Dye_Kit",
+		img: "http://i.imgur.com/EWxXKQO.png",
+		quantity: 1,
+		pricenew: 125,
 		priceold: 0,
 		col: 1
 	},
