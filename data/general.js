@@ -747,9 +747,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Ruins", "Spender", "Tower", "Keep"]
 },
 "27": {
-	pve: ["Miner Ascalon", "Vista Shiverpeaks", "Harathi", "Fractal 1-10"],
-	pvp: ["Defender", "Rank", "Eng Mes", "Guard Ele"],
-	wvw: ["Caravan", "Creature", "Defender", "Camp"]
+	pve: ["Lumberer Ascalon", "Forger", "Plains", "FE"],
+	pvp: ["Defender", "Kills", "War Thief", "Rev Mes"],
+	wvw: ["Land", "Kills", "Camp", "Tower"]
 },
 "28": {
 	pve: ["Lumberer Kryta", "Forger", "Queensdale", "Fractal 1-10"],
