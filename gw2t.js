@@ -8090,7 +8090,7 @@ M = {
 	 */
 	redrawPersonalPath: function(pCoords)
 	{
-		if (pCoords.length > 0)
+		if (pCoords !== undefined && pCoords.length > 0)
 		{
 			this.clearPersonalPins();
 			for (var i in pCoords)

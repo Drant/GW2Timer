@@ -649,7 +649,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #mapZones:hover #mapZonesPopup {
 	min-width: 260px;
 	max-width: 340px;
-	padding: 0px 8px 6px 8px;
+	padding: 0px 8px 0px 8px;
 }
 #mapZoneList {
 	border-spacing: 12px;
@@ -660,6 +660,9 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #mapZoneList ul, #mapZoneList h2 {
 	min-width: 120px;
 	max-width: 140px;
+}
+#mapZoneList ul {
+	margin-bottom: 16px;
 }
 
 /* Marker classes

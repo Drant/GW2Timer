@@ -4,13 +4,13 @@
  */
 
 var GW2T_REGION_DATA = {
-"heart": {
-	name_en: "Heart of Maguuma",
-	name_de: "Herz von Maguuma",
-	name_es: "Corazón de Maguuma",
-	name_fr: "Cœur de Maguuma",
-	name_zh: "邁古瑪的心",
-	color: "gray"
+"magus": {
+	name_en: "Magus Falls",
+	name_de: "Magusfälle",
+	name_es: "Cataratas Magus",
+	name_fr: "Chutes des mages",
+	name_zh: "賢者瀑布",
+	color: "yellow"
 },
 "wastes": {
 	name_en: "Maguuma Wastes",
@@ -100,7 +100,11 @@ var GW2T_ZONE_ASSOCIATION = {
 	"326": "hoelbrak",
 	"873": "southsun",
 	"988": "dry",
-	"1015": "silverwastes"
+	"1015": "silverwastes",
+	"1041": "dragon",
+	"1043": "auric",
+	"1045": "tangled",
+	"1052": "verdant"
 };
 
 /*
@@ -233,6 +237,50 @@ spidernestcavern: {
  * Zones are sorted by how far from the top left corner (0,0) it is.
  */
 var GW2T_ZONE_DATA = {
+"verdant":
+{
+	id: "1052",
+	name_en: "Verdant Brink",
+	name_de: "Grasgrüne Schwelle",
+	name_es: "Umbral Verdeante",
+	name_fr: "Orée d'émeraude",
+	name_zh: "蒼翠邊界",
+	region: "magus",
+	rect: [[640, 14592], [3840, 16128]]
+},
+"auric":
+{
+	id: "1043",
+	name_en: "Auric Basin",
+	name_de: "Güldener Talkessel",
+	name_es: "Bassin aurique",
+	name_fr: "Valle Áurico",
+	name_zh: "赤金盆地",
+	region: "magus",
+	rect: [[512, 16128], [2560, 18944]]
+},
+"tangled":
+{
+	id: "1045",
+	name_en: "Tangled Depths",
+	name_de: "Verschlungene Tiefen",
+	name_es: "Profundidades Enredadas",
+	name_fr: "Profondeurs verdoyantes",
+	name_zh: "纏藤深淵",
+	region: "magus",
+	rect: [[2560, 17408], [5888, 19712]]
+},
+"dragon":
+{
+	id: "1041",
+	name_en: "Dragon's Stand",
+	name_de: "Widerstand des Drachen",
+	name_es: "Defensa del Dragón",
+	name_fr: "Repli du Dragon",
+	name_zh: "巨龍陣地",
+	region: "magus",
+	rect: [[1280, 19712], [4352, 22400]]
+},
 "silverwastes":
 {
 	id: "1015",
@@ -778,7 +826,8 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_DASHBOARD_DATA = {
 
-Announcement: "Do you like using gw2timer.com? Recommend it your friends and new players!",
+Announcement: "Spoilers! <dfn data-coord='[2740, 15226]'>Heart of Thorns</dfn> explorable zones map and icons added.<br />" +
+	"Hover over<img src='img/map/display.png' />to change views. Use <a href='http://forum.renaka.com/topic/5546166/'>GPS overlay</a> for easier navigation in game.",
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
