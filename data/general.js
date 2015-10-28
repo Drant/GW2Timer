@@ -26,7 +26,7 @@ var GW2T_REGION_DATA = {
 	name_es: "Jungla de Maguuma",
 	name_fr: "Jungle de Maguuma",
 	name_zh: "晦暗海岸",
-	color: "cyan"
+	color: "deepskyblue"
 },
 "kryta": {
 	name_en: "Kryta",
@@ -42,7 +42,7 @@ var GW2T_REGION_DATA = {
 	name_es: "Orr",
 	name_fr: "Orr",
 	name_zh: "歐爾遺跡",
-	color: "darkgoldenrod"
+	color: "sienna"
 },
 "shiverpeaks": {
 	name_en: "Shiverpeaks",
@@ -50,7 +50,7 @@ var GW2T_REGION_DATA = {
 	name_es: "Picosescalofriantes",
 	name_fr: "Cimefroides",
 	name_zh: "席瓦雪山",
-	color: "lightskyblue"
+	color: "aliceblue"
 },
 "ascalon": {
 	name_en: "Ascalon",
@@ -800,9 +800,9 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Kills", "Camp", "Tower"]
 },
 "28": {
-	pve: ["Lumberer Kryta", "Forger", "Queensdale", "Fractal 1-10"],
-	pvp: ["Capture", "Rank", "War Ele", "Eng Necro"],
-	wvw: ["Spender", "Caravan", "Camp", "Keep"]
+	pve: ["Forager Kryta", "Vista Ascalon", "Fields", "SB"],
+	pvp: ["Reward", "Defender", "Ranger Eng", "Ele Necro"],
+	wvw: ["Land", "Caravan", "Keep", "Defender"]
 },
 "29": {
 	pve: ["Forager Ascalon", "Activity", "Marches", "Fractal 1-10"],
@@ -904,7 +904,7 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Start: new Date("2015-10-06T16:00:00Z"),
 	Finish: new Date("2015-11-03T16:00:00Z"),
-	range: "500-3500",
+	range: "125-3500",
 	Items: [
 	/*{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
