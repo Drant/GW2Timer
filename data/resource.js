@@ -758,7 +758,8 @@ Flax: {
 	type: "Plant",
 	item: null,
 	riches: [
-	{c: [3358, 14678]}
+	{c: [3358, 14678]}, // verdant
+	{c: [3694, 18672]} // tangled
 	],
 	regulars: [
 	
