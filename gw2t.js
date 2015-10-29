@@ -5446,13 +5446,13 @@ C = {
 			date = T.addDaysToDate(date, 1);
 		}
 		var dayofmonth = date.getUTCDate();
-		var alias = (T.DailyCalendar[dayofmonth].pve[3].split(" "))[0].toLowerCase();
+		var alias = (T.DailyCalendar.Days[dayofmonth].pve[3]).toLowerCase();
 		var chain;
 		
 		var currentmins = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
 		var startmins;
 		
-		if (T.ChainAssociation[alias] !== undefined)
+		if (T.ChainAssociation[alias] !== undefined && T.isTimely(T.DailyCalendar, date))
 		{
 			chain = C.Chains[T.ChainAssociation[alias]];
 			startmins = T.convertScheduleKeyToUTCMinutes(chain.scheduleKeys[0]);
@@ -9651,7 +9651,7 @@ G = {
 		{
 			ithdate = T.addDaysToDate(new Date(), i);
 			dayofmonth = ithdate.getUTCDate();
-			G.insertDailyDay(T.DailyCalendar[dayofmonth], ithdate);
+			G.insertDailyDay(T.DailyCalendar.Days[dayofmonth], ithdate);
 		}
 		
 		$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
@@ -9670,7 +9670,7 @@ G = {
 	insertDailyDay: function(pDaily, pDate)
 	{
 		var pve, pvp, wvw; // Daily types
-		var gather, activity, boss; // Regional dailies
+		var gather, activity; // Regional dailies
 		var prof0, prof1;
 		// Prepare variables
 		var dayclass = "";
@@ -9696,7 +9696,6 @@ G = {
 		// Some cells
 		gather = pve[0].split(" ");
 		activity = pve[1].split(" ");
-		boss = pve[3].split(" ");
 		gatherregion = "<ins class='dlyRegion dly_region_" + gather[1].toLowerCase() + "'>";
 		if (activity[0] === "Vista")
 		{
@@ -9704,16 +9703,16 @@ G = {
 			activityregionclose = "</ins>";
 		}
 		eventregion = "<ins class='dlyRegion dly_region_" + M.getZoneRegion(pve[2]) + "'>";
-		if (boss[0] === "Fractal")
+		if (pve[3] !== null)
 		{
-			bosssrc = "dly_pve_" + boss[0].toLowerCase() + "_" + boss[1];
+			bosssrc = "dly_pve_boss";
+			bossregion = "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(pve[3])) + "'>";
+			bossregionclose = "</ins>";
+			bosshtml = "<em><img src='img/chain/" + pve[3].toLowerCase() + I.cPNG + "' /></em>";
 		}
 		else
 		{
-			bosssrc = "dly_pve_boss";
-			bossregion = "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(boss[0])) + "'>";
-			bossregionclose = "</ins>";
-			bosshtml = "<em><img src='img/chain/" + boss[0].toLowerCase() + I.cPNG + "' /></em>";
+			pve[3] = "Unknown";
 		}
 		
 		prof0 = pvp[2].split(" ");
@@ -12168,9 +12167,9 @@ T = {
 		}
 		
 		// Verify announcement: if announcement exists
-		if (T.DashboardAnnouncement.length > 0)
+		if (T.DashboardAnnouncement.content.length > 0 && T.isTimely(T.DashboardAnnouncement, now))
 		{
-			U.convertExternalLink($("#dsbAnnouncement").html(T.DashboardAnnouncement).find("a"));
+			U.convertExternalLink($("#dsbAnnouncement").html(T.DashboardAnnouncement.content).find("a"));
 			M.bindMapLinks("#dsbAnnouncement");
 			T.isDashboardAnnouncementEnabled = true;
 		}
@@ -12181,7 +12180,7 @@ T = {
 			T.isDashboardSaleEnabled = true;
 		}
 		
-		// Make sure at least one component of the dashboard is enabled and timely, else disable the dashboard
+		// Make sure at least one component of the dashboard is enabled, else disable the dashboard
 		if ((T.isDashboardCountdownEnabled === false
 				&& T.isDashboardAnnouncementEnabled === false
 				&& T.isDashboardSaleEnabled === false)

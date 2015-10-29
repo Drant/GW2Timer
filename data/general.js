@@ -1,6 +1,7 @@
 /*
  * This file is used by http://gw2timer.com
- * Contains Kryta continent map zone, region, dailies, countdown, and sales data.
+ * Map data for Kryta continent: zone, region, submaps, and dailies
+ * Dashboard time sensitive data: announcement, countdown, and sales.
  */
 
 var GW2T_REGION_DATA = {
@@ -160,7 +161,7 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[16978, 22219], [16980, 22547]], // sparkfly to straits
 	[[17870, 23464], [17679, 23537]], // maelstrom to straits
 	[[14575, 24541], [14352, 24600]], // straits to malchor
-	[[11926, 25129], [11731, 25347]], // malchor to cursed
+	[[11926, 25129], [11731, 25347]] // malchor to cursed
 	],
 	// The purple asura gates that mostly connect cities
 	intergates: [
@@ -664,98 +665,102 @@ var GW2T_ZONE_DATA = {
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
 var GW2T_DAILY_CALENDAR = {
+Start: new Date("2015-10-28T00:00:00Z"),
+Finish: new Date("2015-10-31T00:00:00Z"),
+Days:
+{
 "1": {
-	pve: ["Miner Shiverpeaks", "Fractal", "Kessex", "Fractal 1-10"],
+	pve: ["Miner Shiverpeaks", "Fractal", "Kessex", null],
 	pvp: ["Defender", "Capture", "Thief Necro", "Ele Ranger"],
 	wvw: ["Land", "Guard", "Tower", "Keep"]
 },
 "2": {
-	pve: ["Forager Orr", "Forger", "Caledon", "Fractal 21-30"],
+	pve: ["Forager Orr", "Forger", "Caledon", null],
 	pvp: ["Defender", "Kills", "War Necro", "Thief Mes"],
 	wvw: ["Spender", "Kills", "Camp", "Defender"]
 },
 "3": {
-	pve: ["Forager Jungle", "Vista Jungle", "Harathi", "Fractal 1-10"],
+	pve: ["Forager Jungle", "Vista Jungle", "Harathi", null],
 	pvp: ["Rank", "Reward", "War Eng", "Ranger Eng"],
 	wvw: ["Ruins", "Kills", "Keep", "Defender"]
 },
 "4": {
-	pve: ["Miner Ascalon", "Vista Ascalon", "Sparkfly", "Fractal 11-20"],
+	pve: ["Miner Ascalon", "Vista Ascalon", "Sparkfly", null],
 	pvp: ["Capture", "Kills", "Ele Mes", "Guard Thief"],
 	wvw: ["Ruins", "Guard", "Camp", "Keep"]
 },
 "5": {
-	pve: ["Lumberer Wastes", "Forger", "Straits", "Fractal 1-10"],
+	pve: ["Lumberer Wastes", "Forger", "Straits", null],
 	pvp: ["Rank", "Reward", "Eng Thief", "Ranger Eng"],
 	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "6": {
-	pve: ["Miner Orr", "Vista Shiverpeaks", "Frostgorge", "Fractal 1-10"],
+	pve: ["Miner Orr", "Vista Shiverpeaks", "Frostgorge", null],
 	pvp: ["Kills", "Defender", "War Guard", "Ranger Eng"],
 	wvw: ["Guard", "Caravan", "Defender", "Camp"]
 },
 "7": {
-	pve: ["Forager Ascalon", "Activity", "Fields", "Fractal 1-10"],
+	pve: ["Forager Ascalon", "Activity", "Fields", null],
 	pvp: ["Kills", "Rank", "Ranger Thief", "Eng Ele"],
 	wvw: ["Land", "Spender", "Defender", "Tower"]
 },
 "8": {
-	pve: ["Lumberer Ascalon", "Forger", "Brisban", "Fractal 1-10"],
+	pve: ["Lumberer Ascalon", "Forger", "Brisban", null],
 	pvp: ["Rank", "Capture", "War Ranger", "Guard Necro"],
 	wvw: ["Ruins", "Kills", "Tower", "Camp"]
 },
 "9": {
-	pve: ["Miner Kryta", "Vista Orr", "Maelstrom", "Fractal 31-40"],
+	pve: ["Miner Kryta", "Vista Orr", "Maelstrom", null],
 	pvp: ["Defender", "Reward", "Ranger Mes", "Guard Eng"],
 	wvw: ["Spender", "Land", "Defender", "Camp"]
 },
 "10": {
-	pve: ["Forager Orr", "Vista Ascalon", "Bloodtide", "Fractal 1-10"],
+	pve: ["Forager Orr", "Vista Ascalon", "Bloodtide", null],
 	pvp: ["Rank", "Reward", "War Eng", "Ranger Necro"],
 	wvw: ["Ruins", "Guard", "Camp", "Defender"]
 },
 "11": {
-	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Plains", "Fractal 1-10"],
+	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Plains", null],
 	pvp: ["Capture", "Defender", "Ele Mes", "Guard Thief"],
 	wvw: ["Land", "Caravan", "Keep", "Camp"]
 },
 "12": {
-	pve: ["Miner Wastes", "Activity", "Kessex", "Fractal 1-10"],
+	pve: ["Miner Wastes", "Activity", "Kessex", null],
 	pvp: ["Capture", "Reward", "Eng Thief", "Ele Necro"],
 	wvw: ["Land", "Guard", "Tower", "Camp"]
 },
 "13": {
-	pve: ["Forager Ascalon", "Vista Jungle", "Dredgehaunt", "Fractal 1-10"],
+	pve: ["Forager Ascalon", "Vista Jungle", "Dredgehaunt", null],
 	pvp: ["Rank", "Reward", "War Thief", "Guard Ranger"],
 	wvw: ["Ruins", "Land", "Tower", "Defender"]
 },
 "14": {
-	pve: ["Lumberer Shiverpeaks", "Forger", "Snowden", "Fractal 1-10"],
+	pve: ["Lumberer Shiverpeaks", "Forger", "Snowden", null],
 	pvp: ["Kills", "Rank", "Eng Mes", "Guard Ele"],
 	wvw: ["Spender", "Ruins", "Keep", "Defender"]
 },
 "15": {
-	pve: ["Miner Shiverpeaks", "Activity", "Metrica", "Fractal 1-10"],
+	pve: ["Miner Shiverpeaks", "Activity", "Metrica", null],
 	pvp: ["Defender", "Reward", "War Ele", "Eng Necro"],
 	wvw: ["Creature", "Kills", "Keep", "Camp"]
 },
 "16": {
-	pve: ["Lumberer Wastes", "Fractal", "Harathi", "Fractal 1-10"],
+	pve: ["Lumberer Wastes", "Fractal", "Harathi", null],
 	pvp: ["Capture", "Rank", "Thief Ele", "Guard Mes"],
 	wvw: ["Ruins", "Land", "Defender", "Tower"]
 },
 "17": {
-	pve: ["Forager Orr", "Vista Orr", "Frostgorge", "Fractal 1-10"],
+	pve: ["Forager Orr", "Vista Orr", "Frostgorge", null],
 	pvp: ["Defender", "Kills", "War Mes", "Ranger Necro"],
 	wvw: ["Spender", "Guard", "Camp", "Keep"]
 },
 "18": {
-	pve: ["Miner Shiverpeaks", "Vista Shiverpeaks", "Queensdale", "Fractal 1-10"],
+	pve: ["Miner Shiverpeaks", "Vista Shiverpeaks", "Queensdale", null],
 	pvp: ["Capture", "Rank", "Thief Necro", "Ele Ranger"],
 	wvw: ["Ruins", "Land", "Defender", "Camp"]
 },
 "19": {
-	pve: ["Lumberer Ascalon", "Vista Ascalon", "Southsun", "Fractal 1-10"],
+	pve: ["Lumberer Ascalon", "Vista Ascalon", "Southsun", null],
 	pvp: ["Defender", "Kills", "War Necro", "Thief Mes"],
 	wvw: ["Kills", "Ruins", "Defender", "Tower"]
 },
@@ -770,7 +775,7 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Creature", "Guard", "Defender", "Keep"]
 },
 "22": {
-	pve: ["Lumberer Jungle", "Activity", "Snowden", "Fractal 1-10"],
+	pve: ["Lumberer Jungle", "Activity", "Snowden", null],
 	pvp: ["Defender", "Capture", "War Ranger", "Guard Necro"],
 	wvw: ["Caravan", "Kills", "Camp", "Tower"]
 },
@@ -805,19 +810,20 @@ var GW2T_DAILY_CALENDAR = {
 	wvw: ["Land", "Caravan", "Keep", "Defender"]
 },
 "29": {
-	pve: ["Forager Ascalon", "Activity", "Marches", "Fractal 1-10"],
-	pvp: ["Capture", "Reward", "Thief Ele", "Guard Mes"],
-	wvw: ["Land", "Kills", "Defender", "Tower"]
+	pve: ["Miner Shiverpeaks", "Vista Kryta", "Brisban", "FE"],
+	pvp: ["Defender", "Rank", "Guard Thief", "Rev Mes"],
+	wvw: ["Ruins", "Guard", "Camp", "Defender"]
 },
 "30": {
-	pve: ["Lumberer Kryta", "Vista Wastes", "Gendarran", "Fractal 1-10"],
+	pve: ["Lumberer Kryta", "Vista Wastes", "Gendarran", null],
 	pvp: ["Rank", "Reward", "War Mes", "Guard Necro"],
 	wvw: ["Guard", "Caravan", "Defender", "Camp"]
 },
 "31": {
-	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Sparkfly", "Fractal 1-10"],
+	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Sparkfly", null],
 	pvp: ["Defender", "Kills", "Thief Necro", "Ele Ranger"],
 	wvw: ["Creature", "Land", "Keep", "Camp"]
+}
 }
 };
 
@@ -826,8 +832,13 @@ var GW2T_DAILY_CALENDAR = {
  */
 var GW2T_DASHBOARD_DATA = {
 
-Announcement: "Spoilers! <dfn data-coord='[2740, 15226]'>Heart of Thorns</dfn> explorable zones <a href='http://i.imgur.com/icwLrEm.png'>map and icons</a> added.<br />" +
+Announcement:
+{
+	content: "Spoilers! <dfn data-coord='[2740, 15226]'>Heart of Thorns</dfn> explorable zones <a href='http://i.imgur.com/icwLrEm.png'>map and icons</a> added.<br />" +
 	"GPS overlay now available with fast <a href='https://github.com/ffd114/gw2route'>Chrome</a> browser engine.",
+	Start: new Date("2015-10-27T16:00:00Z"),
+	Finish: new Date("2015-11-06T08:00:00Z")
+},
 
 /*
  * GW2 special events, such as those announced on GuildWars2.com.
@@ -855,7 +866,7 @@ Countdowns: [
 	name_fr: "Halloween approche !",
 	news: "halloween-is-coming",
 	Start: new Date("2015-10-23T07:00:00Z"),
-	Finish: new Date("2015-10-31T07:00:00Z")
+	Finish: new Date("2015-11-06T08:00:00Z")
 },
 {
 	name_en: "ArenaNet at Halloween",
@@ -889,7 +900,7 @@ Story:
 	name_es: "La sombra del Rey Loco",
 	name_fr: "Ombre du Roi Dément",
 	Start: new Date("2015-10-23T07:00:00Z"),
-	Finish: new Date("2015-10-31T07:00:00Z")
+	Finish: new Date("2015-11-06T08:00:00Z")
 },
 /*
  * GW2 gem store sale items.
@@ -917,7 +928,7 @@ Sale: {
 	},*/
 	{
 		url: "http://wiki.guildwars2.com/wiki/Crystal_Arbiter_Appearance_Pack",
-		img: "http://i.imgur.com/AuYSBAV.png",
+		img: "https://render.guildwars2.com/file/62230B3E52E262F814E10D5A2C49EBC3ACAE9640/1223685.png",
 		quantity: 1,
 		pricenew: 2000,
 		priceold: 0,
@@ -925,7 +936,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Lunatic_Guard_Outfit",
-		img: "http://i.imgur.com/UYf4LCL.png",
+		img: "https://render.guildwars2.com/file/21DF9BD3E8FA3E63E4B0D90F0820CE2617E22D95/1223686.png",
 		quantity: 1,
 		pricenew: 700,
 		priceold: 0,
@@ -933,7 +944,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Bat_Wings_Glider_Combo",
-		img: "http://i.imgur.com/iVa4PwL.png",
+		img: "https://render.guildwars2.com/file/BD2FA14B122CB7EB2205D016F9B07D4F1FC90ED2/1203275.png",
 		quantity: 1,
 		pricenew: 700,
 		priceold: 0,
@@ -1005,7 +1016,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Ghoul_Backpack_and_Mini_Set",
-		img: "http://i.imgur.com/fePIIMq.png",
+		img: "https://render.guildwars2.com/file/75985817F910CB485F390F305FED43C3C2306E0A/1200504.png",
 		quantity: 1,
 		pricenew: 600,
 		priceold: 0,
@@ -1013,7 +1024,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mad_King_Dye_Kit",
-		img: "http://i.imgur.com/EWxXKQO.png",
+		img: "https://render.guildwars2.com/file/68B1C9C4E228064C0E7E0316202B97D2E8303A14/1114056.png",
 		quantity: 1,
 		pricenew: 125,
 		priceold: 0,
