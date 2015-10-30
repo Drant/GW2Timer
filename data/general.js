@@ -815,9 +815,9 @@ Days:
 	wvw: ["Ruins", "Guard", "Camp", "Defender"]
 },
 "30": {
-	pve: ["Jungle Lumberer", "Forger", "Bloodtide", null],
+	pve: ["Jungle Lumberer", "Forger", "Bloodtide", "Maw"],
 	pvp: ["Reward", "Rank", "War Eng", "Rev Mes"],
-	wvw: ["Caravan", "Veteran", "Camp", "Keep"]
+	wvw: ["Caravan", "Creature", "Camp", "Keep"]
 },
 "31": {
 	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Sparkfly", null],
