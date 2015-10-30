@@ -815,9 +815,9 @@ Days:
 	wvw: ["Ruins", "Guard", "Camp", "Defender"]
 },
 "30": {
-	pve: ["Lumberer Kryta", "Vista Wastes", "Gendarran", null],
-	pvp: ["Rank", "Reward", "War Mes", "Guard Necro"],
-	wvw: ["Guard", "Caravan", "Defender", "Camp"]
+	pve: ["Jungle Lumberer", "Forger", "Bloodtide", null],
+	pvp: ["Reward", "Rank", "War Eng", "Rev Mes"],
+	wvw: ["Caravan", "Veteran", "Camp", "Keep"]
 },
 "31": {
 	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Sparkfly", null],
@@ -849,7 +849,7 @@ Announcement:
 	name_de: "",
 	name_es: "",
 	name_fr: "",
-	news: "", // Official GW2 site news link
+	official: "", // Official GW2 site news link, the prefix https://www.guildwars2.com/en/ is pre-included
 	url: "", // Language independent, overrides others
 	url_en: "",
 	url_de: "",
@@ -860,11 +860,11 @@ Announcement:
  */
 Countdowns: [
 {
-	name_en: "Halloween Is Coming!",
-	name_de: "Halloween naht!",
-	name_es: "¡Se acerca Halloween!",
-	name_fr: "Halloween approche !",
-	news: "halloween-is-coming",
+	name_en: "Halloween 2015",
+	name_de: "Halloween 2015",
+	name_es: "Halloween 2015",
+	name_fr: "Halloween 2015",
+	official: "the-game/releases/october-23-2015",
 	Start: new Date("2015-10-23T07:00:00Z"),
 	Finish: new Date("2015-11-06T08:00:00Z")
 },

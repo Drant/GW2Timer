@@ -1942,9 +1942,9 @@ U = {
 	 * @param string pString suffix.
 	 * @returns string URL.
 	 */
-	getGW2NewsLink: function(pString)
+	getGW2OfficialLink: function(pString)
 	{
-		return "https://www.guildwars2.com/" + D.getFullySupportedLanguage() + "/news/" + pString;
+		return "https://www.guildwars2.com/" + D.getFullySupportedLanguage() + "/" + pString;
 	},
 	
 	/*
@@ -4815,7 +4815,7 @@ D = {
 			cs: "Chrámy", it: "Templi", pl: "Świątynie", pt: "Templos", ru: "Храмы", zh: "寺廟"},
 		s_Full_Timetable: {de: "Zeitplan", es: "Horario", fr: "Horaire",
 			cs: "Plán", it: "Programma", pl: "Harmonogram", pt: "Horário", ru: "Расписание", zh: "時間表"},
-		s_Gem_Store_Promotions: {de: "Edelsteinshop Aktionen", es: "Tienda de gemas promociones", fr: "Boutique aux gemmes promotions",
+		s_Gem_Store_Promotions: {de: "Edelsteinshop Aktionen", es: "Promociones gemas", fr: "Promotions gemmes",
 			cs: "Drahokam Prodejna Propagace", it: "Negozio gemma promozioni", pl: "Klejnot Sklep Promocje", pt: "Loja gema promoções", ru: "Самоцве́т Магази́н Продвижения", zh: "寶石商店促銷"},
 		s_news: {de: "nachrichten", es: "noticias", fr: "actualités",
 			cs: "zprávy", it: "notizie", pl: "wiadomości", pt: "notícias", ru: "новости", zh: "新聞"},
@@ -5446,7 +5446,8 @@ C = {
 			date = T.addDaysToDate(date, 1);
 		}
 		var dayofmonth = date.getUTCDate();
-		var alias = (T.DailyCalendar.Days[dayofmonth].pve[3]).toLowerCase();
+		var alias = (T.DailyCalendar.Days[dayofmonth].pve[3]);
+		alias = (alias !== null) ? alias.toLowerCase() : null;
 		var chain;
 		
 		var currentmins = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
@@ -9710,10 +9711,6 @@ G = {
 			bossregionclose = "</ins>";
 			bosshtml = "<em><img src='img/chain/" + pve[3].toLowerCase() + I.cPNG + "' /></em>";
 		}
-		else
-		{
-			pve[3] = "Unknown";
-		}
 		
 		prof0 = pvp[2].split(" ");
 		prof1 = pvp[3].split(" ");
@@ -12220,7 +12217,7 @@ T = {
 				// Use default name if available, or use the translated name
 				name = (ctd.name === undefined) ? ctd[namekey] : ctd.name;
 				// If available: set the URL as the official news page, the translated url, or a regular url
-				url = (ctd.news === undefined) ? ctd[urlkey] : U.getGW2NewsLink(ctd.news); 
+				url = (ctd.official === undefined) ? ctd[urlkey] : U.getGW2OfficialLink(ctd.official);
 				url = (url === undefined) ? ctd.url : url;
 				if (url.indexOf(I.cSiteURL) !== -1)
 				{

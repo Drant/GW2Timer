@@ -756,7 +756,7 @@ Flax: {
 	name_es: "Lino",
 	name_fr: "Lin",
 	type: "Plant",
-	item: null,
+	item: "74090",
 	riches: [
 	{c: [3358, 14678]}, // verdant
 	{c: [3694, 18672]} // tangled
