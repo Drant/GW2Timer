@@ -665,8 +665,8 @@ var GW2T_ZONE_DATA = {
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
 var GW2T_DAILY_CALENDAR = {
-Start: new Date("2015-10-28T00:00:00Z"),
-Finish: new Date("2015-10-31T00:00:00Z"),
+Start: new Date("2015-10-19T00:00:00Z"),
+Finish: new Date("2015-11-19T00:00:00Z"),
 Days:
 {
 "1": {
@@ -690,14 +690,14 @@ Days:
 	wvw: ["Ruins", "Guard", "Camp", "Keep"]
 },
 "5": {
-	pve: ["Lumberer Wastes", "Forger", "Straits", null],
-	pvp: ["Rank", "Reward", "Eng Thief", "Ranger Eng"],
-	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
+	pve: ["Lumberer Kryta", "Vista Ascalon", "Timberlines", "Shatterer"],
+	pvp: ["Reward", "Rank", "Guard Eng", "Thief Mes"],
+	wvw: ["Ruins", "Kills", "Tower", "Defender"]
 },
 "6": {
-	pve: ["Miner Orr", "Vista Shiverpeaks", "Frostgorge", null],
-	pvp: ["Kills", "Defender", "War Guard", "Ranger Eng"],
-	wvw: ["Guard", "Caravan", "Defender", "Camp"]
+	pve: ["Forager Orr", "Forger", "Sparkfly", "Wurm"],
+	pvp: ["Kills", "Capture", "War Ranger", "Ele Necro"],
+	wvw: ["Guard", "Creature", "Keep", "Defender"]
 },
 "7": {
 	pve: ["Forager Ascalon", "Activity", "Fields", null],
@@ -860,25 +860,13 @@ Announcement:
  */
 Countdowns: [
 {
-	name_en: "Halloween 2015",
-	name_de: "Halloween 2015",
-	name_es: "Halloween 2015",
-	name_fr: "Halloween 2015",
-	official: "the-game/releases/october-23-2015",
-	Start: new Date("2015-10-23T07:00:00Z"),
-	Finish: new Date("2015-11-06T08:00:00Z")
-},
-{
-	name_en: "ArenaNet at Halloween",
-	name_de: "ArenaNet an Halloween",
-	name_es: "ArenaNet en Halloween",
-	name_fr: "ArenaNet à Halloween",
-	url_en: "https://forum-en.guildwars2.com/forum/game/gw2/Halloween-Event-Yay",
-	url_de: "https://forum-de.guildwars2.com/forum/game/gw2/Halloween-Event-2",
-	url_es: "https://forum-es.guildwars2.com/forum/game/game/Evento-de-Halloween",
-	url_fr: "https://forum-fr.guildwars2.com/forum/game/game/v-nement-d-Halloween",
-	Start: new Date("2015-10-30T16:00:00Z"),
-	Finish: new Date("2015-10-31T07:00:00Z")
+	name_en: "Wintersday 2015",
+	name_de: "Wintertag 2015",
+	name_es: "Día Invernal 2015",
+	name_fr: "Hivernel 2015",
+	official: "news/the-road-ahead-for-2015",
+	Start: new Date("2015-12-15T17:00:00Z"),
+	Finish: new Date("2015-12-29T17:00:00Z")
 }
 ],
 /*
@@ -894,11 +882,11 @@ Countdowns: [
  */
 Story:
 {
-	isEnabled: true,
-	name_en: "Shadow of the Mad King",
-	name_de: "Schatten des Verrückten Königs",
-	name_es: "La sombra del Rey Loco",
-	name_fr: "Ombre du Roi Dément",
+	isEnabled: false,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
 	Start: new Date("2015-10-23T07:00:00Z"),
 	Finish: new Date("2015-11-06T08:00:00Z")
 },
@@ -913,9 +901,9 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	Start: new Date("2015-10-06T16:00:00Z"),
-	Finish: new Date("2015-11-03T16:00:00Z"),
-	range: "125-3500",
+	Start: new Date("2015-11-04T16:00:00Z"),
+	Finish: new Date("2015-11-10T16:00:00Z"),
+	range: "125-2000",
 	Items: [
 	/*{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
@@ -942,83 +930,59 @@ Sale: {
 		priceold: 0,
 		col: 0
 	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Bat_Wings_Glider_Combo",
-		img: "https://render.guildwars2.com/file/BD2FA14B122CB7EB2205D016F9B07D4F1FC90ED2/1203275.png",
+		{
+		url: "http://wiki.guildwars2.com/wiki/Black_Feather_Wings_Backpack",
+		img: "https://render.guildwars2.com/file/5978F84C08E69460B7FD34346745E7183562A35A/951784.png",
 		quantity: 1,
 		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Butterfly Wings Backpack",
-		img: "https://render.guildwars2.com/file/DF22D8F8EFF9FC476372020D4F3555A7074F7521/1024006.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Harbinger_of_Mordremoth_Outfit",
-		img: "https://render.guildwars2.com/file/806576D20DA0426BB1D8E55A1CC50AF52806C33A/1024051.png",
+		url: "http://wiki.guildwars2.com/wiki/White_Feather_Wings_Backpack",
+		img: "https://render.guildwars2.com/file/FB9A14C04510096F4E33205AC2DE15BB07ADA0FF/1010543.png",
 		quantity: 1,
 		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Executioner's_Outfit",
-		img: "https://render.guildwars2.com/file/606BC169F95F7FF8470DD2CE6D30016AD5B646EA/648164.png",
+		url: "http://wiki.guildwars2.com/wiki/Exalted_Glider",
+		img: "https://render.guildwars2.com/file/60BAF50456D5D49E672D9CE3E7A34391E2CA8011/1200572.png",
 		quantity: 1,
-		pricenew: 700,
+		pricenew: 400,
 		priceold: 0,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Bloody_Prince's_Outfit",
-		img: "https://render.guildwars2.com/file/0297679A65D858DFC61B9C02ECC4964FDEC7AA1A/648158.png",
+		url: "http://wiki.guildwars2.com/wiki/Dread_Quiver_Backpack",
+		img: "https://render.guildwars2.com/file/310EE3C0A2C3F550B81A790C12EA720DBD3DFA0E/1205831.png",
 		quantity: 1,
-		pricenew: 700,
+		pricenew: 350,
 		priceold: 0,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Mad_King's_Outfit",
-		img: "https://render.guildwars2.com/file/041DC1695CF0DD1A4438D45ACB036C510E1AFFB4/499488.png",
+		url: "http://wiki.guildwars2.com/wiki/Mini_Tiger",
+		img: "https://render.guildwars2.com/file/42D8AB9393C79E117F56C0D4BFA36A335A5F4E72/1055534.png",
 		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Witch's_Outfit",
-		img: "https://render.guildwars2.com/file/F90DEF6BD1FA9EE60DC93BA31B0D367EBA60EC7A/499499.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Raiment_of_the_Lich",
-		img: "https://render.guildwars2.com/file/5A4C04B84D5C7BA4CB7E7C0804D83FC0EE38BA1B/882252.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Character_Jump_Start",
-		img: "http://i.imgur.com/k4DetY1.png",
-		quantity: 1,
-		pricenew: 3500,
+		pricenew: 350,
 		priceold: 0,
 		col: 1
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Ghoul_Backpack_and_Mini_Set",
-		img: "https://render.guildwars2.com/file/75985817F910CB485F390F305FED43C3C2306E0A/1200504.png",
+		url: "http://wiki.guildwars2.com/wiki/Mini_Bonebreaker",
+		img: "https://render.guildwars2.com/file/39570A0CCB3F2A664425993F541EA2381D930E30/1072823.png",
 		quantity: 1,
-		pricenew: 600,
+		pricenew: 350,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mini_Drooburt's_Ghost",
+		img: "https://render.guildwars2.com/file/D305750F120C3F4496DEB5B5064E0EE4290A0FC2/919368.png",
+		quantity: 1,
+		pricenew: 350,
 		priceold: 0,
 		col: 1
 	},
@@ -1030,62 +994,6 @@ Sale: {
 		priceold: 0,
 		col: 1
 	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Permanent_Mad_King_Finisher",
-		img: "https://render.guildwars2.com/file/FBF45CE54777DF1FF4940EA1A6083658A574727F/499519.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Permanent_Scarecrow_Finisher",
-		img: "https://render.guildwars2.com/file/3849FBC850B9A872FBEFEFF5F852AE4434F33D51/499518.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Costumed_Mini_3-Pack",
-		img: "https://render.guildwars2.com/file/29F135C235EDCCCCB3C714B70D24EEB907F69B5A/648175.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Miniature_Spooky_Trio",
-		img: "https://render.guildwars2.com/file/37DEE7E6294BD4D9345001C750BB37991A1931B8/499442.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Bone_Pick",
-		img: "https://render.guildwars2.com/file/9827C507181C6B305EA026C2F1EB7448AA390CD5/638367.png",
-		quantity: 1,
-		pricenew: 1000,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Tireless_Harvesting_Minion",
-		img: "https://render.guildwars2.com/file/66A0544916B86F1E00F173ABB9555FC6FDCECBE0/882264.png",
-		quantity: 1,
-		pricenew: 1000,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Tireless_Logging_Minion",
-		img: "https://render.guildwars2.com/file/20A17F9B7356EE37FEB1003B66D46DBF755B4D91/882250.png",
-		quantity: 1,
-		pricenew: 1000,
-		priceold: 0,
-		col: 1
-	}
 	]
 }
 };

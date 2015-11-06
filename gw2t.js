@@ -1234,6 +1234,48 @@ U = {
 	},
 	
 	/*
+	 * Prints a v2 API endpoint by querying each element in the array it returned.
+	 * @param string pString of API
+	 */
+	printAPIArray: function(pString)
+	{
+		var array = new Array();
+		var length = 0;
+		var counter = 0;
+		$.get("https://api.guildwars2.com/v2/" + pString, function(pData)
+		{
+			I.write("Gathering elements...");
+			length = pData.length;
+			for (var i in pData)
+			{
+				$.getJSON("https://api.guildwars2.com/v2/" + pString + "/" + pData[i], function(pDataInner)
+				{
+					array.push(U.formatJSON(pDataInner));
+				}).done(function()
+				{
+					// Print the result when all elements have been queried
+					if (counter === length - 1)
+					{
+						I.clear();
+						array.sort();
+						for (var ii in array)
+						{
+							I.write(array[ii], 60);
+						}
+					}
+					counter++;
+				}).fail(function()
+				{
+					I.write("Unable to retrieve API array element: " + U.escapeHTML(pData[i]));
+				});
+			}
+		}).fail(function()
+		{
+			I.write("Unable to retrieve API array.");
+		});
+	},
+	
+	/*
 	 * Tells if a string is an enum of an enum object.
 	 * @param string pString to test for inclusion.
 	 * @param object pEnum container of enums.
@@ -6975,6 +7017,7 @@ M = {
 						case "lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
 						case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
 						case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
+						case "api": U.printAPIArray(args[1]); break;
 						case "items": E.getItemLatest(args[1]); break;
 					}
 				}
