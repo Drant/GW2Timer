@@ -700,9 +700,9 @@ Days:
 	wvw: ["Guard", "Creature", "Keep", "Defender"]
 },
 "7": {
-	pve: ["Forager Ascalon", "Activity", "Fields", null],
-	pvp: ["Kills", "Rank", "Ranger Thief", "Eng Ele"],
-	wvw: ["Land", "Spender", "Defender", "Tower"]
+	pve: ["Miner Jungle", "Fractal", "Harathi", "SB"],
+	pvp: ["Rank", "Defender", "Guard Ranger", "Mes Necro"],
+	wvw: ["Spender", "Ruins", "Camp", "Keep"]
 },
 "8": {
 	pve: ["Lumberer Ascalon", "Forger", "Brisban", null],
