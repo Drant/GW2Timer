@@ -705,9 +705,9 @@ Days:
 	wvw: ["Spender", "Ruins", "Camp", "Keep"]
 },
 "8": {
-	pve: ["Lumberer Ascalon", "Forger", "Brisban", null],
-	pvp: ["Rank", "Capture", "War Ranger", "Guard Necro"],
-	wvw: ["Ruins", "Kills", "Tower", "Camp"]
+	pve: ["Lumberer Kryta", "Vista Kryta", "Metrica", "Wurm"],
+	pvp: ["Reward", "Defender", "Guard Thief", "Rev Necro"],
+	wvw: ["Land", "Creature", "Defender", "Tower"]
 },
 "9": {
 	pve: ["Miner Kryta", "Vista Orr", "Maelstrom", null],
@@ -905,15 +905,15 @@ Sale: {
 	Finish: new Date("2015-11-10T16:00:00Z"),
 	range: "125-2000",
 	Items: [
-	/*{
+	{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
 		pricenew: 100,
 		priceold: 0,
-		col: 1,
+		col: 0,
 		isExample: true
-	},*/
+	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Crystal_Arbiter_Appearance_Pack",
 		img: "https://render.guildwars2.com/file/62230B3E52E262F814E10D5A2C49EBC3ACAE9640/1223685.png",
@@ -969,6 +969,14 @@ Sale: {
 		pricenew: 350,
 		priceold: 0,
 		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mini_Wyvern",
+		img: "https://render.guildwars2.com/file/76BFC446B59BF7A6FA0345B02ECFC2DA2A057230/1203296.png",
+		quantity: 1,
+		pricenew: 350,
+		priceold: 0,
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Tiger",
