@@ -710,9 +710,9 @@ Days:
 	wvw: ["Land", "Creature", "Defender", "Tower"]
 },
 "9": {
-	pve: ["Miner Kryta", "Vista Orr", "Maelstrom", null],
-	pvp: ["Defender", "Reward", "Ranger Mes", "Guard Eng"],
-	wvw: ["Spender", "Land", "Defender", "Camp"]
+	pve: ["Miner Shiverpeaks", "Activity", "Kessex", "Maw"],
+	pvp: ["Rank", "Kills", "War Eng", "Thief Ele"],
+	wvw: ["Ruins", "Guard", "Defender", "Camp"]
 },
 "10": {
 	pve: ["Forager Orr", "Vista Ascalon", "Bloodtide", null],
@@ -905,7 +905,7 @@ Sale: {
 	Finish: new Date("2015-11-10T16:00:00Z"),
 	range: "125-2000",
 	Items: [
-	{
+	/*{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
@@ -913,7 +913,7 @@ Sale: {
 		priceold: 0,
 		col: 0,
 		isExample: true
-	},
+	},*/
 	{
 		url: "http://wiki.guildwars2.com/wiki/Crystal_Arbiter_Appearance_Pack",
 		img: "https://render.guildwars2.com/file/62230B3E52E262F814E10D5A2C49EBC3ACAE9640/1223685.png",
@@ -1025,15 +1025,7 @@ Sale: {
 		pricenew: 500,
 		priceold: 0,
 		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mad_King_Dye_Kit",
-		img: "https://render.guildwars2.com/file/68B1C9C4E228064C0E7E0316202B97D2E8303A14/1114056.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
+	}
 	]
 }
 };

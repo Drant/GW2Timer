@@ -11012,6 +11012,7 @@ T = {
 	cBASE_10: 10,
 	cPERCENT_100: 100,
 	// Game constants
+	WEEKLY_RESET_DAY: 1, // Monday 00:00 UTC
 	DAILY_START_UNIX: 1418774400, // 2014-12-17:0000 UTC or 2014-12-16:1600 PST
 	DAYS_SINCE_DAILY_START: 0,
 	cDAYTIME_DAY_MINUTES: 80,
@@ -12143,7 +12144,7 @@ T = {
 	 * @param int pOffsetSeconds since midnight (start) of that day.
 	 * @returns int seconds.
 	 */
-	getSecondsTillWeekday: function(pTargetDay, pOffsetSeconds)
+	getSecondsTillUTCWeekday: function(pTargetDay, pOffsetSeconds)
 	{
 		if (pOffsetSeconds === undefined)
 		{
@@ -12182,7 +12183,7 @@ T = {
 	{
 		if (T.secondsTillResetWeekly < 0)
 		{
-			T.secondsTillResetWeekly = T.getSecondsTillWeekday(T.DayEnum.Sunday);
+			T.secondsTillResetWeekly = T.getSecondsTillUTCWeekday(T.WEEKLY_RESET_DAY);
 		}
 		$("#chlCountdownToReset").text(T.formatSeconds(T.secondsTillResetWeekly, true));
 		// Decrement global variable to countdown, instead of calling the compute function every time
@@ -15050,6 +15051,10 @@ I = {
 		},
 		init: function(s)
 		{
+			if (I.ModeCurrent === I.ModeEnum.Mobile)
+			{
+				return;
+			}
 			var a;
 			var b = document.getElementById("qTip");
 			$(s).each(function()
