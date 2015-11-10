@@ -1264,8 +1264,9 @@ U = {
 	 * Prints a v2 API endpoint by querying each element in the array it returned.
 	 * @param string pString of API
 	 */
-	printAPIArray: function(pString)
+	printAPIArray: function(pString, pLimit)
 	{
+		pLimit = parseInt(pLimit) || Number.POSITIVE_INFINITY;
 		var array = new Array();
 		var length = 0;
 		var counter = 0;
@@ -1273,28 +1274,40 @@ U = {
 		{
 			I.write("Gathering elements...");
 			length = pData.length;
-			for (var i in pData)
+			if (Array.isArray(pData))
 			{
-				$.getJSON("https://api.guildwars2.com/v2/" + pString + "/" + pData[i], function(pDataInner)
+				for (var i in pData)
 				{
-					array.push(U.formatJSON(pDataInner));
-				}).done(function()
-				{
-					// Print the result when all elements have been queried
-					if (counter === length - 1)
+					if (parseInt(i) === pLimit)
 					{
-						I.clear();
-						array.sort();
-						for (var ii in array)
-						{
-							I.write(array[ii], 60);
-						}
+						break;
 					}
-					counter++;
-				}).fail(function()
-				{
-					I.write("Unable to retrieve API array element: " + U.escapeHTML(pData[i]));
-				});
+					$.getJSON("https://api.guildwars2.com/v2/" + pString + "/" + pData[i], function(pDataInner)
+					{
+						I.write("Retrieved an element.");
+						array.push(U.formatJSON(pDataInner));
+					}).done(function()
+					{
+						// Print the result when all elements have been queried
+						if (counter === length - 1 || counter === pLimit - 1)
+						{
+							I.clear();
+							array.sort();
+							for (var ii in array)
+							{
+								I.write(array[ii], 0);
+							}
+						}
+						counter++;
+					}).fail(function()
+					{
+						I.write("Unable to retrieve API array element: " + U.escapeHTML(pData[i]));
+					});
+				}
+			}
+			else
+			{
+				I.write(U.formatJSON(pData), 0, true);
 			}
 		}).fail(function()
 		{
@@ -7044,7 +7057,7 @@ M = {
 						case "lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
 						case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
 						case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
-						case "api": U.printAPIArray(args[1]); break;
+						case "api": U.printAPIArray(args[1], args[2]); break;
 						case "items": E.getItemLatest(args[1]); break;
 					}
 				}
@@ -14070,7 +14083,7 @@ I = {
 	 * Writes an HTML string to the "console" area in the top left corner of
 	 * the website that disappears after a while.
 	 * @param string pString to write.
-	 * @param float pSeconds to display the console with that string.
+	 * @param float pSeconds to display the console with that string. 0 for infinite.
 	 * @param boolean pClear to empty the console before printing.
 	 * @pre If input was from an outside source it must be escaped first!
 	 */
@@ -14109,14 +14122,18 @@ I = {
 		
 		// Ignore previous display time, which is how long before the console is cleared
 		window.clearTimeout(I.consoleTimeout);
-		I.consoleTimeout = setTimeout(function()
+		// Only queue to clear the console if seconds is not set as so
+		if (pSeconds !== 0)
 		{
-			content.css({opacity: 1}).animate({opacity: 0}, 600, function()
+			I.consoleTimeout = setTimeout(function()
 			{
-				$(this).empty().css({opacity: 1});
-				$("#itemConsole").hide();
-			});
-		}, pSeconds * T.cMILLISECONDS_IN_SECOND);
+				content.css({opacity: 1}).animate({opacity: 0}, 600, function()
+				{
+					$(this).empty().css({opacity: 1});
+					$("#itemConsole").hide();
+				});
+			}, pSeconds * T.cMILLISECONDS_IN_SECOND);
+		}
 	},
 	greet: function(pString, pSeconds, pClear)
 	{

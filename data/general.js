@@ -109,11 +109,14 @@ var GW2T_ZONE_ASSOCIATION = {
 };
 
 /*
- * Locations for cross-world map travel. Coordinates are ordered west to east.
+ * Locations for cross-world map travel. Coordinates are ordered by progression.
  */
 var GW2T_GATEWAY_CONNECTION = {
 	// The light blue vortexes at the edges of zones
 	interzones: [
+	[[2394, 18790], [2915, 18296]], // auric to tangled
+	[[877, 16061], [790, 16219]], // verdant to auric
+	[[4155, 15495], [3750, 15250]], // silverwastes to verdant
 	[[5865, 15283], [5974, 15604]], // silverwastes to brisban
 	[[5559, 16744], [6039, 17105]], // dry to brisban
 	[[8011, 17021], [8082, 17270]], // metrica to brisban
@@ -901,10 +904,10 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	Start: new Date("2015-11-04T16:00:00Z"),
-	Finish: new Date("2015-11-10T16:00:00Z"),
+	Start: new Date("2015-11-10T16:00:00Z"),
+	Finish: new Date("2015-11-17T16:00:00Z"),
 	Items: [
-	/*{
+	{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
@@ -912,12 +915,20 @@ Sale: {
 		priceold: 0,
 		col: 0,
 		isExample: true
-	},*/
+	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Crystal_Arbiter_Appearance_Pack",
 		img: "https://render.guildwars2.com/file/62230B3E52E262F814E10D5A2C49EBC3ACAE9640/1223685.png",
 		quantity: 1,
 		pricenew: 2000,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Lyssa's_Regalia",
+		img: "http://i.imgur.com/zIzEn6Y.png",
+		quantity: 1,
+		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
@@ -960,6 +971,30 @@ Sale: {
 		pricenew: 500,
 		priceold: 0,
 		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Butterfly_Harvesting_Flute",
+		img: "http://i.imgur.com/d81tVKq.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Firefly_Mining_Flute",
+		img: "http://i.imgur.com/k5HsH1n.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Swarm_Logging_Flute",
+		img: "http://i.imgur.com/bw8EY40.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Wyvern",
