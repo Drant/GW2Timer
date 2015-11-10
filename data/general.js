@@ -690,7 +690,7 @@ Days:
 	wvw: ["Ruins", "Guard", "Camp", "Keep"]
 },
 "5": {
-	pve: ["Lumberer Kryta", "Vista Ascalon", "Timberlines", "Shatterer"],
+	pve: ["Lumberer Kryta", "Vista Ascalon", "Timberline", "Shatterer"],
 	pvp: ["Reward", "Rank", "Guard Eng", "Thief Mes"],
 	wvw: ["Ruins", "Kills", "Tower", "Defender"]
 },
@@ -715,9 +715,9 @@ Days:
 	wvw: ["Ruins", "Guard", "Defender", "Camp"]
 },
 "10": {
-	pve: ["Forager Orr", "Vista Ascalon", "Bloodtide", null],
-	pvp: ["Rank", "Reward", "War Eng", "Ranger Necro"],
-	wvw: ["Ruins", "Guard", "Camp", "Defender"]
+	pve: ["Forager Ascalon", "Vista Wastes", "Malchor", "FE"],
+	pvp: ["Capture", "Rank", "Guard Eng", "Ranger Thief"],
+	wvw: ["Land", "Kills", "Tower", "Defender"]
 },
 "11": {
 	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Plains", null],
@@ -903,7 +903,6 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Start: new Date("2015-11-04T16:00:00Z"),
 	Finish: new Date("2015-11-10T16:00:00Z"),
-	range: "125-2000",
 	Items: [
 	/*{
 		url: "http://wiki.guildwars2.com/wiki/Gem",
@@ -919,30 +918,6 @@ Sale: {
 		img: "https://render.guildwars2.com/file/62230B3E52E262F814E10D5A2C49EBC3ACAE9640/1223685.png",
 		quantity: 1,
 		pricenew: 2000,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Lunatic_Guard_Outfit",
-		img: "https://render.guildwars2.com/file/21DF9BD3E8FA3E63E4B0D90F0820CE2617E22D95/1223686.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 0
-	},
-		{
-		url: "http://wiki.guildwars2.com/wiki/Black_Feather_Wings_Backpack",
-		img: "https://render.guildwars2.com/file/5978F84C08E69460B7FD34346745E7183562A35A/951784.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/White_Feather_Wings_Backpack",
-		img: "https://render.guildwars2.com/file/FB9A14C04510096F4E33205AC2DE15BB07ADA0FF/1010543.png",
-		quantity: 1,
-		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
@@ -971,8 +946,24 @@ Sale: {
 		col: 0
 	},
 	{
+		url: "http://wiki.guildwars2.com/wiki/Permanent_Mad_King_Finisher",
+		img: "https://render.guildwars2.com/file/FBF45CE54777DF1FF4940EA1A6083658A574727F/499519.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Permanent_Scarecrow_Finisher",
+		img: "https://render.guildwars2.com/file/3849FBC850B9A872FBEFEFF5F852AE4434F33D51/499518.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Wyvern",
-		img: "https://render.guildwars2.com/file/76BFC446B59BF7A6FA0345B02ECFC2DA2A057230/1203296.png",
+		img: "https://render.guildwars2.com/file/EF73A55F78EFD8A1589437D55BFFDF0E6A5B0445/1029165.png",
 		quantity: 1,
 		pricenew: 350,
 		priceold: 0,
@@ -1007,22 +998,6 @@ Sale: {
 		img: "https://render.guildwars2.com/file/D305750F120C3F4496DEB5B5064E0EE4290A0FC2/919368.png",
 		quantity: 1,
 		pricenew: 350,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Permanent_Mad_King_Finisher",
-		img: "https://render.guildwars2.com/file/FBF45CE54777DF1FF4940EA1A6083658A574727F/499519.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Permanent_Scarecrow_Finisher",
-		img: "https://render.guildwars2.com/file/3849FBC850B9A872FBEFEFF5F852AE4434F33D51/499518.png",
-		quantity: 1,
-		pricenew: 500,
 		priceold: 0,
 		col: 1
 	}

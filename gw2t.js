@@ -440,6 +440,33 @@ O = {
 	},
 	
 	/*
+	 * Gets the lowest and highest value inside an array.
+	 * @param 2D array pArray.
+	 * @param string pProperty of array if the value is a property.
+	 * @returns 2D array of the two values.
+	 */
+	getMinMax: function(pArray, pProperty)
+	{
+		var hasprop = !(pProperty === undefined);
+		var min = Number.POSITIVE_INFINITY;
+		var max = Number.NEGATIVE_INFINITY;
+		var ith;
+		for (var i in pArray)
+		{
+			ith = hasprop ? (pArray[i])[pProperty] : pArray[i];
+			if (ith < min)
+			{
+				min = ith;
+			}
+			if (ith > max)
+			{
+				max = ith;
+			}
+		}
+		return [min, max];
+	},
+	
+	/*
 	 * Converts an integer to boolean.
 	 * @param int pInteger to convert.
 	 * @returns boolean true only if integer is greater than 0.
@@ -12297,11 +12324,12 @@ T = {
 		// Initialize sale
 		if (T.isDashboardSaleEnabled)
 		{
+			var range = O.getMinMax(T.DashboardSale.Items, "pricenew");
 			// Create "button" to toggle list of items on sale
 			$("#dsbSale").append("<div id='dsbSaleHeader' class='curToggle'><img src='img/ui/gemstore.png' /> "
 				+ "<u>" + ((T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1)) + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
-				+ "(<span class='dsbSalePriceNew'>" + T.DashboardSale.range + "<ins class='s16 s16_gem'></ins></span>)"
+				+ "(<span class='dsbSalePriceNew'>" + range[0] + "-" + range[1] + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' />"
 				+ "⇓@ " + T.DashboardSale.Finish.toLocaleString()
 			+"</div><div id='dsbSaleTable' class='jsScrollable'></div>");
