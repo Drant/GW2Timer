@@ -12340,12 +12340,36 @@ T = {
 			var range = O.getMinMax(T.DashboardSale.Items, "pricenew");
 			// Create "button" to toggle list of items on sale
 			$("#dsbSale").append("<div id='dsbSaleHeader' class='curToggle'><img src='img/ui/gemstore.png' /> "
-				+ "<u>" + ((T.DashboardSale.Items[0].isExample === undefined) ? (T.DashboardSale.Items.length) : (T.DashboardSale.Items.length - 1)) + " "
+				+ "<u>" + T.DashboardSale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceNew'>" + range[0] + "-" + range[1] + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' />"
 				+ "⇓@ " + T.DashboardSale.Finish.toLocaleString()
 			+"</div><div id='dsbSaleTable' class='jsScrollable'></div>");
+			// Add a "padding" item if the columns are not equal length
+			var ncol0 = 0, ncol1 = 0;
+			for (var i in T.DashboardSale.Items)
+			{
+				if (T.DashboardSale.Items[i].col === 0)
+				{
+					ncol0++;
+				}
+				else
+				{
+					ncol1++;
+				}
+			}
+			if (ncol0 < ncol1)
+			{
+				T.DashboardSale.Padding.col = 0;
+				T.DashboardSale.Items.unshift(T.DashboardSale.Padding);
+			}
+			else if (ncol0 > ncol1)
+			{
+				T.DashboardSale.Padding.col = 1;
+				T.DashboardSale.Items.unshift(T.DashboardSale.Padding);
+			}
+			// Bind buttons
 			$("#dsbSaleHeader").click(function()
 			{
 				T.generateDashboardSale();

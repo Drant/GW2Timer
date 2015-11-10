@@ -863,6 +863,15 @@ Announcement:
  */
 Countdowns: [
 {
+	name_en: "Spirit Vale Raid",
+	name_de: "Geistertal Schlachtzugs",
+	name_es: "Incursión Valle Espiritual",
+	name_fr: "Raid Vallée des esprits",
+	official: "the-game/releases/november-17-2015",
+	Start: new Date("2015-11-17T17:00:00Z"),
+	Finish: new Date("2015-11-18T00:00:00Z")
+},
+{
 	name_en: "Wintersday 2015",
 	name_de: "Wintertag 2015",
 	name_es: "Día Invernal 2015",
@@ -899,23 +908,21 @@ Story:
 	url: "", // Usually a wiki link to that item
 	img: "", // ArenaNet hosted item image
 	quantity: 1, // Batch sales
-	pricenew: 400, // Gems quantity
+	pricenew: 400, // Gems value
 	priceold: 800
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Start: new Date("2015-11-10T16:00:00Z"),
 	Finish: new Date("2015-11-17T16:00:00Z"),
-	Items: [
-	{
+	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
 		pricenew: 100,
-		priceold: 0,
-		col: 0,
-		isExample: true
+		priceold: 0
 	},
+	Items: [
 	{
 		url: "http://wiki.guildwars2.com/wiki/Crystal_Arbiter_Appearance_Pack",
 		img: "https://render.guildwars2.com/file/62230B3E52E262F814E10D5A2C49EBC3ACAE9640/1223685.png",
