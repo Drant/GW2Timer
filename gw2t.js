@@ -1261,10 +1261,12 @@ U = {
 	},
 	
 	/*
-	 * Prints a v2 API endpoint by querying each element in the array it returned.
+	 * Prints a v2 API endpoint by querying each element in the array it
+	 * returned, or just the object.
 	 * @param string pString of API
+	 * @param int pLimit of array elements to print.
 	 */
-	printAPIArray: function(pString, pLimit)
+	printAPI: function(pString, pLimit)
 	{
 		pLimit = parseInt(pLimit) || Number.POSITIVE_INFINITY;
 		var array = new Array();
@@ -7057,7 +7059,7 @@ M = {
 						case "lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
 						case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
 						case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
-						case "api": U.printAPIArray(args[1], args[2]); break;
+						case "api": U.printAPI(args[1], args[2]); break;
 						case "items": E.getItemLatest(args[1]); break;
 					}
 				}

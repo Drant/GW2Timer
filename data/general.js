@@ -723,9 +723,9 @@ Days:
 	wvw: ["Land", "Kills", "Tower", "Defender"]
 },
 "11": {
-	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Plains", null],
-	pvp: ["Capture", "Defender", "Ele Mes", "Guard Thief"],
-	wvw: ["Land", "Caravan", "Keep", "Camp"]
+	pve: ["Miner Shiverpeaks", "Vista Jungle", "Snowden", "Golem"],
+	pvp: ["Defender", "Kills", "Eng Ele", "Mes Necro"],
+	wvw: ["Ruins", "Guard", "Camp", "Tower"]
 },
 "12": {
 	pve: ["Miner Wastes", "Activity", "Kessex", null],
@@ -913,8 +913,8 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	Start: new Date("2015-11-10T16:00:00Z"),
-	Finish: new Date("2015-11-17T16:00:00Z"),
+	Start: new Date("2015-11-10T17:00:00Z"),
+	Finish: new Date("2015-11-17T17:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
