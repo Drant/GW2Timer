@@ -728,9 +728,9 @@ Days:
 	wvw: ["Ruins", "Guard", "Camp", "Tower"]
 },
 "12": {
-	pve: ["Miner Wastes", "Activity", "Kessex", null],
-	pvp: ["Capture", "Reward", "Eng Thief", "Ele Necro"],
-	wvw: ["Land", "Guard", "Tower", "Camp"]
+	pve: ["Lumberer Kryta", "Activity", "Dredgehaunt", "Wurm"],
+	pvp: ["Reward", "Rank", "Thief Ele", "Rev Necro"],
+	wvw: ["Ruins", "Kills", "Tower", "Defender"]
 },
 "13": {
 	pve: ["Forager Ascalon", "Vista Jungle", "Dredgehaunt", null],
@@ -933,7 +933,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Lyssa's_Regalia",
-		img: "http://i.imgur.com/zIzEn6Y.png",
+		img: "https://render.guildwars2.com/file/7D1AAED555D13BDEBB1736DB77D0DF1C56141F64/1223684.png",
 		quantity: 1,
 		pricenew: 700,
 		priceold: 0,
@@ -981,7 +981,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Butterfly_Harvesting_Flute",
-		img: "http://i.imgur.com/d81tVKq.png",
+		img: "https://render.guildwars2.com/file/BBC7E4B707C3624DEFB22C62FC2C9390741F090D/978010.png",
 		quantity: 1,
 		pricenew: 1000,
 		priceold: 0,
@@ -989,7 +989,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Firefly_Mining_Flute",
-		img: "http://i.imgur.com/k5HsH1n.png",
+		img: "https://render.guildwars2.com/file/796209E4012FE25C53D0A04C1DDB0FA5D87079F6/960280.png",
 		quantity: 1,
 		pricenew: 1000,
 		priceold: 0,
@@ -997,7 +997,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Swarm_Logging_Flute",
-		img: "http://i.imgur.com/bw8EY40.png",
+		img: "https://render.guildwars2.com/file/AFDEBDF46AE851390BE57EC2CEDAF41703B43C36/983558.png",
 		quantity: 1,
 		pricenew: 1000,
 		priceold: 0,

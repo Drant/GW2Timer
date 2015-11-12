@@ -1268,13 +1268,13 @@ U = {
 	 */
 	printAPI: function(pString, pLimit)
 	{
+		I.write("Gathering elements...");
 		pLimit = parseInt(pLimit) || Number.POSITIVE_INFINITY;
 		var array = new Array();
 		var length = 0;
 		var counter = 0;
 		$.get("https://api.guildwars2.com/v2/" + pString, function(pData)
 		{
-			I.write("Gathering elements...");
 			length = pData.length;
 			if (Array.isArray(pData))
 			{
@@ -9149,6 +9149,7 @@ P = {
 			if (pName.indexOf("recover") !== -1) return "img/event/collect.png";
 			if (pName.indexOf("return") !== -1) return "img/event/collect.png";
 			if (pName.indexOf("retrieve") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("salvage") !== -1) return "img/event/collect.png";
 			if (pName.indexOf("burglar") !== -1) return "img/event/fist.png";
 			return "img/event/swords.png";
 		};
