@@ -6866,7 +6866,7 @@ M = {
 	 * with their rectangular coordinates.
 	 * This is referred to by the variable "Zones".
 	 */
-	DEBUG_WANTCONTEXT: false,
+	DEBUG_WANTCONTEXT: true,
 	MapEnum: "map", // Type of map this map is
 	Zones: GW2T_ZONE_DATA,
 	ZoneAssociation: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
@@ -12607,13 +12607,18 @@ T = {
 			{
 				// Segments of a timeline (event)
 				var event = chain.Blocks[ii];
-				var titleboss = (event.primacy === C.EventPrimacyEnum.Boss) ? (I.Symbol.Star + " ") : "";
+				var titleprefix = "";
+				switch (event.primacy)
+				{
+					case C.EventPrimacyEnum.Normal: titleprefix = I.Symbol.Ellipsis; break;
+					case C.EventPrimacyEnum.Boss: titleprefix = I.Symbol.Star + " "; break;
+				}
 				var titlezone = (parseInt(ii) === 0) ? ("<b class='tmlName'>" + name + "</b>") : "";
 				event.duration = T.parseChainTime(event.duration);
 				event.time = T.parseChainTime(event.time);
 				var width = (event.duration / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
 				line.append("<div class='tmlSegment' style='width:" + width + "%' data-start='" + event.time + "' data-finish='" + (event.time + event.duration) + "'>"
-					+ "<span class='tmlSegmentTitle'>" + titlezone + titleboss + D.getObjectName(event) + "</span></div>");
+					+ "<span class='tmlSegmentTitle'>" + titlezone + titleprefix + D.getObjectName(event) + "</span></div>");
 			}
 		}
 		I.qTip.init(".tmlLine");
@@ -13771,6 +13776,7 @@ I = {
 	Symbol:
 	{
 		Star: "☆",
+		Ellipsis: "…",
 		Day: "☀",
 		Night: "☽",
 		Expand: "[+]",
