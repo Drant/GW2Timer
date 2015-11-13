@@ -1028,10 +1028,10 @@ var GW2T_TIMELINE = [
 		alias: "verdant",
 		color: "greenyellow",
 		Blocks: [
-			{ time: "00:00", duration: "00:10", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "NAMENAME", name_zh: "夜晚" },
+			{ time: "00:00", duration: "00:10", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" },
 			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Helikoptere", name_es: "Helicópteros", name_fr: "Hélicoptères", name_zh: "直升機" },
 			{ time: "00:30", duration: "00:75", primacy: 2, name_en: "Daylight", name_de: "Tag", name_es: "Día", name_fr: "Jour", name_zh: "白天" },
-			{ time: "01:45", duration: "00:15", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "NAMENAME", name_zh: "夜晚" }
+			{ time: "01:45", duration: "00:15", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" }
 		]
 	},
 	{
