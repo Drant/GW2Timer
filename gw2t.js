@@ -3232,9 +3232,6 @@ E = {
 		TAX_TOTAL: 0.15,
 		TAX_INVERSE: 0.85,
 		
-		INFLUENCE_PER_COPPER: 0.05,
-		COPPER_PER_INFLUENCE: 20,
-		
 		// These variable ratios will be set by API functions
 		GemInCoin: 0,
 		CoinInGem: 0
@@ -10923,22 +10920,6 @@ G = {
 			});
 			
 			/*
-			 * Initialize influence-coin exchange.
-			 */
-			$("#gldInfluence input").click(function()
-			{
-				$(this).select();
-			});
-			$("#gldInfluenceToCoinInput").on("input", function()
-			{
-				$("#gldInfluenceToCoinOutput").val(E.createCoinString($(this).val() * E.Exchange.COPPER_PER_INFLUENCE));
-			});
-			$("#gldCoinToInfluenceInput").on("input", function()
-			{
-				$("#gldCoinToInfluenceOutput").val(E.parseCoinString($(this).val()) * E.Exchange.INFLUENCE_PER_COPPER);
-			});
-			
-			/*
 			 * Open the guild mission type if article query string is present.
 			 */
 			if (I.ArticleCurrent)
@@ -12407,21 +12388,27 @@ T = {
 	generateDashboardSale: function()
 	{
 		var animationspeed = 200;
-		if ($("#dsbSaleTable").is(":empty") === false)
+		var table = $("#dsbSaleTable");
+		if (table.is(":empty") === false)
 		{
 			I.toggleToggleIcon("#dsbSaleToggleIcon", false);
-			$("#dsbSaleTable").animate({height: 0}, animationspeed, function()
+			table.animate({height: 0}, animationspeed, function()
 			{
 				$(this).css({height: "auto"}).empty();
 			});
 		}
 		else
 		{
-			$("#dsbSaleTable").append(I.cThrobber);
+			table.append(I.cThrobber);
 			E.updateCoinInGem().always(function()
 			{
 				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
-				$("#dsbSaleTable").empty().append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
+				table.empty();
+				if (T.DashboardSale.Note.length > 0)
+				{
+					table.append("<div>Note: " + T.DashboardSale.Note + "</div>");
+				}
+				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				if (E.Exchange.CoinInGem !== 0)
 				{
 					for (var i in T.DashboardSale.Items)
@@ -12439,8 +12426,8 @@ T = {
 						+ "</div>");
 					}
 				}
-				var height = $("#dsbSaleTable").height();
-				$("#dsbSaleTable").css({height: 0}).animate({height: height}, animationspeed, function()
+				var height = table.height();
+				table.css({height: 0}).animate({height: height}, animationspeed, function()
 				{
 					$(this).css({height: "auto"});
 					I.initializeScrollbar("#dsbSaleTable");
