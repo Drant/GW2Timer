@@ -459,7 +459,7 @@ html, body,
 	display: none;
 	position: absolute;
 	top: 32px; right: 12px;
-	z-index: 10;
+	z-index: 1;
 	margin-top: 4px;
 	padding: 4px 10px 4px 10px;
 	font-family: Menomonia;
