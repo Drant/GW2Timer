@@ -1273,7 +1273,8 @@ U = {
 		var array = new Array();
 		var length = 0;
 		var counter = 0;
-		$.get("https://api.guildwars2.com/v2/" + pString, function(pData)
+		var url = "https://api.guildwars2.com/v2/" + pString;
+		$.get(url, function(pData)
 		{
 			length = pData.length;
 			if (Array.isArray(pData))
@@ -1284,7 +1285,7 @@ U = {
 					{
 						break;
 					}
-					$.getJSON("https://api.guildwars2.com/v2/" + pString + "/" + pData[i], function(pDataInner)
+					$.getJSON(url + "/" + pData[i], function(pDataInner)
 					{
 						I.write("Retrieved an element.");
 						array.push(U.formatJSON(pDataInner));
@@ -1303,7 +1304,7 @@ U = {
 						counter++;
 					}).fail(function()
 					{
-						I.write("Unable to retrieve API array element: " + U.escapeHTML(pData[i]));
+						I.write("Unable to retrieve API array element at: " + U.escapeHTML(url + "/" + pData[i]));
 					});
 				}
 			}
@@ -1313,8 +1314,77 @@ U = {
 			}
 		}).fail(function()
 		{
-			I.write("Unable to retrieve API array.");
+			I.write("Unable to retrieve API at: " + U.escapeHTML(url));
 		});
+	},
+	
+	/*
+	 * Gets the latest items that was added to the API item database.
+	 * @param int pSmartIndex if positive, will list that many latest items;
+	 * if negative, will list the item at that index, from end of the array.
+	 * @returns string of item details.
+	 */
+	printItemsAPI: function(pSmartIndex)
+	{
+		if (O.isInteger(pSmartIndex) === false)
+		{
+			I.write("Invalid reverse index.");
+			return;
+		}
+		else
+		{
+			I.write("Retrieving items...");
+			pSmartIndex = parseInt(pSmartIndex);
+		}
+		
+		if (E.ItemsArray.length === 0)
+		{
+			$.get(U.URL_API.ItemDatabase, function(pData)
+			{
+				E.ItemsArray = pData;
+			}).done(function()
+			{
+				U.printItemsAPI(pSmartIndex);
+			}).fail(function()
+			{
+				I.write("Unable to retrieve API items database.");
+			});
+		}
+		else
+		{
+			var requesteditem = 0;
+			var index = 0;
+			if (pSmartIndex <= 0)
+			{
+				index = E.ItemsArray.length + pSmartIndex - 1;
+				requesteditem = E.ItemsArray[index];
+				$.getJSON(U.URL_API.ItemDetails + requesteditem, function(pData)
+				{
+					I.clear();
+					I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.formatJSON(pData), 0);
+				}).fail(function()
+				{
+					I.write("Unable to retrieve item: " + index);
+				});
+			}
+			else
+			{
+				I.clear();
+				for (var i = 0; i < pSmartIndex; i++)
+				{
+					index = E.ItemsArray.length - pSmartIndex - 1 - i;
+					requesteditem = E.ItemsArray[index];
+					$.getJSON(U.URL_API.ItemDetails + requesteditem, function(pData)
+					{
+						I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.formatJSON(pData), 0);
+					}).fail(function()
+					{
+						I.write("Unable to retrieve item: " + index);
+					});
+				}
+			}
+			
+		}
 	},
 	
 	/*
@@ -3483,66 +3553,6 @@ E = {
 	},
 	
 	/*
-	 * Gets the latest items that was added to the API item database.
-	 * @param int pSmartIndex if positive, will list that many latest items;
-	 * if negative, will list the item at that index, from end of the array.
-	 * @returns string of item details.
-	 */
-	getItemLatest: function(pSmartIndex)
-	{
-		if (O.isInteger(pSmartIndex) === false)
-		{
-			I.write("Invalid reverse index.");
-			return;
-		}
-		else
-		{
-			I.write("Retrieving items...");
-			pSmartIndex = parseInt(pSmartIndex);
-		}
-		
-		if (E.ItemsArray.length === 0)
-		{
-			$.get(U.URL_API.ItemDatabase, function(pData)
-			{
-				E.ItemsArray = pData;
-			}).done(function()
-			{
-				E.getItemLatest(pSmartIndex);
-			}).fail(function()
-			{
-				I.write("Unable to retrieve API items database.");
-			});
-		}
-		else
-		{
-			var requesteditem = 0;
-			if (pSmartIndex <= 0)
-			{
-				requesteditem = E.ItemsArray[E.ItemsArray.length + pSmartIndex - 1];
-				$.getJSON(U.URL_API.ItemDetails + requesteditem, function(pData)
-				{
-					I.write(U.formatJSON(pData));
-					I.write("<img src='" + pData.icon + "' />");
-				});
-			}
-			else
-			{
-				for (var i = 0; i < pSmartIndex; i++)
-				{
-					requesteditem = E.ItemsArray[E.ItemsArray.length - pSmartIndex - 1 - i];
-					$.getJSON(U.URL_API.ItemDetails + requesteditem, function(pData)
-					{
-						I.write(U.formatJSON(pData));
-						I.write("<img src='" + pData.icon + "' />", 60);
-					});
-				}
-			}
-			
-		}
-	},
-	
-	/*
 	 * Deducts Trading Post tax from a value.
 	 * @param int pAmount of copper.
 	 * @returns int taxed value.
@@ -5514,7 +5524,7 @@ C = {
 	},
 	getChainRegion: function(pChain)
 	{
-		return M.getZoneRegion(pChain.extra[0]);
+		return M.getZoneRegion(pChain.zone);
 	},
 	
 	/*
@@ -5709,12 +5719,12 @@ C = {
 		if (C.isChainWorldBoss(pChain))
 		{
 			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
-				+ " (" + pChain.extra[1] + ")"
+				+ " (" + pChain.level + ")"
 					+ "<a href='" + U.convertExternalURL(U.getYouTubeLink(D.getObjectDefaultName(pChain) + " " + I.cGameNick)) + "' target='_blank'>"
 					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> "
-				+ pChain.extra[2] + "<ins class='s16 s16_ecto' title='Ecto'></ins> "
-				+ pChain.extra[3] + "<ins class='s16 s16_loot' title='Loot'></ins> "
-				+ pChain.extra[4] + "<ins class='s16 s16_dragonite' title='Dragonite'></ins> ";
+				+ pChain.ecto + "<ins class='s16 s16_ecto' title='Ecto'></ins> "
+				+ pChain.loot + "<ins class='s16 s16_loot' title='Loot'></ins> "
+				+ pChain.dragonite + "<ins class='s16 s16_dragonite' title='Dragonite'></ins> ";
 		}
 		
 		/*
@@ -7060,7 +7070,7 @@ M = {
 						case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
 						case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
 						case "api": U.printAPI(args[1], args[2]); break;
-						case "items": E.getItemLatest(args[1]); break;
+						case "items": U.printItemsAPI(args[1]); break;
 					}
 				}
 				else
@@ -9425,7 +9435,7 @@ P = {
 				 */
 				coords = M.convertGCtoLCMulti(primaryevent.path, 1);
 				pathline = L.polyline(coords, {color: color});
-				M.Zones[(pChain.extra[0])].Layers.Path.addLayer(pathline);
+				M.Zones[(pChain.zone)].Layers.Path.addLayer(pathline);
 			}
 		}
 

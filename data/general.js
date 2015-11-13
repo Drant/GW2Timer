@@ -733,9 +733,9 @@ Days:
 	wvw: ["Ruins", "Kills", "Tower", "Defender"]
 },
 "13": {
-	pve: ["Forager Ascalon", "Vista Jungle", "Dredgehaunt", null],
-	pvp: ["Rank", "Reward", "War Thief", "Guard Ranger"],
-	wvw: ["Ruins", "Land", "Tower", "Defender"]
+	pve: ["Miner Kryta", "Vista Ascalon", "Frostgorge", "Maw"],
+	pvp: ["Capture", "Kills", "Eng Thief", "Rev Ele"],
+	wvw: ["Land", "Caravan", "Defender", "Keep"]
 },
 "14": {
 	pve: ["Lumberer Shiverpeaks", "Forger", "Snowden", null],
@@ -964,22 +964,6 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Permanent_Mad_King_Finisher",
-		img: "https://render.guildwars2.com/file/FBF45CE54777DF1FF4940EA1A6083658A574727F/499519.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Permanent_Scarecrow_Finisher",
-		img: "https://render.guildwars2.com/file/3849FBC850B9A872FBEFEFF5F852AE4434F33D51/499518.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Butterfly_Harvesting_Flute",
 		img: "https://render.guildwars2.com/file/BBC7E4B707C3624DEFB22C62FC2C9390741F090D/978010.png",
 		quantity: 1,
@@ -1030,14 +1014,6 @@ Sale: {
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Avatar_of_the_Tree",
 		img: "https://render.guildwars2.com/file/7AC8D0657FF005D63A26E3DD6D4FE538C2B9B31C/919369.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini_Drooburt's_Ghost",
-		img: "https://render.guildwars2.com/file/D305750F120C3F4496DEB5B5064E0EE4290A0FC2/919368.png",
 		quantity: 1,
 		pricenew: 350,
 		priceold: 0,

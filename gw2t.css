@@ -1914,6 +1914,9 @@ button.btnToggle {
 .cssHidden {
 	display: none;
 }
+.cssLeft {
+	float: left;
+}
 .cssRight {
 	float: right;
 }
