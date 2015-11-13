@@ -128,6 +128,7 @@ O = {
 		bol_showPanel: true,
 		bol_showMap: true,
 		bol_showDashboard: true,
+		bol_showTimeline: true,
 		// Map
 		int_setFloor: 1,
 		bol_showZoneBorders: false,
@@ -6865,6 +6866,7 @@ M = {
 	 * with their rectangular coordinates.
 	 * This is referred to by the variable "Zones".
 	 */
+	DEBUG_WANTCONTEXT: false,
 	MapEnum: "map", // Type of map this map is
 	Zones: GW2T_ZONE_DATA,
 	ZoneAssociation: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
@@ -7513,11 +7515,14 @@ M = {
 		/*
 		 * Right clicking the map shows a custom context menu.
 		 */
-		this.Map.on("contextmenu", function(pEvent)
+		if (this.DEBUG_WANTCONTEXT)
 		{
-			that.ContextLatLng = pEvent.latlng;
-			$("#ctxMap").css({top: I.posY, left: I.posX}).show();
-		});
+			this.Map.on("contextmenu", function(pEvent)
+			{
+				that.ContextLatLng = pEvent.latlng;
+				$("#ctxMap").css({top: I.posY, left: I.posX}).show();
+			});
+		}
 		
 		/*
 		 * Bind context menu functions, same order as the HTML.
@@ -11032,6 +11037,7 @@ T = {
 	isDashboardCountdownTickEnabled: false,
 	isDashboardStoryEnabled: false,
 	isDashboardSaleEnabled: false,
+	Timeline: GW2T_TIMELINE,
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -11049,6 +11055,7 @@ T = {
 	cSECONDS_IN_DAY: 86400,
 	cSECONDS_IN_WEEK: 604800,
 	cMINUTES_IN_HOUR: 60,
+	cMINUTES_IN_2_HOURS: 120,
 	cMINUTES_IN_DAY: 1440,
 	cHOURS_IN_MERIDIEM: 12,
 	cHOURS_IN_DAY: 24,
@@ -11537,9 +11544,7 @@ T = {
 	{
 		var time = (T.getScheduleSlotTime(pKey) * T.cSECONDS_IN_MINUTE)
 			- ((new Date()).getTimezoneOffset() * T.cSECONDS_IN_MINUTE);
-		time = T.wrapInteger(time, T.cSECONDS_IN_DAY);
-
-		return time;
+		return T.wrapInteger(time, T.cSECONDS_IN_DAY);
 	},
 	convertScheduleKeyToUTCMinutes: function(pKey)
 	{
@@ -12543,7 +12548,127 @@ T = {
 				$("#itemDashboard").hide();
 			}
 		}
+	},
+	
+	/*
+	 * Gets the minutes elapsed in the current even hour of UTC.
+	 * Example: 14:00 = 0, 14:20 = 20, 15:59 = 119, 16:00 = 0
+	 * @returns int minutes.
+	 */
+	getCurrentBihourlyMinutesUTC: function()
+	{
+		var now = new Date();
+		return ((now.getUTCHours() % 2) * T.cMINUTES_IN_HOUR) + now.getUTCMinutes();
+	},
+	
+	/*
+	 * Gets the timestamp for the current two-hour period.
+	 * @param int pOffset minutes since the start of the current even hour.
+	 * @returns string timestamp.
+	 */
+	getCurrentBihourlyTimestampLocal: function(pOffset)
+	{
+		var now = new Date();
+		var hour = now.getUTCHours();
+		var evenhour = (hour % 2 === 0) ? hour : (hour - 1);
+		
+		var time = ((evenhour * T.cMINUTES_IN_HOUR)) - now.getTimezoneOffset();
+		time = T.wrapInteger(time, T.cMINUTES_IN_DAY);
+		return T.getTimeFormatted({
+			customTimeInSeconds: ((time + pOffset) * T.cSECONDS_IN_MINUTE),
+			wantSeconds: false
+		});
+	},
+	
+	/*
+	 * Generates the timeline HTML.
+	 */
+	generateTimeline: function()
+	{
+		// Container for all the timelines
+		var divisionminutes = 5;
+		var divisions = T.cMINUTES_IN_2_HOURS / divisionminutes;
+		var tapestry = $("#itemTimeline");
+		// Create timings header
+		var line = $("<div class='tmlLine' id='tmlLegend'></div>").appendTo(tapestry);
+		for (var ii = 0; ii < divisions; ii++)
+		{
+			var width = T.cPERCENT_100 / divisions;
+			line.append("<div class='tmlSegment' style='width:" + width + "%'>"
+				+ "<span class='tmlSegmentTime'>" + T.getCurrentBihourlyTimestampLocal(divisionminutes * ii) + "</span></div>");
+		}
+		for (var i in T.Timeline)
+		{
+			var chain = T.Timeline[i];
+			var name = U.escapeHTML(M.getZoneName(chain.alias));
+			// Container for segments of a timeline (chain)
+			line = $("<div class='tmlLine' title='<dfn>" + name + "</dfn>'></div>").appendTo(tapestry);
+			for (var ii in chain.Blocks)
+			{
+				// Segments of a timeline (event)
+				var event = chain.Blocks[ii];
+				var titleboss = (event.primacy === C.EventPrimacyEnum.Boss) ? (I.Symbol.Star + " ") : "";
+				var titlezone = (parseInt(ii) === 0) ? ("<b class='tmlName'>" + name + "</b>") : "";
+				event.duration = T.parseChainTime(event.duration);
+				event.time = T.parseChainTime(event.time);
+				var width = (event.duration / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
+				line.append("<div class='tmlSegment' style='width:" + width + "%' data-start='" + event.time + "' data-finish='" + (event.time + event.duration) + "'>"
+					+ "<span class='tmlSegmentTitle'>" + titlezone + titleboss + D.getObjectName(event) + "</span></div>");
+			}
+		}
+		I.qTip.init(".tmlLine");
+		T.updateTimelineSegments();
+		T.updateTimelineIndicator();
+	},
+	
+	/*
+	 * Updates the "minute hand" of the timeline. Should be called every 1 minute.
+	 */
+	updateTimelineIndicator: function()
+	{
+		var minutes = T.getCurrentBihourlyMinutesUTC();
+		var offset = (minutes / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
+		$("#tmlIndicator").css({left: offset + "%"});
+	},
+	
+	/*
+	 * Highlights the active segments. Should be called every 5 minutes.
+	 */
+	updateTimelineSegments: function()
+	{
+		var minutes = T.getCurrentBihourlyMinutesUTC();
+		$(".tmlSegment").each(function()
+		{
+			if (minutes >= $(this).data("start") && minutes < $(this).data("finish"))
+			{
+				$(this).addClass("tmlSegmentActive");
+			}
+			else
+			{
+				$(this).removeClass("tmlSegmentActive");
+			}
+		});
+	},
+	
+	/*
+	 * Shows or hides the timeline.
+	 * @param boolean pBoolean.
+	 */
+	toggleTimeline: function(pBoolean)
+	{
+		if (O.Options.bol_showTimeline)
+		{
+			if (pBoolean)
+			{
+				$("#itemTimeline").show().css({opacity: 0}).animate({opacity: 1}, 200);
+			}
+			else
+			{
+				$("#itemTimeline").hide();
+			}
+		}
 	}
+	
 };
 
 /* =============================================================================
@@ -12610,6 +12735,8 @@ K = {
 		K.tickFrequent();
 		K.updateDigitalClockMinutely();
 		K.initializeClipboard();
+		
+		T.generateTimeline();
 		
 		// Other clickable elements
 		$("#itemTimeLocalActual").click(function()
@@ -13031,6 +13158,7 @@ K = {
 		if (sec === 0)
 		{
 			K.updateDigitalClockMinutely();
+			T.updateTimelineIndicator();
 			// Refresh the chain time countdown opted
 			C.updateChainsTimeHTML();
 			K.updateWaypointsClipboard();
@@ -13047,6 +13175,7 @@ K = {
 			{
 				K.updateDaytimeIcon();
 				K.updateDryTopClipboard();
+				T.updateTimelineSegments();
 				if (T.isDashboardEnabled)
 				{
 					T.refreshDashboard(pDate);
@@ -13641,6 +13770,7 @@ I = {
 	siteTagCurrent: " - gw2timer.com",
 	Symbol:
 	{
+		Star: "☆",
 		Day: "☀",
 		Night: "☽",
 		Expand: "[+]",
@@ -14767,6 +14897,7 @@ I = {
 					case I.PageEnum.Chains:
 					{
 						T.toggleDashboard(true);
+						T.toggleTimeline(true);
 					} break;
 					case I.PageEnum.Map:
 					{
@@ -14777,9 +14908,13 @@ I = {
 					} break;
 				}
 				$("#paneContent article").hide(); // Hide all plates
-				if (I.PageCurrent !== I.PageEnum.Chains && T.isDashboardCountdownTickEnabled)
+				if (I.PageCurrent !== I.PageEnum.Chains)
 				{
-					T.toggleDashboard(false);
+					if (T.isDashboardCountdownTickEnabled)
+					{
+						T.toggleDashboard(false);
+					}
+					T.toggleTimeline(false);
 				}
 				
 				// Only do animations if on regular website (to save computation)

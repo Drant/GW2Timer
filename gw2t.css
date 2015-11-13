@@ -388,6 +388,72 @@ html, body,
 	background: white;
 }
 
+/* Bottom side: Timeline */
+#itemTimeline {
+	position: absolute;
+	bottom: 48px;
+	margin-left: 24px;
+	width: calc(100% - 48px);
+	z-index: 1;
+}
+.tmlLine {
+	height: 24px;
+}
+.tmlLine:hover .tmlSegment {
+	outline: 1px solid #ff8844;
+}
+.tmlLine:hover .tmlName {
+	opacity: 1;
+}
+.tmlLine:hover .tmlSegmentTitle {
+	opacity: 1;
+}
+.tmlSegment {
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	overflow: hidden;
+	background: rgba(0, 0, 0, 0.2);
+	outline: 1px solid rgba(255, 136, 68, 0.2);
+}
+.tmlName {
+	position: absolute;
+	margin-top: -10px;
+	font-size: 12px;
+	color: #ffaa22;
+	opacity: 0.6;
+}
+.tmlSegmentTitle {
+	margin-left: 6px;
+	font-family: Menomonia;
+	font-size: 16px;
+	color: #ccc;
+	text-shadow: 0px 0px 4px black;
+	opacity: 0.6;
+}
+.tmlSegmentTime {
+	margin-left: 4px;
+	font-size: 10px;
+	color: #bbcc77;
+	text-shadow: 0px 0px 4px black;
+	opacity: 0.6;
+}
+.tmlSegmentActive {
+	background: rgba(255, 136, 68, 0.2);
+	outline: 1px solid rgba(0, 0, 0, 0.2);;
+}
+.tmlSegmentActive .tmlSegmentTitle {
+	opacity: 1;
+}
+#tmlIndicator {
+	display: block;
+	top: -10%;
+	width: 2px; height: 110%;
+	position: absolute;
+	background: lime;
+	opacity: 0.5;
+}
+
 /* Top right corner: Dashboard */
 #itemDashboard {
 	display: none;

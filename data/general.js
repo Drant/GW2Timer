@@ -837,10 +837,10 @@ var GW2T_DASHBOARD_DATA = {
 
 Announcement:
 {
-	content: "Spoilers! <dfn data-coord='[2740, 15226]'>Heart of Thorns</dfn> explorable zones <a href='http://i.imgur.com/icwLrEm.png'>map and icons</a> added.<br />" +
-	"GPS overlay now available with fast <a href='https://github.com/ffd114/gw2route'>Chrome</a> browser engine.",
-	Start: new Date("2015-10-27T16:00:00Z"),
-	Finish: new Date("2015-11-06T08:00:00Z")
+	content: "Heart of Thorns meta events timeline added (based on <a href='http://jsfiddle.net/fffam/tukuz9x1/embedded/result/'>Famme's</a> work). <br />"
+		+ "Please help with <a href='http://forum.renaka.com/topic/5905384/'>researching</a> the HoT events for world boss style timers.",
+	Start: new Date("2015-11-12T16:00:00Z"),
+	Finish: new Date("2015-11-18T16:00:00Z")
 },
 
 /*
@@ -1022,3 +1022,45 @@ Sale: {
 	]
 }
 };
+
+var GW2T_TIMELINE = [
+	{
+		alias: "verdant",
+		color: "greenyellow",
+		Blocks: [
+			{ time: "00:00", duration: "00:10", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "NAMENAME", name_zh: "夜晚" },
+			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Helikoptere", name_es: "Helicópteros", name_fr: "Hélicoptères", name_zh: "直升機" },
+			{ time: "00:30", duration: "00:75", primacy: 2, name_en: "Daylight", name_de: "Tag", name_es: "Día", name_fr: "Jour", name_zh: "白天" },
+			{ time: "01:45", duration: "00:15", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "NAMENAME", name_zh: "夜晚" }
+		]
+	},
+	{
+		alias: "auric",
+		color: "gold",
+		Blocks: [
+			{ time: "00:00", duration: "00:45", primacy: 2, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" },
+			{ time: "00:45", duration: "00:15", primacy: 2, name_en: "Challenges", name_de: "Herausforderungen", name_es: "Desafíos", name_fr: "Défis", name_zh: "挑戰" },
+			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Octovine", name_de: "Rankenkraken", name_es: "Octohiedra", name_fr: "Octoliane", name_zh: "八爪藤" },
+			{ time: "01:20", duration: "00:10", primacy: 2, name_en: "Reset", name_de: "Zurücksetzen", name_es: "Restablecer", name_fr: "Réinitialiser", name_zh: "重設" },
+			{ time: "01:30", duration: "00:30", primacy: 2, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" }
+		]
+	},
+	{
+		alias: "tangled",
+		color: "violet",
+		Blocks: [
+			{ time: "00:00", duration: "00:25", primacy: 2, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" },
+			{ time: "00:25", duration: "00:05", primacy: 2, name_en: "Prepare", name_de: "Vorbereiten", name_es: "Preparar", name_fr: "Préparer", name_zh: "準備" },
+			{ time: "00:30", duration: "00:20", primacy: 3, name_en: "Chak Gerent", name_de: "Chak-Potentaten", name_es: "Regente Chak", name_fr: "Régent Chak", name_zh: "查克虫王" },
+			{ time: "00:50", duration: "01:10", primacy: 2, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" }
+		]
+	},
+	{
+		alias: "dragon",
+		color: "skyblue",
+		Blocks: [
+			{ time: "00:00", duration: "01:30", primacy: 2, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" },
+			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" }
+		]
+	}
+];
