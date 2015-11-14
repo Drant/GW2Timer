@@ -478,7 +478,7 @@ html, body,
 #dsbAnnouncement img:hover {
 	opacity: 0.8;
 }
-#dsbClose {
+#dsbClose, #tmlClose, #tmlToggle {
 	position: absolute;
 	top: -16px;
 	left: -16px;
@@ -486,7 +486,11 @@ html, body,
 	background: url("img/ui/close.png");
 	opacity: 0.4;
 }
-#dsbClose:hover {
+#tmlToggle {
+	left: 16px;
+	background: url("img/ui/select.png");
+}
+#dsbClose:hover, #tmlClose:hover, #tmlToggle:hover {
 	opacity: 0.8;
 }
 #dsbCountdown time {

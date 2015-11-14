@@ -738,9 +738,9 @@ Days:
 	wvw: ["Land", "Caravan", "Defender", "Keep"]
 },
 "14": {
-	pve: ["Lumberer Shiverpeaks", "Forger", "Snowden", null],
-	pvp: ["Kills", "Rank", "Eng Mes", "Guard Ele"],
-	wvw: ["Spender", "Ruins", "Keep", "Defender"]
+	pve: ["Lumberer Ascalon", "Forger", "Plains", "SB"],
+	pvp: ["Capture", "Defender", "Guard Ele", "Rev Mes"],
+	wvw: ["Ruins", "Spender", "Camp", "Tower"]
 },
 "15": {
 	pve: ["Miner Shiverpeaks", "Activity", "Metrica", null],

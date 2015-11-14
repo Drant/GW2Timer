@@ -129,6 +129,7 @@ O = {
 		bol_showMap: true,
 		bol_showDashboard: true,
 		bol_showTimeline: true,
+		bol_showTimelineOpaque: false,
 		// Map
 		int_setFloor: 1,
 		bol_showZoneBorders: false,
@@ -876,6 +877,7 @@ O = {
 			O.Enact.int_setClock();
 			O.Enact.int_setDimming();
 			O.Enact.bol_showMap();
+			O.Enact.bol_showTimelineOpaque();
 		}
 		
 		/*
@@ -1017,6 +1019,7 @@ O = {
 			C.initializeTimetableHTML();
 			C.updateChainsTimeHTML();
 			K.updateDigitalClockMinutely();
+			T.refillTimelineLegend();
 		},
 		bol_detectDST: function()
 		{
@@ -1126,6 +1129,17 @@ O = {
 			{
 				$("#panelMap").toggle(O.Options.bol_showMap);
 				M.refreshMap();
+			}
+		},
+		bol_showTimelineOpaque: function()
+		{
+			if (O.Options.bol_showTimelineOpaque)
+			{
+				$("#itemTimeline").css({background: "rgba(0, 0, 0, 0.6)"});
+			}
+			else
+			{
+				$("#itemTimeline").css({background: "none"});
 			}
 		},
 		bol_refreshPrices: function()
@@ -4828,6 +4842,8 @@ D = {
 			cs: "trasa", it: "percorso", pl: "trasa", pt: "rota", ru: "маршру́т", zh: "路線"},
 		s_pins: {de: "nadeln", es: "agujas", fr: "aiguilles",
 			cs: "jehly", it: "aghi", pl: "igły", pt: "agulhas", ru: "иглы", zh: "針"},
+		s_lock: {de: "sperre", es: "bloqueo", fr: "verrou",
+			cs: "zámek", it: "blocco", pl: "zablokuj", pt: "bloqueio", ru: "блокировка", zh: "鎖定"},
 		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", zh: "鳥瞰點"},
 		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros", zh: "技能點"},
 		s_checklist: {de: "prüfliste", es: "lista de comprobación", fr: "liste de contrôle",
@@ -6878,6 +6894,7 @@ M = {
 	isMapInitialized: false,
 	isMouseOnHUD: false,
 	isUserDragging: false,
+	isZoneLocked: false,
 	isMapAJAXDone: false,
 	isAPIRetrieved_MAPFLOOR: false,
 	isItineraryRetrieved: false,
@@ -7532,6 +7549,18 @@ M = {
 		{
 			that.goToDefault();
 		});
+		$("#ctxMapToggleLock").click(function()
+		{
+			that.isZoneLocked = !that.isZoneLocked;
+			if (that.isZoneLocked)
+			{
+				I.write("Map locked to zone: " + D.getObjectName(M.ZoneCurrent));
+			}
+			else
+			{
+				I.write("Map zoning unlocked.");
+			}
+		});
 		$("#ctxMapToggleCompletion").click(function()
 		{
 			$("#opt_bol_showWorldCompletion").trigger("click");
@@ -7698,7 +7727,8 @@ M = {
 		if (pCoord[0] >= this.ZoneCurrent.rect[0][0] // x1
 			&& pCoord[1] >= this.ZoneCurrent.rect[0][1] // y1
 			&& pCoord[0] <= this.ZoneCurrent.rect[1][0] // x2
-			&& pCoord[1] <= this.ZoneCurrent.rect[1][1]) // y2
+			&& pCoord[1] <= this.ZoneCurrent.rect[1][1] // y2
+			|| this.isZoneLocked === true)
 		{
 			return;
 		}
@@ -11019,6 +11049,7 @@ T = {
 	isDashboardStoryEnabled: false,
 	isDashboardSaleEnabled: false,
 	Timeline: GW2T_TIMELINE,
+	isTimelineEnabled: true,
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -12523,7 +12554,7 @@ T = {
 	 */
 	toggleDashboard: function(pBoolean)
 	{
-		if (T.isDashboardEnabled)
+		if (O.Options.bol_showDashboard && T.isDashboardEnabled)
 		{
 			T.isDashboardCountdownTickEnabled = pBoolean;
 			if (pBoolean)
@@ -12573,23 +12604,15 @@ T = {
 	generateTimeline: function()
 	{
 		// Container for all the timelines
-		var divisionminutes = 5;
-		var divisions = T.cMINUTES_IN_2_HOURS / divisionminutes;
-		var tapestry = $("#itemTimeline");
+		var tapestry = $("#itemTimeline").append("<div class='tmlLine' id='tmlLegend'></div>");
+		T.refillTimelineLegend();
 		// Create timings header
-		var line = $("<div class='tmlLine' id='tmlLegend'></div>").appendTo(tapestry);
-		for (var ii = 0; ii < divisions; ii++)
-		{
-			var width = T.cPERCENT_100 / divisions;
-			line.append("<div class='tmlSegment' style='width:" + width + "%'>"
-				+ "<span class='tmlSegmentTime'>" + T.getCurrentBihourlyTimestampLocal(divisionminutes * ii) + "</span></div>");
-		}
 		for (var i in T.Timeline)
 		{
 			var chain = T.Timeline[i];
 			var name = U.escapeHTML(M.getZoneName(chain.alias));
 			// Container for segments of a timeline (chain)
-			line = $("<div class='tmlLine' title='<dfn>" + name + "</dfn>'></div>").appendTo(tapestry);
+			var line = $("<div class='tmlLine' title='<dfn>" + name + "</dfn>'></div>").appendTo(tapestry);
 			for (var ii in chain.Blocks)
 			{
 				// Segments of a timeline (event)
@@ -12608,9 +12631,34 @@ T = {
 					+ "<span class='tmlSegmentTitle'>" + titlezone + titleprefix + D.getObjectName(event) + "</span></div>");
 			}
 		}
+		$("#tmlClose").click(function()
+		{
+			T.toggleTimeline(false);
+			T.isTimelineEnabled = false;
+		});
+		$("#tmlToggle").click(function()
+		{
+			$("#opt_bol_showTimelineOpaque").trigger("click");
+		});
 		I.qTip.init(".tmlLine");
 		T.updateTimelineSegments();
 		T.updateTimelineIndicator();
+	},
+	
+	/*
+	 * Fills the legend line with timestamps. Reuseable for time formatting.
+	 */
+	refillTimelineLegend: function()
+	{
+		var line = $("#tmlLegend").empty();
+		var divisionminutes = 5;
+		var divisions = T.cMINUTES_IN_2_HOURS / divisionminutes;
+		for (var i = 0; i < divisions; i++)
+		{
+			var width = T.cPERCENT_100 / divisions;
+			line.append("<div class='tmlSegment' style='width:" + width + "%'>"
+				+ "<span class='tmlSegmentTime'>" + T.getCurrentBihourlyTimestampLocal(divisionminutes * i) + "</span></div>");
+		}
 	},
 	
 	/*
@@ -12648,7 +12696,7 @@ T = {
 	 */
 	toggleTimeline: function(pBoolean)
 	{
-		if (O.Options.bol_showTimeline)
+		if (O.Options.bol_showTimeline && T.isTimelineEnabled)
 		{
 			if (pBoolean)
 			{

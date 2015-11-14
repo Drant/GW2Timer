@@ -64,6 +64,7 @@
 			<div id="ctxMap" class="ctxMenu">
 				<ul>
 					<li id="ctxMapCenter">Center map</li>
+					<li id="ctxMapToggleLock">Toggle map lock</li>
 					<li id="ctxMapToggleCompletion">Toggle world completion</li>
 					<li id="ctxMapDrawCompletion">Draw completion route</li>
 					<li id="ctxMapClearPins">Clear pins</li>
@@ -78,6 +79,8 @@
 				<div id="dsbStory" class="jsScrollable"></div>
 			</div>
 			<div id="itemTimeline">
+				<kbd id="tmlClose" class="curClick" title="Close the timeline. You can hide this permanently by going to Options page, Map section."></kbd>
+				<kbd id="tmlToggle" class="curClick" title="Toggle timeline opacity."></kbd>
 				<div id="tmlIndicator"></div>
 			</div>
 			<time id="itemMapTime"></time>
@@ -505,6 +508,7 @@
 					<label title="Show/Hide the map area on the left."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<label title="Show/Hide GW2 official event countdowns and gem sales on the top right corner of the map pane. Requires reload."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard</label>
 					<label title="Show/Hide Heart of Thorns meta events timeline."><input id="opt_bol_showTimeline" type="checkbox" /> Show the timeline</label>
+					<label title="Enable high visibility timeline."><input id="opt_bol_showTimelineOpaque" type="checkbox" /> Opaque timeline</label>
 					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane.</span><br />
 					<br />
 					<h2>Alarm</h2>
