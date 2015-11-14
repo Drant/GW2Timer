@@ -395,20 +395,21 @@ html, body,
 	margin-left: 24px;
 	width: calc(100% - 48px);
 	z-index: 1;
+	white-space: nowrap;
 }
-.tmlLine {
+.tmlLine { /* A whole line representing a chain of events */
 	height: 24px;
 }
 .tmlLine:hover .tmlSegment {
 	outline: 1px solid #ff8844;
 }
-.tmlLine:hover .tmlName {
+.tmlLine:hover .tmlLineName {
 	opacity: 1;
 }
-.tmlLine:hover .tmlSegmentTitle {
+.tmlLine:hover .tmlSegmentName {
 	opacity: 1;
 }
-.tmlSegment {
+.tmlSegment { /* A division of a line representing an event */
 	display: inline-block;
 	height: 100%;
 	vertical-align: middle;
@@ -416,23 +417,40 @@ html, body,
 	background: rgba(0, 0, 0, 0.2);
 	outline: 1px solid rgba(255, 136, 68, 0.2);
 }
-.tmlName {
+.tmlSegmentContent {
+	display: table;
+	height: 100%;
+	margin-left: 6px;
+}
+.tmlLineName {
 	position: absolute;
 	margin-top: -10px;
 	font-size: 12px;
 	color: #ffaa22;
 	opacity: 0.7;
 }
-.tmlSegmentTitle {
-	margin-left: 6px;
+.tmlSegmentName {
+	display: table-cell;
+	vertical-align: middle;
 	font-family: Menomonia;
 	font-size: 16px;
 	color: #ccc;
 	text-shadow: 0px 0px 4px black;
 	opacity: 0.7;
 }
-.tmlSegmentTime {
-	margin-left: 4px;
+.tmlSegmentCountdown {
+	display: table-cell;
+	padding-left: 4px;
+	vertical-align: middle;
+	font-family: sans-serif;
+	font-size: 14px;
+	color: #bbcc77;
+	text-shadow: 0px 0px 4px black;
+}
+.tmlSegmentTimestamp {
+	display: table-cell;
+	vertical-align: middle;
+	font-family: sans-serif;
 	font-size: 10px;
 	color: #bbcc77;
 	text-shadow: 0px 0px 4px black;
@@ -442,7 +460,7 @@ html, body,
 	background: rgba(255, 136, 68, 0.2);
 	outline: 1px solid rgba(0, 0, 0, 0.2);;
 }
-.tmlSegmentActive .tmlSegmentTitle {
+.tmlSegmentActive .tmlSegmentName {
 	opacity: 1;
 }
 #tmlIndicator {

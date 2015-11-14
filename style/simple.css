@@ -7,6 +7,10 @@
 	display: block;
 }
 
+#itemTimeline {
+	bottom: 24px;
+}
+
 /* Hide unrelated elements */
 #panelMap, #paneMenu, #paneContent, #itemSocial {
 	display: none;

@@ -872,12 +872,12 @@ O = {
 		O.Enact.bol_useSiteTag();
 		O.Enact.bol_alignPanelRight(true);
 		O.Enact.bol_showPanel();
+		O.Enact.bol_showTimelineOpaque();
 		if (I.ModeCurrent !== I.ModeEnum.Simple & I.ModeCurrent !== I.ModeEnum.Tile)
 		{
 			O.Enact.int_setClock();
 			O.Enact.int_setDimming();
 			O.Enact.bol_showMap();
-			O.Enact.bol_showTimelineOpaque();
 		}
 		
 		/*
@@ -6175,7 +6175,7 @@ C = {
 		var elapsed = T.getCurrentTimeframeElapsedTime();
 		var remaining = pChain.countdownToFinish - elapsed;
 		var time = remaining;
-		var sign = "⇑ ";
+		var sign = I.Symbol.ArrowUp + " ";
 		
 		if (pChain.series === C.ChainSeriesEnum.DryTop)
 		{
@@ -6203,7 +6203,7 @@ C = {
 			if (remaining <= 0)
 			{
 				time = T.cSECONDS_IN_TIMEFRAME - elapsed;
-				sign = "⇓ ";
+				sign = I.Symbol.ArrowDown + " ";
 			}
 
 			$("#chnTime_" + pChain.nexus).text(sign + T.getTimeFormatted(
@@ -6879,7 +6879,6 @@ M = {
 	 * with their rectangular coordinates.
 	 * This is referred to by the variable "Zones".
 	 */
-	DEBUG_WANTCONTEXT: true,
 	MapEnum: "map", // Type of map this map is
 	Zones: GW2T_ZONE_DATA,
 	ZoneAssociation: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
@@ -7084,6 +7083,7 @@ M = {
 						case "identity": I.write(U.formatJSON(GPSIdentityJSON)); break;
 						case "lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
 						case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
+						case "nocontext": that.Map.off("contextmenu"); I.write("Map context menu disabled."); break;
 						case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
 						case "api": U.printAPI(args[1], args[2]); break;
 						case "items": U.printItemsAPI(args[1]); break;
@@ -7529,14 +7529,11 @@ M = {
 		/*
 		 * Right clicking the map shows a custom context menu.
 		 */
-		if (this.DEBUG_WANTCONTEXT)
+		this.Map.on("contextmenu", function(pEvent)
 		{
-			this.Map.on("contextmenu", function(pEvent)
-			{
-				that.ContextLatLng = pEvent.latlng;
-				$("#ctxMap").css({top: I.posY, left: I.posX}).show();
-			});
-		}
+			that.ContextLatLng = pEvent.latlng;
+			$("#ctxMap").css({top: I.posY, left: I.posX}).show();
+		});
 		
 		/*
 		 * Bind context menu functions, same order as the HTML.
@@ -12351,7 +12348,7 @@ T = {
 				 */
 				$("#dsbCountdown").append(
 					"<div id='dsbCountdown_" + i + "' class='dsbCountdownEntry'>"
-						+ "<code>■</code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> <var></var> <samp></samp>"
+						+ "<code>" + I.Symbol.Block + "</code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> <var></var> <samp></samp>"
 					+ "</div>");
 			}
 			T.refreshDashboard(now);
@@ -12508,14 +12505,14 @@ T = {
 				{
 					ctd.DesiredTime = ctd.Start;
 					bulletclass = "dsbCountdownDormant";
-					arrow = "⇑@";
+					arrow = I.Symbol.ArrowUp + "@";
 					stamp = ctd.StartStamp;
 				}
 				else if (pDate < ctd.Finish)
 				{
 					ctd.DesiredTime = ctd.Finish;
 					bulletclass = "dsbCountdownActive";
-					arrow = "⇓@";
+					arrow = I.Symbol.ArrowDown + "@";
 					stamp = ctd.FinishStamp;
 				}
 				else
@@ -12617,20 +12614,22 @@ T = {
 			{
 				// Segments of a timeline (event)
 				var event = chain.Blocks[ii];
-				var titleprefix = "";
+				var segmentprefix = "";
 				switch (event.primacy)
 				{
-					case C.EventPrimacyEnum.Normal: titleprefix = I.Symbol.Ellipsis; break;
-					case C.EventPrimacyEnum.Boss: titleprefix = I.Symbol.Star + " "; break;
+					case C.EventPrimacyEnum.Normal: segmentprefix = I.Symbol.Ellipsis; break;
+					case C.EventPrimacyEnum.Boss: segmentprefix = I.Symbol.Star + " "; break;
 				}
-				var titlezone = (parseInt(ii) === 0) ? ("<b class='tmlName'>" + name + "</b>") : "";
+				var linename = (parseInt(ii) === 0) ? ("<b class='tmlLineName'>" + name + "</b>") : "";
 				event.duration = T.parseChainTime(event.duration);
 				event.time = T.parseChainTime(event.time);
 				var width = (event.duration / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
-				line.append("<div class='tmlSegment' style='width:" + width + "%' data-start='" + event.time + "' data-finish='" + (event.time + event.duration) + "'>"
-					+ "<span class='tmlSegmentTitle'>" + titlezone + titleprefix + D.getObjectName(event) + "</span></div>");
+				line.append("<div class='tmlSegment' style='width:" + width + "%' data-start='" + event.time + "' data-finish='" + (event.time + event.duration)
+					+ "'><div class='tmlSegmentContent'><span class='tmlSegmentName'>" + linename + segmentprefix + D.getObjectName(event)
+					+ "</span><span class='tmlSegmentCountdown'></span></div></div>");
 			}
 		}
+		// Bind window buttons
 		$("#tmlClose").click(function()
 		{
 			T.toggleTimeline(false);
@@ -12640,6 +12639,7 @@ T = {
 		{
 			$("#opt_bol_showTimelineOpaque").trigger("click");
 		});
+		// Initialize
 		I.qTip.init(".tmlLine");
 		T.updateTimelineSegments();
 		T.updateTimelineIndicator();
@@ -12656,8 +12656,8 @@ T = {
 		for (var i = 0; i < divisions; i++)
 		{
 			var width = T.cPERCENT_100 / divisions;
-			line.append("<div class='tmlSegment' style='width:" + width + "%'>"
-				+ "<span class='tmlSegmentTime'>" + T.getCurrentBihourlyTimestampLocal(divisionminutes * i) + "</span></div>");
+			line.append("<div class='tmlSegment' style='width:" + width + "%'><div class='tmlSegmentContent'>"
+				+ "<span class='tmlSegmentTimestamp'>" + T.getCurrentBihourlyTimestampLocal(divisionminutes * i) + "</span></div></div>");
 		}
 	},
 	
@@ -12669,6 +12669,26 @@ T = {
 		var minutes = T.getCurrentBihourlyMinutesUTC();
 		var offset = (minutes / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
 		$("#tmlIndicator").css({left: offset + "%"});
+		$(".tmlLineName").css({left: "calc(" + offset + "% + 6px)"});
+		
+		$(".tmlSegment").each(function()
+		{
+			var start = $(this).data("start");
+			var finish = $(this).data("finish");
+			var countdown = $(this).find(".tmlSegmentCountdown");
+			var minstring = D.getWord("m");
+			
+			if ($(this).hasClass("tmlSegmentActive"))
+			{
+				// If active then show time remaining
+				countdown.html(I.Symbol.ArrowDown + (finish - minutes) + minstring);
+			}
+			else
+			{
+				// If inactive then show time until
+				countdown.html(I.Symbol.ArrowUp + T.wrapInteger((start - minutes), T.cMINUTES_IN_2_HOURS) + minstring);
+			}
+		});
 	},
 	
 	/*
@@ -13810,6 +13830,9 @@ I = {
 	siteTagCurrent: " - gw2timer.com",
 	Symbol:
 	{
+		ArrowUp: "⇑",
+		ArrowDown: "⇓",
+		Block: "■",
 		Star: "☆",
 		Ellipsis: "…",
 		Day: "☀",
@@ -15178,6 +15201,7 @@ I = {
 				// Readjust panels
 				I.readjustSimple();
 				$(window).resize(function() { I.readjustSimple(); });
+				$("#itemTimeline").appendTo("#panelApp");
 			} break;
 			case I.ModeEnum.Mobile:
 			{
