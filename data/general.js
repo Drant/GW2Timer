@@ -114,15 +114,16 @@ var GW2T_ZONE_ASSOCIATION = {
 var GW2T_GATEWAY_CONNECTION = {
 	// The light blue vortexes at the edges of zones
 	interzones: [
-	[[2394, 18790], [2915, 18296]], // auric to tangled
 	[[877, 16061], [790, 16219]], // verdant to auric
+	[[2394, 18790], [2915, 18296]], // auric to tangled
+	[[2902, 19509], [3776, 19771]], // tangled to dragon
 	[[4155, 15495], [3750, 15250]], // silverwastes to verdant
-	[[5865, 15283], [5974, 15604]], // silverwastes to brisban
-	[[5559, 16744], [6039, 17105]], // dry to brisban
+	[[5974, 15604], [5865, 15283]], // brisban to silverwastes
+	[[6039, 17105], [5559, 16744]], // brisban to dry
 	[[8011, 17021], [8082, 17270]], // metrica to brisban
-	[[9218, 14666], [9492, 14615]], // brisban to kessex
-	[[9244, 16368], [9443, 16316]], // brisban to caledon
-	[[9926, 20038], [10229, 20633]], // caledon to grove
+	[[9492, 14615], [9218, 14666]], // kessex to brisban
+	[[9443, 16316], [9244, 16368]], // caledon to brisban
+	[[10229, 20633], [9926, 20038]], // grove to caledon
 	[[9130, 17658], [9435, 17664]], // metrica to caledon
 	[[11061, 16191], [11090, 16023]], // caledon to kessex
 	[[12232, 14028], [12234, 14141]], // kessex to queensdale
@@ -743,9 +744,9 @@ Days:
 	wvw: ["Ruins", "Spender", "Camp", "Tower"]
 },
 "15": {
-	pve: ["Miner Shiverpeaks", "Activity", "Metrica", null],
-	pvp: ["Defender", "Reward", "War Ele", "Eng Necro"],
-	wvw: ["Creature", "Kills", "Keep", "Camp"]
+	pve: ["Forager Kryta", "Fractal", "Brisban", "Wurm"],
+	pvp: ["Rank", "Kills", "Guard Mes", "Rev Necro"],
+	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "16": {
 	pve: ["Lumberer Wastes", "Fractal", "Harathi", null],
@@ -837,8 +838,7 @@ var GW2T_DASHBOARD_DATA = {
 
 Announcement:
 {
-	content: "Heart of Thorns meta events timeline added (based on <a href='http://jsfiddle.net/fffam/tukuz9x1/embedded/result/'>Famme's</a> work). <br />"
-		+ "Please help with <a href='http://forum.renaka.com/topic/5905384/'>researching</a> the HoT events for world boss style timers.",
+	content: "Please help research and correct the <a href='http://forum.renaka.com/topic/5905384/'>Heart of Thorns meta events</a> and rewards.",
 	Start: new Date("2015-11-12T16:00:00Z"),
 	Finish: new Date("2015-11-18T16:00:00Z")
 },
@@ -1024,28 +1024,34 @@ Sale: {
 }
 };
 
+/*
+ * UTC bihourly events.
+ */
 var GW2T_TIMELINE = [
 	{
-		alias: "verdant",
+		zone: "verdant",
+		color: "yellowgreen",
 		Blocks: [
 			{ time: "00:00", duration: "00:10", primacy: 1, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" },
 			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Helikoptere", name_es: "Helicópteros", name_fr: "Hélicoptères", name_zh: "直升機" },
-			{ time: "00:30", duration: "00:75", primacy: 2, name_en: "Daylight", name_de: "Tag", name_es: "Día", name_fr: "Jour", name_zh: "白天" },
+			{ time: "00:30", duration: "00:75", primacy: 2, name_en: "Daylight", name_de: "Tag", name_es: "Día", name_fr: "Journée", name_zh: "白天" },
 			{ time: "01:45", duration: "00:15", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" }
 		]
 	},
 	{
-		alias: "auric",
+		zone: "auric",
+		color: "gold",
 		Blocks: [
 			{ time: "00:00", duration: "00:45", primacy: 1, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" },
 			{ time: "00:45", duration: "00:15", primacy: 2, name_en: "Challenges", name_de: "Herausforderungen", name_es: "Desafíos", name_fr: "Défis", name_zh: "挑戰" },
 			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Octovine", name_de: "Rankenkraken", name_es: "Octohiedra", name_fr: "Octoliane", name_zh: "八爪藤" },
-			{ time: "01:20", duration: "00:10", primacy: 2, name_en: "Reset", name_de: "Zurücksetzen", name_es: "Restablecer", name_fr: "Réinitialiser", name_zh: "重設" },
+			{ time: "01:20", duration: "00:10", primacy: 2, name_en: "Rest", name_de: "Verschnaufpause", name_es: "Descanso", name_fr: "Répit", name_zh: "休息" },
 			{ time: "01:30", duration: "00:30", primacy: 2, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" }
 		]
 	},
 	{
-		alias: "tangled",
+		zone: "tangled",
+		color: "violet",
 		Blocks: [
 			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" },
 			{ time: "00:25", duration: "00:05", primacy: 2, name_en: "Prepare", name_de: "Vorbereiten", name_es: "Preparar", name_fr: "Préparer", name_zh: "準備" },
@@ -1054,7 +1060,8 @@ var GW2T_TIMELINE = [
 		]
 	},
 	{
-		alias: "dragon",
+		zone: "dragon",
+		color: "skyblue",
 		Blocks: [
 			{ time: "00:00", duration: "01:30", primacy: 1, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" },
 			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" }

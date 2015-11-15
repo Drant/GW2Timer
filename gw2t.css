@@ -423,9 +423,15 @@ html, body,
 	margin-left: 6px;
 }
 .tmlLineName {
+	display: table-cell;
 	position: absolute;
+	z-index: 2;
 	margin-top: -10px;
+	margin-left: 6px;
+	vertical-align: middle;
+	font-family: Menomonia;
 	font-size: 12px;
+	font-weight: bold;
 	color: #ffaa22;
 	opacity: 0.7;
 }
@@ -437,6 +443,9 @@ html, body,
 	color: #ccc;
 	text-shadow: 0px 0px 4px black;
 	opacity: 0.7;
+}
+.tmlSegmentNameCurrent {
+	color: #ccc;
 }
 .tmlSegmentCountdown {
 	display: table-cell;
@@ -500,6 +509,7 @@ html, body,
 	position: absolute;
 	top: -16px;
 	left: -16px;
+	z-index: 1;
 	width: 32px; height: 32px;
 	background: url("img/ui/close.png");
 	opacity: 0.4;
@@ -601,7 +611,7 @@ html, body,
 	bottom: 12px; left: 12px;
 	z-index: 9;
 }
-#itemMapCoordinates input, #itemWvWCoordinates input {
+#itemMapCoordinates input, #itemWvWCoordinates input, .cssInputText {
 	display: inline-block;
 	width: 90px;
 	height: 16px;

@@ -75,7 +75,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 151027},
+		programVersion: {key: "int_utlProgramVersion", value: 151115},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
 		personalPins: {key: "str_utlPersonalPins", value: ""}
 	},
@@ -97,8 +97,7 @@ O = {
 				+ "Your version: " + usersversion + "<br />"
 				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
 				+ "<br />"
-				+ "Heart of Thorns maps now work with GPS. Routes are not available yet.<br />"
-				+ "Try the Chromium version of the <a class='urlUpdates' href='" + U.URL_META.Overlay + "'>GW2Navi overlay</a> with much faster performance.<br />"
+				+ "Heart of Thorns timers added. Please help <a href='http://forum.renaka.com/topic/5905384/'>correct</a> the timers.<br />"
 				, wait);
 			U.convertExternalLink(".urlUpdates");
 		}
@@ -1019,7 +1018,7 @@ O = {
 			C.initializeTimetableHTML();
 			C.updateChainsTimeHTML();
 			K.updateDigitalClockMinutely();
-			T.refillTimelineLegend();
+			T.updateTimelineLegend();
 		},
 		bol_detectDST: function()
 		{
@@ -3113,7 +3112,7 @@ X = {
 			$("#chlCustomListDaily").append(checkboxhtml);
 			$("#chlCustomListWeekly").append(checkboxhtml);
 		}
-		var sampledailylist = ["Did dailies", "Gathered home nodes", "Opened JP chests", "Crafted timegates", "Fed Mawdrey, Star, Princess"];
+		var sampledailylist = ["Did dailies", "Gathered home nodes", "Opened JP chests", "Crafted timegates", "Fed Mawdrey, Star, Princess", "Bought Converter items"];
 		var sampleweeklylist = ["Did guild missions", "Farmed personal story key"];
 		var insertSampleList = function(pList, pSample)
 		{
@@ -5508,12 +5507,13 @@ C = {
 	{
 		Temple: 0, // Unscheduled Orr temples
 		Legacy: 1, // Unscheduled chains that still gives a rare
-		ScheduledCutoff: 1,
+		ScheduledCutoff: 2,
 		Standard: 2, // Scheduled non-hardcore chains
 		Hardcore: 3, // Scheduled challenging chains with a separate schedule from non-hardcores
-		ChainCutoff: 4,
-		DryTop: 4, // Scheduled Dry Top chains
-		LivingStory: 5
+		WorldBossCuttoff: 3,
+		Miscellaneous: 4, // Any scheduled chains not already defined here
+		DryTop: 5, // Scheduled Dry Top chains
+		LivingStory: 6 // Seasonal events
 	},
 	EventPrimacyEnum:
 	{
@@ -5648,7 +5648,7 @@ C = {
 	 */
 	isChainScheduled: function(pChain)
 	{
-		if (pChain.series > C.ChainSeriesEnum.ScheduledCutoff)
+		if (pChain.series >= C.ChainSeriesEnum.ScheduledCutoff)
 		{
 			return true;
 		}
@@ -5656,7 +5656,7 @@ C = {
 	},
 	isChainWorldBoss: function(pChain)
 	{
-		if (pChain.series < C.ChainSeriesEnum.ChainCutoff)
+		if (pChain.series <= C.ChainSeriesEnum.WorldBossCuttoff)
 		{
 			return true;
 		}
@@ -5665,7 +5665,8 @@ C = {
 	isChainRegular: function(pChain)
 	{
 		if (pChain.series === C.ChainSeriesEnum.Standard ||
-			pChain.series === C.ChainSeriesEnum.Hardcore||
+			pChain.series === C.ChainSeriesEnum.Hardcore ||
+			pChain.series === C.ChainSeriesEnum.Miscellaneous ||
 			pChain.series === C.ChainSeriesEnum.LivingStory)
 		{
 			return true;
@@ -5730,7 +5731,7 @@ C = {
 		var chainextra = "";
 		var chainname = D.getObjectName(pChain);
 		
-		if (C.isChainWorldBoss(pChain))
+		if (C.isChainRegular(pChain))
 		{
 			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
 				+ " (" + pChain.level + ")"
@@ -6017,6 +6018,11 @@ C = {
 					C.DryTopChains.push(chain);
 					C.ScheduledChains.push(chain);
 				} break;
+				case C.ChainSeriesEnum.Miscellaneous:
+				{
+					chain.htmllist = "#sectionChains_Scheduled";
+					C.ScheduledChains.push(chain);
+				} break;
 				case C.ChainSeriesEnum.LivingStory:
 				{
 					if (T.isDashboardStoryEnabled)
@@ -6026,7 +6032,7 @@ C = {
 							? "#sectionChains_Scheduled" : "#dsbStory";
 						C.LivingStoryChains.push(chain);
 						C.ScheduledChains.push(chain);
-						T.insertChainToSchedule(chain, chain.extra);
+						T.insertChainToSchedule(chain);
 					}
 					else
 					{
@@ -6177,7 +6183,7 @@ C = {
 		var time = remaining;
 		var sign = I.Symbol.ArrowUp + " ";
 		
-		if (pChain.series === C.ChainSeriesEnum.DryTop)
+		if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopGenerated)
 		{
 			// Dry Top events
 			var currentframe = T.getDryTopMinute();
@@ -6240,7 +6246,8 @@ C = {
 				ithchain = chains[ii];
 				// Only generate chain bars for these types
 				if (ithchain.series !== C.ChainSeriesEnum.Standard
-					&& ithchain.series !== C.ChainSeriesEnum.Hardcore)
+					&& ithchain.series !== C.ChainSeriesEnum.Hardcore
+					&& ithchain.series !== C.ChainSeriesEnum.Miscellaneous)
 				{
 					break;
 				}
@@ -6746,10 +6753,9 @@ C = {
 				}
 			}
 			
-			// Also unsubscribe if opted
-			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription && I.isProgramLoaded
-				&& pChain.series !== C.ChainSeriesEnum.LivingStory
-				&& O.Options.bol_alertUnsubscribe && isregularchain && C.isChainSubscribed(pChain))
+			// Also unsubscribe from world boss chains if opted
+			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription && O.Options.bol_alertUnsubscribe && I.isProgramLoaded
+				&& C.isChainWorldBoss(pChain) && C.isChainSubscribed(pChain))
 			{
 				$("#chnTime_" + pChain.nexus).trigger("click");
 			}
@@ -7087,6 +7093,7 @@ M = {
 						case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
 						case "api": U.printAPI(args[1], args[2]); break;
 						case "items": U.printItemsAPI(args[1]); break;
+						case "events": P.printZoneEvents(); break;
 					}
 				}
 				else
@@ -7482,6 +7489,7 @@ M = {
 		this.Layer.Pin.eachLayer(function(pMarker)
 		{
 			that.bindMarkerCoordBehavior(pMarker, "click");
+			that.bindMarkerZoomBehavior(pMarker, "contextmenu");
 			pMarker.on("dblclick", function()
 			{
 				that.movePin(this);
@@ -8228,7 +8236,7 @@ M = {
 		}
 		else
 		{
-			I.write("Path unavailable for this.");
+			I.write("Path unavailable for this zone.");
 		}
 	},
 	
@@ -8901,7 +8909,7 @@ M = {
 			var zonenick = $(this).attr("data-zone");
 			$(this).text(M.getZoneName(zonenick));
 			$(this).attr("data-coord", M.getZoneCenter(zonenick).toString());
-			M.bindMapLinkBehavior($(this), M.ZoomEnum.Same);
+			M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
 		});
 		$("#mapZoneList h2").each(function()
 		{
@@ -9155,7 +9163,7 @@ P = {
 		{
 			if (pName.indexOf("guild") !== -1 || // Guild missions
 				pName.indexOf("subdue") !== -1 || // Guild bounty
-				pName.indexOf("challenge") !== -1 || // Hero challenges
+				pName.indexOf("hero ch") !== -1 || // Hero challenges
 				pName.indexOf("offshoot") !== -1 || // Obsolete events
 				pName.indexOf("vigil en") !== -1 ||
 				pName.indexOf("haunted") !== -1)
@@ -9315,6 +9323,23 @@ P = {
 		{
 			
 		});
+	},
+	
+	/*
+	 * Prints the current zone's event names and coordinates.
+	 */
+	printZoneEvents: function()
+	{
+		if (M.isEventIconsGenerated)
+		{
+			M.ZoneCurrent.Layers.EventIcon.eachLayer(function(layer) {
+				I.write("<input type='text' class='cssInputText' value='[" + M.convertLCtoGC(layer.getLatLng()) + "]' /> " + layer.options.task, 0);
+			});
+		}
+		else
+		{
+			I.write("Event icons have not been generated.");
+		}
 	},
 	
 	/*
@@ -11035,6 +11060,10 @@ W = {
  * ========================================================================== */
 T = {
 	
+	Schedule: {},
+	DryTopSets: {},
+	DryTopCodes: {},
+	
 	DashboardAnnouncement: GW2T_DASHBOARD_DATA.Announcement,
 	DashboardCountdown: GW2T_DASHBOARD_DATA.Countdowns,
 	DashboardStory: GW2T_DASHBOARD_DATA.Story,
@@ -11071,7 +11100,7 @@ T = {
 	cDAYS_IN_WEEK: 7,
 	cSECONDS_IN_TIMEFRAME: 900,
 	cMINUTES_IN_TIMEFRAME: 15,
-	cMINUTES_IN_DRYTOPFRAME: 5,
+	cMINUTES_IN_MINIFRAME: 5,
 	cNUM_TIMEFRAMES_IN_HOUR: 4,
 	cSECS_MARK_0: 0,
 	cSECS_MARK_1: 900,
@@ -11115,10 +11144,6 @@ T = {
 	secondsTillResetWeekly: -1,
 	isCountdownToResetStarted: false,
 	
-	DryTopSets: {},
-	DryTopCodes: {},
-	Schedule: {},
-	
 	/*
 	 * Gets a clipboard text of the current Dry Top events.
 	 * @param int pOffset frames from the current.
@@ -11143,7 +11168,7 @@ T = {
 		pOffset = pOffset || 0;
 		var now = new Date();
 		var min = now.getUTCMinutes();
-		var minute = (~~(min / T.cMINUTES_IN_DRYTOPFRAME) * T.cMINUTES_IN_DRYTOPFRAME) + (pOffset * T.cMINUTES_IN_DRYTOPFRAME);
+		var minute = (~~(min / T.cMINUTES_IN_MINIFRAME) * T.cMINUTES_IN_MINIFRAME) + (pOffset * T.cMINUTES_IN_MINIFRAME);
 		minute = T.wrapInteger(minute, T.cMINUTES_IN_HOUR);
 		if (minute < T.cBASE_10)
 		{
@@ -11227,186 +11252,67 @@ T = {
 	},
 	
 	/*
+	 * Initializes a slot in the schedule. All units are in minutes since UTC midnight.
+	 * @param int pTime minute.
+	 * Example of expected schedule:
+	 *	T.Schedule =
+	 *	{
+	 *	   "0": {SchedTime: 0 SchedChains: [C.Taidha, C.Tequatl]},
+	 *	  "15": {SchedTime: 15, SchedChains: [C.Maw]},
+	 *	  "30": {SchedTime: 30, SchedChains: [C.Megades]},
+	 *	  "45": {SchedTime: 45, SchedChains: [C.FE]},
+	 *		...
+	 *	}
+	 */
+	initializeScheduleSlot: function(pTime)
+	{
+		if (T.Schedule[pTime] === undefined)
+		{
+			T.Schedule[pTime] = {SchedTime: pTime, SchedChains: []};
+		}
+	},
+	
+	/*
 	 * Inserts a chain into the schedule.
 	 * @param object pChain.
-	 * @param array pTimeArray of strings of HH:MM format.
+	 * @param array/object pTime array of strings of HH:MM format,
+	 * or an object with the timing pattern:
+	 * hourInitial: the first UTC hour the chain starts on.
+	 * hourMultiplier: the repetition on every so hours.
+	 * minuteOffset: the UTC minutes from those hours.
 	 */
-	insertChainToSchedule: function(pChain, pTimeArray)
+	insertChainToSchedule: function(pChain)
 	{
-		for (var i in pTimeArray)
+		var utcminute = 0;
+		var timing = pChain.timing;
+		// If given an array of start times
+		if (Array.isArray(timing))
 		{
-			var time = T.parseChainTime(pTimeArray[i]);
-			T.Schedule[time].c.unshift(pChain);
+			for (var i in timing)
+			{
+				utcminute = T.parseChainTime(timing[i]);
+				T.initializeScheduleSlot(utcminute);
+				T.Schedule[utcminute].SchedChains.push(pChain);
+			}
+		}
+		// If given a pattern of the start times
+		else
+		{
+			for (utcminute = (timing.hourInitial * T.cMINUTES_IN_HOUR) + timing.minuteOffset;
+				utcminute < T.cMINUTES_IN_DAY;
+				utcminute += timing.hourMultiplier * T.cMINUTES_IN_HOUR)
+			{
+				T.initializeScheduleSlot(utcminute);
+				T.Schedule[utcminute].SchedChains.push(pChain);
+			}
 		}
 	},
 	
 	// World boss chains
 	initializeSchedule: function()
 	{
-		// Shortcut reference to the chains
-		C.FE =			C.Chains[0];
-		C.Golem =		C.Chains[1];
-		C.Jormag =		C.Chains[2];
-		C.Maw =			C.Chains[3];
-		C.Megades =		C.Chains[4];
-		C.SB =			C.Chains[5];
-		C.Shatterer =	C.Chains[6];
-		C.Taidha =		C.Chains[7];
-		C.Ulgoth =		C.Chains[8];
-		C.Wurm =		C.Chains[9];
-		C.Queen =		C.Chains[10];
-		C.Tequatl =		C.Chains[11];
-		C.Triple =		C.Chains[12];
-		C.DryTop0 =		C.Chains[13];
-		C.DryTop1 =		C.Chains[14];
-		C.DryTop2 =		C.Chains[15];
-		C.DryTop3 =		C.Chains[16];
-		
-		/*
-		 * This associative array contains all time-sensitive chains (a group of
-		 * events). The "key"/slot is the time in minutes since UTC midnight,
-		 * and the "value" is an object with the minutes (again for access) and
-		 * the array of chains that start at that time.
-		 * A "timeframe" is the quarter of an hour that a regular chain(s) is
-		 * considered current and before it is replaced by the next chain(s).
-		 */
-		T.Schedule =
-		{
-			   "0": {t: "00:00", c: [C.Taidha, C.Tequatl]},
-			  "15": {t: "00:15", c: [C.Maw]},
-			  "30": {t: "00:30", c: [C.Megades]},
-			  "45": {t: "00:45", c: [C.FE]},
-
-			  "60": {t: "01:00", c: [C.Shatterer, C.Triple]},
-			  "75": {t: "01:15", c: [C.Wurm]},
-			  "90": {t: "01:30", c: [C.Ulgoth]},
-			 "105": {t: "01:45", c: [C.SB]},
-
-			 "120": {t: "02:00", c: [C.Golem, C.Queen]},
-			 "135": {t: "02:15", c: [C.Maw]},
-			 "150": {t: "02:30", c: [C.Jormag]},
-			 "165": {t: "02:45", c: [C.FE]},
-
-			 "180": {t: "03:00", c: [C.Taidha, C.Tequatl]},
-			 "195": {t: "03:15", c: [C.Wurm]},
-			 "210": {t: "03:30", c: [C.Megades]},
-			 "225": {t: "03:45", c: [C.SB]},
-
-			 "240": {t: "04:00", c: [C.Shatterer, C.Triple]},
-			 "255": {t: "04:15", c: [C.Maw]},
-			 "270": {t: "04:30", c: [C.Ulgoth]},
-			 "285": {t: "04:45", c: [C.FE]},
-
-			 "300": {t: "05:00", c: [C.Golem]},
-			 "315": {t: "05:15", c: [C.Wurm]},
-			 "330": {t: "05:30", c: [C.Jormag]},
-			 "345": {t: "05:45", c: [C.SB]},
-
-			 "360": {t: "06:00", c: [C.Taidha, C.Queen]},
-			 "375": {t: "06:15", c: [C.Maw]},
-			 "390": {t: "06:30", c: [C.Megades]},
-			 "405": {t: "06:45", c: [C.FE]},
-
-			 "420": {t: "07:00", c: [C.Shatterer, C.Tequatl]},
-			 "435": {t: "07:15", c: [C.Wurm]},
-			 "450": {t: "07:30", c: [C.Ulgoth]},
-			 "465": {t: "07:45", c: [C.SB]},
-
-			 "480": {t: "08:00", c: [C.Golem, C.Triple]},
-			 "495": {t: "08:15", c: [C.Maw]},
-			 "510": {t: "08:30", c: [C.Jormag]},
-			 "525": {t: "08:45", c: [C.FE]},
-
-			 "540": {t: "09:00", c: [C.Taidha]},
-			 "555": {t: "09:15", c: [C.Wurm]},
-			 "570": {t: "09:30", c: [C.Megades]},
-			 "585": {t: "09:45", c: [C.SB]},
-
-			 "600": {t: "10:00", c: [C.Shatterer]},
-			 "615": {t: "10:15", c: [C.Maw]},
-			 "630": {t: "10:30", c: [C.Ulgoth, C.Queen]},
-			 "645": {t: "10:45", c: [C.FE]},
-
-			 "660": {t: "11:00", c: [C.Golem]},
-			 "675": {t: "11:15", c: [C.Wurm]},
-			 "690": {t: "11:30", c: [C.Jormag, C.Tequatl]},
-			 "705": {t: "11:45", c: [C.SB]},
-
-			 "720": {t: "12:00", c: [C.Taidha]},
-			 "735": {t: "12:15", c: [C.Maw]},
-			 "750": {t: "12:30", c: [C.Megades, C.Triple]},
-			 "765": {t: "12:45", c: [C.FE]},
-
-			 "780": {t: "13:00", c: [C.Shatterer]},
-			 "795": {t: "13:15", c: [C.Wurm]},
-			 "810": {t: "13:30", c: [C.Ulgoth]},
-			 "825": {t: "13:45", c: [C.SB]},
-
-			 "840": {t: "14:00", c: [C.Golem]},
-			 "855": {t: "14:15", c: [C.Maw]},
-			 "870": {t: "14:30", c: [C.Jormag]},
-			 "885": {t: "14:45", c: [C.FE]},
-
-			 "900": {t: "15:00", c: [C.Taidha, C.Queen]},
-			 "915": {t: "15:15", c: [C.Wurm]},
-			 "930": {t: "15:30", c: [C.Megades]},
-			 "945": {t: "15:45", c: [C.SB]},
-
-			 "960": {t: "16:00", c: [C.Shatterer, C.Tequatl]},
-			 "975": {t: "16:15", c: [C.Maw]},
-			 "990": {t: "16:30", c: [C.Ulgoth]},
-			"1005": {t: "16:45", c: [C.FE]},
-
-			"1020": {t: "17:00", c: [C.Golem, C.Triple]},
-			"1035": {t: "17:15", c: [C.Wurm]},
-			"1050": {t: "17:30", c: [C.Jormag]},
-			"1065": {t: "17:45", c: [C.SB]},
-
-			"1080": {t: "18:00", c: [C.Taidha, C.Queen]},
-			"1095": {t: "18:15", c: [C.Maw]},
-			"1110": {t: "18:30", c: [C.Megades]},
-			"1125": {t: "18:45", c: [C.FE]},
-
-			"1140": {t: "19:00", c: [C.Shatterer, C.Tequatl]},
-			"1155": {t: "19:15", c: [C.Wurm]},
-			"1170": {t: "19:30", c: [C.Ulgoth]},
-			"1185": {t: "19:45", c: [C.SB]},
-
-			"1200": {t: "20:00", c: [C.Golem, C.Triple]},
-			"1215": {t: "20:15", c: [C.Maw]},
-			"1230": {t: "20:30", c: [C.Jormag]},
-			"1245": {t: "20:45", c: [C.FE]},
-
-			"1260": {t: "21:00", c: [C.Taidha]},
-			"1275": {t: "21:15", c: [C.Wurm]},
-			"1290": {t: "21:30", c: [C.Megades]},
-			"1305": {t: "21:45", c: [C.SB]},
-
-			"1320": {t: "22:00", c: [C.Shatterer]},
-			"1335": {t: "22:15", c: [C.Maw]},
-			"1350": {t: "22:30", c: [C.Ulgoth]},
-			"1365": {t: "22:45", c: [C.FE]},
-
-			"1380": {t: "23:00", c: [C.Golem, C.Queen]},
-			"1395": {t: "23:15", c: [C.Wurm]},
-			"1410": {t: "23:30", c: [C.Jormag]},
-			"1425": {t: "23:45", c: [C.SB]}
-		};
-		
 		var i, ii, iii;
-		var quarter = 0;
 		var slot;
-		
-		// Add Dry Top chains to the schedule
-		for (i in T.Schedule)
-		{
-			T.Schedule[i].c.push(C["DryTop" + (quarter)]);
-			quarter++;
-			if (quarter > T.cNUM_TIMEFRAMES_IN_HOUR - 1)
-			{
-				quarter = 0;
-			}
-		}
 		
 		// Initialize Living Story events, if available
 		if (T.DashboardStory.isEnabled)
@@ -11418,20 +11324,21 @@ T = {
 		}
 		
 		// Initialize chains
-		C.ScheduledChains = new Array();
 		C.initializeAllChains();
+		for (i in C.ScheduledChains)
+		{
+			T.insertChainToSchedule(C.ScheduledChains[i]);
+		}
 		
+		// Every scheduled chain gets an array of schedule keys (UTC minutes) of where it is in the schedule
 		for (i in T.Schedule)
 		{
-			// Convert all schedule time strings to minute integer
-			T.Schedule[i].t = T.parseChainTime(T.Schedule[i].t);
-			// Each chain gets an array of schedule keys of where it is in the schedule
 			slot = T.Schedule[i];
 			for (ii in C.ScheduledChains)
 			{
-				for (iii in slot.c)
+				for (iii in slot.SchedChains)
 				{
-					if (C.ScheduledChains[ii].nexus === slot.c[iii].nexus)
+					if (C.ScheduledChains[ii].nexus === slot.SchedChains[iii].nexus)
 					{
 						C.ScheduledChains[ii].scheduleKeys.push(i);
 						break;
@@ -11451,7 +11358,7 @@ T = {
 	 */
 	getScheduleSlotTime: function(pKey)
 	{
-		return T.Schedule[pKey].t;
+		return T.Schedule[pKey].SchedTime;
 	},
 	
 	/*
@@ -11461,7 +11368,7 @@ T = {
 	 */
 	getScheduleSlotChainsByKey: function(pKey)
 	{
-		return T.Schedule[pKey].c;
+		return T.Schedule[pKey].SchedChains;
 	},
 	
 	/*
@@ -11495,7 +11402,7 @@ T = {
 	 */
 	getTimeframeChains: function(pOffset)
 	{
-		return T.Schedule[T.getTimeframe(pOffset)].c;
+		return T.Schedule[T.getTimeframe(pOffset)].SchedChains;
 	},
 	
 	/*
@@ -12058,6 +11965,10 @@ T = {
 		
 		return signstr + weekstr + daystr + hourstr + minstr + secstr;
 	},
+	formatMinutes: function(pMinutes)
+	{
+		return T.formatSeconds(pMinutes * T.cSECONDS_IN_MINUTE);
+	},
 	
 	/*
 	 * Checks a time sensitive object if its Start and Finish date objects are
@@ -12602,12 +12513,12 @@ T = {
 	{
 		// Container for all the timelines
 		var tapestry = $("#itemTimeline").append("<div class='tmlLine' id='tmlLegend'></div>");
-		T.refillTimelineLegend();
+		T.updateTimelineLegend();
 		// Create timings header
 		for (var i in T.Timeline)
 		{
 			var chain = T.Timeline[i];
-			var name = U.escapeHTML(M.getZoneName(chain.alias));
+			var name = (chain.zone === undefined) ? D.getObjectName(chain) : U.escapeHTML(M.getZoneName(chain.zone));
 			// Container for segments of a timeline (chain)
 			var line = $("<div class='tmlLine' title='<dfn>" + name + "</dfn>'></div>").appendTo(tapestry);
 			for (var ii in chain.Blocks)
@@ -12625,7 +12536,7 @@ T = {
 				event.time = T.parseChainTime(event.time);
 				var width = (event.duration / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
 				line.append("<div class='tmlSegment' style='width:" + width + "%' data-start='" + event.time + "' data-finish='" + (event.time + event.duration)
-					+ "'><div class='tmlSegmentContent'><span class='tmlSegmentName'>" + linename + segmentprefix + D.getObjectName(event)
+					+ "'><div class='tmlSegmentContent'>" + linename + "<span class='tmlSegmentName'>" + segmentprefix + D.getObjectName(event)
 					+ "</span><span class='tmlSegmentCountdown'></span></div></div>");
 			}
 		}
@@ -12646,47 +12557,29 @@ T = {
 	},
 	
 	/*
-	 * Fills the legend line with timestamps. Reuseable for time formatting.
-	 */
-	refillTimelineLegend: function()
-	{
-		var line = $("#tmlLegend").empty();
-		var divisionminutes = 5;
-		var divisions = T.cMINUTES_IN_2_HOURS / divisionminutes;
-		for (var i = 0; i < divisions; i++)
-		{
-			var width = T.cPERCENT_100 / divisions;
-			line.append("<div class='tmlSegment' style='width:" + width + "%'><div class='tmlSegmentContent'>"
-				+ "<span class='tmlSegmentTimestamp'>" + T.getCurrentBihourlyTimestampLocal(divisionminutes * i) + "</span></div></div>");
-		}
-	},
-	
-	/*
-	 * Updates the "minute hand" of the timeline. Should be called every 1 minute.
+	 * Moves the "minute hand" and updates countdowns. Should be called every 1 minute.
 	 */
 	updateTimelineIndicator: function()
 	{
 		var minutes = T.getCurrentBihourlyMinutesUTC();
 		var offset = (minutes / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
 		$("#tmlIndicator").css({left: offset + "%"});
-		$(".tmlLineName").css({left: "calc(" + offset + "% + 6px)"});
+		$(".tmlLineName").css({left: offset + "%"});
 		
 		$(".tmlSegment").each(function()
 		{
 			var start = $(this).data("start");
 			var finish = $(this).data("finish");
 			var countdown = $(this).find(".tmlSegmentCountdown");
-			var minstring = D.getWord("m");
-			
 			if ($(this).hasClass("tmlSegmentActive"))
 			{
 				// If active then show time remaining
-				countdown.html(I.Symbol.ArrowDown + (finish - minutes) + minstring);
+				countdown.html(I.Symbol.ArrowUp + T.formatMinutes(finish - minutes));
 			}
 			else
 			{
 				// If inactive then show time until
-				countdown.html(I.Symbol.ArrowUp + T.wrapInteger((start - minutes), T.cMINUTES_IN_2_HOURS) + minstring);
+				countdown.html(I.Symbol.ArrowDown + T.formatMinutes(T.wrapInteger((start - minutes), T.cMINUTES_IN_2_HOURS)));
 			}
 		});
 	},
@@ -12708,6 +12601,27 @@ T = {
 				$(this).removeClass("tmlSegmentActive");
 			}
 		});
+		// Refresh the legend if approached new bihour
+		if (minutes === 0)
+		{
+			T.updateTimelineLegend();
+		}
+	},
+	
+	/*
+	 * Fills the legend line with timestamps. Should be called every 120 minutes.
+	 */
+	updateTimelineLegend: function()
+	{
+		var line = $("#tmlLegend").empty();
+		var divisionminutes = 5;
+		var divisions = T.cMINUTES_IN_2_HOURS / divisionminutes;
+		for (var i = 0; i < divisions; i++)
+		{
+			var width = T.cPERCENT_100 / divisions;
+			line.append("<div class='tmlSegment' style='width:" + width + "%'><div class='tmlSegmentContent'>"
+				+ "<span class='tmlSegmentTimestamp'>" + T.getCurrentBihourlyTimestampLocal(divisionminutes * i) + "</span></div></div>");
+		}
 	},
 	
 	/*
@@ -13177,7 +13091,9 @@ K = {
 			? ((T.cPERCENT_100 * opacityadd) + "%") : (~~(I.cPANEL_WIDTH * opacityadd) + "px");
 		K.timeProgress.style.width = progress;
 		
-		// If crossing a 15 minute mark (IMPORTANT)
+		/*
+		 * If crossing a 15 minute mark (IMPORTANT).
+		 */
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
 		{
 			if (O.Options.int_setDimming === 0
@@ -13214,9 +13130,25 @@ K = {
 		// If crossing a 1 second mark (given)
 		C.CurrentChains.forEach(C.updateCurrentChainTimeHTML);
 		
-		// If crossing a 1 minute mark
 		if (sec === 0)
 		{
+			/*
+			 * If crossing a 5 minute mark.
+			 */
+			if (min % T.cMINUTES_IN_MINIFRAME === 0)
+			{
+				K.updateDaytimeIcon();
+				K.updateDryTopClipboard();
+				T.updateTimelineSegments();
+				if (T.isDashboardEnabled)
+				{
+					T.refreshDashboard(pDate);
+				}
+			}
+			
+			/*
+			 * If crossing a 1 minute mark.
+			 */
 			K.updateDigitalClockMinutely();
 			T.updateTimelineIndicator();
 			// Refresh the chain time countdown opted
@@ -13230,17 +13162,7 @@ K = {
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedSecond);
 			}
 			
-			// If crossing a 5 minute mark
-			if (min % T.cMINUTES_IN_DRYTOPFRAME === 0)
-			{
-				K.updateDaytimeIcon();
-				K.updateDryTopClipboard();
-				T.updateTimelineSegments();
-				if (T.isDashboardEnabled)
-				{
-					T.refreshDashboard(pDate);
-				}
-			}
+			
 		}
 		
 		// Tick the two digital clocks below the analog clock
@@ -13753,15 +13675,16 @@ K = {
 		var updateWaypoint = function(pWaypoint, pChainSD, pChainHC, pChainSDAfter, pChainHCAfter)
 		{
 			var text = "";
+			var ignoredchain = C.getChainByAlias("triple");
 			
 			// Chains for the clicked timeframe
 			text += pChainSD.waypoint + " " + D.getChainAlias(pChainSD);
 			// If hardcore chain doesn't exist or is Triple Wurm
-			if ( ! pChainHC || pChainHC.nexus === C.Triple.nexus)
+			if ( ! pChainHC || pChainHC.nexus === ignoredchain.nexus)
 			{
 				text += T.getTimeTillChainFormatted(pChainSD);
 			}
-			else if (pChainHC.nexus !== C.Triple.nexus)
+			else if (pChainHC.nexus !== ignoredchain.nexus)
 			{
 				text += " " + D.getTranslation("and") + " " + pChainHC.waypoint
 					+ " " + D.getChainAlias(pChainHC)
@@ -13771,11 +13694,11 @@ K = {
 			// Chains for the timeframe after that
 			text += ", " + D.getTranslation("then") + " " + pChainSDAfter.waypoint
 				+ " " + D.getChainAlias(pChainSDAfter);
-			if ( ! pChainHCAfter || pChainHCAfter.nexus === C.Triple.nexus)
+			if ( ! pChainHCAfter || pChainHCAfter.nexus === ignoredchain.nexus)
 			{
 				text += T.getTimeTillChainFormatted(pChainSDAfter);
 			}
-			else if (pChainHCAfter.nexus !== C.Triple.nexus)
+			else if (pChainHCAfter.nexus !== ignoredchain.nexus)
 			{
 				text += " " + D.getTranslation("and") + " " + pChainHCAfter.waypoint
 					+ " " + D.getChainAlias(pChainHCAfter)
