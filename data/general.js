@@ -749,9 +749,9 @@ Days:
 	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "16": {
-	pve: ["Lumberer Wastes", "Fractal", "Harathi", null],
-	pvp: ["Capture", "Rank", "Thief Ele", "Guard Mes"],
-	wvw: ["Ruins", "Land", "Defender", "Tower"]
+	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", "FE"],
+	pvp: ["Rank", "Reward", "Guard Eng", "Ranger Mes"],
+	wvw: ["Caravan", "Guard", "Defender", "Tower"]
 },
 "17": {
 	pve: ["Forager Orr", "Vista Orr", "Frostgorge", null],
@@ -838,7 +838,7 @@ var GW2T_DASHBOARD_DATA = {
 
 Announcement:
 {
-	content: "Please help research and correct the <a href='http://forum.renaka.com/topic/5905384/'>Heart of Thorns meta events</a> and rewards.",
+	content: "Please help research and correct the <a href='http://forum.renaka.com/topic/5905384/'>Heart of Thorns meta event</a> timers.",
 	Start: new Date("2015-11-12T16:00:00Z"),
 	Finish: new Date("2015-11-18T16:00:00Z")
 },
@@ -915,7 +915,7 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Note: "All Style category items are 20% off. 800⇒640. 700⇒560. 500⇒400.",
 	Start: new Date("2015-11-10T17:00:00Z"),
-	Finish: new Date("2015-11-17T17:00:00Z"),
+	Finish: new Date("2015-11-20T17:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
