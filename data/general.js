@@ -869,7 +869,7 @@ Countdowns: [
 	name_fr: "Raid Vallée des esprits",
 	official: "the-game/releases/november-17-2015",
 	Start: new Date("2015-11-17T17:00:00Z"),
-	Finish: new Date("2015-11-18T00:00:00Z")
+	Finish: new Date("2015-11-18T17:00:00Z")
 },
 {
 	name_en: "Wintersday 2015",
@@ -924,6 +924,30 @@ Sale: {
 		priceold: 0
 	},
 	Items: [
+	{
+		url: "http://wiki.guildwars2.com/wiki/Raider's_Supply_Package",
+		img: "http://i.imgur.com/fBDEflK.png",
+		quantity: 1,
+		pricenew: 1260,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mini_Angry_Chest",
+		img: "http://i.imgur.com/Y42Bpgd.png",
+		quantity: 1,
+		pricenew: 400,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Shadow_Abyss_Dye",
+		img: "https://render.guildwars2.com/file/E70224319F4D2B047B16FD29456DEF6963B1D7D7/960281.png",
+		quantity: 5,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Crystal_Arbiter_Appearance_Pack",
 		img: "https://render.guildwars2.com/file/62230B3E52E262F814E10D5A2C49EBC3ACAE9640/1223685.png",

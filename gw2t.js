@@ -12354,11 +12354,11 @@ T = {
 					{
 						var item = T.DashboardSale.Items[i];
 						var forhowmany = (item.quantity > 1) ? item.quantity + "/ " : "";
-						var prevprice = (item.pricenew < item.priceold) ? item.priceold : "";
+						var prevprice = (item.pricenew < item.priceold) ? "<span class='dsbSalePriceOld'><del>" + forhowmany + item.priceold + "</del></span> " : "";
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
 						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
 							+"<a href='" + U.convertExternalURL(item.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
-							+ "<span class='dsbSalePriceOld'><del>" + forhowmany + prevprice + "</del></span> "
+							+ prevprice
 							+ "<span class='dsbSalePriceNew'>" + forhowmany + item.pricenew + "<ins class='s16 s16_gem'></ins></span>"
 							+ "<span class='dsbSalePriceCoin'> ≈ " + E.createCoinString(Math.round(item.pricenew * E.Exchange.CoinInGem), true) + "</span>"
 							+ "<span class='dsbSalePriceMoney'> = " + E.convertGemToMoney(item.pricenew) + "<ins class='s16 s16_money'></ins></span>"
