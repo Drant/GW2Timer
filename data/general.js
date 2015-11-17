@@ -754,9 +754,9 @@ Days:
 	wvw: ["Caravan", "Guard", "Defender", "Tower"]
 },
 "17": {
-	pve: ["Forager Orr", "Vista Orr", "Frostgorge", null],
-	pvp: ["Defender", "Kills", "War Mes", "Ranger Necro"],
-	wvw: ["Spender", "Guard", "Camp", "Keep"]
+	pve: ["Miner Ascalon", "Forger", "Sparkfly", "SB"],
+	pvp: ["Capture", "Kills", "Ranger Eng", "Rev Necro"],
+	wvw: ["Spender", "Kills", "Keep", "Defender"]
 },
 "18": {
 	pve: ["Miner Shiverpeaks", "Vista Shiverpeaks", "Queensdale", null],

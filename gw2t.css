@@ -465,6 +465,10 @@ html, body,
 	text-shadow: 0px 0px 4px black;
 	opacity: 0.9;
 }
+.tmlSegmentTimestampHour {
+	font-weight: bold;
+	color: #ddff77;
+}
 .tmlSegmentActive {
 	background: rgba(255, 136, 68, 0.2);
 	outline: 1px solid rgba(0, 0, 0, 0.2);;
@@ -474,9 +478,9 @@ html, body,
 }
 #tmlIndicator {
 	display: block;
-	top: -10%;
 	width: 2px; height: 110%;
 	position: absolute;
+	top: -10%;
 	background: lime;
 	opacity: 0.6;
 }
@@ -487,6 +491,7 @@ html, body,
 	position: absolute;
 	top: 32px; right: 12px;
 	z-index: 1;
+	margin-left: 24px;
 	margin-top: 4px;
 	padding: 4px 10px 4px 10px;
 	font-family: Menomonia;

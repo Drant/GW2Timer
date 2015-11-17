@@ -960,7 +960,7 @@ O = {
 				s += keys[i] + ": " + value + "<br />";
 			}
 			
-			I.write(s, 30, true);
+			I.write(s, 0, true);
 		});
 	},
 	
@@ -5731,7 +5731,7 @@ C = {
 		var chainextra = "";
 		var chainname = D.getObjectName(pChain);
 		
-		if (C.isChainRegular(pChain))
+		if (pChain.waypoint !== undefined)
 		{
 			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
 				+ " (" + pChain.level + ")"
@@ -12565,7 +12565,7 @@ T = {
 		var offset = (minutes / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
 		$("#tmlIndicator").css({left: offset + "%"});
 		$(".tmlLineName").css({left: offset + "%"});
-		
+		// Update countdown next to the segment names
 		$(".tmlSegment").each(function()
 		{
 			var start = $(this).data("start");
@@ -12616,11 +12616,13 @@ T = {
 		var line = $("#tmlLegend").empty();
 		var divisionminutes = 5;
 		var divisions = T.cMINUTES_IN_2_HOURS / divisionminutes;
+		var half = divisions / 2;
 		for (var i = 0; i < divisions; i++)
 		{
 			var width = T.cPERCENT_100 / divisions;
+			var hourclass = (i === 0 || i === half) ? "tmlSegmentTimestampHour" : "";
 			line.append("<div class='tmlSegment' style='width:" + width + "%'><div class='tmlSegmentContent'>"
-				+ "<span class='tmlSegmentTimestamp'>" + T.getCurrentBihourlyTimestampLocal(divisionminutes * i) + "</span></div></div>");
+				+ "<span class='tmlSegmentTimestamp " + hourclass + "'>" + T.getCurrentBihourlyTimestampLocal(divisionminutes * i) + "</span></div></div>");
 		}
 	},
 	
