@@ -759,9 +759,9 @@ Days:
 	wvw: ["Spender", "Kills", "Keep", "Defender"]
 },
 "18": {
-	pve: ["Miner Shiverpeaks", "Vista Shiverpeaks", "Queensdale", null],
-	pvp: ["Capture", "Rank", "Thief Necro", "Ele Ranger"],
-	wvw: ["Ruins", "Land", "Defender", "Camp"]
+	pve: ["Forager Orr", "Vista Kryta", "Snowden", "Shatterer"],
+	pvp: ["Defender", "Rank", "War Thief", "Ele Mes"],
+	wvw: ["Land", "Kills", "Tower", "Camp"]
 },
 "19": {
 	pve: ["Lumberer Ascalon", "Vista Ascalon", "Southsun", null],
@@ -1057,7 +1057,7 @@ var GW2T_TIMELINE = [
 		color: "yellowgreen",
 		Blocks: [
 			{ time: "00:00", duration: "00:10", primacy: 1, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" },
-			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Helikoptere", name_es: "Helicópteros", name_fr: "Hélicoptères", name_zh: "直升機" },
+			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Koptere", name_es: "Cópteros", name_fr: "Coptères", name_zh: "直升機" },
 			{ time: "00:30", duration: "00:75", primacy: 2, name_en: "Daylight", name_de: "Tag", name_es: "Día", name_fr: "Journée", name_zh: "白天" },
 			{ time: "01:45", duration: "00:15", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" }
 		]
