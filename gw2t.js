@@ -12643,6 +12643,10 @@ T = {
 				$("#itemTimeline").hide();
 			}
 		}
+		else if (O.Options.bol_showTimeline === false)
+		{
+			$("#itemTimeline").hide();
+		}
 	}
 	
 };
