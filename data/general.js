@@ -669,8 +669,8 @@ var GW2T_ZONE_DATA = {
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
 var GW2T_DAILY_CALENDAR = {
-Start: new Date("2015-10-19T00:00:00Z"),
-Finish: new Date("2015-11-19T00:00:00Z"),
+Start: new Date("2015-11-19T00:00:00Z"),
+Finish: new Date("2015-12-19T00:00:00Z"),
 Days:
 {
 "1": {
@@ -694,87 +694,87 @@ Days:
 	wvw: ["Ruins", "Guard", "Camp", "Keep"]
 },
 "5": {
-	pve: ["Lumberer Kryta", "Vista Ascalon", "Timberline", "Shatterer"],
+	pve: ["Lumberer Kryta", "Vista Ascalon", "Timberline", null],
 	pvp: ["Reward", "Rank", "Guard Eng", "Thief Mes"],
 	wvw: ["Ruins", "Kills", "Tower", "Defender"]
 },
 "6": {
-	pve: ["Forager Orr", "Forger", "Sparkfly", "Wurm"],
+	pve: ["Forager Orr", "Forger", "Sparkfly", null],
 	pvp: ["Kills", "Capture", "War Ranger", "Ele Necro"],
 	wvw: ["Guard", "Creature", "Keep", "Defender"]
 },
 "7": {
-	pve: ["Miner Jungle", "Fractal", "Harathi", "SB"],
+	pve: ["Miner Jungle", "Fractal", "Harathi", null],
 	pvp: ["Rank", "Defender", "Guard Ranger", "Mes Necro"],
 	wvw: ["Spender", "Ruins", "Camp", "Keep"]
 },
 "8": {
-	pve: ["Lumberer Kryta", "Vista Kryta", "Metrica", "Wurm"],
+	pve: ["Lumberer Kryta", "Vista Kryta", "Metrica", null],
 	pvp: ["Reward", "Defender", "Guard Thief", "Rev Necro"],
 	wvw: ["Land", "Creature", "Defender", "Tower"]
 },
 "9": {
-	pve: ["Miner Shiverpeaks", "Activity", "Kessex", "Maw"],
+	pve: ["Miner Shiverpeaks", "Activity", "Kessex", null],
 	pvp: ["Rank", "Kills", "War Eng", "Thief Ele"],
 	wvw: ["Ruins", "Guard", "Defender", "Camp"]
 },
 "10": {
-	pve: ["Forager Ascalon", "Vista Wastes", "Malchor", "FE"],
+	pve: ["Forager Ascalon", "Vista Wastes", "Malchor", null],
 	pvp: ["Capture", "Rank", "Guard Eng", "Ranger Thief"],
 	wvw: ["Land", "Kills", "Tower", "Defender"]
 },
 "11": {
-	pve: ["Miner Shiverpeaks", "Vista Jungle", "Snowden", "Golem"],
+	pve: ["Miner Shiverpeaks", "Vista Jungle", "Snowden", null],
 	pvp: ["Defender", "Kills", "Eng Ele", "Mes Necro"],
 	wvw: ["Ruins", "Guard", "Camp", "Tower"]
 },
 "12": {
-	pve: ["Lumberer Kryta", "Activity", "Dredgehaunt", "Wurm"],
+	pve: ["Lumberer Kryta", "Activity", "Dredgehaunt", null],
 	pvp: ["Reward", "Rank", "Thief Ele", "Rev Necro"],
 	wvw: ["Ruins", "Kills", "Tower", "Defender"]
 },
 "13": {
-	pve: ["Miner Kryta", "Vista Ascalon", "Frostgorge", "Maw"],
+	pve: ["Miner Kryta", "Vista Ascalon", "Frostgorge", null],
 	pvp: ["Capture", "Kills", "Eng Thief", "Rev Ele"],
 	wvw: ["Land", "Caravan", "Defender", "Keep"]
 },
 "14": {
-	pve: ["Lumberer Ascalon", "Forger", "Plains", "SB"],
+	pve: ["Lumberer Ascalon", "Forger", "Plains", null],
 	pvp: ["Capture", "Defender", "Guard Ele", "Rev Mes"],
 	wvw: ["Ruins", "Spender", "Camp", "Tower"]
 },
 "15": {
-	pve: ["Forager Kryta", "Fractal", "Brisban", "Wurm"],
+	pve: ["Forager Kryta", "Fractal", "Brisban", null],
 	pvp: ["Rank", "Kills", "Guard Mes", "Rev Necro"],
 	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
 },
 "16": {
-	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", "FE"],
+	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", null],
 	pvp: ["Rank", "Reward", "Guard Eng", "Ranger Mes"],
 	wvw: ["Caravan", "Guard", "Defender", "Tower"]
 },
 "17": {
-	pve: ["Miner Ascalon", "Forger", "Sparkfly", "SB"],
+	pve: ["Miner Ascalon", "Forger", "Sparkfly", null],
 	pvp: ["Capture", "Kills", "Ranger Eng", "Rev Necro"],
 	wvw: ["Spender", "Kills", "Keep", "Defender"]
 },
 "18": {
-	pve: ["Forager Orr", "Vista Kryta", "Snowden", "Shatterer"],
+	pve: ["Forager Orr", "Vista Kryta", "Snowden", null],
 	pvp: ["Defender", "Rank", "War Thief", "Ele Mes"],
 	wvw: ["Land", "Kills", "Tower", "Camp"]
 },
 "19": {
-	pve: ["Lumberer Ascalon", "Vista Ascalon", "Southsun", null],
-	pvp: ["Defender", "Kills", "War Necro", "Thief Mes"],
-	wvw: ["Kills", "Ruins", "Defender", "Tower"]
+	pve: ["Miner Kryta", "Fractal", "Bloodtide", "Megades"],
+	pvp: ["Kills", "Reward", "Guard Eng", "Rev Necro"],
+	wvw: ["Guard", "Ruins", "Tower", "Defender"]
 },
 "20": {
-	pve: ["Forager Orr", "Fractal", "Caledon", "SB"],
+	pve: ["Forager Orr", "Fractal", "Caledon", null],
 	pvp: ["Capture", "Kills", "War Guard", "Ranger Eng"],
 	wvw: ["Spender", "Caravan", "Tower", "Camp"]
 },
 "21": {
-	pve: ["Miner Shiverpeaks", "Forger", "Timberline", "Golem"],
+	pve: ["Miner Shiverpeaks", "Forger", "Timberline", null],
 	pvp: ["Defender", "Reward", "Ranger Thief", "Eng Ele"],
 	wvw: ["Creature", "Guard", "Defender", "Keep"]
 },
@@ -784,42 +784,42 @@ Days:
 	wvw: ["Caravan", "Kills", "Camp", "Tower"]
 },
 "23": {
-	pve: ["Miner Wastes", "Vista Jungle", "Fields", "Jormag"],
+	pve: ["Miner Wastes", "Vista Jungle", "Fields", null],
 	pvp: ["Kills", "Rank", "War Ele", "Rev Necro"],
 	wvw: ["Spender", "Land", "Tower", "Camp"]
 },
 "24": {
-	pve: ["Miner Jungle", "Vista Kryta", "Metrica", "Maw"],
+	pve: ["Miner Jungle", "Vista Kryta", "Metrica", null],
 	pvp: ["Kills", "Defender", "War Eng", "Thief Necro"],
 	wvw: ["Guard", "Land", "Keep", "Defender"]
 },
 "25": {
-	pve: ["Lumberer Jungle", "Fractal", "Cursed", "Golem"],
+	pve: ["Lumberer Jungle", "Fractal", "Cursed", null],
 	pvp: ["Defender", "Rank", "War Guard", "Ele Necro"],
 	wvw: ["Creature", "Caravan", "Defender", "Camp"]
 },
 "26": {
-	pve: ["Miner Jungle", "Activity", "Dry", "Megades"],
+	pve: ["Miner Jungle", "Activity", "Dry", null],
 	pvp: ["Kills", "Reward", "War Guard", "Thief Ele"],
 	wvw: ["Ruins", "Spender", "Tower", "Keep"]
 },
 "27": {
-	pve: ["Lumberer Ascalon", "Forger", "Plains", "FE"],
+	pve: ["Lumberer Ascalon", "Forger", "Plains", null],
 	pvp: ["Defender", "Kills", "War Thief", "Rev Mes"],
 	wvw: ["Land", "Kills", "Camp", "Tower"]
 },
 "28": {
-	pve: ["Forager Kryta", "Vista Ascalon", "Fields", "SB"],
+	pve: ["Forager Kryta", "Vista Ascalon", "Fields", null],
 	pvp: ["Reward", "Defender", "Ranger Eng", "Ele Necro"],
 	wvw: ["Land", "Caravan", "Keep", "Defender"]
 },
 "29": {
-	pve: ["Miner Shiverpeaks", "Vista Kryta", "Brisban", "FE"],
+	pve: ["Miner Shiverpeaks", "Vista Kryta", "Brisban", null],
 	pvp: ["Defender", "Rank", "Guard Thief", "Rev Mes"],
 	wvw: ["Ruins", "Guard", "Camp", "Defender"]
 },
 "30": {
-	pve: ["Jungle Lumberer", "Forger", "Bloodtide", "Maw"],
+	pve: ["Jungle Lumberer", "Forger", "Bloodtide", null],
 	pvp: ["Reward", "Rank", "War Eng", "Rev Mes"],
 	wvw: ["Caravan", "Creature", "Camp", "Keep"]
 },
