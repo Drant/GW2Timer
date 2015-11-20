@@ -12521,10 +12521,10 @@ T = {
 			var name = (chain.zone === undefined) ? D.getObjectName(chain) : U.escapeHTML(M.getZoneName(chain.zone));
 			// Container for segments of a timeline (chain)
 			var line = $("<div class='tmlLine' title='<dfn>" + name + "</dfn>'></div>").appendTo(tapestry);
-			for (var ii in chain.Blocks)
+			for (var ii in chain.Segments)
 			{
 				// Segments of a timeline (event)
-				var event = chain.Blocks[ii];
+				var event = chain.Segments[ii];
 				var segmentprefix = "";
 				switch (event.primacy)
 				{
