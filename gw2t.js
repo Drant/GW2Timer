@@ -13274,6 +13274,7 @@ K = {
 			var wantsd = false;
 			var wanthc = false;
 			var wantls = false;
+			var wantms = false;
 			var speechwb = "";
 			var speechms = "";
 
@@ -13289,7 +13290,7 @@ K = {
 			if (pMinutes === minutestill)
 			{
 				// Make sure the chain is not null/undefined (if it does not exist in the time slot)
-				var conjunction = D.getSpeech("and");
+				var conjunction = " " + D.getSpeech("and") + " ";
 				var timephrase = " " + D.getSpeech("will start") + D.getPluralTime(minutestill, "minute");
 				
 				speechwb = D.getSpeech(D.orderModifier(D.orderModifier("boss", "world"), "subscribed")) + " ";
@@ -13301,8 +13302,7 @@ K = {
 				{
 					if (wantsd && wanthc)
 					{
-						speechwb += D.getChainPronunciation(chainsd) + " " + conjunction + " " + D.getChainPronunciation(chainhc);
-						wait = 6;
+						speechwb += D.getChainPronunciation(chainsd) + conjunction + D.getChainPronunciation(chainhc);
 					}
 					else if (wantsd)
 					{
@@ -13333,10 +13333,14 @@ K = {
 							{
 								speechms += conjunction;
 							}
+							wantms = true;
 						}
 					}
-					speechms += timephrase;
-					D.speak(speechms);
+					if (wantms)
+					{
+						speechms += timephrase;
+						D.speak(speechms);
+					}
 				}
 
 				// Living Story chain
