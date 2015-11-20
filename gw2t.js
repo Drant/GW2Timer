@@ -452,7 +452,7 @@ O = {
 		var min = Number.POSITIVE_INFINITY;
 		var max = Number.NEGATIVE_INFINITY;
 		var ith;
-		for (var i in pArray)
+		for (var i = 0; i < pArray.length; i++)
 		{
 			ith = hasprop ? (pArray[i])[pProperty] : pArray[i];
 			if (ith < min)
@@ -5436,6 +5436,21 @@ D = {
 	},
 	
 	/*
+	 * Gets a phrase such as " in 1 minute" or " in 15 minutes".
+	 * @param int pTime amount of time units.
+	 * @param string pUnit of time.
+	 * @returns string phrase.
+	 */
+	getPluralTime: function(pTime, pUnit)
+	{
+		if (pTime > 1)
+		{
+			pUnit += "s";
+		}
+		return " " + D.getWord("in") + " " + pTime + " " + D.getWord(pUnit);
+	},
+	
+	/*
 	 * Gets pronunciation of chain in opted language.
 	 * @param object pChain to get.
 	 * @returns string pronunciation.
@@ -5489,7 +5504,8 @@ C = {
 	ChainToday: null,
 	CurrentChainSD: {}, NextChainSD1: {}, NextChainSD2: {}, NextChainSD3: {}, NextChainSD4: {},
 	CurrentChainHC: {}, NextChainHC1: {}, NextChainHC2: {}, NextChainHC3: {}, NextChainHC4: {},
-	CurrentChainLS: {}, NextChainLS1: {}, NextChainLS2: {},
+	NextChainLS1: {}, NextChainLS2: {},
+	NextChainsMS1: [], NextChainsMS2: [],
 	CurrentChains: [],
 	CurrentChainsSD: [],
 	PreviousChains1: [],
@@ -5497,11 +5513,12 @@ C = {
 	NextChains1: [],
 	cEventTitleCharLimit: 44,
 	cEventNameWidth: 320,
-	RegularChains: [], // Scheduled world bosses
-	ScheduledChains: [], // Any scheduled chain
-	DryTopChains: [],
-	LegacyChains: [],
 	TempleChains: [],
+	LegacyChains: [],
+	ScheduledChains: [], // Any scheduled chain
+	RegularChains: [], // Scheduled world bosses
+	MiscellaneousChains: [],
+	DryTopChains: [],
 	LivingStoryChains: [],
 	ChainSeriesEnum:
 	{
@@ -6021,6 +6038,7 @@ C = {
 				case C.ChainSeriesEnum.Miscellaneous:
 				{
 					chain.htmllist = "#sectionChains_Scheduled";
+					C.MiscellaneousChains.push(chain);
 					C.ScheduledChains.push(chain);
 				} break;
 				case C.ChainSeriesEnum.LivingStory:
@@ -6214,7 +6232,6 @@ C = {
 
 			$("#chnTime_" + pChain.nexus).text(sign + T.getTimeFormatted(
 				{
-					wantHours: false,
 					wantLetters: true,
 					customTimeInSeconds: time
 				})
@@ -11412,10 +11429,9 @@ T = {
 	 */
 	getTimeframeChainBySeries: function(pOffset, pSeries)
 	{
-		var i;
 		var chains = T.getTimeframeChains(pOffset);
 		
-		for (i in chains)
+		for (var i in chains)
 		{
 			if (chains[i].series === pSeries)
 			{
@@ -11423,6 +11439,20 @@ T = {
 			}
 		}
 		return null;
+	},
+	getTimeframeChainsBySeries: function(pOffset, pSeries)
+	{
+		var chains = T.getTimeframeChains(pOffset);
+		var retchains = [];
+		
+		for (var i in chains)
+		{
+			if (chains[i].series === pSeries)
+			{
+				retchains.push(chains[i]);
+			}
+		}
+		return retchains;
 	},
 	getStandardChain: function(pOffset)
 	{
@@ -11439,6 +11469,10 @@ T = {
 	getLivingStoryChain: function(pOffset)
 	{
 		return T.getTimeframeChainBySeries(pOffset, C.ChainSeriesEnum.LivingStory);
+	},
+	getMiscellaneousChains: function(pOffset)
+	{
+		return T.getTimeframeChainsBySeries(pOffset, C.ChainSeriesEnum.Miscellaneous);
 	},
 	
 	/*
@@ -12594,7 +12628,11 @@ T = {
 		{
 			if (minutes >= $(this).data("start") && minutes < $(this).data("finish"))
 			{
-				$(this).addClass("tmlSegmentActive");
+				if (!$(this).hasClass("tmlSegmentActive"))
+				{
+					$(this).css({opacity: 0}).animate({opacity: 1}, 1000);
+					$(this).addClass("tmlSegmentActive");
+				}
 			}
 			else
 			{
@@ -13167,8 +13205,6 @@ K = {
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedFirst);
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedSecond);
 			}
-			
-			
 		}
 		
 		// Tick the two digital clocks below the analog clock
@@ -13238,8 +13274,8 @@ K = {
 			var wantsd = false;
 			var wanthc = false;
 			var wantls = false;
-			var speech = D.getSpeech(D.orderModifier(D.orderModifier("boss", "world"), "subscribed")) + " ";
-			var wait = 5;
+			var speechwb = "";
+			var speechms = "";
 
 			// If alarm minutes is beyond the timeframe range, check the chains beyond
 			if (pMinutes > T.cMINUTES_IN_TIMEFRAME)
@@ -13249,36 +13285,65 @@ K = {
 				chainls = C.NextChainLS2;
 				minutestill += T.cMINUTES_IN_TIMEFRAME;
 			}
-			wantsd = O.objToBool(chainsd) && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
-			wanthc = O.objToBool(chainhc) && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
-			wantls = O.objToBool(chainls) && (C.isChainSubscribed(chainls) && C.isChainUnchecked(chainls));
-
-			if (pMinutes === minutestill && (wantsd || wanthc))
-			{
-				if (wantsd && wanthc)
-				{
-					speech += D.getChainPronunciation(chainsd) + " " + D.getSpeech("and") + " " + D.getChainPronunciation(chainhc);
-					wait = 6;
-				}
-				else if (wantsd)
-				{
-					speech += D.getChainPronunciation(chainsd);
-				}
-				else if (wanthc)
-				{
-					speech += D.getChainPronunciation(chainhc);
-				}
-				D.speak(speech, wait);
-				D.speak(D.getSpeech("will start") + T.getTimeTillChainFormatted(chainsd, "speech"), 3);
-			}
 			
-			// Living Story subscription comes after
-			if (T.isDashboardStoryEnabled)
+			if (pMinutes === minutestill)
 			{
-				if (pMinutes === minutestill && wantls)
+				// Make sure the chain is not null/undefined (if it does not exist in the time slot)
+				var conjunction = D.getSpeech("and");
+				var timephrase = " " + D.getSpeech("will start") + D.getPluralTime(minutestill, "minute");
+				
+				speechwb = D.getSpeech(D.orderModifier(D.orderModifier("boss", "world"), "subscribed")) + " ";
+				wantsd = O.objToBool(chainsd) && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
+				wanthc = O.objToBool(chainhc) && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
+				wantls = O.objToBool(chainls) && (C.isChainSubscribed(chainls) && C.isChainUnchecked(chainls));
+				
+				if (wantsd || wanthc)
 				{
-					D.speak(D.getSpeech("event", "subscribed") + " " + D.getChainPronunciation(chainls), wait);
-					D.speak(D.getSpeech("will start") + T.getTimeTillChainFormatted(chainls, "speech"), 3);
+					if (wantsd && wanthc)
+					{
+						speechwb += D.getChainPronunciation(chainsd) + " " + conjunction + " " + D.getChainPronunciation(chainhc);
+						wait = 6;
+					}
+					else if (wantsd)
+					{
+						speechwb += D.getChainPronunciation(chainsd);
+					}
+					else if (wanthc)
+					{
+						speechwb += D.getChainPronunciation(chainhc);
+					}
+					D.speak(speechwb);
+					D.speak(timephrase);
+				}
+
+				// Miscellaneous chains can happen simultaneously in a timeframe
+				var chainms;
+				var chainsms = (pMinutes > T.cMINUTES_IN_TIMEFRAME) ? C.NextChainsMS2 : C.NextChainsMS1;
+				if (chainsms.length > 0)
+				{
+					speechms = D.getSpeech("event", "subscribed") + " ";
+					for (var i = 0; i < chainsms.length; i++)
+					{
+						chainms = chainsms[i];
+						if (O.objToBool(chainms) && (C.isChainSubscribed(chainms) && C.isChainUnchecked(chainms)))
+						{
+							speechms += D.getChainPronunciation(chainms);
+							// Append a conjunction between names
+							if (i+1 < chainsms.length && chainsms.length > 1)
+							{
+								speechms += conjunction;
+							}
+						}
+					}
+					speechms += timephrase;
+					D.speak(speechms);
+				}
+
+				// Living Story chain
+				if (T.isDashboardStoryEnabled && wantls)
+				{
+					D.speak(D.getSpeech("event", "subscribed") + " " + D.getChainPronunciation(chainls));
+					D.speak(timephrase);
 				}
 			}
 		}
@@ -13319,6 +13384,8 @@ K = {
 			C.NextChainLS1 = T.getLivingStoryChain(1);
 			C.NextChainLS2 = T.getLivingStoryChain(2);
 		}
+		C.NextChainsMS1 = T.getMiscellaneousChains(1);
+		C.NextChainsMS2 = T.getMiscellaneousChains(2);
 		
 		C.PreviousChains2 = T.getTimeframeChains(-2);
 		C.PreviousChains1 = T.getTimeframeChains(-1);

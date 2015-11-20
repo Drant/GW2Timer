@@ -838,9 +838,9 @@ var GW2T_DASHBOARD_DATA = {
 
 Announcement:
 {
-	content: "Please help research and correct the <a href='http://forum.renaka.com/topic/5905384/'>Heart of Thorns meta event</a> timers.",
-	Start: new Date("2015-11-12T16:00:00Z"),
-	Finish: new Date("2015-11-18T16:00:00Z")
+	content: "Subscription alarm for HoT events now works. <a href='http://i.imgur.com/pTXO9Av.png'>Click on a time</a> to subscribe.",
+	Start: new Date("2015-11-19T16:00:00Z"),
+	Finish: new Date("2015-11-28T16:00:00Z")
 },
 
 /*
@@ -913,7 +913,7 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	Note: "All Style category items are 20% off. 800⇒640. 700⇒560. 500⇒400.",
+	Note: "",
 	Start: new Date("2015-11-10T17:00:00Z"),
 	Finish: new Date("2015-11-20T17:00:00Z"),
 	Padding: {
@@ -934,7 +934,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Angry_Chest",
-		img: "http://i.imgur.com/Y42Bpgd.png",
+		img: "https://render.guildwars2.com/file/552B6B315EE943BBE7E81FD83594EC2E6D94D1F7/1053208.png",
 		quantity: 1,
 		pricenew: 400,
 		priceold: 0,
