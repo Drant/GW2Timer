@@ -774,9 +774,9 @@ Days:
 	wvw: ["Creature", "Caravan", "Camp", "Tower"]
 },
 "21": {
-	pve: ["Miner Shiverpeaks", "Forger", "Timberline", null],
-	pvp: ["Defender", "Reward", "Ranger Thief", "Eng Ele"],
-	wvw: ["Creature", "Guard", "Defender", "Keep"]
+	pve: ["Forager Jungle", "Forger", "Queensdale", "Wurm"],
+	pvp: ["Defender", "Capture", "War Eng", "Ranger Necro"],
+	wvw: ["Land", "Ruins", "Keep", "Camp"]
 },
 "22": {
 	pve: ["Lumberer Jungle", "Activity", "Snowden", null],
@@ -914,8 +914,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Note: "",
-	Start: new Date("2015-11-10T17:00:00Z"),
-	Finish: new Date("2015-11-20T17:00:00Z"),
+	Start: new Date("2015-11-20T17:00:00Z"),
+	Finish: new Date("2015-11-27T17:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -957,7 +957,7 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Lyssa's_Regalia",
+		url: "http://wiki.guildwars2.com/wiki/Lyssa's_Regalia_Outfit",
 		img: "https://render.guildwars2.com/file/7D1AAED555D13BDEBB1736DB77D0DF1C56141F64/1223684.png",
 		quantity: 1,
 		pricenew: 700,

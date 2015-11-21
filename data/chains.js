@@ -2060,9 +2060,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "5:00",
-		avg: "5:00",
-		min: "5:00",
+		lim: "7:00",
+		avg: "7:00",
+		min: "7:00",
 		max: "5:00"
 	},
 	{
@@ -2078,9 +2078,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "5:00",
-		avg: "5:00",
-		min: "5:00",
+		lim: "7:00",
+		avg: "7:00",
+		min: "7:00",
 		max: "5:00"
 	},
 	{
@@ -2096,9 +2096,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "5:00",
-		avg: "5:00",
-		min: "5:00",
+		lim: "7:00",
+		avg: "7:00",
+		min: "7:00",
 		max: "5:00"
 	},
 	{
@@ -2114,9 +2114,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "30:00",
-		avg: "30:00",
-		min: "30:00",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
 		max: "30:00"
 	},
 	{
@@ -2132,9 +2132,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "30:00",
-		avg: "30:00",
-		min: "30:00",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
 		max: "30:00"
 	},
 	{
@@ -2150,9 +2150,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "30:00",
-		avg: "30:00",
-		min: "30:00",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
 		max: "30:00"
 	},
 	{
@@ -2168,9 +2168,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "30:00",
-		avg: "30:00",
-		min: "30:00",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
 		max: "30:00"
 	},
 	{
@@ -2186,9 +2186,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "30:00",
-		avg: "30:00",
-		min: "30:00",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
 		max: "30:00"
 	},
 	{
@@ -2204,9 +2204,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "30:00",
-		avg: "30:00",
-		min: "30:00",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
 		max: "30:00"
 	},
 	{
@@ -2222,9 +2222,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "20:00",
-		avg: "20:00",
-		min: "20:00",
+		lim: "10:00",
+		avg: "10:00",
+		min: "10:00",
 		max: "20:00"
 	},
 	{
@@ -2240,9 +2240,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "20:00",
-		avg: "20:00",
-		min: "20:00",
+		lim: "10:00",
+		avg: "10:00",
+		min: "10:00",
 		max: "20:00"
 	},
 	{
@@ -2258,9 +2258,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "20:00",
-		avg: "20:00",
-		min: "20:00",
+		lim: "10:00",
+		avg: "10:00",
+		min: "10:00",
 		max: "20:00"
 	},
 	{
@@ -2276,9 +2276,9 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "30:00",
-		avg: "30:00",
-		min: "30:00",
+		lim: "15:00",
+		avg: "15:00",
+		min: "15:00",
 		max: "30:00"
 	}
 	]

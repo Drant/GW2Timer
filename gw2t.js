@@ -65,7 +65,7 @@ O = {
 	
 	lengthOfPrefixes: 3,
 	prefixOption: "opt_",
-	legalLocalStorageKeys: new Array(),
+	legalLocalStorageKeys: [],
 	isServerReset: false,
 
 	/*
@@ -942,7 +942,7 @@ O = {
 		$("#optPrintLocalStorage").click(function()
 		{
 			var i;
-			var keys = new Array();
+			var keys = [];
 			// Gather the keys
 			for (i = 0; i < localStorage.length; i++)
 			{
@@ -1284,7 +1284,7 @@ U = {
 	{
 		I.write("Gathering elements...");
 		pLimit = parseInt(pLimit) || Number.POSITIVE_INFINITY;
-		var array = new Array();
+		var array = [];
 		var length = 0;
 		var counter = 0;
 		var url = "https://api.guildwars2.com/v2/" + pString;
@@ -2203,6 +2203,7 @@ X = {
 		Chain: { key: "str_chlChain", value: "" },
 		ChainSubscription: { key: "str_chlChainSubscription", value: "" },
 		JP: { key: "str_chlJP", value: "" },
+		Chest: { key: "str_chlChest", value: "" },
 		ResourceRich: { key: "str_chlResourceRich", value: "" },
 		ResourceRegular: { key: "str_chlResourceRegular", value: "" },
 		ResourceZone: { key: "str_chlResourceZone", value: "" },
@@ -2260,19 +2261,19 @@ X = {
 	 */
 	Textlists:
 	{
-		CustomTextDaily: { key: "str_txlCustomTextDaily", value: new Array(), valueDefault: new Array() },
-		CustomTextWeekly: { key: "str_txlCustomTextWeekly", value: new Array(), valueDefault: new Array() },
-		NotepadText: { key: "str_txlNotepadText", value: new Array(), valueDefault: new Array() },
-		TradingItem: { key: "str_txlTradingItem", value: new Array() },
-		TradingName: { key: "str_txlTradingName", value: new Array() },
-		TradingBuy: { key: "str_txlTradingBuy", value: new Array() },
-		TradingSell: { key: "str_txlTradingSell", value: new Array() },
-		TradingQuantity: { key: "str_txlTradingQuantity", value: new Array() },
-		NotifyBuyLow: { key: "str_txlNotifyBuyLow", value: new Array() },
-		NotifyBuyHigh: { key: "str_txlNotifyBuyHigh", value: new Array() },
-		NotifySellLow: { key: "str_txlNotifySellLow", value: new Array() },
-		NotifySellHigh: { key: "str_txlNotifySellHigh", value: new Array() },
-		ExchangeUnit: { key: "str_txlExchangeUnit", value: new Array() }
+		CustomTextDaily: { key: "str_txlCustomTextDaily", value: [], valueDefault: [] },
+		CustomTextWeekly: { key: "str_txlCustomTextWeekly", value: [], valueDefault: [] },
+		NotepadText: { key: "str_txlNotepadText", value: [], valueDefault: [] },
+		TradingItem: { key: "str_txlTradingItem", value: [] },
+		TradingName: { key: "str_txlTradingName", value: [] },
+		TradingBuy: { key: "str_txlTradingBuy", value: [] },
+		TradingSell: { key: "str_txlTradingSell", value: [] },
+		TradingQuantity: { key: "str_txlTradingQuantity", value: [] },
+		NotifyBuyLow: { key: "str_txlNotifyBuyLow", value: [] },
+		NotifyBuyHigh: { key: "str_txlNotifyBuyHigh", value: [] },
+		NotifySellLow: { key: "str_txlNotifySellLow", value: [] },
+		NotifySellHigh: { key: "str_txlNotifySellHigh", value: [] },
+		ExchangeUnit: { key: "str_txlExchangeUnit", value: [] }
 	},
 	
 	/*
@@ -2458,7 +2459,7 @@ X = {
 	/*
 	 * Sets a checklist object's list a desired mass state.
 	 * @param object pChecklist to clear.
-	 * @param string pJob to check or uncheck the checklist.
+	 * @param enum pJob to check or uncheck the checklist.
 	 * @pre Checklist length attribute was initialized.
 	 */
 	clearChecklist: function(pChecklist, pJob)
@@ -3987,8 +3988,8 @@ E = {
 					var calcB = $("#trdEntry_" + j);
 					
 					// Swap text data from inputs
-					var dataA = new Array();
-					var dataB = new Array();
+					var dataA = [];
+					var dataB = [];
 					var counterA = 0;
 					var counterB = 0;
 					calcA.find("input[type='text']").each(function()
@@ -6012,8 +6013,8 @@ C = {
 			
 			chain.nexus = parseInt(i);
 			chain.isSorted = false;
-			chain.primaryEvents = new Array();
-			chain.scheduleKeys = new Array();
+			chain.primaryEvents = [];
+			chain.scheduleKeys = [];
 			
 			switch (chain.series)
 			{
@@ -6622,7 +6623,7 @@ C = {
 		if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopGenerated)
 		{
 			P.LayerArray.DryTopActive = null;
-			P.LayerArray.DryTopActive = new Array();
+			P.LayerArray.DryTopActive = [];
 			if (C.isDryTopIconsShown)
 			{
 				for (i in pChain.events)
@@ -6909,7 +6910,7 @@ M = {
 	Submaps: GW2T_SUBMAP_DATA,
 	cInitialZone: "lion",
 	Map: {},
-	Floors: new Array(),
+	Floors: [],
 	ZoneCurrent: {},
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
@@ -8127,7 +8128,7 @@ M = {
 	 */
 	insertPersonalPin: function(pPrecede, pLatLng)
 	{
-		var latlngs = new Array();
+		var latlngs = [];
 		var i = 0;
 		// Recompile pin coordinates for recreation
 		this.Layer.PersonalPin.eachLayer(function(pPin){
@@ -8170,8 +8171,8 @@ M = {
 		if (O.Options.bol_showPersonalPaths)
 		{
 			var path;
-			var latlngs = new Array();
-			var pinids = new Array();
+			var latlngs = [];
+			var pinids = [];
 			var length = 0;
 			this.Layer.PersonalPin.eachLayer(function(pPin){
 				latlngs.push(pPin.getLatLng());
@@ -8264,7 +8265,7 @@ M = {
 	getPersonalCoords: function()
 	{
 		var that = this;
-		var coords = new Array();
+		var coords = [];
 		var length = 0;
 		this.Layer.PersonalPin.eachLayer(function(pPin){
 			coords.push(that.convertLCtoGC(pPin.getLatLng()));
@@ -8553,7 +8554,7 @@ M = {
 	{
 		pIndexStart = pIndexStart || 0;
 		var i;
-		var latlngs = new Array();
+		var latlngs = [];
 		for (i = pIndexStart; i < pCoordArray.length; i++)
 		{
 			latlngs.push(this.convertGCtoLC(pCoordArray[i]));
@@ -8583,7 +8584,7 @@ M = {
 	},
 	convertLCtoGCMulti: function(pCoordArray)
 	{
-		var coords = new Array();
+		var coords = [];
 		for (var i = 0; i < pCoordArray.length; i++)
 		{
 			coords.push(this.convertLCtoGC(pCoordArray[i]));
@@ -8657,8 +8658,8 @@ M = {
 	{
 		var arraylengthlimit = 13;
 		var s = pString.replace(/\s/g, "");
-		var sarray = new Array();
-		var narray = new Array();
+		var sarray = [];
+		var narray = [];
 		var coord;
 		
 		if (s.length >= arraylengthlimit &&
@@ -9033,20 +9034,20 @@ P = {
 		ZoneBorder: new L.layerGroup(), // Rectangles colored specific to the zones' region
 		ZoneGateway: new L.layerGroup(), // Interzone and intergate connections
 		DryTopNicks: new L.layerGroup(), // Dry Top event names and timestamps
-		Chest: new L.layerGroup() // Open world basic chests
+		Chest: new L.layerGroup()
 	},
 	LayerArray: {
-		ChainPath: new Array(),
-		Resource: new Array(),
-		JP: new Array(),
-		Guild_Bounty: new Array(),
-		Guild_Trek: new Array(),
-		Guild_Challenge: new Array(),
-		Guild_Rush: new Array(),
-		Guild_Puzzle: new Array(),
-		DryTopIcons: new Array(),
-		DryTopRings: new Array(),
-		DryTopActive: new Array()
+		ChainPath: [],
+		Resource: [],
+		JP: [],
+		Guild_Bounty: [],
+		Guild_Trek: [],
+		Guild_Challenge: [],
+		Guild_Rush: [],
+		Guild_Puzzle: [],
+		DryTopIcons: [],
+		DryTopRings: [],
+		DryTopActive: []
 	},
 	
 	Events: {},
@@ -9933,8 +9934,8 @@ G = {
 		};
 		var bindNodeBehavior = function(pMarker)
 		{
-			M.bindMarkerZoomBehavior(pMarker, "dblclick");
-			M.bindMarkerCoordBehavior(pMarker, "contextmenu");
+			M.bindMarkerZoomBehavior(pMarker, "contextmenu");
+			M.bindMarkerCoordBehavior(pMarker, "dblclick");
 			pMarker.on("click", function()
 			{
 				if (getNodeState(pMarker) === X.ChecklistEnum.Checked)
@@ -10203,11 +10204,9 @@ G = {
 		$.getScript(U.URL_DATA.JP).done(function()
 		{
 			P.JPs = GW2T_JP_DATA;
-			P.Chests = GW2T_CHEST_DATA;
 			X.Checklists.JP.length = O.getObjectLength(P.JPs);
 			P.LayerArray.JP = new Array(X.Checklists.JP.length);
 		
-			var i, ii;
 			for (var i in P.JPs)
 			{
 				/*
@@ -10246,37 +10245,6 @@ G = {
 			M.bindMapLinks(".jpzList");
 			U.convertExternalLink(".jpzList a");
 			I.qTip.init(".jpzList dt");
-			
-			// Create markers for chests
-			var createChestMarker = function(pObject, pType)
-			{
-				var coord = pObject.c;
-				var newtitle = null;
-				if (pObject.t)
-				{
-					newtitle = pObject.t;
-				}
-				var marker = L.marker(M.convertGCtoLC(coord),
-				{
-					icon: L.divIcon(
-					{
-						className: "mapChest" + pType,
-						html: "<img src='" + "img/map/chest.png" + "' />",
-						iconSize: [32, 32],
-						iconAnchor: [16, 16]
-					}),
-					title: newtitle
-				});
-				M.bindMarkerZoomBehavior(marker, "click");
-				P.Layer.Chest.addLayer(marker);
-			};
-			for (i in P.Chests)
-			{
-				for (ii in P.Chests[i])
-				{
-					createChestMarker((P.Chests[i])[ii], i);
-				}
-			}
 
 			// Button to toggle JP markers only
 			$("#jpzToggleJP").change(function()
@@ -10301,11 +10269,7 @@ G = {
 					}
 				}
 			});
-			// Button to toggle chest markers only
-			$("#jpzToggleChest").change(function()
-			{
-				M.toggleLayer(P.Layer.Chest, $(this).prop("checked"));
-			});
+			
 			// Button to toggle markers display
 			$("#mapToggle_JP").data("checked", true).click(function()
 			{
@@ -10333,8 +10297,8 @@ G = {
 				$("#jpzCounter").text(completed + "/" + total);
 			};
 
-			var i;
-			for (i = 0; i < X.Checklists.JP.length; i++)
+			// Bind behavior
+			for (var i = 0; i < X.Checklists.JP.length; i++)
 			{
 				$("#jpzCheck_" + i).each(function()
 				{
@@ -10393,45 +10357,129 @@ G = {
 				(function(pIndex)
 				{
 					// Click associated checkbox when clicked
-					P.LayerArray.JP[pIndex].on("click", function()
+					var marker = P.LayerArray.JP[pIndex];
+					marker.on("click", function()
 					{
 						$("#jpzCheck_" + pIndex).trigger("click");
 						I.scrollToElement($("#jpz_" + this.options.id), $("#plateMap"));
 					});
-					// Zoom in when double clicked
-					P.LayerArray.JP[pIndex].on("dblclick", function()
-					{
-						if (M.Map.getZoom() === M.ZoomEnum.Max)
-						{
-							M.Map.setZoom(M.ZoomEnum.Default);
-						}
-						else
-						{
-							M.goToLatLng(this.getLatLng());
-						}
-					});
+					M.bindMarkerZoomBehavior(marker, "contextmenu");
 				})(i);
 			}
 
 			// The button to clear all JP checkboxes
-			$("#jpzUncheck").click(function()
+			$("#jpzUncheckJP").click(function()
 			{
-				var jpchecklist = "";
 				for (i = 0; i < X.Checklists.JP.length; i++)
 				{
 					$("#jpzCheck_" + i).prop("checked", false)
 						.parent().prev().removeClass("jpzListNameChecked");
 					styleJPMarker(P.LayerArray.JP[i], P.LayerArray.JP[i].options.difficulty);
-
-					jpchecklist += "0";
 				}
-				X.Checklists.JP.value = jpchecklist;
-				localStorage[X.Checklists.JP.key] = X.Checklists.JP.value;
+				X.clearChecklist(X.Checklists.JP);
 
 				updateJPCount();
 			});
 
 			updateJPCount();
+			G.generateAndInitializeChests();
+		});
+	},
+	
+	/*
+	 * Populates the map with chest icons. These are found in the open world and
+	 * unrelated to chests found within JPs. Should be run after the JP function.
+	 */
+	generateAndInitializeChests: function()
+	{
+		P.Chests = GW2T_CHEST_DATA;
+		var numofchests = P.Chests.Basic.length + P.Chests.Splendid.length;
+		X.initializeChecklist(X.Checklists.Chest, numofchests);
+		
+		var i, ii;
+		var counter = 0;
+		var opacityclicked = 0.3;
+		var getNodeState = function(pMarker)
+		{
+			return X.getChecklistItem(X.Checklists.Chest, pMarker.options.index);
+		};
+		var setNodeState = function(pMarker, pState)
+		{
+			X.setChecklistItem(X.Checklists.Chest, pMarker.options.index, pState);
+		};
+		var refreshNodeState = function()
+		{
+			P.Layer.Chest.eachLayer(function(pMarker)
+			{
+				if (getNodeState(pMarker) === X.ChecklistEnum.Checked)
+				{
+					pMarker.setOpacity(opacityclicked);
+				}
+				else
+				{
+					pMarker.setOpacity(1);
+				}
+			});
+		};
+		var createChestMarker = function(pObject, pType, pID)
+		{
+			var coord = pObject.c;
+			var newtitle = null;
+			if (pObject.t)
+			{
+				newtitle = pObject.t;
+			}
+			var marker = L.marker(M.convertGCtoLC(coord),
+			{
+				index: pID,
+				icon: L.divIcon(
+				{
+					className: "mapChest" + pType,
+					html: "<img src='" + "img/map/chest.png" + "' />",
+					iconSize: [32, 32],
+					iconAnchor: [16, 16]
+				}),
+				title: newtitle
+			});
+			marker.on("click", function()
+			{
+				if (getNodeState(this) === X.ChecklistEnum.Checked)
+				{
+					setNodeState(this, X.ChecklistEnum.Unchecked);
+					this.setOpacity(1);
+				}
+				else
+				{
+					setNodeState(this, X.ChecklistEnum.Checked);
+					this.setOpacity(opacityclicked);
+				}
+			});
+			M.bindMarkerZoomBehavior(marker, "contextmenu");
+			P.Layer.Chest.addLayer(marker);
+		};
+		
+		// Create the chests
+		for (i in P.Chests)
+		{
+			for (ii in P.Chests[i])
+			{
+				createChestMarker((P.Chests[i])[ii], i, counter);
+				counter++;
+			}
+		}
+
+		// Checkbox to toggle chest markers
+		$("#jpzToggleChest").change(function()
+		{
+			M.toggleLayer(P.Layer.Chest, $(this).prop("checked"));
+			refreshNodeState();
+		});
+		
+		// The button to "uncheck" all chests
+		$("#jpzUncheckChest").click(function()
+		{
+			X.clearChecklist(X.Checklists.Chest);
+			refreshNodeState();
 		});
 	},
 	
@@ -10532,7 +10580,7 @@ G = {
 		X.Collectibles[pType].length = P.Collectibles[pType].needles.length;
 		X.initializeChecklist(X.Collectibles[pType], X.Collectibles[pType].length, customlist);
 		
-		P.LayerArray[pType] = new Array(); // Holds markers (needles)
+		P.LayerArray[pType] = []; // Holds markers (needles)
 		P.Layer[pType] = new L.layerGroup(); // Holds path connecting the markers
 		
 		for (i = 0; i < collectible.needles.length; i++)
@@ -10817,7 +10865,7 @@ G = {
 			 */
 			$("#gldButton_Challenge").one("click", function()
 			{
-				P.Guild.Challenge.usedSubmaps = new Array();
+				P.Guild.Challenge.usedSubmaps = [];
 				D.sortObjects(P.Guild.Challenge.data);
 				for (var i in P.Guild.Challenge.data)
 				{
@@ -10869,7 +10917,7 @@ G = {
 			 */
 			$("#gldButton_Rush").one("click", function()
 			{
-				P.Guild.Rush.usedSubmaps = new Array();
+				P.Guild.Rush.usedSubmaps = [];
 				D.sortObjects(P.Guild.Rush.data);
 				for (var i in P.Guild.Rush.data)
 				{
@@ -10938,7 +10986,7 @@ G = {
 			 */
 			$("#gldButton_Puzzle").one("click", function()
 			{
-				P.Guild.Puzzle.usedSubmaps = new Array();
+				P.Guild.Puzzle.usedSubmaps = [];
 				D.sortObjects(P.Guild.Puzzle.data);
 				for (var i in P.Guild.Puzzle.data)
 				{
@@ -11672,7 +11720,7 @@ T = {
 		 * window time (two time strings), for example "1:30:00~30:00" is 1.5 hour
 		 * wait, and 0.5 hour window during which the next event can happen.
 		 */
-		var time = new Array();
+		var time = [];
 		if (pTime.indexOf("~") !== -1)
 		{
 			time = pTime.split("~");
@@ -12718,8 +12766,8 @@ K = {
 	// These will be jQuery "elements"
 	IconSD0: {}, IconSD1: {}, IconSD2: {}, IconSD3: {},
 	IconHC0: {}, IconHC1: {}, IconHC2: {}, IconHC3: {},
-	IconsStandard: new Array(),
-	IconsHardcore: new Array(),
+	IconsStandard: [],
+	IconsHardcore: [],
 	wpClipboards: [],
 	lsClipboards: [],
 	cZeroClipboardDataAttribute: "data-clipboard-text", // Defined by ZeroClipboard
@@ -14388,9 +14436,9 @@ I = {
 	/*
 	 * Alternative for I.write but used for testing and easier to find and remove.
 	 */
-	log: function(pString, pSeconds, pClear)
+	log: function(pString, pClear)
 	{
-		I.write(pString, pSeconds || 30, pClear);
+		I.write(pString, 0, pClear);
 	},
 	
 	/*
