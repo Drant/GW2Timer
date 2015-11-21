@@ -1940,11 +1940,11 @@ var GW2T_CHAIN_DATA = [
 	alias: "Tangled",
 	pronunciation: "chak gerent",
 	title: "King of the Jungle",
-	name_en: "Tangled Depths: Chak",
-	name_de: "Verschlungene Tiefen: Chak",
-	name_es: "Profundidades Enredadas: Chak",
-	name_fr: "Profondeurs verdoyantes: Chak",
-	name_zh: "纏藤深淵：查克",
+	name_en: "Tangled Depths: Gerent",
+	name_de: "Verschlungene Tiefen: Potentaten",
+	name_es: "Profundidades Enredadas: Regente",
+	name_fr: "Profondeurs verdoyantes: Régent",
+	name_zh: "纏藤深淵：虫王",
 	zone: "tangled",
 	waypoint: "[&BPUHAAA=]",
 	level: "80",
@@ -1967,10 +1967,10 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "20:00",
-		avg: "20:00",
-		min: "20:00",
-		max: "20:00"
+		lim: "15:00",
+		avg: "15:00",
+		min: "15:00",
+		max: "15:00"
 	},
 	{
 		primacy: 1,
@@ -1985,10 +1985,10 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "20:00",
-		avg: "20:00",
-		min: "20:00",
-		max: "20:00"
+		lim: "15:00",
+		avg: "15:00",
+		min: "15:00",
+		max: "15:00"
 	},
 	{
 		primacy: 1,
@@ -2003,10 +2003,10 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "20:00",
-		avg: "20:00",
-		min: "20:00",
-		max: "20:00"
+		lim: "15:00",
+		avg: "15:00",
+		min: "15:00",
+		max: "15:00"
 	},
 	{
 		primacy: 3,
@@ -2021,10 +2021,10 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "20:00",
-		avg: "20:00",
-		min: "20:00",
-		max: "20:00"
+		lim: "15:00",
+		avg: "15:00",
+		min: "15:00",
+		max: "15:00"
 	}
 	]
 },
@@ -2063,7 +2063,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "7:00",
 		avg: "7:00",
 		min: "7:00",
-		max: "5:00"
+		max: "7:00"
 	},
 	{
 		primacy: 1,
@@ -2081,7 +2081,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "7:00",
 		avg: "7:00",
 		min: "7:00",
-		max: "5:00"
+		max: "7:00"
 	},
 	{
 		primacy: 2,
@@ -2099,7 +2099,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "7:00",
 		avg: "7:00",
 		min: "7:00",
-		max: "5:00"
+		max: "7:00"
 	},
 	{
 		primacy: 1,
@@ -2117,7 +2117,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "20:00",
 		avg: "20:00",
 		min: "20:00",
-		max: "30:00"
+		max: "20:00"
 	},
 	{
 		primacy: 1,
@@ -2135,7 +2135,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "20:00",
 		avg: "20:00",
 		min: "20:00",
-		max: "30:00"
+		max: "20:00"
 	},
 	{
 		primacy: 2,
@@ -2153,7 +2153,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "20:00",
 		avg: "20:00",
 		min: "20:00",
-		max: "30:00"
+		max: "20:00"
 	},
 	{
 		primacy: 1,
@@ -2171,7 +2171,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "20:00",
 		avg: "20:00",
 		min: "20:00",
-		max: "30:00"
+		max: "20:00"
 	},
 	{
 		primacy: 1,
@@ -2189,7 +2189,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "20:00",
 		avg: "20:00",
 		min: "20:00",
-		max: "30:00"
+		max: "20:00"
 	},
 	{
 		primacy: 2,
@@ -2207,7 +2207,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "20:00",
 		avg: "20:00",
 		min: "20:00",
-		max: "30:00"
+		max: "20:00"
 	},
 	{
 		primacy: 1,
@@ -2225,7 +2225,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "10:00",
 		avg: "10:00",
 		min: "10:00",
-		max: "20:00"
+		max: "10:00"
 	},
 	{
 		primacy: 1,
@@ -2243,7 +2243,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "10:00",
 		avg: "10:00",
 		min: "10:00",
-		max: "20:00"
+		max: "10:00"
 	},
 	{
 		primacy: 2,
@@ -2261,7 +2261,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "10:00",
 		avg: "10:00",
 		min: "10:00",
-		max: "20:00"
+		max: "10:00"
 	},
 	{
 		primacy: 3,
@@ -2279,7 +2279,7 @@ var GW2T_CHAIN_DATA = [
 		lim: "15:00",
 		avg: "15:00",
 		min: "15:00",
-		max: "30:00"
+		max: "15:00"
 	}
 	]
 },

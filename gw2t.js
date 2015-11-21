@@ -12643,25 +12643,23 @@ T = {
 	 */
 	updateTimelineIndicator: function()
 	{
-		var minutes = T.getCurrentBihourlyMinutesUTC();
-		var offset = (minutes / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
+		var currentminute = T.getCurrentBihourlyMinutesUTC();
+		var offset = (currentminute / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
 		$("#tmlIndicator").css({left: offset + "%"});
 		$(".tmlLineName").css({left: offset + "%"});
-		// Update countdown next to the segment names
+		// Update the countdowns next to the segment names
 		$(".tmlSegment").each(function()
 		{
-			var start = $(this).data("start");
-			var finish = $(this).data("finish");
 			var countdown = $(this).find(".tmlSegmentCountdown");
 			if ($(this).hasClass("tmlSegmentActive"))
 			{
 				// If active then show time remaining
-				countdown.html(I.Symbol.ArrowUp + T.formatMinutes(finish - minutes));
+				countdown.html(I.Symbol.ArrowUp + T.formatMinutes($(this).data("finish") - currentminute));
 			}
 			else
 			{
 				// If inactive then show time until
-				countdown.html(I.Symbol.ArrowDown + T.formatMinutes(T.wrapInteger((start - minutes), T.cMINUTES_IN_2_HOURS)));
+				countdown.html(I.Symbol.ArrowDown + T.formatMinutes(T.wrapInteger(($(this).data("start") - currentminute), T.cMINUTES_IN_2_HOURS)));
 			}
 		});
 	},
@@ -12671,10 +12669,10 @@ T = {
 	 */
 	updateTimelineSegments: function()
 	{
-		var minutes = T.getCurrentBihourlyMinutesUTC();
+		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		$(".tmlSegment").each(function()
 		{
-			if (minutes >= $(this).data("start") && minutes < $(this).data("finish"))
+			if (currentminute >= $(this).data("start") && currentminute < $(this).data("finish"))
 			{
 				if (!$(this).hasClass("tmlSegmentActive"))
 				{
@@ -12688,9 +12686,18 @@ T = {
 			}
 		});
 		// Refresh the legend if approached new bihour
-		if (minutes === 0)
+		if (currentminute === 0)
 		{
 			T.updateTimelineLegend();
+		}
+		else
+		{
+			// Update the timestamp just behind the indicator with future time
+			var timestampminute = currentminute - T.cMINUTES_IN_MINIFRAME;
+			$("#tmlSegmentTimestamp_" + timestampminute)
+				.html(T.getCurrentBihourlyTimestampLocal(timestampminute + T.cMINUTES_IN_2_HOURS))
+				.addClass("tmlSegmentTimestampFutureFar")
+				.parent().css({opacity: 0}).animate({opacity: 1}, 1000);
 		}
 	},
 	
@@ -12699,18 +12706,32 @@ T = {
 	 */
 	updateTimelineLegend: function()
 	{
+		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		var line = $("#tmlLegend").empty();
-		var divisionminutes = 5;
-		var divisions = T.cMINUTES_IN_2_HOURS / divisionminutes;
+		var divisions = T.cMINUTES_IN_2_HOURS / T.cMINUTES_IN_MINIFRAME;
 		var half = divisions / 2;
+		var ithminute, timestamp;
 		for (var i = 0; i < divisions; i++)
 		{
 			var width = T.cPERCENT_100 / divisions;
 			var hourclass = (i === 0 || i === half) ? "tmlSegmentTimestampHour" : "";
+			var tenseclass = "";
+			ithminute = T.cMINUTES_IN_MINIFRAME * i;
+			if (ithminute < currentminute - T.cMINUTES_IN_MINIFRAME)
+			{
+				// Timestamps behind the current minute indicator becomes two hours ahead
+				timestamp = T.getCurrentBihourlyTimestampLocal(ithminute + T.cMINUTES_IN_2_HOURS);
+				tenseclass = "tmlSegmentTimestampFutureFar";
+			}
+			else
+			{
+				timestamp = T.getCurrentBihourlyTimestampLocal(ithminute);
+			}
 			line.append("<div class='tmlSegment' style='width:" + width + "%'><div class='tmlSegmentContent'>"
-				+ "<span class='tmlSegmentTimestamp " + hourclass + "'>" + T.getCurrentBihourlyTimestampLocal(divisionminutes * i) + "</span></div></div>");
+				+ "<span id='tmlSegmentTimestamp_" + ithminute + "' class='tmlSegmentTimestamp " + hourclass + " " + tenseclass + "'>" + timestamp + "</span></div></div>");
 		}
 	},
+
 	
 	/*
 	 * Shows or hides the timeline.
@@ -12757,7 +12778,7 @@ K = {
 	
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
-	clockBackground: {}, clockCircumference: {}, timeProgress: {},
+	clockBackground: {}, clockCircumference: {}, timeProgress0: {}, timeProgress1: {},
 	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeSimple: {}, timeMap: {},
 	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
 	
@@ -12785,7 +12806,8 @@ K = {
 		K.handHour = $("#clkHourHand")[0];
 		K.clockBackground = $("#paneClockBackground")[0];
 		K.clockCircumference = $("#clkCircumference")[0];
-		K.timeProgress = $("#chnProgress")[0];
+		K.timeProgress0 = $("#chnProgress0")[0];
+		K.timeProgress1 = $("#chnProgress1")[0];
 		K.timeLocal = $("#itemTimeLocalActual")[0];
 		K.timeDaytime = $("#itemTimeDayTime")[0];
 		K.timeSimple = $("#itemSimpleTime")[0];
@@ -13125,7 +13147,7 @@ K = {
 		{
 			K.currentPredictionColor = pColor;
 			K.handMinute.style.stroke = pColor;
-			K.timeProgress.style.background = "linear-gradient(to right, black 0%, " + pColor + " 100%)";
+			K.timeProgress0.style.background = "linear-gradient(to right, black 0%, " + pColor + " 100%)";
 		}
 	},
 
@@ -13179,9 +13201,9 @@ K = {
 		// Opacity value 0.0 through 1.0 based on how far into the 15 minutes frame
 		var opacityadd = 1 - ((min % T.cMINUTES_IN_TIMEFRAME)*60 + sec) / (T.cSECONDS_IN_TIMEFRAME);
 		// Progress bar over chains page to show how far in timeframe
-		var progress = (I.ModeCurrent === I.ModeEnum.Tile)
-			? ((T.cPERCENT_100 * opacityadd) + "%") : (~~(I.cPANEL_WIDTH * opacityadd) + "px");
-		K.timeProgress.style.width = progress;
+		var percent = (T.cPERCENT_100 * opacityadd);
+		K.timeProgress0.style.width = percent + "%";
+		K.timeProgress1.style.width = (100 - percent) + "%";
 		
 		/*
 		 * If crossing a 15 minute mark (IMPORTANT).

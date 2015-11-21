@@ -101,9 +101,9 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	width: 24px; height: 24px;
 }
 
-#chnProgress {
-	top: 0;
+#chnProgressBar {
 	height: 4px;
+	top: 0;
 }
 
 .chnBar, .chnSlot {
