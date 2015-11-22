@@ -779,9 +779,9 @@ Days:
 	wvw: ["Land", "Ruins", "Keep", "Camp"]
 },
 "22": {
-	pve: ["Lumberer Jungle", "Activity", "Snowden", null],
-	pvp: ["Defender", "Capture", "War Ranger", "Guard Necro"],
-	wvw: ["Caravan", "Kills", "Camp", "Tower"]
+	pve: ["Lumberer Kryta", "Vista Ascalon", "Silverwastes", "FE"],
+	pvp: ["Capture", "Rank", "War Eng", "Thief Mes"],
+	wvw: ["Spender", "Land", "Tower", "Defender"]
 },
 "23": {
 	pve: ["Miner Wastes", "Vista Jungle", "Fields", null],
@@ -933,22 +933,6 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Mini_Angry_Chest",
-		img: "https://render.guildwars2.com/file/552B6B315EE943BBE7E81FD83594EC2E6D94D1F7/1053208.png",
-		quantity: 1,
-		pricenew: 400,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Shadow_Abyss_Dye",
-		img: "https://render.guildwars2.com/file/E70224319F4D2B047B16FD29456DEF6963B1D7D7/960281.png",
-		quantity: 5,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Crystal_Arbiter_Appearance_Pack",
 		img: "https://render.guildwars2.com/file/62230B3E52E262F814E10D5A2C49EBC3ACAE9640/1223685.png",
 		quantity: 1,
@@ -965,28 +949,20 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Glittering_Wings_Backpack",
-		img: "https://render.guildwars2.com/file/5605730D904A9A62CF6C30B62C80D42FF469A876/1058324.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Exalted_Glider",
-		img: "https://render.guildwars2.com/file/60BAF50456D5D49E672D9CE3E7A34391E2CA8011/1200572.png",
+		url: "http://wiki.guildwars2.com/wiki/Mini_Angry_Chest",
+		img: "https://render.guildwars2.com/file/552B6B315EE943BBE7E81FD83594EC2E6D94D1F7/1053208.png",
 		quantity: 1,
 		pricenew: 400,
 		priceold: 0,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Dread_Quiver_Backpack",
-		img: "https://render.guildwars2.com/file/310EE3C0A2C3F550B81A790C12EA720DBD3DFA0E/1205831.png",
-		quantity: 1,
-		pricenew: 350,
+		url: "http://wiki.guildwars2.com/wiki/Shadow_Abyss_Dye",
+		img: "https://render.guildwars2.com/file/E70224319F4D2B047B16FD29456DEF6963B1D7D7/960281.png",
+		quantity: 5,
+		pricenew: 500,
 		priceold: 0,
-		col: 0
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Butterfly_Harvesting_Flute",
@@ -1009,38 +985,6 @@ Sale: {
 		img: "https://render.guildwars2.com/file/AFDEBDF46AE851390BE57EC2CEDAF41703B43C36/983558.png",
 		quantity: 1,
 		pricenew: 1000,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini_Wyvern",
-		img: "https://render.guildwars2.com/file/EF73A55F78EFD8A1589437D55BFFDF0E6A5B0445/1029165.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini_Tiger",
-		img: "https://render.guildwars2.com/file/42D8AB9393C79E117F56C0D4BFA36A335A5F4E72/1055534.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini_Bonebreaker",
-		img: "https://render.guildwars2.com/file/39570A0CCB3F2A664425993F541EA2381D930E30/1072823.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini_Avatar_of_the_Tree",
-		img: "https://render.guildwars2.com/file/7AC8D0657FF005D63A26E3DD6D4FE538C2B9B31C/919369.png",
-		quantity: 1,
-		pricenew: 350,
 		priceold: 0,
 		col: 1
 	}
