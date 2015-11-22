@@ -871,7 +871,7 @@ O = {
 		O.Enact.bol_useSiteTag();
 		O.Enact.bol_alignPanelRight(true);
 		O.Enact.bol_showPanel();
-		O.Enact.bol_showTimelineOpaque();
+		O.Enact.bol_showTimeline();
 		if (I.ModeCurrent !== I.ModeEnum.Simple & I.ModeCurrent !== I.ModeEnum.Tile)
 		{
 			O.Enact.int_setClock();
@@ -1128,6 +1128,21 @@ O = {
 			{
 				$("#panelMap").toggle(O.Options.bol_showMap);
 				M.refreshMap();
+			}
+		},
+		bol_showTimeline: function()
+		{
+			if (O.Options.bol_showTimeline)
+			{
+				if ($("#tmlLegend").length)
+				{
+					return;
+				}
+				else
+				{
+					T.generateTimeline();
+					O.Enact.bol_showTimelineOpaque();
+				}
 			}
 		},
 		bol_showTimelineOpaque: function()
@@ -12594,7 +12609,7 @@ T = {
 	generateTimeline: function()
 	{
 		// Container for all the timelines
-		var tapestry = $("#itemTimeline").append("<div class='tmlLine' id='tmlLegend'></div>");
+		var tapestry = $("#itemTimeline").show().append("<div class='tmlLine' id='tmlLegend'></div>");
 		T.updateTimelineLegend();
 		// Create timings header
 		for (var i in T.Timeline)
@@ -12823,8 +12838,6 @@ K = {
 		K.tickFrequent();
 		K.updateDigitalClockMinutely();
 		K.initializeClipboard();
-		
-		T.generateTimeline();
 		
 		// Other clickable elements
 		$("#itemTimeLocalActual").click(function()
@@ -15269,9 +15282,9 @@ I = {
 				I.isMapEnabled = false;
 				I.showHomeLink();
 				// Readjust panels
+				$("#itemTimeline").appendTo("#panelApp");
 				I.readjustSimple();
 				$(window).resize(function() { I.readjustSimple(); });
-				$("#itemTimeline").appendTo("#panelApp");
 			} break;
 			case I.ModeEnum.Mobile:
 			{
@@ -15289,6 +15302,26 @@ I = {
 				I.showHomeLink();
 				$("#itemLanguage").prependTo("#plateChains");
 				$("#chnOptionsRight").prependTo("#chnOptionsPopup");
+				// Show the timeline if the website is not embedded
+				if (I.isProgramEmbedded === false)
+				{
+					var timelinemargintop = parseInt($("#chnProgressBar").css("margin-top"));
+					$("#itemTimeline").prependTo("#panelApp");
+					// Move the chain progress bar to the top of the screen if scrolled past the timeline
+					$("#windowMain").scroll(function(){
+						if ($("#itemTimeline").is(":visible"))
+						{
+							$("#chnProgressBar").css("margin-top", Math.max(
+								-$("#itemTimeline").outerHeight(true) + timelinemargintop,
+								-$("#windowMain").scrollTop())
+							);
+						}
+						else
+						{
+							$("#chnProgressBar").css("margin-top", timelinemargintop);
+						}
+					});
+				}
 				I.initializeScrollbar("#windowMain");
 				$(window).resize(function() { I.readjustTile(); });
 			} break;

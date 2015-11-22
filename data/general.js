@@ -989,6 +989,39 @@ Sale: {
 		col: 1
 	}
 	]
+},
+/*
+ * Pact Supply Network Agent locations. Array indexes correspond to the UTC weekday number.
+ */
+Supply:
+{
+	Codes:
+	{
+		Mehem: ["[&BH8HAAA=]",,,,,,"[&BJQHAAA=]"],
+		Fox: ["[&BNMCAAA=]",,,,,,"[&BMMCAAA=]"],
+		Derwena: ["[&BIMAAAA=]",,,,,,"[&BNUGAAA=]"],
+		Katyn: ["[&BEICAAA=]",,,,,,"[&BHsBAAA=]"],
+		Verma: ["[&BBABAAA=]",,,,,,"[&BNMAAAA=]"],
+		Yana: ["[&BBEDAAA=]",,,,,,"[&BJsCAAA=]"]
+	},
+	Coordinates:
+	{
+		Mehem: [[5691, 15212],,,,,,[3907, 16445]],
+		Fox: [[20252, 21585],,,,,,[18926, 22037]],
+		Derwena: [[11295, 12997],,,,,,[13820, 20501]],
+		Katyn: [[20146, 18656],,,,,,[23006, 11984]],
+		Verma: [[24319, 12362],,,,,,[29248, 18538]],
+		Yana: [[11052, 28061],,,,,,[14095, 24336]]
+	},
+	Offerings:
+	{
+		Mehem: { id: 0, name: "" },
+		Fox: { id: 0, name: "" },
+		Derwena: { id: 0, name: "" },
+		Katyn: { id: 0, name: "" },
+		Verma: { id: 0, name: "" },
+		Yana: { id: 0, name: "" }
+	}
 }
 };
 
@@ -1023,7 +1056,7 @@ var GW2T_TIMELINE = [
 		Segments: [
 			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" },
 			{ time: "00:25", duration: "00:05", primacy: 2, name_en: "Prepare", name_de: "Vorbereiten", name_es: "Preparar", name_fr: "Préparer", name_zh: "準備" },
-			{ time: "00:30", duration: "00:20", primacy: 3, name_en: "Chak Gerent", name_de: "Chak-Potentaten", name_es: "Regente Chak", name_fr: "Régent Chak", name_zh: "查克虫王" },
+			{ time: "00:30", duration: "00:20", primacy: 3, name_en: "Gerent", name_de: "Potentaten", name_es: "Regente", name_fr: "Régent", name_zh: "虫王" },
 			{ time: "00:50", duration: "01:10", primacy: 2, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" }
 		]
 	},

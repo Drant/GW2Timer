@@ -390,6 +390,7 @@ html, body,
 
 /* Bottom side: Timeline */
 #itemTimeline {
+	display: none;
 	position: absolute;
 	bottom: 48px;
 	margin-left: 24px;
