@@ -514,7 +514,7 @@ html, body,
 #dsbAnnouncement img:hover {
 	opacity: 0.8;
 }
-#dsbClose, #tmlClose, #tmlToggle {
+#dsbClose, #tmlDelete, #tmlClose, #tmlToggle {
 	position: absolute;
 	top: -16px;
 	left: -16px;
@@ -522,6 +522,9 @@ html, body,
 	width: 32px; height: 32px;
 	background: url("img/ui/close.png");
 	opacity: 0.4;
+}
+#tmlDelete {
+	display: none;
 }
 #tmlToggle {
 	left: 16px;

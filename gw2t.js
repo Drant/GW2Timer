@@ -1134,7 +1134,7 @@ O = {
 		{
 			if (O.Options.bol_showTimeline)
 			{
-				if ($("#tmlLegend").length)
+				if (T.isTimelineGenerated)
 				{
 					return;
 				}
@@ -11156,6 +11156,7 @@ T = {
 	isDashboardSaleEnabled: false,
 	Timeline: GW2T_TIMELINE,
 	isTimelineEnabled: true,
+	isTimelineGenerated: false,
 	
 	DailyCalendar: GW2T_DAILY_CALENDAR,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
@@ -12608,6 +12609,7 @@ T = {
 	 */
 	generateTimeline: function()
 	{
+		T.isTimelineGenerated = true;
 		// Container for all the timelines
 		var tapestry = $("#itemTimeline").show().append("<div class='tmlLine' id='tmlLegend'></div>");
 		T.updateTimelineLegend();
@@ -12643,6 +12645,11 @@ T = {
 			T.toggleTimeline(false);
 			T.isTimelineEnabled = false;
 		});
+		$("#tmlDelete").click(function()
+		{
+			$("#opt_bol_showTimeline").prop("checked", false).trigger("change");
+			$("#tmlClose").trigger("click");
+		});
 		$("#tmlToggle").click(function()
 		{
 			$("#opt_bol_showTimelineOpaque").trigger("click");
@@ -12658,6 +12665,10 @@ T = {
 	 */
 	updateTimelineIndicator: function()
 	{
+		if (!T.isTimelineGenerated)
+		{
+			return;
+		}
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		var offset = (currentminute / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
 		$("#tmlIndicator").css({left: offset + "%"});
@@ -12684,6 +12695,10 @@ T = {
 	 */
 	updateTimelineSegments: function()
 	{
+		if (!T.isTimelineGenerated)
+		{
+			return;
+		}
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		$(".tmlSegment").each(function()
 		{
@@ -12721,6 +12736,10 @@ T = {
 	 */
 	updateTimelineLegend: function()
 	{
+		if (!T.isTimelineGenerated)
+		{
+			return;
+		}
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		var line = $("#tmlLegend").empty();
 		var divisions = T.cMINUTES_IN_2_HOURS / T.cMINUTES_IN_MINIFRAME;

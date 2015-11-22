@@ -10,9 +10,12 @@
 #itemTimeline {
 	bottom: 24px;
 }
+#tmlDelete {
+	display: block;
+}
 
 /* Hide unrelated elements */
-#panelMap, #paneMenu, #paneContent, #itemSocial {
+#panelMap, #paneMenu, #paneContent, #itemSocial, #tmlClose {
 	display: none;
 }
 

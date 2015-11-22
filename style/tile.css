@@ -14,7 +14,7 @@ html, body {
 	bottom: 24px;
 }
 
-#panelMap, #paneClock, #paneMenu, .chnEvents {
+#panelMap, #paneClock, #paneMenu, #tmlClose, .chnEvents {
 	display: none;
 }
 
@@ -23,6 +23,9 @@ html, body {
 	bottom: auto;
 	margin-top: 24px;
 	margin-bottom: 24px;
+}
+#tmlDelete {
+	display: block;
 }
 
 #windowMain {
