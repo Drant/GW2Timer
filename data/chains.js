@@ -13,9 +13,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "metrica",
 	waypoint: "[&BEcAAAA=]",
 	level: "15",
-	ecto: "1",
-	loot: "2",
-	dragonite: "3-5",
+	reward: {ecto: "1", loot: "2", dragonite: "3-5"},
 	duration: "15:00",
 	timing: ["00:45", "02:45", "04:45", "06:45", "08:45", "10:45", "12:45", "14:45", "16:45", "18:45", "20:45", "22:45"],
 	events: [
@@ -124,9 +122,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "maelstrom",
 	waypoint: "[&BNQCAAA=]",
 	level: "68",
-	ecto: "1",
-	loot: "2",
-	dragonite: "15-25",
+	reward: {ecto: "1", loot: "2", dragonite: "15-25"},
 	duration: "15:00",
 	timing: ["02:00", "05:00", "08:00", "11:00", "14:00", "17:00", "20:00", "23:00"],
 	events: [
@@ -199,9 +195,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "frostgorge",
 	waypoint: "[&BHoCAAA=]",
 	level: "80",
-	ecto: "1",
-	loot: "3",
-	dragonite: "15-25",
+	reward: {ecto: "1", loot: "3", dragonite: "15-25"},
 	duration: "15:00",
 	timing: ["02:30", "05:30", "08:30", "11:30", "14:30", "17:30", "20:30", "23:30"],
 	events: [
@@ -346,9 +340,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "wayfarer",
 	waypoint: "[&BMIDAAA=]",
 	level: "10",
-	ecto: "1-2",
-	loot: "1",
-	dragonite: "3-5",
+	reward: {ecto: "1-2", loot: "1", dragonite: "3-5"},
 	duration: "15:00",
 	timing: ["00:15", "02:15", "04:15", "06:15", "08:15", "10:15", "12:15", "14:15", "16:15", "18:15", "20:15", "22:15"],
 	events: [
@@ -493,9 +485,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "maelstrom",
 	waypoint: "[&BM0CAAA=]",
 	level: "66",
-	ecto: "1",
-	loot: "1",
-	dragonite: "0",
+	reward: {ecto: "1", loot: "1", dragonite: "0"},
 	duration: "15:00",
 	timing: ["00:30", "03:30", "06:30", "09:30", "12:30", "15:30", "18:30", "21:30"],
 	events: [
@@ -658,9 +648,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "queensdale",
 	waypoint: "[&BPcAAAA=]",
 	level: "15",
-	ecto: "1",
-	loot: "0",
-	dragonite: "3-5",
+	reward: {ecto: "1", loot: "0", dragonite: "3-5"},
 	duration: "15:00",
 	timing: ["01:45", "03:45", "05:45", "07:45", "09:45", "11:45", "13:45", "15:45", "17:45", "19:45", "21:45", "23:45"],
 	events: [
@@ -769,9 +757,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "blazeridge",
 	waypoint: "[&BE4DAAA=]",
 	level: "50",
-	ecto: "1",
-	loot: "0",
-	dragonite: "15-25",
+	reward: {ecto: "1", loot: "0", dragonite: "15-25"},
 	duration: "15:00",
 	timing: ["01:00", "04:00", "07:00", "10:00", "13:00", "16:00", "19:00", "22:00"],
 	events: [
@@ -844,9 +830,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "bloodtide",
 	waypoint: "[&BKgBAAA=]",
 	level: "50",
-	ecto: "1",
-	loot: "0",
-	dragonite: "3-5",
+	reward: {ecto: "1", loot: "0", dragonite: "3-5"},
 	duration: "15:00",
 	timing: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00"],
 	events: [
@@ -937,9 +921,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "harathi",
 	waypoint: "[&BLAAAAA=]",
 	level: "43",
-	ecto: "1",
-	loot: "5",
-	dragonite: "3-5",
+	reward: {ecto: "1", loot: "5", dragonite: "3-5"},
 	duration: "15:00",
 	timing: ["01:30", "04:30", "07:30", "10:30", "13:30", "16:30", "19:30", "22:30"],
 	events: [
@@ -1102,9 +1084,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "caledon",
 	waypoint: "[&BEEFAAA=]",
 	level: "15",
-	ecto: "1",
-	loot: "4",
-	dragonite: "3-5",
+	reward: {ecto: "1", loot: "4", dragonite: "3-5"},
 	duration: "15:00",
 	timing: ["01:15", "03:15", "05:15", "07:15", "09:15", "11:15", "13:15", "15:15", "17:15", "19:15", "21:15", "23:15"],
 	events: [
@@ -1213,9 +1193,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "southsun",
 	waypoint: "[&BNcGAAA=]",
 	level: "80",
-	ecto: "2",
-	loot: "5",
-	dragonite: "30",
+	reward: {ecto: "2", loot: "5", dragonite: "30"},
 	duration: "15:00",
 	timing: ["02:00", "06:00", "10:30", "15:00", "18:00", "23:00"],
 	events: [
@@ -1450,9 +1428,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "sparkfly",
 	waypoint: "[&BNABAAA=]",
 	level: "65",
-	ecto: "3",
-	loot: "4",
-	dragonite: "38",
+	reward: {ecto: "3", loot: "4", dragonite: "38"},
 	duration: "15:00",
 	timing: ["00:00", "03:00", "07:00", "11:30", "16:00", "19:00"],
 	events: [
@@ -1597,9 +1573,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "bloodtide",
 	waypoint: "[&BKoBAAA=]",
 	level: "55",
-	ecto: "4",
-	loot: "6",
-	dragonite: "78",
+	reward: {ecto: "4", loot: "6", dragonite: "78"},
 	duration: "15:00",
 	timing: ["01:00", "04:00", "08:00", "12:30", "17:00", "20:00"],
 	events: [
@@ -1726,9 +1700,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "verdant",
 	waypoint: "[&BAgIAAA=]",
 	level: "80",
-	ecto: "1",
-	loot: "4",
-	dragonite: "0",
+	reward: {ecto: "1", loot: "4"},
 	duration: "15:00",
 	timing: {hourInitial: 1, hourMultiplier: 2, minuteOffset: 45},
 	events: [
@@ -1801,9 +1773,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "auric",
 	waypoint: "[&BMYHAAA=]",
 	level: "80",
-	ecto: "0",
-	loot: "4",
-	dragonite: "0",
+	reward: {ecto: "0", loot: "4"},
 	duration: "15:00",
 	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 45},
 	events: [
@@ -1948,9 +1918,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "tangled",
 	waypoint: "[&BPUHAAA=]",
 	level: "80",
-	ecto: "0",
-	loot: "4",
-	dragonite: "0",
+	reward: {ecto: "0", loot: "4"},
 	duration: "15:00",
 	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 30},
 	events: [
@@ -2041,9 +2009,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "dragon",
 	waypoint: "[&BBAIAAA=]",
 	level: "80",
-	ecto: "0",
-	loot: "4",
-	dragonite: "0",
+	reward: {ecto: "0", loot: "4"},
 	duration: "15:00",
 	timing: {hourInitial: 1, hourMultiplier: 2, minuteOffset: 30},
 	events: [
@@ -3985,9 +3951,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "malchor",
 	waypoint: "[&BK4CAAA=]",
 	level: "78",
-	ecto: "1",
-	loot: "2",
-	dragonite: "30",
+	reward: {ecto: "1", loot: "2", dragonite: "30"},
 	events: [
 	{
 		primacy: 1,
@@ -4201,9 +4165,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "malchor",
 	waypoint: "[&BLICAAA=]",
 	level: "79",
-	ecto: "1",
-	loot: "2",
-	dragonite: "30",
+	reward: {ecto: "1", loot: "2", dragonite: "30"},
 	events: [
 	{
 		primacy: 2,
@@ -4327,9 +4289,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "cursed",
 	waypoint: "[&BB4DAAA=]",
 	level: "80",
-	ecto: "1",
-	loot: "3",
-	dragonite: "30",
+	reward: {ecto: "1", loot: "3", dragonite: "30"},
 	events: [
 	{
 		primacy: 2,
@@ -4525,9 +4485,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "cursed",
 	waypoint: "[&BB4DAAA=]",
 	level: "80",
-	ecto: "1",
-	loot: "3",
-	dragonite: "30",
+	reward: {ecto: "1", loot: "3", dragonite: "30"},
 	events: [
 	{
 		primacy: 2,
@@ -4705,9 +4663,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "cursed",
 	waypoint: "[&BB4DAAA=]",
 	level: "80",
-	ecto: "1",
-	loot: "4",
-	dragonite: "0",
+	reward: {ecto: "1", loot: "4", dragonite: "0"},
 	events: [
 	{
 		primacy: 2,
@@ -4921,9 +4877,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "straits",
 	waypoint: "[&BNIEAAA=]",
 	level: "75",
-	ecto: "1",
-	loot: "2",
-	dragonite: "30",
+	reward: {ecto: "1", loot: "2", dragonite: "30"},
 	events: [
 	{
 		primacy: 2,
@@ -5011,9 +4965,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "straits",
 	waypoint: "[&BFkGAAA=]",
 	level: "75",
-	ecto: "0",
-	loot: "0",
-	dragonite: "0",
+	reward: {ecto: "0", loot: "0", dragonite: "0"},
 	events: [
 	{
 		primacy: 2,
@@ -5209,9 +5161,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "straits",
 	waypoint: "[&BO4CAAA=]",
 	level: "75",
-	ecto: "0",
-	loot: "1",
-	dragonite: "0",
+	reward: {ecto: "0", loot: "1", dragonite: "0"},
 	events: [
 	{
 		primacy: 2,
@@ -5389,9 +5339,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "straits",
 	waypoint: "[&BO8CAAA=]",
 	level: "75",
-	ecto: "0",
-	loot: "3",
-	dragonite: "0",
+	reward: {ecto: "0", loot: "3", dragonite: "0"},
 	events: [
 	{
 		primacy: 2,
@@ -5605,9 +5553,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "marches",
 	waypoint: "[&BO4BAAA=]",
 	level: "60",
-	ecto: "1",
-	loot: "1",
-	dragonite: "15-25",
+	reward: {ecto: "1", loot: "1", dragonite: "15-25"},
 	events: [
 	{
 		primacy: 3,
@@ -5641,9 +5587,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "diessa",
 	waypoint: "[&BNwAAAA=]",
 	level: "25",
-	ecto: "1-2",
-	loot: "2",
-	dragonite: "0",
+	reward: {ecto: "1", loot: "2", dragonite: "0"},
 	events: [
 	{
 		primacy: 2,
@@ -5821,9 +5765,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "fields",
 	waypoint: "[&BDwEAAA=]",
 	level: "34",
-	ecto: "1",
-	loot: "4",
-	dragonite: "0",
+	reward: {ecto: "1", loot: "4", dragonite: "0"},
 	events: [
 	{
 		primacy: 2,
@@ -5965,9 +5907,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "dredgehaunt",
 	waypoint: "[&BD8FAAA=]",
 	level: "50",
-	ecto: "1",
-	loot: "1",
-	dragonite: "3-5",
+	reward: {ecto: "1", loot: "1", dragonite: "3-5"},
 	events: [
 	{
 		primacy: 1,
@@ -6073,9 +6013,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "gendarran",
 	waypoint: "[&BIwBAAA=]",
 	level: "28",
-	ecto: "1",
-	loot: "2",
-	dragonite: "0",
+	reward: {ecto: "1", loot: "2", dragonite: "0"},
 	events: [
 	{
 		primacy: 2,
@@ -6199,9 +6137,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "straits",
 	waypoint: "[&BNIEAAA=]",
 	level: "75",
-	ecto: "1",
-	loot: "2",
-	dragonite: "3-5",
+	reward: {ecto: "1", loot: "2", dragonite: "3-5"},
 	events: [
 	{
 		primacy: 2,

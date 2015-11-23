@@ -784,9 +784,9 @@ Days:
 	wvw: ["Spender", "Land", "Tower", "Defender"]
 },
 "23": {
-	pve: ["Miner Wastes", "Vista Jungle", "Fields", null],
-	pvp: ["Kills", "Rank", "War Ele", "Rev Necro"],
-	wvw: ["Spender", "Land", "Tower", "Camp"]
+	pve: ["Miner Ascalon", "Vista Kryta", "Marches", "Maw"],
+	pvp: ["Reward", "Kills", "War Guard", "Mes Necro"],
+	wvw: ["Guard", "Kills", "Defender", "Camp"]
 },
 "24": {
 	pve: ["Miner Jungle", "Vista Kryta", "Metrica", null],

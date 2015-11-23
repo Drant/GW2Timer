@@ -5769,10 +5769,14 @@ C = {
 			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
 				+ " (" + pChain.level + ")"
 					+ "<a href='" + U.convertExternalURL(U.getYouTubeLink(D.getObjectDefaultName(pChain) + " " + I.cGameNick)) + "' target='_blank'>"
-					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> "
-				+ pChain.ecto + "<ins class='s16 s16_ecto' title='Ecto'></ins> "
-				+ pChain.loot + "<ins class='s16 s16_loot' title='Loot'></ins> "
-				+ pChain.dragonite + "<ins class='s16 s16_dragonite' title='Dragonite'></ins> ";
+					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> ";
+		}
+		if (pChain.reward !== undefined)
+		{
+			for (i in pChain.reward)
+			{
+				chainextra += pChain.reward[i] + "<ins class='s16 s16_" + i + "' title='" + i + "'></ins> ";
+			}
 		}
 		
 		/*
@@ -9600,13 +9604,6 @@ P = {
 				})
 			});
 			M.toggleLayer(P.DryTopTimer, true);
-			I.qTip.init($("#mapDryTopClip0, #mapDryTopClip1").click(function()
-			{
-				$(this).select();
-			}).hover(
-				function() { M.isMouseOnHUD = true; },
-				function() { M.isMouseOnHUD = false; }
-			));
 			
 			// Create icons
 			for (i in C.DryTopChains)
@@ -9678,6 +9675,13 @@ P = {
 				M.toggleLayerArray(P.LayerArray.DryTopActive, pBoolean);
 				P.adjustZoomDryTop();
 				K.updateDryTopClipboard();
+				I.qTip.init($("#mapDryTopClip0, #mapDryTopClip1").click(function()
+				{
+					$(this).select();
+				}).hover(
+					function() { M.isMouseOnHUD = true; },
+					function() { M.isMouseOnHUD = false; }
+				));
 			}
 			else
 			{
@@ -12611,8 +12615,12 @@ T = {
 	{
 		T.isTimelineGenerated = true;
 		// Container for all the timelines
-		var tapestry = $("#itemTimeline").show().append("<div class='tmlLine' id='tmlLegend'></div>");
+		var tapestry = $("#itemTimeline").show().append("<div class='tmlLine curToggle' id='tmlLegend'></div>");
 		T.updateTimelineLegend();
+		$("#tmlLegend").click(function()
+		{
+			$("#opt_bol_use24Hour").trigger("click");
+		});
 		// Create timings header
 		for (var i in T.Timeline)
 		{
