@@ -790,8 +790,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	Note: "",
-	Start: new Date("2015-11-20T17:00:00Z"),
-	Finish: new Date("2015-11-27T17:00:00Z"),
+	Start: new Date("2015-11-24T16:00:00Z"),
+	Finish: new Date("2015-12-01T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -801,26 +801,10 @@ Sale: {
 	},
 	Items: [
 	{
-		url: "http://wiki.guildwars2.com/wiki/Raider's_Supply_Package",
-		img: "http://i.imgur.com/fBDEflK.png",
-		quantity: 1,
-		pricenew: 1260,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Crystal_Arbiter_Appearance_Pack",
-		img: "https://render.guildwars2.com/file/62230B3E52E262F814E10D5A2C49EBC3ACAE9640/1223685.png",
+		url: "http://wiki.guildwars2.com/wiki/Bandit_Sniper_Appearance_Pack",
+		img: "http://i.imgur.com/mIuPrbz.png",
 		quantity: 1,
 		pricenew: 2000,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Lyssa's_Regalia_Outfit",
-		img: "https://render.guildwars2.com/file/7D1AAED555D13BDEBB1736DB77D0DF1C56141F64/1223684.png",
-		quantity: 1,
-		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
@@ -830,29 +814,13 @@ Sale: {
 		quantity: 1,
 		pricenew: 400,
 		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Butterfly_Harvesting_Flute",
-		img: "https://render.guildwars2.com/file/BBC7E4B707C3624DEFB22C62FC2C9390741F090D/978010.png",
-		quantity: 1,
-		pricenew: 1000,
-		priceold: 0,
 		col: 1
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Firefly_Mining_Flute",
-		img: "https://render.guildwars2.com/file/796209E4012FE25C53D0A04C1DDB0FA5D87079F6/960280.png",
+		url: "http://wiki.guildwars2.com/wiki/Mini_Sabetha",
+		img: "http://i.imgur.com/CdLuf8K.png",
 		quantity: 1,
-		pricenew: 1000,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Swarm_Logging_Flute",
-		img: "https://render.guildwars2.com/file/AFDEBDF46AE851390BE57EC2CEDAF41703B43C36/983558.png",
-		quantity: 1,
-		pricenew: 1000,
+		pricenew: 350,
 		priceold: 0,
 		col: 1
 	}

@@ -1443,8 +1443,10 @@ U = {
 		
 		var doPrint = function()
 		{
+			I.write("Retrieving item...");
 			$.getJSON(U.URL_API.Daily, function(pData)
 			{
+				I.clear();
 				var i;
 				var daily = {};
 				var assoc = T.DailyCalendar.Association;
@@ -15588,7 +15590,12 @@ I = {
 				$("#itemLanguage").prependTo("#plateChains");
 				$("#chnOptionsRight").prependTo("#chnOptionsPopup");
 				// Show the timeline if the website is not embedded
-				if (I.isProgramEmbedded === false)
+				if (I.isProgramEmbedded)
+				{
+					// Less whitespace for embedded window
+					$(".chnBar, .chnSlot").css({marginBottom: "4px", marginRight: "4px"});
+				}
+				else
 				{
 					var timelinemargintop = parseInt($("#chnProgressBar").css("margin-top"));
 					$("#itemTimeline").prependTo("#panelApp");
