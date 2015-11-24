@@ -1198,6 +1198,9 @@ U = {
 	
 	URL_API:
 	{
+		// Achievements
+		Daily: "https://api.guildwars2.com/v2/achievements/daily",
+		
 		// Map
 		LangKey: "",
 		TilesTyria: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
@@ -1242,6 +1245,7 @@ U = {
 		WvW: "data/wvw.js",
 		Itinerary: "data/itinerary.js",
 		// Data to load when opening a map section
+		Daily: "data/daily.js",
 		DryTop: "data/drytop.js",
 		Resource: "data/resource.js",
 		JP: "data/jp.js",
@@ -1417,6 +1421,52 @@ U = {
 			}
 			
 		}
+	},
+	
+	/*
+	 * Prints today's API daily achievements arrays in alias form.
+	 */
+	printDaily: function()
+	{
+		if (T.DailyCalendar === null)
+		{
+			$.getScript(U.URL_DATA.Daily).done(function()
+			{
+				T.DailyCalendar = GW2T_DAILY_CALENDAR;
+				doPrint();
+			});
+		}
+		else
+		{
+			doPrint();
+		}
+		
+		var doPrint = function()
+		{
+			$.getJSON(U.URL_API.Daily, function(pData)
+			{
+				var i;
+				var daily = {};
+				var assoc = T.DailyCalendar.Association;
+				var str = "";
+				// Trim non-max level dailies
+				for (i = pData.pve.length - 1; i >= 0; i--)
+				{
+					if ((pData.pve[i]).level.max < I.cLevelMax)
+					{
+						pData.pve.splice(i, 1);
+					}
+				}
+				// Turn the achievement IDs into achievement nicknames
+				daily.pve = [assoc[(pData.pve[0].id)], assoc[(pData.pve[1].id)], assoc[(pData.pve[2].id)], assoc[(pData.pve[3].id)]];
+				daily.pvp = [assoc[(pData.pvp[0].id)], assoc[(pData.pvp[1].id)], assoc[(pData.pvp[2].id)], assoc[(pData.pvp[3].id)]];
+				daily.wvw = [assoc[(pData.wvw[0].id)], assoc[(pData.wvw[1].id)], assoc[(pData.wvw[2].id)], assoc[(pData.wvw[3].id)]];
+				str = "{<br />&#9;pve: [&quot;" + daily.pve[0] + "&quot;, &quot;" + daily.pve[1] + "&quot;, &quot;" + daily.pve[2] + "&quot;, &quot;" + daily.pve[3] + "&quot;],<br />"
+					+ "&#9;pvp: [&quot;" + daily.pvp[0] + "&quot;, &quot;" + daily.pvp[1] + "&quot;, &quot;" + daily.pvp[2] + "&quot;, &quot;" + daily.pvp[3] + "&quot;],<br />"
+					+ "&#9;wvw: [&quot;" + daily.wvw[0] + "&quot;, &quot;" + daily.wvw[1] + "&quot;, &quot;" + daily.wvw[2] + "&quot;, &quot;" + daily.wvw[3] + "&quot;]<br />}";
+				I.write(str, 0);
+			});
+		};
 	},
 	
 	/*
@@ -5621,15 +5671,14 @@ C = {
 		{
 			date = T.addDaysToDate(date, 1);
 		}
-		var dayofmonth = date.getUTCDate();
-		var alias = (T.DailyCalendar.Days[dayofmonth].pve[3]);
+		var alias = GW2T_DAILY_BOSS.today;
 		alias = (alias !== null) ? alias.toLowerCase() : null;
 		var chain;
 		
 		var currentmins = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
 		var startmins;
 		
-		if (T.ChainAssociation[alias] !== undefined && T.isTimely(T.DailyCalendar, date))
+		if (T.ChainAssociation[alias] !== undefined && T.isTimely(GW2T_DAILY_BOSS, date))
 		{
 			chain = C.Chains[T.ChainAssociation[alias]];
 			startmins = T.convertScheduleKeyToUTCMinutes(chain.scheduleKeys[0]);
@@ -7135,7 +7184,7 @@ M = {
 		}
 		
 		// Bind map click functions for non-touch devices
-		if ( ! this.Map.tap)
+		if (!I.isTouchEnabled)
 		{
 			this.bindMapClicks(this.MapEnum);
 		}
@@ -7164,6 +7213,7 @@ M = {
 						case "nocontext": that.Map.off("contextmenu"); I.write("Map context menu disabled."); break;
 						case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
 						case "api": U.printAPI(args[1], args[2]); break;
+						case "daily": U.printDaily(); break;
 						case "items": U.printItemsAPI(args[1]); break;
 						case "events": P.printZoneEvents(); break;
 					}
@@ -7586,6 +7636,7 @@ M = {
 	{
 		var that = this;
 		var htmlidprefix = "#" + pMapEnum;
+		
 		/*
 		 * Clicking an empty place on the map highlight its coordinate.
 		 */
@@ -7605,7 +7656,7 @@ M = {
 			if (that.isMouseOnHUD) { return; }
 			that.createPersonalPin(pEvent.latlng, true);
 		});
-		
+
 		/*
 		 * Right clicking the map shows a custom context menu.
 		 */
@@ -9871,26 +9922,42 @@ G = {
 	},
 	regenerateDailiesCalendar: function()
 	{
-		$("#dlyCalendar").empty();
-		
-		var i;
-		var dayofmonth = 0;
-		var ithdate;
-		var DAYS_TO_SHOW = 32;
-		
-		for (i = 0; i < DAYS_TO_SHOW; i++)
+		if (T.DailyCalendar === null)
 		{
-			ithdate = T.addDaysToDate(new Date(), i);
-			dayofmonth = ithdate.getUTCDate();
-			G.insertDailyDay(T.DailyCalendar.Days[dayofmonth], ithdate);
+			$.getScript(U.URL_DATA.Daily).done(function()
+			{
+				T.DailyCalendar = GW2T_DAILY_CALENDAR;
+				doGenerate();
+			});
+		}
+		else
+		{
+			doGenerate();
 		}
 		
-		$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
-		$("#dlyCalendar .dlyEvent").each(function()
+		var doGenerate = function()
 		{
-			M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
-		});
-		I.qTip.init("#dlyCalendar ins");
+			$("#dlyCalendar").empty();
+			
+			var i;
+			var dayofmonth = 0;
+			var ithdate;
+			var DAYS_TO_SHOW = 32;
+
+			for (i = 0; i < DAYS_TO_SHOW; i++)
+			{
+				ithdate = T.addDaysToDate(new Date(), i);
+				dayofmonth = ithdate.getUTCDate();
+				G.insertDailyDay(T.DailyCalendar.Days[dayofmonth], ithdate);
+			}
+
+			$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
+			$("#dlyCalendar .dlyEvent").each(function()
+			{
+				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
+			});
+			I.qTip.init("#dlyCalendar ins");
+		};
 	},
 	
 	/*
@@ -11207,7 +11274,7 @@ T = {
 	isTimelineEnabled: true,
 	isTimelineGenerated: false,
 	
-	DailyCalendar: GW2T_DAILY_CALENDAR,
+	DailyCalendar: null,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
 	SECONDS_TILL_RESET: 0,
 	TIMESTAMP_UNIX_SECONDS: 0,
@@ -12390,18 +12457,18 @@ T = {
 				ctd.StartStamp = ctd.Start.toLocaleString();
 				ctd.FinishStamp = ctd.Finish.toLocaleString();
 				// Use default name if available, or use the translated name
-				name = (ctd.name === undefined) ? ctd[namekey] : ctd.name;
+				supplyname = (ctd.name === undefined) ? ctd[namekey] : ctd.name;
 				// If available: set the URL as the official news page, the translated url, or a regular url
 				url = (ctd.official === undefined) ? ctd[urlkey] : U.getGW2OfficialLink(ctd.official);
 				url = (url === undefined) ? ctd.url : url;
 				if (url.indexOf(I.cSiteURL) !== -1)
 				{
 					// Don't externalize URL if self link
-					ctd.Anchor = "<a href='" + url + "'>" + name + "</a>";
+					ctd.Anchor = "<a href='" + url + "'>" + supplyname + "</a>";
 				}
 				else
 				{
-					ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + name + "</a>";
+					ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + supplyname + "</a>";
 				}
 				
 				/*
@@ -12477,13 +12544,15 @@ T = {
 		if (T.isDashboardSupplyEnabled)
 		{
 			var weekdaylocation = T.getDashboardSupplyWeekday();
+			var supplyname = D.getObjectName(T.DashboardSupply);
 			var supplycodes = "";
 			for (var i in T.DashboardSupply.Codes)
 			{
 				supplycodes += (T.DashboardSupply.Codes[i])[weekdaylocation];
 			}
+			supplycodes += " " + supplyname;
 			$("#dsbSupply").append("<div><img src='img/map/vendor_karma.png' /> "
-				+ "<u id='dsbSupplyHeader' class='curToggle'>" + D.getObjectName(T.DashboardSupply) + "</u>"
+				+ "<u id='dsbSupplyHeader' class='curToggle'>" + supplyname + "</u>"
 				+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' />"
 				+ "<a href='" + U.convertExternalURL("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 					+ "' target='_blank' title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString() + "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.' >Info</a> "
@@ -14117,6 +14186,7 @@ I = {
 	cImageHost: "http://i.imgur.com/",
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
+	cLevelMax: 80,
 	cPNG: ".png", // Almost all used images are PNG
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
 	cTextDelimiterChar: "|",
@@ -14163,6 +14233,7 @@ I = {
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
 	isMapEnabled: true,
+	isTouchEnabled: false,
 	isScrollEnabled: false,
 	isSpeechSynthesisEnabled: false,
 	ModeCurrent: null,
@@ -14271,6 +14342,7 @@ I = {
 		{
 			I.isProgramEmbedded = true;
 		}
+		I.isTouchEnabled = typeof window.ontouchstart !== "undefined";
 		
 		// Get URL arguments and do appropriate changes
 		U.enforceURLArgumentsFirst();

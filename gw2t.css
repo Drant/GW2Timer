@@ -573,6 +573,7 @@ html, body,
 	width: 64px; height: 64px;
 	opacity: 0.9;
 	border-radius: 16px;
+	box-shadow: 0px 0px 10px #44bbff;
 }
 .dsbSalePriceMoney {
 	display: none;
@@ -600,6 +601,7 @@ html, body,
 .dsbSupplyEntry:hover .dsbSupplyItem {
 	display: inline-block;
 	line-height: 64px;
+	text-decoration: underline;
 }
 
 #dsbStory {

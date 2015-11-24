@@ -663,173 +663,49 @@ var GW2T_ZONE_DATA = {
 };
 
 /*
- * A month's achievements with associated days. Example of format:
- * pve: ["GATHER REGION", "ACTIVITY CONDITIONALREGION", "EVENTREGION", "BOSS"],
- * pvp: ["PVP0", "PVP1", "PROFESSIONS0", "PROFESSIONS1"],
- * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
+ * UTC bihourly events.
  */
-var GW2T_DAILY_CALENDAR = {
-Start: new Date("2015-11-19T00:00:00Z"),
-Finish: new Date("2015-12-19T00:00:00Z"),
-Days:
-{
-"1": {
-	pve: ["Miner Shiverpeaks", "Fractal", "Kessex", null],
-	pvp: ["Defender", "Capture", "Thief Necro", "Ele Ranger"],
-	wvw: ["Land", "Guard", "Tower", "Keep"]
-},
-"2": {
-	pve: ["Forager Orr", "Forger", "Caledon", null],
-	pvp: ["Defender", "Kills", "War Necro", "Thief Mes"],
-	wvw: ["Spender", "Kills", "Camp", "Defender"]
-},
-"3": {
-	pve: ["Forager Jungle", "Vista Jungle", "Harathi", null],
-	pvp: ["Rank", "Reward", "War Eng", "Ranger Eng"],
-	wvw: ["Ruins", "Kills", "Keep", "Defender"]
-},
-"4": {
-	pve: ["Miner Ascalon", "Vista Ascalon", "Sparkfly", null],
-	pvp: ["Capture", "Kills", "Ele Mes", "Guard Thief"],
-	wvw: ["Ruins", "Guard", "Camp", "Keep"]
-},
-"5": {
-	pve: ["Lumberer Kryta", "Vista Ascalon", "Timberline", null],
-	pvp: ["Reward", "Rank", "Guard Eng", "Thief Mes"],
-	wvw: ["Ruins", "Kills", "Tower", "Defender"]
-},
-"6": {
-	pve: ["Forager Orr", "Forger", "Sparkfly", null],
-	pvp: ["Kills", "Capture", "War Ranger", "Ele Necro"],
-	wvw: ["Guard", "Creature", "Keep", "Defender"]
-},
-"7": {
-	pve: ["Miner Jungle", "Fractal", "Harathi", null],
-	pvp: ["Rank", "Defender", "Guard Ranger", "Mes Necro"],
-	wvw: ["Spender", "Ruins", "Camp", "Keep"]
-},
-"8": {
-	pve: ["Lumberer Kryta", "Vista Kryta", "Metrica", null],
-	pvp: ["Reward", "Defender", "Guard Thief", "Rev Necro"],
-	wvw: ["Land", "Creature", "Defender", "Tower"]
-},
-"9": {
-	pve: ["Miner Shiverpeaks", "Activity", "Kessex", null],
-	pvp: ["Rank", "Kills", "War Eng", "Thief Ele"],
-	wvw: ["Ruins", "Guard", "Defender", "Camp"]
-},
-"10": {
-	pve: ["Forager Ascalon", "Vista Wastes", "Malchor", null],
-	pvp: ["Capture", "Rank", "Guard Eng", "Ranger Thief"],
-	wvw: ["Land", "Kills", "Tower", "Defender"]
-},
-"11": {
-	pve: ["Miner Shiverpeaks", "Vista Jungle", "Snowden", null],
-	pvp: ["Defender", "Kills", "Eng Ele", "Mes Necro"],
-	wvw: ["Ruins", "Guard", "Camp", "Tower"]
-},
-"12": {
-	pve: ["Lumberer Kryta", "Activity", "Dredgehaunt", null],
-	pvp: ["Reward", "Rank", "Thief Ele", "Rev Necro"],
-	wvw: ["Ruins", "Kills", "Tower", "Defender"]
-},
-"13": {
-	pve: ["Miner Kryta", "Vista Ascalon", "Frostgorge", null],
-	pvp: ["Capture", "Kills", "Eng Thief", "Rev Ele"],
-	wvw: ["Land", "Caravan", "Defender", "Keep"]
-},
-"14": {
-	pve: ["Lumberer Ascalon", "Forger", "Plains", null],
-	pvp: ["Capture", "Defender", "Guard Ele", "Rev Mes"],
-	wvw: ["Ruins", "Spender", "Camp", "Tower"]
-},
-"15": {
-	pve: ["Forager Kryta", "Fractal", "Brisban", null],
-	pvp: ["Rank", "Kills", "Guard Mes", "Rev Necro"],
-	wvw: ["Caravan", "Ruins", "Camp", "Keep"]
-},
-"16": {
-	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", null],
-	pvp: ["Rank", "Reward", "Guard Eng", "Ranger Mes"],
-	wvw: ["Caravan", "Guard", "Defender", "Tower"]
-},
-"17": {
-	pve: ["Miner Ascalon", "Forger", "Sparkfly", null],
-	pvp: ["Capture", "Kills", "Ranger Eng", "Rev Necro"],
-	wvw: ["Spender", "Kills", "Keep", "Defender"]
-},
-"18": {
-	pve: ["Forager Orr", "Vista Kryta", "Snowden", null],
-	pvp: ["Defender", "Rank", "War Thief", "Ele Mes"],
-	wvw: ["Land", "Kills", "Tower", "Camp"]
-},
-"19": {
-	pve: ["Miner Kryta", "Fractal", "Bloodtide", "Megades"],
-	pvp: ["Kills", "Reward", "Guard Eng", "Rev Necro"],
-	wvw: ["Guard", "Ruins", "Tower", "Defender"]
-},
-"20": {
-	pve: ["Lumberer Jungle", "Vista Jungle", "Kessex", "SB"],
-	pvp: ["Rank", "Capture", "War Mes", "Rev Necro"],
-	wvw: ["Creature", "Caravan", "Camp", "Tower"]
-},
-"21": {
-	pve: ["Forager Jungle", "Forger", "Queensdale", "Wurm"],
-	pvp: ["Defender", "Capture", "War Eng", "Ranger Necro"],
-	wvw: ["Land", "Ruins", "Keep", "Camp"]
-},
-"22": {
-	pve: ["Lumberer Kryta", "Vista Ascalon", "Silverwastes", "FE"],
-	pvp: ["Capture", "Rank", "War Eng", "Thief Mes"],
-	wvw: ["Spender", "Land", "Tower", "Defender"]
-},
-"23": {
-	pve: ["Miner Ascalon", "Vista Kryta", "Marches", "Maw"],
-	pvp: ["Reward", "Kills", "War Guard", "Mes Necro"],
-	wvw: ["Guard", "Kills", "Defender", "Camp"]
-},
-"24": {
-	pve: ["Forager Kryta", "Vista Shiverpeaks", "Bloodtide", "Wurm"],
-	pvp: ["Capture", "Defender", "Ranger Thief", "Rev Ele"],
-	wvw: ["Spender", "Ruins", "Camp", "Tower"]
-},
-"25": {
-	pve: ["Lumberer Jungle", "Fractal", "Cursed", null],
-	pvp: ["Defender", "Rank", "War Guard", "Ele Necro"],
-	wvw: ["Creature", "Caravan", "Defender", "Camp"]
-},
-"26": {
-	pve: ["Miner Jungle", "Activity", "Dry", null],
-	pvp: ["Kills", "Reward", "War Guard", "Thief Ele"],
-	wvw: ["Ruins", "Spender", "Tower", "Keep"]
-},
-"27": {
-	pve: ["Lumberer Ascalon", "Forger", "Plains", null],
-	pvp: ["Defender", "Kills", "War Thief", "Rev Mes"],
-	wvw: ["Land", "Kills", "Camp", "Tower"]
-},
-"28": {
-	pve: ["Forager Kryta", "Vista Ascalon", "Fields", null],
-	pvp: ["Reward", "Defender", "Ranger Eng", "Ele Necro"],
-	wvw: ["Land", "Caravan", "Keep", "Defender"]
-},
-"29": {
-	pve: ["Miner Shiverpeaks", "Vista Kryta", "Brisban", null],
-	pvp: ["Defender", "Rank", "Guard Thief", "Rev Mes"],
-	wvw: ["Ruins", "Guard", "Camp", "Defender"]
-},
-"30": {
-	pve: ["Jungle Lumberer", "Forger", "Bloodtide", null],
-	pvp: ["Reward", "Rank", "War Eng", "Rev Mes"],
-	wvw: ["Caravan", "Creature", "Camp", "Keep"]
-},
-"31": {
-	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Sparkfly", null],
-	pvp: ["Defender", "Kills", "Thief Necro", "Ele Ranger"],
-	wvw: ["Creature", "Land", "Keep", "Camp"]
-}
-}
-};
+var GW2T_TIMELINE = [
+	{
+		zone: "verdant",
+		color: "yellowgreen",
+		Segments: [
+			{ time: "00:00", duration: "00:10", primacy: 1, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" },
+			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Koptere", name_es: "Cópteros", name_fr: "Coptères", name_zh: "直升機" },
+			{ time: "00:30", duration: "00:75", primacy: 2, name_en: "Daylight", name_de: "Tag", name_es: "Día", name_fr: "Journée", name_zh: "白天" },
+			{ time: "01:45", duration: "00:15", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" }
+		]
+	},
+	{
+		zone: "auric",
+		color: "gold",
+		Segments: [
+			{ time: "00:00", duration: "00:45", primacy: 1, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" },
+			{ time: "00:45", duration: "00:15", primacy: 2, name_en: "Challenges", name_de: "Herausforderungen", name_es: "Desafíos", name_fr: "Défis", name_zh: "挑戰" },
+			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Octovine", name_de: "Rankenkraken", name_es: "Octohiedra", name_fr: "Octoliane", name_zh: "八爪藤" },
+			{ time: "01:20", duration: "00:10", primacy: 2, name_en: "Rest", name_de: "Verschnaufpause", name_es: "Descanso", name_fr: "Répit", name_zh: "休息" },
+			{ time: "01:30", duration: "00:30", primacy: 2, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" }
+		]
+	},
+	{
+		zone: "tangled",
+		color: "violet",
+		Segments: [
+			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" },
+			{ time: "00:25", duration: "00:05", primacy: 2, name_en: "Prepare", name_de: "Vorbereiten", name_es: "Preparar", name_fr: "Préparer", name_zh: "準備" },
+			{ time: "00:30", duration: "00:20", primacy: 3, name_en: "Gerent", name_de: "Potentaten", name_es: "Regente", name_fr: "Régent", name_zh: "虫王" },
+			{ time: "00:50", duration: "01:10", primacy: 2, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" }
+		]
+	},
+	{
+		zone: "dragon",
+		color: "skyblue",
+		Segments: [
+			{ time: "00:00", duration: "01:30", primacy: 1, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" },
+			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" }
+		]
+	}
+];
 
 /*
  * Data for generating the dashboard on the map pane.
@@ -1007,12 +883,12 @@ Supply:
 	},
 	Coords: // Changes at 08:00 UTC
 	{
-		Mehem: [[3995, 15900],[5038, 16227],,,,[3907, 16445],[5691, 15212]],
-		Fox: [[10202, 18168],[9978, 16945],,,,[18926, 22037],[20252, 21585]],
-		Derwena: [[13342, 15548],[13342, 15548],,,,[13820, 20501],[11295, 12997]],
-		Katyn: [[21335, 10084],[22448, 10241],,,,[23006, 11984],[20146, 18656]],
-		Verma: [[24757, 8568],[24131, 9304],,,,[29248, 18538],[24319, 12362]],
-		Yana: [[16978, 23711],[15234, 24050],,,,[14095, 24336],[11052, 28061]]
+		Mehem: [[3995, 15900],[5038, 16227],[5682, 15515],,,[3907, 16445],[5691, 15212]],
+		Fox: [[10202, 18168],[9978, 16945],[8728, 18923],,,[18926, 22037],[20252, 21585]],
+		Derwena: [[13342, 15548],[13342, 15548],[13342, 15548],,,[13820, 20501],[11295, 12997]],
+		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],,,[23006, 11984],[20146, 18656]],
+		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],,,[29248, 18538],[24319, 12362]],
+		Yana: [[16978, 23711],[15234, 24050],[14090, 23997],,,[14095, 24336],[11052, 28061]]
 	},
 	Offers: // Changes at 00:00 UTC
 	{
@@ -1027,46 +903,11 @@ Supply:
 };
 
 /*
- * UTC bihourly events.
+ * Daily world boss manual edit.
  */
-var GW2T_TIMELINE = [
-	{
-		zone: "verdant",
-		color: "yellowgreen",
-		Segments: [
-			{ time: "00:00", duration: "00:10", primacy: 1, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" },
-			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Koptere", name_es: "Cópteros", name_fr: "Coptères", name_zh: "直升機" },
-			{ time: "00:30", duration: "00:75", primacy: 2, name_en: "Daylight", name_de: "Tag", name_es: "Día", name_fr: "Journée", name_zh: "白天" },
-			{ time: "01:45", duration: "00:15", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" }
-		]
-	},
-	{
-		zone: "auric",
-		color: "gold",
-		Segments: [
-			{ time: "00:00", duration: "00:45", primacy: 1, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" },
-			{ time: "00:45", duration: "00:15", primacy: 2, name_en: "Challenges", name_de: "Herausforderungen", name_es: "Desafíos", name_fr: "Défis", name_zh: "挑戰" },
-			{ time: "01:00", duration: "00:20", primacy: 3, name_en: "Octovine", name_de: "Rankenkraken", name_es: "Octohiedra", name_fr: "Octoliane", name_zh: "八爪藤" },
-			{ time: "01:20", duration: "00:10", primacy: 2, name_en: "Rest", name_de: "Verschnaufpause", name_es: "Descanso", name_fr: "Répit", name_zh: "休息" },
-			{ time: "01:30", duration: "00:30", primacy: 2, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" }
-		]
-	},
-	{
-		zone: "tangled",
-		color: "violet",
-		Segments: [
-			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" },
-			{ time: "00:25", duration: "00:05", primacy: 2, name_en: "Prepare", name_de: "Vorbereiten", name_es: "Preparar", name_fr: "Préparer", name_zh: "準備" },
-			{ time: "00:30", duration: "00:20", primacy: 3, name_en: "Gerent", name_de: "Potentaten", name_es: "Regente", name_fr: "Régent", name_zh: "虫王" },
-			{ time: "00:50", duration: "01:10", primacy: 2, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" }
-		]
-	},
-	{
-		zone: "dragon",
-		color: "skyblue",
-		Segments: [
-			{ time: "00:00", duration: "01:30", primacy: 1, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" },
-			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" }
-		]
-	}
-];
+var GW2T_DAILY_BOSS = {
+	Start: new Date("2015-11-24T00:00:00Z"),
+	Finish: new Date("2015-11-25T00:00:00Z"),
+	today: "Wurm",
+	tomorrow: "Jormag"
+};
