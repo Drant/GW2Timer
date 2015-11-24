@@ -789,9 +789,9 @@ Days:
 	wvw: ["Guard", "Kills", "Defender", "Camp"]
 },
 "24": {
-	pve: ["Miner Jungle", "Vista Kryta", "Metrica", null],
-	pvp: ["Kills", "Defender", "War Eng", "Thief Necro"],
-	wvw: ["Guard", "Land", "Keep", "Defender"]
+	pve: ["Forager Kryta", "Vista Shiverpeaks", "Bloodtide", "Wurm"],
+	pvp: ["Capture", "Defender", "Ranger Thief", "Rev Ele"],
+	wvw: ["Spender", "Ruins", "Camp", "Tower"]
 },
 "25": {
 	pve: ["Lumberer Jungle", "Fractal", "Cursed", null],
@@ -957,14 +957,6 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Shadow_Abyss_Dye",
-		img: "https://render.guildwars2.com/file/E70224319F4D2B047B16FD29456DEF6963B1D7D7/960281.png",
-		quantity: 5,
-		pricenew: 500,
-		priceold: 0,
-		col: 1
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Butterfly_Harvesting_Flute",
 		img: "https://render.guildwars2.com/file/BBC7E4B707C3624DEFB22C62FC2C9390741F090D/978010.png",
 		quantity: 1,
@@ -991,36 +983,45 @@ Sale: {
 	]
 },
 /*
- * Pact Supply Network Agent locations. Array indexes correspond to the UTC weekday number.
+ * Pact Supply Network Agent locations. Array indexes correspond to the UTC
+ * weekday number, where 0 is Sunday.
  */
 Supply:
 {
+	Start: new Date("2015-11-24T00:00:00Z"),
+	Finish: new Date("2015-11-25T00:00:00Z"),
+	resetHour: 8,
+	name_en: "Pact Supply Network Agents",
+	name_de: "Pakt-Vorratsnetzwerk-Agenten handeln",
+	name_es: "Agentes de la red de suministros del Pacto",
+	name_fr: "Réseau d'agents du Pacte",
+	name_zh: "協議耗材網絡經紀人",
 	Codes:
 	{
-		Mehem: ["[&BH8HAAA=]",,,,,,"[&BJQHAAA=]"],
-		Fox: ["[&BNMCAAA=]",,,,,,"[&BMMCAAA=]"],
-		Derwena: ["[&BIMAAAA=]",,,,,,"[&BNUGAAA=]"],
-		Katyn: ["[&BEICAAA=]",,,,,,"[&BHsBAAA=]"],
-		Verma: ["[&BBABAAA=]",,,,,,"[&BNMAAAA=]"],
-		Yana: ["[&BBEDAAA=]",,,,,,"[&BJsCAAA=]"]
+		Mehem: ["[&BIsHAAA=]","[&BIcHAAA=]","[&BH8HAAA=]","[&BH4HAAA=]","[&BKsHAAA=]","[&BJQHAAA=]", "[&BH8HAAA=]"],
+		Fox: ["[&BDoBAAA=]","[&BEwDAAA=]","[&BEgAAAA=]","[&BMIBAAA=]","[&BF0AAAA=]","[&BMMCAAA=]", "[&BNMCAAA=]"],
+		Derwena: ["[&BBkAAAA=]","[&BBkAAAA=]","[&BBkAAAA=]","[&BIMAAAA=]","[&BIMAAAA=]","[&BNUGAAA=]","[&BIMAAAA=]"],
+		Katyn: ["[&BIUCAAA=]","[&BIMCAAA=]","[&BGQCAAA=]","[&BDgDAAA=]","[&BF0GAAA=]","[&BHsBAAA=]", "[&BEICAAA=]"],
+		Verma: ["[&BCECAAA=]","[&BA8CAAA=]","[&BIMBAAA=]","[&BPEBAAA=]","[&BOcBAAA=]","[&BNMAAAA=]","[&BBABAAA=]"],
+		Yana: ["[&BP8DAAA=]","[&BNIEAAA=]","[&BKgCAAA=]","[&BP0CAAA=]","[&BO4CAAA=]","[&BJsCAAA=]","[&BBEDAAA=]"]
 	},
-	Coordinates:
+	Coords: // Changes at 08:00 UTC
 	{
-		Mehem: [[5691, 15212],,,,,,[3907, 16445]],
-		Fox: [[20252, 21585],,,,,,[18926, 22037]],
-		Derwena: [[11295, 12997],,,,,,[13820, 20501]],
-		Katyn: [[20146, 18656],,,,,,[23006, 11984]],
-		Verma: [[24319, 12362],,,,,,[29248, 18538]],
-		Yana: [[11052, 28061],,,,,,[14095, 24336]]
+		Mehem: [[3995, 15900],[5038, 16227],,,,[3907, 16445],[5691, 15212]],
+		Fox: [[10202, 18168],[9978, 16945],,,,[18926, 22037],[20252, 21585]],
+		Derwena: [[13342, 15548],[13342, 15548],,,,[13820, 20501],[11295, 12997]],
+		Katyn: [[21335, 10084],[22448, 10241],,,,[23006, 11984],[20146, 18656]],
+		Verma: [[24757, 8568],[24131, 9304],,,,[29248, 18538],[24319, 12362]],
+		Yana: [[16978, 23711],[15234, 24050],,,,[14095, 24336],[11052, 28061]]
 	},
-	Offerings:
+	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: 0, name: "" },
-		Fox: { id: 0, name: "" },
-		Derwena: { id: 0, name: "" },
-		Katyn: { id: 0, name: "" },
-		Verma: { id: 0, name: "" },
-		Yana: { id: 0, name: "" }
+		Mehem: { id: "44652", price: "25200" },
+		Fox: { id: "43839", price: "25200" },
+		Derwena: { id: "67964", price: "25200" },
+		Katyn: { id: "43827", price: "25200" },
+		Verma: { id: "49735", price: "25200" },
+		Yana: { id: "43810", price: "25200" }
 	}
 }
 };

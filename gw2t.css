@@ -398,6 +398,14 @@ html, body,
 	z-index: 1;
 	white-space: nowrap;
 }
+#tmlIndicator {
+	display: block;
+	width: 2px; height: 110%;
+	position: absolute;
+	top: -10%;
+	background: lime;
+	opacity: 0.6;
+}
 .tmlLine { /* A whole line representing a chain of events */
 	height: 24px;
 }
@@ -478,15 +486,8 @@ html, body,
 	outline: 1px solid rgba(0, 0, 0, 0.2);;
 }
 .tmlSegmentActive .tmlSegmentName {
-	opacity: 1;
-}
-#tmlIndicator {
-	display: block;
-	width: 2px; height: 110%;
-	position: absolute;
-	top: -10%;
-	background: lime;
-	opacity: 0.6;
+	color: lime;
+	opacity: 0.8;
 }
 
 /* Top right corner: Dashboard */
@@ -508,7 +509,7 @@ html, body,
 #itemDashboard a {
 	color: #bbcc77;
 }
-#itemDashboard a:hover, #dsbSaleHeader:hover u {
+#itemDashboard a:hover, #itemDashboard u:hover {
 	color: #44dd44;
 }
 #dsbAnnouncement img:hover {
@@ -550,7 +551,7 @@ html, body,
 #dsbSaleHeader:active {
 	opacity: 0.8;
 }
-#dsbSaleTable {
+#dsbSaleTable, #dsbSupplyTable {
 	max-height: 320px;
 }
 #dsbSaleCol0, #dsbSaleCol1 {
@@ -564,11 +565,11 @@ html, body,
 	width: 256px;
 	white-space: nowrap;
 }
-.dsbSaleIcon {
+.dsbSaleIcon, .dsbSupplyIcon {
 	width: 32px; height: 32px;
 	border-radius: 4px;
 }
-.dsbSaleEntry:hover .dsbSaleIcon {
+.dsbSaleEntry:hover .dsbSaleIcon, .dsbSupplyEntry:hover .dsbSupplyIcon {
 	width: 64px; height: 64px;
 	opacity: 0.9;
 	border-radius: 16px;
@@ -588,6 +589,17 @@ html, body,
 }
 .dsbSalePriceOld {
 	color: #b3a082;
+}
+
+.dsbSupplyPriceKarma {
+	float: right;
+}
+.dsbSupplyEntry {
+	margin-left: 32px;
+}
+.dsbSupplyEntry:hover .dsbSupplyItem {
+	display: inline-block;
+	line-height: 64px;
 }
 
 #dsbStory {
@@ -2057,6 +2069,9 @@ silver {
 gold {
 	color: #ddbb44;
 }
+karma {
+	color: white;
+}
 
 .s16 {
 	width: 16px; height: 16px;
@@ -2070,18 +2085,23 @@ gold {
 .s16_ecto { background-position: -80px 0; }
 .s16_gem { background-position: -96px 0; }
 .s16_info { background-position: -112px 0; }
-.s16_loot { background-position: -128px 0; }
-.s16_money { background-position: -144px 0; }
-.s16_twitter { background-position: -160px 0; }
-.s16_wiki { background-position: -176px 0; }
-.s16_youtube { background-position: -192px 0; }
+.s16_karma { background-position: -128px 0; }
+.s16_loot { background-position: -144px 0; }
+.s16_money { background-position: -160px 0; }
+.s16_twitter { background-position: -176px 0; }
+.s16_wiki { background-position: -192px 0; }
+.s16_youtube { background-position: -208px 0; }
 
-coppercoin, silvercoin, goldcoin {
+coppercoin, silvercoin, goldcoin, karmaunit {
 	display: inline-block;
 	width: 16px; height: 16px;
 	margin-bottom: -12px;
 	vertical-align: middle;
 	background-image: url("img/ui/sixteen.png");
+}
+karmaunit {
+	margin-left: 2px;
+	margin-bottom: 2px;
 }
 coppercoin {
 	background-position: -16px 0;
@@ -2091,6 +2111,9 @@ silvercoin {
 }
 goldcoin {
 	background-position: -32px 0;
+}
+karmaunit {
+	background-position: -128px 0;
 }
 
 .rarity0 { color: #aaaaaa; /* junk gray */ }

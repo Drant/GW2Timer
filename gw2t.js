@@ -1199,6 +1199,7 @@ U = {
 	URL_API:
 	{
 		// Map
+		LangKey: "",
 		TilesTyria: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=2",
 		TilesMists: "https://tiles.guildwars2.com/2/1/{z}/{x}/{y}.jpg",
@@ -1251,9 +1252,11 @@ U = {
 	initializeAPIURLs: function()
 	{
 		var lang = D.getPartiallySupportedLanguage();
-		U.URL_API.MapFloorTyria += "&lang=" + lang;
-		U.URL_API.MapFloorMists += "&lang=" + lang;
-		U.URL_API.EventNames += "?lang=" + lang;
+		U.URL_API.LangKey = "?lang=" + lang;
+		var langsuffix = "&lang=" + lang;
+		U.URL_API.MapFloorTyria += langsuffix;
+		U.URL_API.MapFloorMists += langsuffix;
+		U.URL_API.EventNames += langsuffix;
 	},
 
 	/*
@@ -3489,6 +3492,31 @@ E = {
 	},
 	
 	/*
+	 * Formats a karma currency amount.
+	 * @param int pAmount.
+	 * @returns string.
+	 */
+	createKarmaString: function(pAmount, pWantColor)
+	{
+		if (pAmount === undefined || isFinite(pAmount) === false)
+		{
+			return "0";
+		}
+		pAmount = parseInt(pAmount);
+
+		var sk0 = "";
+		var sk1 = "";
+		if (pWantColor)
+		{
+			// Instead of period separating the currency units, use the coin images
+			sk0 = "<karma>";
+			sk1 = "</karma><karmaunit></karmaunit>";
+		}
+		var karma = pAmount.toLocaleString(); // Place separators
+		return sk0 + karma + sk1;
+	},
+	
+	/*
 	 * Converts a decimal number into a decimal-less percentage.
 	 * @param float pNumber to convert.
 	 * @param int pPlaces decimal to keep.
@@ -3516,17 +3544,24 @@ E = {
 	 */
 	setRarityClass: function(pEntry, pLevel)
 	{
-		pEntry.each(function()
+		for (var i = 0; i < E.cNUM_ITEM_RARITIES; i++)
 		{
-			for (var i = 0; i < E.cNUM_ITEM_RARITIES; i++)
-			{
-				$(this).removeClass("rarity" + i.toString());
-			}
-		});
+			pEntry.removeClass("rarity" + i.toString());
+		}
 		if (E.Rarity[pLevel] !== undefined)
 		{
 			pEntry.addClass("rarity" + (E.Rarity[pLevel]).toString());
 		}
+	},
+	
+	/*
+	 * Gets a rarity CSS class from a rarity name.
+	 * @param string pRarity.
+	 * @returns string CSS class.
+	 */
+	getRarityClass: function(pRarity)
+	{
+		return "rarity" + E.Rarity[pRarity];
 	},
 	
 	/*
@@ -3844,7 +3879,7 @@ E = {
 		var insertSearchResult = function(pData, pQuery, pResultsList)
 		{
 			$(".trdResults .itemThrobber").remove();
-			var outputline = $("<dfn class='rarity" + E.Rarity[pData.rarity] + "' data-id='" + pData.id + "'>"
+			var outputline = $("<dfn class='" + E.getRarityClass(pData.rarity) + "' data-id='" + pData.id + "'>"
 			+ "<img src='" + pData.icon + "'>"
 			+ U.wrapSubstringHTML(pData.name, pQuery, "u") + "</dfn>").appendTo(pResultsList);
 			// Bind click a result to memorize the item's ID and name
@@ -8257,8 +8292,9 @@ M = {
 	/*
 	 * Draws a path from a given set of coordinates.
 	 * @param 2D array pCoords of x y coordinates.
+	 * @param string pZoomArgs for map view.
 	 */
-	redrawPersonalPath: function(pCoords)
+	redrawPersonalPath: function(pCoords, pZoomArgs)
 	{
 		if (pCoords !== undefined && pCoords.length > 0)
 		{
@@ -8269,11 +8305,18 @@ M = {
 			}
 			this.drawPersonalPath();
 			// View the first point in the generated path
-			this.goToArguments(pCoords[0]);
+			if (pZoomArgs === undefined)
+			{
+				this.goToArguments(pCoords[0]);
+			}
+			else
+			{
+				this.goToArguments(pZoomArgs);
+			}
 		}
 		else
 		{
-			I.write("Path unavailable for this zone.");
+			I.write("Path unavailable for this.");
 		}
 	},
 	
@@ -11152,12 +11195,14 @@ T = {
 	DashboardCountdown: GW2T_DASHBOARD_DATA.Countdowns,
 	DashboardStory: GW2T_DASHBOARD_DATA.Story,
 	DashboardSale: GW2T_DASHBOARD_DATA.Sale,
+	DashboardSupply: GW2T_DASHBOARD_DATA.Supply,
 	isDashboardEnabled: true,
 	isDashboardAnnouncementEnabled: false,
 	isDashboardCountdownEnabled: false,
 	isDashboardCountdownTickEnabled: false,
 	isDashboardStoryEnabled: false,
 	isDashboardSaleEnabled: false,
+	isDashboardSupplyEnabled: false,
 	Timeline: GW2T_TIMELINE,
 	isTimelineEnabled: true,
 	isTimelineGenerated: false,
@@ -12276,8 +12321,8 @@ T = {
 	 */
 	initializeDashboard: function()
 	{
-		// Verify countdown: if at least one countdown has not expired
 		var now = new Date();
+		// Verify countdown: if at least one countdown has not expired
 		for (var i in T.DashboardCountdown)
 		{
 			if (now < T.DashboardCountdown[i].Finish)
@@ -12300,11 +12345,17 @@ T = {
 		{
 			T.isDashboardSaleEnabled = true;
 		}
+		// Verify supply: if has not expired
+		if (T.isTimely(T.DashboardSupply, now))
+		{
+			T.isDashboardSupplyEnabled = true;
+		}
 		
 		// Make sure at least one component of the dashboard is enabled, else disable the dashboard
 		if ((T.isDashboardCountdownEnabled === false
 				&& T.isDashboardAnnouncementEnabled === false
-				&& T.isDashboardSaleEnabled === false)
+				&& T.isDashboardSaleEnabled === false
+				&& T.isDashboardSupplyEnabled === false)
 			|| T.isDashboardEnabled === false
 			|| I.isMapEnabled === false
 			|| O.Options.bol_showDashboard === false)
@@ -12379,13 +12430,13 @@ T = {
 		{
 			var range = O.getMinMax(T.DashboardSale.Items, "pricenew");
 			// Create "button" to toggle list of items on sale
-			$("#dsbSale").append("<div id='dsbSaleHeader' class='curToggle'><img src='img/ui/gemstore.png' /> "
-				+ "<u>" + T.DashboardSale.Items.length + " "
+			$("#dsbSale").append("<div><img src='img/ui/gemstore.png' /> "
+				+ "<u id='dsbSaleHeader' class='curToggle'>" + T.DashboardSale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceNew'>" + range[0] + "-" + range[1] + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' />"
 				+ "⇓@ " + T.DashboardSale.Finish.toLocaleString()
-			+"</div><div id='dsbSaleTable' class='jsScrollable'></div>");
+			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
 			// Add a "padding" item if the columns are not equal length
 			var ncol0 = 0, ncol1 = 0;
 			for (var i in T.DashboardSale.Items)
@@ -12421,6 +12472,58 @@ T = {
 				T.generateDashboardSale();
 			}
 		}
+		
+		// Initialize supply
+		if (T.isDashboardSupplyEnabled)
+		{
+			var weekdaylocation = T.getDashboardSupplyWeekday();
+			var supplycodes = "";
+			for (var i in T.DashboardSupply.Codes)
+			{
+				supplycodes += (T.DashboardSupply.Codes[i])[weekdaylocation];
+			}
+			$("#dsbSupply").append("<div><img src='img/map/vendor_karma.png' /> "
+				+ "<u id='dsbSupplyHeader' class='curToggle'>" + D.getObjectName(T.DashboardSupply) + "</u>"
+				+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' />"
+				+ "<a href='" + U.convertExternalURL("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
+					+ "' target='_blank' title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString() + "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.' >Info</a> "
+				+ "<u class='curZoom' id='dsbSupplyDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
+				+ "<input id='dsbSupplyCodes' class='cssInputText' type='text' value='" + supplycodes + "' /> "
+			+ "</div><div id='dsbSupplyTable' class='jsScrollable'></div>");
+			
+			// Bind buttons
+			$("#dsbSupplyCodes").click(function()
+			{
+				$(this).select();
+			});
+			$("#dsbSupplyHeader").click(function()
+			{
+				T.generateDashboardSupply();
+			});
+			$("#dsbSupplyDraw").click(function()
+			{
+				if ($(this).data("hasDrawn") !== true)
+				{
+					var coords = [];
+					for (var i in T.DashboardSupply.Coords)
+					{
+						var coord = (T.DashboardSupply.Coords[i])[weekdaylocation];
+						if (coord !== undefined)
+						{
+							coords.push(coord);
+						}
+					}
+					M.redrawPersonalPath(coords, "default");
+					$(this).data("hasDrawn", true);
+				}
+				else
+				{
+					M.clearPersonalPins();
+					$(this).data("hasDrawn", false);
+				}
+			});
+			I.toggleToggleIcon("#dsbSupplyToggleIcon", T.DashboardSale.isPreshown);
+		}
 	},
 	
 	/*
@@ -12430,6 +12533,7 @@ T = {
 	{
 		var animationspeed = 200;
 		var table = $("#dsbSaleTable");
+		
 		if (table.is(":empty") === false)
 		{
 			I.toggleToggleIcon("#dsbSaleToggleIcon", false);
@@ -12476,6 +12580,88 @@ T = {
 				});
 			});
 		}
+	},
+	
+	/*
+	 * Generates the supply offered.
+	 */
+	generateDashboardSupply: function()
+	{
+		var animationspeed = 200;
+		var weekdaylocation = T.getDashboardSupplyWeekday();
+		var table = $("#dsbSupplyTable");
+		var numoffers = O.getObjectLength(T.DashboardSupply.Offers);
+		
+		if (table.is(":empty") === false)
+		{
+			I.toggleToggleIcon("#dsbSupplyToggleIcon", false);
+			table.animate({height: 0}, animationspeed, function()
+			{
+				$(this).css({height: "auto"}).empty();
+			});
+		}
+		else
+		{
+			I.toggleToggleIcon("#dsbSupplyToggleIcon", true);
+			table.empty();
+			table.append(I.cThrobber);
+			for (var i in T.DashboardSupply.Offers)
+			{
+				(function(i)
+				{
+					var offer = T.DashboardSupply.Offers[i];
+					$.getJSON(U.URL_API.ItemDetails + offer.id + U.URL_API.LangKey, function(pData)
+					{
+						table.append("<div class='dsbSupplyEntry'>"
+							+ "<a href='" + U.convertExternalURL(U.getWikiLanguageLink(pData.name)) + "' target='_blank'><img class='dsbSupplyIcon' src='" + pData.icon + "' /></a> "
+							+ "<span id='dsbSupplyItem_" + i + "' class='dsbSupplyItem curZoom " + E.getRarityClass(pData.rarity)
+								+ "' data-coord='" + (T.DashboardSupply.Coords[i])[weekdaylocation] + "'>" + pData.name + "</span> "
+							+ "<span class='dsbSupplyPriceKarma'>" + E.createKarmaString(offer.price, true) + "</span>"
+							+ "<span class='dsbSupplyPriceCoin' id='dsbSupplyPriceCoin_" + i + "'></span>"
+						+ "</div>");
+						// Get TP prices also
+						$.getJSON(U.URL_API.ItemPrices + offer.id, function(pData)
+						{
+							$("#dsbSupplyPriceCoin_" + i).html(" ≈ " + E.createCoinString(E.deductTax(pData.sells.unit_price), true));
+						}).fail(function()
+						{
+							$("#dsbSupplyPriceCoin_" + i).html(" = " + E.createCoinString(0, true));
+						});
+						M.bindMapLinkBehavior($("#dsbSupplyItem_" + i), M.ZoomEnum.Ground, M.Pin.Program);
+					}).done(function()
+					{
+						// Finalize the table after every offer has been added
+						if ($(".dsbSupplyEntry").length === numoffers)
+						{
+							finalizeSupplyTable();
+						}
+					});
+				})(i);
+			}
+		}
+		
+		var finalizeSupplyTable = function()
+		{
+			$(".dsbSupplyItem").each(function()
+			{
+				M.bindMapLinkBehavior($(this));
+			});
+			var height = table.height();
+			table.css({height: 0}).animate({height: height}, animationspeed, function()
+			{
+				$(this).css({height: "auto"});
+				I.initializeScrollbar("#dsbSupplyTable");
+				I.updateScrollbar("#dsbSupplyTable");
+			});
+			table.find(".itemThrobber").remove();
+		};
+	},
+	getDashboardSupplyWeekday: function()
+	{
+		var now = new Date();
+		var weekday = now.getUTCDay();
+		var hour = now.getUTCHours();
+		return (hour < T.DashboardSupply.resetHour) ? T.wrapInteger(weekday - 1, T.cDAYS_IN_WEEK) : weekday;
 	},
 	
 	/*
