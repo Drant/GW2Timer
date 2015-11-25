@@ -7580,7 +7580,7 @@ M = {
 				+ "- Your browser is too old (if IE then need 11+).<br />"
 				+ "- Your computer's time is out of sync.<br />"
 				+ "- This website's code encountered a bug.<br />"
-				+ "Map features will be limited.<br />", 15);
+				+ "Map features will be limited.<br />", 0);
 			}
 		}).always(function() // Do after AJAX regardless of success/failure
 		{
@@ -12542,55 +12542,7 @@ T = {
 		// Initialize supply
 		if (T.isDashboardSupplyEnabled)
 		{
-			var weekdaylocation = T.getDashboardSupplyWeekday();
-			var supplyname = D.getObjectName(T.DashboardSupply);
-			var supplycodes = "";
-			for (var i in T.DashboardSupply.Codes)
-			{
-				supplycodes += (T.DashboardSupply.Codes[i])[weekdaylocation];
-			}
-			supplycodes += " " + supplyname;
-			$("#dsbSupply").append("<div><kbd id='dsbSupplyHeader' class='curToggle'><img src='img/map/vendor_karma.png' /> "
-				+ "<u>" + supplyname + "</u>"
-				+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' /></kbd>"
-				+ "<a href='" + U.convertExternalURL("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
-					+ "' target='_blank' title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString() + "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.' >Info</a> "
-				+ "<u class='curZoom' id='dsbSupplyDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
-				+ "<input id='dsbSupplyCodes' class='cssInputText' type='text' value='" + supplycodes + "' /> "
-			+ "</div><div id='dsbSupplyTable' class='jsScrollable'></div>");
-			
-			// Bind buttons
-			$("#dsbSupplyCodes").click(function()
-			{
-				$(this).select();
-			});
-			$("#dsbSupplyHeader").click(function()
-			{
-				T.generateDashboardSupply();
-			});
-			$("#dsbSupplyDraw").click(function()
-			{
-				if ($(this).data("hasDrawn") !== true)
-				{
-					var coords = [];
-					for (var i in T.DashboardSupply.Coords)
-					{
-						var coord = (T.DashboardSupply.Coords[i])[weekdaylocation];
-						if (coord !== undefined)
-						{
-							coords.push(coord);
-						}
-					}
-					M.redrawPersonalPath(coords, "default");
-					$(this).data("hasDrawn", true);
-				}
-				else
-				{
-					M.clearPersonalPins();
-					$(this).data("hasDrawn", false);
-				}
-			});
-			I.toggleToggleIcon("#dsbSupplyToggleIcon", T.DashboardSale.isPreshown);
+			T.generateDashboardSupplyHeader();
 		}
 	},
 	
@@ -12651,6 +12603,62 @@ T = {
 	},
 	
 	/*
+	 * Generates the header for the supply feature.
+	 */
+	generateDashboardSupplyHeader: function()
+	{
+		var weekdaylocation = T.getDashboardSupplyWeekday();
+		var supplyname = D.getObjectName(T.DashboardSupply);
+		var supplycodes = "";
+		for (var i in T.DashboardSupply.Codes)
+		{
+			supplycodes += (T.DashboardSupply.Codes[i])[weekdaylocation];
+		}
+		supplycodes += " " + supplyname;
+		$("#dsbSupply").empty().append("<div><kbd id='dsbSupplyHeader' class='curToggle'><img src='img/map/vendor_karma.png' /> "
+			+ "<u>" + supplyname + "</u>"
+			+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' /></kbd>"
+			+ "<a href='" + U.convertExternalURL("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
+				+ "' target='_blank' title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString() + "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.' >Info</a> "
+			+ "<u class='curZoom' id='dsbSupplyDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
+			+ "<input id='dsbSupplyCodes' class='cssInputText' type='text' value='" + supplycodes + "' /> "
+		+ "</div><div id='dsbSupplyTable' class='jsScrollable'></div>");
+
+		// Bind buttons
+		$("#dsbSupplyCodes").click(function()
+		{
+			$(this).select();
+		});
+		$("#dsbSupplyHeader").click(function()
+		{
+			T.generateDashboardSupply();
+		});
+		$("#dsbSupplyDraw").click(function()
+		{
+			if ($(this).data("hasDrawn") !== true)
+			{
+				var coords = [];
+				for (var i in T.DashboardSupply.Coords)
+				{
+					var coord = (T.DashboardSupply.Coords[i])[weekdaylocation];
+					if (coord !== undefined)
+					{
+						coords.push(coord);
+					}
+				}
+				M.redrawPersonalPath(coords, "default");
+				$(this).data("hasDrawn", true);
+			}
+			else
+			{
+				M.clearPersonalPins();
+				$(this).data("hasDrawn", false);
+			}
+		});
+		I.toggleToggleIcon("#dsbSupplyToggleIcon", T.DashboardSale.isPreshown);
+	},
+	
+	/*
 	 * Generates the supply offered.
 	 */
 	generateDashboardSupply: function()
@@ -12703,6 +12711,11 @@ T = {
 						{
 							finalizeSupplyTable();
 						}
+					}).fail(function()
+					{
+						table.empty();
+						I.write("Unable to retrieve item: <a href='" + U.convertExternalURL(U.getWikiSearchLink(offer.id)) + "' target='_blank'>"
+							+ offer.id + "</a>. ArenaNet API servers may be down.", 0);
 					});
 				})(i);
 			}
@@ -12757,6 +12770,9 @@ T = {
 	 */
 	refreshDashboard: function(pDate)
 	{
+		var hour = pDate.getUTCHours();
+		var minute = pDate.getUTCMinutes();
+		
 		// Update countdown text elements, or deactivate a countdown entry if expired
 		for (var i in T.DashboardCountdown)
 		{
@@ -12809,6 +12825,13 @@ T = {
 		{
 			T.isDashboardSaleEnabled = false;
 			$("#dsbSale").hide();
+		}
+		
+		// Refresh supply header at its specific time
+		if (T.isTimely(T.DashboardSupply, pDate)
+			&& hour === T.DashboardSupply.resetHour && minute === 0)
+		{
+			T.generateDashboardSupplyHeader();
 		}
 	},
 	
@@ -13510,6 +13533,8 @@ K = {
 			{
 				$(K.clockBackground).fadeTo(800, 1);
 			}
+			$(K.timeProgress0).css({width: "0%"}).animate({width: "100%"}, 800);
+			$(K.timeProgress1).css({width: "100%"}).animate({width: "0%"}, 800);
 			K.updateTimeFrame(pDate);
 		}
 		else // If crossing a 1 second mark and hasn't crossed the 15 minute mark
