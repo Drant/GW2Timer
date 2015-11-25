@@ -832,8 +832,8 @@ Sale: {
  */
 Supply:
 {
-	Start: new Date("2015-11-24T00:00:00Z"),
-	Finish: new Date("2015-11-25T00:00:00Z"),
+	Start: new Date("2015-11-25T00:00:00Z"),
+	Finish: new Date("2015-11-26T00:00:00Z"),
 	resetHour: 8,
 	name_en: "Pact Supply Network Agents",
 	name_de: "Pakt-Vorratsnetzwerk-Agenten handeln",
@@ -860,12 +860,12 @@ Supply:
 	},
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "44652", price: "25200" },
-		Fox: { id: "43839", price: "25200" },
-		Derwena: { id: "67964", price: "25200" },
-		Katyn: { id: "43827", price: "25200" },
-		Verma: { id: "49735", price: "25200" },
-		Yana: { id: "43810", price: "25200" }
+		Mehem: { id: "43807", price: "25200" },
+		Fox: { id: "49746", price: "25200" },
+		Derwena: { id: "44660", price: "25200" },
+		Katyn: { id: "49752", price: "25200" },
+		Verma: { id: "49769", price: "25200" },
+		Yana: { id: "43817", price: "25200" }
 	}
 }
 };
@@ -874,8 +874,8 @@ Supply:
  * Daily world boss manual edit.
  */
 var GW2T_DAILY_BOSS = {
-	Start: new Date("2015-11-24T00:00:00Z"),
-	Finish: new Date("2015-11-25T00:00:00Z"),
-	today: "Wurm",
-	tomorrow: "Jormag"
+	Start: new Date("2015-11-25T00:00:00Z"),
+	Finish: new Date("2015-11-26T00:00:00Z"),
+	today: "Jormag",
+	tomorrow: null
 };

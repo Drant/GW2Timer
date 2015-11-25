@@ -548,7 +548,7 @@ html, body,
 .dsbCountdownActive {
 	color: lime;
 }
-#dsbSaleHeader:active {
+#dsbSaleHeader:active, #dsbSupplyHeader:active {
 	opacity: 0.8;
 }
 #dsbSaleTable, #dsbSupplyTable {
@@ -662,8 +662,9 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 /* Right side: Misc links */
 .itemMapPeripheral {
 	display: inline-block;
-	width: 520px; /* This becomes the maximum size of the HUD popup divs */
+	width: 390px; /* This becomes the maximum size of the HUD popup divs */
 	text-align: right;
+	z-index: 1;
 }
 .itemMapPeripheral div {
 	text-align: left;
@@ -671,12 +672,10 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #itemMapPeripheralNorth, #itemWvWLinksNorth {
 	position: absolute;
 	top: 4px; right: 12px;
-	z-index: 9;
 }
 #itemMapPeripheralSouth {
 	position: absolute;
 	bottom: 4px; right: 12px;
-	z-index: 9;
 }
 #itemLogo {
 	margin-right: 2px;
@@ -1203,7 +1202,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 #paneMenu kbd {
 	display: table;
 	float: left;
-	width: 90px; height: 48px;
+	width: 25%; height: 100%;
 	text-align: center;
 }
 #paneMenu kbd:hover {

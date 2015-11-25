@@ -95,10 +95,7 @@ O = {
 			I.greet(I.cSiteName + " was updated since your last visit.<br />"
 				+ "This version: " + currentversion + "<br />"
 				+ "Your version: " + usersversion + "<br />"
-				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />"
-				+ "<br />"
-				+ "Heart of Thorns timers added. Please help <a href='http://forum.renaka.com/topic/5905384/'>correct</a> the timers.<br />"
-				, wait);
+				+ "Would you like to see the <a class='urlUpdates' href='" + U.URL_META.News + "'>changes</a>?<br />", wait);
 			U.convertExternalLink(".urlUpdates");
 		}
 		
@@ -12499,11 +12496,11 @@ T = {
 		{
 			var range = O.getMinMax(T.DashboardSale.Items, "pricenew");
 			// Create "button" to toggle list of items on sale
-			$("#dsbSale").append("<div><img src='img/ui/gemstore.png' /> "
-				+ "<u id='dsbSaleHeader' class='curToggle'>" + T.DashboardSale.Items.length + " "
+			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img src='img/ui/gemstore.png' /> "
+				+ "<u>" + T.DashboardSale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceNew'>" + range[0] + "-" + range[1] + "<ins class='s16 s16_gem'></ins></span>)"
-				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' />"
+				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
 				+ "⇓@ " + T.DashboardSale.Finish.toLocaleString()
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
 			// Add a "padding" item if the columns are not equal length
@@ -12553,9 +12550,9 @@ T = {
 				supplycodes += (T.DashboardSupply.Codes[i])[weekdaylocation];
 			}
 			supplycodes += " " + supplyname;
-			$("#dsbSupply").append("<div><img src='img/map/vendor_karma.png' /> "
-				+ "<u id='dsbSupplyHeader' class='curToggle'>" + supplyname + "</u>"
-				+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' />"
+			$("#dsbSupply").append("<div><kbd id='dsbSupplyHeader' class='curToggle'><img src='img/map/vendor_karma.png' /> "
+				+ "<u>" + supplyname + "</u>"
+				+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' /></kbd>"
 				+ "<a href='" + U.convertExternalURL("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 					+ "' target='_blank' title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString() + "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.' >Info</a> "
 				+ "<u class='curZoom' id='dsbSupplyDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
@@ -15593,7 +15590,7 @@ I = {
 				if (I.isProgramEmbedded)
 				{
 					// Less whitespace for embedded window
-					$(".chnBar, .chnSlot").css({marginBottom: "4px", marginRight: "4px"});
+					$("<style type='text/css'>.chnBar, .chnSlot {margin-bottom:4px !important; margin-right: 4px !important;}</style>").appendTo("head");
 				}
 				else
 				{
