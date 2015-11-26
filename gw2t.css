@@ -376,7 +376,7 @@ html, body,
 	background: linear-gradient(to right, #000 0%, #111 100%);
 }
 
-/* @@Map pane
+/* @@Map pane. z-index priority: Peripheral > Dashboard > Timeline
 ----------------------------------------------------------------------------- */
 #mapPane, #wvwPane {
 	height: 100%;
@@ -495,7 +495,7 @@ html, body,
 	display: none;
 	position: absolute;
 	top: 32px; right: 12px;
-	z-index: 1;
+	z-index: 2;
 	margin-left: 24px;
 	margin-top: 4px;
 	padding: 4px 10px 4px 10px;
@@ -664,7 +664,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	display: inline-block;
 	width: 390px; /* This becomes the maximum size of the HUD popup divs */
 	text-align: right;
-	z-index: 1;
+	z-index: 3;
 }
 .itemMapPeripheral div {
 	text-align: left;

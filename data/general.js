@@ -4,65 +4,6 @@
  * Dashboard time sensitive data: announcement, countdown, and sales.
  */
 
-var GW2T_REGION_DATA = {
-"magus": {
-	name_en: "Magus Falls",
-	name_de: "Magusfälle",
-	name_es: "Cataratas Magus",
-	name_fr: "Chutes des mages",
-	name_zh: "賢者瀑布",
-	color: "yellow"
-},
-"wastes": {
-	name_en: "Maguuma Wastes",
-	name_de: "Maguuma-Einöde",
-	name_es: "Páramos Maguuma",
-	name_fr: "Contrées sauvages de Maguuma",
-	name_zh: "邁古瑪荒野",
-	color: "wheat"
-},
-"jungle": {
-	name_en: "Maguuma Jungle",
-	name_de: "Maguuma-Dschungel",
-	name_es: "Jungla de Maguuma",
-	name_fr: "Jungle de Maguuma",
-	name_zh: "晦暗海岸",
-	color: "deepskyblue"
-},
-"kryta": {
-	name_en: "Kryta",
-	name_de: "Kryta",
-	name_es: "Kryta",
-	name_fr: "Kryte",
-	name_zh: "科瑞塔",
-	color: "lightgreen"
-},
-"orr": {
-	name_en: "Orr",
-	name_de: "Orr",
-	name_es: "Orr",
-	name_fr: "Orr",
-	name_zh: "歐爾遺跡",
-	color: "sienna"
-},
-"shiverpeaks": {
-	name_en: "Shiverpeaks",
-	name_de: "Zittergipfelgebirge",
-	name_es: "Picosescalofriantes",
-	name_fr: "Cimefroides",
-	name_zh: "席瓦雪山",
-	color: "aliceblue"
-},
-"ascalon": {
-	name_en: "Ascalon",
-	name_de: "Ascalon",
-	name_es: "Ascalon",
-	name_fr: "Ascalon",
-	name_zh: "阿斯卡隆",
-	color: "orange"
-}
-};
-
 /*
  * This associates the zone's nick with their ID number in the API JSON for
  * access in constant time.
@@ -106,6 +47,166 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1043": "auric",
 	"1045": "tangled",
 	"1052": "verdant"
+};
+// Associate the API achievement IDs with the custom achievement nicknames
+var GW2T_DAILY_ASSOCIATION = {
+
+	// Gatherer
+	"1837": "Lumberer Ascalon",
+	"1838": "Forager Ascalon",
+	"1968": "Lumberer Shiverpeaks",
+	"1969": "Miner Jungle",
+	"1970": "Lumberer Jungle",
+	"1971": "Miner Kryta",
+	"1972": "Lumberer Kryta",
+	"1973": "Forager Jungle",
+	"1974": "Forager Orr",
+	"1975": "Forager Kryta",
+	"1976": "Lumberer Orr",
+	"1977": "Miner Orr",
+	"1978": "Miner Wastes",
+	"1979": "Lumberer Wastes",
+	"1980": "Forager Wastes",
+	"1981": "Miner Ascalon",
+	"1984": "Miner Shiverpeaks",
+	"1985": "Forager Shiverpeaks",
+	
+	// Misc
+	"500": "Forger",
+	"1839": "Vista Kryta",
+	"1931": "Vista Jungle",
+	"1932": "Vista Orr",
+	"1936": "Vista Shiverpeaks",
+	"1937": "Vista Wastes",
+	"1938": "Vista Ascalon",
+	"1939": "Activity",
+	"1989": "Fractal",
+	
+	// Event
+	"1940": "Caledon",
+	"1941": "Cursed",
+	"1942": "Straits",
+	"1943": "Gendarran",
+	"1944": "Frostgorge",
+	"1945": "Brisban",
+	"1947": "Sparkfly",
+	"1948": "Bloodtide",
+	"1949": "Southsun",
+	"1950": "Maelstrom",
+	"1951": "Metrica",
+	"1952": "Fields",
+	"1953": "Wayfarer",
+	"1954": "Timberline",
+	"1955": "Dry",
+	"1956": "Snowden",
+	"1958": "Dredgehaunt",
+	"1959": "Silverwastes",
+	"1960": "Harathi",
+	"1961": "Malchor",
+	"1962": "Marches",
+	"1963": "Queensdale",
+	"1964": "Plains",
+	"1965": "Kessex",
+	
+	// Boss
+	"1930": "FE",
+	"1934": "Golem",
+	"2026": "Jormag",
+	"2022": "Maw",
+	"1935": "Megades",
+	"2025": "SB",
+	"1983": "Shatterer",
+	"1933": "Wurm",
+	
+	// WvW
+	"437": "Guard",
+	"1843": "Tower",
+	"1844": "Defender",
+	"1845": "Keep",
+	"1846": "Kills",
+	"1847": "Caravan",
+	"1848": "Creature",
+	"1849": "Land",
+	"1850": "Camp",
+	"1852": "Spender",
+	"1541": "Ruins",
+	"982": "Ruins",
+	"946": "Ruins",
+	
+	// PvP
+	"1856": "Reward",
+	"1857": "Rank",
+	"1858": "Defender",
+	"1861": "Kills",
+	"1867": "Capture",
+	
+	// Profession
+	"2090": "Eng Thief",
+	"2091": "Mes Necro",
+	"2093": "Guard Eng",
+	"2096": "War Guard",
+	"2098": "Guard Ranger",
+	"2099": "Ranger Mes",
+	"2100": "War Thief",
+	"2101": "Thief Ele",
+	"2102": "Thief Mes",
+	"2103": "Ranger Eng",
+	"2104": "Ele Mes",
+	"2105": "Guard Ele",
+	"2107": "Eng Ele",
+	"2108": "Ele Necro",
+	"2109": "Eng Mes",
+	"2110": "Guard Thief",
+	"2111": "War Ranger",
+	"2112": "Ele Ranger",
+	"2113": "Guard Mes",
+	"2114": "War Eng",
+	"2115": "Ranger Thief",
+	"2116": "War Mes",
+	"2117": "Ranger Necro",
+	"2118": "Eng Necro",
+	"2120": "Thief Necro",
+	"2122": "War Ele",
+	"2162": "Rev Ranger",
+	"2317": "Rev Ele",
+	"2561": "Rev Eng",
+	"2611": "Rev Necro",
+	"2623": "Rev Mes",
+	"2640": "Rev Thief",
+	
+	// Fractal
+	"2191": "Adept",
+	"2511": "Journeyman",
+	"2411": "Master",
+	"2415": "Elite",
+	"2166": "29",
+	"2189": "21",
+	"2218": "9",
+	"2223": "26",
+	"2229": "6",
+	"2231": "13",
+	"2238": "15",
+	"2239": "27",
+	"2245": "24",
+	"2266": "35",
+	"2297": "28",
+	"2303": "22",
+	"2308": "16",
+	"2309": "36",
+	"2316": "5",
+	"2327": "14",
+	"2329": "7",
+	"2330": "30",
+	"2366": "23",
+	"2377": "37",
+	"2405": "4",
+	"2422": "8",
+	"2473": "25",
+	"2491": "17",
+	"2492": "19",
+	"2533": "31",
+	"2560": "10",
+	"2597": "12"
 };
 
 /*
@@ -235,6 +336,68 @@ sawtoothbaycaves: {
 spidernestcavern: {
 	img: "http://i.imgur.com/XCSCoDD.png", 
 	bounds: [[25141, 11313], [25641, 11753]]
+}
+};
+
+/*
+ * Regions of a zone.
+ */
+var GW2T_REGION_DATA = {
+"magus": {
+	name_en: "Magus Falls",
+	name_de: "Magusfälle",
+	name_es: "Cataratas Magus",
+	name_fr: "Chutes des mages",
+	name_zh: "賢者瀑布",
+	color: "yellow"
+},
+"wastes": {
+	name_en: "Maguuma Wastes",
+	name_de: "Maguuma-Einöde",
+	name_es: "Páramos Maguuma",
+	name_fr: "Contrées sauvages de Maguuma",
+	name_zh: "邁古瑪荒野",
+	color: "wheat"
+},
+"jungle": {
+	name_en: "Maguuma Jungle",
+	name_de: "Maguuma-Dschungel",
+	name_es: "Jungla de Maguuma",
+	name_fr: "Jungle de Maguuma",
+	name_zh: "晦暗海岸",
+	color: "deepskyblue"
+},
+"kryta": {
+	name_en: "Kryta",
+	name_de: "Kryta",
+	name_es: "Kryta",
+	name_fr: "Kryte",
+	name_zh: "科瑞塔",
+	color: "lightgreen"
+},
+"orr": {
+	name_en: "Orr",
+	name_de: "Orr",
+	name_es: "Orr",
+	name_fr: "Orr",
+	name_zh: "歐爾遺跡",
+	color: "sienna"
+},
+"shiverpeaks": {
+	name_en: "Shiverpeaks",
+	name_de: "Zittergipfelgebirge",
+	name_es: "Picosescalofriantes",
+	name_fr: "Cimefroides",
+	name_zh: "席瓦雪山",
+	color: "aliceblue"
+},
+"ascalon": {
+	name_en: "Ascalon",
+	name_de: "Ascalon",
+	name_es: "Ascalon",
+	name_fr: "Ascalon",
+	name_zh: "阿斯卡隆",
+	color: "orange"
 }
 };
 
@@ -663,7 +826,7 @@ var GW2T_ZONE_DATA = {
 };
 
 /*
- * UTC bihourly events.
+ * UTC bihourly events that are generated as columns in rows of meta event timelines.
  */
 var GW2T_TIMELINE = [
 	{
@@ -743,7 +906,7 @@ Countdowns: [
 	name_de: "Black Friday Verkauf",
 	name_es: "Rebaja Viernes Negro",
 	name_fr: "Vente Vendredi Noir",
-	url: "http://wiki.guildwars2.com/wiki/Gem_Store",
+	url: "https://twitter.com/GuildWars2/status/669516905657552897",
 	Start: new Date("2015-11-27T17:00:00Z"),
 	Finish: new Date("2015-11-30T17:00:00Z")
 },
@@ -832,8 +995,7 @@ Sale: {
  */
 Supply:
 {
-	Start: new Date("2015-11-25T00:00:00Z"),
-	Finish: new Date("2015-11-26T00:00:00Z"),
+	// This uses the same expiration time as the daily
 	resetHour: 8,
 	name_en: "Pact Supply Network Agents",
 	name_de: "Pakt-Vorratsnetzwerk-Agenten handeln",
@@ -860,22 +1022,29 @@ Supply:
 	},
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43807", price: "25200" },
-		Fox: { id: "49746", price: "25200" },
-		Derwena: { id: "44660", price: "25200" },
-		Katyn: { id: "49752", price: "25200" },
-		Verma: { id: "49769", price: "25200" },
-		Yana: { id: "43817", price: "25200" }
+		Mehem: { id: "49735", price: "25200", name: "Recipe: Zealot's Intricate Gossamer Insignia"},
+		Fox: { id: "49780", price: "25200", name: "Recipe: Sprocket Orichalcum Ring"},
+		Derwena: { id: "43835", price: "25200", name: "Recipe: Celestial Pearl Broadsword"},
+		Katyn: { id: "43799", price: "25200", name: "Recipe: Celestial Orichalcum Imbued Inscription"},
+		Verma: { id: "43798", price: "25200", name: "Recipe: Celestial Intricate Gossamer Insignia"},
+		Yana: { id: "43816", price: "25200", name: "Recipe: Celestial Emblazoned Boots"},
 	}
 }
 };
 
 /*
- * Daily world boss manual edit.
+ * Daily achievements manual edit. Example of format:
+ * pve: ["GATHER REGION", "ACTIVITY CONDITIONALREGION", "EVENTREGION", "BOSS"],
+ * pvp: ["PVP0", "PVP1", "PROFESSIONS0", "PROFESSIONS1"],
+ * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
-var GW2T_DAILY_BOSS = {
-	Start: new Date("2015-11-25T00:00:00Z"),
-	Finish: new Date("2015-11-26T00:00:00Z"),
-	today: "Jormag",
-	tomorrow: "Maw"
+var GW2T_DAILY_DATA = {
+	Start: new Date("2015-11-26T00:00:00Z"),
+	Finish: new Date("2015-11-27T00:00:00Z"),
+	Today: 
+	{
+		pve: ["Lumberer Ascalon", "Vista Jungle", "Southsun", "Maw"],
+		pvp: ["Reward", "Kills", "Ranger Eng", "Rev Mes"],
+		wvw: ["Land", "Caravan", "Keep", "Defender"]
+	}
 };

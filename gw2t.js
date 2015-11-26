@@ -75,7 +75,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 151115},
+		programVersion: {key: "int_utlProgramVersion", value: 151125},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
 		personalPins: {key: "str_utlPersonalPins", value: ""}
 	},
@@ -175,7 +175,6 @@ O = {
 		int_numTradingResults: 30,
 		int_secTradingRefresh: 60,
 		// Advanced
-		int_shiftLogin: 0,
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
 		bol_use24Hour: true,
@@ -782,11 +781,10 @@ O = {
 				X.clearCustomChecklistWeekly();
 			}
 		}
-		// Login rewards and dailies calendar
+		// Daily achievements
 		if (I.isSectionLoaded_Daily)
 		{
-			G.shiftLoginTrack();
-			G.regenerateDailiesCalendar();
+			G.generateAndInitializeDailies();
 		}
 		
 		// Finally
@@ -1164,10 +1162,6 @@ O = {
 				E.cancelLoopRefresh();
 			}
 		},
-		int_shiftLogin: function()
-		{
-			G.shiftLoginTrack();
-		},
 		bol_useSiteTag: function()
 		{
 			if (O.Options.bol_useSiteTag)
@@ -1425,47 +1419,31 @@ U = {
 	 */
 	printDaily: function()
 	{
-		if (T.DailyCalendar === null)
+		I.write("Retrieving item...");
+		$.getJSON(U.URL_API.Daily, function(pData)
 		{
-			$.getScript(U.URL_DATA.Daily).done(function()
+			I.clear();
+			var i;
+			var daily = {};
+			var assoc = T.DailyAssociation;
+			var str = "";
+			// Trim non-max level dailies
+			for (i = pData.pve.length - 1; i >= 0; i--)
 			{
-				T.DailyCalendar = GW2T_DAILY_CALENDAR;
-				doPrint();
-			});
-		}
-		else
-		{
-			doPrint();
-		}
-		
-		var doPrint = function()
-		{
-			I.write("Retrieving item...");
-			$.getJSON(U.URL_API.Daily, function(pData)
-			{
-				I.clear();
-				var i;
-				var daily = {};
-				var assoc = T.DailyCalendar.Association;
-				var str = "";
-				// Trim non-max level dailies
-				for (i = pData.pve.length - 1; i >= 0; i--)
+				if ((pData.pve[i]).level.max < I.cLevelMax)
 				{
-					if ((pData.pve[i]).level.max < I.cLevelMax)
-					{
-						pData.pve.splice(i, 1);
-					}
+					pData.pve.splice(i, 1);
 				}
-				// Turn the achievement IDs into achievement nicknames
-				daily.pve = [assoc[(pData.pve[0].id)], assoc[(pData.pve[1].id)], assoc[(pData.pve[2].id)], assoc[(pData.pve[3].id)]];
-				daily.pvp = [assoc[(pData.pvp[0].id)], assoc[(pData.pvp[1].id)], assoc[(pData.pvp[2].id)], assoc[(pData.pvp[3].id)]];
-				daily.wvw = [assoc[(pData.wvw[0].id)], assoc[(pData.wvw[1].id)], assoc[(pData.wvw[2].id)], assoc[(pData.wvw[3].id)]];
-				str = "{<br />&#9;pve: [&quot;" + daily.pve[0] + "&quot;, &quot;" + daily.pve[1] + "&quot;, &quot;" + daily.pve[2] + "&quot;, &quot;" + daily.pve[3] + "&quot;],<br />"
-					+ "&#9;pvp: [&quot;" + daily.pvp[0] + "&quot;, &quot;" + daily.pvp[1] + "&quot;, &quot;" + daily.pvp[2] + "&quot;, &quot;" + daily.pvp[3] + "&quot;],<br />"
-					+ "&#9;wvw: [&quot;" + daily.wvw[0] + "&quot;, &quot;" + daily.wvw[1] + "&quot;, &quot;" + daily.wvw[2] + "&quot;, &quot;" + daily.wvw[3] + "&quot;]<br />}";
-				I.write(str, 0);
-			});
-		};
+			}
+			// Turn the achievement IDs into achievement nicknames
+			daily.pve = [assoc[(pData.pve[0].id)], assoc[(pData.pve[1].id)], assoc[(pData.pve[2].id)], assoc[(pData.pve[3].id)]];
+			daily.pvp = [assoc[(pData.pvp[0].id)], assoc[(pData.pvp[1].id)], assoc[(pData.pvp[2].id)], assoc[(pData.pvp[3].id)]];
+			daily.wvw = [assoc[(pData.wvw[0].id)], assoc[(pData.wvw[1].id)], assoc[(pData.wvw[2].id)], assoc[(pData.wvw[3].id)]];
+			str = "{<br />&#9;pve: [&quot;" + daily.pve[0] + "&quot;, &quot;" + daily.pve[1] + "&quot;, &quot;" + daily.pve[2] + "&quot;, &quot;" + daily.pve[3] + "&quot;],<br />"
+				+ "&#9;pvp: [&quot;" + daily.pvp[0] + "&quot;, &quot;" + daily.pvp[1] + "&quot;, &quot;" + daily.pvp[2] + "&quot;, &quot;" + daily.pvp[3] + "&quot;],<br />"
+				+ "&#9;wvw: [&quot;" + daily.wvw[0] + "&quot;, &quot;" + daily.wvw[1] + "&quot;, &quot;" + daily.wvw[2] + "&quot;, &quot;" + daily.wvw[3] + "&quot;]<br />}";
+			I.write(str, 0);
+		});
 	},
 	
 	/*
@@ -2066,7 +2044,13 @@ U = {
 	},
 	convertExternalURL: function(pURL)
 	{
+		// Appends the outgoing link
 		return I.cSiteURL + "out/?u=" + U.encodeURL(pURL);
+	},
+	convertExternalAnchor: function(pURL)
+	{
+		// This is to be placed within the property of an <a> tag
+		return " href='" + I.cSiteURL + "out/?u=" + U.encodeURL(pURL) + "' target='_blank' ";
 	},
 	
 	/*
@@ -5659,7 +5643,7 @@ C = {
 	},
 	
 	/*
-	 * Assigns today's chain object to the calendar's world boss, if available.
+	 * Assigns today's world boss chain object, if available.
 	 * @param boolean pIsTomorrow whether today's boss won't spawn before reset.
 	 */
 	updateChainToday: function(pIsTomorrow)
@@ -5670,14 +5654,14 @@ C = {
 		{
 			date = T.addDaysToDate(date, 1);
 		}
-		var alias = GW2T_DAILY_BOSS.today;
+		var alias = T.Daily.Today.pve[3];
 		alias = (alias !== null) ? alias.toLowerCase() : null;
 		var chain;
 		
 		var currentmins = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
 		var startmins;
 		
-		if (T.ChainAssociation[alias] !== undefined && T.isTimely(GW2T_DAILY_BOSS, date))
+		if (T.ChainAssociation[alias] !== undefined && T.isTimely(T.Daily, date))
 		{
 			chain = C.Chains[T.ChainAssociation[alias]];
 			startmins = T.convertScheduleKeyToUTCMinutes(chain.scheduleKeys[0]);
@@ -5851,7 +5835,7 @@ C = {
 		{
 			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
 				+ " (" + pChain.level + ")"
-					+ "<a href='" + U.convertExternalURL(U.getYouTubeLink(D.getObjectDefaultName(pChain) + " " + I.cGameNick)) + "' target='_blank'>"
+					+ "<a" + U.convertExternalAnchor(U.getYouTubeLink(D.getObjectDefaultName(pChain) + " " + I.cGameNick)) + ">"
 					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> ";
 		}
 		if (pChain.reward !== undefined)
@@ -9845,118 +9829,24 @@ P = {
 G = {
 	
 	/*
-	 * Initializes Login Rewards track and Dailies Calendar.
+	 * Initializes or regenerates the daily achievements box.
 	 */
 	generateAndInitializeDailies: function()
 	{
-		// Adjust the squares progress
-		G.shiftLoginTrack();
-		// Bind click squares behavior
-		$("#lgnTrack ins").each(function()
-		{
-			$(this).click(function(){
-				G.shiftLoginValue(parseInt($(this).data("i")));
-			}).mouseenter(function()
-			{
-				$("#lgnRecordHover").text("(" + (parseInt($(this).data("i")) + 1) + ")");
-			});
-		});
-		$("#lgnTrack").mouseleave(function()
-		{
-			$("#lgnRecordHover").text("");
-		});
-		
-		I.qTip.init("#lgnTrack ins");
-		
-		// Generate dailies calendar
-		G.regenerateDailiesCalendar();
-	},
-	shiftLoginTrack: function()
-	{
-		var DAYS_IN_TRACK = 28;
-		var LOGIN_START_UNIX = T.DAILY_START_UNIX;
-		T.DAYS_SINCE_DAILY_START = ~~((T.getUNIXSeconds() - LOGIN_START_UNIX) / T.cSECONDS_IN_DAY);
-		var CURRENT_DAY_IN_TRACK = T.wrapInteger(T.DAYS_SINCE_DAILY_START - O.Options.int_shiftLogin, DAYS_IN_TRACK);
-		var OFFICIAL_DAY_IN_TRACK = T.wrapInteger(T.DAYS_SINCE_DAILY_START, DAYS_IN_TRACK);
-		
-		var icurrent = 0;
-		var iofficial = 0;
-		// Initial CSS
-		$("#lgnTrack ins").each(function()
-		{
-			$(this).css({"border-radius": "auto", opacity: 0.3})
-				.removeClass("lgnCurrent lgnOfficial").data("i", iofficial);
-			if (iofficial === OFFICIAL_DAY_IN_TRACK)
-			{
-				$(this).addClass("lgnOfficial");
-				T.loginTrackOfficial = iofficial;
-			}
-			iofficial++;
-		});
-		// Track CSS
-		$("#lgnTrack ins").each(function()
-		{
-			if (icurrent === CURRENT_DAY_IN_TRACK + 1)
-			{
-				return false; // Break from each loop
-			}
-			else if (icurrent === CURRENT_DAY_IN_TRACK)
-			{
-				$(this).addClass("lgnCurrent"); // Current day is highlighted
-			}
-			$(this).css({opacity: 1}); // Days unlocked becomes fully opaque
-			
-			icurrent++;
-		});
-		
-		// Show statistics
-		$("#lgnRecordCurrent").text((CURRENT_DAY_IN_TRACK + 1) + " / " + DAYS_IN_TRACK);
-	},
-	shiftLoginValue: function(pCurrent)
-	{
-		var DAYS_IN_TRACK = 28;
-		var newshift = T.wrapInteger((T.loginTrackOfficial - pCurrent), DAYS_IN_TRACK);
-		$("#opt_int_shiftLogin").val(newshift).trigger("change");
-		G.shiftLoginTrack();
-	},
-	regenerateDailiesCalendar: function()
-	{
-		if (T.DailyCalendar === null)
-		{
-			$.getScript(U.URL_DATA.Daily).done(function()
-			{
-				T.DailyCalendar = GW2T_DAILY_CALENDAR;
-				doGenerate();
-			});
-		}
-		else
-		{
-			doGenerate();
-		}
-		
-		var doGenerate = function()
-		{
-			$("#dlyCalendar").empty();
-			
-			var i;
-			var dayofmonth = 0;
-			var ithdate;
-			var DAYS_TO_SHOW = 32;
+		var now = new Date();
+		// Generate dailies box
+		$("#dlyCalendar").empty();
+		$("#dlyDate").html(now.toLocaleString(window.navigator.language, {
+			year: "numeric", month: "numeric", day: "numeric", weekday: "long"
+		}));
+		G.insertDailyDay(T.Daily.Today, now);
 
-			for (i = 0; i < DAYS_TO_SHOW; i++)
-			{
-				ithdate = T.addDaysToDate(new Date(), i);
-				dayofmonth = ithdate.getUTCDate();
-				G.insertDailyDay(T.DailyCalendar.Days[dayofmonth], ithdate);
-			}
-
-			$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
-			$("#dlyCalendar .dlyEvent").each(function()
-			{
-				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
-			});
-			I.qTip.init("#dlyCalendar ins");
-		};
+		$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
+		$("#dlyCalendar .dlyEvent").each(function()
+		{
+			M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
+		});
+		I.qTip.init("#dlyCalendar ins");
 	},
 	
 	/*
@@ -10362,8 +10252,8 @@ G = {
 					"<dt id='jpz_" + jp.id + "' data-coord='" + jp.coord + "'>" + translatedname + "</dt>"
 					+ "<label><input type='checkbox' id='jpzCheck_" + jp.id + "' /></label>"
 					+ "&nbsp;<cite><a href='"
-					+ U.getYouTubeLink(translatedname + " " + I.cGameNick) + "' target='_blank'>[Y]</a> <a href='"
-					+ U.getWikiLanguageLink(translatedname) + "' target='_blank'>[W]</a></cite>"
+					+ U.getYouTubeLink(translatedname + " " + I.cGameNick) + "'>[Y]</a> <a href='"
+					+ U.getWikiLanguageLink(translatedname) + "'>[W]</a></cite>"
 					+ "<dd>" + jp.description + "</dd>"
 				);
 				var jplink = $("#jpz_" + jp.id);
@@ -10865,8 +10755,8 @@ G = {
 					+ "<button class='gldButton curToggle' id='gldButton_" + i + "' "
 					+ "title='<dfn>" + translatedname + "</dfn><br />gw2timer.com/guild/" + i.toLowerCase() + "'>"
 					+ "<img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>"
-					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "' target='_blank'>Y</a>&nbsp;"
-					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "' target='_blank'>W</a>"
+					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "'>Y</a>&nbsp;"
+					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "'>W</a>"
 					+ "</div>");
 				$("#gldBooks").append("<div class='gldBook' id='gldBook_" + i + "'></div>");
 			}
@@ -10921,8 +10811,8 @@ G = {
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldBounty_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
-						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
+						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
+						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
 						+ "</div>"
 					);
 					
@@ -11005,8 +10895,8 @@ G = {
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
-						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
+						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
+						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
 						+ "</div>"
 					);
 			
@@ -11057,8 +10947,8 @@ G = {
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Rush) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldRush_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
-						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
+						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
+						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
 						+ "</div>"
 					);
 					
@@ -11126,8 +11016,8 @@ G = {
 						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Puzzle) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldPuzzle_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "' target='_blank'>[Y]</a> "
-						+ "<a href='" + U.getWikiLink(name) + "' target='_blank'>[W]</a>"
+						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
+						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
 						+ "</div>"
 					);
 					
@@ -11253,6 +11143,8 @@ W = {
  * ========================================================================== */
 T = {
 	
+	Daily: GW2T_DAILY_DATA,
+	DailyAssociation: GW2T_DAILY_ASSOCIATION,
 	Schedule: {},
 	DryTopSets: {},
 	DryTopCodes: {},
@@ -11273,7 +11165,6 @@ T = {
 	isTimelineEnabled: true,
 	isTimelineGenerated: false,
 	
-	DailyCalendar: null,
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
 	SECONDS_TILL_RESET: 0,
 	TIMESTAMP_UNIX_SECONDS: 0,
@@ -11336,7 +11227,6 @@ T = {
 		Friday: 5,
 		Saturday: 6
 	},
-	loginTrackOfficial: 0,
 	secondsTillResetWeekly: -1,
 	isCountdownToResetStarted: false,
 	
@@ -12412,6 +12302,8 @@ T = {
 			T.isDashboardSaleEnabled = true;
 		}
 		// Verify supply: if has not expired
+		T.DashboardSupply.Start = T.Daily.Start;
+		T.DashboardSupply.Finish = T.Daily.Finish;
 		if (T.isTimely(T.DashboardSupply, now))
 		{
 			T.isDashboardSupplyEnabled = true;
@@ -12445,7 +12337,7 @@ T = {
 			var namekey = D.getNameKey();
 			var urlkey = D.getURLKey();
 			var ctd;
-			var name;
+			var countdownname;
 			var url;
 			
 			for (var i in T.DashboardCountdown)
@@ -12456,18 +12348,18 @@ T = {
 				ctd.StartStamp = ctd.Start.toLocaleString();
 				ctd.FinishStamp = ctd.Finish.toLocaleString();
 				// Use default name if available, or use the translated name
-				supplyname = (ctd.name === undefined) ? ctd[namekey] : ctd.name;
+				countdownname = (ctd.name === undefined) ? ctd[namekey] : ctd.name;
 				// If available: set the URL as the official news page, the translated url, or a regular url
 				url = (ctd.official === undefined) ? ctd[urlkey] : U.getGW2OfficialLink(ctd.official);
 				url = (url === undefined) ? ctd.url : url;
 				if (url.indexOf(I.cSiteURL) !== -1)
 				{
 					// Don't externalize URL if self link
-					ctd.Anchor = "<a href='" + url + "'>" + supplyname + "</a>";
+					ctd.Anchor = "<a href='" + url + "'>" + countdownname + "</a>";
 				}
 				else
 				{
-					ctd.Anchor = "<a href='" + U.convertExternalURL(url) + "' target='_blank'>" + supplyname + "</a>";
+					ctd.Anchor = "<a" + U.convertExternalAnchor(url) + ">" + countdownname + "</a>";
 				}
 				
 				/*
@@ -12583,7 +12475,7 @@ T = {
 						var prevprice = (item.pricenew < item.priceold) ? "<span class='dsbSalePriceOld'><del>" + forhowmany + item.priceold + "</del></span> " : "";
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
 						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
-							+"<a href='" + U.convertExternalURL(item.url) + "' target='_blank'><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
+							+"<a" + U.convertExternalAnchor(item.url) + "><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
 							+ prevprice
 							+ "<span class='dsbSalePriceNew'>" + forhowmany + item.pricenew + "<ins class='s16 s16_gem'></ins></span>"
 							+ "<span class='dsbSalePriceCoin'> ≈ " + E.createCoinString(Math.round(item.pricenew * E.Exchange.CoinInGem), true) + "</span>"
@@ -12618,8 +12510,8 @@ T = {
 		$("#dsbSupply").empty().append("<div><kbd id='dsbSupplyHeader' class='curToggle'><img src='img/map/vendor_karma.png' /> "
 			+ "<u>" + supplyname + "</u>"
 			+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' /></kbd>"
-			+ "<a href='" + U.convertExternalURL("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
-				+ "' target='_blank' title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString() + "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.' >Info</a> "
+			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
+				+ "title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString() + "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.' >Info</a> "
 			+ "<u class='curZoom' id='dsbSupplyDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
 			+ "<input id='dsbSupplyCodes' class='cssInputText' type='text' value='" + supplycodes + "' /> "
 		+ "</div><div id='dsbSupplyTable' class='jsScrollable'></div>");
@@ -12689,7 +12581,7 @@ T = {
 					$.getJSON(U.URL_API.ItemDetails + offer.id + U.URL_API.LangKey, function(pData)
 					{
 						table.append("<div class='dsbSupplyEntry'>"
-							+ "<a href='" + U.convertExternalURL(U.getWikiLanguageLink(pData.name)) + "' target='_blank'><img class='dsbSupplyIcon' src='" + pData.icon + "' /></a> "
+							+ "<a" + U.convertExternalAnchor(U.getWikiLanguageLink(pData.name)) + "><img class='dsbSupplyIcon' src='" + pData.icon + "' /></a> "
 							+ "<span id='dsbSupplyItem_" + i + "' class='dsbSupplyItem curZoom " + E.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (T.DashboardSupply.Coords[i])[weekdaylocation] + "'>" + pData.name + "</span> "
 							+ "<span class='dsbSupplyPriceKarma'>" + E.createKarmaString(offer.price, true) + "</span>"
@@ -12714,7 +12606,7 @@ T = {
 					}).fail(function()
 					{
 						table.empty();
-						I.write("Unable to retrieve item: <a href='" + U.convertExternalURL(U.getWikiSearchLink(offer.id)) + "' target='_blank'>"
+						I.write("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchLink(offer.id)) + ">"
 							+ offer.id + "</a>. ArenaNet API servers may be down.", 0);
 					});
 				})(i);
