@@ -528,10 +528,10 @@ Cabbage: {
 },
 
 Pearlclam: {
-	name_en: "Pearlclam",
-	name_de: "Perlemuschel",
-	name_es: "Almejaperla",
-	name_fr: "Palourdeperle",
+	name_en: "Pearl",
+	name_de: "Perle",
+	name_es: "Perla",
+	name_fr: "Perle",
 	type: "Plant",
 	item: "24500",
 	riches: [
@@ -559,7 +559,7 @@ Vanilla: {
 },
 Pumpkin: {
 	name_en: "Pumpkin",
-	name_de: "Zuckerkürbis",
+	name_de: "Kürbis",
 	name_es: "Calabaza",
 	name_fr: "Potiron",
 	type: "Plant",

@@ -312,7 +312,7 @@ html, body,
 .curClick, a, kbd, input, label, button,
 .mapHUDButton, .ctxMenu li,
 .menuBeam img:hover, .jsSectionDone,
-.chnCheck:hover, .chnTitle time, #lgnTrack ins {
+.chnCheck:hover, .chnTitle time {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
 

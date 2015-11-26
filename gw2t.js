@@ -2044,7 +2044,7 @@ U = {
 	},
 	convertExternalURL: function(pURL)
 	{
-		// Appends the outgoing link
+		// Prefixes the outgoing page to the URL
 		return I.cSiteURL + "out/?u=" + U.encodeURL(pURL);
 	},
 	convertExternalAnchor: function(pURL)
