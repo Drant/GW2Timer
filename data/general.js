@@ -1025,8 +1025,8 @@ Supply:
 		Mehem: { id: "49735", price: "25200", name: "Recipe: Zealot's Intricate Gossamer Insignia"},
 		Fox: { id: "49780", price: "25200", name: "Recipe: Sprocket Orichalcum Ring"},
 		Derwena: { id: "43835", price: "25200", name: "Recipe: Celestial Pearl Broadsword"},
-		Katyn: { id: "43799", price: "25200", name: "Recipe: Celestial Orichalcum Imbued Inscription"},
-		Verma: { id: "43798", price: "25200", name: "Recipe: Celestial Intricate Gossamer Insignia"},
+		Katyn: { id: "43799", price: "12600", name: "Recipe: Celestial Orichalcum Imbued Inscription"},
+		Verma: { id: "43798", price: "12600", name: "Recipe: Celestial Intricate Gossamer Insignia"},
 		Yana: { id: "43816", price: "25200", name: "Recipe: Celestial Emblazoned Boots"}
 	}
 }
