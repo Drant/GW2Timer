@@ -891,7 +891,7 @@ Announcement:
 	name_de: "",
 	name_es: "",
 	name_fr: "",
-	official: "", // Official GW2 site news link, the prefix https://www.guildwars2.com/en/ is pre-included
+	official: "", // Official GW2 site news link, the prefix https://www.guildwars2.com/xx/ is pre-included
 	url: "", // Language independent, overrides others
 	url_en: "",
 	url_de: "",
@@ -981,7 +981,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Sabetha",
-		img: "http://i.imgur.com/CdLuf8K.png",
+		img: "https://render.guildwars2.com/file/1C96C03C385529A818E9E14ED7BB7E47F10154F5/1301795.png",
 		quantity: 1,
 		pricenew: 350,
 		priceold: 0,
@@ -999,16 +999,16 @@ Supply:
 	resetHour: 8,
 	name_en: "Pact Supply Network Agents",
 	name_de: "Pakt-Vorratsnetzwerk-Agenten handeln",
-	name_es: "Agentes de la red de suministros del Pacto",
+	name_es: "Agentes de suministros del Pacto",
 	name_fr: "Réseau d'agents du Pacte",
-	name_zh: "協議耗材網絡經紀人",
+	name_zh: "特殊商人",
 	Codes:
 	{
 		Mehem: ["[&BIsHAAA=]","[&BIcHAAA=]","[&BH8HAAA=]","[&BH4HAAA=]","[&BKsHAAA=]","[&BJQHAAA=]", "[&BH8HAAA=]"],
 		Fox: ["[&BDoBAAA=]","[&BEwDAAA=]","[&BEgAAAA=]","[&BMIBAAA=]","[&BF0AAAA=]","[&BMMCAAA=]", "[&BNMCAAA=]"],
 		Derwena: ["[&BBkAAAA=]","[&BBkAAAA=]","[&BBkAAAA=]","[&BIMAAAA=]","[&BIMAAAA=]","[&BNUGAAA=]","[&BIMAAAA=]"],
 		Katyn: ["[&BIUCAAA=]","[&BIMCAAA=]","[&BGQCAAA=]","[&BDgDAAA=]","[&BF0GAAA=]","[&BHsBAAA=]", "[&BEICAAA=]"],
-		Verma: ["[&BCECAAA=]","[&BA8CAAA=]","[&BIMBAAA=]","[&BPEBAAA=]","[&BOcBAAA=]","[&BNMAAAA=]","[&BBABAAA=]"],
+		Verma: ["[&BCECAAA=]","[&BA8CAAA=]","[&BIMBAAA=]","[&BPEBAAA=]","[&BOQBAAA=]","[&BNMAAAA=]","[&BBABAAA=]"],
 		Yana: ["[&BP8DAAA=]","[&BNIEAAA=]","[&BKgCAAA=]","[&BP0CAAA=]","[&BO4CAAA=]","[&BJsCAAA=]","[&BBEDAAA=]"]
 	},
 	Coords: // Changes at 08:00 UTC
@@ -1022,12 +1022,12 @@ Supply:
 	},
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49735", price: "25200", name: "Recipe: Zealot's Intricate Gossamer Insignia"},
-		Fox: { id: "49780", price: "25200", name: "Recipe: Sprocket Orichalcum Ring"},
-		Derwena: { id: "43835", price: "25200", name: "Recipe: Celestial Pearl Broadsword"},
-		Katyn: { id: "43799", price: "12600", name: "Recipe: Celestial Orichalcum Imbued Inscription"},
-		Verma: { id: "43798", price: "12600", name: "Recipe: Celestial Intricate Gossamer Insignia"},
-		Yana: { id: "43816", price: "25200", name: "Recipe: Celestial Emblazoned Boots"}
+		Mehem: { id: "49747", price: "25200", name: "Recipe: Zealot's Exalted Boots"},
+		Fox: { id: "49735", price: "25200", name: "Recipe: Zealot's Intricate Gossamer Insignia"},
+		Derwena: { id: "43813", price: "25200", name: "Recipe: Celestial Exalted Masque"},
+		Katyn: { id: "49772", price: "25200", name: "Recipe: Zealot's Pearl Broadsword"},
+		Verma: { id: "49773", price: "25200", name: "Recipe: Zealot's Pearl Crusher"},
+		Yana: { id: "43833", price: "25200", name: "Recipe: Celestial Pearl Reaver"}
 	}
 }
 };
@@ -1039,18 +1039,18 @@ Supply:
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
 var GW2T_DAILY_DATA = {
-	Start: new Date("2015-11-26T00:00:00Z"),
-	Finish: new Date("2015-11-27T00:00:00Z"),
+	Start: new Date("2015-11-27T00:00:00Z"),
+	Finish: new Date("2015-11-28T00:00:00Z"),
 	Today: 
-	{
-		pve: ["Lumberer Ascalon", "Vista Jungle", "Southsun", "Maw"],
-		pvp: ["Reward", "Kills", "Ranger Eng", "Rev Mes"],
-		wvw: ["Land", "Caravan", "Keep", "Defender"]
-	},
-	Tomorrow:
 	{
 		pve: ["Miner Shiverpeaks", "Fractal", "Fields", "Shatterer"],
 		pvp: ["Rank", "Defender", "Ranger Thief", "Ele Mes"],
 		wvw: ["Guard", "Kills", "Tower", "Camp"]
+	},
+	Tomorrow:
+	{
+		pve: ["Forager Ascalon", "Forger", "Frostgorge", "SB"],
+		pvp: ["Rank", "Capture", "War Eng", "Rev Ranger"],
+		wvw: ["Caravan", "Land", "Keep", "Camp"]
 	}
 };
