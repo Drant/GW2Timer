@@ -877,9 +877,9 @@ var GW2T_DASHBOARD_DATA = {
 
 Announcement:
 {
-	content: "Subscription alarm for HoT events now works. <a href='http://i.imgur.com/pTXO9Av.png'>Click on a time</a> to subscribe.",
+	content: "",
 	Start: new Date("2015-11-19T16:00:00Z"),
-	Finish: new Date("2015-11-28T16:00:00Z")
+	Finish: new Date("2015-11-26T16:00:00Z")
 },
 
 /*
@@ -969,7 +969,7 @@ Sale: {
 		quantity: 1,
 		pricenew: 2000,
 		priceold: 0,
-		col: 0
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Angry_Chest",
@@ -986,6 +986,22 @@ Sale: {
 		pricenew: 350,
 		priceold: 0,
 		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Experience_Booster",
+		img: "https://render.guildwars2.com/file/433FE6E01CDA243EDBDC24F96F06D5FC2FAF195A/66584.png",
+		quantity: 1,
+		pricenew: 0,
+		priceold: 100,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Trading_Post_Express",
+		img: "https://render.guildwars2.com/file/550278CE4303EB99084810B33F6A9ECA1FEBE693/220569.png",
+		quantity: 1,
+		pricenew: 0,
+		priceold: 50,
+		col: 0
 	}
 	]
 },
