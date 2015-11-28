@@ -878,8 +878,8 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	content: "<a href='http://forum.renaka.com/topic/5546166/'>Overlay app</a> now has <a href='http://forum.renaka.com/topic/5790839/'>clickthrough</a> feature, works with Action Camera!",
-	Start: new Date("2015-11-19T16:00:00Z"),
-	Finish: new Date("2015-11-26T16:00:00Z")
+	Start: new Date("2015-11-27T16:00:00Z"),
+	Finish: new Date("2015-12-01T16:00:00Z")
 },
 
 /*
@@ -1001,6 +1001,22 @@ Sale: {
 		quantity: 1,
 		pricenew: 0,
 		priceold: 50,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Item_Booster",
+		img: "https://render.guildwars2.com/file/F1E6C29D6A783A9563E5D516532C6E079C5A6069/66669.png",
+		quantity: 1,
+		pricenew: 0,
+		priceold: 100,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Transmutation_Charge",
+		img: "https://render.guildwars2.com/file/43BC25495803A7709F700970E1F8C22FFA6A716A/780163.png",
+		quantity: 1,
+		pricenew: 0,
+		priceold: 30,
 		col: 0
 	}
 	]
