@@ -877,7 +877,7 @@ var GW2T_DASHBOARD_DATA = {
 
 Announcement:
 {
-	content: "",
+	content: "<a href='http://forum.renaka.com/topic/5546166/'>Overlay app</a> now has <a href='http://forum.renaka.com/topic/5790839/'>clickthrough</a> feature, works with Action Camera!",
 	Start: new Date("2015-11-19T16:00:00Z"),
 	Finish: new Date("2015-11-26T16:00:00Z")
 },
@@ -1023,27 +1023,27 @@ Supply:
 		Mehem: ["[&BIsHAAA=]","[&BIcHAAA=]","[&BH8HAAA=]","[&BH4HAAA=]","[&BKsHAAA=]","[&BJQHAAA=]","[&BH8HAAA=]"],
 		Fox: ["[&BDoBAAA=]","[&BEwDAAA=]","[&BEgAAAA=]","[&BMIBAAA=]","[&BF0AAAA=]","[&BMMCAAA=]","[&BNMCAAA=]"],
 		Derwena: ["[&BBkAAAA=]","[&BBkAAAA=]","[&BBkAAAA=]","[&BIMAAAA=]","[&BIMAAAA=]","[&BNUGAAA=]","[&BIMAAAA=]"],
+		Yana: ["[&BP8DAAA=]","[&BNIEAAA=]","[&BKgCAAA=]","[&BP0CAAA=]","[&BO4CAAA=]","[&BJsCAAA=]","[&BBEDAAA=]"],
 		Katyn: ["[&BIUCAAA=]","[&BIMCAAA=]","[&BGQCAAA=]","[&BDgDAAA=]","[&BF0GAAA=]","[&BHsBAAA=]","[&BEICAAA=]"],
-		Verma: ["[&BCECAAA=]","[&BA8CAAA=]","[&BIMBAAA=]","[&BPEBAAA=]","[&BOQBAAA=]","[&BNMAAAA=]","[&BBABAAA=]"],
-		Yana: ["[&BP8DAAA=]","[&BNIEAAA=]","[&BKgCAAA=]","[&BP0CAAA=]","[&BO4CAAA=]","[&BJsCAAA=]","[&BBEDAAA=]"]
+		Verma: ["[&BCECAAA=]","[&BA8CAAA=]","[&BIMBAAA=]","[&BPEBAAA=]","[&BOQBAAA=]","[&BNMAAAA=]","[&BBABAAA=]"]
 	},
 	Coords: // Changes at 08:00 UTC
 	{
 		Mehem: [[3995, 15900],[5038, 16227],[5682, 15515],[5345, 16212],[4348, 14822],[3907, 16445],[5691, 15212]],
 		Fox: [[10202, 18168],[9978, 16945],[8728, 18923],[16795, 19804],[9162, 14943],[18926, 22037],[20252, 21585]],
 		Derwena: [[13342, 15548],[13342, 15548],[13342, 15548],[11294, 12997],[11294, 12997],[13820, 20501],[11295, 12997]],
+		Yana: [[16978, 23711],[15234, 24050],[14090, 23997],[11287, 25752],[17072, 23457],[14095, 24336],[11052, 28061]],
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
-		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]],
-		Yana: [[16978, 23711],[15234, 24050],[14090, 23997],[11287, 25752],[17072, 23457],[14095, 24336],[11052, 28061]]
+		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43798", price: "12600", name: "Recipe: Celestial Intricate Gossamer Insignia"},
-		Fox: { id: "48908", price: "25200", name: "Recipe: Superior Rune of Antitoxin"},
-		Derwena: { id: "43838", price: "25200", name: "Recipe: Celestial Pearl Shell"},
-		Katyn: { id: "49755", price: "25200", name: "Recipe: Zealot's Emblazoned Gloves"},
-		Verma: { id: "43820", price: "25200", name: "Recipe: Celestial Emblazoned Pants"},
-		Yana: { id: "73199", price: "25200", name: "Recipe: 20-Slot Equipment Pact Box"}
+		Mehem: { id: "43798", price: "12600" },
+		Fox: { id: "48908", price: "25200" },
+		Derwena: { id: "43838", price: "25200" },
+		Yana: { id: "73199", price: "25200" },
+		Katyn: { id: "49755", price: "25200" },
+		Verma: { id: "43820", price: "25200" }
 	}
 }
 };

@@ -9168,9 +9168,9 @@ P = {
 	compileCoordinates: function(pCoords)
 	{
 		var output = "";
-		for (var i in pCoords)
+		for (var i = 0; i < pCoords.length; i++)
 		{
-			output = output + "[" + (pCoords[i])[0] + "," + (pCoords[i])[1] + "],";
+			output += (pCoords[i] === null) ? "null," : "[" + (pCoords[i])[0] + "," + (pCoords[i])[1] + "],";
 		}
 		output = output.substring(0, output.length - 1); // Trim last comma
 		return "[" + output + "]";
@@ -9191,60 +9191,51 @@ P = {
 		return Math.sqrt(Math.pow(pCoordA[0] - pCoordB[0], 2) + Math.pow(pCoordA[1] - pCoordB[1], 2));
 	},
 	
-	/**
+	/*
 	 * Gets a greedy shortest path from an array of coordinates.
 	 * @param 2D array pCoords of GW2 coordinates.
-	 * @param int pStart index of the starting coordinate.
+	 * @param int pStart index of the optional starting coordinate.
 	 * @returns 2D array path.
 	 */
 	getGreedyPath: function(pCoords, pStart)
 	{
-		if (pStart === undefined)
+		var array = pCoords;
+		if (pStart !== undefined)
 		{
-			pStart = 0;
+			// Do initial swapping for selected starting coordinates
+			var temp = array[0];
+			array[0] = array[pStart];
+			array[pStart] = temp;
 		}
-		var oldarray = pCoords;
-		var newarray = [];
 		
-		// Do initial swapping for selected starting coordinates
-		var temp = oldarray[0];
-		oldarray[0] = oldarray[pStart];
-		oldarray[pStart] = temp;
-		// Let the first element be the start
-		newarray.push(oldarray[0]);
-		
-		var currentcoord;
-		var closestcoord = oldarray[0];
+		var currentcoord = array[0];
 		var indexofclosest = 0;
-		var prevmindistance = Number.POSITIVE_INFINITY;
+		var length = array.length;
 		
-		for (var i = 0; i < oldarray.length - 1; i++)
+		for (var i = 0; i < length; i++)
 		{
-			currentcoord = oldarray[i];
-			if (currentcoord === null)
+			var prevmindistance = Number.POSITIVE_INFINITY;
+			// Scan through coordinates and find the closest to the current point
+			for (var ii = i; ii < length; ii++)
 			{
-				continue;
-			}
-			for (var ii = i+1; ii < oldarray.length; ii++)
-			{
-				if (oldarray[ii] === null)
-				{
-					continue;
-				}
-				//I.log(oldarray[ii]);
-				var ithdistance = P.getDistanceBetweenCoords(closestcoord, oldarray[ii]);
-				if (ithdistance <= prevmindistance);
+				var ithdistance = P.getDistanceBetweenCoords(currentcoord, array[ii]);
+				if (ithdistance <= prevmindistance)
 				{
 					indexofclosest = ii;
 					prevmindistance = ithdistance;
 				}
 			}
-			closestcoord = oldarray[indexofclosest];
-			oldarray[indexofclosest] = null;
-			newarray.push(closestcoord);
+			/*
+			 * Rewrite the array with the closest adjacent points, example:
+			 * [A, B, C, D, E] where B was found to be closest to A, and C was
+			 * found closest to B in the order they were scanned.
+			 */
+			currentcoord = array[indexofclosest];
+			array[indexofclosest] = array[i];
+			array[i] = currentcoord;
 		}
 		
-		return newarray;
+		return array;
 	},
 	
 	/*
@@ -12569,11 +12560,13 @@ T = {
 		var weekdaylocation = T.getDashboardSupplyWeekday();
 		var supplyname = D.getObjectName(T.DashboardSupply);
 		var supplycodes = "";
+		var counter = 1;
 		for (var i in T.DashboardSupply.Codes)
 		{
-			supplycodes += (T.DashboardSupply.Codes[i])[weekdaylocation];
+			supplycodes += counter + "." + (T.DashboardSupply.Codes[i])[weekdaylocation] + " ";
+			counter++;
 		}
-		supplycodes += " " + supplyname;
+		supplycodes += "- " + supplyname;
 		$("#dsbSupply").empty().append("<div><kbd id='dsbSupplyHeader' class='curToggle'><img src='img/map/vendor_karma.png' /> "
 			+ "<u>" + supplyname + "</u>"
 			+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' /></kbd>"
@@ -12605,7 +12598,7 @@ T = {
 						coords.push(coord);
 					}
 				}
-				M.redrawPersonalPath(coords, "default");
+				M.redrawPersonalPath(P.getGreedyPath(coords), "default");
 				$(this).data("hasDrawn", true);
 			}
 			else
