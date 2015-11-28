@@ -952,7 +952,7 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	Note: "",
+	note: "",
 	Start: new Date("2015-11-24T16:00:00Z"),
 	Finish: new Date("2015-12-01T16:00:00Z"),
 	Padding: {
@@ -1020,10 +1020,10 @@ Supply:
 	name_zh: "特殊商人",
 	Codes:
 	{
-		Mehem: ["[&BIsHAAA=]","[&BIcHAAA=]","[&BH8HAAA=]","[&BH4HAAA=]","[&BKsHAAA=]","[&BJQHAAA=]", "[&BH8HAAA=]"],
-		Fox: ["[&BDoBAAA=]","[&BEwDAAA=]","[&BEgAAAA=]","[&BMIBAAA=]","[&BF0AAAA=]","[&BMMCAAA=]", "[&BNMCAAA=]"],
+		Mehem: ["[&BIsHAAA=]","[&BIcHAAA=]","[&BH8HAAA=]","[&BH4HAAA=]","[&BKsHAAA=]","[&BJQHAAA=]","[&BH8HAAA=]"],
+		Fox: ["[&BDoBAAA=]","[&BEwDAAA=]","[&BEgAAAA=]","[&BMIBAAA=]","[&BF0AAAA=]","[&BMMCAAA=]","[&BNMCAAA=]"],
 		Derwena: ["[&BBkAAAA=]","[&BBkAAAA=]","[&BBkAAAA=]","[&BIMAAAA=]","[&BIMAAAA=]","[&BNUGAAA=]","[&BIMAAAA=]"],
-		Katyn: ["[&BIUCAAA=]","[&BIMCAAA=]","[&BGQCAAA=]","[&BDgDAAA=]","[&BF0GAAA=]","[&BHsBAAA=]", "[&BEICAAA=]"],
+		Katyn: ["[&BIUCAAA=]","[&BIMCAAA=]","[&BGQCAAA=]","[&BDgDAAA=]","[&BF0GAAA=]","[&BHsBAAA=]","[&BEICAAA=]"],
 		Verma: ["[&BCECAAA=]","[&BA8CAAA=]","[&BIMBAAA=]","[&BPEBAAA=]","[&BOQBAAA=]","[&BNMAAAA=]","[&BBABAAA=]"],
 		Yana: ["[&BP8DAAA=]","[&BNIEAAA=]","[&BKgCAAA=]","[&BP0CAAA=]","[&BO4CAAA=]","[&BJsCAAA=]","[&BBEDAAA=]"]
 	},
@@ -1038,12 +1038,12 @@ Supply:
 	},
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49747", price: "25200", name: "Recipe: Zealot's Exalted Boots"},
-		Fox: { id: "49735", price: "25200", name: "Recipe: Zealot's Intricate Gossamer Insignia"},
-		Derwena: { id: "43813", price: "25200", name: "Recipe: Celestial Exalted Masque"},
-		Katyn: { id: "49772", price: "25200", name: "Recipe: Zealot's Pearl Broadsword"},
-		Verma: { id: "49773", price: "25200", name: "Recipe: Zealot's Pearl Crusher"},
-		Yana: { id: "43833", price: "25200", name: "Recipe: Celestial Pearl Reaver"}
+		Mehem: { id: "43798", price: "12600", name: "Recipe: Celestial Intricate Gossamer Insignia"},
+		Fox: { id: "48908", price: "25200", name: "Recipe: Superior Rune of Antitoxin"},
+		Derwena: { id: "43838", price: "25200", name: "Recipe: Celestial Pearl Shell"},
+		Katyn: { id: "49755", price: "25200", name: "Recipe: Zealot's Emblazoned Gloves"},
+		Verma: { id: "43820", price: "25200", name: "Recipe: Celestial Emblazoned Pants"},
+		Yana: { id: "73199", price: "25200", name: "Recipe: 20-Slot Equipment Pact Box"}
 	}
 }
 };
@@ -1055,18 +1055,18 @@ Supply:
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
 var GW2T_DAILY_DATA = {
-	Start: new Date("2015-11-27T00:00:00Z"),
-	Finish: new Date("2015-11-28T00:00:00Z"),
+	Start: new Date("2015-11-28T00:00:00Z"),
+	Finish: new Date("2015-11-29T00:00:00Z"),
 	Today: 
-	{
-		pve: ["Miner Shiverpeaks", "Fractal", "Fields", "Shatterer"],
-		pvp: ["Rank", "Defender", "Ranger Thief", "Ele Mes"],
-		wvw: ["Guard", "Kills", "Tower", "Camp"]
-	},
-	Tomorrow:
 	{
 		pve: ["Forager Ascalon", "Forger", "Frostgorge", "SB"],
 		pvp: ["Rank", "Capture", "War Eng", "Rev Ranger"],
 		wvw: ["Caravan", "Land", "Keep", "Camp"]
+	},
+	Tomorrow:
+	{
+		pve: ["Miner Ascalon", "Vista Ascalon", "Sparkfly", "Golem"],
+		pvp: ["Reward", "Kills", "War Thief", "Mes Necro"],
+		wvw: ["Ruins", "Caravan", "Defender", "Camp"]
 	}
 };

@@ -1439,9 +1439,9 @@ U = {
 			daily.pve = [assoc[(pData.pve[0].id)], assoc[(pData.pve[1].id)], assoc[(pData.pve[2].id)], assoc[(pData.pve[3].id)]];
 			daily.pvp = [assoc[(pData.pvp[0].id)], assoc[(pData.pvp[1].id)], assoc[(pData.pvp[2].id)], assoc[(pData.pvp[3].id)]];
 			daily.wvw = [assoc[(pData.wvw[0].id)], assoc[(pData.wvw[1].id)], assoc[(pData.wvw[2].id)], assoc[(pData.wvw[3].id)]];
-			str = "{<br />&#9;pve: [&quot;" + daily.pve[0] + "&quot;, &quot;" + daily.pve[1] + "&quot;, &quot;" + daily.pve[2] + "&quot;, &quot;" + daily.pve[3] + "&quot;],<br />"
-				+ "&#9;pvp: [&quot;" + daily.pvp[0] + "&quot;, &quot;" + daily.pvp[1] + "&quot;, &quot;" + daily.pvp[2] + "&quot;, &quot;" + daily.pvp[3] + "&quot;],<br />"
-				+ "&#9;wvw: [&quot;" + daily.wvw[0] + "&quot;, &quot;" + daily.wvw[1] + "&quot;, &quot;" + daily.wvw[2] + "&quot;, &quot;" + daily.wvw[3] + "&quot;]<br />}";
+			str = "pve: [&quot;" + daily.pve[0] + "&quot;, &quot;" + daily.pve[1] + "&quot;, &quot;" + daily.pve[2] + "&quot;, &quot;" + daily.pve[3] + "&quot;],<br />"
+				+ "pvp: [&quot;" + daily.pvp[0] + "&quot;, &quot;" + daily.pvp[1] + "&quot;, &quot;" + daily.pvp[2] + "&quot;, &quot;" + daily.pvp[3] + "&quot;],<br />"
+				+ "wvw: [&quot;" + daily.wvw[0] + "&quot;, &quot;" + daily.wvw[1] + "&quot;, &quot;" + daily.wvw[2] + "&quot;, &quot;" + daily.wvw[3] + "&quot;]";
 			I.write(str, 0);
 		});
 	},
@@ -7628,7 +7628,7 @@ M = {
 			if (that.isMouseOnHUD) { return; }
 			var coord = that.convertLCtoGC(pEvent.latlng);
 			$(htmlidprefix + "CoordinatesCopy")
-				.val(that.formatCoord(coord)).select();
+				.val(P.formatCoord(coord)).select();
 		});
 
 		/*
@@ -8371,11 +8371,11 @@ M = {
 		var str = "";
 		if (length > 1)
 		{
-			str = this.compileCoordinates(coords);
+			str = P.compileCoordinates(coords);
 		}
 		else if (length === 1)
 		{
-			str = this.formatCoord(coords[0]);
+			str = P.formatCoord(coords[0]);
 		}
 		
 		return str;
@@ -8782,96 +8782,6 @@ M = {
 	},
 	
 	/*
-	 * Sorts an array of GW2 coordinates.
-	 * @param 2D array pArray to sort.
-	 */
-	sortCoordinates: function(pArray, pIsNumbered)
-	{
-		var coord;
-		// Convert to integer
-		for (var i in pArray)
-		{
-			coord = pArray[i];
-			coord[0] = Math.round(coord[0]);
-			coord[1] = Math.round(coord[1]);
-		}
-		// Sort the array
-		pArray.sort(function (a, b)
-		{
-			if (a[0] > b[0])
-			{
-				return 1;
-			}
-			if (a[0] < b[0])
-			{
-				return -1;
-			}
-			return 0;
-		});
-		// Print the result formatted
-		if (pIsNumbered)
-		{
-			for (var i in pArray)
-			{
-				this.printNumberedCoordinates(pArray[i], i);
-			}
-		}
-		else
-		{
-			this.printCoordinates(pArray);
-		}
-	},
-	roundCoordinates: function(pArray)
-	{
-		var coord;
-		// Convert to integer
-		for (var i in pArray)
-		{
-			coord = pArray[i];
-			coord[0] = Math.round(coord[0]);
-			coord[1] = Math.round(coord[1]);
-		}
-		// Print the result formatted
-		this.printCoordinates(pArray);
-	},
-	printNeedles: function(pNeedles)
-	{
-		for (var i in pNeedles)
-		{
-			this.printNumberedCoordinates((pNeedles[i]).c, i);
-		}
-	},
-	formatNodes: function(pArray)
-	{
-		for (var i in pArray)
-		{
-			I.write("{c: [" + (pArray[i])[0] + ", " + (pArray[i])[1] + "]},");
-		}
-	},
-	printNumberedCoordinates: function(pCoord, i)
-	{
-		I.write("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},");
-	},
-	formatCoord: function(pCoord)
-	{
-		return "[" + pCoord[0] + ", " + pCoord[1] + "]";
-	},
-	compileCoordinates: function(pCoords)
-	{
-		var output = "";
-		for (var i in pCoords)
-		{
-			output = output + "[" + (pCoords[i])[0] + "," + (pCoords[i])[1] + "],";
-		}
-		output = output.substring(0, output.length - 1); // Trim last comma
-		return "[" + output + "]";
-	},
-	printCoordinates: function(pCoords)
-	{
-		I.write(this.compileCoordinates(pCoords), 30);
-	},
-	
-	/*
 	 * Converts and prints an array of LatLngs to GW2 coordinates.
 	 * @param 2D array pArray.
 	 * @returns 2D array.
@@ -9007,7 +8917,7 @@ M = {
 		{
 			var coord = that.convertLCtoGC(this.getLatLng());
 			$("#" + that.MapEnum + "CoordinatesCopy")
-				.val(that.formatCoord(coord))
+				.val(P.formatCoord(coord))
 				.select();
 		});
 	},
@@ -9178,6 +9088,163 @@ P = {
 			return true;
 		}
 		return false;
+	},
+	
+	/*
+	 * Sorts an array of GW2 coordinates.
+	 * @param 2D array pArray to sort.
+	 */
+	sortCoordinates: function(pArray, pIsNumbered)
+	{
+		var coord;
+		// Convert to integer
+		for (var i in pArray)
+		{
+			coord = pArray[i];
+			coord[0] = Math.round(coord[0]);
+			coord[1] = Math.round(coord[1]);
+		}
+		// Sort the array
+		pArray.sort(function (a, b)
+		{
+			if (a[0] > b[0])
+			{
+				return 1;
+			}
+			if (a[0] < b[0])
+			{
+				return -1;
+			}
+			return 0;
+		});
+		// Print the result formatted
+		if (pIsNumbered)
+		{
+			for (var i in pArray)
+			{
+				this.printNumberedCoordinates(pArray[i], i);
+			}
+		}
+		else
+		{
+			this.printCoordinates(pArray);
+		}
+	},
+	roundCoordinates: function(pArray)
+	{
+		var coord;
+		// Convert to integer
+		for (var i in pArray)
+		{
+			coord = pArray[i];
+			coord[0] = Math.round(coord[0]);
+			coord[1] = Math.round(coord[1]);
+		}
+		// Print the result formatted
+		this.printCoordinates(pArray);
+	},
+	printNeedles: function(pNeedles)
+	{
+		for (var i in pNeedles)
+		{
+			this.printNumberedCoordinates((pNeedles[i]).c, i);
+		}
+	},
+	formatNodes: function(pArray)
+	{
+		for (var i in pArray)
+		{
+			I.write("{c: [" + (pArray[i])[0] + ", " + (pArray[i])[1] + "]},", 0);
+		}
+	},
+	printNumberedCoordinates: function(pCoord, i)
+	{
+		I.write("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},", 0);
+	},
+	formatCoord: function(pCoord)
+	{
+		return "[" + pCoord[0] + ", " + pCoord[1] + "]";
+	},
+	compileCoordinates: function(pCoords)
+	{
+		var output = "";
+		for (var i in pCoords)
+		{
+			output = output + "[" + (pCoords[i])[0] + "," + (pCoords[i])[1] + "],";
+		}
+		output = output.substring(0, output.length - 1); // Trim last comma
+		return "[" + output + "]";
+	},
+	printCoordinates: function(pCoords)
+	{
+		I.write(this.compileCoordinates(pCoords), 0);
+	},
+	
+	/*
+	 * Gets the distance between two points.
+	 * @param array pCoordA.
+	 * @param array pCoordB.
+	 * @returns float distance.
+	 */
+	getDistanceBetweenCoords: function(pCoordA, pCoordB)
+	{
+		return Math.sqrt(Math.pow(pCoordA[0] - pCoordB[0], 2) + Math.pow(pCoordA[1] - pCoordB[1], 2));
+	},
+	
+	/**
+	 * Gets a greedy shortest path from an array of coordinates.
+	 * @param 2D array pCoords of GW2 coordinates.
+	 * @param int pStart index of the starting coordinate.
+	 * @returns 2D array path.
+	 */
+	getGreedyPath: function(pCoords, pStart)
+	{
+		if (pStart === undefined)
+		{
+			pStart = 0;
+		}
+		var oldarray = pCoords;
+		var newarray = [];
+		
+		// Do initial swapping for selected starting coordinates
+		var temp = oldarray[0];
+		oldarray[0] = oldarray[pStart];
+		oldarray[pStart] = temp;
+		// Let the first element be the start
+		newarray.push(oldarray[0]);
+		
+		var currentcoord;
+		var closestcoord = oldarray[0];
+		var indexofclosest = 0;
+		var prevmindistance = Number.POSITIVE_INFINITY;
+		
+		for (var i = 0; i < oldarray.length - 1; i++)
+		{
+			currentcoord = oldarray[i];
+			if (currentcoord === null)
+			{
+				continue;
+			}
+			for (var ii = i+1; ii < oldarray.length; ii++)
+			{
+				if (oldarray[ii] === null)
+				{
+					continue;
+				}
+				//I.log(oldarray[ii]);
+				var ithdistance = P.getDistanceBetweenCoords(closestcoord, oldarray[ii]);
+				if (ithdistance <= prevmindistance);
+				{
+					indexofclosest = ii;
+					prevmindistance = ithdistance;
+				}
+			}
+			closestcoord = oldarray[indexofclosest];
+			oldarray[indexofclosest] = null;
+			newarray.push(closestcoord);
+		}
+		
+		return newarray;
 	},
 	
 	/*
@@ -12461,9 +12528,9 @@ T = {
 			{
 				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
 				table.empty();
-				if (T.DashboardSale.Note.length > 0)
+				if (T.DashboardSale.note.length > 0)
 				{
-					table.append("<div>Note: " + T.DashboardSale.Note + "</div>");
+					table.append("<div>Note: " + T.DashboardSale.note + "</div>");
 				}
 				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				if (E.Exchange.CoinInGem !== 0)
