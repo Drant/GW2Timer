@@ -953,8 +953,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2015-11-24T16:00:00Z"),
-	Finish: new Date("2015-12-01T16:00:00Z"),
+	Start: new Date("2015-11-27T16:00:00Z"),
+	Finish: new Date("2015-11-30T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -1017,6 +1017,22 @@ Sale: {
 		quantity: 1,
 		pricenew: 0,
 		priceold: 30,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Bank_Access_Express",
+		img: "https://render.guildwars2.com/file/B0BBF3DF137745A6BEFFAC3E72DB95F899137B07/66553.png",
+		quantity: 1,
+		pricenew: 0,
+		priceold: 35,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mystic_Forge_Stone",
+		img: "https://render.guildwars2.com/file/033CAC7DB2DE70BF39DA10D061375BA2B9BD6FA9/220548.png",
+		quantity: 1,
+		pricenew: 0,
+		priceold: 50,
 		col: 0
 	}
 	]

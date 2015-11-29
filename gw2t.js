@@ -5831,6 +5831,19 @@ C = {
 		var chainextra = "";
 		var chainname = D.getObjectName(pChain);
 		
+		/*
+		 * Initialize step attribute (the first number in an event
+		 * number, as in "2" in "2A1"), will be used to access events HTML.
+		 */
+		for (i in pChain.events)
+		{
+			// Minus 1 because the event numbers are 1 indexed
+			pChain.events[i].step = parseInt(C.getEventStepNumber(pChain.events[i].num)) - 1;
+		}
+		pChain.isSorted = false;
+		pChain.primaryEvents = [];
+		pChain.scheduleKeys = [];
+		
 		if (pChain.waypoint !== undefined)
 		{
 			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
@@ -6087,20 +6100,7 @@ C = {
 		for (var i in C.Chains)
 		{
 			chain = C.Chains[i];
-			/*
-			 * Initialize step attribute (the first number in an event
-			 * number, as in "2" in "2A1"), will be used to access events HTML.
-			 */
-			for (var ii in chain.events)
-			{
-				// Minus 1 because the event numbers are 1 indexed
-				chain.events[ii].step = parseInt(C.getEventStepNumber(chain.events[ii].num)) - 1;
-			}
-			
 			chain.nexus = parseInt(i);
-			chain.isSorted = false;
-			chain.primaryEvents = [];
-			chain.scheduleKeys = [];
 			
 			switch (chain.series)
 			{
@@ -12571,7 +12571,9 @@ T = {
 			+ "<u>" + supplyname + "</u>"
 			+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' /></kbd>"
 			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
-				+ "title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString() + "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.' >Info</a> "
+				+ "title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString(window.navigator.language, {
+					year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long" })
+				+ "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.'>Info</a> "
 			+ "<u class='curZoom' id='dsbSupplyDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
 			+ "<input id='dsbSupplyCodes' class='cssInputText' type='text' value='" + supplycodes + "' /> "
 		+ "</div><div id='dsbSupplyTable' class='jsScrollable'></div>");
