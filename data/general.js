@@ -907,8 +907,8 @@ Countdowns: [
 	name_es: "Rebaja Viernes Negro",
 	name_fr: "Vente Vendredi Noir",
 	url: "https://twitter.com/GuildWars2/status/669516905657552897",
-	Start: new Date("2015-11-27T17:00:00Z"),
-	Finish: new Date("2015-11-30T17:00:00Z")
+	Start: new Date("2015-11-27T16:00:00Z"),
+	Finish: new Date("2015-11-30T16:00:00Z")
 },
 {
 	name_en: "Wintersday 2015",
@@ -1054,12 +1054,12 @@ Supply:
 	},
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43798", price: "12600" },
-		Fox: { id: "48908", price: "25200" },
-		Derwena: { id: "43838", price: "25200" },
-		Yana: { id: "73199", price: "25200" },
-		Katyn: { id: "49755", price: "25200" },
-		Verma: { id: "43820", price: "25200" }
+		Mehem: { id: "43843", price: "25200" },
+		Fox: { id: "49735", price: "25200" },
+		Derwena: { id: "43799", price: "12600" },
+		Yana: { id: "44647", price: "25200" },
+		Katyn: { id: "48910", price: "25200" },
+		Verma: { id: "49759", price: "25200" }
 	}
 }
 };
@@ -1071,18 +1071,18 @@ Supply:
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
 var GW2T_DAILY_DATA = {
-	Start: new Date("2015-11-28T00:00:00Z"),
-	Finish: new Date("2015-11-29T00:00:00Z"),
+	Start: new Date("2015-11-29T00:00:00Z"),
+	Finish: new Date("2015-11-30T00:00:00Z"),
 	Today: 
-	{
-		pve: ["Forager Ascalon", "Forger", "Frostgorge", "SB"],
-		pvp: ["Rank", "Capture", "War Eng", "Rev Ranger"],
-		wvw: ["Caravan", "Land", "Keep", "Camp"]
-	},
-	Tomorrow:
 	{
 		pve: ["Miner Ascalon", "Vista Ascalon", "Sparkfly", "Golem"],
 		pvp: ["Reward", "Kills", "War Thief", "Mes Necro"],
 		wvw: ["Ruins", "Caravan", "Defender", "Camp"]
+	},
+	Tomorrow:
+	{
+		pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Wayfarer", "Wurm"],
+		pvp: ["Reward", "Defender", "War Ranger", "Rev Thief"],
+		wvw: ["Caravan", "Spender", "Camp", "Tower"]
 	}
 };

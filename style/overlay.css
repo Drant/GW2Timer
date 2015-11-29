@@ -18,6 +18,13 @@
 	left: -4px; top: -4px;
 }
 
+.ctxMenu {
+	font-size: 14px;
+}
+.ctxMenu li {
+	margin-bottom: 2px;
+	padding: 1px 2px 1px 4px;
+}
 #itemDashboard {
 	line-height: 120%;
 	font-size: 14px;
