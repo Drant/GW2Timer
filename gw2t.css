@@ -483,7 +483,7 @@ html, body,
 }
 .tmlSegmentActive {
 	background: rgba(255, 136, 68, 0.2);
-	outline: 1px solid rgba(0, 0, 0, 0.2);;
+	outline: 1px solid rgba(0, 0, 0, 0.2);
 }
 .tmlSegmentActive .tmlSegmentName {
 	color: lime;
@@ -662,9 +662,12 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 /* Right side: Misc links */
 .itemMapPeripheral {
 	display: inline-block;
-	width: 390px; /* This becomes the maximum size of the HUD popup divs */
+	width: auto; /* Should be just wide enough to fit the HUD buttons */
 	text-align: right;
 	z-index: 3;
+}
+.itemMapPeripheral:hover {
+	width: 390px; /* This becomes the maximum width of the HUD popup divs */
 }
 .itemMapPeripheral div {
 	text-align: left;

@@ -1142,14 +1142,23 @@ O = {
 		},
 		bol_showTimelineOpaque: function()
 		{
+			var background;
 			if (O.Options.bol_showTimelineOpaque)
 			{
-				$("#itemTimeline").css({background: "rgba(0, 0, 0, 0.6)"});
+				if (I.ModeCurrent === I.ModeEnum.Overlay)
+				{
+					background = "linear-gradient(to right, #111 0%, #383838 50%, #111 100%)";
+				}
+				else
+				{
+					background = "rgba(0, 0, 0, 0.6)";
+				}
 			}
 			else
 			{
-				$("#itemTimeline").css({background: "none"});
+				background = "none";
 			}
+			$("#itemTimeline").css({background: background});
 		},
 		bol_refreshPrices: function()
 		{
@@ -1236,6 +1245,7 @@ U = {
 		WvW: "data/wvw.js",
 		Itinerary: "data/itinerary.js",
 		// Data to load when opening a map section
+		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
 		DryTop: "data/drytop.js",
 		Resource: "data/resource.js",
@@ -5577,11 +5587,13 @@ D = {
 C = {
 	
 	/*
-	 * http://gw2timer.com/data/chains.js holds an array of meta event chain objects,
-	 * which themselves contain an array of their events.
-	 * This is referred to by the variable "C.Chains".
+	 * http://gw2timer.com/data/chains.js initially holds an array of scheduled
+	 * meta event chain objects, which themselves contain an array of their events.
+	 * This is referred to by the variable "C.Chains". It will be added with
+	 * unscheduled chains when the user opens that section on the chains page.
 	 */
 	Chains: GW2T_CHAIN_DATA,
+	UnscheduledChainsLength: GW2T_CHAIN_ADD_LENGTH,
 	DryTop: {},
 	// The word and variable "nexus" is simply a chain's index number in the Chains array
 	cIndexSynonym: "nexus",
@@ -5599,6 +5611,7 @@ C = {
 	cEventNameWidth: 320,
 	TempleChains: [],
 	LegacyChains: [],
+	UnscheduledChains: [],
 	ScheduledChains: [], // Any scheduled chain
 	RegularChains: [], // Scheduled world bosses
 	MiscellaneousChains: [],
@@ -5623,6 +5636,7 @@ C = {
 		Primary: 2, // An only event at the time or a concurrent event that takes the longest to complete
 		Boss: 3 // The boss event, also considered a primary event
 	},
+	isUnscheduledChainsLoaded: false,
 	isDryTopGenerated: false,
 	isDryTopIconsShown: false,
 	isTimetableGenerated: false,
@@ -5823,6 +5837,7 @@ C = {
 	 * Initializes the chain HTML plate with chains and their individual events.
 	 * Calculates time sums for chains and pushes to array for later accessing by the ticker.
 	 * @param object pChain chain to initialize.
+	 * @pre Event number can only go from 1-9.
 	 */
 	initializeChain: function(pChain)
 	{
@@ -6088,20 +6103,19 @@ C = {
 	}, // End of initializeChain()
 
 	/*
-	 * Initializes every chain and create additional informative arrays for them.
-	 * @pre Event number can only go from 1-9.
+	 * Categorizes and initializes scheduled chains, which are already in the
+	 * main chains array.
 	 */
-	initializeAllChains: function()
+	initializeScheduledChains: function()
 	{
-		X.initializeChecklist(X.Checklists.Chain, C.Chains.length);
-		X.initializeChecklist(X.Checklists.ChainSubscription, C.Chains.length);
-		
 		var chain;
-		for (var i in C.Chains)
+		var length = C.Chains.length;
+		for (var i = 0; i < length; i++)
 		{
+			// Unschedule chains will be initialized when their headers are clicked on
 			chain = C.Chains[i];
-			chain.nexus = parseInt(i);
-			
+			chain.nexus = i;
+
 			switch (chain.series)
 			{
 				case C.ChainSeriesEnum.Standard:
@@ -6144,29 +6158,62 @@ C = {
 						continue;
 					}
 				} break;
-				case C.ChainSeriesEnum.Legacy:
-				{
-					chain.htmllist = "#sectionChains_Legacy";
-					C.LegacyChains.push(chain);
-				} break;
-				case C.ChainSeriesEnum.Temple:
-				{
-					chain.htmllist = "#sectionChains_Temple";
-					C.TempleChains.push(chain);
-				} break;
 			}
-
-			// Unschedule chains will be initialized when their headers are clicked on
-			if (C.isChainScheduled(chain))
-			{
-				C.initializeChain(chain);
-			}
+			C.initializeChain(chain);
 		}
-		
-		I.initializeChainsUI();
-		// Initial recoloring of chain titles
-		$("#sectionChains_Scheduled .chnBar h1, #sectionChains_Drytop .chnBar h1, #dsbStory .chnBar h1")
-			.addClass("chnTitleFutureFar");
+	},
+	
+	/*
+	 * Loads the unscheduled chains data then categorizes and initializes them.
+	 */
+	initializeUnscheduledChains: function()
+	{
+		if (C.isUnscheduledChainsLoaded === false)
+		{
+			$.getScript(U.URL_DATA.Unscheduled).done(function()
+			{
+				if (C.isUnscheduledChainsLoaded)
+				{
+					return;
+				}
+				
+				// Add them to the main chains array
+				var unscheduledchains = GW2T_CHAIN_UNSCHEDULED;
+				var oldlength = C.Chains.length;
+				for (var i = 0; i < unscheduledchains.length; i++)
+				{
+					C.Chains.push(unscheduledchains[i]);
+				}
+				
+				// Initialize them
+				var chain;
+				var newlength = C.Chains.length;
+				for (var i = oldlength; i < newlength; i++)
+				{
+					chain = C.Chains[i];
+					chain.nexus = i;
+
+					switch (chain.series)
+					{
+						case C.ChainSeriesEnum.Temple:
+						{
+							chain.htmllist = "#sectionChains_Temple";
+							C.TempleChains.push(chain);
+							C.UnscheduledChains.push(chain);
+						} break;
+						case C.ChainSeriesEnum.Legacy:
+						{
+							chain.htmllist = "#sectionChains_Legacy";
+							C.LegacyChains.push(chain);
+							C.UnscheduledChains.push(chain);
+						} break;
+					}
+					C.initializeChain(chain);
+					P.drawChainPaths(chain);
+				}
+				C.isUnscheduledChainsLoaded = true;
+			});
+		}
 	},
 	
 	/*
@@ -11466,13 +11513,19 @@ T = {
 		}
 		
 		// Initialize chains
-		C.initializeAllChains();
+		X.initializeChecklist(X.Checklists.Chain, C.Chains.length + C.UnscheduledChainsLength);
+		X.initializeChecklist(X.Checklists.ChainSubscription, C.Chains.length + C.UnscheduledChainsLength);
+		C.initializeScheduledChains();
+		I.initializeChainsUI();
+		// Initial recoloring of chain titles
+		$("#sectionChains_Scheduled .chnBar h1, #sectionChains_Drytop .chnBar h1, #dsbStory .chnBar h1")
+			.addClass("chnTitleFutureFar");
+		
+		// Every scheduled chain gets an array of schedule keys (UTC minutes) of where it is in the schedule
 		for (i in C.ScheduledChains)
 		{
 			T.insertChainToSchedule(C.ScheduledChains[i]);
 		}
-		
-		// Every scheduled chain gets an array of schedule keys (UTC minutes) of where it is in the schedule
 		for (i in T.Schedule)
 		{
 			slot = T.Schedule[i];
@@ -13566,9 +13619,10 @@ K = {
 		K.timestampLocal.innerHTML = O.Utilities.lastLocalResetTimestamp.value;
 		K.timestampServer.innerHTML = T.TIMESTAMP_UNIX_SECONDS + T.SECONDS_TILL_RESET;
 		K.timestampReset.innerHTML = T.getTimeFormatted(
-			{
-				customTimeInSeconds: T.SECONDS_TILL_RESET, want24: true
-			});
+		{
+			customTimeInSeconds: T.SECONDS_TILL_RESET,
+			want24: true
+		});
 		
 		// Change the minute hand if passing colored marker
 		if (secinhour >= K.currentFrameOffsetMinutes
@@ -14634,14 +14688,12 @@ I = {
 		}
 		$("#headerChains_Legacy").one("click", function()
 		{
-			C.LegacyChains.forEach(C.initializeChain);
-			C.LegacyChains.forEach(P.drawChainPaths);
+			C.initializeUnscheduledChains(C.LegacyChains);
 			I.readjustTile();
 		});
 		$("#headerChains_Temple").one("click", function()
 		{
-			C.TempleChains.forEach(C.initializeChain);
-			C.TempleChains.forEach(P.drawChainPaths);
+			C.initializeUnscheduledChains(C.TempleChains);
 			I.readjustTile();
 		});
 
