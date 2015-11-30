@@ -1070,12 +1070,12 @@ Supply:
 	},
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43843", price: "25200" },
-		Fox: { id: "49735", price: "25200" },
-		Derwena: { id: "43799", price: "12600" },
-		Yana: { id: "44647", price: "25200" },
-		Katyn: { id: "48910", price: "25200" },
-		Verma: { id: "49759", price: "25200" }
+		Mehem: { id: "44652", price: "25200" },
+		Fox: { id: "43839", price: "25200" },
+		Derwena: { id: "49767", price: "25200" },
+		Yana: { id: "43825", price: "25200" },
+		Katyn: { id: "43827", price: "25200" },
+		Verma: { id: "49735", price: "25200" }
 	}
 }
 };
@@ -1087,18 +1087,18 @@ Supply:
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
 var GW2T_DAILY_DATA = {
-	Start: new Date("2015-11-29T00:00:00Z"),
-	Finish: new Date("2015-11-30T00:00:00Z"),
+	Start: new Date("2015-11-30T00:00:00Z"),
+	Finish: new Date("2015-12-01T00:00:00Z"),
 	Today: 
-	{
-		pve: ["Miner Ascalon", "Vista Ascalon", "Sparkfly", "Golem"],
-		pvp: ["Reward", "Kills", "War Thief", "Mes Necro"],
-		wvw: ["Ruins", "Caravan", "Defender", "Camp"]
-	},
-	Tomorrow:
 	{
 		pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Wayfarer", "Wurm"],
 		pvp: ["Reward", "Defender", "War Ranger", "Rev Thief"],
 		wvw: ["Caravan", "Spender", "Camp", "Tower"]
+	},
+	Tomorrow:
+	{
+		pve: ["Miner Jungle", "Fractal", "Brisban", "SB"],
+		pvp: ["Kills", "Capture", "Thief Ele", "Rev Mes"],
+		wvw: ["Land", "Caravan", "Tower", "Keep"]
 	}
 };

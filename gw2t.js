@@ -6539,9 +6539,7 @@ C = {
 			// Show the events (details)
 			if (C.isChainUnchecked(ithchain))
 			{
-				if (I.ModeCurrent !== I.ModeEnum.Tile
-					&& ((ithchain.series === C.ChainSeriesEnum.DryTop)
-					|| (ithchain.series !== C.ChainSeriesEnum.DryTop && O.Options.bol_expandWB)))
+				if (O.Options.bol_expandWB && (I.ModeCurrent !== I.ModeEnum.Tile))
 				{
 					$("#chnDetails_" + ithchain.nexus).show("fast", function()
 					{
@@ -6564,7 +6562,7 @@ C = {
 			$("#chnBar_" + ithchain.nexus)
 				.removeClass("chnBarCurrent").addClass("chnBarPrevious");
 			// Hide previous chains if opted to automatically expand before
-			if (O.Options.bol_collapseChains && I.ModeCurrent !== I.ModeEnum.Tile)
+			if (O.Options.bol_collapseChains && (I.ModeCurrent !== I.ModeEnum.Tile))
 			{
 				$("#chnDetails_" + ithchain.nexus).hide();
 			}
@@ -15704,7 +15702,7 @@ I = {
 		},
 		init: function(s)
 		{
-			if (I.ModeCurrent === I.ModeEnum.Mobile)
+			if (I.isTouchEnabled)
 			{
 				return;
 			}
