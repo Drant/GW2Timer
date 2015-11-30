@@ -902,15 +902,6 @@ Announcement:
  */
 Countdowns: [
 {
-	name_en: "Black Friday Sale",
-	name_de: "Black Friday Verkauf",
-	name_es: "Rebaja Viernes Negro",
-	name_fr: "Vente Vendredi Noir",
-	url: "https://twitter.com/GuildWars2/status/669516905657552897",
-	Start: new Date("2015-11-27T16:00:00Z"),
-	Finish: new Date("2015-11-30T16:00:00Z")
-},
-{
 	name_en: "Wintersday 2015",
 	name_de: "Wintertag 2015",
 	name_es: "Día Invernal 2015",
@@ -953,8 +944,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2015-11-27T16:00:00Z"),
-	Finish: new Date("2015-11-30T16:00:00Z"),
+	Start: new Date("2015-11-30T16:00:00Z"),
+	Finish: new Date("2015-12-01T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -969,7 +960,7 @@ Sale: {
 		quantity: 1,
 		pricenew: 2000,
 		priceold: 0,
-		col: 1
+		col: 0
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Angry_Chest",
@@ -988,51 +979,11 @@ Sale: {
 		col: 1
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Experience_Booster",
-		img: "https://render.guildwars2.com/file/433FE6E01CDA243EDBDC24F96F06D5FC2FAF195A/66584.png",
+		url: "http://wiki.guildwars2.com/wiki/Black_Lion_Chest_Key",
+		img: "https://render.guildwars2.com/file/207BDD31BC494A07A0A1691705079100066D3F2F/414998.png",
 		quantity: 1,
-		pricenew: 0,
-		priceold: 100,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Trading_Post_Express",
-		img: "https://render.guildwars2.com/file/550278CE4303EB99084810B33F6A9ECA1FEBE693/220569.png",
-		quantity: 1,
-		pricenew: 0,
-		priceold: 50,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Item_Booster",
-		img: "https://render.guildwars2.com/file/F1E6C29D6A783A9563E5D516532C6E079C5A6069/66669.png",
-		quantity: 1,
-		pricenew: 0,
-		priceold: 100,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Transmutation_Charge",
-		img: "https://render.guildwars2.com/file/43BC25495803A7709F700970E1F8C22FFA6A716A/780163.png",
-		quantity: 1,
-		pricenew: 0,
-		priceold: 30,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Bank_Access_Express",
-		img: "https://render.guildwars2.com/file/B0BBF3DF137745A6BEFFAC3E72DB95F899137B07/66553.png",
-		quantity: 1,
-		pricenew: 0,
-		priceold: 35,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mystic_Forge_Stone",
-		img: "https://render.guildwars2.com/file/033CAC7DB2DE70BF39DA10D061375BA2B9BD6FA9/220548.png",
-		quantity: 1,
-		pricenew: 0,
-		priceold: 50,
+		pricenew: 100,
+		priceold: 125,
 		col: 0
 	}
 	]
