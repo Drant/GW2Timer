@@ -1225,7 +1225,10 @@ U = {
 		// WvW
 		Matches: "https://api.guildwars2.com/v1/wvw/matches.json",
 		MatchDetails: "https://api.guildwars2.com/v1/wvw/match_details.json?match_id=",
-		GuildDetails: "https://api.guildwars2.com/v1/guild_details.json?guild_id="
+		GuildDetails: "https://api.guildwars2.com/v1/guild_details.json?guild_id=",
+		
+		// Other
+		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl="
 	},
 	
 	URL_IMG:
@@ -1262,6 +1265,7 @@ U = {
 		U.URL_API.MapFloorTyria += langsuffix;
 		U.URL_API.MapFloorMists += langsuffix;
 		U.URL_API.EventNames += langsuffix;
+		U.URL_API.TextToSpeech += lang + "&sv=&vn=&pitch=0.5&rate=0.4&vol=1&t=";
 	},
 
 	/*
@@ -3174,17 +3178,16 @@ X = {
 			$("#chlCustomListDaily").append(checkboxhtml);
 			$("#chlCustomListWeekly").append(checkboxhtml);
 		}
-		var sampledailylist = ["Did dailies", "Gathered home nodes", "Opened JP chests", "Crafted timegates", "Fed Mawdrey, Star, Princess", "Bought Converter items"];
-		var sampleweeklylist = ["Did guild missions", "Farmed personal story key"];
-		var insertSampleList = function(pList, pSample)
+		var insertSampleList = function(pList)
 		{
-			for (var i in pSample)
+			var samples = $(pList).attr("data-samples").split(I.cTextDelimiterChar);
+			for (var i = 0; i < samples.length; i++)
 			{
-				$(pList + " input[type='text']:eq(" + i + ")").val(pSample[i]);
+				$(pList + " input[type='text']:eq(" + i + ")").val(samples[i]);
 			}
 		};
-		insertSampleList("#chlCustomListDaily", sampledailylist);
-		insertSampleList("#chlCustomListWeekly", sampleweeklylist);
+		insertSampleList("#chlCustomListDaily");
+		insertSampleList("#chlCustomListWeekly");
 		
 		// Bind checkboxes and textboxes behavior
 		var bindCustomChecklistBehavior = function(pChecklist, pTextlist, pListName)
@@ -5437,7 +5440,7 @@ D = {
 		var doSpeak = function(pStringMacro)
 		{
 			var tts = document.getElementById("jsTTSAudio");
-			tts.src = "http://code.responsivevoice.org/getvoice.php?tl=" + O.LanguageCode[O.Options.enu_Language] + "&sv=&vn=&pitch=0.5&rate=0.4&vol=1&t=" + pStringMacro;
+			tts.src = U.URL_API.TextToSpeech + pStringMacro;
 			tts.volume = O.Options.int_setVolume / T.cPERCENT_100;
 			tts.load();
 			tts.play();
@@ -7186,7 +7189,7 @@ M = {
 		{
 			case I.MapEnum.Tyria: {
 				mapnumber = 1;
-				this.populateMap(I.MapEnum.Tyria);
+				this.populateMap();
 				P.drawZoneBorders();
 				P.drawZoneGateways();
 				C.ScheduledChains.forEach(P.drawChainPaths);
@@ -7199,6 +7202,7 @@ M = {
 				{
 					continuousWorld: true
 				}).addTo(W.Map);
+				this.populateMap();
 			} break;
 		}
 		
@@ -7214,7 +7218,7 @@ M = {
 		// Bind map click functions for non-touch devices
 		if (!I.isTouchEnabled)
 		{
-			this.bindMapClicks(this.MapEnum);
+			this.bindMapClicks();
 		}
 		
 		/*
@@ -7292,7 +7296,22 @@ M = {
 	 */
 	populateMap: function()
 	{
+		if (!I.isMapEnabled)
+		{
+			return;
+		}
 		var that = this;
+		var url;
+		switch (this.MapEnum)
+		{
+			case I.MapEnum.Tyria: {
+				url = U.URL_API.MapFloorTyria;
+			} break;
+			
+			case I.MapEnum.Mists: {
+				url = U.URL_API.MapFloorMists;
+			} break;
+		}
 		/*
 		 * map_floor.json sample structure of desired data
 		 * Code based on API documentation.
@@ -7321,10 +7340,8 @@ M = {
 					}
 				}
 			}
-		}*/
-		if (I.isMapEnabled)
-		{
-		$.getJSON(U.URL_API.MapFloorTyria, function(pData)
+		}*/		
+		$.getJSON(url, function(pData)
 		{
 			var i;
 			var regionid, region, zoneid, ithzone, poi;
@@ -7613,16 +7630,24 @@ M = {
 			}
 		}).always(function() // Do after AJAX regardless of success/failure
 		{
-			if (O.Options.bol_displayEvents === true)
+			switch (that.MapEnum)
 			{
-				P.populateEvents();
-			}
-			else
-			{
-				P.finishPopulation();
+				case I.MapEnum.Tyria: {
+					if (O.Options.bol_displayEvents === true)
+					{
+						P.populateEvents();
+					}
+					else
+					{
+						P.finishPopulation();
+					}
+				} break;
+
+				case I.MapEnum.Mists: {
+					W.finishPopulation();
+				} break;
 			}
 		});
-		}
 		
 		/*
 		 * Create pin markers that can be moved by user or program.
@@ -7660,10 +7685,10 @@ M = {
 	 * Bind mouse button functions for the map. Also binds the map custom context menu.
 	 * @param enum pMapEnum.
 	 */
-	bindMapClicks: function(pMapEnum)
+	bindMapClicks: function()
 	{
 		var that = this;
-		var htmlidprefix = "#" + pMapEnum;
+		var htmlidprefix = "#" + that.MapEnum;
 		
 		/*
 		 * Clicking an empty place on the map highlight its coordinate.
@@ -7691,21 +7716,21 @@ M = {
 		this.Map.on("contextmenu", function(pEvent)
 		{
 			that.ContextLatLng = pEvent.latlng;
-			$("#ctxMap").css({top: I.posY, left: I.posX}).show();
+			$(htmlidprefix + "Context").css({top: I.posY, left: I.posX}).show();
 		});
 		
 		/*
 		 * Bind context menu functions, same order as the HTML.
 		 */
-		$("#ctxMap").click(function()
+		$(htmlidprefix + "Context").click(function()
 		{
 			$(this).hide();
 		});
-		$("#ctxMapCenter").click(function()
+		$(htmlidprefix + "ContextCenter").click(function()
 		{
 			that.goToDefault();
 		});
-		$("#ctxMapToggleLock").click(function()
+		$(htmlidprefix + "ContextToggleLock").click(function()
 		{
 			that.isZoneLocked = !that.isZoneLocked;
 			if (that.isZoneLocked)
@@ -7717,15 +7742,15 @@ M = {
 				I.write("Map zoning unlocked.");
 			}
 		});
-		$("#ctxMapToggleCompletion").click(function()
+		$(htmlidprefix + "ContextToggleCompletion").click(function()
 		{
 			$("#opt_bol_showWorldCompletion").trigger("click");
 		});
-		$("#ctxMapDrawCompletion").click(function()
+		$(htmlidprefix + "ContextDrawCompletion").click(function()
 		{
 			P.drawCompletionRoute();
 		});
-		$("#ctxMapClearPins").click(function()
+		$(htmlidprefix + "ContextClearPins").click(function()
 		{
 			that.clearPersonalPins();
 		});
@@ -7735,17 +7760,18 @@ M = {
 	 * Bindings for map events that need to be done after AJAX has loaded the
 	 * API-generated markers.
 	 */
-	bindMapVisualChanges: function(pMapEnum)
+	bindMapVisualChanges: function()
 	{
 		var that = this;
+		var htmlidprefix = "#" + that.MapEnum;
 		/*
 		 * Booleans to stop some map functions from activating.
 		 */
-		$("#paneHUDMap").hover(
+		$(htmlidprefix + "HUDPane").hover(
 			function() { that.isMouseOnHUD = true; },
 			function() { that.isMouseOnHUD = false; }
 		);
-		$("#ctxMap").hover(
+		$(htmlidprefix + "Context").hover(
 			function() { that.isMouseOnHUD = true; },
 			function() { that.isMouseOnHUD = false; }
 		);
@@ -7776,7 +7802,7 @@ M = {
 		this.Map.on("zoomend", function(pEvent)
 		{
 			that.adjustZoomMapping();
-			if (pMapEnum === I.MapEnum.Tyria)
+			if (that.MapEnum === I.MapEnum.Tyria)
 			{
 				P.adjustZoomDryTop();
 			}
@@ -8301,6 +8327,7 @@ M = {
 	drawPersonalPath: function()
 	{
 		var that = this;
+		var htmlidprefix = "#" + that.MapEnum;
 		if (O.Options.bol_showPersonalPaths)
 		{
 			var path;
@@ -8326,7 +8353,7 @@ M = {
 					// Single click path: get the coordinates of all pins
 					path.on("click", function()
 					{
-						$("#" + that.MapEnum + "CoordinatesCopy").val(that.getPersonalCoords()).select();
+						$(htmlidprefix + "CoordinatesCopy").val(that.getPersonalCoords()).select();
 					});
 					// Double click path: insert a pin between the two pins that connect the path
 					path.on("dblclick", function(pEvent)
@@ -8958,10 +8985,11 @@ M = {
 	bindMarkerCoordBehavior: function(pMarker, pEventType)
 	{
 		var that = this;
+		var htmlidprefix = "#" + that.MapEnum;
 		pMarker.on(pEventType, function()
 		{
 			var coord = that.convertLCtoGC(this.getLatLng());
-			$("#" + that.MapEnum + "CoordinatesCopy")
+			$(htmlidprefix + "CoordinatesCopy")
 				.val(P.formatCoord(coord))
 				.select();
 		});
@@ -9576,7 +9604,7 @@ P = {
 	finishPopulation: function()
 	{
 		M.isMapAJAXDone = true;
-		M.bindMapVisualChanges(I.MapEnum.Tyria);
+		M.bindMapVisualChanges();
 		M.adjustZoomMapping();
 		P.adjustZoomDryTop();
 		M.goToArguments(U.Args[U.KeyEnum.Go], M.Pin.Program);
@@ -11209,6 +11237,7 @@ W = {
 		Spain: 2300
 	},
 	Layer: {
+		Overview: new L.layerGroup(),
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(),
 		ZoneBorder: new L.layerGroup(),
@@ -11238,6 +11267,12 @@ W = {
 		W.Regions = GW2T_REALM_DATA;
 		
 		W.initializeMap();
+	},
+	
+	finishPopulation: function()
+	{
+		W.bindMapVisualChanges();
+		W.adjustZoomMapping();
 	},
 };
 
@@ -13135,7 +13170,7 @@ K = {
 		K.timeLocal = $("#itemTimeLocalActual")[0];
 		K.timeDaytime = $("#itemTimeDayTime")[0];
 		K.timeSimple = $("#itemSimpleTime")[0];
-		K.timeMap = $("#itemMapTime")[0];
+		K.timeMap = $("#mapTime")[0];
 		K.timestampUTC = $("#optTimestampUTC")[0];
 		K.timestampLocal = $("#optTimestampLocalReset")[0];
 		K.timestampServer = $("#optTimestampServerReset")[0];
@@ -14463,7 +14498,7 @@ I = {
 		I.bindHelpButtons("#plateOptions");
 		I.initializeUIforMenu();
 		I.initializeUIForHUD();
-		I.styleContextMenu("#ctxMap");
+		I.styleContextMenu("#mapContext");
 		// Bind switch map buttons
 		$("#mapSwitchButton").one("click", function()
 		{
@@ -15659,7 +15694,7 @@ I = {
 		if (I.isProgramEmbedded)
 		{
 			$("#itemWarning").remove();
-			$(".itemMapPeripheral a, .itemMapPeripheral span").hide();
+			$(".mapPeripheral a, .mapPeripheral span").hide();
 			T.isDashboardEnabled = false;
 		}
 		

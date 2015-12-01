@@ -877,7 +877,7 @@ var GW2T_DASHBOARD_DATA = {
 
 Announcement:
 {
-	content: "<a href='http://forum.renaka.com/topic/5546166/'>Overlay app</a> now has <a href='http://forum.renaka.com/topic/5790839/'>clickthrough</a> feature, works with Action Camera!",
+	content: "",
 	Start: new Date("2015-11-27T16:00:00Z"),
 	Finish: new Date("2015-12-01T16:00:00Z")
 },
@@ -960,7 +960,7 @@ Sale: {
 		quantity: 1,
 		pricenew: 2000,
 		priceold: 0,
-		col: 0
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Angry_Chest",
@@ -984,6 +984,14 @@ Sale: {
 		quantity: 1,
 		pricenew: 100,
 		priceold: 125,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mystic_Forge_Stone",
+		img: "https://render.guildwars2.com/file/033CAC7DB2DE70BF39DA10D061375BA2B9BD6FA9/220548.png",
+		quantity: 1,
+		pricenew: 0,
+		priceold: 50,
 		col: 0
 	}
 	]
@@ -1021,12 +1029,12 @@ Supply:
 	},
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "44652", price: "25200" },
-		Fox: { id: "43839", price: "25200" },
-		Derwena: { id: "49767", price: "25200" },
-		Yana: { id: "43825", price: "25200" },
-		Katyn: { id: "43827", price: "25200" },
-		Verma: { id: "49735", price: "25200" }
+		Mehem: { id: "43804", price: "25200" },
+		Fox: { id: "67962", price: "25200" },
+		Derwena: { id: "43837", price: "25200" },
+		Yana: { id: "44653", price: "25200" },
+		Katyn: { id: "75473", price: "25200" },
+		Verma: { id: "49737", price: "12600" }
 	}
 }
 };
@@ -1038,18 +1046,18 @@ Supply:
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
 var GW2T_DAILY_DATA = {
-	Start: new Date("2015-11-30T00:00:00Z"),
-	Finish: new Date("2015-12-01T00:00:00Z"),
+	Start: new Date("2015-12-01T00:00:00Z"),
+	Finish: new Date("2015-12-02T00:00:00Z"),
 	Today: 
-	{
-		pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Wayfarer", "Wurm"],
-		pvp: ["Reward", "Defender", "War Ranger", "Rev Thief"],
-		wvw: ["Caravan", "Spender", "Camp", "Tower"]
-	},
-	Tomorrow:
 	{
 		pve: ["Miner Jungle", "Fractal", "Brisban", "SB"],
 		pvp: ["Kills", "Capture", "Thief Ele", "Rev Mes"],
 		wvw: ["Land", "Caravan", "Tower", "Keep"]
+	},
+	Tomorrow:
+	{
+		pve: ["Lumberer Kryta", "Activity", "Metrica", "Maw"],
+		pvp: ["Defender", "Rank", "Ranger Thief", "Rev Necro"],
+		wvw: ["Ruins", "Land", "Camp", "Tower"]
 	}
 };

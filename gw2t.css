@@ -632,12 +632,12 @@ html, body,
 }
 
 /* Bottom left corner: Coordinates bar */
-#itemMapCoordinates, #itemWvWCoordinates {
+#mapCoordinates, #wvwCoordinates {
 	position: absolute;
 	bottom: 12px; left: 12px;
 	z-index: 9;
 }
-#itemMapCoordinates input, #itemWvWCoordinates input, .cssInputText {
+#mapCoordinates input, #wvwCoordinates input, .cssInputText {
 	display: inline-block;
 	width: 90px;
 	height: 16px;
@@ -649,54 +649,54 @@ html, body,
 	color: #ddff77;
 	opacity: 0.6;
 }
-#itemMapCoordinates input::selection, #itemWvWCoordinates input::selection {
+#mapCoordinates input::selection, #wvwCoordinates input::selection {
 	background: #66aaff;
 }
 input#mapCoordinatesName, input#wvwCoordinatesName {
 	width: 145px; 
 }
-#itemMapTime {
+#mapTime {
 	display: none;
 }
 
 /* Right side: Misc links */
-.itemMapPeripheral {
+.mapPeripheral {
 	display: inline-block;
 	width: auto; /* Should be just wide enough to fit the HUD buttons */
 	text-align: right;
 	z-index: 3;
 }
-.itemMapPeripheral:hover {
+.mapPeripheral:hover {
 	width: 390px; /* This becomes the maximum width of the HUD popup divs */
 }
-.itemMapPeripheral div {
+.mapPeripheral div {
 	text-align: left;
 }
-#itemMapPeripheralNorth, #itemWvWLinksNorth {
+#mapPeripheralNorth, #wvwLinksNorth {
 	position: absolute;
 	top: 4px; right: 12px;
 }
-#itemMapPeripheralSouth {
+#mapPeripheralSouth {
 	position: absolute;
 	bottom: 4px; right: 12px;
 }
 #itemLogo {
 	margin-right: 2px;
 }
-.itemMapPeripheral img {
+.mapPeripheral img {
 	width: 32px; height: 32px;
 }
-.itemMapPeripheral { /* Links on the map pane */
+.mapPeripheral { /* Links on the map pane */
 	font-family: Menomonia;
 	font-size: 18px;
 	color: #ffeebb;
 }
-.itemMapPeripheral a, .itemMapPeripheral span {
+.mapPeripheral a, .mapPeripheral span {
 	text-decoration: none;
 	color: #ffeebb;
 	opacity: 0.6;
 }
-.itemMapPeripheral a:hover {
+.mapPeripheral a:hover {
 	color: #ddff77;
 	opacity: 0.9;
 }
@@ -715,7 +715,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	display: inline-block;
 	opacity: 0.6;
 }
-.itemMapPeripheral:hover .mapHUDButton {
+.mapPeripheral:hover .mapHUDButton {
 	opacity: 0.8;
 }
 .mapHUDContainer:hover .mapHUDButton {

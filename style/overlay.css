@@ -4,7 +4,7 @@
 */
 
 /* Remove elements extraneous or intrusive to overlay mode */
-#itemWarning, #itemDashboard, #mapQuickURL, #itemMapPeripheralSouth, #itemSocial,
+#itemWarning, #itemDashboard, #mapQuickURL, #mapPeripheralSouth, #itemSocial,
 #paneMenu var {
 	display: none;
 }
@@ -50,10 +50,10 @@
 #mapGPS, #wvwGPS {
 	display: inline-block;
 }
-#itemMapCoordinates, #itemWvWCoordinates {
+#mapCoordinates, #wvwCoordinates {
 	bottom: 6px; left: 6px;
 }
-#itemMapCoordinates input, #itemWvWCoordinates input {
+#mapCoordinates input, #wvwCoordinates input {
 	width: 80px; height: 12px;
 	margin-left: 5px;
 	font-size: 12px;
@@ -61,7 +61,7 @@
 #mapCoordinatesName, #wvwCoordinatesName {
 	width: 116px;
 }
-#itemMapTime {
+#mapTime {
 	display: inline-block;
 	position: absolute;
 	z-index: 9;
