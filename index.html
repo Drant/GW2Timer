@@ -101,15 +101,15 @@
 				<!--<div id="mapSwitch" class="mapHUDContainer">
 					<img id="mapSwitchButton" class="mapHUDButton" title="<dfn> Click to WVW </dfn>" src="img/map/wvw.png" alt="display" />
 				</div>-->
-				<div id="mapGPS" class="mapHUDContainer">
+				<div class="mapGPS mapHUDContainer">
 					<img id="mapGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
-					<div id="mapGPSPopup" class="mapHUDPopup cntComposition">
+					<div class="mapGPSPopup mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacter" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
 						<label title="Milliseconds before your character is pinpointed again.<br />This should not be faster than the overlay's rate."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Rate (ms)</label>
 					</div>
 				</div>
-				<div id="mapOptions" class="mapHUDContainer">
+				<div class="mapOptions mapHUDContainer">
 					<img id="mapDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
 					<div id="mapOptionsPopup" class="mapHUDPopup cntComposition">
 						<div id="mapOptionsDisplay">
@@ -138,72 +138,72 @@
 						</div>
 					</div>
 				</div>
-				<div id="mapZones" class="mapHUDContainer">
+				<div class="mapZones mapHUDContainer">
 					<img id="mapCompassButton" class="mapHUDButton" title="<dfn> Click to Center Map </dfn>" src="img/map/compass.png" alt="compass" />
-					<div id="mapZonesPopup" class="mapHUDPopup cntComposition">
-						<div id="mapZoneList" class="mapZoneLinks">
+					<div class="mapZonesPopup mapHUDPopup cntComposition">
+						<div id="mapZoneList" class="mapZoneList mapZoneLinks">
 							<div>
-							<h2 data-region="magus"></h2>
-							<ul>
-								<li data-zone="verdant"></li>
-								<li data-zone="auric"></li>
-								<li data-zone="tangled"></li>
-								<li data-zone="dragon"></li>
-							</ul>
-							<h2 data-region="wastes"></h2>
-							<ul>
-								<li data-zone="dry"></li>
-								<li data-zone="silverwastes"></li>
-							</ul>
-							<h2 data-region="jungle"></h2>
-							<ul>
-								<li data-zone="rata"></li>
-								<li data-zone="grove"></li>
-								<li data-zone="metrica"></li>
-								<li data-zone="caledon"></li>
-								<li data-zone="brisban"></li>
-								<li data-zone="sparkfly"></li>
-								<li data-zone="maelstrom"></li>
-							</ul>
-							<h2 data-region="orr"></h2>
-							<ul>
-								<li data-zone="straits"></li>
-								<li data-zone="malchor"></li>
-								<li data-zone="cursed"></li>
-							</ul>
+								<h2 data-region="magus"></h2>
+								<ul>
+									<li data-zone="verdant"></li>
+									<li data-zone="auric"></li>
+									<li data-zone="tangled"></li>
+									<li data-zone="dragon"></li>
+								</ul>
+								<h2 data-region="wastes"></h2>
+								<ul>
+									<li data-zone="dry"></li>
+									<li data-zone="silverwastes"></li>
+								</ul>
+								<h2 data-region="jungle"></h2>
+								<ul>
+									<li data-zone="rata"></li>
+									<li data-zone="grove"></li>
+									<li data-zone="metrica"></li>
+									<li data-zone="caledon"></li>
+									<li data-zone="brisban"></li>
+									<li data-zone="sparkfly"></li>
+									<li data-zone="maelstrom"></li>
+								</ul>
+								<h2 data-region="orr"></h2>
+								<ul>
+									<li data-zone="straits"></li>
+									<li data-zone="malchor"></li>
+									<li data-zone="cursed"></li>
+								</ul>
 							</div>
 							<div>
-							<h2 data-region="kryta"></h2>
-							<ul>
-								<li data-zone="divinity"></li>
-								<li data-zone="lion"></li>
-								<li data-zone="queensdale"></li>
-								<li data-zone="kessex"></li>
-								<li data-zone="gendarran"></li>
-								<li data-zone="harathi"></li>
-								<li data-zone="bloodtide"></li>
-								<li data-zone="southsun"></li>
-							</ul>
-							<h2 data-region="shiverpeaks"></h2>
-							<ul>
-								<li data-zone="hoelbrak"></li>
-								<li data-zone="wayfarer"></li>
-								<li data-zone="snowden"></li>
-								<li data-zone="lornar"></li>
-								<li data-zone="dredgehaunt"></li>
-								<li data-zone="timberline"></li>
-								<li data-zone="frostgorge"></li>
-							</ul>
-							<h2 data-region="ascalon"></h2>
-							<ul>
-								<li data-zone="citadel"></li>
-								<li data-zone="plains"></li>
-								<li data-zone="diessa"></li>
-								<li data-zone="fields"></li>
-								<li data-zone="marches"></li>
-								<li data-zone="blazeridge"></li>
-								<li data-zone="fireheart"></li>
-							</ul>
+								<h2 data-region="kryta"></h2>
+								<ul>
+									<li data-zone="divinity"></li>
+									<li data-zone="lion"></li>
+									<li data-zone="queensdale"></li>
+									<li data-zone="kessex"></li>
+									<li data-zone="gendarran"></li>
+									<li data-zone="harathi"></li>
+									<li data-zone="bloodtide"></li>
+									<li data-zone="southsun"></li>
+								</ul>
+								<h2 data-region="shiverpeaks"></h2>
+								<ul>
+									<li data-zone="hoelbrak"></li>
+									<li data-zone="wayfarer"></li>
+									<li data-zone="snowden"></li>
+									<li data-zone="lornar"></li>
+									<li data-zone="dredgehaunt"></li>
+									<li data-zone="timberline"></li>
+									<li data-zone="frostgorge"></li>
+								</ul>
+								<h2 data-region="ascalon"></h2>
+								<ul>
+									<li data-zone="citadel"></li>
+									<li data-zone="plains"></li>
+									<li data-zone="diessa"></li>
+									<li data-zone="fields"></li>
+									<li data-zone="marches"></li>
+									<li data-zone="blazeridge"></li>
+									<li data-zone="fireheart"></li>
+								</ul>
 							</div>
 						</div>
 					</div>
@@ -217,29 +217,37 @@
 			</article>
 		</section>
 		<section id="wvwPane">&nbsp;
-			<article id="paneHUDWvW">
+			<div id="wvwContext" class="ctxMenu">
+				<ul>
+					<li id="wvwContextCenter">Center map</li>
+					<li id="wvwContextToggleLock">Toggle map lock</li>
+					<li id="wvwContextClearPins">Clear pins</li>
+				</ul>
+			</div>
+			<article id="wvwHUDPane">
 			<div id="wvwCoordinates">
 				<input id="wvwCoordinatesMouse" type="text" />
 				<input id="wvwCoordinatesCopy" type="text" />
 				<input id="wvwCoordinatesName" type="text" />
 			</div>
-			<div id="wvwLinksNorth" class="mapPeripheral">
+			<div id="wvwPeripheralNorth" class="mapPeripheral">
 				<div id="wvwSwitch" class="mapHUDContainer">
 					<img id="wvwSwitchButton" class="mapHUDButton" title="<dfn> Click to Map </dfn>" src="img/ui/pages/map.png" alt="display" />
 				</div>
-				<div id="wvwGPS" class="mapHUDContainer">
+				<div class="mapGPS mapHUDContainer">
 					<img id="wvwGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
-					<div id="wvwGPSPopup" class="mapHUDPopup cntComposition">
+					<div class="mapGPSPopup mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacterWvW" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the map character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacterWvW" type="checkbox" />Display Character Pin</label>
 					</div>
 				</div>
-				<div id="wvwOptions" class="mapHUDContainer">
+				<div class="mapOptions mapHUDContainer">
 					<img id="wvwDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
 					<div id="wvwOptionsPopup" class="mapHUDPopup cntComposition">
 						<div id="wvwOptionsDisplay">
-							<label title="Show/Hide all icons listed below.<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
+							<label title="Show/Hide all icons listed below.<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletionWvW" type="checkbox" /> Show completion</label>
 							<div id="wvwOptionsCompletion">
+								<label><img data-src="img/ui/question.png" /><input id="opt_bol_showZoneOverviewWvW" type="checkbox" /> Zone Overview</label>
 								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectorsWvW" type="checkbox" /> Sector Names</label>
 								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypointsWvW" type="checkbox" /> Waypoints</label>
 								<label><img data-src="img/map/landmark.png" /><input id="opt_bol_displayPOIsWvW" type="checkbox" /> POIs</label>
@@ -247,11 +255,27 @@
 								<label><img data-src="img/map/challenge.png" /><input id="opt_bol_displayChallengesWvW" type="checkbox" /> Hero Challenges</label>
 							</div>
 						</div>
+						<div id="wvwOptionsOther">
+							
+						</div>
 					</div>
 				</div>
-				<div id="wvwZones" class="mapHUDContainer">
+				<div class="mapZones mapHUDContainer">
 					<img id="wvwCompassButton" class="mapHUDButton" title="<dfn> Click to Center Map </dfn>" src="img/map/compass.png" alt="compass" />
-					
+					<div class="mapZonesPopup mapHUDPopup cntComposition">
+						<div id="wvwZoneList" class="mapZoneList mapZoneLinks">
+							<div>
+								<h2 data-region="wvw"></h2>
+								<ul>
+									<li data-zone="desertred"></li>
+									<li data-zone="desertgreen"></li>
+									<li data-zone="desertblue"></li>
+									<li data-zone="eternal"></li>
+									<li data-zone="edge"></li>
+								</ul>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			</article>

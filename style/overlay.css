@@ -47,7 +47,7 @@
 #dsbCountdown time {
 	font-size: 16px;
 }
-#mapGPS, #wvwGPS {
+.mapGPS {
 	display: inline-block;
 }
 #mapCoordinates, #wvwCoordinates {

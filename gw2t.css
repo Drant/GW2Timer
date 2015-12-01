@@ -667,12 +667,12 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	z-index: 3;
 }
 .mapPeripheral:hover {
-	width: 390px; /* This becomes the maximum width of the HUD popup divs */
+	width: 520px; /* This becomes the maximum width of the HUD popup divs */
 }
 .mapPeripheral div {
 	text-align: left;
 }
-#mapPeripheralNorth, #wvwLinksNorth {
+#mapPeripheralNorth, #wvwPeripheralNorth {
 	position: absolute;
 	top: 4px; right: 12px;
 }
@@ -736,7 +736,7 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	opacity: 0;
 }
 
-#mapGPS, #wvwGPS { /* Only shown in overlay mode */
+.mapGPS { /* Only shown in overlay mode */
 	display: none;
 }
 
@@ -766,28 +766,28 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 	width: 24px; height: 24px;
 	margin-right: 4px;
 }
-#mapGPSPopup label img {
+.mapGPSPopup label img {
 	width: 24px; height: 24px;
 	margin-right: 4px;
 }
 
 /* Map zones list */
-#mapZones:hover #mapZonesPopup {
-	min-width: 260px;
+.mapZones:hover .mapZonesPopup {
+	min-width: 180px;
 	max-width: 340px;
 	padding: 0px 8px 0px 8px;
 }
-#mapZoneList {
+.mapZoneList {
 	border-spacing: 12px;
 }
-#mapZoneList div, .nodList div {
+.mapZoneList div, .nodList div {
 	display: table-cell;
 }
-#mapZoneList ul, #mapZoneList h2 {
+.mapZoneList ul, .mapZoneList h2 {
 	min-width: 120px;
 	max-width: 140px;
 }
-#mapZoneList ul {
+.mapZoneList ul {
 	margin-bottom: 16px;
 }
 

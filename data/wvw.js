@@ -46,6 +46,7 @@ var GW2T_LAND_ASSOCIATION = {
 	"900": "skyhammer",
 	"984": "courtyard",
 	"968": "edge",
+	"1011": "champion",
 	"1099": "desertred",
 	"1102": "desertgreen",
 	"1143": "desertblue"
@@ -55,7 +56,7 @@ var GW2T_LAND_ASSOCIATION = {
  * Lands are sorted by importance.
  */
 var GW2T_LAND_DATA = {
-"eternal":
+"eternal": // south side
 {
 	name_en: "Eternal Battlegrounds",
 	name_de: "Ewige Schlachtfelder",
@@ -65,33 +66,33 @@ var GW2T_LAND_DATA = {
 	realm: "wvw",
 	rect: [[8958, 12798], [12030, 15870]]
 },
-"desertred":
+"desertred": // north side
 {
-	name_en: " Borderlands",
-	name_de: " Grenzlande",
-	name_es: "Tierras Fronterizas de ",
-	name_fr: "Territoires frontaliers ",
-	name_zh: "沙漠邊境之地 ",
+	name_en: "Red Borderlands",
+	name_de: "Rot Grenzlande",
+	name_es: "Tierras Fronterizas de rojo",
+	name_fr: "Territoires frontaliers rouge",
+	name_zh: "沙漠邊境之地紅色",
 	realm: "wvw",
 	rect: [[9214, 8958], [12286, 12030]]
 },
-"desertgreen":
+"desertgreen": // east side
 {
-	name_en: " Borderlands",
-	name_de: " Grenzlande",
-	name_es: "Tierras Fronterizas de ",
-	name_fr: "Territoires frontaliers ",
-	name_zh: "沙漠邊境之地 ",
+	name_en: "Green Borderlands",
+	name_de: "Grün Grenzlande",
+	name_es: "Tierras Fronterizas de verde",
+	name_fr: "Territoires frontaliers vert",
+	name_zh: "沙漠邊境之地綠色的",
 	realm: "wvw",
 	rect: [[5630, 11518], [8702, 14590]]
 },
-"desertblue":
+"desertblue": // west side
 {
-	name_en: " Borderlands",
-	name_de: " Grenzlande",
-	name_es: "Tierras Fronterizas de ",
-	name_fr: "Territoires frontaliers ",
-	name_zh: "沙漠邊境之地 ",
+	name_en: "Blue Borderlands",
+	name_de: "Blau Grenzlande",
+	name_es: "Tierras Fronterizas de azul",
+	name_fr: "Territoires frontaliers bleu",
+	name_zh: "沙漠邊境之地藍色",
 	realm: "wvw",
 	rect: [[12798, 10878], [15870, 13950]]
 },
@@ -194,6 +195,16 @@ var GW2T_LAND_DATA = {
 	name_zh: "庭院",
 	realm: "pvp",
 	rect: [[2048, 7040], [3072, 8064]]
+},
+"champion":
+{
+	name_en: "Battle of Champion's Dusk",
+	name_de: "Die Schlacht von Champions Dämmerung",
+	name_es: "Batalla del Crepúsculo del Campeón",
+	name_fr: "Bataille du crépuscule du Champion",
+	name_zh: "末日英雄之战",
+	realm: "pvp",
+	rect: [[8448, 7680], [9472, 8320]]
 }
 };
 

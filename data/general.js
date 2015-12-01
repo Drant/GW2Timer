@@ -944,8 +944,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2015-11-30T16:00:00Z"),
-	Finish: new Date("2015-12-01T16:00:00Z"),
+	Start: new Date("2015-12-01T16:00:00Z"),
+	Finish: new Date("2015-12-08T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -960,15 +960,39 @@ Sale: {
 		quantity: 1,
 		pricenew: 2000,
 		priceold: 0,
-		col: 1
+		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Mini_Angry_Chest",
-		img: "https://render.guildwars2.com/file/552B6B315EE943BBE7E81FD83594EC2E6D94D1F7/1053208.png",
+		url: "http://wiki.guildwars2.com/wiki/Slayer's_Outfit",
+		img: "http://i.imgur.com/4MnJ7dy.png",
 		quantity: 1,
-		pricenew: 400,
+		pricenew: 700,
 		priceold: 0,
-		col: 1
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Grenth_Hood_Skin",
+		img: "https://render.guildwars2.com/file/BDA5603EA1C3FF412AC8520E76D42CA56D549B37/681054.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Stag_Helm_Skin",
+		img: "https://render.guildwars2.com/file/59D6A0679B50CAA60D10FFABC4EA4AC99432EF59/681053.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Wintersday_Earmuffs",
+		img: "https://render.guildwars2.com/file/E1590ED73D082F950AA2ED44021A7F795D0DD647/526118.png",
+		quantity: 1,
+		pricenew: 25,
+		priceold: 0,
+		col: 0
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini_Sabetha",
@@ -979,20 +1003,36 @@ Sale: {
 		col: 1
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Black_Lion_Chest_Key",
-		img: "https://render.guildwars2.com/file/207BDD31BC494A07A0A1691705079100066D3F2F/414998.png",
+		url: "http://wiki.guildwars2.com/wiki/Permanent_Snow_Globe_Finisher",
+		img: "https://render.guildwars2.com/file/4ED2336A39D9E19EBDEC30D013EB13B42D0F3130/699315.png",
 		quantity: 1,
-		pricenew: 100,
-		priceold: 125,
-		col: 0
+		pricenew: 700,
+		priceold: 0,
+		col: 1
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Mystic_Forge_Stone",
-		img: "https://render.guildwars2.com/file/033CAC7DB2DE70BF39DA10D061375BA2B9BD6FA9/220548.png",
+		url: "http://wiki.guildwars2.com/wiki/Permanent_Snowman_Finisher",
+		img: "https://render.guildwars2.com/file/3D0BBD30A2CA4D1A0E14525C03233E51DA095307/619502.png",
 		quantity: 1,
-		pricenew: 0,
-		priceold: 50,
-		col: 0
+		pricenew: 700,
+		priceold: 0,
+		col: 1
+	},
+		{
+		url: "http://wiki.guildwars2.com/wiki/Permanent_Gift_Finisher",
+		img: "https://render.guildwars2.com/file/3BDDA4DFF4B83B56C716410E446DE89CF03C38CE/619503.png",
+		quantity: 1,
+		pricenew: 600,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Winter_Chimes_Dye_Kit",
+		img: "http://i.imgur.com/1I747yu.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
 	}
 	]
 },

@@ -130,11 +130,11 @@ O = {
 		int_setFloor: 1,
 		bol_showZoneBorders: false,
 		bol_showZoneGateways: false,
-		bol_showZoneOverview: true,
 		bol_showPersonalPaths: true,
 		bol_showChainPaths: true,
 		bol_tourPrediction: true,
 		bol_showWorldCompletion: false,
+		bol_showZoneOverview: true,
 		bol_displaySectors: true,
 		bol_displayWaypoints: true,
 		bol_displayPOIs: true,
@@ -143,6 +143,7 @@ O = {
 		bol_displayHearts: true,
 		bol_displayEvents: false,
 		bol_showWorldCompletionWvW: false,
+		bol_showZoneOverviewWvW: true,
 		bol_displaySectorsWvW: true,
 		bol_displayWaypointsWvW: true,
 		bol_displayPOIsWvW: true,
@@ -834,6 +835,19 @@ O = {
 				X.setCheckboxEnumState($(this), X.boolToChecklistEnum(O.Options.bol_showWorldCompletion));
 			});
 		});
+		$("#opt_bol_showWorldCompletionWvW").change(function()
+		{
+			if (O.Options.bol_showWorldCompletionWvW === true
+				&& W.isMappingIconsGenerated === false)
+			{
+				location.reload();
+			}
+			
+			$("#wvwOptionsCompletion label input").each(function()
+			{
+				X.setCheckboxEnumState($(this), X.boolToChecklistEnum(O.Options.bol_showWorldCompletionWvW));
+			});
+		});
 		$("#opt_bol_displayEvents").change(function()
 		{
 			if (O.Options.bol_displayEvents === true
@@ -854,6 +868,16 @@ O = {
 				if (M.isAPIRetrieved_MAPFLOOR)
 				{
 					M.refreshCurrentZone();
+				}
+			});
+		});
+		$("#wvwOptionsCompletion label input").each(function()
+		{
+			$(this).change(function()
+			{
+				if (W.isAPIRetrieved_MAPFLOOR)
+				{
+					W.refreshCurrentZone();
 				}
 			});
 		});
@@ -1204,8 +1228,8 @@ U = {
 		// Map
 		LangKey: "",
 		TilesTyria: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
-		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=2",
 		TilesMists: "https://tiles.guildwars2.com/2/1/{z}/{x}/{y}.jpg",
+		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=2",
 		MapFloorMists: "https://api.guildwars2.com/v1/map_floor.json?continent_id=2&floor=1",
 		MapsList: "https://api.guildwars2.com/v1/maps.json",
 		EventNames: "https://api.guildwars2.com/v1/event_names.json",
@@ -7069,6 +7093,7 @@ M = {
 	{
 		Same: -1,
 		Min: 0,
+		Overview: 3,
 		Default: 3,
 		Space: 3,
 		Sky: 5,
@@ -7100,7 +7125,7 @@ M = {
 	 * To assign marker properties: MARKER.options.PROPERTY
 	 */
 	Layer: {
-		Overview: new L.layerGroup(),
+		Overview: new L.layerGroup(), // Stats of zone's number of world completion icons
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(), // Path drawn from connecting player-laid pins
@@ -7190,6 +7215,7 @@ M = {
 			case I.MapEnum.Tyria: {
 				mapnumber = 1;
 				this.populateMap();
+				this.createPins();
 				P.drawZoneBorders();
 				P.drawZoneGateways();
 				C.ScheduledChains.forEach(P.drawChainPaths);
@@ -7203,6 +7229,7 @@ M = {
 					continuousWorld: true
 				}).addTo(W.Map);
 				this.populateMap();
+				this.createPins();
 			} break;
 		}
 		
@@ -7281,7 +7308,7 @@ M = {
 			$("#opt_bol_showPanel").trigger("click");
 		});
 		// Translate and bind map zones list
-		$(htmlidprefix + "CompassButton").one("mouseenter", that.bindZoneList).click(function()
+		$(htmlidprefix + "CompassButton").one("mouseenter", that.bindZoneList(that)).click(function()
 		{
 			that.goToDefault();
 		});
@@ -7301,15 +7328,25 @@ M = {
 			return;
 		}
 		var that = this;
+		var htmlidprefix = "#" + that.MapEnum;
 		var url;
+		var completionboolean;
 		switch (this.MapEnum)
 		{
 			case I.MapEnum.Tyria: {
 				url = U.URL_API.MapFloorTyria;
+				completionboolean = O.Options.bol_showWorldCompletion;
 			} break;
 			
 			case I.MapEnum.Mists: {
 				url = U.URL_API.MapFloorMists;
+				completionboolean = O.Options.bol_showWorldCompletionWvW;
+				// Exit this entire function if using the Mists map but have completion option off
+				if (completionboolean === false)
+				{
+					W.finishPopulation();
+					return;
+				}
 			} break;
 		}
 		/*
@@ -7390,7 +7427,7 @@ M = {
 						{
 							case that.APIPOIEnum.Waypoint:
 							{
-								// Waypoints are always created, others are optional
+								// Waypoints are always created for Tyria, others are optional
 								numwaypoint++;
 								icon = U.URL_IMG.Waypoint;
 								cssclass = "mapWp";
@@ -7399,7 +7436,7 @@ M = {
 							
 							case that.APIPOIEnum.Landmark:
 							{
-								if (O.Options.bol_showWorldCompletion === false)
+								if (completionboolean === false)
 								{
 									continue;
 								}
@@ -7411,7 +7448,7 @@ M = {
 							
 							case that.APIPOIEnum.Vista:
 							{
-								if (O.Options.bol_showWorldCompletion === false)
+								if (completionboolean === false)
 								{
 									continue;
 								}
@@ -7475,8 +7512,8 @@ M = {
 						{
 							marker.on("click", function()
 							{
-								$("#mapCoordinatesCopy").val(this.options.link).select();
-								$("#mapCoordinatesName").val(this.options.markername);
+								$(htmlidprefix + "CoordinatesCopy").val(this.options.link).select();
+								$(htmlidprefix + "CoordinatesName").val(this.options.markername);
 							});
 							marker.on("dblclick", function(pEvent)
 							{
@@ -7494,7 +7531,7 @@ M = {
 					/*
 					 * For API separate arrays for pois.
 					 */
-					if (O.Options.bol_showWorldCompletion)
+					if (completionboolean)
 					{
 						// Hero Challenges
 						numofpois = ithzone.skill_challenges.length;
@@ -7571,7 +7608,7 @@ M = {
 					}
 					
 					// Generate POIs overview for this zone
-					if (O.Options.bol_showWorldCompletion)
+					if (completionboolean)
 					{
 						marker = L.marker(that.convertGCtoLC(zoneobj.center),
 						{
@@ -7610,7 +7647,7 @@ M = {
 			 * AJAX takes a while so can use this to advantage to delay graphics
 			 * that seem out of place without a map loaded.
 			 */
-			if (O.Options.bol_displayEvents === false)
+			if (that.MapEnum === I.MapEnum.Tyria && O.Options.bol_displayEvents === false)
 			{
 				P.donePopulation();
 			}
@@ -7648,12 +7685,18 @@ M = {
 				} break;
 			}
 		});
-		
-		/*
-		 * Create pin markers that can be moved by user or program.
-		 * ---------------------------------------------------------------------
-		 */
-		
+	}, // End of populateMap
+	
+	/*
+	 * Create pin markers that can be moved by user or program.
+	 */
+	createPins: function()
+	{
+		if (!I.isMapEnabled)
+		{
+			return;
+		}
+		var that = this;
 		this.Pin.Program = this.createPin("img/map/pin_blue.png");
 		this.Pin.Event = this.createPin("img/map/pin_green.png");
 		this.Pin.Over = this.createPin("img/map/pin_over.png", [128,128]);
@@ -7678,8 +7721,7 @@ M = {
 		});
 		// Hide the pins, they will be shown when they are moved
 		this.toggleLayer(this.Layer.Pin, false);
-		
-	}, // End of populateMap
+	},
 	
 	/*
 	 * Bind mouse button functions for the map. Also binds the map custom context menu.
@@ -7735,7 +7777,7 @@ M = {
 			that.isZoneLocked = !that.isZoneLocked;
 			if (that.isZoneLocked)
 			{
-				I.write("Map locked to zone: " + D.getObjectName(M.ZoneCurrent));
+				I.write("Map locked to zone: " + D.getObjectName(that.ZoneCurrent));
 			}
 			else
 			{
@@ -7796,8 +7838,8 @@ M = {
 		}));
 
 		/*
-		 * At the end of a zoom animation, resize the map waypoint icons
-		 * depending on zoom level. Hide if zoomed too far.
+		 * At the end of a zoom animation, resize the map icons depending on
+		 * zoom level. Hide if zoomed too far.
 		 */
 		this.Map.on("zoomend", function(pEvent)
 		{
@@ -7902,7 +7944,10 @@ M = {
 	 */
 	showCurrentZone: function(pCoord)
 	{
-		document.getElementById("mapCoordinatesMouse")
+		var that = this;
+		var htmlidprefix = that.MapEnum;
+		
+		document.getElementById(htmlidprefix + "CoordinatesMouse")
 			.value = pCoord[0] + ", " + pCoord[1];
 	
 		// Don't continue if mouse is still in the same zone
@@ -7936,20 +7981,34 @@ M = {
 				// Update current zone object
 				this.ZoneCurrent = this.Zones[i];
 				zonename = this.getZoneName(this.ZoneCurrent);
-				document.getElementById("mapCoordinatesName")
+				document.getElementById(htmlidprefix + "CoordinatesName")
 					.value = zonename;
 
 				// Reveal moused zone's icons
-				if (O.Options.bol_showChainPaths && I.PageCurrent !== I.PageEnum.Map) { this.ZoneCurrent.Layers.Path.addTo(this.Map); }
-				if (O.Options.bol_displayWaypoints) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
-				if (O.Options.bol_displayPOIs) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
-				if (O.Options.bol_displayVistas) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
-				if (O.Options.bol_displayChallenges) { this.ZoneCurrent.Layers.Challenge.addTo(this.Map); }
-				if (O.Options.bol_displayHearts) { this.ZoneCurrent.Layers.Heart.addTo(this.Map); }
-				if (O.Options.bol_displaySectors) { this.ZoneCurrent.Layers.Sector.addTo(this.Map); }
-				if (O.Options.bol_displayEvents) {
-					this.ZoneCurrent.Layers.EventIcon.addTo(this.Map);
-					this.ZoneCurrent.Layers.EventRing.addTo(this.Map);
+				switch (that.MapEnum)
+				{
+					case I.MapEnum.Tyria:
+					{
+						if (O.Options.bol_showChainPaths && I.PageCurrent !== I.PageEnum.Map) { this.ZoneCurrent.Layers.Path.addTo(this.Map); }
+						if (O.Options.bol_displayWaypoints) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
+						if (O.Options.bol_displayPOIs) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
+						if (O.Options.bol_displayVistas) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
+						if (O.Options.bol_displayChallenges) { this.ZoneCurrent.Layers.Challenge.addTo(this.Map); }
+						if (O.Options.bol_displayHearts) { this.ZoneCurrent.Layers.Heart.addTo(this.Map); }
+						if (O.Options.bol_displaySectors) { this.ZoneCurrent.Layers.Sector.addTo(this.Map); }
+						if (O.Options.bol_displayEvents) {
+							this.ZoneCurrent.Layers.EventIcon.addTo(this.Map);
+							this.ZoneCurrent.Layers.EventRing.addTo(this.Map);
+						}
+					} break;
+					case I.MapEnum.Mists:
+					{
+						if (O.Options.bol_displayWaypointsWvW) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
+						if (O.Options.bol_displayPOIsWvW) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
+						if (O.Options.bol_displayVistasWvW) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
+						if (O.Options.bol_displayChallengesWvW) { this.ZoneCurrent.Layers.Challenge.addTo(this.Map); }
+						if (O.Options.bol_displaySectorsWvW) { this.ZoneCurrent.Layers.Sector.addTo(this.Map); }
+					} break;
 				}
 
 				// Re-tooltip
@@ -7968,8 +8027,20 @@ M = {
 	refreshCurrentZone: function()
 	{
 		var currentcoord = this.ZoneCurrent.center;
-		this.showCurrentZone(this.getZoneCenter("dry"));
-		this.showCurrentZone(this.getZoneCenter("rata"));
+		switch (this.MapEnum)
+		{
+			case I.MapEnum.Tyria:
+			{
+				// These specimen zone are chosen because they are the top of the array
+				this.showCurrentZone(this.getZoneCenter("verdant"));
+				this.showCurrentZone(this.getZoneCenter("auric"));
+			} break;
+			case I.MapEnum.Mists:
+			{
+				this.showCurrentZone(this.getZoneCenter("edge"));
+				this.showCurrentZone(this.getZoneCenter("eternal"));
+			} break;
+		}
 		this.showCurrentZone(currentcoord);
 	},
 	
@@ -8041,30 +8112,69 @@ M = {
 		var currentzoom = this.Map.getZoom();
 		var waypointsize, landmarksize, eventiconsize, eventringsize;
 		var sectorfontsize, sectoropacity;
+		var completionboolean;
+		var overviewboolean;
+		var sectorboolean;
 		
 		switch (currentzoom)
 		{
-			case 7: waypointsize = 40; landmarksize = 32; eventiconsize = 32; eventringsize = 256; break;
-			case 6: waypointsize = 32; landmarksize = 24; eventiconsize = 24; eventringsize = 128; break;
-			case 5: waypointsize = 26; landmarksize = 16; eventiconsize = 16; eventringsize = 64; break;
-			case 4: waypointsize = 20; landmarksize = 12; eventiconsize = 12; eventringsize = 32; break;
-			case 3: waypointsize = 16; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
-			case 2: waypointsize = 12; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
+			case this.ZoomEnum.Max: waypointsize = 40; landmarksize = 32; eventiconsize = 32; eventringsize = 256; break;
+			case this.ZoomEnum.Max - 1: waypointsize = 32; landmarksize = 24; eventiconsize = 24; eventringsize = 128; break;
+			case this.ZoomEnum.Max - 2: waypointsize = 26; landmarksize = 16; eventiconsize = 16; eventringsize = 64; break;
+			case this.ZoomEnum.Max - 3: waypointsize = 20; landmarksize = 12; eventiconsize = 12; eventringsize = 32; break;
+			case this.ZoomEnum.Max - 4: waypointsize = 16; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
+			case this.ZoomEnum.Max - 5: waypointsize = 12; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
 			default: { waypointsize = 0; landmarksize = 0; eventiconsize = 0; eventringsize = 0; }
 		}
 		
 		switch (currentzoom)
 		{
-			case 7: sectorfontsize = 28; sectoropacity = 0.9; break;
-			case 6: sectorfontsize = 20; sectoropacity = 0.6; break;
-			case 5: sectorfontsize = 16; sectoropacity = 0.3; break;
+			case this.ZoomEnum.Max: sectorfontsize = 28; sectoropacity = 0.9; break;
+			case this.ZoomEnum.Max - 1: sectorfontsize = 20; sectoropacity = 0.6; break;
+			case this.ZoomEnum.Max - 2: sectorfontsize = 16; sectoropacity = 0.3; break;
 			default: { sectorfontsize = 0; sectoropacity = 0; }
 		}
 		
-		// Overview on the zones
-		if (O.Options.bol_showWorldCompletion && O.Options.bol_showZoneOverview)
+		switch (this.MapEnum)
 		{
-			if (currentzoom === this.ZoomEnum.Default)
+			case I.MapEnum.Tyria:
+			{
+				// Event Icon
+				if (O.Options.bol_displayEvents)
+				{
+					this.ZoneCurrent.Layers.EventIcon.eachLayer(function(layer) {
+						that.changeMarkerIcon(layer, layer._icon.src, eventiconsize);
+						if (layer._icon)
+						{
+							layer._icon.style.zIndex = M.cZIndexRaise;
+						}
+					});
+
+					// Event Ring
+					this.ZoneCurrent.Layers.EventRing.eachLayer(function(layer) {
+						that.changeMarkerIcon(layer, layer._icon.src, eventringsize);
+						if (layer._icon)
+						{
+							layer._icon.style.zIndex = M.cZIndexBury;
+						}
+					});
+				}
+				overviewboolean = O.Options.bol_showZoneOverview;
+				completionboolean = O.Options.bol_showWorldCompletion;
+				sectorboolean = O.Options.bol_displaySectors;
+			} break;
+			case I.MapEnum.Mists:
+			{
+				overviewboolean = O.Options.bol_showZoneOverviewWvW;
+				completionboolean = O.Options.bol_showWorldCompletionWvW;
+				sectorboolean = O.Options.bol_displaySectorsWvW;
+			} break;
+		}
+		
+		// Overview on the zones
+		if (completionboolean && overviewboolean)
+		{
+			if (currentzoom === this.ZoomEnum.Overview)
 			{
 				this.toggleLayer(this.Layer.Overview, true);
 				this.Layer.Overview.eachLayer(function(layer) {
@@ -8117,33 +8227,12 @@ M = {
 				layer._icon.style.fontSize = sectorfontsize + "px";
 				layer._icon.style.opacity = sectoropacity;
 				layer._icon.style.zIndex = that.cZIndexBury + 1; // Don't cover other icons
-				if (O.Options.bol_displaySectors)
+				if (sectorboolean)
 				{
 					layer._icon.style.display = "table"; // For middle vertical alignment
 				}
 			}
 		});
-		
-		// Event Icon
-		if (O.Options.bol_displayEvents)
-		{
-			this.ZoneCurrent.Layers.EventIcon.eachLayer(function(layer) {
-				that.changeMarkerIcon(layer, layer._icon.src, eventiconsize);
-				if (layer._icon)
-				{
-					layer._icon.style.zIndex = M.cZIndexRaise;
-				}
-			});
-
-			// Event Ring
-			this.ZoneCurrent.Layers.EventRing.eachLayer(function(layer) {
-				that.changeMarkerIcon(layer, layer._icon.src, eventringsize);
-				if (layer._icon)
-				{
-					layer._icon.style.zIndex = M.cZIndexBury;
-				}
-			});
-		}
 		
 		// Character pin and camera FOV
 		this.updateCharacter(-1);
@@ -8999,19 +9088,21 @@ M = {
 	 * Translates the zones list in the Map page and bind click zoom behavior.
 	 * @pre The translated names from the API was retrieved.
 	 */
-	bindZoneList: function()
+	bindZoneList: function(pMapObject)
 	{
-		$("#mapZoneList li").each(function()
+		var that = pMapObject;
+		var htmlidprefix = "#" + that.MapEnum;
+		$(htmlidprefix + "ZoneList li").each(function()
 		{
 			var zonenick = $(this).attr("data-zone");
-			$(this).text(M.getZoneName(zonenick));
-			$(this).attr("data-coord", M.getZoneCenter(zonenick).toString());
-			M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
+			$(this).text(that.getZoneName(zonenick));
+			$(this).attr("data-coord", that.getZoneCenter(zonenick).toString());
+			that.bindMapLinkBehavior($(this), that.ZoomEnum.Sky);
 		});
-		$("#mapZoneList h2").each(function()
+		$(htmlidprefix + "ZoneList h2").each(function()
 		{
 			var regionnick = $(this).attr("data-region");
-			$(this).text(D.getObjectName(M.Regions[regionnick]));
+			$(this).text(D.getObjectName(that.Regions[regionnick]));
 		});
 	},
 	
@@ -9265,7 +9356,7 @@ P = {
 	},
 	
 	/*
-	 * Gets a greedy shortest path from an array of coordinates.
+	 * Gets a nearest-immediate-neighbor path from an array of coordinates.
 	 * @param 2D array pCoords of GW2 coordinates.
 	 * @param int pStart index of the optional starting coordinate.
 	 * @returns 2D array path.
@@ -11220,6 +11311,7 @@ W = {
 	{
 		Same: -1,
 		Min: 0,
+		Overview: 2,
 		Default: 3,
 		Space: 3,
 		Sky: 4,
@@ -11267,6 +11359,7 @@ W = {
 		W.Regions = GW2T_REALM_DATA;
 		
 		W.initializeMap();
+		I.styleContextMenu("#wvwContext");
 	},
 	
 	finishPopulation: function()
@@ -12646,11 +12739,9 @@ T = {
 		var weekdaylocation = T.getDashboardSupplyWeekday();
 		var supplyname = D.getObjectName(T.DashboardSupply);
 		var supplycodes = "";
-		var counter = 1;
 		for (var i in T.DashboardSupply.Codes)
 		{
-			supplycodes += counter + "." + (T.DashboardSupply.Codes[i])[weekdaylocation] + " ";
-			counter++;
+			supplycodes += i + "@" + (T.DashboardSupply.Codes[i])[weekdaylocation] + " ";
 		}
 		supplycodes += "- " + supplyname;
 		$("#dsbSupply").empty().append("<div><kbd id='dsbSupplyHeader' class='curToggle'><img src='img/map/vendor_karma.png' /> "
@@ -12659,7 +12750,7 @@ T = {
 			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString(window.navigator.language, {
 					year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long" })
-				+ "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.'>Info</a> "
+				+ "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.<br />Limit 1 purchase per vendor.'>Info</a> "
 			+ "<u class='curZoom' id='dsbSupplyDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
 			+ "<input id='dsbSupplyCodes' class='cssInputText' type='text' value='" + supplycodes + "' /> "
 		+ "</div><div id='dsbSupplyTable' class='jsScrollable'></div>");
@@ -14534,7 +14625,7 @@ I = {
 		{
 			I.selectText("#cslContent");
 		});
-		$("#mapOptions, #wvwOptions, #mapGPS, #wvwGPS").one("mouseenter", function()
+		$(".mapOptions, .mapGPS").one("mouseenter", function()
 		{
 			$(this).find("img").each(function()
 			{
