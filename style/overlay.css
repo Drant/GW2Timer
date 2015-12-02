@@ -50,15 +50,15 @@
 .mapGPS {
 	display: inline-block;
 }
-#mapCoordinates, #wvwCoordinates {
+.mapCoordinates {
 	bottom: 6px; left: 6px;
 }
-#mapCoordinates input, #wvwCoordinates input {
+.mapCoordinates input {
 	width: 80px; height: 12px;
 	margin-left: 5px;
 	font-size: 12px;
 }
-#mapCoordinatesName, #wvwCoordinatesName {
+input.mapCoordinatesName {
 	width: 116px;
 }
 #mapTime {

@@ -883,7 +883,7 @@ textarea.jsCopyCode {
 .mapCoordinates input::selection {
 	background: #66aaff;
 }
-input#mapCoordinatesName, input#wvwCoordinatesName {
+input.mapCoordinatesName {
 	width: 145px; 
 }
 #mapTime {
