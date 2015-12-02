@@ -298,7 +298,6 @@ div#qTip dfn { /* Highlight color for emphasis text in tooltip */
 	background-color: #999;
 }
 
-
 /* Custom cursors
 ----------------------------------------------------------------------------- */
 
@@ -310,7 +309,7 @@ html, body,
 
 /* Clickable */
 .curClick, a, kbd, input, label, button,
-.mapHUDButton, .ctxMenu li,
+.mapHUDButton, .itemContext li,
 .menuBeam img:hover, .jsSectionDone,
 .chnCheck:hover, .chnTitle time {
 	cursor: url("img/cursor/pointer.cur"), pointer;
@@ -338,7 +337,7 @@ html, body,
 
 /* Context menus
 ----------------------------------------------------------------------------- */
-.ctxMenu {
+.itemContext {
 	display: none;
 	position: fixed; z-index: 1000;
 	border: 2px solid #aaa;
@@ -354,15 +353,247 @@ html, body,
 	opacity: 0.9;
 }
 
-.ctxMenu li {
+.itemContext li {
 	margin-bottom: 6px;
 	padding: 2px 4px 2px 6px;
 }
-.ctxMenu li:last-child {
+.itemContext li:last-child {
 	margin-bottom: 0;
 }
-.ctxMenu li:hover {
+.itemContext li:hover {
 	background: linear-gradient(to right, #7c7253 0%, #212021 100%);
+}
+
+/* Composition container for default writing style
+----------------------------------------------------------------------------- */
+.cntComposition {
+	width: auto; min-height: 36px;
+	margin: 8px;
+	margin-left: 0px;
+	padding: 4px 8px 18px 12px;
+	border: 1px solid #111;
+	border-radius: 8px;
+	background: #222;
+	background: linear-gradient(to right, #111 0%, #333 100%);
+	font-family: sans-serif;
+	font-size: 12px;
+	line-height: 150%;
+	color: #eee;
+	text-shadow: 0px 0px 2px black;
+}
+
+.cntPopup {
+	border: 2px solid #111;
+	border-radius: 4px;
+	box-shadow: 0px 0px 2px #555;
+	background: #222;
+	background: linear-gradient(to right, #111 0%, #333 100%);
+	opacity: 0.9;
+}
+
+.cntComposition input[type="text"], .cntComposition textarea {
+	width: auto;
+	margin: 0;
+	padding: 2px;
+	overflow: hidden;
+	border: 1px solid #555;
+	background: #222;
+	font-family: sans-serif;
+	color: #ffddcc;
+}
+
+.cntComposition input[type="text"]:hover, .cntComposition textarea:hover {
+	border: 1px solid red;
+}
+
+.cntComposition fieldset {
+	display: inline-block;
+	padding: 4px;
+	margin-bottom: 16px;
+	border: 1px solid gray;
+}
+.cntComposition fieldset legend {
+	font-weight: bold;
+}
+.cntComposition fieldset label:hover {
+	background: #333;
+}
+
+.cntComposition label {
+	display: block;
+	clear: both;
+	margin-bottom: 8px;
+}
+
+.cntComposition button, .cssButton {
+	min-width: 24px; min-height: 24px;
+	margin: 0;
+	padding-left: 4px;
+	padding-right: 4px;
+	vertical-align: middle;
+	border: 1px solid #222;
+	border-radius: 4px;
+	background: #333;
+	background: linear-gradient(to bottom, #444 0%, #333 100%);
+	color: white;
+	text-decoration: none;
+	text-shadow:
+		1px 1px 0px #000,
+		-1px -1px 0px #000,
+		1px -1px 0px #000,
+		-1px 1px 0px #000,
+		1px 1px 0px #000;
+}
+.cntComposition button:hover, .cssButton:hover {
+	border: 1px solid red;
+}
+.cntComposition button:active, .cssButton:active {
+	background: #444;
+	background: linear-gradient(to bottom, #333 0%, #444 100%);
+}
+.cntComposition button.btnFocused {
+	border: 1px solid #ddff77;
+}
+.cntComposition button img {
+	width: 24px; height: 24px;
+}
+.cntComposition button.btnUncheck img {
+	width: 64px; height: 32px;
+}
+.cntComposition button.btnDefault img {
+	width: 32px; height: 32px;
+}
+
+.cntComposition hr {
+	margin-top: 8px;
+	margin-bottom: 4px;
+}
+
+.cntComposition h1, header.cntHeader {
+	padding-top: 12px;
+	margin-bottom: 8px;
+	font-size: 20px;
+	text-shadow: 0px 0px 2px #e4e0b3;
+}
+header.cntHeader {
+	font-variant: small-caps;
+	text-decoration: none;
+	letter-spacing: 2px;
+}
+.cntComposition h2 {
+	margin-top: 4px;
+	margin-bottom: 2px;
+	font-size: 16px;
+	text-shadow: 0px 0px 1px #e4e0b3;
+}
+.cntComposition h3 {
+	margin-left: 12px;
+	margin-bottom: 2px;
+	font-size: 14px;
+	text-shadow: 0px 0px 1px #e4e0b3;
+}
+.cntComposition h1, .cntComposition h2, .cntComposition h3, header.cntHeader {
+	font-weight: bold;
+	color: #e4e0b3;
+}
+
+.cntComposition em {
+	font-style: italic;
+}
+
+.cntComposition strong {
+	font-weight: bold;
+}
+
+.cntComposition p {
+	margin-bottom: 16px;
+}
+
+.cntComposition a {
+	color: #ccc;
+}
+.cntComposition a:visited {
+	color: #999;
+}
+.cntComposition a:hover {
+	color: #e4e0b3;
+}
+.cntComposition a:active {
+	color: white;
+}
+
+.cntComposition dt {
+	display: inline;
+	font-weight: bold;
+}
+
+.cntComposition dd {
+	margin-left: 12px;
+}
+
+dfn, .mapZoneLinks li, .mapZoneLinks dt {
+	font-weight: bold;
+	color: #ffcc77;
+}
+dfn:hover, .mapZoneLinks li:hover, .mapZoneLinks dt:hover {
+	color: #ffdda6;
+}
+dfn:active, .mapZoneLinks li:active, .mapZoneLinks dt:active {
+	color: white;
+}
+
+.cntIconExample {
+	width: 24px; height: 24px;
+}
+.cntDivider {
+	width: 100%;
+	border-bottom: 1px solid black;
+}
+.cntOptionMini {
+	display: inline-block;
+	padding: 2px 4px 2px 4px;
+	border: 1px solid gray;
+}
+.cntOptionMini label {
+	display: inline;
+}
+
+.itemThrobber {
+	display: block;
+	width: 100%; height: 64px;
+	text-align: center;
+}
+.itemThrobber em {
+	display: inline-block;
+	width: 64px; height: 64px;
+	background: url("img/ui/favicon.png");
+	-webkit-animation: spin 1s linear infinite;
+    -moz-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.jsHelpTooltip, .jsHelpCollapsible {
+	float: right;
+	font-family: sans-serif;
+	font-size: 12px;
+	font-variant: small-caps;
+	font-weight: bold;
+	letter-spacing: 2px;
+	color: white;
+	text-shadow: 0px 0px 2px #e4e0b3;
+}
+.jsHelpCollapsible:hover {
+	color: #ddff77;
+	text-decoration: underline;
+}
+
+textarea.jsCopyCode {
+	width: 300px;
+	font-family: monospace;
+	color: #ddff77;
 }
 
 
@@ -378,7 +609,7 @@ html, body,
 
 /* @@Map pane. z-index priority: Peripheral > Dashboard > Timeline
 ----------------------------------------------------------------------------- */
-#mapPane, #wvwPane {
+.mapPane {
 	height: 100%;
 	min-height: 220px;
 	background: url("img/background/space.jpg") repeat center;
@@ -632,12 +863,12 @@ html, body,
 }
 
 /* Bottom left corner: Coordinates bar */
-#mapCoordinates, #wvwCoordinates {
+.mapCoordinates {
 	position: absolute;
 	bottom: 12px; left: 12px;
 	z-index: 9;
 }
-#mapCoordinates input, #wvwCoordinates input, .cssInputText {
+.mapCoordinates input, .cssInputText {
 	display: inline-block;
 	width: 90px;
 	height: 16px;
@@ -649,7 +880,7 @@ html, body,
 	color: #ddff77;
 	opacity: 0.6;
 }
-#mapCoordinates input::selection, #wvwCoordinates input::selection {
+.mapCoordinates input::selection {
 	background: #66aaff;
 }
 input#mapCoordinatesName, input#wvwCoordinatesName {
@@ -672,11 +903,11 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 .mapPeripheral div {
 	text-align: left;
 }
-#mapPeripheralNorth, #wvwPeripheralNorth {
+.mapPeripheralNorth {
 	position: absolute;
 	top: 4px; right: 12px;
 }
-#mapPeripheralSouth {
+.mapPeripheralSouth {
 	position: absolute;
 	bottom: 4px; right: 12px;
 }
@@ -741,28 +972,27 @@ input#mapCoordinatesName, input#wvwCoordinatesName {
 }
 
 /* Map options */
-#mapOptionsDisplay, #mapOptionsOther,
-#wvwOptionsDisplay, #wvwOptionsOther{
+.mapOptionsDisplay, .mapOptionsOther {
 	display: inline-block;
 	vertical-align: top;
 }
-#mapOptionsDisplay, #wvwOptionsDisplay {
+.mapOptionsDisplay {
 	padding-right: 8px;
 	margin-right: 4px;
 	border-right: 1px solid gray;
 }
-#mapOptionsCompletion, #wvwOptionsCompletion {
+.mapOptionsCompletion {
 	margin-bottom: 8px;
 	border-bottom: 1px solid gray;
 }
-#mapOptionsCompletion label, #wvwOptionsCompletion label {
+.mapOptionsCompletion label {
 	margin: 0;
 	padding: 0;
 }
-#mapOptionsOther label, #wvwOptionsOther label {
+.mapOptionsOther label {
 	margin-bottom: 4px;
 }
-#mapOptionsPopup label img, #wvwOptionsPopup label img {
+.mapOptionsPopup label img {
 	width: 24px; height: 24px;
 	margin-right: 4px;
 }
@@ -1355,236 +1585,6 @@ header.jsSection sup {
 }
 #plateMap, #plateWvW, #plateHelp, #plateOptions {
 	display: none;
-}
-
-.cntComposition {
-	width: auto; min-height: 36px;
-	margin: 8px;
-	margin-left: 0px;
-	padding: 4px 8px 18px 12px;
-	border: 1px solid #111;
-	border-radius: 8px;
-	background: #222;
-	background: linear-gradient(to right, #111 0%, #333 100%);
-	font-family: sans-serif;
-	font-size: 12px;
-	line-height: 150%;
-	color: #eee;
-	text-shadow: 0px 0px 2px black;
-}
-
-.cntPopup {
-	border: 2px solid #111;
-	border-radius: 4px;
-	box-shadow: 0px 0px 2px #555;
-	background: #222;
-	background: linear-gradient(to right, #111 0%, #333 100%);
-	opacity: 0.9;
-}
-
-.cntComposition input[type="text"], .cntComposition textarea {
-	width: auto;
-	margin: 0;
-	padding: 2px;
-	overflow: hidden;
-	border: 1px solid #555;
-	background: #222;
-	font-family: sans-serif;
-	color: #ffddcc;
-}
-
-.cntComposition input[type="text"]:hover, .cntComposition textarea:hover {
-	border: 1px solid red;
-}
-
-.cntComposition fieldset {
-	display: inline-block;
-	padding: 4px;
-	margin-bottom: 16px;
-	border: 1px solid gray;
-}
-.cntComposition fieldset legend {
-	font-weight: bold;
-}
-.cntComposition fieldset label:hover {
-	background: #333;
-}
-
-.cntComposition label {
-	display: block;
-	clear: both;
-	margin-bottom: 8px;
-}
-
-.cntComposition button, .cssButton {
-	min-width: 24px; min-height: 24px;
-	margin: 0;
-	padding-left: 4px;
-	padding-right: 4px;
-	vertical-align: middle;
-	border: 1px solid #222;
-	border-radius: 4px;
-	background: #333;
-	background: linear-gradient(to bottom, #444 0%, #333 100%);
-	color: white;
-	text-decoration: none;
-	text-shadow:
-		1px 1px 0px #000,
-		-1px -1px 0px #000,
-		1px -1px 0px #000,
-		-1px 1px 0px #000,
-		1px 1px 0px #000;
-}
-.cntComposition button:hover, .cssButton:hover {
-	border: 1px solid red;
-}
-.cntComposition button:active, .cssButton:active {
-	background: #444;
-	background: linear-gradient(to bottom, #333 0%, #444 100%);
-}
-.cntComposition button.btnFocused {
-	border: 1px solid #ddff77;
-}
-.cntComposition button img {
-	width: 24px; height: 24px;
-}
-.cntComposition button.btnUncheck img {
-	width: 64px; height: 32px;
-}
-.cntComposition button.btnDefault img {
-	width: 32px; height: 32px;
-}
-
-.cntComposition hr {
-	margin-top: 8px;
-	margin-bottom: 4px;
-}
-
-.cntComposition h1, header.cntHeader {
-	padding-top: 12px;
-	margin-bottom: 8px;
-	font-size: 20px;
-	text-shadow: 0px 0px 2px #e4e0b3;
-}
-header.cntHeader {
-	font-variant: small-caps;
-	text-decoration: none;
-	letter-spacing: 2px;
-}
-.cntComposition h2 {
-	margin-top: 4px;
-	margin-bottom: 2px;
-	font-size: 16px;
-	text-shadow: 0px 0px 1px #e4e0b3;
-}
-.cntComposition h3 {
-	margin-left: 12px;
-	margin-bottom: 2px;
-	font-size: 14px;
-	text-shadow: 0px 0px 1px #e4e0b3;
-}
-.cntComposition h1, .cntComposition h2, .cntComposition h3, header.cntHeader {
-	font-weight: bold;
-	color: #e4e0b3;
-}
-
-.cntComposition em {
-	font-style: italic;
-}
-
-.cntComposition strong {
-	font-weight: bold;
-}
-
-.cntComposition p {
-	margin-bottom: 16px;
-}
-
-.cntComposition a {
-	color: #ccc;
-}
-.cntComposition a:visited {
-	color: #999;
-}
-.cntComposition a:hover {
-	color: #e4e0b3;
-}
-.cntComposition a:active {
-	color: white;
-}
-
-.cntComposition dt {
-	display: inline;
-	font-weight: bold;
-}
-
-.cntComposition dd {
-	margin-left: 12px;
-}
-
-dfn, .mapZoneLinks li, .mapZoneLinks dt {
-	font-weight: bold;
-	color: #ffcc77;
-}
-dfn:hover, .mapZoneLinks li:hover, .mapZoneLinks dt:hover {
-	color: #ffdda6;
-}
-dfn:active, .mapZoneLinks li:active, .mapZoneLinks dt:active {
-	color: white;
-}
-
-.cntIconExample {
-	width: 24px; height: 24px;
-}
-.cntDivider {
-	width: 100%;
-	border-bottom: 1px solid black;
-}
-.cntOptionMini {
-	display: inline-block;
-	padding: 2px 4px 2px 4px;
-	border: 1px solid gray;
-}
-.cntOptionMini label {
-	display: inline;
-}
-
-.itemThrobber {
-	display: block;
-	width: 100%; height: 64px;
-	text-align: center;
-}
-.itemThrobber em {
-	display: inline-block;
-	width: 64px; height: 64px;
-	background: url("img/ui/favicon.png");
-	-webkit-animation: spin 1s linear infinite;
-    -moz-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
-}
-@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
-
-.jsHelpTooltip, .jsHelpCollapsible {
-	float: right;
-	font-family: sans-serif;
-	font-size: 12px;
-	font-variant: small-caps;
-	font-weight: bold;
-	letter-spacing: 2px;
-	color: white;
-	text-shadow: 0px 0px 2px #e4e0b3;
-}
-.jsHelpCollapsible:hover {
-	color: #ddff77;
-	text-decoration: underline;
-}
-
-textarea.jsCopyCode {
-	width: 300px;
-	font-family: monospace;
-	color: #ddff77;
 }
 
 /* @@Chains plate

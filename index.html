@@ -60,8 +60,8 @@
 	<div id="panelMap" class="panelMain">
 		<!-- Map, the dummy nbsp is required or Leaflet won't show
 		==================================================================== -->
-		<section id="mapPane">&nbsp;
-			<div id="mapContext" class="ctxMenu">
+		<section id="mapPane" class="mapPane">&nbsp;
+			<div id="mapContext" class="itemContext">
 				<ul>
 					<li id="mapContextCenter">Center map</li>
 					<li id="mapContextToggleLock">Toggle map lock</li>
@@ -86,12 +86,12 @@
 				<div id="tmlIndicator"></div>
 			</div>
 			<time id="mapTime"></time>
-			<div id="mapCoordinates">
+			<div class="mapCoordinates">
 				<input id="mapCoordinatesMouse" type="text" />
 				<input id="mapCoordinatesCopy" type="text" />
 				<input id="mapCoordinatesName" type="text" />
 			</div>
-			<div id="mapPeripheralNorth" class="mapPeripheral">
+			<div class="mapPeripheral mapPeripheralNorth">
 				<div id="mapQuickURL">
 					<u><a class="jsTranslate linkExternal" title="<dfn>Go to Forum</dfn>" href="http://forum.renaka.com/forum/368355/">forum</a></u><span> /</span>
 					<u><a class="jsTranslate" title="<dfn>Switch to Simple Mode (clock only)</dfn><br />gw2timer.com/s<br /><div class='mapLoc'><img src='http://i.imgur.com/Nk42voP.png' /></div>" href="./?mode=Simple">simple</a></u><span> /</span>
@@ -111,10 +111,10 @@
 				</div>
 				<div class="mapOptions mapHUDContainer">
 					<img id="mapDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
-					<div id="mapOptionsPopup" class="mapHUDPopup cntComposition">
-						<div id="mapOptionsDisplay">
+					<div class="mapOptionsPopup mapHUDPopup cntComposition">
+						<div class="mapOptionsDisplay">
 							<label title="Show/Hide all icons listed below.<br /><dfn>Right click on the map</dfn> to show the world completion route."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
-							<div id="mapOptionsCompletion">
+							<div id="mapOptionsCompletion" class="mapOptionsCompletion">
 								<label><img data-src="img/ui/question.png" /><input id="opt_bol_showZoneOverview" type="checkbox" /> Zone Overview</label>
 								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectors" type="checkbox" /> Sector Names</label>
 								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypoints" type="checkbox" /> Waypoints</label>
@@ -125,7 +125,7 @@
 							</div>
 							<label title="Show/Hide possible zone events.<br />Will increase initial site load time if enabled.<br />Most in-game events have a cooldown of 15 minutes.<br />They can become active by simply being near them."><img data-src="img/event/swords.png" /><input id="opt_bol_displayEvents" type="checkbox" /> Dynamic Events</label>
 						</div>
-						<div id="mapOptionsOther">
+						<div class="mapOptionsOther">
 							<label><img data-src="img/map/floor.png" /><input id="opt_int_setFloor" style="width:140px" type="range" min="0" max="3" step="1" title="Set map floor level.<br />Example: Verdant Brink has multiple floors." /></label>
 							<label title="Show/Hide region-colored borders over zones."><img data-src="img/map/border.png" /><input id="opt_bol_showZoneBorders" type="checkbox" /> Show zone borders</label>
 							<label title="Show/Hide gateways between zones."><img data-src="img/map/gateway_gate.png" /><input id="opt_bol_showZoneGateways" type="checkbox" /> Show zone gateways</label>
@@ -209,15 +209,15 @@
 					</div>
 				</div>
 			</div>
-			<div id="mapPeripheralSouth" class="mapPeripheral">
+			<div class="mapPeripheral mapPeripheralSouth">
 				<a class="linkExternal" title="<dfn>Download the app to run GW2Timer in game!</dfn><br /><div class='mapLoc'><img src='http://i.imgur.com/mZ1Tboj.png' /></div>" href="http://forum.renaka.com/topic/5546166/">
 					<img id="itemLogo" src="img/ui/favicon.png" alt="Overlay Application" />gw2timer.com <u>overlay</u>
 				</a>
 			</div>
 			</article>
 		</section>
-		<section id="wvwPane">&nbsp;
-			<div id="wvwContext" class="ctxMenu">
+		<section id="wvwPane" class="mapPane">&nbsp;
+			<div id="wvwContext" class="itemContext">
 				<ul>
 					<li id="wvwContextCenter">Center map</li>
 					<li id="wvwContextToggleLock">Toggle map lock</li>
@@ -225,12 +225,12 @@
 				</ul>
 			</div>
 			<article id="wvwHUDPane">
-			<div id="wvwCoordinates">
+			<div class="mapCoordinates">
 				<input id="wvwCoordinatesMouse" type="text" />
 				<input id="wvwCoordinatesCopy" type="text" />
 				<input id="wvwCoordinatesName" type="text" />
 			</div>
-			<div id="wvwPeripheralNorth" class="mapPeripheral">
+			<div class="mapPeripheral mapPeripheralNorth">
 				<div id="wvwSwitch" class="mapHUDContainer">
 					<img id="wvwSwitchButton" class="mapHUDButton" title="<dfn> Click to Map </dfn>" src="img/ui/pages/map.png" alt="display" />
 				</div>
@@ -243,10 +243,10 @@
 				</div>
 				<div class="mapOptions mapHUDContainer">
 					<img id="wvwDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
-					<div id="wvwOptionsPopup" class="mapHUDPopup cntComposition">
-						<div id="wvwOptionsDisplay">
+					<div class="mapOptionsPopup mapHUDPopup cntComposition">
+						<div class="mapOptionsDisplay">
 							<label title="Show/Hide all icons listed below.<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletionWvW" type="checkbox" /> Show completion</label>
-							<div id="wvwOptionsCompletion">
+							<div id="wvwOptionsCompletion" class="mapOptionsCompletion">
 								<label><img data-src="img/ui/question.png" /><input id="opt_bol_showZoneOverviewWvW" type="checkbox" /> Zone Overview</label>
 								<label><img data-src="img/map/scope.png" /><input id="opt_bol_displaySectorsWvW" type="checkbox" /> Sector Names</label>
 								<label><img data-src="img/map/waypoint_h.png" /><input id="opt_bol_displayWaypointsWvW" type="checkbox" /> Waypoints</label>
@@ -255,7 +255,7 @@
 								<label><img data-src="img/map/challenge.png" /><input id="opt_bol_displayChallengesWvW" type="checkbox" /> Hero Challenges</label>
 							</div>
 						</div>
-						<div id="wvwOptionsOther">
+						<div class="mapOptionsOther">
 							
 						</div>
 					</div>

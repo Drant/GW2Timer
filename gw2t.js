@@ -7659,11 +7659,11 @@ M = {
 				I.write(
 				"Guild Wars 2 API server is unreachable.<br />"
 				+ "Reasons could be:<br />"
-				+ "- The GW2 server is down for maintenance.<br />"
+				+ "- The ArenaNet server is down for maintenance.<br />"
 				+ "- Your browser is too old (if IE then need 11+).<br />"
 				+ "- Your computer's time is out of sync.<br />"
 				+ "- This website's code encountered a bug.<br />"
-				+ "Map features will be limited.<br />", 0);
+				+ "Map features will be limited.<br />", 20);
 			}
 		}).always(function() // Do after AJAX regardless of success/failure
 		{
@@ -14343,6 +14343,7 @@ I = {
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
 	cLevelMax: 80,
+	cAJAXGlobalTimeout: 5000, // milliseconds
 	cPNG: ".png", // Almost all used images are PNG
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
 	cTextDelimiterChar: "|",
@@ -14567,6 +14568,9 @@ I = {
 			I.BrowserCurrent = I.BrowserEnum.Opera;
 		}
 		
+		// Set the maximum wait time for all non-custom AJAX requests, such as getJSON
+		$.ajaxSetup({ timeout: I.cAJAXGlobalTimeout });
+		
 		// Add throbber to AJAX loaded pages
 		$("#plateMap, #plateWvW, #plateHelp").each(function()
 		{
@@ -14593,6 +14597,7 @@ I = {
 		// Bind switch map buttons
 		$("#mapSwitchButton").one("click", function()
 		{
+			I.loadStylesheet("wvw");
 			$.getScript(U.URL_DATA.WvW).done(function()
 			{
 				W.initializeWvW();
@@ -15334,7 +15339,7 @@ I = {
 	},
 	
 	/*
-	 * Loads a stylesheet file that was named with a prefix.
+	 * Loads a stylesheet file from the default directory.
 	 * @param string pName filename without extension.
 	 */
 	loadStylesheet: function(pName)

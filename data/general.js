@@ -1069,12 +1069,12 @@ Supply:
 	},
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43804", price: "25200" },
-		Fox: { id: "67962", price: "25200" },
-		Derwena: { id: "43837", price: "25200" },
-		Yana: { id: "44653", price: "25200" },
-		Katyn: { id: "75473", price: "25200" },
-		Verma: { id: "49737", price: "12600" }
+		Mehem: { id: "43816", price: "25200" },
+		Fox: { id: "43799", price: "12600" },
+		Derwena: { id: "43804", price: "25200" },
+		Yana: { id: "43834", price: "25200" },
+		Katyn: { id: "43798", price: "12600" },
+		Verma: { id: "43835", price: "25200" }
 	}
 }
 };
@@ -1086,15 +1086,9 @@ Supply:
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
 var GW2T_DAILY_DATA = {
-	Start: new Date("2015-12-01T00:00:00Z"),
-	Finish: new Date("2015-12-02T00:00:00Z"),
+	Start: new Date("2015-12-02T00:00:00Z"),
+	Finish: new Date("2015-12-03T00:00:00Z"),
 	Today: 
-	{
-		pve: ["Miner Jungle", "Fractal", "Brisban", "SB"],
-		pvp: ["Kills", "Capture", "Thief Ele", "Rev Mes"],
-		wvw: ["Land", "Caravan", "Tower", "Keep"]
-	},
-	Tomorrow:
 	{
 		pve: ["Lumberer Kryta", "Activity", "Metrica", "Maw"],
 		pvp: ["Defender", "Rank", "Ranger Thief", "Rev Necro"],

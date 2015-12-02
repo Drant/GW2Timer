@@ -18,10 +18,10 @@
 	left: -4px; top: -4px;
 }
 
-.ctxMenu {
+.itemContext {
 	font-size: 14px;
 }
-.ctxMenu li {
+.itemContext li {
 	margin-bottom: 2px;
 	padding: 1px 2px 1px 4px;
 }
