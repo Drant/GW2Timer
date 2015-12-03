@@ -31,180 +31,188 @@ var GW2T_REALM_DATA = {
 };
 
 /*
- * This associates the land's nick with their ID number in the API JSON for
- * access in constant time.
- */
-var GW2T_LAND_ASSOCIATION = {
-	"38": "eternal",
-	"350": "heart",
-	"549": "kyhlo",
-	"554": "niflhel",
-	"795": "foefire",
-	"872": "fractals",
-	"875": "storm",
-	"894": "spirit",
-	"900": "skyhammer",
-	"984": "courtyard",
-	"968": "edge",
-	"1011": "champion",
-	"1099": "desertred",
-	"1102": "desertgreen",
-	"1143": "desertblue"
-};
-
-/*
  * Lands are sorted by importance.
  */
 var GW2T_LAND_DATA = {
 "eternal": // south side
 {
+	id: "38",
 	name_en: "Eternal Battlegrounds",
 	name_de: "Ewige Schlachtfelder",
 	name_es: "Campos de batalla eternos",
 	name_fr: "Champs de bataille éternels",
 	name_zh: "永恆戰場",
-	realm: "wvw",
-	rect: [[8958, 12798], [12030, 15870]]
+	region: "wvw",
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[8958, 12798], [12030, 15870]]
 },
 "desertred": // north side
 {
+	id: "1099",
 	name_en: "Red Borderlands",
 	name_de: "Rot Grenzlande",
 	name_es: "Tierras Fronterizas de rojo",
 	name_fr: "Territoires frontaliers rouge",
 	name_zh: "沙漠邊境之地紅色",
-	realm: "wvw",
-	rect: [[9214, 8958], [12286, 12030]]
+	region: "wvw",
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[9214, 8958], [12286, 12030]]
 },
 "desertgreen": // east side
 {
+	id: "1102",
 	name_en: "Green Borderlands",
 	name_de: "Grün Grenzlande",
 	name_es: "Tierras Fronterizas de verde",
 	name_fr: "Territoires frontaliers vert",
 	name_zh: "沙漠邊境之地綠色的",
-	realm: "wvw",
-	rect: [[5630, 11518], [8702, 14590]]
+	region: "wvw",
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[5630, 11518], [8702, 14590]]
 },
 "desertblue": // west side
 {
+	id: "1143",
 	name_en: "Blue Borderlands",
 	name_de: "Blau Grenzlande",
 	name_es: "Tierras Fronterizas de azul",
 	name_fr: "Territoires frontaliers bleu",
 	name_zh: "沙漠邊境之地藍色",
-	realm: "wvw",
-	rect: [[12798, 10878], [15870, 13950]]
+	region: "wvw",
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[12798, 10878], [15870, 13950]]
 },
 "edge":
 {
+	id: "968",
 	name_en: "Edge of the Mists",
 	name_de: "Rand der Nebel",
 	name_es: "El Borde de la Niebla",
 	name_fr: "La lisière des Brumes",
 	name_zh: "迷霧邊界",
-	realm: "wvw",
-	rect: [[5994, 8446], [9066, 11518]]
+	region: "wvw",
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[5994, 8446], [9066, 11518]]
 },
 "fractals":
 {
+	id: "872",
 	name_en: "Fractals of the Mists",
 	name_de: "Fraktale der Nebel",
 	name_es: "Fractales de la Niebla",
 	name_fr: "Fractales des Brumes",
 	name_zh: "迷霧碎層",
-	realm: "fotm",
-	rect: [[10880, 3328], [13952, 6400]]
+	region: "fotm",
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[10880, 3328], [13952, 6400]]
 },
 "heart":
 {
+	id: "350",
 	name_en: "Heart of the Mists",
 	name_de: "Herz der Nebel",
 	name_es: "Corazón de la Niebla",
 	name_fr: "Cœur des Brumes",
 	name_zh: "迷霧之心",
-	realm: "pvp",
-	rect: [[4865, 6398], [6657, 8190]]
+	region: "pvp",
+	map_rect: [[-21504, -21504], [21504, 21504]],
+	continent_rect: [[4865, 6398], [6657, 8190]]
 },
 "kyhlo":
 {
+	id: "549",
 	name_en: "Battle of Kyhlo",
 	name_de: "Die Schlacht von Kyhlo",
 	name_es: "La Batalla de Kyhlo",
 	name_fr: "Bataille de Kyhlo",
 	name_zh: "凱洛城之戰",
-	realm: "pvp",
-	rect: [[3326, 5374], [4094, 6142]]
+	region: "pvp",
+	map_rect: [[-9216, -9216], [9216, 9216]],
+	continent_rect: [[3326, 5374], [4094, 6142]]
 },
 "niflhel":
 {
+	id: "554",
 	name_en: "Forest of Niflhel",
 	name_de: "Der Wald von Niflhel",
 	name_es: "Bosque de Niflhel",
 	name_fr: "Forêt de Niflhel",
 	name_zh: "尼菲爾森林",
-	realm: "pvp",
-	rect: [[7038, 4860], [8062, 5500]]
+	region: "pvp",
+	map_rect: [[-12288, -6144], [12288, 9216]],
+	continent_rect: [[7038, 4860], [8062, 5500]]
 },
 "foefire":
 {
+	id: "795",
 	name_en: "Legacy of the Foefire",
 	name_de: "Vermächtnis des Feindfeuers",
 	name_es: "El Legado del Fuego Enemigo",
 	name_fr: "Héritage du Fléau de feu",
 	name_zh: "煉獄的遺產",
-	realm: "pvp",
-	rect: [[2558, 8190], [3454, 9342]]
+	region: "pvp",
+	map_rect: [[-9216, -12288], [12288, 15360]],
+	continent_rect: [[2558, 8190], [3454, 9342]]
 },
 "storm":
 {
+	id: "875",
 	name_en: "Temple of the Silent Storm",
 	name_de: "Tempel des stillen Sturms",
 	name_es: "Templo de la Tormenta Silenciosa",
 	name_fr: "Temple de la Tempête silencieuse",
 	name_zh: "靜風神殿",
-	realm: "pvp",
-	rect: [[4096, 9344], [5120, 9984]]
+	region: "pvp",
+	map_rect: [[-12288, -6144], [12288, 9216]],
+	continent_rect: [[4096, 9344], [5120, 9984]]
 },
 "spirit":
 {
+	id: "894",
 	name_en: "Spirit Watch",
 	name_de: "Geisterwacht",
 	name_es: "Vigilancia del Espíritu",
 	name_fr: "Observatoire des Esprits",
 	name_zh: "眾靈守望",
-	realm: "pvp",
-	rect: [[1920, 5248], [2944, 6272]]
+	region: "pvp",
+	map_rect: [[-12288, -12288], [12288, 12288]],
+	continent_rect: [[1920, 5248], [2944, 6272]]
 },
 "skyhammer":
 {
+	id: "900",
 	name_en: "Skyhammer",
 	name_de: "Hammer des Himmels",
 	name_es: "Martillo Celestial",
 	name_fr: "Marteau céleste",
 	name_zh: "天空巨錘",
-	realm: "pvp",
-	rect: [[7168, 7422], [8192, 8062]]
+	region: "pvp",
+	map_rect: [[-12288, -6144], [12288, 9216]],
+	continent_rect: [[7168, 7422], [8192, 8062]]
 },
 "courtyard":
 {
+	id: "984",
 	name_en: "Courtyard",
 	name_de: "Hof",
 	name_es: "Patio",
 	name_fr: "Cour",
 	name_zh: "庭院",
-	realm: "pvp",
-	rect: [[2048, 7040], [3072, 8064]]
+	region: "pvp",
+	map_rect: [[-12288, -12288], [12288, 12288]],
+	continent_rect: [[2048, 7040], [3072, 8064]]
 },
 "champion":
 {
+	id: "1011",
 	name_en: "Battle of Champion's Dusk",
 	name_de: "Die Schlacht von Champions Dämmerung",
 	name_es: "Batalla del Crepúsculo del Campeón",
 	name_fr: "Bataille du crépuscule du Champion",
 	name_zh: "末日英雄之战",
-	realm: "pvp",
-	rect: [[8448, 7680], [9472, 8320]]
+	region: "pvp",
+	map_rect: [[-12288, -6144], [12288, 9216]],
+	continent_rect: [[8448, 7680], [9472, 8320]]
 }
 };
 

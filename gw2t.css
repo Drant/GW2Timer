@@ -886,7 +886,7 @@ textarea.jsCopyCode {
 input.mapCoordinatesName {
 	width: 145px; 
 }
-#mapTime {
+.mapTime {
 	display: none;
 }
 

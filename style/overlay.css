@@ -4,7 +4,7 @@
 */
 
 /* Remove elements extraneous or intrusive to overlay mode */
-#itemWarning, #itemDashboard, #mapQuickURL, #mapPeripheralSouth, #itemSocial,
+#itemWarning, #itemDashboard, #mapQuickURL, .mapPeripheralSouth, #itemSocial,
 #paneMenu var {
 	display: none;
 }
@@ -61,7 +61,7 @@
 input.mapCoordinatesName {
 	width: 116px;
 }
-#mapTime {
+.mapTime {
 	display: inline-block;
 	position: absolute;
 	z-index: 9;

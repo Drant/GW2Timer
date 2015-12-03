@@ -85,7 +85,7 @@
 				<kbd id="tmlToggle" class="curClick" title="Toggle timeline opacity."></kbd>
 				<div id="tmlIndicator"></div>
 			</div>
-			<time id="mapTime"></time>
+			<time id="mapTime" class="mapTime"></time>
 			<div class="mapCoordinates">
 				<input id="mapCoordinatesMouse" type="text" />
 				<input id="mapCoordinatesCopy" type="text" />
@@ -106,6 +106,7 @@
 					<div class="mapGPSPopup mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacter" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
+						<label title="Automatically switch the map to Tyria if you are in it."><img data-src="img/ui/pages/map.png" /><input id="opt_bol_switchMap" type="checkbox" />Auto-Switch Tyria Map</label>
 						<label title="Milliseconds before your character is pinpointed again.<br />This should not be faster than the overlay's rate."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Rate (ms)</label>
 					</div>
 				</div>
@@ -225,6 +226,7 @@
 				</ul>
 			</div>
 			<article id="wvwHUDPane">
+			<time id="wvwTime" class="mapTime"></time>
 			<div class="mapCoordinates">
 				<input id="wvwCoordinatesMouse" type="text" />
 				<input id="wvwCoordinatesCopy" type="text" />
@@ -238,7 +240,8 @@
 					<img id="wvwGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
 					<div class="mapGPSPopup mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacterWvW" type="checkbox" />Follow Game Character</label>
-						<label title="Automatically move the map character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacterWvW" type="checkbox" />Display Character Pin</label>
+						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacterWvW" type="checkbox" />Display Character Pin</label>
+						<label title="Automatically switch the map to the Mists if you are in it."><img data-src="img/ui/pages/map.png" /><input id="opt_bol_switchMapWvW" type="checkbox" />Auto-Switch Mists Map</label>
 					</div>
 				</div>
 				<div class="mapOptions mapHUDContainer">

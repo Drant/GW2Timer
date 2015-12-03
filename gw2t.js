@@ -152,8 +152,10 @@ O = {
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: true,
+		bol_switchMap: true,
 		bol_displayCharacterWvW: true,
 		bol_followCharacterWvW: false,
+		bol_switchMapWvW: true,
 		int_msecGPSRefresh: 100,
 		// Alarm
 		int_setAlarm: 0,
@@ -1091,8 +1093,21 @@ O = {
 			}
 			else
 			{
-				M.tickGPS();
-				M.updateCharacter(0);
+				P.tickGPS();
+				P.updateCharacter(0);
+			}
+		},
+		bol_displayCharacterWvW: function()
+		{
+			if ( ! O.Options.bol_displayCharacterWvW)
+			{
+				W.movePin(W.Pin.Character);
+				W.movePin(W.Pin.Camera);
+			}
+			else
+			{
+				P.tickGPS();
+				P.updateCharacter(0);
 			}
 		},
 		bol_showPanel: function()
@@ -7057,8 +7072,8 @@ C = {
  * ========================================================================== */
 M = {
 	/*
-	 * http://gw2timer.com/data/general.js contains zone (e.g. Queensdale, LA) objects
-	 * with their rectangular coordinates.
+	 * http://gw2timer.com/data/general.js contains zone (e.g. Queensdale, LA)
+	 * objects with their rectangular coordinates.
 	 * This is referred to by the variable "Zones".
 	 */
 	MapEnum: "map", // Type of map this map is
@@ -7112,7 +7127,6 @@ M = {
 	cRADIAN_TO_DEGREE: 180 / Math.PI,
 	cUNITS_TO_POINTS: 208 / 5000,
 	cPOINTS_TO_UNITS: 5000 / 208,
-	GPSTimeout: {},
 	GPSPreviousCoord: [],
 	GPSPreviousAngleCharacter: 0,
 	GPSPreviousAngleCamera: 0,
@@ -7128,7 +7142,7 @@ M = {
 		Overview: new L.layerGroup(), // Stats of zone's number of world completion icons
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
-		PersonalPath: new L.layerGroup(), // Path drawn from connecting player-laid pins
+		PersonalPath: new L.layerGroup() // Path drawn from connecting player-laid pins
 	},
 	Pin: {
 		Program: {},
@@ -7290,7 +7304,7 @@ M = {
 		$(htmlidprefix + "GPSButton").click(function()
 		{
 			// Go to character if cliked on GPS button
-			that.updateCharacter(1);
+			P.updateCharacter(1);
 		}).dblclick(function()
 		{
 			if (that.Map.getZoom() !== that.ZoomEnum.Ground)
@@ -7405,9 +7419,6 @@ M = {
 					
 					ithzone = region.maps[zoneid];
 					zoneobj = that.getZoneFromID(zoneid);
-					// Store zone dimension data for locating events
-					zoneobj.map_rect = ithzone.map_rect;
-					zoneobj.continent_rect = ithzone.continent_rect;
 					var numheart = 0;
 					var numwaypoint = 0;
 					var numlandmark = 0;
@@ -7563,7 +7574,7 @@ M = {
 							marker = L.marker(that.convertGCtoLC(poi.coord),
 							{
 								title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
-								task: poi.objective,
+								wiki: poi.objective,
 								icon: L.icon(
 								{
 									iconUrl: U.URL_IMG.Heart,
@@ -7571,16 +7582,7 @@ M = {
 									iconAnchor: [8, 8]
 								})
 							});
-							marker.on("click", function(pEvent)
-							{
-								var heartname = this.options.task;
-								// Trim trailing period if exists
-								if (heartname.indexOf(".") === heartname.length - 1)
-								{
-									heartname = heartname.slice(0, -1);
-								}
-								U.openExternalURL(U.getWikiLanguageLink(heartname));
-							});
+							M.bindMarkerWikiBehavior(marker, "click");
 							M.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 							zoneobj.Layers.Heart.addLayer(marker);
 						}
@@ -7913,7 +7915,7 @@ M = {
 			zone = this.Zones[pNick];
 		}
 		// If pNick is a zone that has the property
-		else if (pNick["rect"])
+		else if (typeof(pNick) === "object")
 		{
 			zone = pNick;
 		}
@@ -7951,10 +7953,10 @@ M = {
 			.value = pCoord[0] + ", " + pCoord[1];
 	
 		// Don't continue if mouse is still in the same zone
-		if (pCoord[0] >= this.ZoneCurrent.rect[0][0] // x1
-			&& pCoord[1] >= this.ZoneCurrent.rect[0][1] // y1
-			&& pCoord[0] <= this.ZoneCurrent.rect[1][0] // x2
-			&& pCoord[1] <= this.ZoneCurrent.rect[1][1] // y2
+		if (pCoord[0] >= this.ZoneCurrent.continent_rect[0][0] // x1
+			&& pCoord[1] >= this.ZoneCurrent.continent_rect[0][1] // y1
+			&& pCoord[0] <= this.ZoneCurrent.continent_rect[1][0] // x2
+			&& pCoord[1] <= this.ZoneCurrent.continent_rect[1][1] // y2
 			|| this.isZoneLocked === true)
 		{
 			return;
@@ -7967,10 +7969,10 @@ M = {
 		
 		for (i in this.Zones) // i is the index and nickname of the zone
 		{
-			if (pCoord[0] >= this.Zones[i].rect[0][0]
-				&& pCoord[1] >= this.Zones[i].rect[0][1]
-				&& pCoord[0] <= this.Zones[i].rect[1][0]
-				&& pCoord[1] <= this.Zones[i].rect[1][1])
+			if (pCoord[0] >= this.Zones[i].continent_rect[0][0]
+				&& pCoord[1] >= this.Zones[i].continent_rect[0][1]
+				&& pCoord[0] <= this.Zones[i].continent_rect[1][0]
+				&& pCoord[1] <= this.Zones[i].continent_rect[1][1])
 			{
 				// Hide the icons of the previously moused zone
 				previouszone = this.Zones[this.ZoneCurrent.nick];
@@ -8051,7 +8053,7 @@ M = {
 	 */
 	computeZoneCenter: function(pNick)
 	{
-		var rect = this.Zones[pNick].rect;
+		var rect = this.Zones[pNick].continent_rect;
 		// x = OffsetX + (WidthOfZone/2), y = OffsetY + (HeightOfZone/2)
 		var x = rect[0][0] + ~~((rect[1][0] - rect[0][0]) / 2);
 		var y = rect[0][1] + ~~((rect[1][1] - rect[0][1]) / 2);
@@ -8235,7 +8237,7 @@ M = {
 		});
 		
 		// Character pin and camera FOV
-		this.updateCharacter(-1);
+		P.updateCharacter(-1);
 	},
 	
 	/*
@@ -9083,6 +9085,19 @@ M = {
 				.select();
 		});
 	},
+	bindMarkerWikiBehavior: function(pMarker, pEventType)
+	{
+		pMarker.on(pEventType, function(pEvent)
+		{
+			var name = this.options.wiki;
+			// Trim trailing period if exists
+			if (name.indexOf(".") === name.length - 1)
+			{
+				name = name.slice(0, -1);
+			}
+			U.openExternalURL(U.getWikiLink(name));
+		});
+	},
 	
 	/*
 	 * Translates the zones list in the Map page and bind click zoom behavior.
@@ -9104,95 +9119,7 @@ M = {
 			var regionnick = $(this).attr("data-region");
 			$(this).text(D.getObjectName(that.Regions[regionnick]));
 		});
-	},
-	
-	/*
-	 * Imitates the character pin as in the game minimap, as informed by the overlay.
-	 * @param int pForceCode 1 to force update position, -1 angle, 0 both, undefined neither.
-	 */
-	updateCharacter: function(pForceCode)
-	{
-		/*
-		 * Validate the GPS data before allowing updates.
-		 * Sample structure of position, character angle, and camera angle:
-		 * fAvatarPosition: [116.662186, 44.60492, -104.502495]
-		 * fAvatarFront: [0.070094235, 0.0, 0.99754035]
-		 * fCameraFront: [-0.2597584, 0.02722733, 0.9652897]
-		 * Sample structure of JSON:
-		 * {"name": "Character Name","profession": 1,"race": 2,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false,"fov": 0.873}
-		 */
-		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || this.isUserDragging)
-		{
-			return;
-		}
-		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
-		{
-			return;
-		}
-		if (this.isZoneValid(GPSIdentityJSON["map_id"]) === false)
-		{
-			this.movePin(this.Pin.Character);
-			this.movePin(this.Pin.Camera);
-			return;
-		}
-		var coord = this.convertGPSCoord(GPSPositionArray, GPSIdentityJSON["map_id"]);
-		if (coord[0] > this.cMAP_BOUND || coord[0] <= 0
-			|| coord[1] > this.cMAP_BOUND || coord[1] <= 0)
-		{
-			return;
-		}
-		
-		// Follow character if opted and position has changed (character moved)
-		if ((O.Options.bol_followCharacter && this.GPSPreviousCoord[0] !== coord[0] && this.GPSPreviousCoord[1] !== coord[1])
-			|| pForceCode >= 0)
-		{
-			this.Map.setView(this.convertGCtoLC(coord), this.Map.getZoom());
-			this.showCurrentZone(coord);
-			this.GPSPreviousCoord = coord;
-			pForceCode = -1; // Also update pin position
-		}
-		
-		// Pin character if opted and angle has changed (character turned)
-		if (O.Options.bol_displayCharacter)
-		{
-			var anglecharacter = -(this.convertGPSAngle(GPSDirectionArray));
-			var anglecamera = -(this.convertGPSAngle(GPSCameraArray));
-			if (this.GPSPreviousAngleCharacter !== anglecharacter
-				|| this.GPSPreviousAngleCamera !== anglecamera
-				|| pForceCode <= 0)
-			{
-				this.movePin(this.Pin.Character, coord);
-				this.movePin(this.Pin.Camera, coord);
-				this.Pin.Camera._icon.style.zIndex = this.cZIndexBury;
-				var pintranscharacter = this.Pin.Character._icon.style.transform.toString();
-				var pintranscamera = this.Pin.Camera._icon.style.transform.toString();
-				if (pintranscharacter.indexOf("rotate") === -1)
-				{
-					this.Pin.Character._icon.style.transform = pintranscharacter + " rotate(" + anglecharacter + "deg)";
-				}
-				if (pintranscamera.indexOf("rotate") === -1)
-				{
-					this.Pin.Camera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
-				}
-				this.GPSPreviousAngleCharacter = anglecharacter;
-				this.GPSPreviousAngleCamera = anglecamera;
-			}
-		}
-	},
-	
-	/*
-	 * Executes GPS functions every specified milliseconds.
-	 */
-	tickGPS: function()
-	{
-		if (O.Options.bol_followCharacter || O.Options.bol_displayCharacter)
-		{
-			M.updateCharacter();
-			window.clearTimeout(M.GPSTimeout);
-			M.GPSTimeout = setTimeout(M.tickGPS, O.Options.int_msecGPSRefresh);
-		}
-	}
-	
+	}	
 };
 
 /* =============================================================================
@@ -9227,6 +9154,7 @@ P = {
 	Chests: {},
 	Collectibles: {},
 	Guild: {},
+	GPSTimeout: {},
 	
 	/*
 	 * Initializes the map only if the boolean set by specific modes is on.
@@ -9619,7 +9547,7 @@ P = {
 					marker = L.marker(coord,
 					{
 						title: "<span class='" + "mapPoi" + "'>" + newname + " (" + event.level + ")" + "</span>",
-						task: event.name,
+						wiki: event.name,
 						icon: L.icon(
 						{
 							iconUrl: determineEventIcon(searchname),
@@ -9627,16 +9555,7 @@ P = {
 							iconAnchor: [24, 24]
 						})
 					});
-					marker.on("click", function(pEvent)
-					{
-						var eventname = this.options.task;
-						// Trim trailing period if exists
-						if (eventname.indexOf(".") === eventname.length - 1)
-						{
-							eventname = eventname.slice(0, -1);
-						}
-						U.openExternalURL(U.getWikiLink(eventname));
-					});
+					M.bindMarkerWikiBehavior(marker, "click");
 					M.bindMarkerZoomBehavior(marker, "contextmenu");
 					zoneobj.Layers.EventIcon.addLayer(marker);
 				}
@@ -9699,7 +9618,10 @@ P = {
 		M.adjustZoomMapping();
 		P.adjustZoomDryTop();
 		M.goToArguments(U.Args[U.KeyEnum.Go], M.Pin.Program);
-		M.tickGPS();
+		if (I.ModeCurrent === I.ModeEnum.Overlay)
+		{
+			P.tickGPS();
+		}
 	},
 	
 	/*
@@ -9715,7 +9637,7 @@ P = {
 				var zoneobj = M.Zones[i];
 				// Cover the zone with a colored border signifying its region
 				P.Layer.ZoneBorder.addLayer(L.rectangle(
-					M.convertGCtoLCMulti(zoneobj.rect), {
+					M.convertGCtoLCMulti(zoneobj.continent_rect), {
 						fill: false,
 						color: M.Regions[zoneobj.region].color,
 						weight: 2,
@@ -9928,6 +9850,7 @@ P = {
 					{
 						title: "<span class='mapEvent'>" + D.getObjectName(event) + "</span>",
 						image: "img/event/" + event.icon + I.cPNG,
+						wiki: D.getObjectName(event),
 						icon: L.icon(
 						{
 							iconUrl: "img/event/" + event.icon + I.cPNG,
@@ -9935,7 +9858,8 @@ P = {
 							iconAnchor: [8, 8]
 						})
 					});
-					M.bindMarkerZoomBehavior(event.eventicon, "click");
+					M.bindMarkerWikiBehavior(event.eventicon, "click");
+					M.bindMarkerZoomBehavior(event.eventicon, "contextmenu");
 					// Show only current event icons, the highlight event function will continue this
 					if ($("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
 					{
@@ -10041,6 +9965,149 @@ P = {
 			P.DryTopTimer._icon.style.opacity = nickopacity;
 			P.DryTopTimer._icon.style.zIndex = M.cZIndexRaise + 1;
 			P.DryTopTimer._icon.style.display = "table";
+		}
+	},
+	
+	/*
+	 * Checks whether the player is in a Tyria or a Mists associated zone then
+	 * switch the map automatically if it is not already displayed.
+	 */
+	switchMapCheck: function()
+	{
+		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
+		{
+			return;
+		}
+		
+		var currentnick = GPSIdentityJSON["map_id"];
+		if (O.Options.bol_switchMap && I.MapCurrent !== I.MapEnum.Tyria
+			&& M.ZoneAssociation[currentnick] !== undefined)
+		{
+			$("#wvwSwitchButton").trigger("click");
+		}
+		else if (O.Options.bol_switchMapWvW && I.MapCurrent !== I.MapEnum.Mists
+			&& W.ZoneAssociation[currentnick] !== undefined)
+		{
+			$("#mapSwitchButton").trigger("click");
+		}
+	},
+	
+	/*
+	 * Imitates the character pin as in the game minimap, as informed by the overlay.
+	 * This function is shared by the Tyria and Mists maps.
+	 * @param int pForceCode 1 to force update position, -1 angle, 0 both, undefined neither.
+	 */
+	updateCharacter: function(pForceCode)
+	{
+		var that, followboolean, displayboolean;
+		switch (I.MapCurrent)
+		{
+			case I.MapEnum.Tyria: {
+				that = M;
+				followboolean = O.Options.bol_followCharacter;
+				displayboolean = O.Options.bol_displayCharacter;
+			} break;
+			
+			case I.MapEnum.Mists: {
+				that = W;
+				followboolean = O.Options.bol_followCharacterWvW;
+				displayboolean = O.Options.bol_displayCharacterWvW;
+			} break;
+		}
+		
+		/*
+		 * Validate the GPS data before allowing updates.
+		 * Sample structure of position, character angle, and camera angle:
+		 * fAvatarPosition: [116.662186, 44.60492, -104.502495]
+		 * fAvatarFront: [0.070094235, 0.0, 0.99754035]
+		 * fCameraFront: [-0.2597584, 0.02722733, 0.9652897]
+		 * Sample structure of JSON:
+		 * {"name": "Character Name","profession": 1,"race": 2,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false,"fov": 0.873}
+		 */
+		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || that.isUserDragging || !that.isAPIRetrieved_MAPFLOOR)
+		{
+			return;
+		}
+		if (GPSIdentityJSON === undefined || GPSIdentityJSON === null)
+		{
+			return;
+		}
+		if (that.isZoneValid(GPSIdentityJSON["map_id"]) === false)
+		{
+			that.movePin(that.Pin.Character);
+			that.movePin(that.Pin.Camera);
+			return;
+		}
+		var coord = that.convertGPSCoord(GPSPositionArray, GPSIdentityJSON["map_id"]);
+		if (coord[0] > that.cMAP_BOUND || coord[0] <= 0
+			|| coord[1] > that.cMAP_BOUND || coord[1] <= 0)
+		{
+			return;
+		}
+		
+		// Follow character if opted and position has changed (character moved)
+		if ((followboolean && that.GPSPreviousCoord[0] !== coord[0] && that.GPSPreviousCoord[1] !== coord[1])
+			|| pForceCode >= 0)
+		{
+			that.Map.setView(that.convertGCtoLC(coord), that.Map.getZoom());
+			that.showCurrentZone(coord);
+			that.GPSPreviousCoord = coord;
+			pForceCode = -1; // Also update pin position
+		}
+		
+		// Pin character if opted and angle has changed (character turned)
+		if (displayboolean)
+		{
+			var anglecharacter = -(that.convertGPSAngle(GPSDirectionArray));
+			var anglecamera = -(that.convertGPSAngle(GPSCameraArray));
+			if (that.GPSPreviousAngleCharacter !== anglecharacter
+				|| that.GPSPreviousAngleCamera !== anglecamera
+				|| pForceCode <= 0)
+			{
+				that.movePin(that.Pin.Character, coord);
+				that.movePin(that.Pin.Camera, coord);
+				that.Pin.Camera._icon.style.zIndex = that.cZIndexBury;
+				var pintranscharacter = that.Pin.Character._icon.style.transform.toString();
+				var pintranscamera = that.Pin.Camera._icon.style.transform.toString();
+				if (pintranscharacter.indexOf("rotate") === -1)
+				{
+					that.Pin.Character._icon.style.transform = pintranscharacter + " rotate(" + anglecharacter + "deg)";
+				}
+				if (pintranscamera.indexOf("rotate") === -1)
+				{
+					that.Pin.Camera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
+				}
+				that.GPSPreviousAngleCharacter = anglecharacter;
+				that.GPSPreviousAngleCamera = anglecamera;
+			}
+		}
+	},
+	
+	/*
+	 * Executes GPS functions every specified milliseconds.
+	 */
+	tickGPS: function()
+	{
+		var checkboolean;
+		switch (I.MapCurrent)
+		{
+			case I.MapEnum.Tyria: {
+				checkboolean = (O.Options.bol_followCharacter || O.Options.bol_displayCharacter);
+			} break;
+			
+			case I.MapEnum.Mists: {
+				checkboolean = (O.Options.bol_followCharacterWvW || O.Options.bol_displayCharacterWvW);
+			} break;
+		}
+		
+		if (checkboolean)
+		{
+			P.updateCharacter();
+			window.clearTimeout(P.GPSTimeout);
+			P.GPSTimeout = setTimeout(function()
+			{
+				P.tickGPS();
+			}, O.Options.int_msecGPSRefresh);
 		}
 	}
 };
@@ -11302,6 +11369,7 @@ G = {
 W = {
 	
 	MapEnum: "wvw",
+	ZoneAssociation: GW2T_LAND_ASSOCIATION,
 	cInitialZone: "eternal",
 	cMAP_BOUND: 16384,
 	cMAP_CENTER: [10400, 12400], // This centers at the WvW portion of the map
@@ -11355,7 +11423,6 @@ W = {
 		 */
 		$.extend(W, $.extend({}, M, W));
 		W.Zones = GW2T_LAND_DATA;
-		W.ZoneAssociation = GW2T_LAND_ASSOCIATION;
 		W.Regions = GW2T_REALM_DATA;
 		
 		W.initializeMap();
@@ -11366,6 +11433,10 @@ W = {
 	{
 		W.bindMapVisualChanges();
 		W.adjustZoomMapping();
+		if (I.ModeCurrent === I.ModeEnum.Overlay)
+		{
+			P.tickGPS();
+		}
 	},
 };
 
@@ -13659,8 +13730,7 @@ K = {
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
 		{
 			if (O.Options.int_setDimming === 0
-				&& I.ModeCurrent !== I.ModeEnum.Simple
-				&& I.ModeCurrent !== I.ModeEnum.Overlay)
+				&& I.ModeCurrent !== I.ModeEnum.Simple)
 			{
 				$(K.clockBackground).fadeTo(800, 1);
 			}
@@ -13727,18 +13797,28 @@ K = {
 			}
 		}
 		
-		// Tick the two digital clocks below the analog clock
-		if (I.ModeCurrent === I.ModeEnum.Simple)
+		// Mode dependent repeated functions
+		switch (I.ModeCurrent)
 		{
-			K.timeSimple.innerHTML =
-			T.getTimeFormatted(
+			case I.ModeEnum.Simple:
 			{
-				want24: true,
-				wantHours: false,
-				wantLetters: true,
-				customTimeInSeconds: T.cSECONDS_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime()
-			});
+				// Tick the two digital clocks below the analog clock
+				K.timeSimple.innerHTML =
+				T.getTimeFormatted(
+				{
+					want24: true,
+					wantHours: false,
+					wantLetters: true,
+					customTimeInSeconds: T.cSECONDS_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime()
+				});
+			} break;
+			
+			case I.ModeEnum.Overlay:
+			{
+				P.switchMapCheck();
+			} break; 
 		}
+		
 		K.timeLocal.innerHTML = T.getTimeFormatted();
 		// Times in the Options page Debug section
 		K.timestampUTC.innerHTML = T.TIMESTAMP_UNIX_SECONDS;
@@ -14343,7 +14423,7 @@ I = {
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
 	cLevelMax: 80,
-	cAJAXGlobalTimeout: 5000, // milliseconds
+	cAJAXGlobalTimeout: 15000, // milliseconds
 	cPNG: ".png", // Almost all used images are PNG
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
 	cTextDelimiterChar: "|",
@@ -14452,12 +14532,13 @@ I = {
 			Dungeons: "Dungeons"
 		}
 	},
+	// The map currently displayed on the map pane
+	MapCurrent: "map",
 	MapEnum:
 	{
 		Tyria: "map",
 		Mists: "wvw"
 	},
-	MapCurrent: 0,
 	/*
 	 * Number used to open a section's subcontent, written as 1-indexed via
 	 * query string, but used as 0-indexed.
@@ -14474,6 +14555,7 @@ I = {
 	BrowserCurrent: -1,
 	BrowserEnum:
 	{
+		Unknown: -1,
 		IE: 0,
 		Opera: 1,
 		Firefox: 2,

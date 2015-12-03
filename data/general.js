@@ -1,6 +1,6 @@
 /*
  * This file is used by http://gw2timer.com
- * Map data for Kryta continent: zone, region, submaps, and dailies
+ * Map data for Kryta continent: zone, region, submaps, and dailies.
  * Dashboard time sensitive data: announcement, countdown, and sales.
  */
 
@@ -47,6 +47,23 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1043": "auric",
 	"1045": "tangled",
 	"1052": "verdant"
+};
+var GW2T_LAND_ASSOCIATION = {
+	"38": "eternal",
+	"350": "heart",
+	"549": "kyhlo",
+	"554": "niflhel",
+	"795": "foefire",
+	"872": "fractals",
+	"875": "storm",
+	"894": "spirit",
+	"900": "skyhammer",
+	"984": "courtyard",
+	"968": "edge",
+	"1011": "champion",
+	"1099": "desertred",
+	"1102": "desertgreen",
+	"1143": "desertblue"
 };
 // Associate the API achievement IDs with the custom achievement nicknames
 var GW2T_DAILY_ASSOCIATION = {
@@ -414,7 +431,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Orée d'émeraude",
 	name_zh: "蒼翠邊界",
 	region: "magus",
-	rect: [[640, 14592], [3840, 16128]]
+	map_rect: [[-36864, -18432], [39936, 18432]],
+	continent_rect: [[640, 14592], [3840, 16128]]
 },
 "auric":
 {
@@ -425,7 +443,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Valle Áurico",
 	name_zh: "赤金盆地",
 	region: "magus",
-	rect: [[512, 16128], [2560, 18944]]
+	map_rect: [[-24576, -33792], [24576, 33792]],
+	continent_rect: [[512, 16128], [2560, 18944]]
 },
 "tangled":
 {
@@ -436,7 +455,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Profondeurs verdoyantes",
 	name_zh: "纏藤深淵",
 	region: "magus",
-	rect: [[2560, 17408], [5888, 19712]]
+	map_rect: [[-39936, -27648], [39936, 27648]],
+	continent_rect: [[2560, 17408], [5888, 19712]]
 },
 "dragon":
 {
@@ -447,7 +467,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Repli du Dragon",
 	name_zh: "巨龍陣地",
 	region: "magus",
-	rect: [[1280, 19712], [4352, 22400]]
+	map_rect: [[-36864, -30720], [36864, 33792]],
+	continent_rect: [[1280, 19712], [4352, 22400]]
 },
 "silverwastes":
 {
@@ -458,7 +479,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Les Contrées sauvages d'Argent",
 	name_zh: "白銀荒地",
 	region: "wastes",
-	rect: [[3838, 14206], [5886, 15742]]
+	map_rect: [[-24576, -18432], [24576, 18432]],
+	continent_rect: [[3838, 14206], [5886, 15742]]
 },
 "dry":
 {
@@ -469,7 +491,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Cimesèche",
 	name_zh: "干涸高地",
 	region: "wastes",
-	rect: [[3840, 15742], [5888, 17152]]//[3840, 14592]
+	map_rect: [[-24576, -30720], [24576, 30720]],
+	continent_rect: [[3840, 15742], [5888, 17152]]//[3840, 14592]
 },
 "rata":
 {
@@ -480,7 +503,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Rata Sum",
 	name_zh: "拉塔索姆",
 	region: "jungle",
-	rect: [[4608, 19710], [7168, 22270]]
+	map_rect: [[-30720, -30720], [30720, 30720]],
+	continent_rect: [[4608, 19710], [7168, 22270]]
 },
 "brisban":
 {
@@ -491,7 +515,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Terres sauvages de Brisban",
 	name_zh: "布裡斯班野地",
 	region: "jungle",
-	rect: [[5888, 14464], [9344, 17152]]
+	map_rect: [[-39936, -30720], [43008, 33792]],
+	continent_rect: [[5888, 14464], [9344, 17152]]
 },
 "metrica":
 {
@@ -502,7 +527,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Province de Metrica",
 	name_zh: "度量領域",
 	region: "jungle",
-	rect: [[7168, 17152], [9344, 20480]]
+	map_rect: [[-24576, -39936], [27648, 39936]],
+	continent_rect: [[7168, 17152], [9344, 20480]]
 },
 "caledon":
 {
@@ -513,7 +539,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Forêt de Caledon",
 	name_zh: "卡勒頓之森",
 	region: "jungle",
-	rect: [[9344, 16128], [11264, 20096]]
+	map_rect: [[-21504, -46080], [24576, 49152]],
+	continent_rect: [[9344, 16128], [11264, 20096]]
 },
 "kessex":
 {
@@ -524,7 +551,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Collines de Kessex",
 	name_zh: "凱席斯山",
 	region: "kryta",
-	rect: [[9344, 14080], [13440, 16128]]
+	map_rect: [[-49152, -24576], [49152, 24576]],
+	continent_rect: [[9344, 14080], [13440, 16128]]
 },
 "grove":
 {
@@ -535,7 +563,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Le Bosquet",
 	name_zh: "聖林之地",
 	region: "jungle",
-	rect: [[9728, 20096], [11136, 22144]]
+	map_rect: [[-15360, -24576], [18432, 24576]],
+	continent_rect: [[9728, 20096], [11136, 22144]]
 },
 "queensdale":
 {
@@ -546,7 +575,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "La Vallée de la reine",
 	name_zh: "女王谷",
 	region: "kryta",
-	rect: [[9856, 11648], [13440, 14080]]
+	map_rect: [[-43008, -27648], [43008, 30720]],
+	continent_rect: [[9856, 11648], [13440, 14080]]
 },
 "cursed":
 {
@@ -557,7 +587,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Rivage maudit",
 	name_zh: "詛咒海岸",
 	region: "orr",
-	rect: [[10112, 25216], [12160, 29312]]
+	map_rect: [[-24576, -49152], [24576, 49152]],
+	continent_rect: [[10112, 25216], [12160, 29312]]
 },
 "divinity":
 {
@@ -568,7 +599,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Le Promontoire divin",
 	name_zh: "神佑之城",
 	region: "kryta",
-	rect: [[10240, 9856], [12160, 11648]]
+	map_rect: [[-21504, -21504], [24576, 21504]],
+	continent_rect: [[10240, 9856], [12160, 11648]]
 },
 "malchor":
 {
@@ -579,7 +611,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Saut de Malchor",
 	name_zh: "馬爾科之躍",
 	region: "orr",
-	rect: [[10368, 23168], [14464, 25216]]
+	map_rect: [[-49152, -24576], [49152, 24576]],
+	continent_rect: [[10368, 23168], [14464, 25216]]
 },
 "southsun":
 {
@@ -590,7 +623,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Crique de Sud-Soleil",
 	name_zh: "南陽海灣",
 	region: "kryta",
-	rect: [[11520, 18944], [14208, 20736]]
+	map_rect: [[-30720, -21504], [33792, 21504]],
+	continent_rect: [[11520, 18944], [14208, 20736]]
 },
 "harathi":
 {
@@ -601,7 +635,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Hinterlands harathis",
 	name_zh: "哈拉希腹地",
 	region: "kryta",
-	rect: [[13440, 9472], [16640, 12288]]
+	map_rect: [[-36864, -33792], [39936, 33792]],
+	continent_rect: [[13440, 9472], [16640, 12288]]
 },
 "gendarran":
 {
@@ -612,7 +647,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Champs de Gendarran",
 	name_zh: "甘達拉戰區",
 	region: "kryta",
-	rect: [[13440, 12288], [17664, 14336]]
+	map_rect: [[-49152, -24576], [52224, 24576]],
+	continent_rect: [[13440, 12288], [17664, 14336]]
 },
 "straits":
 {
@@ -623,7 +659,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Détroit de la Dévastation",
 	name_zh: "浩劫海峽",
 	region: "orr",
-	rect: [[14464, 22400], [17792, 25216]]
+	map_rect: [[-39936, -33792], [39936, 33792]],
+	continent_rect: [[14464, 22400], [17792, 25216]]
 },
 "lion":
 {
@@ -634,7 +671,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "L'Arche du Lion",
 	name_zh: "獅子拱門",
 	region: "kryta",
-	rect: [[15232, 14336], [17664, 15872]]
+	map_rect: [[-27648, -18432], [30720, 18432]],
+	continent_rect: [[15232, 14336], [17664, 15872]]
 },
 "bloodtide":
 {
@@ -645,7 +683,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Côte de la marée sanglante",
 	name_zh: "血潮海岸",
 	region: "kryta",
-	rect: [[15232, 15872], [17664, 19072]]
+	map_rect: [[-27648, -36864], [30720, 39936]],
+	continent_rect: [[15232, 15872], [17664, 19072]]
 },
 "sparkfly":
 {
@@ -656,7 +695,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Marais de Lumillule",
 	name_zh: "閃螢沼澤",
 	region: "jungle",
-	rect: [[15232, 19072], [17792, 22400]]
+	map_rect: [[-30720, -39936], [30720, 39936]],
+	continent_rect: [[15232, 19072], [17792, 22400]]
 },
 "lornar":
 {
@@ -667,7 +707,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Passage de Lornar",
 	name_zh: "羅納通道",
 	region: "shiverpeaks",
-	rect: [[17664, 13312], [19456, 18176]]
+	map_rect: [[-21504, -58368], [21504, 58368]],
+	continent_rect: [[17664, 13312], [19456, 18176]]
 },
 "snowden":
 {
@@ -678,7 +719,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Congères d'Antreneige",
 	name_zh: "漂流雪境",
 	region: "shiverpeaks",
-	rect: [[17664, 11264], [21760, 13312]]
+	map_rect: [[-49152, -24576], [49152, 24576]],
+	continent_rect: [[17664, 11264], [21760, 13312]]
 },
 "maelstrom":
 {
@@ -689,7 +731,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Mont Maelström",
 	name_zh: "漩渦山",
 	region: "jungle",
-	rect: [[17792, 21376], [21632, 23808]]
+	map_rect: [[-46080, -27648], [46080, 30720]],
+	continent_rect: [[17792, 21376], [21632, 23808]]
 },
 "timberline":
 {
@@ -700,7 +743,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Chutes de la Canopée",
 	name_zh: "林線瀑布",
 	region: "shiverpeaks",
-	rect: [[18944, 18176], [21248, 21376]]
+	map_rect: [[-27648, -36864], [27648, 39936]],
+	continent_rect: [[18944, 18176], [21248, 21376]]
 },
 "hoelbrak":
 {
@@ -711,7 +755,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Hoelbrak",
 	name_zh: "霍布雷克",
 	region: "shiverpeaks",
-	rect: [[19456, 13312], [21760, 14976]]
+	map_rect: [[-27648, -18432], [27648, 21504]],
+	continent_rect: [[19456, 13312], [21760, 14976]]
 },
 "dredgehaunt":
 {
@@ -722,7 +767,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Falaises de Hantedraguerre",
 	name_zh: "掘洞懸崖",
 	region: "shiverpeaks",
-	rect: [[19456, 14976], [21760, 18176]]
+	map_rect: [[-27648, -36864], [27648, 39936]],
+	continent_rect: [[19456, 14976], [21760, 18176]]
 },
 "frostgorge":
 {
@@ -733,7 +779,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Détroit des gorges glacées",
 	name_zh: "霜谷之音",
 	region: "shiverpeaks",
-	rect: [[20736, 8192], [23808, 11264]]
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[20736, 8192], [23808, 11264]]
 },
 "wayfarer":
 {
@@ -744,7 +791,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Contreforts du Voyageur",
 	name_zh: "旅者丘陵",
 	region: "shiverpeaks",
-	rect: [[21760, 11264], [23552, 15872]]
+	map_rect: [[-21504, -55296], [21504, 55296]],
+	continent_rect: [[21760, 11264], [23552, 15872]]
 },
 "citadel":
 {
@@ -755,7 +803,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "La Citadelle noire",
 	name_zh: "黑煙壁壘",
 	region: "ascalon",
-	rect: [[23552, 13568], [25088, 15616]]
+	map_rect: [[-18432, -24576], [18432, 24576]],
+	continent_rect: [[23552, 13568], [25088, 15616]]
 },
 "diessa":
 {
@@ -766,7 +815,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Plateau de Diessa",
 	name_zh: "底耶沙高地",
 	region: "ascalon",
-	rect: [[23552, 11264], [27136, 13568]]
+	map_rect: [[-43008, -27648], [43008, 27648]],
+	continent_rect: [[23552, 11264], [27136, 13568]]
 },
 "fireheart":
 {
@@ -777,7 +827,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Montée de Flambecœur",
 	name_zh: "炎心高地",
 	region: "ascalon",
-	rect: [[23808, 8448], [27136, 11264]]
+	map_rect: [[-39936, -33792], [39936, 33792]],
+	continent_rect: [[23808, 8448], [27136, 11264]]
 },
 "plains":
 {
@@ -788,7 +839,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Plaines d'Ashford",
 	name_zh: "阿什福德平原",
 	region: "ascalon",
-	rect: [[25088, 13568], [29184, 15616]]
+	map_rect: [[-49152, -24576], [49152, 24576]],
+	continent_rect: [[25088, 13568], [29184, 15616]]
 },
 "marches":
 {
@@ -799,7 +851,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Marais de fer",
 	name_zh: "鋼鐵平原",
 	region: "ascalon",
-	rect: [[27136, 9472], [29184, 13568]]
+	map_rect: [[-24576, -49152], [24576, 49152]],
+	continent_rect: [[27136, 9472], [29184, 13568]]
 },
 "fields":
 {
@@ -810,7 +863,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Champs de Ruine",
 	name_zh: "廢墟原野",
 	region: "ascalon",
-	rect: [[28672, 16256], [31744, 19328]]
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[28672, 16256], [31744, 19328]]
 },
 "blazeridge":
 {
@@ -821,7 +875,8 @@ var GW2T_ZONE_DATA = {
 	name_fr: "Les Steppes de la Strie flamboyante",
 	name_zh: "裂脊草原",
 	region: "ascalon",
-	rect: [[29184, 12160], [31232, 16256]]
+	map_rect: [[-24576, -49152], [24576, 49152]],
+	continent_rect: [[29184, 12160], [31232, 16256]]
 }
 };
 
@@ -1069,12 +1124,12 @@ Supply:
 	},
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43816", price: "25200" },
-		Fox: { id: "43799", price: "12600" },
-		Derwena: { id: "43804", price: "25200" },
-		Yana: { id: "43834", price: "25200" },
-		Katyn: { id: "43798", price: "12600" },
-		Verma: { id: "43835", price: "25200" }
+		Mehem: { id: "49758", price: "25200" },
+		Fox: { id: "43828", price: "25200" },
+		Derwena: { id: "43814", price: "25200" },
+		Yana: { id: "49760", price: "25200" },
+		Katyn: { id: "43832", price: "25200" },
+		Verma: { id: "49743", price: "25200" }
 	}
 }
 };
@@ -1086,12 +1141,12 @@ Supply:
  * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
  */
 var GW2T_DAILY_DATA = {
-	Start: new Date("2015-12-02T00:00:00Z"),
-	Finish: new Date("2015-12-03T00:00:00Z"),
-	Today: 
+	Start: new Date("2015-12-03T00:00:00Z"),
+	Finish: new Date("2015-12-04T00:00:00Z"),
+	Today:
 	{
-		pve: ["Lumberer Kryta", "Activity", "Metrica", "Maw"],
-		pvp: ["Defender", "Rank", "Ranger Thief", "Rev Necro"],
-		wvw: ["Ruins", "Land", "Camp", "Tower"]
+		pve: ["Miner Shiverpeaks", "Vista Kryta", "Gendarran", "SB"],
+		pvp: ["Rank", "Kills", "Eng Thief", "Rev Mes"],
+		wvw: ["Guard", "Caravan", "Defender", "Keep"]
 	}
 };
