@@ -941,9 +941,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "",
-	Start: new Date("2015-11-27T16:00:00Z"),
-	Finish: new Date("2015-12-01T16:00:00Z")
+	content: "Heart of Thorns <a href='http://gw2timer.com/?page=Collectible'>achievements/mastery/strongbox</a> map added. Use with <a href='http://forum.renaka.com/topic/5546166/'>GPS app</a>.",
+	Start: new Date("2015-12-03T16:00:00Z"),
+	Finish: new Date("2015-12-06T16:00:00Z")
 },
 
 /*
