@@ -966,6 +966,13 @@ input.mapCoordinatesName {
 	box-shadow: 0px 0px 2px #555;
 	opacity: 0;
 }
+.mapHUDPopup label {
+	margin-bottom: 4px;
+}
+.mapHUDPopup label img {
+	width: 24px; height: 24px;
+	margin-right: 4px;
+}
 
 .mapGPS { /* Only shown in overlay mode */
 	display: none;
@@ -988,17 +995,6 @@ input.mapCoordinatesName {
 .mapOptionsCompletion label {
 	margin: 0;
 	padding: 0;
-}
-.mapOptionsOther label {
-	margin-bottom: 4px;
-}
-.mapOptionsPopup label img {
-	width: 24px; height: 24px;
-	margin-right: 4px;
-}
-.mapGPSPopup label img {
-	width: 24px; height: 24px;
-	margin-right: 4px;
 }
 
 /* Map zones list */
@@ -2006,6 +2002,9 @@ header.jsSection sup {
 .optButtons button {
 	width: 270px;
 	margin-bottom: 4px;
+}
+[type="range"].optSlider {
+	width: 140px;
 }
 
 #optTimestamps time {

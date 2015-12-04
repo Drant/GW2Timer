@@ -128,6 +128,8 @@ O = {
 		bol_showTimelineOpaque: false,
 		// Map
 		int_setFloor: 1,
+		int_setInitialZoom: 3,
+		int_setInitialZoomWvW: 3,
 		bol_showZoneBorders: false,
 		bol_showZoneGateways: false,
 		bol_showPersonalPaths: true,
@@ -739,11 +741,12 @@ O = {
 			var weeklymessage = pIsDaily ? "Weekly Reset!" : "Weekly Timestamp Expired!";
 			I.greet(weeklymessage, messagetime);
 		}
+		// Update the daily object
+		T.getDaily({isReset: true});
 		
 		// Chains checklist
 		var i;
 		var chain;
-		var time;
 		if (O.Options.bol_clearChainChecklistOnReset)
 		{
 			for (i in C.Chains)
@@ -757,21 +760,6 @@ O = {
 				}
 			}
 			X.clearChecklist(X.Checklists.Chain, X.ChecklistJob.UncheckTheChecked);
-		}
-		
-		// Subscribe to daily chain
-		if (O.Options.bol_alertAutosubscribe &&
-			O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription)
-		{
-			C.updateChainToday();
-			if (C.ChainToday)
-			{
-				time = $("#chnTime_" + C.ChainToday.nexus);
-				if ( ! time.hasClass("chnTimeSubscribed"))
-				{
-					time.trigger("click");
-				}
-			}
 		}
 		
 		// Dungeon and Personal Checklists
@@ -1341,6 +1329,33 @@ U = {
 	},
 	
 	/*
+	 * Executes a console command.
+	 * @param string pString command.
+	 * @param object pMapObject which map the command was executed from.
+	 */
+	parseConsoleCommand: function(pString, pMapObject)
+	{
+		var that = pMapObject;
+		var command = pString.toLowerCase().substring(1, pString.length); // Trim the command prefix character
+		var args = command.split(" ");
+		switch (args[0])
+		{
+			case "clear": I.clear(); break;
+			case "gps": I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray); break;
+			case "identity": I.write(U.formatJSON(GPSIdentityJSON)); break;
+			case "lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
+			case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
+			case "nocontext": that.Map.off("contextmenu"); I.write("Map context menu disabled."); break;
+			case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
+			case "api": U.printAPI(args[1], args[2]); break;
+			case "daily": U.printDaily(); break;
+			case "item": U.printAPI("items/" + args[1]); break;
+			case "items": U.printItemsAPI(args[1]); break;
+			case "events": P.printZoneEvents(); break;
+		}
+	},
+	
+	/*
 	 * Prints a v2 API endpoint by querying each element in the array it
 	 * returned, or just the object.
 	 * @param string pString of API
@@ -1472,31 +1487,18 @@ U = {
 	 */
 	printDaily: function()
 	{
-		I.write("Retrieving item...");
-		$.getJSON(U.URL_API.Daily, function(pData)
+		if (T.Daily !== null)
 		{
-			I.clear();
-			var i;
-			var daily = {};
-			var assoc = T.DailyAssociation;
-			var str = "";
-			// Trim non-max level dailies
-			for (i = pData.pve.length - 1; i >= 0; i--)
-			{
-				if ((pData.pve[i]).level.max < I.cLevelMax)
-				{
-					pData.pve.splice(i, 1);
-				}
-			}
-			// Turn the achievement IDs into achievement nicknames
-			daily.pve = [assoc[(pData.pve[0].id)], assoc[(pData.pve[1].id)], assoc[(pData.pve[2].id)], assoc[(pData.pve[3].id)]];
-			daily.pvp = [assoc[(pData.pvp[0].id)], assoc[(pData.pvp[1].id)], assoc[(pData.pvp[2].id)], assoc[(pData.pvp[3].id)]];
-			daily.wvw = [assoc[(pData.wvw[0].id)], assoc[(pData.wvw[1].id)], assoc[(pData.wvw[2].id)], assoc[(pData.wvw[3].id)]];
-			str = "pve: [&quot;" + daily.pve[0] + "&quot;, &quot;" + daily.pve[1] + "&quot;, &quot;" + daily.pve[2] + "&quot;, &quot;" + daily.pve[3] + "&quot;],<br />"
-				+ "pvp: [&quot;" + daily.pvp[0] + "&quot;, &quot;" + daily.pvp[1] + "&quot;, &quot;" + daily.pvp[2] + "&quot;, &quot;" + daily.pvp[3] + "&quot;],<br />"
-				+ "wvw: [&quot;" + daily.wvw[0] + "&quot;, &quot;" + daily.wvw[1] + "&quot;, &quot;" + daily.wvw[2] + "&quot;, &quot;" + daily.wvw[3] + "&quot;]";
+			var d = T.Daily;
+			var str = "pve: [&quot;" + d.pve[0] + "&quot;, &quot;" + d.pve[1] + "&quot;, &quot;" + d.pve[2] + "&quot;, &quot;" + d.pve[3] + "&quot;],<br />"
+				+ "pvp: [&quot;" + d.pvp[0] + "&quot;, &quot;" + d.pvp[1] + "&quot;, &quot;" + d.pvp[2] + "&quot;, &quot;" + d.pvp[3] + "&quot;],<br />"
+				+ "wvw: [&quot;" + d.wvw[0] + "&quot;, &quot;" + d.wvw[1] + "&quot;, &quot;" + d.wvw[2] + "&quot;, &quot;" + d.wvw[3] + "&quot;]";
 			I.write(str, 0);
-		});
+		}
+		else
+		{
+			I.write("API daily achievements object is invalid.");
+		}
 	},
 	
 	/*
@@ -2324,9 +2326,17 @@ X = {
 	 */
 	Collectibles:
 	{
+		// Repeatable
 		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: ""},
 		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: ""},
 		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: ""},
+		// Heart of Thorns
+		ItzelTotems: { key: "str_chlItzelTotems", urlkey: "itzeltotems", value: ""},
+		PriorySeals: { key: "str_chlPriorySeals", urlkey: "prioryseals", value: ""},
+		AuricTablets: { key: "str_chlAuricTablets", urlkey: "aurictablets", value: ""},
+		ExaltedMasks: { key: "str_chlExaltedMasks", urlkey: "exaltedmasks", value: ""},
+		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes", value: ""},
+		// Pre-expansion
 		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator", value: ""},
 		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: ""},
 		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: ""},
@@ -2337,6 +2347,8 @@ X = {
 		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader", value: ""},
 		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup", value: ""},
 		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: ""},
+		// Hero progress
+		MasteryInsight: { key: "str_chlMasteryInsight", urlkey: "masteryinsight", value: ""},
 		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge", value: ""}
 	},
 	ChecklistEnum:
@@ -3381,10 +3393,6 @@ E = {
 	
 	CalculatorHistoryArray: new Array(64),
 	CalcHistoryIndex: 0,
-	
-	copper: function(pString) { return "<copper>" + pString + "</copper>"; },
-	silver: function(pString) { return "<silver>" + pString + "</silver>"; },
-	gold: function(pString) { return "<gold>" + pString + "</gold>"; },
 	
 	/*
 	 * Parses a period separated string representing those units.
@@ -5635,11 +5643,13 @@ C = {
 	 * unscheduled chains when the user opens that section on the chains page.
 	 */
 	Chains: GW2T_CHAIN_DATA,
+	ChainAssociation: {},
 	UnscheduledChainsLength: GW2T_CHAIN_ADD_LENGTH,
 	DryTop: {},
 	// The word and variable "nexus" is simply a chain's index number in the Chains array
 	cIndexSynonym: "nexus",
 	ChainToday: null,
+	ChainDummy: {alias: "dummy"},
 	CurrentChainSD: {}, NextChainSD1: {}, NextChainSD2: {}, NextChainSD3: {}, NextChainSD4: {},
 	CurrentChainHC: {}, NextChainHC1: {}, NextChainHC2: {}, NextChainHC3: {}, NextChainHC4: {},
 	NextChainLS1: {}, NextChainLS2: {},
@@ -5691,67 +5701,11 @@ C = {
 	 */
 	getChainByAlias: function(pAlias)
 	{
-		return C.Chains[T.ChainAssociation[pAlias.toLowerCase()]];
+		return C.Chains[C.ChainAssociation[pAlias.toLowerCase()]];
 	},
 	getChainRegion: function(pChain)
 	{
 		return M.getZoneRegion(pChain.zone);
-	},
-	
-	/*
-	 * Assigns today's world boss chain object, if available.
-	 * @param boolean pIsTomorrow whether today's boss won't spawn before reset.
-	 */
-	updateChainToday: function(pIsTomorrow)
-	{
-		var date = new Date();
-		pIsTomorrow = pIsTomorrow || false;
-		if (pIsTomorrow === true)
-		{
-			date = T.addDaysToDate(date, 1);
-		}
-		var alias = T.Daily.Today.pve[3];
-		alias = (alias !== null) ? alias.toLowerCase() : null;
-		var chain;
-		
-		var currentmins = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
-		var startmins;
-		
-		if (T.ChainAssociation[alias] !== undefined && T.isTimely(T.Daily, date))
-		{
-			chain = C.Chains[T.ChainAssociation[alias]];
-			startmins = T.convertScheduleKeyToUTCMinutes(chain.scheduleKeys[0]);
-			if (pIsTomorrow === false)
-			{
-				if (startmins + T.cMINUTES_IN_TIMEFRAME >= currentmins)
-				{
-					// Make sure today's boss can still spawn before server reset at UTC midnight
-					C.ChainToday = chain;
-				}
-				else
-				{
-					// Else get tomorrow's boss
-					C.ChainToday = null;
-					//C.updateChainToday(true);
-				}
-			}
-			else
-			{
-				if (startmins + T.cMINUTES_IN_TIMEFRAME < currentmins)
-				{
-					C.ChainToday = chain;
-				}
-				else
-				{
-					C.ChainToday = null;
-				}
-			}
-		}
-		else
-		{
-			// No boss for this day
-			C.ChainToday = null;
-		}
 	},
 	
 	/*
@@ -5769,10 +5723,10 @@ C = {
 	},
 	
 	/*
-	 * Shows the daily icon for today's daily boss, if available.
+	 * Shows or hides the daily icon for today's boss depending on availability.
 	 * @pre Used variables has been reinitialized.
 	 */
-	showChainDailyIcon: function()
+	refreshChainDailyIcon: function()
 	{
 		// Reimage the waypoint icon if boss on clock is daily
 		for (var i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
@@ -6157,6 +6111,7 @@ C = {
 			// Unschedule chains will be initialized when their headers are clicked on
 			chain = C.Chains[i];
 			chain.nexus = i;
+			C.ChainAssociation[(chain.alias.toLowerCase())] = chain.nexus;
 
 			switch (chain.series)
 			{
@@ -6489,7 +6444,7 @@ C = {
 		});
 		// Special color of the reset time slot
 		$(".chnSlotTime_0").addClass("chnBarReset");
-		C.showChainDailyIcon();
+		C.refreshChainDailyIcon();
 	},
 	
 	/*
@@ -7179,6 +7134,12 @@ M = {
 	{
 		var that = this;
 		var htmlidprefix = "#" + this.MapEnum;
+		var initialzoom;
+		switch (I.MapCurrent)
+		{
+			case I.MapEnum.Tyria: { initialzoom = O.Options.int_setInitialZoom; } break;
+			case I.MapEnum.Mists: { initialzoom = O.Options.int_setInitialZoomWvW; } break;
+		}
 		// ?.Map is the actual Leaflet map object, initialize it
 		this.Map = L.map(this.MapEnum + "Pane", {
 			minZoom: this.ZoomEnum.Min,
@@ -7189,7 +7150,7 @@ M = {
 			zoomControl: I.isOnSmallDevice, // Hide the zoom UI
 			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
-		}).setView(this.cMAP_CENTER_INITIAL, this.ZoomEnum.Default); // Out of map boundary so browser doesn't download tiles yet
+		}).setView(this.cMAP_CENTER_INITIAL, initialzoom); // Out of map boundary so browser doesn't download tiles yet
 		// Because the map will interfere with scrolling the website on touch devices
 		this.Map.touchZoom.disable();
 		if (this.Map.tap)
@@ -7272,24 +7233,9 @@ M = {
 			if (that.parsePersonalPath(val) === false)
 			{
 				// If input starts with a slash, assume it is a console command
-				if (val.indexOf("/") === 0)
+				if (val.indexOf(I.cConsoleCommandPrefix) === 0)
 				{
-					var command = val.toLowerCase().substring(1, val.length);
-					var args = command.split(" ");
-					switch (args[0])
-					{
-						case "clear": I.clear(); break;
-						case "gps": I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray); break;
-						case "identity": I.write(U.formatJSON(GPSIdentityJSON)); break;
-						case "lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
-						case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
-						case "nocontext": that.Map.off("contextmenu"); I.write("Map context menu disabled."); break;
-						case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
-						case "api": U.printAPI(args[1], args[2]); break;
-						case "daily": U.printDaily(); break;
-						case "items": U.printItemsAPI(args[1]); break;
-						case "events": P.printZoneEvents(); break;
-					}
+					U.parseConsoleCommand(val, that);
 				}
 				else
 				{
@@ -8731,9 +8677,13 @@ M = {
 	/*
 	 * Views the default map view.
 	 */
-	goToDefault: function()
+	goToDefault: function(pZoom)
 	{
-		this.Map.setView(this.convertGCtoLC(this.cMAP_CENTER), this.ZoomEnum.Default);
+		if (pZoom === undefined)
+		{
+			pZoom = this.ZoomEnum.Default;
+		}
+		this.Map.setView(this.convertGCtoLC(this.cMAP_CENTER), pZoom);
 	},
 	
 	/*
@@ -10122,20 +10072,23 @@ G = {
 	 */
 	generateAndInitializeDailies: function()
 	{
-		var now = new Date();
-		// Generate dailies box
-		$("#dlyCalendar").empty();
-		$("#dlyDate").html(now.toLocaleString(window.navigator.language, {
-			year: "numeric", month: "numeric", day: "numeric", weekday: "long"
-		}));
-		G.insertDailyDay(T.Daily.Today, now);
-
-		$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
-		$("#dlyCalendar .dlyEvent").each(function()
+		T.getDaily().done(function()
 		{
-			M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
+			var now = new Date();
+			// Generate dailies box
+			$("#dlyCalendar").empty();
+			$("#dlyDate").html(now.toLocaleString(window.navigator.language, {
+				year: "numeric", month: "numeric", day: "numeric", weekday: "long"
+			}));
+			G.insertDailyDay(T.Daily, now);
+
+			$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
+			$("#dlyCalendar .dlyEvent").each(function()
+			{
+				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
+			});
+			I.qTip.init("#dlyCalendar ins");
 		});
-		I.qTip.init("#dlyCalendar ins");
 	},
 	
 	/*
@@ -11441,11 +11394,12 @@ W = {
 };
 
 /* =============================================================================
- * @@Time utilities and schedule, Dashboard functions
+ * @@Time utilities, schedule, daily, and Dashboard functions
  * ========================================================================== */
 T = {
 	
-	Daily: GW2T_DAILY_DATA,
+	Daily: null,
+	dailyRetrievalRetries: 0,
 	DailyAssociation: GW2T_DAILY_ASSOCIATION,
 	Schedule: {},
 	DryTopSets: {},
@@ -11621,22 +11575,6 @@ T = {
 		
 		K.updateDryTopClipboard();
 		$("#itemDryTopClip").show();
-	},
-	
-	ChainAssociation: {
-		"fe": 0,
-		"golem": 1,
-		"jormag": 2,
-		"maw": 3,
-		"megades": 4,
-		"sb": 5,
-		"shatterer": 6,
-		"taidha": 7,
-		"ulgoth": 8,
-		"wurm": 9,
-		"queen": 10,
-		"tequatl": 11,
-		"triple": 12
 	},
 	
 	/*
@@ -12580,6 +12518,136 @@ T = {
 	},
 	
 	/*
+	 * Converts an API daily object to a nickname based object with similar structure
+	 * @param object pObj from API.
+	 * @returns object reformatted.
+	 */
+	convertDailyObject: function(pObj)
+	{
+		var daily = {};
+		var a = T.DailyAssociation;
+		// Trim non-max level dailies
+		for (var i = pObj.pve.length - 1; i >= 0; i--)
+		{
+			if ((pObj.pve[i]).level.max < I.cLevelMax)
+			{
+				pObj.pve.splice(i, 1);
+			}
+		}
+		// Turn the achievement IDs into achievement nicknames
+		daily.pve = [a[(pObj.pve[0].id)], a[(pObj.pve[1].id)], a[(pObj.pve[2].id)], a[(pObj.pve[3].id)]];
+		daily.pvp = [a[(pObj.pvp[0].id)], a[(pObj.pvp[1].id)], a[(pObj.pvp[2].id)], a[(pObj.pvp[3].id)]];
+		daily.wvw = [a[(pObj.wvw[0].id)], a[(pObj.wvw[1].id)], a[(pObj.wvw[2].id)], a[(pObj.wvw[3].id)]];
+		return daily;
+	},
+	
+	/*
+	 * Initializes the daily object and the today chain object.
+	 * @returns jqXHR object.
+	 */
+	getDaily: function(pOptions)
+	{
+		var retrywaitminutes = 3;
+		
+		return $.getJSON(U.URL_API.Daily, function(pData)
+		{
+			T.Daily = T.convertDailyObject(pData);
+
+			// Initialize today chain object
+			var alias = T.Daily.pve[3];
+			alias = (alias !== undefined && alias !== null) ? alias.toLowerCase() : null;
+			var apichain;
+			var currentmins = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
+			var startmins;
+
+			if (C.ChainAssociation[alias] !== undefined)
+			{
+				apichain = C.Chains[C.ChainAssociation[alias]];
+				/*
+				 * If the today chain object was already parsed, make sure that
+				 * the retrieved API daily object is different from it, in case
+				 * the API server was not updated immediately at reset time.
+				 */
+				if (C.ChainToday !== null && pOptions !== undefined && pOptions.isReset === true)
+				{
+					var previousalias = C.ChainToday.alias;
+					C.ChainToday = null; // Single recursion base case
+					C.refreshChainDailyIcon();
+					if (apichain.alias === previousalias)
+					{
+						// Wait a while and retrieve the daily object hoping it is updated
+						setTimeout(function()
+						{
+							T.getDaily({isReset: true});
+						},  retrywaitminutes * T.cMILLISECONDS_IN_MINUTE);
+						return;
+					}
+				}
+				
+				startmins = T.convertScheduleKeyToUTCMinutes(apichain.scheduleKeys[0]);
+				// Make sure today's boss can still spawn before server reset at UTC midnight
+				if (startmins + T.cMINUTES_IN_TIMEFRAME >= currentmins)
+				{
+					C.ChainToday = apichain;
+				}
+				// Else get tomorrow's boss
+				else
+				{
+					// Placeholder for recursive call to retrieve future daily
+					C.ChainToday = null;
+				}
+			}
+			else
+			{
+				// No boss for this day
+				C.ChainToday = null;
+			}
+			
+			/*
+			 * If successfully retrieved today chain object.
+			 */
+			if (C.ChainToday)
+			{
+				// Update daily icons
+				C.refreshChainDailyIcon();
+
+				if (pOptions !== undefined && pOptions.isReset === true)
+				{
+					// Tell today's world boss closest scheduled time if server resetted
+					if (O.isServerReset && C.ChainToday)
+					{
+						I.greet(D.getModifiedWord("boss", "daily", U.CaseEnum.Sentence) + " "
+							+ D.getObjectName(C.ChainToday) + " " + D.getTranslation("will start") + " " + D.getTranslation("at") + " "
+							+ T.getTimeFormatted(
+							{
+								wantSeconds: false,
+								customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
+							}) + " " + D.getTranslation("in") + " "
+							+ T.getTimeFormatted(
+							{
+								wantLetters: true,
+								wantSeconds: false,
+								customTimeInSeconds: T.getSecondsUntilChainStarts(C.ChainToday)
+							}),
+						15);
+					}
+
+					// Subscribe to daily chain
+					if (O.Options.bol_alertAutosubscribe &&
+						O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription)
+					{
+						var subscriptionbutton = $("#chnTime_" + C.ChainToday.nexus);
+						if ( ! subscriptionbutton.hasClass("chnTimeSubscribed"))
+						{
+							subscriptionbutton.trigger("click");
+						}
+					}
+				}
+			}
+		});
+	},
+	
+	/*
 	 * Initializes dashboard components.
 	 * Must be executed before the clock tick function executes.
 	 */
@@ -12610,8 +12678,6 @@ T = {
 			T.isDashboardSaleEnabled = true;
 		}
 		// Verify supply: if has not expired
-		T.DashboardSupply.Start = T.Daily.Start;
-		T.DashboardSupply.Finish = T.Daily.Finish;
 		if (T.isTimely(T.DashboardSupply, now))
 		{
 			T.isDashboardSupplyEnabled = true;
@@ -13300,7 +13366,7 @@ K = {
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
 	clockBackground: {}, clockCircumference: {}, timeProgress0: {}, timeProgress1: {},
-	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeSimple: {}, timeMap: {},
+	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeSimple: {}, timeMap: {}, timeWvW: {},
 	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
 	
 	// These will be DOM elements
@@ -13333,12 +13399,14 @@ K = {
 		K.timeDaytime = $("#itemTimeDayTime")[0];
 		K.timeSimple = $("#itemSimpleTime")[0];
 		K.timeMap = $("#mapTime")[0];
+		K.timeWvW = $("#wvwTime")[0];
 		K.timestampUTC = $("#optTimestampUTC")[0];
 		K.timestampLocal = $("#optTimestampLocalReset")[0];
 		K.timestampServer = $("#optTimestampServerReset")[0];
 		K.timestampReset = $("#optTimeTillReset")[0];
 		
 		T.initializeDashboard();
+		T.getDaily();
 		K.updateTimeFrame(new Date());
 		K.updateDaytimeIcon();
 		K.tickFrequent();
@@ -13999,8 +14067,6 @@ K = {
 		
 		// Sort the chains list
 		C.sortChainsListHTML();
-		// Initialize today's chain shortcut object
-		C.updateChainToday();
 		
 		// Queue the highlighting of the current chain's events
 		C.CurrentChains.forEach(C.queueEventsHighlight);
@@ -14204,7 +14270,7 @@ K = {
 			K.IconHC2 = $("#clkIconHC" + i2);
 			K.IconHC3 = $("#clkIconHC" + i3);
 			
-			C.showChainDailyIcon();
+			C.refreshChainDailyIcon();
 			
 			repositionMarkers(
 				$("#clkMarker" + i0), $("#clkMarker" + i0 + "A"), $("#clkMarker" + i0 + "B"),
@@ -14320,8 +14386,10 @@ K = {
 		// Daytime clock updates time remaining
 		var daytime = T.getDayPeriodRemaining();
 		K.timeDaytime.innerHTML = daytime;
+		var maptime = T.getTimeFormatted({wantSeconds: false}) + " " + K.currentDaytimeSymbol + daytime;
 		// Clock on the map shown in overlay mode
-		K.timeMap.innerHTML = T.getTimeFormatted({wantSeconds: false}) + " " + K.currentDaytimeSymbol + daytime;
+		K.timeMap.innerHTML = maptime;
+		K.timeWvW.innerHTML = maptime;
 		// Local clock updates additional times in tooltip
 		K.timeLocal.title =
 			(new Date()).toLocaleString() + "<br />" +
@@ -14353,7 +14421,7 @@ K = {
 		var updateWaypoint = function(pWaypoint, pChainSD, pChainHC, pChainSDAfter, pChainHCAfter)
 		{
 			var text = "";
-			var ignoredchain = C.getChainByAlias("triple");
+			var ignoredchain = C.getChainByAlias("triplewurm");
 			
 			// Chains for the clicked timeframe
 			text += pChainSD.waypoint + " " + D.getChainAlias(pChainSD);
@@ -14426,6 +14494,7 @@ I = {
 	cAJAXGlobalTimeout: 15000, // milliseconds
 	cPNG: ".png", // Almost all used images are PNG
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
+	cConsoleCommandPrefix: "/",
 	cTextDelimiterChar: "|",
 	cTextDelimiterRegex: /[|]/g,
 	consoleTimeout: {},
@@ -14712,7 +14781,7 @@ I = {
 		{
 			I.selectText("#cslContent");
 		});
-		$(".mapOptions, .mapGPS").one("mouseenter", function()
+		$(".mapHUDContainer").one("mouseenter", function()
 		{
 			$(this).find("img").each(function()
 			{
@@ -14788,31 +14857,13 @@ I = {
 		}
 		else if (I.isMapEnabled)
 		{
-			M.goToDefault();
+			// The follow option will do the viewing instead
+			M.goToDefault(O.Options.int_setInitialZoom);
 		}
 		// Set tile after viewing the coordinate so it downloads the tiles last
 		if (I.isMapEnabled)
 		{
 			M.changeFloor(O.Options.int_setFloor);
-		}
-		
-		// Tells today's world boss closest scheduled time if server resetted
-		if (O.isServerReset && C.ChainToday)
-		{
-			I.greet(D.getModifiedWord("boss", "daily", U.CaseEnum.Sentence) + " "
-				+ D.getObjectName(C.ChainToday) + " " + D.getTranslation("will start") + " " + D.getTranslation("at") + " "
-				+ T.getTimeFormatted(
-				{
-					wantSeconds: false,
-					customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
-				}) + " " + D.getTranslation("in") + " "
-				+ T.getTimeFormatted(
-				{
-					wantLetters: true,
-					wantSeconds: false,
-					customTimeInSeconds: T.getSecondsUntilChainStarts(C.ChainToday)
-				}),
-			15);
 		}
 		
 		// Finally

@@ -99,20 +99,23 @@
 					<u><a class="jsTranslate" title="<dfn>Switch to Tile Mode (timers only)</dfn><br />gw2timer.com/t<br /><div class='mapLoc'><img src='http://i.imgur.com/SDseVJE.png' /></div>" href="./?mode=Tile">tile</a></u>
 				</div>
 				<!--<div id="mapSwitch" class="mapHUDContainer">
-					<img id="mapSwitchButton" class="mapHUDButton" title="<dfn> Click to WVW </dfn>" src="img/map/wvw.png" alt="display" />
+					<img id="mapSwitchButton" class="mapHUDButton" title="<dfn> Click to WVW </dfn>" src="img/ui/pages/wvw.png" alt="display" />
+					<div class="mapHUDPopup cntComposition">
+						<label title="Automatically switch the map to Tyria if you are in it."><img data-src="img/ui/pages/map.png" /><input id="opt_bol_switchMap" type="checkbox" />Auto-Switch Tyria Map</label>
+						<label title="Set initial Tyria map zoom level."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoom" class="optSlider" type="range" min="0" max="7" step="1" /></label>
+					</div>
 				</div>-->
 				<div class="mapGPS mapHUDContainer">
 					<img id="mapGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
-					<div class="mapGPSPopup mapHUDPopup cntComposition">
+					<div class="mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacter" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
-						<label title="Automatically switch the map to Tyria if you are in it."><img data-src="img/ui/pages/map.png" /><input id="opt_bol_switchMap" type="checkbox" />Auto-Switch Tyria Map</label>
 						<label title="Milliseconds before your character is pinpointed again.<br />This should not be faster than the overlay's rate."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Rate (ms)</label>
 					</div>
 				</div>
 				<div class="mapOptions mapHUDContainer">
 					<img id="mapDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
-					<div class="mapOptionsPopup mapHUDPopup cntComposition">
+					<div class="mapHUDPopup cntComposition">
 						<div class="mapOptionsDisplay">
 							<label title="Show/Hide all icons listed below.<br /><dfn>Right click on the map</dfn> to show the world completion route."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
 							<div id="mapOptionsCompletion" class="mapOptionsCompletion">
@@ -127,7 +130,7 @@
 							<label title="Show/Hide possible zone events.<br />Will increase initial site load time if enabled.<br />Most in-game events have a cooldown of 15 minutes.<br />They can become active by simply being near them."><img data-src="img/event/swords.png" /><input id="opt_bol_displayEvents" type="checkbox" /> Dynamic Events</label>
 						</div>
 						<div class="mapOptionsOther">
-							<label><img data-src="img/map/floor.png" /><input id="opt_int_setFloor" style="width:140px" type="range" min="0" max="3" step="1" title="Set map floor level.<br />Example: Verdant Brink has multiple floors." /></label>
+							<label><img data-src="img/map/floor.png" /><input id="opt_int_setFloor" class="optSlider" type="range" min="0" max="3" step="1" title="Set map floor level.<br />Example: Verdant Brink has multiple floors." /></label>
 							<label title="Show/Hide region-colored borders over zones."><img data-src="img/map/border.png" /><input id="opt_bol_showZoneBorders" type="checkbox" /> Show zone borders</label>
 							<label title="Show/Hide gateways between zones."><img data-src="img/map/gateway_gate.png" /><input id="opt_bol_showZoneGateways" type="checkbox" /> Show zone gateways</label>
 							<label title="Double click on the map to lay/remove a personal pin.<br />This option will draw a path from these pins."><img data-src="img/map/pin_white.png" /><input id="opt_bol_showPersonalPaths" type="checkbox" /> Show personal paths</label>
@@ -235,18 +238,21 @@
 			<div class="mapPeripheral mapPeripheralNorth">
 				<div id="wvwSwitch" class="mapHUDContainer">
 					<img id="wvwSwitchButton" class="mapHUDButton" title="<dfn> Click to Map </dfn>" src="img/ui/pages/map.png" alt="display" />
+					<div class="mapHUDPopup cntComposition">
+						<label title="Automatically switch the map to the Mists if you are in it."><img data-src="img/ui/pages/wvw.png" /><input id="opt_bol_switchMapWvW" type="checkbox" />Auto-Switch Mists Map</label>
+						<label title="Set initial WvW map zoom level."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoomWvW" class="optSlider" type="range" min="0" max="6" step="1" /></label>
+					</div>
 				</div>
 				<div class="mapGPS mapHUDContainer">
 					<img id="wvwGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
-					<div class="mapGPSPopup mapHUDPopup cntComposition">
+					<div class="mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacterWvW" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacterWvW" type="checkbox" />Display Character Pin</label>
-						<label title="Automatically switch the map to the Mists if you are in it."><img data-src="img/ui/pages/map.png" /><input id="opt_bol_switchMapWvW" type="checkbox" />Auto-Switch Mists Map</label>
 					</div>
 				</div>
 				<div class="mapOptions mapHUDContainer">
 					<img id="wvwDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
-					<div class="mapOptionsPopup mapHUDPopup cntComposition">
+					<div class="mapHUDPopup cntComposition">
 						<div class="mapOptionsDisplay">
 							<label title="Show/Hide all icons listed below.<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletionWvW" type="checkbox" /> Show completion</label>
 							<div id="wvwOptionsCompletion" class="mapOptionsCompletion">

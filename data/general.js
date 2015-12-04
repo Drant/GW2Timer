@@ -226,6 +226,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"2597": "12"
 };
 
+
 /*
  * Locations for cross-world map travel. Coordinates are ordered by progression.
  */
@@ -306,6 +307,7 @@ var GW2T_GATEWAY_CONNECTION = {
 	]
 };
 
+
 /*
  * Images that are overlaid on the map, such as caves and underground areas.
  */
@@ -355,6 +357,7 @@ spidernestcavern: {
 	bounds: [[25141, 11313], [25641, 11753]]
 }
 };
+
 
 /*
  * Regions of a zone.
@@ -417,6 +420,7 @@ var GW2T_REGION_DATA = {
 	color: "orange"
 }
 };
+
 
 /*
  * Zones are sorted by how far from the top left corner (0,0) it is.
@@ -880,6 +884,7 @@ var GW2T_ZONE_DATA = {
 }
 };
 
+
 /*
  * UTC bihourly events that are generated as columns in rows of meta event timelines.
  */
@@ -925,11 +930,15 @@ var GW2T_TIMELINE = [
 	}
 ];
 
+
 /*
  * Data for generating the dashboard on the map pane.
  */
 var GW2T_DASHBOARD_DATA = {
 
+/*
+ * Self-announcement about the website.
+ */
 Announcement:
 {
 	content: "",
@@ -966,6 +975,7 @@ Countdowns: [
 	Finish: new Date("2015-12-29T17:00:00Z")
 }
 ],
+
 /*
  * Living Story events.
  * Format:
@@ -987,6 +997,7 @@ Story:
 	Start: new Date("2015-10-23T07:00:00Z"),
 	Finish: new Date("2015-11-06T08:00:00Z")
 },
+
 /*
  * GW2 gem store sale items.
  * Format:
@@ -1091,13 +1102,13 @@ Sale: {
 	}
 	]
 },
+
 /*
  * Pact Supply Network Agent locations. Array indexes correspond to the UTC
  * weekday number, where 0 is Sunday.
  */
 Supply:
 {
-	// This uses the same expiration time as the daily
 	resetHour: 8,
 	name_en: "Pact Supply Network Agents",
 	name_de: "Pakt-Vorratsnetzwerk-Agenten handeln",
@@ -1122,31 +1133,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
+	Start: new Date("2015-12-04T00:00:00Z"),
+	Finish: new Date("2015-12-05T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49758", price: "25200" },
-		Fox: { id: "43828", price: "25200" },
-		Derwena: { id: "43814", price: "25200" },
-		Yana: { id: "49760", price: "25200" },
-		Katyn: { id: "43832", price: "25200" },
-		Verma: { id: "49743", price: "25200" }
+		Mehem: { id: "44664", price: "25200" },
+		Fox: { id: "43829", price: "25200" },
+		Derwena: { id: "43826", price: "25200" },
+		Yana: { id: "48908", price: "25200" },
+		Katyn: { id: "44657", price: "25200" },
+		Verma: { id: "43838", price: "25200" }
 	}
 }
-};
-
-/*
- * Daily achievements manual edit. Example of format:
- * pve: ["GATHER REGION", "ACTIVITY CONDITIONALREGION", "EVENTREGION", "BOSS"],
- * pvp: ["PVP0", "PVP1", "PROFESSIONS0", "PROFESSIONS1"],
- * wvw: ["WVW0", "WVW1", "WVW2", "WVW3"]
- */
-var GW2T_DAILY_DATA = {
-	Start: new Date("2015-12-03T00:00:00Z"),
-	Finish: new Date("2015-12-04T00:00:00Z"),
-	Today:
-	{
-		pve: ["Miner Shiverpeaks", "Vista Kryta", "Gendarran", "SB"],
-		pvp: ["Rank", "Kills", "Eng Thief", "Rev Mes"],
-		wvw: ["Guard", "Caravan", "Defender", "Keep"]
-	}
 };
