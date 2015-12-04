@@ -1,6 +1,6 @@
 /*
  * This file is used by http://gw2timer.com/collectible
- * Collectible items map data. Needle properties:
+ * Open world collectible items map data. Needle properties:
  * n: number
  * c: coordinates
  * i: image URL (optional)
@@ -290,6 +290,116 @@ MatrixCubeKey: {
 	{n: 17, c: [7730, 17767]},
 	{n: 18, c: [7755, 17733]},
 	{n: 19, c: [7749, 17688]}
+	]
+},
+ItzelTotems: {
+	name_en: "Jungle Totem Hunter",
+	name_de: "Chasseuse de totems de la jungle",
+	name_es: "Monedas: Altiplanos",
+	name_fr: "Pièces: Hauteurs",
+	color: "burlywood",
+	view: "verdant",
+	wiki: "http://wiki.guildwars2.com/wiki/Jungle_Totem_Hunter",
+	credit: "http://dulfy.net/2015/12/02/gw2-jungle-totem-hunter-guide/",
+	needles: [
+	{n: 1, c: [3329, 14810]},
+	{n: 2, c: [3044, 15479]},
+	{n: 3, c: [2739, 15143]},
+	{n: 4, c: [2237, 15306]},
+	{n: 5, c: [1994, 15266]},
+	{n: 6, c: [1816, 15397]},
+	{n: 7, c: [1539, 15468]},
+	{n: 8, c: [1463, 15171]},
+	{n: 9, c: [1064, 15073]},
+	{n: 10, c: [1042, 15940]}
+	]
+},
+PriorySeals: {
+	name_en: "Treetop Retriever",
+	name_de: "Baumkronen-Bergung",
+	name_es: "Recuperadora en la copa",
+	name_fr: "Exploratrice des cimes",
+	color: "lightskyblue",
+	view: "[1004, 16496]",
+	wiki: "http://wiki.guildwars2.com/wiki/Treetop_Retriever",
+	credit: "http://wiki.guildwars2.com/wiki/Auric_Basin_(achievements)",
+	needles: [
+	{n: 1, c: [888, 16306]},
+	{n: 2, c: [824, 16580]},
+	{n: 3, c: [848, 16723]},
+	{n: 4, c: [1017, 16753]},
+	{n: 5, c: [1023, 16584]},
+	{n: 6, c: [1067, 16559]},
+	{n: 7, c: [1084, 16609]},
+	{n: 8, c: [1118, 16677]},
+	{n: 9, c: [1238, 16570]},
+	{n: 10, c: [1168, 16346]}
+	]
+},
+AuricTablets: {
+	name_en: "A Study in Gold",
+	name_de: "Eine Studie in Gold",
+	name_es: "Un estudio de oro",
+	name_fr: "Adepte des tablettes",
+	color: "goldenrod",
+	view: "[1538, 17534]",
+	wiki: "http://wiki.guildwars2.com/wiki/A_Study_in_Gold",
+	credit: "http://dulfy.net/2015/10/29/gw2-a-study-in-gold-herta-tablets-achievements-guide/",
+	needles: [
+	{n: 1, c: [1151, 17688]},
+	{n: 2, c: [1471, 17601]},
+	{n: 3, c: [1601, 17601]},
+	{n: 4, c: [1470, 17469]},
+	{n: 5, c: [1761, 17193]},
+	{n: 6, c: [2111, 17578]},
+	{n: 7, c: [1793, 17673]},
+	{n: 8, c: [1225, 17876]},
+	{n: 9, c: [1210, 17380]},
+	{n: 10, c: [1536, 17932]},
+	{n: 11, c: [1537, 17207]},
+	{n: 12, c: [1205, 17898]},
+	{n: 13, c: [1184, 17483]},
+	{n: 14, c: [1211, 17007]},
+	{n: 15, c: [1543, 17187]},
+	{n: 16, c: [1653, 17550]},
+	{n: 17, c: [2060, 17985]}
+	]
+},
+ExaltedMasks: {
+	name_en: "No Mask Left Behind",
+	name_de: "Keine Maske zurückgelassen",
+	name_es: "No sin mi máscara",
+	name_fr: "Bas les masques",
+	color: "palegoldenrod",
+	view: "auric",
+	wiki: "http://wiki.guildwars2.com/wiki/No_Mask_Left_Behind",
+	credit: "http://dulfy.net/2015/10/28/gw2-no-mask-left-behind-exalted-masks-achievement-guide/",
+	needles: [
+	{n: 1, c: [1647, 16658]},
+	{n: 2, c: [2474, 16951]},
+	{n: 3, c: [2318, 17321]},
+	{n: 4, c: [827, 18246]},
+	{n: 5, c: [1875, 18599]},
+	{n: 6, c: [1636, 18851]},
+	{n: 7, c: [2058, 17917]},
+	{n: 8, c: [2543, 17430]},
+	{n: 9, c: [983, 18142]},
+	{n: 10, c: [699, 17973]},
+	{n: 11, c: [563, 17286]},
+	{n: 12, c: [937, 16677]},
+	{n: 13, c: [1506, 16638]},
+	{n: 14, c: [2156, 16656]},
+	{n: 15, c: [2425, 16359]},
+	{n: 16, c: [2362, 18402]},
+	{n: 17, c: [2243, 18880]},
+	{n: 18, c: [1691, 18654]},
+	{n: 19, c: [1241, 18490]},
+	{n: 20, c: [1358, 18164]},
+	{n: 21, c: [1634, 18019]},
+	{n: 22, c: [1779, 18268]},
+	{n: 23, c: [1029, 16330]},
+	{n: 24, c: [590, 17604]},
+	{n: 25, c: [1671, 16999]}
 	]
 },
 LionsArchExterminator: {
@@ -661,6 +771,73 @@ HistoryBuff: {
 	{n: 10, c: [16030, 15493]},
 	{n: 11, c: [16006, 15653]},
 	{n: 12, c: [10660, 24221]}
+	]
+},
+Strongboxes: {
+	name_en: "Strongbox",
+	name_de: "Schatulle",
+	name_es: "Arca",
+	name_fr: "Coffre de l'aéronef",
+	color: "aliceblue",
+	view: "[2558, 17406, 3]",
+	wiki: "http://wiki.guildwars2.com/wiki/Strongbox",
+	credit: "http://dulfy.net/category/gw2/hot/",
+	needles: [
+	// verdant
+	{n: 1, c: [3235, 15459], t: "Lethal Vantage", e: 0},
+	{n: 2, c: [1346, 14985], t: "Mellagan's Valor"},
+	{n: 3, c: [1235, 15316], t: "Faren's Flyer"},
+	{n: 4, c: [1435, 16036], t: "Glory of Tyria"},
+	{n: 5, c: [1213, 15787], t: "Thunderbreaker", e: 2},
+	// auric
+	{n: 6, c: [1209, 16536], t: "Straight and Narrow", e: 1},
+	{n: 7, c: [759, 18345], t: "Endurance"},
+	{n: 8, c: [1006, 17736], t: "Slice of Sky"},
+	{n: 9, c: [2497, 17228], t: "Vengeance Rising"},
+	{n: 10, c: [2325, 18007], t: "Obsidian Triumph", e: 2},
+	// tangled
+	{n: 11, c: [3525, 17894], t: "Cryptonym", e: 1},
+	{n: 12, c: [3629, 17688], t: "Sword of Smodur"},
+	{n: 13, c: [3197, 18492], t: "Shard of Brilliance"},
+	{n: 14, c: [4468, 18540], t: "Whitebear's Pride II"},
+	{n: 15, c: [4452, 19429], t: "Plains of Golghein", e: 3}
+	]
+},
+MasteryInsight: {
+	name_en: "Mastery Insight",
+	name_de: "Einsicht in die Beherrschung",
+	name_es: "Percepción de dominio",
+	name_fr: "Connaissances de maîtrise",
+	color: "limegreen",
+	view: "[2558, 17406, 3]",
+	wiki: "http://wiki.guildwars2.com/wiki/Maguuma_Mastery_Insight",
+	credit: "http://dulfy.net/category/gw2/hot/",
+	needles: [
+	// verdant
+	{n: 1, c: [3297, 15212], t: "Heartless Pass", e: 0},
+	{n: 2, c: [3134, 15434], t: "Creeping Crevasse"},
+	{n: 3, c: [2218, 15876], t: "Creaking Cavern"},
+	{n: 4, c: [1665, 15829], t: "Outside Noble Ledges"},
+	{n: 5, c: [2843, 14663], t: "Fumerol Caves"},
+	{n: 6, c: [1804, 14782], t: "The Corpse Grove"},
+	{n: 7, c: [2384, 15574], t: "Thistlevine Ravine"},
+	{n: 8, c: [2442, 15245], t: "Holdfast Hollow"},
+	{n: 9, c: [2339, 15510], t: "Canopy Over Pact Encampment", e: 2},
+	// auric
+	{n: 10, c: [1288, 17105], t: "Mask of the Fallen", e: 1},
+	{n: 11, c: [848, 17775], t: "Lastgear Standing"},
+	{n: 12, c: [844, 18020], t: "The Falls"},
+	{n: 13, c: [1811, 18517], t: "Jawatl Grounds"},
+	{n: 14, c: [1408, 18374], t: "Southwatch Creep"},
+	{n: 15, c: [2505, 17848], t: "Eastwatch Bluff"},
+	{n: 16, c: [2376, 16831], t: "Burnisher Quarry"},
+	{n: 17, c: [1345, 17546], t: "Luminate's Throne", e: 2},
+	// tangled
+	{n: 18, c: [3379, 18376], t: "Order of Whispers Outpost", e: 1},
+	{n: 19, c: [5346, 18778], t: "Terraced Hive"},
+	{n: 20, c: [4356, 18416], t: "Northern Confluence"},
+	{n: 21, c: [2996, 19380], t: "Twisting Viaduct"},
+	{n: 22, c: [3700, 18299], t: "Nuhoch Lane", e: 3}
 	]
 },
 HeroChallenge: {

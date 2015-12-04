@@ -360,7 +360,7 @@ spidernestcavern: {
 
 
 /*
- * Regions of a zone.
+ * Region categories of zones.
  */
 var GW2T_REGION_DATA = {
 "magus": {

@@ -1232,7 +1232,7 @@ U = {
 		LangKey: "",
 		TilesTyria: "https://tiles.guildwars2.com/1/1/{z}/{x}/{y}.jpg",
 		TilesMists: "https://tiles.guildwars2.com/2/1/{z}/{x}/{y}.jpg",
-		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=2",
+		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 		MapFloorMists: "https://api.guildwars2.com/v1/map_floor.json?continent_id=2&floor=1",
 		MapsList: "https://api.guildwars2.com/v1/maps.json",
 		EventNames: "https://api.guildwars2.com/v1/event_names.json",
@@ -1347,6 +1347,7 @@ U = {
 			case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
 			case "nocontext": that.Map.off("contextmenu"); I.write("Map context menu disabled."); break;
 			case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
+			case "optimize": that.redrawPersonalPath(P.getGreedyPath(M.parseCoordinatesMulti(args[1]))); break;
 			case "api": U.printAPI(args[1], args[2]); break;
 			case "daily": U.printDaily(); break;
 			case "item": U.printAPI("items/" + args[1]); break;
@@ -2335,7 +2336,6 @@ X = {
 		PriorySeals: { key: "str_chlPriorySeals", urlkey: "prioryseals", value: ""},
 		AuricTablets: { key: "str_chlAuricTablets", urlkey: "aurictablets", value: ""},
 		ExaltedMasks: { key: "str_chlExaltedMasks", urlkey: "exaltedmasks", value: ""},
-		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes", value: ""},
 		// Pre-expansion
 		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator", value: ""},
 		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: ""},
@@ -2348,6 +2348,7 @@ X = {
 		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup", value: ""},
 		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: ""},
 		// Hero progress
+		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes", value: ""},
 		MasteryInsight: { key: "str_chlMasteryInsight", urlkey: "masteryinsight", value: ""},
 		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge", value: ""}
 	},
@@ -7229,18 +7230,16 @@ M = {
 		$(htmlidprefix + "CoordinatesCopy").onEnterKey(function()
 		{
 			var val = $(this).val();
-			// If input looks like a 2D array of coordinates, then create pins from them
-			if (that.parsePersonalPath(val) === false)
+			
+			if (val.indexOf(I.cConsoleCommandPrefix) === 0)
 			{
-				// If input starts with a slash, assume it is a console command
-				if (val.indexOf(I.cConsoleCommandPrefix) === 0)
-				{
-					U.parseConsoleCommand(val, that);
-				}
-				else
-				{
-					that.goToArguments(val, that.Pin.Program);
-				}
+				// If input starts with a console command
+				U.parseConsoleCommand(val, that);
+			}
+			else if (that.parsePersonalPath(val) === false)
+			{
+				// If input looks like a 2D array of coordinates, then create pins from them
+				that.goToArguments(val, that.Pin.Program);
 			}
 		});
 		
@@ -8884,8 +8883,8 @@ M = {
 				coord = sarray[i].split(",");
 				if (coord.length === 2)
 				{
-					coord[0] = parseInt(coord[0]);
-					coord[1] = parseInt(coord[1]);
+					coord[0] = Math.round(coord[0]);
+					coord[1] = Math.round(coord[1]);
 					narray.push(coord);
 				}
 			}

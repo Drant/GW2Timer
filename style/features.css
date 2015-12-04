@@ -289,20 +289,26 @@ dt.jpzListNameHover {
 	text-align: right;
 }
 
-.clt_banditchests { background-position: 0 0; }
-.clt_buriedchests { background-position: -32px 0; }
-.clt_cleaningup { background-position: -64px 0; }
-.clt_coinchallenger { background-position: -96px 0; }
-.clt_coinprospect { background-position: -128px 0; }
-.clt_coinuplands { background-position: -160px 0; }
-.clt_divemaster { background-position: -192px 0; }
-.clt_goldenlostbadges { background-position: -224px 0; }
-.clt_herochallenge { background-position: -256px 0; }
-.clt_historybuff { background-position: -288px 0; }
-.clt_lionsarchexterminator { background-position: -320px 0; }
-.clt_lostbadges { background-position: -352px 0; }
-.clt_matrixcubekey { background-position: -384px 0; }
-.clt_speedyreader { background-position: -416px 0; }
+.clt_aurictablets { background-position: 0 0; }
+.clt_banditchests { background-position: -32px 0; }
+.clt_buriedchests { background-position: -64px 0; }
+.clt_cleaningup { background-position: -96px 0; }
+.clt_coinchallenger { background-position: -128px 0; }
+.clt_coinprospect { background-position: -160px 0; }
+.clt_coinuplands { background-position: -192px 0; }
+.clt_divemaster { background-position: -224px 0; }
+.clt_exaltedmasks { background-position: -256px 0; }
+.clt_goldenlostbadges { background-position: -288px 0; }
+.clt_herochallenge { background-position: -320px 0; }
+.clt_historybuff { background-position: -352px 0; }
+.clt_itzeltotems { background-position: -384px 0; }
+.clt_lionsarchexterminator { background-position: -416px 0; }
+.clt_lostbadges { background-position: -448px 0; }
+.clt_masteryinsight { background-position: -480px 0; }
+.clt_matrixcubekey { background-position: -512px 0; }
+.clt_prioryseals { background-position: -544px 0; }
+.clt_speedyreader { background-position: -576px 0; }
+.clt_strongboxes { background-position: -608px 0; }
 
 .mapNeedle0, .mapNeedle1, .mapNeedle2 {
 	border-radius: 16px;
