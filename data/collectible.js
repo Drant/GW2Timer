@@ -294,9 +294,9 @@ MatrixCubeKey: {
 },
 ItzelTotems: {
 	name_en: "Jungle Totem Hunter",
-	name_de: "Chasseuse de totems de la jungle",
-	name_es: "Monedas: Altiplanos",
-	name_fr: "Pièces: Hauteurs",
+	name_de: "Dschungeltotem-Jägerin",
+	name_es: "Cazadora de tótems de la selva",
+	name_fr: "Chasseuse de totems de la jungle",
 	color: "burlywood",
 	view: "verdant",
 	wiki: "http://wiki.guildwars2.com/wiki/Jungle_Totem_Hunter",

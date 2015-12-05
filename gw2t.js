@@ -10774,19 +10774,21 @@ G = {
 			var i;
 			var collectible;
 			var translatedname;
+			var defaultname;
 			
 			for (i in P.Collectibles)
 			{
 				// Create checkboxes
 				collectible = P.Collectibles[i];
 				translatedname = D.getObjectName(collectible);
+				defaultname = D.getObjectDefaultName(collectible);
 				$("#cltList").append(
 					"<div>"
 					+ "<label style='color:" + collectible.color + "'>"
 						+ "<ins class='clt_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
 					+ "</label>"
 					+ "<span><cite>"
-						+ "<a href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "'>[Y]</a>&nbsp;"
+						+ "<a href='" + U.getYouTubeLink(defaultname + " " + I.cGameNick) + "'>[Y]</a>&nbsp;"//
 						+ "<a href='" + collectible.wiki + "'>[W]</a>&nbsp;"
 						+ "<a href='" + collectible.credit + "'>[C]</a>&nbsp;"
 						+ "&nbsp;-&nbsp;&nbsp;</cite>"
