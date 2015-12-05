@@ -154,10 +154,8 @@ O = {
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: true,
-		bol_switchMap: true,
 		bol_displayCharacterWvW: true,
 		bol_followCharacterWvW: false,
-		bol_switchMapWvW: true,
 		int_msecGPSRefresh: 100,
 		// Alarm
 		int_setAlarm: 0,
@@ -1227,6 +1225,7 @@ U = {
 	{
 		// Achievements
 		Daily: "https://api.guildwars2.com/v2/achievements/daily",
+		Tomorrow: "https://api.guildwars2.com/v2/achievements/daily/tomorrow",
 		
 		// Map
 		LangKey: "",
@@ -5650,6 +5649,7 @@ C = {
 	// The word and variable "nexus" is simply a chain's index number in the Chains array
 	cIndexSynonym: "nexus",
 	ChainToday: null,
+	ChainTomorrow: null,
 	ChainDummy: {alias: "dummy"},
 	CurrentChainSD: {}, NextChainSD1: {}, NextChainSD2: {}, NextChainSD3: {}, NextChainSD4: {},
 	CurrentChainHC: {}, NextChainHC1: {}, NextChainHC2: {}, NextChainHC3: {}, NextChainHC4: {},
@@ -9072,7 +9072,7 @@ M = {
 };
 
 /* =============================================================================
- * @@Populate Tyria-exclusive map properties and functions
+ * @@Populate Tyria-exclusive map properties, GPS, and standalone map functions
  * ========================================================================== */
 P = {
 	
@@ -9928,16 +9928,24 @@ P = {
 			return;
 		}
 		
+		var previousmap = I.GPSCurrent;
 		var currentnick = GPSIdentityJSON["map_id"];
-		if (O.Options.bol_switchMap && I.MapCurrent !== I.MapEnum.Tyria
-			&& M.ZoneAssociation[currentnick] !== undefined)
+		var htmlidprefix = "#" + I.MapCurrent;
+		
+		// Get the map the player is in
+		if (M.ZoneAssociation[currentnick] !== undefined)
 		{
-			$("#wvwSwitchButton").trigger("click");
+			I.GPSCurrent = I.MapEnum.Tyria;
 		}
-		else if (O.Options.bol_switchMapWvW && I.MapCurrent !== I.MapEnum.Mists
-			&& W.ZoneAssociation[currentnick] !== undefined)
+		else if (W.ZoneAssociation[currentnick] !== undefined)
 		{
-			$("#mapSwitchButton").trigger("click");
+			I.GPSCurrent = I.MapEnum.Mists;
+		}
+		
+		// If the player has changed the map in game and the website's map is different from it, then switch the website's map
+		if (I.GPSCurrent !== previousmap && I.GPSCurrent !== I.MapCurrent)
+		{
+			$(htmlidprefix + "SwitchButton").trigger("click");
 		}
 	},
 	
@@ -10071,22 +10079,34 @@ G = {
 	 */
 	generateAndInitializeDailies: function()
 	{
-		T.getDaily().done(function()
+		var finalizeDailies = function()
 		{
-			var now = new Date();
-			// Generate dailies box
-			$("#dlyCalendar").empty();
-			$("#dlyDate").html(now.toLocaleString(window.navigator.language, {
-				year: "numeric", month: "numeric", day: "numeric", weekday: "long"
-			}));
-			G.insertDailyDay(T.Daily, now);
-
 			$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
 			$("#dlyCalendar .dlyEvent").each(function()
 			{
 				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
 			});
 			I.qTip.init("#dlyCalendar ins");
+		};
+		
+		T.getDaily().done(function()
+		{
+			var now = new Date();
+			var tomorrow;
+			// Generate dailies box
+			$("#dlyCalendar").empty();
+			$("#dlyDate").html(now.toLocaleString(window.navigator.language, {
+				year: "numeric", month: "numeric", day: "numeric", weekday: "long"
+			}));
+			// Insert today's dailies
+			G.insertDailyDay(T.Daily, now);
+			// Insert tomorrow's dailies
+			T.getDaily({getTomorrow: true}).done(function()
+			{
+				tomorrow = T.addDaysToDate(now, 1);
+				G.insertDailyDay(T.Tomorrow, tomorrow);
+				finalizeDailies();
+			});
 		});
 	},
 	
@@ -11390,6 +11410,11 @@ W = {
 			P.tickGPS();
 		}
 	},
+	
+	tickWvW: function()
+	{
+		
+	}
 };
 
 /* =============================================================================
@@ -11398,7 +11423,7 @@ W = {
 T = {
 	
 	Daily: null,
-	dailyRetrievalRetries: 0,
+	Tomorrow: null,
 	DailyAssociation: GW2T_DAILY_ASSOCIATION,
 	Schedule: {},
 	DryTopSets: {},
@@ -11453,8 +11478,6 @@ T = {
 	cPERCENT_100: 100,
 	// Game constants
 	WEEKLY_RESET_DAY: 1, // Monday 00:00 UTC
-	DAILY_START_UNIX: 1418774400, // 2014-12-17:0000 UTC or 2014-12-16:1600 PST
-	DAYS_SINCE_DAILY_START: 0,
 	cDAYTIME_DAY_MINUTES: 80,
 	cDAYTIME_NIGHT_MINUTES: 40,
 	cDAYTIME_DAY_START: 25,
@@ -12541,104 +12564,140 @@ T = {
 	},
 	
 	/*
+	 * Extracts the daily world boss from a daily object.
+	 * @param object pDaily that was converted from the API object.
+	 * @returns object chain or null if invalid boss.
+	 */
+	extractDailyChain: function(pDaily)
+	{
+		var alias = pDaily.pve[3];
+		alias = (alias !== undefined && alias !== null) ? alias.toLowerCase() : null;
+		if (alias !== null && C.ChainAssociation[alias] !== undefined)
+		{
+			return C.getChainByAlias(alias);
+		}
+		return null;
+	},
+	
+	/*
 	 * Initializes the daily object and the today chain object.
+	 * @objparam boolean getTomorrow whether to get tomorrow's daily object instead.
+	 * @objparam boolean wantTomorrow whether to set today's daily object as tomorrow's.
+	 * @objparam boolean isReset whether to also do daily reset related functions.
 	 * @returns jqXHR object.
 	 */
 	getDaily: function(pOptions)
 	{
+		pOptions = pOptions || {};
 		var retrywaitminutes = 3;
-		
-		return $.getJSON(U.URL_API.Daily, function(pData)
+		var url = U.URL_API.Daily;
+		if (pOptions.getTomorrow || pOptions.wantTomorrow)
 		{
-			T.Daily = T.convertDailyObject(pData);
-
-			// Initialize today chain object
-			var alias = T.Daily.pve[3];
-			alias = (alias !== undefined && alias !== null) ? alias.toLowerCase() : null;
-			var apichain;
-			var currentmins = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
-			var startmins;
-
-			if (C.ChainAssociation[alias] !== undefined)
+			url = U.URL_API.Tomorrow;
+		}
+		
+		return $.getJSON(url, function(pData)
+		{
+			if (pOptions.getTomorrow)
 			{
-				apichain = C.Chains[C.ChainAssociation[alias]];
-				/*
-				 * If the today chain object was already parsed, make sure that
-				 * the retrieved API daily object is different from it, in case
-				 * the API server was not updated immediately at reset time.
-				 */
-				if (C.ChainToday !== null && pOptions !== undefined && pOptions.isReset === true)
-				{
-					var previousalias = C.ChainToday.alias;
-					C.ChainToday = null; // Single recursion base case
-					C.refreshChainDailyIcon();
-					if (apichain.alias === previousalias)
-					{
-						// Wait a while and retrieve the daily object hoping it is updated
-						setTimeout(function()
-						{
-							T.getDaily({isReset: true});
-						},  retrywaitminutes * T.cMILLISECONDS_IN_MINUTE);
-						return;
-					}
-				}
-				
-				startmins = T.convertScheduleKeyToUTCMinutes(apichain.scheduleKeys[0]);
-				// Make sure today's boss can still spawn before server reset at UTC midnight
-				if (startmins + T.cMINUTES_IN_TIMEFRAME >= currentmins)
-				{
-					C.ChainToday = apichain;
-				}
-				// Else get tomorrow's boss
-				else
-				{
-					// Placeholder for recursive call to retrieve future daily
-					C.ChainToday = null;
-				}
+				T.Tomorrow = T.convertDailyObject(pData);
+				C.ChainTomorrow = T.extractDailyChain(T.Tomorrow);
 			}
 			else
 			{
-				// No boss for this day
-				C.ChainToday = null;
-			}
-			
-			/*
-			 * If successfully retrieved today chain object.
-			 */
-			if (C.ChainToday)
-			{
-				// Update daily icons
-				C.refreshChainDailyIcon();
+				T.Daily = T.convertDailyObject(pData);
+				// Initialize today chain object
+				var dailychain = T.extractDailyChain(T.Daily);
+				var currentmins = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
+				var startmins;
 
-				if (pOptions !== undefined && pOptions.isReset === true)
+				if (dailychain !== null)
 				{
-					// Tell today's world boss closest scheduled time if server resetted
-					if (O.isServerReset && C.ChainToday)
+					startmins = T.convertScheduleKeyToUTCMinutes(dailychain.scheduleKeys[0]);
+					
+					if (pOptions.wantTomorrow)
 					{
-						I.greet(D.getModifiedWord("boss", "daily", U.CaseEnum.Sentence) + " "
-							+ D.getObjectName(C.ChainToday) + " " + D.getTranslation("will start") + " " + D.getTranslation("at") + " "
-							+ T.getTimeFormatted(
-							{
-								wantSeconds: false,
-								customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
-							}) + " " + D.getTranslation("in") + " "
-							+ T.getTimeFormatted(
-							{
-								wantLetters: true,
-								wantSeconds: false,
-								customTimeInSeconds: T.getSecondsUntilChainStarts(C.ChainToday)
-							}),
-						15);
+						C.ChainToday = dailychain; // SUCCESS GET TOMORROW
 					}
-
-					// Subscribe to daily chain
-					if (O.Options.bol_alertAutosubscribe &&
-						O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription)
+					else
 					{
-						var subscriptionbutton = $("#chnTime_" + C.ChainToday.nexus);
-						if ( ! subscriptionbutton.hasClass("chnTimeSubscribed"))
+						/*
+						 * If the today chain object was already parsed, make sure that
+						 * the retrieved API daily object is different from it, in case
+						 * the API server was not updated immediately at reset time.
+						 */
+						if (C.ChainToday !== null && pOptions.isReset)
 						{
-							subscriptionbutton.trigger("click");
+							var previousalias = C.ChainToday.alias;
+							C.ChainToday = null; // Single recursion base case
+							C.refreshChainDailyIcon();
+							if (dailychain.alias === previousalias)
+							{
+								// Wait a while and retrieve the daily object hoping it is updated
+								setTimeout(function()
+								{
+									T.getDaily({isReset: true});
+								},  retrywaitminutes * T.cMILLISECONDS_IN_MINUTE);
+								return;
+							}
+						}
+
+						// Make sure today's boss can still spawn before server reset at UTC midnight
+						if (startmins + T.cMINUTES_IN_TIMEFRAME >= currentmins)
+						{
+							C.ChainToday = dailychain; // SUCCESS GET TODAY
+						}
+						// Else get tomorrow's boss
+						else
+						{
+							T.getDaily({wantTomorrow: true});
+						}
+					}
+				}
+				else
+				{
+					// No boss for this day
+					C.ChainToday = null;
+				}
+
+				/*
+				 * If successfully retrieved today chain object.
+				 */
+				if (C.ChainToday)
+				{
+					// Update daily icons
+					C.refreshChainDailyIcon();
+
+					if (pOptions.isReset === true)
+					{
+						// Tell today's world boss closest scheduled time if server resetted
+						if (O.isServerReset && C.ChainToday)
+						{
+							I.greet(D.getModifiedWord("boss", "daily", U.CaseEnum.Sentence) + " "
+								+ D.getObjectName(C.ChainToday) + " " + D.getTranslation("will start") + " " + D.getTranslation("at") + " "
+								+ T.getTimeFormatted(
+								{
+									wantSeconds: false,
+									customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
+								}) + " " + D.getTranslation("in") + " "
+								+ T.getTimeFormatted(
+								{
+									wantLetters: true,
+									wantSeconds: false,
+									customTimeInSeconds: T.getSecondsUntilChainStarts(C.ChainToday)
+								}),
+							15);
+						}
+
+						// Subscribe to daily chain
+						if (O.Options.bol_alertAutosubscribe &&
+							O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription)
+						{
+							var subscriptionbutton = $("#chnTime_" + C.ChainToday.nexus);
+							if ( ! subscriptionbutton.hasClass("chnTimeSubscribed"))
+							{
+								subscriptionbutton.trigger("click");
+							}
 						}
 					}
 				}
@@ -14600,8 +14659,8 @@ I = {
 			Dungeons: "Dungeons"
 		}
 	},
-	// The map currently displayed on the map pane
-	MapCurrent: "map",
+	MapCurrent: "map", // The map currently displayed on the website
+	GPSCurrent: null, // The map which the player resides in game
 	MapEnum:
 	{
 		Tyria: "map",
