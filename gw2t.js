@@ -1310,7 +1310,8 @@ U = {
 		Section: "section",
 		Article: "article",
 		Mode: "mode",
-		Go: "go"
+		Go: "go",
+		Draw: "draw"
 	},
 	
 	/*
@@ -5128,7 +5129,7 @@ D = {
 	getTranslation: function(pText)
 	{
 		// If opted language is English then just return the given text
-		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+		if (D.isLanguageDefault())
 		{
 			return pText;
 		}
@@ -5158,7 +5159,7 @@ D = {
 	},
 	getWord: function(pText)
 	{
-		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+		if (D.isLanguageDefault())
 		{
 			return pText;
 		}
@@ -5322,6 +5323,10 @@ D = {
 		}
 		return false;
 	},
+	isLanguageDefault: function()
+	{
+		return O.Options.enu_Language === O.OptionEnum.Language.Default;
+	},
 	
 	/*
 	 * Gets the language code of the opted fully supported language, or the default if isn't.
@@ -5429,7 +5434,7 @@ D = {
 	 */
 	getChainTitle: function(pChain)
 	{
-		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+		if (D.isLanguageDefault())
 		{
 			return pChain.title;
 		}
@@ -5443,7 +5448,7 @@ D = {
 	 */
 	getChainAlias: function(pChain)
 	{
-		if (O.Options.enu_Language === O.OptionEnum.Language.Default)
+		if (D.isLanguageDefault())
 		{
 			return pChain.alias;
 		}
@@ -5601,7 +5606,7 @@ D = {
 	 */
 	getChainPronunciation: function(pChain)
 	{
-		if (O.Options.enu_Language === O.OptionEnum.Language.Default
+		if (D.isLanguageDefault()
 			|| I.BrowserCurrent !== I.BrowserEnum.Chrome)
 		{
 			return C.Chains[pChain.nexus].pronunciation;
@@ -6078,7 +6083,7 @@ C = {
 			});
 			$("#chnDetails_" + pChain.nexus).hide();
 		}
-		if (O.Options.enu_Language === O.OptionEnum.Language.Default && I.isMapEnabled)
+		if (D.isLanguageDefault() && I.isMapEnabled)
 		{
 			$("#chnBar_" + pChain.nexus).hover(
 				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain)); },
@@ -8731,15 +8736,13 @@ M = {
 					{
 						if (zone.indexOf(i) !== -1)
 						{
-							this.goToView(this.getZoneCenter(i), this.ZoomEnum.Bird);
+							this.goToView(this.getZoneCenter(i), this.ZoomEnum.Sky);
 							break;
 						}
 					}
 				}
 			}
 		}
-		// Only execute this function once
-		U.Args[U.KeyEnum.Go] = null;
 	},
 	
 	/*
@@ -9562,11 +9565,26 @@ P = {
 	},
 	finishPopulation: function()
 	{
+		// Do visual changes
 		M.isMapAJAXDone = true;
 		M.bindMapVisualChanges();
 		M.adjustZoomMapping();
 		P.adjustZoomDryTop();
-		M.goToArguments(U.Args[U.KeyEnum.Go], M.Pin.Program);
+		
+		// Execute query string commands if available
+		var qsgo = U.Args[U.KeyEnum.Go];
+		var qsdraw = U.Args[U.KeyEnum.Draw];
+		if (qsgo !== undefined)
+		{
+			M.goToArguments(qsgo, M.Pin.Program);
+			U.Args[U.KeyEnum.Go] = null;
+		}
+		if (qsdraw !== undefined)
+		{
+			M.parsePersonalPath(qsdraw);
+		}
+		
+		// Start GPS if on overlay
 		if (I.ModeCurrent === I.ModeEnum.Overlay)
 		{
 			P.tickGPS();
@@ -10079,6 +10097,7 @@ G = {
 	 */
 	generateAndInitializeDailies: function()
 	{
+		var now = new Date();
 		var finalizeDailies = function()
 		{
 			$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
@@ -10089,24 +10108,33 @@ G = {
 			I.qTip.init("#dlyCalendar ins");
 		};
 		
+		// Regenerate the whole section
+		$("#dlyDate, #dlyActivity, #dlyCalendar").empty();
+		$("#dlyDate").html(now.toLocaleString(window.navigator.language, {
+			year: "numeric", month: "numeric", day: "numeric", weekday: "long"
+		}));
+
+		// Get daily activity
+		var activity = GW2T_ACTIVITY_DATA;
+		var activityalias = activity.Schedule[now.getUTCDay()];
+		var activityname = D.getObjectName(activity.Activities[activityalias]);
+		$("#dlyActivity").html("<h2><img src='img/daily/activities/" + activityalias + I.cPNG + "' />"
+			+ " <a" + U.convertExternalAnchor(U.getWikiLanguageLink(activityname)) + ">" + activityname + "</a> <ins class='dly dly_pve_activity'></ins></h2>");
+		
+		// Generate daily achievement boxes
+		$("#dlyCalendar").after(I.cThrobber);
 		T.getDaily().done(function()
 		{
-			var now = new Date();
-			var tomorrow;
-			// Generate dailies box
-			$("#dlyCalendar").empty();
-			$("#dlyDate").html(now.toLocaleString(window.navigator.language, {
-				year: "numeric", month: "numeric", day: "numeric", weekday: "long"
-			}));
-			// Insert today's dailies
-			G.insertDailyDay(T.Daily, now);
-			// Insert tomorrow's dailies
-			T.getDaily({getTomorrow: true}).done(function()
+			G.insertDailyDay(T.Daily, now); // Today's dailies
+			T.getDaily({getTomorrow: true}).done(function() // Tomorrow's dailies
 			{
-				tomorrow = T.addDaysToDate(now, 1);
-				G.insertDailyDay(T.Tomorrow, tomorrow);
+				$("#dlyContainer").find(".itemThrobber").remove();
+				G.insertDailyDay(T.Tomorrow, T.addDaysToDate(now, 1));
 				finalizeDailies();
 			});
+		}).fail(function()
+		{
+			I.write("Unable to retrieve daily API.");
 		});
 	},
 	
@@ -13016,8 +13044,9 @@ T = {
 					var offer = T.DashboardSupply.Offers[i];
 					$.getJSON(U.URL_API.ItemDetails + offer.id + U.URL_API.LangKey, function(pData)
 					{
+						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
 						table.append("<div class='dsbSupplyEntry'>"
-							+ "<a" + U.convertExternalAnchor(U.getWikiLanguageLink(pData.name)) + "><img class='dsbSupplyIcon' src='" + pData.icon + "' /></a> "
+							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img class='dsbSupplyIcon' src='" + pData.icon + "' /></a> "
 							+ "<span id='dsbSupplyItem_" + i + "' class='dsbSupplyItem curZoom " + E.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (T.DashboardSupply.Coords[i])[weekdaylocation] + "'>" + pData.name + "</span> "
 							+ "<span class='dsbSupplyPriceKarma'>" + E.createKarmaString(offer.price, true) + "</span>"

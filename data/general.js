@@ -148,7 +148,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1852": "Spender",
 	"1541": "Ruins",
 	"982": "Ruins",
-	"946": "Ruins",
+	"946": "Monument",
 	
 	// PvP
 	"1856": "Reward",
@@ -226,6 +226,19 @@ var GW2T_DAILY_ASSOCIATION = {
 	"2597": "12"
 };
 
+/*
+ * Activities that change daily.
+ */
+var GW2T_ACTIVITY_DATA = {
+	// Schedule array index correspond to the UTC weekday number, where 0 is Sunday
+	Schedule: ["keg", "crab", "sanctum", "southsun", "crab", "sanctum", "southsun"],
+	Activities: {
+		sanctum: { name_en: "Sanctum Sprint", name_de: "Refugiums-Sprint", name_es: "Sprint del Sagrario", name_fr: "Course du Sanctuaire" },
+		crab: { name_en: "Crab Toss", name_de: "Krebs-Wurfspiel", name_es: "Lanzamiento de cangrejos", name_fr: "Lancer de crabe" },
+		keg: { name_en: "Keg Brawl", name_de: "Fasskeilerei", name_es: "Pelea de barricas", name_fr: "Bagarre de barils" },
+		southsun: { name_en: "Southsun Survival", name_de: "Südlicht-Überlebenskampf", name_es: "Supervivencia Sol Austral", name_fr: "Survie à Sud-Soleil" }
+	}
+};
 
 /*
  * Locations for cross-world map travel. Coordinates are ordered by progression.

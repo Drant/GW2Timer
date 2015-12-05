@@ -10,6 +10,16 @@
 	width: 24px; height: 24px;
 }
 
+#dlyDate {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	text-align: center;
+}
+#dlyActivity {
+	margin-top: -16px;
+	text-align: center;
+}
+
 #dlyCalendar div { /* A day */
 	margin-bottom: 16px;
 	border-radius: 16px;
@@ -39,7 +49,7 @@
 	background-color: rgba(255, 255, 102, 0.1);
 	box-shadow: 0px 0px 4px #ffff66;
 }
-#dlyCalendar ins { /* Daily */
+#dlyCalendar ins, .dly { /* Daily */
 	display: inline-block;
 	width: 32px; height: 32px;
 	margin-right: 8px;
@@ -153,9 +163,10 @@
 .dly_wvw_keep { background-position: -1280px 0; }
 .dly_wvw_kills { background-position: -1312px 0; }
 .dly_wvw_land { background-position: -1344px 0; }
-.dly_wvw_ruins { background-position: -1376px 0; }
-.dly_wvw_spender { background-position: -1408px 0; }
-.dly_wvw_tower { background-position: -1440px 0; }
+.dly_wvw_monument { background-position: -1376px 0; }
+.dly_wvw_ruins { background-position: -1408px 0; }
+.dly_wvw_spender { background-position: -1440px 0; }
+.dly_wvw_tower { background-position: -1472px 0; }
 
 
 /* =============================================================================

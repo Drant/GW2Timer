@@ -51,9 +51,16 @@
 		if (primerindex !== -1)
 		{
 			params = loc.substring(primerindex + primer.length, loc.length).split("/");
-			if ((params[0]).indexOf(",") !== -1) // If first param is a coordinate
+			if (params[0].indexOf("[") === 0) // If first param is an array
 			{
-				newloc = base + "?go=" + params[0];
+				if (params[0].substring(0,2) === "[[")
+				{
+					newloc = base + "?draw=" + params[0];
+				}
+				else
+				{
+					newloc = base + "?go=" + params[0];
+				}
 			}
 			else // If params are in order: page/section/coordinates
 			{
