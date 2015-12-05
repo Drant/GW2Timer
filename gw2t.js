@@ -1226,6 +1226,7 @@ U = {
 		// Achievements
 		Daily: "https://api.guildwars2.com/v2/achievements/daily",
 		Tomorrow: "https://api.guildwars2.com/v2/achievements/daily/tomorrow",
+		Fractal: "https://api.guildwars2.com/v2/achievements/categories/88",
 		
 		// Map
 		LangKey: "",
@@ -3972,7 +3973,7 @@ E = {
 		};
 		var insertSearchResult = function(pData, pQuery, pResultsList)
 		{
-			$(".trdResults .itemThrobber").remove();
+			I.removeThrobber(".trdResults");
 			var outputline = $("<dfn class='" + E.getRarityClass(pData.rarity) + "' data-id='" + pData.id + "'>"
 			+ "<img src='" + pData.icon + "'>"
 			+ U.wrapSubstringHTML(pData.name, pQuery, "u") + "</dfn>").appendTo(pResultsList);
@@ -10109,7 +10110,8 @@ G = {
 		};
 		
 		// Regenerate the whole section
-		$("#dlyDate, #dlyActivity, #dlyCalendar").empty();
+		$("#dlyDate, #dlyCalendar, #dlyFractal, #dlyActivity").empty();
+		I.removeThrobber("#dlyContainer");
 		$("#dlyDate").html(now.toLocaleString(window.navigator.language, {
 			year: "numeric", month: "numeric", day: "numeric", weekday: "long"
 		}));
@@ -10128,13 +10130,30 @@ G = {
 			G.insertDailyDay(T.Daily, now); // Today's dailies
 			T.getDaily({getTomorrow: true}).done(function() // Tomorrow's dailies
 			{
-				$("#dlyContainer").find(".itemThrobber").remove();
+				I.removeThrobber("#dlyContainer");
 				G.insertDailyDay(T.Tomorrow, T.addDaysToDate(now, 1));
 				finalizeDailies();
 			});
 		}).fail(function()
 		{
 			I.write("Unable to retrieve daily API.");
+		});
+		// Daily fractal scale numbers
+		$.getJSON(U.URL_API.Fractal, function(pData)
+		{
+			// The daily scale are located in these API array indexes for that URL
+			var tier0 = T.DailyAssociation[(pData.achievements[0])];
+			var tier1 = T.DailyAssociation[(pData.achievements[4])];
+			
+			if (tier0 !== undefined && tier1 !== undefined)
+			{
+				$("#dlyFractal").html("<h2><img src='img/daily/activities/fractal.png' />"
+					+ " <a" + U.convertExternalAnchor(U.getWikiLink("Fractals of the Mists")) + ">"
+					+ tier0 + " + " + tier1 + " Fractal Scale" + "</a> <ins class='dly dly_pve_fractal'></ins></h2>");
+			}
+		}).fail(function()
+		{
+			I.write("Unable to retrieve daily fractal API.");
 		});
 	},
 	
@@ -13091,7 +13110,7 @@ T = {
 				I.initializeScrollbar("#dsbSupplyTable");
 				I.updateScrollbar("#dsbSupplyTable");
 			});
-			table.find(".itemThrobber").remove();
+			I.removeThrobber(table);
 		};
 	},
 	getDashboardSupplyWeekday: function()
@@ -15196,6 +15215,16 @@ I = {
 				}
 			}
 		}
+	},
+	
+	/*
+	 * Finds throbber elements (spinning icon used before AJAX content is loaded)
+	 * and removes it.
+	 * @param string pContainer selector.
+	 */
+	removeThrobber: function(pContainer)
+	{
+		$(pContainer).find(".itemThrobber").remove();
 	},
 	
 	/*
