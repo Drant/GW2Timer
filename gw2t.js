@@ -1489,9 +1489,9 @@ U = {
 	 */
 	printDaily: function()
 	{
-		if (T.Daily !== null)
+		if (T.DailyToday !== null)
 		{
-			var d = T.Daily;
+			var d = T.DailyToday;
 			var str = "pve: [&quot;" + d.pve[0] + "&quot;, &quot;" + d.pve[1] + "&quot;, &quot;" + d.pve[2] + "&quot;, &quot;" + d.pve[3] + "&quot;],<br />"
 				+ "pvp: [&quot;" + d.pvp[0] + "&quot;, &quot;" + d.pvp[1] + "&quot;, &quot;" + d.pvp[2] + "&quot;, &quot;" + d.pvp[3] + "&quot;],<br />"
 				+ "wvw: [&quot;" + d.wvw[0] + "&quot;, &quot;" + d.wvw[1] + "&quot;, &quot;" + d.wvw[2] + "&quot;, &quot;" + d.wvw[3] + "&quot;]";
@@ -10106,18 +10106,19 @@ G = {
 			{
 				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
 			});
+			I.bindPseudoCheckbox("#dlyCalendar ins");
 			I.qTip.init("#dlyCalendar ins");
 		};
 		
 		// Regenerate the whole section
-		$("#dlyDate, #dlyCalendar, #dlyFractal, #dlyActivity").empty();
+		$("#dlyHeader, #dlyCalendar, #dlyActivity").empty();
 		I.removeThrobber("#dlyContainer");
-		$("#dlyDate").html(now.toLocaleString(window.navigator.language, {
+		$("#dlyHeader").html(now.toLocaleString(window.navigator.language, {
 			year: "numeric", month: "numeric", day: "numeric", weekday: "long"
 		}));
 
 		// Get daily activity
-		var activity = GW2T_ACTIVITY_DATA;
+		var activity = T.Daily.Activity;
 		var activityalias = activity.Schedule[now.getUTCDay()];
 		var activityname = D.getObjectName(activity.Activities[activityalias]);
 		$("#dlyActivity").html("<h2><img src='img/daily/activities/" + activityalias + I.cPNG + "' />"
@@ -10127,29 +10128,31 @@ G = {
 		$("#dlyCalendar").after(I.cThrobber);
 		T.getDaily().done(function()
 		{
-			G.insertDailyDay(T.Daily, now); // Today's dailies
+			G.insertDailyDay(T.DailyToday, now); // Today's dailies
 			T.getDaily({getTomorrow: true}).done(function() // Tomorrow's dailies
 			{
 				I.removeThrobber("#dlyContainer");
-				G.insertDailyDay(T.Tomorrow, T.addDaysToDate(now, 1));
+				G.insertDailyDay(T.DailyTomorrow, T.addDaysToDate(now, 1));
 				finalizeDailies();
 			});
 		}).fail(function()
 		{
 			I.write("Unable to retrieve daily API.");
 		});
+		
 		// Daily fractal scale numbers
 		$.getJSON(U.URL_API.Fractal, function(pData)
 		{
 			// The daily scale are located in these API array indexes for that URL
+			var fractal = T.Daily.Fractal;
 			var tier0 = T.DailyAssociation[(pData.achievements[0])];
 			var tier1 = T.DailyAssociation[(pData.achievements[4])];
 			
 			if (tier0 !== undefined && tier1 !== undefined)
 			{
-				$("#dlyFractal").html("<h2><img src='img/daily/activities/fractal.png' />"
-					+ " <a" + U.convertExternalAnchor(U.getWikiLink("Fractals of the Mists")) + ">"
-					+ tier0 + " + " + tier1 + " Fractal Scale" + "</a> <ins class='dly dly_pve_fractal'></ins></h2>");
+				$("#dlyHeader").append(" <ins class='dly dly_pve_fractal'></ins><a title='" + D.getObjectName(fractal.Scale) + "' "
+					+ U.convertExternalAnchor(D.getObjectURL(fractal)) + ">" + tier0 + "+" + tier1 + "</a>");
+				I.qTip.init("#dlyHeader a");
 			}
 		}).fail(function()
 		{
@@ -11471,9 +11474,10 @@ W = {
  * ========================================================================== */
 T = {
 	
-	Daily: null,
-	Tomorrow: null,
+	Daily: GW2T_DAILY_DATA,
 	DailyAssociation: GW2T_DAILY_ASSOCIATION,
+	DailyToday: null,
+	DailyTomorrow: null,
 	Schedule: {},
 	DryTopSets: {},
 	DryTopCodes: {},
@@ -12631,7 +12635,7 @@ T = {
 	/*
 	 * Initializes the daily object and the today chain object.
 	 * @objparam boolean getTomorrow whether to get tomorrow's daily object instead.
-	 * @objparam boolean wantTomorrow whether to set today's daily object as tomorrow's.
+	 * @objparam boolean setTomorrow whether to set today's daily object as tomorrow's.
 	 * @objparam boolean isReset whether to also do daily reset related functions.
 	 * @returns jqXHR object.
 	 */
@@ -12640,23 +12644,23 @@ T = {
 		pOptions = pOptions || {};
 		var retrywaitminutes = 3;
 		var url = U.URL_API.Daily;
-		if (pOptions.getTomorrow || pOptions.wantTomorrow)
+		if (pOptions.getTomorrow || pOptions.setTomorrow)
 		{
 			url = U.URL_API.Tomorrow;
 		}
 		
 		return $.getJSON(url, function(pData)
 		{
-			if (pOptions.getTomorrow)
+			if (pOptions.getTomorrow) // Get tomorrow
 			{
-				T.Tomorrow = T.convertDailyObject(pData);
-				C.ChainTomorrow = T.extractDailyChain(T.Tomorrow);
+				T.DailyTomorrow = T.convertDailyObject(pData);
+				C.ChainTomorrow = T.extractDailyChain(T.DailyTomorrow);
 			}
-			else
+			else // Get today
 			{
-				T.Daily = T.convertDailyObject(pData);
+				T.DailyToday = T.convertDailyObject(pData);
 				// Initialize today chain object
-				var dailychain = T.extractDailyChain(T.Daily);
+				var dailychain = T.extractDailyChain(T.DailyToday);
 				var currentmins = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Minutes);
 				var startmins;
 
@@ -12664,9 +12668,9 @@ T = {
 				{
 					startmins = T.convertScheduleKeyToUTCMinutes(dailychain.scheduleKeys[0]);
 					
-					if (pOptions.wantTomorrow)
+					if (pOptions.setTomorrow)
 					{
-						C.ChainToday = dailychain; // SUCCESS GET TOMORROW
+						C.ChainToday = dailychain; // SUCCESS SET TOMORROW
 					}
 					else
 					{
@@ -12694,12 +12698,12 @@ T = {
 						// Make sure today's boss can still spawn before server reset at UTC midnight
 						if (startmins + T.cMINUTES_IN_TIMEFRAME >= currentmins)
 						{
-							C.ChainToday = dailychain; // SUCCESS GET TODAY
+							C.ChainToday = dailychain; // SUCCESS SET TODAY
 						}
 						// Else get tomorrow's boss
 						else
 						{
-							T.getDaily({wantTomorrow: true});
+							T.getDaily({setTomorrow: true});
 						}
 					}
 				}
@@ -15485,7 +15489,7 @@ I = {
 			});
 			
 			// Create and bind the additional bottom header to collapse the container
-			$("<div class='jsSectionDone'><img src='img/ui/close.png' />" + headertext + "</div>")
+			$("<div class='curClick jsSectionDone'><img src='img/ui/close.png' />" + headertext + "</div>")
 			.appendTo(header.next()).click(function()
 			{
 				$(this).parent().prev().trigger("click");
@@ -15665,6 +15669,33 @@ I = {
 		var bool = !(pElement.data("checked"));
 		pElement.data("checked", bool);
 		return bool;
+	},
+	
+	/*
+	 * Makes an element have a checkbox change appearance behavior, but does not
+	 * actually write to any checklist.
+	 * @param string pSelector to bind.
+	 * @param float pOpacity when the element is checked.
+	 */
+	bindPseudoCheckbox: function(pSelector, pOpacity)
+	{
+		if (pOpacity === undefined)
+		{
+			pOpacity = 0.3;
+		}
+		$(pSelector).click(function()
+		{
+			if ($(this).data("checked") !== true)
+			{
+				$(this).css({opacity: pOpacity});
+				$(this).data("checked", true);
+			}
+			else
+			{
+				$(this).css({opacity: 1});
+				$(this).data("checked", false);
+			}
+		});
 	},
 	
 	/*

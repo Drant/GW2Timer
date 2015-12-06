@@ -227,9 +227,11 @@ var GW2T_DAILY_ASSOCIATION = {
 };
 
 /*
- * Activities that change daily.
+ * Daily achievements and translations.
  */
-var GW2T_ACTIVITY_DATA = {
+var GW2T_DAILY_DATA = {
+Activity:
+{
 	// Schedule array index correspond to the UTC weekday number, where 0 is Sunday
 	Schedule: ["keg", "crab", "sanctum", "southsun", "crab", "sanctum", "southsun"],
 	Activities: {
@@ -238,6 +240,21 @@ var GW2T_ACTIVITY_DATA = {
 		keg: { name_en: "Keg Brawl", name_de: "Fasskeilerei", name_es: "Pelea de barricas", name_fr: "Bagarre de barils" },
 		southsun: { name_en: "Southsun Survival", name_de: "Südlicht-Überlebenskampf", name_es: "Supervivencia Sol Austral", name_fr: "Survie à Sud-Soleil" }
 	}
+},
+Fractal:
+{
+	url_en: "http://wiki-en.guildwars2.com/wiki/Fractals_of_the_Mists#Fractal_levels",
+	url_de: "http://wiki-de.guildwars2.com/wiki/Fraktale_der_Nebel#Stufen",
+	url_es: "http://wiki-es.guildwars2.com/wiki/Fractales_de_la_niebla",
+	url_fr: "http://wiki-fr.guildwars2.com/wiki/Fractales_des_Brumes#Difficult.C3.A9_et_fractales",
+	Scale:
+	{
+		name_en: "Recommended Fractal Scale",
+		name_de: "Empfohlenes Fraktal Schwierigkeitsgrad",
+		name_es: "Fractal recomendado escala",
+		name_fr: "Fractale recommandée de niveau"
+	}
+}
 };
 
 /*
@@ -1146,16 +1163,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2015-12-05T00:00:00Z"),
-	Finish: new Date("2015-12-06T00:00:00Z"),
+	Start: new Date("2015-12-06T00:00:00Z"),
+	Finish: new Date("2015-12-07T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43805", price: "25200" },
-		Fox: { id: "43819", price: "25200" },
-		Derwena: { id: "49777", price: "25200" },
-		Yana: { id: "43830", price: "25200" },
-		Katyn: { id: "49734", price: "12600" },
-		Verma: { id: "43822", price: "25200" }
+		Mehem: { id: "43838", price: "25200" },
+		Fox: { id: "48913", price: "25200" },
+		Derwena: { id: "44715", price: "25200" },
+		Yana: { id: "44718", price: "25200" },
+		Katyn: { id: "43809", price: "25200" },
+		Verma: { id: "49754", price: "25200" }
 	}
 }
 };

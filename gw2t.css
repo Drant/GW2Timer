@@ -310,8 +310,7 @@ html, body,
 /* Clickable */
 .curClick, a, kbd, input, label, button,
 .mapHUDButton, .itemContext li,
-.menuBeam img:hover, .jsSectionDone,
-.chnCheck:hover, .chnTitle time {
+.menuBeam img:hover, .chnCheck:hover, .chnTitle time {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
 
