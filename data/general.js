@@ -971,9 +971,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "Heart of Thorns <a href='http://gw2timer.com/?page=Collectible'>achievements/mastery/strongbox</a> map added. Use with <a href='http://forum.renaka.com/topic/5546166/'>GPS app</a>.",
-	Start: new Date("2015-12-03T16:00:00Z"),
-	Finish: new Date("2015-12-06T16:00:00Z")
+	content: "To toggle this box and the HoT timer, right click on the map and choose &quot;Toggle HUD&quot;",
+	Start: new Date("2015-12-06T16:00:00Z"),
+	Finish: new Date("2015-12-09T16:00:00Z")
 },
 
 /*
@@ -1163,16 +1163,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2015-12-06T00:00:00Z"),
-	Finish: new Date("2015-12-07T00:00:00Z"),
+	Start: new Date("2015-12-07T00:00:00Z"),
+	Finish: new Date("2015-12-08T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43838", price: "25200" },
-		Fox: { id: "48913", price: "25200" },
-		Derwena: { id: "44715", price: "25200" },
-		Yana: { id: "44718", price: "25200" },
-		Katyn: { id: "43809", price: "25200" },
-		Verma: { id: "49754", price: "25200" }
+		Mehem: { id: "44663", price: "25200" },
+		Fox: { id: "75473", price: "25200" },
+		Derwena: { id: "49744", price: "25200" },
+		Yana: { id: "43798", price: "12600" },
+		Katyn: { id: "43482", price: "25200" },
+		Verma: { id: "43837", price: "25200" }
 	}
 }
 };

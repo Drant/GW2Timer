@@ -1156,6 +1156,7 @@ O = {
 			{
 				if (T.isTimelineGenerated)
 				{
+					T.toggleTimeline(true);
 					return;
 				}
 				else
@@ -1163,6 +1164,10 @@ O = {
 					T.generateTimeline();
 					O.Enact.bol_showTimelineOpaque();
 				}
+			}
+			else
+			{
+				T.toggleTimeline(false);
 			}
 		},
 		bol_showTimelineOpaque: function()
@@ -1348,6 +1353,7 @@ U = {
 			case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
 			case "nocontext": that.Map.off("contextmenu"); I.write("Map context menu disabled."); break;
 			case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
+			case "dart": that.drawRandom(args[1]); break;
 			case "optimize": that.redrawPersonalPath(P.getGreedyPath(M.parseCoordinatesMulti(args[1]))); break;
 			case "api": U.printAPI(args[1], args[2]); break;
 			case "daily": U.printDaily(); break;
@@ -1785,22 +1791,6 @@ U = {
 	{
 		return pString.charAt(0).toUpperCase() + pString.slice(1).toLowerCase();
 	},
-	toEveryUpperCase: function(pString)
-	{
-		var str = pString.split(" ");
-		if (str.length > 1)
-		{
-			for (var i in str)
-			{
-				str[i] = U.toFirstUpperCase(str[i]);
-			}
-			return str.join(" ");
-		}
-		else
-		{
-			return U.toFirstUpperCase(pString);
-		}
-	},
 	
 	/*
 	 * Changes letter case of a word or sentence.
@@ -1922,7 +1912,7 @@ U = {
 			.replace(/</g, "&lt;")
 			.replace(/>/g, "&gt;")
 			.replace(/"/g, "&quot;")
-			.replace(/'/g, "&#039;");
+			.replace(/'/g, "&#39;");
 	},
 	
 	/*
@@ -5045,6 +5035,8 @@ D = {
 			cs: "odebírané", it: "sottoscritti", pl: "subskrypcji", pt: "assinado", ru: "подписан", zh: "訂閱"},
 		s_then: {de: "dann", es: "luego", fr: "puis",
 			cs: "pak", it: "poi", pl: "potem", pt: "então", ru: "затем", zh: "接著"},
+		s_more: {de: "mehr", es: "más", fr: "plus",
+			cs: "víc", it: "più", pl: "więcej", pt: "mais", ru: "бо́льше", zh: "更多"},
 		
 		// Prepositions and Conjunctions
 		s_at: {de: "um", es: "a", fr: "à",
@@ -7715,11 +7707,15 @@ M = {
 		});
 		
 		/*
-		 * Bind context menu functions, same order as the HTML.
+		 * Bind context menu functions.
 		 */
 		$(htmlidprefix + "Context").click(function()
 		{
 			$(this).hide();
+		});
+		$(htmlidprefix + "ContextToggleHUD").click(function()
+		{
+			$(htmlidprefix + "HUDBoxes").toggle();
 		});
 		$(htmlidprefix + "ContextCenter").click(function()
 		{
@@ -8466,6 +8462,27 @@ M = {
 		{
 			I.write("Path unavailable for this.");
 		}
+	},
+	
+	/*
+	 * Draw pins in random coordinates.
+	 * @param pQuantity pins to draw.
+	 */
+	drawRandom: function(pQuantity)
+	{
+		if (pQuantity === 0 || pQuantity === undefined)
+		{
+			return;
+		}
+		
+		var x, y;
+		for (var i = 0; i < pQuantity; i++)
+		{
+			x = T.getRandomIntRange(0, this.cMAP_BOUND);
+			y = T.getRandomIntRange(0, this.cMAP_BOUND);
+			this.createPersonalPin(this.convertGCtoLC([x, y]));
+		}
+		this.drawPersonalPath();
 	},
 	
 	/*
@@ -13221,6 +13238,10 @@ T = {
 	 */
 	toggleDashboard: function(pBoolean)
 	{
+		if (pBoolean === undefined)
+		{
+			pBoolean = !($("#itemDashboard").is(":visible"));
+		}
 		if (O.Options.bol_showDashboard && T.isDashboardEnabled)
 		{
 			T.isDashboardCountdownTickEnabled = pBoolean;
@@ -13438,6 +13459,10 @@ T = {
 	 */
 	toggleTimeline: function(pBoolean)
 	{
+		if (pBoolean === undefined)
+		{
+			pBoolean = !($("#itemTimeline").is(":visible"));
+		}
 		if (O.Options.bol_showTimeline && T.isTimelineEnabled)
 		{
 			if (pBoolean)
@@ -14616,6 +14641,10 @@ I = {
 	{
 		ArrowUp: "⇑",
 		ArrowDown: "⇓",
+		TriUp: "▲",
+		TriDown: "▼",
+		TriRight: "►",
+		TriLeft: "◄",
 		Block: "■",
 		Star: "☆",
 		Ellipsis: "…",
@@ -15310,10 +15339,21 @@ I = {
 	{
 		$(pMenu).addClass("jsHidable").find("li").each(function()
 		{
-			if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+			if ($(this).hasClass("itemContextSubmenu") === false)
 			{
-				$(this).text(D.getPhraseOriginal($(this).text()));
+				// Translate menu item
+				if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+				{
+					$(this).text(D.getPhraseOriginal($(this).text()));
+				}
 			}
+			else
+			{
+				// Submenu label
+				var label = $(this).find("span");
+				label.text(D.getPhraseOriginal(label.text())).append(" " + I.Symbol.TriRight);
+			}
+			// Add bullet points
 			$(this).prepend("<ins class='s16 s16_bullet'></ins> ");
 		});
 	},
@@ -15769,8 +15809,7 @@ I = {
 				{
 					case I.PageEnum.Chains:
 					{
-						T.toggleDashboard(true);
-						T.toggleTimeline(true);
+						
 					} break;
 					case I.PageEnum.Map:
 					{
@@ -15781,14 +15820,6 @@ I = {
 					} break;
 				}
 				$("#paneContent article").hide(); // Hide all plates
-				if (I.PageCurrent !== I.PageEnum.Chains)
-				{
-					if (T.isDashboardCountdownTickEnabled)
-					{
-						T.toggleDashboard(false);
-					}
-					T.toggleTimeline(false);
-				}
 				
 				// Only do animations if on regular website (to save computation)
 				if (I.ModeCurrent === I.ModeEnum.Website)
