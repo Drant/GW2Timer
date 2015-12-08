@@ -3675,7 +3675,7 @@ var GW2T_CHAIN_DATA = [
 	{
 		primacy: 2,
 		path: [[5034, 16714]],
-		name_en: "Defeat the champion devourer queen. (Tier 2)",
+		name_en: "Defeat the champion devourer queen.",
 		name_de: "Besiegt die Champion Verschlinger-Königin. (2)",
 		name_es: "Derrota a la reina devoradora campeona. (2)",
 		name_fr: "Vaincre la reine dévoreuse. (2)",
@@ -3713,7 +3713,7 @@ var GW2T_CHAIN_DATA = [
 	{
 		primacy: 1,
 		path: [[4539, 16776]],
-		name_en: "Defeat Queen Chrii'kkt IV and her royal subjects. (Tier 4)",
+		name_en: "Defeat Queen Chrii'kkt IV and her royal subjects.",
 		name_de: "Besiegt Königin Chrii'kkt IV und ihre Untertanen. (4)",
 		name_es: "Derrota a la reina Chrii'kkt IV y a sus leales súbditos. (4)",
 		name_fr: "Affronter la reine Chrii'kkt IV et ses sujets. (4)",
@@ -3884,7 +3884,7 @@ var GW2T_CHAIN_DATA = [
 	{
 		primacy: 2,
 		path: [[5193, 16447]],
-		name_en: "Defeat the dust mite twister! (Tier 3)",
+		name_en: "Defeat the dust mite twister!",
 		name_de: "Besiegt den Staubmilben-Wirbelwind! (3)",
 		name_es: "¡Derrota al huracán de ácaros de polvo! (3)",
 		name_fr: "Vaincre la tornade d'acarides ! (3)",
@@ -3903,7 +3903,7 @@ var GW2T_CHAIN_DATA = [
 	{
 		primacy: 1,
 		path: [[4231, 16299]],
-		name_en: "Defeat the giant beetle. (Tier 5)",
+		name_en: "Defeat the giant beetle.",
 		name_de: "Besiegt den Riesenkäfer. (5)",
 		name_es: "Derrota al escarabajo gigante. (5)",
 		name_fr: "Terrasser le scarabée géant. (5)",
@@ -3922,7 +3922,7 @@ var GW2T_CHAIN_DATA = [
 	{
 		primacy: 3,
 		path: [[5129, 16658]],
-		name_en: "Defeat the dust monster! (Tier 4)",
+		name_en: "Defeat the dust monster!",
 		name_de: "Besiegt das Staubmonster! (4)",
 		name_es: "¡Derrota al monstruo de polvo! (4)",
 		name_fr: "Vaincre le monstre de poussière ! (4)",

@@ -440,33 +440,6 @@ O = {
 	},
 	
 	/*
-	 * Gets the lowest and highest value inside an array.
-	 * @param 2D array pArray.
-	 * @param string pProperty of array if the value is a property.
-	 * @returns 2D array of the two values.
-	 */
-	getMinMax: function(pArray, pProperty)
-	{
-		var hasprop = !(pProperty === undefined);
-		var min = Number.POSITIVE_INFINITY;
-		var max = Number.NEGATIVE_INFINITY;
-		var ith;
-		for (var i = 0; i < pArray.length; i++)
-		{
-			ith = hasprop ? (pArray[i])[pProperty] : pArray[i];
-			if (ith < min)
-			{
-				min = ith;
-			}
-			if (ith > max)
-			{
-				max = ith;
-			}
-		}
-		return [min, max];
-	},
-	
-	/*
 	 * Converts an integer to boolean.
 	 * @param int pInteger to convert.
 	 * @returns boolean true only if integer is greater than 0.
@@ -1354,12 +1327,16 @@ U = {
 			case "nocontext": that.Map.off("contextmenu"); I.write("Map context menu disabled."); break;
 			case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
 			case "dart": that.drawRandom(args[1]); break;
-			case "optimize": that.redrawPersonalPath(P.getGreedyPath(M.parseCoordinatesMulti(args[1]))); break;
+			case "greedy": that.redrawPersonalPath(P.getGreedyPath(M.parseCoordinatesMulti(args[1]))); break;
 			case "api": U.printAPI(args[1], args[2]); break;
 			case "daily": U.printDaily(); break;
 			case "item": U.printAPI("items/" + args[1]); break;
 			case "items": U.printItemsAPI(args[1]); break;
 			case "events": P.printZoneEvents(); break;
+			case "test": {
+
+				P.printClosestWaypoints();
+			} break;
 		}
 	},
 	
@@ -5013,6 +4990,8 @@ D = {
 			cs: "sbalit", it: "comprimere", pl: "zwinąć", pt: "recolher", ru: "свернуть", zh: "摺疊"},
 		s_draw: {de: "zeichnen", es: "dibujar", fr: "dessiner",
 			cs: "kreslit", it: "disegnare", pl: "rysować", pt: "desenhar", ru: "рисова́ть", zh: "画"},
+		s_optimize: {de: "optimieren", es: "optimizar", fr: "optimiser",
+			cs: "optimalizovat", it: "ottimizzare", pl: "optymalizować", pt: "otimizar", ru: "оптимизировать", zh: "最佳化"},
 		
 		// Adjectives and Adverbs
 		s_ago: {de: "vor", es: "hace", fr: "il ya",
@@ -5035,8 +5014,6 @@ D = {
 			cs: "odebírané", it: "sottoscritti", pl: "subskrypcji", pt: "assinado", ru: "подписан", zh: "訂閱"},
 		s_then: {de: "dann", es: "luego", fr: "puis",
 			cs: "pak", it: "poi", pl: "potem", pt: "então", ru: "затем", zh: "接著"},
-		s_more: {de: "mehr", es: "más", fr: "plus",
-			cs: "víc", it: "più", pl: "więcej", pt: "mais", ru: "бо́льше", zh: "更多"},
 		
 		// Prepositions and Conjunctions
 		s_at: {de: "um", es: "a", fr: "à",
@@ -7029,6 +7006,9 @@ M = {
 	 * http://gw2timer.com/data/general.js contains zone (e.g. Queensdale, LA)
 	 * objects with their rectangular coordinates.
 	 * This is referred to by the variable "Zones".
+	 * Each zone will be assigned with LayerGroup of world completion markers,
+	 * they can be accessed by the format: zonevariable.Layers.LandmarkType
+	 * where LandmarkType may be Waypoint, Vista, or others.
 	 */
 	MapEnum: "map", // Type of map this map is
 	Zones: GW2T_ZONE_DATA,
@@ -7157,7 +7137,7 @@ M = {
 			this.Map.tap.disable();
 		}
 		
-		// Initialize array in zones to later hold world completion and dynamic event icons
+		// Initialize LayerGroup in zones to later hold world completion and dynamic event icons
 		var zone;
 		for (var i in this.Zones)
 		{
@@ -7425,7 +7405,7 @@ M = {
 								iconSize: [16, 16], // Initial size corresponding to default zoom level
 								iconAnchor: [8, 8]
 							}),
-							link: U.getChatlinkFromPoiID(poi.poi_id)
+							id: poi.poi_id
 						});
 						
 						// Bind behavior
@@ -7466,7 +7446,7 @@ M = {
 						{
 							marker.on("click", function()
 							{
-								$(htmlidprefix + "CoordinatesCopy").val(this.options.link).select();
+								$(htmlidprefix + "CoordinatesCopy").val(U.getChatlinkFromPoiID(this.options.id)).select();
 								$(htmlidprefix + "CoordinatesName").val(this.options.markername);
 							});
 							marker.on("dblclick", function(pEvent)
@@ -7713,13 +7693,31 @@ M = {
 		{
 			$(this).hide();
 		});
+		$(htmlidprefix + "ContextCenter").click(function()
+		{
+			that.goToDefault();
+		});
 		$(htmlidprefix + "ContextToggleHUD").click(function()
 		{
 			$(htmlidprefix + "HUDBoxes").toggle();
 		});
-		$(htmlidprefix + "ContextCenter").click(function()
+		$(htmlidprefix + "ContextClearPins").click(function()
 		{
-			that.goToDefault();
+			that.clearPersonalPins();
+		});
+		$(htmlidprefix + "ContextChatlinkPins").click(function()
+		{
+			if (that.isPersonalPinsLaid())
+			{
+				P.printClosestWaypoints();
+			}
+		});
+		$(htmlidprefix + "ContextOptimizePins").click(function()
+		{
+			if (that.isPersonalPinsLaid())
+			{
+				that.optimizePersonalPath();
+			}
 		});
 		$(htmlidprefix + "ContextToggleLock").click(function()
 		{
@@ -7740,10 +7738,6 @@ M = {
 		$(htmlidprefix + "ContextDrawCompletion").click(function()
 		{
 			P.drawCompletionRoute();
-		});
-		$(htmlidprefix + "ContextClearPins").click(function()
-		{
-			that.clearPersonalPins();
 		});
 	},
 	
@@ -7886,6 +7880,26 @@ M = {
 	},
 	
 	/*
+	 * Gets the zone a coordinates reside in.
+	 * @param array pCoord.
+	 * @returns object zone if found else null.
+	 */
+	getZoneFromCoord: function(pCoord)
+	{
+		for (var i in this.Zones) // i is the index and nickname of the zone
+		{
+			if (pCoord[0] >= this.Zones[i].continent_rect[0][0]
+				&& pCoord[1] >= this.Zones[i].continent_rect[0][1]
+				&& pCoord[0] <= this.Zones[i].continent_rect[1][0]
+				&& pCoord[1] <= this.Zones[i].continent_rect[1][1])
+			{
+				return this.Zones[i];
+			}
+		}
+		return null;
+	},
+	
+	/*
 	 * Finds what zone the specified point is in by comparing it to the top left
 	 * and bottom right coordinates of the zones, then show the zone's visuals.
 	 * @param array pCoord containing x and y coordinates.
@@ -7910,62 +7924,55 @@ M = {
 		}
 		
 		// Else search for new moused zone
-		var i, ii;
-		var previouszone;
 		var zonename = "";
+		var previouszone;
+		var testzone = this.getZoneFromCoord(pCoord); // Search for the zone
 		
-		for (i in this.Zones) // i is the index and nickname of the zone
+		if (testzone !== null)
 		{
-			if (pCoord[0] >= this.Zones[i].continent_rect[0][0]
-				&& pCoord[1] >= this.Zones[i].continent_rect[0][1]
-				&& pCoord[0] <= this.Zones[i].continent_rect[1][0]
-				&& pCoord[1] <= this.Zones[i].continent_rect[1][1])
+			// Hide the icons of the previously moused zone
+			previouszone = this.Zones[this.ZoneCurrent.nick];
+			for (var i in previouszone.Layers)
 			{
-				// Hide the icons of the previously moused zone
-				previouszone = this.Zones[this.ZoneCurrent.nick];
-				for (ii in previouszone.Layers)
-				{
-					this.Map.removeLayer(previouszone.Layers[ii]);
-				}
-				// Update current zone object
-				this.ZoneCurrent = this.Zones[i];
-				zonename = this.getZoneName(this.ZoneCurrent);
-				document.getElementById(htmlidprefix + "CoordinatesName")
-					.value = zonename;
-
-				// Reveal moused zone's icons
-				switch (that.MapEnum)
-				{
-					case I.MapEnum.Tyria:
-					{
-						if (O.Options.bol_showChainPaths && I.PageCurrent !== I.PageEnum.Map) { this.ZoneCurrent.Layers.Path.addTo(this.Map); }
-						if (O.Options.bol_displayWaypoints) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
-						if (O.Options.bol_displayPOIs) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
-						if (O.Options.bol_displayVistas) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
-						if (O.Options.bol_displayChallenges) { this.ZoneCurrent.Layers.Challenge.addTo(this.Map); }
-						if (O.Options.bol_displayHearts) { this.ZoneCurrent.Layers.Heart.addTo(this.Map); }
-						if (O.Options.bol_displaySectors) { this.ZoneCurrent.Layers.Sector.addTo(this.Map); }
-						if (O.Options.bol_displayEvents) {
-							this.ZoneCurrent.Layers.EventIcon.addTo(this.Map);
-							this.ZoneCurrent.Layers.EventRing.addTo(this.Map);
-						}
-					} break;
-					case I.MapEnum.Mists:
-					{
-						if (O.Options.bol_displayWaypointsWvW) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
-						if (O.Options.bol_displayPOIsWvW) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
-						if (O.Options.bol_displayVistasWvW) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
-						if (O.Options.bol_displayChallengesWvW) { this.ZoneCurrent.Layers.Challenge.addTo(this.Map); }
-						if (O.Options.bol_displaySectorsWvW) { this.ZoneCurrent.Layers.Sector.addTo(this.Map); }
-					} break;
-				}
-
-				// Re-tooltip
-				I.qTip.init(".leaflet-marker-icon");
-				// Rescale current moused mapping markers
-				this.adjustZoomMapping();
-				break; // Already found zone so stop searching
+				this.Map.removeLayer(previouszone.Layers[i]);
 			}
+			// Update current zone object
+			this.ZoneCurrent = testzone;
+			zonename = this.getZoneName(this.ZoneCurrent);
+			document.getElementById(htmlidprefix + "CoordinatesName")
+				.value = zonename;
+
+			// Reveal moused zone's icons
+			switch (that.MapEnum)
+			{
+				case I.MapEnum.Tyria:
+				{
+					if (O.Options.bol_showChainPaths && I.PageCurrent !== I.PageEnum.Map) { this.ZoneCurrent.Layers.Path.addTo(this.Map); }
+					if (O.Options.bol_displayWaypoints) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
+					if (O.Options.bol_displayPOIs) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
+					if (O.Options.bol_displayVistas) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
+					if (O.Options.bol_displayChallenges) { this.ZoneCurrent.Layers.Challenge.addTo(this.Map); }
+					if (O.Options.bol_displayHearts) { this.ZoneCurrent.Layers.Heart.addTo(this.Map); }
+					if (O.Options.bol_displaySectors) { this.ZoneCurrent.Layers.Sector.addTo(this.Map); }
+					if (O.Options.bol_displayEvents) {
+						this.ZoneCurrent.Layers.EventIcon.addTo(this.Map);
+						this.ZoneCurrent.Layers.EventRing.addTo(this.Map);
+					}
+				} break;
+				case I.MapEnum.Mists:
+				{
+					if (O.Options.bol_displayWaypointsWvW) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
+					if (O.Options.bol_displayPOIsWvW) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
+					if (O.Options.bol_displayVistasWvW) { this.ZoneCurrent.Layers.Vista.addTo(this.Map); }
+					if (O.Options.bol_displayChallengesWvW) { this.ZoneCurrent.Layers.Challenge.addTo(this.Map); }
+					if (O.Options.bol_displaySectorsWvW) { this.ZoneCurrent.Layers.Sector.addTo(this.Map); }
+				} break;
+			}
+
+			// Re-tooltip
+			I.qTip.init(".leaflet-marker-icon");
+			// Rescale current moused mapping markers
+			this.adjustZoomMapping();
 		}
 	},
 	
@@ -8242,7 +8249,7 @@ M = {
 	 */
 	savePersonalPins: function()
 	{
-		localStorage[O.Utilities.personalPins.key] = this.getPersonalCoords();
+		localStorage[O.Utilities.personalPins.key] = this.getPersonalString();
 	},
 	loadPersonalPins: function()
 	{
@@ -8391,7 +8398,7 @@ M = {
 					// Single click path: get the coordinates of all pins
 					path.on("click", function()
 					{
-						$(htmlidprefix + "CoordinatesCopy").val(that.getPersonalCoords()).select();
+						$(htmlidprefix + "CoordinatesCopy").val(that.getPersonalString()).select();
 					});
 					// Double click path: insert a pin between the two pins that connect the path
 					path.on("dblclick", function(pEvent)
@@ -8465,6 +8472,28 @@ M = {
 	},
 	
 	/*
+	 * Tells if there is at least one personal pin laid on the map.
+	 * @returns boolean.
+	 */
+	isPersonalPinsLaid: function()
+	{
+		if (this.Layer.PersonalPin.getLayers().length === 0)
+		{
+			I.write("No personal pins to work with. Double click on the map to lay pins.");
+			return false;
+		}
+		return true;
+	},
+	
+	/*
+	 * Redraws the path with a shorter distance, only the starting point is not changed.
+	 */
+	optimizePersonalPath: function()
+	{
+		this.redrawPersonalPath(P.getGreedyPath(this.getPersonalCoords()));
+	},
+	
+	/*
 	 * Draw pins in random coordinates.
 	 * @param pQuantity pins to draw.
 	 */
@@ -8493,12 +8522,15 @@ M = {
 	{
 		var that = this;
 		var coords = [];
-		var length = 0;
 		this.Layer.PersonalPin.eachLayer(function(pPin){
 			coords.push(that.convertLCtoGC(pPin.getLatLng()));
-			length++;
 		});
-		
+		return coords;
+	},
+	getPersonalString: function()
+	{
+		var coords = this.getPersonalCoords();
+		var length = coords.length;
 		var str = "";
 		if (length > 1)
 		{
@@ -8510,6 +8542,32 @@ M = {
 		}
 		
 		return str;
+	},
+	
+	/*
+	 * Gets the closest marker to the specified coordinates.
+	 * @param array pCoord.
+	 * @param object pLayerGroup markers to scan.
+	 * @param boolean wantCoord to return coordinate instead of the marker object.
+	 * @returns object Leaflet marker.
+	 * @pre Coordinates must be inside a zone.
+	 */
+	getClosestLocation: function(pCoord, pLayerGroup)
+	{
+		var that = this;
+		var distance;
+		var mindistance = Number.POSITIVE_INFINITY;
+		var minmarker = null;
+		
+		pLayerGroup.eachLayer(function(layer) {
+			distance = P.getDistanceBetweenCoords(pCoord, that.convertLCtoGC(layer.getLatLng()));
+			if (distance < mindistance)
+			{
+				mindistance = distance;
+				minmarker = layer;
+			}
+		});
+		return minmarker;
 	},
 	
 	/*
@@ -9240,6 +9298,79 @@ P = {
 	printCoordinates: function(pCoords)
 	{
 		I.write(this.compileCoordinates(pCoords), 0);
+	},
+	
+	/*
+	 * Prints a series of text inputs for the user to copy waypoint chatlinks
+	 * that are closest to each personal pins.
+	 */
+	printClosestWaypoints: function()
+	{
+		var CHATLINKS_PER_MESSAGE = 12; // Maximum to fit chat message limit
+		var html = "";
+		var chatlink;
+		var chatlinks = [""]; // First element is a dummy for comparison
+		var coordpin;
+		var zone, waypoint;
+		
+		M.Layer.PersonalPin.eachLayer(function(layer)
+		{
+			coordpin = M.convertLCtoGC(layer.getLatLng());
+			zone = M.getZoneFromCoord(coordpin);
+			if (zone !== null)
+			{
+				waypoint = M.getClosestLocation(coordpin, zone.Layers.Waypoint);
+				chatlink = "";
+				if (waypoint !== null)
+				{
+					chatlink = U.getChatlinkFromPoiID(waypoint.options.id);
+					// Don't append consecutively duplicate waypoints
+					if (chatlinks[chatlinks.length - 1] !== chatlink)
+					{
+						chatlinks.push(chatlink);
+					}
+				}
+			}
+		});
+		chatlinks.shift(); // Remove the first dummy element
+		
+		if (chatlinks.length > 0)
+		{
+			// A message contains a limited quantity of chatlinks
+			var nummessages = Math.ceil(chatlinks.length / CHATLINKS_PER_MESSAGE);
+			var counter = 0;
+			var html = "<div id='jsWaypointLinks'>Copy the codes below and<br />paste them in game chat to <br />follow the route:<br />";
+			for (var i = 0; i < nummessages; i++)
+			{
+				// Each message gets its own input box
+				html += "<input type='text'  class='cssInputText' value='";
+				for (var ii = CHATLINKS_PER_MESSAGE * i;
+						ii < (CHATLINKS_PER_MESSAGE * (i+1));
+						ii++)
+				{
+					if (counter >= chatlinks.length)
+					{
+						// If reached the end of the array
+						break;
+					}
+					html += " " + (ii+1) + "-&gt;" + chatlinks[ii]; // Chatlinks divider
+					counter++;
+				}
+				html += "' /> Message " + (i+1) + "<br />";
+			}
+			html += "</div>";
+			
+			// Output the input boxes containing the chatlinks
+			I.write(html, 0, true);
+			$("#jsWaypointLinks .cssInputText").click(function()
+			{
+				$(this).select();
+			});
+		}
+		else
+		{
+			I.write("Pins must first be placed and be inside zones in order to create chatlinks.");
+		}
 	},
 	
 	/*
@@ -11546,6 +11677,7 @@ T = {
 	cSECS_MARK_4: 3599,
 	cBASE_10: 10,
 	cPERCENT_100: 100,
+	cINTEGER_MAX: 0x7fffffff, // Binary: 01111111111111111111111111111111
 	// Game constants
 	WEEKLY_RESET_DAY: 1, // Monday 00:00 UTC
 	cDAYTIME_DAY_MINUTES: 80,
@@ -12026,6 +12158,33 @@ T = {
 	getRandomIntRange: function(pMin, pMax)
 	{
 		return Math.floor(Math.random() * (pMax - pMin + 1)) + pMin;
+	},
+	
+	/*
+	 * Gets the lowest and highest value inside an array.
+	 * @param 2D array pArray.
+	 * @param string pProperty of array if the value is a property.
+	 * @returns 2D array of the two values.
+	 */
+	getMinMax: function(pArray, pProperty)
+	{
+		var hasprop = !(pProperty === undefined);
+		var min = Number.POSITIVE_INFINITY;
+		var max = Number.NEGATIVE_INFINITY;
+		var ith;
+		for (var i = 0; i < pArray.length; i++)
+		{
+			ith = hasprop ? (pArray[i])[pProperty] : pArray[i];
+			if (ith < min)
+			{
+				min = ith;
+			}
+			if (ith > max)
+			{
+				max = ith;
+			}
+		}
+		return [min, max];
 	},
 	
 	/*
@@ -12888,7 +13047,7 @@ T = {
 		// Initialize sale
 		if (T.isDashboardSaleEnabled)
 		{
-			var range = O.getMinMax(T.DashboardSale.Items, "pricenew");
+			var range = T.getMinMax(T.DashboardSale.Items, "pricenew");
 			// Create "button" to toggle list of items on sale
 			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img src='img/ui/gemstore.png' /> "
 				+ "<u>" + T.DashboardSale.Items.length + " "
@@ -14628,7 +14787,7 @@ I = {
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
 	cLevelMax: 80,
-	cAJAXGlobalTimeout: 15000, // milliseconds
+	cAJAXGlobalTimeout: 20000, // milliseconds
 	cPNG: ".png", // Almost all used images are PNG
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
 	cConsoleCommandPrefix: "/",
@@ -15351,7 +15510,7 @@ I = {
 			{
 				// Submenu label
 				var label = $(this).find("span");
-				label.text(D.getPhraseOriginal(label.text())).append(" " + I.Symbol.TriRight);
+				label.html(D.getPhraseOriginal(label.text())).append(" <kbd>" + I.Symbol.TriRight + "</kbd>");
 			}
 			// Add bullet points
 			$(this).prepend("<ins class='s16 s16_bullet'></ins> ");
@@ -16103,7 +16262,7 @@ I = {
 		if (I.isProgramEmbedded)
 		{
 			$("#itemWarning").remove();
-			$(".mapPeripheral a, .mapPeripheral span").hide();
+			$(".mapHUDLinks").hide();
 			T.isDashboardEnabled = false;
 		}
 		

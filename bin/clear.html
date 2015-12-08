@@ -3,7 +3,14 @@
 	<head>
 		<title>GW2Timer Application Reset</title>
 		<script type="text/javascript">
-			localStorage.clear();
+			if (confirm("GW2Timer.com Reset: This is will clear all options and everything you have written in this website. Continue?"))
+			{
+				localStorage.clear();
+			}
+			else
+			{
+				document.location = "http://gw2timer.com";
+			}
 		</script>
 	</head>
 	<body>

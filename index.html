@@ -65,8 +65,14 @@
 				<ul>
 					<li id="mapContextCenter">Center map</li>
 					<li id="mapContextToggleHUD">Toggle HUD</li>
-					<li id="mapContextClearPins">Clear pins</li>
-					<li class="itemContextSubmenu"><span>More</span>
+					<li class="itemContextSubmenu"><span>Pins</span>
+						<ul>
+							<li id="mapContextChatlinkPins">Chatlink</li>
+							<li id="mapContextOptimizePins">Optimize</li>
+							<li id="mapContextClearPins">Clear</li>
+						</ul>
+					</li>
+					<li class="itemContextSubmenu"><span>Map</span>
 						<ul>
 							<li id="mapContextToggleLock">Toggle map lock</li>
 							<li id="mapContextToggleCompletion">Toggle world completion</li>
@@ -99,12 +105,12 @@
 				<input id="mapCoordinatesName" class="mapCoordinatesName" type="text" />
 			</div>
 			<div class="mapPeripheral mapPeripheralNorth">
-				<div id="mapQuickURL">
-					<u><a class="jsTranslate linkExternal" title="<dfn>Go to Forum</dfn>" href="http://forum.renaka.com/forum/368355/">forum</a></u><span> /</span>
-					<u><a class="jsTranslate" title="<dfn>Switch to Simple Mode (clock only)</dfn><br />gw2timer.com/s<br /><div class='mapLoc'><img src='http://i.imgur.com/Nk42voP.png' /></div>" href="./?mode=Simple">simple</a></u><span> /</span>
-					<u><a class="jsTranslate" title="<dfn>Switch to Mobile Mode (right panel only)</dfn><br />gw2timer.com/m<br /><div class='mapLoc'><img src='http://i.imgur.com/0QsaeY7.png' /></div>" href="./?mode=Mobile">mobile</a></u><span> /</span>
+				<span id="mapQuickURL" class="mapHUDLinks">
+					<u><a class="jsTranslate linkExternal" title="<dfn>Go to Forum</dfn>" href="http://forum.renaka.com/forum/368355/">forum</a></u><em> /</em>
+					<u><a class="jsTranslate" title="<dfn>Switch to Simple Mode (clock only)</dfn><br />gw2timer.com/s<br /><div class='mapLoc'><img src='http://i.imgur.com/Nk42voP.png' /></div>" href="./?mode=Simple">simple</a></u><em> /</em>
+					<u><a class="jsTranslate" title="<dfn>Switch to Mobile Mode (right panel only)</dfn><br />gw2timer.com/m<br /><div class='mapLoc'><img src='http://i.imgur.com/0QsaeY7.png' /></div>" href="./?mode=Mobile">mobile</a></u><em> /</em>
 					<u><a class="jsTranslate" title="<dfn>Switch to Tile Mode (timers only)</dfn><br />gw2timer.com/t<br /><div class='mapLoc'><img src='http://i.imgur.com/SDseVJE.png' /></div>" href="./?mode=Tile">tile</a></u>
-				</div>
+				</span>
 				<!--<div id="mapSwitch" class="mapHUDContainer">
 					<img id="mapSwitchButton" class="mapHUDButton" title="<dfn> Click to WVW </dfn>" src="img/ui/pages/wvw.png" alt="display" />
 					<div class="mapHUDPopup cntComposition">
@@ -220,9 +226,11 @@
 				</div>
 			</div>
 			<div class="mapPeripheral mapPeripheralSouth">
-				<a class="linkExternal" title="<dfn>Download the app to run GW2Timer in game!</dfn><br /><div class='mapLoc'><img src='http://i.imgur.com/mZ1Tboj.png' /></div>" href="http://forum.renaka.com/topic/5546166/">
-					<img id="itemLogo" src="img/ui/favicon.png" alt="Overlay Application" />gw2timer.com <u>overlay</u>
-				</a>
+				<span class="mapHUDLinks">
+					<a class="linkExternal" title="<dfn>Download the app to run GW2Timer in game!</dfn><br /><div class='mapLoc'><img src='http://i.imgur.com/mZ1Tboj.png' /></div>" href="http://forum.renaka.com/topic/5546166/">
+						<img id="itemLogo" src="img/ui/favicon.png" alt="Overlay Application" />gw2timer.com <u>overlay</u>
+					</a>
+				</span>
 			</div>
 			</article>
 		</section>
