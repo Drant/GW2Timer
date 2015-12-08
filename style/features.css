@@ -245,12 +245,12 @@ dt.jpzListNameHover {
 	font-weight: bold;
 }
 
-.nodRich img, .nodZone img, .mapChestBasic img, .mapChestSplendid img {
+.nodRich img, .mapChestBasic img, .mapChestSplendid img {
 	width: 32px; height: 32px;
 	border-radius: 16px;
 	opacity: 0.9;
 }
-.nodRegular img {
+.nodRegular img, .nodHotspot img {
 	width: 24px; height: 24px;
 	border-radius: 16px;
 	opacity: 0.9;
@@ -261,9 +261,9 @@ dt.jpzListNameHover {
 .nodRegular img {
 	border: 2px dotted limegreen;
 }
-.nodZone img {
+.nodHotspot img {
 	border: 2px dashed lime;
-	border-radius: 4px;
+	border-radius: 2px;
 }
 
 

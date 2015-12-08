@@ -126,6 +126,7 @@ O = {
 		bol_showDashboard: true,
 		bol_showTimeline: true,
 		bol_showTimelineOpaque: false,
+		bol_hideHUD: true,
 		// Map
 		int_setFloor: 1,
 		int_setInitialZoom: 3,
@@ -1123,6 +1124,13 @@ O = {
 				M.refreshMap();
 			}
 		},
+		bol_hideHUD: function()
+		{
+			if (O.Options.bol_hideHUD === false)
+			{
+				$("#mapHUDBoxes").show();
+			}
+		},
 		bol_showTimeline: function()
 		{
 			if (O.Options.bol_showTimeline)
@@ -1328,14 +1336,14 @@ U = {
 			case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
 			case "dart": that.drawRandom(args[1]); break;
 			case "greedy": that.redrawPersonalPath(P.getGreedyPath(M.parseCoordinatesMulti(args[1]))); break;
+			case "nodes": P.printNodes(P.sortCoordinates(M.parseCoordinatesMulti(args[1]))); break;
 			case "api": U.printAPI(args[1], args[2]); break;
 			case "daily": U.printDaily(); break;
 			case "item": U.printAPI("items/" + args[1]); break;
 			case "items": U.printItemsAPI(args[1]); break;
 			case "events": P.printZoneEvents(); break;
 			case "test": {
-
-				P.printClosestWaypoints();
+				
 			} break;
 		}
 	},
@@ -2281,7 +2289,7 @@ X = {
 		Chest: { key: "str_chlChest", value: "" },
 		ResourceRich: { key: "str_chlResourceRich", value: "" },
 		ResourceRegular: { key: "str_chlResourceRegular", value: "" },
-		ResourceZone: { key: "str_chlResourceZone", value: "" },
+		ResourceHotspot: { key: "str_chlResourceHotspot", value: "" },
 		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
 		CustomDaily: { key: "str_chlCustomDaily", value: "" },
 		CustomWeekly: { key: "str_chlCustomWeekly", value: "" },
@@ -8488,9 +8496,9 @@ M = {
 	/*
 	 * Redraws the path with a shorter distance, only the starting point is not changed.
 	 */
-	optimizePersonalPath: function()
+	optimizePersonalPath: function(pStart)
 	{
-		this.redrawPersonalPath(P.getGreedyPath(this.getPersonalCoords()));
+		this.redrawPersonalPath(P.getGreedyPath(this.getPersonalCoords(), pStart));
 	},
 	
 	/*
@@ -9214,18 +9222,18 @@ P = {
 	 * Sorts an array of GW2 coordinates.
 	 * @param 2D array pArray to sort.
 	 */
-	sortCoordinates: function(pArray, pIsNumbered)
+	sortCoordinates: function(pCoords, pIsNumbered)
 	{
 		var coord;
 		// Convert to integer
-		for (var i in pArray)
+		for (var i in pCoords)
 		{
-			coord = pArray[i];
+			coord = pCoords[i];
 			coord[0] = Math.round(coord[0]);
 			coord[1] = Math.round(coord[1]);
 		}
 		// Sort the array
-		pArray.sort(function (a, b)
+		pCoords.sort(function (a, b)
 		{
 			if (a[0] > b[0])
 			{
@@ -9240,28 +9248,28 @@ P = {
 		// Print the result formatted
 		if (pIsNumbered)
 		{
-			for (var i in pArray)
+			for (var i in pCoords)
 			{
-				this.printNumberedCoordinates(pArray[i], i);
+				this.printNumberedCoordinates(pCoords[i], i);
 			}
 		}
 		else
 		{
-			this.printCoordinates(pArray);
+			return pCoords;
 		}
 	},
-	roundCoordinates: function(pArray)
+	roundCoordinates: function(pCoords)
 	{
 		var coord;
 		// Convert to integer
-		for (var i in pArray)
+		for (var i in pCoords)
 		{
-			coord = pArray[i];
+			coord = pCoords[i];
 			coord[0] = Math.round(coord[0]);
 			coord[1] = Math.round(coord[1]);
 		}
 		// Print the result formatted
-		this.printCoordinates(pArray);
+		this.printCoordinates(pCoords);
 	},
 	printNeedles: function(pNeedles)
 	{
@@ -9270,11 +9278,11 @@ P = {
 			this.printNumberedCoordinates((pNeedles[i]).c, i);
 		}
 	},
-	formatNodes: function(pArray)
+	printNodes: function(pCoords)
 	{
-		for (var i in pArray)
+		for (var i in pCoords)
 		{
-			I.write("{c: [" + (pArray[i])[0] + ", " + (pArray[i])[1] + "]},", 0);
+			I.write("{c: [" + (pCoords[i])[0] + ", " + (pCoords[i])[1] + "]},", 0);
 		}
 	},
 	printNumberedCoordinates: function(pCoord, i)
@@ -10409,6 +10417,20 @@ G = {
 		{
 			X.setChecklistItem(X.Checklists["Resource" + pMarker.options.grade], pMarker.options.index, pState);
 		};
+		var reapplyNodesState = function()
+		{
+			// Fade the node if state is so in checklist
+			for (var i in P.LayerArray.Resource)
+			{
+				P.LayerArray.Resource[i].eachLayer(function(layer)
+				{
+					if (layer instanceof L.Marker && getNodeState(layer) === X.ChecklistEnum.Checked)
+					{
+						layer.setOpacity(opacityclicked);
+					}
+				});
+			}
+		};
 		var bindNodeBehavior = function(pMarker)
 		{
 			M.bindMarkerZoomBehavior(pMarker, "contextmenu");
@@ -10439,20 +10461,16 @@ G = {
 						$.getJSON(U.URL_API.ItemPrices + id, function(pData)
 						{
 							var price = E.deductTax(pData.sells.unit_price);
-							$("#nodPrice_" + inneri).html(E.createCoinString(price, true));
+							$("#nodPrice_" + inneri).data("price", price).html(E.createCoinString(price, true));
 						});
 					})(i);
 				}
 			}
 		};
-		
-		$.getScript(U.URL_DATA.Resource).done(function()
+		var initializePermanentNodes = function()
 		{
-			P.Resources = GW2T_RESOURCE_DATA; // This object is inline in the map HTML file
 			var i, ii;
 			var counterrich = 0;
-			var counterregular = 0;
-			var counterzone = 0;
 			var resource; // A type of resource, like copper ore
 			var layer, marker, path;
 
@@ -10471,13 +10489,15 @@ G = {
 						{
 							grade: "Rich",
 							index: counterrich,
+							coord: resource.riches[ii].c,
 							icon: L.divIcon(
 							{
 								className: "nodRich",
 								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
 								iconSize: [32, 32],
 								iconAnchor: [16, 16]
-							})
+							}),
+							isNode: true
 						});
 						bindNodeBehavior(marker);
 						// Add to array
@@ -10499,6 +10519,25 @@ G = {
 					P.Layer["Resource_Rich_" + i] = layer;
 					P.LayerArray.Resource.push(layer);
 				}
+			}
+			
+			// Initialize checklist for saving nodes clicked state
+			X.initializeChecklist(X.Checklists.ResourceRich, counterrich);
+			reapplyNodesState();
+		};
+		var initializePossibleNodes = function()
+		{
+			var i, ii;
+			var counterregular = 0;
+			var counterhotspot = 0;
+			var resource; // A type of resource, like copper ore
+			var layer, marker;
+			
+			for (i in P.Resources)
+			{
+				resource = P.Resources[i];
+				var name = i.toLowerCase();
+				
 				// Regular nodes that may spawn there
 				if (resource.regulars !== undefined && resource.regulars.length > 0)
 				{
@@ -10509,13 +10548,15 @@ G = {
 						{
 							grade: "Regular",
 							index: counterregular,
+							coord: resource.regulars[ii].c,
 							icon: L.divIcon(
 							{
 								className: "nodRegular",
 								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
 								iconSize: [24, 24],
 								iconAnchor: [12, 12]
-							})
+							}),
+							isNode: true
 						});
 						bindNodeBehavior(marker);
 						// Add to array
@@ -10526,54 +10567,48 @@ G = {
 					P.Layer["Resource_Regular_" + i] = layer;
 					P.LayerArray.Resource.push(layer);
 				}
-				// Resources with only zone locations (marker centered in map)
-				if (resource.zones !== undefined)
+				// Resources nodes that may spawn in the vicinity
+				if (resource.hotspots !== undefined)
 				{
 					layer = new L.layerGroup();
-					for (ii in resource.zones)
+					for (ii in resource.hotspots)
 					{
-						var zone = resource.zones[ii];
-						var coord = M.getZoneCenter(zone);
-						coord[0] += resource.offset[0];
-						coord[1] += resource.offset[1];
-						marker = L.marker(M.convertGCtoLC(coord),
+						marker = L.marker(M.convertGCtoLC(resource.hotspots[ii].c),
 						{
-							grade: "Zone",
-							index: counterzone,
+							grade: "Hotspot",
+							index: counterhotspot,
+							coord: resource.hotspots[ii].c,
 							icon: L.divIcon(
 							{
-								className: "nodZone",
+								className: "nodHotspot",
 								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
-								iconSize: [32, 32],
-								iconAnchor: [16, 16]
-							})
+								iconSize: [24, 24],
+								iconAnchor: [12, 12]
+							}),
+							isNode: true
 						});
 						bindNodeBehavior(marker);
 						// Add to array
 						layer.addLayer(marker);
-						counterzone++;
+						counterhotspot++;
 					}
 					M.toggleLayer(layer);
-					P.Layer["Resource_Zone_" + i] = layer;
+					P.Layer["Resource_Hotspot_" + i] = layer;
 					P.LayerArray.Resource.push(layer);
 				}
 			}
 			
-			// Initialize checklist for saving nodes clicked state
-			X.initializeChecklist(X.Checklists.ResourceRich, counterrich);
 			X.initializeChecklist(X.Checklists.ResourceRegular, counterregular);
-			X.initializeChecklist(X.Checklists.ResourceZone, counterzone);
-			// Fade the node if state is so in checklist
-			for (i in P.LayerArray.Resource)
-			{
-				P.LayerArray.Resource[i].eachLayer(function(pMarker)
-				{
-					if (pMarker instanceof L.Marker && getNodeState(pMarker) === X.ChecklistEnum.Checked)
-					{
-						pMarker.setOpacity(opacityclicked);
-					}
-				});
-			}
+			X.initializeChecklist(X.Checklists.ResourceHotspot, counterhotspot);
+			reapplyNodesState();
+		};
+		
+		$.getScript(U.URL_DATA.Resource).done(function()
+		{
+			var i;
+			var resource;
+			P.Resources = GW2T_RESOURCE_DATA;
+			initializePermanentNodes(); // Only create rich node markers initially
 			
 			// Create checkboxes
 			for (i in P.Resources)
@@ -10590,18 +10625,54 @@ G = {
 				{
 					var thisresource = U.getSubstringFromHTMLID($(this));
 					var wantshow = $(this).prop("checked");
-					var wantregular = $("#nodShowRegular").prop("checked");
+					var wantregular = $("#nodShowPossible").prop("checked");
 					M.toggleLayer(P.Layer["Resource_Rich_" + thisresource], wantshow);
 					M.toggleLayer(P.Layer["Resource_Regular_" + thisresource], (wantshow && wantregular));
-					M.toggleLayer(P.Layer["Resource_Zone_" + thisresource], (wantshow && wantregular));
+					M.toggleLayer(P.Layer["Resource_Hotspot_" + thisresource], (wantshow && wantregular));
 				});
 			}
+			
+			// Bind button to toggle all checkboxes
 			$("#mapToggle_Resource").data("checked", true).click(function()
 			{
 				var bool = I.toggleButtonState($(this));
 				for (i in P.Resources)
 				{
 					$("#nod_" + i).prop("checked", bool).trigger("change");
+				}
+			});
+			
+			// Bind button to generate a route from the currently visible and unchecked permanent nodes
+			$("#nodRoute").click(function()
+			{
+				M.clearPersonalPins();
+				var coords = [];
+				var i = 0;
+				var eastmostcoord = Number.POSITIVE_INFINITY;
+				var indexofeastmostcoord;
+				var coord;
+				
+				// Gather the coordinates of valid resource node markers
+				M.Map.eachLayer(function(layer) {
+					if (layer instanceof L.Marker && layer.options.isNode
+						&& getNodeState(layer) === X.ChecklistEnum.Unchecked)
+					{
+						coords.push(layer.options.coord);
+						coord = (coords[i])[0];
+						if (coord < eastmostcoord)
+						{
+							eastmostcoord = coord;
+							indexofeastmostcoord = i;
+						}
+						i++;
+					}
+				});
+				
+				if (coords.length > 0)
+				{
+					// The eastmost coordinates will be the starting point of the optimized path
+					M.redrawPersonalPath(P.getGreedyPath(coords, indexofeastmostcoord), "default");
+					P.printClosestWaypoints();
 				}
 			});
 			
@@ -10620,14 +10691,19 @@ G = {
 			});
 			
 			// Bind the checkbox to show regular nodes
-			$("#nodShowRegular").change(function()
+			$("#nodShowPossible").one("click", function()
+			{
+				// Only create the non-rich nodes when the user has chosen to show
+				initializePossibleNodes();
+			});
+			$("#nodShowPossible").change(function()
 			{
 				var wantregular = $(this).prop("checked");
 				for (var i in P.Resources)
 				{
 					var wantshow = $("#nod_" + i).prop("checked");
 					M.toggleLayer(P.Layer["Resource_Regular_" + i], (wantshow && wantregular));
-					M.toggleLayer(P.Layer["Resource_Zone_" + i], (wantshow && wantregular));
+					M.toggleLayer(P.Layer["Resource_Hotspot_" + i], (wantshow && wantregular));
 				}
 			}).trigger("change");
 			
@@ -10636,17 +10712,17 @@ G = {
 			{
 				for (var i in P.LayerArray.Resource)
 				{
-					P.LayerArray.Resource[i].eachLayer(function(pMarker)
+					P.LayerArray.Resource[i].eachLayer(function(layer)
 					{
-						if (pMarker instanceof L.Marker)
+						if (layer instanceof L.Marker)
 						{
-							pMarker.setOpacity(1);
+							layer.setOpacity(1);
 						}
 					});
 				}
 				X.clearChecklist(X.Checklists.ResourceRich);
 				X.clearChecklist(X.Checklists.ResourceRegular);
-				X.clearChecklist(X.Checklists.ResourceZone);
+				X.clearChecklist(X.Checklists.ResourceHotspot);
 			});
 			
 			// Bind button to refresh TP prices
@@ -11025,6 +11101,8 @@ G = {
 					}
 				}
 			});
+			// Scroll to the section now that the list is generated
+			I.scrollToElement("#headerMap_Collectible", "#plateMap");
 		});
 	},
 	
@@ -15968,7 +16046,10 @@ I = {
 				{
 					case I.PageEnum.Chains:
 					{
-						
+						if (O.Options.bol_hideHUD)
+						{
+							$("#mapHUDBoxes").show();
+						}
 					} break;
 					case I.PageEnum.Map:
 					{
@@ -15979,6 +16060,10 @@ I = {
 					} break;
 				}
 				$("#paneContent article").hide(); // Hide all plates
+				if (I.PageCurrent !== I.PageEnum.Chains && O.Options.bol_hideHUD)
+				{
+					$("#mapHUDBoxes").hide();
+				}
 				
 				// Only do animations if on regular website (to save computation)
 				if (I.ModeCurrent === I.ModeEnum.Website)
