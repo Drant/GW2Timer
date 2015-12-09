@@ -107,7 +107,7 @@ img {
 }
 #cslContent, #itemWarning {
 	max-width: 62%;
-	max-height: 95%;
+	max-height: calc(100% - 72px);
 	position: fixed; z-index: 10;
 	top: 24px;
 	left: 24px;
@@ -137,21 +137,19 @@ img {
 	top: 8px;
 }
 #cslButtons kbd {
-	position: absolute;
-	width: 32px; height: 32px;
-	opacity: 0.4;
+	top: 0px;
 }
 #cslClose {
-	position: absolute;
-	top: 0px;
 	left: 0px;
 	background: url("img/ui/close.png");
 }
 #cslSelect {
-	position: absolute;
-	top: 0;
 	left: 32px;
 	background: url("img/ui/select.png");
+}
+#cslToggle {
+	left: 64px;
+	background: url("img/ui/toggle.png");
 }
 #cslButtons kbd {
 	opacity: 0.4;
@@ -307,7 +305,7 @@ html, body,
 
 /* Clickable */
 .curClick, a, kbd, input, label, button,
-.mapHUDButton, .itemContext li,
+.btnWindow, .mapHUDButton, .itemContext li,
 .menuBeam img:hover, .chnCheck:hover, .chnTitle time {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
@@ -760,8 +758,8 @@ textarea.jsCopyCode {
 #dsbAnnouncement img:hover {
 	opacity: 0.8;
 }
-#dsbClose, #tmlDelete, #tmlClose, #tmlToggle {
-	position: absolute; z-index: 1;
+.btnWindow {
+	position: absolute; z-index: 11;
 	top: -16px;
 	left: -16px;
 	width: 32px; height: 32px;
@@ -1182,7 +1180,7 @@ input.mapCoordinatesName {
 	background: radial-gradient(ellipse at center, #4c4c4c 0%, #444444 50%, #131313 100%);
 }
 
-#paneClockBackground {
+#paneClockBackground { /* Festival sensitive */
 	background: url("img/background/globe.jpg") no-repeat center;
 	opacity: 0;
 }
@@ -1254,7 +1252,7 @@ input.mapCoordinatesName {
 	width: 32px; height: 32px;
 	background-size: 32px 32px;
 }
-.cssWaypoint {
+.cssWaypoint { /* Festival sensitive */
 	width: 24px; height: 24px;
 	background: url("img/map/waypoint.png");
 	background-size: 24px 24px;

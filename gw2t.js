@@ -75,7 +75,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 151125},
+		programVersion: {key: "int_utlProgramVersion", value: 151208},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
 		personalPins: {key: "str_utlPersonalPins", value: ""}
 	},
@@ -1342,7 +1342,8 @@ U = {
 			case "item": U.printAPI("items/" + args[1]); break;
 			case "items": U.printItemsAPI(args[1]); break;
 			case "events": P.printZoneEvents(); break;
-			case "test": {
+			case "test":
+			{
 				
 			} break;
 		}
@@ -4960,8 +4961,8 @@ D = {
 			cs: "dokončení", it: "completamento", pl: "ukończenie", pt: "progressão", ru: "завершение", zh: "完成"},
 		s_route: {de: "route", es: "ruta", fr: "route",
 			cs: "trasa", it: "percorso", pl: "trasa", pt: "rota", ru: "маршру́т", zh: "路線"},
-		s_pins: {de: "nadeln", es: "agujas", fr: "aiguilles",
-			cs: "jehly", it: "aghi", pl: "igły", pt: "agulhas", ru: "иглы", zh: "針"},
+		s_pins: {de: "stecknadel", es: "alfileres", fr: "épingles",
+			cs: "špendlík", it: "spilli", pl: "szpilka", pt: "alfinetes", ru: "була́вка", zh: "大頭針"},
 		s_lock: {de: "sperre", es: "bloqueo", fr: "verrou",
 			cs: "zámek", it: "blocco", pl: "zablokuj", pt: "bloqueio", ru: "блокировка", zh: "鎖定"},
 		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", zh: "鳥瞰點"},
@@ -8274,7 +8275,8 @@ M = {
 	{
 		var that = this;
 		// Create a pin at double click location
-		var marker = L.marker(pLatLng, {
+		var marker = L.marker(pLatLng,
+		{
 			icon: L.icon(
 			{
 				iconUrl: "img/map/pin_white.png",
@@ -8295,14 +8297,14 @@ M = {
 		this.bindMarkerCoordBehavior(marker, "click");
 		marker.on("click", function()
 		{
-			if (this.options.ismarked === undefined || this.options.ismarked === false)
+			if (this.options.isMarked === undefined || this.options.isMarked === false)
 			{
-				this.options.ismarked = true;
+				this.options.isMarked = true;
 				this.setOpacity(0.3);
 			}
 			else
 			{
-				this.options.ismarked = false;
+				this.options.isMarked = false;
 				this.setOpacity(1);
 			}
 		});
@@ -8343,7 +8345,7 @@ M = {
 		var latlngs = [];
 		var i = 0;
 		// Recompile pin coordinates for recreation
-		this.Layer.PersonalPin.eachLayer(function(pPin){
+		this.Layer.PersonalPin.eachLayer(function(pPin) {
 			latlngs.push(pPin.getLatLng());
 			if (i === pPrecede)
 			{
@@ -8367,7 +8369,7 @@ M = {
 	clearPersonalPins: function()
 	{
 		var that = this;
-		this.Layer.PersonalPin.eachLayer(function(pPin){
+		this.Layer.PersonalPin.eachLayer(function(pPin) {
 			that.toggleLayer(pPin, false);
 		});
 		this.Layer.PersonalPin.clearLayers();
@@ -8387,9 +8389,9 @@ M = {
 			var latlngs = [];
 			var pinids = [];
 			var length = 0;
-			this.Layer.PersonalPin.eachLayer(function(pPin){
+			this.Layer.PersonalPin.eachLayer(function(pPin) {
 				latlngs.push(pPin.getLatLng());
-				pinids.push(that.getLayerId(pPin));
+				pinids.push(P.getLayerId(pPin));
 				length++;
 			});
 			if (length > 1)
@@ -8530,7 +8532,7 @@ M = {
 	{
 		var that = this;
 		var coords = [];
-		this.Layer.PersonalPin.eachLayer(function(pPin){
+		this.Layer.PersonalPin.eachLayer(function(pPin) {
 			coords.push(that.convertLCtoGC(pPin.getLatLng()));
 		});
 		return coords;
@@ -8597,16 +8599,6 @@ M = {
 			iconSize: [pSize, pSize],
 			iconAnchor: [pSize/2, pSize/2]
 		}));
-	},
-	
-	/*
-	 * Gets ID of a Leaflet layer.
-	 * @param object pLayer.
-	 * @returns string ID number.
-	 */
-	getLayerId: function(pLayer)
-	{
-		return pLayer["_leaflet_id"];
 	},
 	
 	/*
@@ -9219,6 +9211,26 @@ P = {
 	},
 	
 	/*
+	 * Gets ID of a Leaflet layer.
+	 * @param object pLayer.
+	 * @returns string ID number.
+	 */
+	getLayerId: function(pLayer)
+	{
+		return pLayer["_leaflet_id"];
+	},
+	
+	/*
+	 * Gets the object containing the layers.
+	 * @param object pLayerGroup
+	 * @returns object iterable.
+	 */
+	getLayerGroup: function(pLayerGroup)
+	{
+		return pLayerGroup["_layers"];
+	},
+	
+	/*
 	 * Sorts an array of GW2 coordinates.
 	 * @param 2D array pArray to sort.
 	 */
@@ -9311,6 +9323,7 @@ P = {
 	/*
 	 * Prints a series of text inputs for the user to copy waypoint chatlinks
 	 * that are closest to each personal pins.
+	 * @returns int number of waypoints to be used.
 	 */
 	printClosestWaypoints: function()
 	{
@@ -9344,9 +9357,9 @@ P = {
 		
 		if (chatlinks.length > 0)
 		{
-			// A message contains a limited quantity of chatlinks
+			// A message contains a limited quantity of chatlinks/waypoints
 			var nummessages = Math.ceil(chatlinks.length / CHATLINKS_PER_MESSAGE);
-			var counter = 0;
+			var numwaypoints = 0;
 			var html = "<div id='jsWaypointLinks'>Copy the codes below and<br />paste them in game chat to <br />follow the route:<br />";
 			for (var i = 0; i < nummessages; i++)
 			{
@@ -9356,13 +9369,13 @@ P = {
 						ii < (CHATLINKS_PER_MESSAGE * (i+1));
 						ii++)
 				{
-					if (counter >= chatlinks.length)
+					if (numwaypoints >= chatlinks.length)
 					{
 						// If reached the end of the array
 						break;
 					}
 					html += " " + (ii+1) + "-&gt;" + chatlinks[ii]; // Chatlinks divider
-					counter++;
+					numwaypoints++;
 				}
 				html += "' /> Message " + (i+1) + "<br />";
 			}
@@ -9379,6 +9392,8 @@ P = {
 		{
 			I.write("Pins must first be placed and be inside zones in order to create chatlinks.");
 		}
+		// Return the number of waypoints
+		return numwaypoints;
 	},
 	
 	/*
@@ -10461,11 +10476,43 @@ G = {
 						$.getJSON(U.URL_API.ItemPrices + id, function(pData)
 						{
 							var price = E.deductTax(pData.sells.unit_price);
-							$("#nodPrice_" + inneri).data("price", price).html(E.createCoinString(price, true));
+							$("#nodPrice_" + inneri).html(E.createCoinString(price, true));
+							P.Resources[inneri].price = price;
 						});
 					})(i);
 				}
 			}
+		};
+		var getNodeQuantity = function(pResource, pGrade)
+		{
+			if (pResource.type === "Metal")
+			{
+				switch (pGrade)
+				{
+					case "Rich": return 10;
+					case "Regular": return 3;
+					case "Hotspot": return 3;
+				}
+			}
+			else if (pResource.type === "Plant")
+			{
+				switch (pGrade)
+				{
+					case "Rich": return 8;
+					case "Regular": return 1;
+					case "Hotspot": return 1;
+				}
+			}
+			else if (pResource.type === "Wood")
+			{
+				switch (pGrade)
+				{
+					case "Rich": return 15;
+					case "Regular": return 3;
+					case "Hotspot": return 3;
+				}
+			}
+			return 0;
 		};
 		var initializePermanentNodes = function()
 		{
@@ -10477,6 +10524,7 @@ G = {
 			for (i in P.Resources)
 			{
 				resource = P.Resources[i];
+				P.Resources[i].price = 0; // Also initialize price property
 				var name = i.toLowerCase();
 
 				// Permanent Rich/Farm nodes
@@ -10488,6 +10536,8 @@ G = {
 						marker = L.marker(M.convertGCtoLC(resource.riches[ii].c),
 						{
 							grade: "Rich",
+							name: i,
+							quantity: getNodeQuantity(resource, "Rich"),
 							index: counterrich,
 							coord: resource.riches[ii].c,
 							icon: L.divIcon(
@@ -10536,6 +10586,7 @@ G = {
 			for (i in P.Resources)
 			{
 				resource = P.Resources[i];
+				P.Resources[i].price = 0; // Also initialize price property
 				var name = i.toLowerCase();
 				
 				// Regular nodes that may spawn there
@@ -10547,6 +10598,8 @@ G = {
 						marker = L.marker(M.convertGCtoLC(resource.regulars[ii].c),
 						{
 							grade: "Regular",
+							name: i,
+							quantity: getNodeQuantity(resource, "Regular"),
 							index: counterregular,
 							coord: resource.regulars[ii].c,
 							icon: L.divIcon(
@@ -10576,6 +10629,8 @@ G = {
 						marker = L.marker(M.convertGCtoLC(resource.hotspots[ii].c),
 						{
 							grade: "Hotspot",
+							name: i,
+							quantity: getNodeQuantity(resource, "Hotspot"),
 							index: counterhotspot,
 							coord: resource.hotspots[ii].c,
 							icon: L.divIcon(
@@ -10652,11 +10707,25 @@ G = {
 				var indexofeastmostcoord;
 				var coord;
 				
+				var WAYPOINT_COPPER_AVERAGE = $("#nod_int_coinWaypointAverage").val();
+				var TIME_SECOND_AVERAGE = $("#nod_int_secNodeVisitAverage").val();
+				var waypointcost = 0;
+				var timecost = 0;
+				var sumprice = 0;
+				
 				// Gather the coordinates of valid resource node markers
 				M.Map.eachLayer(function(layer) {
 					if (layer instanceof L.Marker && layer.options.isNode
 						&& getNodeState(layer) === X.ChecklistEnum.Unchecked)
 					{
+						/*
+						 * Sum the price with the node's single resource price times the output of the node.
+						 * The price was initialized the TP refresh function.
+						 * The quantity was initialized by the marker initialization function.
+						 */
+						sumprice += P.Resources[(layer.options.name)].price * layer.options.quantity;
+						
+						// Find eastmost coordinate to use it as the starting point
 						coords.push(layer.options.coord);
 						coord = (coords[i])[0];
 						if (coord < eastmostcoord)
@@ -10667,12 +10736,22 @@ G = {
 						i++;
 					}
 				});
+				var numnodes = coords.length;
 				
-				if (coords.length > 0)
+				if (numnodes > 0)
 				{
 					// The eastmost coordinates will be the starting point of the optimized path
 					M.redrawPersonalPath(P.getGreedyPath(coords, indexofeastmostcoord), "default");
-					P.printClosestWaypoints();
+					waypointcost = P.printClosestWaypoints() * WAYPOINT_COPPER_AVERAGE;
+					timecost = numnodes * TIME_SECOND_AVERAGE;
+					var summary = "Gather Profit: <span class='cssRight'>" + E.createCoinString(sumprice, true) + "</span><br />"
+						+ "Waypoint Cost: <span class='cssRight'>" + E.createCoinString(waypointcost, true) + "</span><br />"
+						+ "</br >"
+						+ "Net Profit: <span class='cssRight'>" + E.createCoinString(sumprice - waypointcost, true) + "</span><br />"
+						+ "<br />"
+						+ "Nodes to Visit: <span class='cssRight'>" + numnodes + "</span><br />"
+						+ "Estimated Time: <span class='cssRight'>" + T.getTimeFormatted({customTimeInSeconds: timecost, wantLetters: true}) + "</span>";
+					I.write(summary, 0);
 				}
 			});
 			
@@ -15159,6 +15238,10 @@ I = {
 		{
 			I.selectText("#cslContent");
 		});
+		$("#cslToggle").click(function()
+		{
+			$("#cslContent").toggle("fast");
+		});
 		$(".mapHUDContainer").one("mouseenter", function()
 		{
 			$(this).find("img").each(function()
@@ -15359,7 +15442,7 @@ I = {
 	write: function(pString, pSeconds, pClear)
 	{
 		$("#itemConsole").show();
-		var content = $("#cslContent");
+		var content = $("#cslContent").show();
 		var characterspersecond = 18;
 		
 		if (pString === undefined || pString === null)

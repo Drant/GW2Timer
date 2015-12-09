@@ -971,9 +971,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "To toggle this box and the HoT timer, right click on the map and choose &quot;Toggle HUD&quot;",
-	Start: new Date("2015-12-06T16:00:00Z"),
-	Finish: new Date("2015-12-09T16:00:00Z")
+	content: "<a href='http://gw2timer.com/?page=Resource'>Resource Nodes</a> gathering map now has a <a href='http://forum.renaka.com/topic/5500046/1/'>route generator</a> with waypoints and stats!",
+	Start: new Date("2015-12-08T16:00:00Z"),
+	Finish: new Date("2015-12-11T16:00:00Z")
 },
 
 /*
@@ -1252,16 +1252,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2015-12-08T00:00:00Z"),
-	Finish: new Date("2015-12-09T00:00:00Z"),
+	Start: new Date("2015-12-09T00:00:00Z"),
+	Finish: new Date("2015-12-10T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49753", price: "25200" },
-		Fox: { id: "43821", price: "25200" },
-		Derwena: { id: "49734", price: "12600" },
-		Yana: { id: "49776", price: "25200" },
-		Katyn: { id: "43831", price: "25200" },
-		Verma: { id: "49742", price: "25200" }
+		Mehem: { id: "49758", price: "25200" },
+		Fox: { id: "67963", price: "25200" },
+		Derwena: { id: "43814", price: "25200" },
+		Yana: { id: "49771", price: "25200" },
+		Katyn: { id: "44658", price: "25200" },
+		Verma: { id: "43818", price: "25200" }
 	}
 }
 };

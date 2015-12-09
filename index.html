@@ -5,7 +5,7 @@
 	<title>GW2Timer.com - Advanced GW2 Timer and Daily Map Guide</title>
 	<meta charset="utf-8" />
 	<meta name="robots" content="index, follow, noarchive" />
-	<meta name="description" content="Guild Wars 2 Heart of Thorns timer for world boss meta events, with daily checklists, JP nodes collections map, and Trading Post tracker overlay." />
+	<meta name="description" content="Guild Wars 2 Heart of Thorns timer for world boss meta events, with daily checklists, resource nodes collections map, and Trading Post tracker overlay." />
 	<meta name="google-site-verification" content="hPcBd74DxlBzpTu6wO6DkIcOVFLu9SOMT-GQ1MI3fbg" />
 	<meta name="msvalidate.01" content="95E5C0E89A8A24688EC00F2A69986A17" />
 
@@ -41,8 +41,9 @@
 <body>
 	<div id="itemConsole">
 		<div id="cslButtons">
-			<kbd id="cslClose" class="curClick" title="<dfn>Close Console<dfn>"></kbd>
-			<kbd id="cslSelect" class="curClick" title="<dfn>Select Console<dfn>"></kbd>
+			<kbd id="cslClose" class="btnWindow" title="<dfn>Close Console<dfn>"></kbd>
+			<kbd id="cslSelect" class="btnWindow" title="<dfn>Select Console<dfn>"></kbd>
+			<kbd id="cslToggle" class="curToggle btnWindow" title="<dfn>Toggle Console<dfn>"></kbd>
 		</div>
 		<div id="cslContent"></div>
 	</div>
@@ -84,7 +85,7 @@
 			<article id="mapHUDPane">
 			<div id="mapHUDBoxes">
 				<div id="itemDashboard">
-					<kbd id="dsbClose" class="curClick" title="<dfn>Close the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
+					<kbd id="dsbClose" class="btnWindow" title="<dfn>Close the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
 					<div id="dsbAnnouncement"></div>
 					<div id="dsbCountdown"></div>
 					<div id="dsbSale"></div>
@@ -92,9 +93,9 @@
 					<div id="dsbStory" class="jsScrollable"></div>
 				</div>
 				<div id="itemTimeline">
-					<kbd id="tmlDelete" class="curClick" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
-					<kbd id="tmlClose" class="curClick" title="<dfn>Close the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
-					<kbd id="tmlToggle" class="curClick" title="Toggle timeline opacity."></kbd>
+					<kbd id="tmlDelete" class="btnWindow" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
+					<kbd id="tmlClose" class="btnWindow" title="<dfn>Close the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
+					<kbd id="tmlToggle" class="btnWindow" title="Toggle timeline opacity."></kbd>
 					<div id="tmlIndicator"></div>
 				</div>
 			</div>
@@ -324,7 +325,7 @@
 		<section id="paneClock" class="paneApp clkSizeRegular">
 			<div id="paneClockWall" class="clkSizeRegular"></div>
 			<div id="paneClockBackground" class="clkSizeRegular"></div>
-			<img id="paneClockFace" class="clkSizeRegular" src="img/background/face.png" alt="Clock Face">
+			<img id="paneClockFace" class="clkSizeRegular" src="img/background/face.png" alt="Clock Face"><!-- Festival sensitive -->
 			<div id="paneClockIcons" class="clkSizeRegular">
 				<img id="clkIconSD0" class="iconSD" src="img/ui/placeholder.png" alt="X:00" />
 				<img id="clkIconSD1" class="iconSD" src="img/ui/placeholder.png" alt="X:15" />
