@@ -55,6 +55,10 @@
 		- This web application encountered a bug; try refreshing, or <a href="bin/clear.html">clearing</a> its localStorage.<br />
 		Do you want to <a href="http://forum.renaka.com/topic/5476238/">report</a> this problem?<br />
 	</div>
+	<div id="itemStopwatch">
+		<div id="watUp"></div>
+		<div id="watDown"></div>
+	</div>
 	<iframe id="jsTTSFrame"></iframe>
 	<audio id="jsTTSAudio"></audio>
 	<main id="windowMain">
@@ -70,13 +74,14 @@
 						<ul>
 							<li id="mapContextChatlinkPins">Chatlink</li>
 							<li id="mapContextOptimizePins">Optimize</li>
+							<li id="mapContextUndoPins">Undo</li>
 							<li id="mapContextClearPins">Clear</li>
-							<!--<li class="itemContextSubmenu"><span>Load</span>
+							<li class="itemContextSubmenu"><span>Load</span>
 								<ul id="mapContextLoadPins"></ul>
 							</li>
 							<li class="itemContextSubmenu"><span>Save</span>
 								<ul id="mapContextSavePins"></ul>
-							</li>-->
+							</li>
 						</ul>
 					</li>
 					<li class="itemContextSubmenu"><span>Map</span>
@@ -116,7 +121,7 @@
 					<u><a class="jsTranslate linkExternal" title="<dfn>Go to Forum</dfn>" href="http://forum.renaka.com/forum/368355/">forum</a></u><em> /</em>
 					<u><a class="jsTranslate" title="<dfn>Switch to Simple Mode (clock only)</dfn><br />gw2timer.com/s<br /><div class='mapLoc'><img src='http://i.imgur.com/Nk42voP.png' /></div>" href="./?mode=Simple">simple</a></u><em> /</em>
 					<u><a class="jsTranslate" title="<dfn>Switch to Mobile Mode (right panel only)</dfn><br />gw2timer.com/m<br /><div class='mapLoc'><img src='http://i.imgur.com/0QsaeY7.png' /></div>" href="./?mode=Mobile">mobile</a></u><em> /</em>
-					<u><a class="jsTranslate" title="<dfn>Switch to Tile Mode (timers only)</dfn><br />gw2timer.com/t<br /><div class='mapLoc'><img src='http://i.imgur.com/SDseVJE.png' /></div>" href="./?mode=Tile">tile</a></u>
+					<u><a class="jsTranslate" title="<dfn>Switch to Tile Mode (timers only)</dfn><br />gw2timer.com/t<br /><div class='mapLoc'><img src='http://i.imgur.com/Q6O2lIx.png' /></div>" href="./?mode=Tile">tile</a></u>
 				</span>
 				<!--<div id="mapSwitch" class="mapHUDContainer">
 					<img id="mapSwitchButton" class="mapHUDButton" title="<dfn> Click to WVW </dfn>" src="img/ui/pages/wvw.png" alt="display" />
@@ -245,8 +250,24 @@
 			<div id="wvwContext" class="itemContext">
 				<ul>
 					<li id="wvwContextCenter">Center map</li>
-					<li id="wvwContextToggleLock">Toggle map lock</li>
-					<li id="wvwContextClearPins">Clear pins</li>
+					<li class="itemContextSubmenu" id="wvwContextPins"><span>Pins</span>
+						<ul>
+							<li id="wvwContextOptimizePins">Optimize</li>
+							<li id="wvwContextUndoPins">Undo</li>
+							<li id="wvwContextClearPins">Clear</li>
+							<li class="itemContextSubmenu"><span>Load</span>
+								<ul id="wvwContextLoadPins"></ul>
+							</li>
+							<li class="itemContextSubmenu"><span>Save</span>
+								<ul id="wvwContextSavePins"></ul>
+							</li>
+						</ul>
+					</li>
+					<li class="itemContextSubmenu"><span>Map</span>
+						<ul>
+							<li id="wvwContextToggleLock">Toggle map lock</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 			<article id="wvwHUDPane">
@@ -331,7 +352,7 @@
 		<section id="paneClock" class="paneApp clkSizeRegular">
 			<div id="paneClockWall" class="clkSizeRegular"></div>
 			<div id="paneClockBackground" class="clkSizeRegular"></div>
-			<img id="paneClockFace" class="clkSizeRegular" src="img/background/face.png" alt="Clock Face"><!-- Festival sensitive -->
+			<img id="paneClockFace" class="clkSizeRegular" src="img/background/face_wintersday.png" alt="Clock Face"><!-- Festival sensitive -->
 			<div id="paneClockIcons" class="clkSizeRegular">
 				<img id="clkIconSD0" class="iconSD" src="img/ui/placeholder.png" alt="X:00" />
 				<img id="clkIconSD1" class="iconSD" src="img/ui/placeholder.png" alt="X:15" />
@@ -401,20 +422,20 @@
 					<line id="clkMarker3B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
 				</g>
 				<g id="clkHoursPrime">
-					<text x="50" y="18">12</text>
-					<text x="85" y="53">3</text>
-					<text x="50" y="87">6</text>
-					<text x="15" y="53">9</text>
+					<text x="50" y="18">XII</text>
+					<text x="85" y="53">III</text>
+					<text x="50" y="87">VI</text>
+					<text x="15" y="53">IX</text>
 				</g>
 				<g id="clkHours">
-					<text x="68" y="22">1</text>
-					<text x="68" y="83">5</text>
-					<text x="32" y="83">7</text>
-					<text x="32" y="22">11</text>
-					<text x="81" y="35">2</text>
-					<text x="81" y="71">4</text>
-					<text x="19" y="71">8</text>
-					<text x="20" y="35">10</text>
+					<text x="68" y="22">I</text>
+					<text x="68" y="83">V</text>
+					<text x="32" y="83">VII</text>
+					<text x="32" y="22">XI</text>
+					<text x="81" y="35">II</text>
+					<text x="81" y="71">IV</text>
+					<text x="19" y="71">VIII</text>
+					<text x="20" y="35">X</text>
 				</g>
 				<!-- Hands and markers initially point at 12 o'clock, JS will rotate them -->
 				<g id="clkHands" filter="url(#clkFilterShadowHand)">
@@ -477,8 +498,14 @@
 					<img id="optAlarmIcon" src="img/ui/placeholder.png" alt="Mode"/><img id="optAlarmSpeaker" class="curClick" title="Click to preview audio." src="img/ui/speaker.png" alt="Alarm"/>
 					<img id="optChainsIcon" src="img/ui/toggle.png" alt="Toggle" />
 					<div id="chnOptionsPopup" class="cntComposition cntPopup">
+						<div id="chnOptionsTop">
+							<b class="jsTranslate">Stopwatch</b>
+							<span id="watButtons">
+								<kbd id="watStart">▶/▮▮</kbd><kbd id="watStop">■</kbd><kbd id="watLap">★</kbd>
+							</span>
+						</div>
 						<div id="chnOptionsLeft">
-							<b>Chain Options</b>
+							<b class="jsTranslate">Timers Options</b>
 							<label title="13:00:00 or 1:00:00 PM"><input id="opt_bol_use24Hour" type="checkbox" /> 24:00 / 12AM</label>
 							<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked bosses</label>
 							<label title="Active/orange chain bars."><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand events</label>
@@ -565,7 +592,7 @@
 					<label title="Show/Hide Heart of Thorns meta events timeline."><input id="opt_bol_showTimeline" type="checkbox" /> Show the timeline (on HUD)</label>
 					<label title="Enable high visibility timeline."><input id="opt_bol_showTimelineOpaque" type="checkbox" /> Opaque timeline</label>
 					<label title="Only show the HUD when you are on the Chains page."><input id="opt_bol_hideHUD" type="checkbox" /> Hide HUD if not on Chains page</label>
-					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane. To toggle the Dashboard and Timeline, right click on the map and choose &quot;Toggle HUD&quot;</span><br />
+					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane. To toggle the Dashboard and Timeline, right click on the map and choose &quot;Toggle HUD&quot;.</span><br />
 					<br />
 					<h2>Alarm</h2>
 					<span>Voice announcement requires Chrome, Firefox, or IE11+. Hover over the speaker icon on the chains page to change alarm.</span>
@@ -589,6 +616,7 @@
 					<label title="How many calculators to show? If you pick a number lower than the current, data from the higher numbered calculators will be erased! Requires reload."><input id="opt_int_numTradingCalculators" type="number" min="1" max="250" step="1" /> Number of TP calculators</label>
 					<label title="How many items to show in the TP search result?"><input id="opt_int_numTradingResults" type="number" min="1" max="50" step="1" /> Number of TP search results</label>
 					<h2>Tools</h2>
+					<label title="Resume stopwatch to see changes."><input id="opt_int_sizeStopwatchFont" type="number" min="8" max="480" step="1" /> Stopwatch font size</label>
 					<label title="Requires reload."><input id="opt_int_sizeNotepadFont" type="number" min="8" max="32" step="1" /> Notepad font size</label>
 					<label title="Requires reload."><input id="opt_int_sizeNotepadHeight" type="number" min="180" max="1080" step="1" /> Notepad height (pixels)</label>
 					<br />

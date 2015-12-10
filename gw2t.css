@@ -163,6 +163,7 @@ img {
 #cslContent a:hover, #itemWarning a:hover {
 	color: greenyellow;
 }
+
 #jsTTSFrame, #jsTTSAudio {
 	display: none;
 }
@@ -1181,7 +1182,7 @@ input.mapCoordinatesName {
 }
 
 #paneClockBackground { /* Festival sensitive */
-	background: url("img/background/globe.jpg") no-repeat center;
+	background: url("img/background/globe_wintersday.png") no-repeat center;
 	opacity: 0;
 }
 
@@ -1254,7 +1255,7 @@ input.mapCoordinatesName {
 }
 .cssWaypoint { /* Festival sensitive */
 	width: 24px; height: 24px;
-	background: url("img/map/waypoint.png");
+	background: url("img/map/wintersday.png");
 	background-size: 24px 24px;
 }
 .clkWaypointDaily {
@@ -1649,6 +1650,13 @@ header.jsSection sup {
 	margin-left: 4px;
 	border-left: 1px solid gray;
 }
+#chnOptionsTop {
+	width: 100%;
+	padding-bottom: 8px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid gray;
+	text-align: left;
+}
 #chnOptionsPopup fieldset {
 	min-width: 120px;
 	margin: 0;
@@ -1664,6 +1672,52 @@ header.jsSection sup {
 }
 #opt_int_setFloor {
 	width: 80%;
+}
+
+#itemStopwatch {
+	position: fixed; z-index: 9; /* z-index behind the console */
+	top: 24px;
+	left: 24px;
+	font-family: Consolas, monospace;
+	color: white;
+	text-shadow:
+		1px 1px 4px #000,
+		-1px -1px 4px #000,
+		1px -1px 4px #000,
+		-1px 1px 4px #000,
+		1px 1px 4px #000;
+	pointer-events: none;
+}
+#watButtons {
+	float: right;
+	margin-left: 16px;
+	font-family: monospace;
+	font-size: 24px;
+}
+#watCustom {
+	width: 64px;
+}
+#watButtons kbd {
+	padding-left: 8px;
+	padding-right: 8px;
+	border-radius: 2px;
+	opacity: 0.9;
+}
+#watButtons kbd:hover {
+	border: 1px solid white;
+	opacity: 1;
+}
+#watButtons kbd:active {
+	color: white;
+}
+#watStart {
+	color: lime;
+}
+#watStop {
+	color: red;
+}
+#watLap {
+	color: gold;
 }
 
 #plateChains header {

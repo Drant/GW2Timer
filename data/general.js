@@ -1051,6 +1051,22 @@ Sale: {
 	},
 	Items: [
 	{
+		url: "http://wiki.guildwars2.com/wiki/Bandit Sniper Appearance Pack",
+		img: "http://i.imgur.com/mIuPrbz.png",
+		quantity: 1,
+		pricenew: 2000,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Royal Terrace Pass",
+		img: "https://render.guildwars2.com/file/470C33B838D5541D39C91DD5C65A53EFB9BCEB79/699314.png",
+		quantity: 1,
+		pricenew: 1000,
+		priceold: 0,
+		col: 0
+	},
+	{
 		url: "http://wiki.guildwars2.com/wiki/Arctic Explorer Outfit",
 		img: "https://render.guildwars2.com/file/1CA69FFE21A1B046D4355A13FD454F6E4E7BF438/919386.png",
 		quantity: 1,
@@ -1132,14 +1148,6 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Bandit Sniper Appearance Pack",
-		img: "http://i.imgur.com/mIuPrbz.png",
-		quantity: 1,
-		pricenew: 2000,
-		priceold: 0,
-		col: 1
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Slayer's Outfit",
 		img: "https://render.guildwars2.com/file/EA2FC116C5CACAF5DCA434765F2871D39DFA7824/1313301.png",
 		quantity: 1,
@@ -1180,6 +1188,14 @@ Sale: {
 		col: 1
 	},
 	{
+		url: "http://wiki.guildwars2.com/wiki/Festive Hat",
+		img: "https://render.guildwars2.com/file/BFE4016823C9D530D658940157761EB539192B03/526117.png",
+		quantity: 1,
+		pricenew: 150,
+		priceold: 0,
+		col: 1
+	},
+	{
 		url: "http://wiki.guildwars2.com/wiki/Wintersday Earmuffs",
 		img: "https://render.guildwars2.com/file/E1590ED73D082F950AA2ED44021A7F795D0DD647/526118.png",
 		quantity: 1,
@@ -1190,6 +1206,14 @@ Sale: {
 	{
 		url: "http://wiki.guildwars2.com/wiki/Winter Chimes Dye Kit",
 		img: "https://render.guildwars2.com/file/C6B91C29A5D30474AC7508AB2FFE3BFEC558CDC8/1313228.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Toxic Dye Kit",
+		img: "https://render.guildwars2.com/file/9CA420D41AC95B0507CE2F5BBFF9E0BBE8C44E3E/665807.png",
 		quantity: 1,
 		pricenew: 125,
 		priceold: 0,

@@ -77,8 +77,8 @@ O = {
 	{
 		programVersion: {key: "int_utlProgramVersion", value: 151208},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
-		BackupPins: {key: "str_utlBackupPins", value: ""},
-		BackupPinsWvW: {key: "str_utlBackupPinsWvW", value: ""},
+		BackupPins: {key: "obj_utlBackupPins", value: []},
+		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
 		StoredPins: {key: "obj_utlStoredPins", value: []},
 		StoredPinsWvW: {key: "obj_utlStoredPinsWvW", value: []}
 	},
@@ -173,6 +173,7 @@ O = {
 		bol_alertAutosubscribe: true,
 		bol_alertUnsubscribe: true,
 		// Tools
+		int_sizeStopwatchFont: 64,
 		int_sizeNotepadFont: 12,
 		int_sizeNotepadHeight: 400,
 		// Trading
@@ -1336,7 +1337,6 @@ U = {
 			case "lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
 			case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
 			case "nocontext": that.Map.off("contextmenu"); I.write("Map context menu disabled."); break;
-			case "loadpins": that.parsePersonalPath(that.loadBackupPins()); break;
 			case "dart": that.drawRandom(args[1]); break;
 			case "greedy": that.redrawPersonalPath(P.getGreedyPath(M.parseCoordinatesMulti(args[1]))); break;
 			case "nodes": P.printNodes(P.sortCoordinates(M.parseCoordinatesMulti(args[1]))); break;
@@ -4981,6 +4981,8 @@ D = {
 			cs: "chat odkaz", it: "collegamento chat", pl: "czat łącze", pt: "link bate-papo", ru: "чат связь", zh: "連結聊天"},
 		s_wvw: {de: "WvW", es: "McM", fr: "McM",
 			cs: "SpS", it: "McM", pl: "SkS", pt: "McM", ru: "МпМ", zh: "世界戰場"},
+		s_stopwatch: {de: "stoppuhr", es: "cronómetro", fr: "chronomètre",
+			cs: "stopky", it: "cronografo", pl: "stoper", pt: "cronômetro", ru: "секундомер", zh: "碼錶"},
 		
 		// Verbs
 		s_is: {de: "ist", es: "es", fr: "est",
@@ -5005,6 +5007,8 @@ D = {
 			cs: "sbalit", it: "comprimere", pl: "zwinąć", pt: "recolher", ru: "свернуть", zh: "摺疊"},
 		s_draw: {de: "zeichnen", es: "dibujar", fr: "dessiner",
 			cs: "kreslit", it: "disegnare", pl: "rysować", pt: "desenhar", ru: "рисова́ть", zh: "画"},
+		s_undo: {de: "rückgängig", es: "deshacer", fr: "annuler",
+			cs: "zpět", it: "annullare", pl: "cofnąć", pt: "desfazer", ru: "отменить", zh: "復原"},
 		s_optimize: {de: "optimieren", es: "optimizar", fr: "optimiser",
 			cs: "optimalizovat", it: "ottimizzare", pl: "optymalizować", pt: "otimizar", ru: "оптимизировать", zh: "最佳化"},
 		
@@ -5062,8 +5066,6 @@ D = {
 			cs: "mobilní", it: "mobile", pl: "mobilna", pt: "móvel", ru: "мобильный", zh: "行動"},
 		s_tile: {de: "kachel", es: "mosaico", fr: "mosaïque",
 			cs: "dlaždice", it: "affianca", pl: "sąsiadująco", pt: "ladrilho", ru: "замостить", zh: "磚"},
-		s_chests: {de: "truhen", es: "cofres", fr: "coffres",
-			cs: "truhly", it: "scrigni", pl: "skrzynie", pt: "baús", ru: "сундуки", zh: "寶箱"},
 		
 		// Economy
 		s_this: {de: "dieses", es: "esto", fr: "ce",
@@ -7035,6 +7037,7 @@ M = {
 	Map: {},
 	Floors: [],
 	ZoneCurrent: {},
+	numPins: 0,
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
 	isMapInitialized: false,
@@ -7329,7 +7332,8 @@ M = {
 		this.Map.on("dblclick", function(pEvent)
 		{
 			if (that.isMouseOnHUD) { return; }
-			that.createPersonalPin(pEvent.latlng, true);
+			that.saveBackupPins();
+			that.createPersonalPin(pEvent.latlng, true, true);
 		});
 
 		/*
@@ -7358,25 +7362,29 @@ M = {
 		});
 		$(htmlidprefix + "ContextPins").one("mouseenter", function()
 		{
-			return;
 			// Generate the load/save items when user opens the Pins context menu for the first time
 			var numslots = 8;
 			var wordload = D.getWordCapital("load");
 			var wordsave = D.getWordCapital("save");
+			that.initializeStoredPins(numslots);
 			for (var i = 0; i < numslots; i++)
 			{
 				$(htmlidprefix + "ContextLoadPins").append("<li data-index='" + i + "'>" + wordload + " #" + (i+1) + "</li>");
 				$(htmlidprefix + "ContextSavePins").append("<li data-index='" + i + "'>" + wordsave + " #" + (i+1) + "</li>");
 			}
 			// Bind behavior for the created list items
-			$(htmlidprefix + "ContextLoadPins").each(function()
+			$(htmlidprefix + "ContextLoadPins li").click(function()
 			{
 				that.loadStoredPins($(this).attr("data-index"));
 			});
-			$(htmlidprefix + "ContextSavePins").each(function()
+			$(htmlidprefix + "ContextSavePins li").click(function()
 			{
 				that.saveStoredPins($(this).attr("data-index"));
 			});
+		});
+		$(htmlidprefix + "ContextUndoPins").click(function()
+		{
+			that.loadBackupPins();
 		});
 		$(htmlidprefix + "ContextClearPins").click(function()
 		{
@@ -7922,25 +7930,40 @@ M = {
 	},
 	
 	/*
-	 * Saves the current personal pins as backup.
+	 * Saves the current personal pins as backup. This is to be called when the
+	 * user manually adds and inserts a pin.
 	 */
 	saveBackupPins: function()
 	{
-		var key = O.Utilities["BackupPins" + this.OptionSuffix].key;
-		localStorage[key] = this.getPersonalString();
+		var obj = O.Utilities["BackupPins" + this.OptionSuffix];
+		localStorage[obj.key] = JSON.stringify(this.getPersonalCoords());
 	},
 	loadBackupPins: function()
 	{
-		var key = O.Utilities["BackupPins" + this.OptionSuffix].key;
-		return localStorage[key];
+		var obj = O.Utilities["BackupPins" + this.OptionSuffix];
+		try
+		{
+			obj.value = JSON.parse(localStorage[obj.key]);
+		}
+		catch(e) {}
+		this.redrawPersonalPath(obj.value, null);
 	},
 	
 	/*
 	 * Initializes the options object for load/save personal pins.
 	 */
-	initializeStoredPins: function()
+	initializeStoredPins: function(pQuantity)
 	{
-		var key = O.Utilities["StoredPins" + this.OptionSuffix].key;
+		var obj = O.Utilities["StoredPins" + this.OptionSuffix];
+		// First make a new array with desired length
+		obj.value = new Array(pQuantity);
+		var key = obj.key;
+		// Try to overwrite it with the stored arrays, if this fails then the value property is unchanged (a blank array)
+		try
+		{
+			obj.value = JSON.parse(localStorage[key]);
+		}
+		catch(e) {}
 	},
 	
 	/*
@@ -7949,11 +7972,24 @@ M = {
 	 */
 	saveStoredPins: function(pIndex)
 	{
-		var key = O.Utilities["StoredPins" + this.OptionSuffix].key;
+		var obj = O.Utilities["StoredPins" + this.OptionSuffix];
+		// coords is an array of coordinates, and value is an array of coords.
+		var coords = this.getPersonalCoords();
+		if (coords.length > 0)
+		{
+			obj.value[pIndex] = coords;
+			
+			localStorage[obj.key] = JSON.stringify(obj.value);
+		}
+		else
+		{
+			this.isPersonalPinsLaid();
+		}
 	},
 	loadStoredPins: function(pIndex)
 	{
-		var key = O.Utilities["StoredPins" + this.OptionSuffix].key;
+		var obj = O.Utilities["StoredPins" + this.OptionSuffix];
+		this.redrawPersonalPath(obj.value[pIndex]);
 	},
 	
 	/*
@@ -7966,11 +8002,12 @@ M = {
 	{
 		var that = this;
 		// Create a pin at double click location
+		var url = (this.numPins === 0) ? "img/map/pin_red.png" : "img/map/pin_white.png";
 		var marker = L.marker(pLatLng,
 		{
 			icon: L.icon(
 			{
-				iconUrl: "img/map/pin_white.png",
+				iconUrl: url,
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}),
@@ -7979,6 +8016,7 @@ M = {
 		});
 		this.toggleLayer(marker, true);
 		this.Layer.PersonalPin.addLayer(marker);
+		this.numPins++;
 		if (pWantDraw)
 		{
 			this.drawPersonalPath();
@@ -8005,6 +8043,7 @@ M = {
 			that.toggleLayer(this, false);
 			that.Layer.PersonalPin.removeLayer(this);
 			that.drawPersonalPath();
+			this.numPins--;
 		});
 		// Right click pin: centers the pin on GPS character
 		marker.on("contextmenu", function()
@@ -8065,6 +8104,7 @@ M = {
 		});
 		this.Layer.PersonalPin.clearLayers();
 		this.drawPersonalPath();
+		this.numPins = 0;
 	},
 	
 	/*
@@ -8104,13 +8144,12 @@ M = {
 					// Double click path: insert a pin between the two pins that connect the path
 					path.on("dblclick", function(pEvent)
 					{
+						that.saveBackupPins();
 						that.insertPersonalPin(this.options.precede, pEvent.latlng);
 					});
 					this.Layer.PersonalPath.addLayer(path);
 				}
 				this.toggleLayer(this.Layer.PersonalPath, true);
-				// Save when the pins have changed but not completely erased
-				this.saveBackupPins();
 			}
 			else
 			{
@@ -8148,7 +8187,7 @@ M = {
 	 */
 	redrawPersonalPath: function(pCoords, pZoomArgs)
 	{
-		if (pCoords !== undefined && pCoords.length > 0)
+		if (pCoords !== undefined && pCoords !== null && pCoords.length > 0)
 		{
 			this.clearPersonalPins();
 			for (var i in pCoords)
@@ -8157,13 +8196,16 @@ M = {
 			}
 			this.drawPersonalPath();
 			// View the first point in the generated path
-			if (pZoomArgs === undefined)
+			if (pZoomArgs !== null)
 			{
-				this.goToArguments(pCoords[0]);
-			}
-			else
-			{
-				this.goToArguments(pZoomArgs);
+				if (pZoomArgs === undefined)
+				{
+					this.goToArguments(pCoords[0]);
+				}
+				else
+				{
+					this.goToArguments(pZoomArgs);
+				}
 			}
 		}
 		else
@@ -13831,6 +13873,7 @@ K = {
 	
 	tickerFrequency: 250, // Must be a divisor of 1000 milliseconds
 	tickerSecondPrevious: null,
+	stopwatchFrequency: 50,
 	awakeTimestampPrevious: 0,
 	awakeTimestampTolerance: 5,
 	currentFrameOffsetMinutes: 0,
@@ -13847,6 +13890,7 @@ K = {
 	clockBackground: {}, clockCircumference: {}, timeProgress0: {}, timeProgress1: {},
 	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeSimple: {}, timeMap: {}, timeWvW: {},
 	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
+	stopwatchUp: {}, stopwatchDown: {},
 	
 	// These will be DOM elements
 	WpChain0: {}, WpChain1: {}, WpChain2: {}, WpChain3: {},
@@ -13860,6 +13904,12 @@ K = {
 	cZeroClipboardDataAttribute: "data-clipboard-text", // Defined by ZeroClipboard
 	cZeroClipboardSuccessText: "Chat link copied to clipboard :)<br />",
 	TickerTimeout: {},
+	
+	// Stopwatch properties
+	StopwatchTimeout: {},
+	StopwatchTimestamp: 0,
+	StopwatchTimesleep: 0,
+	isStopwatchPaused: false,
 	
 	/*
 	 * Starts the clock.
@@ -13883,6 +13933,8 @@ K = {
 		K.timestampLocal = $("#optTimestampLocalReset")[0];
 		K.timestampServer = $("#optTimestampServerReset")[0];
 		K.timestampReset = $("#optTimeTillReset")[0];
+		K.stopwatchUp = $("#watUp")[0];
+		K.stopwatchDown = $("#watDown")[0];
 		
 		T.initializeDashboard();
 		K.updateTimeFrame(new Date()); // This also calls the server reset check function
@@ -14956,7 +15008,71 @@ K = {
 			$("#mapDryTopClip0").val(s0);
 			$("#mapDryTopClip1").val(s1);
 		}
-	}
+	},
+	
+	initializeStopwatch: function()
+	{
+		// Start button acts as Start/Pause/Resume
+		$("#watStart").click(function()
+		{
+			$("#itemStopwatch").css("font-size", O.Options.int_sizeStopwatchFont);
+			var nowms = (new Date()).getTime();
+			// Start the first time
+			if (K.StopwatchTimestamp === 0)
+			{
+				K.StopwatchTimestamp = (new Date()).getTime();
+				K.runStopwatch();
+			}
+			// Resume after pause
+			else if (K.isStopwatchPaused)
+			{
+				K.isStopwatchPaused = false;
+				K.StopwatchTimestamp = K.StopwatchTimestamp + (nowms - K.StopwatchTimesleep);
+				K.runStopwatch();
+			}
+			// Pause
+			else
+			{
+				window.clearTimeout(K.StopwatchTimeout);
+				K.StopwatchTimesleep = nowms;
+				K.isStopwatchPaused = true;
+			}
+		});
+		
+		// Stop button resets the countup
+		$("#watStop").click(function()
+		{
+			window.clearTimeout(K.StopwatchTimeout);
+			K.isStopwatchPaused = false;
+			K.StopwatchTimestamp = 0;
+			K.stopwatchUp.innerHTML = "";
+		});
+		
+		// Lap button prints the current moment
+		$("#watLap").click(function()
+		{
+			if (K.StopwatchTimestamp !== 0)
+			{
+				I.write(K.stopwatchUp.innerHTML, 0);
+				$("#watStop").trigger("click");
+				$("#watStart").trigger("click");
+			}
+			else
+			{
+				I.write("Stopwatch must be running to lap time.");
+			}
+		});
+	},
+	
+	runStopwatch: function()
+	{
+		var elapsedms = (new Date()).getTime() - K.StopwatchTimestamp;
+		K.stopwatchUp.innerHTML = T.formatMilliseconds(elapsedms, true);
+		K.StopwatchTimeout = setTimeout(function()
+		{
+			K.runStopwatch();
+		}, K.stopwatchFrequency);
+	},
 };
 
 /* =============================================================================
@@ -15268,19 +15384,21 @@ I = {
 				$(this).attr("src", $(this).attr("data-src"));
 			});
 		});
-		// Speaker icon click to preview audio
-		$("#optAlarmSpeaker").click(function()
-		{
-			D.speak(D.getWord("alarm"));
-		});
-		$("#optMute").click(function()
-		{
-			D.stopSpeech();
-		});
-		$("#chnOptions").one("mouseover", function()
+		// Initialize the elements in the chain options popup
+		$("#chnOptions").one("mouseenter", function()
 		{
 			I.loadImg($(this));
+			K.initializeStopwatch();
+			$("#optAlarmSpeaker").click(function()
+			{
+				D.speak(D.getWord("alarm"));
+			});
+			$("#optMute").click(function()
+			{
+				D.stopSpeech();
+			});
 		});
+		// Make all links to other sites open a new tab
 		U.convertExternalLink(".linkExternal");
 		
 		// Cursors on these Leaflet elements cause slowdown in IE, only add them for other browsers
@@ -16398,7 +16516,6 @@ I = {
 				I.showHomeLink();
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
 					.append("<link rel='canonical' href='http://gw2timer.com' />");
-				$("#chnOptionsRight").prependTo("#chnOptionsPopup");
 			} break;
 			case I.ModeEnum.Tile:
 			{
@@ -16406,7 +16523,6 @@ I = {
 				K.iconOpacityChecked = 0.2;
 				I.showHomeLink();
 				$("#itemLanguage").prependTo("#plateChains");
-				$("#chnOptionsRight").prependTo("#chnOptionsPopup");
 				// Show the timeline if the website is not embedded
 				if (I.isProgramEmbedded)
 				{

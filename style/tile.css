@@ -88,20 +88,6 @@ body, #paneContent article {
 	left: auto;
 }
 
-#chnOptions:hover #chnOptionsPopup {
-	width: 180px;
-}
-#chnOptionsRight {
-	width: auto;
-	margin: 0;
-	margin-bottom: 8px;
-	padding: 0;
-	border: none;
-}
-#chnOptionsLeft {
-	display: block;
-}
-
 #chnProgressBar {
 	width: 100%; height: 4px;
 }
