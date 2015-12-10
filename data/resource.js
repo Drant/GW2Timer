@@ -239,6 +239,17 @@ Quartz: {
 	
 	]
 },
+Sprocket: {
+	name_en: "Sprocket",
+	name_de: "Zwischenzahnrad",
+	name_es: "Engranaje",
+	name_fr: "Pignon",
+	type: "Metal",
+	item: "44941",
+	riches: [
+	{c: [11518, 10483]} // divinity
+	]
+},
 Poultry: {
 	name_en: "Poultry",
 	name_de: "Geflügelfleisch",

@@ -5,7 +5,7 @@
 	IDE recommended for viewing and collapsing code sections.
 	Version: see int_utlProgramVersion - 2014.04.18 created
 
-	CREDITS:
+	LIBRARIES:
 	Vladimir Agafonkin - LeafletJS map library
 	Ben Alman - jQuery throttle/debounce
 	Stephen Chapman - DST detection
@@ -77,7 +77,10 @@ O = {
 	{
 		programVersion: {key: "int_utlProgramVersion", value: 151208},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
-		personalPins: {key: "str_utlPersonalPins", value: ""}
+		BackupPins: {key: "str_utlBackupPins", value: ""},
+		BackupPinsWvW: {key: "str_utlBackupPinsWvW", value: ""},
+		StoredPins: {key: "obj_utlStoredPins", value: []},
+		StoredPinsWvW: {key: "obj_utlStoredPinsWvW", value: []}
 	},
 	
 	/*
@@ -1329,11 +1332,11 @@ U = {
 		{
 			case "clear": I.clear(); break;
 			case "gps": I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray); break;
-			case "identity": I.write(U.formatJSON(GPSIdentityJSON)); break;
+			case "identity": I.write(U.formatJSON(GPSIdentityJSON), 0); break;
 			case "lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
 			case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
 			case "nocontext": that.Map.off("contextmenu"); I.write("Map context menu disabled."); break;
-			case "loadpins": that.parsePersonalPath(that.loadPersonalPins()); break;
+			case "loadpins": that.parsePersonalPath(that.loadBackupPins()); break;
 			case "dart": that.drawRandom(args[1]); break;
 			case "greedy": that.redrawPersonalPath(P.getGreedyPath(M.parseCoordinatesMulti(args[1]))); break;
 			case "nodes": P.printNodes(P.sortCoordinates(M.parseCoordinatesMulti(args[1]))); break;
@@ -2801,7 +2804,7 @@ X = {
 			// Read every text fields and rewrite the string of substrings again
 			pTextFields.each(function(pIndex)
 			{
-				// Do not allow delimiter in the stored string
+				// Do not allow delimiter in the string to be stored
 				pTextlist.value[pIndex] = $(this).val().replace(I.cTextDelimiterRegex, "");
 			});
 			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
@@ -2810,8 +2813,7 @@ X = {
 		// Bind text fields behavior
 		pTextFields.each(function(pIndex)
 		{
-			// Set number of characters allowed in the text field
-			$(this).attr("maxlength", pMaxLength);
+			$(this).attr("maxlength", pMaxLength); // Set number of characters allowed in the text field
 			$(this).val(pTextlist.value[pIndex]); // Load initialized text
 			
 			$(this).change(function()
@@ -4989,6 +4991,10 @@ D = {
 			cs: "začne", it: "inizierà", pl: "rozpocznie się", pt: "começará", ru: "начнется", zh: "開始"},
 		s_click: {de: "klicken", es: "clic", fr: "cliquer",
 			cs: "kliknout", it: "clic", pl: "klikać", pt: "clicar", ru: "щелкнуть", zh: "按一下"},
+		s_load: {de: "laden", es: "cargar", fr: "charger",
+			cs: "načíst", it: "caricare", pl: "załaduj", pt: "carregar", ru: "загрузить", zh: "載入"},
+		s_save: {de: "speichern", es: "guardar", fr: "enregistrer",
+			cs: "uložit", it: "salvare", pl: "zapisać", pt: "salvar", ru: "сохранить", zh: "儲存"},
 		s_clear: {de: "löschen", es: "borrar", fr: "effacer",
 			cs: "vymazat", it: "cancella", pl: "wyczyść", pt: "limpar", ru: "очистить", zh: "清除"},
 		s_toggle: {de: "umschalten", es: "alternar", fr: "basculer",
@@ -7020,6 +7026,7 @@ M = {
 	 * where LandmarkType may be Waypoint, Vista, or others.
 	 */
 	MapEnum: "map", // Type of map this map is
+	OptionSuffix: "", // Tyria map has unsuffixed option variable names
 	Zones: GW2T_ZONE_DATA,
 	ZoneAssociation: GW2T_ZONE_ASSOCIATION, // This contains API zone IDs that associates with regular world zones
 	Regions: GW2T_REGION_DATA,
@@ -7122,12 +7129,8 @@ M = {
 	{
 		var that = this;
 		var htmlidprefix = "#" + this.MapEnum;
-		var initialzoom;
-		switch (I.MapCurrent)
-		{
-			case I.MapEnum.Tyria: { initialzoom = O.Options.int_setInitialZoom; } break;
-			case I.MapEnum.Mists: { initialzoom = O.Options.int_setInitialZoomWvW; } break;
-		}
+		var initialzoom = O.Options["int_setInitialZoom" + P.SuffixCurrent];
+		
 		// ?.Map is the actual Leaflet map object, initialize it
 		this.Map = L.map(this.MapEnum + "Pane", {
 			minZoom: this.ZoomEnum.Min,
@@ -7164,7 +7167,7 @@ M = {
 				EventIcon: new L.layerGroup(),
 				EventRing: new L.layerGroup()
 			};
-			if (that.MapEnum === I.MapEnum.Tyria)
+			if (that.MapEnum === P.MapEnum.Tyria)
 			{
 				P.LayerArray.ChainPath.push(zone.Layers.Path);
 			}
@@ -7175,23 +7178,23 @@ M = {
 		var mapnumber;
 		switch (this.MapEnum)
 		{
-			case I.MapEnum.Tyria: {
+			case P.MapEnum.Tyria: {
 				mapnumber = 1;
-				this.populateMap();
+				P.populateMap(M);
 				this.createPins();
 				P.drawZoneBorders();
 				P.drawZoneGateways();
 				C.ScheduledChains.forEach(P.drawChainPaths);
 			} break;
 			
-			case I.MapEnum.Mists: {
+			case P.MapEnum.Mists: {
 				mapnumber = 2;
 				// Set tiles, Tyria tiles is set later to avoid loading extra images
 				L.tileLayer(U.URL_API.TilesMists,
 				{
 					continuousWorld: true
 				}).addTo(W.Map);
-				this.populateMap();
+				P.populateMap(W);
 				this.createPins();
 			} break;
 		}
@@ -7263,363 +7266,6 @@ M = {
 		this.isMapInitialized = true;
 		this.refreshMap();
 	},
-	
-	/*
-	 * Generates map waypoints and other markers from the GW2 server API files.
-	 */
-	populateMap: function()
-	{
-		if (!I.isMapEnabled)
-		{
-			return;
-		}
-		var that = this;
-		var htmlidprefix = "#" + that.MapEnum;
-		var url;
-		var completionboolean;
-		switch (this.MapEnum)
-		{
-			case I.MapEnum.Tyria: {
-				url = U.URL_API.MapFloorTyria;
-				completionboolean = O.Options.bol_showWorldCompletion;
-			} break;
-			
-			case I.MapEnum.Mists: {
-				url = U.URL_API.MapFloorMists;
-				completionboolean = O.Options.bol_showWorldCompletionWvW;
-				// Exit this entire function if using the Mists map but have completion option off
-				if (completionboolean === false)
-				{
-					W.finishPopulation();
-					return;
-				}
-			} break;
-		}
-		/*
-		 * map_floor.json sample structure of desired data
-		 * Code based on API documentation.
-		{
-			"regions":
-			{
-				"1":
-				{
-					"name": "Shiverpeak Mountains"
-					"maps":
-					{
-						"26":
-						{
-							"name": "Dredgehaunt Cliffs",
-							"continent_rect": [[19456, 14976], [21760, 18176]],
-							"points_of_interest":
-							[{
-								"poi_id": 602,
-								"name": "Grey Road Waypoint",
-								"type": "waypoint",
-								"coord": [20684.6, 17105.3]
-							},
-							...
-							]
-						}
-					}
-				}
-			}
-		}*/		
-		$.getJSON(url, function(pData)
-		{
-			var i;
-			var regionid, region, zoneid, ithzone, poi;
-			var zoneobj;
-			var numofpois;
-			var marker;
-			var icon;
-			var cssclass;
-			var tooltip;
-			var translationvista = D.getTranslation("Vista");
-			var translationchallenge = D.getTranslation("Hero Challenge");
-
-			for (regionid in pData.regions)
-			{
-				region = pData.regions[regionid];
-
-				for (zoneid in region.maps)
-				{
-					// Don't bother parsing if not a regular world zone
-					if ( ! that.ZoneAssociation[zoneid])
-					{
-						continue;
-					}
-					
-					ithzone = region.maps[zoneid];
-					zoneobj = that.getZoneFromID(zoneid);
-					var numheart = 0;
-					var numwaypoint = 0;
-					var numlandmark = 0;
-					var numchallenge = 0;
-					var numvista = 0;
-					
-					/* 
-					 * For waypoints, points of interest, and vistas.
-					 */
-					numofpois = ithzone.points_of_interest.length;
-					for (i = 0; i < numofpois; i++)
-					{
-						poi = ithzone.points_of_interest[i];
-
-						// Properties assignment based on POI's type
-						switch (poi.type)
-						{
-							case that.APIPOIEnum.Waypoint:
-							{
-								// Waypoints are always created for Tyria, others are optional
-								numwaypoint++;
-								icon = U.URL_IMG.Waypoint;
-								cssclass = "mapWp";
-								tooltip = poi.name;
-							} break;
-							
-							case that.APIPOIEnum.Landmark:
-							{
-								if (completionboolean === false)
-								{
-									continue;
-								}
-								numlandmark++;
-								icon = U.URL_IMG.Landmark;
-								cssclass = "mapPoi";
-								tooltip = poi.name;
-							} break;
-							
-							case that.APIPOIEnum.Vista:
-							{
-								if (completionboolean === false)
-								{
-									continue;
-								}
-								numvista++;
-								icon = U.URL_IMG.Vista;
-								cssclass = "mapPoi";
-								tooltip = translationvista;
-							} break;
-							
-							default: continue; // Don't create marker if not desired type
-						}
-
-						marker = L.marker(that.convertGCtoLC(poi.coord),
-						{
-							title: "<span class='" + cssclass + "'>" + tooltip + "</span>",
-							markername: poi.name,
-							icon: L.icon(
-							{
-								iconUrl: icon,
-								iconSize: [16, 16], // Initial size corresponding to default zoom level
-								iconAnchor: [8, 8]
-							}),
-							id: poi.poi_id
-						});
-						
-						// Bind behavior
-						switch (poi.type)
-						{
-							case that.APIPOIEnum.Waypoint:
-							{
-								marker.on("mouseout", function()
-								{
-									try { this._icon.src = U.URL_IMG.Waypoint; } catch(e) {}
-								});
-								marker.on("mouseover", function()
-								{
-									this._icon.src = U.URL_IMG.WaypointOver;
-								});
-								zoneobj.Layers.Waypoint.addLayer(marker);
-							} break;
-							case that.APIPOIEnum.Landmark:
-							{
-								marker.on("mouseout", function()
-								{
-									// Workaround a null pointer exception when changing zones
-									try { this._icon.src = U.URL_IMG.Landmark; } catch(e) {}
-								});
-								marker.on("mouseover", function()
-								{
-									this._icon.src = U.URL_IMG.LandmarkOver;
-								});
-								zoneobj.Layers.Landmark.addLayer(marker);
-							} break;
-							case that.APIPOIEnum.Vista:
-							{
-								zoneobj.Layers.Vista.addLayer(marker);
-							} break;
-						}
-						// Clicking on waypoints or POIs gives a chatcode
-						if (poi.type === that.APIPOIEnum.Waypoint || poi.type === that.APIPOIEnum.Landmark)
-						{
-							marker.on("click", function()
-							{
-								$(htmlidprefix + "CoordinatesCopy").val(U.getChatlinkFromPoiID(this.options.id)).select();
-								$(htmlidprefix + "CoordinatesName").val(this.options.markername);
-							});
-							marker.on("dblclick", function(pEvent)
-							{
-								U.openExternalURL(U.getWikiLanguageLink(this.options.markername));
-							});
-							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
-						}
-						else
-						{
-							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
-							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
-						}
-					}
-					
-					/*
-					 * For API separate arrays for pois.
-					 */
-					if (completionboolean)
-					{
-						// Hero Challenges
-						numofpois = ithzone.skill_challenges.length;
-						numchallenge = numofpois;
-						for (i = 0; i < numofpois; i++)
-						{
-							poi = ithzone.skill_challenges[i];
-							marker = L.marker(that.convertGCtoLC(poi.coord),
-							{
-								title: "<span class='" + "mapPoi" + "'>" + translationchallenge + "</span>",
-								icon: L.icon(
-								{
-									iconUrl: U.URL_IMG.Challenge,
-									iconSize: [16, 16],
-									iconAnchor: [8, 8]
-								})
-							});
-							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
-							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
-							zoneobj.Layers.Challenge.addLayer(marker);
-						}
-						
-						// Renown Hearts
-						numofpois = ithzone.tasks.length;
-						numheart = numofpois;
-						for (i = 0; i < numofpois; i++)
-						{
-							poi = ithzone.tasks[i];
-							marker = L.marker(that.convertGCtoLC(poi.coord),
-							{
-								title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
-								wiki: poi.objective,
-								icon: L.icon(
-								{
-									iconUrl: U.URL_IMG.Heart,
-									iconSize: [16, 16],
-									iconAnchor: [8, 8]
-								})
-							});
-							M.bindMarkerWikiBehavior(marker, "click");
-							M.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
-							zoneobj.Layers.Heart.addLayer(marker);
-						}
-						
-						// Sector Names
-						numofpois = ithzone.sectors.length;
-						for (i = 0; i < numofpois; i++)
-						{
-							poi = ithzone.sectors[i];
-							marker = L.marker(that.convertGCtoLC(poi.coord),
-							{
-								clickable: false,
-								icon: L.divIcon(
-								{
-									className: "mapSec",
-									html: "<span class='mapSecIn'>" + poi.name + "</span>",
-									iconSize: [512, 64],
-									iconAnchor: [256, 32]
-								})
-							});
-							zoneobj.Layers.Sector.addLayer(marker);
-						}
-						
-						that.isMappingIconsGenerated = true;
-					}
-					
-					// Generate POIs overview for this zone
-					if (completionboolean)
-					{
-						marker = L.marker(that.convertGCtoLC(zoneobj.center),
-						{
-							mappingzone: zoneobj.nick,
-							riseOnHover: true,
-							icon: L.divIcon(
-							{
-								className: "mapOverview",
-								html: "<span class='mapOverviewIn'>"
-									+ "<var class='mapOverviewName'>" + D.getObjectName(zoneobj) + "</var>"
-									+ ((ithzone.min_level > 0) ? ("<var class='mapOverviewLevel'>"
-										+ ((ithzone.min_level === 80) ? (ithzone.max_level) : (ithzone.min_level + " - " + ithzone.max_level))
-									+ "</var>") : "")
-									+ ((numheart > 0) ? ("<img src='img/map/heart.png' />" + numheart + " ") : "")
-									+ ((numwaypoint > 0) ? ("<img src='img/map/waypoint.png' />" + numwaypoint + " ") : "")
-									+ ((numlandmark > 0) ? ("<img src='img/map/landmark.png' />" + numlandmark + " ") : "")
-									+ ((numchallenge > 0) ? ("<img src='img/map/challenge.png' />" + numchallenge + " ") : "")
-									+ ((numvista > 0) ? ("<img src='img/map/vista.png' />" + numvista) : "")
-								+ "</span>",
-								iconSize: [256, 64],
-								iconAnchor: [128, 32]
-							})
-						});
-						that.bindOverviewBehavior(marker, "click");
-						that.bindOverviewBehavior(marker, "contextmenu");
-						that.Layer.Overview.addLayer(marker);
-						that.toggleLayer(that.Layer.Overview, true);
-					}
-				}
-			}
-		}).done(function() // Map is populated by AJAX
-		{
-			that.isAPIRetrieved_MAPFLOOR = true;
-			
-			/*
-			 * AJAX takes a while so can use this to advantage to delay graphics
-			 * that seem out of place without a map loaded.
-			 */
-			if (that.MapEnum === I.MapEnum.Tyria && O.Options.bol_displayEvents === false)
-			{
-				P.donePopulation();
-			}
-			
-		}).fail(function()
-		{
-			if (I.ModeCurrent === I.ModeEnum.Website)
-			{
-				I.write(
-				"Guild Wars 2 API server is unreachable.<br />"
-				+ "Reasons could be:<br />"
-				+ "- The ArenaNet server is down for maintenance.<br />"
-				+ "- Your browser is too old (if IE then need 11+).<br />"
-				+ "- Your computer's time is out of sync.<br />"
-				+ "- This website's code encountered a bug.<br />"
-				+ "Map features will be limited.<br />", 20);
-			}
-		}).always(function() // Do after AJAX regardless of success/failure
-		{
-			switch (that.MapEnum)
-			{
-				case I.MapEnum.Tyria: {
-					if (O.Options.bol_displayEvents === true)
-					{
-						P.populateEvents();
-					}
-					else
-					{
-						P.finishPopulation();
-					}
-				} break;
-
-				case I.MapEnum.Mists: {
-					W.finishPopulation();
-				} break;
-			}
-		});
-	}, // End of populateMap
 	
 	/*
 	 * Create pin markers that can be moved by user or program.
@@ -7710,6 +7356,28 @@ M = {
 		{
 			$(htmlidprefix + "HUDBoxes").toggle();
 		});
+		$(htmlidprefix + "ContextPins").one("mouseenter", function()
+		{
+			return;
+			// Generate the load/save items when user opens the Pins context menu for the first time
+			var numslots = 8;
+			var wordload = D.getWordCapital("load");
+			var wordsave = D.getWordCapital("save");
+			for (var i = 0; i < numslots; i++)
+			{
+				$(htmlidprefix + "ContextLoadPins").append("<li data-index='" + i + "'>" + wordload + " #" + (i+1) + "</li>");
+				$(htmlidprefix + "ContextSavePins").append("<li data-index='" + i + "'>" + wordsave + " #" + (i+1) + "</li>");
+			}
+			// Bind behavior for the created list items
+			$(htmlidprefix + "ContextLoadPins").each(function()
+			{
+				that.loadStoredPins($(this).attr("data-index"));
+			});
+			$(htmlidprefix + "ContextSavePins").each(function()
+			{
+				that.saveStoredPins($(this).attr("data-index"));
+			});
+		});
 		$(htmlidprefix + "ContextClearPins").click(function()
 		{
 			that.clearPersonalPins();
@@ -7796,7 +7464,7 @@ M = {
 		this.Map.on("zoomend", function(pEvent)
 		{
 			that.adjustZoomMapping();
-			if (that.MapEnum === I.MapEnum.Tyria)
+			if (that.MapEnum === P.MapEnum.Tyria)
 			{
 				P.adjustZoomDryTop();
 			}
@@ -7954,7 +7622,7 @@ M = {
 			// Reveal moused zone's icons
 			switch (that.MapEnum)
 			{
-				case I.MapEnum.Tyria:
+				case P.MapEnum.Tyria:
 				{
 					if (O.Options.bol_showChainPaths && I.PageCurrent !== I.PageEnum.Map) { this.ZoneCurrent.Layers.Path.addTo(this.Map); }
 					if (O.Options.bol_displayWaypoints) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
@@ -7968,7 +7636,7 @@ M = {
 						this.ZoneCurrent.Layers.EventRing.addTo(this.Map);
 					}
 				} break;
-				case I.MapEnum.Mists:
+				case P.MapEnum.Mists:
 				{
 					if (O.Options.bol_displayWaypointsWvW) { this.ZoneCurrent.Layers.Waypoint.addTo(this.Map); }
 					if (O.Options.bol_displayPOIsWvW) { this.ZoneCurrent.Layers.Landmark.addTo(this.Map); }
@@ -7994,13 +7662,13 @@ M = {
 		var currentcoord = this.ZoneCurrent.center;
 		switch (this.MapEnum)
 		{
-			case I.MapEnum.Tyria:
+			case P.MapEnum.Tyria:
 			{
 				// These specimen zone are chosen because they are the top of the array
 				this.showCurrentZone(this.getZoneCenter("verdant"));
 				this.showCurrentZone(this.getZoneCenter("auric"));
 			} break;
-			case I.MapEnum.Mists:
+			case P.MapEnum.Mists:
 			{
 				this.showCurrentZone(this.getZoneCenter("edge"));
 				this.showCurrentZone(this.getZoneCenter("eternal"));
@@ -8102,7 +7770,7 @@ M = {
 		
 		switch (this.MapEnum)
 		{
-			case I.MapEnum.Tyria:
+			case P.MapEnum.Tyria:
 			{
 				// Event Icon
 				if (O.Options.bol_displayEvents)
@@ -8128,7 +7796,7 @@ M = {
 				completionboolean = O.Options.bol_showWorldCompletion;
 				sectorboolean = O.Options.bol_displaySectors;
 			} break;
-			case I.MapEnum.Mists:
+			case P.MapEnum.Mists:
 			{
 				overviewboolean = O.Options.bol_showZoneOverviewWvW;
 				completionboolean = O.Options.bol_showWorldCompletionWvW;
@@ -8254,15 +7922,38 @@ M = {
 	},
 	
 	/*
-	 * Saves the current personal pins to storage.
+	 * Saves the current personal pins as backup.
 	 */
-	savePersonalPins: function()
+	saveBackupPins: function()
 	{
-		localStorage[O.Utilities.personalPins.key] = this.getPersonalString();
+		var key = O.Utilities["BackupPins" + this.OptionSuffix].key;
+		localStorage[key] = this.getPersonalString();
 	},
-	loadPersonalPins: function()
+	loadBackupPins: function()
 	{
-		return localStorage[O.Utilities.personalPins.key];
+		var key = O.Utilities["BackupPins" + this.OptionSuffix].key;
+		return localStorage[key];
+	},
+	
+	/*
+	 * Initializes the options object for load/save personal pins.
+	 */
+	initializeStoredPins: function()
+	{
+		var key = O.Utilities["StoredPins" + this.OptionSuffix].key;
+	},
+	
+	/*
+	 * Saves the current personal pins to storage as slots.
+	 * @param int pIndex of the save slot.
+	 */
+	saveStoredPins: function(pIndex)
+	{
+		var key = O.Utilities["StoredPins" + this.OptionSuffix].key;
+	},
+	loadStoredPins: function(pIndex)
+	{
+		var key = O.Utilities["StoredPins" + this.OptionSuffix].key;
 	},
 	
 	/*
@@ -8418,6 +8109,8 @@ M = {
 					this.Layer.PersonalPath.addLayer(path);
 				}
 				this.toggleLayer(this.Layer.PersonalPath, true);
+				// Save when the pins have changed but not completely erased
+				this.saveBackupPins();
 			}
 			else
 			{
@@ -8430,8 +8123,6 @@ M = {
 			this.Layer.PersonalPath.clearLayers();
 			this.toggleLayer(this.Layer.PersonalPath, false);
 		}
-		// Save when any change was made to the pins
-		this.savePersonalPins();
 	},
 	
 	/*
@@ -8539,19 +8230,7 @@ M = {
 	},
 	getPersonalString: function()
 	{
-		var coords = this.getPersonalCoords();
-		var length = coords.length;
-		var str = "";
-		if (length > 1)
-		{
-			str = P.compileCoordinates(coords);
-		}
-		else if (length === 1)
-		{
-			str = P.formatCoord(coords[0]);
-		}
-		
-		return str;
+		return JSON.stringify(this.getPersonalCoords());
 	},
 	
 	/*
@@ -9151,9 +8830,18 @@ M = {
 };
 
 /* =============================================================================
- * @@Populate Tyria-exclusive map properties, GPS, and standalone map functions
+ * @@Populate shared and independent map properties and functions
  * ========================================================================== */
 P = {
+	
+	SuffixCurrent: "", // Map options with suffix to differentiate for which map
+	MapCurrent: "map", // The map currently displayed on the website
+	GPSCurrent: null, // The map which the player resides in game
+	MapEnum:
+	{
+		Tyria: "map",
+		Mists: "wvw"
+	},
 	
 	Layer: {
 		ZoneBorder: new L.layerGroup(), // Rectangles colored specific to the zones' region
@@ -9192,6 +8880,566 @@ P = {
 		if (I.isMapEnabled)
 		{
 			M.initializeMap();
+		}
+	},
+		
+	/*
+	 * Generates map waypoints and other markers from the GW2 server API files.
+	 */
+	populateMap: function(pMapObject)
+	{
+		if (!I.isMapEnabled)
+		{
+			return;
+		}
+		var that = pMapObject;
+		var htmlidprefix = "#" + that.MapEnum;
+		var url;
+		var completionboolean = O.Options["bol_showWorldCompletion" + that.OptionSuffix];
+		switch (that.MapEnum)
+		{
+			case P.MapEnum.Tyria: {
+				url = U.URL_API.MapFloorTyria;
+			} break;
+			
+			case P.MapEnum.Mists: {
+				url = U.URL_API.MapFloorMists;
+				// Exit this entire function if using the Mists map but have completion option off
+				if (completionboolean === false)
+				{
+					W.finishPopulation();
+					return;
+				}
+			} break;
+		}
+		/*
+		 * map_floor.json sample structure of desired data
+		 * Code based on API documentation.
+		{
+			"regions":
+			{
+				"1":
+				{
+					"name": "Shiverpeak Mountains"
+					"maps":
+					{
+						"26":
+						{
+							"name": "Dredgehaunt Cliffs",
+							"continent_rect": [[19456, 14976], [21760, 18176]],
+							"points_of_interest":
+							[{
+								"poi_id": 602,
+								"name": "Grey Road Waypoint",
+								"type": "waypoint",
+								"coord": [20684.6, 17105.3]
+							},
+							...
+							]
+						}
+					}
+				}
+			}
+		}*/		
+		$.getJSON(url, function(pData)
+		{
+			var i;
+			var regionid, region, zoneid, ithzone, poi;
+			var zoneobj;
+			var numofpois;
+			var marker;
+			var icon;
+			var cssclass;
+			var tooltip;
+			var translationvista = D.getTranslation("Vista");
+			var translationchallenge = D.getTranslation("Hero Challenge");
+
+			for (regionid in pData.regions)
+			{
+				region = pData.regions[regionid];
+
+				for (zoneid in region.maps)
+				{
+					// Don't bother parsing if not a regular world zone
+					if ( ! that.ZoneAssociation[zoneid])
+					{
+						continue;
+					}
+					
+					ithzone = region.maps[zoneid];
+					zoneobj = that.getZoneFromID(zoneid);
+					var numheart = 0;
+					var numwaypoint = 0;
+					var numlandmark = 0;
+					var numchallenge = 0;
+					var numvista = 0;
+					
+					/* 
+					 * For waypoints, points of interest, and vistas.
+					 */
+					numofpois = ithzone.points_of_interest.length;
+					for (i = 0; i < numofpois; i++)
+					{
+						poi = ithzone.points_of_interest[i];
+
+						// Properties assignment based on POI's type
+						switch (poi.type)
+						{
+							case that.APIPOIEnum.Waypoint:
+							{
+								// Waypoints are always created for Tyria, others are optional
+								numwaypoint++;
+								icon = U.URL_IMG.Waypoint;
+								cssclass = "mapWp";
+								tooltip = poi.name;
+							} break;
+							
+							case that.APIPOIEnum.Landmark:
+							{
+								if (completionboolean === false)
+								{
+									continue;
+								}
+								numlandmark++;
+								icon = U.URL_IMG.Landmark;
+								cssclass = "mapPoi";
+								tooltip = poi.name;
+							} break;
+							
+							case that.APIPOIEnum.Vista:
+							{
+								if (completionboolean === false)
+								{
+									continue;
+								}
+								numvista++;
+								icon = U.URL_IMG.Vista;
+								cssclass = "mapPoi";
+								tooltip = translationvista;
+							} break;
+							
+							default: continue; // Don't create marker if not desired type
+						}
+
+						marker = L.marker(that.convertGCtoLC(poi.coord),
+						{
+							title: "<span class='" + cssclass + "'>" + tooltip + "</span>",
+							markername: poi.name,
+							icon: L.icon(
+							{
+								iconUrl: icon,
+								iconSize: [16, 16], // Initial size corresponding to default zoom level
+								iconAnchor: [8, 8]
+							}),
+							id: poi.poi_id
+						});
+						
+						// Bind behavior
+						switch (poi.type)
+						{
+							case that.APIPOIEnum.Waypoint:
+							{
+								marker.on("mouseout", function()
+								{
+									try { this._icon.src = U.URL_IMG.Waypoint; } catch(e) {}
+								});
+								marker.on("mouseover", function()
+								{
+									this._icon.src = U.URL_IMG.WaypointOver;
+								});
+								zoneobj.Layers.Waypoint.addLayer(marker);
+							} break;
+							case that.APIPOIEnum.Landmark:
+							{
+								marker.on("mouseout", function()
+								{
+									// Workaround a null pointer exception when changing zones
+									try { this._icon.src = U.URL_IMG.Landmark; } catch(e) {}
+								});
+								marker.on("mouseover", function()
+								{
+									this._icon.src = U.URL_IMG.LandmarkOver;
+								});
+								zoneobj.Layers.Landmark.addLayer(marker);
+							} break;
+							case that.APIPOIEnum.Vista:
+							{
+								zoneobj.Layers.Vista.addLayer(marker);
+							} break;
+						}
+						// Clicking on waypoints or POIs gives a chatcode
+						if (poi.type === that.APIPOIEnum.Waypoint || poi.type === that.APIPOIEnum.Landmark)
+						{
+							marker.on("click", function()
+							{
+								$(htmlidprefix + "CoordinatesCopy").val(U.getChatlinkFromPoiID(this.options.id)).select();
+								$(htmlidprefix + "CoordinatesName").val(this.options.markername);
+							});
+							marker.on("dblclick", function(pEvent)
+							{
+								U.openExternalURL(U.getWikiLanguageLink(this.options.markername));
+							});
+							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+						}
+						else
+						{
+							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
+							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+						}
+					}
+					
+					/*
+					 * For API separate arrays for pois.
+					 */
+					if (completionboolean)
+					{
+						// Hero Challenges
+						numofpois = ithzone.skill_challenges.length;
+						numchallenge = numofpois;
+						for (i = 0; i < numofpois; i++)
+						{
+							poi = ithzone.skill_challenges[i];
+							marker = L.marker(that.convertGCtoLC(poi.coord),
+							{
+								title: "<span class='" + "mapPoi" + "'>" + translationchallenge + "</span>",
+								icon: L.icon(
+								{
+									iconUrl: U.URL_IMG.Challenge,
+									iconSize: [16, 16],
+									iconAnchor: [8, 8]
+								})
+							});
+							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
+							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+							zoneobj.Layers.Challenge.addLayer(marker);
+						}
+						
+						// Renown Hearts
+						numofpois = ithzone.tasks.length;
+						numheart = numofpois;
+						for (i = 0; i < numofpois; i++)
+						{
+							poi = ithzone.tasks[i];
+							marker = L.marker(that.convertGCtoLC(poi.coord),
+							{
+								title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
+								wiki: poi.objective,
+								icon: L.icon(
+								{
+									iconUrl: U.URL_IMG.Heart,
+									iconSize: [16, 16],
+									iconAnchor: [8, 8]
+								})
+							});
+							M.bindMarkerWikiBehavior(marker, "click");
+							M.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+							zoneobj.Layers.Heart.addLayer(marker);
+						}
+						
+						// Sector Names
+						numofpois = ithzone.sectors.length;
+						for (i = 0; i < numofpois; i++)
+						{
+							poi = ithzone.sectors[i];
+							marker = L.marker(that.convertGCtoLC(poi.coord),
+							{
+								clickable: false,
+								icon: L.divIcon(
+								{
+									className: "mapSec",
+									html: "<span class='mapSecIn'>" + poi.name + "</span>",
+									iconSize: [512, 64],
+									iconAnchor: [256, 32]
+								})
+							});
+							zoneobj.Layers.Sector.addLayer(marker);
+						}
+						
+						that.isMappingIconsGenerated = true;
+					}
+					
+					// Generate POIs overview for this zone
+					if (completionboolean)
+					{
+						marker = L.marker(that.convertGCtoLC(zoneobj.center),
+						{
+							mappingzone: zoneobj.nick,
+							riseOnHover: true,
+							icon: L.divIcon(
+							{
+								className: "mapOverview",
+								html: "<span class='mapOverviewIn'>"
+									+ "<var class='mapOverviewName'>" + D.getObjectName(zoneobj) + "</var>"
+									+ ((ithzone.min_level > 0) ? ("<var class='mapOverviewLevel'>"
+										+ ((ithzone.min_level === 80) ? (ithzone.max_level) : (ithzone.min_level + " - " + ithzone.max_level))
+									+ "</var>") : "")
+									+ ((numheart > 0) ? ("<img src='img/map/heart.png' />" + numheart + " ") : "")
+									+ ((numwaypoint > 0) ? ("<img src='img/map/waypoint.png' />" + numwaypoint + " ") : "")
+									+ ((numlandmark > 0) ? ("<img src='img/map/landmark.png' />" + numlandmark + " ") : "")
+									+ ((numchallenge > 0) ? ("<img src='img/map/challenge.png' />" + numchallenge + " ") : "")
+									+ ((numvista > 0) ? ("<img src='img/map/vista.png' />" + numvista) : "")
+								+ "</span>",
+								iconSize: [256, 64],
+								iconAnchor: [128, 32]
+							})
+						});
+						that.bindOverviewBehavior(marker, "click");
+						that.bindOverviewBehavior(marker, "contextmenu");
+						that.Layer.Overview.addLayer(marker);
+						that.toggleLayer(that.Layer.Overview, true);
+					}
+				}
+			}
+		}).done(function() // Map is populated by AJAX
+		{
+			that.isAPIRetrieved_MAPFLOOR = true;
+			
+			/*
+			 * AJAX takes a while so can use this to advantage to delay graphics
+			 * that seem out of place without a map loaded.
+			 */
+			if (that.MapEnum === P.MapEnum.Tyria && O.Options.bol_displayEvents === false)
+			{
+				P.donePopulation();
+			}
+			
+		}).fail(function()
+		{
+			if (I.ModeCurrent === I.ModeEnum.Website)
+			{
+				I.write(
+				"Guild Wars 2 API server is unreachable.<br />"
+				+ "Reasons could be:<br />"
+				+ "- The ArenaNet server is down for maintenance.<br />"
+				+ "- Your browser is too old (if IE then need 11+).<br />"
+				+ "- Your computer's time is out of sync.<br />"
+				+ "- This website's code encountered a bug.<br />"
+				+ "Map features will be limited.<br />", 20);
+			}
+		}).always(function() // Do after AJAX regardless of success/failure
+		{
+			switch (that.MapEnum)
+			{
+				case P.MapEnum.Tyria: {
+					if (O.Options.bol_displayEvents === true)
+					{
+						P.populateEvents();
+					}
+					else
+					{
+						P.finishPopulation();
+					}
+				} break;
+
+				case P.MapEnum.Mists: {
+					W.finishPopulation();
+				} break;
+			}
+		});
+	}, // End of populateMap
+	
+	/*
+	 * Generates icons and rings for all dynamic events.
+	 */
+	populateEvents: function()
+	{
+		// Function to filter out unwanted events
+		var isEventUnwanted = function(pName)
+		{
+			if (pName.indexOf("guild") !== -1 || // Guild missions
+				pName.indexOf("subdue") !== -1 || // Guild bounty
+				pName.indexOf("hero ch") !== -1 || // Hero challenges
+				pName.indexOf("offshoot") !== -1 || // Obsolete events
+				pName.indexOf("vigil en") !== -1 ||
+				pName.indexOf("haunted") !== -1)
+			{
+				return true;
+			}
+			return false;
+		};
+		
+		// Function to guess an event's icon (not provided by the API) based on its name
+		var determineEventIcon = function(pName)
+		{
+			if (pName.indexOf("free") !== -1) return "img/event/release.png";
+			if (pName.indexOf("rescue") !== -1) return "img/event/release.png";
+			if (pName.indexOf("capture") !== -1) return "img/event/flag.png";
+			if (pName.indexOf("retake") !== -1) return "img/event/flag.png";
+			if (pName.indexOf("reclaim") !== -1) return "img/event/flag.png";
+			if (pName.indexOf("liberate") !== -1) return "img/event/flag.png";
+			if (pName.indexOf("protect") !== -1) return "img/event/shield.png";
+			if (pName.indexOf("defend") !== -1) return "img/event/shield.png";
+			if (pName.indexOf("escort") !== -1) return "img/event/shield.png";
+			if (pName.indexOf("kill") !== -1) return "img/event/boss.png";
+			if (pName.indexOf("slay") !== -1) return "img/event/boss.png";
+			if (pName.indexOf("defeat") !== -1) return "img/event/boss.png";
+			if (pName.indexOf("collect") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("help") !== -1) return "img/event/star.png";
+			if (pName.indexOf("destroy") !== -1) return "img/event/cog.png";
+			if (pName.indexOf("gather") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("bring") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("recover") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("return") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("retrieve") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("salvage") !== -1) return "img/event/collect.png";
+			if (pName.indexOf("burglar") !== -1) return "img/event/fist.png";
+			return "img/event/swords.png";
+		};
+		
+		// Function to approximate the event ring as viewed in the game's minimap
+		var determineEventRing = function(pEvent)
+		{
+			var r = pEvent.location.radius;
+			switch (pEvent.location.type)
+			{
+				case "sphere": {
+					if (r < 2000) return "img/ring/c_s.png";
+					return "img/ring/c_m.png";
+				}
+				
+				case "cylinder": {
+					return "img/ring/e_m_h.png";
+				}
+				
+				case "poly": {
+					return "img/ring/e_l_h.png";
+				}
+			}
+			
+			return "img/ring/c_m.png";
+		};
+		
+		// First, store the event names in user's language
+		// Note that event_names.json does not contain obsolete events, unlike event_details.json
+		$.getJSON(U.URL_API.EventNames, function(pData)
+		{
+			var i;
+			for (i in pData)
+			{
+				P.Events[(pData[i].id)] = {};
+				P.Events[(pData[i].id)].name = pData[i].name;
+			}
+		}).done(function()
+		{
+			// Second, retrieve the event details in the default language for filtering events
+			$.getJSON(U.URL_API.EventDetails, function(pDataInner)
+			{
+				var i;
+				var event;
+				var searchname;
+				var newname;
+				var marker;
+				var coord;
+
+				var zoneobj;
+
+				for (i in pDataInner.events)
+				{
+					event = pDataInner.events[i];
+					searchname = event.name.toLowerCase();
+					newname = (P.Events[i] !== undefined) ? P.Events[i].name : event.name;
+					zoneobj = M.getZoneFromID(event.map_id);
+					// Skip iterated event if...
+					if (P.Events[i] === undefined // Event is not in event_names.json also
+						|| zoneobj === undefined // Event is not in a world map zone
+						|| isEventUnwanted(searchname) // Event is obsolete
+						|| event.map_id === 988 // Ignore Dry Top
+						|| event.map_id === 50) // LA
+					{
+						continue;
+					}
+
+					coord = M.convertGCtoLC(M.getEventCenter(event));
+
+					// Create event's ring
+					marker = L.marker(coord,
+					{
+						clickable: false,
+						icon: L.icon(
+						{
+							iconUrl: determineEventRing(event),
+							iconSize: [256, 256],
+							iconAnchor: [128, 128]
+						})
+					});
+					zoneobj.Layers.EventRing.addLayer(marker);
+
+					// Create event's icon
+					marker = L.marker(coord,
+					{
+						title: "<span class='" + "mapPoi" + "'>" + newname + " (" + event.level + ")" + "</span>",
+						wiki: event.name,
+						icon: L.icon(
+						{
+							iconUrl: determineEventIcon(searchname),
+							iconSize: [48, 48],
+							iconAnchor: [24, 24]
+						})
+					});
+					M.bindMarkerWikiBehavior(marker, "click");
+					M.bindMarkerZoomBehavior(marker, "contextmenu");
+					zoneobj.Layers.EventIcon.addLayer(marker);
+				}
+				M.isEventIconsGenerated = true;
+
+			}).done(function()
+			{
+				P.donePopulation();
+			}).fail(function()
+			{
+
+			}).always(function()
+			{
+				P.finishPopulation();
+			});
+		}).fail(function()
+		{
+			P.finishPopulation();
+		}).always(function()
+		{
+			
+		});
+	}, // end of populateEvents
+	
+	/*
+	 * Does final touches to the map after the zone icons have been generated.
+	 */
+	donePopulation: function()
+	{
+		if (P.wantZoomToFirstEvent())
+		{
+			// Initialize the "current moused zone" variable for showing waypoints
+			M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
+			// Tour to the event on the map if opted
+			$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
+				+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
+		}
+	},
+	finishPopulation: function()
+	{
+		// Do visual changes
+		M.isMapAJAXDone = true;
+		M.bindMapVisualChanges();
+		M.adjustZoomMapping();
+		P.adjustZoomDryTop();
+		
+		// Execute query string commands if available
+		var qsgo = U.Args[U.KeyEnum.Go];
+		var qsdraw = U.Args[U.KeyEnum.Draw];
+		if (qsgo !== undefined)
+		{
+			M.goToArguments(qsgo, M.Pin.Program);
+			U.Args[U.KeyEnum.Go] = null;
+		}
+		if (qsdraw !== undefined)
+		{
+			M.parsePersonalPath(qsdraw);
+		}
+		
+		// Start GPS if on overlay
+		if (I.ModeCurrent === I.ModeEnum.Overlay)
+		{
+			P.tickGPS();
 		}
 	},
 	
@@ -9542,169 +9790,6 @@ P = {
 	},
 	
 	/*
-	 * Generates icons and rings for all dynamic events.
-	 */
-	populateEvents: function()
-	{
-		// Function to filter out unwanted events
-		var isEventUnwanted = function(pName)
-		{
-			if (pName.indexOf("guild") !== -1 || // Guild missions
-				pName.indexOf("subdue") !== -1 || // Guild bounty
-				pName.indexOf("hero ch") !== -1 || // Hero challenges
-				pName.indexOf("offshoot") !== -1 || // Obsolete events
-				pName.indexOf("vigil en") !== -1 ||
-				pName.indexOf("haunted") !== -1)
-			{
-				return true;
-			}
-			return false;
-		};
-		
-		// Function to guess an event's icon (not provided by the API) based on its name
-		var determineEventIcon = function(pName)
-		{
-			if (pName.indexOf("free") !== -1) return "img/event/release.png";
-			if (pName.indexOf("rescue") !== -1) return "img/event/release.png";
-			if (pName.indexOf("capture") !== -1) return "img/event/flag.png";
-			if (pName.indexOf("retake") !== -1) return "img/event/flag.png";
-			if (pName.indexOf("reclaim") !== -1) return "img/event/flag.png";
-			if (pName.indexOf("liberate") !== -1) return "img/event/flag.png";
-			if (pName.indexOf("protect") !== -1) return "img/event/shield.png";
-			if (pName.indexOf("defend") !== -1) return "img/event/shield.png";
-			if (pName.indexOf("escort") !== -1) return "img/event/shield.png";
-			if (pName.indexOf("kill") !== -1) return "img/event/boss.png";
-			if (pName.indexOf("slay") !== -1) return "img/event/boss.png";
-			if (pName.indexOf("defeat") !== -1) return "img/event/boss.png";
-			if (pName.indexOf("collect") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("help") !== -1) return "img/event/star.png";
-			if (pName.indexOf("destroy") !== -1) return "img/event/cog.png";
-			if (pName.indexOf("gather") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("bring") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("recover") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("return") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("retrieve") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("salvage") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("burglar") !== -1) return "img/event/fist.png";
-			return "img/event/swords.png";
-		};
-		
-		// Function to approximate the event ring as viewed in the game's minimap
-		var determineEventRing = function(pEvent)
-		{
-			var r = pEvent.location.radius;
-			switch (pEvent.location.type)
-			{
-				case "sphere": {
-					if (r < 2000) return "img/ring/c_s.png";
-					return "img/ring/c_m.png";
-				}
-				
-				case "cylinder": {
-					return "img/ring/e_m_h.png";
-				}
-				
-				case "poly": {
-					return "img/ring/e_l_h.png";
-				}
-			}
-			
-			return "img/ring/c_m.png";
-		};
-		
-		// First, store the event names in user's language
-		// Note that event_names.json does not contain obsolete events, unlike event_details.json
-		$.getJSON(U.URL_API.EventNames, function(pData)
-		{
-			var i;
-			for (i in pData)
-			{
-				P.Events[(pData[i].id)] = {};
-				P.Events[(pData[i].id)].name = pData[i].name;
-			}
-		}).done(function()
-		{
-			// Second, retrieve the event details in the default language for filtering events
-			$.getJSON(U.URL_API.EventDetails, function(pDataInner)
-			{
-				var i;
-				var event;
-				var searchname;
-				var newname;
-				var marker;
-				var coord;
-
-				var zoneobj;
-
-				for (i in pDataInner.events)
-				{
-					event = pDataInner.events[i];
-					searchname = event.name.toLowerCase();
-					newname = (P.Events[i] !== undefined) ? P.Events[i].name : event.name;
-					zoneobj = M.getZoneFromID(event.map_id);
-					// Skip iterated event if...
-					if (P.Events[i] === undefined // Event is not in event_names.json also
-						|| zoneobj === undefined // Event is not in a world map zone
-						|| isEventUnwanted(searchname) // Event is obsolete
-						|| event.map_id === 988 // Ignore Dry Top
-						|| event.map_id === 50) // LA
-					{
-						continue;
-					}
-
-					coord = M.convertGCtoLC(M.getEventCenter(event));
-
-					// Create event's ring
-					marker = L.marker(coord,
-					{
-						clickable: false,
-						icon: L.icon(
-						{
-							iconUrl: determineEventRing(event),
-							iconSize: [256, 256],
-							iconAnchor: [128, 128]
-						})
-					});
-					zoneobj.Layers.EventRing.addLayer(marker);
-
-					// Create event's icon
-					marker = L.marker(coord,
-					{
-						title: "<span class='" + "mapPoi" + "'>" + newname + " (" + event.level + ")" + "</span>",
-						wiki: event.name,
-						icon: L.icon(
-						{
-							iconUrl: determineEventIcon(searchname),
-							iconSize: [48, 48],
-							iconAnchor: [24, 24]
-						})
-					});
-					M.bindMarkerWikiBehavior(marker, "click");
-					M.bindMarkerZoomBehavior(marker, "contextmenu");
-					zoneobj.Layers.EventIcon.addLayer(marker);
-				}
-				M.isEventIconsGenerated = true;
-
-			}).done(function()
-			{
-				P.donePopulation();
-			}).fail(function()
-			{
-
-			}).always(function()
-			{
-				P.finishPopulation();
-			});
-		}).fail(function()
-		{
-			P.finishPopulation();
-		}).always(function()
-		{
-			
-		});
-	},
-	
-	/*
 	 * Prints the current zone's event names and coordinates.
 	 */
 	printZoneEvents: function()
@@ -9718,48 +9803,6 @@ P = {
 		else
 		{
 			I.write("Event icons have not been generated.");
-		}
-	},
-	
-	/*
-	 * Does final touches to the map after the zone icons have been generated.
-	 */
-	donePopulation: function()
-	{
-		if (P.wantZoomToFirstEvent())
-		{
-			// Initialize the "current moused zone" variable for showing waypoints
-			M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
-			// Tour to the event on the map if opted
-			$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
-				+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
-		}
-	},
-	finishPopulation: function()
-	{
-		// Do visual changes
-		M.isMapAJAXDone = true;
-		M.bindMapVisualChanges();
-		M.adjustZoomMapping();
-		P.adjustZoomDryTop();
-		
-		// Execute query string commands if available
-		var qsgo = U.Args[U.KeyEnum.Go];
-		var qsdraw = U.Args[U.KeyEnum.Draw];
-		if (qsgo !== undefined)
-		{
-			M.goToArguments(qsgo, M.Pin.Program);
-			U.Args[U.KeyEnum.Go] = null;
-		}
-		if (qsdraw !== undefined)
-		{
-			M.parsePersonalPath(qsdraw);
-		}
-		
-		// Start GPS if on overlay
-		if (I.ModeCurrent === I.ModeEnum.Overlay)
-		{
-			P.tickGPS();
 		}
 	},
 	
@@ -10118,22 +10161,22 @@ P = {
 			return;
 		}
 		
-		var previousmap = I.GPSCurrent;
+		var previousmap = P.GPSCurrent;
 		var currentnick = GPSIdentityJSON["map_id"];
-		var htmlidprefix = "#" + I.MapCurrent;
+		var htmlidprefix = "#" + P.MapCurrent;
 		
 		// Get the map the player is in
 		if (M.ZoneAssociation[currentnick] !== undefined)
 		{
-			I.GPSCurrent = I.MapEnum.Tyria;
+			P.GPSCurrent = P.MapEnum.Tyria;
 		}
 		else if (W.ZoneAssociation[currentnick] !== undefined)
 		{
-			I.GPSCurrent = I.MapEnum.Mists;
+			P.GPSCurrent = P.MapEnum.Mists;
 		}
 		
 		// If the player has changed the map in game and the website's map is different from it, then switch the website's map
-		if (I.GPSCurrent !== previousmap && I.GPSCurrent !== I.MapCurrent)
+		if (P.GPSCurrent !== previousmap && P.GPSCurrent !== P.MapCurrent)
 		{
 			$(htmlidprefix + "SwitchButton").trigger("click");
 		}
@@ -10146,20 +10189,13 @@ P = {
 	 */
 	updateCharacter: function(pForceCode)
 	{
-		var that, followboolean, displayboolean;
-		switch (I.MapCurrent)
+		var that;
+		var followboolean = O.Options["bol_followCharacter" + P.SuffixCurrent];
+		var displayboolean = O.Options["bol_displayCharacter" + P.SuffixCurrent];
+		switch (P.MapCurrent)
 		{
-			case I.MapEnum.Tyria: {
-				that = M;
-				followboolean = O.Options.bol_followCharacter;
-				displayboolean = O.Options.bol_displayCharacter;
-			} break;
-			
-			case I.MapEnum.Mists: {
-				that = W;
-				followboolean = O.Options.bol_followCharacterWvW;
-				displayboolean = O.Options.bol_displayCharacterWvW;
-			} break;
+			case P.MapEnum.Tyria: { that = M; } break;
+			case P.MapEnum.Mists: { that = W; } break;
 		}
 		
 		/*
@@ -10235,19 +10271,8 @@ P = {
 	 */
 	tickGPS: function()
 	{
-		var checkboolean;
-		switch (I.MapCurrent)
-		{
-			case I.MapEnum.Tyria: {
-				checkboolean = (O.Options.bol_followCharacter || O.Options.bol_displayCharacter);
-			} break;
-			
-			case I.MapEnum.Mists: {
-				checkboolean = (O.Options.bol_followCharacterWvW || O.Options.bol_displayCharacterWvW);
-			} break;
-		}
-		
-		if (checkboolean)
+		if (O.Options["bol_followCharacter" + P.SuffixCurrent]
+			|| O.Options["bol_displayCharacter" + P.SuffixCurrent])
 		{
 			P.updateCharacter();
 			window.clearTimeout(P.GPSTimeout);
@@ -11698,6 +11723,7 @@ G = {
 W = {
 	
 	MapEnum: "wvw",
+	OptionSuffix: "WvW",
 	ZoneAssociation: GW2T_LAND_ASSOCIATION,
 	cInitialZone: "eternal",
 	cMAP_BOUND: 16384,
@@ -13057,7 +13083,7 @@ T = {
 					if (pOptions.isReset === true)
 					{
 						// Tell today's world boss closest scheduled time if server resetted
-						if (O.isServerReset && C.ChainToday)
+						if (O.isServerReset)
 						{
 							I.greet(D.getModifiedWord("boss", "daily", U.CaseEnum.Sentence) + " "
 								+ D.getObjectName(C.ChainToday) + " " + D.getTranslation("will start") + " " + D.getTranslation("at") + " "
@@ -13859,8 +13885,8 @@ K = {
 		K.timestampReset = $("#optTimeTillReset")[0];
 		
 		T.initializeDashboard();
+		K.updateTimeFrame(new Date()); // This also calls the server reset check function
 		T.getDaily();
-		K.updateTimeFrame(new Date());
 		K.updateDaytimeIcon();
 		K.tickFrequent();
 		K.updateDigitalClockMinutely();
@@ -15058,13 +15084,6 @@ I = {
 			Dungeons: "Dungeons"
 		}
 	},
-	MapCurrent: "map", // The map currently displayed on the website
-	GPSCurrent: null, // The map which the player resides in game
-	MapEnum:
-	{
-		Tyria: "map",
-		Mists: "wvw"
-	},
 	/*
 	 * Number used to open a section's subcontent, written as 1-indexed via
 	 * query string, but used as 0-indexed.
@@ -15212,11 +15231,11 @@ I = {
 			});
 		}).click(function()
 		{
-			I.toggleMap(I.MapEnum.Mists);
+			I.toggleMap(P.MapEnum.Mists);
 		});
 		$("#wvwSwitchButton").click(function()
 		{
-			I.toggleMap(I.MapEnum.Tyria);
+			I.toggleMap(P.MapEnum.Tyria);
 		});
 		
 		// Do special commands from the URL
@@ -15670,7 +15689,7 @@ I = {
 			else
 			{
 				// Submenu label
-				var label = $(this).find("span");
+				var label = $(this).find("> span");
 				label.html(D.getPhraseOriginal(label.text())).append(" <kbd>" + I.Symbol.TriRight + "</kbd>");
 			}
 			// Add bullet points
@@ -16121,7 +16140,7 @@ I = {
 				var plate = $(this).attr("id");
 				I.PageCurrent = plate.substring(I.cMenuPrefix.length-1, plate.length);
 				I.contentCurrentPlate = I.cPagePrefix + I.PageCurrent;
-				if (I.MapCurrent === I.MapEnum.Mists)
+				if (P.MapCurrent === P.MapEnum.Mists)
 				{
 					I.PagePrevious = I.PageCurrent;
 				}
@@ -16194,16 +16213,17 @@ I = {
 	{
 		switch (pMapEnum)
 		{
-			case I.MapEnum.Tyria: {
+			case P.MapEnum.Tyria: {
 				$("#wvwPane").hide();
 				$("#mapPane").show();
 				M.refreshMap();
 				I.PageCurrent = I.PagePrevious;
 				I.PagePrevious = I.SpecialPageEnum.WvW;
-				I.MapCurrent = I.MapEnum.Tyria;
+				P.MapCurrent = P.MapEnum.Tyria;
+				P.SuffixCurrent = M.OptionSuffix;
 			} break;
 			
-			case I.MapEnum.Mists: {
+			case P.MapEnum.Mists: {
 				$("#mapPane").hide();
 				$("#wvwPane").show();
 				if (W.isMapInitialized)
@@ -16212,7 +16232,8 @@ I = {
 				}
 				I.PagePrevious = I.PageCurrent;
 				I.PageCurrent = I.SpecialPageEnum.WvW;
-				I.MapCurrent = I.MapEnum.Mists;
+				P.MapCurrent = P.MapEnum.Mists;
+				P.SuffixCurrent = W.OptionSuffix;
 			} break;
 		}
 		U.updateQueryString();

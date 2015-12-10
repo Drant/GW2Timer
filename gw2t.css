@@ -364,10 +364,10 @@ html, body,
 	font-size: 80%;
 	color: #ffeebb;
 }
-.itemContextSubmenu ul {
+.itemContextSubmenu > ul {
 	display: none;
 }
-.itemContextSubmenu:hover ul {
+.itemContextSubmenu:hover > ul {
 	display: inline-block;
 	min-width: 150px;
 	position: absolute; z-index: 2;

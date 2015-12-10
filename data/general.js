@@ -971,7 +971,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<a href='http://gw2timer.com/?page=Resource'>Resource Nodes</a> gathering map now has a <a href='http://forum.renaka.com/topic/5500046/1/'>route generator</a> with waypoints and stats!",
+	content: "<a href='http://gw2timer.com/?page=Resource'>Resource Nodes</a> gathering map now has a <a href='http://i.imgur.com/IcOM6pE.png'>route generator</a> with waypoints and stats!",
 	Start: new Date("2015-12-08T16:00:00Z"),
 	Finish: new Date("2015-12-11T16:00:00Z")
 },
@@ -1141,7 +1141,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Slayer's Outfit",
-		img: "http://i.imgur.com/4MnJ7dy.png",
+		img: "https://render.guildwars2.com/file/EA2FC116C5CACAF5DCA434765F2871D39DFA7824/1313301.png",
 		quantity: 1,
 		pricenew: 700,
 		priceold: 0,
@@ -1149,7 +1149,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Wintersday Wreath Backpack",
-		img: "http://i.imgur.com/JRR1R5N.png",
+		img: "https://render.guildwars2.com/file/3408A04293EAA9CE802226E593956D56EBFE0304/1313100.png",
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
@@ -1157,7 +1157,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Snowflake Glider",
-		img: "http://i.imgur.com/nMwUswF.png",
+		img: "https://render.guildwars2.com/file/CE007E4C9FD410E85D79D745BC750F2A6719E4DF/1313090.png",
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
@@ -1189,7 +1189,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Winter Chimes Dye Kit",
-		img: "http://i.imgur.com/1I747yu.png",
+		img: "https://render.guildwars2.com/file/C6B91C29A5D30474AC7508AB2FFE3BFEC558CDC8/1313228.png",
 		quantity: 1,
 		pricenew: 125,
 		priceold: 0,
@@ -1252,16 +1252,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2015-12-09T00:00:00Z"),
-	Finish: new Date("2015-12-10T00:00:00Z"),
+	Start: new Date("2015-12-10T00:00:00Z"),
+	Finish: new Date("2015-12-11T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49758", price: "25200" },
-		Fox: { id: "67963", price: "25200" },
-		Derwena: { id: "43814", price: "25200" },
-		Yana: { id: "49771", price: "25200" },
-		Katyn: { id: "44658", price: "25200" },
-		Verma: { id: "43818", price: "25200" }
+		Mehem: { id: "43824", price: "25200" },
+		Fox: { id: "43815", price: "25200" },
+		Derwena: { id: "43811", price: "25200" },
+		Yana: { id: "49734", price: "12600" },
+		Katyn: { id: "43806", price: "25200" },
+		Verma: { id: "44662", price: "25200" }
 	}
 }
 };
