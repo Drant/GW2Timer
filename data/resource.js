@@ -679,11 +679,12 @@ Foxfire: {
 	type: "Wood",
 	item: "66933",
 	riches: [
-	{c: [15625, 24851]}, // straits
-	{c: [13858, 24941]} // malchor
+	
 	],
 	regulars: [
-	{c: [20215, 21981]} // maelstrom
+	{c: [20215, 21981]}, // maelstrom
+	{c: [15625, 24851]}, // straits
+	{c: [13858, 24941]} // malchor
 	]
 },
 Mixed: {

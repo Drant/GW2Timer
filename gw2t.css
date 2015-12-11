@@ -1172,6 +1172,13 @@ input.mapCoordinatesName {
 	width: 360px; height: 360px;
 }
 
+.clkFlake { /* Festival flake */
+	z-index: 100;
+	position: absolute;
+	width: 1px; height: 1px;
+	background: white;
+}
+
 #paneClock {
 	top: 0px;
 }
@@ -1688,6 +1695,14 @@ header.jsSection sup {
 		1px 1px 4px #000;
 	pointer-events: none;
 }
+#watToggle {
+	display: none;
+	z-index: 9;
+	top: 12px;
+	left: 12px;
+	position: fixed;
+	background: url("img/ui/toggle.png");
+}
 #watButtons {
 	float: right;
 	margin-left: 16px;
@@ -1701,23 +1716,21 @@ header.jsSection sup {
 	padding-left: 8px;
 	padding-right: 8px;
 	border-radius: 2px;
-	opacity: 0.9;
 }
 #watButtons kbd:hover {
 	border: 1px solid white;
-	opacity: 1;
 }
 #watButtons kbd:active {
 	color: white;
 }
 #watStart {
-	color: lime;
+	color: #66ff66;
 }
 #watStop {
-	color: red;
+	color: #cc3322;
 }
 #watLap {
-	color: gold;
+	color: #ffcc77;
 }
 
 #plateChains header {
@@ -2215,6 +2228,8 @@ paletteText {
 	color: #44dd44; /* Green story title */
 	color: #ddff77; /* Green bright chat notice */
 	color: #88ff88; /* Green chat say name */
+	color: #66ff66; /* Green lime story chapter */
+	color: #aaff55; /* Green lime electric story */
 	color: #44bbff; /* Blue chat party name */
 	color: #bbddff; /* Blue chat party */
 	color: #66aaff; /* Blue gem */

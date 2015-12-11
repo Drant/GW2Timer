@@ -13943,6 +13943,7 @@ K = {
 		K.tickFrequent();
 		K.updateDigitalClockMinutely();
 		K.initializeClipboard();
+		K.refreshFestival();
 		
 		// Other clickable elements
 		$("#itemTimeLocalActual").click(function()
@@ -14382,6 +14383,7 @@ K = {
 			/*
 			 * If crossing a 1 minute mark.
 			 */
+			K.refreshFestival();
 			K.updateDigitalClockMinutely();
 			T.updateTimelineIndicator();
 			// Refresh the chain time countdown opted
@@ -15012,23 +15014,30 @@ K = {
 	
 	initializeStopwatch: function()
 	{
+		// Bind toggle button on top of the digits
+		$("#watToggle").click(function()
+		{
+			$("#itemStopwatch").toggle("fast");
+		});
+		
 		// Start button acts as Start/Pause/Resume
 		$("#watStart").click(function()
 		{
-			$("#itemStopwatch").css("font-size", O.Options.int_sizeStopwatchFont);
+			$("#watToggle").show();
+			$("#itemStopwatch").show().css("font-size", O.Options.int_sizeStopwatchFont);
 			var nowms = (new Date()).getTime();
 			// Start the first time
 			if (K.StopwatchTimestamp === 0)
 			{
 				K.StopwatchTimestamp = (new Date()).getTime();
-				K.runStopwatch();
+				K.tickStopwatch();
 			}
 			// Resume after pause
 			else if (K.isStopwatchPaused)
 			{
 				K.isStopwatchPaused = false;
 				K.StopwatchTimestamp = K.StopwatchTimestamp + (nowms - K.StopwatchTimesleep);
-				K.runStopwatch();
+				K.tickStopwatch();
 			}
 			// Pause
 			else
@@ -15042,6 +15051,7 @@ K = {
 		// Stop button resets the countup
 		$("#watStop").click(function()
 		{
+			$("#watToggle").hide();
 			window.clearTimeout(K.StopwatchTimeout);
 			K.isStopwatchPaused = false;
 			K.StopwatchTimestamp = 0;
@@ -15054,8 +15064,6 @@ K = {
 			if (K.StopwatchTimestamp !== 0)
 			{
 				I.write(K.stopwatchUp.innerHTML, 0);
-				$("#watStop").trigger("click");
-				$("#watStart").trigger("click");
 			}
 			else
 			{
@@ -15064,15 +15072,37 @@ K = {
 		});
 	},
 	
-	runStopwatch: function()
+	/*
+	 * Updates the stopwatch countup.
+	 */
+	tickStopwatch: function()
 	{
 		var elapsedms = (new Date()).getTime() - K.StopwatchTimestamp;
 		K.stopwatchUp.innerHTML = T.formatMilliseconds(elapsedms, true);
 		K.StopwatchTimeout = setTimeout(function()
 		{
-			K.runStopwatch();
+			K.tickStopwatch();
 		}, K.stopwatchFrequency);
 	},
+	
+	/*
+	 * Festival decorative function.
+	 */
+	refreshFestival: function()
+	{
+		return;
+		// Add Wintersday snowflakes
+		$(".clkFlake").remove();
+		var snowflakes = 144;
+		var clock = $("#paneClock");
+		var x, y;
+		for (var i = 0; i < snowflakes; i++)
+		{
+			x = T.getRandomIntRange(0, 360);
+			y = T.getRandomIntRange(0, 360);
+			clock.append("<div class='clkFlake' style='top:"+y+"px; left:"+x+"px;'></div>");
+		}
+	}
 };
 
 /* =============================================================================
