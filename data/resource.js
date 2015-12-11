@@ -174,7 +174,7 @@ Orichalcum: {
 	type: "Metal",
 	item: "19701",
 	riches: [
-	{c: [12424, 19478]} // southsun
+	
 	],
 	regulars: [
 	{c: [4833, 14596]}, // silver
@@ -189,7 +189,8 @@ Orichalcum: {
 	{c: [5023, 16529]},
 	{c: [5166, 16783]},
 	{c: [5170, 16294]},
-	{c: [11939, 20363]}, // southsun
+	{c: [12424, 19478]}, // southsun
+	{c: [11939, 20363]},
 	{c: [12032, 19858]},
 	{c: [12343, 20066]},
 	{c: [12530, 20204]},
@@ -671,22 +672,6 @@ Ancient: {
 	{c: [11750, 28675]}
 	]
 },
-Foxfire: {
-	name_en: "Foxfire",
-	name_de: "Leuchtpilz",
-	name_es: "Lumin",
-	name_fr: "Biolumin",
-	type: "Wood",
-	item: "66933",
-	riches: [
-	
-	],
-	regulars: [
-	{c: [20215, 21981]}, // maelstrom
-	{c: [15625, 24851]}, // straits
-	{c: [13858, 24941]} // malchor
-	]
-},
 Mixed: {
 	name_en: "Mixed",
 	name_de: "Gemischt",
@@ -1045,6 +1030,22 @@ Spore: {
 	{c: [12912, 15362]},
 	{c: [12928, 15838]},
 	{c: [13040, 15848]}
+	]
+},
+Foxfire: {
+	name_en: "Foxfire",
+	name_de: "Leuchtpilz",
+	name_es: "Lumin",
+	name_fr: "Biolumin",
+	type: "Plant",
+	item: "66933",
+	riches: [
+	
+	],
+	regulars: [
+	{c: [20215, 21981]}, // maelstrom
+	{c: [15625, 24851]}, // straits
+	{c: [13858, 24941]} // malchor
 	]
 },
 Flax: {

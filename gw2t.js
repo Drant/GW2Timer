@@ -9618,10 +9618,13 @@ P = {
 	printClosestWaypoints: function()
 	{
 		var CHATLINKS_PER_MESSAGE = 12; // Maximum to fit chat message limit
+		var DISTANCE_MINIMUM = 500; // The distance between two coordinates must be greater than this to include a new waypoint
 		var html = "";
 		var chatlink;
 		var chatlinks = [""]; // First element is a dummy for comparison
 		var coordpin;
+		var coordprev = [0, 0];
+		var distancetoprevious = 0;
 		var zone, waypoint;
 		
 		M.Layer.PersonalPin.eachLayer(function(layer)
@@ -9635,11 +9638,13 @@ P = {
 				if (waypoint !== null)
 				{
 					chatlink = U.getChatlinkFromPoiID(waypoint.options.id);
-					// Don't append consecutively duplicate waypoints
-					if (chatlinks[chatlinks.length - 1] !== chatlink)
+					distancetoprevious = P.getDistanceBetweenCoords(coordpin, coordprev);
+					// Don't append consecutively duplicate waypoints or if distance between is too short
+					if (chatlinks[chatlinks.length - 1] !== chatlink && distancetoprevious > DISTANCE_MINIMUM)
 					{
 						chatlinks.push(chatlink);
 					}
+					coordprev = coordpin;
 				}
 			}
 		});
@@ -10768,11 +10773,11 @@ G = {
 			$("#nodRoute").click(function()
 			{
 				M.clearPersonalPins();
-				var coords = [];
 				var i = 0;
+				var coords = [];
+				var coord;
 				var eastmostcoord = Number.POSITIVE_INFINITY;
 				var indexofeastmostcoord;
-				var coord;
 				
 				var WAYPOINT_COPPER_AVERAGE = $("#nod_int_coinWaypointAverage").val();
 				var TIME_SECOND_AVERAGE = $("#nod_int_secNodeVisitAverage").val();
@@ -14105,7 +14110,7 @@ K = {
 		{
 			// Resize panes by animation
 			$("#paneMenu").animate({top: clockpaneheight}, animationspeed);
-			$("#paneClock, #paneClockWall, #paneClockBackground, #paneClockIcons")
+			$("#paneClock, #paneClockWall, #paneClockBackground, #paneClockIcons, #paneClockCanvas")
 				.animate({height: clockpaneheight}, animationspeed);
 
 			// Readjust content pane
@@ -15090,17 +15095,19 @@ K = {
 	 */
 	refreshFestival: function()
 	{
-		return;
-		// Add Wintersday snowflakes
-		$(".clkFlake").remove();
-		var snowflakes = 144;
-		var clock = $("#paneClock");
+		var numsnowflakes = 144;
+		var canvas = document.getElementById("paneClockCanvas");
+		var context = canvas.getContext("2d");
+		// Erase previous snowflakes
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		// Sprinkle new snowflakes
 		var x, y;
-		for (var i = 0; i < snowflakes; i++)
+		for (var i = 0; i < numsnowflakes; i++)
 		{
-			x = T.getRandomIntRange(0, 360);
-			y = T.getRandomIntRange(0, 360);
-			clock.append("<div class='clkFlake' style='top:"+y+"px; left:"+x+"px;'></div>");
+			x = T.getRandomIntRange(0, canvas.width);
+			y = T.getRandomIntRange(0, canvas.height);
+			context.fillStyle = "rgba(255,255,255,255)";
+			context.fillRect(x, y, 1, 1);
 		}
 	}
 };

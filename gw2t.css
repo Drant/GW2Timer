@@ -1172,11 +1172,8 @@ input.mapCoordinatesName {
 	width: 360px; height: 360px;
 }
 
-.clkFlake { /* Festival flake */
-	z-index: 100;
-	position: absolute;
-	width: 1px; height: 1px;
-	background: white;
+#paneClockCanvas {
+	pointer-events: none;
 }
 
 #paneClock {
@@ -1677,9 +1674,6 @@ header.jsSection sup {
 	width: 100%;
 	margin-bottom: 4px;
 }
-#opt_int_setFloor {
-	width: 80%;
-}
 
 #itemStopwatch {
 	position: fixed; z-index: 9; /* z-index behind the console */
@@ -2075,9 +2069,6 @@ header.jsSection sup {
 	width: 270px;
 	margin-bottom: 4px;
 }
-[type="range"].optSlider {
-	width: 140px;
-}
 
 #optTimestamps time {
 	color: #bbcc77;
@@ -2093,6 +2084,9 @@ input[type="range"] {
 	display: inline;
 	width: 100%;
 	padding: 0;
+}
+input[type="range"].optSlider {
+	width: 140px;
 }
 
 label, input {
