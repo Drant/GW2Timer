@@ -1083,8 +1083,8 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Exalted Mail Carrier",
-		img: "http://i.imgur.com/egXC3b2.png",
+		url: "http://wiki.guildwars2.com/wiki/Exalted Mail Courier",
+		img: "https://render.guildwars2.com/file/E4FF1D42FFAA7F58681724F95D552410EC7F7880/1024007.png",
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
@@ -1276,16 +1276,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2015-12-12T00:00:00Z"),
-	Finish: new Date("2015-12-13T00:00:00Z"),
+	Start: new Date("2015-12-13T00:00:00Z"),
+	Finish: new Date("2015-12-14T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49746", price: "25200" },
-		Fox: { id: "49769", price: "25200" },
-		Derwena: { id: "43810", price: "25200" },
-		Yana: { id: "49752", price: "25200" },
-		Katyn: { id: "44660", price: "25200" },
-		Verma: { id: "49756", price: "25200" }
+		Mehem: { id: "43822", price: "25200" },
+		Fox: { id: "43800", price: "25200" },
+		Derwena: { id: "43817", price: "25200" },
+		Yana: { id: "43808", price: "25200" },
+		Katyn: { id: "49734", price: "12600" },
+		Verma: { id: "43807", price: "25200" }
 	}
 }
 };

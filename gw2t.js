@@ -13398,13 +13398,14 @@ T = {
 			supplycodes += i + "@" + (T.DashboardSupply.Codes[i])[weekdaylocation] + " ";
 		}
 		supplycodes += "- " + supplyname;
-		$("#dsbSupply").empty().append("<div><kbd id='dsbSupplyHeader' class='curToggle'><img src='img/map/vendor_karma.png' /> "
+		$("#dsbSupply").empty().append("<div><kbd id='dsbSupplyHeader' class='curToggle' "
+			+  "title='<dfn>Updated:</dfn> " + T.DashboardSupply.Start.toLocaleString(window.navigator.language, {
+					year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long" })
+				+ "'><img src='img/map/vendor_karma.png' /> "
 			+ "<u>" + supplyname + "</u>"
 			+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' /></kbd>"
 			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
-				+ "title='<dfn>Updated: " + T.DashboardSupply.Start.toLocaleString(window.navigator.language, {
-					year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long" })
-				+ "</dfn><br />Items restock at daily reset.<br />Vendors relocate 8 hours after that.<br />Limit 1 purchase per vendor.'>Info</a> "
+				+ "title='Items restock at daily reset.<br />Vendors relocate 8 hours after that.<br />Limit 1 purchase per vendor.'>Info</a> "
 			+ "<u class='curZoom' id='dsbSupplyDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
 			+ "<input id='dsbSupplyCodes' class='cssInputText' type='text' value='" + supplycodes + "' /> "
 		+ "</div><div id='dsbSupplyTable' class='jsScrollable'></div>");
