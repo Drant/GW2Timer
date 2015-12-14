@@ -906,7 +906,7 @@ O = {
 		$("#optChainsCollapse").click(function()
 		{
 			$(".chnDetails").hide();
-			I.scrollToElement($("#plateChains"));
+			I.scrollToElement("#plateChains");
 		});
 		
 		/*
@@ -11065,7 +11065,7 @@ G = {
 					marker.on("click", function()
 					{
 						$("#jpzCheck_" + pIndex).trigger("click");
-						I.scrollToElement($("#jpz_" + this.options.id), $("#plateMap"));
+						I.scrollToElement("#jpz_" + this.options.id, "#plateMap");
 					});
 					M.bindMarkerZoomBehavior(marker, "contextmenu");
 				})(i);
@@ -15706,12 +15706,13 @@ I = {
 	
 	/*
 	 * Scrolls to an element at specified rate.
-	 * @param jqobject pElement to scroll to.
-	 * @param jqobject pContainerOfElement container with the scroll bar.
+	 * @param string pElement selector to scroll to.
+	 * @param string pContainerOfElement selector container with the scroll bar.
 	 * @param int or string pTime duration to animate.
 	 */
 	scrollToElement: function(pElement, pContainerOfElement, pTime)
 	{
+		pElement = $(pElement);
 		// Mobile mode webpage height is dynamic
 		switch (I.ModeCurrent)
 		{
@@ -15730,6 +15731,7 @@ I = {
 			default: {
 				if (pContainerOfElement)
 				{
+					pContainerOfElement = $(pContainerOfElement);
 					pContainerOfElement.animate(
 					{
 						scrollTop: pElement.offset().top - pContainerOfElement.offset().top
@@ -16013,7 +16015,7 @@ I = {
 				// Scroll to header if expanding, top of page if collapsing
 				if (istobeexpanded)
 				{
-					I.scrollToElement($(this), $(pPlate), "fast");
+					I.scrollToElement($(this), pPlate, "fast");
 				}
 			});
 			
