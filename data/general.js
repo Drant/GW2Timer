@@ -1000,9 +1000,9 @@ Countdowns: [
 	name_de: "Wintertag 2015",
 	name_es: "Día Invernal 2015",
 	name_fr: "Hivernel 2015",
-	official: "news/the-road-ahead-for-2015",
+	official: "the-game/releases/december-15-2015",
 	Start: new Date("2015-12-15T17:00:00Z"),
-	Finish: new Date("2015-12-29T17:00:00Z")
+	Finish: new Date("2016-01-12T17:00:00Z")
 }
 ],
 
@@ -1040,8 +1040,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2015-12-08T16:00:00Z"),
-	Finish: new Date("2015-12-15T16:00:00Z"),
+	Start: new Date("2015-12-15T16:00:00Z"),
+	Finish: new Date("2015-12-22T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -1050,6 +1050,14 @@ Sale: {
 		priceold: 0
 	},
 	Items: [
+	{
+		url: "http://wiki.guildwars2.com/wiki/Winter Solstice Appearance Pack",
+		img: "http://i.imgur.com/92cVON9.png",
+		quantity: 1,
+		pricenew: 2000,
+		priceold: 0,
+		col: 0
+	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Bandit Sniper Appearance Pack",
 		img: "http://i.imgur.com/mIuPrbz.png",
@@ -1063,6 +1071,14 @@ Sale: {
 		img: "https://render.guildwars2.com/file/470C33B838D5541D39C91DD5C65A53EFB9BCEB79/699314.png",
 		quantity: 1,
 		pricenew: 1000,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Winter Solstice Outfit",
+		img: "http://i.imgur.com/rrmuuZc.png",
+		quantity: 1,
+		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
@@ -1090,78 +1106,13 @@ Sale: {
 		priceold: 0,
 		col: 0
 	},
-	
-	{
-		url: "http://wiki.guildwars2.com/wiki/Wintersday Minis 3-Pack",
-		img: "https://render.guildwars2.com/file/4B5345024E2D5A0503E04F7D923562422806FB4D/681030.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Plush Griffon",
-		img: "https://render.guildwars2.com/file/9A7507807FC264B576932BC3CD0AB257CFD54404/526321.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Princess Doll",
-		img: "https://render.guildwars2.com/file/1358E502FB2F9C9AD5CF0AA80580C353ABE8B869/526317.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Toy Golem",
-		img: "https://render.guildwars2.com/file/FFF9987321789234043801D13BB226B94F65DF00/526320.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Toy Soldier",
-		img: "https://render.guildwars2.com/file/B1C2AACE933A677F40187004DC5D51561DB3FF38/526319.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Toy Ventari",
-		img: "https://render.guildwars2.com/file/22A5D499D0BA2AB9FA77FDD9D7C88052F47046C7/526318.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini Sabetha",
-		img: "https://render.guildwars2.com/file/1C96C03C385529A818E9E14ED7BB7E47F10154F5/1301795.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Slayer's Outfit",
-		img: "https://render.guildwars2.com/file/EA2FC116C5CACAF5DCA434765F2871D39DFA7824/1313301.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 1
-	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Wintersday Wreath Backpack",
 		img: "https://render.guildwars2.com/file/3408A04293EAA9CE802226E593956D56EBFE0304/1313100.png",
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
-		col: 1
+		col: 0
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Snowflake Glider",
@@ -1169,21 +1120,61 @@ Sale: {
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
-		col: 1
+		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Grenth Hood Skin",
-		img: "https://render.guildwars2.com/file/BDA5603EA1C3FF412AC8520E76D42CA56D549B37/681054.png",
+		url: "http://wiki.guildwars2.com/wiki/Mini Snow Flurry Dragon",
+		img: "http://i.imgur.com/ivNv9Zu.png",
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
 		col: 1
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Stag Helm Skin",
-		img: "https://render.guildwars2.com/file/59D6A0679B50CAA60D10FFABC4EA4AC99432EF59/681053.png",
+		url: "http://wiki.guildwars2.com/wiki/Wintersday Minis 3-Pack",
+		img: "https://render.guildwars2.com/file/4B5345024E2D5A0503E04F7D923562422806FB4D/681030.png",
 		quantity: 1,
 		pricenew: 500,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Plush Griffon",
+		img: "https://render.guildwars2.com/file/9A7507807FC264B576932BC3CD0AB257CFD54404/526321.png",
+		quantity: 1,
+		pricenew: 350,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Princess Doll",
+		img: "https://render.guildwars2.com/file/1358E502FB2F9C9AD5CF0AA80580C353ABE8B869/526317.png",
+		quantity: 1,
+		pricenew: 350,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Toy Golem",
+		img: "https://render.guildwars2.com/file/FFF9987321789234043801D13BB226B94F65DF00/526320.png",
+		quantity: 1,
+		pricenew: 350,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Toy Soldier",
+		img: "https://render.guildwars2.com/file/B1C2AACE933A677F40187004DC5D51561DB3FF38/526319.png",
+		quantity: 1,
+		pricenew: 350,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Toy Ventari",
+		img: "https://render.guildwars2.com/file/22A5D499D0BA2AB9FA77FDD9D7C88052F47046C7/526318.png",
+		quantity: 1,
+		pricenew: 350,
 		priceold: 0,
 		col: 1
 	},
@@ -1196,50 +1187,10 @@ Sale: {
 		col: 1
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Wintersday Earmuffs",
-		img: "https://render.guildwars2.com/file/E1590ED73D082F950AA2ED44021A7F795D0DD647/526118.png",
-		quantity: 1,
-		pricenew: 25,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Winter Chimes Dye Kit",
-		img: "https://render.guildwars2.com/file/C6B91C29A5D30474AC7508AB2FFE3BFEC558CDC8/1313228.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Toxic Dye Kit",
 		img: "https://render.guildwars2.com/file/9CA420D41AC95B0507CE2F5BBFF9E0BBE8C44E3E/665807.png",
 		quantity: 1,
 		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Permanent Snow Globe Finisher",
-		img: "https://render.guildwars2.com/file/4ED2336A39D9E19EBDEC30D013EB13B42D0F3130/699315.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Permanent Snowman Finisher",
-		img: "https://render.guildwars2.com/file/3D0BBD30A2CA4D1A0E14525C03233E51DA095307/619502.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 1
-	},
-		{
-		url: "http://wiki.guildwars2.com/wiki/Permanent Gift Finisher",
-		img: "https://render.guildwars2.com/file/3BDDA4DFF4B83B56C716410E446DE89CF03C38CE/619503.png",
-		quantity: 1,
-		pricenew: 600,
 		priceold: 0,
 		col: 1
 	}
