@@ -15538,6 +15538,7 @@ I = {
 						I.PageCurrent = I.SpecialPageEnum.DryTop;
 						U.updateTitle(I.SpecialPageEnum.DryTop);
 						P.toggleDryTopIcons(true);
+						$("#mapHUDBoxes").hide();
 					}
 					else
 					{
@@ -15555,6 +15556,7 @@ I = {
 					{
 						I.PageCurrent = I.PageEnum.Chains;
 						P.toggleDryTopIcons(false);
+						$("#mapHUDBoxes").show();
 					}
 					// Nullify current section variable
 					I[I.sectionPrefix + I.PageEnum.Chains] = "";
