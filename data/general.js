@@ -971,9 +971,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<a href='http://gw2timer.com/?page=Resource'>Resource Nodes</a> gathering map now has a <a href='http://i.imgur.com/IcOM6pE.png'>route generator</a> with waypoints and stats!",
-	Start: new Date("2015-12-08T16:00:00Z"),
-	Finish: new Date("2015-12-11T16:00:00Z")
+	content: "<a href='http://gw2timer.com/?page=Orphans'>Map of orphans</a> for Donation Drive dailies: gw2timer.com/orphans",
+	Start: new Date("2015-12-15T16:00:00Z"),
+	Finish: new Date("2015-12-22T16:00:00Z")
 },
 
 /*

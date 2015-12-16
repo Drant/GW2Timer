@@ -2307,6 +2307,8 @@ X = {
 	 */
 	Collectibles:
 	{
+		// Temporary
+		LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans", value: ""},
 		// Repeatable
 		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: ""},
 		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: ""},
@@ -9580,11 +9582,12 @@ P = {
 			this.printNumberedCoordinates((pNeedles[i]).c, i);
 		}
 	},
-	printNodes: function(pCoords)
+	printNodes: function(pCoords, pIsNumbered)
 	{
-		for (var i in pCoords)
+		for (var i = 0; i < pCoords.length; i++)
 		{
-			I.write("{c: [" + (pCoords[i])[0] + ", " + (pCoords[i])[1] + "]},", 0);
+			var numprefix = (pIsNumbered) ? ("n: " + (i+1) + ", ") : "";
+			I.write("{" + numprefix + "c: [" + (pCoords[i])[0] + ", " + (pCoords[i])[1] + "]},", 0);
 		}
 	},
 	printNumberedCoordinates: function(pCoord, i)
