@@ -13919,6 +13919,8 @@ K = {
 	StopwatchTimestamp: 0,
 	StopwatchTimesleep: 0,
 	isStopwatchPaused: false,
+	StopwatchTimerStart: 0,
+	StopwatchTimerFinish: 0,
 	
 	/*
 	 * Starts the clock.
@@ -14405,6 +14407,11 @@ K = {
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedFirst);
 				K.doSubscribedSpeech(O.Options.int_alertSubscribedSecond);
 			}
+		}
+		
+		if (K.StopwatchTimerStart !== 0)
+		{
+			K.tickStopwatchDown();
 		}
 		
 		// Mode dependent repeated functions
@@ -15039,14 +15046,14 @@ K = {
 			if (K.StopwatchTimestamp === 0)
 			{
 				K.StopwatchTimestamp = (new Date()).getTime();
-				K.tickStopwatch();
+				K.tickStopwatchUp();
 			}
 			// Resume after pause
 			else if (K.isStopwatchPaused)
 			{
 				K.isStopwatchPaused = false;
 				K.StopwatchTimestamp = K.StopwatchTimestamp + (nowms - K.StopwatchTimesleep);
-				K.tickStopwatch();
+				K.tickStopwatchUp();
 			}
 			// Pause
 			else
@@ -15060,7 +15067,11 @@ K = {
 		// Stop button resets the countup
 		$("#watStop").click(function()
 		{
-			$("#watToggle").hide();
+			if (K.StopwatchTimerStart === 0)
+			{
+				// Only the toggle button if the personal timer isn't running also
+				$("#watToggle").hide();
+			}
 			window.clearTimeout(K.StopwatchTimeout);
 			K.isStopwatchPaused = false;
 			K.StopwatchTimestamp = 0;
@@ -15079,19 +15090,64 @@ K = {
 				I.write("Stopwatch must be running to lap time.");
 			}
 		});
+		
+		// Personal timer
+		$("#watTimerStart").click(function()
+		{
+			$("#watToggle").show();
+			$("#itemStopwatch").show().css("font-size", O.Options.int_sizeStopwatchFont);
+			K.StopwatchTimerStart = (new Date()).getTime();
+			K.StopwatchTimerFinish = K.StopwatchTimerStart + (parseInt($("#watTimerMinute").val()) * T.cMILLISECONDS_IN_MINUTE);
+		});
+		$("#watTimerStop").click(function()
+		{
+			if (K.StopwatchTimestamp === 0)
+			{
+				// Only the toggle button if the stopwatch isn't running also
+				$("#watToggle").hide();
+			}
+			K.StopwatchTimerStart = 0;
+			K.stopwatchDown.innerHTML = "";
+		});
+		$("#watTimerMinute, #watTimerText").click(function()
+		{
+			$(this).select();
+		});
 	},
 	
 	/*
 	 * Updates the stopwatch countup.
 	 */
-	tickStopwatch: function()
+	tickStopwatchUp: function()
 	{
 		var elapsedms = (new Date()).getTime() - K.StopwatchTimestamp;
 		K.stopwatchUp.innerHTML = T.formatMilliseconds(elapsedms, true);
 		K.StopwatchTimeout = setTimeout(function()
 		{
-			K.tickStopwatch();
+			K.tickStopwatchUp();
 		}, K.stopwatchFrequency);
+	},
+	
+	/*
+	 * Updates the personal countdown timer.
+	 */
+	tickStopwatchDown: function()
+	{
+		var msec = K.StopwatchTimerFinish - (new Date()).getTime();
+		if (msec > 0)
+		{
+			K.stopwatchDown.innerHTML = T.getTimeFormatted({
+				customTimeInSeconds: parseInt(msec / T.cMILLISECONDS_IN_SECOND),
+				wantLetters: true
+			});
+		}
+		else
+		{
+			// If negative then timer has finished
+			$("#watTimerStop").trigger("click");
+			var speech = $("#watTimerText").val();
+			D.speak(speech);
+		}
 	},
 	
 	/*

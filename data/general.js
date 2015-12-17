@@ -1076,7 +1076,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Winter Solstice Outfit",
-		img: "http://i.imgur.com/rrmuuZc.png",
+		img: "https://render.guildwars2.com/file/7133DC4108BE42C2F010D61CE406772D360F0E39/1322763.png",
 		quantity: 1,
 		pricenew: 700,
 		priceold: 0,
@@ -1124,7 +1124,7 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini Snow Flurry Dragon",
-		img: "http://i.imgur.com/ivNv9Zu.png",
+		img: "https://render.guildwars2.com/file/0DE72811F5176B90454AE16B5E48CA5BBBE6610C/1322567.png",
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
@@ -1227,16 +1227,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2015-12-16T00:00:00Z"),
-	Finish: new Date("2015-12-17T00:00:00Z"),
+	Start: new Date("2015-12-17T00:00:00Z"),
+	Finish: new Date("2015-12-18T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43815", price: "25200" },
-		Fox: { id: "43842", price: "25200" },
-		Derwena: { id: "48920", price: "25200" },
-		Yana: { id: "43806", price: "25200" },
-		Katyn: { id: "43811", price: "25200" },
-		Verma: { id: "43801", price: "25200" }
+		Mehem: { id: "49735", price: "25200" },
+		Fox: { id: "43843", price: "25200" },
+		Derwena: { id: "48910", price: "25200" },
+		Yana: { id: "49767", price: "25200" },
+		Katyn: { id: "44647", price: "25200" },
+		Verma: { id: "43841", price: "25200" }
 	}
 }
 };

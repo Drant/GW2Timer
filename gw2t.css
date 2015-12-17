@@ -1643,23 +1643,26 @@ header.jsSection sup {
 	margin: 0;
 	padding: 8px;
 }
-#chnOptionsLeft, #chnOptionsRight {
+#chnOptionsChain, #chnOptionsAlarm {
 	display: inline-block;
 	vertical-align: top;
 	text-align: left;
 }
-#chnOptionsRight {
+#chnOptionsAlarm {
 	width: 50%;
 	padding-left: 8px;
 	margin-left: 4px;
 	border-left: 1px solid gray;
 }
-#chnOptionsTop {
+#chnOptionsStopwatchUp, #chnOptionsStopwatchDown {
 	width: 100%;
 	padding-bottom: 8px;
 	margin-bottom: 8px;
 	border-bottom: 1px solid gray;
 	text-align: left;
+}
+#chnOptionsStopwatchUp {
+	border-bottom: 1px solid black;
 }
 #chnOptionsPopup fieldset {
 	min-width: 120px;
@@ -1697,7 +1700,7 @@ header.jsSection sup {
 	position: fixed;
 	background: url("img/ui/toggle.png");
 }
-#watButtons {
+.watButtons {
 	float: right;
 	margin-left: 16px;
 	font-family: monospace;
@@ -1706,21 +1709,21 @@ header.jsSection sup {
 #watCustom {
 	width: 64px;
 }
-#watButtons kbd {
+.watButtons kbd {
 	padding-left: 8px;
 	padding-right: 8px;
 	border-radius: 2px;
 }
-#watButtons kbd:hover {
+.watButtons kbd:hover {
 	border: 1px solid white;
 }
-#watButtons kbd:active {
+.watButtons kbd:active {
 	color: white;
 }
-#watStart {
+#watStart, #watTimerStart {
 	color: #66ff66;
 }
-#watStop {
+#watStop, #watTimerStop {
 	color: #cc3322;
 }
 #watLap {
