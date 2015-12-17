@@ -1320,6 +1320,26 @@ U = {
 	},
 	
 	/*
+	 * Interprets and executes a command string, which may be a console command
+	 * or a map data string.
+	 * @param string pString command.
+	 * @param object pMapObject which map to execute.
+	 */
+	interpretCommand: function(pString, pMapObject)
+	{
+		if (pString.indexOf(I.cConsoleCommandPrefix) === 0)
+		{
+			// If input starts with a console command
+			U.parseConsoleCommand(pString, pMapObject);
+		}
+		else if (pMapObject.parsePersonalPath(pString) === false)
+		{
+			// If input looks like a 2D array of coordinates, then create pins from them
+			pMapObject.goToArguments(pString, pMapObject.Pin.Program);
+		}
+	},
+	
+	/*
 	 * Executes a console command.
 	 * @param string pString command.
 	 * @param object pMapObject which map the command was executed from.
@@ -7225,17 +7245,7 @@ M = {
 		$(htmlidprefix + "CoordinatesCopy").onEnterKey(function()
 		{
 			var val = $(this).val();
-			
-			if (val.indexOf(I.cConsoleCommandPrefix) === 0)
-			{
-				// If input starts with a console command
-				U.parseConsoleCommand(val, that);
-			}
-			else if (that.parsePersonalPath(val) === false)
-			{
-				// If input looks like a 2D array of coordinates, then create pins from them
-				that.goToArguments(val, that.Pin.Program);
-			}
+			U.interpretCommand(val, that);
 		});
 		
 		/*
@@ -8750,8 +8760,8 @@ M = {
 		var that = this;
 		pLink.click(function()
 		{
-			var thiscoord = that.getElementCoordinates($(this));
-			that.goToView(thiscoord, pZoom, pPin);
+			var command = $(this).attr("data-coord");
+			U.interpretCommand(command, that);
 		});
 		
 		pLink.dblclick(function()
@@ -14409,11 +14419,6 @@ K = {
 			}
 		}
 		
-		if (K.StopwatchTimerStart !== 0)
-		{
-			K.tickStopwatchDown();
-		}
-		
 		// Mode dependent repeated functions
 		switch (I.ModeCurrent)
 		{
@@ -14471,6 +14476,10 @@ K = {
 		if (T.isDashboardCountdownTickEnabled)
 		{
 			T.updateDashboardCountdown(pDate);
+		}
+		if (K.StopwatchTimerStart !== 0)
+		{
+			K.tickStopwatchDown();
 		}
 		
 		// Loop this function, can use variable to halt it
@@ -15098,6 +15107,8 @@ K = {
 			$("#itemStopwatch").show().css("font-size", O.Options.int_sizeStopwatchFont);
 			K.StopwatchTimerStart = (new Date()).getTime();
 			K.StopwatchTimerFinish = K.StopwatchTimerStart + (parseInt($("#watTimerMinute").val()) * T.cMILLISECONDS_IN_MINUTE);
+			// Initial call to the update function
+			K.tickStopwatchDown();
 		});
 		$("#watTimerStop").click(function()
 		{
@@ -15130,6 +15141,7 @@ K = {
 	
 	/*
 	 * Updates the personal countdown timer.
+	 * To be called by the clock tick second function.
 	 */
 	tickStopwatchDown: function()
 	{

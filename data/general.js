@@ -971,7 +971,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<a href='http://gw2timer.com/?page=Orphans'>Map of orphans</a> for Donation Drive dailies: gw2timer.com/orphans",
+	content: "<a href='http://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
 	Start: new Date("2015-12-15T16:00:00Z"),
 	Finish: new Date("2015-12-22T16:00:00Z")
 },
