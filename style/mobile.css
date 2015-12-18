@@ -149,11 +149,6 @@ input[type=checkbox] {
 	transform: scale(1.25);
 }
 
-input[type="number"] {
-	width: 64px;
-	font-size: 18px;
-}
-
 #plateOptions .cntComposition button {
 	min-height: 32px;
 	font-size: 18px;

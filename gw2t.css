@@ -1661,9 +1661,6 @@ header.jsSection sup {
 	border-bottom: 1px solid gray;
 	text-align: left;
 }
-#chnOptionsStopwatchUp {
-	border-bottom: 1px solid black;
-}
 #chnOptionsPopup fieldset {
 	min-width: 120px;
 	margin: 0;

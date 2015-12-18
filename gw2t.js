@@ -46,6 +46,7 @@
 	G - Generated content
 	W - World vs World
 	T - Time utilities and schedule
+	B - Dashboard and timeline
 	K - Clock ticker
 	I - Interface UI
 
@@ -56,7 +57,7 @@ $(window).on("load", function() {
 /* =============================================================================
  * Single letter objects serve as namespaces.
  * ========================================================================== */
-var O, U, X, E, D, C, M, P, G, W, T, K, I = {};
+var O, U, X, E, D, C, M, P, G, W, T, B, K, I = {};
 
 /* =============================================================================
  * @@Options for the user
@@ -173,6 +174,8 @@ O = {
 		bol_alertAutosubscribe: true,
 		bol_alertUnsubscribe: true,
 		// Tools
+		int_minStopwatchAlert: 5,
+		str_textStopwatchAlert: "Alert, alert, alert!",
 		int_sizeStopwatchFont: 64,
 		int_sizeNotepadFont: 12,
 		int_sizeNotepadHeight: 400,
@@ -556,38 +559,37 @@ O = {
 		var optionkey;
 		var inputtype;
 		var variabletype;
+		var inputobj;
 		// Load or initialize input options
 		for (optionkey in O.Options)
 		{
+			inputobj = $("#" + O.prefixOption + optionkey);
+			inputtype = inputobj.attr("type");
+			variabletype = U.getVariablePrefix(optionkey);
+			
 			/*
 			 * Initialize legal numeric values by looking up the associated
 			 * input tag.
 			 */
-			$("#" + O.prefixOption + optionkey).each(function()
+			if (inputtype === "radio")
 			{
-				inputtype = $(this).attr("type");
-				variabletype = U.getVariablePrefix(optionkey);
-				if (inputtype === "radio")
-				{
-					// Range shall be 0 to how many radio buttons there are minus one
-					O.OptionRange[optionkey] = new Array(0,
-						$("fieldset[name=" + optionkey + "] input").length - 1);
-				}
-				else if (inputtype === "number" || inputtype === "range")
-				{
-					O.OptionRange[optionkey] = new Array($(this).prop("min"), $(this).prop("max"));
-				}
-			});
+				// Range shall be 0 to how many radio buttons there are minus one
+				O.OptionRange[optionkey] = new Array(0, $("fieldset[name=" + optionkey + "] input").length - 1);
+			}
+			else if (inputtype === "number" || inputtype === "range")
+			{
+				O.OptionRange[optionkey] = new Array(inputobj.prop("min"), inputobj.prop("max"));
+			}
 			
 			/*
 			 * URLArguments overrides localStorage, which overrides Options here
 			 * only if such an Options variable exists. If program is embedded
 			 * then URLArguments overrides Options only, and user preferences
-			 * (localStorage) will not modified.
+			 * (localStorage) will not modified. Strings may not be overriden by URL.
 			 */
 			if (I.isProgramEmbedded)
 			{
-				if (U.Args[optionkey] !== undefined)
+				if (U.Args[optionkey] !== undefined && variabletype !== O.TypeEnum.isString)
 				{
 					O.Options[optionkey] = O.convertLocalStorageDataType(
 						U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]));
@@ -595,11 +597,10 @@ O = {
 			}
 			else
 			{
-				if (U.Args[optionkey] !== undefined)
+				if (U.Args[optionkey] !== undefined && variabletype !== O.TypeEnum.isString)
 				{
 					// Override localStorage
-					localStorage[optionkey] = U.sanitizeURLOptionsValue(
-						optionkey, U.Args[optionkey]);
+					localStorage[optionkey] = U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]);
 				}
 
 				// Assign default values to localStorage if they are empty
@@ -613,86 +614,84 @@ O = {
 				}
 			}
 			
-			// Update the inputs of specific types, this "loop" runs once
-			$("#" + O.prefixOption + optionkey).each(function()
+			// Assign the retrieved values to the input tags
+			if (inputtype === "checkbox")
 			{
-				// Assign the retrieved values to the input tags
-				inputtype = $(this).attr("type");
-				variabletype = U.getVariablePrefix(optionkey);
-				if (inputtype === "checkbox")
-				{
-					$(this).prop("checked", O.Options[optionkey]);
-				}
-				else if (inputtype === "number" || inputtype === "range")
-				{
-					$(this).val(O.Options[optionkey]);
-				}
-				else if (inputtype === "radio")
-				{
-					// Check the radio button of that index (int)
-					$("input:radio[name=" + optionkey + "]:eq(" + O.Options[optionkey] + ")")
-						.prop("checked", true);
-				}
-				
+				inputobj.prop("checked", O.Options[optionkey]);
+			}
+			else if (inputtype === "number" || inputtype === "range")
+			{
+				inputobj.val(O.Options[optionkey]);
+			}
+			else if (inputtype === "radio")
+			{
+				// Check the radio button of that index (int)
+				$("input:radio[name=" + optionkey + "]:eq(" + O.Options[optionkey] + ")")
+					.prop("checked", true);
+			}
+			else
+			{
+				inputobj.val(O.Options[optionkey]);
+			}
+
+			/*
+			 * Bind simple event handlers to each input tags that writes
+			 * the value of the input to the options and localStorage.
+			 * Note that the optionkey local variable was not reused here
+			 * because this is the scope of the input's event! Have to use
+			 * separate variables.
+			 */
+			if (inputtype === "radio")
+			{
 				/*
-				 * Bind simple event handlers to each input tags that writes
-				 * the value of the input to the options and localStorage.
-				 * Note that the optionkey local variable was not reused here
-				 * because this is the scope of the input's event! Have to use
-				 * separate variables.
+				 * Radio buttons are a special case because they are multiple
+				 * input tags. They must be wrapped in a fieldset and all be
+				 * given the same name attribute. One button shall hold the
+				 * unique ID so the group will only be iterated once.
 				 */
-				if (inputtype === "radio")
+				$("fieldset[name=" + optionkey + "]").change(function()
 				{
-					/*
-					 * Radio buttons are a special case because they are multiple
-					 * input tags. They must be wrapped in a fieldset and all be
-					 * given the same name attribute. One button shall hold the
-					 * unique ID so the group will only be iterated once.
-					 */
-					$("fieldset[name=" + optionkey + "]").change(function()
-					{
-						var thisoptionkey = $(this).attr("name");
-						O.Options[thisoptionkey] = O.getIndexOfSelectedRadioButton(thisoptionkey);
-						localStorage[thisoptionkey] = O.Options[thisoptionkey];
-					});
-				}
-				else
+					var thisoptionkey = $(this).attr("name");
+					O.Options[thisoptionkey] = O.getIndexOfSelectedRadioButton(thisoptionkey);
+					localStorage[thisoptionkey] = O.Options[thisoptionkey];
+				});
+			}
+			else
+			{
+				inputobj.change(function()
 				{
-					$(this).change(function()
+					var thisinputtype = $(this).attr("type");
+					var thisoptionkey = $(this).attr("id").slice(O.prefixOption.length);
+
+					if (thisinputtype === "checkbox")
 					{
-						var thisinputtype = $(this).attr("type");
-						var thisoptionkey = $(this).attr("id").slice(O.prefixOption.length);
-						
-						if (thisinputtype === "checkbox")
+						O.Options[thisoptionkey] = $(this).prop("checked");
+					}
+					else if (thisinputtype === "number" || thisinputtype === "range")
+					{
+						// These inputs can have custom text, so sanitize them first
+						var value = $(this).val();
+						var integer = parseInt(value);
+						if (isFinite(value) && integer >= O.OptionRange[thisoptionkey][0]
+							&& integer <= O.OptionRange[thisoptionkey][1])
 						{
-							O.Options[thisoptionkey] = $(this).prop("checked");
-						}
-						else if (thisinputtype === "number" || thisinputtype === "range")
-						{
-							// These inputs can have custom text, so sanitize them first
-							var value = $(this).val();
-							var integer = parseInt(value);
-							if (isFinite(value) && integer >= O.OptionRange[thisoptionkey][0]
-								&& integer <= O.OptionRange[thisoptionkey][1])
-							{
-								O.Options[thisoptionkey] = integer;
-							}
-							else
-							{
-								// Load default value if not an integer within range
-								O.Options[thisoptionkey] = O.OptionRange[thisoptionkey][0];
-							}
-							$(this).val(O.Options[thisoptionkey]);
+							O.Options[thisoptionkey] = integer;
 						}
 						else
 						{
-							O.Options[thisoptionkey] = $(this).val();
+							// Load default value if not an integer within range
+							O.Options[thisoptionkey] = O.OptionRange[thisoptionkey][0];
 						}
-						
-						localStorage[thisoptionkey] = O.Options[thisoptionkey];
-					});
-				}
-			});
+						$(this).val(O.Options[thisoptionkey]);
+					}
+					else
+					{
+						O.Options[thisoptionkey] = $(this).val();
+					}
+
+					localStorage[thisoptionkey] = O.Options[thisoptionkey];
+				});
+			}
 		}
 		
 		// Supplementary event handlers for some inputs
@@ -1003,7 +1002,7 @@ O = {
 			C.initializeTimetableHTML();
 			C.updateChainsTimeHTML();
 			K.updateDigitalClockMinutely();
-			T.updateTimelineLegend();
+			B.updateTimelineLegend();
 		},
 		bol_detectDST: function()
 		{
@@ -1141,18 +1140,18 @@ O = {
 			{
 				if (T.isTimelineGenerated)
 				{
-					T.toggleTimeline(true);
+					B.toggleTimeline(true);
 					return;
 				}
 				else
 				{
-					T.generateTimeline();
+					B.generateTimeline();
 					O.Enact.bol_showTimelineOpaque();
 				}
 			}
 			else
 			{
-				T.toggleTimeline(false);
+				B.toggleTimeline(false);
 			}
 		},
 		bol_showTimelineOpaque: function()
@@ -1324,8 +1323,9 @@ U = {
 	 * or a map data string.
 	 * @param string pString command.
 	 * @param object pMapObject which map to execute.
+	 * @param enum pZoom level, optional.
 	 */
-	interpretCommand: function(pString, pMapObject)
+	interpretCommand: function(pString, pMapObject, pZoom, pPin)
 	{
 		if (pString.indexOf(I.cConsoleCommandPrefix) === 0)
 		{
@@ -1335,7 +1335,7 @@ U = {
 		else if (pMapObject.parsePersonalPath(pString) === false)
 		{
 			// If input looks like a 2D array of coordinates, then create pins from them
-			pMapObject.goToArguments(pString, pMapObject.Pin.Program);
+			pMapObject.goToArguments(pString, pZoom, pPin);
 		}
 	},
 	
@@ -8055,7 +8055,7 @@ M = {
 			that.toggleLayer(this, false);
 			that.Layer.PersonalPin.removeLayer(this);
 			that.drawPersonalPath();
-			this.numPins--;
+			that.numPins--;
 		});
 		// Right click pin: centers the pin on GPS character
 		marker.on("contextmenu", function()
@@ -8503,15 +8503,18 @@ M = {
 	 * Views the map at the given URL coordinates if exist.
 	 * URL should be in the form of http://gw2timer.com/?go=4874,16436,1
 	 * @param string pArguments of location to view.
+	 * @param enum pZoom level, optional.
+	 * @param object pPin pin, optional.
 	 * coords[0] = x coordinate.
 	 * coords[1] = y coordinate.
 	 * coords[2] = z coordinate (zoom level, lower value equals greater zoom-in).
 	 */
-	goToArguments: function(pArguments, pPin)
+	goToArguments: function(pArguments, pZoom, pPin)
 	{
 		var i;
 		var coords = [];
 		var zone;
+		var zoom;
 		if (pArguments)
 		{
 			coords = this.parseCoordinates(pArguments);
@@ -8519,7 +8522,8 @@ M = {
 			{
 				if (isFinite(coords[0]) && isFinite(coords[1]))
 				{
-					this.goToView(coords, this.ZoomEnum.Ground, pPin);
+					zoom = (pZoom !== undefined || pZoom !== null) ? pZoom : this.ZoomEnum.Ground;
+					this.goToView(coords, zoom, pPin);
 				}
 			}
 			else if (coords.length >= 3)
@@ -8545,7 +8549,8 @@ M = {
 					{
 						if (zone.indexOf(i) !== -1)
 						{
-							this.goToView(this.getZoneCenter(i), this.ZoomEnum.Sky);
+							zoom = (pZoom !== undefined || pZoom !== null) ? pZoom : this.ZoomEnum.Sky;
+							this.goToView(this.getZoneCenter(i), zoom);
 							break;
 						}
 					}
@@ -8735,6 +8740,7 @@ M = {
 	 * Binds map view event handlers to all map links (dfn tag reserved) in the
 	 * specified container.
 	 * @param string pContainer element ID.
+	 * @param enum pZoom level.
 	 */
 	bindMapLinks: function(pContainer, pZoom)
 	{
@@ -8752,7 +8758,7 @@ M = {
 	 * to view the map location when clicked.
 	 * @param jqobject pLink to bind.
 	 * @param object pPin marker to move.
-	 * @param string pZoom level when viewed location.
+	 * @param enum pZoom level when viewed location.
 	 */
 	bindMapLinkBehavior: function(pLink, pZoom, pPin)
 	{
@@ -8761,7 +8767,7 @@ M = {
 		pLink.click(function()
 		{
 			var command = $(this).attr("data-coord");
-			U.interpretCommand(command, that);
+			U.interpretCommand(command, that, pZoom, pPin);
 		});
 		
 		pLink.dblclick(function()
@@ -9482,7 +9488,7 @@ P = {
 		var qsdraw = U.Args[U.KeyEnum.Draw];
 		if (qsgo !== undefined)
 		{
-			M.goToArguments(qsgo, M.Pin.Program);
+			M.goToArguments(qsgo, null, M.Pin.Program);
 			U.Args[U.KeyEnum.Go] = null;
 		}
 		if (qsdraw !== undefined)
@@ -11920,7 +11926,6 @@ T = {
 	cSECS_MARK_4: 3599,
 	cBASE_10: 10,
 	cPERCENT_100: 100,
-	cINTEGER_MAX: 0x7fffffff, // Binary: 01111111111111111111111111111111
 	// Game constants
 	WEEKLY_RESET_DAY: 1, // Monday 00:00 UTC
 	cDAYTIME_DAY_MINUTES: 80,
@@ -12960,6 +12965,36 @@ T = {
 	},
 	
 	/*
+	 * Gets the minutes elapsed in the current even hour of UTC.
+	 * Example: 14:00 = 0, 14:20 = 20, 15:59 = 119, 16:00 = 0
+	 * @returns int minutes.
+	 */
+	getCurrentBihourlyMinutesUTC: function()
+	{
+		var now = new Date();
+		return ((now.getUTCHours() % 2) * T.cMINUTES_IN_HOUR) + now.getUTCMinutes();
+	},
+	
+	/*
+	 * Gets the timestamp for the current two-hour period.
+	 * @param int pOffset minutes since the start of the current even hour.
+	 * @returns string timestamp.
+	 */
+	getCurrentBihourlyTimestampLocal: function(pOffset)
+	{
+		var now = new Date();
+		var hour = now.getUTCHours();
+		var evenhour = (hour % 2 === 0) ? hour : (hour - 1);
+		
+		var time = ((evenhour * T.cMINUTES_IN_HOUR)) - now.getTimezoneOffset();
+		time = T.wrapInteger(time, T.cMINUTES_IN_DAY);
+		return T.getTimeFormatted({
+			customTimeInSeconds: ((time + pOffset) * T.cSECONDS_IN_MINUTE),
+			wantSeconds: false
+		});
+	},
+	
+	/*
 	 * Gets the seconds until a time in a day of the week.
 	 * @param int pDay of week.
 	 * @param int pOffsetSeconds since midnight (start) of that day.
@@ -13175,8 +13210,15 @@ T = {
 				}
 			}
 		});
-	},
+	}
 	
+};
+
+/* =============================================================================
+ * @@Board dashboard and timeline.
+ * ========================================================================== */
+B = {
+
 	/*
 	 * Initializes dashboard components.
 	 * Must be executed before the clock tick function executes.
@@ -13230,14 +13272,14 @@ T = {
 		// Hide the dashboard when clicked on the close button
 		$("#dsbClose").click(function()
 		{
-			T.toggleDashboard(false);
+			B.toggleDashboard(false);
 			T.isDashboardEnabled = false;
 		});
 		
 		// Initialize countdown entries
 		if (T.isDashboardCountdownEnabled)
 		{
-			T.toggleDashboard(true);
+			B.toggleDashboard(true);
 			var namekey = D.getNameKey();
 			var urlkey = D.getURLKey();
 			var ctd;
@@ -13277,7 +13319,7 @@ T = {
 						+ "<code>" + I.Symbol.Block + "</code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> <var></var> <samp></samp>"
 					+ "</div>");
 			}
-			T.refreshDashboard(now);
+			B.refreshDashboard(now);
 		}
 		
 		// Initialize Living Story
@@ -13325,20 +13367,20 @@ T = {
 			// Bind buttons
 			$("#dsbSaleHeader").click(function()
 			{
-				T.generateDashboardSale();
+				B.generateDashboardSale();
 			});
 			// Automatically generate the items on sale if the boolean is true
 			I.toggleToggleIcon("#dsbSaleToggleIcon", T.DashboardSale.isPreshown);
 			if (T.DashboardSale.isPreshown === true)
 			{
-				T.generateDashboardSale();
+				B.generateDashboardSale();
 			}
 		}
 		
 		// Initialize supply
 		if (T.isDashboardSupplyEnabled)
 		{
-			T.generateDashboardSupplyHeader();
+			B.generateDashboardSupplyHeader();
 		}
 	},
 	
@@ -13403,7 +13445,7 @@ T = {
 	 */
 	generateDashboardSupplyHeader: function()
 	{
-		var weekdaylocation = T.getDashboardSupplyWeekday();
+		var weekdaylocation = B.getDashboardSupplyWeekday();
 		var supplyname = D.getObjectName(T.DashboardSupply);
 		var supplycodes = "";
 		for (var i in T.DashboardSupply.Codes)
@@ -13430,7 +13472,7 @@ T = {
 		});
 		$("#dsbSupplyHeader").click(function()
 		{
-			T.generateDashboardSupply();
+			B.generateDashboardSupply();
 		});
 		$("#dsbSupplyDraw").click(function()
 		{
@@ -13463,7 +13505,7 @@ T = {
 	generateDashboardSupply: function()
 	{
 		var animationspeed = 200;
-		var weekdaylocation = T.getDashboardSupplyWeekday();
+		var weekdaylocation = B.getDashboardSupplyWeekday();
 		var table = $("#dsbSupplyTable");
 		var numoffers = O.getObjectLength(T.DashboardSupply.Offers);
 		
@@ -13631,7 +13673,7 @@ T = {
 		if (T.isTimely(T.DashboardSupply, pDate)
 			&& hour === T.DashboardSupply.resetHour && minute === 0)
 		{
-			T.generateDashboardSupplyHeader();
+			B.generateDashboardSupplyHeader();
 		}
 	},
 	
@@ -13660,36 +13702,6 @@ T = {
 	},
 	
 	/*
-	 * Gets the minutes elapsed in the current even hour of UTC.
-	 * Example: 14:00 = 0, 14:20 = 20, 15:59 = 119, 16:00 = 0
-	 * @returns int minutes.
-	 */
-	getCurrentBihourlyMinutesUTC: function()
-	{
-		var now = new Date();
-		return ((now.getUTCHours() % 2) * T.cMINUTES_IN_HOUR) + now.getUTCMinutes();
-	},
-	
-	/*
-	 * Gets the timestamp for the current two-hour period.
-	 * @param int pOffset minutes since the start of the current even hour.
-	 * @returns string timestamp.
-	 */
-	getCurrentBihourlyTimestampLocal: function(pOffset)
-	{
-		var now = new Date();
-		var hour = now.getUTCHours();
-		var evenhour = (hour % 2 === 0) ? hour : (hour - 1);
-		
-		var time = ((evenhour * T.cMINUTES_IN_HOUR)) - now.getTimezoneOffset();
-		time = T.wrapInteger(time, T.cMINUTES_IN_DAY);
-		return T.getTimeFormatted({
-			customTimeInSeconds: ((time + pOffset) * T.cSECONDS_IN_MINUTE),
-			wantSeconds: false
-		});
-	},
-	
-	/*
 	 * Generates the timeline HTML.
 	 */
 	generateTimeline: function()
@@ -13697,7 +13709,7 @@ T = {
 		T.isTimelineGenerated = true;
 		// Container for all the timelines
 		var tapestry = $("#itemTimeline").show().append("<div class='tmlLine curToggle' id='tmlLegend'></div>");
-		T.updateTimelineLegend();
+		B.updateTimelineLegend();
 		$("#tmlLegend").click(function()
 		{
 			$("#opt_bol_use24Hour").trigger("click");
@@ -13731,7 +13743,7 @@ T = {
 		// Bind window buttons
 		$("#tmlClose").click(function()
 		{
-			T.toggleTimeline(false);
+			B.toggleTimeline(false);
 			T.isTimelineEnabled = false;
 		});
 		$("#tmlDelete").click(function()
@@ -13745,8 +13757,8 @@ T = {
 		});
 		// Initialize
 		I.qTip.init(".tmlLine");
-		T.updateTimelineSegments();
-		T.updateTimelineIndicator();
+		B.updateTimelineSegments();
+		B.updateTimelineIndicator();
 	},
 	
 	/*
@@ -13807,7 +13819,7 @@ T = {
 		// Refresh the legend if approached new bihour
 		if (currentminute === 0)
 		{
-			T.updateTimelineLegend();
+			B.updateTimelineLegend();
 		}
 		else
 		{
@@ -13854,7 +13866,6 @@ T = {
 				+ "<span id='tmlSegmentTimestamp_" + ithminute + "' class='tmlSegmentTimestamp " + hourclass + " " + tenseclass + "'>" + timestamp + "</span></div></div>");
 		}
 	},
-
 	
 	/*
 	 * Shows or hides the timeline.
@@ -13882,7 +13893,6 @@ T = {
 			$("#itemTimeline").hide();
 		}
 	}
-	
 };
 
 /* =============================================================================
@@ -13957,7 +13967,7 @@ K = {
 		K.stopwatchUp = $("#watUp")[0];
 		K.stopwatchDown = $("#watDown")[0];
 		
-		T.initializeDashboard();
+		B.initializeDashboard();
 		K.updateTimeFrame(new Date()); // This also calls the server reset check function
 		T.getDaily();
 		K.updateDaytimeIcon();
@@ -14394,10 +14404,10 @@ K = {
 			{
 				K.updateDaytimeIcon();
 				K.updateDryTopClipboard();
-				T.updateTimelineSegments();
+				B.updateTimelineSegments();
 				if (T.isDashboardEnabled)
 				{
-					T.refreshDashboard(pDate);
+					B.refreshDashboard(pDate);
 				}
 			}
 			
@@ -14406,7 +14416,7 @@ K = {
 			 */
 			K.refreshFestival();
 			K.updateDigitalClockMinutely();
-			T.updateTimelineIndicator();
+			B.updateTimelineIndicator();
 			// Refresh the chain time countdown opted
 			C.updateChainsTimeHTML();
 			K.updateWaypointsClipboard();
@@ -14475,7 +14485,7 @@ K = {
 		}
 		if (T.isDashboardCountdownTickEnabled)
 		{
-			T.updateDashboardCountdown(pDate);
+			B.updateDashboardCountdown(pDate);
 		}
 		if (K.StopwatchTimerStart !== 0)
 		{
@@ -15106,7 +15116,7 @@ K = {
 			$("#watToggle").show();
 			$("#itemStopwatch").show().css("font-size", O.Options.int_sizeStopwatchFont);
 			K.StopwatchTimerStart = (new Date()).getTime();
-			K.StopwatchTimerFinish = K.StopwatchTimerStart + (parseInt($("#watTimerMinute").val()) * T.cMILLISECONDS_IN_MINUTE);
+			K.StopwatchTimerFinish = K.StopwatchTimerStart + (O.Options.int_minStopwatchAlert * T.cMILLISECONDS_IN_MINUTE);
 			// Initial call to the update function
 			K.tickStopwatchDown();
 		});
@@ -15120,7 +15130,7 @@ K = {
 			K.StopwatchTimerStart = 0;
 			K.stopwatchDown.innerHTML = "";
 		});
-		$("#watTimerMinute, #watTimerText").click(function()
+		$("#chnOptionsStopwatchDown input").click(function()
 		{
 			$(this).select();
 		});
@@ -15157,7 +15167,7 @@ K = {
 		{
 			// If negative then timer has finished
 			$("#watTimerStop").trigger("click");
-			var speech = $("#watTimerText").val();
+			var speech = O.Options.str_textStopwatchAlert;
 			D.speak(speech);
 		}
 	},

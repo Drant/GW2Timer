@@ -253,15 +253,15 @@
 					<li id="wvwContextCenter">Center map</li>
 					<li class="itemContextSubmenu" id="wvwContextPins"><span>Pins</span>
 						<ul>
-							<li id="wvwContextOptimizePins">Optimize</li>
-							<li id="wvwContextUndoPins">Undo</li>
-							<li id="wvwContextClearPins">Clear</li>
 							<li class="itemContextSubmenu"><span>Load</span>
 								<ul id="wvwContextLoadPins"></ul>
 							</li>
 							<li class="itemContextSubmenu"><span>Save</span>
 								<ul id="wvwContextSavePins"></ul>
 							</li>
+							<li id="wvwContextOptimizePins">Optimize</li>
+							<li id="wvwContextUndoPins">Undo</li>
+							<li id="wvwContextClearPins">Clear</li>
 						</ul>
 					</li>
 					<li class="itemContextSubmenu"><span>Map</span>
@@ -507,8 +507,8 @@
 							</span>
 						</div>
 						<div id="chnOptionsStopwatchDown">
-							<input id="watTimerMinute" type="number" min="0" max="1440" step="1" value="15" title="<dfn>Personal Timer:</dfn> minutes from now when you will be alerted." />
-							<input id="watTimerText" type="text" value="Alert, alert, alert!" title="The text to be spoken when the personal timer finishes." />
+							<input id="opt_int_minStopwatchAlert" type="number" min="0" max="1440" step="1" value="15" title="<dfn>Personal Timer:</dfn> minutes from now when you will be alerted." />
+							<input id="opt_str_textStopwatchAlert" type="text" maxlength="128" value="Alert, alert, alert!" title="The text to be spoken when the personal timer finishes." />
 							<span class="watButtons">
 								<kbd id="watTimerStart">▶</kbd><kbd id="watTimerStop">■</kbd>
 							</span>

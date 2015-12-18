@@ -1000,7 +1000,7 @@ Countdowns: [
 	name_de: "Wintertag 2015",
 	name_es: "Día Invernal 2015",
 	name_fr: "Hivernel 2015",
-	official: "the-game/releases/december-15-2015",
+	url: "https://forum-en.guildwars2.com/forum/game/gw2/Updates-about-Wintersday",
 	Start: new Date("2015-12-15T17:00:00Z"),
 	Finish: new Date("2016-01-12T17:00:00Z")
 }
@@ -1063,14 +1063,6 @@ Sale: {
 		img: "http://i.imgur.com/mIuPrbz.png",
 		quantity: 1,
 		pricenew: 2000,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Royal Terrace Pass",
-		img: "https://render.guildwars2.com/file/470C33B838D5541D39C91DD5C65A53EFB9BCEB79/699314.png",
-		quantity: 1,
-		pricenew: 1000,
 		priceold: 0,
 		col: 0
 	},
@@ -1227,16 +1219,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2015-12-17T00:00:00Z"),
-	Finish: new Date("2015-12-18T00:00:00Z"),
+	Start: new Date("2015-12-18T00:00:00Z"),
+	Finish: new Date("2015-12-19T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49735", price: "25200" },
-		Fox: { id: "43843", price: "25200" },
-		Derwena: { id: "48910", price: "25200" },
-		Yana: { id: "49767", price: "25200" },
-		Katyn: { id: "44647", price: "25200" },
-		Verma: { id: "43841", price: "25200" }
+		Mehem: { id: "50021", price: "25200" },
+		Fox: { id: "44652", price: "25200" },
+		Derwena: { id: "43827", price: "25200" },
+		Yana: { id: "44660", price: "25200" },
+		Katyn: { id: "43810", price: "25200" },
+		Verma: { id: "43839", price: "25200" }
 	}
 }
 };

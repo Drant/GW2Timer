@@ -629,3 +629,10 @@ var GW2T_SERVER_DATA = {
 	name_zh: "巴魯克海灣[ SP ]"
 }
 };
+
+/*
+ * Objectives in WvW capturable map locations.
+ */
+var GW2T_OBJECTIVE_DATA = {
+	
+};
