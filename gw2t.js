@@ -7245,7 +7245,7 @@ M = {
 		$(htmlidprefix + "CoordinatesCopy").onEnterKey(function()
 		{
 			var val = $(this).val();
-			U.interpretCommand(val, that);
+			U.interpretCommand(val, that, that.ZoomEnum.Ground, that.Pin.Program);
 		});
 		
 		/*
@@ -8514,7 +8514,6 @@ M = {
 		var i;
 		var coords = [];
 		var zone;
-		var zoom;
 		if (pArguments)
 		{
 			coords = this.parseCoordinates(pArguments);
@@ -8522,8 +8521,7 @@ M = {
 			{
 				if (isFinite(coords[0]) && isFinite(coords[1]))
 				{
-					zoom = (pZoom !== undefined || pZoom !== null) ? pZoom : this.ZoomEnum.Ground;
-					this.goToView(coords, zoom, pPin);
+					this.goToView(coords, pZoom, pPin);
 				}
 			}
 			else if (coords.length >= 3)
@@ -8549,8 +8547,7 @@ M = {
 					{
 						if (zone.indexOf(i) !== -1)
 						{
-							zoom = (pZoom !== undefined || pZoom !== null) ? pZoom : this.ZoomEnum.Sky;
-							this.goToView(this.getZoneCenter(i), zoom);
+							this.goToView(this.getZoneCenter(i), this.ZoomEnum.Sky);
 							break;
 						}
 					}
