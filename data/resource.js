@@ -6,6 +6,25 @@
  * q: quantity (optional, number of items yield)
  */
 
+// Units of resources that a node typically yields (10 copper ore from a rich copper vein)
+var GW2T_RESOURCE_YIELD = {
+Metal: {
+	Rich: 10,
+	Regular: 3,
+	Hotspot: 3
+},
+Plant: {
+	Rich: 8,
+	Regular: 1,
+	Hotspot: 1
+},
+Wood: {
+	Rich: 15,
+	Regular: 3,
+	Hotspot: 3
+}
+};
+
 var GW2T_RESOURCE_DATA = {
 /* =============================================================================
  * @@METAL

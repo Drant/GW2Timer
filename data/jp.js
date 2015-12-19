@@ -13,7 +13,7 @@ var GW2T_JP_DATA = {
 	name_de: "Urmaugs Geheimnis",
 	name_es: "Secreto de Urmaug",
 	name_fr: "Le secret d'Urmaug",
-	coord: "[17399, 14591]",
+	coord: [17399, 14591],
 	img: "yjaAbBF",
 	description: "LA short climbs up cave cliff"
 },
@@ -24,7 +24,7 @@ var GW2T_JP_DATA = {
 	name_de: "Dämonenraupen-Gruben",
 	name_es: "Fosos Larvademonio",
 	name_fr: "Fosses de l'engeance",
-	coord: "[13202, 13674]",
+	coord: [13202, 13674],
 	img: "Bme6j1E",
 	chest: "splendid gold",
 	description: "Queensdale small cave with grubs and skelks"
@@ -36,7 +36,7 @@ var GW2T_JP_DATA = {
 	name_de: "Das eingestürzte Observatorium",
 	name_es: "El Observatorio Derrumbado",
 	name_fr: "Observatoire effondré",
-	coord: "[12781, 15876]",
+	coord: [12781, 15876],
 	img: "4JUI2Ba",
 	description: "Kessex cave ruins behind a river"
 },
@@ -47,7 +47,7 @@ var GW2T_JP_DATA = {
 	name_de: "Unter neuer Leitung",
 	name_es: "Nueva Administración",
 	name_fr: "La nouvelle direction",
-	coord: "[13884, 20428]",
+	coord: [13884, 20428],
 	img: "omyJBSk",
 	description: "Southsun short climb up the Consortium building"
 },
@@ -58,7 +58,7 @@ var GW2T_JP_DATA = {
 	name_de: "Höhlenforscher-Senke",
 	name_es: "Hondonada del Espeleólogo",
 	name_fr: "Grottes du spéléologue",
-	coord: "[10635, 20000]",
+	coord: [10635, 20000],
 	img: "SkOg8q8",
 	description: "Caledon giant mushrooms water cavern. Entrance is an underground hole covered by shrubs"
 },
@@ -69,7 +69,7 @@ var GW2T_JP_DATA = {
 	name_de: "Schamanen-Kolonie",
 	name_es: "Colonia del Chamán",
 	name_fr: "Perchoir des chamanes",
-	coord: "[22074, 13584]",
+	coord: [22074, 13584],
 	img: "0vGbgNn",
 	description: "Wayfarer raven knockbacks from rock pillars"
 },
@@ -80,7 +80,7 @@ var GW2T_JP_DATA = {
 	name_de: "König Jalis' Zuflucht",
 	name_es: "Refugio del Rey Jalis",
 	name_fr: "Refuge du roi Jalis",
-	coord: "[21490, 12271]",
+	coord: [21490, 12271],
 	img: "y7bmCXv",
 	description: "Snowden Priory site with looters"
 },
@@ -91,7 +91,7 @@ var GW2T_JP_DATA = {
 	name_de: "Knuddlerbucht",
 	name_es: "Cala del Cuidador",
 	name_fr: "Gorge du dorloteur",
-	coord: "[20756, 20878]",
+	coord: [20756, 20878],
 	img: "iWXzOXM",
 	description: "Timberline skip jump over quaggan lanterns. Entrance is underwater. <dfn data-coord='[20685, 21217]'>Inner cove</dfn> <a href='http://i.imgur.com/1CRkPDo.png'>entrance note</a>"
 },
@@ -102,7 +102,7 @@ var GW2T_JP_DATA = {
 	name_de: "Die Zerschmetterten Eisruinen",
 	name_es: "Ruinas de Hielo Destrozadas",
 	name_fr: "Ruines de la banquise brisée",
-	coord: "[22075, 9112]",
+	coord: [22075, 9112],
 	img: "sV7XcGd",
 	description: "Frostgorge ice cave with trolls skelks oozes"
 },
@@ -113,7 +113,7 @@ var GW2T_JP_DATA = {
 	name_de: "Purpur-Plateau",
 	name_es: "Meseta Carmesí",
 	name_fr: "Plateau cramoisi",
-	coord: "[26258, 13026]",
+	coord: [26258, 13026],
 	img: "CETyR64",
 	description: "Diessa grawl plateau with rocks and ruins"
 },
@@ -124,7 +124,7 @@ var GW2T_JP_DATA = {
 	name_de: "Grendich-Spiel",
 	name_es: "Apuesta de Grendich",
 	name_fr: "Saut de Grendich",
-	coord: "[25136, 12227]",
+	coord: [25136, 12227],
 	img: "7Qxd1Wx",
 	description: "Diessa ruined Ascalonian stone tower climb"
 },
@@ -135,7 +135,7 @@ var GW2T_JP_DATA = {
 	name_de: "Wallbrecherblitz",
 	name_es: "Bombardeo de la Brecha del Muro",
 	name_fr: "Brèche du mur en folie",
-	coord: "[25530, 13388]",
+	coord: [25530, 13388],
 	img: "c8sAP6V",
 	description: "Diessa long Ascalonian wall with vista at end"
 },
@@ -146,7 +146,7 @@ var GW2T_JP_DATA = {
 	name_de: "Behem-Spießrutenlauf",
 	name_es: "Desafío de Behem",
 	name_fr: "Défi de Behem",
-	coord: "[31116, 15198]",
+	coord: [31116, 15198],
 	img: "5AOBdga",
 	description: "Blazeridge deep spider bat cave"
 },
@@ -157,7 +157,7 @@ var GW2T_JP_DATA = {
 	name_de: "Die Roheisen-Grube",
 	name_es: "Cantera de Arrabio",
 	name_fr: "La Carrière de fonte brute",
-	coord: "[25986, 10719]",
+	coord: [25986, 10719],
 	img: "0RIGbvR",
 	description: "Fireheart suspended carts high over two hills"
 },
@@ -168,7 +168,7 @@ var GW2T_JP_DATA = {
 	name_de: "Der Turm des Wesirs",
 	name_es: "Torre del Visir",
 	name_fr: "La Tour du Vizir",
-	coord: "[16325, 24485]",
+	coord: [16325, 24485],
 	img: "1whVJrb",
 	description: "Straits coral climb up a plateau tower"
 },
@@ -179,7 +179,7 @@ var GW2T_JP_DATA = {
 	name_de: "Verschüttete Archive",
 	name_es: "Archivos Enterrados",
 	name_fr: "Archives ensevelies",
-	coord: "[11078, 29012]",
+	coord: [11078, 29012],
 	img: "5AAMpcO",
 	description: "Cursed wall coral jump through risens eagles"
 },
@@ -190,7 +190,7 @@ var GW2T_JP_DATA = {
 	name_de: "Schürftal-Absturzstellenklettererin",
 	name_es: "Lugar del Impacto del Valle de las Promesas",
 	name_fr: "Site du crash de la Vallée du prospecteur",
-	coord: "[5380, 16514]",
+	coord: [5380, 16514],
 	img: "5QS6dN2",
 	chest: "grand",
 	description: "Dry Top aspect crystal jump on bamboo beams to top plateau"
@@ -202,7 +202,7 @@ var GW2T_JP_DATA = {
 	name_de: "Weyandts Rache",
 	name_es: "Venganza de Weyandt",
 	name_fr: "La revanche de Weyandt",
-	coord: "[17210, 15481]",
+	coord: [17210, 15481],
 	img: "Asnph3I",
 	description: "LA huge pirate themed cave"
 },
@@ -213,7 +213,7 @@ var GW2T_JP_DATA = {
 	name_de: "Die Säbelrassler-Bucht",
 	name_es: "Cala del Espadachín",
 	name_fr: "La Crique du bretteur",
-	coord: "[16670, 14183]",
+	coord: [16670, 14183],
 	img: "19dLq1S",
 	description: "Gendarran light torches and swim in time. <dfn data-coord='[16510, 14221]'>Cave entrance</dfn> faces east"
 },
@@ -224,7 +224,7 @@ var GW2T_JP_DATA = {
 	name_de: "Fawcetts Beute",
 	name_es: "Botín de Fawcett",
 	name_fr: "Le butin de Fawcett",
-	coord: "[14330, 9653]",
+	coord: [14330, 9653],
 	img: "vHwaBOm",
 	description: "Harathi pirate ship in underground lake"
 },
@@ -235,7 +235,7 @@ var GW2T_JP_DATA = {
 	name_de: "Professor Portmatts Labor",
 	name_es: "Laboratorio del Profesor Portmatt",
 	name_fr: "Labo du professeur Portmatt",
-	coord: "[15726, 16423]",
+	coord: [15726, 16423],
 	img: "3uEgh6s",
 	description: "Bloodtide underwater number puzzle force fields"
 },
@@ -246,7 +246,7 @@ var GW2T_JP_DATA = {
 	name_de: "Morgans Sprung",
 	name_es: "Salto de Morgan",
 	name_fr: "Bond de Morgan",
-	coord: "[11020, 19349]",
+	coord: [11020, 19349],
 	img: "vJ9pk02",
 	description: "Caledon spiral tree and floating rocks in the sky. Escort <dfn data-coord='[10696, 19663]'>Brugh</dfn> to regrow the leaf stairs"
 },
@@ -257,7 +257,7 @@ var GW2T_JP_DATA = {
 	name_de: "Spekks' Labor",
 	name_es: "Laboratorio de Spekks",
 	name_fr: "Laboratoire de Spekks",
-	coord: "[9492, 18652]",
+	coord: [9492, 18652],
 	img: "wiRtb7r",
 	description: "Caledon asuran light platforms with lava below"
 },
@@ -268,7 +268,7 @@ var GW2T_JP_DATA = {
 	name_de: "Zwickmühle hoch drei",
 	name_es: "Acertijo al Cubo",
 	name_fr: "Enigme au carré",
-	coord: "[17958, 21624]",
+	coord: [17958, 21624],
 	img: "xE1n8zJ",
 	description: "Maelstrom floating cubes and electricity"
 },
@@ -279,7 +279,7 @@ var GW2T_JP_DATA = {
 	name_de: "Fluchgießerei Abgedreht",
 	name_es: "Hexafundición Destartalada",
 	name_fr: "Hexfonderie désaxée",
-	coord: "[17545, 21917]",
+	coord: [17545, 21917],
 	img: "LlN43yV",
 	description: "Sparkfly destroyed Inquest facility"
 },
@@ -290,7 +290,7 @@ var GW2T_JP_DATA = {
 	name_de: "Greifenturmstrecke",
 	name_es: "Ruta Torre del Grifo",
 	name_fr: "Piste de Griffonroc",
-	coord: "[18077, 17118]",
+	coord: [18077, 17118],
 	img: "fR9doXu",
 	description: "Lornar's steep griffons rock pillars. <a href='http://i.imgur.com/rJk97wh.png'>Entrance note</a>"
 },
@@ -301,7 +301,7 @@ var GW2T_JP_DATA = {
 	name_de: "Trübsalriss-Gerüst",
 	name_es: "Andamiaje del Abismo de la Tribulación",
 	name_fr: "Ascension de la Faille de la tribulation",
-	coord: "[19819, 17950]",
+	coord: [19819, 17950],
 	img: "2XMfX13",
 	description: "Dredgehaunt tall tower scaffold planks"
 },
@@ -312,7 +312,7 @@ var GW2T_JP_DATA = {
 	name_de: "Trübsalriss-Höhlen",
 	name_es: "Cavernas de la Aflicción",
 	name_fr: "Tribulations caverneuses",
-	coord: "[19718, 17986]",
+	coord: [19718, 17986],
 	img: "2jLd6zm",
 	description: "Dredgehaunt ice cave after the scaffold JP"
 },
@@ -323,7 +323,7 @@ var GW2T_JP_DATA = {
 	name_de: "Nur Zuhl",
 	name_es: "Solo Zuhl",
 	name_fr: "Zuhl au monde",
-	coord: "[21062, 18805]",
+	coord: [21062, 18805],
 	img: "jG5uLNJ",
 	description: "Timberline ice cave then lava dredge/destroyer mine. You have to kill a champ at the end to get credit"
 },
@@ -334,7 +334,7 @@ var GW2T_JP_DATA = {
 	name_de: "Sagenklauen-Weite",
 	name_es: "Extensión de Garrafolclore",
 	name_fr: "Etendue de Fablegriffe",
-	coord: "[28465, 15425]",
+	coord: [28465, 15425],
 	img: "dtnDiEQ",
 	description: "Plains water cavern Ascalonian ruins with traps"
 },
@@ -345,7 +345,7 @@ var GW2T_JP_DATA = {
 	name_de: "Die Gebrandmarkte Mine",
 	name_es: "Mina del Marcado",
 	name_fr: "Mine stigmatisée",
-	coord: "[28948, 16834]",
+	coord: [28948, 16834],
 	img: "QATS0uY",
 	description: "Fields metal platforms jaggedly hung on chains"
 },
@@ -356,7 +356,7 @@ var GW2T_JP_DATA = {
 	name_de: "Die Chaoskristallhöhle",
 	name_es: "Caverna del Cristal del Caos",
 	name_fr: "Grotte du cristal du chaos",
-	coord: "[27345, 13106]",
+	coord: [27345, 13106],
 	img: "S0JZgxG",
 	description: "Marches skip rocks jumps with character transformations. <a href='http://i.imgur.com/hQKO6Mi.png'>Shortcut note</a>"
 },
@@ -367,7 +367,7 @@ var GW2T_JP_DATA = {
 	name_de: "Crazes Torheit",
 	name_es: "Capricho de Insanio",
 	name_fr: "La Folie de Delirius",
-	coord: "[30901, 12471]",
+	coord: [30901, 12471],
 	img: "2Q5FzbJ",
 	description: "Blazeridge Separatists hideout and troll cave. <a href='http://i.imgur.com/WNCAQlk.png'>Grand Chest note</a>"
 },
@@ -378,7 +378,7 @@ var GW2T_JP_DATA = {
 	name_de: "Kavernöses Refugium",
 	name_es: "Caverna de la Suspensión",
 	name_fr: "Antre de Suspension",
-	coord: "[13598, 24798]",
+	coord: [13598, 24798],
 	img: "JlHp1Jb",
 	description: "Malchor's cave wall climb with mini treasure chests"
 },
@@ -389,7 +389,7 @@ var GW2T_JP_DATA = {
 	name_de: "Trockendock-Riss",
 	name_es: "Gruta de Diqueseco",
 	name_fr: "Griffure de Quai-sec",
-	coord: "[5850, 14793]",
+	coord: [5850, 14793],
 	img: "iWbwwAY",
 	description: "Silverwastes map-size desert JP with checkpoints. <dfn data-coord='[5257, 14952]'>Inner entrance</dfn> is left side of the ship's roof"
 },
@@ -400,7 +400,7 @@ var GW2T_JP_DATA = {
 	name_de: "Rache des Trolls",
 	name_es: "Venganza del trol",
 	name_fr: "Vengeance du troll",
-	coord: "[16611, 15124]",
+	coord: [16611, 15124],
 	img: "zho486P",
 	description: "LA city-wide rooftop jumps. Open four mini-chests to open final chest"
 },
@@ -411,7 +411,7 @@ var GW2T_JP_DATA = {
 	name_de: "Nicht so geheim",
 	name_es: "No Tan Secreta",
 	name_fr: "Pas si secret",
-	coord: "[15379, 14282]",
+	coord: [15379, 14282],
 	img: "wEG8PMR",
 	description: "Gendarran aetherblade hideout with trampolines"
 },
@@ -422,7 +422,7 @@ var GW2T_JP_DATA = {
 	name_de: "Goemms Labor",
 	name_es: "Laboratorio de Goemm",
 	name_fr: "Laboratoire de Goemm",
-	coord: "[9235, 18967]",
+	coord: [9235, 18967],
 	img: "782GdE5",
 	description: "Metrica floating landmasses in the sky as asura weather stations"
 },
@@ -433,7 +433,7 @@ var GW2T_JP_DATA = {
 	name_de: "Finsterer Tagtraum",
 	name_es: "Ensoñación Oscura",
 	name_fr: "Rêverie cauchemardesque",
-	coord: "[10963, 19197]",
+	coord: [10963, 19197],
 	img: "KcUE585",
 	description: "Caledon nightmare court blue hideout after Morgan's Spiral"
 },
@@ -444,7 +444,7 @@ var GW2T_JP_DATA = {
 	name_de: "Verborgener Garten",
 	name_es: "Jardín Oculto",
 	name_fr: "Jardin caché",
-	coord: "[21357, 21885]",
+	coord: [21357, 21885],
 	img: "ZgnQGFR",
 	description: "Maelstrom unlock four element cantles. Keeper portal to JP locations: <dfn data-coord='[18335, 22125]'>Earth</dfn>, <dfn data-coord='[19514, 22714]'>Light</dfn>, <dfn data-coord='[20143, 22209]'>Waves</dfn>, <dfn data-coord='[20770, 23385]'>Winds</dfn>. Cantals are at sky and ground level of the center, southeast waterfalls, and north lake"
 },
@@ -455,7 +455,7 @@ var GW2T_JP_DATA = {
 	name_de: "Steine hüpfen lassen",
 	name_es: "Haciendo Patitos",
 	name_fr: "Ricochets",
-	coord: "[12780, 19377]",
+	coord: [12780, 19377],
 	img: "dxTDLqJ",
 	description: "Southsun stones gushed up by geysers"
 },
@@ -466,7 +466,7 @@ var GW2T_JP_DATA = {
 	name_de: "Der Abgrund des Plünderers",
 	name_es: "Sima del Carroñero",
 	name_fr: "Gouffre du charognard",
-	coord: "[13610, 25044]",
+	coord: [13610, 25044],
 	img: "kDX7ZEq",
 	description: "Malchor's convoluted orrian ruins cave collecting 12 orbs"
 },
@@ -477,7 +477,7 @@ var GW2T_JP_DATA = {
 	name_de: "Miese Nachbarschaft",
 	name_es: "Un vecindario cruel",
 	name_fr: "Voisinage malsain",
-	coord: "[11717, 11915]",
+	coord: [11717, 11915],
 	img: "UAuY5zY",
 	chest: "splendid krytan",
 	description: "Queensdale bandit headquarter cave (Easy)"
@@ -489,7 +489,7 @@ var GW2T_JP_DATA = {
 	name_de: "Goffs Beute",
 	name_es: "El botín de Goff",
 	name_fr: "Butin de Goff",
-	coord: "[11481, 14335]",
+	coord: [11481, 14335],
 	img: "oziFIK5",
 	chest: "splendid wood",
 	description: "Kessex bandit cave camp with imprisoned trolls (Easy)"
@@ -501,7 +501,7 @@ var GW2T_JP_DATA = {
 	name_de: "Provern-Gruft",
 	name_es: "Cripta Provérnica",
 	name_fr: "Crypte de Provernic",
-	coord: "[15433, 12539]",
+	coord: [15433, 12539],
 	img: "j5PK9V7",
 	description: "Gendarran traps and spiders crypt (Easy)"
 },
@@ -512,7 +512,7 @@ var GW2T_JP_DATA = {
 	name_de: "Finger weg vom Glänzigen",
 	name_es: "No toques el reluciente",
 	name_fr: "Pas touche au brillant",
-	coord: "[10126, 17694]",
+	coord: [10126, 17694],
 	img: "2bWLIdI",
 	chest: "splendid asura",
 	description: "Caledon skritt junk cave with golem room. Take the electric sphere from the glass container and throw it at the shanty gate to enter (Easy)"
@@ -524,7 +524,7 @@ var GW2T_JP_DATA = {
 	name_de: "Verarium-Loch",
 	name_es: "Socavones de Verarium",
 	name_fr: "Fosses de Verarium",
-	coord: "[15583, 20191]",
+	coord: [15583, 20191],
 	img: "PJVbyuO",
 	chest: "wood",
 	description: "Sparkfly ruined tomb. Follow the cave <dfn data-coord='[15647, 19631]'>path</dfn> to the cliff vista, then jump down south from the vista where the boars are for the entrance (Easy)"
@@ -536,8 +536,8 @@ var GW2T_JP_DATA = {
 	name_de: "Unterschlupf der Rebellen",
 	name_es: "Aislamiento del Rebelde",
 	name_fr: "Solitude du Rebelle",
-	coord: "[26906, 9674]",
-	c: "[27080, 9919]",
+	coord: [26906, 9674],
+	c: [27080, 9919],
 	img: "l1CIJGo",
 	chest: "splendid sphere",
 	description: "Fireheart bandit camp and Ascalonian ghosts ruins (Easy)"
@@ -549,7 +549,7 @@ var GW2T_JP_DATA = {
 	name_de: "Riesenschnabel Nimmersatt",
 	name_es: "El buche vacío de Pico",
 	name_fr: "Beaker au ventre vide",
-	coord: "[17764, 16379]",
+	coord: [17764, 16379],
 	img: "H3HoEZk",
 	description: "Lornar feed griffon ogre pet. Same area as <dfn data-coord='[18077, 17118]'>Griffonrook</dfn> JP. No chest here, just the achievement (Easy)"
 },
@@ -560,7 +560,7 @@ var GW2T_JP_DATA = {
 	name_de: "Oolas altes Labor",
 	name_es: "Antiguo Laboratorio de Oola",
 	name_fr: "Labo d'Oola l'Ancêtre",
-	coord: "[9194, 19062]",
+	coord: [9194, 19062],
 	img: "leOMSRn",
 	description: "Metrica asura lab with security golems. Requires an <a href='http://wiki.guildwars2.com/wiki/Energy_Crystal'>Energy Crystal</a> (random loot) to open the outside gate (Medium)"
 },
@@ -571,7 +571,7 @@ var GW2T_JP_DATA = {
 	name_de: "Die Tränen Itlaocols",
 	name_es: "Las lágrimas de Itlaocol",
 	name_fr: "Larmes d'Itlaocol",
-	coord: "[9516, 17345]",
+	coord: [9516, 17345],
 	img: "d5b4LYG",
 	chest: "sylvari",
 	description: "Caledon hylek village with pattern puzzle. Pick up a nearby boulder and throw at the gong right side of the gate to enter (Medium)"
@@ -583,7 +583,7 @@ var GW2T_JP_DATA = {
 	name_de: "Vexas Labor",
 	name_es: "Laboratorio de Vexa",
 	name_fr: "Labo de Vexa",
-	coord: "[26066, 9837]",
+	coord: [26066, 9837],
 	img: "7LGnLCr",
 	description: "Fireheart asura laboratory with Escher stairs. Boss Vexa (Medium)"
 },
@@ -594,7 +594,7 @@ var GW2T_JP_DATA = {
 	name_de: "Schatz der Zugigen Höhle",
 	name_es: "El tesoro de la Cueva Ventosa",
 	name_fr: "Trésor de la Grotte venteuse",
-	coord: "[18322, 14297]",
+	coord: [18322, 14297],
 	img: "zHnC5RR",
 	chest: "grand dwarven",
 	description: "Lornar knockdown winds cavern with shadow imps (Medium)"
@@ -606,7 +606,7 @@ var GW2T_JP_DATA = {
 	name_de: "Magellans Andenken",
 	name_es: "El recordatorio de Magallanes",
 	name_fr: "Souvenirs de Magellan",
-	coord: "[23434, 10877]",
+	coord: [23434, 10877],
 	img: "6ZOrmQ0",
 	chest: "grand dwarven",
 	description: "Frostgorge grawl cave. Chest is guarded by champ ooze (Medium)"
@@ -618,7 +618,7 @@ var GW2T_JP_DATA = {
 	name_de: "Schiff des Leids",
 	name_es: "El barco de los lamentos",
 	name_fr: "Navire des lamentations",
-	coord: "[15044, 22718]",
+	coord: [15044, 22718],
 	img: "Y5DhRbx",
 	chest: "grand asura",
 	description: "Straits shipwreck filled with underwater risens (Medium)"
@@ -630,7 +630,7 @@ var GW2T_JP_DATA = {
 	name_de: "Der vergessene Fluss",
 	name_es: "El arroyo olvidado",
 	name_fr: "Cours d'eau oublié",
-	coord: "[11415, 26582]",
+	coord: [11415, 26582],
 	img: "IhAjhKN",
 	chest: "orrian",
 	description: "Cursed heavily guarded orrian cavern (Medium)"
@@ -642,7 +642,7 @@ var GW2T_JP_DATA = {
 	name_de: "Geerdet",
 	name_es: "Encallado",
 	name_fr: "A terre",
-	coord: "[11656, 28757]",
+	coord: [11656, 28757],
 	img: "ZznRVR5",
 	chest: "grand orrian",
 	description: "Cursed beached shipwreck. Chest is guarded by champ risen (Medium)"
@@ -654,7 +654,7 @@ var GW2T_JP_DATA = {
 	name_de: "Flammentempel-Gruft",
 	name_es: "Tumbas del Templo de la Llama",
 	name_fr: "Tombes du Temple de la Flamme",
-	coord: "[26936, 11437]",
+	coord: [26936, 11437],
 	img: "pjRqPyE",
 	description: "Diessa Flame Legion booby-trapped water dungeon. Boss Rhendak (Hard)"
 },
@@ -665,7 +665,7 @@ var GW2T_JP_DATA = {
 	name_de: "Verdammte Schätze",
 	name_es: "Fortuna abandonada",
 	name_fr: "Fortune oubliée",
-	coord: "[19658, 15653]",
+	coord: [19658, 15653],
 	img: "zYpFis4",
 	chest: "grand dwarven",
 	description: "Dredgehaunt pitch black dwarven ruin. Talk to <dfn data-coord='[20045, 15356]'>Gerrvid</dfn> and the books to start the event to open the gate (Hard)"
@@ -677,7 +677,7 @@ var GW2T_JP_DATA = {
 	name_de: "Ein großer Umweg",
 	name_es: "El camino más largo",
 	name_fr: "Grand détour",
-	coord: "[16527, 23647]",
+	coord: [16527, 23647],
 	img: "ZDCGMmY",
 	description: "Straits dodge risen hands projectiles to deactivate datapads (Hard)"
 }
