@@ -1243,6 +1243,7 @@ U = {
 		GuildDetails: "https://api.guildwars2.com/v1/guild_details.json?guild_id=",
 		
 		// Other
+		Prefix: "https://api.guildwars2.com/v2/",
 		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl="
 	},
 	
@@ -1346,29 +1347,83 @@ U = {
 	parseConsoleCommand: function(pString, pMapObject)
 	{
 		var that = pMapObject;
-		var command = pString.toLowerCase().substring(1, pString.length); // Trim the command prefix character
-		var args = command.split(" ");
-		switch (args[0])
-		{
-			case "clear": I.clear(); break;
-			case "gps": I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray); break;
-			case "identity": I.write(U.formatJSON(GPSIdentityJSON), 0); break;
-			case "lock": that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked."); break;
-			case "unlock": that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked."); break;
-			case "nocontext": that.Map.off("contextmenu"); I.write("Map context menu disabled."); break;
-			case "dart": that.drawRandom(args[1]); break;
-			case "greedy": that.redrawPersonalPath(P.getGreedyPath(M.parseCoordinatesMulti(args[1]))); break;
-			case "nodes": P.printNodes(P.sortCoordinates(M.parseCoordinatesMulti(args[1]))); break;
-			case "api": U.printAPI(args[1], args[2], args[3]); break;
-			case "daily": U.printDaily(); break;
-			case "item": U.printAPI("items/" + args[1]); break;
-			case "items": U.printItemsAPI(args[1]); break;
-			case "events": P.printZoneEvents(); break;
-			case "test":
+		var args = pString.substring(1, pString.length).split(" "); // Trim the command prefix character
+		var command = args[0].toLowerCase();
+		
+		var Commands = {
+			clear: {usage: "Clears the console screen.", f: function()
+			{
+				I.clear();
+			}},
+			gps: {usage: "Prints GPS location information.", f: function()
+			{
+				I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray);
+			}},
+			identity: {usage: "Prints GPS general information.", f: function()
+			{
+				I.write(U.formatJSON(GPSIdentityJSON), 0);
+			}},
+			lock: {usage: "Map cannot be moved.", f: function()
+			{
+				that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked.");
+			}},
+			unlock: {usage: "Map can be moved.", f: function()
+			{
+				that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked.");
+			}},
+			nocontext: {usage: "Disables the map's context menu.", f: function()
+			{
+				that.Map.off("contextmenu"); I.write("Map context menu disabled.");
+			}},
+			dart: {usage: "Draws personal pins at random map locations. <em>Parameters: int_quantity</em>", f: function()
+			{
+				that.drawRandom(args[1]);
+			}},
+			nodes: {usage: "Prints a list of ordered coordinates. <em>Parameters: arr_coordinates</em>", f: function()
+			{
+				P.printNodes(P.sortCoordinates(M.parseCoordinatesMulti(args[1])));
+			}},
+			decode: {usage: "Decodes a chatlink to a number ID. <em>Parameters: str_chatlink</em>", f: function()
+			{
+				I.write(U.getGameIDFromChatlink(args[1], true), 0);
+			}},
+			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, int_limit (optional), str_querystring (optional)</em>", f: function()
+			{
+				U.printAPI(args[1], args[2], args[3]);
+			}},
+			daily: {usage: "Prints the daily achievements.", f: function()
+			{
+				U.printDaily();
+			}},
+			item: {usage: "Prints an item's information. <em>Parameters: int_itemid</em>", f: function()
+			{
+				U.printAPI("items/" + args[1]);
+			}},
+			items: {usage: "Prints the highest numbered item IDs in the API. <em>Parameters: int_offset</em>", f: function()
+			{
+				U.printItemsAPI(args[1]);
+			}},
+			events: {usage: "Prints the event names of the current zone, dynamic events option must be enabled.", f: function()
+			{
+				P.printZoneEvents();
+			}},
+			help: {usage: "Prints this help message.", f: function()
+			{
+				I.write("Available console commands:<br />");
+				var s = "";
+				for (var i in Commands)
+				{
+					s += "<b>" + i + "</b> - " + Commands[i].usage + "<br />";
+				}
+				I.write(s, 0);
+			}},
+			test: {usage: "Test function for debugging.", f: function()
 			{
 				
-			} break;
-		}
+			}}
+		};
+		// Execute the command by finding it in the object
+		(Commands[command].f)();
 	},
 	
 	/*
@@ -1386,7 +1441,7 @@ U = {
 		var length = 0;
 		var counter = 0;
 		var args = (pArgs === undefined) ? "" : pArgs;
-		var url = "https://api.guildwars2.com/v2/" + pString;
+		var url = U.URL_API.Prefix + pString;
 		$.get(url + args, function(pData)
 		{
 			length = pData.length;
@@ -2256,28 +2311,28 @@ U = {
 	},
 	
 	/*
-	 * Converts a poi_id number from maps_floor.json to a valid chat link.
+	 * Converts a poi_id number from maps_floor.json to a valid chatlink.
 	 * Code from http://virtus-gilde.de/gw2map
 	 * @param int pID of the poi.
-	 * @returns string chatcode.
+	 * @returns string chatlink.
 	 */
 	getChatlinkFromPoiID: function(pID)
 	{
-		var chatcode = String.fromCharCode(4);
+		var chatlink = String.fromCharCode(4);
 		// Create unicode characters from the id
 		for (var i = 0; i < 4; i++)
 		{
-			chatcode += String.fromCharCode((pID >> (i * 8)) & 255);
+			chatlink += String.fromCharCode((pID >> (i * 8)) & 255);
 		}
 		// Return base64 string with chat code tags
-		return "[&" + btoa(chatcode) + "]";
+		return "[&" + btoa(chatlink) + "]";
 	},
 	
 	/*
-	 * Converts an item id from items.json to a valid chat link.
+	 * Converts an item id from items.json to a valid chatlink.
 	 * Code from http://redd.it/zy8gb
 	 * @param int pID of the item.
-	 * @returns string chatcode.
+	 * @returns string chatlink.
 	 */ 
 	getChatlinkFromItemID: function(pID)
 	{
@@ -2289,6 +2344,62 @@ U = {
 			+ String.fromCharCode(0) + String.fromCharCode(0)) + "]";
 		} catch(e){};
 		return str;
+	},
+
+	/*
+	 * Converts a chatlink to a plain number ID.
+	 * @param string pChatlink.
+	 * @param boolean pWantType if to return the type of the ID also, optional.
+	 * @returns int number or null if invalid.
+	 * Code from http://wiki.guildwars2.com/wiki/MediaWiki:ChatLinkSearch.js
+	 */
+	getGameIDFromChatlink: function(pChatlink, pWantType)
+	{
+		var decodeChatLink = function(pCode)
+		{
+			var binary = window.atob(pCode);
+			var octets = new Array(binary.length);
+			for (var i = 0; i < binary.length; i++)
+			{
+				octets[i] = binary.charCodeAt(i);
+			}
+			return octets;
+		};
+		
+		var id = null;
+		// Extract the code portion of the chatlink [&CODE]
+		if (typeof(pChatlink) === "string" && pChatlink.indexOf("[&") === 0 && pChatlink.indexOf("]" === pChatlink.length - 1))
+		{
+			pChatlink = pChatlink.substring(2, pChatlink.length - 1);
+		}
+		
+		try
+		{
+			var data = decodeChatLink(pChatlink);
+			var id = data[2] << 8 | data[1];
+			var type = null;
+			switch (data[0])
+			{
+				case 2: {
+					type = "item";
+					id = data[3] << 8 | data[2];
+					id = (data.length > 4 ? data[4] << 16 : 0) | id;
+					
+				} break;
+				case 4: type = "location"; break;
+				case 6: type = "skill"; break;
+				case 8: type = "trait"; break;
+				case 9: type = "recipe"; break;
+				case 10: type = "skin"; break;
+				case 11: type = "outfit"; break;	
+			}
+		}
+		catch(e)
+		{
+			I.write("Invalid chatlink to decode.");
+		}
+
+		return (pWantType === undefined) ? id : id + " (" + type + ")";
 	}
 };
 
@@ -7206,8 +7317,8 @@ M = {
 		{
 			case P.MapEnum.Tyria: {
 				mapnumber = 1;
-				P.populateMap(M);
 				this.createPins();
+				P.populateMap(M);
 				P.drawZoneBorders();
 				P.drawZoneGateways();
 				C.ScheduledChains.forEach(P.drawChainPaths);
@@ -7220,8 +7331,8 @@ M = {
 				{
 					continuousWorld: true
 				}).addTo(W.Map);
-				P.populateMap(W);
 				this.createPins();
+				P.populateMap(W);
 			} break;
 		}
 		
@@ -7431,7 +7542,7 @@ M = {
 		});
 		$(htmlidprefix + "ContextToggleCompletion").click(function()
 		{
-			$("#opt_bol_showWorldCompletion").trigger("click");
+			$("#opt_bol_showWorldCompletion" + that.OptionSuffix).trigger("click");
 		});
 		$(htmlidprefix + "ContextDrawCompletion").click(function()
 		{
@@ -7764,7 +7875,7 @@ M = {
 	{
 		var that = this;
 		var currentzoom = this.Map.getZoom();
-		var waypointsize, landmarksize, eventiconsize, eventringsize;
+		var waypointsize, landmarksize, eventiconsize, eventringsize, objectivesize;
 		var sectorfontsize, sectoropacity;
 		var completionboolean;
 		var overviewboolean;
@@ -7772,13 +7883,13 @@ M = {
 		
 		switch (currentzoom)
 		{
-			case this.ZoomEnum.Max: waypointsize = 40; landmarksize = 32; eventiconsize = 32; eventringsize = 256; break;
-			case this.ZoomEnum.Max - 1: waypointsize = 32; landmarksize = 24; eventiconsize = 24; eventringsize = 128; break;
-			case this.ZoomEnum.Max - 2: waypointsize = 26; landmarksize = 16; eventiconsize = 16; eventringsize = 64; break;
-			case this.ZoomEnum.Max - 3: waypointsize = 20; landmarksize = 12; eventiconsize = 12; eventringsize = 32; break;
-			case this.ZoomEnum.Max - 4: waypointsize = 16; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
-			case this.ZoomEnum.Max - 5: waypointsize = 12; landmarksize = 0; eventiconsize = 0; eventringsize = 0; break;
-			default: { waypointsize = 0; landmarksize = 0; eventiconsize = 0; eventringsize = 0; }
+			case this.ZoomEnum.Max: waypointsize = 40; landmarksize = 32; eventiconsize = 32; eventringsize = 256; objectivesize = 38; break;
+			case this.ZoomEnum.Max - 1: waypointsize = 32; landmarksize = 24; eventiconsize = 24; eventringsize = 128; objectivesize = 38; break;
+			case this.ZoomEnum.Max - 2: waypointsize = 26; landmarksize = 16; eventiconsize = 16; eventringsize = 64; objectivesize = 35; break;
+			case this.ZoomEnum.Max - 3: waypointsize = 20; landmarksize = 12; eventiconsize = 12; eventringsize = 32; objectivesize = 32; break;
+			case this.ZoomEnum.Max - 4: waypointsize = 16; landmarksize = 0; eventiconsize = 0; eventringsize = 0; objectivesize = 24; break;
+			case this.ZoomEnum.Max - 5: waypointsize = 12; landmarksize = 0; eventiconsize = 0; eventringsize = 0; objectivesize = 16; break;
+			default: { waypointsize = 0; landmarksize = 0; eventiconsize = 0; eventringsize = 0; objectivesize = 0; }
 		}
 		
 		switch (currentzoom)
@@ -7819,6 +7930,9 @@ M = {
 			} break;
 			case P.MapEnum.Mists:
 			{
+				// Objective Icon
+				$(".objContainer").find("img").css({width: objectivesize, height: objectivesize});
+				
 				overviewboolean = O.Options.bol_showZoneOverviewWvW;
 				completionboolean = O.Options.bol_showWorldCompletionWvW;
 				sectorboolean = O.Options.bol_displaySectorsWvW;
@@ -9125,7 +9239,7 @@ P = {
 								zoneobj.Layers.Vista.addLayer(marker);
 							} break;
 						}
-						// Clicking on waypoints or POIs gives a chatcode
+						// Clicking on waypoints or POIs gives a chatlink
 						if (poi.type === that.APIPOIEnum.Waypoint || poi.type === that.APIPOIEnum.Landmark)
 						{
 							marker.on("click", function()
@@ -11791,7 +11905,8 @@ W = {
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(),
 		ZoneBorder: new L.layerGroup(),
-		Pin: new L.layerGroup()
+		Pin: new L.layerGroup(),
+		Objective: new L.layerGroup()
 	},
 	LayerArray: {
 		
@@ -11834,10 +11949,42 @@ W = {
 	 */
 	populateWvW: function()
 	{
+		var obj;
+		var marker;
 		for (var i in W.Objectives)
 		{
-			this.createPersonalPin(this.convertGCtoLC(W.Objectives[i].coord));
+			obj = W.Objectives[i];
+			/*var marker = L.marker(this.convertGCtoLC(obj.coord),
+			{
+				icon: L.icon(
+				{
+					iconUrl: "img/wvw/" + (obj.type).toLowerCase() + "_" + "blue" + I.cPNG,
+					iconSize: [38, 38],
+					iconAnchor: [19, 19]
+				}),
+			});*/
+			marker = L.marker(this.convertGCtoLC(obj.coord),
+			{
+				clickable: true,
+				riseOnHover: true,
+				icon: L.divIcon(
+				{
+					className: "",
+					html: "<div id='obj_" + obj.id + "' class='objContainer'>"
+							+ "<img src='img/wvw/objectives/" + (obj.type).toLowerCase() + "_" + "blue" + I.cPNG + "' />"
+						+ "</div>",
+					iconSize: [38, 38],
+					iconAnchor: [19, 19]
+				})
+			});
+			this.Layer.Objective.addLayer(marker);
 		}
+		this.toggleLayer(this.Layer.Objective, true);
+	},
+	
+	updateState: function(pServer)
+	{
+		
 	},
 	
 	finishPopulation: function()

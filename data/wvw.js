@@ -640,7 +640,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_en: "Overlook",
 	name_de: "Aussichtspunkt von",
 	name_es: "Mirador",
-	name_fr: "- Belvédère",
+	name_fr: "Belvédère",
 	name_zh: "眺望台",
 	id: "38-1",
 	map_id: "38",
@@ -652,7 +652,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_en: "Valley",
 	name_de: "Tal von",
 	name_es: "Valle",
-	name_fr: "- Vallée",
+	name_fr: "Vallée",
 	name_zh: "溪谷",
 	id: "38-2",
 	map_id: "38",
@@ -664,7 +664,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_en: "Lowlands",
 	name_de: "Tiefland von",
 	name_es: "Tierras bajas",
-	name_fr: "- Basses terres",
+	name_fr: "Basses terres",
 	name_zh: "低地",
 	id: "38-3",
 	map_id: "38",
@@ -1366,4 +1366,42 @@ var GW2T_OBJECTIVE_DATA = {
 	map_id: "1143",
 	coord: [14331, 13774]
 }
+};
+
+/*
+ * Objective type translations.
+ */
+var GW2T_OBJECTIVE_TYPE = {
+	"Camp": {
+		value: 5,
+		name_en: "Camp",
+		name_de: "Lager",
+		name_es: "Campamento",
+		name_fr: "Camp",
+		name_zh: "營地"
+	},
+	"Tower": {
+		value: 10,
+		name_en: "Tower",
+		name_de: "Turm",
+		name_es: "Torre",
+		name_fr: "Tour",
+		name_zh: "塔樓"
+	},
+	"Keep": {
+		value: 25,
+		name_en: "Keep",
+		name_de: "Feste",
+		name_es: "Fortaleza",
+		name_fr: "Fort",
+		name_zh: "要塞"
+	},
+	"Castle": {
+		value: 35,
+		name_en: "Castle",
+		name_de: "Schloss",
+		name_es: "Castillo",
+		name_fr: "Château",
+		name_zh: "城堡"
+	}
 };

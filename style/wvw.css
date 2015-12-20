@@ -2,3 +2,10 @@
 	http://gw2timer.com/wvw
 	World versus World stylesheet.
 */
+
+.objContainer {
+	display: table-cell;
+	width: 38px; height: 38px;
+	vertical-align: middle;
+	text-align: center;
+}
