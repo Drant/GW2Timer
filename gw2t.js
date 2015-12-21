@@ -7193,6 +7193,7 @@ M = {
 	cZoomFactor: 2,
 	ZoomEnum:
 	{
+		Adaptive: -2,
 		Same: -1,
 		Min: 0,
 		Overview: 3,
@@ -7865,7 +7866,7 @@ M = {
 	 */
 	invertZoomLevel: function(pZoomLevel)
 	{
-		return this.ZoomEnum.Max - T.wrapInteger(pZoomLevel, this.ZoomEnum.Max);
+		return this.ZoomEnum.Max - pZoomLevel;
 	},
 	
 	/*
@@ -7875,30 +7876,35 @@ M = {
 	{
 		var that = this;
 		var currentzoom = this.Map.getZoom();
-		var waypointsize, landmarksize, eventiconsize, eventringsize, objectivesize;
-		var sectorfontsize, sectoropacity;
+		var zoomindex = this.invertZoomLevel(currentzoom);
+		
+		var ZoomValues = {
+			// The first index is the max zoom-in level
+			waypoint: [40, 32, 26, 20, 16, 12, 0, 0],
+			landmark: [32, 24, 16, 12, 0, 0, 0, 0],
+			eventicon: [32, 24, 16, 12, 0, 0, 0, 0],
+			eventring: [256, 128, 64, 32, 0, 0, 0, 0],
+			sectorfont: [28, 20, 16, 0, 0, 0, 0, 0],
+			sectoropacity: [0.9, 0.6, 0.3, 0, 0, 0, 0, 0],
+			objectiveicon: [38, 38, 35, 32, 24, 16, 0, 0],
+			objectivefont: [12, 12, 12, 12, 11, 10, 0, 0]
+		};
+		var getZoomValue = function(pKey)
+		{
+			return (ZoomValues[pKey])[zoomindex];
+		};
+		var waypointsize = getZoomValue("waypoint");
+		var landmarksize = getZoomValue("landmark");
+		var eventiconsize =  getZoomValue("eventicon");
+		var eventringsize = getZoomValue("eventring");
+		var sectorfont = getZoomValue("sectorfont");
+		var sectoropacity = getZoomValue("sectoropacity");
+		var objectiveiconsize = getZoomValue("objectiveicon");
+		var objectivefont = getZoomValue("objectivefont");
+		
 		var completionboolean;
 		var overviewboolean;
 		var sectorboolean;
-		
-		switch (currentzoom)
-		{
-			case this.ZoomEnum.Max: waypointsize = 40; landmarksize = 32; eventiconsize = 32; eventringsize = 256; objectivesize = 38; break;
-			case this.ZoomEnum.Max - 1: waypointsize = 32; landmarksize = 24; eventiconsize = 24; eventringsize = 128; objectivesize = 38; break;
-			case this.ZoomEnum.Max - 2: waypointsize = 26; landmarksize = 16; eventiconsize = 16; eventringsize = 64; objectivesize = 35; break;
-			case this.ZoomEnum.Max - 3: waypointsize = 20; landmarksize = 12; eventiconsize = 12; eventringsize = 32; objectivesize = 32; break;
-			case this.ZoomEnum.Max - 4: waypointsize = 16; landmarksize = 0; eventiconsize = 0; eventringsize = 0; objectivesize = 24; break;
-			case this.ZoomEnum.Max - 5: waypointsize = 12; landmarksize = 0; eventiconsize = 0; eventringsize = 0; objectivesize = 16; break;
-			default: { waypointsize = 0; landmarksize = 0; eventiconsize = 0; eventringsize = 0; objectivesize = 0; }
-		}
-		
-		switch (currentzoom)
-		{
-			case this.ZoomEnum.Max: sectorfontsize = 28; sectoropacity = 0.9; break;
-			case this.ZoomEnum.Max - 1: sectorfontsize = 20; sectoropacity = 0.6; break;
-			case this.ZoomEnum.Max - 2: sectorfontsize = 16; sectoropacity = 0.3; break;
-			default: { sectorfontsize = 0; sectoropacity = 0; }
-		}
 		
 		switch (this.MapEnum)
 		{
@@ -7931,7 +7937,9 @@ M = {
 			case P.MapEnum.Mists:
 			{
 				// Objective Icon
-				$(".objContainer").find("img").css({width: objectivesize, height: objectivesize});
+				$(".objIcon").css({width: objectiveiconsize, height: objectiveiconsize});
+				$(".objProgressBar").css({width: objectiveiconsize});
+				$(".objContainer").css({fontSize: objectivefont});
 				
 				overviewboolean = O.Options.bol_showZoneOverviewWvW;
 				completionboolean = O.Options.bol_showWorldCompletionWvW;
@@ -7992,7 +8000,7 @@ M = {
 		this.ZoneCurrent.Layers.Sector.eachLayer(function(layer) {
 			if (layer._icon)
 			{
-				layer._icon.style.fontSize = sectorfontsize + "px";
+				layer._icon.style.fontSize = sectorfont + "px";
 				layer._icon.style.opacity = sectoropacity;
 				layer._icon.style.zIndex = that.cZIndexBury + 1; // Don't cover other icons
 				if (sectorboolean)
@@ -8556,7 +8564,7 @@ M = {
 	 * Views the map at the specifications.
 	 * @param 2D array pCoord coordinates.
 	 * @param object pPin which to move to coordinate.
-	 * @param enum pZoom level.
+	 * @param enum pZoom level or object with integer "offset" key.
 	 */
 	goToView: function(pCoord, pZoom, pPin)
 	{
@@ -8569,9 +8577,17 @@ M = {
 		{
 			pZoom = this.ZoomEnum.Ground;
 		}
-		if (pZoom === this.ZoomEnum.Same)
+		else if (pZoom === this.ZoomEnum.Same)
 		{
 			pZoom = this.Map.getZoom();
+		}
+		else if (pZoom === this.ZoomEnum.Adaptive)
+		{
+			pZoom = this.getAdaptiveZoom();
+		}
+		else if (typeof(pZoom) === "object" && pZoom.offset !== undefined)
+		{
+			pZoom = this.getAdaptiveZoom(pZoom.offset);
 		}
 		this.Map.setView(this.convertGCtoLC(pCoord), pZoom);
 		this.showCurrentZone(pCoord);
@@ -8603,13 +8619,46 @@ M = {
 	},
 	
 	/*
+	 * Gets a zoom level that depends on the user's screen width.
+	 * @param int pOffset from the returned zoom.
+	 * @returns int zoom level.
+	 */
+	getAdaptiveZoom: function(pOffset)
+	{
+		if (pOffset === undefined)
+		{
+			pOffset = 0;
+		}
+		var zoom;
+		var winwidth = $(window).width();
+		
+		if (winwidth >= I.ScreenWidth.Huge)
+		{
+			zoom = this.ZoomEnum.Default + 1;
+		}
+		else if (winwidth >= I.ScreenWidth.Large)
+		{
+			zoom = this.ZoomEnum.Default;
+		}
+		else if (winwidth >= I.ScreenWidth.Medium)
+		{
+			zoom = this.ZoomEnum.Default - 1;
+		}
+		else
+		{
+			zoom = this.ZoomEnum.Default - 2;
+		}
+		return zoom + pOffset;
+	},
+	
+	/*
 	 * Views the default map view.
 	 */
 	goToDefault: function(pZoom)
 	{
 		if (pZoom === undefined)
 		{
-			pZoom = this.ZoomEnum.Default;
+			pZoom = this.getAdaptiveZoom();
 		}
 		this.Map.setView(this.convertGCtoLC(this.cMAP_CENTER), pZoom);
 	},
@@ -8991,7 +9040,7 @@ M = {
 			var zonenick = $(this).attr("data-zone");
 			$(this).text(that.getZoneName(zonenick));
 			$(this).attr("data-coord", that.getZoneCenter(zonenick).toString());
-			that.bindMapLinkBehavior($(this), that.ZoomEnum.Sky);
+			that.bindMapLinkBehavior($(this), {offset: 1});
 		});
 		$(htmlidprefix + "ZoneList h2").each(function()
 		{
@@ -11876,11 +11925,12 @@ W = {
 	ZoneAssociation: GW2T_LAND_ASSOCIATION,
 	cInitialZone: "eternal",
 	cMAP_BOUND: 16384,
-	cMAP_CENTER: [10400, 12400], // This centers at the WvW portion of the map
-	cMAP_CENTER_INITIAL: [-193.75, 162.5],
+	cMAP_CENTER: [10750, 12414], // This centers at the WvW portion of the map
+	cMAP_CENTER_INITIAL: [-193.96875, 167.96875],
 	cMAP_CENTER_ACTUAL: [8192, 8192],
 	ZoomEnum:
 	{
+		Adaptive: -2,
 		Same: -1,
 		Min: 0,
 		Overview: 2,
@@ -11923,6 +11973,8 @@ W = {
 	 * WvW exclusive properties.
 	 */
 	Objectives: {},
+	RecentObjectives: {}, // Recently captured objectives under Righteous Indignation buff
+	cSECONDS_CAPTURE_LIMIT: 300,
 	
 	/*
 	 * Initializes the WvW map and starts the score keeping functions.
@@ -11971,12 +12023,16 @@ W = {
 				{
 					className: "",
 					html: "<div id='obj_" + obj.id + "' class='objContainer'>"
-							+ "<img src='img/wvw/objectives/" + (obj.type).toLowerCase() + "_" + "blue" + I.cPNG + "' />"
+							+ "<span class='objProgressContainer'><span class='objProgressBar'><var id='objProgress_" + obj.id + "' class='objProgress'></var></span></span>"
+							+ "<cite id='objGuild_" + obj.id + "' class='objGuild'>[AI] 3h</cite>"
+							+ "<samp class='objIconContainer'><img id='objIcon_" + obj.id + "' class='objIcon' src='img/wvw/objectives/" + (obj.type).toLowerCase() + "_" + "blue" + I.cPNG + "' /></samp>"
+							+ "<time id='objTimer_" + obj.id + "' class='objTimer'>5:00</time>"
 						+ "</div>",
 					iconSize: [38, 38],
 					iconAnchor: [19, 19]
 				})
 			});
+			obj.Marker = marker;
 			this.Layer.Objective.addLayer(marker);
 		}
 		this.toggleLayer(this.Layer.Objective, true);
@@ -15479,6 +15535,13 @@ I = {
 		Opera: 1,
 		Firefox: 2,
 		Chrome: 3
+	},
+	// Screen width in pixels, for determining map zoom values
+	ScreenWidth:
+	{
+		Huge: 2560,
+		Large: 1024,
+		Medium: 640
 	},
 	isOnSmallDevice: false,
 	isOnBigDevice: false,

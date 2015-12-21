@@ -487,6 +487,9 @@ dt.jpzListNameHover {
 	width: 16px; height: 16px;
 	margin-right: 8px;
 }
+.trdResults dfn:hover img {
+	width: 32px; height: 32px;
+}
 .trdAccordionShut {
 	display: inline-block;
 }

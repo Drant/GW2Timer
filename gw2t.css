@@ -200,6 +200,7 @@ div#qTip {
 	text-shadow: 0px 0px 2px black;
 	box-shadow: 0px 0px 2px #555;
 	opacity: 0.9;
+	pointer-events: none;
 }
 div#qTip dfn { /* Highlight color for emphasis text in tooltip */
 	background: none;
@@ -2219,6 +2220,7 @@ paletteText {
 	color: #44bbff; /* Blue chat party name */
 	color: #bbddff; /* Blue chat party */
 	color: #66aaff; /* Blue gem */
+	color: #99eedd; /* Blue light tooltip */
 	color: #cc77ff; /* Purple daily */
 	color: #bbbbbb; /* Gray in mob description */
 	color: #888888; /* Gray chat time timestamp */
