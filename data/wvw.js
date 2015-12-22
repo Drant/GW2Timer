@@ -1403,5 +1403,12 @@ var GW2T_OBJECTIVE_TYPE = {
 		name_es: "Castillo",
 		name_fr: "Château",
 		name_zh: "城堡"
+	},
+	"Borderlands": {
+		name_en: "Borderlands",
+		name_de: "Grenzlande",
+		name_es: "Tierras Fronterizas de",
+		name_fr: "Territoires frontaliers",
+		name_zh: "沙漠邊境之地"
 	}
 };

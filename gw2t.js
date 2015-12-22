@@ -156,6 +156,8 @@ O = {
 		bol_displayPOIsWvW: true,
 		bol_displayVistasWvW: true,
 		bol_displayChallengesWvW: true,
+		// WvW
+		int_secWvWRefresh: 10,
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: true,
@@ -1239,6 +1241,7 @@ U = {
 		ItemSearchFallback: "http://www.gw2shinies.com/api/json/idbyname/",
 		
 		// WvW
+		Match: "https://api.guildwars2.com/v2/wvw/matches?world=",
 		Matches: "https://api.guildwars2.com/v2/wvw/matches/",
 		GuildDetails: "https://api.guildwars2.com/v1/guild_details.json?guild_id=",
 		
@@ -2031,8 +2034,9 @@ U = {
 	 * Does not actually load anything and is only a visual effect; however, if
 	 * the user presses enter with that URL (go to such a link), a separate
 	 * function will load that page (content plate) and expand that section.
+	 * @param string pParamOptions additional query string options.
 	 */
-	updateQueryString: function()
+	updateQueryString: function(pParamOptions)
 	{
 		if (I.PageCurrent !== "")
 		{
@@ -2045,6 +2049,7 @@ U = {
 			var articlestring = "";
 			var gostring = "";
 			var modestring = "";
+			pParamOptions = (pParamOptions === undefined) ? "" : "&" + pParamOptions;
 			
 			var title = I.PageCurrent;
 			
@@ -2067,7 +2072,7 @@ U = {
 				gostring = "&" + U.KeyEnum.Go + "=" + go;
 			}
 			
-			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring + modestring);
+			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring + modestring + pParamOptions);
 			U.updateTitle(title);
 		}
 	},
@@ -3910,13 +3915,17 @@ E = {
 			return;
 		}
 		
-		$.getJSON(U.URL_API.ItemDetails + id, function(pData)
+		$.ajax({
+			dataType: "json",
+			url: U.URL_API.ItemDetails + id,
+			cache: false,
+			success: function(pData)
 		{
 			E.setRarityClass(pEntry.find(".trdName"), pData.rarity);
 			pEntry.attr("data-rarity", pData.rarity);
 			pEntry.find(".trdIcon").attr("src", pData.icon);
 			pEntry.find(".trdLink").val(U.getChatlinkFromItemID(id));
-		});
+		}});
 	},
 	
 	/*
@@ -3946,7 +3955,11 @@ E = {
 		var selllow = E.parseCoinString(selllowelm.val());
 		var sellhigh = E.parseCoinString(sellhighelm.val());
 
-		$.getJSON(U.URL_API.ItemPrices + id, function(pData)
+		$.ajax({
+			dataType: "json",
+			url: U.URL_API.ItemPrices + id,
+			cache: false,
+			success: function(pData)
 		{
 			previousbuy = E.parseCoinString(pEntry.find(".trdCurrentBuy").first().val());
 			previoussell = E.parseCoinString(pEntry.find(".trdCurrentSell").first().val());
@@ -3970,7 +3983,7 @@ E = {
 				pEntry.find(".trdBuy").val(buyelm.val()).trigger("input");
 				pEntry.find(".trdSell").val(sellelm.val()).trigger("input");
 			}
-		}).done(function()
+		}}).done(function()
 		{
 			// Animate prices that have changed
 			E.animateValue(buyelm, previousbuy, currentbuy);
@@ -5742,7 +5755,7 @@ D = {
 	sortObjects: function(pObjects)
 	{
 		var key = D.getNameKey();
-		pObjects.sort(function (a, b)
+		pObjects.sort(function(a, b)
 		{
 			if (a[key] > b[key])
 			{
@@ -9128,7 +9141,6 @@ P = {
 				// Exit this entire function if using the Mists map but have completion option off
 				if (completionboolean === false)
 				{
-					W.finishPopulation();
 					return;
 				}
 			} break;
@@ -9623,7 +9635,7 @@ P = {
 	}, // end of populateEvents
 	
 	/*
-	 * Does final touches to the map after the zone icons have been generated.
+	 * Does final touches to the map after the icons have been generated.
 	 */
 	donePopulation: function()
 	{
@@ -10725,12 +10737,16 @@ G = {
 				if (id !== null)
 				{
 					(function(inneri){
-						$.getJSON(U.URL_API.ItemPrices + id, function(pData)
+						$.ajax({
+							dataType: "json",
+							url: U.URL_API.ItemPrices + id,
+							cache: false,
+							success: function(pData)
 						{
 							var price = E.deductTax(pData.sells.unit_price);
 							$("#nodPrice_" + inneri).html(E.createCoinString(price, true));
 							P.Resources[inneri].price = price;
-						});
+						}});
 					})(i);
 				}
 			}
@@ -11950,11 +11966,15 @@ W = {
 		Germany: 2200,
 		Spain: 2300
 	},
+	ServerRegionEnum:
+	{
+		Americas: 1,
+		Europe: 2
+	},
 	Layer: {
 		Overview: new L.layerGroup(),
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(),
-		ZoneBorder: new L.layerGroup(),
 		Pin: new L.layerGroup(),
 		Objective: new L.layerGroup()
 	},
@@ -11972,9 +11992,15 @@ W = {
 	/*
 	 * WvW exclusive properties.
 	 */
+	isWvWLoaded: false,
+	Servers: {},
 	Objectives: {},
 	RecentObjectives: {}, // Recently captured objectives under Righteous Indignation buff
+	ObjectiveType: {},
+	ObjectiveTimeout: {},
+	isObjectiveTickEnabled: true,
 	cSECONDS_CAPTURE_LIMIT: 300,
+	MatchFinishTime: {},
 	
 	/*
 	 * Initializes the WvW map and starts the score keeping functions.
@@ -11989,11 +12015,17 @@ W = {
 		$.extend(W, $.extend({}, M, W));
 		W.Zones = GW2T_LAND_DATA;
 		W.Regions = GW2T_REALM_DATA;
+		W.Servers = GW2T_SERVER_DATA;
 		W.Objectives = GW2T_OBJECTIVE_DATA;
+		W.ObjectiveType = GW2T_OBJECTIVE_TYPE;
 		
 		W.initializeMap();
 		W.populateWvW();
+		W.initializeObjectives();
+		W.generateServerList();
 		I.styleContextMenu("#wvwContext");
+		// Finally
+		W.isWvWLoaded = true;
 	},
 	
 	/*
@@ -12024,8 +12056,9 @@ W = {
 					className: "",
 					html: "<div id='obj_" + obj.id + "' class='objContainer'>"
 							+ "<span class='objProgressContainer'><span class='objProgressBar'><var id='objProgress_" + obj.id + "' class='objProgress'></var></span></span>"
-							+ "<cite id='objGuild_" + obj.id + "' class='objGuild'>[AI] 3h</cite>"
-							+ "<samp class='objIconContainer'><img id='objIcon_" + obj.id + "' class='objIcon' src='img/wvw/objectives/" + (obj.type).toLowerCase() + "_" + "blue" + I.cPNG + "' /></samp>"
+							+ "<span class='objInfo'><cite id='objGuild_" + obj.id + "'>[AI]</cite> <cite id='objAge_" + obj.id + "'>3h</cite></span>"
+							+ "<span class='objIconContainer'><img id='objIcon_" + obj.id
+								+ "' class='objIcon' data-src='img/wvw/objectives/" + (obj.type).toLowerCase() + "_' src='img/ui/placeholder.png'/></span>"
 							+ "<time id='objTimer_" + obj.id + "' class='objTimer'>5:00</time>"
 						+ "</div>",
 					iconSize: [38, 38],
@@ -12036,13 +12069,17 @@ W = {
 			this.Layer.Objective.addLayer(marker);
 		}
 		this.toggleLayer(this.Layer.Objective, true);
-	},
-	
-	updateState: function(pServer)
-	{
 		
+		// The function below would have been called already if world completion icons were generated
+		if (O.Options.bol_showWorldCompletion === false)
+		{
+			W.finishPopulation();
+		}
 	},
 	
+	/*
+	 * Does final touches to the map after the icons have been generated.
+	 */
 	finishPopulation: function()
 	{
 		W.bindMapVisualChanges();
@@ -12053,9 +12090,149 @@ W = {
 		}
 	},
 	
-	tickWvW: function()
+	/*
+	 * Generates the list of servers to change the WvW map objectives and scoreboard.
+	 */
+	generateServerList: function()
+	{
+		// Put the server objects into an array so they can be alphabetized according to language
+		var servers = [];
+		for (var i in W.Servers)
+		{
+			servers.push(W.Servers[i]);
+		}
+		D.sortObjects(servers);
+		
+		// Write the list
+		var server;
+		var list = $("#wvwServerList");
+		var selected;
+		for (var i in servers)
+		{
+			server = servers[i];
+			selected = (server.id === O.Options.enu_Server) ? "selected" : "";
+			list.append("<option value='" + server.id + "' " + selected + ">" + D.getObjectName(server) + "</option>");
+		}
+		
+		// Bind server name select function
+		$("#wvwServerList").change(function()
+		{
+			// Save the server ID
+			var serverid = $(this).val();
+			O.Options.enu_Server = serverid;
+			localStorage["enu_Server"] = O.Options.enu_Server;
+			// Update address bar
+			U.updateQueryString("enu_Server=" + serverid);
+			// Restart the system
+			I.write("Loading match data for " + $(this).find("option:selected").text() + "...");
+			W.initializeObjectives();
+		});
+	},
+	
+	/*
+	 * Generates a scoreboard of all servers in a server region.
+	 */
+	generateScoreboard: function()
 	{
 		
+	},
+	
+	/*
+	 * Sets the objectives with the same state as the match API data.
+	 */
+	initializeObjectives: function()
+	{
+		// Stop the previous timeout and call the update function with initialization
+		W.toggleObjectiveTick(false);
+		W.updateObjectives(true);
+		
+		// Wait the time before redownloading the objectives data
+		setTimeout(function()
+		{
+			W.toggleObjectiveTick(true);
+		}, O.Options.int_secWvWRefresh * T.cMILLISECONDS_IN_SECOND);
+	},
+	
+	/*
+	 * Checks for changes in the match API data and updates objectives state.
+	 * @param boolean pIsInitialization do initializations for other elements.
+	 */
+	updateObjectives: function(pIsInitialization)
+	{
+		$.ajax({
+			dataType: "json",
+			url: U.URL_API.Match + O.Options.enu_Server,
+			cache: false, // Prevents keeping stale data
+			success: function(pData)
+		{
+			// Only update the objectives if they have changed server ownership or guild claiming
+			for (var i in pData.maps)
+			{
+				for (var ii in (pData.maps[i]).objectives)
+				{
+					var objnew = (pData.maps[i]).objectives[ii];
+					var objold = W.Objectives[objnew.id];
+					$("#objIcon_" + objnew.id).each(function()
+					{
+						$(this).attr("src", $(this).attr("data-src") + objnew.owner.toLowerCase() + I.cPNG);
+					});
+				}
+			}
+			
+			// If called when the user changes the server, then update other elements also
+			if (pIsInitialization)
+			{
+				
+			}
+			
+		}}).fail(function()
+		{
+			I.write("Unable to retrieve WvW data. ArenaNet API servers may be down.");
+			W.toggleObjectiveTick(false);
+		});
+	},
+	
+	/*
+	 * Updates the HTML timer of recently captured objectives. To be called by
+	 * the clock tick second function.
+	 */
+	updateObjectiveTimers: function()
+	{
+		
+	},
+	
+	/*
+	 * Starts or stops the objectives tick function and sets associated variables.
+	 * @param boolean pBoolean true to start.
+	 */
+	toggleObjectiveTick: function(pBoolean)
+	{
+		if (pBoolean)
+		{
+			W.isObjectiveTickEnabled = pBoolean;
+			W.tickObjectives();
+		}
+		else
+		{
+			window.clearTimeout(W.ObjectiveTimeout);
+			W.isObjectiveTickEnabled = pBoolean;
+		}
+	},
+	
+	/*
+	 * Executes the update objectives function every few seconds.
+	 */
+	tickObjectives: function()
+	{
+		if (W.isObjectiveTickEnabled)
+		{
+			W.updateObjectives();
+			window.clearTimeout(W.ObjectiveTimeout);
+			W.ObjectiveTimeout = setTimeout(function()
+			{
+				W.tickObjectives();
+			}, O.Options.int_secWvWRefresh * T.cMILLISECONDS_IN_SECOND);
+		}
 	}
 };
 
@@ -15400,7 +15577,7 @@ I = {
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
 	cLevelMax: 80,
-	cAJAXGlobalTimeout: 20000, // milliseconds
+	cAJAXGlobalTimeout: 30000, // milliseconds
 	cPNG: ".png", // Almost all used images are PNG
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
 	cConsoleCommandPrefix: "/",

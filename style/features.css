@@ -561,9 +561,13 @@ dt.jpzListNameHover {
 	font-size: 16px;
 	color: #888;
 }
-.trdEntry img.trdIcon {
+img.trdIcon {
 	width: 24px; height: 24px;
 	border-radius: 4px;
+}
+img.trdIcon:hover {
+	width: 64px; height: 64px;
+	border-radius: 8px;
 }
 input[type="text"].trdName {
 	width: 100px;

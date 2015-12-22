@@ -4,7 +4,7 @@
 	Measurements: minimum window size is 360x580, which is only enough for the
 	clock and timers list (all of the right panel).
 	CSS3: uses gradient, text-shadow, box-shadow modules.
-	Version: 2015.10.17 modified - 2014.04.18 created
+	Version: see gw2t.js - 2014.04.18 created
 
 	CREDITS:
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
@@ -668,7 +668,7 @@ textarea.jsCopyCode {
 .tmlSegmentContent {
 	display: table;
 	height: 100%;
-	margin-left: 6px;
+	margin-left: 4px;
 }
 .tmlLineName {
 	display: table-cell;

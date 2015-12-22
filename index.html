@@ -126,16 +126,13 @@
 				</span>
 				<!--<div id="mapSwitch" class="mapHUDContainer">
 					<img id="mapSwitchButton" class="mapHUDButton" title="<dfn> Click to WVW </dfn>" src="img/ui/pages/wvw.png" alt="display" />
-					<div class="mapHUDPopup cntComposition">
-						<label title="Set initial zoom level for Tyria map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoom" class="optSlider" type="range" min="0" max="7" step="1" /></label>
-					</div>
 				</div>-->
 				<div class="mapGPS mapHUDContainer">
 					<img id="mapGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
 					<div class="mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacter" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
-						<label title="Milliseconds before your character is pinpointed again.<br />This should not be faster than the overlay's rate."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Rate (ms)</label>
+						<label title="Repeated milliseconds before your character is pinpointed again.<br />This should not be faster than the overlay's interval."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Interval (ms)</label>
 					</div>
 				</div>
 				<div class="mapOptions mapHUDContainer">
@@ -153,6 +150,7 @@
 								<label><img data-src="img/map/heart.png" /><input id="opt_bol_displayHearts" type="checkbox" /> Renown Hearts</label>
 							</div>
 							<label title="Show/Hide possible zone events.<br />Will increase initial site load time if enabled.<br />Most in-game events have a cooldown of 15 minutes.<br />They can become active by simply being near them."><img data-src="img/event/swords.png" /><input id="opt_bol_displayEvents" type="checkbox" /> Dynamic Events</label>
+							<label title="Set initial zoom level for Tyria map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoom" class="optSlider" type="range" min="0" max="7" step="1" /></label>
 						</div>
 						<div class="mapOptionsOther">
 							<label><img data-src="img/map/floor.png" /><input id="opt_int_setFloor" class="optSlider" type="range" min="0" max="3" step="1" title="Set map floor level.<br />Example: Verdant Brink has multiple floors." /></label>
@@ -281,9 +279,9 @@
 			</div>
 			<div class="mapPeripheral mapPeripheralNorth">
 				<div id="wvwSwitch" class="mapHUDContainer">
-					<img id="wvwSwitchButton" class="mapHUDButton" title="<dfn> Click to Map </dfn>" src="img/ui/pages/map.png" alt="display" />
+					<img id="wvwSwitchButton" class="mapHUDButton" title="<dfn> Click to PvE </dfn>" src="img/ui/pages/map.png" alt="display" />
 					<div class="mapHUDPopup cntComposition">
-						<label title="Set initial zoom level for WvW map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoomWvW" class="optSlider" type="range" min="0" max="6" step="1" /></label>
+						<select id="wvwServerList"></select>
 					</div>
 				</div>
 				<div class="mapGPS mapHUDContainer">
@@ -306,9 +304,10 @@
 								<label><img data-src="img/map/vista.png" /><input id="opt_bol_displayVistasWvW" type="checkbox" /> Vistas</label>
 								<label><img data-src="img/map/challenge.png" /><input id="opt_bol_displayChallengesWvW" type="checkbox" /> Hero Challenges</label>
 							</div>
+							<label title="Set initial zoom level for WvW map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoomWvW" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 						</div>
 						<div class="mapOptionsOther">
-							
+							<label title="Repeated seconds before API data are downloaded again to check if objectives have flipped."><input id="opt_int_secWvWRefresh" type="number" min="5" max="60" step="1" /> Refresh Interval (sec)</label>
 						</div>
 					</div>
 				</div>
