@@ -1040,8 +1040,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2015-12-15T16:00:00Z"),
-	Finish: new Date("2015-12-22T16:00:00Z"),
+	Start: new Date("2015-12-22T16:00:00Z"),
+	Finish: new Date("2015-12-29T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -1075,38 +1075,6 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Arctic Explorer Outfit",
-		img: "https://render.guildwars2.com/file/1CA69FFE21A1B046D4355A13FD454F6E4E7BF438/919386.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Fancy Winter Outfit",
-		img: "https://render.guildwars2.com/file/5F4776E9357CDC37600A4250021856115EF40C3E/526123.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Exalted Mail Courier",
-		img: "https://render.guildwars2.com/file/E4FF1D42FFAA7F58681724F95D552410EC7F7880/1024007.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Wintersday Wreath Backpack",
-		img: "https://render.guildwars2.com/file/3408A04293EAA9CE802226E593956D56EBFE0304/1313100.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Snowflake Glider",
 		img: "https://render.guildwars2.com/file/CE007E4C9FD410E85D79D745BC750F2A6719E4DF/1313090.png",
 		quantity: 1,
@@ -1120,61 +1088,109 @@ Sale: {
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
-		col: 1
+		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Wintersday Minis 3-Pack",
-		img: "https://render.guildwars2.com/file/4B5345024E2D5A0503E04F7D923562422806FB4D/681030.png",
+		url: "http://wiki.guildwars2.com/wiki/Mini Festive Lord Faren",
+		img: "https://render.guildwars2.com/file/076E2196005DB9E2ADF35D110F98390A7FA3D431/924619.png",
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
-		col: 1
+		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Plush Griffon",
-		img: "https://render.guildwars2.com/file/9A7507807FC264B576932BC3CD0AB257CFD54404/526321.png",
+		url: "http://wiki.guildwars2.com/wiki/Mini Angry Wintersday Gift",
+		img: "https://render.guildwars2.com/file/7F026FC5997F999E2E2C54B23E3939F29552F321/1322319.png",
 		quantity: 1,
-		pricenew: 350,
+		pricenew: 400,
 		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Princess Doll",
-		img: "https://render.guildwars2.com/file/1358E502FB2F9C9AD5CF0AA80580C353ABE8B869/526317.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Toy Golem",
-		img: "https://render.guildwars2.com/file/FFF9987321789234043801D13BB226B94F65DF00/526320.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Toy Soldier",
-		img: "https://render.guildwars2.com/file/B1C2AACE933A677F40187004DC5D51561DB3FF38/526319.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Toy Ventari",
-		img: "https://render.guildwars2.com/file/22A5D499D0BA2AB9FA77FDD9D7C88052F47046C7/526318.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 1
+		col: 0
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Festive Hat",
 		img: "https://render.guildwars2.com/file/BFE4016823C9D530D658940157761EB539192B03/526117.png",
 		quantity: 1,
 		pricenew: 150,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Deathly Dye Kit",
+		img: "https://render.guildwars2.com/file/0F617A0610A0EA5048CA07D602BCF91E059E9048/638379.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Flame Dye Kit",
+		img: "https://render.guildwars2.com/file/2247E82DA2260643CBD94B9C14FB223606447450/561732.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Frost Dye Kit",
+		img: "https://render.guildwars2.com/file/FF9E2C614DAB80050EB009CDE27E0CED0A972892/561733.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Lion's Arch Commemorative Dye Kit",
+		img: "https://render.guildwars2.com/file/7F3328A7A7997C7BD4396F383C3AB017342DB298/780271.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Lion's Arch Rebuild Dye Kit",
+		img: "https://render.guildwars2.com/file/0624EAD15E91FF47C01F0604B777BD00FD9B49CC/1010544.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Lion's Arch Survivors Dye Kit",
+		img: "https://render.guildwars2.com/file/6CF8E4B708732FE2E9B2259DFCD299E3924DD7C9/771057.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mad King Dye Kit",
+		img: "https://render.guildwars2.com/file/68B1C9C4E228064C0E7E0316202B97D2E8303A14/1114056.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Metallurgic Dye Kit",
+		img: "https://render.guildwars2.com/file/C9660719E6A3BCA1A9DB049AAFFD0F96B57AFCEE/699316.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Shadow Dye Kit",
+		img: "https://render.guildwars2.com/file/E70224319F4D2B047B16FD29456DEF6963B1D7D7/960281.png",
+		quantity: 1,
+		pricenew: 125,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Taimi's Dye Kit",
+		img: "https://render.guildwars2.com/file/D35BFB050364A67CF2B1A330404893EEA0156A0C/866828.png",
+		quantity: 1,
+		pricenew: 125,
 		priceold: 0,
 		col: 1
 	},

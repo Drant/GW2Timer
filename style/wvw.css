@@ -23,25 +23,37 @@
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
 }
+.objIcon {
+	background: rgba(255, 255, 255, 0.25);
+	border-radius: 100%;
+}
+.objIcon:hover {
+	background: white;
+}
 .objInfo {
-	width: 100%;
+	width: auto;
 	left: 0;
-	top: -8px;
+	bottom: -16px;
 	position: absolute;
+	line-height: 14px;
+	white-space: nowrap;
 	color: #ffbb44;
+	border-radius: 4px;
+	background: rgba(0, 0, 0, 0.5);
+	opacity: 0.8;
 }
 .objProgressContainer {
 	display: block;
 	width: 38px; height: 2px;
 	position: absolute;
-	bottom: -4px;
+	top: 0;
 }
 .objProgressBar {
 	display: inline-block;
-	width: 38px; height: 2px;
+	width: 38px; height: 4px;
 	border: 1px solid black;
 	vertical-align: top;
-	background: rgba(0, 0, 0, 0.5);
+	background: rgba(255, 0, 0, 0.5);
 }
 .objProgress {
 	display: block;
@@ -52,6 +64,11 @@
 	display: block;
 	width: 100%;
 	position: absolute;
-	bottom: -6px;
+	top: -18px;
+	line-height: 18px;
+	white-space: nowrap;
+	font-family: Arial, sans-serif;
 	color: white;
+	border-radius: 4px;
+	background: rgba(0, 0, 0, 0.5);
 }

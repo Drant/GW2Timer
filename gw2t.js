@@ -37,6 +37,7 @@
 
 	O - Options for user
 	U - URL management
+	A - Account management
 	X - Checklists
 	E - Economy
 	D - Dictionary for translations
@@ -57,7 +58,7 @@ $(window).on("load", function() {
 /* =============================================================================
  * Single letter objects serve as namespaces.
  * ========================================================================== */
-var O, U, X, E, D, C, M, P, G, W, T, B, K, I = {};
+var O, U, A, X, E, D, C, M, P, G, W, T, B, K, I = {};
 
 /* =============================================================================
  * @@Options for the user
@@ -2406,6 +2407,13 @@ U = {
 
 		return (pWantType === undefined) ? id : id + " (" + type + ")";
 	}
+};
+
+/* =============================================================================
+ * @@Account API key management and views
+ * ========================================================================== */
+A = {
+	
 };
 
 /* =============================================================================
@@ -7899,8 +7907,8 @@ M = {
 			eventring: [256, 128, 64, 32, 0, 0, 0, 0],
 			sectorfont: [28, 20, 16, 0, 0, 0, 0, 0],
 			sectoropacity: [0.9, 0.6, 0.3, 0, 0, 0, 0, 0],
-			objectiveicon: [38, 38, 35, 32, 24, 16, 0, 0],
-			objectivefont: [12, 12, 12, 12, 11, 10, 0, 0]
+			objectiveicon: [38, 38, 38, 38, 32, 24, 16, 0],
+			objectivefont: [18, 17, 16, 15, 14, 13, 12, 0]
 		};
 		var getZoomValue = function(pKey)
 		{
@@ -7949,11 +7957,12 @@ M = {
 			} break;
 			case P.MapEnum.Mists:
 			{
-				// Objective Icon
+				// Objective
 				$(".objIcon").css({width: objectiveiconsize, height: objectiveiconsize});
 				$(".objProgressBar").css({width: objectiveiconsize});
-				$(".objContainer").css({fontSize: objectivefont});
-				
+				$(".objTimer").css({fontSize: objectivefont});
+				$(".objInfo").css({fontSize: objectivefont - 4});
+				// World Completion
 				overviewboolean = O.Options.bol_showZoneOverviewWvW;
 				completionboolean = O.Options.bol_showWorldCompletionWvW;
 				sectorboolean = O.Options.bol_displaySectorsWvW;
@@ -9177,7 +9186,7 @@ P = {
 		$.getJSON(url, function(pData)
 		{
 			var i;
-			var regionid, region, zoneid, ithzone, poi;
+			var regionid, region, zoneid, apizone, poi;
 			var zoneobj;
 			var numofpois;
 			var marker;
@@ -9199,7 +9208,7 @@ P = {
 						continue;
 					}
 					
-					ithzone = region.maps[zoneid];
+					apizone = region.maps[zoneid];
 					zoneobj = that.getZoneFromID(zoneid);
 					var numheart = 0;
 					var numwaypoint = 0;
@@ -9210,10 +9219,10 @@ P = {
 					/* 
 					 * For waypoints, points of interest, and vistas.
 					 */
-					numofpois = ithzone.points_of_interest.length;
+					numofpois = apizone.points_of_interest.length;
 					for (i = 0; i < numofpois; i++)
 					{
-						poi = ithzone.points_of_interest[i];
+						poi = apizone.points_of_interest[i];
 
 						// Properties assignment based on POI's type
 						switch (poi.type)
@@ -9327,11 +9336,11 @@ P = {
 					if (completionboolean)
 					{
 						// Hero Challenges
-						numofpois = ithzone.skill_challenges.length;
+						numofpois = apizone.skill_challenges.length;
 						numchallenge = numofpois;
 						for (i = 0; i < numofpois; i++)
 						{
-							poi = ithzone.skill_challenges[i];
+							poi = apizone.skill_challenges[i];
 							marker = L.marker(that.convertGCtoLC(poi.coord),
 							{
 								title: "<span class='" + "mapPoi" + "'>" + translationchallenge + "</span>",
@@ -9348,11 +9357,11 @@ P = {
 						}
 						
 						// Renown Hearts
-						numofpois = ithzone.tasks.length;
+						numofpois = apizone.tasks.length;
 						numheart = numofpois;
 						for (i = 0; i < numofpois; i++)
 						{
-							poi = ithzone.tasks[i];
+							poi = apizone.tasks[i];
 							marker = L.marker(that.convertGCtoLC(poi.coord),
 							{
 								title: "<span class='" + "mapPoi" + "'>" + poi.objective + " (" + poi.level + ")" + "</span>",
@@ -9370,10 +9379,10 @@ P = {
 						}
 						
 						// Sector Names
-						numofpois = ithzone.sectors.length;
+						numofpois = apizone.sectors.length;
 						for (i = 0; i < numofpois; i++)
 						{
-							poi = ithzone.sectors[i];
+							poi = apizone.sectors[i];
 							marker = L.marker(that.convertGCtoLC(poi.coord),
 							{
 								clickable: false,
@@ -9403,8 +9412,8 @@ P = {
 								className: "mapOverview",
 								html: "<span class='mapOverviewIn'>"
 									+ "<var class='mapOverviewName'>" + D.getObjectName(zoneobj) + "</var>"
-									+ ((ithzone.min_level > 0) ? ("<var class='mapOverviewLevel'>"
-										+ ((ithzone.min_level === 80) ? (ithzone.max_level) : (ithzone.min_level + " - " + ithzone.max_level))
+									+ ((apizone.min_level > 0) ? ("<var class='mapOverviewLevel'>"
+										+ ((apizone.min_level === 80) ? (apizone.max_level) : (apizone.min_level + " - " + apizone.max_level))
 									+ "</var>") : "")
 									+ ((numheart > 0) ? ("<img src='img/map/heart.png' />" + numheart + " ") : "")
 									+ ((numwaypoint > 0) ? ("<img src='img/map/waypoint.png' />" + numwaypoint + " ") : "")
@@ -10446,7 +10455,7 @@ P = {
 		 * Sample structure of JSON:
 		 * {"name": "Character Name","profession": 1,"race": 2,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false,"fov": 0.873}
 		 */
-		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || that.isUserDragging || !that.isAPIRetrieved_MAPFLOOR)
+		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || that.isUserDragging)
 		{
 			return;
 		}
@@ -11995,11 +12004,12 @@ W = {
 	isWvWLoaded: false,
 	Servers: {},
 	Objectives: {},
-	RecentObjectives: {}, // Recently captured objectives under Righteous Indignation buff
 	ObjectiveType: {},
 	ObjectiveTimeout: {},
-	isObjectiveTickEnabled: true,
-	cSECONDS_CAPTURE_LIMIT: 300,
+	isObjectiveTickEnabled: false,
+	isObjectiveTimerTickEnabled: false,
+	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
+	cMILLISECONDS_IMMUNITY: 300000,
 	MatchFinishTime: {},
 	
 	/*
@@ -12038,15 +12048,6 @@ W = {
 		for (var i in W.Objectives)
 		{
 			obj = W.Objectives[i];
-			/*var marker = L.marker(this.convertGCtoLC(obj.coord),
-			{
-				icon: L.icon(
-				{
-					iconUrl: "img/wvw/" + (obj.type).toLowerCase() + "_" + "blue" + I.cPNG,
-					iconSize: [38, 38],
-					iconAnchor: [19, 19]
-				}),
-			});*/
 			marker = L.marker(this.convertGCtoLC(obj.coord),
 			{
 				clickable: true,
@@ -12055,11 +12056,12 @@ W = {
 				{
 					className: "",
 					html: "<div id='obj_" + obj.id + "' class='objContainer'>"
-							+ "<span class='objProgressContainer'><span class='objProgressBar'><var id='objProgress_" + obj.id + "' class='objProgress'></var></span></span>"
+							+ "<span class='objProgressContainer'><span id='objProgressBar_" + obj.id
+								+ "' class='objProgressBar'><var id='objProgress_" + obj.id + "' class='objProgress'></var></span></span>"
 							+ "<span class='objInfo'><cite id='objGuild_" + obj.id + "'>[AI]</cite> <cite id='objAge_" + obj.id + "'>3h</cite></span>"
-							+ "<span class='objIconContainer'><img id='objIcon_" + obj.id
+							+ "<span class='objIconContainer'><samp id='objUmbrella_" + obj.id + "' class='objUmbrella'></samp><img id='objIcon_" + obj.id
 								+ "' class='objIcon' data-src='img/wvw/objectives/" + (obj.type).toLowerCase() + "_' src='img/ui/placeholder.png'/></span>"
-							+ "<time id='objTimer_" + obj.id + "' class='objTimer'>5:00</time>"
+							+ "<time id='objTimer_" + obj.id + "' class='objTimer'></time>"
 						+ "</div>",
 					iconSize: [38, 38],
 					iconAnchor: [19, 19]
@@ -12071,7 +12073,7 @@ W = {
 		this.toggleLayer(this.Layer.Objective, true);
 		
 		// The function below would have been called already if world completion icons were generated
-		if (O.Options.bol_showWorldCompletion === false)
+		if (O.Options.bol_showWorldCompletionWvW === false)
 		{
 			W.finishPopulation();
 		}
@@ -12124,7 +12126,6 @@ W = {
 			// Update address bar
 			U.updateQueryString("enu_Server=" + serverid);
 			// Restart the system
-			I.write("Loading match data for " + $(this).find("option:selected").text() + "...");
 			W.initializeObjectives();
 		});
 	},
@@ -12142,15 +12143,20 @@ W = {
 	 */
 	initializeObjectives: function()
 	{
+		// Initialize properties to be later compared within the API
+		for (var i in W.Objectives)
+		{
+			var obj = W.Objectives[i];
+			obj.isRecent = false;
+			obj.last_flipped = null;
+			obj.claimed_by = null;
+		}
+		$(".objTimer").empty();
+		$(".objProgressBar").hide();
+		
 		// Stop the previous timeout and call the update function with initialization
 		W.toggleObjectiveTick(false);
-		W.updateObjectives(true);
-		
-		// Wait the time before redownloading the objectives data
-		setTimeout(function()
-		{
-			W.toggleObjectiveTick(true);
-		}, O.Options.int_secWvWRefresh * T.cMILLISECONDS_IN_SECOND);
+		W.toggleObjectiveTick(true);
 	},
 	
 	/*
@@ -12159,35 +12165,57 @@ W = {
 	 */
 	updateObjectives: function(pIsInitialization)
 	{
+		var msec = (new Date()).getTime();
+		
 		$.ajax({
 			dataType: "json",
 			url: U.URL_API.Match + O.Options.enu_Server,
 			cache: false, // Prevents keeping stale data
 			success: function(pData)
 		{
-			// Only update the objectives if they have changed server ownership or guild claiming
+			var obj, apiobj;
 			for (var i in pData.maps)
 			{
 				for (var ii in (pData.maps[i]).objectives)
 				{
-					var objnew = (pData.maps[i]).objectives[ii];
-					var objold = W.Objectives[objnew.id];
-					$("#objIcon_" + objnew.id).each(function()
+					apiobj = (pData.maps[i]).objectives[ii];
+					obj = W.Objectives[apiobj.id];
+					// Only update the objectives if they have changed server ownership
+					if (obj.last_flipped !== apiobj.last_flipped)
 					{
-						$(this).attr("src", $(this).attr("data-src") + objnew.owner.toLowerCase() + I.cPNG);
-					});
+						// Reinitialize properties
+						obj.last_flipped = apiobj.last_flipped;
+						obj.last_flipped_msec = (new Date(apiobj.last_flipped)).getTime();
+						if (apiobj.claimed_by !== undefined)
+						{
+							obj.claimed_by = apiobj.claimed_by;
+						}
+						
+						// Update objective visuals
+						$("#objIcon_" + apiobj.id).each(function()
+						{
+							$(this).attr("src", $(this).attr("data-src") + apiobj.owner.toLowerCase() + I.cPNG);
+						});
+						
+						// Mark the objective as recent if it is under the capture time limit
+						if ((msec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY)
+						{
+							W.Objectives[obj.id].isRecent = true;
+							$("#objProgressBar_" + obj.id).show();
+						}
+					}
+					
+					// If called when the user changes the server, then update other elements also
+					if (pIsInitialization)
+					{
+						
+					}
 				}
-			}
-			
-			// If called when the user changes the server, then update other elements also
-			if (pIsInitialization)
-			{
-				
 			}
 			
 		}}).fail(function()
 		{
-			I.write("Unable to retrieve WvW data. ArenaNet API servers may be down.");
+			I.write("Unable to retrieve WvW data. ArenaNet API servers may be down.", 0);
 			W.toggleObjectiveTick(false);
 		});
 	},
@@ -12198,7 +12226,34 @@ W = {
 	 */
 	updateObjectiveTimers: function()
 	{
+		var obj;
+		var msec = (new Date()).getTime();
 		
+		for (var i in W.Objectives)
+		{
+			obj = W.Objectives[i];
+			if (obj.isRecent)
+			{
+				var msecremaining = W.cMILLISECONDS_IMMUNITY - (msec - obj.last_flipped_msec);
+				var percremaining = (msecremaining / W.cMILLISECONDS_IMMUNITY) * T.cPERCENT_100;
+				if (msecremaining > 0)
+				{
+					document.getElementById("objTimer_" + obj.id).innerHTML = T.formatMilliseconds(msecremaining);
+					document.getElementById("objProgress_" + obj.id).style.width = percremaining + "%";
+				}
+				else
+				{
+					// If the objective has become capturable
+					$("#objTimer_" + obj.id).html("");
+					$("#objProgressBar_" + obj.id).css({opacity: 1}).animate({opacity: 0}, 2000, function()
+					{
+						$(this).css({opacity: 1}).hide();
+					});
+					$("#objIcon_" + obj.id).css({opacity: 0}).animate({opacity: 1}, 2000);
+					obj.isRecent = false;
+				}
+			}
+		}
 	},
 	
 	/*
@@ -12211,11 +12266,13 @@ W = {
 		{
 			W.isObjectiveTickEnabled = pBoolean;
 			W.tickObjectives();
+			W.isObjectiveTimerTickEnabled = pBoolean;
 		}
 		else
 		{
 			window.clearTimeout(W.ObjectiveTimeout);
 			W.isObjectiveTickEnabled = pBoolean;
+			W.isObjectiveTimerTickEnabled = pBoolean;
 		}
 	},
 	
@@ -14862,6 +14919,10 @@ K = {
 		if (K.StopwatchTimerStart !== 0)
 		{
 			K.tickStopwatchDown();
+		}
+		if (W.isObjectiveTimerTickEnabled)
+		{
+			W.updateObjectiveTimers();
 		}
 		
 		// Loop this function, can use variable to halt it
