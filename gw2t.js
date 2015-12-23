@@ -7907,8 +7907,10 @@ M = {
 			eventring: [256, 128, 64, 32, 0, 0, 0, 0],
 			sectorfont: [28, 20, 16, 0, 0, 0, 0, 0],
 			sectoropacity: [0.9, 0.6, 0.3, 0, 0, 0, 0, 0],
-			objectiveicon: [38, 38, 38, 38, 32, 24, 16, 0],
-			objectivefont: [18, 17, 16, 15, 14, 13, 12, 0]
+			objicon: [38, 38, 38, 38, 32, 24, 16, 0],
+			objtimerfont: [18, 17, 16, 15, 14, 13, 12, 0],
+			objinfofont: [14, 13, 12, 11, 10, 9, 0, 0],
+			objumbrella: [96, 96, 96, 96, 64, 32, 24, 0]
 		};
 		var getZoomValue = function(pKey)
 		{
@@ -7920,8 +7922,10 @@ M = {
 		var eventringsize = getZoomValue("eventring");
 		var sectorfont = getZoomValue("sectorfont");
 		var sectoropacity = getZoomValue("sectoropacity");
-		var objectiveiconsize = getZoomValue("objectiveicon");
-		var objectivefont = getZoomValue("objectivefont");
+		var objiconsize = getZoomValue("objicon");
+		var objtimerfont = getZoomValue("objtimerfont");
+		var objinfofont = getZoomValue("objinfofont");
+		var objumbrella = getZoomValue("objumbrella");
 		
 		var completionboolean;
 		var overviewboolean;
@@ -7958,10 +7962,11 @@ M = {
 			case P.MapEnum.Mists:
 			{
 				// Objective
-				$(".objIcon").css({width: objectiveiconsize, height: objectiveiconsize});
-				$(".objProgressBar").css({width: objectiveiconsize});
-				$(".objTimer").css({fontSize: objectivefont});
-				$(".objInfo").css({fontSize: objectivefont - 4});
+				$(".objIcon").css({width: objiconsize, height: objiconsize});
+				$(".objProgressBar").css({width: objiconsize});
+				$(".objTimer").css({fontSize: objtimerfont});
+				$(".objInfo").css({fontSize: objinfofont});
+				$(".objUmbrella").css({width: objumbrella, height: objumbrella});
 				// World Completion
 				overviewboolean = O.Options.bol_showZoneOverviewWvW;
 				completionboolean = O.Options.bol_showWorldCompletionWvW;
@@ -12004,7 +12009,7 @@ W = {
 	isWvWLoaded: false,
 	Servers: {},
 	Objectives: {},
-	ObjectiveType: {},
+	ObjectiveMetadata: {},
 	ObjectiveTimeout: {},
 	isObjectiveTickEnabled: false,
 	isObjectiveTimerTickEnabled: false,
@@ -12027,11 +12032,11 @@ W = {
 		W.Regions = GW2T_REALM_DATA;
 		W.Servers = GW2T_SERVER_DATA;
 		W.Objectives = GW2T_OBJECTIVE_DATA;
-		W.ObjectiveType = GW2T_OBJECTIVE_TYPE;
+		W.ObjectiveMetadata = GW2T_OBJECTIVE_METADATA;
 		
 		W.initializeMap();
 		W.populateWvW();
-		W.initializeObjectives();
+		W.reinitializeObjectives();
 		W.generateServerList();
 		I.styleContextMenu("#wvwContext");
 		// Finally
@@ -12056,10 +12061,11 @@ W = {
 				{
 					className: "",
 					html: "<div id='obj_" + obj.id + "' class='objContainer'>"
+							+ "<span class='objUmbrellaContainer'><span class='objUmbrellaOuter'><samp id='objUmbrella_" + obj.id + "' class='objUmbrella'></samp></span></span>"
 							+ "<span class='objProgressContainer'><span id='objProgressBar_" + obj.id
 								+ "' class='objProgressBar'><var id='objProgress_" + obj.id + "' class='objProgress'></var></span></span>"
 							+ "<span class='objInfo'><cite id='objGuild_" + obj.id + "'>[AI]</cite> <cite id='objAge_" + obj.id + "'>3h</cite></span>"
-							+ "<span class='objIconContainer'><samp id='objUmbrella_" + obj.id + "' class='objUmbrella'></samp><img id='objIcon_" + obj.id
+							+ "<span class='objIconContainer'><img id='objIcon_" + obj.id
 								+ "' class='objIcon' data-src='img/wvw/objectives/" + (obj.type).toLowerCase() + "_' src='img/ui/placeholder.png'/></span>"
 							+ "<time id='objTimer_" + obj.id + "' class='objTimer'></time>"
 						+ "</div>",
@@ -12126,7 +12132,7 @@ W = {
 			// Update address bar
 			U.updateQueryString("enu_Server=" + serverid);
 			// Restart the system
-			W.initializeObjectives();
+			W.reinitializeObjectives();
 		});
 	},
 	
@@ -12141,16 +12147,18 @@ W = {
 	/*
 	 * Sets the objectives with the same state as the match API data.
 	 */
-	initializeObjectives: function()
+	reinitializeObjectives: function()
 	{
 		// Initialize properties to be later compared within the API
 		for (var i in W.Objectives)
 		{
 			var obj = W.Objectives[i];
-			obj.isRecent = false;
+			obj.isImmune = false;
 			obj.last_flipped = null;
 			obj.claimed_by = null;
 		}
+		$(".objUmbrellaContainer").hide();
+		$(".objIcon").data("owner", null);
 		$(".objTimer").empty();
 		$(".objProgressBar").hide();
 		
@@ -12192,15 +12200,45 @@ W = {
 						}
 						
 						// Update objective visuals
-						$("#objIcon_" + apiobj.id).each(function()
+						var owner = apiobj.owner;
+						var animationspeed = 2000;
+						var objumbrella = $("#objUmbrella_" + apiobj.id);
+						var objicon = $("#objIcon_" + apiobj.id);
+						var prevwidth = objicon.css("width");
+						var prevowner = objicon.data("owner");
+						
+						if (prevowner !== null)
 						{
-							$(this).attr("src", $(this).attr("data-src") + apiobj.owner.toLowerCase() + I.cPNG);
-						});
+							var prevcolor = W.ObjectiveMetadata[prevowner].color;
+							var newcolor = W.ObjectiveMetadata[owner].color;
+							// Squash the icon to 0 width, then change the icon color (image) and stretch it back to previous width
+							objumbrella.parent().parent().show();
+							objumbrella.css({borderColor: prevcolor, boxShadow: "0px 0px 10px " + prevcolor});
+							objicon.data("owner", owner);
+							(function(pUmbrella, pColor)
+							{
+								objicon.css({width: prevwidth}).animate({width: 0}, animationspeed, function()
+								{
+									pUmbrella.css({borderColor: pColor, boxShadow: "0px 0px 10px " + pColor});
+									$(this).attr("src", $(this).attr("data-src") + $(this).data("owner") + I.cPNG)
+										.animate({width: prevwidth}, animationspeed, function()
+										{
+											pUmbrella.parent().parent().hide();
+											W.adjustZoomMapping();
+										});
+								});
+							})(objumbrella, newcolor);
+						}
+						else
+						{
+							// If it is the first initialization (no previous known owner), then just change the icons
+							objicon.data("owner", owner).attr("src", objicon.attr("data-src") + owner + I.cPNG);
+						}
 						
 						// Mark the objective as recent if it is under the capture time limit
 						if ((msec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY)
 						{
-							W.Objectives[obj.id].isRecent = true;
+							W.Objectives[obj.id].isImmune = true;
 							$("#objProgressBar_" + obj.id).show();
 						}
 					}
@@ -12228,18 +12266,19 @@ W = {
 	{
 		var obj;
 		var msec = (new Date()).getTime();
+		var msecremaining, percentremaining;
 		
 		for (var i in W.Objectives)
 		{
 			obj = W.Objectives[i];
-			if (obj.isRecent)
+			if (obj.isImmune)
 			{
-				var msecremaining = W.cMILLISECONDS_IMMUNITY - (msec - obj.last_flipped_msec);
-				var percremaining = (msecremaining / W.cMILLISECONDS_IMMUNITY) * T.cPERCENT_100;
+				msecremaining = W.cMILLISECONDS_IMMUNITY - (msec - obj.last_flipped_msec);
+				percentremaining = (msecremaining / W.cMILLISECONDS_IMMUNITY) * T.cPERCENT_100;
 				if (msecremaining > 0)
 				{
 					document.getElementById("objTimer_" + obj.id).innerHTML = T.formatMilliseconds(msecremaining);
-					document.getElementById("objProgress_" + obj.id).style.width = percremaining + "%";
+					document.getElementById("objProgress_" + obj.id).style.width = percentremaining + "%";
 				}
 				else
 				{
@@ -12250,7 +12289,7 @@ W = {
 						$(this).css({opacity: 1}).hide();
 					});
 					$("#objIcon_" + obj.id).css({opacity: 0}).animate({opacity: 1}, 2000);
-					obj.isRecent = false;
+					obj.isImmune = false;
 				}
 			}
 		}
@@ -16143,9 +16182,13 @@ I = {
 		var content = $("#cslContent").show();
 		var characterspersecond = 18;
 		
-		if (pString === undefined || pString === null)
+		if (pString === undefined)
 		{
-			pString = "emptystring";
+			pString = "undefinedstring";
+		}
+		else if (pString === null)
+		{
+			pString = "nullstring";
 		}
 		else
 		{
@@ -16311,6 +16354,16 @@ I = {
 		{
 			$(pSelector).animate({rotation: -90}, 200);
 		}
+	},
+	
+	/*
+	 * Quickly shows and hides an element to create a blinking effect.
+	 * @param string pSelector of the element.
+	 * @param boolean pIsShown whether to show or hide aftering finishing blinking.
+	 */
+	blinkElement: function(pSelector, pDuration, pFrequency, pIsShown)
+	{
+		
 	},
 	
 	/*

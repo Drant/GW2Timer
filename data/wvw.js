@@ -65,7 +65,7 @@ var GW2T_LAND_DATA = {
 	name_de: "Grün Grenzlande",
 	name_es: "Tierras Fronterizas de verde",
 	name_fr: "Territoires frontaliers vert",
-	name_zh: "沙漠邊境之地綠色的",
+	name_zh: "沙漠邊境之地綠色",
 	region: "wvw",
 	map_rect: [[-36864, -36864], [36864, 36864]],
 	continent_rect: [[5630, 11518], [8702, 14590]]
@@ -1369,9 +1369,33 @@ var GW2T_OBJECTIVE_DATA = {
 };
 
 /*
- * Objective type translations.
+ * Objective translations and addenda.
  */
-var GW2T_OBJECTIVE_TYPE = {
+var GW2T_OBJECTIVE_METADATA = {
+	"Red": {
+		color: "#cc1f24",
+		name_en: "Red",
+		name_de: "Rot",
+		name_es: "rojo",
+		name_fr: "rouge",
+		name_zh: "紅色"
+	},
+	"Green": {
+		color: "#52a518",
+		name_en: "Green",
+		name_de: "Grün",
+		name_es: "verde",
+		name_fr: "vert",
+		name_zh: "綠色"
+	},
+	"Blue": {
+		color: "#31a7bb",
+		name_en: "Blue",
+		name_de: "Blau",
+		name_es: "azul",
+		name_fr: "bleu",
+		name_zh: "藍色"
+	},
 	"Camp": {
 		value: 5,
 		name_en: "Camp",
