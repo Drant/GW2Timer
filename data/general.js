@@ -526,7 +526,7 @@ var GW2T_ZONE_DATA = {
 	name_zh: "干涸高地",
 	region: "wastes",
 	map_rect: [[-24576, -30720], [24576, 30720]],
-	continent_rect: [[3840, 15742], [5888, 17152]]//[3840, 14592]
+	continent_rect: [[3840, 14592], [5888, 17152]]
 },
 "rata":
 {

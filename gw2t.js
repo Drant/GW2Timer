@@ -1423,7 +1423,8 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				I.log("test");
+				I.blinkElement(".objIcon", 2000, 200);
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -11971,20 +11972,6 @@ W = {
 		Ground: 6,
 		Max: 6
 	},
-	ServerRegionThreshold:
-	{
-		Range: 99,
-		Americas: 1000,
-		Europe: 2000,
-		France: 2100,
-		Germany: 2200,
-		Spain: 2300
-	},
-	ServerRegionEnum:
-	{
-		Americas: 1,
-		Europe: 2
-	},
 	Layer: {
 		Overview: new L.layerGroup(),
 		PersonalPin: new L.layerGroup(),
@@ -12006,6 +11993,20 @@ W = {
 	/*
 	 * WvW exclusive properties.
 	 */
+	ServerRegionThreshold:
+	{
+		Range: 99,
+		Americas: 1000,
+		Europe: 2000,
+		France: 2100,
+		Germany: 2200,
+		Spain: 2300
+	},
+	ServerRegionEnum:
+	{
+		Americas: 1,
+		Europe: 2
+	},
 	isWvWLoaded: false,
 	Servers: {},
 	Objectives: {},
@@ -12062,12 +12063,12 @@ W = {
 					className: "",
 					html: "<div id='obj_" + obj.id + "' class='objContainer'>"
 							+ "<span class='objUmbrellaContainer'><span class='objUmbrellaOuter'><samp id='objUmbrella_" + obj.id + "' class='objUmbrella'></samp></span></span>"
+							+ "<time id='objTimer_" + obj.id + "' class='objTimer'></time>"
 							+ "<span class='objProgressContainer'><span id='objProgressBar_" + obj.id
 								+ "' class='objProgressBar'><var id='objProgress_" + obj.id + "' class='objProgress'></var></span></span>"
-							+ "<span class='objInfo'><cite id='objGuild_" + obj.id + "'>[AI]</cite> <cite id='objAge_" + obj.id + "'>3h</cite></span>"
 							+ "<span class='objIconContainer'><img id='objIcon_" + obj.id
 								+ "' class='objIcon' data-src='img/wvw/objectives/" + (obj.type).toLowerCase() + "_' src='img/ui/placeholder.png'/></span>"
-							+ "<time id='objTimer_" + obj.id + "' class='objTimer'></time>"
+							+ "<span class='objInfo'><cite id='objClaim_" + obj.id + "'></cite> <cite id='objAge_" + obj.id + "'></cite></span>"
 						+ "</div>",
 					iconSize: [38, 38],
 					iconAnchor: [19, 19]
@@ -12153,12 +12154,14 @@ W = {
 		for (var i in W.Objectives)
 		{
 			var obj = W.Objectives[i];
-			obj.isImmune = false;
-			obj.last_flipped = null;
-			obj.claimed_by = null;
+			obj.isImmune = false; // Boolean if is recently captured
+			obj.owner = null; // String owner color
+			obj.last_flipped = null; // String ISO time
+			obj.last_flipped_msec = null; // Integer
+			obj.claimed_by = "null"; // String guild ID, the API can have actual "null" values
+			obj.claimed_at = null; // String ISO time
 		}
 		$(".objUmbrellaContainer").hide();
-		$(".objIcon").data("owner", null);
 		$(".objTimer").empty();
 		$(".objProgressBar").hide();
 		
@@ -12169,9 +12172,8 @@ W = {
 	
 	/*
 	 * Checks for changes in the match API data and updates objectives state.
-	 * @param boolean pIsInitialization do initializations for other elements.
 	 */
-	updateObjectives: function(pIsInitialization)
+	updateObjectives: function()
 	{
 		var msec = (new Date()).getTime();
 		
@@ -12188,65 +12190,72 @@ W = {
 				{
 					apiobj = (pData.maps[i]).objectives[ii];
 					obj = W.Objectives[apiobj.id];
-					// Only update the objectives if they have changed server ownership
+					/*
+					 * Only update the objectives if they have changed server ownership.
+					 */
 					if (obj.last_flipped !== apiobj.last_flipped)
 					{
 						// Reinitialize properties
 						obj.last_flipped = apiobj.last_flipped;
 						obj.last_flipped_msec = (new Date(apiobj.last_flipped)).getTime();
-						if (apiobj.claimed_by !== undefined)
-						{
-							obj.claimed_by = apiobj.claimed_by;
-						}
+						obj.prevowner = obj.owner;
+						obj.owner = apiobj.owner;
+						W.updateObjectiveAge(obj);
+						// Claiming is reset upon ownership change
+						$("#objClaim_" + obj.id).empty();
 						
 						// Update objective visuals
-						var owner = apiobj.owner;
 						var animationspeed = 2000;
 						var objumbrella = $("#objUmbrella_" + apiobj.id);
 						var objicon = $("#objIcon_" + apiobj.id);
 						var prevwidth = objicon.css("width");
-						var prevowner = objicon.data("owner");
 						
-						if (prevowner !== null)
+						// If the objective is being reassigned from a known previous owner
+						if (obj.prevowner !== null)
 						{
-							var prevcolor = W.ObjectiveMetadata[prevowner].color;
-							var newcolor = W.ObjectiveMetadata[owner].color;
-							// Squash the icon to 0 width, then change the icon color (image) and stretch it back to previous width
+							var prevcolor = W.ObjectiveMetadata[obj.prevowner].color;
+							var color = W.ObjectiveMetadata[obj.owner].color;
 							objumbrella.parent().parent().show();
+							// Color the umbrella notification ring and blink it
 							objumbrella.css({borderColor: prevcolor, boxShadow: "0px 0px 10px " + prevcolor});
-							objicon.data("owner", owner);
-							(function(pUmbrella, pColor)
+							I.bloatElement(objumbrella, 1000, 100);
+							// Squash the icon to 0 width, then change the icon image and stretch it back to previous width
+							(function(pOwner, pUmbrella, pColor)
 							{
 								objicon.css({width: prevwidth}).animate({width: 0}, animationspeed, function()
 								{
 									pUmbrella.css({borderColor: pColor, boxShadow: "0px 0px 10px " + pColor});
-									$(this).attr("src", $(this).attr("data-src") + $(this).data("owner") + I.cPNG)
+									$(this).attr("src", $(this).attr("data-src") + pOwner + I.cPNG)
 										.animate({width: prevwidth}, animationspeed, function()
 										{
 											pUmbrella.parent().parent().hide();
 											W.adjustZoomMapping();
 										});
 								});
-							})(objumbrella, newcolor);
+							})(obj.owner, objumbrella, color);
 						}
 						else
 						{
-							// If it is the first initialization (no previous known owner), then just change the icons
-							objicon.data("owner", owner).attr("src", objicon.attr("data-src") + owner + I.cPNG);
+							// If it is the first initialization (no previous known owner), then just assign the icons
+							objicon.attr("src", objicon.attr("data-src") + obj.owner + I.cPNG);
 						}
 						
-						// Mark the objective as recent if it is under the capture time limit
+						// Mark the objective as immune if it is recently captured
 						if ((msec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY)
 						{
 							W.Objectives[obj.id].isImmune = true;
 							$("#objProgressBar_" + obj.id).show();
 						}
 					}
-					
-					// If called when the user changes the server, then update other elements also
-					if (pIsInitialization)
+					/*
+					 * Only update guild tag labels if claiming has changed.
+					 */
+					if (obj.claimed_by !== apiobj.claimed_by)
 					{
-						
+						obj.prevclaimed_by = obj.claimed_by;
+						obj.claimed_by = apiobj.claimed_by;
+						obj.claimed_at = apiobj.claimed_at;
+						W.updateObjectiveClaim(obj);
 					}
 				}
 			}
@@ -12256,6 +12265,16 @@ W = {
 			I.write("Unable to retrieve WvW data. ArenaNet API servers may be down.", 0);
 			W.toggleObjectiveTick(false);
 		});
+	},
+	
+	/*
+	 * Rewrites the objective marker's HTML tooltip with the current objective's
+	 * properties data. To be called only when user has hovered over an objective.
+	 * @param string pID of the objective.
+	 */
+	updateObjectiveTooltip: function(pObjective)
+	{
+		
 	},
 	
 	/*
@@ -12271,6 +12290,7 @@ W = {
 		for (var i in W.Objectives)
 		{
 			obj = W.Objectives[i];
+			// Update the Righteous Indigntation timers
 			if (obj.isImmune)
 			{
 				msecremaining = W.cMILLISECONDS_IMMUNITY - (msec - obj.last_flipped_msec);
@@ -12290,9 +12310,54 @@ W = {
 					});
 					$("#objIcon_" + obj.id).css({opacity: 0}).animate({opacity: 1}, 2000);
 					obj.isImmune = false;
+					W.updateObjectiveAge(obj);
 				}
 			}
 		}
+	},
+	
+	/*
+	 * Updates the label showing an objective's time since it was last captured.
+	 */
+	updateObjectiveAge: function(pObjective)
+	{
+		var msecage = (new Date()).getTime() - pObjective.last_flipped_msec;
+		// Minutely updates
+		$("#objAge_" + pObjective.id).html(T.getShorthandTime(msecage));
+	},
+	updateAllObjectiveAge: function()
+	{
+		// To be called minutely by the clock tick second function
+		for (var i in W.Objectives)
+		{
+			W.updateObjectiveAge(W.Objectives[i]);
+		}
+	},
+	
+	/*
+	 * Updates the label showing the guild tag of who claimed the objective.
+	 */
+	updateObjectiveClaim: function(pObjective)
+	{
+		if (pObjective.claimed_by === null)
+		{
+			return;
+		}
+		
+		$.getJSON(U.URL_API.GuildDetails + pObjective.claimed_by, function(pData)
+		{
+			pObjective.guild_name = pData.guild_name;
+			pObjective.tag = pData.tag;
+			var label = $("#objClaim_" + pObjective.id);
+			var prevcolor = label.css("color");
+			label.html("[" + pObjective.tag + "]");
+			// Also animate if guild has changed from previous known claimer
+			if (pObjective.prevclaimed_by !== "null")
+			{
+				I.blinkElement(label, 2000, 200);
+				label.css({color: "#ffffff"}).animate({color: prevcolor}, 4000);
+			}
+		});
 	},
 	
 	/*
@@ -13148,6 +13213,27 @@ T = {
 	},
 	
 	/*
+	 * Gets a "0m" "1m" "59m" "1h" "25h" single unit approximated time string.
+	 * @param int pMilliseconds of time.
+	 * @returns string shorthand.
+	 */
+	getShorthandTime: function(pMilliseconds)
+	{
+		var seconds = ~~(pMilliseconds / T.cMILLISECONDS_IN_SECOND);
+		// Return minutes
+		if (seconds < T.cSECONDS_IN_MINUTE)
+		{
+			return 0 + D.getWord("m");
+		}
+		if (seconds < T.cSECONDS_IN_HOUR)
+		{
+			return (~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR) + D.getWord("m");
+		}
+		// Return hours
+		return ~~(seconds / T.cSECONDS_IN_HOUR) + D.getWord("h");
+	},
+	
+	/*
 	 * Gets a "Days:Hours:Minutes:Seconds" string from seconds.
 	 * @param int pMilliseconds of time.
 	 * @returns string formatted time.
@@ -13155,7 +13241,6 @@ T = {
 	formatMilliseconds: function(pMilliseconds, pWantDeciseconds)
 	{
 		var seconds = ~~(pMilliseconds / T.cMILLISECONDS_IN_SECOND);
-		var deciseconds = ~~((pMilliseconds % T.cMILLISECONDS_IN_SECOND) / T.cBASE_10);
 		var day, hour, min, sec;
 		var daystr = "";
 		var hourstr = "";
@@ -13204,6 +13289,7 @@ T = {
 		}
 		if (pWantDeciseconds)
 		{
+			var deciseconds = ~~((pMilliseconds % T.cMILLISECONDS_IN_SECOND) / T.cBASE_10);
 			msstr = "." + deciseconds;
 			if (deciseconds < T.cBASE_10)
 			{
@@ -14962,6 +15048,10 @@ K = {
 		if (W.isObjectiveTimerTickEnabled)
 		{
 			W.updateObjectiveTimers();
+			if (sec === 0)
+			{
+				W.updateAllObjectiveAge();
+			}
 		}
 		
 		// Loop this function, can use variable to halt it
@@ -16357,14 +16447,59 @@ I = {
 	},
 	
 	/*
-	 * Quickly shows and hides an element to create a blinking effect.
+	 * Shows and hides an element to create a blinking effect.
 	 * @param string pSelector of the element.
-	 * @param boolean pIsShown whether to show or hide aftering finishing blinking.
+	 * @param int pDuration in milliseconds.
+	 * @param int pSpeed in milliseconds.
+	 * @post Element is shown at the final frame.
 	 */
-	blinkElement: function(pSelector, pDuration, pFrequency, pIsShown)
+	bloatElement: function(pSelector, pDuration, pSpeed)
 	{
-		
+		var times = parseInt(pDuration / pSpeed);
+		// Have to have even numbered times so show and hide equals
+		times = (times % 2 === 0) ? times : times + 1;
+		var isshown = true;
+		for (var i = 0; i < times; i++)
+		{
+			if (isshown)
+			{
+				$(pSelector).hide(pSpeed);
+			}
+			else
+			{
+				$(pSelector).show(pSpeed);
+			}
+			isshown = !isshown;
+		}
 	},
+	blinkElement: function(pSelector, pDuration, pSpeed)
+	{
+		var times = parseInt(pDuration / pSpeed);
+		// Have to have even numbered times so show and hide equals
+		times = (times % 2 === 0) ? times : times + 1;
+		var isshown = true;
+		var counter = 1;
+		var elm = $(pSelector);
+		
+		var interval = setInterval(function()
+		{
+			if (isshown)
+			{
+				elm.css({visibility: "hidden"});
+			}
+			else
+			{
+				elm.css({visibility: "visibile"});
+			}
+			isshown = !isshown;
+			if (counter === times)
+			{
+				clearInterval(interval);
+			}
+			counter++;
+		}, pSpeed);
+	},
+	
 	
 	/*
 	 * Toggles a generic highlight class to an element.

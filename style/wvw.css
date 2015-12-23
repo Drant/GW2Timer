@@ -51,13 +51,16 @@
 	background: white;
 }
 .objInfo {
-	width: auto;
+	width: 100%;
 	left: 0;
 	bottom: -16px;
 	position: absolute;
 	line-height: 14px;
 	white-space: nowrap;
 	color: #ffbb44;
+}
+.objInfo cite {
+	text-align: center;
 	border-radius: 4px;
 	background: rgba(0, 0, 0, 0.5);
 	opacity: 0.8;
