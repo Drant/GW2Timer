@@ -1242,7 +1242,7 @@ Supply:
 		Mehem: { id: "49735", price: "25200" },
 		Fox: { id: "43843", price: "25200" },
 		Derwena: { id: "48910", price: "25200" },
-		Yana: { id: "50023", price: "12600" },
+		Yana: { id: "50023", price: "25200" },
 		Katyn: { id: "44647", price: "25200" },
 		Verma: { id: "49735", price: "25200" }
 	}
