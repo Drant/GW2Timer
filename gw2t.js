@@ -1423,8 +1423,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				I.log("test");
-				I.blinkElement(".objIcon", 2000, 200);
+				
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -7859,7 +7858,7 @@ M = {
 	getEventCenter: function(pEvent)
 	{
 		var zone = this.getZoneFromID(pEvent.map_id);
-		var p = pEvent.location.center; // 3D float array
+		var p = pEvent.location.center; // 2D float array
 
 		return this.convertEventCoord(p, zone);
 	},
@@ -8808,8 +8807,8 @@ M = {
 	
 	/*
 	 * Converts a map_floor.json event coordinates to the map coordinates system.
+	 * @param 2D float array pPos event center. Only uses [0] and [1] values.
 	 * @param object pZone to translate coordinates.
-	 * @param 3D float array pPos event center. Only uses [0] and [1] values.
 	 * @returns 2D int array map coordinates.
 	 * @pre pZone was initialized (this is asynchronous).
 	 */
@@ -8817,6 +8816,14 @@ M = {
 	{
 		var cr = pZone.continent_rect; // 2D float array
 		var mr = pZone.map_rect; // 2D float array
+		/*
+		 * Dry Top's actual (API) continent_rect overlaps Silverwastes, so use
+		 * the actual only when it is to convert Event or GPS coordinates.
+		 */
+		if (pZone.id === "988")
+		{
+			cr = pZone.continent_rect_actual;
+		}
 		
 		// Code from http://gw2.chillerlan.net/examples/gw2maps-jquery.html
 		return [
@@ -8827,7 +8834,7 @@ M = {
 	
 	/*
 	 * Converts a MumbleLink player coordinates to the map coordinates system.
-	 * @param 3D float array pPos [latitude altitude longitude] player position.
+	 * @param 2D float array pPos [latitude altitude longitude] player position.
 	 * @param string pZoneID of the zone the player is in.
 	 * @returns 2D int array map coordinates.
 	 */
@@ -8843,7 +8850,7 @@ M = {
 	
 	/*
 	 * Converts a MumbleLink 3D vector values to degrees of 2D rotation.
-	 * @param 3D array pVector [x, z, y].
+	 * @param 2D array pVector [x, z, y].
 	 * @returns float degrees.
 	 */
 	convertGPSAngle: function(pVector)
@@ -11956,7 +11963,7 @@ W = {
 	ZoneAssociation: GW2T_LAND_ASSOCIATION,
 	cInitialZone: "eternal",
 	cMAP_BOUND: 16384,
-	cMAP_CENTER: [10750, 12414], // This centers at the WvW portion of the map
+	cMAP_CENTER: [10750, 12414], // This centers on the WvW portion of the map
 	cMAP_CENTER_INITIAL: [-193.96875, 167.96875],
 	cMAP_CENTER_ACTUAL: [8192, 8192],
 	ZoomEnum:
@@ -12016,10 +12023,10 @@ W = {
 	isObjectiveTimerTickEnabled: false,
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
 	cMILLISECONDS_IMMUNITY: 300000,
-	MatchFinishTime: {},
+	MatchFinishTime: null,
 	
 	/*
-	 * Initializes the WvW map and starts the score keeping functions.
+	 * Initializes the WvW map and starts the objective state and time functions.
 	 */
 	initializeWvW: function()
 	{
@@ -12100,7 +12107,7 @@ W = {
 	},
 	
 	/*
-	 * Generates the list of servers to change the WvW map objectives and scoreboard.
+	 * Generates a list of servers for the user to choose from.
 	 */
 	generateServerList: function()
 	{
@@ -12146,7 +12153,15 @@ W = {
 	},
 	
 	/*
-	 * Sets the objectives with the same state as the match API data.
+	 * Writes the base HTML for the capture history log.
+	 */
+	initializeLog: function()
+	{
+		
+	},
+	
+	/*
+	 * Resets objective properties and updates the objectives.
 	 */
 	reinitializeObjectives: function()
 	{
@@ -12161,6 +12176,7 @@ W = {
 			obj.claimed_by = "null"; // String guild ID, the API can have actual "null" values
 			obj.claimed_at = null; // String ISO time
 		}
+		W.MatchFinishTime = null;
 		$(".objUmbrellaContainer").hide();
 		$(".objTimer").empty();
 		$(".objProgressBar").hide();
@@ -12200,45 +12216,11 @@ W = {
 						obj.last_flipped_msec = (new Date(apiobj.last_flipped)).getTime();
 						obj.prevowner = obj.owner;
 						obj.owner = apiobj.owner;
+						W.updateObjectiveIcon(obj);
 						W.updateObjectiveAge(obj);
+						
 						// Claiming is reset upon ownership change
 						$("#objClaim_" + obj.id).empty();
-						
-						// Update objective visuals
-						var animationspeed = 2000;
-						var objumbrella = $("#objUmbrella_" + apiobj.id);
-						var objicon = $("#objIcon_" + apiobj.id);
-						var prevwidth = objicon.css("width");
-						
-						// If the objective is being reassigned from a known previous owner
-						if (obj.prevowner !== null)
-						{
-							var prevcolor = W.ObjectiveMetadata[obj.prevowner].color;
-							var color = W.ObjectiveMetadata[obj.owner].color;
-							objumbrella.parent().parent().show();
-							// Color the umbrella notification ring and blink it
-							objumbrella.css({borderColor: prevcolor, boxShadow: "0px 0px 10px " + prevcolor});
-							I.bloatElement(objumbrella, 1000, 100);
-							// Squash the icon to 0 width, then change the icon image and stretch it back to previous width
-							(function(pOwner, pUmbrella, pColor)
-							{
-								objicon.css({width: prevwidth}).animate({width: 0}, animationspeed, function()
-								{
-									pUmbrella.css({borderColor: pColor, boxShadow: "0px 0px 10px " + pColor});
-									$(this).attr("src", $(this).attr("data-src") + pOwner + I.cPNG)
-										.animate({width: prevwidth}, animationspeed, function()
-										{
-											pUmbrella.parent().parent().hide();
-											W.adjustZoomMapping();
-										});
-								});
-							})(obj.owner, objumbrella, color);
-						}
-						else
-						{
-							// If it is the first initialization (no previous known owner), then just assign the icons
-							objicon.attr("src", objicon.attr("data-src") + obj.owner + I.cPNG);
-						}
 						
 						// Mark the objective as immune if it is recently captured
 						if ((msec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY)
@@ -12259,6 +12241,11 @@ W = {
 					}
 				}
 			}
+			// Initialize match finish time if not already
+			if (W.MatchFinishTime === null)
+			{
+				W.MatchFinishTime = pData.end_time;
+			}
 			
 		}}).fail(function()
 		{
@@ -12268,13 +12255,46 @@ W = {
 	},
 	
 	/*
-	 * Rewrites the objective marker's HTML tooltip with the current objective's
-	 * properties data. To be called only when user has hovered over an objective.
-	 * @param string pID of the objective.
+	 * Refreshes the objective's icon, which is also its color, to the current owner.
+	 * @param object pObjective.
 	 */
-	updateObjectiveTooltip: function(pObjective)
+	updateObjectiveIcon: function(pObjective)
 	{
-		
+		// Update objective visuals
+		var animationspeed = 2000;
+		var objumbrella = $("#objUmbrella_" + pObjective.id); // A big circle over the objective icon
+		var objicon = $("#objIcon_" + pObjective.id);
+		var prevwidth = objicon.css("width");
+
+		// If the objective is being reassigned from a known previous owner
+		if (pObjective.prevowner !== null)
+		{
+			var prevcolor = W.ObjectiveMetadata[pObjective.prevowner].color;
+			var color = W.ObjectiveMetadata[pObjective.owner].color;
+			objumbrella.parent().parent().show(); // Show the umbrella container
+			// Color the umbrella notification circle and blink it
+			objumbrella.css({borderColor: prevcolor, boxShadow: "0px 0px 10px " + prevcolor});
+			I.bloatElement(objumbrella, 1000, 100);
+			// Squash the icon to 0 width, then change the icon image and stretch it back to previous width
+			(function(pOwner, pUmbrella, pColor)
+			{
+				objicon.css({width: prevwidth}).animate({width: 0}, animationspeed, function()
+				{
+					pUmbrella.css({borderColor: pColor, boxShadow: "0px 0px 10px " + pColor});
+					$(this).attr("src", $(this).attr("data-src") + pOwner + I.cPNG)
+						.animate({width: prevwidth}, animationspeed, function()
+						{
+							pUmbrella.parent().parent().hide();
+							W.adjustZoomMapping();
+						});
+				});
+			})(pObjective.owner, objumbrella, color);
+		}
+		else
+		{
+			// If it is the first initialization (no previous known owner), then just assign the icons
+			objicon.attr("src", objicon.attr("data-src") + pObjective.owner + I.cPNG);
+		}
 	},
 	
 	/*
@@ -12318,6 +12338,7 @@ W = {
 	
 	/*
 	 * Updates the label showing an objective's time since it was last captured.
+	 * @param object pObjective.
 	 */
 	updateObjectiveAge: function(pObjective)
 	{
@@ -12336,6 +12357,7 @@ W = {
 	
 	/*
 	 * Updates the label showing the guild tag of who claimed the objective.
+	 * @param object pObjective.
 	 */
 	updateObjectiveClaim: function(pObjective)
 	{
@@ -12358,6 +12380,16 @@ W = {
 				label.css({color: "#ffffff"}).animate({color: prevcolor}, 4000);
 			}
 		});
+	},
+	
+	/*
+	 * Rewrites the objective marker's HTML tooltip with the current objective's
+	 * properties data. To be called only when user has hovered over an objective.
+	 * @param object pObjective.
+	 */
+	updateObjectiveTooltip: function(pObjective)
+	{
+		
 	},
 	
 	/*

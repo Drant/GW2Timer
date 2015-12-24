@@ -1374,65 +1374,33 @@ var GW2T_OBJECTIVE_DATA = {
 var GW2T_OBJECTIVE_METADATA = {
 	"Red": {
 		color: "#cc1f24",
-		name_en: "Red",
-		name_de: "Rot",
-		name_es: "rojo",
-		name_fr: "rouge",
-		name_zh: "紅色"
+		name_en: "Red", name_de: "Rot", name_es: "rojo", name_fr: "rouge", name_zh: "紅色"
 	},
 	"Green": {
 		color: "#52a518",
-		name_en: "Green",
-		name_de: "Grün",
-		name_es: "verde",
-		name_fr: "vert",
-		name_zh: "綠色"
+		name_en: "Green", name_de: "Grün", name_es: "verde", name_fr: "vert", name_zh: "綠色"
 	},
 	"Blue": {
 		color: "#31a7bb",
-		name_en: "Blue",
-		name_de: "Blau",
-		name_es: "azul",
-		name_fr: "bleu",
-		name_zh: "藍色"
+		name_en: "Blue", name_de: "Blau", name_es: "azul", name_fr: "bleu", name_zh: "藍色"
 	},
 	"Camp": {
 		value: 5,
-		name_en: "Camp",
-		name_de: "Lager",
-		name_es: "Campamento",
-		name_fr: "Camp",
-		name_zh: "營地"
+		name_en: "Camp", name_de: "Lager", name_es: "Campamento", name_fr: "Camp", name_zh: "營地"
 	},
 	"Tower": {
 		value: 10,
-		name_en: "Tower",
-		name_de: "Turm",
-		name_es: "Torre",
-		name_fr: "Tour",
-		name_zh: "塔樓"
+		name_en: "Tower", name_de: "Turm", name_es: "Torre", name_fr: "Tour", name_zh: "塔樓"
 	},
 	"Keep": {
 		value: 25,
-		name_en: "Keep",
-		name_de: "Feste",
-		name_es: "Fortaleza",
-		name_fr: "Fort",
-		name_zh: "要塞"
+		name_en: "Keep", name_de: "Feste", name_es: "Fortaleza", name_fr: "Fort", name_zh: "要塞"
 	},
 	"Castle": {
 		value: 35,
-		name_en: "Castle",
-		name_de: "Schloss",
-		name_es: "Castillo",
-		name_fr: "Château",
-		name_zh: "城堡"
+		name_en: "Castle", name_de: "Schloss", name_es: "Castillo", name_fr: "Château", name_zh: "城堡"
 	},
 	"Borderlands": {
-		name_en: "Borderlands",
-		name_de: "Grenzlande",
-		name_es: "Tierras Fronterizas de",
-		name_fr: "Territoires frontaliers",
-		name_zh: "沙漠邊境之地"
+		name_en: "Borderlands", name_de: "Grenzlande", name_es: "Tierras Fronterizas de", name_fr: "Territoires frontaliers", name_zh: "沙漠邊境之地"
 	}
 };
