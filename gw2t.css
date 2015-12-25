@@ -760,15 +760,15 @@ textarea.jsCopyCode {
 	background: url("img/ui/close.png");
 	opacity: 0.4;
 }
+.btnWindow:hover {
+	opacity: 0.8;
+}
 #tmlDelete {
 	display: none;
 }
 #tmlToggle {
 	left: 16px;
 	background: url("img/ui/select.png");
-}
-#dsbClose:hover, #tmlClose:hover, #tmlToggle:hover {
-	opacity: 0.8;
 }
 #dsbCountdown time {
 	font-family: Consolas, monospace;
@@ -900,9 +900,6 @@ input.mapCoordinatesName {
 	width: auto; /* Should be just wide enough to fit the HUD buttons */
 	text-align: right;
 }
-.mapPeripheral:hover {
-	width: 520px; /* This becomes the maximum width of the HUD popup divs */
-}
 .mapPeripheral div {
 	text-align: left;
 }
@@ -910,9 +907,13 @@ input.mapCoordinatesName {
 	position: absolute;
 	top: 4px; right: 12px;
 }
+.mapPeripheralNorth:hover {
+	width: 520px; /* This becomes the maximum width of the HUD popup divs */
+}
 .mapPeripheralSouth {
 	position: absolute;
 	bottom: 4px; right: 12px;
+	z-index: 10;
 }
 #itemLogo {
 	margin-right: 2px;

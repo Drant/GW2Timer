@@ -125,7 +125,7 @@
 					<u><a class="jsTranslate" title="<dfn>Switch to Tile Mode (timers only)</dfn><br />gw2timer.com/t<br /><div class='mapLoc'><img src='http://i.imgur.com/Q6O2lIx.png' /></div>" href="./?mode=Tile">tile</a></u>
 				</span>
 				<!--<div id="mapSwitch" class="mapHUDContainer">
-					<img id="mapSwitchButton" class="mapHUDButton" title="<dfn> Click to WVW </dfn>" src="img/ui/pages/wvw.png" alt="display" />
+					<img id="mapSwitchButton" class="mapHUDButton curToggle" title="<dfn> Click to WVW </dfn>" src="img/ui/pages/wvw.png" alt="display" />
 				</div>-->
 				<div class="mapGPS mapHUDContainer">
 					<img id="mapGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
@@ -279,7 +279,7 @@
 			</div>
 			<div class="mapPeripheral mapPeripheralNorth">
 				<div id="wvwSwitch" class="mapHUDContainer">
-					<img id="wvwSwitchButton" class="mapHUDButton" title="<dfn> Click to PvE </dfn>" src="img/ui/pages/map.png" alt="display" />
+					<img id="wvwSwitchButton" class="mapHUDButton curToggle" title="<dfn> Click to PvE </dfn>" src="img/ui/pages/map.png" alt="display" />
 					<div class="mapHUDPopup cntComposition">
 						<select id="wvwServerList"></select>
 					</div>
@@ -328,6 +328,9 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="mapPeripheral mapPeripheralSouth">
+			
 			</div>
 			</article>
 		</section>
@@ -460,16 +463,16 @@
 			<div id="itemLanguage">
 				<span><img src="img/ui/language.png" alt="Language" /></span>
 				<ul id="itemLanguagePopup" class="cntPopup">
-					<li><a href="./?enu_Language=en">English</a></li>
-					<li><a href="./?enu_Language=de">Deutsch</a></li>
-					<li><a href="./?enu_Language=es">Español</a></li>
-					<li><a href="./?enu_Language=fr">Français</a></li>
-					<li><a href="./?enu_Language=cs">Čeština</a></li>
-					<li><a href="./?enu_Language=it">Italiano</a></li>
-					<li><a href="./?enu_Language=pl">Polski</a></li>
-					<li><a href="./?enu_Language=pt">Português</a></li>
-					<li><a href="./?enu_Language=ru">Русский</a></li>
-					<li><a href="./?enu_Language=zh">中文</a></li>
+					<li><a class="linkLanguage" data-lang="en">English</a></li>
+					<li><a class="linkLanguage" data-lang="de">Deutsch</a></li>
+					<li><a class="linkLanguage" data-lang="es">Español</a></li>
+					<li><a class="linkLanguage" data-lang="fr">Français</a></li>
+					<li><a class="linkLanguage" data-lang="cs">Čeština</a></li>
+					<li><a class="linkLanguage" data-lang="it">Italiano</a></li>
+					<li><a class="linkLanguage" data-lang="pl">Polski</a></li>
+					<li><a class="linkLanguage" data-lang="pt">Português</a></li>
+					<li><a class="linkLanguage" data-lang="ru">Русский</a></li>
+					<li><a class="linkLanguage" data-lang="zh">中文</a></li>
 					<li><a class="linkExternal" href="http://forum.renaka.com/topic/5529319/"><sub>Help Translate</sub></a></li>
 				</ul>
 			</div>

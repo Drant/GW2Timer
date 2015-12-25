@@ -159,6 +159,10 @@ O = {
 		bol_displayChallengesWvW: true,
 		// WvW
 		int_secWvWRefresh: 10,
+		bol_logRed: true,
+		bol_logGreen: true,
+		bol_logBlue: true,
+		bol_logEternal: true,
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: true,
@@ -1027,6 +1031,14 @@ O = {
 		{
 			M.changeFloor(O.Options.int_setFloor);
 		},
+		int_setInitialZoom: function()
+		{
+			M.Map.setZoom(O.Options.int_setInitialZoom);
+		},
+		int_setInitialZoomWvW: function()
+		{
+			W.Map.setZoom(O.Options.int_setInitialZoomWvW);
+		},
 		bol_showZoneBorders: function()
 		{
 			P.drawZoneBorders();
@@ -1352,12 +1364,17 @@ U = {
 	{
 		var that = pMapObject;
 		var args = pString.substring(1, pString.length).split(" "); // Trim the command prefix character
+		var argstr = pString.substring(pString.indexOf(" ") + 1, pString.length);
 		var command = args[0].toLowerCase();
 		
 		var Commands = {
 			clear: {usage: "Clears the console screen.", f: function()
 			{
 				I.clear();
+			}},
+			speak: {usage: "Speaks the given text. <em>Parameters: str_text</em>", f: function()
+			{
+				D.speak(argstr);
 			}},
 			gps: {usage: "Prints GPS location information.", f: function()
 			{
@@ -1427,7 +1444,10 @@ U = {
 			}}
 		};
 		// Execute the command by finding it in the object
-		(Commands[command].f)();
+		if (Commands[command] !== undefined)
+		{
+			(Commands[command].f)();
+		}
 	},
 	
 	/*
@@ -2075,11 +2095,36 @@ U = {
 			
 			U.updateAddressBar(pagestring + sectionstring + articlestring + gostring + modestring + pParamOptions);
 			U.updateTitle(title);
+			U.updateLanguageLinks(pagestring + sectionstring + modestring);
 		}
 	},
 	updateTitle: function(pTitle)
 	{
 		document.title = I.cSiteName + "/" + pTitle;
+	},
+	
+	/*
+	 * Updates the href attribute of the language links for the user to change
+	 * language, while also keeping the current URL path.
+	 */
+	updateLanguageLinks: function(pQuery)
+	{
+		$(".linkLanguage").each(function()
+		{
+			var lang = $(this).attr("data-lang");
+			var suffixes = "";
+			if (pQuery === undefined)
+			{
+				// This should be assigned when the website loads for the first time
+				suffixes = (I.ModeCurrent === I.ModeEnum.Website) ? ("?enu_Language=" + lang) : ("?enu_Language=" + lang + "&mode=" + I.ModeCurrent);
+			}
+			else
+			{
+				// This should be assigned when the user changes to a different page
+				suffixes = pQuery + "&enu_Language=" + lang;
+			}
+			$(this).attr("href", "./" + suffixes);
+		});
 	},
 	
 	/*
@@ -5717,13 +5762,37 @@ D = {
 	 * @param string pModifier optional adjective or adverb.
 	 * @returns string translated text or given text.
 	 */
-	getSpeech: function(pText, pModifier)
+	getSpeechWord: function(pText, pModifier)
 	{
 		if (pModifier)
 		{
 			return D.getModifiedWord(pText, pModifier);
 		}
 		return D.getPhrase(pText);
+	},
+		
+	/*
+	 * Adds periods to a string so each letter is spoken separately.
+	 * "SoS" returns "S.O.S." but "Mag" returns "Mag" (no change).
+	 * @param string pString.
+	 * @returns string of period separated initials.
+	 */
+	getSpeechInitials: function(pString)
+	{
+		// If the last character of the string is lowercase, then don't do anything
+		var finalchar = pString.charAt(pString.length - 1);
+		if (finalchar === finalchar.toLowerCase())
+		{
+			return pString;
+		}
+		// Otherwise make initials
+		pString = pString.toUpperCase();
+		var str = "";
+		for (var i = 0; i < pString.length; i++)
+		{
+			str += pString.charAt(i) + ".";
+		}
+		return str;
 	},
 	
 	/*
@@ -6981,7 +7050,7 @@ C = {
 					|| (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription
 						&& C.isChainSubscribed(pChain) && C.isChainUnchecked(pChain)))
 				{
-					D.speak(D.getChainPronunciation(pChain) + " " + D.getSpeech("arrival predicted"));
+					D.speak(D.getChainPronunciation(pChain) + " " + D.getSpeechWord("arrival predicted"));
 				}
 			}
 		}
@@ -7005,12 +7074,12 @@ C = {
 				&& pChain.nexus === C.CurrentChainSD.nexus
 				&& isregularchain)
 			{
-				var checked = ", " + D.getSpeech("checked");
+				var checked = ", " + D.getSpeechWord("checked");
 				var checkedsd = "";
 				var checkedhc = "";
 				var wantsd = O.objToBool(C.NextChainSD1);
 				var wanthc = O.objToBool(C.NextChainHC1);
-				var speech = D.getSpeech("next " + D.orderModifier("boss", "world") + " is") + " ";
+				var speech = D.getSpeechWord("next " + D.orderModifier("boss", "world") + " is") + " ";
 				
 				if (C.NextChainSD1 && ( ! C.isChainUnchecked(C.NextChainSD1)))
 				{
@@ -7030,7 +7099,7 @@ C = {
 				if (wantsd && wanthc)
 				{
 					D.speak(speech + D.getChainPronunciation(C.NextChainSD1) + checkedsd, 5);
-					D.speak(D.getSpeech("also") + ", " + D.getChainPronunciation(C.NextChainHC1) + checkedhc, 3);
+					D.speak(D.getSpeechWord("also") + ", " + D.getChainPronunciation(C.NextChainHC1) + checkedhc, 3);
 				}
 				else if (wantsd)
 				{
@@ -7297,7 +7366,7 @@ M = {
 			inertiaThreshold: this.cInertiaThreshold,
 			doubleClickZoom: false,
 			touchZoom: false, // Disable pinch to zoom
-			zoomControl: I.isOnSmallDevice, // Hide the zoom UI
+			zoomControl: I.isTouchEnabled, // Hide the zoom UI
 			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
 		}).setView(this.cMAP_CENTER_INITIAL, initialzoom); // Out of map boundary so browser doesn't download tiles yet
@@ -7409,6 +7478,9 @@ M = {
 		$(htmlidprefix + "CompassButton").one("mouseenter", that.bindZoneList(that)).click(function()
 		{
 			that.goToDefault();
+		}).dblclick(function()
+		{
+			that.Map.setZoom(that.Map.getZoom() - 1); // Zoom out one level
 		});
 		
 		// Finally
@@ -12044,6 +12116,7 @@ W = {
 		
 		W.initializeMap();
 		W.populateWvW();
+		W.initializeLog();
 		W.reinitializeObjectives();
 		W.generateServerList();
 		I.styleContextMenu("#wvwContext");
@@ -12107,6 +12180,22 @@ W = {
 	},
 	
 	/*
+	 * Gets a translated borderlands name.
+	 * @param string pServer to get the server name.
+	 * @returns string phrase.
+	 */
+	getBorderlandsString: function(pServer)
+	{
+		var borderlands = D.getObjectName(W.ObjectiveMetadata["Borderlands"]);
+		var server = D.getObjectName(W.Servers[pServer]);
+		if (D.isLanguageModifierFirst())
+		{
+			return server + " " + borderlands;
+		}
+		return borderlands + " " + server;
+	},
+	
+	/*
 	 * Generates a list of servers for the user to choose from.
 	 */
 	generateServerList: function()
@@ -12153,11 +12242,46 @@ W = {
 	},
 	
 	/*
-	 * Writes the base HTML for the capture history log.
+	 * Writes the base HTML of the capture history log.
 	 */
 	initializeLog: function()
 	{
+		// Initialize element properties
+		$("#logWindow").data("oldHeight", $("#logWindow").height());
 		
+		// Bind window buttons
+		$("#logToggle").click(function()
+		{
+			$("#wvwLog").toggle("fast");
+		});
+		$("#logExpand").click(function()
+		{
+			var log = $("#logWindow");
+			var height = $(window).height();
+			if (log.data("isExpanded") === true)
+			{
+				log.show().animate({height: log.data("oldHeight")}, 200, function()
+				{
+					I.updateScrollbar(log);
+				}).data("isExpanded", false);
+			}
+			else
+			{
+				log.show().animate({height: height - log.data("oldHeight")}, 200, function()
+				{
+					I.updateScrollbar(log);
+				}).data("isExpanded", true);
+			}
+		});
+		I.initializeScrollbar("#logWindow");
+	},
+	readjustLog: function()
+	{
+		var log = $("#logWindow");
+		if (log.height() > $(window).height())
+		{
+			$("#logExpand").trigger("click").trigger("click");
+		}
 	},
 	
 	/*
@@ -12908,15 +13032,15 @@ T = {
 		
 		if (pFormat === "speech")
 		{
-			minword = " " + D.getSpeech("minute");
-			hourword = " " + D.getSpeech("hour");
+			minword = " " + D.getSpeechWord("minute");
+			hourword = " " + D.getSpeechWord("hour");
 			if (Math.abs(min) > 1)
 			{
-				minword = " " + D.getSpeech("minutes");
+				minword = " " + D.getSpeechWord("minutes");
 			}
 			if (Math.abs(hour) > 1)
 			{
-				hourword = " " + D.getSpeech("hours");
+				hourword = " " + D.getSpeechWord("hours");
 			}
 			if (hour === 0 && Math.abs(min) === 30)
 			{
@@ -15121,10 +15245,10 @@ K = {
 			if (pMinutes === minutestill)
 			{
 				// Make sure the chain is not null/undefined (if it does not exist in the time slot)
-				var conjunction = " " + D.getSpeech("and") + " ";
-				var timephrase = " " + D.getSpeech("will start") + D.getPluralTime(minutestill, "minute");
+				var conjunction = " " + D.getSpeechWord("and") + " ";
+				var timephrase = " " + D.getSpeechWord("will start") + D.getPluralTime(minutestill, "minute");
 				
-				speechwb = D.getSpeech(D.orderModifier(D.orderModifier("boss", "world"), "subscribed")) + " ";
+				speechwb = D.getSpeechWord(D.orderModifier(D.orderModifier("boss", "world"), "subscribed")) + " ";
 				wantsd = O.objToBool(chainsd) && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
 				wanthc = O.objToBool(chainhc) && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
 				wantls = O.objToBool(chainls) && (C.isChainSubscribed(chainls) && C.isChainUnchecked(chainls));
@@ -15152,7 +15276,7 @@ K = {
 				var chainsms = (pMinutes > T.cMINUTES_IN_TIMEFRAME) ? C.NextChainsMS2 : C.NextChainsMS1;
 				if (chainsms.length > 0)
 				{
-					speechms = D.getSpeech("event", "subscribed") + " ";
+					speechms = D.getSpeechWord("event", "subscribed") + " ";
 					for (var i = 0; i < chainsms.length; i++)
 					{
 						chainms = chainsms[i];
@@ -15177,7 +15301,7 @@ K = {
 				// Living Story chain
 				if (B.isDashboardStoryEnabled && wantls)
 				{
-					D.speak(D.getSpeech("event", "subscribed") + " " + D.getChainPronunciation(chainls));
+					D.speak(D.getSpeechWord("event", "subscribed") + " " + D.getChainPronunciation(chainls));
 					D.speak(timephrase);
 				}
 			}
@@ -15261,7 +15385,7 @@ K = {
 		// Alert current chain
 		if (O.Options.int_setAlarm === O.IntEnum.Alarm.Checklist && O.Options.bol_alertAtEnd)
 		{
-			var checked = ", " + D.getSpeech("checked");
+			var checked = ", " + D.getSpeechWord("checked");
 			var checkedcurrentsd = "";
 			var checkednextsd = "";
 			var checkedcurrenthc = "";
@@ -15270,7 +15394,7 @@ K = {
 			var wantcurrenthc = O.objToBool(C.CurrentChainHC);
 			var wantnextsd = O.objToBool(C.NextChainSD1);
 			var wantnexthc = O.objToBool(C.NextChainHC1);
-			var speech = D.getSpeech("world boss", "current") + " " + D.getSpeech("is") + " ";
+			var speech = D.getSpeechWord("world boss", "current") + " " + D.getSpeechWord("is") + " ";
 			
 			if (C.CurrentChainSD && ( ! C.isChainUnchecked(C.CurrentChainSD)))
 			{
@@ -15301,7 +15425,7 @@ K = {
 			if (wantcurrentsd && wantcurrenthc)
 			{
 				D.speak(speech + D.getChainPronunciation(C.CurrentChainSD) + checkedcurrentsd, 5);
-				D.speak(D.getSpeech("and") + ", " + D.getChainPronunciation(C.CurrentChainHC) + checkedcurrenthc, 4);
+				D.speak(D.getSpeechWord("and") + ", " + D.getChainPronunciation(C.CurrentChainHC) + checkedcurrenthc, 4);
 			}
 			else if (wantcurrentsd)
 			{
@@ -15317,16 +15441,16 @@ K = {
 			{
 				if (wantnextsd && wantnexthc)
 				{
-					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextChainSD1) + checkednextsd, 4);
-					D.speak(D.getSpeech("and") + ", " + D.getChainPronunciation(C.NextChainHC1) + checkednexthc, 4);
+					D.speak(D.getSpeechWord("then") + ", " + D.getChainPronunciation(C.NextChainSD1) + checkednextsd, 4);
+					D.speak(D.getSpeechWord("and") + ", " + D.getChainPronunciation(C.NextChainHC1) + checkednexthc, 4);
 				}
 				else if (wantnextsd)
 				{
-					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextChainSD1) + checkednextsd, 4);
+					D.speak(D.getSpeechWord("then") + ", " + D.getChainPronunciation(C.NextChainSD1) + checkednextsd, 4);
 				}
 				else if (wantnexthc)
 				{
-					D.speak(D.getSpeech("then") + ", " + D.getChainPronunciation(C.NextChainHC1) + checkednexthc, 4);
+					D.speak(D.getSpeechWord("then") + ", " + D.getChainPronunciation(C.NextChainHC1) + checkednexthc, 4);
 				}
 			}
 		}
@@ -15942,8 +16066,6 @@ I = {
 		Large: 1024,
 		Medium: 640
 	},
-	isOnSmallDevice: false,
-	isOnBigDevice: false,
 	cSMALL_DEVICE_WIDTH: 800,
 	cSMALL_DEVICE_HEIGHT: 600,
 	cBIG_DISPLAY_HEIGHT: 1200,
@@ -15967,6 +16089,7 @@ I = {
 		// Get URL arguments and do appropriate changes
 		U.enforceURLArgumentsFirst();
 		I.enforceProgramMode();
+		U.updateLanguageLinks();
 		
 		// Tell if DST is in effect
 		T.checkDST();
@@ -15999,16 +16122,19 @@ I = {
 		// Initial sync of the sleep detection variable
 		K.awakeTimestampPrevious = currenttimestamp;
 		
-		// Detect small devices
-		if (screen.width <= I.cSMALL_DEVICE_WIDTH && screen.height <= I.cSMALL_DEVICE_HEIGHT
-			&& I.ModeCurrent === I.ModeEnum.Website)
+		// Tailor the initial zoom for WvW so its map fits at least vertically
+		localStorage.removeItem("int_setInitialZoomWvW"); // DEBUG REMOVE AFTER WVW RELEASE
+		if (screen.height >= 800)
 		{
-			I.isOnSmallDevice = true;
+			O.Options.int_setInitialZoomWvW = 3;
 		}
-		// Detect big displays
-		if (window.innerHeight > I.cBIG_DISPLAY_HEIGHT)
+		else if (screen.height >= 480)
 		{
-			I.isOnBigDevice = true;
+			O.Options.int_setInitialZoomWvW = 4;
+		}
+		else
+		{
+			O.Options.int_setInitialZoomWvW = 5;
 		}
 		
 		// Remember user's browser maker
@@ -16054,6 +16180,7 @@ I = {
 		// Initializes all UI
 		I.initializeTooltip();
 		I.bindHelpButtons("#plateOptions");
+		I.bindWindowResize();
 		I.initializeUIforMenu();
 		I.initializeUIForHUD();
 		I.styleContextMenu("#mapContext");
@@ -16600,6 +16727,7 @@ I = {
 	
 	/*
 	 * Initializes custom scroll bar for specified element using defined settings.
+	 * Container requirements: position relative, overflow hidden.
 	 * @param jqobject pElement to initialize.
 	 */
 	initializeScrollbar: function(pSelector)
@@ -17290,7 +17418,6 @@ I = {
 				// Readjust panels
 				$("#itemTimeline").appendTo("#panelApp");
 				I.readjustSimple();
-				$(window).resize(function() { I.readjustSimple(); });
 			} break;
 			case I.ModeEnum.Mobile:
 			{
@@ -17332,7 +17459,6 @@ I = {
 					});
 				}
 				I.initializeScrollbar("#windowMain");
-				$(window).resize(function() { I.readjustTile(); });
 			} break;
 		}
 		
@@ -17354,19 +17480,39 @@ I = {
 			B.isDashboardEnabled = false;
 		}
 		
-		// Include program mode in Language links
+		// Disable dashboard for non-using modes
 		if (I.ModeCurrent !== I.ModeEnum.Website)
 		{
-			$("#itemLanguagePopup a").each(function()
-			{
-				var link = $(this).attr("href");
-				$(this).attr("href", link + "&mode=" + I.ModeCurrent);
-			});
 			if (I.ModeCurrent !== I.ModeEnum.Overlay)
 			{
 				B.isDashboardEnabled = false;
 			}
 		}
+	},
+	
+	/*
+	 * Binds functions that activate when the user resizes the browser/window.
+	 */
+	bindWindowResize: function()
+	{
+		$(window).resize(function()
+		{
+			/*
+			 * Resize elements' CSS properties to be more legible in the current window size.
+			 */
+			switch (I.ModeCurrent)
+			{
+				case I.ModeEnum.Simple: I.readjustSimple(); break;
+				case I.ModeEnum.Tile: I.readjustTile(); break;
+			}
+			/*
+			 * Resize elements that may have overflowed when the user resized the browser.
+			 */
+			if (W.isWvWLoaded)
+			{
+				W.readjustLog();
+			}
+		});
 	},
 	
 	/*

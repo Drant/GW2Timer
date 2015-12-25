@@ -223,34 +223,38 @@ var GW2T_SERVER_DATA = {
 "1001": {
 	id: 1001,
 	name_en: "Anvil Rock",
-	name_de: "Rocher de l'enclume",
-	name_es: "Amboss-Stein",
-	name_fr: "Roca del Yunque",
-	name_zh: "鐵砧石"
+	name_de: "Amboss-Stein",
+	name_es: "Roca del Yunque",
+	name_fr: "Rocher de l'enclume",
+	name_zh: "鐵砧石",
+	nick_en: "AR", nick_de: "AS", nick_es: "RdY", nick_fr: "RdlE"
 },
 "1002": {
 	id: 1002,
 	name_en: "Borlis Pass",
-	name_de: "Passage de Borlis",
-	name_es: "Borlis-Pass",
-	name_fr: "Paso de Borlis",
-	name_zh: "波裡斯小徑"
+	name_de: "Borlis-Pass",
+	name_es: "Paso de Borlis",
+	name_fr: "Passage de Borlis",
+	name_zh: "波裡斯小徑",
+	nick_en: "BP", nick_de: "BP", nick_es: "PdB", nick_fr: "PdB"
 },
 "1003": {
 	id: 1003,
 	name_en: "Yak's Bend",
-	name_de: "Courbe du Yak",
-	name_es: "Yakbiegung",
-	name_fr: "Declive del Yak",
-	name_zh: "牦牛拐角"
+	name_de: "Yakbiegung",
+	name_es: "Declive del Yak",
+	name_fr: "Courbe du Yak",
+	name_zh: "牦牛拐角",
+	nick_en: "YB", nick_de: "YB", nick_es: "DdY", nick_fr: "CdY"
 },
 "1004": {
 	id: 1004,
 	name_en: "Henge of Denravi",
-	name_de: "Cromlech de Denravi",
-	name_es: "Steinkreis von Denravi",
-	name_fr: "Círculo de Denravi",
-	name_zh: "德拉維石陣"
+	name_de: "Steinkreis von Denravi",
+	name_es: "Círculo de Denravi",
+	name_fr: "Cromlech de Denravi",
+	name_zh: "德拉維石陣",
+	nick_en: "HoD", nick_de: "SvD", nick_es: "CdD", nick_fr: "CdD"
 },
 "1005": {
 	id: 1005,
@@ -258,135 +262,152 @@ var GW2T_SERVER_DATA = {
 	name_de: "Maguuma",
 	name_es: "Maguuma",
 	name_fr: "Maguuma",
-	name_zh: "邁古瑪"
+	name_zh: "邁古瑪",
+	nick_en: "Mag", nick_de: "Mag", nick_es: "Mag", nick_fr: "Mag"
 },
 "1006": {
 	id: 1006,
 	name_en: "Sorrow's Furnace",
-	name_de: "Fourneau des lamentations",
-	name_es: "Hochofen der Betrübnis",
-	name_fr: "Fragua del Pesar",
-	name_zh: "悲傷熔爐"
+	name_de: "Hochofen der Betrübnis",
+	name_es: "Fragua del Pesar",
+	name_fr: "Fourneau des lamentations",
+	name_zh: "悲傷熔爐",
+	nick_en: "SF", nick_de: "HdB", nick_es: "FdP", nick_fr: "FdL"
 },
 "1007": {
 	id: 1007,
 	name_en: "Gate of Madness",
-	name_de: "Porte de la folie",
-	name_es: "Tor des Wahnsinns",
-	name_fr: "Puerta de la Locura",
-	name_zh: "瘋狂之門"
+	name_de: "Tor des Wahnsinns",
+	name_es: "Puerta de la Locura",
+	name_fr: "Porte de la folie",
+	name_zh: "瘋狂之門",
+	nick_en: "GoM", nick_de: "TdW", nick_es: "PdlL", nick_fr: "PdlF"
 },
 "1008": {
 	id: 1008,
 	name_en: "Jade Quarry",
-	name_de: "Carrière de jade",
-	name_es: "Jade-Steinbruch",
-	name_fr: "Cantera de Jade",
-	name_zh: "翠玉礦洞"
+	name_de: "Jade-Steinbruch",
+	name_es: "Cantera de Jade",
+	name_fr: "Carrière de jade",
+	name_zh: "翠玉礦洞",
+	nick_en: "JQ", nick_de: "JS", nick_es: "CdJ", nick_fr: "CdJ"
 },
 "1009": {
 	id: 1009,
 	name_en: "Fort Aspenwood",
-	name_de: "Fort Trembleforêt",
-	name_es: "Fort Espenwald",
-	name_fr: "Fuerte Aspenwood",
-	name_zh: "白楊堡壘"
+	name_de: "Fort Espenwald",
+	name_es: "Fuerte Aspenwood",
+	name_fr: "Fort Trembleforêt",
+	name_zh: "白楊堡壘",
+	nick_en: "FA", nick_de: "FE", nick_es: "FA", nick_fr: "FT"
 },
 "1010": {
 	id: 1010,
 	name_en: "Ehmry Bay",
-	name_de: "Baie d'Ehmry",
-	name_es: "Ehmry-Bucht",
-	name_fr: "Bahía de Ehmry",
-	name_zh: "艾瑪海灣"
+	name_de: "Ehmry-Bucht",
+	name_es: "Bahía de Ehmry",
+	name_fr: "Baie d'Ehmry",
+	name_zh: "艾瑪海灣",
+	nick_en: "EB", nick_de: "EB", nick_es: "BdE", nick_fr: "BdE"
 },
 "1011": {
 	id: 1011,
 	name_en: "Stormbluff Isle",
-	name_de: "Ile de la Falaise tumultueuse",
-	name_es: "Sturmklippen-Insel",
-	name_fr: "Isla Cimatormenta",
-	name_zh: "暴風崖島"
+	name_de: "Sturmklippen-Insel",
+	name_es: "Isla Cimatormenta",
+	name_fr: "Ile de la Falaise tumultueuse",
+	name_zh: "暴風崖島",
+	nick_en: "SBI", nick_de: "SKI", nick_es: "IC", nick_fr: "IFT"
 },
 "1012": {
 	id: 1012,
 	name_en: "Darkhaven",
-	name_de: "Refuge noir",
-	name_es: "Finsterfreistatt",
-	name_fr: "Refugio Oscuro",
-	name_zh: "暗黑庇護所"
+	name_de: "Finsterfreistatt",
+	name_es: "Refugio Oscuro",
+	name_fr: "Refuge noir",
+	name_zh: "暗黑庇護所",
+	nick_en: "DH", nick_de: "FF", nick_es: "RO", nick_fr: "RN"
 },
 "1013": {
 	id: 1013,
 	name_en: "Sanctum of Rall",
-	name_de: "Sanctuaire de Rall",
-	name_es: "Heilige Halle von Rall",
-	name_fr: "Sagrario de Rall",
-	name_zh: "羅爾聖所"
+	name_de: "Heilige Halle von Rall",
+	name_es: "Sagrario de Rall",
+	name_fr: "Sanctuaire de Rall",
+	name_zh: "羅爾聖所",
+	nick_en: "SoR", nick_de: "HHvR", nick_es: "SdR", nick_fr: "SdR"
 },
 "1014": {
 	id: 1014,
 	name_en: "Crystal Desert",
-	name_de: "Désert de cristal",
-	name_es: "Kristallwüste",
-	name_fr: "Desierto de Cristal",
-	name_zh: "水晶沙漠"
+	name_de: "Kristallwüste",
+	name_es: "Desierto de Cristal",
+	name_fr: "Désert de cristal",
+	name_zh: "水晶沙漠",
+	nick_en: "CD", nick_de: "KW", nick_es: "DdC", nick_fr: "DdC"
 },
 "1015": {
 	id: 1015,
 	name_en: "Isle of Janthir",
-	name_de: "Ile de Janthir",
-	name_es: "Janthir-Insel",
-	name_fr: "Isla de Janthir",
-	name_zh: "珍瑟之島"
+	name_de: "Janthir-Insel",
+	name_es: "Isla de Janthir",
+	name_fr: "Ile de Janthir",
+	name_zh: "珍瑟之島",
+	nick_en: "IoJ", nick_de: "JI", nick_es: "IdJ", nick_fr: "IdJ"
 },
 "1016": {
 	id: 1016,
 	name_en: "Sea of Sorrows",
-	name_de: "Mer des lamentations",
-	name_es: "Meer des Leids",
-	name_fr: "Mar de los Pesares",
-	name_zh: "悲傷之海"
+	name_de: "Meer des Leids",
+	name_es: "Mar de los Pesares",
+	name_fr: "Mer des lamentations",
+	name_zh: "悲傷之海",
+	nick_en: "SoS", nick_de: "MdL", nick_es: "MdlP", nick_fr: "MdL"
 },
 "1017": {
 	id: 1017,
 	name_en: "Tarnished Coast",
-	name_de: "Côte ternie",
-	name_es: "Befleckte Küste",
-	name_fr: "Costa de Bronce",
-	name_zh: "晦暗海岸"
+	name_de: "Befleckte Küste",
+	name_es: "Costa de Bronce",
+	name_fr: "Côte ternie",
+	name_zh: "晦暗海岸",
+	nick_en: "TC", nick_de: "BK", nick_es: "CdB", nick_fr: "CT"
 },
 "1018": {
 	id: 1018,
 	name_en: "Northern Shiverpeaks",
-	name_de: "Cimefroides nordiques",
-	name_es: "Nördliche Zittergipfel",
-	name_fr: "Picosescalofriantes del Norte",
-	name_zh: "北席瓦雪山"
+	name_de: "Nördliche Zittergipfel",
+	name_es: "Picosescalofriantes del Norte",
+	name_fr: "Cimefroides nordiques",
+	name_zh: "北席瓦雪山",
+	nick_en: "NSP", nick_de: "NZG", nick_es: "PFdN", nick_fr: "CFN"
 },
 "1019": {
 	id: 1019,
 	name_en: "Blackgate",
-	name_de: "Portenoire",
-	name_es: "Schwarztor",
-	name_fr: "Puertanegra",
-	name_zh: "黑暗之門"
+	name_de: "Schwarztor",
+	name_es: "Puertanegra",
+	name_fr: "Portenoire",
+	name_zh: "黑暗之門",
+	nick_en: "BG", nick_de: "ST", nick_es: "PN", nick_fr: "PN"
 },
 "1020": {
 	id: 1020,
 	name_en: "Ferguson's Crossing",
-	name_de: "Croisée de Ferguson",
-	name_es: "Fergusons Kreuzung",
-	name_fr: "Encrucijada de Ferguson",
-	name_zh: "弗格森渡口"
+	name_de: "Fergusons Kreuzung",
+	name_es: "Encrucijada de Ferguson",
+	name_fr: "Croisée de Ferguson",
+	name_zh: "弗格森渡口",
+	nick_en: "FC", nick_de: "FK", nick_es: "EdF", nick_fr: "CdF"
 },
 "1021": {
 	id: 1021,
 	name_en: "Dragonbrand",
-	name_de: "Stigmate du dragon",
-	name_es: "Drachenbrand",
-	name_fr: "Marca del Dragón",
-	name_zh: "烙印之地"
+	name_de: "Drachenbrand",
+	name_es: "Marca del Dragón",
+	name_fr: "Stigmate du dragon",
+	name_zh: "烙印之地",
+	nick_en: "DB", nick_de: "DB", nick_es: "MdD", nick_fr: "SdD"
 },
 "1022": {
 	id: 1022,
@@ -394,39 +415,44 @@ var GW2T_SERVER_DATA = {
 	name_de: "Kaineng",
 	name_es: "Kaineng",
 	name_fr: "Kaineng",
-	name_zh: "凱寧"
+	name_zh: "凱寧",
+	nick_en: "KN", nick_de: "KN", nick_es: "KN", nick_fr: "KN"
 },
 "1023": {
 	id: 1023,
 	name_en: "Devona's Rest",
-	name_de: "Repos de Devona",
-	name_es: "Devonas Ruh",
-	name_fr: "Descanso de Devona",
-	name_zh: "德佛娜之眠"
+	name_de: "Devonas Ruh",
+	name_es: "Descanso de Devona",
+	name_fr: "Repos de Devona",
+	name_zh: "德佛娜之眠",
+	nick_en: "DR", nick_de: "DR", nick_es: "DdD", nick_fr: "RdD"
 },
 "1024": {
 	id: 1024,
 	name_en: "Eredon Terrace",
-	name_de: "Plateau d'Eredon",
-	name_es: "Eredon-Terrasse",
-	name_fr: "Terraza de Eredon",
-	name_zh: "伊雷登平台"
+	name_de: "Eredon-Terrasse",
+	name_es: "Terraza de Eredon",
+	name_fr: "Plateau d'Eredon",
+	name_zh: "伊雷登平台",
+	nick_en: "ET", nick_de: "ET", nick_es: "TdE", nick_fr: "PdE"
 },
 "2001": {
 	id: 2001,
 	name_en: "Fissure of Woe",
-	name_de: "Fissure du malheur",
-	name_es: "Riss des Kummers",
-	name_fr: "Fisura de la Aflicción",
-	name_zh: "悲嘆縫隙"
+	name_de: "Riss des Kummers",
+	name_es: "Fisura de la Aflicción",
+	name_fr: "Fissure du malheur",
+	name_zh: "悲嘆縫隙",
+	nick_en: "FoW", nick_de: "RdK", nick_es: "FdlA", nick_fr: "FdM"
 },
 "2002": {
 	id: 2002,
 	name_en: "Desolation",
-	name_de: "Désolation",
-	name_es: "Ödnis",
-	name_fr: "Desolación",
-	name_zh: "荒蕪廢墟"
+	name_de: "Ödnis",
+	name_es: "Desolación",
+	name_fr: "Désolation",
+	name_zh: "荒蕪廢墟",
+	nick_en: "Deso", nick_de: "Ödnis", nick_es: "Deso", nick_fr: "Déso"
 },
 "2003": {
 	id: 2003,
@@ -434,199 +460,224 @@ var GW2T_SERVER_DATA = {
 	name_de: "Gandara",
 	name_es: "Gandara",
 	name_fr: "Gandara",
-	name_zh: "甘達拉"
+	name_zh: "甘達拉",
+	nick_en: "Gand", nick_de: "Gand", nick_es: "Gand", nick_fr: "Gand"
 },
 "2004": {
 	id: 2004,
 	name_en: "Blacktide",
-	name_de: "Noirflot",
-	name_es: "Schwarzwasser",
-	name_fr: "Marea Negra",
-	name_zh: "黑潮"
+	name_de: "Schwarzwasser",
+	name_es: "Marea Negra",
+	name_fr: "Noirflot",
+	name_zh: "黑潮",
+	nick_en: "BT", nick_de: "SW", nick_es: "MN", nick_fr: "NF"
 },
 "2005": {
 	id: 2005,
 	name_en: "Ring of Fire",
-	name_de: "Cercle de feu",
-	name_es: "Feuerring",
-	name_fr: "Anillo de fuego",
-	name_zh: "火焰之環"
+	name_de: "Feuerring",
+	name_es: "Anillo de fuego",
+	name_fr: "Cercle de feu",
+	name_zh: "火焰之環",
+	nick_en: "RoF", nick_de: "FR", nick_es: "AdF", nick_fr: "CdF"
 },
 "2006": {
 	id: 2006,
 	name_en: "Underworld",
-	name_de: "Outre-monde",
-	name_es: "Unterwelt",
-	name_fr: "Inframundo",
-	name_zh: "地下世界"
+	name_de: "Unterwelt",
+	name_es: "Inframundo",
+	name_fr: "Outre-monde",
+	name_zh: "地下世界",
+	nick_en: "UW", nick_de: "UW", nick_es: "IM", nick_fr: "OM"
 },
 "2007": {
 	id: 2007,
 	name_en: "Far Shiverpeaks",
-	name_de: "Lointaines Cimefroides",
-	name_es: "Ferne Zittergipfel",
-	name_fr: "Lejanas Picosescalofriantes",
-	name_zh: "席瓦雪山遠境"
+	name_de: "Ferne Zittergipfel",
+	name_es: "Lejanas Picosescalofriantes",
+	name_fr: "Lointaines Cimefroides",
+	name_zh: "席瓦雪山遠境",
+	nick_en: "FSP", nick_de: "FZG", nick_es: "LPF", nick_fr: "LCF"
 },
 "2008": {
 	id: 2008,
 	name_en: "Whiteside Ridge",
-	name_de: "Crête de Verseblanc",
-	name_es: "Weißflankgrat",
-	name_fr: "Cadena Laderablanca",
-	name_zh: "白際山脊"
+	name_de: "Weißflankgrat",
+	name_es: "Cadena Laderablanca",
+	name_fr: "Crête de Verseblanc",
+	name_zh: "白際山脊",
+	nick_en: "WSR", nick_de: "WFG", nick_es: "CLB", nick_fr: "CVB"
 },
 "2009": {
 	id: 2009,
 	name_en: "Ruins of Surmia",
-	name_de: "Ruines de Surmia",
-	name_es: "Ruinen von Surmia",
-	name_fr: "Ruinas de Surmia",
-	name_zh: "瑟米亞廢墟"
+	name_de: "Ruinen von Surmia",
+	name_es: "Ruinas de Surmia",
+	name_fr: "Ruines de Surmia",
+	name_zh: "瑟米亞廢墟",
+	nick_en: "RoS", nick_de: "RvS", nick_es: "RdS", nick_fr: "RdS"
 },
 "2010": {
 	id: 2010,
 	name_en: "Seafarer's Rest",
-	name_de: "Repos du Marin",
-	name_es: "Seemannsruh",
-	name_fr: "Refugio del Viajante",
-	name_zh: "航海者之寧"
+	name_de: "Seemannsruh",
+	name_es: "Refugio del Viajante",
+	name_fr: "Repos du Marin",
+	name_zh: "航海者之寧",
+	nick_en: "SFR", nick_de: "SMS", nick_es: "RdV", nick_fr: "RdM"
 },
 "2011": {
 	id: 2011,
 	name_en: "Vabbi",
-	name_de: "Vabbi",
-	name_es: "Vaabi",
+	name_de: "Vaabi",
+	name_es: "Vabbi",
 	name_fr: "Vabbi",
-	name_zh: "瓦比"
+	name_zh: "瓦比",
+	nick_en: "VB", nick_de: "VB", nick_es: "VB", nick_fr: "VB"
 },
 "2012": {
 	id: 2012,
 	name_en: "Piken Square",
-	name_de: "Place Piken",
-	name_es: "Piken-Platz",
-	name_fr: "Plaza de Piken",
-	name_zh: "派肯廣場"
+	name_de: "Piken-Platz",
+	name_es: "Plaza de Piken",
+	name_fr: "Place Piken",
+	name_zh: "派肯廣場",
+	nick_en: "PS", nick_de: "PP", nick_es: "PdP", nick_fr: "PP"
 },
 "2013": {
 	id: 2013,
 	name_en: "Aurora Glade",
-	name_de: "Clairière de l'aurore",
-	name_es: "Auroralichtung",
-	name_fr: "Claro de la Aurora",
-	name_zh: "曙光林地"
+	name_de: "Auroralichtung",
+	name_es: "Claro de la Aurora",
+	name_fr: "Clairière de l'aurore",
+	name_zh: "曙光林地",
+	nick_en: "AG", nick_de: "AL", nick_es: "CdlA", nick_fr: "CdlA"
 },
 "2014": {
 	id: 2014,
 	name_en: "Gunnar's Hold",
-	name_de: "Campement de Gunnar",
-	name_es: "Gunnars Feste",
-	name_fr: "Fuerte de Gunnar",
-	name_zh: "納爾要塞"
+	name_de: "Gunnars Feste",
+	name_es: "Fuerte de Gunnar",
+	name_fr: "Campement de Gunnar",
+	name_zh: "納爾要塞",
+	nick_en: "GH", nick_de: "GF", nick_es: "FdG", nick_fr: "CdG"
 },
 "2101": {
 	id: 2101,
-	name_en: "Jade Sea [FR]",
-	name_de: "Mer de Jade [FR]",
-	name_es: "Jademeer [FR]",
-	name_fr: "Mar de Jade [FR]",
-	name_zh: "翠玉之海[ FR ]"
+	name_en: "Jade Sea",
+	name_de: "Jademeer",
+	name_es: "Mar de Jade",
+	name_fr: "Mer de Jade",
+	name_zh: "翠玉之海",
+	nick_en: "JS", nick_de: "JM", nick_es: "MdJ", nick_fr: "MdJ"
 },
 "2102": {
 	id: 2102,
-	name_en: "Fort Ranik [FR]",
-	name_de: "Fort Ranik [FR]",
-	name_es: "Fort Ranik [FR]",
-	name_fr: "Fuerte Ranik [FR]",
-	name_zh: "拉尼克堡[ FR ]"
+	name_en: "Fort Ranik",
+	name_de: "Fort Ranik",
+	name_es: "Fuerte Ranik",
+	name_fr: "Fort Ranik",
+	name_zh: "拉尼克堡",
+	nick_en: "FR", nick_de: "FR", nick_es: "FR", nick_fr: "FR"
 },
 "2103": {
 	id: 2103,
-	name_en: "Augury Rock [FR]",
-	name_de: "Roche de l'Augure [FR]",
-	name_es: "Fels der Weissagung [FR]",
-	name_fr: "Roca del Augurio [FR]",
-	name_zh: "預言之石[ FR ]"
+	name_en: "Augury Rock",
+	name_de: "Fels der Weissagung",
+	name_es: "Roca del Augurio",
+	name_fr: "Roche de l'Augure",
+	name_zh: "預言之石",
+	nick_en: "AR", nick_de: "FdW", nick_es: "RdA", nick_fr: "RdlA"
 },
 "2104": {
 	id: 2104,
-	name_en: "Vizunah Square [FR]",
-	name_de: "Place de Vizunah [FR]",
-	name_es: "Vizunah-Platz [FR]",
-	name_fr: "Plaza de Vizunah [FR]",
-	name_zh: "薇茹廣場[ FR ]"
+	name_en: "Vizunah Square",
+	name_de: "Vizunah-Platz",
+	name_es: "Plaza de Vizunah",
+	name_fr: "Place de Vizunah",
+	name_zh: "薇茹廣場",
+	nick_en: "VS", nick_de: "VP", nick_es: "PdV", nick_fr: "PdV"
 },
 "2105": {
 	id: 2105,
-	name_en: "Arborstone [FR]",
-	name_de: "Pierre Arborea [FR]",
-	name_es: "Arborstein [FR]",
-	name_fr: "Piedra Arbórea [FR]",
-	name_zh: "亞博之石 [ FR ]"
+	name_en: "Arborstone",
+	name_de: "Arborstein",
+	name_es: "Piedra Arbórea",
+	name_fr: "Pierre Arborea",
+	name_zh: "亞博之石 ",
+	nick_en: "AS", nick_de: "AS", nick_es: "PA", nick_fr: "PA"
 },
 "2201": {
 	id: 2201,
-	name_en: "Kodash [DE]",
-	name_de: "Kodash [DE]",
-	name_es: "Kodasch [DE]",
-	name_fr: "Kodash [DE]",
-	name_zh: "聖潔之石 [ DE ]"
+	name_en: "Kodash",
+	name_de: "Kodasch",
+	name_es: "Kodash",
+	name_fr: "Kodash",
+	name_zh: "聖潔之石",
+	nick_en: "KD", nick_de: "KD", nick_es: "KD", nick_fr: "KD"
 },
 "2202": {
 	id: 2202,
-	name_en: "Riverside [DE]",
-	name_de: "Provinces fluviales [DE]",
-	name_es: "Flussufer [DE]",
-	name_fr: "Ribera [DE]",
-	name_zh: "河畔[ DE ]"
+	name_en: "Riverside",
+	name_de: "Flussufer",
+	name_es: "Ribera",
+	name_fr: "Provinces fluviales",
+	name_zh: "河畔",
+	nick_en: "RS", nick_de: "FS", nick_es: "RB", nick_fr: "PF"
 },
 "2203": {
 	id: 2203,
-	name_en: "Elona Reach [DE]",
-	name_de: "Bief d'Elona [DE]",
-	name_es: "Elonaspitze [DE]",
-	name_fr: "Cañón de Elona [DE]",
-	name_zh: "伊倫娜海岸[ DE ]"
+	name_en: "Elona Reach",
+	name_de: "Elonaspitze",
+	name_es: "Cañón de Elona",
+	name_fr: "Bief d'Elona",
+	name_zh: "伊倫娜海岸",
+	nick_en: "ER", nick_de: "ES", nick_es: "CdE", nick_fr: "BdE"
 },
 "2204": {
 	id: 2204,
-	name_en: "Abaddon's Mouth [DE]",
-	name_de: "Bouche d'Abaddon [DE]",
-	name_es: "Abaddons Maul [DE]",
-	name_fr: "Boca de Abaddon [DE]",
-	name_zh: "阿伯頓之口[ DE ]"
+	name_en: "Abaddon's Mouth",
+	name_de: "Abaddons Maul",
+	name_es: "Boca de Abaddon",
+	name_fr: "Bouche d'Abaddon",
+	name_zh: "阿伯頓之口",
+	nick_en: "AM", nick_de: "AM", nick_es: "BdA", nick_fr: "BdA"
 },
 "2205": {
 	id: 2205,
-	name_en: "Drakkar Lake [DE]",
-	name_de: "Lac Drakkar [DE]",
-	name_es: "Drakkar-See [DE]",
-	name_fr: "Lago Drakkar [DE]",
-	name_zh: "德拉克湖[ DE ]"
+	name_en: "Drakkar Lake",
+	name_de: "Drakkar-See",
+	name_es: "Lago Drakkar",
+	name_fr: "Lac Drakkar",
+	name_zh: "德拉克湖",
+	nick_en: "DL", nick_de: "DS", nick_es: "LD", nick_fr: "LD"
 },
 "2206": {
 	id: 2206,
-	name_en: "Miller's Sound [DE]",
-	name_de: "Détroit de Miller [DE]",
-	name_es: "Millersund [DE]",
-	name_fr: "Estrecho de Miller [DE]",
-	name_zh: "米勒之聲[ DE ]"
+	name_en: "Miller's Sound",
+	name_de: "Millersund",
+	name_es: "Estrecho de Miller",
+	name_fr: "Détroit de Miller",
+	name_zh: "米勒之聲",
+	nick_en: "MS", nick_de: "MS", nick_es: "EdM", nick_fr: "DdM"
 },
 "2207": {
 	id: 2207,
-	name_en: "Dzagonur [DE]",
-	name_de: "Dzagonur [DE]",
-	name_es: "Dzagonur [DE]",
-	name_fr: "Dzagonur [DE]",
-	name_zh: "扎格諾[ DE ]"
+	name_en: "Dzagonur",
+	name_de: "Dzagonur",
+	name_es: "Dzagonur",
+	name_fr: "Dzagonur",
+	name_zh: "扎格諾",
+	nick_en: "DZN", nick_de: "DZN", nick_es: "DZN", nick_fr: "DZN"
 },
 "2301": {
 	id: 2301,
-	name_en: "Baruch Bay [SP]",
-	name_de: "Baie de Baruch [SP]",
-	name_es: "Baruch-Bucht [ES]",
-	name_fr: "Bahía de Baruch [ES]",
-	name_zh: "巴魯克海灣[ SP ]"
+	name_en: "Baruch Bay",
+	name_de: "Baruch-Bucht",
+	name_es: "Bahía de Baruch",
+	name_fr: "Baie de Baruch",
+	name_zh: "巴魯克海灣",
+	nick_en: "BB", nick_de: "BB", nick_es: "BdB", nick_fr: "BdB"
 }
 };
 
@@ -1383,6 +1434,10 @@ var GW2T_OBJECTIVE_METADATA = {
 	"Blue": {
 		color: "#31a7bb",
 		name_en: "Blue", name_de: "Blau", name_es: "azul", name_fr: "bleu", name_zh: "藍色"
+	},
+	"Eternal": {
+		color: "#ffffff",
+		name_en: "Eternal", name_de: "Ewige", name_es: "eternos", name_fr: "éternels", name_zh: "永恆"
 	},
 	"Camp": {
 		value: 5,
