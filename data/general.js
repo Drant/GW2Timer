@@ -526,8 +526,7 @@ var GW2T_ZONE_DATA = {
 	name_zh: "干涸高地",
 	region: "wastes",
 	map_rect: [[-24576, -30720], [24576, 30720]],
-	continent_rect: [[3840, 15744], [5888, 17152]],
-	continent_rect_actual: [[3840, 14592], [5888, 17152]]
+	continent_rect: [[3840, 15744], [5888, 17152]], continent_rect_actual: [[3840, 14592], [5888, 17152]]
 },
 "rata":
 {
@@ -1236,16 +1235,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2015-12-25T00:00:00Z"),
-	Finish: new Date("2015-12-26T00:00:00Z"),
+	Start: new Date("2015-12-26T00:00:00Z"),
+	Finish: new Date("2015-12-27T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43841", price: "25200" },
-		Fox: { id: "43804", price: "25200" },
-		Derwena: { id: "75473", price: "25200" },
-		Yana: { id: "43835", price: "25200" },
-		Katyn: { id: "44653", price: "25200" },
-		Verma: { id: "67962", price: "25200" }
+		Mehem: { id: "44658", price: "25200" },
+		Fox: { id: "43814", price: "25200" },
+		Derwena: { id: "44649", price: "25200" },
+		Yana: { id: "43818", price: "25200" },
+		Katyn: { id: "49753", price: "25200" },
+		Verma: { id: "44648", price: "25200" }
 	}
 }
 };

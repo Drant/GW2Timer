@@ -107,7 +107,7 @@
 				<div id="itemTimeline">
 					<kbd id="tmlDelete" class="btnWindow" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
 					<kbd id="tmlClose" class="btnWindow" title="<dfn>Close the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
-					<kbd id="tmlToggle" class="btnWindow" title="Toggle timeline opacity."></kbd>
+					<kbd id="tmlToggle" class="btnWindow curToggle" title="Toggle timeline opacity."></kbd>
 					<div id="tmlIndicator"></div>
 				</div>
 			</div>
@@ -308,6 +308,7 @@
 						</div>
 						<div class="mapOptionsOther">
 							<label title="Repeated seconds before API data are downloaded again to check if objectives have flipped."><input id="opt_int_secWvWRefresh" type="number" min="5" max="60" step="1" /> Refresh Interval (sec)</label>
+							<label title="Old log entries beyond this limit shall be deleted."><input id="opt_int_numLogEntries" type="number" min="64" max="1024" step="1" /> Max Log Entries</label>
 						</div>
 					</div>
 				</div>
@@ -330,7 +331,22 @@
 				</div>
 			</div>
 			<div class="mapPeripheral mapPeripheralSouth">
-			
+				<div id="wvwLogContainer">
+					<kbd id="logToggle" class="curToggle btnWindow logButton" title="<dfn>Toggle Log</dfn>"></kbd>
+					<kbd id="logExpand" class="curToggle btnWindow logButton" title="<dfn>Toggle Log Height</dfn>"></kbd>
+					<div id="wvwLog" class="cntComposition">
+						<div id="logOptions">
+							<label id="logCheckNarrate" title="Toggle narration of WvW events."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logCheckNarrateSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
+							<div id="logFilters">
+								<label><input id="opt_bol_logRedHome" type="checkbox" /><var id="logFilterRedHome"></var></label><br />
+								<label><input id="opt_bol_logGreenHome" type="checkbox" /><var id="logFilterGreenHome"></var></label>
+								<label><input id="opt_bol_logBlueHome" type="checkbox" /><var id="logFilterBlueHome"></var></label>
+								<div id="logTimeContainer"><time id="logTime" class="curToggle" title="Toggle 24:00/12AM"></time><label><input id="opt_bol_logCenter" type="checkbox" /><var id="logFilterCenter"></var></label></div>
+							</div>
+						</div>
+						<ul id="logWindow"></ul>
+					</div>
+				</div>
 			</div>
 			</article>
 		</section>

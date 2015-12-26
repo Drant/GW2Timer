@@ -227,7 +227,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Roca del Yunque",
 	name_fr: "Rocher de l'enclume",
 	name_zh: "鐵砧石",
-	nick_en: "AR", nick_de: "AS", nick_es: "RdY", nick_fr: "RdlE"
+	nick_en: "AR", nick_de: "AS", nick_es: "RdY", nick_fr: "RdlE", nick_zh: "鐵砧石"
 },
 "1002": {
 	id: 1002,
@@ -236,7 +236,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Paso de Borlis",
 	name_fr: "Passage de Borlis",
 	name_zh: "波裡斯小徑",
-	nick_en: "BP", nick_de: "BP", nick_es: "PdB", nick_fr: "PdB"
+	nick_en: "BP", nick_de: "BP", nick_es: "PdB", nick_fr: "PdB", nick_zh: "波裡斯小徑"
 },
 "1003": {
 	id: 1003,
@@ -245,7 +245,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Declive del Yak",
 	name_fr: "Courbe du Yak",
 	name_zh: "牦牛拐角",
-	nick_en: "YB", nick_de: "YB", nick_es: "DdY", nick_fr: "CdY"
+	nick_en: "YB", nick_de: "YB", nick_es: "DdY", nick_fr: "CdY", nick_zh: "牦牛拐角"
 },
 "1004": {
 	id: 1004,
@@ -254,7 +254,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Círculo de Denravi",
 	name_fr: "Cromlech de Denravi",
 	name_zh: "德拉維石陣",
-	nick_en: "HoD", nick_de: "SvD", nick_es: "CdD", nick_fr: "CdD"
+	nick_en: "HoD", nick_de: "SvD", nick_es: "CdD", nick_fr: "CdD", nick_zh: "德拉維石陣"
 },
 "1005": {
 	id: 1005,
@@ -263,7 +263,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Maguuma",
 	name_fr: "Maguuma",
 	name_zh: "邁古瑪",
-	nick_en: "Mag", nick_de: "Mag", nick_es: "Mag", nick_fr: "Mag"
+	nick_en: "Mag", nick_de: "Mag", nick_es: "Mag", nick_fr: "Mag", nick_zh: "邁古瑪"
 },
 "1006": {
 	id: 1006,
@@ -272,7 +272,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Fragua del Pesar",
 	name_fr: "Fourneau des lamentations",
 	name_zh: "悲傷熔爐",
-	nick_en: "SF", nick_de: "HdB", nick_es: "FdP", nick_fr: "FdL"
+	nick_en: "SF", nick_de: "HdB", nick_es: "FdP", nick_fr: "FdL", nick_zh: "悲傷熔爐"
 },
 "1007": {
 	id: 1007,
@@ -281,7 +281,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Puerta de la Locura",
 	name_fr: "Porte de la folie",
 	name_zh: "瘋狂之門",
-	nick_en: "GoM", nick_de: "TdW", nick_es: "PdlL", nick_fr: "PdlF"
+	nick_en: "GoM", nick_de: "TdW", nick_es: "PdlL", nick_fr: "PdlF", nick_zh: "瘋狂之門"
 },
 "1008": {
 	id: 1008,
@@ -290,7 +290,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Cantera de Jade",
 	name_fr: "Carrière de jade",
 	name_zh: "翠玉礦洞",
-	nick_en: "JQ", nick_de: "JS", nick_es: "CdJ", nick_fr: "CdJ"
+	nick_en: "JQ", nick_de: "JS", nick_es: "CdJ", nick_fr: "CdJ", nick_zh: "翠玉礦洞"
 },
 "1009": {
 	id: 1009,
@@ -299,7 +299,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Fuerte Aspenwood",
 	name_fr: "Fort Trembleforêt",
 	name_zh: "白楊堡壘",
-	nick_en: "FA", nick_de: "FE", nick_es: "FA", nick_fr: "FT"
+	nick_en: "FA", nick_de: "FE", nick_es: "FA", nick_fr: "FT", nick_zh: "白楊堡壘"
 },
 "1010": {
 	id: 1010,
@@ -308,7 +308,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Bahía de Ehmry",
 	name_fr: "Baie d'Ehmry",
 	name_zh: "艾瑪海灣",
-	nick_en: "EB", nick_de: "EB", nick_es: "BdE", nick_fr: "BdE"
+	nick_en: "EB", nick_de: "EB", nick_es: "BdE", nick_fr: "BdE", nick_zh: "艾瑪海灣"
 },
 "1011": {
 	id: 1011,
@@ -317,7 +317,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Isla Cimatormenta",
 	name_fr: "Ile de la Falaise tumultueuse",
 	name_zh: "暴風崖島",
-	nick_en: "SBI", nick_de: "SKI", nick_es: "IC", nick_fr: "IFT"
+	nick_en: "SBI", nick_de: "SKI", nick_es: "IC", nick_fr: "IFT", nick_zh: "暴風崖島"
 },
 "1012": {
 	id: 1012,
@@ -326,7 +326,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Refugio Oscuro",
 	name_fr: "Refuge noir",
 	name_zh: "暗黑庇護所",
-	nick_en: "DH", nick_de: "FF", nick_es: "RO", nick_fr: "RN"
+	nick_en: "DH", nick_de: "FF", nick_es: "RO", nick_fr: "RN", nick_zh: "暗黑庇護所"
 },
 "1013": {
 	id: 1013,
@@ -335,7 +335,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Sagrario de Rall",
 	name_fr: "Sanctuaire de Rall",
 	name_zh: "羅爾聖所",
-	nick_en: "SoR", nick_de: "HHvR", nick_es: "SdR", nick_fr: "SdR"
+	nick_en: "SoR", nick_de: "HHvR", nick_es: "SdR", nick_fr: "SdR", nick_zh: "羅爾聖所"
 },
 "1014": {
 	id: 1014,
@@ -344,7 +344,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Desierto de Cristal",
 	name_fr: "Désert de cristal",
 	name_zh: "水晶沙漠",
-	nick_en: "CD", nick_de: "KW", nick_es: "DdC", nick_fr: "DdC"
+	nick_en: "CD", nick_de: "KW", nick_es: "DdC", nick_fr: "DdC", nick_zh: "水晶沙漠"
 },
 "1015": {
 	id: 1015,
@@ -353,7 +353,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Isla de Janthir",
 	name_fr: "Ile de Janthir",
 	name_zh: "珍瑟之島",
-	nick_en: "IoJ", nick_de: "JI", nick_es: "IdJ", nick_fr: "IdJ"
+	nick_en: "IoJ", nick_de: "JI", nick_es: "IdJ", nick_fr: "IdJ", nick_zh: "珍瑟之島"
 },
 "1016": {
 	id: 1016,
@@ -362,7 +362,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Mar de los Pesares",
 	name_fr: "Mer des lamentations",
 	name_zh: "悲傷之海",
-	nick_en: "SoS", nick_de: "MdL", nick_es: "MdlP", nick_fr: "MdL"
+	nick_en: "SoS", nick_de: "MdL", nick_es: "MdlP", nick_fr: "MdL", nick_zh: "悲傷之海"
 },
 "1017": {
 	id: 1017,
@@ -371,7 +371,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Costa de Bronce",
 	name_fr: "Côte ternie",
 	name_zh: "晦暗海岸",
-	nick_en: "TC", nick_de: "BK", nick_es: "CdB", nick_fr: "CT"
+	nick_en: "TC", nick_de: "BK", nick_es: "CdB", nick_fr: "CT", nick_zh: "晦暗海岸"
 },
 "1018": {
 	id: 1018,
@@ -380,7 +380,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Picosescalofriantes del Norte",
 	name_fr: "Cimefroides nordiques",
 	name_zh: "北席瓦雪山",
-	nick_en: "NSP", nick_de: "NZG", nick_es: "PFdN", nick_fr: "CFN"
+	nick_en: "NSP", nick_de: "NZG", nick_es: "PFdN", nick_fr: "CFN", nick_zh: "北席瓦雪山"
 },
 "1019": {
 	id: 1019,
@@ -389,7 +389,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Puertanegra",
 	name_fr: "Portenoire",
 	name_zh: "黑暗之門",
-	nick_en: "BG", nick_de: "ST", nick_es: "PN", nick_fr: "PN"
+	nick_en: "BG", nick_de: "ST", nick_es: "PN", nick_fr: "PN", nick_zh: "黑暗之門"
 },
 "1020": {
 	id: 1020,
@@ -398,7 +398,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Encrucijada de Ferguson",
 	name_fr: "Croisée de Ferguson",
 	name_zh: "弗格森渡口",
-	nick_en: "FC", nick_de: "FK", nick_es: "EdF", nick_fr: "CdF"
+	nick_en: "FC", nick_de: "FK", nick_es: "EdF", nick_fr: "CdF", nick_zh: "弗格森渡口"
 },
 "1021": {
 	id: 1021,
@@ -407,7 +407,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Marca del Dragón",
 	name_fr: "Stigmate du dragon",
 	name_zh: "烙印之地",
-	nick_en: "DB", nick_de: "DB", nick_es: "MdD", nick_fr: "SdD"
+	nick_en: "DB", nick_de: "DB", nick_es: "MdD", nick_fr: "SdD", nick_zh: "烙印之地"
 },
 "1022": {
 	id: 1022,
@@ -416,7 +416,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Kaineng",
 	name_fr: "Kaineng",
 	name_zh: "凱寧",
-	nick_en: "KN", nick_de: "KN", nick_es: "KN", nick_fr: "KN"
+	nick_en: "KN", nick_de: "KN", nick_es: "KN", nick_fr: "KN", nick_zh: "凱寧"
 },
 "1023": {
 	id: 1023,
@@ -425,7 +425,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Descanso de Devona",
 	name_fr: "Repos de Devona",
 	name_zh: "德佛娜之眠",
-	nick_en: "DR", nick_de: "DR", nick_es: "DdD", nick_fr: "RdD"
+	nick_en: "DR", nick_de: "DR", nick_es: "DdD", nick_fr: "RdD", nick_zh: "德佛娜之眠"
 },
 "1024": {
 	id: 1024,
@@ -434,7 +434,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Terraza de Eredon",
 	name_fr: "Plateau d'Eredon",
 	name_zh: "伊雷登平台",
-	nick_en: "ET", nick_de: "ET", nick_es: "TdE", nick_fr: "PdE"
+	nick_en: "ET", nick_de: "ET", nick_es: "TdE", nick_fr: "PdE", nick_zh: "伊雷登平台"
 },
 "2001": {
 	id: 2001,
@@ -443,7 +443,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Fisura de la Aflicción",
 	name_fr: "Fissure du malheur",
 	name_zh: "悲嘆縫隙",
-	nick_en: "FoW", nick_de: "RdK", nick_es: "FdlA", nick_fr: "FdM"
+	nick_en: "FoW", nick_de: "RdK", nick_es: "FdlA", nick_fr: "FdM", nick_zh: "悲嘆縫隙"
 },
 "2002": {
 	id: 2002,
@@ -452,7 +452,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Desolación",
 	name_fr: "Désolation",
 	name_zh: "荒蕪廢墟",
-	nick_en: "Deso", nick_de: "Ödnis", nick_es: "Deso", nick_fr: "Déso"
+	nick_en: "DS", nick_de: "ÖN", nick_es: "DS", nick_fr: "DS", nick_zh: "荒蕪廢墟"
 },
 "2003": {
 	id: 2003,
@@ -461,7 +461,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Gandara",
 	name_fr: "Gandara",
 	name_zh: "甘達拉",
-	nick_en: "Gand", nick_de: "Gand", nick_es: "Gand", nick_fr: "Gand"
+	nick_en: "GD", nick_de: "GD", nick_es: "GD", nick_fr: "GD", nick_zh: "甘達拉"
 },
 "2004": {
 	id: 2004,
@@ -470,7 +470,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Marea Negra",
 	name_fr: "Noirflot",
 	name_zh: "黑潮",
-	nick_en: "BT", nick_de: "SW", nick_es: "MN", nick_fr: "NF"
+	nick_en: "BT", nick_de: "SW", nick_es: "MN", nick_fr: "NF", nick_zh: "黑潮"
 },
 "2005": {
 	id: 2005,
@@ -479,7 +479,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Anillo de fuego",
 	name_fr: "Cercle de feu",
 	name_zh: "火焰之環",
-	nick_en: "RoF", nick_de: "FR", nick_es: "AdF", nick_fr: "CdF"
+	nick_en: "RoF", nick_de: "FR", nick_es: "AdF", nick_fr: "CdF", nick_zh: "火焰之環"
 },
 "2006": {
 	id: 2006,
@@ -488,7 +488,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Inframundo",
 	name_fr: "Outre-monde",
 	name_zh: "地下世界",
-	nick_en: "UW", nick_de: "UW", nick_es: "IM", nick_fr: "OM"
+	nick_en: "UW", nick_de: "UW", nick_es: "IM", nick_fr: "OM", nick_zh: "地下世界"
 },
 "2007": {
 	id: 2007,
@@ -497,7 +497,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Lejanas Picosescalofriantes",
 	name_fr: "Lointaines Cimefroides",
 	name_zh: "席瓦雪山遠境",
-	nick_en: "FSP", nick_de: "FZG", nick_es: "LPF", nick_fr: "LCF"
+	nick_en: "FSP", nick_de: "FZG", nick_es: "LPF", nick_fr: "LCF", nick_zh: "席瓦雪山遠境"
 },
 "2008": {
 	id: 2008,
@@ -506,7 +506,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Cadena Laderablanca",
 	name_fr: "Crête de Verseblanc",
 	name_zh: "白際山脊",
-	nick_en: "WSR", nick_de: "WFG", nick_es: "CLB", nick_fr: "CVB"
+	nick_en: "WSR", nick_de: "WFG", nick_es: "CLB", nick_fr: "CVB", nick_zh: "白際山脊"
 },
 "2009": {
 	id: 2009,
@@ -515,7 +515,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Ruinas de Surmia",
 	name_fr: "Ruines de Surmia",
 	name_zh: "瑟米亞廢墟",
-	nick_en: "RoS", nick_de: "RvS", nick_es: "RdS", nick_fr: "RdS"
+	nick_en: "RoS", nick_de: "RvS", nick_es: "RdS", nick_fr: "RdS", nick_zh: "瑟米亞廢墟"
 },
 "2010": {
 	id: 2010,
@@ -524,7 +524,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Refugio del Viajante",
 	name_fr: "Repos du Marin",
 	name_zh: "航海者之寧",
-	nick_en: "SFR", nick_de: "SMS", nick_es: "RdV", nick_fr: "RdM"
+	nick_en: "SFR", nick_de: "SMS", nick_es: "RdV", nick_fr: "RdM", nick_zh: "航海者之寧"
 },
 "2011": {
 	id: 2011,
@@ -533,7 +533,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Vabbi",
 	name_fr: "Vabbi",
 	name_zh: "瓦比",
-	nick_en: "VB", nick_de: "VB", nick_es: "VB", nick_fr: "VB"
+	nick_en: "VB", nick_de: "VB", nick_es: "VB", nick_fr: "VB", nick_zh: "瓦比"
 },
 "2012": {
 	id: 2012,
@@ -542,7 +542,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Plaza de Piken",
 	name_fr: "Place Piken",
 	name_zh: "派肯廣場",
-	nick_en: "PS", nick_de: "PP", nick_es: "PdP", nick_fr: "PP"
+	nick_en: "PS", nick_de: "PP", nick_es: "PdP", nick_fr: "PP", nick_zh: "派肯廣場"
 },
 "2013": {
 	id: 2013,
@@ -551,7 +551,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Claro de la Aurora",
 	name_fr: "Clairière de l'aurore",
 	name_zh: "曙光林地",
-	nick_en: "AG", nick_de: "AL", nick_es: "CdlA", nick_fr: "CdlA"
+	nick_en: "AG", nick_de: "AL", nick_es: "CdlA", nick_fr: "CdlA", nick_zh: "曙光林地"
 },
 "2014": {
 	id: 2014,
@@ -560,7 +560,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Fuerte de Gunnar",
 	name_fr: "Campement de Gunnar",
 	name_zh: "納爾要塞",
-	nick_en: "GH", nick_de: "GF", nick_es: "FdG", nick_fr: "CdG"
+	nick_en: "GH", nick_de: "GF", nick_es: "FdG", nick_fr: "CdG", nick_zh: "納爾要塞"
 },
 "2101": {
 	id: 2101,
@@ -569,7 +569,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Mar de Jade",
 	name_fr: "Mer de Jade",
 	name_zh: "翠玉之海",
-	nick_en: "JS", nick_de: "JM", nick_es: "MdJ", nick_fr: "MdJ"
+	nick_en: "JS", nick_de: "JM", nick_es: "MdJ", nick_fr: "MdJ", nick_zh: "翠玉之海"
 },
 "2102": {
 	id: 2102,
@@ -578,7 +578,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Fuerte Ranik",
 	name_fr: "Fort Ranik",
 	name_zh: "拉尼克堡",
-	nick_en: "FR", nick_de: "FR", nick_es: "FR", nick_fr: "FR"
+	nick_en: "FR", nick_de: "FR", nick_es: "FR", nick_fr: "FR", nick_zh: "拉尼克堡"
 },
 "2103": {
 	id: 2103,
@@ -587,7 +587,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Roca del Augurio",
 	name_fr: "Roche de l'Augure",
 	name_zh: "預言之石",
-	nick_en: "AR", nick_de: "FdW", nick_es: "RdA", nick_fr: "RdlA"
+	nick_en: "AR", nick_de: "FdW", nick_es: "RdA", nick_fr: "RdlA", nick_zh: "預言之石"
 },
 "2104": {
 	id: 2104,
@@ -596,7 +596,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Plaza de Vizunah",
 	name_fr: "Place de Vizunah",
 	name_zh: "薇茹廣場",
-	nick_en: "VS", nick_de: "VP", nick_es: "PdV", nick_fr: "PdV"
+	nick_en: "VS", nick_de: "VP", nick_es: "PdV", nick_fr: "PdV", nick_zh: "薇茹廣場"
 },
 "2105": {
 	id: 2105,
@@ -605,7 +605,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Piedra Arbórea",
 	name_fr: "Pierre Arborea",
 	name_zh: "亞博之石 ",
-	nick_en: "AS", nick_de: "AS", nick_es: "PA", nick_fr: "PA"
+	nick_en: "AS", nick_de: "AS", nick_es: "PA", nick_fr: "PA", nick_zh: "亞博之石 "
 },
 "2201": {
 	id: 2201,
@@ -614,7 +614,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Kodash",
 	name_fr: "Kodash",
 	name_zh: "聖潔之石",
-	nick_en: "KD", nick_de: "KD", nick_es: "KD", nick_fr: "KD"
+	nick_en: "KD", nick_de: "KD", nick_es: "KD", nick_fr: "KD", nick_zh: "聖潔之石"
 },
 "2202": {
 	id: 2202,
@@ -623,7 +623,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Ribera",
 	name_fr: "Provinces fluviales",
 	name_zh: "河畔",
-	nick_en: "RS", nick_de: "FS", nick_es: "RB", nick_fr: "PF"
+	nick_en: "RS", nick_de: "FS", nick_es: "RB", nick_fr: "PF", nick_zh: "河畔"
 },
 "2203": {
 	id: 2203,
@@ -632,7 +632,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Cañón de Elona",
 	name_fr: "Bief d'Elona",
 	name_zh: "伊倫娜海岸",
-	nick_en: "ER", nick_de: "ES", nick_es: "CdE", nick_fr: "BdE"
+	nick_en: "ER", nick_de: "ES", nick_es: "CdE", nick_fr: "BdE", nick_zh: "伊倫娜海岸"
 },
 "2204": {
 	id: 2204,
@@ -641,7 +641,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Boca de Abaddon",
 	name_fr: "Bouche d'Abaddon",
 	name_zh: "阿伯頓之口",
-	nick_en: "AM", nick_de: "AM", nick_es: "BdA", nick_fr: "BdA"
+	nick_en: "AM", nick_de: "AM", nick_es: "BdA", nick_fr: "BdA", nick_zh: "阿伯頓之口"
 },
 "2205": {
 	id: 2205,
@@ -650,7 +650,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Lago Drakkar",
 	name_fr: "Lac Drakkar",
 	name_zh: "德拉克湖",
-	nick_en: "DL", nick_de: "DS", nick_es: "LD", nick_fr: "LD"
+	nick_en: "DL", nick_de: "DS", nick_es: "LD", nick_fr: "LD", nick_zh: "德拉克湖"
 },
 "2206": {
 	id: 2206,
@@ -659,7 +659,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Estrecho de Miller",
 	name_fr: "Détroit de Miller",
 	name_zh: "米勒之聲",
-	nick_en: "MS", nick_de: "MS", nick_es: "EdM", nick_fr: "DdM"
+	nick_en: "MS", nick_de: "MS", nick_es: "EdM", nick_fr: "DdM", nick_zh: "米勒之聲"
 },
 "2207": {
 	id: 2207,
@@ -668,7 +668,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Dzagonur",
 	name_fr: "Dzagonur",
 	name_zh: "扎格諾",
-	nick_en: "DZN", nick_de: "DZN", nick_es: "DZN", nick_fr: "DZN"
+	nick_en: "DZN", nick_de: "DZN", nick_es: "DZN", nick_fr: "DZN", nick_zh: "扎格諾"
 },
 "2301": {
 	id: 2301,
@@ -677,7 +677,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Bahía de Baruch",
 	name_fr: "Baie de Baruch",
 	name_zh: "巴魯克海灣",
-	nick_en: "BB", nick_de: "BB", nick_es: "BdB", nick_fr: "BdB"
+	nick_en: "BB", nick_de: "BB", nick_es: "BdB", nick_fr: "BdB", nick_zh: "巴魯克海灣"
 }
 };
 
@@ -689,10 +689,11 @@ var GW2T_OBJECTIVE_DATA = {
 	map_type: "Center",
 	type: "Keep",
 	name_en: "Overlook",
-	name_de: "Aussichtspunkt von",
+	name_de: "Aussichtspunkt",
 	name_es: "Mirador",
 	name_fr: "Belvédère",
 	name_zh: "眺望台",
+	nick_en: "Overlook", nick_de: "Aussichtspunkt", nick_es: "Mirador", nick_fr: "Belvédère", nick_zh: "眺望台",
 	id: "38-1",
 	map_id: "38",
 	coord: [10764, 13656]
@@ -701,10 +702,11 @@ var GW2T_OBJECTIVE_DATA = {
 	map_type: "Center",
 	type: "Keep",
 	name_en: "Valley",
-	name_de: "Tal von",
+	name_de: "Tal",
 	name_es: "Valle",
 	name_fr: "Vallée",
 	name_zh: "溪谷",
+	nick_en: "Valley", nick_de: "Tal", nick_es: "Valle", nick_fr: "Vallée", nick_zh: "溪谷",
 	id: "38-2",
 	map_id: "38",
 	coord: [11490, 15122]
@@ -713,10 +715,11 @@ var GW2T_OBJECTIVE_DATA = {
 	map_type: "Center",
 	type: "Keep",
 	name_en: "Lowlands",
-	name_de: "Tiefland von",
+	name_de: "Tiefland",
 	name_es: "Tierras bajas",
 	name_fr: "Basses terres",
 	name_zh: "低地",
+	nick_en: "Lowlands", nick_de: "Tiefland", nick_es: "Tierrasbajas", nick_fr: "Bassesterres", nick_zh: "低地",
 	id: "38-3",
 	map_id: "38",
 	coord: [9604, 15130]
@@ -729,6 +732,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Claro Golanta",
 	name_fr: "Clairière de Golanta",
 	name_zh: "格蘭塔空地",
+	nick_en: "Golanta", nick_de: "Golanta", nick_es: "Golanta", nick_fr: "Golanta", nick_zh: "格蘭塔",
 	id: "38-4",
 	map_id: "38",
 	coord: [10203, 15437]
@@ -741,6 +745,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Colina Pangloss",
 	name_fr: "Montée de Pangloss",
 	name_zh: "潘樂高地",
+	nick_en: "Pangloss", nick_de: "Pangloss", nick_es: "Pangloss", nick_fr: "Pangloss", nick_zh: "潘樂",
 	id: "38-5",
 	map_id: "38",
 	coord: [11280, 13737]
@@ -753,6 +758,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Claro Espeldia",
 	name_fr: "Forêt rasée de Speldan",
 	name_zh: "斯佩爾丹營地",
+	nick_en: "Speldan", nick_de: "Speldan", nick_es: "Espeldia", nick_fr: "Speldan", nick_zh: "斯佩爾丹",
 	id: "38-6",
 	map_id: "38",
 	coord: [9841, 13546]
@@ -765,6 +771,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Pasaje Danelon",
 	name_fr: "Passage Danelon",
 	name_zh: "丹隆之廊",
+	nick_en: "Danelon", nick_de: "Danelon", nick_es: "Danelon", nick_fr: "Danelon", nick_zh: "丹隆",
 	id: "38-7",
 	map_id: "38",
 	coord: [11038, 15556]
@@ -777,6 +784,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Bosques Clarosombra",
 	name_fr: "Bois d'Ombreclair",
 	name_zh: "褐沼樹林",
+	nick_en: "Umberglade", nick_de: "Umberlichtung", nick_es: "Clarosombra", nick_fr: "Ombreclair", nick_zh: "褐沼",
 	id: "38-8",
 	map_id: "38",
 	coord: [11562, 14470]
@@ -789,6 +797,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Castillo Piedraniebla",
 	name_fr: "Château Brumepierre",
 	name_zh: "石雲堡",
+	nick_en: "Stonemist", nick_de: "Steinnebel", nick_es: "Piedraniebla", nick_fr: "Brumepierre", nick_zh: "石雲",
 	id: "38-9",
 	map_id: "38",
 	coord: [10606, 14576]
@@ -801,6 +810,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Cantera del Pícaro",
 	name_fr: "Carrière du voleur",
 	name_zh: "盜賊採石場",
+	nick_en: "Rogue", nick_de: "Schurkenbruch", nick_es: "Pícaro", nick_fr: "Voleur", nick_zh: "盜賊",
 	id: "38-10",
 	map_id: "38",
 	coord: [9571, 14423]
@@ -813,6 +823,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Cornisa de Aldon",
 	name_fr: "Corniche d'Aldon",
 	name_zh: "阿爾丹暗礁",
+	nick_en: "Aldon", nick_de: "Aldons", nick_es: "Aldon", nick_fr: "Aldon", nick_zh: "阿爾丹",
 	id: "38-11",
 	map_id: "38",
 	coord: [9414, 14793]
@@ -825,6 +836,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Pista Arroyosalvaje",
 	name_fr: "Piste du ruisseau sauvage",
 	name_zh: "野溪急道",
+	nick_en: "Wildcreek", nick_de: "Wildbach", nick_es: "Arroyosalvaje", nick_fr: "Ruisseausauvage", nick_zh: "野溪急",
 	id: "38-12",
 	map_id: "38",
 	coord: [9906, 14625]
@@ -837,6 +849,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Cenagal de Jerrifer",
 	name_fr: "Bourbier de Jerrifer",
 	name_zh: "杰裡弗泥潭",
+	nick_en: "Jerrifer", nick_de: "Jerrifers", nick_es: "Jerrifer", nick_fr: "Jerrifer", nick_zh: "杰裡弗",
 	id: "38-13",
 	map_id: "38",
 	coord: [9806, 15406]
@@ -849,6 +862,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Barranco Klovan",
 	name_fr: "Petit ravin de Klovan",
 	name_zh: "科洛文水渠",
+	nick_en: "Klovan", nick_de: "Klovan", nick_es: "Klovan", nick_fr: "Klovan", nick_zh: "科洛文",
 	id: "38-14",
 	map_id: "38",
 	coord: [10172, 15082]
@@ -861,6 +875,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Barranco Langor",
 	name_fr: "Ravin de Langor",
 	name_zh: "朗格爾峽谷",
+	nick_en: "Langor", nick_de: "Langor", nick_es: "Langor", nick_fr: "Langor", nick_zh: "朗格爾",
 	id: "38-15",
 	map_id: "38",
 	coord: [11453, 15491]
@@ -873,6 +888,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Lago Quentin",
 	name_fr: "Lac Quentin",
 	name_zh: "昆汀湖",
+	nick_en: "Quentin", nick_de: "Quentin", nick_es: "Quentin", nick_fr: "Quentin", nick_zh: "昆汀",
 	id: "38-16",
 	map_id: "38",
 	coord: [10850, 15224]
@@ -885,6 +901,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Zanja de Mendon",
 	name_fr: "Faille de Mendon",
 	name_zh: "曼敦峽谷",
+	nick_en: "Mendon", nick_de: "Mendons", nick_es: "Mendon", nick_fr: "Mendon", nick_zh: "曼敦",
 	id: "38-17",
 	map_id: "38",
 	coord: [10257, 13514]
@@ -897,6 +914,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Paso Anzalias",
 	name_fr: "Col d'Anzalias",
 	name_zh: "真語小徑",
+	nick_en: "Anzalias", nick_de: "Anzalias", nick_es: "Anzalias", nick_fr: "Anzalias", nick_zh: "真語",
 	id: "38-18",
 	map_id: "38",
 	coord: [10189, 14082]
@@ -909,6 +927,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Tajo de la Guardia del Ogro",
 	name_fr: "Percée de Gardogre",
 	name_zh: "食人魔山路",
+	nick_en: "Ogrewatch", nick_de: "Ogerwacht", nick_es: "Ogroguardia", nick_fr: "Gardogre", nick_zh: "食人魔",
 	id: "38-19",
 	map_id: "38",
 	coord: [11011, 13850]
@@ -921,6 +940,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Pendiente Veloka",
 	name_fr: "Flanc de Veloka",
 	name_zh: "維羅卡斜坡",
+	nick_en: "Veloka", nick_de: "Veloka", nick_es: "Veloka", nick_fr: "Veloka", nick_zh: "維羅卡",
 	id: "38-20",
 	map_id: "38",
 	coord: [11090, 13488]
@@ -933,6 +953,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Barranco Durios",
 	name_fr: "Ravin de Durios",
 	name_zh: "德裡尤斯峽谷",
+	nick_en: "Durios", nick_de: "Durios", nick_es: "Durios", nick_fr: "Durios", nick_zh: "德裡尤斯",
 	id: "38-21",
 	map_id: "38",
 	coord: [11156, 14528]
@@ -945,6 +966,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Escarpadura Bravost",
 	name_fr: "Falaise de Bravost",
 	name_zh: "斗膽懸崖",
+	nick_en: "Bravost", nick_de: "Bravost", nick_es: "Bravost", nick_fr: "Bravost", nick_zh: "斗膽",
 	id: "38-22",
 	map_id: "38",
 	coord: [11766, 14794]
@@ -957,6 +979,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Laboratorio de Hamm",
 	name_fr: "Laboratoire de Hamm",
 	name_zh: "漢姆的實驗室",
+	nick_en: "N. Camp", nick_de: "N. Lager", nick_es: "N. Campamento", nick_fr: "N. Camp", nick_zh: "北營地",
 	id: "1099-99",
 	map_id: "1099",
 	coord: [10743, 9482]
@@ -969,6 +992,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Hacienda de Bauer",
 	name_fr: "Ferme Bauer",
 	name_zh: "鮑爾的農場",
+	nick_en: "S.E. Camp", nick_de: "S.O. Lager", nick_es: "S.E. Campamento", nick_fr: "S.E. Camp", nick_zh: "東南營地",
 	id: "1099-100",
 	map_id: "1099",
 	coord: [11889, 11291]
@@ -981,6 +1005,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Campamento de McLain",
 	name_fr: "Campement de McLain",
 	name_zh: "麥克萊恩的營地",
+	nick_en: "S.W. Camp", nick_de: "S.W. Lager", nick_es: "S.O. Campamento", nick_fr: "S.O. Camp", nick_zh: "西南營地",
 	id: "1099-101",
 	map_id: "1099",
 	coord: [9584, 11295]
@@ -993,6 +1018,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Academia O'del",
 	name_fr: "Académie de O'del",
 	name_zh: "歐黛學院",
+	nick_en: "N.W. Tower", nick_de: "N.W. Turm", nick_es: "N.O. Torre", nick_fr: "N.O. Tour", nick_zh: "西北塔樓",
 	id: "1099-102",
 	map_id: "1099",
 	coord: [9832, 9508]
@@ -1005,6 +1031,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Necrópolis Eterna",
 	name_fr: "Nécropole éternelle",
 	name_zh: "永恆魂都",
+	nick_en: "N.E. Tower", nick_de: "N.O. Turm", nick_es: "N.E. Torre", nick_fr: "N.E. Tour", nick_zh: "東北塔樓",
 	id: "1099-104",
 	map_id: "1099",
 	coord: [11739, 9654]
@@ -1017,6 +1044,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Depósito de Palancamanijas",
 	name_fr: "Dépôt Vilebrequin",
 	name_zh: "機軸補給站",
+	nick_en: "S.E. Tower", nick_de: "S.O. Turm", nick_es: "S.E. Torre", nick_fr: "S.E. Tour", nick_zh: "東南塔樓",
 	id: "1099-105",
 	map_id: "1099",
 	coord: [11257, 11551]
@@ -1029,6 +1057,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Sótano Achicharrante",
 	name_fr: "Crypte embrasée",
 	name_zh: "沸騰墓穴",
+	nick_en: "Undercroft", nick_de: "Gruft", nick_es: "Sótano", nick_fr: "Crypte", nick_zh: "墓穴",
 	id: "1099-106",
 	map_id: "1099",
 	coord: [9328, 10634]
@@ -1041,6 +1070,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Refugio de Roy",
 	name_fr: "Refuge de Roy",
 	name_zh: "羅伊的避難所",
+	nick_en: "N.E. Camp", nick_de: "N.O. Lager", nick_es: "N.E. Campamento", nick_fr: "N.E. Camp", nick_zh: "東北營地",
 	id: "1099-109",
 	map_id: "1099",
 	coord: [12100, 10019]
@@ -1053,6 +1083,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Puesto Avanzado Abrasado",
 	name_fr: "Avant-poste dévasté",
 	name_zh: "焦枯前哨",
+	nick_en: "S.W. Tower", nick_de: "S.W. Turm", nick_es: "S.O. Torre", nick_fr: "S.O. Tour", nick_zh: "西南塔樓",
 	id: "1099-110",
 	map_id: "1099",
 	coord: [10244, 11331]
@@ -1065,6 +1096,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Muralla Estoica",
 	name_fr: "Rempart stoïque",
 	name_zh: "堅忍壁壘",
+	nick_en: "Rampart", nick_de: "Festungswall", nick_es: "Muralla", nick_fr: "Rempart", nick_zh: "壁壘",
 	id: "1099-113",
 	map_id: "1099",
 	coord: [10777, 10120]
@@ -1077,6 +1109,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Palacio del Águila Pescadora",
 	name_fr: "Palais du balbuzard",
 	name_zh: "魚鷹宮殿",
+	nick_en: "Palace", nick_de: "Palast", nick_es: "Palacio", nick_fr: "Palais", nick_zh: "宮殿",
 	id: "1099-114",
 	map_id: "1099",
 	coord: [12203, 10706]
@@ -1089,6 +1122,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Escondrijo de Boettiger",
 	name_fr: "Antre de Boettiger",
 	name_zh: "波提加的藏匿點",
+	nick_en: "N.W. Camp", nick_de: "N.W. Lager", nick_es: "N.O. Campamento", nick_fr: "N.O. Camp", nick_zh: "西北營地",
 	id: "1099-115",
 	map_id: "1099",
 	coord: [9313, 9994]
@@ -1101,6 +1135,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Pozo del Murmullo de Polvo",
 	name_fr: "Puits du Souffle-poussière",
 	name_zh: "塵語之井",
+	nick_en: "S. Camp", nick_de: "S. Lager", nick_es: "S. Campamento", nick_fr: "S. Camp", nick_zh: "南營地",
 	id: "1099-116",
 	map_id: "1099",
 	coord: [10747, 11854]
@@ -1113,6 +1148,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Laboratorio de Lesh",
 	name_fr: "Laboratoire de Lesh",
 	name_zh: "萊希的實驗室",
+	nick_en: "N. Camp", nick_de: "N. Lager", nick_es: "N. Campamento", nick_fr: "N. Camp", nick_zh: "北營地",
 	id: "1102-99",
 	map_id: "1102",
 	coord: [7159, 12042]
@@ -1125,6 +1161,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Hacienda de Barrett",
 	name_fr: "Ferme Barrett",
 	name_zh: "巴裡特的農場",
+	nick_en: "S.E. Camp", nick_de: "S.O. Lager", nick_es: "S.E. Campamento", nick_fr: "S.E. Camp", nick_zh: "東南營地",
 	id: "1102-100",
 	map_id: "1102",
 	coord: [8305, 13851]
@@ -1137,6 +1174,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Campamento de Patrick",
 	name_fr: "Campement de Patrick",
 	name_zh: "帕特裡克的營地",
+	nick_en: "S.W. Camp", nick_de: "S.W. Lager", nick_es: "S.O. Campamento", nick_fr: "S.O. Camp", nick_zh: "西南營地",
 	id: "1102-101",
 	map_id: "1102",
 	coord: [6000, 13855]
@@ -1149,6 +1187,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Academia Y'lan",
 	name_fr: "Académie de Y'lan",
 	name_zh: "依蘭學院",
+	nick_en: "N.W. Tower", nick_de: "N.W. Turm", nick_es: "N.O. Torre", nick_fr: "N.O. Tour", nick_zh: "西北塔樓",
 	id: "1102-102",
 	map_id: "1102",
 	coord: [6248, 12068]
@@ -1161,6 +1200,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Necrópolis Inmortal",
 	name_fr: "Nécropole immortelle",
 	name_zh: "不死魂都",
+	nick_en: "N.E. Tower", nick_de: "N.O. Turm", nick_es: "N.E. Torre", nick_fr: "N.E. Tour", nick_zh: "東北塔樓",
 	id: "1102-104",
 	map_id: "1102",
 	coord: [8155, 12214]
@@ -1173,6 +1213,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Depósito de Bujías",
 	name_fr: "Dépôt Bougie",
 	name_zh: "火塞補給站",
+	nick_en: "S.E. Tower", nick_de: "S.O. Turm", nick_es: "S.E. Torre", nick_fr: "S.E. Tour", nick_zh: "東南塔樓",
 	id: "1102-105",
 	map_id: "1102",
 	coord: [7673, 14111]
@@ -1185,6 +1226,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Sótano Abrasador",
 	name_fr: "Crypte cuisante",
 	name_zh: "焦熱墓穴",
+	nick_en: "Undercroft", nick_de: "Gruft", nick_es: "Sótano", nick_fr: "Crypte", nick_zh: "墓穴",
 	id: "1102-106",
 	map_id: "1102",
 	coord: [5744, 13194]
@@ -1197,6 +1239,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Refugio de Norfolk",
 	name_fr: "Refuge de Norfolk",
 	name_zh: "諾弗克的避難所",
+	nick_en: "N.E. Camp", nick_de: "N.O. Lager", nick_es: "N.E. Campamento", nick_fr: "N.E. Camp", nick_zh: "東北營地",
 	id: "1102-109",
 	map_id: "1102",
 	coord: [8516, 12579]
@@ -1209,6 +1252,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Puesto Avanzado Desolado",
 	name_fr: "Avant-poste ravagé",
 	name_zh: "凋零前哨",
+	nick_en: "S.W. Tower", nick_de: "S.W. Turm", nick_es: "S.O. Torre", nick_fr: "S.O. Tour", nick_zh: "西南塔樓",
 	id: "1102-110",
 	map_id: "1102",
 	coord: [6660, 13891]
@@ -1221,6 +1265,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Muralla Imperturbable",
 	name_fr: "Rempart impassible",
 	name_zh: "無情壁壘",
+	nick_en: "Rampart", nick_de: "Festungswall", nick_es: "Muralla", nick_fr: "Rempart", nick_zh: "壁壘",
 	id: "1102-113",
 	map_id: "1102",
 	coord: [7193, 12680]
@@ -1233,6 +1278,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Palacio del Aguilucho",
 	name_fr: "Palais du circaète",
 	name_zh: "鷂鷹宮殿",
+	nick_en: "Palace", nick_de: "Palast", nick_es: "Palacio", nick_fr: "Palais", nick_zh: "宮殿",
 	id: "1102-114",
 	map_id: "1102",
 	coord: [8619, 13266]
@@ -1245,6 +1291,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Escondrijo de Hughe",
 	name_fr: "Antre de Hughe",
 	name_zh: "休赫的藏匿點",
+	nick_en: "N.W. Camp", nick_de: "N.W. Lager", nick_es: "N.O. Campamento", nick_fr: "N.O. Camp", nick_zh: "西北營地",
 	id: "1102-115",
 	map_id: "1102",
 	coord: [5729, 12554]
@@ -1257,6 +1304,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Pozo Tragaesperanza",
 	name_fr: "Puits du Rêve-brisé",
 	name_zh: "絕望之井",
+	nick_en: "S. Camp", nick_de: "S. Lager", nick_es: "S. Campamento", nick_fr: "S. Camp", nick_zh: "南營地",
 	id: "1102-116",
 	map_id: "1102",
 	coord: [7163, 14414]
@@ -1269,6 +1317,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Laboratorio de Zakk",
 	name_fr: "Laboratoire de Zakk",
 	name_zh: "扎科的實驗室",
+	nick_en: "N. Camp", nick_de: "N. Lager", nick_es: "N. Campamento", nick_fr: "N. Camp", nick_zh: "北營地",
 	id: "1143-99",
 	map_id: "1143",
 	coord: [14327, 11402]
@@ -1281,6 +1330,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Hacienda de Gee",
 	name_fr: "Ferme Gee",
 	name_zh: "基的農場",
+	nick_en: "S.E. Camp", nick_de: "S.O. Lager", nick_es: "S.E. Campamento", nick_fr: "S.E. Camp", nick_zh: "東南營地",
 	id: "1143-100",
 	map_id: "1143",
 	coord: [15473, 13211]
@@ -1293,6 +1343,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Campamento de Habib",
 	name_fr: "Campement d'Habib",
 	name_zh: "哈比伯的營地",
+	nick_en: "S.W. Camp", nick_de: "S.W. Lager", nick_es: "S.O. Campamento", nick_fr: "S.O. Camp", nick_zh: "西南營地",
 	id: "1143-101",
 	map_id: "1143",
 	coord: [13168, 13215]
@@ -1305,6 +1356,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Academia Kay'li",
 	name_fr: "Académie de Kay'li",
 	name_zh: "凱立學院",
+	nick_en: "N.W. Tower", nick_de: "N.W. Turm", nick_es: "N.O. Torre", nick_fr: "N.O. Tour", nick_zh: "西北塔樓",
 	id: "1143-102",
 	map_id: "1143",
 	coord: [13416, 11428]
@@ -1317,6 +1369,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Necrópolis Imperecedera",
 	name_fr: "Nécropole impérissable",
 	name_zh: "不朽魂都",
+	nick_en: "N.E. Tower", nick_de: "N.O. Turm", nick_es: "N.E. Torre", nick_fr: "N.E. Tour", nick_zh: "東北塔樓",
 	id: "1143-104",
 	map_id: "1143",
 	coord: [15323, 11574]
@@ -1329,6 +1382,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Depósito de Volantes",
 	name_fr: "Dépôt Engrenage",
 	name_zh: "飛輪補給站",
+	nick_en: "S.E. Tower", nick_de: "S.O. Turm", nick_es: "S.E. Torre", nick_fr: "S.E. Tour", nick_zh: "東南塔樓",
 	id: "1143-105",
 	map_id: "1143",
 	coord: [14841, 13471]
@@ -1341,6 +1395,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Sótano Sofocante",
 	name_fr: "Crypte torride",
 	name_zh: "酷熱墓穴",
+	nick_en: "Undercroft", nick_de: "Gruft", nick_es: "Sótano", nick_fr: "Crypte", nick_zh: "墓穴",
 	id: "1143-106",
 	map_id: "1143",
 	coord: [12912, 12554]
@@ -1353,6 +1408,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Refugio de Olivier",
 	name_fr: "Refuge d'Olivier",
 	name_zh: "奧立弗的避難所",
+	nick_en: "N.E. Camp", nick_de: "N.O. Lager", nick_es: "N.E. Campamento", nick_fr: "N.E. Camp", nick_zh: "東北營地",
 	id: "1143-109",
 	map_id: "1143",
 	coord: [15684, 11939]
@@ -1365,6 +1421,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Puesto Avanzado Abandonado",
 	name_fr: "Avant-poste délabré",
 	name_zh: "貧瘠前哨",
+	nick_en: "S.W. Tower", nick_de: "S.W. Turm", nick_es: "S.O. Torre", nick_fr: "S.O. Tour", nick_zh: "西南塔樓",
 	id: "1143-110",
 	map_id: "1143",
 	coord: [13828, 13251]
@@ -1377,6 +1434,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Muralla Endurecida",
 	name_fr: "Rempart durci",
 	name_zh: "防護壁壘",
+	nick_en: "Rampart", nick_de: "Festungswall", nick_es: "Muralla", nick_fr: "Rempart", nick_zh: "壁壘",
 	id: "1143-113",
 	map_id: "1143",
 	coord: [14361, 12040]
@@ -1389,6 +1447,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Palacio del Alcaudón",
 	name_fr: "Palais de la pie-grièche",
 	name_zh: "烏鶇宮殿",
+	nick_en: "Palace", nick_de: "Palast", nick_es: "Palacio", nick_fr: "Palais", nick_zh: "宮殿",
 	id: "1143-114",
 	map_id: "1143",
 	coord: [15787, 12626]
@@ -1401,6 +1460,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Escondrijo de Berdrow",
 	name_fr: "Antre de Berdrow",
 	name_zh: "貝德羅的藏匿點",
+	nick_en: "N.W. Camp", nick_de: "N.W. Lager", nick_es: "N.O. Campamento", nick_fr: "N.O. Camp", nick_zh: "西北營地",
 	id: "1143-115",
 	map_id: "1143",
 	coord: [12897, 11914]
@@ -1413,6 +1473,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Pozo del Último Suspiro",
 	name_fr: "Puits du Dernier-soupir",
 	name_zh: "瀕死之井",
+	nick_en: "S. Camp", nick_de: "S. Lager", nick_es: "S. Campamento", nick_fr: "S. Camp", nick_zh: "南營地",
 	id: "1143-116",
 	map_id: "1143",
 	coord: [14331, 13774]
@@ -1423,39 +1484,53 @@ var GW2T_OBJECTIVE_DATA = {
  * Objective translations and addenda.
  */
 var GW2T_OBJECTIVE_METADATA = {
-	"Red": {
+	MapType: ["RedHome", "GreenHome", "BlueHome", "Center"],
+	Red: {
 		color: "#cc1f24",
 		name_en: "Red", name_de: "Rot", name_es: "rojo", name_fr: "rouge", name_zh: "紅色"
 	},
-	"Green": {
+	Green: {
 		color: "#52a518",
 		name_en: "Green", name_de: "Grün", name_es: "verde", name_fr: "vert", name_zh: "綠色"
 	},
-	"Blue": {
+	Blue: {
 		color: "#31a7bb",
 		name_en: "Blue", name_de: "Blau", name_es: "azul", name_fr: "bleu", name_zh: "藍色"
 	},
-	"Eternal": {
+	Eternal: {
 		color: "#ffffff",
 		name_en: "Eternal", name_de: "Ewige", name_es: "eternos", name_fr: "éternels", name_zh: "永恆"
 	},
-	"Camp": {
+	Camp: {
 		value: 5,
 		name_en: "Camp", name_de: "Lager", name_es: "Campamento", name_fr: "Camp", name_zh: "營地"
 	},
-	"Tower": {
+	Tower: {
 		value: 10,
 		name_en: "Tower", name_de: "Turm", name_es: "Torre", name_fr: "Tour", name_zh: "塔樓"
 	},
-	"Keep": {
+	Keep: {
 		value: 25,
 		name_en: "Keep", name_de: "Feste", name_es: "Fortaleza", name_fr: "Fort", name_zh: "要塞"
 	},
-	"Castle": {
+	Castle: {
 		value: 35,
 		name_en: "Castle", name_de: "Schloss", name_es: "Castillo", name_fr: "Château", name_zh: "城堡"
 	},
-	"Borderlands": {
-		name_en: "Borderlands", name_de: "Grenzlande", name_es: "Tierras Fronterizas de", name_fr: "Territoires frontaliers", name_zh: "沙漠邊境之地"
+	Borderlands: {
+		name_en: "Borderlands", name_de: "Grenzlande", name_es: "Tierras Fronterizas de", name_fr: "Territoires frontaliers", name_zh: "沙漠邊境之地",
+		nick_en: "BL", nick_de: "GL", nick_es: "TF", nick_fr: "TF", nick_zh: "邊境之地"
+	},
+	North: {
+		name_en: "North", name_de: "Nord", name_es: "Norte", name_fr: "Nord", name_zh: "北"
+	},
+	South: {
+		name_en: "South", name_de: "Süd", name_es: "Sur", name_fr: "Sud", name_zh: "南"
+	},
+	West: {
+		name_en: "West", name_de: "West", name_es: "Oeste", name_fr: "Ouest", name_zh: "西"
+	},
+	East: {
+		name_en: "East", name_de: "Ost", name_es: "Este", name_fr: "Est", name_zh: "東"
 	}
 };

@@ -113,77 +113,110 @@
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
 }
-#logToggle {
-	top: -24px;
-	left: -24px;
-	background: url("../img/ui/toggle.png");
-	opacity: 0.2;
+#wvwLog:hover {
+	background: rgba(0, 0, 0, 0.8);
 }
-#logToggle:hover, #logExpand:hover {
+
+#wvwLogContainer:hover .logButton {
 	opacity: 0.8;
 }
-#logExpand {
-	top: -24px;
-	left: 12px;
-	background: url("../img/ui/select.png");
+.logButton {
+	top: auto;
+	left: auto;
+	bottom: 0;
 	opacity: 0.2;
+}
+#logToggle {
+	right:  0;
+	background: url("../img/ui/toggle.png");
+}
+#logExpand {
+	right: 32px;
+	background: url("../img/ui/switch.png");
 }
 
 #logWindow {
 	position: relative;
-	height: 128px;
+	height: 144px;
 	overflow: hidden;
 }
-#logCheckboxes {
+#logOptions, #logFilters {
 	text-align: center;
+	white-space: nowrap;
 }
-#logCheckboxes label {
+#logOptions label {
 	display: inline-block;
 	width: auto;
 	margin: 0;
 }
-#logCheckboxes label:hover {
-	background: rgba(0, 0, 0, 0.1);
+#logOptions label:hover, #logTime:hover {
+	background: rgba(255, 255, 255, 0.1);
 	border-radius: 4px;
 }
-#logCheckRed {
+#logOptions input[type="checkbox"] {
+	opacity: 0.5;
+}
+#logOptions label:hover input[type="checkbox"] {
+	opacity: 0.9;
+}
+#logCheckNarrate {
+	position: absolute;
+	right: 12px;
+}
+#logCheckNarrateSpeaker {
+	width: 24px; height: 24px;
+	opacity: 0.5;
+}
+#logFilterRedHome {
 	color: #cc1f24;
 }
-#logCheckGreen {
+#logFilterGreenHome {
 	color: #52a518;
 }
-#logCheckBlue {
+#logFilterBlueHome {
 	color: #31a7bb;
 }
-#logCheckEternal {
+#logFilterCenter {
 	color: #ffffff;
 }
 
+#logTimeContainer {
+	text-align: left;
+}
+#logTime {
+	text-decoration: underline;
+}
+
+.logEntry {
+	background: rgba(255, 238, 187, 0.2);
+	white-space: nowrap;
+}
 .logEntry:hover {
 	outline: 1px solid rgba(0, 0, 0, 0.5);
+	font-weight: bold;
 }
-.logEntry time {
+.logEntry time, #logTime {
 	display: inline-block;
 	width: 72px;
 	margin-right: 8px;
 	text-align: right;
 }
 .logEntry img {
-	width: 16px; height: 16px;
+	width: 24px; height: 24px;
 	vertical-align: middle;
 }
 .logEntry cite {
 	color: #ffbb44;
 }
-.logEntryRed {
+.logEntryRedHome {
 	background: rgba(204, 31, 36, 0.2);
 }
-.logEntryGreen {
+.logEntryGreenHome {
 	background: rgba(82, 165, 24, 0.2);
 }
-.logEntryBlue {
+.logEntryBlueHome {
 	background: rgba(49, 167, 187, 0.2);
 }
-.logEntryEternal {
+.logEntryCenter {
 	background: rgba(255, 255, 255, 0.2);
 }

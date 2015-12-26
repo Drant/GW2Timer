@@ -159,10 +159,12 @@ O = {
 		bol_displayChallengesWvW: true,
 		// WvW
 		int_secWvWRefresh: 10,
-		bol_logRed: true,
-		bol_logGreen: true,
-		bol_logBlue: true,
-		bol_logEternal: true,
+		int_numLogEntries: 256,
+		bol_logNarrate: false,
+		bol_logRedHome: true,
+		bol_logGreenHome: true,
+		bol_logBlueHome: true,
+		bol_logCenter: true,
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: true,
@@ -1392,7 +1394,7 @@ U = {
 			{
 				that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked.");
 			}},
-			nocontext: {usage: "Disables the map's context menu.", f: function()
+			nct: {usage: "Disables the map's context menu.", f: function()
 			{
 				that.Map.off("contextmenu"); I.write("Map context menu disabled.");
 			}},
@@ -1440,7 +1442,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				//W.addLogEntry(argstr);
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -5559,9 +5561,21 @@ D = {
 		}
 		return D.getObjectDefaultName(pObject);
 	},
+	getObjectNick: function(pObject)
+	{
+		if (pObject["nick_" + O.Options.enu_Language] !== undefined)
+		{
+			return pObject["nick_" + O.Options.enu_Language];
+		}
+		return D.getObjectDefaultNick(pObject);
+	},
 	getObjectDefaultName: function(pObject)
 	{
 		return pObject["name_" + O.OptionEnum.Language.Default];
+	},
+	getObjectDefaultNick: function(pObject)
+	{
+		return pObject["nick_" + O.OptionEnum.Language.Default];
 	},
 	getObjectURL: function(pObject)
 	{
@@ -9755,7 +9769,7 @@ P = {
 		var qsdraw = U.Args[U.KeyEnum.Draw];
 		if (qsgo !== undefined)
 		{
-			M.goToArguments(qsgo, null, M.Pin.Program);
+			M.goToArguments(qsgo, M.ZoomEnum.Ground, M.Pin.Program);
 			U.Args[U.KeyEnum.Go] = null;
 		}
 		if (qsdraw !== undefined)
@@ -12088,8 +12102,9 @@ W = {
 	},
 	isWvWLoaded: false,
 	Servers: {},
+	ServersCurrent: null,
 	Objectives: {},
-	ObjectiveMetadata: {},
+	Metadata: {},
 	ObjectiveTimeout: {},
 	isObjectiveTickEnabled: false,
 	isObjectiveTimerTickEnabled: false,
@@ -12112,7 +12127,7 @@ W = {
 		W.Regions = GW2T_REALM_DATA;
 		W.Servers = GW2T_SERVER_DATA;
 		W.Objectives = GW2T_OBJECTIVE_DATA;
-		W.ObjectiveMetadata = GW2T_OBJECTIVE_METADATA;
+		W.Metadata = GW2T_OBJECTIVE_METADATA;
 		
 		W.initializeMap();
 		W.populateWvW();
@@ -12181,13 +12196,15 @@ W = {
 	
 	/*
 	 * Gets a translated borderlands name.
-	 * @param string pServer to get the server name.
+	 * @param object pServer to get the server name.
+	 * @param boolean pWantNick to get the nick instead, optional.
 	 * @returns string phrase.
 	 */
-	getBorderlandsString: function(pServer)
+	getBorderlandsString: function(pServer, pFullServer, pFullBorderlands)
 	{
-		var borderlands = D.getObjectName(W.ObjectiveMetadata["Borderlands"]);
-		var server = D.getObjectName(W.Servers[pServer]);
+		var bl = W.Metadata["Borderlands"];
+		var borderlands = (pFullServer) ? D.getObjectNick(bl) : D.getObjectName(bl);
+		var server = (pFullBorderlands) ? D.getObjectNick(pServer) : D.getObjectName(pServer);
 		if (D.isLanguageModifierFirst())
 		{
 			return server + " " + borderlands;
@@ -12249,7 +12266,7 @@ W = {
 		// Initialize element properties
 		$("#logWindow").data("oldHeight", $("#logWindow").height());
 		
-		// Bind window buttons
+		// Bind the log window buttons
 		$("#logToggle").click(function()
 		{
 			$("#wvwLog").toggle("fast");
@@ -12257,30 +12274,176 @@ W = {
 		$("#logExpand").click(function()
 		{
 			var log = $("#logWindow");
-			var height = $(window).height();
+			var windowheight = $(window).height();
+			var oldheight = log.data("oldHeight");
+			var newheight = windowheight - oldheight;
+			
 			if (log.data("isExpanded") === true)
 			{
-				log.show().animate({height: log.data("oldHeight")}, 200, function()
+				log.show().animate({height: oldheight}, 200, function()
 				{
 					I.updateScrollbar(log);
 				}).data("isExpanded", false);
 			}
 			else
 			{
-				log.show().animate({height: height - log.data("oldHeight")}, 200, function()
+				if (newheight < oldheight)
+				{
+					newheight = oldheight;
+				}
+				log.show().animate({height: newheight}, 200, function()
 				{
 					I.updateScrollbar(log);
 				}).data("isExpanded", true);
 			}
 		});
 		I.initializeScrollbar("#logWindow");
+		
+		// Bind the checkboxes to filter log entries
+		var maps = W.Metadata.MapType;
+		for (var i = 0; i < maps.length; i++)
+		{
+			(function(pFilter)
+			{
+				$("#opt_bol_log" + pFilter).change(function()
+				{
+					if (O.Options["bol_log" + pFilter])
+					{
+						$(".logEntry" + pFilter).show("fast", function()
+						{
+							I.updateScrollbar("#logWindow");
+						});
+					}
+					else
+					{
+						$(".logEntry" + pFilter).hide("fast", function()
+						{
+							I.updateScrollbar("#logWindow");
+						});
+					}
+				});
+			})(maps[i]);
+		}
+		
+		// Bind local time clock
+		$("#logTime").click(function()
+		{
+			$("#opt_bol_use24Hour").trigger("click");
+			// Update the timestamps of the log entries
+			$("#logWindow li time").each(function()
+			{
+				var timestr = T.getTimeFormatted({customTimeInDate: new Date($(this).attr("data-time"))}); 
+				$(this).html(timestr);
+			});
+		});
 	},
 	readjustLog: function()
 	{
-		var log = $("#logWindow");
-		if (log.height() > $(window).height())
+		if ($("#wvwLog").height() > $(window).height())
 		{
 			$("#logExpand").trigger("click").trigger("click");
+		}
+	},
+	
+	/*
+	 * Adds an entry to the WvW log.
+	 * @param string pString to insert.
+	 * @param string pISOTime of the event, optional
+	 * @param string pClass such as the map the event happened in.
+	 * @param boolean pIsDisplayed whether shown initially.
+	 */
+	addLogEntry: function(pString, pISOTime, pClass, pIsDisplayed)
+	{
+		pString = pString || "";
+		pClass = pClass || "";
+		var timestr = "";
+		if (pISOTime === undefined)
+		{
+			timestr = T.getTimeFormatted();
+			pISOTime = (new Date()).toISOString();
+		}
+		else
+		{
+			timestr = T.getTimeFormatted({customTimeInDate: new Date(pISOTime)});
+		}
+		var entry = $("<li class='logEntry logRecent " + pClass + "'><time data-time='" + pISOTime + "'>" + timestr + "</time><samp>" + pString + "</samp></li>")
+			.prependTo("#logWindow");
+		
+		// Animate the new entry
+		if (pIsDisplayed === false)
+		{
+			entry.hide();
+		}
+		else
+		{
+			var width = entry.width();
+			entry.removeClass("logRecent").css({width: 0}).animate({width: width}, 400);
+		}
+		
+		// Delete an old entry if over max limit
+		var entries = $(".logEntry");
+		if (entries.length > O.Options.int_numLogEntries)
+		{
+			entries.last().remove();
+		}
+		I.updateScrollbar("#logWindow");
+	},
+	
+	/*
+	 * Adds an entry pertaining to objectives.
+	 * @param object pObjective.
+	 * @param boolean pIsClaim if it is an objective claim, optional.
+	 */
+	addLogEntryObjective: function(pObjective, pIsClaim)
+	{
+		var prevobjectiveicon = "<img src='img/wvw/objectives/" + (pObjective.type + "_" + pObjective.prevowner).toLowerCase() + I.cPNG + "' />";
+		var objectiveicon = "<img src='img/wvw/objectives/" + (pObjective.type + "_" + pObjective.owner).toLowerCase() + I.cPNG + "' />";
+		var objectivenick = D.getObjectNick(pObjective);
+		
+		// Claiming shows the guild tag instead of the previous objective icon
+		var isotime;
+		if (pIsClaim)
+		{
+			prevobjectiveicon = objectiveicon;
+			objectiveicon = "<cite>[" + pObjective.tag + "]</cite>";
+			isotime = pObjective.claimed_at;
+		}
+		else
+		{
+			isotime = pObjective.last_flipped;
+		}
+		var str = prevobjectiveicon + " ⇒ " + objectiveicon + " " + objectivenick;
+		var cssclass = "logEntry" + pObjective.map_type;
+		
+		// The entry will be added, but only shown if opted
+		var display = true;
+		if ((cssclass === "logEntryRedHome" && O.Options.bol_logRedHome === false)
+			|| (cssclass === "logEntryBlueHome" && O.Options.bol_logBlueHome === false)
+			|| (cssclass === "logEntryGreenHome" && O.Options.bol_logGreenHome === false)
+			|| (cssclass === "logEntryCenter" && O.Options.bol_logCenter === false))
+		{
+			display = false;
+		}
+		W.addLogEntry(str, isotime, cssclass, display);
+	},
+	
+	/*
+	 * Updates the server names for the current match wherever it is shown.
+	 */
+	updateParticipants: function()
+	{
+		if (W.ServersCurrent !== null)
+		{
+			var redserver = W.Servers[W.ServersCurrent["red"]];
+			var greenserver = W.Servers[W.ServersCurrent["green"]];
+			var blueserver = W.Servers[W.ServersCurrent["blue"]];
+			$("#logFilterRedHome").html(W.getBorderlandsString(redserver, true, false));
+			$("#logFilterGreenHome").html(W.getBorderlandsString(greenserver, true, false));
+			$("#logFilterBlueHome").html(W.getBorderlandsString(blueserver, true, false));
+			$("#logFilterCenter").html(D.getObjectName(W.Zones["eternal"]));
+			
+			W.addLogEntry(D.getObjectNick(redserver)
+				+ " : " + D.getObjectNick(greenserver) + " : " + D.getObjectNick(blueserver));
 		}
 	},
 	
@@ -12301,9 +12464,11 @@ W = {
 			obj.claimed_at = null; // String ISO time
 		}
 		W.MatchFinishTime = null;
+		W.ServersCurrent = null;
 		$(".objUmbrellaContainer").hide();
 		$(".objTimer").empty();
 		$(".objProgressBar").hide();
+		$("#logWindow").empty();
 		
 		// Stop the previous timeout and call the update function with initialization
 		W.toggleObjectiveTick(false);
@@ -12365,16 +12530,17 @@ W = {
 					}
 				}
 			}
-			// Initialize match finish time if not already
+			// Initialize stagnant variables once
 			if (W.MatchFinishTime === null)
 			{
 				W.MatchFinishTime = pData.end_time;
+				W.ServersCurrent = pData.worlds;
+				W.updateParticipants();
 			}
 			
 		}}).fail(function()
 		{
-			I.write("Unable to retrieve WvW data. ArenaNet API servers may be down.", 0);
-			W.toggleObjectiveTick(false);
+			I.write("Unable to retrieve WvW data. ArenaNet API servers may be down.");
 		});
 	},
 	
@@ -12393,8 +12559,8 @@ W = {
 		// If the objective is being reassigned from a known previous owner
 		if (pObjective.prevowner !== null)
 		{
-			var prevcolor = W.ObjectiveMetadata[pObjective.prevowner].color;
-			var color = W.ObjectiveMetadata[pObjective.owner].color;
+			var prevcolor = W.Metadata[pObjective.prevowner].color;
+			var color = W.Metadata[pObjective.owner].color;
 			objumbrella.parent().parent().show(); // Show the umbrella container
 			// Color the umbrella notification circle and blink it
 			objumbrella.css({borderColor: prevcolor, boxShadow: "0px 0px 10px " + prevcolor});
@@ -12413,6 +12579,8 @@ W = {
 						});
 				});
 			})(pObjective.owner, objumbrella, color);
+			// Log the change of ownership
+			W.addLogEntryObjective(pObjective);
 		}
 		else
 		{
@@ -12502,6 +12670,7 @@ W = {
 			{
 				I.blinkElement(label, 2000, 200);
 				label.css({color: "#ffffff"}).animate({color: prevcolor}, 4000);
+				W.addLogEntryObjective(pObjective, true);
 			}
 		});
 	},
@@ -13258,7 +13427,15 @@ T = {
 		}
 		
 		var sec, min, hour;
-		var now = new Date();
+		var now;
+		if (pOptions.customTimeInDate === undefined)
+		{
+			now = new Date();
+		}
+		else
+		{
+			now = pOptions.customTimeInDate;
+		}
 		
 		if (pOptions.customTimeInSeconds === undefined)
 		{
@@ -14627,7 +14804,7 @@ K = {
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
 	clockBackground: {}, clockCircumference: {}, timeProgress0: {}, timeProgress1: {},
-	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeSimple: {}, timeMap: {}, timeWvW: {},
+	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeSimple: {}, timeMap: {}, timeWvW: {}, timeLog: {},
 	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
 	stopwatchUp: {}, stopwatchDown: {},
 	
@@ -14670,6 +14847,7 @@ K = {
 		K.timeSimple = $("#itemSimpleTime")[0];
 		K.timeMap = $("#mapTime")[0];
 		K.timeWvW = $("#wvwTime")[0];
+		K.timeLog = $("#logTime")[0];
 		K.timestampUTC = $("#optTimestampUTC")[0];
 		K.timestampLocal = $("#optTimestampLocalReset")[0];
 		K.timestampServer = $("#optTimestampServerReset")[0];
@@ -15044,6 +15222,7 @@ K = {
 		 * Things in this outer block runs every second, so core JS is used
 		 * instead of jQuery for performance.
 		 */
+		var localtime = T.getTimeFormatted();
 		var sec = pDate.getSeconds();
 		T.TIMESTAMP_UNIX_SECONDS = T.getUNIXSeconds();
 		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
@@ -15161,7 +15340,7 @@ K = {
 			} break; 
 		}
 		
-		K.timeLocal.innerHTML = T.getTimeFormatted();
+		K.timeLocal.innerHTML = localtime;
 		// Times in the Options page Debug section
 		K.timestampUTC.innerHTML = T.TIMESTAMP_UNIX_SECONDS;
 		K.timestampLocal.innerHTML = O.Utilities.lastLocalResetTimestamp.value;
@@ -15203,6 +15382,7 @@ K = {
 		}
 		if (W.isObjectiveTimerTickEnabled)
 		{
+			K.timeLog.innerHTML = localtime;
 			W.updateObjectiveTimers();
 			if (sec === 0)
 			{
@@ -17495,7 +17675,7 @@ I = {
 	 */
 	bindWindowResize: function()
 	{
-		$(window).resize(function()
+		$(window).on("resize", $.throttle(200, function()
 		{
 			/*
 			 * Resize elements' CSS properties to be more legible in the current window size.
@@ -17512,7 +17692,7 @@ I = {
 			{
 				W.readjustLog();
 			}
-		});
+		}));
 	},
 	
 	/*
@@ -17548,7 +17728,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind the following tags with the title attribute for tooltip
-		I.qTip.init("#chnOptions img, a, ins, kbd, span, fieldset, label, input, button");
+		I.qTip.init("#chnOptions img, a, ins, kbd, span, time, fieldset, label, input, button");
 		$("#panelApp").hover(
 			function() { I.isMouseOnPanel = true; },
 			function() { I.isMouseOnPanel = false; }

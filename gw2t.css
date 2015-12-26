@@ -768,7 +768,7 @@ textarea.jsCopyCode {
 }
 #tmlToggle {
 	left: 16px;
-	background: url("img/ui/select.png");
+	background: url("img/ui/switch.png");
 }
 #dsbCountdown time {
 	font-family: Consolas, monospace;
@@ -904,16 +904,15 @@ input.mapCoordinatesName {
 	text-align: left;
 }
 .mapPeripheralNorth {
-	position: absolute;
+	position: absolute; z-index: 11;
 	top: 4px; right: 12px;
 }
 .mapPeripheralNorth:hover {
 	width: 520px; /* This becomes the maximum width of the HUD popup divs */
 }
 .mapPeripheralSouth {
-	position: absolute;
+	position: absolute; z-index: 10;
 	bottom: 4px; right: 12px;
-	z-index: 10;
 }
 #itemLogo {
 	margin-right: 2px;
