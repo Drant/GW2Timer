@@ -149,10 +149,6 @@
 	width: auto;
 	margin: 0;
 }
-#logOptions label:hover, #logTime:hover {
-	background: rgba(255, 255, 255, 0.1);
-	border-radius: 4px;
-}
 #logOptions input[type="checkbox"] {
 	opacity: 0.5;
 }
@@ -167,17 +163,32 @@
 	width: 24px; height: 24px;
 	opacity: 0.5;
 }
-#logFilterRedHome {
+#opt_bol_logRedHome + var, #opt_bol_narrateRedHome + var {
 	color: #cc1f24;
 }
-#logFilterGreenHome {
+#opt_bol_logGreenHome + var, #opt_bol_narrateGreenHome + var  {
 	color: #52a518;
 }
-#logFilterBlueHome {
+#opt_bol_logBlueHome + var, #opt_bol_narrateBlueHome + var  {
 	color: #31a7bb;
 }
-#logFilterCenter {
-	color: #ffffff;
+#opt_bol_logCenter + var, #opt_bol_narrateCenter + var  {
+	color: #ffeeaa;
+}
+
+#logNarrationPopup {
+	display: none;
+	position: absolute; z-index: 9;
+	top: 32px;
+	right: 16px;
+	margin: 0;
+	padding: 8px;
+}
+#logNarrationContainer:hover #logNarrationPopup {
+	display: block;
+}
+#logNarrationPopup label {
+	display: block;
 }
 
 #logTimeContainer {
@@ -188,7 +199,7 @@
 }
 
 .logEntry {
-	background: rgba(255, 238, 187, 0.2);
+	background: rgba(255, 255, 255, 0.2);
 	white-space: nowrap;
 }
 .logEntry:hover {
@@ -218,5 +229,5 @@
 	background: rgba(49, 167, 187, 0.2);
 }
 .logEntryCenter {
-	background: rgba(255, 255, 255, 0.2);
+	background: rgba(255, 255, 0, 0.2);
 }

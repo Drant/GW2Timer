@@ -938,6 +938,9 @@ input.mapCoordinatesName {
 	display: inline;
 	margin-right: 8px;
 }
+#wvwLogContainer {
+	display: none; /* To be displayed when loaded by JavaScript */
+}
 
 /* Map HUD */
 .mapHUDContainer {
@@ -982,10 +985,6 @@ input.mapCoordinatesName {
 }
 
 /* Map options */
-.mapOptionsDisplay, .mapOptionsOther {
-	display: inline-block;
-	vertical-align: top;
-}
 .mapOptionsDisplay {
 	padding-right: 8px;
 	margin-right: 4px;
@@ -1179,7 +1178,8 @@ input.mapCoordinatesName {
 }
 
 #paneClockBackground { /* Festival sensitive */
-	background: url("img/background/globe_wintersday.png") no-repeat center;
+	/*background: url("img/background/globe_wintersday.png") no-repeat center;*/
+	background: url("img/background/globe.jpg") no-repeat center;
 	opacity: 0;
 }
 
@@ -1252,7 +1252,8 @@ input.mapCoordinatesName {
 }
 .cssWaypoint { /* Festival sensitive */
 	width: 24px; height: 24px;
-	background: url("img/map/wintersday.png");
+	/*background: url("img/map/wintersday.png");*/
+	background: url("img/map/waypoint.png");
 	background-size: 24px 24px;
 }
 .clkWaypointDaily {
@@ -2087,6 +2088,8 @@ label, input {
 }
 label:hover {
 	color: #ddff77;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 4px;
 }
 
 /* =============================================================================
@@ -2115,6 +2118,10 @@ button.btnToggle {
 }
 .cssIndent {
 	margin-left: 16px;
+}
+.cssColumn, .mapOptionsDisplay, .mapOptionsOther {
+	display: inline-block;
+	vertical-align: top;
 }
 .cssSpin {
 	-webkit-animation: spin 1s linear infinite;

@@ -336,12 +336,30 @@
 					<kbd id="logExpand" class="curToggle btnWindow logButton" title="<dfn>Toggle Log Height</dfn>"></kbd>
 					<div id="wvwLog" class="cntComposition">
 						<div id="logOptions">
-							<label id="logCheckNarrate" title="Toggle narration of WvW events."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logCheckNarrateSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
+							<div id=logNarrationContainer>
+								<label id="logCheckNarrate" title="Toggle narration of WvW events."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logCheckNarrateSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
+								<div id="logNarrationPopup" class="cntComposition">
+									<div id="logNarrateLand" class="cssColumn">
+										<b>Narration Filter:</b>
+										<label><input id="opt_bol_narrateRedHome" type="checkbox" /><var></var></label>
+										<label><input id="opt_bol_narrateGreenHome" type="checkbox" /><var></var></label>
+										<label><input id="opt_bol_narrateBlueHome" type="checkbox" /><var></var></label>
+										<label><input id="opt_bol_narrateCenter" type="checkbox" /><var></var></label>
+									</div>
+									<div id="logNarrateObjective" class="cssColumn">
+										<label><input id="opt_bol_narrateClaimed" type="checkbox" /><var></var></label>
+										<label><input id="opt_bol_narrateCamp" type="checkbox" /><var></var></label>
+										<label><input id="opt_bol_narrateTower" type="checkbox" /><var></var></label>
+										<label><input id="opt_bol_narrateKeep" type="checkbox" /><var></var></label>
+										<label><input id="opt_bol_narrateCastle" type="checkbox" /><var></var></label>
+									</div>
+								</div>
+							</div>
 							<div id="logFilters">
-								<label><input id="opt_bol_logRedHome" type="checkbox" /><var id="logFilterRedHome"></var></label><br />
-								<label><input id="opt_bol_logGreenHome" type="checkbox" /><var id="logFilterGreenHome"></var></label>
-								<label><input id="opt_bol_logBlueHome" type="checkbox" /><var id="logFilterBlueHome"></var></label>
-								<div id="logTimeContainer"><time id="logTime" class="curToggle" title="Toggle 24:00/12AM"></time><label><input id="opt_bol_logCenter" type="checkbox" /><var id="logFilterCenter"></var></label></div>
+								<label><input id="opt_bol_logRedHome" type="checkbox" /><var></var></label><br />
+								<label><input id="opt_bol_logGreenHome" type="checkbox" /><var></var></label>
+								<label><input id="opt_bol_logBlueHome" type="checkbox" /><var></var></label>
+								<div id="logTimeContainer"><time id="logTime" class="curToggle" title="Toggle 24:00/12AM"></time><label><input id="opt_bol_logCenter" type="checkbox" /><var></var></label></div>
 							</div>
 						</div>
 						<ul id="logWindow"></ul>
@@ -372,7 +390,8 @@
 		<section id="paneClock" class="paneApp clkSizeRegular">
 			<div id="paneClockWall" class="clkSizeRegular"></div>
 			<div id="paneClockBackground" class="clkSizeRegular"></div>
-			<img id="paneClockFace" class="clkSizeRegular" src="img/background/face_wintersday.png" alt="Clock Face"><!-- Festival sensitive -->
+			<!--<img id="paneClockFace" class="clkSizeRegular" src="img/background/face_wintersday.png" alt="Clock Face">--><!-- Festival sensitive -->
+			<img id="paneClockFace" class="clkSizeRegular" src="img/background/face.png" alt="Clock Face">
 			<div id="paneClockIcons" class="clkSizeRegular">
 				<img id="clkIconSD0" class="iconSD" src="img/ui/placeholder.png" alt="X:00" />
 				<img id="clkIconSD1" class="iconSD" src="img/ui/placeholder.png" alt="X:15" />
@@ -442,20 +461,20 @@
 					<line id="clkMarker3B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
 				</g>
 				<g id="clkHoursPrime">
-					<text x="50" y="18">XII</text>
-					<text x="85" y="53">III</text>
-					<text x="50" y="87">VI</text>
-					<text x="15" y="53">IX</text>
+					<text x="50" y="18">12</text>
+					<text x="85" y="53">3</text>
+					<text x="50" y="87">6</text>
+					<text x="15" y="53">9</text>
 				</g>
 				<g id="clkHours">
-					<text x="68" y="22">I</text>
-					<text x="68" y="83">V</text>
-					<text x="32" y="83">VII</text>
-					<text x="32" y="22">XI</text>
-					<text x="81" y="35">II</text>
-					<text x="81" y="71">IV</text>
-					<text x="19" y="71">VIII</text>
-					<text x="20" y="35">X</text>
+					<text x="68" y="22">1</text>
+					<text x="68" y="83">5</text>
+					<text x="32" y="83">7</text>
+					<text x="32" y="22">11</text>
+					<text x="81" y="35">2</text>
+					<text x="81" y="71">4</text>
+					<text x="19" y="71">8</text>
+					<text x="20" y="35">10</text>
 				</g>
 				<!-- Hands and markers initially point at 12 o'clock, JS will rotate them -->
 				<g id="clkHands" filter="url(#clkFilterShadowHand)">

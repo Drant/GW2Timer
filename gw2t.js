@@ -160,11 +160,20 @@ O = {
 		// WvW
 		int_secWvWRefresh: 10,
 		int_numLogEntries: 256,
-		bol_logNarrate: false,
 		bol_logRedHome: true,
 		bol_logGreenHome: true,
 		bol_logBlueHome: true,
 		bol_logCenter: true,
+		bol_logNarrate: false,
+		bol_narrateRedHome: true,
+		bol_narrateGreenHome: true,
+		bol_narrateBlueHome: true,
+		bol_narrateCenter: true,
+		bol_narrateClaimed: true,
+		bol_narrateCamp: true,
+		bol_narrateTower: true,
+		bol_narrateKeep: true,
+		bol_narrateCastle: true,
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: true,
@@ -989,6 +998,13 @@ O = {
 				D.speak(D.getWord("alarm"));
 			}
 		},
+		bol_logNarrate: function()
+		{
+			if (O.Options.bol_logNarrate === false)
+			{
+				D.stopSpeech();
+			}
+		},
 		bol_hideChecked: function()
 		{
 			$(".chnBar").each(function()
@@ -1442,7 +1458,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				//W.addLogEntry(argstr);
+				
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -4453,7 +4469,7 @@ E = {
 						{
 							resultitem = resultarray[thisi];
 							resultid = parseInt(resultitem[keyname_id]);
-							// Get metadata of each item in the returned search result array
+							// Get information of each item in the returned search result array
 							$.getJSON(U.URL_API.ItemDetails + resultid, function(pDataInner)
 							{
 								insertSearchResult(pDataInner, query, resultslist);
@@ -5791,7 +5807,7 @@ D = {
 	 * @param string pString.
 	 * @returns string of period separated initials.
 	 */
-	getSpeechInitials: function(pString)
+	getSpeechInitials: function(pString, pWantTrim)
 	{
 		// If the last character of the string is lowercase, then don't do anything
 		var finalchar = pString.charAt(pString.length - 1);
@@ -5800,11 +5816,17 @@ D = {
 			return pString;
 		}
 		// Otherwise make initials
+		if (pWantTrim)
+		{
+			pString = pString.replace(/ /g, "");
+		}
 		pString = pString.toUpperCase();
 		var str = "";
+		var char = "";
 		for (var i = 0; i < pString.length; i++)
 		{
-			str += pString.charAt(i) + ".";
+			char = pString.charAt(i);
+			str += (char === " ") ? char : (char + ".");
 		}
 		return str;
 	},
@@ -12101,11 +12123,14 @@ W = {
 		Europe: 2
 	},
 	isWvWLoaded: false,
-	Servers: {},
-	ServersCurrent: null,
-	Objectives: {},
 	Metadata: {},
+	Servers: {},
+	ServersCurrent: null, // Sample structure - ServersCurrent: { "red": 1019, "blue": 1008, "green": 1003 },
+	Objectives: {},
 	ObjectiveTimeout: {},
+	MapType: {}, // Corresponds to "worlds" object from match API
+	LandEnum: {}, // Corresponds to "map_type" property of objectives
+	ObjectiveEnum: {}, // Corresponds to "type" property of objectives
 	isObjectiveTickEnabled: false,
 	isObjectiveTimerTickEnabled: false,
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
@@ -12128,6 +12153,9 @@ W = {
 		W.Servers = GW2T_SERVER_DATA;
 		W.Objectives = GW2T_OBJECTIVE_DATA;
 		W.Metadata = GW2T_OBJECTIVE_METADATA;
+		W.MapType = W.Metadata.MapType;
+		W.LandEnum = W.Metadata.LandEnum;
+		W.ObjectiveEnum = W.Metadata.ObjectiveEnum;
 		
 		W.initializeMap();
 		W.populateWvW();
@@ -12195,21 +12223,83 @@ W = {
 	},
 	
 	/*
+	 * Gets the WvW metadata entry translations.
+	 * @param string pString.
+	 */
+	getName: function(pEntry)
+	{
+		return D.getObjectName(W.Metadata[pEntry]);
+	},
+	getNick: function(pEntry)
+	{
+		return D.getObjectNick(W.Metadata[pEntry]);
+	},
+	
+	/*
+	 * Gets the server object from an owner string, such as "Green".
+	 * @param string pOwner.
+	 * @returns object server.
+	 */
+	getServerFromOwner: function(pOwner)
+	{
+		var serverid = W.ServersCurrent[pOwner.toLowerCase()];
+		return W.Servers[serverid];
+	},
+	
+	/*
 	 * Gets a translated borderlands name.
-	 * @param object pServer to get the server name.
-	 * @param boolean pWantNick to get the nick instead, optional.
+	 * @param object pServer to get the server name, or an objective object.
+	 * @param boolean pFullServer or false to get nick, optional.
+	 * @param boolean pFullBorderlands or false to get nick, optional.
 	 * @returns string phrase.
 	 */
 	getBorderlandsString: function(pServer, pFullServer, pFullBorderlands)
 	{
-		var bl = W.Metadata["Borderlands"];
-		var borderlands = (pFullServer) ? D.getObjectNick(bl) : D.getObjectName(bl);
-		var server = (pFullBorderlands) ? D.getObjectNick(pServer) : D.getObjectName(pServer);
+		var server = pServer;
+		var serverstr, blstr;
+		
+		// If the server is actually an objective object
+		var maptype = pServer["map_type"];
+		if (maptype !== undefined)
+		{
+			var land = W.MapType[maptype];
+			if (land === "center")
+			{
+				// EBG does not include server name, so just return it here
+				return W.getNick("Center");
+			}
+			else
+			{
+				server = W.Servers[(W.ServersCurrent[land])];
+			}
+		}
+		
+		// Get the full strings abbreviated or not
+		serverstr = (pFullServer) ? D.getObjectName(server) : D.getObjectNick(server);
+		blstr = (pFullBorderlands) ? W.getName("Borderlands") : W.getNick("Borderlands");
+		
+		// Adjust to grammar
 		if (D.isLanguageModifierFirst())
 		{
-			return server + " " + borderlands;
+			return serverstr + " " + blstr;
 		}
-		return borderlands + " " + server;
+		return blstr + " " + serverstr;
+	},
+	
+	/*
+	 * Gets an objective's nick, or generate one if it has a direction property.
+	 * @param pObject pObjective.
+	 * @param boolean pFullDirection or false for abbreviated compass direction.
+	 */
+	getObjectiveNick: function(pObjective, pFullDirection)
+	{
+		if (pObjective.direction !== undefined)
+		{
+			var dirstr = (pFullDirection) ? W.getName(pObjective.direction) : W.getNick(pObjective.direction);
+			var typestr = W.getName(pObjective.type);
+			return dirstr + " " + typestr;
+		}
+		return D.getObjectNick(pObjective);
 	},
 	
 	/*
@@ -12263,6 +12353,7 @@ W = {
 	 */
 	initializeLog: function()
 	{
+		$("#wvwLogContainer").show();
 		// Initialize element properties
 		$("#logWindow").data("oldHeight", $("#logWindow").height());
 		
@@ -12300,8 +12391,7 @@ W = {
 		I.initializeScrollbar("#logWindow");
 		
 		// Bind the checkboxes to filter log entries
-		var maps = W.Metadata.MapType;
-		for (var i = 0; i < maps.length; i++)
+		for (var i in W.MapType)
 		{
 			(function(pFilter)
 			{
@@ -12309,21 +12399,33 @@ W = {
 				{
 					if (O.Options["bol_log" + pFilter])
 					{
-						$(".logEntry" + pFilter).show("fast", function()
-						{
-							I.updateScrollbar("#logWindow");
-						});
+						$(".logEntry" + pFilter).show("fast", function() { I.updateScrollbar("#logWindow"); });
 					}
 					else
 					{
-						$(".logEntry" + pFilter).hide("fast", function()
-						{
-							I.updateScrollbar("#logWindow");
-						});
+						$(".logEntry" + pFilter).hide("fast", function() { I.updateScrollbar("#logWindow"); });
 					}
+				}).parent().dblclick(function()
+				{
+					// If double clicked the checkbox, then uncheck all the others except itself
+					$("#logFilters input:checkbox").each(function()
+					{
+						X.setCheckboxEnumState($(this), X.ChecklistEnum.Unchecked);
+					});
+					X.setCheckboxEnumState($("#opt_bol_log" + pFilter), X.ChecklistEnum.Checked);
 				});
-			})(maps[i]);
+			})(i);
 		}
+		// Label the narration filters
+		$("#opt_bol_narrateRedHome").next().html(D.orderModifier(W.getName("Borderlands"), W.getName("Red")));
+		$("#opt_bol_narrateGreenHome").next().html(D.orderModifier(W.getName("Borderlands"), W.getName("Green")));
+		$("#opt_bol_narrateBlueHome").next().html(D.orderModifier(W.getName("Borderlands"), W.getName("Blue")));
+		$("#opt_bol_narrateCenter").next().html(W.getName("Center"));
+		$("#opt_bol_narrateCamp").next().html(W.getName("Camp"));
+		$("#opt_bol_narrateTower").next().html(W.getName("Tower"));
+		$("#opt_bol_narrateKeep").next().html(W.getName("Keep"));
+		$("#opt_bol_narrateCastle").next().html(W.getName("Castle"));
+		$("#opt_bol_narrateClaimed").next().html(W.getName("Claimed"));
 		
 		// Bind local time clock
 		$("#logTime").click(function()
@@ -12398,7 +12500,7 @@ W = {
 	{
 		var prevobjectiveicon = "<img src='img/wvw/objectives/" + (pObjective.type + "_" + pObjective.prevowner).toLowerCase() + I.cPNG + "' />";
 		var objectiveicon = "<img src='img/wvw/objectives/" + (pObjective.type + "_" + pObjective.owner).toLowerCase() + I.cPNG + "' />";
-		var objectivenick = D.getObjectNick(pObjective);
+		var objectivenick = W.getObjectiveNick(pObjective, false);
 		
 		// Claiming shows the guild tag instead of the previous objective icon
 		var isotime;
@@ -12413,18 +12515,61 @@ W = {
 			isotime = pObjective.last_flipped;
 		}
 		var str = prevobjectiveicon + " ⇒ " + objectiveicon + " " + objectivenick;
-		var cssclass = "logEntry" + pObjective.map_type;
+		var land = pObjective.map_type;
+		var cssclass = "logEntry" + land;
 		
 		// The entry will be added, but only shown if opted
-		var display = true;
-		if ((cssclass === "logEntryRedHome" && O.Options.bol_logRedHome === false)
-			|| (cssclass === "logEntryBlueHome" && O.Options.bol_logBlueHome === false)
-			|| (cssclass === "logEntryGreenHome" && O.Options.bol_logGreenHome === false)
-			|| (cssclass === "logEntryCenter" && O.Options.bol_logCenter === false))
+		var displayed = true;
+		if ((land === W.LandEnum.RedHome && O.Options.bol_logRedHome === false)
+			|| (land === W.LandEnum.GreenHome && O.Options.bol_logBlueHome === false)
+			|| (land === W.LandEnum.BlueHome && O.Options.bol_logGreenHome === false)
+			|| (land === W.LandEnum.Center && O.Options.bol_logCenter === false))
 		{
-			display = false;
+			displayed = false;
 		}
-		W.addLogEntry(str, isotime, cssclass, display);
+		W.addLogEntry(str, isotime, cssclass, displayed);
+		
+		// Narrate the capture event if opted
+		if (O.Options.bol_logNarrate)
+		{
+			W.narrateLog(pObjective, pIsClaim);
+		}
+	},
+	
+	/*
+	 * Speaks the objective that was captured and the capturer.
+	 * @param object pObjective.
+	 * @param boolean pIsClaim if it is an objective claim, optional.
+	 */
+	narrateLog: function(pObjective, pIsClaim)
+	{
+		// Do not proceed if does not pass the opted filters
+		var land = pObjective.map_type;
+		var type = pObjective.type;
+		if ((pIsClaim && O.Options.bol_narrateClaimed === false)
+			|| (land === W.LandEnum.RedHome && O.Options.bol_narrateRedHome === false)
+			|| (land === W.LandEnum.GreenHome && O.Options.bol_narrateGreenHome === false)
+			|| (land === W.LandEnum.BlueHome && O.Options.bol_narrateBlueHome === false)
+			|| (land === W.LandEnum.Center && O.Options.bol_narrateCenter === false)
+			|| (type === W.ObjectiveEnum.Camp && O.Options.bol_narrateCamp === false)
+			|| (type === W.ObjectiveEnum.Tower && O.Options.bol_narrateTower === false)
+			|| (type === W.ObjectiveEnum.Keep && O.Options.bol_narrateKeep === false)
+			|| (type === W.ObjectiveEnum.Castle && O.Options.bol_narrateCastle === false))
+		{
+			return;
+		}
+		
+		var objstr = W.getObjectiveNick(pObjective, true);
+		var ownerstr = (pIsClaim) ? D.getSpeechInitials(pObjective.tag) : D.getObjectName(W.getServerFromOwner(pObjective.owner));
+		// Only include the borderlands string if user opted for more than one land filter
+		var blstr = ($("#logNarrateLand input:checked").length > 1) ? (W.getBorderlandsString(pObjective, true, true) + ". ") : "";
+		var verbstr = (pIsClaim) ? W.getName("Claimed") : W.getName("Captured");
+		
+		// Separated to two speeches so the pause is longer
+		var speech1 = blstr + objstr;
+		var speech2 = verbstr + " " + ownerstr;
+		D.speak(speech1);
+		D.speak(speech2);
 	},
 	
 	/*
@@ -12437,10 +12582,10 @@ W = {
 			var redserver = W.Servers[W.ServersCurrent["red"]];
 			var greenserver = W.Servers[W.ServersCurrent["green"]];
 			var blueserver = W.Servers[W.ServersCurrent["blue"]];
-			$("#logFilterRedHome").html(W.getBorderlandsString(redserver, true, false));
-			$("#logFilterGreenHome").html(W.getBorderlandsString(greenserver, true, false));
-			$("#logFilterBlueHome").html(W.getBorderlandsString(blueserver, true, false));
-			$("#logFilterCenter").html(D.getObjectName(W.Zones["eternal"]));
+			$("#opt_bol_logRedHome").next().html(W.getBorderlandsString(redserver, true, false));
+			$("#opt_bol_logGreenHome").next().html(W.getBorderlandsString(greenserver, true, false));
+			$("#opt_bol_logBlueHome").next().html(W.getBorderlandsString(blueserver, true, false));
+			$("#opt_bol_logCenter").next().html(W.getName("Center"));
 			
 			W.addLogEntry(D.getObjectNick(redserver)
 				+ " : " + D.getObjectNick(greenserver) + " : " + D.getObjectNick(blueserver));
@@ -14862,7 +15007,7 @@ K = {
 		K.tickFrequent();
 		K.updateDigitalClockMinutely();
 		K.initializeClipboard();
-		K.refreshFestival();
+		//K.refreshFestival();
 		
 		// Other clickable elements
 		$("#itemTimeLocalActual").click(function()
@@ -15303,7 +15448,7 @@ K = {
 			/*
 			 * If crossing a 1 minute mark.
 			 */
-			K.refreshFestival();
+			//K.refreshFestival();
 			K.updateDigitalClockMinutely();
 			B.updateTimelineIndicator();
 			// Refresh the chain time countdown opted
