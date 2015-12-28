@@ -160,6 +160,7 @@ O = {
 		// WvW
 		int_secWvWRefresh: 10,
 		int_numLogEntries: 256,
+		bol_showLog: true,
 		bol_logRedHome: true,
 		bol_logGreenHome: true,
 		bol_logBlueHome: true,
@@ -182,7 +183,7 @@ O = {
 		int_msecGPSRefresh: 100,
 		// Alarm
 		int_setAlarm: 0,
-		int_setVolume: 100,
+		int_setVolume: 75,
 		bol_alertArrival: true,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
@@ -1227,6 +1228,17 @@ O = {
 			else
 			{
 				I.siteTagCurrent = "";
+			}
+		},
+		bol_showLog: function()
+		{
+			if (O.Options.bol_showLog)
+			{
+				$("#wvwLog").show("fast");
+			}
+			else
+			{
+				$("#wvwLog").hide("fast");
 			}
 		}
 	}
@@ -9842,6 +9854,24 @@ P = {
 	},
 	
 	/*
+	 * Stops event propagation for an element inside the map pane.
+	 * @param string pElementID to be protected.
+	 */
+	preventPropagation: function(pElementID)
+	{
+		var elm = L.DomUtil.get(pElementID);
+		if (!L.Browser.touch)
+		{
+			L.DomEvent.disableClickPropagation(elm);
+			L.DomEvent.on(elm, "mousewheel", L.DomEvent.stopPropagation);
+		}
+		else
+		{
+			L.DomEvent.on(elm, "click", L.DomEvent.stopPropagation);
+		}
+	},
+	
+	/*
 	 * Sorts an array of GW2 coordinates.
 	 * @param 2D array pArray to sort.
 	 */
@@ -12108,7 +12138,7 @@ W = {
 	/*
 	 * WvW exclusive properties.
 	 */
-	ServerRegionThreshold:
+	LocaleThreshold:
 	{
 		Range: 99,
 		Americas: 1000,
@@ -12117,11 +12147,12 @@ W = {
 		Germany: 2200,
 		Spain: 2300
 	},
-	ServerRegionEnum:
+	LocaleEnum:
 	{
 		Americas: 1,
 		Europe: 2
 	},
+	LocaleCurrent: null,
 	isWvWLoaded: false,
 	Metadata: {},
 	Servers: {},
@@ -12131,8 +12162,10 @@ W = {
 	MapType: {}, // Corresponds to "worlds" object from match API
 	LandEnum: {}, // Corresponds to "map_type" property of objectives
 	ObjectiveEnum: {}, // Corresponds to "type" property of objectives
+	OwnerEnum: {}, // Corresponds to "owner" property from match API
 	isObjectiveTickEnabled: false,
 	isObjectiveTimerTickEnabled: false,
+	isAPIFailed: false,
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
 	cMILLISECONDS_IMMUNITY: 300000,
 	MatchFinishTime: null,
@@ -12156,12 +12189,14 @@ W = {
 		W.MapType = W.Metadata.MapType;
 		W.LandEnum = W.Metadata.LandEnum;
 		W.ObjectiveEnum = W.Metadata.ObjectiveEnum;
+		W.OwnerEnum = W.Metadata.OwnerEnum;
 		
 		W.initializeMap();
 		W.populateWvW();
 		W.initializeLog();
 		W.reinitializeObjectives();
 		W.generateServerList();
+		W.generateScoreboard();
 		I.styleContextMenu("#wvwContext");
 		// Finally
 		W.isWvWLoaded = true;
@@ -12243,6 +12278,11 @@ W = {
 	getServerFromOwner: function(pOwner)
 	{
 		var serverid = W.ServersCurrent[pOwner.toLowerCase()];
+		// Neutral owner
+		if (serverid === undefined)
+		{
+			return W.Metadata.Neutral;
+		}
 		return W.Servers[serverid];
 	},
 	
@@ -12293,12 +12333,19 @@ W = {
 	 */
 	getObjectiveNick: function(pObjective, pFullDirection)
 	{
+		// Example: "Northwest Camp", "East Keep"
 		if (pObjective.direction !== undefined)
 		{
 			var dirstr = (pFullDirection) ? W.getName(pObjective.direction) : W.getNick(pObjective.direction);
 			var typestr = W.getName(pObjective.type);
 			return dirstr + " " + typestr;
 		}
+		// Example: "Garrison"
+		else if (pObjective.alias !== undefined)
+		{
+			return W.getName(pObjective.alias);
+		}
+		// Example: "Stonemist", "Umberglade"
 		return D.getObjectNick(pObjective);
 	},
 	
@@ -12338,6 +12385,9 @@ W = {
 			// Restart the system
 			W.reinitializeObjectives();
 		});
+		
+		// Prevent map scroll from interfering when using the list
+		P.preventPropagation("wvwServerList");
 	},
 	
 	/*
@@ -12345,7 +12395,8 @@ W = {
 	 */
 	generateScoreboard: function()
 	{
-		
+		var sb = $("#wvwScoreboard").empty();
+		var matches = (O.Options.enu_Server);
 	},
 	
 	/*
@@ -12353,15 +12404,19 @@ W = {
 	 */
 	initializeLog: function()
 	{
-		$("#wvwLogContainer").show();
 		// Initialize element properties
+		$("#wvwLogContainer").show();
 		$("#logWindow").data("oldHeight", $("#logWindow").height());
 		
 		// Bind the log window buttons
 		$("#logToggle").click(function()
 		{
-			$("#wvwLog").toggle("fast");
+			$("#opt_bol_showLog").trigger("click");
 		});
+		if (O.Options.bol_showLog === false)
+		{
+			$("#wvwLog").hide();
+		}
 		$("#logExpand").click(function()
 		{
 			var log = $("#logWindow");
@@ -12417,9 +12472,10 @@ W = {
 			})(i);
 		}
 		// Label the narration filters
-		$("#opt_bol_narrateRedHome").next().html(D.orderModifier(W.getName("Borderlands"), W.getName("Red")));
-		$("#opt_bol_narrateGreenHome").next().html(D.orderModifier(W.getName("Borderlands"), W.getName("Green")));
-		$("#opt_bol_narrateBlueHome").next().html(D.orderModifier(W.getName("Borderlands"), W.getName("Blue")));
+		var blstr = W.getName("Borderlands");
+		$("#opt_bol_narrateRedHome").next().html(D.orderModifier(blstr, W.getName("Red")));
+		$("#opt_bol_narrateGreenHome").next().html(D.orderModifier(blstr, W.getName("Green")));
+		$("#opt_bol_narrateBlueHome").next().html(D.orderModifier(blstr, W.getName("Blue")));
 		$("#opt_bol_narrateCenter").next().html(W.getName("Center"));
 		$("#opt_bol_narrateCamp").next().html(W.getName("Camp"));
 		$("#opt_bol_narrateTower").next().html(W.getName("Tower"));
@@ -12439,6 +12495,10 @@ W = {
 			});
 		});
 	},
+	
+	/*
+	 * Resizes the log if the browser window covers it.
+	 */
 	readjustLog: function()
 	{
 		if ($("#wvwLog").height() > $(window).height())
@@ -12468,7 +12528,7 @@ W = {
 		{
 			timestr = T.getTimeFormatted({customTimeInDate: new Date(pISOTime)});
 		}
-		var entry = $("<li class='logEntry logRecent " + pClass + "'><time data-time='" + pISOTime + "'>" + timestr + "</time><samp>" + pString + "</samp></li>")
+		var entry = $("<li class='logEntry " + pClass + "'><time data-time='" + pISOTime + "'>" + timestr + "</time><samp>" + pString + "</samp></li>")
 			.prependTo("#logWindow");
 		
 		// Animate the new entry
@@ -12479,7 +12539,10 @@ W = {
 		else
 		{
 			var width = entry.width();
-			entry.removeClass("logRecent").css({width: 0}).animate({width: width}, 400);
+			entry.css({width: 0}).animate({width: width}, 400, function()
+			{
+				$(this).removeAttr("style");
+			});
 		}
 		
 		// Delete an old entry if over max limit
@@ -12602,12 +12665,14 @@ W = {
 		{
 			var obj = W.Objectives[i];
 			obj.isImmune = false; // Boolean if is recently captured
-			obj.owner = null; // String owner color
+			obj.owner = null; // String owner
 			obj.last_flipped = null; // String ISO time
 			obj.last_flipped_msec = null; // Integer
 			obj.claimed_by = "null"; // String guild ID, the API can have actual "null" values
 			obj.claimed_at = null; // String ISO time
 		}
+		W.LocaleCurrent = (O.Options.enu_Server >= W.LocaleThreshold.Europe)
+			? W.LocaleEnum.Europe : W.LocaleEnum.Americas;
 		W.MatchFinishTime = null;
 		W.ServersCurrent = null;
 		$(".objUmbrellaContainer").hide();
@@ -12633,6 +12698,7 @@ W = {
 			cache: false, // Prevents keeping stale data
 			success: function(pData)
 		{
+			W.isAPIFailed = false;
 			var obj, apiobj;
 			for (var i in pData.maps)
 			{
@@ -12657,7 +12723,8 @@ W = {
 						$("#objClaim_" + obj.id).empty();
 						
 						// Mark the objective as immune if it is recently captured
-						if ((msec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY)
+						if ((msec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY
+								&& obj.owner !== W.OwnerEnum.Neutral) // If it is owned by Neutral (no immunity) then it is WvW reset
 						{
 							W.Objectives[obj.id].isImmune = true;
 							$("#objProgressBar_" + obj.id).show();
@@ -12676,7 +12743,7 @@ W = {
 				}
 			}
 			// Initialize stagnant variables once
-			if (W.MatchFinishTime === null)
+			if (W.MatchFinishTime !== pData.end_time)
 			{
 				W.MatchFinishTime = pData.end_time;
 				W.ServersCurrent = pData.worlds;
@@ -12685,7 +12752,11 @@ W = {
 			
 		}}).fail(function()
 		{
-			I.write("Unable to retrieve WvW data. ArenaNet API servers may be down.");
+			if (W.isAPIFailed === false)
+			{
+				W.isAPIFailed = true;
+				I.write("Unable to retrieve WvW data during " + T.getTimeFormatted() +".<br />ArenaNet API servers may be down." , 0);
+			}
 		});
 	},
 	
@@ -12702,7 +12773,7 @@ W = {
 		var prevwidth = objicon.css("width");
 
 		// If the objective is being reassigned from a known previous owner
-		if (pObjective.prevowner !== null)
+		if (pObjective.prevowner !== null && pObjective.owner !== W.OwnerEnum.Neutral)
 		{
 			var prevcolor = W.Metadata[pObjective.prevowner].color;
 			var color = W.Metadata[pObjective.owner].color;
@@ -12716,7 +12787,7 @@ W = {
 				objicon.css({width: prevwidth}).animate({width: 0}, animationspeed, function()
 				{
 					pUmbrella.css({borderColor: pColor, boxShadow: "0px 0px 10px " + pColor});
-					$(this).attr("src", $(this).attr("data-src") + pOwner + I.cPNG)
+					$(this).attr("src", $(this).attr("data-src") + (pOwner).toLowerCase() + I.cPNG)
 						.animate({width: prevwidth}, animationspeed, function()
 						{
 							pUmbrella.parent().parent().hide();
@@ -12730,7 +12801,7 @@ W = {
 		else
 		{
 			// If it is the first initialization (no previous known owner), then just assign the icons
-			objicon.attr("src", objicon.attr("data-src") + pObjective.owner + I.cPNG);
+			objicon.attr("src", objicon.attr("data-src") + (pObjective.owner).toLowerCase() + I.cPNG);
 		}
 	},
 	
@@ -16449,6 +16520,7 @@ I = {
 		
 		// Tailor the initial zoom for WvW so its map fits at least vertically
 		localStorage.removeItem("int_setInitialZoomWvW"); // DEBUG REMOVE AFTER WVW RELEASE
+		localStorage.removeItem("int_setVolume"); // DEBUG REMOVE AFTER WVW RELEASE
 		if (screen.height >= 800)
 		{
 			O.Options.int_setInitialZoomWvW = 3;

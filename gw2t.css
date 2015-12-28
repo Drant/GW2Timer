@@ -768,7 +768,7 @@ textarea.jsCopyCode {
 }
 #tmlToggle {
 	left: 16px;
-	background: url("img/ui/switch.png");
+	background: url("img/ui/select.png");
 }
 #dsbCountdown time {
 	font-family: Consolas, monospace;

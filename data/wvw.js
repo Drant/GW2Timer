@@ -1058,7 +1058,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Sótano Achicharrante",
 	name_fr: "Crypte embrasée",
 	name_zh: "沸騰墓穴",
-	nick_en: "Undercroft", nick_de: "Gruft", nick_es: "Sótano", nick_fr: "Crypte", nick_zh: "墓穴",
+	direction: "West",
 	id: "1099-106",
 	map_id: "1099",
 	coord: [9328, 10634]
@@ -1097,7 +1097,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Muralla Estoica",
 	name_fr: "Rempart stoïque",
 	name_zh: "堅忍壁壘",
-	nick_en: "Rampart", nick_de: "Festungswall", nick_es: "Muralla", nick_fr: "Rempart", nick_zh: "壁壘",
+	alias: "Garrison",
 	id: "1099-113",
 	map_id: "1099",
 	coord: [10777, 10120]
@@ -1110,7 +1110,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Palacio del Águila Pescadora",
 	name_fr: "Palais du balbuzard",
 	name_zh: "魚鷹宮殿",
-	nick_en: "Palace", nick_de: "Palast", nick_es: "Palacio", nick_fr: "Palais", nick_zh: "宮殿",
+	direction: "East",
 	id: "1099-114",
 	map_id: "1099",
 	coord: [12203, 10706]
@@ -1227,7 +1227,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Sótano Abrasador",
 	name_fr: "Crypte cuisante",
 	name_zh: "焦熱墓穴",
-	nick_en: "Undercroft", nick_de: "Gruft", nick_es: "Sótano", nick_fr: "Crypte", nick_zh: "墓穴",
+	direction: "West",
 	id: "1102-106",
 	map_id: "1102",
 	coord: [5744, 13194]
@@ -1266,7 +1266,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Muralla Imperturbable",
 	name_fr: "Rempart impassible",
 	name_zh: "無情壁壘",
-	nick_en: "Rampart", nick_de: "Festungswall", nick_es: "Muralla", nick_fr: "Rempart", nick_zh: "壁壘",
+	alias: "Garrison",
 	id: "1102-113",
 	map_id: "1102",
 	coord: [7193, 12680]
@@ -1279,7 +1279,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Palacio del Aguilucho",
 	name_fr: "Palais du circaète",
 	name_zh: "鷂鷹宮殿",
-	nick_en: "Palace", nick_de: "Palast", nick_es: "Palacio", nick_fr: "Palais", nick_zh: "宮殿",
+	direction: "East",
 	id: "1102-114",
 	map_id: "1102",
 	coord: [8619, 13266]
@@ -1396,7 +1396,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Sótano Sofocante",
 	name_fr: "Crypte torride",
 	name_zh: "酷熱墓穴",
-	nick_en: "Undercroft", nick_de: "Gruft", nick_es: "Sótano", nick_fr: "Crypte", nick_zh: "墓穴",
+	direction: "West",
 	id: "1143-106",
 	map_id: "1143",
 	coord: [12912, 12554]
@@ -1435,7 +1435,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Muralla Endurecida",
 	name_fr: "Rempart durci",
 	name_zh: "防護壁壘",
-	nick_en: "Rampart", nick_de: "Festungswall", nick_es: "Muralla", nick_fr: "Rempart", nick_zh: "壁壘",
+	alias: "Garrison",
 	id: "1143-113",
 	map_id: "1143",
 	coord: [14361, 12040]
@@ -1448,7 +1448,7 @@ var GW2T_OBJECTIVE_DATA = {
 	name_es: "Palacio del Alcaudón",
 	name_fr: "Palais de la pie-grièche",
 	name_zh: "烏鶇宮殿",
-	nick_en: "Palace", nick_de: "Palast", nick_es: "Palacio", nick_fr: "Palais", nick_zh: "宮殿",
+	direction: "East",
 	id: "1143-114",
 	map_id: "1143",
 	coord: [15787, 12626]
@@ -1485,6 +1485,10 @@ var GW2T_OBJECTIVE_DATA = {
  * Objective translations and addenda.
  */
 var GW2T_OBJECTIVE_METADATA = {
+	Matches: {
+		Americas: ["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"],
+		Europe:   ["2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9"]
+	},
 	MapType: {
 		"RedHome": "red",
 		"GreenHome": "green",
@@ -1502,6 +1506,16 @@ var GW2T_OBJECTIVE_METADATA = {
 		Tower: "Tower",
 		Keep: "Keep",
 		Castle: "Castle"
+	},
+	OwnerEnum: {
+		Red: "Red",
+		Blue: "Blue",
+		Green: "Green",
+		Neutral: "Neutral"
+	},
+	Neutral: {
+		color: "#dddddd",
+		name_en: "Neutral", name_de: "Neutral", name_es: "Neutral", name_fr: "Neutre", name_zh: "中立"
 	},
 	Red: {
 		color: "#cc1f24",
@@ -1536,8 +1550,11 @@ var GW2T_OBJECTIVE_METADATA = {
 		value: 35,
 		name_en: "Castle", name_de: "Schloss", name_es: "Castillo", name_fr: "Château", name_zh: "城堡"
 	},
+	Garrison: {
+		name_en: "Garrison", name_de: "Festung", name_es: "Fuerte", name_fr: "Garnison", name_zh: "要塞"
+	},
 	Borderlands: {
-		name_en: "Borderlands", name_de: "Grenzlande", name_es: "Tierras Fronterizas de", name_fr: "Territoires frontaliers", name_zh: "邊境之地",
+		name_en: "Borderlands", name_de: "Grenzlande", name_es: "Tierras de", name_fr: "Territoires", name_zh: "邊境之地",
 		nick_en: "BL", nick_de: "GL", nick_es: "TF", nick_fr: "TF", nick_zh: "邊境之地"
 	},
 	North: {

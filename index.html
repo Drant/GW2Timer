@@ -107,7 +107,7 @@
 				<div id="itemTimeline">
 					<kbd id="tmlDelete" class="btnWindow" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
 					<kbd id="tmlClose" class="btnWindow" title="<dfn>Close the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
-					<kbd id="tmlToggle" class="btnWindow curToggle" title="Toggle timeline opacity."></kbd>
+					<kbd id="tmlToggle" class="btnWindow curToggle" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
 					<div id="tmlIndicator"></div>
 				</div>
 			</div>
@@ -280,9 +280,6 @@
 			<div class="mapPeripheral mapPeripheralNorth">
 				<div id="wvwSwitch" class="mapHUDContainer">
 					<img id="wvwSwitchButton" class="mapHUDButton curToggle" title="<dfn> Click to PvE </dfn>" src="img/ui/pages/map.png" alt="display" />
-					<div class="mapHUDPopup cntComposition">
-						<select id="wvwServerList"></select>
-					</div>
 				</div>
 				<div class="mapGPS mapHUDContainer">
 					<img id="wvwGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
@@ -309,6 +306,7 @@
 						<div class="mapOptionsOther">
 							<label title="Repeated seconds before API data are downloaded again to check if objectives have flipped."><input id="opt_int_secWvWRefresh" type="number" min="5" max="60" step="1" /> Refresh Interval (sec)</label>
 							<label title="Old log entries beyond this limit shall be deleted."><input id="opt_int_numLogEntries" type="number" min="64" max="1024" step="1" /> Max Log Entries</label>
+							<label title="Show or minimize the WvW log."><img data-src="img/wvw/log.png" /><input id="opt_bol_showLog" type="checkbox" /> Show log window</label>
 						</div>
 					</div>
 				</div>
@@ -335,10 +333,11 @@
 					<kbd id="logToggle" class="curToggle btnWindow logButton" title="<dfn>Toggle Log</dfn>"></kbd>
 					<kbd id="logExpand" class="curToggle btnWindow logButton" title="<dfn>Toggle Log Height</dfn>"></kbd>
 					<div id="wvwLog" class="cntComposition">
+						<select id="wvwServerList"></select>
 						<div id="logOptions">
 							<div id=logNarrationContainer>
-								<label id="logCheckNarrate" title="Toggle narration of WvW events."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logCheckNarrateSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
-								<div id="logNarrationPopup" class="cntComposition">
+								<label id="logCheckNarrate" title="Toggle narration of WvW events.<br />Uncheck to mute current narration."><input id="opt_bol_logNarrate" type="checkbox" /><img id="logCheckNarrateSpeaker" src="img/ui/speaker.png" alt="Narration"/></label>
+								<div id="logNarrationPopup" class="cntComposition cntPopup">
 									<div id="logNarrateLand" class="cssColumn">
 										<b>Narration Filter:</b>
 										<label><input id="opt_bol_narrateRedHome" type="checkbox" /><var></var></label>
@@ -359,7 +358,7 @@
 								<label><input id="opt_bol_logRedHome" type="checkbox" /><var></var></label><br />
 								<label><input id="opt_bol_logGreenHome" type="checkbox" /><var></var></label>
 								<label><input id="opt_bol_logBlueHome" type="checkbox" /><var></var></label>
-								<div id="logTimeContainer"><time id="logTime" class="curToggle" title="Toggle 24:00/12AM"></time><label><input id="opt_bol_logCenter" type="checkbox" /><var></var></label></div>
+								<div><time id="logTime" class="curToggle" title="Toggle 24:00/12AM"></time><label><input id="opt_bol_logCenter" type="checkbox" /><var></var></label></div>
 							</div>
 						</div>
 						<ul id="logWindow"></ul>

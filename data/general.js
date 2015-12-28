@@ -996,10 +996,10 @@ Announcement:
  */
 Countdowns: [
 {
-	name_en: "Wintersday 2015",
-	name_de: "Wintertag 2015",
-	name_es: "Día Invernal 2015",
-	name_fr: "Hivernel 2015",
+	name_en: "Wintersday",
+	name_de: "Wintertag",
+	name_es: "Día Invernal",
+	name_fr: "Hivernel",
 	url: "https://forum-en.guildwars2.com/forum/game/gw2/Updates-about-Wintersday",
 	Start: new Date("2015-12-15T17:00:00Z"),
 	Finish: new Date("2016-01-12T17:00:00Z")
@@ -1235,16 +1235,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2015-12-27T00:00:00Z"),
-	Finish: new Date("2015-12-28T00:00:00Z"),
+	Start: new Date("2015-12-28T00:00:00Z"),
+	Finish: new Date("2015-12-29T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49775", price: "25200" },
-		Fox: { id: "43826", price: "25200" },
-		Derwena: { id: "43828", price: "25200" },
-		Yana: { id: "49763", price: "25200" },
-		Katyn: { id: "49758", price: "25200" },
-		Verma: { id: "49760", price: "25200" }
+		Mehem: { id: "49734", price: "12600" },
+		Fox: { id: "44717", price: "25200" },
+		Derwena: { id: "43815", price: "25200" },
+		Yana: { id: "43822", price: "25200" },
+		Katyn: { id: "48912", price: "25200" },
+		Verma: { id: "49734", price: "12600" }
 	}
 }
 };
