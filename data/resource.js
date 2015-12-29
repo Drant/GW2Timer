@@ -827,7 +827,6 @@ Cabbage: {
 		
 	]
 },
-
 Pearlclam: {
 	name_en: "Pearl",
 	name_de: "Perle",
@@ -840,6 +839,23 @@ Pearlclam: {
 	],
 	regulars: [
 		
+	]
+},
+Pearlmussel: {
+	name_en: "Pearl",
+	name_de: "Perle",
+	name_es: "Perla",
+	name_fr: "Perle",
+	type: "Plant",
+	item: "76179",
+	riches: [
+	
+	],
+	regulars: [
+		
+	],
+	hotspots: [
+	{c: [3683, 15322]} // verdant
 	]
 },
 Vanilla: {

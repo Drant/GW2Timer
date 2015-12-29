@@ -183,7 +183,7 @@ O = {
 		int_msecGPSRefresh: 100,
 		// Alarm
 		int_setAlarm: 0,
-		int_setVolume: 50,
+		int_setVolume: 75,
 		bol_alertArrival: true,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
@@ -1383,7 +1383,7 @@ U = {
 		U.URL_API.MapFloorTyria += langsuffix;
 		U.URL_API.MapFloorMists += langsuffix;
 		U.URL_API.EventNames += langsuffix;
-		U.URL_API.TextToSpeech += lang + "&sv=&vn=&pitch=0.5&rate=0.4&vol=1&t=";
+		U.URL_API.TextToSpeech += lang + "&sv=&vn=&pitch=0.5&rate=0.4";
 	},
 
 	/*
@@ -5766,12 +5766,14 @@ D = {
 	speechWait: 0, // In milliseconds
 	speak: function(pString, pDuration)
 	{
+		var volume = (O.Options.int_setVolume / T.cPERCENT_100).toFixed(2);
+		I.log(volume);
 		// Chrome-only TTS service
 		if (I.isSpeechSynthesisEnabled)
 		{
 			var msg = new SpeechSynthesisUtterance(pString);
 			msg.lang = O.LanguageCode[O.Options.enu_Language];
-			msg.volume = O.Options.int_setVolume / T.cPERCENT_100;
+			msg.volume = volume;
 			msg.rate = 0.8;
 			window.speechSynthesis.speak(msg);
 			return;
@@ -5781,7 +5783,7 @@ D = {
 		var doSpeak = function(pStringMacro)
 		{
 			var tts = document.getElementById("jsTTSAudio");
-			tts.src = U.URL_API.TextToSpeech + pStringMacro;
+			tts.src = U.URL_API.TextToSpeech + "&vol=" + volume + "&t=" + pStringMacro;
 			tts.volume = O.Options.int_setVolume / T.cPERCENT_100;
 			tts.load();
 			tts.play();
@@ -12401,6 +12403,20 @@ W = {
 	},
 	
 	/*
+	 * Gets the points worth for an objective type.
+	 * @param string pObjectiveType such as "Camp".
+	 * @returns int value.
+	 */
+	getObjectiveTypeValue: function(pObjectiveName)
+	{
+		return W.Metadata.ObjectiveType[pObjectiveName].Value.each;
+	},
+	getTotalPointsPossible: function()
+	{
+		return W.Metadata.ObjectiveType.Total.Value.all;
+	},
+	
+	/*
 	 * Generates a list of servers for the user to choose from.
 	 */
 	generateServerList: function()
@@ -12469,11 +12485,80 @@ W = {
 	
 	/*
 	 * Generates stats of current matchup the user opted.
+	 * @param object pData from matches API.
 	 */
-	generateScoreboard: function()
+	generateScoreboard: function(pData)
 	{
-		var sb = $("#wvwScoreboard").empty();
-		var matches = (O.Options.enu_Server);
+		
+	},
+	
+	/*
+	 * Inserts a matchup scoreboard into the leaderboard.
+	 * @param object pData from matches API.
+	 */
+	insertScoreboard: function(pData, pIsMain)
+	{
+		
+		var lb = (pIsMain) ? $("#lboCurrent") : $("#lboOther");
+		lb.empty();
+		
+		// Collate objective points for each borderlands
+		var map, obj;
+		var PPT = {};
+		for (var i in W.Metadata.Owners)
+		{
+			var owner = W.Metadata.Owners[i];
+			PPT[owner] = {};
+			(PPT[owner]).points = 0;
+		}
+		for (var i in pData.maps)
+		{
+			map = pData.maps[i];
+			for (var ii in map.objectives)
+			{
+				obj = map.objectives[ii];
+				(PPT[obj.owner]).points += W.getObjectiveTypeValue(obj.type);
+			}
+		}
+		I.log(U.formatJSON(PPT));
+		return;
+		
+		var html = "<section>";
+		for (var i = 0; i < W.Metadata.Owners.length; i++)
+		{
+			var owner = W.Metadata.Owners[i]; // Example: "Green"
+			var ownerkey = owner.toLowerCase(); // Example: "green"
+			var ppt = 0;
+			
+			switch (owner)
+			{
+				case W.OwnerEnum.Green: {
+					
+				} break;
+				
+				case W.OwnerEnum.Blue: {
+						
+				} break;
+				
+				case W.OwnerEnum.Red: {
+						
+				} break;
+			}
+			var scorepercent = (pData.scores[ownerkey] / (T.getMinMax(pData.scores)).max) * T.cPERCENT_100;
+			
+			html += "<article class='lboServer'" + owner + ">";
+				+ "<aside class='lboRank'>" + (i+1) + ".</aside>"
+				+ "<aside class='lboName'>" + D.getObjectName(W.getServerFromOwner(owner)) + "</aside>"
+				+ "<aside class='lboScore'>"
+					+ "<var>" + pData.scores[ownerkey] + "</var>"
+					+ "<span><samp style='width:" + scorepercent + "%'></samp></span>"
+				+ "<aside>"
+				+ "<aside class='lboPPT'>"
+					+ "<span><samp style='width:" + "%'></samp></span>"
+		}
+		html += "</section>";
+		
+		lb.html(html);
 	},
 
 	
@@ -12861,6 +12946,7 @@ W = {
 				W.MatchFinishTime = pData.end_time;
 				W.ServersCurrent = pData.worlds;
 				W.updateParticipants();
+				W.insertScoreboard(pData, true);
 			}
 			
 		}}).fail(function()
@@ -13579,29 +13665,33 @@ T = {
 	
 	/*
 	 * Gets the lowest and highest value inside an array.
-	 * @param 2D array pArray.
+	 * @param array pArray.
 	 * @param string pProperty of array if the value is a property.
-	 * @returns 2D array of the two values.
+	 * @returns object contains min and max values, and their key/index.
 	 */
 	getMinMax: function(pArray, pProperty)
 	{
 		var hasprop = !(pProperty === undefined);
 		var min = Number.POSITIVE_INFINITY;
 		var max = Number.NEGATIVE_INFINITY;
+		var minkey = null;
+		var maxkey = null;
 		var ith;
-		for (var i = 0; i < pArray.length; i++)
+		for (var i in pArray)
 		{
 			ith = hasprop ? (pArray[i])[pProperty] : pArray[i];
 			if (ith < min)
 			{
 				min = ith;
+				minkey = i;
 			}
 			if (ith > max)
 			{
 				max = ith;
+				maxkey = i;
 			}
 		}
-		return [min, max];
+		return {min: min, max: max, minkey: minkey, maxkey: maxkey};
 	},
 	
 	/*
@@ -14553,7 +14643,7 @@ B = {
 			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img src='img/ui/gemstore.png' /> "
 				+ "<u>" + B.DashboardSale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
-				+ "(<span class='dsbSalePriceNew'>" + range[0] + "-" + range[1] + "<ins class='s16 s16_gem'></ins></span>)"
+				+ "(<span class='dsbSalePriceNew'>" + range.min + "-" + range.max + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
 				+ "⇓@ " + B.DashboardSale.Finish.toLocaleString()
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");

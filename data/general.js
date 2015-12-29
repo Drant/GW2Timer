@@ -1040,8 +1040,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2015-12-22T16:00:00Z"),
-	Finish: new Date("2015-12-29T16:00:00Z"),
+	Start: new Date("2015-12-29T16:00:00Z"),
+	Finish: new Date("2016-01-05T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -1067,24 +1067,8 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Winter Solstice Outfit",
-		img: "https://render.guildwars2.com/file/7133DC4108BE42C2F010D61CE406772D360F0E39/1322763.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 0
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Snowflake Glider",
 		img: "https://render.guildwars2.com/file/CE007E4C9FD410E85D79D745BC750F2A6719E4DF/1313090.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini Snow Flurry Dragon",
-		img: "https://render.guildwars2.com/file/0DE72811F5176B90454AE16B5E48CA5BBBE6610C/1322567.png",
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
@@ -1103,6 +1087,22 @@ Sale: {
 		img: "https://render.guildwars2.com/file/7F026FC5997F999E2E2C54B23E3939F29552F321/1322319.png",
 		quantity: 1,
 		pricenew: 400,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mini_Avatar_of_the_Tree",
+		img: "https://render.guildwars2.com/file/7AC8D0657FF005D63A26E3DD6D4FE538C2B9B31C/919369.png",
+		quantity: 1,
+		pricenew: 350,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mini Tizlak",
+		img: "http://i.imgur.com/gfYICcQ.png",
+		quantity: 1,
+		pricenew: 200,
 		priceold: 0,
 		col: 0
 	},

@@ -257,64 +257,48 @@
 /* Leaderboard
 ----------------------------------------------------------------------------- */
 #wvwLeaderboard {
-	width: calc(100% - 352px);
+	width: calc(100% - 48px); height: 100%;
+	overflow: auto;
 	position: absolute; z-index: 9;
 	top: 16px;
 	left: 16px;
-	padding: 8px;
+	text-align: center;
 	font-size: 14px;
 	color: white;
-	background: rgba(0, 0, 0, 0.2);
 	text-shadow:
 		0px 1px 1px #000,
 		0px -1px 1px #000,
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
 }
-#wvwLeaderboard aside {
+#lboContainer {
 	display: inline-block;
+	padding: 8px;
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
 }
-.lboRank {
-	width: 32px;
-	text-align: right;
-	font-weight: bold;
-	background: rgba(5, 158, 182, 0.2);
+#lboContainer:hover {
+	background: rgba(0, 0, 0, 0.8);
 }
-.lboServer1 .lboName  {
-	color: #52a518;
+#wvwLeaderboard section { /* A block of rows for a single tier/matchup */
+	margin-bottom: 16px;
 }
-.lboServer2 .lboName {
-	color: #31a7bb;
+#wvwLeaderboard section:nth-child(even) {
+	background: rgba(255, 255, 255, 0.2);
 }
-.lboServer3 .lboName {
-	color: #cc1f24;
+#wvwLeaderboard section:hover {
+	background: rgba(255, 255, 255, 0.4);
+	border-radius: 4px;
 }
-.lboServer1 samp {
-	background: #52a518;
-}
-.lboServer2 samp {
-	background: #31a7bb;
-}
-.lboServer3 samp {
-	background: #cc1f24;
-}
-.lboName {
-	width: 128px;
-	font-weight: bold;
-	background: rgba(47, 170, 74, 0.2);
-}
-.lboScore {
-	width: 160px;
+#wvwLeaderboard aside { /* A cell of the leaderboard table */
+	display: inline-block;
 	vertical-align: middle;
-	text-align: right;
-	background: rgba(32, 158, 48, 0.2);
 }
-.lboScore var {
-	width: 64px;
-	margin-right: 4px;
+#wvwLeaderboard var { /* Numbers and text */
+	display: inline-block;
 	text-align: right;
 }
-.lboScore span, .lboPPT span {
+#wvwLeaderboard span { /* A bar graph */
 	vertical-align: middle;
 	display: inline-block;
 	width: 96px; height: 12px;
@@ -322,29 +306,91 @@
 	border-radius: 2px;
 	background: rgba(0, 0, 0, 0.2);
 }
-.lboScore span samp, .lboPPT span samp {
+#wvwLeaderboard samp { /* The inner progress of the bar graph */
 	display: block;
 	height: 100%;
+}
+
+.lboRank {
+	width: 32px;
+	text-align: right;
+	font-weight: bold;
+}
+.lboServerGreen .lboName, .lboPPTGreen {
+	color: #52a518;
+}
+.lboServerBlue .lboName, .lboPPTBlue {
+	color: #31a7bb;
+}
+.lboServerRed .lboName, .lboPPTRed {
+	color: #cc1f24;
+}
+.lboPPTCenter {
+	color: #ffeeaa;
+}
+.lboName {
+	width: 128px;
+	font-weight: bold;
+	
+}
+.lboScore {
+	width: auto;
+	text-align: right;
+	
+}
+.lboScore var {
+	width: 64px;
+}
+.lboServerGreen samp {
+	background: #52a518;
+}
+.lboServerBlue samp {
+	background: #31a7bb;
+}
+.lboServerRed samp {
+	background: #cc1f24;
+}
+.lboFocusRed span, .lboFocusBlue span {
+	background: #52a518 !important;
+}
+.lboFocusRed samp, .lboFocusGreen span {
+	background: #31a7bb !important;
+}
+.lboFocusGreen samp, .lboFocusBlue samp {
+	background: #cc1f24 !important;
 }
 .lboScore span samp {
 	float: right;
 }
 .lboPPT {
-	width: 160px;
-	vertical-align: middle;
+	width: auto;
 	text-align: left;
 	background: rgba(22, 18, 37, 0.2);
 }
 .lboPPT var {
-	display: inline-block;
 	width: 32px;
-	margin-right: 4px;
-	text-align: right;
 }
 .lboPPT span {
-	background: rgba(22, 18, 37, 0.2);
+	
 }
-.lboObjectives {
-	width: 256px;
-	background: rgba(72, 91, 112, 0.2);
+.lboLand {
+	
+}
+.lboLand var {
+	width: 40px; height: 100%;
+}
+.lboFocus {
+	margin-left: 8px;
+}
+.lboFocus var {
+	width: 32px;
+}
+.lboKD {
+	margin-left: 8px;
+}
+.lboKD var {
+	width: 48px;
+}
+.lboKD var:last-child {
+	padding-right: 16px;
 }
