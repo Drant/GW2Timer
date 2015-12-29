@@ -687,6 +687,7 @@ var GW2T_SERVER_DATA = {
  */
 var GW2T_OBJECTIVE_DATA = {
 "38-1": {
+	nativeowner: "Red",
 	map_type: "Center",
 	type: "Keep",
 	name_en: "Overlook",
@@ -700,6 +701,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10764, 13656]
 },
 "38-2": {
+	nativeowner: "Blue",
 	map_type: "Center",
 	type: "Keep",
 	name_en: "Valley",
@@ -713,6 +715,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11490, 15122]
 },
 "38-3": {
+	nativeowner: "Green",
 	map_type: "Center",
 	type: "Keep",
 	name_en: "Lowlands",
@@ -726,6 +729,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [9604, 15130]
 },
 "38-4": {
+	nativeowner: "Green",
 	map_type: "Center",
 	type: "Camp",
 	name_en: "Golanta Clearing",
@@ -739,6 +743,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10203, 15437]
 },
 "38-5": {
+	nativeowner: "Red",
 	map_type: "Center",
 	type: "Camp",
 	name_en: "Pangloss Rise",
@@ -752,6 +757,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11280, 13737]
 },
 "38-6": {
+	nativeowner: "Red",
 	map_type: "Center",
 	type: "Camp",
 	name_en: "Speldan Clearcut",
@@ -765,6 +771,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [9841, 13546]
 },
 "38-7": {
+	nativeowner: "Blue",
 	map_type: "Center",
 	type: "Camp",
 	name_en: "Danelon Passage",
@@ -778,6 +785,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11038, 15556]
 },
 "38-8": {
+	nativeowner: "Blue",
 	map_type: "Center",
 	type: "Camp",
 	name_en: "Umberglade Woods",
@@ -791,6 +799,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11562, 14470]
 },
 "38-9": {
+	nativeowner: "Neutral",
 	map_type: "Center",
 	type: "Castle",
 	name_en: "Stonemist Castle",
@@ -804,6 +813,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10606, 14576]
 },
 "38-10": {
+	nativeowner: "Green",
 	map_type: "Center",
 	type: "Camp",
 	name_en: "Rogue's Quarry",
@@ -817,6 +827,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [9571, 14423]
 },
 "38-11": {
+	nativeowner: "Green",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Aldon's Ledge",
@@ -830,6 +841,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [9414, 14793]
 },
 "38-12": {
+	nativeowner: "Green",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Wildcreek Run",
@@ -843,6 +855,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [9906, 14625]
 },
 "38-13": {
+	nativeowner: "Green",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Jerrifer's Slough",
@@ -856,6 +869,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [9806, 15406]
 },
 "38-14": {
+	nativeowner: "Green",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Klovan Gully",
@@ -869,6 +883,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10172, 15082]
 },
 "38-15": {
+	nativeowner: "Blue",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Langor Gulch",
@@ -882,6 +897,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11453, 15491]
 },
 "38-16": {
+	nativeowner: "Blue",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Quentin Lake",
@@ -895,6 +911,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10850, 15224]
 },
 "38-17": {
+	nativeowner: "Red",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Mendon's Gap",
@@ -908,6 +925,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10257, 13514]
 },
 "38-18": {
+	nativeowner: "Red",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Anzalias Pass",
@@ -921,6 +939,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10189, 14082]
 },
 "38-19": {
+	nativeowner: "Red",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Ogrewatch Cut",
@@ -934,6 +953,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11011, 13850]
 },
 "38-20": {
+	nativeowner: "Red",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Veloka Slope",
@@ -947,6 +967,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11090, 13488]
 },
 "38-21": {
+	nativeowner: "Blue",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Durios Gulch",
@@ -960,6 +981,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11156, 14528]
 },
 "38-22": {
+	nativeowner: "Blue",
 	map_type: "Center",
 	type: "Tower",
 	name_en: "Bravost Escarpment",
@@ -973,6 +995,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11766, 14794]
 },
 "1099-99": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Camp",
 	name_en: "Hamm's Lab",
@@ -986,6 +1009,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10743, 9482]
 },
 "1099-100": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Camp",
 	name_en: "Bauer Farmstead",
@@ -999,6 +1023,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11889, 11291]
 },
 "1099-101": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Camp",
 	name_en: "McLain's Encampment",
@@ -1012,6 +1037,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [9584, 11295]
 },
 "1099-102": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Tower",
 	name_en: "O'del Academy",
@@ -1025,6 +1051,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [9832, 9508]
 },
 "1099-104": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Tower",
 	name_en: "Eternal Necropolis",
@@ -1038,6 +1065,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11739, 9654]
 },
 "1099-105": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Tower",
 	name_en: "Crankshaft Depot",
@@ -1051,6 +1079,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [11257, 11551]
 },
 "1099-106": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Keep",
 	name_en: "Blistering Undercroft",
@@ -1064,6 +1093,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [9328, 10634]
 },
 "1099-109": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Camp",
 	name_en: "Roy's Refuge",
@@ -1077,6 +1107,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [12100, 10019]
 },
 "1099-110": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Tower",
 	name_en: "Parched Outpost",
@@ -1090,6 +1121,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10244, 11331]
 },
 "1099-113": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Keep",
 	name_en: "Stoic Rampart",
@@ -1103,6 +1135,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10777, 10120]
 },
 "1099-114": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Keep",
 	name_en: "Osprey's Palace",
@@ -1116,6 +1149,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [12203, 10706]
 },
 "1099-115": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Camp",
 	name_en: "Boettiger's Hideaway",
@@ -1129,6 +1163,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [9313, 9994]
 },
 "1099-116": {
+	nativeowner: "Red",
 	map_type: "RedHome",
 	type: "Camp",
 	name_en: "Dustwhisper Well",
@@ -1142,6 +1177,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [10747, 11854]
 },
 "1102-99": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Camp",
 	name_en: "Lesh's Lab",
@@ -1155,6 +1191,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [7159, 12042]
 },
 "1102-100": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Camp",
 	name_en: "Barrett Farmstead",
@@ -1168,6 +1205,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [8305, 13851]
 },
 "1102-101": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Camp",
 	name_en: "Patrick's Encampment",
@@ -1181,6 +1219,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [6000, 13855]
 },
 "1102-102": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Tower",
 	name_en: "Y'lan Academy",
@@ -1194,6 +1233,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [6248, 12068]
 },
 "1102-104": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Tower",
 	name_en: "Deathless Necropolis",
@@ -1207,6 +1247,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [8155, 12214]
 },
 "1102-105": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Tower",
 	name_en: "Sparkplug Depot",
@@ -1220,6 +1261,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [7673, 14111]
 },
 "1102-106": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Keep",
 	name_en: "Scorching Undercroft",
@@ -1233,6 +1275,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [5744, 13194]
 },
 "1102-109": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Camp",
 	name_en: "Norfolk's Refuge",
@@ -1246,6 +1289,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [8516, 12579]
 },
 "1102-110": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Tower",
 	name_en: "Withered Outpost",
@@ -1259,6 +1303,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [6660, 13891]
 },
 "1102-113": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Keep",
 	name_en: "Impassive Rampart",
@@ -1272,6 +1317,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [7193, 12680]
 },
 "1102-114": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Keep",
 	name_en: "Harrier's Palace",
@@ -1285,6 +1331,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [8619, 13266]
 },
 "1102-115": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Camp",
 	name_en: "Hughe's Hideaway",
@@ -1298,6 +1345,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [5729, 12554]
 },
 "1102-116": {
+	nativeowner: "Green",
 	map_type: "GreenHome",
 	type: "Camp",
 	name_en: "Smashedhope Well",
@@ -1311,6 +1359,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [7163, 14414]
 },
 "1143-99": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Camp",
 	name_en: "Zakk's Lab",
@@ -1324,6 +1373,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [14327, 11402]
 },
 "1143-100": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Camp",
 	name_en: "Gee Farmstead",
@@ -1337,6 +1387,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [15473, 13211]
 },
 "1143-101": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Camp",
 	name_en: "Habib's Encampment",
@@ -1350,6 +1401,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [13168, 13215]
 },
 "1143-102": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Tower",
 	name_en: "Kay'li Academy",
@@ -1363,6 +1415,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [13416, 11428]
 },
 "1143-104": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Tower",
 	name_en: "Undying Necropolis",
@@ -1376,6 +1429,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [15323, 11574]
 },
 "1143-105": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Tower",
 	name_en: "Flywheel Depot",
@@ -1389,6 +1443,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [14841, 13471]
 },
 "1143-106": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Keep",
 	name_en: "Torrid Undercroft",
@@ -1402,6 +1457,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [12912, 12554]
 },
 "1143-109": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Camp",
 	name_en: "Olivier's Refuge",
@@ -1415,6 +1471,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [15684, 11939]
 },
 "1143-110": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Tower",
 	name_en: "Barren Outpost",
@@ -1428,6 +1485,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [13828, 13251]
 },
 "1143-113": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Keep",
 	name_en: "Hardened Rampart",
@@ -1441,6 +1499,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [14361, 12040]
 },
 "1143-114": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Keep",
 	name_en: "Shrike's Palace",
@@ -1454,6 +1513,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [15787, 12626]
 },
 "1143-115": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Camp",
 	name_en: "Berdrow's Hideaway",
@@ -1467,6 +1527,7 @@ var GW2T_OBJECTIVE_DATA = {
 	coord: [12897, 11914]
 },
 "1143-116": {
+	nativeowner: "Blue",
 	map_type: "BlueHome",
 	type: "Camp",
 	name_en: "Lastgasp Well",
@@ -1488,6 +1549,67 @@ var GW2T_OBJECTIVE_METADATA = {
 	Matches: {
 		Americas: ["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"],
 		Europe:   ["2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9"]
+	},
+	ObjectiveType: {
+		Camp: {
+			Quantity: {
+				teambl: 6,
+				teambg: 2,
+				all: 24
+			},
+			Value: {
+				each: 5,
+				teambl: 30,
+				teambg: 10,
+				all: 120
+			}
+		},
+		Tower: {
+			Quantity: {
+				teambl: 4,
+				teambg: 4,
+				all: 24
+			},
+			Value: {
+				each: 10,
+				teambl: 40,
+				teambg: 40,
+				all: 240
+			}
+		},
+		Keep: {
+			Quantity: {
+				teambl: 3,
+				teambg: 1,
+				all: 12
+			},
+			Value: {
+				each: 25,
+				teambl: 75,
+				teambg: 25,
+				all: 300
+			}
+		},
+		Castle: {
+			Quantity: {
+				teambl: 0,
+				teambg: 0,
+				all: 1
+			},
+			Value: {
+				each: 35,
+				teambl: 0,
+				teambg: 0,
+				all: 35
+			}
+		},
+		Total: {
+			Value: {
+				teambl: 145,
+				teamebg: 75,
+				all: 695
+			}
+		}
 	},
 	MapType: {
 		"RedHome": "red",
@@ -1535,19 +1657,15 @@ var GW2T_OBJECTIVE_METADATA = {
 		nick_en: "E.B.G.", nick_de: "E.S.F.", nick_es: "C.B.E.", nick_fr: "C.B.E.", nick_zh: "永恆戰場"
 	},
 	Camp: {
-		value: 5,
 		name_en: "Camp", name_de: "Lager", name_es: "Campamento", name_fr: "Camp", name_zh: "營地"
 	},
 	Tower: {
-		value: 10,
 		name_en: "Tower", name_de: "Turm", name_es: "Torre", name_fr: "Tour", name_zh: "塔樓"
 	},
 	Keep: {
-		value: 25,
 		name_en: "Keep", name_de: "Feste", name_es: "Fortaleza", name_fr: "Fort", name_zh: "要塞"
 	},
 	Castle: {
-		value: 35,
 		name_en: "Castle", name_de: "Schloss", name_es: "Castillo", name_fr: "Château", name_zh: "城堡"
 	},
 	Garrison: {
@@ -1592,7 +1710,13 @@ var GW2T_OBJECTIVE_METADATA = {
 	Captured: {
 		name_en: "Captured by", name_de: "Erobert von", name_es: "Capturado por", name_fr: "Capturé de", name_zh: "抓住的"
 	},
+	Retaken: {
+		name_en: "Retaken by", name_de: "Zurückerobert von", name_es: "Retomada por", name_fr: "Repris de", name_zh: "奪回的"
+	},
 	Claimed: {
 		name_en: "Claimed by", name_de: "Beansprucht von", name_es: "Reclamado por", name_fr: "Revendication de", name_zh: "聲稱的"
+	},
+	Us: {
+		name_en: "us", name_de: "uns", name_es: "nosotros", name_fr: "nous", name_zh: "我們"
 	}
 };

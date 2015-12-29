@@ -159,7 +159,7 @@ O = {
 		bol_displayChallengesWvW: true,
 		// WvW
 		int_secWvWRefresh: 10,
-		int_numLogEntries: 256,
+		int_numLogEntries: 128,
 		bol_showLog: true,
 		bol_logRedHome: true,
 		bol_logGreenHome: true,
@@ -183,7 +183,7 @@ O = {
 		int_msecGPSRefresh: 100,
 		// Alarm
 		int_setAlarm: 0,
-		int_setVolume: 75,
+		int_setVolume: 50,
 		bol_alertArrival: true,
 		bol_alertAtStart: true,
 		bol_alertAtEnd: true,
@@ -634,24 +634,7 @@ O = {
 			}
 			
 			// Assign the retrieved values to the input tags
-			if (inputtype === "checkbox")
-			{
-				inputobj.prop("checked", O.Options[optionkey]);
-			}
-			else if (inputtype === "number" || inputtype === "range")
-			{
-				inputobj.val(O.Options[optionkey]);
-			}
-			else if (inputtype === "radio")
-			{
-				// Check the radio button of that index (int)
-				$("input:radio[name=" + optionkey + "]:eq(" + O.Options[optionkey] + ")")
-					.prop("checked", true);
-			}
-			else
-			{
-				inputobj.val(O.Options[optionkey]);
-			}
+			O.setInputValue(inputobj, O.Options[optionkey]);
 
 			/*
 			 * Bind simple event handlers to each input tags that writes
@@ -679,35 +662,8 @@ O = {
 			{
 				inputobj.change(function()
 				{
-					var thisinputtype = $(this).attr("type");
 					var thisoptionkey = $(this).attr("id").slice(O.prefixOption.length);
-
-					if (thisinputtype === "checkbox")
-					{
-						O.Options[thisoptionkey] = $(this).prop("checked");
-					}
-					else if (thisinputtype === "number" || thisinputtype === "range")
-					{
-						// These inputs can have custom text, so sanitize them first
-						var value = $(this).val();
-						var integer = parseInt(value);
-						if (isFinite(value) && integer >= O.OptionRange[thisoptionkey][0]
-							&& integer <= O.OptionRange[thisoptionkey][1])
-						{
-							O.Options[thisoptionkey] = integer;
-						}
-						else
-						{
-							// Load default value if not an integer within range
-							O.Options[thisoptionkey] = O.OptionRange[thisoptionkey][0];
-						}
-						$(this).val(O.Options[thisoptionkey]);
-					}
-					else
-					{
-						O.Options[thisoptionkey] = $(this).val();
-					}
-
+					O.Options[thisoptionkey] = O.getInputValue($(this), thisoptionkey);
 					localStorage[thisoptionkey] = O.Options[thisoptionkey];
 				});
 			}
@@ -716,6 +672,104 @@ O = {
 		// Supplementary event handlers for some inputs
 		O.bindOptionsInputs();
 		U.initializeAPIURLs();
+	},
+	
+	/*
+	 * Sets the value of an input tag.
+	 * @param string pInput to read.
+	 * @param polymorphic pValue.
+	 */
+	setInputValue: function(pInput, pValue)
+	{
+		var inputobj = $(pInput);
+		var inputtype = inputobj.attr("type");
+
+		// Assign the retrieved values to the cloned input
+		if (inputtype === "checkbox")
+		{
+			inputobj.prop("checked", pValue);
+		}
+		else if (inputtype === "number" || inputtype === "range")
+		{
+			inputobj.val(pValue);
+		}
+		else if (inputtype === "radio")
+		{
+			// Check the radio button of that index (int)
+			$("input:radio[name=" + inputobj.attr("name") + "]:eq(" + pValue + ")")
+				.prop("checked", true);
+		}
+		else
+		{
+			inputobj.val(pValue);
+		}
+	},
+	
+	/*
+	 * Gets the value of an input tag.
+	 * @param string pInput to read.
+	 * @param string pOptionKey name of an option for range validation.
+	 */
+	getInputValue: function(pInput, pOptionKey)
+	{
+		var inputobj = $(pInput);
+		var inputtype = inputobj.attr("type");
+		var value;
+
+		if (inputtype === "checkbox")
+		{
+			value = inputobj.prop("checked");
+		}
+		else if (inputtype === "number" || inputtype === "range")
+		{
+			// These inputs can have custom text, so sanitize them first
+			var value = inputobj.val();
+			var integer = parseInt(value);
+			if (isFinite(value) && integer >= O.OptionRange[pOptionKey][0]
+				&& integer <= O.OptionRange[pOptionKey][1])
+			{
+				value = integer;
+			}
+			else
+			{
+				// Load default value if not an integer within range
+				value = O.OptionRange[pOptionKey][0];
+			}
+			inputobj.val(value);
+		}
+		else
+		{
+			value = inputobj.val();
+		}
+
+		return value;
+	},
+	
+	/*
+	 * Makes an input tag behave the same as an Options input tag.
+	 * @param jqobject pCloneInput input tag.
+	 * @param string pOptionKey name of an option.
+	 */
+	mimicInput: function(pCloneInput, pOptionKey)
+	{
+		var inputclone = $(pCloneInput);
+		// Initialize the value of the clone
+		O.setInputValue(inputclone, O.Options[pOptionKey]);
+		
+		// If the cloned input value has changed then mimic that to the original
+		var inputobj = $("#" + O.prefixOption + pOptionKey);
+		inputclone.change(function()
+		{
+			var value = O.getInputValue($(this), pOptionKey);
+			O.setInputValue(inputobj, value);
+			inputobj.trigger("change");
+		});
+		// If the original input value has changed, then superficially change the cloned input
+		inputobj.change(function()
+		{
+			O.setInputValue(inputclone, O.Options[pOptionKey]);
+		});
+		return inputclone;
 	},
 	
 	/*
@@ -1137,6 +1191,7 @@ O = {
 						});
 						$("#itemLanguagePopup").css({ left: "-98px" });
 						$("#cslContent").css({ left: "24px" });
+						$(".mapExpandButton").css({right: 0, left: "auto"});
 					}
 				}
 				else
@@ -1150,6 +1205,7 @@ O = {
 					});
 					$("#itemLanguagePopup").css({ left: "64px" });
 					$("#cslContent").css({ left: I.cPANEL_WIDTH + 24 + "px" });
+					$(".mapExpandButton").css({right: "auto", left: 0});
 				}
 			}
 		},
@@ -1470,7 +1526,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				I.log($(args[1]).val());
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -5517,7 +5573,11 @@ D = {
 			});
 			$(".mapHUDButton").each(function()
 			{
-				$(this).attr("title", D.getPhraseOriginal($(this).attr("title")));
+				var title = $(this).attr("title");
+				if (title !== undefined)
+				{
+					$(this).attr("title", D.getPhraseOriginal(title));
+				}
 			});
 			D.translateElements();
 		}
@@ -7518,6 +7578,14 @@ M = {
 			}
 		});
 		$(htmlidprefix + "DisplayButton").click(function()
+		{
+			// Replicate display button
+			if (I.isTouchEnabled === false)
+			{
+				$("#opt_bol_showPanel").trigger("click");
+			}
+		});
+		$(htmlidprefix + "ExpandButton").click(function()
 		{
 			// Hide the right panel if click on the display button
 			$("#opt_bol_showPanel").trigger("click");
@@ -9854,24 +9922,6 @@ P = {
 	},
 	
 	/*
-	 * Stops event propagation for an element inside the map pane.
-	 * @param string pElementID to be protected.
-	 */
-	preventPropagation: function(pElementID)
-	{
-		var elm = L.DomUtil.get(pElementID);
-		if (!L.Browser.touch)
-		{
-			L.DomEvent.disableClickPropagation(elm);
-			L.DomEvent.on(elm, "mousewheel", L.DomEvent.stopPropagation);
-		}
-		else
-		{
-			L.DomEvent.on(elm, "click", L.DomEvent.stopPropagation);
-		}
-	},
-	
-	/*
 	 * Sorts an array of GW2 coordinates.
 	 * @param 2D array pArray to sort.
 	 */
@@ -12149,8 +12199,8 @@ W = {
 	},
 	LocaleEnum:
 	{
-		Americas: 1,
-		Europe: 2
+		Americas: "Americas",
+		Europe: "Europe"
 	},
 	LocaleCurrent: null,
 	isWvWLoaded: false,
@@ -12163,6 +12213,7 @@ W = {
 	LandEnum: {}, // Corresponds to "map_type" property of objectives
 	ObjectiveEnum: {}, // Corresponds to "type" property of objectives
 	OwnerEnum: {}, // Corresponds to "owner" property from match API
+	OwnerCurrent: null, // The color of the user's selected server
 	isObjectiveTickEnabled: false,
 	isObjectiveTimerTickEnabled: false,
 	isAPIFailed: false,
@@ -12387,17 +12438,44 @@ W = {
 		});
 		
 		// Prevent map scroll from interfering when using the list
-		P.preventPropagation("wvwServerList");
+		I.preventPropagation("#wvwServerList");
 	},
 	
 	/*
-	 * Generates a scoreboard of all servers in a server region.
+	 * Generates stats of all servers in a server region.
+	 */
+	generateLeaderboard: function()
+	{
+		var lb = $("#wvwLeaderboard");
+		var matches = (W.Metadata.Matches[W.LocaleCurrent]);
+		var match;
+		
+		// Gather data for all matches for current server region
+		for (var i in matches)
+		{
+			match = matches[i];
+			lb.append("<div class='wvwLBTier'>"
+				+ "<div class='lboRank></div>"
+				+ "<div class='lboName'></div>"
+				+ "<div class='lboScore'></div>"
+				+ "<div class='lboPPT'></div>"
+			+ "</div>");
+			$.getJSON(U.URL_API.Match + matches[i], function(pData)
+			{
+				
+			});
+		}
+	},
+	
+	/*
+	 * Generates stats of current matchup the user opted.
 	 */
 	generateScoreboard: function()
 	{
 		var sb = $("#wvwScoreboard").empty();
 		var matches = (O.Options.enu_Server);
 	},
+
 	
 	/*
 	 * Writes the base HTML of the capture history log.
@@ -12471,6 +12549,7 @@ W = {
 				});
 			})(i);
 		}
+		
 		// Label the narration filters
 		var blstr = W.getName("Borderlands");
 		$("#opt_bol_narrateRedHome").next().html(D.orderModifier(blstr, W.getName("Red")));
@@ -12482,6 +12561,9 @@ W = {
 		$("#opt_bol_narrateKeep").next().html(W.getName("Keep"));
 		$("#opt_bol_narrateCastle").next().html(W.getName("Castle"));
 		$("#opt_bol_narrateClaimed").next().html(W.getName("Claimed"));
+		
+		// Mimic the master volumn slider
+		I.preventPropagation(O.mimicInput("#logNarrateVolume", "int_setVolume"));
 		
 		// Bind local time clock
 		$("#logTime").click(function()
@@ -12623,10 +12705,34 @@ W = {
 		}
 		
 		var objstr = W.getObjectiveNick(pObjective, true);
-		var ownerstr = (pIsClaim) ? D.getSpeechInitials(pObjective.tag) : D.getObjectName(W.getServerFromOwner(pObjective.owner));
+		var ownerstr;
+		if (pIsClaim)
+		{
+			ownerstr = D.getSpeechInitials(pObjective.tag);
+		}
+		else if (pObjective.owner === W.OwnerCurrent)
+		{
+			ownerstr = W.getName("Us");
+		}
+		else
+		{
+			ownerstr = D.getObjectName(W.getServerFromOwner(pObjective.owner));
+		}
 		// Only include the borderlands string if user opted for more than one land filter
 		var blstr = ($("#logNarrateLand input:checked").length > 1) ? (W.getBorderlandsString(pObjective, true, true) + ". ") : "";
-		var verbstr = (pIsClaim) ? W.getName("Claimed") : W.getName("Captured");
+		var verbstr;
+		if (pIsClaim)
+		{
+			verbstr = W.getName("Claimed");
+		}
+		else if (pObjective.owner === pObjective.nativeowner)
+		{
+			verbstr = W.getName("Retaken");
+		}
+		else
+		{
+			verbstr = W.getName("Captured");
+		}
 		
 		// Separated to two speeches so the pause is longer
 		var speech1 = blstr + objstr;
@@ -12645,6 +12751,13 @@ W = {
 			var redserver = W.Servers[W.ServersCurrent["red"]];
 			var greenserver = W.Servers[W.ServersCurrent["green"]];
 			var blueserver = W.Servers[W.ServersCurrent["blue"]];
+			for (var i in W.ServersCurrent)
+			{
+				if (W.ServersCurrent[i] === O.Options.enu_Server)
+				{
+					W.OwnerCurrent = U.toFirstUpperCase((i).toString());
+				}
+			}
 			$("#opt_bol_logRedHome").next().html(W.getBorderlandsString(redserver, true, false));
 			$("#opt_bol_logGreenHome").next().html(W.getBorderlandsString(greenserver, true, false));
 			$("#opt_bol_logBlueHome").next().html(W.getBorderlandsString(blueserver, true, false));
@@ -12727,7 +12840,7 @@ W = {
 								&& obj.owner !== W.OwnerEnum.Neutral) // If it is owned by Neutral (no immunity) then it is WvW reset
 						{
 							W.Objectives[obj.id].isImmune = true;
-							$("#objProgressBar_" + obj.id).show();
+							$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
 						}
 					}
 					/*
@@ -17119,6 +17232,28 @@ I = {
 			}
 			// Add bullet points
 			$(this).prepend("<ins class='s16 s16_bullet'></ins> ");
+		});
+	},
+	
+	/*
+	 * Stops map DOM events from interfering with an element.
+	 * @param string pSelector of elements to be protected.
+	 */
+	preventPropagation: function(pSelector)
+	{
+		$(pSelector).each(function()
+		{
+			var elm = L.DomUtil.get($(this)[0]);
+			if (!L.Browser.touch)
+			{
+				L.DomEvent.disableClickPropagation(elm);
+				L.DomEvent.on(elm, "mousewheel", L.DomEvent.stopPropagation);
+				L.DomEvent.on(elm, "contextmenu", L.DomEvent.stopPropagation);
+			}
+			else
+			{
+				L.DomEvent.on(elm, "click", L.DomEvent.stopPropagation);
+			}
 		});
 	},
 	
