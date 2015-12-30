@@ -161,6 +161,7 @@ O = {
 		int_secWvWRefresh: 10,
 		int_numLogEntries: 128,
 		bol_showLog: true,
+		bol_maximizeLog: false,
 		bol_logRedHome: true,
 		bol_logGreenHome: true,
 		bol_logBlueHome: true,
@@ -1296,6 +1297,10 @@ O = {
 			{
 				$("#wvwLog").hide("fast");
 			}
+		},
+		bol_maximizeLog: function()
+		{
+			W.toggleLogHeight();
 		}
 	}
 };
@@ -1526,7 +1531,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				I.log($(args[1]).val());
+				$("#wvwLeaderboard span, .lboRank, .lboName, .lboFocus").toggle();
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -5767,7 +5772,7 @@ D = {
 	speak: function(pString, pDuration)
 	{
 		var volume = (O.Options.int_setVolume / T.cPERCENT_100).toFixed(2);
-		I.log(volume);
+		
 		// Chrome-only TTS service
 		if (I.isSpeechSynthesisEnabled)
 		{
@@ -9165,7 +9170,7 @@ M = {
 			}
 			else
 			{
-				that.goToView(thiscoord, that.ZoomEnum.Ground, pPin);
+				that.Map.zoomIn();
 			}
 		});
 		
@@ -12216,9 +12221,11 @@ W = {
 	ObjectiveEnum: {}, // Corresponds to "type" property of objectives
 	OwnerEnum: {}, // Corresponds to "owner" property from match API
 	OwnerCurrent: null, // The color of the user's selected server
+	MatchupIDCurrent: null,
 	isObjectiveTickEnabled: false,
 	isObjectiveTimerTickEnabled: false,
 	isAPIFailed: false,
+	cOWNERS_PER_TIER: 3,
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
 	cMILLISECONDS_IMMUNITY: 300000,
 	MatchFinishTime: null,
@@ -12411,9 +12418,19 @@ W = {
 	{
 		return W.Metadata.ObjectiveType[pObjectiveName].Value.each;
 	},
-	getTotalPointsPossible: function()
+	getTotalPPTPossible: function()
 	{
 		return W.Metadata.ObjectiveType.Total.Value.all;
+	},
+	
+	/*
+	 * Gets the tier number from the match id. Example "2-5" returns 5.
+	 * @param object pData matchup from API.
+	 * @returns int tier.
+	 */
+	getMatchupTier: function(pData)
+	{
+		return parseInt((pData.id.split("-"))[1]);
 	},
 	
 	/*
@@ -12498,37 +12515,67 @@ W = {
 	 */
 	insertScoreboard: function(pData, pIsMain)
 	{
-		
-		var lb = (pIsMain) ? $("#lboCurrent") : $("#lboOther");
-		lb.empty();
-		
-		// Collate objective points for each borderlands
+		/*
+		 * Collate objective points from each borderlands.
+		 */
 		var map, obj;
+		var land, value;
+		var tier = W.getMatchupTier(pData);
 		var PPT = {};
+		// Initialize variables for the temp object
 		for (var i in W.Metadata.Owners)
 		{
 			var owner = W.Metadata.Owners[i];
 			PPT[owner] = {};
-			(PPT[owner]).points = 0;
+			(PPT[owner]).Total = 0;
+			(PPT[owner])[W.LandEnum.GreenHome] = 0;
+			(PPT[owner])[W.LandEnum.BlueHome] = 0;
+			(PPT[owner])[W.LandEnum.RedHome] = 0;
+			(PPT[owner])[W.LandEnum.Center] = 0;
 		}
+		// Assign the values
 		for (var i in pData.maps)
 		{
 			map = pData.maps[i];
 			for (var ii in map.objectives)
 			{
 				obj = map.objectives[ii];
-				(PPT[obj.owner]).points += W.getObjectiveTypeValue(obj.type);
+				land = (W.Objectives[obj.id]).map_type; // Example: "RedHome"
+				value = W.getObjectiveTypeValue(obj.type);
+				(PPT[obj.owner]).Total += value;
+				(PPT[obj.owner])[land] += value;
 			}
 		}
-		I.log(U.formatJSON(PPT));
-		return;
 		
+		/*
+		 * Compute data and generate HTML.
+		 */
+		var container = $("#lboContainer").css({opacity: 0});
+		var lb = (pIsMain) ? $("#lboCurrent") : $("#lboOther");
+		lb.empty();
 		var html = "<section>";
 		for (var i = 0; i < W.Metadata.Owners.length; i++)
 		{
-			var owner = W.Metadata.Owners[i]; // Example: "Green"
-			var ownerkey = owner.toLowerCase(); // Example: "green"
-			var ppt = 0;
+			var owner = W.Metadata.Owners[i]; // Example: "Green" as in data
+			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
+			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
+			var score = pData.scores[ownerkey];
+			var scorepercent = (pData.scores[ownerkey] / (T.getMinMax(pData.scores)).max) * T.cPERCENT_100;
+			var ppttotal = (PPT[owner]).Total;
+			var pptpercent = (ppttotal / W.getTotalPPTPossible()) * T.cPERCENT_100;
+			var kdstr = ""; // KD is not available in EU https://forum-en.guildwars2.com/forum/community/api/WvWvW-API
+			if (pData.kills !== undefined)
+			{
+				var kills = (pData.kills !== undefined) ? pData.kills[ownerkey] : "";
+				var deaths = (pData.deaths !== undefined) ? pData.deaths[ownerkey] : "";
+				var kdratio = (kills / deaths).toFixed(2);
+				var kdpercent = (kills / (kills + deaths)) * T.cPERCENT_100;
+				kdstr = "<aside class='lboKD' title='<dfn>Kills to Deaths ratio:</dfn> " + kdratio + "'>"
+					+ "<var class='lboKills'>" + kills.toLocaleString() + "</var>"
+					+ "<span><samp style='width:" + kdpercent + "%'><mark></mark></samp></span>"
+					+ "<var class='lboDeaths'>" + deaths.toLocaleString() + "</var>"
+				+ "</aside>";
+			}
 			
 			switch (owner)
 			{
@@ -12544,21 +12591,37 @@ W = {
 						
 				} break;
 			}
-			var scorepercent = (pData.scores[ownerkey] / (T.getMinMax(pData.scores)).max) * T.cPERCENT_100;
 			
-			html += "<article class='lboServer'" + owner + ">";
-				+ "<aside class='lboRank'>" + (i+1) + ".</aside>"
+			html += "<article class='lboServer" + owner + "'>"
+				+ "<aside class='lboRank'>" + rank + ".</aside>"
 				+ "<aside class='lboName'>" + D.getObjectName(W.getServerFromOwner(owner)) + "</aside>"
-				+ "<aside class='lboScore'>"
-					+ "<var>" + pData.scores[ownerkey] + "</var>"
+				+ "<aside class='lboScore' title='<dfn>Score</dfn>'>"
+					+ "<var>" + score.toLocaleString() + "</var>"
 					+ "<span><samp style='width:" + scorepercent + "%'></samp></span>"
-				+ "<aside>"
-				+ "<aside class='lboPPT'>"
-					+ "<span><samp style='width:" + "%'></samp></span>"
+				+ "</aside>"
+				+ "<aside class='lboPPT' title='<dfn>Points-Per-Tick (PPT)</dfn>'>"
+					+ "<span><samp style='width:" + pptpercent + "%'></samp></span>"
+					+ "<var>+" + ppttotal + "</var>"
+				+ "</aside>"
+				+ "<aside class='lboLand' title='<dfn>PPT per borderlands</dfn>'>"
+					+ "<var class='lboPPTGreen'>+" + (PPT[owner])[W.LandEnum.GreenHome] + "</var>"
+					+ "<var class='lboPPTBlue'>+" + (PPT[owner])[W.LandEnum.BlueHome] + "</var>"
+					+ "<var class='lboPPTRed'>+" + (PPT[owner])[W.LandEnum.RedHome] + "</var>"
+					+ "<var class='lboPPTCenter'>+" + (PPT[owner])[W.LandEnum.Center] + "</var>"
+				+ "</aside>"
+				+ "<aside class='lboFocus lboFocus" + owner + "' title='<dfn>Server Focus</dfn>'>"
+					+ "<var class='lboFocusA'>" + 55 + "%</var>"
+					+ "<span><samp style='width:" + 55 + "%'><mark></mark></samp></span>"
+					+ "<var class='lboFocusB'>" + 55 + "%</var>"
+				+ "</aside>"
+				+ kdstr
+			+ "</article>";
 		}
 		html += "</section>";
 		
-		lb.html(html);
+		lb.append(html);
+		I.qTip.init(lb.find("aside"));
+		container.animate({opacity: 1}, 1000);
 	},
 
 	
@@ -12576,36 +12639,16 @@ W = {
 		{
 			$("#opt_bol_showLog").trigger("click");
 		});
+		$("#logExpand").click(function()
+		{
+			$("#opt_bol_maximizeLog").trigger("click");
+		});
+		// Apply the log appearance options
 		if (O.Options.bol_showLog === false)
 		{
 			$("#wvwLog").hide();
 		}
-		$("#logExpand").click(function()
-		{
-			var log = $("#logWindow");
-			var windowheight = $(window).height();
-			var oldheight = log.data("oldHeight");
-			var newheight = windowheight - oldheight;
-			
-			if (log.data("isExpanded") === true)
-			{
-				log.show().animate({height: oldheight}, 200, function()
-				{
-					I.updateScrollbar(log);
-				}).data("isExpanded", false);
-			}
-			else
-			{
-				if (newheight < oldheight)
-				{
-					newheight = oldheight;
-				}
-				log.show().animate({height: newheight}, 200, function()
-				{
-					I.updateScrollbar(log);
-				}).data("isExpanded", true);
-			}
-		});
+		W.toggleLogHeight();
 		I.initializeScrollbar("#logWindow");
 		
 		// Bind the checkboxes to filter log entries
@@ -12661,6 +12704,38 @@ W = {
 				$(this).html(timestr);
 			});
 		});
+	},
+	
+	/*
+	 * Adjusts the log window height.
+	 */
+	toggleLogHeight: function()
+	{
+		var log = $("#logWindow");
+		var windowheight = $(window).height();
+		var oldheight = log.data("oldHeight");
+		var newheight = windowheight - oldheight;
+
+		if (O.Options.bol_maximizeLog)
+		{
+			if (newheight < oldheight)
+			{
+				newheight = oldheight;
+			}
+			log.show().animate({height: newheight}, 200, function()
+			{
+				I.updateScrollbar(log);
+				O.Options.bol_maximizeLog = true;
+			});
+		}
+		else
+		{
+			log.show().animate({height: oldheight}, 200, function()
+			{
+				I.updateScrollbar(log);
+				O.Options.bol_maximizeLog = false;
+			});
+		}
 	},
 	
 	/*
@@ -12944,10 +13019,12 @@ W = {
 			if (W.MatchFinishTime !== pData.end_time)
 			{
 				W.MatchFinishTime = pData.end_time;
+				W.MatchupIDCurrent = pData.id;
 				W.ServersCurrent = pData.worlds;
 				W.updateParticipants();
 				W.insertScoreboard(pData, true);
 			}
+			//W.insertScoreboard(pData, true);
 			
 		}}).fail(function()
 		{

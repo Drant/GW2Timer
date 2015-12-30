@@ -241,13 +241,13 @@
 .logEntry cite {
 	color: #ffbb44;
 }
-.logEntryRedHome {
+.logEntryRedHome, .lboServerRed {
 	background: rgba(204, 31, 36, 0.2);
 }
-.logEntryGreenHome {
+.logEntryGreenHome, .lboServerGreen {
 	background: rgba(82, 165, 24, 0.2);
 }
-.logEntryBlueHome {
+.logEntryBlueHome, .lboServerBlue {
 	background: rgba(49, 167, 187, 0.2);
 }
 .logEntryCenter {
@@ -257,7 +257,7 @@
 /* Leaderboard
 ----------------------------------------------------------------------------- */
 #wvwLeaderboard {
-	width: calc(100% - 48px); height: 100%;
+	width: calc(100% - 48px);
 	overflow: auto;
 	position: absolute; z-index: 9;
 	top: 16px;
@@ -270,6 +270,7 @@
 		0px -1px 1px #000,
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
+	overflow: hidden;
 }
 #lboContainer {
 	display: inline-block;
@@ -281,7 +282,7 @@
 	background: rgba(0, 0, 0, 0.8);
 }
 #wvwLeaderboard section { /* A block of rows for a single tier/matchup */
-	margin-bottom: 16px;
+	
 }
 #wvwLeaderboard section:nth-child(even) {
 	background: rgba(255, 255, 255, 0.2);
@@ -289,6 +290,10 @@
 #wvwLeaderboard section:hover {
 	background: rgba(255, 255, 255, 0.4);
 	border-radius: 4px;
+}
+#wvwLeaderboard article { /* A row containing a server's data cells '*/
+	border-radius: 4px;
+	white-space: nowrap;
 }
 #wvwLeaderboard aside { /* A cell of the leaderboard table */
 	display: inline-block;
@@ -310,6 +315,13 @@
 	display: block;
 	height: 100%;
 }
+#wvwLeaderboard mark { /* The bisecting line representing 50% in a bar graph */
+	display: block;
+	width: 2px; height: 12px;
+	position: absolute;
+	margin-left: 47px;
+	background: rgba(255, 255, 255, 0.4);
+}
 
 .lboRank {
 	width: 32px;
@@ -330,8 +342,10 @@
 }
 .lboName {
 	width: 128px;
+	margin-left: 4px;
+	overflow: hidden;
+	white-space: nowrap;
 	font-weight: bold;
-	
 }
 .lboScore {
 	width: auto;
@@ -340,6 +354,7 @@
 }
 .lboScore var {
 	width: 64px;
+	margin-right: 4px;
 }
 .lboServerGreen samp {
 	background: #52a518;
@@ -365,25 +380,34 @@
 .lboPPT {
 	width: auto;
 	text-align: left;
-	background: rgba(22, 18, 37, 0.2);
 }
 .lboPPT var {
 	width: 32px;
+	margin-left: 4px;
 }
 .lboPPT span {
 	
 }
 .lboLand {
-	
+	margin-left: 8px;
 }
 .lboLand var {
-	width: 40px; height: 100%;
+	width: 36px; height: 100%;
+	padding-right: 4px;
+	background: rgba(0, 0, 0, 0.4);
+	border-radius: 4px;
 }
 .lboFocus {
 	margin-left: 8px;
 }
 .lboFocus var {
 	width: 32px;
+}
+.lboFocusA, .lboKills {
+	margin-right: 4px;
+}
+.lboFocusB, .lboDeaths {
+	margin-left: 4px;
 }
 .lboKD {
 	margin-left: 8px;
@@ -393,4 +417,8 @@
 }
 .lboKD var:last-child {
 	padding-right: 16px;
+}
+
+#mapPane * {
+	text-shadow: none !important;
 }

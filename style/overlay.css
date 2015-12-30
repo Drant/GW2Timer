@@ -91,6 +91,12 @@ input.mapCoordinatesName {
 	margin-bottom: 8px;
 }
 
+#wvwLeaderboard {
+	width: 100% !important;
+	top: 0 !important;
+	left: 0 !important;
+}
+
 /* Lower the menu bar's height */
 #paneMenu {
 	height: 32px;
