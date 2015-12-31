@@ -1469,7 +1469,7 @@ U = {
 			}},
 			gps: {usage: "Prints GPS location information.", f: function()
 			{
-				I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray);
+				I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray, 0);
 			}},
 			identity: {usage: "Prints GPS general information.", f: function()
 			{
@@ -2591,6 +2591,10 @@ X = {
 		// Temporary
 		LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans", value: ""},
 		// Repeatable
+		NoxiousPods: { key: "str_chlNoxiousPods", urlkey: "noxiouspods", value: ""},
+		CrystallizedCaches: { key: "str_chlCrystallizedCaches", urlkey: "crystallizedcaches", value: ""},
+		ExaltedChests: { key: "str_chlExaltedChests", urlkey: "exaltedchests", value: ""},
+		AirshipCargo: { key: "str_chlAirshipCargo", urlkey: "airshipcargo", value: ""},
 		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: ""},
 		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: ""},
 		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: ""},
@@ -12519,7 +12523,8 @@ W = {
 		 * Collate objective points from each borderlands.
 		 */
 		var map, obj;
-		var land, value;
+		var land, value, nativeowner;
+		var numowners = W.Metadata.Owners.length;
 		var tier = W.getMatchupTier(pData);
 		var PPT = {};
 		// Initialize variables for the temp object
@@ -12532,6 +12537,10 @@ W = {
 			(PPT[owner])[W.LandEnum.BlueHome] = 0;
 			(PPT[owner])[W.LandEnum.RedHome] = 0;
 			(PPT[owner])[W.LandEnum.Center] = 0;
+			for (var ii in W.Metadata.Owners) // The division of "native" land in EBG
+			{
+				(PPT[owner])[W.LandEnum.Center + (W.Metadata.Owners[ii])] = 0;
+			}
 		}
 		// Assign the values
 		for (var i in pData.maps)
@@ -12540,21 +12549,27 @@ W = {
 			for (var ii in map.objectives)
 			{
 				obj = map.objectives[ii];
+				owner = obj.owner;
 				land = (W.Objectives[obj.id]).map_type; // Example: "RedHome"
 				value = W.getObjectiveTypeValue(obj.type);
-				(PPT[obj.owner]).Total += value;
-				(PPT[obj.owner])[land] += value;
+				nativeowner = (W.Objectives[obj.id]).nativeowner;
+				(PPT[owner]).Total += value;
+				(PPT[owner])[land] += value;
+				if (land === W.LandEnum.Center)
+				{
+					// Example: In EBG, Red took objectives that were natively owned by Green's side, such as Lowlands
+					(PPT[owner])[W.LandEnum.Center + nativeowner] += value;
+				}
 			}
 		}
 		
 		/*
 		 * Compute data and generate HTML.
 		 */
-		var container = $("#lboContainer").css({opacity: 0});
 		var lb = (pIsMain) ? $("#lboCurrent") : $("#lboOther");
 		lb.empty();
 		var html = "<section>";
-		for (var i = 0; i < W.Metadata.Owners.length; i++)
+		for (var i = 0; i < numowners; i++)
 		{
 			var owner = W.Metadata.Owners[i]; // Example: "Green" as in data
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
@@ -12577,19 +12592,29 @@ W = {
 				+ "</aside>";
 			}
 			
-			switch (owner)
+			var focuses = [];
+			for (var ii = 0; ii < numowners; ii++)
 			{
-				case W.OwnerEnum.Green: {
-					
-				} break;
-				
-				case W.OwnerEnum.Blue: {
-						
-				} break;
-				
-				case W.OwnerEnum.Red: {
-						
-				} break;
+				var focusedowner = W.Metadata.Owners[ii];
+				if (owner !== focusedowner)
+				{
+					var focus = (PPT[owner])[focusedowner + "Home"] + (PPT[owner])[W.LandEnum.Center + focusedowner];
+					focuses.push(focus);
+				}
+			}
+			var totalfocus = (focuses[0] + focuses[1]);
+			var focusApercent, focusBpercent;
+			var focusclass = "";
+			if (totalfocus > 0)
+			{
+				focusApercent = Math.round((focuses[0] / totalfocus) * T.cPERCENT_100);
+				focusBpercent = Math.round((focuses[1] / totalfocus) * T.cPERCENT_100);
+			}
+			else
+			{
+				focusApercent = 0;
+				focusBpercent = 0;
+				focusclass = "lboFocusZero";
 			}
 			
 			html += "<article class='lboServer" + owner + "'>"
@@ -12610,9 +12635,9 @@ W = {
 					+ "<var class='lboPPTCenter'>+" + (PPT[owner])[W.LandEnum.Center] + "</var>"
 				+ "</aside>"
 				+ "<aside class='lboFocus lboFocus" + owner + "' title='<dfn>Server Focus</dfn>'>"
-					+ "<var class='lboFocusA'>" + 55 + "%</var>"
-					+ "<span><samp style='width:" + 55 + "%'><mark></mark></samp></span>"
-					+ "<var class='lboFocusB'>" + 55 + "%</var>"
+					+ "<var class='lboFocusA'>" + focusApercent + "%</var>"
+					+ "<span class='" + focusclass + "'><samp style='width:" + focusApercent + "%'><mark></mark></samp></span>"
+					+ "<var class='lboFocusB'>" + focusBpercent + "%</var>"
 				+ "</aside>"
 				+ kdstr
 			+ "</article>";
@@ -12621,7 +12646,8 @@ W = {
 		
 		lb.append(html);
 		I.qTip.init(lb.find("aside"));
-		container.animate({opacity: 1}, 1000);
+		//I.initializeScrollbar("#wvwLeaderboard");
+		//I.updateScrollbar("#wvwLeaderboard");
 	},
 
 	
@@ -12923,8 +12949,8 @@ W = {
 			$("#opt_bol_logBlueHome").next().html(W.getBorderlandsString(blueserver, true, false));
 			$("#opt_bol_logCenter").next().html(W.getName("Center"));
 			
-			W.addLogEntry(D.getObjectNick(redserver)
-				+ " : " + D.getObjectNick(greenserver) + " : " + D.getObjectNick(blueserver));
+			W.addLogEntry(D.getObjectNick(greenserver)
+				+ " : " + D.getObjectNick(blueserver) + " : " + D.getObjectNick(redserver));
 		}
 	},
 	
@@ -13022,9 +13048,10 @@ W = {
 				W.MatchupIDCurrent = pData.id;
 				W.ServersCurrent = pData.worlds;
 				W.updateParticipants();
-				W.insertScoreboard(pData, true);
 			}
-			//W.insertScoreboard(pData, true);
+			
+			// Update scoreboard
+			W.insertScoreboard(pData, true);
 			
 		}}).fail(function()
 		{

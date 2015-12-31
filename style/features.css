@@ -302,26 +302,30 @@ dt.jpzListNameHover {
 }
 
 .clt_story { background-position: 0 0; }
-.clt_aurictablets { background-position: -32px 0; }
-.clt_banditchests { background-position: -64px 0; }
-.clt_buriedchests { background-position: -96px 0; }
-.clt_cleaningup { background-position: -128px 0; }
-.clt_coinchallenger { background-position: -160px 0; }
-.clt_coinprospect { background-position: -192px 0; }
-.clt_coinuplands { background-position: -224px 0; }
-.clt_divemaster { background-position: -256px 0; }
-.clt_exaltedmasks { background-position: -288px 0; }
-.clt_goldenlostbadges { background-position: -320px 0; }
-.clt_herochallenge { background-position: -352px 0; }
-.clt_historybuff { background-position: -384px 0; }
-.clt_itzeltotems { background-position: -416px 0; }
-.clt_lionsarchexterminator { background-position: -448px 0; }
-.clt_lostbadges { background-position: -480px 0; }
-.clt_masteryinsight { background-position: -512px 0; }
-.clt_matrixcubekey { background-position: -544px 0; }
-.clt_prioryseals { background-position: -576px 0; }
-.clt_speedyreader { background-position: -608px 0; }
-.clt_strongboxes { background-position: -640px 0; }
+.clt_airshipcargo { background-position: -32px 0; }
+.clt_aurictablets { background-position: -64px 0; }
+.clt_banditchests { background-position: -96px 0; }
+.clt_buriedchests { background-position: -128px 0; }
+.clt_cleaningup { background-position: -160px 0; }
+.clt_coinchallenger { background-position: -192px 0; }
+.clt_coinprospect { background-position: -224px 0; }
+.clt_coinuplands { background-position: -256px 0; }
+.clt_crystallizedcaches { background-position: -288px 0; }
+.clt_divemaster { background-position: -320px 0; }
+.clt_exaltedchests { background-position: -352px 0; }
+.clt_exaltedmasks { background-position: -384px 0; }
+.clt_goldenlostbadges { background-position: -416px 0; }
+.clt_herochallenge { background-position: -448px 0; }
+.clt_historybuff { background-position: -480px 0; }
+.clt_itzeltotems { background-position: -512px 0; }
+.clt_lionsarchexterminator { background-position: -544px 0; }
+.clt_lostbadges { background-position: -576px 0; }
+.clt_masteryinsight { background-position: -608px 0; }
+.clt_matrixcubekey { background-position: -640px 0; }
+.clt_noxiouspods { background-position: -672px 0; }
+.clt_prioryseals { background-position: -704px 0; }
+.clt_speedyreader { background-position: -736px 0; }
+.clt_strongboxes { background-position: -768px 0; }
 
 .mapNeedle0, .mapNeedle1, .mapNeedle2 {
 	border-radius: 16px;

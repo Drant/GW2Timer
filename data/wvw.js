@@ -1551,67 +1551,6 @@ var GW2T_OBJECTIVE_METADATA = {
 		Europe:   ["2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9"]
 	},
 	Owners: ["Green", "Blue", "Red"], // Corresponds to the 1st, 2nd, and 3rd place of previous week's matchup
-	ObjectiveType: {
-		Camp: {
-			Quantity: {
-				teambl: 6,
-				teambg: 2,
-				all: 24
-			},
-			Value: {
-				each: 5,
-				teambl: 30,
-				teambg: 10,
-				all: 120
-			}
-		},
-		Tower: {
-			Quantity: {
-				teambl: 4,
-				teambg: 4,
-				all: 24
-			},
-			Value: {
-				each: 10,
-				teambl: 40,
-				teambg: 40,
-				all: 240
-			}
-		},
-		Keep: {
-			Quantity: {
-				teambl: 3,
-				teambg: 1,
-				all: 12
-			},
-			Value: {
-				each: 25,
-				teambl: 75,
-				teambg: 25,
-				all: 300
-			}
-		},
-		Castle: {
-			Quantity: {
-				teambl: 0,
-				teambg: 0,
-				all: 1
-			},
-			Value: {
-				each: 35,
-				teambl: 0,
-				teambg: 0,
-				all: 35
-			}
-		},
-		Total: {
-			Value: {
-				teambl: 145,
-				teamebg: 75,
-				all: 695
-			}
-		}
-	},
 	MapType: {
 		"RedHome": "red",
 		"GreenHome": "green",
@@ -1719,5 +1658,66 @@ var GW2T_OBJECTIVE_METADATA = {
 	},
 	Us: {
 		name_en: "us", name_de: "uns", name_es: "nosotros", name_fr: "nous", name_zh: "我們"
+	},
+	ObjectiveType: {
+		Camp: {
+			Quantity: {
+				teambl: 6,
+				teambg: 2,
+				all: 24
+			},
+			Value: {
+				each: 5,
+				teambl: 30,
+				teambg: 10,
+				all: 120
+			}
+		},
+		Tower: {
+			Quantity: {
+				teambl: 4,
+				teambg: 4,
+				all: 24
+			},
+			Value: {
+				each: 10,
+				teambl: 40,
+				teambg: 40,
+				all: 240
+			}
+		},
+		Keep: {
+			Quantity: {
+				teambl: 3,
+				teambg: 1,
+				all: 12
+			},
+			Value: {
+				each: 25,
+				teambl: 75,
+				teambg: 25,
+				all: 300
+			}
+		},
+		Castle: {
+			Quantity: {
+				teambl: 0,
+				teambg: 0,
+				all: 1
+			},
+			Value: {
+				each: 35,
+				teambl: 0,
+				teambg: 0,
+				all: 35
+			}
+		},
+		Total: {
+			Value: {
+				teambl: 145,
+				teamebg: 75,
+				all: 695
+			}
+		}
 	}
 };

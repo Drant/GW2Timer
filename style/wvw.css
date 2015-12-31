@@ -258,8 +258,8 @@
 ----------------------------------------------------------------------------- */
 #wvwLeaderboard {
 	width: calc(100% - 48px);
-	overflow: auto;
 	position: absolute; z-index: 9;
+	overflow: hidden;
 	top: 16px;
 	left: 16px;
 	text-align: center;
@@ -270,7 +270,6 @@
 		0px -1px 1px #000,
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
-	overflow: hidden;
 }
 #lboContainer {
 	display: inline-block;
@@ -365,14 +364,26 @@
 .lboServerRed samp {
 	background: #cc1f24;
 }
-.lboFocusRed span, .lboFocusBlue span {
-	background: #52a518 !important;
+#wvwLeaderboard .lboFocusRed samp, #wvwLeaderboard .lboFocusBlue samp {
+	background: #52a518; /* Green */
 }
-.lboFocusRed samp, .lboFocusGreen span {
-	background: #31a7bb !important;
+#wvwLeaderboard .lboFocusRed span, #wvwLeaderboard .lboFocusGreen samp {
+	background: #31a7bb; /* Blue */
 }
-.lboFocusGreen samp, .lboFocusBlue samp {
-	background: #cc1f24 !important;
+#wvwLeaderboard .lboFocusGreen span, #wvwLeaderboard .lboFocusBlue span {
+	background: #cc1f24; /* Red */
+}
+.lboFocusRed .lboFocusA, .lboFocusBlue .lboFocusA {
+	color: #52a518; /* Green */
+}
+.lboFocusRed .lboFocusB, .lboFocusGreen .lboFocusA {
+	color: #31a7bb; /* Blue */
+}
+.lboFocusGreen .lboFocusB, .lboFocusBlue .lboFocusB {
+	color: #cc1f24; /* Red */
+}
+#wvwLeaderboard span.lboFocusZero {
+	background: rgba(0, 0, 0, 0.2);
 }
 .lboScore span samp {
 	float: right;
@@ -417,8 +428,4 @@
 }
 .lboKD var:last-child {
 	padding-right: 16px;
-}
-
-#mapPane * {
-	text-shadow: none !important;
 }

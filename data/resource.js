@@ -855,7 +855,8 @@ Pearlmussel: {
 		
 	],
 	hotspots: [
-	{c: [3683, 15322]} // verdant
+	{c: [3683, 15322]}, // verdant
+	{c: [2199, 17920]} // auric
 	]
 },
 Vanilla: {
