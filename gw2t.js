@@ -176,6 +176,8 @@ O = {
 		bol_narrateTower: true,
 		bol_narrateKeep: true,
 		bol_narrateCastle: true,
+		bol_showLeaderboard: true,
+		bol_condenseLeaderboard: false,
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: true,
@@ -1292,15 +1294,40 @@ O = {
 			if (O.Options.bol_showLog)
 			{
 				$("#wvwLog").show("fast");
+				$("#logExpand").show();
 			}
 			else
 			{
 				$("#wvwLog").hide("fast");
+				$("#logExpand").hide();
 			}
 		},
 		bol_maximizeLog: function()
 		{
 			W.toggleLogHeight();
+		},
+		bol_showLeaderboard: function()
+		{
+			if (O.Options.bol_showLeaderboard)
+			{
+				$("#lboCurrent, #lboOther").show("fast", function()
+				{
+					$("#lboContainer").css({padding: "8px"});
+				});
+				$("#lboCondense, #lboRegion").show();
+			}
+			else
+			{
+				$("#lboCurrent, #lboOther").hide("fast", function()
+				{
+					$("#lboContainer").css({padding: 0});
+				});
+				$("#lboCondense, #lboRegion").hide();
+			}
+		},
+		bol_condenseLeaderboard: function()
+		{
+			W.toggleLeaderboardWidth();
 		}
 	}
 };
@@ -1531,7 +1558,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				$("#wvwLeaderboard span, .lboRank, .lboName, .lboFocus").toggle();
+				
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -12257,10 +12284,10 @@ W = {
 		
 		W.initializeMap();
 		W.populateWvW();
+		W.initializeLeaderboard();
 		W.initializeLog();
-		W.reinitializeObjectives();
+		W.reinitializeServerChange();
 		W.generateServerList();
-		W.generateScoreboard();
 		I.styleContextMenu("#wvwContext");
 		// Finally
 		W.isWvWLoaded = true;
@@ -12471,7 +12498,7 @@ W = {
 			// Update address bar
 			U.updateQueryString("enu_Server=" + serverid);
 			// Restart the system
-			W.reinitializeObjectives();
+			W.reinitializeServerChange();
 		});
 		
 		// Prevent map scroll from interfering when using the list
@@ -12481,43 +12508,71 @@ W = {
 	/*
 	 * Generates stats of all servers in a server region.
 	 */
-	generateLeaderboard: function()
+	initializeLeaderboard: function()
 	{
-		var lb = $("#wvwLeaderboard");
-		var matches = (W.Metadata.Matches[W.LocaleCurrent]);
-		var match;
+		// Bind the log window buttons
+		$("#lboToggle").click(function()
+		{
+			$("#opt_bol_showLeaderboard").trigger("click");
+		});
+		$("#lboCondense").click(function()
+		{
+			$("#opt_bol_condenseLeaderboard").trigger("click");
+		});
+		$("#lboRegion").click(function()
+		{
+			W.toggleRegionLeaderboard();
+		});
 		
+		// Apply the leaderboard appearance options
+		$("#opt_bol_showLeaderboard").trigger("change");
+		$("#opt_bol_condenseLeaderboard").trigger("change");
+		I.initializeScrollbar("#lboContainer");
+	},
+	
+	/*
+	 * Retrieves all data for server in the region and generates a scoreboard
+	 * for each.
+	 */
+	toggleRegionLeaderboard: function()
+	{
+		var lb = $("#lboOther");
+		// Toggle by adding or emptying content
+		if (lb.is(":empty") === false || W.LocaleCurrent === null)
+		{
+			lb.empty();
+			return;
+		}
+		
+		var matches = (W.Metadata.Matches[W.LocaleCurrent]);
 		// Gather data for all matches for current server region
 		for (var i in matches)
 		{
-			match = matches[i];
-			lb.append("<div class='wvwLBTier'>"
-				+ "<div class='lboRank></div>"
-				+ "<div class='lboName'></div>"
-				+ "<div class='lboScore'></div>"
-				+ "<div class='lboPPT'></div>"
-			+ "</div>");
-			$.getJSON(U.URL_API.Match + matches[i], function(pData)
+			var match = matches[i];
+			var htmlid = "lboOther_" + match;
+			
+			// Skip the current matchup because it is already shown
+			if (match === W.MatchupIDCurrent)
 			{
-				
-			});
+				continue;
+			}
+			lb.append("<div id='" + htmlid + "'></div>");
+			(function(pID)
+			{
+				$.getJSON(U.URL_API.Matches + match, function(pData)
+				{
+					W.insertScoreboard(pData, $("#" + pID));
+				});
+			})(htmlid);
 		}
 	},
 	
 	/*
-	 * Generates stats of current matchup the user opted.
+	 * Inserts a matchup/tier scoreboard into the leaderboard.
 	 * @param object pData from matches API.
+	 * @param boolean pIsMain whether is it the user's server matchup or other tiers.
 	 */
-	generateScoreboard: function(pData)
-	{
-		
-	},
-	
-	/*
-	 * Inserts a matchup scoreboard into the leaderboard.
-	 * @param object pData from matches API.
-	 */
-	insertScoreboard: function(pData, pIsMain)
+	insertScoreboard: function(pData, pContainer)
 	{
 		/*
 		 * Collate objective points from each borderlands.
@@ -12566,16 +12621,27 @@ W = {
 		/*
 		 * Compute data and generate HTML.
 		 */
-		var lb = (pIsMain) ? $("#lboCurrent") : $("#lboOther");
-		lb.empty();
+		var lb;
+		if (pContainer === undefined)
+		{
+			lb = $("#lboCurrent");
+			lb.empty();
+		}
+		else
+		{
+			lb = pContainer;
+		}
 		var html = "<section>";
 		for (var i = 0; i < numowners; i++)
 		{
 			var owner = W.Metadata.Owners[i]; // Example: "Green" as in data
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
+			var serverid = pData.worlds[ownerkey];
+			var servername = D.getObjectName(W.Servers[serverid]);
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
 			var score = pData.scores[ownerkey];
-			var scorepercent = (pData.scores[ownerkey] / (T.getMinMax(pData.scores)).max) * T.cPERCENT_100;
+			var scorehighest = (T.getMinMax(pData.scores)).max;
+			var scorepercent = (pData.scores[ownerkey] / scorehighest) * T.cPERCENT_100;
 			var ppttotal = (PPT[owner]).Total;
 			var pptpercent = (ppttotal / W.getTotalPPTPossible()) * T.cPERCENT_100;
 			var kdstr = ""; // KD is not available in EU https://forum-en.guildwars2.com/forum/community/api/WvWvW-API
@@ -12583,7 +12649,7 @@ W = {
 			{
 				var kills = (pData.kills !== undefined) ? pData.kills[ownerkey] : "";
 				var deaths = (pData.deaths !== undefined) ? pData.deaths[ownerkey] : "";
-				var kdratio = (kills / deaths).toFixed(2);
+				var kdratio = (kills / deaths).toFixed(3);
 				var kdpercent = (kills / (kills + deaths)) * T.cPERCENT_100;
 				kdstr = "<aside class='lboKD' title='<dfn>Kills to Deaths ratio:</dfn> " + kdratio + "'>"
 					+ "<var class='lboKills'>" + kills.toLocaleString() + "</var>"
@@ -12619,8 +12685,8 @@ W = {
 			
 			html += "<article class='lboServer" + owner + "'>"
 				+ "<aside class='lboRank'>" + rank + ".</aside>"
-				+ "<aside class='lboName'>" + D.getObjectName(W.getServerFromOwner(owner)) + "</aside>"
-				+ "<aside class='lboScore' title='<dfn>Score</dfn>'>"
+				+ "<aside class='lboName'>" + servername + "</aside>"
+				+ "<aside class='lboScore' title='<dfn>Score:</dfn> " + (scorehighest - score) + " points from leader'>"
 					+ "<var>" + score.toLocaleString() + "</var>"
 					+ "<span><samp style='width:" + scorepercent + "%'></samp></span>"
 				+ "</aside>"
@@ -12646,10 +12712,23 @@ W = {
 		
 		lb.append(html);
 		I.qTip.init(lb.find("aside"));
+		
+		if (O.Options.bol_condenseLeaderboard)
+		{
+			W.toggleLeaderboardWidth();
+		}
 		//I.initializeScrollbar("#wvwLeaderboard");
 		//I.updateScrollbar("#wvwLeaderboard");
 	},
-
+	
+	/*
+	 * Condenses the leaderboard or revert it.
+	 */
+	toggleLeaderboardWidth: function()
+	{
+		var isshown = !O.Options.bol_condenseLeaderboard;
+		$("#wvwLeaderboard span, .lboRank, .lboName, .lboFocus").toggle(isshown);
+	},
 	
 	/*
 	 * Writes the base HTML of the capture history log.
@@ -12670,10 +12749,7 @@ W = {
 			$("#opt_bol_maximizeLog").trigger("click");
 		});
 		// Apply the log appearance options
-		if (O.Options.bol_showLog === false)
-		{
-			$("#wvwLog").hide();
-		}
+		$("#opt_bol_showLog").trigger("change");
 		W.toggleLogHeight();
 		I.initializeScrollbar("#logWindow");
 		
@@ -12957,7 +13033,7 @@ W = {
 	/*
 	 * Resets objective properties and updates the objectives.
 	 */
-	reinitializeObjectives: function()
+	reinitializeServerChange: function()
 	{
 		// Initialize properties to be later compared within the API
 		for (var i in W.Objectives)
@@ -12978,6 +13054,7 @@ W = {
 		$(".objTimer").empty();
 		$(".objProgressBar").hide();
 		$("#logWindow").empty();
+		$("#lboOther").empty();
 		
 		// Stop the previous timeout and call the update function with initialization
 		W.toggleObjectiveTick(false);
@@ -12997,7 +13074,6 @@ W = {
 			cache: false, // Prevents keeping stale data
 			success: function(pData)
 		{
-			W.isAPIFailed = false;
 			var obj, apiobj;
 			for (var i in pData.maps)
 			{
@@ -13051,8 +13127,13 @@ W = {
 			}
 			
 			// Update scoreboard
-			W.insertScoreboard(pData, true);
+			W.insertScoreboard(pData);
 			
+			if (W.isAPIFailed)
+			{
+				W.isAPIFailed = false;
+				I.write("WvW data connection reestablished at " + T.getTimeFormatted());
+			}
 		}}).fail(function()
 		{
 			if (W.isAPIFailed === false)

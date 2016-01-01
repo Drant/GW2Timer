@@ -96,6 +96,9 @@ input.mapCoordinatesName {
 	top: 0 !important;
 	left: 0 !important;
 }
+.lboButton {
+	margin-top: -12px !important;
+}
 
 /* Lower the menu bar's height */
 #paneMenu {

@@ -996,6 +996,15 @@ Announcement:
  */
 Countdowns: [
 {
+	name_en: "New Year Sale",
+	name_de: "Neujahr Ausverkauf",
+	name_es: "Rebaja Año Nuevo",
+	name_fr: "Vente Nouvel An",
+	url: "https://www.google.com/search?num=100&q=site%3Aforum-en.guildwars2.com+%22new+year%22+sale",
+	Start: new Date("2016-01-01T16:00:00Z"),
+	Finish: new Date("2016-01-04T16:00:00Z")
+},
+{
 	name_en: "Wintersday",
 	name_de: "Wintertag",
 	name_es: "Día Invernal",
@@ -1059,18 +1068,18 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Bandit Sniper Appearance Pack",
-		img: "http://i.imgur.com/mIuPrbz.png",
-		quantity: 1,
-		pricenew: 2000,
-		priceold: 0,
-		col: 0
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Snowflake Glider",
 		img: "https://render.guildwars2.com/file/CE007E4C9FD410E85D79D745BC750F2A6719E4DF/1313090.png",
 		quantity: 1,
 		pricenew: 500,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Winter_Chimes_Dye_Kit",
+		img: "http://i.imgur.com/1I747yu.png",
+		quantity: 1,
+		pricenew: 125,
 		priceold: 0,
 		col: 0
 	},
@@ -1080,7 +1089,7 @@ Sale: {
 		quantity: 1,
 		pricenew: 500,
 		priceold: 0,
-		col: 0
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini Angry Wintersday Gift",
@@ -1088,117 +1097,13 @@ Sale: {
 		quantity: 1,
 		pricenew: 400,
 		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini_Avatar_of_the_Tree",
-		img: "https://render.guildwars2.com/file/7AC8D0657FF005D63A26E3DD6D4FE538C2B9B31C/919369.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 0
+		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini Tizlak",
 		img: "http://i.imgur.com/gfYICcQ.png",
 		quantity: 1,
 		pricenew: 200,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Festive Hat",
-		img: "https://render.guildwars2.com/file/BFE4016823C9D530D658940157761EB539192B03/526117.png",
-		quantity: 1,
-		pricenew: 150,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Deathly Dye Kit",
-		img: "https://render.guildwars2.com/file/0F617A0610A0EA5048CA07D602BCF91E059E9048/638379.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Flame Dye Kit",
-		img: "https://render.guildwars2.com/file/2247E82DA2260643CBD94B9C14FB223606447450/561732.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Frost Dye Kit",
-		img: "https://render.guildwars2.com/file/FF9E2C614DAB80050EB009CDE27E0CED0A972892/561733.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Lion's Arch Commemorative Dye Kit",
-		img: "https://render.guildwars2.com/file/7F3328A7A7997C7BD4396F383C3AB017342DB298/780271.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Lion's Arch Rebuild Dye Kit",
-		img: "https://render.guildwars2.com/file/0624EAD15E91FF47C01F0604B777BD00FD9B49CC/1010544.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Lion's Arch Survivors Dye Kit",
-		img: "https://render.guildwars2.com/file/6CF8E4B708732FE2E9B2259DFCD299E3924DD7C9/771057.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mad King Dye Kit",
-		img: "https://render.guildwars2.com/file/68B1C9C4E228064C0E7E0316202B97D2E8303A14/1114056.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Metallurgic Dye Kit",
-		img: "https://render.guildwars2.com/file/C9660719E6A3BCA1A9DB049AAFFD0F96B57AFCEE/699316.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Shadow Dye Kit",
-		img: "https://render.guildwars2.com/file/E70224319F4D2B047B16FD29456DEF6963B1D7D7/960281.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Taimi's Dye Kit",
-		img: "https://render.guildwars2.com/file/D35BFB050364A67CF2B1A330404893EEA0156A0C/866828.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Toxic Dye Kit",
-		img: "https://render.guildwars2.com/file/9CA420D41AC95B0507CE2F5BBFF9E0BBE8C44E3E/665807.png",
-		quantity: 1,
-		pricenew: 125,
 		priceold: 0,
 		col: 1
 	}
@@ -1235,16 +1140,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2015-12-31T00:00:00Z"),
-	Finish: new Date("2016-01-01T00:00:00Z"),
+	Start: new Date("2016-01-01T00:00:00Z"),
+	Finish: new Date("2016-01-02T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "44661", price: "25200" },
-		Fox: { id: "49734", price: "12600" },
-		Derwena: { id: "43800", price: "25200" },
-		Yana: { id: "44659", price: "25200" },
-		Katyn: { id: "43812", price: "25200" },
-		Verma: { id: "43808", price: "25200" }
+		Mehem: { id: "44658", price: "25200" },
+		Fox: { id: "48919", price: "25200" },
+		Derwena: { id: "43821", price: "25200" },
+		Yana: { id: "43818", price: "25200" },
+		Katyn: { id: "49753", price: "25200" },
+		Verma: { id: "49776", price: "25200" }
 	}
 }
 };

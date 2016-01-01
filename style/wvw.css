@@ -96,6 +96,222 @@
 	background: rgba(0, 0, 0, 0.5);
 }
 
+/* Leaderboard
+----------------------------------------------------------------------------- */
+#wvwLeaderboard {
+	width: calc(100% - 48px);
+	position: absolute; z-index: 9;
+	overflow: visible;
+	top: 16px;
+	left: 16px;
+	text-align: center;
+	font-size: 14px;
+	color: white;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
+}
+
+#lboContainer {
+	overflow: visible;
+	display: inline-block;
+	padding: 8px;
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+	text-align: left;
+}
+#lboContainer:hover {
+	background: rgba(0, 0, 0, 0.8);
+}
+
+#lboOther { /* Contains scoreboards of other tiers */
+	background: rgba(0, 0, 0, 0.8);
+	border-radius: 2px;
+}
+
+.lboButton {
+	display: inline-block;
+	text-align: left;
+	top: auto;
+	left: auto;
+	margin-top: -24px;
+	opacity: 0.2;
+}
+#lboContainer:hover .lboButton {
+	opacity: 0.8;
+}
+#lboContainer:hover .lboButton:hover {
+	opacity: 1;
+}
+#lboToggle {
+	margin-left: -8px;
+	background: url("../img/ui/toggle.png");
+}
+#lboCondense {
+	margin-left: 24px;
+	background: url("../img/ui/switch.png");
+	transform: rotate(90deg);
+}
+#lboRegion {
+	margin-left: 56px;
+	background: url("../img/ui/switch.png");
+}
+
+#lboOther section { /* A block of rows for a single tier/matchup */
+	margin-top: 8px;
+	margin-bottom: 16px;
+	padding: 4px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 2px;
+}
+#wvwLeaderboard section:nth-child(even) {
+	background: rgba(255, 255, 255, 0.2);
+}
+#wvwLeaderboard article { /* A row containing a server's data cells '*/
+	border-radius: 4px;
+	white-space: nowrap;
+}
+#wvwLeaderboard aside { /* A cell of the leaderboard table */
+	display: inline-block;
+	vertical-align: middle;
+}
+#wvwLeaderboard var { /* Numbers and text */
+	display: inline-block;
+	text-align: right;
+}
+#wvwLeaderboard span { /* A bar graph */
+	vertical-align: middle;
+	display: inline-block;
+	width: 96px; height: 12px;
+	border: 1px solid rgba(255, 255, 255, 0.8);
+	border-radius: 2px;
+	background: rgba(0, 0, 0, 0.2);
+}
+#wvwLeaderboard samp { /* The inner progress of the bar graph */
+	display: block;
+	height: 100%;
+}
+#wvwLeaderboard mark { /* The bisecting line representing 50% in a bar graph */
+	display: block;
+	width: 2px; height: 12px;
+	position: absolute;
+	margin-left: 47px;
+	background: rgba(255, 255, 255, 0.4);
+}
+
+.lboRank {
+	width: 32px;
+	text-align: right;
+	font-weight: bold;
+}
+.lboServerGreen .lboName, .lboPPTGreen {
+	color: #52a518;
+}
+.lboServerBlue .lboName, .lboPPTBlue {
+	color: #31a7bb;
+}
+.lboServerRed .lboName, .lboPPTRed {
+	color: #cc1f24;
+}
+.lboPPTCenter {
+	color: #ffeeaa;
+}
+.lboName {
+	width: 128px;
+	margin-left: 4px;
+	overflow: hidden;
+	text-align: left;
+	white-space: nowrap;
+	font-weight: bold;
+}
+.lboScore {
+	width: auto;
+	text-align: right;
+}
+.lboScore var {
+	width: 64px;
+	margin-right: 4px;
+}
+.lboServerGreen samp {
+	background: #52a518;
+}
+.lboServerBlue samp {
+	background: #31a7bb;
+}
+.lboServerRed samp {
+	background: #cc1f24;
+}
+#wvwLeaderboard .lboFocusRed samp, #wvwLeaderboard .lboFocusBlue samp {
+	background: #52a518; /* Green */
+}
+#wvwLeaderboard .lboFocusRed span, #wvwLeaderboard .lboFocusGreen samp {
+	background: #31a7bb; /* Blue */
+}
+#wvwLeaderboard .lboFocusGreen span, #wvwLeaderboard .lboFocusBlue span {
+	background: #cc1f24; /* Red */
+}
+.lboFocusRed .lboFocusA, .lboFocusBlue .lboFocusA {
+	color: #52a518; /* Green */
+}
+.lboFocusRed .lboFocusB, .lboFocusGreen .lboFocusA {
+	color: #31a7bb; /* Blue */
+}
+.lboFocusGreen .lboFocusB, .lboFocusBlue .lboFocusB {
+	color: #cc1f24; /* Red */
+}
+#wvwLeaderboard span.lboFocusZero {
+	background: rgba(0, 0, 0, 0.2);
+}
+.lboScore span samp {
+	float: right;
+}
+.lboPPT {
+	width: auto;
+	text-align: left;
+}
+.lboPPT var {
+	width: 32px;
+	margin-left: 4px;
+}
+.lboPPT span {
+	
+}
+.lboLand {
+	margin-left: 8px;
+}
+.lboLand var {
+	width: 36px; height: 100%;
+	padding-right: 4px;
+	background: rgba(0, 0, 0, 0.4);
+	border-radius: 4px;
+}
+.lboFocus {
+	margin-left: 8px;
+}
+.lboFocus var {
+	width: 32px;
+}
+.lboFocusA, .lboKills {
+	margin-right: 4px;
+}
+.lboFocusB, .lboDeaths {
+	margin-left: 4px;
+}
+.lboFocusB {
+	padding-right: 4px;
+}
+.lboKD {
+	margin-left: 4px;
+}
+.lboKD var {
+	width: 48px;
+}
+.lboKD var:last-child {
+	padding-right: 16px;
+}
+
 /* Log
 ----------------------------------------------------------------------------- */
 #wvwLog {
@@ -144,6 +360,9 @@
 
 #wvwLogContainer:hover .logButton {
 	opacity: 0.8;
+}
+#wvwLogContainer:hover .logButton:hover {
+	opacity: 1;
 }
 .logButton {
 	top: auto;
@@ -253,179 +472,12 @@
 .logEntryCenter {
 	background: rgba(255, 255, 0, 0.2);
 }
-
-/* Leaderboard
------------------------------------------------------------------------------ */
-#wvwLeaderboard {
-	width: calc(100% - 48px);
-	position: absolute; z-index: 9;
-	overflow: hidden;
-	top: 16px;
-	left: 16px;
-	text-align: center;
-	font-size: 14px;
-	color: white;
-	text-shadow:
-		0px 1px 1px #000,
-		0px -1px 1px #000,
-		1px 0px 1px #000,
-		-1px 0px 1px #000;
+.lboServerRed:hover {
+	background: rgba(204, 31, 36, 0.8);
 }
-#lboContainer {
-	display: inline-block;
-	padding: 8px;
-	background: rgba(0, 0, 0, 0.2);
-	border-radius: 4px;
+.lboServerGreen:hover {
+	background: rgba(82, 165, 24, 0.8);
 }
-#lboContainer:hover {
-	background: rgba(0, 0, 0, 0.8);
-}
-#wvwLeaderboard section { /* A block of rows for a single tier/matchup */
-	
-}
-#wvwLeaderboard section:nth-child(even) {
-	background: rgba(255, 255, 255, 0.2);
-}
-#wvwLeaderboard section:hover {
-	background: rgba(255, 255, 255, 0.4);
-	border-radius: 4px;
-}
-#wvwLeaderboard article { /* A row containing a server's data cells '*/
-	border-radius: 4px;
-	white-space: nowrap;
-}
-#wvwLeaderboard aside { /* A cell of the leaderboard table */
-	display: inline-block;
-	vertical-align: middle;
-}
-#wvwLeaderboard var { /* Numbers and text */
-	display: inline-block;
-	text-align: right;
-}
-#wvwLeaderboard span { /* A bar graph */
-	vertical-align: middle;
-	display: inline-block;
-	width: 96px; height: 12px;
-	border: 1px solid rgba(255, 255, 255, 0.8);
-	border-radius: 2px;
-	background: rgba(0, 0, 0, 0.2);
-}
-#wvwLeaderboard samp { /* The inner progress of the bar graph */
-	display: block;
-	height: 100%;
-}
-#wvwLeaderboard mark { /* The bisecting line representing 50% in a bar graph */
-	display: block;
-	width: 2px; height: 12px;
-	position: absolute;
-	margin-left: 47px;
-	background: rgba(255, 255, 255, 0.4);
-}
-
-.lboRank {
-	width: 32px;
-	text-align: right;
-	font-weight: bold;
-}
-.lboServerGreen .lboName, .lboPPTGreen {
-	color: #52a518;
-}
-.lboServerBlue .lboName, .lboPPTBlue {
-	color: #31a7bb;
-}
-.lboServerRed .lboName, .lboPPTRed {
-	color: #cc1f24;
-}
-.lboPPTCenter {
-	color: #ffeeaa;
-}
-.lboName {
-	width: 128px;
-	margin-left: 4px;
-	overflow: hidden;
-	white-space: nowrap;
-	font-weight: bold;
-}
-.lboScore {
-	width: auto;
-	text-align: right;
-	
-}
-.lboScore var {
-	width: 64px;
-	margin-right: 4px;
-}
-.lboServerGreen samp {
-	background: #52a518;
-}
-.lboServerBlue samp {
-	background: #31a7bb;
-}
-.lboServerRed samp {
-	background: #cc1f24;
-}
-#wvwLeaderboard .lboFocusRed samp, #wvwLeaderboard .lboFocusBlue samp {
-	background: #52a518; /* Green */
-}
-#wvwLeaderboard .lboFocusRed span, #wvwLeaderboard .lboFocusGreen samp {
-	background: #31a7bb; /* Blue */
-}
-#wvwLeaderboard .lboFocusGreen span, #wvwLeaderboard .lboFocusBlue span {
-	background: #cc1f24; /* Red */
-}
-.lboFocusRed .lboFocusA, .lboFocusBlue .lboFocusA {
-	color: #52a518; /* Green */
-}
-.lboFocusRed .lboFocusB, .lboFocusGreen .lboFocusA {
-	color: #31a7bb; /* Blue */
-}
-.lboFocusGreen .lboFocusB, .lboFocusBlue .lboFocusB {
-	color: #cc1f24; /* Red */
-}
-#wvwLeaderboard span.lboFocusZero {
-	background: rgba(0, 0, 0, 0.2);
-}
-.lboScore span samp {
-	float: right;
-}
-.lboPPT {
-	width: auto;
-	text-align: left;
-}
-.lboPPT var {
-	width: 32px;
-	margin-left: 4px;
-}
-.lboPPT span {
-	
-}
-.lboLand {
-	margin-left: 8px;
-}
-.lboLand var {
-	width: 36px; height: 100%;
-	padding-right: 4px;
-	background: rgba(0, 0, 0, 0.4);
-	border-radius: 4px;
-}
-.lboFocus {
-	margin-left: 8px;
-}
-.lboFocus var {
-	width: 32px;
-}
-.lboFocusA, .lboKills {
-	margin-right: 4px;
-}
-.lboFocusB, .lboDeaths {
-	margin-left: 4px;
-}
-.lboKD {
-	margin-left: 8px;
-}
-.lboKD var {
-	width: 48px;
-}
-.lboKD var:last-child {
-	padding-right: 16px;
+.lboServerBlue:hover {
+	background: rgba(49, 167, 187, 0.8);
 }

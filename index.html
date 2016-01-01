@@ -275,6 +275,9 @@
 			<div id="wvwExpandButton" class="mapExpandButton mapHUDButton curToggle" title="<dfn> Click to Expand Map </dfn>"></div>
 			<div id="wvwLeaderboard">
 				<div id="lboContainer">
+					<kbd id="lboToggle" class="curToggle btnWindow lboButton" title="<dfn>Toggle Leaderboard</dfn>"></kbd>
+					<kbd id="lboCondense" class="curToggle btnWindow lboButton" title="<dfn>Condense Leaderboard</dfn>"></kbd>
+					<kbd id="lboRegion" class="curToggle btnWindow lboButton" title="<dfn>Toggle All Tiers</dfn>"></kbd>
 					<div id="lboCurrent"></div>
 					<div id="lboOther"></div>
 				</div>
@@ -314,8 +317,10 @@
 						<div class="mapOptionsOther">
 							<label title="Repeated seconds before API data are downloaded again to check if objectives have flipped."><input id="opt_int_secWvWRefresh" type="number" min="5" max="60" step="1" /> Refresh Interval (sec)</label>
 							<label title="Old log entries beyond this limit shall be deleted."><input id="opt_int_numLogEntries" type="number" min="64" max="1024" step="1" /> Max Log Entries</label>
-							<label title="Show or minimize the WvW log."><img data-src="img/wvw/log.png" /><input id="opt_bol_showLog" type="checkbox" /> Show log window</label>
-							<label title="Taller log window."><input id="opt_bol_maximizeLog" type="checkbox" /> Maximize log window</label>
+							<label title="Show or minimize the WvW log."><img data-src="img/wvw/log.png" /><input id="opt_bol_showLog" type="checkbox" /> Show log</label>
+							<label title="Taller log window."><input id="opt_bol_maximizeLog" type="checkbox" /> Maximize log</label>
+							<label title="Show or minimize the WvW leaderboard."><img data-src="img/wvw/leaderboard.png" /><input id="opt_bol_showLeaderboard" type="checkbox" /> Show leaderboard</label>
+							<label title="Hide graphics and extra information on the leaderboard."><input id="opt_bol_condenseLeaderboard" type="checkbox" /> Condense leaderboard</label>
 						</div>
 					</div>
 				</div>
