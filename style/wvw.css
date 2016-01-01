@@ -127,8 +127,10 @@
 }
 
 #lboOther { /* Contains scoreboards of other tiers */
+	position: relative;
 	background: rgba(0, 0, 0, 0.8);
 	border-radius: 2px;
+	overflow: hidden;
 }
 
 .lboButton {
@@ -145,6 +147,9 @@
 #lboContainer:hover .lboButton:hover {
 	opacity: 1;
 }
+#lboContainer:hover #lboCountdown {
+	opacity: 1;
+}
 #lboToggle {
 	margin-left: -8px;
 	background: url("../img/ui/toggle.png");
@@ -159,7 +164,16 @@
 	background: url("../img/ui/switch.png");
 }
 
-#lboOther section { /* A block of rows for a single tier/matchup */
+#lboCountdown { /* Countdown to WvW reset clock */
+	position: absolute;
+	margin-left: 88px;
+	margin-top: -24px;
+	font-family: Consolas, monospace;
+	font-size: 14px;
+	opacity: 0.4;
+}
+
+#lboOther section { /* A block of rows for a single tier/matchup: a scoreboard */
 	margin-top: 8px;
 	margin-bottom: 16px;
 	padding: 4px;
@@ -219,8 +233,8 @@
 	color: #ffeeaa;
 }
 .lboName {
-	width: 128px;
-	margin-left: 4px;
+	width: 96px;
+	margin-left: 8px;
 	overflow: hidden;
 	text-align: left;
 	white-space: nowrap;

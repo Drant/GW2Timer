@@ -1308,26 +1308,11 @@ O = {
 		},
 		bol_showLeaderboard: function()
 		{
-			if (O.Options.bol_showLeaderboard)
-			{
-				$("#lboCurrent, #lboOther").show("fast", function()
-				{
-					$("#lboContainer").css({padding: "8px"});
-				});
-				$("#lboCondense, #lboRegion").show();
-			}
-			else
-			{
-				$("#lboCurrent, #lboOther").hide("fast", function()
-				{
-					$("#lboContainer").css({padding: 0});
-				});
-				$("#lboCondense, #lboRegion").hide();
-			}
+			W.toggleLeaderboard();
 		},
 		bol_condenseLeaderboard: function()
 		{
-			W.toggleLeaderboardWidth();
+			W.toggleLeaderboardWidth(true);
 		}
 	}
 };
@@ -12525,9 +12510,10 @@ W = {
 		});
 		
 		// Apply the leaderboard appearance options
+		$("#lboCurrent").append(I.cThrobber);
 		$("#opt_bol_showLeaderboard").trigger("change");
-		$("#opt_bol_condenseLeaderboard").trigger("change");
-		I.initializeScrollbar("#lboContainer");
+		W.toggleLeaderboardWidth();
+		I.initializeScrollbar("#lboOther");
 	},
 	
 	/*
@@ -12540,7 +12526,10 @@ W = {
 		// Toggle by adding or emptying content
 		if (lb.is(":empty") === false || W.LocaleCurrent === null)
 		{
-			lb.empty();
+			lb.animate({height: 0}, "fast", function()
+			{
+				lb.empty().css({height: "auto"});
+			});
 			return;
 		}
 		
@@ -12562,6 +12551,8 @@ W = {
 				$.getJSON(U.URL_API.Matches + match, function(pData)
 				{
 					W.insertScoreboard(pData, $("#" + pID));
+					W.readjustLeaderboard();
+					I.updateScrollbar("#lboOther");
 				});
 			})(htmlid);
 		}
@@ -12619,7 +12610,7 @@ W = {
 		}
 		
 		/*
-		 * Compute data and generate HTML.
+		 * Decide appropriate container to insert the scoreboard.
 		 */
 		var lb;
 		if (pContainer === undefined)
@@ -12634,6 +12625,9 @@ W = {
 		var html = "<section>";
 		for (var i = 0; i < numowners; i++)
 		{
+			/*
+			 * Prepare variables to be inserted into the HTML.
+			 */
 			var owner = W.Metadata.Owners[i]; // Example: "Green" as in data
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
 			var serverid = pData.worlds[ownerkey];
@@ -12658,14 +12652,24 @@ W = {
 				+ "</aside>";
 			}
 			
+			/*
+			 * Calculate self score as it relate to the opposing servers.
+			 */
 			var focuses = [];
+			var scoredifferences = [];
+			var otherservers = [];
 			for (var ii = 0; ii < numowners; ii++)
 			{
-				var focusedowner = W.Metadata.Owners[ii];
-				if (owner !== focusedowner)
+				var otherowner = W.Metadata.Owners[ii];
+				var otherownerkey = otherowner.toLowerCase();
+				if (otherowner !== owner)
 				{
-					var focus = (PPT[owner])[focusedowner + "Home"] + (PPT[owner])[W.LandEnum.Center + focusedowner];
+					var focus = (PPT[owner])[otherowner + "Home"] + (PPT[owner])[W.LandEnum.Center + otherowner];
 					focuses.push(focus);
+					var difference = score - pData.scores[otherownerkey];
+					scoredifferences.push(difference);
+					var otherserver = W.Servers[(pData.worlds[otherownerkey])];
+					otherservers.push(U.escapeHTML(D.getObjectName(otherserver)));
 				}
 			}
 			var totalfocus = (focuses[0] + focuses[1]);
@@ -12683,10 +12687,14 @@ W = {
 				focusclass = "lboFocusZero";
 			}
 			
+			/*
+			 * Write the HTML.
+			 */
 			html += "<article class='lboServer" + owner + "'>"
 				+ "<aside class='lboRank'>" + rank + ".</aside>"
 				+ "<aside class='lboName'>" + servername + "</aside>"
-				+ "<aside class='lboScore' title='<dfn>Score:</dfn> " + (scorehighest - score) + " points from leader'>"
+				+ "<aside class='lboScore' title='<dfn>" + scoredifferences[0] + " points</dfn> away from " + otherservers[0]
+				+ "<br /><dfn>" + scoredifferences[1] + " points</dfn> away from " + otherservers[1] + "'>"
 					+ "<var>" + score.toLocaleString() + "</var>"
 					+ "<span><samp style='width:" + scorepercent + "%'></samp></span>"
 				+ "</aside>"
@@ -12717,17 +12725,57 @@ W = {
 		{
 			W.toggleLeaderboardWidth();
 		}
-		//I.initializeScrollbar("#wvwLeaderboard");
-		//I.updateScrollbar("#wvwLeaderboard");
+	},
+	
+	/*
+	 * Toggles the leaderboard display.
+	 */
+	toggleLeaderboard: function()
+	{
+		if (O.Options.bol_showLeaderboard)
+		{
+			$("#lboCurrent, #lboOther").show("fast", function()
+			{
+				$("#lboContainer").css({padding: "8px"});
+			});
+			$(".lboExtra").show();
+		}
+		else
+		{
+			$("#lboCurrent, #lboOther").hide("fast", function()
+			{
+				$("#lboContainer").css({padding: 0});
+			});
+			$(".lboExtra").hide();
+		}
 	},
 	
 	/*
 	 * Condenses the leaderboard or revert it.
 	 */
-	toggleLeaderboardWidth: function()
+	toggleLeaderboardWidth: function(pWantAnimate)
 	{
 		var isshown = !O.Options.bol_condenseLeaderboard;
-		$("#wvwLeaderboard span, .lboRank, .lboName, .lboFocus").toggle(isshown);
+		var elms = $("#wvwLeaderboard span, .lboRank, .lboName, .lboFocus");
+		if (pWantAnimate)
+		{
+			if (isshown)
+			{
+				elms.show("fast");
+			}
+			else
+			{
+				elms.hide("fast");
+			}
+		}
+		else
+		{
+			elms.toggle(isshown);
+		}
+	},
+	readjustLeaderboard: function()
+	{
+		$("#lboOther").css({maxHeight: $(window).height() - $("#lboCurrent").height() * 2});
 	},
 	
 	/*
@@ -15408,7 +15456,7 @@ K = {
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
 	clockBackground: {}, clockCircumference: {}, timeProgress0: {}, timeProgress1: {},
-	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeSimple: {}, timeMap: {}, timeWvW: {}, timeLog: {},
+	timeDaylight: {}, timeLocal: {}, timeDaytime: {}, timeSimple: {}, timeMap: {}, timeWvW: {}, timeLog: {}, countdownWvW: {},
 	timestampUTC: {}, timestampLocal: {}, timestampServer: {}, timestampReset: {},
 	stopwatchUp: {}, stopwatchDown: {},
 	
@@ -15452,6 +15500,7 @@ K = {
 		K.timeMap = $("#mapTime")[0];
 		K.timeWvW = $("#wvwTime")[0];
 		K.timeLog = $("#logTime")[0];
+		K.countdownWvW = $("#lboCountdown")[0];
 		K.timestampUTC = $("#optTimestampUTC")[0];
 		K.timestampLocal = $("#optTimestampLocalReset")[0];
 		K.timestampServer = $("#optTimestampServerReset")[0];
@@ -15988,6 +16037,11 @@ K = {
 		{
 			K.timeLog.innerHTML = localtime;
 			W.updateObjectiveTimers();
+			if (W.MatchFinishTime !== null)
+			{
+				var sectillwvwreset = ~~(((new Date(W.MatchFinishTime)).getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND);
+				K.countdownWvW.innerHTML = T.formatSeconds(sectillwvwreset, true);
+			}
 			if (sec === 0)
 			{
 				W.updateAllObjectiveAge();
@@ -18317,6 +18371,7 @@ I = {
 			 */
 			if (W.isWvWLoaded)
 			{
+				W.readjustLeaderboard();
 				W.readjustLog();
 			}
 		}));

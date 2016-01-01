@@ -1050,7 +1050,7 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
 	Start: new Date("2015-12-29T16:00:00Z"),
-	Finish: new Date("2016-01-05T16:00:00Z"),
+	Finish: new Date("2016-01-04T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -1059,6 +1059,30 @@ Sale: {
 		priceold: 0
 	},
 	Items: [
+	{
+		url: "http://wiki.guildwars2.com/wiki/Bank Tab Expansion",
+		img: "https://render.guildwars2.com/file/5BF86A2433F1BE0575E7B37B22EF6695F83211C5/66589.png",
+		quantity: 1,
+		pricenew: 450,
+		priceold: 600,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Bag-Slot_Value_Pack",
+		img: "http://i.imgur.com/oLKrjR5.png",
+		quantity: 1,
+		pricenew: 350,
+		priceold: 700,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Bandit Sniper Appearance Pack",
+		img: "http://i.imgur.com/mIuPrbz.png",
+		quantity: 1,
+		pricenew: 2000,
+		priceold: 0,
+		col: 0
+	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Winter Solstice Appearance Pack",
 		img: "http://i.imgur.com/92cVON9.png",
@@ -1072,14 +1096,6 @@ Sale: {
 		img: "https://render.guildwars2.com/file/CE007E4C9FD410E85D79D745BC750F2A6719E4DF/1313090.png",
 		quantity: 1,
 		pricenew: 500,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Winter_Chimes_Dye_Kit",
-		img: "http://i.imgur.com/1I747yu.png",
-		quantity: 1,
-		pricenew: 125,
 		priceold: 0,
 		col: 0
 	},
@@ -1104,6 +1120,14 @@ Sale: {
 		img: "http://i.imgur.com/gfYICcQ.png",
 		quantity: 1,
 		pricenew: 200,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Winter_Chimes_Dye_Kit",
+		img: "http://i.imgur.com/1I747yu.png",
+		quantity: 1,
+		pricenew: 125,
 		priceold: 0,
 		col: 1
 	}

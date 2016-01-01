@@ -4,7 +4,7 @@
 */
 
 /* Remove elements extraneous or intrusive to overlay mode */
-#itemWarning, #itemDashboard, #itemSocial, #paneMenu var, #mapQuickURL, .mapHUDLinks {
+#itemWarning, #itemDashboard, #itemSocial, #paneMenu var, #mapQuickURL, .mapHUDLinks, .mapExpandButton {
 	display: none;
 }
 
@@ -97,6 +97,9 @@ input.mapCoordinatesName {
 	left: 0 !important;
 }
 .lboButton {
+	margin-top: -12px !important;
+}
+#lboCountdown {
 	margin-top: -12px !important;
 }
 
