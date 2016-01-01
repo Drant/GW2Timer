@@ -1047,7 +1047,7 @@ Story:
 	priceold: 800
  */
 Sale: {
-	isPreshown: false, // If true, will show the items on sale without needing user click toggle
+	isPreshown: true, // If true, will show the items on sale without needing user click toggle
 	note: "",
 	Start: new Date("2015-12-29T16:00:00Z"),
 	Finish: new Date("2016-01-04T16:00:00Z"),
@@ -1073,9 +1073,9 @@ Sale: {
 		quantity: 1,
 		pricenew: 350,
 		priceold: 700,
-		col: 0
+		col: 1
 	},
-	{
+	/*{
 		url: "http://wiki.guildwars2.com/wiki/Bandit Sniper Appearance Pack",
 		img: "http://i.imgur.com/mIuPrbz.png",
 		quantity: 1,
@@ -1130,7 +1130,7 @@ Sale: {
 		pricenew: 125,
 		priceold: 0,
 		col: 1
-	}
+	}*/
 	]
 },
 
