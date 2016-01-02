@@ -1441,6 +1441,11 @@ input.mapCoordinatesName {
 
 /* @@Bar primary menu for switching pages
 ----------------------------------------------------------------------------- */
+#clkToggle {
+	left: 164px;
+	background: url("img/ui/switch.png");
+}
+
 #paneMenu {
 	position: absolute;
 	top: 360px;
@@ -2128,6 +2133,10 @@ button.btnToggle {
 }
 .cssRight {
 	float: right;
+}
+.cssCenter {
+	text-align: center;
+	vertical-align: middle;
 }
 .cssIndent {
 	margin-left: 16px;

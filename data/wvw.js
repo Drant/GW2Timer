@@ -1552,10 +1552,10 @@ var GW2T_OBJECTIVE_METADATA = {
 	},
 	Owners: ["Green", "Blue", "Red"], // Corresponds to the 1st, 2nd, and 3rd place of previous week's matchup
 	MapType: {
-		"RedHome": "red",
-		"GreenHome": "green",
-		"BlueHome": "blue",
-		"Center": "center"
+		RedHome: "red",
+		GreenHome: "green",
+		BlueHome: "blue",
+		Center: "center"
 	},
 	LandEnum: {
 		RedHome: "RedHome",
@@ -1574,6 +1574,28 @@ var GW2T_OBJECTIVE_METADATA = {
 		Blue: "Blue",
 		Green: "Green",
 		Neutral: "Neutral"
+	},
+	SpawnLabels: { /* Label showing the server name, positioned over their spawn in each map */
+		RedHome: {
+			Red: [10758, 9181],
+			Green: [9519, 11814],
+			Blue: [12112, 11894]
+		},
+		GreenHome: {
+			Red: [5935, 14374],
+			Green: [7174, 11741],
+			Blue: [8528, 14454]
+		},
+		BlueHome: {
+			Red: [13103, 13734],
+			Green: [15696, 13814],
+			Blue: [14342, 11101]
+		},
+		Center: {
+			Red: [10563, 13020],
+			Green: [9082, 15653],
+			Blue: [11890, 15720]
+		}
 	},
 	Neutral: {
 		color: "#dddddd",

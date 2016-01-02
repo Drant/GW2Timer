@@ -2963,6 +2963,14 @@ X = {
 	},
 	
 	/*
+	 * Programmatically selects an option in a fieldset input.
+	 */
+	setFieldsetState: function(pName, pOrder)
+	{
+		$("fieldset[name='" + pName + "'] input:eq(" + pOrder + ")").trigger("click");
+	},
+	
+	/*
 	 * Sets a checkbox to a desired state by reading it then manually triggering it.
 	 * @param jqobject pElement checkbox to manipulate.
 	 * @param int pState checkbox enum.
@@ -5841,6 +5849,10 @@ D = {
 				}
 			}, D.speechWait - durationms);
 		}
+		
+		// Prevent the speech queue to be too long, reset if it is
+		var secmaxspeechduration = 30;
+		D.resetSpeechQueue(secmaxspeechduration);
 	},
 	isSpeaking: function()
 	{
@@ -12195,7 +12207,8 @@ W = {
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(),
 		Pin: new L.layerGroup(),
-		Objective: new L.layerGroup()
+		Objective: new L.layerGroup(),
+		SpawnLabel: new L.layerGroup()
 	},
 	LayerArray: {
 		
@@ -12312,6 +12325,30 @@ W = {
 			this.Layer.Objective.addLayer(marker);
 		}
 		this.toggleLayer(this.Layer.Objective, true);
+		
+		// Generate labels over servers' map spawn points, the names will be reassigned by the objective function
+		var labels = W.Metadata.Labels;
+		for (var i in labels)
+		{
+			var labelmap = labels[i];
+			for (var ii in labelmap)
+			{
+				var coord = labelmap[ii];
+				marker = L.marker(this.convertGCtoLC(coord),
+				{
+					clickable: false,
+					icon: L.divIcon(
+					{
+						className: "",
+						html: "<div class='wvwSpawn'" + ii + ">Spawn Point</div>",
+						iconSize: [38, 38],
+						iconAnchor: [19, 19]
+					})
+				});
+				this.Layer.SpawnLabel.addLayer(marker);
+			}
+		}
+		this.toggleLayer(this.Layer.SpawnLabel, true);
 		
 		// The function below would have been called already if world completion icons were generated
 		if (O.Options.bol_showWorldCompletionWvW === false)
@@ -12517,7 +12554,7 @@ W = {
 	},
 	
 	/*
-	 * Retrieves all data for server in the region and generates a scoreboard
+	 * Retrieves data for all servers in the region and generates a scoreboard
 	 * for each.
 	 */
 	toggleRegionLeaderboard: function()
@@ -12533,7 +12570,7 @@ W = {
 			return;
 		}
 		
-		var matches = (W.Metadata.Matches[W.LocaleCurrent]);
+		var matches = W.Metadata.Matches[W.LocaleCurrent];
 		// Gather data for all matches for current server region
 		for (var i in matches)
 		{
@@ -12974,15 +13011,15 @@ W = {
 		var cssclass = "logEntry" + land;
 		
 		// The entry will be added, but only shown if opted
-		var displayed = true;
+		var isdisplayed = true;
 		if ((land === W.LandEnum.RedHome && O.Options.bol_logRedHome === false)
 			|| (land === W.LandEnum.GreenHome && O.Options.bol_logBlueHome === false)
 			|| (land === W.LandEnum.BlueHome && O.Options.bol_logGreenHome === false)
 			|| (land === W.LandEnum.Center && O.Options.bol_logCenter === false))
 		{
-			displayed = false;
+			isdisplayed = false;
 		}
-		W.addLogEntry(str, isotime, cssclass, displayed);
+		W.addLogEntry(str, isotime, cssclass, isdisplayed);
 		
 		// Narrate the capture event if opted
 		if (O.Options.bol_logNarrate)
@@ -13141,6 +13178,7 @@ W = {
 						obj.owner = apiobj.owner;
 						W.updateObjectiveIcon(obj);
 						W.updateObjectiveAge(obj);
+						W.updateObjectiveTooltip(obj);
 						
 						// Claiming is reset upon ownership change
 						$("#objClaim_" + obj.id).empty();
@@ -13310,6 +13348,7 @@ W = {
 		{
 			pObjective.guild_name = pData.guild_name;
 			pObjective.tag = pData.tag;
+			W.updateObjectiveTooltip(pObjective);
 			var label = $("#objClaim_" + pObjective.id);
 			var prevcolor = label.css("color");
 			label.html("[" + pObjective.tag + "]");
@@ -13325,12 +13364,39 @@ W = {
 	
 	/*
 	 * Rewrites the objective marker's HTML tooltip with the current objective's
-	 * properties data. To be called only when user has hovered over an objective.
+	 * properties data. To be called when objective changed owner or claim.
 	 * @param object pObjective.
 	 */
 	updateObjectiveTooltip: function(pObjective)
 	{
+		// Initialize tooltip behavior for ith icon
+		var obj = pObjective;
+		var icon = $("#objIcon_" + obj.id);
+		var claim = "";
+		if (obj.claimed_at !== null)
+		{
+			claim = "<br /><dfn>Claim:</dfn> " + (new Date(obj.claimed_at)).toLocaleString()
+				+ "<br /><dfn>Guild:</dfn> " + U.escapeHTML("[" + pObjective.tag + "] " + pObjective.guild_name)
+				+ "<div class='cssCenter'><img src='" + W.getGuildBannerURL(pObjective.guild_name) + "' /></div>";
+		}
 		
+		var title = "<div class='objTooltip'>"
+			+ "<dfn class='objTooltipName'>" + D.getObjectName(obj) + "</dfn>"
+			+ "<br /><dfn>Owner:</dfn> " + (new Date(obj.last_flipped)).toLocaleString()
+			+ claim
+		+ "</div>";
+		I.qTip.init(icon.attr("title", title));
+	},
+	
+	/*
+	 * Gets an image URL from a third party provider for a guild banner.
+	 * @param string pName of the guild.
+	 * @returns string URL.
+	 */
+	getGuildBannerURL: function(pName)
+	{
+		var name = U.escapeHTML((pName.split(" ").join("-")).toLowerCase());
+		return "http://guilds.gw2w2w.com/guilds/" + name + "/128.svg";
 	},
 	
 	/*
@@ -15452,6 +15518,7 @@ K = {
 	oldQuadrantAngle: 0,
 	cDEGREES_IN_CIRCLE: 360,
 	cDEGREES_IN_QUADRANT: 90,
+	paneSizePrevious: 0,
 	
 	// Clock DOM elements
 	handSecond: {}, handMinute: {}, handHour: {},
@@ -15521,6 +15588,20 @@ K = {
 		$("#itemTimeLocalActual").click(function()
 		{
 			$("#opt_bol_use24Hour").trigger("click");
+		});
+		
+		// Toggle clock pane shortcut button
+		$("#clkToggle").click(function()
+		{
+			if (O.Options.int_setClock !== O.IntEnum.Clock.None)
+			{
+				K.paneSizePrevious = O.Options.int_setClock;
+				X.setFieldsetState("int_setClock", O.IntEnum.Clock.None);
+			}
+			else
+			{
+				X.setFieldsetState("int_setClock", K.paneSizePrevious);
+			}
 		});
 	},
 	
