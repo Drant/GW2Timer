@@ -1060,19 +1060,19 @@ Sale: {
 	},
 	Items: [
 	{
+		url: "http://wiki.guildwars2.com/wiki/Character Slot Expansion",
+		img: "http://i.imgur.com/bYMfxCX.png",
+		quantity: 1,
+		pricenew: 600,
+		priceold: 800,
+		col: 0
+	},
+	{
 		url: "http://wiki.guildwars2.com/wiki/Bank Tab Expansion",
 		img: "https://render.guildwars2.com/file/5BF86A2433F1BE0575E7B37B22EF6695F83211C5/66589.png",
 		quantity: 1,
 		pricenew: 450,
 		priceold: 600,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Bag-Slot_Value_Pack",
-		img: "http://i.imgur.com/oLKrjR5.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 700,
 		col: 1
 	},
 	/*{

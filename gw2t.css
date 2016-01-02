@@ -195,11 +195,11 @@ div#qTip {
 	font-weight: bold;
 	line-height: 110%;
 	color: #eee;
-	background: #22323d;
-	background: linear-gradient(to right, #001019 0%, #364852 100%);
+	background: url("img/background/tooltip.png");
+	background-size: cover;
 	text-shadow: 0px 0px 2px black;
 	box-shadow: 0px 0px 2px #555;
-	opacity: 0.9;
+	opacity: 1;
 	pointer-events: none;
 }
 div#qTip dfn { /* Highlight color for emphasis text in tooltip */

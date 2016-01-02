@@ -102,6 +102,13 @@
 	font-size: 18px;
 	line-height: 18px;
 }
+.objTooltipBanner {
+	margin-top: 12px;
+	margin-bottom: 8px;
+	background: url("../img/background/guildbanner.png");
+	background-size: cover;
+	box-shadow: 0px 0px 2px tan;
+}
 
 /* Leaderboard
 ----------------------------------------------------------------------------- */
@@ -227,13 +234,13 @@
 	text-align: right;
 	font-weight: bold;
 }
-.lboServerGreen .lboName, .lboPPTGreen {
+.wvwColorGreen, .lboServerGreen .lboName, .lboPPTGreen {
 	color: #52a518;
 }
-.lboServerBlue .lboName, .lboPPTBlue {
+.wvwColorBlue, .lboServerBlue .lboName, .lboPPTBlue {
 	color: #31a7bb;
 }
-.lboServerRed .lboName, .lboPPTRed {
+.wvwColorRed, .lboServerRed .lboName, .lboPPTRed {
 	color: #cc1f24;
 }
 .lboPPTCenter {
@@ -481,6 +488,14 @@
 .logEntry cite {
 	color: #ffbb44;
 }
+.logEntry dfn {
+	font-weight: normal;
+	color: white;
+}
+.logEntry:hover dfn {
+	font-weight: bold;
+	color: #ffcc77;
+}
 .logEntryRedHome, .lboServerRed {
 	background: rgba(204, 31, 36, 0.2);
 }
@@ -502,3 +517,31 @@
 .lboServerBlue:hover {
 	background: rgba(49, 167, 187, 0.8);
 }
+
+/* Supply Calculator
+----------------------------------------------------------------------------- */
+.sie {
+	width: 32px; height: 32px;
+	background-image: url("img/wvw/siege.png");
+}
+.sie_basic_arrowcart { background-position: 0 0; }
+.sie_basic_ballista { background-position: -32px 0; }
+.sie_basic_catapult { background-position: -64px 0; }
+.sie_basic_flameram { background-position: -96px 0; }
+.sie_basic_golem { background-position: -128px 0; }
+.sie_basic_shieldgenerator { background-position: -160px 0; }
+.sie_basic_trebuchet { background-position: -192px 0; }
+.sie_guild_arrowcart { background-position: -224px 0; }
+.sie_guild_ballista { background-position: -256px 0; }
+.sie_guild_catapult { background-position: -288px 0; }
+.sie_guild_flameram { background-position: -320px 0; }
+.sie_guild_golem { background-position: -352px 0; }
+.sie_guild_shieldgenerator { background-position: -384px 0; }
+.sie_guild_trebuchet { background-position: -416px 0; }
+.sie_superior_arrowcart { background-position: -448px 0; }
+.sie_superior_ballista { background-position: -480px 0; }
+.sie_superior_catapult { background-position: -512px 0; }
+.sie_superior_flameram { background-position: -544px 0; }
+.sie_superior_golem { background-position: -576px 0; }
+.sie_superior_shieldgenerator { background-position: -608px 0; }
+.sie_superior_trebuchet { background-position: -640px 0; }

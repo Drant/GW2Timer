@@ -178,6 +178,7 @@ O = {
 		bol_narrateCastle: true,
 		bol_showLeaderboard: true,
 		bol_condenseLeaderboard: false,
+		bol_showObjectiveLabels: true,
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: true,
@@ -1313,6 +1314,10 @@ O = {
 		bol_condenseLeaderboard: function()
 		{
 			W.toggleLeaderboardWidth(true);
+		},
+		bol_showObjectiveLabels: function()
+		{
+			W.toggleObjectiveLabels();
 		}
 	}
 };
@@ -8133,7 +8138,9 @@ M = {
 			objicon: [38, 38, 38, 38, 32, 24, 16, 0],
 			objtimerfont: [18, 17, 16, 15, 14, 13, 12, 0],
 			objinfofont: [14, 13, 12, 11, 10, 9, 0, 0],
-			objumbrella: [96, 96, 96, 96, 64, 32, 24, 0]
+			objumbrella: [96, 96, 96, 96, 64, 32, 24, 0],
+			spawnfont: [28, 24, 20, 16, 12, 8, 0, 0],
+			spawnopacity: [0.9, 0.9, 0.8, 0.7, 0.6, 0.5, 0, 0]
 		};
 		var getZoomValue = function(pKey)
 		{
@@ -8149,6 +8156,8 @@ M = {
 		var objtimerfont = getZoomValue("objtimerfont");
 		var objinfofont = getZoomValue("objinfofont");
 		var objumbrella = getZoomValue("objumbrella");
+		var spawnfont = getZoomValue("spawnfont");
+		var spawnopacity = getZoomValue("spawnopacity");
 		
 		var completionboolean;
 		var overviewboolean;
@@ -8194,6 +8203,13 @@ M = {
 				overviewboolean = O.Options.bol_showZoneOverviewWvW;
 				completionboolean = O.Options.bol_showWorldCompletionWvW;
 				sectorboolean = O.Options.bol_displaySectorsWvW;
+				// Server spawn area labels
+				this.Layer.SpawnLabel.eachLayer(function(layer) {
+					layer._icon.style.fontSize = spawnfont + "px";
+					layer._icon.style.opacity = spawnopacity;
+					layer._icon.style.zIndex = that.cZIndexBury + 1;
+					layer._icon.style.display = "table";
+				});
 			} break;
 		}
 		
@@ -9181,7 +9197,7 @@ M = {
 	 */
 	bindMapLinkBehavior: function(pLink, pZoom, pPin)
 	{
-		if (I.isMapEnabled === false) { return; }
+		if (I.isMapEnabled === false || pLink === undefined || pLink === null) { return; }
 		var that = this;
 		pLink.click(function()
 		{
@@ -12327,7 +12343,7 @@ W = {
 		this.toggleLayer(this.Layer.Objective, true);
 		
 		// Generate labels over servers' map spawn points, the names will be reassigned by the objective function
-		var labels = W.Metadata.Labels;
+		var labels = W.Metadata.SpawnLabels;
 		for (var i in labels)
 		{
 			var labelmap = labels[i];
@@ -12339,16 +12355,19 @@ W = {
 					clickable: false,
 					icon: L.divIcon(
 					{
-						className: "",
-						html: "<div class='wvwSpawn'" + ii + ">Spawn Point</div>",
-						iconSize: [38, 38],
-						iconAnchor: [19, 19]
+						className: "mapSec",
+						html: "<span class='mapSecIn wvwSpawnLabel wvwColor" + ii + "' data-owner='" + ii + "'></span>",
+						iconSize: [512, 64],
+						iconAnchor: [256, 32]
 					})
 				});
 				this.Layer.SpawnLabel.addLayer(marker);
 			}
 		}
 		this.toggleLayer(this.Layer.SpawnLabel, true);
+		
+		// Hide map labels if opted
+		W.toggleObjectiveLabels();
 		
 		// The function below would have been called already if world completion icons were generated
 		if (O.Options.bol_showWorldCompletionWvW === false)
@@ -12368,6 +12387,14 @@ W = {
 		{
 			P.tickGPS();
 		}
+	},
+	
+	/*
+	 * Toggles display of objective labels below its icon.
+	 */
+	toggleObjectiveLabels: function()
+	{
+		$(".objInfo, .wvwSpawnLabel").toggle(O.Options.bol_showObjectiveLabels);
 	},
 	
 	/*
@@ -12547,7 +12574,6 @@ W = {
 		});
 		
 		// Apply the leaderboard appearance options
-		$("#lboCurrent").append(I.cThrobber);
 		$("#opt_bol_showLeaderboard").trigger("change");
 		W.toggleLeaderboardWidth();
 		I.initializeScrollbar("#lboOther");
@@ -12940,7 +12966,7 @@ W = {
 	 * Adds an entry to the WvW log.
 	 * @param string pString to insert.
 	 * @param string pISOTime of the event, optional
-	 * @param string pClass such as the map the event happened in.
+	 * @param string pClass of the log entry, such as the map the event happened in.
 	 * @param boolean pIsDisplayed whether shown initially.
 	 */
 	addLogEntry: function(pString, pISOTime, pClass, pIsDisplayed)
@@ -12959,6 +12985,7 @@ W = {
 		}
 		var entry = $("<li class='logEntry " + pClass + "'><time data-time='" + pISOTime + "'>" + timestr + "</time><samp>" + pString + "</samp></li>")
 			.prependTo("#logWindow");
+		this.bindMapLinkBehavior(entry.find("dfn"));
 		
 		// Animate the new entry
 		if (pIsDisplayed === false)
@@ -13006,7 +13033,7 @@ W = {
 		{
 			isotime = pObjective.last_flipped;
 		}
-		var str = prevobjectiveicon + " ⇒ " + objectiveicon + " " + objectivenick;
+		var str = prevobjectiveicon + " ⇒ " + objectiveicon + " <dfn data-coord='" + pObjective.coord + "'>" + objectivenick + "</dfn>";
 		var land = pObjective.map_type;
 		var cssclass = "logEntry" + land;
 		
@@ -13112,6 +13139,13 @@ W = {
 			
 			W.addLogEntry(D.getObjectNick(greenserver)
 				+ " : " + D.getObjectNick(blueserver) + " : " + D.getObjectNick(redserver));
+			
+			// Update map spawn labels
+			$(".wvwSpawnLabel").each(function()
+			{
+				var label = D.getObjectName(W.getServerFromOwner($(this).attr("data-owner")));
+				$(this).html(label);
+			});
 		}
 	},
 	
@@ -13138,8 +13172,9 @@ W = {
 		$(".objUmbrellaContainer").hide();
 		$(".objTimer").empty();
 		$(".objProgressBar").hide();
-		$("#logWindow").empty();
+		$("#lboCurrent").empty().append(I.cThrobber);
 		$("#lboOther").empty();
+		$("#logWindow").empty();
 		
 		// Stop the previous timeout and call the update function with initialization
 		W.toggleObjectiveTick(false);
@@ -13213,7 +13248,10 @@ W = {
 			}
 			
 			// Update scoreboard
-			W.insertScoreboard(pData);
+			if (O.Options.bol_showLeaderboard)
+			{
+				W.insertScoreboard(pData);
+			}
 			
 			if (W.isAPIFailed)
 			{
@@ -13376,8 +13414,8 @@ W = {
 		if (obj.claimed_at !== null)
 		{
 			claim = "<br /><dfn>Claim:</dfn> " + (new Date(obj.claimed_at)).toLocaleString()
-				+ "<br /><dfn>Guild:</dfn> " + U.escapeHTML("[" + pObjective.tag + "] " + pObjective.guild_name)
-				+ "<div class='cssCenter'><img src='" + W.getGuildBannerURL(pObjective.guild_name) + "' /></div>";
+				+ "<br /><dfn>Guild:</dfn> " + U.escapeHTML(pObjective.guild_name + " [" + pObjective.tag + "]")
+				+ "<div class='cssCenter'><img class='objTooltipBanner' src='" + W.getGuildBannerURL(pObjective.guild_name) + "' /></div>";
 		}
 		
 		var title = "<div class='objTooltip'>"
