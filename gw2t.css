@@ -195,7 +195,7 @@ div#qTip {
 	font-weight: bold;
 	line-height: 110%;
 	color: #eee;
-	background: url("img/background/tooltip.png");
+	background: url("https://lh3.googleusercontent.com/-wlypns0_VdE/VogZrid2vPI/AAAAAAAAAyM/p1m-KfX8J2E/s360-Ic42/tooltip.png");
 	background-size: cover;
 	text-shadow: 0px 0px 2px black;
 	box-shadow: 0px 0px 2px #555;
@@ -1388,11 +1388,12 @@ input.mapCoordinatesName {
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
 }
-#itemLanguage img {
+#itemLanguage ins {
+	width: 64px;
 	padding-bottom: 2px;
 	opacity: 0.9;
 }
-#itemLanguage:hover img {
+#itemLanguage:hover ins {
 	opacity: 1;
 }
 #itemLanguagePopup {
@@ -2177,11 +2178,12 @@ karma {
 .s16_gem { background-position: -96px 0; }
 .s16_info { background-position: -112px 0; }
 .s16_karma { background-position: -128px 0; }
-.s16_loot { background-position: -144px 0; }
-.s16_money { background-position: -160px 0; }
-.s16_twitter { background-position: -176px 0; }
-.s16_wiki { background-position: -192px 0; }
-.s16_youtube { background-position: -208px 0; }
+.s16_language { background-position: -144px 0; }
+.s16_loot { background-position: -208px 0; }
+.s16_money { background-position: -224px 0; }
+.s16_twitter { background-position: -240px 0; }
+.s16_wiki { background-position: -256px 0; }
+.s16_youtube { background-position: -272px 0; }
 
 coppercoin, silvercoin, goldcoin, karmaunit {
 	display: inline-block;
