@@ -1543,6 +1543,43 @@ var GW2T_OBJECTIVE_DATA = {
 };
 
 /*
+ * Siege weapons and blueprint supply.
+ */
+var GW2T_SIEGE_DATA = {
+	Blueprints: ["Basic", "Superior", "Guild"],
+	Weapons: {
+		flameram: {
+			range: 360,
+			supply: [40, 50, 40]
+		},
+		arrowcart: {
+			range: 2500,
+			supply: [30, 50, 40]
+		},
+		ballista: {
+			range: 3000,
+			supply: [30, 40, 30]
+		},
+		catapult: {
+			range: 4000,
+			supply: [50, 60, 50]
+		},
+		trebuchet: {
+			range: 10000,
+			supply: [100, 120, 100]
+		},
+		golem: {
+			range: 225,
+			supply: [100, 150, 50]
+		},
+		shieldgenerator: {
+			range: 2200,
+			supply: [40, 50, 40]
+		}
+	}
+};
+
+/*
  * Objective translations and addenda.
  */
 var GW2T_OBJECTIVE_METADATA = {

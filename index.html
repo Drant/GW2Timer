@@ -290,6 +290,22 @@
 				<input id="wvwCoordinatesName" class="mapCoordinatesName" type="text" />
 			</div>
 			<div class="mapPeripheral mapPeripheralNorth">
+				<div class="mapHUDContainer">
+					<img id="wvwToolsButton" class="mapHUDButton" src="img/ui/tools.png" alt="Tools" />
+					<div class="mapHUDPopup cntComposition">
+						<div id="wvwSiege">
+							<div id="sieCalculator">
+								<img data-src="img/wvw/supply.png" /><input id="sieSupplyHave" type="text" value="0" maxlength="4" /> − <span id="sieSupplyNeed">0</span> = <span id="sieSupplyRemain">0</span>
+								<button id="sieSupplyReset" class="btnDefault cssRight" title="Left-Click on a blueprint to add it to the supply calculator, or Right-Click to remove it."></button>
+							</div>
+							<div id="sieBlueprints" class="curClick">
+								<div id="sieBlueprintsBasic"></div>
+								<div id="sieBlueprintsSuperior"></div>
+								<div id="sieBlueprintsGuild"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div id="wvwSwitch" class="mapHUDContainer">
 					<img id="wvwSwitchButton" class="mapHUDButton curToggle" title="<dfn> Click to PvE </dfn>" src="img/ui/pages/map.png" alt="display" />
 				</div>
@@ -316,7 +332,7 @@
 							<label title="Set initial zoom level for WvW map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoomWvW" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 						</div>
 						<div class="mapOptionsOther">
-							<label title="Repeated seconds before API data are downloaded again to check if objectives have flipped."><input id="opt_int_secWvWRefresh" type="number" min="5" max="30" step="1" /> Refresh Interval (sec)</label>
+							<label title="Repeated seconds before API data are downloaded again to check if objectives have flipped."><input id="opt_int_secWvWRefresh" type="number" min="5" max="120" step="1" /> Refresh Interval (sec)</label>
 							<label title="Old log entries beyond this limit shall be deleted."><input id="opt_int_numLogEntries" type="number" min="64" max="1024" step="1" /> Max Log Entries</label>
 							<label title="Show or minimize the WvW log."><img data-src="img/wvw/log.png" /><input id="opt_bol_showLog" type="checkbox" /> Show log</label>
 							<label title="Taller log window."><input id="opt_bol_maximizeLog" type="checkbox" /> Maximize log</label>
@@ -330,7 +346,7 @@
 					<img id="wvwCompassButton" class="mapHUDButton" title="<dfn> Click to Center Map </dfn>" src="img/map/compass.png" alt="compass" />
 					<div class="mapZonesPopup mapHUDPopup cntComposition">
 						<div id="wvwZoneList" class="mapZoneList mapZoneLinks">
-							<div>
+							<div id="wvwLandList">
 								<h2 data-region="wvw"></h2>
 								<ul>
 									<li data-zone="desertred"></li>
@@ -574,7 +590,7 @@
 							<label title="Hide the chain bars when you check them."><input id="opt_bol_hideChecked" type="checkbox" /> Hide checked bosses</label>
 							<label title="Active/orange chain bars."><input id="opt_bol_expandWB" type="checkbox" /> Auto-expand events</label>
 							<label title="Inactive/gray chain bars."><input id="opt_bol_collapseChains" type="checkbox" /> Auto-collapse events</label>
-							<button id="optRestoreAllChains" class="btnUncheck" title="Unhide all world bosses and uncheck them."><img data-src="img/ui/uncheck.png" alt="Refresh" /></button>
+							<button id="optRestoreAllChains" class="btnUncheck" title="Unhide all world bosses and uncheck them."></button>
 						</div>
 						<div id="chnOptionsAlarm">
 							<div id="optChainsToggle"><button id="optChainsExpand">+</button><button id="optChainsCollapse">−</button></div>

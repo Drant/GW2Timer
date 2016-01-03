@@ -1000,7 +1000,7 @@ Countdowns: [
 	name_de: "Neujahr Ausverkauf",
 	name_es: "Rebaja Año Nuevo",
 	name_fr: "Vente Nouvel An",
-	url: "https://www.google.com/search?num=100&q=site%3Aforum-en.guildwars2.com+%22new+year%22+sale",
+	url: "https://twitter.com/guildwars2",
 	Start: new Date("2016-01-01T16:00:00Z"),
 	Finish: new Date("2016-01-04T16:00:00Z")
 },
@@ -1047,7 +1047,7 @@ Story:
 	priceold: 800
  */
 Sale: {
-	isPreshown: true, // If true, will show the items on sale without needing user click toggle
+	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
 	Start: new Date("2015-12-29T16:00:00Z"),
 	Finish: new Date("2016-01-04T16:00:00Z"),
@@ -1068,11 +1068,35 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Bank Tab Expansion",
-		img: "https://render.guildwars2.com/file/5BF86A2433F1BE0575E7B37B22EF6695F83211C5/66589.png",
+		url: "http://wiki.guildwars2.com/wiki/Basic Cloth Rack",
+		img: "https://render.guildwars2.com/file/6EDD16520B6459AA2731414BA5309C524F730949/904688.png",
 		quantity: 1,
-		pricenew: 450,
-		priceold: 600,
+		pricenew: 600,
+		priceold: 800,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Basic Harvesting Node Pack",
+		img: "https://render.guildwars2.com/file/049F5E2C1B4019D0806D3D06CA17F92153FBD574/866826.png",
+		quantity: 1,
+		pricenew: 600,
+		priceold: 800,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Basic Lumber Node Pack",
+		img: "https://render.guildwars2.com/file/A91BE8A9075CBF2F342C0459F0DEFD68509C66B1/841529.png",
+		quantity: 1,
+		pricenew: 600,
+		priceold: 800,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Basic Ore Node Pack",
+		img: "https://render.guildwars2.com/file/116DD826056B64F35AA13AB3EE111594EB62B50D/699313.png",
+		quantity: 1,
+		pricenew: 600,
+		priceold: 800,
 		col: 1
 	},
 	/*{

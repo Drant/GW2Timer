@@ -518,11 +518,43 @@
 	background: rgba(49, 167, 187, 0.8);
 }
 
-/* Supply Calculator
+/* Siege Supply Calculator
 ----------------------------------------------------------------------------- */
+
+#wvwSiege {
+	padding: 4px 8px 8px 8px;
+}
+
+#sieCalculator, #sieSupplyHave {
+	font-size: 14px;
+}
+#sieSupplyHave {
+	width: 32px;
+}
+
 .sie {
 	width: 32px; height: 32px;
-	background-image: url("img/wvw/siege.png");
+	margin: 1px;
+	border: 1px solid transparent;
+	background-image: url("../img/wvw/siege.png");
+	text-align: right;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffeebb;
+	text-shadow:
+		0px 1px 2px #000,
+		0px -1px 2px #000,
+		1px 0px 2px #000,
+		-1px 0px 2px #000;
+}
+.sie:hover {
+	border: 1px solid gold;
+}
+.sie:active {
+	opacity: 0.6;
+}
+.sieAdded {
+	border: 1px solid lime;
 }
 .sie_basic_arrowcart { background-position: 0 0; }
 .sie_basic_ballista { background-position: -32px 0; }

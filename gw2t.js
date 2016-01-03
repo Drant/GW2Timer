@@ -12261,6 +12261,7 @@ W = {
 	ServersCurrent: null, // Sample structure - ServersCurrent: { "red": 1019, "blue": 1008, "green": 1003 },
 	Objectives: {},
 	ObjectiveTimeout: {},
+	Siege: {},
 	MapType: {}, // Corresponds to "worlds" object from match API
 	LandEnum: {}, // Corresponds to "map_type" property of objectives
 	ObjectiveEnum: {}, // Corresponds to "type" property of objectives
@@ -12274,6 +12275,8 @@ W = {
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
 	cMILLISECONDS_IMMUNITY: 300000,
 	MatchFinishTime: null,
+	secTillWvWReset: null,
+	numSiegeSupply: 0,
 	
 	/*
 	 * Initializes the WvW map and starts the objective state and time functions.
@@ -12290,6 +12293,7 @@ W = {
 		W.Regions = GW2T_REALM_DATA;
 		W.Servers = GW2T_SERVER_DATA;
 		W.Objectives = GW2T_OBJECTIVE_DATA;
+		W.Siege = GW2T_SIEGE_DATA;
 		W.Metadata = GW2T_OBJECTIVE_METADATA;
 		W.MapType = W.Metadata.MapType;
 		W.LandEnum = W.Metadata.LandEnum;
@@ -12303,6 +12307,7 @@ W = {
 		W.reinitializeServerChange();
 		W.generateServerList();
 		I.styleContextMenu("#wvwContext");
+		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
 		// Finally
 		W.isWvWLoaded = true;
 	},
@@ -12662,12 +12667,15 @@ W = {
 				land = (W.Objectives[obj.id]).map_type; // Example: "RedHome"
 				value = W.getObjectiveTypeValue(obj.type);
 				nativeowner = (W.Objectives[obj.id]).nativeowner;
-				(PPT[owner]).Total += value;
-				(PPT[owner])[land] += value;
-				if (land === W.LandEnum.Center)
+				if (owner !== W.OwnerEnum.Neutral)
 				{
-					// Example: In EBG, Red took objectives that were natively owned by Green's side, such as Lowlands
-					(PPT[owner])[W.LandEnum.Center + nativeowner] += value;
+					(PPT[owner]).Total += value;
+					(PPT[owner])[land] += value;
+					if (land === W.LandEnum.Center)
+					{
+						// Example: In EBG, Red took objectives that were natively owned by Green's side, such as Lowlands
+						(PPT[owner])[W.LandEnum.Center + nativeowner] += value;
+					}
 				}
 			}
 		}
@@ -13116,6 +13124,86 @@ W = {
 	},
 	
 	/*
+	 * Generates the siege supply calculator.
+	 */
+	initializeSupplyCalculator: function()
+	{
+		var addSupply = function(pElement, pSupply)
+		{
+			var blcount = pElement.html();
+			// Blank blueprint count means 0 blueprints requested
+			blcount = (blcount === "") ? 0 : parseInt(blcount);
+			if (pSupply < 0 && blcount === 0)
+			{
+				return;
+			}
+			var increment = (pSupply < 0) ? -1 : 1;
+
+			W.numSiegeSupply += pSupply;
+			$("#sieSupplyNeed").html(W.numSiegeSupply);
+			// If after increment the blueprint count is 0, then make it blank
+			var finalblcount = blcount + increment;
+			if (finalblcount === 0)
+			{
+				pElement.removeClass("sieAdded");
+				finalblcount = "";
+			}
+			else
+			{
+				pElement.addClass("sieAdded");
+			}
+			pElement.html(finalblcount);
+		};
+		
+		var calc = $("#wvwSiege");
+		I.preventPropagation(calc);
+		for (var i in W.Siege.Weapons)
+		{
+			for (var ii in W.Siege.Blueprints)
+			{
+				var bp = W.Siege.Blueprints[ii];
+				var siege = $("<ins class='sie sie_" + bp.toLowerCase() + "_" + i + "'></ins>");
+				var supply = W.Siege.Weapons[i].supply[ii];
+				$("#sieBlueprints" + bp).append(siege);
+				(function(pSupply)
+				{
+					siege.click(function()
+					{
+						addSupply($(this), pSupply);
+						$("#sieSupplyHave").trigger("input");
+					});
+					siege.contextmenu(function()
+					{
+						addSupply($(this), -1 * pSupply);
+						$("#sieSupplyHave").trigger("input");
+						return false; // Prevents context menu popping up
+					});
+				})(supply);
+			}
+		}
+		
+		// Bind reset button
+		$("#sieSupplyReset").click(function()
+		{
+			$("#sieBlueprints ins").html("").removeClass("sieAdded");
+			$("#sieSupplyNeed").html("0");
+			W.numSiegeSupply = 0;
+			$("#sieSupplyHave").trigger("input");
+		});
+		
+		// Bind supply have input
+		$("#sieSupplyHave").click(function()
+		{
+			$(this).select();
+		}).on("input", function()
+		{
+			var value = parseInt($(this).val()) - W.numSiegeSupply;
+			var elm = $("#sieSupplyRemain").html(value);
+			I.colorizeValue(elm, value);
+		});
+	},
+	
+	/*
 	 * Updates the server names for the current match wherever it is shown.
 	 */
 	updateParticipants: function()
@@ -13242,6 +13330,7 @@ W = {
 			if (W.MatchFinishTime !== pData.end_time)
 			{
 				W.MatchFinishTime = pData.end_time;
+				W.secTillWvWReset = ~~(((new Date(W.MatchFinishTime)).getTime() - msec) / T.cMILLISECONDS_IN_SECOND);
 				W.MatchupIDCurrent = pData.id;
 				W.ServersCurrent = pData.worlds;
 				W.updateParticipants();
@@ -13263,7 +13352,9 @@ W = {
 			if (W.isAPIFailed === false)
 			{
 				W.isAPIFailed = true;
-				I.write("Unable to retrieve WvW data during " + T.getTimeFormatted() +".<br />ArenaNet API servers may be down." , 0);
+				// If failed near reset then tell so, otherwise generic error
+				var errormessage = (W.secTillWvWReset < 10 * T.cSECONDS_IN_MINUTE) ? "WvW reset is happening soon." : "ArenaNet API servers may be down.";
+				I.write("Unable to retrieve WvW data during " + T.getTimeFormatted() + ".<br />" + errormessage, 0);
 			}
 		});
 	},
@@ -14976,11 +15067,12 @@ B = {
 		if (B.isDashboardSaleEnabled)
 		{
 			var range = T.getMinMax(B.DashboardSale.Items, "pricenew");
+			var rangestr = (range.min === range.max) ? range.max : (range.min + "-" + range.max);
 			// Create "button" to toggle list of items on sale
 			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img src='img/ui/gemstore.png' /> "
 				+ "<u>" + B.DashboardSale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
-				+ "(<span class='dsbSalePriceNew'>" + range.min + "-" + range.max + "<ins class='s16 s16_gem'></ins></span>)"
+				+ "(<span class='dsbSalePriceNew'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
 				+ "⇓@ " + B.DashboardSale.Finish.toLocaleString()
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
@@ -16158,8 +16250,7 @@ K = {
 			W.updateObjectiveTimers();
 			if (W.MatchFinishTime !== null)
 			{
-				var sectillwvwreset = ~~(((new Date(W.MatchFinishTime)).getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND);
-				K.countdownWvW.innerHTML = T.formatSeconds(sectillwvwreset, true);
+				K.countdownWvW.innerHTML = T.formatSeconds(W.secTillWvWReset--, true);
 			}
 			if (sec === 0)
 			{
@@ -17617,6 +17708,29 @@ I = {
 		}, pSpeed);
 	},
 	
+	/*
+	 * Colors the text of an element depending on its numeric value.
+	 * @param jqobject pElement.
+	 * @param int pValue to compare.
+	 * @param int pLimit to compare.
+	 */
+	colorizeValue: function(pElement, pValue, pLimit)
+	{
+		var elm = $(pElement);
+		elm.removeClass("cssLimitEqual cssLimitWithin cssLimitExceed");
+		var cssclass;
+		
+		if (pLimit === undefined)
+		{
+			cssclass = (pValue > 0) ? "cssLimitWithin" : ((pValue < 0) ? "cssLimitExceed" : "cssLimitEqual");
+		}
+		else
+		{
+			cssclass = (pValue <= pLimit) ? "cssLimitWithin" : "cssLimitExceed";
+		}
+		elm.addClass(cssclass);
+		return elm;
+	},
 	
 	/*
 	 * Toggles a generic highlight class to an element.
@@ -18644,7 +18758,7 @@ I = {
 			else // Mouse is on the map pane
 			{
 				// Tooltip overflows right edge
-				if (I.posX + I.cTOOLTIP_ADD_OFFSET_X + tipwidth > winwidth && tipwidth > I.cTOOLTIP_WIDTH_MAX)
+				if (I.posX + I.cTOOLTIP_ADD_OFFSET_X + tipwidth > winwidth)
 				{
 					I.qTip.offsetX = -(tipwidth) - I.cTOOLTIP_ADD_OFFSET_X;
 				}
