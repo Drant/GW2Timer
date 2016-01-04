@@ -41,9 +41,9 @@
 <body>
 	<div id="itemConsole">
 		<div id="cslButtons">
-			<kbd id="cslClose" class="btnWindow" title="<dfn>Close Console</dfn><br />Click on the map then type /help for more information."></kbd>
-			<kbd id="cslSelect" class="btnWindow" title="<dfn>Select Console</dfn>"></kbd>
-			<kbd id="cslToggle" class="curToggle btnWindow" title="<dfn>Toggle Console</dfn>"></kbd>
+			<kbd id="cslClose" class="btnWindow btnClose" title="<dfn>Close Console</dfn><br />Click on the map then type /help for more information."></kbd>
+			<kbd id="cslSelect" class="btnWindow btnSelect" title="<dfn>Select Console</dfn>"></kbd>
+			<kbd id="cslToggle" class="btnWindow btnToggle" title="<dfn>Toggle Console</dfn>"></kbd>
 		</div>
 		<div id="cslContent"></div>
 	</div>
@@ -55,7 +55,7 @@
 		- This web application encountered a bug; try refreshing, or <a href="bin/clear.html">clearing</a> its localStorage.<br />
 		Do you want to <a href="http://forum.renaka.com/topic/5476238/">report</a> this problem?<br />
 	</div>
-	<kbd id="watToggle" class="curToggle btnWindow" title="<dfn>Toggle stopwatch.</dfn> Click the stop button to reset."></kbd>
+	<kbd id="watToggle" class="btnWindow btnToggle" title="<dfn>Toggle stopwatch.</dfn> Click the stop button to reset."></kbd>
 	<div id="itemStopwatch">
 		<div id="watUp"></div>
 		<div id="watDown"></div>
@@ -95,10 +95,10 @@
 				</ul>
 			</div>
 			<article id="mapHUDPane">
-			<div id="mapExpandButton" class="mapExpandButton mapHUDButton curToggle" title="<dfn> Click to Expand Map </dfn>"></div>
+			<div id="mapExpandButton" class="mapExpandButton mapHUDButton btnHorizontal" title="<dfn> Click to Expand Map </dfn>"></div>
 			<div id="mapHUDBoxes">
 				<div id="itemDashboard">
-					<kbd id="dsbClose" class="btnWindow" title="<dfn>Close the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
+					<kbd id="dsbClose" class="btnWindow btnClose" title="<dfn>Close the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
 					<div id="dsbAnnouncement"></div>
 					<div id="dsbCountdown" title="<dfn>Countdown for Official GW2 Events</dfn><br /><span class='dsbCountdownDormant' style='font-size:20px'>■</span>: has not started yet, and is counting down to when it starts.<br /><span class='dsbCountdownActive' style='font-size:20px'>■</span>: is happening, and is counting down to when it ends."></div>
 					<div id="dsbSale"></div>
@@ -106,9 +106,9 @@
 					<div id="dsbStory" class="jsScrollable"></div>
 				</div>
 				<div id="itemTimeline">
-					<kbd id="tmlDelete" class="btnWindow" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
-					<kbd id="tmlClose" class="btnWindow" title="<dfn>Close the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
-					<kbd id="tmlToggle" class="btnWindow curToggle" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
+					<kbd id="tmlDelete" class="btnWindow btnClose" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
+					<kbd id="tmlClose" class="btnWindow btnClose" title="<dfn>Close the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
+					<kbd id="tmlToggle" class="btnWindow btnSelect" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
 					<div id="tmlIndicator"></div>
 				</div>
 			</div>
@@ -129,7 +129,7 @@
 					<img id="mapSwitchButton" class="mapHUDButton curToggle" title="<dfn> Click to WVW </dfn>" src="img/ui/pages/wvw.png" alt="display" />
 				</div>-->
 				<div class="mapGPS mapHUDContainer">
-					<img id="mapGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
+					<img id="mapGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" data-src="img/map/gps.png" alt="GPS" />
 					<div class="mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacter" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
@@ -250,6 +250,9 @@
 			<div id="wvwContext" class="itemContext">
 				<ul>
 					<li id="wvwContextCenter">Center map</li>
+					<li id="wvwContextRange" class="itemContextSubmenu"><span>Range</span>
+						<ul id="wvwContextRangeList"></ul>
+					</li>
 					<li class="itemContextSubmenu" id="wvwContextPins"><span>Pins</span>
 						<ul>
 							<li class="itemContextSubmenu"><span>Load</span>
@@ -272,12 +275,12 @@
 				</ul>
 			</div>
 			<article id="wvwHUDPane">
-			<div id="wvwExpandButton" class="mapExpandButton mapHUDButton curToggle" title="<dfn> Click to Expand Map </dfn>"></div>
+			<div id="wvwExpandButton" class="mapExpandButton mapHUDButton btnHorizontal" title="<dfn> Click to Expand Map </dfn>"></div>
 			<div id="wvwLeaderboard">
 				<div id="lboContainer">
-					<kbd id="lboToggle" class="curToggle btnWindow lboButton" title="<dfn>Toggle Leaderboard</dfn>"></kbd>
-					<kbd id="lboCondense" class="curToggle btnWindow lboButton lboExtra" title="<dfn>Condense Leaderboard</dfn>"></kbd>
-					<kbd id="lboRegion" class="curToggle btnWindow lboButton lboExtra" title="<dfn>Toggle All Server Matchups</dfn>"></kbd>
+					<kbd id="lboToggle" class="curToggle btnWindow btnToggle lboButton" title="<dfn>Toggle Leaderboard</dfn>"></kbd>
+					<kbd id="lboCondense" class="curToggle btnWindow btnHorizontal lboButton lboExtra" title="<dfn>Condense Leaderboard</dfn>"></kbd>
+					<kbd id="lboRegion" class="curToggle btnWindow btnVertical lboButton lboExtra" title="<dfn>Toggle All Server Matchups</dfn>"></kbd>
 					<time id="lboCountdown" class="lboExtra"></time>
 					<div id="lboCurrent"></div>
 					<div id="lboOther"></div>
@@ -291,33 +294,33 @@
 			</div>
 			<div class="mapPeripheral mapPeripheralNorth">
 				<div class="mapHUDContainer">
-					<img id="wvwToolsButton" class="mapHUDButton" src="img/ui/tools.png" alt="Tools" />
+					<img id="wvwToolsButton" class="mapHUDButton" data-src="img/ui/tools.png" alt="Tools" />
 					<div class="mapHUDPopup cntComposition">
-						<div id="wvwSiege">
-							<div id="sieCalculator">
-								<img data-src="img/wvw/supply.png" /><input id="sieSupplyHave" type="text" value="0" maxlength="4" /> − <span id="sieSupplyNeed">0</span> = <span id="sieSupplyRemain">0</span>
-								<button id="sieSupplyReset" class="btnDefault cssRight" title="Left-Click on a blueprint to add it to the supply calculator, or Right-Click to remove it."></button>
+						<div id="wvwSupply">
+							<div id="splCalculator">
+								<img data-src="img/wvw/supply.png" /><input id="splHave" type="text" value="0" maxlength="4" /> − <span id="splNeed">0</span> = <span id="splRemain">0</span>
+								<button id="splReset" class="btnDefault cssRight" title="Left-Click on a blueprint to add it to the supply calculator, or Right-Click to remove it."></button>
 							</div>
-							<div id="sieBlueprints" class="curClick">
-								<div id="sieBlueprintsBasic"></div>
-								<div id="sieBlueprintsSuperior"></div>
-								<div id="sieBlueprintsGuild"></div>
+							<div id="splBlueprints" class="curClick">
+								<div id="splBlueprintsBasic"></div>
+								<div id="splBlueprintsSuperior"></div>
+								<div id="splBlueprintsGuild"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div id="wvwSwitch" class="mapHUDContainer">
-					<img id="wvwSwitchButton" class="mapHUDButton curToggle" title="<dfn> Click to PvE </dfn>" src="img/ui/pages/map.png" alt="display" />
+					<img id="wvwSwitchButton" class="mapHUDButton curToggle" title="<dfn> Click to PvE </dfn>" data-src="img/ui/leave.png" alt="display" />
 				</div>
 				<div class="mapGPS mapHUDContainer">
-					<img id="wvwGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" src="img/map/gps.png" alt="GPS" />
+					<img id="wvwGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" data-src="img/map/gps.png" alt="GPS" />
 					<div class="mapHUDPopup cntComposition">
 						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacterWvW" type="checkbox" />Follow Game Character</label>
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacterWvW" type="checkbox" />Display Character Pin</label>
 					</div>
 				</div>
 				<div class="mapOptions mapHUDContainer">
-					<img id="wvwDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" src="img/map/display.png" alt="display" />
+					<img id="wvwDisplayButton" class="mapHUDButton" title="<dfn> Click to Expand Map </dfn>" data-src="img/map/display.png" alt="display" />
 					<div class="mapHUDPopup cntComposition">
 						<div class="mapOptionsDisplay">
 							<label title="Show/Hide all icons listed below.<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletionWvW" type="checkbox" /> Show completion</label>
@@ -334,16 +337,16 @@
 						<div class="mapOptionsOther">
 							<label title="Repeated seconds before API data are downloaded again to check if objectives have flipped."><input id="opt_int_secWvWRefresh" type="number" min="5" max="120" step="1" /> Refresh Interval (sec)</label>
 							<label title="Old log entries beyond this limit shall be deleted."><input id="opt_int_numLogEntries" type="number" min="64" max="1024" step="1" /> Max Log Entries</label>
-							<label title="Show or minimize the WvW log."><img data-src="img/wvw/log.png" /><input id="opt_bol_showLog" type="checkbox" /> Show log</label>
-							<label title="Taller log window."><input id="opt_bol_maximizeLog" type="checkbox" /> Maximize log</label>
 							<label title="Show or minimize the WvW leaderboard."><img data-src="img/wvw/leaderboard.png" /><input id="opt_bol_showLeaderboard" type="checkbox" /> Show leaderboard</label>
 							<label title="Hide graphics and extra information on the leaderboard."><input id="opt_bol_condenseLeaderboard" type="checkbox" /> Condense leaderboard</label>
+							<label title="Show or minimize the WvW log."><img data-src="img/wvw/log.png" /><input id="opt_bol_showLog" type="checkbox" /> Show log</label>
+							<label title="Taller log window."><input id="opt_bol_maximizeLog" type="checkbox" /> Maximize log</label>
 							<label title="Show or hide labels on the map."><img data-src="img/wvw/label.png" /><input id="opt_bol_showObjectiveLabels" type="checkbox" /> Show objective labels</label>
 						</div>
 					</div>
 				</div>
 				<div class="mapZones mapHUDContainer">
-					<img id="wvwCompassButton" class="mapHUDButton" title="<dfn> Click to Center Map </dfn>" src="img/map/compass.png" alt="compass" />
+					<img id="wvwCompassButton" class="mapHUDButton" title="<dfn> Click to Center Map </dfn>" data-src="img/map/compass.png" alt="compass" />
 					<div class="mapZonesPopup mapHUDPopup cntComposition">
 						<div id="wvwZoneList" class="mapZoneList mapZoneLinks">
 							<div id="wvwLandList">
@@ -362,8 +365,8 @@
 			</div>
 			<div class="mapPeripheral mapPeripheralSouth">
 				<div id="wvwLogContainer">
-					<kbd id="logToggle" class="curToggle btnWindow logButton" title="<dfn>Toggle Log</dfn>"></kbd>
-					<kbd id="logExpand" class="curToggle btnWindow logButton" title="<dfn>Toggle Log Height</dfn>"></kbd>
+					<kbd id="logToggle" class="curToggle btnWindow btnToggle logButton" title="<dfn>Toggle Log</dfn>"></kbd>
+					<kbd id="logExpand" class="curToggle btnWindow btnVertical logButton" title="<dfn>Toggle Log Height</dfn>"></kbd>
 					<div id="wvwLog" class="cntComposition">
 						<select id="wvwServerList"></select>
 						<div id="logOptions">
@@ -516,10 +519,10 @@
 				</g>
 			</svg>
 			<div id="clkWaypoints">
-				<img id="clkWaypoint0" class="cssWaypoint" src="img/ui/placeholder.png" alt="X:00 Waypoint">
-				<img id="clkWaypoint1" class="cssWaypoint" src="img/ui/placeholder.png" alt="X:15 Waypoint">
-				<img id="clkWaypoint2" class="cssWaypoint" src="img/ui/placeholder.png" alt="X:30 Waypoint">
-				<img id="clkWaypoint3" class="cssWaypoint" src="img/ui/placeholder.png" alt="X:45 Waypoint">
+				<img id="clkWaypoint0" class="cssWaypoint jsClip" src="img/ui/placeholder.png" alt="X:00 Waypoint">
+				<img id="clkWaypoint1" class="cssWaypoint jsClip" src="img/ui/placeholder.png" alt="X:15 Waypoint">
+				<img id="clkWaypoint2" class="cssWaypoint jsClip" src="img/ui/placeholder.png" alt="X:30 Waypoint">
+				<img id="clkWaypoint3" class="cssWaypoint jsClip" src="img/ui/placeholder.png" alt="X:45 Waypoint">
 			</div>
 			<time id="itemTimeLocal" class="itemTimeDigital">
 				<var id="itemTimeLocalActual" class="curToggle">00:00</var>
@@ -551,12 +554,12 @@
 					<ins class="s16 s16_twitter"></ins>
 				</a>
 			</div>
-			<canvas id="paneClockCanvas" class="clkSizeRegular" width="300" height="180"></canvas><!-- Size mismatch for anti-aliasing when scaled -->
+			<!--<canvas id="paneClockCanvas" class="clkSizeRegular" width="300" height="180"></canvas>--><!-- Size mismatch for anti-aliasing when scaled -->
 		</section>
 		<!-- Menu, if these IDs were changed, change the <article> tags' too
 		==================================================================== -->
 		<nav id="paneMenu" class="paneApp">
-			<span id="clkToggle" class="curToggle btnWindow" title="<dfn>Toggle Clock</dfn>"></span>
+			<span id="clkToggle" class="btnWindow btnVertical" title="<dfn>Toggle Clock</dfn>"></span>
 			<kbd id="menuChains" title="<dfn>Chains:</dfn> Timers, Events, Schedule"><ins></ins><var class="jsTranslate">Timers</var></kbd>
 			<kbd id="menuMap" title="<dfn>Map:</dfn> Dailies, Nodes, JPs, Missions, TP, Checklists"><ins></ins><var class="jsTranslate">Tools</var></kbd>
 			<kbd id="menuHelp" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"><ins></ins><var class="jsTranslate">Help</var></kbd>
@@ -604,6 +607,7 @@
 						</div>
 					</div>
 				</div>
+				<kbd id="chnToggle" class="btnWindow btnVertical" title="<dfn>Toggle Active Chains</dfn>"></kbd>
 				<header id="headerChains_Scheduled">
 					<ins class="chn_scheduled"></ins>
 					<span class="jsTranslateCompound">Scheduled Bosses</span>
@@ -611,8 +615,8 @@
 				<section id="sectionChains_Scheduled">
 				</section>
 				<div id="itemDryTopClip" style="display:none;">
-					<img id="chnDryTopWaypoint0" class="chnDryTopWaypoint" src="img/ui/placeholder.png" alt="X:00 Waypoint">
-					<img id="chnDryTopWaypoint1" class="chnDryTopWaypoint" src="img/ui/placeholder.png" alt="X:15 Waypoint">
+					<img id="chnDryTopWaypoint0" class="chnDryTopWaypoint jsClip" src="img/ui/placeholder.png" alt="X:00 Waypoint">
+					<img id="chnDryTopWaypoint1" class="chnDryTopWaypoint jsClip" src="img/ui/placeholder.png" alt="X:15 Waypoint">
 				</div>
 				<header id="headerChains_Drytop">
 					<ins class="chn_drytop"></ins>

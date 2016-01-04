@@ -10,6 +10,7 @@
 	Game assets and map tiles are copyright 2012 ArenaNet, Inc.
 	extracted using https://github.com/kytulendu/Gw2Browser
 	PNGs are compressed using http://pnggauntlet.com
+	CSS sprites generated with http://spritegen.website-performance.org
 	Gradient generated with http://colorzilla.com/gradient-editor
 	Design influenced by http://gw2stuff.com by WintrySnowman
 
@@ -98,6 +99,15 @@ img {
 	overflow: hidden;
 }
 
+.jsClip:hover {
+	border-radius: 16px;
+	box-shadow: 0px 0px 5px white;
+	background: url("img/ui/copy.png");
+}
+.jsClip:active {
+	opacity: 0.5;
+}
+
 .cntComposition ::selection {
 	background: #66aaff;
 }
@@ -141,15 +151,12 @@ img {
 }
 #cslClose {
 	left: 0px;
-	background: url("img/ui/close.png");
 }
 #cslSelect {
 	left: 32px;
-	background: url("img/ui/select.png");
 }
 #cslToggle {
 	left: 64px;
-	background: url("img/ui/toggle.png");
 }
 #cslButtons kbd {
 	opacity: 0.4;
@@ -306,14 +313,15 @@ html, body,
 }
 
 /* Clickable */
-.curClick, a, kbd, input, label, button,
+.curClick, .jsClip, a, kbd, input, label, button,
 .btnWindow, .mapHUDButton, .itemContext li,
 .menuBeam img:hover, .chnCheck:hover, .chnTitle time {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
 
 /* Toggleable */
-.curToggle, #plateChains header, .chnTitle h1, .jsSection, .jsHelpCollapsible {
+.curToggle, .btnToggle, .btnVertical, .btnHorizontal,
+#plateChains header, .chnTitle h1, .jsSection, .jsHelpCollapsible {
 	cursor: url("img/cursor/toggle.cur"), pointer;
 }
 
@@ -442,7 +450,7 @@ html, body,
 	margin-bottom: 8px;
 }
 
-.cntComposition button, .cssButton {
+button, .cssButton {
 	min-width: 24px; min-height: 24px;
 	margin: 0;
 	padding-left: 4px;
@@ -461,32 +469,18 @@ html, body,
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
 }
-.cntComposition button:hover, .cssButton:hover {
+button:hover, .cssButton:hover {
 	border: 1px solid red;
 }
-.cntComposition button:active, .cssButton:active {
+button:active, .cssButton:active {
 	background: #444;
 	background: linear-gradient(to bottom, #333 0%, #444 100%);
 }
-.cntComposition button.btnFocused {
+button.btnFocused {
 	border: 1px solid #ddff77;
 }
-.cntComposition button img {
+button img {
 	width: 24px; height: 24px;
-}
-button.btnUncheck {
-	background: url("img/ui/uncheck.png") center no-repeat, linear-gradient(to bottom, #444 0%, #333 100%);
-	width: 64px; height: 32px;
-}
-button.btnUncheck:active {
-	background: url("img/ui/uncheck.png") center no-repeat, linear-gradient(to bottom, #333 0%, #444 100%);
-}
-button.btnDefault {
-	background: url("img/ui/default.png") center no-repeat, linear-gradient(to bottom, #444 0%, #333 100%);
-	width: 32px; height: 32px;
-}
-button.btnDefault:active {
-	background: url("img/ui/default.png") center no-repeat, linear-gradient(to bottom, #333 0%, #444 100%);
 }
 
 .cntComposition hr {
@@ -760,23 +754,11 @@ textarea.jsCopyCode {
 #dsbAnnouncement img:hover {
 	opacity: 0.8;
 }
-.btnWindow {
-	position: absolute; z-index: 11;
-	top: -16px;
-	left: -16px;
-	width: 32px; height: 32px;
-	background: url("img/ui/close.png");
-	opacity: 0.4;
-}
-.btnWindow:hover {
-	opacity: 0.8;
-}
 #tmlDelete {
 	display: none;
 }
 #tmlToggle {
 	left: 16px;
-	background: url("img/ui/select.png");
 }
 #dsbCountdown time {
 	font-family: Consolas, monospace;
@@ -997,8 +979,6 @@ input.mapCoordinatesName {
 	top: calc(50% - 16px);
 	right: 0;
 	width: 32px; height: 32px;
-	transform: rotate(90deg);
-	background: url("img/ui/switch.png");
 	opacity: 0.4;
 }
 .mapExpandButton:hover {
@@ -1266,7 +1246,7 @@ input.mapCoordinatesName {
 #clkWaypoint3 {
 	top: 164px; left: 52px;
 }
-#clkWaypoints .cssWaypoint, #clkWaypoints .cssWaypoint.zeroclipboard-is-hover {
+#clkWaypoints .cssWaypoint {
 	position: absolute;
 	width: 32px; height: 32px;
 	background-size: 32px 32px;
@@ -1281,13 +1261,13 @@ input.mapCoordinatesName {
 	background: url("img/ui/daily.png");
 	background-size: 32px 32px;
 }
-.cssWaypoint.zeroclipboard-is-hover {
+.cssWaypoint:hover {
 	border-radius: 16px;
 	box-shadow: 0px 0px 5px white;
 	background: url("img/ui/copy.png");
 	background-size: 24px 24px;
 }
-.cssWaypoint.zeroclipboard-is-active {
+.cssWaypoint:active {
 	opacity: 0.5;
 }
 
@@ -1452,7 +1432,6 @@ input.mapCoordinatesName {
 ----------------------------------------------------------------------------- */
 #clkToggle {
 	left: 164px;
-	background: url("img/ui/switch.png");
 }
 
 #paneMenu {
@@ -1637,6 +1616,11 @@ header.jsSection sup {
 	background: linear-gradient(to left, black 0%, white 100%);
 }
 
+#chnToggle {
+	top: 16px;
+	left: 32px;
+}
+
 #chnOptions {
 	position: absolute; z-index: 2;
 	right: 0;
@@ -1716,7 +1700,6 @@ header.jsSection sup {
 	top: 12px;
 	left: 12px;
 	position: fixed;
-	background: url("img/ui/toggle.png");
 }
 .watButtons {
 	float: right;
@@ -1818,14 +1801,6 @@ header.jsSection sup {
 	background: url("img/map/waypoint.png");
 	background-size: 32px 32px;
 	opacity: 0.9;
-}
-.chnDryTopWaypoint.zeroclipboard-is-hover {
-	border-radius: 16px;
-	box-shadow: 0px 0px 5px white;
-	background: url("img/ui/copy.png");
-}
-.chnDryTopWaypoint.zeroclipboard-is-active {
-	opacity: 0.5;
 }
 #mapDryTopClip0, #mapDryTopClip1 {
 	width: 32px; height: 16px;
@@ -2128,10 +2103,55 @@ label:hover {
 	margin: auto 12px 5px 6px;
 }
 
-button.btnToggle {
+.btnUncheck {
+	background: url("img/ui/uncheck.png") center no-repeat, linear-gradient(to bottom, #444 0%, #333 100%);
+	width: 64px; height: 32px;
+}
+.btnUncheck:active {
+	background: url("img/ui/uncheck.png") center no-repeat, linear-gradient(to bottom, #333 0%, #444 100%);
+}
+.btnDefault {
+	background: url("img/ui/default.png") center no-repeat, linear-gradient(to bottom, #444 0%, #333 100%);
+	width: 32px; height: 32px;
+}
+.btnDefault:active {
+	background: url("img/ui/default.png") center no-repeat, linear-gradient(to bottom, #333 0%, #444 100%);
+}
+.btnDisplay {
 	margin-top: 8px;
 	margin-bottom: 8px;
-	width: 220px;
+	width: 220px; height: 28px;
+	background: url("img/map/display_hide.png") center no-repeat, linear-gradient(to bottom, #444 0%, #333 100%);
+}
+.btnDisplay:active {
+	background: url("img/map/display_hide.png") center no-repeat, linear-gradient(to bottom, #333 0%, #444 100%);
+}
+
+.btnWindow {
+	position: absolute; z-index: 11;
+	top: -16px;
+	left: -16px;
+	width: 32px; height: 32px;
+	opacity: 0.4;
+}
+.btnWindow:hover {
+	opacity: 0.8;
+}
+.btnClose {
+	background: url("img/ui/close.png");
+}
+.btnToggle {
+	background: url("img/ui/toggle.png");
+}
+.btnVertical {
+	background: url("img/ui/switch.png");
+}
+.btnHorizontal {
+	background: url("img/ui/switch.png");
+	transform: rotate(90deg);
+}
+.btnSelect {
+	background: url("img/ui/select.png");
 }
 
 .cssHidden {

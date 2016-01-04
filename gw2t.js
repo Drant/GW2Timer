@@ -6,13 +6,10 @@
 	Version: see int_utlProgramVersion - 2014.04.18 created
 
 	LIBRARIES:
+	Below are inline libraries, for the rest, see http://gw2timer.com/plugins.js
 	Vladimir Agafonkin - LeafletJS map library
-	Ben Alman - jQuery throttle/debounce
-	Stephen Chapman - DST detection
 	Craig Erskine - qTip tooltip
 	David Flanagan - SVG clock based on example from "JavaScript The Definitive Guide 6e"
-	Jon Rohan, James M. Greene - ZeroClipboard
-	Hyunje Alex Jun - JS scroll bar
 	Cliff Spradlin - GW2 API Documentation
 	Google and ResponsiveVoice.JS - Text-To-Speech service
 
@@ -1077,7 +1074,15 @@ O = {
 			{
 				if (C.isChainRegular(C.CurrentChains[i]))
 				{
-					$("#chnDetails_" + C.CurrentChains[i].nexus).toggle(O.Options.bol_expandWB);
+					var elm = $("#chnDetails_" + C.CurrentChains[i].nexus);
+					if (O.Options.bol_expandWB)
+					{
+						elm.show("fast");
+					}
+					else
+					{
+						elm.hide("fast");
+					}
 				}
 			}
 		},
@@ -5285,6 +5290,8 @@ D = {
 			cs: "trasa", it: "percorso", pl: "trasa", pt: "rota", ru: "маршру́т", zh: "路線"},
 		s_pins: {de: "stecknadel", es: "alfileres", fr: "épingles",
 			cs: "špendlík", it: "spilli", pl: "szpilka", pt: "alfinetes", ru: "була́вка", zh: "大頭針"},
+		s_range: {de: "reichweite", es: "alcance", fr: "portée",
+			cs: "dosah", it: "portata", pl: "zasięg", pt: "alcance", ru: "дальность", zh: "射程"},
 		s_lock: {de: "sperre", es: "bloqueo", fr: "verrou",
 			cs: "zámek", it: "blocco", pl: "zablokuj", pt: "bloqueio", ru: "блокировка", zh: "鎖定"},
 		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", zh: "鳥瞰點"},
@@ -11853,10 +11860,7 @@ G = {
 			// Initialize clipboard for each waypoint
 			$("#gldBook_" + pBook + " .cssWaypoint").each(function()
 			{
-				(new ZeroClipboard($(this)[0])).on("aftercopy", function(pEvent)
-				{
-					I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
-				});
+				I.initializeClipboard($(this)[0]);
 			});
 		},
 		
@@ -11926,7 +11930,7 @@ G = {
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Bounty").append(
-						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
+						"<div><img class='cssWaypoint jsClip' " + K.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldBounty_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
@@ -11973,7 +11977,7 @@ G = {
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Trek").append(
-						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
+						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Trek) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldTrek_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn>"
 						+ "</div>"
@@ -12010,7 +12014,7 @@ G = {
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Challenge").append(
-						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
+						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
@@ -12062,7 +12066,7 @@ G = {
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Rush").append(
-						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
+						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Rush) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldRush_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
@@ -12131,7 +12135,7 @@ G = {
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Puzzle").append(
-						"<div><img class='cssWaypoint' " + K.cZeroClipboardDataAttribute
+						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Puzzle) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldPuzzle_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
@@ -12308,6 +12312,7 @@ W = {
 		W.generateServerList();
 		I.styleContextMenu("#wvwContext");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
+		$("#wvwContextRange").one("mouseenter", W.initializeRangePlacer);
 		// Finally
 		W.isWvWLoaded = true;
 	},
@@ -12342,6 +12347,7 @@ W = {
 					iconAnchor: [19, 19]
 				})
 			});
+			this.bindMarkerZoomBehavior(marker, "contextmenu");
 			obj.Marker = marker;
 			this.Layer.Objective.addLayer(marker);
 		}
@@ -13140,17 +13146,17 @@ W = {
 			var increment = (pSupply < 0) ? -1 : 1;
 
 			W.numSiegeSupply += pSupply;
-			$("#sieSupplyNeed").html(W.numSiegeSupply);
+			$("#splNeed").html(W.numSiegeSupply);
 			// If after increment the blueprint count is 0, then make it blank
 			var finalblcount = blcount + increment;
 			if (finalblcount === 0)
 			{
-				pElement.removeClass("sieAdded");
+				pElement.removeClass("splAdded");
 				finalblcount = "";
 			}
 			else
 			{
-				pElement.addClass("sieAdded");
+				pElement.addClass("splAdded");
 			}
 			pElement.html(finalblcount);
 		};
@@ -13162,20 +13168,20 @@ W = {
 			for (var ii in W.Siege.Blueprints)
 			{
 				var bp = W.Siege.Blueprints[ii];
-				var siege = $("<ins class='sie sie_" + bp.toLowerCase() + "_" + i + "'></ins>");
+				var siege = $("<ins class='spl spl_" + bp.toLowerCase() + "_" + i + "'></ins>");
 				var supply = W.Siege.Weapons[i].supply[ii];
-				$("#sieBlueprints" + bp).append(siege);
+				$("#splBlueprints" + bp).append(siege);
 				(function(pSupply)
 				{
 					siege.click(function()
 					{
 						addSupply($(this), pSupply);
-						$("#sieSupplyHave").trigger("input");
+						$("#splHave").trigger("input");
 					});
 					siege.contextmenu(function()
 					{
 						addSupply($(this), -1 * pSupply);
-						$("#sieSupplyHave").trigger("input");
+						$("#splHave").trigger("input");
 						return false; // Prevents context menu popping up
 					});
 				})(supply);
@@ -13183,24 +13189,32 @@ W = {
 		}
 		
 		// Bind reset button
-		$("#sieSupplyReset").click(function()
+		$("#splReset").click(function()
 		{
-			$("#sieBlueprints ins").html("").removeClass("sieAdded");
-			$("#sieSupplyNeed").html("0");
+			$("#splBlueprints ins").html("").removeClass("splAdded");
+			$("#splNeed").html("0");
 			W.numSiegeSupply = 0;
-			$("#sieSupplyHave").trigger("input");
+			$("#splHave").trigger("input");
 		});
 		
 		// Bind supply have input
-		$("#sieSupplyHave").click(function()
+		$("#splHave").click(function()
 		{
 			$(this).select();
 		}).on("input", function()
 		{
 			var value = parseInt($(this).val()) - W.numSiegeSupply;
-			var elm = $("#sieSupplyRemain").html(value);
+			var elm = $("#splRemain").html(value);
 			I.colorizeValue(elm, value);
 		});
+	},
+	
+	/*
+	 * Writes context menu elements for placing range circles on the map.
+	 */
+	initializeRangePlacer: function()
+	{
+		var cm = $("#wvwContextRangeList");
 	},
 	
 	/*
@@ -14931,7 +14945,7 @@ T = {
 };
 
 /* =============================================================================
- * @@Board dashboard and timeline.
+ * @@Board dashboard and timeline
  * ========================================================================== */
 B = {
 	
@@ -15664,10 +15678,9 @@ K = {
 	IconHC0: {}, IconHC1: {}, IconHC2: {}, IconHC3: {},
 	IconsStandard: [],
 	IconsHardcore: [],
-	wpClipboards: [],
 	lsClipboards: [],
-	cZeroClipboardDataAttribute: "data-clipboard-text", // Defined by ZeroClipboard
-	cZeroClipboardSuccessText: "Chat link copied to clipboard :)<br />",
+	cClipboardAttribute: "data-clipboard-text",
+	cClipboardSuccessText: "Chat link copied to clipboard :)<br />",
 	TickerTimeout: {},
 	
 	// Stopwatch properties
@@ -16661,43 +16674,22 @@ K = {
 	},
 
 	/*
-	 * Initializes the array containing Zero Clipboard objects.
+	 * Initializes the array containing Clipboard objects.
 	 * Each clock waypoint icon (4 img tags) will have the data attribute set to
 	 * a waypoint text by the time updater.
 	 */
 	initializeClipboard: function()
 	{
-		ZeroClipboard.config({swfPath: "bin/ZeroClipboard.swf"});
 		for (var i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 		{
-			K.wpClipboards.push
-			(
-				new ZeroClipboard(document.getElementById("clkWaypoint" + i))
-			);
-			/*
-			 * Zero Clipboard works by superimposing an invisible Flash object 
-			 * over the target (the waypoint icons). When a user click on it the
-			 * data attribute of the target is loaded to the user's clipboard.
-			 * The code below are additional stuff to execute after.
-			 */
-			K.wpClipboards[i].on("aftercopy", function(pEvent)
-			{
-				I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
-			});
+			I.initializeClipboard("#clkWaypoint" + i);
 		}
 		
 		if (C.DryTopChains.length > 0)
 		{
 			for (var i = 0; i < 2; i++)
 			{
-				K.lsClipboards.push
-				(
-					new ZeroClipboard(document.getElementById("chnDryTopWaypoint" + i))
-				);
-				K.lsClipboards[i].on("aftercopy", function(pEvent)
-				{
-					I.write(K.cZeroClipboardSuccessText + pEvent.data["text/plain"], 5);
-				});
+				I.initializeClipboard("#chnDryTopWaypoint" + i);
 			}
 		}
 	},
@@ -16786,7 +16778,7 @@ K = {
 			}
 			
 			text = text + I.siteTagCurrent;
-			pWaypoint.attr(K.cZeroClipboardDataAttribute, text);
+			pWaypoint.attr(K.cClipboardAttribute, text);
 		};
 		
 		updateWaypoint(K.WpChain0, C.CurrentChainSD, C.CurrentChainHC, C.NextChainSD1, C.NextChainHC1);
@@ -16805,9 +16797,9 @@ K = {
 			var s0 = T.getCurrentDryTopEvents();
 			var s1 = T.getCurrentDryTopEvents(1);
 			document.getElementById("chnDryTopWaypoint0")
-				.setAttribute(K.cZeroClipboardDataAttribute, s0);
+				.setAttribute(K.cClipboardAttribute, s0);
 			document.getElementById("chnDryTopWaypoint1")
-				.setAttribute(K.cZeroClipboardDataAttribute, s1);
+				.setAttribute(K.cClipboardAttribute, s1);
 			$("#mapDryTopClip0").val(s0);
 			$("#mapDryTopClip1").val(s1);
 		}
@@ -17237,6 +17229,7 @@ I = {
 		$("#mapSwitchButton").one("click", function()
 		{
 			I.loadStylesheet("wvw");
+			I.loadImg("#wvwHUDPane .mapHUDButton");
 			$.getScript(U.URL_DATA.WvW).done(function()
 			{
 				W.initializeWvW();
@@ -17455,6 +17448,12 @@ I = {
 		{
 			C.initializeUnscheduledChains(C.TempleChains);
 			I.readjustTile();
+		});
+		
+		// Button to toggle the chain bar expand option
+		$("#chnToggle").click(function()
+		{
+			$("#opt_bol_expandWB").trigger("click");
 		});
 
 		// Generate a full timetable of the chains when clicked on that header
@@ -17820,6 +17819,21 @@ I = {
 	},
 	
 	/*
+	 * Binds an element for clipboard behavior.
+	 * @param string or DOM element pSelector for selecting the element.
+	 * @returns object Clipboard.
+	 */
+	initializeClipboard: function(pSelector)
+	{
+		var cb = new Clipboard(pSelector);
+		cb.on("success", function(pEvent)
+		{
+			I.write(K.cClipboardSuccessText + pEvent.text, 5);
+		});
+		return cb;
+	},
+	
+	/*
 	 * Initializes custom scroll bar for specified element using defined settings.
 	 * Container requirements: position relative, overflow hidden.
 	 * @param jqobject pElement to initialize.
@@ -18114,7 +18128,8 @@ I = {
 	 */
 	loadImg: function(pContainer)
 	{
-		pContainer.find("img").each(function()
+		var elms = (typeof pContainer === "string") ? $(pContainer) : pContainer.find("img");
+		elms.each(function()
 		{
 			if ($(this).attr("data-src"))
 			{
@@ -18504,6 +18519,7 @@ I = {
 			case I.ModeEnum.Overlay:
 			{
 				I.cPANE_MENU_HEIGHT = 32;
+				I.loadImg("#mapGPSButton");
 			} break;
 			case I.ModeEnum.Simple:
 			{

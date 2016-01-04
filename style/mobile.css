@@ -122,6 +122,10 @@ body, html, .panelMain, #windowMain, #paneContent article {
 #plateChains header {
 	height: 48px;
 }
+#chnToggle {
+	top: 32px;
+	left: 0;
+}
 
 #plateChains header span {
 	visibility: visible;

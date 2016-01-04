@@ -521,18 +521,18 @@
 /* Siege Supply Calculator
 ----------------------------------------------------------------------------- */
 
-#wvwSiege {
+#wvwSupply {
 	padding: 4px 8px 8px 8px;
 }
 
-#sieCalculator, #sieSupplyHave {
+#splCalculator, #splHave {
 	font-size: 14px;
 }
-#sieSupplyHave {
+#splHave {
 	width: 32px;
 }
 
-.sie {
+.spl {
 	width: 32px; height: 32px;
 	margin: 1px;
 	border: 1px solid transparent;
@@ -547,33 +547,33 @@
 		1px 0px 2px #000,
 		-1px 0px 2px #000;
 }
-.sie:hover {
+.spl:hover {
 	border: 1px solid gold;
 }
-.sie:active {
+.spl:active {
 	opacity: 0.6;
 }
-.sieAdded {
+.splAdded {
 	border: 1px solid lime;
 }
-.sie_basic_arrowcart { background-position: 0 0; }
-.sie_basic_ballista { background-position: -32px 0; }
-.sie_basic_catapult { background-position: -64px 0; }
-.sie_basic_flameram { background-position: -96px 0; }
-.sie_basic_golem { background-position: -128px 0; }
-.sie_basic_shieldgenerator { background-position: -160px 0; }
-.sie_basic_trebuchet { background-position: -192px 0; }
-.sie_guild_arrowcart { background-position: -224px 0; }
-.sie_guild_ballista { background-position: -256px 0; }
-.sie_guild_catapult { background-position: -288px 0; }
-.sie_guild_flameram { background-position: -320px 0; }
-.sie_guild_golem { background-position: -352px 0; }
-.sie_guild_shieldgenerator { background-position: -384px 0; }
-.sie_guild_trebuchet { background-position: -416px 0; }
-.sie_superior_arrowcart { background-position: -448px 0; }
-.sie_superior_ballista { background-position: -480px 0; }
-.sie_superior_catapult { background-position: -512px 0; }
-.sie_superior_flameram { background-position: -544px 0; }
-.sie_superior_golem { background-position: -576px 0; }
-.sie_superior_shieldgenerator { background-position: -608px 0; }
-.sie_superior_trebuchet { background-position: -640px 0; }
+.spl_basic_arrowcart { background-position: 0 0; }
+.spl_basic_ballista { background-position: -32px 0; }
+.spl_basic_catapult { background-position: -64px 0; }
+.spl_basic_flameram { background-position: -96px 0; }
+.spl_basic_golem { background-position: -128px 0; }
+.spl_basic_shieldgenerator { background-position: -160px 0; }
+.spl_basic_trebuchet { background-position: -192px 0; }
+.spl_guild_arrowcart { background-position: -224px 0; }
+.spl_guild_ballista { background-position: -256px 0; }
+.spl_guild_catapult { background-position: -288px 0; }
+.spl_guild_flameram { background-position: -320px 0; }
+.spl_guild_golem { background-position: -352px 0; }
+.spl_guild_shieldgenerator { background-position: -384px 0; }
+.spl_guild_trebuchet { background-position: -416px 0; }
+.spl_superior_arrowcart { background-position: -448px 0; }
+.spl_superior_ballista { background-position: -480px 0; }
+.spl_superior_catapult { background-position: -512px 0; }
+.spl_superior_flameram { background-position: -544px 0; }
+.spl_superior_golem { background-position: -576px 0; }
+.spl_superior_shieldgenerator { background-position: -608px 0; }
+.spl_superior_trebuchet { background-position: -640px 0; }
