@@ -127,7 +127,7 @@ O = {
 		bol_showMap: true,
 		bol_showDashboard: true,
 		bol_showTimeline: true,
-		bol_showTimelineOpaque: false,
+		bol_opaqueTimeline: false,
 		bol_hideHUD: true,
 		// Map
 		int_setFloor: 1,
@@ -158,6 +158,7 @@ O = {
 		int_secWvWRefresh: 10,
 		int_numLogEntries: 128,
 		bol_showLog: true,
+		bol_opaqueLog: false,
 		bol_maximizeLog: false,
 		bol_logRedHome: true,
 		bol_logGreenHome: true,
@@ -174,6 +175,7 @@ O = {
 		bol_narrateKeep: true,
 		bol_narrateCastle: true,
 		bol_showLeaderboard: true,
+		bol_opaqueLeaderboard: false,
 		bol_condenseLeaderboard: false,
 		bol_showObjectiveLabels: true,
 		// GPS
@@ -1245,7 +1247,7 @@ O = {
 				else
 				{
 					B.generateTimeline();
-					O.Enact.bol_showTimelineOpaque();
+					O.Enact.bol_opaqueTimeline();
 				}
 			}
 			else
@@ -1253,10 +1255,10 @@ O = {
 				B.toggleTimeline(false);
 			}
 		},
-		bol_showTimelineOpaque: function()
+		bol_opaqueTimeline: function()
 		{
 			var background;
-			if (O.Options.bol_showTimelineOpaque)
+			if (O.Options.bol_opaqueTimeline)
 			{
 				if (I.ModeCurrent === I.ModeEnum.Overlay)
 				{
@@ -1297,16 +1299,11 @@ O = {
 		},
 		bol_showLog: function()
 		{
-			if (O.Options.bol_showLog)
-			{
-				$("#wvwLog").show("fast");
-				$("#logExpand").show();
-			}
-			else
-			{
-				$("#wvwLog").hide("fast");
-				$("#logExpand").hide();
-			}
+			W.toggleLog();
+		},
+		bol_opaqueLog: function()
+		{
+			W.opaqueLog();
 		},
 		bol_maximizeLog: function()
 		{
@@ -1315,6 +1312,10 @@ O = {
 		bol_showLeaderboard: function()
 		{
 			W.toggleLeaderboard();
+		},
+		bol_opaqueLeaderboard: function()
+		{
+			W.opaqueLeaderboard();
 		},
 		bol_condenseLeaderboard: function()
 		{
@@ -7458,8 +7459,9 @@ M = {
 	cCIRCLE_HALF_DEGREE: 180,
 	cCIRCLE_FULL_DEGREE: 360,
 	cRADIAN_TO_DEGREE: 180 / Math.PI,
-	cUNITS_TO_POINTS: 208 / 5000,
-	cPOINTS_TO_UNITS: 5000 / 208,
+	cUNITS_TO_POINTS: 1 / 24, // Map coordinates "points" versus game range "units"
+	cPOINTS_TO_UNITS: 24,
+	cUNITS_PER_SECOND: 386, // Units traveled in one second while on swiftness buff
 	GPSPreviousCoord: [],
 	GPSPreviousAngleCharacter: 0,
 	GPSPreviousAngleCamera: 0,
@@ -7703,8 +7705,7 @@ M = {
 		{
 			if (that.isMouseOnHUD) { return; }
 			var coord = that.convertLCtoGC(pEvent.latlng);
-			$(htmlidprefix + "CoordinatesCopy")
-				.val(P.formatCoord(coord)).select();
+			that.outputCoordinatesCopy(P.formatCoord(coord));
 		});
 
 		/*
@@ -7805,6 +7806,21 @@ M = {
 		{
 			P.drawCompletionRoute();
 		});
+	},
+	
+	/*
+	 * Sets the value provided to the coordinates bar.
+	 * @param string pText to output.
+	 */
+	outputCoordinatesCopy: function(pText)
+	{
+		var htmlidprefix = "#" + this.MapEnum;
+		$(htmlidprefix + "CoordinatesCopy").val(pText).select();
+	},
+	outputCoordinatesName: function(pText)
+	{
+		var htmlidprefix = "#" + this.MapEnum;
+		$(htmlidprefix + "CoordinatesName").val(pText);
 	},
 	
 	/*
@@ -8005,8 +8021,7 @@ M = {
 			// Update current zone object
 			this.ZoneCurrent = testzone;
 			zonename = this.getZoneName(this.ZoneCurrent);
-			document.getElementById(htmlidprefix + "CoordinatesName")
-				.value = zonename;
+			document.getElementById(htmlidprefix + "CoordinatesName").value = zonename;
 
 			// Reveal moused zone's icons
 			switch (that.MapEnum)
@@ -8521,7 +8536,6 @@ M = {
 	drawPersonalPath: function()
 	{
 		var that = this;
-		var htmlidprefix = "#" + that.MapEnum;
 		if (O.Options.bol_showPersonalPaths)
 		{
 			var path;
@@ -8547,7 +8561,7 @@ M = {
 					// Single click path: get the coordinates of all pins
 					path.on("click", function()
 					{
-						$(htmlidprefix + "CoordinatesCopy").val(that.getPersonalString()).select();
+						that.outputCoordinatesCopy(that.getPersonalString());
 					});
 					// Double click path: insert a pin between the two pins that connect the path
 					path.on("dblclick", function(pEvent)
@@ -8558,6 +8572,7 @@ M = {
 					this.Layer.PersonalPath.addLayer(path);
 				}
 				this.toggleLayer(this.Layer.PersonalPath, true);
+				that.outputPinsRange();
 			}
 			else
 			{
@@ -8620,6 +8635,27 @@ M = {
 		{
 			I.write("Path unavailable for this.");
 		}
+	},
+	
+	/*
+	 * Outputs the total game "unit" range distance for the pins.
+	 */
+	outputPinsRange: function()
+	{
+		var distance = 0;
+		var markers = this.Layer.PersonalPin.getLayers();
+		var length = markers.length - 1;
+		
+		for (var i = 0; i < length; i++)
+		{
+			distance += P.getDistanceBetweenCoords(
+				this.convertLCtoGC(markers[i].getLatLng()),
+				this.convertLCtoGC(markers[i+1].getLatLng())
+			);
+		}
+		var units = ~~(distance * this.cPOINTS_TO_UNITS);
+		var time = T.formatSeconds(Math.round(units / this.cUNITS_PER_SECOND), true);
+		this.outputCoordinatesName(units + " " + D.getWord("range") + " (" + time + ")");
 	},
 	
 	/*
@@ -9285,13 +9321,10 @@ M = {
 	bindMarkerCoordBehavior: function(pMarker, pEventType)
 	{
 		var that = this;
-		var htmlidprefix = "#" + that.MapEnum;
 		pMarker.on(pEventType, function()
 		{
 			var coord = that.convertLCtoGC(this.getLatLng());
-			$(htmlidprefix + "CoordinatesCopy")
-				.val(P.formatCoord(coord))
-				.select();
+			that.outputCoordinatesCopy(P.formatCoord(coord));
 		});
 	},
 	bindMarkerWikiBehavior: function(pMarker, pEventType)
@@ -9573,8 +9606,8 @@ P = {
 						{
 							marker.on("click", function()
 							{
-								$(htmlidprefix + "CoordinatesCopy").val(U.getChatlinkFromPoiID(this.options.id)).select();
-								$(htmlidprefix + "CoordinatesName").val(this.options.markername);
+								that.outputCoordinatesCopy(U.getChatlinkFromPoiID(this.options.id));
+								that.outputCoordinatesName(this.options.markername);
 							});
 							marker.on("dblclick", function(pEvent)
 							{
@@ -10161,6 +10194,10 @@ P = {
 	{
 		return Math.sqrt(Math.pow(pCoordA[0] - pCoordB[0], 2) + Math.pow(pCoordA[1] - pCoordB[1], 2));
 	},
+	getUnitsBetweenCoords: function(pCoordA, pCoordB)
+	{
+		return ~~(P.getDistanceBetweenCoords(pCoordA, pCoordB) * M.cPOINTS_TO_UNITS);
+	},
 	
 	/*
 	 * Gets a nearest-immediate-neighbor path from an array of coordinates.
@@ -10367,7 +10404,7 @@ P = {
 			
 			for (var i in interzones)
 			{
-				// Draw the two portals
+				// Draw the two gateways
 				for (var ii in interzones[i])
 				{
 					marker = drawGateway((interzones[i])[ii], "img/map/gateway_zone.png");
@@ -12583,9 +12620,14 @@ W = {
 		{
 			W.toggleRegionLeaderboard();
 		});
+		$("#lboOpaque").click(function()
+		{
+			$("#opt_bol_opaqueLeaderboard").trigger("click");
+		});
 		
 		// Apply the leaderboard appearance options
-		$("#opt_bol_showLeaderboard").trigger("change");
+		W.toggleLeaderboard();
+		W.opaqueLeaderboard();
 		W.toggleLeaderboardWidth();
 		I.initializeScrollbar("#lboOther");
 	},
@@ -12707,9 +12749,9 @@ W = {
 			 */
 			var owner = W.Metadata.Owners[i]; // Example: "Green" as in data
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
+			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
 			var serverid = pData.worlds[ownerkey];
 			var servername = D.getObjectName(W.Servers[serverid]);
-			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
 			var score = pData.scores[ownerkey];
 			var scorehighest = (T.getMinMax(pData.scores)).max;
 			var scorepercent = (pData.scores[ownerkey] / scorehighest) * T.cPERCENT_100;
@@ -12769,7 +12811,7 @@ W = {
 			 */
 			html += "<article class='lboServer" + owner + "'>"
 				+ "<aside class='lboRank'>" + rank + ".</aside>"
-				+ "<aside class='lboName'>" + servername + "</aside>"
+				+ "<aside class='lboName'>&nbsp;" + servername + "</aside>"
 				+ "<aside class='lboScore' title='<dfn>" + scoredifferences[0] + " points</dfn> away from " + otherservers[0]
 				+ "<br /><dfn>" + scoredifferences[1] + " points</dfn> away from " + otherservers[1] + "'>"
 					+ "<var>" + score.toLocaleString() + "</var>"
@@ -12826,6 +12868,11 @@ W = {
 			$(".lboExtra").hide();
 		}
 	},
+	opaqueLeaderboard: function()
+	{
+		var background = (O.Options.bol_opaqueLeaderboard) ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.2)";
+		$("#lboContainer").css({background: background});
+	},
 	
 	/*
 	 * Condenses the leaderboard or revert it.
@@ -12873,8 +12920,13 @@ W = {
 		{
 			$("#opt_bol_maximizeLog").trigger("click");
 		});
+		$("#logOpaque").click(function()
+		{
+			$("#opt_bol_opaqueLog").trigger("click");
+		});
 		// Apply the log appearance options
-		$("#opt_bol_showLog").trigger("change");
+		W.toggleLog();
+		W.opaqueLog();
 		W.toggleLogHeight();
 		I.initializeScrollbar("#logWindow");
 		
@@ -12931,6 +12983,26 @@ W = {
 				$(this).html(timestr);
 			});
 		});
+	},
+	
+	/*
+	 * Toggles the log display.
+	 */
+	toggleLog: function()
+	{
+		if (O.Options.bol_showLog)
+		{
+			$("#wvwLog, .logExtra").show("fast");
+		}
+		else
+		{
+			$("#wvwLog, .logExtra").hide("fast");
+		}
+	},
+	opaqueLog: function()
+	{
+		var background = (O.Options.bol_opaqueLog) ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.1)";
+		$("#wvwLog").css({background: background});
 	},
 	
 	/*
@@ -13163,13 +13235,17 @@ W = {
 		
 		var calc = $("#wvwSiege");
 		I.preventPropagation(calc);
-		for (var i in W.Siege.Weapons)
+		for (var i in W.Siege.Blueprints)
 		{
-			for (var ii in W.Siege.Blueprints)
+			for (var ii in W.Siege.Weapons)
 			{
-				var bp = W.Siege.Blueprints[ii];
-				var siege = $("<ins class='spl spl_" + bp.toLowerCase() + "_" + i + "'></ins>");
-				var supply = W.Siege.Weapons[i].supply[ii];
+				if (W.Siege.Weapons[ii].type !== "field")
+				{
+					continue;
+				}
+				var bp = W.Siege.Blueprints[i];
+				var siege = $("<ins class='spl spl_" + bp.toLowerCase() + "_" + ii + "'></ins>");
+				var supply = W.Siege.Weapons[ii].supply[i];
 				$("#splBlueprints" + bp).append(siege);
 				(function(pSupply)
 				{
@@ -13215,6 +13291,41 @@ W = {
 	initializeRangePlacer: function()
 	{
 		var cm = $("#wvwContextRangeList");
+		var counter = 0;
+		var iconsperline = 5;
+		for (var i in W.Siege.Weapons)
+		{
+			var weapon = W.Siege.Weapons[i];
+			if (weapon.isPlaceable === false)
+			{
+				continue;
+			}
+			counter++;
+			var weapon = $("<img src='img/wvw/range/" + i + I.cPNG + "' />");
+			cm.append(weapon);
+			if (counter % iconsperline === 0)
+			{
+				cm.append("<br />");
+			}
+			(function(pWeapon)
+			{
+				weapon.click(function()
+				{
+					W.placeRange(pWeapon);
+				});
+			})(weapon);
+		}
+	},
+	
+	/*
+	 * Places a range marker icon and circle circumference on the map.
+	 * @param object pWeapon siege.
+	 * @pre LatLng variable was assigned when the user right clicked on the map.
+	 */
+	placeRange: function(pWeapon)
+	{
+		var coord = this.convertLCtoGC(this.ContextLatLng);
+		L.circle(this.ContextLatLng, 2000).addTo(this.Map);
 	},
 	
 	/*
@@ -13367,7 +13478,7 @@ W = {
 			{
 				W.isAPIFailed = true;
 				// If failed near reset then tell so, otherwise generic error
-				var errormessage = (W.secTillWvWReset < 10 * T.cSECONDS_IN_MINUTE) ? "WvW reset is happening soon." : "ArenaNet API servers may be down.";
+				var errormessage = (W.secTillWvWReset < 10 * T.cSECONDS_IN_MINUTE) ? "WvW reset is happening soon." : "Waiting for ArenaNet API servers...";
 				I.write("Unable to retrieve WvW data during " + T.getTimeFormatted() + ".<br />" + errormessage, 0);
 			}
 		});
@@ -14953,14 +15064,14 @@ B = {
 	DashboardCountdown: GW2T_DASHBOARD_DATA.Countdowns,
 	DashboardStory: GW2T_DASHBOARD_DATA.Story,
 	DashboardSale: GW2T_DASHBOARD_DATA.Sale,
-	DashboardSupply: GW2T_DASHBOARD_DATA.Supply,
+	DashboardVendor: GW2T_DASHBOARD_DATA.Vendor,
 	isDashboardEnabled: true,
 	isDashboardAnnouncementEnabled: false,
 	isDashboardCountdownEnabled: false,
 	isDashboardCountdownTickEnabled: false,
 	isDashboardStoryEnabled: false,
 	isDashboardSaleEnabled: false,
-	isDashboardSupplyEnabled: false,
+	isDashboardVendorEnabled: false,
 	
 	Timeline: GW2T_TIMELINE,
 	isTimelineEnabled: true,
@@ -14996,17 +15107,17 @@ B = {
 		{
 			B.isDashboardSaleEnabled = true;
 		}
-		// Verify supply: if has not expired
-		if (T.isTimely(B.DashboardSupply, now))
+		// Verify vendor: if has not expired
+		if (T.isTimely(B.DashboardVendor, now))
 		{
-			B.isDashboardSupplyEnabled = true;
+			B.isDashboardVendorEnabled = true;
 		}
 		
 		// Make sure at least one component of the dashboard is enabled, else disable the dashboard
 		if ((B.isDashboardCountdownEnabled === false
 				&& B.isDashboardAnnouncementEnabled === false
 				&& B.isDashboardSaleEnabled === false
-				&& B.isDashboardSupplyEnabled === false)
+				&& B.isDashboardVendorEnabled === false)
 			|| B.isDashboardEnabled === false
 			|| I.isMapEnabled === false
 			|| O.Options.bol_showDashboard === false)
@@ -15126,10 +15237,10 @@ B = {
 			}
 		}
 		
-		// Initialize supply
-		if (B.isDashboardSupplyEnabled)
+		// Initialize vendor
+		if (B.isDashboardVendorEnabled)
 		{
-			B.generateDashboardSupplyHeader();
+			B.generateDashboardVendorHeader();
 		}
 	},
 	
@@ -15190,47 +15301,47 @@ B = {
 	},
 	
 	/*
-	 * Generates the header for the supply feature.
+	 * Generates the header for the vendor feature.
 	 */
-	generateDashboardSupplyHeader: function()
+	generateDashboardVendorHeader: function()
 	{
-		var weekdaylocation = B.getDashboardSupplyWeekday();
-		var supplyname = D.getObjectName(B.DashboardSupply);
-		var supplycodes = "";
-		for (var i in B.DashboardSupply.Codes)
+		var weekdaylocation = B.getDashboardVendorWeekday();
+		var vendorname = D.getObjectName(B.DashboardVendor);
+		var vendorcodes = "";
+		for (var i in B.DashboardVendor.Codes)
 		{
-			supplycodes += i + "@" + (B.DashboardSupply.Codes[i])[weekdaylocation] + " ";
+			vendorcodes += i + "@" + (B.DashboardVendor.Codes[i])[weekdaylocation] + " ";
 		}
-		supplycodes += "- " + supplyname;
-		$("#dsbSupply").empty().append("<div><kbd id='dsbSupplyHeader' class='curToggle' "
-			+  "title='<dfn>Updated:</dfn> " + B.DashboardSupply.Start.toLocaleString(window.navigator.language, {
+		vendorcodes += "- " + vendorname;
+		$("#dsbVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle' "
+			+  "title='<dfn>Updated:</dfn> " + B.DashboardVendor.Start.toLocaleString(window.navigator.language, {
 					year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long" })
 				+ "'><img src='img/map/vendor_karma.png' /> "
-			+ "<u>" + supplyname + "</u>"
-			+ "<img id='dsbSupplyToggleIcon' src='img/ui/toggle.png' /></kbd>"
-			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
+			+ "<u>" + vendorname + "</u>"
+			+ "<img id='dsbVendorToggleIcon' src='img/ui/toggle.png' /></kbd>"
+			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Vendor_Network_Agent")
 				+ "title='Items restock at daily reset.<br />Vendors relocate 8 hours after that.<br />Limit 1 purchase per vendor.'>Info</a> "
-			+ "<u class='curZoom' id='dsbSupplyDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
-			+ "<input id='dsbSupplyCodes' class='cssInputText' type='text' value='" + supplycodes + "' /> "
-		+ "</div><div id='dsbSupplyTable' class='jsScrollable'></div>");
+			+ "<u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
+			+ "<input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' /> "
+		+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>");
 
 		// Bind buttons
-		$("#dsbSupplyCodes").click(function()
+		$("#dsbVendorCodes").click(function()
 		{
 			$(this).select();
 		});
-		$("#dsbSupplyHeader").click(function()
+		$("#dsbVendorHeader").click(function()
 		{
-			B.generateDashboardSupply();
+			B.generateDashboardVendor();
 		});
-		$("#dsbSupplyDraw").click(function()
+		$("#dsbVendorDraw").click(function()
 		{
 			if ($(this).data("hasDrawn") !== true)
 			{
 				var coords = [];
-				for (var i in B.DashboardSupply.Coords)
+				for (var i in B.DashboardVendor.Coords)
 				{
-					var coord = (B.DashboardSupply.Coords[i])[weekdaylocation];
+					var coord = (B.DashboardVendor.Coords[i])[weekdaylocation];
 					if (coord !== undefined)
 					{
 						coords.push(coord);
@@ -15245,22 +15356,22 @@ B = {
 				$(this).data("hasDrawn", false);
 			}
 		});
-		I.toggleToggleIcon("#dsbSupplyToggleIcon", B.DashboardSale.isPreshown);
+		I.toggleToggleIcon("#dsbVendorToggleIcon", B.DashboardSale.isPreshown);
 	},
 	
 	/*
-	 * Generates the supply offered.
+	 * Generates the vendor offered.
 	 */
-	generateDashboardSupply: function()
+	generateDashboardVendor: function()
 	{
 		var animationspeed = 200;
-		var weekdaylocation = B.getDashboardSupplyWeekday();
-		var table = $("#dsbSupplyTable");
-		var numoffers = O.getObjectLength(B.DashboardSupply.Offers);
+		var weekdaylocation = B.getDashboardVendorWeekday();
+		var table = $("#dsbVendorTable");
+		var numoffers = O.getObjectLength(B.DashboardVendor.Offers);
 		
 		if (table.is(":empty") === false)
 		{
-			I.toggleToggleIcon("#dsbSupplyToggleIcon", false);
+			I.toggleToggleIcon("#dsbVendorToggleIcon", false);
 			table.animate({height: 0}, animationspeed, function()
 			{
 				$(this).css({height: "auto"}).empty();
@@ -15268,39 +15379,39 @@ B = {
 		}
 		else
 		{
-			I.toggleToggleIcon("#dsbSupplyToggleIcon", true);
+			I.toggleToggleIcon("#dsbVendorToggleIcon", true);
 			table.empty();
 			table.append(I.cThrobber);
-			for (var i in B.DashboardSupply.Offers)
+			for (var i in B.DashboardVendor.Offers)
 			{
 				(function(i)
 				{
-					var offer = B.DashboardSupply.Offers[i];
+					var offer = B.DashboardVendor.Offers[i];
 					$.getJSON(U.URL_API.ItemDetails + offer.id + U.URL_API.LangKey, function(pData)
 					{
 						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
-						table.append("<div class='dsbSupplyEntry'>"
-							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img class='dsbSupplyIcon' src='" + pData.icon + "' /></a> "
-							+ "<span id='dsbSupplyItem_" + i + "' class='dsbSupplyItem curZoom " + E.getRarityClass(pData.rarity)
-								+ "' data-coord='" + (B.DashboardSupply.Coords[i])[weekdaylocation] + "'>" + pData.name + "</span> "
-							+ "<span class='dsbSupplyPriceKarma'>" + E.createKarmaString(offer.price, true) + "</span>"
-							+ "<span class='dsbSupplyPriceCoin' id='dsbSupplyPriceCoin_" + i + "'></span>"
+						table.append("<div class='dsbVendorEntry'>"
+							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img class='dsbVendorIcon' src='" + pData.icon + "' /></a> "
+							+ "<span id='dsbVendorItem_" + i + "' class='dsbVendorItem curZoom " + E.getRarityClass(pData.rarity)
+								+ "' data-coord='" + (B.DashboardVendor.Coords[i])[weekdaylocation] + "'>" + pData.name + "</span> "
+							+ "<span class='dsbVendorPriceKarma'>" + E.createKarmaString(offer.price, true) + "</span>"
+							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + i + "'></span>"
 						+ "</div>");
 						// Get TP prices also
 						$.getJSON(U.URL_API.ItemPrices + offer.id, function(pData)
 						{
-							$("#dsbSupplyPriceCoin_" + i).html(" ≈ " + E.createCoinString(E.deductTax(pData.sells.unit_price), true));
+							$("#dsbVendorPriceCoin_" + i).html(" ≈ " + E.createCoinString(E.deductTax(pData.sells.unit_price), true));
 						}).fail(function()
 						{
-							$("#dsbSupplyPriceCoin_" + i).html(" = " + E.createCoinString(0, true));
+							$("#dsbVendorPriceCoin_" + i).html(" = " + E.createCoinString(0, true));
 						});
-						M.bindMapLinkBehavior($("#dsbSupplyItem_" + i), M.ZoomEnum.Ground, M.Pin.Program);
+						M.bindMapLinkBehavior($("#dsbVendorItem_" + i), M.ZoomEnum.Ground, M.Pin.Program);
 					}).done(function()
 					{
 						// Finalize the table after every offer has been added
-						if ($(".dsbSupplyEntry").length === numoffers)
+						if ($(".dsbVendorEntry").length === numoffers)
 						{
-							finalizeSupplyTable();
+							finalizeVendorTable();
 						}
 					}).fail(function()
 					{
@@ -15312,9 +15423,9 @@ B = {
 			}
 		}
 		
-		var finalizeSupplyTable = function()
+		var finalizeVendorTable = function()
 		{
-			$(".dsbSupplyItem").each(function()
+			$(".dsbVendorItem").each(function()
 			{
 				M.bindMapLinkBehavior($(this));
 			});
@@ -15322,18 +15433,18 @@ B = {
 			table.css({height: 0}).animate({height: height}, animationspeed, function()
 			{
 				$(this).css({height: "auto"});
-				I.initializeScrollbar("#dsbSupplyTable");
-				I.updateScrollbar("#dsbSupplyTable");
+				I.initializeScrollbar("#dsbVendorTable");
+				I.updateScrollbar("#dsbVendorTable");
 			});
 			I.removeThrobber(table);
 		};
 	},
-	getDashboardSupplyWeekday: function()
+	getDashboardVendorWeekday: function()
 	{
 		var now = new Date();
 		var weekday = now.getUTCDay();
 		var hour = now.getUTCHours();
-		return (hour < B.DashboardSupply.resetHour) ? T.wrapInteger(weekday - 1, T.cDAYS_IN_WEEK) : weekday;
+		return (hour < B.DashboardVendor.resetHour) ? T.wrapInteger(weekday - 1, T.cDAYS_IN_WEEK) : weekday;
 	},
 	
 	/*
@@ -15418,11 +15529,11 @@ B = {
 			$("#dsbSale").hide();
 		}
 		
-		// Refresh supply header at its specific time
-		if (T.isTimely(B.DashboardSupply, pDate)
-			&& hour === B.DashboardSupply.resetHour && minute === 0)
+		// Refresh vendor header at its specific time
+		if (T.isTimely(B.DashboardVendor, pDate)
+			&& hour === B.DashboardVendor.resetHour && minute === 0)
 		{
-			B.generateDashboardSupplyHeader();
+			B.generateDashboardVendorHeader();
 		}
 	},
 	
@@ -15500,9 +15611,9 @@ B = {
 			$("#opt_bol_showTimeline").prop("checked", false).trigger("change");
 			$("#tmlClose").trigger("click");
 		});
-		$("#tmlToggle").click(function()
+		$("#tmlOpaque").click(function()
 		{
-			$("#opt_bol_showTimelineOpaque").trigger("click");
+			$("#opt_bol_opaqueTimeline").trigger("click");
 		});
 		// Initialize
 		I.qTip.init(".tmlLine");

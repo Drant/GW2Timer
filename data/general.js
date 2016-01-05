@@ -1060,46 +1060,6 @@ Sale: {
 	},
 	Items: [
 	{
-		url: "http://wiki.guildwars2.com/wiki/Character Slot Expansion",
-		img: "http://i.imgur.com/bYMfxCX.png",
-		quantity: 1,
-		pricenew: 600,
-		priceold: 800,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Basic Cloth Rack",
-		img: "https://render.guildwars2.com/file/6EDD16520B6459AA2731414BA5309C524F730949/904688.png",
-		quantity: 1,
-		pricenew: 600,
-		priceold: 800,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Basic Harvesting Node Pack",
-		img: "https://render.guildwars2.com/file/049F5E2C1B4019D0806D3D06CA17F92153FBD574/866826.png",
-		quantity: 1,
-		pricenew: 600,
-		priceold: 800,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Basic Lumber Node Pack",
-		img: "https://render.guildwars2.com/file/A91BE8A9075CBF2F342C0459F0DEFD68509C66B1/841529.png",
-		quantity: 1,
-		pricenew: 600,
-		priceold: 800,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Basic Ore Node Pack",
-		img: "https://render.guildwars2.com/file/116DD826056B64F35AA13AB3EE111594EB62B50D/699313.png",
-		quantity: 1,
-		pricenew: 600,
-		priceold: 800,
-		col: 1
-	},
-	/*{
 		url: "http://wiki.guildwars2.com/wiki/Bandit Sniper Appearance Pack",
 		img: "http://i.imgur.com/mIuPrbz.png",
 		quantity: 1,
@@ -1116,10 +1076,10 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Snowflake Glider",
-		img: "https://render.guildwars2.com/file/CE007E4C9FD410E85D79D745BC750F2A6719E4DF/1313090.png",
+		url: "http://wiki.guildwars2.com/wiki/Winter_Chimes_Dye_Kit",
+		img: "http://i.imgur.com/1I747yu.png",
 		quantity: 1,
-		pricenew: 500,
+		pricenew: 125,
 		priceold: 0,
 		col: 0
 	},
@@ -1146,15 +1106,7 @@ Sale: {
 		pricenew: 200,
 		priceold: 0,
 		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Winter_Chimes_Dye_Kit",
-		img: "http://i.imgur.com/1I747yu.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 1
-	}*/
+	}
 	]
 },
 
@@ -1162,7 +1114,7 @@ Sale: {
  * Pact Supply Network Agent locations. Array indexes correspond to the UTC
  * weekday number, where 0 is Sunday.
  */
-Supply:
+Vendor:
 {
 	resetHour: 8,
 	name_en: "Pact Supply Network Agents",
@@ -1188,16 +1140,16 @@ Supply:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-04T00:00:00Z"),
-	Finish: new Date("2016-01-05T00:00:00Z"),
+	Start: new Date("2016-01-05T00:00:00Z"),
+	Finish: new Date("2016-01-06T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "44660", price: "25200" },
-		Fox: { id: "43810", price: "25200" },
-		Derwena: { id: "49735", price: "25200" },
-		Yana: { id: "44652", price: "25200" },
-		Katyn: { id: "43839", price: "25200" },
-		Verma: { id: "43827", price: "25200" }
+		Mehem: { id: "49734", price: "12600" },
+		Fox: { id: "43817", price: "25200" },
+		Derwena: { id: "49769", price: "25200" },
+		Yana: { id: "43807", price: "25200" },
+		Katyn: { id: "49746", price: "25200" },
+		Verma: { id: "49752", price: "25200" }
 	}
 }
 };

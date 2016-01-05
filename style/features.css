@@ -226,7 +226,7 @@ dt.jpzListNameHover {
 .nodList button {
 	width: 84px;
 }
-.nodList img {
+.nodList label img {
 	width: 16px; height: 16px;
 }
 .nodList div var { /* Resource name */

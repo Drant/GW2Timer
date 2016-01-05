@@ -28,7 +28,7 @@
 	top: 0;
 	left: 0;
 }
-#tmlToggle {
+#tmlOpaque {
 	top: 0px;
 	left: 32px;
 }
@@ -101,6 +101,12 @@ input.mapCoordinatesName {
 }
 #lboCountdown {
 	margin-top: -12px !important;
+}
+#wvwLog {
+	margin: 0 !important;
+}
+.mapPeripheralSouth {
+	bottom: 0 !important; right: 0 !important;
 }
 
 /* Lower the menu bar's height */

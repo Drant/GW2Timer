@@ -757,7 +757,7 @@ textarea.jsCopyCode {
 #tmlDelete {
 	display: none;
 }
-#tmlToggle {
+#tmlOpaque {
 	left: 16px;
 }
 #dsbCountdown time {
@@ -774,10 +774,10 @@ textarea.jsCopyCode {
 .dsbCountdownActive {
 	color: lime;
 }
-#dsbSaleHeader:active, #dsbSupplyHeader:active {
+#dsbSaleHeader:active, #dsbVendorHeader:active {
 	opacity: 0.8;
 }
-#dsbSaleTable, #dsbSupplyTable {
+#dsbSaleTable, #dsbVendorTable {
 	max-height: 320px;
 }
 #dsbSaleCol0, #dsbSaleCol1 {
@@ -791,11 +791,11 @@ textarea.jsCopyCode {
 	width: 256px;
 	white-space: nowrap;
 }
-.dsbSaleIcon, .dsbSupplyIcon {
+.dsbSaleIcon, .dsbVendorIcon {
 	width: 32px; height: 32px;
 	border-radius: 4px;
 }
-.dsbSaleEntry:hover .dsbSaleIcon, .dsbSupplyEntry:hover .dsbSupplyIcon {
+.dsbSaleEntry:hover .dsbSaleIcon, .dsbVendorEntry:hover .dsbVendorIcon {
 	width: 64px; height: 64px;
 	opacity: 0.9;
 	border-radius: 16px;
@@ -818,13 +818,13 @@ textarea.jsCopyCode {
 	color: #b3a082;
 }
 
-.dsbSupplyPriceKarma {
+.dsbVendorPriceKarma {
 	float: right;
 }
-.dsbSupplyEntry {
+.dsbVendorEntry {
 	margin-left: 32px;
 }
-.dsbSupplyEntry:hover .dsbSupplyItem {
+.dsbVendorEntry:hover .dsbVendorItem {
 	display: inline-block;
 	line-height: 64px;
 	text-decoration: underline;
@@ -2137,6 +2137,9 @@ label:hover {
 .btnWindow:hover {
 	opacity: 0.8;
 }
+.btnWindow:active {
+	opacity: 0.6;
+}
 .btnClose {
 	background: url("img/ui/close.png");
 }
@@ -2152,6 +2155,9 @@ label:hover {
 }
 .btnSelect {
 	background: url("img/ui/select.png");
+}
+.btnOpaque {
+	background: url("img/ui/opaque.png");
 }
 
 .cssHidden {

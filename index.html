@@ -102,13 +102,13 @@
 					<div id="dsbAnnouncement"></div>
 					<div id="dsbCountdown" title="<dfn>Countdown for Official GW2 Events</dfn><br /><span class='dsbCountdownDormant' style='font-size:20px'>■</span>: has not started yet, and is counting down to when it starts.<br /><span class='dsbCountdownActive' style='font-size:20px'>■</span>: is happening, and is counting down to when it ends."></div>
 					<div id="dsbSale"></div>
-					<div id="dsbSupply"></div>
+					<div id="dsbVendor"></div>
 					<div id="dsbStory" class="jsScrollable"></div>
 				</div>
 				<div id="itemTimeline">
 					<kbd id="tmlDelete" class="btnWindow btnClose" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
 					<kbd id="tmlClose" class="btnWindow btnClose" title="<dfn>Close the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
-					<kbd id="tmlToggle" class="btnWindow btnSelect" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
+					<kbd id="tmlOpaque" class="btnWindow btnOpaque" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
 					<div id="tmlIndicator"></div>
 				</div>
 			</div>
@@ -278,9 +278,10 @@
 			<div id="wvwExpandButton" class="mapExpandButton mapHUDButton btnHorizontal" title="<dfn> Click to Expand Map </dfn>"></div>
 			<div id="wvwLeaderboard">
 				<div id="lboContainer">
-					<kbd id="lboToggle" class="curToggle btnWindow btnToggle lboButton" title="<dfn>Toggle Leaderboard</dfn>"></kbd>
-					<kbd id="lboCondense" class="curToggle btnWindow btnHorizontal lboButton lboExtra" title="<dfn>Condense Leaderboard</dfn>"></kbd>
-					<kbd id="lboRegion" class="curToggle btnWindow btnVertical lboButton lboExtra" title="<dfn>Toggle All Server Matchups</dfn>"></kbd>
+					<kbd id="lboToggle" class="btnWindow lboButton btnToggle" title="<dfn>Toggle Leaderboard</dfn>"></kbd>
+					<kbd id="lboCondense" class="btnWindow lboButton btnHorizontal lboExtra" title="<dfn>Condense Leaderboard</dfn>"></kbd>
+					<kbd id="lboRegion" class="btnWindow lboButton btnVertical lboExtra" title="<dfn>Toggle All Server Matchups</dfn>"></kbd>
+					<kbd id="lboOpaque" class="btnWindow lboButton btnOpaque lboExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
 					<time id="lboCountdown" class="lboExtra"></time>
 					<div id="lboCurrent"></div>
 					<div id="lboOther"></div>
@@ -338,8 +339,10 @@
 							<label title="Repeated seconds before API data are downloaded again to check if objectives have flipped."><input id="opt_int_secWvWRefresh" type="number" min="5" max="120" step="1" /> Refresh Interval (sec)</label>
 							<label title="Old log entries beyond this limit shall be deleted."><input id="opt_int_numLogEntries" type="number" min="64" max="1024" step="1" /> Max Log Entries</label>
 							<label title="Show or minimize the WvW leaderboard."><img data-src="img/wvw/leaderboard.png" /><input id="opt_bol_showLeaderboard" type="checkbox" /> Show leaderboard</label>
+							<label title="Enable high visibility leaderboard."><input id="opt_bol_opaqueLeaderboard" type="checkbox" /> Opaque leaderboard</label>
 							<label title="Hide graphics and extra information on the leaderboard."><input id="opt_bol_condenseLeaderboard" type="checkbox" /> Condense leaderboard</label>
 							<label title="Show or minimize the WvW log."><img data-src="img/wvw/log.png" /><input id="opt_bol_showLog" type="checkbox" /> Show log</label>
+							<label title="Enable high visibility log."><input id="opt_bol_opaqueLog" type="checkbox" /> Opaque log</label>
 							<label title="Taller log window."><input id="opt_bol_maximizeLog" type="checkbox" /> Maximize log</label>
 							<label title="Show or hide labels on the map."><img data-src="img/wvw/label.png" /><input id="opt_bol_showObjectiveLabels" type="checkbox" /> Show objective labels</label>
 						</div>
@@ -365,8 +368,9 @@
 			</div>
 			<div class="mapPeripheral mapPeripheralSouth">
 				<div id="wvwLogContainer">
-					<kbd id="logToggle" class="curToggle btnWindow btnToggle logButton" title="<dfn>Toggle Log</dfn>"></kbd>
-					<kbd id="logExpand" class="curToggle btnWindow btnVertical logButton" title="<dfn>Toggle Log Height</dfn>"></kbd>
+					<kbd id="logToggle" class="btnWindow logButton btnToggle" title="<dfn>Toggle Log</dfn>"></kbd>
+					<kbd id="logExpand" class="btnWindow logButton btnVertical logExtra" title="<dfn>Toggle Log Height</dfn>"></kbd>
+					<kbd id="logOpaque" class="btnWindow logButton btnOpaque logExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
 					<div id="wvwLog" class="cntComposition">
 						<select id="wvwServerList"></select>
 						<div id="logOptions">
@@ -674,7 +678,7 @@
 					<label title="Show/Hide the map."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<label title="Show/Hide GW2 official event countdowns and gem sales on the top right corner of the map pane. Requires reload."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard (on HUD)</label>
 					<label title="Show/Hide Heart of Thorns meta events timeline."><input id="opt_bol_showTimeline" type="checkbox" /> Show the timeline (on HUD)</label>
-					<label title="Enable high visibility timeline."><input id="opt_bol_showTimelineOpaque" type="checkbox" /> Opaque timeline</label>
+					<label title="Enable high visibility timeline."><input id="opt_bol_opaqueTimeline" type="checkbox" /> Opaque timeline</label>
 					<label title="Only show the HUD when you are on the Chains page."><input id="opt_bol_hideHUD" type="checkbox" /> Hide HUD if not on Chains page</label>
 					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane. To toggle the Dashboard and Timeline, right click on the map and choose &quot;Toggle HUD&quot;.</span><br />
 					<br />

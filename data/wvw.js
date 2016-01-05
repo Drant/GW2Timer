@@ -1548,32 +1548,69 @@ var GW2T_OBJECTIVE_DATA = {
 var GW2T_SIEGE_DATA = {
 	Blueprints: ["Basic", "Superior", "Guild"],
 	Weapons: {
+		portal: {
+			type: "tactic",
+			isPlaceable: true,
+			range: 5000
+		},
 		flameram: {
+			type: "field",
+			isPlaceable: true,
 			range: 360,
 			supply: [40, 50, 40]
 		},
 		arrowcart: {
+			type: "field",
+			isPlaceable: true,
 			range: 2500,
-			supply: [30, 50, 40]
+			supply: [40, 50, 40]
 		},
 		ballista: {
+			type: "field",
+			isPlaceable: true,
 			range: 3000,
 			supply: [30, 40, 30]
 		},
 		catapult: {
+			type: "field",
+			isPlaceable: true,
 			range: 4000,
 			supply: [50, 60, 50]
 		},
 		trebuchet: {
+			type: "field",
+			isPlaceable: true,
 			range: 10000,
 			supply: [100, 120, 100]
 		},
 		golem: {
+			type: "field",
+			isPlaceable: true,
 			range: 225,
 			supply: [100, 150, 50]
 		},
 		shieldgenerator: {
+			type: "field",
+			isPlaceable: true,
 			range: 2200,
+			supply: [40, 50, 40]
+		},
+		burningoil: {
+			type: "base",
+			isPlaceable: false,
+			range: 600,
+			supply: [40, 50, 40]
+		},
+		cannon: {
+			type: "base",
+			isPlaceable: true,
+			range: 6000,
+			supply: [40, 50, 40]
+		},
+		mortar: {
+			type: "base",
+			isPlaceable: true,
+			range: 9400,
 			supply: [40, 50, 40]
 		}
 	}
@@ -1619,9 +1656,9 @@ var GW2T_OBJECTIVE_METADATA = {
 			Blue: [12112, 11894]
 		},
 		GreenHome: {
-			Red: [5935, 14374],
+			Red: [8528, 14454],
 			Green: [7174, 11741],
-			Blue: [8528, 14454]
+			Blue: [5935, 14374]
 		},
 		BlueHome: {
 			Red: [13103, 13734],

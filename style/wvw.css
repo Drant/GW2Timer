@@ -136,9 +136,6 @@
 	border-radius: 4px;
 	text-align: left;
 }
-#lboContainer:hover {
-	background: rgba(0, 0, 0, 0.8);
-}
 
 #lboOther { /* Contains scoreboards of other tiers */
 	position: relative;
@@ -166,16 +163,15 @@
 }
 #lboToggle {
 	margin-left: -8px;
-	background: url("../img/ui/toggle.png");
 }
 #lboCondense {
 	margin-left: 24px;
-	background: url("../img/ui/switch.png");
-	transform: rotate(90deg);
 }
 #lboRegion {
 	margin-left: 56px;
-	background: url("../img/ui/switch.png");
+}
+#lboOpaque {
+	margin-left: 88px;
 }
 
 #lboCountdown { /* Countdown to WvW reset clock */
@@ -213,9 +209,10 @@
 	vertical-align: middle;
 	display: inline-block;
 	width: 96px; height: 12px;
-	border: 1px solid rgba(255, 255, 255, 0.8);
+	border: 1px solid rgba(0, 0, 0, 0.8);
 	border-radius: 2px;
 	background: rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 0px 1px black;
 }
 #wvwLeaderboard samp { /* The inner progress of the bar graph */
 	display: block;
@@ -249,10 +246,12 @@
 .lboName {
 	width: 96px;
 	margin-left: 8px;
-	overflow: hidden;
+	overflow: visible;
 	text-align: left;
 	white-space: nowrap;
+	font-family: Menomonia;
 	font-weight: bold;
+	font-size: 16px;
 }
 .lboScore {
 	width: auto;
@@ -263,22 +262,28 @@
 	margin-right: 4px;
 }
 .lboServerGreen samp {
-	background: #52a518;
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #c0e23c 0%, #62a01c 49%, #3c5610 100%);
+	box-shadow: 0px 0px 2px #62a01c;
+	border-radius: 1px;
 }
 .lboServerBlue samp {
-	background: #31a7bb;
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #37d4e3 0%, #217fa2 49%, #174f5b 100%);
+	box-shadow: 0px 0px 2px #217fa2;
+	border-radius: 1px;
 }
 .lboServerRed samp {
-	background: #cc1f24;
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #de3f47 0%, #b52326 49%, #621010 100%);
+	box-shadow: 0px 0px 2px #b52326;
+	border-radius: 1px;
 }
 #wvwLeaderboard .lboFocusRed samp, #wvwLeaderboard .lboFocusBlue samp {
-	background: #52a518; /* Green */
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #c0e23c 0%, #62a01c 49%, #3c5610 100%); /* Green */
 }
 #wvwLeaderboard .lboFocusRed span, #wvwLeaderboard .lboFocusGreen samp {
-	background: #31a7bb; /* Blue */
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #37d4e3 0%, #217fa2 49%, #174f5b 100%); /* Blue */
 }
 #wvwLeaderboard .lboFocusGreen span, #wvwLeaderboard .lboFocusBlue span {
-	background: #cc1f24; /* Red */
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #de3f47 0%, #b52326 49%, #621010 100%); /* Red */
 }
 .lboFocusRed .lboFocusA, .lboFocusBlue .lboFocusA {
 	color: #52a518; /* Green */
@@ -355,9 +360,6 @@
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
 }
-#wvwLog:hover {
-	background: rgba(0, 0, 0, 0.8);
-}
 
 #wvwServerList {
 	position: absolute;
@@ -400,11 +402,12 @@
 }
 #logToggle {
 	right:  0;
-	background: url("../img/ui/toggle.png");
 }
 #logExpand {
 	right: 32px;
-	background: url("../img/ui/switch.png");
+}
+#logOpaque {
+	right: 64px;
 }
 
 #logWindow {
@@ -526,10 +529,12 @@
 }
 
 #splCalculator, #splHave {
-	font-size: 14px;
+	font-size: 16px;
+	font-weight: bold;
 }
 #splHave {
-	width: 32px;
+	width: 48px;
+	text-align: right;
 }
 
 .spl {
@@ -577,3 +582,15 @@
 .spl_superior_golem { background-position: -576px 0; }
 .spl_superior_shieldgenerator { background-position: -608px 0; }
 .spl_superior_trebuchet { background-position: -640px 0; }
+
+/* Siege Range Placer
+----------------------------------------------------------------------------- */
+#wvwContextRangeList img {
+	border: 1px solid transparent;
+}
+#wvwContextRangeList img:hover {
+	border: 1px solid gold;
+}
+#wvwContextRangeList img:active {
+	opacity: 0.6;
+}
