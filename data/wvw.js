@@ -1545,81 +1545,101 @@ var GW2T_OBJECTIVE_DATA = {
 /*
  * Siege weapons and blueprint supply.
  */
-var GW2T_SIEGE_DATA = {
-	Blueprints: ["Basic", "Superior", "Guild"],
-	Weapons: {
-		portal: {
-			type: "tactic",
-			isPlaceable: true,
-			range: 5000
-		},
-		flameram: {
-			type: "field",
-			isPlaceable: true,
-			range: 360,
-			supply: [40, 50, 40]
-		},
-		arrowcart: {
-			type: "field",
-			isPlaceable: true,
-			range: 2500,
-			supply: [40, 50, 40]
-		},
-		ballista: {
-			type: "field",
-			isPlaceable: true,
-			range: 3000,
-			supply: [30, 40, 30]
-		},
-		catapult: {
-			type: "field",
-			isPlaceable: true,
-			range: 4000,
-			supply: [50, 60, 50]
-		},
-		trebuchet: {
-			type: "field",
-			isPlaceable: true,
-			range: 10000,
-			supply: [100, 120, 100]
-		},
-		golem: {
-			type: "field",
-			isPlaceable: true,
-			range: 225,
-			supply: [100, 150, 50]
-		},
-		shieldgenerator: {
-			type: "field",
-			isPlaceable: true,
-			range: 2200,
-			supply: [40, 50, 40]
-		},
-		burningoil: {
-			type: "base",
-			isPlaceable: false,
-			range: 600,
-			supply: [40, 50, 40]
-		},
-		cannon: {
-			type: "base",
-			isPlaceable: true,
-			range: 6000,
-			supply: [40, 50, 40]
-		},
-		mortar: {
-			type: "base",
-			isPlaceable: true,
-			range: 9400,
-			supply: [40, 50, 40]
-		}
-	}
+var GW2T_WEAPON_DATA = {
+portal: {
+	id: "portal",
+	type: "tactic",
+	color: "pink",
+	isPlaceable: true,
+	range: 5000
+},
+flameram: {
+	id: "flameram",
+	type: "field",
+	color: "orange",
+	isPlaceable: false,
+	range: 360,
+	supply: [40, 50, 40]
+},
+arrowcart: {
+	id: "arrowcart",
+	type: "field",
+	color: "orange",
+	isPlaceable: true,
+	range: 2500,
+	supply: [40, 50, 40]
+},
+ballista: {
+	id: "ballista",
+	type: "field",
+	color: "orange",
+	isPlaceable: true,
+	range: 3000,
+	supply: [30, 40, 30]
+},
+catapult: {
+	id: "catapult",
+	type: "field",
+	color: "orange",
+	isPlaceable: true,
+	range: 4000,
+	supply: [50, 60, 50]
+},
+trebuchet: {
+	id: "trebuchet",
+	type: "field",
+	color: "orange",
+	isPlaceable: true,
+	range: 10000,
+	supply: [100, 120, 100]
+},
+golem: {
+	id: "golem",
+	type: "field",
+	color: "orange",
+	isPlaceable: false,
+	range: 1500,
+	supply: [100, 150, 50]
+},
+shieldgenerator: {
+	id: "shieldgenerator",
+	type: "field",
+	color: "orange",
+	isPlaceable: true,
+	range: 2200,
+	supply: [40, 50, 40]
+},
+burningoil: {
+	id: "burningoil",
+	type: "base",
+	color: "yellow",
+	isPlaceable: false,
+	range: 600,
+	supply: [40, 50, 40]
+},
+cannon: {
+	id: "cannon",
+	type: "base",
+	color: "yellow",
+	isPlaceable: true,
+	range: 6000,
+	supply: [40, 50, 40]
+},
+mortar: {
+	id: "mortar",
+	type: "base",
+	color: "yellow",
+	isPlaceable: true,
+	range: 9400,
+	supply: [40, 50, 40]
+}
 };
 
 /*
  * Objective translations and addenda.
  */
 var GW2T_OBJECTIVE_METADATA = {
+	Blueprints: ["Basic", "Superior", "Guild"],
 	Matches: {
 		Americas: ["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"],
 		Europe:   ["2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9"]

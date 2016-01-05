@@ -8232,6 +8232,10 @@ M = {
 					layer._icon.style.zIndex = that.cZIndexBury + 1;
 					layer._icon.style.display = "table";
 				});
+				// Adjust range circles
+				this.Layer.RangeCircle.eachLayer(function(layer) {
+					layer.setRadius(that.getZoomedDistance(layer.options.trueradius));
+				});
 			} break;
 		}
 		
@@ -8300,6 +8304,14 @@ M = {
 		
 		// Character pin and camera FOV
 		P.updateCharacter(-1);
+	},
+	
+	/*
+	 * Calculates a new distance from an inherent distance based on current map zoom level.
+	 */
+	getZoomedDistance: function(pDistance)
+	{
+		return pDistance / Math.pow(2, this.ZoomEnum.Max - this.Map.getZoom());
 	},
 	
 	/*
@@ -8654,7 +8666,7 @@ M = {
 			);
 		}
 		var units = ~~(distance * this.cPOINTS_TO_UNITS);
-		var time = T.formatSeconds(Math.round(units / this.cUNITS_PER_SECOND), true);
+		var time = T.formatSeconds(Math.ceil(units / this.cUNITS_PER_SECOND), true);
 		this.outputCoordinatesName(units + " " + D.getWord("range") + " (" + time + ")");
 	},
 	
@@ -12265,7 +12277,9 @@ W = {
 		PersonalPath: new L.layerGroup(),
 		Pin: new L.layerGroup(),
 		Objective: new L.layerGroup(),
-		SpawnLabel: new L.layerGroup()
+		SpawnLabel: new L.layerGroup(),
+		RangeWeapon: new L.layerGroup(),
+		RangeCircle: new L.layerGroup()
 	},
 	LayerArray: {
 		
@@ -12302,7 +12316,7 @@ W = {
 	ServersCurrent: null, // Sample structure - ServersCurrent: { "red": 1019, "blue": 1008, "green": 1003 },
 	Objectives: {},
 	ObjectiveTimeout: {},
-	Siege: {},
+	Weapon: {},
 	MapType: {}, // Corresponds to "worlds" object from match API
 	LandEnum: {}, // Corresponds to "map_type" property of objectives
 	ObjectiveEnum: {}, // Corresponds to "type" property of objectives
@@ -12334,7 +12348,7 @@ W = {
 		W.Regions = GW2T_REALM_DATA;
 		W.Servers = GW2T_SERVER_DATA;
 		W.Objectives = GW2T_OBJECTIVE_DATA;
-		W.Siege = GW2T_SIEGE_DATA;
+		W.Weapon = GW2T_WEAPON_DATA;
 		W.Metadata = GW2T_OBJECTIVE_METADATA;
 		W.MapType = W.Metadata.MapType;
 		W.LandEnum = W.Metadata.LandEnum;
@@ -12349,7 +12363,7 @@ W = {
 		W.generateServerList();
 		I.styleContextMenu("#wvwContext");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
-		$("#wvwContextRange").one("mouseenter", W.initializeRangePlacer);
+		$("#wvwContextRange").one("mouseenter", W.initializeWeaponPlacer);
 		// Finally
 		W.isWvWLoaded = true;
 	},
@@ -13235,26 +13249,26 @@ W = {
 		
 		var calc = $("#wvwSiege");
 		I.preventPropagation(calc);
-		for (var i in W.Siege.Blueprints)
+		for (var i in W.Metadata.Blueprints)
 		{
-			for (var ii in W.Siege.Weapons)
+			for (var ii in W.Weapon)
 			{
-				if (W.Siege.Weapons[ii].type !== "field")
+				if (W.Weapon[ii].type !== "field")
 				{
 					continue;
 				}
-				var bp = W.Siege.Blueprints[i];
-				var siege = $("<ins class='spl spl_" + bp.toLowerCase() + "_" + ii + "'></ins>");
-				var supply = W.Siege.Weapons[ii].supply[i];
-				$("#splBlueprints" + bp).append(siege);
+				var bp = W.Metadata.Blueprints[i];
+				var blueprint = $("<ins class='spl spl_" + bp.toLowerCase() + "_" + ii + "'></ins>");
+				var supply = W.Weapon[ii].supply[i];
+				$("#splBlueprints" + bp).append(blueprint);
 				(function(pSupply)
 				{
-					siege.click(function()
+					blueprint.click(function()
 					{
 						addSupply($(this), pSupply);
 						$("#splHave").trigger("input");
 					});
-					siege.contextmenu(function()
+					blueprint.contextmenu(function()
 					{
 						addSupply($(this), -1 * pSupply);
 						$("#splHave").trigger("input");
@@ -13286,35 +13300,44 @@ W = {
 	},
 	
 	/*
-	 * Writes context menu elements for placing range circles on the map.
+	 * Writes context menu elements for placing weapons with range circles on the map.
 	 */
-	initializeRangePlacer: function()
+	initializeWeaponPlacer: function()
 	{
 		var cm = $("#wvwContextRangeList");
 		var counter = 0;
 		var iconsperline = 5;
-		for (var i in W.Siege.Weapons)
+		for (var i in W.Weapon)
 		{
-			var weapon = W.Siege.Weapons[i];
+			var weapon = W.Weapon[i];
 			if (weapon.isPlaceable === false)
 			{
 				continue;
 			}
 			counter++;
-			var weapon = $("<img src='img/wvw/range/" + i + I.cPNG + "' />");
-			cm.append(weapon);
+			var weaponbutton = $("<img src='img/wvw/range/" + i + I.cPNG + "' />");
+			cm.append(weaponbutton);
 			if (counter % iconsperline === 0)
 			{
 				cm.append("<br />");
 			}
 			(function(pWeapon)
 			{
-				weapon.click(function()
+				weaponbutton.click(function()
 				{
-					W.placeRange(pWeapon);
+					W.createWeapon(W.ContextLatLng, pWeapon);
 				});
 			})(weapon);
 		}
+		var clearbutton = $("<img src='img/ui/default.png' "
+			+ "title='<dfn>Delete all weapons.</dfn><br />After laying a weapon on the map:<br />"
+			+ "Drag it to move it.<br />Right click to center it.<br />Double click to delete it.' />");
+		clearbutton.click(function()
+		{
+			W.clearWeapons();
+		});
+		cm.append(clearbutton);
+		I.qTip.init(clearbutton);
 	},
 	
 	/*
@@ -13322,10 +13345,91 @@ W = {
 	 * @param object pWeapon siege.
 	 * @pre LatLng variable was assigned when the user right clicked on the map.
 	 */
-	placeRange: function(pWeapon)
+	createWeapon: function(pLatLng, pWeapon)
 	{
-		var coord = this.convertLCtoGC(this.ContextLatLng);
-		L.circle(this.ContextLatLng, 2000).addTo(this.Map);
+		var that = this;
+		// The circle indcating the range
+		var trueradius = pWeapon.range * M.cUNITS_TO_POINTS;
+		var radius = this.getZoomedDistance(trueradius);
+		var circle = L.circleMarker(pLatLng, {
+			trueradius: trueradius,
+			radius: radius,
+			color: pWeapon.color,
+			weight: 2,
+			opacity: 0.8,
+			fillOpacity: 0.1
+		});
+		this.Layer.RangeCircle.addLayer(circle);
+		this.toggleLayer(circle);
+		
+		// The interactive icon allowing the user to relocate the circle
+		var weapon = L.marker(pLatLng,
+		{
+			circle: circle,
+			icon: L.icon(
+			{
+				className: "wvwWeapon",
+				iconUrl: "img/wvw/range/" + pWeapon.id + I.cPNG,
+				iconSize: [24, 24],
+				iconAnchor: [12, 12]
+			}),
+			draggable: true,
+			opacity: 0.9
+		});
+		
+		// Bind placed range icon behavior
+		weapon.on("drag", function()
+		{
+			this.options.circle.setLatLng(this.getLatLng());
+		});
+		weapon.on("dblclick", function()
+		{
+			W.removeWeapon(this);
+		});
+		weapon.on("contextmenu", function()
+		{
+			if (that.GPSPreviousCoord.length > 0)
+			{
+				that.movePin(this, that.GPSPreviousCoord);
+			}
+			else
+			{
+				that.movePin(this, that.Map.getCenter());
+			}
+			this.options.circle.setLatLng(this.getLatLng());
+		});
+		this.Layer.RangeWeapon.addLayer(weapon);
+		this.toggleLayer(weapon);
+	},
+	
+	/*
+	 * Removes a placed weapon from the map and associated container objects.
+	 * @param object pMarker.
+	 */
+	removeWeapon: function(pMarker)
+	{
+		// Remove its circle range marker before removing the weapon
+		this.toggleLayer(pMarker.options.circle, false);
+		this.Layer.RangeCircle.removeLayer(pMarker.options.circle);
+		// Remove the weapon itself
+		this.toggleLayer(pMarker, false);
+		this.Layer.RangeWeapon.removeLayer(pMarker);
+	},
+	
+	/*
+	 * Removes all weapons from the map.
+	 */
+	clearWeapons: function()
+	{
+		var that = this;
+		this.Layer.RangeWeapon.eachLayer(function(layer)
+		{
+			that.removeWeapon(layer);
+		});
+		this.Layer.RangeCircle = null;
+		this.Layer.RangeCircle = new L.layerGroup();
+		this.Layer.RangeWeapon = null;
+		this.Layer.RangeWeapon = new L.layerGroup();
 	},
 	
 	/*
@@ -18932,6 +19036,7 @@ T.initializeSchedule(); // compute event data and write HTML
 P.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
+
 
 
 

@@ -2161,7 +2161,7 @@ label:hover {
 }
 
 .cssHidden {
-	display: none;
+	display: none !important;
 }
 .cssLeft {
 	float: left;

@@ -1049,8 +1049,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2015-12-29T16:00:00Z"),
-	Finish: new Date("2016-01-04T16:00:00Z"),
+	Start: new Date("2016-01-05T16:00:00Z"),
+	Finish: new Date("2016-01-12T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -1076,14 +1076,6 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Winter_Chimes_Dye_Kit",
-		img: "http://i.imgur.com/1I747yu.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 0
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Mini Festive Lord Faren",
 		img: "https://render.guildwars2.com/file/076E2196005DB9E2ADF35D110F98390A7FA3D431/924619.png",
 		quantity: 1,
@@ -1100,8 +1092,16 @@ Sale: {
 		col: 1
 	},
 	{
+		url: "http://wiki.guildwars2.com/wiki/Mini Arrowhead",
+		img: "https://render.guildwars2.com/file/5692457F01AD5220FF5EB3BF1E0FFFC49FA46A62/1322566.png",
+		quantity: 1,
+		pricenew: 400,
+		priceold: 0,
+		col: 1
+	},
+	{
 		url: "http://wiki.guildwars2.com/wiki/Mini Tizlak",
-		img: "http://i.imgur.com/gfYICcQ.png",
+		img: "https://render.guildwars2.com/file/9545150CD6FD020A99EC0803BF1E41B8EDF0ADA6/1322308.png",
 		quantity: 1,
 		pricenew: 200,
 		priceold: 0,

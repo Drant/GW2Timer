@@ -594,3 +594,7 @@
 #wvwContextRangeList img:active {
 	opacity: 0.6;
 }
+.wvwWeapon {
+	border: 1px solid orange;
+	border-radius: 4px;
+}

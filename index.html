@@ -336,15 +336,15 @@
 							<label title="Set initial zoom level for WvW map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoomWvW" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 						</div>
 						<div class="mapOptionsOther">
+							<label title="Show or hide labels on the map."><img data-src="img/wvw/label.png" /><input id="opt_bol_showObjectiveLabels" type="checkbox" /> Show objective labels</label>
+							<label title="Show or minimize the WvW leaderboard."><img data-src="img/wvw/leaderboard.png" /><input id="opt_bol_showLeaderboard" type="checkbox" /> Show leaderboard</label>
+							<label class="cssHidden"><input id="opt_bol_opaqueLeaderboard" type="checkbox" /></label><!-- These hidden inputs serve as memory state holders -->
+							<label class="cssHidden"><input id="opt_bol_condenseLeaderboard" type="checkbox" /></label>
+							<label title="Show or minimize the WvW log."><img data-src="img/wvw/log.png" /><input id="opt_bol_showLog" type="checkbox" /> Show log</label>
+							<label class="cssHidden"><input id="opt_bol_opaqueLog" type="checkbox" /></label>
+							<label class="cssHidden"><input id="opt_bol_maximizeLog" type="checkbox" /></label>
 							<label title="Repeated seconds before API data are downloaded again to check if objectives have flipped."><input id="opt_int_secWvWRefresh" type="number" min="5" max="120" step="1" /> Refresh Interval (sec)</label>
 							<label title="Old log entries beyond this limit shall be deleted."><input id="opt_int_numLogEntries" type="number" min="64" max="1024" step="1" /> Max Log Entries</label>
-							<label title="Show or minimize the WvW leaderboard."><img data-src="img/wvw/leaderboard.png" /><input id="opt_bol_showLeaderboard" type="checkbox" /> Show leaderboard</label>
-							<label title="Enable high visibility leaderboard."><input id="opt_bol_opaqueLeaderboard" type="checkbox" /> Opaque leaderboard</label>
-							<label title="Hide graphics and extra information on the leaderboard."><input id="opt_bol_condenseLeaderboard" type="checkbox" /> Condense leaderboard</label>
-							<label title="Show or minimize the WvW log."><img data-src="img/wvw/log.png" /><input id="opt_bol_showLog" type="checkbox" /> Show log</label>
-							<label title="Enable high visibility log."><input id="opt_bol_opaqueLog" type="checkbox" /> Opaque log</label>
-							<label title="Taller log window."><input id="opt_bol_maximizeLog" type="checkbox" /> Maximize log</label>
-							<label title="Show or hide labels on the map."><img data-src="img/wvw/label.png" /><input id="opt_bol_showObjectiveLabels" type="checkbox" /> Show objective labels</label>
 						</div>
 					</div>
 				</div>
