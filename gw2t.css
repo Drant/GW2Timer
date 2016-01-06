@@ -389,6 +389,21 @@ html, body,
 	opacity: 0.9;	
 }
 
+/* Range Placer */
+.mapContextRangeList img {
+	border: 1px solid transparent;
+}
+.mapContextRangeList img:hover {
+	border: 1px solid gold;
+}
+.mapContextRangeList img:active {
+	opacity: 0.6;
+}
+.mapWeapon {
+	border: 1px solid orange;
+	border-radius: 4px;
+}
+
 /* Composition container for default writing style
 ----------------------------------------------------------------------------- */
 .cntComposition {

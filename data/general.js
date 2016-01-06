@@ -339,6 +339,23 @@ var GW2T_GATEWAY_CONNECTION = {
 
 
 /*
+ * Target range for game skills to be laid on the map for measuring.
+ */
+var GW2T_RANGE_DATA = {
+portal: {
+	id: "portal",
+	color: "pink",
+	range: 5000
+},
+shadowtrap: {
+	id: "shadowtrap",
+	color: "black",
+	range: 10000
+}
+};
+
+
+/*
  * Images that are overlaid on the map, such as caves and underground areas.
  */
 var GW2T_SUBMAP_DATA = {
@@ -1140,16 +1157,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-05T00:00:00Z"),
-	Finish: new Date("2016-01-06T00:00:00Z"),
+	Start: new Date("2016-01-06T00:00:00Z"),
+	Finish: new Date("2016-01-07T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49734", price: "12600" },
-		Fox: { id: "43817", price: "25200" },
-		Derwena: { id: "49769", price: "25200" },
-		Yana: { id: "43807", price: "25200" },
-		Katyn: { id: "49746", price: "25200" },
-		Verma: { id: "49752", price: "25200" }
+		Mehem: { id: "43813", price: "25200" },
+		Fox: { id: "43816", price: "25200" },
+		Derwena: { id: "43798", price: "12600" },
+		Yana: { id: "49735", price: "25200" },
+		Katyn: { id: "49780", price: "25200" },
+		Verma: { id: "43799", price: "12600" }
 	}
 }
 };

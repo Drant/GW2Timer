@@ -1548,7 +1548,7 @@ var GW2T_OBJECTIVE_DATA = {
 var GW2T_WEAPON_DATA = {
 portal: {
 	id: "portal",
-	type: "tactic",
+	type: "skill",
 	color: "pink",
 	isPlaceable: true,
 	range: 5000

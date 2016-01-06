@@ -583,18 +583,3 @@
 .spl_superior_shieldgenerator { background-position: -608px 0; }
 .spl_superior_trebuchet { background-position: -640px 0; }
 
-/* Siege Range Placer
------------------------------------------------------------------------------ */
-#wvwContextRangeList img {
-	border: 1px solid transparent;
-}
-#wvwContextRangeList img:hover {
-	border: 1px solid gold;
-}
-#wvwContextRangeList img:active {
-	opacity: 0.6;
-}
-.wvwWeapon {
-	border: 1px solid orange;
-	border-radius: 4px;
-}
