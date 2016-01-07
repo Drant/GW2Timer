@@ -1636,9 +1636,37 @@ mortar: {
 };
 
 /*
+ * Map placement of siege weapons, and destructible objective walls and gates.
+ */
+var GW2T_PLACEMENT_DATA = {
+	desert: {
+		Wall: [
+			
+		],
+		Gate: [
+			
+		],
+		Siege: [
+			{id: "flameram", coord: 55555}
+		]
+	},
+	eternal: {
+		Wall: [
+			
+		],
+		Gate: [
+			
+		],
+		Siege: [
+			{id: "flameram", coord: 55555}
+		]
+	}
+};
+
+/*
  * Objective translations and addenda.
  */
-var GW2T_OBJECTIVE_METADATA = {
+var GW2T_WVW_METADATA = {
 	Blueprints: ["Basic", "Superior", "Guild"],
 	Matches: {
 		Americas: ["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"],

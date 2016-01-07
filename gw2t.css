@@ -202,7 +202,7 @@ div#qTip {
 	font-weight: bold;
 	line-height: 110%;
 	color: #eee;
-	background: url("https://lh3.googleusercontent.com/-wlypns0_VdE/VogZrid2vPI/AAAAAAAAAyM/p1m-KfX8J2E/s360-Ic42/tooltip.png");
+	background: url("img/background/tooltip.png");
 	background-size: cover;
 	text-shadow: 0px 0px 2px black;
 	box-shadow: 0px 0px 2px #555;
@@ -391,6 +391,7 @@ html, body,
 
 /* Range Placer */
 .mapContextRangeList img {
+	width: 32px; height: 32px;
 	border: 1px solid transparent;
 }
 .mapContextRangeList img:hover {
@@ -398,6 +399,10 @@ html, body,
 }
 .mapContextRangeList img:active {
 	opacity: 0.6;
+}
+.mapRangeCustom {
+	display: block;
+	margin-top: 4px;
 }
 .mapWeapon {
 	border: 1px solid orange;
@@ -888,6 +893,10 @@ textarea.jsCopyCode {
 	background: black;
 	color: #ddff77;
 	opacity: 0.6;
+}
+.cssInputText {
+	margin: 0;
+	padding: 2px;
 }
 .mapCoordinates input::selection {
 	background: #66aaff;

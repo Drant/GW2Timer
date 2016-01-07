@@ -79,7 +79,9 @@ O = {
 		BackupPins: {key: "obj_utlBackupPins", value: []},
 		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
 		StoredPins: {key: "obj_utlStoredPins", value: []},
-		StoredPinsWvW: {key: "obj_utlStoredPinsWvW", value: []}
+		StoredPinsWvW: {key: "obj_utlStoredPinsWvW", value: []},
+		StoredWeapons: {key: "obj_utlStoredWeapons", value: []},
+		StoredWeaponsWvW: {key: "obj_utlStoredWeaponsWvW", value: []}
 	},
 	
 	/*
@@ -1963,6 +1965,11 @@ U = {
 	stripToAlphanumeric: function(pString)
 	{
 		return pString.replace(/\W/g, "");
+	},
+	stripToColorString: function(pString)
+	{
+		// Allow only alphanumeric and number sign (color word or a hexadecimal color)
+		return pString.replace(/[^a-zA-Z0-9#]/g, "");
 	},
 	
 	/*
@@ -7481,8 +7488,8 @@ M = {
 		Pin: new L.layerGroup(), // Utility pin markers, looks like GW2 personal waypoints
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(), // Path drawn from connecting player-laid pins
-		RangeWeapon: new L.layerGroup(), // A weapon icon with its radius circle
-		RangeCircle: new L.layerGroup()
+		WeaponIcon: new L.layerGroup(), // A weapon icon with its radius circle
+		WeaponCircle: new L.layerGroup()
 	},
 	Pin: {
 		Program: {},
@@ -8227,7 +8234,7 @@ M = {
 		}
 		
 		// Adjust range circles
-		this.Layer.RangeCircle.eachLayer(function(layer) {
+		this.Layer.WeaponCircle.eachLayer(function(layer) {
 			layer.setRadius(that.getZoomedDistance(layer.options.trueradius));
 		});
 		
@@ -8357,26 +8364,6 @@ M = {
 	},
 	
 	/*
-	 * Saves the current personal pins as backup. This is to be called when the
-	 * user manually adds and inserts a pin.
-	 */
-	saveBackupPins: function()
-	{
-		var obj = O.Utilities["BackupPins" + this.OptionSuffix];
-		localStorage[obj.key] = JSON.stringify(this.getPersonalCoords());
-	},
-	loadBackupPins: function()
-	{
-		var obj = O.Utilities["BackupPins" + this.OptionSuffix];
-		try
-		{
-			obj.value = JSON.parse(localStorage[obj.key]);
-		}
-		catch(e) {}
-		this.redrawPersonalPath(obj.value, null);
-	},
-	
-	/*
 	 * Initializes the personal pin storage system.
 	 */
 	initializePinStorage: function(pMapObject)
@@ -8395,6 +8382,25 @@ M = {
 			}
 			catch(e) {}
 		};
+		var saveStoredPins = function(pIndex)
+		{
+			var obj = O.Utilities["StoredPins" + that.OptionSuffix];
+			var coords = that.getPersonalCoords();
+			if (coords.length > 0)
+			{
+				obj.value[pIndex] = coords;
+				localStorage[obj.key] = JSON.stringify(obj.value);
+			}
+			else
+			{
+				that.isPersonalPinsLaid();
+			}
+		};
+		var loadStoredPins = function(pIndex)
+		{
+			var obj = O.Utilities["StoredPins" + that.OptionSuffix];
+			that.redrawPersonalPath(obj.value[pIndex]);
+		};
 		
 		var htmlidprefix = "#" + that.MapEnum;
 		// Generate the load/save items when user opens the Pins context menu for the first time
@@ -8410,38 +8416,32 @@ M = {
 		// Bind behavior for the created list items
 		$(htmlidprefix + "ContextLoadPins li").click(function()
 		{
-			that.loadStoredPins($(this).attr("data-index"));
+			loadStoredPins($(this).attr("data-index"));
 		});
 		$(htmlidprefix + "ContextSavePins li").click(function()
 		{
-			that.saveStoredPins($(this).attr("data-index"));
+			saveStoredPins($(this).attr("data-index"));
 		});
 	},
 	
 	/*
-	 * Saves the current personal pins to storage as slots.
-	 * @param int pIndex of the save slot.
+	 * Saves the current personal pins as backup. This is to be called when the
+	 * user manually adds and inserts a pin.
 	 */
-	saveStoredPins: function(pIndex)
+	saveBackupPins: function()
 	{
-		var obj = O.Utilities["StoredPins" + this.OptionSuffix];
-		// coords is an array of coordinates, and value is an array of coords.
-		var coords = this.getPersonalCoords();
-		if (coords.length > 0)
-		{
-			obj.value[pIndex] = coords;
-			
-			localStorage[obj.key] = JSON.stringify(obj.value);
-		}
-		else
-		{
-			this.isPersonalPinsLaid();
-		}
+		var obj = O.Utilities["BackupPins" + this.OptionSuffix];
+		localStorage[obj.key] = JSON.stringify(this.getPersonalCoords());
 	},
-	loadStoredPins: function(pIndex)
+	loadBackupPins: function()
 	{
-		var obj = O.Utilities["StoredPins" + this.OptionSuffix];
-		this.redrawPersonalPath(obj.value[pIndex]);
+		var obj = O.Utilities["BackupPins" + this.OptionSuffix];
+		try
+		{
+			obj.value = JSON.parse(localStorage[obj.key]);
+		}
+		catch(e) {}
+		this.redrawPersonalPath(obj.value, null);
 	},
 	
 	/*
@@ -8774,7 +8774,6 @@ M = {
 		return minmarker;
 	},
 	
-	
 	/*
 	 * Writes context menu elements for placing weapons with range circles on the map.
 	 */
@@ -8783,6 +8782,7 @@ M = {
 		var that = pMapObject;
 		var htmlidprefix = "#" + that.MapEnum;
 		var cm = $(htmlidprefix + "ContextRangeList");
+		I.preventPropagation(cm);
 		var counter = 0;
 		var iconsperline = 5;
 		for (var i in that.Weapons)
@@ -8803,33 +8803,191 @@ M = {
 			{
 				weaponbutton.click(function()
 				{
-					that.createWeapon(that.ContextLatLng, pWeapon);
+					that.createWeapon(pWeapon, that.ContextLatLng);
 				});
 			})(weapon);
 		}
+		
+		// Button: lay a custom range weapon
+		var custombutton = $("<img src='img/wvw/range/custom.png' "
+			+ "title='<dfn>Lay a custom weapon</dfn><br />on the map using the range and color specified below.' />");
+		custombutton.click(function()
+		{
+			var cw = {
+				id: "custom",
+				range: parseInt($(htmlidprefix + "RangeCustomRange").val()),
+				color: U.stripToColorString($(htmlidprefix + "RangeCustomColor").val())
+			};
+			that.createWeapon(cw, that.ContextLatLng);
+		});
+		cm.append(custombutton);
+		
+		// Button: clear all weapons
 		var clearbutton = $("<img src='img/ui/default.png' "
-			+ "title='<dfn>Delete all weapons.</dfn><br />After laying a weapon on the map:<br />"
+			+ "title='<dfn>Delete all weapons on the map.</dfn><br />After laying a weapon on the map:<br />"
 			+ "Drag it to move it.<br />Right click to center it.<br />Double click to delete it.' />");
 		clearbutton.click(function()
 		{
 			that.clearWeapons();
 		});
 		cm.append(clearbutton);
-		I.qTip.init(clearbutton);
+		
+		// Inputs: attributes for the custom range weapon
+		cm.append("<br /><span id='" + that.MapEnum + "RangeCustom' class='mapRangeCustom'><input id='"
+			+ that.MapEnum + "RangeCustomRange' type='number' value='1200' min='0' max='20000' step='100' style='width:64px' class='cssInputText' />"
+			+ "<input id='" + that.MapEnum + "RangeCustomColor' type='text' value='#ffffff' maxlength='32' style='width:96px' class='cssInputText' />"
+			+ "</span>");
+		// Allow interaction with the inputs within the context menu
+		$(htmlidprefix + "RangeCustom").click(function(pEvent)
+		{
+			pEvent.stopPropagation();
+		});
+		
+		// Finally
+		I.qTip.init(".mapContextRangeList img");
+		that.initializeWeaponStorage(that);
+	},
+	
+	/*
+	 * Initializes the weapon range storage system.
+	 */
+	initializeWeaponStorage: function(pMapObject)
+	{
+		var that = pMapObject;
+		var initializeStoredWeapons = function(pQuantity)
+		{
+			var obj = O.Utilities["StoredWeapons" + that.OptionSuffix];
+			// First make a new array with desired length
+			obj.value = new Array(pQuantity);
+			var key = obj.key;
+			// Try to overwrite it with the stored arrays, if this fails then the value property is unchanged (a blank array)
+			try
+			{
+				obj.value = JSON.parse(localStorage[key]);
+			}
+			catch(e) {}
+		};
+		var saveStoredWeapons = function(pIndex)
+		{
+			var obj = O.Utilities["StoredWeapons" + that.OptionSuffix];
+			var weapons = that.serializeWeapons();
+			if (weapons.length > 0)
+			{
+				obj.value[pIndex] = weapons;
+				localStorage[obj.key] = JSON.stringify(obj.value);
+			}
+			else
+			{
+				that.isWeaponsLaid();
+			}
+		};
+		var loadStoredWeapons = function(pIndex)
+		{
+			var obj = O.Utilities["StoredWeapons" + that.OptionSuffix];
+			that.redrawWeapons(obj.value[pIndex]);
+		};
+		
+		var htmlidprefix = "#" + that.MapEnum;
+		// Generate the load/save items when user opens the Weapons context menu for the first time
+		var numslots = 8;
+		var wordload = D.getWordCapital("load");
+		var wordsave = D.getWordCapital("save");
+		initializeStoredWeapons(numslots);
+		for (var i = 0; i < numslots; i++)
+		{
+			$(htmlidprefix + "ContextLoadWeapons").append("<li data-index='" + i + "'>" + wordload + " #" + (i+1) + "</li>");
+			$(htmlidprefix + "ContextSaveWeapons").append("<li data-index='" + i + "'>" + wordsave + " #" + (i+1) + "</li>");
+		}
+		// Bind behavior for the created list items
+		$(htmlidprefix + "ContextLoadWeapons li").click(function()
+		{
+			loadStoredWeapons($(this).attr("data-index"));
+		});
+		$(htmlidprefix + "ContextSaveWeapons li").click(function()
+		{
+			saveStoredWeapons($(this).attr("data-index"));
+		});
+	},
+	
+	/*
+	 * Gets an array of objects with properties needed to reconstruct the weapons on the map.
+	 * @returns array of objects.
+	 */
+	serializeWeapons: function()
+	{
+		var that = this;
+		var weapons = [];
+		that.Layer.WeaponCircle.eachLayer(function(layer)
+		{
+			// Store only the weapon ID and location
+			var weapon = {
+				id: layer.options.weaponid,
+				coord: that.convertLCtoGC(layer.getLatLng())
+			};
+			// If it is a custom weapon, then also store the custom color and range
+			if (layer.options.weaponid === "custom")
+			{
+				weapon.color = (layer.options.color).toLowerCase();
+				weapon.range = parseInt(layer.options.weaponrange);
+			}
+			weapons.push(weapon);
+		});
+		return weapons;
+	},
+	
+	/*
+	 * Reconstructs a placement of weapons on the map.
+	 * @param array pArsenal of weapons and their location.
+	 * @pre Weapons' placement was stored as game coordinates, not LatLng.
+	 */
+	redrawWeapons: function(pArsenal)
+	{
+		if (pArsenal !== undefined && pArsenal !== null && pArsenal.length > 0)
+		{
+			this.clearWeapons();
+			for (var i in pArsenal)
+			{
+				var weapon = pArsenal[i];
+				// If it is not a custom weapon, then use the default properties via that weapon ID
+				var weapontomake = (weapon.id === "custom") ? weapon : this.Weapons[weapon.id];
+				this.createWeapon(weapontomake, this.convertGCtoLC(weapon.coord));
+			}
+		}
+		else
+		{
+			I.write("Arsenal unavailable for this.");
+		}
+	},
+	
+	/*
+	 * Tells if there is at least one personal pin laid on the map.
+	 * @returns boolean.
+	 */
+	isWeaponsLaid: function()
+	{
+		if (this.Layer.WeaponIcon.getLayers().length === 0)
+		{
+			I.write("No range weapons to work with. Lay weapons from the map's Range context menu.");
+			return false;
+		}
+		return true;
 	},
 	
 	/*
 	 * Places a range marker icon and circle circumference on the map.
-	 * @param object pWeapon siege.
+	 * @param object pWeapon.
+	 * @param object pLatLng location of the weapon.
 	 * @pre LatLng variable was assigned when the user right clicked on the map.
 	 */
-	createWeapon: function(pLatLng, pWeapon)
+	createWeapon: function(pWeapon, pLatLng)
 	{
 		var that = this;
 		// The circle indcating the range
 		var trueradius = pWeapon.range * M.cUNITS_TO_POINTS;
 		var radius = this.getZoomedDistance(trueradius);
 		var circle = L.circleMarker(pLatLng, {
+			weaponid: pWeapon.id,
+			weaponrange: pWeapon.range,
 			trueradius: trueradius,
 			radius: radius,
 			color: pWeapon.color,
@@ -8837,7 +8995,7 @@ M = {
 			opacity: 0.8,
 			fillOpacity: 0.1
 		});
-		this.Layer.RangeCircle.addLayer(circle);
+		this.Layer.WeaponCircle.addLayer(circle);
 		this.toggleLayer(circle);
 		
 		// The interactive icon allowing the user to relocate the circle
@@ -8876,7 +9034,7 @@ M = {
 			}
 			this.options.circle.setLatLng(this.getLatLng());
 		});
-		this.Layer.RangeWeapon.addLayer(weapon);
+		this.Layer.WeaponIcon.addLayer(weapon);
 		this.toggleLayer(weapon);
 	},
 	
@@ -8888,10 +9046,10 @@ M = {
 	{
 		// Remove its circle range marker before removing the weapon
 		this.toggleLayer(pMarker.options.circle, false);
-		this.Layer.RangeCircle.removeLayer(pMarker.options.circle);
+		this.Layer.WeaponCircle.removeLayer(pMarker.options.circle);
 		// Remove the weapon itself
 		this.toggleLayer(pMarker, false);
-		this.Layer.RangeWeapon.removeLayer(pMarker);
+		this.Layer.WeaponIcon.removeLayer(pMarker);
 	},
 	
 	/*
@@ -8900,16 +9058,15 @@ M = {
 	clearWeapons: function()
 	{
 		var that = this;
-		this.Layer.RangeWeapon.eachLayer(function(layer)
+		this.Layer.WeaponIcon.eachLayer(function(layer)
 		{
 			that.removeWeapon(layer);
 		});
-		this.Layer.RangeCircle = null;
-		this.Layer.RangeCircle = new L.layerGroup();
-		this.Layer.RangeWeapon = null;
-		this.Layer.RangeWeapon = new L.layerGroup();
+		this.Layer.WeaponCircle = null;
+		this.Layer.WeaponCircle = new L.layerGroup();
+		this.Layer.WeaponIcon = null;
+		this.Layer.WeaponIcon = new L.layerGroup();
 	},
-	
 	
 	/*
 	 * Changes the marker icon's image and size (Leaflet does not have this method).
@@ -12430,8 +12587,8 @@ W = {
 		Pin: new L.layerGroup(),
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(),
-		RangeWeapon: new L.layerGroup(), // A weapon icon with its radius circle
-		RangeCircle: new L.layerGroup(),
+		WeaponIcon: new L.layerGroup(), // A weapon icon with its radius circle
+		WeaponCircle: new L.layerGroup(),
 		Objective: new L.layerGroup(),
 		SpawnLabel: new L.layerGroup()
 	},
@@ -12471,6 +12628,7 @@ W = {
 	Objectives: {},
 	ObjectiveTimeout: {},
 	Weapons: {},
+	Placement: {},
 	MapType: {}, // Corresponds to "worlds" object from match API
 	LandEnum: {}, // Corresponds to "map_type" property of objectives
 	ObjectiveEnum: {}, // Corresponds to "type" property of objectives
@@ -12503,7 +12661,7 @@ W = {
 		W.Servers = GW2T_SERVER_DATA;
 		W.Objectives = GW2T_OBJECTIVE_DATA;
 		W.Weapons = GW2T_WEAPON_DATA;
-		W.Metadata = GW2T_OBJECTIVE_METADATA;
+		W.Metadata = GW2T_WVW_METADATA;
 		W.MapType = W.Metadata.MapType;
 		W.LandEnum = W.Metadata.LandEnum;
 		W.ObjectiveEnum = W.Metadata.ObjectiveEnum;
@@ -15446,7 +15604,7 @@ B = {
 			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Vendor_Network_Agent")
 				+ "title='Items restock at daily reset.<br />Vendors relocate 8 hours after that.<br />Limit 1 purchase per vendor.'>Info</a> "
 			+ "<u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
-			+ "<input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' /> "
+			+ "&nbsp;<input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' /> "
 		+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>");
 
 		// Bind buttons
@@ -17617,7 +17775,7 @@ I = {
 					// Automatically scroll to the clicked header
 					I.scrollToElement(header, container, "fast");
 					
-					// Scroll the map to Dry Top if it is that chain list
+					// View the map at Dry Top if it is that chain list
 					if ($(this).attr("id") === "sectionChains_Drytop")
 					{
 						M.goToZone("dry", M.ZoomEnum.Bird);
@@ -17628,8 +17786,8 @@ I = {
 					}
 					else
 					{
-						// Update current section variable
-						I[I.sectionPrefix + I.PageEnum.Chains] = section;
+						// Update current section variable, ignore if on Scheduled section of Chains page
+						I[I.sectionPrefix + I.PageEnum.Chains] = (section === I.SectionEnum.Chains.Scheduled) ? "" : section;
 					}
 				}
 				else
@@ -18012,22 +18170,25 @@ I = {
 	{
 		$(pMenu).addClass("jsHidable").find("li").each(function()
 		{
-			if ($(this).hasClass("itemContextSubmenu") === false)
+			if ($(this).hasClass("jsIgnore") === false)
 			{
-				// Translate menu item
-				if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+				// If it is a menu item
+				if ($(this).hasClass("itemContextSubmenu") === false)
 				{
-					$(this).text(D.getPhraseOriginal($(this).text()));
+					if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
+					{
+						$(this).text(D.getPhraseOriginal($(this).text()));
+					}
 				}
+				// If it is a label for a submenu
+				else
+				{
+					var label = $(this).find("> span");
+					label.html(D.getPhraseOriginal(label.text())).append(" <kbd>" + I.Symbol.TriRight + "</kbd>");
+				}
+				// Add bullet point decoration
+				$(this).prepend("<ins class='s16 s16_bullet'></ins> ");
 			}
-			else
-			{
-				// Submenu label
-				var label = $(this).find("> span");
-				label.html(D.getPhraseOriginal(label.text())).append(" <kbd>" + I.Symbol.TriRight + "</kbd>");
-			}
-			// Add bullet points
-			$(this).prepend("<ins class='s16 s16_bullet'></ins> ");
 		});
 	},
 	
