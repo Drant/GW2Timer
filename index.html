@@ -123,8 +123,9 @@
 					<div id="tmlIndicator"></div>
 				</div>
 			</div>
-			<time id="mapTime" class="mapTime"></time>
-			<div class="mapCoordinates">
+			<div id="mapCoordinatesBar" class="mapCoordinatesBar">
+				<kbd id="mapCoordinatesToggle" class="btnWindow btnToggle mapCoordinatesToggle" title="<dfn>Toggle Coordinates Bar</dfn>"></kbd>
+				<time id="mapTime" class="mapTime"></time><br />
 				<input id="mapCoordinatesMouse" type="text" />
 				<input id="mapCoordinatesCopy" type="text" />
 				<input id="mapCoordinatesName" class="mapCoordinatesName" type="text" />
@@ -165,6 +166,7 @@
 							<label title="Set initial zoom level for Tyria map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoom" class="optSlider" type="range" min="0" max="7" step="1" /></label>
 						</div>
 						<div class="mapOptionsOther">
+							<label class="cssHidden"><input id="opt_bol_showCoordinatesBar" type="checkbox" /></label>
 							<label><img data-src="img/map/floor.png" /><input id="opt_int_setFloor" class="optSlider" type="range" min="0" max="3" step="1" title="Set map floor level.<br />Example: Verdant Brink has multiple floors." /></label>
 							<label title="Show/Hide region-colored borders over zones."><img data-src="img/map/border.png" /><input id="opt_bol_showZoneBorders" type="checkbox" /> Show zone borders</label>
 							<label title="Show/Hide gateways between zones."><img data-src="img/map/gateway_gate.png" /><input id="opt_bol_showZoneGateways" type="checkbox" /> Show zone gateways</label>
@@ -306,8 +308,9 @@
 					<div id="lboOther"></div>
 				</div>
 			</div>
-			<time id="wvwTime" class="mapTime"></time>
-			<div class="mapCoordinates">
+			<div id="wvwCoordinatesBar" class="mapCoordinatesBar">
+				<kbd id="wvwCoordinatesToggle" class="btnWindow btnToggle mapCoordinatesToggle" title="<dfn>Toggle Coordinates Bar</dfn>"></kbd>
+				<time id="wvwTime" class="mapTime"></time><br />
 				<input id="wvwCoordinatesMouse" type="text" />
 				<input id="wvwCoordinatesCopy" type="text" />
 				<input id="wvwCoordinatesName" class="mapCoordinatesName" type="text" />
@@ -355,6 +358,8 @@
 							<label title="Set initial zoom level for WvW map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoomWvW" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 						</div>
 						<div class="mapOptionsOther">
+							<label class="cssHidden"><input id="opt_bol_showCoordinatesBarWvW" type="checkbox" /></label>
+							<label title="Show or hide objectives' destructible walls and gates."><img data-src="img/wvw/wall.png" /><input id="opt_bol_showDestructibleWalls" type="checkbox" /> Show destructible walls</label>
 							<label title="Show or hide labels on the map."><img data-src="img/wvw/label.png" /><input id="opt_bol_showObjectiveLabels" type="checkbox" /> Show objective labels</label>
 							<label title="Show or minimize the WvW leaderboard."><img data-src="img/wvw/leaderboard.png" /><input id="opt_bol_showLeaderboard" type="checkbox" /> Show leaderboard</label>
 							<label class="cssHidden"><input id="opt_bol_opaqueLeaderboard" type="checkbox" /></label><!-- These hidden inputs serve as memory state holders -->
@@ -697,7 +702,7 @@
 					<label title="Show/Hide the map."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
 					<label title="Show/Hide GW2 official event countdowns and gem sales on the top right corner of the map pane. Requires reload."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard (on HUD)</label>
 					<label title="Show/Hide Heart of Thorns meta events timeline."><input id="opt_bol_showTimeline" type="checkbox" /> Show the timeline (on HUD)</label>
-					<label title="Enable high visibility timeline."><input id="opt_bol_opaqueTimeline" type="checkbox" /> Opaque timeline</label>
+					<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>
 					<label title="Only show the HUD when you are on the Chains page."><input id="opt_bol_hideHUD" type="checkbox" /> Hide HUD if not on Chains page</label>
 					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane. To toggle the Dashboard and Timeline, right click on the map and choose &quot;Toggle HUD&quot;.</span><br />
 					<br />

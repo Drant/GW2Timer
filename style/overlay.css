@@ -49,10 +49,10 @@
 .mapGPS {
 	display: inline-block;
 }
-.mapCoordinates {
+.mapCoordinatesBar {
 	bottom: 6px; left: 6px;
 }
-.mapCoordinates input {
+.mapCoordinatesBar input {
 	width: 80px; height: 12px;
 	margin-left: 5px;
 	font-size: 12px;
@@ -62,9 +62,7 @@ input.mapCoordinatesName {
 }
 .mapTime {
 	display: inline-block;
-	position: absolute;
 	z-index: 9;
-	bottom: 24px; left: 6px;
 	margin-left: 8px;
 	font-size: 14px;
 	font-family: Menomonia;

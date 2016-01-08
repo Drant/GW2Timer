@@ -132,6 +132,8 @@ O = {
 		bol_opaqueTimeline: false,
 		bol_hideHUD: true,
 		// Map
+		bol_showCoordinatesBar: true,
+		bol_showCoordinatesBarWvW: true,
 		int_setFloor: 1,
 		int_setInitialZoom: 3,
 		int_setInitialZoomWvW: 3,
@@ -179,6 +181,7 @@ O = {
 		bol_showLeaderboard: true,
 		bol_opaqueLeaderboard: false,
 		bol_condenseLeaderboard: false,
+		bol_showDestructibleWalls: false,
 		bol_showObjectiveLabels: true,
 		// GPS
 		bol_displayCharacter: true,
@@ -1229,6 +1232,14 @@ O = {
 				$("#panelMap").toggle(O.Options.bol_showMap);
 				M.refreshMap();
 			}
+		},
+		bol_showCoordinatesBar: function()
+		{
+			M.toggleCoordinatesBar();
+		},
+		bol_showCoordinatesBarWvW: function()
+		{
+			W.toggleCoordinatesBar();
 		},
 		bol_hideHUD: function()
 		{
@@ -7711,6 +7722,15 @@ M = {
 		var htmlidprefix = "#" + that.MapEnum;
 		
 		/*
+		 * Shows or hides coordinates bar.
+		 */
+		this.toggleCoordinatesBar(); // Apply initial appearance
+		$(htmlidprefix + "CoordinatesToggle").click(function()
+		{
+			$("#opt_bol_showCoordinatesBar" + that.OptionSuffix).trigger("click");
+		});
+		
+		/*
 		 * Clicking an empty place on the map highlight its coordinate.
 		 */
 		this.Map.on("click", function(pEvent)
@@ -7804,6 +7824,12 @@ M = {
 		{
 			P.drawCompletionRoute();
 		});
+	},
+	toggleCoordinatesBar: function()
+	{
+		var that = this;
+		var htmlidprefix = "#" + that.MapEnum;
+		$(htmlidprefix + "CoordinatesBar input").toggle(O.Options["bol_showCoordinatesBar" + that.OptionSuffix]);
 	},
 	
 	/*
@@ -8781,10 +8807,14 @@ M = {
 	{
 		var that = pMapObject;
 		var htmlidprefix = "#" + that.MapEnum;
-		var cm = $(htmlidprefix + "ContextRangeList");
-		I.preventPropagation(cm);
-		var counter = 0;
 		var iconsperline = 5;
+		var rangemaxvalue = 20000;
+		var colormaxlength = 32;
+		var importmaxlength = 8192;
+		
+		var weaponsmenu = $(htmlidprefix + "ContextRangeList");
+		I.preventPropagation(weaponsmenu);
+		var counter = 0;
 		for (var i in that.Weapons)
 		{
 			var weapon = that.Weapons[i];
@@ -8794,10 +8824,10 @@ M = {
 			}
 			counter++;
 			var weaponbutton = $("<img src='img/wvw/range/" + i + I.cPNG + "' />");
-			cm.append(weaponbutton);
+			weaponsmenu.append(weaponbutton);
 			if (counter % iconsperline === 0)
 			{
-				cm.append("<br />");
+				weaponsmenu.append("<br />");
 			}
 			(function(pWeapon)
 			{
@@ -8810,50 +8840,89 @@ M = {
 		
 		// Button: lay a custom range weapon
 		var custombutton = $("<img src='img/wvw/range/custom.png' "
-			+ "title='<dfn>Lay a custom weapon</dfn><br />on the map using the range and color specified below.' />");
-		custombutton.click(function()
-		{
-			var cw = {
-				id: "custom",
-				range: parseInt($(htmlidprefix + "RangeCustomRange").val()),
-				color: U.stripToColorString($(htmlidprefix + "RangeCustomColor").val())
-			};
-			that.createWeapon(cw, that.ContextLatLng);
-		});
-		cm.append(custombutton);
+			+ "title='<dfn>Lay a custom weapon on the map</dfn><br />using the range and color specified below.' />")
+			.click(function()
+			{
+				var cw = {
+					id: "custom",
+					range: parseInt($(htmlidprefix + "RangeCustomRange").val()),
+					color: U.stripToColorString($(htmlidprefix + "RangeCustomColor").val())
+				};
+				that.createWeapon(cw, that.ContextLatLng);
+			});
+		weaponsmenu.append(custombutton);
 		
 		// Button: clear all weapons
 		var clearbutton = $("<img src='img/ui/default.png' "
 			+ "title='<dfn>Delete all weapons on the map.</dfn><br />After laying a weapon on the map:<br />"
-			+ "Drag it to move it.<br />Right click to center it.<br />Double click to delete it.' />");
-		clearbutton.click(function()
-		{
-			that.clearWeapons();
-		});
-		cm.append(clearbutton);
+			+ "Drag it to move it.<br />Right click to center it.<br />Double click to delete it.' />")
+			.click(function()
+			{
+				that.clearWeapons();
+			});
+		weaponsmenu.append(clearbutton);
 		
 		// Inputs: attributes for the custom range weapon
-		cm.append("<br /><span id='" + that.MapEnum + "RangeCustom' class='mapRangeCustom'><input id='"
-			+ that.MapEnum + "RangeCustomRange' type='number' value='1200' min='0' max='20000' step='100' style='width:64px' class='cssInputText' />"
-			+ "<input id='" + that.MapEnum + "RangeCustomColor' type='text' value='#ffffff' maxlength='32' style='width:96px' class='cssInputText' />"
+		weaponsmenu.append("<br /><span id='" + that.MapEnum + "RangeCustom' class='mapRangeCustom'><input id='"
+			+ that.MapEnum + "RangeCustomRange' type='number' value='1200' min='0' max='"
+				+ rangemaxvalue + "' step='100' style='width:64px' class='cssInputText' />"
+			+ "<input id='" + that.MapEnum + "RangeCustomColor' type='text' value='#ffffff' maxlength='"
+				+ colormaxlength + "' style='width:96px' class='cssInputText' />"
 			+ "</span>");
+		
+		// Buttons and inputs to import and export weapon placement
+		var exportbutton  = $("<img src='img/ui/export.png' "
+			+ "title='<dfn>(Export) Prints in data format the weapons</dfn> currently placed on the map.<br />"
+			+ "The outputted text can be copied to share your weapons placement.' />")
+			.click(function()
+			{
+				if (that.isWeaponsLaid())
+				{
+					I.write(U.escapeHTML(JSON.stringify(that.serializeWeapons())), 0, true);
+				}
+			});
+		var importbutton = $("<img src='img/ui/import.png' id='" + that.MapEnum + "RangeImportButton' "
+			+ "title='<dfn>(Import) Reads data from the text input box</dfn> on the right.<br />"
+			+ "Weapons will be reconstructed from these pasted text data.' />")
+			.click(function()
+			{
+				var str = $(htmlidprefix + "RangeImportText").val();
+				try {
+					var arsenal = JSON.parse(str);
+					if (Array.isArray(arsenal))
+					{
+						that.redrawWeapons(arsenal);
+					}
+				}
+				catch (e) {
+					I.write("Invalid data string for importing weapons.");
+				};
+			});
+		var importtext = $("<input id='" + that.MapEnum + "RangeImportText' type='text' value='' maxlength='"
+			+ importmaxlength + "' style='width:96px' class='cssInputText' />")
+			.onEnterKey(function()
+			{
+				$(htmlidprefix + "RangeImportButton").trigger("click");
+			});
+		weaponsmenu.append(exportbutton).append(importbutton).append(importtext);
+		
 		// Allow interaction with the inputs within the context menu
-		$(htmlidprefix + "RangeCustom").click(function(pEvent)
+		weaponsmenu.find("input").click(function(pEvent)
 		{
 			pEvent.stopPropagation();
 		});
 		
 		// Finally
 		I.qTip.init(".mapContextRangeList img");
-		that.initializeWeaponStorage(that);
+		that.initializeWeaponStorage();
 	},
 	
 	/*
 	 * Initializes the weapon range storage system.
 	 */
-	initializeWeaponStorage: function(pMapObject)
+	initializeWeaponStorage: function()
 	{
-		var that = pMapObject;
+		var that = this;
 		var initializeStoredWeapons = function(pQuantity)
 		{
 			var obj = O.Utilities["StoredWeapons" + that.OptionSuffix];
@@ -8949,8 +9018,33 @@ M = {
 			{
 				var weapon = pArsenal[i];
 				// If it is not a custom weapon, then use the default properties via that weapon ID
-				var weapontomake = (weapon.id === "custom") ? weapon : this.Weapons[weapon.id];
-				this.createWeapon(weapontomake, this.convertGCtoLC(weapon.coord));
+				var weapontomake = null;
+				if (weapon.id === "custom"
+					&& weapon.range !== undefined
+					&& weapon.color !== undefined
+					&& weapon.coord !== undefined)
+				{
+					weapontomake = {
+						id: weapon.id,
+						coord: this.parseCoordinates(weapon.coord),
+						range: parseInt(weapon.range),
+						color: U.stripToColorString(weapon.color)
+					};
+				}
+				else if (this.Weapons[weapon.id] !== undefined)
+				{
+					weapontomake = this.Weapons[weapon.id];
+				}
+				
+				// Only draw if it is a valid weapon object
+				if (weapontomake !== null)
+				{
+					this.createWeapon(weapontomake, this.convertGCtoLC(weapon.coord));
+				}
+				else
+				{
+					I.write("Failed parsing a weapon.");
+				}
 			}
 		}
 		else
@@ -8967,7 +9061,7 @@ M = {
 	{
 		if (this.Layer.WeaponIcon.getLayers().length === 0)
 		{
-			I.write("No range weapons to work with. Lay weapons from the map's Range context menu.");
+			I.write("No weapons to work with. Lay weapons from the map's &quot;Range&quot; context menu.");
 			return false;
 		}
 		return true;
@@ -9519,7 +9613,7 @@ M = {
 	convertLatLngs: function(pArray)
 	{
 		var coords = this.convertLCtoGCMulti(pArray);
-		this.printCoordinates(coords);
+		P.printCoordinates(coords);
 	},
 	
 	/*
@@ -19217,7 +19311,6 @@ T.initializeSchedule(); // compute event data and write HTML
 P.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
-
 
 
 

@@ -878,11 +878,11 @@ textarea.jsCopyCode {
 }
 
 /* Bottom left corner: Coordinates bar */
-.mapCoordinates {
+.mapCoordinatesBar {
 	position: absolute; z-index: 9;
 	bottom: 12px; left: 12px;
 }
-.mapCoordinates input, .cssInputText {
+.mapCoordinatesBar input, .cssInputText {
 	display: inline-block;
 	width: 90px;
 	height: 16px;
@@ -898,11 +898,17 @@ textarea.jsCopyCode {
 	margin: 0;
 	padding: 2px;
 }
-.mapCoordinates input::selection {
+.mapCoordinatesBar input::selection {
 	background: #66aaff;
 }
 input.mapCoordinatesName {
 	width: 145px; 
+}
+#mapCoordinatesToggle, #wvwCoordinatesToggle {
+	position: fixed;
+	top: auto;
+	bottom: 8px;
+	left: -4px;
 }
 .mapTime {
 	display: none;
