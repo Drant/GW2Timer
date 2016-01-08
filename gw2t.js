@@ -1334,6 +1334,10 @@ O = {
 		{
 			W.toggleLeaderboardWidth(true);
 		},
+		bol_showDestructibleWalls: function()
+		{
+			W.toggleWalls();
+		},
 		bol_showObjectiveLabels: function()
 		{
 			W.toggleObjectiveLabels();
@@ -8186,7 +8190,8 @@ M = {
 			objinfofont: [14, 13, 12, 11, 10, 9, 0, 0],
 			objumbrella: [96, 96, 96, 96, 64, 32, 24, 0],
 			spawnfont: [28, 24, 20, 16, 12, 8, 0, 0],
-			spawnopacity: [0.9, 0.9, 0.8, 0.7, 0.6, 0.5, 0, 0]
+			spawnopacity: [0.9, 0.9, 0.8, 0.7, 0.6, 0.5, 0, 0],
+			wallweight: [10, 8, 6, 4, 2, 0, 0, 0]
 		};
 		var getZoomValue = function(pKey)
 		{
@@ -8204,6 +8209,7 @@ M = {
 		var objumbrella = getZoomValue("objumbrella");
 		var spawnfont = getZoomValue("spawnfont");
 		var spawnopacity = getZoomValue("spawnopacity");
+		var wallweight = getZoomValue("wallweight");
 		
 		var completionboolean;
 		var overviewboolean;
@@ -8255,6 +8261,10 @@ M = {
 					layer._icon.style.opacity = spawnopacity;
 					layer._icon.style.zIndex = that.cZIndexBury + 1;
 					layer._icon.style.display = "table";
+				});
+				// Destructible walls and gates paths
+				this.Layer.DestructibleWall.eachLayer(function(layer) {
+					layer.setStyle({weight: wallweight});
 				});
 			} break;
 		}
@@ -9106,6 +9116,7 @@ M = {
 			draggable: true,
 			opacity: 0.9
 		});
+		that.bindMarkerCoordBehavior(weapon, "click");
 		
 		// Bind placed range icon behavior
 		weapon.on("drag", function()
@@ -9138,7 +9149,7 @@ M = {
 	 */
 	removeWeapon: function(pMarker)
 	{
-		// Remove its circle range marker before removing the weapon
+		// Remove its range circle before removing the weapon
 		this.toggleLayer(pMarker.options.circle, false);
 		this.Layer.WeaponCircle.removeLayer(pMarker.options.circle);
 		// Remove the weapon itself
@@ -9156,10 +9167,8 @@ M = {
 		{
 			that.removeWeapon(layer);
 		});
-		this.Layer.WeaponCircle = null;
-		this.Layer.WeaponCircle = new L.layerGroup();
-		this.Layer.WeaponIcon = null;
-		this.Layer.WeaponIcon = new L.layerGroup();
+		this.Layer.WeaponCircle.clearLayers();
+		this.Layer.WeaponIcon.clearLayers();
 	},
 	
 	/*
@@ -12683,6 +12692,7 @@ W = {
 		PersonalPath: new L.layerGroup(),
 		WeaponIcon: new L.layerGroup(), // A weapon icon with its radius circle
 		WeaponCircle: new L.layerGroup(),
+		DestructibleWall: new L.layerGroup(),
 		Objective: new L.layerGroup(),
 		SpawnLabel: new L.layerGroup()
 	},
@@ -12755,6 +12765,7 @@ W = {
 		W.Servers = GW2T_SERVER_DATA;
 		W.Objectives = GW2T_OBJECTIVE_DATA;
 		W.Weapons = GW2T_WEAPON_DATA;
+		W.Placement = GW2T_PLACEMENT_DATA;
 		W.Metadata = GW2T_WVW_METADATA;
 		W.MapType = W.Metadata.MapType;
 		W.LandEnum = W.Metadata.LandEnum;
@@ -12767,6 +12778,7 @@ W = {
 		W.initializeLog();
 		W.reinitializeServerChange();
 		W.generateServerList();
+		W.toggleWalls();
 		I.styleContextMenu("#wvwContext");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
 		// Finally
@@ -12854,6 +12866,38 @@ W = {
 		{
 			P.tickGPS();
 		}
+	},
+	
+	/*
+	 * Draws paths representing destructible walls on the map or toggle them if
+	 * already drawn.
+	 */
+	toggleWalls: function()
+	{
+		var wallcolor = "orange";
+		var gatecolor = "yellow";
+		
+		if (O.Options.bol_showDestructibleWalls
+			&& W.Layer.DestructibleWall.getLayers().length === 0)
+		{
+			var drawWall = function(pCoords, pColor)
+			{
+				for (var i in pCoords)
+				{
+					var path = L.polyline(W.convertGCtoLCDual(pCoords[i]),
+					{
+						color: pColor,
+						opacity: 0.8,
+						weight: 10,
+						lineCap: "butt"
+					});
+					W.Layer.DestructibleWall.addLayer(path);
+				}
+			};
+			drawWall(W.Placement["eternal"].Wall, wallcolor);
+			drawWall(W.Placement["eternal"].Gate, gatecolor);
+		}
+		W.toggleLayer(W.Layer.DestructibleWall, O.Options.bol_showDestructibleWalls);
 	},
 	
 	/*
