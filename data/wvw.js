@@ -1550,6 +1550,7 @@ portal: {
 	id: "portal",
 	type: "skill",
 	color: "pink",
+	image: "portal",
 	isPlaceable: true,
 	range: 5000
 },
@@ -1557,6 +1558,7 @@ flameram: {
 	id: "flameram",
 	type: "field",
 	color: "orange",
+	image: "flameram",
 	isPlaceable: false,
 	range: 360,
 	supply: [40, 50, 40]
@@ -1565,6 +1567,7 @@ arrowcart: {
 	id: "arrowcart",
 	type: "field",
 	color: "orange",
+	image: "arrowcart",
 	isPlaceable: true,
 	range: 2500,
 	supply: [40, 50, 40]
@@ -1573,6 +1576,7 @@ ballista: {
 	id: "ballista",
 	type: "field",
 	color: "orange",
+	image: "ballista",
 	isPlaceable: true,
 	range: 3000,
 	supply: [30, 40, 30]
@@ -1581,6 +1585,7 @@ catapult: {
 	id: "catapult",
 	type: "field",
 	color: "orange",
+	image: "catapult",
 	isPlaceable: true,
 	range: 4000,
 	supply: [50, 60, 50]
@@ -1589,6 +1594,7 @@ trebuchet: {
 	id: "trebuchet",
 	type: "field",
 	color: "orange",
+	image: "trebuchet",
 	isPlaceable: true,
 	range: 10000,
 	supply: [100, 120, 100]
@@ -1597,6 +1603,7 @@ golem: {
 	id: "golem",
 	type: "field",
 	color: "orange",
+	image: "golem",
 	isPlaceable: false,
 	range: 1500,
 	supply: [100, 150, 50]
@@ -1605,6 +1612,7 @@ shieldgenerator: {
 	id: "shieldgenerator",
 	type: "field",
 	color: "orange",
+	image: "shieldgenerator",
 	isPlaceable: true,
 	range: 2200,
 	supply: [40, 50, 40]
@@ -1613,26 +1621,42 @@ burningoil: {
 	id: "burningoil",
 	type: "base",
 	color: "yellow",
+	image: "burningoil",
 	isPlaceable: false,
-	range: 600,
-	supply: [40, 50, 40]
+	range: 600
 },
 cannon: {
 	id: "cannon",
 	type: "base",
 	color: "yellow",
+	image: "cannon",
 	isPlaceable: true,
-	range: 6000,
-	supply: [40, 50, 40]
+	range: 6000
 },
 mortar: {
 	id: "mortar",
 	type: "base",
 	color: "yellow",
+	image: "mortar",
 	isPlaceable: true,
-	range: 9400,
-	supply: [40, 50, 40]
-}
+	range: 9400
+},
+burningoildesert: {
+	id: "burningoildesert",
+	type: "base",
+	color: "gold",
+	image: "burningoil",
+	isPlaceable: false,
+	range: 850
+},
+cannondesert: {
+	id: "cannondesert",
+	type: "base",
+	color: "gold",
+	image: "cannon",
+	isPlaceable: false,
+	range: 3750
+},
 };
 
 /*
@@ -1641,10 +1665,39 @@ mortar: {
 var GW2T_PLACEMENT_DATA = {
 desert: {
 	Wall: [
-
+	// palace
+	[[8271, 13000], [8297, 13000]],
+	[[8067, 13063], [8067, 13109]],
+	[[8402, 13345], [8420, 13359]],
+	[[8399, 13150], [8417, 13139]],
+	[[8124, 13425], [8158, 13453]],
+	// SE tower
+	[[7380, 13954], [7430, 13964]],
+	[[7461, 13970], [7525, 13980]],
+	[[7577, 13958], [7621, 13939]],
+	[[7527, 14157], [7579, 14209]],
+	// NE tower
+	[[8006, 12355], [8054, 12345]],
+	[[7932, 12381], [7980, 12370]],
+	[[8049, 12239], [8069, 12298]],
+	[[8041, 12200], [8018, 12132]],
+	[[8049, 12072], [8077, 12050]],
+	[[8108, 12043], [8178, 12013]],
+	[[8174, 12326], [8247, 12315]],
 	],
 	Gate: [
-
+	// rampart
+	[[7323, 12492], [7340, 12510]],
+	// palace
+	[[8189, 12983], [8210, 12983]],
+	[[8078, 13259], [8077, 13278]],
+	[[8438, 13425], [8458, 13440]],
+	[[8458, 13110], [8480, 13096]],
+	[[8219, 13475], [8238, 13482]],
+	// SE tower
+	[[7716, 14242], [7734, 14236]],
+	// NE tower
+	[[8111, 12322], [8131, 12322]],
 	],
 	Siege: [
 		{id: "flameram", coord: 55555}

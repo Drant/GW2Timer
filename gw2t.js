@@ -132,11 +132,10 @@ O = {
 		bol_opaqueTimeline: false,
 		bol_hideHUD: true,
 		// Map
-		bol_showCoordinatesBar: true,
-		bol_showCoordinatesBarWvW: true,
 		int_setFloor: 1,
 		int_setInitialZoom: 3,
 		int_setInitialZoomWvW: 3,
+		bol_showCoordinatesBar: true,
 		bol_showZoneBorders: false,
 		bol_showZoneGateways: false,
 		bol_showPersonalPaths: true,
@@ -181,7 +180,7 @@ O = {
 		bol_showLeaderboard: true,
 		bol_opaqueLeaderboard: false,
 		bol_condenseLeaderboard: false,
-		bol_showDestructibleWalls: false,
+		bol_showDestructibles: false,
 		bol_showObjectiveLabels: true,
 		// GPS
 		bol_displayCharacter: true,
@@ -1237,10 +1236,6 @@ O = {
 		{
 			M.toggleCoordinatesBar();
 		},
-		bol_showCoordinatesBarWvW: function()
-		{
-			W.toggleCoordinatesBar();
-		},
 		bol_hideHUD: function()
 		{
 			if (O.Options.bol_hideHUD === false)
@@ -1334,7 +1329,7 @@ O = {
 		{
 			W.toggleLeaderboardWidth(true);
 		},
-		bol_showDestructibleWalls: function()
+		bol_showDestructibles: function()
 		{
 			W.toggleWalls();
 		},
@@ -7731,7 +7726,7 @@ M = {
 		this.toggleCoordinatesBar(); // Apply initial appearance
 		$(htmlidprefix + "CoordinatesToggle").click(function()
 		{
-			$("#opt_bol_showCoordinatesBar" + that.OptionSuffix).trigger("click");
+			$("#opt_bol_showCoordinatesBar").trigger("click");
 		});
 		
 		/*
@@ -7829,11 +7824,13 @@ M = {
 			P.drawCompletionRoute();
 		});
 	},
+	
+	/*
+	 * Toggles both the Tyria and Mists map's coordinates bars.
+	 */
 	toggleCoordinatesBar: function()
 	{
-		var that = this;
-		var htmlidprefix = "#" + that.MapEnum;
-		$(htmlidprefix + "CoordinatesBar input").toggle(O.Options["bol_showCoordinatesBar" + that.OptionSuffix]);
+		$(".mapCoordinatesBar input").toggle(O.Options["bol_showCoordinatesBar"]);
 	},
 	
 	/*
@@ -7977,6 +7974,10 @@ M = {
 		
 		// Now get the name
 		return D.getObjectName(zone);
+	},
+	getZoneNick: function(pZone)
+	{
+		return this.ZoneAssociation[pZone.id];
 	},
 	
 	/*
@@ -8263,7 +8264,7 @@ M = {
 					layer._icon.style.display = "table";
 				});
 				// Destructible walls and gates paths
-				this.Layer.DestructibleWall.eachLayer(function(layer) {
+				this.Layer.Destructible.eachLayer(function(layer) {
 					layer.setStyle({weight: wallweight});
 				});
 			} break;
@@ -8833,7 +8834,7 @@ M = {
 				continue;
 			}
 			counter++;
-			var weaponbutton = $("<img src='img/wvw/range/" + i + I.cPNG + "' />");
+			var weaponbutton = $("<img src='img/wvw/range/" + weapon.image + I.cPNG + "' />");
 			weaponsmenu.append(weaponbutton);
 			if (counter % iconsperline === 0)
 			{
@@ -8920,6 +8921,12 @@ M = {
 		weaponsmenu.find("input").click(function(pEvent)
 		{
 			pEvent.stopPropagation();
+		});
+		
+		// The menu entry to draw standard siege placement
+		$("#wvwContextDrawWeapons").click(function()
+		{
+			W.drawPlacement(that.ZoneCurrent);
 		});
 		
 		// Finally
@@ -9109,7 +9116,7 @@ M = {
 			icon: L.icon(
 			{
 				className: "mapWeapon",
-				iconUrl: "img/wvw/range/" + pWeapon.id + I.cPNG,
+				iconUrl: "img/wvw/range/" + pWeapon.image + I.cPNG,
 				iconSize: [24, 24],
 				iconAnchor: [12, 12]
 			}),
@@ -9169,6 +9176,27 @@ M = {
 		});
 		this.Layer.WeaponCircle.clearLayers();
 		this.Layer.WeaponIcon.clearLayers();
+	},
+	
+	/*
+	 * Creates weapons from a standard placement for the specified zone.
+	 * @param object pZone.
+	 */
+	drawPlacement: function(pZone)
+	{
+		var zonenick = this.getZoneNick(pZone);
+		if (zonenick === "eternal")
+		{
+			this.redrawWeapons(W.Placement["eternal"].Siege);
+		}
+		else if (zonenick === "desertgreen")
+		{
+			
+		}
+		else if (zonenick === "desertred" || zonenick === "desertblue")
+		{
+			
+		}
 	},
 	
 	/*
@@ -12692,7 +12720,7 @@ W = {
 		PersonalPath: new L.layerGroup(),
 		WeaponIcon: new L.layerGroup(), // A weapon icon with its radius circle
 		WeaponCircle: new L.layerGroup(),
-		DestructibleWall: new L.layerGroup(),
+		Destructible: new L.layerGroup(),
 		Objective: new L.layerGroup(),
 		SpawnLabel: new L.layerGroup()
 	},
@@ -12877,8 +12905,8 @@ W = {
 		var wallcolor = "orange";
 		var gatecolor = "yellow";
 		
-		if (O.Options.bol_showDestructibleWalls
-			&& W.Layer.DestructibleWall.getLayers().length === 0)
+		if (O.Options.bol_showDestructibles
+			&& W.Layer.Destructible.getLayers().length === 0)
 		{
 			var drawWall = function(pCoords, pColor)
 			{
@@ -12891,13 +12919,15 @@ W = {
 						weight: 10,
 						lineCap: "butt"
 					});
-					W.Layer.DestructibleWall.addLayer(path);
+					W.Layer.Destructible.addLayer(path);
 				}
 			};
 			drawWall(W.Placement["eternal"].Wall, wallcolor);
 			drawWall(W.Placement["eternal"].Gate, gatecolor);
+			drawWall(W.Placement["desert"].Wall, wallcolor);
+			drawWall(W.Placement["desert"].Gate, gatecolor);
 		}
-		W.toggleLayer(W.Layer.DestructibleWall, O.Options.bol_showDestructibleWalls);
+		W.toggleLayer(W.Layer.Destructible, O.Options.bol_showDestructibles);
 	},
 	
 	/*
