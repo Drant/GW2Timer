@@ -1548,137 +1548,188 @@ var GW2T_OBJECTIVE_DATA = {
 var GW2T_WEAPON_DATA = {
 portal: {
 	id: "portal",
+	image: "portal",
 	type: "skill",
 	color: "pink",
-	image: "portal",
 	isPlaceable: true,
 	range: 5000
 },
 flameram: {
 	id: "flameram",
+	image: "flameram",
 	type: "field",
 	color: "orange",
-	image: "flameram",
 	isPlaceable: false,
 	range: 360,
 	supply: [40, 50, 40]
 },
 arrowcart: {
 	id: "arrowcart",
+	image: "arrowcart",
 	type: "field",
 	color: "orange",
-	image: "arrowcart",
 	isPlaceable: true,
 	range: 2500,
 	supply: [40, 50, 40]
 },
 ballista: {
 	id: "ballista",
+	image: "ballista",
 	type: "field",
 	color: "orange",
-	image: "ballista",
 	isPlaceable: true,
 	range: 3000,
 	supply: [30, 40, 30]
 },
 catapult: {
 	id: "catapult",
+	image: "catapult",
 	type: "field",
 	color: "orange",
-	image: "catapult",
 	isPlaceable: true,
 	range: 4000,
 	supply: [50, 60, 50]
 },
 trebuchet: {
 	id: "trebuchet",
+	image: "trebuchet",
 	type: "field",
 	color: "orange",
-	image: "trebuchet",
 	isPlaceable: true,
 	range: 10000,
 	supply: [100, 120, 100]
 },
 golem: {
 	id: "golem",
+	image: "golem",
 	type: "field",
 	color: "orange",
-	image: "golem",
 	isPlaceable: false,
 	range: 1500,
 	supply: [100, 150, 50]
 },
 shieldgenerator: {
 	id: "shieldgenerator",
+	image: "shieldgenerator",
 	type: "field",
 	color: "orange",
-	image: "shieldgenerator",
 	isPlaceable: true,
 	range: 2200,
 	supply: [40, 50, 40]
 },
 burningoil: {
 	id: "burningoil",
+	image: "burningoil",
 	type: "base",
 	color: "yellow",
-	image: "burningoil",
+	opacity: 0.05,
 	isPlaceable: false,
 	range: 600
 },
 cannon: {
 	id: "cannon",
+	image: "cannon",
 	type: "base",
 	color: "yellow",
-	image: "cannon",
+	opacity: 0.05,
 	isPlaceable: true,
 	range: 6000
 },
 mortar: {
 	id: "mortar",
+	image: "mortar",
 	type: "base",
 	color: "yellow",
-	image: "mortar",
+	opacity: 0.05,
 	isPlaceable: true,
 	range: 9400
 },
 burningoildesert: {
 	id: "burningoildesert",
+	image: "burningoil",
 	type: "base",
 	color: "gold",
-	image: "burningoil",
+	opacity: 0.05,
 	isPlaceable: false,
 	range: 850
 },
 cannondesert: {
 	id: "cannondesert",
+	image: "cannon",
 	type: "base",
 	color: "gold",
-	image: "cannon",
+	opacity: 0.05,
 	isPlaceable: false,
 	range: 3750
-},
+}
 };
 
 /*
  * Map placement of siege weapons, and destructible objective walls and gates.
+ * The coordinates are all from the Green Borderlands. To place on the red and
+ * blue borderlands, the offset metadata must be used.
  */
 var GW2T_PLACEMENT_DATA = {
-desert: {
+Desert: {
+	ZoneNicks: ["desertgreen", "desertblue", "desertred"],
+	Barricade: [
+	// rampart
+	[[6750, 12489], [6821, 12480]],
+	[[6698, 12493], [6718, 12492]],
+	[[7512, 12499], [7580, 12497]],
+	[[7614, 12493], [7635, 12490]],
+	// SE tower
+	[[7380, 13954], [7430, 13964]],
+	[[7461, 13970], [7525, 13980]],
+	[[7849, 14072], [7921, 14051]],
+	[[7949, 14043], [7989, 14017]],
+	// NW tower
+	[[6398, 12288], [6461, 12289]],
+	[[6493, 12293], [6540, 12286]],
+	// SW tower
+	[[6860, 14042], [6888, 14053]],
+	[[6842, 14040], [6822, 14035]],
+	// NE tower
+	[[8006, 12355], [8054, 12345]],
+	[[7932, 12381], [7980, 12370]],
+	],
 	Wall: [
-	// palace
+	// rampart
+	[[7373, 12545], [7408, 12584]],
+	[[7257, 12810], [7279, 12810]],
+	[[7077, 12799], [7117, 12803]],
+	[[6832, 12484], [6834, 12534]],
+	[[6840, 12476], [6922, 12471]],
+	[[7049, 12519], [7082, 12480]],
+	[[7434, 12490], [7485, 12491]],
+	[[7497, 12500], [7501, 12551]],
+	// W keep
+	[[5963, 12948], [6012, 12946]],
+	[[6108, 12945], [6160, 12946]],
+	[[6236, 13016], [6236, 13047]],
+	[[5933, 13223], [5933, 13245]],
+	[[5932, 13134], [5932, 13153]],
+	[[6001, 13411], [6034, 13411]],
+	[[6128, 13414], [6161, 13414]],
+	[[6267, 13288], [6267, 13310]],
+	// E keep
 	[[8271, 13000], [8297, 13000]],
 	[[8067, 13063], [8067, 13109]],
 	[[8402, 13345], [8420, 13359]],
 	[[8399, 13150], [8417, 13139]],
 	[[8124, 13425], [8158, 13453]],
+	// NW tower
+	[[6315, 12277], [6365, 12277]],
+	[[6378, 12211], [6377, 12262]],
+	[[6141, 12277], [6199, 12278]],
+	[[6127, 12189], [6127, 12262]],
+	[[6330, 11884], [6405, 11917]],
+	[[6413, 11938], [6401, 11965]],
 	// SE tower
-	[[7380, 13954], [7430, 13964]],
-	[[7461, 13970], [7525, 13980]],
 	[[7577, 13958], [7621, 13939]],
 	[[7527, 14157], [7579, 14209]],
+	[[7821, 14159], [7828, 14082]],
 	// NE tower
-	[[8006, 12355], [8054, 12345]],
-	[[7932, 12381], [7980, 12370]],
 	[[8049, 12239], [8069, 12298]],
 	[[8041, 12200], [8018, 12132]],
 	[[8049, 12072], [8077, 12050]],
@@ -1688,7 +1739,17 @@ desert: {
 	Gate: [
 	// rampart
 	[[7323, 12492], [7340, 12510]],
-	// palace
+	[[7505, 12611], [7507, 12633]],
+	[[7174, 12812], [7198, 12812]],
+	[[6835, 12594], [6835, 12617]],
+	[[7005, 12575], [7021, 12554]],
+	// W keep
+	[[6059, 12942], [6078, 12942]],
+	[[5931, 13307], [5931, 13327]],
+	[[5931, 13052], [5932, 13076]],
+	[[6060, 13412], [6081, 13412]],
+	[[6281, 13179], [6281, 13202]],
+	// E keep
 	[[8189, 12983], [8210, 12983]],
 	[[8078, 13259], [8077, 13278]],
 	[[8438, 13425], [8458, 13440]],
@@ -1699,11 +1760,10 @@ desert: {
 	// NE tower
 	[[8111, 12322], [8131, 12322]],
 	],
-	Siege: [
-		{id: "flameram", coord: 55555}
-	]
+	Siege: [{"id":"cannondesert","coord":[8057,13294]},{"id":"cannondesert","coord":[8057,13239]},{"id":"mortar","coord":[8013,13193]},{"id":"mortar","coord":[8484,13462]},{"id":"cannondesert","coord":[8453,13483]},{"id":"cannondesert","coord":[8395,13445]},{"id":"cannondesert","coord":[8478,13056]},{"id":"cannondesert","coord":[8423,13091]},{"id":"mortar","coord":[8504,13073]},{"id":"mortar","coord":[8228,13478]},{"id":"cannondesert","coord":[8243,13506]},{"id":"cannondesert","coord":[8195,13485]},{"id":"mortar","coord":[8265,12292]},{"id":"cannondesert","coord":[8104,12420]},{"id":"cannondesert","coord":[8156,12416]},{"id":"mortar","coord":[7453,12625]},{"id":"mortar","coord":[7738,14113]},{"id":"cannondesert","coord":[7329,12461]},{"id":"cannondesert","coord":[7370,12506]},{"id":"cannondesert","coord":[7542,12579]},{"id":"cannondesert","coord":[7541,12664]},{"id":"cannondesert","coord":[7144,12835]},{"id":"cannondesert","coord":[7230,12839]},{"id":"mortar","coord":[7187,12876]},{"id":"cannondesert","coord":[6803,12563]},{"id":"cannondesert","coord":[6803,12646]},{"id":"mortar","coord":[6871,12604]},{"id":"cannondesert","coord":[7015,12528]},{"id":"cannondesert","coord":[6978,12578]},{"id":"mortar","coord":[7026,12575]},{"id":"cannondesert","coord":[6274,12351]},{"id":"cannondesert","coord":[6221,12351]},{"id":"cannondesert","coord":[6021,12921]},{"id":"cannondesert","coord":[6098,12920]},{"id":"mortar","coord":[6150,13392]},{"id":"mortar","coord":[6167,13184]},{"id":"cannondesert","coord":[5962,13110]},{"id":"mortar","coord":[5995,13115]},{"id":"cannondesert","coord":[5962,13270]},{"id":"mortar","coord":[5995,13267]},{"id":"mortar","coord":[5969,12952]},{"id":"mortar","coord":[6006,13411]},{"id":"cannondesert","coord":[6044,13433]},{"id":"cannondesert","coord":[6117,13435]},{"id":"mortar","coord":[6398,12273]},{"id":"cannondesert","coord":[5963,13335]},{"id":"cannondesert","coord":[5964,13048]},{"id":"cannondesert","coord":[6558,14121]},{"id":"cannondesert","coord":[6625,14136]},{"id":"cannondesert","coord":[7736,14329]},{"id":"cannondesert","coord":[7780,14302]},{"id":"mortar","coord":[6751,14065]},{"id":"mortar","coord":[7323,12509]}]
 },
-eternal: {
+Eternal: {
+	ZoneNicks: ["eternal"],
 	Wall: [
 	// lowlands
 	[[9789, 15150], [9841, 15147]],
@@ -1854,17 +1914,33 @@ eternal: {
 	[[10592, 14283], [10613, 14283]],
 	[[10688, 14424], [10706, 14435]]
 	],
-	Siege: [
-		{id: "flameram", coord: 55555}
-	]
+	Siege: [{"id":"catapult","coord":[11005,13670]},{"id":"cannon","coord":[10578,14345]},{"id":"cannon","coord":[10374,14535]},{"id":"cannon","coord":[10822,14480]},{"id":"cannon","coord":[10746,14754]},{"id":"cannon","coord":[10492,14787]},{"id":"catapult","coord":[10883,13651]},{"id":"catapult","coord":[10503,13771]},{"id":"catapult","coord":[10532,13845]},{"id":"catapult","coord":[10474,13927]},{"id":"mortar","coord":[11412,15505]},{"id":"trebuchet","coord":[11152,14495]},{"id":"trebuchet","coord":[10424,13954]},{"id":"catapult","coord":[10015,13999]},{"id":"catapult","coord":[11072,13704]},{"id":"catapult","coord":[11114,13529]},{"id":"ballista","coord":[11119,13987]},{"id":"mortar","coord":[11749,14814]},{"id":"catapult","coord":[11833,14906]},{"id":"trebuchet","coord":[11679,14564]},{"id":"cannon","coord":[11380,15115]},{"id":"catapult","coord":[11114,15188]},{"id":"trebuchet","coord":[9914,15277]},{"id":"catapult","coord":[9923,15250]},{"id":"catapult","coord":[9368,14936]},{"id":"catapult","coord":[9595,14898]},{"id":"catapult","coord":[9911,14428]},{"id":"catapult","coord":[10382,15146]},{"id":"mortar","coord":[10726,14616]},{"id":"catapult","coord":[10757,13731]},{"id":"ballista","coord":[10153,13261]},{"id":"catapult","coord":[10121,13255]},{"id":"catapult","coord":[11359,15521]},{"id":"catapult","coord":[11440,15326]},{"id":"catapult","coord":[11676,15040]},{"id":"catapult","coord":[9894,15139]},{"id":"catapult","coord":[10257,14642]},{"id":"trebuchet","coord":[10634,13848]},{"id":"catapult","coord":[10948,14019]},{"id":"cannon","coord":[11579,14995]},{"id":"catapult","coord":[10832,14316]},{"id":"catapult","coord":[10569,14939]},{"id":"ballista","coord":[11289,15364]},{"id":"cannon","coord":[10825,13579]},{"id":"catapult","coord":[9979,15345]},{"id":"catapult","coord":[9766,15411]},{"id":"catapult","coord":[9774,15292]},{"id":"trebuchet","coord":[9615,14444]},{"id":"catapult","coord":[10158,15178]},{"id":"catapult","coord":[10121,14044]},{"id":"ballista","coord":[10361,13962]},{"id":"catapult","coord":[10373,13980]},{"id":"trebuchet","coord":[11075,14154]},{"id":"catapult","coord":[11400,14689]},{"id":"catapult","coord":[11373,14483]},{"id":"catapult","coord":[11210,14490]},{"id":"trebuchet","coord":[10965,13420]},{"id":"catapult","coord":[11341,15165]},{"id":"catapult","coord":[11325,15584]},{"id":"catapult","coord":[11133,15296]},{"id":"catapult","coord":[11422,14973]},{"id":"catapult","coord":[10839,15184]},{"id":"catapult","coord":[10707,14894]},{"id":"trebuchet","coord":[9929,13357]},{"id":"trebuchet","coord":[11143,15177]},{"id":"catapult","coord":[10361,14415]},{"id":"cannon","coord":[10337,14783]},{"id":"mortar","coord":[10492,14624]},{"id":"cannon","coord":[10283,14637]},{"id":"mortar","coord":[10313,14563]},{"id":"cannon","coord":[10358,14450]},{"id":"mortar","coord":[10392,14369]},{"id":"mortar","coord":[10465,14261]},{"id":"cannon","coord":[10523,14203]},{"id":"mortar","coord":[10613,14700]},{"id":"mortar","coord":[10529,14485]},{"id":"mortar","coord":[10674,14477]},{"id":"mortar","coord":[10677,14910]},{"id":"cannon","coord":[10617,14939]},{"id":"mortar","coord":[10520,14880]},{"id":"mortar","coord":[10375,14725]},{"id":"mortar","coord":[10735,14257]},{"id":"cannon","coord":[10686,14198]},{"id":"cannon","coord":[10795,14299]},{"id":"cannon","coord":[10887,14427]},{"id":"mortar","coord":[10915,14600]},{"id":"cannon","coord":[10935,14675]},{"id":"cannon","coord":[10855,14812]},{"id":"mortar","coord":[10779,14834]},{"id":"cannon","coord":[10413,14310]}]
 }
 };
 
 /*
- * Objective translations and addenda.
+ * Objective translations and map addenda.
  */
 var GW2T_WVW_METADATA = {
-	Blueprints: ["Basic", "Superior", "Guild"],
+	PlacementAssociation: {
+		desertred: "Desert",
+		desertgreen: "Desert",
+		desertblue: "Desert",
+		eternal: "Eternal",
+		alpinered: "Alpine",
+		alpinegreen: "Alpine",
+		alpineblue: "Alpine"
+	},
+	Offsets: { // The three borderland maps are identical; these X and Y offsets are relative to the green borderlands
+		desertred: [3584, -2560],
+		desertgreen: [0, 0],
+		desertblue: [7168, -640],
+		eternal: [0, 0],
+		alpinered: [0, 0],
+		alpinegreen: [0, 0],
+		alpineblue: [0, 0]
+	},
+	Blueprints: ["Basic", "Superior", "Guild"], // Blueprint grades
 	Matches: {
 		Americas: ["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"],
 		Europe:   ["2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9"]

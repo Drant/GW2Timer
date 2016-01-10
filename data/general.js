@@ -345,11 +345,13 @@ var GW2T_RANGE_DATA = {
 portal: {
 	id: "portal",
 	color: "pink",
+	image: "portal",
 	range: 5000
 },
 shadowtrap: {
 	id: "shadowtrap",
 	color: "black",
+	image: "shadowtrap",
 	range: 10000
 }
 };
@@ -1157,16 +1159,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-09T00:00:00Z"),
-	Finish: new Date("2016-01-10T00:00:00Z"),
+	Start: new Date("2016-01-10T00:00:00Z"),
+	Finish: new Date("2016-01-11T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "50023", price: "25200" },
-		Fox: { id: "48918", price: "25200" },
-		Derwena: { id: "49759", price: "25200" },
-		Yana: { id: "43843", price: "25200" },
-		Katyn: { id: "49735", price: "25200" },
-		Verma: { id: "48910", price: "25200" }
+		Mehem: { id: "67961", price: "25200" },
+		Fox: { id: "43825", price: "25200" },
+		Derwena: { id: "49735", price: "25200" },
+		Yana: { id: "44652", price: "25200" },
+		Katyn: { id: "43839", price: "25200" },
+		Verma: { id: "43827", price: "25200" }
 	}
 }
 };

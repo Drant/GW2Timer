@@ -7769,10 +7769,6 @@ M = {
 		{
 			that.goToDefault();
 		});
-		$(htmlidprefix + "ContextToggleHUD").click(function()
-		{
-			$(htmlidprefix + "HUDBoxes").toggle();
-		});
 		$(htmlidprefix + "ContextRange").one("mouseenter", function()
 		{
 			that.initializeWeaponPlacer(that);
@@ -7819,10 +7815,26 @@ M = {
 		{
 			$("#opt_bol_showWorldCompletion" + that.OptionSuffix).trigger("click");
 		});
-		$(htmlidprefix + "ContextDrawCompletion").click(function()
+		
+		// Map exclusive functions
+		switch (that.MapEnum)
 		{
-			P.drawCompletionRoute();
-		});
+			case P.MapEnum.Tyria:
+			{
+				$(htmlidprefix + "ContextToggleHUD").click(function()
+				{
+					$(htmlidprefix + "HUDBoxes").toggle();
+				});
+				$(htmlidprefix + "ContextDrawCompletion").click(function()
+				{
+					P.drawCompletionRoute();
+				});
+			} break;
+			case P.MapEnum.Mists:
+			{
+				
+			} break;
+		}
 	},
 	
 	/*
@@ -8856,6 +8868,7 @@ M = {
 			{
 				var cw = {
 					id: "custom",
+					image: "custom",
 					range: parseInt($(htmlidprefix + "RangeCustomRange").val()),
 					color: U.stripToColorString($(htmlidprefix + "RangeCustomColor").val())
 				};
@@ -8926,7 +8939,7 @@ M = {
 		// The menu entry to draw standard siege placement
 		$("#wvwContextDrawWeapons").click(function()
 		{
-			W.drawPlacement(that.ZoneCurrent);
+			W.redrawDefaultWeapons();
 		});
 		
 		// Finally
@@ -9024,9 +9037,10 @@ M = {
 	/*
 	 * Reconstructs a placement of weapons on the map.
 	 * @param array pArsenal of weapons and their location.
+	 * @param array pOffset x and y coordinates offset, optional.
 	 * @pre Weapons' placement was stored as game coordinates, not LatLng.
 	 */
-	redrawWeapons: function(pArsenal)
+	redrawWeapons: function(pArsenal, pOffset)
 	{
 		if (pArsenal !== undefined && pArsenal !== null && pArsenal.length > 0)
 		{
@@ -9034,6 +9048,7 @@ M = {
 			for (var i in pArsenal)
 			{
 				var weapon = pArsenal[i];
+				var coord = (pOffset !== undefined) ? [weapon.coord[0] + pOffset[0], weapon.coord[1] + pOffset[1]] : weapon.coord;
 				// If it is not a custom weapon, then use the default properties via that weapon ID
 				var weapontomake = null;
 				if (weapon.id === "custom"
@@ -9043,7 +9058,8 @@ M = {
 				{
 					weapontomake = {
 						id: weapon.id,
-						coord: this.parseCoordinates(weapon.coord),
+						image: "custom",
+						coord: coord,
 						range: parseInt(weapon.range),
 						color: U.stripToColorString(weapon.color)
 					};
@@ -9056,7 +9072,7 @@ M = {
 				// Only draw if it is a valid weapon object
 				if (weapontomake !== null)
 				{
-					this.createWeapon(weapontomake, this.convertGCtoLC(weapon.coord));
+					this.createWeapon(weapontomake, this.convertGCtoLC(coord));
 				}
 				else
 				{
@@ -9067,6 +9083,20 @@ M = {
 		else
 		{
 			I.write("Arsenal unavailable for this.");
+		}
+	},
+	
+	/*
+	 * Draws the standard siege placement for the current zone.
+	 */
+	redrawDefaultWeapons: function()
+	{
+		var placementname = W.Metadata.PlacementAssociation[W.ZoneCurrent.nick];
+		var offset = W.Metadata.Offsets[W.ZoneCurrent.nick];
+		if (offset !== undefined)
+		{
+			var arsenal = W.Placement[placementname].Siege;
+			W.redrawWeapons(arsenal, offset);
 		}
 	},
 	
@@ -9103,8 +9133,8 @@ M = {
 			radius: radius,
 			color: pWeapon.color,
 			weight: 2,
-			opacity: 0.8,
-			fillOpacity: 0.1
+			opacity: (pWeapon.opacity*2) || 0.8,
+			fillOpacity: pWeapon.opacity || 0.1
 		});
 		this.Layer.WeaponCircle.addLayer(circle);
 		this.toggleLayer(circle);
@@ -9176,27 +9206,6 @@ M = {
 		});
 		this.Layer.WeaponCircle.clearLayers();
 		this.Layer.WeaponIcon.clearLayers();
-	},
-	
-	/*
-	 * Creates weapons from a standard placement for the specified zone.
-	 * @param object pZone.
-	 */
-	drawPlacement: function(pZone)
-	{
-		var zonenick = this.getZoneNick(pZone);
-		if (zonenick === "eternal")
-		{
-			this.redrawWeapons(W.Placement["eternal"].Siege);
-		}
-		else if (zonenick === "desertgreen")
-		{
-			
-		}
-		else if (zonenick === "desertred" || zonenick === "desertblue")
-		{
-			
-		}
 	},
 	
 	/*
@@ -12753,6 +12762,11 @@ W = {
 		Europe: "Europe"
 	},
 	LocaleCurrent: null,
+	BorderlandsCurrent: null,
+	BorderlandsEnum: {
+		Alpine: "Alpine",
+		Desert: "Desert"
+	},
 	isWvWLoaded: false,
 	Metadata: {},
 	Servers: {},
@@ -12806,7 +12820,6 @@ W = {
 		W.initializeLog();
 		W.reinitializeServerChange();
 		W.generateServerList();
-		W.toggleWalls();
 		I.styleContextMenu("#wvwContext");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
 		// Finally
@@ -12818,6 +12831,7 @@ W = {
 	 */
 	populateWvW: function()
 	{
+		W.BorderlandsCurrent = W.BorderlandsEnum.Desert;
 		var obj;
 		var marker;
 		for (var i in W.Objectives)
@@ -12888,6 +12902,7 @@ W = {
 	 */
 	finishPopulation: function()
 	{
+		W.toggleWalls();
 		W.bindMapVisualChanges();
 		W.adjustZoomMapping();
 		if (I.ModeCurrent === I.ModeEnum.Overlay)
@@ -12902,17 +12917,22 @@ W = {
 	 */
 	toggleWalls: function()
 	{
+		var barricadecolor = "coral";
 		var wallcolor = "orange";
 		var gatecolor = "yellow";
 		
 		if (O.Options.bol_showDestructibles
 			&& W.Layer.Destructible.getLayers().length === 0)
 		{
-			var drawWall = function(pCoords, pColor)
+			var drawWall = function(pCoords, pColor, pZoneNick)
 			{
+				var offset = W.Metadata.Offsets[pZoneNick];
 				for (var i in pCoords)
 				{
-					var path = L.polyline(W.convertGCtoLCDual(pCoords[i]),
+					var coord = pCoords[i];
+					var coordA = [(coord[0])[0] + offset[0], (coord[0])[1] + offset[1]];
+					var coordB = [(coord[1])[0] + offset[0], (coord[1])[1] + offset[1]];
+					var path = L.polyline(W.convertGCtoLCDual([coordA, coordB]),
 					{
 						color: pColor,
 						opacity: 0.8,
@@ -12922,10 +12942,18 @@ W = {
 					W.Layer.Destructible.addLayer(path);
 				}
 			};
-			drawWall(W.Placement["eternal"].Wall, wallcolor);
-			drawWall(W.Placement["eternal"].Gate, gatecolor);
-			drawWall(W.Placement["desert"].Wall, wallcolor);
-			drawWall(W.Placement["desert"].Gate, gatecolor);
+			
+			for (var i in W.Placement)
+			{
+				var pl = W.Placement[i];
+				for (var ii in pl.ZoneNicks)
+				{
+					var nick = pl.ZoneNicks[ii];
+					drawWall(pl.Barricade, barricadecolor, nick);
+					drawWall(pl.Wall, wallcolor, nick);
+					drawWall(pl.Gate, gatecolor, nick);
+				}
+			}
 		}
 		W.toggleLayer(W.Layer.Destructible, O.Options.bol_showDestructibles);
 	},
