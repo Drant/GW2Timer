@@ -8654,14 +8654,14 @@ M = {
 			}
 			else
 			{
-				this.Layer.PersonalPath.clearLayers();
 				this.toggleLayer(this.Layer.PersonalPath, false);
+				this.Layer.PersonalPath.clearLayers();
 			}
 		}
 		else
 		{
-			this.Layer.PersonalPath.clearLayers();
 			this.toggleLayer(this.Layer.PersonalPath, false);
+			this.Layer.PersonalPath.clearLayers();
 		}
 	},
 	
@@ -8764,13 +8764,14 @@ M = {
 	 */
 	drawRandom: function(pQuantity)
 	{
-		if (pQuantity === 0 || pQuantity === undefined)
+		var qty = parseInt(pQuantity);
+		if (qty === 0 || qty > 1000 || this.numPins > 1000 || qty === undefined)
 		{
 			return;
 		}
 		
 		var x, y;
-		for (var i = 0; i < pQuantity; i++)
+		for (var i = 0; i < qty; i++)
 		{
 			x = T.getRandomIntRange(0, this.cMAP_BOUND);
 			y = T.getRandomIntRange(0, this.cMAP_BOUND);
@@ -9127,14 +9128,15 @@ M = {
 		var trueradius = pWeapon.range * M.cUNITS_TO_POINTS;
 		var radius = this.getZoomedDistance(trueradius);
 		var circle = L.circleMarker(pLatLng, {
+			clickable: false,
 			weaponid: pWeapon.id,
 			weaponrange: pWeapon.range,
 			trueradius: trueradius,
 			radius: radius,
 			color: pWeapon.color,
 			weight: 2,
-			opacity: (pWeapon.opacity*2) || 0.8,
-			fillOpacity: pWeapon.opacity || 0.1
+			opacity: pWeapon.opacity || 0.8,
+			fillOpacity: pWeapon.fillOpacity || 0.1
 		});
 		this.Layer.WeaponCircle.addLayer(circle);
 		this.toggleLayer(circle);
@@ -13004,7 +13006,7 @@ W = {
 	 */
 	getBorderlandsString: function(pServer, pFullServer, pFullBorderlands)
 	{
-		var server = pServer;
+		var server = (typeof pServer === "string") ? W.Servers[W.ServersCurrent[pServer]] : pServer;
 		var serverstr, blstr;
 		
 		// If the server is actually an objective object
@@ -13760,28 +13762,27 @@ W = {
 		{
 			for (var ii in W.Weapons)
 			{
-				if (W.Weapons[ii].type !== "field")
+				if (W.Weapons[ii].type === "field")
 				{
-					continue;
+					var bp = W.Metadata.Blueprints[i];
+					var blueprint = $("<ins class='spl spl_" + bp.toLowerCase() + "_" + ii + "'></ins>");
+					var supply = W.Weapons[ii].supply[i];
+					$("#splBlueprints" + bp).append(blueprint);
+					(function(pSupply)
+					{
+						blueprint.click(function()
+						{
+							addSupply($(this), pSupply);
+							$("#splHave").trigger("input");
+						});
+						blueprint.contextmenu(function()
+						{
+							addSupply($(this), -1 * pSupply);
+							$("#splHave").trigger("input");
+							return false; // Prevents context menu popping up
+						});
+					})(supply);
 				}
-				var bp = W.Metadata.Blueprints[i];
-				var blueprint = $("<ins class='spl spl_" + bp.toLowerCase() + "_" + ii + "'></ins>");
-				var supply = W.Weapons[ii].supply[i];
-				$("#splBlueprints" + bp).append(blueprint);
-				(function(pSupply)
-				{
-					blueprint.click(function()
-					{
-						addSupply($(this), pSupply);
-						$("#splHave").trigger("input");
-					});
-					blueprint.contextmenu(function()
-					{
-						addSupply($(this), -1 * pSupply);
-						$("#splHave").trigger("input");
-						return false; // Prevents context menu popping up
-					});
-				})(supply);
 			}
 		}
 		
@@ -13823,10 +13824,16 @@ W = {
 					W.OwnerCurrent = U.toFirstUpperCase((i).toString());
 				}
 			}
+			// Log server borderlands names
 			$("#opt_bol_logRedHome").next().html(W.getBorderlandsString(redserver, true, false));
 			$("#opt_bol_logGreenHome").next().html(W.getBorderlandsString(greenserver, true, false));
 			$("#opt_bol_logBlueHome").next().html(W.getBorderlandsString(blueserver, true, false));
 			$("#opt_bol_logCenter").next().html(W.getName("Center"));
+			
+			// Compass zone links borderlands names
+			$("#wvwZoneLinkGreen").text(W.getBorderlandsString(greenserver, true, true));
+			$("#wvwZoneLinkRed").text(W.getBorderlandsString(redserver, true, true));
+			$("#wvwZoneLinkBlue").text(W.getBorderlandsString(blueserver, true, true));
 			
 			W.addLogEntry(D.getObjectNick(greenserver)
 				+ " : " + D.getObjectNick(blueserver) + " : " + D.getObjectNick(redserver));
