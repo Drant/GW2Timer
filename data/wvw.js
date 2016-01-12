@@ -1614,7 +1614,7 @@ shieldgenerator: {
 	type: "field",
 	color: "orange",
 	isPlaceable: true,
-	range: 2200,
+	range: 3300,
 	supply: [40, 50, 40]
 },
 burningoil: {

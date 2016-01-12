@@ -905,7 +905,7 @@ input.mapCoordinatesName {
 	width: 145px; 
 }
 #mapCoordinatesToggle, #wvwCoordinatesToggle {
-	position: fixed;
+	position: absolute;
 	top: auto;
 	bottom: 8px;
 	left: -4px;
