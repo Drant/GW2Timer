@@ -76,6 +76,9 @@ input.mapCoordinatesName {
 		1px 1px 1px #000;
 	opacity: 0.9;
 }
+.mapHUDButton {
+	opacity: 0.4;
+}
 #mapZones:hover #mapZonesPopup {
 	padding: 0px 2px 0px 2px;
 }
@@ -93,6 +96,7 @@ input.mapCoordinatesName {
 	width: 100% !important;
 	top: 0 !important;
 	left: 0 !important;
+	text-align: left !important;
 }
 .lboButton {
 	margin-top: -12px !important;

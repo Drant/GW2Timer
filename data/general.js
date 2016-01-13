@@ -990,7 +990,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<a href='http://gw2timer.com/?page=Orphans' title='Donation Drive Wintersday daily achievement.<br /><dfn>gw2timer.com/</dfn>orphans'>Map of orphans</a>. Talk to <dfn data-coord='[10786, 10824]'>Tixx NPC</dfn> and <dfn data-coord='[[10773, 10801],[10989, 11133],[11217, 11528]]'>trees</dfn> everyday for <a href='http://wiki.guildwars2.com/wiki/Tixx%27s_Gift'>free gifts</a>.",
+	content: "",
 	Start: new Date("2015-12-15T16:00:00Z"),
 	Finish: new Date("2016-01-12T16:00:00Z")
 },
@@ -1015,22 +1015,34 @@ Announcement:
  */
 Countdowns: [
 {
-	name_en: "New Year Sale",
-	name_de: "Neujahr Ausverkauf",
-	name_es: "Rebaja Año Nuevo",
-	name_fr: "Vente Nouvel An",
-	url: "https://twitter.com/guildwars2",
-	Start: new Date("2016-01-01T16:00:00Z"),
-	Finish: new Date("2016-01-04T16:00:00Z")
+	name_en: "Winter 2016 Update",
+	name_de: "Winter-Update 2016",
+	name_es: "Actualización de invierno de 2016",
+	name_fr: "Mise à jour hivernale de 2016",
+	official: "news/state-of-the-game-update-q1-2016/",
+	Start: new Date("2016-01-26T16:00:00Z"),
+	Finish: new Date("2016-01-27T16:00:00Z")
 },
 {
-	name_en: "Wintersday",
-	name_de: "Wintertag",
-	name_es: "Día Invernal",
-	name_fr: "Hivernel",
-	url: "https://forum-en.guildwars2.com/forum/game/gw2/Updates-about-Wintersday",
-	Start: new Date("2015-12-15T17:00:00Z"),
-	Finish: new Date("2016-01-12T17:00:00Z")
+	name_en: "Lunar New Year",
+	name_de: "Mondneujahr",
+	name_es: "Año nuevo lunar",
+	name_fr: "Nouvel an lunaire",
+	official: "news/state-of-the-game-update-q1-2016/",
+	Start: new Date("2016-01-26T16:00:00Z"),
+	Finish: new Date("2016-02-09T16:00:00Z")
+},
+{
+	name_en: "PvP League Season 2",
+	name_de: "PvP Liga Saison 2",
+	name_es: "Segunda temporada de liga PvP",
+	name_fr: "Saison 2 de la ligue JcJ",
+	url_en: "https://forum-en.guildwars2.com/forum/game/pvp/Upcoming-Changes-for-PvP-League-Season-2/",
+	url_de: "https://forum-de.guildwars2.com/forum/game/pvp/Kommende-nderungen-f-r-die-zweite-PvP-Liga-Saison",
+	url_es: "https://forum-es.guildwars2.com/forum/game/pvp/Cambios-que-llegar-n-a-la-segunda-temporada-de-liga-PvP",
+	url_fr: "https://forum-fr.guildwars2.com/forum/game/pvp/Changements-venir-pour-la-saison-2-de-la-ligue-JcJ",
+	Start: new Date("2016-02-23T16:00:00Z"),
+	Finish: new Date("2016-02-24T16:00:00Z")
 }
 ],
 
@@ -1068,8 +1080,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2016-01-05T16:00:00Z"),
-	Finish: new Date("2016-01-12T16:00:00Z"),
+	Start: new Date("2016-01-12T16:00:00Z"),
+	Finish: new Date("2016-01-19T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -1079,36 +1091,12 @@ Sale: {
 	},
 	Items: [
 	{
-		url: "http://wiki.guildwars2.com/wiki/Bandit Sniper Appearance Pack",
-		img: "http://i.imgur.com/mIuPrbz.png",
+		url: "http://wiki.guildwars2.com/wiki/Shared_Inventory_Slot",
+		img: "https://render.guildwars2.com/file/58085D0B0C10C3594E96046B95BE963B7A293BB5/1314214.png",
 		quantity: 1,
-		pricenew: 2000,
+		pricenew: 700,
 		priceold: 0,
 		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Winter Solstice Appearance Pack",
-		img: "http://i.imgur.com/92cVON9.png",
-		quantity: 1,
-		pricenew: 2000,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini Festive Lord Faren",
-		img: "https://render.guildwars2.com/file/076E2196005DB9E2ADF35D110F98390A7FA3D431/924619.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini Angry Wintersday Gift",
-		img: "https://render.guildwars2.com/file/7F026FC5997F999E2E2C54B23E3939F29552F321/1322319.png",
-		quantity: 1,
-		pricenew: 400,
-		priceold: 0,
-		col: 1
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini Arrowhead",
@@ -1118,14 +1106,6 @@ Sale: {
 		priceold: 0,
 		col: 1
 	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini Tizlak",
-		img: "https://render.guildwars2.com/file/9545150CD6FD020A99EC0803BF1E41B8EDF0ADA6/1322308.png",
-		quantity: 1,
-		pricenew: 200,
-		priceold: 0,
-		col: 1
-	}
 	]
 },
 
@@ -1159,16 +1139,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-12T00:00:00Z"),
-	Finish: new Date("2016-01-13T00:00:00Z"),
+	Start: new Date("2016-01-13T00:00:00Z"),
+	Finish: new Date("2016-01-14T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43827", price: "25200" },
-		Fox: { id: "43816", price: "25200" },
-		Derwena: { id: "43798", price: "12600" },
-		Yana: { id: "49735", price: "25200" },
-		Katyn: { id: "43834", price: "25200" },
-		Verma: { id: "43799", price: "12600" }
+		Mehem: { id: "49763", price: "25200" },
+		Fox: { id: "49758", price: "25200" },
+		Derwena: { id: "43832", price: "25200" },
+		Yana: { id: "43826", price: "25200" },
+		Katyn: { id: "49760", price: "25200" },
+		Verma: { id: "67963", price: "25200" }
 	}
 }
 };

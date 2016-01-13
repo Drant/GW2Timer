@@ -13212,6 +13212,7 @@ W = {
 		var numowners = W.Metadata.Owners.length;
 		var tier = W.getMatchupTier(pData);
 		var PPT = {};
+		var wantserver = true;
 		// Initialize variables for the temp object
 		for (var i in W.Metadata.Owners)
 		{
@@ -13259,6 +13260,10 @@ W = {
 		{
 			lb = $("#lboCurrent");
 			lb.empty();
+			if (I.ModeCurrent === I.ModeEnum.Overlay)
+			{
+				wantserver = false;
+			}
 		}
 		else
 		{
@@ -13275,6 +13280,8 @@ W = {
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
 			var serverid = pData.worlds[ownerkey];
 			var servername = D.getObjectName(W.Servers[serverid]);
+			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
+				+ "<aside class='lboName'>&nbsp;" + servername + "</aside>" : "";
 			var score = pData.scores[ownerkey];
 			var scorehighest = (T.getMinMax(pData.scores)).max;
 			var scorepercent = (pData.scores[ownerkey] / scorehighest) * T.cPERCENT_100;
@@ -13333,8 +13340,7 @@ W = {
 			 * Write the HTML.
 			 */
 			html += "<article class='lboServer" + owner + "'>"
-				+ "<aside class='lboRank'>" + rank + ".</aside>"
-				+ "<aside class='lboName'>&nbsp;" + servername + "</aside>"
+				+ serverstr
 				+ "<aside class='lboScore' title='<dfn>" + scoredifferences[0] + " points</dfn> away from " + otherservers[0]
 				+ "<br /><dfn>" + scoredifferences[1] + " points</dfn> away from " + otherservers[1] + "'>"
 					+ "<var>" + score.toLocaleString() + "</var>"
@@ -13376,6 +13382,7 @@ W = {
 	{
 		if (O.Options.bol_showLeaderboard)
 		{
+			W.updateObjectives();
 			$("#lboCurrent, #lboOther").show("fast", function()
 			{
 				$("#lboContainer").css({padding: "8px"});
@@ -13893,6 +13900,9 @@ W = {
 			success: function(pData)
 		{
 			var obj, apiobj;
+			var numobjflipped = 0;
+			var maxobjflipped = 12;
+			var istoomanyflips = false;
 			for (var i in pData.maps)
 			{
 				for (var ii in (pData.maps[i]).objectives)
@@ -13904,6 +13914,10 @@ W = {
 					 */
 					if (obj.last_flipped !== apiobj.last_flipped)
 					{
+						if (obj.last_flipped !== null)
+						{
+							numobjflipped++;
+						}
 						// Reinitialize properties
 						obj.last_flipped = apiobj.last_flipped;
 						obj.last_flipped_msec = (new Date(apiobj.last_flipped)).getTime();
@@ -13934,6 +13948,17 @@ W = {
 						obj.claimed_at = apiobj.claimed_at;
 						W.updateObjectiveClaim(obj);
 					}
+					// If these many objectives flipped after an update then there might be an error with the API
+					if (numobjflipped > maxobjflipped)
+					{
+						istoomanyflips = true;
+						break;
+					}
+				}
+				if (numobjflipped > maxobjflipped)
+				{
+					istoomanyflips = true;
+					break;
 				}
 			}
 			// Initialize stagnant variables once
@@ -13952,6 +13977,11 @@ W = {
 				W.insertScoreboard(pData);
 			}
 			
+			// Check for errors
+			if (istoomanyflips)
+			{
+				I.write("Too many objectives updated. ArenaNet API servers may be having problems.");
+			}
 			if (W.isAPIFailed)
 			{
 				W.isAPIFailed = false;
@@ -13963,7 +13993,7 @@ W = {
 			{
 				W.isAPIFailed = true;
 				// If failed near reset then tell so, otherwise generic error
-				var errormessage = (W.secTillWvWReset < 10 * T.cSECONDS_IN_MINUTE) ? "WvW reset is happening soon." : "Waiting for ArenaNet API servers...";
+				var errormessage = (W.secTillWvWReset !== null && W.secTillWvWReset < 10 * T.cSECONDS_IN_MINUTE) ? "WvW reset is happening soon." : "Waiting for ArenaNet API servers...";
 				I.write("Unable to retrieve WvW data during " + T.getTimeFormatted() + ".<br />" + errormessage, 0);
 			}
 		});
@@ -15610,7 +15640,11 @@ B = {
 			B.isDashboardEnabled = false;
 			return;
 		}
-		B.isDashboardCountdownTickEnabled = true;
+		else
+		{
+			B.toggleDashboard(true);
+			B.isDashboardCountdownTickEnabled = true;
+		}
 		
 		// Hide the dashboard when clicked on the close button
 		$("#dsbClose").click(function()
@@ -15622,7 +15656,6 @@ B = {
 		// Initialize countdown entries
 		if (B.isDashboardCountdownEnabled)
 		{
-			B.toggleDashboard(true);
 			var namekey = D.getNameKey();
 			var urlkey = D.getURLKey();
 			var ctd;
@@ -16034,7 +16067,6 @@ B = {
 		}
 		if (O.Options.bol_showDashboard && B.isDashboardEnabled)
 		{
-			B.isDashboardCountdownTickEnabled = pBoolean;
 			if (pBoolean)
 			{
 				$("#itemDashboard").show().css({opacity: 0}).animate({opacity: 1}, 200);
