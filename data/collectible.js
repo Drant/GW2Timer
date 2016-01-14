@@ -11,48 +11,6 @@
 
 var GW2T_COLLECTIBLE_DATA = {
 // Must have same name as a Checklist object
-LivingStory: {
-	name_en: "Donation Drive",
-	name_de: "Spendenaktion",
-	name_es: "Recogida de donativos",
-	name_fr: "Pulsion généreuse",
-	color: "white",
-	view: "divinity",
-	wiki: "http://wiki.guildwars2.com/wiki/Wintersday_2015",
-	credit: "https://www.reddit.com/r/Guildwars2/comments/3wzgt1/orphans_map_divinitys_reach/",
-	needles: [
-	{n: 1, c: [10897, 10824]},
-	{n: 2, c: [10729, 10698]},
-	{n: 3, c: [10557, 10734]},
-	{n: 4, c: [10549, 11007]},
-	{n: 5, c: [10638, 11020]},
-	{n: 6, c: [10702, 10966]},
-	{n: 7, c: [10752, 11048]},
-	{n: 8, c: [10797, 11223]},
-	{n: 9, c: [11008, 11156]},
-	{n: 10, c: [11162, 11218]},
-	{n: 11, c: [11196, 11169]},
-	{n: 12, c: [11378, 11213]},
-	{n: 13, c: [11302, 11530]},
-	{n: 14, c: [11416, 11509]},
-	{n: 15, c: [11586, 11400]},
-	{n: 16, c: [11570, 11185]},
-	{n: 17, c: [11747, 11215]},
-	{n: 18, c: [11697, 10862]},
-	{n: 19, c: [11858, 10965]},
-	{n: 20, c: [11978, 10831]},
-	{n: 21, c: [11690, 10750]},
-	{n: 22, c: [11931, 10626]},
-	{n: 23, c: [11449, 10563]},
-	{n: 24, c: [11377, 10867]},
-	{n: 25, c: [11130, 10807]},
-	{n: 26, c: [11038, 10566]},
-	{n: 27, c: [11079, 10358]},
-	{n: 28, c: [11140, 10198]},
-	{n: 29, c: [10944, 10208]},
-	{n: 30, c: [10814, 10446]}
-	]
-},
 NoxiousPods: {
 	name_en: "Noxious Pods",
 	name_de: "Giftigen Kapseln",

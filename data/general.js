@@ -1020,8 +1020,8 @@ Countdowns: [
 	name_es: "Actualización de invierno de 2016",
 	name_fr: "Mise à jour hivernale de 2016",
 	official: "news/state-of-the-game-update-q1-2016/",
-	Start: new Date("2016-01-26T16:00:00Z"),
-	Finish: new Date("2016-01-27T16:00:00Z")
+	Start: new Date("2016-01-26T17:00:00Z"),
+	Finish: new Date("2016-01-27T17:00:00Z")
 },
 {
 	name_en: "Lunar New Year",
@@ -1029,8 +1029,8 @@ Countdowns: [
 	name_es: "Año nuevo lunar",
 	name_fr: "Nouvel an lunaire",
 	official: "news/state-of-the-game-update-q1-2016/",
-	Start: new Date("2016-01-26T16:00:00Z"),
-	Finish: new Date("2016-02-09T16:00:00Z")
+	Start: new Date("2016-01-26T17:00:00Z"),
+	Finish: new Date("2016-02-09T17:00:00Z")
 },
 {
 	name_en: "PvP League Season 2",
@@ -1041,8 +1041,8 @@ Countdowns: [
 	url_de: "https://forum-de.guildwars2.com/forum/game/pvp/Kommende-nderungen-f-r-die-zweite-PvP-Liga-Saison",
 	url_es: "https://forum-es.guildwars2.com/forum/game/pvp/Cambios-que-llegar-n-a-la-segunda-temporada-de-liga-PvP",
 	url_fr: "https://forum-fr.guildwars2.com/forum/game/pvp/Changements-venir-pour-la-saison-2-de-la-ligue-JcJ",
-	Start: new Date("2016-02-23T16:00:00Z"),
-	Finish: new Date("2016-02-24T16:00:00Z")
+	Start: new Date("2016-02-23T17:00:00Z"),
+	Finish: new Date("2016-02-24T17:00:00Z")
 }
 ],
 
@@ -1139,16 +1139,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-13T00:00:00Z"),
-	Finish: new Date("2016-01-14T00:00:00Z"),
+	Start: new Date("2016-01-14T00:00:00Z"),
+	Finish: new Date("2016-01-15T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49763", price: "25200" },
-		Fox: { id: "49758", price: "25200" },
-		Derwena: { id: "43832", price: "25200" },
-		Yana: { id: "43826", price: "25200" },
-		Katyn: { id: "49760", price: "25200" },
-		Verma: { id: "67963", price: "25200" }
+		Mehem: { id: "43799", price: "12600" },
+		Fox: { id: "44664", price: "25200" },
+		Derwena: { id: "44657", price: "25200" },
+		Yana: { id: "43798", price: "12600" },
+		Katyn: { id: "49745", price: "25200" },
+		Verma: { id: "43829", price: "25200" }
 	}
 }
 };

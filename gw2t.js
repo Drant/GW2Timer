@@ -2629,7 +2629,7 @@ X = {
 	Collectibles:
 	{
 		// Temporary
-		LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans", value: ""},
+		//LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans", value: ""},
 		// Repeatable
 		NoxiousPods: { key: "str_chlNoxiousPods", urlkey: "noxiouspods", value: ""},
 		CrystallizedCaches: { key: "str_chlCrystallizedCaches", urlkey: "crystallizedcaches", value: ""},
