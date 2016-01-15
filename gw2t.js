@@ -17792,8 +17792,6 @@ I = {
 		K.awakeTimestampPrevious = currenttimestamp;
 		
 		// Tailor the initial zoom for WvW so its map fits at least vertically
-		localStorage.removeItem("int_setInitialZoomWvW"); // DEBUG REMOVE AFTER WVW RELEASE
-		localStorage.removeItem("int_setVolume"); // DEBUG REMOVE AFTER WVW RELEASE
 		if (screen.height >= 800)
 		{
 			O.Options.int_setInitialZoomWvW = 3;

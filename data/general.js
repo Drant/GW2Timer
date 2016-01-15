@@ -990,9 +990,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "WvW feature with <a href='https://www.youtube.com/watch?v=uXqvTMGNIXo&t=16m09s'>overlay</a> compatibility has been released.<br />Click the <a href='http://gw2timer.com/?page=WvW'><img src='img/ui/pages/wvw.png' /></a> icon or go to gw2timer.com/wvw to use.",
-	Start: new Date("2015-01-13T16:00:00Z"),
-	Finish: new Date("2015-01-20T16:00:00Z")
+	content: "<a href='http://i.imgur.com/h96UP6J.png'>WvW</a> with <a href='https://www.youtube.com/watch?v=uXqvTMGNIXo&t=16m09s'>overlay</a> released. Click <a href='http://gw2timer.com/?page=WvW'><img src='img/ui/pages/wvw.png' /></a> icon or go to gw2timer.com/wvw.",
+	Start: new Date("2016-01-13T16:00:00Z"),
+	Finish: new Date("2016-01-20T16:00:00Z")
 },
 
 /*
