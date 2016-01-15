@@ -13980,6 +13980,7 @@ W = {
 			// Check for errors
 			if (istoomanyflips)
 			{
+				D.stopSpeech();
 				I.write("Too many objectives updated. ArenaNet API servers may be having problems.");
 			}
 			if (W.isAPIFailed)

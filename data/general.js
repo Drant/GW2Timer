@@ -990,9 +990,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "",
-	Start: new Date("2015-12-15T16:00:00Z"),
-	Finish: new Date("2016-01-12T16:00:00Z")
+	content: "WvW feature with <a href='https://www.youtube.com/watch?v=uXqvTMGNIXo&t=16m09s'>overlay</a> compatibility has been released.<br />Click the <a href='http://gw2timer.com/?page=WvW'><img src='img/ui/pages/wvw.png' /></a> icon or go to gw2timer.com/wvw to use.",
+	Start: new Date("2015-01-13T16:00:00Z"),
+	Finish: new Date("2015-01-20T16:00:00Z")
 },
 
 /*
@@ -1022,8 +1022,8 @@ Countdowns: [
 	official: "news/state-of-the-game-update-q1-2016/",
 	Start: new Date("2016-01-26T17:00:00Z"),
 	Finish: new Date("2016-01-27T17:00:00Z")
-},
-{
+}
+/*{
 	name_en: "Lunar New Year",
 	name_de: "Mondneujahr",
 	name_es: "Año nuevo lunar",
@@ -1043,7 +1043,7 @@ Countdowns: [
 	url_fr: "https://forum-fr.guildwars2.com/forum/game/pvp/Changements-venir-pour-la-saison-2-de-la-ligue-JcJ",
 	Start: new Date("2016-02-23T17:00:00Z"),
 	Finish: new Date("2016-02-24T17:00:00Z")
-}
+}*/
 ],
 
 /*
@@ -1139,16 +1139,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-14T00:00:00Z"),
-	Finish: new Date("2016-01-15T00:00:00Z"),
+	Start: new Date("2016-01-15T00:00:00Z"),
+	Finish: new Date("2016-01-16T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43799", price: "12600" },
-		Fox: { id: "44664", price: "25200" },
-		Derwena: { id: "44657", price: "25200" },
-		Yana: { id: "43798", price: "12600" },
-		Katyn: { id: "49745", price: "25200" },
-		Verma: { id: "43829", price: "25200" }
+		Mehem: { id: "48909", price: "25200" },
+		Fox: { id: "48918", price: "25200" },
+		Derwena: { id: "49759", price: "25200" },
+		Yana: { id: "43843", price: "25200" },
+		Katyn: { id: "49735", price: "25200" },
+		Verma: { id: "49770", price: "25200" }
 	}
 }
 };
