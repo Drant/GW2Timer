@@ -74,7 +74,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 151208},
+		programVersion: {key: "int_utlProgramVersion", value: 160115},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
 		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
@@ -1881,6 +1881,11 @@ U = {
 					}
 				}
 			}
+		}
+		// Remember the initial page when the site loaded
+		if (page !== undefined)
+		{
+			I.PageInitial = page.toLowerCase();
 		}
 		
 		// Check if the special page is actually a collectible
@@ -17658,6 +17663,7 @@ I = {
 	},
 	cPagePrefix: "#plate",
 	cMenuPrefix: "#menu",
+	PageInitial: "",
 	PageCurrent: "",
 	PagePrevious: "",
 	PageEnum:
@@ -17977,7 +17983,17 @@ I = {
 		// Set tile after viewing the coordinate so it downloads the tiles last
 		if (I.isMapEnabled)
 		{
-			M.changeFloor(O.Options.int_setFloor);
+			if (I.PageInitial === "wvw")
+			{
+				$("#wvwSwitchButton").one("click", function()
+				{
+					M.changeFloor(O.Options.int_setFloor);
+				});
+			}
+			else
+			{
+				M.changeFloor(O.Options.int_setFloor);
+			}
 		}
 		
 		// Finally
@@ -18155,7 +18171,7 @@ I = {
 	greet: function(pString, pSeconds, pClear)
 	{
 		// For messages that are shown when the program has just loaded
-		if (I.isProgramEmbedded === false)
+		if (I.isProgramEmbedded === false && I.PageInitial !== "wvw")
 		{
 			I.write(pString, pSeconds, pClear);
 		}
