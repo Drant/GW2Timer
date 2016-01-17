@@ -12828,6 +12828,7 @@ W = {
 		W.reinitializeServerChange();
 		W.generateServerList();
 		I.styleContextMenu("#wvwContext");
+		U.convertExternalLink("#wvwHelpLinks a");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
 		// Finally
 		W.isWvWLoaded = true;

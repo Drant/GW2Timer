@@ -6,6 +6,14 @@
 #wvwZoneList ul, #wvwZoneList h2 {
 	max-width: none;
 }
+#wvwHelpLinks {
+	width: 100%;
+	text-align: center;
+}
+#wvwHelpLinks a {
+	font-weight: bold;
+	text-decoration: underline;
+}
 
 /* Objective
 ----------------------------------------------------------------------------- */
