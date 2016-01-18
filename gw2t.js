@@ -13115,7 +13115,7 @@ W = {
 		}
 		
 		// Bind server name select function
-		$("#wvwServerList").change(function()
+		list.change(function()
 		{
 			// Save the server ID
 			var serverid = $(this).val();
@@ -13128,7 +13128,8 @@ W = {
 		});
 		
 		// Prevent map scroll from interfering when using the list
-		I.preventPropagation("#wvwServerList");
+		I.preventPropagation(list);
+		I.blinkElement(list, 5000, 250);
 	},
 	
 	/*

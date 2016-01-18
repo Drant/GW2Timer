@@ -1596,7 +1596,7 @@ trebuchet: {
 	type: "field",
 	color: "orange",
 	isPlaceable: true,
-	range: 10000,
+	range: 8000,
 	supply: [100, 120, 100]
 },
 golem: {
