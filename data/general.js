@@ -1140,15 +1140,15 @@ Vendor:
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
 	Start: new Date("2016-01-18T00:00:00Z"),
-	Finish: new Date("2016-01-19T00:00:00Z"),
+	Finish: new Date("2016-01-20T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43818", price: "25200" },
-		Fox: { id: "49753", price: "25200" },
-		Derwena: { id: "49738", price: "50400" },
-		Yana: { id: "48919", price: "25200" },
-		Katyn: { id: "49776", price: "25200" },
-		Verma: { id: "43821", price: "25200" }
+		Mehem: { id: "49761", price: "25200" },
+		Fox: { id: "49758", price: "25200" },
+		Derwena: { id: "44658", price: "25200" },
+		Yana: { id: "43826", price: "25200" },
+		Katyn: { id: "49771", price: "25200" },
+		Verma: { id: "67963", price: "25200" }
 	}
 }
 };

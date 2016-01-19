@@ -15845,7 +15845,7 @@ B = {
 				+ "'><img src='img/map/vendor_karma.png' /> "
 			+ "<u>" + vendorname + "</u>"
 			+ "<img id='dsbVendorToggleIcon' src='img/ui/toggle.png' /></kbd>"
-			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Vendor_Network_Agent")
+			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='Items restock at daily reset.<br />Vendors relocate 8 hours after that.<br />Limit 1 purchase per vendor.'>Info</a> "
 			+ "<u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
 			+ "&nbsp;<input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' /> "

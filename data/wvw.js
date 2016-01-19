@@ -1543,6 +1543,28 @@ var GW2T_OBJECTIVE_DATA = {
 };
 
 /*
+ * Secondary "objectives" like shrines and sentries. Coordinates are from
+ * Green Borderlands and must be offsetted.
+ */
+var GW2T_SECONDARY_DATA = {
+	shrine_earth: {
+		coord: [[6380, 12595], [7154, 12245], [7939, 12553]]
+	},
+	shrine_fire: {
+		coord: [[6376, 12878], [6125, 13248], [6419, 13460]]
+	},
+	shrine_air: {
+		coord: [[8624, 12840], [7976, 13437], [8559, 13723]]
+	},
+	sentry: {
+		
+	},
+	depot: {
+		
+	}
+};
+
+/*
  * Siege weapons and blueprint supply.
  */
 var GW2T_WEAPON_DATA = {
