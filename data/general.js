@@ -1080,8 +1080,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2016-01-12T16:00:00Z"),
-	Finish: new Date("2016-01-19T16:00:00Z"),
+	Start: new Date("2016-01-19T16:00:00Z"),
+	Finish: new Date("2016-01-26T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -1099,10 +1099,10 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Mini Arrowhead",
-		img: "https://render.guildwars2.com/file/5692457F01AD5220FF5EB3BF1E0FFFC49FA46A62/1322566.png",
+		url: "http://wiki.guildwars2.com/wiki/Mini Zintl_Cavalier",
+		img: "http://i.imgur.com/1UsTZxc.png",
 		quantity: 1,
-		pricenew: 400,
+		pricenew: 350,
 		priceold: 0,
 		col: 1
 	},
@@ -1139,16 +1139,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-18T00:00:00Z"),
-	Finish: new Date("2016-01-20T00:00:00Z"),
+	Start: new Date("2016-01-20T00:00:00Z"),
+	Finish: new Date("2016-01-21T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49761", price: "25200" },
-		Fox: { id: "49758", price: "25200" },
-		Derwena: { id: "44658", price: "25200" },
-		Yana: { id: "43826", price: "25200" },
-		Katyn: { id: "49771", price: "25200" },
-		Verma: { id: "67963", price: "25200" }
+		Mehem: { id: "67966", price: "25200" },
+		Fox: { id: "43824", price: "25200" },
+		Derwena: { id: "43806", price: "25200" },
+		Yana: { id: "43831", price: "25200" },
+		Katyn: { id: "49734", price: "12600" },
+		Verma: { id: "43815", price: "25200" }
 	}
 }
 };

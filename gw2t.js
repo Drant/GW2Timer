@@ -182,6 +182,7 @@ O = {
 		bol_condenseLeaderboard: false,
 		bol_showDestructibles: false,
 		bol_showObjectiveLabels: true,
+		bol_showSecondaries: false,
 		// GPS
 		bol_displayCharacter: true,
 		bol_followCharacter: true,
@@ -1329,9 +1330,13 @@ O = {
 		{
 			W.toggleLeaderboardWidth(true);
 		},
+		bol_showSecondaries: function()
+		{
+			W.toggleSecondaries(true);
+		},
 		bol_showDestructibles: function()
 		{
-			W.toggleWalls();
+			W.toggleWalls(true);
 		},
 		bol_showObjectiveLabels: function()
 		{
@@ -8241,7 +8246,7 @@ M = {
 				if (O.Options.bol_displayEvents)
 				{
 					this.ZoneCurrent.Layers.EventIcon.eachLayer(function(layer) {
-						that.changeMarkerIcon(layer, layer._icon.src, eventiconsize);
+						that.resizeMarkerIcon(layer, eventiconsize);
 						if (layer._icon)
 						{
 							layer._icon.style.zIndex = M.cZIndexRaise;
@@ -8250,7 +8255,7 @@ M = {
 
 					// Event Ring
 					this.ZoneCurrent.Layers.EventRing.eachLayer(function(layer) {
-						that.changeMarkerIcon(layer, layer._icon.src, eventringsize);
+						that.resizeMarkerIcon(layer, eventringsize);
 						if (layer._icon)
 						{
 							layer._icon.style.zIndex = M.cZIndexBury;
@@ -8279,6 +8284,10 @@ M = {
 					layer._icon.style.opacity = spawnopacity;
 					layer._icon.style.zIndex = that.cZIndexBury + 1;
 					layer._icon.style.display = "table";
+				});
+				// Secondary objectives
+				this.Layer.Secondaries.eachLayer(function(layer) {
+					that.resizeMarkerIcon(layer, landmarksize);
 				});
 				// Destructible walls and gates paths
 				this.Layer.Destructible.eachLayer(function(layer) {
@@ -8314,12 +8323,12 @@ M = {
 
 		// Waypoints
 		this.ZoneCurrent.Layers.Waypoint.eachLayer(function(layer) {
-			that.changeMarkerIcon(layer, U.URL_IMG.Waypoint, waypointsize);
+			that.resizeMarkerIcon(layer, waypointsize);
 		});
 		
 		// Landmarks
 		this.ZoneCurrent.Layers.Landmark.eachLayer(function(layer) {
-			that.changeMarkerIcon(layer, U.URL_IMG.Landmark, landmarksize);
+			that.resizeMarkerIcon(layer, landmarksize);
 			if (layer._icon)
 			{
 				layer._icon.style.opacity = (currentzoom < that.ZoomEnum.Max) ? 0.6 : 0.8;
@@ -8328,17 +8337,17 @@ M = {
 		
 		// Vista
 		this.ZoneCurrent.Layers.Vista.eachLayer(function(layer) {
-			that.changeMarkerIcon(layer, U.URL_IMG.Vista, landmarksize);
+			that.resizeMarkerIcon(layer, landmarksize);
 		});
 		
 		// Challenge
 		this.ZoneCurrent.Layers.Challenge.eachLayer(function(layer) {
-			that.changeMarkerIcon(layer, U.URL_IMG.Challenge, landmarksize);
+			that.resizeMarkerIcon(layer, landmarksize);
 		});
 		
 		// Heart
 		this.ZoneCurrent.Layers.Heart.eachLayer(function(layer) {
-			that.changeMarkerIcon(layer, U.URL_IMG.Heart, landmarksize);
+			that.resizeMarkerIcon(layer, landmarksize);
 		});
 		
 		// Sector
@@ -8645,6 +8654,7 @@ M = {
 					path.on("click", function()
 					{
 						that.outputCoordinatesCopy(that.getPersonalString());
+						that.outputPinsRange();
 					});
 					// Double click path: insert a pin between the two pins that connect the path
 					path.on("dblclick", function(pEvent)
@@ -8853,6 +8863,12 @@ M = {
 			}
 			counter++;
 			var weaponbutton = $("<img src='img/wvw/range/" + weapon.image + I.cPNG + "' />");
+			
+			// Tooltip
+			var title = (weapon.tooltip !== undefined) ? weapon.tooltip : D.getWordCapital("range") + " " + weapon.range;
+			weaponbutton.attr("title", title);
+			
+			// Add weapon
 			weaponsmenu.append(weaponbutton);
 			if (counter % iconsperline === 0)
 			{
@@ -8899,6 +8915,12 @@ M = {
 			+ "<input id='" + that.MapEnum + "RangeCustomColor' type='text' value='#ffffff' maxlength='"
 				+ colormaxlength + "' style='width:96px' class='cssInputText' />"
 			+ "</span>");
+		
+		// Custom range input press enter
+		$(htmlidprefix + "RangeCustomRange, " + htmlidprefix + "RangeCustomColor").onEnterKey(function()
+		{
+			custombutton.trigger("click");
+		});
 		
 		// Buttons and inputs to import and export weapon placement
 		var exportbutton  = $("<img src='img/ui/export.png' "
@@ -9221,7 +9243,7 @@ M = {
 	 * @param string pIconURL of the icon image.
 	 * @param int pSize of icon.
 	 */
-	changeMarkerIcon: function(pMarker, pIconURL, pSize)
+	resizeMarkerIcon: function(pMarker, pSize)
 	{
 		if (pSize === undefined)
 		{
@@ -9230,7 +9252,7 @@ M = {
 		
 		pMarker.setIcon(new L.icon(
 		{
-			iconUrl: pIconURL,
+			iconUrl: pMarker.options.icon.options.iconUrl,
 			iconSize: [pSize, pSize],
 			iconAnchor: [pSize/2, pSize/2]
 		}));
@@ -11034,7 +11056,6 @@ P = {
 					{
 						zIndexOffset: M.cZIndexBury,
 						clickable: false,
-						image: "img/ring/" + event.ring + I.cPNG,
 						icon: L.icon(
 						{
 							iconUrl: "img/ring/" + event.ring + I.cPNG,
@@ -11045,7 +11066,6 @@ P = {
 					event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
 					{
 						title: "<span class='mapEvent'>" + D.getObjectName(event) + "</span>",
-						image: "img/event/" + event.icon + I.cPNG,
 						wiki: D.getObjectName(event),
 						icon: L.icon(
 						{
@@ -11142,10 +11162,10 @@ P = {
 			{
 				// Icons
 				icon = P.LayerArray.DryTopIcons[i];
-				M.changeMarkerIcon(icon, icon.options.image, iconsize);
+				M.resizeMarkerIcon(icon, iconsize);
 				// Rings
 				icon = P.LayerArray.DryTopRings[i];
-				M.changeMarkerIcon(icon, icon.options.image, ringsize);
+				M.resizeMarkerIcon(icon, ringsize);
 			}
 			
 			P.Layer.DryTopNicks.eachLayer(function(layer) {
@@ -12734,11 +12754,12 @@ W = {
 		Pin: new L.layerGroup(),
 		PersonalPin: new L.layerGroup(),
 		PersonalPath: new L.layerGroup(),
-		WeaponIcon: new L.layerGroup(), // A weapon icon with its radius circle
-		WeaponCircle: new L.layerGroup(),
-		Destructible: new L.layerGroup(),
-		Objective: new L.layerGroup(),
-		SpawnLabel: new L.layerGroup()
+		WeaponIcon: new L.layerGroup(), // weapon icon
+		WeaponCircle: new L.layerGroup(), // weapon radius circle
+		Destructible: new L.layerGroup(), // destructibles walls and gates
+		Secondaries: new L.layerGroup(), // sentries, shrines, ruins, supply depots
+		Objective: new L.layerGroup(), // camps, towers, keeps
+		SpawnLabel: new L.layerGroup() // server name over their map spawns
 	},
 	LayerArray: {
 		
@@ -12910,6 +12931,7 @@ W = {
 	 */
 	finishPopulation: function()
 	{
+		W.toggleSecondaries();
 		W.toggleWalls();
 		W.bindMapVisualChanges();
 		W.adjustZoomMapping();
@@ -12920,10 +12942,64 @@ W = {
 	},
 	
 	/*
+	 * Creates secondary objective markers or toggle them if already created.
+	 */
+	toggleSecondaries: function(pWantAdjust)
+	{
+		if (O.Options.bol_showSecondaries
+			&& W.Layer.Secondaries.getLayers().length === 0)
+		{
+			var drawSecondary = function(pCoords, pImage, pZoneNick)
+			{
+				if (pCoords === undefined)
+				{
+					return;
+				}
+				for (var i in pCoords)
+				{
+					var offset = W.Metadata.Offsets[pZoneNick];
+					var coord = pCoords[i];
+					var marker = L.marker(W.convertGCtoLC([coord[0] + offset[0], coord[1] + offset[1]]),
+					{
+						clickable: false,
+						icon: L.icon(
+						{
+							iconUrl: "img/wvw/secondaries/" + pImage + I.cPNG,
+							iconSize: [32, 32],
+							iconAnchor: [16, 16]
+						}),
+						opacity: 0.9
+					});
+					W.Layer.Secondaries.addLayer(marker);
+				}
+			};
+
+			for (var i in W.Placement)
+			{
+				var pl = W.Placement[i];
+				for (var ii in pl.ZoneNicks)
+				{
+					var nick = pl.ZoneNicks[ii];
+					drawSecondary(pl.ShrineEarth, "shrine_earth", nick);
+					drawSecondary(pl.ShrineFire, "shrine_fire", nick);
+					drawSecondary(pl.ShrineAir, "shrine_air", nick);
+					drawSecondary(pl.Sentry, "sentry", nick);
+					drawSecondary(pl.Depot, "depot", nick);
+				}
+			}
+			if (pWantAdjust)
+			{
+				W.adjustZoomMapping();
+			}
+		}
+		W.toggleLayer(W.Layer.Secondaries, O.Options.bol_showSecondaries);
+	},
+	
+	/*
 	 * Draws paths representing destructible walls on the map or toggle them if
 	 * already drawn.
 	 */
-	toggleWalls: function()
+	toggleWalls: function(pWantAdjust)
 	{
 		var barricadecolor = "coral";
 		var wallcolor = "orange";
@@ -12942,6 +13018,7 @@ W = {
 					var coordB = [(coord[1])[0] + offset[0], (coord[1])[1] + offset[1]];
 					var path = L.polyline(W.convertGCtoLCDual([coordA, coordB]),
 					{
+						clickable: false,
 						color: pColor,
 						opacity: 0.8,
 						weight: 10,
@@ -12961,6 +13038,10 @@ W = {
 					drawWall(pl.Wall, wallcolor, nick);
 					drawWall(pl.Gate, gatecolor, nick);
 				}
+			}
+			if (pWantAdjust)
+			{
+				W.adjustZoomMapping();
 			}
 		}
 		W.toggleLayer(W.Layer.Destructible, O.Options.bol_showDestructibles);
@@ -13267,7 +13348,7 @@ W = {
 		{
 			lb = $("#lboCurrent");
 			lb.empty();
-			if (I.ModeCurrent === I.ModeEnum.Overlay)
+			if (I.ModeCurrent === I.ModeEnum.Overlay || I.isProgramEmbedded)
 			{
 				wantserver = false;
 			}
