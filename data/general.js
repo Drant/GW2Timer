@@ -991,8 +991,8 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	content: "<a href='http://i.imgur.com/h96UP6J.png'>WvW</a> with <a href='https://www.youtube.com/watch?v=uXqvTMGNIXo&t=16m09s'>overlay</a> released. Click <a href='http://gw2timer.com/?page=WvW'><img src='img/ui/pages/wvw.png' /></a> icon or go to gw2timer.com/wvw.",
-	Start: new Date("2016-01-13T16:00:00Z"),
-	Finish: new Date("2016-01-20T16:00:00Z")
+	Start: new Date("2016-01-20T16:00:00Z"),
+	Finish: new Date("2016-01-26T16:00:00Z")
 },
 
 /*
@@ -1139,16 +1139,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-20T00:00:00Z"),
-	Finish: new Date("2016-01-21T00:00:00Z"),
+	Start: new Date("2016-01-21T00:00:00Z"),
+	Finish: new Date("2016-01-22T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "67966", price: "25200" },
-		Fox: { id: "43824", price: "25200" },
-		Derwena: { id: "43806", price: "25200" },
-		Yana: { id: "43831", price: "25200" },
-		Katyn: { id: "49734", price: "12600" },
-		Verma: { id: "43815", price: "25200" }
+		Mehem: { id: "43828", price: "25200" },
+		Fox: { id: "43805", price: "25200" },
+		Derwena: { id: "49734", price: "12600" },
+		Yana: { id: "43832", price: "25200" },
+		Katyn: { id: "43814", price: "12600" },
+		Verma: { id: "43819", price: "25200" }
 	}
 }
 };
