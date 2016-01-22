@@ -1091,15 +1091,31 @@ Sale: {
 	},
 	Items: [
 	{
-		url: "http://wiki.guildwars2.com/wiki/Shared_Inventory_Slot",
-		img: "https://render.guildwars2.com/file/58085D0B0C10C3594E96046B95BE963B7A293BB5/1314214.png",
+		url: "http://wiki.guildwars2.com/wiki/Nature's Oath Outfit",
+		img: "http://i.imgur.com/ZEFhem6.png",
 		quantity: 1,
 		pricenew: 700,
 		priceold: 0,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Mini Zintl_Cavalier",
+		url: "http://wiki.guildwars2.com/wiki/Hawk Wings Glider Combo",
+		img: "http://i.imgur.com/uM46Vv3.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Shared Inventory Slot",
+		img: "https://render.guildwars2.com/file/58085D0B0C10C3594E96046B95BE963B7A293BB5/1314214.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Mini Zintl Cavalier",
 		img: "https://render.guildwars2.com/file/DE3CDEE322EAF50780EE05623277686D43E2C87E/1334910.png",
 		quantity: 1,
 		pricenew: 350,
