@@ -1100,12 +1100,12 @@ Sale: {
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini Zintl_Cavalier",
-		img: "http://i.imgur.com/1UsTZxc.png",
+		img: "https://render.guildwars2.com/file/DE3CDEE322EAF50780EE05623277686D43E2C87E/1334910.png",
 		quantity: 1,
 		pricenew: 350,
 		priceold: 0,
 		col: 1
-	},
+	}
 	]
 },
 
@@ -1139,16 +1139,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-21T00:00:00Z"),
-	Finish: new Date("2016-01-22T00:00:00Z"),
+	Start: new Date("2016-01-22T00:00:00Z"),
+	Finish: new Date("2016-01-23T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43828", price: "25200" },
-		Fox: { id: "43805", price: "25200" },
-		Derwena: { id: "49734", price: "12600" },
-		Yana: { id: "43832", price: "25200" },
-		Katyn: { id: "43814", price: "12600" },
-		Verma: { id: "43819", price: "25200" }
+		Mehem: { id: "43807", price: "25200" },
+		Fox: { id: "49746", price: "25200" },
+		Derwena: { id: "44660", price: "25200" },
+		Yana: { id: "43817", price: "25200" },
+		Katyn: { id: "49752", price: "12600" },
+		Verma: { id: "49769", price: "25200" }
 	}
 }
 };
