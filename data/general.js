@@ -1147,7 +1147,7 @@ Vendor:
 		Fox: { id: "49746", price: "25200" },
 		Derwena: { id: "44660", price: "25200" },
 		Yana: { id: "43817", price: "25200" },
-		Katyn: { id: "49752", price: "12600" },
+		Katyn: { id: "49752", price: "25200" },
 		Verma: { id: "49769", price: "25200" }
 	}
 }
