@@ -14141,7 +14141,7 @@ W = {
 	{
 		var obj;
 		var msec = (new Date()).getTime();
-		var msecremaining, percentremaining;
+		var age, msecremaining, percentremaining;
 		
 		for (var i in W.Objectives)
 		{
@@ -14149,12 +14149,21 @@ W = {
 			// Update the Righteous Indigntation timers
 			if (obj.isImmune)
 			{
-				msecremaining = W.cMILLISECONDS_IMMUNITY - (msec - obj.last_flipped_msec);
+				age = msec - obj.last_flipped_msec;
+				msecremaining = W.cMILLISECONDS_IMMUNITY - age;
 				percentremaining = (msecremaining / W.cMILLISECONDS_IMMUNITY) * T.cPERCENT_100;
-				if (msecremaining > 0)
+				if (msecremaining > 0 && age > 0)
 				{
 					document.getElementById("objTimer_" + obj.id).innerHTML = T.formatMilliseconds(msecremaining);
 					document.getElementById("objProgress_" + obj.id).style.width = percentremaining + "%";
+				}
+				else if (age < 0)
+				{
+					if (T.isTimeOutOfSync === false)
+					{
+						I.write("Negative time detected. Your computer's time may be <a" + U.convertExternalAnchor("https://www.google.com/search?q=synchronize+time") + ">out of sync!</a>", 0);
+						T.isTimeOutOfSync = true;
+					}
 				}
 				else
 				{
@@ -14367,6 +14376,7 @@ T = {
 		Friday: 5,
 		Saturday: 6
 	},
+	isTimeOutOfSync: false,
 	secondsTillResetWeekly: -1,
 	isCountdownToResetStarted: false,
 	
