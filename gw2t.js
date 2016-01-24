@@ -5838,7 +5838,7 @@ D = {
 		var volume = (O.Options.int_setVolume / T.cPERCENT_100).toFixed(2);
 		
 		// Chrome-only TTS service
-		if (I.isSpeechSynthesisEnabled)
+		if (I.isSpeechSynthesisEnabled && I.ModeCurrent !== I.ModeEnum.Overlay)
 		{
 			var msg = new SpeechSynthesisUtterance(pString);
 			msg.lang = O.LanguageCode[O.Options.enu_Language];
@@ -14141,7 +14141,8 @@ W = {
 	{
 		var obj;
 		var msec = (new Date()).getTime();
-		var age, msecremaining, percentremaining;
+		var msecage, msecremaining, percentremaining;
+		var msectolerance = 10000;
 		
 		for (var i in W.Objectives)
 		{
@@ -14149,15 +14150,15 @@ W = {
 			// Update the Righteous Indigntation timers
 			if (obj.isImmune)
 			{
-				age = msec - obj.last_flipped_msec;
-				msecremaining = W.cMILLISECONDS_IMMUNITY - age;
+				msecage = msec - obj.last_flipped_msec;
+				msecremaining = W.cMILLISECONDS_IMMUNITY - msecage;
 				percentremaining = (msecremaining / W.cMILLISECONDS_IMMUNITY) * T.cPERCENT_100;
-				if (msecremaining > 0 && age > 0)
+				if (msecremaining > 0 && msecage + msectolerance > 0)
 				{
 					document.getElementById("objTimer_" + obj.id).innerHTML = T.formatMilliseconds(msecremaining);
 					document.getElementById("objProgress_" + obj.id).style.width = percentremaining + "%";
 				}
-				else if (age < 0)
+				else if (msecage + msectolerance <= 0)
 				{
 					if (T.isTimeOutOfSync === false)
 					{

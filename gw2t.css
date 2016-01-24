@@ -1746,10 +1746,10 @@ header.jsSection sup {
 	border-radius: 2px;
 }
 .watButtons kbd:hover {
-	border: 1px solid white;
+	border: 1px solid red;
 }
 .watButtons kbd:active {
-	color: white;
+	border: 1px solid white;
 }
 #watStart, #watTimerStart {
 	color: #66ff66;

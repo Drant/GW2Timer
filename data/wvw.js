@@ -1589,7 +1589,7 @@ catapult: {
 	isPlaceable: true,
 	range: 4000,
 	tooltip: "<dfn>Power</dfn> = Range<br /><dfn>0%</dfn> = 1500<br /><dfn>25%</dfn> = 2100<br /><dfn>50%</dfn> = 2700<br /><dfn>75%</dfn> = 3300<br /><dfn>100%</dfn> = 3800<br />Radius 432",
-	supply: [50, 60, 50]
+	supply: [40, 50, 40]
 },
 trebuchet: {
 	id: "trebuchet",
