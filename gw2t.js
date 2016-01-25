@@ -12522,7 +12522,7 @@ G = {
 						I.toggleHighlight($(this));
 						M.toggleLayer(P.LayerArray.Guild_Trek[U.getSubintegerFromHTMLID($(this))]);
 					});
-					M.bindMapLinkBehavior(elm, M.ZoomEnum.Same, M.Pin.Program);
+					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
 				finalizeGuildBook("Trek");
 			});
