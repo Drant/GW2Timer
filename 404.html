@@ -83,7 +83,18 @@
 
 				switch (params.length)
 				{
-					case 1: newloc = base + "?page=" + page; break;
+					case 1:
+					{
+						// First argument has a comma then it is a coordinates
+						if (page.indexOf(",") !== -1)
+						{
+							newloc = base + "?go=" + page;
+						}
+						else
+						{
+							newloc = base + "?page=" + page;
+						}
+					} break;
 					case 2:
 					{
 						// Second argument can be a comma separated coordinates or a section index
