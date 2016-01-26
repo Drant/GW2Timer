@@ -990,9 +990,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<a href='http://i.imgur.com/h96UP6J.png'>WvW</a> with <a href='https://www.youtube.com/watch?v=uXqvTMGNIXo&t=16m09s'>overlay</a> released. Click <a href='http://gw2timer.com/?page=WvW'><img src='img/ui/pages/wvw.png' /></a> icon or go to gw2timer.com/wvw.",
-	Start: new Date("2016-01-20T16:00:00Z"),
-	Finish: new Date("2016-01-26T16:00:00Z")
+	content: "<a href='http://i.imgur.com/pTXO9Av.png' title='Note that alarm needs to be in <dfn>Subscription Mode</dfn>.'>Click</a> on the Shatterer's time for voice <a href='https://www.youtube.com/watch?v=uXqvTMGNIXo&t=5m29s'>announcement</a> of its arrival.",
+	Start: new Date("2016-01-26T16:00:00Z"),
+	Finish: new Date("2016-02-02T16:00:00Z")
 },
 
 /*
@@ -1019,7 +1019,7 @@ Countdowns: [
 	name_de: "Mondneujahr",
 	name_es: "Año nuevo lunar",
 	name_fr: "Nouvel an lunaire",
-	official: "news/state-of-the-game-update-q1-2016/",
+	official: "the-game/releases/january-26-2016/",
 	Start: new Date("2016-01-26T17:00:00Z"),
 	Finish: new Date("2016-02-09T17:00:00Z")
 }/*,
@@ -1071,8 +1071,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2016-01-19T16:00:00Z"),
-	Finish: new Date("2016-01-26T16:00:00Z"),
+	Start: new Date("2016-01-26T16:00:00Z"),
+	Finish: new Date("2016-02-02T16:00:00Z"),
 	Padding: {
 		url: "http://wiki.guildwars2.com/wiki/Gem",
 		img: "./img/ui/gem.png",
@@ -1098,18 +1098,50 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Shared Inventory Slot",
-		img: "https://render.guildwars2.com/file/58085D0B0C10C3594E96046B95BE963B7A293BB5/1314214.png",
+		url: "http://wiki.guildwars2.com/wiki/Black Wings Glider Combo",
+		img: "https://render.guildwars2.com/file/5978F84C08E69460B7FD34346745E7183562A35A/951784.png",
 		quantity: 1,
 		pricenew: 700,
 		priceold: 0,
-		col: 1
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/White Wings Glider Combo",
+		img: "https://render.guildwars2.com/file/FB9A14C04510096F4E33205AC2DE15BB07ADA0FF/1010543.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 0
 	},
 	{
 		url: "http://wiki.guildwars2.com/wiki/Mini Zintl Cavalier",
 		img: "https://render.guildwars2.com/file/DE3CDEE322EAF50780EE05623277686D43E2C87E/1334910.png",
 		quantity: 1,
 		pricenew: 350,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Confetti Mail Delivery",
+		img: "https://render.guildwars2.com/file/DC800626B873260155C528297325C07635FFD41E/924620.png",
+		quantity: 1,
+		pricenew: 300,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Red Lantern",
+		img: "https://render.guildwars2.com/file/2B52C72C6E0B5A6095F5D39714CD7ED447E7B24B/941018.png",
+		quantity: 1,
+		pricenew: 250,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Crimson Lion Dye",
+		img: "https://render.guildwars2.com/file/44DF293E3070550FA5700FB0CA96E14C12F89F43/947660.png",
+		quantity: 1,
+		pricenew: 125,
 		priceold: 0,
 		col: 1
 	}
