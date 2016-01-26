@@ -1015,15 +1015,6 @@ Announcement:
  */
 Countdowns: [
 {
-	name_en: "Winter 2016 Update",
-	name_de: "Winter-Update 2016",
-	name_es: "Actualización de invierno de 2016",
-	name_fr: "Mise à jour hivernale de 2016",
-	official: "news/state-of-the-game-update-q1-2016/",
-	Start: new Date("2016-01-26T17:00:00Z"),
-	Finish: new Date("2016-01-27T17:00:00Z")
-}
-/*{
 	name_en: "Lunar New Year",
 	name_de: "Mondneujahr",
 	name_es: "Año nuevo lunar",
@@ -1031,7 +1022,7 @@ Countdowns: [
 	official: "news/state-of-the-game-update-q1-2016/",
 	Start: new Date("2016-01-26T17:00:00Z"),
 	Finish: new Date("2016-02-09T17:00:00Z")
-},
+}/*,
 {
 	name_en: "PvP League Season 2",
 	name_de: "PvP Liga Saison 2",
@@ -1155,16 +1146,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-25T00:00:00Z"),
-	Finish: new Date("2016-01-26T00:00:00Z"),
+	Start: new Date("2016-01-26T00:00:00Z"),
+	Finish: new Date("2016-01-27T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43842", price: "25200" },
-		Fox: { id: "48914", price: "25200" },
-		Derwena: { id: "44713", price: "25200" },
-		Yana: { id: "43840", price: "25200" },
-		Katyn: { id: "44654", price: "25200" },
-		Verma: { id: "43484", price: "25200" }
+		Mehem: { id: "44649", price: "25200" },
+		Fox: { id: "43824", price: "25200" },
+		Derwena: { id: "43806", price: "25200" },
+		Yana: { id: "43831", price: "25200" },
+		Katyn: { id: "49734", price: "12600" },
+		Verma: { id: "43815", price: "25200" }
 	}
 }
 };
