@@ -12853,6 +12853,12 @@ W = {
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
 		// Finally
 		W.isWvWLoaded = true;
+		// Show leaderboard the first time if requested by URL
+		var section = U.Args[U.KeyEnum.Section];
+		if (section !== undefined && section.toLowerCase() === "leaderboard")
+		{
+			$("#lboRegion").trigger("click");
+		}
 	},
 	
 	/*
