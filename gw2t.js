@@ -1527,6 +1527,10 @@ U = {
 			{
 				that.Map.off("contextmenu"); I.write("Map context menu disabled.");
 			}},
+			link: {usage: "Prints a coordinates URL of the current map view.", f: function()
+			{
+				I.write(I.cSiteURL + that.convertLCtoGC(that.Map.getCenter()), 0, true);
+			}},
 			dart: {usage: "Draws personal pins at random map locations. <em>Parameters: int_quantity</em>", f: function()
 			{
 				that.drawRandom(args[1]);
@@ -10878,20 +10882,23 @@ P = {
 			var marker, path;
 			var interzones = GW2T_GATEWAY_CONNECTION.interzones;
 			var intergates = GW2T_GATEWAY_CONNECTION.intergates;
+			var launchpads = GW2T_GATEWAY_CONNECTION.launchpads;
 			
-			var drawGateway = function(pCoord, pImage)
+			var drawGateway = function(pCoord, pImage, pOpacity)
 			{
-				return L.marker(M.convertGCtoLC(pCoord),
+				var marker = L.marker(M.convertGCtoLC(pCoord),
 				{
-					clickable: false,
 					icon: L.icon(
 					{
 						iconUrl: pImage,
 						iconSize: [32, 32], // Initial size corresponding to default zoom level
 						iconAnchor: [16, 16]
 					}),
-					opacity: 0.6
+					opacity: pOpacity || 0.6
 				});
+				M.bindMarkerZoomBehavior(marker, "click");
+				M.bindMarkerZoomBehavior(marker, "contextmenu");
+				return marker;
 			};
 			
 			for (var i in interzones)
@@ -10915,6 +10922,19 @@ P = {
 				path = L.polyline(M.convertGCtoLCDual(intergates[i]),
 				{
 					color: "purple",
+					opacity: 0.2
+				});
+				P.Layer.ZoneGateway.addLayer(path);
+			}
+			for (var i in launchpads)
+			{
+				// Draw the launchpad (first inner coordinates)
+				marker = drawGateway((launchpads[i])[0], "img/map/launchpad.png", 1);
+				P.Layer.ZoneGateway.addLayer(marker);
+				// Draw the line trajectory
+				path = L.polyline(M.convertGCtoLCDual(launchpads[i]),
+				{
+					color: "gold",
 					opacity: 0.2
 				});
 				P.Layer.ZoneGateway.addLayer(path);
@@ -15953,7 +15973,7 @@ B = {
 		+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>");
 
 		// Bind buttons
-		$("#dsbVendorCodes").click(function()
+		I.preventPropagation("#dsbVendorCodes").click(function()
 		{
 			$(this).select();
 		});
@@ -18551,7 +18571,7 @@ I = {
 	 */
 	preventPropagation: function(pSelector)
 	{
-		$(pSelector).each(function()
+		return $(pSelector).each(function()
 		{
 			var elm = L.DomUtil.get($(this)[0]);
 			if (!L.Browser.touch)

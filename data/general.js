@@ -334,6 +334,30 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[17390, 23393], [16706, 12619]], // forttrinity to vigilkeep
 	[[17418, 23392], [16672, 16653]], // forttrinity to chantryofsecrets
 	[[17442, 23401], [17815, 15000]] // forttrinity to durmandpriory
+	],
+	// The circular pads that cannonballs the player over the map
+	launchpads: [
+	[[13794, 10161], [14125, 9839]], // harathi
+	[[14628, 10642], [14684, 10351]], // harathi
+	[[16123, 11449], [15715, 11526]], // harathi
+	[[16719, 16097], [16790, 16379]], // bloodtide
+	[[16345, 20165], [15920, 20071]], // sparkfly
+	[[16984, 21336], [17092, 21633]], // sparkfly
+	[[20441, 23215], [20508, 23478]], // maelstrom
+	[[21148, 22756], [21201, 22504]], // maelstrom
+	[[29462, 18297], [29698, 18042]], // fields
+	[[29771, 12832], [29751, 12716]], // blazeridge
+	[[29900, 12775], [29800, 12687]], // blazeridge
+	[[29646, 15191], [29645, 14997]], // blazeridge
+	[[30527, 15382], [30258, 15615]], // blazeridge
+	[[25738, 10887], [25989, 10794]], // fireheart
+	[[27655, 9992], [27820, 10306]], // fireheart
+	[[15224, 24113], [15138, 24433]], // straits
+	[[11912, 24958], [12203, 24781]], // malchor
+	[[12708, 24331], [12352, 24504]], // malchor
+	[[13922, 24269], [13706, 24364]], // malchor
+	[[11049, 27979], [11328, 27915]], // cursed
+	[[11248, 25762], [10899, 25948]], // cursed
 	]
 };
 
@@ -1082,6 +1106,14 @@ Sale: {
 	},
 	Items: [
 	{
+		url: "http://wiki.guildwars2.com/wiki/Black Lion Chest Key",
+		img: "https://render.guildwars2.com/file/207BDD31BC494A07A0A1691705079100066D3F2F/414998.png",
+		quantity: 25,
+		pricenew: 1680,
+		priceold: 0,
+		col: 0
+	},
+	{
 		url: "http://wiki.guildwars2.com/wiki/Nature's Oath Outfit",
 		img: "https://render.guildwars2.com/file/F0C5DCBAAFBF5C1BA3DB5201D19154A30D35BD57/1335090.png",
 		quantity: 1,
@@ -1138,7 +1170,7 @@ Sale: {
 		col: 1
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Crimson Lion Dye",
+		url: "http://wiki.guildwars2.com/wiki/Crimson Lion Dye Kit",
 		img: "https://render.guildwars2.com/file/44DF293E3070550FA5700FB0CA96E14C12F89F43/947660.png",
 		quantity: 1,
 		pricenew: 125,
