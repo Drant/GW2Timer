@@ -12416,6 +12416,7 @@ G = {
 			// Bind button to show the guild mission type
 			$(".gldButton").click(function()
 			{
+				$(".gldButton").removeClass("btnFocused");
 				var missiontype = U.getSubstringFromHTMLID($(this));
 				var wantshow = true;
 				// If current mission type is already showing
@@ -12427,6 +12428,7 @@ G = {
 				$(".gldBook").hide();
 				if (wantshow)
 				{
+					$(this).addClass("btnFocused");
 					$("#gldBook_" + missiontype).show();
 				}
 				I.updateScrollbar();
@@ -12435,7 +12437,7 @@ G = {
 			// Bind button to hide all guild map drawings
 			$("#mapToggle_Guild").data("hideonly", true).click(function()
 			{
-				$(".gldButton").each(function()
+				$(".gldButton").removeClass("btnFocused").each(function()
 				{
 					hideGuildMapDrawings(U.getSubstringFromHTMLID($(this)));
 					$(".gldBook").hide();
@@ -14148,7 +14150,7 @@ W = {
 		var obj;
 		var msec = (new Date()).getTime();
 		var msecage, msecremaining, percentremaining;
-		var msectolerance = 10000;
+		var msectolerance = 15000;
 		
 		for (var i in W.Objectives)
 		{
@@ -14168,7 +14170,8 @@ W = {
 				{
 					if (T.isTimeOutOfSync === false)
 					{
-						I.write("Negative time detected. Your computer's time may be <a" + U.convertExternalAnchor("https://www.google.com/search?q=synchronize+time") + ">out of sync!</a>", 0);
+						I.write("Negative time detected. Your computer's time may be <a"
+							+ U.convertExternalAnchor("https://www.google.com/search?q=synchronize+time") + ">out of sync!</a>", 0);
 						T.isTimeOutOfSync = true;
 					}
 				}

@@ -990,7 +990,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<a href='http://i.imgur.com/pTXO9Av.png' title='Note that alarm needs to be in <dfn>Subscription Mode</dfn>.'>Click</a> on the Shatterer's time for voice <a href='https://www.youtube.com/watch?v=uXqvTMGNIXo&t=5m29s'>announcement</a> of its arrival.",
+	content: "",
 	Start: new Date("2016-01-26T16:00:00Z"),
 	Finish: new Date("2016-02-02T16:00:00Z")
 },
@@ -1178,16 +1178,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-28T00:00:00Z"),
-	Finish: new Date("2016-01-29T00:00:00Z"),
+	Start: new Date("2016-01-29T00:00:00Z"),
+	Finish: new Date("2016-01-30T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "50019", price: "25200" },
-		Fox: { id: "43811", price: "25200" },
-		Derwena: { id: "44652", price: "25200" },
-		Yana: { id: "49746", price: "25200" },
-		Katyn: { id: "50021", price: "25200" },
-		Verma: { id: "44660", price: "25200" }
+		Mehem: { id: "67964", price: "25200" },
+		Fox: { id: "43799", price: "12600" },
+		Derwena: { id: "43804", price: "25200" },
+		Yana: { id: "43834", price: "25200" },
+		Katyn: { id: "43841", price: "25200" },
+		Verma: { id: "43835", price: "25200" }
 	}
 }
 };
