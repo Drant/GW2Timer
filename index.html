@@ -137,7 +137,10 @@
 					<u><a class="jsTranslate" title="<dfn>Switch to Mobile Mode (right panel only)</dfn><br />gw2timer.com/m<br /><div class='mapLoc'><img src='http://i.imgur.com/0QsaeY7.png' /></div>" href="./?mode=Mobile">mobile</a></u><em> /</em>
 					<u><a class="jsTranslate" title="<dfn>Switch to Tile Mode (timers only)</dfn><br />gw2timer.com/t<br /><div class='mapLoc'><img src='http://i.imgur.com/Q6O2lIx.png' /></div>" href="./?mode=Tile">tile</a></u>
 				</span>
-				<div id="mapSwitch" class="mapHUDContainer">
+				<!--<div class="mapHUDContainer">
+					<img id="mapAccountButton" class="mapHUDButton curToggle" title="<dfn> Click to Account </dfn>" src="img/ui/pages/account.png" alt="display" />
+				</div>-->
+				<div class="mapHUDContainer">
 					<img id="mapSwitchButton" class="mapHUDButton curToggle" title="<dfn> Click to WVW </dfn>" src="img/ui/pages/wvw.png" alt="display" />
 				</div>
 				<div class="mapGPS mapHUDContainer">
@@ -317,6 +320,9 @@
 				<input id="wvwCoordinatesName" class="mapCoordinatesName" type="text" />
 			</div>
 			<div class="mapPeripheral mapPeripheralNorth">
+				<!--<div class="mapHUDContainer">
+					<img id="wvwAccountButton" class="mapHUDButton curToggle" title="<dfn> Click to Account </dfn>" src="img/ui/pages/account.png" alt="display" />
+				</div>-->
 				<div class="mapHUDContainer">
 					<img id="wvwToolsButton" class="mapHUDButton" title="Right click on the map to lay siege weapons." data-src="img/ui/tools.png" alt="Tools" />
 					<div class="mapHUDPopup cntComposition">
@@ -333,7 +339,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="wvwSwitch" class="mapHUDContainer">
+				<div class="mapHUDContainer">
 					<img id="wvwSwitchButton" class="mapHUDButton curToggle" title="<dfn> Click to PvE </dfn>" data-src="img/ui/leave.png" alt="display" />
 				</div>
 				<div class="mapGPS mapHUDContainer">
@@ -434,6 +440,7 @@
 			</article>
 		</section>
 	</div><!-- End of panelMap -->
+	<div id="panelAccount" class="panelMain"></div>
 	<div id="panelApp" class="panelMain">
 		<var id="itemHome"></var>
 		<div id="paneSimple">

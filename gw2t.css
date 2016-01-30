@@ -1488,17 +1488,17 @@ input.mapCoordinatesName {
 	margin-top: 8px;
 	background-image: url("img/ui/pages.png");
 }
-#menuChains ins { background-position: 0 0; }
-#menuHelp ins { background-position: -32px 0; }
-#menuMap ins { background-position: -64px 0; }
-#menuOptions ins { background-position: -96px 0; }
-#menuWvW ins { background-position: -128px 0; }
+#menuAccount ins { background-position: 0 0; }
+#menuChains ins { background-position: -32px 0;; }
+#menuHelp ins { background-position: -64px 0; }
+#menuMap ins { background-position: -96px 0; }
+#menuOptions ins { background-position: -128px 0; }
 
 #paneMenu var { /* Button subtitle */
 	display: table-cell;
 	position: absolute;
 	bottom: 0;
-	width: 90px;
+	width: 25%;
 	text-align: center;
 	font-family: Arial, sans-serif;
 	font-size: 12px;
@@ -2122,6 +2122,17 @@ label:hover {
 	color: #ddff77;
 	background: rgba(255, 255, 255, 0.1);
 	border-radius: 4px;
+}
+
+/* =============================================================================
+ *  Account panel
+ * ========================================================================== */
+#panelAccount {
+	display: none;
+	width: 100%; height: 100%;
+	position: relative;
+	left: 0;
+	background: radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%);
 }
 
 /* =============================================================================

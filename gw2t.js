@@ -1408,9 +1408,10 @@ U = {
 	
 	URL_DATA:
 	{
+		Account: "data/account.js",
 		WvW: "data/wvw.js",
 		Itinerary: "data/itinerary.js",
-		// Data to load when opening a map section
+		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
 		DryTop: "data/drytop.js",
@@ -2329,6 +2330,9 @@ U = {
 			page = page.toLowerCase();
 			switch (page)
 			{
+				case "account": {
+					$("#mapAccountButton").trigger("click");
+				} break;
 				case "wvw": {
 					$("#mapSwitchButton").trigger("click");
 				} break;
@@ -2419,7 +2423,7 @@ U = {
 	 */
 	getPageSrc: function(pPage)
 	{
-		return pPage.toLowerCase() + "src.html";
+		return "page/" + pPage.toLowerCase() + ".html";
 	},
 	
 	/*
@@ -2603,6 +2607,17 @@ U = {
  * @@Account API key management and views
  * ========================================================================== */
 A = {
+	
+	isWindowLoaded: false,
+	
+	initializeAccount: function()
+	{
+		$("#accClose").click(function()
+		{
+			$("#mapAccountButton").trigger("click");
+		});
+		A.isWindowLoaded = true;
+	},
 	
 };
 
@@ -3133,7 +3148,7 @@ X = {
 		else
 		{
 			var storedtextarray = localStorage[pTextlist.key].split(I.cTextDelimiterChar);
-			// Load the stored text and account for missing entries
+			// Load the stored text and regard missing entries
 			for (i = 0; i < pTextlist.value.length; i++)
 			{
 				if (storedtextarray[i])
@@ -5292,6 +5307,8 @@ D = {
 			cs: "půl hodiny", it: "mezz'ora", pl: "pół godziny", pt: "meia hora", ru: "полчаса", zh: "半小時"},
 		
 		// Nouns
+		s_account: {de: "account", es: "cuenta", fr: "compte",
+			cs: "účet", it: "account", pl: "konto", pt: "conta", ru: "счёт", zh: "帳戶​​"},
 		s_timers: {de: "zeitgeber", es: "temporizadores", fr: "minuteurs",
 			cs: "časovače", it: "timer", pl: "czasomierzy", pt: "temporizadores", ru: "таймеров", zh: "計時器"},
 		s_tools: {de: "extras", es: "herramientas", fr: "outils",
@@ -15084,7 +15101,7 @@ T = {
 		}
 		else
 		{
-			// Account for negative input
+			// Regard negative input
 			pOptions.customTimeInSeconds = T.wrapInteger(pOptions.customTimeInSeconds, T.cSECONDS_IN_DAY);
 			/*
 			 * Convert specified seconds to time units. The ~~ gets rid of the
@@ -15929,7 +15946,7 @@ B = {
 					{
 						var item = B.DashboardSale.Items[i];
 						var forhowmany = (item.quantity > 1) ? item.quantity + "/ " : "";
-						var prevprice = (item.pricenew < item.priceold) ? "<span class='dsbSalePriceOld'><del>" + forhowmany + item.priceold + "</del></span> " : "";
+						var prevprice = (item.pricenew < item.priceold) ? "<span class='dsbSalePriceOld'><del>" + item.priceold + "</del></span> " : "";
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
 						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
 							+"<a" + U.convertExternalAnchor(item.url) + "><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
@@ -17803,6 +17820,7 @@ I = {
 	},
 	SpecialPageEnum:
 	{
+		Account: "Account",
 		WvW: "WvW",
 		DryTop: "DryTop"
 	},
@@ -17982,7 +18000,7 @@ I = {
 		I.initializeTooltip();
 		I.bindHelpButtons("#plateOptions");
 		I.bindWindowResize();
-		I.initializeUIforMenu();
+		I.initializeUIForMenu();
 		I.initializeUIForHUD();
 		I.styleContextMenu("#mapContext");
 		// Bind switch map buttons
@@ -18001,6 +18019,24 @@ I = {
 		$("#wvwSwitchButton").click(function()
 		{
 			I.toggleMap(P.MapEnum.Tyria);
+		});
+		// Bind account button
+		$("#mapAccountButton, #wvwAccountButton").one("click", function()
+		{
+			if (A.isWindowLoaded === false)
+			{
+				I.loadStylesheet("account");
+				$("#panelAccount").load(U.getPageSrc("account"), function()
+				{
+					$.getScript(U.URL_DATA.Account).done(function()
+					{
+						A.initializeAccount();
+					});
+				});
+			}
+		}).click(function()
+		{
+			I.toggleAccount();
 		});
 		
 		// Do special commands from the URL
@@ -18991,7 +19027,7 @@ I = {
 	/*
 	 * Menu event handlers and UI postchanges.
 	 */
-	initializeUIforMenu: function()
+	initializeUIForMenu: function()
 	{
 		/*
 		 * Preset the menu to fade all icons except the one being hovered.
@@ -19146,6 +19182,40 @@ I = {
 				P.MapCurrent = P.MapEnum.Mists;
 				P.SuffixCurrent = W.OptionSuffix;
 			} break;
+		}
+		U.updateQueryString();
+	},
+	
+	/*
+	 * Shows or hides the account window.
+	 */
+	toggleAccount: function()
+	{
+		var panel = $("#panelAccount");
+		if (panel.is(":visible")) // Hide
+		{
+			panel.css({width: "100%"}).animate({width: 0}, "fast", function()
+			{
+				$(this).hide();
+				if (I.isMapEnabled)
+				{
+					$("#panelMap").toggle(O.Options.bol_showMap);
+					M.refreshMap;
+					if (W.isMapInitialized)
+					{
+						W.refreshMap();
+					}
+				}
+			});
+			I.PageCurrent = I.PagePrevious;
+			I.PagePrevious = I.SpecialPageEnum.Account;
+		}
+		else // Show
+		{
+			panel.show().css({width: 0}).animate({width: "100%"}, "fast");
+			I.PagePrevious = I.PageCurrent;
+			I.PageCurrent = I.SpecialPageEnum.Account;
+			$("#panelMap").hide();
 		}
 		U.updateQueryString();
 	},

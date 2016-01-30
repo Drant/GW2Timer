@@ -2,3 +2,18 @@
 	http://gw2timer.com/account
 	Account API stylesheet.
 */
+
+#accContent {
+	font-size: 16px;
+}
+
+#accClose {
+	display: block;
+	width: 32px; height: 32px;
+	position: absolute;
+	right: 0;
+	background-image: url("../img/ui/close.png");
+}
+#accClose:active {
+	opacity: 0.8;
+}
