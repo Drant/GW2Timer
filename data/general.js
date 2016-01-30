@@ -337,27 +337,29 @@ var GW2T_GATEWAY_CONNECTION = {
 	],
 	// The circular pads that cannonballs the player over the map
 	launchpads: [
-	[[13794, 10161], [14125, 9839]], // harathi
-	[[14628, 10642], [14684, 10351]], // harathi
-	[[16123, 11449], [15715, 11526]], // harathi
-	[[16719, 16097], [16790, 16379]], // bloodtide
-	[[16345, 20165], [15920, 20071]], // sparkfly
-	[[16984, 21336], [17092, 21633]], // sparkfly
-	[[20441, 23215], [20508, 23478]], // maelstrom
-	[[21148, 22756], [21201, 22504]], // maelstrom
-	[[29462, 18297], [29698, 18042]], // fields
-	[[29771, 12832], [29751, 12716]], // blazeridge
-	[[29900, 12775], [29800, 12687]], // blazeridge
-	[[29646, 15191], [29645, 14997]], // blazeridge
-	[[30527, 15382], [30258, 15615]], // blazeridge
-	[[25738, 10887], [25989, 10794]], // fireheart
-	[[27655, 9992], [27820, 10306]], // fireheart
-	[[15224, 24113], [15138, 24433]], // straits
-	[[11912, 24958], [12203, 24781]], // malchor
-	[[12708, 24331], [12352, 24504]], // malchor
-	[[13922, 24269], [13706, 24364]], // malchor
-	[[11049, 27979], [11328, 27915]], // cursed
-	[[11248, 25762], [10899, 25948]], // cursed
+	{c: [[13794, 10161], [14125, 9839]], i: "http://i.imgur.com/05EZy40.png"}, // harathi
+	{c: [[14628, 10642], [14684, 10351]], i: "http://i.imgur.com/pzi7QqB.png"}, // harathi
+	{c: [[16123, 11449], [15715, 11526]], i: "http://i.imgur.com/LtlKlMd.png"}, // harathi
+	{c: [[16719, 16097], [16790, 16379]], i: "http://i.imgur.com/4knjPzn.png"}, // bloodtide
+	{c: [[16345, 20165], [15920, 20071]], i: "http://i.imgur.com/Ofvznoc.png"}, // sparkfly
+	{c: [[16984, 21336], [17092, 21633]], i: "http://i.imgur.com/CKADrul.png"}, // sparkfly
+	{c: [[15758, 20762], [16036, 21031]], i: "http://i.imgur.com/89HbHei.png"}, // sparkfly
+	{c: [[20441, 23215], [20508, 23478]], i: "http://i.imgur.com/lsoFXtG.png"}, // maelstrom
+	{c: [[21148, 22756], [21201, 22504]], i: "http://i.imgur.com/psc19cs.png"}, // maelstrom
+	{c: [[29462, 18297], [29698, 18042]], i: ""}, // fields
+	{c: [[29771, 12832], [29751, 12716]], i: ""}, // blazeridge
+	{c: [[29900, 12775], [29800, 12687]], i: ""}, // blazeridge
+	{c: [[29646, 15191], [29645, 14997]], i: ""}, // blazeridge
+	{c: [[30527, 15382], [30258, 15615]], i: ""}, // blazeridge
+	{c: [[25738, 10887], [25989, 10794]], i: ""}, // fireheart
+	{c: [[27655, 9992], [27820, 10306]], i: ""}, // fireheart
+	{c: [[15224, 24113], [15138, 24433]], i: "http://i.imgur.com/Juve33P.png"}, // straits
+	{c: [[13922, 24269], [13706, 24364]], i: "http://i.imgur.com/muYx0K5.png"}, // malchor
+	{c: [[12708, 24331], [12352, 24504]], i: "http://i.imgur.com/20aN2Kl.png"}, // malchor
+	{c: [[11912, 24958], [12203, 24781]], i: "http://i.imgur.com/v2nRrzR.png"}, // malchor
+	{c: [[11248, 25762], [10899, 25948]], i: "http://i.imgur.com/Vkb74AG.png"}, // cursed
+	{c: [[11122, 27381], [11248, 27635]], i: "http://i.imgur.com/20U6Gts.png"}, // cursed
+	{c: [[11049, 27979], [11328, 27915]], i: "http://i.imgur.com/Yx0LBxP.png"}, // cursed
 	]
 };
 
@@ -1110,7 +1112,7 @@ Sale: {
 		img: "https://render.guildwars2.com/file/207BDD31BC494A07A0A1691705079100066D3F2F/414998.png",
 		quantity: 25,
 		pricenew: 1680,
-		priceold: 0,
+		priceold: 2100,
 		col: 0
 	},
 	{
@@ -1210,16 +1212,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-01-29T00:00:00Z"),
-	Finish: new Date("2016-01-30T00:00:00Z"),
+	Start: new Date("2016-01-30T00:00:00Z"),
+	Finish: new Date("2016-01-31T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "67964", price: "25200" },
-		Fox: { id: "43799", price: "12600" },
-		Derwena: { id: "43804", price: "25200" },
-		Yana: { id: "43834", price: "25200" },
-		Katyn: { id: "43841", price: "25200" },
-		Verma: { id: "43835", price: "25200" }
+		Mehem: { id: "43833", price: "25200" },
+		Fox: { id: "49772", price: "25200" },
+		Derwena: { id: "49735", price: "25200" },
+		Yana: { id: "49748", price: "25200" },
+		Katyn: { id: "44716", price: "25200" },
+		Verma: { id: "43813", price: "25200" }
 	}
 }
 };

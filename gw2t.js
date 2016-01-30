@@ -10884,8 +10884,9 @@ P = {
 			var intergates = GW2T_GATEWAY_CONNECTION.intergates;
 			var launchpads = GW2T_GATEWAY_CONNECTION.launchpads;
 			
-			var drawGateway = function(pCoord, pImage, pOpacity)
+			var drawGateway = function(pCoord, pImage, pOpacity, pTitle)
 			{
+				pTitle = (pTitle === undefined) ? null : pTitle;
 				var marker = L.marker(M.convertGCtoLC(pCoord),
 				{
 					icon: L.icon(
@@ -10894,7 +10895,8 @@ P = {
 						iconSize: [32, 32], // Initial size corresponding to default zoom level
 						iconAnchor: [16, 16]
 					}),
-					opacity: pOpacity || 0.6
+					opacity: pOpacity || 0.6,
+					title: pTitle
 				});
 				M.bindMarkerZoomBehavior(marker, "click");
 				M.bindMarkerZoomBehavior(marker, "contextmenu");
@@ -10928,17 +10930,19 @@ P = {
 			}
 			for (var i in launchpads)
 			{
+				var tooltip = "<div class='mapLoc'><img src='" + (launchpads[i]).i + "' /></div>";
 				// Draw the launchpad (first inner coordinates)
-				marker = drawGateway((launchpads[i])[0], "img/map/launchpad.png", 1);
+				marker = drawGateway((launchpads[i]).c[0], "img/map/launchpad.png", 1, tooltip);
 				P.Layer.ZoneGateway.addLayer(marker);
 				// Draw the line trajectory
-				path = L.polyline(M.convertGCtoLCDual(launchpads[i]),
+				path = L.polyline(M.convertGCtoLCDual(launchpads[i].c),
 				{
 					color: "gold",
 					opacity: 0.2
 				});
 				P.Layer.ZoneGateway.addLayer(path);
 			}
+			I.qTip.init(".leaflet-marker-icon");
 		}
 		M.toggleLayer(P.Layer.ZoneGateway, O.Options.bol_showZoneGateways);
 	},
