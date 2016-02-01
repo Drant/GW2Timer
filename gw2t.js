@@ -2608,8 +2608,22 @@ U = {
  * ========================================================================== */
 A = {
 	
+	TokenCurrent: null,
 	isWindowLoaded: false,
 	
+	/*
+	 * Gets an API URL to retrieve account data.
+	 * @param string pType of account data.
+	 * @returns string.
+	 */
+	getURL: function(pType)
+	{
+		return "https://api.guildwars2.com/v2/" + pType + "?access_token=" + A.TokenCurrent;
+	},
+	
+	/*
+	 * Initializes common UI for the account panel.
+	 */
 	initializeAccount: function()
 	{
 		$("#accClose").click(function()
@@ -2617,6 +2631,15 @@ A = {
 			$("#mapAccountButton").trigger("click");
 		});
 		A.isWindowLoaded = true;
+		
+		$.ajax({
+			dataType: "json",
+			url: A.getURL("account/bank"),
+			cache: false,
+			success: function(pData)
+		{
+			I.log(U.formatJSON(pData));
+		}});
 	},
 	
 };
@@ -14191,7 +14214,7 @@ W = {
 		var obj;
 		var msec = (new Date()).getTime();
 		var msecage, msecremaining, percentremaining;
-		var msectolerance = 15000;
+		var msectolerance = 30000;
 		
 		for (var i in W.Objectives)
 		{
@@ -19187,7 +19210,7 @@ I = {
 	},
 	
 	/*
-	 * Shows or hides the account window.
+	 * Shows or hides the account panel.
 	 */
 	toggleAccount: function()
 	{
