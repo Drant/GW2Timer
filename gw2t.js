@@ -2485,7 +2485,7 @@ U = {
 	 */
 	getYouTubeLink: function(pString)
 	{
-		return "http://www.youtube.com/results?search_query=" + U.encodeURL(pString);
+		return "http://www.youtube.com/results?search_query=" + U.encodeURL(pString + " " + I.cGameNick);
 	},
 	
 	/*
@@ -6310,7 +6310,7 @@ C = {
 		{
 			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
 				+ " (" + pChain.level + ")"
-					+ "<a" + U.convertExternalAnchor(U.getYouTubeLink(D.getObjectDefaultName(pChain) + " " + I.cGameNick)) + ">"
+					+ "<a" + U.convertExternalAnchor(U.getYouTubeLink(D.getObjectDefaultName(pChain))) + ">"
 					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> ";
 		}
 		if (pChain.reward !== undefined)
@@ -11972,7 +11972,7 @@ G = {
 					"<dt id='jpz_" + jp.id + "' data-coord='" + jp.coord + "'>" + translatedname + "</dt>"
 					+ "<label><input type='checkbox' id='jpzCheck_" + jp.id + "' /></label>"
 					+ "&nbsp;<cite><a href='"
-					+ U.getYouTubeLink(translatedname + " " + I.cGameNick) + "'>[Y]</a> <a href='"
+					+ U.getYouTubeLink(translatedname) + "'>[Y]</a> <a href='"
 					+ U.getWikiLanguageLink(translatedname) + "'>[W]</a></cite>"
 					+ "<dd>" + jp.description + "</dd>"
 				);
@@ -12246,7 +12246,7 @@ G = {
 						+ "<ins class='clt_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
 					+ "</label>"
 					+ "<span><cite>"
-						+ "<a href='" + U.getYouTubeLink(defaultname + " " + I.cGameNick) + "'>[Y]</a>&nbsp;"//
+						+ "<a href='" + U.getYouTubeLink(defaultname) + "'>[Y]</a>&nbsp;"//
 						+ "<a href='" + collectible.wiki + "'>[W]</a>&nbsp;"
 						+ "<a href='" + collectible.credit + "'>[C]</a>&nbsp;"
 						+ "&nbsp;-&nbsp;&nbsp;</cite>"
@@ -12475,7 +12475,7 @@ G = {
 					+ "<button class='gldButton curToggle' id='gldButton_" + i + "' "
 					+ "title='<dfn>" + translatedname + "</dfn><br />gw2timer.com/guild/" + i.toLowerCase() + "'>"
 					+ "<img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>"
-					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname + " " + I.cGameNick) + "'>Y</a>&nbsp;"
+					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname) + "'>Y</a>&nbsp;"
 					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "'>W</a>"
 					+ "</div>");
 				$("#gldBooks").append("<div class='gldBook' id='gldBook_" + i + "'></div>");
@@ -12533,7 +12533,7 @@ G = {
 						"<div><img class='cssWaypoint jsClip' " + K.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldBounty_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
+						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
 						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
 						+ "</div>"
 					);
@@ -12617,7 +12617,7 @@ G = {
 						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
+						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
 						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
 						+ "</div>"
 					);
@@ -12669,7 +12669,7 @@ G = {
 						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Rush) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldRush_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
+						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
 						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
 						+ "</div>"
 					);
@@ -12738,7 +12738,7 @@ G = {
 						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Puzzle) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldPuzzle_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name + " " + I.cGameNick) + "'>[Y]</a> "
+						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
 						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
 						+ "</div>"
 					);
@@ -15975,11 +15975,14 @@ B = {
 					for (var i in B.DashboardSale.Items)
 					{
 						var item = B.DashboardSale.Items[i];
+						var wiki = U.getWikiSearchLink(item.name);
+						var video = U.getYouTubeLink(item.name);
 						var forhowmany = (item.quantity > 1) ? item.quantity + "/ " : "";
 						var prevprice = (item.pricenew < item.priceold) ? "<span class='dsbSalePriceOld'><del>" + item.priceold + "</del></span> " : "";
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
 						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
-							+"<a" + U.convertExternalAnchor(item.url) + "><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
+							+"<a" + U.convertExternalAnchor(wiki) + "><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
+							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
 							+ prevprice
 							+ "<span class='dsbSalePriceNew'>" + forhowmany + item.pricenew + "<ins class='s16 s16_gem'></ins></span>"
 							+ "<span class='dsbSalePriceCoin'> ≈ " + E.createCoinString(Math.round(item.pricenew * E.Exchange.CoinInGem), true) + "</span>"

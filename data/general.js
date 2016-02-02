@@ -1101,10 +1101,10 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "",
-	Start: new Date("2016-01-26T16:00:00Z"),
-	Finish: new Date("2016-02-02T16:00:00Z"),
+	Start: new Date("2016-02-02T16:00:00Z"),
+	Finish: new Date("2016-02-09T16:00:00Z"),
 	Padding: {
-		url: "http://wiki.guildwars2.com/wiki/Gem",
+		name: "Gem",
 		img: "./img/ui/gem.png",
 		quantity: 1,
 		pricenew: 100,
@@ -1112,7 +1112,7 @@ Sale: {
 	},
 	Items: [
 	{
-		url: "http://wiki.guildwars2.com/wiki/Nature's Oath Outfit",
+		name: "Nature's Oath Outfit",
 		img: "https://render.guildwars2.com/file/F0C5DCBAAFBF5C1BA3DB5201D19154A30D35BD57/1335090.png",
 		quantity: 1,
 		pricenew: 700,
@@ -1120,7 +1120,7 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Hawk Wings Glider Combo",
+		name: "Hawk Wings Glider Combo",
 		img: "https://render.guildwars2.com/file/4EABD122FBD4296C7869600915EC3DD941C4BBA4/1334916.png",
 		quantity: 1,
 		pricenew: 700,
@@ -1128,39 +1128,15 @@ Sale: {
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Bat Wings Glider Combo",
-		img: "https://render.guildwars2.com/file/BD2FA14B122CB7EB2205D016F9B07D4F1FC90ED2/1203275.png",
+		name: "Phoenix Kite Glider",
+		img: "http://i.imgur.com/CzIknH6.png",
 		quantity: 1,
-		pricenew: 700,
+		pricenew: 400,
 		priceold: 0,
 		col: 0
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Black Wings Glider Combo",
-		img: "https://render.guildwars2.com/file/5978F84C08E69460B7FD34346745E7183562A35A/951784.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/White Wings Glider Combo",
-		img: "https://render.guildwars2.com/file/FB9A14C04510096F4E33205AC2DE15BB07ADA0FF/1010543.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 0
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Mini Zintl Cavalier",
-		img: "https://render.guildwars2.com/file/DE3CDEE322EAF50780EE05623277686D43E2C87E/1334910.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Confetti Mail Delivery",
+		name: "Confetti Mail Delivery",
 		img: "https://render.guildwars2.com/file/DC800626B873260155C528297325C07635FFD41E/924620.png",
 		quantity: 1,
 		pricenew: 300,
@@ -1168,15 +1144,7 @@ Sale: {
 		col: 1
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Lion Mask Skin",
-		img: "https://render.guildwars2.com/file/0DFDA234FFABBC23F539A5045FDCF7640E06F1B2/947663.png",
-		quantity: 1,
-		pricenew: 300,
-		priceold: 0,
-		col: 1
-	},
-	{
-		url: "http://wiki.guildwars2.com/wiki/Red Lantern",
+		name: "Red Lantern",
 		img: "https://render.guildwars2.com/file/2B52C72C6E0B5A6095F5D39714CD7ED447E7B24B/941018.png",
 		quantity: 1,
 		pricenew: 250,
@@ -1184,7 +1152,7 @@ Sale: {
 		col: 1
 	},
 	{
-		url: "http://wiki.guildwars2.com/wiki/Crimson Lion Dye Kit",
+		name: "Crimson Lion Dye Kit",
 		img: "https://render.guildwars2.com/file/44DF293E3070550FA5700FB0CA96E14C12F89F43/947660.png",
 		quantity: 1,
 		pricenew: 125,

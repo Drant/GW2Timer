@@ -837,6 +837,12 @@ textarea.jsCopyCode {
 .dsbSalePriceOld {
 	color: #b3a082;
 }
+.dsbSaleVideo {
+	display: none;
+}
+.dsbSaleEntry:hover .dsbSaleVideo {
+	display: inline;
+}
 
 .dsbVendorPriceKarma {
 	float: right;
