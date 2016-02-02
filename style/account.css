@@ -17,3 +17,9 @@
 #accClose:active {
 	opacity: 0.8;
 }
+
+#accHelp {
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+}

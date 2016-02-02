@@ -2129,9 +2129,9 @@ label:hover {
  * ========================================================================== */
 #panelAccount {
 	display: none;
-	width: 100%; height: 100%;
+	height: 100vh;
+	overflow: hidden;
 	position: relative;
-	left: 0;
 	background: radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%);
 }
 

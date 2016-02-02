@@ -2615,6 +2615,7 @@ A = {
 	 * Gets an API URL to retrieve account data.
 	 * @param string pType of account data.
 	 * @returns string.
+	 * @pre Token for use (API key) variable was initialized.
 	 */
 	getURL: function(pType)
 	{
@@ -2626,6 +2627,12 @@ A = {
 	 */
 	initializeAccount: function()
 	{
+		// Initialize common UI
+		var panel = $("#panelAccount");
+		I.initializeScrollbar(panel);
+		U.convertExternalLink("#accHelp a");
+		
+		// Bind the close panel button
 		$("#accClose").click(function()
 		{
 			$("#mapAccountButton").trigger("click");
@@ -19215,8 +19222,10 @@ I = {
 	toggleAccount: function()
 	{
 		var panel = $("#panelAccount");
+		var content = $("#accContent");
 		if (panel.is(":visible")) // Hide
 		{
+			content.hide();
 			panel.css({width: "100%"}).animate({width: 0}, "fast", function()
 			{
 				$(this).hide();
@@ -19235,7 +19244,10 @@ I = {
 		}
 		else // Show
 		{
-			panel.show().css({width: 0}).animate({width: "100%"}, "fast");
+			panel.show().css({width: 0}).animate({width: "100%"}, "fast", function()
+			{
+				content.show();
+			});
 			I.PagePrevious = I.PageCurrent;
 			I.PageCurrent = I.SpecialPageEnum.Account;
 			$("#panelMap").hide();

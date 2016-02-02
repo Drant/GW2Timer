@@ -1112,14 +1112,6 @@ Sale: {
 	},
 	Items: [
 	{
-		url: "http://wiki.guildwars2.com/wiki/Black Lion Chest Key",
-		img: "https://render.guildwars2.com/file/207BDD31BC494A07A0A1691705079100066D3F2F/414998.png",
-		quantity: 25,
-		pricenew: 1680,
-		priceold: 2100,
-		col: 0
-	},
-	{
 		url: "http://wiki.guildwars2.com/wiki/Nature's Oath Outfit",
 		img: "https://render.guildwars2.com/file/F0C5DCBAAFBF5C1BA3DB5201D19154A30D35BD57/1335090.png",
 		quantity: 1,
@@ -1130,6 +1122,14 @@ Sale: {
 	{
 		url: "http://wiki.guildwars2.com/wiki/Hawk Wings Glider Combo",
 		img: "https://render.guildwars2.com/file/4EABD122FBD4296C7869600915EC3DD941C4BBA4/1334916.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 0
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Bat Wings Glider Combo",
+		img: "https://render.guildwars2.com/file/BD2FA14B122CB7EB2205D016F9B07D4F1FC90ED2/1203275.png",
 		quantity: 1,
 		pricenew: 700,
 		priceold: 0,
@@ -1162,6 +1162,14 @@ Sale: {
 	{
 		url: "http://wiki.guildwars2.com/wiki/Confetti Mail Delivery",
 		img: "https://render.guildwars2.com/file/DC800626B873260155C528297325C07635FFD41E/924620.png",
+		quantity: 1,
+		pricenew: 300,
+		priceold: 0,
+		col: 1
+	},
+	{
+		url: "http://wiki.guildwars2.com/wiki/Lion Mask Skin",
+		img: "https://render.guildwars2.com/file/0DFDA234FFABBC23F539A5045FDCF7640E06F1B2/947663.png",
 		quantity: 1,
 		pricenew: 300,
 		priceold: 0,
@@ -1216,16 +1224,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-02-01T00:00:00Z"),
-	Finish: new Date("2016-02-02T00:00:00Z"),
+	Start: new Date("2016-02-02T00:00:00Z"),
+	Finish: new Date("2016-02-03T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "48918", price: "25200" },
-		Fox: { id: "49770", price: "25200" },
-		Derwena: { id: "43798", price: "12600" },
-		Yana: { id: "49735", price: "25200" },
-		Katyn: { id: "44714", price: "25200" },
-		Verma: { id: "43799", price: "12600" }
+		Mehem: { id: "43825", price: "25200" },
+		Fox: { id: "44656", price: "25200" },
+		Derwena: { id: "43843", price: "25200" },
+		Yana: { id: "49749", price: "25200" },
+		Katyn: { id: "49735", price: "25200" },
+		Verma: { id: "50023", price: "25200" }
 	}
 }
 };
