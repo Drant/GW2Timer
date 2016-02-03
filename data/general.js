@@ -1129,7 +1129,7 @@ Sale: {
 	},
 	{
 		name: "Phoenix Kite Glider",
-		img: "http://i.imgur.com/CzIknH6.png",
+		img: "https://render.guildwars2.com/file/EDB6F1402EE407080237B9045DE8C96E59720293/1341461.png",
 		quantity: 1,
 		pricenew: 400,
 		priceold: 0,
@@ -1192,16 +1192,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-02-02T00:00:00Z"),
-	Finish: new Date("2016-02-03T00:00:00Z"),
+	Start: new Date("2016-02-03T00:00:00Z"),
+	Finish: new Date("2016-02-04T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43825", price: "25200" },
-		Fox: { id: "44656", price: "25200" },
-		Derwena: { id: "43843", price: "25200" },
-		Yana: { id: "49749", price: "25200" },
-		Katyn: { id: "49735", price: "25200" },
-		Verma: { id: "50023", price: "25200" }
+		Mehem: { id: "44663", price: "25200" },
+		Fox: { id: "73199", price: "25200" },
+		Derwena: { id: "43820", price: "25200" },
+		Yana: { id: "43798", price: "12600" },
+		Katyn: { id: "43482", price: "25200" },
+		Verma: { id: "43837", price: "25200" }
 	}
 }
 };

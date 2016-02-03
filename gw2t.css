@@ -313,7 +313,7 @@ html, body,
 }
 
 /* Clickable */
-.curClick, .jsClip, a, kbd, input, label, button,
+.curClick, .jsClip, a, kbd, input, select, label, button,
 .btnWindow, .mapHUDButton, .itemContext li,
 .menuBeam img:hover, .chnCheck:hover, .chnTitle time {
 	cursor: url("img/cursor/pointer.cur"), pointer;
@@ -449,6 +449,12 @@ html, body,
 
 .cntComposition input[type="text"]:hover, .cntComposition textarea:hover {
 	border: 1px solid red;
+}
+
+.cntComposition select {
+	border: 1px solid #555;
+	background: #444;
+	color: #ffddcc;
 }
 
 .cntComposition fieldset {

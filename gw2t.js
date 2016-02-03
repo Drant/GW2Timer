@@ -2631,8 +2631,13 @@ A = {
 		var panel = $("#panelAccount");
 		I.initializeScrollbar(panel);
 		U.convertExternalLink("#accHelp a");
+		I.qTip.init($("#panelAccount").find("a, label, kbd, img"));
 		
-		// Bind the close panel button
+		// Bind the window buttons
+		$("#accExpand").click(function()
+		{
+			$("#mapDisplayButton").trigger("click");
+		});
 		$("#accClose").click(function()
 		{
 			$("#mapAccountButton").trigger("click");
@@ -19250,6 +19255,7 @@ I = {
 			panel.show().css({width: 0}).animate({width: "100%"}, "fast", function()
 			{
 				content.show();
+				I.updateScrollbar("#panelAccount");
 			});
 			I.PagePrevious = I.PageCurrent;
 			I.PageCurrent = I.SpecialPageEnum.Account;

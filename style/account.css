@@ -7,19 +7,43 @@
 	font-size: 16px;
 }
 
-#accClose {
-	display: block;
-	width: 32px; height: 32px;
+#accClose, #accExpand {
 	position: absolute;
+	left: auto;
 	top: 0; right: 0;
-	background-image: url("../img/ui/close.png");
 }
-#accClose:active {
+#accExpand {
+	right: 32px;
+}
+#accClose:active, #accExpand:active {
 	opacity: 0.8;
 }
 
-#accHelp {
+#accManager label {
+	display: inline-block;
+	margin-right: 16px;
+}
+#accManager label b {
+	white-space: nowrap;
+}
+#accManager, #accHelp {
 	width: 80%;
 	margin-left: 10%;
 	margin-right: 10%;
+}
+#accManager {
+	text-align: center;
+}
+#accKeyList {
+	display: inline-block;
+	width: 50%;
+}
+#accKeyNameLabel {
+	width: 15%;
+}
+#accKeyTokenLabel {
+	width: 50%;
+}
+#accKeyName, #accKeyToken {
+	width: 100%;
 }
