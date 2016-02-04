@@ -368,6 +368,10 @@
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
 }
+#wvwLog a {
+	color: white;
+	text-decoration: underline;
+}
 
 #wvwServerList {
 	position: absolute;
@@ -480,11 +484,13 @@
 
 .logEntry {
 	background: rgba(255, 255, 255, 0.2);
-	white-space: nowrap;
 }
 .logEntry:hover {
 	outline: 1px solid rgba(0, 0, 0, 0.5);
 	font-weight: bold;
+}
+.logEntryLong {
+	white-space: normal;
 }
 .logEntry time, #logTime {
 	display: inline-block;
@@ -508,16 +514,19 @@
 	color: #ffcc77;
 }
 .logEntryRedHome, .lboServerRed {
-	background: rgba(204, 31, 36, 0.2);
+	background: rgba(204, 31, 36, 0.3);
 }
 .logEntryGreenHome, .lboServerGreen {
-	background: rgba(82, 165, 24, 0.2);
+	background: rgba(82, 165, 24, 0.3);
 }
 .logEntryBlueHome, .lboServerBlue {
-	background: rgba(49, 167, 187, 0.2);
+	background: rgba(49, 167, 187, 0.3);
 }
 .logEntryCenter {
-	background: rgba(255, 255, 0, 0.2);
+	background: rgba(255, 255, 0, 0.3);
+}
+.logEntryRedHome, .logEntryGreenHome, .logEntryBlueHome, .logEntryCenter {
+	white-space: nowrap; /* This makes the log entry expand animation go in one line */
 }
 .lboServerRed:hover {
 	background: rgba(204, 31, 36, 0.8);

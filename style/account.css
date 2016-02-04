@@ -19,13 +19,9 @@
 	opacity: 0.8;
 }
 
-#accManager label {
-	display: inline-block;
-	margin-right: 16px;
-}
-#accManager label b {
-	white-space: nowrap;
-}
+/* Key manager
+----------------------------------------------------------------------------- */
+
 #accManager, #accHelp {
 	width: 80%;
 	margin-left: 10%;
@@ -33,17 +29,34 @@
 }
 #accManager {
 	text-align: center;
+	margin-bottom: 32px;
 }
-#accKeyList {
+#accManager .accTokenName {
 	display: inline-block;
+	min-width: 128px;
+	width: 20%;
+	margin-right: 16px;
+}
+#accManager .accTokenKey {
+	display: inline-block;
+	min-width: 256px;
 	width: 50%;
+	margin-right: 16px;
 }
-#accKeyNameLabel {
-	width: 15%;
+#accManager input.accTokenKey {
+	font-family: monospace;
+	font-size: 14px;
 }
-#accKeyTokenLabel {
-	width: 50%;
+.accTokenButtons {
+	display: inline-block;
+	width: 72px;
 }
-#accKeyName, #accKeyToken {
-	width: 100%;
+
+#accTokenNew {
+	display: inline-block;
+	margin-top: 8px;
+	width: 64px;
 }
+
+/* Help area
+----------------------------------------------------------------------------- */

@@ -76,6 +76,7 @@ O = {
 	{
 		programVersion: {key: "int_utlProgramVersion", value: 160115},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
+		APITokens: {key: "obj_utlAPITokens", value: []},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
 		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
 		StoredPins: {key: "obj_utlStoredPins", value: []},
@@ -113,7 +114,7 @@ O = {
 	 */
 	Options:
 	{
-		// Enumeration is an exception, being set by URL only
+		// Enumeration is an exception, being set by URL or special functions only
 		enu_Language: "en",
 		enu_Server: "1008",
 		// Timer
@@ -1576,7 +1577,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				M.refreshMap;
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -1990,6 +1991,10 @@ U = {
 	stripToAlphanumeric: function(pString)
 	{
 		return pString.replace(/\W/g, "");
+	},
+	stripToAlphanumericDash: function(pString)
+	{
+		return pString.replace(/[^a-zA-Z0-9\-]/g, "");
 	},
 	stripToColorString: function(pString)
 	{
@@ -2609,11 +2614,38 @@ U = {
 A = {
 	
 	TokenCurrent: null,
-	isWindowLoaded: false,
+	isAccountLoaded: false,
+	URL: { // Account data type and URL substring
+		Account: "account",
+		Achievements: "account/achievements",
+		Bank: "account/bank",
+		Dyes: "account/dyes",
+		Materials: "account/materials",
+		Minis: "account/minis",
+		Skins: "account/skins",
+		Wallet: "account/wallet",
+		Characters: "characters",
+		Transactions: "commerce/transactions", // suffixed by "current" or "history", then "buys" or "sells"
+		Stats: "pvp/stats",
+		Games: "pvp/games",
+		TokenInfo: "tokeninfo"
+	},
+	Permissions: { // Corresponds to tokeninfo.json permissions array
+		account: null,
+		builds: null,
+		characters: null,
+		guilds: null,
+		inventories: null,
+		progression: null,
+		pvp: null,
+		tradingpost: null,
+		wallet: null,
+		unlocks: null
+	},
 	
 	/*
 	 * Gets an API URL to retrieve account data.
-	 * @param string pType of account data.
+	 * @param enum pType of account data.
 	 * @returns string.
 	 * @pre Token for use (API key) variable was initialized.
 	 */
@@ -2631,7 +2663,6 @@ A = {
 		var panel = $("#panelAccount");
 		I.initializeScrollbar(panel);
 		U.convertExternalLink("#accHelp a");
-		I.qTip.init($("#panelAccount").find("a, label, kbd, img"));
 		
 		// Bind the window buttons
 		$("#accExpand").click(function()
@@ -2642,16 +2673,209 @@ A = {
 		{
 			$("#mapAccountButton").trigger("click");
 		});
-		A.isWindowLoaded = true;
 		
+		// Initialize API keys
+		A.initializeTokens();
+		
+		// Initialize tooltips and translate
+		I.qTip.init($("#panelAccount").find("a, label, button, kbd, img"));
+		$("#accContent .jsTranslate").each(function()
+		{
+			$(this).text(D.getPhraseOriginal($(this).text()))
+				.removeClass("jsTranslate");
+		});
+	
+		// Finally
+		A.isAccountLoaded = true;
+	},
+	
+	/*
+	 * Initializes the API keys manager and their storage.
+	 */
+	initializeTokens: function()
+	{
+		var tokenslimit = 32;
+		var tokens = localStorage[O.Utilities.APITokens.key];
+		try
+		{
+			tokens = JSON.parse(tokens);
+		}
+		catch(e) {}
+		if (tokens === undefined)
+		{
+			tokens = [];
+			tokens.push(A.createToken("Example Key Name", "EXAMPLE-API-KEY-PLEASE-REPLACE-WITH-YOUR-OWN-HERE"));
+		}
+		for (var i = 0; i < tokens.length; i++)
+		{
+			var token = tokens[i];
+			A.insertTokenRow(token.name, token.key, token.isUsed);
+		}
+		A.saveTokens();
+		A.loadToken();
+		
+		// Bind button to add another token/row
+		$("#accTokenNew").click(function()
+		{
+			if (O.Utilities.APITokens.value.length < tokenslimit)
+			{
+				A.insertTokenRow("", "");
+				A.saveTokens();
+			}
+			else
+			{
+				I.write("API tokens limit reached.");
+			}
+		});
+	},
+	
+	/*
+	 * Creates a token object which contains a token's name and the API key string.
+	 * @param string pName.
+	 * @param pAPIKey pAPIKey.
+	 * @returns object.
+	 */
+	createToken: function(pName, pAPIKey)
+	{
+		return {
+			name: pName,
+			key: pAPIKey
+		};
+	},
+	
+	/*
+	 * Reads text from the token inputs then serialize and store them.
+	 */
+	saveTokens: function()
+	{
+		var tokens = [];
+		$(".accToken").each(function()
+		{
+			var name = U.escapeHTML($(this).find(".accTokenName").val());
+			var key = U.stripToAlphanumericDash($(this).find(".accTokenKey").val());
+			var token = A.createToken(name, key);
+			if ($(this).find(".accTokenUse").hasClass("btnFocused"))
+			{
+				token.isUsed = true;
+			}
+			tokens.push(token);
+		});
+		var obj = O.Utilities.APITokens;
+		obj.value = tokens;
+		localStorage[obj.key] = JSON.stringify(obj.value);
+	},
+	
+	/*
+	 * Readies the account panel for the current API key.
+	 */
+	loadToken: function()
+	{
+		for (var i in A.Permissions)
+		{
+			A.Permissions[i] = null;
+		}
+		// Initialize permissions
 		$.ajax({
 			dataType: "json",
-			url: A.getURL("account/bank"),
+			url: A.getURL(A.URL.TokenInfo),
 			cache: false,
 			success: function(pData)
+			{
+				for (var i in pData.permissions)
+				{
+					var permission = pData.permissions[i];
+					A.Permissions[permission] = true;
+					I.write(permission);
+				}
+			},
+			error: function(pRequest, pError)
+			{
+				if (pError === "error")
+				{
+					I.write("This API key is invalid.");
+				}
+				else
+				{
+					I.write("Unable to retrieve this token from ArenaNet API servers.");
+				}
+				I.write(A.TokenCurrent);
+			}
+		});
+	},
+	
+	/*
+	 * Inserts a token (row) into the API key manager.
+	 * @param string pName.
+	 * @param string pAPIKey.
+	 */
+	insertTokenRow: function(pName, pAPIKey, pIsUsed)
+	{
+		var token = $("<div class='accToken'></div>").appendTo("#accManager");
+		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
+		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
+		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
+		var use = $("<button class='accTokenUse' title='Use this key.'><img src='img/ui/check.png' /></button>").appendTo(buttons);
+		var del = $("<button class='accTokenDelete' title='Delete this key.'><img src='img/ui/default.png' /></button><br />").appendTo(buttons);
+		
+		// Use the token if specified
+		if (pIsUsed !== undefined && pIsUsed === true)
 		{
-			I.log(U.formatJSON(pData));
-		}});
+			A.TokenCurrent = U.stripToAlphanumericDash(pAPIKey);
+			use.addClass("btnFocused");
+		}
+		
+		// Bind buttons
+		use.click(function()
+		{
+			var str = key.val();
+			if (str.length > 0)
+			{
+				$("#accManager button").removeClass("btnFocused");
+				use.addClass("btnFocused");
+				A.TokenCurrent = U.stripToAlphanumericDash(str);
+				A.loadToken();
+				A.saveTokens();
+			}
+			else
+			{
+				I.write("Please enter a valid API key.");
+			}
+		});
+		del.click(function()
+		{
+			var str = key.val();
+			if (O.Utilities.APITokens.value.length > 1)
+			{
+				// Ask for confirmation if key is not empty
+				if (str.length > 0)
+				{
+					if (confirm("Delete this API token?"))
+					{
+						token.remove();
+						A.saveTokens();
+					}
+				}
+				else
+				{
+					token.remove();
+					A.saveTokens();
+				}
+			}
+			else
+			{
+				I.write("Must have at least one API token.");
+			}
+		});
+		$([name, key]).each(function()
+		{
+			$(this).click(function()
+			{
+				$(this).select();
+			}).change(function()
+			{
+				A.saveTokens();
+			});
+		});
 	},
 	
 };
@@ -5344,6 +5568,8 @@ D = {
 		// Nouns
 		s_account: {de: "account", es: "cuenta", fr: "compte",
 			cs: "účet", it: "account", pl: "konto", pt: "conta", ru: "счёт", zh: "帳戶​​"},
+		s_key: {de: "schlüssel", es: "tecla", fr: "clé",
+			cs: "klávesa", it: "chiave", pl: "klawisz", pt: "chave", ru: "ключ", zh: "索引鍵"},
 		s_timers: {de: "zeitgeber", es: "temporizadores", fr: "minuteurs",
 			cs: "časovače", it: "timer", pl: "czasomierzy", pt: "temporizadores", ru: "таймеров", zh: "計時器"},
 		s_tools: {de: "extras", es: "herramientas", fr: "outils",
@@ -13753,11 +13979,11 @@ W = {
 	/*
 	 * Adds an entry to the WvW log.
 	 * @param string pString to insert.
-	 * @param string pISOTime of the event, optional
 	 * @param string pClass of the log entry, such as the map the event happened in.
+	 * @param string pISOTime of the event, optional
 	 * @param boolean pIsDisplayed whether shown initially.
 	 */
-	addLogEntry: function(pString, pISOTime, pClass, pIsDisplayed)
+	addLogEntry: function(pString, pClass, pISOTime, pIsDisplayed)
 	{
 		pString = pString || "";
 		pClass = pClass || "";
@@ -13834,7 +14060,7 @@ W = {
 		{
 			isdisplayed = false;
 		}
-		W.addLogEntry(str, isotime, cssclass, isdisplayed);
+		W.addLogEntry(str, cssclass, isotime, isdisplayed);
 		
 		// Narrate the capture event if opted
 		if (O.Options.bol_logNarrate)
@@ -14014,6 +14240,8 @@ W = {
 			$("#wvwZoneLinkRed").text(W.getBorderlandsString(redserver, true, true));
 			$("#wvwZoneLinkBlue").text(W.getBorderlandsString(blueserver, true, true));
 			
+			// Initial messages in the log window
+			W.addLogEntry($("#wvwHelpLinks").html());
 			W.addLogEntry(D.getObjectNick(greenserver)
 				+ " : " + D.getObjectNick(blueserver) + " : " + D.getObjectNick(redserver));
 			
@@ -14246,8 +14474,8 @@ W = {
 				{
 					if (T.isTimeOutOfSync === false)
 					{
-						I.write("Negative time detected. Your computer's time may be <a"
-							+ U.convertExternalAnchor("https://www.google.com/search?q=synchronize+time") + ">out of sync!</a>", 0);
+						W.addLogEntry("Negative time detected. Your computer's time may be <a"
+							+ U.convertExternalAnchor("https://www.google.com/search?q=synchronize+time") + ">out of sync!</a>");
 						T.isTimeOutOfSync = true;
 					}
 				}
@@ -18061,7 +18289,7 @@ I = {
 		// Bind account button
 		$("#mapAccountButton, #wvwAccountButton").one("click", function()
 		{
-			if (A.isWindowLoaded === false)
+			if (A.isAccountLoaded === false)
 			{
 				I.loadStylesheet("account");
 				$("#panelAccount").load(U.getPageSrc("account"), function()
@@ -18579,7 +18807,7 @@ I = {
 	 * Toggles a generic highlight class to an element.
 	 * @param jqobject pElement to toggle.
 	 * @param boolean pBoolean manual.
-	 * @returns boolean new highlight state.
+	 * @returns boolean new highlight state.b
 	 */
 	toggleHighlight: function(pElement, pBoolean)
 	{
@@ -19237,13 +19465,23 @@ I = {
 			panel.css({width: "100%"}).animate({width: 0}, "fast", function()
 			{
 				$(this).hide();
-				if (I.isMapEnabled)
+				if (I.isMapEnabled && O.Options.bol_showMap)
 				{
-					$("#panelMap").toggle(O.Options.bol_showMap);
-					M.refreshMap;
-					if (W.isMapInitialized)
+					$("#panelMap").show();
+					switch (P.MapCurrent)
 					{
-						W.refreshMap();
+						case P.MapEnum.Tyria: {
+							$("#mapPane").show();
+							M.refreshMap();
+						} break;
+
+						case P.MapEnum.Mists: {
+							$("#wvwPane").show();
+							if (W.isMapInitialized)
+							{
+								W.refreshMap();
+							}
+						} break;
 					}
 				}
 			});

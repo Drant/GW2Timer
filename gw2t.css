@@ -2238,6 +2238,9 @@ label:hover {
     -moz-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
 }
+dfn.cssHighlight {
+	color: #ffff00;
+}
 .cssLimitExceed {
 	color: #ff2200;
 }

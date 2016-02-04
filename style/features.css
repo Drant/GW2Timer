@@ -173,7 +173,7 @@
 /* =============================================================================
  *  JP
  * ========================================================================== */
-dt.jpzListNameChecked, dfn.cssHighlight {
+dt.jpzListNameChecked {
 	color: #ffff00;
 }
 dt.jpzListNameHover {
@@ -381,10 +381,6 @@ dt.jpzListNameHover {
 #gldButtons button img {
 	width: 48px; height: 48px;
 	border-radius: 2px;
-}
-
-button.cssHighlight {
-	
 }
 
 #gldInfluence input[type="text"] {
