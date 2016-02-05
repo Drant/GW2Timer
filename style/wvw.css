@@ -204,6 +204,7 @@
 #wvwLeaderboard article { /* A row containing a server's data cells '*/
 	border-radius: 4px;
 	white-space: nowrap;
+	padding-right: 8px;
 }
 #wvwLeaderboard aside { /* A cell of the leaderboard table */
 	display: inline-block;
@@ -349,9 +350,6 @@
 .lboKD var {
 	width: 48px;
 }
-.lboKD var:last-child {
-	padding-right: 16px;
-}
 
 /* Log
 ----------------------------------------------------------------------------- */
@@ -371,6 +369,9 @@
 #wvwLog a {
 	color: white;
 	text-decoration: underline;
+}
+#wvwLog a:hover {
+	color: #ddff77;
 }
 
 #wvwServerList {

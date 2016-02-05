@@ -13677,7 +13677,7 @@ W = {
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
 			var serverid = pData.worlds[ownerkey];
-			var servername = D.getObjectName(W.Servers[serverid]);
+			var servername = U.escapeHTML(D.getObjectName(W.Servers[serverid]));
 			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
 				+ "<aside class='lboName'>&nbsp;" + servername + "</aside>" : "";
 			var score = pData.scores[ownerkey];
@@ -13700,7 +13700,7 @@ W = {
 			}
 			
 			/*
-			 * Calculate self score as it relate to the opposing servers.
+			 * Server Focus is PPT from ownership of non-native objectives (including EBG).
 			 */
 			var focuses = [];
 			var scoredifferences = [];
@@ -13735,6 +13735,23 @@ W = {
 			}
 			
 			/*
+			 * Borderlands Focus is score from non-native borderlands (excluding EBG).
+			 */
+			var blscoreA, blscoreB;
+			for (var ii in pData.maps)
+			{
+				var map = pData.maps[ii];
+				switch (map.type)
+				{
+					case ((W.Metadata.Opposites[owner])[0] + "Home"): blscoreA = map.scores[ownerkey]; break;
+					case ((W.Metadata.Opposites[owner])[1] + "Home"): blscoreB = map.scores[ownerkey]; break;
+				}
+			}
+			var totalblscore = blscoreA + blscoreB;
+			var blscoreApercent = Math.round((blscoreA / totalblscore) * T.cPERCENT_100);
+			var blscoreBpercent = Math.round((blscoreB / totalblscore) * T.cPERCENT_100);
+			
+			/*
 			 * Write the HTML.
 			 */
 			html += "<article class='lboServer" + owner + "'>"
@@ -13754,12 +13771,21 @@ W = {
 					+ "<var class='lboPPTRed'>+" + (PPT[owner])[W.LandEnum.RedHome] + "</var>"
 					+ "<var class='lboPPTCenter'>+" + (PPT[owner])[W.LandEnum.Center] + "</var>"
 				+ "</aside>"
-				+ "<aside class='lboFocus lboFocus" + owner + "' title='<dfn>Server Focus</dfn>'>"
+				+ "<aside class='lboFocus lboFocus" + owner + "' title='<dfn>Server Focus (PPT Now)</dfn><br />"
+						+ "<dfn>" + focuses[0] + " PPT</dfn> earnable from " + otherservers[0] + " native objectives<br />"
+						+ "<dfn>" + focuses[1] + " PPT</dfn> earnable from " + otherservers[1] + " native objectives'>"
 					+ "<var class='lboFocusA'>" + focusApercent + "%</var>"
 					+ "<span class='" + focusclass + "'><samp style='width:" + focusApercent + "%'><mark></mark></samp></span>"
 					+ "<var class='lboFocusB'>" + focusBpercent + "%</var>"
 				+ "</aside>"
 				+ kdstr
+				+ "<aside class='lboFocus lboFocus" + owner + "' title='<dfn>Server Focus (Points Matchup)</dfn><br />"
+						+ "<dfn>" + blscoreA + " points</dfn> earned from " + otherservers[0] + " Borderlands<br />"
+						+ "<dfn>" + blscoreB + " points</dfn> earned from " + otherservers[1] + " Borderlands'>"
+					+ "<var class='lboFocusA'>" + blscoreApercent + "%</var>"
+					+ "<span><samp style='width:" + blscoreApercent + "%'><mark></mark></samp></span>"
+					+ "<var class='lboFocusB'>" + blscoreBpercent + "%</var>"
+				+ "</aside>"
 			+ "</article>";
 		}
 		html += "</section>";
@@ -14576,8 +14602,12 @@ W = {
 	 */
 	getGuildBannerURL: function(pName)
 	{
-		var name = U.escapeHTML((pName.split(" ").join("-")).toLowerCase());
-		return "http://guilds.gw2w2w.com/guilds/" + name + "/128.svg";
+		if (pName !== undefined)
+		{
+			var name = U.escapeHTML((pName.split(" ").join("-")).toLowerCase());
+			return "http://guilds.gw2w2w.com/guilds/" + name + "/128.svg";
+		}
+		return "img/ui/placeholder.png";
 	},
 	
 	/*
@@ -18274,10 +18304,24 @@ I = {
 		{
 			I.loadStylesheet("wvw");
 			I.loadImg("#wvwHUDPane .mapHUDButton");
-			$.getScript(U.URL_DATA.WvW).done(function()
+			$("#lboCurrent").append(I.cThrobber);
+			/*
+			 * WvW requires CSS to be loaded first before scripts execute.
+			 * To know that the CSS has been loaded, a CSS property is checked,
+			 * and this property must be changed here also if it was changed in
+			 * the stylesheet.
+			 */
+			var waitForWvWStylesheet = setInterval(function()
 			{
-				W.initializeWvW();
-			});
+				if ($("#wvwLeaderboard").css("position") === "absolute")
+				{
+					window.clearInterval(waitForWvWStylesheet);
+					$.getScript(U.URL_DATA.WvW).done(function()
+					{
+						W.initializeWvW();
+					});
+				}
+			}, 100);
 		}).click(function()
 		{
 			I.toggleMap(P.MapEnum.Mists);

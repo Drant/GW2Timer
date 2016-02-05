@@ -949,20 +949,20 @@ input.mapCoordinatesName {
 #itemLogo {
 	margin-right: 2px;
 }
-.mapPeripheral img {
-	width: 32px; height: 32px;
-}
-.mapPeripheral { /* Links on the map pane */
+.mapHUDLinks { /* Links on the map pane */
 	font-family: Menomonia;
 	font-size: 18px;
 	color: #ffeebb;
 }
-.mapPeripheral a, .mapPeripheral em {
+.mapHUDLinks img {
+	width: 32px; height: 32px;
+}
+.mapHUDLinks a, .mapHUDLinks em {
 	text-decoration: none;
 	color: #ffeebb;
 	opacity: 0.6;
 }
-.mapPeripheral a:hover {
+.mapHUDLinks a:hover {
 	color: #ddff77;
 	opacity: 0.9;
 }
@@ -978,7 +978,7 @@ input.mapCoordinatesName {
 .mapHUDContainer {
 	display: inline-block;
 	width: 32px;
-	margin-left: -4px; /* This squeezes the HUD buttons closer */
+	margin-left: 0px; /* This squeezes the HUD buttons closer */
 }
 .mapHUDButton {
 	display: inline-block;
