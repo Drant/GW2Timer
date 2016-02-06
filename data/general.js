@@ -1112,36 +1112,28 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Nature's Oath Outfit",
-		img: "https://render.guildwars2.com/file/F0C5DCBAAFBF5C1BA3DB5201D19154A30D35BD57/1335090.png",
+		name: "Royal Terrace Pass",
+		img: "https://render.guildwars2.com/file/470C33B838D5541D39C91DD5C65A53EFB9BCEB79/699314.png",
 		quantity: 1,
-		pricenew: 700,
+		pricenew: 1000,
 		priceold: 0,
 		col: 0
 	},
 	{
-		name: "Hawk Wings Glider Combo",
-		img: "https://render.guildwars2.com/file/4EABD122FBD4296C7869600915EC3DD941C4BBA4/1334916.png",
+		name: "Silver-Fed Salvage-o-Matic",
+		img: "https://render.guildwars2.com/file/53BE1B65A817091427E30319C2B2B3777C27A319/855379.png",
 		quantity: 1,
-		pricenew: 700,
+		pricenew: 500,
 		priceold: 0,
 		col: 0
 	},
 	{
-		name: "Phoenix Kite Glider",
-		img: "https://render.guildwars2.com/file/EDB6F1402EE407080237B9045DE8C96E59720293/1341461.png",
+		name: "Black Lion Salvage Kit",
+		img: "https://render.guildwars2.com/file/2204EE5D7B1F7BEE9261CBAE3BF1DB5B027EE607/66551.png",
 		quantity: 1,
-		pricenew: 400,
-		priceold: 0,
+		pricenew: 255,
+		priceold: 300,
 		col: 0
-	},
-	{
-		name: "Confetti Mail Delivery",
-		img: "https://render.guildwars2.com/file/DC800626B873260155C528297325C07635FFD41E/924620.png",
-		quantity: 1,
-		pricenew: 300,
-		priceold: 0,
-		col: 1
 	},
 	{
 		name: "Red Lantern",
@@ -1149,13 +1141,44 @@ Sale: {
 		quantity: 1,
 		pricenew: 250,
 		priceold: 0,
-		col: 1
-	},
-	{
+		col: 0
+	},{
 		name: "Crimson Lion Dye Kit",
 		img: "https://render.guildwars2.com/file/44DF293E3070550FA5700FB0CA96E14C12F89F43/947660.png",
 		quantity: 1,
 		pricenew: 125,
+		priceold: 0,
+		col: 0
+	},
+	{
+		name: "Nature's Oath Outfit",
+		img: "https://render.guildwars2.com/file/F0C5DCBAAFBF5C1BA3DB5201D19154A30D35BD57/1335090.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 1
+	},
+	{
+		name: "Hawk Wings Glider Combo",
+		img: "https://render.guildwars2.com/file/4EABD122FBD4296C7869600915EC3DD941C4BBA4/1334916.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 1
+	},
+	{
+		name: "Phoenix Kite Glider",
+		img: "https://render.guildwars2.com/file/EDB6F1402EE407080237B9045DE8C96E59720293/1341461.png",
+		quantity: 1,
+		pricenew: 400,
+		priceold: 0,
+		col: 1
+	},
+	{
+		name: "Confetti Mail Delivery",
+		img: "https://render.guildwars2.com/file/DC800626B873260155C528297325C07635FFD41E/924620.png",
+		quantity: 1,
+		pricenew: 300,
 		priceold: 0,
 		col: 1
 	}
