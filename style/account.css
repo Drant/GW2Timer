@@ -51,6 +51,9 @@
 	display: inline-block;
 	width: 72px;
 }
+.accTokenButtons button {
+	width: 32px;
+}
 
 #accTokenNew {
 	display: inline-block;

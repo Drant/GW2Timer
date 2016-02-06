@@ -2615,6 +2615,7 @@ A = {
 	
 	TokenCurrent: null,
 	isAccountLoaded: false,
+	Items: {}, // For holding retrieved item details objects
 	URL: { // Account data type and URL substring
 		Account: "account",
 		Achievements: "account/achievements",
@@ -2770,6 +2771,10 @@ A = {
 	 */
 	loadToken: function()
 	{
+		if (A.TokenCurrent === null)
+		{
+			return;
+		}
 		for (var i in A.Permissions)
 		{
 			A.Permissions[i] = null;
@@ -2785,7 +2790,7 @@ A = {
 				{
 					var permission = pData.permissions[i];
 					A.Permissions[permission] = true;
-					I.write(permission);
+					//I.log(permission);
 				}
 			},
 			error: function(pRequest, pError)
@@ -2800,6 +2805,11 @@ A = {
 				}
 				I.write(A.TokenCurrent);
 			}
+		});
+		
+		$.getJSON(A.getURL("account/wallet"), function(pData)
+		{
+			I.log(U.formatJSON(pData));
 		});
 	},
 	
@@ -13427,11 +13437,7 @@ W = {
 		blstr = (pFullBorderlands) ? W.getName("Borderlands") : W.getNick("Borderlands");
 		
 		// Adjust to grammar
-		if (D.isLanguageModifierFirst())
-		{
-			return serverstr + " " + blstr;
-		}
-		return blstr + " " + serverstr;
+		return D.orderModifier(blstr, serverstr);
 	},
 	
 	/*
