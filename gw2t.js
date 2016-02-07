@@ -16158,10 +16158,11 @@ B = {
 		// Initialize sale
 		if (B.isDashboardSaleEnabled)
 		{
+			var icon = ((B.DashboardSale.isSpecial) ? "gemstore_special" : "gemstore") + I.cPNG;
 			var range = T.getMinMax(B.DashboardSale.Items, "pricenew");
 			var rangestr = (range.min === range.max) ? range.max : (range.min + "-" + range.max);
 			// Create "button" to toggle list of items on sale
-			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img src='img/ui/gemstore.png' /> "
+			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img src='img/ui/" + icon + "' /> "
 				+ "<u>" + B.DashboardSale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceNew'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
