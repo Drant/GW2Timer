@@ -13754,8 +13754,20 @@ W = {
 				}
 			}
 			var totalblscore = blscoreA + blscoreB;
-			var blscoreApercent = Math.round((blscoreA / totalblscore) * T.cPERCENT_100);
-			var blscoreBpercent = Math.round((blscoreB / totalblscore) * T.cPERCENT_100);
+			var blscoreApercent, blscoreBpercent;
+			var blscoreclass = "";
+			if (totalblscore > 0)
+			{
+				blscoreApercent = Math.round((blscoreA / totalblscore) * T.cPERCENT_100);
+				blscoreBpercent = Math.round((blscoreB / totalblscore) * T.cPERCENT_100);
+			}
+			else
+			{
+				blscoreApercent = 0;
+				blscoreBpercent = 0;
+				blscoreclass = "lboFocusZero";
+			}
+			
 			
 			/*
 			 * Write the HTML.
@@ -13789,7 +13801,7 @@ W = {
 						+ "<dfn>" + blscoreA + " points</dfn> earned from " + otherservers[0] + " Borderlands<br />"
 						+ "<dfn>" + blscoreB + " points</dfn> earned from " + otherservers[1] + " Borderlands'>"
 					+ "<var class='lboFocusA'>" + blscoreApercent + "%</var>"
-					+ "<span><samp style='width:" + blscoreApercent + "%'><mark></mark></samp></span>"
+					+ "<span class='" + blscoreclass + "'><samp style='width:" + blscoreApercent + "%'><mark></mark></samp></span>"
 					+ "<var class='lboFocusB'>" + blscoreBpercent + "%</var>"
 				+ "</aside>"
 			+ "</article>";
