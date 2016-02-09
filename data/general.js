@@ -1045,15 +1045,6 @@ Announcement:
  */
 Countdowns: [
 {
-	name_en: "Lunar New Year",
-	name_de: "Mondneujahr",
-	name_es: "Año nuevo lunar",
-	name_fr: "Nouvel an lunaire",
-	official: "the-game/releases/january-26-2016/",
-	Start: new Date("2016-01-26T17:00:00Z"),
-	Finish: new Date("2016-02-09T17:00:00Z")
-}/*,
-{
 	name_en: "PvP League Season 2",
 	name_de: "PvP Liga Saison 2",
 	name_es: "Segunda temporada de liga PvP",
@@ -1064,7 +1055,7 @@ Countdowns: [
 	url_fr: "https://forum-fr.guildwars2.com/forum/game/pvp/Changements-venir-pour-la-saison-2-de-la-ligue-JcJ",
 	Start: new Date("2016-02-23T17:00:00Z"),
 	Finish: new Date("2016-02-24T17:00:00Z")
-}*/
+}
 ],
 
 /*
@@ -1100,10 +1091,10 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	isSpecial: true,
+	isSpecial: false,
 	note: "",
-	Start: new Date("2016-02-02T16:00:00Z"),
-	Finish: new Date("2016-02-09T16:00:00Z"),
+	Start: new Date("2016-02-09T16:00:00Z"),
+	Finish: new Date("2016-02-16T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "./img/ui/gem.png",
@@ -1113,59 +1104,20 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Royal Terrace Pass",
-		img: "https://render.guildwars2.com/file/470C33B838D5541D39C91DD5C65A53EFB9BCEB79/699314.png",
+		name: "Wedding Preparation Package",
+		img: "http://i.imgur.com/WIycepj.png",
 		quantity: 1,
-		pricenew: 1000,
+		pricenew: 1560,
 		priceold: 0,
 		col: 0
 	},
 	{
-		name: "Silver-Fed Salvage-o-Matic",
-		img: "https://render.guildwars2.com/file/53BE1B65A817091427E30319C2B2B3777C27A319/855379.png",
+		name: "Wings of Love Glider",
+		img: "http://i.imgur.com/UjVUmls.png",
 		quantity: 1,
-		pricenew: 500,
+		pricenew: 400,
 		priceold: 0,
 		col: 0
-	},
-	{
-		name: "Black Lion Salvage Kit",
-		img: "https://render.guildwars2.com/file/2204EE5D7B1F7BEE9261CBAE3BF1DB5B027EE607/66551.png",
-		quantity: 1,
-		pricenew: 255,
-		priceold: 300,
-		col: 0
-	},
-	{
-		name: "Red Lantern",
-		img: "https://render.guildwars2.com/file/2B52C72C6E0B5A6095F5D39714CD7ED447E7B24B/941018.png",
-		quantity: 1,
-		pricenew: 250,
-		priceold: 0,
-		col: 0
-	},{
-		name: "Crimson Lion Dye Kit",
-		img: "https://render.guildwars2.com/file/44DF293E3070550FA5700FB0CA96E14C12F89F43/947660.png",
-		quantity: 1,
-		pricenew: 125,
-		priceold: 0,
-		col: 0
-	},
-	{
-		name: "Nature's Oath Outfit",
-		img: "https://render.guildwars2.com/file/F0C5DCBAAFBF5C1BA3DB5201D19154A30D35BD57/1335090.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 1
-	},
-	{
-		name: "Hawk Wings Glider Combo",
-		img: "https://render.guildwars2.com/file/4EABD122FBD4296C7869600915EC3DD941C4BBA4/1334916.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
-		col: 1
 	},
 	{
 		name: "Phoenix Kite Glider",
@@ -1173,13 +1125,29 @@ Sale: {
 		quantity: 1,
 		pricenew: 400,
 		priceold: 0,
+		col: 0
+	},
+	{
+		name: "Wintersday Wreath Backpack",
+		img: "https://render.guildwars2.com/file/3408A04293EAA9CE802226E593956D56EBFE0304/1313100.png",
+		quantity: 1,
+		pricenew: 500,
+		priceold: 0,
 		col: 1
 	},
 	{
-		name: "Confetti Mail Delivery",
-		img: "https://render.guildwars2.com/file/DC800626B873260155C528297325C07635FFD41E/924620.png",
+		name: "Bouquet of Roses",
+		img: "https://render.guildwars2.com/file/9B06346EC37F0DD0A2EF61F819F56962D11FE1BE/534227.png",
 		quantity: 1,
-		pricenew: 300,
+		pricenew: 250,
+		priceold: 0,
+		col: 1
+	},
+	{
+		name: "Box of Chocolates",
+		img: "https://render.guildwars2.com/file/39FD9EDC1AA019A0B53367A82DE9D63627B90C98/729530.png",
+		quantity: 1,
+		pricenew: 250,
 		priceold: 0,
 		col: 1
 	}

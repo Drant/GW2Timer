@@ -74,7 +74,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160115},
+		programVersion: {key: "int_utlProgramVersion", value: 160209},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
@@ -1404,6 +1404,8 @@ U = {
 		Match: "https://api.guildwars2.com/v2/wvw/matches?world=",
 		Matches: "https://api.guildwars2.com/v2/wvw/matches/",
 		GuildDetails: "https://api.guildwars2.com/v1/guild_details.json?guild_id=",
+		MatchFallback: "https://api.guildwars2.com/v1/wvw/match_details.json?match_id=",
+		MatchesFallback: "https://api.guildwars2.com/v1/wvw/matches.json",
 		
 		// Other
 		Prefix: "https://api.guildwars2.com/v2/",
@@ -13199,6 +13201,8 @@ W = {
 	isObjectiveTickEnabled: false,
 	isObjectiveTimerTickEnabled: false,
 	isAPIFailed: false,
+	isFallbackEnabled: false,
+	numFailedAPICalls: 0,
 	cOWNERS_PER_TIER: 3,
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
 	cMILLISECONDS_IMMUNITY: 300000,
@@ -14409,6 +14413,10 @@ W = {
 	updateObjectives: function()
 	{
 		var msec = (new Date()).getTime();
+		if (W.isFallbackEnabled)
+		{
+			W.updateObjectivesFallback();
+		}
 		
 		$.ajax({
 			dataType: "json",
@@ -14504,17 +14512,45 @@ W = {
 			}
 			if (W.isAPIFailed)
 			{
+				W.numFailedAPICalls = 0;
 				W.isAPIFailed = false;
+				W.isFallbackEnabled = false;
 				I.write("WvW data connection reestablished at " + T.getTimeFormatted());
 			}
 		}}).fail(function()
 		{
-			if (W.isAPIFailed === false)
+			W.numFailedAPICalls++;
+			if (W.numFailedAPICalls > 10)
 			{
-				W.isAPIFailed = true;
-				// If failed near reset then tell so, otherwise generic error
-				var errormessage = (W.secTillWvWReset !== null && W.secTillWvWReset < 10 * T.cSECONDS_IN_MINUTE) ? "WvW reset is happening soon." : "Waiting for ArenaNet API servers...";
-				I.write("Unable to retrieve WvW data during " + T.getTimeFormatted() + ".<br />" + errormessage, 0);
+				W.isFallbackEnabled = true;
+				I.write("Too many failed API retrievals. Switching to fallback API server...", 0);
+			}
+			else
+			{
+				if (W.isAPIFailed === false)
+				{
+					W.isAPIFailed = true;
+					// If failed near reset then tell so, otherwise generic error
+					var errormessage = (W.secTillWvWReset !== null && W.secTillWvWReset < 10 * T.cSECONDS_IN_MINUTE)
+						? "WvW reset is happening soon." : "Waiting for ArenaNet API servers...";
+					I.write("Unable to retrieve WvW data during " + T.getTimeFormatted() + ".<br />" + errormessage, 0);
+				}
+			}
+		});
+	},
+	
+	/*
+	 * Uses the v1 API to get objectives state.
+	 */
+	updateObjectivesFallback: function()
+	{
+		$.ajax({
+			dataType: "json",
+			url: U.URL_API.MatchFallback + O.Options.enu_Server,
+			cache: false, // Prevents keeping stale data
+			success: function(pData)
+			{
+				
 			}
 		});
 	},
