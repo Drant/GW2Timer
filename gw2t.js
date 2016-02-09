@@ -1351,6 +1351,7 @@ O = {
  * ========================================================================== */
 U = {
 	
+	CommandPrefix: "/",
 	URL_META:
 	{
 		News: "http://forum.renaka.com/topic/5500046/",
@@ -1548,6 +1549,22 @@ U = {
 			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, int_limit (optional), str_querystring (optional)</em>", f: function()
 			{
 				U.printAPI(args[1], args[2], args[3]);
+			}},
+			acc: {usage: "Prints the output of an account API URL &quot;"
+				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. Replace spaces with &quot;%20&quot;", f: function()
+			{
+				if (args[1] === undefined)
+				{
+					I.write("Available account API URL suffixes:");
+					for (var i in A.URL)
+					{
+						I.write(A.URL[i], 0);
+					}
+				}
+				else
+				{
+					A.printAccount(args[1]);
+				}
 			}},
 			daily: {usage: "Prints the daily achievements.", f: function()
 			{
@@ -2511,7 +2528,7 @@ U = {
 	 */
 	getTradingItemLink: function(pID, pName)
 	{
-		//return "https://www.gw2tp.com/item/" + U.getURL(pID) + "#" + U.stripToSentence(pName);
+		//return "https://www.gw2tp.com/item/" + U.encodeURL(pID) + "#" + U.stripToSentence(pName);
 		return "http://www.gw2spidy.com/item/" + U.encodeURL(pID) + "#" + U.stripToSentence(pName);
 	},
 	
@@ -2646,13 +2663,14 @@ A = {
 	
 	/*
 	 * Gets an API URL to retrieve account data.
-	 * @param enum pType of account data.
+	 * @param enum pSuffix type of account data.
 	 * @returns string.
 	 * @pre Token for use (API key) variable was initialized.
 	 */
-	getURL: function(pType)
+	getURL: function(pSuffix)
 	{
-		return "https://api.guildwars2.com/v2/" + pType + "?access_token=" + A.TokenCurrent;
+		var divider = (pSuffix.indexOf("?") !== -1) ? "&" : "?";
+		return "https://api.guildwars2.com/v2/" + pSuffix + divider + "access_token=" + A.TokenCurrent;
 	},
 	
 	/*
@@ -2684,6 +2702,14 @@ A = {
 		{
 			$(this).text(D.getPhraseOriginal($(this).text()))
 				.removeClass("jsTranslate");
+		});
+		
+		// Initialize the console, which is the same as the map's coordinates bar
+		$("#accConsole").onEnterKey(function()
+		{
+			var val = $(this).val();
+			var str = (val.charAt(0) === U.CommandPrefix) ? val : U.CommandPrefix + val;
+			U.parseConsoleCommand(str, M);
 		});
 	
 		// Finally
@@ -2790,26 +2816,50 @@ A = {
 				{
 					var permission = pData.permissions[i];
 					A.Permissions[permission] = true;
-					//I.log(permission);
 				}
 			},
 			error: function(pRequest, pError)
 			{
-				if (pError === "error")
-				{
-					I.write("This API key is invalid.");
-				}
-				else
-				{
-					I.write("Unable to retrieve this token from ArenaNet API servers.");
-				}
-				I.write(A.TokenCurrent);
+				A.respondError(pError);
 			}
 		});
-		
-		$.getJSON(A.getURL("account/wallet"), function(pData)
+	},
+	
+	/*
+	 * Prints standard error response to the console.
+	 */
+	respondError: function(pStatus)
+	{
+		if (pStatus === "error")
 		{
-			I.log(U.formatJSON(pData));
+			I.write("Error retrieving API key data: no permission or bad request.");
+		}
+		else
+		{
+			I.write("Unable to retrieve data for this key from ArenaNet API servers.");
+		}
+		I.write(A.TokenCurrent);
+	},
+	
+	/*
+	 * Prints data from an account API.
+	 * @param string pURLSuffix.
+	 */
+	printAccount: function(pURLSuffix)
+	{
+		I.write("Loading " + pURLSuffix + "...", 0);
+		$.ajax({
+			dataType: "json",
+			url: A.getURL(pURLSuffix),
+			cache: false,
+			success: function(pData, pStatus, pRequest)
+			{
+				I.write(U.formatJSON(pData), 0);
+			},
+			error: function(pRequest, pStatus)
+			{
+				A.respondError(pStatus);
+			}
 		});
 	},
 	
@@ -14425,6 +14475,7 @@ W = {
 			if (istoomanyflips)
 			{
 				D.stopSpeech();
+				W.reinitializeServerChange();
 				I.write("Too many objectives updated. ArenaNet API servers may be having problems.");
 			}
 			if (W.isAPIFailed)
