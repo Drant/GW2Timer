@@ -244,6 +244,20 @@ O = {
 		ru: "ru-RU", // Unsupported
 		zh: "zh-CN"
 	},
+	VoiceCode:
+	{
+		// This enum corresponds to the voices available from window.speechSynthesis.getVoices() array
+		en: "Google US English",
+		de: "Google Deutsch",
+		es: "Google español",
+		fr: "Google français",
+		cs: "native",
+		it: "Google italiano",
+		pl: "Google polski",
+		pt: "Google português do Brasil",
+		ru: "Google русский",
+		zh: "Google 國語（臺灣）"
+	},
 	OptionEnum:
 	{
 		Language:
@@ -6183,7 +6197,16 @@ D = {
 		if (I.isSpeechSynthesisEnabled && I.ModeCurrent !== I.ModeEnum.Overlay)
 		{
 			var msg = new SpeechSynthesisUtterance(pString);
-			msg.lang = O.LanguageCode[O.Options.enu_Language];
+			/*
+			 * Chrome bug https://code.google.com/p/chromium/issues/detail?id=582455
+			 * Workaround is to manually set the voice. When the bug is fixed, can
+			 * just set only the lang property and have the voice set automatically.
+			 */
+			//msg.lang = O.LanguageCode[O.Options.enu_Language];
+			msg.voice = window.speechSynthesis.getVoices().filter(function(pVoice)
+			{
+				return pVoice.name === O.VoiceCode[O.Options.enu_Language];
+			})[0];
 			msg.volume = volume;
 			msg.rate = 0.8;
 			window.speechSynthesis.speak(msg);
@@ -14476,6 +14499,7 @@ W = {
 			{
 				D.stopSpeech();
 				W.reinitializeServerChange();
+				W.addLogEntry("Restarted due to API error.");
 				I.write("Too many objectives updated. ArenaNet API servers may be having problems.");
 			}
 			if (W.isAPIFailed)
@@ -18331,7 +18355,6 @@ I = {
 		else if (useragent.indexOf("Chrome") !== -1)
 		{
 			I.BrowserCurrent = I.BrowserEnum.Chrome;
-			I.isSpeechSynthesisEnabled = true;
 		}
 		else if (useragent.indexOf("Firefox") !== -1)
 		{
@@ -18340,6 +18363,17 @@ I = {
 		else if (useragent.indexOf("Opera") !== -1)
 		{
 			I.BrowserCurrent = I.BrowserEnum.Opera;
+		}
+		
+		// Detect TTS capability
+		if (window.speechSynthesis !== undefined)
+		{
+			I.isSpeechSynthesisEnabled = true;
+			// Automatically reload the asynchronous voices
+			window.speechSynthesis.onvoiceschanged = function()
+			{
+				var voices = window.speechSynthesis.getVoices();
+			};
 		}
 		
 		// Set the maximum wait time for all non-custom AJAX requests, such as getJSON

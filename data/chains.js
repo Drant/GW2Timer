@@ -2010,7 +2010,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "dragon",
 	waypoint: "[&BBAIAAA=]",
 	level: "80",
-	reward: {ecto: "0", loot: "4"},
+	reward: {ecto: "6", loot: "30"},
 	duration: "15:00",
 	timing: {hourInitial: 1, hourMultiplier: 2, minuteOffset: 30},
 	events: [
