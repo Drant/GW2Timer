@@ -1979,6 +1979,17 @@ var GW2T_WVW_METADATA = {
 		BlueHome: "BlueHome",
 		Center: "Center"
 	},
+	LandPrefix: {
+		RedHome: "1099-",
+		GreenHome: "1102-",
+		BlueHome: "1143-",
+		Center: "38-"
+	},
+	ScoreAssociation: { // For getting the score from v1 API, which is in an array
+		Red: 0,
+		Green: 2,
+		Blue: 1
+	},
 	ObjectiveEnum: {
 		Camp: "Camp",
 		Tower: "Tower",

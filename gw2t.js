@@ -13563,6 +13563,10 @@ W = {
 	{
 		return parseInt((pData.id.split("-"))[1]);
 	},
+	getMatchupTierFallback: function(pData)
+	{
+		return parseInt((pData.match_id.split("-"))[1]);
+	},
 	
 	/*
 	 * Generates a list of servers for the user to choose from.
@@ -13681,7 +13685,7 @@ W = {
 	/*
 	 * Inserts a matchup/tier scoreboard into the leaderboard.
 	 * @param object pData from matches API.
-	 * @param boolean pIsMain whether is it the user's server matchup or other tiers.
+	 * @param jqobject pContainer to insert the scoreboard in, optional.
 	 */
 	insertScoreboard: function(pData, pContainer)
 	{
@@ -13759,7 +13763,7 @@ W = {
 			var owner = W.Metadata.Owners[i]; // Example: "Green" as in data
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
-			var serverid = pData.worlds[ownerkey];
+			var serverid = W.ServersCurrent[ownerkey];
 			var servername = U.escapeHTML(D.getObjectName(W.Servers[serverid]));
 			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
 				+ "<aside class='lboName'>&nbsp;" + servername + "</aside>" : "";
@@ -13798,7 +13802,7 @@ W = {
 					focuses.push(focus);
 					var difference = score - pData.scores[otherownerkey];
 					scoredifferences.push(difference);
-					var otherserver = W.Servers[(pData.worlds[otherownerkey])];
+					var otherserver = W.Servers[(W.ServersCurrent[otherownerkey])];
 					otherservers.push(U.escapeHTML(D.getObjectName(otherserver)));
 				}
 			}
@@ -13845,7 +13849,6 @@ W = {
 				blscoreclass = "lboFocusZero";
 			}
 			
-			
 			/*
 			 * Write the HTML.
 			 */
@@ -13874,6 +13877,210 @@ W = {
 					+ "<var class='lboFocusB'>" + focusBpercent + "%</var>"
 				+ "</aside>"
 				+ kdstr
+				+ "<aside class='lboFocus lboFocus" + owner + "' title='<dfn>Server Focus (Points Matchup)</dfn><br />"
+						+ "<dfn>" + blscoreA + " points</dfn> earned from " + otherservers[0] + " Borderlands<br />"
+						+ "<dfn>" + blscoreB + " points</dfn> earned from " + otherservers[1] + " Borderlands'>"
+					+ "<var class='lboFocusA'>" + blscoreApercent + "%</var>"
+					+ "<span class='" + blscoreclass + "'><samp style='width:" + blscoreApercent + "%'><mark></mark></samp></span>"
+					+ "<var class='lboFocusB'>" + blscoreBpercent + "%</var>"
+				+ "</aside>"
+			+ "</article>";
+		}
+		html += "</section>";
+		
+		lb.append(html);
+		I.qTip.init(lb.find("aside"));
+		
+		if (O.Options.bol_condenseLeaderboard)
+		{
+			W.toggleLeaderboardWidth();
+		}
+	},
+	
+	/*
+	 * Inserts a limited matchup/tier scoreboard into the leaderboard.
+	 * @param object pData from matches API.
+	 * @param jqobject pContainer to insert the scoreboard in, optional.
+	 */
+	insertScoreboardFallback: function(pData, pContainer)
+	{
+		/*
+		 * Collate objective points from each borderlands.
+		 */
+		var map, obj, apiobj, landprefix;
+		var value;
+		var numowners = W.Metadata.Owners.length;
+		var tier = W.getMatchupTierFallback(pData);
+		var PPT = {};
+		var wantserver = true;
+		// Initialize variables for the temp object
+		for (var i in W.Metadata.Owners)
+		{
+			var owner = W.Metadata.Owners[i];
+			PPT[owner] = {};
+			(PPT[owner]).Total = 0;
+			(PPT[owner])[W.LandEnum.GreenHome] = 0;
+			(PPT[owner])[W.LandEnum.BlueHome] = 0;
+			(PPT[owner])[W.LandEnum.RedHome] = 0;
+			(PPT[owner])[W.LandEnum.Center] = 0;
+			for (var ii in W.Metadata.Owners) // The division of "native" land in EBG
+			{
+				(PPT[owner])[W.LandEnum.Center + (W.Metadata.Owners[ii])] = 0;
+			}
+		}
+		// Assign the values
+		for (var i in pData.maps)
+		{
+			map = pData.maps[i];
+			landprefix = W.Metadata.LandPrefix[map.type];
+			for (var ii in map.objectives)
+			{
+				apiobj = map.objectives[ii];
+				obj = W.Objectives[landprefix + apiobj.id];
+				owner = apiobj.owner;
+				value = W.getObjectiveTypeValue(obj.type);
+				if (owner !== W.OwnerEnum.Neutral)
+				{
+					(PPT[owner]).Total += value;
+					(PPT[owner])[obj.map_type] += value;
+					if (obj.map_type === W.LandEnum.Center)
+					{
+						// Example: In EBG, Red took objectives that were natively owned by Green's side, such as Lowlands
+						(PPT[owner])[W.LandEnum.Center + obj.nativeowner] += value;
+					}
+				}
+			}
+		}
+		
+		/*
+		 * Decide appropriate container to insert the scoreboard.
+		 */
+		var lb;
+		if (pContainer === undefined)
+		{
+			lb = $("#lboCurrent");
+			lb.empty();
+			if (I.ModeCurrent === I.ModeEnum.Overlay || I.isProgramEmbedded)
+			{
+				wantserver = false;
+			}
+		}
+		else
+		{
+			lb = pContainer;
+		}
+		var html = "<section>";
+		for (var i = 0; i < numowners; i++)
+		{
+			/*
+			 * Prepare variables to be inserted into the HTML.
+			 */
+			var owner = W.Metadata.Owners[i]; // Example: "Green" as in data
+			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
+			var ownerindex = W.Metadata.ScoreAssociation[owner]; // Example: 0
+			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
+			var serverid = W.ServersCurrent[ownerkey];
+			var servername = U.escapeHTML(D.getObjectName(W.Servers[serverid]));
+			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
+				+ "<aside class='lboName'>&nbsp;" + servername + "</aside>" : "";
+			var score = pData.scores[ownerindex];
+			var scorehighest = (T.getMinMax(pData.scores)).max;
+			var scorepercent = (pData.scores[ownerindex] / scorehighest) * T.cPERCENT_100;
+			var ppttotal = (PPT[owner]).Total;
+			var pptpercent = (ppttotal / W.getTotalPPTPossible()) * T.cPERCENT_100;
+			
+			/*
+			 * Server Focus is PPT from ownership of non-native objectives (including EBG).
+			 */
+			var focuses = [];
+			var scoredifferences = [];
+			var otherservers = [];
+			for (var ii = 0; ii < numowners; ii++)
+			{
+				var otherowner = W.Metadata.Owners[ii];
+				var otherownerkey = otherowner.toLowerCase();
+				var otherownerindex = W.Metadata.ScoreAssociation[otherowner];
+				if (otherowner !== owner)
+				{
+					var focus = (PPT[owner])[otherowner + "Home"] + (PPT[owner])[W.LandEnum.Center + otherowner];
+					focuses.push(focus);
+					var difference = score - pData.scores[otherownerindex];
+					scoredifferences.push(difference);
+					var otherserver = W.Servers[(W.ServersCurrent[otherownerkey])];
+					otherservers.push(U.escapeHTML(D.getObjectName(otherserver)));
+				}
+			}
+			var totalfocus = (focuses[0] + focuses[1]);
+			var focusApercent, focusBpercent;
+			var focusclass = "";
+			if (totalfocus > 0)
+			{
+				focusApercent = Math.round((focuses[0] / totalfocus) * T.cPERCENT_100);
+				focusBpercent = Math.round((focuses[1] / totalfocus) * T.cPERCENT_100);
+			}
+			else
+			{
+				focusApercent = 0;
+				focusBpercent = 0;
+				focusclass = "lboFocusZero";
+			}
+			
+			/*
+			 * Borderlands Focus is score from non-native borderlands (excluding EBG).
+			 */
+			var blscoreA, blscoreB;
+			for (var ii in pData.maps)
+			{
+				var map = pData.maps[ii];
+				switch (map.type)
+				{
+					case ((W.Metadata.Opposites[owner])[0] + "Home"): blscoreA = map.scores[otherownerindex]; break;
+					case ((W.Metadata.Opposites[owner])[1] + "Home"): blscoreB = map.scores[otherownerindex]; break;
+				}
+			}
+			var totalblscore = blscoreA + blscoreB;
+			var blscoreApercent, blscoreBpercent;
+			var blscoreclass = "";
+			if (totalblscore > 0)
+			{
+				blscoreApercent = Math.round((blscoreA / totalblscore) * T.cPERCENT_100);
+				blscoreBpercent = Math.round((blscoreB / totalblscore) * T.cPERCENT_100);
+			}
+			else
+			{
+				blscoreApercent = 0;
+				blscoreBpercent = 0;
+				blscoreclass = "lboFocusZero";
+			}
+			
+			
+			/*
+			 * Write the HTML.
+			 */
+			html += "<article class='lboServer" + owner + "'>"
+				+ serverstr
+				+ "<aside class='lboScore' title='<dfn>" + scoredifferences[0] + " points</dfn> away from " + otherservers[0]
+				+ "<br /><dfn>" + scoredifferences[1] + " points</dfn> away from " + otherservers[1] + "'>"
+					+ "<var>" + score.toLocaleString() + "</var>"
+					+ "<span><samp style='width:" + scorepercent + "%'></samp></span>"
+				+ "</aside>"
+				+ "<aside class='lboPPT' title='<dfn>Points-Per-Tick (PPT)</dfn>'>"
+					+ "<span><samp style='width:" + pptpercent + "%'></samp></span>"
+					+ "<var>+" + ppttotal + "</var>"
+				+ "</aside>"
+				+ "<aside class='lboLand' title='<dfn>PPT per borderlands</dfn>'>"
+					+ "<var class='lboPPTGreen'>+" + (PPT[owner])[W.LandEnum.GreenHome] + "</var>"
+					+ "<var class='lboPPTBlue'>+" + (PPT[owner])[W.LandEnum.BlueHome] + "</var>"
+					+ "<var class='lboPPTRed'>+" + (PPT[owner])[W.LandEnum.RedHome] + "</var>"
+					+ "<var class='lboPPTCenter'>+" + (PPT[owner])[W.LandEnum.Center] + "</var>"
+				+ "</aside>"
+				+ "<aside class='lboFocus lboFocus" + owner + "' title='<dfn>Server Focus (PPT Now)</dfn><br />"
+						+ "<dfn>" + focuses[0] + " PPT</dfn> earnable from " + otherservers[0] + " native objectives<br />"
+						+ "<dfn>" + focuses[1] + " PPT</dfn> earnable from " + otherservers[1] + " native objectives'>"
+					+ "<var class='lboFocusA'>" + focusApercent + "%</var>"
+					+ "<span class='" + focusclass + "'><samp style='width:" + focusApercent + "%'><mark></mark></samp></span>"
+					+ "<var class='lboFocusB'>" + focusBpercent + "%</var>"
+				+ "</aside>"
 				+ "<aside class='lboFocus lboFocus" + owner + "' title='<dfn>Server Focus (Points Matchup)</dfn><br />"
 						+ "<dfn>" + blscoreA + " points</dfn> earned from " + otherservers[0] + " Borderlands<br />"
 						+ "<dfn>" + blscoreB + " points</dfn> earned from " + otherservers[1] + " Borderlands'>"
@@ -14393,6 +14600,7 @@ W = {
 		}
 		W.LocaleCurrent = (O.Options.enu_Server >= W.LocaleThreshold.Europe)
 			? W.LocaleEnum.Europe : W.LocaleEnum.Americas;
+		W.MatchupIDCurrent = null;
 		W.MatchFinishTime = null;
 		W.ServersCurrent = null;
 		$(".objUmbrellaContainer").hide();
@@ -14412,7 +14620,7 @@ W = {
 	 */
 	updateObjectives: function()
 	{
-		var msec = (new Date()).getTime();
+		var nowmsec = (new Date()).getTime();
 		if (W.isFallbackEnabled)
 		{
 			W.updateObjectivesFallback();
@@ -14420,19 +14628,20 @@ W = {
 		
 		$.ajax({
 			dataType: "json",
-			url: U.URL_API.Match + O.Options.enu_Server,
+			url: U.URL_API.Match + "asdf" +  O.Options.enu_Server,
 			cache: false, // Prevents keeping stale data
 			success: function(pData)
 		{
-			var obj, apiobj;
+			var map, obj, apiobj;
 			var numobjflipped = 0;
 			var maxobjflipped = 12;
 			var istoomanyflips = false;
 			for (var i in pData.maps)
 			{
-				for (var ii in (pData.maps[i]).objectives)
+				map = pData.maps[i];
+				for (var ii in map.objectives)
 				{
-					apiobj = (pData.maps[i]).objectives[ii];
+					apiobj = map.objectives[ii];
 					obj = W.Objectives[apiobj.id];
 					/*
 					 * Only update the objectives if they have changed server ownership.
@@ -14456,7 +14665,7 @@ W = {
 						$("#objClaim_" + obj.id).empty();
 						
 						// Mark the objective as immune if it is recently captured
-						if ((msec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY
+						if ((nowmsec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY
 								&& obj.owner !== W.OwnerEnum.Neutral) // If it is owned by Neutral (no immunity) then it is WvW reset
 						{
 							W.Objectives[obj.id].isImmune = true;
@@ -14490,7 +14699,7 @@ W = {
 			if (W.MatchFinishTime !== pData.end_time)
 			{
 				W.MatchFinishTime = pData.end_time;
-				W.secTillWvWReset = ~~(((new Date(W.MatchFinishTime)).getTime() - msec) / T.cMILLISECONDS_IN_SECOND);
+				W.secTillWvWReset = ~~(((new Date(W.MatchFinishTime)).getTime() - nowmsec) / T.cMILLISECONDS_IN_SECOND);
 				W.MatchupIDCurrent = pData.id;
 				W.ServersCurrent = pData.worlds;
 				W.updateParticipants();
@@ -14519,40 +14728,149 @@ W = {
 			}
 		}}).fail(function()
 		{
-			W.numFailedAPICalls++;
-			if (W.numFailedAPICalls > 10)
+			if (W.isFallbackEnabled === false)
 			{
-				W.isFallbackEnabled = true;
-				I.write("Too many failed API retrievals. Switching to fallback API server...", 0);
-			}
-			else
-			{
-				if (W.isAPIFailed === false)
+				W.numFailedAPICalls++;
+				if (W.numFailedAPICalls > 1)
 				{
-					W.isAPIFailed = true;
-					// If failed near reset then tell so, otherwise generic error
-					var errormessage = (W.secTillWvWReset !== null && W.secTillWvWReset < 10 * T.cSECONDS_IN_MINUTE)
-						? "WvW reset is happening soon." : "Waiting for ArenaNet API servers...";
-					I.write("Unable to retrieve WvW data during " + T.getTimeFormatted() + ".<br />" + errormessage, 0);
+					W.isFallbackEnabled = true;
+					W.updateObjectives();
+					I.write("Too many failed API retrievals. Switching to fallback API server...", 0);
+				}
+				else
+				{
+					if (W.isAPIFailed === false)
+					{
+						W.isAPIFailed = true;
+						// If failed near reset then tell so, otherwise generic error
+						var errormessage = (W.secTillWvWReset !== null && W.secTillWvWReset < 10 * T.cSECONDS_IN_MINUTE)
+							? "WvW reset is happening soon." : "Waiting for ArenaNet API servers...";
+						I.write("Unable to retrieve WvW data during " + T.getTimeFormatted() + ".<br />" + errormessage, 0);
+					}
 				}
 			}
 		});
 	},
 	
 	/*
-	 * Uses the v1 API to get objectives state.
+	 * Uses the v1 API to get objectives state. Reconstructs data as v2 API
+	 * style objects so they can be reused.
 	 */
 	updateObjectivesFallback: function()
 	{
-		$.ajax({
-			dataType: "json",
-			url: U.URL_API.MatchFallback + O.Options.enu_Server,
-			cache: false, // Prevents keeping stale data
-			success: function(pData)
+		I.log("fallback");
+		var now = new Date();
+		var nowiso = now.toISOString();
+		var nowmsec = now.getTime();
+		// First find the matchup for the selected server
+		if (W.MatchupIDCurrent === null)
+		{
+			I.log("null");
+			$.ajax({
+				dataType: "json",
+				url: U.URL_API.MatchesFallback,
+				cache: false,
+				success: function(pData)
+				{
+					I.log("fallback success matches");
+					for (var i in pData.wvw_matches)
+					{
+						var match = pData.wvw_matches[i];
+						var serverid = parseInt(O.Options.enu_Server);
+						// Execute this function again now that the match ID is found
+						if (match.red_world_id === serverid
+							|| match.blue_world_id === serverid
+							|| match.green_world_id === serverid)
+						{
+							W.MatchupIDCurrent = match.wvw_match_id;
+							W.MatchFinishTime = match.end_time;
+							W.secTillWvWReset = ~~(((new Date(W.MatchFinishTime)).getTime() - nowmsec) / T.cMILLISECONDS_IN_SECOND);
+							// Duplicate the structure the v2 matches API "worlds" subobject
+							W.ServersCurrent = {
+								red: match.red_world_id,
+								blue: match.blue_world_id,
+								green: match.green_world_id
+							};
+							W.updateParticipants();
+							W.updateObjectivesFallback();
+							break;
+						}
+					}
+				}
+			}).fail(function()
 			{
-				
-			}
-		});
+				I.log("failed fallback");
+			});
+		}
+		else
+		{
+			I.log("not null");
+			$.ajax({
+				dataType: "json",
+				url: U.URL_API.MatchFallback + W.MatchupIDCurrent,
+				cache: false,
+				success: function(pData)
+				{
+					I.log("fallback success update");
+					var map, obj, apiobj, landprefix;
+					var pastfar = new Date(nowmsec - W.cMILLISECONDS_IMMUNITY);
+					var pastnear = new Date(nowmsec - (O.Options.int_secWvWRefresh * T.cMILLISECONDS_IN_SECOND));
+					for (var i in pData.maps)
+					{
+						map = pData.maps[i];
+						landprefix = W.Metadata.LandPrefix[map.type];
+						for (var ii in map.objectives)
+						{
+							apiobj = map.objectives[ii];
+							obj = W.Objectives[landprefix + apiobj.id];
+							/*
+							 * Only update the objectives if they have changed server ownership.
+							 */
+							var past = (obj.owner === null) ? pastfar : pastnear;
+							if (obj.owner !== apiobj.owner)
+							{
+								// Reinitialize properties
+								obj.last_flipped = past.toISOString();
+								obj.last_flipped_msec = past.getTime();
+								obj.prevowner = obj.owner;
+								obj.owner = apiobj.owner;
+								W.updateObjectiveIcon(obj);
+								W.updateObjectiveAge(obj);
+								W.updateObjectiveTooltip(obj);
+
+								// Claiming is reset upon ownership change
+								$("#objClaim_" + obj.id).empty();
+
+								// Mark the objective as immune if it is recently captured
+								if ((nowmsec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY
+										&& obj.owner !== W.OwnerEnum.Neutral) // If it is owned by Neutral (no immunity) then it is WvW reset
+								{
+									W.Objectives[obj.id].isImmune = true;
+									$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
+								}
+							}
+							/*
+							 * Only update guild tag labels if claiming has changed.
+							 */
+							if (apiobj.owner_guild !== undefined
+								&& obj.claimed_by !== apiobj.owner_guild)
+							{
+								obj.prevclaimed_by = obj.claimed_by;
+								obj.claimed_by = apiobj.owner_guild;
+								obj.claimed_at = nowiso;
+								W.updateObjectiveClaim(obj);
+							}
+						}
+					}
+
+					// Update scoreboard
+					if (O.Options.bol_showLeaderboard)
+					{
+						W.insertScoreboardFallback(pData);
+					}
+				}
+			});
+		}
 	},
 	
 	/*
