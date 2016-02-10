@@ -1957,7 +1957,7 @@ var GW2T_WVW_METADATA = {
 		alpineblue: [0, 0]
 	},
 	Blueprints: ["Basic", "Superior", "Guild"], // Blueprint grades
-	Matches: {
+	MatchIDs: {
 		Americas: ["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"],
 		Europe:   ["2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9"]
 	},
@@ -1984,11 +1984,6 @@ var GW2T_WVW_METADATA = {
 		GreenHome: "1102-",
 		BlueHome: "1143-",
 		Center: "38-"
-	},
-	ScoreAssociation: { // For getting the score from v1 API, which is in an array
-		Red: 0,
-		Green: 2,
-		Blue: 1
 	},
 	ObjectiveEnum: {
 		Camp: "Camp",

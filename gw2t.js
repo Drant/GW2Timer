@@ -1610,7 +1610,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				U.URL_API.Match = args[1];
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -13186,8 +13186,9 @@ W = {
 	},
 	isWvWLoaded: false,
 	Metadata: {},
-	Servers: {},
-	ServersCurrent: null, // Sample structure - ServersCurrent: { "red": 1019, "blue": 1008, "green": 1003 },
+	Servers: {}, // Server names and translations
+	Matches: null, // For fallback API, array containing objects with same structure as "worlds" subobject in matches.json
+	MatchupCurrent: null, // Example: { "red": 1019, "blue": 1008, "green": 1003 }
 	Objectives: {},
 	ObjectiveTimeout: {},
 	Weapons: {},
@@ -13472,7 +13473,7 @@ W = {
 	 */
 	getServerFromOwner: function(pOwner)
 	{
-		var serverid = W.ServersCurrent[pOwner.toLowerCase()];
+		var serverid = W.MatchupCurrent[pOwner.toLowerCase()];
 		// Neutral owner
 		if (serverid === undefined)
 		{
@@ -13490,7 +13491,7 @@ W = {
 	 */
 	getBorderlandsString: function(pServer, pFullServer, pFullBorderlands)
 	{
-		var server = (typeof pServer === "string") ? W.Servers[W.ServersCurrent[pServer]] : pServer;
+		var server = (typeof pServer === "string") ? W.Servers[W.MatchupCurrent[pServer]] : pServer;
 		var serverstr, blstr;
 		
 		// If the server is actually an objective object
@@ -13505,7 +13506,7 @@ W = {
 			}
 			else
 			{
-				server = W.Servers[(W.ServersCurrent[land])];
+				server = W.Servers[(W.MatchupCurrent[land])];
 			}
 		}
 		
@@ -13654,37 +13655,40 @@ W = {
 			return;
 		}
 		
-		var matches = W.Metadata.Matches[W.LocaleCurrent];
+		var matchids = W.Metadata.MatchIDs[W.LocaleCurrent];
 		// Gather data for all matches for current server region
-		for (var i in matches)
+		for (var i in matchids)
 		{
-			var match = matches[i];
-			var htmlid = "lboOther_" + match;
+			var matchid = matchids[i];
+			var url = (W.isFallbackEnabled) ? (U.URL_API.MatchFallback + matchid) : (U.URL_API.Matches + matchid);
+			var htmlid = "lboOther_" + matchid;
 			
 			// Skip the current matchup because it is already shown
-			if (match === W.MatchupIDCurrent)
+			if (matchid === W.MatchupIDCurrent)
 			{
 				continue;
 			}
 			lb.append("<div id='" + htmlid + "'></div>");
-			(function(pID)
+			(function(pID, pMatchID)
 			{
-				$.getJSON(U.URL_API.Matches + match, function(pData)
+				$.getJSON(url, function(pData)
 				{
-					W.insertScoreboard(pData, $("#" + pID));
+					var ithmatch = (W.isFallbackEnabled) ? W.Matches[pMatchID] : pData.worlds;
+					W.insertScoreboard(pData, ithmatch, $("#" + pID));
 					W.readjustLeaderboard();
 					I.updateScrollbar("#lboOther");
 				});
-			})(htmlid);
+			})(htmlid, matchid);
 		}
 	},
 	
 	/*
 	 * Inserts a matchup/tier scoreboard into the leaderboard.
 	 * @param object pData from matches API.
+	 * @param object pMatchup from matches API.
 	 * @param jqobject pContainer to insert the scoreboard in, optional.
 	 */
-	insertScoreboard: function(pData, pContainer)
+	insertScoreboard: function(pData, pMatchup, pContainer)
 	{
 		// Converts a v1 style "scores" array to v2 style object if using fallback
 		var convertScores = function(pScores)
@@ -13695,7 +13699,7 @@ W = {
 					red: pScores[0],
 					blue: pScores[1],
 					green: pScores[2]
-				}
+				};
 			}
 			return pScores;
 		};
@@ -13703,6 +13707,7 @@ W = {
 		/*
 		 * Collate objective points from each borderlands.
 		 */
+		pMatchup = pMatchup || W.MatchupCurrent;
 		var map, obj, apiobj, landprefix, objid;
 		var land, value, nativeowner;
 		var numowners = W.Metadata.Owners.length;
@@ -13778,7 +13783,7 @@ W = {
 			var owner = W.Metadata.Owners[i]; // Example: "Green" as in data
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
-			var serverid = W.ServersCurrent[ownerkey];
+			var serverid = pMatchup[ownerkey];
 			var servername = U.escapeHTML(D.getObjectName(W.Servers[serverid]));
 			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
 				+ "<aside class='lboName'>&nbsp;" + servername + "</aside>" : "";
@@ -13817,7 +13822,7 @@ W = {
 					focuses.push(focus);
 					var difference = score - scores[otherownerkey];
 					scoredifferences.push(difference);
-					var otherserver = W.Servers[(W.ServersCurrent[otherownerkey])];
+					var otherserver = W.Servers[(pMatchup[otherownerkey])];
 					otherservers.push(U.escapeHTML(D.getObjectName(otherserver)));
 				}
 			}
@@ -14357,14 +14362,14 @@ W = {
 	 */
 	updateParticipants: function()
 	{
-		if (W.ServersCurrent !== null)
+		if (W.MatchupCurrent !== null)
 		{
-			var redserver = W.Servers[W.ServersCurrent["red"]];
-			var greenserver = W.Servers[W.ServersCurrent["green"]];
-			var blueserver = W.Servers[W.ServersCurrent["blue"]];
-			for (var i in W.ServersCurrent)
+			var redserver = W.Servers[W.MatchupCurrent["red"]];
+			var greenserver = W.Servers[W.MatchupCurrent["green"]];
+			var blueserver = W.Servers[W.MatchupCurrent["blue"]];
+			for (var i in W.MatchupCurrent)
 			{
-				if (W.ServersCurrent[i] === O.Options.enu_Server)
+				if (W.MatchupCurrent[i] === O.Options.enu_Server)
 				{
 					W.OwnerCurrent = U.toFirstUpperCase((i).toString());
 				}
@@ -14415,7 +14420,7 @@ W = {
 			? W.LocaleEnum.Europe : W.LocaleEnum.Americas;
 		W.MatchupIDCurrent = null;
 		W.MatchFinishTime = null;
-		W.ServersCurrent = null;
+		W.MatchupCurrent = null;
 		$(".objUmbrellaContainer").hide();
 		$(".objTimer").empty();
 		$(".objProgressBar").hide();
@@ -14453,7 +14458,7 @@ W = {
 		// Attempt to retrieve objectives data
 		$.ajax({
 			dataType: "json",
-			url: U.URL_API.Match +  O.Options.enu_Server,
+			url: U.URL_API.Match + O.Options.enu_Server,
 			cache: false, // Prevents keeping stale data
 			success: function(pData)
 		{
@@ -14533,7 +14538,7 @@ W = {
 				W.MatchFinishTime = pData.end_time;
 				W.secTillWvWReset = ~~(((new Date(W.MatchFinishTime)).getTime() - nowmsec) / T.cMILLISECONDS_IN_SECOND);
 				W.MatchupIDCurrent = pData.id;
-				W.ServersCurrent = pData.worlds;
+				W.MatchupCurrent = pData.worlds;
 				W.updateParticipants();
 			}
 			
@@ -14582,6 +14587,20 @@ W = {
 	},
 	
 	/*
+	 * Converts a v1 API matches.json match object to a v2 API worlds object.
+	 * @param object pMatch.
+	 * @returns object worlds.
+	 */
+	convertMatchup: function(pMatch)
+	{
+		return {
+			red: pMatch.red_world_id,
+			blue: pMatch.blue_world_id,
+			green: pMatch.green_world_id
+		};
+	},
+	
+	/*
 	 * Uses the v1 API to get objectives state. Reconstructs data as v2 API
 	 * style objects so they can be reused.
 	 */
@@ -14591,7 +14610,7 @@ W = {
 		var nowiso = now.toISOString();
 		var nowmsec = now.getTime();
 		// First find the matchup for the selected server
-		if (W.MatchupIDCurrent === null)
+		if (W.MatchupIDCurrent === null || W.Matches === null)
 		{
 			$.ajax({
 				dataType: "json",
@@ -14603,10 +14622,12 @@ W = {
 					{
 						return;
 					}
+					W.Matches = {};
 					for (var i in pData.wvw_matches)
 					{
 						var match = pData.wvw_matches[i];
 						var serverid = parseInt(O.Options.enu_Server);
+						W.Matches[match.wvw_match_id] = W.convertMatchup(match);
 						// Execute this function again now that the match ID is found
 						if (match.red_world_id === serverid
 							|| match.blue_world_id === serverid
@@ -14616,14 +14637,9 @@ W = {
 							W.MatchFinishTime = match.end_time;
 							W.secTillWvWReset = ~~(((new Date(W.MatchFinishTime)).getTime() - nowmsec) / T.cMILLISECONDS_IN_SECOND);
 							// Duplicate the structure the v2 matches API "worlds" subobject
-							W.ServersCurrent = {
-								red: match.red_world_id,
-								blue: match.blue_world_id,
-								green: match.green_world_id
-							};
+							W.MatchupCurrent = W.Matches[W.MatchupIDCurrent];
 							W.updateParticipants();
 							W.updateObjectivesFallback();
-							break;
 						}
 					}
 				}
@@ -18554,7 +18570,7 @@ I = {
 			// Automatically reload the asynchronous voices
 			window.speechSynthesis.onvoiceschanged = function()
 			{
-				var voices = window.speechSynthesis.getVoices();
+				window.speechSynthesis.getVoices();
 			};
 		}
 		
