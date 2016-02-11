@@ -1193,7 +1193,7 @@ Vendor:
 		Derwena: { id: "49753", price: "25200" },
 		Yana: { id: "49768", price: "25200" },
 		Katyn: { id: "43818", price: "25200" },
-		Verma: { id: "48919", price: "12600" }
+		Verma: { id: "48919", price: "25200" }
 	}
 }
 };
