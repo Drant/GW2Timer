@@ -372,15 +372,11 @@ dt.jpzListNameHover {
 	text-decoration: none;
 }
 #gldButtons button {
-	width: auto;
+	width: 48px; height: 48px;
 	padding: 0;
 }
 #gldButtons button:active {
 	opacity: 0.8;
-}
-#gldButtons button img {
-	width: 48px; height: 48px;
-	border-radius: 2px;
 }
 
 #gldInfluence input[type="text"] {

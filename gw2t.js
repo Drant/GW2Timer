@@ -25,7 +25,8 @@
 	~~ operator (reverse bits twice) is shorthand for parseInt and is used in integer division
 	Functions that are repeated in milliseconds should use core JS instead of jQuery
 	Arguments in double quotes: $("argument"), single quotes for HTML generation
-	Parameters are camel case and starts with "p": function(pExampleParameter)
+	Parameters are camel case and start with "p": function(pExampleParameter)
+	Parameters inside loops start with "i": forEach(function(iExampleParameter){})
 	CSS classes and IDs are named like instance variables: exampleID
 	Allman indentation (braces align vertically) unless it is repetitive code
 	4 space-size tabs, you are free to Replace All tab characters with spaces
@@ -863,13 +864,13 @@ O = {
 		// The Enact object has functions with the same name as the Options variables
 		for (i in O.Enact)
 		{
-			(function(pFunction){
+			(function(iFunction){
 				var query;
-				var htmlid = O.prefixOption + pFunction;
+				var htmlid = O.prefixOption + iFunction;
 				var thisinputtype = $("#" + htmlid).attr("type");
 				if (thisinputtype === "radio")
 				{
-					query = "fieldset[name=" + pFunction + "]";
+					query = "fieldset[name=" + iFunction + "]";
 				}
 				else
 				{
@@ -878,7 +879,7 @@ O = {
 				
 				$(query).change(function()
 				{
-					O.Enact[pFunction]();
+					O.Enact[iFunction]();
 				});
 			})(i);
 		}
@@ -2678,7 +2679,7 @@ A = {
 	},
 	
 	/*
-	 * Gets an API URL to retrieve account data.
+	 * Gets an authenticated API URL to retrieve account data.
 	 * @param enum pSuffix type of account data.
 	 * @returns string.
 	 * @pre Token for use (API key) variable was initialized.
@@ -2694,10 +2695,31 @@ A = {
 	 */
 	initializeAccount: function()
 	{
+		// Add new words to the dictionary
+		D.addDictionary(GW2T_ACCOUNT_DICTIONARY);
+		
 		// Initialize common UI
 		var panel = $("#panelAccount");
 		I.initializeScrollbar(panel);
 		U.convertExternalLink("#accHelp a");
+		var menu = $("#accMenu");
+		for (var i in I.SectionEnum.Account)
+		{
+			var sectionname = I.SectionEnum.Account[i];
+			var sectionnamelow = sectionname.toLowerCase();
+			var menubutton = $("<li id='accMenu" + sectionname + "' class='curClick'><img src='img/ui/account/"
+				+ sectionnamelow + ".png' />" + sectionname + "</li>");
+			menu.append(menubutton);
+			(function(iButton, iSection)
+			{
+				iButton.click(function()
+				{
+					$("#accContent section").hide();
+					$("#accPlate" + iSection).show();
+				});
+				I.bindListHover(iButton);
+			})(menubutton, sectionname);
+		}
 		
 		// Bind the window buttons
 		$("#accExpand").click(function()
@@ -2890,8 +2912,8 @@ A = {
 		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
 		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
-		var use = $("<button class='accTokenUse' title='Use this key.'><img src='img/ui/check.png' /></button>").appendTo(buttons);
-		var del = $("<button class='accTokenDelete' title='Delete this key.'><img src='img/ui/default.png' /></button><br />").appendTo(buttons);
+		var use = $("<button class='accTokenUse'><img src='img/ui/check.png' /></button>").appendTo(buttons);
+		var del = $("<button class='accTokenDelete'><img src='img/ui/default.png' /></button><br />").appendTo(buttons);
 		
 		// Use the token if specified
 		if (pIsUsed !== undefined && pIsUsed === true)
@@ -3435,17 +3457,17 @@ X = {
 	{
 		X.initializeChecklist(pChecklist, pCheckboxes.length, null, pJob);
 		
-		pCheckboxes.each(function(pIndex)
+		pCheckboxes.each(function(iIndex)
 		{
 			$(this).change(function()
 			{
 				var state = X.getCheckboxEnumState($(this));
 				
-				X.setChecklistItem(pChecklist, pIndex, state);
+				X.setChecklistItem(pChecklist, iIndex, state);
 			});
 			
 			// Now that this checkbox is bound, trigger it as the state in checklist
-			X.triggerCheckboxEnumState(pChecklist, pIndex, $(this));
+			X.triggerCheckboxEnumState(pChecklist, iIndex, $(this));
 		});
 	},
 	
@@ -3501,25 +3523,25 @@ X = {
 		var updateStoredText = function()
 		{
 			// Read every text fields and rewrite the string of substrings again
-			pTextFields.each(function(pIndex)
+			pTextFields.each(function(iIndex)
 			{
 				// Do not allow delimiter in the string to be stored
-				pTextlist.value[pIndex] = $(this).val().replace(I.cTextDelimiterRegex, "");
+				pTextlist.value[iIndex] = $(this).val().replace(I.cTextDelimiterRegex, "");
 			});
 			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
 		};
 		
 		// Bind text fields behavior
-		pTextFields.each(function(pIndex)
+		pTextFields.each(function(iIndex)
 		{
 			$(this).attr("maxlength", pMaxLength); // Set number of characters allowed in the text field
-			$(this).val(pTextlist.value[pIndex]); // Load initialized text
+			$(this).val(pTextlist.value[iIndex]); // Load initialized text
 			
 			$(this).change(function()
 			{
 				if (pFieldName)
 				{
-					I.write(pFieldName + " #" + (pIndex + 1) + " updated.");
+					I.write(pFieldName + " #" + (iIndex + 1) + " updated.");
 				}
 				updateStoredText();
 			});
@@ -3532,9 +3554,9 @@ X = {
 			{
 				if (confirm("Reset texts to default?"))
 				{
-					pTextFields.each(function(pIndex)
+					pTextFields.each(function(iIndex)
 					{
-						$(this).val(pTextlist.valueDefault[pIndex]).trigger("change");
+						$(this).val(pTextlist.valueDefault[iIndex]).trigger("change");
 					});
 				}
 			});
@@ -3806,15 +3828,15 @@ X = {
 		};
 		
 		// Update checkbox visual and do the calculation when clicked
-		$("#chlDungeon input").each(function(pIndex)
+		$("#chlDungeon input").each(function(iIndex)
 		{
 			// Bind checkbox behavior
 			$(this).change(function()
 			{
 				var state = X.getCheckboxEnumState($(this));
 				
-				X.setChecklistItem(X.Checklists.Dungeon, pIndex, state);
-				X.styleCheckbox(X.Checklists.Dungeon, pIndex, $(this));
+				X.setChecklistItem(X.Checklists.Dungeon, iIndex, state);
+				X.styleCheckbox(X.Checklists.Dungeon, iIndex, $(this));
 				
 				// Sum the checkbox's path money
 				var calc = $("#chlDungeonCalculator");
@@ -3845,7 +3867,7 @@ X = {
 			});
 		});
 		// Double click a label (which wraps an input tag) to en/disable the checkbox
-		$("#chlDungeon label").each(function(pIndex)
+		$("#chlDungeon label").each(function(iIndex)
 		{
 			$(this).dblclick(function()
 			{
@@ -3868,28 +3890,28 @@ X = {
 				{
 					checkbox.prop("disabled", false);
 				}
-				X.setChecklistItem(X.Checklists.Dungeon, pIndex, X.getCheckboxEnumState(checkbox));
-				X.styleCheckbox(X.Checklists.Dungeon, pIndex, checkbox);
+				X.setChecklistItem(X.Checklists.Dungeon, iIndex, X.getCheckboxEnumState(checkbox));
+				X.styleCheckbox(X.Checklists.Dungeon, iIndex, checkbox);
 			});
 		});
 		
 		// Restore checklist state from stored by triggering the checkboxes (behaviors already bound)
-		$("#chlDungeon input").each(function(pIndex)
+		$("#chlDungeon input").each(function(iIndex)
 		{
-			X.triggerCheckboxEnumState(X.Checklists.Dungeon, pIndex, $(this));
+			X.triggerCheckboxEnumState(X.Checklists.Dungeon, iIndex, $(this));
 		});
 		
 		// Bind uncheck all button
 		$("#chlDungeonUncheck").click(function()
 		{
 			X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
-			$("#chlDungeon input").each(function(pIndex)
+			$("#chlDungeon input").each(function(iIndex)
 			{
 				if ($(this).prop("checked") === true)
 				{
 					$(this).trigger("click");
 				};
-				X.styleCheckbox(X.Checklists.Dungeon, pIndex, $(this));
+				X.styleCheckbox(X.Checklists.Dungeon, iIndex, $(this));
 			});
 		});
 	},
@@ -3925,14 +3947,14 @@ X = {
 			var checkboxes = $("#chlCustomList" + pListName + " input:checkbox");
 			X.initializeChecklist(pChecklist, checkboxes.length);
 
-			checkboxes.each(function(pIndex)
+			checkboxes.each(function(iIndex)
 			{
 				$(this).change(function()
 				{
 					var state = X.getCheckboxEnumState($(this));
 
-					X.setChecklistItem(pChecklist, pIndex, state);
-					X.styleCheckbox(pChecklist, pIndex, $(this));
+					X.setChecklistItem(pChecklist, iIndex, state);
+					X.styleCheckbox(pChecklist, iIndex, $(this));
 
 					if (state === X.ChecklistEnum.Checked)
 					{
@@ -3945,20 +3967,20 @@ X = {
 				});
 
 				// Now that this checkbox is bound, trigger it as the state in checklist
-				X.triggerCheckboxEnumState(pChecklist, pIndex, $(this));
+				X.triggerCheckboxEnumState(pChecklist, iIndex, $(this));
 			});
 
 			// Bind uncheck all button
 			$("#chlCustomUncheck" + pListName).click(function()
 			{
 				X.clearChecklist(pChecklist, X.ChecklistJob.UncheckTheChecked);
-				$("#chlCustomList" + pListName + " input:checkbox").each(function(pIndex)
+				$("#chlCustomList" + pListName + " input:checkbox").each(function(iIndex)
 				{
 					if ($(this).prop("checked"))
 					{
 						$(this).trigger("click");
 					};
-					X.styleCheckbox(pChecklist, pIndex, $(this));
+					X.styleCheckbox(pChecklist, iIndex, $(this));
 				});
 			});
 
@@ -3993,12 +4015,12 @@ X = {
 	initializeNotepad: function()
 	{
 		// Numbered buttons' behavior
-		$("#chlNotepadButtons button").each(function(pIndex)
+		$("#chlNotepadButtons button").each(function(iIndex)
 		{
 			$(this).click(function()
 			{
 				// Show selected number's sheet
-				$("#chlNotepadSheets textarea").hide().eq(pIndex).show()
+				$("#chlNotepadSheets textarea").hide().eq(iIndex).show()
 					.css({opacity: 0.5}).animate({opacity: 1}, 400);
 				$("#chlNotepadButtons button").removeClass("btnFocused");
 				$(this).addClass("btnFocused");
@@ -5822,6 +5844,19 @@ D = {
 	},
 	
 	/*
+	 * Adds new words to the dictionary from an object of the same structure.
+	 * Note that the words have to be unique from the ones here.
+	 * @param object pDictionary.
+	 */
+	addDictionary: function(pDictionary)
+	{
+		for (var i in pDictionary)
+		{
+			D.Dictionary[i] = pDictionary[i];
+		}
+	},
+	
+	/*
 	 * Gets a dictionary entry translated based on the opted language.
 	 * @param string pText text to translate without spaces.
 	 * @returns string translated text.
@@ -6205,9 +6240,9 @@ D = {
 			 * just set only the lang property and have the voice set automatically.
 			 */
 			//msg.lang = O.LanguageCode[O.Options.enu_Language];
-			msg.voice = window.speechSynthesis.getVoices().filter(function(pVoice)
+			msg.voice = window.speechSynthesis.getVoices().filter(function(iVoice)
 			{
-				return pVoice.name === O.VoiceCode[O.Options.enu_Language];
+				return iVoice.name === O.VoiceCode[O.Options.enu_Language];
 			})[0];
 			msg.volume = volume;
 			msg.rate = 0.8;
@@ -7471,12 +7506,12 @@ C = {
 			if (wait >= elapsed)
 			{
 				wait = wait - elapsed;
-				setTimeout((function(pChain, pPrimaryEventIndex)
+				setTimeout((function(iChain, iPrimaryEventIndex)
 				{
 					// Have to use this clunky nesting else the timeout gets the last iterator
 					return function()
 					{
-						C.highlightEvents(pChain, pPrimaryEventIndex);
+						C.highlightEvents(iChain, iPrimaryEventIndex);
 					};
 				})(chain, parseInt(i)), wait * T.cMILLISECONDS_IN_SECOND);
 			}
@@ -7487,11 +7522,11 @@ C = {
 		if (wait >= elapsed)
 		{
 			wait = wait - elapsed;
-			setTimeout((function(pChain)
+			setTimeout((function(iChain)
 			{
 				return function()
 				{
-					C.highlightEvents(pChain, -1);
+					C.highlightEvents(iChain, -1);
 				};
 			})(chain), wait * T.cMILLISECONDS_IN_SECOND);
 		}
@@ -8069,11 +8104,11 @@ M = {
 		this.Pin.Camera = this.createPin("img/map/pin_camera.png", [256,256], {clickable: false});
 		
 		// Bind pin click event to get coordinates in the coordinates bar
-		this.Layer.Pin.eachLayer(function(pMarker)
+		this.Layer.Pin.eachLayer(function(iMarker)
 		{
-			that.bindMarkerCoordBehavior(pMarker, "click");
-			that.bindMarkerZoomBehavior(pMarker, "contextmenu");
-			pMarker.on("dblclick", function()
+			that.bindMarkerCoordBehavior(iMarker, "click");
+			that.bindMarkerZoomBehavior(iMarker, "contextmenu");
+			iMarker.on("dblclick", function()
 			{
 				that.movePin(this);
 			});
@@ -8957,8 +8992,8 @@ M = {
 		var latlngs = [];
 		var i = 0;
 		// Recompile pin coordinates for recreation
-		this.Layer.PersonalPin.eachLayer(function(pPin) {
-			latlngs.push(pPin.getLatLng());
+		this.Layer.PersonalPin.eachLayer(function(iPin) {
+			latlngs.push(iPin.getLatLng());
 			if (i === pPrecede)
 			{
 				// When at the index to insert, push the provided coordinates of the new pin
@@ -8981,8 +9016,8 @@ M = {
 	clearPersonalPins: function()
 	{
 		var that = this;
-		this.Layer.PersonalPin.eachLayer(function(pPin) {
-			that.toggleLayer(pPin, false);
+		this.Layer.PersonalPin.eachLayer(function(iPin) {
+			that.toggleLayer(iPin, false);
 		});
 		this.Layer.PersonalPin.clearLayers();
 		this.drawPersonalPath();
@@ -9001,9 +9036,9 @@ M = {
 			var latlngs = [];
 			var pinids = [];
 			var length = 0;
-			this.Layer.PersonalPin.eachLayer(function(pPin) {
-				latlngs.push(pPin.getLatLng());
-				pinids.push(P.getLayerId(pPin));
+			this.Layer.PersonalPin.eachLayer(function(iPin) {
+				latlngs.push(iPin.getLatLng());
+				pinids.push(P.getLayerId(iPin));
 				length++;
 			});
 			if (length > 1)
@@ -9170,8 +9205,8 @@ M = {
 	{
 		var that = this;
 		var coords = [];
-		this.Layer.PersonalPin.eachLayer(function(pPin) {
-			coords.push(that.convertLCtoGC(pPin.getLatLng()));
+		this.Layer.PersonalPin.eachLayer(function(iPin) {
+			coords.push(that.convertLCtoGC(iPin.getLatLng()));
 		});
 		return coords;
 	},
@@ -9241,11 +9276,11 @@ M = {
 			{
 				weaponsmenu.append("<br />");
 			}
-			(function(pWeapon)
+			(function(iWeapon)
 			{
 				weaponbutton.click(function()
 				{
-					that.createWeapon(pWeapon, that.ContextLatLng);
+					that.createWeapon(iWeapon, that.ContextLatLng);
 				});
 			})(weapon);
 		}
@@ -9326,9 +9361,9 @@ M = {
 		weaponsmenu.append(exportbutton).append(importbutton).append(importtext);
 		
 		// Allow interaction with the inputs within the context menu
-		weaponsmenu.find("input").click(function(pEvent)
+		weaponsmenu.find("input").click(function(iEvent)
 		{
-			pEvent.stopPropagation();
+			iEvent.stopPropagation();
 		});
 		
 		// The menu entry to draw standard siege placement
@@ -12408,13 +12443,13 @@ G = {
 				 * Duplicate the behavior of JP checklist and zoom by mirroring the
 				 * action of clicking on the JP icon with the associated HTML element.
 				 */
-				(function(pIndex)
+				(function(iIndex)
 				{
 					// Click associated checkbox when clicked
-					var marker = P.LayerArray.JP[pIndex];
+					var marker = P.LayerArray.JP[iIndex];
 					marker.on("click", function()
 					{
-						$("#jpzCheck_" + pIndex).trigger("click");
+						$("#jpzCheck_" + iIndex).trigger("click");
 						I.scrollToElement("#jpz_" + this.options.id, "#plateMap");
 					});
 					M.bindMarkerZoomBehavior(marker, "contextmenu");
@@ -12463,15 +12498,15 @@ G = {
 		};
 		var refreshNodeState = function()
 		{
-			P.Layer.Chest.eachLayer(function(pMarker)
+			P.Layer.Chest.eachLayer(function(iMarker)
 			{
-				if (getNodeState(pMarker) === X.ChecklistEnum.Checked)
+				if (getNodeState(iMarker) === X.ChecklistEnum.Checked)
 				{
-					pMarker.setOpacity(opacityclicked);
+					iMarker.setOpacity(opacityclicked);
 				}
 				else
 				{
-					pMarker.setOpacity(1);
+					iMarker.setOpacity(1);
 				}
 			});
 		};
@@ -12788,9 +12823,9 @@ G = {
 				var missiontype = P.Guild[i];
 				var translatedname = D.getObjectName(missiontype);
 				$("#gldButtons").append("<div>"
-					+ "<button class='gldButton curToggle' id='gldButton_" + i + "' "
-					+ "title='<dfn>" + translatedname + "</dfn><br />gw2timer.com/guild/" + i.toLowerCase() + "'>"
-					+ "<img src='img/guild/" + i.toLowerCase() + I.cPNG + "' /></button>"
+					+ "<button class='gldButton curToggle btnTab' id='gldButton_" + i
+						+ "' style='background-size:cover; background-image:url(img/guild/" + i.toLowerCase() + I.cPNG + ")' "
+						+ "title='<dfn>" + translatedname + "</dfn><br />gw2timer.com/guild/" + i.toLowerCase() + "'></button>"
 					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname) + "'>Y</a>&nbsp;"
 					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "'>W</a>"
 					+ "</div>");
@@ -13669,12 +13704,12 @@ W = {
 				continue;
 			}
 			lb.append("<div id='" + htmlid + "'></div>");
-			(function(pID, pMatchID)
+			(function(iID, iMatchID)
 			{
 				$.getJSON(url, function(pData)
 				{
-					var ithmatch = (W.isFallbackEnabled) ? W.Matches[pMatchID] : pData.worlds;
-					W.insertScoreboard(pData, ithmatch, $("#" + pID));
+					var ithmatch = (W.isFallbackEnabled) ? W.Matches[iMatchID] : pData.worlds;
+					W.insertScoreboard(pData, ithmatch, $("#" + iID));
 					W.readjustLeaderboard();
 					I.updateScrollbar("#lboOther");
 				});
@@ -13786,7 +13821,8 @@ W = {
 			var serverid = pMatchup[ownerkey];
 			var servername = U.escapeHTML(D.getObjectName(W.Servers[serverid]));
 			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
-				+ "<aside class='lboName'>&nbsp;" + servername + "</aside>" : "";
+				+ "<aside class='lboName'>&nbsp;<a href='"
+				+ I.cSiteURL + "?page=WvW&enu_Server=" + serverid + "'>" + servername + "</a></aside>" : "";
 			var score = scores[ownerkey];
 			var scorehighest = (T.getMinMax(scores)).max;
 			var scorepercent = (scores[ownerkey] / scorehighest) * T.cPERCENT_100;
@@ -13873,7 +13909,7 @@ W = {
 			/*
 			 * Write the HTML.
 			 */
-			html += "<article class='lboServer" + owner + "'>"
+			html += "<article class='lboServer lboServer" + owner + "'>"
 				+ serverstr
 				+ "<aside class='lboScore' title='<dfn>" + scoredifferences[0] + " points</dfn> away from " + otherservers[0]
 				+ "<br /><dfn>" + scoredifferences[1] + " points</dfn> away from " + otherservers[1] + "'>"
@@ -14006,17 +14042,17 @@ W = {
 		// Bind the checkboxes to filter log entries
 		for (var i in W.MapType)
 		{
-			(function(pFilter)
+			(function(iFilter)
 			{
-				$("#opt_bol_log" + pFilter).change(function()
+				$("#opt_bol_log" + iFilter).change(function()
 				{
-					if (O.Options["bol_log" + pFilter])
+					if (O.Options["bol_log" + iFilter])
 					{
-						$(".logEntry" + pFilter).show("fast", function() { I.updateScrollbar("#logWindow"); });
+						$(".logEntry" + iFilter).show("fast", function() { I.updateScrollbar("#logWindow"); });
 					}
 					else
 					{
-						$(".logEntry" + pFilter).hide("fast", function() { I.updateScrollbar("#logWindow"); });
+						$(".logEntry" + iFilter).hide("fast", function() { I.updateScrollbar("#logWindow"); });
 					}
 				}).parent().dblclick(function()
 				{
@@ -14025,7 +14061,7 @@ W = {
 					{
 						X.setCheckboxEnumState($(this), X.ChecklistEnum.Unchecked);
 					});
-					X.setCheckboxEnumState($("#opt_bol_log" + pFilter), X.ChecklistEnum.Checked);
+					X.setCheckboxEnumState($("#opt_bol_log" + iFilter), X.ChecklistEnum.Checked);
 				});
 			})(i);
 		}
@@ -14317,16 +14353,16 @@ W = {
 					var blueprint = $("<ins class='spl spl_" + bp.toLowerCase() + "_" + ii + "'></ins>");
 					var supply = W.Weapons[ii].supply[i];
 					$("#splBlueprints" + bp).append(blueprint);
-					(function(pSupply)
+					(function(iSupply)
 					{
 						blueprint.click(function()
 						{
-							addSupply($(this), pSupply);
+							addSupply($(this), iSupply);
 							$("#splHave").trigger("input");
 						});
 						blueprint.contextmenu(function()
 						{
-							addSupply($(this), -1 * pSupply);
+							addSupply($(this), -1 * iSupply);
 							$("#splHave").trigger("input");
 							return false; // Prevents context menu popping up
 						});
@@ -14732,15 +14768,15 @@ W = {
 			objumbrella.css({borderColor: prevcolor, boxShadow: "0px 0px 10px " + prevcolor});
 			I.bloatElement(objumbrella, 1000, 100);
 			// Squash the icon to 0 width, then change the icon image and stretch it back to previous width
-			(function(pOwner, pUmbrella, pColor)
+			(function(iOwner, iUmbrella, iColor)
 			{
 				objicon.css({width: prevwidth}).animate({width: 0}, animationspeed, function()
 				{
-					pUmbrella.css({borderColor: pColor, boxShadow: "0px 0px 10px " + pColor});
-					$(this).attr("src", $(this).attr("data-src") + (pOwner).toLowerCase() + I.cPNG)
+					iUmbrella.css({borderColor: iColor, boxShadow: "0px 0px 10px " + iColor});
+					$(this).attr("src", $(this).attr("data-src") + (iOwner).toLowerCase() + I.cPNG)
 						.animate({width: prevwidth}, animationspeed, function()
 						{
-							pUmbrella.parent().parent().hide();
+							iUmbrella.parent().parent().hide();
 							W.adjustZoomMapping();
 						});
 				});
@@ -16640,28 +16676,28 @@ B = {
 			table.append(I.cThrobber);
 			for (var i in B.DashboardVendor.Offers)
 			{
-				(function(i)
+				(function(iIndex)
 				{
-					var offer = B.DashboardVendor.Offers[i];
+					var offer = B.DashboardVendor.Offers[iIndex];
 					$.getJSON(U.URL_API.ItemDetails + offer.id + U.URL_API.LangKey, function(pData)
 					{
 						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
 						table.append("<div class='dsbVendorEntry'>"
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img class='dsbVendorIcon' src='" + pData.icon + "' /></a> "
-							+ "<span id='dsbVendorItem_" + i + "' class='dsbVendorItem curZoom " + E.getRarityClass(pData.rarity)
-								+ "' data-coord='" + (B.DashboardVendor.Coords[i])[weekdaylocation] + "'>" + pData.name + "</span> "
+							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + E.getRarityClass(pData.rarity)
+								+ "' data-coord='" + (B.DashboardVendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
 							+ "<span class='dsbVendorPriceKarma'>" + E.createKarmaString(offer.price, true) + "</span>"
-							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + i + "'></span>"
+							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
 						+ "</div>");
 						// Get TP prices also
 						$.getJSON(U.URL_API.ItemPrices + offer.id, function(pData)
 						{
-							$("#dsbVendorPriceCoin_" + i).html(" ≈ " + E.createCoinString(E.deductTax(pData.sells.unit_price), true));
+							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.createCoinString(E.deductTax(pData.sells.unit_price), true));
 						}).fail(function()
 						{
-							$("#dsbVendorPriceCoin_" + i).html(" = " + E.createCoinString(0, true));
+							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.createCoinString(0, true));
 						});
-						M.bindMapLinkBehavior($("#dsbVendorItem_" + i), M.ZoomEnum.Ground, M.Pin.Program);
+						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
 					}).done(function()
 					{
 						// Finalize the table after every offer has been added
@@ -18443,6 +18479,17 @@ I = {
 			Legacies: "Legacies",
 			Temples: "Temples",
 			Dungeons: "Dungeons"
+		},
+		Account:
+		{
+			Mananger: "Manager",
+			Characters: "Characters",
+			Bank: "Bank",
+			Wardrobe: "Wardrobe",
+			Trading: "Trading",
+			PVP: "PVP",
+			Guilds: "Guilds",
+			Achievements: "Achievements"
 		}
 	},
 	/*
@@ -18705,11 +18752,11 @@ I = {
 		}
 		
 		// Bind special popup elements that can be removed if user clicks anywhere not on it
-		$(document).mouseup(function(pEvent)
+		$(document).mouseup(function(iEvent)
 		{
 			$(".jsRemovable, .jsHidable").each(function()
 			{
-				if ( ! $(this).is(pEvent.target) && $(this).has(pEvent.target).length === 0)
+				if ( ! $(this).is(iEvent.target) && $(this).has(iEvent.target).length === 0)
 				{
 					if ($(this).hasClass("jsHidable"))
 					{
@@ -19029,6 +19076,18 @@ I = {
 	},
 	
 	/*
+	 * Animates an element's background in the style of GW2 tooltips.
+	 * @param jqobject pElement to bind.
+	 */
+	bindListHover: function(pElement)
+	{
+		$(pElement).on("mouseenter", function()
+		{
+			$(this).css({backgroundSize: "25%"}).animate({backgroundSize: "100%"}, 200);
+		});
+	},
+	
+	/*
 	 * Finds throbber elements (spinning icon used before AJAX content is loaded)
 	 * and removes it.
 	 * @param string pContainer selector.
@@ -19197,6 +19256,7 @@ I = {
 		{
 			if ($(this).hasClass("jsIgnore") === false)
 			{
+				I.bindListHover($(this));
 				// If it is a menu item
 				if ($(this).hasClass("itemContextSubmenu") === false)
 				{

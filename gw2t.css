@@ -362,12 +362,13 @@ html, body,
 .itemContext li {
 	margin-bottom: 6px;
 	padding: 2px 4px 2px 6px;
+	background-repeat: repeat-y;
 }
 .itemContext li:last-child {
 	margin-bottom: 0;
 }
 .itemContext li:hover {
-	background: linear-gradient(to right, #7c7253 0%, #212021 100%);
+	background-image: linear-gradient(to right, #7c7253 0%, rgba(255,255,255,0) 100%);
 }
 .itemContext kbd { /* The submenu icon */
 	font-family: sans-serif;
@@ -2178,6 +2179,10 @@ label:hover {
 }
 .btnDisplay:active {
 	background: url("img/map/display_hide.png") center no-repeat, linear-gradient(to bottom, #333 0%, #444 100%);
+}
+.btnTab {
+	border-top-left-radius: 33%;
+	border-top-right-radius: 33%;
 }
 
 .btnWindow {

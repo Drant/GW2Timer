@@ -234,19 +234,25 @@
 	margin-left: 47px;
 	background: rgba(255, 255, 255, 0.4);
 }
+.lboServer a {
+	text-decoration: none;
+}
+.lboServer:hover a {
+	text-decoration: underline;
+}
 
 .lboRank {
 	width: 32px;
 	text-align: right;
 	font-weight: bold;
 }
-.wvwColorGreen, .lboServerGreen .lboName, .lboPPTGreen {
+.wvwColorGreen, .lboServerGreen .lboName a, .lboPPTGreen {
 	color: #52a518;
 }
-.wvwColorBlue, .lboServerBlue .lboName, .lboPPTBlue {
+.wvwColorBlue, .lboServerBlue .lboName a, .lboPPTBlue {
 	color: #31a7bb;
 }
-.wvwColorRed, .lboServerRed .lboName, .lboPPTRed {
+.wvwColorRed, .lboServerRed .lboName a, .lboPPTRed {
 	color: #cc1f24;
 }
 .lboPPTCenter {

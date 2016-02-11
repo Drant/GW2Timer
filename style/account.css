@@ -19,6 +19,30 @@
 	opacity: 0.8;
 }
 
+/* Menu
+----------------------------------------------------------------------------- */
+#accMenu {
+	padding: 0;
+	font-size: 16px;
+	font-family: Menomonia;
+	text-align: center;
+	border-bottom: 1px solid #444;
+	margin-bottom: 16px;
+}
+#accMenu li {
+	display: inline-block;
+	padding-left: 4px;
+	margin-right: 12px;
+	text-align: left;
+	background-repeat: repeat-y;
+}
+#accMenu li:hover {
+	background-image: linear-gradient(to right, #7c7253 0%, rgba(255,255,255,0) 100%);
+}
+#accMenu li img {
+	margin-right: 2px;
+}
+
 /* Key manager
 ----------------------------------------------------------------------------- */
 
