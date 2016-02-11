@@ -1113,7 +1113,7 @@ Sale: {
 	},
 	{
 		name: "Wings of Love Glider",
-		img: "http://i.imgur.com/UjVUmls.png",
+		img: "https://render.guildwars2.com/file/ACEF58430417A95B9B2DB44A307FCD2C38800E05/1366974.png",
 		quantity: 1,
 		pricenew: 400,
 		priceold: 0,
@@ -1184,16 +1184,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-02-10T00:00:00Z"),
-	Finish: new Date("2016-02-11T00:00:00Z"),
+	Start: new Date("2016-02-11T00:00:00Z"),
+	Finish: new Date("2016-02-12T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49736", price: "25200" },
-		Fox: { id: "44661", price: "25200" },
-		Derwena: { id: "43812", price: "25200" },
-		Yana: { id: "43821", price: "25200" },
-		Katyn: { id: "44659", price: "25200" },
-		Verma: { id: "49734", price: "12600" }
+		Mehem: { id: "49744", price: "25200" },
+		Fox: { id: "49740", price: "50400" },
+		Derwena: { id: "49753", price: "25200" },
+		Yana: { id: "49768", price: "25200" },
+		Katyn: { id: "43818", price: "25200" },
+		Verma: { id: "48919", price: "12600" }
 	}
 }
 };

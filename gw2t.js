@@ -14306,8 +14306,7 @@ W = {
 			pElement.html(finalblcount);
 		};
 		
-		var calc = $("#wvwSiege");
-		I.preventPropagation(calc);
+		I.preventPropagation("#wvwSupply");
 		for (var i in W.Metadata.Blueprints)
 		{
 			for (var ii in W.Weapons)
@@ -14441,7 +14440,7 @@ W = {
 	 */
 	updateObjectives: function()
 	{
-		var maxattemptsuntilfallback = 4;
+		var maxattemptsuntilfallback = 3;
 		var nowmsec = (new Date()).getTime();
 		var succeedReconnection = function()
 		{
@@ -14497,9 +14496,6 @@ W = {
 						W.updateObjectiveIcon(obj);
 						W.updateObjectiveAge(obj);
 						W.updateObjectiveTooltip(obj);
-						
-						// Claiming is reset upon ownership change
-						$("#objClaim_" + obj.id).empty();
 						
 						// Mark the objective as immune if it is recently captured
 						if ((nowmsec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY
@@ -14683,9 +14679,6 @@ W = {
 								W.updateObjectiveAge(obj);
 								W.updateObjectiveTooltip(obj);
 
-								// Claiming is reset upon ownership change
-								$("#objClaim_" + obj.id).empty();
-
 								// Mark the objective as immune if it is recently captured
 								if ((nowmsec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY
 										&& obj.owner !== W.OwnerEnum.Neutral) // If it is owned by Neutral (no immunity) then it is WvW reset
@@ -14839,25 +14832,32 @@ W = {
 	{
 		if (pObjective.claimed_by === null || pObjective.claimed_by === undefined)
 		{
-			return;
-		}
-		
-		$.getJSON(U.URL_API.GuildDetails + pObjective.claimed_by, function(pData)
-		{
-			pObjective.guild_name = pData.guild_name;
-			pObjective.tag = pData.tag;
+			// If the objective was previously claimed but has become unclaimed
+			pObjective.guild_name = null;
+			pObjective.tag = null;
 			W.updateObjectiveTooltip(pObjective);
-			var label = $("#objClaim_" + pObjective.id);
-			var prevcolor = label.css("color");
-			label.html("[" + pObjective.tag + "]");
-			// Also animate if guild has changed from previous known claimer
-			if (pObjective.prevclaimed_by !== "none")
+			$("#objClaim_" + pObjective.id).empty();
+		}
+		else
+		{
+			// If the objective changed claimers
+			$.getJSON(U.URL_API.GuildDetails + pObjective.claimed_by, function(pData)
 			{
-				I.blinkElement(label, 2000, 200);
-				label.css({color: "#ffffff"}).animate({color: prevcolor}, 4000);
-				W.addLogEntryObjective(pObjective, true);
-			}
-		});
+				pObjective.guild_name = pData.guild_name;
+				pObjective.tag = pData.tag;
+				W.updateObjectiveTooltip(pObjective);
+				var label = $("#objClaim_" + pObjective.id);
+				var prevcolor = label.css("color");
+				label.html("[" + pObjective.tag + "]");
+				// Also animate if guild has changed from previous known claimer
+				if (pObjective.prevclaimed_by !== "none")
+				{
+					I.blinkElement(label, 2000, 200);
+					label.css({color: "#ffffff"}).animate({color: prevcolor}, 4000);
+					W.addLogEntryObjective(pObjective, true);
+				}
+			});
+		}
 	},
 	
 	/*
@@ -14871,11 +14871,11 @@ W = {
 		var obj = pObjective;
 		var icon = $("#objIcon_" + obj.id);
 		var claim = "";
-		if (obj.claimed_at !== null)
+		if (obj.guild_name !== null)
 		{
 			claim = "<br /><dfn>Claim:</dfn> " + (new Date(obj.claimed_at)).toLocaleString()
-				+ "<br /><dfn>Guild:</dfn> " + U.escapeHTML(pObjective.guild_name + " [" + pObjective.tag + "]")
-				+ "<div class='cssCenter'><img class='objTooltipBanner' src='" + W.getGuildBannerURL(pObjective.guild_name) + "' /></div>";
+				+ "<br /><dfn>Guild:</dfn> " + U.escapeHTML(obj.guild_name + " [" + obj.tag + "]")
+				+ "<div class='cssCenter'><img class='objTooltipBanner' src='" + W.getGuildBannerURL(obj.guild_name) + "' /></div>";
 		}
 		
 		var title = "<div class='objTooltip'>"
