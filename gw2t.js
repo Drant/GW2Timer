@@ -14445,7 +14445,7 @@ W = {
 			$("#wvwZoneLinkBlue").text(W.getBorderlandsString(blueserver, true, true));
 			
 			// Initial messages in the log window
-			W.addLogEntry($("#wvwHelpLinks").html());
+			W.addLogEntry($("#wvwHelpLinks").html() + "<br /><br />");
 			W.addLogEntry(D.getObjectNick(greenserver)
 				+ " : " + D.getObjectNick(blueserver) + " : " + D.getObjectNick(redserver));
 			
