@@ -2246,7 +2246,7 @@ U = {
 	{
 		if (I.PageCurrent !== "")
 		{
-			var section = I[I.sectionPrefix + I.PageCurrent];
+			var section = I.SectionCurrent[I.PageCurrent];
 			var article = I.ArticleCurrent;
 			var go = U.Args[U.KeyEnum.Go];
 
@@ -2313,12 +2313,21 @@ U = {
 	},
 	
 	/*
-	 * Triggers the header tag associated with the requested page and section,
-	 * which will cause the section beside the header to expand. This is to be
-	 * called after a page has been AJAX loaded and bindings completed.
+	 * Triggers the button or header associated with the requested page and section,
+	 * which will cause that section to expand/show. This is to be called after
+	 * a page has been AJAX loaded and bindings completed.
+	 * @objparam string prefix HTML ID prefix of the button to trigger, optional.
+	 * @objparam string section name, optional.
+	 * @objparam string button HTML ID of the button to trigger, optional.
 	 */
-	openSectionFromURL: function()
+	openSectionFromURL: function(pOptions)
 	{
+		var settings = $.extend({
+			prefix: I.cHeaderPrefix + I.PageCurrent + "_",
+			section: U.Args[U.KeyEnum.Section],
+			button: null
+		}, pOptions);
+		
 		/*
 		 * Enclosed in setTimeout because without it the scroll to element
 		 * animation function is glitchy (the function is called when the header
@@ -2326,22 +2335,30 @@ U = {
 		 */
 		setTimeout(function()
 		{
-			if (U.Args[U.KeyEnum.Section] !== undefined)
+			if (settings.section !== undefined)
 			{
-				var section = U.stripToAlphanumeric(U.Args[U.KeyEnum.Section]);
-				// Try going to a section name in sentence letter case
-				var elem = $(I.cHeaderPrefix + I.PageCurrent + "_" + U.toFirstUpperCase(section));
-				if ( ! elem.length)
+				var section = U.stripToAlphanumeric(settings.section);
+				var elm;
+				if (typeof settings.button === "string")
 				{
-					// Else try going to a section name in all caps
-					elem = $(I.cHeaderPrefix + I.PageCurrent + "_" + section.toUpperCase());
+					elm = $(settings.button);
 				}
-				if (I.PageCurrent === I.PageEnum.Chains)
+				else
 				{
-					// Click the chains header to hide it because it's shown by default
-					$("#headerChains_Scheduled").trigger("click");
+					// Try going to a section name in sentence letter case
+					elm = $(settings.prefix + U.toFirstUpperCase(section));
+					if ( ! elm.length)
+					{
+						// Else try going to a section name in all caps
+						elm = $(settings.prefix + section.toUpperCase());
+					}
+					if (I.PageCurrent === I.PageEnum.Chains)
+					{
+						// Click the chains header to hide it because it's shown by default
+						$("#headerChains_Scheduled").trigger("click");
+					}
 				}
-				elem.trigger("click");
+				elm.trigger("click");
 			}
 		}, 0);
 	},
@@ -2607,7 +2624,7 @@ U = {
 		
 		var id = null;
 		// Extract the code portion of the chatlink [&CODE]
-		if (typeof(pChatlink) === "string" && pChatlink.indexOf("[&") === 0 && pChatlink.indexOf("]" === pChatlink.length - 1))
+		if (typeof pChatlink === "string" && pChatlink.indexOf("[&") === 0 && pChatlink.indexOf("]" === pChatlink.length - 1))
 		{
 			pChatlink = pChatlink.substring(2, pChatlink.length - 1);
 		}
@@ -2649,7 +2666,8 @@ A = {
 	
 	TokenCurrent: null,
 	isAccountLoaded: false,
-	Items: {}, // For holding retrieved item details objects
+	Items: {}, // Retrieved item details objects
+	Characters: {}, // Retrieved characters objects
 	URL: { // Account data type and URL substring
 		Account: "account",
 		Achievements: "account/achievements",
@@ -2710,16 +2728,21 @@ A = {
 			var menubutton = $("<li id='accMenu" + sectionname + "' class='curClick'><img src='img/ui/account/"
 				+ sectionnamelow + ".png' />" + sectionname + "</li>");
 			menu.append(menubutton);
-			(function(iButton, iSection)
+			// Clicking on a button shows the associated section
+			(function(iButton, iSectionName)
 			{
 				iButton.click(function()
 				{
 					$("#accContent section").hide();
-					$("#accPlate" + iSection).show();
+					$("#accPlate" + iSectionName).show();
+					I.SectionCurrent[I.SpecialPageEnum.Account] =
+						(iSectionName === I.SectionEnum.Account.Mananger) ? "" : iSectionName;
+					U.updateQueryString();
 				});
-				I.bindListHover(iButton);
 			})(menubutton, sectionname);
 		}
+		// Open the section if specified in the URL
+		U.openSectionFromURL({prefix: "#accMenu"});
 		
 		// Bind the window buttons
 		$("#accExpand").click(function()
@@ -6351,8 +6374,8 @@ D = {
 	},
 		
 	/*
-	 * Adds periods to a string so each letter is spoken separately.
-	 * "SoS" returns "S.O.S." but "Mag" returns "Mag" (no change).
+	 * Adds spaces to a string so each letter is spoken separately.
+	 * "SoS" returns "S O S" but "Mag" returns "Mag" (no change).
 	 * @param string pString.
 	 * @returns string of period separated initials.
 	 */
@@ -6375,7 +6398,7 @@ D = {
 		for (var i = 0; i < pString.length; i++)
 		{
 			char = pString.charAt(i);
-			str += (char === " ") ? char : (char + ".");
+			str += (char === " ") ? char : (char + " ");
 		}
 		return str;
 	},
@@ -8382,12 +8405,12 @@ M = {
 	{
 		// If pNick is an alias of a zone
 		var zone;
-		if (typeof(pNick) === "string" && this.Zones[pNick])
+		if (typeof pNick === "string" && this.Zones[pNick])
 		{
 			zone = this.Zones[pNick];
 		}
 		// If pNick is a zone that has the property
-		else if (typeof(pNick) === "object")
+		else if (typeof pNick === "object")
 		{
 			zone = pNick;
 		}
@@ -8647,20 +8670,20 @@ M = {
 				// Event Icon
 				if (O.Options.bol_displayEvents)
 				{
-					this.ZoneCurrent.Layers.EventIcon.eachLayer(function(layer) {
-						that.resizeMarkerIcon(layer, eventiconsize);
-						if (layer._icon)
+					this.ZoneCurrent.Layers.EventIcon.eachLayer(function(iLayer) {
+						that.resizeMarkerIcon(iLayer, eventiconsize);
+						if (iLayer._icon)
 						{
-							layer._icon.style.zIndex = M.cZIndexRaise;
+							iLayer._icon.style.zIndex = M.cZIndexRaise;
 						}
 					});
 
 					// Event Ring
-					this.ZoneCurrent.Layers.EventRing.eachLayer(function(layer) {
-						that.resizeMarkerIcon(layer, eventringsize);
-						if (layer._icon)
+					this.ZoneCurrent.Layers.EventRing.eachLayer(function(iLayer) {
+						that.resizeMarkerIcon(iLayer, eventringsize);
+						if (iLayer._icon)
 						{
-							layer._icon.style.zIndex = M.cZIndexBury;
+							iLayer._icon.style.zIndex = M.cZIndexBury;
 						}
 					});
 				}
@@ -8681,26 +8704,26 @@ M = {
 				completionboolean = O.Options.bol_showWorldCompletionWvW;
 				sectorboolean = O.Options.bol_displaySectorsWvW;
 				// Server spawn area labels
-				this.Layer.SpawnLabel.eachLayer(function(layer) {
-					layer._icon.style.fontSize = spawnfont + "px";
-					layer._icon.style.opacity = spawnopacity;
-					layer._icon.style.zIndex = that.cZIndexBury + 1;
-					layer._icon.style.display = "table";
+				this.Layer.SpawnLabel.eachLayer(function(iLayer) {
+					iLayer._icon.style.fontSize = spawnfont + "px";
+					iLayer._icon.style.opacity = spawnopacity;
+					iLayer._icon.style.zIndex = that.cZIndexBury + 1;
+					iLayer._icon.style.display = "table";
 				});
 				// Secondary objectives
-				this.Layer.Secondaries.eachLayer(function(layer) {
-					that.resizeMarkerIcon(layer, landmarksize);
+				this.Layer.Secondaries.eachLayer(function(iLayer) {
+					that.resizeMarkerIcon(iLayer, landmarksize);
 				});
 				// Destructible walls and gates paths
-				this.Layer.Destructible.eachLayer(function(layer) {
-					layer.setStyle({weight: wallweight});
+				this.Layer.Destructible.eachLayer(function(iLayer) {
+					iLayer.setStyle({weight: wallweight});
 				});
 			} break;
 		}
 		
 		// Adjust range circles
-		this.Layer.WeaponCircle.eachLayer(function(layer) {
-			layer.setRadius(that.getZoomedDistance(layer.options.trueradius));
+		this.Layer.WeaponCircle.eachLayer(function(iLayer) {
+			iLayer.setRadius(that.getZoomedDistance(iLayer.options.trueradius));
 		});
 		
 		// Overview on the zones
@@ -8709,8 +8732,8 @@ M = {
 			if (currentzoom === this.ZoomEnum.Overview)
 			{
 				this.toggleLayer(this.Layer.Overview, true);
-				this.Layer.Overview.eachLayer(function(layer) {
-					layer._icon.style.display = "table";
+				this.Layer.Overview.eachLayer(function(iLayer) {
+					iLayer._icon.style.display = "table";
 				});
 			}
 			else
@@ -8724,44 +8747,44 @@ M = {
 		}
 
 		// Waypoints
-		this.ZoneCurrent.Layers.Waypoint.eachLayer(function(layer) {
-			that.resizeMarkerIcon(layer, waypointsize);
+		this.ZoneCurrent.Layers.Waypoint.eachLayer(function(iLayer) {
+			that.resizeMarkerIcon(iLayer, waypointsize);
 		});
 		
 		// Landmarks
-		this.ZoneCurrent.Layers.Landmark.eachLayer(function(layer) {
-			that.resizeMarkerIcon(layer, landmarksize);
-			if (layer._icon)
+		this.ZoneCurrent.Layers.Landmark.eachLayer(function(iLayer) {
+			that.resizeMarkerIcon(iLayer, landmarksize);
+			if (iLayer._icon)
 			{
-				layer._icon.style.opacity = (currentzoom < that.ZoomEnum.Max) ? 0.6 : 0.8;
+				iLayer._icon.style.opacity = (currentzoom < that.ZoomEnum.Max) ? 0.6 : 0.8;
 			}
 		});
 		
 		// Vista
-		this.ZoneCurrent.Layers.Vista.eachLayer(function(layer) {
-			that.resizeMarkerIcon(layer, landmarksize);
+		this.ZoneCurrent.Layers.Vista.eachLayer(function(iLayer) {
+			that.resizeMarkerIcon(iLayer, landmarksize);
 		});
 		
 		// Challenge
-		this.ZoneCurrent.Layers.Challenge.eachLayer(function(layer) {
-			that.resizeMarkerIcon(layer, landmarksize);
+		this.ZoneCurrent.Layers.Challenge.eachLayer(function(iLayer) {
+			that.resizeMarkerIcon(iLayer, landmarksize);
 		});
 		
 		// Heart
-		this.ZoneCurrent.Layers.Heart.eachLayer(function(layer) {
-			that.resizeMarkerIcon(layer, landmarksize);
+		this.ZoneCurrent.Layers.Heart.eachLayer(function(iLayer) {
+			that.resizeMarkerIcon(iLayer, landmarksize);
 		});
 		
 		// Sector
-		this.ZoneCurrent.Layers.Sector.eachLayer(function(layer) {
-			if (layer._icon)
+		this.ZoneCurrent.Layers.Sector.eachLayer(function(iLayer) {
+			if (iLayer._icon)
 			{
-				layer._icon.style.fontSize = sectorfont + "px";
-				layer._icon.style.opacity = sectoropacity;
-				layer._icon.style.zIndex = that.cZIndexBury + 1; // Don't cover other icons
+				iLayer._icon.style.fontSize = sectorfont + "px";
+				iLayer._icon.style.opacity = sectoropacity;
+				iLayer._icon.style.zIndex = that.cZIndexBury + 1; // Don't cover other icons
 				if (sectorboolean)
 				{
-					layer._icon.style.display = "table"; // For middle vertical alignment
+					iLayer._icon.style.display = "table"; // For middle vertical alignment
 				}
 			}
 		});
@@ -9230,12 +9253,12 @@ M = {
 		var mindistance = Number.POSITIVE_INFINITY;
 		var minmarker = null;
 		
-		pLayerGroup.eachLayer(function(layer) {
-			distance = P.getDistanceBetweenCoords(pCoord, that.convertLCtoGC(layer.getLatLng()));
+		pLayerGroup.eachLayer(function(iLayer) {
+			distance = P.getDistanceBetweenCoords(pCoord, that.convertLCtoGC(iLayer.getLatLng()));
 			if (distance < mindistance)
 			{
 				mindistance = distance;
-				minmarker = layer;
+				minmarker = iLayer;
 			}
 		});
 		return minmarker;
@@ -9446,18 +9469,18 @@ M = {
 	{
 		var that = this;
 		var weapons = [];
-		that.Layer.WeaponCircle.eachLayer(function(layer)
+		that.Layer.WeaponCircle.eachLayer(function(iLayer)
 		{
 			// Store only the weapon ID and location
 			var weapon = {
-				id: layer.options.weaponid,
-				coord: that.convertLCtoGC(layer.getLatLng())
+				id: iLayer.options.weaponid,
+				coord: that.convertLCtoGC(iLayer.getLatLng())
 			};
 			// If it is a custom weapon, then also store the custom color and range
-			if (layer.options.weaponid === "custom")
+			if (iLayer.options.weaponid === "custom")
 			{
-				weapon.color = (layer.options.color).toLowerCase();
-				weapon.range = parseInt(layer.options.weaponrange);
+				weapon.color = (iLayer.options.color).toLowerCase();
+				weapon.range = parseInt(iLayer.options.weaponrange);
 			}
 			weapons.push(weapon);
 		});
@@ -9631,9 +9654,9 @@ M = {
 	clearWeapons: function()
 	{
 		var that = this;
-		this.Layer.WeaponIcon.eachLayer(function(layer)
+		this.Layer.WeaponIcon.eachLayer(function(iLayer)
 		{
-			that.removeWeapon(layer);
+			that.removeWeapon(iLayer);
 		});
 		this.Layer.WeaponCircle.clearLayers();
 		this.Layer.WeaponIcon.clearLayers();
@@ -9788,7 +9811,7 @@ M = {
 		{
 			pZoom = this.getAdaptiveZoom();
 		}
-		else if (typeof(pZoom) === "object" && pZoom.offset !== undefined)
+		else if (typeof pZoom === "object" && pZoom.offset !== undefined)
 		{
 			pZoom = this.getAdaptiveZoom(pZoom.offset);
 		}
@@ -11014,9 +11037,9 @@ P = {
 		var distancetoprevious = 0;
 		var zone, waypoint;
 		
-		M.Layer.PersonalPin.eachLayer(function(layer)
+		M.Layer.PersonalPin.eachLayer(function(iLayer)
 		{
-			coordpin = M.convertLCtoGC(layer.getLatLng());
+			coordpin = M.convertLCtoGC(iLayer.getLatLng());
 			zone = M.getZoneFromCoord(coordpin);
 			if (zone !== null)
 			{
@@ -11234,8 +11257,8 @@ P = {
 	{
 		if (M.isEventIconsGenerated)
 		{
-			M.ZoneCurrent.Layers.EventIcon.eachLayer(function(layer) {
-				I.write("<input type='text' class='cssInputText' value='[" + M.convertLCtoGC(layer.getLatLng()) + "]' /> " + layer.options.task, 0);
+			M.ZoneCurrent.Layers.EventIcon.eachLayer(function(iLayer) {
+				I.write("<input type='text' class='cssInputText' value='[" + M.convertLCtoGC(iLayer.getLatLng()) + "]' /> " + iLayer.options.task, 0);
 			});
 		}
 		else
@@ -11590,13 +11613,13 @@ P = {
 				M.resizeMarkerIcon(icon, ringsize);
 			}
 			
-			P.Layer.DryTopNicks.eachLayer(function(layer) {
-				if (layer._icon)
+			P.Layer.DryTopNicks.eachLayer(function(iLayer) {
+				if (iLayer._icon)
 				{
-					layer._icon.style.fontSize = nickfontsize + "px";
-					layer._icon.style.opacity = nickopacity;
-					layer._icon.style.zIndex = M.cZIndexBury + 1; // Don't cover other icons
-					layer._icon.style.display = "table"; // For middle vertical alignment
+					iLayer._icon.style.fontSize = nickfontsize + "px";
+					iLayer._icon.style.opacity = nickopacity;
+					iLayer._icon.style.zIndex = M.cZIndexBury + 1; // Don't cover other icons
+					iLayer._icon.style.display = "table"; // For middle vertical alignment
 				}
 			});
 			P.DryTopTimer._icon.style.fontSize = (nickfontsize*2) + "px";
@@ -11918,11 +11941,11 @@ G = {
 			// Fade the node if state is so in checklist
 			for (var i in P.LayerArray.Resource)
 			{
-				P.LayerArray.Resource[i].eachLayer(function(layer)
+				P.LayerArray.Resource[i].eachLayer(function(iLayer)
 				{
-					if (layer instanceof L.Marker && getNodeState(layer) === X.ChecklistEnum.Checked)
+					if (iLayer instanceof L.Marker && getNodeState(iLayer) === X.ChecklistEnum.Checked)
 					{
-						layer.setOpacity(opacityclicked);
+						iLayer.setOpacity(opacityclicked);
 					}
 				});
 			}
@@ -12172,19 +12195,19 @@ G = {
 				var sumprice = 0;
 				
 				// Gather the coordinates of valid resource node markers
-				M.Map.eachLayer(function(layer) {
-					if (layer instanceof L.Marker && layer.options.isNode
-						&& getNodeState(layer) === X.ChecklistEnum.Unchecked)
+				M.Map.eachLayer(function(iLayer) {
+					if (iLayer instanceof L.Marker && iLayer.options.isNode
+						&& getNodeState(iLayer) === X.ChecklistEnum.Unchecked)
 					{
 						/*
 						 * Sum the price with the node's single resource price times the output of the node.
 						 * The price was initialized the TP refresh function.
 						 * The quantity was initialized by the marker initialization function.
 						 */
-						sumprice += P.Resources[(layer.options.name)].price * layer.options.quantity;
+						sumprice += P.Resources[(iLayer.options.name)].price * iLayer.options.quantity;
 						
 						// Find eastmost coordinate to use it as the starting point
-						coords.push(layer.options.coord);
+						coords.push(iLayer.options.coord);
 						coord = (coords[i])[0];
 						if (coord < eastmostcoord)
 						{
@@ -12249,11 +12272,11 @@ G = {
 			{
 				for (var i in P.LayerArray.Resource)
 				{
-					P.LayerArray.Resource[i].eachLayer(function(layer)
+					P.LayerArray.Resource[i].eachLayer(function(iLayer)
 					{
-						if (layer instanceof L.Marker)
+						if (iLayer instanceof L.Marker)
 						{
-							layer.setOpacity(1);
+							iLayer.setOpacity(1);
 						}
 					});
 				}
@@ -13281,11 +13304,7 @@ W = {
 		// Finally
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL
-		var section = U.Args[U.KeyEnum.Section];
-		if (section !== undefined && section.toLowerCase() === "leaderboard")
-		{
-			$("#lboRegion").trigger("click");
-		}
+		U.openSectionFromURL({button: "#lboRegion", section: "Leaderboard"});
 	},
 	
 	/*
@@ -15660,43 +15679,19 @@ T = {
 	 */
 	getTimeFormatted: function(pOptions)
 	{
-		// Set parameter defaults
-		pOptions = pOptions || {};
-		if (pOptions.reference === undefined)
-		{
-			pOptions.reference = T.ReferenceEnum.Local;
-		}
-		if (pOptions.want24 === undefined)
-		{
-			pOptions.want24 = O.Options.bol_use24Hour;
-		}
-		if (pOptions.wantSeconds === undefined)
-		{
-			pOptions.wantSeconds = true;
-		}
-		if (pOptions.wantHours === undefined)
-		{
-			pOptions.wantHours = true;
-		}
-		if (pOptions.wantLetters === undefined)
-		{
-			pOptions.wantLetters = false;
-		}
+		var settings = $.extend({
+			reference: T.ReferenceEnum.Local,
+			want24: O.Options.bol_use24Hour,
+			wantSeconds: true,
+			wantHours: true,
+			wantLetters: false
+		}, pOptions);
 		
 		var sec, min, hour;
-		var now;
-		if (pOptions.customTimeInDate === undefined)
+		var now = (settings.customTimeInDate === undefined) ? (new Date()) : settings.customTimeInDate;
+		if (settings.customTimeInSeconds === undefined)
 		{
-			now = new Date();
-		}
-		else
-		{
-			now = pOptions.customTimeInDate;
-		}
-		
-		if (pOptions.customTimeInSeconds === undefined)
-		{
-			switch (pOptions.reference)
+			switch (settings.reference)
 			{
 				case T.ReferenceEnum.Local:
 				{
@@ -15722,21 +15717,21 @@ T = {
 		else
 		{
 			// Regard negative input
-			pOptions.customTimeInSeconds = T.wrapInteger(pOptions.customTimeInSeconds, T.cSECONDS_IN_DAY);
+			settings.customTimeInSeconds = T.wrapInteger(settings.customTimeInSeconds, T.cSECONDS_IN_DAY);
 			/*
 			 * Convert specified seconds to time units. The ~~ gets rid of the
 			 * decimal so / behaves like integer divide.
 			 */
-			sec = pOptions.customTimeInSeconds % T.cSECONDS_IN_MINUTE;
-			min = ~~(pOptions.customTimeInSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
-			hour = ~~(pOptions.customTimeInSeconds / T.cSECONDS_IN_HOUR);
+			sec = settings.customTimeInSeconds % T.cSECONDS_IN_MINUTE;
+			min = ~~(settings.customTimeInSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+			hour = ~~(settings.customTimeInSeconds / T.cSECONDS_IN_HOUR);
 		}
 		
 		var minsec = "";
 		// Include the seconds else don't
-		if (pOptions.wantSeconds)
+		if (settings.wantSeconds)
 		{
-			if (pOptions.wantLetters)
+			if (settings.wantLetters)
 			{
 				if (hour === 0 && min === 0)
 				{
@@ -15747,7 +15742,7 @@ T = {
 					minsec = min + D.getWord("m") + " " + sec + D.getWord("s");
 				}
 			}
-			else if (pOptions.wantHours === false)
+			else if (settings.wantHours === false)
 			{
 				minsec = min + ":" + ((sec < T.cBASE_10) ? "0" + sec : sec);
 			}
@@ -15758,7 +15753,7 @@ T = {
 		}
 		else
 		{
-			if (pOptions.wantLetters)
+			if (settings.wantLetters)
 			{
 				minsec = min + D.getWord("m");
 			}
@@ -15769,17 +15764,17 @@ T = {
 		}
 		
 		// Possible returns
-		if (pOptions.wantLetters)
+		if (settings.wantLetters)
 		{
-			if (hour === 0 || pOptions.wantHours === false)
+			if (hour === 0 || settings.wantHours === false)
 			{
 				return minsec;
 			}
 			return hour + D.getWord("h") + " " + minsec;
 		}
-		if (pOptions.want24)
+		if (settings.want24)
 		{
-			if (pOptions.wantHours === false)
+			if (settings.wantHours === false)
 			{
 				return minsec;
 			}
@@ -18496,12 +18491,12 @@ I = {
 	 * Number used to open a section's subcontent, written as 1-indexed via
 	 * query string, but used as 0-indexed.
 	 */
+	SectionCurrent: {},
 	ArticleCurrent: null,
 	contentCurrentPlate: "", // This is cContentPrefix + contentCurrent
 	isContentLoaded_Map: false,
 	isContentLoaded_Help: false,
 	isSectionLoaded_Daily: false,
-	sectionPrefix: "sectionCurrent_",
 	cHeaderPrefix: "#header",
 	
 	// User information
@@ -18859,7 +18854,7 @@ I = {
 					else
 					{
 						// Update current section variable, ignore if on Scheduled section of Chains page
-						I[I.sectionPrefix + I.PageEnum.Chains] = (section === I.SectionEnum.Chains.Scheduled) ? "" : section;
+						I.SectionCurrent[I.PageEnum.Chains] = (section === I.SectionEnum.Chains.Scheduled) ? "" : section;
 					}
 				}
 				else
@@ -18875,7 +18870,7 @@ I = {
 						$("#mapHUDBoxes").show();
 					}
 					// Nullify current section variable
-					I[I.sectionPrefix + I.PageEnum.Chains] = "";
+					I.SectionCurrent[I.PageEnum.Chains] = "";
 				}
 				U.updateQueryString();
 			});
@@ -19076,18 +19071,6 @@ I = {
 	},
 	
 	/*
-	 * Animates an element's background in the style of GW2 tooltips.
-	 * @param jqobject pElement to bind.
-	 */
-	bindListHover: function(pElement)
-	{
-		$(pElement).on("mouseenter", function()
-		{
-			$(this).css({backgroundSize: "25%"}).animate({backgroundSize: "100%"}, 200);
-		});
-	},
-	
-	/*
 	 * Finds throbber elements (spinning icon used before AJAX content is loaded)
 	 * and removes it.
 	 * @param string pContainer selector.
@@ -19256,7 +19239,6 @@ I = {
 		{
 			if ($(this).hasClass("jsIgnore") === false)
 			{
-				I.bindListHover($(this));
 				// If it is a menu item
 				if ($(this).hasClass("itemContextSubmenu") === false)
 				{
@@ -19418,7 +19400,7 @@ I = {
 					$(this).children("sup").text(I.Symbol.Expand);
 					
 					I.displaySectionMarkers(section, false); // Hide this section's map icons
-					I[I.sectionPrefix + plate] = ""; // Nullify current section variable
+					I.SectionCurrent[plate] = ""; // Nullify current section variable
 					
 					// Show all headers again
 					$(pPlate + " header.jsSection").show();
@@ -19433,7 +19415,7 @@ I = {
 						.addClass("menuBeamIconActive");
 					
 					I.displaySectionMarkers(section, true); // Show associated map icons
-					I[I.sectionPrefix + plate] = section;
+					I.SectionCurrent[plate] = section;
 					
 					// If clicked from beam menu then hide the other headers to save space
 					if ($(this).data("beamclicked") === true)

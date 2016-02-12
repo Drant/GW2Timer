@@ -11,6 +11,6 @@ var GW2T_ACCOUNT_DICTIONARY =
 {
 	s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 	
-	s_manager: {de: "", es: "", fr: "",
+	s_manager: {de: "", es: "administrador", fr: "",
 		cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 };

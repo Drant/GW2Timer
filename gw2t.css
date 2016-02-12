@@ -65,6 +65,13 @@ body > windowMain
 	font-family: "Menomonia";
 	src: url("https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.woff") format("woff");
 }
+@keyframes aniSpin { /* Used on throbbers */
+	100% { transform: rotate(360deg); }
+}
+@keyframes aniHighlight { /* Used on elements with :hover and gradient background, to mimic GW2's highlight of list elements */
+	0% { background-size: 25%; }
+	100% { background-size: 100%; }
+}
 
 html, body {
 	width: 100%;
@@ -369,6 +376,7 @@ html, body,
 }
 .itemContext li:hover {
 	background-image: linear-gradient(to right, #7c7253 0%, rgba(255,255,255,0) 100%);
+	animation: aniHighlight 0.2s;
 }
 .itemContext kbd { /* The submenu icon */
 	font-family: sans-serif;
@@ -605,13 +613,8 @@ dfn:active, .mapZoneLinks li:active, .mapZoneLinks dt:active {
 	display: inline-block;
 	width: 64px; height: 64px;
 	background: url("img/ui/favicon.png");
-	-webkit-animation: spin 1s linear infinite;
-    -moz-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
+    animation: aniSpin 1s linear infinite;
 }
-@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 .jsHelpTooltip, .jsHelpCollapsible {
 	float: right;
@@ -1022,7 +1025,7 @@ input.mapCoordinatesName {
 	top: calc(50% - 16px);
 	right: 0;
 	width: 32px; height: 32px;
-	opacity: 0.4;
+	opacity: 0.6;
 }
 .mapExpandButton:hover {
 	opacity: 0.9;
@@ -2239,9 +2242,7 @@ label:hover {
 	vertical-align: top;
 }
 .cssSpin {
-	-webkit-animation: spin 1s linear infinite;
-    -moz-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
+    animation: aniSpin 1s linear infinite;
 }
 dfn.cssHighlight {
 	color: #ffff00;
