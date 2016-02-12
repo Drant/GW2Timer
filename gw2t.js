@@ -2324,7 +2324,7 @@ U = {
 	{
 		var settings = $.extend({
 			prefix: I.cHeaderPrefix + I.PageCurrent + "_",
-			section: U.Args[U.KeyEnum.Section],
+			section: null,
 			button: null
 		}, pOptions);
 		
@@ -2335,13 +2335,18 @@ U = {
 		 */
 		setTimeout(function()
 		{
-			if (settings.section !== undefined)
+			var section = U.Args[U.KeyEnum.Section];
+			if (section !== undefined)
 			{
-				var section = U.stripToAlphanumeric(settings.section);
-				var elm;
+				section = U.stripToAlphanumeric(section);
+				var elm = $(null);
 				if (typeof settings.button === "string")
 				{
-					elm = $(settings.button);
+					if (settings.section !== undefined
+						&& settings.section.toLowerCase() === section.toLowerCase())
+					{
+						elm = $(settings.button);
+					}
 				}
 				else
 				{
