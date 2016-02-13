@@ -18611,15 +18611,18 @@ I = {
 		}
 		
 		// Detect TTS capability
-		if (window.speechSynthesis !== undefined)
-		{
-			I.isSpeechSynthesisEnabled = true;
-			// Automatically reload the asynchronous voices
-			window.speechSynthesis.onvoiceschanged = function()
+		try {
+			if (window.speechSynthesis)
 			{
-				window.speechSynthesis.getVoices();
-			};
+				I.isSpeechSynthesisEnabled = true;
+				// Automatically reload the asynchronous voices
+				window.speechSynthesis.onvoiceschanged = function()
+				{
+					window.speechSynthesis.getVoices();
+				};
+			}
 		}
+		catch (e) {}
 		
 		// Set the maximum wait time for all non-custom AJAX requests, such as getJSON
 		$.ajaxSetup({ timeout: I.cAJAXGlobalTimeout });
