@@ -4181,12 +4181,6 @@ E = {
 		}
 		return parseInt(pString);
 	},
-	parseQuantityString: function(pString)
-	{
-		var quantity = parseInt(pString);
-		if ( ! isFinite(quantity)) { quantity = 1; }
-		return quantity;
-	},
 	
 	/*
 	 * Converts a coin amount in copper to a period separated string.
@@ -4463,7 +4457,7 @@ E = {
 		// Computable data
 		var buy = E.parseCoinString(pEntry.find(".trdBuy").val());
 		var sell = E.parseCoinString(pEntry.find(".trdSell").val());
-		var quantity = E.parseQuantityString(pEntry.find(".trdQuantity").val());
+		var quantity = T.parseQuantity(pEntry.find(".trdQuantity").val());
 		
 		// Output elements
 		var cost = pEntry.find(".trdCost");
@@ -6259,23 +6253,28 @@ D = {
 		var volume = (O.Options.int_setVolume / T.cPERCENT_100).toFixed(2);
 		
 		// Chrome-only TTS service
-		if (I.isSpeechSynthesisEnabled && I.ModeCurrent !== I.ModeEnum.Overlay)
-		{
-			var msg = new SpeechSynthesisUtterance(pString);
-			/*
-			 * Chrome bug https://code.google.com/p/chromium/issues/detail?id=582455
-			 * Workaround is to manually set the voice. When the bug is fixed, can
-			 * just set only the lang property and have the voice set automatically.
-			 */
-			//msg.lang = O.LanguageCode[O.Options.enu_Language];
-			msg.voice = window.speechSynthesis.getVoices().filter(function(iVoice)
+		try {
+			if (I.isSpeechSynthesisEnabled && I.ModeCurrent !== I.ModeEnum.Overlay)
 			{
-				return iVoice.name === O.VoiceCode[O.Options.enu_Language];
-			})[0];
-			msg.volume = volume;
-			msg.rate = 0.8;
-			window.speechSynthesis.speak(msg);
-			return;
+				var msg = new SpeechSynthesisUtterance(pString);
+				/*
+				 * Chrome bug https://code.google.com/p/chromium/issues/detail?id=582455
+				 * Workaround is to manually set the voice. When the bug is fixed, can
+				 * just set only the lang property and have the voice set automatically.
+				 */
+				//msg.lang = O.LanguageCode[O.Options.enu_Language];
+				msg.voice = window.speechSynthesis.getVoices().filter(function(iVoice)
+				{
+					return iVoice.name === O.VoiceCode[O.Options.enu_Language];
+				})[0];
+				msg.volume = volume;
+				msg.rate = 0.8;
+				window.speechSynthesis.speak(msg);
+				return;
+			}
+		}
+		catch (e) {
+			I.isSpeechSynthesisEnabled = false;
 		}
 		
 		// If using other TTS service then use custom queue system
@@ -13844,9 +13843,8 @@ W = {
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
 			var serverid = pMatchup[ownerkey];
 			var servername = U.escapeHTML(D.getObjectName(W.Servers[serverid]));
-			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
-				+ "<aside class='lboName'>&nbsp;<a href='"
-				+ I.cSiteURL + "?page=WvW&enu_Server=" + serverid + "'>" + servername + "</a></aside>" : "";
+			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside><aside class='lboName'>&nbsp;<a href='/"
+				+ "?page=WvW&enu_Server=" + serverid + "'>" + servername + "</a></aside>" : "";
 			var score = scores[ownerkey];
 			var scorehighest = (T.getMinMax(scores)).max;
 			var scorepercent = (scores[ownerkey] / scorehighest) * T.cPERCENT_100;
@@ -13857,8 +13855,8 @@ W = {
 			{
 				var kills = (pData.kills !== undefined) ? pData.kills[ownerkey] : "";
 				var deaths = (pData.deaths !== undefined) ? pData.deaths[ownerkey] : "";
-				var kdratio = (kills / deaths).toFixed(3);
-				var kdpercent = (kills / (kills + deaths)) * T.cPERCENT_100;
+				var kdratio = T.parseRatio((kills / deaths), 3);
+				var kdpercent = T.parseRatio(kills / (kills + deaths)) * T.cPERCENT_100;
 				kdstr = "<aside class='lboKD' title='<dfn>Kills to Deaths ratio:</dfn> " + kdratio + "'>"
 					+ "<var class='lboKills'>" + kills.toLocaleString() + "</var>"
 					+ "<span><samp style='width:" + kdpercent + "%'><mark></mark></samp></span>"
@@ -14410,7 +14408,7 @@ W = {
 			$(this).select();
 		}).on("input", function()
 		{
-			var value = parseInt($(this).val()) - W.numSiegeSupply;
+			var value = T.parseQuantity($(this).val(), 0) - W.numSiegeSupply;
 			var elm = $("#splRemain").html(value);
 			I.colorizeValue(elm, value);
 		});
@@ -14999,7 +14997,7 @@ W = {
 };
 
 /* =============================================================================
- * @@Time utilities, schedule, daily, and Dashboard functions
+ * @@Time utilities, schedule, daily, and numeric functions
  * ========================================================================== */
 T = {
 	
@@ -15592,6 +15590,42 @@ T = {
 	{
 		var result = (~~(pX / pDivisor) * pMultiplier) + pMin;
 		return (result > pMax) ? pMax : result;
+	},
+	
+	/*
+	 * Parses a counting number.
+	 * @param number or string pQuantity.
+	 * @param number pDefault value.
+	 * @returns cleaned quantity.
+	 */
+	parseQuantity: function(pQuantity, pDefault)
+	{
+		if (pDefault === undefined)
+		{
+			pDefault = 1;
+		}
+		var quantity = parseInt(pQuantity);
+		if ( ! isFinite(quantity)) { quantity = pDefault; }
+		return quantity;
+	},
+	
+	/*
+	 * Parses a quotient.
+	 * @param number pRatio.
+	 * @param int pDigits of decimals to show.
+	 * @returns cleaned decimal.
+	 */
+	parseRatio: function(pRatio, pDigits)
+	{
+		if (pRatio === 0 || isNaN(pRatio))
+		{
+			return 0;
+		}
+		else if (pRatio === 1 || pRatio === Number.POSITIVE_INFINITY || pRatio === Number.NEGATIVE_INFINITY)
+		{
+			return 1;
+		}
+		return (pDigits !== undefined) ? pRatio.toFixed(pDigits) : pRatio;
 	},
 	
 	/*
