@@ -1091,7 +1091,7 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	isSpecial: true,
+	isSpecial: false,
 	note: "",
 	Start: new Date("2016-02-09T16:00:00Z"),
 	Finish: new Date("2016-02-16T16:00:00Z"),
@@ -1104,44 +1104,12 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Total Makeover Kit",
-		img: "https://render.guildwars2.com/file/91BD906F3DB001B01D18B505CC0C9920C4451E97/495503.png",
-		quantity: 5,
-		pricenew: 1120,
-		priceold: 1400,
-		col: 0
-	},
-	{
-		name: "Transmutation Charge",
-		img: "https://render.guildwars2.com/file/43BC25495803A7709F700970E1F8C22FFA6A716A/780163.png",
-		quantity: 25,
-		pricenew: 480,
-		priceold: 600,
-		col: 0
-	},
-	{
-		name: "Bag-Slot Value Pack",
-		img: "https://render.guildwars2.com/file/6AECEE0A0704F069B3776BC66516EB2F0E0DE644/66588.png",
-		quantity: 1,
-		pricenew: 350,
-		priceold: 400,
-		col: 0
-	},
-	{
 		name: "Wedding Preparation Package",
 		img: "http://i.imgur.com/WIycepj.png",
 		quantity: 1,
 		pricenew: 1560,
 		priceold: 0,
-		col: 1
-	},
-	{
-		name: "Wings of Love Glider",
-		img: "https://render.guildwars2.com/file/ACEF58430417A95B9B2DB44A307FCD2C38800E05/1366974.png",
-		quantity: 1,
-		pricenew: 400,
-		priceold: 0,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Phoenix Kite Glider",
@@ -1149,15 +1117,7 @@ Sale: {
 		quantity: 1,
 		pricenew: 400,
 		priceold: 0,
-		col: 1
-	},
-	{
-		name: "Wintersday Wreath Backpack",
-		img: "https://render.guildwars2.com/file/3408A04293EAA9CE802226E593956D56EBFE0304/1313100.png",
-		quantity: 1,
-		pricenew: 500,
-		priceold: 0,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Bouquet of Roses",

@@ -15981,10 +15981,14 @@ T = {
 	/*
 	 * Checks a time sensitive object if its Start and Finish date objects are
 	 * within the current time.
+	 * @param object pObject to check.
+	 * @param Date pDate time to compare with.
+	 * @param int pGracePeriod seconds to add to the finish time, optional.
 	 */
-	isTimely: function(pObject, pDate)
+	isTimely: function(pObject, pDate, pGracePeriod)
 	{
-		if (pDate >= pObject.Start && pDate <= pObject.Finish)
+		pGracePeriod = (pGracePeriod === undefined) ? 0 : pGracePeriod;
+		if (pDate >= pObject.Start && pDate <= (new Date(pObject.Finish.getTime() + pGracePeriod * T.cMILLISECONDS_IN_SECOND)))
 		{
 			return true;
 		}
@@ -16427,7 +16431,7 @@ B = {
 			B.isDashboardSaleEnabled = true;
 		}
 		// Verify vendor: if has not expired
-		if (T.isTimely(B.DashboardVendor, now))
+		if (T.isTimely(B.DashboardVendor, now, T.cSECONDS_IN_DAY))
 		{
 			B.isDashboardVendorEnabled = true;
 		}
@@ -16762,6 +16766,10 @@ B = {
 				I.initializeScrollbar("#dsbVendorTable");
 				I.updateScrollbar("#dsbVendorTable");
 			});
+			if (T.isTimely(B.DashboardVendor, new Date()) === false)
+			{
+				$("#dsbVendorTable").prepend("Note: These items have expired.");
+			}
 			I.removeThrobber(table);
 		};
 	},
