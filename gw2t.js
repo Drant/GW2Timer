@@ -14929,7 +14929,7 @@ W = {
 		var obj = pObjective;
 		var icon = $("#objIcon_" + obj.id);
 		var claim = "";
-		if (obj.guild_name !== null)
+		if (obj.claimed_by !== null)
 		{
 			claim = "<br /><dfn>Claim:</dfn> " + (new Date(obj.claimed_at)).toLocaleString()
 				+ "<br /><dfn>Guild:</dfn> " + U.escapeHTML(obj.guild_name + " [" + obj.tag + "]")
