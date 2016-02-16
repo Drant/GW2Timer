@@ -1093,8 +1093,8 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	isSpecial: false,
 	note: "",
-	Start: new Date("2016-02-09T16:00:00Z"),
-	Finish: new Date("2016-02-16T16:00:00Z"),
+	Start: new Date("2016-02-16T16:00:00Z"),
+	Finish: new Date("2016-02-23T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "./img/ui/gem.png",
@@ -1112,12 +1112,52 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Phoenix Kite Glider",
-		img: "https://render.guildwars2.com/file/EDB6F1402EE407080237B9045DE8C96E59720293/1341461.png",
+		name: "Phalanx Heavy-Armor Skin",
+		img: "https://render.guildwars2.com/file/3727CC685744360817FA5CE8430BBD164F6241FD/665784.png",
 		quantity: 1,
-		pricenew: 400,
+		pricenew: 800,
 		priceold: 0,
 		col: 0
+	},
+	{
+		name: "Trickster's Light-Armor Skin",
+		img: "https://render.guildwars2.com/file/B2525293D7E825EDD50124F64C0EB7436FACD2DB/665786.png",
+		quantity: 1,
+		pricenew: 800,
+		priceold: 0,
+		col: 0
+	},
+	{
+		name: "Viper's Medium-Armor Skin",
+		img: "https://render.guildwars2.com/file/29FF069D1B19BC79B8B1CDD6D8DACE3E189114AC/665785.png",
+		quantity: 1,
+		pricenew: 800,
+		priceold: 0,
+		col: 0
+	},
+	{
+		name: "Caithe's Bloom Dagger",
+		img: "https://render.guildwars2.com/file/56E61A69CE0AE070B2F239E5F2F44020615BC1E7/941014.png",
+		quantity: 1,
+		pricenew: 600,
+		priceold: 0,
+		col: 0
+	},
+	{
+		name: "Golden Wings Glider Combo",
+		img: "http://i.imgur.com/bayOs0U.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 1
+	},
+	{
+		name: "Shadow Assassin Outfit",
+		img: "https://render.guildwars2.com/file/AD557E606AC130E9757D75CB6176657440157730/831492.png",
+		quantity: 1,
+		pricenew: 700,
+		priceold: 0,
+		col: 1
 	},
 	{
 		name: "Bouquet of Roses",
@@ -1132,6 +1172,14 @@ Sale: {
 		img: "https://render.guildwars2.com/file/39FD9EDC1AA019A0B53367A82DE9D63627B90C98/729530.png",
 		quantity: 1,
 		pricenew: 250,
+		priceold: 0,
+		col: 1
+	},
+	{
+		name: "Fuzzy Hylek Hat",
+		img: "https://render.guildwars2.com/file/BD28FA0216E2D0C74357E5C05FD115E9C5CB670A/771065.png",
+		quantity: 1,
+		pricenew: 200,
 		priceold: 0,
 		col: 1
 	}

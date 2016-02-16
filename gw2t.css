@@ -376,7 +376,7 @@ html, body,
 }
 .itemContext li:hover {
 	background-image: linear-gradient(to right, #7c7253 0%, rgba(255,255,255,0) 100%);
-	animation: aniHighlight 0.2s;
+	animation: aniHighlight 0.4s;
 }
 .itemContext kbd { /* The submenu icon */
 	font-family: sans-serif;

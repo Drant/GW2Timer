@@ -2730,8 +2730,8 @@ A = {
 		{
 			var sectionname = I.SectionEnum.Account[i];
 			var sectionnamelow = sectionname.toLowerCase();
-			var menubutton = $("<li id='accMenu" + sectionname + "' class='curClick'><img src='img/ui/account/"
-				+ sectionnamelow + ".png' />" + sectionname + "</li>");
+			var menubutton = $("<li id='accMenu" + sectionname + "' class='curClick'><img src='img/account/menu/"
+				+ sectionnamelow + ".png' />" + D.getPhraseOriginal(sectionname) + "</li>");
 			menu.append(menubutton);
 			// Clicking on a button shows the associated section
 			(function(iButton, iSectionName)
@@ -2892,7 +2892,7 @@ A = {
 	},
 	
 	/*
-	 * Prints standard error response to the console.
+	 * Prints standard API key error message to the console.
 	 */
 	respondError: function(pStatus)
 	{
@@ -15987,8 +15987,9 @@ T = {
 	 */
 	isTimely: function(pObject, pDate, pGracePeriod)
 	{
-		pGracePeriod = (pGracePeriod === undefined) ? 0 : pGracePeriod;
-		if (pDate >= pObject.Start && pDate <= (new Date(pObject.Finish.getTime() + pGracePeriod * T.cMILLISECONDS_IN_SECOND)))
+		var finish = (pGracePeriod === undefined)
+			? pObject.Finish : (new Date(pObject.Finish.getTime() + pGracePeriod * T.cMILLISECONDS_IN_SECOND));
+		if (pDate >= pObject.Start && pDate <= finish)
 		{
 			return true;
 		}
