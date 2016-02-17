@@ -2035,6 +2035,11 @@ U = {
 		// Allow only alphanumeric and number sign (color word or a hexadecimal color)
 		return pString.replace(/[^a-zA-Z0-9#]/g, "");
 	},
+	stripToVariable: function(pString)
+	{
+		// Disallow spaces and ranges of programming characters !/:@[^`{~
+		return pString.replace(/ /g, "_").replace(/[\u0021-\u002f\u003a-\u0040\u005b-\u005e\u0060\u007b-\u007e]/g, "");
+	},
 	
 	/*
 	 * Strips to alphanumeric and allow spaces and some punctuation marks.
@@ -2671,8 +2676,11 @@ A = {
 	
 	TokenCurrent: null,
 	isAccountLoaded: false,
-	Items: {}, // Retrieved item details objects
-	Characters: {}, // Retrieved characters objects
+	Data: { // Cache for retrieved API data objects and arrays
+		Items: {},
+		Characters: {},
+		CharacterNames: null
+	},
 	URL: { // Account data type and URL substring
 		Account: "account",
 		Achievements: "account/achievements",
@@ -2738,15 +2746,22 @@ A = {
 			{
 				iButton.click(function()
 				{
-					$("#accContent section").hide();
-					$("#accPlate" + iSectionName).show();
+					$(".accPlatter").hide();
+					$("#accPlatter" + iSectionName).show();
 					I.SectionCurrent[I.SpecialPageEnum.Account] =
 						(iSectionName === I.SectionEnum.Account.Mananger) ? "" : iSectionName;
 					U.updateQueryString();
 				});
 			})(menubutton, sectionname);
 		}
+		
+		$("#accMenuCharacters").click(function()
+		{
+			A.generateAndInitializeCharacters();
+		});
+		
 		// Open the section if specified in the URL
+		$("#accPlatterManager").show();
 		U.openSectionFromURL({prefix: "#accMenu"});
 		
 		// Bind the window buttons
@@ -2867,10 +2882,14 @@ A = {
 		{
 			return;
 		}
+		
+		// Reset variables so the sections will reload the account data
 		for (var i in A.Permissions)
 		{
 			A.Permissions[i] = null;
 		}
+		A.Data.CharacterNames = null;
+		
 		// Initialize permissions
 		$.ajax({
 			dataType: "json",
@@ -2886,7 +2905,7 @@ A = {
 			},
 			error: function(pRequest, pError)
 			{
-				A.respondError(pError);
+				A.printError(pError);
 			}
 		});
 	},
@@ -2894,7 +2913,7 @@ A = {
 	/*
 	 * Prints standard API key error message to the console.
 	 */
-	respondError: function(pStatus)
+	printError: function(pStatus)
 	{
 		if (pStatus === "error")
 		{
@@ -2924,7 +2943,7 @@ A = {
 			},
 			error: function(pRequest, pStatus)
 			{
-				A.respondError(pStatus);
+				A.printError(pStatus);
 			}
 		});
 	},
@@ -3002,6 +3021,66 @@ A = {
 				A.saveTokens();
 			});
 		});
+	},
+	
+	/*
+	 * Gets a player character object.
+	 * @param string pName of the character, as in the API characters array.
+	 * @returns object.
+	 */
+	getCharacter: function(pName)
+	{
+		return A.Data.Characters[U.stripToVariable(pName)];
+	},
+	
+	/*
+	 * Initializes the characters subpage.
+	 */
+	generateAndInitializeCharacters: function()
+	{
+		// Don't retrieve if already did
+		if (A.Data.CharacterNames !== null)
+		{
+			return;
+		}
+		
+		var numcharacters = 0;
+		$.getJSON(A.getURL(A.URL.Characters), function(pData)
+		{
+			A.Data.CharacterNames = pData;
+			A.Data.CharacterNames.forEach(function(iCharacter)
+			{
+				$.ajax({
+					dataType: "json",
+					url: A.getURL(A.URL.Characters + "/" + U.encodeURL(iCharacter)),
+					cache: false,
+					success: function(pData, pStatus, pRequest)
+					{
+						A.Data.Characters[U.stripToVariable(iCharacter)] = pData;
+						numcharacters++;
+						if (numcharacters === A.Data.CharacterNames.length - 1)
+						{
+							finalizeCharacters();
+						}
+					},
+					error: function(pRequest, pStatus)
+					{
+						I.write("Error retrieving data for character: " + U.escapeHTML(iCharacter));
+					}
+				});
+				$("#chrSelection").append(iCharacter + "<br />");
+			});
+		}).fail(function()
+		{
+			A.printError();
+		});
+		
+		
+		// Things to do when all the characters data have been retrieved
+		var finalizeCharacters = function()
+		{
+			
+		};
 	},
 	
 };
