@@ -2038,7 +2038,7 @@ U = {
 	stripToVariable: function(pString)
 	{
 		// Disallow spaces and ranges of programming characters !/:@[^`{~
-		return pString.replace(/ /g, "_").replace(/[\u0021-\u002f\u003a-\u0040\u005b-\u005e\u0060\u007b-\u007e]/g, "");
+		return pString.replace(/ /g, "_").replace(/[0-9\u0021-\u002f\u003a-\u0040\u005b-\u005e\u0060\u007b-\u007e]/g, "");
 	},
 	
 	/*
@@ -2676,6 +2676,7 @@ A = {
 	
 	TokenCurrent: null,
 	isAccountLoaded: false,
+	Metadata: {}, // Prewritten data loaded along with account page
 	Data: { // Cache for retrieved API data objects and arrays
 		Items: {},
 		Characters: {},
@@ -2722,12 +2723,33 @@ A = {
 	},
 	
 	/*
+	 * Sets the appearance of the account page global progress bar.
+	 * @param float pPercent 0 to 1. Leave undefined to reset the bar.
+	 */
+	setProgressBar: function(pPercent)
+	{
+		var progress = $("#accProgress");
+		if (pPercent === undefined)
+		{
+			progress.css({opacity: 1}).animate({opacity: 0}, 800, function()
+			{
+				$(this).css({width: "0px", opacity: 1});
+			});
+		}
+		else
+		{
+			progress.animate({width: pPercent * T.cPERCENT_100 + "%", opacity: 1}, 50);
+		}
+	},
+	
+	/*
 	 * Initializes common UI for the account panel.
 	 */
 	initializeAccount: function()
 	{
 		// Add new words to the dictionary
 		D.addDictionary(GW2T_ACCOUNT_DICTIONARY);
+		A.Metadata = GW2T_ACCOUNT_METADATA;
 		
 		// Initialize common UI
 		var panel = $("#panelAccount");
@@ -2747,7 +2769,7 @@ A = {
 				iButton.click(function()
 				{
 					$(".accPlatter").hide();
-					$("#accPlatter" + iSectionName).show();
+					$("#accPlatter" + iSectionName).fadeIn(400);
 					I.SectionCurrent[I.SpecialPageEnum.Account] =
 						(iSectionName === I.SectionEnum.Account.Mananger) ? "" : iSectionName;
 					U.updateQueryString();
@@ -2956,8 +2978,8 @@ A = {
 	insertTokenRow: function(pName, pAPIKey, pIsUsed)
 	{
 		var token = $("<div class='accToken'></div>").appendTo("#accManager");
-		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
+		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
 		var use = $("<button class='accTokenUse'><img src='img/ui/check.png' /></button>").appendTo(buttons);
 		var del = $("<button class='accTokenDelete'><img src='img/ui/default.png' /></button><br />").appendTo(buttons);
@@ -2970,6 +2992,10 @@ A = {
 		}
 		
 		// Bind buttons
+		token.change(function()
+		{
+			use.trigger("click");
+		});
 		use.click(function()
 		{
 			var str = key.val();
@@ -3044,44 +3070,110 @@ A = {
 			return;
 		}
 		
-		var numcharacters = 0;
+		$("#chrSummary, #chrSelection, #chrInfo").empty();
+		var platter = $("#accPlatterCharacters");
+		platter.prepend(I.cThrobber);
 		$.getJSON(A.getURL(A.URL.Characters), function(pData)
 		{
+			I.removeThrobber(platter);
+			var charindex = 0;
+			var numfetched = 0;
+			var numcharacters = pData.length;
 			A.Data.CharacterNames = pData;
+			A.Data.Characters = null;
+			A.Data.Characters = new Array(numcharacters);
 			A.Data.CharacterNames.forEach(function(iCharacter)
 			{
-				$.ajax({
-					dataType: "json",
-					url: A.getURL(A.URL.Characters + "/" + U.encodeURL(iCharacter)),
-					cache: false,
-					success: function(pData, pStatus, pRequest)
-					{
-						A.Data.Characters[U.stripToVariable(iCharacter)] = pData;
-						numcharacters++;
-						if (numcharacters === A.Data.CharacterNames.length - 1)
+				$("#chrSelection").append("<li id='chrSelect_" + charindex + "' class='curClick'></li>");
+				$("#chrInfo").append("<li id='chrInfo_" + charindex + "'></li>");
+				(function(iIndex)
+				{
+					$.ajax({
+						dataType: "json",
+						url: A.getURL(A.URL.Characters + "/" + U.encodeURL(iCharacter)),
+						cache: true,
+						success: function(pData, pStatus, pRequest)
 						{
-							finalizeCharacters();
+							// Insert character into selection list
+							$("#chrSelect_" + iIndex).append(
+								"<img class='chrPortrait' src='img/account/characters/" + (pData.race).toLowerCase() + "_" + (pData.gender).toLowerCase() + I.cPNG + "' />"
+								+ "<span class='chrName'>" + iCharacter + "</span>"
+								+ "<img class='chrProceed' src='img/account/view.png' />"
+								+ "<span class='chrProfession'><img src='" + getProfessionIcon(pData) + "' />" + pData.level + "</span>")
+								.click(function()
+								{
+									$(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
+									$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
+								});
+							// Check retrieval progress
+							A.Data.Characters[iIndex] = pData;
+							(A.Data.Characters[iIndex]).charindex = iIndex;
+							numfetched++;
+							A.setProgressBar(numfetched / numcharacters);
+							if (numfetched === numcharacters)
+							{
+								A.setProgressBar();
+								A.finalizeCharacters();
+							}
+						},
+						error: function(pRequest, pStatus)
+						{
+							I.write("Error retrieving data for character: " + U.escapeHTML(iCharacter));
 						}
-					},
-					error: function(pRequest, pStatus)
-					{
-						I.write("Error retrieving data for character: " + U.escapeHTML(iCharacter));
-					}
-				});
-				$("#chrSelection").append(iCharacter + "<br />");
+					});
+				})(charindex);
+				charindex++;
 			});
 		}).fail(function()
 		{
+			I.removeThrobber(platter);
 			A.printError();
 		});
 		
-		
-		// Things to do when all the characters data have been retrieved
-		var finalizeCharacters = function()
+		// Gets the profession icon or elite spec icon if available from the character data
+		var getProfessionIcon = function(pData)
 		{
-			
+			var icon = (pData.profession).toLowerCase();
+			if (pData.specializations && pData.specializations.pve)
+			{
+				var specs = pData.specializations.pve;
+				for (var i = 0; i < specs.length; i++)
+				{
+					if (specs[i])
+					{
+						// If one of the character's specs is found to be in the elite spec
+						var specid = specs[i].id;
+						if (A.Metadata.SpecProf[specid] !== undefined)
+						{
+							icon = A.Metadata.SpecProf[specid];
+							break;
+						}
+					}
+				}
+			}
+			return "img/account/profession/" + icon + I.cPNG;
 		};
 	},
+	
+	/*
+	 * Things to do when all the characters data have been retrieved.
+	 */
+	finalizeCharacters: function()
+	{
+		var hourstr = D.getWord("h");
+		var daystr = D.getWord("d");
+		var totalage = 0;
+		A.Data.Characters.forEach(function(iData)
+		{
+			totalage += iData.age;
+			var age = Math.round(iData.age / T.cSECONDS_IN_HOUR) + hourstr;
+			var html = "<var class='chrAge'>" + age + "</var>";
+			$("#chrInfo_" + iData.charindex).append(html);
+		});
+		var totalagestr = Math.round(totalage / T.cSECONDS_IN_HOUR) + hourstr;
+		var totaldaystr = Math.round((totalage / T.cSECONDS_IN_HOUR) / T.cHOURS_IN_DAY) + daystr;
+		$("#chrSummary").append(totalagestr + " (" + totaldaystr + ")");
+	}
 	
 };
 
@@ -19219,7 +19311,7 @@ I = {
 	 */
 	bulkAnimate: function(pRequests, pSpeed)
 	{
-		for (var i in pRequests)
+		for (var i = 0; i < pRequests.length; i++)
 		{
 			var r = pRequests[i];
 			$(r.s).animate(r.p, {duration: pSpeed, queue: false});

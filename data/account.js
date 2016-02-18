@@ -7,8 +7,7 @@
  * These words must be unique from the ones in the standard Dictionary object
  * because they will be added to it.
  */
-var GW2T_ACCOUNT_DICTIONARY =
-{
+var GW2T_ACCOUNT_DICTIONARY = {
 	s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 	
 	s_achievements: {de: "erfolge", es: "logros", fr: "succès",
@@ -27,4 +26,32 @@ var GW2T_ACCOUNT_DICTIONARY =
 		cs: "obchod", it: "commercio", pl: "handel", pt: "comércio", ru: "продажа", zh: "貿易"},
 	s_wardrobe: {de: "garderobenlager", es: "garderobe", fr: "escaparate",
 		cs: "skříň", it: "armadio", pl: "szafa", pt: "roupeiro", ru: "гардероб", zh: "衣櫃"},
+};
+
+/*
+ * Quick reference API related data.
+ */
+var GW2T_ACCOUNT_METADATA = {
+	Profession: {
+		"1": "guardian",
+		"2": "warrior",
+		"3": "engineer",
+		"4": "ranger",
+		"5": "thief",
+		"6": "elementalist",
+		"7": "mesmer",
+		"8": "necromancer",
+		"9": "revenant"
+	},
+	SpecProf: {
+		"27": "dragonhunter",
+		"18": "berserker",
+		"43": "scrapper",
+		"5": "druid",
+		"7": "daredevil",
+		"48": "tempest",
+		"40": "chronomancer",
+		"34": "reaper",
+		"52": "herald"
+	}
 };
