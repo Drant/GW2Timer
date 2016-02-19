@@ -229,16 +229,16 @@ dt.jpzListNameHover {
 .nodList label img {
 	width: 16px; height: 16px;
 }
-.nodList div var { /* Resource name */
+.nodList div abbr { /* Resource name */
 	display: inline;
 }
-.nodList div:hover var {
+.nodList div:hover abbr {
 	display: none;
 }
-.nodList div samp {
+.nodList div var {
 	display: none;
 } 
-.nodList div:hover samp { /* Resource price */
+.nodList div:hover var { /* Resource price */
 	display: inline;
 	margin-left: 2px;
 	font-size: 12px;
@@ -557,7 +557,7 @@ dt.jpzListNameHover {
 	border-radius: 4px;
 	color: #ffeebb;
 }
-.trdEntry samp {
+.trdEntry abbr {
 	display: inline-block;
 	width: 36px;
 	margin-right: 4px;

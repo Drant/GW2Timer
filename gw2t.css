@@ -25,9 +25,10 @@
 
 	RESERVED TAGS:
 	<ins> sprite images
-	<var> mutable text
+	<var> generated or mutable text
 	<dfn> map coordinates link
 	<kbd> buttons clickable
+	<samp> bar graphs and progress bars, use inner tag <s> for progress
 	<aside> appended content
 
 	TABLE OF CONTENTS (Ctrl+F "AtsignAtsignLetter" to jump to section)

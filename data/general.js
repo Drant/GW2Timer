@@ -1049,10 +1049,7 @@ Countdowns: [
 	name_de: "PvP Liga Saison 2",
 	name_es: "Segunda temporada de liga PvP",
 	name_fr: "Saison 2 de la ligue JcJ",
-	url_en: "https://forum-en.guildwars2.com/forum/game/pvp/Upcoming-Changes-for-PvP-League-Season-2/",
-	url_de: "https://forum-de.guildwars2.com/forum/game/pvp/Kommende-nderungen-f-r-die-zweite-PvP-Liga-Saison",
-	url_es: "https://forum-es.guildwars2.com/forum/game/pvp/Cambios-que-llegar-n-a-la-segunda-temporada-de-liga-PvP",
-	url_fr: "https://forum-fr.guildwars2.com/forum/game/pvp/Changements-venir-pour-la-saison-2-de-la-ligue-JcJ",
+	official: "news/pvp-league-season-two-changes/",
 	Start: new Date("2016-02-23T17:00:00Z"),
 	Finish: new Date("2016-02-24T17:00:00Z")
 }
@@ -1216,16 +1213,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-02-18T00:00:00Z"),
-	Finish: new Date("2016-02-19T00:00:00Z"),
+	Start: new Date("2016-02-19T00:00:00Z"),
+	Finish: new Date("2016-02-20T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49734", price: "12600" },
-		Fox: { id: "43808", price: "25200" },
-		Derwena: { id: "48914", price: "25200" },
-		Yana: { id: "43812", price: "25200" },
-		Katyn: { id: "43842", price: "25200" },
-		Verma: { id: "43840", price: "25200" }
+		Mehem: { id: "44656", price: "25200" },
+		Fox: { id: "50023", price: "25200" },
+		Derwena: { id: "49735", price: "25200" },
+		Yana: { id: "49735", price: "25200" },
+		Katyn: { id: "43843", price: "25200" },
+		Verma: { id: "48918", price: "25200" }
 	}
 }
 };

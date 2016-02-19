@@ -26,6 +26,17 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "obchod", it: "commercio", pl: "handel", pt: "comércio", ru: "продажа", zh: "貿易"},
 	s_wardrobe: {de: "garderobenlager", es: "garderobe", fr: "escaparate",
 		cs: "skříň", it: "armadio", pl: "szafa", pt: "roupeiro", ru: "гардероб", zh: "衣櫃"},
+	
+	s_profession: {de: "klasse", es: "profesión", fr: "profession",
+		cs: "profese", it: "professione", pl: "zawód", pt: "profissão", ru: "профе́ссия", zh: "職業"},
+	s_age: {de: "alter", es: "edad", fr: "âge",
+		cs: "věk", it: "età", pl: "wiek", pt: "idade", ru: "возраст", zh: "年齡"},
+	s_deaths: {de: "tode", es: "muertes", fr: "morts",
+		cs: "úmrtí", it: "morti", pl: "zgonów", pt: "mortes", ru: "смертей", zh: "死亡"},
+	s_lifetime: {de: "lebenszeit", es: "vida", fr: "vie",
+		cs: "život", it: "vita", pl: "życie", pt: "vida", ru: "жизни", zh: "一生"},
+	s_birthday: {de: "geburtstag", es: "cumpleaños", fr: "anniversaire",
+		cs: "narozeniny", it: "compleanno", pl: "urodziny", pt: "aniversário", ru: "деньрожде́ния", zh: "生日"},
 };
 
 /*
@@ -33,6 +44,35 @@ var GW2T_ACCOUNT_DICTIONARY = {
  */
 var GW2T_ACCOUNT_METADATA = {
 	Profession: {
+		guardian: {
+			color: "blue"
+		},
+		warrior: {
+			color: "brown"
+		},
+		engineer: {
+			color: "blue"
+		},
+		ranger: {
+			color: "yellow"
+		},
+		thief: {
+			color: "black"
+		},
+		elementalist: {
+			color: "red"
+		},
+		mesmer: {
+			color: "pink"
+		},
+		necromancer: {
+			color: "green"
+		},
+		revenant: {
+			color: "gray"
+		}
+	},
+	ProfAssociation: {
 		"1": "guardian",
 		"2": "warrior",
 		"3": "engineer",
@@ -43,7 +83,7 @@ var GW2T_ACCOUNT_METADATA = {
 		"8": "necromancer",
 		"9": "revenant"
 	},
-	SpecProf: {
+	ProfElite: {
 		"27": "dragonhunter",
 		"18": "berserker",
 		"43": "scrapper",

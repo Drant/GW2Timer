@@ -214,7 +214,7 @@
 	display: inline-block;
 	text-align: right;
 }
-#wvwLeaderboard span { /* A bar graph */
+#wvwLeaderboard samp { /* A bar graph */
 	vertical-align: middle;
 	display: inline-block;
 	width: 96px; height: 12px;
@@ -223,7 +223,7 @@
 	background: rgba(0, 0, 0, 0.2);
 	box-shadow: 0px 0px 1px black;
 }
-#wvwLeaderboard samp { /* The inner progress of the bar graph */
+#wvwLeaderboard samp s { /* The inner progress of the bar graph */
 	display: block;
 	height: 100%;
 }
@@ -276,29 +276,29 @@
 	width: 64px;
 	margin-right: 4px;
 }
-.lboServerGreen samp {
-	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #c0e23c 0%, #62a01c 49%, #3c5610 100%);
+.lboServerGreen samp s {
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #c0e23c 0%, #62a01c 50%, #3c5610 100%);
 	box-shadow: 0px 0px 2px #62a01c;
 	border-radius: 1px;
 }
-.lboServerBlue samp {
-	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #37d4e3 0%, #217fa2 49%, #174f5b 100%);
+.lboServerBlue samp s {
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #37d4e3 0%, #217fa2 50%, #174f5b 100%);
 	box-shadow: 0px 0px 2px #217fa2;
 	border-radius: 1px;
 }
-.lboServerRed samp {
-	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #de3f47 0%, #b52326 49%, #621010 100%);
+.lboServerRed samp s {
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #de3f47 0%, #b52326 50%, #621010 100%);
 	box-shadow: 0px 0px 2px #b52326;
 	border-radius: 1px;
 }
-#wvwLeaderboard .lboFocusRed samp, #wvwLeaderboard .lboFocusBlue samp {
-	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #c0e23c 0%, #62a01c 49%, #3c5610 100%); /* Green */
+#wvwLeaderboard .lboFocusRed samp s, #wvwLeaderboard .lboFocusBlue samp s {
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #c0e23c 0%, #62a01c 50%, #3c5610 100%); /* Green */
 }
-#wvwLeaderboard .lboFocusRed span, #wvwLeaderboard .lboFocusGreen samp {
-	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #37d4e3 0%, #217fa2 49%, #174f5b 100%); /* Blue */
+#wvwLeaderboard .lboFocusRed samp, #wvwLeaderboard .lboFocusGreen samp s {
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #37d4e3 0%, #217fa2 50%, #174f5b 100%); /* Blue */
 }
-#wvwLeaderboard .lboFocusGreen span, #wvwLeaderboard .lboFocusBlue span {
-	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #de3f47 0%, #b52326 49%, #621010 100%); /* Red */
+#wvwLeaderboard .lboFocusGreen samp, #wvwLeaderboard .lboFocusBlue samp {
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #de3f47 0%, #b52326 50%, #621010 100%); /* Red */
 }
 .lboFocusRed .lboFocusA, .lboFocusBlue .lboFocusA {
 	color: #52a518; /* Green */
@@ -309,10 +309,10 @@
 .lboFocusGreen .lboFocusB, .lboFocusBlue .lboFocusB {
 	color: #cc1f24; /* Red */
 }
-#wvwLeaderboard span.lboFocusZero {
+#wvwLeaderboard samp.lboFocusZero {
 	background: rgba(0, 0, 0, 0.2);
 }
-.lboScore span samp {
+.lboScore samp s {
 	float: right;
 }
 .lboPPT {
@@ -322,9 +322,6 @@
 .lboPPT var {
 	width: 32px;
 	margin-left: 4px;
-}
-.lboPPT span {
-	
 }
 .lboLand {
 	margin-left: 8px;

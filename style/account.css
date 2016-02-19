@@ -4,8 +4,8 @@
 */
 
 #accContent {
-	font-family: Menomonia;
 	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 #accClose, #accExpand {
@@ -107,20 +107,32 @@
 
 /* Characters
 ----------------------------------------------------------------------------- */
-#chrSummary {
+#chrSummary, #chrStatistics {
 	width: 100%;
 	text-align: center;
 }
 
-#chrSelection, #chrInfo {
+.chrHeaderLeft, .chrHeaderRight {
+	font-size: 18px;
+	font-weight: bold;
+	text-shadow: 0px 0px 2px #e4e0b3;
+	color: #e4e0b3;
+}
+.chrHeaderLeft {
+	margin-left: 32px;
+	float: left;
+}
+.chrHeaderRight {
+	margin-right: 8px;
+	float: right;
+}
+
+#chrSelection, #chrUsage, #chrSeniority {
 	display: inline-block;
 	font-size: 18px;
 }
 #chrSelection {
 	margin-right: 8px;
-}
-#chrInfo {
-	
 }
 
 #chrSelection li {
@@ -129,6 +141,7 @@
 	overflow: hidden;
 	vertical-align: middle;
 	line-height: 32px;
+	text-align: left;
 	background-repeat: repeat-y;
 }
 #chrSelection li:nth-child(even) {
@@ -143,6 +156,7 @@
 	min-width: 128px; max-width: 192px;
 	overflow: hidden;
 	white-space: nowrap;
+	font-family: Menomonia;
 }
 .chrPortrait {
 	display: block;
@@ -161,16 +175,64 @@
 	float: right;
 }
 
-#chrInfo {
+#chrStatistics samp { /* A bar graph */
+	vertical-align: middle;
+	display: inline-block;
+	width: 96px; height: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.8);
+	border-radius: 2px;
+	background: rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 0px 1px black;
+}
+#chrStatistics samp s { /* The inner progress of the bar graph */
+	display: block;
+	height: 100%;
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #fff392 0%, #eadf86 50%, #807a49 100%);
+	box-shadow: 0px 0px 2px #62a01c;
+	border-radius: 1px;
+}
+
+.chrStats {
 	vertical-align: top;
 }
-#chrInfo li {
+.chrStats li { /* A row containing texts and graphs */
 	height: 32px;
+	padding-right: 16px;
+	overflow: hidden;
 	line-height: 32px;
 }
-.chrAge {
+.chrStats li:nth-child(even) {
+	background-image: linear-gradient(to left, #333 0%, rgba(255,255,255,0) 100%);
+}
+.chrStats li:hover {
+	background: #444;
+}
+.chrHeader {
+	background: linear-gradient(to right, #000 0%, rgba(255,255,255,0) 100%);
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+}
+.chrAge, .chrDeaths, .chrLifetime, .chrBirthday, .chrBirthdate { /* Text and values */
 	display: inline-block;
 	width: 64px;
 	text-align: right;
+	white-space: nowrap;
+}
+.chrAge {
+	margin-right: 8px;
 	color: #bbcc77;
+}
+.chrDeaths {
+	color: #ff2200;
+}
+.chrLifetime {
+	width: 112px;
+	margin-right: 8px;
+}
+.chrBirthday {
+	margin-right: 8px;
+}
+.chrBirthdate {
+	width: 224px;
+	color: #ccc;
 }

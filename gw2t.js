@@ -476,6 +476,47 @@ O = {
 	},
 	
 	/*
+	 * Sorts an array of objects by the provided key name, or language name if not.
+	 * @param array pObjects.
+	 * @param string pKeyName, optional.
+	 * @param boolean pIsDescending order, optional. Ascending is default order.
+	 */
+	sortObjects: function(pObjects, pKeyName, pIsDescending)
+	{
+		var key = (pKeyName) ? pKeyName : D.getNameKey();
+		if (pIsDescending)
+		{
+			pObjects.sort(function(a, b)
+			{
+				if (a[key] < b[key])
+				{
+					return 1;
+				}
+				if (a[key] > b[key])
+				{
+					return -1;
+				}
+				return 0;
+			});
+		}
+		else
+		{
+			pObjects.sort(function(a, b)
+			{
+				if (a[key] > b[key])
+				{
+					return 1;
+				}
+				if (a[key] < b[key])
+				{
+					return -1;
+				}
+				return 0;
+			});
+		}
+	},
+	
+	/*
 	 * Gets the length of a uniform associative array object.
 	 * @param object pObject to count.
 	 * @returns int number of subobjects in object.
@@ -2678,9 +2719,11 @@ A = {
 	isAccountLoaded: false,
 	Metadata: {}, // Prewritten data loaded along with account page
 	Data: { // Cache for retrieved API data objects and arrays
+		Account: {},
 		Items: {},
 		Characters: {},
-		CharacterNames: null
+		CharacterNames: null,
+		Guild: {}
 	},
 	URL: { // Account data type and URL substring
 		Account: "account",
@@ -2913,22 +2956,16 @@ A = {
 		A.Data.CharacterNames = null;
 		
 		// Initialize permissions
-		$.ajax({
-			dataType: "json",
-			url: A.getURL(A.URL.TokenInfo),
-			cache: false,
-			success: function(pData)
+		$.getJSON(A.getURL(A.URL.TokenInfo), function(pData)
+		{
+			for (var i in pData.permissions)
 			{
-				for (var i in pData.permissions)
-				{
-					var permission = pData.permissions[i];
-					A.Permissions[permission] = true;
-				}
-			},
-			error: function(pRequest, pError)
-			{
-				A.printError(pError);
+				var permission = pData.permissions[i];
+				A.Permissions[permission] = true;
 			}
+		}).fail(function()
+		{
+			A.printError();
 		});
 	},
 	
@@ -3070,7 +3107,8 @@ A = {
 			return;
 		}
 		
-		$("#chrSummary, #chrSelection, #chrInfo").empty();
+		$("#chrSummary, #chrSelection, #chrUsage, #chrSeniority").empty();
+		$(".chrStats").hide();
 		var platter = $("#accPlatterCharacters");
 		platter.prepend(I.cThrobber);
 		$.getJSON(A.getURL(A.URL.Characters), function(pData)
@@ -3084,8 +3122,9 @@ A = {
 			A.Data.Characters = new Array(numcharacters);
 			A.Data.CharacterNames.forEach(function(iCharacter)
 			{
-				$("#chrSelection").append("<li id='chrSelect_" + charindex + "' class='curClick'></li>");
-				$("#chrInfo").append("<li id='chrInfo_" + charindex + "'></li>");
+				$("#chrSelection").append("<li id='chrSelection_" + charindex + "' class='curClick'></li>");
+				$("#chrUsage").append("<li id='chrUsage_" + charindex + "'></li>");
+				$("#chrSeniority").append("<li id='chrSeniority_" + charindex + "'></li>");
 				(function(iIndex)
 				{
 					$.ajax({
@@ -3094,8 +3133,8 @@ A = {
 						cache: true,
 						success: function(pData, pStatus, pRequest)
 						{
-							// Insert character into selection list
-							$("#chrSelect_" + iIndex).append(
+							// Insert character name into selection list
+							$("#chrSelection_" + iIndex).append(
 								"<img class='chrPortrait' src='img/account/characters/" + (pData.race).toLowerCase() + "_" + (pData.gender).toLowerCase() + I.cPNG + "' />"
 								+ "<span class='chrName'>" + iCharacter + "</span>"
 								+ "<img class='chrProceed' src='img/account/view.png' />"
@@ -3143,9 +3182,9 @@ A = {
 					{
 						// If one of the character's specs is found to be in the elite spec
 						var specid = specs[i].id;
-						if (A.Metadata.SpecProf[specid] !== undefined)
+						if (A.Metadata.ProfElite[specid] !== undefined)
 						{
-							icon = A.Metadata.SpecProf[specid];
+							icon = A.Metadata.ProfElite[specid];
 							break;
 						}
 					}
@@ -3160,20 +3199,126 @@ A = {
 	 */
 	finalizeCharacters: function()
 	{
+		$(".chrStats").show();
+		var now = new Date();
+		var nowmsec = now.getTime();
+		$.getJSON(A.getURL(A.URL.Account), function(pData)
+		{
+			
+		});
+		
 		var hourstr = D.getWord("h");
 		var daystr = D.getWord("d");
+		var yearstr = D.getWord("y");
+		var highestage = 0;
+		var highestdeaths = 0;
+		var highestlifetime = 0;
 		var totalage = 0;
+		var totaldeaths = 0;
+		
+		// First loop to find max values for age and deaths
 		A.Data.Characters.forEach(function(iData)
 		{
-			totalage += iData.age;
-			var age = Math.round(iData.age / T.cSECONDS_IN_HOUR) + hourstr;
-			var html = "<var class='chrAge'>" + age + "</var>";
-			$("#chrInfo_" + iData.charindex).append(html);
+			if (highestage < iData.age)
+			{
+				highestage = iData.age;
+			}
+			if (highestdeaths < iData.deaths)
+			{
+				highestdeaths = iData.deaths;
+			}
+			iData.charlifetime = ~~((nowmsec - (new Date(iData.created)).getTime()) / T.cMILLISECONDS_IN_SECOND);
+			if (highestlifetime < iData.charlifetime)
+			{
+				highestlifetime = iData.charlifetime;
+			}
 		});
+		// Write a row for each character
+		A.Data.Characters.forEach(function(iData)
+		{
+			totalage += iData.age; // Seconds
+			totaldeaths += iData.deaths;
+			var age = Math.round(iData.age / T.cSECONDS_IN_HOUR);
+			var agepercent = (iData.age / highestage) * T.cPERCENT_100;
+			var deathpercent = (iData.deaths / highestdeaths) * T.cPERCENT_100;
+			var usage = "<var class='chrAge' title='" + T.formatSeconds(iData.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
+				+ "<samp><s class='cssRight' style='width:" + agepercent + "%'></s></samp>"
+				+ "<samp><s style='width:" + deathpercent + "%'></s></samp>"
+				+ "<var class='chrDeaths' data-value='" + iData.deaths + "'>" + iData.deaths + "x</var>";
+			$("#chrUsage_" + iData.charindex).append(usage);
+			var birthdate = (new Date(iData.created)).toLocaleString();
+			var birthdays = ~~(iData.charlifetime / T.cSECONDS_IN_YEAR);
+			var lifetime = ~~(iData.charlifetime / T.cSECONDS_IN_DAY);
+			var lifetimepercent = (iData.charlifetime / highestlifetime) * T.cPERCENT_100;
+			var birthdaysince = ~~((iData.charlifetime % T.cSECONDS_IN_YEAR) / T.cSECONDS_IN_DAY);
+			var birthdaytill = T.cDAYS_IN_YEAR - birthdaysince;
+			var birthdaypercent = (birthdaysince / T.cDAYS_IN_YEAR) * T.cPERCENT_100;
+			var seniority = "<var class='chrLifetime' data-value='" + iData.charlifetime + "'>" + lifetime + daystr + " (" + birthdays + yearstr + ")</var>"
+				+ "<samp><s class='cssRight' style='width:" + lifetimepercent + "%'></s></samp>"
+				+ "<samp><s style='width:" + birthdaypercent + "%'></s></samp>"
+				+ "<var class='chrBirthday' data-value='" + birthdaysince + "'>" + birthdaytill + daystr + "</var>"
+				+ "<var class='chrBirthdate'>" + birthdate + "</var>";
+			$("#chrSeniority_" + iData.charindex).append(seniority);
+		});
+		// Write summary on the top of page
 		var totalagestr = Math.round(totalage / T.cSECONDS_IN_HOUR) + hourstr;
 		var totaldaystr = Math.round((totalage / T.cSECONDS_IN_HOUR) / T.cHOURS_IN_DAY) + daystr;
-		$("#chrSummary").append(totalagestr + " (" + totaldaystr + ")");
-	}
+		var summary = A.Data.Characters.length + ": " + totalagestr + " (" + totaldaystr + ") / " + totaldeaths + "x";
+		$("#chrSummary").append(summary);
+		
+		// Highlight the character's name when hovered over a statistics row
+		$(".chrStats li").hover(
+			function() { $("#chrSelection_" + U.getSubstringFromHTMLID($(this))).css({outline: "1px solid red"}); },
+			function() { $("#chrSelection_" + U.getSubstringFromHTMLID($(this))).css({outline: "none"}); }
+		);
+
+		// Insert header above the columns
+		$("#chrSelection").prepend("<li class='chrHeader'><var class='chrHeaderLeft'>"
+			+ D.getWordCapital("character") + "</var><var class='chrHeaderRight'>"
+			+ D.getWordCapital("profession") + "</var></li>");
+		$("#chrUsage").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrAge'>"
+			+ D.getWordCapital("age") + " " + I.Symbol.TriDown + "</var><var class='chrHeaderRight curClick' data-classifier='chrDeaths'>"
+			+ D.getWordCapital("deaths") + " " + I.Symbol.TriDown + "</var></li>");
+		$("#chrSeniority").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrLifetime'>"
+			+ D.getWordCapital("lifetime") + " " + I.Symbol.TriDown + "</var><var class='chrHeaderRight curClick' data-classifier='chrBirthday'>"
+			+ D.getWordCapital("birthday") + " " + I.Symbol.TriDown + "</var></li>");
+		
+		$(".chrHeaderLeft, .chrHeaderRight").click(function()
+		{
+			A.sortCharacters($(this).attr("data-classifier"));
+		});
+		
+		// Finally
+		I.qTip.init("#accPlatterCharacters var");
+	},
+	
+	/*
+	 * Rearranges all the characters columns based on one column's data value,
+	 * in descending order.
+	 * @param string pClassifier class names of data containing cells.
+	 */
+	sortCharacters: function(pClassifier)
+	{
+		var sortable = [];
+		$("." + pClassifier).each(function()
+		{
+			sortable.push({
+				// Get the index from the list item containing the value
+				index: U.getSubintegerFromHTMLID($(this).parent()),
+				value: parseInt($(this).attr("data-value"))
+			});
+		});
+		O.sortObjects(sortable, "value", true);
+		
+		// Sort all the rows using the new order
+		for (var i = 0; i < sortable.length; i++)
+		{
+			var index = sortable[i].index;
+			$("#chrSelection_" + index).appendTo("#chrSelection");
+			$("#chrUsage_" + index).appendTo("#chrUsage");
+			$("#chrSeniority_" + index).appendTo("#chrSeniority");
+		}
+	},
 	
 };
 
@@ -4898,30 +5043,30 @@ E = {
 			$("#trdList").append(
 				"<div id='trdEntry_" + i + "' class='trdEntry'>"
 					+ "<div class='trdAccordion trdAccordionShut'>"
-						+ "<samp><img class='trdIcon' src='" + U.URL_IMG.Placeholder + "' /></samp>"
+						+ "<abbr><img class='trdIcon' src='" + U.URL_IMG.Placeholder + "' /></abbr>"
 							+ "<div class='trdResultsFocus'><input class='trdName' type='text' /></div>"
 						+ "<div class='trdButtons'>"
 							+ "<button class='trdSearch' tabindex='-1'>S</button><button class='trdWiki' tabindex='-1'>W</button><br />"
 						+ "</div>"
 						+ "<div class='trdExpand'>"
-							+ "<samp>$~O</samp><input class='trdBuy' type='text' />"
-							+ "<samp>−$~</samp><input class='trdCost trdOutput' type='text' tabindex='-1' /><br />"
-							+ "<samp>O~$</samp><input class='trdSell' type='text' />"
-							+ "<samp>$=$</samp><input class='trdBreak trdOutput' type='text' tabindex='-1' /><br />"
-							+ "<samp>×</samp><input class='trdQuantity' type='text' />"
-							+ "<samp>−$%</samp><input class='trdTax trdOutput' type='text' tabindex='-1' /><br />"
-							+ "<samp>+$</samp><input class='trdProfit trdOutput' type='text' tabindex='-1' />"
-							+ "<samp>=$</samp><input class='trdRevenue trdOutput' type='text' tabindex='-1' /><br />"
-							+ "<samp>+$%</samp><input class='trdMargin trdOutput' type='text' tabindex='-1' />"
-							+ "<samp>[]</samp><input class='trdLink trdOutput' type='text' tabindex='-1' />"
+							+ "<abbr>$~O</abbr><input class='trdBuy' type='text' />"
+							+ "<abbr>−$~</abbr><input class='trdCost trdOutput' type='text' tabindex='-1' /><br />"
+							+ "<abbr>O~$</abbr><input class='trdSell' type='text' />"
+							+ "<abbr>$=$</abbr><input class='trdBreak trdOutput' type='text' tabindex='-1' /><br />"
+							+ "<abbr>×</abbr><input class='trdQuantity' type='text' />"
+							+ "<abbr>−$%</abbr><input class='trdTax trdOutput' type='text' tabindex='-1' /><br />"
+							+ "<abbr>+$</abbr><input class='trdProfit trdOutput' type='text' tabindex='-1' />"
+							+ "<abbr>=$</abbr><input class='trdRevenue trdOutput' type='text' tabindex='-1' /><br />"
+							+ "<abbr>+$%</abbr><input class='trdMargin trdOutput' type='text' tabindex='-1' />"
+							+ "<abbr>[]</abbr><input class='trdLink trdOutput' type='text' tabindex='-1' />"
 							+ "<input class='trdItem trdOutput' type='text' /><br />"
-							+ "<samp>$~!</samp>"
+							+ "<abbr>$~!</abbr>"
 								+ "<input class='trdNotifyBuyHigh' type='text' />"
 								+ "<input class='trdCurrentBuy trdOutput' type='text' tabindex='-1' />"
 								+ "<input class='trdNotifyBuyLow' type='text' />"
 								+ "<label title='<dfn>" + D.getWordCapital("overwrite") + "</dfn>: Replace your buy and sell prices with the current prices when refreshing.'>"
 									+ "<input class='trdOverwrite' type='checkbox' tabindex='-1' />&zwnj;</label><br />"
-							+ "<samp>!~$</samp>"
+							+ "<abbr>!~$</abbr>"
 								+ "<input class='trdNotifySellHigh' type='text' />"
 								+ "<input class='trdCurrentSell trdOutput' type='text' tabindex='-1' />"
 								+ "<input class='trdNotifySellLow' type='text' />"
@@ -5808,7 +5953,7 @@ E = {
 	},
 	
 	/*
-	 * Performs the expression on a generic calculator.
+	 * Performs the expression on the arithmetic calculator.
 	 * This function uses eval(), so must sanitize user input.
 	 * @param jqobject pCalculator input box containing user's expression.
 	 */
@@ -5820,7 +5965,7 @@ E = {
 		{
 			result = eval(expression);
 		}
-		catch (pException) {}
+		catch (e) {}
 		
 		pCalculator.val(parseFloat(result)).select();
 		if (result.toString().length > 0)
@@ -5842,6 +5987,7 @@ D = {
 		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 		
 		// Time
+		s_y: {de: "j", es: "a", fr: "a", cs: "r", it: "a", pl: "r", pt: "a", ru: "г", zh: "年"},
 		s_w: {de: "w", es: "s", fr: "s", cs: "t", it: "s", pl: "t", pt: "s", ru: "н", zh: "週"},
 		s_d: {de: "t", es: "d", fr: "j", cs: "d", it: "g", pl: "d", pt: "d", ru: "д", zh: "日"},
 		s_h: {de: "h", es: "h", fr: "h", cs: "h", it: "o", pl: "g", pt: "h", ru: "ч", zh: "時"},
@@ -6606,27 +6752,6 @@ D = {
 			return C.Chains[pChain.nexus].pronunciation;
 		}
 		return D.getChainTitle(pChain);
-	},
-	
-	/*
-	 * Sorts an array of objects by its language name.
-	 * @param array pObjects.
-	 */
-	sortObjects: function(pObjects)
-	{
-		var key = D.getNameKey();
-		pObjects.sort(function(a, b)
-		{
-			if (a[key] > b[key])
-			{
-				return 1;
-			}
-			if (a[key] < b[key])
-			{
-				return -1;
-			}
-			return 0;
-		});
 	}
 };
 
@@ -6879,7 +7004,7 @@ C = {
 		"<div id='chnBar_" + pChain.nexus + "' class='chnBar'>"
 			+ "<div class='chnTitle'>"
 				+ "<img id='chnIcon_" + pChain.nexus + "' src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
-				+ "<samp id='chnCheck_" + pChain.nexus + "' class='chnCheck'></samp>"
+				+ "<kbd id='chnCheck_" + pChain.nexus + "' class='chnCheck'></kbd>"
 				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + chainname + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
 				+ "<aside><img class='chnDaily chnDaily_" + pChain.nexus + "' src='img/ui/daily.png' /></aside>"
@@ -7410,7 +7535,7 @@ C = {
 				"<div class='chnSlot chnSlotTime_" + i + " chnSlot_" + ithchain.nexus + "' data-" + C.cIndexSynonym + "='" + ithchain.nexus + "' data-timeframe='" + i + "'>"
 					+ "<div class='chnTitle'>"
 						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
-						+ "<samp class='chnCheck'></samp>"
+						+ "<kbd class='chnCheck'></kbd>"
 						+ "<h1>" + D.getObjectName(ithchain) + "</h1>"
 						+ "<time>" + timestring + "</time>"
 						+ "<aside><img class='chnDaily chnDaily_" + ithchain.nexus + "' src='img/ui/daily.png' /></aside>"
@@ -7433,7 +7558,7 @@ C = {
 			function() { $(".chnSlot").removeClass("chnBarHover"); }
 		);
 		// Mimic check off function
-		$(".chnSlot samp").click(function()
+		$(".chnSlot .chnCheck").click(function()
 		{
 			$("#chnCheck_" + C.Chains[$(this).parent().parent().data(C.cIndexSynonym)].nexus).trigger("click");
 		});
@@ -12327,7 +12452,7 @@ G = {
 				resource = P.Resources[i];
 				$("#nodResource_" + resource.type).append(
 					"<label><input id='nod_" + i + "' type='checkbox' checked='checked' /> <img src='img/node/"
-					+ i.toLowerCase() + I.cPNG + "' /> <var>" + D.getObjectName(resource) + "</var><samp id='nodPrice_" + i + "'></samp></label>");
+					+ i.toLowerCase() + I.cPNG + "' /> <abbr>" + D.getObjectName(resource) + "</abbr><var id='nodPrice_" + i + "'></var></label>");
 			}
 			// Bind checkboxes
 			for (i in P.Resources)
@@ -13071,7 +13196,7 @@ G = {
 			 */
 			$("#gldButton_Bounty").one("click", function()
 			{
-				D.sortObjects(P.Guild.Bounty.data);
+				O.sortObjects(P.Guild.Bounty.data);
 				for (var i in P.Guild.Bounty.data)
 				{
 					var mission = P.Guild.Bounty.data[i];
@@ -13119,7 +13244,7 @@ G = {
 			 */
 			$("#gldButton_Trek").one("click", function()
 			{
-				D.sortObjects(P.Guild.Trek.data);
+				O.sortObjects(P.Guild.Trek.data);
 				for (var i in P.Guild.Trek.data)
 				{
 					var mission = P.Guild.Trek.data[i];
@@ -13155,7 +13280,7 @@ G = {
 			$("#gldButton_Challenge").one("click", function()
 			{
 				P.Guild.Challenge.usedSubmaps = [];
-				D.sortObjects(P.Guild.Challenge.data);
+				O.sortObjects(P.Guild.Challenge.data);
 				for (var i in P.Guild.Challenge.data)
 				{
 					var mission = P.Guild.Challenge.data[i];
@@ -13207,7 +13332,7 @@ G = {
 			$("#gldButton_Rush").one("click", function()
 			{
 				P.Guild.Rush.usedSubmaps = [];
-				D.sortObjects(P.Guild.Rush.data);
+				O.sortObjects(P.Guild.Rush.data);
 				for (var i in P.Guild.Rush.data)
 				{
 					var mission = P.Guild.Rush.data[i];
@@ -13276,7 +13401,7 @@ G = {
 			$("#gldButton_Puzzle").one("click", function()
 			{
 				P.Guild.Puzzle.usedSubmaps = [];
-				D.sortObjects(P.Guild.Puzzle.data);
+				O.sortObjects(P.Guild.Puzzle.data);
 				for (var i in P.Guild.Puzzle.data)
 				{
 					var mission = P.Guild.Puzzle.data[i];
@@ -13501,7 +13626,7 @@ W = {
 				{
 					className: "",
 					html: "<div id='obj_" + obj.id + "' class='objContainer'>"
-							+ "<span class='objUmbrellaContainer'><span class='objUmbrellaOuter'><samp id='objUmbrella_" + obj.id + "' class='objUmbrella'></samp></span></span>"
+							+ "<span class='objUmbrellaContainer'><span class='objUmbrellaOuter'><span id='objUmbrella_" + obj.id + "' class='objUmbrella'></span></span></span>"
 							+ "<time id='objTimer_" + obj.id + "' class='objTimer'></time>"
 							+ "<span class='objProgressContainer'><span id='objProgressBar_" + obj.id
 								+ "' class='objProgressBar'><var id='objProgress_" + obj.id + "' class='objProgress'></var></span></span>"
@@ -13806,7 +13931,7 @@ W = {
 		{
 			servers.push(W.Servers[i]);
 		}
-		D.sortObjects(servers);
+		O.sortObjects(servers);
 		
 		// Write the list
 		var server;
@@ -14030,7 +14155,7 @@ W = {
 				var kdpercent = T.parseRatio(kills / (kills + deaths)) * T.cPERCENT_100;
 				kdstr = "<aside class='lboKD' title='<dfn>Kills to Deaths ratio:</dfn> " + kdratio + "'>"
 					+ "<var class='lboKills'>" + kills.toLocaleString() + "</var>"
-					+ "<span><samp style='width:" + kdpercent + "%'><mark></mark></samp></span>"
+					+ "<samp><s style='width:" + kdpercent + "%'><mark></mark></s></samp>"
 					+ "<var class='lboDeaths'>" + deaths.toLocaleString() + "</var>"
 				+ "</aside>";
 			}
@@ -14107,10 +14232,10 @@ W = {
 				+ "<aside class='lboScore' title='<dfn>" + scoredifferences[0] + " points</dfn> away from " + otherservers[0]
 				+ "<br /><dfn>" + scoredifferences[1] + " points</dfn> away from " + otherservers[1] + "'>"
 					+ "<var>" + score.toLocaleString() + "</var>"
-					+ "<span><samp style='width:" + scorepercent + "%'></samp></span>"
+					+ "<samp><s style='width:" + scorepercent + "%'></s></samp>"
 				+ "</aside>"
 				+ "<aside class='lboPPT' title='<dfn>Points-Per-Tick (PPT)</dfn>'>"
-					+ "<span><samp style='width:" + pptpercent + "%'></samp></span>"
+					+ "<samp><s style='width:" + pptpercent + "%'></s></samp>"
 					+ "<var>+" + ppttotal + "</var>"
 				+ "</aside>"
 				+ "<aside class='lboLand' title='<dfn>PPT per borderlands</dfn>'>"
@@ -14123,7 +14248,7 @@ W = {
 						+ "<dfn>" + focuses[0] + " PPT</dfn> earnable from " + otherservers[0] + " native objectives<br />"
 						+ "<dfn>" + focuses[1] + " PPT</dfn> earnable from " + otherservers[1] + " native objectives'>"
 					+ "<var class='lboFocusA'>" + focusApercent + "%</var>"
-					+ "<span class='" + focusclass + "'><samp style='width:" + focusApercent + "%'><mark></mark></samp></span>"
+					+ "<samp class='" + focusclass + "'><s style='width:" + focusApercent + "%'><mark></mark></s></samp>"
 					+ "<var class='lboFocusB'>" + focusBpercent + "%</var>"
 				+ "</aside>"
 				+ kdstr
@@ -14131,7 +14256,7 @@ W = {
 						+ "<dfn>" + blscoreA + " points</dfn> earned from " + otherservers[0] + " Borderlands<br />"
 						+ "<dfn>" + blscoreB + " points</dfn> earned from " + otherservers[1] + " Borderlands'>"
 					+ "<var class='lboFocusA'>" + blscoreApercent + "%</var>"
-					+ "<span class='" + blscoreclass + "'><samp style='width:" + blscoreApercent + "%'><mark></mark></samp></span>"
+					+ "<samp class='" + blscoreclass + "'><s style='width:" + blscoreApercent + "%'><mark></mark></s></samp>"
 					+ "<var class='lboFocusB'>" + blscoreBpercent + "%</var>"
 				+ "</aside>"
 			+ "</article>";
@@ -14371,7 +14496,7 @@ W = {
 		{
 			timestr = T.getTimeFormatted({customTimeInDate: new Date(pISOTime)});
 		}
-		var entry = $("<li class='logEntry " + pClass + "'><time data-time='" + pISOTime + "'>" + timestr + "</time><samp>" + pString + "</samp></li>")
+		var entry = $("<li class='logEntry " + pClass + "'><time data-time='" + pISOTime + "'>" + timestr + "</time><span>" + pString + "</span></li>")
 			.prependTo("#logWindow");
 		this.bindMapLinkBehavior(entry.find("dfn"));
 		
@@ -15194,12 +15319,14 @@ T = {
 	cSECONDS_IN_HOUR: 3600,
 	cSECONDS_IN_DAY: 86400,
 	cSECONDS_IN_WEEK: 604800,
+	cSECONDS_IN_YEAR: 31536000,
 	cMINUTES_IN_HOUR: 60,
 	cMINUTES_IN_2_HOURS: 120,
 	cMINUTES_IN_DAY: 1440,
 	cHOURS_IN_MERIDIEM: 12,
 	cHOURS_IN_DAY: 24,
 	cDAYS_IN_WEEK: 7,
+	cDAYS_IN_YEAR: 365,
 	cSECONDS_IN_TIMEFRAME: 900,
 	cMINUTES_IN_TIMEFRAME: 15,
 	cMINUTES_IN_MINIFRAME: 5,
@@ -16096,7 +16223,8 @@ T = {
 	},
 	
 	/*
-	 * Gets a "1w 6d 23h 59m 59s" string from seconds.
+	 * Gets a "1w 6d 23h 59m 59s" string from seconds. Years is used instead of
+	 * weeks if the time is that long.
 	 * @param int pSeconds of time.
 	 * @returns string formatted time.
 	 */
@@ -16116,15 +16244,31 @@ T = {
 			seconds = seconds * -1;
 			signstr = "−";
 		}
-		if (seconds >= T.cSECONDS_IN_WEEK)
+		if (seconds < T.cSECONDS_IN_YEAR)
 		{
-			week = ~~(seconds / T.cSECONDS_IN_WEEK);
-			weekstr = week + D.getWord("w") + " ";
+			if (seconds >= T.cSECONDS_IN_WEEK)
+			{
+				week = ~~(seconds / T.cSECONDS_IN_WEEK);
+				weekstr = week + D.getWord("w") + " ";
+			}
+			if (seconds >= T.cSECONDS_IN_DAY)
+			{
+				day = ~~(seconds / T.cSECONDS_IN_DAY) % T.cDAYS_IN_WEEK;
+				daystr = day + D.getWord("d") + " ";
+			}
 		}
-		if (seconds >= T.cSECONDS_IN_DAY)
+		else
 		{
-			day = ~~(seconds / T.cSECONDS_IN_DAY) % T.cDAYS_IN_WEEK;
-			daystr = day + D.getWord("d") + " ";
+			if (seconds >= T.cSECONDS_IN_YEAR)
+			{
+				week = ~~(seconds / T.cSECONDS_IN_YEAR);
+				weekstr = week + D.getWord("y") + " ";
+			}
+			if (seconds >= T.cSECONDS_IN_DAY)
+			{
+				day = ~~(seconds / T.cSECONDS_IN_DAY) % T.cDAYS_IN_YEAR;
+				daystr = day + D.getWord("d") + " ";
+			}
 		}
 		if (seconds >= T.cSECONDS_IN_HOUR)
 		{
@@ -16667,12 +16811,12 @@ B = {
 				/*
 				 * code: the colored bullet point for activity status
 				 * time: the countdown time
-				 * var: the up or down arrow for start or finish start
-				 * samp: the start or finish time
+				 * abbr: the up or down arrow for start or finish start
+				 * var: the start or finish time
 				 */
 				$("#dsbCountdown").append(
 					"<div id='dsbCountdown_" + i + "' class='dsbCountdownEntry'>"
-						+ "<code>" + I.Symbol.Block + "</code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> <var></var> <samp></samp>"
+						+ "<code>" + I.Symbol.Block + "</code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> <abbr></abbr> <var></var>"
 					+ "</div>");
 			}
 			I.qTip.init("#dsbCountdown");
@@ -17015,8 +17159,8 @@ B = {
 				if (ctd.isTimely)
 				{
 					countdownhtml.find("code").removeClass().addClass(bulletclass);
-					countdownhtml.find("var").text(arrow);
-					countdownhtml.find("samp").text(stamp);
+					countdownhtml.find("abbr").text(arrow);
+					countdownhtml.find("var").text(stamp);
 				}
 			}
 		}
