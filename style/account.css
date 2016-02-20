@@ -36,16 +36,20 @@
 #accMenu li {
 	display: inline-block;
 	padding-left: 4px;
-	margin-right: 12px;
+	padding-right: 6px;
+	margin-right: 6px;
 	text-align: left;
-	background-repeat: repeat-y;
+	background-repeat: repeat-x;
 }
 #accMenu li:hover {
-	background-image: linear-gradient(to right, #7c7253 0%, rgba(255,255,255,0) 100%);
+	background-image: linear-gradient(to top, #7c7253 0%, rgba(255,255,255,0) 100%);
 	animation: aniHighlight 0.4s;
 }
 #accMenu li img {
 	margin-right: 2px;
+}
+.accMenuFocused {
+	background-image: linear-gradient(to top, #7c7253 0%, rgba(255,255,255,0) 100%);
 }
 #accProgressBar {
 	display: block;
@@ -121,9 +125,11 @@
 	line-height: normal;
 }
 #chrAccountName {
+	font-family: Menomonia;
 	font-size: 64px;
 	font-variant: small-caps;
-	font-family: Menomonia;
+	font-weight: bold;
+	letter-spacing: 2px;
 	color: #ffeebb;
 }
 #chrAccountServer {
@@ -138,7 +144,20 @@
 }
 #chrAccountLifetime {
 	color: #ccc;
-	border-bottom: 1px dotted #ccc;
+}
+#chrAccountMisc {
+	display: none;
+}
+#chrSummary:hover #chrAccountName {
+	display: none;
+}
+#chrSummary:hover #chrAccountMisc {
+	display: block;
+	height: 48px;
+	overflow: visible;
+	line-height: 18px;
+	font-size: 12px;
+	animation: aniFadeIn 0.4s;
 }
 
 .chrHeaderLeft, .chrHeaderRight {

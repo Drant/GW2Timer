@@ -6,7 +6,7 @@
 
 
 <nav><ul id="accMenu"></ul></nav>
-<span id="accProgressBar"><samp id="accProgress"></samp></span>
+<samp id="accProgressBar"><s id="accProgress"></s></samp>
 
 <section id="accPlatterManager" class="accPlatter">
 <div id="accManager">
@@ -19,8 +19,8 @@
 	<p><a href="http://i.imgur.com/utspzci.png">Create an API key</a> at <b><a href="https://account.arena.net/applications">https://account.arena.net/applications</a></b> with all permissions checked and paste it in the &quot;API Key&quot; input box above in order to view your GW2 account's data. You may have multiple accounts or API keys, so give them a name to help you remember.</p>
 	<h1>Privacy Statement</h2>
 	<p>Last changed on: 2016-02-01</p>
-	<p>Knowing an API key allows anyone to view your account's ingame information, such as: characters and guilds, bank and inventory contents, gold and assets, achievements and unlocks, Trading Post and PvP match history, and playtime and activity. You may limit which of these type of information is exposed when creating an API key, and remove access to these information by deleting the API key at the ArenaNet website.</p>
-	<p>GW2Timer.com <strong>does not</strong> view, store, collect, or datamine API keys or the information API keys provide. When you enter the API key into the website, you are performing calculations using this web application locally on your computer, and the keys are <a href="https://en.wikipedia.org/wiki/Web_storage">stored</a> in your web browser, not a server.</p>
+	<p>Knowing an API key allows anyone to view your account's ingame information, such as: characters and guilds, bank and inventory contents, gold and assets, achievements and unlocks, Trading Post and PvP match history, and playtime and activity. You may limit which of these type of information is exposed when creating an API key, and disallow further access to these information by deleting the API key at the ArenaNet website.</p>
+	<p>GW2Timer.com <strong>does not</strong> view, store, collect, or datamine API keys or your account information. When you enter the API key into the website, you are performing calculations using this web application locally on your computer, and the keys are <a href="https://en.wikipedia.org/wiki/Web_storage">stored</a> in your web browser, not a server.</p>
 	<p>GW2Timer.com uses <a href="https://en.wikipedia.org/wiki/Google_Analytics#Privacy_issues">Google Analytics</a> and is able to view and store text that is shown on your <a href="https://en.wikipedia.org/wiki/Address_bar">address bar</a> when you are on this website. If you do not wish to expose your API key, do not put your API key in the browser address bar. To share your key with other people, private message them the key and direct them to gw2timer.com/account</p>
 	<h1>Console</h1>
 	<input id="accConsole" type="text" />
@@ -28,15 +28,13 @@
 </section>
 
 <section id="accPlatterCharacters" class="accPlatter">
-	<div id="chrSummary">
-		<div id="chrAccountTotality"></div>
-		<div id="chrAccountGuilds"></div>
-	</div>
+	<div id="chrSummary"></div>
 	<div id="chrStatistics">
 		<ul id="chrSelection"></ul>
 		<ul id="chrUsage" class="chrStats"></ul>
 		<ul id="chrSeniority" class="chrStats"></ul>
 	</div>
+	<div id="chrTally"></div>
 </section>
 
 

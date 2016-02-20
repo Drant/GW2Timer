@@ -1107,13 +1107,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Wedding Preparation Package",
-		img: "http://i.imgur.com/WIycepj.png",
-		price: 1560,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Phalanx Heavy-Armor Skin",
 		img: "https://render.guildwars2.com/file/3727CC685744360817FA5CE8430BBD164F6241FD/665784.png",
 		price: 800,

@@ -2806,7 +2806,7 @@ A = {
 		{
 			var sectionname = I.SectionEnum.Account[i];
 			var sectionnamelow = sectionname.toLowerCase();
-			var menubutton = $("<li id='accMenu" + sectionname + "' class='curClick'><img src='img/account/menu/"
+			var menubutton = $("<li id='accMenu" + sectionname + "' class='accMenu curClick'><img src='img/account/menu/"
 				+ sectionnamelow + ".png' />" + D.getPhraseOriginal(sectionname) + "</li>");
 			menu.append(menubutton);
 			// Clicking on a button shows the associated section
@@ -2814,6 +2814,8 @@ A = {
 			{
 				iButton.click(function()
 				{
+					$(".accMenu").removeClass("accMenuFocused");
+					$(this).addClass("accMenuFocused");
 					$(".accPlatter").hide();
 					$("#accPlatter" + iSectionName).fadeIn(400);
 					I.SectionCurrent[I.SpecialPageEnum.Account] =
@@ -2968,14 +2970,16 @@ A = {
 			}
 		}).fail(function()
 		{
-			A.printError();
+			A.printError("account");
 		});
 	},
 	
 	/*
 	 * Prints standard API key error message to the console.
+	 * @param string pRequestType the permission requested.
+	 * @param string pStatus from AJAX.
 	 */
-	printError: function(pStatus)
+	printError: function(pRequestType, pStatus)
 	{
 		if (pStatus === "error")
 		{
@@ -2986,6 +2990,10 @@ A = {
 			I.write("Unable to retrieve data for this key from ArenaNet API servers.");
 		}
 		I.write(A.TokenCurrent);
+		if (pRequestType)
+		{
+			I.write("Requested permission: " + pRequestType, 5);
+		}
 	},
 	
 	/*
@@ -3005,7 +3013,7 @@ A = {
 			},
 			error: function(pRequest, pStatus)
 			{
-				A.printError(pStatus);
+				A.printError(null, pStatus);
 			}
 		});
 	},
@@ -3100,7 +3108,7 @@ A = {
 			return;
 		}
 		
-		$("#chrAccountTotality, #chrStatistics ul").empty();
+		$("#chrSummary, #chrStatistics ul").empty();
 		$(".chrStats").hide();
 		var platter = $("#accPlatterCharacters");
 		platter.prepend(I.cThrobber);
@@ -3150,7 +3158,7 @@ A = {
 		}).fail(function()
 		{
 			I.removeThrobber(platter);
-			A.printError();
+			A.printError("characters");
 		});
 	},
 	
@@ -3202,7 +3210,7 @@ A = {
 			});
 		}
 		
-		// Insert character name into selection list
+		// SELECTION COLUMN (left)
 		var charvalue = A.Metadata.Race[(pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase()] || 1;
 		var professionvalue = (A.Metadata.Profession[(pCharacter.profession).toLowerCase()]).weight;
 		var trivial = (pCharacter.level === A.Metadata.ProfLevel.Max) ? "" : "chrTrivial";
@@ -3261,7 +3269,7 @@ A = {
 		A.Data.Characters.forEach(function(iData)
 		{
 			var name = "<abbr>" + U.escapeHTML(iData.name) + "</abbr>";
-			// USAGE COLUMN
+			// USAGE COLUMN (middle)
 			totalage += iData.age; // Seconds
 			totaldeaths += iData.deaths;
 			var age = Math.round(iData.age / T.cSECONDS_IN_HOUR);
@@ -3269,10 +3277,10 @@ A = {
 			var deathpercent = (iData.deaths / highestdeaths) * T.cPERCENT_100;
 			var usage = "<var class='chrAge' title='" + T.formatSeconds(iData.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
 				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + agepercent + "%'></s></samp>"
-				+ "<samp><s style='width:" + deathpercent + "%'></s></samp></span>"
+					+ "<samp><s style='width:" + deathpercent + "%'></s></samp></span>"
 				+ "<var class='chrDeaths' data-value='" + iData.deaths + "'>" + iData.deaths + "x</var>";
 			$("#chrUsage_" + iData.charindex).append(usage);
-			// SENIORITY COLUMN
+			// SENIORITY COLUMN (right)
 			var birthdate = (new Date(iData.created)).toLocaleString();
 			var birthdays = ~~(iData.charlifetime / T.cSECONDS_IN_YEAR);
 			var lifetime = ~~(iData.charlifetime / T.cSECONDS_IN_DAY);
@@ -3282,26 +3290,65 @@ A = {
 			var birthdaypercent = (birthdaysince / T.cDAYS_IN_YEAR) * T.cPERCENT_100;
 			var seniority = "<var class='chrLifetime' data-value='" + iData.charlifetime + "'>" + lifetime + daystr + " (" + birthdays + yearstr + ")</var>"
 				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + lifetimepercent + "%'></s></samp>"
-				+ "<samp><s style='width:" + birthdaypercent + "%'></s></samp></span>"
+					+ "<samp><s style='width:" + birthdaypercent + "%'></s></samp></span>"
 				+ "<var class='chrBirthday' data-value='" + birthdaysince + "'>" + birthdaytill + daystr + "</var>"
 				+ "<var class='chrBirthdate'>" + birthdate + "</var>";
 			$("#chrSeniority_" + iData.charindex).append(seniority);
 		});
-		// Generate summary using additional information from account
+		// Highlight the character's name when hovered over a statistics row
+		$(".chrStats li").hover(
+			function() { $("#chrSelection_" + U.getSubstringFromHTMLID($(this))).css({outline: "1px solid red"}); },
+			function() { $("#chrSelection_" + U.getSubstringFromHTMLID($(this))).css({outline: "none"}); }
+		);
+		// Insert header above the columns
+		var sym = " <b class='chrHeaderToggle'>" + I.Symbol.TriDown + "</b>";
+		$("#chrSelection").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrName'>"
+			+ D.getWordCapital("character") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrCommitment'>"
+			+ D.getWordCapital("profession") + sym + "</var></li>");
+		$("#chrUsage").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrAge'>"
+			+ D.getWordCapital("age") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrDeaths'>"
+			+ D.getWordCapital("deaths") + sym + "</var></li>");
+		$("#chrSeniority").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrLifetime'>"
+			+ D.getWordCapital("lifetime") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrBirthday'>"
+			+ D.getWordCapital("birthday") + sym + "</var></li>");
+		// Header click to sort the columns
+		$(".chrHeaderLeft, .chrHeaderRight").data("descending", true).click(function()
+		{
+			// Sort and toggle the boolean
+			var isdescending = $(this).data("descending");
+			A.sortCharacters($(this).attr("data-classifier"), isdescending);
+			$(this).data("descending", !isdescending);
+			// Change symbol
+			var symbol = (!isdescending) ? I.Symbol.TriUp : I.Symbol.TriDown;
+			$(this).find(".chrHeaderToggle").html(symbol);
+		});
+		// SUMMARY MARQUEE (top)
 		$.getJSON(A.getURL(A.URL.Account), function(pData)
 		{
+			A.Data.Account = pData;
 			var accountname = U.escapeHTML(((pData.name).split("."))[0]); // Omit the identifier number from the account name
-			var totalagestr = Math.round(totalage / T.cSECONDS_IN_HOUR) + hourstr;
-			var totaldaystr = Math.round((totalage / T.cSECONDS_IN_HOUR) / T.cHOURS_IN_DAY) + daystr;
-			var summary = A.Data.Characters.length + ": " + totalagestr + " (" + totaldaystr + ") / " + totaldeaths + "x";
+			var totalagehour = Math.round(totalage / T.cSECONDS_IN_HOUR);
 			var accountbirthdate = new Date(pData.created);
 			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMILLISECONDS_IN_SECOND);
 			var accountbirthdaysince = T.formatSeconds(accountlifetime).trim();
-			var totality = "<var id='chrAccountName'>" + accountname + "</var><br /><var id='chrAccountServer'></var><br />"
-				+ "<var id='chrAccountAge'>" + totalagestr + "</var> / <var id='chrAccountDeaths'>"
-					+ totaldeaths + "x</var> <var id='chrAccountLifetime' title='" + accountbirthdate.toLocaleString() + "'>" + accountbirthdaysince +  "</var>";
-			$("#chrAccountTotality").append(totality);
-			I.qTip.init("#chrAccountTotality var");
+			var accountadditional = "<span id='chrAccountMisc'>"
+				+ "<dfn title='" + U.escapeHTML(pData.id) + "'>" + U.escapeHTML(pData.name) + "</dfn><br />" + accountbirthdate.toLocaleString() + "<br />"
+				+ "<img class='" + commandership +  "' src='img/account/commander.png' />"
+				+ "<img class='" + access +  "' src='img/account/access_hot.png' /> "
+				+ "<img src='img/account/fractal.png' />" + (pData.fractal_level || "") + " "
+				+ "<img src='img/account/daily.png' />" + (pData.daily_ap || "") + " "
+				+ "<img src='img/account/monthly.png' />" + (pData.monthly_ap || "")
+			+ "</span><br />";
+			var commandership = (pData.commander) ? "" : "chrTrivial";
+			var access = (pData.access) ? "" : "chrTrivial";
+			var summary = "<var id='chrAccountName'>" + accountname + "</var>"
+				+ accountadditional
+				+ "<var id='chrAccountServer'></var><br />"
+				+ "<var id='chrAccountAge' title='" + T.formatSeconds(totalage) + "'>" + totalagehour + hourstr + "</var> / "
+					+ "<var id='chrAccountDeaths' title='" + T.parseRatio(totalagehour / totaldeaths, 3) + "'>" + totaldeaths + "x</var> &nbsp; "
+					+ "<var id='chrAccountLifetime'>" + accountbirthdaysince +  "</var>";
+			$("#chrSummary").append(summary);
+			I.qTip.init("#chrSummary var");
 			// Insert server name
 			$.getJSON(U.URL_API.Worlds + pData.world, function(pDataInner)
 			{
@@ -3314,28 +3361,6 @@ A = {
 			A.initializeGuilds(pData.guilds);
 			// Finally for the summary
 			$("#chrSummary").show("fast");
-		});
-		
-		// Highlight the character's name when hovered over a statistics row
-		$(".chrStats li").hover(
-			function() { $("#chrSelection_" + U.getSubstringFromHTMLID($(this))).css({outline: "1px solid red"}); },
-			function() { $("#chrSelection_" + U.getSubstringFromHTMLID($(this))).css({outline: "none"}); }
-		);
-
-		// Insert header above the columns
-		var sym = " " + I.Symbol.TriDown;
-		$("#chrSelection").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrName'>"
-			+ D.getWordCapital("character") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrCommitment'>"
-			+ D.getWordCapital("profession") + sym + "</var></li>");
-		$("#chrUsage").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrAge'>"
-			+ D.getWordCapital("age") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrDeaths'>"
-			+ D.getWordCapital("deaths") + sym + "</var></li>");
-		$("#chrSeniority").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrLifetime'>"
-			+ D.getWordCapital("lifetime") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrBirthday'>"
-			+ D.getWordCapital("birthday") + sym + "</var></li>");
-		$(".chrHeaderLeft, .chrHeaderRight").click(function()
-		{
-			A.sortCharacters($(this).attr("data-classifier"));
 		});
 		
 		// Finally
@@ -3387,8 +3412,9 @@ A = {
 	/*
 	 * Rearranges all the characters columns based on one column's data values.
 	 * @param string pClassifier class names of data containing cells.
+	 * @param boolean pOrder descending if true, ascending if false.
 	 */
-	sortCharacters: function(pClassifier)
+	sortCharacters: function(pClassifier, pOrder)
 	{
 		var sortable = [];
 		$("." + pClassifier).each(function()
@@ -3399,7 +3425,7 @@ A = {
 				value: parseInt($(this).attr("data-value"))
 			});
 		});
-		O.sortObjects(sortable, "value", true); // Descending order
+		O.sortObjects(sortable, "value", pOrder);
 		
 		// Sort all the rows using the new order
 		for (var i = 0; i < sortable.length; i++)
@@ -15342,7 +15368,7 @@ W = {
 	 */
 	getGuildBannerURL: function(pName)
 	{
-		if (pName !== undefined)
+		if (pName)
 		{
 			var name = U.escapeHTML((pName.split(" ").join("-")).toLowerCase());
 			return "http://guilds.gw2w2w.com/guilds/" + name + "/128.svg";
@@ -17017,7 +17043,7 @@ B = {
 				if (E.Exchange.CoinInGem !== 0)
 				{
 					var gemstr = "<ins class='s16 s16_gem'></ins>";
-					for (var i in B.DashboardSale.Items)
+					for (var i = 0; i < B.DashboardSale.Items.length; i++)
 					{
 						var item = B.DashboardSale.Items[i];
 						var wiki = U.getWikiSearchLink(item.name);
@@ -17031,12 +17057,12 @@ B = {
 						if (item.discount && Array.isArray(item.discount))
 						{
 							discounts += "<span class='dsbDiscount'>";
-							for (var ii in item.discount)
+							for (var ii = 0; ii < item.discount.length; ii++)
 							{
 								var disc = item.discount[ii];
-								var oldprice = (disc.length > 2) ? ("<span class='dsbSalePriceOld'>" + disc[2] + "</span> ") : "";
+								var oldpriceinner = (disc.length > 2) ? ("<span class='dsbSalePriceOld'>" + disc[2] + "</span> ") : "";
 								var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
-								discounts += oldprice + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
+								discounts += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
 									+ " ≈ " + E.convertGemToCoin(disc[1]) + "<br />";
 							}
 							discounts += "</span>";
