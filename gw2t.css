@@ -842,11 +842,19 @@ textarea.jsCopyCode {
 .dsbSaleEntry:hover .dsbSalePriceCoin {
 	display: none;
 }
-.dsbSalePriceNew {
+.dsbDiscount {
+	display: none;
+}
+.dsbSaleEntry:hover .dsbDiscount {
+	display: block;
+	margin-bottom: 8px;
+}
+.dsbSalePriceCurrent {
 	color: white;
 }
 .dsbSalePriceOld {
 	color: #b3a082;
+	text-decoration: line-through;
 }
 .dsbSaleVideo {
 	display: none;

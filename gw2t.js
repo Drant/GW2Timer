@@ -1450,6 +1450,7 @@ U = {
 		MatchesFallback: "https://api.guildwars2.com/v1/wvw/matches.json",
 		
 		// Other
+		Worlds: "https://api.guildwars2.com/v2/worlds",
 		Prefix: "https://api.guildwars2.com/v2/",
 		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl="
 	},
@@ -1486,6 +1487,8 @@ U = {
 		var lang = D.getPartiallySupportedLanguage();
 		U.URL_API.LangKey = "?lang=" + lang;
 		var langsuffix = "&lang=" + lang;
+		
+		U.URL_API.Worlds += U.URL_API.LangKey + "&ids=";
 		U.URL_API.MapFloorTyria += langsuffix;
 		U.URL_API.MapFloorMists += langsuffix;
 		U.URL_API.EventNames += langsuffix;
@@ -2177,7 +2180,7 @@ U = {
 	},
 	
 	/*
-	 * Shortens a title/name string based on limit and add ellipses.
+	 * Shortens a title/name string based on limit, and add ellipses.
 	 * @param string pString.
 	 * @returns string truncated if it's too long.
 	 */
@@ -2721,9 +2724,9 @@ A = {
 	Data: { // Cache for retrieved API data objects and arrays
 		Account: {},
 		Items: {},
-		Characters: {},
+		Characters: [],
 		CharacterNames: null,
-		Guild: {}
+		Guilds: {} // Guild details objects, accessed using the guild IDs
 	},
 	URL: { // Account data type and URL substring
 		Account: "account",
@@ -3087,16 +3090,6 @@ A = {
 	},
 	
 	/*
-	 * Gets a player character object.
-	 * @param string pName of the character, as in the API characters array.
-	 * @returns object.
-	 */
-	getCharacter: function(pName)
-	{
-		return A.Data.Characters[U.stripToVariable(pName)];
-	},
-	
-	/*
 	 * Initializes the characters subpage.
 	 */
 	generateAndInitializeCharacters: function()
@@ -3107,7 +3100,7 @@ A = {
 			return;
 		}
 		
-		$("#chrSummary, #chrSelection, #chrUsage, #chrSeniority").empty();
+		$("#chrAccountTotality, #chrStatistics ul").empty();
 		$(".chrStats").hide();
 		var platter = $("#accPlatterCharacters");
 		platter.prepend(I.cThrobber);
@@ -3133,26 +3126,17 @@ A = {
 						cache: true,
 						success: function(pData, pStatus, pRequest)
 						{
-							// Insert character name into selection list
-							$("#chrSelection_" + iIndex).append(
-								"<img class='chrPortrait' src='img/account/characters/" + (pData.race).toLowerCase() + "_" + (pData.gender).toLowerCase() + I.cPNG + "' />"
-								+ "<span class='chrName'>" + iCharacter + "</span>"
-								+ "<img class='chrProceed' src='img/account/view.png' />"
-								+ "<span class='chrProfession'><img src='" + getProfessionIcon(pData) + "' />" + pData.level + "</span>")
-								.click(function()
-								{
-									$(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
-									$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
-								});
 							// Check retrieval progress
 							A.Data.Characters[iIndex] = pData;
 							(A.Data.Characters[iIndex]).charindex = iIndex;
+							(A.Data.Characters[iIndex]).charname = U.escapeHTML(pData.name);
+							A.generateCharactersSelection(pData);
 							numfetched++;
 							A.setProgressBar(numfetched / numcharacters);
 							if (numfetched === numcharacters)
 							{
 								A.setProgressBar();
-								A.finalizeCharacters();
+								A.generateCharactersStatistics();
 							}
 						},
 						error: function(pRequest, pStatus)
@@ -3168,14 +3152,21 @@ A = {
 			I.removeThrobber(platter);
 			A.printError();
 		});
-		
+	},
+	
+	/*
+	 * Generates a row in the first column showing common information about a character.
+	 * @param object pCharacter characters data.
+	 */
+	generateCharactersSelection: function(pCharacter)
+	{
 		// Gets the profession icon or elite spec icon if available from the character data
-		var getProfessionIcon = function(pData)
+		var getProfessionIcon = function(pDataInner)
 		{
-			var icon = (pData.profession).toLowerCase();
-			if (pData.specializations && pData.specializations.pve)
+			var icon = (pDataInner.profession).toLowerCase();
+			if (pDataInner.specializations && pDataInner.specializations.pve)
 			{
-				var specs = pData.specializations.pve;
+				var specs = pDataInner.specializations.pve;
 				for (var i = 0; i < specs.length; i++)
 				{
 					if (specs[i])
@@ -3192,21 +3183,54 @@ A = {
 			}
 			return "img/account/profession/" + icon + I.cPNG;
 		};
+		
+		// Get active crafting disciplines
+		var craftused = "";
+		var crafttooltip = "";
+		if (pCharacter.crafting && pCharacter.crafting.length > 0)
+		{
+			pCharacter.crafting.forEach(function(iCraft)
+			{
+				var trivial = (iCraft.rating >= A.Metadata.CraftRank.Master) ? "" : "chrTrivial";
+				var craftstr = "<b class='" + trivial + "'><img src='img/account/crafting/" + (iCraft.discipline).toLowerCase() + I.cPNG + "' />"
+					+ "<sup class='chrLevel'>" + iCraft.rating + "</sup></b> ";
+				if (iCraft.active)
+				{
+					craftused += craftstr;
+				}
+				crafttooltip += craftstr + " ";
+			});
+		}
+		
+		// Insert character name into selection list
+		var charvalue = A.Metadata.Race[(pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase()] || 1;
+		var professionvalue = (A.Metadata.Profession[(pCharacter.profession).toLowerCase()]).weight;
+		var trivial = (pCharacter.level === A.Metadata.ProfLevel.Max) ? "" : "chrTrivial";
+		$("#chrSelection_" + pCharacter.charindex).append(
+			"<img class='chrPortrait' src='img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG + "' />"
+			+ "<var id='chrName_" + pCharacter.charindex + "' class='chrName' data-value='" + charvalue + "'>" + pCharacter.charname + "</var>"
+			+ "<img class='chrProceed' src='img/account/view.png' />"
+			+ "<span class='chrCommitment' data-value='" + professionvalue + "'>"
+				+ "<var class='chrProfession " + trivial + "'><img class='chrProfessionIcon' src='"
+					+ getProfessionIcon(pCharacter) + "' /><sup>" + pCharacter.level + "</sup></var>"
+				+ "<var class='chrCrafting'>" + craftused + "</var>"
+			+ "</span>")
+		.click(function()
+		{
+			$(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
+			$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
+		});
+		// Additional information as tooltip
+		I.qTip.init($("#chrSelection_" + pCharacter.charindex).find(".chrCommitment").attr("title", crafttooltip));
 	},
 	
 	/*
-	 * Things to do when all the characters data have been retrieved.
+	 * Generates the columns for presenting the character's data values.
 	 */
-	finalizeCharacters: function()
+	generateCharactersStatistics: function()
 	{
-		$(".chrStats").show();
 		var now = new Date();
 		var nowmsec = now.getTime();
-		$.getJSON(A.getURL(A.URL.Account), function(pData)
-		{
-			
-		});
-		
 		var hourstr = D.getWord("h");
 		var daystr = D.getWord("d");
 		var yearstr = D.getWord("y");
@@ -3236,16 +3260,19 @@ A = {
 		// Write a row for each character
 		A.Data.Characters.forEach(function(iData)
 		{
+			var name = "<abbr>" + U.escapeHTML(iData.name) + "</abbr>";
+			// USAGE COLUMN
 			totalage += iData.age; // Seconds
 			totaldeaths += iData.deaths;
 			var age = Math.round(iData.age / T.cSECONDS_IN_HOUR);
 			var agepercent = (iData.age / highestage) * T.cPERCENT_100;
 			var deathpercent = (iData.deaths / highestdeaths) * T.cPERCENT_100;
 			var usage = "<var class='chrAge' title='" + T.formatSeconds(iData.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
-				+ "<samp><s class='cssRight' style='width:" + agepercent + "%'></s></samp>"
-				+ "<samp><s style='width:" + deathpercent + "%'></s></samp>"
+				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + agepercent + "%'></s></samp>"
+				+ "<samp><s style='width:" + deathpercent + "%'></s></samp></span>"
 				+ "<var class='chrDeaths' data-value='" + iData.deaths + "'>" + iData.deaths + "x</var>";
 			$("#chrUsage_" + iData.charindex).append(usage);
+			// SENIORITY COLUMN
 			var birthdate = (new Date(iData.created)).toLocaleString();
 			var birthdays = ~~(iData.charlifetime / T.cSECONDS_IN_YEAR);
 			var lifetime = ~~(iData.charlifetime / T.cSECONDS_IN_DAY);
@@ -3254,17 +3281,40 @@ A = {
 			var birthdaytill = T.cDAYS_IN_YEAR - birthdaysince;
 			var birthdaypercent = (birthdaysince / T.cDAYS_IN_YEAR) * T.cPERCENT_100;
 			var seniority = "<var class='chrLifetime' data-value='" + iData.charlifetime + "'>" + lifetime + daystr + " (" + birthdays + yearstr + ")</var>"
-				+ "<samp><s class='cssRight' style='width:" + lifetimepercent + "%'></s></samp>"
-				+ "<samp><s style='width:" + birthdaypercent + "%'></s></samp>"
+				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + lifetimepercent + "%'></s></samp>"
+				+ "<samp><s style='width:" + birthdaypercent + "%'></s></samp></span>"
 				+ "<var class='chrBirthday' data-value='" + birthdaysince + "'>" + birthdaytill + daystr + "</var>"
 				+ "<var class='chrBirthdate'>" + birthdate + "</var>";
 			$("#chrSeniority_" + iData.charindex).append(seniority);
 		});
-		// Write summary on the top of page
-		var totalagestr = Math.round(totalage / T.cSECONDS_IN_HOUR) + hourstr;
-		var totaldaystr = Math.round((totalage / T.cSECONDS_IN_HOUR) / T.cHOURS_IN_DAY) + daystr;
-		var summary = A.Data.Characters.length + ": " + totalagestr + " (" + totaldaystr + ") / " + totaldeaths + "x";
-		$("#chrSummary").append(summary);
+		// Generate summary using additional information from account
+		$.getJSON(A.getURL(A.URL.Account), function(pData)
+		{
+			var accountname = U.escapeHTML(((pData.name).split("."))[0]); // Omit the identifier number from the account name
+			var totalagestr = Math.round(totalage / T.cSECONDS_IN_HOUR) + hourstr;
+			var totaldaystr = Math.round((totalage / T.cSECONDS_IN_HOUR) / T.cHOURS_IN_DAY) + daystr;
+			var summary = A.Data.Characters.length + ": " + totalagestr + " (" + totaldaystr + ") / " + totaldeaths + "x";
+			var accountbirthdate = new Date(pData.created);
+			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMILLISECONDS_IN_SECOND);
+			var accountbirthdaysince = T.formatSeconds(accountlifetime).trim();
+			var totality = "<var id='chrAccountName'>" + accountname + "</var><br /><var id='chrAccountServer'></var><br />"
+				+ "<var id='chrAccountAge'>" + totalagestr + "</var> / <var id='chrAccountDeaths'>"
+					+ totaldeaths + "x</var> <var id='chrAccountLifetime' title='" + accountbirthdate.toLocaleString() + "'>" + accountbirthdaysince +  "</var>";
+			$("#chrAccountTotality").append(totality);
+			I.qTip.init("#chrAccountTotality var");
+			// Insert server name
+			$.getJSON(U.URL_API.Worlds + pData.world, function(pDataInner)
+			{
+				if (Array.isArray(pDataInner) && pDataInner.length > 0)
+				{
+					$("#chrAccountServer").text(pDataInner[0].name);
+				}
+			});
+			// Retrieve and insert guilds
+			A.initializeGuilds(pData.guilds);
+			// Finally for the summary
+			$("#chrSummary").show("fast");
+		});
 		
 		// Highlight the character's name when hovered over a statistics row
 		$(".chrStats li").hover(
@@ -3273,16 +3323,16 @@ A = {
 		);
 
 		// Insert header above the columns
-		$("#chrSelection").prepend("<li class='chrHeader'><var class='chrHeaderLeft'>"
-			+ D.getWordCapital("character") + "</var><var class='chrHeaderRight'>"
-			+ D.getWordCapital("profession") + "</var></li>");
+		var sym = " " + I.Symbol.TriDown;
+		$("#chrSelection").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrName'>"
+			+ D.getWordCapital("character") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrCommitment'>"
+			+ D.getWordCapital("profession") + sym + "</var></li>");
 		$("#chrUsage").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrAge'>"
-			+ D.getWordCapital("age") + " " + I.Symbol.TriDown + "</var><var class='chrHeaderRight curClick' data-classifier='chrDeaths'>"
-			+ D.getWordCapital("deaths") + " " + I.Symbol.TriDown + "</var></li>");
+			+ D.getWordCapital("age") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrDeaths'>"
+			+ D.getWordCapital("deaths") + sym + "</var></li>");
 		$("#chrSeniority").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrLifetime'>"
-			+ D.getWordCapital("lifetime") + " " + I.Symbol.TriDown + "</var><var class='chrHeaderRight curClick' data-classifier='chrBirthday'>"
-			+ D.getWordCapital("birthday") + " " + I.Symbol.TriDown + "</var></li>");
-		
+			+ D.getWordCapital("lifetime") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrBirthday'>"
+			+ D.getWordCapital("birthday") + sym + "</var></li>");
 		$(".chrHeaderLeft, .chrHeaderRight").click(function()
 		{
 			A.sortCharacters($(this).attr("data-classifier"));
@@ -3290,11 +3340,52 @@ A = {
 		
 		// Finally
 		I.qTip.init("#accPlatterCharacters var");
+		$(".chrStats").show("fast");
 	},
 	
 	/*
-	 * Rearranges all the characters columns based on one column's data value,
-	 * in descending order.
+	 * Caches guild details objects and writes guild information where needed.
+	 * @param array pGuilds containing guild IDs.
+	 */
+	initializeGuilds: function(pGuilds)
+	{
+		if (pGuilds === undefined || pGuilds === null || pGuilds.length <= 0)
+		{
+			return;
+		}
+		
+		// Add guild information to HTML
+		var finalizeGuilds = function()
+		{
+			// Guild tag next to each character's name
+			A.Data.Characters.forEach(function(iCharacter)
+			{
+				if (iCharacter.guild)
+				{
+					var guildtag = "<sup class='chrTag'>[" + (A.Data.Guilds[iCharacter.guild]).tag + "]" + "</sup>";
+					$("#chrName_" + iCharacter.charindex).append(guildtag);
+				}
+			});
+		};
+		
+		// Fetch the guild details
+		var numfetched = 0;
+		for (var i = 0; i < pGuilds.length; i++)
+		{
+			$.getJSON(U.URL_API.GuildDetails + pGuilds[i], function(pData)
+			{
+				A.Data.Guilds[pData.guild_id] = pData;
+				numfetched++;
+				if (numfetched === pGuilds.length)
+				{
+					finalizeGuilds();
+				}
+			});
+		}
+	},
+	
+	/*
+	 * Rearranges all the characters columns based on one column's data values.
 	 * @param string pClassifier class names of data containing cells.
 	 */
 	sortCharacters: function(pClassifier)
@@ -3308,7 +3399,7 @@ A = {
 				value: parseInt($(this).attr("data-value"))
 			});
 		});
-		O.sortObjects(sortable, "value", true);
+		O.sortObjects(sortable, "value", true); // Descending order
 		
 		// Sort all the rows using the new order
 		for (var i = 0; i < sortable.length; i++)
@@ -4754,6 +4845,10 @@ E = {
 	deductTax: function(pAmount)
 	{
 		return parseInt(pAmount - pAmount * E.Exchange.TAX_TOTAL);
+	},
+	convertGemToCoin: function(pAmount)
+	{
+		return E.createCoinString(Math.round(pAmount * E.Exchange.CoinInGem), true);
 	},
 	convertGemToMoney: function(pAmount)
 	{
@@ -14307,7 +14402,7 @@ W = {
 	toggleLeaderboardWidth: function(pWantAnimate)
 	{
 		var isshown = !O.Options.bol_condenseLeaderboard;
-		var elms = $("#wvwLeaderboard span, .lboRank, .lboName, .lboFocus");
+		var elms = $(".lboRank, .lboName, .lboFocus");
 		if (pWantAnimate)
 		{
 			if (isshown)
@@ -16270,20 +16365,24 @@ T = {
 				daystr = day + D.getWord("d") + " ";
 			}
 		}
-		if (seconds >= T.cSECONDS_IN_HOUR)
+		// Include hms only if duration is less than a year
+		if (seconds < T.cSECONDS_IN_YEAR)
 		{
-			hour = ~~(seconds / T.cSECONDS_IN_HOUR) % T.cHOURS_IN_DAY;
-			hourstr = hour + D.getWord("h") + " ";
-		}
-		if (seconds >= T.cSECONDS_IN_MINUTE)
-		{
-			min = ~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
-			minstr = min + D.getWord("m") + " ";
-		}
-		if (pWantSeconds)
-		{
-			sec = seconds % T.cSECONDS_IN_MINUTE;
-			secstr = sec.toString() + D.getWord("s");
+			if (seconds >= T.cSECONDS_IN_HOUR)
+			{
+				hour = ~~(seconds / T.cSECONDS_IN_HOUR) % T.cHOURS_IN_DAY;
+				hourstr = hour + D.getWord("h") + " ";
+			}
+			if (seconds >= T.cSECONDS_IN_MINUTE)
+			{
+				min = ~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+				minstr = min + D.getWord("m") + " ";
+			}
+			if (pWantSeconds)
+			{
+				sec = seconds % T.cSECONDS_IN_MINUTE;
+				secstr = sec.toString() + D.getWord("s");
+			}
 		}
 		
 		return signstr + weekstr + daystr + hourstr + minstr + secstr;
@@ -16834,13 +16933,13 @@ B = {
 		if (B.isDashboardSaleEnabled)
 		{
 			var icon = ((B.DashboardSale.isSpecial) ? "gemstore_special" : "gemstore") + I.cPNG;
-			var range = T.getMinMax(B.DashboardSale.Items, "pricenew");
+			var range = T.getMinMax(B.DashboardSale.Items, "price");
 			var rangestr = (range.min === range.max) ? range.max : (range.min + "-" + range.max);
 			// Create "button" to toggle list of items on sale
 			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img src='img/ui/" + icon + "' /> "
 				+ "<u>" + B.DashboardSale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
-				+ "(<span class='dsbSalePriceNew'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
+				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
 				+ "⇓@ " + B.DashboardSale.Finish.toLocaleString()
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
@@ -16917,21 +17016,39 @@ B = {
 				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				if (E.Exchange.CoinInGem !== 0)
 				{
+					var gemstr = "<ins class='s16 s16_gem'></ins>";
 					for (var i in B.DashboardSale.Items)
 					{
 						var item = B.DashboardSale.Items[i];
 						var wiki = U.getWikiSearchLink(item.name);
 						var video = U.getYouTubeLink(item.name);
-						var forhowmany = (item.quantity > 1) ? item.quantity + "/ " : "";
-						var prevprice = (item.pricenew < item.priceold) ? "<span class='dsbSalePriceOld'><del>" + item.priceold + "</del></span> " : "";
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
+						var oldprice = "";
+						oldprice = (O.isInteger(item.discount)) ? item.discount : oldprice;
+						oldprice = (Array.isArray(item.discount) && item.discount.length > 2) ? ((item.discount[0])[2]) : oldprice;
+						oldprice = (oldprice !== "") ? ("<span class='dsbSalePriceOld'>" + oldprice + "</span> ") : oldprice;
+						var discounts = "";
+						if (item.discount && Array.isArray(item.discount))
+						{
+							discounts += "<span class='dsbDiscount'>";
+							for (var ii in item.discount)
+							{
+								var disc = item.discount[ii];
+								var oldprice = (disc.length > 2) ? ("<span class='dsbSalePriceOld'>" + disc[2] + "</span> ") : "";
+								var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
+								discounts += oldprice + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
+									+ " ≈ " + E.convertGemToCoin(disc[1]) + "<br />";
+							}
+							discounts += "</span>";
+						}
 						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
 							+"<a" + U.convertExternalAnchor(wiki) + "><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
 							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
-							+ prevprice
-							+ "<span class='dsbSalePriceNew'>" + forhowmany + item.pricenew + "<ins class='s16 s16_gem'></ins></span>"
-							+ "<span class='dsbSalePriceCoin'> ≈ " + E.createCoinString(Math.round(item.pricenew * E.Exchange.CoinInGem), true) + "</span>"
-							+ "<span class='dsbSalePriceMoney'> = " + E.convertGemToMoney(item.pricenew) + "<ins class='s16 s16_money'></ins></span>"
+							+ oldprice
+							+ "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
+							+ "<span class='dsbSalePriceCoin'> ≈ " + E.convertGemToCoin(item.price) + "</span>"
+							+ "<span class='dsbSalePriceMoney'> = " + E.convertGemToMoney(item.price) + "<ins class='s16 s16_money'></ins></span>"
+							+ discounts
 						+ "</div>");
 					}
 				}

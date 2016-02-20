@@ -37,39 +37,82 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "život", it: "vita", pl: "życie", pt: "vida", ru: "жизни", zh: "一生"},
 	s_birthday: {de: "geburtstag", es: "cumpleaños", fr: "anniversaire",
 		cs: "narozeniny", it: "compleanno", pl: "urodziny", pt: "aniversário", ru: "деньрожде́ния", zh: "生日"},
+	s_guild: {de: "", es: "", fr: "",
+		cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
+	s_craft: {de: "", es: "", fr: "",
+		cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 };
 
 /*
  * Quick reference API related data.
  */
 var GW2T_ACCOUNT_METADATA = {
+	CraftRank: {
+		Novice: 0,
+		Initiate: 75,
+		Apprentice: 150,
+		Journeyman: 225,
+		Adept: 300,
+		Master: 400,
+		Grandmaster: 500
+	},
+	Race: { // Weight for sorting player's characters by race and gender
+		human_female: 10,
+		human_male: 9,
+		norn_female: 8,
+		norn_male: 7,
+		sylvari_female: 6,
+		sylvari_male: 5,
+		asura_female: 4,
+		asura_male: 3,
+		charr_female: 2,
+		charr_male: 1
+	},
 	Profession: {
 		guardian: {
-			color: "blue"
+			id: 1,
+			weight: 2,
+			color: "turquoise"
 		},
 		warrior: {
-			color: "brown"
+			id: 2,
+			weight: 3,
+			color: "sandybrown"
 		},
 		engineer: {
-			color: "blue"
+			id: 3,
+			weight: 4,
+			color: "burlyWood"
 		},
 		ranger: {
-			color: "yellow"
+			id: 4,
+			weight: 5,
+			color: "greenyellow"
 		},
 		thief: {
-			color: "black"
+			id: 5,
+			weight: 6,
+			color: "darkgray"
 		},
 		elementalist: {
-			color: "red"
+			id: 6,
+			weight: 9,
+			color: "orangered"
 		},
 		mesmer: {
-			color: "pink"
+			id: 7,
+			weight: 8,
+			color: "violet"
 		},
 		necromancer: {
-			color: "green"
+			id: 8,
+			weight: 7,
+			color: "seagreen"
 		},
 		revenant: {
-			color: "gray"
+			id: 9,
+			weight: 1,
+			color: "slategray"
 		}
 	},
 	ProfAssociation: {
@@ -93,5 +136,8 @@ var GW2T_ACCOUNT_METADATA = {
 		"40": "chronomancer",
 		"34": "reaper",
 		"52": "herald"
+	},
+	ProfLevel: {
+		Max: 80
 	}
 };

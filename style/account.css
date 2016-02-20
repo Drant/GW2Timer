@@ -112,6 +112,35 @@
 	text-align: center;
 }
 
+#chrSummary {
+	display: none;
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+#chrSummary var {
+	line-height: normal;
+}
+#chrAccountName {
+	font-size: 64px;
+	font-variant: small-caps;
+	font-family: Menomonia;
+	color: #ffeebb;
+}
+#chrAccountServer {
+	font-size: 24px;
+	font-family: Menomonia;
+}
+#chrAccountAge {
+	color: #bbcc77;
+}
+#chrAccountDeaths {
+	color: #ff2200;
+}
+#chrAccountLifetime {
+	color: #ccc;
+	border-bottom: 1px dotted #ccc;
+}
+
 .chrHeaderLeft, .chrHeaderRight {
 	font-size: 18px;
 	font-weight: bold;
@@ -127,12 +156,10 @@
 	float: right;
 }
 
-#chrSelection, #chrUsage, #chrSeniority {
+#chrStatistics ul {
 	display: inline-block;
-	font-size: 18px;
-}
-#chrSelection {
 	margin-right: 8px;
+	font-size: 18px;
 }
 
 #chrSelection li {
@@ -151,13 +178,6 @@
 	background-image: linear-gradient(to right, #7c7253 0%, rgba(255,255,255,0) 100%);
 	animation: aniHighlight 0.4s;
 }
-.chrName {
-	display: inline-block;
-	min-width: 128px; max-width: 192px;
-	overflow: hidden;
-	white-space: nowrap;
-	font-family: Menomonia;
-}
 .chrPortrait {
 	display: block;
 	width: 32px; height: 32px;
@@ -165,10 +185,44 @@
 	border-radius: 4px;
 	margin-right: 8px;
 }
-.chrProfession {
+.chrName {
 	display: inline-block;
-	width: 64px;
+	width: 176px;
+	overflow: hidden;
+	white-space: nowrap;
+	font-family: Menomonia;
+}
+.chrTag {
+	margin-left: 4px;
+	font-size: 12px;
+	color: #ffbb44;
+	opacity: 0.4;
+}
+.chrTrivial { /* Situational class to fade trivial information */
+	opacity: 0.4;
+}
+.chrCommitment { /* Contains profession and crafting icons */
+	display: inline-block;
+	width: 128px;
 	float: right;
+}
+.chrCrafting {
+	margin-left: 4px;
+	pointer-events: none;
+}
+.chrLevel {
+	width: 32px;
+	position: absolute;
+	margin-left: -32px;
+	margin-top: -16px;
+	text-align: center;
+	font-size: 10px;
+	color: #ffeeaa;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
 }
 .chrProceed {
 	margin-top: 8px;
@@ -207,10 +261,21 @@
 .chrStats li:hover {
 	background: #444;
 }
+#chrStatistics .chrHoverName abbr { /* Character name again, hidden beside the bar graphs */
+	display: none;
+}
+#chrStatistics .chrHoverName:hover abbr {
+	display: inline-block;
+	position: absolute;
+	width: 196px;
+	white-space: nowrap;
+	font-family: Menomonia;
+	background: linear-gradient(to left, rgba(255,255,255,0) 0%, #333 50%, rgba(255,255,255,0) 100%);
+}
 .chrHeader {
-	background: linear-gradient(to right, #000 0%, rgba(255,255,255,0) 100%);
-	border-top: 2px solid black;
-	border-bottom: 2px solid black;
+	border-top: 1px solid #222;
+	border-bottom: 1px solid #000;
+	background: linear-gradient(to right, #000 0%, rgba(255,255,255,0) 100%) !important;
 }
 .chrAge, .chrDeaths, .chrLifetime, .chrBirthday, .chrBirthdate { /* Text and values */
 	display: inline-block;
@@ -219,10 +284,12 @@
 	white-space: nowrap;
 }
 .chrAge {
+	width: 70px;
 	margin-right: 8px;
 	color: #bbcc77;
 }
 .chrDeaths {
+	width: 70px;
 	color: #ff2200;
 }
 .chrLifetime {
@@ -230,6 +297,7 @@
 	margin-right: 8px;
 }
 .chrBirthday {
+	width: 56px;
 	margin-right: 8px;
 }
 .chrBirthdate {

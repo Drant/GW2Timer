@@ -1082,9 +1082,9 @@ Story:
  * Format:
 	url: "", // Usually a wiki link to that item
 	img: "", // ArenaNet hosted item image
-	quantity: 1, // Batch sales
-	pricenew: 400, // Gems value
-	priceold: 800
+	price: 400, // Gems value for one item
+	discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]], // [[quantity, gempricecurrent, gempriceoldOptional], ...]
+	col: 0 // Display on left (0) or right (1) column
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
@@ -1095,89 +1095,85 @@ Sale: {
 	Padding: {
 		name: "Gem",
 		img: "./img/ui/gem.png",
-		quantity: 1,
-		pricenew: 100,
-		priceold: 0
+		price: 100,
+		discount: null
 	},
 	Items: [
 	{
+		name: "Dye Pack",
+		img: "https://render.guildwars2.com/file/09206A087606CFC674AC19E1E5CCADB6B3302061/66601.png",
+		price: 160,
+		discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]],
+		col: 0
+	},
+	{
 		name: "Wedding Preparation Package",
 		img: "http://i.imgur.com/WIycepj.png",
-		quantity: 1,
-		pricenew: 1560,
-		priceold: 0,
+		price: 1560,
+		discount: null,
 		col: 0
 	},
 	{
 		name: "Phalanx Heavy-Armor Skin",
 		img: "https://render.guildwars2.com/file/3727CC685744360817FA5CE8430BBD164F6241FD/665784.png",
-		quantity: 1,
-		pricenew: 800,
-		priceold: 0,
+		price: 800,
+		discount: null,
 		col: 0
 	},
 	{
 		name: "Trickster's Light-Armor Skin",
 		img: "https://render.guildwars2.com/file/B2525293D7E825EDD50124F64C0EB7436FACD2DB/665786.png",
-		quantity: 1,
-		pricenew: 800,
-		priceold: 0,
+		price: 800,
+		discount: null,
 		col: 0
 	},
 	{
 		name: "Viper's Medium-Armor Skin",
 		img: "https://render.guildwars2.com/file/29FF069D1B19BC79B8B1CDD6D8DACE3E189114AC/665785.png",
-		quantity: 1,
-		pricenew: 800,
-		priceold: 0,
+		price: 800,
+		discount: null,
 		col: 0
 	},
 	{
 		name: "Caithe's Bloom Dagger",
 		img: "https://render.guildwars2.com/file/56E61A69CE0AE070B2F239E5F2F44020615BC1E7/941014.png",
-		quantity: 1,
-		pricenew: 600,
-		priceold: 0,
+		price: 600,
+		discount: null,
 		col: 0
 	},
 	{
 		name: "Golden Wings Glider Combo",
-		img: "http://i.imgur.com/bayOs0U.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
+		img: "https://render.guildwars2.com/file/5151FD5C72550F643AE00DC91CC2C43D99C8C711/1366963.png",
+		price: 700,
+		discount: null,
 		col: 1
 	},
 	{
 		name: "Shadow Assassin Outfit",
 		img: "https://render.guildwars2.com/file/AD557E606AC130E9757D75CB6176657440157730/831492.png",
-		quantity: 1,
-		pricenew: 700,
-		priceold: 0,
+		price: 700,
+		discount: null,
 		col: 1
 	},
 	{
 		name: "Bouquet of Roses",
 		img: "https://render.guildwars2.com/file/9B06346EC37F0DD0A2EF61F819F56962D11FE1BE/534227.png",
-		quantity: 1,
-		pricenew: 250,
-		priceold: 0,
+		price: 250,
+		discount: null,
 		col: 1
 	},
 	{
 		name: "Box of Chocolates",
 		img: "https://render.guildwars2.com/file/39FD9EDC1AA019A0B53367A82DE9D63627B90C98/729530.png",
-		quantity: 1,
-		pricenew: 250,
-		priceold: 0,
+		price: 250,
+		discount: null,
 		col: 1
 	},
 	{
 		name: "Fuzzy Hylek Hat",
 		img: "https://render.guildwars2.com/file/BD28FA0216E2D0C74357E5C05FD115E9C5CB670A/771065.png",
-		quantity: 1,
-		pricenew: 200,
-		priceold: 0,
+		price: 200,
+		discount: null,
 		col: 1
 	}
 	]
@@ -1213,16 +1209,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-02-19T00:00:00Z"),
-	Finish: new Date("2016-02-20T00:00:00Z"),
+	Start: new Date("2016-02-20T00:00:00Z"),
+	Finish: new Date("2016-02-21T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "44656", price: "25200" },
-		Fox: { id: "50023", price: "25200" },
-		Derwena: { id: "49735", price: "25200" },
-		Yana: { id: "49735", price: "25200" },
-		Katyn: { id: "43843", price: "25200" },
-		Verma: { id: "48918", price: "25200" }
+		Mehem: { id: "43811", price: "25200" },
+		Fox: { id: "67961", price: "25200" },
+		Derwena: { id: "43839", price: "25200" },
+		Yana: { id: "49762", price: "25200" },
+		Katyn: { id: "43483", price: "25200" },
+		Verma: { id: "43825", price: "25200" }
 	}
 }
 };
