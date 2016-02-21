@@ -2807,7 +2807,7 @@ A = {
 			var sectionname = I.SectionEnum.Account[i];
 			var sectionnamelow = sectionname.toLowerCase();
 			var menubutton = $("<li id='accMenu" + sectionname + "' class='accMenu curClick'><img src='img/account/menu/"
-				+ sectionnamelow + ".png' />" + D.getPhraseOriginal(sectionname) + "</li>");
+				+ sectionnamelow + ".png' /><var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var></li>");
 			menu.append(menubutton);
 			// Clicking on a button shows the associated section
 			(function(iButton, iSectionName)
