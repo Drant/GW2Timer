@@ -9,9 +9,8 @@
 }
 
 #accClose, #accExpand {
-	position: absolute;
-	left: auto;
-	top: 0; right: 0;
+	top: 16px;
+	left: auto; right: 0;
 }
 #accExpand {
 	right: 32px;
@@ -27,12 +26,14 @@
 /* Menu
 ----------------------------------------------------------------------------- */
 #accOverhead {
+	top: 0;
+	position: fixed;
 	display: block;
 	width: 100%;
 	background: linear-gradient(to left, rgba(255,255,255,0) 0%, #333 50%, rgba(255,255,255,0) 100%);
 }
 #accOverheadPadding {
-	height: 16px;
+	height: 32px;
 }
 
 #accMenu {
@@ -101,16 +102,19 @@
 }
 .accTokenButtons {
 	display: inline-block;
-	width: 72px;
+	width: 96px;
 }
-.accTokenButtons button {
+.accTokenUse, .accTokenDelete {
 	width: 32px;
 }
 
 #accTokenNew {
 	display: inline-block;
 	margin-top: 8px;
-	width: 64px;
+	width: 96px;
+}
+input[type="text"].accTokenHovered {
+	border: 1px solid red;
 }
 
 #accConsole {
@@ -193,7 +197,7 @@
 	display: block;
 	width: auto; height: 32px;
 	overflow: hidden;
-	vertical-align: middle;
+	white-space: nowrap;
 	line-height: 32px;
 	text-align: left;
 	background-repeat: repeat-y;
@@ -206,9 +210,8 @@
 	animation: aniHighlight 0.4s;
 }
 .chrPortrait {
-	display: block;
+	display: block; float: left;
 	width: 32px; height: 32px;
-	float: left;
 	border-radius: 4px;
 	margin-right: 8px;
 }
@@ -228,20 +231,19 @@
 .chrTrivial { /* Situational class to fade trivial information */
 	opacity: 0.4;
 }
-.chrCommitment { /* Contains profession and crafting icons */
+.chrProfession, .chrProfessionIcon, .chrCrafting {
 	display: inline-block;
-	width: 128px;
-	float: right;
+	overflow: hidden;
+	white-space: nowrap;
 }
 .chrCrafting {
 	margin-left: 4px;
-	pointer-events: none;
 }
-.chrLevel {
+.chrCraftingRating {
 	width: 32px;
 	position: absolute;
 	margin-left: -32px;
-	margin-top: -16px;
+	margin-top: -12px;
 	text-align: center;
 	font-size: 10px;
 	color: #ffeeaa;

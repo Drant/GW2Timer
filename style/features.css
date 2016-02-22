@@ -525,28 +525,6 @@ dt.jpzListNameHover {
 .trdButtons button {
 	width: 24px; height: 24px;
 }
-.trdSwap {
-	display: inline-block;
-	width: 20px; height: 24px;
-	vertical-align: bottom;
-}
-.trdEntry button.trdSwapUp, .trdEntry button.trdSwapDown {
-	display: block;
-	min-width: 18px; min-height: 12px;
-	font-size: 8px;
-}
-.trdEntry button.trdSwapUp {
-	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-}
-.trdEntry button.trdSwapDown {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 8px;
-	border-bottom-left-radius: 8px;
-}
 .trdEntry input[type="text"] {
 	width: 103px;
 	margin: 2px;

@@ -1100,13 +1100,6 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Dye Pack",
-		img: "https://render.guildwars2.com/file/09206A087606CFC674AC19E1E5CCADB6B3302061/66601.png",
-		price: 160,
-		discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]],
-		col: 0
-	},
-	{
 		name: "Phalanx Heavy-Armor Skin",
 		img: "https://render.guildwars2.com/file/3727CC685744360817FA5CE8430BBD164F6241FD/665784.png",
 		price: 800,
@@ -1202,16 +1195,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-02-21T00:00:00Z"),
-	Finish: new Date("2016-02-22T00:00:00Z"),
+	Start: new Date("2016-02-22T00:00:00Z"),
+	Finish: new Date("2016-02-23T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43799", price: "12600" },
-		Fox: { id: "67965", price: "25200" },
-		Derwena: { id: "43798", price: "12600" },
-		Yana: { id: "43841", price: "25200" },
-		Katyn: { id: "43804", price: "25200" },
-		Verma: { id: "44653", price: "25200" }
+		Mehem: { id: "43810", price: "12600" },
+		Fox: { id: "43827", price: "25200" },
+		Derwena: { id: "43834", price: "12600" },
+		Yana: { id: "43839", price: "25200" },
+		Katyn: { id: "49735", price: "25200" },
+		Verma: { id: "67964", price: "25200" }
 	}
 }
 };

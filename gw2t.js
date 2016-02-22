@@ -2719,7 +2719,7 @@ U = {
 A = {
 	
 	TokenCurrent: null,
-	isAccountLoaded: false,
+	isAccountInitialized: false,
 	Metadata: {}, // Prewritten data loaded along with account page
 	Data: { // Cache for retrieved API data objects and arrays
 		Account: {},
@@ -2838,6 +2838,7 @@ A = {
 		$("#accExpand").click(function()
 		{
 			$("#mapDisplayButton").trigger("click");
+			A.adjustAccountPanel();
 		});
 		$("#accClose").click(function()
 		{
@@ -2864,7 +2865,18 @@ A = {
 		});
 	
 		// Finally
-		A.isAccountLoaded = true;
+		A.adjustAccountPanel();
+		A.isAccountInitialized = true;
+	},
+	
+	/*
+	 * Adjusts the content portion of the account panel.
+	 */
+	adjustAccountPanel: function()
+	{
+		$("#accOverhead").css({width: + $("#accContent").width() + "px"});
+		$("#accOverheadPadding").css({height: $("#accOverhead").height() + "px"});
+		I.updateScrollbar("#panelAccount");
 	},
 	
 	/*
@@ -3030,7 +3042,10 @@ A = {
 		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
 		var use = $("<button class='accTokenUse'><img src='img/ui/check.png' /></button>").appendTo(buttons);
-		var del = $("<button class='accTokenDelete'><img src='img/ui/default.png' /></button><br />").appendTo(buttons);
+		var del = $("<button class='accTokenDelete'><img src='img/ui/default.png' /></button>").appendTo(buttons);
+		var swap = $("<span class='btnSwap'></span>").appendTo(buttons);
+		var swapup = $("<button class='btnSwapUp'></button>").appendTo(swap);
+		var swapdown = $("<button class='btnSwapDown'></button>").appendTo(swap);
 		
 		// Use the token if specified
 		if (pIsUsed !== undefined && pIsUsed === true)
@@ -3040,10 +3055,6 @@ A = {
 		}
 		
 		// Bind buttons
-		token.change(function()
-		{
-			use.trigger("click");
-		});
 		use.click(function()
 		{
 			var str = key.val();
@@ -3095,6 +3106,18 @@ A = {
 				A.saveTokens();
 			});
 		});
+		buttons.hover(
+			function()
+			{
+				name.addClass("accTokenHovered");
+				key.addClass("accTokenHovered");
+			},
+			function()
+			{
+				name.removeClass("accTokenHovered");
+				key.removeClass("accTokenHovered");
+			}
+		);
 	},
 	
 	/*
@@ -3201,7 +3224,7 @@ A = {
 			{
 				var trivial = (iCraft.rating >= A.Metadata.CraftRank.Master) ? "" : "chrTrivial";
 				var craftstr = "<b class='" + trivial + "'><img src='img/account/crafting/" + (iCraft.discipline).toLowerCase() + I.cPNG + "' />"
-					+ "<sup class='chrLevel'>" + iCraft.rating + "</sup></b> ";
+					+ "<sup class='chrCraftingRating'>" + iCraft.rating + "</sup></b> ";
 				if (iCraft.active)
 				{
 					craftused += craftstr;
@@ -3217,16 +3240,18 @@ A = {
 		$("#chrSelection_" + pCharacter.charindex).append(
 			"<img class='chrPortrait' src='img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG + "' />"
 			+ "<var id='chrName_" + pCharacter.charindex + "' class='chrName' data-value='" + charvalue + "'>" + pCharacter.charname + "</var>"
-			+ "<img class='chrProceed' src='img/account/view.png' />"
 			+ "<span class='chrCommitment' data-value='" + professionvalue + "'>"
-				+ "<var class='chrProfession " + trivial + "'><img class='chrProfessionIcon' src='"
-					+ getProfessionIcon(pCharacter) + "' /><sup>" + pCharacter.level + "</sup></var>"
+				+ "<var class='chrProfession " + trivial + "'>"
+					+ "<img class='chrProfessionIcon' src='" + getProfessionIcon(pCharacter) + "' /><sup>" + pCharacter.level + "</sup></var>"
 				+ "<var class='chrCrafting'>" + craftused + "</var>"
-			+ "</span>")
+			+ "</span>"
+			+ "<img class='chrProceed' src='img/account/view.png' />")
 		.click(function()
 		{
 			$(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
 			$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
+			var charindex = U.getSubintegerFromHTMLID($(this));
+			I.write(U.formatJSON(A.Data.Characters[charindex]));
 		});
 		// Additional information as tooltip
 		I.qTip.init($("#chrSelection_" + pCharacter.charindex).find(".chrCommitment").attr("title", crafttooltip));
@@ -3312,12 +3337,12 @@ A = {
 			+ D.getWordCapital("lifetime") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrBirthday'>"
 			+ D.getWordCapital("birthday") + sym + "</var></li>");
 		// Header click to sort the columns
-		$(".chrHeaderLeft, .chrHeaderRight").data("descending", true).click(function()
+		$(".chrHeaderLeft, .chrHeaderRight").data("isdescending", true).click(function()
 		{
 			// Sort and toggle the boolean
-			var isdescending = $(this).data("descending");
+			var isdescending = $(this).data("isdescending");
 			A.sortCharacters($(this).attr("data-classifier"), isdescending);
-			$(this).data("descending", !isdescending);
+			$(this).data("isdescending", !isdescending);
 			// Change symbol
 			var symbol = (!isdescending) ? I.Symbol.TriUp : I.Symbol.TriDown;
 			$(this).find(".chrHeaderToggle").html(symbol);
@@ -5198,8 +5223,8 @@ E = {
 					+ "<div class='trdPreview'>"
 						+ "<input class='trdCurrentBuy trdOutput' type='text' tabindex='-1' />"
 						+ "<input class='trdCurrentSell trdOutput' type='text' tabindex='-1' />"
-						+ "<div class='trdSwap'>"
-							+ "<button class='trdSwapUp' tabindex='-1'></button><button class='trdSwapDown' tabindex='-1'></button>"
+						+ "<div class='btnSwap'>"
+							+ "<button class='btnSwapUp' tabindex='-1'></button><button class='btnSwapDown' tabindex='-1'></button>"
 						+ "</div>"
 					+ "</div>"
 				+ "</div>"
@@ -5264,7 +5289,7 @@ E = {
 			});
 			
 			// Initial registering of the swap index variable
-			$(entry + " .trdSwap").hover(
+			$(entry + " .btnSwap").hover(
 				function()
 				{
 					$(this).parents(".trdEntry").find(".trdName").addClass("trdHovered");
@@ -5277,12 +5302,12 @@ E = {
 			);
 			
 			// Bind swap up/down buttons to swap data between calculators (for manual rearranging)
-			$(entry + " .trdSwapUp, " + entry + " .trdSwapDown").each(function()
+			$(entry + " .btnSwapUp, " + entry + " .btnSwapDown").each(function()
 			{
 				$(this).click(function()
 				{
 					var i = E.SwapIndex;
-					var isUp = ($(this).hasClass("trdSwapUp")) ? true : false;
+					var isUp = ($(this).hasClass("btnSwapUp")) ? true : false;
 					
 					// Do not allow swapping outside of range
 					if (isUp && i === 0)
@@ -19186,7 +19211,7 @@ I = {
 		// Bind account button
 		$("#mapAccountButton, #wvwAccountButton").one("click", function()
 		{
-			if (A.isAccountLoaded === false)
+			if (A.isAccountInitialized === false)
 			{
 				I.loadStylesheet("account");
 				$("#panelAccount").load(U.getPageSrc("account"), function()
@@ -20390,7 +20415,7 @@ I = {
 			panel.show().css({width: 0}).animate({width: "100%"}, "fast", function()
 			{
 				content.show();
-				I.updateScrollbar("#panelAccount");
+				A.adjustAccountPanel();
 			});
 			I.PagePrevious = I.PageCurrent;
 			I.PageCurrent = I.SpecialPageEnum.Account;
@@ -20623,7 +20648,7 @@ I = {
 	},
 	
 	/*
-	 * Binds functions that activate when the user resizes the browser/window.
+	 * Binds functions that activate when the user resizes the browser/screen/window.
 	 */
 	bindWindowResize: function()
 	{
@@ -20644,6 +20669,10 @@ I = {
 			{
 				W.readjustLeaderboard();
 				W.readjustLog();
+			}
+			if (A.isAccountInitialized)
+			{
+				A.adjustAccountPanel();
 			}
 		}));
 	},
