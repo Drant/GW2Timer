@@ -1244,6 +1244,10 @@ O = {
 				{
 					W.refreshMap();
 				}
+				if (A.isAccountInitialized)
+				{
+					A.adjustAccountPanel();
+				}
 			}
 		},
 		bol_alignPanelRight: function(pInitial)
@@ -2621,6 +2625,21 @@ U = {
 	},
 	
 	/*
+	 * Gets an image URL from a third party provider for a guild banner.
+	 * @param string pName of the guild.
+	 * @returns string URL.
+	 */
+	getGuildBannerURL: function(pName)
+	{
+		if (pName)
+		{
+			var name = U.escapeHTML((pName.split(" ").join("-")).toLowerCase());
+			return "http://guilds.gw2w2w.com/guilds/" + name + "/128.svg";
+		}
+		return "img/ui/placeholder.png";
+	},
+	
+	/*
 	 * Converts a poi_id number from maps_floor.json to a valid chatlink.
 	 * Code from http://virtus-gilde.de/gw2map
 	 * @param int pID of the poi.
@@ -2806,8 +2825,9 @@ A = {
 		{
 			var sectionname = I.SectionEnum.Account[i];
 			var sectionnamelow = sectionname.toLowerCase();
-			var menubutton = $("<li id='accMenu" + sectionname + "' class='accMenu curClick'><img src='img/account/menu/"
-				+ sectionnamelow + ".png' /><var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var></li>");
+			var menubutton = $("<kbd id='accMenu" + sectionname + "' class='accMenu curClick'>"
+				+ "<img src='img/account/menu/" + sectionnamelow + I.cPNG + "' />"
+				+ "<var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var></kbd>");
 			menu.append(menubutton);
 			// Clicking on a button shows the associated section
 			(function(iButton, iSectionName)
@@ -2817,7 +2837,10 @@ A = {
 					$(".accMenu").removeClass("accMenuFocused");
 					$(this).addClass("accMenuFocused");
 					$(".accPlatter").hide();
-					$("#accPlatter" + iSectionName).fadeIn(400);
+					$("#accPlatter" + iSectionName).fadeIn(400, function()
+					{
+						A.adjustAccountPanel();
+					});
 					I.SectionCurrent[I.SpecialPageEnum.Account] =
 						(iSectionName === I.SectionEnum.Account.Mananger) ? "" : iSectionName;
 					U.updateQueryString();
@@ -2838,7 +2861,6 @@ A = {
 		$("#accExpand").click(function()
 		{
 			$("#mapDisplayButton").trigger("click");
-			A.adjustAccountPanel();
 		});
 		$("#accClose").click(function()
 		{
@@ -2995,7 +3017,7 @@ A = {
 	{
 		if (pStatus === "error")
 		{
-			I.write("Error retrieving API key data: no permission or bad request.");
+			I.write("Unable to retrieve response. ArenaNet API servers may be down.");
 		}
 		else
 		{
@@ -3054,7 +3076,7 @@ A = {
 			use.addClass("btnFocused");
 		}
 		
-		// Bind buttons
+		// Button to use this token's API key
 		use.click(function()
 		{
 			var str = key.val();
@@ -3071,6 +3093,7 @@ A = {
 				I.write("Please enter a valid API key.");
 			}
 		});
+		// Button to delete this token
 		del.click(function()
 		{
 			var str = key.val();
@@ -3096,6 +3119,7 @@ A = {
 				I.write("Must have at least one API token.");
 			}
 		});
+		// Autoselect the input boxes on click and save on change
 		$([name, key]).each(function()
 		{
 			$(this).click(function()
@@ -3106,6 +3130,7 @@ A = {
 				A.saveTokens();
 			});
 		});
+		// Highlight the row when hovered on a button
 		buttons.hover(
 			function()
 			{
@@ -3118,6 +3143,28 @@ A = {
 				key.removeClass("accTokenHovered");
 			}
 		);
+		// Button to raise or lower the token's row order
+		$([swapup, swapdown]).each(function()
+		{
+			$(this).click(function()
+			{
+				if ($(this).hasClass("btnSwapUp"))
+				{
+					if (token.prev().hasClass("accToken")) // Prevent out of bounds
+					{
+						token.insertBefore(token.prev());
+					}
+				}
+				else
+				{
+					if (token.next().hasClass("accToken"))
+					{
+						token.insertAfter(token.next());
+					}
+				}
+				A.saveTokens();
+			});
+		});
 	},
 	
 	/*
@@ -3192,12 +3239,13 @@ A = {
 	generateCharactersSelection: function(pCharacter)
 	{
 		// Gets the profession icon or elite spec icon if available from the character data
-		var getProfessionIcon = function(pDataInner)
+		var getProfessionIcon = function(pCharacterInner)
 		{
-			var icon = (pDataInner.profession).toLowerCase();
-			if (pDataInner.specializations && pDataInner.specializations.pve)
+			var icon = (pCharacterInner.profession).toLowerCase();
+			pCharacterInner.charicon = icon;
+			if (pCharacterInner.specializations && pCharacterInner.specializations.pve)
 			{
-				var specs = pDataInner.specializations.pve;
+				var specs = pCharacterInner.specializations.pve;
 				for (var i = 0; i < specs.length; i++)
 				{
 					if (specs[i])
@@ -3207,6 +3255,7 @@ A = {
 						if (A.Metadata.ProfElite[specid] !== undefined)
 						{
 							icon = A.Metadata.ProfElite[specid];
+							pCharacterInner.charicon = icon; // Remember the icon
 							break;
 						}
 					}
@@ -3328,7 +3377,8 @@ A = {
 		// Insert header above the columns
 		var sym = " <b class='chrHeaderToggle'>" + I.Symbol.TriDown + "</b>";
 		$("#chrSelection").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrName'>"
-			+ D.getWordCapital("character") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrCommitment'>"
+			+ A.Data.Characters.length + " "
+			+ D.getWordCapital("characters") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrCommitment'>"
 			+ D.getWordCapital("profession") + sym + "</var></li>");
 		$("#chrUsage").prepend("<li class='chrHeader'><var class='chrHeaderLeft curClick' data-classifier='chrAge'>"
 			+ D.getWordCapital("age") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrDeaths'>"
@@ -3356,16 +3406,16 @@ A = {
 			var accountbirthdate = new Date(pData.created);
 			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMILLISECONDS_IN_SECOND);
 			var accountbirthdaysince = T.formatSeconds(accountlifetime).trim();
+			var commandership = (pData.commander) ? "" : "chrTrivial";
+			var access = (pData.access) ? "" : "chrTrivial";
 			var accountadditional = "<span id='chrAccountMisc'>"
 				+ "<dfn title='" + U.escapeHTML(pData.id) + "'>" + U.escapeHTML(pData.name) + "</dfn><br />" + accountbirthdate.toLocaleString() + "<br />"
 				+ "<img class='" + commandership +  "' src='img/account/commander.png' />"
 				+ "<img class='" + access +  "' src='img/account/access_hot.png' /> "
-				+ "<img src='img/account/fractal.png' />" + (pData.fractal_level || "") + " "
-				+ "<img src='img/account/daily.png' />" + (pData.daily_ap || "") + " "
-				+ "<img src='img/account/monthly.png' />" + (pData.monthly_ap || "")
+				+ "<img src='img/account/fractal.png' />" + (pData.fractal_level || "?") + " "
+				+ "<img src='img/account/daily.png' />" + (pData.daily_ap || "?") + " "
+				+ "<img src='img/account/monthly.png' />" + (pData.monthly_ap || "?")
 			+ "</span><br />";
-			var commandership = (pData.commander) ? "" : "chrTrivial";
-			var access = (pData.access) ? "" : "chrTrivial";
 			var summary = "<var id='chrAccountName'>" + accountname + "</var>"
 				+ accountadditional
 				+ "<var id='chrAccountServer'></var><br />"
@@ -3416,21 +3466,46 @@ A = {
 					$("#chrName_" + iCharacter.charindex).append(guildtag);
 				}
 			});
+			
+			var guildheader = "<li class='chrHeader'><var class='chrHeaderLeft'>" + D.getWordCapital("guilds") + "</var></li>";
+			$("#chrGuilds").append(guildheader);
+			for (var i in pGuilds)
+			{
+				var guild = A.Data.Guilds[(pGuilds[i])];
+				var banner = U.getGuildBannerURL(guild.guild_name);
+				var guildrow = "<li class='chrGuild'><span class='chrGuildHover'><img class='chrGuildBanner' src='" + banner + "' />"
+						+ "<img class='chrGuildBanner chrGuildBannerLarge' src='" + banner + "' /></span>"
+					+ "<var class='chrGuildName'>" + guild.guild_name + " [" + guild.tag + "]</var></li>";
+				$("#chrGuilds").append(guildrow);
+			}
 		};
 		
-		// Fetch the guild details
+		// Fetch the guild details from the array of guild IDs
 		var numfetched = 0;
 		for (var i = 0; i < pGuilds.length; i++)
 		{
-			$.getJSON(U.URL_API.GuildDetails + pGuilds[i], function(pData)
+			// Only fetch if haven't cached it
+			if (A.Data.Guilds[(pGuilds[i])] === undefined)
 			{
-				A.Data.Guilds[pData.guild_id] = pData;
+				$.getJSON(U.URL_API.GuildDetails + pGuilds[i], function(pData)
+				{
+					A.Data.Guilds[pData.guild_id] = pData;
+					numfetched++;
+					if (numfetched === pGuilds.length)
+					{
+						finalizeGuilds();
+					}
+				});
+			}
+			else
+			{
 				numfetched++;
 				if (numfetched === pGuilds.length)
 				{
 					finalizeGuilds();
 				}
-			});
+			}
+			
 		}
 	},
 	
@@ -6142,7 +6217,7 @@ D = {
 		s_hour: {de: "stunde", es: "hora", fr: "heure", cs: "hodina", it: "ora", pl: "godzinę", pt: "hora", ru: "час", zh: "時"},
 		s_minute: {de: "minute", es: "minuto", fr: "minute", cs: "minuta", it: "minuto", pl: "minuta", pt: "minuto", ru: "минута", zh: "分"},
 		s_second: {de: "sekunde", es: "segundo", fr: "seconde", cs: "sekunda", it: "secondo", pl: "sekund", pt: "segundo", ru: "секунду", zh: "秒"},
-		s_hours: {de: "studen", es: "horas", fr: "heures", cs: "hodin", it: "secondi", pl: "godzin", pt: "horas", ru: "часов", zh: "時"},
+		s_hours: {de: "stunden", es: "horas", fr: "heures", cs: "hodin", it: "secondi", pl: "godzin", pt: "horas", ru: "часов", zh: "時"},
 		s_minutes: {de: "minuten", es: "minutos", fr: "minutes", cs: "minut", it: "minuti", pl: "minut", pt: "minutos", ru: "минут", zh: "分"},
 		s_seconds: {de: "sekunden", es: "segundos", fr: "secondes", cs: "sekund", it: "ore", pl: "sekund", pt: "segundos", ru: "секунд", zh: "秒"},
 		s_half_an_hour: {de: "eine halbe stunde", es: "media hora", fr: "demi-heure",
@@ -6175,8 +6250,6 @@ D = {
 			cs: "mapa", it: "mappa", pl: "mapa", pt: "mapa", ru: "ка́рта", zh: "地圖"},
 		s_center: {de: "zentrum", es: "centro", fr: "centre",
 			cs: "střed", it: "centro", pl: "środek", pt: "centro", ru: "центр", zh: "中心"},
-		s_character: {de: "person", es: "personaje", fr: "personnage",
-			cs: "postava", it: "personaggio", pl: "postać", pt: "personagem", ru: "персона́ж", zh: "人物"},
 		s_completion: {de: "abschluss", es: "finalización", fr: "progression",
 			cs: "dokončení", it: "completamento", pl: "ukończenie", pt: "progressão", ru: "завершение", zh: "完成"},
 		s_route: {de: "route", es: "ruta", fr: "route",
@@ -6221,9 +6294,9 @@ D = {
 			cs: "vymazat", it: "cancella", pl: "wyczyść", pt: "limpar", ru: "очистить", zh: "清除"},
 		s_toggle: {de: "umschalten", es: "alternar", fr: "basculer",
 			cs: "přepnout", it: "alterna", pl: "przełączanie", pt: "alternar", ru: "переключить", zh: "切換"},
-		s_expand: {de: "erweitern", es: "expandir", fr: "développer",
+		s_expand: {de: "erweiter", es: "expandir", fr: "développer",
 			cs: "rozbalit", it: "espandere", pl: "rozwinąć", pt: "expandir", ru: "развернуть", zh: "展開"},
-		s_collapse: {de: "reduzieren", es: "contraer", fr: "réduire",
+		s_collapse: {de: "verkleiner", es: "contraer", fr: "réduire",
 			cs: "sbalit", it: "comprimere", pl: "zwinąć", pt: "recolher", ru: "свернуть", zh: "摺疊"},
 		s_draw: {de: "zeichnen", es: "dibujar", fr: "dessiner",
 			cs: "kreslit", it: "disegnare", pl: "rysować", pt: "desenhar", ru: "рисова́ть", zh: "画"},
@@ -6284,7 +6357,7 @@ D = {
 			cs: "prostý", it: "semplice", pl: "prosty", pt: "simples", ru: "простой", zh: "簡單"},
 		s_mobile: {de: "mobil", es: "móvil", fr: "mobile",
 			cs: "mobilní", it: "mobile", pl: "mobilna", pt: "móvel", ru: "мобильный", zh: "行動"},
-		s_tile: {de: "kachel", es: "mosaico", fr: "mosaïque",
+		s_tile: {de: "kacheln", es: "mosaico", fr: "mosaïque",
 			cs: "dlaždice", it: "affianca", pl: "sąsiadująco", pt: "ladrilho", ru: "замостить", zh: "磚"},
 		
 		// Economy
@@ -6298,7 +6371,7 @@ D = {
 			cs: "koupit", it: "comprare", pl: "kupić", pt: "comprar", ru: "купить", zh: "買"},
 		s_sell: {de: "verkaufen", es: "vender", fr: "vendre",
 			cs: "prodat", it: "vendere", pl: "sprzedać", pt: "vender", ru: "продать", zh: "賣"},
-		s_quantity: {de: "quantität", es: "cantidad", fr: "quantité",
+		s_quantity: {de: "anzahl", es: "cantidad", fr: "quantité",
 			cs: "množství", it: "quantità", pl: "ilość", pt: "quantidade", ru: "количество", zh: "量"},
 		s_profit: {de: "gewinn", es: "beneficio", fr: "profit",
 			cs: "zisk", it: "profitto", pl: "zysk", pt: "lucro", ru: "прибыль", zh: "利潤"},
@@ -6310,7 +6383,7 @@ D = {
 			cs: "daň", it: "fiscale", pl: "podatek", pt: "fiscal", ru: "налог", zh: "稅"},
 		s_revenue: {de: "einnahmen", es: "ingresos", fr: "revenus",
 			cs: "příjmy", it: "entrate", pl: "dochody", pt: "receita", ru: "доходов", zh: "收入"},
-		s_margin: {de: "marge", es: "margen", fr: "marge",
+		s_margin: {de: "gewinnspanne", es: "margen", fr: "marge",
 			cs: "marže", it: "margine", pl: "marża", pt: "margem", ru: "валовая", zh: "邊際"},
 		s_low: {de: "niedrigen", es: "bajo", fr: "bas",
 			cs: "nízký", it: "bassa", pl: "niski", pt: "baixa", ru: "низкая", zh: "低"},
@@ -15375,7 +15448,7 @@ W = {
 		{
 			claim = "<br /><dfn>Claim:</dfn> " + (new Date(obj.claimed_at)).toLocaleString()
 				+ "<br /><dfn>Guild:</dfn> " + U.escapeHTML(obj.guild_name + " [" + obj.tag + "]")
-				+ "<div class='cssCenter'><img class='objTooltipBanner' src='" + W.getGuildBannerURL(obj.guild_name) + "' /></div>";
+				+ "<div class='cssCenter'><img class='objTooltipBanner' src='" + U.getGuildBannerURL(obj.guild_name) + "' /></div>";
 		}
 		
 		var title = "<div class='objTooltip'>"
@@ -15384,21 +15457,6 @@ W = {
 			+ claim
 		+ "</div>";
 		I.qTip.init(icon.attr("title", title));
-	},
-	
-	/*
-	 * Gets an image URL from a third party provider for a guild banner.
-	 * @param string pName of the guild.
-	 * @returns string URL.
-	 */
-	getGuildBannerURL: function(pName)
-	{
-		if (pName)
-		{
-			var name = U.escapeHTML((pName.split(" ").join("-")).toLowerCase());
-			return "http://guilds.gw2w2w.com/guilds/" + name + "/128.svg";
-		}
-		return "img/ui/placeholder.png";
 	},
 	
 	/*

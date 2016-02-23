@@ -111,6 +111,7 @@
 	line-height: 18px;
 }
 .objTooltipBanner {
+	width: 128px; height: 128px;
 	margin-top: 12px;
 	margin-bottom: 8px;
 	background: url("../img/background/guildbanner.png");
