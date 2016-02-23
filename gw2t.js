@@ -3352,7 +3352,7 @@ A = {
 			var usage = "<var class='chrAge' title='" + T.formatSeconds(iData.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
 				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + agepercent + "%'></s></samp>"
 					+ "<samp><s style='width:" + deathpercent + "%'></s></samp></span>"
-				+ "<var class='chrDeaths' data-value='" + iData.deaths + "'>" + iData.deaths + "x</var>";
+				+ "<var class='chrDeaths' title='" + T.parseRatio(age / iData.deaths, 3) + "' data-value='" + iData.deaths + "'>" + iData.deaths + "x</var>";
 			$("#chrUsage_" + iData.charindex).append(usage);
 			// SENIORITY COLUMN (right)
 			var birthdate = (new Date(iData.created)).toLocaleString();
@@ -16752,9 +16752,10 @@ T = {
 			}
 		}
 		// Turn the achievement IDs into achievement nicknames
-		daily.pve = [a[(pObj.pve[0].id)], a[(pObj.pve[1].id)], a[(pObj.pve[2].id)], a[(pObj.pve[3].id)]];
-		daily.pvp = [a[(pObj.pvp[0].id)], a[(pObj.pvp[1].id)], a[(pObj.pvp[2].id)], a[(pObj.pvp[3].id)]];
-		daily.wvw = [a[(pObj.wvw[0].id)], a[(pObj.wvw[1].id)], a[(pObj.wvw[2].id)], a[(pObj.wvw[3].id)]];
+		var u = "unknown";
+		daily.pve = [a[(pObj.pve[0].id)] || u, a[(pObj.pve[1].id)] || u, a[(pObj.pve[2].id)] || u, a[(pObj.pve[3].id)] || u];
+		daily.pvp = [a[(pObj.pvp[0].id)] || u, a[(pObj.pvp[1].id)] || u, a[(pObj.pvp[2].id)] || u, a[(pObj.pvp[3].id)] || u];
+		daily.wvw = [a[(pObj.wvw[0].id)] || u, a[(pObj.wvw[1].id)] || u, a[(pObj.wvw[2].id)] || u, a[(pObj.wvw[3].id)] || u];
 		return daily;
 	},
 	

@@ -1090,8 +1090,8 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	isSpecial: false,
 	note: "",
-	Start: new Date("2016-02-16T16:00:00Z"),
-	Finish: new Date("2016-02-23T16:00:00Z"),
+	Start: new Date("2016-02-13T16:00:00Z"),
+	Finish: new Date("2016-03-01T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "./img/ui/gem.png",
@@ -1100,67 +1100,25 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Phalanx Heavy-Armor Skin",
-		img: "https://render.guildwars2.com/file/3727CC685744360817FA5CE8430BBD164F6241FD/665784.png",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Trickster's Light-Armor Skin",
-		img: "https://render.guildwars2.com/file/B2525293D7E825EDD50124F64C0EB7436FACD2DB/665786.png",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Viper's Medium-Armor Skin",
-		img: "https://render.guildwars2.com/file/29FF069D1B19BC79B8B1CDD6D8DACE3E189114AC/665785.png",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Caithe's Bloom Dagger",
-		img: "https://render.guildwars2.com/file/56E61A69CE0AE070B2F239E5F2F44020615BC1E7/941014.png",
+		name: "Belinda's Greatsword Skin",
+		img: "https://render.guildwars2.com/file/FEFE79F5D14B2CC42F5721A49C01982ACD9AEDDB/855402.png",
 		price: 600,
 		discount: null,
+		col: 1
+	},
+	{
+		name: "Electromagnetic-Descender Glider",
+		img: "http://i.imgur.com/FHX7gpz.png",
+		price: 400,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Golden Wings Glider Combo",
-		img: "https://render.guildwars2.com/file/5151FD5C72550F643AE00DC91CC2C43D99C8C711/1366963.png",
+		name: "Crystal Savant Outfit",
+		img: "https://render.guildwars2.com/file/169610D56164BBB24B95EB94B2240C3E0259515A/1373353.png",
 		price: 700,
 		discount: null,
-		col: 1
-	},
-	{
-		name: "Shadow Assassin Outfit",
-		img: "https://render.guildwars2.com/file/AD557E606AC130E9757D75CB6176657440157730/831492.png",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Bouquet of Roses",
-		img: "https://render.guildwars2.com/file/9B06346EC37F0DD0A2EF61F819F56962D11FE1BE/534227.png",
-		price: 250,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Box of Chocolates",
-		img: "https://render.guildwars2.com/file/39FD9EDC1AA019A0B53367A82DE9D63627B90C98/729530.png",
-		price: 250,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fuzzy Hylek Hat",
-		img: "https://render.guildwars2.com/file/BD28FA0216E2D0C74357E5C05FD115E9C5CB670A/771065.png",
-		price: 200,
-		discount: null,
-		col: 1
+		col: 0
 	}
 	]
 },

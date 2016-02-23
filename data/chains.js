@@ -751,7 +751,7 @@ var GW2T_CHAIN_DATA = [
 	pronunciation: "the shatterer",
 	title: "Kralkatorrik's Legacy",
 	name_en: "The Shatterer",
-	name_de: "Den Zerschmetterer",
+	name_de: "Der Zerschmetterer",
 	name_es: "El Asolador",
 	name_fr: "Le Destructeur",
 	name_zh: "碎裂巨獸",
