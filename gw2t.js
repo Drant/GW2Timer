@@ -6244,7 +6244,7 @@ D = {
 			cs: "boss", it: "boss", pl: "szef", pt: "chefe", ru: "мировой", zh: "頭目"},
 		s_event: {de: "event", es: "evento", fr: "événement",
 			cs: "událost", it: "evento", pl: "wydarzenie", pt: "evento", ru: "собы́тие", zh: "事件"},
-		s_section: {de: "paragraph", es: "sección", fr: "section",
+		s_section: {de: "abschnitt", es: "sección", fr: "section",
 			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "раздел", zh: "節"},
 		s_map: {de: "karte", es: "mapa", fr: "carte",
 			cs: "mapa", it: "mappa", pl: "mapa", pt: "mapa", ru: "ка́рта", zh: "地圖"},
