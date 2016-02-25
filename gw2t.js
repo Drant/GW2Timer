@@ -2370,7 +2370,8 @@ U = {
 	 * which will cause that section to expand/show. This is to be called after
 	 * a page has been AJAX loaded and bindings completed.
 	 * @objparam string prefix HTML ID prefix of the button to trigger, optional.
-	 * @objparam string section name, optional.
+	 * @objparam string section name to override URL's, optional.
+	 * @objparam string initialsection to open initially, optional.
 	 * @objparam string button HTML ID of the button to trigger, optional.
 	 */
 	openSectionFromURL: function(pOptions)
@@ -2378,6 +2379,7 @@ U = {
 		var settings = $.extend({
 			prefix: I.cHeaderPrefix + I.PageCurrent + "_",
 			section: null,
+			initialsection: null,
 			button: null
 		}, pOptions);
 		
@@ -2389,6 +2391,7 @@ U = {
 		setTimeout(function()
 		{
 			var section = U.Args[U.KeyEnum.Section];
+			// If section was specified in the URL arguments
 			if (section !== undefined)
 			{
 				section = U.stripToAlphanumeric(section);
@@ -2417,6 +2420,11 @@ U = {
 					}
 				}
 				elm.trigger("click");
+			}
+			// If section was specified by the function call
+			else if (typeof settings.initialsection === "string")
+			{
+				$(settings.prefix + settings.defaultsection).trigger("click");
 			}
 		}, 0);
 	},
@@ -2825,17 +2833,26 @@ A = {
 		{
 			var sectionname = I.SectionEnum.Account[i];
 			var sectionnamelow = sectionname.toLowerCase();
-			var menubutton = $("<kbd id='accMenu" + sectionname + "' class='accMenu curClick'>"
-				+ "<img src='img/account/menu/" + sectionnamelow + I.cPNG + "' />"
-				+ "<var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var></kbd>");
+			var menubutton = $("<aside class='accMenu curClick'>"
+				+ "<span id='accMenu" + sectionname + "' class='accMenuLeading'>"
+					+ "<img src='img/account/menu/" + sectionnamelow + I.cPNG + "' />"
+					+ "<var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var>"
+				+ "</span>"
+				+ "<span class='accMenuSubsection' style='display:none;'></span>"
+			+ "</aside>");
 			menu.append(menubutton);
-			// Clicking on a button shows the associated section
 			(function(iButton, iSectionName)
 			{
+				// Clicking on a button shows the associated section
 				iButton.click(function()
 				{
-					$(".accMenu").removeClass("accMenuFocused");
-					$(this).addClass("accMenuFocused");
+					if (I.SectionCurrent[I.SpecialPageEnum.Account] === iSectionName)
+					{
+						// Don't do anything if already in the clicked section
+						return;
+					}
+					$(".accMenu").removeClass("accMenuFocused").find(".accMenuSubsection").hide();
+					$(this).addClass("accMenuFocused").find(".accMenuSubsection").show();
 					$(".accPlatter").hide();
 					$("#accPlatter" + iSectionName).fadeIn(400, function()
 					{
@@ -2845,6 +2862,26 @@ A = {
 						(iSectionName === I.SectionEnum.Account.Mananger) ? "" : iSectionName;
 					U.updateQueryString();
 				});
+				// Insert additional subsection icons to the button, if available
+				var subsections = A.Metadata.Subsections[iSectionName];
+				if (subsections !== undefined)
+				{
+					var subbuttons = iButton.find(".accMenuSubsection");
+					subbuttons.append("<img src='img/account/view.png' />");
+					for (var ii in subsections)
+					{
+						var subsectionname = subsections[ii];
+						var subbutton = $("<img class='accMenuSubbutton' src='img/account/menu/" + subsectionname.toLowerCase() + I.cPNG + "' />");
+						subbuttons.append(subbutton);
+						(function(iSubbutton, iSubsectionName)
+						{
+							iSubbutton.click(function()
+							{
+								
+							});
+						})(subbutton, subsectionname);
+					}
+				}
 			})(menubutton, sectionname);
 		}
 		
@@ -2855,7 +2892,7 @@ A = {
 		
 		// Open the section if specified in the URL
 		$("#accPlatterManager").show();
-		U.openSectionFromURL({prefix: "#accMenu"});
+		U.openSectionFromURL({prefix: "#accMenu", initialsection: I.SectionEnum.Account.Mananger});
 		
 		// Bind the window buttons
 		$("#accExpand").click(function()
@@ -3271,7 +3308,7 @@ A = {
 		{
 			pCharacter.crafting.forEach(function(iCraft)
 			{
-				var trivial = (iCraft.rating >= A.Metadata.CraftRank.Master) ? "" : "chrTrivial";
+				var trivial = (iCraft.rating >= A.Metadata.CraftingRank.Master) ? "" : "chrTrivial";
 				var craftstr = "<b class='" + trivial + "'><img src='img/account/crafting/" + (iCraft.discipline).toLowerCase() + I.cPNG + "' />"
 					+ "<sup class='chrCraftingRating'>" + iCraft.rating + "</sup></b> ";
 				if (iCraft.active)

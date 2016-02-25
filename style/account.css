@@ -45,24 +45,36 @@
 	border-bottom: 1px solid #444;
 	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #333 100%);
 }
-#accMenu kbd {
+.accMenu {
 	display: inline-block;
 	padding-left: 4px;
 	padding-right: 6px;
 	margin-right: 6px;
 	text-align: left;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
 	background-repeat: repeat-x;
 }
-#accMenu kbd:hover {
+.accMenu:hover {
 	background-image: linear-gradient(to top, #7c7253 0%, rgba(255,255,255,0) 100%);
 	animation: aniHighlight 0.4s;
 }
-#accMenu kbd img {
+.accMenu img {
 	margin-right: 2px;
 }
 .accMenuFocused {
+	border-left: 1px solid rgba(228,224,179,0.6);
+	border-right: 1px solid rgba(228,224,179,0.6);
 	background-image: linear-gradient(to top, #7c7253 0%, rgba(255,255,255,0) 100%);
 }
+.accMenuSubbutton:hover {
+	border-radius: 50%;
+	box-shadow: 0px 0px 10px #e7e3bd;
+}
+.accMenuSubbutton:active {
+	opacity: 0.6;
+}
+
 #accProgressBar {
 	display: block;
 	width: 100%; height: 1px;
