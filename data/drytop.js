@@ -334,6 +334,17 @@ Explosives: {
 	wp: "[&BH4HAAA=]",
 	color: "lime"
 },
+Creature: {
+	name_en: "Creature",
+	name_de: "Kreatur",
+	name_es: "Criatura",
+	name_fr: "Créature",
+	name_zh: "生物",
+	time: ":45",
+	coord: [5056, 16423],
+	wp: "[&BHoHAAA=]",
+	color: "limegreen"
+},
 Devourer: {
 	name_en: "Devourer (II)",
 	name_de: "Verschlinger (II)",
@@ -400,4 +411,53 @@ Monster: {
 	wp: "[&BHoHAAA=]",
 	color: "orchid"
 }
+};
+
+/*
+ * Set of events in the 5 minute chunks.
+ */
+var GW2T_DRYTOP_SETS = [
+	[
+		GW2T_DRYTOP_DATA.Victims, GW2T_DRYTOP_DATA.Crystals, GW2T_DRYTOP_DATA.Supplies, GW2T_DRYTOP_DATA.Rustbucket,
+		GW2T_DRYTOP_DATA.Shaman, GW2T_DRYTOP_DATA.TendrilW, GW2T_DRYTOP_DATA.TendrilSE, GW2T_DRYTOP_DATA.Tootsie
+	],
+	[
+		GW2T_DRYTOP_DATA.MineE, GW2T_DRYTOP_DATA.Serene, GW2T_DRYTOP_DATA.Insects, GW2T_DRYTOP_DATA.Bridge,
+		GW2T_DRYTOP_DATA.Experiment, GW2T_DRYTOP_DATA.Golem, GW2T_DRYTOP_DATA.Nochtli, GW2T_DRYTOP_DATA.Colocal
+	],
+	[
+		GW2T_DRYTOP_DATA.MineNE, GW2T_DRYTOP_DATA.Basket, GW2T_DRYTOP_DATA.Suit, GW2T_DRYTOP_DATA.Leyline, GW2T_DRYTOP_DATA.Town
+	],
+	[
+		GW2T_DRYTOP_DATA.Mites, GW2T_DRYTOP_DATA.Haze, GW2T_DRYTOP_DATA.Eway, GW2T_DRYTOP_DATA.Skritts0, GW2T_DRYTOP_DATA.Skritts1,
+		GW2T_DRYTOP_DATA.Skritts2, GW2T_DRYTOP_DATA.Skritts3, GW2T_DRYTOP_DATA.Explosives, GW2T_DRYTOP_DATA.Giant
+	],
+	[
+		GW2T_DRYTOP_DATA.Creature, GW2T_DRYTOP_DATA.Devourer
+	],
+	[
+		GW2T_DRYTOP_DATA.Mites, GW2T_DRYTOP_DATA.Haze, GW2T_DRYTOP_DATA.Twister, GW2T_DRYTOP_DATA.Chriikkt, GW2T_DRYTOP_DATA.Eway,
+		GW2T_DRYTOP_DATA.Skritts0, GW2T_DRYTOP_DATA.Skritts1, GW2T_DRYTOP_DATA.Skritts2, GW2T_DRYTOP_DATA.Skritts3, GW2T_DRYTOP_DATA.Chickenado
+	],
+	[
+		GW2T_DRYTOP_DATA.Beetle, GW2T_DRYTOP_DATA.Monster
+	]
+];
+
+/*
+ * Timings and the event set associated, with color for the map label.
+ */
+var GWT2_DRYTOP_CODES = {
+	"00": {chat: ":00 ", set: 0, color: "red"},
+	"05": {chat: ":05 ", set: 1, color: "orange"},
+	"10": {chat: ":10 ", set: 2, color: "yellow"},
+	"15": {chat: ":15 ", set: 0, color: "red"},
+	"20": {chat: ":20 ", set: 1, color: "orange"},
+	"25": {chat: ":25 ", set: 2, color: "yellow"},
+	"30": {chat: ":30 ", set: 0, color: "red"},
+	"35": {chat: ":35 ", set: 1, color: "orange"},
+	"40": {chat: ":40 ", set: 3, color: "lime"},
+	"45": {chat: ":45 ", set: 4, color: "limegreen"},
+	"50": {chat: ":50 ", set: 5, color: "dodgerblue"},
+	"55": {chat: ":55 ", set: 6, color: "orchid"}
 };

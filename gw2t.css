@@ -1078,7 +1078,7 @@ input.mapCoordinatesName {
 .mapZoneList {
 	border-spacing: 12px;
 }
-.mapZoneList div, .nodList div {
+.mapZoneList aside {
 	display: table-cell;
 }
 .mapZoneList ul, .mapZoneList h2 {

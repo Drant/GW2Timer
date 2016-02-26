@@ -220,27 +220,34 @@ dt.jpzListNameHover {
 .nodList {
 	font-size: 11px;
 }
-.nodList div {
+.nodColumn {
+	display: table-cell;
 	min-width: 110px;
 }
-.nodList button {
+.nodColumn label {
+	white-space: nowrap;
+	overflow: hidden;
+}
+.nodColumn button {
 	width: 84px;
 }
-.nodList label img {
+.nodColumn label img {
 	width: 16px; height: 16px;
 }
-.nodList div abbr { /* Resource name */
+.nodColumn abbr { /* Resource name */
 	display: inline;
+	white-space: nowrap;
 }
-.nodList div:hover abbr {
+.nodColumn:hover abbr {
 	display: none;
 }
-.nodList div var {
+.nodColumn var {
 	display: none;
 } 
-.nodList div:hover var { /* Resource price */
+.nodColumn:hover var { /* Resource price */
 	display: inline;
 	margin-left: 2px;
+	white-space: nowrap;
 	font-size: 12px;
 	font-weight: bold;
 }

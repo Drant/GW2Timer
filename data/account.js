@@ -43,11 +43,6 @@ var GW2T_ACCOUNT_DICTIONARY = {
  * Quick reference API related data.
  */
 var GW2T_ACCOUNT_METADATA = {
-	Subsections: { // The subsections of a page's section that can be viewed after the section has been loaded
-		Characters: ["Equipment", "Specializations", "Inventory", "Crafting"],
-		Bank: ["Materials"],
-		Wardrobe: ["Dyes", "Minis"]
-	},
 	CraftingRank: {
 		Novice: 0,
 		Initiate: 75,

@@ -2424,7 +2424,7 @@ U = {
 			// If section was specified by the function call
 			else if (typeof settings.initialsection === "string")
 			{
-				$(settings.prefix + settings.defaultsection).trigger("click");
+				$(settings.prefix + settings.initialsection).trigger("click");
 			}
 		}, 0);
 	},
@@ -2828,71 +2828,7 @@ A = {
 		var panel = $("#panelAccount");
 		I.initializeScrollbar(panel);
 		U.convertExternalLink("#accHelp a");
-		var menu = $("#accMenu");
-		for (var i in I.SectionEnum.Account)
-		{
-			var sectionname = I.SectionEnum.Account[i];
-			var sectionnamelow = sectionname.toLowerCase();
-			var menubutton = $("<aside class='accMenu curClick'>"
-				+ "<span id='accMenu" + sectionname + "' class='accMenuLeading'>"
-					+ "<img src='img/account/menu/" + sectionnamelow + I.cPNG + "' />"
-					+ "<var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var>"
-				+ "</span>"
-				+ "<span class='accMenuSubsection' style='display:none;'></span>"
-			+ "</aside>");
-			menu.append(menubutton);
-			(function(iButton, iSectionName)
-			{
-				// Clicking on a button shows the associated section
-				iButton.click(function()
-				{
-					if (I.SectionCurrent[I.SpecialPageEnum.Account] === iSectionName)
-					{
-						// Don't do anything if already in the clicked section
-						return;
-					}
-					$(".accMenu").removeClass("accMenuFocused").find(".accMenuSubsection").hide();
-					$(this).addClass("accMenuFocused").find(".accMenuSubsection").show();
-					$(".accPlatter").hide();
-					$("#accPlatter" + iSectionName).fadeIn(400, function()
-					{
-						A.adjustAccountPanel();
-					});
-					I.SectionCurrent[I.SpecialPageEnum.Account] =
-						(iSectionName === I.SectionEnum.Account.Mananger) ? "" : iSectionName;
-					U.updateQueryString();
-				});
-				// Insert additional subsection icons to the button, if available
-				var subsections = A.Metadata.Subsections[iSectionName];
-				if (subsections !== undefined)
-				{
-					var subbuttons = iButton.find(".accMenuSubsection");
-					subbuttons.append("<img src='img/account/view.png' />");
-					for (var ii in subsections)
-					{
-						var subsectionname = subsections[ii];
-						var subbutton = $("<img class='accMenuSubbutton' src='img/account/menu/" + subsectionname.toLowerCase() + I.cPNG + "' />");
-						subbuttons.append(subbutton);
-						(function(iSubbutton, iSubsectionName)
-						{
-							iSubbutton.click(function()
-							{
-								
-							});
-						})(subbutton, subsectionname);
-					}
-				}
-			})(menubutton, sectionname);
-		}
-		
-		$("#accMenuCharacters").click(function()
-		{
-			A.generateAndInitializeCharacters();
-		});
-		
-		// Open the section if specified in the URL
-		$("#accPlatterManager").show();
-		U.openSectionFromURL({prefix: "#accMenu", initialsection: I.SectionEnum.Account.Mananger});
+		A.initializeMenu();
 		
 		// Bind the window buttons
 		$("#accExpand").click(function()
@@ -2926,6 +2862,92 @@ A = {
 		// Finally
 		A.adjustAccountPanel();
 		A.isAccountInitialized = true;
+	},
+	
+	/*
+	 * Binds functionality of the account page menu bar.
+	 * A menu item views its associated section, and can also contains menu icons,
+	 * which views the section's subsections if available.
+	 */
+	initializeMenu: function()
+	{
+		var menu = $("#accMenu");
+		for (var i in I.SectionEnum.Account)
+		{
+			var sectionname = I.SectionEnum.Account[i];
+			var sectionnamelow = sectionname.toLowerCase();
+			var menubutton = $("<aside id='accMenu" + sectionname + "' class='accMenu curClick'>"
+				+ "<span>"
+					+ "<img class='accMenuIcon accMenuIconMain' src='img/account/menu/" + sectionnamelow + I.cPNG + "' />"
+					+ "<var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var>"
+				+ "</span>"
+				+ "<span class='accMenuSubsection' style='display:none;'></span>"
+			+ "</aside>");
+			menu.append(menubutton);
+			(function(iButton, iSectionName)
+			{
+				// Clicking on a button shows the associated section
+				iButton.click(function()
+				{
+					// Highlight the clicked button
+					$(".accMenu").removeClass("accMenuFocused").find(".accMenuSubsection").hide();
+					$(this).addClass("accMenuFocused").find(".accMenuSubsection").show();
+					$(".accMenu").find(".accMenuIcon").removeClass("accMenuButtonFocused");
+					$(this).find(".accMenuIconMain").addClass("accMenuButtonFocused");
+					// Show the section
+					$(".accPlatter").hide();
+					var section = $("#accPlatter" + iSectionName);
+					section.fadeIn(400, function()
+					{
+						A.adjustAccountPanel();
+					});
+					// Show the main subsection
+					section.find(".accDish").hide();
+					section.find(".accDishMain").show();
+					// Update address
+					I.SectionCurrent[I.SpecialPageEnum.Account] =
+						(iSectionName === I.SectionEnum.Account.Mananger) ? "" : iSectionName;
+					U.updateQueryString();
+				});
+				
+				var subsections = $("#accPlatter" + iSectionName).find(".accDish");
+				if (subsections.length)
+				{
+					var subbuttons = iButton.find(".accMenuSubsection");
+					subbuttons.append("<img src='img/account/view.png' />");
+					subsections.each(function()
+					{
+						if ($(this).hasClass("accDishMain") === false)
+						{
+							var subsectionname = U.getSubstringFromHTMLID($(this));
+							var subbutton = $("<img class='accMenuSubbutton accMenuIcon' src='img/account/menu/" + subsectionname.toLowerCase() + I.cPNG + "' />");
+							subbuttons.append(subbutton);
+							(function(iSubbutton, iSubsection)
+							{
+								iSubbutton.click(function(iEvent)
+								{
+									iEvent.stopPropagation();
+									iSubsection.parent().find(".accDish").hide();
+									iSubsection.show();
+									// Highlight the button
+									$(this).parent().parent().find(".accMenuIcon").removeClass("accMenuButtonFocused");
+									$(this).addClass("accMenuButtonFocused");
+								});
+							})(subbutton, $(this));
+						}
+					});
+				}
+			})(menubutton, sectionname);
+		}
+		
+		$("#accMenuCharacters").click(function()
+		{
+			A.generateAndInitializeCharacters();
+		});
+		
+		// Open the section if specified in the URL
+		$("#accPlatterManager").show();
+		U.openSectionFromURL({prefix: "#accMenu", initialsection: I.SectionEnum.Account.Mananger});
 	},
 	
 	/*
@@ -10901,7 +10923,6 @@ P = {
 			return;
 		}
 		var that = pMapObject;
-		var htmlidprefix = "#" + that.MapEnum;
 		var url;
 		var completionboolean = O.Options["bol_showWorldCompletion" + that.OptionSuffix];
 		switch (that.MapEnum)
@@ -11350,7 +11371,6 @@ P = {
 					if (P.Events[i] === undefined // Event is not in event_names.json also
 						|| zoneobj === undefined // Event is not in a world map zone
 						|| isEventUnwanted(searchname) // Event is obsolete
-						|| event.map_id === 988 // Ignore Dry Top
 						|| event.map_id === 50) // LA
 					{
 						continue;
@@ -15661,43 +15681,12 @@ T = {
 			return str.trim();
 		};
 
-		T.DryTopSets = [
-			[
-				C.DryTop.Victims, C.DryTop.Crystals, C.DryTop.Supplies, C.DryTop.Rustbucket,
-				C.DryTop.Shaman, C.DryTop.TendrilW, C.DryTop.TendrilSE, C.DryTop.Tootsie
-			],[
-				C.DryTop.MineE, C.DryTop.Serene, C.DryTop.Insects, C.DryTop.Bridge,
-				C.DryTop.Experiment, C.DryTop.Golem, C.DryTop.Nochtli, C.DryTop.Colocal
-			],[
-				C.DryTop.MineNE, C.DryTop.Basket, C.DryTop.Suit, C.DryTop.Leyline, C.DryTop.Town
-			],[
-				C.DryTop.Mites, C.DryTop.Haze, C.DryTop.Eway, C.DryTop.Skritts0, C.DryTop.Skritts1,
-				C.DryTop.Skritts2, C.DryTop.Skritts3, C.DryTop.Explosives, C.DryTop.Giant
-			],[
-				C.DryTop.Devourer
-			],[
-				C.DryTop.Mites, C.DryTop.Haze, C.DryTop.Twister, C.DryTop.Chriikkt, C.DryTop.Eway,
-				C.DryTop.Skritts0, C.DryTop.Skritts1, C.DryTop.Skritts2, C.DryTop.Skritts3, C.DryTop.Chickenado
-			],[
-				C.DryTop.Beetle, C.DryTop.Monster
-			]
-		];
-		
-		T.DryTopCodes =
+		T.DryTopSets = GW2T_DRYTOP_SETS;
+		T.DryTopCodes = GWT2_DRYTOP_CODES;
+		for (var i in T.DryTopCodes) // Initialize chatcodes
 		{
-			"00": {chat: ":00 " + getDryTopSet(0), color: "red"},
-			"05": {chat: ":05 " + getDryTopSet(1), color: "orange"},
-			"10": {chat: ":10 " + getDryTopSet(2), color: "yellow"},
-			"15": {chat: ":15 " + getDryTopSet(0), color: "red"},
-			"20": {chat: ":20 " + getDryTopSet(1), color: "orange"},
-			"25": {chat: ":25 " + getDryTopSet(2), color: "yellow"},
-			"30": {chat: ":30 " + getDryTopSet(0), color: "red"},
-			"35": {chat: ":35 " + getDryTopSet(1), color: "orange"},
-			"40": {chat: ":40 " + getDryTopSet(3), color: "lime"},
-			"45": {chat: ":45 " + getDryTopSet(4), color: "limegreen"},
-			"50": {chat: ":50 " + getDryTopSet(5), color: "dodgerblue"},
-			"55": {chat: ":55 " + getDryTopSet(6), color: "orchid"}
-		};
+			T.DryTopCodes[i].chat += getDryTopSet(T.DryTopCodes[i].set);
+		}
 		
 		K.updateDryTopClipboard();
 		$("#itemDryTopClip").show();
