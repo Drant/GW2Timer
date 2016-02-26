@@ -1101,25 +1101,32 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Box o' Fun",
+		img: "https://render.guildwars2.com/file/BE034CD0E694AE0677B5A268446C4BBC30046660/220568.png",
+		price: 0,
+		discount: [[1, 0, 80], [5, 320]],
+		col: 0
+	},
+	{
 		name: "Belinda's Greatsword Skin",
 		img: "https://render.guildwars2.com/file/FEFE79F5D14B2CC42F5721A49C01982ACD9AEDDB/855402.png",
 		price: 600,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Electromagnetic-Descender Glider",
 		img: "https://render.guildwars2.com/file/4ABD3F35DE479D2B059A399E3A6ABED6B2017C1B/1373283.png",
 		price: 400,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Crystal Savant Outfit",
 		img: "https://render.guildwars2.com/file/169610D56164BBB24B95EB94B2240C3E0259515A/1373353.png",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	}
 	]
 },

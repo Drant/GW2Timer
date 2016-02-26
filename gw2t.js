@@ -12025,7 +12025,7 @@ P = {
 	{
 		$.getScript(U.URL_DATA.DryTop).done(function()
 		{
-			C.DryTop = GW2T_DRYTOP_DATA;
+			C.DryTop = GW2T_DRYTOP_EVENTS;
 			var i, ii;
 			var chain, event, marker;
 			
@@ -15682,7 +15682,7 @@ T = {
 		};
 
 		T.DryTopSets = GW2T_DRYTOP_SETS;
-		T.DryTopCodes = GWT2_DRYTOP_CODES;
+		T.DryTopCodes = GW2T_DRYTOP_CODES;
 		for (var i in T.DryTopCodes) // Initialize chatcodes
 		{
 			T.DryTopCodes[i].chat += getDryTopSet(T.DryTopCodes[i].set);

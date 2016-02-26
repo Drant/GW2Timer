@@ -9,7 +9,7 @@
 }
 
 #accClose, #accExpand {
-	top: 18px; /* Center it across the horizontal line */
+	top: auto; bottom: -14px; /* Center it across the horizontal line */
 	left: auto; right: 0;
 }
 #accExpand {
