@@ -1089,7 +1089,7 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	isSpecial: false,
+	isSpecial: true,
 	note: "",
 	Start: new Date("2016-02-13T16:00:00Z"),
 	Finish: new Date("2016-03-01T16:00:00Z"),
@@ -1161,16 +1161,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-02-26T00:00:00Z"),
-	Finish: new Date("2016-02-27T00:00:00Z"),
+	Start: new Date("2016-02-27T00:00:00Z"),
+	Finish: new Date("2016-02-28T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "73199", price: "25200" },
-		Fox: { id: "49765", price: "25200" },
-		Derwena: { id: "44718", price: "25200" },
-		Yana: { id: "48922", price: "25200" },
-		Katyn: { id: "43820", price: "25200" },
-		Verma: { id: "43838", price: "25200" }
+		Mehem: { id: "44647", price: "25200" },
+		Fox: { id: "67965", price: "25200" },
+		Derwena: { id: "43798", price: "12600" },
+		Yana: { id: "43841", price: "25200" },
+		Katyn: { id: "44651", price: "25200" },
+		Verma: { id: "44663", price: "25200" }
 	}
 }
 };

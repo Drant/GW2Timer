@@ -40,6 +40,13 @@ var GW2T_ACCOUNT_DICTIONARY = {
 };
 
 /*
+ * Categorized currencies for generating separate lists.
+ */
+var GW2T_CURRENCY_DATA = {
+	
+};
+
+/*
  * Quick reference API related data.
  */
 var GW2T_ACCOUNT_METADATA = {
@@ -111,7 +118,7 @@ var GW2T_ACCOUNT_METADATA = {
 			color: "slategray"
 		}
 	},
-	ProfAssociation: {
+	ProfAssociation: { // Corresponds to MumbleLink assignment
 		"1": "guardian",
 		"2": "warrior",
 		"3": "engineer",
@@ -122,7 +129,7 @@ var GW2T_ACCOUNT_METADATA = {
 		"8": "necromancer",
 		"9": "revenant"
 	},
-	ProfElite: {
+	ProfElite: { // Corresponds to specializations.json
 		"27": "dragonhunter",
 		"18": "berserker",
 		"43": "scrapper",
