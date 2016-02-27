@@ -53,6 +53,8 @@
 	text-align: left;
 	border-left: 1px solid transparent;
 	border-right: 1px solid transparent;
+	border-top-left-radius: 33%;
+	border-top-right-radius: 33%;
 	background-repeat: repeat-x;
 }
 .accMenu:hover {
@@ -388,6 +390,75 @@ input[type="text"].accTokenHovered {
 	display: inline-block;
 	width: 320px;
 }
+
+.acc_prof { /* Profession icon sprites */
+	width: 32px; height: 32px;
+	background-image: url("../img/account/professions.png");
+}
+.acc_prof_berserker { background-position: 0 0; }
+.acc_prof_chronomancer { background-position: -32px 0; }
+.acc_prof_daredevil { background-position: -64px 0; }
+.acc_prof_dragonhunter { background-position: -96px 0; }
+.acc_prof_druid { background-position: -128px 0; }
+.acc_prof_elementalist { background-position: -160px 0; }
+.acc_prof_engineer { background-position: -192px 0; }
+.acc_prof_guardian { background-position: -224px 0; }
+.acc_prof_herald { background-position: -256px 0; }
+.acc_prof_mesmer { background-position: -288px 0; }
+.acc_prof_necromancer { background-position: -320px 0; }
+.acc_prof_ranger { background-position: -352px 0; }
+.acc_prof_reaper { background-position: -384px 0; }
+.acc_prof_revenant { background-position: -416px 0; }
+.acc_prof_scrapper { background-position: -448px 0; }
+.acc_prof_tempest { background-position: -480px 0; }
+.acc_prof_thief { background-position: -512px 0; }
+.acc_prof_warrior { background-position: -544px 0; }
+
+.acc_craft { /* Crafting icon sprites */
+	width: 32px; height: 32px;
+	background-image: url("../img/account/crafting.png");
+}
+.acc_craft_armorsmith { background-position: 0 0; }
+.acc_craft_artificer { background-position: -32px 0; }
+.acc_craft_chef { background-position: -64px 0; }
+.acc_craft_huntsman { background-position: -96px 0; }
+.acc_craft_jeweler { background-position: -128px 0; }
+.acc_craft_leatherworker { background-position: -160px 0; }
+.acc_craft_scribe { background-position: -192px 0; }
+.acc_craft_tailor { background-position: -224px 0; }
+.acc_craft_weaponsmith { background-position: -256px 0; }
+
+.acc_wallet { /* Wallet currency sprites */
+	width: 32px; height: 32px;
+	background-image: url("../img/account/currencies.png");
+}
+.acc_wallet_1 { background-position: 0 0; }
+.acc_wallet_2 { background-position: -32px 0; }
+.acc_wallet_3 { background-position: -64px 0; }
+.acc_wallet_4 { background-position: -96px 0; }
+.acc_wallet_5 { background-position: -128px 0; }
+.acc_wallet_6 { background-position: -160px 0; }
+.acc_wallet_7 { background-position: -192px 0; }
+.acc_wallet_9 { background-position: -224px 0; }
+.acc_wallet_10 { background-position: -256px 0; }
+.acc_wallet_11 { background-position: -288px 0; }
+.acc_wallet_12 { background-position: -320px 0; }
+.acc_wallet_13 { background-position: -352px 0; }
+.acc_wallet_14 { background-position: -384px 0; }
+.acc_wallet_15 { background-position: -416px 0; }
+.acc_wallet_16 { background-position: -448px 0; }
+.acc_wallet_18 { background-position: -480px 0; }
+.acc_wallet_19 { background-position: -512px 0; }
+.acc_wallet_20 { background-position: -544px 0; }
+.acc_wallet_22 { background-position: -576px 0; }
+.acc_wallet_23 { background-position: -608px 0; }
+.acc_wallet_24 { background-position: -640px 0; }
+.acc_wallet_25 { background-position: -672px 0; }
+.acc_wallet_26 { background-position: -704px 0; }
+.acc_wallet_27 { background-position: -736px 0; }
+.acc_wallet_28 { background-position: -768px 0; }
+.acc_wallet_29 { background-position: -800px 0; }
+.acc_wallet_30 { background-position: -832px 0; }
 
 /* Adjustments for smaller screens
 ----------------------------------------------------------------------------- */

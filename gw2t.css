@@ -800,6 +800,7 @@ textarea.jsCopyCode {
 	opacity: 0.8;
 }
 #tmlDelete {
+	left: 48px;
 	display: none;
 }
 #tmlOpaque {

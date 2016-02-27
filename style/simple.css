@@ -15,7 +15,7 @@
 }
 
 /* Hide unrelated elements */
-#panelMap, #paneMenu, #paneContent, #itemSocial, #tmlClose {
+#panelMap, #paneMenu, #paneContent, #itemSocial {
 	display: none;
 }
 

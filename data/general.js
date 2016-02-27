@@ -151,6 +151,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"946": "Monument",
 	
 	// PvP
+	"405": "Stats",
 	"1856": "Reward",
 	"1857": "Rank",
 	"1858": "Defender",
@@ -1046,13 +1047,16 @@ Announcement:
  */
 Countdowns: [
 {
-	name_en: "PvP League Season 2",
-	name_de: "PvP Liga Saison 2",
-	name_es: "Segunda temporada de liga PvP",
-	name_fr: "Saison 2 de la ligue JcJ",
-	official: "news/pvp-league-season-two-changes/",
-	Start: new Date("2016-02-23T17:00:00Z"),
-	Finish: new Date("2016-02-24T17:00:00Z")
+	name_en: "Second Wing of Raid",
+	name_de: "Nächste Schlachtzugsflügel",
+	name_es: "Segunda ala de la incursión",
+	name_fr: "Seconde aile du raid",
+	url_en: "https://forum-en.guildwars2.com/forum/game/dungeons/Raid-1-Wing-2-Coming-March-8th",
+	url_de: "https://forum-de.guildwars2.com/forum/game/dungeons/Der-n-chste-Schlachtzugsfl-gel-kommt-am-8-M-rz",
+	url_es: "https://forum-es.guildwars2.com/forum/game/dungeons/La-segunda-ala-de-la-primera-incursi-n-llega-el-8-de-marzo",
+	url_fr: "https://forum-fr.guildwars2.com/forum/game/dungeons/La-seconde-aile-du-premier-raid-arrive-le-8-mars",
+	Start: new Date("2016-03-08T17:00:00Z"),
+	Finish: new Date("2016-03-09T17:00:00Z")
 }
 ],
 

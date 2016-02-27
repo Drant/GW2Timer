@@ -1681,51 +1681,75 @@ U = {
 		I.write("Gathering elements...");
 		pLimit = parseInt(pLimit) || Number.POSITIVE_INFINITY;
 		var array = [];
-		var length = 0;
 		var counter = 0;
 		var args = (pArgs === undefined) ? "" : pArgs;
 		var url = U.URL_API.Prefix + pString;
+		var printResult = function(pArray)
+		{
+			I.clear();
+			pArray.sort();
+			for (var i = 0; i < pArray.length; i++)
+			{
+				printIcon(pArray[i]);
+				I.write(pArray[i], 0);
+			}
+		};
+		var printIcon = function(pData)
+		{
+			var data = (typeof pData === "string") ? JSON.parse(pData) : pData;
+			if (data.icon)
+			{
+				I.write("<img class='cssRight' src='" + U.escapeHTML(data.icon) + "' />", 0);
+			}
+		};
+		
 		$.get(url + args, function(pData)
 		{
-			length = pData.length;
+			var length = (pData.length === undefined) ? 0 : pData.length;
 			if (Array.isArray(pData))
 			{
-				for (var i in pData)
+				I.write("Retrieved array:<br />" + U.formatJSON(pData), 0);
+				var successlength = length;
+				for (var i = 0; i < length; i++)
 				{
-					if (parseInt(i) === pLimit)
+					if (i === pLimit)
 					{
 						break;
 					}
-					$.getJSON(url + "/" + pData[i] + args, function(pDataInner)
+					(function(iIndex)
 					{
-						I.write("Retrieved an element.");
-						array.push(U.formatJSON(pDataInner));
-					}).done(function()
-					{
-						// Print the result when all elements have been queried
-						if (counter === length - 1 || counter === pLimit - 1)
+						$.getJSON(url + "/" + pData[iIndex] + args, function(pDataInner)
 						{
-							I.clear();
-							array.sort();
-							for (var ii in array)
+							I.write("Retrieved an element: " + iIndex);
+							array.push(U.formatJSON(pDataInner));
+						}).done(function()
+						{
+							// Print the result when all elements have been queried
+							if (counter === successlength - 1 || counter === pLimit - 1)
 							{
-								I.write(array[ii], 0);
+								printResult(array);
 							}
-						}
-						counter++;
-					}).fail(function()
-					{
-						I.write("Unable to retrieve API array element at: " + U.escapeHTML(url + "/" + pData[i]));
-					});
+							counter++;
+						}).fail(function()
+						{
+							successlength--;
+							if (counter === successlength - 1 || counter === pLimit - 1)
+							{
+								printResult(array);
+							}
+							I.write("Unable to retrieve API array element at: " + U.escapeHTML(url + "/" + pData[iIndex]), 0);
+						});
+					})(i);
 				}
 			}
 			else
 			{
-				I.write(U.formatJSON(pData), 0, true);
+				printIcon(pData);
+				I.write(U.formatJSON(pData), 0);
 			}
 		}).fail(function()
 		{
-			I.write("Unable to retrieve API at: " + U.escapeHTML(url));
+			I.write("Unable to retrieve API at: " + U.escapeHTML(url), 0);
 		});
 	},
 	
@@ -1771,7 +1795,6 @@ U = {
 				requesteditem = E.ItemsArray[index];
 				$.getJSON(U.URL_API.ItemDetails + requesteditem, function(pData)
 				{
-					I.clear();
 					I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.formatJSON(pData), 0);
 				}).fail(function()
 				{
@@ -2753,7 +2776,8 @@ A = {
 		Items: {},
 		Characters: [],
 		CharacterNames: null,
-		Guilds: {} // Guild details objects, accessed using the guild IDs
+		Guilds: {}, // Guild details objects, accessed using the guild IDs
+		Wallet: {}
 	},
 	URL: { // Account data type and URL substring
 		Account: "account",
@@ -3298,7 +3322,7 @@ A = {
 	generateCharactersSelection: function(pCharacter)
 	{
 		// Gets the profession icon or elite spec icon if available from the character data
-		var getProfessionIcon = function(pCharacterInner)
+		var getProfession = function(pCharacterInner)
 		{
 			var icon = (pCharacterInner.profession).toLowerCase();
 			pCharacterInner.charicon = icon;
@@ -3320,7 +3344,7 @@ A = {
 					}
 				}
 			}
-			return "img/account/profession/" + icon + I.cPNG;
+			return icon;
 		};
 		
 		// Get active crafting disciplines
@@ -3331,7 +3355,7 @@ A = {
 			pCharacter.crafting.forEach(function(iCraft)
 			{
 				var trivial = (iCraft.rating >= A.Metadata.CraftingRank.Master) ? "" : "chrTrivial";
-				var craftstr = "<b class='" + trivial + "'><img src='img/account/crafting/" + (iCraft.discipline).toLowerCase() + I.cPNG + "' />"
+				var craftstr = "<b class='" + trivial + "'><ins class='acc_craft acc_craft_" + (iCraft.discipline).toLowerCase() + "'></ins>"
 					+ "<sup class='chrCraftingRating'>" + iCraft.rating + "</sup></b> ";
 				if (iCraft.active)
 				{
@@ -3350,7 +3374,7 @@ A = {
 			+ "<var id='chrName_" + pCharacter.charindex + "' class='chrName' data-value='" + charvalue + "'>" + pCharacter.charname + "</var>"
 			+ "<span class='chrCommitment' data-value='" + professionvalue + "'>"
 				+ "<var class='chrProfession " + trivial + "'>"
-					+ "<img class='chrProfessionIcon' src='" + getProfessionIcon(pCharacter) + "' /><sup>" + pCharacter.level + "</sup></var>"
+					+ "<ins class='chrProfessionIcon acc_prof acc_prof_" + getProfession(pCharacter) + "'></ins><sup>" + pCharacter.level + "</sup></var>"
 				+ "<var class='chrCrafting'>" + craftused + "</var>"
 			+ "</span>"
 			+ "<img class='chrProceed' src='img/account/view.png' />")
@@ -3493,6 +3517,7 @@ A = {
 			});
 			// Retrieve and insert guilds
 			A.initializeGuilds(pData.guilds);
+			A.initializeWallet();
 			// Finally for the summary
 			$("#chrSummary").show("fast");
 		});
@@ -3500,6 +3525,34 @@ A = {
 		// Finally
 		I.qTip.init("#accPlatterCharacters var");
 		$(".chrStats").show("fast");
+	},
+	
+	/*
+	 * Rearranges all the characters columns based on one column's data values.
+	 * @param string pClassifier class names of data containing cells.
+	 * @param boolean pOrder descending if true, ascending if false.
+	 */
+	sortCharacters: function(pClassifier, pOrder)
+	{
+		var sortable = [];
+		$("." + pClassifier).each(function()
+		{
+			sortable.push({
+				// Get the index from the list item containing the value
+				index: U.getSubintegerFromHTMLID($(this).parent()),
+				value: parseInt($(this).attr("data-value"))
+			});
+		});
+		O.sortObjects(sortable, "value", pOrder);
+		
+		// Sort all the rows using the new order
+		for (var i = 0; i < sortable.length; i++)
+		{
+			var index = sortable[i].index;
+			$("#chrSelection_" + index).appendTo("#chrSelection");
+			$("#chrUsage_" + index).appendTo("#chrUsage");
+			$("#chrSeniority_" + index).appendTo("#chrSeniority");
+		}
 	},
 	
 	/*
@@ -3569,31 +3622,42 @@ A = {
 	},
 	
 	/*
-	 * Rearranges all the characters columns based on one column's data values.
-	 * @param string pClassifier class names of data containing cells.
-	 * @param boolean pOrder descending if true, ascending if false.
+	 * Initializes the wallet object and generate columns for currencies.
+	 * @param object pWallet from wallet.json
 	 */
-	sortCharacters: function(pClassifier, pOrder)
+	initializeWallet: function()
 	{
-		var sortable = [];
-		$("." + pClassifier).each(function()
+		var generateWallet = function(pCurrencies, pName)
 		{
-			sortable.push({
-				// Get the index from the list item containing the value
-				index: U.getSubintegerFromHTMLID($(this).parent()),
-				value: parseInt($(this).attr("data-value"))
-			});
-		});
-		O.sortObjects(sortable, "value", pOrder);
+			var wallet = $("<ul id='chrWallet_" + pName + "' class='chrWallet'></ul>").appendTo("#chrStatistics");
+			wallet.append("<li class='chrHeader'>HEADER</li>");
+			for (var i = 0; i < pCurrencies.length; i++)
+			{
+				var currency = pCurrencies[i];
+				if (A.Data.Wallet[currency.id] >= 0)
+				{
+					wallet.append("<li>" + D.getObjectName(currency) + " " + (A.Data.Wallet[currency.id]).toLocaleString() + " <ins class='acc_wallet acc_wallet_" + currency.id + "'></ins></li>");
+				}
+			}
+		};
 		
-		// Sort all the rows using the new order
-		for (var i = 0; i < sortable.length; i++)
+		$.getJSON(A.getURL(A.URL.Wallet), function(pData)
 		{
-			var index = sortable[i].index;
-			$("#chrSelection_" + index).appendTo("#chrSelection");
-			$("#chrUsage_" + index).appendTo("#chrUsage");
-			$("#chrSeniority_" + index).appendTo("#chrSeniority");
-		}
+			A.Data.Wallet = null;
+			A.Data.Wallet = {};
+			// Convert the API array of currency objects into an associative array of currency IDs and values
+			for (var i = 0; i < pData.length; i++)
+			{
+				var currency = pData[i];
+				A.Data.Wallet[currency.id] = parseInt(currency.value);
+			}
+
+			var currencies = GW2T_CURRENCY_DATA;
+			for (var i in currencies)
+			{
+				generateWallet(currencies[i], i);
+			}
+		});
 	},
 	
 };
@@ -17005,11 +17069,10 @@ B = {
 			B.isDashboardCountdownTickEnabled = true;
 		}
 		
-		// Hide the dashboard when clicked on the close button
-		$("#dsbClose").click(function()
+		// Button to toggle the dashboard
+		$("#dsbToggle").click(function()
 		{
-			B.toggleDashboard(false);
-			B.isDashboardEnabled = false;
+			$("#dsbContainer").toggle("fast");
 		});
 		
 		// Initialize countdown entries
@@ -17470,7 +17533,8 @@ B = {
 	{
 		B.isTimelineGenerated = true;
 		// Container for all the timelines
-		var tapestry = $("#itemTimeline").show().append("<div class='tmlLine curToggle' id='tmlLegend'></div>");
+		$("#itemTimeline").show()
+		var container = $("#tmlContainer").append("<div class='tmlLine curToggle' id='tmlLegend'></div>");
 		B.updateTimelineLegend();
 		$("#tmlLegend").click(function()
 		{
@@ -17482,7 +17546,7 @@ B = {
 			var chain = B.Timeline[i];
 			var name = (chain.zone === undefined) ? D.getObjectName(chain) : U.escapeHTML(M.getZoneName(chain.zone));
 			// Container for segments of a timeline (chain)
-			var line = $("<div class='tmlLine' title='<dfn>" + name + "</dfn>'></div>").appendTo(tapestry);
+			var line = $("<div class='tmlLine' title='<dfn>" + name + "</dfn>'></div>").appendTo(container);
 			for (var ii in chain.Segments)
 			{
 				// Segments of a timeline (event)
@@ -17503,15 +17567,15 @@ B = {
 			}
 		}
 		// Bind window buttons
-		$("#tmlClose").click(function()
+		$("#tmlToggle").click(function()
 		{
-			B.toggleTimeline(false);
-			B.isTimelineEnabled = false;
+			$("#tmlContainer").toggle("fast");
 		});
 		$("#tmlDelete").click(function()
 		{
 			$("#opt_bol_showTimeline").prop("checked", false).trigger("change");
-			$("#tmlClose").trigger("click");
+			B.toggleTimeline(false);
+			B.isTimelineEnabled = false;
 		});
 		$("#tmlOpaque").click(function()
 		{

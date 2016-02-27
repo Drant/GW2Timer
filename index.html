@@ -109,19 +109,23 @@
 			<div id="mapExpandButton" class="mapExpandButton mapHUDButton btnHorizontal" title="<dfn> Click to Expand Map </dfn>"></div>
 			<div id="mapHUDBoxes">
 				<div id="itemDashboard">
-					<kbd id="dsbClose" class="btnWindow btnClose" title="<dfn>Close the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
-					<div id="dsbAnnouncement"></div>
-					<div id="dsbCountdown" title="<dfn>Countdown for Official GW2 Events</dfn><br /><span class='dsbCountdownDormant' style='font-size:20px'>■</span>: not started yet, counting down to when it starts.<br /><span class='dsbCountdownActive' style='font-size:20px'>■</span>: is happening, counting down to when it ends."></div>
-					<div id="dsbSale"></div>
-					<div id="dsbVendor"></div>
-					<div id="dsbStory" class="jsScrollable"></div>
+					<kbd id="dsbToggle" class="btnWindow btnToggle" title="<dfn>Toggle the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
+					<div id="dsbContainer">
+						<div id="dsbAnnouncement"></div>
+						<div id="dsbCountdown" title="<dfn>Countdown for Official GW2 Events</dfn><br /><span class='dsbCountdownDormant' style='font-size:20px'>■</span>: not started yet, counting down to when it starts.<br /><span class='dsbCountdownActive' style='font-size:20px'>■</span>: is happening, counting down to when it ends."></div>
+						<div id="dsbSale"></div>
+						<div id="dsbVendor"></div>
+						<div id="dsbStory" class="jsScrollable"></div>
+					</div>
 				</div>
 				<div id="itemTimeline">
 					<kbd id="tmlDelete" class="btnWindow btnClose" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
-					<kbd id="tmlClose" class="btnWindow btnClose" title="<dfn>Close the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
-					<kbd id="tmlOpaque" class="btnWindow btnOpaque" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
-					<div id="tmlIndicator"></div>
-					<div id="tmlBisector"></div>
+					<kbd id="tmlToggle" class="btnWindow btnToggle" title="<dfn>Toggle the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
+					<div id="tmlContainer">
+						<kbd id="tmlOpaque" class="btnWindow btnOpaque" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
+						<div id="tmlIndicator"></div>
+						<div id="tmlBisector"></div>
+					</div>
 				</div>
 			</div>
 			<div id="mapCoordinatesBar" class="mapCoordinatesBar">
