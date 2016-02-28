@@ -3629,8 +3629,8 @@ A = {
 	{
 		var generateWallet = function(pCurrencies, pName)
 		{
-			var wallet = $("<ul id='chrWallet_" + pName + "' class='chrWallet'></ul>").appendTo("#chrStatistics");
-			wallet.append("<li class='chrHeader'>HEADER</li>");
+			var wallet = $("<ul id='chrWallet_" + pName + "' class='chrStats'></ul>").appendTo("#chrStatistics");
+			wallet.append("<li class='chrHeader'><var class='chrHeaderLeft curClick'>HEADER</var></li>");
 			for (var i = 0; i < pCurrencies.length; i++)
 			{
 				var currency = pCurrencies[i];

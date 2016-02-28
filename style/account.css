@@ -191,11 +191,14 @@ input[type="text"].accTokenHovered {
 	margin-right: 2px;
 }
 
-.chrHeaderLeft, .chrHeaderRight {
+.chrHeader {
 	font-size: 18px;
 	font-weight: bold;
 	text-shadow: 0px 0px 2px #e4e0b3;
 	color: #e4e0b3;
+	border-top: 1px solid #222;
+	border-bottom: 1px solid #000;
+	background: linear-gradient(to right, #000 0%, rgba(255,255,255,0) 100%) !important;
 }
 .chrHeaderLeft {
 	margin-left: 32px;
@@ -248,7 +251,7 @@ input[type="text"].accTokenHovered {
 	opacity: 0.4;
 }
 .chrTrivial { /* Situational class to fade trivial information */
-	opacity: 0.4;
+	opacity: 0.3;
 }
 .chrProfession, .chrProfessionIcon, .chrCrafting {
 	display: inline-block;
@@ -296,6 +299,7 @@ input[type="text"].accTokenHovered {
 
 .chrStats {
 	vertical-align: top;
+	text-align: right;
 }
 .chrStats li { /* A row containing texts and graphs */
 	height: 32px;
@@ -319,11 +323,6 @@ input[type="text"].accTokenHovered {
 	white-space: nowrap;
 	font-family: Menomonia;
 	background: linear-gradient(to left, rgba(255,255,255,0) 0%, #333 50%, rgba(255,255,255,0) 100%);
-}
-.chrHeader {
-	border-top: 1px solid #222;
-	border-bottom: 1px solid #000;
-	background: linear-gradient(to right, #000 0%, rgba(255,255,255,0) 100%) !important;
 }
 .chrAge, .chrDeaths, .chrLifetime, .chrBirthday, .chrBirthdate { /* Text and values */
 	display: inline-block;

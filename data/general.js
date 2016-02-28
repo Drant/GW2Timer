@@ -1022,7 +1022,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "GW2Timer.com was <a href='http://forum.renaka.com/topic/5954229/'>featured by ArenaNet!</a>",
+	content: "",
 	Start: new Date("2016-02-22T16:00:00Z"),
 	Finish: new Date("2016-02-29T16:00:00Z")
 },
@@ -1093,7 +1093,7 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	isSpecial: true,
+	isSpecial: false,
 	note: "",
 	Start: new Date("2016-02-13T16:00:00Z"),
 	Finish: new Date("2016-03-01T16:00:00Z"),
@@ -1105,32 +1105,25 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Box o' Fun",
-		img: "https://render.guildwars2.com/file/BE034CD0E694AE0677B5A268446C4BBC30046660/220568.png",
-		price: 0,
-		discount: [[1, 0, 80], [5, 320]],
-		col: 0
-	},
-	{
 		name: "Belinda's Greatsword Skin",
 		img: "https://render.guildwars2.com/file/FEFE79F5D14B2CC42F5721A49C01982ACD9AEDDB/855402.png",
 		price: 600,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Electromagnetic-Descender Glider",
 		img: "https://render.guildwars2.com/file/4ABD3F35DE479D2B059A399E3A6ABED6B2017C1B/1373283.png",
 		price: 400,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Crystal Savant Outfit",
 		img: "https://render.guildwars2.com/file/169610D56164BBB24B95EB94B2240C3E0259515A/1373353.png",
 		price: 700,
 		discount: null,
-		col: 1
+		col: 0
 	}
 	]
 },
@@ -1151,7 +1144,7 @@ Vendor:
 	{
 		Mehem: ["[&BIsHAAA=]","[&BIcHAAA=]","[&BH8HAAA=]","[&BH4HAAA=]","[&BKsHAAA=]","[&BJQHAAA=]","[&BH8HAAA=]"],
 		Fox: ["[&BDoBAAA=]","[&BEwDAAA=]","[&BEgAAAA=]","[&BMIBAAA=]","[&BF0AAAA=]","[&BMMCAAA=]","[&BNMCAAA=]"],
-		Derwena: ["[&BBkAAAA=]","[&BBkAAAA=]","[&BBkAAAA=]","[&BKEAAAA=]","[&BIMAAAA=]","[&BNUGAAA=]","[&BIMAAAA=]"],
+		Derwena: ["[&BBkAAAA=]","[&BBkAAAA=]","[&BBkAAAA=]","[&BKEAAAA=]","[&BIMAAAA=]","[&BNUGAAA=]","[&BJIBAAA=]"],
 		Yana: ["[&BP8DAAA=]","[&BNIEAAA=]","[&BKgCAAA=]","[&BP0CAAA=]","[&BO4CAAA=]","[&BJsCAAA=]","[&BBEDAAA=]"],
 		Katyn: ["[&BIUCAAA=]","[&BIMCAAA=]","[&BGQCAAA=]","[&BDgDAAA=]","[&BF0GAAA=]","[&BHsBAAA=]","[&BEICAAA=]"],
 		Verma: ["[&BCECAAA=]","[&BA8CAAA=]","[&BIMBAAA=]","[&BPEBAAA=]","[&BOQBAAA=]","[&BNMAAAA=]","[&BBABAAA=]"]
@@ -1160,7 +1153,7 @@ Vendor:
 	{
 		Mehem: [[3995, 15900],[5038, 16227],[5682, 15515],[5345, 16212],[4348, 14822],[3907, 16445],[5691, 15212]],
 		Fox: [[10202, 18168],[9978, 16945],[8728, 18923],[16795, 19804],[9162, 14943],[18926, 22037],[20252, 21585]],
-		Derwena: [[13342, 15548],[13342, 15548],[13342, 15548],[16017, 12086],[11294, 12997],[13820, 20501],[11295, 12997]],
+		Derwena: [[13342, 15548],[13342, 15548],[13342, 15548],[16017, 12086],[11294, 12997],[13820, 20501],[16661, 12794]],
 		Yana: [[16978, 23711],[15234, 24050],[14090, 23997],[11287, 25752],[17072, 23457],[14095, 24336],[11052, 28061]],
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
@@ -1169,12 +1162,12 @@ Vendor:
 	Finish: new Date("2016-02-28T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "44647", price: "25200" },
-		Fox: { id: "67965", price: "25200" },
-		Derwena: { id: "43798", price: "12600" },
-		Yana: { id: "43841", price: "25200" },
-		Katyn: { id: "44651", price: "25200" },
-		Verma: { id: "44663", price: "25200" }
+		Mehem: { id: "49768", price: "25200" },
+		Fox: { id: "43818", price: "25200" },
+		Derwena: { id: "49776", price: "25200" },
+		Yana: { id: "49741", price: "25200" },
+		Katyn: { id: "48919", price: "25200" },
+		Verma: { id: "49753", price: "25200" }
 	}
 }
 };

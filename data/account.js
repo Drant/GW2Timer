@@ -36,7 +36,15 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	s_lifetime: {de: "lebenszeit", es: "vida", fr: "vie",
 		cs: "život", it: "vita", pl: "życie", pt: "vida", ru: "жизни", zh: "一生"},
 	s_birthday: {de: "geburtstag", es: "cumpleaños", fr: "anniversaire",
-		cs: "narozeniny", it: "compleanno", pl: "urodziny", pt: "aniversário", ru: "деньрожде́ния", zh: "生日"}
+		cs: "narozeniny", it: "compleanno", pl: "urodziny", pt: "aniversário", ru: "деньрожде́ния", zh: "生日"},
+	s_general: {de: "", es: "", fr: "",
+		cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
+	s_dungeon: {de: "", es: "", fr: "",
+		cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
+	s_currencies: {de: "", es: "", fr: "",
+		cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
+	s_tokens: {de: "", es: "", fr: "",
+		cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 };
 
 /*
