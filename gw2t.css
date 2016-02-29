@@ -880,6 +880,7 @@ textarea.jsCopyCode {
 
 .dsbVendorPriceKarma {
 	float: right;
+	color: white;
 }
 .dsbVendorEntry {
 	margin-left: 32px;
@@ -2313,7 +2314,13 @@ gold {
 	color: #ddbb44;
 }
 karma {
-	color: white;
+	color: #ee55cc;
+}
+laurel {
+	color: #44dd44;
+}
+gem {
+	color: #66aaff;
 }
 
 .s16 {

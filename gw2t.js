@@ -2769,6 +2769,7 @@ U = {
 A = {
 	
 	TokenCurrent: null,
+	CharacterCurrent: null,
 	isAccountInitialized: false,
 	Metadata: {}, // Prewritten data loaded along with account page
 	Data: { // Cache for retrieved API data objects and arrays
@@ -3262,6 +3263,7 @@ A = {
 		}
 		
 		$("#chrSummary, #chrStatistics ul").empty();
+		$(".chrWallet").remove();
 		$(".chrStats").hide();
 		var platter = $("#accPlatterCharacters");
 		platter.prepend(I.cThrobber);
@@ -3272,6 +3274,7 @@ A = {
 			var numfetched = 0;
 			var numcharacters = pData.length;
 			A.Data.CharacterNames = pData;
+			A.CharacterCurrent = null;
 			A.Data.Characters = null;
 			A.Data.Characters = new Array(numcharacters);
 			A.Data.CharacterNames.forEach(function(iCharacter)
@@ -3380,10 +3383,18 @@ A = {
 			+ "<img class='chrProceed' src='img/account/view.png' />")
 		.click(function()
 		{
-			$(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
-			$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
 			var charindex = U.getSubintegerFromHTMLID($(this));
-			I.write(U.formatJSON(A.Data.Characters[charindex]));
+			if (A.CharacterCurrent === charindex)
+			{
+				A.CharacterCurrent = null;
+				$(this).find(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
+			}
+			else
+			{
+				A.CharacterCurrent = charindex;
+				$(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
+				$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
+			}
 		});
 		// Additional information as tooltip
 		I.qTip.init($("#chrSelection_" + pCharacter.charindex).find(".chrCommitment").attr("title", crafttooltip));
@@ -3470,15 +3481,10 @@ A = {
 			+ D.getWordCapital("lifetime") + sym + "</var><var class='chrHeaderRight curClick' data-classifier='chrBirthday'>"
 			+ D.getWordCapital("birthday") + sym + "</var></li>");
 		// Header click to sort the columns
-		$(".chrHeaderLeft, .chrHeaderRight").data("isdescending", true).click(function()
+		$(".chrHeaderLeft, .chrHeaderRight").click(function()
 		{
-			// Sort and toggle the boolean
-			var isdescending = $(this).data("isdescending");
-			A.sortCharacters($(this).attr("data-classifier"), isdescending);
-			$(this).data("isdescending", !isdescending);
-			// Change symbol
-			var symbol = (!isdescending) ? I.Symbol.TriUp : I.Symbol.TriDown;
-			$(this).find(".chrHeaderToggle").html(symbol);
+			A.toggleSortableHeader($(this));
+			A.sortCharacters($(this).attr("data-classifier"), $(this).data("isdescending"));
 		});
 		// SUMMARY MARQUEE (top)
 		$.getJSON(A.getURL(A.URL.Account), function(pData)
@@ -3622,22 +3628,62 @@ A = {
 	},
 	
 	/*
-	 * Initializes the wallet object and generate columns for currencies.
-	 * @param object pWallet from wallet.json
+	 * Initializes the wallet object and generate columns (categorized wallets) for currencies.
 	 */
 	initializeWallet: function()
 	{
-		var generateWallet = function(pCurrencies, pName)
+		var generateWallet = function(pWallet, pName)
 		{
-			var wallet = $("<ul id='chrWallet_" + pName + "' class='chrStats'></ul>").appendTo("#chrStatistics");
-			wallet.append("<li class='chrHeader'><var class='chrHeaderLeft curClick'>HEADER</var></li>");
-			for (var i = 0; i < pCurrencies.length; i++)
+			// Prepare HTML
+			var wallet = $("<ul id='chrWallet_" + pName + "' class='chrStats chrWallet'></ul>").insertBefore("#chrGuilds");
+			var header = "";
+			switch (pName)
 			{
-				var currency = pCurrencies[i];
-				if (A.Data.Wallet[currency.id] >= 0)
+				case "General": header = D.getModifiedWord("currencies", "general", U.CaseEnum.Every); break;
+				case "Dungeon": header = D.getModifiedWord("tokens", "dungeon", U.CaseEnum.Every); break;
+				case "Map": header = D.getModifiedWord("tokens", "map", U.CaseEnum.Every); break;
+			}
+			var sym = " <b class='chrHeaderToggle'>" + I.Symbol.TriDown + "</b>";
+			wallet.append("<li class='chrHeader'><var class='chrHeaderLeft curClick'>" + header + sym + "</var></li>");
+			A.bindSortableList(wallet);
+			
+			// First loop to find max value of the wallet
+			var value, amount, coef, amountstr;
+			for (var i = 0; i < pWallet.length; i++)
+			{
+				amount = A.Data.Wallet[(pWallet[i].id)];
+				amount = (amount === undefined || amount === null) ? 0 : amount;
+				coef = pWallet[i].coefficient;
+				// Adjust the value so the currencies can be compared
+				pWallet[i].value = (coef === undefined) ? amount : (amount * coef);
+			}
+			var max = T.getMinMax(pWallet, "value").max;
+			
+			// Generate the currencies for this wallet
+			for (var i = 0; i < pWallet.length; i++)
+			{
+				var currency = pWallet[i];
+				amount = A.Data.Wallet[currency.id];
+				amount = (amount === undefined || amount === null) ? 0 : amount;
+				amountstr = amount.toLocaleString();
+				value = currency.value;
+				switch (currency.id)
 				{
-					wallet.append("<li>" + D.getObjectName(currency) + " " + (A.Data.Wallet[currency.id]).toLocaleString() + " <ins class='acc_wallet acc_wallet_" + currency.id + "'></ins></li>");
+					case 1: amountstr = E.createCoinString(amount, true); break;
+					case 2: amountstr = E.createKarmaString(amount, true); break;
+					case 3: amountstr = E.createLaurelString(amount, true); break;
+					case 4: amountstr = E.createGemString(amount, true); break;
 				}
+
+				var percent = (value / max) * T.cPERCENT_100;
+				var name = D.getObjectName(currency);
+				var link = U.getWikiLanguageLink(name);
+				wallet.append("<li data-value='" + value + "'>"
+					+ "<var class='chrWalletAmount'>" + amountstr + "</var>"
+					+ "<ins class='acc_wallet acc_wallet_" + currency.id + "'></ins>"
+					+ "<var class='chrWalletCurrency'><a class='chrWalletLink'" + U.convertExternalAnchor(link) + ">" + name + "</a></var>"
+					+ "<samp><s style='width:" + percent + "%'></s></samp>"
+				+ "</li>");
 			}
 		};
 		
@@ -3652,12 +3698,71 @@ A = {
 				A.Data.Wallet[currency.id] = parseInt(currency.value);
 			}
 
-			var currencies = GW2T_CURRENCY_DATA;
-			for (var i in currencies)
+			var wallets = GW2T_CURRENCY_DATA;
+			for (var i in wallets)
 			{
-				generateWallet(currencies[i], i);
+				generateWallet(wallets[i], i);
 			}
 		});
+	},
+	
+	/*
+	 * Binds a sortable list by binding its clickable header.
+	 * @param jqobject pList to bind.
+	 */
+	bindSortableList: function(pList)
+	{
+		var header = $(pList).find("li").first();
+		header.click(function()
+		{
+			A.toggleSortableHeader($(this));
+			A.sortList($(this).parent(), $(this).data("isdescending"));
+		});
+	},
+	
+	/*
+	 * Toggles the icon and boolean data value of a header.
+	 * @param jqobject pHeader to bind.
+	 */
+	toggleSortableHeader: function(pHeader)
+	{
+		var header = $(pHeader);
+		// Sort and toggle the boolean
+		var isdescending = header.data("isdescending");
+		if (isdescending === undefined)
+		{
+			isdescending = false;
+		}
+		header.data("isdescending", !isdescending);
+		// Change symbol
+		var symbol = (isdescending) ? I.Symbol.TriUp : I.Symbol.TriDown;
+		header.find(".chrHeaderToggle").html(symbol);
+	},
+	
+	/*
+	 * Sorts a list with a single set of numeric data.
+	 * @param jqobject pColumn to sort.
+	 * @param boolean pOrder descending if true, ascending if false.
+	 * @pre Each list item in the column has the data-value attribute initialized.
+	 */
+	sortList: function(pList, pOrder)
+	{
+		var list = $(pList);
+		var sortable = [];
+		// Loop every list items, except the first which is the header
+		list.find("li").slice(1).each(function()
+		{
+			sortable.push({
+				item: $(this),
+				value: parseFloat($(this).attr("data-value"))
+			});
+		});
+		O.sortObjects(sortable, "value", pOrder);
+		
+		for (var i = 0; i < sortable.length; i++)
+		{
+			(sortable[i].item).appendTo(list);
+		}
 	},
 	
 };
@@ -4839,6 +4944,52 @@ E = {
 	},
 	
 	/*
+	 * Parses a period separated dollars and cents string.
+	 * @param string pString to parse.
+	 * @returns int the money in cent value for calculating.
+	 * @pre String does not contain negative numbers.
+	 */
+	parseMoneyString: function(pString)
+	{
+		if (pString === undefined || pString === null)
+		{
+			return 0;
+		}
+		
+		var str = pString.split(".");
+		var len = str.length;
+		var cent = 0, dollar = 0;
+		
+		if (len === 0)
+		{
+			return 0;
+		}
+		if (len === 1)
+		{
+			dollar = parseInt(str[0]);
+		}
+		
+		if (len >= 2)
+		{
+			cent = parseInt(str[len-1]);
+			dollar = parseInt(str[len-2]);
+		}
+		if (len >= 2 && str[len-1].length === 1)
+		{
+			cent = cent * T.cBASE_10; // 0.1 = 10 cent
+		}
+		else if (len >= 2 && str[len-1].length >= 2)
+		{
+			cent = parseInt(cent.toString().substring(0, 2)); // Only accept first two digits of cent
+		}
+		
+		if ( ! isFinite(cent)) { cent = 0; }
+		if ( ! isFinite(dollar)) { dollar = 0; }
+		
+		return parseInt(cent + (dollar * E.Exchange.CENTS_IN_DOLLAR));
+	},
+	
+	/*
 	 * Converts a coin amount in copper to a period separated string.
 	 * @param int pAmount of copper.
 	 * @returns string coin for displaying.
@@ -4894,52 +5045,6 @@ E = {
 	},
 	
 	/*
-	 * Parses a period separated dollars and cents string.
-	 * @param string pString to parse.
-	 * @returns int the money in cent value for calculating.
-	 * @pre String does not contain negative numbers.
-	 */
-	parseMoneyString: function(pString)
-	{
-		if (pString === undefined || pString === null)
-		{
-			return 0;
-		}
-		
-		var str = pString.split(".");
-		var len = str.length;
-		var cent = 0, dollar = 0;
-		
-		if (len === 0)
-		{
-			return 0;
-		}
-		if (len === 1)
-		{
-			dollar = parseInt(str[0]);
-		}
-		
-		if (len >= 2)
-		{
-			cent = parseInt(str[len-1]);
-			dollar = parseInt(str[len-2]);
-		}
-		if (len >= 2 && str[len-1].length === 1)
-		{
-			cent = cent * T.cBASE_10; // 0.1 = 10 cent
-		}
-		else if (len >= 2 && str[len-1].length >= 2)
-		{
-			cent = parseInt(cent.toString().substring(0, 2)); // Only accept first two digits of cent
-		}
-		
-		if ( ! isFinite(cent)) { cent = 0; }
-		if ( ! isFinite(dollar)) { dollar = 0; }
-		
-		return parseInt(cent + (dollar * E.Exchange.CENTS_IN_DOLLAR));
-	},
-	
-	/*
 	 * Converts a money amount in cents to dollars period separated cents string.
 	 * @param int pAmount of cents.
 	 * @returns string money for displaying.
@@ -4964,28 +5069,43 @@ E = {
 	},
 	
 	/*
-	 * Formats a karma currency amount.
+	 * Formats a currency amount and appends a currency unit icon.
+	 * @param string pCurrency as defined in the CSS as a custom HTML tag that
+	 * has color attribute associated with that currency.
 	 * @param int pAmount.
-	 * @returns string.
+	 * @param boolean pWantColor whether to colorize the amount.
+	 * @returns HTML string.
 	 */
-	createKarmaString: function(pAmount, pWantColor)
+	createCurrencyString: function(pCurrency, pAmount, pWantColor)
 	{
 		if (pAmount === undefined || isFinite(pAmount) === false)
 		{
 			return "0";
 		}
 		pAmount = parseInt(pAmount);
-
-		var sk0 = "";
-		var sk1 = "";
+		
+		var c = pCurrency;
+		var s0 = "";
+		var s1 = "";
+		var s2 = "<" + c + "unit></" + c + "unit>";
 		if (pWantColor)
 		{
-			// Instead of period separating the currency units, use the coin images
-			sk0 = "<karma>";
-			sk1 = "</karma><karmaunit></karmaunit>";
+			s0 = "<" + c + ">";
+			s1 = "</" + c + ">";
 		}
-		var karma = pAmount.toLocaleString(); // Place separators
-		return sk0 + karma + sk1;
+		return s0 + pAmount.toLocaleString() + s1 + s2;
+	},
+	createKarmaString: function(pAmount, pWantColor)
+	{
+		return E.createCurrencyString("karma", pAmount, pWantColor);
+	},
+	createLaurelString: function(pAmount, pWantColor)
+	{
+		return E.createCurrencyString("laurel", pAmount, pWantColor);
+	},
+	createGemString: function(pAmount, pWantColor)
+	{
+		return E.createCurrencyString("gem", pAmount, pWantColor);
 	},
 	
 	/*
@@ -17356,7 +17476,7 @@ B = {
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img class='dsbVendorIcon' src='" + pData.icon + "' /></a> "
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + E.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (B.DashboardVendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
-							+ "<span class='dsbVendorPriceKarma'>" + E.createKarmaString(offer.price, true) + "</span>"
+							+ "<span class='dsbVendorPriceKarma'>" + E.createKarmaString(offer.price) + "</span>"
 							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
 						+ "</div>");
 						// Get TP prices also

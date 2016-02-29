@@ -27,8 +27,8 @@
 ----------------------------------------------------------------------------- */
 #accOverhead {
 	top: 0; left: 0;
-	position: fixed;
 	display: block;
+	position: fixed; z-index: 9;
 	width: 100%;
 	padding-top: 2px;
 	background: linear-gradient(to left, rgba(255,255,255,0) 0%, #333 50%, rgba(255,255,255,0) 100%);
@@ -209,9 +209,10 @@ input[type="text"].accTokenHovered {
 	float: right;
 }
 
-#chrStatistics ul {
+#chrStatistics ul { /* A column, should have a computed total width of at least 360 pixels and be divisible by 30 */
 	display: inline-block;
 	margin-right: 8px;
+	margin-bottom: 16px;
 	font-size: 18px;
 }
 
@@ -252,6 +253,10 @@ input[type="text"].accTokenHovered {
 }
 .chrTrivial { /* Situational class to fade trivial information */
 	opacity: 0.3;
+}
+.chrCommitment {
+	display: inline-block;
+	width: 128px;
 }
 .chrProfession, .chrProfessionIcon, .chrCrafting {
 	display: inline-block;
@@ -299,7 +304,7 @@ input[type="text"].accTokenHovered {
 
 .chrStats {
 	vertical-align: top;
-	text-align: right;
+	text-align: left;
 }
 .chrStats li { /* A row containing texts and graphs */
 	height: 32px;
@@ -320,11 +325,12 @@ input[type="text"].accTokenHovered {
 	display: inline-block;
 	position: absolute;
 	width: 196px;
+	text-align: center;
 	white-space: nowrap;
 	font-family: Menomonia;
 	background: linear-gradient(to left, rgba(255,255,255,0) 0%, #333 50%, rgba(255,255,255,0) 100%);
 }
-.chrAge, .chrDeaths, .chrLifetime, .chrBirthday, .chrBirthdate { /* Text and values */
+.chrAge, .chrDeaths, .chrLifetime, .chrBirthday, .chrBirthdate, .chrWalletAmount, .chrWalletCurrency { /* Text and values */
 	display: inline-block;
 	width: 64px;
 	text-align: right;
@@ -348,7 +354,7 @@ input[type="text"].accTokenHovered {
 	margin-right: 8px;
 }
 .chrBirthdate {
-	width: 224px;
+	width: 234px;
 	color: #ccc;
 }
 
@@ -387,7 +393,27 @@ input[type="text"].accTokenHovered {
 }
 .chrGuildName {
 	display: inline-block;
-	width: 320px;
+	width: 304px;
+}
+
+.chrWalletAmount {
+	width: 96px;
+	margin-right: 8px;
+}
+.chrWalletCurrency {
+	width: 192px;
+	margin-left: 8px;
+	text-align: left;
+	font-family: Menomonia;
+	font-size: 16px;
+}
+a.chrWalletLink {
+	color: #eee;
+	text-decoration: none;
+}
+/* Hide gold and karma icon for the wallet to allow more space for the numbers */
+#chrWallet_General .acc_wallet_1, #chrWallet_General .acc_wallet_2 {
+	visibility: hidden;
 }
 
 .acc_prof { /* Profession icon sprites */
