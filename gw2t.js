@@ -1498,6 +1498,16 @@ U = {
 		U.URL_API.EventNames += langsuffix;
 		U.URL_API.TextToSpeech += lang + "&sv=&vn=&pitch=0.5&rate=0.4";
 	},
+	
+	/*
+	 * Gets a language specific URL to an item details API.
+	 * @param int pItemID
+	 * @returns string URL.
+	 */
+	getItemAPI: function(pItemID)
+	{
+		return U.URL_API.ItemDetails + pItemID + U.URL_API.LangKey;
+	},
 
 	/*
 	 * URLArguments (Args) may contain Options object's variables. In the form of:
@@ -1793,7 +1803,7 @@ U = {
 			{
 				index = E.ItemsArray.length + pSmartIndex - 1;
 				requesteditem = E.ItemsArray[index];
-				$.getJSON(U.URL_API.ItemDetails + requesteditem, function(pData)
+				$.getJSON(U.getItemAPI(requesteditem), function(pData)
 				{
 					I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.formatJSON(pData), 0);
 				}).fail(function()
@@ -1808,7 +1818,7 @@ U = {
 				{
 					index = E.ItemsArray.length - pSmartIndex - 1 - i;
 					requesteditem = E.ItemsArray[index];
-					$.getJSON(U.URL_API.ItemDetails + requesteditem, function(pData)
+					$.getJSON(U.getItemAPI(requesteditem), function(pData)
 					{
 						I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.formatJSON(pData), 0);
 					}).fail(function()
@@ -3414,6 +3424,10 @@ A = {
 				$(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
 				$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
 			}
+		}).on("contextmenu", function()
+		{
+			var charindex = U.getSubintegerFromHTMLID($(this));
+			I.write(U.formatJSON(A.Data.Characters[charindex]));
 		});
 		// Additional information as tooltip
 		I.qTip.init($("#chrSelection_" + pCharacter.charindex).find(".chrCommitment").attr("title", crafttooltip));
@@ -3731,7 +3745,17 @@ A = {
 	 */
 	generateEquipment: function()
 	{
-		I.log("here");
+		
+	},
+	
+	/*
+	 * Gets the total agony resistance of a character by looking at its equipment array.
+	 * @param object pCharacter from API.
+	 * @returns int sum.
+	 */
+	getAgonyResistance: function(pCharacter)
+	{
+		
 	},
 	
 	/*
@@ -5257,6 +5281,20 @@ E = {
 	},
 	
 	/*
+	 * Binds an element to have 
+	 * @param jqobject pElement to bind.
+	 * @param object pItem details retrieved from API.
+	 */
+	bindItemTooltip: function(pElement, pItem)
+	{
+		var elm = $(pElement);
+		var html = "";
+		elm.attr("title", html);
+		
+		I.qTip.init(elm);
+	},
+	
+	/*
 	 * Calculates the trading calculator's output textboxes using input textboxes' values.
 	 * @param jqobject pEntry trading calculator HTML parent.
 	 */
@@ -5329,7 +5367,7 @@ E = {
 		
 		$.ajax({
 			dataType: "json",
-			url: U.URL_API.ItemDetails + id,
+			url: U.getItemAPI(id),
 			cache: false,
 			success: function(pData)
 		{
@@ -5736,7 +5774,7 @@ E = {
 					entry.find(".trdResultsContainer").remove();
 					resultslist = createSearchContainer(entry);
 					
-					$.getJSON(U.URL_API.ItemDetails + query, function(pDataInner)
+					$.getJSON(U.getItemAPI(query), function(pDataInner)
 					{
 						insertSearchResult(pDataInner, query, resultslist);
 					}).fail(function()
@@ -5811,7 +5849,7 @@ E = {
 							resultitem = resultarray[thisi];
 							resultid = parseInt(resultitem[keyname_id]);
 							// Get information of each item in the returned search result array
-							$.getJSON(U.URL_API.ItemDetails + resultid, function(pDataInner)
+							$.getJSON(U.getItemAPI(resultid), function(pDataInner)
 							{
 								insertSearchResult(pDataInner, query, resultslist);
 							});
@@ -17497,7 +17535,7 @@ B = {
 				(function(iIndex)
 				{
 					var offer = B.DashboardVendor.Offers[iIndex];
-					$.getJSON(U.URL_API.ItemDetails + offer.id + U.URL_API.LangKey, function(pData)
+					$.getJSON(U.getItemAPI(offer.id), function(pData)
 					{
 						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
 						table.append("<div class='dsbVendorEntry'>"

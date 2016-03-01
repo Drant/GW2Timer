@@ -416,6 +416,10 @@ a.chrWalletLink {
 	visibility: hidden;
 }
 
+.chrEquipHelm {
+	
+}
+
 .acc_prof { /* Profession icon sprites */
 	width: 32px; height: 32px;
 	background-image: url("../img/account/professions.png");

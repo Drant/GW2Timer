@@ -151,13 +151,13 @@ var GW2T_DAILY_ASSOCIATION = {
 	"946": "Monument",
 	
 	// PvP
-	"405": "Stats",
 	"1856": "Reward",
 	"1857": "Rank",
 	"1858": "Defender",
 	"1861": "Kills",
 	"1867": "Capture",
 	"2816": "Matches",
+	"2817": "Stats",
 	
 	// Profession
 	"2090": "Eng Thief",
@@ -1047,6 +1047,15 @@ Announcement:
  */
 Countdowns: [
 {
+	name_en: "Everyday March Sale",
+	name_de: "Täglich Angebote März",
+	name_es: "Oferta cada día de marzo",
+	name_fr: "Promotions quotidiennes de mars",
+	official: "news/every-day-sale-in-the-month-of-march/",
+	Start: new Date("2016-03-01T17:00:00Z"),
+	Finish: new Date("2016-03-31T17:00:00Z")
+},
+{
 	name_en: "Second Wing of Raid",
 	name_de: "Nächste Schlachtzugsflügel",
 	name_es: "Segunda ala de la incursión",
@@ -1093,10 +1102,10 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	isSpecial: false,
+	isSpecial: true,
 	note: "",
-	Start: new Date("2016-02-13T16:00:00Z"),
-	Finish: new Date("2016-03-01T16:00:00Z"),
+	Start: new Date("2016-03-01T16:00:00Z"),
+	Finish: new Date("2016-03-08T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "./img/ui/gem.png",
@@ -1105,16 +1114,44 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Belinda's Greatsword Skin",
-		img: "https://render.guildwars2.com/file/FEFE79F5D14B2CC42F5721A49C01982ACD9AEDDB/855402.png",
-		price: 600,
+		name: "Zodiac Heavy Armor Skin",
+		img: "https://render.guildwars2.com/file/2793703E07C7E0D15EA2EE95E6C116DA75674F0C/740302.png",
+		price: 800,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
-		name: "Electromagnetic-Descender Glider",
-		img: "https://render.guildwars2.com/file/4ABD3F35DE479D2B059A399E3A6ABED6B2017C1B/1373283.png",
-		price: 400,
+		name: "Zodiac Medium Armor Skin",
+		img: "https://render.guildwars2.com/file/CACA37AA4734936B5E062003940CAB4B11092F6C/740303.png",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Zodiac Light Armor Skin",
+		img: "https://render.guildwars2.com/file/9A22FCFF1B3DDC290D5360DAC77595C86D36F9F8/740304.png",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Krytan Medium Armor Skin",
+		img: "https://render.guildwars2.com/file/0793E7E47832AFFBFAA71A6801066E2A41606BBA/455866.png",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Primeval Heavy Armor Skin",
+		img: "https://render.guildwars2.com/file/D57103D6520ECFC07DBA564E5E76F13D96B8B1E7/455865.png",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Profane Light Armor Skin",
+		img: "https://render.guildwars2.com/file/0DA0BEC80AF6FEBA33ABB8D463B00FB8F3F3D861/455867.png",
+		price: 500,
 		discount: null,
 		col: 0
 	},
@@ -1124,6 +1161,125 @@ Sale: {
 		price: 700,
 		discount: null,
 		col: 0
+	},
+	{
+		name: "Winter Solstice Outfit",
+		img: "https://render.guildwars2.com/file/7133DC4108BE42C2F010D61CE406772D360F0E39/1322763.png",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Butterfly Wings Backpack",
+		img: "https://render.guildwars2.com/file/DF22D8F8EFF9FC476372020D4F3555A7074F7521/1024006.png",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Snowflake Glider",
+		img: "https://render.guildwars2.com/file/CE007E4C9FD410E85D79D745BC750F2A6719E4DF/1313090.png",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Snow Flurry Dragon",
+		img: "https://render.guildwars2.com/file/0DE72811F5176B90454AE16B5E48CA5BBBE6610C/1322567.png",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Wintersday Earmuffs",
+		img: "https://render.guildwars2.com/file/E1590ED73D082F950AA2ED44021A7F795D0DD647/526118.png",
+		price: 25,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Frost Wasp Logging Tool",
+		img: "https://render.guildwars2.com/file/0227CB6C96D2AC7FC20B6D465478E9BBF3ED09D9/771066.png",
+		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Basic Cloth Rack",
+		img: "https://render.guildwars2.com/file/6EDD16520B6459AA2731414BA5309C524F730949/904688.png",
+		price: 640,
+		discount: [[1, 640, 800]],
+		col: 1
+	},
+	{
+		name: "Basic Harvesting Node Pack",
+		img: "https://render.guildwars2.com/file/049F5E2C1B4019D0806D3D06CA17F92153FBD574/866826.png",
+		price: 640,
+		discount: [[1, 640, 800]],
+		col: 1
+	},
+	{
+		name: "Basic Lumber Node Pack",
+		img: "https://render.guildwars2.com/file/A91BE8A9075CBF2F342C0459F0DEFD68509C66B1/841529.png",
+		price: 640,
+		discount: [[1, 640, 800]],
+		col: 1
+	},
+	{
+		name: "Basic Ore Node Pack",
+		img: "https://render.guildwars2.com/file/116DD826056B64F35AA13AB3EE111594EB62B50D/699313.png",
+		price: 640,
+		discount: [[1, 640, 800]],
+		col: 1
+	},
+	{
+		name: "Mask of the Crown",
+		img: "https://render.guildwars2.com/file/30EB5309B29F55DB5E060906C660A598A132E842/619590.png",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Warrior Quaggan Backpack Set",
+		img: "https://render.guildwars2.com/file/ADE839C7FBDE9B18EE07E21FD4B8AC7BA06E29EE/543837.png",
+		price: 300,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Fuzzy Bear Hat",
+		img: "https://render.guildwars2.com/file/D33AB44B1C0DDBFD3D0DB5CDB139D618AF0FE6B2/587062.png",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Fuzzy Leopard Hat",
+		img: "https://render.guildwars2.com/file/C4020218F1437D6E154DBE497F9D66B0D6294E17/771064.png",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Sailor's Beanie",
+		img: "https://render.guildwars2.com/file/6BDB0CE00EB895C9375F1F7336CCB80F0265BD35/220579.png",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Top Hat",
+		img: "https://render.guildwars2.com/file/B261FBF12505BBE1210D3FB0EADE00D3E5999A0A/340524.png",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Reading Glasses",
+		img: "https://render.guildwars2.com/file/01DC5C169EBB7D2467FFC95F01B349FB0F52995B/220573.png",
+		price: 150,
+		discount: null,
+		col: 1
 	}
 	]
 },
