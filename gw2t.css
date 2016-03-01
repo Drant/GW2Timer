@@ -110,18 +110,23 @@ img {
 	vertical-align: middle;
 }
 
-.jsScrollable {
+.jsScrollable { /* Apply to containers that shall have a scroll bar */
 	position: relative;
 	overflow: hidden;
 }
 
-.jsClip:hover {
+.jsClip:hover { /* A clipboard button */
 	border-radius: 16px;
 	box-shadow: 0px 0px 5px white;
 	background: url("img/ui/copy.png");
 }
 .jsClip:active {
 	opacity: 0.5;
+}
+
+.jsSuspended { /* Apply to any element that should be temporarily unclickable */
+	pointer-events: none;
+	opacity: 0.4;
 }
 
 .cntComposition ::selection {

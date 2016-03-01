@@ -2930,6 +2930,7 @@ A = {
 					section.find(".accDish").hide();
 					section.find(".accDishMain").show();
 					// Update address
+					I.PageCurrent = I.SpecialPageEnum.Account;
 					I.SectionCurrent[I.SpecialPageEnum.Account] =
 						(iSectionName === I.SectionEnum.Account.Mananger) ? "" : iSectionName;
 					U.updateQueryString();
@@ -2945,7 +2946,7 @@ A = {
 						if ($(this).hasClass("accDishMain") === false)
 						{
 							var subsectionname = U.getSubstringFromHTMLID($(this));
-							var subbutton = $("<img class='accMenuSubbutton accMenuIcon' src='img/account/menu/" + subsectionname.toLowerCase() + I.cPNG + "' />");
+							var subbutton = $("<img id='accMenu" + subsectionname + "' class='accMenuSubbutton accMenuIcon' src='img/account/menu/" + subsectionname.toLowerCase() + I.cPNG + "' />");
 							subbuttons.append(subbutton);
 							(function(iSubbutton, iSubsection)
 							{
@@ -2955,7 +2956,8 @@ A = {
 									iSubsection.parent().find(".accDish").hide();
 									iSubsection.show();
 									// Highlight the button
-									$(this).parent().parent().find(".accMenuIcon").removeClass("accMenuButtonFocused");
+									var menubutton = $(this).parent().parent();
+									menubutton.find(".accMenuIcon").removeClass("accMenuButtonFocused");
 									$(this).addClass("accMenuButtonFocused");
 								});
 							})(subbutton, $(this));
@@ -2968,6 +2970,10 @@ A = {
 		$("#accMenuCharacters").click(function()
 		{
 			A.generateAndInitializeCharacters();
+		});
+		$("#accMenuEquipment").click(function()
+		{
+			A.generateEquipment();
 		});
 		
 		// Open the section if specified in the URL
@@ -3261,10 +3267,18 @@ A = {
 		{
 			return;
 		}
+		var menusubsection = $("#accMenuCharacters").find(".accMenuSubsection");
+		var finishFetch = function()
+		{
+			I.suspendElement(menusubsection, false);
+			A.setProgressBar();
+			A.generateCharactersStatistics();
+		};
 		
 		$("#chrSummary, #chrStatistics ul").empty();
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
+		I.suspendElement(menusubsection);
 		var platter = $("#accPlatterCharacters");
 		platter.prepend(I.cThrobber);
 		$.getJSON(A.getURL(A.URL.Characters), function(pData)
@@ -3273,6 +3287,7 @@ A = {
 			var charindex = 0;
 			var numfetched = 0;
 			var numcharacters = pData.length;
+			var numfetchable = numcharacters;
 			A.Data.CharacterNames = pData;
 			A.CharacterCurrent = null;
 			A.Data.Characters = null;
@@ -3296,15 +3311,19 @@ A = {
 							(A.Data.Characters[iIndex]).charname = U.escapeHTML(pData.name);
 							A.generateCharactersSelection(pData);
 							numfetched++;
-							A.setProgressBar(numfetched / numcharacters);
-							if (numfetched === numcharacters)
+							A.setProgressBar(numfetched / numfetchable);
+							if (numfetched === numfetchable)
 							{
-								A.setProgressBar();
-								A.generateCharactersStatistics();
+								finishFetch();
 							}
 						},
 						error: function(pRequest, pStatus)
 						{
+							numfetchable--;
+							if (numfetched === numfetchable)
+							{
+								finishFetch();
+							}
 							I.write("Error retrieving data for character: " + U.escapeHTML(iCharacter));
 						}
 					});
@@ -3523,7 +3542,7 @@ A = {
 			});
 			// Retrieve and insert guilds
 			A.initializeGuilds(pData.guilds);
-			A.initializeWallet();
+			A.generateWallet();
 			// Finally for the summary
 			$("#chrSummary").show("fast");
 		});
@@ -3630,7 +3649,7 @@ A = {
 	/*
 	 * Initializes the wallet object and generate columns (categorized wallets) for currencies.
 	 */
-	initializeWallet: function()
+	generateWallet: function()
 	{
 		var generateWallet = function(pWallet, pName)
 		{
@@ -3704,6 +3723,15 @@ A = {
 				generateWallet(wallets[i], i);
 			}
 		});
+	},
+	
+	/*
+	 * Generates the equipment subsection of the characters page.
+	 * @pre Characters array was loaded by AJAX.
+	 */
+	generateEquipment: function()
+	{
+		I.log("here");
 	},
 	
 	/*
@@ -20029,6 +20057,23 @@ I = {
 				pElement.removeClass("cssHighlight");
 				return false;
 			}
+		}
+	},
+	
+	/*
+	 * Makes an element unclickable and have the appearance of so.
+	 * @param jqobject pElement.
+	 * @param boolean pBoolean to suspend or reactivate.
+	 */
+	suspendElement: function(pElement, pBoolean)
+	{
+		if (pBoolean === undefined || pBoolean === true)
+		{
+			$(pElement).addClass("jsSuspended");
+		}
+		else
+		{
+			$(pElement).removeClass("jsSuspended");
 		}
 	},
 	
