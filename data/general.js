@@ -1204,6 +1204,29 @@ Sale: {
 		discount: null,
 		col: 1
 	},
+	
+	{
+		name: "Mad Scientist's Harvesting Tool",
+		img: "https://render.guildwars2.com/file/BBC7E4B707C3624DEFB22C62FC2C9390741F090D/978010.png",
+		price: 800,
+		discount: 1000,
+		col: 1
+	},
+	{
+		name: "Mad Scientist's Logging Tool",
+		img: "https://render.guildwars2.com/file/796209E4012FE25C53D0A04C1DDB0FA5D87079F6/960280.png",
+		price: 800,
+		discount: 1000,
+		col: 1
+	},
+	{
+		name: "Mad Scientist's Mining Tool",
+		img: "https://render.guildwars2.com/file/796209E4012FE25C53D0A04C1DDB0FA5D87079F6/960280.png",
+		price: 800,
+		discount: 1000,
+		col: 1
+	},
+	
 	{
 		name: "Basic Cloth Rack",
 		img: "https://render.guildwars2.com/file/6EDD16520B6459AA2731414BA5309C524F730949/904688.png",

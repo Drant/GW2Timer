@@ -210,7 +210,7 @@ img {
 /*
  * Style for qTip tooltip JS plugin by Craig Erskine.
  */
-div#qTip {
+#qTip {
 	display: none;
 	position: absolute; z-index: 1000;
 	max-width: 720px;
@@ -230,9 +230,35 @@ div#qTip {
 	opacity: 1;
 	pointer-events: none;
 }
-div#qTip dfn { /* Highlight color for emphasis text in tooltip */
+#qTip dfn { /* Highlight color for emphasis text in tooltip */
 	background: none;
 	color: #ffcc77;
+}
+
+/*
+ * Style for tooltip for item details.
+ */
+.itmContainer {
+	width: 380px;
+	font-family: Menomonia;
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 17px;
+}
+.itmIcon {
+	width: 40px; height: 40px;
+	border-top: 1px solid #5f6569;
+	border-left: 1px solid #605f5e;
+	border-right: 1px solid #c8caca;
+	border-bottom: 1px solid #c9caca;
+	border-radius: 1px;
+	margin-right: 6px;
+}
+.itmStats {
+	color: #00ff00;
+}
+.itmDescription {
+	color: #99eedd;
 }
 
 /*

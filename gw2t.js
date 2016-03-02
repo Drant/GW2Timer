@@ -5281,16 +5281,180 @@ E = {
 	},
 	
 	/*
-	 * Binds an element to have 
-	 * @param jqobject pElement to bind.
+	 * Gets a tooltip HTML of an item.
 	 * @param object pItem details retrieved from API.
+	 * return string HTML.
 	 */
+	getItemTooltip: function(pItem, pOptions)
+	{
+		var item1 = {
+			"name": "Forgemaster's Visage",
+			"description": "Crafted in the style of the legendary Eternal Forgemaster.",
+			"type": "Armor",
+			"level": 80,
+			"rarity": "Ascended",
+			"vendor_value": 240,
+			"default_skin": 124,
+			"game_types": ["Activity", "Wvw", "Dungeon", "Pve"],
+			"flags": ["HideSuffix", "AccountBound", "AccountBindOnUse"],
+			"restrictions": [],
+			"id": 48123,
+			"chat_link": "[&AgH7uwAA]",
+			"icon": "https://render.guildwars2.com/file/0EBB9F33579CC54CC39F685868FFD79D7A0FEEDC/699204.png",
+			"details": {
+				"type": "Helm",
+				"weight_class": "Medium",
+				"defense": 102,
+				"infusion_slots": [{
+					"flags": ["Defense"]
+				}],
+				"infix_upgrade": {
+					"attributes": [{
+						"attribute": "Power",
+						"modifier": 45
+					}, {
+						"attribute": "Precision",
+						"modifier": 63
+					}, {
+						"attribute": "ConditionDamage",
+						"modifier": 45
+					}]
+				},
+				"secondary_suffix_item_id": ""
+			}
+		};
+		
+		var item2 = {
+			"name": "Capacitive Bottle",
+			"description": "Double-click to prime the bottle for capturing an electric charge.",
+			"type": "Gizmo",
+			"level": 0,
+			"rarity": "Basic",
+			"vendor_value": 0,
+			"game_types": ["Wvw", "Dungeon", "Pve"],
+			"flags": [],
+			"restrictions": [],
+			"id": 71974,
+			"chat_link": "[&AgEmGQEA]",
+			"icon": "https://render.guildwars2.com/file/052198B6380E46FC9D6C1177AF5E4C2178FDAA3D/1204480.png",
+			"details": {
+				"type": "Default"
+			}
+		};
+		
+		var settings = $.extend({
+			upgrades: null,
+			infusions: null,
+			skin: null
+		}, pOptions);
+		var item = pItem;
+		
+		
+		var namestr = "";
+		var rarity = (item.rarity !== undefined) ? item.rarity : E.Rarity.Basic;
+		namestr = "<aside class='itmName " + E.getRarityClass(rarity)
+			+ "'><img class='itmIcon' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
+		
+		var statsstr = "";
+		var det = item.details;
+		if (det && det.infix_upgrade)
+		{
+			var stats = det.infix_upgrade.attributes;
+			statsstr += "<aside class='itmStats'>";
+			
+			if (det.defense)
+			{
+				statsstr += "<span style='color:white'>Defense:</span> " + det.defense + "<br />";
+			}
+			
+			stats.forEach(function(iStats)
+			{
+				statsstr += "+" + iStats.modifier + " " + iStats.attribute + "<br />";
+			});
+			statsstr += "</aside><br />";
+		}
+		
+		var transmstr = "";
+		if (settings.skin)
+		{
+			transmstr += "<aside='itmTransmute'>Transmuted<br />" + "TRANSMUTED ITEM NAME" + "</aside>";
+		}
+		
+		var raritystr = item.rarity + "<br />";
+		
+		var detailstr = "";
+		if (det)
+		{
+			if (det.weight_class)
+			{
+				detailstr += det.weight_class + "<br />";
+			}
+			if (det.type)
+			{
+				detailstr += det.type + "<br />";
+			}
+		}
+		
+		var levelstr = "";
+		if (item.level > 0)
+		{
+			levelstr += "Required Level: " + item.level + "<br />";
+		}
+		
+		var descstr = "";
+		if (item.description)
+		{
+			descstr = "<aside class='itmDescription'>" + item.description + "</aside>";
+		}
+		
+		var boundstr = "";
+		if (item.flags)
+		{
+			item.flags.forEach(function(iFlag)
+			{
+				if (iFlag === "SoulbindOnAcquire"
+					|| iFlag === "SoulBindOnUse"
+					|| iFlag === "AccountBindOnUse"
+					|| iFlag === "AccountBound")
+				{
+					boundstr += iFlag + "<br />";
+				}
+			});
+		}
+		
+		var vendorstr = "";
+		if (item.vendor_value !== undefined)
+		{
+			vendorstr += E.createCoinString(item.vendor_value, true);
+		}
+		
+		var html = "<div class='itmContainer'>"
+			+ namestr
+			+ statsstr
+			+ transmstr
+			+ raritystr
+			+ detailstr
+			+ levelstr
+			+ descstr
+			+ boundstr
+			+ vendorstr
+		+ "</div>";
+		
+		
+		
+		
+		
+		
+		return html;
+	},
+	
 	bindItemTooltip: function(pElement, pItem)
 	{
 		var elm = $(pElement);
-		var html = "";
-		elm.attr("title", html);
+		//elm = $("#itemTimeline");
+		var html = E.getItemTooltip(pItem);
 		
+		elm.attr("title", html);
 		I.qTip.init(elm);
 	},
 	
@@ -5373,8 +5537,10 @@ E = {
 		{
 			E.setRarityClass(pEntry.find(".trdName"), pData.rarity);
 			pEntry.attr("data-rarity", pData.rarity);
-			pEntry.find(".trdIcon").attr("src", pData.icon);
 			pEntry.find(".trdLink").val(U.getChatlinkFromItemID(id));
+			var icon = pEntry.find(".trdIcon");
+			icon.attr("src", pData.icon);
+			E.bindItemTooltip(icon, pData);
 		}});
 	},
 	
@@ -21226,6 +21392,6 @@ K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
 
 
-
+//E.bindItemTooltip();
 
 });//]]>// END OF JQUERY NEST
