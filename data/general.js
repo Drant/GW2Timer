@@ -1052,8 +1052,8 @@ Countdowns: [
 	name_es: "Oferta cada día de marzo",
 	name_fr: "Promotions quotidiennes de mars",
 	official: "news/every-day-sale-in-the-month-of-march/",
-	Start: new Date("2016-03-01T17:00:00Z"),
-	Finish: new Date("2016-03-31T17:00:00Z")
+	Start: new Date("2016-03-01T16:00:00Z"),
+	Finish: new Date("2016-03-31T16:00:00Z")
 },
 {
 	name_en: "Second Wing of Raid",
@@ -1097,7 +1097,7 @@ Story:
 	url: "", // Usually a wiki link to that item
 	img: "", // ArenaNet hosted item image
 	price: 400, // Gems value for one item
-	discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]], // [[quantity, gempricecurrent, gempriceoldOptional], ...]
+	discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]] OR 200, // [[quantity, gempricecurrent, gempriceoldOptional], ...] OR gempriceoldOptional
 	col: 0 // Display on left (0) or right (1) column
  */
 Sale: {
@@ -1208,28 +1208,28 @@ Sale: {
 		name: "Basic Cloth Rack",
 		img: "https://render.guildwars2.com/file/6EDD16520B6459AA2731414BA5309C524F730949/904688.png",
 		price: 640,
-		discount: [[1, 640, 800]],
+		discount: 800,
 		col: 1
 	},
 	{
 		name: "Basic Harvesting Node Pack",
 		img: "https://render.guildwars2.com/file/049F5E2C1B4019D0806D3D06CA17F92153FBD574/866826.png",
 		price: 640,
-		discount: [[1, 640, 800]],
+		discount: 800,
 		col: 1
 	},
 	{
 		name: "Basic Lumber Node Pack",
 		img: "https://render.guildwars2.com/file/A91BE8A9075CBF2F342C0459F0DEFD68509C66B1/841529.png",
 		price: 640,
-		discount: [[1, 640, 800]],
+		discount: 800,
 		col: 1
 	},
 	{
 		name: "Basic Ore Node Pack",
 		img: "https://render.guildwars2.com/file/116DD826056B64F35AA13AB3EE111594EB62B50D/699313.png",
 		price: 640,
-		discount: [[1, 640, 800]],
+		discount: 800,
 		col: 1
 	},
 	{
@@ -1314,16 +1314,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-03-01T00:00:00Z"),
-	Finish: new Date("2016-03-02T00:00:00Z"),
+	Start: new Date("2016-03-02T00:00:00Z"),
+	Finish: new Date("2016-03-03T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "49757", price: "25200" },
-		Fox: { id: "67966", price: "25200" },
-		Derwena: { id: "49734", price: "25200" },
-		Yana: { id: "44655", price: "25200" },
-		Katyn: { id: "43831", price: "25200" },
-		Verma: { id: "43824", price: "25200" }
+		Mehem: { id: "43823", price: "25200" },
+		Fox: { id: "43828", price: "25200" },
+		Derwena: { id: "43814", price: "25200" },
+		Yana: { id: "43809", price: "25200" },
+		Katyn: { id: "43832", price: "25200" },
+		Verma: { id: "43805", price: "25200" }
 	}
 }
 };

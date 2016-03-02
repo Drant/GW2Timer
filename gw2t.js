@@ -17410,7 +17410,7 @@ B = {
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
 						var oldprice = "";
 						oldprice = (O.isInteger(item.discount)) ? item.discount : oldprice;
-						oldprice = (Array.isArray(item.discount) && item.discount.length > 2) ? ((item.discount[0])[2]) : oldprice;
+						oldprice = (Array.isArray(item.discount) && item.discount[0].length > 2) ? ((item.discount[0])[2]) : oldprice;
 						oldprice = (oldprice !== "") ? ("<span class='dsbSalePriceOld'>" + oldprice + "</span> ") : oldprice;
 						var discounts = "";
 						if (item.discount && Array.isArray(item.discount))
@@ -17719,7 +17719,7 @@ B = {
 	{
 		B.isTimelineGenerated = true;
 		// Container for all the timelines
-		$("#itemTimeline").show()
+		$("#itemTimeline").show();
 		var container = $("#tmlContainer").append("<div class='tmlLine curToggle' id='tmlLegend'></div>");
 		B.updateTimelineLegend();
 		$("#tmlLegend").click(function()
