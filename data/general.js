@@ -365,7 +365,7 @@ var GW2T_GATEWAY_CONNECTION = {
 	{c: [[11912, 24958], [12203, 24781]], i: "http://i.imgur.com/v2nRrzR.png"}, // malchor
 	{c: [[11248, 25762], [10899, 25948]], i: "http://i.imgur.com/Vkb74AG.png"}, // cursed
 	{c: [[11122, 27381], [11248, 27635]], i: "http://i.imgur.com/20U6Gts.png"}, // cursed
-	{c: [[11049, 27979], [11328, 27915]], i: "http://i.imgur.com/Yx0LBxP.png"}, // cursed
+	{c: [[11049, 27979], [11328, 27915]], i: "http://i.imgur.com/Yx0LBxP.png"} // cursed
 	]
 };
 
@@ -386,6 +386,37 @@ shadowtrap: {
 	image: "shadowtrap",
 	range: 10000
 }
+};
+
+/*
+ * Item details metadata for generating tooltips.
+ * 1 01 mainhand
+ * 2 10 offhand
+ * 3 11 twohand
+ * 4 00 aquatic
+ */
+var GW2T_ITEMS_DATA = {
+	Weapon: {
+		Axe: 1,
+		Dagger: 1,
+		Mace: 1,
+		Pistol: 1,
+		Scepter: 1,
+		Sword: 1,
+		Focus: 2,
+		Shield: 2,
+		Torch: 2,
+		Warhorn: 2,
+		Greatsword: 3,
+		Hammer: 3,
+		LongBow: 3,
+		Rifle: 3,
+		ShortBow: 3,
+		Staff: 3,
+		Harpoon: 4,
+		Speargun: 4,
+		Trident: 4
+	}
 };
 
 
@@ -1204,7 +1235,6 @@ Sale: {
 		discount: null,
 		col: 1
 	},
-	
 	{
 		name: "Mad Scientist's Harvesting Tool",
 		img: "https://render.guildwars2.com/file/BBC7E4B707C3624DEFB22C62FC2C9390741F090D/978010.png",
@@ -1226,7 +1256,6 @@ Sale: {
 		discount: 1000,
 		col: 1
 	},
-	
 	{
 		name: "Basic Cloth Rack",
 		img: "https://render.guildwars2.com/file/6EDD16520B6459AA2731414BA5309C524F730949/904688.png",
@@ -1337,16 +1366,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-03-02T00:00:00Z"),
-	Finish: new Date("2016-03-03T00:00:00Z"),
+	Start: new Date("2016-03-03T00:00:00Z"),
+	Finish: new Date("2016-03-04T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC
 	{
-		Mehem: { id: "43823", price: "25200" },
-		Fox: { id: "43828", price: "25200" },
-		Derwena: { id: "43814", price: "25200" },
-		Yana: { id: "43809", price: "25200" },
-		Katyn: { id: "43832", price: "25200" },
-		Verma: { id: "43805", price: "25200" }
+		Mehem: { id: "73199", price: "25200" },
+		Fox: { id: "49755", price: "25200" },
+		Derwena: { id: "49751", price: "25200" },
+		Yana: { id: "48908", price: "25200" },
+		Katyn: { id: "43820", price: "25200" },
+		Verma: { id: "43838", price: "25200" }
 	}
 }
 };

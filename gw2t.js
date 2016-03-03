@@ -5287,61 +5287,6 @@ E = {
 	 */
 	getItemTooltip: function(pItem, pOptions)
 	{
-		var item1 = {
-			"name": "Forgemaster's Visage",
-			"description": "Crafted in the style of the legendary Eternal Forgemaster.",
-			"type": "Armor",
-			"level": 80,
-			"rarity": "Ascended",
-			"vendor_value": 240,
-			"default_skin": 124,
-			"game_types": ["Activity", "Wvw", "Dungeon", "Pve"],
-			"flags": ["HideSuffix", "AccountBound", "AccountBindOnUse"],
-			"restrictions": [],
-			"id": 48123,
-			"chat_link": "[&AgH7uwAA]",
-			"icon": "https://render.guildwars2.com/file/0EBB9F33579CC54CC39F685868FFD79D7A0FEEDC/699204.png",
-			"details": {
-				"type": "Helm",
-				"weight_class": "Medium",
-				"defense": 102,
-				"infusion_slots": [{
-					"flags": ["Defense"]
-				}],
-				"infix_upgrade": {
-					"attributes": [{
-						"attribute": "Power",
-						"modifier": 45
-					}, {
-						"attribute": "Precision",
-						"modifier": 63
-					}, {
-						"attribute": "ConditionDamage",
-						"modifier": 45
-					}]
-				},
-				"secondary_suffix_item_id": ""
-			}
-		};
-		
-		var item2 = {
-			"name": "Capacitive Bottle",
-			"description": "Double-click to prime the bottle for capturing an electric charge.",
-			"type": "Gizmo",
-			"level": 0,
-			"rarity": "Basic",
-			"vendor_value": 0,
-			"game_types": ["Wvw", "Dungeon", "Pve"],
-			"flags": [],
-			"restrictions": [],
-			"id": 71974,
-			"chat_link": "[&AgEmGQEA]",
-			"icon": "https://render.guildwars2.com/file/052198B6380E46FC9D6C1177AF5E4C2178FDAA3D/1204480.png",
-			"details": {
-				"type": "Default"
-			}
-		};
-		
 		var settings = $.extend({
 			upgrades: null,
 			infusions: null,
