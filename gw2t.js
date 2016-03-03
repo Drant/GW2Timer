@@ -5281,6 +5281,49 @@ E = {
 	},
 	
 	/*
+	 * Tells whether an item is an equipment (character gear).
+	 * @param object pItem details from API.
+	 * @returns boolean.
+	 */
+	isEquipment: function(pItem)
+	{
+		var type = pItem.type;
+		if (type === "Weapon"
+			|| type === "Armor"
+			|| type === "Trinket"
+			|| type === "Back")
+		{
+			return true;
+		}
+		return false;
+	},
+	
+	/*
+	 * Gets the translation for an attribute keyword in the API.
+	 * @param string pAttr.
+	 * @returns string translation.
+	 */
+	translateItemKeyword: function(pAttr)
+	{
+		var keywords = {
+			BoonDuration: "Boon Duration",
+			ConditionDamage: "Condition Damage",
+			ConditionDuration: "Expertise",
+			CritDamage: "Critical Damage",
+			Healing: "Healing Power",
+			AccountBindOnUse: "Account Bound on Use",
+			AccountBound: "Account Bound",
+			SoulBindOnUse: "Soulbound on Use",
+			SoulbindOnAcquire: "Soulbound"
+		};
+		if (keywords[pAttr])
+		{
+			return D.getTranslation(keywords[pAttr]);
+		}
+		return D.getTranslation(pAttr);
+	},
+	
+	/*
 	 * Gets a tooltip HTML of an item.
 	 * @param object pItem details retrieved from API.
 	 * return string HTML.
@@ -5312,10 +5355,28 @@ E = {
 				statsstr += "<span style='color:white'>Defense:</span> " + det.defense + "<br />";
 			}
 			
+			// Ascended equipment includes additional stats to compensate for lack of jewelry upgrades
+			var buffs = [];
+			var buffcounter = 0;
+			var buffadd = 0;
+			if (det.infix_upgrade.buff)
+			{
+				var buffnumbers = (det.infix_upgrade.buff.description).split("\n");
+				buffnumbers.forEach(function(iBuff)
+				{
+					buffs.push(parseInt(iBuff.split(" ")[0]));
+				});
+			}
 			stats.forEach(function(iStats)
 			{
-				statsstr += "+" + iStats.modifier + " " + iStats.attribute + "<br />";
+				if (buffcounter < buffs.length)
+				{
+					buffadd = buffs[buffcounter];
+					buffcounter++;
+				}
+				statsstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.translateItemKeyword(iStats.attribute) + "<br />";
 			});
+			
 			statsstr += "</aside><br />";
 		}
 		
@@ -5325,7 +5386,11 @@ E = {
 			transmstr += "<aside='itmTransmute'>Transmuted<br />" + "TRANSMUTED ITEM NAME" + "</aside>";
 		}
 		
-		var raritystr = item.rarity + "<br />";
+		var raritystr = "";
+		if (E.isEquipment(item))
+		{
+			raritystr = item.rarity + "<br />";
+		}
 		
 		var detailstr = "";
 		if (det)
@@ -5352,17 +5417,18 @@ E = {
 			descstr = "<aside class='itmDescription'>" + item.description + "</aside>";
 		}
 		
-		var boundstr = "";
+		var flagsstr = "";
 		if (item.flags)
 		{
 			item.flags.forEach(function(iFlag)
 			{
-				if (iFlag === "SoulbindOnAcquire"
+				if (iFlag === "Unique"
+					|| iFlag === "SoulbindOnAcquire"
 					|| iFlag === "SoulBindOnUse"
 					|| iFlag === "AccountBindOnUse"
 					|| iFlag === "AccountBound")
 				{
-					boundstr += iFlag + "<br />";
+					flagsstr += E.translateItemKeyword(iFlag) + "<br />";
 				}
 			});
 		}
@@ -5381,7 +5447,7 @@ E = {
 			+ detailstr
 			+ levelstr
 			+ descstr
-			+ boundstr
+			+ flagsstr
 			+ vendorstr
 		+ "</div>";
 		
@@ -6818,7 +6884,34 @@ D = {
 		s_coin: {de: "münze", es: "moneda", fr: "monnaie",
 			cs: "mince", it: "moneta", pl: "moneta", pt: "moeda", ru: "монета", zh: "硬幣"},
 		s_dollar: {de: "dollar", es: "dólar", fr: "dollar",
-			cs: "dolar", it: "dollaro", pl: "polar", pt: "dólar", ru: "доллар", zh: "元"}
+			cs: "dolar", it: "dollaro", pl: "polar", pt: "dólar", ru: "доллар", zh: "元"},
+		
+		// Items
+		s_Power: {de: "Kraft", es: "Potencia", fr: "Puissance"},
+		s_Precision: {de: "Präzision", es: "Precisión", fr: "Précision"},
+		s_Critical_Chance: {de: "Kritische Trefferchance", es: "Probabilidad de daño crítico", fr: "Chance de coup critique"},
+		s_Toughness: {de: "Zähigkeit", es: "Dureza", fr: "Robustesse"},
+		s_Armor: {de: "Rüstung", es: "Armadura", fr: "Armure"},
+		s_Vitality: {de: "Vitalität", es: "Vitalidad", fr: "Vitalité"},
+		s_Concentration: {de: "Konzentration", es: "Concentración", fr: "Concentration"},
+		s_Boon_Duration: {de: "Segensdauer", es: "Duración de bendición", fr: "Durée d'avantage"},
+		s_Condition_Damage: {de: "Zustandsschaden", es: "Daño de condición", fr: "Dégâts par altération"},
+		s_Expertise: {de: "Fachkenntnis", es: "Pericia", fr: "Expertise"},
+		s_Condition_Duration: {de: "Zustandsdauer", es: "Duración de condición", fr: "Durée d'altération"},
+		s_Ferocity: {de: "Wildheit", es: "Ferocidad", fr: "Férocité"},
+		s_Critical_Damage: {de: "Kritischer Schaden", es: "Daño crítico", fr: "Dégâts critiques"},
+		s_Health: {de: "Lebenspunkte", es: "Salud", fr: "Santé"},
+		s_Healing_Power: {de: "Heilkraft", es: "Poder de curación", fr: "Guérison"},
+		s_Agony_Resistance: {de: "Qual-Widerstand", es: "Resistencia a la agonía", fr: "Résistance à l'agonie"},
+		s_Magic_Find: {de: "Magisches Gespür", es: "Hallazgo mágico", fr: "Découverte de magie"},
+		s_Defense: {de: "", es: "", fr: ""},
+		s_Weapon_Strength: {de: "", es: "", fr: ""},
+		s_Required_Level: {de: "", es: "", fr: ""},
+		s_Account_Bound_on_Use: {de: "Accountgebunden bei Benutzung", es: "Vinculado a cuenta en uso", fr: "Lié au compte dès l'utilisation"},
+		s_Account_Bound: {de: "Accountgebunden", es: "Vinculado a cuenta", fr: "Lié au compte"},
+		s_Soulbound_on_Use: {de: "Seelengebunden bei Benutzung", es: "Ligado en uso", fr: "Lié à l'âme dès l'utilisation"},
+		s_Soulbound: {de: "Seelengebunden", es: "Ligado", fr: "Lié à l'âme"},
+		s_Unique: {de: "Einzigartig", es: "Equipamiento único", fr: "Unique"}
 	},
 	
 	/*
@@ -21337,6 +21430,6 @@ K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
 
 
-//E.bindItemTooltip();
+
 
 });//]]>// END OF JQUERY NEST

@@ -388,37 +388,6 @@ shadowtrap: {
 }
 };
 
-/*
- * Item details metadata for generating tooltips.
- * 1 01 mainhand
- * 2 10 offhand
- * 3 11 twohand
- * 4 00 aquatic
- */
-var GW2T_ITEMS_DATA = {
-	Weapon: {
-		Axe: 1,
-		Dagger: 1,
-		Mace: 1,
-		Pistol: 1,
-		Scepter: 1,
-		Sword: 1,
-		Focus: 2,
-		Shield: 2,
-		Torch: 2,
-		Warhorn: 2,
-		Greatsword: 3,
-		Hammer: 3,
-		LongBow: 3,
-		Rifle: 3,
-		ShortBow: 3,
-		Staff: 3,
-		Harpoon: 4,
-		Speargun: 4,
-		Trident: 4
-	}
-};
-
 
 /*
  * Images that are overlaid on the map, such as caves and underground areas.
@@ -1139,11 +1108,25 @@ Sale: {
 	Finish: new Date("2016-03-08T16:00:00Z"),
 	Padding: {
 		name: "Gem",
-		img: "./img/ui/gem.png",
+		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
 		price: 100,
 		discount: null
 	},
 	Items: [
+	{
+		name: "Scarlet's Grasp",
+		img: "https://render.guildwars2.com/file/0BA8EF2BF03F520292545B987E51C7BF5F1451FB/757485.png",
+		price: 320,
+		discount: 400,
+		col: 0
+	},
+	{
+		name: "Scarlet's Spaulders",
+		img: "https://render.guildwars2.com/file/C5E4D7D49C6AD648E00DD0B0F80020F553E509C1/757486.png",
+		price: 320,
+		discount: 400,
+		col: 0
+	},
 	{
 		name: "Zodiac Heavy Armor Skin",
 		img: "https://render.guildwars2.com/file/2793703E07C7E0D15EA2EE95E6C116DA75674F0C/740302.png",
@@ -1201,34 +1184,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Butterfly Wings Backpack",
-		img: "https://render.guildwars2.com/file/DF22D8F8EFF9FC476372020D4F3555A7074F7521/1024006.png",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Snowflake Glider",
-		img: "https://render.guildwars2.com/file/CE007E4C9FD410E85D79D745BC750F2A6719E4DF/1313090.png",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Mini Snow Flurry Dragon",
-		img: "https://render.guildwars2.com/file/0DE72811F5176B90454AE16B5E48CA5BBBE6610C/1322567.png",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Wintersday Earmuffs",
-		img: "https://render.guildwars2.com/file/E1590ED73D082F950AA2ED44021A7F795D0DD647/526118.png",
-		price: 25,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Frost Wasp Logging Tool",
 		img: "https://render.guildwars2.com/file/0227CB6C96D2AC7FC20B6D465478E9BBF3ED09D9/771066.png",
 		price: 1000,
@@ -1236,52 +1191,24 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Mad Scientist's Harvesting Tool",
-		img: "https://render.guildwars2.com/file/BBC7E4B707C3624DEFB22C62FC2C9390741F090D/978010.png",
-		price: 800,
-		discount: 1000,
+		name: "Butterfly Wings Backpack",
+		img: "https://render.guildwars2.com/file/DF22D8F8EFF9FC476372020D4F3555A7074F7521/1024006.png",
+		price: 500,
+		discount: null,
 		col: 1
 	},
 	{
-		name: "Mad Scientist's Logging Tool",
-		img: "https://render.guildwars2.com/file/796209E4012FE25C53D0A04C1DDB0FA5D87079F6/960280.png",
-		price: 800,
-		discount: 1000,
+		name: "Snowflake Glider",
+		img: "https://render.guildwars2.com/file/CE007E4C9FD410E85D79D745BC750F2A6719E4DF/1313090.png",
+		price: 500,
+		discount: null,
 		col: 1
 	},
 	{
-		name: "Mad Scientist's Mining Tool",
-		img: "https://render.guildwars2.com/file/796209E4012FE25C53D0A04C1DDB0FA5D87079F6/960280.png",
-		price: 800,
-		discount: 1000,
-		col: 1
-	},
-	{
-		name: "Basic Cloth Rack",
-		img: "https://render.guildwars2.com/file/6EDD16520B6459AA2731414BA5309C524F730949/904688.png",
-		price: 640,
-		discount: 800,
-		col: 1
-	},
-	{
-		name: "Basic Harvesting Node Pack",
-		img: "https://render.guildwars2.com/file/049F5E2C1B4019D0806D3D06CA17F92153FBD574/866826.png",
-		price: 640,
-		discount: 800,
-		col: 1
-	},
-	{
-		name: "Basic Lumber Node Pack",
-		img: "https://render.guildwars2.com/file/A91BE8A9075CBF2F342C0459F0DEFD68509C66B1/841529.png",
-		price: 640,
-		discount: 800,
-		col: 1
-	},
-	{
-		name: "Basic Ore Node Pack",
-		img: "https://render.guildwars2.com/file/116DD826056B64F35AA13AB3EE111594EB62B50D/699313.png",
-		price: 640,
-		discount: 800,
+		name: "Mini Snow Flurry Dragon",
+		img: "https://render.guildwars2.com/file/0DE72811F5176B90454AE16B5E48CA5BBBE6610C/1322567.png",
+		price: 500,
+		discount: null,
 		col: 1
 	},
 	{
@@ -1332,7 +1259,14 @@ Sale: {
 		price: 150,
 		discount: null,
 		col: 1
-	}
+	},
+	{
+		name: "Wintersday Earmuffs",
+		img: "https://render.guildwars2.com/file/E1590ED73D082F950AA2ED44021A7F795D0DD647/526118.png",
+		price: 25,
+		discount: null,
+		col: 1
+	},
 	]
 },
 
