@@ -257,8 +257,14 @@ img {
 .itmStats {
 	color: #00ff00;
 }
+.itmText {
+	color: white;
+}
 .itmDescription {
 	color: #99eedd;
+}
+.itmBuff {
+	color: #5599ff;
 }
 
 /*

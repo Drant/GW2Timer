@@ -5299,12 +5299,13 @@ E = {
 	},
 	
 	/*
-	 * Gets the translation for an attribute keyword in the API.
+	 * Gets the translation for a keyword in the items.json API.
 	 * @param string pAttr.
 	 * @returns string translation.
 	 */
 	translateItemKeyword: function(pAttr)
 	{
+		// Associate API keywords with the proper translation word or phrase
 		var keywords = {
 			BoonDuration: "Boon Duration",
 			ConditionDamage: "Condition Damage",
@@ -5314,7 +5315,23 @@ E = {
 			AccountBindOnUse: "Account Bound on Use",
 			AccountBound: "Account Bound",
 			SoulBindOnUse: "Soulbound on Use",
-			SoulbindOnAcquire: "Soulbound"
+			SoulbindOnAcquire: "Soulbound",
+			LongBow: "Longbow",
+			ShortBow: "Shortbow",
+			LightArmor: "Light",
+			MediumArmor: "Medium",
+			HeavyArmor: "Heavy",
+			HelmAquatic: "Head Armor",
+			Helm: "Head Armor",
+			Shoulders: "Shoulder Armor",
+			Coat: "Chest Armor",
+			Gloves: "Hand Armor",
+			Leggings: "Leg Armor",
+			Boots: "Foot Armor",
+			Back: "Back Item",
+			Defense_Infusion: "Unused Defensive Infusion Slot",
+			Offense_Infusion: "Unused Offensive Infusion Slot",
+			Utility_Infusion: "Unused Utility Infusion Slot"
 		};
 		if (keywords[pAttr])
 		{
@@ -5337,7 +5354,7 @@ E = {
 		}, pOptions);
 		var item = pItem;
 		
-		
+		var isequipment = E.isEquipment(item);
 		var namestr = "";
 		var rarity = (item.rarity !== undefined) ? item.rarity : E.Rarity.Basic;
 		namestr = "<aside class='itmName " + E.getRarityClass(rarity)
@@ -5352,30 +5369,37 @@ E = {
 			
 			if (det.defense)
 			{
-				statsstr += "<span style='color:white'>Defense:</span> " + det.defense + "<br />";
+				statsstr += "<span class='itmText'>" + E.translateItemKeyword("Defense") + ":</span> " + det.defense + "<br />";
 			}
 			
 			// Ascended equipment includes additional stats to compensate for lack of jewelry upgrades
 			var buffs = [];
 			var buffcounter = 0;
 			var buffadd = 0;
-			if (det.infix_upgrade.buff)
+			if (isequipment)
 			{
-				var buffnumbers = (det.infix_upgrade.buff.description).split("\n");
-				buffnumbers.forEach(function(iBuff)
+				if (det.infix_upgrade.buff)
 				{
-					buffs.push(parseInt(iBuff.split(" ")[0]));
+					var buffnumbers = (det.infix_upgrade.buff.description).split("\n");
+					buffnumbers.forEach(function(iBuff)
+					{
+						buffs.push(parseInt(iBuff.split(" ")[0]));
+					});
+				}
+				stats.forEach(function(iStats)
+				{
+					if (buffcounter < buffs.length)
+					{
+						buffadd = buffs[buffcounter];
+						buffcounter++;
+					}
+					statsstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.translateItemKeyword(iStats.attribute) + "<br />";
 				});
 			}
-			stats.forEach(function(iStats)
+			else if (det.infix_upgrade.buff && det.infix_upgrade.buff.description)
 			{
-				if (buffcounter < buffs.length)
-				{
-					buffadd = buffs[buffcounter];
-					buffcounter++;
-				}
-				statsstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.translateItemKeyword(iStats.attribute) + "<br />";
-			});
+				statsstr += "<span class='itmBuff'>" + det.infix_upgrade.buff.description + "</span>";
+			}
 			
 			statsstr += "</aside><br />";
 		}
@@ -5383,13 +5407,13 @@ E = {
 		var transmstr = "";
 		if (settings.skin)
 		{
-			transmstr += "<aside='itmTransmute'>Transmuted<br />" + "TRANSMUTED ITEM NAME" + "</aside>";
+			transmstr += "<aside='itmTransmute'>" + E.translateItemKeyword("Transmuted") + "<br />" + "TRANSMUTED ITEM NAME" + "</aside>";
 		}
 		
 		var raritystr = "";
-		if (E.isEquipment(item))
+		if (isequipment)
 		{
-			raritystr = item.rarity + "<br />";
+			raritystr = E.translateItemKeyword(item.rarity) + "<br />";
 		}
 		
 		var detailstr = "";
@@ -6886,7 +6910,20 @@ D = {
 		s_dollar: {de: "dollar", es: "dólar", fr: "dollar",
 			cs: "dolar", it: "dollaro", pl: "polar", pt: "dólar", ru: "доллар", zh: "元"},
 		
-		// Items
+		// Item Rarity
+		s_Junk: {de: "Schrott", es: "Basura", fr: "Inutile"},
+		s_Basic: {de: "Einfach", es: "Básico", fr: "Simple"},
+		s_Fine: {de: "Edel", es: "Selecto", fr: "Raffiné"},
+		s_Masterwork: {de: "Meisterwerk", es: "Obra de arte", fr: "Chef-d'œuvre"},
+		s_Rare: {de: "Selten", es: "Excepcional", fr: "Rare"},
+		s_Exotic: {de: "Exotisch", es: "Exótico", fr: "Exotique"},
+		s_Ascended: {de: "Aufgestiegen", es: "Ascendido", fr: "Élevé"},
+		s_Legendary: {de: "Legendär", es: "Legendario", fr: "Légendaire"},
+		// Item Weight
+		s_Light: {de: "Leicht", es: "Ligero", fr: "Légèr"},
+		s_Medium: {de: "Mittel", es: "Medio", fr: "Intermédiaire"},
+		s_Heavy: {de: "Schwer", es: "Pesado", fr: "Lourd"},
+		// Item Attributes
 		s_Power: {de: "Kraft", es: "Potencia", fr: "Puissance"},
 		s_Precision: {de: "Präzision", es: "Precisión", fr: "Précision"},
 		s_Critical_Chance: {de: "Kritische Trefferchance", es: "Probabilidad de daño crítico", fr: "Chance de coup critique"},
@@ -6904,14 +6941,50 @@ D = {
 		s_Healing_Power: {de: "Heilkraft", es: "Poder de curación", fr: "Guérison"},
 		s_Agony_Resistance: {de: "Qual-Widerstand", es: "Resistencia a la agonía", fr: "Résistance à l'agonie"},
 		s_Magic_Find: {de: "Magisches Gespür", es: "Hallazgo mágico", fr: "Découverte de magie"},
-		s_Defense: {de: "", es: "", fr: ""},
-		s_Weapon_Strength: {de: "", es: "", fr: ""},
-		s_Required_Level: {de: "", es: "", fr: ""},
+		// Item Equipment
+		s_Axe: {de: "Axt", es: "Hacha", fr: "Haches"},
+		s_Dagger: {de: "Dolch", es: "Daga", fr: "Dague"},
+		s_Mace: {de: "Streitkolben", es: "Maza", fr: "Masse"},
+		s_Pistol: {de: "Pistole", es: "Pistola", fr: "Pistolet"},
+		s_Scepter: {de: "Zepter", es: "Cetro", fr: "Sceptre"},
+		s_Sword: {de: "Schwert", es: "Espada", fr: "Epée"},
+		s_Focus: {de: "Fokus", es: "Foco", fr: "Focus"},
+		s_Shield: {de: "Schild", es: "Escudo", fr: "Bouclier"},
+		s_Torch: {de: "Fackel", es: "Antorcha", fr: "Torche"},
+		s_Warhorn: {de: "Kriegshorn", es: "Cuerno de guerra", fr: "Cor de guerre"},
+		s_Greatsword: {de: "Großschwert", es: "Mandoble", fr: "Espadon"},
+		s_Hammer: {de: "Hammer", es: "Martillo", fr: "Marteau"},
+		s_Longbow: {de: "Langbogen", es: "Arco largo", fr: "Arc long"},
+		s_Rifle: {de: "Gewehr", es: "Rifle", fr: "Fusil"},
+		s_Shortbow: {de: "Kurzbogen", es: "Arco corto", fr: "Arc court"},
+		s_Staff: {de: "Stab", es: "Báculo", fr: "Bâton"},
+		s_Harpoon: {de: "Speer", es: "Lanza", fr: "Lance"},
+		s_Speargun: {de: "Harpunenschleuder", es: "Cañón de arpón", fr: "Fusil-harpon"},
+		s_Trident: {de: "Dreizack", es: "Tridente", fr: "Trident"},
+		s_Head_Armor: {de: "Kopf-Rüstung", es: "Armadura de cabeza", fr: "Armure : Couvre-chef"},
+		s_Shoulder_Armor: {de: "Schulter-Rüstung", es: "Armadura de hombros", fr: "Armure : Épaulières"},
+		s_Chest_Armor: {de: "Brust-Rüstung", es: "Armadura pectoral", fr: "Armure : Cuirasse"},
+		s_Hand_Armor: {de: "Hand-Rüstung", es: "Armadura de mano", fr: "Armure : Gants"},
+		s_Leg_Armor: {de: "Bein-Rüstung", es: "Armadura de pierna", fr: "Armure : Jambières"},
+		s_Foot_Armor: {de: "Fuß-Rüstung", es: "Armadura de pie", fr: "Armure : Bottes"},
+		s_Back_Item: {de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos"},
+		s_Accessory: {de: "Accessoire", es: "Accesorio", fr: "Accessoire"},
+		s_Amulet: {de: "Amulett", es: "Amuleto", fr: "Amulette"},
+		s_Ring: {de: "Ring", es: "Anillo", fr: "Anneau"},
+		// Item Tooltip
+		s_Defense: {de: "Verteidigung", es: "Defensa", fr: "Défense"},
+		s_Weapon_Strength: {de: "Waffenstärke", es: "Fuerza del arma", fr: "Puissance d'arme"},
+		s_Required_Level: {de: "Erforderliche Stufe", es: "Nivel necesario", fr: "Niveau requis"},
 		s_Account_Bound_on_Use: {de: "Accountgebunden bei Benutzung", es: "Vinculado a cuenta en uso", fr: "Lié au compte dès l'utilisation"},
 		s_Account_Bound: {de: "Accountgebunden", es: "Vinculado a cuenta", fr: "Lié au compte"},
 		s_Soulbound_on_Use: {de: "Seelengebunden bei Benutzung", es: "Ligado en uso", fr: "Lié à l'âme dès l'utilisation"},
 		s_Soulbound: {de: "Seelengebunden", es: "Ligado", fr: "Lié à l'âme"},
-		s_Unique: {de: "Einzigartig", es: "Equipamiento único", fr: "Unique"}
+		s_Unique: {de: "Einzigartig", es: "Equipamiento único", fr: "Unique"},
+		s_Transmuted: {de: "Transmutiert", es: "Transmutado", fr: "Transmuté"},
+		s_Unused_Defensive_Infusion_Slot: {de: "Freier Infusionsplatz (Defensiv)", es: "Casilla de infusión defensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Défensive)"},
+		s_Unused_Offensive_Infusion_Slot: {de: "Freier Infusionsplatz (Offensiv)", es: "Casilla de infusión ofensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Offensive)"},
+		s_Unused_Utility_Infusion_Slot: {de: "Freier Infusionsplatz (Hilfe)", es: "Casilla de infusión apoyo sin utilizar", fr: "Emplacement d'infusion inutilisé (Utilitaire)"},
+		s_Unused_Upgrade_Slot: {de: "Freier Aufwertungsplatz", es: "Casilla para mejoras sin utilizar", fr: "Emplacement d'amélioration inutilisé"}
 	},
 	
 	/*
