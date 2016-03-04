@@ -1114,15 +1114,29 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Scarlet's Grasp",
-		img: "https://render.guildwars2.com/file/0BA8EF2BF03F520292545B987E51C7BF5F1451FB/757485.png",
-		price: 320,
-		discount: 400,
+		name: "Glint's Gaze Mask",
+		img: "https://render.guildwars2.com/file/96DC21E8276B321EE14617E79227E5075ADE5C92/904689.png",
+		price: 400,
+		discount: 500,
 		col: 0
 	},
 	{
-		name: "Scarlet's Spaulders",
-		img: "https://render.guildwars2.com/file/C5E4D7D49C6AD648E00DD0B0F80020F553E509C1/757486.png",
+		name: "Glowing Crimson Mask",
+		img: "https://render.guildwars2.com/file/D506EF430E4BAA75E96095DED5665D6EFDBF79BC/771056.png",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Glowing Green Mask",
+		img: "https://render.guildwars2.com/file/55C12345B361D251D5FE040A60959C5432C46BA0/882253.png",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Magnus's Eye Patch",
+		img: "https://render.guildwars2.com/file/F5C67F2A9C2A69C204B9620FA9093E6FEDDA4FF6/740292.png",
 		price: 320,
 		discount: 400,
 		col: 0

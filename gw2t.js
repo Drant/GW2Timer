@@ -5281,21 +5281,29 @@ E = {
 	},
 	
 	/*
-	 * Tells whether an item is an equipment (character gear).
+	 * Gets the translated type name of an item.
 	 * @param object pItem details from API.
-	 * @returns boolean.
+	 * @returns string translated type.
 	 */
-	isEquipment: function(pItem)
+	getItemType: function(pItem)
 	{
+		var det = pItem.details;
 		var type = pItem.type;
-		if (type === "Weapon"
-			|| type === "Armor"
-			|| type === "Trinket"
-			|| type === "Back")
+		var str = "";
+		// These top level types have overriding priority
+		if (type === "Back"
+			|| type === "Consumable"
+			|| type === "CraftingMaterial"
+			|| type === "Trophy"
+			|| type === "MiniPet")
 		{
-			return true;
+			str = "<br />" + E.translateItemKeyword(type);
 		}
-		return false;
+		else if (det.type) // Else use the subtype in the details property object
+		{
+			str = E.translateItemKeyword(det.type);
+		}
+		return str + "<br />";
 	},
 	
 	/*
@@ -5328,10 +5336,13 @@ E = {
 			Gloves: "Hand Armor",
 			Leggings: "Leg Armor",
 			Boots: "Foot Armor",
-			Back: "Back Item",
 			Defense_Infusion: "Unused Defensive Infusion Slot",
 			Offense_Infusion: "Unused Offensive Infusion Slot",
-			Utility_Infusion: "Unused Utility Infusion Slot"
+			Utility_Infusion: "Unused Utility Infusion Slot",
+			Agony_Infusion: "Unused Agony Infusion Slot",
+			Back: "Back Item",
+			CraftingMaterial: "Crafting Material",
+			MiniPet: "Miniature"
 		};
 		if (keywords[pAttr])
 		{
@@ -5353,69 +5364,134 @@ E = {
 			skin: null
 		}, pOptions);
 		var item = pItem;
+		var type = item.type;
+		var subtype = "";
+		var det = item.details;
+		var isequipment = (type === "Weapon" || type === "Armor" || type === "Trinket" || type === "Back");
+		var istrinket = (type === "Trinket" || type === "Back");
+		var isascended = (item.rarity === "Ascended" || item.rarity === "Legendary");
+		var isdouble = false;
+		if (det && det.type)
+		{
+			subtype = det.type;
+			if (type === "Weapon") // Only weapons can have two upgrade slots
+			{
+				isdouble = (subtype === "Greatsword" || subtype === "Hammer" || subtype === "LongBow"
+					|| subtype === "ShortBow" || subtype === "Rifle" || subtype === "Staff"
+					|| subtype === "Harpoon" || subtype === "Speargun" || subtype === "Trident");
+			}
+		}
 		
-		var isequipment = E.isEquipment(item);
+		// NAME
 		var namestr = "";
 		var rarity = (item.rarity !== undefined) ? item.rarity : E.Rarity.Basic;
 		namestr = "<aside class='itmName " + E.getRarityClass(rarity)
 			+ "'><img class='itmIcon' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
 		
+		// WEAPON STRENGTH
+		var damagestr = "";
+		if (det && det.min_power !== undefined && det.max_power !== undefined)
+		{
+			damagestr += "<span class='itmText'>" + E.translateItemKeyword("Weapon Strength") + ":</span> <span class='itmStats'>"
+				+ (det.min_power).toLocaleString() + " - " + (det.max_power).toLocaleString() + "</span><br />";
+		}
+		
+		// DEFENSE
+		var defensestr = "";
+		if (det && det.defense > 0)
+		{
+			defensestr += "<span class='itmText'>" + E.translateItemKeyword("Defense") + ":</span> " + (det.defense).toLocaleString() + "<br />";
+		}
+		
+		// ATTRIBUTES
 		var statsstr = "";
-		var det = item.details;
+		var statsbrktop = "";
+		var buffs = [];
+		var buffcounter = 0;
+		var buffadd = 0;
+		var buffnumbers = [];
 		if (det && det.infix_upgrade)
 		{
 			var stats = det.infix_upgrade.attributes;
 			statsstr += "<aside class='itmStats'>";
 			
-			if (det.defense)
+			if (det.infix_upgrade !== undefined)
 			{
-				statsstr += "<span class='itmText'>" + E.translateItemKeyword("Defense") + ":</span> " + det.defense + "<br />";
-			}
-			
-			// Ascended equipment includes additional stats to compensate for lack of jewelry upgrades
-			var buffs = [];
-			var buffcounter = 0;
-			var buffadd = 0;
-			if (isequipment)
-			{
-				if (det.infix_upgrade.buff)
+				// Ascended equipment includes additional stats to compensate for lack of jewelry upgrades
+				if (isequipment)
 				{
-					var buffnumbers = (det.infix_upgrade.buff.description).split("\n");
-					buffnumbers.forEach(function(iBuff)
+					if (det.infix_upgrade.buff)
 					{
-						buffs.push(parseInt(iBuff.split(" ")[0]));
+						buffnumbers = (det.infix_upgrade.buff.description).split("\n");
+						buffnumbers.forEach(function(iBuff)
+						{
+							buffs.push(parseInt(iBuff.split(" ")[0]));
+						});
+					}
+					stats.forEach(function(iStats)
+					{
+						if (buffcounter < buffs.length)
+						{
+							buffadd = buffs[buffcounter];
+							buffcounter++;
+						}
+						statsstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.translateItemKeyword(iStats.attribute) + "<br />";
 					});
 				}
-				stats.forEach(function(iStats)
+				else if (det.infix_upgrade.buff)
 				{
-					if (buffcounter < buffs.length)
-					{
-						buffadd = buffs[buffcounter];
-						buffcounter++;
-					}
-					statsstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.translateItemKeyword(iStats.attribute) + "<br />";
-				});
-			}
-			else if (det.infix_upgrade.buff && det.infix_upgrade.buff.description)
-			{
-				statsstr += "<span class='itmBuff'>" + det.infix_upgrade.buff.description + "</span>";
+					statsstr += "<span class='itmBuff'>" + (det.infix_upgrade.buff.description).replace(/\n/g, "<br />") + "</span>";
+					statsbrktop = "<br />";
+				}
 			}
 			
-			statsstr += "</aside><br />";
+			statsstr = statsbrktop + statsstr;
+			statsstr += "</aside>";
 		}
 		
+		// UPGRADES
+		var upgrstr = "";
+		var infusion = "";
+		if (isequipment)
+		{
+			if (isascended || (isascended && istrinket) === false)
+			{
+				upgrstr += "<br />";
+			}
+			
+			if (isascended)
+			{
+				if (det && det.infusion_slots)
+				{
+					for (var i in det.infusion_slots)
+					{
+						infusion = det.infusion_slots[i].flags[0];
+						upgrstr += "<img src='img/account/item/infusion_" + infusion.toLowerCase() + ".png' /> " + E.translateItemKeyword(infusion + "_Infusion") + "<br /><br />";
+					}
+				}
+			}
+			if ((isascended && istrinket) === false)
+			{
+				var regup = "<img src='img/account/item/upgrade.png' /> " + E.translateItemKeyword("Unused Upgrade Slot") + "<br /><br />";
+				upgrstr += (isdouble) ? (regup + regup) : regup;
+			}
+		}
+		
+		// TRANSMUTATION
 		var transmstr = "";
 		if (settings.skin)
 		{
 			transmstr += "<aside='itmTransmute'>" + E.translateItemKeyword("Transmuted") + "<br />" + "TRANSMUTED ITEM NAME" + "</aside>";
 		}
 		
+		// RARITY
 		var raritystr = "";
 		if (isequipment)
 		{
 			raritystr = E.translateItemKeyword(item.rarity) + "<br />";
 		}
 		
+		// DETAILS
 		var detailstr = "";
 		if (det)
 		{
@@ -5423,24 +5499,35 @@ E = {
 			{
 				detailstr += det.weight_class + "<br />";
 			}
-			if (det.type)
-			{
-				detailstr += det.type + "<br />";
-			}
 		}
 		
+		// TYPE
+		var typestr = E.getItemType(item);
+		
+		// LEVEL
 		var levelstr = "";
 		if (item.level > 0)
 		{
-			levelstr += "Required Level: " + item.level + "<br />";
+			levelstr += E.translateItemKeyword("Required Level") + ": " + item.level + "<br />";
 		}
 		
-		var descstr = "";
+		// DESCRIPTION
+		var desctopstr = "";
+		var descbottomstr = "";
+		var descbrk = (statsbrktop.length > 0) ? "<br />" : "";
 		if (item.description)
 		{
-			descstr = "<aside class='itmDescription'>" + item.description + "</aside>";
+			if (isequipment)
+			{
+				descbottomstr = "<aside class='itmDescription'>" + item.description + "</aside>";
+			}
+			else
+			{
+				desctopstr = "<aside class='itmText'>" + item.description + "</aside>" + descbrk;
+			}
 		}
 		
+		// FLAGS
 		var flagsstr = "";
 		if (item.flags)
 		{
@@ -5457,6 +5544,7 @@ E = {
 			});
 		}
 		
+		// VENDOR PRICE
 		var vendorstr = "";
 		if (item.vendor_value !== undefined)
 		{
@@ -5465,12 +5553,17 @@ E = {
 		
 		var html = "<div class='itmContainer'>"
 			+ namestr
+			+ damagestr
+			+ defensestr
 			+ statsstr
+			+ desctopstr
+			+ upgrstr
 			+ transmstr
 			+ raritystr
 			+ detailstr
+			+ typestr
 			+ levelstr
-			+ descstr
+			+ descbottomstr
 			+ flagsstr
 			+ vendorstr
 		+ "</div>";
@@ -5478,7 +5571,7 @@ E = {
 		
 		
 		
-		
+		I.log(html);
 		
 		return html;
 	},
@@ -5572,7 +5665,7 @@ E = {
 		{
 			E.setRarityClass(pEntry.find(".trdName"), pData.rarity);
 			pEntry.attr("data-rarity", pData.rarity);
-			pEntry.find(".trdLink").val(U.getChatlinkFromItemID(id));
+			pEntry.find(".trdLink").val(pData.chat_link || "");
 			var icon = pEntry.find(".trdIcon");
 			icon.attr("src", pData.icon);
 			E.bindItemTooltip(icon, pData);
@@ -5691,7 +5784,8 @@ E = {
 			}
 		}).fail(function()
 		{
-			I.write("&quot;" + U.escapeHTML(pEntry.find(".trdName").val()) + "&quot; is not a tradeable item.");
+			buyelm.val(I.Symbol.Ellipsis);
+			sellelm.val(I.Symbol.Ellipsis);
 		});
 	},
 	updateAllTradingDetails: function()
@@ -6910,6 +7004,12 @@ D = {
 		s_dollar: {de: "dollar", es: "dólar", fr: "dollar",
 			cs: "dolar", it: "dollaro", pl: "polar", pt: "dólar", ru: "доллар", zh: "元"},
 		
+		// Item Type
+		s_Back_Item: {de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos"},
+		s_Consumable: {de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable"},
+		s_Crafting_Material: {de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d'artisanat"},
+		s_Miniature: {de: "Miniatur", es: "Miniatura", fr: "Miniature"},
+		s_Trophy: {de: "Trophäe", es: "Trofeo", fr: "Trophée"},
 		// Item Rarity
 		s_Junk: {de: "Schrott", es: "Basura", fr: "Inutile"},
 		s_Basic: {de: "Einfach", es: "Básico", fr: "Simple"},
@@ -6967,7 +7067,6 @@ D = {
 		s_Hand_Armor: {de: "Hand-Rüstung", es: "Armadura de mano", fr: "Armure : Gants"},
 		s_Leg_Armor: {de: "Bein-Rüstung", es: "Armadura de pierna", fr: "Armure : Jambières"},
 		s_Foot_Armor: {de: "Fuß-Rüstung", es: "Armadura de pie", fr: "Armure : Bottes"},
-		s_Back_Item: {de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos"},
 		s_Accessory: {de: "Accessoire", es: "Accesorio", fr: "Accessoire"},
 		s_Amulet: {de: "Amulett", es: "Amuleto", fr: "Amulette"},
 		s_Ring: {de: "Ring", es: "Anillo", fr: "Anneau"},
@@ -6984,6 +7083,7 @@ D = {
 		s_Unused_Defensive_Infusion_Slot: {de: "Freier Infusionsplatz (Defensiv)", es: "Casilla de infusión defensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Défensive)"},
 		s_Unused_Offensive_Infusion_Slot: {de: "Freier Infusionsplatz (Offensiv)", es: "Casilla de infusión ofensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Offensive)"},
 		s_Unused_Utility_Infusion_Slot: {de: "Freier Infusionsplatz (Hilfe)", es: "Casilla de infusión apoyo sin utilizar", fr: "Emplacement d'infusion inutilisé (Utilitaire)"},
+		s_Unused_Agony_Infusion_Slot: {de: "Freier Infusionsplatz (Qual)", es: "Casilla de infusión agonía sin utilizar", fr: "Emplacement d'infusion inutilisé (Agonie)"},
 		s_Unused_Upgrade_Slot: {de: "Freier Aufwertungsplatz", es: "Casilla para mejoras sin utilizar", fr: "Emplacement d'amélioration inutilisé"}
 	},
 	

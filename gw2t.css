@@ -239,11 +239,12 @@ img {
  * Style for tooltip for item details.
  */
 .itmContainer {
-	width: 380px;
+	max-width: 380px;
 	font-family: Menomonia;
 	font-size: 17px;
 	font-weight: 500;
 	line-height: 17px;
+	color: white;
 }
 .itmIcon {
 	width: 40px; height: 40px;
