@@ -240,11 +240,15 @@ img {
  */
 .itmContainer {
 	max-width: 380px;
-	font-family: Menomonia;
-	font-size: 17px;
-	font-weight: 500;
-	line-height: 17px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 18px;
 	color: white;
+}
+.itmName {
+	font-family: Menomonia;
+	font-size: 18px;
 }
 .itmIcon {
 	width: 40px; height: 40px;
@@ -255,10 +259,13 @@ img {
 	border-radius: 1px;
 	margin-right: 6px;
 }
+.itmSlotIcon {
+	width: 20px; height: 20px;
+}
 .itmAttr {
 	color: #00ff00;
 }
-.itmBuff {
+.itmBuff, .itmRune, .itmUpgrade {
 	color: #5599ff;
 }
 .itmUnused {

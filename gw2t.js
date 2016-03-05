@@ -1439,7 +1439,6 @@ U = {
 		ItemListing: "https://api.guildwars2.com/v2/commerce/listings/",
 		ItemPrices: "https://api.guildwars2.com/v2/commerce/prices/",
 		ItemDatabase: "https://api.guildwars2.com/v2/items",
-		ItemDetails: "https://api.guildwars2.com/v2/items/",
 		ItemRender: "https://render.guildwars2.com/file/",
 		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
 		GemPrice: "https://api.guildwars2.com/v2/commerce/exchange/coins?quantity=",
@@ -1500,13 +1499,26 @@ U = {
 	},
 	
 	/*
-	 * Gets a language specific URL to an item details API.
-	 * @param int pItemID
-	 * @returns string URL.
+	 * Gets the localized URL of a standard v2 API that requires an ID.
+	 * @param string pAPI endpoint name.
+	 * @param int pID for request.
+	 * @returns string URL to request data.
 	 */
-	getItemAPI: function(pItemID)
+	getAPI: function(pAPI, pID)
 	{
-		return U.URL_API.ItemDetails + pItemID + U.URL_API.LangKey;
+		return U.URL_API.Prefix + pAPI + "/" + pID + U.URL_API.LangKey;
+	},
+	getAPIItem: function(pID)
+	{
+		return U.getAPI("items", pID);
+	},
+	getAPISkin: function(pID)
+	{
+		return U.getAPI("skins", pID);
+	},
+	getAPIRecipe: function(pID)
+	{
+		return U.getAPI("recipes", pID);
 	},
 
 	/*
@@ -1587,11 +1599,11 @@ U = {
 			}},
 			gps: {usage: "Prints GPS location information.", f: function()
 			{
-				I.write("Position: " + GPSPositionArray + "<br />Direction: " + GPSDirectionArray + "<br />Camera: " + GPSCameraArray, 0);
+				I.write("Position: " + U.escapeHTML(GPSPositionArray) + "<br />Direction: " + U.escapeHTML(GPSDirectionArray) + "<br />Camera: " + U.escapeHTML(GPSCameraArray), 0);
 			}},
 			identity: {usage: "Prints GPS general information.", f: function()
 			{
-				I.write(U.formatJSON(GPSIdentityJSON), 0);
+				U.printJSON(GPSIdentityJSON);
 			}},
 			lock: {usage: "Map cannot be moved.", f: function()
 			{
@@ -1701,7 +1713,7 @@ U = {
 			for (var i = 0; i < pArray.length; i++)
 			{
 				printIcon(pArray[i]);
-				I.write(pArray[i], 0);
+				I.write(U.escapeHTML(pArray[i]), 0);
 			}
 		};
 		var printIcon = function(pData)
@@ -1718,7 +1730,7 @@ U = {
 			var length = (pData.length === undefined) ? 0 : pData.length;
 			if (Array.isArray(pData))
 			{
-				I.write("Retrieved array:<br />" + U.formatJSON(pData), 0);
+				I.write("Retrieved array:<br />" + U.escapeJSON(pData), 0);
 				var successlength = length;
 				for (var i = 0; i < length; i++)
 				{
@@ -1755,7 +1767,7 @@ U = {
 			else
 			{
 				printIcon(pData);
-				I.write(U.formatJSON(pData), 0);
+				U.printJSON(pData);
 			}
 		}).fail(function()
 		{
@@ -1803,9 +1815,9 @@ U = {
 			{
 				index = E.ItemsArray.length + pSmartIndex - 1;
 				requesteditem = E.ItemsArray[index];
-				$.getJSON(U.getItemAPI(requesteditem), function(pData)
+				$.getJSON(U.getAPIItem(requesteditem), function(pData)
 				{
-					I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.formatJSON(pData), 0);
+					I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData), 0);
 				}).fail(function()
 				{
 					I.write("Unable to retrieve item: " + index);
@@ -1818,9 +1830,9 @@ U = {
 				{
 					index = E.ItemsArray.length - pSmartIndex - 1 - i;
 					requesteditem = E.ItemsArray[index];
-					$.getJSON(U.getItemAPI(requesteditem), function(pData)
+					$.getJSON(U.getAPIItem(requesteditem), function(pData)
 					{
-						I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.formatJSON(pData), 0);
+						I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData), 0);
 					}).fail(function()
 					{
 						I.write("Unable to retrieve item: " + index);
@@ -2097,6 +2109,14 @@ U = {
 	{
 		return JSON.stringify(pObject, null, 2);
 	},
+	escapeJSON: function(pObject)
+	{
+		return U.escapeHTML(U.formatJSON(pObject));
+	},
+	printJSON: function(pObject)
+	{
+		I.write(U.escapeJSON(pObject), 0);
+	},
 	
 	/*
 	 * Strips all non-alphabet and non-numbers from a string using regex.
@@ -2267,12 +2287,20 @@ U = {
 	 */
 	escapeHTML: function(pString)
 	{
-		return pString
-			.replace(/&/g, "&amp;")
-			.replace(/</g, "&lt;")
-			.replace(/>/g, "&gt;")
-			.replace(/"/g, "&quot;")
-			.replace(/'/g, "&#39;");
+		if (typeof pString === "string")
+		{
+			return pString
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;")
+				.replace(/'/g, "&#39;");
+		}
+		if (pString === undefined)
+		{
+			return "undefined";
+		}
+		return "null";
 	},
 	
 	/*
@@ -3143,7 +3171,7 @@ A = {
 			cache: false,
 			success: function(pData, pStatus, pRequest)
 			{
-				I.write(U.formatJSON(pData), 0);
+				U.printJSON(pData);
 			},
 			error: function(pRequest, pStatus)
 			{
@@ -3427,7 +3455,7 @@ A = {
 		}).on("contextmenu", function()
 		{
 			var charindex = U.getSubintegerFromHTMLID($(this));
-			I.write(U.formatJSON(A.Data.Characters[charindex]));
+			U.printJSON(A.Data.Characters[charindex]);
 		});
 		// Additional information as tooltip
 		I.qTip.init($("#chrSelection_" + pCharacter.charindex).find(".chrCommitment").attr("title", crafttooltip));
@@ -5316,7 +5344,9 @@ E = {
 	{
 		var str = "";
 		var det = pItem.details;
+		var runeith = 0;
 		var runemax = 6;
+		var runecolor = "";
 		switch(pItem.rarity)
 		{
 			case "Rare": runemax = 4; break;
@@ -5324,18 +5354,43 @@ E = {
 		}
 		if (det.bonuses)
 		{
-			str += "<aside class='itmRune'>";
+			str += "<br /><aside class='itmRune'>";
 			if (pPieces !== undefined)
 			{
 				str += pItem.name + " (" + pPieces + "/" + runemax + ")<br />";
 			}
 			for (var i in det.bonuses)
 			{
-				str += det.bonuses[i] + "<br />";
+				runecolor = (runeith < runemax) ? "itmUnused" : "";
+				runeith++;
+				str += "<span class='" + runecolor + "'>(" + runeith + "): " + det.bonuses[i] + "</span><br />";
 			}
 			str += "</aside>";
 		}
 		return str;
+	},
+	
+	/*
+	 * Gets the description of the buff property of an item.
+	 * @param object pItem details from API.
+	 * @returns string description.
+	 */
+	getBuffDescription: function(pItem)
+	{
+		try
+		{
+			var desc = pItem.details.infix_upgrade.buff.description;
+			if (desc.indexOf("\n") !== -1)
+			{
+				return desc.replace(/\n/g, "<br />");
+			}
+			else
+			{
+				return desc;
+			}
+		}
+		catch (e) {}
+		return "";
 	},
 	
 	/*
@@ -5350,7 +5405,7 @@ E = {
 			BoonDuration: "Boon Duration",
 			ConditionDamage: "Condition Damage",
 			ConditionDuration: "Expertise",
-			CritDamage: "Critical Damage",
+			CritDamage: "Ferocity",
 			Healing: "Healing Power",
 			AccountBindOnUse: "Account Bound on Use",
 			AccountBound: "Account Bound",
@@ -5384,7 +5439,7 @@ E = {
 	},
 	
 	/*
-	 * Gets a tooltip HTML of an item.
+	 * Binds an element to have a tooltip presenting item details.
 	 * @param jqobject pElement to bind tooltip.
 	 * @param object pItem details retrieved from API.
 	 * @objparam intarray item IDs upgrades like sigils, runes, or gems.
@@ -5392,23 +5447,11 @@ E = {
 	 * @objparam int skin ID for transmuted items.
 	 * return string HTML.
 	 */
-	getItemTooltip: function(pElement, pItem, pOptions)
+	bindItemTooltip: function(pElement, pItem, pOptions)
 	{
-		/*
-		 * Final actions and binding to be done after the tooltip HTML has been
-		 * formatted and additional AJAX HTML included.
-		 */
-		var finalizeTooltip = function(pHTML)
-		{
-			var elm = $(pElement);
-			//elm = $("#itemTimeline");
-			elm.attr("title", pHTML);
-			I.qTip.init(elm);
-		};
-		
 		var settings = $.extend({
-			upgrades: null,
 			infusions: null,
+			upgrades: null,
 			skin: null
 		}, pOptions);
 		var item = pItem;
@@ -5417,8 +5460,11 @@ E = {
 		var det = item.details;
 		var isequipment = (type === "Weapon" || type === "Armor" || type === "Trinket" || type === "Back");
 		var istrinket = (type === "Trinket" || type === "Back");
-		var isascended = (item.rarity === "Ascended" || item.rarity === "Legendary");
+		var isascended = (item.rarity === E.Rarity.Ascended || item.rarity === E.Rarity.Legendary);
 		var isdouble = false;
+		var isvendorable = true;
+		var propstofetch = 0;
+		var numfetched = 0;
 		if (det && det.type)
 		{
 			subtype = det.type;
@@ -5465,7 +5511,7 @@ E = {
 			
 			if (det.infix_upgrade !== undefined)
 			{
-				// Ascended equipment includes additional stats to compensate for lack of jewelry upgrades
+				// Armors, weapons, trinkets
 				if (isequipment)
 				{
 					if (det.infix_upgrade.buff)
@@ -5486,50 +5532,21 @@ E = {
 						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.translateItemKeyword(iStats.attribute) + "<br />";
 					});
 				}
+				// Foods and Sigils
 				else if (det.infix_upgrade.buff)
 				{
-					attrstr += "<span class='itmBuff'>" + (det.infix_upgrade.buff.description).replace(/\n/g, "<br />") + "</span>";
+					attrstr += "<span class='itmBuff'>" + E.getBuffDescription(item) + "</span>";
 					statsbrktop = "<br />";
+				}
+				// Runes
+				else if (det.bonuses && det.type === "Rune")
+				{
+					attrstr += E.getItemRune(item);
 				}
 			}
 			
 			attrstr = statsbrktop + attrstr;
 			attrstr += "</aside>";
-		}
-		
-		// UPGRADES
-		var upgrstr = "";
-		var infusion = "";
-		if (isequipment)
-		{
-			if (isascended || (isascended && istrinket) === false)
-			{
-				upgrstr += "<br />";
-			}
-			
-			if (isascended)
-			{
-				if (det && det.infusion_slots)
-				{
-					for (var i in det.infusion_slots)
-					{
-						infusion = det.infusion_slots[i].flags[0];
-						upgrstr += "<img src='img/account/item/infusion_" + infusion.toLowerCase() + ".png' /> " + E.translateItemKeyword(infusion + "_Infusion") + "<br /><br />";
-					}
-				}
-			}
-			if ((isascended && istrinket) === false)
-			{
-				var regup = "<img src='img/account/item/upgrade.png' /> " + E.translateItemKeyword("Unused Upgrade Slot") + "<br /><br />";
-				upgrstr += (isdouble) ? (regup + regup) : regup;
-			}
-		}
-		
-		// TRANSMUTATION
-		var transmstr = "";
-		if (settings.skin)
-		{
-			transmstr += "<aside='itmTransmute'>" + E.translateItemKeyword("Transmuted") + "<br />" + "TRANSMUTED ITEM NAME" + "</aside>";
 		}
 		
 		// RARITY
@@ -5563,7 +5580,7 @@ E = {
 		/*
 		 * Item details' description may be pretagged with XML that colorizes
 		 * a portion of text. Example: <c=@flavor>Description</c>
-		 * If the tag exist, it shall have the "=@flavor" replaced with " class='.itmColor_flavor'"
+		 * If a tag exists, it shall have the "=@flavor" replaced with " class='.itmColor_flavor'"
 		 */
 		var desctopstr = "";
 		var descbottomstr = "";
@@ -5603,34 +5620,216 @@ E = {
 				{
 					flagsstr += E.translateItemKeyword(iFlag) + "<br />";
 				}
+				else if (iFlag === "NoSell")
+				{
+					isvendorable = false;
+				}
 			});
 		}
 		
 		// VENDOR PRICE
 		var vendorstr = "";
-		if (item.vendor_value > 0)
+		if (item.vendor_value > 0 && isvendorable)
 		{
 			vendorstr += E.createCoinString(item.vendor_value, true);
 		}
 		
-		var html = "<div class='itmContainer'>"
-			+ namestr
-			+ damagestr
-			+ defensestr
-			+ attrstr
-			+ desctopstr
-			+ upgrstr
-			+ transmstr
-			+ raritystr
-			+ detailstr
-			+ typestr
-			+ levelstr
-			+ descbottomstr
-			+ flagsstr
-			+ vendorstr
-		+ "</div>";
+		/*
+		 * Upgrades and transmutations requires loading AJAX, so they must be
+		 * done last and checked that every requests have been fulfilled then
+		 * the tooltip HTML generation is finalized.
+		 */
+		// UPGRADES
+		var upgradebrk = "";
+		var infusionslot;
+		var infusiontype = "";
+		var preinfusions = [];
+		var infusionstr = [];
+		var preupgrades = [];
+		var upgradestr = [];
+		if (isequipment)
+		{
+			if (isascended || (isascended && istrinket) === false)
+			{
+				upgradebrk = "<br />";
+			}
+			
+			if (isascended)
+			{
+				if (det && det.infusion_slots)
+				{
+					for (var i = 0; i < det.infusion_slots.length; i++)
+					{
+						infusionslot = det.infusion_slots[i];
+						infusiontype = infusionslot.flags[0];
+						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
+							+ E.translateItemKeyword(infusiontype + "_Infusion") + "<br /><br />");
+						if (infusionslot.item_id !== undefined)
+						{
+							preinfusions.push(infusionslot.item_id);
+							propstofetch++;
+						}
+						else
+						{
+							preinfusions.push(null);
+						}
+					}
+				}
+			}
+			if ((isascended && istrinket) === false)
+			{
+				var regup = "<img class='itmSlotIcon' src='img/account/item/upgrade.png' /> "
+					+ E.translateItemKeyword("Unused Upgrade Slot") + "<br /><br />";
+				upgradestr.push(regup);
+				upgradestr.push((isdouble) ? regup : "");
+				if (det && det.suffix_item_id)
+				{
+					preupgrades.push(det.suffix_item_id);
+					propstofetch++;
+				}
+			}
+		}
 		
-		finalizeTooltip(html);
+		// OVERWRITE INFUSIONS AND UPGRADES
+		if (settings.infusions)
+		{
+			for (var i = 0; i < settings.infusions.length; i++)
+			{
+				if (i < preinfusions.length)
+				{
+					preinfusions[i] = settings.infusions[i];
+				}
+			}
+		}
+		if (settings.upgrades)
+		{
+			for (var i = 0; i < settings.upgrades.length; i++)
+			{
+				if (i < preupgrades.length)
+				{
+					preupgrades[i] = settings.upgrades[i];
+				}
+			}
+		}
+		
+		// TRANSMUTATION
+		var transmstr = "";
+		if (settings.skin)
+		{
+			propstofetch++;
+		}
+		
+		/*
+		 * Final actions and binding to be done after the tooltip HTML has been
+		 * formatted and additional AJAX HTML included.
+		 */
+		var finalizeTooltip = function()
+		{
+			if (numfetched !== propstofetch)
+			{
+				return;
+			}
+			var html = "<div class='itmContainer'>"
+				+ namestr
+				+ damagestr
+				+ defensestr
+				+ attrstr
+				+ desctopstr
+				+ upgradebrk
+				+ infusionstr.join("")
+				+ upgradestr.join("")
+				+ transmstr
+				+ raritystr
+				+ detailstr
+				+ typestr
+				+ levelstr
+				+ descbottomstr
+				+ flagsstr
+				+ vendorstr
+			+ "</div>";
+			var elm = $(pElement);
+			elm.attr("title", html);
+			I.qTip.init(elm);
+		};
+		
+		/*
+		 * Fetch additional data like slotted upgrades and transmutations.
+		 */
+		// SLOTTED INFUSIONS
+		for (var i = 0; i < preinfusions.length; i++)
+		{
+			if (preinfusions[i] === null)
+			{
+				continue;
+			}
+			(function(iIndex, iInfusionID)
+			{
+				$.getJSON(U.getAPIItem(iInfusionID), function(iData)
+				{
+					infusionstr[iIndex] = "<span class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + iData.name + "<br />"
+						+ iData.details.infix_upgrade.buff.description + "</span><br /><br />";
+					numfetched++;
+					finalizeTooltip();
+				}).fail(function()
+				{
+					propstofetch--;
+					finalizeTooltip();
+				});
+			})(i, preinfusions[i]);
+		}
+		
+		// SLOTTED UPGRADES
+		for (var i = 0; i < preupgrades.length; i++)
+		{
+			if (preupgrades[i] === null)
+			{
+				continue;
+			}
+			(function(iIndex, iInfusionID)
+			{
+				$.getJSON(U.getAPIItem(iInfusionID), function(iData)
+				{
+					var upgdesc = "";
+					if (iData.details.type === "Rune")
+					{
+						upgdesc = E.getItemRune(iData);
+					}
+					else
+					{
+						upgdesc = iData.name + "<br />" + E.getBuffDescription(iData);
+					}
+					
+					upgradestr[iIndex] = "<span class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + upgdesc + "</span><br /><br />";
+					numfetched++;
+					finalizeTooltip();
+				}).fail(function()
+				{
+					propstofetch--;
+					finalizeTooltip();
+				});
+			})(i, preupgrades[i]);
+		}
+		
+		// TRANSMUTED
+		if (settings.skin)
+		{
+			$.getJSON(U.getAPISkin(settings.skin), function(iData)
+			{
+				transmstr = "<aside='itmTransmute'>" + E.translateItemKeyword("Transmuted") + "<br />" + iData.name + "</aside><br />";
+				numfetched++;
+				finalizeTooltip();
+			}).fail(function()
+			{
+				propstofetch--;
+				finalizeTooltip();
+			});
+		}
+		
+		// In case no fetching is needed at all
+		if (numfetched === propstofetch)
+		{
+			finalizeTooltip();
+		}
 	},
 	
 	/*
@@ -5706,7 +5905,7 @@ E = {
 		
 		$.ajax({
 			dataType: "json",
-			url: U.getItemAPI(id),
+			url: U.getAPIItem(id),
 			cache: false,
 			success: function(pData)
 		{
@@ -5715,7 +5914,11 @@ E = {
 			pEntry.find(".trdLink").val(pData.chat_link || "");
 			var icon = pEntry.find(".trdIcon");
 			icon.attr("src", pData.icon);
-			E.getItemTooltip(icon, pData);
+			icon.unbind("click").click(function()
+			{
+				U.printJSON(pData);
+			});
+			E.bindItemTooltip(icon, pData);
 		}});
 	},
 	
@@ -6116,7 +6319,7 @@ E = {
 					entry.find(".trdResultsContainer").remove();
 					resultslist = createSearchContainer(entry);
 					
-					$.getJSON(U.getItemAPI(query), function(pDataInner)
+					$.getJSON(U.getAPIItem(query), function(pDataInner)
 					{
 						insertSearchResult(pDataInner, query, resultslist);
 					}).fail(function()
@@ -6191,7 +6394,7 @@ E = {
 							resultitem = resultarray[thisi];
 							resultid = parseInt(resultitem[keyname_id]);
 							// Get information of each item in the returned search result array
-							$.getJSON(U.getItemAPI(resultid), function(pDataInner)
+							$.getJSON(U.getAPIItem(resultid), function(pDataInner)
 							{
 								insertSearchResult(pDataInner, query, resultslist);
 							});
@@ -17959,7 +18162,7 @@ B = {
 				(function(iIndex)
 				{
 					var offer = B.DashboardVendor.Offers[iIndex];
-					$.getJSON(U.getItemAPI(offer.id), function(pData)
+					$.getJSON(U.getAPIItem(offer.id), function(pData)
 					{
 						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
 						table.append("<div class='dsbVendorEntry'>"

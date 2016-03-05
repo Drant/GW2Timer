@@ -1013,7 +1013,7 @@ var GW2T_TIMELINE = [
 
 
 /*
- * Data for generating the dashboard on the map pane.
+ * Data for generating the dashboard on the map panel.
  */
 var GW2T_DASHBOARD_DATA = {
 
@@ -1094,7 +1094,7 @@ Story:
 /*
  * GW2 gem store sale items.
  * Format:
-	url: "", // Usually a wiki link to that item
+	name: "", // Item name to point to English wiki
 	img: "", // ArenaNet hosted item image
 	price: 400, // Gems value for one item
 	discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]] OR 200, // [[quantity, gempricecurrent, gempriceoldOptional], ...] OR gempriceoldOptional
@@ -1102,8 +1102,8 @@ Story:
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
-	isSpecial: true,
-	note: "",
+	isSpecial: true, // If a discounted sale exists
+	note: "", // Important note about the sale, optional
 	Start: new Date("2016-03-01T16:00:00Z"),
 	Finish: new Date("2016-03-08T16:00:00Z"),
 	Padding: {
@@ -1114,31 +1114,38 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Glint's Gaze Mask",
-		img: "https://render.guildwars2.com/file/96DC21E8276B321EE14617E79227E5075ADE5C92/904689.png",
-		price: 400,
-		discount: 500,
+		name: "Instant Repair Canister",
+		img: "https://render.guildwars2.com/file/0CCB605907DEE64AB9E7090B2FA30AD79341E6EB/66582.png",
+		price: 21,
+		discount: [[1, 21, 35], [5, 90, 150]],
 		col: 0
 	},
 	{
-		name: "Glowing Crimson Mask",
-		img: "https://render.guildwars2.com/file/D506EF430E4BAA75E96095DED5665D6EFDBF79BC/771056.png",
-		price: 400,
-		discount: 500,
+		name: "Rox's Quiver Set",
+		img: "https://render.guildwars2.com/file/199C1663EB03FD02E20CD8DFE11C38C29B0FC1A2/575136.png",
+		price: 600,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Glowing Green Mask",
-		img: "https://render.guildwars2.com/file/55C12345B361D251D5FE040A60959C5432C46BA0/882253.png",
-		price: 400,
-		discount: 500,
+		name: "Rox's Short Bow Skin",
+		img: "https://render.guildwars2.com/file/96E304325F7F995E16CF72D957C1275D04AC9BF8/575135.png",
+		price: 600,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Magnus's Eye Patch",
-		img: "https://render.guildwars2.com/file/F5C67F2A9C2A69C204B9620FA9093E6FEDDA4FF6/740292.png",
-		price: 320,
-		discount: 400,
+		name: "Braham's Mace Skin",
+		img: "https://render.guildwars2.com/file/C96937D1C3772C082A25383ED71B3CBA6DDB0904/575133.png",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Braham's Shield Skin",
+		img: "https://render.guildwars2.com/file/A6A066D2640F5D0F7819F91299D8591C1E2607F4/575134.png",
+		price: 600,
+		discount: null,
 		col: 0
 	},
 	{
