@@ -640,14 +640,14 @@ input[type="text"].trdHovered {
 	border: 1px solid red;
 }
 
-input[type="text"].rarity0 { color: #aaaaaa; /* junk gray */ }
-input[type="text"].rarity1 { color: #ffffff; /* basic white */ }
-input[type="text"].rarity2 { color: #5599ff; /* fine blue */ }
-input[type="text"].rarity3 { color: #33cc11; /* masterwork green */ }
-input[type="text"].rarity4 { color: #ffdd22; /* rare yellow */ }
-input[type="text"].rarity5 { color: #ffaa00; /* exotic orange */ }
-input[type="text"].rarity6 { color: #ff4488; /* ascended magenta */ }
-input[type="text"].rarity7 { color: #9933ff; /* legendary violet */ }
+input[type="text"].rarity_Junk { color: #aaaaaa; /* gray */ }
+input[type="text"].rarity_Basic { color: #ffffff; /* white */ }
+input[type="text"].rarity_Fine { color: #5599ff; /* blue */ }
+input[type="text"].rarity_Masterwork { color: #33cc11; /* green */ }
+input[type="text"].rarity_Rare { color: #ffdd22; /* yellow */ }
+input[type="text"].rarity_Exotic { color: #ffaa00; /* orange */ }
+input[type="text"].rarity_Ascended { color: #ff4488; /* magenta */ }
+input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 
 
 /* =============================================================================

@@ -4909,14 +4909,14 @@ E = {
 	},
 	Rarity: // Corresponds to API names for rarity levels
 	{
-		Junk: 0,
-		Basic: 1,
-		Fine: 2,
-		Masterwork: 3,
-		Rare: 4,
-		Exotic: 5,
-		Ascended: 6,
-		Legendary: 7
+		Junk: "Junk",
+		Basic: "Basic",
+		Fine: "Fine",
+		Masterwork: "Masterwork",
+		Rare: "Rare",
+		Exotic: "Exotic",
+		Ascended: "Ascended",
+		Legendary: "Legendary"
 	},
 	cNUM_ITEM_RARITIES: 8,
 	
@@ -5188,13 +5188,13 @@ E = {
 	 */
 	setRarityClass: function(pEntry, pLevel)
 	{
-		for (var i = 0; i < E.cNUM_ITEM_RARITIES; i++)
+		for (var i in E.Rarity)
 		{
-			pEntry.removeClass("rarity" + i.toString());
+			pEntry.removeClass("rarity_" + i);
 		}
 		if (E.Rarity[pLevel] !== undefined)
 		{
-			pEntry.addClass("rarity" + (E.Rarity[pLevel]).toString());
+			pEntry.addClass("rarity_" + pLevel);
 		}
 	},
 	
@@ -5205,7 +5205,7 @@ E = {
 	 */
 	getRarityClass: function(pRarity)
 	{
-		return "rarity" + E.Rarity[pRarity];
+		return "rarity_" + pRarity;
 	},
 	
 	/*
@@ -5307,6 +5307,38 @@ E = {
 	},
 	
 	/*
+	 * Formats the text of a rune's bonuses.
+	 * @param object pItem details from API.
+	 * @param int pPieces number of runes equipped, optional.
+	 * @returns string HTML.
+	 */
+	getItemRune: function(pItem, pPieces)
+	{
+		var str = "";
+		var det = pItem.details;
+		var runemax = 6;
+		switch(pItem.rarity)
+		{
+			case "Rare": runemax = 4; break;
+			case "Masterwork": runemax = 2; break;
+		}
+		if (det.bonuses)
+		{
+			str += "<aside class='itmRune'>";
+			if (pPieces !== undefined)
+			{
+				str += pItem.name + " (" + pPieces + "/" + runemax + ")<br />";
+			}
+			for (var i in det.bonuses)
+			{
+				str += det.bonuses[i] + "<br />";
+			}
+			str += "</aside>";
+		}
+		return str;
+	},
+	
+	/*
 	 * Gets the translation for a keyword in the items.json API.
 	 * @param string pAttr.
 	 * @returns string translation.
@@ -5353,11 +5385,27 @@ E = {
 	
 	/*
 	 * Gets a tooltip HTML of an item.
+	 * @param jqobject pElement to bind tooltip.
 	 * @param object pItem details retrieved from API.
+	 * @objparam intarray item IDs upgrades like sigils, runes, or gems.
+	 * @objparam intarray item IDs of infusions.
+	 * @objparam int skin ID for transmuted items.
 	 * return string HTML.
 	 */
-	getItemTooltip: function(pItem, pOptions)
+	getItemTooltip: function(pElement, pItem, pOptions)
 	{
+		/*
+		 * Final actions and binding to be done after the tooltip HTML has been
+		 * formatted and additional AJAX HTML included.
+		 */
+		var finalizeTooltip = function(pHTML)
+		{
+			var elm = $(pElement);
+			//elm = $("#itemTimeline");
+			elm.attr("title", pHTML);
+			I.qTip.init(elm);
+		};
+		
 		var settings = $.extend({
 			upgrades: null,
 			infusions: null,
@@ -5392,7 +5440,7 @@ E = {
 		var damagestr = "";
 		if (det && det.min_power !== undefined && det.max_power !== undefined)
 		{
-			damagestr += "<span class='itmText'>" + E.translateItemKeyword("Weapon Strength") + ":</span> <span class='itmStats'>"
+			damagestr += "<span class='itmText'>" + E.translateItemKeyword("Weapon Strength") + ":</span> <span class='itmAttr'>"
 				+ (det.min_power).toLocaleString() + " - " + (det.max_power).toLocaleString() + "</span><br />";
 		}
 		
@@ -5404,7 +5452,7 @@ E = {
 		}
 		
 		// ATTRIBUTES
-		var statsstr = "";
+		var attrstr = "";
 		var statsbrktop = "";
 		var buffs = [];
 		var buffcounter = 0;
@@ -5412,8 +5460,8 @@ E = {
 		var buffnumbers = [];
 		if (det && det.infix_upgrade)
 		{
-			var stats = det.infix_upgrade.attributes;
-			statsstr += "<aside class='itmStats'>";
+			var attr = det.infix_upgrade.attributes;
+			attrstr += "<aside class='itmAttr'>";
 			
 			if (det.infix_upgrade !== undefined)
 			{
@@ -5428,25 +5476,25 @@ E = {
 							buffs.push(parseInt(iBuff.split(" ")[0]));
 						});
 					}
-					stats.forEach(function(iStats)
+					attr.forEach(function(iStats)
 					{
 						if (buffcounter < buffs.length)
 						{
 							buffadd = buffs[buffcounter];
 							buffcounter++;
 						}
-						statsstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.translateItemKeyword(iStats.attribute) + "<br />";
+						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.translateItemKeyword(iStats.attribute) + "<br />";
 					});
 				}
 				else if (det.infix_upgrade.buff)
 				{
-					statsstr += "<span class='itmBuff'>" + (det.infix_upgrade.buff.description).replace(/\n/g, "<br />") + "</span>";
+					attrstr += "<span class='itmBuff'>" + (det.infix_upgrade.buff.description).replace(/\n/g, "<br />") + "</span>";
 					statsbrktop = "<br />";
 				}
 			}
 			
-			statsstr = statsbrktop + statsstr;
-			statsstr += "</aside>";
+			attrstr = statsbrktop + attrstr;
+			attrstr += "</aside>";
 		}
 		
 		// UPGRADES
@@ -5512,18 +5560,32 @@ E = {
 		}
 		
 		// DESCRIPTION
+		/*
+		 * Item details' description may be pretagged with XML that colorizes
+		 * a portion of text. Example: <c=@flavor>Description</c>
+		 * If the tag exist, it shall have the "=@flavor" replaced with " class='.itmColor_flavor'"
+		 */
 		var desctopstr = "";
 		var descbottomstr = "";
 		var descbrk = (statsbrktop.length > 0) ? "<br />" : "";
+		var desc = item.description || "";
+		if (desc.indexOf("<c=@") !== -1)
+		{
+			desc = desc.replace(/<c=@abilitytype>/g, "<c class='itmColor_abilitytype'>");
+			desc = desc.replace(/<c=@flavor>/g, "<c class='itmColor_flavor'>");
+			desc = desc.replace(/<c=@reminder>/g, "<c class='itmColor_reminder'>");
+			desc = desc.replace(/<c=@warning>/g, "<c class='itmColor_warning'>");
+		}
 		if (item.description)
 		{
+			desc = "<aside>" + desc + "</aside>";
 			if (isequipment)
 			{
-				descbottomstr = "<aside class='itmDescription'>" + item.description + "</aside>";
+				descbottomstr = desc;
 			}
 			else
 			{
-				desctopstr = "<aside class='itmText'>" + item.description + "</aside>" + descbrk;
+				desctopstr = desc + descbrk;
 			}
 		}
 		
@@ -5546,7 +5608,7 @@ E = {
 		
 		// VENDOR PRICE
 		var vendorstr = "";
-		if (item.vendor_value !== undefined)
+		if (item.vendor_value > 0)
 		{
 			vendorstr += E.createCoinString(item.vendor_value, true);
 		}
@@ -5555,7 +5617,7 @@ E = {
 			+ namestr
 			+ damagestr
 			+ defensestr
-			+ statsstr
+			+ attrstr
 			+ desctopstr
 			+ upgrstr
 			+ transmstr
@@ -5568,22 +5630,7 @@ E = {
 			+ vendorstr
 		+ "</div>";
 		
-		
-		
-		
-		I.log(html);
-		
-		return html;
-	},
-	
-	bindItemTooltip: function(pElement, pItem)
-	{
-		var elm = $(pElement);
-		//elm = $("#itemTimeline");
-		var html = E.getItemTooltip(pItem);
-		
-		elm.attr("title", html);
-		I.qTip.init(elm);
+		finalizeTooltip(html);
 	},
 	
 	/*
@@ -5668,7 +5715,7 @@ E = {
 			pEntry.find(".trdLink").val(pData.chat_link || "");
 			var icon = pEntry.find(".trdIcon");
 			icon.attr("src", pData.icon);
-			E.bindItemTooltip(icon, pData);
+			E.getItemTooltip(icon, pData);
 		}});
 	},
 	

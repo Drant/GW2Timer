@@ -255,18 +255,22 @@ img {
 	border-radius: 1px;
 	margin-right: 6px;
 }
-.itmStats {
+.itmAttr {
 	color: #00ff00;
-}
-.itmText {
-	color: white;
-}
-.itmDescription {
-	color: #99eedd;
 }
 .itmBuff {
 	color: #5599ff;
 }
+.itmUnused {
+	color: #aaaaaa;
+}
+.itmText {
+	color: white;
+}
+.itmColor_abilitytype { color: #ffcc77; }
+.itmColor_flavor { color: #99eedd; }
+.itmColor_reminder { color: #aaaaaa; }
+.itmColor_warning { color: #ee0000; }
 
 /*
  * Style for perfect-scrollbar JS plugin by Hyunje Alex Jun.
@@ -2405,14 +2409,14 @@ karmaunit {
 	background-position: -128px 0;
 }
 
-.rarity0 { color: #aaaaaa; /* junk gray */ }
-.rarity1 { color: #ffffff; /* basic white */ }
-.rarity2 { color: #5599ff; /* fine blue */ }
-.rarity3 { color: #33cc11; /* masterwork green */ }
-.rarity4 { color: #ffdd22; /* rare yellow */ }
-.rarity5 { color: #ffaa00; /* exotic orange */ }
-.rarity6 { color: #ff4488; /* ascended magenta */ }
-.rarity7 { color: #9933ff; /* legendary violet */ }
+.rarity_Junk { color: #aaaaaa; /* gray */ }
+.rarity_Basic { color: #ffffff; /* white */ }
+.rarity_Fine { color: #5599ff; /* blue */ }
+.rarity_Masterwork { color: #33cc11; /* green */ }
+.rarity_Rare { color: #ffdd22; /* yellow */ }
+.rarity_Exotic { color: #ffaa00; /* orange */ }
+.rarity_Ascended { color: #ff4488; /* magenta */ }
+.rarity_Legendary { color: #9933ff; /* violet */ }
 
 /* =============================================================================
  *  @@Palette color derived from GW2 user interface.
