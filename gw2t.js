@@ -18255,7 +18255,9 @@ B = {
 						// Get the product that the recipe crafts
 						$.getJSON(U.getAPIItem(offer.product), function(pProduct)
 						{
-							E.bindItemTooltip($("#dsbVendorIcon_" + iIndex), pProduct);
+							var icon = $("#dsbVendorIcon_" + iIndex);
+							icon.attr("src", pProduct.icon);
+							E.bindItemTooltip(icon, pProduct);
 						});
 					}).done(function()
 					{
