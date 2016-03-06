@@ -1115,10 +1115,10 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Instant Repair Canister",
-		id: "19992",
-		price: 21,
-		discount: [[1, 21, 35], [5, 90, 150]],
+		name: "Monk's Outfit",
+		id: "69863",
+		price: 560,
+		discount: 700,
 		col: 0
 	},
 	{

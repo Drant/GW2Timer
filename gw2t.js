@@ -5534,7 +5534,7 @@ E = {
 		var defensestr = "";
 		if (det && det.defense > 0)
 		{
-			defensestr += "<span class='itmText'>" + E.translateItemKeyword("Defense") + ":</span> " + (det.defense).toLocaleString() + "<br />";
+			defensestr += "<span class='itmText'>" + E.translateItemKeyword("Defense") + ":</span> <span class='itmAttr'>" + (det.defense).toLocaleString() + "</span><br />";
 		}
 		
 		// ATTRIBUTES
@@ -18237,7 +18237,7 @@ B = {
 					{
 						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
 						table.append("<div class='dsbVendorEntry'>"
-							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='" + pData.icon + "' /></a> "
+							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + E.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (B.DashboardVendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
 							+ "<span class='dsbVendorPriceKarma'>" + E.createKarmaString(offer.price) + "</span>"
