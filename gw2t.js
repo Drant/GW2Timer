@@ -2930,7 +2930,7 @@ A = {
 	/*
 	 * Binds functionality of the account page menu bar.
 	 * A menu item views its associated section, and can also contains menu icons,
-	 * which views the section's subsections if available.
+	 * which views the section's (platter) subsections (dish) if available.
 	 */
 	initializeMenu: function()
 	{
@@ -2993,6 +2993,7 @@ A = {
 									iEvent.stopPropagation();
 									iSubsection.parent().find(".accDish").hide();
 									iSubsection.show();
+									A.adjustAccountPanel();
 									// Highlight the button
 									var menubutton = $(this).parent().parent();
 									menubutton.find(".accMenuIcon").removeClass("accMenuButtonFocused");
@@ -3011,7 +3012,7 @@ A = {
 		});
 		$("#accMenuEquipment").click(function()
 		{
-			A.generateEquipment();
+			A.initializeEquipment();
 		});
 		
 		// Open the section if specified in the URL
@@ -3293,6 +3294,20 @@ A = {
 				A.saveTokens();
 			});
 		});
+	},
+	
+	/*
+	 * Gets the current user selected character.
+	 * @returns object character.
+	 */
+	getCurrentCharacter: function()
+	{
+		try
+		{
+			return A.Data.Characters[A.CharacterCurrent];
+		}
+		catch (e) {}
+		return null;
 	},
 	
 	/*
@@ -3584,7 +3599,7 @@ A = {
 			});
 			// Retrieve and insert guilds
 			A.initializeGuilds(pData.guilds);
-			A.generateWallet();
+			A.initializeWallet();
 			// Finally for the summary
 			$("#chrSummary").show("fast");
 		});
@@ -3691,7 +3706,7 @@ A = {
 	/*
 	 * Initializes the wallet object and generate columns (categorized wallets) for currencies.
 	 */
-	generateWallet: function()
+	initializeWallet: function()
 	{
 		var generateWallet = function(pWallet, pName)
 		{
@@ -3771,9 +3786,32 @@ A = {
 	 * Generates the equipment subsection of the characters page.
 	 * @pre Characters array was loaded by AJAX.
 	 */
-	generateEquipment: function()
+	initializeEquipment: function()
 	{
+		var generateEquipment = function(pCharacter)
+		{
+			var char = pCharacter || A.getCurrentCharacter();
+			if (char === undefined || char === null)
+			{
+				return;
+			}
+			var dish = $("#accDish_Equipment");
+			dish.append(char.name);
+		};
 		
+		// If the user has chosen a character to view, then generate for that character only, else all
+		$("#accDish_Equipment").empty();
+		if (A.CharacterCurrent)
+		{
+			generateEquipment();
+		}
+		else
+		{
+			A.Data.Characters.forEach(function(iCharacter)
+			{
+				generateEquipment(iCharacter);
+			});
+		}
 	},
 	
 	/*
@@ -5321,6 +5359,7 @@ E = {
 		// These top level types have overriding priority
 		if (type === "Back"
 			|| type === "Consumable"
+			|| type === "Container"
 			|| type === "CraftingMaterial"
 			|| type === "Trophy"
 			|| type === "MiniPet")
@@ -5423,10 +5462,10 @@ E = {
 			Gloves: "Hand Armor",
 			Leggings: "Leg Armor",
 			Boots: "Foot Armor",
-			Defense_Infusion: "Unused Defensive Infusion Slot",
-			Offense_Infusion: "Unused Offensive Infusion Slot",
-			Utility_Infusion: "Unused Utility Infusion Slot",
-			Agony_Infusion: "Unused Agony Infusion Slot",
+			Infusion_Defense: "Unused Defensive Infusion Slot",
+			Infusion_Offense: "Unused Offensive Infusion Slot",
+			Infusion_Utility: "Unused Utility Infusion Slot",
+			Infusion_Agony: "Unused Agony Infusion Slot",
 			Back: "Back Item",
 			CraftingMaterial: "Crafting Material",
 			MiniPet: "Miniature"
@@ -5463,6 +5502,7 @@ E = {
 		var isascended = (item.rarity === E.Rarity.Ascended || item.rarity === E.Rarity.Legendary);
 		var isdouble = false;
 		var isvendorable = true;
+		var isaccountbound = false;
 		var propstofetch = 0;
 		var numfetched = 0;
 		if (det && det.type)
@@ -5612,17 +5652,30 @@ E = {
 		{
 			item.flags.forEach(function(iFlag)
 			{
+				var wantflag = false;
 				if (iFlag === "Unique"
 					|| iFlag === "SoulbindOnAcquire"
-					|| iFlag === "SoulBindOnUse"
-					|| iFlag === "AccountBindOnUse"
-					|| iFlag === "AccountBound")
+					|| iFlag === "SoulBindOnUse")
 				{
-					flagsstr += E.translateItemKeyword(iFlag) + "<br />";
+					wantflag = true;
+				}
+				else if (iFlag === "AccountBound") // "AccountBound" flag shall override "AccountBindOnUse"
+				{
+					isaccountbound = true;
+					wantflag = true;
+				}
+				else if (iFlag === "AccountBindOnUse" && isaccountbound === false)
+				{
+					wantflag = true;
 				}
 				else if (iFlag === "NoSell")
 				{
 					isvendorable = false;
+				}
+				
+				if (wantflag)
+				{
+					flagsstr += E.translateItemKeyword(iFlag) + "<br />";
 				}
 			});
 		}
@@ -5663,7 +5716,7 @@ E = {
 						infusionslot = det.infusion_slots[i];
 						infusiontype = infusionslot.flags[0];
 						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
-							+ E.translateItemKeyword(infusiontype + "_Infusion") + "<br /><br />");
+							+ E.translateItemKeyword("Infusion_" + infusiontype) + "<br /><br />");
 						if (infusionslot.item_id !== undefined)
 						{
 							preinfusions.push(infusionslot.item_id);
@@ -7257,6 +7310,7 @@ D = {
 		// Item Type
 		s_Back_Item: {de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos"},
 		s_Consumable: {de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable"},
+		s_Container: {de: "Behälter", es: "Contenedor", fr: "Conteneur"},
 		s_Crafting_Material: {de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d'artisanat"},
 		s_Miniature: {de: "Miniatur", es: "Miniatura", fr: "Miniature"},
 		s_Trophy: {de: "Trophäe", es: "Trofeo", fr: "Trophée"},
@@ -18053,8 +18107,10 @@ B = {
 							}
 							discounts += "</span>";
 						}
+						var dataprop = (item.id) ? ("data-sale='" + item.id + "'") : "";
+						var imgsrc = (item.img) ? item.img : "img/ui/placeholder.png";
 						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
-							+"<a" + U.convertExternalAnchor(wiki) + "><img class='dsbSaleIcon' src='" + item.img + "' /></a> "
+							+"<a" + U.convertExternalAnchor(wiki) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
 							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
 							+ oldprice
 							+ "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
@@ -18070,6 +18126,21 @@ B = {
 					$(this).css({height: "auto"});
 					I.initializeScrollbar("#dsbSaleTable");
 					I.updateScrollbar("#dsbSaleTable");
+				});
+				// Retrieve item info
+				$(".dsbSaleIcon").each(function()
+				{
+					if ($(this).attr("data-sale"))
+					{
+						(function(iElement)
+						{
+							$.getJSON(U.getAPIItem(iElement.attr("data-sale")), function(iData)
+							{
+								iElement.attr("src", iData.icon);
+								E.bindItemTooltip(iElement, iData);
+							});
+						})($(this));
+					}
 				});
 			});
 		}
@@ -18166,7 +18237,7 @@ B = {
 					{
 						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
 						table.append("<div class='dsbVendorEntry'>"
-							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img class='dsbVendorIcon' src='" + pData.icon + "' /></a> "
+							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='" + pData.icon + "' /></a> "
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + E.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (B.DashboardVendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
 							+ "<span class='dsbVendorPriceKarma'>" + E.createKarmaString(offer.price) + "</span>"
@@ -18181,6 +18252,11 @@ B = {
 							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.createCoinString(0, true));
 						});
 						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
+						// Get the product that the recipe crafts
+						$.getJSON(U.getAPIItem(offer.product), function(pProduct)
+						{
+							E.bindItemTooltip($("#dsbVendorIcon_" + iIndex), pProduct);
+						});
 					}).done(function()
 					{
 						// Finalize the table after every offer has been added

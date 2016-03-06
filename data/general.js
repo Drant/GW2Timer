@@ -1095,7 +1095,8 @@ Story:
  * GW2 gem store sale items.
  * Format:
 	name: "", // Item name to point to English wiki
-	img: "", // ArenaNet hosted item image
+	id: "", // Item ID to retrieve icon and tooltip details
+	img: "", // ArenaNet hosted item image, if item ID is not available
 	price: 400, // Gems value for one item
 	discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]] OR 200, // [[quantity, gempricecurrent, gempriceoldOptional], ...] OR gempriceoldOptional
 	col: 0 // Display on left (0) or right (1) column
@@ -1115,179 +1116,179 @@ Sale: {
 	Items: [
 	{
 		name: "Instant Repair Canister",
-		img: "https://render.guildwars2.com/file/0CCB605907DEE64AB9E7090B2FA30AD79341E6EB/66582.png",
+		id: "19992",
 		price: 21,
 		discount: [[1, 21, 35], [5, 90, 150]],
 		col: 0
 	},
 	{
 		name: "Rox's Quiver Set",
-		img: "https://render.guildwars2.com/file/199C1663EB03FD02E20CD8DFE11C38C29B0FC1A2/575136.png",
+		id: "42661",
 		price: 600,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Rox's Short Bow Skin",
-		img: "https://render.guildwars2.com/file/96E304325F7F995E16CF72D957C1275D04AC9BF8/575135.png",
+		id: "42659",
 		price: 600,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Braham's Mace Skin",
-		img: "https://render.guildwars2.com/file/C96937D1C3772C082A25383ED71B3CBA6DDB0904/575133.png",
+		id: "42653",
 		price: 600,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Braham's Shield Skin",
-		img: "https://render.guildwars2.com/file/A6A066D2640F5D0F7819F91299D8591C1E2607F4/575134.png",
+		id: "42656",
 		price: 600,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Zodiac Heavy Armor Skin",
-		img: "https://render.guildwars2.com/file/2793703E07C7E0D15EA2EE95E6C116DA75674F0C/740302.png",
+		id: "43016",
 		price: 800,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Zodiac Medium Armor Skin",
-		img: "https://render.guildwars2.com/file/CACA37AA4734936B5E062003940CAB4B11092F6C/740303.png",
+		id: "43017",
 		price: 800,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Zodiac Light Armor Skin",
-		img: "https://render.guildwars2.com/file/9A22FCFF1B3DDC290D5360DAC77595C86D36F9F8/740304.png",
+		id: "43018",
 		price: 800,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Krytan Medium Armor Skin",
-		img: "https://render.guildwars2.com/file/0793E7E47832AFFBFAA71A6801066E2A41606BBA/455866.png",
+		id: "20273",
 		price: 500,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Primeval Heavy Armor Skin",
-		img: "https://render.guildwars2.com/file/D57103D6520ECFC07DBA564E5E76F13D96B8B1E7/455865.png",
+		id: "20272",
 		price: 500,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Profane Light Armor Skin",
-		img: "https://render.guildwars2.com/file/0DA0BEC80AF6FEBA33ABB8D463B00FB8F3F3D861/455867.png",
+		id: "20274",
 		price: 500,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Crystal Savant Outfit",
-		img: "https://render.guildwars2.com/file/169610D56164BBB24B95EB94B2240C3E0259515A/1373353.png",
+		id: "77808",
 		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Winter Solstice Outfit",
-		img: "https://render.guildwars2.com/file/7133DC4108BE42C2F010D61CE406772D360F0E39/1322763.png",
+		id: "77595",
 		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Frost Wasp Logging Tool",
-		img: "https://render.guildwars2.com/file/0227CB6C96D2AC7FC20B6D465478E9BBF3ED09D9/771066.png",
+		id: "48825",
 		price: 1000,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Butterfly Wings Backpack",
-		img: "https://render.guildwars2.com/file/DF22D8F8EFF9FC476372020D4F3555A7074F7521/1024006.png",
+		id: "70095",
 		price: 500,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Snowflake Glider",
-		img: "https://render.guildwars2.com/file/CE007E4C9FD410E85D79D745BC750F2A6719E4DF/1313090.png",
+		id: "77528",
 		price: 500,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Mini Snow Flurry Dragon",
-		img: "https://render.guildwars2.com/file/0DE72811F5176B90454AE16B5E48CA5BBBE6610C/1322567.png",
+		id: "77581",
 		price: 500,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Mask of the Crown",
-		img: "https://render.guildwars2.com/file/30EB5309B29F55DB5E060906C660A598A132E842/619590.png",
+		id: "44609",
 		price: 400,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Warrior Quaggan Backpack Set",
-		img: "https://render.guildwars2.com/file/ADE839C7FBDE9B18EE07E21FD4B8AC7BA06E29EE/543837.png",
+		id: "39520",
 		price: 300,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Fuzzy Bear Hat",
-		img: "https://render.guildwars2.com/file/D33AB44B1C0DDBFD3D0DB5CDB139D618AF0FE6B2/587062.png",
+		id: "64755",
 		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Fuzzy Leopard Hat",
-		img: "https://render.guildwars2.com/file/C4020218F1437D6E154DBE497F9D66B0D6294E17/771064.png",
+		id: "64746",
 		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Sailor's Beanie",
-		img: "https://render.guildwars2.com/file/6BDB0CE00EB895C9375F1F7336CCB80F0265BD35/220579.png",
+		id: "64749",
 		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Top Hat",
-		img: "https://render.guildwars2.com/file/B261FBF12505BBE1210D3FB0EADE00D3E5999A0A/340524.png",
+		id: "64750",
 		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Reading Glasses",
-		img: "https://render.guildwars2.com/file/01DC5C169EBB7D2467FFC95F01B349FB0F52995B/220573.png",
+		id: "64748",
 		price: 150,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Wintersday Earmuffs",
-		img: "https://render.guildwars2.com/file/E1590ED73D082F950AA2ED44021A7F795D0DD647/526118.png",
+		id: "65200",
 		price: 25,
 		discount: null,
 		col: 1
-	},
+	}
 	]
 },
 
@@ -1321,16 +1322,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-03-05T00:00:00Z"),
-	Finish: new Date("2016-03-06T00:00:00Z"),
-	Offers: // Changes at 00:00 UTC
+	Start: new Date("2016-03-06T00:00:00Z"),
+	Finish: new Date("2016-03-07T00:00:00Z"),
+	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "44650", price: "25200" },
-		Fox: { id: "43818", price: "25200" },
-		Derwena: { id: "49736", price: "25200" },
-		Yana: { id: "49741", price: "25200" },
-		Katyn: { id: "49778", price: "12600" },
-		Verma: { id: "49766", price: "25200" }
+		Mehem: { id: "43812", price: "25200", product: "43788" },
+		Fox: { id: "43842", price: "25200", product: "43863" },
+		Derwena: { id: "44654", price: "25200", product: "44958" },
+		Yana: { id: "43808", price: "25200", product: "43784" },
+		Katyn: { id: "43840", price: "25200", product: "43862" },
+		Verma: { id: "48914", price: "25200", product: "48911" }
 	}
 }
 };
