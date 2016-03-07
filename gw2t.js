@@ -5596,14 +5596,11 @@ E = {
 			raritystr = E.translateItemKeyword(item.rarity) + "<br />";
 		}
 		
-		// DETAILS
-		var detailstr = "";
-		if (det)
+		// WEIGHT
+		var weightstr = "";
+		if (det && det.weight_class)
 		{
-			if (det.weight_class)
-			{
-				detailstr += det.weight_class + "<br />";
-			}
+			weightstr = E.translateItemKeyword(det.weight_class) + "<br />";
 		}
 		
 		// TYPE
@@ -5793,7 +5790,7 @@ E = {
 				+ upgradestr.join("")
 				+ transmstr
 				+ raritystr
-				+ detailstr
+				+ weightstr
 				+ typestr
 				+ levelstr
 				+ descbottomstr
