@@ -1115,6 +1115,13 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Copper-Fed Salvage-o-Matic",
+		id: "44602",
+		price: 640,
+		discount: 800,
+		col: 0
+	},
+	{
 		name: "Monk's Outfit",
 		id: "69863",
 		price: 560,
