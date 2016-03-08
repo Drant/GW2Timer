@@ -228,7 +228,7 @@ input[type="text"].accTokenHovered {
 #chrSelection li:nth-child(even) {
 	background-image: linear-gradient(to right, #333 0%, rgba(255,255,255,0) 100%);
 }
-#chrSelection li:hover {
+#chrSelection li:hover, #chrSelection li.chrSelected {
 	background-image: linear-gradient(to right, #7c7253 0%, rgba(255,255,255,0) 100%);
 	animation: aniHighlight 0.4s;
 }
@@ -488,6 +488,28 @@ a.chrWalletLink {
 .acc_wallet_28 { background-position: -768px 0; }
 .acc_wallet_29 { background-position: -800px 0; }
 .acc_wallet_30 { background-position: -832px 0; }
+
+
+/* Equipment and Build
+----------------------------------------------------------------------------- */
+.eqpLeft, .eqpRight {
+	display: inline-block;
+	width: 360px;
+}
+.eqpRow {
+	margin-bottom: 6px;
+}
+.eqpSlot {
+	display: inline-block;
+	width: 65px; height: 65px;
+	background-size: cover;
+}
+.eqpIcon {
+	width: 64px; height: 64px;
+	border: 1px solid #828181;
+	border-radius: 1px;
+}
+
 
 /* Adjustments for smaller screens
 ----------------------------------------------------------------------------- */

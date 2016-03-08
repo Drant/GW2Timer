@@ -1054,18 +1054,6 @@ Countdowns: [
 	official: "news/every-day-sale-in-the-month-of-march/",
 	Start: new Date("2016-03-01T16:00:00Z"),
 	Finish: new Date("2016-03-31T16:00:00Z")
-},
-{
-	name_en: "Second Wing of Raid",
-	name_de: "Nächste Schlachtzugsflügel",
-	name_es: "Segunda ala de la incursión",
-	name_fr: "Seconde aile du raid",
-	url_en: "https://forum-en.guildwars2.com/forum/game/dungeons/Raid-1-Wing-2-Coming-March-8th",
-	url_de: "https://forum-de.guildwars2.com/forum/game/dungeons/Der-n-chste-Schlachtzugsfl-gel-kommt-am-8-M-rz",
-	url_es: "https://forum-es.guildwars2.com/forum/game/dungeons/La-segunda-ala-de-la-primera-incursi-n-llega-el-8-de-marzo",
-	url_fr: "https://forum-fr.guildwars2.com/forum/game/dungeons/La-seconde-aile-du-premier-raid-arrive-le-8-mars",
-	Start: new Date("2016-03-08T17:00:00Z"),
-	Finish: new Date("2016-03-09T17:00:00Z")
 }
 ],
 
@@ -1105,8 +1093,8 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	isSpecial: true, // If a discounted sale exists
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-03-01T16:00:00Z"),
-	Finish: new Date("2016-03-08T16:00:00Z"),
+	Start: new Date("2016-03-08T16:00:00Z"),
+	Finish: new Date("2016-03-15T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1115,184 +1103,23 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Copper-Fed Salvage-o-Matic",
-		id: "44602",
-		price: 640,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Monk's Outfit",
-		id: "69863",
-		price: 560,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "Rox's Quiver Set",
-		id: "42661",
-		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Rox's Short Bow Skin",
-		id: "42659",
-		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Braham's Mace Skin",
-		id: "42653",
-		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Braham's Shield Skin",
-		id: "42656",
-		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Zodiac Heavy Armor Skin",
-		id: "43016",
+		name: "Captain's Airship Pass",
+		id: "50104",
 		price: 800,
-		discount: null,
+		discount: 1000,
 		col: 0
 	},
 	{
-		name: "Zodiac Medium Armor Skin",
-		id: "43017",
-		price: 800,
+		name: "Classical Glider",
+		img: "http://i.imgur.com/GkWDFQD.png",
+		price: 400,
 		discount: null,
 		col: 0
-	},
-	{
-		name: "Zodiac Light Armor Skin",
-		id: "43018",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Krytan Medium Armor Skin",
-		id: "20273",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Primeval Heavy Armor Skin",
-		id: "20272",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Profane Light Armor Skin",
-		id: "20274",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Crystal Savant Outfit",
-		id: "77808",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Winter Solstice Outfit",
-		id: "77595",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Frost Wasp Logging Tool",
-		id: "48825",
-		price: 1000,
-		discount: null,
-		col: 1
 	},
 	{
 		name: "Butterfly Wings Backpack",
 		id: "70095",
 		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Snowflake Glider",
-		id: "77528",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mini Snow Flurry Dragon",
-		id: "77581",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mask of the Crown",
-		id: "44609",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Warrior Quaggan Backpack Set",
-		id: "39520",
-		price: 300,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fuzzy Bear Hat",
-		id: "64755",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fuzzy Leopard Hat",
-		id: "64746",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Sailor's Beanie",
-		id: "64749",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Top Hat",
-		id: "64750",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Reading Glasses",
-		id: "64748",
-		price: 150,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Wintersday Earmuffs",
-		id: "65200",
-		price: 25,
 		discount: null,
 		col: 1
 	}

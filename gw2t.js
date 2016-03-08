@@ -3328,7 +3328,7 @@ A = {
 			A.generateCharactersStatistics();
 		};
 		
-		$("#chrSummary, #chrStatistics ul").empty();
+		$("#chrSummary, #chrStatistics ul, #accDish_Equipment").empty();
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
 		I.suspendElement(menusubsection);
@@ -3347,7 +3347,7 @@ A = {
 			A.Data.Characters = new Array(numcharacters);
 			A.Data.CharacterNames.forEach(function(iCharacter)
 			{
-				$("#chrSelection").append("<li id='chrSelection_" + charindex + "' class='curClick'></li>");
+				$("#chrSelection").append("<li id='chrSelection_" + charindex + "' class='chrSelection curClick'></li>");
 				$("#chrUsage").append("<li id='chrUsage_" + charindex + "'></li>");
 				$("#chrSeniority").append("<li id='chrSeniority_" + charindex + "'></li>");
 				(function(iIndex)
@@ -3466,6 +3466,8 @@ A = {
 				A.CharacterCurrent = charindex;
 				$(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
 				$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
+				$(".chrSelection").removeClass("chrSelected");
+				$(this).addClass("chrSelected");
 			}
 		}).on("contextmenu", function()
 		{
@@ -3788,20 +3790,78 @@ A = {
 	 */
 	initializeEquipment: function()
 	{
+		var dish = $("#accDish_Equipment");
 		var generateEquipment = function(pCharacter)
 		{
 			var char = pCharacter || A.getCurrentCharacter();
-			if (char === undefined || char === null)
+			if (char === undefined || char === null || Array.isArray(char.equipment) === false)
 			{
 				return;
 			}
-			var dish = $("#accDish_Equipment");
+			
+			var equipleft = ["Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots", "WeaponA1", "WeaponA2", "WeaponB1", "WeaponB2"];
+			var equipright = ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2", "Sickle", "Axe", "Pick", "HelmAquatic", "WeaponAquaticA", "WeaponAquaticB"];
+			var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
+			var subconleft = $("<div class='eqpLeft'></div>").appendTo(container);
+			var subconright = $("<div class='eqpRight'></div>").appendTo(container);
+			var subconbuild = $("<div class='eqpBuild'></div>").appendTo(container);
+			
+			for (var i in equipleft)
+			{
+				subconleft.append("<aside class='eqpRow eqp" + equipleft[i] + "'><span id='eqp" + equipleft[i]
+					+ "_" + char.charindex + "' class='eqpSlot' style='background-image:url(\"img/account/equipment/"
+					+ (equipleft[i]).toLowerCase() + ".png\")'></span><span class='eqpNames'></span></aside>");
+			}
+			for (var i in equipright)
+			{
+				subconright.append("<aside class='eqp" + equipright[i] + "'><span id='eqp" + equipright[i]
+					+ "_" + char.charindex + "' class='eqpSlot'></span><span class='eqpNames'></span></aside>");
+			}
+			
+			
+			for (var i in char.equipment)
+			{
+				(function(iEquip)
+				{
+					$.getJSON(U.getAPIItem(iEquip.id), function(iData)
+					{
+						var slot = $("#eqp" + iEquip.slot + "_" + char.charindex);
+						var slotimg = (iEquip.skin) ? "img/ui/placeholder.png" : iData.icon;
+						var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
+						var iconelement = (iEquip.skin) ? sloticon : null;
+						E.bindItemTooltip(slot, iData, {equipment: iEquip, iconelement: iconelement});
+					});
+				})(char.equipment[i]);
+			}
+			
 			dish.append(char.name);
 		};
 		
-		// If the user has chosen a character to view, then generate for that character only, else all
-		$("#accDish_Equipment").empty();
-		if (A.CharacterCurrent)
+		// If the equipment page is already generated, filter a specific character if the user chosen so
+		if (dish.is(":empty") === false)
+		{
+			var equipcur = $("#eqpCharacter_" + A.CharacterCurrent);
+			var equipall = $(".eqpCharacter");
+			if (A.CharacterCurrent !== null)
+			{
+				if (equipcur.length)
+				{
+					equipall.hide();
+					equipcur.show();
+				}
+				else
+				{
+					generateEquipment(A.CharacterCurrent);
+				}
+			}
+			else
+			{
+				equipall.show();
+			}
+			return;
+		}
+		// Generate for single character if user chosen, else all characters
+		if (A.CharacterCurrent !== null)
 		{
 			generateEquipment();
 		}
@@ -3881,7 +3941,7 @@ A = {
 		{
 			(sortable[i].item).appendTo(list);
 		}
-	},
+	}
 	
 };
 
@@ -5364,11 +5424,11 @@ E = {
 			|| type === "Trophy"
 			|| type === "MiniPet")
 		{
-			str = "<br />" + E.translateItemKeyword(type);
+			str = "<br />" + D.getString(type);
 		}
 		else if (det.type) // Else use the subtype in the details property object
 		{
-			str = E.translateItemKeyword(det.type);
+			str = D.getString(det.type);
 		}
 		return str + "<br />";
 	},
@@ -5393,32 +5453,45 @@ E = {
 		}
 		if (det.bonuses)
 		{
-			str += "<br /><aside class='itmRune'>";
+			str += (pPieces !== undefined) ? "" : "<br />";
+			str += "<span class='itmRune'>";
 			if (pPieces !== undefined)
 			{
 				str += pItem.name + " (" + pPieces + "/" + runemax + ")<br />";
 			}
 			for (var i in det.bonuses)
 			{
-				runecolor = (runeith < runemax) ? "itmUnused" : "";
+				runecolor = (runeith < runemax) ? "itmGrayed" : "";
 				runeith++;
-				str += "<span class='" + runecolor + "'>(" + runeith + "): " + det.bonuses[i] + "</span><br />";
+				str += "<var class='" + runecolor + "'>(" + runeith + "): " + det.bonuses[i] + "</var><br />";
 			}
-			str += "</aside>";
+			str += "</span>";
 		}
 		return str;
 	},
 	
 	/*
 	 * Gets the description of the buff property of an item.
-	 * @param object pItem details from API.
+	 * @param object or string pItem details from API or the description itself.
 	 * @returns string description.
 	 */
-	getBuffDescription: function(pItem)
+	formatItemDescription: function(pItem)
 	{
 		try
 		{
-			var desc = pItem.details.infix_upgrade.buff.description;
+			var desc = (typeof pItem === "string") ? pItem : pItem.details.infix_upgrade.buff.description;
+			/*
+			 * Item details' description may be pretagged with XML that colorizes
+			 * a portion of text. Example: <c=@flavor>Description</c>
+			 * If a tag exists, it shall have the "=@flavor" replaced with " class='.itmColor_flavor'"
+			 */
+			if (desc.indexOf("<c=@") !== -1)
+			{
+				desc = desc.replace(/<c=@abilitytype>/g, "<c class='itmColor_abilitytype'>");
+				desc = desc.replace(/<c=@flavor>/g, "<c class='itmColor_flavor'>");
+				desc = desc.replace(/<c=@reminder>/g, "<c class='itmColor_reminder'>");
+				desc = desc.replace(/<c=@warning>/g, "<c class='itmColor_warning'>");
+			}
 			if (desc.indexOf("\n") !== -1)
 			{
 				return desc.replace(/\n/g, "<br />");
@@ -5433,51 +5506,6 @@ E = {
 	},
 	
 	/*
-	 * Gets the translation for a keyword in the items.json API.
-	 * @param string pAttr.
-	 * @returns string translation.
-	 */
-	translateItemKeyword: function(pAttr)
-	{
-		// Associate API keywords with the proper translation word or phrase
-		var keywords = {
-			BoonDuration: "Boon Duration",
-			ConditionDamage: "Condition Damage",
-			ConditionDuration: "Expertise",
-			CritDamage: "Ferocity",
-			Healing: "Healing Power",
-			AccountBindOnUse: "Account Bound on Use",
-			AccountBound: "Account Bound",
-			SoulBindOnUse: "Soulbound on Use",
-			SoulbindOnAcquire: "Soulbound",
-			LongBow: "Longbow",
-			ShortBow: "Shortbow",
-			LightArmor: "Light",
-			MediumArmor: "Medium",
-			HeavyArmor: "Heavy",
-			HelmAquatic: "Head Armor",
-			Helm: "Head Armor",
-			Shoulders: "Shoulder Armor",
-			Coat: "Chest Armor",
-			Gloves: "Hand Armor",
-			Leggings: "Leg Armor",
-			Boots: "Foot Armor",
-			Infusion_Defense: "Unused Defensive Infusion Slot",
-			Infusion_Offense: "Unused Offensive Infusion Slot",
-			Infusion_Utility: "Unused Utility Infusion Slot",
-			Infusion_Agony: "Unused Agony Infusion Slot",
-			Back: "Back Item",
-			CraftingMaterial: "Crafting Material",
-			MiniPet: "Miniature"
-		};
-		if (keywords[pAttr])
-		{
-			return D.getTranslation(keywords[pAttr]);
-		}
-		return D.getTranslation(pAttr);
-	},
-	
-	/*
 	 * Binds an element to have a tooltip presenting item details.
 	 * @param jqobject pElement to bind tooltip.
 	 * @param object pItem details retrieved from API.
@@ -5485,6 +5513,7 @@ E = {
 	 * @objparam intarray item IDs upgrades like sigils, runes, or gems.
 	 * @objparam intarray item IDs of infusions.
 	 * @objparam int skin ID for transmuted items.
+	 * @objparam object equipment from characters API.
 	 * @objparam string soulbound name of character the item is bound to.
 	 * return string HTML.
 	 */
@@ -5495,8 +5524,19 @@ E = {
 			infusions: null,
 			upgrades: null,
 			skin: null,
+			runepieces: 0,
+			equipment: null,
 			soulbound: null
 		}, pOptions);
+		// If provided an equipment object, override the other parameters
+		if (settings.equipment)
+		{
+			
+			settings.infusions = settings.equipment.infusions;
+			settings.upgrades = settings.equipment.upgrades;
+			settings.skin = settings.equipment.skin;
+		}
+		
 		var item = pItem;
 		var type = item.type;
 		var subtype = "";
@@ -5525,13 +5565,13 @@ E = {
 		var namestr = "";
 		var rarity = (item.rarity !== undefined) ? item.rarity : E.Rarity.Basic;
 		namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + E.getRarityClass(rarity)
-			+ "'><img class='itmIcon' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
+			+ "'><img class='itmIcon itmIconMain' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
 		
 		// WEAPON STRENGTH
 		var damagestr = "";
 		if (det && det.min_power !== undefined && det.max_power !== undefined)
 		{
-			damagestr += "<span class='itmText'>" + E.translateItemKeyword("Weapon Strength") + ":</span> <span class='itmAttr'>"
+			damagestr += "<span class='itmText'>" + D.getString("WeaponStrength") + ":</span> <span class='itmAttr'>"
 				+ (det.min_power).toLocaleString() + " - " + (det.max_power).toLocaleString() + "</span><br />";
 		}
 		
@@ -5539,7 +5579,7 @@ E = {
 		var defensestr = "";
 		if (det && det.defense > 0)
 		{
-			defensestr += "<span class='itmText'>" + E.translateItemKeyword("Defense") + ":</span> <span class='itmAttr'>" + (det.defense).toLocaleString() + "</span><br />";
+			defensestr += "<span class='itmText'>" + D.getString("Defense") + ":</span> <span class='itmAttr'>" + (det.defense).toLocaleString() + "</span><br />";
 		}
 		
 		// ATTRIBUTES
@@ -5574,13 +5614,13 @@ E = {
 							buffadd = buffs[buffcounter];
 							buffcounter++;
 						}
-						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.translateItemKeyword(iStats.attribute) + "<br />";
+						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + D.getString(iStats.attribute) + "<br />";
 					});
 				}
-				// Foods and Sigils
+				// Sigils
 				else if (det.infix_upgrade.buff)
 				{
-					attrstr += "<span class='itmBuff'>" + E.getBuffDescription(item) + "</span>";
+					attrstr += "<span class='itmBuff'>" + E.formatItemDescription(item) + "</span>";
 					statsbrktop = "<br />";
 				}
 				// Runes
@@ -5593,19 +5633,36 @@ E = {
 			attrstr = statsbrktop + attrstr;
 			attrstr += "</aside>";
 		}
+		// Foods and Utilities
+		else if (type === "Consumable")
+		{
+			attrstr += D.getString("DoubleClickToConsume") + "<br />";
+			if (det.duration_ms !== undefined)
+			{
+				var consumeimg = (det.type === "Food" || det.type === "Utility") ? ("_" + (det.type).toLowerCase()) : "";
+				var consumetypestr = (det.type === "Immediate") ? D.getString("Boost") : D.getString("Nourishment");
+				var consumedurstr = (det.duration_ms > 0) ? (" (" + T.formatTooltipTime(det.duration_ms) + ")") : "";
+				attrstr += "<img class='itmIcon itmConsumableIcon' src='img/account/item/nourishment" + consumeimg + ".png' /> "
+					+ "<span class='itmGrayed itmConsumableDesc'>" + consumetypestr + consumedurstr + ": " + E.formatItemDescription(det.description) + "</span><br />";
+			}
+			else if (det.type === "Booze")
+			{
+				attrstr += D.getString("ExcessiveAlcohol") + "<br />";
+			}
+		}
 		
 		// RARITY
 		var raritystr = "";
 		if (isequipment)
 		{
-			raritystr = E.translateItemKeyword(item.rarity) + "<br />";
+			raritystr = D.getString(item.rarity) + "<br />";
 		}
 		
 		// WEIGHT
 		var weightstr = "";
 		if (det && det.weight_class)
 		{
-			weightstr = E.translateItemKeyword(det.weight_class) + "<br />";
+			weightstr = D.getString(det.weight_class) + "<br />";
 		}
 		
 		// TYPE
@@ -5615,7 +5672,7 @@ E = {
 		var levelstr = "";
 		if (item.level > 0)
 		{
-			levelstr += E.translateItemKeyword("Required Level") + ": " + item.level + "<br />";
+			levelstr += D.getString("RequiredLevel") + ": " + item.level + "<br />";
 		}
 		
 		// DESCRIPTION
@@ -5628,13 +5685,7 @@ E = {
 		var descbottomstr = "";
 		var descbrk = (statsbrktop.length > 0) ? "<br />" : "";
 		var desc = item.description || "";
-		if (desc.indexOf("<c=@") !== -1)
-		{
-			desc = desc.replace(/<c=@abilitytype>/g, "<c class='itmColor_abilitytype'>");
-			desc = desc.replace(/<c=@flavor>/g, "<c class='itmColor_flavor'>");
-			desc = desc.replace(/<c=@reminder>/g, "<c class='itmColor_reminder'>");
-			desc = desc.replace(/<c=@warning>/g, "<c class='itmColor_warning'>");
-		}
+		desc = E.formatItemDescription(desc);
 		if (item.description)
 		{
 			desc = "<aside>" + desc + "</aside>";
@@ -5677,7 +5728,7 @@ E = {
 				
 				if (wantflag)
 				{
-					flagsstr += E.translateItemKeyword(iFlag) + "<br />";
+					flagsstr += D.getString(iFlag) + "<br />";
 				}
 			});
 		}
@@ -5686,7 +5737,7 @@ E = {
 		var charbindstr = "";
 		if (settings.soulbound)
 		{
-			charbindstr = E.translateItemKeyword("Soulbound to another character") + ": " + U.escapeHTML(settings.soulbound);
+			charbindstr = D.getString("SoulboundToCharacter") + ": " + U.escapeHTML(settings.soulbound);
 		}
 		
 		// VENDOR PRICE
@@ -5725,8 +5776,8 @@ E = {
 						infusionslot = det.infusion_slots[i];
 						infusiontype = infusionslot.flags[0];
 						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
-							+ E.translateItemKeyword("Infusion_" + infusiontype) + "<br /><br />");
-						if (infusionslot.item_id !== undefined)
+							+ D.getString(infusiontype + "_Infusion") + "<br /><br />");
+						if (infusionslot.item_id !== undefined && settings.infusions === null)
 						{
 							preinfusions.push(infusionslot.item_id);
 							propstofetch++;
@@ -5741,13 +5792,21 @@ E = {
 			if ((isascended && istrinket) === false)
 			{
 				var regup = "<img class='itmSlotIcon' src='img/account/item/upgrade.png' /> "
-					+ E.translateItemKeyword("Unused Upgrade Slot") + "<br /><br />";
+					+ D.getString("UnusedUpgradeSlot") + "<br /><br />";
 				upgradestr.push(regup);
 				upgradestr.push((isdouble) ? regup : "");
-				if (det && det.suffix_item_id)
+				if (det && det.suffix_item_id && settings.upgrades === null)
 				{
 					preupgrades.push(det.suffix_item_id);
 					propstofetch++;
+				}
+				else
+				{
+					preupgrades.push(null);
+					if (isdouble)
+					{
+						preupgrades.push(null);
+					}
 				}
 			}
 		}
@@ -5760,6 +5819,10 @@ E = {
 				if (i < preinfusions.length)
 				{
 					preinfusions[i] = settings.infusions[i];
+					if (preinfusions[i])
+					{
+						propstofetch++;
+					}
 				}
 			}
 		}
@@ -5770,6 +5833,10 @@ E = {
 				if (i < preupgrades.length)
 				{
 					preupgrades[i] = settings.upgrades[i];
+					if (preupgrades[i])
+					{
+						propstofetch++;
+					}
 				}
 			}
 		}
@@ -5847,21 +5914,21 @@ E = {
 			{
 				continue;
 			}
-			(function(iIndex, iInfusionID)
+			(function(iIndex, iUpgradeID)
 			{
-				$.getJSON(U.getAPIItem(iInfusionID), function(iData)
+				$.getJSON(U.getAPIItem(iUpgradeID), function(iData)
 				{
 					var upgdesc = "";
 					if (iData.details.type === "Rune")
 					{
-						upgdesc = E.getItemRune(iData);
+						upgdesc = E.getItemRune(iData, settings.runepieces);
 					}
 					else
 					{
-						upgdesc = iData.name + "<br />" + E.getBuffDescription(iData);
+						upgdesc = iData.name + "<br />" + E.formatItemDescription(iData);
 					}
 					
-					upgradestr[iIndex] = "<span class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + upgdesc + "</span><br /><br />";
+					upgradestr[iIndex] = "<aside class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + upgdesc + "</aside><br />";
 					numfetched++;
 					finalizeTooltip();
 				}).fail(function()
@@ -5877,7 +5944,13 @@ E = {
 		{
 			$.getJSON(U.getAPISkin(settings.skin), function(iData)
 			{
-				transmstr = "<aside='itmTransmute'>" + E.translateItemKeyword("Transmuted") + "<br />" + iData.name + "</aside><br />";
+				namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + E.getRarityClass(rarity)
+					+ "'><img class='itmIcon itmIconMain' src='" + iData.icon + "' />" + U.escapeHTML(iData.name) + "</aside>";
+				transmstr = "<aside='itmTransmute'>" + D.getString("Transmuted") + "<br />" + U.escapeHTML(item.name) + "</aside><br /><br />";
+				if (settings.iconelement)
+				{
+					settings.iconelement.attr("src", iData.icon);
+				}
 				numfetched++;
 				finalizeTooltip();
 			}).fail(function()
@@ -7119,6 +7192,7 @@ E = {
  * ========================================================================== */
 D = {
 	
+	// Words to be used alone or to construct a phrase
 	Dictionary:
 	{
 		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
@@ -7314,91 +7388,132 @@ D = {
 		s_coin: {de: "münze", es: "moneda", fr: "monnaie",
 			cs: "mince", it: "moneta", pl: "moneta", pt: "moeda", ru: "монета", zh: "硬幣"},
 		s_dollar: {de: "dollar", es: "dólar", fr: "dollar",
-			cs: "dolar", it: "dollaro", pl: "polar", pt: "dólar", ru: "доллар", zh: "元"},
+			cs: "dolar", it: "dollaro", pl: "polar", pt: "dólar", ru: "доллар", zh: "元"}
+	},
+	
+	// Strings from the game copied verbatim, for use mainly in tooltips
+	Codex:
+	{
+		s_TEMPLATE: {en: "", de: "", es: "", fr: ""},
 		
 		// Item Type
-		s_Back_Item: {de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos"},
-		s_Consumable: {de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable"},
-		s_Container: {de: "Behälter", es: "Contenedor", fr: "Conteneur"},
-		s_Crafting_Material: {de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d'artisanat"},
-		s_Miniature: {de: "Miniatur", es: "Miniatura", fr: "Miniature"},
-		s_Trophy: {de: "Trophäe", es: "Trofeo", fr: "Trophée"},
+		s_Back: {en: "Back Item", de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos"},
+		s_Consumable: {en: "Consumable", de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable"},
+		s_Container: {en: "Container", de: "Behälter", es: "Contenedor", fr: "Conteneur"},
+		s_CraftingMaterial: {en: "Crafting Material", de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d'artisanat"},
+		s_MiniPet: {en: "Miniature", de: "Miniatur", es: "Miniatura", fr: "Miniature"},
+		s_Nourishment: {en: "Nourishment", de: "Verbrauchsstoff", es: "Consumible", fr: "Produit consommable"},
+		s_Boost: {en: "Boost", de: "Verstärker", es: "Potenciador", fr: "Augmentation"},
+		s_Trophy: {en: "Trophy", de: "Trophäe", es: "Trofeo", fr: "Trophée"},
 		// Item Rarity
-		s_Junk: {de: "Schrott", es: "Basura", fr: "Inutile"},
-		s_Basic: {de: "Einfach", es: "Básico", fr: "Simple"},
-		s_Fine: {de: "Edel", es: "Selecto", fr: "Raffiné"},
-		s_Masterwork: {de: "Meisterwerk", es: "Obra de arte", fr: "Chef-d'œuvre"},
-		s_Rare: {de: "Selten", es: "Excepcional", fr: "Rare"},
-		s_Exotic: {de: "Exotisch", es: "Exótico", fr: "Exotique"},
-		s_Ascended: {de: "Aufgestiegen", es: "Ascendido", fr: "Élevé"},
-		s_Legendary: {de: "Legendär", es: "Legendario", fr: "Légendaire"},
+		s_Junk: {en: "Junk", de: "Schrott", es: "Basura", fr: "Inutile"},
+		s_Basic: {en: "Basic", de: "Einfach", es: "Básico", fr: "Simple"},
+		s_Fine: {en: "Fine", de: "Edel", es: "Selecto", fr: "Raffiné"},
+		s_Masterwork: {en: "Masterwork", de: "Meisterwerk", es: "Obra de arte", fr: "Chef-d'œuvre"},
+		s_Rare: {en: "Rare", de: "Selten", es: "Excepcional", fr: "Rare"},
+		s_Exotic: {en: "Exotic", de: "Exotisch", es: "Exótico", fr: "Exotique"},
+		s_Ascended: {en: "Ascended", de: "Aufgestiegen", es: "Ascendido", fr: "Élevé"},
+		s_Legendary: {en: "Legendary", de: "Legendär", es: "Legendario", fr: "Légendaire"},
 		// Item Weight
-		s_Light: {de: "Leicht", es: "Ligero", fr: "Légèr"},
-		s_Medium: {de: "Mittel", es: "Medio", fr: "Intermédiaire"},
-		s_Heavy: {de: "Schwer", es: "Pesado", fr: "Lourd"},
+		s_LightArmor: {en: "Light", de: "Leicht", es: "Ligero", fr: "Légèr"},
+		s_MediumArmor: {en: "Medium", de: "Mittel", es: "Medio", fr: "Intermédiaire"},
+		s_HeavyArmor: {en: "Heavy", de: "Schwer", es: "Pesado", fr: "Lourd"},
 		// Item Attributes
-		s_Power: {de: "Kraft", es: "Potencia", fr: "Puissance"},
-		s_Precision: {de: "Präzision", es: "Precisión", fr: "Précision"},
-		s_Critical_Chance: {de: "Kritische Trefferchance", es: "Probabilidad de daño crítico", fr: "Chance de coup critique"},
-		s_Toughness: {de: "Zähigkeit", es: "Dureza", fr: "Robustesse"},
-		s_Armor: {de: "Rüstung", es: "Armadura", fr: "Armure"},
-		s_Vitality: {de: "Vitalität", es: "Vitalidad", fr: "Vitalité"},
-		s_Concentration: {de: "Konzentration", es: "Concentración", fr: "Concentration"},
-		s_Boon_Duration: {de: "Segensdauer", es: "Duración de bendición", fr: "Durée d'avantage"},
-		s_Condition_Damage: {de: "Zustandsschaden", es: "Daño de condición", fr: "Dégâts par altération"},
-		s_Expertise: {de: "Fachkenntnis", es: "Pericia", fr: "Expertise"},
-		s_Condition_Duration: {de: "Zustandsdauer", es: "Duración de condición", fr: "Durée d'altération"},
-		s_Ferocity: {de: "Wildheit", es: "Ferocidad", fr: "Férocité"},
-		s_Critical_Damage: {de: "Kritischer Schaden", es: "Daño crítico", fr: "Dégâts critiques"},
-		s_Health: {de: "Lebenspunkte", es: "Salud", fr: "Santé"},
-		s_Healing_Power: {de: "Heilkraft", es: "Poder de curación", fr: "Guérison"},
-		s_Agony_Resistance: {de: "Qual-Widerstand", es: "Resistencia a la agonía", fr: "Résistance à l'agonie"},
-		s_Magic_Find: {de: "Magisches Gespür", es: "Hallazgo mágico", fr: "Découverte de magie"},
+		s_Power: {en: "Power", de: "Kraft", es: "Potencia", fr: "Puissance"},
+		s_Precision: {en: "Precision", de: "Präzision", es: "Precisión", fr: "Précision"},
+		s_CriticalChance: {en: "Critical Chance", de: "Kritische Trefferchance", es: "Probabilidad de daño crítico", fr: "Chance de coup critique"},
+		s_Toughness: {en: "Toughness", de: "Zähigkeit", es: "Dureza", fr: "Robustesse"},
+		s_Armor: {en: "Armor", de: "Rüstung", es: "Armadura", fr: "Armure"},
+		s_Vitality: {en: "Vitality", de: "Vitalität", es: "Vitalidad", fr: "Vitalité"},
+		s_Concentration: {en: "Concentration", de: "Konzentration", es: "Concentración", fr: "Concentration"},
+		s_BoonDuration: {en: "Boon Duration", de: "Segensdauer", es: "Duración de bendición", fr: "Durée d'avantage"},
+		s_ConditionDamage: {en: "Condition Damage", de: "Zustandsschaden", es: "Daño de condición", fr: "Dégâts par altération"},
+		s_ConditionDuration: {en: "Expertise", de: "Fachkenntnis", es: "Pericia", fr: "Expertise"},
+		s_ConditionDuration_Attribute: {en: "Condition Duration", de: "Zustandsdauer", es: "Duración de condición", fr: "Durée d'altération"},
+		s_Ferocity: {en: "Ferocity", de: "Wildheit", es: "Ferocidad", fr: "Férocité"},
+		s_CritDamage: {en: "Critical Damage", de: "Kritischer Schaden", es: "Daño crítico", fr: "Dégâts critiques"},
+		s_Health: {en: "Health", de: "Lebenspunkte", es: "Salud", fr: "Santé"},
+		s_Healing: {en: "Healing Power", de: "Heilkraft", es: "Poder de curación", fr: "Guérison"},
+		s_AgonyResistance: {en: "Agony Resistance", de: "Qual-Widerstand", es: "Resistencia a la agonía", fr: "Résistance à l'agonie"},
+		s_MagicFind: {en: "Magic Find", de: "Magisches Gespür", es: "Hallazgo mágico", fr: "Découverte de magie"},
 		// Item Equipment
-		s_Axe: {de: "Axt", es: "Hacha", fr: "Haches"},
-		s_Dagger: {de: "Dolch", es: "Daga", fr: "Dague"},
-		s_Mace: {de: "Streitkolben", es: "Maza", fr: "Masse"},
-		s_Pistol: {de: "Pistole", es: "Pistola", fr: "Pistolet"},
-		s_Scepter: {de: "Zepter", es: "Cetro", fr: "Sceptre"},
-		s_Sword: {de: "Schwert", es: "Espada", fr: "Epée"},
-		s_Focus: {de: "Fokus", es: "Foco", fr: "Focus"},
-		s_Shield: {de: "Schild", es: "Escudo", fr: "Bouclier"},
-		s_Torch: {de: "Fackel", es: "Antorcha", fr: "Torche"},
-		s_Warhorn: {de: "Kriegshorn", es: "Cuerno de guerra", fr: "Cor de guerre"},
-		s_Greatsword: {de: "Großschwert", es: "Mandoble", fr: "Espadon"},
-		s_Hammer: {de: "Hammer", es: "Martillo", fr: "Marteau"},
-		s_Longbow: {de: "Langbogen", es: "Arco largo", fr: "Arc long"},
-		s_Rifle: {de: "Gewehr", es: "Rifle", fr: "Fusil"},
-		s_Shortbow: {de: "Kurzbogen", es: "Arco corto", fr: "Arc court"},
-		s_Staff: {de: "Stab", es: "Báculo", fr: "Bâton"},
-		s_Harpoon: {de: "Speer", es: "Lanza", fr: "Lance"},
-		s_Speargun: {de: "Harpunenschleuder", es: "Cañón de arpón", fr: "Fusil-harpon"},
-		s_Trident: {de: "Dreizack", es: "Tridente", fr: "Trident"},
-		s_Head_Armor: {de: "Kopf-Rüstung", es: "Armadura de cabeza", fr: "Armure : Couvre-chef"},
-		s_Shoulder_Armor: {de: "Schulter-Rüstung", es: "Armadura de hombros", fr: "Armure : Épaulières"},
-		s_Chest_Armor: {de: "Brust-Rüstung", es: "Armadura pectoral", fr: "Armure : Cuirasse"},
-		s_Hand_Armor: {de: "Hand-Rüstung", es: "Armadura de mano", fr: "Armure : Gants"},
-		s_Leg_Armor: {de: "Bein-Rüstung", es: "Armadura de pierna", fr: "Armure : Jambières"},
-		s_Foot_Armor: {de: "Fuß-Rüstung", es: "Armadura de pie", fr: "Armure : Bottes"},
-		s_Accessory: {de: "Accessoire", es: "Accesorio", fr: "Accessoire"},
-		s_Amulet: {de: "Amulett", es: "Amuleto", fr: "Amulette"},
-		s_Ring: {de: "Ring", es: "Anillo", fr: "Anneau"},
+		s_Axe: {en: "Axe", de: "Axt", es: "Hacha", fr: "Haches"},
+		s_Dagger: {en: "Dagger", de: "Dolch", es: "Daga", fr: "Dague"},
+		s_Mace: {en: "Mace", de: "Streitkolben", es: "Maza", fr: "Masse"},
+		s_Pistol: {en: "Pistol", de: "Pistole", es: "Pistola", fr: "Pistolet"},
+		s_Scepter: {en: "Scepter", de: "Zepter", es: "Cetro", fr: "Sceptre"},
+		s_Sword: {en: "Sword", de: "Schwert", es: "Espada", fr: "Epée"},
+		s_Focus: {en: "Focus", de: "Fokus", es: "Foco", fr: "Focus"},
+		s_Shield: {en: "Shield", de: "Schild", es: "Escudo", fr: "Bouclier"},
+		s_Torch: {en: "Torch", de: "Fackel", es: "Antorcha", fr: "Torche"},
+		s_Warhorn: {en: "Warhorn", de: "Kriegshorn", es: "Cuerno de guerra", fr: "Cor de guerre"},
+		s_Greatsword: {en: "Greatsword", de: "Großschwert", es: "Mandoble", fr: "Espadon"},
+		s_Hammer: {en: "Hammer", de: "Hammer", es: "Martillo", fr: "Marteau"},
+		s_LongBow: {en: "Longbow", de: "Langbogen", es: "Arco largo", fr: "Arc long"},
+		s_Rifle: {en: "Rifle", de: "Gewehr", es: "Rifle", fr: "Fusil"},
+		s_ShortBow: {en: "Shortbow", de: "Kurzbogen", es: "Arco corto", fr: "Arc court"},
+		s_Staff: {en: "Staff", de: "Stab", es: "Báculo", fr: "Bâton"},
+		s_Harpoon: {en: "Harpoon", de: "Speer", es: "Lanza", fr: "Lance"},
+		s_Speargun: {en: "Speargun", de: "Harpunenschleuder", es: "Cañón de arpón", fr: "Fusil-harpon"},
+		s_Trident: {en: "Trident", de: "Dreizack", es: "Tridente", fr: "Trident"},
+		s_HelmAquatic: {en: "Head Armor", de: "Kopf-Rüstung", es: "Armadura de cabeza", fr: "Armure : Couvre-chef"},
+		s_Helm: {en: "Head Armor", de: "Kopf-Rüstung", es: "Armadura de cabeza", fr: "Armure : Couvre-chef"},
+		s_Shoulders: {en: "Shoulder Armor", de: "Schulter-Rüstung", es: "Armadura de hombros", fr: "Armure : Épaulières"},
+		s_Coat: {en: "Chest Armor", de: "Brust-Rüstung", es: "Armadura pectoral", fr: "Armure : Cuirasse"},
+		s_Gloves: {en: "Hand Armor", de: "Hand-Rüstung", es: "Armadura de mano", fr: "Armure : Gants"},
+		s_Leggings: {en: "Leg Armor", de: "Bein-Rüstung", es: "Armadura de pierna", fr: "Armure : Jambières"},
+		s_Boots: {en: "Foot Armor", de: "Fuß-Rüstung", es: "Armadura de pie", fr: "Armure : Bottes"},
+		s_Accessory: {en: "Accessory", de: "Accessoire", es: "Accesorio", fr: "Accessoire"},
+		s_Amulet: {en: "Amulet", de: "Amulett", es: "Amuleto", fr: "Amulette"},
+		s_Ring: {en: "Ring", de: "Ring", es: "Anillo", fr: "Anneau"},
 		// Item Tooltip
-		s_Defense: {de: "Verteidigung", es: "Defensa", fr: "Défense"},
-		s_Weapon_Strength: {de: "Waffenstärke", es: "Fuerza del arma", fr: "Puissance d'arme"},
-		s_Required_Level: {de: "Erforderliche Stufe", es: "Nivel necesario", fr: "Niveau requis"},
-		s_Account_Bound_on_Use: {de: "Accountgebunden bei Benutzung", es: "Vinculado a cuenta en uso", fr: "Lié au compte dès l'utilisation"},
-		s_Account_Bound: {de: "Accountgebunden", es: "Vinculado a cuenta", fr: "Lié au compte"},
-		s_Soulbound_on_Use: {de: "Seelengebunden bei Benutzung", es: "Ligado en uso", fr: "Lié à l'âme dès l'utilisation"},
-		s_Soulbound: {de: "Seelengebunden", es: "Ligado", fr: "Lié à l'âme"},
-		s_Soulbound_to_another_character: {de: "An einen anderen Charakter seelengebunden", es: "Ligado a otro personaje", fr: "Lié à l'âme d'un autre personnage"},
-		s_Unique: {de: "Einzigartig", es: "Equipamiento único", fr: "Unique"},
-		s_Transmuted: {de: "Transmutiert", es: "Transmutado", fr: "Transmuté"},
-		s_Unused_Defensive_Infusion_Slot: {de: "Freier Infusionsplatz (Defensiv)", es: "Casilla de infusión defensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Défensive)"},
-		s_Unused_Offensive_Infusion_Slot: {de: "Freier Infusionsplatz (Offensiv)", es: "Casilla de infusión ofensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Offensive)"},
-		s_Unused_Utility_Infusion_Slot: {de: "Freier Infusionsplatz (Hilfe)", es: "Casilla de infusión apoyo sin utilizar", fr: "Emplacement d'infusion inutilisé (Utilitaire)"},
-		s_Unused_Agony_Infusion_Slot: {de: "Freier Infusionsplatz (Qual)", es: "Casilla de infusión agonía sin utilizar", fr: "Emplacement d'infusion inutilisé (Agonie)"},
-		s_Unused_Upgrade_Slot: {de: "Freier Aufwertungsplatz", es: "Casilla para mejoras sin utilizar", fr: "Emplacement d'amélioration inutilisé"}
+		s_Defense: {en: "Defense", de: "Verteidigung", es: "Defensa", fr: "Défense"},
+		s_WeaponStrength: {en: "Weapon Strength", de: "Waffenstärke", es: "Fuerza del arma", fr: "Puissance d'arme"},
+		s_RequiredLevel: {en: "Required Level", de: "Erforderliche Stufe", es: "Nivel necesario", fr: "Niveau requis"},
+		s_AccountBindOnUse: {en: "Account Bound on Use", de: "Accountgebunden bei Benutzung", es: "Vinculado a cuenta en uso", fr: "Lié au compte dès l'utilisation"},
+		s_AccountBound: {en: "Account Bound", de: "Accountgebunden", es: "Vinculado a cuenta", fr: "Lié au compte"},
+		s_SoulBindOnUse: {en: "Soulbound on Use", de: "Seelengebunden bei Benutzung", es: "Ligado en uso", fr: "Lié à l'âme dès l'utilisation"},
+		s_SoulbindOnAcquire: {en: "Soulbound", de: "Seelengebunden", es: "Ligado", fr: "Lié à l'âme"},
+		s_SoulboundToCharacter: {en: "Soulbound to another character", de: "An einen anderen Charakter seelengebunden", es: "Ligado a otro personaje", fr: "Lié à l'âme d'un autre personnage"},
+		s_Unique: {en: "Unique", de: "Einzigartig", es: "Equipamiento único", fr: "Unique"},
+		s_Transmuted: {en: "Transmuted", de: "Transmutiert", es: "Transmutado", fr: "Transmuté"},
+		s_Defense_Infusion: {en: "Unused Defensive Infusion Slot", de: "Freier Infusionsplatz (Defensiv)", es: "Casilla de infusión defensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Défensive)"},
+		s_Offense_Infusion: {en: "Unused Offensive Infusion Slot", de: "Freier Infusionsplatz (Offensiv)", es: "Casilla de infusión ofensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Offensive)"},
+		s_Utility_Infusion: {en: "Unused Utility Infusion Slot", de: "Freier Infusionsplatz (Hilfe)", es: "Casilla de infusión apoyo sin utilizar", fr: "Emplacement d'infusion inutilisé (Utilitaire)"},
+		s_Agony_Infusion: {en: "Unused Agony Infusion Slot", de: "Freier Infusionsplatz (Qual)", es: "Casilla de infusión agonía sin utilizar", fr: "Emplacement d'infusion inutilisé (Agonie)"},
+		s_UnusedUpgradeSlot: {en: "Unused Upgrade Slot", de: "Freier Aufwertungsplatz", es: "Casilla para mejoras sin utilizar", fr: "Emplacement d'amélioration inutilisé"},
+		s_DoubleClickToConsume: {en: "Double-click to consume.", de: "Zum Benutzen doppelklicken.", es: "Haz doble clic para consumir.", fr: "Double-cliquez pour utiliser."},
+		s_ExcessiveAlcohol: {en: "Excessive alcohol consumption will result in intoxication.", de: "Übermäßiger Alkoholkonsum führt zu Rauschzuständen.",
+			es: "El consumo excesivo de alcohol provoca embriaguez.", fr: "Consommer trop d'alcool entraîne une ivresse manifeste."}
+	},
+	
+	
+	/*
+	 * Gets a codex string based on the opted language.
+	 * @param string pText text to translate without spaces.
+	 * @returns string translated text.
+	 */
+	getString: function(pText)
+	{
+		// Use default language is not using any of the fully supported language
+		var language = O.Options.enu_Language;
+		if (D.isLanguageFullySupported() === false)
+		{
+			language = O.OptionEnum.Language.Default;
+		}
+		
+		var entry = D.Codex["s_" + pText];
+		if (entry)
+		{
+			// Get the text based on user's language
+			var value = entry[language];
+			if (value)
+			{
+				return value;
+			}
+		}
+		// Language not found so use given instead
+		return pText;
 	},
 	
 	/*
@@ -7416,7 +7531,7 @@ D = {
 	
 	/*
 	 * Gets a dictionary entry translated based on the opted language.
-	 * @param string pText text to translate without spaces.
+	 * @param string pText text to translate.
 	 * @returns string translated text.
 	 */
 	getTranslation: function(pText)
@@ -7428,7 +7543,6 @@ D = {
 		}
 		
 		// Else look up the text in the dictionary
-		var entry;
 		var value;
 		var text = pText;
 		if (text.indexOf(" ") !== -1)
@@ -10505,17 +10619,25 @@ M = {
 			that.numPins--;
 		});
 		// Right click pin: centers the pin on GPS character
-		marker.on("contextmenu", function()
+		marker.on("contextmenu", function(pEvent)
 		{
-			if (that.GPSPreviousCoord.length > 0)
+			if (that.Map.getZoom() === that.ZoomEnum.Max)
 			{
-				that.movePin(this, that.GPSPreviousCoord);
+				if (that.GPSPreviousCoord.length > 0)
+				{
+					that.movePin(this, that.GPSPreviousCoord);
+				}
+				else
+				{
+					that.movePin(this, that.Map.getCenter());
+				}
+				that.drawPersonalPath();
 			}
 			else
 			{
-				that.movePin(this, that.Map.getCenter());
+				that.Map.setView(pEvent.latlng, that.ZoomEnum.Max);
 			}
-			that.drawPersonalPath();
+			
 		});
 		// Drag pin: redraw the personal path
 		marker.on("dragend", function()
@@ -17466,6 +17588,30 @@ T = {
 	formatMinutes: function(pMinutes)
 	{
 		return T.formatSeconds(pMinutes * T.cSECONDS_IN_MINUTE);
+	},
+	
+	/*
+	 * Formats the succinct time format of ingame tooltips. Example: "59 s", "59 m", "23 h", "1 d"
+	 * @param int pMilliseconds
+	 * @returns string.
+	 */
+	formatTooltipTime: function(pMilliseconds)
+	{
+		var sec = ~~(pMilliseconds / T.cMILLISECONDS_IN_SECOND);
+		var divisors = [T.cSECONDS_IN_MINUTE, T.cSECONDS_IN_HOUR, T.cSECONDS_IN_DAY, T.cSECONDS_IN_YEAR];
+		var units = ["m", "h", "d"];
+		if (sec < T.cSECONDS_IN_MINUTE)
+		{
+			return sec + " " + D.getWord("s");
+		}
+		for (var i = 0; i < units.length; i++)
+		{
+			if (sec < divisors[i+1])
+			{
+				return ~~(sec / divisors[i]) + " " + D.getWord(units[i]);
+			}
+		}
+		return "";
 	},
 	
 	/*

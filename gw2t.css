@@ -252,6 +252,8 @@ img {
 }
 .itmIcon {
 	width: 40px; height: 40px;
+}
+.itmIconMain {
 	border-top: 1px solid #5f6569;
 	border-left: 1px solid #605f5e;
 	border-right: 1px solid #c8caca;
@@ -268,7 +270,7 @@ img {
 .itmBuff, .itmRune, .itmUpgrade {
 	color: #5599ff;
 }
-.itmUnused {
+.itmGrayed {
 	color: #aaaaaa;
 }
 .itmText {
@@ -278,6 +280,15 @@ img {
 .itmColor_flavor { color: #99eedd; }
 .itmColor_reminder { color: #aaaaaa; }
 .itmColor_warning { color: #ee0000; }
+.itmConsumableIcon {
+	display: inline-block;
+	vertical-align: top;
+}
+.itmConsumableDesc {
+	display: inline-block;
+	width: 300px;
+	line-height: 16px;
+}
 
 /*
  * Style for perfect-scrollbar JS plugin by Hyunje Alex Jun.
