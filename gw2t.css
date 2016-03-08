@@ -2025,7 +2025,8 @@ header.jsSection sup {
 	margin-bottom: 4px;
 	white-space: nowrap;
 	overflow: hidden;
-	font-family: "Times New Roman", Times, Georgia, serif;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 15px;
 }
 .chnDetails ol li ins { /* Orange event icon */
 	width: 16px; height: 16px;

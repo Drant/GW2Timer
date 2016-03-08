@@ -5481,23 +5481,28 @@ E = {
 	 * Binds an element to have a tooltip presenting item details.
 	 * @param jqobject pElement to bind tooltip.
 	 * @param object pItem details retrieved from API.
+	 * @objparam int quantity if it is a stack of these items.
 	 * @objparam intarray item IDs upgrades like sigils, runes, or gems.
 	 * @objparam intarray item IDs of infusions.
 	 * @objparam int skin ID for transmuted items.
+	 * @objparam string soulbound name of character the item is bound to.
 	 * return string HTML.
 	 */
 	bindItemTooltip: function(pElement, pItem, pOptions)
 	{
 		var settings = $.extend({
+			quantity: null,
 			infusions: null,
 			upgrades: null,
-			skin: null
+			skin: null,
+			soulbound: null
 		}, pOptions);
 		var item = pItem;
 		var type = item.type;
 		var subtype = "";
 		var det = item.details;
-		var isequipment = (type === "Weapon" || type === "Armor" || type === "Trinket" || type === "Back");
+		var isweapon = (type === "Weapon");
+		var isequipment = (isweapon || type === "Armor" || type === "Trinket" || type === "Back");
 		var istrinket = (type === "Trinket" || type === "Back");
 		var isascended = (item.rarity === E.Rarity.Ascended || item.rarity === E.Rarity.Legendary);
 		var isdouble = false;
@@ -5519,7 +5524,7 @@ E = {
 		// NAME
 		var namestr = "";
 		var rarity = (item.rarity !== undefined) ? item.rarity : E.Rarity.Basic;
-		namestr = "<aside class='itmName " + E.getRarityClass(rarity)
+		namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + E.getRarityClass(rarity)
 			+ "'><img class='itmIcon' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
 		
 		// WEAPON STRENGTH
@@ -5677,6 +5682,13 @@ E = {
 			});
 		}
 		
+		// CHARACTER BINDING
+		var charbindstr = "";
+		if (settings.soulbound)
+		{
+			charbindstr = E.translateItemKeyword("Soulbound to another character") + ": " + U.escapeHTML(settings.soulbound);
+		}
+		
 		// VENDOR PRICE
 		var vendorstr = "";
 		if (item.vendor_value > 0 && isvendorable)
@@ -5786,8 +5798,7 @@ E = {
 				+ attrstr
 				+ desctopstr
 				+ upgradebrk
-				+ infusionstr.join("")
-				+ upgradestr.join("")
+				+ ((isweapon) ? (upgradestr.join("") + infusionstr.join("")) : (infusionstr.join("") + upgradestr.join("")))
 				+ transmstr
 				+ raritystr
 				+ weightstr
@@ -5795,6 +5806,7 @@ E = {
 				+ levelstr
 				+ descbottomstr
 				+ flagsstr
+				+ charbindstr
 				+ vendorstr
 			+ "</div>";
 			var elm = $(pElement);
@@ -7379,6 +7391,7 @@ D = {
 		s_Account_Bound: {de: "Accountgebunden", es: "Vinculado a cuenta", fr: "Lié au compte"},
 		s_Soulbound_on_Use: {de: "Seelengebunden bei Benutzung", es: "Ligado en uso", fr: "Lié à l'âme dès l'utilisation"},
 		s_Soulbound: {de: "Seelengebunden", es: "Ligado", fr: "Lié à l'âme"},
+		s_Soulbound_to_another_character: {de: "An einen anderen Charakter seelengebunden", es: "Ligado a otro personaje", fr: "Lié à l'âme d'un autre personnage"},
 		s_Unique: {de: "Einzigartig", es: "Equipamiento único", fr: "Unique"},
 		s_Transmuted: {de: "Transmutiert", es: "Transmutado", fr: "Transmuté"},
 		s_Unused_Defensive_Infusion_Slot: {de: "Freier Infusionsplatz (Defensiv)", es: "Casilla de infusión defensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Défensive)"},
