@@ -1111,7 +1111,7 @@ Sale: {
 	},
 	{
 		name: "Classical Glider",
-		img: "http://i.imgur.com/GkWDFQD.png",
+		id: "77821",
 		price: 400,
 		discount: null,
 		col: 0
@@ -1156,16 +1156,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-03-08T00:00:00Z"),
-	Finish: new Date("2016-03-09T00:00:00Z"),
+	Start: new Date("2016-03-09T00:00:00Z"),
+	Finish: new Date("2016-03-10T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "49762", price: "25200", product: "49807" },
-		Fox: { id: "43483", price: "25200", product: "43451" },
-		Derwena: { id: "44656", price: "25200", product: "44946" },
-		Yana: { id: "67961", price: "25200", product: "67522" },
-		Katyn: { id: "43825", price: "25200", product: "43847" },
-		Verma: { id: "49749", price: "25200", product: "49790" }
+		Mehem: { id: "49734", price: "12600", product: "49865" },
+		Fox: { id: "50019", price: "25200", product: "50018" },
+		Derwena: { id: "50021", price: "25200", product: "50020" },
+		Yana: { id: "43815", price: "25200", product: "43791" },
+		Katyn: { id: "44662", price: "25200", product: "44949" },
+		Verma: { id: "43811", price: "25200", product: "43787" }
 	}
 }
 };

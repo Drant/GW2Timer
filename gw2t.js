@@ -3460,6 +3460,7 @@ A = {
 			{
 				A.CharacterCurrent = null;
 				$(this).find(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
+				$(this).removeClass("chrSelected");
 			}
 			else
 			{
@@ -3794,7 +3795,7 @@ A = {
 		var generateEquipment = function(pCharacter)
 		{
 			var char = pCharacter || A.getCurrentCharacter();
-			if (char === undefined || char === null || Array.isArray(char.equipment) === false)
+			if (char === undefined || char === null || Array.isArray(char.equipment) === false || $("#eqpContainer_" + char.charindex).length)
 			{
 				return;
 			}
@@ -3837,33 +3838,14 @@ A = {
 			dish.append(char.name);
 		};
 		
-		// If the equipment page is already generated, filter a specific character if the user chosen so
-		if (dish.is(":empty") === false)
-		{
-			var equipcur = $("#eqpCharacter_" + A.CharacterCurrent);
-			var equipall = $(".eqpCharacter");
-			if (A.CharacterCurrent !== null)
-			{
-				if (equipcur.length)
-				{
-					equipall.hide();
-					equipcur.show();
-				}
-				else
-				{
-					generateEquipment(A.CharacterCurrent);
-				}
-			}
-			else
-			{
-				equipall.show();
-			}
-			return;
-		}
 		// Generate for single character if user chosen, else all characters
+		var equipcur = $("#eqpContainer_" + A.CharacterCurrent);
+		var equipall = $(".eqpContainer");
 		if (A.CharacterCurrent !== null)
 		{
 			generateEquipment();
+			equipall.hide();
+			equipcur.show();
 		}
 		else
 		{
@@ -3871,6 +3853,7 @@ A = {
 			{
 				generateEquipment(iCharacter);
 			});
+			equipall.show();
 		}
 	},
 	
@@ -5531,7 +5514,6 @@ E = {
 		// If provided an equipment object, override the other parameters
 		if (settings.equipment)
 		{
-			
 			settings.infusions = settings.equipment.infusions;
 			settings.upgrades = settings.equipment.upgrades;
 			settings.skin = settings.equipment.skin;

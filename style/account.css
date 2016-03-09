@@ -509,6 +509,10 @@ a.chrWalletLink {
 	border: 1px solid #828181;
 	border-radius: 1px;
 }
+.eqpWeaponA2 .eqpSlot, .eqpWeaponB2 .eqpSlot,
+.eqpWeaponA2 .eqpIcon, .eqpWeaponB2 .eqpIcon {
+	width: 52px; height: 52px;
+}
 
 
 /* Adjustments for smaller screens
