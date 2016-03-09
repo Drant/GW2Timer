@@ -1085,7 +1085,7 @@ Story:
 	name: "", // Item name to point to English wiki
 	id: "", // Item ID to retrieve icon and tooltip details
 	img: "", // ArenaNet hosted item image, if item ID is not available
-	price: 400, // Gems value for one item
+	price: 400, // Current gem price for one item
 	discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]] OR 200, // [[quantity, gempricecurrent, gempriceoldOptional], ...] OR gempriceoldOptional
 	col: 0 // Display on left (0) or right (1) column
  */
@@ -1105,22 +1105,22 @@ Sale: {
 	{
 		name: "Elegant Fan Focus Skin",
 		id: "69664",
-		price: 600,
-		discount: 480,
+		price: 480,
+		discount: 600,
 		col: 0
 	},
 	{
 		name: "Mini Chickenado",
 		id: "66164",
-		price: 500,
-		discount: 400,
+		price: 400,
+		discount: 500,
 		col: 0
 	},
 	{
 		name: "Mini Frostbite",
 		id: "45044",
-		price: 400,
-		discount: 320,
+		price: 320,
+		discount: 400,
 		col: 0
 	},
 	{
