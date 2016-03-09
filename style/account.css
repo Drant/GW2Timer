@@ -416,10 +416,6 @@ a.chrWalletLink {
 	visibility: hidden;
 }
 
-.chrEquipHelm {
-	
-}
-
 .acc_prof { /* Profession icon sprites */
 	width: 32px; height: 32px;
 	background-image: url("../img/account/professions.png");
@@ -489,14 +485,48 @@ a.chrWalletLink {
 .acc_wallet_29 { background-position: -800px 0; }
 .acc_wallet_30 { background-position: -832px 0; }
 
+.chrSeparator {
+	margin-top: 32px;
+	margin-bottom: 16px;
+}
+.chrSepName {
+	vertical-align: middle;
+	line-height: normal;
+	font-family: Menomonia;
+	font-size: 48px;
+	color: #eeddcc;
+}
+.chrSepPortrait {
+	margin-right: 16px;
+	border-radius: 50%;
+	box-shadow: 0px 0px 10px #c8b896;
+}
+.chrSepProfession {
+	margin-left: 8px;
+}
 
 /* Equipment and Build
 ----------------------------------------------------------------------------- */
-.eqpLeft, .eqpRight {
+.eqpContainer {
+	width: 100%;
+	text-align: center;
+}
+
+.eqpHeader {
+	display: block;
+	width: 100%;
+}
+.eqpName {
+	font-size: 20px;
+}
+
+.eqpColumn {
 	display: inline-block;
 	width: 360px;
+	vertical-align: top;
 }
 .eqpRow {
+	height: 68px;
 	margin-bottom: 6px;
 }
 .eqpSlot {
@@ -509,9 +539,31 @@ a.chrWalletLink {
 	border: 1px solid #828181;
 	border-radius: 1px;
 }
+.eqpBrief {
+	display: inline-block;
+	width: 250px;
+	white-space: nowrap;
+	margin-left: 12px;
+	vertical-align: top;
+	text-align: left;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 14px;
+	line-height: 16px;
+}
+.eqpBriefName {
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 16px;
+}
+.eqpBrief img {
+	width: 20px; height: 20px;
+	vertical-align: top;
+}
 .eqpWeaponA2 .eqpSlot, .eqpWeaponB2 .eqpSlot,
 .eqpWeaponA2 .eqpIcon, .eqpWeaponB2 .eqpIcon {
 	width: 52px; height: 52px;
+}
+.eqpWeaponA1 {
+	margin-top: 24px;
 }
 
 

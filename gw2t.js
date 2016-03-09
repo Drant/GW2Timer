@@ -3400,7 +3400,7 @@ A = {
 		var getProfession = function(pCharacterInner)
 		{
 			var icon = (pCharacterInner.profession).toLowerCase();
-			pCharacterInner.charicon = icon;
+			pCharacterInner.charprofession = icon;
 			if (pCharacterInner.specializations && pCharacterInner.specializations.pve)
 			{
 				var specs = pCharacterInner.specializations.pve;
@@ -3413,7 +3413,7 @@ A = {
 						if (A.Metadata.ProfElite[specid] !== undefined)
 						{
 							icon = A.Metadata.ProfElite[specid];
-							pCharacterInner.charicon = icon; // Remember the icon
+							pCharacterInner.charprofession = icon; // Remember the icon
 							break;
 						}
 					}
@@ -3444,8 +3444,10 @@ A = {
 		var charvalue = A.Metadata.Race[(pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase()] || 1;
 		var professionvalue = (A.Metadata.Profession[(pCharacter.profession).toLowerCase()]).weight;
 		var trivial = (pCharacter.level === A.Metadata.ProfLevel.Max) ? "" : "chrTrivial";
+		// Store character portrait
+		pCharacter.charportrait = "img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG;
 		$("#chrSelection_" + pCharacter.charindex).append(
-			"<img class='chrPortrait' src='img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG + "' />"
+			"<img class='chrPortrait' src='" + pCharacter.charportrait + "' />"
 			+ "<var id='chrName_" + pCharacter.charindex + "' class='chrName' data-value='" + charvalue + "'>" + pCharacter.charname + "</var>"
 			+ "<span class='chrCommitment' data-value='" + professionvalue + "'>"
 				+ "<var class='chrProfession " + trivial + "'>"
@@ -3786,12 +3788,52 @@ A = {
 	},
 	
 	/*
+	 * Gets HTML showing character's name and icons, used as header and separator.
+	 * @param object pCharacter from API.
+	 * @returns string.
+	 */
+	formatCharacterSeparator: function(pCharacter)
+	{
+		return "<div class='chrSeparator'><img class='chrSepPortrait' src='"
+			+ pCharacter.charportrait + "' /><span class='chrSepName'>"
+			+ pCharacter.charname + "</span><img class='chrSepProfession' src='img/account/classes/"
+			+ pCharacter.charprofession + ".png' /></div>";
+	},
+	
+	/*
+	 * Gets HTML showing an item's name and slotted upgrade names, if available.
+	 * @param object pBox containing the item API object itself and associated objects.
+	 * @returns string.
+	 */
+	formatItemSummary: function(pBox)
+	{
+		var str = "";
+		var levelstr = (pBox.item.level < A.Metadata.ProfLevel.Max) ? (" (" + pBox.item.level + ")") : "";
+		str = "<span class='eqpBriefName " + E.getRarityClass(pBox.item.rarity) + "'>" + pBox.item.name + levelstr + "</span><br />";
+		pBox.infusions.forEach(function(iInfusion)
+		{
+			str += "<span class='" + E.getRarityClass(iInfusion.rarity) + "'><img src='" + iInfusion.icon + "' /> " + iInfusion.name + "</span><br />";
+		});
+		pBox.upgrades.forEach(function(iUpgrade)
+		{
+			str += "<span class='" + E.getRarityClass(iUpgrade.rarity) + "'><img src='" + iUpgrade.icon + "' /> " + iUpgrade.name + "</span><br />";
+		});
+		return str;
+	},
+	
+	/*
 	 * Generates the equipment subsection of the characters page.
 	 * @pre Characters array was loaded by AJAX.
 	 */
 	initializeEquipment: function()
 	{
 		var dish = $("#accDish_Equipment");
+		var formatEquipmentSlot = function(pEquipment)
+		{
+			return "<aside class='eqpRow eqp" + pEquipment + "'><span class='eqpSlot' style='background-image:url(\"img/account/equipment/"
+					+ pEquipment.toLowerCase() + ".png\")'></span><span class='eqpBrief'></span></aside>";
+		};
+		
 		var generateEquipment = function(pCharacter)
 		{
 			var char = pCharacter || A.getCurrentCharacter();
@@ -3800,24 +3842,22 @@ A = {
 				return;
 			}
 			
+			// Header showing character name and portrait
+			var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
+			container.append(A.formatCharacterSeparator(char));
+			
+			// Equipment icons and glance information
+			var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(container);
+			var subconright = $("<div class='eqpRight eqpColumn'></div>").appendTo(container);
+			var subconbuild = $("<div class='eqpBuild eqpColumn'></div>").appendTo(container);
 			var equipleft = ["Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots", "WeaponA1", "WeaponA2", "WeaponB1", "WeaponB2"];
 			var equipright = ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2", "Sickle", "Axe", "Pick", "HelmAquatic", "WeaponAquaticA", "WeaponAquaticB"];
-			var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
-			var subconleft = $("<div class='eqpLeft'></div>").appendTo(container);
-			var subconright = $("<div class='eqpRight'></div>").appendTo(container);
-			var subconbuild = $("<div class='eqpBuild'></div>").appendTo(container);
-			
+			// The armor and weapon column is all vertical so can be looped
 			for (var i in equipleft)
 			{
-				subconleft.append("<aside class='eqpRow eqp" + equipleft[i] + "'><span id='eqp" + equipleft[i]
-					+ "_" + char.charindex + "' class='eqpSlot' style='background-image:url(\"img/account/equipment/"
-					+ (equipleft[i]).toLowerCase() + ".png\")'></span><span class='eqpNames'></span></aside>");
+				subconleft.append(formatEquipmentSlot(equipleft[i]));
 			}
-			for (var i in equipright)
-			{
-				subconright.append("<aside class='eqp" + equipright[i] + "'><span id='eqp" + equipright[i]
-					+ "_" + char.charindex + "' class='eqpSlot'></span><span class='eqpNames'></span></aside>");
-			}
+			// Trinkets and underwater column is structured manually
 			
 			
 			for (var i in char.equipment)
@@ -3826,16 +3866,22 @@ A = {
 				{
 					$.getJSON(U.getAPIItem(iEquip.id), function(iData)
 					{
-						var slot = $("#eqp" + iEquip.slot + "_" + char.charindex);
+						var row = $("#eqpContainer_" + char.charindex).find(".eqp" + iEquip.slot);
+						var slot = row.find(".eqpSlot");
 						var slotimg = (iEquip.skin) ? "img/ui/placeholder.png" : iData.icon;
 						var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
-						var iconelement = (iEquip.skin) ? sloticon : null;
-						E.bindItemTooltip(slot, iData, {equipment: iEquip, iconelement: iconelement});
+						E.bindItemTooltip(slot, iData, {equipment: iEquip, callback: function(iBox)
+						{
+							// Set the slot icon as the transmuted skin icon
+							row.find(".eqpBrief").append(A.formatItemSummary(iBox));
+							if (iBox.skin)
+							{
+								sloticon.attr("src", iBox.skin.icon);
+							}
+						}});
 					});
 				})(char.equipment[i]);
 			}
-			
-			dish.append(char.name);
 		};
 		
 		// Generate for single character if user chosen, else all characters
@@ -5498,19 +5544,13 @@ E = {
 	 * @objparam int skin ID for transmuted items.
 	 * @objparam object equipment from characters API.
 	 * @objparam string soulbound name of character the item is bound to.
-	 * return string HTML.
+	 * @objparam function callback what to do after the tooltip generation
+	 * completes. This provides an object containing additionally retrieved
+	 * API objects like upgrades and skin.
 	 */
 	bindItemTooltip: function(pElement, pItem, pOptions)
 	{
-		var settings = $.extend({
-			quantity: null,
-			infusions: null,
-			upgrades: null,
-			skin: null,
-			runepieces: 0,
-			equipment: null,
-			soulbound: null
-		}, pOptions);
+		var settings = pOptions || {};
 		// If provided an equipment object, override the other parameters
 		if (settings.equipment)
 		{
@@ -5518,6 +5558,10 @@ E = {
 			settings.upgrades = settings.equipment.upgrades;
 			settings.skin = settings.equipment.skin;
 		}
+		// These will hold retrieved API objects, if a callback was requested
+		var infusionobjs = [];
+		var upgradeobjs = [];
+		var skinobj = null;
 		
 		var item = pItem;
 		var type = item.type;
@@ -5530,6 +5574,7 @@ E = {
 		var isdouble = false;
 		var isvendorable = true;
 		var isaccountbound = false;
+		var issoulbound = false;
 		var propstofetch = 0;
 		var numfetched = 0;
 		if (det && det.type)
@@ -5546,7 +5591,7 @@ E = {
 		// NAME
 		var namestr = "";
 		var rarity = (item.rarity !== undefined) ? item.rarity : E.Rarity.Basic;
-		namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + E.getRarityClass(rarity)
+		namestr = "<aside class='itmName " + ((settings.quantity !== undefined) ? (settings.quantity + " ") : "") + E.getRarityClass(rarity)
 			+ "'><img class='itmIcon itmIconMain' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
 		
 		// WEAPON STRENGTH
@@ -5581,7 +5626,7 @@ E = {
 				// Armors, weapons, trinkets
 				if (isequipment)
 				{
-					if (det.infix_upgrade.buff)
+					if (det.infix_upgrade.buff && det.infix_upgrade.buff.description)
 					{
 						buffnumbers = (det.infix_upgrade.buff.description).split("\n");
 						buffnumbers.forEach(function(iBuff)
@@ -5688,9 +5733,16 @@ E = {
 			item.flags.forEach(function(iFlag)
 			{
 				var wantflag = false;
-				if (iFlag === "Unique"
-					|| iFlag === "SoulbindOnAcquire"
-					|| iFlag === "SoulBindOnUse")
+				if (iFlag === "Unique")
+				{
+					wantflag = true;
+				}
+				else if (iFlag === "SoulbindOnAcquire") // "SoulbindOnAcquire" flag shall override "SoulBindOnUse"
+				{
+					issoulbound = true;
+					wantflag = true;
+				}
+				else if (iFlag === "SoulBindOnUse" && issoulbound === false)
 				{
 					wantflag = true;
 				}
@@ -5759,7 +5811,7 @@ E = {
 						infusiontype = infusionslot.flags[0];
 						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
 							+ D.getString(infusiontype + "_Infusion") + "<br /><br />");
-						if (infusionslot.item_id !== undefined && settings.infusions === null)
+						if (infusionslot.item_id !== undefined && settings.infusions === undefined)
 						{
 							preinfusions.push(infusionslot.item_id);
 							propstofetch++;
@@ -5777,7 +5829,7 @@ E = {
 					+ D.getString("UnusedUpgradeSlot") + "<br /><br />";
 				upgradestr.push(regup);
 				upgradestr.push((isdouble) ? regup : "");
-				if (det && det.suffix_item_id && settings.upgrades === null)
+				if (det && det.suffix_item_id && settings.upgrades === undefined)
 				{
 					preupgrades.push(det.suffix_item_id);
 					propstofetch++;
@@ -5861,6 +5913,16 @@ E = {
 			var elm = $(pElement);
 			elm.attr("title", html);
 			I.qTip.init(elm);
+			// Execute callback if provided
+			if (settings.callback)
+			{
+				settings.callback({
+					item: item,
+					infusions: infusionobjs,
+					upgrades: upgradeobjs,
+					skin: skinobj
+				});
+			}
 		};
 		
 		/*
@@ -5879,6 +5941,10 @@ E = {
 				{
 					infusionstr[iIndex] = "<span class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + iData.name + "<br />"
 						+ iData.details.infix_upgrade.buff.description + "</span><br /><br />";
+					if (settings.callback)
+					{
+						infusionobjs.push(iData);
+					}
 					numfetched++;
 					finalizeTooltip();
 				}).fail(function()
@@ -5903,7 +5969,7 @@ E = {
 					var upgdesc = "";
 					if (iData.details.type === "Rune")
 					{
-						upgdesc = E.getItemRune(iData, settings.runepieces);
+						upgdesc = E.getItemRune(iData, ((settings.runepieces) ? settings.runepieces : 0));
 					}
 					else
 					{
@@ -5911,6 +5977,10 @@ E = {
 					}
 					
 					upgradestr[iIndex] = "<aside class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + upgdesc + "</aside><br />";
+					if (settings.callback)
+					{
+						upgradeobjs.push(iData);
+					}
 					numfetched++;
 					finalizeTooltip();
 				}).fail(function()
@@ -5929,9 +5999,9 @@ E = {
 				namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + E.getRarityClass(rarity)
 					+ "'><img class='itmIcon itmIconMain' src='" + iData.icon + "' />" + U.escapeHTML(iData.name) + "</aside>";
 				transmstr = "<aside='itmTransmute'>" + D.getString("Transmuted") + "<br />" + U.escapeHTML(item.name) + "</aside><br /><br />";
-				if (settings.iconelement)
+				if (settings.callback)
 				{
-					settings.iconelement.attr("src", iData.icon);
+					skinobj = iData;
 				}
 				numfetched++;
 				finalizeTooltip();

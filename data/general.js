@@ -1103,10 +1103,24 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Captain's Airship Pass",
-		id: "50104",
-		price: 800,
-		discount: 1000,
+		name: "Elegant Fan Focus Skin",
+		id: "69664",
+		price: 600,
+		discount: 480,
+		col: 0
+	},
+	{
+		name: "Mini Chickenado",
+		id: "66164",
+		price: 500,
+		discount: 400,
+		col: 0
+	},
+	{
+		name: "Mini Frostbite",
+		id: "45044",
+		price: 400,
+		discount: 320,
 		col: 0
 	},
 	{
@@ -1114,7 +1128,7 @@ Sale: {
 		id: "77821",
 		price: 400,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Butterfly Wings Backpack",
@@ -1164,7 +1178,7 @@ Vendor:
 		Fox: { id: "50019", price: "25200", product: "50018" },
 		Derwena: { id: "50021", price: "25200", product: "50020" },
 		Yana: { id: "43815", price: "25200", product: "43791" },
-		Katyn: { id: "44662", price: "25200", product: "44949" },
+		Katyn: { id: "44662", price: "25200", product: "44948" },
 		Verma: { id: "43811", price: "25200", product: "43787" }
 	}
 }
