@@ -152,6 +152,9 @@ input[type="text"].accTokenHovered {
 #chrSummary var {
 	line-height: normal;
 }
+#chrAccountLink {
+	text-decoration: none;
+}
 #chrAccountName {
 	font-family: Menomonia;
 	font-size: 64px;

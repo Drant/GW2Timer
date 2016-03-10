@@ -247,7 +247,7 @@ Fractal:
 {
 	url_en: "http://wiki-en.guildwars2.com/wiki/Fractals_of_the_Mists#Fractal_levels",
 	url_de: "http://wiki-de.guildwars2.com/wiki/Fraktale_der_Nebel#Stufen",
-	url_es: "http://wiki-es.guildwars2.com/wiki/Fractales_de_la_niebla",
+	url_es: "http://wiki-es.guildwars2.com/wiki/Fractales_de_la_niebla#Niveles_Fractales",
 	url_fr: "http://wiki-fr.guildwars2.com/wiki/Fractales_des_Brumes#Difficult.C3.A9_et_fractales",
 	Scale:
 	{
@@ -1170,16 +1170,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-03-09T00:00:00Z"),
-	Finish: new Date("2016-03-10T00:00:00Z"),
+	Start: new Date("2016-03-10T00:00:00Z"),
+	Finish: new Date("2016-03-11T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "49734", price: "12600", product: "49865" },
-		Fox: { id: "50019", price: "25200", product: "50018" },
-		Derwena: { id: "50021", price: "25200", product: "50020" },
-		Yana: { id: "43815", price: "25200", product: "43791" },
-		Katyn: { id: "44662", price: "25200", product: "44948" },
-		Verma: { id: "43811", price: "25200", product: "43787" }
+		Mehem: { id: "43830", price: "25200", product: "43851" },
+		Fox: { id: "49734", price: "12600", product: "49865" },
+		Derwena: { id: "43800", price: "25200", product: "43866" },
+		Yana: { id: "43819", price: "25200", product: "43795" },
+		Katyn: { id: "43822", price: "25200", product: "43844" },
+		Verma: { id: "49777", price: "25200", product: "49821" }
 	}
 }
 };

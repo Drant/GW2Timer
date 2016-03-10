@@ -3572,6 +3572,7 @@ A = {
 		{
 			A.Data.Account = pData;
 			var accountname = U.escapeHTML(((pData.name).split("."))[0]); // Omit the identifier number from the account name
+			var forumlink = U.convertExternalAnchor("https://forum-en.guildwars2.com/members/" + pData.name.replace(/[\s\.]/g, "-") + "/showposts");
 			var totalagehour = Math.round(totalage / T.cSECONDS_IN_HOUR);
 			var accountbirthdate = new Date(pData.created);
 			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMILLISECONDS_IN_SECOND);
@@ -3579,7 +3580,7 @@ A = {
 			var commandership = (pData.commander) ? "" : "chrTrivial";
 			var access = (pData.access) ? "" : "chrTrivial";
 			var accountadditional = "<span id='chrAccountMisc'>"
-				+ "<dfn title='" + U.escapeHTML(pData.id) + "'>" + U.escapeHTML(pData.name) + "</dfn><br />" + accountbirthdate.toLocaleString() + "<br />"
+				+ "<dfn><a id='chrAccountLink' title='" + U.escapeHTML(pData.id) + "'" + forumlink + ">" + U.escapeHTML(pData.name) + "</a></dfn><br />" + accountbirthdate.toLocaleString() + "<br />"
 				+ "<img class='" + commandership +  "' src='img/account/commander.png' />"
 				+ "<img class='" + access +  "' src='img/account/access_hot.png' /> "
 				+ "<img src='img/account/fractal.png' />" + (pData.fractal_level || "?") + " "

@@ -2033,9 +2033,9 @@ header.jsSection sup {
 	margin-bottom: 8px;
 }
 .chnDetails ol li { /* Contains the event icon and event name */
+	display: block;
 	margin-bottom: 4px;
 	white-space: nowrap;
-	overflow: hidden;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 15px;
 }
