@@ -163,6 +163,10 @@ input[type="text"].accTokenHovered {
 	letter-spacing: 2px;
 	color: #ffeebb;
 }
+input[type="text"].accTokenNameUsed {
+	background: linear-gradient(to right, #7c7253 0%, rgba(255,255,255,0) 100%);
+	color: #ddff77;
+}
 #chrAccountServer {
 	font-size: 24px;
 	font-family: Menomonia;
@@ -527,20 +531,63 @@ a.chrWalletLink {
 	display: inline-block;
 	width: 360px;
 	vertical-align: top;
+	text-align: left;
 }
-.eqpRow {
+.eqpRight {
+	vertical-align: bottom;
+	padding-bottom: 38px;
+}
+.eqpRow { /* Subcontainer for left column */
 	height: 68px;
 	margin-bottom: 6px;
 }
-.eqpSlot {
+.eqpCell { /* A container of a slot for right column */
+	display: block;
+	float: left;
+	margin-bottom: 7px;
+	margin-right: 7px;
+}
+.eqpSlotOuter {
+	display: inline-block;
+	width: 65px;
+	text-align: center;
+}
+.eqpRow .eqpSlot {
 	display: inline-block;
 	width: 65px; height: 65px;
 	background-size: cover;
 }
+.eqpCell .eqpSlot {
+	display: block;
+	width: 52px; height: 52px;
+	background-size: cover;
+}
 .eqpIcon {
-	width: 64px; height: 64px;
 	border: 1px solid #828181;
 	border-radius: 1px;
+}
+.eqpRow .eqpIcon {
+	width: 64px; height: 64px;
+}
+.eqpCell .eqpIcon {
+	width: 52px; height: 52px;
+}
+.eqpIcon:hover {
+	border: 1px solid #929391;
+}
+.eqpSwap {
+	width: 64px;
+	text-align: center;
+	margin-bottom: 6px;
+}
+.eqpSwapIcon, .eqpSwapIcon {
+	width: 38px; height: 38px;
+}
+.eqpSwapOuter {
+	position: absolute;
+	width: 64px;
+	margin-top: -22px;
+	text-align: center;
 }
 .eqpBrief {
 	display: inline-block;
@@ -552,6 +599,10 @@ a.chrWalletLink {
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 14px;
 	line-height: 16px;
+}
+.eqpRight .eqpBrief {
+	margin-left: 0;
+	margin-bottom: 8px;
 }
 .eqpBriefName {
 	font-family: Trebuchet MS, Menomonia;
@@ -567,6 +618,21 @@ a.chrWalletLink {
 }
 .eqpWeaponA1 {
 	margin-top: 24px;
+}
+.eqpWeaponA2 {
+	height: 52px;
+}
+.eqpAmulet, .eqpSickle, .eqpHelmAquatic { /* Break the line between trinkets and underwater */
+	clear: left;
+}
+.eqpBriefRight {
+	display: block;
+	margin-bottom: 8px;
+}
+.eqpSepGathering, .eqpSepUnderwater {
+	display: block;
+	height: 16px;
+	clear: both;
 }
 
 

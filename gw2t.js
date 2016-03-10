@@ -3202,6 +3202,7 @@ A = {
 		if (pIsUsed !== undefined && pIsUsed === true)
 		{
 			A.TokenCurrent = U.stripToAlphanumericDash(pAPIKey);
+			name.addClass("accTokenNameUsed");
 			use.addClass("btnFocused");
 		}
 		
@@ -3211,7 +3212,9 @@ A = {
 			var str = key.val();
 			if (str.length > 0)
 			{
-				$("#accManager button").removeClass("btnFocused");
+				$(".accTokenName").removeClass("accTokenNameUsed");
+				$(".accTokenUse").removeClass("btnFocused");
+				name.addClass("accTokenNameUsed");
 				use.addClass("btnFocused");
 				A.TokenCurrent = U.stripToAlphanumericDash(str);
 				A.loadToken();
@@ -3400,6 +3403,7 @@ A = {
 		var getProfession = function(pCharacterInner)
 		{
 			var icon = (pCharacterInner.profession).toLowerCase();
+			pCharacterInner.charelite = icon;
 			pCharacterInner.charprofession = icon;
 			if (pCharacterInner.specializations && pCharacterInner.specializations.pve)
 			{
@@ -3413,7 +3417,7 @@ A = {
 						if (A.Metadata.ProfElite[specid] !== undefined)
 						{
 							icon = A.Metadata.ProfElite[specid];
-							pCharacterInner.charprofession = icon; // Remember the icon
+							pCharacterInner.charelite = icon; // Remember the icon
 							break;
 						}
 					}
@@ -3472,7 +3476,7 @@ A = {
 				$(".chrSelection").removeClass("chrSelected");
 				$(this).addClass("chrSelected");
 			}
-		}).on("contextmenu", function()
+		}).dblclick(function()
 		{
 			var charindex = U.getSubintegerFromHTMLID($(this));
 			U.printJSON(A.Data.Characters[charindex]);
@@ -3798,7 +3802,7 @@ A = {
 		return "<div class='chrSeparator'><img class='chrSepPortrait' src='"
 			+ pCharacter.charportrait + "' /><span class='chrSepName'>"
 			+ pCharacter.charname + "</span><img class='chrSepProfession' src='img/account/classes/"
-			+ pCharacter.charprofession + ".png' /></div>";
+			+ pCharacter.charelite + ".png' /></div>";
 	},
 	
 	/*
@@ -3829,11 +3833,21 @@ A = {
 	initializeEquipment: function()
 	{
 		var dish = $("#accDish_Equipment");
-		var formatEquipmentSlot = function(pEquipment)
+		var formatEquipmentSlotLeft = function(pEquipment)
 		{
-			return "<aside class='eqpRow eqp" + pEquipment + "'><span class='eqpSlot' style='background-image:url(\"img/account/equipment/"
-					+ pEquipment.toLowerCase() + ".png\")'></span><span class='eqpBrief'></span></aside>";
+			return "<aside class='eqpRow eqp" + pEquipment + "'>"
+				+ "<span class='eqpSlotOuter'><span class='eqpSlot eqpSlot_" + pEquipment
+					+ "' style='background-image:url(\"img/account/equipment/" + pEquipment.toLowerCase() + ".png\")'></span></span>"
+				+ "<span class='eqpBrief eqpBrief_" + pEquipment + "'></span>"
+			+ "</aside>";
 		};
+		var formatEquipmentSlotRight = function(pEquipment)
+		{
+			return "<aside class='eqpCell eqp" + pEquipment + "'>"
+				+ "<span class='eqpSlot eqpSlot_" + pEquipment
+					+ "' style='background-image:url(\"img/account/equipment/" + pEquipment.toLowerCase() + ".png\")'></span>"
+			+ "</aside>";
+		}; 
 		
 		var generateEquipment = function(pCharacter)
 		{
@@ -3853,13 +3867,30 @@ A = {
 			var subconbuild = $("<div class='eqpBuild eqpColumn'></div>").appendTo(container);
 			var equipleft = ["Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots", "WeaponA1", "WeaponA2", "WeaponB1", "WeaponB2"];
 			var equipright = ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2", "Sickle", "Axe", "Pick", "HelmAquatic", "WeaponAquaticA", "WeaponAquaticB"];
-			// The armor and weapon column is all vertical so can be looped
-			for (var i in equipleft)
+			var equiprightbrief = ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2"];
+			// The armor and weapon column
+			equipleft.forEach(function(iEquip)
 			{
-				subconleft.append(formatEquipmentSlot(equipleft[i]));
-			}
-			// Trinkets and underwater column is structured manually
-			
+				subconleft.append(formatEquipmentSlotLeft(iEquip));
+			});
+			// Add swap weapon ornamental icon
+			subconleft.find(".eqpWeaponA2").after("<aside class='eqpSwap'><img class='eqpSwapIcon' src='img/account/equipment/swap.png' /></aside>");
+			subconleft.find(".eqpWeaponA1").after("<span class='eqpSwapOuter eqpSwapA'><img class='eqpSwapIcon' src='img/account/equipment/swapa.png' /></span>");
+			subconleft.find(".eqpWeaponB1").after("<span class='eqpSwapOuter eqpSwapB'><img class='eqpSwapIcon' src='img/account/equipment/swapb.png' /></span>");
+			// Trinkets and underwater
+			equipright.forEach(function(iEquip)
+			{
+				subconright.append(formatEquipmentSlotRight(iEquip));
+			});
+			subconright.prepend("<aside class='eqpSepTrinket'></aside>");
+			var briefcontainer = $("<aside class='eqpBriefRight'></aside>").prependTo(subconright);
+			equiprightbrief.forEach(function(iEquip)
+			{
+				briefcontainer.append("<span class='eqpBrief eqpBrief_" + iEquip + "' style='display:none;'></span>");
+			});
+			// Add padding separators
+			subconright.find(".eqpRing2").after("<aside class='eqpSepGathering'></aside>");
+			subconright.find(".eqpPick").after("<aside class='eqpSepUnderwater'></aside>");
 			
 			for (var i in char.equipment)
 			{
@@ -3867,14 +3898,14 @@ A = {
 				{
 					$.getJSON(U.getAPIItem(iEquip.id), function(iData)
 					{
-						var row = $("#eqpContainer_" + char.charindex).find(".eqp" + iEquip.slot);
-						var slot = row.find(".eqpSlot");
+						var ithcontainer = $("#eqpContainer_" + char.charindex);
+						var slot = ithcontainer.find(".eqpSlot_" + iEquip.slot);
 						var slotimg = (iEquip.skin) ? "img/ui/placeholder.png" : iData.icon;
 						var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
 						E.bindItemTooltip(slot, iData, {equipment: iEquip, callback: function(iBox)
 						{
 							// Set the slot icon as the transmuted skin icon
-							row.find(".eqpBrief").append(A.formatItemSummary(iBox));
+							ithcontainer.find(".eqpBrief_" + iEquip.slot).append(A.formatItemSummary(iBox)).show();
 							if (iBox.skin)
 							{
 								sloticon.attr("src", iBox.skin.icon);
@@ -3882,6 +3913,16 @@ A = {
 						}});
 					});
 				})(char.equipment[i]);
+			}
+			
+			// Hide secondary weapon slots for professions that can't swap weapons
+			if (char.charprofession === "elementalist" || char.charprofession === "engineer")
+			{
+				var elmstohide = [".eqpSwap", ".eqpSwapB", ".eqpWeaponB1", ".eqpWeaponB2", ".eqpWeaponAquaticB"];
+				elmstohide.forEach(function(iSelector)
+				{
+					container.find(iSelector).css({visibility: "hidden"});
+				});
 			}
 		};
 		

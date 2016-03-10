@@ -1103,24 +1103,10 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Elegant Fan Focus Skin",
-		id: "69664",
-		price: 480,
-		discount: 600,
-		col: 0
-	},
-	{
-		name: "Mini Chickenado",
-		id: "66164",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Mini Frostbite",
-		id: "45044",
-		price: 320,
-		discount: 400,
+		name: "Transmutation Charge",
+		id: "64737",
+		price: 127,
+		discount: [[5, 127, 150], [10, 229, 270], [25, 510, 600]],
 		col: 0
 	},
 	{
@@ -1128,7 +1114,7 @@ Sale: {
 		id: "77821",
 		price: 400,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Butterfly Wings Backpack",
