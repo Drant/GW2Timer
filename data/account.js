@@ -155,55 +155,55 @@ var GW2T_ACCOUNT_METADATA = {
 			id: 1,
 			weight: 2,
 			color: "turquoise",
-			weaponswap: true
+			isswappable: true
 		},
 		warrior: {
 			id: 2,
 			weight: 3,
 			color: "sandybrown",
-			weaponswap: true
+			isswappable: true
 		},
 		engineer: {
 			id: 3,
 			weight: 4,
 			color: "burlyWood",
-			weaponswap: false
+			isswappable: false
 		},
 		ranger: {
 			id: 4,
 			weight: 5,
 			color: "greenyellow",
-			weaponswap: true
+			isswappable: true
 		},
 		thief: {
 			id: 5,
 			weight: 6,
 			color: "darkgray",
-			weaponswap: true
+			isswappable: true
 		},
 		elementalist: {
 			id: 6,
 			weight: 9,
 			color: "orangered",
-			weaponswap: false
+			isswappable: false
 		},
 		mesmer: {
 			id: 7,
 			weight: 8,
 			color: "violet",
-			weaponswap: true
+			isswappable: true
 		},
 		necromancer: {
 			id: 8,
 			weight: 7,
 			color: "seagreen",
-			weaponswap: true
+			isswappable: true
 		},
 		revenant: {
 			id: 9,
 			weight: 1,
 			color: "slategray",
-			weaponswap: true
+			isswappable: true
 		}
 	},
 	ProfAssociation: { // Corresponds to MumbleLink assignment

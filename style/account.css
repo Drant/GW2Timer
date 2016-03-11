@@ -580,6 +580,9 @@ a.chrWalletLink {
 	text-align: center;
 	margin-bottom: 6px;
 }
+.eqpSwapAquatic {
+	margin: 5px 2px 0px -4px;
+}
 .eqpSwapIcon, .eqpSwapIcon {
 	width: 38px; height: 38px;
 }
@@ -588,6 +591,12 @@ a.chrWalletLink {
 	width: 64px;
 	margin-top: -22px;
 	text-align: center;
+}
+.eqpSwapAquaticOuter {
+	display: block;
+	float: left;
+	margin-left: -50px;
+	margin-top: 28px;
 }
 .eqpBrief {
 	display: inline-block;
@@ -615,6 +624,10 @@ a.chrWalletLink {
 .eqpWeaponA2 .eqpSlot, .eqpWeaponB2 .eqpSlot,
 .eqpWeaponA2 .eqpIcon, .eqpWeaponB2 .eqpIcon {
 	width: 52px; height: 52px;
+}
+.eqpWeaponAquaticA .eqpSlot, .eqpWeaponAquaticB .eqpSlot,
+.eqpWeaponAquaticA .eqpIcon, .eqpWeaponAquaticB .eqpIcon {
+	width: 48px; height: 48px;
 }
 .eqpWeaponA1 {
 	margin-top: 24px;

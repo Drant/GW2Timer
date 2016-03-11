@@ -3868,7 +3868,7 @@ A = {
 			var equipleft = ["Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots", "WeaponA1", "WeaponA2", "WeaponB1", "WeaponB2"];
 			var equipright = ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2", "Sickle", "Axe", "Pick", "HelmAquatic", "WeaponAquaticA", "WeaponAquaticB"];
 			var equiprightbrief = ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2"];
-			// The armor and weapon column
+			// LEFT COLUMN armor and weapon
 			equipleft.forEach(function(iEquip)
 			{
 				subconleft.append(formatEquipmentSlotLeft(iEquip));
@@ -3877,7 +3877,7 @@ A = {
 			subconleft.find(".eqpWeaponA2").after("<aside class='eqpSwap'><img class='eqpSwapIcon' src='img/account/equipment/swap.png' /></aside>");
 			subconleft.find(".eqpWeaponA1").after("<span class='eqpSwapOuter eqpSwapA'><img class='eqpSwapIcon' src='img/account/equipment/swapa.png' /></span>");
 			subconleft.find(".eqpWeaponB1").after("<span class='eqpSwapOuter eqpSwapB'><img class='eqpSwapIcon' src='img/account/equipment/swapb.png' /></span>");
-			// Trinkets and underwater
+			// RIGHT COLUMN trinket and underwater
 			equipright.forEach(function(iEquip)
 			{
 				subconright.append(formatEquipmentSlotRight(iEquip));
@@ -3891,6 +3891,10 @@ A = {
 			// Add padding separators
 			subconright.find(".eqpRing2").after("<aside class='eqpSepGathering'></aside>");
 			subconright.find(".eqpPick").after("<aside class='eqpSepUnderwater'></aside>");
+			// Add swap weapon ornamental icon
+			subconright.find(".eqpWeaponAquaticA").after("<aside class='eqpSwapAquatic eqpCell'><img class='eqpSwapIcon' src='img/account/equipment/swap.png' /></aside>");
+			subconright.find(".eqpWeaponAquaticA").after("<span class='eqpSwapAquaticOuter eqpSwapAquaticA'><img class='eqpSwapIcon' src='img/account/equipment/swapaquatica.png' /></span>");
+			subconright.find(".eqpWeaponAquaticB").after("<span class='eqpSwapAquaticOuter eqpSwapAquaticB'><img class='eqpSwapIcon' src='img/account/equipment/swapaquaticb.png' /></span>");
 			
 			for (var i in char.equipment)
 			{
@@ -3916,7 +3920,7 @@ A = {
 			}
 			
 			// Hide secondary weapon slots for professions that can't swap weapons
-			if (char.charprofession === "elementalist" || char.charprofession === "engineer")
+			if ((A.Metadata.Profession[char.charprofession]).isswappable === false)
 			{
 				var elmstohide = [".eqpSwap", ".eqpSwapB", ".eqpWeaponB1", ".eqpWeaponB2", ".eqpWeaponAquaticB"];
 				elmstohide.forEach(function(iSelector)
@@ -14980,6 +14984,7 @@ W = {
 	Servers: {}, // Server names and translations
 	Matches: null, // For fallback API, array containing objects with same structure as "worlds" subobject in matches.json
 	MatchupCurrent: null, // Example: { "red": 1019, "blue": 1008, "green": 1003 }
+	Guilds: {}, // Holds retrieved API guild details objects
 	Objectives: {},
 	ObjectiveTimeout: {},
 	Weapons: {},
@@ -16617,33 +16622,48 @@ W = {
 	 */
 	updateObjectiveClaim: function(pObjective)
 	{
-		if (pObjective.claimed_by === null || pObjective.claimed_by === undefined)
+		var guildid = pObjective.claimed_by;
+		var updateClaim = function()
 		{
-			// If the objective was previously claimed but has become unclaimed
+			var guild = W.Guilds[guildid];
+			pObjective.guild_name = guild.guild_name;
+			pObjective.tag = guild.tag;
+			W.updateObjectiveTooltip(pObjective);
+			var label = $("#objClaim_" + pObjective.id);
+			var prevcolor = label.css("color");
+			label.html("[" + pObjective.tag + "]");
+			// Also animate if guild has changed from previous known claimer
+			if (pObjective.prevclaimed_by !== "none")
+			{
+				I.blinkElement(label, 2000, 200);
+				label.css({color: "#ffffff"}).animate({color: prevcolor}, 4000);
+				W.addLogEntryObjective(pObjective, true);
+			}
+		};
+		
+		// If the objective was previously claimed but has become unclaimed
+		if (guildid === null || guildid === undefined)
+		{
 			pObjective.guild_name = null;
 			pObjective.tag = null;
 			W.updateObjectiveTooltip(pObjective);
 			$("#objClaim_" + pObjective.id).empty();
 		}
+		// If the objective changed claimers, update and use cached guild if available
 		else
 		{
-			// If the objective changed claimers
-			$.getJSON(U.URL_API.GuildDetails + pObjective.claimed_by, function(pData)
+			if (W.Guilds[guildid] !== undefined)
 			{
-				pObjective.guild_name = pData.guild_name;
-				pObjective.tag = pData.tag;
-				W.updateObjectiveTooltip(pObjective);
-				var label = $("#objClaim_" + pObjective.id);
-				var prevcolor = label.css("color");
-				label.html("[" + pObjective.tag + "]");
-				// Also animate if guild has changed from previous known claimer
-				if (pObjective.prevclaimed_by !== "none")
+				updateClaim();
+			}
+			else
+			{
+				$.getJSON(U.URL_API.GuildDetails + guildid, function(pData)
 				{
-					I.blinkElement(label, 2000, 200);
-					label.css({color: "#ffffff"}).animate({color: prevcolor}, 4000);
-					W.addLogEntryObjective(pObjective, true);
-				}
-			});
+					W.Guilds[guildid] = pData;
+					updateClaim();
+				});
+			}
 		}
 	},
 	
