@@ -3799,10 +3799,10 @@ A = {
 	 */
 	formatCharacterSeparator: function(pCharacter)
 	{
-		return "<div class='chrSeparator'><img class='chrSepPortrait' src='"
-			+ pCharacter.charportrait + "' /><span class='chrSepName'>"
-			+ pCharacter.charname + "</span><img class='chrSepProfession' src='img/account/classes/"
-			+ pCharacter.charelite + ".png' /></div>";
+		return "<div class='chrSeparator'><img class='chrSepPortrait' src='" + pCharacter.charportrait + "' />"
+			+ "<img class='chrSepProfession' src='img/account/classes/" + pCharacter.charelite + ".png' />"
+			+ "<span class='chrSepName'>" + pCharacter.charname + "</span>"
+		+ "</div>";
 	},
 	
 	/*
@@ -3862,9 +3862,10 @@ A = {
 			container.append(A.formatCharacterSeparator(char));
 			
 			// Equipment icons and glance information
-			var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(container);
-			var subconright = $("<div class='eqpRight eqpColumn'></div>").appendTo(container);
-			var subconbuild = $("<div class='eqpBuild eqpColumn'></div>").appendTo(container);
+			var subcontainer = $("<div class='eqpSubcontainer'></div>").appendTo(container);
+			var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(subcontainer);
+			var subconright = $("<div class='eqpRight eqpColumn'></div>").appendTo(subcontainer);
+			var subconbuild = $("<div class='eqpBuild eqpColumn'></div>").appendTo(subcontainer);
 			var equipleft = ["Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots", "WeaponA1", "WeaponA2", "WeaponB1", "WeaponB2"];
 			var equipright = ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2", "Sickle", "Axe", "Pick", "HelmAquatic", "WeaponAquaticA", "WeaponAquaticB"];
 			var equiprightbrief = ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2"];
@@ -3889,12 +3890,14 @@ A = {
 				briefcontainer.append("<span class='eqpBrief eqpBrief_" + iEquip + "' style='display:none;'></span>");
 			});
 			// Add padding separators
-			subconright.find(".eqpRing2").after("<aside class='eqpSepGathering'></aside>");
-			subconright.find(".eqpPick").after("<aside class='eqpSepUnderwater'></aside>");
+			subconright.find(".eqpRing2").after("<aside class='eqpSepGathering'><span class='eqpSepInner'></span></aside>");
+			subconright.find(".eqpPick").after("<aside class='eqpSepUnderwater'><span class='eqpSepInner'></span></aside>");
 			// Add swap weapon ornamental icon
 			subconright.find(".eqpWeaponAquaticA").after("<aside class='eqpSwapAquatic eqpCell'><img class='eqpSwapIcon' src='img/account/equipment/swap.png' /></aside>");
 			subconright.find(".eqpWeaponAquaticA").after("<span class='eqpSwapAquaticOuter eqpSwapAquaticA'><img class='eqpSwapIcon' src='img/account/equipment/swapaquatica.png' /></span>");
 			subconright.find(".eqpWeaponAquaticB").after("<span class='eqpSwapAquaticOuter eqpSwapAquaticB'><img class='eqpSwapIcon' src='img/account/equipment/swapaquaticb.png' /></span>");
+			// Add aquatic weapon background
+			subconright.append("<img class='eqpAquaticBackground' src='img/account/equipment/aquatic.png' />");
 			
 			for (var i in char.equipment)
 			{
@@ -3922,11 +3925,13 @@ A = {
 			// Hide secondary weapon slots for professions that can't swap weapons
 			if ((A.Metadata.Profession[char.charprofession]).isswappable === false)
 			{
-				var elmstohide = [".eqpSwap", ".eqpSwapB", ".eqpWeaponB1", ".eqpWeaponB2", ".eqpWeaponAquaticB"];
+				var elmstohide = [".eqpSwap", ".eqpSwapB", ".eqpWeaponB1", ".eqpWeaponB2", ".eqpSwapAquatic", ".eqpSwapAquaticB", ".eqpWeaponAquaticB"];
 				elmstohide.forEach(function(iSelector)
 				{
-					container.find(iSelector).css({visibility: "hidden"});
+					subcontainer.find(iSelector).css({visibility: "hidden"});
 				});
+				subconright.find(".eqpAquaticBackground").addClass("eqpAquaticBackgroundSingle");
+				subconright.find(".eqpHelmAquatic").addClass("eqpHelmAquaticSingle");
 			}
 		};
 		

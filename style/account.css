@@ -4,6 +4,8 @@
 */
 
 #accContent {
+	padding-left: 0;
+	padding-right: 0;
 	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -31,7 +33,7 @@
 	position: fixed; z-index: 9;
 	width: 100%;
 	padding-top: 2px;
-	background: linear-gradient(to left, rgba(255,255,255,0) 0%, #333 50%, rgba(255,255,255,0) 100%);
+	background: linear-gradient(to left, transparent 0%, #333 50%, transparent 100%);
 }
 #accOverheadPadding {
 	height: 32px;
@@ -43,7 +45,7 @@
 	text-align: center;
 	font-family: Menomonia;
 	border-bottom: 1px solid #444;
-	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #333 100%);
+	background: linear-gradient(to bottom, transparent 0%, #333 100%);
 }
 .accMenu {
 	display: inline-block;
@@ -58,7 +60,7 @@
 	background-repeat: repeat-x;
 }
 .accMenu:hover {
-	background-image: linear-gradient(to top, #7c7253 0%, rgba(255,255,255,0) 100%);
+	background-image: linear-gradient(to top, #7c7253 0%, transparent 100%);
 	animation: aniHighlight 0.4s;
 }
 .accMenu img {
@@ -67,7 +69,7 @@
 .accMenuFocused {
 	border-left: 1px solid rgba(228,224,179,0.6);
 	border-right: 1px solid rgba(228,224,179,0.6);
-	background-image: linear-gradient(to top, #7c7253 0%, rgba(255,255,255,0) 100%);
+	background-image: linear-gradient(to top, #7c7253 0%, transparent 100%);
 }
 .accMenuSubbutton:hover, .accMenuButtonFocused {
 	border-radius: 50%;
@@ -164,7 +166,7 @@ input[type="text"].accTokenHovered {
 	color: #ffeebb;
 }
 input[type="text"].accTokenNameUsed {
-	background: linear-gradient(to right, #7c7253 0%, rgba(255,255,255,0) 100%);
+	background: linear-gradient(to right, #7c7253 0%, transparent 100%);
 	color: #ddff77;
 }
 #chrAccountServer {
@@ -205,7 +207,7 @@ input[type="text"].accTokenNameUsed {
 	color: #e4e0b3;
 	border-top: 1px solid #222;
 	border-bottom: 1px solid #000;
-	background: linear-gradient(to right, #000 0%, rgba(255,255,255,0) 100%) !important;
+	background: linear-gradient(to right, #000 0%, transparent 100%) !important;
 }
 .chrHeaderLeft {
 	margin-left: 32px;
@@ -233,10 +235,10 @@ input[type="text"].accTokenNameUsed {
 	background-repeat: repeat-y;
 }
 #chrSelection li:nth-child(even) {
-	background-image: linear-gradient(to right, #333 0%, rgba(255,255,255,0) 100%);
+	background-image: linear-gradient(to right, #333 0%, transparent 100%);
 }
 #chrSelection li:hover, #chrSelection li.chrSelected {
-	background-image: linear-gradient(to right, #7c7253 0%, rgba(255,255,255,0) 100%);
+	background-image: linear-gradient(to right, #7c7253 0%, transparent 100%);
 	animation: aniHighlight 0.4s;
 }
 .chrPortrait {
@@ -320,7 +322,7 @@ input[type="text"].accTokenNameUsed {
 	line-height: 32px;
 }
 .chrStats li:nth-child(even) {
-	background-image: linear-gradient(to left, #333 0%, rgba(255,255,255,0) 100%);
+	background-image: linear-gradient(to left, #333 0%, transparent 100%);
 }
 .chrStats li:hover {
 	background: #444;
@@ -335,7 +337,7 @@ input[type="text"].accTokenNameUsed {
 	text-align: center;
 	white-space: nowrap;
 	font-family: Menomonia;
-	background: linear-gradient(to left, rgba(255,255,255,0) 0%, #333 50%, rgba(255,255,255,0) 100%);
+	background: linear-gradient(to left, transparent 0%, #333 50%, transparent 100%);
 }
 .chrAge, .chrDeaths, .chrLifetime, .chrBirthday, .chrBirthdate, .chrWalletAmount, .chrWalletCurrency { /* Text and values */
 	display: inline-block;
@@ -376,7 +378,7 @@ input[type="text"].accTokenNameUsed {
 	color: #ffbb44;
 }
 #chrGuilds li:nth-child(even) {
-	background-image: linear-gradient(to left, rgba(255,255,255,0) 0%, #333 50%, rgba(255,255,255,0) 100%);
+	background-image: linear-gradient(to left, transparent 0%, #333 50%, transparent 100%);
 }
 #chrGuilds li:hover {
 	background: #444;
@@ -494,22 +496,33 @@ a.chrWalletLink {
 
 .chrSeparator {
 	margin-top: 32px;
-	margin-bottom: 16px;
+	margin-bottom: 32px;
+	width: 100%;
+	background: linear-gradient(to bottom, transparent 0%, #333 100%);
+	border-bottom-right-radius: 50%;
+	border-bottom-left-radius: 50%;
 }
 .chrSepName {
+	margin-left: 32px;
 	vertical-align: middle;
 	line-height: normal;
 	font-family: Menomonia;
 	font-size: 48px;
 	color: #eeddcc;
+	text-shadow:
+		0px 1px 6px #000,
+		0px -1px 6px #000,
+		1px 0px 6px #000,
+		-1px 0px 6px #000;
 }
 .chrSepPortrait {
-	margin-right: 16px;
 	border-radius: 50%;
 	box-shadow: 0px 0px 10px #c8b896;
 }
 .chrSepProfession {
-	margin-left: 8px;
+	position: absolute;
+	margin-top: 32px;
+	margin-left: -32px;
 }
 
 /* Equipment and Build
@@ -517,6 +530,38 @@ a.chrWalletLink {
 .eqpContainer {
 	width: 100%;
 	text-align: center;
+}
+.eqpSubcontainer {
+	width: auto;
+	display: inline-block;
+	position: relative;
+	padding-top: 48px;
+	padding-left: 16px;
+	margin-bottom: 32px;
+	background: linear-gradient(to right, rgba(12, 12, 12, 1) 0%, rgba(85, 54, 20, 0.2) 75%, transparent 100%);
+	box-shadow: 0px 0px 32px #000;
+}
+.eqpSubcontainer:before, .eqpSubcontainer:after {
+	position: absolute;
+	content: "";
+}
+.eqpSubcontainer:before {
+	bottom: -3px;
+	left: -3px;
+}
+.eqpSubcontainer:after {
+	top: -3px;
+	left: -3px;
+}
+.eqpSubcontainer:before {
+	width: 3px;
+	top: -3px;
+	background: linear-gradient(to top, transparent, #ffaa00);
+}
+.eqpSubcontainer:after {
+	height: 3px;
+	right: -3px;
+	background: linear-gradient(to left, transparent, #ffaa00);
 }
 
 .eqpHeader {
@@ -533,15 +578,17 @@ a.chrWalletLink {
 	vertical-align: top;
 	text-align: left;
 }
+
 .eqpRight {
 	vertical-align: bottom;
-	padding-bottom: 38px;
+	padding-bottom: 28px;
 }
 .eqpRow { /* Subcontainer for left column */
 	height: 68px;
 	margin-bottom: 6px;
 }
 .eqpCell { /* A container of a slot for right column */
+	position: relative; z-index: 2;
 	display: block;
 	float: left;
 	margin-bottom: 7px;
@@ -583,7 +630,7 @@ a.chrWalletLink {
 .eqpSwapAquatic {
 	margin: 5px 2px 0px -4px;
 }
-.eqpSwapIcon, .eqpSwapIcon {
+.eqpSwapIcon {
 	width: 38px; height: 38px;
 }
 .eqpSwapOuter {
@@ -591,8 +638,10 @@ a.chrWalletLink {
 	width: 64px;
 	margin-top: -22px;
 	text-align: center;
+	pointer-events: none;
 }
 .eqpSwapAquaticOuter {
+	position: relative; z-index: 10;
 	display: block;
 	float: left;
 	margin-left: -50px;
@@ -611,7 +660,7 @@ a.chrWalletLink {
 }
 .eqpRight .eqpBrief {
 	margin-left: 0;
-	margin-bottom: 8px;
+	margin-bottom: 10px;
 }
 .eqpBriefName {
 	font-family: Trebuchet MS, Menomonia;
@@ -629,6 +678,23 @@ a.chrWalletLink {
 .eqpWeaponAquaticA .eqpIcon, .eqpWeaponAquaticB .eqpIcon {
 	width: 48px; height: 48px;
 }
+.eqpBackpack, .eqpAmulet, .eqpSickle {
+	margin-left: 16px;
+}
+.eqpAquaticBackground {
+	position: absolute;
+	display: block;
+	margin-top: -32px;
+	margin-left: -32px;
+}
+.eqpAquaticBackgroundSingle {
+	width: 134px; height: 128px;
+	margin-top: -32px;
+	margin-left: 32px;
+}
+.eqpHelmAquaticSingle {
+	margin-left: 48px;
+}
 .eqpWeaponA1 {
 	margin-top: 24px;
 }
@@ -644,8 +710,15 @@ a.chrWalletLink {
 }
 .eqpSepGathering, .eqpSepUnderwater {
 	display: block;
-	height: 16px;
+	height: 12px;
 	clear: both;
+	padding-top: 4px;
+	margin-left: -32px;
+}
+.eqpSepInner {
+	display: block;
+	width: 256px; height: 4px;
+	background: linear-gradient(to left, transparent 0%, #111 50%, transparent 100%);
 }
 
 

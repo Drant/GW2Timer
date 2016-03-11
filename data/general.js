@@ -1103,10 +1103,10 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Transmutation Charge",
-		id: "64737",
-		price: 127,
-		discount: [[5, 127, 150], [10, 229, 270], [25, 510, 600]],
+		name: "Heroic Booster",
+		id: "20005",
+		price: 112,
+		discount: [[1, 112, 150], [5, 476, 637], [20, 1574, 2100]],
 		col: 0
 	},
 	{
