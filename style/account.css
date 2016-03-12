@@ -46,6 +46,7 @@
 	font-family: Menomonia;
 	border-bottom: 1px solid #444;
 	background: linear-gradient(to bottom, transparent 0%, #333 100%);
+	border-bottom-right-radius: 8px;
 }
 .accMenu {
 	display: inline-block;
@@ -158,12 +159,21 @@ input[type="text"].accTokenHovered {
 	text-decoration: none;
 }
 #chrAccountName {
+	padding: 4px 64px 4px 64px;
 	font-family: Menomonia;
 	font-size: 64px;
 	font-variant: small-caps;
 	font-weight: bold;
 	letter-spacing: 2px;
+	background-image: url("../img/account/summary/name_bottom.png"), url("../img/account/summary/name_top.png");
+	background-position: center bottom, center top;
+	background-repeat: no-repeat;
 	color: #ffeebb;
+	text-shadow:
+		0px 1px 4px #000,
+		0px -1px 4px #000,
+		1px 0px 4px #000,
+		-1px 0px 4px #000;
 }
 input[type="text"].accTokenNameUsed {
 	background: linear-gradient(to right, #7c7253 0%, transparent 100%);
@@ -541,6 +551,7 @@ a.chrWalletLink {
 	background: linear-gradient(to right, rgba(12, 12, 12, 1) 0%, rgba(85, 54, 20, 0.2) 75%, transparent 100%);
 	box-shadow: 0px 0px 32px #000;
 }
+/* These pseudoelements act as the gradient borders */
 .eqpSubcontainer:before, .eqpSubcontainer:after {
 	position: absolute;
 	content: "";
@@ -565,10 +576,10 @@ a.chrWalletLink {
 .eqpSubcontainer_Necromancer:after { background: linear-gradient(to left, transparent, #33cc11); }
 .eqpSubcontainer_Thief:before { background: linear-gradient(to top, transparent, #555555); }
 .eqpSubcontainer_Thief:after { background: linear-gradient(to left, transparent, #555555); }
-.eqpSubcontainer_Ranger:before { background: linear-gradient(to top, transparent, #ffff00); }
-.eqpSubcontainer_Ranger:after { background: linear-gradient(to left, transparent, #ffff00); }
-.eqpSubcontainer_Engineer:before { background: linear-gradient(to top, transparent, #d19600); }
-.eqpSubcontainer_Engineer:after { background: linear-gradient(to left, transparent, #d19600); }
+.eqpSubcontainer_Ranger:before { background: linear-gradient(to top, transparent, #ffdd22); }
+.eqpSubcontainer_Ranger:after { background: linear-gradient(to left, transparent, #ffdd22); }
+.eqpSubcontainer_Engineer:before { background: linear-gradient(to top, transparent, #ffcc77); }
+.eqpSubcontainer_Engineer:after { background: linear-gradient(to left, transparent, #ffcc77); }
 .eqpSubcontainer_Warrior:before { background: linear-gradient(to top, transparent, #ffaa00); }
 .eqpSubcontainer_Warrior:after { background: linear-gradient(to left, transparent, #ffaa00); }
 .eqpSubcontainer_Guardian:before { background: linear-gradient(to top, transparent, #5599ff); }
@@ -741,6 +752,7 @@ a.chrWalletLink {
 }
 .eqpBriefRight {
 	display: block;
+	margin-bottom: 2px;
 }
 .eqpSepGathering, .eqpSepUnderwater {
 	display: block;

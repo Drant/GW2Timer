@@ -45,6 +45,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "měny", it: "valute", pl: "waluty", pt: "moedas", ru: "валюта", zh: "貨幣"},
 	s_tokens: {de: "wertmarke", es: "fichas", fr: "jetons",
 		cs: "žetony", it: "gettoni", pl: "żeton", pt: "fichas", ru: "жетоны", zh: "令牌"},
+	s_attributes: {de: "attribute", es: "atributos", fr: "caractéristiques",
+		cs: "atributy", it: "attributi", pl: "atrybuty", pt: "atributos", ru: "атрибуты", zh: "屬性"}
 };
 
 /*
@@ -206,6 +208,123 @@ var GW2T_ACCOUNT_ITEM = {
 		BriefRight: ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2"], // Item names for right column
 		ToggleableSlots: {Helm: 1, Shoulders: 1, Gloves: 1, Backpack: 1},
 		GatheringCharges: {Sickle: 50, Axe: 100, Pick: 100}
+	},
+	// Standardizes the attribute names in order to parse attributes and buff descriptions from item details
+	Attribute: {
+		Conversion: {
+			//Power: 0,
+			//Toughness: 0,
+			//Vitality: 0,
+			Precision: 21, // for +1% CriticalChance
+			Ferocity: 15, // for +1% CriticalDamage
+			//ConditionDamage: 0,
+			Expertise: 15, // for +1% ConditionDuration
+			Concentration: 15, // for +1% BoonDuration
+			//AgonyResistance: 0,
+			//Armor: 0,
+			//Health: 0,
+			//CriticalChance: 0,
+			//CriticalDamage: 0,
+			//HealingPower: 0,
+			//ConditionDuration: 0,
+			//BoonDuration: 0,
+			//MagicFind: 0,
+		},
+		KeyAttributes: { // Corresponds to "attributes" property
+			"Power": "Power",
+			"Toughness": "Toughness",
+			"Vitality": "Vitality",
+			"Precision": "Precision",
+			"CritDamage": "Ferocity",
+			"ConditionDamage": "ConditionDamage",
+			//"": "Expertise",
+			"BoonDuration": "Concentration",
+			//"": "AgonyResistance",
+			//"": "Armor",
+			//"": "Health",
+			//"": "CriticalChance",
+			//"": "CriticalDamage",
+			"Healing": "HealingPower",
+			"ConditionDuration": "ConditionDuration",
+			//"": "BoonDuration",
+			//"": "MagicFind"
+		},
+		KeyDescription_en: { // Corresponds to keywords in buff "description" property (after being stripped to letters and lowercased)
+			"power": "Power",
+			"toughness": "Toughness",
+			"vitality": "Vitality",
+			"precision": "Precision",
+			"ferocity": "Ferocity",
+			"conditiondamage": "ConditionDamage",
+			"expertise": "Expertise",
+			"concentration": "Concentration",
+			"agonyresistance": "AgonyResistance",
+			//"": "Armor",
+			//"": "Health",
+			"criticalchance": "CriticalChance",
+			//"": "CriticalDamage",
+			"healing": "HealingPower",
+			"conditionduration": "ConditionDuration",
+			"boonduration": "BoonDuration",
+			//"": "MagicFind"
+		},
+		KeyDescription_de: {
+			"kraft": "Power",
+			"zähigkeit": "Toughness",
+			"vitalität": "Vitality",
+			"präzision": "Precision",
+			"wildheit": "Ferocity",
+			"zustandsschaden": "ConditionDamage",
+			"fachkenntnis": "Expertise",
+			"konzentration": "Concentration",
+			"qualwiderstand": "AgonyResistance",
+			//"": "Armor",
+			//"": "Health",
+			"kritischetrefferchance": "CriticalChance",
+			//"": "CriticalDamage",
+			"heilkraft": "HealingPower",
+			"zustandsdauer": "ConditionDuration",
+			"segensdauer": "BoonDuration",
+			//"": "MagicFind"
+		},
+		KeyDescription_es: {
+			"potencia": "Power",
+			"dureza": "Toughness",
+			"vitalidad": "Vitality",
+			"precisión": "Precision",
+			"ferocidad": "Ferocity",
+			"dañodecondición": "ConditionDamage",
+			"pericia": "Expertise",
+			"concentración": "Concentration",
+			"resistenciaalaagonía": "AgonyResistance",
+			//"": "Armor",
+			//"": "Health",
+			"probabilidaddedañocrítico": "CriticalChance",
+			//"": "CriticalDamage",
+			"poderdecuración": "HealingPower",
+			"duracióndecondición": "ConditionDuration",
+			"duracióndebendición": "BoonDuration",
+			//"": "MagicFind"
+		},
+		KeyDescription_fr: {
+			"Puissance": "Power",
+			"robustesse": "Toughness",
+			"vitalité": "Vitality",
+			"précision": "Precision",
+			"férocité": "Ferocity",
+			"dégâtsparaltération": "ConditionDamage",
+			"expertise": "Expertise",
+			"concentration": "Concentration",
+			"résistanceàlagonie": "AgonyResistance",
+			//"": "Armor",
+			//"": "Health",
+			"chancedecoupcritique": "CriticalChance",
+			//"": "CriticalDamage",
+			"guérison": "HealingPower",
+			"duréedaltération": "ConditionDuration",
+			"duréedavantage": "BoonDuration",
+			//"": "MagicFind"
+		}
 	},
 	Agony: { // Lookup table for items that give fractal Agony Resistance (AR)
 		"37138": 5, // Versatile Simple Infusion +5

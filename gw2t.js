@@ -2131,6 +2131,10 @@ U = {
 	{
 		return pString.replace(/[^a-zA-Z0-9\-]/g, "");
 	},
+	stripToNumbers: function(pString)
+	{
+		return pString.replace(/[^0-9]/g, "");
+	},
 	stripToColorString: function(pString)
 	{
 		// Allow only alphanumeric and number sign (color word or a hexadecimal color)
@@ -3587,11 +3591,12 @@ A = {
 			var access = (pData.access) ? "" : "chrTrivial";
 			var accountadditional = "<span id='chrAccountMisc'>"
 				+ "<dfn><a id='chrAccountLink' title='" + U.escapeHTML(pData.id) + "'" + forumlink + ">" + U.escapeHTML(pData.name) + "</a></dfn><br />" + accountbirthdate.toLocaleString() + "<br />"
-				+ "<img class='" + commandership +  "' src='img/account/commander.png' />"
-				+ "<img class='" + access +  "' src='img/account/access_hot.png' /> "
-				+ "<img src='img/account/fractal.png' />" + (pData.fractal_level || "?") + " "
-				+ "<img src='img/account/daily.png' />" + (pData.daily_ap || "?") + " "
-				+ "<img src='img/account/monthly.png' />" + (pData.monthly_ap || "?")
+				+ "<img class='" + commandership +  "' src='img/account/summary/commander.png' />"
+				+ "<img class='" + access +  "' src='img/account/summary/access_hot.png' /> "
+				+ "<img src='img/account/summary/fractal.png' />" + (pData.fractal_level || "?") + " "
+				+ "<img src='img/account/summary/worldabilitypoint.png' />" + (pData.wvw_rank || "?") + " "
+				+ "<img src='img/account/summary/daily.png' />" + (pData.daily_ap || "?") + " "
+				+ "<img src='img/account/summary/monthly.png' />" + (pData.monthly_ap || "?")
 			+ "</span><br />";
 			var summary = "<var id='chrAccountName'>" + accountname + "</var>"
 				+ accountadditional
@@ -3914,7 +3919,7 @@ A = {
 						var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
 						var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iData.icon;
 						var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
-						E.bindItemTooltip(slot, iData, {equipment: iEquipment, callback: function(iBox)
+						E.bindItemTooltip(slot, iData, {equipment: iEquipment, wantattr: true, callback: function(iBox)
 						{
 							// Set the slot icon as the transmuted skin icon
 							ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(A.formatItemSummary(iBox)).show();
@@ -5629,6 +5634,7 @@ E = {
 		var infusionobjs = [];
 		var upgradeobjs = [];
 		var skinobj = null;
+		var attr = null; // Holds attribute points
 		
 		var item = pItem;
 		var type = item.type;
@@ -5698,7 +5704,7 @@ E = {
 						buffnumbers = (det.infix_upgrade.buff.description).split("\n");
 						buffnumbers.forEach(function(iBuff)
 						{
-							buffs.push(parseInt(iBuff.split(" ")[0]));
+							buffs.push(parseInt(U.stripToNumbers(iBuff)));
 						});
 					}
 					attr.forEach(function(iStats)

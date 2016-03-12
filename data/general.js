@@ -1103,10 +1103,10 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Heroic Booster",
-		id: "20005",
-		price: 112,
-		discount: [[1, 112, 150], [5, 476, 637], [20, 1574, 2100]],
+		name: "Ghoul Backpack and Mini Set",
+		id: "71323",
+		price: 420,
+		discount: 600,
 		col: 0
 	},
 	{
