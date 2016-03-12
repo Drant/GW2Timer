@@ -2810,6 +2810,7 @@ A = {
 	CharacterCurrent: null,
 	isAccountInitialized: false,
 	Metadata: {}, // Prewritten data loaded along with account page
+	Item: {}, // Metadata for items (not item details objects)
 	Data: { // Cache for retrieved API data objects and arrays
 		Account: {},
 		Items: {},
@@ -2886,6 +2887,7 @@ A = {
 		// Add new words to the dictionary
 		D.addDictionary(GW2T_ACCOUNT_DICTIONARY);
 		A.Metadata = GW2T_ACCOUNT_METADATA;
+		A.Item = GW2T_ACCOUNT_ITEM;
 		
 		// Initialize common UI
 		var panel = $("#panelAccount");
@@ -3862,13 +3864,16 @@ A = {
 			container.append(A.formatCharacterSeparator(char));
 			
 			// Equipment icons and glance information
-			var subcontainer = $("<div class='eqpSubcontainer'></div>").appendTo(container);
+			var subcontainer = $("<div class='eqpSubcontainer eqpSubcontainer_" + char.profession + "'></div>").appendTo(container);
 			var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(subcontainer);
 			var subconright = $("<div class='eqpRight eqpColumn'></div>").appendTo(subcontainer);
 			var subconbuild = $("<div class='eqpBuild eqpColumn'></div>").appendTo(subcontainer);
-			var equipleft = ["Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots", "WeaponA1", "WeaponA2", "WeaponB1", "WeaponB2"];
-			var equipright = ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2", "Sickle", "Axe", "Pick", "HelmAquatic", "WeaponAquaticA", "WeaponAquaticB"];
-			var equiprightbrief = ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2"];
+			var eqp = A.Item.Equipment;
+			var equipleft = eqp.ColumnLeft;
+			var equipright = eqp.ColumnRight;
+			var equiprightbrief = eqp.BriefRight;
+			var equiptoggle = eqp.ToggleableSlots;
+			var equipgathering = eqp.GatheringCharges;
 			// LEFT COLUMN armor and weapon
 			equipleft.forEach(function(iEquip)
 			{
@@ -3901,23 +3906,34 @@ A = {
 			
 			for (var i in char.equipment)
 			{
-				(function(iEquip)
+				(function(iEquipment)
 				{
-					$.getJSON(U.getAPIItem(iEquip.id), function(iData)
+					$.getJSON(U.getAPIItem(iEquipment.id), function(iData)
 					{
 						var ithcontainer = $("#eqpContainer_" + char.charindex);
-						var slot = ithcontainer.find(".eqpSlot_" + iEquip.slot);
-						var slotimg = (iEquip.skin) ? "img/ui/placeholder.png" : iData.icon;
+						var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
+						var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iData.icon;
 						var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
-						E.bindItemTooltip(slot, iData, {equipment: iEquip, callback: function(iBox)
+						E.bindItemTooltip(slot, iData, {equipment: iEquipment, callback: function(iBox)
 						{
 							// Set the slot icon as the transmuted skin icon
-							ithcontainer.find(".eqpBrief_" + iEquip.slot).append(A.formatItemSummary(iBox)).show();
+							ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(A.formatItemSummary(iBox)).show();
 							if (iBox.skin)
 							{
 								sloticon.attr("src", iBox.skin.icon);
 							}
 						}});
+						// Add faux checkboxes for toggleable armor slots
+						if (equiptoggle[iEquipment.slot])
+						{
+							subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/account/equipment/checkbox.png' />");
+						}
+						// Add faux charges number over gathering tools
+						if (equipgathering[iEquipment.slot] && iData.rarity !== E.Rarity.Rare) // Ignore Rare rarity tools which have unlimited charges
+						{
+							sloticon.attr("src", "img/account/equipment/icon_" + (iEquipment.slot).toLowerCase() + I.cPNG);
+							subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iEquipment.slot] + "</span>");
+						}
 					});
 				})(char.equipment[i]);
 			}

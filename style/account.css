@@ -546,23 +546,35 @@ a.chrWalletLink {
 	content: "";
 }
 .eqpSubcontainer:before {
+	width: 3px;
+	top: -3px;
 	bottom: -3px;
 	left: -3px;
 }
 .eqpSubcontainer:after {
+	height: 3px;
 	top: -3px;
 	left: -3px;
-}
-.eqpSubcontainer:before {
-	width: 3px;
-	top: -3px;
-	background: linear-gradient(to top, transparent, #ffaa00);
-}
-.eqpSubcontainer:after {
-	height: 3px;
 	right: -3px;
-	background: linear-gradient(to left, transparent, #ffaa00);
 }
+.eqpSubcontainer_Elementalist:before { background: linear-gradient(to top, transparent, #ff2200); }
+.eqpSubcontainer_Elementalist:after { background: linear-gradient(to left, transparent, #ff2200); }
+.eqpSubcontainer_Mesmer:before { background: linear-gradient(to top, transparent, #ff4488); }
+.eqpSubcontainer_Mesmer:after { background: linear-gradient(to left, transparent, #ff4488); }
+.eqpSubcontainer_Necromancer:before { background: linear-gradient(to top, transparent, #33cc11); }
+.eqpSubcontainer_Necromancer:after { background: linear-gradient(to left, transparent, #33cc11); }
+.eqpSubcontainer_Thief:before { background: linear-gradient(to top, transparent, #555555); }
+.eqpSubcontainer_Thief:after { background: linear-gradient(to left, transparent, #555555); }
+.eqpSubcontainer_Ranger:before { background: linear-gradient(to top, transparent, #ffff00); }
+.eqpSubcontainer_Ranger:after { background: linear-gradient(to left, transparent, #ffff00); }
+.eqpSubcontainer_Engineer:before { background: linear-gradient(to top, transparent, #d19600); }
+.eqpSubcontainer_Engineer:after { background: linear-gradient(to left, transparent, #d19600); }
+.eqpSubcontainer_Warrior:before { background: linear-gradient(to top, transparent, #ffaa00); }
+.eqpSubcontainer_Warrior:after { background: linear-gradient(to left, transparent, #ffaa00); }
+.eqpSubcontainer_Guardian:before { background: linear-gradient(to top, transparent, #5599ff); }
+.eqpSubcontainer_Guardian:after { background: linear-gradient(to left, transparent, #5599ff); }
+.eqpSubcontainer_Revenant:before { background: linear-gradient(to top, transparent, #ffffff); }
+.eqpSubcontainer_Revenant:after { background: linear-gradient(to left, transparent, #ffffff); }
 
 .eqpHeader {
 	display: block;
@@ -612,8 +624,6 @@ a.chrWalletLink {
 .eqpIcon {
 	border: 1px solid #828181;
 	border-radius: 1px;
-}
-.eqpRow .eqpIcon {
 	width: 64px; height: 64px;
 }
 .eqpCell .eqpIcon {
@@ -621,6 +631,31 @@ a.chrWalletLink {
 }
 .eqpIcon:hover {
 	border: 1px solid #929391;
+}
+.eqpCheckbox {
+	width: 38px; height: 38px;
+	position: absolute;
+	margin-left: 36px;
+	margin-top: -10px;
+}
+.eqpCell .eqpCheckbox {
+	margin-left: 24px;
+}
+.eqpCharges {
+	position: absolute;
+	margin-top: -3px;
+	right: 4px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 17px;
+	color: #ffeeaa;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
+}
+.eqpCharges {
+	position: absolute;
 }
 .eqpSwap {
 	width: 64px;
@@ -641,7 +676,7 @@ a.chrWalletLink {
 	pointer-events: none;
 }
 .eqpSwapAquaticOuter {
-	position: relative; z-index: 10;
+	position: relative; z-index: 3;
 	display: block;
 	float: left;
 	margin-left: -50px;
@@ -706,7 +741,6 @@ a.chrWalletLink {
 }
 .eqpBriefRight {
 	display: block;
-	margin-bottom: 8px;
 }
 .eqpSepGathering, .eqpSepUnderwater {
 	display: block;

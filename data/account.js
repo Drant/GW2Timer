@@ -87,45 +87,6 @@ var GW2T_CURRENCY_DATA = {
 };
 
 /*
- * Lookup table for items that give fractal Agony Resistance (AR), for totaling
- * a character's equipped AR.
- */
-var GW2T_AGONY_DATA = {
-	"37138": 5, // Versatile Simple Infusion +5
-	"70852": 7, // Versatile Simple Infusion +7
-	"49424": 1, // +1 Agony Infusion
-	"49425": 2,
-	"49426": 3,
-	"49427": 4,
-	"49428": 5,
-	"49429": 6,
-	"49430": 7,
-	"49431": 8,
-	"49432": 9,
-	"49433": 10,
-	"49434": 11,
-	"49435": 12,
-	"49436": 13,
-	"49437": 14,
-	"49438": 15,
-	"49439": 16,
-	"49440": 17,
-	"49441": 18,
-	"49442": 19,
-	"49443": 20,
-	"49444": 21,
-	"49445": 22,
-	"49446": 23,
-	"49447": 24,
-	"49448": 25,
-	"49449": 26,
-	"49450": 27,
-	"49451": 28,
-	"49452": 29,
-	"49453": 30
-};
-
-/*
  * Quick reference API related data.
  */
 var GW2T_ACCOUNT_METADATA = {
@@ -230,5 +191,54 @@ var GW2T_ACCOUNT_METADATA = {
 	},
 	ProfLevel: {
 		Max: 80
+	}
+};
+
+/*
+ * Metadata for items.
+ */
+var GW2T_ACCOUNT_ITEM = {
+	
+	// The ordering of equipment slots to generate the equipment window
+	Equipment: {
+		ColumnLeft: ["Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots", "WeaponA1", "WeaponA2", "WeaponB1", "WeaponB2"],
+		ColumnRight: ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2", "Sickle", "Axe", "Pick", "HelmAquatic", "WeaponAquaticA", "WeaponAquaticB"],
+		BriefRight: ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2"], // Item names for right column
+		ToggleableSlots: {Helm: 1, Shoulders: 1, Gloves: 1, Backpack: 1},
+		GatheringCharges: {Sickle: 50, Axe: 100, Pick: 100}
+	},
+	Agony: { // Lookup table for items that give fractal Agony Resistance (AR)
+		"37138": 5, // Versatile Simple Infusion +5
+		"70852": 7, // Versatile Simple Infusion +7
+		"49424": 1, // +1 Agony Infusion
+		"49425": 2,
+		"49426": 3,
+		"49427": 4,
+		"49428": 5,
+		"49429": 6,
+		"49430": 7,
+		"49431": 8,
+		"49432": 9,
+		"49433": 10,
+		"49434": 11,
+		"49435": 12,
+		"49436": 13,
+		"49437": 14,
+		"49438": 15,
+		"49439": 16,
+		"49440": 17,
+		"49441": 18,
+		"49442": 19,
+		"49443": 20,
+		"49444": 21,
+		"49445": 22,
+		"49446": 23,
+		"49447": 24,
+		"49448": 25,
+		"49449": 26,
+		"49450": 27,
+		"49451": 28,
+		"49452": 29,
+		"49453": 30
 	}
 };
