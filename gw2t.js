@@ -2133,7 +2133,7 @@ U = {
 	},
 	stripToNumbers: function(pString)
 	{
-		return pString.replace(/[^0-9]/g, "");
+		return parseInt(pString.replace(/[^0-9]/g, ""));
 	},
 	stripToColorString: function(pString)
 	{
@@ -3021,7 +3021,7 @@ A = {
 		});
 		$("#accMenuEquipment").click(function()
 		{
-			A.initializeEquipment();
+			A.viewEquipment();
 		});
 		
 		// Open the section if specified in the URL
@@ -3838,12 +3838,48 @@ A = {
 	},
 	
 	/*
-	 * Generates the equipment subsection of the characters page.
+	 * Shows or hides a character or all characters equipment window, and
+	 * generates them if haven't already.
 	 * @pre Characters array was loaded by AJAX.
 	 */
-	initializeEquipment: function()
+	viewEquipment: function()
 	{
-		var dish = $("#accDish_Equipment");
+		// Generate for single character if user chosen, else all characters
+		var equipcur = $("#eqpContainer_" + A.CharacterCurrent);
+		var equipall = $(".eqpContainer");
+		if (A.CharacterCurrent !== null)
+		{
+			A.generateEquipment();
+			equipall.hide();
+			equipcur.show();
+		}
+		else
+		{
+			A.Data.Characters.forEach(function(iCharacter)
+			{
+				A.generateEquipment(iCharacter);
+			});
+			equipall.show();
+		}
+	},
+	
+	/*
+	 * Generates the equipment subsection of the characters page.
+	 * @param object pCharacter characters data.
+	 */
+	generateEquipment: function(pCharacter)
+	{
+		var char = pCharacter || A.getCurrentCharacter();
+		if (char === undefined || char === null || Array.isArray(char.equipment) === false || $("#eqpContainer_" + char.charindex).length)
+		{
+			return;
+		}
+		// Object containing attribute points to be added by the retrieved items
+		var attrobj = new A.Item.Attribute.Base();
+		var equipstofetch = char.equipment.length;
+		var numfetched = 0;
+		
+		// Macro HTML writing functions
 		var formatEquipmentSlotLeft = function(pEquipment)
 		{
 			return "<aside class='eqpRow eqp" + pEquipment + "'>"
@@ -3858,129 +3894,135 @@ A = {
 				+ "<span class='eqpSlot eqpSlot_" + pEquipment
 					+ "' style='background-image:url(\"img/account/equipment/" + pEquipment.toLowerCase() + ".png\")'></span>"
 			+ "</aside>";
-		}; 
-		
-		var generateEquipment = function(pCharacter)
-		{
-			var char = pCharacter || A.getCurrentCharacter();
-			if (char === undefined || char === null || Array.isArray(char.equipment) === false || $("#eqpContainer_" + char.charindex).length)
-			{
-				return;
-			}
-			
-			// Header showing character name and portrait
-			var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
-			container.append(A.formatCharacterSeparator(char));
-			
-			// Equipment icons and glance information
-			var subcontainer = $("<div class='eqpSubcontainer eqpSubcontainer_" + char.profession + "'></div>").appendTo(container);
-			var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(subcontainer);
-			var subconright = $("<div class='eqpRight eqpColumn'></div>").appendTo(subcontainer);
-			var subconbuild = $("<div class='eqpBuild eqpColumn'></div>").appendTo(subcontainer);
-			var eqp = A.Item.Equipment;
-			var equipleft = eqp.ColumnLeft;
-			var equipright = eqp.ColumnRight;
-			var equiprightbrief = eqp.BriefRight;
-			var equiptoggle = eqp.ToggleableSlots;
-			var equipgathering = eqp.GatheringCharges;
-			// LEFT COLUMN armor and weapon
-			equipleft.forEach(function(iEquip)
-			{
-				subconleft.append(formatEquipmentSlotLeft(iEquip));
-			});
-			// Add swap weapon ornamental icon
-			subconleft.find(".eqpWeaponA2").after("<aside class='eqpSwap'><img class='eqpSwapIcon' src='img/account/equipment/swap.png' /></aside>");
-			subconleft.find(".eqpWeaponA1").after("<span class='eqpSwapOuter eqpSwapA'><img class='eqpSwapIcon' src='img/account/equipment/swapa.png' /></span>");
-			subconleft.find(".eqpWeaponB1").after("<span class='eqpSwapOuter eqpSwapB'><img class='eqpSwapIcon' src='img/account/equipment/swapb.png' /></span>");
-			// RIGHT COLUMN trinket and underwater
-			equipright.forEach(function(iEquip)
-			{
-				subconright.append(formatEquipmentSlotRight(iEquip));
-			});
-			subconright.prepend("<aside class='eqpSepTrinket'></aside>");
-			var briefcontainer = $("<aside class='eqpBriefRight'></aside>").prependTo(subconright);
-			equiprightbrief.forEach(function(iEquip)
-			{
-				briefcontainer.append("<span class='eqpBrief eqpBrief_" + iEquip + "' style='display:none;'></span>");
-			});
-			// Add padding separators
-			subconright.find(".eqpRing2").after("<aside class='eqpSepGathering'><span class='eqpSepInner'></span></aside>");
-			subconright.find(".eqpPick").after("<aside class='eqpSepUnderwater'><span class='eqpSepInner'></span></aside>");
-			// Add swap weapon ornamental icon
-			subconright.find(".eqpWeaponAquaticA").after("<aside class='eqpSwapAquatic eqpCell'><img class='eqpSwapIcon' src='img/account/equipment/swap.png' /></aside>");
-			subconright.find(".eqpWeaponAquaticA").after("<span class='eqpSwapAquaticOuter eqpSwapAquaticA'><img class='eqpSwapIcon' src='img/account/equipment/swapaquatica.png' /></span>");
-			subconright.find(".eqpWeaponAquaticB").after("<span class='eqpSwapAquaticOuter eqpSwapAquaticB'><img class='eqpSwapIcon' src='img/account/equipment/swapaquaticb.png' /></span>");
-			// Add aquatic weapon background
-			subconright.append("<img class='eqpAquaticBackground' src='img/account/equipment/aquatic.png' />");
-			
-			for (var i in char.equipment)
-			{
-				(function(iEquipment)
-				{
-					$.getJSON(U.getAPIItem(iEquipment.id), function(iData)
-					{
-						var ithcontainer = $("#eqpContainer_" + char.charindex);
-						var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
-						var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iData.icon;
-						var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
-						E.analyzeItem(iData, {
-							element: slot,
-							equipment: iEquipment,
-							wantattr: true,
-							callback: function(iBox)
-							{
-								// Set the slot icon as the transmuted skin icon
-								ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(A.formatItemSummary(iBox)).show();
-								if (iBox.skin)
-								{
-									sloticon.attr("src", iBox.skin.icon);
-								}
-							}
-						});
-						// Add faux checkboxes for toggleable armor slots
-						if (equiptoggle[iEquipment.slot])
-						{
-							subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/account/equipment/checkbox.png' />");
-						}
-						// Add faux charges number over gathering tools
-						if (equipgathering[iEquipment.slot] && iData.rarity !== E.Rarity.Rare) // Ignore Rare rarity tools which have unlimited charges
-						{
-							sloticon.attr("src", "img/account/equipment/icon_" + (iEquipment.slot).toLowerCase() + I.cPNG);
-							subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iEquipment.slot] + "</span>");
-						}
-					});
-				})(char.equipment[i]);
-			}
-			
-			// Hide secondary weapon slots for professions that can't swap weapons
-			if ((A.Metadata.Profession[char.charprofession]).isswappable === false)
-			{
-				var elmstohide = [".eqpSwap", ".eqpSwapB", ".eqpWeaponB1", ".eqpWeaponB2", ".eqpSwapAquatic", ".eqpSwapAquaticB", ".eqpWeaponAquaticB"];
-				elmstohide.forEach(function(iSelector)
-				{
-					subcontainer.find(iSelector).css({visibility: "hidden"});
-				});
-				subconright.find(".eqpAquaticBackground").addClass("eqpAquaticBackgroundSingle");
-				subconright.find(".eqpHelmAquatic").addClass("eqpHelmAquaticSingle");
-			}
 		};
 		
-		// Generate for single character if user chosen, else all characters
-		var equipcur = $("#eqpContainer_" + A.CharacterCurrent);
-		var equipall = $(".eqpContainer");
-		if (A.CharacterCurrent !== null)
+		// Function to execute after every single item and subitems have been retrieved
+		var finalizeEquipment = function()
 		{
-			generateEquipment();
-			equipall.hide();
-			equipcur.show();
-		}
-		else
-		{
-			A.Data.Characters.forEach(function(iCharacter)
+			if (equipstofetch === numfetched)
 			{
-				generateEquipment(iCharacter);
+				formatAttributesWindow();
+				I.log(char.name + ": " + U.formatJSON(attrobj) + "<br />");
+			}
+		};
+
+		var dish = $("#accDish_Equipment");
+		var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
+		container.append(A.formatCharacterSeparator(char));
+
+		// Equipment icons and glance information
+		var subcontainer = $("<div class='eqpSubcontainer eqpSubcontainer_" + char.profession + "'></div>").appendTo(container);
+		var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(subcontainer);
+		var subconright = $("<div class='eqpRight eqpColumn'></div>").appendTo(subcontainer);
+		var subconbuild = $("<div class='eqpBuild eqpColumn'></div>").appendTo(subcontainer);
+		var eqp = A.Item.Equipment;
+		var equipleft = eqp.ColumnLeft;
+		var equipright = eqp.ColumnRight;
+		var equiprightbrief = eqp.BriefRight;
+		var equiptoggle = eqp.ToggleableSlots;
+		var equipgathering = eqp.GatheringCharges;
+		// LEFT COLUMN armor and weapon
+		equipleft.forEach(function(iEquip)
+		{
+			subconleft.append(formatEquipmentSlotLeft(iEquip));
+		});
+		// Add swap weapon ornamental icon
+		subconleft.find(".eqpWeaponA2").after("<aside class='eqpSwap'><img class='eqpSwapIcon' src='img/account/equipment/swap.png' /></aside>");
+		subconleft.find(".eqpWeaponA1").after("<span class='eqpSwapOuter eqpSwapA'><img class='eqpSwapIcon' src='img/account/equipment/swapa.png' /></span>");
+		subconleft.find(".eqpWeaponB1").after("<span class='eqpSwapOuter eqpSwapB'><img class='eqpSwapIcon' src='img/account/equipment/swapb.png' /></span>");
+		// RIGHT COLUMN trinket and underwater
+		equipright.forEach(function(iEquip)
+		{
+			subconright.append(formatEquipmentSlotRight(iEquip));
+		});
+		subconright.prepend("<aside class='eqpSepTrinket'></aside>");
+		var briefcontainer = $("<aside class='eqpBriefRight'></aside>").prependTo(subconright);
+		equiprightbrief.forEach(function(iEquip)
+		{
+			briefcontainer.append("<span class='eqpBrief eqpBrief_" + iEquip + "' style='display:none;'></span>");
+		});
+		// Add padding separators
+		subconright.find(".eqpRing2").after("<aside class='eqpSepGathering'><span class='eqpSepInner'></span></aside>");
+		subconright.find(".eqpPick").after("<aside class='eqpSepUnderwater'><span class='eqpSepInner'></span></aside>");
+		// Add swap weapon ornamental icon
+		subconright.find(".eqpWeaponAquaticA").after("<aside class='eqpSwapAquatic eqpCell'><img class='eqpSwapIcon' src='img/account/equipment/swap.png' /></aside>");
+		subconright.find(".eqpWeaponAquaticA").after("<span class='eqpSwapAquaticOuter eqpSwapAquaticA'><img class='eqpSwapIcon' src='img/account/equipment/swapaquatica.png' /></span>");
+		subconright.find(".eqpWeaponAquaticB").after("<span class='eqpSwapAquaticOuter eqpSwapAquaticB'><img class='eqpSwapIcon' src='img/account/equipment/swapaquaticb.png' /></span>");
+		// Add aquatic weapon background
+		subconright.append("<img class='eqpAquaticBackground' src='img/account/equipment/aquatic.png' />");
+		
+		// BUILD COLUMN attributes and specializations
+		var attrwindow = $("<div class='eqpAttrWindow'><aside class='eqpAttrHeader'><span class='eqpAttrTitle'>"
+			+ D.getWordCapital("attributes") + "</span></aside><aside class='eqpAttrContent'></aside></div>").appendTo(subconbuild);
+		var formatAttributesWindow = function()
+		{
+			var attrcontent = attrwindow.find(".eqpAttrContent");
+			for (var i in attrobj)
+			{
+				attrcontent.append("<span class='eqpAttrBlock eqpAttr_" + i + "' title='" + D.getString(i) + "'>"
+					+ "<img src='img/account/attributes/" + i.toLowerCase() + ".png' /><var>" + attrobj[i] + "</var></span>");
+			}
+			attrcontent.find(".eqpAttr_Power").after("<span class='eqpAttrBlock eqpAttr_Profession'>"
+				+ "<img src='img/account/attributes/" + char.profession.toLowerCase() + ".png' /><var>0</var></span>");
+			I.qTip.init(attrcontent.find("span"));
+		};
+
+		for (var i in char.equipment)
+		{
+			(function(iEquipment)
+			{
+				$.getJSON(U.getAPIItem(iEquipment.id), function(iData)
+				{
+					var ithcontainer = $("#eqpContainer_" + char.charindex);
+					var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
+					var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iData.icon;
+					var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
+					E.analyzeItem(iData, {
+						element: slot,
+						equipment: iEquipment,
+						wantattr: true,
+						callback: function(iBox)
+						{
+							// Set the slot icon as the transmuted skin icon
+							ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(A.formatItemSummary(iBox)).show();
+							if (iBox.skin)
+							{
+								sloticon.attr("src", iBox.skin.icon);
+							}
+							// If the item is slotted in an attributable slot, (armor, primary weapons, trinkets, not underwater), then tally the attribute points
+							if (A.Item.Equipment.AttributableSlots[iEquipment.slot])
+							{
+								E.sumAttributeObject(attrobj, iBox.attr);
+							}
+							numfetched++;
+							finalizeEquipment();
+						}
+					});
+					// Add faux checkboxes for toggleable armor slots
+					if (equiptoggle[iEquipment.slot])
+					{
+						subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/account/equipment/checkbox.png' />");
+					}
+					// Add faux charges number over gathering tools
+					if (equipgathering[iEquipment.slot] && iData.rarity !== E.Rarity.Rare) // Ignore Rare rarity tools which have unlimited charges
+					{
+						sloticon.attr("src", "img/account/equipment/icon_" + (iEquipment.slot).toLowerCase() + I.cPNG);
+						subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iEquipment.slot] + "</span>");
+					}
+				});
+			})(char.equipment[i]);
+		}
+
+		// Hide secondary weapon slots for professions that can't swap weapons
+		if ((A.Metadata.Profession[char.charprofession]).isswappable === false)
+		{
+			var elmstohide = [".eqpSwap", ".eqpSwapB", ".eqpWeaponB1", ".eqpWeaponB2", ".eqpSwapAquatic", ".eqpSwapAquaticB", ".eqpWeaponAquaticB"];
+			elmstohide.forEach(function(iSelector)
+			{
+				subcontainer.find(iSelector).css({visibility: "hidden"});
 			});
-			equipall.show();
+			subconright.find(".eqpAquaticBackground").addClass("eqpAquaticBackgroundSingle");
+			subconright.find(".eqpHelmAquatic").addClass("eqpHelmAquaticSingle");
 		}
 	},
 	
@@ -5565,6 +5607,101 @@ E = {
 	},
 	
 	/*
+	 * Parses a description text for attribute points and add them to the
+	 * attributes-containing object.
+	 * @param object pAttribute.
+	 * @param string or array pDescription from buff or bonuses property of item details.
+	 * @pre Account page's script has been loaded, which contains attribute association.
+	 * Properties this function looks for:
+	 * item.details.infix_upgrade.attributes // [{attribute: "Abc", "modifier": 123}, ...] language independent
+	 * item.details.bonuses // ["+123 Abc", ...] language dependent
+	 * item.details.infix_upgrade.buff.description // "+123 Abc\n+123 Abc..." language dependent
+	 */
+	sumItemAttribute: function(pAttrObj, pItem)
+	{
+		// This object translates the current language extracted attribute name to the proper key name
+		var assocobj = A.Item.Attribute["KeyDescription_" + D.getFullySupportedLanguage()];
+		// Reuseable function to parse array of attribute strings which are language dependent
+		var sumAttributeArray = function(pArray)
+		{
+			var attrstr, points, keyextracted, keyproper;
+			for (var i = 0; i < pArray.length; i++)
+			{
+				attrstr = pArray[i];
+				points = U.stripToNumbers(attrstr);
+				// The attribute key name shall be whatever that remains after stripping the description of non-letter characters
+				keyextracted = (attrstr.replace(/[\s0-9%,.\-+']/g, "")).toLowerCase();
+				if (assocobj[keyextracted])
+				{
+					keyproper = assocobj[keyextracted];
+					/*
+					 * Skip an anomaly in the API details for "infused" items
+					 * that contains agony attribute in the description (being
+					 * redundant because of infusion slots).
+					 */
+					if (keyproper === "AgonyResistance" && det.infusion_slots)
+					{
+						continue;
+					}
+					pAttrObj[keyproper] += points;
+				}
+			}
+		};
+		
+		var item = pItem;
+		if (item === undefined || item.details === undefined)
+		{
+			return;
+		}
+		var det = item.details;
+		
+		// Armors, weapons, trinkets
+		if (det.infix_upgrade && det.infix_upgrade.attributes)
+		{
+			det.infix_upgrade.attributes.forEach(function(iAttr)
+			{
+				var attrname = A.Item.Attribute.KeyAttributes[iAttr.attribute];
+				if (attrname)
+				{
+					pAttrObj[attrname] += iAttr.modifier;
+				}
+			});
+		}
+		// Runes
+		if (det.bonuses)
+		{
+			//I.log("!!! BONUSES");
+			sumAttributeArray(det.bonuses);
+		}
+		// Sigils, infusions, and miscellaneous
+		if (det.infix_upgrade && det.infix_upgrade.buff && det.infix_upgrade.buff.description)
+		{
+			//I.log("!!! BUFF");
+			var desc = det.infix_upgrade.buff.description;
+			desc.replace(/<br>/g, ""); // Cleanup markup
+			sumAttributeArray(desc.split("\n"));
+		}
+		// Armor and shield that have defense attribute (adds to armor)
+		if (det.defense !== undefined)
+		{
+			pAttrObj["Armor"] += det.defense;
+		}
+	},
+	
+	/*
+	 * Adds the attribute points of one attributes-containing object to another.
+	 * @param object pAttrMain destination.
+	 * @param object pAttrAdd source.
+	 */
+	sumAttributeObject: function(pAttrMain, pAttrAdd)
+	{
+		for (var i in pAttrMain)
+		{
+			pAttrMain[i] += pAttrAdd[i];
+		};
+	},
+	
+	/*
 	 * Formats the text of a rune's bonuses.
 	 * @param object pItem details from API.
 	 * @param int pPieces number of runes equipped, optional.
@@ -5654,6 +5791,11 @@ E = {
 	analyzeItem: function(pItem, pOptions)
 	{
 		var settings = pOptions || {};
+		// These will hold retrieved API objects, if a callback was requested
+		var infusionobjs = [];
+		var upgradeobjs = [];
+		var skinobj = null;
+		var attrobj = null; // Holds attribute points
 		// If provided an equipment object, override the other parameters
 		if (settings.equipment)
 		{
@@ -5661,11 +5803,10 @@ E = {
 			settings.upgrades = settings.equipment.upgrades;
 			settings.skin = settings.equipment.skin;
 		}
-		// These will hold retrieved API objects, if a callback was requested
-		var infusionobjs = [];
-		var upgradeobjs = [];
-		var skinobj = null;
-		var attr = null; // Holds attribute points
+		if (settings.wantattr && A.isAccountInitialized)
+		{
+			attrobj = new A.Item.Attribute.Base();
+		}
 		
 		var item = pItem;
 		var type = item.type;
@@ -5735,7 +5876,7 @@ E = {
 						buffnumbers = (det.infix_upgrade.buff.description).split("\n");
 						buffnumbers.forEach(function(iBuff)
 						{
-							buffs.push(parseInt(U.stripToNumbers(iBuff)));
+							buffs.push(U.stripToNumbers(iBuff));
 						});
 					}
 					attr.forEach(function(iStats)
@@ -5746,6 +5887,7 @@ E = {
 							buffcounter++;
 						}
 						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.getAttributeString(iStats.attribute) + "<br />";
+						// Sum the iterated attribute to the attributes-containing object
 					});
 				}
 				// Sigils
@@ -5780,6 +5922,11 @@ E = {
 			{
 				attrstr += D.getString("ExcessiveAlcohol") + "<br />";
 			}
+		}
+		// Sum attribute points if requested
+		if (attrobj)
+		{
+			E.sumItemAttribute(attrobj, item);
 		}
 		
 		// RARITY
@@ -6028,7 +6175,8 @@ E = {
 					item: item,
 					infusions: infusionobjs,
 					upgrades: upgradeobjs,
-					skin: skinobj
+					skin: skinobj,
+					attr: attrobj
 				});
 			}
 		};
@@ -6052,6 +6200,10 @@ E = {
 					if (settings.callback)
 					{
 						infusionobjs.push(iData);
+					}
+					if (attrobj)
+					{
+						E.sumItemAttribute(attrobj, iData);
 					}
 					numfetched++;
 					finalizeTooltip();
@@ -6082,6 +6234,10 @@ E = {
 					else
 					{
 						upgdesc = iData.name + "<br />" + E.formatItemDescription(iData);
+						if (attrobj) // Only sum attribute for non-runes
+						{
+							E.sumItemAttribute(attrobj, iData);
+						}
 					}
 					
 					upgradestr[iIndex] = "<aside class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + upgdesc + "</aside><br />";

@@ -1103,10 +1103,24 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Ghoul Backpack and Mini Set",
-		id: "71323",
-		price: 420,
-		discount: 600,
+		name: "Flamekissed Light Armor Skin",
+		id: "43576",
+		price: 640,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Flamewalker Medium Armor Skin",
+		id: "43575",
+		price: 640,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Flamewrath Heavy Armor Skin",
+		id: "43574",
+		price: 640,
+		discount: 800,
 		col: 0
 	},
 	{
@@ -1114,7 +1128,7 @@ Sale: {
 		id: "77821",
 		price: 400,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Butterfly Wings Backpack",
@@ -1162,7 +1176,7 @@ Vendor:
 	{
 		Mehem: { id: "48909", price: "25200", product: "48907" },
 		Fox: { id: "48918", price: "25200", product: "48915" },
-		Derwena: { id: "44714", price: "25200", product: "44948" },
+		Derwena: { id: "44714", price: "25200", product: "44949" },
 		Yana: { id: "43843", price: "25200", product: "43864" },
 		Katyn: { id: "49735", price: "25200", product: "49866" },
 		Verma: { id: "49770", price: "25200", product: "49815" }

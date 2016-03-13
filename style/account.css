@@ -769,6 +769,47 @@ a.chrWalletLink {
 	background: linear-gradient(to left, transparent 0%, #111 50%, transparent 100%);
 }
 
+.eqpAttrWindow {
+	width: 240px;
+	border-top: 2px solid #1e1c1e;
+	border-right: 2px solid #1e2125;
+	border-bottom: 3px solid #090b0b;
+	border-left: 2px solid #0b0c0d;
+	box-shadow: 0px 0px 16px #0b0d0e;
+}
+.eqpAttrHeader {
+	height: 40px;
+	border-bottom: 2px solid #0a0b0c;
+	font-family: Menomonia;
+	font-size: 20px;
+	background: linear-gradient(to right, #101010 0%, #323536 50%, #2a2c30 100%);
+}
+.eqpAttrTitle {
+	display: inline-block;
+	margin-top: 4px;
+	margin-left: 12px;
+}
+.eqpAttrContent {
+	display: block;
+	height: 360px;
+	background: linear-gradient(to right, #171a1b 0%, #202525 50%, #2c3034 100%);
+}
+.eqpAttrBlock {
+	display: inline-block;
+	width: 115px; height: 39px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 17px;
+}
+.eqpAttrBlock img {
+	width: 38px; height: 38px;
+	margin-left: 6px;
+}
+.eqpAttrBlock var {
+	display: inline-block;
+	margin-top: 7px;
+	margin-left: 3px;
+	vertical-align: top;
+}
 
 /* Adjustments for smaller screens
 ----------------------------------------------------------------------------- */

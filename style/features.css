@@ -487,7 +487,7 @@ dt.jpzListNameHover {
 	position: relative;
 }
 .trdResults {
-	position: absolute;
+	position: absolute; z-index: 2;
 	width: 270px;
 	max-height: 220px;
 	overflow-y: auto;
