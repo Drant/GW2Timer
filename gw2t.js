@@ -2980,6 +2980,7 @@ A = {
 					U.updateQueryString();
 				});
 				
+				// A section (platter) may have multiple subsections (dishes)
 				var subsections = $("#accPlatter" + iSectionName).find(".accDish");
 				if (subsections.length)
 				{
@@ -2998,8 +2999,10 @@ A = {
 								{
 									iEvent.stopPropagation();
 									iSubsection.parent().find(".accDish").hide();
-									iSubsection.show();
-									A.adjustAccountPanel();
+									iSubsection.fadeIn(200, function()
+									{
+										A.adjustAccountPanel();
+									});
 									// Highlight the button
 									var menubutton = $(this).parent().parent();
 									menubutton.find(".accMenuIcon").removeClass("accMenuButtonFocused");
@@ -3481,6 +3484,7 @@ A = {
 				$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
 				$(".chrSelection").removeClass("chrSelected");
 				$(this).addClass("chrSelected");
+				$("#accMenuEquipment").trigger("click");
 			}
 		}).dblclick(function()
 		{
@@ -3919,15 +3923,20 @@ A = {
 						var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
 						var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iData.icon;
 						var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
-						E.bindItemTooltip(slot, iData, {equipment: iEquipment, wantattr: true, callback: function(iBox)
-						{
-							// Set the slot icon as the transmuted skin icon
-							ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(A.formatItemSummary(iBox)).show();
-							if (iBox.skin)
+						E.analyzeItem(iData, {
+							element: slot,
+							equipment: iEquipment,
+							wantattr: true,
+							callback: function(iBox)
 							{
-								sloticon.attr("src", iBox.skin.icon);
+								// Set the slot icon as the transmuted skin icon
+								ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(A.formatItemSummary(iBox)).show();
+								if (iBox.skin)
+								{
+									sloticon.attr("src", iBox.skin.icon);
+								}
 							}
-						}});
+						});
 						// Add faux checkboxes for toggleable armor slots
 						if (equiptoggle[iEquipment.slot])
 						{
@@ -5535,6 +5544,27 @@ E = {
 	},
 	
 	/*
+	 * Corrects naming inconsistency of the attributes property in item API.
+	 * @param string pString.
+	 * @returns translation.
+	 */
+	getAttributeString: function(pString)
+	{
+		var str = pString;
+		var match = {
+			"CritDamage": "Ferocity",
+			"Healing": "HealingPower",
+			"ConditionDuration": "Expertise",
+			"BoonDuration": "Concentration"
+		};
+		if (match[pString])
+		{
+			str = match[pString];
+		}
+		return D.getString(str);
+	},
+	
+	/*
 	 * Formats the text of a rune's bonuses.
 	 * @param object pItem details from API.
 	 * @param int pPieces number of runes equipped, optional.
@@ -5607,9 +5637,10 @@ E = {
 	},
 	
 	/*
-	 * Binds an element to have a tooltip presenting item details.
-	 * @param jqobject pElement to bind tooltip.
+	 * Generates item tooltip HTML, compiles attributes, and retrieves linked
+	 * upgrades and skins if available.
 	 * @param object pItem details retrieved from API.
+	 * @objparam jqobject pElement to bind tooltip.
 	 * @objparam int quantity if it is a stack of these items.
 	 * @objparam intarray item IDs upgrades like sigils, runes, or gems.
 	 * @objparam intarray item IDs of infusions.
@@ -5620,7 +5651,7 @@ E = {
 	 * completes. This provides an object containing additionally retrieved
 	 * API objects like upgrades and skin.
 	 */
-	bindItemTooltip: function(pElement, pItem, pOptions)
+	analyzeItem: function(pItem, pOptions)
 	{
 		var settings = pOptions || {};
 		// If provided an equipment object, override the other parameters
@@ -5714,7 +5745,7 @@ E = {
 							buffadd = buffs[buffcounter];
 							buffcounter++;
 						}
-						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + D.getString(iStats.attribute) + "<br />";
+						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + E.getAttributeString(iStats.attribute) + "<br />";
 					});
 				}
 				// Sigils
@@ -5983,9 +6014,13 @@ E = {
 				+ charbindstr
 				+ vendorstr
 			+ "</div>";
-			var elm = $(pElement);
-			elm.attr("title", html);
-			I.qTip.init(elm);
+			// Bind tooltip if provided an element
+			if (settings.element)
+			{
+				var elm = $(settings.element);
+				elm.attr("title", html);
+				I.qTip.init(elm);
+			}
 			// Execute callback if provided
 			if (settings.callback)
 			{
@@ -6178,7 +6213,7 @@ E = {
 			{
 				U.printJSON(pData);
 			});
-			E.bindItemTooltip(icon, pData);
+			E.analyzeItem(pData, {element: icon});
 		}});
 	},
 	
@@ -7545,20 +7580,20 @@ D = {
 		s_HeavyArmor: {en: "Heavy", de: "Schwer", es: "Pesado", fr: "Lourd"},
 		// Item Attributes
 		s_Power: {en: "Power", de: "Kraft", es: "Potencia", fr: "Puissance"},
-		s_Precision: {en: "Precision", de: "Präzision", es: "Precisión", fr: "Précision"},
-		s_CriticalChance: {en: "Critical Chance", de: "Kritische Trefferchance", es: "Probabilidad de daño crítico", fr: "Chance de coup critique"},
 		s_Toughness: {en: "Toughness", de: "Zähigkeit", es: "Dureza", fr: "Robustesse"},
 		s_Armor: {en: "Armor", de: "Rüstung", es: "Armadura", fr: "Armure"},
 		s_Vitality: {en: "Vitality", de: "Vitalität", es: "Vitalidad", fr: "Vitalité"},
+		s_Health: {en: "Health", de: "Lebenspunkte", es: "Salud", fr: "Santé"},
+		s_Precision: {en: "Precision", de: "Präzision", es: "Precisión", fr: "Précision"},
+		s_CriticalChance: {en: "Critical Chance", de: "Kritische Trefferchance", es: "Probabilidad de daño crítico", fr: "Chance de coup critique"},
+		s_Ferocity: {en: "Ferocity", de: "Wildheit", es: "Ferocidad", fr: "Férocité"},
+		s_CriticalDamage: {en: "Critical Damage", de: "Kritischer Schaden", es: "Daño crítico", fr: "Dégâts critiques"},
+		s_ConditionDamage: {en: "Condition Damage", de: "Zustandsschaden", es: "Daño de condición", fr: "Dégâts par altération"},
+		s_HealingPower: {en: "Healing Power", de: "Heilkraft", es: "Poder de curación", fr: "Guérison"},
+		s_Expertise: {en: "Expertise", de: "Fachkenntnis", es: "Pericia", fr: "Expertise"},
+		s_ConditionDuration: {en: "Condition Duration", de: "Zustandsdauer", es: "Duración de condición", fr: "Durée d'altération"},
 		s_Concentration: {en: "Concentration", de: "Konzentration", es: "Concentración", fr: "Concentration"},
 		s_BoonDuration: {en: "Boon Duration", de: "Segensdauer", es: "Duración de bendición", fr: "Durée d'avantage"},
-		s_ConditionDamage: {en: "Condition Damage", de: "Zustandsschaden", es: "Daño de condición", fr: "Dégâts par altération"},
-		s_ConditionDuration: {en: "Expertise", de: "Fachkenntnis", es: "Pericia", fr: "Expertise"},
-		s_ConditionDuration_Attribute: {en: "Condition Duration", de: "Zustandsdauer", es: "Duración de condición", fr: "Durée d'altération"},
-		s_Ferocity: {en: "Ferocity", de: "Wildheit", es: "Ferocidad", fr: "Férocité"},
-		s_CritDamage: {en: "Critical Damage", de: "Kritischer Schaden", es: "Daño crítico", fr: "Dégâts critiques"},
-		s_Health: {en: "Health", de: "Lebenspunkte", es: "Salud", fr: "Santé"},
-		s_Healing: {en: "Healing Power", de: "Heilkraft", es: "Poder de curación", fr: "Guérison"},
 		s_AgonyResistance: {en: "Agony Resistance", de: "Qual-Widerstand", es: "Resistencia a la agonía", fr: "Résistance à l'agonie"},
 		s_MagicFind: {en: "Magic Find", de: "Magisches Gespür", es: "Hallazgo mágico", fr: "Découverte de magie"},
 		// Item Equipment
@@ -18434,7 +18469,7 @@ B = {
 							$.getJSON(U.getAPIItem(iElement.attr("data-sale")), function(iData)
 							{
 								iElement.attr("src", iData.icon);
-								E.bindItemTooltip(iElement, iData);
+								E.analyzeItem(iData, {element: iElement});
 							});
 						})($(this));
 					}
@@ -18554,7 +18589,7 @@ B = {
 						{
 							var icon = $("#dsbVendorIcon_" + iIndex);
 							icon.attr("src", pProduct.icon);
-							E.bindItemTooltip(icon, pProduct);
+							E.analyzeItem(pProduct, {element: icon});
 						});
 					}).done(function()
 					{

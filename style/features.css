@@ -506,6 +506,7 @@ dt.jpzListNameHover {
 }
 .trdAccordionShut {
 	display: inline-block;
+	position: relative;
 }
 .trdAccordionShut:hover {
 	padding-top: 8px;
@@ -558,8 +559,11 @@ img.trdIcon {
 	border-radius: 4px;
 }
 img.trdIcon:hover {
+	position: absolute;
+	top: -32px; left: -14px;
 	width: 64px; height: 64px;
 	border-radius: 8px;
+	border: 1px solid red;
 }
 input[type="text"].trdName {
 	width: 100px;
