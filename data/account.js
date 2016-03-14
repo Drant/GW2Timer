@@ -118,55 +118,64 @@ var GW2T_ACCOUNT_METADATA = {
 			id: 1,
 			weight: 2,
 			color: "turquoise",
-			isswappable: true
+			isswappable: true,
+			health: "low"
 		},
 		warrior: {
 			id: 2,
 			weight: 3,
 			color: "sandybrown",
-			isswappable: true
+			isswappable: true,
+			health: "high"
 		},
 		engineer: {
 			id: 3,
 			weight: 4,
 			color: "burlyWood",
-			isswappable: false
+			isswappable: false,
+			health: "mid"
 		},
 		ranger: {
 			id: 4,
 			weight: 5,
 			color: "greenyellow",
-			isswappable: true
+			isswappable: true,
+			health: "mid"
 		},
 		thief: {
 			id: 5,
 			weight: 6,
 			color: "darkgray",
-			isswappable: true
+			isswappable: true,
+			health: "low"
 		},
 		elementalist: {
 			id: 6,
 			weight: 9,
 			color: "orangered",
-			isswappable: false
+			isswappable: false,
+			health: "low"
 		},
 		mesmer: {
 			id: 7,
 			weight: 8,
 			color: "violet",
-			isswappable: true
+			isswappable: true,
+			health: "mid"
 		},
 		necromancer: {
 			id: 8,
 			weight: 7,
 			color: "seagreen",
-			isswappable: true
+			isswappable: true,
+			health: "high"
 		},
 		revenant: {
 			id: 9,
 			weight: 1,
 			color: "slategray",
-			isswappable: true
+			isswappable: true,
+			health: "mid"
 		}
 	},
 	ProfAssociation: { // Corresponds to MumbleLink assignment
@@ -214,31 +223,53 @@ var GW2T_ACCOUNT_ITEM = {
 	Attribute: {
 		ColumnLeft: ["Power", "Toughness", "Vitality", "Precision", "Ferocity", "ConditionDamage", "Expertise", "Concentration", "AgonyResistance"],
 		ColumnRight: ["Profession", "Armor", "Health", "CriticalChance", "CriticalDamage", "HealingPower", "ConditionDuration", "BoonDuration", "MagicFind"],
-		Base: function()
-		{
-			this.Power = 0,
-			this.Toughness = 0;
-			this.Armor = 0;
-			this.Vitality = 0;
-			this.Health = 0;
-			this.Precision = 0;
-			this.CriticalChance = 0;
-			this.Ferocity = 0;
-			this.CriticalDamage = 0;
-			this.ConditionDamage = 0;
-			this.HealingPower = 0;
-			this.Expertise = 0;
-			this.ConditionDuration = 0;
-			this.Concentration = 0;
-			this.BoonDuration = 0;
-			this.AgonyResistance = 0;
-			this.MagicFind = 0;
+		PrimaryGrowth: { // For Power, Precision, Toughness, and Vitality attributes
+			"1": 37,
+			"10": 7,
+			"20": 10,
+			"24": 14,
+			"26": 15,
+			"30": 16,
+			"40": 20,
+			"44": 24,
+			"46": 25,
+			"50": 26,
+			"60": 30,
+			"64": 34,
+			"66": 35,
+			"70": 36,
+			"74": 44,
+			"76": 45,
+			"80": 46
+		},
+		HealthGrowth: { // Additional health points per level, group corresponds to profession health property
+			high: {
+				"19": 28,
+				"39": 70,
+				"59": 140,
+				"79": 210,
+				"80": 280
+			},
+			mid: {
+				"19": 18,
+				"39": 45,
+				"59": 90,
+				"79": 135,
+				"80": 180
+			},
+			low: {
+				"19": 5,
+				"39": 12.5,
+				"59": 25,
+				"79": 37.5,
+				"80": 50
+			}
 		},
 		Conversion: {
 			//Power: 0,
 			//Toughness: 0,
 			//Armor: 0,
-			//Vitality: 0,
+			Vitality: 0.1, // for 1 health point
 			//Health: 0,
 			Precision: 21, // for +1% CriticalChance
 			//CriticalChance: 0,

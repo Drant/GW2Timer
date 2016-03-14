@@ -810,6 +810,16 @@ a.chrWalletLink {
 	margin-left: 3px;
 	vertical-align: top;
 }
+.eqpAttrWindow .eqpAttrBonus {
+	display: none;
+}
+.eqpAttrWindow:hover .eqpAttrSum {
+	display: none;
+}
+.eqpAttrWindow:hover .eqpAttrBonus {
+	display: inline-block;
+	animation: aniFadeIn 0.4s;
+}
 
 /* Adjustments for smaller screens
 ----------------------------------------------------------------------------- */
