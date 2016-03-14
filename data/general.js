@@ -1103,24 +1103,38 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Flamekissed Light Armor Skin",
-		id: "43576",
-		price: 640,
-		discount: 800,
+		name: "Tireless Logging Minion",
+		id: "67029",
+		price: 800,
+		discount: 1000,
 		col: 0
 	},
 	{
-		name: "Flamewalker Medium Armor Skin",
-		id: "43575",
-		price: 640,
-		discount: 800,
+		name: "Tireless Harvesting Minion",
+		id: "67063",
+		price: 800,
+		discount: 1000,
 		col: 0
 	},
 	{
-		name: "Flamewrath Heavy Armor Skin",
-		id: "43574",
-		price: 640,
-		discount: 800,
+		name: "Bone Pick",
+		id: "48932",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
+		name: "Mini Chieftain Utahein and Mini Svanir",
+		id: "67281",
+		price: 480,
+		discount: 700,
+		col: 0
+	},
+	{
+		name: "Mini Beetle",
+		id: "69690",
+		price: 343,
+		discount: 500,
 		col: 0
 	},
 	{
@@ -1128,13 +1142,76 @@ Sale: {
 		id: "77821",
 		price: 400,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Butterfly Wings Backpack",
 		id: "70095",
 		price: 500,
 		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Bonebreaker",
+		id: "70300",
+		price: 240,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Mini Braham Eirsson",
+		id: "68572",
+		price: 240,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Mini Golden Pig",
+		id: "68683",
+		price: 240,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Mini Pact Airship",
+		id: "67839",
+		price: 240,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Mini Red Panda",
+		id: "68569",
+		price: 240,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Mini Rock",
+		id: "69790",
+		price: 240,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Mini Rox",
+		id: "68570",
+		price: 240,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Mini Tiger",
+		id: "70231",
+		price: 240,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Miniature Moose",
+		id: "69621",
+		price: 240,
+		discount: 350,
 		col: 1
 	}
 	]

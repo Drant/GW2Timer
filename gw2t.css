@@ -267,7 +267,7 @@ img {
 .itmAttr {
 	color: #00ff00;
 }
-.itmBuff, .itmRune, .itmUpgrade {
+.itmBuff, .itmUpgrade {
 	color: #5599ff;
 }
 .itmGrayed {
@@ -2460,7 +2460,7 @@ paletteText {
 	color: #ffff00; /* Yellow chat squad name and game notices */
 	color: #ffff66; /* Yellow chat squad */
 	color: #44dd44; /* Green laurel */
-	color: #009900; /* Green stats */
+	color: #009900; /* Green attributes */
 	color: #bbcc77; /* Green time */
 	color: #44dd44; /* Green story title */
 	color: #ddff77; /* Green bright chat notice */

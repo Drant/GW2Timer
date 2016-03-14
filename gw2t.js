@@ -1682,7 +1682,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				U.URL_API.Match = args[1];
+				
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -2803,6 +2803,48 @@ U = {
 		}
 
 		return (pWantType === undefined) ? id : id + " (" + type + ")";
+	},
+	
+	/*
+	 * Converts a decimal number into a decimal-less percentage.
+	 * @param float pNumber to convert.
+	 * @param int pPlaces decimal to keep.
+	 * @returns string.
+	 */
+	convertDecimalToPercent: function(pNumber, pPlaces)
+	{
+		if (pNumber === undefined || isFinite(pNumber) === false)
+		{
+			return "0%";
+		}
+		if (pPlaces === undefined)
+		{
+			pPlaces = 0;
+		}
+		
+		var sign = (pNumber < 0) ? "−" : "";
+		return sign + Math.abs(pNumber * 100).toFixed(pPlaces) + "%";
+	},
+	
+
+	/*
+	 * Formats a percentage number. Example: 1250.538 becomes 1,250.53%
+	 * @param float pPercentage to convert.
+	 * @param int pPlacesMax decimals to keep.
+	 * @param int pPlacesMin decimals to keep if number has no decimal values.
+	 * @returns string.
+	 */
+	formatPercentage: function(pPercentage, pPlacesMax, pPlacesMin)
+	{
+		if (pPercentage === parseInt(pPercentage)) // The percentage has no decimal points, then don't include them
+		{
+			if (pPlacesMin !== undefined)
+			{
+				return pPercentage.toFixed(pPlacesMin).toLocaleString() + "%";
+			}
+			return pPercentage.toLocaleString() + "%";
+		}
+		return pPercentage.toFixed((pPlacesMax === undefined) ? 2 : pPlacesMax).toLocaleString() + "%";
 	}
 };
 
@@ -2815,7 +2857,8 @@ A = {
 	CharacterCurrent: null,
 	isAccountInitialized: false,
 	Metadata: {}, // Prewritten data loaded along with account page
-	Item: {}, // Metadata for items (not item details objects)
+	Equipment: {}, // Character equipment slots
+	Attribute: {}, // Character attribute points
 	Data: { // Cache for retrieved API data objects and arrays
 		Account: {},
 		Items: {},
@@ -2892,7 +2935,8 @@ A = {
 		// Add new words to the dictionary
 		D.addDictionary(GW2T_ACCOUNT_DICTIONARY);
 		A.Metadata = GW2T_ACCOUNT_METADATA;
-		A.Item = GW2T_ACCOUNT_ITEM;
+		A.Equipment = GW2T_EQUIPMENT_DATA;
+		A.Attribute = GW2T_ATTRIBUTE_DATA;
 		
 		// Initialize common UI
 		var panel = $("#panelAccount");
@@ -3855,7 +3899,7 @@ A = {
 			return;
 		}
 		// Object containing attribute points to be added by the retrieved items
-		var attrobj = new A.Item.Attribute.Base();
+		var attrobj = new A.Attribute.Base();
 		var equipstofetch = char.equipment.length;
 		var numfetched = 0;
 		
@@ -3875,7 +3919,7 @@ A = {
 					+ "' style='background-image:url(\"img/account/equipment/" + pEquipment.toLowerCase() + ".png\")'></span>"
 			+ "</aside>";
 		};
-		var formatItemSummary = function(pBox)
+		var formatItemBrief = function(pBox)
 		{
 			var str = "";
 			var levelstr = (pBox.item.level < A.Metadata.ProfLevel.Max) ? (" (" + pBox.item.level + ")") : "";
@@ -3909,7 +3953,7 @@ A = {
 		var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(subcontainer);
 		var subconright = $("<div class='eqpRight eqpColumn'></div>").appendTo(subcontainer);
 		var subconbuild = $("<div class='eqpBuild eqpColumn'></div>").appendTo(subcontainer);
-		var eqp = A.Item.Equipment;
+		var eqp = A.Equipment;
 		var equipleft = eqp.ColumnLeft;
 		var equipright = eqp.ColumnRight;
 		var equiprightbrief = eqp.BriefRight;
@@ -3951,19 +3995,21 @@ A = {
 		var formatAttributesWindow = function()
 		{
 			var attrcontent = attrwindow.find(".eqpAttrContent");
-			for (var i in attrobj)
+			var attrstrobj = Q.calculateAttributes(attrobj, char);
+			for (var i in attrstrobj)
 			{
 				attrcontent.append("<span class='eqpAttrBlock eqpAttr_" + i + "' title='" + D.getString(i) + "'>"
 					+ "<img src='img/account/attributes/" + i.toLowerCase() + ".png' />"
-					+ "<var class='eqpAttrSum'>" + attrobj[i] + "</var><var class='eqpAttrBonus'>+" + attrobj[i] + "</var>"
+					+ "<var class='eqpAttrSum'>" + attrstrobj[i] + "</var><var class='eqpAttrBonus'>+" + attrobj[i] + "</var>"
 				+ "</span>");
 			}
 			// Insert profession-specific attribute
 			attrcontent.find(".eqpAttr_Power").after("<span class='eqpAttrBlock eqpAttr_Profession'>"
-				+ "<img src='img/account/attributes/" + char.profession.toLowerCase() + ".png' /><var>0</var></span>");
+				+ "<img src='img/account/attributes/" + char.profession.toLowerCase() + ".png' /><var>0%</var></span>");
 			I.qTip.init(attrcontent.find("span"));
 		};
-
+		
+		var runesets = Q.countRunes(char);
 		for (var i in char.equipment)
 		{
 			(function(iEquipment)
@@ -3977,17 +4023,18 @@ A = {
 					Q.analyzeItem(iData, {
 						element: slot,
 						equipment: iEquipment,
+						runesets: runesets,
 						wantattr: true,
 						callback: function(iBox)
 						{
 							// Set the slot icon as the transmuted skin icon
-							ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(formatItemSummary(iBox)).show();
+							ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(formatItemBrief(iBox)).show();
 							if (iBox.skin)
 							{
 								sloticon.attr("src", iBox.skin.icon);
 							}
 							// If the item is slotted in an attributable slot, (armor, primary weapons, trinkets, not underwater), then tally the attribute points
-							if (A.Item.Equipment.AttributableSlots[iEquipment.slot])
+							if (A.Equipment.AttributableSlots[iEquipment.slot])
 							{
 								Q.sumAttributeObject(attrobj, iBox.attr);
 							}
@@ -5414,27 +5461,6 @@ E = {
 	},
 	
 	/*
-	 * Converts a decimal number into a decimal-less percentage.
-	 * @param float pNumber to convert.
-	 * @param int pPlaces decimal to keep.
-	 * @returns string percentage.
-	 */
-	createPercentString: function(pNumber, pPlaces)
-	{
-		if (pNumber === undefined || isFinite(pNumber) === false)
-		{
-			return "0%";
-		}
-		if (pPlaces === undefined)
-		{
-			pPlaces = 0;
-		}
-		
-		var sign = (pNumber < 0) ? "−" : "";
-		return sign + Math.abs(pNumber * 100).toFixed(pPlaces) + "%";
-	},
-	
-	/*
 	 * Animates the input box's value or the box itself depending on difference.
 	 * @param int pOldValue for comparison.
 	 * @param int pNewValue for comparison.
@@ -5549,7 +5575,7 @@ E = {
 		profit.val(E.createCoinString(Math.round(
 			profitamount
 		)));
-		margin.val(E.createPercentString(
+		margin.val(U.convertDecimalToPercent(
 			(revenueamount / (costamount + listamount)) - 1, 2
 		));
 
@@ -6727,7 +6753,7 @@ E = {
 };
 
 /* =============================================================================
- * @@Quantity items and attributes
+ * @@Quantity items and attributes, to be initialized by the Account page
  * ========================================================================== */
 Q = {
 	
@@ -6741,6 +6767,12 @@ Q = {
 		Exotic: "Exotic",
 		Ascended: "Ascended",
 		Legendary: "Legendary"
+	},
+	RunePieces:
+	{
+		Masterwork: 2,
+		Rare: 4,
+		Exotic: 6
 	},
 	
 	/*
@@ -6819,25 +6851,39 @@ Q = {
 	},
 	
 	/*
-	 * Parses a description text for attribute points and add them to the
+	 * Looks for attribute points in an item and adds them to the
 	 * attributes-containing object.
 	 * @param object pAttrObj.
-	 * @param string or array pDescription from buff or bonuses property of item details.
+	 * @param object pItem to find attributes.
+	 * @param object pRuneSets numbers of runes equipped, optional.
 	 * @pre Account page's script has been loaded, which contains attribute association.
 	 * Properties this function looks for:
 	 * item.details.infix_upgrade.attributes // [{attribute: "Abc", "modifier": 123}, ...] language independent
 	 * item.details.bonuses // ["+123 Abc", ...] language dependent
 	 * item.details.infix_upgrade.buff.description // "+123 Abc\n+123 Abc..." language dependent
 	 */
-	sumItemAttribute: function(pAttrObj, pItem)
+	sumItemAttribute: function(pAttrObj, pItem, pRuneSets)
 	{
 		// This object translates the current language extracted attribute name to the proper key name
-		var assocobj = A.Item.Attribute["KeyDescription_" + D.getFullySupportedLanguage()];
+		var assocobj = A.Attribute["KeyDescription_" + D.getFullySupportedLanguage()];
 		// Reuseable function to parse array of attribute strings which are language dependent
 		var sumAttributeArray = function(pArray)
 		{
 			var attrstr, points, keyextracted, keyproper;
-			for (var i = 0; i < pArray.length; i++)
+			var length = pArray.length;
+			var runepieces = 0;
+			// Special case if summing for a rune
+			if (pRuneSets && pRuneSets[pItem.id])
+			{
+				if (pRuneSets[pItem.id].issummed === true)
+				{
+					return;
+				}
+				runepieces = pRuneSets[pItem.id].value;
+				length = runepieces;
+			}
+			
+			for (var i = 0; i < length; i++)
 			{
 				attrstr = pArray[i];
 				points = U.stripToNumbers(attrstr);
@@ -6858,6 +6904,11 @@ Q = {
 					pAttrObj[keyproper] += points;
 				}
 			}
+			if (pRuneSets && pRuneSets[pItem.id])
+			{
+				// Mark the rune to avoid resumming it
+				pRuneSets[pItem.id].issummed = true;
+			}
 		};
 		
 		var item = pItem;
@@ -6872,7 +6923,7 @@ Q = {
 		{
 			det.infix_upgrade.attributes.forEach(function(iAttr)
 			{
-				var attrname = A.Item.Attribute.KeyAttributes[iAttr.attribute];
+				var attrname = A.Attribute.KeyAttributes[iAttr.attribute];
 				if (attrname)
 				{
 					pAttrObj[attrname] += iAttr.modifier;
@@ -6915,64 +6966,151 @@ Q = {
 	 * Uses an attributes-containing object and calculates it with the base stats.
 	 * @param object pAttrObj for adding geared stats.
 	 * @param object pCharacter for calculating base stats.
+	 * @param boolean pWantValue whether to return an object with numbers instead of formatted strings.
 	 * @returns object attributes as string representation of the numbers.
 	 */
-	calculateAttributes: function(pAttrObj, pCharacter)
+	calculateAttributes: function(pAttrObj, pCharacter, pWantValue)
 	{
 		var attrobj = {};
-		var base = A.Item.Attribute.BasePoints;
-		attrobj.Power = (base + pAttrObj.Power).toLocaleString();
-		attrobj.Toughness = (base + pAttrObj.Toughness).toLocaleString();
-		attrobj.Armor = (base + pAttrObj.Armor).toLocaleString();
-		attrobj.Vitality = (base + pAttrObj.Vitality).toLocaleString();
-		attrobj.Health = (base + pAttrObj.Health).toLocaleString();
-		attrobj.Precision = (base + pAttrObj.Precision).toLocaleString();
-		attrobj.CriticalChance = (base + pAttrObj.CriticalChance).toLocaleString();
-		attrobj.Ferocity = (base + pAttrObj.Ferocity).toLocaleString();
-		attrobj.CriticalDamage = (base + pAttrObj.CriticalDamage).toLocaleString();
-		attrobj.ConditionDamage = (base + pAttrObj.ConditionDamage).toLocaleString();
-		attrobj.HealingPower = (base + pAttrObj.HealingPower).toLocaleString();
-		attrobj.Expertise = (base + pAttrObj.Expertise).toLocaleString();
-		attrobj.ConditionDuration = (base + pAttrObj.ConditionDuration).toLocaleString();
-		attrobj.Concentration = (base + pAttrObj.Concentration).toLocaleString();
-		attrobj.BoonDuration = (base + pAttrObj.BoonDuration).toLocaleString();
-		attrobj.AgonyResistance = (base + pAttrObj.AgonyResistance).toLocaleString();
-		attrobj.MagicFind = (base + pAttrObj.MagicFind).toLocaleString();
-		
+		var level = pCharacter.level;
+		var profession = pCharacter.charprofession;
+		var conv = A.Attribute.Conversion;
+		var baseattr = A.Attribute.PrimaryPoints[level - 1];
+		/*
+		 * Calculate the health by adding converted base vitality with the base
+		 * health points, then add it with the object's.
+		 */
+		var profhealth = 0;
+		var levelprev = 0;
+		var healthtype = A.Metadata.Profession[profession].health;
+		var healthgrowth = A.Attribute.HealthGrowth[healthtype];
+		var healthtier = 0;
+		for (var i in healthgrowth)
+		{
+			healthtier = parseInt(i);
+			if (healthtier <= level)
+			{
+				profhealth += (healthtier - levelprev) * healthgrowth[i];
+				levelprev = healthtier;
+			}
+			else
+			{
+				profhealth += (level - levelprev) * healthgrowth[i];
+				break;
+			}
+		}
+		/*
+		 * Use simple additions (with base attribute if available) and ratios to
+		 * get these attributes. This object contains unformatted raw numbers.
+		 */
+		var attrnew = {
+			Power:				baseattr + pAttrObj.Power,
+			Toughness:			baseattr + pAttrObj.Toughness,
+			Armor:				baseattr + pAttrObj.Armor,
+			Vitality:			baseattr + pAttrObj.Vitality,
+			Health:				(baseattr / conv.VITALITY_IN_HEALTH) + profhealth + pAttrObj.Health + (pAttrObj.Vitality / conv.VITALITY_IN_HEALTH),
+			Precision:			baseattr + pAttrObj.Precision,
+			CriticalChance:		conv.BASE_CRITICALCHANCE + pAttrObj.CriticalChance + (pAttrObj.Precision / conv.PRECISION_IN_CRITICALCHANCE),
+			Ferocity:			pAttrObj.Ferocity,
+			CriticalDamage:		conv.BASE_CRITICALDAMAGE + pAttrObj.CriticalDamage + (pAttrObj.Ferocity / conv.FEROCITY_IN_CRITICALDAMAGE),
+			ConditionDamage:	pAttrObj.ConditionDamage,
+			HealingPower:		pAttrObj.HealingPower,
+			Expertise:			pAttrObj.Expertise,
+			ConditionDuration:	pAttrObj.CriticalDamage + (pAttrObj.Expertise / conv.FEROCITY_IN_CRITICALDAMAGE),
+			Concentration:		pAttrObj.Concentration,
+			BoonDuration:		pAttrObj.CriticalDamage + (pAttrObj.Concentration / conv.FEROCITY_IN_CRITICALDAMAGE),
+			AgonyResistance:	pAttrObj.AgonyResistance,
+			MagicFind:			pAttrObj.MagicFind
+		};
+		// Return raw values if requested
+		if (pWantValue)
+		{
+			return attrnew;
+		}
+		// Otherwise format the values as strings
+		for (var i in attrnew)
+		{
+			attrobj[i] = (A.Attribute.KeyType[i]) ? U.formatPercentage(attrnew[i], 2, 1) : parseInt(attrnew[i]).toLocaleString();
+		}
 		return attrobj;
+	},
+	
+	/*
+	 * Looks through a character object's equipment property and tally the
+	 * number of same runes.
+	 * @param object pCharacter.
+	 * @returns object with rune item ID and count.
+	 */
+	countRunes: function(pCharacter)
+	{
+		var equip = pCharacter.equipment;
+		var armorcount = 0;
+		if (equip)
+		{
+			var obj = {};
+			for (var i = 0; i < equip.length; i++)
+			{
+				// If it is an armor slot and has upgrades
+				if (A.Equipment.ArmorSlots[(equip[i].slot)] && equip[i].upgrades)
+				{
+					var runeid = equip[i].upgrades[0];
+					if (obj[runeid] === undefined)
+					{
+						obj[runeid] = {
+							value: 0,
+							issummed: false // Whether the rune's attributes (if it is equipped) have been summed yet
+						};
+					}
+					obj[runeid].value = obj[runeid].value + 1;
+					armorcount++;
+				}
+				if (armorcount === A.Equipment.NumArmorSlots)
+				{
+					break;
+				}
+			}
+			return obj;
+		}
+		return null;
 	},
 	
 	/*
 	 * Formats the text of a rune's bonuses.
 	 * @param object pItem details from API.
-	 * @param int pPieces number of runes equipped, optional.
+	 * @param object or int pRuneSets numbers of runes equipped, optional.
 	 * @returns string HTML.
 	 */
-	getItemRune: function(pItem, pPieces)
+	getItemRune: function(pItem, pRuneSets)
 	{
 		var str = "";
 		var det = pItem.details;
 		var runeith = 0;
-		var runemax = 6;
-		var runecolor = "";
-		switch(pItem.rarity)
+		var runemax = Q.RunePieces[pItem.rarity];
+		var runepieces = (pRuneSets && pRuneSets[pItem.id]) ? pRuneSets[pItem.id].value : null;
+		if (typeof pRuneSets === "number")
 		{
-			case "Rare": runemax = 4; break;
-			case "Masterwork": runemax = 2; break;
+			runepieces = pRuneSets;
 		}
+		if (runepieces > runemax)
+		{
+			runepieces = runemax; // Prevent overcounting of bonuses if equipped too many of same runes
+		}
+		
+		var runecolor = "";
 		if (det.bonuses)
 		{
-			str += (pPieces !== undefined) ? "" : "<br />";
-			str += "<span class='itmRune'>";
-			if (pPieces !== undefined)
+			str += (runepieces !== null) ? "" : "<br />";
+			str += "<span class='itmGrayed'>";
+			if (runepieces !== null)
 			{
-				str += pItem.name + " (" + pPieces + "/" + runemax + ")<br />";
+				str += "<var class='itmBuff'>" + pItem.name + " (" + runepieces + "/" + runemax + ")</var><br />";
 			}
 			for (var i in det.bonuses)
 			{
-				runecolor = (runeith < runemax) ? "itmGrayed" : "";
+				// Colorize the bonus line if the rune is equipped
+				runecolor = (runeith < runepieces) ? " class='itmBuff'" : "";
 				runeith++;
-				str += "<var class='" + runecolor + "'>(" + runeith + "): " + det.bonuses[i] + "</var><br />";
+				str += "<var" + runecolor + ">(" + runeith + "): " + det.bonuses[i] + "</var><br />";
 			}
 			str += "</span>";
 		}
@@ -7024,6 +7162,7 @@ Q = {
 	 * @objparam intarray item IDs of infusions.
 	 * @objparam int skin ID for transmuted items.
 	 * @objparam object equipment from characters API.
+	 * @objparam object runesets containing counts of runes associated with rune's item ID.
 	 * @objparam string soulbound name of character the item is bound to.
 	 * @objparam function callback what to do after the tooltip generation
 	 * completes. This provides an object containing additionally retrieved
@@ -7046,7 +7185,7 @@ Q = {
 		}
 		if (settings.wantattr && A.isAccountInitialized)
 		{
-			attrobj = new A.Item.Attribute.Base();
+			attrobj = new A.Attribute.Base();
 		}
 		
 		var item = pItem;
@@ -7470,12 +7609,16 @@ Q = {
 					var upgdesc = "";
 					if (iData.details.type === "Rune")
 					{
-						upgdesc = Q.getItemRune(iData, ((settings.runepieces) ? settings.runepieces : 0));
+						upgdesc = Q.getItemRune(iData, ((settings.runesets) ? settings.runesets : 0));
+						if (attrobj)
+						{
+							Q.sumItemAttribute(attrobj, iData, settings.runesets);
+						}
 					}
 					else
 					{
 						upgdesc = iData.name + "<br />" + Q.formatItemDescription(iData);
-						if (attrobj) // Only sum attribute for non-runes
+						if (attrobj)
 						{
 							Q.sumItemAttribute(attrobj, iData);
 						}

@@ -206,212 +206,216 @@ var GW2T_ACCOUNT_METADATA = {
 };
 
 /*
- * Metadata for items.
+ * Metadata for equipment items and presentation.
  */
-var GW2T_ACCOUNT_ITEM = {
-	
+var GW2T_EQUIPMENT_DATA = {
 	// The ordering of equipment slots to generate the equipment window
-	Equipment: {
-		ColumnLeft: ["Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots", "WeaponA1", "WeaponA2", "WeaponB1", "WeaponB2"],
-		ColumnRight: ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2", "Sickle", "Axe", "Pick", "HelmAquatic", "WeaponAquaticA", "WeaponAquaticB"],
-		BriefRight: ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2"], // Item names for right column
-		AttributableSlots: {Helm: 1, Shoulders: 1, Coat: 1, Gloves: 1, Leggings: 1, Boots: 1, WeaponA1: 1, WeaponA2: 1, Backpack: 1, Accessory1: 1, Accessory2: 1, Amulet: 1, Ring1: 1, Ring2: 1},
-		ToggleableSlots: {Helm: 1, Shoulders: 1, Gloves: 1, Backpack: 1},
-		GatheringCharges: {Sickle: 50, Axe: 100, Pick: 100}
+	ColumnLeft: ["Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots", "WeaponA1", "WeaponA2", "WeaponB1", "WeaponB2"],
+	ColumnRight: ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2", "Sickle", "Axe", "Pick", "HelmAquatic", "WeaponAquaticA", "WeaponAquaticB"],
+	BriefRight: ["Backpack", "Accessory1", "Accessory2", "Amulet", "Ring1", "Ring2"], // Item names for right column
+	AttributableSlots: {Helm: 1, Shoulders: 1, Coat: 1, Gloves: 1, Leggings: 1, Boots: 1, WeaponA1: 1, WeaponA2: 1, Backpack: 1, Accessory1: 1, Accessory2: 1, Amulet: 1, Ring1: 1, Ring2: 1},
+	ArmorSlots: {Helm: 1, Shoulders: 1, Coat: 1, Gloves: 1, Leggings: 1, Boots: 1},
+	ToggleableSlots: {Helm: 1, Shoulders: 1, Gloves: 1, Backpack: 1},
+	NumArmorSlots: 6,
+	GatheringCharges: {Sickle: 50, Axe: 100, Pick: 100}
+};
+
+/*
+ * Metadata for item attributes and character stats.
+ */
+var GW2T_ATTRIBUTE_DATA = {
+	// Ordering of icons for displaying the attributes window
+	ColumnLeft: ["Power", "Toughness", "Vitality", "Precision", "Ferocity", "ConditionDamage", "Expertise", "Concentration", "AgonyResistance"],
+	ColumnRight: ["Profession", "Armor", "Health", "CriticalChance", "CriticalDamage", "HealingPower", "ConditionDuration", "BoonDuration", "MagicFind"],
+	// Constructor for standard attributes-containing object
+	Base: function()
+	{
+		this.Power = 0,
+		this.Toughness = 0;
+		this.Armor = 0;
+		this.Vitality = 0;
+		this.Health = 0;
+		this.Precision = 0;
+		this.CriticalChance = 0;
+		this.Ferocity = 0;
+		this.CriticalDamage = 0;
+		this.ConditionDamage = 0;
+		this.HealingPower = 0;
+		this.Expertise = 0;
+		this.ConditionDuration = 0;
+		this.Concentration = 0;
+		this.BoonDuration = 0;
+		this.AgonyResistance = 0;
+		this.MagicFind = 0;
 	},
-	// Standardizes the attribute names in order to parse attributes and buff descriptions from item details
-	Attribute: {
-		ColumnLeft: ["Power", "Toughness", "Vitality", "Precision", "Ferocity", "ConditionDamage", "Expertise", "Concentration", "AgonyResistance"],
-		ColumnRight: ["Profession", "Armor", "Health", "CriticalChance", "CriticalDamage", "HealingPower", "ConditionDuration", "BoonDuration", "MagicFind"],
-		PrimaryGrowth: { // For Power, Precision, Toughness, and Vitality attributes
-			"1": 37,
-			"10": 7,
-			"20": 10,
-			"24": 14,
-			"26": 15,
-			"30": 16,
-			"40": 20,
-			"44": 24,
-			"46": 25,
-			"50": 26,
-			"60": 30,
-			"64": 34,
-			"66": 35,
-			"70": 36,
-			"74": 44,
-			"76": 45,
-			"80": 46
+	PrimaryGrowth: [ // The attribute points the player gains at a level (the ith array index)
+		37, 7, 7, 7, 7, 7, 7, 7, 7, 7,     //  1-10
+		0, 10, 0, 10, 0, 10, 0, 10, 0, 10, // 11-20
+		0, 14, 0, 14, 0, 15, 0, 16, 0, 16, // 21-30
+		0, 20, 0, 20, 0, 20, 0, 20, 0, 20, // 31-40
+		0, 24, 0, 24, 0, 25, 0, 26, 0, 26, // 41-50
+		0, 30, 0, 30, 0, 30, 0, 30, 0, 30, // 51-60
+		0, 34, 0, 34, 0, 35, 0, 36, 0, 36, // 61-70
+		0, 44, 0, 44, 0, 45, 0, 46, 0, 46  // 71-80
+	],
+	PrimaryPoints: [ // The computed summation
+		37, 44, 51, 58, 65, 72, 79, 86, 93, 100,
+		100, 110, 110, 120, 120, 130, 130, 140, 140, 150,
+		150, 164, 164, 178, 178, 193, 193, 209, 209, 225,
+		225, 245, 245, 265, 265, 285, 285, 305, 305, 325,
+		325, 349, 349, 373, 373, 398, 398, 424, 424, 450,
+		450, 480, 480, 510, 510, 540, 540, 570, 570, 600,
+		600, 634, 634, 668, 668, 703, 703, 739, 739, 775,
+		775, 819, 819, 863, 863, 908, 908, 954, 954, 1000 // 1000 base attributes at level 80
+	],
+	HealthGrowth: { // Additional health points per level, group corresponds to profession health property
+		high: {
+			"19": 28,  //  1-19
+			"39": 70,  // 20-39
+			"59": 140, // 40-59
+			"79": 210, // 60-79
+			"80": 280  //    80
 		},
-		HealthGrowth: { // Additional health points per level, group corresponds to profession health property
-			high: {
-				"19": 28,
-				"39": 70,
-				"59": 140,
-				"79": 210,
-				"80": 280
-			},
-			mid: {
-				"19": 18,
-				"39": 45,
-				"59": 90,
-				"79": 135,
-				"80": 180
-			},
-			low: {
-				"19": 5,
-				"39": 12.5,
-				"59": 25,
-				"79": 37.5,
-				"80": 50
-			}
+		mid: {
+			"19": 18,
+			"39": 45,
+			"59": 90,
+			"79": 135,
+			"80": 180
 		},
-		Conversion: {
-			//Power: 0,
-			//Toughness: 0,
-			//Armor: 0,
-			Vitality: 0.1, // for 1 health point
-			//Health: 0,
-			Precision: 21, // for +1% CriticalChance
-			//CriticalChance: 0,
-			Ferocity: 15, // for +1% CriticalDamage
-			//CriticalDamage: 0,
-			//ConditionDamage: 0,
-			//HealingPower: 0,
-			Expertise: 15, // for +1% ConditionDuration
-			//ConditionDuration: 0,
-			Concentration: 15, // for +1% BoonDuration
-			//BoonDuration: 0,
-			//AgonyResistance: 0,
-			//MagicFind: 0,
-		},
-		KeyAttributes: { // Corresponds to "attributes" property
-			"Power": "Power",
-			"Toughness": "Toughness",
-			//"": "Armor",
-			"Vitality": "Vitality",
-			//"": "Health",
-			"Precision": "Precision",
-			//"": "CriticalChance",
-			"CritDamage": "Ferocity",
-			//"": "CriticalDamage",
-			"ConditionDamage": "ConditionDamage",
-			"Healing": "HealingPower",
-			"ConditionDuration": "Expertise",
-			//"": "ConditionDuration",
-			"BoonDuration": "Concentration",
-			//"": "BoonDuration",
-			//"": "AgonyResistance",
-			//"": "MagicFind"
-		},
-		KeyDescription_en: { // Corresponds to keywords in buff "description" property (after being stripped to letters and lowercased)
-			"power": "Power",
-			"toughness": "Toughness",
-			//"": "Armor",
-			"vitality": "Vitality",
-			//"": "Health",
-			"precision": "Precision",
-			"criticalchance": "CriticalChance",
-			"ferocity": "Ferocity",
-			//"": "CriticalDamage",
-			"conditiondamage": "ConditionDamage",
-			"healing": "HealingPower",
-			"expertise": "Expertise",
-			"conditionduration": "ConditionDuration",
-			"concentration": "Concentration",
-			"boonduration": "BoonDuration",
-			"agonyresistance": "AgonyResistance",
-			//"": "MagicFind"
-		},
-		KeyDescription_de: {
-			"kraft": "Power",
-			"zähigkeit": "Toughness",
-			//"": "Armor",
-			"vitalität": "Vitality",
-			//"": "Health",
-			"präzision": "Precision",
-			"kritischetrefferchance": "CriticalChance",
-			"wildheit": "Ferocity",
-			//"": "CriticalDamage",
-			"zustandsschaden": "ConditionDamage",
-			"heilkraft": "HealingPower",
-			"fachkenntnis": "Expertise",
-			"zustandsdauer": "ConditionDuration",
-			"konzentration": "Concentration",
-			"segensdauer": "BoonDuration",
-			"qualwiderstand": "AgonyResistance",
-			//"": "MagicFind"
-		},
-		KeyDescription_es: {
-			"potencia": "Power",
-			"dureza": "Toughness",
-			//"": "Armor",
-			"vitalidad": "Vitality",
-			//"": "Health",
-			"precisión": "Precision",
-			"probabilidaddedañocrítico": "CriticalChance",
-			"ferocidad": "Ferocity",
-			//"": "CriticalDamage",
-			"dañodecondición": "ConditionDamage",
-			"poderdecuración": "HealingPower",
-			"pericia": "Expertise",
-			"duracióndecondición": "ConditionDuration",
-			"concentración": "Concentration",
-			"duracióndebendición": "BoonDuration",
-			"resistenciaalaagonía": "AgonyResistance",
-			//"": "MagicFind"
-		},
-		KeyDescription_fr: {
-			"Puissance": "Power",
-			"robustesse": "Toughness",
-			//"": "Armor",
-			"vitalité": "Vitality",
-			//"": "Health",
-			"précision": "Precision",
-			"chancedecoupcritique": "CriticalChance",
-			"férocité": "Ferocity",
-			//"": "CriticalDamage",
-			"dégâtsparaltération": "ConditionDamage",
-			"guérison": "HealingPower",
-			"expertise": "Expertise",
-			"duréedaltération": "ConditionDuration",
-			"concentration": "Concentration",
-			"duréedavantage": "BoonDuration",
-			"résistanceàlagonie": "AgonyResistance",
-			//"": "MagicFind"
+		low: {
+			"19": 5,
+			"39": 12.5,
+			"59": 25,
+			"79": 37.5,
+			"80": 50
 		}
 	},
-	Agony: { // Lookup table for items that give fractal Agony Resistance (AR)
-		"37138": 5, // Versatile Simple Infusion +5
-		"70852": 7, // Versatile Simple Infusion +7
-		"49424": 1, // +1 Agony Infusion
-		"49425": 2,
-		"49426": 3,
-		"49427": 4,
-		"49428": 5,
-		"49429": 6,
-		"49430": 7,
-		"49431": 8,
-		"49432": 9,
-		"49433": 10,
-		"49434": 11,
-		"49435": 12,
-		"49436": 13,
-		"49437": 14,
-		"49438": 15,
-		"49439": 16,
-		"49440": 17,
-		"49441": 18,
-		"49442": 19,
-		"49443": 20,
-		"49444": 21,
-		"49445": 22,
-		"49446": 23,
-		"49447": 24,
-		"49448": 25,
-		"49449": 26,
-		"49450": 27,
-		"49451": 28,
-		"49452": 29,
-		"49453": 30
+	Conversion: {
+		BASE_CRITICALCHANCE: 4, // percentage
+		BASE_CRITICALDAMAGE: 150, // percentage
+		VITALITY_IN_HEALTH: 0.1, // For 1 HP
+		PRECISION_IN_CRITICALCHANCE: 21, // For +1%
+		FEROCITY_IN_CRITICALDAMAGE: 15, // For +1%
+		EXPERTISE_IN_CONDITIONDURATION: 15, // For +1%
+		CONCENTRATION_IN_BOONDURATION: 15 // For +1%
+	},
+	/*
+	 * Standardize the attribute names in order to parse attributes and buff
+	 * descriptions from item details.
+	 */
+	KeyAttributes: { // Corresponds to "attributes" property
+		"Power": "Power",
+		"Toughness": "Toughness",
+		//"": "Armor",
+		"Vitality": "Vitality",
+		//"": "Health",
+		"Precision": "Precision",
+		//"": "CriticalChance",
+		"CritDamage": "Ferocity",
+		//"": "CriticalDamage",
+		"ConditionDamage": "ConditionDamage",
+		"Healing": "HealingPower",
+		"ConditionDuration": "Expertise",
+		//"": "ConditionDuration",
+		"BoonDuration": "Concentration",
+		//"": "BoonDuration",
+		//"": "AgonyResistance",
+		//"": "MagicFind"
+	},
+	KeyType: { // 0 for numbers, 1 for percentages
+		Power: 0,
+		Toughness: 0,
+		Armor: 0,
+		Vitality: 0,
+		Health: 0,
+		Precision: 0,
+		CriticalChance: 1,
+		Ferocity: 0,
+		CriticalDamage: 1,
+		ConditionDamage: 0,
+		HealingPower: 0,
+		Expertise: 0,
+		ConditionDuration: 1,
+		Concentration: 0,
+		BoonDuration: 1,
+		AgonyResistance: 0,
+		MagicFind: 1
+	},
+	KeyDescription_en: { // Corresponds to keywords in buff "description" property (after being stripped to letters and lowercased)
+		"power": "Power",
+		"toughness": "Toughness",
+		//"": "Armor",
+		"vitality": "Vitality",
+		//"": "Health",
+		"precision": "Precision",
+		"criticalchance": "CriticalChance",
+		"ferocity": "Ferocity",
+		//"": "CriticalDamage",
+		"conditiondamage": "ConditionDamage",
+		"healing": "HealingPower",
+		"expertise": "Expertise",
+		"conditionduration": "ConditionDuration",
+		"concentration": "Concentration",
+		"boonduration": "BoonDuration",
+		"agonyresistance": "AgonyResistance",
+		//"": "MagicFind"
+	},
+	KeyDescription_de: {
+		"kraft": "Power",
+		"zähigkeit": "Toughness",
+		//"": "Armor",
+		"vitalität": "Vitality",
+		//"": "Health",
+		"präzision": "Precision",
+		"kritischetrefferchance": "CriticalChance",
+		"wildheit": "Ferocity",
+		//"": "CriticalDamage",
+		"zustandsschaden": "ConditionDamage",
+		"heilkraft": "HealingPower",
+		"fachkenntnis": "Expertise",
+		"zustandsdauer": "ConditionDuration",
+		"konzentration": "Concentration",
+		"segensdauer": "BoonDuration",
+		"qualwiderstand": "AgonyResistance",
+		//"": "MagicFind"
+	},
+	KeyDescription_es: {
+		"potencia": "Power",
+		"dureza": "Toughness",
+		//"": "Armor",
+		"vitalidad": "Vitality",
+		//"": "Health",
+		"precisión": "Precision",
+		"probabilidaddedañocrítico": "CriticalChance",
+		"ferocidad": "Ferocity",
+		//"": "CriticalDamage",
+		"dañodecondición": "ConditionDamage",
+		"poderdecuración": "HealingPower",
+		"pericia": "Expertise",
+		"duracióndecondición": "ConditionDuration",
+		"concentración": "Concentration",
+		"duracióndebendición": "BoonDuration",
+		"resistenciaalaagonía": "AgonyResistance",
+		//"": "MagicFind"
+	},
+	KeyDescription_fr: {
+		"Puissance": "Power",
+		"robustesse": "Toughness",
+		//"": "Armor",
+		"vitalité": "Vitality",
+		//"": "Health",
+		"précision": "Precision",
+		"chancedecoupcritique": "CriticalChance",
+		"férocité": "Ferocity",
+		//"": "CriticalDamage",
+		"dégâtsparaltération": "ConditionDamage",
+		"guérison": "HealingPower",
+		"expertise": "Expertise",
+		"duréedaltération": "ConditionDuration",
+		"concentration": "Concentration",
+		"duréedavantage": "BoonDuration",
+		"résistanceàlagonie": "AgonyResistance",
+		//"": "MagicFind"
 	}
 };

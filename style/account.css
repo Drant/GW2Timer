@@ -809,6 +809,7 @@ a.chrWalletLink {
 	margin-top: 7px;
 	margin-left: 3px;
 	vertical-align: top;
+	white-space: nowrap;
 }
 .eqpAttrWindow .eqpAttrBonus {
 	display: none;
