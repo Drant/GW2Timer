@@ -34,10 +34,10 @@
 	TABLE OF CONTENTS (Ctrl+F "AtsignAtsignLetter" to jump to section)
 
 	O - Options for user
+	X - Checklists
 	U - URL management
 	A - Account management
-	X - Checklists
-	E - Economy
+	E - Economy Trading Post
 	Q - Quantity items
 	D - Dictionary for translations
 	C - Chains events
@@ -57,7 +57,7 @@ $(window).on("load", function() {
 /* =============================================================================
  * Single letter objects serve as namespaces.
  * ========================================================================== */
-var O, U, A, X, E, Q, D, C, M, P, G, W, T, B, K, I = {};
+var O, X, U, A, E, Q, D, C, M, P, G, W, T, B, K, I = {};
 
 /* =============================================================================
  * @@Options for the user
@@ -1404,6 +1404,1066 @@ O = {
 		{
 			W.toggleObjectiveLabels();
 		}
+	}
+};
+
+/* =============================================================================
+ * @@Checklist management and generation
+ * ========================================================================== */
+X = {
+	
+	/*
+	 * A checklist is a set of checkboxes that can have the usual unchecked,
+	 * checked, and disabled states. These states are recorded as a single
+	 * character in a string of numbers representing those states, and the index
+	 * of a character is that checkbox's "ID". The Checklists object stores
+	 * checklists with such a string and a key for localStorage, along with
+	 * supplementary attributes.
+	 */
+	Checklists:
+	{
+		// localStorage key-value pairs (key is required)
+		Chain: { key: "str_chlChain", value: "" },
+		ChainSubscription: { key: "str_chlChainSubscription", value: "" },
+		JP: { key: "str_chlJP", value: "" },
+		Chest: { key: "str_chlChest", value: "" },
+		ResourceRich: { key: "str_chlResourceRich", value: "" },
+		ResourceRegular: { key: "str_chlResourceRegular", value: "" },
+		ResourceHotspot: { key: "str_chlResourceHotspot", value: "" },
+		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
+		CustomDaily: { key: "str_chlCustomDaily", value: "" },
+		CustomWeekly: { key: "str_chlCustomWeekly", value: "" },
+		// Individual calculator's settings
+		TradingOverwrite: { key: "str_chlTradingOverwrite", value: "" },
+		TradingNotify: { key: "str_chlTradingNotify", value: "" }
+	},
+	/*
+	 * Collectible checklists must have the same variable name as in the map page's data.
+	 * The urlkey properties must be unique from the global KeyEnum.
+	 */
+	Collectibles:
+	{
+		// Temporary
+		//LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans", value: ""},
+		// Repeatable
+		NoxiousPods: { key: "str_chlNoxiousPods", urlkey: "noxiouspods", value: ""},
+		CrystallizedCaches: { key: "str_chlCrystallizedCaches", urlkey: "crystallizedcaches", value: ""},
+		ExaltedChests: { key: "str_chlExaltedChests", urlkey: "exaltedchests", value: ""},
+		AirshipCargo: { key: "str_chlAirshipCargo", urlkey: "airshipcargo", value: ""},
+		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: ""},
+		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: ""},
+		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: ""},
+		// Heart of Thorns
+		ItzelTotems: { key: "str_chlItzelTotems", urlkey: "itzeltotems", value: ""},
+		PriorySeals: { key: "str_chlPriorySeals", urlkey: "prioryseals", value: ""},
+		AuricTablets: { key: "str_chlAuricTablets", urlkey: "aurictablets", value: ""},
+		ExaltedMasks: { key: "str_chlExaltedMasks", urlkey: "exaltedmasks", value: ""},
+		// Pre-expansion
+		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator", value: ""},
+		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: ""},
+		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: ""},
+		CoinChallenger: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: ""},
+		LostBadges: { key: "str_chlLostBadges", urlkey: "lostbadges", value: ""},
+		GoldenLostBadges: { key: "str_chlGoldenLostBadges", urlkey: "goldenlostbadges", value: ""},
+		DiveMaster: { key: "str_chlDiveMaster", urlkey: "divemaster", value: ""},
+		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader", value: ""},
+		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup", value: ""},
+		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: ""},
+		// Hero progress
+		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes", value: ""},
+		MasteryInsight: { key: "str_chlMasteryInsight", urlkey: "masteryinsight", value: ""},
+		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge", value: ""}
+	},
+	ChecklistEnum:
+	{
+		// Must be 1 character long
+		Unchecked: "0",
+		Checked: "1",
+		Disabled: "2",
+		
+		Unfound: "0",
+		Tracked: "1",
+		Found: "2"
+	},
+	ChecklistJob:
+	{
+		UncheckAll: 0,
+		CheckAll: 1,
+		UncheckTheChecked: 2
+	},
+	
+	/*
+	 * A textlist is a set of text inputs or textareas that user writes in.
+	 * These are stored as substrings separated by "|" in a single long string.
+	 * The index between the separators represent the substring's (textarea's
+	 * content) ID. Other than that, its working is similar to checklists.
+	 */
+	Textlists:
+	{
+		CustomTextDaily: { key: "str_txlCustomTextDaily", value: [], valueDefault: [] },
+		CustomTextWeekly: { key: "str_txlCustomTextWeekly", value: [], valueDefault: [] },
+		NotepadText: { key: "str_txlNotepadText", value: [], valueDefault: [] },
+		TradingItem: { key: "str_txlTradingItem", value: [] },
+		TradingName: { key: "str_txlTradingName", value: [] },
+		TradingBuy: { key: "str_txlTradingBuy", value: [] },
+		TradingSell: { key: "str_txlTradingSell", value: [] },
+		TradingQuantity: { key: "str_txlTradingQuantity", value: [] },
+		NotifyBuyLow: { key: "str_txlNotifyBuyLow", value: [] },
+		NotifyBuyHigh: { key: "str_txlNotifyBuyHigh", value: [] },
+		NotifySellLow: { key: "str_txlNotifySellLow", value: [] },
+		NotifySellHigh: { key: "str_txlNotifySellHigh", value: [] },
+		ExchangeUnit: { key: "str_txlExchangeUnit", value: [] }
+	},
+	
+	/*
+	 * Converts a boolean to a checklist enum.
+	 * @param string pBoolean to convert.
+	 * @returns enum.
+	 */
+	boolToChecklistEnum: function(pBoolean)
+	{
+		if (pBoolean)
+		{
+			return X.ChecklistEnum.Checked;
+		}
+		return X.ChecklistEnum.Unchecked;
+	},
+	
+	/*
+	 * Creates a string for a checklist object with each character representing
+	 * a state, and each index representing a check item. Also initializes the
+	 * localStorage or load it as the checklist if already stored.
+	 * @param object pChecklist to initialize.
+	 * @param int pLength of the checklist string to construct.
+	 * @param string pCustomList comma separated list of indexes (1-indexed) to be set as checked.
+	 * @returns string new checklist to be assigned to a checklist variable.
+	 */
+	initializeChecklist: function(pChecklist, pLength, pCustomList, pJob)
+	{
+		var i;
+		var indexes;
+		var index;
+		var storedlist = localStorage[pChecklist.key];
+		pChecklist.length = pLength;
+		
+		if (pCustomList)
+		{
+			X.clearChecklist(pChecklist);
+			indexes = pCustomList.split(",");
+
+			for (i in indexes)
+			{
+				index = parseInt(indexes[i]);
+				if (isFinite(index))
+				{
+					X.setChecklistItem(pChecklist, index - 1, X.ChecklistEnum.Checked);
+				}
+			}
+		}
+		/*
+		 * If localStorage doesn't have the checklist already then it gets a
+		 * default checklist string of 0's.
+		 */
+		else if (storedlist === undefined)
+		{
+			X.clearChecklist(pChecklist, pJob);
+		}
+		// If stored list is longer than requested, then truncate it from right to left
+		else if (storedlist.length > pLength)
+		{
+			localStorage[pChecklist.key] = storedlist.substring(0, pLength);
+		}
+		// If stored list is shorter than requested, then concatenate it with 0's so its new length equals so
+		else if (storedlist.length < pLength)
+		{
+			var padding = U.repeatChar(X.ChecklistEnum.Unchecked, pLength - storedlist.length);
+			localStorage[pChecklist.key] = storedlist + padding;
+		}
+		
+		// Either way, the stored list becomes the program's list
+		pChecklist.value = localStorage[pChecklist.key];
+	},
+	
+	/*
+	 * Replaces a character in a checklist string and updates the localStorage.
+	 * @param object pChecklist to modify.
+	 * @param int pIndex of the character in the string.
+	 * @param string pCharacter to replace the current.
+	 */
+	setChecklistItem: function(pChecklist, pIndex, pCharacter)
+	{
+		pIndex = parseInt(pIndex);
+		var thechar = pCharacter.toString();
+		// A character must be length 1 and different from the current
+		if (thechar.length === 1 && pChecklist.value[pIndex] !== thechar
+			&& pIndex >= 0
+			&& pIndex < pChecklist.value.length)
+		{
+			var checklist = U.replaceCharAt(pChecklist.value, pIndex, thechar);
+			localStorage[pChecklist.key] = checklist;
+			pChecklist.value = checklist;
+		}
+	},
+	
+	/*
+	 * Toggles a character in a checklist string and updates the localStorage
+	 * between three possible states.
+	 * @param object pChecklist to modify.
+	 * @param int pIndex of the character in the string.
+	 * @returns enum the new state.
+	 */
+	trackChecklistItem: function(pChecklist, pIndex)
+	{
+		pIndex = parseInt(pIndex);
+		var thechar = pChecklist.value.charAt(pIndex);
+		switch (thechar)
+		{
+			case X.ChecklistEnum.Unfound: thechar = X.ChecklistEnum.Tracked; break;
+			case X.ChecklistEnum.Tracked: thechar = X.ChecklistEnum.Found; break;
+			case X.ChecklistEnum.Found: thechar = X.ChecklistEnum.Unfound; break;
+			default: thechar = X.ChecklistEnum.Unfound;
+		}
+		
+		var checklist = U.replaceCharAt(pChecklist.value, pIndex, thechar);
+		localStorage[pChecklist.key] = checklist;
+		pChecklist.value = checklist;
+		
+		return thechar;
+	},
+	
+	/*
+	 * Gets the character in a checklist string at specified index.
+	 * @param object pChecklist to extract.
+	 * @param int pIndex of the character.
+	 * @param string pConversion to convert that character to a type.
+	 * @returns dynamic depending on conversion param.
+	 */
+	getChecklistItem: function(pChecklist, pIndex, pConversion)
+	{
+		var thechar = pChecklist.value.charAt(pIndex);
+		
+		if (pConversion === undefined)
+		{
+			return thechar;
+		}
+		if (pConversion === O.TypeEnum.isInteger)
+		{
+			return parseInt(thechar);
+		}
+		if (pConversion === O.TypeEnum.isBoolean)
+		{
+			// Returns false only if unchecked
+			return O.intToBool(parseInt(thechar));
+		}
+		return thechar;
+	},
+	
+	/*
+	 * Tells if an element with a checkbox has checked state.
+	 * @param object pChecklist to lookup.
+	 * @param jqobject pEntry to extract checkbox index in checklist.
+	 * @returns boolean true if checked.
+	 */
+	isChecked: function(pChecklist, pEntry)
+	{
+		var index = U.getSubintegerFromHTMLID(pEntry);
+		if (X.getChecklistItem(pChecklist, index) === X.ChecklistEnum.Checked)
+		{
+			return true;
+		}
+		return false;
+	},
+	
+	/*
+	 * Gets indexes in a checklist that has its value as "checked".
+	 * @param object pChecklist to extract.
+	 * @returns string comma separated string of index numbers (1-indexed).
+	 */
+	getCheckedIndexes: function(pChecklist)
+	{
+		var i;
+		var indexes = "";
+		var list = pChecklist.value;
+		for (i = 0; i < list.length; i++)
+		{
+			if (list[i] === X.ChecklistEnum.Checked)
+			{
+				indexes += (i+1) + ",";
+			}
+		}
+		indexes = indexes.slice(0, -1); // Trim last extra comma
+		return indexes;
+	},
+	
+	/*
+	 * Sets a checklist object's list a desired mass state.
+	 * @param object pChecklist to clear.
+	 * @param enum pJob to check or uncheck the checklist.
+	 * @pre Checklist length attribute was initialized.
+	 */
+	clearChecklist: function(pChecklist, pJob)
+	{
+		var i;
+		var checklist = "";
+		var value = "";
+		
+		switch (pJob)
+		{
+			case X.ChecklistJob.CheckAll:
+			{
+				for (i = 0; i < pChecklist.length; i++)
+				{
+					checklist += X.ChecklistEnum.Checked;
+				}
+			} break;
+			case X.ChecklistJob.UncheckTheChecked:
+			{
+				// Only sets unchecked state on checked ones
+				if (localStorage[pChecklist.key] !== undefined)
+				{
+					value = localStorage[pChecklist.key];
+				}
+				else
+				{
+					value = pChecklist.value;
+				}
+				
+				for (i = 0; i < value.length; i++)
+				{
+					if (value[i] === X.ChecklistEnum.Checked)
+					{
+						checklist += X.ChecklistEnum.Unchecked;
+					}
+					else
+					{
+						checklist += value[i];
+					}
+				}
+			} break;
+			default:
+			{
+				for (i = 0; i < pChecklist.length; i++)
+				{
+					checklist += X.ChecklistEnum.Unchecked;
+				}
+			}
+		}
+		
+		pChecklist.value = checklist;
+		localStorage[pChecklist.key] = checklist;
+	},
+	
+	/*
+	 * Counts the checked type in a checklist.
+	 * @param object pChecklist to look in.
+	 * @param enum pCheckType to look for.
+	 * @returns int count.
+	 */
+	countChecklist: function(pChecklist, pCheckType)
+	{
+		return U.countOccurrence(pChecklist.value, pCheckType);
+	},
+	
+	/*
+	 * Reads a checkbox element and return its checklist enum state.
+	 * @param jqobject pElement to read.
+	 * @returns int checklist enum.
+	 */
+	getCheckboxEnumState: function(pElement)
+	{
+		if (pElement.prop("disabled") === true)
+		{
+			return X.ChecklistEnum.Disabled;
+		}
+		if (pElement.prop("checked") === true)
+		{
+			return X.ChecklistEnum.Checked;
+		}
+		return X.ChecklistEnum.Unchecked;
+	},
+	
+	/*
+	 * Sets an input tag checkbox checked/disabled states based on specified enum.
+	 * @param jqobject pElement checkbox to change.
+	 * @param int pChecklistEnum to apply.
+	 */
+	setCheckboxEnumState: function(pElement, pChecklistEnum)
+	{
+		switch (pChecklistEnum)
+		{
+			case X.ChecklistEnum.Disabled:
+			{
+				pElement.prop("disabled", true);
+				pElement.prop("checked", false);
+			} break;
+			case X.ChecklistEnum.Checked:
+			{
+				pElement.prop("checked", true);
+			} break;
+			default: pElement.prop("checked", false);
+		}
+		pElement.trigger("change");
+	},
+	
+	/*
+	 * Programmatically selects an option in a fieldset input.
+	 */
+	setFieldsetState: function(pName, pOrder)
+	{
+		$("fieldset[name='" + pName + "'] input:eq(" + pOrder + ")").trigger("click");
+	},
+	
+	/*
+	 * Sets a checkbox to a desired state by reading it then manually triggering it.
+	 * @param jqobject pElement checkbox to manipulate.
+	 * @param int pState checkbox enum.
+	 */
+	triggerCheckbox: function(pElement, pState)
+	{
+		var checkboxstate = X.getCheckboxEnumState(pElement);
+		
+		if ( (pState === X.ChecklistEnum.Checked && (checkboxstate === X.ChecklistEnum.Unchecked))
+			|| (pState === X.ChecklistEnum.Unchecked && (checkboxstate === X.ChecklistEnum.Checked)) )
+		{
+			pElement.trigger("click");
+		}
+		else if (pState === X.ChecklistEnum.Disabled && checkboxstate !== X.ChecklistEnum.Disabled)
+		{
+			pElement.trigger("dblclick");
+		}
+	},
+	
+	/*
+	 * Triggers a checkbox based on associated state in a checklist.
+	 * @param object pChecklist as target state.
+	 * @param int pIndex of a state in checklist.
+	 * @param jqobject pElement checkbox to manipulate.
+	 */
+	triggerCheckboxEnumState: function(pChecklist, pIndex, pElement)
+	{
+		var checkliststate = X.getChecklistItem(pChecklist, pIndex);
+		X.triggerCheckbox(pElement, checkliststate);
+	},
+	
+	/*
+	 * Adds style classes to a label that wraps a checkbox depending on its state.
+	 * @param object pChecklist to get state.
+	 * @param int pIndex of state.
+	 * @param jqobject pElement checkbox label to style.
+	 * @pre In format <label><input type="checkbox" />ExampleLabel</label>.
+	 */
+	styleCheckbox: function(pChecklist, pIndex, pElement)
+	{
+		var state = X.getChecklistItem(pChecklist, pIndex);
+		switch (state)
+		{
+			case X.ChecklistEnum.Disabled:
+			{
+				pElement.parent().removeClass("chlCheckboxChecked")
+					.addClass("chlCheckboxDisabled");
+			} break;
+			case X.ChecklistEnum.Checked:
+			{
+				pElement.parent().removeClass("chlCheckboxDisabled")
+					.addClass("chlCheckboxChecked");
+			} break;
+			default:
+			{
+				pElement.parent().removeClass("chlCheckboxDisabled")
+					.removeClass("chlCheckboxChecked");
+			}
+		}
+	},
+	
+	/*
+	 * Initializes the checklist for a set of checkboxes and bind their standard storage behavior.
+	 * @param object pChecklist for storing state.
+	 * @param jqobject pCheckboxes input to bind behavior.
+	 * @param enum pJob initial checkbox state.
+	 * @pre These checkboxes can only have a checked and unchecked state only.
+	 */
+	initializeCheckboxlist: function(pChecklist, pCheckboxes, pJob)
+	{
+		X.initializeChecklist(pChecklist, pCheckboxes.length, null, pJob);
+		
+		pCheckboxes.each(function(iIndex)
+		{
+			$(this).change(function()
+			{
+				var state = X.getCheckboxEnumState($(this));
+				
+				X.setChecklistItem(pChecklist, iIndex, state);
+			});
+			
+			// Now that this checkbox is bound, trigger it as the state in checklist
+			X.triggerCheckboxEnumState(pChecklist, iIndex, $(this));
+		});
+	},
+	
+	/*
+	 * Stores text and binds default behavior for a standard set of text fields.
+	 * @param object pChecklistText for storing text in memory and storage.
+	 * @param jqobject pTextFields input or textarea elements to iterate and read text.
+	 * @param string pFieldName name of the text fields for notifying of change.
+	 * @param int pMaxLength of characters in a text field.
+	 * @param jqobject pRestoreButton to reset all text fields.
+	 */
+	initializeTextlist: function(pTextlist, pTextFields, pFieldName, pMaxLength, pRestoreButton)
+	{
+		// Initialize the pre-written text in the text fields
+		pTextFields.each(function()
+		{
+			var text = $(this).val();
+			pTextlist.value.push(text);
+			if (pTextlist.valueDefault)
+			{
+				pTextlist.valueDefault.push(text);
+			}
+		});
+		
+		/*
+		 * Each text fields' value will become a delimited substring in one
+		 * single string to be stored in localStorage.
+		 */
+		var i;
+		if (localStorage[pTextlist.key] === undefined)
+		{
+			// If localStorage value is empty, replace with original values in text field
+			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
+		}
+		else
+		{
+			var storedtextarray = localStorage[pTextlist.key].split(I.cTextDelimiterChar);
+			// Load the stored text and regard missing entries
+			for (i = 0; i < pTextlist.value.length; i++)
+			{
+				if (storedtextarray[i])
+				{
+					pTextlist.value[i] = storedtextarray[i];
+				}
+				else
+				{
+					pTextlist.value[i] = "";
+				}
+			}
+			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
+		}
+		
+		var updateStoredText = function()
+		{
+			// Read every text fields and rewrite the string of substrings again
+			pTextFields.each(function(iIndex)
+			{
+				// Do not allow delimiter in the string to be stored
+				pTextlist.value[iIndex] = $(this).val().replace(I.cTextDelimiterRegex, "");
+			});
+			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
+		};
+		
+		// Bind text fields behavior
+		pTextFields.each(function(iIndex)
+		{
+			$(this).attr("maxlength", pMaxLength); // Set number of characters allowed in the text field
+			$(this).val(pTextlist.value[iIndex]); // Load initialized text
+			
+			$(this).change(function()
+			{
+				if (pFieldName)
+				{
+					I.write(pFieldName + " #" + (iIndex + 1) + " updated.");
+				}
+				updateStoredText();
+			});
+		});
+		
+		// Bind restore default values button
+		if (pRestoreButton)
+		{
+			pRestoreButton.click(function()
+			{
+				if (confirm("Reset texts to default?"))
+				{
+					pTextFields.each(function(iIndex)
+					{
+						$(this).val(pTextlist.valueDefault[iIndex]).trigger("change");
+					});
+				}
+			});
+		}
+	},
+	
+	/*
+	 * Loads chain checklist state as recorded in localStorage, and binds
+	 * clicking behavior to the div faux checkboxes.
+	 * @param object pChain to initialize.
+	 * @pre Chains HTML have been initialized.
+	 */
+	initializeChainChecklist: function(pChain)
+	{
+		var bar = $("#chnBar_" + pChain.nexus);
+		var check = $("#chnCheck_" + pChain.nexus);
+		var time = $("#chnTime_" + pChain.nexus);
+
+		// Set the checkbox visual state as stored
+		X.reapplyChainBarState(pChain.nexus, bar, check, time);
+		
+		if (C.isChainRegular(pChain))
+		{
+			/*
+			 * Bind event handler for the time clickable for subscription.
+			 */
+			time.click(function()
+			{
+				var nexus = U.getSubintegerFromHTMLID($(this));
+				var slottimes = $(".chnSlot_" + nexus).find("time");
+
+				if (X.getChecklistItem(X.Checklists.ChainSubscription, nexus) === X.ChecklistEnum.Checked)
+				{
+					$(this).removeClass("chnTimeSubscribed");
+					slottimes.removeClass("chnTimeSubscribed");
+					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Unchecked);
+				}
+				else
+				{
+					$(this).addClass("chnTimeSubscribed");
+					slottimes.addClass("chnTimeSubscribed");
+					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
+					if (O.Options.int_setAlarm !== O.IntEnum.Alarm.Subscription)
+					{
+						I.write("Please set <img src='img/ui/speaker.png' /> to &quot;"
+							+ D.getWordCapital("subscription") + "&quot; to enable alarm.");
+					}
+				}
+			});
+		}
+
+		/*
+		 * Bind event handler for the div "checkboxes".
+		 */
+		check.click(function()
+		{
+			// The ID was named so by the chain initializer, get the chain nexus
+			var nexus = U.getSubintegerFromHTMLID($(this));
+			var thisbar = $("#chnBar_" + nexus);
+			var theseslots = $(".chnSlot_" + nexus);
+			var display = (I.ModeCurrent === I.ModeEnum.Tile) ? "inline-block" : "block";
+			// State of the div is stored in the Checklist object rather in the element itself
+			switch (X.getChecklistItem(X.Checklists.Chain, nexus))
+			{
+				case X.ChecklistEnum.Unchecked:
+				{
+					thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
+					if (I.ModeCurrent !== I.ModeEnum.Tile)
+					{
+						$("#chnDetails_" + nexus).hide("fast");
+					}
+					$(this).addClass("chnChecked");
+					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Checked);
+					if (C.isTimetableGenerated)
+					{
+						theseslots.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed)
+							.find(".chnCheck").addClass("chnChecked");
+					}
+				} break;
+				case X.ChecklistEnum.Checked:
+				{
+					thisbar.css({opacity: 1}).show("fast").css({display: display});
+					thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
+					if (I.ModeCurrent !== I.ModeEnum.Tile)
+					{
+						$("#chnDetails_" + nexus).show("fast").css({display: display});
+					}
+					$(this).removeClass("chnChecked");
+					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
+					if (C.isTimetableGenerated)
+					{
+						theseslots.show("fast").css({display: display})
+							.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed)
+							.find(".chnCheck").removeClass("chnChecked");
+					}
+				} break;
+				case X.ChecklistEnum.Disabled:
+				{
+					thisbar.css({opacity: 1}).show("fast").css({display: display});
+					if (I.ModeCurrent !== I.ModeEnum.Tile)
+					{
+						$("#chnDetails_" + nexus).show("fast").css({display: display});
+					}
+					$(this).removeClass("chnChecked");
+					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
+					if (C.isTimetableGenerated)
+					{
+						theseslots.hide().css({opacity: 1})
+							.find(".chnCheck").removeClass("chnChecked");
+					}
+				} break;
+			}
+			X.hideCheckedChainBar(nexus);
+			// Update the icons on the clock too
+			K.checkoffChainIcon(nexus);
+		});
+
+		// Bind the delete chain text button [x]
+		$("#chnDelete_" + pChain.nexus).click(function()
+		{
+			var nexus = U.getSubintegerFromHTMLID($(this));
+			$("#chnBar_" + nexus).hide("slow");
+			if (C.isTimetableGenerated)
+			{
+				$(".chnSlot_" + nexus).hide("slow");
+			}
+			X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Disabled);
+
+			// Also update the clock icon
+			K.checkoffChainIcon(nexus);
+		});
+	},
+	reapplyChainBarState: function(pIndex, pBar, pCheck, pTime)
+	{
+		// Chain check
+		switch (X.getChecklistItem(X.Checklists.Chain, pIndex))
+		{
+			case X.ChecklistEnum.Unchecked:
+			{
+				// Bar is not checked off, so don't do anything
+			} break;
+			case X.ChecklistEnum.Checked:
+			{
+				pBar.css({opacity: K.iconOpacityChecked});
+				pCheck.addClass("chnChecked");
+				if (O.Options.bol_hideChecked)
+				{
+					pBar.hide();
+				}
+			} break;
+			case X.ChecklistEnum.Disabled:
+			{
+				pBar.hide();
+			} break;
+		}
+		
+		// Chain time
+		if (C.isChainRegular(C.Chains[pIndex]) &&
+			X.getChecklistItem(X.Checklists.ChainSubscription, pIndex) === X.ChecklistEnum.Checked)
+		{
+			pTime.addClass("chnTimeSubscribed");
+		}
+	},
+	hideCheckedChainBar: function(pIndex)
+	{
+		var display = (I.ModeCurrent === I.ModeEnum.Tile) ? "inline-block" : "block";
+		// Hide the chain bar if opted
+		if (X.getChecklistItem(X.Checklists.Chain, pIndex) === X.ChecklistEnum.Checked)
+		{
+			if (O.Options.bol_hideChecked)
+			{
+				$("#chnBar_" + pIndex).hide("fast");
+				if (C.isTimetableGenerated)
+				{
+					$(".chnSlot_" + pIndex).hide("fast");
+				}
+			}
+			else
+			{
+				$("#chnBar_" + pIndex).show("fast").css({display: display});
+				if (C.isTimetableGenerated)
+				{
+					$(".chnSlot_" + pIndex).show("fast").css({display: display});
+				}
+			}
+		}
+	},
+	
+	/*
+	 * Gets the checklist state of a chain.
+	 * @param object pChain chain to test.
+	 * @returns int state (use enum).
+	 */
+	getChainChecklistState: function(pChain)
+	{
+		return X.getChecklistItem(X.Checklists.Chain, pChain.nexus);
+	},
+	
+	/*
+	 * Prepares the personal checklist presentation.
+	 */
+	initializePersonalChecklist: function()
+	{
+		/*
+		 * Setting this boolean will tell the clock ticker function to call the
+		 * HTML timer update function.
+		 */
+		T.isCountdownToResetStarted = true;
+		
+		// Initially, only show the daily checklist; user clicks the buttons to toggle the various checklists
+		$("#chlDungeon, #chlCustomWeekly").hide();
+		
+		// Buttons to toggle view between daily and weekly checklist
+		$("#chlDungeonButton").click(function()
+		{
+			$("#chlCustomButtons button").removeClass("btnFocused");
+			$(this).addClass("btnFocused");
+			$("#chlCustom").hide();
+			$("#chlDungeon").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+			
+		});
+		$("#chlCustomDailyButton").addClass("btnFocused").click(function()
+		{
+			$("#chlCustomButtons button").removeClass("btnFocused");
+			$(this).addClass("btnFocused");
+			$("#chlDungeon").hide();
+			$("#chlCustom").show();
+			$("#chlCustomWeekly").hide();
+			$("#chlCustomDaily").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+		});
+		$("#chlCustomWeeklyButton").click(function()
+		{
+			$("#chlCustomButtons button").removeClass("btnFocused");
+			$(this).addClass("btnFocused");
+			$("#chlDungeon").hide();
+			$("#chlCustom").show();
+			$("#chlCustomDaily").hide();
+			$("#chlCustomWeekly").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+			
+		});
+		
+		// Initialize the checklists
+		X.initializeDungeonChecklist();
+		X.initializeCustomChecklist();
+	},
+	
+	/*
+	 * Binds dungeon checkbox storage and calculator behavior.
+	 */
+	initializeDungeonChecklist: function()
+	{
+		X.initializeChecklist(X.Checklists.Dungeon, $("#chlDungeon input").length);
+		
+		// Load dungeon icons on demand because they are pretty large
+		$("#chlDungeon .chlDungeonBar").each(function()
+		{
+			$(this).prepend("<ins class='chl_" + $(this).data("name").toLowerCase() + "'></ins>");
+		});
+		
+		var updateCalculator = function()
+		{
+			var money = X.Checklists.Dungeon.money;
+			var gold = ~~(money / E.Exchange.COPPER_IN_GOLD);
+			var silver = ~~(money / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER;
+			var copper = money % E.Exchange.COPPER_IN_SILVER;
+			$("#chlDungeonCalculator_Gold").text(gold);
+			$("#chlDungeonCalculator_Silver").text(silver);
+			$("#chlDungeonCalculator_Copper").text(copper);
+		};
+		
+		// Update checkbox visual and do the calculation when clicked
+		$("#chlDungeon input").each(function(iIndex)
+		{
+			// Bind checkbox behavior
+			$(this).change(function()
+			{
+				var state = X.getCheckboxEnumState($(this));
+				
+				X.setChecklistItem(X.Checklists.Dungeon, iIndex, state);
+				X.styleCheckbox(X.Checklists.Dungeon, iIndex, $(this));
+				
+				// Sum the checkbox's path money
+				var calc = $("#chlDungeonCalculator");
+				var money = X.Checklists.Dungeon.money;
+				var sum = $(this).data("money");
+				
+				switch ($(this).data("mode"))
+				{
+					case "E": sum += calc.data("moneyaddexp"); break;
+				}
+				
+				switch (state)
+				{
+					case X.ChecklistEnum.Disabled:
+					{
+						X.Checklists.Dungeon.money = money - sum;
+					} break;
+					case X.ChecklistEnum.Checked:
+					{
+						X.Checklists.Dungeon.money = money + sum;
+					} break;
+					default:
+					{
+						X.Checklists.Dungeon.money = money - sum;
+					}
+				}
+				updateCalculator();
+			});
+		});
+		// Double click a label (which wraps an input tag) to en/disable the checkbox
+		$("#chlDungeon label").each(function(iIndex)
+		{
+			$(this).dblclick(function()
+			{
+				var checkbox = $(this).find("input:first-child");
+
+				if (checkbox.prop("disabled") === false)
+				{
+					/*
+					 * The double click triggers the click event, which causes
+					 * the calculator to count the disabled checkbox, so trigger
+					 * the unchecking of it first before disabling.
+					 */
+					if (checkbox.prop("checked") === true)
+					{
+						X.triggerCheckbox(checkbox, X.ChecklistEnum.Unchecked);
+					}
+					checkbox.prop("disabled", true).prop("checked", false);
+				}
+				else
+				{
+					checkbox.prop("disabled", false);
+				}
+				X.setChecklistItem(X.Checklists.Dungeon, iIndex, X.getCheckboxEnumState(checkbox));
+				X.styleCheckbox(X.Checklists.Dungeon, iIndex, checkbox);
+			});
+		});
+		
+		// Restore checklist state from stored by triggering the checkboxes (behaviors already bound)
+		$("#chlDungeon input").each(function(iIndex)
+		{
+			X.triggerCheckboxEnumState(X.Checklists.Dungeon, iIndex, $(this));
+		});
+		
+		// Bind uncheck all button
+		$("#chlDungeonUncheck").click(function()
+		{
+			X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
+			$("#chlDungeon input").each(function(iIndex)
+			{
+				if ($(this).prop("checked") === true)
+				{
+					$(this).trigger("click");
+				};
+				X.styleCheckbox(X.Checklists.Dungeon, iIndex, $(this));
+			});
+		});
+	},
+	
+	/*
+	 * Binds checkbox and text field joined behavior.
+	 */
+	initializeCustomChecklist: function()
+	{
+		// Generate initial set of checkboxes and textboxes
+		var NUM_CHECKBOXES = 12;
+		// &zwnj; is an invisible character, used because empty label appears without a right border in Chrome
+		var checkboxhtml = "<li><label><input type='checkbox' />&zwnj;</label><input type='text' /></li>";
+		for (var i = 0; i < NUM_CHECKBOXES; i++)
+		{
+			$("#chlCustomListDaily").append(checkboxhtml);
+			$("#chlCustomListWeekly").append(checkboxhtml);
+		}
+		var insertSampleList = function(pList)
+		{
+			var samples = $(pList).attr("data-samples").split(I.cTextDelimiterChar);
+			for (var i = 0; i < samples.length; i++)
+			{
+				$(pList + " input[type='text']:eq(" + i + ")").val(samples[i]);
+			}
+		};
+		insertSampleList("#chlCustomListDaily");
+		insertSampleList("#chlCustomListWeekly");
+		
+		// Bind checkboxes and textboxes behavior
+		var bindCustomChecklistBehavior = function(pChecklist, pTextlist, pListName)
+		{
+			var checkboxes = $("#chlCustomList" + pListName + " input:checkbox");
+			X.initializeChecklist(pChecklist, checkboxes.length);
+
+			checkboxes.each(function(iIndex)
+			{
+				$(this).change(function()
+				{
+					var state = X.getCheckboxEnumState($(this));
+
+					X.setChecklistItem(pChecklist, iIndex, state);
+					X.styleCheckbox(pChecklist, iIndex, $(this));
+
+					if (state === X.ChecklistEnum.Checked)
+					{
+						$(this).parent().next().addClass("chlCustomTextChecked");
+					}
+					else
+					{
+						$(this).parent().next().removeClass("chlCustomTextChecked");
+					}
+				});
+
+				// Now that this checkbox is bound, trigger it as the state in checklist
+				X.triggerCheckboxEnumState(pChecklist, iIndex, $(this));
+			});
+
+			// Bind uncheck all button
+			$("#chlCustomUncheck" + pListName).click(function()
+			{
+				X.clearChecklist(pChecklist, X.ChecklistJob.UncheckTheChecked);
+				$("#chlCustomList" + pListName + " input:checkbox").each(function(iIndex)
+				{
+					if ($(this).prop("checked"))
+					{
+						$(this).trigger("click");
+					};
+					X.styleCheckbox(pChecklist, iIndex, $(this));
+				});
+			});
+
+			// Bind text fields behavior
+			var items = $("#chlCustomList" + pListName + " input:text");
+			var restore = $("#chlCustomRestore" + pListName);
+			X.initializeTextlist(pTextlist, items, "Custom checklist item", 48, restore);
+		};
+		bindCustomChecklistBehavior(X.Checklists.CustomDaily, X.Textlists.CustomTextDaily, "Daily");
+		bindCustomChecklistBehavior(X.Checklists.CustomWeekly, X.Textlists.CustomTextWeekly, "Weekly");
+	},
+	
+	/*
+	 * Clears the daily sensitive checklists. Called by the daily reset function.
+	 */
+	clearCustomChecklistDaily: function()
+	{
+		$("#chlDungeonUncheck").trigger("click");
+		$("#chlCustomUncheckDaily").trigger("click");
+		X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
+		X.clearChecklist(X.Checklists.CustomDaily, X.ChecklistJob.UncheckTheChecked);
+	},
+	clearCustomChecklistWeekly: function()
+	{
+		$("#chlCustomUncheckWeekly").trigger("click");
+		X.clearChecklist(X.Checklists.CustomWeekly, X.ChecklistJob.UncheckTheChecked);
+	},
+	
+	/*
+	 * Binds notepad textarea behavior and button pages behavior.
+	 */
+	initializeNotepad: function()
+	{
+		// Numbered buttons' behavior
+		$("#chlNotepadButtons button").each(function(iIndex)
+		{
+			$(this).click(function()
+			{
+				// Show selected number's sheet
+				$("#chlNotepadSheets textarea").hide().eq(iIndex).show()
+					.css({opacity: 0.5}).animate({opacity: 1}, 400);
+				$("#chlNotepadButtons button").removeClass("btnFocused");
+				$(this).addClass("btnFocused");
+			});
+		}).first().click(); // First sheet is default view
+		
+		// Bind text fields behavior
+		var items = $("#chlNotepadSheets textarea");
+		var restore = $("#chlNotepadRestore");
+		X.initializeTextlist(X.Textlists.NotepadText, items, "Notepad sheet", 4096, restore);
+		// Customize notepad according to options
+		items.css("height", O.Options.int_sizeNotepadHeight);
+		items.css("font-size", O.Options.int_sizeNotepadFont);
+		items.first().show();
 	}
 };
 
@@ -3998,7 +5058,7 @@ A = {
 			var attrstrobj = Q.calculateAttributes(attrobj, char);
 			for (var i in attrstrobj)
 			{
-				attrcontent.append("<span class='eqpAttrBlock eqpAttr_" + i + "' title='" + D.getString(i) + "'>"
+				attrcontent.append("<span class='eqpAttrBlock eqpAttr_" + i + "' title='<dfn>" + D.getString(i) + "</dfn>'>"
 					+ "<img src='img/account/attributes/" + i.toLowerCase() + ".png' />"
 					+ "<var class='eqpAttrSum'>" + attrstrobj[i] + "</var><var class='eqpAttrBonus'>+" + attrobj[i] + "</var>"
 				+ "</span>");
@@ -4129,1066 +5189,6 @@ A = {
 		}
 	}
 	
-};
-
-/* =============================================================================
- * @@Checklist management and generation
- * ========================================================================== */
-X = {
-	
-	/*
-	 * A checklist is a set of checkboxes that can have the usual unchecked,
-	 * checked, and disabled states. These states are recorded as a single
-	 * character in a string of numbers representing those states, and the index
-	 * of a character is that checkbox's "ID". The Checklists object stores
-	 * checklists with such a string and a key for localStorage, along with
-	 * supplementary attributes.
-	 */
-	Checklists:
-	{
-		// localStorage key-value pairs (key is required)
-		Chain: { key: "str_chlChain", value: "" },
-		ChainSubscription: { key: "str_chlChainSubscription", value: "" },
-		JP: { key: "str_chlJP", value: "" },
-		Chest: { key: "str_chlChest", value: "" },
-		ResourceRich: { key: "str_chlResourceRich", value: "" },
-		ResourceRegular: { key: "str_chlResourceRegular", value: "" },
-		ResourceHotspot: { key: "str_chlResourceHotspot", value: "" },
-		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
-		CustomDaily: { key: "str_chlCustomDaily", value: "" },
-		CustomWeekly: { key: "str_chlCustomWeekly", value: "" },
-		// Individual calculator's settings
-		TradingOverwrite: { key: "str_chlTradingOverwrite", value: "" },
-		TradingNotify: { key: "str_chlTradingNotify", value: "" }
-	},
-	/*
-	 * Collectible checklists must have the same variable name as in the map page's data.
-	 * The urlkey properties must be unique from the global KeyEnum.
-	 */
-	Collectibles:
-	{
-		// Temporary
-		//LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans", value: ""},
-		// Repeatable
-		NoxiousPods: { key: "str_chlNoxiousPods", urlkey: "noxiouspods", value: ""},
-		CrystallizedCaches: { key: "str_chlCrystallizedCaches", urlkey: "crystallizedcaches", value: ""},
-		ExaltedChests: { key: "str_chlExaltedChests", urlkey: "exaltedchests", value: ""},
-		AirshipCargo: { key: "str_chlAirshipCargo", urlkey: "airshipcargo", value: ""},
-		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: ""},
-		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: ""},
-		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: ""},
-		// Heart of Thorns
-		ItzelTotems: { key: "str_chlItzelTotems", urlkey: "itzeltotems", value: ""},
-		PriorySeals: { key: "str_chlPriorySeals", urlkey: "prioryseals", value: ""},
-		AuricTablets: { key: "str_chlAuricTablets", urlkey: "aurictablets", value: ""},
-		ExaltedMasks: { key: "str_chlExaltedMasks", urlkey: "exaltedmasks", value: ""},
-		// Pre-expansion
-		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator", value: ""},
-		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: ""},
-		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: ""},
-		CoinChallenger: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: ""},
-		LostBadges: { key: "str_chlLostBadges", urlkey: "lostbadges", value: ""},
-		GoldenLostBadges: { key: "str_chlGoldenLostBadges", urlkey: "goldenlostbadges", value: ""},
-		DiveMaster: { key: "str_chlDiveMaster", urlkey: "divemaster", value: ""},
-		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader", value: ""},
-		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup", value: ""},
-		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: ""},
-		// Hero progress
-		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes", value: ""},
-		MasteryInsight: { key: "str_chlMasteryInsight", urlkey: "masteryinsight", value: ""},
-		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge", value: ""}
-	},
-	ChecklistEnum:
-	{
-		// Must be 1 character long
-		Unchecked: "0",
-		Checked: "1",
-		Disabled: "2",
-		
-		Unfound: "0",
-		Tracked: "1",
-		Found: "2"
-	},
-	ChecklistJob:
-	{
-		UncheckAll: 0,
-		CheckAll: 1,
-		UncheckTheChecked: 2
-	},
-	
-	/*
-	 * A textlist is a set of text inputs or textareas that user writes in.
-	 * These are stored as substrings separated by "|" in a single long string.
-	 * The index between the separators represent the substring's (textarea's
-	 * content) ID. Other than that, its working is similar to checklists.
-	 */
-	Textlists:
-	{
-		CustomTextDaily: { key: "str_txlCustomTextDaily", value: [], valueDefault: [] },
-		CustomTextWeekly: { key: "str_txlCustomTextWeekly", value: [], valueDefault: [] },
-		NotepadText: { key: "str_txlNotepadText", value: [], valueDefault: [] },
-		TradingItem: { key: "str_txlTradingItem", value: [] },
-		TradingName: { key: "str_txlTradingName", value: [] },
-		TradingBuy: { key: "str_txlTradingBuy", value: [] },
-		TradingSell: { key: "str_txlTradingSell", value: [] },
-		TradingQuantity: { key: "str_txlTradingQuantity", value: [] },
-		NotifyBuyLow: { key: "str_txlNotifyBuyLow", value: [] },
-		NotifyBuyHigh: { key: "str_txlNotifyBuyHigh", value: [] },
-		NotifySellLow: { key: "str_txlNotifySellLow", value: [] },
-		NotifySellHigh: { key: "str_txlNotifySellHigh", value: [] },
-		ExchangeUnit: { key: "str_txlExchangeUnit", value: [] }
-	},
-	
-	/*
-	 * Converts a boolean to a checklist enum.
-	 * @param string pBoolean to convert.
-	 * @returns enum.
-	 */
-	boolToChecklistEnum: function(pBoolean)
-	{
-		if (pBoolean)
-		{
-			return X.ChecklistEnum.Checked;
-		}
-		return X.ChecklistEnum.Unchecked;
-	},
-	
-	/*
-	 * Creates a string for a checklist object with each character representing
-	 * a state, and each index representing a check item. Also initializes the
-	 * localStorage or load it as the checklist if already stored.
-	 * @param object pChecklist to initialize.
-	 * @param int pLength of the checklist string to construct.
-	 * @param string pCustomList comma separated list of indexes (1-indexed) to be set as checked.
-	 * @returns string new checklist to be assigned to a checklist variable.
-	 */
-	initializeChecklist: function(pChecklist, pLength, pCustomList, pJob)
-	{
-		var i;
-		var indexes;
-		var index;
-		var storedlist = localStorage[pChecklist.key];
-		pChecklist.length = pLength;
-		
-		if (pCustomList)
-		{
-			X.clearChecklist(pChecklist);
-			indexes = pCustomList.split(",");
-
-			for (i in indexes)
-			{
-				index = parseInt(indexes[i]);
-				if (isFinite(index))
-				{
-					X.setChecklistItem(pChecklist, index - 1, X.ChecklistEnum.Checked);
-				}
-			}
-		}
-		/*
-		 * If localStorage doesn't have the checklist already then it gets a
-		 * default checklist string of 0's.
-		 */
-		else if (storedlist === undefined)
-		{
-			X.clearChecklist(pChecklist, pJob);
-		}
-		// If stored list is longer than requested, then truncate it from right to left
-		else if (storedlist.length > pLength)
-		{
-			localStorage[pChecklist.key] = storedlist.substring(0, pLength);
-		}
-		// If stored list is shorter than requested, then concatenate it with 0's so its new length equals so
-		else if (storedlist.length < pLength)
-		{
-			var padding = U.repeatChar(X.ChecklistEnum.Unchecked, pLength - storedlist.length);
-			localStorage[pChecklist.key] = storedlist + padding;
-		}
-		
-		// Either way, the stored list becomes the program's list
-		pChecklist.value = localStorage[pChecklist.key];
-	},
-	
-	/*
-	 * Replaces a character in a checklist string and updates the localStorage.
-	 * @param object pChecklist to modify.
-	 * @param int pIndex of the character in the string.
-	 * @param string pCharacter to replace the current.
-	 */
-	setChecklistItem: function(pChecklist, pIndex, pCharacter)
-	{
-		pIndex = parseInt(pIndex);
-		var thechar = pCharacter.toString();
-		// A character must be length 1 and different from the current
-		if (thechar.length === 1 && pChecklist.value[pIndex] !== thechar
-			&& pIndex >= 0
-			&& pIndex < pChecklist.value.length)
-		{
-			var checklist = U.replaceCharAt(pChecklist.value, pIndex, thechar);
-			localStorage[pChecklist.key] = checklist;
-			pChecklist.value = checklist;
-		}
-	},
-	
-	/*
-	 * Toggles a character in a checklist string and updates the localStorage
-	 * between three possible states.
-	 * @param object pChecklist to modify.
-	 * @param int pIndex of the character in the string.
-	 * @returns enum the new state.
-	 */
-	trackChecklistItem: function(pChecklist, pIndex)
-	{
-		pIndex = parseInt(pIndex);
-		var thechar = pChecklist.value.charAt(pIndex);
-		switch (thechar)
-		{
-			case X.ChecklistEnum.Unfound: thechar = X.ChecklistEnum.Tracked; break;
-			case X.ChecklistEnum.Tracked: thechar = X.ChecklistEnum.Found; break;
-			case X.ChecklistEnum.Found: thechar = X.ChecklistEnum.Unfound; break;
-			default: thechar = X.ChecklistEnum.Unfound;
-		}
-		
-		var checklist = U.replaceCharAt(pChecklist.value, pIndex, thechar);
-		localStorage[pChecklist.key] = checklist;
-		pChecklist.value = checklist;
-		
-		return thechar;
-	},
-	
-	/*
-	 * Gets the character in a checklist string at specified index.
-	 * @param object pChecklist to extract.
-	 * @param int pIndex of the character.
-	 * @param string pConversion to convert that character to a type.
-	 * @returns dynamic depending on conversion param.
-	 */
-	getChecklistItem: function(pChecklist, pIndex, pConversion)
-	{
-		var thechar = pChecklist.value.charAt(pIndex);
-		
-		if (pConversion === undefined)
-		{
-			return thechar;
-		}
-		if (pConversion === O.TypeEnum.isInteger)
-		{
-			return parseInt(thechar);
-		}
-		if (pConversion === O.TypeEnum.isBoolean)
-		{
-			// Returns false only if unchecked
-			return O.intToBool(parseInt(thechar));
-		}
-		return thechar;
-	},
-	
-	/*
-	 * Tells if an element with a checkbox has checked state.
-	 * @param object pChecklist to lookup.
-	 * @param jqobject pEntry to extract checkbox index in checklist.
-	 * @returns boolean true if checked.
-	 */
-	isChecked: function(pChecklist, pEntry)
-	{
-		var index = U.getSubintegerFromHTMLID(pEntry);
-		if (X.getChecklistItem(pChecklist, index) === X.ChecklistEnum.Checked)
-		{
-			return true;
-		}
-		return false;
-	},
-	
-	/*
-	 * Gets indexes in a checklist that has its value as "checked".
-	 * @param object pChecklist to extract.
-	 * @returns string comma separated string of index numbers (1-indexed).
-	 */
-	getCheckedIndexes: function(pChecklist)
-	{
-		var i;
-		var indexes = "";
-		var list = pChecklist.value;
-		for (i = 0; i < list.length; i++)
-		{
-			if (list[i] === X.ChecklistEnum.Checked)
-			{
-				indexes += (i+1) + ",";
-			}
-		}
-		indexes = indexes.slice(0, -1); // Trim last extra comma
-		return indexes;
-	},
-	
-	/*
-	 * Sets a checklist object's list a desired mass state.
-	 * @param object pChecklist to clear.
-	 * @param enum pJob to check or uncheck the checklist.
-	 * @pre Checklist length attribute was initialized.
-	 */
-	clearChecklist: function(pChecklist, pJob)
-	{
-		var i;
-		var checklist = "";
-		var value = "";
-		
-		switch (pJob)
-		{
-			case X.ChecklistJob.CheckAll:
-			{
-				for (i = 0; i < pChecklist.length; i++)
-				{
-					checklist += X.ChecklistEnum.Checked;
-				}
-			} break;
-			case X.ChecklistJob.UncheckTheChecked:
-			{
-				// Only sets unchecked state on checked ones
-				if (localStorage[pChecklist.key] !== undefined)
-				{
-					value = localStorage[pChecklist.key];
-				}
-				else
-				{
-					value = pChecklist.value;
-				}
-				
-				for (i = 0; i < value.length; i++)
-				{
-					if (value[i] === X.ChecklistEnum.Checked)
-					{
-						checklist += X.ChecklistEnum.Unchecked;
-					}
-					else
-					{
-						checklist += value[i];
-					}
-				}
-			} break;
-			default:
-			{
-				for (i = 0; i < pChecklist.length; i++)
-				{
-					checklist += X.ChecklistEnum.Unchecked;
-				}
-			}
-		}
-		
-		pChecklist.value = checklist;
-		localStorage[pChecklist.key] = checklist;
-	},
-	
-	/*
-	 * Counts the checked type in a checklist.
-	 * @param object pChecklist to look in.
-	 * @param enum pCheckType to look for.
-	 * @returns int count.
-	 */
-	countChecklist: function(pChecklist, pCheckType)
-	{
-		return U.countOccurrence(pChecklist.value, pCheckType);
-	},
-	
-	/*
-	 * Reads a checkbox element and return its checklist enum state.
-	 * @param jqobject pElement to read.
-	 * @returns int checklist enum.
-	 */
-	getCheckboxEnumState: function(pElement)
-	{
-		if (pElement.prop("disabled") === true)
-		{
-			return X.ChecklistEnum.Disabled;
-		}
-		if (pElement.prop("checked") === true)
-		{
-			return X.ChecklistEnum.Checked;
-		}
-		return X.ChecklistEnum.Unchecked;
-	},
-	
-	/*
-	 * Sets an input tag checkbox checked/disabled states based on specified enum.
-	 * @param jqobject pElement checkbox to change.
-	 * @param int pChecklistEnum to apply.
-	 */
-	setCheckboxEnumState: function(pElement, pChecklistEnum)
-	{
-		switch (pChecklistEnum)
-		{
-			case X.ChecklistEnum.Disabled:
-			{
-				pElement.prop("disabled", true);
-				pElement.prop("checked", false);
-			} break;
-			case X.ChecklistEnum.Checked:
-			{
-				pElement.prop("checked", true);
-			} break;
-			default: pElement.prop("checked", false);
-		}
-		pElement.trigger("change");
-	},
-	
-	/*
-	 * Programmatically selects an option in a fieldset input.
-	 */
-	setFieldsetState: function(pName, pOrder)
-	{
-		$("fieldset[name='" + pName + "'] input:eq(" + pOrder + ")").trigger("click");
-	},
-	
-	/*
-	 * Sets a checkbox to a desired state by reading it then manually triggering it.
-	 * @param jqobject pElement checkbox to manipulate.
-	 * @param int pState checkbox enum.
-	 */
-	triggerCheckbox: function(pElement, pState)
-	{
-		var checkboxstate = X.getCheckboxEnumState(pElement);
-		
-		if ( (pState === X.ChecklistEnum.Checked && (checkboxstate === X.ChecklistEnum.Unchecked))
-			|| (pState === X.ChecklistEnum.Unchecked && (checkboxstate === X.ChecklistEnum.Checked)) )
-		{
-			pElement.trigger("click");
-		}
-		else if (pState === X.ChecklistEnum.Disabled && checkboxstate !== X.ChecklistEnum.Disabled)
-		{
-			pElement.trigger("dblclick");
-		}
-	},
-	
-	/*
-	 * Triggers a checkbox based on associated state in a checklist.
-	 * @param object pChecklist as target state.
-	 * @param int pIndex of a state in checklist.
-	 * @param jqobject pElement checkbox to manipulate.
-	 */
-	triggerCheckboxEnumState: function(pChecklist, pIndex, pElement)
-	{
-		var checkliststate = X.getChecklistItem(pChecklist, pIndex);
-		X.triggerCheckbox(pElement, checkliststate);
-	},
-	
-	/*
-	 * Adds style classes to a label that wraps a checkbox depending on its state.
-	 * @param object pChecklist to get state.
-	 * @param int pIndex of state.
-	 * @param jqobject pElement checkbox label to style.
-	 * @pre In format <label><input type="checkbox" />ExampleLabel</label>.
-	 */
-	styleCheckbox: function(pChecklist, pIndex, pElement)
-	{
-		var state = X.getChecklistItem(pChecklist, pIndex);
-		switch (state)
-		{
-			case X.ChecklistEnum.Disabled:
-			{
-				pElement.parent().removeClass("chlCheckboxChecked")
-					.addClass("chlCheckboxDisabled");
-			} break;
-			case X.ChecklistEnum.Checked:
-			{
-				pElement.parent().removeClass("chlCheckboxDisabled")
-					.addClass("chlCheckboxChecked");
-			} break;
-			default:
-			{
-				pElement.parent().removeClass("chlCheckboxDisabled")
-					.removeClass("chlCheckboxChecked");
-			}
-		}
-	},
-	
-	/*
-	 * Initializes the checklist for a set of checkboxes and bind their standard storage behavior.
-	 * @param object pChecklist for storing state.
-	 * @param jqobject pCheckboxes input to bind behavior.
-	 * @param enum pJob initial checkbox state.
-	 * @pre These checkboxes can only have a checked and unchecked state only.
-	 */
-	initializeCheckboxlist: function(pChecklist, pCheckboxes, pJob)
-	{
-		X.initializeChecklist(pChecklist, pCheckboxes.length, null, pJob);
-		
-		pCheckboxes.each(function(iIndex)
-		{
-			$(this).change(function()
-			{
-				var state = X.getCheckboxEnumState($(this));
-				
-				X.setChecklistItem(pChecklist, iIndex, state);
-			});
-			
-			// Now that this checkbox is bound, trigger it as the state in checklist
-			X.triggerCheckboxEnumState(pChecklist, iIndex, $(this));
-		});
-	},
-	
-	/*
-	 * Stores text and binds default behavior for a standard set of text fields.
-	 * @param object pChecklistText for storing text in memory and storage.
-	 * @param jqobject pTextFields input or textarea elements to iterate and read text.
-	 * @param string pFieldName name of the text fields for notifying of change.
-	 * @param int pMaxLength of characters in a text field.
-	 * @param jqobject pRestoreButton to reset all text fields.
-	 */
-	initializeTextlist: function(pTextlist, pTextFields, pFieldName, pMaxLength, pRestoreButton)
-	{
-		// Initialize the pre-written text in the text fields
-		pTextFields.each(function()
-		{
-			var text = $(this).val();
-			pTextlist.value.push(text);
-			if (pTextlist.valueDefault)
-			{
-				pTextlist.valueDefault.push(text);
-			}
-		});
-		
-		/*
-		 * Each text fields' value will become a delimited substring in one
-		 * single string to be stored in localStorage.
-		 */
-		var i;
-		if (localStorage[pTextlist.key] === undefined)
-		{
-			// If localStorage value is empty, replace with original values in text field
-			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
-		}
-		else
-		{
-			var storedtextarray = localStorage[pTextlist.key].split(I.cTextDelimiterChar);
-			// Load the stored text and regard missing entries
-			for (i = 0; i < pTextlist.value.length; i++)
-			{
-				if (storedtextarray[i])
-				{
-					pTextlist.value[i] = storedtextarray[i];
-				}
-				else
-				{
-					pTextlist.value[i] = "";
-				}
-			}
-			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
-		}
-		
-		var updateStoredText = function()
-		{
-			// Read every text fields and rewrite the string of substrings again
-			pTextFields.each(function(iIndex)
-			{
-				// Do not allow delimiter in the string to be stored
-				pTextlist.value[iIndex] = $(this).val().replace(I.cTextDelimiterRegex, "");
-			});
-			localStorage[pTextlist.key] = pTextlist.value.join(I.cTextDelimiterChar);
-		};
-		
-		// Bind text fields behavior
-		pTextFields.each(function(iIndex)
-		{
-			$(this).attr("maxlength", pMaxLength); // Set number of characters allowed in the text field
-			$(this).val(pTextlist.value[iIndex]); // Load initialized text
-			
-			$(this).change(function()
-			{
-				if (pFieldName)
-				{
-					I.write(pFieldName + " #" + (iIndex + 1) + " updated.");
-				}
-				updateStoredText();
-			});
-		});
-		
-		// Bind restore default values button
-		if (pRestoreButton)
-		{
-			pRestoreButton.click(function()
-			{
-				if (confirm("Reset texts to default?"))
-				{
-					pTextFields.each(function(iIndex)
-					{
-						$(this).val(pTextlist.valueDefault[iIndex]).trigger("change");
-					});
-				}
-			});
-		}
-	},
-	
-	/*
-	 * Loads chain checklist state as recorded in localStorage, and binds
-	 * clicking behavior to the div faux checkboxes.
-	 * @param object pChain to initialize.
-	 * @pre Chains HTML have been initialized.
-	 */
-	initializeChainChecklist: function(pChain)
-	{
-		var bar = $("#chnBar_" + pChain.nexus);
-		var check = $("#chnCheck_" + pChain.nexus);
-		var time = $("#chnTime_" + pChain.nexus);
-
-		// Set the checkbox visual state as stored
-		X.reapplyChainBarState(pChain.nexus, bar, check, time);
-		
-		if (C.isChainRegular(pChain))
-		{
-			/*
-			 * Bind event handler for the time clickable for subscription.
-			 */
-			time.click(function()
-			{
-				var nexus = U.getSubintegerFromHTMLID($(this));
-				var slottimes = $(".chnSlot_" + nexus).find("time");
-
-				if (X.getChecklistItem(X.Checklists.ChainSubscription, nexus) === X.ChecklistEnum.Checked)
-				{
-					$(this).removeClass("chnTimeSubscribed");
-					slottimes.removeClass("chnTimeSubscribed");
-					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Unchecked);
-				}
-				else
-				{
-					$(this).addClass("chnTimeSubscribed");
-					slottimes.addClass("chnTimeSubscribed");
-					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
-					if (O.Options.int_setAlarm !== O.IntEnum.Alarm.Subscription)
-					{
-						I.write("Please set <img src='img/ui/speaker.png' /> to &quot;"
-							+ D.getWordCapital("subscription") + "&quot; to enable alarm.");
-					}
-				}
-			});
-		}
-
-		/*
-		 * Bind event handler for the div "checkboxes".
-		 */
-		check.click(function()
-		{
-			// The ID was named so by the chain initializer, get the chain nexus
-			var nexus = U.getSubintegerFromHTMLID($(this));
-			var thisbar = $("#chnBar_" + nexus);
-			var theseslots = $(".chnSlot_" + nexus);
-			var display = (I.ModeCurrent === I.ModeEnum.Tile) ? "inline-block" : "block";
-			// State of the div is stored in the Checklist object rather in the element itself
-			switch (X.getChecklistItem(X.Checklists.Chain, nexus))
-			{
-				case X.ChecklistEnum.Unchecked:
-				{
-					thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
-					if (I.ModeCurrent !== I.ModeEnum.Tile)
-					{
-						$("#chnDetails_" + nexus).hide("fast");
-					}
-					$(this).addClass("chnChecked");
-					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Checked);
-					if (C.isTimetableGenerated)
-					{
-						theseslots.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed)
-							.find(".chnCheck").addClass("chnChecked");
-					}
-				} break;
-				case X.ChecklistEnum.Checked:
-				{
-					thisbar.css({opacity: 1}).show("fast").css({display: display});
-					thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
-					if (I.ModeCurrent !== I.ModeEnum.Tile)
-					{
-						$("#chnDetails_" + nexus).show("fast").css({display: display});
-					}
-					$(this).removeClass("chnChecked");
-					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
-					if (C.isTimetableGenerated)
-					{
-						theseslots.show("fast").css({display: display})
-							.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed)
-							.find(".chnCheck").removeClass("chnChecked");
-					}
-				} break;
-				case X.ChecklistEnum.Disabled:
-				{
-					thisbar.css({opacity: 1}).show("fast").css({display: display});
-					if (I.ModeCurrent !== I.ModeEnum.Tile)
-					{
-						$("#chnDetails_" + nexus).show("fast").css({display: display});
-					}
-					$(this).removeClass("chnChecked");
-					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
-					if (C.isTimetableGenerated)
-					{
-						theseslots.hide().css({opacity: 1})
-							.find(".chnCheck").removeClass("chnChecked");
-					}
-				} break;
-			}
-			X.hideCheckedChainBar(nexus);
-			// Update the icons on the clock too
-			K.checkoffChainIcon(nexus);
-		});
-
-		// Bind the delete chain text button [x]
-		$("#chnDelete_" + pChain.nexus).click(function()
-		{
-			var nexus = U.getSubintegerFromHTMLID($(this));
-			$("#chnBar_" + nexus).hide("slow");
-			if (C.isTimetableGenerated)
-			{
-				$(".chnSlot_" + nexus).hide("slow");
-			}
-			X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Disabled);
-
-			// Also update the clock icon
-			K.checkoffChainIcon(nexus);
-		});
-	},
-	reapplyChainBarState: function(pIndex, pBar, pCheck, pTime)
-	{
-		// Chain check
-		switch (X.getChecklistItem(X.Checklists.Chain, pIndex))
-		{
-			case X.ChecklistEnum.Unchecked:
-			{
-				// Bar is not checked off, so don't do anything
-			} break;
-			case X.ChecklistEnum.Checked:
-			{
-				pBar.css({opacity: K.iconOpacityChecked});
-				pCheck.addClass("chnChecked");
-				if (O.Options.bol_hideChecked)
-				{
-					pBar.hide();
-				}
-			} break;
-			case X.ChecklistEnum.Disabled:
-			{
-				pBar.hide();
-			} break;
-		}
-		
-		// Chain time
-		if (C.isChainRegular(C.Chains[pIndex]) &&
-			X.getChecklistItem(X.Checklists.ChainSubscription, pIndex) === X.ChecklistEnum.Checked)
-		{
-			pTime.addClass("chnTimeSubscribed");
-		}
-	},
-	hideCheckedChainBar: function(pIndex)
-	{
-		var display = (I.ModeCurrent === I.ModeEnum.Tile) ? "inline-block" : "block";
-		// Hide the chain bar if opted
-		if (X.getChecklistItem(X.Checklists.Chain, pIndex) === X.ChecklistEnum.Checked)
-		{
-			if (O.Options.bol_hideChecked)
-			{
-				$("#chnBar_" + pIndex).hide("fast");
-				if (C.isTimetableGenerated)
-				{
-					$(".chnSlot_" + pIndex).hide("fast");
-				}
-			}
-			else
-			{
-				$("#chnBar_" + pIndex).show("fast").css({display: display});
-				if (C.isTimetableGenerated)
-				{
-					$(".chnSlot_" + pIndex).show("fast").css({display: display});
-				}
-			}
-		}
-	},
-	
-	/*
-	 * Gets the checklist state of a chain.
-	 * @param object pChain chain to test.
-	 * @returns int state (use enum).
-	 */
-	getChainChecklistState: function(pChain)
-	{
-		return X.getChecklistItem(X.Checklists.Chain, pChain.nexus);
-	},
-	
-	/*
-	 * Prepares the personal checklist presentation.
-	 */
-	initializePersonalChecklist: function()
-	{
-		/*
-		 * Setting this boolean will tell the clock ticker function to call the
-		 * HTML timer update function.
-		 */
-		T.isCountdownToResetStarted = true;
-		
-		// Initially, only show the daily checklist; user clicks the buttons to toggle the various checklists
-		$("#chlDungeon, #chlCustomWeekly").hide();
-		
-		// Buttons to toggle view between daily and weekly checklist
-		$("#chlDungeonButton").click(function()
-		{
-			$("#chlCustomButtons button").removeClass("btnFocused");
-			$(this).addClass("btnFocused");
-			$("#chlCustom").hide();
-			$("#chlDungeon").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
-			
-		});
-		$("#chlCustomDailyButton").addClass("btnFocused").click(function()
-		{
-			$("#chlCustomButtons button").removeClass("btnFocused");
-			$(this).addClass("btnFocused");
-			$("#chlDungeon").hide();
-			$("#chlCustom").show();
-			$("#chlCustomWeekly").hide();
-			$("#chlCustomDaily").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
-		});
-		$("#chlCustomWeeklyButton").click(function()
-		{
-			$("#chlCustomButtons button").removeClass("btnFocused");
-			$(this).addClass("btnFocused");
-			$("#chlDungeon").hide();
-			$("#chlCustom").show();
-			$("#chlCustomDaily").hide();
-			$("#chlCustomWeekly").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
-			
-		});
-		
-		// Initialize the checklists
-		X.initializeDungeonChecklist();
-		X.initializeCustomChecklist();
-	},
-	
-	/*
-	 * Binds dungeon checkbox storage and calculator behavior.
-	 */
-	initializeDungeonChecklist: function()
-	{
-		X.initializeChecklist(X.Checklists.Dungeon, $("#chlDungeon input").length);
-		
-		// Load dungeon icons on demand because they are pretty large
-		$("#chlDungeon .chlDungeonBar").each(function()
-		{
-			$(this).prepend("<ins class='chl_" + $(this).data("name").toLowerCase() + "'></ins>");
-		});
-		
-		var updateCalculator = function()
-		{
-			var money = X.Checklists.Dungeon.money;
-			var gold = ~~(money / E.Exchange.COPPER_IN_GOLD);
-			var silver = ~~(money / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER;
-			var copper = money % E.Exchange.COPPER_IN_SILVER;
-			$("#chlDungeonCalculator_Gold").text(gold);
-			$("#chlDungeonCalculator_Silver").text(silver);
-			$("#chlDungeonCalculator_Copper").text(copper);
-		};
-		
-		// Update checkbox visual and do the calculation when clicked
-		$("#chlDungeon input").each(function(iIndex)
-		{
-			// Bind checkbox behavior
-			$(this).change(function()
-			{
-				var state = X.getCheckboxEnumState($(this));
-				
-				X.setChecklistItem(X.Checklists.Dungeon, iIndex, state);
-				X.styleCheckbox(X.Checklists.Dungeon, iIndex, $(this));
-				
-				// Sum the checkbox's path money
-				var calc = $("#chlDungeonCalculator");
-				var money = X.Checklists.Dungeon.money;
-				var sum = $(this).data("money");
-				
-				switch ($(this).data("mode"))
-				{
-					case "E": sum += calc.data("moneyaddexp"); break;
-				}
-				
-				switch (state)
-				{
-					case X.ChecklistEnum.Disabled:
-					{
-						X.Checklists.Dungeon.money = money - sum;
-					} break;
-					case X.ChecklistEnum.Checked:
-					{
-						X.Checklists.Dungeon.money = money + sum;
-					} break;
-					default:
-					{
-						X.Checklists.Dungeon.money = money - sum;
-					}
-				}
-				updateCalculator();
-			});
-		});
-		// Double click a label (which wraps an input tag) to en/disable the checkbox
-		$("#chlDungeon label").each(function(iIndex)
-		{
-			$(this).dblclick(function()
-			{
-				var checkbox = $(this).find("input:first-child");
-
-				if (checkbox.prop("disabled") === false)
-				{
-					/*
-					 * The double click triggers the click event, which causes
-					 * the calculator to count the disabled checkbox, so trigger
-					 * the unchecking of it first before disabling.
-					 */
-					if (checkbox.prop("checked") === true)
-					{
-						X.triggerCheckbox(checkbox, X.ChecklistEnum.Unchecked);
-					}
-					checkbox.prop("disabled", true).prop("checked", false);
-				}
-				else
-				{
-					checkbox.prop("disabled", false);
-				}
-				X.setChecklistItem(X.Checklists.Dungeon, iIndex, X.getCheckboxEnumState(checkbox));
-				X.styleCheckbox(X.Checklists.Dungeon, iIndex, checkbox);
-			});
-		});
-		
-		// Restore checklist state from stored by triggering the checkboxes (behaviors already bound)
-		$("#chlDungeon input").each(function(iIndex)
-		{
-			X.triggerCheckboxEnumState(X.Checklists.Dungeon, iIndex, $(this));
-		});
-		
-		// Bind uncheck all button
-		$("#chlDungeonUncheck").click(function()
-		{
-			X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
-			$("#chlDungeon input").each(function(iIndex)
-			{
-				if ($(this).prop("checked") === true)
-				{
-					$(this).trigger("click");
-				};
-				X.styleCheckbox(X.Checklists.Dungeon, iIndex, $(this));
-			});
-		});
-	},
-	
-	/*
-	 * Binds checkbox and text field joined behavior.
-	 */
-	initializeCustomChecklist: function()
-	{
-		// Generate initial set of checkboxes and textboxes
-		var NUM_CHECKBOXES = 12;
-		// &zwnj; is an invisible character, used because empty label appears without a right border in Chrome
-		var checkboxhtml = "<li><label><input type='checkbox' />&zwnj;</label><input type='text' /></li>";
-		for (var i = 0; i < NUM_CHECKBOXES; i++)
-		{
-			$("#chlCustomListDaily").append(checkboxhtml);
-			$("#chlCustomListWeekly").append(checkboxhtml);
-		}
-		var insertSampleList = function(pList)
-		{
-			var samples = $(pList).attr("data-samples").split(I.cTextDelimiterChar);
-			for (var i = 0; i < samples.length; i++)
-			{
-				$(pList + " input[type='text']:eq(" + i + ")").val(samples[i]);
-			}
-		};
-		insertSampleList("#chlCustomListDaily");
-		insertSampleList("#chlCustomListWeekly");
-		
-		// Bind checkboxes and textboxes behavior
-		var bindCustomChecklistBehavior = function(pChecklist, pTextlist, pListName)
-		{
-			var checkboxes = $("#chlCustomList" + pListName + " input:checkbox");
-			X.initializeChecklist(pChecklist, checkboxes.length);
-
-			checkboxes.each(function(iIndex)
-			{
-				$(this).change(function()
-				{
-					var state = X.getCheckboxEnumState($(this));
-
-					X.setChecklistItem(pChecklist, iIndex, state);
-					X.styleCheckbox(pChecklist, iIndex, $(this));
-
-					if (state === X.ChecklistEnum.Checked)
-					{
-						$(this).parent().next().addClass("chlCustomTextChecked");
-					}
-					else
-					{
-						$(this).parent().next().removeClass("chlCustomTextChecked");
-					}
-				});
-
-				// Now that this checkbox is bound, trigger it as the state in checklist
-				X.triggerCheckboxEnumState(pChecklist, iIndex, $(this));
-			});
-
-			// Bind uncheck all button
-			$("#chlCustomUncheck" + pListName).click(function()
-			{
-				X.clearChecklist(pChecklist, X.ChecklistJob.UncheckTheChecked);
-				$("#chlCustomList" + pListName + " input:checkbox").each(function(iIndex)
-				{
-					if ($(this).prop("checked"))
-					{
-						$(this).trigger("click");
-					};
-					X.styleCheckbox(pChecklist, iIndex, $(this));
-				});
-			});
-
-			// Bind text fields behavior
-			var items = $("#chlCustomList" + pListName + " input:text");
-			var restore = $("#chlCustomRestore" + pListName);
-			X.initializeTextlist(pTextlist, items, "Custom checklist item", 48, restore);
-		};
-		bindCustomChecklistBehavior(X.Checklists.CustomDaily, X.Textlists.CustomTextDaily, "Daily");
-		bindCustomChecklistBehavior(X.Checklists.CustomWeekly, X.Textlists.CustomTextWeekly, "Weekly");
-	},
-	
-	/*
-	 * Clears the daily sensitive checklists. Called by the daily reset function.
-	 */
-	clearCustomChecklistDaily: function()
-	{
-		$("#chlDungeonUncheck").trigger("click");
-		$("#chlCustomUncheckDaily").trigger("click");
-		X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
-		X.clearChecklist(X.Checklists.CustomDaily, X.ChecklistJob.UncheckTheChecked);
-	},
-	clearCustomChecklistWeekly: function()
-	{
-		$("#chlCustomUncheckWeekly").trigger("click");
-		X.clearChecklist(X.Checklists.CustomWeekly, X.ChecklistJob.UncheckTheChecked);
-	},
-	
-	/*
-	 * Binds notepad textarea behavior and button pages behavior.
-	 */
-	initializeNotepad: function()
-	{
-		// Numbered buttons' behavior
-		$("#chlNotepadButtons button").each(function(iIndex)
-		{
-			$(this).click(function()
-			{
-				// Show selected number's sheet
-				$("#chlNotepadSheets textarea").hide().eq(iIndex).show()
-					.css({opacity: 0.5}).animate({opacity: 1}, 400);
-				$("#chlNotepadButtons button").removeClass("btnFocused");
-				$(this).addClass("btnFocused");
-			});
-		}).first().click(); // First sheet is default view
-		
-		// Bind text fields behavior
-		var items = $("#chlNotepadSheets textarea");
-		var restore = $("#chlNotepadRestore");
-		X.initializeTextlist(X.Textlists.NotepadText, items, "Notepad sheet", 4096, restore);
-		// Customize notepad according to options
-		items.css("height", O.Options.int_sizeNotepadHeight);
-		items.css("font-size", O.Options.int_sizeNotepadFont);
-		items.first().show();
-	}
 };
 
 /* =============================================================================
@@ -6974,8 +6974,10 @@ Q = {
 		var attrobj = {};
 		var level = pCharacter.level;
 		var profession = pCharacter.charprofession;
-		var conv = A.Attribute.Conversion;
+		var constants = A.Attribute.Constants;
 		var baseattr = A.Attribute.PrimaryPoints[level - 1];
+		var precisiondivisor = A.Attribute.PrecisionDivisor[level - 1];
+		var secondarydivisor = precisiondivisor / A.Attribute.SecondaryDivisorRatio;
 		/*
 		 * Calculate the health by adding converted base vitality with the base
 		 * health points, then add it with the object's.
@@ -7006,19 +7008,19 @@ Q = {
 		var attrnew = {
 			Power:				baseattr + pAttrObj.Power,
 			Toughness:			baseattr + pAttrObj.Toughness,
-			Armor:				baseattr + pAttrObj.Armor,
+			Armor:				baseattr + pAttrObj.Armor + pAttrObj.Toughness,
 			Vitality:			baseattr + pAttrObj.Vitality,
-			Health:				(baseattr / conv.VITALITY_IN_HEALTH) + profhealth + pAttrObj.Health + (pAttrObj.Vitality / conv.VITALITY_IN_HEALTH),
+			Health:				(baseattr / constants.VITALITY_IN_HEALTH) + profhealth + pAttrObj.Health + (pAttrObj.Vitality / constants.VITALITY_IN_HEALTH),
 			Precision:			baseattr + pAttrObj.Precision,
-			CriticalChance:		conv.BASE_CRITICALCHANCE + pAttrObj.CriticalChance + (pAttrObj.Precision / conv.PRECISION_IN_CRITICALCHANCE),
+			CriticalChance:		constants.BASE_CRITICALCHANCE + pAttrObj.CriticalChance + (pAttrObj.Precision / precisiondivisor),
 			Ferocity:			pAttrObj.Ferocity,
-			CriticalDamage:		conv.BASE_CRITICALDAMAGE + pAttrObj.CriticalDamage + (pAttrObj.Ferocity / conv.FEROCITY_IN_CRITICALDAMAGE),
+			CriticalDamage:		constants.BASE_CRITICALDAMAGE + pAttrObj.CriticalDamage + (pAttrObj.Ferocity / secondarydivisor),
 			ConditionDamage:	pAttrObj.ConditionDamage,
 			HealingPower:		pAttrObj.HealingPower,
 			Expertise:			pAttrObj.Expertise,
-			ConditionDuration:	pAttrObj.CriticalDamage + (pAttrObj.Expertise / conv.FEROCITY_IN_CRITICALDAMAGE),
+			ConditionDuration:	pAttrObj.CriticalDamage + (pAttrObj.Expertise / secondarydivisor),
 			Concentration:		pAttrObj.Concentration,
-			BoonDuration:		pAttrObj.CriticalDamage + (pAttrObj.Concentration / conv.FEROCITY_IN_CRITICALDAMAGE),
+			BoonDuration:		pAttrObj.CriticalDamage + (pAttrObj.Concentration / secondarydivisor),
 			AgonyResistance:	pAttrObj.AgonyResistance,
 			MagicFind:			pAttrObj.MagicFind
 		};

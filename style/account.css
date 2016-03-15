@@ -598,14 +598,21 @@ a.chrWalletLink {
 
 .eqpColumn {
 	display: inline-block;
-	width: 360px;
 	vertical-align: top;
 	text-align: left;
 }
 
+.eqpLeft {
+	width: 360px;
+}
 .eqpRight {
+	width: 240px;
 	vertical-align: bottom;
 	padding-bottom: 28px;
+}
+.eqpBuild {
+	width: 480px;
+	text-align: center;
 }
 .eqpRow { /* Subcontainer for left column */
 	height: 68px;
@@ -770,11 +777,13 @@ a.chrWalletLink {
 }
 
 .eqpAttrWindow {
+	display: inline-block;
 	width: 240px;
 	border-top: 2px solid #1e1c1e;
 	border-right: 2px solid #1e2125;
 	border-bottom: 3px solid #090b0b;
 	border-left: 2px solid #0b0c0d;
+	text-align: left;
 	box-shadow: 0px 0px 16px #0b0d0e;
 }
 .eqpAttrHeader {

@@ -268,6 +268,17 @@ var GW2T_ATTRIBUTE_DATA = {
 		600, 634, 634, 668, 668, 703, 703, 739, 739, 775,
 		775, 819, 819, 863, 863, 908, 908, 954, 954, 1000 // 1000 base attributes at level 80
 	],
+	PrecisionDivisor: [ // Precision divided by this number to get critical chance
+		1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0,
+		2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0,
+		3.2, 3.4, 3.6, 3.8, 4.0, 4.2, 4.4, 4.6, 4.8, 5.0,
+		5.2, 5.4, 5.6, 5.8, 6.0, 6.2, 6.4, 6.6, 6.8, 7.0,
+		7.3, 7.6, 7.9, 8.2, 8.5, 8.8, 9.1, 9.4, 9.7, 10.0,
+		10.3, 10.6, 10.9, 11.2, 11.5, 11.8, 12.1, 12.4, 12.7, 13.0,
+		13.4, 13.8, 14.2, 14.6, 15.0, 15.4, 15.8, 16.2, 16.6, 17.0,
+		17.4, 17.8, 18.2, 18.6, 19.0, 19.4, 19.8, 20.2, 20.6, 21.0 // Divide by 21 at level 80
+	],
+	SecondaryDivisorRatio: 7/5,
 	HealthGrowth: { // Additional health points per level, group corresponds to profession health property
 		high: {
 			"19": 28,  //  1-19
@@ -291,11 +302,10 @@ var GW2T_ATTRIBUTE_DATA = {
 			"80": 50
 		}
 	},
-	Conversion: {
+	Constants: {
 		BASE_CRITICALCHANCE: 4, // percentage
 		BASE_CRITICALDAMAGE: 150, // percentage
 		VITALITY_IN_HEALTH: 0.1, // For 1 HP
-		PRECISION_IN_CRITICALCHANCE: 21, // For +1%
 		FEROCITY_IN_CRITICALDAMAGE: 15, // For +1%
 		EXPERTISE_IN_CONDITIONDURATION: 15, // For +1%
 		CONCENTRATION_IN_BOONDURATION: 15 // For +1%
