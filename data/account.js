@@ -306,9 +306,6 @@ var GW2T_ATTRIBUTE_DATA = {
 		BASE_CRITICALCHANCE: 4, // percentage
 		BASE_CRITICALDAMAGE: 150, // percentage
 		VITALITY_IN_HEALTH: 0.1, // For 1 HP
-		FEROCITY_IN_CRITICALDAMAGE: 15, // For +1%
-		EXPERTISE_IN_CONDITIONDURATION: 15, // For +1%
-		CONCENTRATION_IN_BOONDURATION: 15 // For +1%
 	},
 	/*
 	 * Standardize the attribute names in order to parse attributes and buff

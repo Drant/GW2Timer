@@ -1022,9 +1022,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "",
-	Start: new Date("2016-02-22T16:00:00Z"),
-	Finish: new Date("2016-02-29T16:00:00Z")
+	content: "<a href='http://wiki.guildwars2.com/wiki/Wizard%27s_Hat'>Wizard's Hat</a> (<gem>200</gem><ins class='s16 s16_gem'></ins>) is back on the gem store after 3 years.",
+	Start: new Date("2016-03-15T16:00:00Z"),
+	Finish: new Date("2016-03-22T16:00:00Z")
 },
 
 /*
@@ -1093,8 +1093,8 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	isSpecial: true, // If a discounted sale exists
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-03-08T16:00:00Z"),
-	Finish: new Date("2016-03-15T16:00:00Z"),
+	Start: new Date("2016-03-15T16:00:00Z"),
+	Finish: new Date("2016-03-22T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1103,38 +1103,17 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Tireless Logging Minion",
-		id: "67029",
-		price: 800,
-		discount: 1000,
+		name: "Wizard's Hat",
+		id: "64757",
+		price: 200,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Tireless Harvesting Minion",
-		id: "67063",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Bone Pick",
-		id: "48932",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Mini Chieftain Utahein and Mini Svanir",
-		id: "67281",
-		price: 480,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "Mini Beetle",
-		id: "69690",
-		price: 343,
-		discount: 500,
+		name: "Taimi's Dye Kit",
+		id: "67291",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 0
 	},
 	{
@@ -1145,73 +1124,31 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Butterfly Wings Backpack",
-		id: "70095",
-		price: 500,
+		name: "Shadow of the Dragon Value Pack",
+		img: "http://i.imgur.com/MsbVxul.png",
+		price: 540,
+		discount: 900,
+		col: 1
+	},
+	{
+		name: "Shadow of the Dragon Helmet Skin",
+		id: "68574",
+		price: 300,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Mini Bonebreaker",
-		id: "70300",
-		price: 240,
-		discount: 350,
 		col: 1
 	},
 	{
-		name: "Mini Braham Eirsson",
-		id: "68572",
-		price: 240,
-		discount: 350,
+		name: "Shadow of the Dragon Shoulder Skin",
+		id: "68575",
+		price: 300,
+		discount: null,
 		col: 1
 	},
 	{
-		name: "Mini Golden Pig",
-		id: "68683",
-		price: 240,
-		discount: 350,
-		col: 1
-	},
-	{
-		name: "Mini Pact Airship",
-		id: "67839",
-		price: 240,
-		discount: 350,
-		col: 1
-	},
-	{
-		name: "Mini Red Panda",
-		id: "68569",
-		price: 240,
-		discount: 350,
-		col: 1
-	},
-	{
-		name: "Mini Rock",
-		id: "69790",
-		price: 240,
-		discount: 350,
-		col: 1
-	},
-	{
-		name: "Mini Rox",
-		id: "68570",
-		price: 240,
-		discount: 350,
-		col: 1
-	},
-	{
-		name: "Mini Tiger",
-		id: "70231",
-		price: 240,
-		discount: 350,
-		col: 1
-	},
-	{
-		name: "Miniature Moose",
-		id: "69621",
-		price: 240,
-		discount: 350,
+		name: "Shadow of the Dragon Gloves Skin",
+		id: "68576",
+		price: 300,
+		discount: null,
 		col: 1
 	}
 	]

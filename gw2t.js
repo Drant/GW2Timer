@@ -3359,7 +3359,7 @@ U = {
 				.replace(/</g, "&lt;")
 				.replace(/>/g, "&gt;")
 				.replace(/"/g, "&quot;")
-				.replace(/'/g, "&#39;");
+				.replace(/'/g, "&apos;");
 		}
 		if (pString === undefined)
 		{
@@ -3925,7 +3925,9 @@ A = {
 		Characters: [],
 		CharacterNames: null,
 		Guilds: {}, // Guild details objects, accessed using the guild IDs
-		Wallet: {}
+		Wallet: {},
+		Specializations: {},
+		Traits: {}
 	},
 	URL: { // Account data type and URL substring
 		Account: "account",
@@ -5001,6 +5003,7 @@ A = {
 			if (equipstofetch === numfetched)
 			{
 				formatAttributesWindow();
+				A.initializeTraits(char);
 			}
 		};
 
@@ -5069,7 +5072,7 @@ A = {
 			I.qTip.init(attrcontent.find("span"));
 		};
 		
-		var runesets = Q.countRunes(char);
+		var runesets = Q.countRuneSets(char);
 		for (var i in char.equipment)
 		{
 			(function(iEquipment)
@@ -5120,14 +5123,44 @@ A = {
 		// Hide secondary weapon slots for professions that can't swap weapons
 		if ((A.Metadata.Profession[char.charprofession]).isswappable === false)
 		{
-			var elmstohide = [".eqpSwap", ".eqpSwapB", ".eqpWeaponB1", ".eqpWeaponB2", ".eqpSwapAquatic", ".eqpSwapAquaticB", ".eqpWeaponAquaticB"];
+			var elmstoconceal = [".eqpSwap", ".eqpSwapB", ".eqpWeaponB1", ".eqpWeaponB2"];
+			var elmstohide = [".eqpSwapAquatic", ".eqpSwapAquaticB", ".eqpWeaponAquaticB"];
+			elmstoconceal.forEach(function(iSelector)
+			{
+				// Set visibility instead of hide so their width and height presence remains
+				subcontainer.find(iSelector).css({visibility: "hidden"});
+			});
 			elmstohide.forEach(function(iSelector)
 			{
-				subcontainer.find(iSelector).css({visibility: "hidden"});
+				subcontainer.find(iSelector).hide();
 			});
 			subconright.find(".eqpAquaticBackground").addClass("eqpAquaticBackgroundSingle");
 			subconright.find(".eqpHelmAquatic").addClass("eqpHelmAquaticSingle");
 		}
+	},
+	
+	/*
+	 * Initializes the multi-mode specializations window for a character.
+	 * @param object pCharacter characters data.
+	 */
+	initializeTraits: function(pCharacter)
+	{
+		var container = "<div class='trtContainer'>"
+			+ "<aside class='trtRow'></aside>"
+		+ "</div>";
+	},
+	
+	/*
+	 * Generates a specializations window.
+	 * @param array pTraitLines from API under "specializations" property of
+	 * character data.
+	 */
+	generateTraits: function(pTraitLines)
+	{
+		$.getJSON(U.getAPI(), function(pData)
+		{
+			
+		});
 	},
 	
 	/*
@@ -7018,9 +7051,9 @@ Q = {
 			ConditionDamage:	pAttrObj.ConditionDamage,
 			HealingPower:		pAttrObj.HealingPower,
 			Expertise:			pAttrObj.Expertise,
-			ConditionDuration:	pAttrObj.CriticalDamage + (pAttrObj.Expertise / secondarydivisor),
+			ConditionDuration:	pAttrObj.ConditionDuration + (pAttrObj.Expertise / secondarydivisor),
 			Concentration:		pAttrObj.Concentration,
-			BoonDuration:		pAttrObj.CriticalDamage + (pAttrObj.Concentration / secondarydivisor),
+			BoonDuration:		pAttrObj.BoonDuration + (pAttrObj.Concentration / secondarydivisor),
 			AgonyResistance:	pAttrObj.AgonyResistance,
 			MagicFind:			pAttrObj.MagicFind
 		};
@@ -7043,7 +7076,7 @@ Q = {
 	 * @param object pCharacter.
 	 * @returns object with rune item ID and count.
 	 */
-	countRunes: function(pCharacter)
+	countRuneSets: function(pCharacter)
 	{
 		var equip = pCharacter.equipment;
 		var armorcount = 0;
@@ -7675,7 +7708,11 @@ Q = {
  * ========================================================================== */
 D = {
 	
-	// Words to be used alone or to construct a phrase
+	/*
+	 * Words to be used alone or to construct a phrase.
+	 * HTML characters like "'" (single quote) must be escaped because these
+	 * strings are used directly.
+	 */
 	Dictionary:
 	{
 		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
@@ -7694,7 +7731,7 @@ D = {
 		s_minutes: {de: "minuten", es: "minutos", fr: "minutes", cs: "minut", it: "minuti", pl: "minut", pt: "minutos", ru: "минут", zh: "分"},
 		s_seconds: {de: "sekunden", es: "segundos", fr: "secondes", cs: "sekund", it: "ore", pl: "sekund", pt: "segundos", ru: "секунд", zh: "秒"},
 		s_half_an_hour: {de: "eine halbe stunde", es: "media hora", fr: "demi-heure",
-			cs: "půl hodiny", it: "mezz'ora", pl: "pół godziny", pt: "meia hora", ru: "полчаса", zh: "半小時"},
+			cs: "půl hodiny", it: "mezz&apos;ora", pl: "pół godziny", pt: "meia hora", ru: "полчаса", zh: "半小時"},
 		
 		// Nouns
 		s_account: {de: "account", es: "cuenta", fr: "compte",
@@ -7883,7 +7920,7 @@ D = {
 		s_Back: {en: "Back Item", de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos"},
 		s_Consumable: {en: "Consumable", de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable"},
 		s_Container: {en: "Container", de: "Behälter", es: "Contenedor", fr: "Conteneur"},
-		s_CraftingMaterial: {en: "Crafting Material", de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d'artisanat"},
+		s_CraftingMaterial: {en: "Crafting Material", de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d&apos;artisanat"},
 		s_MiniPet: {en: "Miniature", de: "Miniatur", es: "Miniatura", fr: "Miniature"},
 		s_Nourishment: {en: "Nourishment", de: "Verbrauchsstoff", es: "Consumible", fr: "Produit consommable"},
 		s_Boost: {en: "Boost", de: "Verstärker", es: "Potenciador", fr: "Augmentation"},
@@ -7892,7 +7929,7 @@ D = {
 		s_Junk: {en: "Junk", de: "Schrott", es: "Basura", fr: "Inutile"},
 		s_Basic: {en: "Basic", de: "Einfach", es: "Básico", fr: "Simple"},
 		s_Fine: {en: "Fine", de: "Edel", es: "Selecto", fr: "Raffiné"},
-		s_Masterwork: {en: "Masterwork", de: "Meisterwerk", es: "Obra de arte", fr: "Chef-d'œuvre"},
+		s_Masterwork: {en: "Masterwork", de: "Meisterwerk", es: "Obra de arte", fr: "Chef-d&apos;œuvre"},
 		s_Rare: {en: "Rare", de: "Selten", es: "Excepcional", fr: "Rare"},
 		s_Exotic: {en: "Exotic", de: "Exotisch", es: "Exótico", fr: "Exotique"},
 		s_Ascended: {en: "Ascended", de: "Aufgestiegen", es: "Ascendido", fr: "Élevé"},
@@ -7914,10 +7951,10 @@ D = {
 		s_ConditionDamage: {en: "Condition Damage", de: "Zustandsschaden", es: "Daño de condición", fr: "Dégâts par altération"},
 		s_HealingPower: {en: "Healing Power", de: "Heilkraft", es: "Poder de curación", fr: "Guérison"},
 		s_Expertise: {en: "Expertise", de: "Fachkenntnis", es: "Pericia", fr: "Expertise"},
-		s_ConditionDuration: {en: "Condition Duration", de: "Zustandsdauer", es: "Duración de condición", fr: "Durée d'altération"},
+		s_ConditionDuration: {en: "Condition Duration", de: "Zustandsdauer", es: "Duración de condición", fr: "Durée d&apos;altération"},
 		s_Concentration: {en: "Concentration", de: "Konzentration", es: "Concentración", fr: "Concentration"},
-		s_BoonDuration: {en: "Boon Duration", de: "Segensdauer", es: "Duración de bendición", fr: "Durée d'avantage"},
-		s_AgonyResistance: {en: "Agony Resistance", de: "Qual-Widerstand", es: "Resistencia a la agonía", fr: "Résistance à l'agonie"},
+		s_BoonDuration: {en: "Boon Duration", de: "Segensdauer", es: "Duración de bendición", fr: "Durée d&apos;avantage"},
+		s_AgonyResistance: {en: "Agony Resistance", de: "Qual-Widerstand", es: "Resistencia a la agonía", fr: "Résistance à l&apos;agonie"},
 		s_MagicFind: {en: "Magic Find", de: "Magisches Gespür", es: "Hallazgo mágico", fr: "Découverte de magie"},
 		// Item Equipment
 		s_Axe: {en: "Axe", de: "Axt", es: "Hacha", fr: "Haches"},
@@ -7951,23 +7988,23 @@ D = {
 		s_Ring: {en: "Ring", de: "Ring", es: "Anillo", fr: "Anneau"},
 		// Item Tooltip
 		s_Defense: {en: "Defense", de: "Verteidigung", es: "Defensa", fr: "Défense"},
-		s_WeaponStrength: {en: "Weapon Strength", de: "Waffenstärke", es: "Fuerza del arma", fr: "Puissance d'arme"},
+		s_WeaponStrength: {en: "Weapon Strength", de: "Waffenstärke", es: "Fuerza del arma", fr: "Puissance d&apos;arme"},
 		s_RequiredLevel: {en: "Required Level", de: "Erforderliche Stufe", es: "Nivel necesario", fr: "Niveau requis"},
-		s_AccountBindOnUse: {en: "Account Bound on Use", de: "Accountgebunden bei Benutzung", es: "Vinculado a cuenta en uso", fr: "Lié au compte dès l'utilisation"},
+		s_AccountBindOnUse: {en: "Account Bound on Use", de: "Accountgebunden bei Benutzung", es: "Vinculado a cuenta en uso", fr: "Lié au compte dès l&apos;utilisation"},
 		s_AccountBound: {en: "Account Bound", de: "Accountgebunden", es: "Vinculado a cuenta", fr: "Lié au compte"},
-		s_SoulBindOnUse: {en: "Soulbound on Use", de: "Seelengebunden bei Benutzung", es: "Ligado en uso", fr: "Lié à l'âme dès l'utilisation"},
-		s_SoulbindOnAcquire: {en: "Soulbound", de: "Seelengebunden", es: "Ligado", fr: "Lié à l'âme"},
-		s_SoulboundToCharacter: {en: "Soulbound to another character", de: "An einen anderen Charakter seelengebunden", es: "Ligado a otro personaje", fr: "Lié à l'âme d'un autre personnage"},
+		s_SoulBindOnUse: {en: "Soulbound on Use", de: "Seelengebunden bei Benutzung", es: "Ligado en uso", fr: "Lié à l&apos;âme dès l&apos;utilisation"},
+		s_SoulbindOnAcquire: {en: "Soulbound", de: "Seelengebunden", es: "Ligado", fr: "Lié à l&apos;âme"},
+		s_SoulboundToCharacter: {en: "Soulbound to another character", de: "An einen anderen Charakter seelengebunden", es: "Ligado a otro personaje", fr: "Lié à l&apos;âme d&apos;un autre personnage"},
 		s_Unique: {en: "Unique", de: "Einzigartig", es: "Equipamiento único", fr: "Unique"},
 		s_Transmuted: {en: "Transmuted", de: "Transmutiert", es: "Transmutado", fr: "Transmuté"},
-		s_Defense_Infusion: {en: "Unused Defensive Infusion Slot", de: "Freier Infusionsplatz (Defensiv)", es: "Casilla de infusión defensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Défensive)"},
-		s_Offense_Infusion: {en: "Unused Offensive Infusion Slot", de: "Freier Infusionsplatz (Offensiv)", es: "Casilla de infusión ofensiva sin utilizar", fr: "Emplacement d'infusion inutilisé (Offensive)"},
-		s_Utility_Infusion: {en: "Unused Utility Infusion Slot", de: "Freier Infusionsplatz (Hilfe)", es: "Casilla de infusión apoyo sin utilizar", fr: "Emplacement d'infusion inutilisé (Utilitaire)"},
-		s_Agony_Infusion: {en: "Unused Agony Infusion Slot", de: "Freier Infusionsplatz (Qual)", es: "Casilla de infusión agonía sin utilizar", fr: "Emplacement d'infusion inutilisé (Agonie)"},
-		s_UnusedUpgradeSlot: {en: "Unused Upgrade Slot", de: "Freier Aufwertungsplatz", es: "Casilla para mejoras sin utilizar", fr: "Emplacement d'amélioration inutilisé"},
+		s_Defense_Infusion: {en: "Unused Defensive Infusion Slot", de: "Freier Infusionsplatz (Defensiv)", es: "Casilla de infusión defensiva sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Défensive)"},
+		s_Offense_Infusion: {en: "Unused Offensive Infusion Slot", de: "Freier Infusionsplatz (Offensiv)", es: "Casilla de infusión ofensiva sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Offensive)"},
+		s_Utility_Infusion: {en: "Unused Utility Infusion Slot", de: "Freier Infusionsplatz (Hilfe)", es: "Casilla de infusión apoyo sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Utilitaire)"},
+		s_Agony_Infusion: {en: "Unused Agony Infusion Slot", de: "Freier Infusionsplatz (Qual)", es: "Casilla de infusión agonía sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Agonie)"},
+		s_UnusedUpgradeSlot: {en: "Unused Upgrade Slot", de: "Freier Aufwertungsplatz", es: "Casilla para mejoras sin utilizar", fr: "Emplacement d&apos;amélioration inutilisé"},
 		s_DoubleClickToConsume: {en: "Double-click to consume.", de: "Zum Benutzen doppelklicken.", es: "Haz doble clic para consumir.", fr: "Double-cliquez pour utiliser."},
 		s_ExcessiveAlcohol: {en: "Excessive alcohol consumption will result in intoxication.", de: "Übermäßiger Alkoholkonsum führt zu Rauschzuständen.",
-			es: "El consumo excesivo de alcohol provoca embriaguez.", fr: "Consommer trop d'alcool entraîne une ivresse manifeste."}
+			es: "El consumo excesivo de alcohol provoca embriaguez.", fr: "Consommer trop d&apos;alcool entraîne une ivresse manifeste."}
 	},
 	
 	
