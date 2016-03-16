@@ -833,7 +833,36 @@ a.chrWalletLink {
 }
 
 .trtWindow {
-	width: 420px;
+	display: inline-block;
+	
+}
+.trtPanel {
+	width: 420px; height: 280px;
+	background: red;
+}
+.trtLine {
+	display: block;
+	width: 100%; height: 33.33%;
+	background-position: bottom left;
+	background-size: 160%;
+}
+.trtColumn {
+	display: inline-block;
+	width: 12.5%;
+	vertical-align: middle;
+	outline: 1px solid red;
+}
+.trtColumn var {
+	display: inline-block;
+	width: 50%;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	background-size: 100% 100%;
+}
+.trtColumn mark {
+	display: inline-block;
+	width: 100%; height: 100%;
+	background: rgba(0,0,0,0.4);
 }
 
 /* Adjustments for smaller screens

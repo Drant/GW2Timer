@@ -1103,6 +1103,20 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Kasmeer's Staff Skin",
+		id: "49021",
+		price: 480,
+		discount: 600,
+		col: 0
+	},
+	{
+		name: "Chain-Whip Sword Skin",
+		id: "69752",
+		price: 480,
+		discount: 600,
+		col: 0
+	},
+	{
 		name: "Wizard's Hat",
 		id: "64757",
 		price: 200,
@@ -1110,45 +1124,17 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Taimi's Dye Kit",
-		id: "67291",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 0
-	},
-	{
 		name: "Classical Glider",
 		id: "77821",
 		price: 400,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Shadow of the Dragon Value Pack",
-		img: "http://i.imgur.com/MsbVxul.png",
-		price: 540,
-		discount: 900,
 		col: 1
 	},
 	{
-		name: "Shadow of the Dragon Helmet Skin",
-		id: "68574",
-		price: 300,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Shadow of the Dragon Shoulder Skin",
-		id: "68575",
-		price: 300,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Shadow of the Dragon Gloves Skin",
-		id: "68576",
-		price: 300,
-		discount: null,
+		name: "Taimi's Dye Kit",
+		id: "67291",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]

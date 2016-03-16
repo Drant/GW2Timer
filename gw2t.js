@@ -5065,15 +5065,17 @@ A = {
 				return;
 			}
 			var traitwindow = $("<div class='trtWindow'>"
-				+ "<aside class='trtSwitchContainer'>"
+				+ "<aside class='trtSwitchContainer'><span class='trtSwitchWrapper'>"
+					+ "<img class='trtBuildIcon' src='img/account/menu/build.png' />"
+					+ "<img src='img/account/view.png' />"
 					+ "<img class='trtSwitch curClick' data-assoc='PVE' src='img/ui/pages/map.png' />"
 					+ "<img class='trtSwitch curClick' data-assoc='WVW' src='img/ui/pages/wvw.png' />"
 					+ "<img class='trtSwitch curClick' data-assoc='PVP' src='img/account/menu/pvp.png' />"
-				+ "</aside>"
+				+ "</span></aside>"
 				+ "<div class='trtContainer'>"
 					+ "<div class='trtPanel trtPanel_PVE'></div>"
-					+ "<div class='trtPanel trtPanel_WVW'></div>"
-					+ "<div class='trtPanel trtPanel_PVP'></div>"
+					/*+ "<div class='trtPanel trtPanel_WVW'></div>"
+					+ "<div class='trtPanel trtPanel_PVP'></div>"*/
 				+ "</div>"
 			+ "</div>").appendTo(subconbuild);
 			// Bind game mode buttons to switch to appropriate specializations panel
@@ -5086,8 +5088,8 @@ A = {
 				});
 			});
 			A.generateTraits(spec.pve, traitwindow.find(".trtPanel_PVE"));
-			A.generateTraits(spec.wvw, traitwindow.find(".trtPanel_WVW"));
-			A.generateTraits(spec.pvp, traitwindow.find(".trtPanel_PVP"));
+			//A.generateTraits(spec.wvw, traitwindow.find(".trtPanel_WVW"));
+			//A.generateTraits(spec.pvp, traitwindow.find(".trtPanel_PVP"));
 		};
 		
 		/*
@@ -5225,40 +5227,93 @@ A = {
 		}],
 		 */
 		
-		var insertSpecialization = function(pID)
+		var insertSpecialization = function(pSpecID)
 		{
-			var specline = $("<aside class='trtLine trtLine_" + pID + "'>"
-				+ "<span class='trtSpecButton'><img class='trtSpecIcon' /></span>"
-				+ "<span class='trtColumn'><img class='trtMinor_0' /></span>"
-					+ "<span class='trtColumn'><img class='trtMajor_0' /></span>"
-					+ "<span class='trtColumn'><img class='trtMajor_1' /></span>"
-					+ "<span class='trtColumn'><img class='trtMajor_2' /></span>"
-				+ "<span class='trtColumn'><img class='trtMinor_1' /></span>"
-					+ "<span class='trtColumn'><img class='trtMajor_3' /></span>"
-					+ "<span class='trtColumn'><img class='trtMajor_4' /></span>"
-					+ "<span class='trtColumn'><img class='trtMajor_5' /></span>"
-				+ "<span class='trtColumn'><img class='trtMinor_2' /></span>"
-					+ "<span class='trtColumn'><img class='trtMajor_6' /></span>"
-					+ "<span class='trtColumn'><img class='trtMajor_7' /></span>"
-					+ "<span class='trtColumn'><img class='trtMajor_8' /></span>"
-			+ "</aside>").find("img").attr("src", "img/ui/placeholder.png");
-			specline.appendTo(panel);
+			var specline = $("<aside class='trtLine trtLine_" + pSpecID + "'>"
+				+ "<span class='trtSpecButton'>"
+					+ "<var class='trtSpecIcon'><img class='trtSpec' />"
+				+ "</span>"
+				+ "<span class='trtColumn'>"
+					+ "<var class='trtMinor_10'></var>"
+				+ "</span>"
+				+ "<span class='trtColumn'>"
+					+ "<var class='trtMajor_10'></var><br />"
+					+ "<var class='trtMajor_11'></var><br />"
+					+ "<var class='trtMajor_12'></var><br />"
+				+ "</span>"
+				+ "<span class='trtColumn'>"
+					+ "<var class='trtMinor_20'></var>"
+				+ "</span>"
+				+ "<span class='trtColumn'>"
+					+ "<var class='trtMajor_20'></var><br />"
+					+ "<var class='trtMajor_21'></var><br />"
+					+ "<var class='trtMajor_22'></var><br />"
+				+ "</span>"
+				+ "<span class='trtColumn'>"
+					+ "<var class='trtMinor_30'></var>"
+				+ "</span>"
+				+ "<span class='trtColumn'>"
+					+ "<var class='trtMajor_30'></var><br />"
+					+ "<var class='trtMajor_31'></var><br />"
+					+ "<var class='trtMajor_32'></var><br />"
+				+ "</span>"
+			+ "</aside>").appendTo(pContainer);
+			specline.find("img").attr("src", "img/ui/placeholder.png");
+			
+			var formatTraitIcon = function(pTraitID)
+			{
+				var trait = A.Data.Traits[pTraitID];
+				specline.find(".trt" + trait.slot + "_" + trait.tier + trait.order).each(function()
+				{
+					$(this).css({backgroundImage: "url(" + trait.icon + ")"});
+					$(this).append("<mark>&zwnj;</mark>");
+				});
+			};
+			var formatSpecLine = function()
+			{
+				var spec = A.Data.Specializations[pSpecID];
+				specline.find(".trtSpec").attr("src", spec.icon).attr("title", spec.name);
+				specline.css({backgroundImage: "url(" + spec.background + ")"});
+				
+				var traitids = spec.minor_traits.concat(spec.major_traits);
+				for (var i = 0; i < traitids.length; i++)
+				{
+					var traitid = traitids[i];
+					// Use cached trait data if available, else retrieve
+					if (A.Data.Traits[traitid])
+					{
+						formatTraitIcon(traitid);
+					}
+					else
+					{
+						(function(iTraitID)
+						{
+							$.getJSON(U.getAPITrait(iTraitID), function(pData)
+							{
+								A.Data.Traits[iTraitID] = pData;
+								formatTraitIcon(iTraitID);
+							});
+						})(traitid);
+					}
+				}
+			};
 			
 			// Use cached specializations data if available, else retrieve
-			if (A.Data.Specializations[pID])
+			if (A.Data.Specializations[pSpecID])
 			{
-				
+				formatSpecLine();
 			}
 			else
 			{
-				$.getJSON(U.getAPISpecialization(pID), function(pData)
+				$.getJSON(U.getAPISpecialization(pSpecID), function(pData)
 				{
-					A.Data.Specializations[pID] = pData;
+					A.Data.Specializations[pSpecID] = pData;
+					formatSpecLine();
 				});
 			}
 		};
 		
-		var panel = $("<aside class='trtLine'></aside>");
+		
 		pTraitLines.forEach(function(iLine)
 		{
 			insertSpecialization(iLine.id);
@@ -9875,13 +9930,16 @@ C = {
 				if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopGenerated)
 				{
 					event = pChain.events[$(this).attr("data-eventindex")];
-					// Add active events to iterable array
-					P.LayerArray.DryTopActive.push(event.eventicon);
-					P.LayerArray.DryTopActive.push(event.eventring);
-					// Show active Dry Top events
-					if (C.isDryTopIconsShown)
+					if (I.isMapEnabled)
 					{
-						M.toggleLayerArray(P.LayerArray.DryTopActive, true);
+						// Add active events to iterable array
+						P.LayerArray.DryTopActive.push(event.eventicon);
+						P.LayerArray.DryTopActive.push(event.eventring);
+						// Show active Dry Top events
+						if (C.isDryTopIconsShown)
+						{
+							M.toggleLayerArray(P.LayerArray.DryTopActive, true);
+						}
 					}
 				}
 			});
@@ -13714,88 +13772,91 @@ P = {
 			var i, ii;
 			var chain, event, marker;
 			
-			// Event nicks are independent of the events themselves and are always shown on the map
-			for (i in C.DryTop)
+			if (I.isMapEnabled)
 			{
-				event = C.DryTop[i];
-				marker = L.marker(M.convertGCtoLC(event.coord),
+				// Event nicks are independent of the events themselves and are always shown on the map
+				for (i in C.DryTop)
+				{
+					event = C.DryTop[i];
+					marker = L.marker(M.convertGCtoLC(event.coord),
+					{
+						clickable: false,
+						icon: L.divIcon(
+						{
+							className: "mapNick",
+							html: "<span class='mapNickIn'>" + D.getObjectName(event)
+								+ "<br /><ins style='color:" + event.color + "'>" + event.time + "</ins></span>",
+							iconSize: [512, 64],
+							iconAnchor: [256, 32]
+						})
+					});
+					P.Layer.DryTopNicks.addLayer(marker);
+				}
+				M.toggleLayer(P.Layer.DryTopNicks, true);
+
+				// Timer integrated on the map
+				P.DryTopTimer = L.marker(M.convertGCtoLC(M.getZoneCenter("dry")),
 				{
 					clickable: false,
 					icon: L.divIcon(
 					{
 						className: "mapNick",
-						html: "<span class='mapNickIn'>" + D.getObjectName(event)
-							+ "<br /><ins style='color:" + event.color + "'>" + event.time + "</ins></span>",
+						html: "<div class='mapNickIn' id='mapDryTopInfo'><span id='mapDryTopTimer'></span><br />"
+							+ "<input id='mapDryTopClip0' type='text' /> "
+							+ "<input id='mapDryTopClip1' type='text' /></div>",
 						iconSize: [512, 64],
 						iconAnchor: [256, 32]
 					})
 				});
-				P.Layer.DryTopNicks.addLayer(marker);
-			}
-			M.toggleLayer(P.Layer.DryTopNicks, true);
-			
-			// Timer integrated on the map
-			P.DryTopTimer = L.marker(M.convertGCtoLC(M.getZoneCenter("dry")),
-			{
-				clickable: false,
-				icon: L.divIcon(
+				M.toggleLayer(P.DryTopTimer, true);
+
+				// Create icons
+				for (i in C.DryTopChains)
 				{
-					className: "mapNick",
-					html: "<div class='mapNickIn' id='mapDryTopInfo'><span id='mapDryTopTimer'></span><br />"
-						+ "<input id='mapDryTopClip0' type='text' /> "
-						+ "<input id='mapDryTopClip1' type='text' /></div>",
-					iconSize: [512, 64],
-					iconAnchor: [256, 32]
-				})
-			});
-			M.toggleLayer(P.DryTopTimer, true);
-			
-			// Create icons
-			for (i in C.DryTopChains)
-			{
-				chain = C.DryTopChains[i];
-				for (ii in chain.events)
-				{
-					event = chain.events[ii];
-					
-					event.eventring = L.marker(M.convertGCtoLC(event.path[0]),
+					chain = C.DryTopChains[i];
+					for (ii in chain.events)
 					{
-						zIndexOffset: M.cZIndexBury,
-						clickable: false,
-						icon: L.icon(
+						event = chain.events[ii];
+
+						event.eventring = L.marker(M.convertGCtoLC(event.path[0]),
 						{
-							iconUrl: "img/ring/" + event.ring + I.cPNG,
-							iconSize: [32, 32],
-							iconAnchor: [16, 16]
-						})
-					});
-					event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
-					{
-						title: "<span class='mapEvent'>" + D.getObjectName(event) + "</span>",
-						wiki: D.getObjectName(event),
-						icon: L.icon(
+							zIndexOffset: M.cZIndexBury,
+							clickable: false,
+							icon: L.icon(
+							{
+								iconUrl: "img/ring/" + event.ring + I.cPNG,
+								iconSize: [32, 32],
+								iconAnchor: [16, 16]
+							})
+						});
+						event.eventicon = L.marker(M.convertGCtoLC(event.path[0]),
 						{
-							iconUrl: "img/event/" + event.icon + I.cPNG,
-							iconSize: [16, 16],
-							iconAnchor: [8, 8]
-						})
-					});
-					M.bindMarkerWikiBehavior(event.eventicon, "click");
-					M.bindMarkerZoomBehavior(event.eventicon, "contextmenu");
-					// Show only current event icons, the highlight event function will continue this
-					if ($("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
-					{
-						P.LayerArray.DryTopActive.push(event.eventicon);
-						P.LayerArray.DryTopActive.push(event.eventring);
-						M.toggleLayer(event.eventring, true);
-						M.toggleLayer(event.eventicon, true);
+							title: "<span class='mapEvent'>" + D.getObjectName(event) + "</span>",
+							wiki: D.getObjectName(event),
+							icon: L.icon(
+							{
+								iconUrl: "img/event/" + event.icon + I.cPNG,
+								iconSize: [16, 16],
+								iconAnchor: [8, 8]
+							})
+						});
+						M.bindMarkerWikiBehavior(event.eventicon, "click");
+						M.bindMarkerZoomBehavior(event.eventicon, "contextmenu");
+						// Show only current event icons, the highlight event function will continue this
+						if ($("#chnEvent_" + chain.nexus + "_" + event.num).hasClass("chnEventCurrent"))
+						{
+							P.LayerArray.DryTopActive.push(event.eventicon);
+							P.LayerArray.DryTopActive.push(event.eventring);
+							M.toggleLayer(event.eventring, true);
+							M.toggleLayer(event.eventicon, true);
+						}
+
+						P.LayerArray.DryTopRings.push(event.eventring);
+						P.LayerArray.DryTopIcons.push(event.eventicon);
 					}
-					
-					P.LayerArray.DryTopRings.push(event.eventring);
-					P.LayerArray.DryTopIcons.push(event.eventicon);
 				}
+				I.qTip.init(".leaflet-marker-icon");
 			}
-			I.qTip.init(".leaflet-marker-icon");
 			
 			// Finally
 			C.isDryTopGenerated = true;
@@ -13810,7 +13871,7 @@ P = {
 	 */
 	toggleDryTopIcons: function(pBoolean)
 	{
-		if (C.isDryTopGenerated)
+		if (C.isDryTopGenerated && I.isMapEnabled)
 		{
 			C.isDryTopIconsShown = pBoolean;
 			M.toggleLayer(P.Layer.DryTopNicks, pBoolean);
@@ -13819,7 +13880,6 @@ P = {
 			{
 				M.toggleLayerArray(P.LayerArray.DryTopActive, pBoolean);
 				P.adjustZoomDryTop();
-				K.updateDryTopClipboard();
 				I.qTip.init($("#mapDryTopClip0, #mapDryTopClip1").click(function()
 				{
 					$(this).select();
@@ -13834,6 +13894,7 @@ P = {
 				M.toggleLayerArray(P.LayerArray.DryTopRings, pBoolean);
 			}
 		}
+		K.updateDryTopClipboard();
 	},
 	
 	/*
@@ -20554,16 +20615,17 @@ K = {
 	 */
 	updateDryTopClipboard: function()
 	{
-		if (C.isDryTopIconsShown)
+		if (C.isDryTopGenerated)
 		{
 			var s0 = T.getCurrentDryTopEvents();
 			var s1 = T.getCurrentDryTopEvents(1);
-			document.getElementById("chnDryTopWaypoint0")
-				.setAttribute(K.cClipboardAttribute, s0);
-			document.getElementById("chnDryTopWaypoint1")
-				.setAttribute(K.cClipboardAttribute, s1);
-			$("#mapDryTopClip0").val(s0);
-			$("#mapDryTopClip1").val(s1);
+			$("#chnDryTopWaypoint0").attr(K.cClipboardAttribute, s0);
+			$("#chnDryTopWaypoint1").attr(K.cClipboardAttribute, s1);
+			if (C.isDryTopIconsShown)
+			{
+				$("#mapDryTopClip0").val(s0);
+				$("#mapDryTopClip1").val(s1);
+			}
 		}
 	},
 	
@@ -21213,10 +21275,13 @@ I = {
 					// View the map at Dry Top if it is that chain list
 					if ($(this).attr("id") === "sectionChains_Drytop")
 					{
-						M.goToZone("dry", M.ZoomEnum.Bird);
+						if (I.isMapEnabled)
+						{
+							M.goToZone("dry", M.ZoomEnum.Bird);
+							P.toggleDryTopIcons(true);
+						}
 						I.PageCurrent = I.SpecialPageEnum.DryTop;
 						U.updateTitle(I.SpecialPageEnum.DryTop);
-						P.toggleDryTopIcons(true);
 						$("#mapHUDBoxes").hide();
 					}
 					else
