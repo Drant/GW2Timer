@@ -887,9 +887,13 @@ O = {
 			}
 		}
 		// Daily achievements
+		var resetgraceperiodms = 10000;
 		if (I.isSectionLoaded_Daily)
 		{
-			G.generateAndInitializeDailies();
+			setTimeout(function()
+			{
+				G.generateAndInitializeDailies();
+			}, resetgraceperiodms);
 		}
 		
 		// Finally
@@ -2580,6 +2584,22 @@ U = {
 	getAPIRecipe: function(pID)
 	{
 		return U.getAPI("recipes", pID);
+	},
+	getAPIMaterial: function(pID)
+	{
+		return U.getAPI("materials", pID);
+	},
+	getAPIMini: function(pID)
+	{
+		return U.getAPI("minis", pID);
+	},
+	getAPITrait: function(pID)
+	{
+		return U.getAPI("traits", pID);
+	},
+	getAPISpecialization: function(pID)
+	{
+		return U.getAPI("specializations", pID);
 	},
 
 	/*
@@ -4960,12 +4980,31 @@ A = {
 		{
 			return;
 		}
+		// Initialize variables
+		var dish = $("#accDish_Equipment");
+		var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
+		container.append(A.formatCharacterSeparator(char));
+		// Equipment icons and glance information
+		var subcontainer = $("<div class='eqpSubcontainer eqpSubcontainer_" + char.profession + "'></div>").appendTo(container);
+		var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(subcontainer);
+		var subconright = $("<div class='eqpRight eqpColumn'></div>").appendTo(subcontainer);
+		var subconbuild = $("<div class='eqpBuild eqpColumn'></div>").appendTo(subcontainer);
+		var eqp = A.Equipment;
+		var equipleft = eqp.ColumnLeft;
+		var equipright = eqp.ColumnRight;
+		var equiprightbrief = eqp.BriefRight;
+		var equiptoggle = eqp.ToggleableSlots;
+		var equipgathering = eqp.GatheringCharges;
+		var attrwindow = $("<div class='eqpAttrWindow'><aside class='eqpAttrHeader'><span class='eqpAttrTitle'>"
+			+ D.getWordCapital("attributes") + "</span></aside><aside class='eqpAttrContent'></aside></div>").appendTo(subconbuild);
 		// Object containing attribute points to be added by the retrieved items
 		var attrobj = new A.Attribute.Base();
 		var equipstofetch = char.equipment.length;
 		var numfetched = 0;
 		
-		// Macro HTML writing functions
+		/*
+		 * Macro HTML writing functions.
+		 */
 		var formatEquipmentSlotLeft = function(pEquipment)
 		{
 			return "<aside class='eqpRow eqp" + pEquipment + "'>"
@@ -4997,31 +5036,72 @@ A = {
 			return str;
 		};
 		
-		// Function to execute after every single item and subitems have been retrieved
+		/*
+		 * Windows to generate after equipments are fully loaded.
+		 */
+		var formatAttributesWindow = function()
+		{
+			// BUILD COLUMN: Attributes
+			var attrcontent = attrwindow.find(".eqpAttrContent");
+			var attrstrobj = Q.calculateAttributes(attrobj, char);
+			for (var i in attrstrobj)
+			{
+				attrcontent.append("<span class='eqpAttrBlock eqpAttr_" + i + "' title='<dfn>" + D.getString(i) + "</dfn>'>"
+					+ "<img src='img/account/attributes/" + i.toLowerCase() + ".png' />"
+					+ "<var class='eqpAttrSum'>" + attrstrobj[i] + "</var><var class='eqpAttrBonus'>+" + attrobj[i] + "</var>"
+				+ "</span>");
+			}
+			// Insert profession-specific attribute
+			attrcontent.find(".eqpAttr_Power").after("<span class='eqpAttrBlock eqpAttr_Profession'>"
+				+ "<img src='img/account/attributes/" + char.profession.toLowerCase() + ".png' /><var>0%</var></span>");
+			I.qTip.init(attrcontent.find("span"));
+		};
+		var formatTraitsWindow = function()
+		{
+			// BUILD COLUMN: Specializations
+			var spec = char.specializations;
+			if (spec === undefined)
+			{
+				return;
+			}
+			var traitwindow = $("<div class='trtWindow'>"
+				+ "<aside class='trtSwitchContainer'>"
+					+ "<img class='trtSwitch curClick' data-assoc='PVE' src='img/ui/pages/map.png' />"
+					+ "<img class='trtSwitch curClick' data-assoc='WVW' src='img/ui/pages/wvw.png' />"
+					+ "<img class='trtSwitch curClick' data-assoc='PVP' src='img/account/menu/pvp.png' />"
+				+ "</aside>"
+				+ "<div class='trtContainer'>"
+					+ "<div class='trtPanel trtPanel_PVE'></div>"
+					+ "<div class='trtPanel trtPanel_WVW'></div>"
+					+ "<div class='trtPanel trtPanel_PVP'></div>"
+				+ "</div>"
+			+ "</div>").appendTo(subconbuild);
+			// Bind game mode buttons to switch to appropriate specializations panel
+			traitwindow.find(".trtSwitch").each(function()
+			{
+				$(this).click(function()
+				{
+					traitwindow.find(".trtPanel").hide();
+					traitwindow.find(".trtPanel_" + $(this).attr("data-assoc")).show();
+				});
+			});
+			A.generateTraits(spec.pve, traitwindow.find(".trtPanel_PVE"));
+			A.generateTraits(spec.wvw, traitwindow.find(".trtPanel_WVW"));
+			A.generateTraits(spec.pvp, traitwindow.find(".trtPanel_PVP"));
+		};
+		
+		/*
+		 * Function to execute after every single item and subitems have been retrieved.
+		 */
 		var finalizeEquipment = function()
 		{
 			if (equipstofetch === numfetched)
 			{
 				formatAttributesWindow();
-				A.initializeTraits(char);
+				formatTraitsWindow();
 			}
 		};
-
-		var dish = $("#accDish_Equipment");
-		var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
-		container.append(A.formatCharacterSeparator(char));
-
-		// Equipment icons and glance information
-		var subcontainer = $("<div class='eqpSubcontainer eqpSubcontainer_" + char.profession + "'></div>").appendTo(container);
-		var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(subcontainer);
-		var subconright = $("<div class='eqpRight eqpColumn'></div>").appendTo(subcontainer);
-		var subconbuild = $("<div class='eqpBuild eqpColumn'></div>").appendTo(subcontainer);
-		var eqp = A.Equipment;
-		var equipleft = eqp.ColumnLeft;
-		var equipright = eqp.ColumnRight;
-		var equiprightbrief = eqp.BriefRight;
-		var equiptoggle = eqp.ToggleableSlots;
-		var equipgathering = eqp.GatheringCharges;
+		
 		// LEFT COLUMN armor and weapon
 		equipleft.forEach(function(iEquip)
 		{
@@ -5052,26 +5132,7 @@ A = {
 		// Add aquatic weapon background
 		subconright.append("<img class='eqpAquaticBackground' src='img/account/equipment/aquatic.png' />");
 		
-		// BUILD COLUMN attributes and specializations
-		var attrwindow = $("<div class='eqpAttrWindow'><aside class='eqpAttrHeader'><span class='eqpAttrTitle'>"
-			+ D.getWordCapital("attributes") + "</span></aside><aside class='eqpAttrContent'></aside></div>").appendTo(subconbuild);
-		var formatAttributesWindow = function()
-		{
-			var attrcontent = attrwindow.find(".eqpAttrContent");
-			var attrstrobj = Q.calculateAttributes(attrobj, char);
-			for (var i in attrstrobj)
-			{
-				attrcontent.append("<span class='eqpAttrBlock eqpAttr_" + i + "' title='<dfn>" + D.getString(i) + "</dfn>'>"
-					+ "<img src='img/account/attributes/" + i.toLowerCase() + ".png' />"
-					+ "<var class='eqpAttrSum'>" + attrstrobj[i] + "</var><var class='eqpAttrBonus'>+" + attrobj[i] + "</var>"
-				+ "</span>");
-			}
-			// Insert profession-specific attribute
-			attrcontent.find(".eqpAttr_Power").after("<span class='eqpAttrBlock eqpAttr_Profession'>"
-				+ "<img src='img/account/attributes/" + char.profession.toLowerCase() + ".png' /><var>0%</var></span>");
-			I.qTip.init(attrcontent.find("span"));
-		};
-		
+		// Retrieve and slot the equipments
 		var runesets = Q.countRuneSets(char);
 		for (var i in char.equipment)
 		{
@@ -5140,26 +5201,67 @@ A = {
 	},
 	
 	/*
-	 * Initializes the multi-mode specializations window for a character.
-	 * @param object pCharacter characters data.
+	 * Generates a specializations panel for a profession.
+	 * @param array pTraitLines from API under "specializations" property.
+	 * Example structure: [{"id": 1, "traits": [701, 1889, 704]}, ...]
+	 * @param jqobject pContainer to place the trait panel.
 	 */
-	initializeTraits: function(pCharacter)
+	generateTraits: function(pTraitLines, pContainer)
 	{
-		var container = "<div class='trtContainer'>"
-			+ "<aside class='trtRow'></aside>"
-		+ "</div>";
-	},
-	
-	/*
-	 * Generates a specializations window.
-	 * @param array pTraitLines from API under "specializations" property of
-	 * character data.
-	 */
-	generateTraits: function(pTraitLines)
-	{
-		$.getJSON(U.getAPI(), function(pData)
+		if (pTraitLines === undefined)
 		{
+			return;
+		}
+		/*
+		[{
+			"id": 1,
+			"traits": [701, 1889, 704]
+		}, {
+			"id": 10,
+			"traits": [682, 693, 681]
+		}, {
+			"id": 40,
+			"traits": [1987, 1978, 1890]
+		}],
+		 */
+		
+		var insertSpecialization = function(pID)
+		{
+			var specline = $("<aside class='trtLine trtLine_" + pID + "'>"
+				+ "<span class='trtSpecButton'><img class='trtSpecIcon' /></span>"
+				+ "<span class='trtColumn'><img class='trtMinor_0' /></span>"
+					+ "<span class='trtColumn'><img class='trtMajor_0' /></span>"
+					+ "<span class='trtColumn'><img class='trtMajor_1' /></span>"
+					+ "<span class='trtColumn'><img class='trtMajor_2' /></span>"
+				+ "<span class='trtColumn'><img class='trtMinor_1' /></span>"
+					+ "<span class='trtColumn'><img class='trtMajor_3' /></span>"
+					+ "<span class='trtColumn'><img class='trtMajor_4' /></span>"
+					+ "<span class='trtColumn'><img class='trtMajor_5' /></span>"
+				+ "<span class='trtColumn'><img class='trtMinor_2' /></span>"
+					+ "<span class='trtColumn'><img class='trtMajor_6' /></span>"
+					+ "<span class='trtColumn'><img class='trtMajor_7' /></span>"
+					+ "<span class='trtColumn'><img class='trtMajor_8' /></span>"
+			+ "</aside>").find("img").attr("src", "img/ui/placeholder.png");
+			specline.appendTo(panel);
 			
+			// Use cached specializations data if available, else retrieve
+			if (A.Data.Specializations[pID])
+			{
+				
+			}
+			else
+			{
+				$.getJSON(U.getAPISpecialization(pID), function(pData)
+				{
+					A.Data.Specializations[pID] = pData;
+				});
+			}
+		};
+		
+		var panel = $("<aside class='trtLine'></aside>");
+		pTraitLines.forEach(function(iLine)
+		{
+			insertSpecialization(iLine.id);
 		});
 	},
 	

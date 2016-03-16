@@ -779,6 +779,7 @@ a.chrWalletLink {
 .eqpAttrWindow {
 	display: inline-block;
 	width: 240px;
+	margin-bottom: 32px;
 	border-top: 2px solid #1e1c1e;
 	border-right: 2px solid #1e2125;
 	border-bottom: 3px solid #090b0b;
@@ -829,6 +830,10 @@ a.chrWalletLink {
 .eqpAttrWindow:hover .eqpAttrBonus {
 	display: inline-block;
 	animation: aniFadeIn 0.4s;
+}
+
+.trtWindow {
+	width: 420px;
 }
 
 /* Adjustments for smaller screens
