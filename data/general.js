@@ -1054,7 +1054,28 @@ Countdowns: [
 	official: "news/every-day-sale-in-the-month-of-march/",
 	Start: new Date("2016-03-01T16:00:00Z"),
 	Finish: new Date("2016-03-31T16:00:00Z")
-}
+}/*,
+{
+	name_en: "April Fools' Day",
+	name_de: "Aprilscherz",
+	name_es: "Pescado de abril",
+	name_fr: "Poisson d'avril",
+	url_en: "https://en.wikipedia.org/wiki/April_Fools%27_Day",
+	url_de: "https://de.wikipedia.org/wiki/Aprilscherz",
+	url_es: "https://es.wikipedia.org/wiki/Día_de_las_bromas_de_abril",
+	url_fr: "https://fr.wikipedia.org/wiki/Poisson_d%27avril",
+	Start: new Date("2016-04-01T16:00:00Z"),
+	Finish: new Date("2016-04-02T16:00:00Z")
+},
+{
+	name_en: "Q2 Patch",
+	name_de: "Q2 Patch",
+	name_es: "Q2 Patch",
+	name_fr: "Q2 Patch",
+	url: "https://forum-en.guildwars2.com/forum/game/wuv/Your-top-5-priorities-for-WvW-Overhaul/page/5#post6044178",
+	Start: new Date("2016-04-26T17:00:00Z"),
+	Finish: new Date("2016-04-27T17:00:00Z")
+}*/
 ],
 
 /*
@@ -1170,16 +1191,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-03-16T00:00:00Z"),
-	Finish: new Date("2016-03-17T00:00:00Z"),
+	Start: new Date("2016-03-17T00:00:00Z"),
+	Finish: new Date("2016-03-18T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "43827", price: "25200", product: "43848" },
-		Fox: { id: "67964", price: "25200", product: "67529" },
-		Derwena: { id: "43841", price: "25200", product: "43865" },
-		Yana: { id: "49735", price: "25200", product: "49866" },
-		Katyn: { id: "43834", price: "25200", product: "43856" },
-		Verma: { id: "43799", price: "12600", product: "43775" }
+		Mehem: { id: "49752", price: "25200", product: "49793" },
+		Fox: { id: "43833", price: "25200", product: "43855" },
+		Derwena: { id: "43839", price: "25200", product: "43861" },
+		Yana: { id: "49769", price: "25200", product: "49814" },
+		Katyn: { id: "49756", price: "25200", product: "49797" },
+		Verma: { id: "43810", price: "25200", product: "43786" }
 	}
 }
 };

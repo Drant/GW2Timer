@@ -834,11 +834,41 @@ a.chrWalletLink {
 
 .trtWindow {
 	display: inline-block;
-	
+	width: 420px;
+	box-shadow: 0px 0px 16px #0b0d0e;
+}
+.trtSwitchContainer {
+	border-bottom: 2px solid #0a0b0c;
+	font-family: Menomonia;
+	font-size: 20px;
+	background: linear-gradient(to right, #101010 0%, #323536 50%, #2a2c30 100%);
+}
+.trtSwitchWrapper {
+	display: inline-block;
+	padding-left: 8px;
+	padding-right: 8px;
+	background: linear-gradient(to bottom, transparent 0%, #222 100%);
+	border-top-right-radius: 50%;
+	border-top-left-radius: 50%;
+}
+.trtBuildIcon {
+	width: 38px; height: 38px;
+}
+.trtSwitch {
+	opacity: 0.8;
+}
+.trtSwitch:hover, .trtSwitchFocused {
+	border-radius: 50%;
+	box-shadow: 0px 0px 10px #e7e3bd;
+	opacity: 1;
+}
+.trtSwitch:active {
+	opacity: 0.4;
 }
 .trtPanel {
-	width: 420px; height: 280px;
-	background: red;
+	display: none;
+	height: 266px;
+	background: linear-gradient(to right, #171a1b 0%, #202525 50%, #2c3034 100%);
 }
 .trtLine {
 	display: block;
@@ -846,11 +876,24 @@ a.chrWalletLink {
 	background-position: bottom left;
 	background-size: 160%;
 }
+.trtLineBackground {
+	display: block;
+	height: 100%;
+	background-image: url("../img/account/equipment/spec_regular.png");
+	background-size: 100%;
+}
+.trtSpecButton {
+	display: inline-block;
+}
+.trtSpecIcon {
+	background-image: url("../img/account/equipment/spec_icon.png");
+	width: 120%;
+}
 .trtColumn {
 	display: inline-block;
 	width: 12.5%;
 	vertical-align: middle;
-	outline: 1px solid red;
+	/*outline: 1px solid red;*/
 }
 .trtColumn var {
 	display: inline-block;
@@ -863,6 +906,12 @@ a.chrWalletLink {
 	display: inline-block;
 	width: 100%; height: 100%;
 	background: rgba(0,0,0,0.4);
+}
+.trtColumn mark.trtActive {
+	background: transparent;
+}
+.trtMinor, .trtMinor mark {
+	border-radius: 50%;
 }
 
 /* Adjustments for smaller screens

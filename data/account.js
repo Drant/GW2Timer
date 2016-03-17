@@ -51,6 +51,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 
 /*
  * Categorized currencies for generating separate lists.
+ * For general currencies, coefficient property normalizes by approximation each
+ * currency to 1 silver. For other currencies, it normalizes relative to all.
  */
 var GW2T_CURRENCY_DATA = {
 	Dungeon: [
@@ -63,10 +65,10 @@ var GW2T_CURRENCY_DATA = {
 		{ id: 14, name_en: "Knowledge Crystal", name_de: "Wissenskristall", name_es: "Cristal del conocimiento", name_fr: "Cristal de connaissance", name_zh: "知識水晶" },
 		{ id: 6, name_en: "Shard of Zhaitan", name_de: "Scherbe des Zhaitan", name_es: "Esquirla de Zhaitan", name_fr: "Eclat de Zhaïtan", name_zh: "澤坦碎片" },
 		{ id: 7, name_en: "Fractal Relic", name_de: "Fraktal-Relikt", name_es: "Reliquia fractal", name_fr: "Relique fractale", name_zh: "碎層古物" },
-		{ id: 24, name_en: "Pristine Fractal Relic", name_de: "Makelloses Fraktal-Relikt", name_es: "Reliquia fractal prístina", name_fr: "Relique fractale immaculée", name_zh: "原始碎層古物" },
-		{ id: 28, name_en: "Magnetite Shard", name_de: "Magnetit-Scherbe", name_es: "Esquirla de magnetita", name_fr: "Éclat de magnétite", name_zh: "磁鐵碎塊" }
+		{ id: 24, coefficient: 15, name_en: "Pristine Fractal Relic", name_de: "Makelloses Fraktal-Relikt", name_es: "Reliquia fractal prístina", name_fr: "Relique fractale immaculée", name_zh: "原始碎層古物" },
+		{ id: 28, coefficient: 10, name_en: "Magnetite Shard", name_de: "Magnetit-Scherbe", name_es: "Esquirla de magnetita", name_fr: "Éclat de magnétite", name_zh: "磁鐵碎塊" }
 	],
-	General: [ // Coefficient normalizes by approximation each currency to 1 silver
+	General: [
 		{ id: 1, coefficient: 0.01, name_en: "Coin", name_de: "Münze", name_es: "Moneda", name_fr: "Pièce", name_zh: "錢幣" },
 		{ id: 2, coefficient: 0.01, name_en: "Karma", name_de: "Karma", name_es: "Karma", name_fr: "Karma", name_zh: "業力" },
 		{ id: 3, coefficient: 100, name_en: "Laurel", name_de: "Lorbeer", name_es: "Laurel", name_fr: "Laurier", name_zh: "桂冠" },

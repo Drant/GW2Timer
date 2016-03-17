@@ -5074,8 +5074,8 @@ A = {
 				+ "</span></aside>"
 				+ "<div class='trtContainer'>"
 					+ "<div class='trtPanel trtPanel_PVE'></div>"
-					/*+ "<div class='trtPanel trtPanel_WVW'></div>"
-					+ "<div class='trtPanel trtPanel_PVP'></div>"*/
+					+ "<div class='trtPanel trtPanel_WVW'></div>"
+					+ "<div class='trtPanel trtPanel_PVP'></div>"
 				+ "</div>"
 			+ "</div>").appendTo(subconbuild);
 			// Bind game mode buttons to switch to appropriate specializations panel
@@ -5083,13 +5083,15 @@ A = {
 			{
 				$(this).click(function()
 				{
+					traitwindow.find(".trtSwitch").removeClass("trtSwitchFocused");
+					$(this).addClass("trtSwitchFocused");
+					var buildmode = $(this).attr("data-assoc");
+					var buildpanel = traitwindow.find(".trtPanel_" + buildmode);
 					traitwindow.find(".trtPanel").hide();
-					traitwindow.find(".trtPanel_" + $(this).attr("data-assoc")).show();
+					buildpanel.show();
+					A.generateTraits(spec[(buildmode.toLowerCase())], buildpanel);
 				});
 			});
-			A.generateTraits(spec.pve, traitwindow.find(".trtPanel_PVE"));
-			//A.generateTraits(spec.wvw, traitwindow.find(".trtPanel_WVW"));
-			//A.generateTraits(spec.pvp, traitwindow.find(".trtPanel_PVP"));
 		};
 		
 		/*
@@ -5210,31 +5212,19 @@ A = {
 	 */
 	generateTraits: function(pTraitLines, pContainer)
 	{
-		if (pTraitLines === undefined)
+		if (pTraitLines === undefined || pContainer.is(":empty") === false)
 		{
 			return;
 		}
-		/*
-		[{
-			"id": 1,
-			"traits": [701, 1889, 704]
-		}, {
-			"id": 10,
-			"traits": [682, 693, 681]
-		}, {
-			"id": 40,
-			"traits": [1987, 1978, 1890]
-		}],
-		 */
 		
-		var insertSpecialization = function(pSpecID)
+		var insertSpecialization = function(pSpecID, pTraits)
 		{
-			var specline = $("<aside class='trtLine trtLine_" + pSpecID + "'>"
+			var specline = $("<aside class='trtLine trtLine_" + pSpecID + "'><span class='trtLineBackground'>"
 				+ "<span class='trtSpecButton'>"
-					+ "<var class='trtSpecIcon'><img class='trtSpec' />"
+					+ "<var class='trtSpecIcon'>&zwnj;</var>"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
-					+ "<var class='trtMinor_10'></var>"
+					+ "<var class='trtMinor trtMinor_10' data-tier='0'></var>"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
 					+ "<var class='trtMajor_10'></var><br />"
@@ -5242,7 +5232,7 @@ A = {
 					+ "<var class='trtMajor_12'></var><br />"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
-					+ "<var class='trtMinor_20'></var>"
+					+ "<var class='trtMinor trtMinor_20' data-tier='1'></var>"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
 					+ "<var class='trtMajor_20'></var><br />"
@@ -5250,14 +5240,14 @@ A = {
 					+ "<var class='trtMajor_22'></var><br />"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
-					+ "<var class='trtMinor_30'></var>"
+					+ "<var class='trtMinor trtMinor_30' data-tier='2'></var>"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
 					+ "<var class='trtMajor_30'></var><br />"
 					+ "<var class='trtMajor_31'></var><br />"
 					+ "<var class='trtMajor_32'></var><br />"
 				+ "</span>"
-			+ "</aside>").appendTo(pContainer);
+			+ "</span></aside>").appendTo(pContainer);
 			specline.find("img").attr("src", "img/ui/placeholder.png");
 			
 			var formatTraitIcon = function(pTraitID)
@@ -5266,7 +5256,13 @@ A = {
 				specline.find(".trt" + trait.slot + "_" + trait.tier + trait.order).each(function()
 				{
 					$(this).css({backgroundImage: "url(" + trait.icon + ")"});
-					$(this).append("<mark>&zwnj;</mark>");
+					var traithighlight = "";
+					if (traitassoc[pTraitID] // If the trait present in the character's traits array
+						|| pTraits[$(this).attr("data-tier")]) // If the traits array is filled up at least to that "tier" (index)
+					{
+						traithighlight = "trtActive";
+					}
+					$(this).append("<mark class='" + traithighlight + "'>&zwnj;</mark>");
 				});
 			};
 			var formatSpecLine = function()
@@ -5313,10 +5309,26 @@ A = {
 			}
 		};
 		
-		
+		var traitassoc = {};
+		// Insert specialization lines to the panel of specific game mode
 		pTraitLines.forEach(function(iLine)
 		{
-			insertSpecialization(iLine.id);
+			if (iLine)
+			{
+				// Convert the traits array into an associative array for highlighting active traits
+				if (iLine.traits)
+				{
+					iLine.traits.forEach(function(iTrait)
+					{
+						if (iTrait)
+						{
+							traitassoc[iTrait] = true;
+						}
+					});
+				}
+				// Insert that line of traits into the panel
+				insertSpecialization(iLine.id, iLine.traits);
+			}
 		});
 	},
 	
