@@ -1124,17 +1124,17 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Kasmeer's Staff Skin",
-		id: "49021",
-		price: 480,
-		discount: 600,
+		name: "Plush Ram Backpack Set",
+		id: "68611",
+		price: 240,
+		discount: 300,
 		col: 0
 	},
 	{
-		name: "Chain-Whip Sword Skin",
-		id: "69752",
-		price: 480,
-		discount: 600,
+		name: "Item Booster",
+		id: "20003",
+		price: 80,
+		discount: [[1, 80, 100], [5, 360, 450], [20, 1280, 1600]],
 		col: 0
 	},
 	{
@@ -1142,20 +1142,13 @@ Sale: {
 		id: "64757",
 		price: 200,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Classical Glider",
 		id: "77821",
 		price: 400,
 		discount: null,
-		col: 1
-	},
-	{
-		name: "Taimi's Dye Kit",
-		id: "67291",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]

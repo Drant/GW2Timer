@@ -2650,6 +2650,11 @@ U = {
 			// If input starts with a console command
 			U.parseConsoleCommand(pString, pMapObject);
 		}
+		else if (pString.indexOf(I.cChatcodePrefix) === 0)
+		{
+			// If input is a chatcode
+			I.write(U.getGameIDFromChatlink(pString, true), 0);
+		}
 		else if (pMapObject.parsePersonalPath(pString) === false)
 		{
 			// If input looks like a 2D array of coordinates, then create pins from them
@@ -2710,10 +2715,6 @@ U = {
 			{
 				P.printNodes(P.sortCoordinates(M.parseCoordinatesMulti(args[1])));
 			}},
-			decode: {usage: "Decodes a chatlink to a number ID. <em>Parameters: str_chatlink</em>", f: function()
-			{
-				I.write(U.getGameIDFromChatlink(args[1], true), 0);
-			}},
 			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, int_limit (optional), str_querystring (optional)</em>", f: function()
 			{
 				U.printAPI(args[1], args[2], args[3]);
@@ -2758,6 +2759,7 @@ U = {
 				{
 					s += "<b>" + i + "</b> - " + Commands[i].usage + "<br />";
 				}
+				s += "<br />The console also accepts: coordinates, array of coordinates, zone names, and chatcodes.<br />";
 				I.write(s, 0);
 			}},
 			test: {usage: "Test function for debugging.", f: function()
@@ -3808,7 +3810,7 @@ U = {
 			chatlink += String.fromCharCode((pID >> (i * 8)) & 255);
 		}
 		// Return base64 string with chat code tags
-		return "[&" + btoa(chatlink) + "]";
+		return I.cChatcodePrefix + btoa(chatlink) + I.cChatcodeSuffix;
 	},
 	
 	/*
@@ -3822,9 +3824,9 @@ U = {
 		var str = "";
 		try // To ignore "Failed to execute 'btoa' on 'Window'" exception
 		{
-			str = "[&" + btoa(String.fromCharCode(2) + String.fromCharCode(1)
+			str = I.cChatcodePrefix + btoa(String.fromCharCode(2) + String.fromCharCode(1)
 			+ String.fromCharCode(pID % 256) + String.fromCharCode(Math.floor(pID / 256))
-			+ String.fromCharCode(0) + String.fromCharCode(0)) + "]";
+			+ String.fromCharCode(0) + String.fromCharCode(0)) + I.cChatcodeSuffix;
 		} catch(e){};
 		return str;
 	},
@@ -3851,7 +3853,7 @@ U = {
 		
 		var id = null;
 		// Extract the code portion of the chatlink [&CODE]
-		if (typeof pChatlink === "string" && pChatlink.indexOf("[&") === 0 && pChatlink.indexOf("]" === pChatlink.length - 1))
+		if (typeof pChatlink === "string" && pChatlink.indexOf(I.cChatcodePrefix) === 0 && pChatlink.indexOf(I.cChatcodeSuffix === pChatlink.length - 1))
 		{
 			pChatlink = pChatlink.substring(2, pChatlink.length - 1);
 		}
@@ -5219,35 +5221,35 @@ A = {
 		
 		var insertSpecialization = function(pSpecID, pTraits)
 		{
-			var specline = $("<aside class='trtLine trtLine_" + pSpecID + "'><span class='trtLineBackground'>"
-				+ "<span class='trtSpecButton'>"
-					+ "<var class='trtSpecIcon'>&zwnj;</var>"
+			var specline = $("<aside class='trtLine'><span class='trtLineBackground'><span class='trtLineForeground'>"
+				+ "<span class='trtSpecSide'><var class='trtSpecSideIcon'></var></span>"
+				+ "<span class='trtSpecColumn'><var class='trtSpecName'></var></span>"
+				+ "<span class='trtColumn'>"
+					+ "<var class='trtMinor trtMinor_10' data-tier='0'><em class='trtCon_01'></em></var>"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
-					+ "<var class='trtMinor trtMinor_10' data-tier='0'></var>"
-				+ "</span>"
-				+ "<span class='trtColumn'>"
-					+ "<var class='trtMajor_10'></var><br />"
-					+ "<var class='trtMajor_11'></var><br />"
-					+ "<var class='trtMajor_12'></var><br />"
+					+ "<var class='trtMajor_10'><em class='trtCon_10L'></em><em class='trtCon_10R'></em></var><br />"
+					+ "<var class='trtMajor_11'><em class='trtCon_11L'></em><em class='trtCon_11R'></em></var><br />"
+					+ "<var class='trtMajor_12'><em class='trtCon_12L'></em><em class='trtCon_12R'></em></var><br />"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
 					+ "<var class='trtMinor trtMinor_20' data-tier='1'></var>"
+					+ "</var>"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
-					+ "<var class='trtMajor_20'></var><br />"
-					+ "<var class='trtMajor_21'></var><br />"
-					+ "<var class='trtMajor_22'></var><br />"
+					+ "<var class='trtMajor_20'><em class='trtCon_20L'></em><em class='trtCon_20R'></em></var><br />"
+					+ "<var class='trtMajor_21'><em class='trtCon_21L'></em><em class='trtCon_21R'></em></var><br />"
+					+ "<var class='trtMajor_22'><em class='trtCon_22L'></em><em class='trtCon_22R'></em></var><br />"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
 					+ "<var class='trtMinor trtMinor_30' data-tier='2'></var>"
 				+ "</span>"
 				+ "<span class='trtColumn'>"
-					+ "<var class='trtMajor_30'></var><br />"
-					+ "<var class='trtMajor_31'></var><br />"
-					+ "<var class='trtMajor_32'></var><br />"
+					+ "<var class='trtMajor_30'><em class='trtCon_30L'></em></var><br />"
+					+ "<var class='trtMajor_31'><em class='trtCon_31L'></em></var><br />"
+					+ "<var class='trtMajor_32'><em class='trtCon_32L'></em></var><br />"
 				+ "</span>"
-			+ "</span></aside>").appendTo(pContainer);
+			+ "</span></span></aside>").appendTo(pContainer);
 			specline.find("img").attr("src", "img/ui/placeholder.png");
 			
 			var formatTraitIcon = function(pTraitID)
@@ -5257,10 +5259,12 @@ A = {
 				{
 					$(this).css({backgroundImage: "url(" + trait.icon + ")"});
 					var traithighlight = "";
+					var tier = $(this).attr("data-tier");
 					if (traitassoc[pTraitID] // If the trait present in the character's traits array
-						|| pTraits[$(this).attr("data-tier")]) // If the traits array is filled up at least to that "tier" (index)
+						|| pTraits[tier]) // If the traits array is filled up at least to that "tier" (index)
 					{
-						traithighlight = "trtActive";
+						$(this).find("em").show(); // Show the connecting line between trait icons
+						traithighlight = "trtActive"; // Brighten the active trait icon
 					}
 					$(this).append("<mark class='" + traithighlight + "'>&zwnj;</mark>");
 				});
@@ -5268,8 +5272,12 @@ A = {
 			var formatSpecLine = function()
 			{
 				var spec = A.Data.Specializations[pSpecID];
-				specline.find(".trtSpec").attr("src", spec.icon).attr("title", spec.name);
 				specline.css({backgroundImage: "url(" + spec.background + ")"});
+				specline.find(".trtSpecName").text(spec.name);
+				if (spec.elite)
+				{
+					specline.find(".trtLineBackground").addClass("trtLineBackgroundElite");
+				}
 				
 				var traitids = spec.minor_traits.concat(spec.major_traits);
 				for (var i = 0; i < traitids.length; i++)
@@ -20803,6 +20811,8 @@ I = {
 	cPNG: ".png", // Almost all used images are PNG
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
 	cConsoleCommandPrefix: "/",
+	cChatcodePrefix: "[&",
+	cChatcodeSuffix: "]",
 	cTextDelimiterChar: "|",
 	cTextDelimiterRegex: /[|]/g,
 	consoleTimeout: {},

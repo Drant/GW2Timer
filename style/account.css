@@ -854,7 +854,8 @@ a.chrWalletLink {
 .trtBuildIcon {
 	width: 38px; height: 38px;
 }
-.trtSwitch {
+.trtSwitch { /* Buttons to switch between game mode builds */
+	margin-left: 2px;
 	opacity: 0.8;
 }
 .trtSwitch:hover, .trtSwitchFocused {
@@ -865,12 +866,12 @@ a.chrWalletLink {
 .trtSwitch:active {
 	opacity: 0.4;
 }
-.trtPanel {
+.trtPanel { /* Holds the specialization lines */
 	display: none;
 	height: 266px;
 	background: linear-gradient(to right, #171a1b 0%, #202525 50%, #2c3034 100%);
 }
-.trtLine {
+.trtLine { /* A specialization container for all its associated trait icons */
 	display: block;
 	width: 100%; height: 33.33%;
 	background-position: bottom left;
@@ -882,36 +883,132 @@ a.chrWalletLink {
 	background-image: url("../img/account/equipment/spec_regular.png");
 	background-size: 100%;
 }
-.trtSpecButton {
-	display: inline-block;
+.trtLine:last-child .trtLineBackground {
+	background-image: url("../img/account/equipment/spec_regular.png"), url("../img/account/equipment/spec_elite.png");
 }
-.trtSpecIcon {
-	background-image: url("../img/account/equipment/spec_icon.png");
-	width: 120%;
+.trtLineForeground {
+	display: block;
+	height: 100%;
+	background-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 100%);
+	background-size: 100%;
 }
-.trtColumn {
+.trtLine:hover .trtLineForeground {
+	background: transparent;
+}
+.trtSpecSide { /* Far left side border */
 	display: inline-block;
-	width: 12.5%;
+	width: 12px; height: 100%;
+	float: left;
+	background: rgba(0,0,0,0.5);
+}
+.trtSpecSideIcon {
+	display: inline-block;
+	width: 18px; height: 18px;
+	margin-top: 32px;
+	background-image: url("../img/account/equipment/spec_side.png");
+	background-size: 100%;
+	opacity: 0.8;
+}
+.trtSpecColumn { /* The hexagon over the background */
+	display: inline-block;
+	width: 80px; height: 80px;
+	margin-top: 6px;
 	vertical-align: middle;
-	/*outline: 1px solid red;*/
+	background-image: url("../img/account/equipment/spec_icon.png");
+	background-size: 100%;
 }
-.trtColumn var {
+.trtSpecName {
+	display: block;
+	margin-top: -10px;
+	white-space: nowrap;
+	font-family: Menomonia;
+	font-size: 14px;
+	text-shadow:
+		0px 1px 2px #000,
+		0px -1px 2px #000,
+		1px 0px 2px #000,
+		-1px 0px 2px #000;
+}
+.trtColumn { /* Vertical containers for trait icons */
 	display: inline-block;
-	width: 50%;
-	margin-top: 2%;
-	margin-bottom: 2%;
-	background-size: 100% 100%;
+	width: 44px;
+	margin-top: 2px;
+	vertical-align: middle;
 }
-.trtColumn mark {
+.trtColumn var { /* A trait icon */
+	display: inline-block;
+	width: 24px; height: 24px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	background-size: 100%;
+}
+.trtColumn mark { /* The shaded background over trait icons for unused traits */
 	display: inline-block;
 	width: 100%; height: 100%;
-	background: rgba(0,0,0,0.4);
+	background: rgba(0,0,0,0.5);
 }
 .trtColumn mark.trtActive {
 	background: transparent;
 }
 .trtMinor, .trtMinor mark {
 	border-radius: 50%;
+}
+
+/* Connection line between trait icons */
+@keyframes aniConnector { 
+    0% {background-position: 0% 50%}
+    50% {background-position: 100% 50%}
+    100% {background-position: 0% 50%}
+}
+.trtColumn em {
+	display: none;
+	position: absolute;
+	height: 2px;
+	background: orange;
+	background: linear-gradient(270deg, transparent, rgba(255,255,255,0.5));
+	background-size: 400% 400%;
+	border-radius: 2px;
+	animation: aniConnector 5s ease infinite;
+}
+.trtCon_01 {
+	display: block !important;
+	width: 20px;
+	margin-left: -20px;
+	margin-top: 11px;
+}
+.trtCon_10L, .trtCon_20L, .trtCon_30L {
+	width: 26px;
+	margin-left: -24px;
+	margin-top: 24px;
+	transform: rotate(-32deg);
+}
+.trtCon_10R, .trtCon_20R {
+	width: 26px;
+	margin-left: 22px;
+	margin-top: 24px;
+	transform: rotate(32deg);
+}
+.trtCon_11L, .trtCon_21L, .trtCon_31L {
+	width: 20px;
+	margin-left: -20px;
+	margin-top: 11px;
+}
+.trtCon_11R, .trtCon_21R {
+	width: 20px;
+	margin-left: 24px;
+	margin-top: 11px;
+}
+.trtCon_12L, .trtCon_22L, .trtCon_32L {
+	width: 26px;
+	margin-left: -24px;
+	margin-top: -2px;
+	transform: rotate(32deg);
+}
+.trtCon_12R, .trtCon_22R {
+	width: 26px;
+	margin-left: 22px;
+	margin-top: -2px;
+	transform: rotate(-32deg);
 }
 
 /* Adjustments for smaller screens
