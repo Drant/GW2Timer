@@ -5186,6 +5186,11 @@ A = {
 				});
 			})(char.equipment[i]);
 		}
+		// In case the character is wearing nothing, the finalize callback would not have happened
+		if (char.equipment.length === 0)
+		{
+			finalizeEquipment();
+		}
 
 		// Hide secondary weapon slots for professions that can't swap weapons
 		if ((A.Metadata.Profession[char.charprofession]).isswappable === false)
@@ -5258,14 +5263,19 @@ A = {
 				var traitelm = specline.find(".spz" + trait.slot + "_" + trait.tier + trait.order);
 				traitelm.css({backgroundImage: "url(" + trait.icon + ")"});
 				var traithighlight = "";
+				var traitname = "";
 				var tier = traitelm.attr("data-tier");
 				if (traitassoc[pTraitID] // If the trait present in the character's traits array
 					|| pTraits[tier]) // If the traits array is filled up at least to that "tier" (index)
 				{
 					traitelm.find("em").show(); // Show the connecting line between trait icons
 					traithighlight = "spzActive"; // Brighten the active trait icon
+					if (trait.slot === "Major")
+					{
+						traitname = "<span class='spzMajorName'>" + trait.name + "</span>";
+					}
 				}
-				traitelm.append("<mark class='" + traithighlight + "'>&zwnj;</mark>");
+				traitelm.append(traitname + "<mark class='" + traithighlight + "'>&zwnj;</mark>");
 				// Generate tooltip for trait
 				Q.analyzeTrait(trait, {element: traitelm});
 			};
@@ -7507,7 +7517,7 @@ Q = {
 			{
 				var consumeimg = (det.type === "Food" || det.type === "Utility") ? ("_" + (det.type).toLowerCase()) : "";
 				var consumetypestr = (det.type === "Immediate") ? D.getString("Boost") : D.getString("Nourishment");
-				var consumedurstr = (det.duration_ms > 0) ? (" (" + T.formatTooltipTime(det.duration_ms) + ")") : "";
+				var consumedurstr = (det.duration_ms > 0) ? (" (" + T.formatTooltipTimeMS(det.duration_ms, true) + ")") : "";
 				attrstr += "<img class='itmIcon itmConsumableIcon' src='img/account/item/nourishment" + consumeimg + ".png' /> "
 					+ "<span class='itmGrayed itmConsumableDesc'>" + consumetypestr + consumedurstr + ": " + Q.formatItemDescription(det.description) + "</span><br />";
 			}
@@ -7900,53 +7910,73 @@ Q = {
 		var settings = pOptions || {};
 		var formatFact = function(pFact)
 		{
-			var value = "";
-			var desc = "";
-			var duration = "";
-			var recharge = "";
-			if (pFact.percent !== undefined)
-			{
-				value = pFact.percent + "%";
-			}
-			else if (pFact.value !== undefined)
-			{
-				value = pFact.value;
-			}
-			// Determine the type of fact it is, in this priority order
-			if (pFact.recharge)
-			{
-				
-			}
-			else if (pFact.status)
-			{
-				desc = pFact.status + ": " + pFact.description;
-			}
-			else if (pFact.description)
-			{
-				desc = pFact.description;
-			}
-			else if (pFact.text)
-			{
-				desc = pFact.text;
-			}
+			var text = pFact.text;
+			var type = pFact.type;
+			var value = pFact.value;
+			var attrtarget = (pFact.target !== undefined) ? Q.getAttributeString(pFact.target) : "";
+			var attrsource = (pFact.source !== undefined) ? Q.getAttributeString(pFact.source) : "";
+			var buffconv = (type === "BuffConversion") ? D.getString("GainBasedPercentage").replace("{0}", attrsource).replace("{1}", attrtarget) : "";
+			var icon = "<img class='trtFactIcon' src='" + pFact.icon + "' />";
+			var prefixicon = (pFact.prefix && pFact.prefix.icon) ? "<img class='trtFactIcon' src='" + pFact.prefix.icon + "' />" : "";
+			var desc = pFact.description;
+			var stacks = (pFact.apply_count > 1) ? "<var class='trtStacks'>" + pFact.apply_count + "</var>" : "";
+			var duration = (pFact.duration !== undefined) ? T.formatTooltipTime(pFact.duration) : "";
+			var interval = (pFact.duration !== undefined) ? (pFact.duration + " " + D.getWord("seconds")) : "";
+			var status = pFact.status;
+			var combofield = pFact.field_type;
+			var combofinisher = pFact.finisher_type;
+			var percent = pFact.percent + "%";
+			var hitcount = pFact.hit_count + "x";
+			var distance = pFact.distance;
+			var pretext = icon + text + ": ";
 			
-			return "<span class='trtFactLine'><img class='trtFactIcon' src='" + pFact.icon + "' /> " + desc + "</span>";
+			var facttype = {
+				AttributeAdjust: icon + "+" + value + " " + attrtarget,
+				Buff: stacks + icon + status + " (" + duration + "): " + desc,
+				BuffConversion: icon + buffconv,
+				ComboField: pretext + combofield,
+				ComboFinisher: pretext + combofinisher + " (" + percent + ")",
+				Damage: pretext + hitcount,
+				Distance: pretext + distance,
+				NoData: icon + text,
+				Number: pretext + value,
+				Percent: pretext + percent,
+				PrefixedBuff: icon + prefixicon + status + " (" + duration + "): " + desc,
+				Radius: pretext + distance,
+				Range: pretext + value,
+				Time: pretext + interval,
+				Unblockable: icon + text
+			};
+			
+			if (facttype[type])
+			{
+				return "<span class='trtFactLine'>" + facttype[type] + "</span>";
+			}
+			return "";
 		};
 		
 		var name = "<span class='trtName'>" + pTrait.name + "</span>";
-		var desc = "<span class='trtDesc'>" + U.escapeHTML(pTrait.description) + "</span>";
+		var desc = "<span class='trtDesc'>" + Q.formatItemDescription(pTrait.description) + "</span>";
+		var recharge = "";
 		var facts = "";
 		if (pTrait.facts)
 		{
 			facts += "<aside class='trtFacts'>";
 			pTrait.facts.forEach(function(iFact)
 			{
-				facts += formatFact(iFact);
+				if (iFact.type === "Recharge")
+				{
+					recharge = "<span class='trtRecharge'>" + iFact.value + "<img class='trtRechargeIcon' src='" + iFact.icon + "' /></span>";
+				}
+				else
+				{
+					facts += formatFact(iFact);
+				}
 			});
 			facts += "</aside>";
 		}
-		
 		var html = "<div class='trtTooltip'>"
+			+ recharge
 			+ name
 			+ desc
 			+ facts
@@ -8255,14 +8285,22 @@ D = {
 		s_SoulboundToCharacter: {en: "Soulbound to another character", de: "An einen anderen Charakter seelengebunden", es: "Ligado a otro personaje", fr: "Lié à l&apos;âme d&apos;un autre personnage"},
 		s_Unique: {en: "Unique", de: "Einzigartig", es: "Equipamiento único", fr: "Unique"},
 		s_Transmuted: {en: "Transmuted", de: "Transmutiert", es: "Transmutado", fr: "Transmuté"},
-		s_Defense_Infusion: {en: "Unused Defensive Infusion Slot", de: "Freier Infusionsplatz (Defensiv)", es: "Casilla de infusión defensiva sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Défensive)"},
-		s_Offense_Infusion: {en: "Unused Offensive Infusion Slot", de: "Freier Infusionsplatz (Offensiv)", es: "Casilla de infusión ofensiva sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Offensive)"},
-		s_Utility_Infusion: {en: "Unused Utility Infusion Slot", de: "Freier Infusionsplatz (Hilfe)", es: "Casilla de infusión apoyo sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Utilitaire)"},
-		s_Agony_Infusion: {en: "Unused Agony Infusion Slot", de: "Freier Infusionsplatz (Qual)", es: "Casilla de infusión agonía sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Agonie)"},
-		s_UnusedUpgradeSlot: {en: "Unused Upgrade Slot", de: "Freier Aufwertungsplatz", es: "Casilla para mejoras sin utilizar", fr: "Emplacement d&apos;amélioration inutilisé"},
-		s_DoubleClickToConsume: {en: "Double-click to consume.", de: "Zum Benutzen doppelklicken.", es: "Haz doble clic para consumir.", fr: "Double-cliquez pour utiliser."},
+		s_Defense_Infusion: {en: "Unused Defensive Infusion Slot", de: "Freier Infusionsplatz (Defensiv)",
+			es: "Casilla de infusión defensiva sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Défensive)"},
+		s_Offense_Infusion: {en: "Unused Offensive Infusion Slot", de: "Freier Infusionsplatz (Offensiv)",
+			es: "Casilla de infusión ofensiva sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Offensive)"},
+		s_Utility_Infusion: {en: "Unused Utility Infusion Slot", de: "Freier Infusionsplatz (Hilfe)",
+			es: "Casilla de infusión apoyo sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Utilitaire)"},
+		s_Agony_Infusion: {en: "Unused Agony Infusion Slot", de: "Freier Infusionsplatz (Qual)",
+			es: "Casilla de infusión agonía sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Agonie)"},
+		s_UnusedUpgradeSlot: {en: "Unused Upgrade Slot", de: "Freier Aufwertungsplatz",
+			es: "Casilla para mejoras sin utilizar", fr: "Emplacement d&apos;amélioration inutilisé"},
+		s_DoubleClickToConsume: {en: "Double-click to consume.", de: "Zum Benutzen doppelklicken.",
+			es: "Haz doble clic para consumir.", fr: "Double-cliquez pour utiliser."},
 		s_ExcessiveAlcohol: {en: "Excessive alcohol consumption will result in intoxication.", de: "Übermäßiger Alkoholkonsum führt zu Rauschzuständen.",
-			es: "El consumo excesivo de alcohol provoca embriaguez.", fr: "Consommer trop d&apos;alcool entraîne une ivresse manifeste."}
+			es: "El consumo excesivo de alcohol provoca embriaguez.", fr: "Consommer trop d&apos;alcool entraîne une ivresse manifeste."},
+		s_GainBasedPercentage: {en: "Gain {1} Based on a Percentage of {0}", de: "Erhaltener prozentualer Anteil von {0} auf {1}:",
+			es: "Ganas {1} según tu porcentaje de {0}", fr: "Vous bénéficiez d'une augmentation de {1} de {0}%."}
 	},
 	
 	
@@ -18395,23 +18433,28 @@ T = {
 	 * @param int pMilliseconds
 	 * @returns string.
 	 */
-	formatTooltipTime: function(pMilliseconds)
+	formatTooltipTime: function(pSeconds, pWantSpace)
 	{
-		var sec = ~~(pMilliseconds / T.cMILLISECONDS_IN_SECOND);
+		var sec = pSeconds;
+		var space = (pWantSpace) ? " " : "";
 		var divisors = [T.cSECONDS_IN_MINUTE, T.cSECONDS_IN_HOUR, T.cSECONDS_IN_DAY, T.cSECONDS_IN_YEAR];
 		var units = ["m", "h", "d"];
 		if (sec < T.cSECONDS_IN_MINUTE)
 		{
-			return sec + " " + D.getWord("s");
+			return sec + space + D.getWord("s");
 		}
 		for (var i = 0; i < units.length; i++)
 		{
 			if (sec < divisors[i+1])
 			{
-				return ~~(sec / divisors[i]) + " " + D.getWord(units[i]);
+				return ~~(sec / divisors[i]) + space + D.getWord(units[i]);
 			}
 		}
 		return "";
+	},
+	formatTooltipTimeMS: function(pMilliseconds, pWantSpace)
+	{
+		return T.formatTooltipTime(~~(pMilliseconds / T.cMILLISECONDS_IN_SECOND), pWantSpace);
 	},
 	
 	/*

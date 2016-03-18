@@ -295,10 +295,19 @@ img {
 .trtTooltip {
 	max-width: 380px;
 	font-family: Trebuchet MS, Menomonia;
-	font-size: 17px;
+	font-size: 16px;
 	font-weight: normal;
 	line-height: 18px;
 	color: white;
+}
+.trtRecharge {
+	float: right;
+	font-size: 17px;
+}
+.trtRechargeIcon {
+	width: 20px; height: 20px;
+	margin-top: -2px;
+	margin-left: 2px;
 }
 .trtName {
 	display: block;
@@ -309,7 +318,7 @@ img {
 }
 .trtDesc {
 	display: block;
-	margin-bottom: 12px;
+	margin-bottom: 10px;
 }
 .trtFacts {
 	display: block;
@@ -317,6 +326,21 @@ img {
 }
 .trtFactIcon {
 	width: 38px; height: 38px;
+}
+.trtFactLine {
+	display: block;
+}
+.trtStacks {
+	position: absolute;
+	margin-top: 24px;
+	margin-left: 28px;
+	font-size: 18px;
+	color: white;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
 }
 
 /*

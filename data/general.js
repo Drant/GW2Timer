@@ -1124,17 +1124,17 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Plush Ram Backpack Set",
-		id: "68611",
-		price: 240,
-		discount: 300,
+		name: "Marjory's Axe Skin",
+		id: "49015",
+		price: 480,
+		discount: 600,
 		col: 0
 	},
 	{
-		name: "Item Booster",
-		id: "20003",
-		price: 80,
-		discount: [[1, 80, 100], [5, 360, 450], [20, 1280, 1600]],
+		name: "Marjory's Dagger Skin",
+		id: "49018",
+		price: 480,
+		discount: 600,
 		col: 0
 	},
 	{
