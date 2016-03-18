@@ -236,9 +236,9 @@ img {
 }
 
 /*
- * Style for tooltip for item details.
+ * Style item details tooltip.
  */
-.itmContainer {
+.itmTooltip {
 	max-width: 380px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 16px;
@@ -288,6 +288,35 @@ img {
 	display: inline-block;
 	width: 300px;
 	line-height: 16px;
+}
+/*
+ * Style trait details tooltips.
+ */
+.trtTooltip {
+	max-width: 380px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 17px;
+	font-weight: normal;
+	line-height: 18px;
+	color: white;
+}
+.trtName {
+	display: block;
+	margin-bottom: 6px;
+	font-family: Menomonia;
+	font-size: 18px;
+	color: #ffcc77;
+}
+.trtDesc {
+	display: block;
+	margin-bottom: 12px;
+}
+.trtFacts {
+	display: block;
+	color: #aaaaaa;
+}
+.trtFactIcon {
+	width: 38px; height: 38px;
 }
 
 /*
@@ -928,8 +957,13 @@ textarea.jsCopyCode {
 	color: white;
 }
 .dsbSalePriceOld {
-	color: #b3a082;
 	text-decoration: line-through;
+	color: #b3a082;
+}
+.dsbSalePercent {
+	font-family: Trebuchet MS, Menomonia;
+	font-weight: bold;
+	color: #fcb84d;
 }
 .dsbSaleVideo {
 	display: none;
@@ -2452,13 +2486,15 @@ paletteText {
 	color: #ffddcc; /* Salmon chat map */
 	color: #ff8844; /* Orange event name in panel */
 	color: #dd8800; /* Orange AP */
+	color: #fcb84d; /* Orange gem store notes */
 	color: #ffbb44; /* Gold guild chat name */
-	color: #ffcc77; /* Gold notice/waypoint */
+	color: #ffcc77; /* Gold highlight/notice/waypoint */
 	color: #ffeebb; /* Cream window and UI title */
 	color: #ffeeaa; /* Cream guild chat and item count */
 	color: #ffaa22; /* Yellow orange chain title in event panel */
 	color: #ffff00; /* Yellow chat squad name and game notices */
 	color: #ffff66; /* Yellow chat squad */
+	color: #aaaaaa; /* Gray tooltip */
 	color: #44dd44; /* Green laurel */
 	color: #009900; /* Green attributes */
 	color: #bbcc77; /* Green time */

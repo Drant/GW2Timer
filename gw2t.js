@@ -5066,30 +5066,30 @@ A = {
 			{
 				return;
 			}
-			var traitwindow = $("<div class='trtWindow'>"
-				+ "<aside class='trtSwitchContainer'><span class='trtSwitchWrapper'>"
-					+ "<img class='trtBuildIcon' src='img/account/menu/build.png' />"
+			var traitwindow = $("<div class='spzWindow'>"
+				+ "<aside class='spzSwitchContainer'><span class='spzSwitchWrapper'>"
+					+ "<img class='spzBuildIcon' src='img/account/menu/build.png' />"
 					+ "<img src='img/account/view.png' />"
-					+ "<img class='trtSwitch curClick' data-assoc='PVE' src='img/ui/pages/map.png' />"
-					+ "<img class='trtSwitch curClick' data-assoc='WVW' src='img/ui/pages/wvw.png' />"
-					+ "<img class='trtSwitch curClick' data-assoc='PVP' src='img/account/menu/pvp.png' />"
+					+ "<img class='spzSwitch curClick' data-assoc='PVE' src='img/ui/pages/map.png' />"
+					+ "<img class='spzSwitch curClick' data-assoc='WVW' src='img/ui/pages/wvw.png' />"
+					+ "<img class='spzSwitch curClick' data-assoc='PVP' src='img/account/menu/pvp.png' />"
 				+ "</span></aside>"
-				+ "<div class='trtContainer'>"
-					+ "<div class='trtPanel trtPanel_PVE'></div>"
-					+ "<div class='trtPanel trtPanel_WVW'></div>"
-					+ "<div class='trtPanel trtPanel_PVP'></div>"
+				+ "<div class='spzContainer'>"
+					+ "<div class='spzPanel spzPanel_PVE'></div>"
+					+ "<div class='spzPanel spzPanel_WVW'></div>"
+					+ "<div class='spzPanel spzPanel_PVP'></div>"
 				+ "</div>"
 			+ "</div>").appendTo(subconbuild);
 			// Bind game mode buttons to switch to appropriate specializations panel
-			traitwindow.find(".trtSwitch").each(function()
+			traitwindow.find(".spzSwitch").each(function()
 			{
 				$(this).click(function()
 				{
-					traitwindow.find(".trtSwitch").removeClass("trtSwitchFocused");
-					$(this).addClass("trtSwitchFocused");
+					traitwindow.find(".spzSwitch").removeClass("spzSwitchFocused");
+					$(this).addClass("spzSwitchFocused");
 					var buildmode = $(this).attr("data-assoc");
-					var buildpanel = traitwindow.find(".trtPanel_" + buildmode);
-					traitwindow.find(".trtPanel").hide();
+					var buildpanel = traitwindow.find(".spzPanel_" + buildmode);
+					traitwindow.find(".spzPanel").hide();
 					buildpanel.show();
 					A.generateTraits(spec[(buildmode.toLowerCase())], buildpanel);
 				});
@@ -5221,33 +5221,33 @@ A = {
 		
 		var insertSpecialization = function(pSpecID, pTraits)
 		{
-			var specline = $("<aside class='trtLine'><span class='trtLineBackground'><span class='trtLineForeground'>"
-				+ "<span class='trtSpecSide'><var class='trtSpecSideIcon'></var></span>"
-				+ "<span class='trtSpecColumn'><var class='trtSpecName'></var></span>"
-				+ "<span class='trtColumn'>"
-					+ "<var class='trtMinor trtMinor_10' data-tier='0'><em class='trtCon_01'></em></var>"
+			var specline = $("<aside class='spzLine'><span class='spzLineBackground'><span class='spzLineForeground'>"
+				+ "<span class='spzSpecSide'><var class='spzSpecSideIcon'></var></span>"
+				+ "<span class='spzSpecColumn'><var class='spzSpecName'></var></span>"
+				+ "<span class='spzColumn'>"
+					+ "<var class='spzMinor spzMinor_10' data-tier='0'><em class='spzCon_01'></em></var>"
 				+ "</span>"
-				+ "<span class='trtColumn'>"
-					+ "<var class='trtMajor_10'><em class='trtCon_10L'></em><em class='trtCon_10R'></em></var><br />"
-					+ "<var class='trtMajor_11'><em class='trtCon_11L'></em><em class='trtCon_11R'></em></var><br />"
-					+ "<var class='trtMajor_12'><em class='trtCon_12L'></em><em class='trtCon_12R'></em></var><br />"
+				+ "<span class='spzColumn'>"
+					+ "<var class='spzMajor_10'><em class='spzCon_10L'></em><em class='spzCon_10R'></em></var><br />"
+					+ "<var class='spzMajor_11'><em class='spzCon_11L'></em><em class='spzCon_11R'></em></var><br />"
+					+ "<var class='spzMajor_12'><em class='spzCon_12L'></em><em class='spzCon_12R'></em></var><br />"
 				+ "</span>"
-				+ "<span class='trtColumn'>"
-					+ "<var class='trtMinor trtMinor_20' data-tier='1'></var>"
+				+ "<span class='spzColumn'>"
+					+ "<var class='spzMinor spzMinor_20' data-tier='1'></var>"
 					+ "</var>"
 				+ "</span>"
-				+ "<span class='trtColumn'>"
-					+ "<var class='trtMajor_20'><em class='trtCon_20L'></em><em class='trtCon_20R'></em></var><br />"
-					+ "<var class='trtMajor_21'><em class='trtCon_21L'></em><em class='trtCon_21R'></em></var><br />"
-					+ "<var class='trtMajor_22'><em class='trtCon_22L'></em><em class='trtCon_22R'></em></var><br />"
+				+ "<span class='spzColumn'>"
+					+ "<var class='spzMajor_20'><em class='spzCon_20L'></em><em class='spzCon_20R'></em></var><br />"
+					+ "<var class='spzMajor_21'><em class='spzCon_21L'></em><em class='spzCon_21R'></em></var><br />"
+					+ "<var class='spzMajor_22'><em class='spzCon_22L'></em><em class='spzCon_22R'></em></var><br />"
 				+ "</span>"
-				+ "<span class='trtColumn'>"
-					+ "<var class='trtMinor trtMinor_30' data-tier='2'></var>"
+				+ "<span class='spzColumn'>"
+					+ "<var class='spzMinor spzMinor_30' data-tier='2'></var>"
 				+ "</span>"
-				+ "<span class='trtColumn'>"
-					+ "<var class='trtMajor_30'><em class='trtCon_30L'></em></var><br />"
-					+ "<var class='trtMajor_31'><em class='trtCon_31L'></em></var><br />"
-					+ "<var class='trtMajor_32'><em class='trtCon_32L'></em></var><br />"
+				+ "<span class='spzColumn'>"
+					+ "<var class='spzMajor_30'><em class='spzCon_30L'></em></var><br />"
+					+ "<var class='spzMajor_31'><em class='spzCon_31L'></em></var><br />"
+					+ "<var class='spzMajor_32'><em class='spzCon_32L'></em></var><br />"
 				+ "</span>"
 			+ "</span></span></aside>").appendTo(pContainer);
 			specline.find("img").attr("src", "img/ui/placeholder.png");
@@ -5255,28 +5255,28 @@ A = {
 			var formatTraitIcon = function(pTraitID)
 			{
 				var trait = A.Data.Traits[pTraitID];
-				specline.find(".trt" + trait.slot + "_" + trait.tier + trait.order).each(function()
+				var traitelm = specline.find(".spz" + trait.slot + "_" + trait.tier + trait.order);
+				traitelm.css({backgroundImage: "url(" + trait.icon + ")"});
+				var traithighlight = "";
+				var tier = traitelm.attr("data-tier");
+				if (traitassoc[pTraitID] // If the trait present in the character's traits array
+					|| pTraits[tier]) // If the traits array is filled up at least to that "tier" (index)
 				{
-					$(this).css({backgroundImage: "url(" + trait.icon + ")"});
-					var traithighlight = "";
-					var tier = $(this).attr("data-tier");
-					if (traitassoc[pTraitID] // If the trait present in the character's traits array
-						|| pTraits[tier]) // If the traits array is filled up at least to that "tier" (index)
-					{
-						$(this).find("em").show(); // Show the connecting line between trait icons
-						traithighlight = "trtActive"; // Brighten the active trait icon
-					}
-					$(this).append("<mark class='" + traithighlight + "'>&zwnj;</mark>");
-				});
+					traitelm.find("em").show(); // Show the connecting line between trait icons
+					traithighlight = "spzActive"; // Brighten the active trait icon
+				}
+				traitelm.append("<mark class='" + traithighlight + "'>&zwnj;</mark>");
+				// Generate tooltip for trait
+				Q.analyzeTrait(trait, {element: traitelm});
 			};
 			var formatSpecLine = function()
 			{
 				var spec = A.Data.Specializations[pSpecID];
 				specline.css({backgroundImage: "url(" + spec.background + ")"});
-				specline.find(".trtSpecName").text(spec.name);
+				specline.find(".spzSpecName").text(spec.name);
 				if (spec.elite)
 				{
-					specline.find(".trtLineBackground").addClass("trtLineBackgroundElite");
+					specline.find(".spzLineBackground").addClass("spzLineBackgroundElite");
 				}
 				
 				var traitids = spec.minor_traits.concat(spec.major_traits);
@@ -6963,7 +6963,7 @@ E = {
 };
 
 /* =============================================================================
- * @@Quantity items and attributes, to be initialized by the Account page
+ * @@Quantity items, attributes, traits, to be initialized by the Account page
  * ========================================================================== */
 Q = {
 	
@@ -7085,11 +7085,12 @@ Q = {
 			// Special case if summing for a rune
 			if (pRuneSets && pRuneSets[pItem.id])
 			{
+				// Don't re-sum if already did
 				if (pRuneSets[pItem.id].issummed === true)
 				{
 					return;
 				}
-				runepieces = pRuneSets[pItem.id].value;
+				runepieces = pRuneSets[pItem.id].numslotted;
 				length = runepieces;
 			}
 			
@@ -7269,11 +7270,11 @@ Q = {
 					if (obj[runeid] === undefined)
 					{
 						obj[runeid] = {
-							value: 0,
+							numslotted: 0,
 							issummed: false // Whether the rune's attributes (if it is equipped) have been summed yet
 						};
 					}
-					obj[runeid].value = obj[runeid].value + 1;
+					obj[runeid].numslotted = obj[runeid].numslotted + 1;
 					armorcount++;
 				}
 				if (armorcount === A.Equipment.NumArmorSlots)
@@ -7298,7 +7299,7 @@ Q = {
 		var det = pItem.details;
 		var runeith = 0;
 		var runemax = Q.RunePieces[pItem.rarity];
-		var runepieces = (pRuneSets && pRuneSets[pItem.id]) ? pRuneSets[pItem.id].value : null;
+		var runepieces = (pRuneSets && pRuneSets[pItem.id]) ? pRuneSets[pItem.id].numslotted : null;
 		if (typeof pRuneSets === "number")
 		{
 			runepieces = pRuneSets;
@@ -7368,7 +7369,7 @@ Q = {
 	 * Generates item tooltip HTML, compiles attributes, and retrieves linked
 	 * upgrades and skins if available.
 	 * @param object pItem details retrieved from API.
-	 * @objparam jqobject pElement to bind tooltip.
+	 * @objparam jqobject element to bind tooltip.
 	 * @objparam int quantity if it is a stack of these items.
 	 * @objparam intarray item IDs upgrades like sigils, runes, or gems.
 	 * @objparam intarray item IDs of infusions.
@@ -7735,7 +7736,7 @@ Q = {
 			{
 				return;
 			}
-			var html = "<div class='itmContainer'>"
+			var html = "<div class='itmTooltip'>"
 				+ namestr
 				+ damagestr
 				+ defensestr
@@ -7821,7 +7822,17 @@ Q = {
 					var upgdesc = "";
 					if (iData.details.type === "Rune")
 					{
-						upgdesc = Q.getItemRune(iData, ((settings.runesets) ? settings.runesets : 0));
+						var runepieces = 0;
+						if (det.type === "HelmAquatic")
+						{
+							// Count the rune in the aquatic helm for its own slotted description
+							runepieces = (settings.runesets && settings.runesets[iData.id]) ? (1 + settings.runesets[iData.id].numslotted) : 1;
+						}
+						else if (settings.runesets)
+						{
+							runepieces = settings.runesets;
+						}
+						upgdesc = Q.getItemRune(iData, runepieces);
 						if (attrobj)
 						{
 							Q.sumItemAttribute(attrobj, iData, settings.runesets);
@@ -7878,6 +7889,76 @@ Q = {
 			finalizeTooltip();
 		}
 	},
+	
+	/*
+	 * Generates trait tooltip HTML.
+	 * @param object pTrait details retrieved from API.
+	 * @objparam jqobject element to bind tooltip.
+	 */
+	analyzeTrait: function(pTrait, pOptions)
+	{
+		var settings = pOptions || {};
+		var formatFact = function(pFact)
+		{
+			var value = "";
+			var desc = "";
+			var duration = "";
+			var recharge = "";
+			if (pFact.percent !== undefined)
+			{
+				value = pFact.percent + "%";
+			}
+			else if (pFact.value !== undefined)
+			{
+				value = pFact.value;
+			}
+			// Determine the type of fact it is, in this priority order
+			if (pFact.recharge)
+			{
+				
+			}
+			else if (pFact.status)
+			{
+				desc = pFact.status + ": " + pFact.description;
+			}
+			else if (pFact.description)
+			{
+				desc = pFact.description;
+			}
+			else if (pFact.text)
+			{
+				desc = pFact.text;
+			}
+			
+			return "<span class='trtFactLine'><img class='trtFactIcon' src='" + pFact.icon + "' /> " + desc + "</span>";
+		};
+		
+		var name = "<span class='trtName'>" + pTrait.name + "</span>";
+		var desc = "<span class='trtDesc'>" + U.escapeHTML(pTrait.description) + "</span>";
+		var facts = "";
+		if (pTrait.facts)
+		{
+			facts += "<aside class='trtFacts'>";
+			pTrait.facts.forEach(function(iFact)
+			{
+				facts += formatFact(iFact);
+			});
+			facts += "</aside>";
+		}
+		
+		var html = "<div class='trtTooltip'>"
+			+ name
+			+ desc
+			+ facts
+		+ "</div>";
+		
+		if (settings.element)
+		{
+			var elm = $(settings.element);
+			elm.attr("title", html);
+			I.qTip.init(elm);
+		}
+	}
 };
 
 /* =============================================================================
@@ -18932,6 +19013,16 @@ B = {
 	 */
 	generateDashboardSale: function()
 	{
+		var getPercentOffString = function(pPriceNew, pPriceOld)
+		{
+			return "<span class='dsbSalePercent'>-" + U.convertDecimalToPercent(1 - (pPriceNew / pPriceOld), 0) + "</span> "
+		};
+		var getOldPriceString = function(pPriceNew, pPriceOld, pPriceOldBulk)
+		{
+			var oldpricestr = (pPriceOldBulk === undefined) ? pPriceOld : pPriceOldBulk;
+			return getPercentOffString(pPriceNew, pPriceOld) + "<span class='dsbSalePriceOld'>" + oldpricestr + "</span> ";
+		};
+		
 		var animationspeed = 200;
 		var table = $("#dsbSaleTable");
 		
@@ -18960,38 +19051,45 @@ B = {
 					var gemstr = "<ins class='s16 s16_gem'></ins>";
 					for (var i = 0; i < B.DashboardSale.Items.length; i++)
 					{
+						// Initialize variables
 						var item = B.DashboardSale.Items[i];
 						var wiki = U.getWikiSearchLink(item.name);
 						var video = U.getYouTubeLink(item.name);
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
-						var oldprice = "";
+						
+						var oldprice = null;
+						// Old price also includes percent off by dividing the new with the old
 						oldprice = (O.isInteger(item.discount)) ? item.discount : oldprice;
 						oldprice = (Array.isArray(item.discount) && item.discount[0].length > 2) ? ((item.discount[0])[2]) : oldprice;
-						oldprice = (oldprice !== "") ? ("<span class='dsbSalePriceOld'>" + oldprice + "</span> ") : oldprice;
-						var discounts = "";
+						var oldpricestr = (oldprice !== null) ? getOldPriceString(item.price, oldprice) : "";
+						// Write bulk discount hover information if available
+						var discountstr = "";
 						if (item.discount && Array.isArray(item.discount))
 						{
-							discounts += "<span class='dsbDiscount'>";
+							discountstr += "<span class='dsbDiscount'>";
 							for (var ii = 0; ii < item.discount.length; ii++)
 							{
 								var disc = item.discount[ii];
-								var oldpriceinner = (disc.length > 2) ? ("<span class='dsbSalePriceOld'>" + disc[2] + "</span> ") : "";
+								var priceper = Math.ceil(disc[1] / disc[0]);
+								// Percent off for bulk discount comes the price per item in the bulk--divided by the old price for a single (non-bulk) item
+								var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (item.discount[0])[2], disc[2]) : getPercentOffString(priceper, (item.discount[0])[1]);
 								var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
-								discounts += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
+								discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
 									+ " ≈ " + E.convertGemToCoin(disc[1]) + "<br />";
 							}
-							discounts += "</span>";
+							discountstr += "</span>";
 						}
+						// Format the presentation of this item
 						var dataprop = (item.id) ? ("data-sale='" + item.id + "'") : "";
 						var imgsrc = (item.img) ? item.img : "img/ui/placeholder.png";
 						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
 							+"<a" + U.convertExternalAnchor(wiki) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
 							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
-							+ oldprice
+							+ oldpricestr
 							+ "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
 							+ "<span class='dsbSalePriceCoin'> ≈ " + E.convertGemToCoin(item.price) + "</span>"
 							+ "<span class='dsbSalePriceMoney'> = " + E.convertGemToMoney(item.price) + "<ins class='s16 s16_money'></ins></span>"
-							+ discounts
+							+ discountstr
 						+ "</div>");
 					}
 				}

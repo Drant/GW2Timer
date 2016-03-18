@@ -280,7 +280,7 @@ var GW2T_ATTRIBUTE_DATA = {
 		13.4, 13.8, 14.2, 14.6, 15.0, 15.4, 15.8, 16.2, 16.6, 17.0,
 		17.4, 17.8, 18.2, 18.6, 19.0, 19.4, 19.8, 20.2, 20.6, 21.0 // Divide by 21 at level 80
 	],
-	SecondaryDivisorRatio: 7/5,
+	SecondaryDivisorRatio: 7/5, // Divide the precision divisor by this ratio to get the secondary attributes' divisor
 	HealthGrowth: { // Additional health points per level, group corresponds to profession health property
 		high: {
 			"19": 28,  //  1-19
@@ -307,7 +307,7 @@ var GW2T_ATTRIBUTE_DATA = {
 	Constants: {
 		BASE_CRITICALCHANCE: 4, // percentage
 		BASE_CRITICALDAMAGE: 150, // percentage
-		VITALITY_IN_HEALTH: 0.1, // For 1 HP
+		VITALITY_IN_HEALTH: 0.1 // For 1 HP
 	},
 	/*
 	 * Standardize the attribute names in order to parse attributes and buff
