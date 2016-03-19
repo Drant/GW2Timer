@@ -1124,17 +1124,10 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Marjory's Axe Skin",
-		id: "49015",
-		price: 480,
-		discount: 600,
-		col: 0
-	},
-	{
-		name: "Marjory's Dagger Skin",
-		id: "49018",
-		price: 480,
-		discount: 600,
+		name: "Black Lion Chest Key",
+		id: "19980",
+		price: 100,
+		discount: [[1, 100, 125], [5, 359, 450], [25, 1680, 2100]],
 		col: 0
 	},
 	{

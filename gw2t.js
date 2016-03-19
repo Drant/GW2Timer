@@ -2714,6 +2714,10 @@ U = {
 			{
 				P.printNodes(P.sortCoordinates(M.parseCoordinatesMulti(args[1])));
 			}},
+			latlng: {usage: "Converts an array of LatLng's to standard coordinates. <em>Parameters: arr_latlngs</em>", f: function()
+			{
+				that.convertLatLngs(JSON.parse(argstr));
+			}},
 			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, int_limit (optional), str_querystring (optional)</em>", f: function()
 			{
 				U.printAPI(args[1], args[2], args[3]);
@@ -7038,12 +7042,16 @@ Q = {
 		var type = pItem.type;
 		var str = "";
 		// These top level types have overriding priority
-		if (type === "Back"
-			|| type === "Consumable"
-			|| type === "Container"
-			|| type === "CraftingMaterial"
-			|| type === "Trophy"
-			|| type === "MiniPet")
+		var validtypes = {
+			Back: 1,
+			Consumable: 1,
+			Container: 1,
+			CraftingMaterial: 1,
+			Gizmo: 1,
+			Trophy: 1,
+			MiniPet: 1
+		};
+		if (validtypes[type])
 		{
 			str = "<br />" + D.getString(type);
 		}
@@ -7906,13 +7914,12 @@ Q = {
 	},
 	
 	/*
-	 * Generates trait tooltip HTML.
+	 * Formats a trait or skill object to be used in tooltips.
 	 * @param object pTrait details retrieved from API.
-	 * @objparam jqobject element to bind tooltip.
+	 * @return string content for tooltip window.
 	 */
-	analyzeTrait: function(pTrait, pOptions)
+	formatSkillTrait: function(pTrait)
 	{
-		var settings = pOptions || {};
 		var formatFact = function(pFact)
 		{
 			var text = pFact.text;
@@ -7922,11 +7929,11 @@ Q = {
 			var attrsource = (pFact.source !== undefined) ? Q.getAttributeString(pFact.source) : "";
 			var buffconv = (type === "BuffConversion") ? D.getString("GainBasedPercentage").replace("{0}", attrsource).replace("{1}", attrtarget) : "";
 			var icon = "<img class='trtFactIcon' src='" + pFact.icon + "' />";
-			var prefixicon = (pFact.prefix && pFact.prefix.icon) ? "<var class='trtFactPrefixIcons'>" + icon + "<img class='trtFactIcon' src='" + pFact.prefix.icon + "' /></var>" : "";
+			var prefixicon = (pFact.prefix && pFact.prefix.icon) ? "<img class='trtFactIcon' src='" + pFact.prefix.icon + "' />" : "";
 			var desc = pFact.description;
 			var stacks = (pFact.apply_count > 1) ? "<var class='trtStacks'>" + pFact.apply_count + "</var>" : "";
-			var duration = (pFact.duration !== undefined) ? T.formatTooltipTime(pFact.duration) : "";
-			var interval = (pFact.duration !== undefined) ? (pFact.duration + " " + D.getWord("seconds")) : "";
+			var duration = (pFact.duration !== undefined) ? (pFact.duration + " " + D.getWord("seconds")) : "";
+			var durationabbr = (pFact.duration !== undefined) ? " (" + T.formatTooltipTime(pFact.duration) + ")" : "";
 			var status = pFact.status;
 			var combofield = pFact.field_type;
 			var combofinisher = pFact.finisher_type;
@@ -7943,7 +7950,7 @@ Q = {
 				AttributeAdjust: function(){
 					return wrap(icon, "+" + value + " " + attrtarget);},
 				Buff: function(){
-					return wrap(stacks + icon, status + " (" + duration + "): " + desc);},
+					return wrap(stacks + icon, status + durationabbr + ": " + desc);},
 				BuffConversion: function(){
 					return wrap(icon, buffconv);},
 				ComboField: function(){
@@ -7954,6 +7961,12 @@ Q = {
 					return wrap(icon, text + ": " + hitcount);},
 				Distance: function(){
 					return wrap(icon, text + ": " + distance);},
+				Duration: function(){
+					return wrap(icon, text + ": " + duration);},
+				Heal: function(){
+					return wrap(icon, text + ": " + hitcount);},
+				HealingAdjust: function(){
+					return wrap(icon, text + ": " + hitcount);},
 				NoData: function(){
 					return wrap(icon, text);},
 				Number: function(){
@@ -7961,13 +7974,13 @@ Q = {
 				Percent: function(){
 					return wrap(icon, text + ": " + percent);},
 				PrefixedBuff: function(){
-					return wrap(prefixicon, status + " (" + duration + "): " + desc);},
+					return wrap(icon + prefixicon, status + durationabbr + ": " + desc);},
 				Radius: function(){
 					return wrap(icon, text + ": " + distance);},
 				Range: function(){
 					return wrap(icon, text + ": " + value);},
 				Time: function(){
-					return wrap(icon, text + ": " + interval);},
+					return wrap(icon, text + ": " + duration);},
 				Unblockable: function(){
 					return wrap(icon, text);}
 			};
@@ -7983,7 +7996,8 @@ Q = {
 		var desc = "<span class='trtDesc'>" + Q.formatItemDescription(pTrait.description) + "</span>";
 		var recharge = "";
 		var facts = "";
-		if (pTrait.facts)
+		var factsinner = "";
+		if (pTrait.facts && pTrait.facts.length > 0)
 		{
 			facts += "<aside class='trtFacts'>";
 			pTrait.facts.forEach(function(iFact)
@@ -7994,19 +8008,59 @@ Q = {
 				}
 				else
 				{
-					facts += formatFact(iFact);
+					factsinner += formatFact(iFact);
 				}
 			});
-			facts += "</aside>";
+			// Don't include facts element if no fact lines were added
+			facts = (factsinner === "") ? "" : (facts + factsinner + "</aside>");
 		}
-		var html = "<div class='trtTooltipBorder'>" + I.Symbol.Filler + "</div>"
-		+ "<div class='trtTooltip'>"
-			+ recharge
-			+ name
-			+ desc
-			+ facts
-		+ "</div>";
 		
+		return recharge + name + desc + facts;
+	},
+	
+	/*
+	 * Generates trait tooltip HTML.
+	 * @param object pTrait details retrieved from API.
+	 * @objparam jqobject element to bind tooltip.
+	 */
+	analyzeTrait: function(pTrait, pOptions)
+	{
+		var settings = pOptions || {};
+		var content = Q.formatSkillTrait(pTrait);
+		
+		// Calculate an extra tooltip's height by actually making it then measuring its height
+		var computeOffset = function(pContent)
+		{
+			var nullcon = $("#itemNull").empty();
+			var height = $(pContent).appendTo(nullcon).height();
+			nullcon.empty(); // Served its purpose, so delete the temporary element
+			return height;
+		};
+		
+		// Include additional tooltips if trait has a skills array
+		var skilltooltips = "";
+		var offsetcumulative = 6;
+		var offsetbetween = 20;
+		if (pTrait.skills)
+		{
+			pTrait.skills.forEach(function(iSkill)
+			{
+				/*
+				 * A trait may contain skill tooltips above its own tooltip. To
+				 * position them like in game, the vertical offsets need to be
+				 * computed so the extra tooltips float by absolute position,
+				 * even though all the tooltips share a single container.
+				 */
+				var dummytooltip = "<div class='qTip'><div class='trtTooltip'>" + Q.formatSkillTrait(iSkill) + "</div></div>";
+				offsetcumulative += computeOffset(dummytooltip) + offsetbetween;
+				// Write the actual extra skill tooltip
+				skilltooltips += "<div class='trtTooltip trtTooltipExtra' style='margin-top:" + "-" + offsetcumulative + "px" + "'>"
+					+ Q.formatSkillTrait(iSkill) + "</div>";
+			});
+		}
+		
+		var html = "<div class='trtTooltipBorder'>" + I.Symbol.Filler + "</div>"
+			+ skilltooltips + "<div class='trtTooltip'>" + content + "</div>";
 		if (settings.element)
 		{
 			var elm = $(settings.element);
@@ -8234,6 +8288,7 @@ D = {
 		s_Consumable: {en: "Consumable", de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable"},
 		s_Container: {en: "Container", de: "Behälter", es: "Contenedor", fr: "Conteneur"},
 		s_CraftingMaterial: {en: "Crafting Material", de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d&apos;artisanat"},
+		s_Gizmo: {en: "Gizmo", de: "Dingsbums", es: "Aparato", fr: "Machin"},
 		s_MiniPet: {en: "Miniature", de: "Miniatur", es: "Miniatura", fr: "Miniature"},
 		s_Nourishment: {en: "Nourishment", de: "Verbrauchsstoff", es: "Consumible", fr: "Produit consommable"},
 		s_Boost: {en: "Boost", de: "Verstärker", es: "Potenciador", fr: "Augmentation"},
@@ -12597,8 +12652,11 @@ M = {
 	 */
 	convertLatLngs: function(pArray)
 	{
-		var coords = this.convertLCtoGCMulti(pArray);
-		P.printCoordinates(coords);
+		if (Array.isArray(pArray))
+		{
+			var coords = this.convertLCtoGCMulti(pArray);
+			P.printCoordinates(coords);
+		}
 	},
 	
 	/*
