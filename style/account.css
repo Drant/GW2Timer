@@ -505,7 +505,7 @@ a.chrWalletLink {
 .acc_wallet_29 { background-position: -800px 0; }
 .acc_wallet_30 { background-position: -832px 0; }
 
-.chrSeparator {
+.eqpCharSeparator {
 	margin-top: 32px;
 	margin-bottom: 32px;
 	width: 100%;
@@ -513,7 +513,7 @@ a.chrWalletLink {
 	border-bottom-right-radius: 50%;
 	border-bottom-left-radius: 50%;
 }
-.chrSepName {
+.eqpCharName {
 	margin-left: 32px;
 	vertical-align: middle;
 	line-height: normal;
@@ -526,11 +526,11 @@ a.chrWalletLink {
 		1px 0px 6px #000,
 		-1px 0px 6px #000;
 }
-.chrSepPortrait {
+.eqpCharPortrait {
 	border-radius: 50%;
 	box-shadow: 0px 0px 10px #c8b896;
 }
-.chrSepProfession {
+.eqpCharProfession {
 	position: absolute;
 	margin-top: 32px;
 	margin-left: -32px;
@@ -976,6 +976,85 @@ a.chrWalletLink {
 }
 .spzMinor, .spzMinor mark {
 	border-radius: 50%;
+}
+
+/*
+ * Style trait details tooltips.
+ */
+.trtTooltip {
+	max-width: 380px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 18px;
+	color: white;
+}
+.trtTooltipBorder { /* A rectangle element that superimposes over the tooltip's borders */
+	display: block;
+	position: absolute;
+	width: 100%; height: 100%;
+	margin-top: -6px;
+	margin-left: -8px;
+	border: 2px solid rgba(87, 129, 170, 0.7);
+	border-radius: 2px;
+}
+.trtRecharge {
+	float: right;
+	font-size: 17px;
+}
+.trtRechargeIcon {
+	width: 20px; height: 20px;
+	margin-top: -2px;
+	margin-left: 2px;
+}
+.trtName {
+	display: block;
+	font-family: Menomonia;
+	font-size: 18px;
+	color: #ffcc77;
+}
+.trtDesc {
+	display: block;
+	margin-top: 6px;
+}
+.trtFacts {
+	display: block;
+	margin-top: 10px;
+	color: #aaaaaa;
+}
+.trtFactLine {
+	display: table;
+}
+.trtFactIcons {
+	display: block;
+	margin-right: 1px;
+}
+.trtFactPrefixIcons {
+	display: block;
+	min-width: 76px; /* Fits two icons */
+	background: red;
+}
+.trtFactIcon {
+	display: block;
+	float: left;
+	width: 38px; height: 38px;
+}
+.trtFactText {
+	display: table-cell;
+	vertical-align: middle;
+}
+.trtStacks {
+	display: block;
+	position: absolute;
+	margin-top: 24px;
+	margin-left: 28px;
+	font-size: 18px;
+	color: white;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
 }
 
 /* Connection line between trait icons */

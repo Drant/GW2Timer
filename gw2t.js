@@ -2356,8 +2356,7 @@ X = {
 	{
 		// Generate initial set of checkboxes and textboxes
 		var NUM_CHECKBOXES = 12;
-		// &zwnj; is an invisible character, used because empty label appears without a right border in Chrome
-		var checkboxhtml = "<li><label><input type='checkbox' />&zwnj;</label><input type='text' /></li>";
+		var checkboxhtml = "<li><label><input type='checkbox' />" + I.Symbol.Filler + "</label><input type='text' /></li>";
 		for (var i = 0; i < NUM_CHECKBOXES; i++)
 		{
 			$("#chlCustomListDaily").append(checkboxhtml);
@@ -4895,10 +4894,10 @@ A = {
 				value = currency.value;
 				switch (currency.id)
 				{
-					case 1: amountstr = E.createCoinString(amount, true); break;
-					case 2: amountstr = E.createKarmaString(amount, true); break;
-					case 3: amountstr = E.createLaurelString(amount, true); break;
-					case 4: amountstr = E.createGemString(amount, true); break;
+					case 1: amountstr = E.formatCoinString(amount, true); break;
+					case 2: amountstr = E.formatKarmaString(amount, true); break;
+					case 3: amountstr = E.formatLaurelString(amount, true); break;
+					case 4: amountstr = E.formatGemString(amount, true); break;
 				}
 
 				var percent = (value / max) * T.cPERCENT_100;
@@ -4939,9 +4938,9 @@ A = {
 	 */
 	formatCharacterSeparator: function(pCharacter)
 	{
-		return "<div class='chrSeparator'><img class='chrSepPortrait' src='" + pCharacter.charportrait + "' />"
-			+ "<img class='chrSepProfession' src='img/account/classes/" + pCharacter.charelite + ".png' />"
-			+ "<span class='chrSepName'>" + pCharacter.charname + "</span>"
+		return "<div class='eqpCharSeparator'><img class='eqpCharPortrait' src='" + pCharacter.charportrait + "' />"
+			+ "<img class='eqpCharProfession' src='img/account/classes/" + pCharacter.charelite + ".png' />"
+			+ "<span class='eqpCharName'>" + pCharacter.charname + "</span>"
 		+ "</div>";
 	},
 	
@@ -5275,7 +5274,7 @@ A = {
 						traitname = "<span class='spzMajorName'>" + trait.name + "</span>";
 					}
 				}
-				traitelm.append(traitname + "<mark class='" + traithighlight + "'>&zwnj;</mark>");
+				traitelm.append(traitname + "<mark class='" + traithighlight + "'>" + I.Symbol.Filler + "</mark>");
 				// Generate tooltip for trait
 				Q.analyzeTrait(trait, {element: traitelm});
 			};
@@ -5564,9 +5563,11 @@ E = {
 	/*
 	 * Converts a coin amount in copper to a period separated string.
 	 * @param int pAmount of copper.
+	 * @param boolean pWantColor whether to include the coin image instead of periods.
+	 * @param boolean pWantSpace whether to separate the different coins with spaces.
 	 * @returns string coin for displaying.
 	 */
-	createCoinString: function(pAmount, pWantColor)
+	formatCoinString: function(pAmount, pWantColor, pWantSpace)
 	{
 		if (pAmount === undefined || isFinite(pAmount) === false)
 		{
@@ -5583,6 +5584,10 @@ E = {
 			sep = "";
 			sg0 = "<gold>"; ss0 = "<silver>"; sc0 = "<copper>";
 			sg1 = "</gold><goldcoin></goldcoin>"; ss1 = "</silver><silvercoin></silvercoin>"; sc1 = "</copper><coppercoin></coppercoin>";
+		}
+		if (pWantSpace)
+		{
+			sep = " ";
 		}
 		
 		var gold = Math.abs(~~(pAmount / E.Exchange.COPPER_IN_GOLD));
@@ -5621,7 +5626,7 @@ E = {
 	 * @param int pAmount of cents.
 	 * @returns string money for displaying.
 	 */
-	createMoneyString: function(pAmount)
+	formatMoneyString: function(pAmount)
 	{
 		if (pAmount === undefined || isFinite(pAmount) === false)
 		{
@@ -5648,7 +5653,7 @@ E = {
 	 * @param boolean pWantColor whether to colorize the amount.
 	 * @returns HTML string.
 	 */
-	createCurrencyString: function(pCurrency, pAmount, pWantColor)
+	formatCurrencyString: function(pCurrency, pAmount, pWantColor)
 	{
 		if (pAmount === undefined || isFinite(pAmount) === false)
 		{
@@ -5667,17 +5672,17 @@ E = {
 		}
 		return s0 + pAmount.toLocaleString() + s1 + s2;
 	},
-	createKarmaString: function(pAmount, pWantColor)
+	formatKarmaString: function(pAmount, pWantColor)
 	{
-		return E.createCurrencyString("karma", pAmount, pWantColor);
+		return E.formatCurrencyString("karma", pAmount, pWantColor);
 	},
-	createLaurelString: function(pAmount, pWantColor)
+	formatLaurelString: function(pAmount, pWantColor)
 	{
-		return E.createCurrencyString("laurel", pAmount, pWantColor);
+		return E.formatCurrencyString("laurel", pAmount, pWantColor);
 	},
-	createGemString: function(pAmount, pWantColor)
+	formatGemString: function(pAmount, pWantColor)
 	{
-		return E.createCurrencyString("gem", pAmount, pWantColor);
+		return E.formatCurrencyString("gem", pAmount, pWantColor);
 	},
 	
 	/*
@@ -5741,11 +5746,11 @@ E = {
 	},
 	convertGemToCoin: function(pAmount)
 	{
-		return E.createCoinString(Math.round(pAmount * E.Exchange.CoinInGem), true);
+		return E.formatCoinString(Math.round(pAmount * E.Exchange.CoinInGem), true);
 	},
 	convertGemToMoney: function(pAmount)
 	{
-		return E.createMoneyString(Math.round(pAmount * E.Exchange.DOLLAR_PER_GEM));
+		return E.formatMoneyString(Math.round(pAmount * E.Exchange.DOLLAR_PER_GEM));
 	},
 	convertMoneyToGem: function(pAmount)
 	{
@@ -5778,21 +5783,21 @@ E = {
 		var taxamount = (sell * E.Exchange.TAX_SOLD) * quantity;
 		
 		// Do calculation and put them in outputs
-		cost.val("−" + E.createCoinString(Math.round(
+		cost.val("−" + E.formatCoinString(Math.round(
 			costamount
 		)));
-		tax.val("−" + E.createCoinString(Math.round(
+		tax.val("−" + E.formatCoinString(Math.round(
 			listamount
-			)) + " + −" + E.createCoinString(Math.round(
+			)) + " + −" + E.formatCoinString(Math.round(
 			taxamount
 		)));
-		breakpoint.val(E.createCoinString(Math.round(
+		breakpoint.val(E.formatCoinString(Math.round(
 			buy / E.Exchange.TAX_INVERSE
 		)));
-		revenue.val(E.createCoinString(Math.round(
+		revenue.val(E.formatCoinString(Math.round(
 			revenueamount
 		)));
-		profit.val(E.createCoinString(Math.round(
+		profit.val(E.formatCoinString(Math.round(
 			profitamount
 		)));
 		margin.val(U.convertDecimalToPercent(
@@ -5887,8 +5892,8 @@ E = {
 				// Get lowest sell listing
 				currentsell = parseInt(pData.sells.unit_price);
 			}
-			buyelm.val(E.createCoinString(currentbuy));
-			sellelm.val(E.createCoinString(currentsell));
+			buyelm.val(E.formatCoinString(currentbuy));
+			sellelm.val(E.formatCoinString(currentsell));
 			
 			// Overwrite calculator buy and sell prices if opted
 			if (X.getChecklistItem(X.Checklists.TradingOverwrite, U.getSubintegerFromHTMLID(pEntry))
@@ -6060,13 +6065,13 @@ E = {
 								+ "<input class='trdCurrentBuy trdOutput' type='text' tabindex='-1' />"
 								+ "<input class='trdNotifyBuyLow' type='text' />"
 								+ "<label title='<dfn>" + D.getWordCapital("overwrite") + "</dfn>: Replace your buy and sell prices with the current prices when refreshing.'>"
-									+ "<input class='trdOverwrite' type='checkbox' tabindex='-1' />&zwnj;</label><br />"
+									+ "<input class='trdOverwrite' type='checkbox' tabindex='-1' />" + I.Symbol.Filler + "</label><br />"
 							+ "<abbr>!~$</abbr>"
 								+ "<input class='trdNotifySellHigh' type='text' />"
 								+ "<input class='trdCurrentSell trdOutput' type='text' tabindex='-1' />"
 								+ "<input class='trdNotifySellLow' type='text' />"
 								+ "<label title='<dfn>" + D.getWordCapital("notify") + "</dfn>: Turn on sound notification for this item.'>"
-									+"<input class='trdNotify' type='checkbox' tabindex='-1' />&zwnj;</label>"
+									+"<input class='trdNotify' type='checkbox' tabindex='-1' />" + I.Symbol.Filler + "</label>"
 						+ "<br /><br /></div>"
 					+ "</div>"
 					+ "<div class='trdPreview'>"
@@ -6130,8 +6135,8 @@ E = {
 					if (price !== 0)
 					{
 						// Assume the inputs are siblings
-						$(this).prev().val(E.createCoinString(price + 1)).trigger("change");
-						$(this).next().val(E.createCoinString(price - 1)).trigger("change");
+						$(this).prev().val(E.formatCoinString(price + 1)).trigger("change");
+						$(this).next().val(E.formatCoinString(price - 1)).trigger("change");
 						E.updateTradingPrices($(this).parents(".trdEntry"));
 					}
 				});
@@ -6485,7 +6490,7 @@ E = {
 					currentmoney = Math.round(currentgem * E.Exchange.DOLLAR_PER_GEM);
 					
 					cointogem.val(currentgem);
-					cointomoney.val(E.createMoneyString(currentmoney));
+					cointomoney.val(E.formatMoneyString(currentmoney));
 				}
 			}).always(function()
 			{
@@ -6514,7 +6519,7 @@ E = {
 					currentgeminverse = Math.round(cointoamount * E.Exchange.GemInCoin);
 					currentmoneyinverse = Math.round(currentgeminverse * E.Exchange.DOLLAR_PER_GEM);
 					cointogeminverse.val(currentgeminverse);
-					cointomoneyinverse.val(E.createMoneyString(currentmoneyinverse));
+					cointomoneyinverse.val(E.formatMoneyString(currentmoneyinverse));
 					
 					if (pWantAnimate === undefined || pWantAnimate)
 					{
@@ -6553,8 +6558,8 @@ E = {
 					currentcoin = parseInt(pData.quantity);
 					currentmoney = parseInt(gemtoamount * E.Exchange.DOLLAR_PER_GEM);
 					
-					gemtocoin.val(E.createCoinString(currentcoin));
-					gemtomoney.val(E.createMoneyString(currentmoney));
+					gemtocoin.val(E.formatCoinString(currentcoin));
+					gemtomoney.val(E.formatMoneyString(currentmoney));
 				}
 			}).always(function()
 			{
@@ -6579,7 +6584,7 @@ E = {
 				{
 					previouscoininverse = E.parseCoinString(gemtocoininverse.val());
 					currentcoininverse = Math.round(gemtoamount * E.Exchange.CoinInGem);
-					gemtocoininverse.val(E.createCoinString(currentcoininverse));
+					gemtocoininverse.val(E.formatCoinString(currentcoininverse));
 					
 					if (pWantAnimate === undefined || pWantAnimate)
 					{
@@ -6616,7 +6621,7 @@ E = {
 					currentcoin = parseInt(pData.quantity);
 					
 					moneytogem.val(gems);
-					moneytocoin.val(E.createCoinString(currentcoin));
+					moneytocoin.val(E.formatCoinString(currentcoin));
 				}
 			}).always(function()
 			{
@@ -6709,7 +6714,7 @@ E = {
 					previouscoin = E.parseCoinString(gemtocoin.val());
 					currentcoin = parseInt(pData.quantity);
 					
-					gemtocoin.val(E.createCoinString(currentcoin));
+					gemtocoin.val(E.formatCoinString(currentcoin));
 				}
 			}).always(function()
 			{
@@ -7632,7 +7637,7 @@ Q = {
 		var vendorstr = "";
 		if (item.vendor_value > 0 && isvendorable)
 		{
-			vendorstr += E.createCoinString(item.vendor_value, true);
+			vendorstr += E.formatCoinString(item.vendor_value, true, true);
 		}
 		
 		/*
@@ -7917,7 +7922,7 @@ Q = {
 			var attrsource = (pFact.source !== undefined) ? Q.getAttributeString(pFact.source) : "";
 			var buffconv = (type === "BuffConversion") ? D.getString("GainBasedPercentage").replace("{0}", attrsource).replace("{1}", attrtarget) : "";
 			var icon = "<img class='trtFactIcon' src='" + pFact.icon + "' />";
-			var prefixicon = (pFact.prefix && pFact.prefix.icon) ? "<img class='trtFactIcon' src='" + pFact.prefix.icon + "' />" : "";
+			var prefixicon = (pFact.prefix && pFact.prefix.icon) ? "<var class='trtFactPrefixIcons'>" + icon + "<img class='trtFactIcon' src='" + pFact.prefix.icon + "' /></var>" : "";
 			var desc = pFact.description;
 			var stacks = (pFact.apply_count > 1) ? "<var class='trtStacks'>" + pFact.apply_count + "</var>" : "";
 			var duration = (pFact.duration !== undefined) ? T.formatTooltipTime(pFact.duration) : "";
@@ -7928,29 +7933,48 @@ Q = {
 			var percent = pFact.percent + "%";
 			var hitcount = pFact.hit_count + "x";
 			var distance = pFact.distance;
-			var pretext = icon + text + ": ";
+			
+			var wrap = function(pIcon, pText)
+			{
+				return "<var class='trtFactIcons'>" + pIcon + "</var><var class='trtFactText'>" + pText + "</var>";
+			};
 			
 			var facttype = {
-				AttributeAdjust: icon + "+" + value + " " + attrtarget,
-				Buff: stacks + icon + status + " (" + duration + "): " + desc,
-				BuffConversion: icon + buffconv,
-				ComboField: pretext + combofield,
-				ComboFinisher: pretext + combofinisher + " (" + percent + ")",
-				Damage: pretext + hitcount,
-				Distance: pretext + distance,
-				NoData: icon + text,
-				Number: pretext + value,
-				Percent: pretext + percent,
-				PrefixedBuff: icon + prefixicon + status + " (" + duration + "): " + desc,
-				Radius: pretext + distance,
-				Range: pretext + value,
-				Time: pretext + interval,
-				Unblockable: icon + text
+				AttributeAdjust: function(){
+					return wrap(icon, "+" + value + " " + attrtarget);},
+				Buff: function(){
+					return wrap(stacks + icon, status + " (" + duration + "): " + desc);},
+				BuffConversion: function(){
+					return wrap(icon, buffconv);},
+				ComboField: function(){
+					return wrap(icon, text + ": " + combofield);},
+				ComboFinisher: function(){
+					return wrap(icon, text + ": " + combofinisher + " (" + percent + ")");},
+				Damage: function(){
+					return wrap(icon, text + ": " + hitcount);},
+				Distance: function(){
+					return wrap(icon, text + ": " + distance);},
+				NoData: function(){
+					return wrap(icon, text);},
+				Number: function(){
+					return wrap(icon, text + ": " + value);},
+				Percent: function(){
+					return wrap(icon, text + ": " + percent);},
+				PrefixedBuff: function(){
+					return wrap(prefixicon, status + " (" + duration + "): " + desc);},
+				Radius: function(){
+					return wrap(icon, text + ": " + distance);},
+				Range: function(){
+					return wrap(icon, text + ": " + value);},
+				Time: function(){
+					return wrap(icon, text + ": " + interval);},
+				Unblockable: function(){
+					return wrap(icon, text);}
 			};
 			
 			if (facttype[type])
 			{
-				return "<span class='trtFactLine'>" + facttype[type] + "</span>";
+				return "<span class='trtFactLine'>" + facttype[type]() + "</span>";
 			}
 			return "";
 		};
@@ -7975,7 +7999,8 @@ Q = {
 			});
 			facts += "</aside>";
 		}
-		var html = "<div class='trtTooltip'>"
+		var html = "<div class='trtTooltipBorder'>" + I.Symbol.Filler + "</div>"
+		+ "<div class='trtTooltip'>"
 			+ recharge
 			+ name
 			+ desc
@@ -14445,7 +14470,7 @@ G = {
 							success: function(pData)
 						{
 							var price = E.deductTax(pData.sells.unit_price);
-							$("#nodPrice_" + inneri).html(E.createCoinString(price, true));
+							$("#nodPrice_" + inneri).html(E.formatCoinString(price, true));
 							P.Resources[inneri].price = price;
 						}});
 					})(i);
@@ -14686,10 +14711,10 @@ G = {
 					M.redrawPersonalPath(P.getGreedyPath(coords, indexofeastmostcoord), "default");
 					waypointcost = P.printClosestWaypoints() * WAYPOINT_COPPER_AVERAGE;
 					timecost = numnodes * TIME_SECOND_AVERAGE;
-					var summary = "Gather Profit: <span class='cssRight'>" + E.createCoinString(sumprice, true) + "</span><br />"
-						+ "Waypoint Cost: <span class='cssRight'>" + E.createCoinString(waypointcost, true) + "</span><br />"
+					var summary = "Gather Profit: <span class='cssRight'>" + E.formatCoinString(sumprice, true) + "</span><br />"
+						+ "Waypoint Cost: <span class='cssRight'>" + E.formatCoinString(waypointcost, true) + "</span><br />"
 						+ "</br >"
-						+ "Net Profit: <span class='cssRight'>" + E.createCoinString(sumprice - waypointcost, true) + "</span><br />"
+						+ "Net Profit: <span class='cssRight'>" + E.formatCoinString(sumprice - waypointcost, true) + "</span><br />"
 						+ "<br />"
 						+ "Nodes to Visit: <span class='cssRight'>" + numnodes + "</span><br />"
 						+ "Estimated Time: <span class='cssRight'>" + T.getTimeFormatted({customTimeInSeconds: timecost, wantLetters: true}) + "</span>";
@@ -19058,7 +19083,7 @@ B = {
 	{
 		var getPercentOffString = function(pPriceNew, pPriceOld)
 		{
-			return "<span class='dsbSalePercent'>-" + U.convertDecimalToPercent(1 - (pPriceNew / pPriceOld), 0) + "</span> "
+			return "<span class='dsbSalePercent'>" + U.convertDecimalToPercent(-1 * (1 - (pPriceNew / pPriceOld)), 0) + "</span> ";
 		};
 		var getOldPriceString = function(pPriceNew, pPriceOld, pPriceOldBulk)
 		{
@@ -19068,7 +19093,6 @@ B = {
 		
 		var animationspeed = 200;
 		var table = $("#dsbSaleTable");
-		
 		if (table.is(":empty") === false)
 		{
 			I.toggleToggleIcon("#dsbSaleToggleIcon", false);
@@ -19256,16 +19280,16 @@ B = {
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (B.DashboardVendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
-							+ "<span class='dsbVendorPriceKarma'>" + E.createKarmaString(offer.price) + "</span>"
+							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(offer.price) + "</span>"
 							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
 						+ "</div>");
 						// Get TP prices also
 						$.getJSON(U.URL_API.ItemPrices + offer.id, function(pData)
 						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.createCoinString(E.deductTax(pData.sells.unit_price), true));
+							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinString(E.deductTax(pData.sells.unit_price), true));
 						}).fail(function()
 						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.createCoinString(0, true));
+							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinString(0, true));
 						});
 						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
 						// Get the product that the recipe crafts
@@ -20961,6 +20985,7 @@ I = {
 	siteTagCurrent: " - gw2timer.com",
 	Symbol:
 	{
+		Filler: "&zwnj;", // Place this inside empty elements to give them dimension
 		ArrowUp: "⇑",
 		ArrowDown: "⇓",
 		TriUp: "▲",
