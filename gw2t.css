@@ -210,7 +210,7 @@ img {
 /*
  * Style for qTip tooltip JS plugin by Craig Erskine.
  */
-#qTip, .qTip {
+#qTip {
 	display: none;
 	position: absolute; z-index: 1000;
 	max-width: 720px;
@@ -229,9 +229,6 @@ img {
 	box-shadow: 0px 0px 2px #555;
 	opacity: 1;
 	pointer-events: none;
-}
-.qTip {
-	display: block !important;
 }
 #qTip dfn { /* Highlight color for emphasis text in tooltip */
 	background: none;

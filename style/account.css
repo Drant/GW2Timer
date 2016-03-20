@@ -978,10 +978,66 @@ a.chrWalletLink {
 	border-radius: 50%;
 }
 
-/*
- * Style trait details tooltips.
- */
+/* Connection line between trait icons */
+@keyframes aniConnector { 
+    0% {background-position: 0% 50%}
+    50% {background-position: 100% 50%}
+    100% {background-position: 0% 50%}
+}
+.spzColumn em {
+	display: none;
+	position: absolute;
+	height: 2px;
+	background: orange;
+	background: linear-gradient(270deg, transparent, rgba(255,255,255,0.5));
+	background-size: 400% 400%;
+	border-radius: 2px;
+	animation: aniConnector 5s ease infinite;
+}
+.spzCon_01 {
+	display: block !important;
+	width: 20px;
+	margin-left: -20px;
+	margin-top: 11px;
+}
+.spzCon_10L, .spzCon_20L, .spzCon_30L {
+	width: 26px;
+	margin-left: -24px;
+	margin-top: 24px;
+	transform: rotate(-32deg);
+}
+.spzCon_10R, .spzCon_20R {
+	width: 26px;
+	margin-left: 22px;
+	margin-top: 24px;
+	transform: rotate(32deg);
+}
+.spzCon_11L, .spzCon_21L, .spzCon_31L {
+	width: 20px;
+	margin-left: -20px;
+	margin-top: 11px;
+}
+.spzCon_11R, .spzCon_21R {
+	width: 20px;
+	margin-left: 24px;
+	margin-top: 11px;
+}
+.spzCon_12L, .spzCon_22L, .spzCon_32L {
+	width: 26px;
+	margin-left: -24px;
+	margin-top: -2px;
+	transform: rotate(32deg);
+}
+.spzCon_12R, .spzCon_22R {
+	width: 26px;
+	margin-left: 22px;
+	margin-top: -2px;
+	transform: rotate(-32deg);
+}
+
+/* Trait details tooltips */
 .trtTooltip {
+	display: block;
 	max-width: 380px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 16px;
@@ -1060,63 +1116,6 @@ a.chrWalletLink {
 		0px -1px 1px #000,
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
-}
-
-/* Connection line between trait icons */
-@keyframes aniConnector { 
-    0% {background-position: 0% 50%}
-    50% {background-position: 100% 50%}
-    100% {background-position: 0% 50%}
-}
-.spzColumn em {
-	display: none;
-	position: absolute;
-	height: 2px;
-	background: orange;
-	background: linear-gradient(270deg, transparent, rgba(255,255,255,0.5));
-	background-size: 400% 400%;
-	border-radius: 2px;
-	animation: aniConnector 5s ease infinite;
-}
-.spzCon_01 {
-	display: block !important;
-	width: 20px;
-	margin-left: -20px;
-	margin-top: 11px;
-}
-.spzCon_10L, .spzCon_20L, .spzCon_30L {
-	width: 26px;
-	margin-left: -24px;
-	margin-top: 24px;
-	transform: rotate(-32deg);
-}
-.spzCon_10R, .spzCon_20R {
-	width: 26px;
-	margin-left: 22px;
-	margin-top: 24px;
-	transform: rotate(32deg);
-}
-.spzCon_11L, .spzCon_21L, .spzCon_31L {
-	width: 20px;
-	margin-left: -20px;
-	margin-top: 11px;
-}
-.spzCon_11R, .spzCon_21R {
-	width: 20px;
-	margin-left: 24px;
-	margin-top: 11px;
-}
-.spzCon_12L, .spzCon_22L, .spzCon_32L {
-	width: 26px;
-	margin-left: -24px;
-	margin-top: -2px;
-	transform: rotate(32deg);
-}
-.spzCon_12R, .spzCon_22R {
-	width: 26px;
-	margin-left: 22px;
-	margin-top: -2px;
-	transform: rotate(-32deg);
 }
 
 /* Adjustments for smaller screens

@@ -1473,10 +1473,11 @@ X = {
 		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader", value: ""},
 		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup", value: ""},
 		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: ""},
-		// Hero progress
+		// Character progress
 		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes", value: ""},
 		MasteryInsight: { key: "str_chlMasteryInsight", urlkey: "masteryinsight", value: ""},
-		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge", value: ""}
+		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge", value: ""},
+		RangerPets: { key: "str_chlRangerPets", urlkey: "pets", value: ""}
 	},
 	ChecklistEnum:
 	{
@@ -6982,7 +6983,7 @@ E = {
 };
 
 /* =============================================================================
- * @@Quantity items, attributes, traits, to be initialized by the Account page
+ * @@Quantity items, attributes, traits, to be used by the Account page
  * ========================================================================== */
 Q = {
 	
@@ -13558,7 +13559,7 @@ P = {
 	},
 	printCoordinates: function(pCoords)
 	{
-		I.write(this.compileCoordinates(pCoords), 0);
+		I.write(this.compileCoordinates(pCoords), 0, true);
 	},
 	
 	/*
@@ -15214,10 +15215,10 @@ G = {
 	 */
 	generateCollectibles: function(pType)
 	{
-		var i, number, extreme;
+		var i, ii, number, extreme;
 		var customlist = U.Args[X.Collectibles[pType].urlkey];
 		var collectible = P.Collectibles[pType];
-		var ithneedle;
+		var ithneedle, ithcushion;
 		var stateinstring;
 		var marker, pathline, pathstyle;
 		var markertitle;
@@ -15242,79 +15243,148 @@ G = {
 		P.LayerArray[pType] = []; // Holds markers (needles)
 		P.Layer[pType] = new L.layerGroup(); // Holds path connecting the markers
 		
-		for (i = 0; i < collectible.needles.length; i++)
+		if (collectible.issets) // If the needles are actually sets of markers rather than individual numbered ones
 		{
-			// Read and enact the state of the ith collectible checklist
-			number = i + 1;
-			ithneedle = collectible.needles[i];
-			stateinstring = X.getChecklistItem(X.Collectibles[pType], i);
+			for (i = 0; i < collectible.needles.length; i++)
+			{
+				// Read and enact the state of the ith collectible checklist
+				number = i + 1;
+				ithcushion = collectible.needles[i];
+				stateinstring = X.getChecklistItem(X.Collectibles[pType], i);
 
-			markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + number;
-			if (ithneedle.i)
-			{
-				markertitle += "<img src='" + ithneedle.i + "' />";
-			}
-			else if (ithneedle.t)
-			{
-				markertitle += "<br /><span class='mapTip'>" + ithneedle.t + "</span>";
-			}
-			markertitle += "</div>";
-
-			// The "extreme" enum indicates the needle is an extremity or sub-extremity of the path
-			if ((i === 0 || i === collectible.needles.length - 1))
-			{
-				extreme = 0;
-			}
-			else
-			{
-				extreme = ((ithneedle.e === undefined) ? "" : ithneedle.e);
-			}
-			
-			marker = L.marker(M.convertGCtoLC(ithneedle.c),
-			{
-				needleExtreme: extreme,
-				needleIndex: i,
-				needleType: pType,
-				needleKey: X.Collectibles[pType].urlkey,
-				needleColor: collectible.color,
-				needleLabel: (ithneedle.l === undefined) ? number : ithneedle.l,
-				title: markertitle
-			});
-			styleCollectibleMarker(marker, stateinstring);
-			
-			// Bind marker behavior
-			marker.on("click", function(pEvent)
-			{
-				var newstate = X.trackChecklistItem(X.Collectibles[this.options.needleType], this.options.needleIndex);
-				styleCollectibleMarker(this, newstate);
-				
-				// Update URL bar with list of numbers of checked markers
-				var pings = X.getCheckedIndexes(X.Collectibles[this.options.needleType]);
-				if (pings.length === 0)
+				markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + number;
+				if (ithcushion.i)
 				{
-					U.updateQueryString();
+					markertitle += "<img src='" + ithcushion.i + "' />";
+				}
+				else if (ithcushion.t)
+				{
+					markertitle += "<br /><span class='mapTip'>" + ithcushion.t + "</span>";
+				}
+				markertitle += "</div>";
+				
+				for (ii = 0; ii < ithcushion.c.length; ii++)
+				{
+					marker = L.marker(M.convertGCtoLC(ithcushion.c[ii]),
+					{
+						needleExtreme: extreme,
+						needleIndex: i,
+						needleType: pType,
+						needleKey: X.Collectibles[pType].urlkey,
+						needleColor: collectible.color,
+						needleLabel: (ithcushion.l === undefined) ? number : ithcushion.l,
+						title: markertitle
+					});
+					styleCollectibleMarker(marker, stateinstring);
+
+					// Bind marker behavior
+					marker.on("click", function(pEvent)
+					{
+						var newstate = X.trackChecklistItem(X.Collectibles[this.options.needleType], this.options.needleIndex);
+						var thismarker = this;
+						// For needle sets, clicking one marker will also change all markers of the same set (index)
+						P.LayerArray[this.options.needleType].forEach(function(iLayer)
+						{
+							if (iLayer.options.needleIndex === thismarker.options.needleIndex)
+							{
+								styleCollectibleMarker(iLayer, newstate);
+							}
+						});
+
+						// Update URL bar with list of numbers of checked markers
+						var pings = X.getCheckedIndexes(X.Collectibles[this.options.needleType]);
+						if (pings.length === 0)
+						{
+							U.updateQueryString();
+						}
+						else
+						{
+							U.updateAddressBar("?" + this.options.needleKey + "=" + pings);
+						}
+					});
+					M.bindMarkerZoomBehavior(marker, "contextmenu");
+
+					// Add to array
+					P.LayerArray[pType].push(marker);
+				}
+			}
+		}
+		else // If the needles are numbered markers
+		{
+			for (i = 0; i < collectible.needles.length; i++)
+			{
+				// Read and enact the state of the ith collectible checklist
+				number = i + 1;
+				ithneedle = collectible.needles[i];
+				stateinstring = X.getChecklistItem(X.Collectibles[pType], i);
+
+				markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + number;
+				if (ithneedle.i)
+				{
+					markertitle += "<img src='" + ithneedle.i + "' />";
+				}
+				else if (ithneedle.t)
+				{
+					markertitle += "<br /><span class='mapTip'>" + ithneedle.t + "</span>";
+				}
+				markertitle += "</div>";
+
+				// The "extreme" enum indicates the needle is an extremity or sub-extremity of the path
+				if ((i === 0 || i === collectible.needles.length - 1))
+				{
+					extreme = 0;
 				}
 				else
 				{
-					U.updateAddressBar("?" + this.options.needleKey + "=" + pings);
+					extreme = ((ithneedle.e === undefined) ? "" : ithneedle.e);
 				}
-			});
-			M.bindMarkerZoomBehavior(marker, "contextmenu");
-			
-			// Add to array
-			P.LayerArray[pType].push(marker);
-			
-			// Draw a segment from the current and next needle's coordinates
-			if (i < collectible.needles.length - 1)
-			{
-				pathstyle = (ithneedle.e === 2) ? "5,15" : "1";
-				pathline = L.polyline(M.convertGCtoLCDual([ithneedle.c, (collectible.needles[i+1]).c]),
+
+				marker = L.marker(M.convertGCtoLC(ithneedle.c),
 				{
-					color: "lime",
-					dashArray: pathstyle,
-					opacity: 0.5
+					needleExtreme: extreme,
+					needleIndex: i,
+					needleType: pType,
+					needleKey: X.Collectibles[pType].urlkey,
+					needleColor: collectible.color,
+					needleLabel: (ithneedle.l === undefined) ? number : ithneedle.l,
+					title: markertitle
 				});
-				P.Layer[pType].addLayer(pathline);
+				styleCollectibleMarker(marker, stateinstring);
+
+				// Bind marker behavior
+				marker.on("click", function(pEvent)
+				{
+					var newstate = X.trackChecklistItem(X.Collectibles[this.options.needleType], this.options.needleIndex);
+					styleCollectibleMarker(this, newstate);
+
+					// Update URL bar with list of numbers of checked markers
+					var pings = X.getCheckedIndexes(X.Collectibles[this.options.needleType]);
+					if (pings.length === 0)
+					{
+						U.updateQueryString();
+					}
+					else
+					{
+						U.updateAddressBar("?" + this.options.needleKey + "=" + pings);
+					}
+				});
+				M.bindMarkerZoomBehavior(marker, "contextmenu");
+
+				// Add to array
+				P.LayerArray[pType].push(marker);
+
+				// Draw a segment from the current and next needle's coordinates
+				if (i < collectible.needles.length - 1)
+				{
+					pathstyle = (ithneedle.e === 2) ? "5,15" : "1";
+					pathline = L.polyline(M.convertGCtoLCDual([ithneedle.c, (collectible.needles[i+1]).c]),
+					{
+						color: "lime",
+						dashArray: pathstyle,
+						opacity: 0.5
+					});
+					P.Layer[pType].addLayer(pathline);
+				}
 			}
 		}
 		
