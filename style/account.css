@@ -979,11 +979,6 @@ a.chrWalletLink {
 }
 
 /* Connection line between trait icons */
-@keyframes aniConnector { 
-    0% {background-position: 0% 50%}
-    50% {background-position: 100% 50%}
-    100% {background-position: 0% 50%}
-}
 .spzColumn em {
 	display: none;
 	position: absolute;
@@ -992,10 +987,10 @@ a.chrWalletLink {
 	background: linear-gradient(270deg, transparent, rgba(255,255,255,0.5));
 	background-size: 400% 400%;
 	border-radius: 2px;
-	animation: aniConnector 5s ease infinite;
+	animation: aniGradientBackground 5s ease infinite;
 }
-.spzCon_01 {
-	display: block !important;
+.spzColumn em.spzCon_01 {
+	display: block;
 	width: 20px;
 	margin-left: -20px;
 	margin-top: 11px;

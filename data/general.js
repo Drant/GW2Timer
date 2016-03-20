@@ -1124,10 +1124,10 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Black Lion Chest Key",
-		id: "19980",
-		price: 100,
-		discount: [[1, 100, 125], [5, 359, 450], [25, 1680, 2100]],
+		name: "Slayer's Outfit",
+		id: "77483",
+		price: 560,
+		discount: 700,
 		col: 0
 	},
 	{

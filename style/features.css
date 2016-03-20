@@ -338,7 +338,7 @@ dt.jpzListNameHover {
 .clt_strongboxes { background-position: -800px 0; }
 
 .mapNeedle0, .mapNeedle1, .mapNeedle2 {
-	border-radius: 16px;
+	border-radius: 50%;
 	font-family: sans-serif;
 	font-size: 12px;
 	text-align: center;
@@ -356,6 +356,11 @@ dt.jpzListNameHover {
 .mapNeedle2 { border: 2px solid white; }
 .mapNeedleExtreme0, .mapNeedleExtreme3 { border-width: 6px; border-style: solid; }
 .mapNeedleExtreme1 { border-width: 6px; border-style: dotted; }
+.mapNeedleIcon {
+	display: block;
+	width: 100%; height: 100%;
+	background-position: center;
+}
 
 
 /* =============================================================================

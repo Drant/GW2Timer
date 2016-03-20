@@ -66,6 +66,11 @@ body > windowMain
 	font-family: "Menomonia";
 	src: url("https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.woff") format("woff");
 }
+@keyframes aniGradientBackground { /* Used on elements with background linear-gradient(270deg, transparent, rgba(255,255,255,0.5)) */
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+}
 @keyframes aniSpin { /* Used on throbbers */
 	100% { transform: rotate(360deg); }
 }
