@@ -15415,6 +15415,11 @@ G = {
 				// Rebind tooltip
 				I.qTip.init(".leaflet-marker-icon");
 			}
+			// Special case for ranger pets
+			if (pType === "RangerPets")
+			{
+				G.generatePetsList(collectible.needles, state);
+			}
 		});
 		$("#nedUncheck_" + pType).click(function()
 		{
@@ -15427,6 +15432,80 @@ G = {
 			X.clearChecklist(X.Collectibles[type]);
 			U.updateQueryString();
 		});
+	},
+	
+	/*
+	 * Generates a list of pets and their pet skills, on the console.
+	 * @param objarray pNeedles from Collectibles object.
+	 */
+	generatePetsList: function(pNeedles, pState)
+	{
+		var type = "RangerPets";
+		var container = $("#cltSublist" + type);
+		var list = container.find(".cltSublistContainer");
+		container.toggle(pState);
+		// Don't regenerate the list if already did
+		if (list.is(":empty") === false)
+		{
+			I.scrollToElement(container, $("#plateMap"));
+			return;
+		}
+		
+		var ithneedle, fact, factline;
+		var name, marker, factstr, durationstr, peticon;
+		var secstr = D.getWord("s");
+		for (var i = 0; i < pNeedles.length; i++)
+		{
+			ithneedle = pNeedles[i];
+			name = ithneedle.p;
+			peticon = "img/collectible/rangerpets/" + name.replace(/ /g, "").toLowerCase() + I.cPNG;;
+			var str = "<div class='cltPetSkill'><span class='cltPetIcon curClick' title='" + name + "' style='background-image:url(" + peticon + ")'>" 
+				+ "<var class='cltPetIconBackground'>" + I.Symbol.Filler + "</var></span><aside class='cltPetFacts'>";
+			for (var ii in ithneedle.s)
+			{
+				fact = ithneedle.s[ii];
+				if (Array.isArray(fact))
+				{
+					// If a fact is an array containing the buff/condition's: [stackNumber, duration]
+					durationstr = "(" + fact[1] + secstr + ")"; // Include stack number if there's more than 1
+					factstr = (fact[0] > 1) ? ("<var class='cltPetStack'>" + fact[0] + "</var>" + durationstr) : durationstr;
+				}
+				else
+				{
+					factstr = fact;
+				}
+				str += "<span class='cltPetFact'><img class='cltPetFactIcon' src='img/fact/"
+					+ ii + I.cPNG + "' /><var class='cltPetFactText'>" + factstr + "</var></span>";
+			}
+			str += "</aside></div>";
+			factline = $(str).appendTo(list);
+			(function(iIndex, iName)
+			{
+				factline.find(".cltPetIcon").click(function()
+				{
+					// Clicking on the pet icon from the list shows that pet species
+					for (var ii = 0; ii < P.LayerArray[type].length; ii++)
+					{
+						marker = (P.LayerArray[type])[ii];
+						if (marker.options.needleIndex === iIndex)
+						{
+							marker.fire("click");
+							break; // Only need to trigger one pet's marker to change all of it
+						}
+					}
+				}).dblclick(function()
+				{
+					// Double clicking on the pet icon opens the wiki
+					U.openExternalURL(U.getWikiLink(iName));
+				});
+			})(i, name);
+		}
+		I.qTip.init(list.find(".cltPetIcon"));
+		// Scroll to the list
+		setTimeout(function()
+		{
+			I.scrollToElement(container, $("#plateMap"));
+		}, 200);
 	},
 	
 	/*
