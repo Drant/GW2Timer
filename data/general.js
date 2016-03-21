@@ -1022,7 +1022,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<a href='http://wiki.guildwars2.com/wiki/Wizard%27s_Hat'>Wizard's Hat</a> (<gem>200</gem><ins class='s16 s16_gem'></ins>) is back on the gem store after 3 years.",
+	content: "",
 	Start: new Date("2016-03-15T16:00:00Z"),
 	Finish: new Date("2016-03-22T16:00:00Z")
 },
@@ -1124,10 +1124,10 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Slayer's Outfit",
-		id: "77483",
-		price: 560,
-		discount: 700,
+		name: "Bank Access Pass",
+		id: "19984",
+		price: 21,
+		discount: [[1, 21, 35], [5, 75, 125]],
 		col: 0
 	},
 	{

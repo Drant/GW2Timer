@@ -384,14 +384,22 @@ dt.jpzListNameHover {
 	margin-right: 4px;
 	background-position: center;
 }
-.cltPetIcon:hover .cltPetIconBackground {
+.cltPetIconBackground {
 	width: 100%; height: 100%;
 	display: block;
-	background: radial-gradient(ellipse at center, rgba(255,255,0,0.4) 0%, transparent 100%);
+}
+.cltPetIcon:hover .cltPetIconBackground {
+	background-image: radial-gradient(ellipse at center, rgba(255,255,0,0.4) 0%, transparent 100%);
+}
+.cltPetIcon:active .cltPetIconBackground {
+	background-image: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.8) 100%);
+}
+.cltPetIconFocused .cltPetIconBackground {
+	background-image: radial-gradient(ellipse at center, rgba(255,255,0,0.8) 0%, transparent 100%);
 }
 .cltPetFacts {
 	display: inline-block;
-	margin-top: 12px;
+	margin-top: 10px;
 	vertical-align: top;
 }
 .cltPetFact {

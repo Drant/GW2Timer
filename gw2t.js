@@ -15444,6 +15444,7 @@ G = {
 		var container = $("#cltSublist" + type);
 		var list = container.find(".cltSublistContainer");
 		container.toggle(pState);
+		$(".cltPetIcon").removeClass("cltPetIconFocused");
 		// Don't regenerate the list if already did
 		if (list.is(":empty") === false)
 		{
@@ -15459,7 +15460,7 @@ G = {
 			ithneedle = pNeedles[i];
 			name = ithneedle.p;
 			peticon = "img/collectible/rangerpets/" + name.replace(/ /g, "").toLowerCase() + I.cPNG;;
-			var str = "<div class='cltPetSkill'><span class='cltPetIcon curClick' title='" + name + "' style='background-image:url(" + peticon + ")'>" 
+			var str = "<div class='cltPetSkill'><span class='cltPetIcon curToggle' title='" + name + "' style='background-image:url(" + peticon + ")'>" 
 				+ "<var class='cltPetIconBackground'>" + I.Symbol.Filler + "</var></span><aside class='cltPetFacts'>";
 			for (var ii in ithneedle.s)
 			{
@@ -15483,15 +15484,30 @@ G = {
 			{
 				factline.find(".cltPetIcon").click(function()
 				{
-					// Clicking on the pet icon from the list shows that pet species
-					for (var ii = 0; ii < P.LayerArray[type].length; ii++)
+					// Clicking on the pet icon from the list shows that pet species only
+					var ischecked = $(this).hasClass("cltPetIconFocused");
+					$(".cltPetIcon").removeClass("cltPetIconFocused");
+					if (ischecked)
 					{
-						marker = (P.LayerArray[type])[ii];
-						if (marker.options.needleIndex === iIndex)
+						// Show all species
+						M.toggleLayerArray(P.LayerArray[type], true);
+					}
+					else
+					{
+						for (var ii = 0; ii < P.LayerArray[type].length; ii++)
 						{
-							marker.fire("click");
-							break; // Only need to trigger one pet's marker to change all of it
+							// Show the clicked species while hiding all others
+							marker = (P.LayerArray[type])[ii];
+							if (marker.options.needleIndex === iIndex)
+							{
+								M.toggleLayer(marker, true);
+							}
+							else
+							{
+								M.toggleLayer(marker, false);
+							}
 						}
+						$(this).addClass("cltPetIconFocused");
 					}
 				}).dblclick(function()
 				{
