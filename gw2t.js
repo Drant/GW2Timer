@@ -15641,7 +15641,7 @@ G = {
 				}).dblclick(function()
 				{
 					// Double clicking on the pet icon opens the wiki
-					U.openExternalURL(U.getWikiLink(iName));
+					U.openExternalURL(U.getWikiLink("Juvenile " + iName));
 				});
 			})(i, name);
 		}
