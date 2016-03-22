@@ -3951,7 +3951,6 @@ A = {
 	Attribute: {}, // Character attribute points
 	Data: { // Cache for retrieved API data objects and arrays
 		Account: {},
-		Items: {},
 		Characters: [],
 		CharacterNames: null,
 		Guilds: {}, // Guild details objects, accessed using the guild IDs
@@ -3959,7 +3958,7 @@ A = {
 		Specializations: {},
 		Traits: {}
 	},
-	Worth: { // Holds coin value with properties "Vendor", "Instant", and "List", for use in summing total asset net worth
+	Worth: { // Holds coin value for use in summing total asset net worth
 		Equipment: {},
 		Inventory: {},
 		Bank: {},
@@ -4278,6 +4277,18 @@ A = {
 			A.Permissions[i] = null;
 		}
 		A.Data.CharacterNames = null;
+		
+		/*
+		 * Zeroes the properties of the Worth object, which holds cumulative
+		 * copper value of the player's assets.
+		 */
+		for (var i in A.Worth)
+		{
+			A.Worth[i].Vendor = 0;
+			A.Worth[i].Buy = 0;
+			A.Worth[i].Sell = 0;
+			A.Worth[i].Estimate = 0;
+		}
 		
 		// Initialize permissions
 		$.getJSON(A.getURL(A.URL.TokenInfo), function(pData)
@@ -5168,7 +5179,7 @@ A = {
 					var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
 					var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iData.icon;
 					var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
-					Q.analyzeItem(iData, {
+					Q.scanItem(iData, {
 						element: slot,
 						equipment: iEquipment,
 						runesets: runesets,
@@ -5870,7 +5881,7 @@ E = {
 			{
 				U.printJSON(pData);
 			});
-			Q.analyzeItem(pData, {element: icon});
+			Q.scanItem(pData, {element: icon});
 		}});
 	},
 	
@@ -7009,6 +7020,7 @@ E = {
  * ========================================================================== */
 Q = {
 	
+	Box: {}, // Holds objects with analyzed item details, accessed using the item's ID
 	Rarity: // Corresponds to API names for rarity levels
 	{
 		Junk: "Junk",
@@ -7412,13 +7424,44 @@ Q = {
 	},
 	
 	/*
+	 * Lightweight preliminary function to check if the requested item has
+	 * already been analyzed, and simply retrieve the cache if available,
+	 * otherwise proceed with the actual analysis function.
+	 * @param object pItem item details.
+	 * @param object pOptions settings.
+	 */
+	scanItem: function(pItem, pOptions)
+	{
+		var settings = pOptions || {};
+		var box = Q.Box[pItem.id];
+		if (box)
+		{
+			if (settings.element)
+			{
+				var elm = $(settings.element);
+				elm.attr("title", box.html);
+				I.qTip.init(elm);
+			}
+			// Execute callback if provided
+			if (settings.callback)
+			{
+				settings.callback(box);
+			}
+		}
+		else
+		{
+			Q.analyzeItem(pItem, pOptions);
+		}
+	},
+	
+	/*
 	 * Generates item tooltip HTML, compiles attributes, and retrieves linked
 	 * upgrades and skins if available.
 	 * @param object pItem details retrieved from API.
 	 * @objparam jqobject element to bind tooltip.
 	 * @objparam int quantity if it is a stack of these items.
-	 * @objparam intarray item IDs upgrades like sigils, runes, or gems.
-	 * @objparam intarray item IDs of infusions.
+	 * @objparam intarray upgrades item IDs upgrades like sigils, runes, or gems.
+	 * @objparam intarray infusions item IDs of infusions.
 	 * @objparam int skin ID for transmuted items.
 	 * @objparam object equipment from characters API.
 	 * @objparam object runesets containing counts of runes associated with rune's item ID.
@@ -7435,9 +7478,11 @@ Q = {
 		var upgradeobjs = [];
 		var skinobj = null;
 		var attrobj = null; // Holds attribute points
+		var iscustomitem = false;
 		// If provided an equipment object, override the other parameters
 		if (settings.equipment)
 		{
+			iscustomitem = true;
 			settings.infusions = settings.equipment.infusions;
 			settings.upgrades = settings.equipment.upgrades;
 			settings.skin = settings.equipment.skin;
@@ -7738,6 +7783,7 @@ Q = {
 		// OVERWRITE INFUSIONS AND UPGRADES
 		if (settings.infusions)
 		{
+			iscustomitem = true;
 			for (var i = 0; i < settings.infusions.length; i++)
 			{
 				if (i < preinfusions.length)
@@ -7752,6 +7798,7 @@ Q = {
 		}
 		if (settings.upgrades)
 		{
+			iscustomitem = true;
 			for (var i = 0; i < settings.upgrades.length; i++)
 			{
 				if (i < preupgrades.length)
@@ -7769,6 +7816,7 @@ Q = {
 		var transmstr = "";
 		if (settings.skin)
 		{
+			iscustomitem = true;
 			propstofetch++;
 		}
 		
@@ -7807,16 +7855,27 @@ Q = {
 				elm.attr("title", html);
 				I.qTip.init(elm);
 			}
+			/*
+			 * This object is the result of the analysis, containing tooltip
+			 * information and additionally retrieved slotted items.
+			 */
+			var box = {
+				item: item,
+				infusions: infusionobjs,
+				upgrades: upgradeobjs,
+				skin: skinobj,
+				attr: attrobj,
+				html: html
+			};
+			// Cache the item only if it's not custom (no upgrades or transmutations)
+			if (iscustomitem === false)
+			{
+				Q.Box[item.id] = box;
+			}
 			// Execute callback if provided
 			if (settings.callback)
 			{
-				settings.callback({
-					item: item,
-					infusions: infusionobjs,
-					upgrades: upgradeobjs,
-					skin: skinobj,
-					attr: attrobj
-				});
+				settings.callback(box);
 			}
 		};
 		
@@ -19409,7 +19468,7 @@ B = {
 							$.getJSON(U.getAPIItem(iElement.attr("data-sale")), function(iData)
 							{
 								iElement.attr("src", iData.icon);
-								Q.analyzeItem(iData, {element: iElement});
+								Q.scanItem(iData, {element: iElement});
 							});
 						})($(this));
 					}
@@ -19529,7 +19588,7 @@ B = {
 						{
 							var icon = $("#dsbVendorIcon_" + iIndex);
 							icon.attr("src", pProduct.icon);
-							Q.analyzeItem(pProduct, {element: icon});
+							Q.scanItem(pProduct, {element: icon});
 						});
 					}).done(function()
 					{
