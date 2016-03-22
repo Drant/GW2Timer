@@ -1022,9 +1022,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "",
-	Start: new Date("2016-03-15T16:00:00Z"),
-	Finish: new Date("2016-03-22T16:00:00Z")
+	content: "<img class='dsbSaleIcon' src='https://render.guildwars2.com/file/AFBE55FC08ABD32007F3EA0F77F14306AC07283D/499490.png' /> <a href='http://wiki.guildwars2.com/wiki/Bunny Ears'>Bunny Ears</a> (<gem>200</gem><ins class='s16 s16_gem'></ins>) is back on the gem store after 2 years.",
+	Start: new Date("2016-03-22T16:00:00Z"),
+	Finish: new Date("2016-03-29T16:00:00Z")
 },
 
 /*
@@ -1114,8 +1114,8 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	isSpecial: true, // If a discounted sale exists
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-03-15T16:00:00Z"),
-	Finish: new Date("2016-03-22T16:00:00Z"),
+	Start: new Date("2016-03-22T16:00:00Z"),
+	Finish: new Date("2016-03-29T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1124,23 +1124,44 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Bank Access Pass",
-		id: "19984",
-		price: 21,
-		discount: [[1, 21, 35], [5, 75, 125]],
+		name: "Ironclad Appearance Pack",
+		img: "http://i.imgur.com/1SaYV5O.png",
+		price: 2000,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Wizard's Hat",
-		id: "64757",
-		price: 200,
+		name: "Ironclad Outfit",
+		img: "http://i.imgur.com/sFOc2JI.png",
+		price: 700,
 		discount: null,
+		col: 0
+	},
+	{
+		name: "Ironclad Glider",
+		img: "http://i.imgur.com/ajTZCWT.png",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Angry Chest",
+		id: "70234",
+		price: 320,
+		discount: 400,
 		col: 1
 	},
 	{
-		name: "Classical Glider",
-		id: "77821",
-		price: 400,
+		name: "Mini Angry Wintersday Gift",
+		id: "77621",
+		price: 320,
+		discount: 400,
+		col: 1
+	},
+	{
+		name: "Bunny Ears",
+		id: "64738",
+		price: 200,
 		discount: null,
 		col: 1
 	}

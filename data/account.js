@@ -94,6 +94,11 @@ var GW2T_CURRENCY_DATA = {
  * Quick reference API related data.
  */
 var GW2T_ACCOUNT_METADATA = {
+	Bank: {
+		NumSlotsHorizontal: 10,
+		NumSlotsVertical: 3,
+		NumSlotsPerTab: 30
+	},
 	CraftingRank: {
 		Novice: 0,
 		Initiate: 75,
@@ -281,7 +286,7 @@ var GW2T_ATTRIBUTE_DATA = {
 		17.4, 17.8, 18.2, 18.6, 19.0, 19.4, 19.8, 20.2, 20.6, 21.0 // Divide by 21 at level 80
 	],
 	SecondaryDivisorRatio: 7/5, // Divide the precision divisor by this ratio to get the secondary attributes' divisor
-	HealthGrowth: { // Additional health points per level, group corresponds to profession health property
+	HealthGrowth: { // Additional health points per level, key corresponds to profession health property
 		high: {
 			"19": 28,  //  1-19
 			"39": 70,  // 20-39

@@ -76,7 +76,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160209},
+		programVersion: {key: "int_utlProgramVersion", value: 160322},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
@@ -4169,6 +4169,10 @@ A = {
 		{
 			A.viewEquipment();
 		});
+		$("#accMenuInventory").click(function()
+		{
+			A.viewInventory();
+		});
 		
 		// Open the section if specified in the URL
 		$("#accPlatterManager").show();
@@ -4498,7 +4502,7 @@ A = {
 			A.generateCharactersStatistics();
 		};
 		
-		$("#chrSummary, #chrStatistics ul, #accDish_Equipment").empty();
+		$("#chrSummary, #chrStatistics ul, #accDish_Equipment, #accDish_Inventory").empty();
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
 		I.suspendElement(menusubsection);
@@ -5181,7 +5185,7 @@ A = {
 					var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
 					Q.scanItem(iData, {
 						element: slot,
-						equipment: iEquipment,
+						customitem: iEquipment,
 						runesets: runesets,
 						wantattr: true,
 						callback: function(iBox)
@@ -5382,9 +5386,57 @@ A = {
 	/*
 	 * Generates searchable inventory and bank windows for all characters.
 	 */
-	generateInventory: function()
+	viewInventory: function()
 	{
-		
+		if ($("#accDish_Inventory").is(":empty"))
+		{
+			A.generateBank();
+		}
+	},
+	
+	/*
+	 * Generates the bank tabs in the inventory subsection.
+	 */
+	generateBank: function()
+	{
+		var dish = $("#accDish_Inventory");
+		//var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
+		var container = $("<div id='ivtBankContainer'></div>").appendTo(dish);
+		var bank = $("<div id='ivtBank'></div>").appendTo(container);
+		var slotdata;
+		var slot;
+		$.getJSON(A.getURL(A.URL.Bank), function(pData)
+		{
+			// First generate empty bank slots, then fill them up asynchronously by item details retrieval
+			for (var i = 0; i < pData.length; i++)
+			{
+				slotdata = pData[i];
+				slot = $("<span class='ivtSlot'><var class='ivtSlotBackground'>" + I.Symbol.Filler
+					+ "</var><var class='ivtSlotIcon'>" + I.Symbol.Filler + "</var></span>");
+				bank.append(slot);
+				// A row every so slots
+				if ((i+1) % A.Metadata.Bank.NumSlotsHorizontal === 0)
+				{
+					bank.append("<br />");
+				}
+				// Bank tab separator every so slots
+				if ((i+1) % A.Metadata.Bank.NumSlotsPerTab === 0)
+				{
+					bank.append("<div class='ivtBankTabSeparator'></div>");
+				}
+				if (slotdata)
+				{
+					(function(iSlotData, iSlot)
+					{
+						$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
+						{
+							iSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + iItem.icon + ")"});
+							Q.scanItem(iItem, {element: iSlot, customitem: iSlotData});
+						});
+					})(slotdata, slot);
+				}
+			}
+		});
 	},
 	
 	/*
@@ -7075,7 +7127,6 @@ Q = {
 	{
 		var det = pItem.details;
 		var type = pItem.type;
-		var str = "";
 		// These top level types have overriding priority
 		var validtypes = {
 			Back: 1,
@@ -7088,13 +7139,13 @@ Q = {
 		};
 		if (validtypes[type])
 		{
-			str = "<br />" + D.getString(type);
+			return "<br />" + D.getString(type) + "<br />";
 		}
-		else if (det.type) // Else use the subtype in the details property object
+		else if (det.type && det.type !== "Default") // Else use the subtype in the details property object
 		{
-			str = D.getString(det.type);
+			return D.getString(det.type) + "<br />";
 		}
-		return str + "<br />";
+		return "";
 	},
 	
 	/*
@@ -7460,10 +7511,9 @@ Q = {
 	 * @param object pItem details retrieved from API.
 	 * @objparam jqobject element to bind tooltip.
 	 * @objparam int quantity if it is a stack of these items.
-	 * @objparam intarray upgrades item IDs upgrades like sigils, runes, or gems.
-	 * @objparam intarray infusions item IDs of infusions.
 	 * @objparam int skin ID for transmuted items.
-	 * @objparam object equipment from characters API.
+	 * @objparam object customitem contains information about the item's upgrades,
+	 * infusions, skins, and bindings, which are found in characters and bank API.
 	 * @objparam object runesets containing counts of runes associated with rune's item ID.
 	 * @objparam string soulbound name of character the item is bound to.
 	 * @objparam function callback what to do after the tooltip generation
@@ -7480,13 +7530,15 @@ Q = {
 		var attrobj = null; // Holds attribute points
 		var iscustomitem = false;
 		// If provided an equipment object, override the other parameters
-		if (settings.equipment)
+		if (settings.customitem)
 		{
 			iscustomitem = true;
-			settings.infusions = settings.equipment.infusions;
-			settings.upgrades = settings.equipment.upgrades;
-			settings.skin = settings.equipment.skin;
 		}
+		else
+		{
+			settings.customitem = {}; // Initialize as blank object with undefined properties
+		}
+		// Initialize attribute object if requested
 		if (settings.wantattr && A.isAccountInitialized)
 		{
 			attrobj = new A.Attribute.Base();
@@ -7599,8 +7651,8 @@ Q = {
 				var consumeimg = (det.type === "Food" || det.type === "Utility") ? ("_" + (det.type).toLowerCase()) : "";
 				var consumetypestr = (det.type === "Immediate") ? D.getString("Boost") : D.getString("Nourishment");
 				var consumedurstr = (det.duration_ms > 0) ? (" (" + T.formatTooltipTimeMS(det.duration_ms, true) + ")") : "";
-				attrstr += "<img class='itmIcon itmConsumableIcon' src='img/account/item/nourishment" + consumeimg + ".png' /> "
-					+ "<span class='itmGrayed itmConsumableDesc'>" + consumetypestr + consumedurstr + ": " + Q.formatItemDescription(det.description) + "</span><br />";
+				attrstr += "<span class='itmConsumableLine'><img class='itmIcon itmConsumableIcon' src='img/account/item/nourishment" + consumeimg + ".png' /> "
+					+ "<var class='itmGrayed itmConsumableDesc'>" + consumetypestr + consumedurstr + ": " + Q.formatItemDescription(det.description) + "</var></span>";
 			}
 			else if (det.type === "Booze")
 			{
@@ -7663,43 +7715,64 @@ Q = {
 		
 		// FLAGS
 		var flagsstr = "";
+		var flagsobj = {};
+		var addFlag = function(pFlagName)
+		{
+			flagsstr += D.getString(pFlagName) + "<br />";
+		};
 		if (item.flags)
 		{
+			// Convert the flags array to an associative array for easier reading
 			item.flags.forEach(function(iFlag)
 			{
-				var wantflag = false;
-				if (iFlag === "Unique")
+				flagsobj[iFlag] = 1;
+			});
+			// Uniqueness flag
+			if (flagsobj["Unique"])
+			{
+				addFlag("Unique");
+			}
+			// Binding flags for custom items (equipped items or in bound in inventory)
+			if (iscustomitem && settings.customitem.binding)
+			{
+				if (settings.customitem.binding === "Character" && settings.customitem.bound_to)
 				{
-					wantflag = true;
+					flagsstr += "<var class='itmColor_warning'>" + D.getString("SoulboundToCharacter")
+						+ ": " + settings.customitem.bound_to + "</var><br />";
+				} 
+				else if (settings.customitem.binding === "Account")
+				{
+					addFlag("AccountBound");
 				}
-				else if (iFlag === "SoulbindOnAcquire") // "SoulbindOnAcquire" flag shall override "SoulBindOnUse"
+			}
+			else // Binding flags for fresh items
+			{
+				// "SoulbindOnAcquire" flag shall override "SoulBindOnUse"
+				if (flagsobj["SoulbindOnAcquire"])
 				{
 					issoulbound = true;
-					wantflag = true;
+					addFlag("SoulbindOnAcquire");
 				}
-				else if (iFlag === "SoulBindOnUse" && issoulbound === false)
+				else if (flagsobj["SoulBindOnUse"] && issoulbound === false)
 				{
-					wantflag = true;
+					addFlag("SoulBindOnUse");
 				}
-				else if (iFlag === "AccountBound") // "AccountBound" flag shall override "AccountBindOnUse"
+				// "AccountBound" flag shall override "AccountBindOnUse"
+				if (flagsobj["AccountBound"]) 
 				{
 					isaccountbound = true;
-					wantflag = true;
+					addFlag("AccountBound");
 				}
-				else if (iFlag === "AccountBindOnUse" && isaccountbound === false)
+				else if (flagsobj["AccountBindOnUse"] && isaccountbound === false)
 				{
-					wantflag = true;
+					addFlag("AccountBindOnUse");
 				}
-				else if (iFlag === "NoSell")
-				{
-					isvendorable = false;
-				}
-				
-				if (wantflag)
-				{
-					flagsstr += D.getString(iFlag) + "<br />";
-				}
-			});
+			}
+			// Vendorability flag
+			if (flagsobj["NoSell"])
+			{
+				isvendorable = false;
+			}
 		}
 		
 		// CHARACTER BINDING
@@ -7746,7 +7819,7 @@ Q = {
 						infusiontype = infusionslot.flags[0];
 						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
 							+ D.getString(infusiontype + "_Infusion") + "<br /><br />");
-						if (infusionslot.item_id !== undefined && settings.infusions === undefined)
+						if (infusionslot.item_id !== undefined && settings.customitem.infusions === undefined)
 						{
 							preinfusions.push(infusionslot.item_id);
 							propstofetch++;
@@ -7764,7 +7837,7 @@ Q = {
 					+ D.getString("UnusedUpgradeSlot") + "<br /><br />";
 				upgradestr.push(regup);
 				upgradestr.push((isdouble) ? regup : "");
-				if (det && det.suffix_item_id && settings.upgrades === undefined)
+				if (det && det.suffix_item_id && settings.customitem.upgrades === undefined)
 				{
 					preupgrades.push(det.suffix_item_id);
 					propstofetch++;
@@ -7781,14 +7854,13 @@ Q = {
 		}
 		
 		// OVERWRITE INFUSIONS AND UPGRADES
-		if (settings.infusions)
+		if (settings.customitem.infusions)
 		{
-			iscustomitem = true;
-			for (var i = 0; i < settings.infusions.length; i++)
+			for (var i = 0; i < settings.customitem.infusions.length; i++)
 			{
 				if (i < preinfusions.length)
 				{
-					preinfusions[i] = settings.infusions[i];
+					preinfusions[i] = settings.customitem.infusions[i];
 					if (preinfusions[i])
 					{
 						propstofetch++;
@@ -7796,14 +7868,13 @@ Q = {
 				}
 			}
 		}
-		if (settings.upgrades)
+		if (settings.customitem.upgrades)
 		{
-			iscustomitem = true;
-			for (var i = 0; i < settings.upgrades.length; i++)
+			for (var i = 0; i < settings.customitem.upgrades.length; i++)
 			{
 				if (i < preupgrades.length)
 				{
-					preupgrades[i] = settings.upgrades[i];
+					preupgrades[i] = settings.customitem.upgrades[i];
 					if (preupgrades[i])
 					{
 						propstofetch++;
@@ -7814,9 +7885,8 @@ Q = {
 		
 		// TRANSMUTATION
 		var transmstr = "";
-		if (settings.skin)
+		if (settings.customitem.skin)
 		{
-			iscustomitem = true;
 			propstofetch++;
 		}
 		
@@ -7968,9 +8038,9 @@ Q = {
 		}
 		
 		// TRANSMUTED
-		if (settings.skin)
+		if (settings.customitem.skin)
 		{
-			$.getJSON(U.getAPISkin(settings.skin), function(iData)
+			$.getJSON(U.getAPISkin(settings.customitem.skin), function(iData)
 			{
 				namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + Q.getRarityClass(rarity)
 					+ "'><img class='itmIcon itmIconMain' src='" + iData.icon + "' />" + U.escapeHTML(iData.name) + "</aside>";

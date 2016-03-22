@@ -986,10 +986,9 @@ a.chrWalletLink {
 	display: none;
 	position: absolute;
 	height: 2px;
-	background: orange;
-	background: linear-gradient(270deg, transparent, rgba(255,255,255,0.5));
-	background-size: 400% 400%;
 	border-radius: 2px;
+	background-image: linear-gradient(270deg, transparent, rgba(255,255,255,0.5));
+	background-size: 400% 400%;
 	animation: aniGradientBackground 5s ease infinite;
 }
 .spzColumn em.spzCon_01 {
@@ -1116,6 +1115,53 @@ a.chrWalletLink {
 		0px -1px 1px #000,
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
+}
+
+/* Inventory and bank
+----------------------------------------------------------------------------- */
+#ivtBankContainer {
+	width: 100%;
+	margin: 32px;
+	text-align: center;
+}
+#ivtBank {
+	display: inline-block;
+	padding: 8px;
+	background: linear-gradient(to right, #4a3018 0%, #4d3c24 50%, #775334 100%);
+	line-height: 0; /* Makes the slots pack tightly */
+}
+.ivtSlot {
+	display: inline-block;
+	width: 72px; height: 72px;
+	padding: 0;
+	margin: 0;
+}
+.ivtSlotBackground {
+	display: block;
+	position: absolute;
+	width: 72px; height: 72px;
+	background-image: url("../img/account/equipment/inventory.png");
+	background-size: 78px 78px;
+	background-position: center;
+	opacity: 0.6;
+}
+.ivtSlot:hover .ivtSlotBackground {
+	opacity: 0.9;
+}
+.ivtSlotIcon {
+	display: block;
+	margin-top: 5px;
+	margin-left: 5px;
+	position: absolute;
+	width: 62px; height: 62px;
+	background-size: 100%;
+	background-position: center;
+}
+.ivtBankTabSeparator {
+	width: 100%; height: 36px;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(64,64,64,0.9) 50%, rgba(128,128,128,0.5) 100%);
 }
 
 /* Adjustments for smaller screens

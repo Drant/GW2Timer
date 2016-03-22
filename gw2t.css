@@ -285,13 +285,15 @@ img {
 .itmColor_flavor { color: #99eedd; }
 .itmColor_reminder { color: #aaaaaa; }
 .itmColor_warning { color: #ee0000; }
+.itmConsumableLine {
+	display: table;
+}
 .itmConsumableIcon {
 	display: inline-block;
 	vertical-align: top;
 }
 .itmConsumableDesc {
-	display: inline-block;
-	width: 300px;
+	display: table-cell;
 	line-height: 16px;
 }
 
