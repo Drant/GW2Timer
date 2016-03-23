@@ -5208,7 +5208,7 @@ A = {
 					// Add faux checkboxes for toggleable armor slots
 					if (equiptoggle[iEquipment.slot])
 					{
-						subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/account/equipment/checkbox.png' />");
+						subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/ui/checkbox.png' />");
 					}
 					// Add faux charges number over gathering tools
 					if (equipgathering[iEquipment.slot] && iData.rarity !== Q.Rarity.Rare) // Ignore Rare rarity tools which have unlimited charges
@@ -5403,39 +5403,44 @@ A = {
 		//var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
 		var container = $("<div id='ivtBankContainer'></div>").appendTo(dish);
 		var bank = $("<div id='ivtBank'></div>").appendTo(container);
+		var tabstr = "<div class='ivtBankTabSeparator'><var class='ivtBankTabToggle'>" + I.Symbol.Filler + "</var></div>";
 		var slotdata;
 		var slot;
+		var nexti;
 		$.getJSON(A.getURL(A.URL.Bank), function(pData)
 		{
 			// First generate empty bank slots, then fill them up asynchronously by item details retrieval
+			bank.append(tabstr);
 			for (var i = 0; i < pData.length; i++)
 			{
+				nexti = i+1;
 				slotdata = pData[i];
-				slot = $("<span class='ivtSlot'><var class='ivtSlotBackground'>" + I.Symbol.Filler
-					+ "</var><var class='ivtSlotIcon'>" + I.Symbol.Filler + "</var></span>");
+				// Add slots
+				slot = Q.createInventorySlot();
 				bank.append(slot);
-				// A row every so slots
-				if ((i+1) % A.Metadata.Bank.NumSlotsHorizontal === 0)
+				// Bank tab separator every so slots
+				if (nexti % A.Metadata.Bank.NumSlotsPerTab === 0 && nexti !== pData.length)
+				{
+					bank.append(tabstr);
+				}
+				// Line break for new row every so slots
+				if (nexti % A.Metadata.Bank.NumSlotsHorizontal === 0)
 				{
 					bank.append("<br />");
 				}
-				// Bank tab separator every so slots
-				if ((i+1) % A.Metadata.Bank.NumSlotsPerTab === 0)
-				{
-					bank.append("<div class='ivtBankTabSeparator'></div>");
-				}
 				if (slotdata)
 				{
-					(function(iSlotData, iSlot)
+					(function(iSlot, iSlotData)
 					{
 						$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 						{
-							iSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + iItem.icon + ")"});
-							Q.scanItem(iItem, {element: iSlot, customitem: iSlotData});
+							Q.styleInventorySlot(iSlot, iSlotData, iItem);
 						});
-					})(slotdata, slot);
+					})(slot, slotdata);
 				}
 			}
+			// Ornamental bank tab separator at the bottom
+			bank.append("<div class='ivtBankTabSeparator'><var class='ivtBankTabLocked'>" + I.Symbol.Filler + "</var></div>");
 		});
 	},
 	
@@ -7529,14 +7534,25 @@ Q = {
 		var skinobj = null;
 		var attrobj = null; // Holds attribute points
 		var iscustomitem = false;
-		// If provided an equipment object, override the other parameters
+		/* Example structure of customitem object:
+			{
+				"id": 68390,
+				"slot": "Coat",
+				"count": 8,
+				"binding": "Character",
+				"bound_to": "Character Name"
+				"upgrades": [24693],
+				"infusions": [70852, 49433],
+				"skin": 2346
+			}
+		 */
 		if (settings.customitem)
 		{
 			iscustomitem = true;
 		}
 		else
 		{
-			settings.customitem = {}; // Initialize as blank object with undefined properties
+			settings.customitem = {}; // If not provided then initialize as a blank object with undefined properties
 		}
 		// Initialize attribute object if requested
 		if (settings.wantattr && A.isAccountInitialized)
@@ -8168,6 +8184,33 @@ Q = {
 		}
 		
 		return recharge + name + desc + facts;
+	},
+		
+	/*
+	 * Constructs a standard inventory slot for use in inventory, bank, materials,
+	 * and other windows.
+	 * @returns jqobject slot.
+	 */
+	createInventorySlot: function()
+	{
+		return $("<span class='ivtSlot'>"
+			+ "<var class='ivtSlotBackground'>" + I.Symbol.Filler + "</var>"
+			+ "<var class='ivtSlotIcon'>" + I.Symbol.Filler + "</var>"
+			+ "<var class='ivtSlotForeground'>" + I.Symbol.Filler + "</var>"
+		+ "</span>");
+	},
+	
+	/*
+	 * Styles a standard inventory slot.
+	 * @param jqobject pSlot to style.
+	 * @param object pSlotData custom item data retrieved from characters or
+	 * bank API, containing stack count and transmutation data.
+	 * @param object pItem data retrieved from item details API.
+	 */
+	styleInventorySlot: function(pSlot, pSlotData, pItem)
+	{
+		pSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + pItem.icon + ")"});
+		Q.scanItem(pItem, {element: pSlot, customitem: pSlotData});
 	},
 	
 	/*

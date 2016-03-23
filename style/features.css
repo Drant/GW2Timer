@@ -408,6 +408,11 @@ dt.jpzListNameHover {
 	white-space: nowrap;
 	font-size: 14px;
 }
+.cltPetFact:hover {
+	width: auto;
+	background: #333;
+	border-radius: 4px;
+}
 .cltPetFact:first-child {
 	width: 96px;
 	font-size: 16px;
