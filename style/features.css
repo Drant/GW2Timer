@@ -420,6 +420,15 @@ dt.jpzListNameHover {
 .cltPetFact:first-child .cltPetFactIcon {
 	width: 32px; height: 32px;
 }
+.cltPetFact:nth-child(2) {
+	position: absolute;
+	margin-left: -96px;
+	margin-top: -16px;
+	font-size: 12px;
+}
+.cltPetFact:nth-child(2) .cltPetFactIcon {
+	width: 16px; height: 16px;
+}
 .cltPetFactIcon {
 	width: 24px; height: 24px;
 	margin-left: 8px;

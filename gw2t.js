@@ -5400,9 +5400,8 @@ A = {
 	generateBank: function()
 	{
 		var dish = $("#accDish_Inventory");
-		//var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
 		var container = $("<div id='ivtBankContainer'></div>").appendTo(dish);
-		var bank = $("<div id='ivtBank'></div>").appendTo(container);
+		var bank = $("<div id='ivtBank'></div>").appendTo(container).append(I.cThrobber);
 		var tabstr = "<div class='ivtBankTabSeparator'><var class='ivtBankTabToggle'>" + I.Symbol.Filler + "</var></div>";
 		var slotdata;
 		var slot;
@@ -5410,7 +5409,7 @@ A = {
 		$.getJSON(A.getURL(A.URL.Bank), function(pData)
 		{
 			// First generate empty bank slots, then fill them up asynchronously by item details retrieval
-			bank.append(tabstr);
+			bank.empty().append(tabstr);
 			for (var i = 0; i < pData.length; i++)
 			{
 				nexti = i+1;
@@ -7729,6 +7728,16 @@ Q = {
 			}
 		}
 		
+		// SELECTABLE STATS
+		var selectstatsstr = "";
+		if (isequipment)
+		{
+			if (det && det.infix_upgrade === undefined)
+			{
+				selectstatsstr = D.getString("DoubleClickToSelectStats") + "<br />";
+			}
+		}
+		
 		// FLAGS
 		var flagsstr = "";
 		var flagsobj = {};
@@ -7741,7 +7750,7 @@ Q = {
 			// Convert the flags array to an associative array for easier reading
 			item.flags.forEach(function(iFlag)
 			{
-				flagsobj[iFlag] = 1;
+				flagsobj[iFlag] = true;
 			});
 			// Uniqueness flag
 			if (flagsobj["Unique"])
@@ -7800,9 +7809,12 @@ Q = {
 		
 		// VENDOR PRICE
 		var vendorstr = "";
+		var vendorvalue = 0;
 		if (item.vendor_value > 0 && isvendorable)
 		{
-			vendorstr += E.formatCoinString(item.vendor_value, true, true);
+			// If stack count is included then multiply vendor price for one item by that number
+			vendorvalue = (settings.customitem.count) ? settings.customitem.count * item.vendor_value : item.vendor_value;
+			vendorstr += E.formatCoinString(vendorvalue, true, true);
 		}
 		
 		/*
@@ -7849,10 +7861,10 @@ Q = {
 			}
 			if ((isascended && istrinket) === false)
 			{
-				var regup = "<img class='itmSlotIcon' src='img/account/item/upgrade.png' /> "
+				var unupgradedslot = "<img class='itmSlotIcon' src='img/account/item/upgrade.png' /> "
 					+ D.getString("UnusedUpgradeSlot") + "<br /><br />";
-				upgradestr.push(regup);
-				upgradestr.push((isdouble) ? regup : "");
+				upgradestr.push(unupgradedslot);
+				upgradestr.push((isdouble) ? unupgradedslot : "");
 				if (det && det.suffix_item_id && settings.customitem.upgrades === undefined)
 				{
 					preupgrades.push(det.suffix_item_id);
@@ -7930,6 +7942,7 @@ Q = {
 				+ typestr
 				+ levelstr
 				+ descbottomstr
+				+ selectstatsstr
 				+ flagsstr
 				+ charbindstr
 				+ vendorstr
@@ -8194,9 +8207,9 @@ Q = {
 	createInventorySlot: function()
 	{
 		return $("<span class='ivtSlot'>"
-			+ "<var class='ivtSlotBackground'>" + I.Symbol.Filler + "</var>"
-			+ "<var class='ivtSlotIcon'>" + I.Symbol.Filler + "</var>"
-			+ "<var class='ivtSlotForeground'>" + I.Symbol.Filler + "</var>"
+			+ "<var class='ivtSlotBackground'></var>"
+			+ "<var class='ivtSlotIcon'></var>"
+			+ "<var class='ivtSlotForeground'></var>"
 		+ "</span>");
 	},
 	
@@ -8209,8 +8222,15 @@ Q = {
 	 */
 	styleInventorySlot: function(pSlot, pSlotData, pItem)
 	{
-		pSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + pItem.icon + ")"});
-		Q.scanItem(pItem, {element: pSlot, customitem: pSlotData});
+		Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, callback: function(pBox)
+		{
+			var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
+			pSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + icon + ")"});
+			if (pSlotData.count > 1)
+			{
+				pSlot.append("<var class='ivtSlotCount'>" + pSlotData.count + "</var>");
+			}
+		}});
 	},
 	
 	/*
@@ -8570,6 +8590,8 @@ D = {
 			es: "Casilla de infusión agonía sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Agonie)"},
 		s_UnusedUpgradeSlot: {en: "Unused Upgrade Slot", de: "Freier Aufwertungsplatz",
 			es: "Casilla para mejoras sin utilizar", fr: "Emplacement d&apos;amélioration inutilisé"},
+		s_DoubleClickToSelectStats: {en: "Double-click to select stats.", de: "Doppelklicken, um Werte auszuwählen.",
+			es: "Haz doble clic para seleccionar estadísticas.", fr: "Double-cliquez pour sélectionner les statistiques."},
 		s_DoubleClickToConsume: {en: "Double-click to consume.", de: "Zum Benutzen doppelklicken.",
 			es: "Haz doble clic para consumir.", fr: "Double-cliquez pour utiliser."},
 		s_ExcessiveAlcohol: {en: "Excessive alcohol consumption will result in intoxication.", de: "Übermäßiger Alkoholkonsum führt zu Rauschzuständen.",
@@ -13945,6 +13967,7 @@ P = {
 	{
 		var latlngs = M.convertGCtoLCMulti(pCoords);
 		var layergroup = new L.layerGroup();
+		var marker;
 		var Options = {radius: 10, color: "lime", weight: 4};
 		if (pOptions !== undefined)
 		{
@@ -13956,7 +13979,9 @@ P = {
 		
 		for (var i in latlngs)
 		{
-			layergroup.addLayer(L.circleMarker(latlngs[i], Options));
+			marker = L.circleMarker(latlngs[i], Options);
+			M.bindMarkerZoomBehavior(marker, "click");
+			layergroup.addLayer(marker);
 		}
 		return layergroup;
 	},

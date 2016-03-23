@@ -917,7 +917,7 @@ a.chrWalletLink {
 	display: inline-block;
 	width: 18px; height: 18px;
 	margin-top: 32px;
-	background-image: url("../img/account/equipment/spec_side.png");
+	background-image: url("../img/ui/toggle_right.png");
 	background-size: 100%;
 	opacity: 0.8;
 }
@@ -1143,6 +1143,7 @@ a.chrWalletLink {
 }
 .ivtSlot {
 	display: inline-block;
+	position: relative;
 	width: 72px; height: 72px;
 	padding: 0;
 	margin: 0;
@@ -1175,12 +1176,26 @@ a.chrWalletLink {
 }
 .ivtSlotIcon {
 	display: block;
+	position: absolute;
 	margin-top: 5px;
 	margin-left: 5px;
-	position: absolute;
 	width: 62px; height: 62px;
 	background-size: 100%;
 	background-position: center;
+}
+.ivtSlotCount {
+	display: block;
+	position: absolute;
+	top: 14px;
+	right: 10px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 18px;
+	color: #ffeeaa;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
 }
 .ivtBankTabSeparator {
 	width: 100%; height: 40px;
