@@ -5422,11 +5422,7 @@ A = {
 				{
 					bank.append(tabstr);
 				}
-				// Line break for new row every so slots
-				if (nexti % A.Metadata.Bank.NumSlotsHorizontal === 0)
-				{
-					bank.append("<br />");
-				}
+				// Line breaks (new rows) are automatically rendered by the fixed width of the bank's container
 				if (slotdata)
 				{
 					(function(iSlot, iSlotData)
@@ -5437,9 +5433,17 @@ A = {
 						});
 					})(slot, slotdata);
 				}
+				else
+				{
+					// For empty inventory slots
+					Q.styleInventorySlot(slot, null, null);
+				}
 			}
 			// Ornamental bank tab separator at the bottom
 			bank.append("<div class='ivtBankTabSeparator'><var class='ivtBankTabLocked'>" + I.Symbol.Filler + "</var></div>");
+			// Create search bar
+			var search = $("<div id='ivtBankSearch'></div>").prependTo(bank);
+			Q.createInventorySearch(search, container);
 		});
 	},
 	
@@ -7072,7 +7076,7 @@ E = {
 };
 
 /* =============================================================================
- * @@Quantity items, attributes, traits, to be used by the Account page
+ * @@Quantity items, inventory, attributes, traits
  * ========================================================================== */
 Q = {
 	
@@ -7094,6 +7098,7 @@ Q = {
 		Rare: 4,
 		Exotic: 6
 	},
+	cSEARCH_LIMIT: 200, // Inventory search throttle limit
 	
 	/*
 	 * Sets an object with an item rarity CSS class. Removes all if level is not provided.
@@ -8222,15 +8227,84 @@ Q = {
 	 */
 	styleInventorySlot: function(pSlot, pSlotData, pItem)
 	{
-		Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, callback: function(pBox)
+		if (pSlotData)
 		{
-			var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
-			pSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + icon + ")"});
-			if (pSlotData.count > 1)
+			Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, callback: function(pBox)
 			{
-				pSlot.append("<var class='ivtSlotCount'>" + pSlotData.count + "</var>");
+				var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
+				pSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + icon + ")"});
+				pSlot.data("name", (pItem.name).toLowerCase()); // Store the item's name in the element for user search
+				if (pSlotData.count > 1)
+				{
+					pSlot.append("<var class='ivtSlotCount'>" + pSlotData.count + "</var>");
+				}
+				else if (pItem.type === "Tool")
+				{
+					// Salvage Kits gets a faux count number representing their remaining charges
+					if (A.Equipment.SalvageCharges && A.Equipment.SalvageCharges[pItem.id])
+					{
+						pSlot.append("<var class='ivtSlotCount'>" + A.Equipment.SalvageCharges[pItem.id] + "</var>");
+					}
+				}
+				else if (pItem.type === "Gathering")
+				{
+					if (pItem.rarity !== Q.Rarity.Rare)
+					{
+						pSlot.append("<var class='ivtSlotCount'>" + "100" + "</var>");
+					}
+				}
+			}});
+		}
+		else
+		{
+			// Empty slot gets a name anyway for use in search
+			pSlot.data("name", "*");
+		}
+	},
+	
+	/*
+	 * Creates and binds a search bar for a container containing item slots.
+	 * @param jqobject pDestination where to place the search bar.
+	 * @param jqobject pSource the container of the slots to be searched.
+	 */
+	createInventorySearch: function(pDestination, pSource)
+	{
+		var bar = $("<div class='ivtSearchBar'></div>").appendTo(pDestination);
+		var input = $("<input class='ivtSearchInput' type='text' />").appendTo(bar);
+		var filler = $("<div class='ivtSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(bar);
+		var slots = pSource.find(".ivtSlot");
+		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
+		{
+			var query = $(this).val().toLowerCase();
+			var name = "";
+			if (query.length > 0)
+			{
+				filler.hide();
+				slots.each(function()
+				{
+					name = $(this).data("name");
+					if (name)
+					{
+						if (name.indexOf(query) !== -1)
+						{
+							$(this).show();
+						}
+						else
+						{
+							$(this).hide();
+						}
+					}
+				});
 			}
-		}});
+			else
+			{
+				filler.show();
+				slots.each(function()
+				{
+					$(this).show();
+				});
+			}
+		}));
 	},
 	
 	/*
@@ -8396,6 +8470,8 @@ D = {
 			cs: "zpět", it: "annullare", pl: "cofnąć", pt: "desfazer", ru: "отменить", zh: "復原"},
 		s_optimize: {de: "optimieren", es: "optimizar", fr: "optimiser",
 			cs: "optimalizovat", it: "ottimizzare", pl: "optymalizować", pt: "otimizar", ru: "оптимизировать", zh: "最佳化"},
+		s_search: {de: "suchen", es: "buscar", fr: "rechercher",
+			cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"},
 		
 		// Adjectives and Adverbs
 		s_ago: {de: "vor", es: "hace", fr: "il ya",

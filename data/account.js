@@ -224,7 +224,16 @@ var GW2T_EQUIPMENT_DATA = {
 	ArmorSlots: {Helm: 1, Shoulders: 1, Coat: 1, Gloves: 1, Leggings: 1, Boots: 1},
 	ToggleableSlots: {Helm: 1, Shoulders: 1, Gloves: 1, Backpack: 1},
 	NumArmorSlots: 6,
-	GatheringCharges: {Sickle: 50, Axe: 100, Pick: 100}
+	GatheringCharges: {Sickle: 50, Axe: 100, Pick: 100},
+	SalvageCharges: {
+		"23038": 15, // Crude Salvage Kit
+		"23040": 25, // Basic Salvage Kit
+		"23041": 25, // Fine Salvage Kit
+		"23042": 25, // Journeyman's Salvage Kit
+		"23043": 25, // Master's Salvage Kit
+		"23045": 250, // Mystic Salvage Kit
+		"19986": 25 // Black Lion Salvage Kit
+	}
 };
 
 /*
