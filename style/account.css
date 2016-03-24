@@ -1119,10 +1119,7 @@ a.chrWalletLink {
 	font-size: 18px;
 	color: white;
 	text-shadow:
-		0px 1px 1px #000,
-		0px -1px 1px #000,
-		1px 0px 1px #000,
-		-1px 0px 1px #000;
+		1px 1px 1px #000;
 }
 
 /* Inventory slot, shared styles for inventory, bank, materials, and other windows.
@@ -1179,6 +1176,29 @@ a.chrWalletLink {
 	color: #ffeeaa;
 	text-shadow:
 		1px 1px 1px #000;
+}
+
+/* Shared window container for bank, materials, wardrobe, minis */
+.ivtBankContainer {
+	width: 100%;
+	margin-top: 32px;
+	margin-bottom: 32px;
+	text-align: center;
+}
+.ivtBank {
+	display: inline-block;
+	width: 720px; /* Must be exactly wide enough to fit a number of slots per row */
+	padding: 8px;
+	text-align: left;
+	line-height: 0; /* Makes the slots pack tightly on the vertical */
+	background: linear-gradient(to right, #4a3018 0%, #775334 50%, rgba(119,83,52,0.2) 100%);
+	border: 4px solid rgba(0,0,0,0.6);
+	border-radius: 8px;
+	box-shadow: 0px 0px 32px #0b0d0e;
+}
+.ivtBankSearch {
+	display: inline-block;
+	width: 705px;
 }
 .ivtBankTabSeparator {
 	width: 100%; height: 40px;
@@ -1237,29 +1257,6 @@ input[type="text"].ivtSearchInput:hover {
 	font-size: 17px;
 	color: #bbbbbb;
 	pointer-events: none;
-}
-
-/* Bank */
-#ivtBankContainer {
-	width: 100%;
-	margin-top: 32px;
-	margin-bottom: 32px;
-	text-align: center;
-}
-#ivtBank {
-	display: inline-block;
-	width: 720px; /* Must be exactly wide enough to fit a number of slots per row */
-	padding: 8px;
-	text-align: left;
-	line-height: 0; /* Makes the slots pack tightly on the vertical */
-	background: linear-gradient(to right, #4a3018 0%, #4d3c24 50%, #775334 100%);
-	border: 4px solid rgba(0,0,0,0.6);
-	border-radius: 8px;
-	box-shadow: 0px 0px 32px #0b0d0e;
-}
-#ivtBankSearch {
-	display: inline-block;
-	width: 705px;
 }
 
 /* Adjustments for smaller screens

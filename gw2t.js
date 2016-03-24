@@ -5177,13 +5177,13 @@ A = {
 		{
 			(function(iEquipment)
 			{
-				$.getJSON(U.getAPIItem(iEquipment.id), function(iData)
+				$.getJSON(U.getAPIItem(iEquipment.id), function(iItem)
 				{
 					var ithcontainer = $("#eqpContainer_" + char.charindex);
 					var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
-					var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iData.icon;
+					var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iItem.icon;
 					var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
-					Q.scanItem(iData, {
+					Q.scanItem(iItem, {
 						element: slot,
 						customitem: iEquipment,
 						runesets: runesets,
@@ -5211,10 +5211,13 @@ A = {
 						subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/ui/checkbox.png' />");
 					}
 					// Add faux charges number over gathering tools
-					if (equipgathering[iEquipment.slot] && iData.rarity !== Q.Rarity.Rare) // Ignore Rare rarity tools which have unlimited charges
+					if (iItem.type === "Gathering")
 					{
-						sloticon.attr("src", "img/account/equipment/icon_" + (iEquipment.slot).toLowerCase() + I.cPNG);
-						subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iEquipment.slot] + "</span>");
+						if (equipgathering[iItem.details.type] && iItem.rarity !== Q.Rarity.Rare) // Ignore Rare rarity tools which have unlimited charges
+						{
+							sloticon.attr("src", "img/account/equipment/icon_" + (iEquipment.slot).toLowerCase() + I.cPNG);
+							subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
+						}
 					}
 				});
 			})(char.equipment[i]);
@@ -5400,8 +5403,8 @@ A = {
 	generateBank: function()
 	{
 		var dish = $("#accDish_Inventory");
-		var container = $("<div id='ivtBankContainer'></div>").appendTo(dish);
-		var bank = $("<div id='ivtBank'></div>").appendTo(container).append(I.cThrobber);
+		var container = $("<div class='ivtBankContainer'></div>").appendTo(dish);
+		var bank = $("<div class='ivtBank'></div>").appendTo(container).append(I.cThrobber);
 		var tabstr = "<div class='ivtBankTabSeparator'><var class='ivtBankTabToggle'>" + I.Symbol.Filler + "</var></div>";
 		var slotdata;
 		var slot;
@@ -5442,7 +5445,7 @@ A = {
 			// Ornamental bank tab separator at the bottom
 			bank.append("<div class='ivtBankTabSeparator'><var class='ivtBankTabLocked'>" + I.Symbol.Filler + "</var></div>");
 			// Create search bar
-			var search = $("<div id='ivtBankSearch'></div>").prependTo(bank);
+			var search = $("<div class='ivtBankSearch'></div>").prependTo(bank);
 			Q.createInventorySearch(search, container);
 		});
 	},
@@ -8231,9 +8234,13 @@ Q = {
 		{
 			Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, callback: function(pBox)
 			{
+				// Load retrieved proper transmuted icon if available
 				var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
 				pSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + icon + ")"});
-				pSlot.data("name", (pItem.name).toLowerCase()); // Store the item's name in the element for user search
+				// Make the item searchable by converting its tooltip HTML into plain text
+				var keywords = $(pBox.html).text().toLowerCase();
+				pSlot.data("keywords", keywords); // Store the item's name in the element for user search
+				// Numeric label over the slot icon indicating stack size or charges remaining
 				if (pSlotData.count > 1)
 				{
 					pSlot.append("<var class='ivtSlotCount'>" + pSlotData.count + "</var>");
@@ -8241,24 +8248,26 @@ Q = {
 				else if (pItem.type === "Tool")
 				{
 					// Salvage Kits gets a faux count number representing their remaining charges
-					if (A.Equipment.SalvageCharges && A.Equipment.SalvageCharges[pItem.id])
+					var salv = A.Equipment.SalvageCharges;
+					if (salv && salv[pItem.id])
 					{
-						pSlot.append("<var class='ivtSlotCount'>" + A.Equipment.SalvageCharges[pItem.id] + "</var>");
+						pSlot.append("<var class='ivtSlotCount'>" + salv[pItem.id] + "</var>");
 					}
 				}
 				else if (pItem.type === "Gathering")
 				{
-					if (pItem.rarity !== Q.Rarity.Rare)
+					var gath = A.Equipment.GatheringCharges;
+					if (gath && pItem.rarity !== Q.Rarity.Rare)
 					{
-						pSlot.append("<var class='ivtSlotCount'>" + "100" + "</var>");
+						pSlot.append("<var class='ivtSlotCount'>" + gath[pItem.details.type] + "</var>");
 					}
 				}
 			}});
 		}
 		else
 		{
-			// Empty slot gets a name anyway for use in search
-			pSlot.data("name", "*");
+			// Empty slot gets keywords anyway for use in search
+			pSlot.data("keywords", "*");
 		}
 	},
 	
@@ -8276,16 +8285,16 @@ Q = {
 		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
 			var query = $(this).val().toLowerCase();
-			var name = "";
+			var keywords = "";
 			if (query.length > 0)
 			{
 				filler.hide();
 				slots.each(function()
 				{
-					name = $(this).data("name");
-					if (name)
+					keywords = $(this).data("keywords");
+					if (keywords)
 					{
-						if (name.indexOf(query) !== -1)
+						if (keywords.indexOf(query) !== -1)
 						{
 							$(this).show();
 						}

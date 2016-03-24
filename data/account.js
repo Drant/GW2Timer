@@ -224,7 +224,7 @@ var GW2T_EQUIPMENT_DATA = {
 	ArmorSlots: {Helm: 1, Shoulders: 1, Coat: 1, Gloves: 1, Leggings: 1, Boots: 1},
 	ToggleableSlots: {Helm: 1, Shoulders: 1, Gloves: 1, Backpack: 1},
 	NumArmorSlots: 6,
-	GatheringCharges: {Sickle: 50, Axe: 100, Pick: 100},
+	GatheringCharges: {Foraging: 50, Logging: 100, Mining: 100},
 	SalvageCharges: {
 		"23038": 15, // Crude Salvage Kit
 		"23040": 25, // Basic Salvage Kit

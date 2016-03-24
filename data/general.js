@@ -1054,7 +1054,7 @@ Countdowns: [
 	official: "news/every-day-sale-in-the-month-of-march/",
 	Start: new Date("2016-03-01T16:00:00Z"),
 	Finish: new Date("2016-03-31T16:00:00Z")
-}/*,
+},
 {
 	name_en: "April Fools' Day",
 	name_de: "Aprilscherz",
@@ -1066,7 +1066,7 @@ Countdowns: [
 	url_fr: "https://fr.wikipedia.org/wiki/Poisson_d%27avril",
 	Start: new Date("2016-04-01T16:00:00Z"),
 	Finish: new Date("2016-04-02T16:00:00Z")
-},
+}/*,
 {
 	name_en: "Q2 Patch",
 	name_de: "Q2 Patch",
@@ -1128,42 +1128,35 @@ Sale: {
 		img: "http://i.imgur.com/1SaYV5O.png",
 		price: 2000,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Ironclad Outfit",
 		id: "78010",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Ironclad Glider",
 		id: "78006",
 		price: 500,
 		discount: null,
+		col: 1
+	},
+	{
+		name: "Additional Crafting License",
+		id: "42970",
+		price: 640,
+		discount: 800,
 		col: 0
-	},
-	{
-		name: "Lion's Arch Commemorative Dye Kit",
-		id: "43078",
-		price: 100,
-		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
-		col: 1
-	},
-	{
-		name: "Lion's Arch Survivors Dye Kit",
-		id: "64254",
-		price: 100,
-		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
-		col: 1
 	},
 	{
 		name: "Bunny Ears",
 		id: "64738",
 		price: 200,
 		discount: null,
-		col: 1
+		col: 0
 	}
 	]
 },
