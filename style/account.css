@@ -1199,11 +1199,10 @@ a.chrWalletLink {
 .ivtBankSearch {
 	display: inline-block;
 	width: 705px;
+	margin-bottom: 2px;
 }
 .ivtBankTabSeparator {
 	width: 100%; height: 40px;
-	margin-top: 2px;
-	margin-bottom: 2px;
 	background-image: url("../img/account/equipment/separator.png");
 	background-size: 100% 100%;
 }
@@ -1223,6 +1222,10 @@ a.chrWalletLink {
 .ivtBankTabLocked {
 	background-image: url("../img/ui/locked.png");
 	background-size: 34px 34px;
+}
+.ivtBankTabSlots {
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 
 /* Search bar */

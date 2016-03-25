@@ -4171,7 +4171,11 @@ A = {
 		});
 		$("#accMenuInventory").click(function()
 		{
-			A.viewInventory();
+			A.generateInventory();
+		});
+		$("#accMenuBank").click(function()
+		{
+			A.generateBank();
 		});
 		
 		// Open the section if specified in the URL
@@ -5387,45 +5391,51 @@ A = {
 	},
 	
 	/*
-	 * Generates searchable inventory and bank windows for all characters.
+	 * Generates inventory windows for all characters.
 	 */
-	viewInventory: function()
+	generateInventory: function()
 	{
-		if ($("#accDish_Inventory").is(":empty"))
+		var dish = $("#accDish_Inventory");
+		if (dish.is(":empty") === false)
 		{
-			A.generateBank();
+			return;
 		}
 	},
 	
 	/*
-	 * Generates the bank tabs in the inventory subsection.
+	 * Generates the bank window.
 	 */
 	generateBank: function()
 	{
-		var dish = $("#accDish_Inventory");
+		var dish = $("#accDish_Bank");
+		if (dish.is(":empty") === false)
+		{
+			return;
+		}
 		var container = $("<div class='ivtBankContainer'></div>").appendTo(dish);
 		var bank = $("<div class='ivtBank'></div>").appendTo(container).append(I.cThrobber);
-		var tabstr = "<div class='ivtBankTabSeparator'><var class='ivtBankTabToggle'>" + I.Symbol.Filler + "</var></div>";
 		var slotdata;
-		var slot;
+		var tab, slotscontainer, slot;
 		var nexti;
 		$.getJSON(A.getURL(A.URL.Bank), function(pData)
 		{
 			// First generate empty bank slots, then fill them up asynchronously by item details retrieval
-			bank.empty().append(tabstr);
+			bank.empty();
 			for (var i = 0; i < pData.length; i++)
 			{
+				// Bank tab separator every so slots
+				if ((i === 0 || nexti % A.Metadata.Bank.NumSlotsPerTab === 0) && nexti !== pData.length)
+				{
+					tab = Q.createBankTab();
+					slotscontainer = tab.find(".ivtBankTabSlots");
+					bank.append(tab);
+				}
 				nexti = i+1;
 				slotdata = pData[i];
 				// Add slots
 				slot = Q.createInventorySlot();
-				bank.append(slot);
-				// Bank tab separator every so slots
-				if (nexti % A.Metadata.Bank.NumSlotsPerTab === 0 && nexti !== pData.length)
-				{
-					bank.append(tabstr);
-				}
-				// Line breaks (new rows) are automatically rendered by the fixed width of the bank's container
+				slotscontainer.append(slot);
+				// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
 				if (slotdata)
 				{
 					(function(iSlot, iSlotData)
@@ -7146,8 +7156,9 @@ Q = {
 			Container: 1,
 			CraftingMaterial: 1,
 			Gizmo: 1,
+			MiniPet: 1,
 			Trophy: 1,
-			MiniPet: 1
+			UpgradeComponent: 1
 		};
 		if (validtypes[type])
 		{
@@ -7573,7 +7584,8 @@ Q = {
 		var det = item.details;
 		var isweapon = (type === "Weapon");
 		var isequipment = (isweapon || type === "Armor" || type === "Trinket" || type === "Back");
-		var istrinket = (type === "Trinket" || type === "Back");
+		var isbackitem = (type === "Back");
+		var istrinket = (type === "Trinket" || isbackitem);
 		var isascended = (item.rarity === Q.Rarity.Ascended || item.rarity === Q.Rarity.Legendary);
 		var isdouble = false;
 		var isvendorable = true;
@@ -7692,7 +7704,8 @@ Q = {
 		var raritystr = "";
 		if (isequipment)
 		{
-			raritystr = D.getString(item.rarity) + "<br />";
+			// Back item will have a beginning line break because of its type name
+			raritystr = D.getString(item.rarity) + ((isbackitem) ? "" : "<br />");
 		}
 		
 		// WEIGHT
@@ -7707,7 +7720,7 @@ Q = {
 		
 		// LEVEL
 		var levelstr = "";
-		if (item.level > 0)
+		if (item.level > 1)
 		{
 			levelstr += D.getString("RequiredLevel") + ": " + item.level + "<br />";
 		}
@@ -7720,7 +7733,6 @@ Q = {
 		 */
 		var desctopstr = "";
 		var descbottomstr = "";
-		var descbrk = (statsbrktop.length > 0) ? "<br />" : "";
 		var desc = item.description || "";
 		desc = Q.formatItemDescription(desc);
 		if (item.description)
@@ -7732,7 +7744,7 @@ Q = {
 			}
 			else
 			{
-				desctopstr = desc + descbrk;
+				desctopstr = desc;
 			}
 		}
 		
@@ -8206,115 +8218,6 @@ Q = {
 		
 		return recharge + name + desc + facts;
 	},
-		
-	/*
-	 * Constructs a standard inventory slot for use in inventory, bank, materials,
-	 * and other windows.
-	 * @returns jqobject slot.
-	 */
-	createInventorySlot: function()
-	{
-		return $("<span class='ivtSlot'>"
-			+ "<var class='ivtSlotBackground'></var>"
-			+ "<var class='ivtSlotIcon'></var>"
-			+ "<var class='ivtSlotForeground'></var>"
-		+ "</span>");
-	},
-	
-	/*
-	 * Styles a standard inventory slot.
-	 * @param jqobject pSlot to style.
-	 * @param object pSlotData custom item data retrieved from characters or
-	 * bank API, containing stack count and transmutation data.
-	 * @param object pItem data retrieved from item details API.
-	 */
-	styleInventorySlot: function(pSlot, pSlotData, pItem)
-	{
-		if (pSlotData)
-		{
-			Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, callback: function(pBox)
-			{
-				// Load retrieved proper transmuted icon if available
-				var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
-				pSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + icon + ")"});
-				// Make the item searchable by converting its tooltip HTML into plain text
-				var keywords = $(pBox.html).text().toLowerCase();
-				pSlot.data("keywords", keywords); // Store the item's name in the element for user search
-				// Numeric label over the slot icon indicating stack size or charges remaining
-				if (pSlotData.count > 1)
-				{
-					pSlot.append("<var class='ivtSlotCount'>" + pSlotData.count + "</var>");
-				}
-				else if (pItem.type === "Tool")
-				{
-					// Salvage Kits gets a faux count number representing their remaining charges
-					var salv = A.Equipment.SalvageCharges;
-					if (salv && salv[pItem.id])
-					{
-						pSlot.append("<var class='ivtSlotCount'>" + salv[pItem.id] + "</var>");
-					}
-				}
-				else if (pItem.type === "Gathering")
-				{
-					var gath = A.Equipment.GatheringCharges;
-					if (gath && pItem.rarity !== Q.Rarity.Rare)
-					{
-						pSlot.append("<var class='ivtSlotCount'>" + gath[pItem.details.type] + "</var>");
-					}
-				}
-			}});
-		}
-		else
-		{
-			// Empty slot gets keywords anyway for use in search
-			pSlot.data("keywords", "*");
-		}
-	},
-	
-	/*
-	 * Creates and binds a search bar for a container containing item slots.
-	 * @param jqobject pDestination where to place the search bar.
-	 * @param jqobject pSource the container of the slots to be searched.
-	 */
-	createInventorySearch: function(pDestination, pSource)
-	{
-		var bar = $("<div class='ivtSearchBar'></div>").appendTo(pDestination);
-		var input = $("<input class='ivtSearchInput' type='text' />").appendTo(bar);
-		var filler = $("<div class='ivtSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(bar);
-		var slots = pSource.find(".ivtSlot");
-		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
-		{
-			var query = $(this).val().toLowerCase();
-			var keywords = "";
-			if (query.length > 0)
-			{
-				filler.hide();
-				slots.each(function()
-				{
-					keywords = $(this).data("keywords");
-					if (keywords)
-					{
-						if (keywords.indexOf(query) !== -1)
-						{
-							$(this).show();
-						}
-						else
-						{
-							$(this).hide();
-						}
-					}
-				});
-			}
-			else
-			{
-				filler.show();
-				slots.each(function()
-				{
-					$(this).show();
-				});
-			}
-		}));
-	},
 	
 	/*
 	 * Generates trait tooltip HTML.
@@ -8365,6 +8268,161 @@ Q = {
 			elm.attr("title", html);
 			I.qTip.init(elm);
 		}
+	},
+		
+	/*
+	 * Constructs a standard inventory slot for use in inventory, bank, materials,
+	 * and other windows.
+	 * @returns jqobject slot.
+	 */
+	createInventorySlot: function()
+	{
+		return $("<span class='ivtSlot'>"
+			+ "<var class='ivtSlotBackground'></var>"
+			+ "<var class='ivtSlotIcon'></var>"
+			+ "<var class='ivtSlotForeground'></var>"
+		+ "</span>");
+	},
+	
+	/*
+	 * Styles a standard inventory slot and prepare it for search.
+	 * @param jqobject pSlot to style.
+	 * @param object pSlotData custom item data retrieved from characters or
+	 * bank API, containing stack count and transmutation data.
+	 * @param object pItem data retrieved from item details API.
+	 */
+	styleInventorySlot: function(pSlot, pSlotData, pItem)
+	{
+		if (pSlotData)
+		{
+			Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, callback: function(pBox)
+			{
+				// Load retrieved proper transmuted icon if available
+				var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
+				pSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + icon + ")"});
+				// Make the item searchable by converting its tooltip HTML into plain text
+				var keywords = ($(pBox.html).text() + " " + D.getString(pItem.rarity)).toLowerCase();
+				pSlot.data("keywords", keywords);
+				// Numeric label over the slot icon indicating stack size or charges remaining
+				if (pSlotData.count > 1)
+				{
+					pSlot.append("<var class='ivtSlotCount'>" + pSlotData.count + "</var>");
+				}
+				else if (pItem.type === "Tool")
+				{
+					// Salvage Kits gets a faux count number representing their remaining charges
+					var salv = A.Equipment.SalvageCharges;
+					if (salv && salv[pItem.id])
+					{
+						pSlot.append("<var class='ivtSlotCount'>" + salv[pItem.id] + "</var>");
+					}
+				}
+				else if (pItem.type === "Gathering")
+				{
+					var gath = A.Equipment.GatheringCharges;
+					if (gath && pItem.rarity !== Q.Rarity.Rare)
+					{
+						pSlot.append("<var class='ivtSlotCount'>" + gath[pItem.details.type] + "</var>");
+					}
+				}
+			}});
+		}
+		else
+		{
+			// Empty slot gets keywords anyway for use in search
+			pSlot.data("keywords", "*");
+		}
+	},
+	
+	/*
+	 * Creates and binds a search bar for a container containing item slots.
+	 * @param jqobject pDestination where to place the search bar.
+	 * @param jqobject pSource the container of the slots to be searched.
+	 */
+	createInventorySearch: function(pDestination, pSource)
+	{
+		var bar = $("<div class='ivtSearchBar'></div>").appendTo(pDestination);
+		var input = $("<input class='ivtSearchInput' type='text' />").appendTo(bar);
+		var fillertext = $("<div class='ivtSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(bar);
+		var slots = pSource.find(".ivtSlot");
+		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
+		{
+			var query = $(this).val().toLowerCase();
+			var queries = [];
+			var keywords = "";
+			if (query.length > 0)
+			{
+				fillertext.hide();
+				queries = query.split(" ");
+				// Search for every substring in the user's query, which is space separated
+				slots.each(function()
+				{
+					keywords = $(this).data("keywords"); // The text version of the item's tooltip HTML
+					var ismatch = true;
+					if (keywords)
+					{
+						for (var i = 0; i < queries.length; i++)
+						{
+							// If at least one substring of the search query isn't found, then hide that item
+							if (keywords.indexOf(queries[i]) === -1)
+							{
+								$(this).hide();
+								ismatch = false;
+								break;
+							}
+						}
+						// The boolean is only true if every substrings were found
+						if (ismatch)
+						{
+							$(this).show();
+						}
+					}
+				});
+			}
+			else
+			{
+				fillertext.show();
+				slots.each(function()
+				{
+					$(this).show();
+				});
+			}
+		}));
+	},
+	
+	/*
+	 * Creates a standard bank window tab that holds item slots, and a separator
+	 * that toggles the tab.
+	 * @returns jqobject bank tab.
+	 */
+	createBankTab: function()
+	{
+		var tab = $("<div class='ivtBankTab'></div>");
+		var tabseparator = $("<div class='ivtBankTabSeparator curToggle'></div>").appendTo(tab);
+		var tabtoggle = $("<var class='ivtBankTabToggle'></var>").appendTo(tabseparator);
+		var tabslots = $("<div class='ivtBankTabSlots'></div>").appendTo(tab);
+		tabseparator.click(function()
+		{
+			if (tabslots.is(":visible"))
+			{
+				I.toggleToggleIcon(tabtoggle, false);
+				tabslots.animate({height: 0}, 200, function()
+				{
+					tabslots.hide();
+				});
+			}
+			else
+			{
+				I.toggleToggleIcon(tabtoggle, true);	
+				// Get the tab's original height by restoring its height
+				var height = tabslots.show().css({height: "auto"}).height();
+				tabslots.show().css({height: 0}).animate({height: height + "px"}, 200, function()
+				{
+					tabslots.css({height: "auto"});
+				});
+			}
+		});
+		return tab;
 	}
 };
 
@@ -8593,6 +8651,7 @@ D = {
 		s_Nourishment: {en: "Nourishment", de: "Verbrauchsstoff", es: "Consumible", fr: "Produit consommable"},
 		s_Boost: {en: "Boost", de: "Verstärker", es: "Potenciador", fr: "Augmentation"},
 		s_Trophy: {en: "Trophy", de: "Trophäe", es: "Trofeo", fr: "Trophée"},
+		s_UpgradeComponent: {en: "Upgrade Component", de: "Aufwertung", es: "Componente de mejora", fr: "Composant d&apos;amélioration"},
 		// Item Rarity
 		s_Junk: {en: "Junk", de: "Schrott", es: "Basura", fr: "Inutile"},
 		s_Basic: {en: "Basic", de: "Einfach", es: "Básico", fr: "Simple"},
@@ -21609,7 +21668,6 @@ I = {
 			Mananger: "Manager",
 			Characters: "Characters",
 			Bank: "Bank",
-			Wardrobe: "Wardrobe",
 			Trading: "Trading",
 			PVP: "PVP",
 			Guilds: "Guilds",
