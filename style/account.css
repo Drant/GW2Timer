@@ -24,6 +24,9 @@
 .accPlatter {
 	display: none;
 }
+.accTrivial { /* Situational class to fade trivial information */
+	opacity: 0.3;
+}
 
 /* Menu
 ----------------------------------------------------------------------------- */
@@ -270,9 +273,6 @@ input[type="text"].accTokenNameUsed {
 	font-size: 12px;
 	color: #ffbb44;
 	opacity: 0.4;
-}
-.chrTrivial { /* Situational class to fade trivial information */
-	opacity: 0.3;
 }
 .chrCommitment {
 	display: inline-block;
@@ -1177,6 +1177,20 @@ a.chrWalletLink {
 	text-shadow:
 		1px 1px 1px #000;
 }
+.ivtSlotPrice {
+	display: block;
+	position: absolute;
+	left: 8px;
+	bottom: 8px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 12px;
+	font-weight: bold;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
+}
 
 /* Shared window container for bank, materials, wardrobe, minis */
 .ivtBankContainer {
@@ -1198,8 +1212,28 @@ a.chrWalletLink {
 }
 .ivtBankSearch {
 	display: inline-block;
-	width: 705px;
+	vertical-align: top;
+	width: 670px;
 	margin-bottom: 2px;
+}
+.ivtBankFilter {
+	display: inline-block;
+	margin-left: 16px;
+	margin-top: -4px;
+	width: 32px; height: 32px;
+}
+.ivtBankFilterTrade {
+	display: block;
+	width: 32px; height: 32px;
+	background-image: url("../img/account/menu/trading.png");
+	background-position: center;
+	background-size: 100% 100%;
+}
+.ivtBankFilterTradeFocus, .ivtBankFilterTrade:hover {
+	background-image: url("../img/ui/tp.png");
+}
+.ivtBankFilterTrade:active {
+	opacity: 0.8;
 }
 .ivtBankTabSeparator {
 	width: 100%; height: 40px;
@@ -1208,6 +1242,18 @@ a.chrWalletLink {
 }
 .ivtBankTabSeparator:hover {
 	background-image: url("../img/account/equipment/separator_hover.png");
+}
+.ivtBankTabHeader {
+	display: block;
+	float: left;
+	margin-top: 8px;
+	margin-left: 8px;
+	line-height: normal;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 18px;
+}
+.ivtBankTabText {
+	margin-right: 8px;
 }
 .ivtBankTabToggle, .ivtBankTabLocked {
 	display: block;
@@ -1236,10 +1282,6 @@ input[type="text"].ivtSearchInput {
 	display: block;
 	width: 100%;
 	height: 20px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	padding-left: 8px;
-	padding-right: 2px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 17px;
 	color: #eeeeee;

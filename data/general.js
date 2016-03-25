@@ -1145,8 +1145,8 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Additional Crafting License",
-		id: "42970",
+		name: "Permanent Llama Finisher",
+		id: "49952",
 		price: 640,
 		discount: 800,
 		col: 0

@@ -4523,7 +4523,7 @@ A = {
 			A.CharacterCurrent = null;
 			A.Data.Characters = null;
 			A.Data.Characters = new Array(numcharacters);
-			A.Data.CharacterNames.forEach(function(iCharacter)
+			A.Data.CharacterNames.forEach(function(iName)
 			{
 				$("#chrSelection").append("<li id='chrSelection_" + charindex + "' class='chrSelection curClick'></li>");
 				$("#chrUsage").append("<li id='chrUsage_" + charindex + "'></li>");
@@ -4532,7 +4532,7 @@ A = {
 				{
 					$.ajax({
 						dataType: "json",
-						url: A.getURL(A.URL.Characters + "/" + U.encodeURL(iCharacter)),
+						url: A.getURL(A.URL.Characters + "/" + U.encodeURL(iName)),
 						cache: true,
 						success: function(pData, pStatus, pRequest)
 						{
@@ -4555,7 +4555,7 @@ A = {
 							{
 								finishFetch();
 							}
-							I.write("Error retrieving data for character: " + U.escapeHTML(iCharacter));
+							I.write("Error retrieving data for character: " + U.escapeHTML(iName));
 						}
 					});
 				})(charindex);
@@ -4608,7 +4608,7 @@ A = {
 		{
 			pCharacter.crafting.forEach(function(iCraft)
 			{
-				var trivial = (iCraft.rating >= A.Metadata.CraftingRank.Master) ? "" : "chrTrivial";
+				var trivial = (iCraft.rating >= A.Metadata.CraftingRank.Master) ? "" : "accTrivial";
 				var craftstr = "<b class='" + trivial + "'><ins class='acc_craft acc_craft_" + (iCraft.discipline).toLowerCase() + "'></ins>"
 					+ "<sup class='chrCraftingRating'>" + iCraft.rating + "</sup></b> ";
 				if (iCraft.active)
@@ -4622,7 +4622,7 @@ A = {
 		// SELECTION COLUMN (left)
 		var charvalue = A.Metadata.Race[(pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase()] || 1;
 		var professionvalue = (A.Metadata.Profession[(pCharacter.profession).toLowerCase()]).weight;
-		var trivial = (pCharacter.level === A.Metadata.ProfLevel.Max) ? "" : "chrTrivial";
+		var trivial = (pCharacter.level === A.Metadata.ProfLevel.Max) ? "" : "accTrivial";
 		// Store character portrait
 		pCharacter.charportrait = "img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG;
 		$("#chrSelection_" + pCharacter.charindex).append(
@@ -4678,51 +4678,51 @@ A = {
 		var totaldeaths = 0;
 		
 		// First loop to find max values for age and deaths
-		A.Data.Characters.forEach(function(iData)
+		A.Data.Characters.forEach(function(iChar)
 		{
-			if (highestage < iData.age)
+			if (highestage < iChar.age)
 			{
-				highestage = iData.age;
+				highestage = iChar.age;
 			}
-			if (highestdeaths < iData.deaths)
+			if (highestdeaths < iChar.deaths)
 			{
-				highestdeaths = iData.deaths;
+				highestdeaths = iChar.deaths;
 			}
-			iData.charlifetime = ~~((nowmsec - (new Date(iData.created)).getTime()) / T.cMILLISECONDS_IN_SECOND);
-			if (highestlifetime < iData.charlifetime)
+			iChar.charlifetime = ~~((nowmsec - (new Date(iChar.created)).getTime()) / T.cMILLISECONDS_IN_SECOND);
+			if (highestlifetime < iChar.charlifetime)
 			{
-				highestlifetime = iData.charlifetime;
+				highestlifetime = iChar.charlifetime;
 			}
 		});
 		// Write a row for each character
-		A.Data.Characters.forEach(function(iData)
+		A.Data.Characters.forEach(function(iChar)
 		{
-			var name = "<abbr>" + U.escapeHTML(iData.name) + "</abbr>";
+			var name = "<abbr>" + U.escapeHTML(iChar.name) + "</abbr>";
 			// USAGE COLUMN (middle)
-			totalage += iData.age; // Seconds
-			totaldeaths += iData.deaths;
-			var age = Math.round(iData.age / T.cSECONDS_IN_HOUR);
-			var agepercent = (iData.age / highestage) * T.cPERCENT_100;
-			var deathpercent = (iData.deaths / highestdeaths) * T.cPERCENT_100;
-			var usage = "<var class='chrAge' title='" + T.formatSeconds(iData.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
+			totalage += iChar.age; // Seconds
+			totaldeaths += iChar.deaths;
+			var age = Math.round(iChar.age / T.cSECONDS_IN_HOUR);
+			var agepercent = (iChar.age / highestage) * T.cPERCENT_100;
+			var deathpercent = (iChar.deaths / highestdeaths) * T.cPERCENT_100;
+			var usage = "<var class='chrAge' title='" + T.formatSeconds(iChar.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
 				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + agepercent + "%'></s></samp>"
 					+ "<samp><s style='width:" + deathpercent + "%'></s></samp></span>"
-				+ "<var class='chrDeaths' title='" + T.parseRatio(age / iData.deaths, 3) + "' data-value='" + iData.deaths + "'>" + iData.deaths + "x</var>";
-			$("#chrUsage_" + iData.charindex).append(usage);
+				+ "<var class='chrDeaths' title='" + T.parseRatio(age / iChar.deaths, 3) + "' data-value='" + iChar.deaths + "'>" + iChar.deaths + "x</var>";
+			$("#chrUsage_" + iChar.charindex).append(usage);
 			// SENIORITY COLUMN (right)
-			var birthdate = (new Date(iData.created)).toLocaleString();
-			var birthdays = ~~(iData.charlifetime / T.cSECONDS_IN_YEAR);
-			var lifetime = ~~(iData.charlifetime / T.cSECONDS_IN_DAY);
-			var lifetimepercent = (iData.charlifetime / highestlifetime) * T.cPERCENT_100;
-			var birthdaysince = ~~((iData.charlifetime % T.cSECONDS_IN_YEAR) / T.cSECONDS_IN_DAY);
+			var birthdate = (new Date(iChar.created)).toLocaleString();
+			var birthdays = ~~(iChar.charlifetime / T.cSECONDS_IN_YEAR);
+			var lifetime = ~~(iChar.charlifetime / T.cSECONDS_IN_DAY);
+			var lifetimepercent = (iChar.charlifetime / highestlifetime) * T.cPERCENT_100;
+			var birthdaysince = ~~((iChar.charlifetime % T.cSECONDS_IN_YEAR) / T.cSECONDS_IN_DAY);
 			var birthdaytill = T.cDAYS_IN_YEAR - birthdaysince;
 			var birthdaypercent = (birthdaysince / T.cDAYS_IN_YEAR) * T.cPERCENT_100;
-			var seniority = "<var class='chrLifetime' data-value='" + iData.charlifetime + "'>" + lifetime + daystr + " (" + birthdays + yearstr + ")</var>"
+			var seniority = "<var class='chrLifetime' data-value='" + iChar.charlifetime + "'>" + lifetime + daystr + " (" + birthdays + yearstr + ")</var>"
 				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + lifetimepercent + "%'></s></samp>"
 					+ "<samp><s style='width:" + birthdaypercent + "%'></s></samp></span>"
 				+ "<var class='chrBirthday' data-value='" + birthdaysince + "'>" + birthdaytill + daystr + "</var>"
 				+ "<var class='chrBirthdate'>" + birthdate + "</var>";
-			$("#chrSeniority_" + iData.charindex).append(seniority);
+			$("#chrSeniority_" + iChar.charindex).append(seniority);
 		});
 		// Highlight the character's name when hovered over a statistics row
 		$(".chrStats li").hover(
@@ -4757,8 +4757,8 @@ A = {
 			var accountbirthdate = new Date(pData.created);
 			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMILLISECONDS_IN_SECOND);
 			var accountbirthdaysince = T.formatSeconds(accountlifetime).trim();
-			var commandership = (pData.commander) ? "" : "chrTrivial";
-			var access = (pData.access) ? "" : "chrTrivial";
+			var commandership = (pData.commander) ? "" : "accTrivial";
+			var access = (pData.access) ? "" : "accTrivial";
 			var accountadditional = "<span id='chrAccountMisc'>"
 				+ "<dfn><a id='chrAccountLink' title='" + U.escapeHTML(pData.id) + "'" + forumlink + ">" + U.escapeHTML(pData.name) + "</a></dfn><br />" + accountbirthdate.toLocaleString() + "<br />"
 				+ "<img class='" + commandership +  "' src='img/account/summary/commander.png' />"
@@ -4839,12 +4839,12 @@ A = {
 		var finalizeGuilds = function()
 		{
 			// Guild tag next to each character's name
-			A.Data.Characters.forEach(function(iCharacter)
+			A.Data.Characters.forEach(function(iChar)
 			{
-				if (iCharacter.guild)
+				if (iChar.guild)
 				{
-					var guildtag = "<sup class='chrTag'>[" + (A.Data.Guilds[iCharacter.guild]).tag + "]" + "</sup>";
-					$("#chrName_" + iCharacter.charindex).append(guildtag);
+					var guildtag = "<sup class='chrTag'>[" + (A.Data.Guilds[iChar.guild]).tag + "]" + "</sup>";
+					$("#chrName_" + iChar.charindex).append(guildtag);
 				}
 			});
 			
@@ -4932,7 +4932,7 @@ A = {
 				value = currency.value;
 				switch (currency.id)
 				{
-					case 1: amountstr = E.formatCoinString(amount, true); break;
+					case 1: amountstr = E.formatCoinStringColored(amount); break;
 					case 2: amountstr = E.formatKarmaString(amount, true); break;
 					case 3: amountstr = E.formatLaurelString(amount, true); break;
 					case 4: amountstr = E.formatGemString(amount, true); break;
@@ -5000,9 +5000,9 @@ A = {
 		}
 		else
 		{
-			A.Data.Characters.forEach(function(iCharacter)
+			A.Data.Characters.forEach(function(iChar)
 			{
-				A.generateEquipment(iCharacter);
+				A.generateEquipment(iChar);
 			});
 			equipall.show();
 		}
@@ -5396,9 +5396,54 @@ A = {
 	generateInventory: function()
 	{
 		var dish = $("#accDish_Inventory");
-		if (dish.is(":empty") === false)
+		if (dish.is(":empty") === false && dish.data("token") === A.TokenCurrent)
 		{
 			return;
+		}
+		if (A.Data.Characters.length < 1 || (A.Data.Characters.length > 1 && A.Data.Characters[0].bags === undefined))
+		{
+			return;
+		}
+		dish.empty().data("token", A.TokenCurrent);
+		var container = $("<div class='ivtBankContainer'></div>").appendTo(dish);
+		var bank = $("<div class='ivtBank'></div>").appendTo(container);
+		var slotdata;
+		var tab, slotscontainer, slot;
+		
+		var char, bag;
+		for (var i = 0; i < A.Data.Characters.length; i++)
+		{
+			char = A.Data.Characters[i];
+			// Bank tab separator every character
+			tab = Q.createBankTab(char.charname);
+			slotscontainer = tab.find(".ivtBankTabSlots");
+			bank.append(tab);
+			for (var ii = 0; ii < char.bags.length; ii++)
+			{
+				bag = char.bags[ii];
+				for (var iii = 0; iii < bag.inventory.length; iii++)
+				{
+					slotdata = bag.inventory[iii];
+					// Add slots
+					slot = Q.createInventorySlot();
+					slotscontainer.append(slot);
+					if (slotdata)
+					{
+						(function(iSlot, iSlotData, iTab)
+						{
+							$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
+							{
+								Q.styleInventorySlot(iSlot, iSlotData, iItem, iTab);
+							});
+						})(slot, slotdata, tab);
+					}
+					else
+					{
+						// For empty inventory slots
+						Q.styleInventorySlot(slot, null);
+					}
+				}
+			}
 		}
 	},
 	
@@ -5408,10 +5453,11 @@ A = {
 	generateBank: function()
 	{
 		var dish = $("#accDish_Bank");
-		if (dish.is(":empty") === false)
+		if (dish.is(":empty") === false && dish.data("token") === A.TokenCurrent)
 		{
 			return;
 		}
+		dish.empty().data("token", A.TokenCurrent);
 		var container = $("<div class='ivtBankContainer'></div>").appendTo(dish);
 		var bank = $("<div class='ivtBank'></div>").appendTo(container).append(I.cThrobber);
 		var slotdata;
@@ -5438,18 +5484,18 @@ A = {
 				// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
 				if (slotdata)
 				{
-					(function(iSlot, iSlotData)
+					(function(iSlot, iSlotData, iTab)
 					{
 						$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 						{
-							Q.styleInventorySlot(iSlot, iSlotData, iItem);
+							Q.styleInventorySlot(iSlot, iSlotData, iItem, iTab);
 						});
-					})(slot, slotdata);
+					})(slot, slotdata, tab);
 				}
 				else
 				{
 					// For empty inventory slots
-					Q.styleInventorySlot(slot, null, null);
+					Q.styleInventorySlot(slot, null);
 				}
 			}
 			// Ornamental bank tab separator at the bottom
@@ -5457,6 +5503,10 @@ A = {
 			// Create search bar
 			var search = $("<div class='ivtBankSearch'></div>").prependTo(bank);
 			Q.createInventorySearch(search, container);
+			// Button to filter out tradeable items
+			var filter = $("<div class='ivtBankFilter'></div>").insertAfter(search);
+			Q.createInventoryFilterTrade(filter, container);
+			
 		});
 	},
 	
@@ -5674,48 +5724,58 @@ E = {
 	/*
 	 * Converts a coin amount in copper to a period separated string.
 	 * @param int pAmount of copper.
-	 * @param boolean pWantColor whether to include the coin image instead of periods.
-	 * @param boolean pWantSpace whether to separate the different coins with spaces.
+	 * @objparam boolean wantcolor whether to include the coin image instead of periods.
+	 * @objparam boolean wantspace whether to separate the different coins with spaces.
+	 * @objparam boolean wantshort whether to truncate lower denominations.
 	 * @returns string coin for displaying.
 	 */
-	formatCoinString: function(pAmount, pWantColor, pWantSpace)
+	formatCoinString: function(pAmount, pOptions)
 	{
-		if (pAmount === undefined || isFinite(pAmount) === false)
-		{
-			return "0.00";
-		}
-		pAmount = parseInt(pAmount);
+		var amount = (pAmount === undefined || isFinite(pAmount) === false) ? 0 : parseInt(pAmount);
+		var settings = $.extend({
+			wantcolor: false,
+			wantspace: false,
+			wantshort: false
+		}, pOptions);
 		
 		var sep = ".";
 		var sg0 = ""; var ss0 = ""; var sc0 = "";
 		var sg1 = ""; var ss1 = ""; var sc1 = "";
-		if (pWantColor)
+		if (settings.wantcolor)
 		{
 			// Instead of period separating the currency units, use the coin images
 			sep = "";
 			sg0 = "<gold>"; ss0 = "<silver>"; sc0 = "<copper>";
 			sg1 = "</gold><goldcoin></goldcoin>"; ss1 = "</silver><silvercoin></silvercoin>"; sc1 = "</copper><coppercoin></coppercoin>";
 		}
-		if (pWantSpace)
+		if (settings.wantspace)
 		{
 			sep = " ";
 		}
 		
-		var gold = Math.abs(~~(pAmount / E.Exchange.COPPER_IN_GOLD));
-		var silver = Math.abs(~~(pAmount / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER);
-		var copper = Math.abs(pAmount % E.Exchange.COPPER_IN_SILVER);
-		var sign = (pAmount < 0) ? "−" : "";
+		var gold = Math.abs(~~(amount / E.Exchange.COPPER_IN_GOLD));
+		var silver = Math.abs(~~(amount / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER);
+		var copper = Math.abs(amount % E.Exchange.COPPER_IN_SILVER);
+		var sign = (amount < 0) ? "−" : "";
 		
 		// Leading zero for units that are right side of the leftmost unit
-		if (!pWantColor && (gold > 0 && silver < T.cBASE_10))
+		if (!settings.wantcolor && (gold > 0 && silver < T.cBASE_10))
 		{
 			silver = "0" + silver;
 		}
-		if (!pWantColor && ((silver > 0 && copper < T.cBASE_10) || (copper < T.cBASE_10)))
+		if (!settings.wantcolor && ((silver > 0 && copper < T.cBASE_10) || (copper < T.cBASE_10)))
 		{
 			copper = "0" + copper;
 		}
+		// For short version exclude copper if showing gold and silver 
+		if (gold > 0 && settings.wantshort)
+		{
+			sc0 = "";
+			copper = "";
+			sc1 = "";
+		}
 		
+		// Returns
 		if (gold > 0)
 		{
 			return sign + sg0 + gold + sg1 + sep + ss0 + silver + ss1 + sep + sc0 + copper + sc1;
@@ -5724,12 +5784,16 @@ E = {
 		{
 			return sign + ss0 + silver + ss1 + sep + sc0 + copper + sc1;
 		}
-		if (pWantColor)
+		if (settings.wantcolor)
 		{
 			// No 0 silver prefix for copper-only price if showing color
 			return sc0 + copper + sc1;
 		}
 		return sign + ss0 + "0" + sep + ss1 + sc0 + copper + sc1;
+	},
+	formatCoinStringColored: function(pAmount)
+	{
+		return E.formatCoinString(pAmount, {wantcolor: true});
 	},
 	
 	/*
@@ -5857,7 +5921,7 @@ E = {
 	},
 	convertGemToCoin: function(pAmount)
 	{
-		return E.formatCoinString(Math.round(pAmount * E.Exchange.CoinInGem), true);
+		return E.formatCoinStringColored(Math.round(pAmount * E.Exchange.CoinInGem));
 	},
 	convertGemToMoney: function(pAmount)
 	{
@@ -7552,6 +7616,7 @@ Q = {
 		var skinobj = null;
 		var attrobj = null; // Holds attribute points
 		var iscustomitem = false;
+		var istradeable = true;
 		/* Example structure of customitem object:
 			{
 				"id": 68390,
@@ -7780,6 +7845,7 @@ Q = {
 			// Binding flags for custom items (equipped items or in bound in inventory)
 			if (iscustomitem && settings.customitem.binding)
 			{
+				istradeable = false;
 				if (settings.customitem.binding === "Character" && settings.customitem.bound_to)
 				{
 					flagsstr += "<var class='itmColor_warning'>" + D.getString("SoulboundToCharacter")
@@ -7796,6 +7862,7 @@ Q = {
 				if (flagsobj["SoulbindOnAcquire"])
 				{
 					issoulbound = true;
+					istradeable = false;
 					addFlag("SoulbindOnAcquire");
 				}
 				else if (flagsobj["SoulBindOnUse"] && issoulbound === false)
@@ -7806,6 +7873,7 @@ Q = {
 				if (flagsobj["AccountBound"]) 
 				{
 					isaccountbound = true;
+					istradeable = false;
 					addFlag("AccountBound");
 				}
 				else if (flagsobj["AccountBindOnUse"] && isaccountbound === false)
@@ -7834,7 +7902,7 @@ Q = {
 		{
 			// If stack count is included then multiply vendor price for one item by that number
 			vendorvalue = (settings.customitem.count) ? settings.customitem.count * item.vendor_value : item.vendor_value;
-			vendorstr += E.formatCoinString(vendorvalue, true, true);
+			vendorstr += E.formatCoinString(vendorvalue, {wantcolor: true, wantspace: true});
 		}
 		
 		/*
@@ -7984,7 +8052,8 @@ Q = {
 				upgrades: upgradeobjs,
 				skin: skinobj,
 				attr: attrobj,
-				html: html
+				html: html,
+				istradeable: istradeable
 			};
 			// Cache the item only if it's not custom (no upgrades or transmutations)
 			if (iscustomitem === false)
@@ -8290,8 +8359,9 @@ Q = {
 	 * @param object pSlotData custom item data retrieved from characters or
 	 * bank API, containing stack count and transmutation data.
 	 * @param object pItem data retrieved from item details API.
+	 * @param jqobject pTab to update tab's sum of tradeable items prices.
 	 */
-	styleInventorySlot: function(pSlot, pSlotData, pItem)
+	styleInventorySlot: function(pSlot, pSlotData, pItem, pTab)
 	{
 		if (pSlotData)
 		{
@@ -8304,9 +8374,10 @@ Q = {
 				var keywords = ($(pBox.html).text() + " " + D.getString(pItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
 				// Numeric label over the slot icon indicating stack size or charges remaining
-				if (pSlotData.count > 1)
+				var count = pSlotData.count || 1;
+				if (count > 1)
 				{
-					pSlot.append("<var class='ivtSlotCount'>" + pSlotData.count + "</var>");
+					pSlot.append("<var class='ivtSlotCount'>" + count + "</var>");
 				}
 				else if (pItem.type === "Tool")
 				{
@@ -8324,6 +8395,29 @@ Q = {
 					{
 						pSlot.append("<var class='ivtSlotCount'>" + gath[pItem.details.type] + "</var>");
 					}
+				}
+				// TP price label if the item is tradeable
+				if (pBox.istradeable)
+				{
+					$.getJSON(U.URL_API.ItemPrices + pItem.id, function(pData)
+					{
+						var pricebuy = E.deductTax(pData.buys.unit_price * count);
+						var pricesell = E.deductTax(pData.sells.unit_price * count);
+						pSlot.append("<var class='ivtSlotPrice'>" + E.formatCoinString(pricesell, {wantcolor: true, wantshort: true}) + "</var>")
+							.data("price", pricesell);
+						// Update tab price
+						if (pTab)
+						{
+							var header = pTab.find(".ivtBankTabPrice");
+							var tabpricebuy = header.data("pricebuy") || 0;
+							var tabpricesell = header.data("pricesell") || 0;
+							tabpricebuy += pricebuy;
+							tabpricesell += pricesell;
+							header.data("pricebuy", tabpricebuy).data("pricesell", tabpricesell);
+							var tabtext = E.formatCoinStringColored(tabpricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(tabpricebuy) + "</span>";
+							header.html(tabtext);
+						}
+					});
 				}
 			}});
 		}
@@ -8391,14 +8485,55 @@ Q = {
 	},
 	
 	/*
+	 * Creates a toggleable button that filters out any non-tradeable items from
+	 * the container.
+	 * @param jqobject pDestination where to place the button.
+	 * @param jqobject pSource the container of the slots to be filtered.
+	 */
+	createInventoryFilterTrade: function(pDestination, pSource)
+	{
+		var filter = $("<div class='ivtBankFilterTrade curToggle'></div>").appendTo(pDestination);
+		var isfiltering = true;
+		var slots = pSource.find(".ivtSlot");
+		filter.click(function()
+		{
+			if (isfiltering)
+			{
+				slots.each(function()
+				{
+					if ($(this).data("price"))
+					{
+						$(this).show();
+					}
+					else
+					{
+						$(this).hide();
+					}
+				});
+			}
+			else
+			{
+				slots.show();
+			}
+			filter.toggleClass("ivtBankFilterTradeFocus", isfiltering);
+			isfiltering = !isfiltering;
+		});
+	},
+	
+	/*
 	 * Creates a standard bank window tab that holds item slots, and a separator
 	 * that toggles the tab.
+	 * @param string pTitle of the tab, placed in the separator, optional.
 	 * @returns jqobject bank tab.
 	 */
-	createBankTab: function()
+	createBankTab: function(pTitle)
 	{
 		var tab = $("<div class='ivtBankTab'></div>");
-		var tabseparator = $("<div class='ivtBankTabSeparator curToggle'></div>").appendTo(tab);
+		var titlestr = (pTitle) ? "<var class='ivtBankTabText'>" + pTitle + "</var>" : "";
+		var tabseparator = $("<div class='ivtBankTabSeparator curToggle'><aside class='ivtBankTabHeader'>"
+			+ titlestr
+			+ "<var class='ivtBankTabPrice'></var>"
+		+ "</aside></div>").appendTo(tab);
 		var tabtoggle = $("<var class='ivtBankTabToggle'></var>").appendTo(tabseparator);
 		var tabslots = $("<div class='ivtBankTabSlots'></div>").appendTo(tab);
 		tabseparator.click(function()
@@ -14892,7 +15027,7 @@ G = {
 							success: function(pData)
 						{
 							var price = E.deductTax(pData.sells.unit_price);
-							$("#nodPrice_" + inneri).html(E.formatCoinString(price, true));
+							$("#nodPrice_" + inneri).html(E.formatCoinStringColored(price));
 							P.Resources[inneri].price = price;
 						}});
 					})(i);
@@ -15133,10 +15268,10 @@ G = {
 					M.redrawPersonalPath(P.getGreedyPath(coords, indexofeastmostcoord), "default");
 					waypointcost = P.printClosestWaypoints() * WAYPOINT_COPPER_AVERAGE;
 					timecost = numnodes * TIME_SECOND_AVERAGE;
-					var summary = "Gather Profit: <span class='cssRight'>" + E.formatCoinString(sumprice, true) + "</span><br />"
-						+ "Waypoint Cost: <span class='cssRight'>" + E.formatCoinString(waypointcost, true) + "</span><br />"
+					var summary = "Gather Profit: <span class='cssRight'>" + E.formatCoinStringColored(sumprice) + "</span><br />"
+						+ "Waypoint Cost: <span class='cssRight'>" + E.formatCoinStringColored(waypointcost) + "</span><br />"
 						+ "</br >"
-						+ "Net Profit: <span class='cssRight'>" + E.formatCoinString(sumprice - waypointcost, true) + "</span><br />"
+						+ "Net Profit: <span class='cssRight'>" + E.formatCoinStringColored(sumprice - waypointcost) + "</span><br />"
 						+ "<br />"
 						+ "Nodes to Visit: <span class='cssRight'>" + numnodes + "</span><br />"
 						+ "Estimated Time: <span class='cssRight'>" + T.getTimeFormatted({customTimeInSeconds: timecost, wantLetters: true}) + "</span>";
@@ -19859,10 +19994,10 @@ B = {
 						// Get TP prices also
 						$.getJSON(U.URL_API.ItemPrices + offer.id, function(pData)
 						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinString(E.deductTax(pData.sells.unit_price), true));
+							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinStringColored(E.deductTax(pData.sells.unit_price)));
 						}).fail(function()
 						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinString(0, true));
+							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
 						});
 						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
 						// Get the product that the recipe crafts
