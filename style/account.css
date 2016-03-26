@@ -5,12 +5,7 @@
 
 #accContent {
 	position: absolute;
-	top: 0;
 	width: 100%;
-	padding-left: 0;
-	padding-right: 0;
-	font-size: 16px;
-	font-family: Arial, Helvetica, sans-serif;
 }
 
 #accClose, #accExpand {
@@ -30,6 +25,8 @@
 }
 .accPlatter .cntComposition {
 	padding-top: 32px; /* Padding for the menu bar above */
+	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif;
 }
 .accTrivial { /* Situational class to fade trivial information */
 	opacity: 0.3;
@@ -168,7 +165,7 @@ input[type="text"].accTokenHovered {
 	text-decoration: none;
 }
 #chrAccountName {
-	display: block;
+	display: inline;
 	padding: 4px 64px 4px 64px;
 	font-family: Menomonia;
 	font-size: 64px;

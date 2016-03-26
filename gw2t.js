@@ -4191,8 +4191,7 @@ A = {
 	 */
 	adjustAccountPanel: function()
 	{
-		$("#accOverhead").css({width: + $("#accContent").width() + "px"});
-		$("#accOverheadPadding").css({height: $("#accOverhead").height() + "px"});
+		$("#accOverhead").css({width: ($("#accContent").width() - 8) + "px"});
 		I.updateScrollbar("#panelAccount");
 	},
 	
@@ -22737,7 +22736,11 @@ I = {
 				else
 				{
 					I.Scrl.isOn = true;
-					I.Scrl.Anchor.css({top: I.posY, left: I.posX}).show();
+					I.Scrl.Anchor.css({
+						top: I.posY,
+						left: I.posX,
+						backgroundImage: "url('img/cursor/autoscroll.png')"
+					}).show();
 					I.Scrl.posX = I.posX;
 					I.Scrl.posY = I.posY;
 					I.Scrl.Container = $(this);
@@ -22774,11 +22777,24 @@ I = {
 		{
 			I.Scrl.Interval = setInterval(function()
 			{
-				var minimumdistance = 3; // Must be these many pixels away from the anchor to start scrolling
-				var scrolldifference = I.posY - I.Scrl.posY;
-				if (Math.abs(scrolldifference) > minimumdistance)
+				var mindistance = 3;
+				var maxdistance = 720;
+				var difference = I.posY - I.Scrl.posY;
+				var initialstrength = 32;
+				var strengthdispersion = 32;
+				var sign = (difference < 0) ? -1 : 1;
+				difference = Math.abs(difference);
+				// Scroll rate function
+				var scrolldistance = Math.pow(2, (difference + initialstrength) / strengthdispersion);
+				// Do not scroll farther than the max distance allowed (per tick)
+				if (scrolldistance > maxdistance)
 				{
-					I.Scrl.Container.scrollTop(I.Scrl.Container.scrollTop() + scrolldifference);
+					scrolldistance = maxdistance;
+				}
+				// Begin scrolling if outside of the anchor threshold distance
+				if (difference > mindistance)
+				{
+					I.Scrl.Container.scrollTop(I.Scrl.Container.scrollTop() + (sign * scrolldistance));
 				}
 			}, 50);
 		};

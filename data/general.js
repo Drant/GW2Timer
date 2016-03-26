@@ -1022,7 +1022,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "You can now middle click to <a href='http://i.imgur.com/QRqOxeA.gif'>autoscroll</a> any panel that has a scrollbar.<br />Click on the middle mouse button once and move your mouse to scroll.",
+	content: "<img class='dsbSaleIcon' src='https://render.guildwars2.com/file/AFBE55FC08ABD32007F3EA0F77F14306AC07283D/499490.png' /> <a href='http://wiki.guildwars2.com/wiki/Bunny Ears'>Bunny Ears</a> (<gem>200</gem><ins class='s16 s16_gem'></ins>) is back on the gem store after 2 years.",
 	Start: new Date("2016-03-22T16:00:00Z"),
 	Finish: new Date("2016-03-29T16:00:00Z")
 },
@@ -1145,10 +1145,10 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Permanent Llama Finisher",
-		id: "49952",
-		price: 640,
-		discount: 800,
+		name: "Raiment of the Lich",
+		id: "67037",
+		price: 560,
+		discount: 700,
 		col: 0
 	},
 	{
