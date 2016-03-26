@@ -417,6 +417,13 @@ html, body,
 .curDrag, .leaflet-dragging .leaflet-container {
 	cursor: url("img/cursor/move.cur"), move;
 }
+#itemAutoscroll {
+	display: none;
+	position: fixed; z-index: 100;
+	width: 32px; height: 32px;
+	background-image:  url("img/cursor/autoscroll.png");
+	pointer-events: none;
+}
 
 /* Help */
 .curHelp, .jsHelpTooltip, .chnDetails ol li ins {

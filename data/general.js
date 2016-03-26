@@ -1022,7 +1022,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<img class='dsbSaleIcon' src='https://render.guildwars2.com/file/AFBE55FC08ABD32007F3EA0F77F14306AC07283D/499490.png' /> <a href='http://wiki.guildwars2.com/wiki/Bunny Ears'>Bunny Ears</a> (<gem>200</gem><ins class='s16 s16_gem'></ins>) is back on the gem store after 2 years.",
+	content: "You can now middle click to <a href='http://i.imgur.com/QRqOxeA.gif'>autoscroll</a> any panel that has a scrollbar.<br />Click on the middle mouse button once and move your mouse to scroll.",
 	Start: new Date("2016-03-22T16:00:00Z"),
 	Finish: new Date("2016-03-29T16:00:00Z")
 },
@@ -1191,16 +1191,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-03-25T00:00:00Z"),
-	Finish: new Date("2016-03-26T00:00:00Z"),
+	Start: new Date("2016-03-26T00:00:00Z"),
+	Finish: new Date("2016-03-27T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "43828", price: "25200", product: "43849" },
-		Fox: { id: "49743", price: "25200", product: "49784" },
-		Derwena: { id: "44655", price: "25200", product: "44957" },
-		Yana: { id: "43832", price: "25200", product: "43854" },
-		Katyn: { id: "43814", price: "25200", product: "43790" },
-		Verma: { id: "49757", price: "25200", product: "49798" }
+		Mehem: { id: "49755", price: "25200", product: "49796" },
+		Fox: { id: "43838", price: "25200", product: "43860" },
+		Derwena: { id: "43809", price: "25200", product: "43785" },
+		Yana: { id: "44657", price: "25200", product: "44945" },
+		Katyn: { id: "43826", price: "25200", product: "43852" },
+		Verma: { id: "43823", price: "25200", product: "43845" }
 	}
 }
 };

@@ -4041,7 +4041,10 @@ A = {
 		
 		// Initialize common UI
 		var panel = $("#panelAccount");
-		I.initializeScrollbar(panel);
+		panel.find(".jsScrollable").each(function()
+		{
+			I.initializeScrollbar($(this));
+		});
 		U.convertExternalLink("#accHelp a");
 		A.initializeMenu();
 		
@@ -21729,6 +21732,14 @@ I = {
 	CLOCK_AND_MENU_HEIGHT: 0,
 	posX: 0, // Mouse position
 	posY: 0,
+	Scrl: {
+		Anchor: {},
+		Interval: {},
+		Container: {},
+		isOn: false,
+		posX: 0,
+		posY: 0
+	},
 	
 	// Content-Plate-Page and Section-Header
 	isMouseOnPanel: false,
@@ -21736,7 +21747,7 @@ I = {
 	isProgramEmbedded: false,
 	isMapEnabled: true,
 	isTouchEnabled: false,
-	isScrollEnabled: false,
+	isCustomScrollEnabled: true,
 	isSpeechSynthesisEnabled: false,
 	ModeCurrent: null,
 	ModeEnum:
@@ -21949,6 +21960,7 @@ I = {
 		{
 			$(this).append(I.cThrobber);
 		});
+		I.Scrl.Anchor = $("#itemAutoscroll");
 		I.qTip.start();
 		
 		// Default content plate
@@ -22089,6 +22101,14 @@ I = {
 				}
 			});
 		});
+		// Stop autoscrolling if user moves the scroll wheel
+		if (I.isCustomScrollEnabled)
+		{
+			$(document).on("ps-scroll-y", function()
+			{
+				I.clearAutoscroll();
+			});
+		}
 		
 		// The menu bar overlaps the language popup, so have to "raise" the clock pane
 		$("#itemLanguage").hover(
@@ -22648,10 +22668,11 @@ I = {
 	 */
 	initializeScrollbar: function(pSelector)
 	{
-		if (I.isScrollEnabled === false)
+		if (I.isCustomScrollEnabled)
 		{
 			try
 			{
+				var container = $(pSelector);
 				var wheelspeed = 1;
 				switch (I.BrowserCurrent)
 				{
@@ -22659,17 +22680,18 @@ I = {
 					case I.BrowserEnum.Firefox: wheelspeed = 3; break;
 				}
 
-				$(pSelector).perfectScrollbar({
+				container.perfectScrollbar({
 					wheelSpeed: wheelspeed,
 					suppressScrollX: true
 				});
+				I.bindAutoscroll(container);
 			}
 			catch (e) {}
 		}
 	},
 	updateScrollbar: function(pSelector)
 	{
-		if (I.isScrollEnabled === false)
+		if (I.isCustomScrollEnabled)
 		{
 			if (I.isMapEnabled)
 			{
@@ -22695,6 +22717,71 @@ I = {
 				$("#windowMain").perfectScrollbar("update");
 			}
 		}
+	},
+	
+	/*
+	 * Binds autoscrolling functionality for a custom scrollbar initialized container.
+	 * @param jqobject pContainer.
+	 */
+	bindAutoscroll: function(pContainer)
+	{
+		pContainer.mousedown(function(pEvent)
+		{
+			if (pEvent.which === 2)
+			{
+				clearInterval(I.Scrl.Interval);
+				if (I.Scrl.isOn)
+				{
+					I.clearAutoscroll();
+				}
+				else
+				{
+					I.Scrl.isOn = true;
+					I.Scrl.Anchor.css({top: I.posY, left: I.posX}).show();
+					I.Scrl.posX = I.posX;
+					I.Scrl.posY = I.posY;
+					I.Scrl.Container = $(this);
+					I.tickAutoscroll();
+				}
+			}
+			else if (pEvent.which === 1 || pEvent.which === 3)
+			{
+				if (I.Scrl.isOn)
+				{
+					I.clearAutoscroll();
+				}
+			}
+		});
+	},
+	
+	/*
+	 * Hides the autoscroll anchor and stops the scrolling.
+	 */
+	clearAutoscroll: function()
+	{
+		clearInterval(I.Scrl.Interval);
+		I.Scrl.isOn = false;
+		I.Scrl.Anchor.hide();
+	},
+	
+	/*
+	 * Continuously scrolls the current container depending on the cursor's
+	 * position away from the autoscroll anchor.
+	 */
+	tickAutoscroll: function()
+	{
+		if (I.Scrl.isOn)
+		{
+			I.Scrl.Interval = setInterval(function()
+			{
+				var minimumdistance = 3; // Must be these many pixels away from the anchor to start scrolling
+				var scrolldifference = I.posY - I.Scrl.posY;
+				if (Math.abs(scrolldifference) > minimumdistance)
+				{
+					I.Scrl.Container.scrollTop(I.Scrl.Container.scrollTop() + scrolldifference);
+				}
+			}, 50);
+		};
 	},
 	
 	/*
@@ -23390,7 +23477,7 @@ I = {
 			case I.ModeEnum.Mobile:
 			{
 				I.isMapEnabled = false;
-				I.isScrollEnabled = true;
+				I.isCustomScrollEnabled = false;
 				I.showHomeLink();
 				$("head").append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
 					.append("<link rel='canonical' href='http://gw2timer.com' />");
