@@ -4191,7 +4191,10 @@ A = {
 	 */
 	adjustAccountPanel: function()
 	{
+		// Resize the width of the menu bar based on the size of the content window
 		$("#accOverhead").css({width: ($("#accContent").width() - 8) + "px"});
+		// Put padding between the menu bar and the content
+		$(".accPlatter").find(".cntComposition").css({paddingTop: $("#accOverhead").height() + "px"});
 		I.updateScrollbar("#panelAccount");
 	},
 	
@@ -5506,9 +5509,9 @@ A = {
 			var search = $("<div class='ivtBankSearch'></div>").prependTo(bank);
 			Q.createInventorySearch(search, container);
 			// Button to filter out tradeable items
-			var filter = $("<div class='ivtBankFilter'></div>").insertAfter(search);
+			var filter = $("<div class='ivtBankFilterContainer'></div>").insertAfter(search);
 			Q.createInventoryFilterTrade(filter, container);
-			
+			Q.createInventoryFilterHelp(filter, container);
 		});
 	},
 	
@@ -8445,35 +8448,58 @@ Q = {
 		{
 			var query = $(this).val().toLowerCase();
 			var queries = [];
+			var equality = "";
 			var keywords = "";
 			if (query.length > 0)
 			{
+				equality = query.charAt(0);
 				fillertext.hide();
-				queries = query.split(" ");
-				// Search for every substring in the user's query, which is space separated
-				slots.each(function()
+				// If searching by price range
+				if ((equality === "<" || equality === ">") && query.length > 1)
 				{
-					keywords = $(this).data("keywords"); // The text version of the item's tooltip HTML
-					var ismatch = true;
-					if (keywords)
+					var pricewant = E.parseCoinString(query.substring(1, query.length));
+					slots.each(function()
 					{
-						for (var i = 0; i < queries.length; i++)
-						{
-							// If at least one substring of the search query isn't found, then hide that item
-							if (keywords.indexOf(queries[i]) === -1)
-							{
-								$(this).hide();
-								ismatch = false;
-								break;
-							}
-						}
-						// The boolean is only true if every substrings were found
-						if (ismatch)
+						var priceslot = $(this).data("price");
+						if (priceslot && ((equality === ">" && priceslot >= pricewant) || (equality === "<" && priceslot <= pricewant)))
 						{
 							$(this).show();
 						}
-					}
-				});
+						else
+						{
+							$(this).hide();
+						}
+					});
+				}
+				// If searching by keywords
+				else
+				{
+					queries = query.split(" ");
+					// Search for every substring in the user's query, which is space separated
+					slots.each(function()
+					{
+						keywords = $(this).data("keywords"); // The text version of the item's tooltip HTML
+						var ismatch = true;
+						if (keywords)
+						{
+							for (var i = 0; i < queries.length; i++)
+							{
+								// If at least one substring of the search query isn't found, then hide that item
+								if (keywords.indexOf(queries[i]) === -1)
+								{
+									$(this).hide();
+									ismatch = false;
+									break;
+								}
+							}
+							// The boolean is only true if every substrings were found
+							if (ismatch)
+							{
+								$(this).show();
+							}
+						}
+					});
+				}
 			}
 			else
 			{
@@ -8494,7 +8520,7 @@ Q = {
 	 */
 	createInventoryFilterTrade: function(pDestination, pSource)
 	{
-		var filter = $("<div class='ivtBankFilterTrade curToggle'></div>").appendTo(pDestination);
+		var filter = $("<div class='ivtBankFilterTrade ivtBankFilter curToggle'></div>").appendTo(pDestination);
 		var isfiltering = true;
 		var slots = pSource.find(".ivtSlot");
 		filter.click(function()
@@ -8517,9 +8543,44 @@ Q = {
 			{
 				slots.show();
 			}
-			filter.toggleClass("ivtBankFilterTradeFocus", isfiltering);
+			filter.toggleClass("ivtBankFilterFocus", isfiltering);
 			isfiltering = !isfiltering;
 		});
+	},
+	createInventoryFilterHelp: function(pDestination, pSource)
+	{
+		var filter = $("<div class='ivtBankFilterHelp ivtBankFilter curToggle'></div>").appendTo(pDestination);
+		var isfiltering = true;
+		filter.click(function()
+		{
+			if (isfiltering || I.isConsoleShown() === false)
+			{
+				I.write($("#accInventorySearchHelp").html(), 0, true);
+			}
+			else
+			{
+				I.clear();
+			}
+			isfiltering = !isfiltering;
+		});
+	},
+	
+	Bank: function()
+	{
+		this.container = $("<div class='ivtBankContainer'><div class='ivtBank'>" + I.cThrobber + "</div></div>");
+		this.createTab = function(pTitle)
+		{
+			
+		};
+	},
+	
+	/*
+	 * Creates a bank container element.
+	 * @returns jqobject bank.
+	 */
+	createBank: function()
+	{
+		return $("<div class='ivtBankContainer'><div class='ivtBank'>" + I.cThrobber + "</div></div>");
 	},
 	
 	/*
@@ -22357,6 +22418,15 @@ I = {
 	log: function(pString, pClear)
 	{
 		I.write(pString, 0, pClear);
+	},
+	
+	/*
+	 * Tells if the console is shown
+	 * @returns boolean.
+	 */
+	isConsoleShown: function()
+	{
+		return $("#itemConsole").is(":visible");
 	},
 	
 	/*

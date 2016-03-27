@@ -1145,10 +1145,17 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Raiment of the Lich",
-		id: "67037",
-		price: 560,
-		discount: 700,
+		name: "Replica Job-o-Tron Backpack",
+		id: "67405",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Mini Egg",
+		id: "69867",
+		price: 200,
+		discount: null,
 		col: 0
 	},
 	{

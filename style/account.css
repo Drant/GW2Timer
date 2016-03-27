@@ -24,9 +24,14 @@
 	width: 100%; height: 100vh;
 }
 .accPlatter .cntComposition {
-	padding-top: 32px; /* Padding for the menu bar above */
 	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
+}
+#accModal { /* Container of HTML to be written in the console as messages */
+	display: none;
+}
+.accModal {
+	max-width: 360px;
 }
 .accTrivial { /* Situational class to fade trivial information */
 	opacity: 0.3;
@@ -1185,6 +1190,7 @@ a.chrWalletLink {
 	position: absolute;
 	left: 8px;
 	bottom: 8px;
+	white-space: nowrap;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 12px;
 	font-weight: bold;
@@ -1216,27 +1222,32 @@ a.chrWalletLink {
 .ivtBankSearch {
 	display: inline-block;
 	vertical-align: top;
-	width: 670px;
+	width: 630px;
 	margin-bottom: 2px;
 }
-.ivtBankFilter {
+.ivtBankFilterContainer {
 	display: inline-block;
 	margin-left: 16px;
 	margin-top: -4px;
-	width: 32px; height: 32px;
 }
-.ivtBankFilterTrade {
-	display: block;
+.ivtBankFilter {
+	display: inline-block;
 	width: 32px; height: 32px;
-	background-image: url("../img/account/menu/trading.png");
+	line-height: normal;
 	background-position: center;
 	background-size: 100% 100%;
 }
-.ivtBankFilterTradeFocus, .ivtBankFilterTrade:hover {
-	background-image: url("../img/ui/tp.png");
+.ivtBankFilterTrade {
+	background-image: url("../img/account/menu/trading.png");
+}
+.ivtBankFilterHelp {
+	background-image: url("../img/ui/question.png");
+}
+.ivtBankFilterFocus, .ivtBankFilter:hover {
+	opacity: 0.8;
 }
 .ivtBankFilterTrade:active {
-	opacity: 0.8;
+	opacity: 0.4;
 }
 .ivtBankTabSeparator {
 	width: 100%; height: 40px;
