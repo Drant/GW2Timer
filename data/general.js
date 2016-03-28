@@ -1022,7 +1022,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<img class='dsbSaleIcon' src='https://render.guildwars2.com/file/AFBE55FC08ABD32007F3EA0F77F14306AC07283D/499490.png' /> <a href='http://wiki.guildwars2.com/wiki/Bunny Ears'>Bunny Ears</a> (<gem>200</gem><ins class='s16 s16_gem'></ins>) is back on the gem store after 2 years.",
+	content: "1 day left to buy <img class='dsbSaleIcon' src='https://render.guildwars2.com/file/AFBE55FC08ABD32007F3EA0F77F14306AC07283D/499490.png' /> <a href='http://wiki.guildwars2.com/wiki/Bunny Ears'>Bunny Ears</a> (<gem>200</gem><ins class='s16 s16_gem'></ins>) on the gem store.",
 	Start: new Date("2016-03-22T16:00:00Z"),
 	Finish: new Date("2016-03-29T16:00:00Z")
 },
@@ -1145,17 +1145,17 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Replica Job-o-Tron Backpack",
-		id: "67405",
-		price: 400,
-		discount: 500,
+		name: "Toxic Mantle Skin",
+		id: "49024",
+		price: 320,
+		discount: 400,
 		col: 0
 	},
 	{
-		name: "Mini Egg",
-		id: "69867",
-		price: 200,
-		discount: null,
+		name: "Toxic Gloves Skin",
+		id: "49031",
+		price: 320,
+		discount: 400,
 		col: 0
 	},
 	{

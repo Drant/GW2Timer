@@ -2254,6 +2254,9 @@ label:hover {
 	position: relative;
 	background: radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%);
 }
+#accContent {
+	display: none;
+}
 
 /* =============================================================================
  *  @@Utility styles

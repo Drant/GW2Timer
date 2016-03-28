@@ -4044,8 +4044,20 @@ A = {
 		scaffold.find("section").addClass("accPlatter");
 		scaffold.find("article").addClass("accDish jsScrollable").each(function()
 		{
+			var sectionname = $(this).attr("data-section");
+			if ($(this).is(":empty"))
+			{
+				$(this).html("<div class='accDishPadding'></div>"
+					+ "<div id='accDish_" + sectionname + "' class='accDishContainer cntComposition'></div>");
+			}
+			else
+			{
+				$(this).wrapInner("<div id='accDish_" + sectionname + "' class='accDishContainer cntComposition'></div>");
+				$(this).prepend("<div class='accDishPadding'></div>");
+			}
 			I.initializeScrollbar($(this));
 		});
+		$("#accContent").show();
 		
 		// Initialize common UI
 		U.convertExternalLink("#accHelp a");
@@ -4054,17 +4066,10 @@ A = {
 		// Bind the window buttons
 		$("#accToggle").click(function()
 		{
-			var menu = $("#accMenu");
-			menu.slideToggle("fast");
-			return;
-			if (menu.is(":visible"))
+			$("#accMenu").slideToggle("fast", function()
 			{
-				menu.css({visibility: "hidden"});
-			}
-			else
-			{
-				menu.css({visibility: "visible"});
-			}
+				A.adjustAccountPanel();
+			});
 		});
 		$("#accExpand").click(function()
 		{
@@ -4155,7 +4160,7 @@ A = {
 					{
 						if ($(this).hasClass("accDishMain") === false)
 						{
-							var subsectionname = U.getSubstringFromHTMLID($(this));
+							var subsectionname = $(this).attr("data-section");
 							var subbutton = $("<img id='accMenu" + subsectionname + "' class='accMenuSubbutton accMenuIcon' src='img/account/menu/" + subsectionname.toLowerCase() + I.cPNG + "' />");
 							subbuttons.append(subbutton);
 							(function(iSubbutton, iSubsection)
@@ -4211,7 +4216,7 @@ A = {
 		// Resize the width of the menu bar based on the size of the content window
 		$("#accOverhead").css({width: ($("#accContent").width() - 8) + "px"});
 		// Put padding between the menu bar and the content
-		//$("#accMenuPadding").css({height: $("#accOverhead").height() + "px"});
+		$(".accDishPadding").css({height: $("#accOverhead").height() + "px"});
 	},
 	
 	/*
@@ -4527,7 +4532,7 @@ A = {
 			A.generateCharactersStatistics();
 		};
 		
-		$("#chrSummary, #chrStatistics ul, #eqpContainer, #accDish_Inventory").empty();
+		$("#chrSummary, #chrStatistics ul, #accDish_Equipment, #accDish_Inventory").empty();
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
 		I.suspendElement(menusubsection);
@@ -5041,7 +5046,7 @@ A = {
 			return;
 		}
 		// Initialize variables
-		var dish = $("#eqpContainer");
+		var dish = $("#accDish_Equipment");
 		var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
 		container.append(A.formatCharacterSeparator(char));
 		// Equipment icons and glance information
@@ -5426,8 +5431,7 @@ A = {
 			return;
 		}
 		dish.empty().data("token", A.TokenCurrent);
-		var container = $("<div class='ivtBankContainer'></div>").appendTo(dish);
-		var bank = $("<div class='ivtBank'></div>").appendTo(container);
+		var bank = Q.createBank(dish).find(".ivtBank");
 		var slotdata;
 		var tab, slotscontainer, slot;
 		
@@ -5446,7 +5450,7 @@ A = {
 				{
 					slotdata = bag.inventory[iii];
 					// Add slots
-					slot = Q.createInventorySlot();
+					slot = Q.createBankSlot();
 					slotscontainer.append(slot);
 					if (slotdata)
 					{
@@ -5454,14 +5458,14 @@ A = {
 						{
 							$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 							{
-								Q.styleInventorySlot(iSlot, iSlotData, iItem, iTab);
+								Q.styleBankSlot(iSlot, iSlotData, iItem);
 							});
 						})(slot, slotdata, tab);
 					}
 					else
 					{
 						// For empty inventory slots
-						Q.styleInventorySlot(slot, null);
+						Q.styleBankSlot(slot, null);
 					}
 				}
 			}
@@ -5479,8 +5483,8 @@ A = {
 			return;
 		}
 		dish.empty().data("token", A.TokenCurrent);
-		var container = $("<div class='ivtBankContainer'></div>").appendTo(dish);
-		var bank = $("<div class='ivtBank'></div>").appendTo(container).append(I.cThrobber);
+		var container = Q.createBank(dish);
+		var bank = container.find(".ivtBank");
 		var slotdata;
 		var tab, slotscontainer, slot;
 		var nexti;
@@ -5500,7 +5504,7 @@ A = {
 				nexti = i+1;
 				slotdata = pData[i];
 				// Add slots
-				slot = Q.createInventorySlot();
+				slot = Q.createBankSlot();
 				slotscontainer.append(slot);
 				// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
 				if (slotdata)
@@ -5509,24 +5513,24 @@ A = {
 					{
 						$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 						{
-							Q.styleInventorySlot(iSlot, iSlotData, iItem, iTab);
+							Q.styleBankSlot(iSlot, iSlotData, iItem);
 						});
 					})(slot, slotdata, tab);
 				}
 				else
 				{
 					// For empty inventory slots
-					Q.styleInventorySlot(slot, null);
+					Q.styleBankSlot(slot, null);
 				}
 			}
 			// Ornamental bank tab separator at the bottom
 			bank.append("<div class='ivtBankTabSeparator'><var class='ivtBankTabLocked'>" + I.Symbol.Filler + "</var></div>");
 			// Create search bar
 			var search = $("<div class='ivtBankSearch'></div>").prependTo(bank);
-			Q.createInventorySearch(search, container);
+			Q.createBankSearch(search, container);
 			// Button to filter out tradeable items
 			var filter = $("<div class='ivtBankFilterContainer'></div>").insertAfter(search);
-			Q.createInventoryFilterTrade(filter, container);
+			Q.createBankFilterTrade(filter, container);
 			Q.createInventoryFilterHelp(filter, container);
 		});
 	},
@@ -8359,13 +8363,50 @@ Q = {
 			I.qTip.init(elm);
 		}
 	},
+	
+	/*
+	 * Creates a bank container element.
+	 * @returns jqobject bank.
+	 */
+	createBank: function(pDestination)
+	{
+		return $("<div class='ivtBankContainer'>"
+			+ "<div class='ivtBankPrice'></div>"
+			+ "<div class='ivtBank'>" + I.cThrobber + "</div>"
+		+ "</div>").appendTo(pDestination);
+	},
+	
+	/*
+	 * Creates a standard bank window tab that holds item slots, and a separator
+	 * that toggles the tab.
+	 * @param string pTitle of the tab, placed in the separator, optional.
+	 * @returns jqobject bank tab.
+	 */
+	createBankTab: function(pTitle)
+	{
+		var tab = $("<div class='ivtBankTab'></div>");
+		var titlestr = (pTitle) ? "<var class='ivtBankTabText'>" + pTitle + "</var>" : "";
+		var tabseparator = $("<div class='ivtBankTabSeparator curToggle'><aside class='ivtBankTabHeader'>"
+			+ titlestr
+			+ "<var class='ivtBankTabPrice'></var>"
+		+ "</aside></div>").appendTo(tab);
+		var tabtoggle = $("<var class='ivtBankTabToggle'></var>").appendTo(tabseparator);
+		var tabslots = $("<div class='ivtBankTabSlots'></div>").appendTo(tab);
+		tabseparator.click(function()
+		{
+			var state = tabslots.is(":visible");
+			I.toggleToggleIcon(tabtoggle, !state);
+			tabslots.slideToggle("fast");
+		});
+		return tab;
+	},
 		
 	/*
 	 * Constructs a standard inventory slot for use in inventory, bank, materials,
 	 * and other windows.
 	 * @returns jqobject slot.
 	 */
-	createInventorySlot: function()
+	createBankSlot: function()
 	{
 		return $("<span class='ivtSlot'>"
 			+ "<var class='ivtSlotBackground'></var>"
@@ -8382,7 +8423,7 @@ Q = {
 	 * @param object pItem data retrieved from item details API.
 	 * @param jqobject pTab to update tab's sum of tradeable items prices.
 	 */
-	styleInventorySlot: function(pSlot, pSlotData, pItem, pTab)
+	styleBankSlot: function(pSlot, pSlotData, pItem)
 	{
 		if (pSlotData)
 		{
@@ -8427,17 +8468,23 @@ Q = {
 						pSlot.append("<var class='ivtSlotPrice'>" + E.formatCoinString(pricesell, {wantcolor: true, wantshort: true}) + "</var>")
 							.data("price", pricesell);
 						// Update tab price
-						if (pTab)
-						{
-							var header = pTab.find(".ivtBankTabPrice");
-							var tabpricebuy = header.data("pricebuy") || 0;
-							var tabpricesell = header.data("pricesell") || 0;
-							tabpricebuy += pricebuy;
-							tabpricesell += pricesell;
-							header.data("pricebuy", tabpricebuy).data("pricesell", tabpricesell);
-							var tabtext = E.formatCoinStringColored(tabpricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(tabpricebuy) + "</span>";
-							header.html(tabtext);
-						}
+						var tabprice = pSlot.parents(".ivtBankTab").find(".ivtBankTabPrice");
+						var tabpricebuy = tabprice.data("pricebuy") || 0;
+						var tabpricesell = tabprice.data("pricesell") || 0;
+						tabpricebuy += pricebuy;
+						tabpricesell += pricesell;
+						tabprice.data("pricebuy", tabpricebuy).data("pricesell", tabpricesell);
+						var tabtext = E.formatCoinStringColored(tabpricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(tabpricebuy) + "</span>";
+						tabprice.html(tabtext);
+						// Update sum price
+						var bankprice = pSlot.parents(".ivtBankContainer").find(".ivtBankPrice");
+						var bankpricebuy = bankprice.data("pricebuy") || 0;
+						var bankpricesell = bankprice.data("pricesell") || 0;
+						bankpricebuy += pricebuy;
+						bankpricesell += pricesell;
+						bankprice.data("pricebuy", bankpricebuy).data("pricesell", bankpricesell);
+						var tabtext = E.formatCoinStringColored(bankpricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(bankpricebuy) + "</span>";
+						bankprice.html(tabtext);
 					});
 				}
 			}});
@@ -8454,7 +8501,7 @@ Q = {
 	 * @param jqobject pDestination where to place the search bar.
 	 * @param jqobject pSource the container of the slots to be searched.
 	 */
-	createInventorySearch: function(pDestination, pSource)
+	createBankSearch: function(pDestination, pSource)
 	{
 		var bar = $("<div class='ivtSearchBar'></div>").appendTo(pDestination);
 		var input = $("<input class='ivtSearchInput' type='text' />").appendTo(bar);
@@ -8534,7 +8581,7 @@ Q = {
 	 * @param jqobject pDestination where to place the button.
 	 * @param jqobject pSource the container of the slots to be filtered.
 	 */
-	createInventoryFilterTrade: function(pDestination, pSource)
+	createBankFilterTrade: function(pDestination, pSource)
 	{
 		var filter = $("<div class='ivtBankFilterTrade ivtBankFilter curToggle'></div>").appendTo(pDestination);
 		var isfiltering = true;
@@ -8580,49 +8627,6 @@ Q = {
 			isfiltering = !isfiltering;
 		});
 	},
-	
-	Bank: function()
-	{
-		this.container = $("<div class='ivtBankContainer'><div class='ivtBank'>" + I.cThrobber + "</div></div>");
-		this.createTab = function(pTitle)
-		{
-			
-		};
-	},
-	
-	/*
-	 * Creates a bank container element.
-	 * @returns jqobject bank.
-	 */
-	createBank: function()
-	{
-		return $("<div class='ivtBankContainer'><div class='ivtBank'>" + I.cThrobber + "</div></div>");
-	},
-	
-	/*
-	 * Creates a standard bank window tab that holds item slots, and a separator
-	 * that toggles the tab.
-	 * @param string pTitle of the tab, placed in the separator, optional.
-	 * @returns jqobject bank tab.
-	 */
-	createBankTab: function(pTitle)
-	{
-		var tab = $("<div class='ivtBankTab'></div>");
-		var titlestr = (pTitle) ? "<var class='ivtBankTabText'>" + pTitle + "</var>" : "";
-		var tabseparator = $("<div class='ivtBankTabSeparator curToggle'><aside class='ivtBankTabHeader'>"
-			+ titlestr
-			+ "<var class='ivtBankTabPrice'></var>"
-		+ "</aside></div>").appendTo(tab);
-		var tabtoggle = $("<var class='ivtBankTabToggle'></var>").appendTo(tabseparator);
-		var tabslots = $("<div class='ivtBankTabSlots'></div>").appendTo(tab);
-		tabseparator.click(function()
-		{
-			var state = tabslots.is(":visible");
-			I.toggleToggleIcon(tabtoggle, !state);
-			tabslots.slideToggle("fast");
-		});
-		return tab;
-	}
 };
 
 /* =============================================================================
