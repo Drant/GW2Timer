@@ -38,6 +38,9 @@
 	top: 0;
 	bottom: auto;
 }
+#tmlIndicator {
+	top: 0;
+}
 #itemDashboard {
 	bottom: 32px; top: auto; right: 12px;
 	line-height: 120%;

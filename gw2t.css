@@ -763,7 +763,8 @@ textarea.jsCopyCode {
 	height: 100%;
 	top: auto; left: 50%;
 	margin-left: -2px;
-	background: rgba(255, 136, 68, 0.4);
+	background: transparent;
+	border-left: 2px dashed rgba(255, 136, 68, 0.3);
 }
 .tmlLine { /* A whole line representing a chain of events */
 	height: 24px;
@@ -2249,7 +2250,6 @@ label:hover {
  * ========================================================================== */
 #panelAccount {
 	display: none;
-	height: 100vh;
 	overflow: hidden;
 	position: relative;
 	background: radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%);

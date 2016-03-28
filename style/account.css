@@ -5,12 +5,15 @@
 
 #accContent {
 	position: absolute;
-	width: 100%;
+	width: 100%; height: 100%;
 }
 
-#accClose, #accExpand {
+#accToggle, #accExpand, #accClose {
 	top: auto; bottom: -14px; /* Center it across the horizontal line */
 	left: auto; right: 0;
+}
+#accToggle {
+	right: 64px;
 }
 #accExpand {
 	right: 32px;
@@ -20,12 +23,20 @@
 }
 
 .accPlatter {
-	display: none;
-	width: 100%; height: 100vh;
+	width: 100%; height: 100%;
 }
-.accPlatter .cntComposition {
+.accDish { /* Contains the sections of the account page */
+	display: none;
+	width: 100%; height: 100%;
+}
+.accDish .cntComposition {
 	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
+}
+.accDish:before { /* Padding for the menu bar up top */
+	content: "";
+	display: block;
+	padding-top: 32px;
 }
 #accModal { /* Container of HTML to be written in the console as messages */
 	display: none;
@@ -1053,7 +1064,7 @@ a.chrWalletLink {
  */
 .trtTooltip {
 	display: block;
-	max-width: 380px;
+	width: 380px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 16px;
 	font-weight: normal;

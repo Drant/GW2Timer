@@ -4039,16 +4039,33 @@ A = {
 		A.Equipment = GW2T_EQUIPMENT_DATA;
 		A.Attribute = GW2T_ATTRIBUTE_DATA;
 		
-		// Initialize common UI
-		var panel = $("#panelAccount");
-		panel.find(".jsScrollable").each(function()
+		// Initialize scaffolding HTML
+		var scaffold = $("#accContent");
+		scaffold.find("section").addClass("accPlatter");
+		scaffold.find("article").addClass("accDish jsScrollable").each(function()
 		{
 			I.initializeScrollbar($(this));
 		});
+		
+		// Initialize common UI
 		U.convertExternalLink("#accHelp a");
-		A.initializeMenu();
+		A.generateMenu();
 		
 		// Bind the window buttons
+		$("#accToggle").click(function()
+		{
+			var menu = $("#accMenu");
+			menu.slideToggle("fast");
+			return;
+			if (menu.is(":visible"))
+			{
+				menu.css({visibility: "hidden"});
+			}
+			else
+			{
+				menu.css({visibility: "visible"});
+			}
+		});
 		$("#accExpand").click(function()
 		{
 			$("#mapDisplayButton").trigger("click");
@@ -4084,10 +4101,8 @@ A = {
 	
 	/*
 	 * Binds functionality of the account page menu bar.
-	 * A menu item views its associated section, and can also contains menu icons,
-	 * which views the section's (platter) subsections (dish) if available.
 	 */
-	initializeMenu: function()
+	generateMenu: function()
 	{
 		var menu = $("#accMenu");
 		for (var i in I.SectionEnum.Account)
@@ -4104,6 +4119,7 @@ A = {
 			menu.append(menubutton);
 			(function(iButton, iSectionName)
 			{
+				var section = $("#accPlatter" + iSectionName);
 				// Clicking on a button shows the associated section
 				iButton.click(function()
 				{
@@ -4114,10 +4130,10 @@ A = {
 					$(this).find(".accMenuIconMain").addClass("accMenuButtonFocused");
 					// Show the section
 					$(".accPlatter").hide();
-					var section = $("#accPlatter" + iSectionName);
 					section.fadeIn(400, function()
 					{
 						A.adjustAccountPanel();
+						I.updateScrollbar(section);
 					});
 					// Show the main subsection
 					section.find(".accDish").hide();
@@ -4130,7 +4146,7 @@ A = {
 				});
 				
 				// A section (platter) may have multiple subsections (dishes)
-				var subsections = $("#accPlatter" + iSectionName).find(".accDish");
+				var subsections = section.find(".accDish");
 				if (subsections.length)
 				{
 					var subbuttons = iButton.find(".accMenuSubsection");
@@ -4151,6 +4167,7 @@ A = {
 									iSubsection.fadeIn(200, function()
 									{
 										A.adjustAccountPanel();
+										I.updateScrollbar(section);
 									});
 									// Highlight the button
 									var menubutton = $(this).parent().parent();
@@ -4194,8 +4211,7 @@ A = {
 		// Resize the width of the menu bar based on the size of the content window
 		$("#accOverhead").css({width: ($("#accContent").width() - 8) + "px"});
 		// Put padding between the menu bar and the content
-		$(".accPlatter").find(".cntComposition").css({paddingTop: $("#accOverhead").height() + "px"});
-		I.updateScrollbar("#panelAccount");
+		//$("#accMenuPadding").css({height: $("#accOverhead").height() + "px"});
 	},
 	
 	/*
@@ -4511,7 +4527,7 @@ A = {
 			A.generateCharactersStatistics();
 		};
 		
-		$("#chrSummary, #chrStatistics ul, #accDish_Equipment, #accDish_Inventory").empty();
+		$("#chrSummary, #chrStatistics ul, #eqpContainer, #accDish_Inventory").empty();
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
 		I.suspendElement(menusubsection);
@@ -5025,7 +5041,7 @@ A = {
 			return;
 		}
 		// Initialize variables
-		var dish = $("#accDish_Equipment");
+		var dish = $("#eqpContainer");
 		var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
 		container.append(A.formatCharacterSeparator(char));
 		// Equipment icons and glance information
@@ -8601,24 +8617,9 @@ Q = {
 		var tabslots = $("<div class='ivtBankTabSlots'></div>").appendTo(tab);
 		tabseparator.click(function()
 		{
-			if (tabslots.is(":visible"))
-			{
-				I.toggleToggleIcon(tabtoggle, false);
-				tabslots.animate({height: 0}, 200, function()
-				{
-					tabslots.hide();
-				});
-			}
-			else
-			{
-				I.toggleToggleIcon(tabtoggle, true);	
-				// Get the tab's original height by restoring its height
-				var height = tabslots.show().css({height: "auto"}).height();
-				tabslots.show().css({height: 0}).animate({height: height + "px"}, 200, function()
-				{
-					tabslots.css({height: "auto"});
-				});
-			}
+			var state = tabslots.is(":visible");
+			I.toggleToggleIcon(tabtoggle, !state);
+			tabslots.slideToggle("fast");
 		});
 		return tab;
 	}
@@ -22847,7 +22848,7 @@ I = {
 		{
 			I.Scrl.Interval = setInterval(function()
 			{
-				var mindistance = 3;
+				var mindistance = 5;
 				var maxdistance = 720;
 				var difference = I.posY - I.Scrl.posY;
 				var initialstrength = 32;
