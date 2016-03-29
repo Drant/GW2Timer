@@ -1022,7 +1022,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "1 day left to buy <img class='dsbSaleIcon' src='https://render.guildwars2.com/file/AFBE55FC08ABD32007F3EA0F77F14306AC07283D/499490.png' /> <a href='http://wiki.guildwars2.com/wiki/Bunny Ears'>Bunny Ears</a> (<gem>200</gem><ins class='s16 s16_gem'></ins>) on the gem store.",
+	content: "",
 	Start: new Date("2016-03-22T16:00:00Z"),
 	Finish: new Date("2016-03-29T16:00:00Z")
 },
@@ -1114,8 +1114,8 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	isSpecial: true, // If a discounted sale exists
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-03-22T16:00:00Z"),
-	Finish: new Date("2016-03-29T16:00:00Z"),
+	Start: new Date("2016-03-29T16:00:00Z"),
+	Finish: new Date("2016-04-05T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1145,23 +1145,16 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Toxic Mantle Skin",
-		id: "49024",
-		price: 320,
-		discount: 400,
+		name: "Lunatic Guard Outfit",
+		id: "70385",
+		price: 630,
+		discount: 700,
 		col: 0
 	},
 	{
-		name: "Toxic Gloves Skin",
-		id: "49031",
-		price: 320,
-		discount: 400,
-		col: 0
-	},
-	{
-		name: "Bunny Ears",
-		id: "64738",
-		price: 200,
+		name: "Bubble Glider",
+		id: "78007",
+		price: 500,
 		discount: null,
 		col: 0
 	}

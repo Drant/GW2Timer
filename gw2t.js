@@ -4138,7 +4138,7 @@ A = {
 					section.fadeIn(400, function()
 					{
 						A.adjustAccountPanel();
-						I.updateScrollbar(section);
+						I.updateScrollbar(section.find(".accDishMain"));
 					});
 					// Show the main subsection
 					section.find(".accDish").hide();
@@ -4155,7 +4155,7 @@ A = {
 				if (subsections.length)
 				{
 					var subbuttons = iButton.find(".accMenuSubsection");
-					subbuttons.append("<img src='img/account/view.png' />");
+					subbuttons.append("<img src='img/ui/view.png' />");
 					subsections.each(function()
 					{
 						if ($(this).hasClass("accDishMain") === false)
@@ -4172,7 +4172,7 @@ A = {
 									iSubsection.fadeIn(200, function()
 									{
 										A.adjustAccountPanel();
-										I.updateScrollbar(section);
+										I.updateScrollbar($("#accDish_" + subsectionname).parent());
 									});
 									// Highlight the button
 									var menubutton = $(this).parent().parent();
@@ -4536,11 +4536,11 @@ A = {
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
 		I.suspendElement(menusubsection);
-		var platter = $("#accPlatterCharacters");
-		platter.prepend(I.cThrobber);
+		var dish = $("#accDish_Characters");
+		dish.prepend(I.cThrobber);
 		$.getJSON(A.getURL(A.URL.Characters), function(pData)
 		{
-			I.removeThrobber(platter);
+			I.removeThrobber(dish);
 			var charindex = 0;
 			var numfetched = 0;
 			var numcharacters = pData.length;
@@ -4589,7 +4589,7 @@ A = {
 			});
 		}).fail(function()
 		{
-			I.removeThrobber(platter);
+			I.removeThrobber(dish);
 			A.printError("characters");
 		});
 	},
@@ -4659,7 +4659,7 @@ A = {
 					+ "<ins class='chrProfessionIcon acc_prof acc_prof_" + getProfession(pCharacter) + "'></ins><sup>" + pCharacter.level + "</sup></var>"
 				+ "<var class='chrCrafting'>" + craftused + "</var>"
 			+ "</span>"
-			+ "<img class='chrProceed' src='img/account/view.png' />")
+			+ "<img class='chrProceed' src='img/ui/view.png' />")
 		.click(function()
 		{
 			var charindex = U.getSubintegerFromHTMLID($(this));
@@ -5132,7 +5132,7 @@ A = {
 			var traitwindow = $("<div class='spzWindow'>"
 				+ "<aside class='spzSwitchContainer'><span class='spzSwitchWrapper'>"
 					+ "<img class='spzBuildIcon' src='img/account/menu/build.png' />"
-					+ "<img src='img/account/view.png' />"
+					+ "<img src='img/ui/view.png' />"
 					+ "<img class='spzSwitch curClick' data-assoc='PVE' src='img/ui/pages/map.png' />"
 					+ "<img class='spzSwitch curClick' data-assoc='WVW' src='img/ui/pages/wvw.png' />"
 					+ "<img class='spzSwitch curClick' data-assoc='PVP' src='img/account/menu/pvp.png' />"
@@ -5231,24 +5231,22 @@ A = {
 							{
 								Q.sumAttributeObject(attrobj, iBox.attr);
 							}
+							// Add faux checkboxes for toggleable armor slots
+							if (equiptoggle[iEquipment.slot])
+							{
+								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/ui/checkbox.png' />");
+							}
+							// Add faux charges number over gathering tools
+							if (iItem.type === "Gathering" && iItem.rarity !== Q.Rarity.Rare)
+							{
+								// Ignore Rare rarity tools which have unlimited charges
+								sloticon.attr("src", iBox.item.icon);
+								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
+							}
 							numfetched++;
 							finalizeEquipment();
 						}
 					});
-					// Add faux checkboxes for toggleable armor slots
-					if (equiptoggle[iEquipment.slot])
-					{
-						subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/ui/checkbox.png' />");
-					}
-					// Add faux charges number over gathering tools
-					if (iItem.type === "Gathering")
-					{
-						if (equipgathering[iItem.details.type] && iItem.rarity !== Q.Rarity.Rare) // Ignore Rare rarity tools which have unlimited charges
-						{
-							sloticon.attr("src", "img/account/equipment/icon_" + (iEquipment.slot).toLowerCase() + I.cPNG);
-							subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
-						}
-					}
 				});
 			})(char.equipment[i]);
 		}
@@ -5431,45 +5429,49 @@ A = {
 			return;
 		}
 		dish.empty().data("token", A.TokenCurrent);
-		var bank = Q.createBank(dish).find(".ivtBank");
+		var bank = Q.createBank(dish).find(".bnkBank");
 		var slotdata;
-		var tab, slotscontainer, slot;
+		var tab, banksidebar, slotscontainer, slot;
 		
-		var char, bag;
+		var char, bagdata;
 		for (var i = 0; i < A.Data.Characters.length; i++)
 		{
 			char = A.Data.Characters[i];
 			// Bank tab separator every character
-			tab = Q.createBankTab(char.charname);
-			slotscontainer = tab.find(".ivtBankTabSlots");
-			bank.append(tab);
+			tab = Q.createBankTab(bank, char.charname);
+			Q.createInventorySidebar(tab, char.bags);
+			slotscontainer = tab.find(".bnkTabSlots");
 			for (var ii = 0; ii < char.bags.length; ii++)
 			{
-				bag = char.bags[ii];
-				for (var iii = 0; iii < bag.inventory.length; iii++)
+				bagdata = char.bags[ii];
+				if (bagdata)
 				{
-					slotdata = bag.inventory[iii];
-					// Add slots
-					slot = Q.createBankSlot();
-					slotscontainer.append(slot);
-					if (slotdata)
+					for (var iii = 0; iii < bagdata.inventory.length; iii++)
 					{
-						(function(iSlot, iSlotData, iTab)
+						slotdata = bagdata.inventory[iii];
+						// Add slots
+						slot = Q.createBankSlot();
+						slotscontainer.append(slot);
+						if (slotdata)
 						{
-							$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
+							(function(iSlot, iSlotData, iTab)
 							{
-								Q.styleBankSlot(iSlot, iSlotData, iItem);
-							});
-						})(slot, slotdata, tab);
-					}
-					else
-					{
-						// For empty inventory slots
-						Q.styleBankSlot(slot, null);
+								$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
+								{
+									Q.styleBankSlot(iSlot, iSlotData, iItem);
+								});
+							})(slot, slotdata, tab);
+						}
+						else
+						{
+							// For empty inventory slots
+							Q.styleBankSlot(slot, null);
+						}
 					}
 				}
 			}
 		}
+		Q.createBankMenu(bank);
 	},
 	
 	/*
@@ -5484,7 +5486,7 @@ A = {
 		}
 		dish.empty().data("token", A.TokenCurrent);
 		var container = Q.createBank(dish);
-		var bank = container.find(".ivtBank");
+		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var slotdata;
 		var tab, slotscontainer, slot;
 		var nexti;
@@ -5497,9 +5499,8 @@ A = {
 				// Bank tab separator every so slots
 				if ((i === 0 || nexti % A.Metadata.Bank.NumSlotsPerTab === 0) && nexti !== pData.length)
 				{
-					tab = Q.createBankTab();
-					slotscontainer = tab.find(".ivtBankTabSlots");
-					bank.append(tab);
+					tab = Q.createBankTab(bank);
+					slotscontainer = tab.find(".bnkTabSlots");
 				}
 				nexti = i+1;
 				slotdata = pData[i];
@@ -5524,14 +5525,9 @@ A = {
 				}
 			}
 			// Ornamental bank tab separator at the bottom
-			bank.append("<div class='ivtBankTabSeparator'><var class='ivtBankTabLocked'>" + I.Symbol.Filler + "</var></div>");
+			bank.append("<div class='bnkTabSeparator'><var class='bnkTabLocked'>" + I.Symbol.Filler + "</var></div>");
 			// Create search bar
-			var search = $("<div class='ivtBankSearch'></div>").prependTo(bank);
-			Q.createBankSearch(search, container);
-			// Button to filter out tradeable items
-			var filter = $("<div class='ivtBankFilterContainer'></div>").insertAfter(search);
-			Q.createBankFilterTrade(filter, container);
-			Q.createInventoryFilterHelp(filter, container);
+			Q.createBankMenu(bank);
 		});
 	},
 	
@@ -7694,6 +7690,12 @@ Q = {
 			}
 		}
 		
+		// Correct API bug with gathering tool icons
+		if (type === "Gathering" && item.rarity !== Q.Rarity.Rare)
+		{
+			item.icon = "img/account/item/gathering_" + det.type.toLowerCase() + I.cPNG;
+		}
+		
 		// NAME
 		var namestr = "";
 		var rarity = (item.rarity !== undefined) ? item.rarity : Q.Rarity.Basic;
@@ -8366,39 +8368,76 @@ Q = {
 	
 	/*
 	 * Creates a bank container element.
+	 * @param jqobject pDestination to append bank.
 	 * @returns jqobject bank.
 	 */
 	createBank: function(pDestination)
 	{
-		return $("<div class='ivtBankContainer'>"
-			+ "<div class='ivtBankPrice'></div>"
-			+ "<div class='ivtBank'>" + I.cThrobber + "</div>"
+		return $("<div class='bnkContainer'>"
+			+ "<div class='bnkPrice'></div>"
+			+ "<div class='bnkBank'></div>"
 		+ "</div>").appendTo(pDestination);
 	},
 	
 	/*
 	 * Creates a standard bank window tab that holds item slots, and a separator
 	 * that toggles the tab.
+	 * @param jqobject pBank container of tabs.
 	 * @param string pTitle of the tab, placed in the separator, optional.
 	 * @returns jqobject bank tab.
 	 */
-	createBankTab: function(pTitle)
+	createBankTab: function(pBank, pTitle)
 	{
-		var tab = $("<div class='ivtBankTab'></div>");
-		var titlestr = (pTitle) ? "<var class='ivtBankTabText'>" + pTitle + "</var>" : "";
-		var tabseparator = $("<div class='ivtBankTabSeparator curToggle'><aside class='ivtBankTabHeader'>"
+		var tab = $("<div class='bnkTab'></div>");
+		var titlestr = (pTitle) ? "<var class='bnkTabText'>" + pTitle + "</var>" : "";
+		var tabseparator = $("<div class='bnkTabSeparator curToggle'><aside class='bnkTabHeader'>"
 			+ titlestr
-			+ "<var class='ivtBankTabPrice'></var>"
+			+ "<var class='bnkTabPrice'></var>"
 		+ "</aside></div>").appendTo(tab);
-		var tabtoggle = $("<var class='ivtBankTabToggle'></var>").appendTo(tabseparator);
-		var tabslots = $("<div class='ivtBankTabSlots'></div>").appendTo(tab);
+		var tabtoggle = $("<var class='bnkTabToggle'></var>").appendTo(tabseparator);
+		var tabslots = $("<div class='bnkTabSlots'></div>").appendTo(tab);
 		tabseparator.click(function()
 		{
 			var state = tabslots.is(":visible");
 			I.toggleToggleIcon(tabtoggle, !state);
 			tabslots.slideToggle("fast");
 		});
+		pBank.append(tab);
 		return tab;
+	},
+	
+	/*
+	 * Creates a vertical bar that holds bags on the left side of a bank tab.
+	 * @param jqobject pTab to append.
+	 * @param objarray pBags from characters API.
+	 */
+	createInventorySidebar: function(pTab, pBagsData)
+	{
+		if (pBagsData === undefined)
+		{
+			return;
+		}
+		
+		pTab.addClass("bnkTabInventory");
+		var sidebar = $("<div class='bnkSidebar'></div>").prependTo(pTab);
+		var bagscolumn = $("<div class='bnkSidebarColumn'></div>").appendTo(sidebar);
+		var bagouter, bag;
+		pBagsData.forEach(function(iBagData)
+		{
+			bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
+			bag = $("<span class='bnkSidebarBag'></span>").appendTo(bagouter);
+			if (iBagData)
+			{
+				(function(iBag)
+				{
+					$.getJSON(U.getAPIItem(iBagData.id), function(iItem)
+					{
+						iBag.css({backgroundImage: "url(" + iItem.icon + ")"});
+						Q.scanItem(iItem, {element: iBag});
+					});
+				})(bag);
+			}
+		});
 	},
 		
 	/*
@@ -8408,10 +8447,10 @@ Q = {
 	 */
 	createBankSlot: function()
 	{
-		return $("<span class='ivtSlot'>"
-			+ "<var class='ivtSlotBackground'></var>"
-			+ "<var class='ivtSlotIcon'></var>"
-			+ "<var class='ivtSlotForeground'></var>"
+		return $("<span class='bnkSlot'>"
+			+ "<var class='bnkSlotBackground'></var>"
+			+ "<var class='bnkSlotIcon'></var>"
+			+ "<var class='bnkSlotForeground'></var>"
 		+ "</span>");
 	},
 	
@@ -8431,7 +8470,7 @@ Q = {
 			{
 				// Load retrieved proper transmuted icon if available
 				var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
-				pSlot.find(".ivtSlotIcon").css({backgroundImage: "url(" + icon + ")"});
+				pSlot.find(".bnkSlotIcon").css({backgroundImage: "url(" + icon + ")"});
 				// Make the item searchable by converting its tooltip HTML into plain text
 				var keywords = ($(pBox.html).text() + " " + D.getString(pItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
@@ -8439,7 +8478,7 @@ Q = {
 				var count = pSlotData.count || 1;
 				if (count > 1)
 				{
-					pSlot.append("<var class='ivtSlotCount'>" + count + "</var>");
+					pSlot.append("<var class='bnkSlotCount'>" + count + "</var>");
 				}
 				else if (pItem.type === "Tool")
 				{
@@ -8447,7 +8486,7 @@ Q = {
 					var salv = A.Equipment.SalvageCharges;
 					if (salv && salv[pItem.id])
 					{
-						pSlot.append("<var class='ivtSlotCount'>" + salv[pItem.id] + "</var>");
+						pSlot.append("<var class='bnkSlotCount'>" + salv[pItem.id] + "</var>");
 					}
 				}
 				else if (pItem.type === "Gathering")
@@ -8455,7 +8494,7 @@ Q = {
 					var gath = A.Equipment.GatheringCharges;
 					if (gath && pItem.rarity !== Q.Rarity.Rare)
 					{
-						pSlot.append("<var class='ivtSlotCount'>" + gath[pItem.details.type] + "</var>");
+						pSlot.append("<var class='bnkSlotCount'>" + gath[pItem.details.type] + "</var>");
 					}
 				}
 				// TP price label if the item is tradeable
@@ -8474,10 +8513,10 @@ Q = {
 							pDisplay.html(tabtext);
 						};
 						
-						pSlot.append("<var class='ivtSlotPrice'>" + E.formatCoinString(pricesell, {wantcolor: true, wantshort: true}) + "</var>")
+						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricesell, {wantcolor: true, wantshort: true}) + "</var>")
 							.data("price", pricesell);
-						updatePriceDisplay(pSlot.parents(".ivtBankTab").find(".ivtBankTabPrice"));
-						updatePriceDisplay(pSlot.parents(".ivtBankContainer").find(".ivtBankPrice"));
+						updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
+						updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPrice"));
 					});
 				}
 			}});
@@ -8490,16 +8529,23 @@ Q = {
 	},
 	
 	/*
-	 * Creates and binds a search bar for a container containing item slots.
-	 * @param jqobject pDestination where to place the search bar.
-	 * @param jqobject pSource the container of the slots to be searched.
+	 * Creates and binds a search bar for a bank. Also creates functional buttons.
+	 * @param jqobject pBank for insertion.
+	 * @pre Bank slots were generated.
 	 */
-	createBankSearch: function(pDestination, pSource)
+	createBankMenu: function(pBank)
 	{
-		var bar = $("<div class='ivtSearchBar'></div>").appendTo(pDestination);
-		var input = $("<input class='ivtSearchInput' type='text' />").appendTo(bar);
-		var fillertext = $("<div class='ivtSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(bar);
-		var slots = pSource.find(".ivtSlot");
+		// Initialize commonly used elements
+		var bankmenu = $("<div class='bnkMenu'></div>").prependTo(pBank);
+		var slots = pBank.find(".bnkSlot");
+		var tabslots = pBank.find(".bnkTabSlots");
+		
+		/*
+		 * Search bar.
+		 */
+		var searchcontainer = $("<div class='bnkSearch'></div>").appendTo(bankmenu);
+		var input = $("<input class='bnkSearchInput' type='text' />").appendTo(searchcontainer);
+		var fillertext = $("<div class='bnkSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(searchcontainer);
 		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
 			var query = $(this).val().toLowerCase();
@@ -8566,22 +8612,32 @@ Q = {
 				});
 			}
 		}));
-	},
-	
-	/*
-	 * Creates a toggleable button that filters out any non-tradeable items from
-	 * the container.
-	 * @param jqobject pDestination where to place the button.
-	 * @param jqobject pSource the container of the slots to be filtered.
-	 */
-	createBankFilterTrade: function(pDestination, pSource)
-	{
-		var filter = $("<div class='ivtBankFilterTrade ivtBankFilter curToggle'></div>").appendTo(pDestination);
-		var isfiltering = true;
-		var slots = pSource.find(".ivtSlot");
-		filter.click(function()
+		
+		/*
+		 * Add buttons next to the search bar for bank functionalities.
+		 */
+		var buttoncontainer = $("<div class='bnkButtons'></div>").appendTo(bankmenu);
+		
+		// Help button shows search usage message
+		var isshowinghelp = true;
+		$("<div class='bnkButtonHelp bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
 		{
-			if (isfiltering)
+			if (isshowinghelp || I.isConsoleShown() === false)
+			{
+				I.write($("#accInventorySearchHelp").html(), 0, true);
+			}
+			else
+			{
+				I.clear();
+			}
+			isshowinghelp = !isshowinghelp;
+		});
+		
+		// Trading Post filter for items that can be traded
+		var isfilteringtrade = true;
+		$("<div class='bnkButtonTrade bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
+		{
+			if (isfilteringtrade)
 			{
 				slots.each(function()
 				{
@@ -8599,27 +8655,45 @@ Q = {
 			{
 				slots.show();
 			}
-			filter.toggleClass("ivtBankFilterFocus", isfiltering);
-			isfiltering = !isfiltering;
+			isfilteringtrade = !isfilteringtrade;
 		});
-	},
-	createInventoryFilterHelp: function(pDestination, pSource)
-	{
-		var filter = $("<div class='ivtBankFilterHelp ivtBankFilter curToggle'></div>").appendTo(pDestination);
-		var isfiltering = true;
-		filter.click(function()
+		
+		// Toggle all tabs button
+		var istabscollapsed = false;
+		$("<div class='bnkButtonTab bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
 		{
-			if (isfiltering || I.isConsoleShown() === false)
+			if (istabscollapsed)
 			{
-				I.write($("#accInventorySearchHelp").html(), 0, true);
+				tabslots.slideDown("fast");
 			}
 			else
 			{
-				I.clear();
+				tabslots.slideUp("fast");
 			}
-			isfiltering = !isfiltering;
+			istabscollapsed = !istabscollapsed;
 		});
-	},
+		
+		// Increase or decrease bank width buttons
+		var slotsize = slots.first().width();
+		$("<div class='bnkButtonWideLess bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
+		{
+			var minbankwidth = slotsize * 4;
+			var oldwidth = pBank.width();
+			if (oldwidth > minbankwidth)
+			{
+				pBank.css({width: oldwidth - slotsize});
+			}
+		});
+		$("<div class='bnkButtonWideMore bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
+		{
+			var maxbankwidth = $("#accContent").width() - (slotsize * 2);
+			var oldwidth = pBank.width();
+			if (oldwidth < maxbankwidth)
+			{
+				pBank.css({width: oldwidth + slotsize});
+			}
+		});
+	}
 };
 
 /* =============================================================================

@@ -168,11 +168,14 @@ input[type="text"].accTokenHovered {
 	display: none;
 	margin-top: 16px;
 	margin-bottom: 16px;
+	font-family: Trebuchet MS, Menomonia;
 }
 #chrSummary var {
 	line-height: normal;
 }
 #chrAccountLink {
+	font-family: Menomonia;
+	font-size: 16px;
 	text-decoration: none;
 }
 #chrAccountName {
@@ -221,7 +224,7 @@ input[type="text"].accTokenNameUsed {
 	height: 48px;
 	overflow: visible;
 	line-height: 18px;
-	font-size: 12px;
+	font-size: 14px;
 	animation: aniFadeIn 0.4s;
 }
 #chrAccountMisc img {
@@ -1136,42 +1139,185 @@ a.chrWalletLink {
 		1px 1px 1px #000;
 }
 
-/* Inventory slot, shared styles for inventory, bank, materials, and other windows.
+
+/* Bank, shared styles for inventory, bank, materials, wardrobe, minis.
 ----------------------------------------------------------------------------- */
-.ivtSlot {
+.bnkContainer {
+	width: 100%;
+	margin-top: 32px;
+	margin-bottom: 32px;
+	text-align: center;
+}
+.bnkPrice {
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 18px;
+}
+.bnkBank {
+	display: inline-block;
+	width: 720px; /* Must be exactly wide enough to fit a number of slots per row */
+	padding: 8px;
+	text-align: left;
+	line-height: 0; /* Makes the slots pack tightly on the vertical */
+	background: linear-gradient(to right, #4a3018 0%, #775334 50%, rgba(119,83,52,0.2) 100%);
+	border: 4px solid rgba(0,0,0,0.6);
+	border-radius: 8px;
+	box-shadow: 0px 0px 32px #0b0d0e;
+}
+.bnkMenu { /* Container above the bank for search bar and buttons */
+	display: inline-block;
+	width: 100%;
+	line-height: normal;
+	margin-bottom: 2px;
+}
+/*
+ * Bank search bar.
+ */
+.bnkSearch {
+	display: inline-block;
+	width: calc(100% - 200px);
+	vertical-align: bottom;
+}
+input[type="text"].bnkSearchInput {
+	display: block;
+	width: 100%;
+	height: 20px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 17px;
+	color: #eeeeee;
+	background: rgba(0,0,0,0.4);
+	border: 2px solid rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 2px #0b0d0e;
+}
+input[type="text"].bnkSearchInput:hover {
+	border: 2px solid rgba(0,0,0,0.5);
+}
+.bnkSearchFiller {
+	display: block;
+	position: absolute;
+	margin-top: -24px;
+	margin-left: 8px;
+	line-height: normal;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 17px;
+	color: #bbbbbb;
+	pointer-events: none;
+}
+/*
+ * Bank buttons and filters.
+ */
+.bnkButtons {
+	display: inline-block;
+	margin-left: 16px;
+	margin-top: -4px;
+}
+.bnkButton {
+	display: inline-block;
+	width: 32px; height: 32px;
+	margin-right: 4px;
+	line-height: normal;
+	vertical-align: bottom;
+	background-position: center;
+	background-size: 100% 100%;
+}
+.bnkButtonTrade {
+	background-image: url("../img/map/tradingpost.png");
+}
+.bnkButtonHelp {
+	background-image: url("../img/ui/question.png");
+}
+.bnkButtonTab {
+	background-image: url("../img/ui/adjust_vertical.png");
+}
+.bnkButtonWideMore {
+	background-image: url("../img/ui/adjust_right.png");
+}
+.bnkButtonWideLess {
+	background-image: url("../img/ui/adjust_left.png");
+}
+.bnkButton:hover {
+	opacity: 0.8;
+}
+.bnkButton:active {
+	opacity: 0.4;
+}
+/*
+ * Bank tabs and separators.
+ */
+.bnkTabSeparator {
+	width: 100%; height: 40px;
+	background-image: url("../img/background/separator.png");
+	background-size: 100% 100%;
+}
+.bnkTabSeparator:hover {
+	background-image: url("../img/background/separator_hover.png");
+}
+.bnkTabHeader {
+	display: block;
+	float: left;
+	margin-top: 8px;
+	margin-left: 8px;
+	line-height: normal;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 18px;
+}
+.bnkTabText {
+	margin-right: 8px;
+}
+.bnkTabToggle, .bnkTabLocked {
+	display: block;
+	width: 38px; height: 38px;
+	float: right;
+	background-position: center;
+}
+.bnkTabToggle {
+	background-image: url("../img/ui/toggle.png");
+	background-size: 44px 44px;
+}
+.bnkTabLocked {
+	background-image: url("../img/ui/locked.png");
+	background-size: 34px 34px;
+}
+.bnkTabSlots {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+/*
+ * Individual bank slots that hold item icon.
+ */
+.bnkSlot {
 	display: inline-block;
 	position: relative;
 	width: 72px; height: 72px;
 	padding: 0;
 	margin: 0;
 }
-.ivtSlot:hover {
+.bnkSlot:hover {
 	-webkit-filter: brightness(1.05);
 	filter: brightness(1.05);
 }
-.ivtSlotBackground {
+.bnkSlotBackground {
 	display: block;
 	position: absolute;
 	width: 72px; height: 72px;
-	background-image: url("../img/account/equipment/inventory.png");
+	background-image: url("../img/account/equipment/slot.png");
 	background-size: 78px 78px;
 	background-position: center;
 	opacity: 0.6;
 }
-.ivtSlot:hover .ivtSlotBackground {
+.bnkSlot:hover .bnkSlotBackground {
 	opacity: 0.9;
 }
-.ivtSlotForeground {
+.bnkSlotForeground {
 	display: block;
 	position: absolute;
 	width: 72px; height: 72px;
 	background-color: black;
 	opacity: 0.05;
 }
-.ivtSlot:hover .ivtSlotForeground {
+.bnkSlot:hover .bnkSlotForeground {
 	opacity: 0;
 }
-.ivtSlotIcon {
+.bnkSlotIcon {
 	display: block;
 	position: absolute;
 	margin-top: 5px;
@@ -1180,7 +1326,7 @@ a.chrWalletLink {
 	background-size: 100%;
 	background-position: center;
 }
-.ivtSlotCount {
+.bnkSlotCount {
 	display: block;
 	position: absolute;
 	top: 14px;
@@ -1191,7 +1337,7 @@ a.chrWalletLink {
 	text-shadow:
 		1px 1px 1px #000;
 }
-.ivtSlotPrice {
+.bnkSlotPrice {
 	display: block;
 	position: absolute;
 	left: 8px;
@@ -1206,133 +1352,47 @@ a.chrWalletLink {
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
 }
-
-/* Shared window container for bank, materials, wardrobe, minis */
-.ivtBankContainer {
-	width: 100%;
-	margin-top: 32px;
-	margin-bottom: 32px;
-	text-align: center;
-}
-.ivtBankPrice {
-	font-family: Trebuchet MS, Menomonia;
-	font-size: 18px;
-}
-.ivtBank {
-	display: inline-block;
-	width: 720px; /* Must be exactly wide enough to fit a number of slots per row */
-	padding: 8px;
-	text-align: left;
-	line-height: 0; /* Makes the slots pack tightly on the vertical */
-	background: linear-gradient(to right, #4a3018 0%, #775334 50%, rgba(119,83,52,0.2) 100%);
-	border: 4px solid rgba(0,0,0,0.6);
-	border-radius: 8px;
-	box-shadow: 0px 0px 32px #0b0d0e;
-}
-.ivtBankSearch {
-	display: inline-block;
-	vertical-align: top;
-	width: 630px;
-	margin-bottom: 2px;
-}
-.ivtBankFilterContainer {
-	display: inline-block;
-	margin-left: 16px;
-	margin-top: -4px;
-}
-.ivtBankFilter {
-	display: inline-block;
-	width: 32px; height: 32px;
-	line-height: normal;
-	background-position: center;
-	background-size: 100% 100%;
-}
-.ivtBankFilterTrade {
-	background-image: url("../img/account/menu/trading.png");
-}
-.ivtBankFilterHelp {
-	background-image: url("../img/ui/question.png");
-}
-.ivtBankFilterFocus, .ivtBankFilter:hover {
-	opacity: 0.8;
-}
-.ivtBankFilterTrade:active {
-	opacity: 0.4;
-}
-.ivtBankTabSeparator {
-	width: 100%; height: 40px;
-	background-image: url("../img/account/equipment/separator.png");
-	background-size: 100% 100%;
-}
-.ivtBankTabSeparator:hover {
-	background-image: url("../img/account/equipment/separator_hover.png");
-}
-.ivtBankTabHeader {
-	display: block;
-	float: left;
-	margin-top: 8px;
-	margin-left: 8px;
-	line-height: normal;
-	font-family: Trebuchet MS, Menomonia;
-	font-size: 18px;
-}
-.ivtBankTabText {
-	margin-right: 8px;
-}
-.ivtBankTabToggle, .ivtBankTabLocked {
-	display: block;
-	width: 38px; height: 38px;
-	float: right;
-	background-position: center;
-}
-.ivtBankTabToggle {
-	background-image: url("../img/ui/toggle.png");
-	background-size: 44px 44px;
-}
-.ivtBankTabLocked {
-	background-image: url("../img/ui/locked.png");
-	background-size: 34px 34px;
-}
-.ivtBankTabSlots {
-	margin-top: 2px;
-	margin-bottom: 2px;
-}
-
-/* Search bar */
-.ivtSearchBar {
-	width: 100%;
-}
-input[type="text"].ivtSearchInput {
-	display: block;
-	width: 100%;
-	height: 20px;
-	font-family: Trebuchet MS, Menomonia;
-	font-size: 17px;
-	color: #eeeeee;
-	background: rgba(0,0,0,0.4);
-	border: 2px solid rgba(0,0,0,0.5);
-	box-shadow: 0px 0px 2px #0b0d0e;
-}
-input[type="text"].ivtSearchInput:hover {
-	border: 2px solid rgba(0,0,0,0.5);
-}
-.ivtSearchFiller {
-	display: block;
+/*
+ * Sidebar for inventory bags.
+ */
+.bnkSidebar {
+	display: none;
 	position: absolute;
-	margin-top: -24px;
-	margin-left: 8px;
-	line-height: normal;
-	font-family: Trebuchet MS, Menomonia;
-	font-size: 17px;
-	color: #bbbbbb;
-	pointer-events: none;
+	margin-left: -62px;
+	width: 52px; height: 720px;
+	background: linear-gradient(to bottom, black 0%, transparent 100%);
+}
+.bnkTabInventory:hover .bnkSidebar {
+	display: block;
+}
+.bnkSidebar:after {
+	content: "";
+	position: absolute;
+	width: 2px;
+	top: -2px;
+	bottom: -2px;
+	right: -2px;
+	background: linear-gradient(to top, transparent 0%, rgba(201,184,177,0.8) 25%, rgba(201,184,177,0.8) 95%, transparent 100%);
+}
+.bnkSidebarBagOuter {
+	margin-left: 4px;
+	margin-bottom: 7px;
+}
+.bnkSidebarBag {
+	display: block;
+	width: 42px; height: 42px;
+	background: #0b0d10;
+	background-size: 100%;
+	outline: 1px solid #4e5d6f;
+	border: 1px solid #343e49;
+	border-radius: 1px;
 }
 
 /* Adjustments for smaller screens
 ----------------------------------------------------------------------------- */
 @media (max-width: 720px) {
 	
-.accMenuTitle {
+.accMenuTitle { /* Hide text on the account page menu */
 	display: none;
 }
 #accMenu kbd {
