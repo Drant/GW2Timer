@@ -8465,26 +8465,19 @@ Q = {
 					{
 						var pricebuy = E.deductTax(pData.buys.unit_price * count);
 						var pricesell = E.deductTax(pData.sells.unit_price * count);
+						var updatePriceDisplay = function(pDisplay)
+						{
+							var displaypricebuy = (pDisplay.data("pricebuy") || 0) + pricebuy;
+							var displaypricesell = (pDisplay.data("pricesell") || 0) + pricesell;
+							pDisplay.data("pricebuy", displaypricebuy).data("pricesell", displaypricesell);
+							var tabtext = E.formatCoinStringColored(displaypricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(displaypricebuy) + "</span>";
+							pDisplay.html(tabtext);
+						};
+						
 						pSlot.append("<var class='ivtSlotPrice'>" + E.formatCoinString(pricesell, {wantcolor: true, wantshort: true}) + "</var>")
 							.data("price", pricesell);
-						// Update tab price
-						var tabprice = pSlot.parents(".ivtBankTab").find(".ivtBankTabPrice");
-						var tabpricebuy = tabprice.data("pricebuy") || 0;
-						var tabpricesell = tabprice.data("pricesell") || 0;
-						tabpricebuy += pricebuy;
-						tabpricesell += pricesell;
-						tabprice.data("pricebuy", tabpricebuy).data("pricesell", tabpricesell);
-						var tabtext = E.formatCoinStringColored(tabpricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(tabpricebuy) + "</span>";
-						tabprice.html(tabtext);
-						// Update sum price
-						var bankprice = pSlot.parents(".ivtBankContainer").find(".ivtBankPrice");
-						var bankpricebuy = bankprice.data("pricebuy") || 0;
-						var bankpricesell = bankprice.data("pricesell") || 0;
-						bankpricebuy += pricebuy;
-						bankpricesell += pricesell;
-						bankprice.data("pricebuy", bankpricebuy).data("pricesell", bankpricesell);
-						var tabtext = E.formatCoinStringColored(bankpricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(bankpricebuy) + "</span>";
-						bankprice.html(tabtext);
+						updatePriceDisplay(pSlot.parents(".ivtBankTab").find(".ivtBankTabPrice"));
+						updatePriceDisplay(pSlot.parents(".ivtBankContainer").find(".ivtBankPrice"));
 					});
 				}
 			}});
