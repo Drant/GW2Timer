@@ -2208,6 +2208,9 @@ header.jsSection sup {
 	margin-right: 8px;
 	vertical-align: top;
 }
+.optFollowFieldset {
+	width: 90%;
+}
 
 .optButtons {
 	margin-top: 8px;

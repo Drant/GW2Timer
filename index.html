@@ -22,7 +22,7 @@
 	<script>window.L || document.write('<script src="bin/leaflet.js"><\/script>');</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160329A"></script>
+	<script type="text/javascript" src="data/general.js?v=20160330"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 <!-- Google Analytics -->
@@ -153,7 +153,11 @@
 				<div class="mapGPS mapHUDContainer">
 					<img id="mapGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" data-src="img/map/gps.png" alt="GPS" />
 					<div class="mapHUDPopup cntComposition">
-						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacter" type="checkbox" />Follow Game Character</label>
+						<fieldset name="int_setFollow" class="optFollowFieldset" title="Automatically moves the map to where you are:&lt;br /&gt;&lt;dfn&gt;Off&lt;/dfn&gt;: No follow&lt;br /&gt;&lt;dfn&gt;Character&lt;/dfn&gt;: Center on your character&lt;br /&gt;&lt;dfn&gt;Zone&lt;/dfn&gt;: Center on the zone your character is in"><legend>GPS Follow</legend>
+							<label><input id="opt_int_setFollow" type="radio" name="int_setFollow" /> Off</label>
+							<label><input type="radio" name="int_setFollow" /> Character</label>
+							<label><input type="radio" name="int_setFollow" /> Zone</label>
+						</fieldset>
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
 						<label title="Repeated milliseconds before your character is pinpointed again.<br />This should not be faster than the overlay's interval."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Interval (ms)</label>
 					</div>
@@ -352,7 +356,11 @@
 				<div class="mapGPS mapHUDContainer">
 					<img id="wvwGPSButton" class="mapHUDButton" title="<dfn> Click to Center Character </dfn>" data-src="img/map/gps.png" alt="GPS" />
 					<div class="mapHUDPopup cntComposition">
-						<label title="Automatically scroll the map to your in-game location."><img data-src="img/map/gps.png" /><input id="opt_bol_followCharacterWvW" type="checkbox" />Follow Game Character</label>
+						<fieldset name="int_setFollowWvW" class="optFollowFieldset" title="Automatically moves the map to where you are:&lt;br /&gt;&lt;dfn&gt;Off&lt;/dfn&gt;: No follow&lt;br /&gt;&lt;dfn&gt;Character&lt;/dfn&gt;: Center on your character&lt;br /&gt;&lt;dfn&gt;Zone&lt;/dfn&gt;: Center on the zone your character is in"><legend>GPS Follow</legend>
+							<label><input id="opt_int_setFollowWvW" type="radio" name="int_setFollowWvW" /> Off</label>
+							<label><input type="radio" name="int_setFollowWvW" /> Character</label>
+							<label><input type="radio" name="int_setFollowWvW" /> Zone</label>
+						</fieldset>
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacterWvW" type="checkbox" />Display Character Pin</label>
 					</div>
 				</div>

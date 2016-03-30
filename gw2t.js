@@ -187,10 +187,10 @@ O = {
 		bol_showObjectiveLabels: true,
 		bol_showSecondaries: false,
 		// GPS
+		int_setFollow: 1,
 		bol_displayCharacter: true,
-		bol_followCharacter: true,
+		int_setFollowWvW: 2,
 		bol_displayCharacterWvW: true,
-		bol_followCharacterWvW: false,
 		int_msecGPSRefresh: 100,
 		// Alarm
 		int_setAlarm: 0,
@@ -355,6 +355,12 @@ O = {
 			Off: 0,
 			Checklist: 1,
 			Subscription: 2
+		},
+		Follow:
+		{
+			Off: 0,
+			Character: 1,
+			Zone: 2
 		}
 	},
 	
@@ -1212,6 +1218,22 @@ O = {
 		bol_showChainPaths: function()
 		{
 			M.toggleLayerArray(P.LayerArray.ChainPath, O.Options.bol_showChainPaths);
+		},
+		int_setFollow: function()
+		{
+			if (O.Options.int_setFollow !== O.IntEnum.Follow.Off)
+			{
+				M.GPSPreviousZoneID = "";
+				P.updateCharacter(0);
+			}
+		},
+		int_setFollowWvW: function()
+		{
+			if (O.Options.int_setFollowWvW !== O.IntEnum.Follow.Off)
+			{
+				W.GPSPreviousZoneID = "";
+				P.updateCharacter(0);
+			}
 		},
 		bol_displayCharacter: function()
 		{
@@ -2772,7 +2794,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				that.goOutOfView();
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -2787,15 +2809,27 @@ U = {
 	 * returned, or just the object.
 	 * @param string pString of API
 	 * @param int pLimit of array elements to print.
-	 * @param string pArgs arguments for the API url.
+	 * @param string pQueryStr arguments for the API url.
 	 */
-	printAPI: function(pString, pLimit, pArgs)
+	printAPI: function(pString, pLimit, pQueryStr)
 	{
 		I.write("Gathering elements...");
-		pLimit = parseInt(pLimit) || Number.POSITIVE_INFINITY;
+		var limit = Number.POSITIVE_INFINITY;
+		var querystr = (pQueryStr === undefined) ? "" : pQueryStr;
+		if (pLimit !== undefined)
+		{
+			// Query string may be sent in place of the limit parameter
+			if (O.isInteger(pLimit))
+			{
+				limit = pLimit;
+			}
+			else
+			{
+				querystr = pLimit;
+			}
+		}
 		var array = [];
 		var counter = 0;
-		var args = (pArgs === undefined) ? "" : pArgs;
 		var url = U.URL_API.Prefix + pString;
 		var printResult = function(pArray)
 		{
@@ -2816,7 +2850,7 @@ U = {
 			}
 		};
 		
-		$.get(url + args, function(pData)
+		$.get(url + querystr, function(pData)
 		{
 			var length = (pData.length === undefined) ? 0 : pData.length;
 			if (Array.isArray(pData))
@@ -2825,20 +2859,20 @@ U = {
 				var successlength = length;
 				for (var i = 0; i < length; i++)
 				{
-					if (i === pLimit)
+					if (i === limit)
 					{
 						break;
 					}
 					(function(iIndex)
 					{
-						$.getJSON(url + "/" + pData[iIndex] + args, function(pDataInner)
+						$.getJSON(url + "/" + pData[iIndex] + querystr, function(pDataInner)
 						{
 							I.write("Retrieved an element: " + iIndex);
 							array.push(U.formatJSON(pDataInner));
 						}).done(function()
 						{
 							// Print the result when all elements have been queried
-							if (counter === successlength - 1 || counter === pLimit - 1)
+							if (counter === successlength - 1 || counter === limit - 1)
 							{
 								printResult(array);
 							}
@@ -2846,7 +2880,7 @@ U = {
 						}).fail(function()
 						{
 							successlength--;
-							if (counter === successlength - 1 || counter === pLimit - 1)
+							if (counter === successlength - 1 || counter === limit - 1)
 							{
 								printResult(array);
 							}
@@ -8474,6 +8508,11 @@ Q = {
 				// Make the item searchable by converting its tooltip HTML into plain text
 				var keywords = ($(pBox.html).text() + " " + D.getString(pItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
+				// Double click the slot opens its wiki page
+				pSlot.dblclick(function()
+				{
+					U.openExternalURL(U.getWikiLanguageLink(pBox.item.name));
+				});
 				// Numeric label over the slot icon indicating stack size or charges remaining
 				var count = pSlotData.count || 1;
 				if (count > 1)
@@ -11080,6 +11119,7 @@ M = {
 	cMETERS_TO_UNITS: 1 / 0.0254,
 	cUNITS_PER_SECOND: 386, // Units traveled in one second while on swiftness buff
 	// MumbleLink data assigned by overlay program
+	GPSPreviousZoneID: "",
 	GPSPreviousCoord: [],
 	GPSPreviousAngleCharacter: 0,
 	GPSPreviousAngleCamera: 0,
@@ -11735,7 +11775,11 @@ M = {
 	},
 	getZoneCenter: function(pNick)
 	{
-		return this.Zones[pNick].center;
+		if (this.Zones[pNick])
+		{
+			return this.Zones[pNick].center;
+		}
+		return [0,0];
 	},
 	
 	/*
@@ -12989,18 +13033,9 @@ M = {
 		this.Map.setView(this.convertGCtoLC(pCoord), pZoom);
 		this.showCurrentZone(pCoord);
 	},
-	goToLatLng: function(pLatLng, pZoom)
+	goOutOfView: function()
 	{
-		if (pZoom === undefined)
-		{
-			pZoom = this.ZoomEnum.Ground;
-		}
-		if (pZoom === this.ZoomEnum.Same)
-		{
-			pZoom = this.Map.getZoom();
-		}
-		this.Map.setView(pLatLng, pZoom);
-		this.showCurrentZone(this.convertLCtoGC(pLatLng));
+		this.Map.setView(M.cMAP_CENTER_INITIAL, this.Map.getZoom());
 	},
 	
 	/*
@@ -13461,8 +13496,8 @@ M = {
 P = {
 	
 	SuffixCurrent: "", // Map options with suffix to differentiate for which map
-	MapCurrent: "map", // The map currently displayed on the website
-	GPSCurrent: null, // The map which the player resides in game
+	WebsiteCurrentMap: "map", // The map currently displayed on the website
+	GPSCurrentMap: null, // The map which the player resides in game
 	MapEnum:
 	{
 		Tyria: "map",
@@ -14818,22 +14853,22 @@ P = {
 			return;
 		}
 		
-		var previousmap = P.GPSCurrent;
+		var previousmap = P.GPSCurrentMap;
 		var currentnick = GPSIdentityJSON["map_id"];
-		var htmlidprefix = "#" + P.MapCurrent;
+		var htmlidprefix = "#" + P.WebsiteCurrentMap;
 		
 		// Get the map the player is in
 		if (M.ZoneAssociation[currentnick] !== undefined)
 		{
-			P.GPSCurrent = P.MapEnum.Tyria;
+			P.GPSCurrentMap = P.MapEnum.Tyria;
 		}
 		else if (W.ZoneAssociation[currentnick] !== undefined)
 		{
-			P.GPSCurrent = P.MapEnum.Mists;
+			P.GPSCurrentMap = P.MapEnum.Mists;
 		}
 		
 		// If the player has changed the map in game and the website's map is different from it, then switch the website's map
-		if (P.GPSCurrent !== previousmap && P.GPSCurrent !== P.MapCurrent)
+		if (P.GPSCurrentMap !== previousmap && P.GPSCurrentMap !== P.WebsiteCurrentMap)
 		{
 			$(htmlidprefix + "SwitchButton").trigger("click");
 		}
@@ -14847,9 +14882,9 @@ P = {
 	updateCharacter: function(pForceCode)
 	{
 		var that;
-		var followboolean = O.Options["bol_followCharacter" + P.SuffixCurrent];
+		var followenum = O.Options["int_setFollow" + P.SuffixCurrent];
 		var displayboolean = O.Options["bol_displayCharacter" + P.SuffixCurrent];
-		switch (P.MapCurrent)
+		switch (P.WebsiteCurrentMap)
 		{
 			case P.MapEnum.Tyria: { that = M; } break;
 			case P.MapEnum.Mists: { that = W; } break;
@@ -14872,13 +14907,14 @@ P = {
 		{
 			return;
 		}
-		if (that.isZoneValid(GPSIdentityJSON["map_id"]) === false)
+		var zoneid = GPSIdentityJSON["map_id"];
+		if (that.isZoneValid(zoneid) === false)
 		{
 			that.movePin(that.Pin.Character);
 			that.movePin(that.Pin.Camera);
 			return;
 		}
-		var coord = that.convertGPSCoord(GPSPositionArray, GPSIdentityJSON["map_id"]);
+		var coord = that.convertGPSCoord(GPSPositionArray, zoneid);
 		if (coord[0] > that.cMAP_BOUND || coord[0] <= 0
 			|| coord[1] > that.cMAP_BOUND || coord[1] <= 0)
 		{
@@ -14886,12 +14922,22 @@ P = {
 		}
 		
 		// Follow character if opted and position has changed (character moved)
-		if ((followboolean && that.GPSPreviousCoord[0] !== coord[0] && that.GPSPreviousCoord[1] !== coord[1])
+		var zonecoord;
+		if ((followenum === O.IntEnum.Follow.Character && that.GPSPreviousCoord[0] !== coord[0] && that.GPSPreviousCoord[1] !== coord[1])
 			|| pForceCode >= 0)
 		{
 			that.Map.setView(that.convertGCtoLC(coord), that.Map.getZoom());
 			that.showCurrentZone(coord);
 			that.GPSPreviousCoord = coord;
+			pForceCode = -1; // Also update pin position
+		}
+		else if (followenum === O.IntEnum.Follow.Zone && that.GPSPreviousZoneID !== zoneid && that.ZoneAssociation[zoneid])
+		{
+			zonecoord = that.getZoneCenter(that.ZoneAssociation[zoneid]);
+			that.goOutOfView();
+			that.Map.setView(that.convertGCtoLC(zonecoord), that.Map.getZoom());
+			that.showCurrentZone(zonecoord);
+			that.GPSPreviousZoneID = zoneid;
 			pForceCode = -1; // Also update pin position
 		}
 		
@@ -14928,7 +14974,7 @@ P = {
 	 */
 	tickGPS: function()
 	{
-		if (O.Options["bol_followCharacter" + P.SuffixCurrent]
+		if (O.Options["int_setFollow" + P.SuffixCurrent]
 			|| O.Options["bol_displayCharacter" + P.SuffixCurrent])
 		{
 			P.updateCharacter();
@@ -23331,7 +23377,7 @@ I = {
 				var plate = $(this).attr("id");
 				I.PageCurrent = plate.substring(I.cMenuPrefix.length-1, plate.length);
 				I.contentCurrentPlate = I.cPagePrefix + I.PageCurrent;
-				if (P.MapCurrent === P.MapEnum.Mists)
+				if (P.WebsiteCurrentMap === P.MapEnum.Mists)
 				{
 					I.PagePrevious = I.PageCurrent;
 				}
@@ -23410,7 +23456,7 @@ I = {
 				M.refreshMap();
 				I.PageCurrent = I.PagePrevious;
 				I.PagePrevious = I.SpecialPageEnum.WvW;
-				P.MapCurrent = P.MapEnum.Tyria;
+				P.WebsiteCurrentMap = P.MapEnum.Tyria;
 				P.SuffixCurrent = M.OptionSuffix;
 			} break;
 			
@@ -23423,7 +23469,7 @@ I = {
 				}
 				I.PagePrevious = I.PageCurrent;
 				I.PageCurrent = I.SpecialPageEnum.WvW;
-				P.MapCurrent = P.MapEnum.Mists;
+				P.WebsiteCurrentMap = P.MapEnum.Mists;
 				P.SuffixCurrent = W.OptionSuffix;
 			} break;
 		}
@@ -23446,7 +23492,7 @@ I = {
 				if (I.isMapEnabled && O.Options.bol_showMap)
 				{
 					$("#panelMap").show();
-					switch (P.MapCurrent)
+					switch (P.WebsiteCurrentMap)
 					{
 						case P.MapEnum.Tyria: {
 							$("#mapPane").show();
@@ -23765,7 +23811,7 @@ I = {
 	 */
 	initializeTooltip: function()
 	{
-		// Bind the following tags with the title attribute for tooltip
+		// Bind these tags with the title attribute for tooltip
 		I.qTip.init("#chnOptions img, a, ins, kbd, span, time, fieldset, label, input, button");
 		$("#panelApp").hover(
 			function() { I.isMouseOnPanel = true; },

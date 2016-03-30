@@ -46,6 +46,12 @@
 	line-height: 120%;
 	font-size: 14px;
 }
+#dsbToggle {
+	left: auto;
+	top: auto;
+	bottom: 0;
+	right: 0;
+}
 #dsbCountdown time {
 	font-size: 16px;
 }
