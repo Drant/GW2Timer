@@ -25,11 +25,13 @@
 .accPlatter {
 	width: 100%; height: 100%;
 }
-.accDish { /* Contains the sections of the account page */
+.accDishContainer { /* Contains the sections of the account page */
 	display: none;
 	width: 100%; height: 100%;
 }
 #accContent .cntComposition {
+	padding-left: 0;
+	padding-right: 0;
 	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -48,7 +50,7 @@
 #accOverhead {
 	top: 0; left: 0;
 	display: block;
-	position: fixed; z-index: 9;
+	position: fixed; z-index: 1;
 	width: 100%;
 	padding-top: 2px;
 	background: linear-gradient(to left, transparent 0%, #333 50%, transparent 100%);
@@ -105,6 +107,12 @@
 	display: block;
 	width: 0%; height: 1px;
 	background: linear-gradient(to right, #000 0%, #eadf86 100%);
+}
+
+/* Dish Menu
+----------------------------------------------------------------------------- */
+#accDishMenuContainer {
+	text-align: center;
 }
 
 /* Key manager
@@ -1144,8 +1152,8 @@ a.chrWalletLink {
 ----------------------------------------------------------------------------- */
 .bnkContainer {
 	width: 100%;
-	margin-top: 32px;
-	margin-bottom: 32px;
+	margin-top: 16px;
+	margin-bottom: 16px;
 	text-align: center;
 }
 .bnkPrice {
@@ -1163,24 +1171,20 @@ a.chrWalletLink {
 	border-radius: 8px;
 	box-shadow: 0px 0px 32px #0b0d0e;
 }
-.bnkMenu { /* Container above the bank for search bar and buttons */
-	display: inline-block;
-	width: 100%;
-	line-height: normal;
-	margin-bottom: 2px;
-}
 /*
  * Bank search bar.
  */
 .bnkSearch {
 	display: inline-block;
-	width: calc(100% - 200px);
+	width: calc(720px - 204px);
+	margin-top: 6px;
+	margin-bottom: 2px;
 	vertical-align: bottom;
 }
 input[type="text"].bnkSearchInput {
 	display: block;
-	width: 100%;
-	height: 20px;
+	width: 100%; height: 20px;
+	padding-left: 4px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 17px;
 	color: #eeeeee;
@@ -1208,7 +1212,10 @@ input[type="text"].bnkSearchInput:hover {
 .bnkButtons {
 	display: inline-block;
 	margin-left: 16px;
-	margin-top: -4px;
+	vertical-align: bottom;
+	background: linear-gradient(to top, #0b0d0e 0%,transparent 100%);
+	border-radius: 8px;
+	box-shadow: 0px 0px 32px #0b0d0e;
 }
 .bnkButton {
 	display: inline-block;
@@ -1218,6 +1225,10 @@ input[type="text"].bnkSearchInput:hover {
 	vertical-align: bottom;
 	background-position: center;
 	background-size: 100% 100%;
+}
+.bnkButtonFocused {
+	box-shadow: 0px 0px 8px rgba(255,238,187,0.5);
+	border-radius: 25%;
 }
 .bnkButtonTrade {
 	background-image: url("../img/map/tradingpost.png");
@@ -1351,6 +1362,12 @@ input[type="text"].bnkSearchInput:hover {
 		0px -1px 1px #000,
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
+}
+.bnkSlotZero .bnkSlotIcon { /* Zero stack slots */
+	opacity: 0.2;
+}
+.bnkSlotZero .bnkSlotPrice {
+	opacity: 0.3;
 }
 /*
  * Sidebar for inventory bags.

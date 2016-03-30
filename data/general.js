@@ -1047,15 +1047,6 @@ Announcement:
  */
 Countdowns: [
 {
-	name_en: "Everyday March Sale",
-	name_de: "Täglich Angebote März",
-	name_es: "Oferta cada día de marzo",
-	name_fr: "Promotions quotidiennes de mars",
-	official: "news/every-day-sale-in-the-month-of-march/",
-	Start: new Date("2016-03-01T16:00:00Z"),
-	Finish: new Date("2016-03-31T16:00:00Z")
-},
-{
 	name_en: "April Fools' Day",
 	name_de: "Aprilscherz",
 	name_es: "Pescado de abril",
@@ -1064,8 +1055,8 @@ Countdowns: [
 	url_de: "https://de.wikipedia.org/wiki/Aprilscherz",
 	url_es: "https://es.wikipedia.org/wiki/Día_de_las_bromas_de_abril",
 	url_fr: "https://fr.wikipedia.org/wiki/Poisson_d%27avril",
-	Start: new Date("2016-04-01T16:00:00Z"),
-	Finish: new Date("2016-04-02T16:00:00Z")
+	Start: new Date("2016-04-01T00:00:00Z"),
+	Finish: new Date("2016-04-02T00:00:00Z")
 }/*,
 {
 	name_en: "Q2 Patch",
@@ -1145,10 +1136,24 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Lunatic Guard Outfit",
-		id: "70385",
-		price: 630,
-		discount: 700,
+		name: "Fused Molten Logging Axe",
+		id: "67030",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
+		name: "Fused Molten Sickle",
+		id: "67032",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
+		name: "Molten Alliance Mining Pick",
+		id: "48933",
+		price: 800,
+		discount: 1000,
 		col: 0
 	},
 	{

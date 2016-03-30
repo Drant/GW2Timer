@@ -4029,6 +4029,7 @@ A = {
 		wallet: null,
 		unlocks: null
 	},
+	DishCurrent: null, // The account section currently displayed
 	
 	/*
 	 * Gets an authenticated API URL to retrieve account data.
@@ -4076,17 +4077,17 @@ A = {
 		// Initialize scaffolding HTML
 		var scaffold = $("#accContent");
 		scaffold.find("section").addClass("accPlatter");
-		scaffold.find("article").addClass("accDish jsScrollable").each(function()
+		scaffold.find("article").addClass("accDishContainer jsScrollable").each(function()
 		{
 			var sectionname = $(this).attr("data-section");
 			if ($(this).is(":empty"))
 			{
 				$(this).html("<div class='accDishPadding'></div>"
-					+ "<div id='accDish_" + sectionname + "' class='accDishContainer cntComposition'></div>");
+					+ "<div id='accDish_" + sectionname + "' class='accDish cntComposition'></div>");
 			}
 			else
 			{
-				$(this).wrapInner("<div id='accDish_" + sectionname + "' class='accDishContainer cntComposition'></div>");
+				$(this).wrapInner("<div id='accDish_" + sectionname + "' class='accDish cntComposition'></div>");
 				$(this).prepend("<div class='accDishPadding'></div>");
 			}
 			I.initializeScrollbar($(this));
@@ -4162,20 +4163,24 @@ A = {
 				// Clicking on a button shows the associated section
 				iButton.click(function()
 				{
+					A.DishCurrent = $("#accDish_" + iSectionName);
 					// Highlight the clicked button
 					$(".accMenu").removeClass("accMenuFocused").find(".accMenuSubsection").hide();
 					$(this).addClass("accMenuFocused").find(".accMenuSubsection").show();
 					$(".accMenu").find(".accMenuIcon").removeClass("accMenuButtonFocused");
 					$(this).find(".accMenuIconMain").addClass("accMenuButtonFocused");
+					// Show dish menu menu
+					$(".accDishMenu").hide();
+					$("#accDishMenu_" + iSectionName).show();
 					// Show the section
 					$(".accPlatter").hide();
 					section.fadeIn(400, function()
 					{
 						A.adjustAccountPanel();
-						I.updateScrollbar(section.find(".accDishMain"));
+						A.adjustAccountScrollbar();
 					});
 					// Show the main subsection
-					section.find(".accDish").hide();
+					section.find(".accDishContainer").hide();
 					section.find(".accDishMain").show();
 					// Update address
 					I.PageCurrent = I.SpecialPageEnum.Account;
@@ -4185,7 +4190,7 @@ A = {
 				});
 				
 				// A section (platter) may have multiple subsections (dishes)
-				var subsections = section.find(".accDish");
+				var subsections = section.find(".accDishContainer");
 				if (subsections.length)
 				{
 					var subbuttons = iButton.find(".accMenuSubsection");
@@ -4201,17 +4206,22 @@ A = {
 							{
 								iSubbutton.click(function(iEvent)
 								{
+									A.DishCurrent = $("#accDish_" + subsectionname);
+									// Show the subsection
 									iEvent.stopPropagation();
-									iSubsection.parent().find(".accDish").hide();
+									iSubsection.parent().find(".accDishContainer").hide();
 									iSubsection.fadeIn(200, function()
 									{
 										A.adjustAccountPanel();
-										I.updateScrollbar($("#accDish_" + subsectionname).parent());
+										A.adjustAccountScrollbar();
 									});
 									// Highlight the button
 									var menubutton = $(this).parent().parent();
 									menubutton.find(".accMenuIcon").removeClass("accMenuButtonFocused");
 									$(this).addClass("accMenuButtonFocused");
+									// Show dish menu menu
+									$(".accDishMenu").hide();
+									$("#accDishMenu_" + subsectionname).show();
 								});
 							})(subbutton, $(this));
 						}
@@ -4236,6 +4246,10 @@ A = {
 		{
 			A.generateBank();
 		});
+		$("#accMenuMaterials").click(function()
+		{
+			A.generateMaterials();
+		});
 		
 		// Open the section if specified in the URL
 		$("#accPlatterManager").show();
@@ -4250,7 +4264,18 @@ A = {
 		// Resize the width of the menu bar based on the size of the content window
 		$("#accOverhead").css({width: ($("#accContent").width() - 8) + "px"});
 		// Put padding between the menu bar and the content
-		$(".accDishPadding").css({height: $("#accOverhead").height() + "px"});
+		if (A.DishCurrent)
+		{
+			A.DishCurrent.parent().find(".accDishPadding").css({height: $("#accOverhead").height() + "px"});
+		}
+	},
+	
+	/*
+	 * Updates the scroll bar of the currently viewed account section.
+	 */
+	adjustAccountScrollbar: function()
+	{
+		I.updateScrollbar(A.DishCurrent.parent());
 	},
 	
 	/*
@@ -5449,20 +5474,34 @@ A = {
 	},
 	
 	/*
+	 * Tells if a section has content generated already.
+	 * @param jqobject pDish to check.
+	 * @returns boolean.
+	 */
+	reinitializeDish: function(pDish)
+	{
+		if (pDish.is(":empty") === false && pDish.data("token") === A.TokenCurrent)
+		{
+			return false;
+		}
+		pDish.empty().data("token", A.TokenCurrent);
+		return true;
+	},
+	
+	/*
 	 * Generates inventory windows for all characters.
 	 */
 	generateInventory: function()
 	{
-		var dish = $("#accDish_Inventory");
-		if (dish.is(":empty") === false && dish.data("token") === A.TokenCurrent)
-		{
-			return;
-		}
 		if (A.Data.Characters.length < 1 || (A.Data.Characters.length > 1 && A.Data.Characters[0].bags === undefined))
 		{
 			return;
 		}
-		dish.empty().data("token", A.TokenCurrent);
+		var dish = $("#accDish_Inventory");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
 		var bank = Q.createBank(dish).find(".bnkBank");
 		var slotdata;
 		var tab, banksidebar, slotscontainer, slot;
@@ -5514,11 +5553,10 @@ A = {
 	generateBank: function()
 	{
 		var dish = $("#accDish_Bank");
-		if (dish.is(":empty") === false && dish.data("token") === A.TokenCurrent)
+		if (A.reinitializeDish(dish) === false)
 		{
 			return;
 		}
-		dish.empty().data("token", A.TokenCurrent);
 		var container = Q.createBank(dish);
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var slotdata;
@@ -5544,13 +5582,13 @@ A = {
 				// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
 				if (slotdata)
 				{
-					(function(iSlot, iSlotData, iTab)
+					(function(iSlot, iSlotData)
 					{
 						$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 						{
 							Q.styleBankSlot(iSlot, iSlotData, iItem);
 						});
-					})(slot, slotdata, tab);
+					})(slot, slotdata);
 				}
 				else
 				{
@@ -5561,6 +5599,64 @@ A = {
 			// Ornamental bank tab separator at the bottom
 			bank.append("<div class='bnkTabSeparator'><var class='bnkTabLocked'>" + I.Symbol.Filler + "</var></div>");
 			// Create search bar
+			Q.createBankMenu(bank);
+		});
+	},
+	
+	generateMaterials: function()
+	{
+		var dish = $("#accDish_Materials");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		var container = Q.createBank(dish);
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var tab, slot, slotscontainer;
+		var slotdata;
+		
+		var matdata = GW2T_MATERIALS_DATA;
+		var itemid;
+		var matcategory;
+		var slotscontainerassoc = {};
+		var slotassoc = {};
+		
+		$.getJSON(A.getURL(A.URL.Materials), function(pData)
+		{
+			bank.empty();
+			// Create tabs that separate the categories
+			for (var i = 0; i < matdata.length; i++)
+			{
+				matcategory = matdata[i];
+				tab = Q.createBankTab(bank, D.getObjectName(matcategory));
+				// Store the tabs to be later inserted with slots
+				slotscontainer = tab.find(".bnkTabSlots");
+				slotscontainerassoc[matcategory.id] = slotscontainer;
+				// Insert empty slots in the proper order
+				for (var ii = 0; ii < matcategory.items.length; ii++)
+				{
+					itemid = matcategory.items[ii];
+					slot = Q.createBankSlot();
+					slotscontainer.append(slot);
+					slotassoc[itemid] = slot;
+				}
+			}
+			
+			// Account materials API is a single disordered array, match the items with the pre-ordered slots
+			for (var i = 0; i < pData.length; i++)
+			{
+				slotdata = pData[i];
+				if (slotassoc[slotdata.id])
+				{
+					(function(iSlot, iSlotData)
+					{
+						$.getJSON(U.getAPIItem(slotdata.id), function(iItem)
+						{
+							Q.styleBankSlot(iSlot, iSlotData, iItem);
+						});
+					})(slotassoc[slotdata.id], slotdata);
+				}
+			}
 			Q.createBankMenu(bank);
 		});
 	},
@@ -8408,7 +8504,9 @@ Q = {
 	createBank: function(pDestination)
 	{
 		return $("<div class='bnkContainer'>"
-			+ "<div class='bnkPrice'></div>"
+			+ "<div class='bnkTop'>"
+				+ "<aside class='bnkPrice'></aside>"
+			+ "</div>"
 			+ "<div class='bnkBank'></div>"
 		+ "</div>").appendTo(pDestination);
 	},
@@ -8536,6 +8634,11 @@ Q = {
 						pSlot.append("<var class='bnkSlotCount'>" + gath[pItem.details.type] + "</var>");
 					}
 				}
+				// Fade the slots that act as collections
+				if (pSlotData.count === 0)
+				{
+					pSlot.addClass("bnkSlotZero");
+				}
 				// TP price label if the item is tradeable
 				if (pBox.istradeable)
 				{
@@ -8552,11 +8655,16 @@ Q = {
 							pDisplay.html(tabtext);
 						};
 						
-						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricesell, {wantcolor: true, wantshort: true}) + "</var>")
-							.data("price", pricesell);
-						updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
-						updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPrice"));
+						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricesell, {wantcolor: true, wantshort: true}) + "</var>");
+						// Only add if item actually exists (not a zero stack slot)
+						if (pSlotData.count !== 0)
+						{
+							updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
+							updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPrice"));
+							pSlot.data("price", pricesell);
+						}
 					});
+					
 				}
 			}});
 		}
@@ -8575,14 +8683,17 @@ Q = {
 	createBankMenu: function(pBank)
 	{
 		// Initialize commonly used elements
-		var bankmenu = $("<div class='bnkMenu'></div>").prependTo(pBank);
+		var sectionname = pBank.parents(".accDishContainer").attr("data-section");
 		var slots = pBank.find(".bnkSlot");
 		var tabslots = pBank.find(".bnkTabSlots");
+		var tabtoggles = pBank.find(".bnkTabToggle");
+		$("#accDishMenu_" + sectionname).remove();
+		var dishmenu = $("<aside id='accDishMenu_" + sectionname + "' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
 		
 		/*
 		 * Search bar.
 		 */
-		var searchcontainer = $("<div class='bnkSearch'></div>").appendTo(bankmenu);
+		var searchcontainer = $("<div class='bnkSearch'></div>").prependTo(dishmenu);
 		var input = $("<input class='bnkSearchInput' type='text' />").appendTo(searchcontainer);
 		var fillertext = $("<div class='bnkSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(searchcontainer);
 		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
@@ -8650,12 +8761,13 @@ Q = {
 					$(this).show();
 				});
 			}
+			A.adjustAccountScrollbar();
 		}));
 		
 		/*
 		 * Add buttons next to the search bar for bank functionalities.
 		 */
-		var buttoncontainer = $("<div class='bnkButtons'></div>").appendTo(bankmenu);
+		var buttoncontainer = $("<aside class='bnkButtons'></aside>").appendTo(dishmenu);
 		
 		// Help button shows search usage message
 		var isshowinghelp = true;
@@ -8694,21 +8806,36 @@ Q = {
 			{
 				slots.show();
 			}
+			$(this).toggleClass("bnkButtonFocused");
 			isfilteringtrade = !isfilteringtrade;
+			A.adjustAccountScrollbar();
 		});
 		
 		// Toggle all tabs button
 		var istabscollapsed = false;
 		$("<div class='bnkButtonTab bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
 		{
+			// Expand or collapse all tabs
 			if (istabscollapsed)
 			{
-				tabslots.slideDown("fast");
+				tabslots.slideDown("fast", function()
+				{
+					A.adjustAccountScrollbar();
+				});
 			}
 			else
 			{
-				tabslots.slideUp("fast");
+				tabslots.slideUp("fast", function()
+				{
+					A.adjustAccountScrollbar();
+				});
 			}
+			// Also change the toggle icon
+			tabtoggles.each(function()
+			{
+				I.toggleToggleIcon($(this), istabscollapsed);
+			});
+			$(this).toggleClass("bnkButtonFocused");
 			istabscollapsed = !istabscollapsed;
 		});
 		
@@ -8721,6 +8848,7 @@ Q = {
 			if (oldwidth > minbankwidth)
 			{
 				pBank.css({width: oldwidth - slotsize});
+				A.adjustAccountScrollbar();
 			}
 		});
 		$("<div class='bnkButtonWideMore bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
@@ -8730,8 +8858,12 @@ Q = {
 			if (oldwidth < maxbankwidth)
 			{
 				pBank.css({width: oldwidth + slotsize});
+				A.adjustAccountScrollbar();
 			}
 		});
+		
+		// Finally
+		A.adjustAccountPanel();
 	}
 };
 
