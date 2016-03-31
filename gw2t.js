@@ -2794,7 +2794,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				U.collateSkins();
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -2966,6 +2966,115 @@ U = {
 			}
 			
 		}
+	},
+	
+	/*
+	 * Categorizes an array of skin IDs into a one-level object containing
+	 * separate arrays.
+	 */
+	collateSkins: function()
+	{
+		var skinids = [];
+		var failedids = [];
+		var catobj = {};
+		var reqindex = 0;
+		var reqlimit = 500;
+		var reqcooldownms = 30000;
+		var itemstoretrieve = 0;
+		var itemsretrieved = 0;
+		
+		var waitCooldown = function()
+		{
+			I.write("Cooldown... " + reqindex, 0);
+			setTimeout(function()
+			{
+				iterateSkins();
+			}, reqcooldownms);
+		};
+		
+		var finalizeCollate = function()
+		{
+			if (itemsretrieved === itemstoretrieve)
+			{
+				I.write("Failed IDs: " + failedids, 0);
+				U.printJSON(catobj);
+			}
+		};
+		
+		var retrieveSkin = function(pSkinID, pReqIndex)
+		{
+			$.getJSON(U.getAPISkin(pSkinID), function(pData)
+			{
+				var key = null;
+				if (pData.type)
+				{
+					// Determine the skin's category name
+					if (pData.type === "Armor" && pData.details && pData.details.type && pData.details.weight_class)
+					{
+						key = pData.type + "_" + pData.details.weight_class + "_" + pData.details.type;
+					}
+					else if (pData.type === "Weapon" && pData.details && pData.details.type)
+					{
+						key = pData.type + "_" + pData.details.type;
+					}
+					else if (pData.type === "Back")
+					{
+						key = pData.type;
+					}
+					
+					// Insert the skin ID into a category array
+					if (key)
+					{
+						if (catobj[key] === undefined)
+						{
+							catobj[key] = [];
+						}
+						(catobj[key]).push(pSkinID);
+						I.write("Success: " + pReqIndex + " Skin: " + pSkinID, 0, true);
+					}
+					else
+					{
+						I.write("FAILED CATEGORIZATION: " + pReqIndex + " Skin: " + pSkinID, 0);
+					}
+					// Check for completion
+					itemsretrieved++;
+					finalizeCollate();
+				}
+			}).fail(function()
+			{
+				failedids.push(pSkinID);
+				// Check for completion
+				itemstoretrieve--;
+				finalizeCollate();
+			});
+		};
+		
+		var iterateSkins = function()
+		{
+			var reqcounter = 0;
+			for (var i = reqindex; i < skinids.length; i++)
+			{
+				if (reqcounter === reqlimit)
+				{
+					waitCooldown();
+					return;
+				}
+				else
+				{
+					retrieveSkin(skinids[i], reqindex);
+				}
+				reqindex++;
+				reqcounter++;
+			}
+		};
+		
+		// Start the process
+		$.getJSON(U.URL_API.Prefix + "skins", function(pData)
+		{
+			skinids = pData;
+			itemstoretrieve = skinids.length;
+			iterateSkins();
+		});
 	},
 	
 	/*
@@ -8798,6 +8907,34 @@ Q = {
 			isshowinghelp = !isshowinghelp;
 		});
 		
+		// Hide empty slots filter
+		var isfilteringempty = true;
+		$("<div class='bnkButtonEmpty bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
+		{
+			if (isfilteringempty)
+			{
+				slots.each(function()
+				{
+					// All non-empty slots should have an item with a tooltip
+					if ($(this).attr(I.cTooltipAttribute))
+					{
+						$(this).show();
+					}
+					else
+					{
+						$(this).hide();
+					}
+				});
+			}
+			else
+			{
+				slots.show();
+			}
+			$(this).toggleClass("bnkButtonFocused");
+			isfilteringempty = !isfilteringempty;
+			A.adjustAccountScrollbar();
+		});
+		
 		// Trading Post filter for items that can be traded
 		var isfilteringtrade = true;
 		$("<div class='bnkButtonTrade bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
@@ -8877,6 +9014,7 @@ Q = {
 		});
 		
 		// Finally
+		searchcontainer.css({width: searchcontainer.width() - buttoncontainer.width()});
 		A.adjustAccountPanel();
 	}
 };
@@ -16425,7 +16563,7 @@ G = {
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Bounty").append(
-						"<div><img class='cssWaypoint jsClip' " + K.cClipboardAttribute
+						"<div><img class='cssWaypoint jsClip' " + I.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldBounty_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
@@ -16472,7 +16610,7 @@ G = {
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Trek").append(
-						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
+						"<div><img class='cssWaypoint' " + I.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Trek) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldTrek_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn>"
 						+ "</div>"
@@ -16509,7 +16647,7 @@ G = {
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Challenge").append(
-						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
+						"<div><img class='cssWaypoint' " + I.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
@@ -16561,7 +16699,7 @@ G = {
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Rush").append(
-						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
+						"<div><img class='cssWaypoint' " + I.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Rush) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldRush_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
@@ -16630,7 +16768,7 @@ G = {
 					var translatedname = D.getObjectName(mission);
 					
 					$("#gldBook_Puzzle").append(
-						"<div><img class='cssWaypoint' " + K.cClipboardAttribute
+						"<div><img class='cssWaypoint' " + I.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Puzzle) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldPuzzle_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
@@ -20722,8 +20860,6 @@ K = {
 	IconsStandard: [],
 	IconsHardcore: [],
 	lsClipboards: [],
-	cClipboardAttribute: "data-clipboard-text",
-	cClipboardSuccessText: "Chat link copied to clipboard :)<br />",
 	TickerTimeout: {},
 	
 	// Stopwatch properties
@@ -21821,7 +21957,7 @@ K = {
 			}
 			
 			text = text + I.siteTagCurrent;
-			pWaypoint.attr(K.cClipboardAttribute, text);
+			pWaypoint.attr(I.cClipboardAttribute, text);
 		};
 		
 		updateWaypoint(K.WpChain0, C.CurrentChainSD, C.CurrentChainHC, C.NextChainSD1, C.NextChainHC1);
@@ -21839,8 +21975,8 @@ K = {
 		{
 			var s0 = T.getCurrentDryTopEvents();
 			var s1 = T.getCurrentDryTopEvents(1);
-			$("#chnDryTopWaypoint0").attr(K.cClipboardAttribute, s0);
-			$("#chnDryTopWaypoint1").attr(K.cClipboardAttribute, s1);
+			$("#chnDryTopWaypoint0").attr(I.cClipboardAttribute, s0);
+			$("#chnDryTopWaypoint1").attr(I.cClipboardAttribute, s1);
 			if (C.isDryTopIconsShown)
 			{
 				$("#mapDryTopClip0").val(s0);
@@ -22015,6 +22151,9 @@ I = {
 	cChatcodeSuffix: "]",
 	cTextDelimiterChar: "|",
 	cTextDelimiterRegex: /[|]/g,
+	cClipboardAttribute: "data-clipboard-text",
+	cClipboardSuccessText: "Chat link copied to clipboard :)<br />",
+	cTooltipAttribute: "data-tip",
 	consoleTimeout: {},
 	siteTagDefault: " - gw2timer.com",
 	siteTagCurrent: " - gw2timer.com",
@@ -22989,7 +23128,7 @@ I = {
 		var cb = new Clipboard(pSelector);
 		cb.on("success", function(pEvent)
 		{
-			I.write(K.cClipboardSuccessText + pEvent.text, 5);
+			I.write(I.cClipboardSuccessText + pEvent.text, 5);
 		});
 		return cb;
 	},
@@ -24013,10 +24152,10 @@ I = {
 				b = a.getAttribute("title");
 				if (a && b)
 				{
-					a.setAttribute("tiptitle", b), a.removeAttribute("title"),
+					a.setAttribute(I.cTooltipAttribute, b), a.removeAttribute("title"),
 						a.removeAttribute("alt"), a.onmouseover = function()
 					{
-						I.qTip.show(this.getAttribute("tiptitle"));
+						I.qTip.show(this.getAttribute(I.cTooltipAttribute));
 					}, a.onmouseout = function()
 					{
 						I.qTip.hide();

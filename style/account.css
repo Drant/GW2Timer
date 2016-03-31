@@ -1176,7 +1176,7 @@ a.chrWalletLink {
  */
 .bnkSearch {
 	display: inline-block;
-	width: calc(720px - 204px);
+	width: 720px;
 	margin-top: 6px;
 	margin-bottom: 2px;
 	vertical-align: bottom;
@@ -1230,11 +1230,14 @@ input[type="text"].bnkSearchInput:hover {
 	box-shadow: 0px 0px 8px rgba(255,238,187,0.5);
 	border-radius: 25%;
 }
-.bnkButtonTrade {
-	background-image: url("../img/map/tradingpost.png");
-}
 .bnkButtonHelp {
 	background-image: url("../img/ui/question.png");
+}
+.bnkButtonEmpty {
+	background-image: url("../img/ui/bag.png");
+}
+.bnkButtonTrade {
+	background-image: url("../img/ui/tradingpost.png");
 }
 .bnkButtonTab {
 	background-image: url("../img/ui/adjust_vertical.png");

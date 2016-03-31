@@ -1047,16 +1047,16 @@ Announcement:
  */
 Countdowns: [
 {
-	name_en: "April Fools' Day",
-	name_de: "Aprilscherz",
-	name_es: "Pescado de abril",
-	name_fr: "Poisson d'avril",
-	url_en: "https://en.wikipedia.org/wiki/April_Fools%27_Day",
-	url_de: "https://de.wikipedia.org/wiki/Aprilscherz",
-	url_es: "https://es.wikipedia.org/wiki/Día_de_las_bromas_de_abril",
-	url_fr: "https://fr.wikipedia.org/wiki/Poisson_d%27avril",
-	Start: new Date("2016-04-01T00:00:00Z"),
-	Finish: new Date("2016-04-02T00:00:00Z")
+	name_en: "Super Adventure Box 2016",
+	name_de: "Super Adventure Box 2016",
+	name_es: "Super Adventure Box 2016",
+	name_fr: "Super Adventure Box 2016",
+	url_en: "https://forum-en.guildwars2.com/forum/info/updates/Game-Update-Notes-April-1-2016",
+	url_de: "https://forum-de.guildwars2.com/forum/info/updates/Release-Notes-zum-Spiel-1-April-2016",
+	url_es: "https://forum-es.guildwars2.com/forum/info/updates/Notas-de-actualizaci-n-del-juego-1-de-abril-2016",
+	url_fr: "https://forum-fr.guildwars2.com/forum/info/updates/Mise-jour-du-jeu-31-mars-2016",
+	Start: new Date("2016-03-31T16:00:00Z"),
+	Finish: new Date("2016-04-19T16:00:00Z")
 },
 {
 	name_en: "Spring 2016 Update",
@@ -1115,6 +1115,62 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Super Adventure Pack",
+		img: "http://i.imgur.com/Oc7d8B6.png",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Permanent Super Explosive Finisher",
+		id: "44724",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Miniature Super Trio",
+		id: "41907",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Miniature Super Trio—World 2",
+		id: "46498",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Flame Dye Kit",
+		id: "70246",
+		price: 100,
+		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
+		col: 0
+	},
+	{
+		name: "Frost Dye Kit",
+		id: "41745",
+		price: 100,
+		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
+		col: 0
+	},
+	{
+		name: "Metallurgic Dye Kit",
+		id: "47900",
+		price: 100,
+		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
+		col: 0
+	},
+	{
+		name: "Shadow Dye Kit",
+		id: "68786",
+		price: 100,
+		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
+		col: 0
+	},
+	{
 		name: "Ironclad Appearance Pack",
 		img: "http://i.imgur.com/1SaYV5O.png",
 		price: 2000,
@@ -1136,32 +1192,11 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Fused Molten Logging Axe",
-		id: "67030",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Fused Molten Sickle",
-		id: "67032",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Molten Alliance Mining Pick",
-		id: "48933",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
 		name: "Bubble Glider",
 		id: "78007",
 		price: 500,
 		discount: null,
-		col: 0
+		col: 1
 	}
 	]
 },
