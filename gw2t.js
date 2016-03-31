@@ -2794,7 +2794,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				that.goOutOfView();
+				
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -4149,7 +4149,7 @@ A = {
 		{
 			var sectionname = I.SectionEnum.Account[i];
 			var sectionnamelow = sectionname.toLowerCase();
-			var menubutton = $("<aside id='accMenu" + sectionname + "' class='accMenu curClick'>"
+			var menubutton = $("<aside id='accMenu_" + sectionname + "' class='accMenu accMenuClick curClick'>"
 				+ "<span>"
 					+ "<img class='accMenuIcon accMenuIconMain' src='img/account/menu/" + sectionnamelow + I.cPNG + "' />"
 					+ "<var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var>"
@@ -4174,11 +4174,9 @@ A = {
 					$("#accDishMenu_" + iSectionName).show();
 					// Show the section
 					$(".accPlatter").hide();
-					section.fadeIn(400, function()
-					{
-						A.adjustAccountPanel();
-						A.adjustAccountScrollbar();
-					});
+					A.adjustAccountPanel();
+					A.adjustAccountScrollbar();
+					section.fadeIn(400);
 					// Show the main subsection
 					section.find(".accDishContainer").hide();
 					section.find(".accDishMain").show();
@@ -4200,7 +4198,8 @@ A = {
 						if ($(this).hasClass("accDishMain") === false)
 						{
 							var subsectionname = $(this).attr("data-section");
-							var subbutton = $("<img id='accMenu" + subsectionname + "' class='accMenuSubbutton accMenuIcon' src='img/account/menu/" + subsectionname.toLowerCase() + I.cPNG + "' />");
+							var subbutton = $("<img id='accMenu_" + subsectionname + "' class='accMenuSubbutton accMenuIcon accMenuClick' "
+								+ "src='img/account/menu/" + subsectionname.toLowerCase() + I.cPNG + "' />");
 							subbuttons.append(subbutton);
 							(function(iSubbutton, iSubsection)
 							{
@@ -4210,11 +4209,9 @@ A = {
 									// Show the subsection
 									iEvent.stopPropagation();
 									iSubsection.parent().find(".accDishContainer").hide();
-									iSubsection.fadeIn(200, function()
-									{
-										A.adjustAccountPanel();
-										A.adjustAccountScrollbar();
-									});
+									A.adjustAccountPanel();
+									A.adjustAccountScrollbar();
+									iSubsection.fadeIn(200);
 									// Highlight the button
 									var menubutton = $(this).parent().parent();
 									menubutton.find(".accMenuIcon").removeClass("accMenuButtonFocused");
@@ -4230,30 +4227,23 @@ A = {
 			})(menubutton, sectionname);
 		}
 		
-		$("#accMenuCharacters").click(function()
+		/*
+		 * Bind the respective generate functions with the account menu buttons
+		 * that views that section of the account page.
+		 */
+		$(".accMenuClick").click(function()
 		{
-			A.generateAndInitializeCharacters();
-		});
-		$("#accMenuEquipment").click(function()
-		{
-			A.viewEquipment();
-		});
-		$("#accMenuInventory").click(function()
-		{
-			A.generateInventory();
-		});
-		$("#accMenuBank").click(function()
-		{
-			A.generateBank();
-		});
-		$("#accMenuMaterials").click(function()
-		{
-			A.generateMaterials();
+			var section = U.getSubstringFromHTMLID($(this));
+			var functionname = "serve" + section; // Special generate functions start with this word
+			if (A[functionname])
+			{
+				(A[functionname])();
+			}
 		});
 		
 		// Open the section if specified in the URL
 		$("#accPlatterManager").show();
-		U.openSectionFromURL({prefix: "#accMenu", initialsection: I.SectionEnum.Account.Mananger});
+		U.openSectionFromURL({prefix: "#accMenu_", initialsection: I.SectionEnum.Account.Mananger});
 	},
 	
 	/*
@@ -4576,14 +4566,14 @@ A = {
 	/*
 	 * Initializes the characters subpage.
 	 */
-	generateAndInitializeCharacters: function()
+	serveCharacters: function()
 	{
 		// Don't retrieve if already did
 		if (A.Data.CharacterNames !== null)
 		{
 			return;
 		}
-		var menusubsection = $("#accMenuCharacters").find(".accMenuSubsection");
+		var menusubsection = $("#accMenu_Characters").find(".accMenuSubsection");
 		var finishFetch = function()
 		{
 			I.suspendElement(menusubsection, false);
@@ -4735,7 +4725,7 @@ A = {
 				$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
 				$(".chrSelection").removeClass("chrSelected");
 				$(this).addClass("chrSelected");
-				$("#accMenuEquipment").trigger("click");
+				$("#accMenu_Equipment").trigger("click");
 			}
 		}).dblclick(function()
 		{
@@ -5072,7 +5062,7 @@ A = {
 	 * generates them if haven't already.
 	 * @pre Characters array was loaded by AJAX.
 	 */
-	viewEquipment: function()
+	serveEquipment: function()
 	{
 		// Generate for single character if user chosen, else all characters
 		var equipcur = $("#eqpContainer_" + A.CharacterCurrent);
@@ -5491,7 +5481,7 @@ A = {
 	/*
 	 * Generates inventory windows for all characters.
 	 */
-	generateInventory: function()
+	serveInventory: function()
 	{
 		if (A.Data.Characters.length < 1 || (A.Data.Characters.length > 1 && A.Data.Characters[0].bags === undefined))
 		{
@@ -5550,7 +5540,7 @@ A = {
 	/*
 	 * Generates the bank window.
 	 */
-	generateBank: function()
+	serveBank: function()
 	{
 		var dish = $("#accDish_Bank");
 		if (A.reinitializeDish(dish) === false)
@@ -5603,7 +5593,10 @@ A = {
 		});
 	},
 	
-	generateMaterials: function()
+	/*
+	 * Generates the crafting materials window.
+	 */
+	serveMaterials: function()
 	{
 		var dish = $("#accDish_Materials");
 		if (A.reinitializeDish(dish) === false)
@@ -5658,6 +5651,27 @@ A = {
 				}
 			}
 			Q.createBankMenu(bank);
+		});
+	},
+	
+	/*
+	 * Generates the skin wardrobe window.
+	 */
+	serveWardrobe: function()
+	{
+		var dish = $("#accDish_Wardrobe");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		var container = Q.createBank(dish);
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var tab, slot, slotscontainer;
+		var slotdata;
+		
+		$.getJSON(A.getURL(A.URL.Materials), function(pData)
+		{
+			
 		});
 	},
 	

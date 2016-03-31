@@ -1057,16 +1057,16 @@ Countdowns: [
 	url_fr: "https://fr.wikipedia.org/wiki/Poisson_d%27avril",
 	Start: new Date("2016-04-01T00:00:00Z"),
 	Finish: new Date("2016-04-02T00:00:00Z")
-}/*,
+},
 {
-	name_en: "Q2 Patch",
-	name_de: "Q2 Patch",
-	name_es: "Q2 Patch",
-	name_fr: "Q2 Patch",
-	url: "https://forum-en.guildwars2.com/forum/game/wuv/Your-top-5-priorities-for-WvW-Overhaul/page/5#post6044178",
-	Start: new Date("2016-04-26T17:00:00Z"),
-	Finish: new Date("2016-04-27T17:00:00Z")
-}*/
+	name_en: "Spring 2016 Update",
+	name_de: "Update Feder 2016",
+	name_es: "Actualización de primavera 2016",
+	name_fr: "Mise à jour du printemps 2016",
+	url: "https://forum-en.guildwars2.com/forum/game/gw2/Upcoming-changes-in-Spring-Quarterly-Update",
+	Start: new Date("2016-04-26T16:00:00Z"),
+	Finish: new Date("2016-04-27T16:00:00Z")
+}
 ],
 
 /*
@@ -1196,16 +1196,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-03-30T00:00:00Z"),
-	Finish: new Date("2016-03-31T00:00:00Z"),
+	Start: new Date("2016-03-31T00:00:00Z"),
+	Finish: new Date("2016-04-01T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "43821", price: "25200", product: "43797" },
-		Fox: { id: "49742", price: "25200", product: "49783" },
-		Derwena: { id: "43808", price: "25200", product: "43784" },
-		Yana: { id: "43831", price: "25200", product: "43853" },
-		Katyn: { id: "49734", price: "12600", product: "49865" },
-		Verma: { id: "43812", price: "25200", product: "43788" }
+		Mehem: { id: "43483", price: "25200", product: "43451" },
+		Fox: { id: "49749", price: "25200", product: "49790" },
+		Derwena: { id: "50023", price: "25200", product: "50022" },
+		Yana: { id: "43825", price: "25200", product: "43847" },
+		Katyn: { id: "44656", price: "25200", product: "44946" },
+		Verma: { id: "49735", price: "25200", product: "49866" }
 	}
 }
 };

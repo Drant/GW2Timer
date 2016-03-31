@@ -40,6 +40,7 @@
 }
 #tmlIndicator {
 	top: 0;
+	box-shadow: -1px -2px 4px lime;
 }
 #itemDashboard {
 	bottom: 32px; top: auto; right: 12px;
