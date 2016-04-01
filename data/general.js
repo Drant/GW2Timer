@@ -1024,7 +1024,13 @@ Announcement:
 {
 	content: "",
 	Start: new Date("2016-03-22T16:00:00Z"),
-	Finish: new Date("2016-03-29T16:00:00Z")
+	Finish: new Date("2016-03-29T16:00:00Z"),
+	Messages:
+	{
+		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Mystic_Forge'>Daily Forger</a>, "
+			+ "forge 4 cheap <a href='http://wiki.guildwars2.com/wiki/Minor_Sigil_of_Earth'>minor sigils</a> "
+			+ "for a free <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Mystic Coin</a>."
+	}
 },
 
 /*
@@ -1139,34 +1145,6 @@ Sale: {
 		id: "46498",
 		price: 500,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Flame Dye Kit",
-		id: "70246",
-		price: 100,
-		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
-		col: 0
-	},
-	{
-		name: "Frost Dye Kit",
-		id: "41745",
-		price: 100,
-		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
-		col: 0
-	},
-	{
-		name: "Metallurgic Dye Kit",
-		id: "47900",
-		price: 100,
-		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
-		col: 0
-	},
-	{
-		name: "Shadow Dye Kit",
-		id: "68786",
-		price: 100,
-		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
 		col: 0
 	},
 	{

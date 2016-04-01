@@ -1093,7 +1093,7 @@ O = {
 				s += keys[i] + ": " + value + "<br />";
 			}
 			
-			I.write(s, 0, true);
+			I.print(s, true);
 		});
 	},
 	
@@ -2658,6 +2658,9 @@ U = {
 		All: 5
 	},
 	
+	APICacheArrayOfIDs: null, // Array of ID numbers for any particular v2 API endpoint
+	APICacheArrayOfObjects: null, // Array of objects downloaded from the IDs pointing there
+	
 	/*
 	 * Interprets and executes a command string, which may be a console command
 	 * or a map data string.
@@ -2675,7 +2678,7 @@ U = {
 		else if (pString.indexOf(I.cChatcodePrefix) === 0)
 		{
 			// If input is a chatcode
-			I.write(U.getGameIDFromChatlink(pString, true), 0);
+			I.print(U.getGameIDFromChatlink(pString, true));
 		}
 		else if (pMapObject.parsePersonalPath(pString) === false)
 		{
@@ -2707,7 +2710,7 @@ U = {
 			}},
 			gps: {usage: "Prints GPS location information.", f: function()
 			{
-				I.write("Position: " + U.escapeHTML(GPSPositionArray) + "<br />Direction: " + U.escapeHTML(GPSDirectionArray) + "<br />Camera: " + U.escapeHTML(GPSCameraArray), 0);
+				I.print("Position: " + U.escapeHTML(GPSPositionArray) + "<br />Direction: " + U.escapeHTML(GPSDirectionArray) + "<br />Camera: " + U.escapeHTML(GPSCameraArray));
 			}},
 			identity: {usage: "Prints GPS general information.", f: function()
 			{
@@ -2727,7 +2730,7 @@ U = {
 			}},
 			link: {usage: "Prints a coordinates URL of the current map view.", f: function()
 			{
-				I.write(I.cSiteURL + that.convertLCtoGC(that.Map.getCenter()), 0, true);
+				I.print(I.cSiteURL + that.convertLCtoGC(that.Map.getCenter()), true);
 			}},
 			dart: {usage: "Draws personal pins at random map locations. <em>Parameters: int_quantity</em>", f: function()
 			{
@@ -2749,15 +2752,22 @@ U = {
 			{
 				U.printAPI(args[1], args[2], args[3]);
 			}},
+			apicache: {usage: "Prints the cache result of the previous console API call.", f: function()
+			{
+				I.print((U.APICacheArrayOfIDs) ? ("API IDs Array:<br />" + U.escapeJSON(U.APICacheArrayOfIDs) + "<br />")
+					: "API IDs Array is empty.");
+				I.print((U.APICacheArrayOfObjects) ? ("API Objects Array:<br />" + U.escapeJSON(U.APICacheArrayOfObjects) + "<br />")
+					: "API Objects Array is empty.");
+			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
 				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. Replace spaces with &quot;%20&quot;", f: function()
 			{
 				if (args[1] === undefined)
 				{
-					I.write("Available account API URL suffixes:");
+					I.print("Available account API URL suffixes:");
 					for (var i in A.URL)
 					{
-						I.write(A.URL[i], 0);
+						I.print(A.URL[i]);
 					}
 				}
 				else
@@ -2790,11 +2800,11 @@ U = {
 					s += "<b>" + i + "</b> - " + Commands[i].usage + "<br />";
 				}
 				s += "<br />The console also accepts: coordinates, array of coordinates, zone names, and chatcodes.<br />";
-				I.write(s, 0);
+				I.print(s);
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				U.collateSkins();
+				
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -2808,13 +2818,14 @@ U = {
 	 * Prints a v2 API endpoint by querying each element in the array it
 	 * returned, or just the object.
 	 * @param string pString of API
-	 * @param int pLimit of array elements to print.
-	 * @param string pQueryStr arguments for the API url.
+	 * @param int pLimit of array elements to print, optional.
+	 * @param string pQueryStr arguments for the API url, optional.
 	 */
 	printAPI: function(pString, pLimit, pQueryStr)
 	{
 		I.write("Gathering elements...");
 		var limit = Number.POSITIVE_INFINITY;
+		var scrapethreshold = 256; // Minimum array size to begin scraping
 		var querystr = (pQueryStr === undefined) ? "" : pQueryStr;
 		if (pLimit !== undefined)
 		{
@@ -2838,7 +2849,7 @@ U = {
 			for (var i = 0; i < pArray.length; i++)
 			{
 				printIcon(pArray[i]);
-				I.write(U.escapeHTML(pArray[i]), 0);
+				I.print(U.escapeHTML(pArray[i]));
 			}
 		};
 		var printIcon = function(pData)
@@ -2846,7 +2857,7 @@ U = {
 			var data = (typeof pData === "string") ? JSON.parse(pData) : pData;
 			if (data.icon)
 			{
-				I.write("<img class='cssRight' src='" + U.escapeHTML(data.icon) + "' />", 0);
+				I.print("<img class='cssRight' src='" + U.escapeHTML(data.icon) + "' />");
 			}
 		};
 		
@@ -2855,38 +2866,50 @@ U = {
 			var length = (pData.length === undefined) ? 0 : pData.length;
 			if (Array.isArray(pData))
 			{
-				I.write("Retrieved array:<br />" + U.escapeJSON(pData), 0);
-				var successlength = length;
-				for (var i = 0; i < length; i++)
+				I.print("Retrieved array:<br />" + U.escapeJSON(pData));
+				if (length > scrapethreshold)
 				{
-					if (i === limit)
+					// Delegate the heavier task of large array scraping to another function
+					I.print("Array is too big for one simultaneous request, requesting in batches with wait in between...");
+					U.scrapeAPIArray(pData, pString, pQueryStr);
+				}
+				else
+				{
+					U.APICacheArrayOfIDs = pData;
+					U.APICacheArrayOfObjects = [];
+					var successlength = length;
+					for (var i = 0; i < length; i++)
 					{
-						break;
+						if (i === limit)
+						{
+							break;
+						}
+						(function(iIndex)
+						{
+							$.getJSON(url + "/" + pData[iIndex] + querystr, function(pDataInner)
+							{
+								I.write("Retrieved an element: " + iIndex);
+								array.push(U.formatJSON(pDataInner));
+								U.APICacheArrayOfObjects.push(pDataInner);
+							}).done(function()
+							{
+								// Print the result when all elements have been queried
+								if (counter === successlength - 1 || counter === limit - 1)
+								{
+									printResult(array);
+								}
+								counter++;
+							}).fail(function()
+							{
+								successlength--;
+								if (counter === successlength - 1 || counter === limit - 1)
+								{
+									printResult(array);
+								}
+								I.print("Unable to retrieve API array element at: " + U.escapeHTML(url + "/" + pData[iIndex]));
+							});
+						})(i);
 					}
-					(function(iIndex)
-					{
-						$.getJSON(url + "/" + pData[iIndex] + querystr, function(pDataInner)
-						{
-							I.write("Retrieved an element: " + iIndex);
-							array.push(U.formatJSON(pDataInner));
-						}).done(function()
-						{
-							// Print the result when all elements have been queried
-							if (counter === successlength - 1 || counter === limit - 1)
-							{
-								printResult(array);
-							}
-							counter++;
-						}).fail(function()
-						{
-							successlength--;
-							if (counter === successlength - 1 || counter === limit - 1)
-							{
-								printResult(array);
-							}
-							I.write("Unable to retrieve API array element at: " + U.escapeHTML(url + "/" + pData[iIndex]), 0);
-						});
-					})(i);
 				}
 			}
 			else
@@ -2896,7 +2919,7 @@ U = {
 			}
 		}).fail(function()
 		{
-			I.write("Unable to retrieve API at: " + U.escapeHTML(url), 0);
+			I.print("Unable to retrieve API at: " + U.escapeHTML(url));
 		});
 	},
 	
@@ -2942,7 +2965,7 @@ U = {
 				requesteditem = E.ItemsArray[index];
 				$.getJSON(U.getAPIItem(requesteditem), function(pData)
 				{
-					I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData), 0);
+					I.print("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData));
 				}).fail(function()
 				{
 					I.write("Unable to retrieve item: " + index);
@@ -2957,7 +2980,7 @@ U = {
 					requesteditem = E.ItemsArray[index];
 					$.getJSON(U.getAPIItem(requesteditem), function(pData)
 					{
-						I.write("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData), 0);
+						I.print("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData));
 					}).fail(function()
 					{
 						I.write("Unable to retrieve item: " + index);
@@ -2969,90 +2992,39 @@ U = {
 	},
 	
 	/*
-	 * Categorizes an array of skin IDs into a one-level object containing
-	 * separate arrays.
+	 * Takes an array of API endpoint ID numbers and download every object that
+	 * they point to, and amass them into an accessible array of objects.
+	 * @param intarray pArray downloaded from API.
+	 * @param string pString suffix of API endpoint.
+	 * @param string pQueryStr arguments for the API url, optional.
 	 */
-	collateSkins: function()
+	scrapeAPIArray: function(pArray, pString, pQueryStr)
 	{
-		var skinids = [];
+		var querystr = pQueryStr || "";
+		var idsarray = [];
 		var failedids = [];
-		var catobj = {};
 		var reqindex = 0;
 		var reqlimit = 500;
 		var reqcooldownms = 30000;
 		var itemstoretrieve = 0;
 		var itemsretrieved = 0;
 		
-		var waitCooldown = function()
-		{
-			I.write("Cooldown... " + reqindex, 0);
-			setTimeout(function()
-			{
-				iterateSkins();
-			}, reqcooldownms);
-		};
-		
-		var finalizeCollate = function()
+		var finalizeScrape = function()
 		{
 			if (itemsretrieved === itemstoretrieve)
 			{
-				I.write("Failed IDs: " + failedids, 0);
-				U.printJSON(catobj);
+				if (failedids.length > 0)
+				{
+					I.print("WARNING - Failed IDs: " + failedids);
+				}
+				I.print("Scrape completed. Enter /apicache to print the results.");
 			}
 		};
 		
-		var retrieveSkin = function(pSkinID, pReqIndex)
-		{
-			$.getJSON(U.getAPISkin(pSkinID), function(pData)
-			{
-				var key = null;
-				if (pData.type)
-				{
-					// Determine the skin's category name
-					if (pData.type === "Armor" && pData.details && pData.details.type && pData.details.weight_class)
-					{
-						key = pData.type + "_" + pData.details.weight_class + "_" + pData.details.type;
-					}
-					else if (pData.type === "Weapon" && pData.details && pData.details.type)
-					{
-						key = pData.type + "_" + pData.details.type;
-					}
-					else if (pData.type === "Back")
-					{
-						key = pData.type;
-					}
-					
-					// Insert the skin ID into a category array
-					if (key)
-					{
-						if (catobj[key] === undefined)
-						{
-							catobj[key] = [];
-						}
-						(catobj[key]).push(pSkinID);
-						I.write("Success: " + pReqIndex + " Skin: " + pSkinID, 0, true);
-					}
-					else
-					{
-						I.write("FAILED CATEGORIZATION: " + pReqIndex + " Skin: " + pSkinID, 0);
-					}
-					// Check for completion
-					itemsretrieved++;
-					finalizeCollate();
-				}
-			}).fail(function()
-			{
-				failedids.push(pSkinID);
-				// Check for completion
-				itemstoretrieve--;
-				finalizeCollate();
-			});
-		};
-		
-		var iterateSkins = function()
+		var iterateIDs = function()
 		{
 			var reqcounter = 0;
-			for (var i = reqindex; i < skinids.length; i++)
+			for (var i = reqindex; i < idsarray.length; i++)
 			{
 				if (reqcounter === reqlimit)
 				{
@@ -3061,20 +3033,66 @@ U = {
 				}
 				else
 				{
-					retrieveSkin(skinids[i], reqindex);
+					retrieveObject(idsarray[i], reqindex);
 				}
 				reqindex++;
 				reqcounter++;
 			}
 		};
 		
-		// Start the process
-		$.getJSON(U.URL_API.Prefix + "skins", function(pData)
+		var retrieveObject = function(pID, pReqIndex)
 		{
-			skinids = pData;
-			itemstoretrieve = skinids.length;
-			iterateSkins();
-		});
+			$.getJSON(U.URL_API.Prefix + pString + "/" + pID + querystr, function(pData)
+			{
+				U.APICacheArrayOfObjects.push(pData);
+				// Check for completion
+				itemsretrieved++;
+				finalizeScrape();
+			}).fail(function()
+			{
+				failedids.push(pID);
+				// Check for completion
+				itemstoretrieve--;
+				finalizeScrape();
+			});
+		};
+		
+		var waitCooldown = function()
+		{
+			var percentcomplete = U.convertDecimalToPercent(reqindex / idsarray.length);
+			I.print("Cooldown... " + reqindex + " / " + idsarray.length + " (" + percentcomplete + ")");
+			setTimeout(function()
+			{
+				iterateIDs();
+			}, reqcooldownms);
+		};
+		
+		// Start the process
+		U.APICacheArrayOfIDs = pArray;
+		U.APICacheArrayOfObjects = [];
+		idsarray = pArray;
+		itemstoretrieve = idsarray.length;
+		iterateIDs();
+	},
+	
+	/*
+	 * Categorizes API skins from a completely downloaded array of skins objects.
+	 * @pre Cache array of objects was assigned.
+	 */
+	collateSkins: function()
+	{
+		var categories = {
+			Armor_Light_Helm: {}, Armor_Light_Shoulders: {}, Armor_Light_Coat: {}, Armor_Light_Gloves: {}, Armor_Light_Leggings: {}, Armor_Light_Boots: {},
+			Armor_Heavy_Helm: {}, Armor_Heavy_Shoulders: {}, Armor_Heavy_Coat: {}, Armor_Heavy_Gloves: {}, Armor_Heavy_Leggings: {}, Armor_Heavy_Boots: {},
+			Armor_Medium_Helm: {}, Armor_Medium_Shoulders: {}, Armor_Medium_Coat: {}, Armor_Medium_Gloves: {}, Armor_Medium_Leggings: {}, Armor_Medium_Boots: {},
+
+			Armor_Light_HelmAquatic: {}, Armor_Medium_HelmAquatic: {}, Armor_Heavy_HelmAquatic: {},
+
+			Weapon_Axe: {}, Weapon_Dagger: {}, Weapon_Mace: {}, Weapon_Pistol: {}, Weapon_Scepter: {}, Weapon_Sword: {}, Weapon_Focus: {}, Weapon_Shield: {}, Weapon_Torch: {}, Weapon_Warhorn: {},
+			Weapon_Greatsword: {}, Weapon_Hammer: {}, Weapon_LongBow: {}, Weapon_Rifle: {}, Weapon_ShortBow: {}, Weapon_Staff: {}, Weapon_Harpoon: {}, Weapon_Speargun: {}, Weapon_Trident: {},
+
+			Back: {}
+		};
 	},
 	
 	/*
@@ -3088,7 +3106,7 @@ U = {
 			var str = "pve: [&quot;" + d.pve[0] + "&quot;, &quot;" + d.pve[1] + "&quot;, &quot;" + d.pve[2] + "&quot;, &quot;" + d.pve[3] + "&quot;],<br />"
 				+ "pvp: [&quot;" + d.pvp[0] + "&quot;, &quot;" + d.pvp[1] + "&quot;, &quot;" + d.pvp[2] + "&quot;, &quot;" + d.pvp[3] + "&quot;],<br />"
 				+ "wvw: [&quot;" + d.wvw[0] + "&quot;, &quot;" + d.wvw[1] + "&quot;, &quot;" + d.wvw[2] + "&quot;, &quot;" + d.wvw[3] + "&quot;]";
-			I.write(str, 0);
+			I.print(str);
 		}
 		else
 		{
@@ -3349,7 +3367,7 @@ U = {
 	},
 	printJSON: function(pObject)
 	{
-		I.write(U.escapeJSON(pObject), 0);
+		I.print(U.escapeJSON(pObject));
 	},
 	
 	/*
@@ -3771,8 +3789,8 @@ U = {
 	{
 		$(pSelector).each(function()
 		{
-			$(this).attr("href", I.cSiteURL + "out/?u=" + U.encodeURL($(this).attr("href")));
-			$(this).attr("target", "_blank");
+			$(this).attr("href", I.cSiteURL + "out/?u=" + U.encodeURL($(this).attr("href")))
+				.attr("target", "_blank");
 		});
 	},
 	convertExternalURL: function(pURL)
@@ -3784,6 +3802,17 @@ U = {
 	{
 		// This is to be placed within the property of an <a> tag
 		return " href='" + I.cSiteURL + "out/?u=" + U.encodeURL(pURL) + "' target='_blank' ";
+	},
+	
+	/*
+	 * Replaces href attributes in a raw HTML string and replace them with
+	 * external prefixes.
+	 * @param string pHTML.
+	 * @returns string.
+	 */
+	convertExternalString: function(pHTML)
+	{
+		return pHTML.replace(/href='/g, "target='_blank' href='" + I.cSiteURL + "out/?u=");
 	},
 	
 	/*
@@ -4524,7 +4553,7 @@ A = {
 	 */
 	printAccount: function(pURLSuffix)
 	{
-		I.write("Loading " + pURLSuffix + "...", 0);
+		I.print("Loading " + pURLSuffix + "...");
 		$.ajax({
 			dataType: "json",
 			url: A.getURL(pURLSuffix),
@@ -7504,7 +7533,7 @@ Q = {
 		}
 		else if (det.type && det.type !== "Default") // Else use the subtype in the details property object
 		{
-			return D.getString(det.type) + "<br />";
+			return "<br />" + D.getString(det.type) + "<br />";
 		}
 		return "";
 	},
@@ -8898,7 +8927,7 @@ Q = {
 		{
 			if (isshowinghelp || I.isConsoleShown() === false)
 			{
-				I.write($("#accInventorySearchHelp").html(), 0, true);
+				I.print($("#accInventorySearchHelp").html(), true);
 			}
 			else
 			{
@@ -12854,7 +12883,7 @@ M = {
 			{
 				if (that.isWeaponsLaid())
 				{
-					I.write(U.escapeHTML(JSON.stringify(that.serializeWeapons())), 0, true);
+					I.print(U.escapeHTML(JSON.stringify(that.serializeWeapons())), true);
 				}
 			});
 		var importbutton = $("<img src='img/ui/import.png' id='" + that.MapEnum + "RangeImportButton' "
@@ -14485,12 +14514,12 @@ P = {
 		for (var i = 0; i < pCoords.length; i++)
 		{
 			var numprefix = (pIsNumbered) ? ("n: " + (i+1) + ", ") : "";
-			I.write("{" + numprefix + "c: [" + (pCoords[i])[0] + ", " + (pCoords[i])[1] + "]},", 0);
+			I.print("{" + numprefix + "c: [" + (pCoords[i])[0] + ", " + (pCoords[i])[1] + "]},");
 		}
 	},
 	printNumberedCoordinates: function(pCoord, i)
 	{
-		I.write("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},", 0);
+		I.print("{n: " + (parseInt(i)+1) + ", c: [" + pCoord[0] + ", " + pCoord[1] + "]},");
 	},
 	formatCoord: function(pCoord)
 	{
@@ -14508,7 +14537,7 @@ P = {
 	},
 	printCoordinates: function(pCoords)
 	{
-		I.write(this.compileCoordinates(pCoords), 0, true);
+		I.print(this.compileCoordinates(pCoords), true);
 	},
 	
 	/*
@@ -14578,7 +14607,7 @@ P = {
 			html += "</div>";
 			
 			// Output the input boxes containing the chatlinks
-			I.write(html, 0, true);
+			I.print(html, true);
 			$("#jsWaypointLinks .cssInputText").click(function()
 			{
 				$(this).select();
@@ -14752,7 +14781,7 @@ P = {
 		if (M.isEventIconsGenerated)
 		{
 			M.ZoneCurrent.Layers.EventIcon.eachLayer(function(iLayer) {
-				I.write("<input type='text' class='cssInputText' value='[" + M.convertLCtoGC(iLayer.getLatLng()) + "]' /> " + iLayer.options.task, 0);
+				I.print("<input type='text' class='cssInputText' value='[" + M.convertLCtoGC(iLayer.getLatLng()) + "]' /> " + iLayer.options.task);
 			});
 		}
 		else
@@ -15740,7 +15769,7 @@ G = {
 						+ "<br />"
 						+ "Nodes to Visit: <span class='cssRight'>" + numnodes + "</span><br />"
 						+ "Estimated Time: <span class='cssRight'>" + T.getTimeFormatted({customTimeInSeconds: timecost, wantLetters: true}) + "</span>";
-					I.write(summary, 0);
+					I.print(summary);
 				}
 			});
 			
@@ -18279,7 +18308,7 @@ W = {
 				{
 					W.isFallbackEnabled = true;
 					W.updateObjectives();
-					I.write("Too many failed API retrievals. Switched to backup API server.", 0);
+					I.print("Too many failed API retrievals. Switched to backup API server.");
 				}
 				else
 				{
@@ -18289,7 +18318,7 @@ W = {
 						// If failed near reset then tell so, otherwise generic error
 						var errormessage = (W.secTillWvWReset !== null && W.secTillWvWReset < 10 * T.cSECONDS_IN_MINUTE)
 							? "WvW reset is happening soon." : "The map will refresh automatically when ArenaNet servers are back online.";
-						I.write("Unable to retrieve WvW data during " + T.getTimeFormatted() + ". Please wait...<br />" + errormessage, 0);
+						I.print("Unable to retrieve WvW data during " + T.getTimeFormatted() + ". Please wait...<br />" + errormessage);
 					}
 				}
 			}
@@ -20021,10 +20050,19 @@ T = {
 
 					if (pOptions.isReset === true)
 					{
-						// Tell today's world boss closest scheduled time if server resetted
 						if (O.isServerReset)
 						{
-							I.greet(D.getModifiedWord("boss", "daily", U.CaseEnum.Sentence) + " "
+							var greetduration = 15;
+							var dailyspecialstr = "";
+							// Mention special dailies if appropriate
+							if (T.DailyToday.pve && T.DailyToday.pve[1] === "Forger")
+							{
+								dailyspecialstr += "<br />" + U.convertExternalString(B.Announcement.Messages.Forger);
+								greetduration += 10;
+							}
+							
+							// Tell today's world boss closest scheduled time if server resetted
+							var dailybossstr = D.getModifiedWord("boss", "daily", U.CaseEnum.Sentence) + " "
 								+ D.getObjectName(C.ChainToday) + " " + D.getTranslation("will start") + " " + D.getTranslation("at") + " "
 								+ T.getTimeFormatted(
 								{
@@ -20036,8 +20074,8 @@ T = {
 									wantLetters: true,
 									wantSeconds: false,
 									customTimeInSeconds: T.getSecondsUntilChainStarts(C.ChainToday)
-								}),
-							15);
+								});
+							I.greet(dailybossstr + dailyspecialstr, greetduration);
 						}
 
 						// Subscribe to daily chain
@@ -20050,6 +20088,8 @@ T = {
 								subscriptionbutton.trigger("click");
 							}
 						}
+						
+						
 					}
 				}
 			}
@@ -20484,8 +20524,8 @@ B = {
 					}).fail(function()
 					{
 						table.empty();
-						I.write("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchLink(offer.id)) + ">"
-							+ offer.id + "</a>. ArenaNet API servers may be down.", 0);
+						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchLink(offer.id)) + ">"
+							+ offer.id + "</a>. ArenaNet API servers may be down.");
 					});
 				})(i);
 			}
@@ -22042,7 +22082,7 @@ K = {
 		{
 			if (K.StopwatchTimestamp !== 0)
 			{
-				I.write(K.stopwatchUp.innerHTML, 0);
+				I.print(K.stopwatchUp.innerHTML);
 			}
 			else
 			{
@@ -22805,6 +22845,11 @@ I = {
 		{
 			I.write(pString, pSeconds, pClear);
 		}
+	},
+	print: function(pString, pClear)
+	{
+		// For messages that are shown until the user manually closes the console
+		I.write(pString, 0, pClear);
 	},
 	
 	/*
