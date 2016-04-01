@@ -1045,29 +1045,28 @@ Announcement:
 	Start: new Date("2015-07-10T19:00:00Z"),
 	Finish: new Date("2015-07-13T19:00:00Z")
  */
-Countdowns: [
-{
-	name_en: "Super Adventure Box 2016",
-	name_de: "Super Adventure Box 2016",
-	name_es: "Super Adventure Box 2016",
-	name_fr: "Super Adventure Box 2016",
-	url_en: "https://forum-en.guildwars2.com/forum/info/updates/Game-Update-Notes-April-1-2016",
-	url_de: "https://forum-de.guildwars2.com/forum/info/updates/Release-Notes-zum-Spiel-1-April-2016",
-	url_es: "https://forum-es.guildwars2.com/forum/info/updates/Notas-de-actualizaci-n-del-juego-1-de-abril-2016",
-	url_fr: "https://forum-fr.guildwars2.com/forum/info/updates/Mise-jour-du-jeu-31-mars-2016",
-	Start: new Date("2016-03-31T16:00:00Z"),
-	Finish: new Date("2016-04-19T16:00:00Z")
+Countdown: {
+	Events: [
+	{
+		name_en: "Super Adventure Box 2016",
+		name_de: "Super Adventure Box 2016",
+		name_es: "Super Adventure Box 2016",
+		name_fr: "Super Adventure Box 2016",
+		official: "news/welcome-to-the-super-adventure-festival",
+		Start: new Date("2016-03-31T16:00:00Z"),
+		Finish: new Date("2016-04-19T16:00:00Z")
+	},
+	{
+		name_en: "Spring 2016 Update",
+		name_de: "Update Feder 2016",
+		name_es: "Actualización de primavera 2016",
+		name_fr: "Mise à jour du printemps 2016",
+		url: "https://forum-en.guildwars2.com/forum/game/gw2/Upcoming-changes-in-Spring-Quarterly-Update",
+		Start: new Date("2016-04-26T16:00:00Z"),
+		Finish: new Date("2016-04-27T16:00:00Z")
+	}
+	]
 },
-{
-	name_en: "Spring 2016 Update",
-	name_de: "Update Feder 2016",
-	name_es: "Actualización de primavera 2016",
-	name_fr: "Mise à jour du printemps 2016",
-	url: "https://forum-en.guildwars2.com/forum/game/gw2/Upcoming-changes-in-Spring-Quarterly-Update",
-	Start: new Date("2016-04-26T16:00:00Z"),
-	Finish: new Date("2016-04-27T16:00:00Z")
-}
-],
 
 /*
  * Living Story events.
@@ -1231,16 +1230,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-03-31T00:00:00Z"),
-	Finish: new Date("2016-04-01T00:00:00Z"),
+	Start: new Date("2016-04-01T00:00:00Z"),
+	Finish: new Date("2016-04-02T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "43483", price: "25200", product: "43451" },
-		Fox: { id: "49749", price: "25200", product: "49790" },
-		Derwena: { id: "50023", price: "25200", product: "50022" },
-		Yana: { id: "43825", price: "25200", product: "43847" },
-		Katyn: { id: "44656", price: "25200", product: "44946" },
-		Verma: { id: "49735", price: "25200", product: "49866" }
+		Mehem: { id: "43806", price: "25200", product: "43782" },
+		Fox: { id: "43811", price: "25200", product: "43787" },
+		Derwena: { id: "43483", price: "25200", product: "43451" },
+		Yana: { id: "44662", price: "25200", product: "44949" },
+		Katyn: { id: "49762", price: "25200", product: "49807" },
+		Verma: { id: "67961", price: "25200", product: "67522" }
 	}
 }
 };

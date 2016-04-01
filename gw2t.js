@@ -10449,7 +10449,7 @@ C = {
 				} break;
 				case C.ChainSeriesEnum.LivingStory:
 				{
-					if (B.isDashboardStoryEnabled)
+					if (B.isStoryEnabled)
 					{
 						// Show Living Story events on the dashboard if on website or overlay mode only
 						chain.htmllist = ((I.isProgramEmbedded || (I.ModeCurrent !== I.ModeEnum.Website && I.ModeCurrent !== I.ModeEnum.Overlay)))
@@ -18675,6 +18675,7 @@ T = {
 	// Natural constants
 	cMILLISECONDS_IN_SECOND: 1000,
 	cMILLISECONDS_IN_MINUTE: 60000,
+	cMILLISECONDS_IN_DAY: 86400000,
 	cSECONDS_IN_MINUTE: 60,
 	cSECONDS_IN_HOUR: 3600,
 	cSECONDS_IN_DAY: 86400,
@@ -18855,11 +18856,11 @@ T = {
 		var slot;
 		
 		// Initialize Living Story events, if available
-		if (B.DashboardStory.isEnabled)
+		if (B.Story.isEnabled)
 		{
-			if (T.isTimely(B.DashboardStory, new Date()))
+			if (T.isTimely(B.Story, new Date()))
 			{
-				B.isDashboardStoryEnabled = true;
+				B.isStoryEnabled = true;
 			}
 		}
 		
@@ -20062,18 +20063,18 @@ T = {
  * ========================================================================== */
 B = {
 	
-	DashboardAnnouncement: GW2T_DASHBOARD_DATA.Announcement,
-	DashboardCountdown: GW2T_DASHBOARD_DATA.Countdowns,
-	DashboardStory: GW2T_DASHBOARD_DATA.Story,
-	DashboardSale: GW2T_DASHBOARD_DATA.Sale,
-	DashboardVendor: GW2T_DASHBOARD_DATA.Vendor,
+	Announcement: GW2T_DASHBOARD_DATA.Announcement,
+	Countdown: GW2T_DASHBOARD_DATA.Countdown,
+	Story: GW2T_DASHBOARD_DATA.Story,
+	Sale: GW2T_DASHBOARD_DATA.Sale,
+	Vendor: GW2T_DASHBOARD_DATA.Vendor,
 	isDashboardEnabled: true,
-	isDashboardAnnouncementEnabled: false,
-	isDashboardCountdownEnabled: false,
-	isDashboardCountdownTickEnabled: false,
-	isDashboardStoryEnabled: false,
-	isDashboardSaleEnabled: false,
-	isDashboardVendorEnabled: false,
+	isAnnouncementEnabled: false,
+	isCountdownEnabled: false,
+	isCountdownTickEnabled: false,
+	isStoryEnabled: false,
+	isSaleEnabled: false,
+	isVendorEnabled: false,
 	
 	Timeline: GW2T_TIMELINE,
 	isTimelineEnabled: true,
@@ -20087,39 +20088,39 @@ B = {
 	{
 		var now = new Date();
 		// Verify countdown: if at least one countdown has not expired
-		for (var i in B.DashboardCountdown)
+		for (var i = 0; i < B.Countdown.Events.length; i++)
 		{
-			if (now < B.DashboardCountdown[i].Finish)
+			if (B.Countdown.Events[i].Finish && now < B.Countdown.Events[i].Finish)
 			{
-				B.isDashboardCountdownEnabled = true;
+				B.isCountdownEnabled = true;
 				break;
 			}
 		}
 		
 		// Verify announcement: if announcement exists
-		if (B.DashboardAnnouncement.content.length > 0 && T.isTimely(B.DashboardAnnouncement, now))
+		if (B.Announcement.content.length > 0 && T.isTimely(B.Announcement, now))
 		{
-			U.convertExternalLink($("#dsbAnnouncement").html(B.DashboardAnnouncement.content).find("a"));
+			U.convertExternalLink($("#dsbAnnouncement").html(B.Announcement.content).find("a"));
 			M.bindMapLinks("#dsbAnnouncement");
-			B.isDashboardAnnouncementEnabled = true;
+			B.isAnnouncementEnabled = true;
 		}
 		
 		// Verify sale: if sale exists and has not expired
-		if (B.DashboardSale.Items.length > 0 && T.isTimely(B.DashboardSale, now))
+		if (B.Sale.Items.length > 0 && T.isTimely(B.Sale, now))
 		{
-			B.isDashboardSaleEnabled = true;
+			B.isSaleEnabled = true;
 		}
 		// Verify vendor: if has not expired
-		if (T.isTimely(B.DashboardVendor, now, T.cSECONDS_IN_DAY))
+		if (T.isTimely(B.Vendor, now, T.cSECONDS_IN_DAY))
 		{
-			B.isDashboardVendorEnabled = true;
+			B.isVendorEnabled = true;
 		}
 		
 		// Make sure at least one component of the dashboard is enabled, else disable the dashboard
-		if ((B.isDashboardCountdownEnabled === false
-				&& B.isDashboardAnnouncementEnabled === false
-				&& B.isDashboardSaleEnabled === false
-				&& B.isDashboardVendorEnabled === false)
+		if ((B.isCountdownEnabled === false
+				&& B.isAnnouncementEnabled === false
+				&& B.isSaleEnabled === false
+				&& B.isVendorEnabled === false)
 			|| B.isDashboardEnabled === false
 			|| I.isMapEnabled === false
 			|| O.Options.bol_showDashboard === false)
@@ -20130,7 +20131,7 @@ B = {
 		else
 		{
 			B.toggleDashboard(true);
-			B.isDashboardCountdownTickEnabled = true;
+			B.isCountdownTickEnabled = true;
 		}
 		
 		// Button to toggle the dashboard
@@ -20140,7 +20141,7 @@ B = {
 		});
 		
 		// Initialize countdown entries
-		if (B.isDashboardCountdownEnabled)
+		if (B.isCountdownEnabled)
 		{
 			var namekey = D.getNameKey();
 			var urlkey = D.getURLKey();
@@ -20148,10 +20149,11 @@ B = {
 			var countdownname;
 			var url;
 			
-			for (var i in B.DashboardCountdown)
+			// Initialize countdowns
+			for (var i = 0; i < B.Countdown.Events.length; i++)
 			{
 				// Initialize countdown properties
-				ctd = B.DashboardCountdown[i];
+				ctd = B.Countdown.Events[i];
 				ctd.isTimely = true;
 				ctd.StartStamp = ctd.Start.toLocaleString();
 				ctd.FinishStamp = ctd.Finish.toLocaleString();
@@ -20186,31 +20188,31 @@ B = {
 		}
 		
 		// Initialize Living Story
-		if (B.isDashboardStoryEnabled)
+		if (B.isStoryEnabled)
 		{
-			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(B.DashboardStory) + "</div>").show();
+			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(B.Story) + "</div>").show();
 			I.initializeScrollbar("#dsbStory");
 		}
 		
 		// Initialize sale
-		if (B.isDashboardSaleEnabled)
+		if (B.isSaleEnabled)
 		{
-			var icon = ((B.DashboardSale.isSpecial) ? "gemstore_special" : "gemstore") + I.cPNG;
-			var range = T.getMinMax(B.DashboardSale.Items, "price");
+			var icon = ((B.Sale.isSpecial) ? "gemstore_special" : "gemstore") + I.cPNG;
+			var range = T.getMinMax(B.Sale.Items, "price");
 			var rangestr = (range.min === range.max) ? range.max : (range.min + "-" + range.max);
 			// Create "button" to toggle list of items on sale
 			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img src='img/ui/" + icon + "' /> "
-				+ "<u>" + B.DashboardSale.Items.length + " "
+				+ "<u>" + B.Sale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
-				+ "⇓@ " + B.DashboardSale.Finish.toLocaleString()
+				+ "⇓@ " + B.Sale.Finish.toLocaleString()
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
 			// Add a "padding" item if the columns are not equal length
 			var ncol0 = 0, ncol1 = 0;
-			for (var i in B.DashboardSale.Items)
+			for (var i in B.Sale.Items)
 			{
-				if (B.DashboardSale.Items[i].col === 0)
+				if (B.Sale.Items[i].col === 0)
 				{
 					ncol0++;
 				}
@@ -20221,13 +20223,13 @@ B = {
 			}
 			if (ncol0 < ncol1)
 			{
-				B.DashboardSale.Padding.col = 0;
-				B.DashboardSale.Items.unshift(B.DashboardSale.Padding);
+				B.Sale.Padding.col = 0;
+				B.Sale.Items.unshift(B.Sale.Padding);
 			}
 			else if (ncol0 > ncol1)
 			{
-				B.DashboardSale.Padding.col = 1;
-				B.DashboardSale.Items.unshift(B.DashboardSale.Padding);
+				B.Sale.Padding.col = 1;
+				B.Sale.Items.unshift(B.Sale.Padding);
 			}
 			// Bind buttons
 			$("#dsbSaleHeader").click(function()
@@ -20235,15 +20237,15 @@ B = {
 				B.generateDashboardSale();
 			});
 			// Automatically generate the items on sale if the boolean is true
-			I.toggleToggleIcon("#dsbSaleToggleIcon", B.DashboardSale.isPreshown);
-			if (B.DashboardSale.isPreshown === true)
+			I.toggleToggleIcon("#dsbSaleToggleIcon", B.Sale.isPreshown);
+			if (B.Sale.isPreshown === true)
 			{
 				B.generateDashboardSale();
 			}
 		}
 		
 		// Initialize vendor
-		if (B.isDashboardVendorEnabled)
+		if (B.isVendorEnabled)
 		{
 			B.generateDashboardVendorHeader();
 		}
@@ -20281,18 +20283,18 @@ B = {
 			{
 				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
 				table.empty();
-				if (B.DashboardSale.note.length > 0)
+				if (B.Sale.note.length > 0)
 				{
-					table.append("<div>Note: " + B.DashboardSale.note + "</div>");
+					table.append("<div>Note: " + B.Sale.note + "</div>");
 				}
 				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				if (E.Exchange.CoinInGem !== 0)
 				{
 					var gemstr = "<ins class='s16 s16_gem'></ins>";
-					for (var i = 0; i < B.DashboardSale.Items.length; i++)
+					for (var i = 0; i < B.Sale.Items.length; i++)
 					{
 						// Initialize variables
-						var item = B.DashboardSale.Items[i];
+						var item = B.Sale.Items[i];
 						var wiki = U.getWikiSearchLink(item.name);
 						var video = U.getYouTubeLink(item.name);
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
@@ -20365,15 +20367,15 @@ B = {
 	generateDashboardVendorHeader: function()
 	{
 		var weekdaylocation = B.getDashboardVendorWeekday();
-		var vendorname = D.getObjectName(B.DashboardVendor);
+		var vendorname = D.getObjectName(B.Vendor);
 		var vendorcodes = "";
-		for (var i in B.DashboardVendor.Codes)
+		for (var i in B.Vendor.Codes)
 		{
-			vendorcodes += i + "@" + (B.DashboardVendor.Codes[i])[weekdaylocation] + " ";
+			vendorcodes += i + "@" + (B.Vendor.Codes[i])[weekdaylocation] + " ";
 		}
 		vendorcodes += "- " + vendorname;
 		$("#dsbVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle' "
-			+  "title='<dfn>Updated:</dfn> " + B.DashboardVendor.Start.toLocaleString(window.navigator.language, {
+			+  "title='<dfn>Updated:</dfn> " + B.Vendor.Start.toLocaleString(window.navigator.language, {
 					year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long" })
 				+ "'><img src='img/map/vendor_karma.png' /> "
 			+ "<u>" + vendorname + "</u>"
@@ -20398,9 +20400,9 @@ B = {
 			if ($(this).data("hasDrawn") !== true)
 			{
 				var coords = [];
-				for (var i in B.DashboardVendor.Coords)
+				for (var i in B.Vendor.Coords)
 				{
-					var coord = (B.DashboardVendor.Coords[i])[weekdaylocation];
+					var coord = (B.Vendor.Coords[i])[weekdaylocation];
 					if (coord !== undefined)
 					{
 						coords.push(coord);
@@ -20415,7 +20417,7 @@ B = {
 				$(this).data("hasDrawn", false);
 			}
 		});
-		I.toggleToggleIcon("#dsbVendorToggleIcon", B.DashboardSale.isPreshown);
+		I.toggleToggleIcon("#dsbVendorToggleIcon", B.Sale.isPreshown);
 	},
 	
 	/*
@@ -20426,7 +20428,7 @@ B = {
 		var animationspeed = 200;
 		var weekdaylocation = B.getDashboardVendorWeekday();
 		var table = $("#dsbVendorTable");
-		var numoffers = O.getObjectLength(B.DashboardVendor.Offers);
+		var numoffers = O.getObjectLength(B.Vendor.Offers);
 		
 		if (table.is(":empty") === false)
 		{
@@ -20441,18 +20443,18 @@ B = {
 			I.toggleToggleIcon("#dsbVendorToggleIcon", true);
 			table.empty();
 			table.append(I.cThrobber);
-			for (var i in B.DashboardVendor.Offers)
+			for (var i in B.Vendor.Offers)
 			{
 				(function(iIndex)
 				{
-					var offer = B.DashboardVendor.Offers[iIndex];
+					var offer = B.Vendor.Offers[iIndex];
 					$.getJSON(U.getAPIItem(offer.id), function(pData)
 					{
 						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
 						table.append("<div class='dsbVendorEntry'>"
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
-								+ "' data-coord='" + (B.DashboardVendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
+								+ "' data-coord='" + (B.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
 							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(offer.price) + "</span>"
 							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
 						+ "</div>");
@@ -20502,7 +20504,7 @@ B = {
 				I.initializeScrollbar("#dsbVendorTable");
 				I.updateScrollbar("#dsbVendorTable");
 			});
-			if (T.isTimely(B.DashboardVendor, new Date()) === false)
+			if (T.isTimely(B.Vendor, new Date()) === false)
 			{
 				$("#dsbVendorTable").prepend("Note: These items have expired.");
 			}
@@ -20514,7 +20516,7 @@ B = {
 		var now = new Date();
 		var weekday = now.getUTCDay();
 		var hour = now.getUTCHours();
-		return (hour < B.DashboardVendor.resetHour) ? T.wrapInteger(weekday - 1, T.cDAYS_IN_WEEK) : weekday;
+		return (hour < B.Vendor.resetHour) ? T.wrapInteger(weekday - 1, T.cDAYS_IN_WEEK) : weekday;
 	},
 	
 	/*
@@ -20524,9 +20526,9 @@ B = {
 	 */
 	updateDashboardCountdown: function(pDate)
 	{
-		for (var i in B.DashboardCountdown)
+		for (var i = 0; i < B.Countdown.Events.length; i++)
 		{
-			var ctd = B.DashboardCountdown[i];
+			var ctd = B.Countdown.Events[i];
 			if (ctd.isTimely)
 			{
 				var ithtime = T.formatSeconds(~~((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
@@ -20546,9 +20548,9 @@ B = {
 		var minute = pDate.getUTCMinutes();
 		
 		// Update countdown text elements, or deactivate a countdown entry if expired
-		for (var i in B.DashboardCountdown)
+		for (var i in B.Countdown.Events)
 		{
-			var ctd = B.DashboardCountdown[i];
+			var ctd = B.Countdown.Events[i];
 			if (ctd.isTimely)
 			{
 				var countdownhtml = $("#dsbCountdown_" + i);
@@ -20586,22 +20588,22 @@ B = {
 		}
 		
 		// Deactivate outdated Living Story
-		if (T.isTimely(B.DashboardStory, pDate) === false)
+		if (T.isTimely(B.Story, pDate) === false)
 		{
-			B.isDashboardStoryEnabled = false;
+			B.isStoryEnabled = false;
 			$("#dsbStory").hide();
 		}
 		
 		// Deactivate outdated sale
-		if (T.isTimely(B.DashboardSale, pDate) === false)
+		if (T.isTimely(B.Sale, pDate) === false)
 		{
-			B.isDashboardSaleEnabled = false;
+			B.isSaleEnabled = false;
 			$("#dsbSale").hide();
 		}
 		
 		// Refresh vendor header at its specific time
-		if (T.isTimely(B.DashboardVendor, pDate)
-			&& hour === B.DashboardVendor.resetHour && minute === 0)
+		if (T.isTimely(B.Vendor, pDate)
+			&& hour === B.Vendor.resetHour && minute === 0)
 		{
 			B.generateDashboardVendorHeader();
 		}
@@ -21428,7 +21430,7 @@ K = {
 		{
 			T.updateCountdownToReset();
 		}
-		if (B.isDashboardCountdownTickEnabled)
+		if (B.isCountdownTickEnabled)
 		{
 			B.updateDashboardCountdown(pDate);
 		}
@@ -21539,7 +21541,7 @@ K = {
 				}
 
 				// Living Story chain
-				if (B.isDashboardStoryEnabled && wantls)
+				if (B.isStoryEnabled && wantls)
 				{
 					D.speak(D.getSpeechWord("event", "subscribed") + " " + D.getChainPronunciation(chainls));
 					D.speak(timephrase);
@@ -21577,7 +21579,7 @@ K = {
 		C.NextChainHC3 = T.getHardcoreChain(3);
 		C.NextChainHC4 = T.getHardcoreChain(4);
 		
-		if (B.isDashboardStoryEnabled)
+		if (B.isStoryEnabled)
 		{
 			// These are for subscription alarm reference
 			C.NextChainLS1 = T.getLivingStoryChain(1);
