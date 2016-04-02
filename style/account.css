@@ -246,7 +246,12 @@ input[type="text"].accTokenNameUsed {
 	color: #e4e0b3;
 	border-top: 1px solid #222;
 	border-bottom: 1px solid #000;
-	background: linear-gradient(to right, #000 0%, transparent 100%) !important;
+	background-image: url("../img/background/separator.png");
+	background-size: 100% 100% !important;
+}
+.chrHeader:hover {
+	background-image: url("../img/background/separator_hover.png") !important;
+	animation: none !important;
 }
 .chrHeaderLeft {
 	margin-left: 32px;

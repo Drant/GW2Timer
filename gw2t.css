@@ -751,6 +751,13 @@ textarea.jsCopyCode {
 	width: calc(100% - 48px);
 	white-space: nowrap;
 }
+#tmlDelete {
+	left: 48px;
+	display: none;
+}
+#tmlOpaque {
+	left: 16px;
+}
 #tmlIndicator, #tmlBisector {
 	display: block;
 	width: 2px;
@@ -876,13 +883,6 @@ textarea.jsCopyCode {
 }
 #dsbAnnouncement img:hover {
 	opacity: 0.8;
-}
-#tmlDelete {
-	left: 48px;
-	display: none;
-}
-#tmlOpaque {
-	left: 16px;
 }
 #dsbCountdown time {
 	font-family: Consolas, monospace;
@@ -2324,6 +2324,9 @@ label:hover {
 	border-bottom-left-radius: 8px;
 }
 
+.btnContainer {
+	position: absolute; z-index: 11;
+}
 .btnWindow {
 	position: absolute; z-index: 11;
 	top: -16px;

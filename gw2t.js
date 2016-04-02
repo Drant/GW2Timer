@@ -2660,6 +2660,7 @@ U = {
 	
 	APICacheArrayOfIDs: null, // Array of ID numbers for any particular v2 API endpoint
 	APICacheArrayOfObjects: null, // Array of objects downloaded from the IDs pointing there
+	APICacheConsole: null, // JSON text entered by the user
 	
 	/*
 	 * Interprets and executes a command string, which may be a console command
@@ -2747,6 +2748,11 @@ U = {
 			latlng: {usage: "Converts an array of LatLng's to standard coordinates. <em>Parameters: arr_latlngs</em>", f: function()
 			{
 				that.convertLatLngs(JSON.parse(argstr));
+			}},
+			jsonparse: {usage: "Converts a JSON string into an object for testing. <em>Parameters: str_json</em>", f: function()
+			{
+				try { U.APICacheConsole = JSON.parse(argstr); I.print("Parse JSON successful."); }
+				catch(e) { I.print("Parse JSON failed."); }
 			}},
 			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, int_limit (optional), str_querystring (optional)</em>", f: function()
 			{
@@ -2866,7 +2872,6 @@ U = {
 			var length = (pData.length === undefined) ? 0 : pData.length;
 			if (Array.isArray(pData))
 			{
-				I.print("Retrieved array:<br />" + U.escapeJSON(pData));
 				if (length > scrapethreshold)
 				{
 					// Delegate the heavier task of large array scraping to another function
@@ -2875,6 +2880,7 @@ U = {
 				}
 				else
 				{
+					I.print("Retrieved array:<br />" + U.escapeJSON(pData));
 					U.APICacheArrayOfIDs = pData;
 					U.APICacheArrayOfObjects = [];
 					var successlength = length;
@@ -3015,7 +3021,11 @@ U = {
 			{
 				if (failedids.length > 0)
 				{
-					I.print("WARNING - Failed IDs: " + failedids);
+					I.print("WARNING - Failed to retrieve some IDs: " + failedids);
+				}
+				else
+				{
+					I.print("All IDs successfully retrieved.");
 				}
 				I.print("Scrape completed. Enter /apicache to print the results.");
 			}
@@ -3081,18 +3091,66 @@ U = {
 	 */
 	collateSkins: function()
 	{
-		var categories = {
-			Armor_Light_Helm: {}, Armor_Light_Shoulders: {}, Armor_Light_Coat: {}, Armor_Light_Gloves: {}, Armor_Light_Leggings: {}, Armor_Light_Boots: {},
-			Armor_Heavy_Helm: {}, Armor_Heavy_Shoulders: {}, Armor_Heavy_Coat: {}, Armor_Heavy_Gloves: {}, Armor_Heavy_Leggings: {}, Armor_Heavy_Boots: {},
-			Armor_Medium_Helm: {}, Armor_Medium_Shoulders: {}, Armor_Medium_Coat: {}, Armor_Medium_Gloves: {}, Armor_Medium_Leggings: {}, Armor_Medium_Boots: {},
+		var catobj = {
+			Armor_Light_Helm: [], Armor_Light_Shoulders: [], Armor_Light_Coat: [], Armor_Light_Gloves: [], Armor_Light_Leggings: [], Armor_Light_Boots: [],
+			Armor_Heavy_Helm: [], Armor_Heavy_Shoulders: [], Armor_Heavy_Coat: [], Armor_Heavy_Gloves: [], Armor_Heavy_Leggings: [], Armor_Heavy_Boots: [],
+			Armor_Medium_Helm: [], Armor_Medium_Shoulders: [], Armor_Medium_Coat: [], Armor_Medium_Gloves: [], Armor_Medium_Leggings: [], Armor_Medium_Boots: [],
 
-			Armor_Light_HelmAquatic: {}, Armor_Medium_HelmAquatic: {}, Armor_Heavy_HelmAquatic: {},
+			Armor_Light_HelmAquatic: [], Armor_Medium_HelmAquatic: [], Armor_Heavy_HelmAquatic: [],
 
-			Weapon_Axe: {}, Weapon_Dagger: {}, Weapon_Mace: {}, Weapon_Pistol: {}, Weapon_Scepter: {}, Weapon_Sword: {}, Weapon_Focus: {}, Weapon_Shield: {}, Weapon_Torch: {}, Weapon_Warhorn: {},
-			Weapon_Greatsword: {}, Weapon_Hammer: {}, Weapon_LongBow: {}, Weapon_Rifle: {}, Weapon_ShortBow: {}, Weapon_Staff: {}, Weapon_Harpoon: {}, Weapon_Speargun: {}, Weapon_Trident: {},
+			Weapon_Axe: [], Weapon_Dagger: [], Weapon_Mace: [], Weapon_Pistol: [], Weapon_Scepter: [], Weapon_Sword: [], Weapon_Focus: [], Weapon_Shield: [], Weapon_Torch: [], Weapon_Warhorn: [],
+			Weapon_Greatsword: [], Weapon_Hammer: [], Weapon_LongBow: [], Weapon_Rifle: [], Weapon_ShortBow: [], Weapon_Staff: [], Weapon_Harpoon: [], Weapon_Speargun: [], Weapon_Trident: [],
 
-			Back: {}
+			Back: []
 		};
+		
+		var arr = U.APICacheArrayOfObjects;
+		var obj, key;
+		var uncatids = [];
+		if (arr === undefined || arr === null)
+		{
+			I.print("API cache array is unassigned.");
+			return;
+		}
+		
+		for (var i = 0; i < arr.length; i++)
+		{
+			key = null;
+			obj = arr[i];
+			if (obj.type === undefined)
+			{
+				continue;
+			}
+			// Determine the skin's category name
+			if (obj.type === "Armor" && obj.details && obj.details.type && obj.details.weight_class)
+			{
+				key = obj.type + "_" + obj.details.weight_class + "_" + obj.details.type;
+			}
+			else if (obj.type === "Weapon" && obj.details && obj.details.type)
+			{
+				key = obj.type + "_" + obj.details.type;
+			}
+			else if (obj.type === "Back")
+			{
+				key = obj.type;
+			}
+			
+			// Insert the skin ID into a category array
+			if (key && catobj[key])
+			{
+				(catobj[key]).push(obj.id);
+			}
+			else
+			{
+				uncatids.push(obj.id);
+			}
+		}
+		
+		if (uncatids.length > 0)
+		{
+			I.print("Uncategorized IDs: " + U.printJSON(uncatids));
+		}
+		U.printJSON(catobj);
 	},
 	
 	/*
@@ -4273,7 +4331,10 @@ A = {
 		});
 	
 		// Finally
-		A.adjustAccountPanel();
+		setTimeout(function()
+		{
+			A.adjustAccountPanel();
+		}, 1000);
 		A.isAccountInitialized = true;
 	},
 	
@@ -4395,6 +4456,7 @@ A = {
 		if (A.DishCurrent)
 		{
 			A.DishCurrent.parent().find(".accDishPadding").css({height: $("#accOverhead").height() + "px"});
+			A.adjustAccountScrollbar();
 		}
 	},
 	
