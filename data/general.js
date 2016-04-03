@@ -1054,10 +1054,10 @@ Announcement:
 Countdown: {
 	Events: [
 	{
-		name_en: "Super Adventure Box 2016",
-		name_de: "Super Adventure Box 2016",
-		name_es: "Super Adventure Box 2016",
-		name_fr: "Super Adventure Box 2016",
+		name_en: "Super Adventure Festival",
+		name_de: "Super Adventure Festival",
+		name_es: "Festival Super Adventure",
+		name_fr: "Festival de la Super Adventure",
 		official: "news/welcome-to-the-super-adventure-festival",
 		Start: new Date("2016-03-31T16:00:00Z"),
 		Finish: new Date("2016-04-19T16:00:00Z")
@@ -1127,7 +1127,7 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Permanent Super Explosive Finisher",
+		name: "Super Explosive Finisher",
 		id: "44724",
 		price: 600,
 		discount: null,
@@ -1208,16 +1208,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-04-02T00:00:00Z"),
-	Finish: new Date("2016-04-03T00:00:00Z"),
+	Start: new Date("2016-04-03T00:00:00Z"),
+	Finish: new Date("2016-04-04T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "49734", price: "12600", product: "49865" },
-		Fox: { id: "44717", price: "25200", product: "44946" },
-		Derwena: { id: "43815", price: "25200", product: "43791" },
-		Yana: { id: "43822", price: "25200", product: "43844" },
-		Katyn: { id: "48912", price: "25200", product: "48911" },
-		Verma: { id: "49734", price: "12600", product: "49865" }
+		Mehem: { id: "44660", price: "25200", product: "44942" },
+		Fox: { id: "43810", price: "25200", product: "43786" },
+		Derwena: { id: "49735", price: "25200", product: "49866" },
+		Yana: { id: "49756", price: "25200", product: "49797" },
+		Katyn: { id: "43839", price: "25200", product: "43861" },
+		Verma: { id: "43827", price: "25200", product: "43848" }
 	}
 }
 };

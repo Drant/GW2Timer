@@ -95,7 +95,7 @@ var GW2T_CURRENCY_DATA = {
  * not in the same order as seen in game.
  * Manually update these data by entering "/api materials" in the console.
  */
-var GW2T_MATERIALS_DATA = [{
+var GW2T_MATERIALS_CATEGORIES = [{
 	id: 6, name_en: "Common Crafting Materials", name_de: "Gewöhnliche Handwerksmaterialien", name_es: "Materiales de artesanía comunes", name_fr: "Matériaux d'artisanat courants", name_zh: "普通制作材料",
 	items: [ 19704, 19679, 19697, 19718, 19720, 19792, 19719, 19738, 19723, 19710, 19699, 19683, 19680, 19739, 19740, 19789, 19728, 19733, 19726, 19713, 19750, 19688, 19703, 19741, 19742, 19794, 19730, 19734, 19727, 19714, 19702, 19686, 19687, 19743, 19744, 19793, 19731, 19736, 19724, 19711, 19924, 19681, 19698, 19748, 19747, 19791, 19729, 19735, 19722, 19709, 19700, 19684, 19682, 19745, 19746, 19790, 19732, 19737, 19725, 19712, 19701, 19685, 62942, 74090, 77256, 75241, 71692, 75270, 71952, 76799, 75694, 77112, 75862, 70426, 74982 ]
 },{
@@ -126,6 +126,32 @@ var GW2T_ACCOUNT_METADATA = {
 		NumSlotsHorizontal: 10,
 		NumSlotsVertical: 3,
 		NumSlotsPerTab: 30
+	},
+	Skins: {
+		Back: [],
+		Armor_Light_Helm: [], Armor_Light_Shoulders: [], Armor_Light_Coat: [], Armor_Light_Gloves: [], Armor_Light_Leggings: [], Armor_Light_Boots: [],
+		Armor_Medium_Helm: [], Armor_Medium_Shoulders: [], Armor_Medium_Coat: [], Armor_Medium_Gloves: [], Armor_Medium_Leggings: [], Armor_Medium_Boots: [],
+		Armor_Heavy_Helm: [], Armor_Heavy_Shoulders: [], Armor_Heavy_Coat: [], Armor_Heavy_Gloves: [], Armor_Heavy_Leggings: [], Armor_Heavy_Boots: [],
+		Armor_Light_HelmAquatic: [], Armor_Medium_HelmAquatic: [], Armor_Heavy_HelmAquatic: [],
+		Weapon_Axe: [],
+		Weapon_Mace: [],
+		Weapon_Sword: [],
+		Weapon_Dagger: [],
+		Weapon_Pistol: [],
+		Weapon_Scepter: [],
+		Weapon_Focus: [],
+		Weapon_Shield: [],
+		Weapon_Torch: [],
+		Weapon_Warhorn: [],
+		Weapon_Greatsword: [],
+		Weapon_Hammer: [],
+		Weapon_LongBow: [],
+		Weapon_ShortBow: [],
+		Weapon_Rifle: [],
+		Weapon_Staff: [],
+		Weapon_Harpoon: [],
+		Weapon_Speargun: [],
+		Weapon_Trident: []
 	},
 	CraftingRank: {
 		Novice: 0,

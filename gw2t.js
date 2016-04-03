@@ -37,6 +37,7 @@
 	X - Checklists
 	U - URL management
 	A - Account management
+	V - View account information
 	E - Economy Trading Post
 	Q - Quantity items
 	D - Dictionary for translations
@@ -57,7 +58,7 @@ $(window).on("load", function() {
 /* =============================================================================
  * Single letter objects serve as namespaces.
  * ========================================================================== */
-var O, X, U, A, E, Q, D, C, M, P, G, W, T, B, K, I = {};
+var O, X, U, A, V, Q, E, D, C, M, P, G, W, T, B, K, I = {};
 
 /* =============================================================================
  * @@Options for the user
@@ -2562,6 +2563,7 @@ U = {
 		Account: "data/account.js",
 		WvW: "data/wvw.js",
 		Itinerary: "data/itinerary.js",
+		Skins: "data/skins-min.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
@@ -3091,18 +3093,7 @@ U = {
 	 */
 	collateSkins: function()
 	{
-		var catobj = {
-			Armor_Light_Helm: [], Armor_Light_Shoulders: [], Armor_Light_Coat: [], Armor_Light_Gloves: [], Armor_Light_Leggings: [], Armor_Light_Boots: [],
-			Armor_Heavy_Helm: [], Armor_Heavy_Shoulders: [], Armor_Heavy_Coat: [], Armor_Heavy_Gloves: [], Armor_Heavy_Leggings: [], Armor_Heavy_Boots: [],
-			Armor_Medium_Helm: [], Armor_Medium_Shoulders: [], Armor_Medium_Coat: [], Armor_Medium_Gloves: [], Armor_Medium_Leggings: [], Armor_Medium_Boots: [],
-
-			Armor_Light_HelmAquatic: [], Armor_Medium_HelmAquatic: [], Armor_Heavy_HelmAquatic: [],
-
-			Weapon_Axe: [], Weapon_Dagger: [], Weapon_Mace: [], Weapon_Pistol: [], Weapon_Scepter: [], Weapon_Sword: [], Weapon_Focus: [], Weapon_Shield: [], Weapon_Torch: [], Weapon_Warhorn: [],
-			Weapon_Greatsword: [], Weapon_Hammer: [], Weapon_LongBow: [], Weapon_Rifle: [], Weapon_ShortBow: [], Weapon_Staff: [], Weapon_Harpoon: [], Weapon_Speargun: [], Weapon_Trident: [],
-
-			Back: []
-		};
+		var catobj = A.Metadata.Skins;
 		
 		var arr = U.APICacheArrayOfObjects;
 		var obj, key;
@@ -4169,7 +4160,7 @@ U = {
 };
 
 /* =============================================================================
- * @@Account API key management and views
+ * @@Account API key management
  * ========================================================================== */
 A = {
 	
@@ -4373,9 +4364,8 @@ A = {
 					$("#accDishMenu_" + iSectionName).show();
 					// Show the section
 					$(".accPlatter").hide();
-					A.adjustAccountPanel();
-					A.adjustAccountScrollbar();
 					section.fadeIn(400);
+					A.adjustAccountPanel();
 					// Show the main subsection
 					section.find(".accDishContainer").hide();
 					section.find(".accDishMain").show();
@@ -4405,19 +4395,18 @@ A = {
 								iSubbutton.click(function(iEvent)
 								{
 									A.DishCurrent = $("#accDish_" + subsectionname);
+									// Show dish menu menu
+									$(".accDishMenu").hide();
+									$("#accDishMenu_" + subsectionname).show();
 									// Show the subsection
 									iEvent.stopPropagation();
 									iSubsection.parent().find(".accDishContainer").hide();
-									A.adjustAccountPanel();
-									A.adjustAccountScrollbar();
 									iSubsection.fadeIn(200);
+									A.adjustAccountPanel();
 									// Highlight the button
 									var menubutton = $(this).parent().parent();
 									menubutton.find(".accMenuIcon").removeClass("accMenuButtonFocused");
 									$(this).addClass("accMenuButtonFocused");
-									// Show dish menu menu
-									$(".accDishMenu").hide();
-									$("#accDishMenu_" + subsectionname).show();
 								});
 							})(subbutton, $(this));
 						}
@@ -4434,9 +4423,9 @@ A = {
 		{
 			var section = U.getSubstringFromHTMLID($(this));
 			var functionname = "serve" + section; // Special generate functions start with this word
-			if (A[functionname])
+			if (V[functionname])
 			{
-				(A[functionname])();
+				(V[functionname])();
 			}
 		});
 		
@@ -4764,6 +4753,114 @@ A = {
 	},
 	
 	/*
+	 * Tells if a section has content generated already.
+	 * @param jqobject pDish to check.
+	 * @returns boolean.
+	 */
+	reinitializeDish: function(pDish)
+	{
+		if (pDish.is(":empty") === false && pDish.data("token") === A.TokenCurrent)
+		{
+			return false;
+		}
+		pDish.empty().data("token", A.TokenCurrent);
+		return true;
+	}
+};
+
+/* =============================================================================
+ * @@View and generate account character and bank sections
+ * ========================================================================== */
+V = {
+	
+	/*
+	 * Binds a sortable list by binding its clickable header.
+	 * @param jqobject pList to bind.
+	 */
+	bindSortableList: function(pList)
+	{
+		var header = $(pList).find("li").first();
+		header.click(function()
+		{
+			V.toggleSortableHeader($(this));
+			V.sortList($(this).parent(), $(this).data("isdescending"));
+		});
+	},
+	
+	/*
+	 * Toggles the icon and boolean data value of a header.
+	 * @param jqobject pHeader to bind.
+	 */
+	toggleSortableHeader: function(pHeader)
+	{
+		var header = $(pHeader);
+		// Sort and toggle the boolean
+		var isdescending = header.data("isdescending");
+		if (isdescending === undefined)
+		{
+			isdescending = false;
+		}
+		header.data("isdescending", !isdescending);
+		// Change symbol
+		var symbol = (isdescending) ? I.Symbol.TriUp : I.Symbol.TriDown;
+		header.find(".chrHeaderToggle").html(symbol);
+	},
+	
+	/*
+	 * Sorts a list with a single set of numeric data.
+	 * @param jqobject pColumn to sort.
+	 * @param boolean pOrder descending if true, ascending if false.
+	 * @pre Each list item in the column has the data-value attribute initialized.
+	 */
+	sortList: function(pList, pOrder)
+	{
+		var list = $(pList);
+		var sortable = [];
+		// Loop every list items, except the first which is the header
+		list.find("li").slice(1).each(function()
+		{
+			sortable.push({
+				item: $(this),
+				value: parseFloat($(this).attr("data-value"))
+			});
+		});
+		O.sortObjects(sortable, "value", pOrder);
+		
+		for (var i = 0; i < sortable.length; i++)
+		{
+			(sortable[i].item).appendTo(list);
+		}
+	},
+	
+		/*
+	 * Rearranges all the characters columns based on one column's data values.
+	 * @param string pClassifier class names of data containing cells.
+	 * @param boolean pOrder descending if true, ascending if false.
+	 */
+	sortCharacters: function(pClassifier, pOrder)
+	{
+		var sortable = [];
+		$("." + pClassifier).each(function()
+		{
+			sortable.push({
+				// Get the index from the list item containing the value
+				index: U.getSubintegerFromHTMLID($(this).parent()),
+				value: parseInt($(this).attr("data-value"))
+			});
+		});
+		O.sortObjects(sortable, "value", pOrder);
+		
+		// Sort all the rows using the new order
+		for (var i = 0; i < sortable.length; i++)
+		{
+			var index = sortable[i].index;
+			$("#chrSelection_" + index).appendTo("#chrSelection");
+			$("#chrUsage_" + index).appendTo("#chrUsage");
+			$("#chrSeniority_" + index).appendTo("#chrSeniority");
+		}
+	},
+	
+	/*
 	 * Initializes the characters subpage.
 	 */
 	serveCharacters: function()
@@ -4778,7 +4875,7 @@ A = {
 		{
 			I.suspendElement(menusubsection, false);
 			A.setProgressBar();
-			A.generateCharactersStatistics();
+			V.generateCharactersStatistics();
 		};
 		
 		$("#chrSummary, #chrStatistics ul, #accDish_Equipment, #accDish_Inventory").empty();
@@ -4815,7 +4912,7 @@ A = {
 							A.Data.Characters[iIndex] = pData;
 							(A.Data.Characters[iIndex]).charindex = iIndex;
 							(A.Data.Characters[iIndex]).charname = U.escapeHTML(pData.name);
-							A.generateCharactersSelection(pData);
+							V.generateCharactersSelection(pData);
 							numfetched++;
 							A.setProgressBar(numfetched / numfetchable);
 							if (numfetched === numfetchable)
@@ -5019,8 +5116,8 @@ A = {
 		// Header click to sort the columns
 		$(".chrHeaderLeft, .chrHeaderRight").click(function()
 		{
-			A.toggleSortableHeader($(this));
-			A.sortCharacters($(this).attr("data-classifier"), $(this).data("isdescending"));
+			V.toggleSortableHeader($(this));
+			V.sortCharacters($(this).attr("data-classifier"), $(this).data("isdescending"));
 		});
 		// SUMMARY MARQUEE (top)
 		$.getJSON(A.getURL(A.URL.Account), function(pData)
@@ -5032,6 +5129,7 @@ A = {
 			var accountbirthdate = new Date(pData.created);
 			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMILLISECONDS_IN_SECOND);
 			var accountbirthdaysince = T.formatSeconds(accountlifetime).trim();
+			var hoursperday = T.parseRatio((totalage / accountlifetime) * T.cHOURS_IN_DAY, 2);
 			var commandership = (pData.commander) ? "" : "accTrivial";
 			var access = (pData.access) ? "" : "accTrivial";
 			var accountadditional = "<span id='chrAccountMisc'>"
@@ -5046,7 +5144,8 @@ A = {
 			var summary = "<var id='chrAccountName'>" + accountname + "</var>"
 				+ accountadditional
 				+ "<var id='chrAccountServer'></var><br />"
-				+ "<var id='chrAccountAge' title='" + T.formatSeconds(totalage) + "'>" + totalagehour + hourstr + "</var> / "
+				+ "<var id='chrAccountAge' title='" + hoursperday + hourstr + " / " + T.cHOURS_IN_DAY + hourstr + "<br />"
+						+ T.formatSeconds(totalage) + " / " + accountbirthdaysince + "'>" + totalagehour + hourstr + "</var> / "
 					+ "<var id='chrAccountDeaths' title='" + T.parseRatio(totalagehour / totaldeaths, 3) + "'>" + totaldeaths + "x</var> &nbsp; "
 					+ "<var id='chrAccountLifetime'>" + accountbirthdaysince +  "</var>";
 			$("#chrSummary").append(summary);
@@ -5060,8 +5159,8 @@ A = {
 				}
 			});
 			// Retrieve and insert guilds
-			A.initializeGuilds(pData.guilds);
-			A.initializeWallet();
+			V.initializeGuilds(pData.guilds);
+			V.initializeWallet();
 			// Finally for the summary
 			$("#chrSummary").show("fast");
 		});
@@ -5069,34 +5168,6 @@ A = {
 		// Finally
 		I.qTip.init("#accPlatterCharacters var");
 		$(".chrStats").show("fast");
-	},
-	
-	/*
-	 * Rearranges all the characters columns based on one column's data values.
-	 * @param string pClassifier class names of data containing cells.
-	 * @param boolean pOrder descending if true, ascending if false.
-	 */
-	sortCharacters: function(pClassifier, pOrder)
-	{
-		var sortable = [];
-		$("." + pClassifier).each(function()
-		{
-			sortable.push({
-				// Get the index from the list item containing the value
-				index: U.getSubintegerFromHTMLID($(this).parent()),
-				value: parseInt($(this).attr("data-value"))
-			});
-		});
-		O.sortObjects(sortable, "value", pOrder);
-		
-		// Sort all the rows using the new order
-		for (var i = 0; i < sortable.length; i++)
-		{
-			var index = sortable[i].index;
-			$("#chrSelection_" + index).appendTo("#chrSelection");
-			$("#chrUsage_" + index).appendTo("#chrUsage");
-			$("#chrSeniority_" + index).appendTo("#chrSeniority");
-		}
 	},
 	
 	/*
@@ -5183,7 +5254,7 @@ A = {
 			}
 			var sym = " <b class='chrHeaderToggle'>" + I.Symbol.TriDown + "</b>";
 			wallet.append("<li class='chrHeader'><var class='chrHeaderLeft curClick'>" + header + sym + "</var></li>");
-			A.bindSortableList(wallet);
+			V.bindSortableList(wallet);
 			
 			// First loop to find max value of the wallet
 			var value, amount, coef, amountstr;
@@ -5245,19 +5316,6 @@ A = {
 	},
 	
 	/*
-	 * Gets HTML showing character's name and icons, used as header and separator.
-	 * @param object pCharacter from API.
-	 * @returns string.
-	 */
-	formatCharacterSeparator: function(pCharacter)
-	{
-		return "<div class='eqpCharSeparator'><img class='eqpCharPortrait' src='" + pCharacter.charportrait + "' />"
-			+ "<img class='eqpCharProfession' src='img/account/classes/" + pCharacter.charelite + ".png' />"
-			+ "<span class='eqpCharName'>" + pCharacter.charname + "</span>"
-		+ "</div>";
-	},
-	
-	/*
 	 * Shows or hides a character or all characters equipment window, and
 	 * generates them if haven't already.
 	 * @pre Characters array was loaded by AJAX.
@@ -5269,7 +5327,7 @@ A = {
 		var equipall = $(".eqpContainer");
 		if (A.CharacterCurrent !== null)
 		{
-			A.generateEquipment();
+			V.generateEquipment();
 			equipall.hide();
 			equipcur.show();
 		}
@@ -5277,7 +5335,7 @@ A = {
 		{
 			A.Data.Characters.forEach(function(iChar)
 			{
-				A.generateEquipment(iChar);
+				V.generateEquipment(iChar);
 			});
 			equipall.show();
 		}
@@ -5297,7 +5355,11 @@ A = {
 		// Initialize variables
 		var dish = $("#accDish_Equipment");
 		var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
-		container.append(A.formatCharacterSeparator(char));
+		// Title and separator
+		$("<div class='eqpCharSeparator'><img class='eqpCharPortrait' src='" + char.charportrait + "' />"
+			+ "<img class='eqpCharProfession' src='img/account/classes/" + char.charelite + ".png' />"
+			+ "<span class='eqpCharName'>" + char.charname + "</span>"
+		+ "</div>").appendTo(container);
 		// Equipment icons and glance information
 		var subcontainer = $("<div class='eqpSubcontainer eqpSubcontainer_" + char.profession + "'></div>").appendTo(container);
 		var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(subcontainer);
@@ -5403,7 +5465,7 @@ A = {
 					var buildpanel = traitwindow.find(".spzPanel_" + buildmode);
 					traitwindow.find(".spzPanel").hide();
 					buildpanel.show();
-					A.generateTraits(spec[(buildmode.toLowerCase())], buildpanel);
+					V.generateTraits(spec[(buildmode.toLowerCase())], buildpanel);
 				});
 			});
 		};
@@ -5664,21 +5726,6 @@ A = {
 	},
 	
 	/*
-	 * Tells if a section has content generated already.
-	 * @param jqobject pDish to check.
-	 * @returns boolean.
-	 */
-	reinitializeDish: function(pDish)
-	{
-		if (pDish.is(":empty") === false && pDish.data("token") === A.TokenCurrent)
-		{
-			return false;
-		}
-		pDish.empty().data("token", A.TokenCurrent);
-		return true;
-	},
-	
-	/*
 	 * Generates inventory windows for all characters.
 	 */
 	serveInventory: function()
@@ -5694,7 +5741,7 @@ A = {
 		}
 		var bank = Q.createBank(dish).find(".bnkBank");
 		var slotdata;
-		var tab, banksidebar, slotscontainer, slot;
+		var tab, slotscontainer, slot;
 		
 		var char, bagdata;
 		for (var i = 0; i < A.Data.Characters.length; i++)
@@ -5713,17 +5760,16 @@ A = {
 					{
 						slotdata = bagdata.inventory[iii];
 						// Add slots
-						slot = Q.createBankSlot();
-						slotscontainer.append(slot);
+						slot = Q.createBankSlot(slotscontainer);
 						if (slotdata)
 						{
-							(function(iSlot, iSlotData, iTab)
+							(function(iSlot, iSlotData)
 							{
 								$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 								{
 									Q.styleBankSlot(iSlot, iSlotData, iItem);
 								});
-							})(slot, slotdata, tab);
+							})(slot, slotdata);
 						}
 						else
 						{
@@ -5767,8 +5813,7 @@ A = {
 				nexti = i+1;
 				slotdata = pData[i];
 				// Add slots
-				slot = Q.createBankSlot();
-				slotscontainer.append(slot);
+				slot = Q.createBankSlot(slotscontainer);
 				// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
 				if (slotdata)
 				{
@@ -5808,7 +5853,7 @@ A = {
 		var tab, slot, slotscontainer;
 		var slotdata;
 		
-		var matdata = GW2T_MATERIALS_DATA;
+		var matdata = GW2T_MATERIALS_CATEGORIES;
 		var itemid;
 		var matcategory;
 		var slotscontainerassoc = {};
@@ -5829,8 +5874,7 @@ A = {
 				for (var ii = 0; ii < matcategory.items.length; ii++)
 				{
 					itemid = matcategory.items[ii];
-					slot = Q.createBankSlot();
-					slotscontainer.append(slot);
+					slot = Q.createBankSlot(slotscontainer);
 					slotassoc[itemid] = slot;
 				}
 			}
@@ -5864,76 +5908,1679 @@ A = {
 		{
 			return;
 		}
+		
 		var container = Q.createBank(dish);
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var tab, slot, slotscontainer;
-		var slotdata;
-		
-		$.getJSON(A.getURL(A.URL.Materials), function(pData)
+		var generateWardrobe = function(pUnlockedAssoc)
 		{
+			bank.empty();
+			var tab;
 			
-		});
-	},
-	
-	/*
-	 * Binds a sortable list by binding its clickable header.
-	 * @param jqobject pList to bind.
-	 */
-	bindSortableList: function(pList)
-	{
-		var header = $(pList).find("li").first();
-		header.click(function()
+			var names = GW2T_SKINS_NAMES;
+			var categories = GW2T_SKINS_CATEGORIES;
+			var assoc = GW2T_SKINS_ASSOCIATION;
+			var cat, catname, caticon;
+			for (var i in categories)
+			{
+				cat = categories[i];
+				catname = D.getObjectName(names[i]);
+				caticon = "<ins class='acc_wardrobe acc_wardrobe_" + i.toLowerCase() + "'></ins>";
+				tab = Q.createBankTab(bank, caticon + catname, true);
+				(function(iTab, iCat)
+				{
+					iTab.find(".bnkTabSeparator").one("click", function()
+					{
+						var slotscontainer = iTab.find(".bnkTabSlots");
+						for (var ii = 0; ii < iCat.length; ii++)
+						{
+							var skinid = iCat[ii];
+							var slot = Q.createBankSlot(slotscontainer);
+							var skinassoc = assoc[skinid];
+							if (skinassoc && skinassoc[0])
+							{
+								(function(iSlot, iSkinID, iItemID)
+								{
+									var count = (pUnlockedAssoc[iSkinID]) ? 1 : 0;
+									$.getJSON(U.getAPIItem(iItemID), function(iItem)
+									{
+										Q.styleBankSlot(iSlot, {note: "ID: " + iSkinID, count: count}, iItem);
+									});
+								})(slot, skinid, skinassoc[0]);
+							}
+						}
+						// Recreate the bank menu
+						Q.createBankMenu(bank);
+					});
+				})(tab, cat);
+			}
+		};
+		
+		// Retrieve data before generating
+		$.getScript(U.URL_DATA.Skins).done(function()
 		{
-			A.toggleSortableHeader($(this));
-			A.sortList($(this).parent(), $(this).data("isdescending"));
-		});
-	},
-	
-	/*
-	 * Toggles the icon and boolean data value of a header.
-	 * @param jqobject pHeader to bind.
-	 */
-	toggleSortableHeader: function(pHeader)
-	{
-		var header = $(pHeader);
-		// Sort and toggle the boolean
-		var isdescending = header.data("isdescending");
-		if (isdescending === undefined)
-		{
-			isdescending = false;
-		}
-		header.data("isdescending", !isdescending);
-		// Change symbol
-		var symbol = (isdescending) ? I.Symbol.TriUp : I.Symbol.TriDown;
-		header.find(".chrHeaderToggle").html(symbol);
-	},
-	
-	/*
-	 * Sorts a list with a single set of numeric data.
-	 * @param jqobject pColumn to sort.
-	 * @param boolean pOrder descending if true, ascending if false.
-	 * @pre Each list item in the column has the data-value attribute initialized.
-	 */
-	sortList: function(pList, pOrder)
-	{
-		var list = $(pList);
-		var sortable = [];
-		// Loop every list items, except the first which is the header
-		list.find("li").slice(1).each(function()
-		{
-			sortable.push({
-				item: $(this),
-				value: parseFloat($(this).attr("data-value"))
+			$.getJSON(A.getURL(A.URL.Skins), function(pData)
+			{
+				var assocobj = {};
+				// Convert the API array of unlocked skin IDs into an associative array
+				for (var i = 0; i < pData.length; i++)
+				{
+					assocobj[(pData[i])] = true;
+				}
+				generateWardrobe(assocobj);
 			});
 		});
-		O.sortObjects(sortable, "value", pOrder);
-		
-		for (var i = 0; i < sortable.length; i++)
-		{
-			(sortable[i].item).appendTo(list);
-		}
 	}
+};
+
+/* =============================================================================
+ * @@Quantity items, inventory, attributes, traits
+ * ========================================================================== */
+Q = {
 	
+	Box: {}, // Holds objects with analyzed item details, accessed using the item's ID
+	Rarity: // Corresponds to API names for rarity levels
+	{
+		Junk: "Junk",
+		Basic: "Basic",
+		Fine: "Fine",
+		Masterwork: "Masterwork",
+		Rare: "Rare",
+		Exotic: "Exotic",
+		Ascended: "Ascended",
+		Legendary: "Legendary"
+	},
+	RunePieces:
+	{
+		Masterwork: 2,
+		Rare: 4,
+		Exotic: 6
+	},
+	cSEARCH_LIMIT: 200, // Inventory search throttle limit
+	
+	/*
+	 * Sets an object with an item rarity CSS class. Removes all if level is not provided.
+	 * @param jqobject pEntry to remove.
+	 * @param string pLevel of rarity.
+	 */
+	setRarityClass: function(pEntry, pLevel)
+	{
+		for (var i in Q.Rarity)
+		{
+			pEntry.removeClass("rarity_" + i);
+		}
+		if (Q.Rarity[pLevel] !== undefined)
+		{
+			pEntry.addClass("rarity_" + pLevel);
+		}
+	},
+	
+	/*
+	 * Gets a rarity CSS class from a rarity name.
+	 * @param string pRarity.
+	 * @returns string CSS class.
+	 */
+	getRarityClass: function(pRarity)
+	{
+		return "rarity_" + pRarity;
+	},
+	
+	/*
+	 * Gets the translated type name of an item.
+	 * @param object pItem details from API.
+	 * @returns string translated type.
+	 */
+	getItemType: function(pItem)
+	{
+		var det = pItem.details;
+		var type = pItem.type;
+		// These top level types have overriding priority
+		var validtypes = {
+			Back: 1,
+			Consumable: 1,
+			Container: 1,
+			CraftingMaterial: 1,
+			Gizmo: 1,
+			MiniPet: 1,
+			Trophy: 1,
+			UpgradeComponent: 1
+		};
+		if (validtypes[type])
+		{
+			return "<br />" + D.getString(type) + "<br />";
+		}
+		else if (det.type && det.type !== "Default") // Else use the subtype in the details property object
+		{
+			return D.getString(det.type) + "<br />";
+		}
+		return "";
+	},
+	
+	/*
+	 * Corrects naming inconsistency of the attributes property in item API.
+	 * @param string pString.
+	 * @returns translation.
+	 */
+	getAttributeString: function(pString)
+	{
+		var str = pString;
+		var match = {
+			"CritDamage": "Ferocity",
+			"Healing": "HealingPower",
+			"ConditionDuration": "Expertise",
+			"BoonDuration": "Concentration"
+		};
+		if (match[pString])
+		{
+			str = match[pString];
+		}
+		return D.getString(str);
+	},
+	
+	/*
+	 * Looks for attribute points in an item and adds them to the
+	 * attributes-containing object.
+	 * @param object pAttrObj.
+	 * @param object pItem to find attributes.
+	 * @param object pRuneSets numbers of runes equipped, optional.
+	 * @pre Account page's script has been loaded, which contains attribute association.
+	 * Properties this function looks for:
+	 * item.details.infix_upgrade.attributes // [{attribute: "Abc", "modifier": 123}, ...] language independent
+	 * item.details.bonuses // ["+123 Abc", ...] language dependent
+	 * item.details.infix_upgrade.buff.description // "+123 Abc\n+123 Abc..." language dependent
+	 */
+	sumItemAttribute: function(pAttrObj, pItem, pRuneSets)
+	{
+		// This object translates the current language extracted attribute name to the proper key name
+		var assocobj = A.Attribute["KeyDescription_" + D.getFullySupportedLanguage()];
+		// Reuseable function to parse array of attribute strings which are language dependent
+		var sumAttributeArray = function(pArray)
+		{
+			var attrstr, points, keyextracted, keyproper;
+			var length = pArray.length;
+			var runepieces = 0;
+			// Special case if summing for a rune
+			if (pRuneSets && pRuneSets[pItem.id])
+			{
+				// Don't re-sum if already did
+				if (pRuneSets[pItem.id].issummed === true)
+				{
+					return;
+				}
+				runepieces = pRuneSets[pItem.id].numslotted;
+				length = runepieces;
+			}
+			
+			for (var i = 0; i < length; i++)
+			{
+				attrstr = pArray[i];
+				points = U.stripToNumbers(attrstr);
+				// The attribute key name shall be whatever that remains after stripping the description of non-letter characters
+				keyextracted = (attrstr.replace(/[\s0-9%,.\-+']/g, "")).toLowerCase();
+				if (assocobj[keyextracted])
+				{
+					keyproper = assocobj[keyextracted];
+					/*
+					 * Skip an anomaly in the API details for "infused" items
+					 * that contains agony attribute in the description (being
+					 * redundant because of infusion slots).
+					 */
+					if (keyproper === "AgonyResistance" && det.infusion_slots)
+					{
+						continue;
+					}
+					pAttrObj[keyproper] += points;
+				}
+			}
+			if (pRuneSets && pRuneSets[pItem.id])
+			{
+				// Mark the rune to avoid resumming it
+				pRuneSets[pItem.id].issummed = true;
+			}
+		};
+		
+		var item = pItem;
+		if (item === undefined || item.details === undefined)
+		{
+			return;
+		}
+		var det = item.details;
+		
+		// Armors, weapons, trinkets
+		if (det.infix_upgrade && det.infix_upgrade.attributes)
+		{
+			det.infix_upgrade.attributes.forEach(function(iAttr)
+			{
+				var attrname = A.Attribute.KeyAttributes[iAttr.attribute];
+				if (attrname)
+				{
+					pAttrObj[attrname] += iAttr.modifier;
+				}
+			});
+		}
+		// Runes
+		if (det.bonuses)
+		{
+			sumAttributeArray(det.bonuses);
+		}
+		// Sigils, infusions, and miscellaneous
+		if (det.infix_upgrade && det.infix_upgrade.buff && det.infix_upgrade.buff.description)
+		{
+			var desc = det.infix_upgrade.buff.description;
+			desc.replace(/<br>/g, ""); // Cleanup markup
+			sumAttributeArray(desc.split("\n"));
+		}
+		// Armor and shield that have defense attribute (adds to armor)
+		if (det.defense !== undefined)
+		{
+			pAttrObj["Armor"] += det.defense;
+		}
+	},
+	
+	/*
+	 * Adds the attribute points of one attributes-containing object to another.
+	 * @param object pAttrMain destination.
+	 * @param object pAttrAdd source.
+	 */
+	sumAttributeObject: function(pAttrMain, pAttrAdd)
+	{
+		for (var i in pAttrMain)
+		{
+			pAttrMain[i] += pAttrAdd[i];
+		};
+	},
+	
+	/*
+	 * Uses an attributes-containing object and calculates it with the base stats.
+	 * @param object pAttrObj for adding geared stats.
+	 * @param object pCharacter for calculating base stats.
+	 * @param boolean pWantValue whether to return an object with numbers instead of formatted strings.
+	 * @returns object attributes as string representation of the numbers.
+	 */
+	calculateAttributes: function(pAttrObj, pCharacter, pWantValue)
+	{
+		var attrobj = {};
+		var level = pCharacter.level;
+		var profession = pCharacter.charprofession;
+		var constants = A.Attribute.Constants;
+		var baseattr = A.Attribute.PrimaryPoints[level - 1];
+		var precisiondivisor = A.Attribute.PrecisionDivisor[level - 1];
+		var secondarydivisor = precisiondivisor / A.Attribute.SecondaryDivisorRatio;
+		/*
+		 * Calculate the health by adding converted base vitality with the base
+		 * health points, then add it with the object's.
+		 */
+		var profhealth = 0;
+		var levelprev = 0;
+		var healthtype = A.Metadata.Profession[profession].health;
+		var healthgrowth = A.Attribute.HealthGrowth[healthtype];
+		var healthtier = 0;
+		for (var i in healthgrowth)
+		{
+			healthtier = parseInt(i);
+			if (healthtier <= level)
+			{
+				profhealth += (healthtier - levelprev) * healthgrowth[i];
+				levelprev = healthtier;
+			}
+			else
+			{
+				profhealth += (level - levelprev) * healthgrowth[i];
+				break;
+			}
+		}
+		/*
+		 * Use simple additions (with base attribute if available) and ratios to
+		 * get these attributes. This object contains unformatted raw numbers.
+		 */
+		var attrnew = {
+			Power:				baseattr + pAttrObj.Power,
+			Toughness:			baseattr + pAttrObj.Toughness,
+			Armor:				baseattr + pAttrObj.Armor + pAttrObj.Toughness,
+			Vitality:			baseattr + pAttrObj.Vitality,
+			Health:				(baseattr / constants.VITALITY_IN_HEALTH) + profhealth + pAttrObj.Health + (pAttrObj.Vitality / constants.VITALITY_IN_HEALTH),
+			Precision:			baseattr + pAttrObj.Precision,
+			CriticalChance:		constants.BASE_CRITICALCHANCE + pAttrObj.CriticalChance + (pAttrObj.Precision / precisiondivisor),
+			Ferocity:			pAttrObj.Ferocity,
+			CriticalDamage:		constants.BASE_CRITICALDAMAGE + pAttrObj.CriticalDamage + (pAttrObj.Ferocity / secondarydivisor),
+			ConditionDamage:	pAttrObj.ConditionDamage,
+			HealingPower:		pAttrObj.HealingPower,
+			Expertise:			pAttrObj.Expertise,
+			ConditionDuration:	pAttrObj.ConditionDuration + (pAttrObj.Expertise / secondarydivisor),
+			Concentration:		pAttrObj.Concentration,
+			BoonDuration:		pAttrObj.BoonDuration + (pAttrObj.Concentration / secondarydivisor),
+			AgonyResistance:	pAttrObj.AgonyResistance,
+			MagicFind:			pAttrObj.MagicFind
+		};
+		// Return raw values if requested
+		if (pWantValue)
+		{
+			return attrnew;
+		}
+		// Otherwise format the values as strings
+		for (var i in attrnew)
+		{
+			attrobj[i] = (A.Attribute.KeyType[i]) ? U.formatPercentage(attrnew[i], 2, 1) : parseInt(attrnew[i]).toLocaleString();
+		}
+		return attrobj;
+	},
+	
+	/*
+	 * Looks through a character object's equipment property and tally the
+	 * number of same runes.
+	 * @param object pCharacter.
+	 * @returns object with rune item ID and count.
+	 */
+	countRuneSets: function(pCharacter)
+	{
+		var equip = pCharacter.equipment;
+		var armorcount = 0;
+		if (equip)
+		{
+			var obj = {};
+			for (var i = 0; i < equip.length; i++)
+			{
+				// If it is an armor slot and has upgrades
+				if (A.Equipment.ArmorSlots[(equip[i].slot)] && equip[i].upgrades)
+				{
+					var runeid = equip[i].upgrades[0];
+					if (obj[runeid] === undefined)
+					{
+						obj[runeid] = {
+							numslotted: 0,
+							issummed: false // Whether the rune's attributes (if it is equipped) have been summed yet
+						};
+					}
+					obj[runeid].numslotted = obj[runeid].numslotted + 1;
+					armorcount++;
+				}
+				if (armorcount === A.Equipment.NumArmorSlots)
+				{
+					break;
+				}
+			}
+			return obj;
+		}
+		return null;
+	},
+	
+	/*
+	 * Formats the text of a rune's bonuses.
+	 * @param object pItem details from API.
+	 * @param object or int pRuneSets numbers of runes equipped, optional.
+	 * @returns string HTML.
+	 */
+	getItemRune: function(pItem, pRuneSets)
+	{
+		var str = "";
+		var det = pItem.details;
+		var runeith = 0;
+		var runemax = Q.RunePieces[pItem.rarity];
+		var runepieces = (pRuneSets && pRuneSets[pItem.id]) ? pRuneSets[pItem.id].numslotted : null;
+		if (typeof pRuneSets === "number")
+		{
+			runepieces = pRuneSets;
+		}
+		if (runepieces > runemax)
+		{
+			runepieces = runemax; // Prevent overcounting of bonuses if equipped too many of same runes
+		}
+		
+		var runecolor = "";
+		if (det.bonuses)
+		{
+			str += (runepieces !== null) ? "" : "<br />";
+			str += "<span class='itmGrayed'>";
+			if (runepieces !== null)
+			{
+				str += "<var class='itmBuff'>" + pItem.name + " (" + runepieces + "/" + runemax + ")</var><br />";
+			}
+			for (var i in det.bonuses)
+			{
+				// Colorize the bonus line if the rune is equipped
+				runecolor = (runeith < runepieces) ? " class='itmBuff'" : "";
+				runeith++;
+				str += "<var" + runecolor + ">(" + runeith + "): " + det.bonuses[i] + "</var><br />";
+			}
+			str += "</span>";
+		}
+		return str;
+	},
+	
+	/*
+	 * Gets the description of the buff property of an item.
+	 * @param object or string pItem details from API or the description itself.
+	 * @returns string description.
+	 */
+	formatItemDescription: function(pItem)
+	{
+		try
+		{
+			var desc = (typeof pItem === "string") ? pItem : pItem.details.infix_upgrade.buff.description;
+			/*
+			 * Item details' description may be pretagged with XML that colorizes
+			 * a portion of text. Example: <c=@flavor>Description</c>
+			 * If a tag exists, it shall have the "=@flavor" replaced with " class='.itmColor_flavor'"
+			 */
+			if (desc.indexOf("<c=@") !== -1)
+			{
+				desc = desc.replace(/<c=@abilitytype>/g, "<c class='itmColor_abilitytype'>");
+				desc = desc.replace(/<c=@flavor>/g, "<c class='itmColor_flavor'>");
+				desc = desc.replace(/<c=@reminder>/g, "<c class='itmColor_reminder'>");
+				desc = desc.replace(/<c=@warning>/g, "<c class='itmColor_warning'>");
+			}
+			if (desc.indexOf("\n") !== -1)
+			{
+				return desc.replace(/\n/g, "<br />");
+			}
+			else
+			{
+				return desc;
+			}
+		}
+		catch (e) {}
+		return "";
+	},
+	
+	/*
+	 * Lightweight preliminary function to check if the requested item has
+	 * already been analyzed, and simply retrieve the cache if available,
+	 * otherwise proceed with the actual analysis function.
+	 * @param object pItem item details.
+	 * @param object pOptions settings.
+	 */
+	scanItem: function(pItem, pOptions)
+	{
+		var settings = pOptions || {};
+		var box = Q.Box[pItem.id];
+		if (box)
+		{
+			if (settings.element)
+			{
+				var elm = $(settings.element);
+				elm.attr("title", box.html);
+				I.qTip.init(elm);
+			}
+			// Execute callback if provided
+			if (settings.callback)
+			{
+				settings.callback(box);
+			}
+		}
+		else
+		{
+			Q.analyzeItem(pItem, pOptions);
+		}
+	},
+	
+	/*
+	 * Generates item tooltip HTML, compiles attributes, and retrieves linked
+	 * upgrades and skins if available.
+	 * @param object pItem details retrieved from API.
+	 * @objparam jqobject element to bind tooltip.
+	 * @objparam int quantity if it is a stack of these items.
+	 * @objparam int skin ID for transmuted items.
+	 * @objparam object customitem contains information about the item's upgrades,
+	 * infusions, skins, and bindings, which are found in characters and bank API.
+	 * @objparam object runesets containing counts of runes associated with rune's item ID.
+	 * @objparam string soulbound name of character the item is bound to.
+	 * @objparam string note additional strings to be appended to the tooltip.
+	 * @objparam function callback what to do after the tooltip generation
+	 * completes. This provides an object containing additionally retrieved
+	 * API objects like upgrades and skin.
+	 */
+	analyzeItem: function(pItem, pOptions)
+	{
+		var settings = pOptions || {};
+		// These will hold retrieved API objects, if a callback was requested
+		var infusionobjs = [];
+		var upgradeobjs = [];
+		var skinobj = null;
+		var attrobj = null; // Holds attribute points
+		var iscustomitem = false;
+		var istradeable = true;
+		/* Example structure of customitem object:
+			{
+				"id": 68390,
+				"slot": "Coat",
+				"count": 8,
+				"binding": "Character",
+				"bound_to": "Character Name"
+				"upgrades": [24693],
+				"infusions": [70852, 49433],
+				"skin": 2346
+			}
+		 */
+		if (settings.customitem)
+		{
+			iscustomitem = true;
+		}
+		else
+		{
+			settings.customitem = {}; // If not provided then initialize as a blank object with undefined properties
+		}
+		// Initialize attribute object if requested
+		if (settings.wantattr && A.isAccountInitialized)
+		{
+			attrobj = new A.Attribute.Base();
+		}
+		
+		var item = pItem;
+		var type = item.type;
+		var subtype = "";
+		var det = item.details;
+		var isweapon = (type === "Weapon");
+		var isequipment = (isweapon || type === "Armor" || type === "Trinket" || type === "Back");
+		var isbackitem = (type === "Back");
+		var istrinket = (type === "Trinket" || isbackitem);
+		var isascended = (item.rarity === Q.Rarity.Ascended || item.rarity === Q.Rarity.Legendary);
+		var isdouble = false;
+		var isvendorable = true;
+		var isaccountbound = false;
+		var issoulbound = false;
+		var propstofetch = 0;
+		var numfetched = 0;
+		if (det && det.type)
+		{
+			subtype = det.type;
+			if (type === "Weapon") // Only weapons can have two upgrade slots
+			{
+				isdouble = (subtype === "Greatsword" || subtype === "Hammer" || subtype === "LongBow"
+					|| subtype === "ShortBow" || subtype === "Rifle" || subtype === "Staff"
+					|| subtype === "Harpoon" || subtype === "Speargun" || subtype === "Trident");
+			}
+		}
+		
+		// Correct API bug with gathering tool icons
+		if (type === "Gathering" && item.rarity !== Q.Rarity.Rare)
+		{
+			item.icon = "img/account/item/gathering_" + det.type.toLowerCase() + I.cPNG;
+		}
+		
+		// NAME
+		var namestr = "";
+		var rarity = (item.rarity !== undefined) ? item.rarity : Q.Rarity.Basic;
+		namestr = "<aside class='itmName " + ((settings.quantity !== undefined) ? (settings.quantity + " ") : "") + Q.getRarityClass(rarity)
+			+ "'><img class='itmIcon itmIconMain' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
+		
+		// WEAPON STRENGTH
+		var damagestr = "";
+		if (det && det.min_power !== undefined && det.max_power !== undefined)
+		{
+			damagestr += "<span class='itmText'>" + D.getString("WeaponStrength") + ":</span> <span class='itmAttr'>"
+				+ (det.min_power).toLocaleString() + " - " + (det.max_power).toLocaleString() + "</span><br />";
+		}
+		
+		// DEFENSE
+		var defensestr = "";
+		if (det && det.defense > 0)
+		{
+			defensestr += "<span class='itmText'>" + D.getString("Defense") + ":</span> <span class='itmAttr'>" + (det.defense).toLocaleString() + "</span><br />";
+		}
+		
+		// ATTRIBUTES
+		var attrstr = "";
+		var statsbrktop = "";
+		var buffs = [];
+		var buffcounter = 0;
+		var buffadd = 0;
+		var buffnumbers = [];
+		if (det && det.infix_upgrade)
+		{
+			var attr = det.infix_upgrade.attributes;
+			attrstr += "<aside class='itmAttr'>";
+			
+			if (det.infix_upgrade !== undefined)
+			{
+				// Armors, weapons, trinkets
+				if (isequipment)
+				{
+					if (det.infix_upgrade.buff && det.infix_upgrade.buff.description)
+					{
+						buffnumbers = (det.infix_upgrade.buff.description).split("\n");
+						buffnumbers.forEach(function(iBuff)
+						{
+							buffs.push(U.stripToNumbers(iBuff));
+						});
+					}
+					attr.forEach(function(iStats)
+					{
+						if (buffcounter < buffs.length)
+						{
+							buffadd = buffs[buffcounter];
+							buffcounter++;
+						}
+						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + Q.getAttributeString(iStats.attribute) + "<br />";
+						// Sum the iterated attribute to the attributes-containing object
+					});
+				}
+				// Sigils
+				else if (det.infix_upgrade.buff)
+				{
+					attrstr += "<span class='itmBuff'>" + Q.formatItemDescription(item) + "</span>";
+					statsbrktop = "<br />";
+				}
+				// Runes
+				else if (det.bonuses && det.type === "Rune")
+				{
+					attrstr += Q.getItemRune(item);
+				}
+			}
+			
+			attrstr = statsbrktop + attrstr;
+			attrstr += "</aside>";
+		}
+		// Foods and Utilities
+		else if (type === "Consumable")
+		{
+			attrstr += D.getString("DoubleClickToConsume") + "<br />";
+			if (det.duration_ms !== undefined)
+			{
+				var consumeimg = (det.type === "Food" || det.type === "Utility") ? ("_" + (det.type).toLowerCase()) : "";
+				var consumetypestr = (det.type === "Immediate") ? D.getString("Boost") : D.getString("Nourishment");
+				var consumedurstr = (det.duration_ms > 0) ? (" (" + T.formatTooltipTimeMS(det.duration_ms, true) + ")") : "";
+				attrstr += "<span class='itmConsumableLine'><img class='itmIcon itmConsumableIcon' src='img/account/item/nourishment" + consumeimg + ".png' /> "
+					+ "<var class='itmGrayed itmConsumableDesc'>" + consumetypestr + consumedurstr + ": " + Q.formatItemDescription(det.description) + "</var></span>";
+			}
+			else if (det.type === "Booze")
+			{
+				attrstr += D.getString("ExcessiveAlcohol") + "<br />";
+			}
+		}
+		// Sum attribute points if requested
+		if (attrobj)
+		{
+			Q.sumItemAttribute(attrobj, item);
+		}
+		
+		// RARITY
+		var raritystr = "";
+		if (isequipment)
+		{
+			// Back item will have a beginning line break because of its type name
+			raritystr = D.getString(item.rarity) + ((isbackitem) ? "" : "<br />");
+		}
+		
+		// WEIGHT
+		var weightstr = "";
+		if (det && det.weight_class)
+		{
+			weightstr = D.getString(det.weight_class) + "<br />";
+		}
+		
+		// TYPE
+		var typestr = Q.getItemType(item);
+		
+		// LEVEL
+		var levelstr = "";
+		if (item.level > 1)
+		{
+			levelstr += D.getString("RequiredLevel") + ": " + item.level + "<br />";
+		}
+		
+		// DESCRIPTION
+		/*
+		 * Item details' description may be pretagged with XML that colorizes
+		 * a portion of text. Example: <c=@flavor>Description</c>
+		 * If a tag exists, it shall have the "=@flavor" replaced with " class='.itmColor_flavor'"
+		 */
+		var desctopstr = "";
+		var descbottomstr = "";
+		var desc = item.description || "";
+		desc = Q.formatItemDescription(desc);
+		if (item.description)
+		{
+			desc = "<aside>" + desc + "</aside>";
+			if (isequipment)
+			{
+				descbottomstr = desc;
+			}
+			else
+			{
+				desctopstr = desc;
+			}
+		}
+		
+		// SELECTABLE STATS
+		var selectstatsstr = "";
+		if (isequipment)
+		{
+			if (det && det.infix_upgrade === undefined)
+			{
+				selectstatsstr = D.getString("DoubleClickToSelectStats") + "<br />";
+			}
+		}
+		
+		// FLAGS
+		var flagsstr = "";
+		var flagsobj = {};
+		var addFlag = function(pFlagName)
+		{
+			flagsstr += D.getString(pFlagName) + "<br />";
+		};
+		if (item.flags)
+		{
+			// Convert the flags array to an associative array for easier reading
+			item.flags.forEach(function(iFlag)
+			{
+				flagsobj[iFlag] = true;
+			});
+			// Uniqueness flag
+			if (flagsobj["Unique"])
+			{
+				addFlag("Unique");
+			}
+			// Binding flags for custom items (equipped items or in bound in inventory)
+			if (iscustomitem && settings.customitem.binding)
+			{
+				istradeable = false;
+				if (settings.customitem.binding === "Character" && settings.customitem.bound_to)
+				{
+					flagsstr += "<var class='itmColor_warning'>" + D.getString("SoulboundToCharacter")
+						+ ": " + settings.customitem.bound_to + "</var><br />";
+				} 
+				else if (settings.customitem.binding === "Account")
+				{
+					addFlag("AccountBound");
+				}
+			}
+			else // Binding flags for fresh items
+			{
+				// "SoulbindOnAcquire" flag shall override "SoulBindOnUse"
+				if (flagsobj["SoulbindOnAcquire"])
+				{
+					issoulbound = true;
+					istradeable = false;
+					addFlag("SoulbindOnAcquire");
+				}
+				else if (flagsobj["SoulBindOnUse"] && issoulbound === false)
+				{
+					addFlag("SoulBindOnUse");
+				}
+				// "AccountBound" flag shall override "AccountBindOnUse"
+				if (flagsobj["AccountBound"]) 
+				{
+					isaccountbound = true;
+					istradeable = false;
+					addFlag("AccountBound");
+				}
+				else if (flagsobj["AccountBindOnUse"] && isaccountbound === false)
+				{
+					addFlag("AccountBindOnUse");
+				}
+			}
+			// Vendorability flag
+			if (flagsobj["NoSell"])
+			{
+				isvendorable = false;
+			}
+		}
+		
+		// CHARACTER BINDING
+		var charbindstr = "";
+		if (settings.soulbound)
+		{
+			charbindstr = D.getString("SoulboundToCharacter") + ": " + U.escapeHTML(settings.soulbound);
+		}
+		
+		// VENDOR PRICE
+		var vendorstr = "";
+		var vendorvalue = 0;
+		if (item.vendor_value > 0 && isvendorable)
+		{
+			// If stack count is included then multiply vendor price for one item by that number
+			vendorvalue = (settings.customitem.count) ? settings.customitem.count * item.vendor_value : item.vendor_value;
+			vendorstr += E.formatCoinString(vendorvalue, {wantcolor: true, wantspace: true});
+		}
+		
+		// CUSTOM NOTE
+		var notestr = "";
+		if (settings.note)
+		{
+			notestr = "<br />" + settings.note;
+		}
+		
+		/*
+		 * Upgrades and transmutations requires loading AJAX, so they must be
+		 * done last and checked that every requests have been fulfilled then
+		 * the tooltip HTML generation is finalized.
+		 */
+		// UPGRADES
+		var upgradebrk = "";
+		var infusionslot;
+		var infusiontype = "";
+		var preinfusions = [];
+		var infusionstr = [];
+		var preupgrades = [];
+		var upgradestr = [];
+		if (isequipment)
+		{
+			if (isascended || (isascended && istrinket) === false)
+			{
+				upgradebrk = "<br />";
+			}
+			
+			if (isascended)
+			{
+				if (det && det.infusion_slots)
+				{
+					for (var i = 0; i < det.infusion_slots.length; i++)
+					{
+						infusionslot = det.infusion_slots[i];
+						infusiontype = infusionslot.flags[0];
+						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
+							+ D.getString(infusiontype + "_Infusion") + "<br /><br />");
+						if (infusionslot.item_id !== undefined && settings.customitem.infusions === undefined)
+						{
+							preinfusions.push(infusionslot.item_id);
+							propstofetch++;
+						}
+						else
+						{
+							preinfusions.push(null);
+						}
+					}
+				}
+			}
+			if ((isascended && istrinket) === false)
+			{
+				var unupgradedslot = "<img class='itmSlotIcon' src='img/account/item/upgrade.png' /> "
+					+ D.getString("UnusedUpgradeSlot") + "<br /><br />";
+				upgradestr.push(unupgradedslot);
+				upgradestr.push((isdouble) ? unupgradedslot : "");
+				if (det && det.suffix_item_id && settings.customitem.upgrades === undefined)
+				{
+					preupgrades.push(det.suffix_item_id);
+					propstofetch++;
+				}
+				else
+				{
+					preupgrades.push(null);
+					if (isdouble)
+					{
+						preupgrades.push(null);
+					}
+				}
+			}
+		}
+		
+		// OVERWRITE INFUSIONS AND UPGRADES
+		if (settings.customitem.infusions)
+		{
+			for (var i = 0; i < settings.customitem.infusions.length; i++)
+			{
+				if (i < preinfusions.length)
+				{
+					preinfusions[i] = settings.customitem.infusions[i];
+					if (preinfusions[i])
+					{
+						propstofetch++;
+					}
+				}
+			}
+		}
+		if (settings.customitem.upgrades)
+		{
+			for (var i = 0; i < settings.customitem.upgrades.length; i++)
+			{
+				if (i < preupgrades.length)
+				{
+					preupgrades[i] = settings.customitem.upgrades[i];
+					if (preupgrades[i])
+					{
+						propstofetch++;
+					}
+				}
+			}
+		}
+		
+		// TRANSMUTATION
+		var transmstr = "";
+		if (settings.customitem.skin)
+		{
+			propstofetch++;
+		}
+		
+		/*
+		 * Final actions and binding to be done after the tooltip HTML has been
+		 * formatted and additional AJAX HTML included.
+		 */
+		var finalizeTooltip = function()
+		{
+			if (numfetched !== propstofetch)
+			{
+				return;
+			}
+			var html = "<div class='itmTooltip'>"
+				+ namestr
+				+ damagestr
+				+ defensestr
+				+ attrstr
+				+ desctopstr
+				+ upgradebrk
+				+ ((isweapon) ? (upgradestr.join("") + infusionstr.join("")) : (infusionstr.join("") + upgradestr.join("")))
+				+ transmstr
+				+ raritystr
+				+ weightstr
+				+ typestr
+				+ levelstr
+				+ descbottomstr
+				+ selectstatsstr
+				+ flagsstr
+				+ charbindstr
+				+ vendorstr
+				+ notestr
+			+ "</div>";
+			// Bind tooltip if provided an element
+			if (settings.element)
+			{
+				var elm = $(settings.element);
+				elm.attr("title", html);
+				I.qTip.init(elm);
+			}
+			/*
+			 * This object is the result of the analysis, containing tooltip
+			 * information and additionally retrieved slotted items.
+			 */
+			var box = {
+				item: item,
+				infusions: infusionobjs,
+				upgrades: upgradeobjs,
+				skin: skinobj,
+				attr: attrobj,
+				html: html,
+				istradeable: istradeable
+			};
+			// Cache the item only if it's not custom (no upgrades or transmutations)
+			if (iscustomitem === false)
+			{
+				Q.Box[item.id] = box;
+			}
+			// Execute callback if provided
+			if (settings.callback)
+			{
+				settings.callback(box);
+			}
+		};
+		
+		/*
+		 * Fetch additional data like slotted upgrades and transmutations.
+		 */
+		// SLOTTED INFUSIONS
+		for (var i = 0; i < preinfusions.length; i++)
+		{
+			if (preinfusions[i] === null)
+			{
+				continue;
+			}
+			(function(iIndex, iInfusionID)
+			{
+				$.getJSON(U.getAPIItem(iInfusionID), function(iData)
+				{
+					infusionstr[iIndex] = "<span class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + iData.name + "<br />"
+						+ iData.details.infix_upgrade.buff.description + "</span><br /><br />";
+					if (settings.callback)
+					{
+						infusionobjs.push(iData);
+					}
+					if (attrobj)
+					{
+						Q.sumItemAttribute(attrobj, iData);
+					}
+					numfetched++;
+					finalizeTooltip();
+				}).fail(function()
+				{
+					propstofetch--;
+					finalizeTooltip();
+				});
+			})(i, preinfusions[i]);
+		}
+		
+		// SLOTTED UPGRADES
+		for (var i = 0; i < preupgrades.length; i++)
+		{
+			if (preupgrades[i] === null)
+			{
+				continue;
+			}
+			(function(iIndex, iUpgradeID)
+			{
+				$.getJSON(U.getAPIItem(iUpgradeID), function(iData)
+				{
+					var upgdesc = "";
+					if (iData.details.type === "Rune")
+					{
+						var runepieces = 0;
+						if (det.type === "HelmAquatic")
+						{
+							// Count the rune in the aquatic helm for its own slotted description
+							runepieces = (settings.runesets && settings.runesets[iData.id]) ? (1 + settings.runesets[iData.id].numslotted) : 1;
+						}
+						else if (settings.runesets)
+						{
+							runepieces = settings.runesets;
+						}
+						upgdesc = Q.getItemRune(iData, runepieces);
+						if (attrobj)
+						{
+							Q.sumItemAttribute(attrobj, iData, settings.runesets);
+						}
+					}
+					else
+					{
+						upgdesc = iData.name + "<br />" + Q.formatItemDescription(iData);
+						if (attrobj)
+						{
+							Q.sumItemAttribute(attrobj, iData);
+						}
+					}
+					
+					upgradestr[iIndex] = "<aside class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + upgdesc + "</aside><br />";
+					if (settings.callback)
+					{
+						upgradeobjs.push(iData);
+					}
+					numfetched++;
+					finalizeTooltip();
+				}).fail(function()
+				{
+					propstofetch--;
+					finalizeTooltip();
+				});
+			})(i, preupgrades[i]);
+		}
+		
+		// TRANSMUTED
+		if (settings.customitem.skin)
+		{
+			$.getJSON(U.getAPISkin(settings.customitem.skin), function(iData)
+			{
+				namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + Q.getRarityClass(rarity)
+					+ "'><img class='itmIcon itmIconMain' src='" + iData.icon + "' />" + U.escapeHTML(iData.name) + "</aside>";
+				transmstr = "<aside='itmTransmute'>" + D.getString("Transmuted") + "<br />" + U.escapeHTML(item.name) + "</aside><br /><br />";
+				if (settings.callback)
+				{
+					skinobj = iData;
+				}
+				numfetched++;
+				finalizeTooltip();
+			}).fail(function()
+			{
+				propstofetch--;
+				finalizeTooltip();
+			});
+		}
+		
+		// In case no fetching is needed at all
+		if (numfetched === propstofetch)
+		{
+			finalizeTooltip();
+		}
+	},
+	
+	/*
+	 * Formats a trait or skill object to be used in tooltips.
+	 * @param object pTrait details retrieved from API.
+	 * @return string content for tooltip window.
+	 */
+	formatSkillTrait: function(pTrait)
+	{
+		var formatFact = function(pFact)
+		{
+			var text = pFact.text;
+			var type = pFact.type;
+			var value = pFact.value;
+			var attrtarget = (pFact.target !== undefined) ? Q.getAttributeString(pFact.target) : "";
+			var attrsource = (pFact.source !== undefined) ? Q.getAttributeString(pFact.source) : "";
+			var buffconv = (type === "BuffConversion") ? D.getString("GainBasedPercentage").replace("{0}", attrsource).replace("{1}", attrtarget) : "";
+			var icon = "<img class='trtFactIcon' src='" + pFact.icon + "' />";
+			var prefixicon = (pFact.prefix && pFact.prefix.icon) ? "<img class='trtFactIcon' src='" + pFact.prefix.icon + "' />" : "";
+			var desc = pFact.description;
+			var stacks = (pFact.apply_count > 1) ? "<var class='trtStacks'>" + pFact.apply_count + "</var>" : "";
+			var duration = (pFact.duration !== undefined) ? (pFact.duration + " " + D.getWord("seconds")) : "";
+			var durationabbr = (pFact.duration !== undefined) ? " (" + T.formatTooltipTime(pFact.duration) + ")" : "";
+			var status = pFact.status;
+			var combofield = pFact.field_type;
+			var combofinisher = pFact.finisher_type;
+			var percent = pFact.percent + "%";
+			var hitcount = pFact.hit_count + "x";
+			var distance = pFact.distance;
+			
+			var wrap = function(pIcon, pText)
+			{
+				return "<var class='trtFactIcons'>" + pIcon + "</var><var class='trtFactText'>" + pText + "</var>";
+			};
+			
+			var facttype = {
+				AttributeAdjust: function(){
+					return wrap(icon, "+" + value + " " + attrtarget);},
+				Buff: function(){
+					return wrap(stacks + icon, status + durationabbr + ": " + desc);},
+				BuffConversion: function(){
+					return wrap(icon, buffconv);},
+				ComboField: function(){
+					return wrap(icon, text + ": " + combofield);},
+				ComboFinisher: function(){
+					return wrap(icon, text + ": " + combofinisher + " (" + percent + ")");},
+				Damage: function(){
+					return wrap(icon, text + ": " + hitcount);},
+				Distance: function(){
+					return wrap(icon, text + ": " + distance);},
+				Duration: function(){
+					return wrap(icon, text + ": " + duration);},
+				Heal: function(){
+					return wrap(icon, text + ": " + hitcount);},
+				HealingAdjust: function(){
+					return wrap(icon, text + ": " + hitcount);},
+				NoData: function(){
+					return wrap(icon, text);},
+				Number: function(){
+					return wrap(icon, text + ": " + value);},
+				Percent: function(){
+					return wrap(icon, text + ": " + percent);},
+				PrefixedBuff: function(){
+					return wrap(icon + prefixicon, status + durationabbr + ": " + desc);},
+				Radius: function(){
+					return wrap(icon, text + ": " + distance);},
+				Range: function(){
+					return wrap(icon, text + ": " + value);},
+				Time: function(){
+					return wrap(icon, text + ": " + duration);},
+				Unblockable: function(){
+					return wrap(icon, text);}
+			};
+			
+			if (facttype[type])
+			{
+				return "<span class='trtFactLine'>" + facttype[type]() + "</span>";
+			}
+			return "";
+		};
+		
+		var name = "<span class='trtName'>" + pTrait.name + "</span>";
+		var desc = "<span class='trtDesc'>" + Q.formatItemDescription(pTrait.description) + "</span>";
+		var recharge = "";
+		var facts = "";
+		var factsinner = "";
+		if (pTrait.facts && pTrait.facts.length > 0)
+		{
+			facts += "<aside class='trtFacts'>";
+			pTrait.facts.forEach(function(iFact)
+			{
+				if (iFact.type === "Recharge")
+				{
+					recharge = "<span class='trtRecharge'>" + iFact.value + "<img class='trtRechargeIcon' src='" + iFact.icon + "' /></span>";
+				}
+				else
+				{
+					factsinner += formatFact(iFact);
+				}
+			});
+			// Don't include facts element if no fact lines were added
+			facts = (factsinner === "") ? "" : (facts + factsinner + "</aside>");
+		}
+		
+		return recharge + name + desc + facts;
+	},
+	
+	/*
+	 * Generates trait tooltip HTML.
+	 * @param object pTrait details retrieved from API.
+	 * @objparam jqobject element to bind tooltip.
+	 */
+	analyzeTrait: function(pTrait, pOptions)
+	{
+		var settings = pOptions || {};
+		var content = Q.formatSkillTrait(pTrait);
+		
+		// Calculate an extra tooltip's height by actually making it then measuring its height
+		var computeOffset = function(pContent)
+		{
+			var nullcon = $("#itemNull").empty();
+			var height = $(pContent).appendTo(nullcon).height();
+			nullcon.empty(); // Served its purpose, so delete the temporary element
+			return height;
+		};
+		
+		// Include additional tooltips if trait has a skills array
+		var skilltooltips = "";
+		var offsetcumulative = 6;
+		var offsetbetween = 20;
+		if (pTrait.skills)
+		{
+			pTrait.skills.forEach(function(iSkill)
+			{
+				/*
+				 * A trait may contain skill tooltips above its own tooltip. To
+				 * position them like in game, the vertical offsets need to be
+				 * computed so the extra tooltips float by absolute position,
+				 * even though all the tooltips share a single container.
+				 */
+				var dummytooltip = "<div class='qTip'><div class='trtTooltip'>" + Q.formatSkillTrait(iSkill) + "</div></div>";
+				offsetcumulative += computeOffset(dummytooltip) + offsetbetween;
+				// Write the actual extra skill tooltip
+				skilltooltips += "<div class='trtTooltip trtTooltipExtra' style='margin-top:" + "-" + offsetcumulative + "px" + "'>"
+					+ Q.formatSkillTrait(iSkill) + "</div>";
+			});
+		}
+		
+		var html = "<div class='trtTooltipBorder'>" + I.Symbol.Filler + "</div>"
+			+ skilltooltips + "<div class='trtTooltip'>" + content + "</div>";
+		if (settings.element)
+		{
+			var elm = $(settings.element);
+			elm.attr("title", html);
+			I.qTip.init(elm);
+		}
+	},
+	
+	/*
+	 * Creates a bank container element.
+	 * @param jqobject pDestination to append bank.
+	 * @returns jqobject bank.
+	 */
+	createBank: function(pDestination)
+	{
+		return $("<div class='bnkContainer'>"
+			+ "<div class='bnkTop'>"
+				+ "<aside class='bnkPrice'></aside>"
+			+ "</div>"
+			+ "<div class='bnkBank'></div>"
+		+ "</div>").appendTo(pDestination);
+	},
+	
+	/*
+	 * Creates a standard bank window tab that holds item slots, and a separator
+	 * that toggles the tab.
+	 * @param jqobject pBank container of tabs.
+	 * @param string pTitle of the tab, placed in the separator, optional.
+	 * @param boolean pIsCollapsed whether the tab is pre-collapsed, for tabs
+	 * that generate slots on demand.
+	 * @returns jqobject bank tab.
+	 */
+	createBankTab: function(pBank, pTitle, pIsCollapsed)
+	{
+		var tab = $("<div class='bnkTab'></div>");
+		var titlestr = (pTitle) ? "<var class='bnkTabText'>" + pTitle + "</var>" : "";
+		var tabseparator = $("<div class='bnkTabSeparator curToggle'><aside class='bnkTabHeader'>"
+			+ titlestr
+			+ "<var class='bnkTabPrice'></var>"
+		+ "</aside></div>").appendTo(tab);
+		var tabtoggle = $("<var class='bnkTabToggle'></var>").appendTo(tabseparator);
+		var tabslots = $("<div class='bnkTabSlots'></div>").appendTo(tab);
+		tabseparator.click(function()
+		{
+			var state = tabslots.is(":visible");
+			I.toggleToggleIcon(tabtoggle, !state);
+			tabslots.slideToggle("fast");
+		});
+		if (pIsCollapsed)
+		{
+			I.toggleToggleIcon(tabtoggle, false);
+			tabslots.hide();
+		}
+		pBank.append(tab);
+		return tab;
+	},
+	
+	/*
+	 * Creates a vertical bar that holds bags on the left side of a bank tab.
+	 * @param jqobject pTab to append.
+	 * @param objarray pBags from characters API.
+	 */
+	createInventorySidebar: function(pTab, pBagsData)
+	{
+		if (pBagsData === undefined)
+		{
+			return;
+		}
+		
+		pTab.addClass("bnkTabInventory");
+		var sidebar = $("<div class='bnkSidebar'></div>").prependTo(pTab);
+		var bagscolumn = $("<div class='bnkSidebarColumn'></div>").appendTo(sidebar);
+		var bagouter, bag;
+		pBagsData.forEach(function(iBagData)
+		{
+			bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
+			bag = $("<span class='bnkSidebarBag'></span>").appendTo(bagouter);
+			if (iBagData)
+			{
+				(function(iBag)
+				{
+					$.getJSON(U.getAPIItem(iBagData.id), function(iItem)
+					{
+						iBag.css({backgroundImage: "url(" + iItem.icon + ")"});
+						Q.scanItem(iItem, {element: iBag});
+					});
+				})(bag);
+			}
+		});
+	},
+		
+	/*
+	 * Inserts a standard inventory slot for use in inventory, bank, materials,
+	 * and other windows. Uses native DOM manipulation for performance.
+	 * @param jqobject pSlotContainer of a tab.
+	 * @returns jqobject slot.
+	 */
+	createBankSlot: function(pSlotContainer)
+	{
+		var slot = document.createElement("span");
+		slot.innerHTML = "<var class='bnkSlotBackground'></var>"
+			+ "<var class='bnkSlotIcon'></var>"
+			+ "<var class='bnkSlotForeground'></var>";
+		slot.className = "bnkSlot";
+		pSlotContainer[0].appendChild(slot);
+		return $(slot);
+	},
+	
+	/*
+	 * Styles a standard inventory slot and prepare it for search.
+	 * @param jqobject pSlot to style.
+	 * @param object pSlotData custom item data retrieved from characters or
+	 * bank API, containing stack count and transmutation data.
+	 * @param object pItem data retrieved from item details API.
+	 */
+	styleBankSlot: function(pSlot, pSlotData, pItem)
+	{
+		if (pSlotData)
+		{
+			Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, note: pSlotData.note, callback: function(pBox)
+			{
+				// Load retrieved proper transmuted icon if available
+				var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
+				pSlot.find(".bnkSlotIcon").css({backgroundImage: "url(" + icon + ")"});
+				// Make the item searchable by converting its tooltip HTML into plain text
+				var keywords = ($(pBox.html).text() + " " + D.getString(pItem.rarity)).toLowerCase();
+				pSlot.data("keywords", keywords);
+				// Double click the slot opens its wiki page
+				pSlot.dblclick(function()
+				{
+					U.openExternalURL(U.getWikiLanguageLink(pBox.item.name));
+				});
+				// Numeric label over the slot icon indicating stack size or charges remaining
+				var count = pSlotData.count || 1;
+				if (count > 1)
+				{
+					pSlot.append("<var class='bnkSlotCount'>" + count + "</var>");
+				}
+				else if (pItem.type === "Tool")
+				{
+					// Salvage Kits gets a faux count number representing their remaining charges
+					var salv = A.Equipment.SalvageCharges;
+					if (salv && salv[pItem.id])
+					{
+						pSlot.append("<var class='bnkSlotCount'>" + salv[pItem.id] + "</var>");
+					}
+				}
+				else if (pItem.type === "Gathering")
+				{
+					var gath = A.Equipment.GatheringCharges;
+					if (gath && pItem.rarity !== Q.Rarity.Rare)
+					{
+						pSlot.append("<var class='bnkSlotCount'>" + gath[pItem.details.type] + "</var>");
+					}
+				}
+				// Fade the slots that act as collections
+				if (pSlotData.count === 0)
+				{
+					pSlot.addClass("bnkSlotZero");
+				}
+				// TP price label if the item is tradeable
+				if (pBox.istradeable)
+				{
+					$.getJSON(U.URL_API.ItemPrices + pItem.id, function(pData)
+					{
+						var pricebuy = E.deductTax(pData.buys.unit_price * count);
+						var pricesell = E.deductTax(pData.sells.unit_price * count);
+						var updatePriceDisplay = function(pDisplay)
+						{
+							var displaypricebuy = (pDisplay.data("pricebuy") || 0) + pricebuy;
+							var displaypricesell = (pDisplay.data("pricesell") || 0) + pricesell;
+							pDisplay.data("pricebuy", displaypricebuy).data("pricesell", displaypricesell);
+							var tabtext = E.formatCoinStringColored(displaypricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(displaypricebuy) + "</span>";
+							pDisplay.html(tabtext);
+						};
+						
+						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricesell, {wantcolor: true, wantshort: true}) + "</var>");
+						// Only add if item actually exists (not a zero stack slot)
+						if (pSlotData.count !== 0)
+						{
+							updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
+							updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPrice"));
+							pSlot.data("price", pricesell);
+						}
+					});
+					
+				}
+			}});
+		}
+		else
+		{
+			// Empty slot gets keywords anyway for use in search
+			pSlot.data("keywords", "*");
+		}
+	},
+	
+	/*
+	 * Creates and binds a search bar for a bank. Also creates functional buttons.
+	 * @param jqobject pBank for insertion.
+	 * @pre Bank slots were generated.
+	 */
+	createBankMenu: function(pBank)
+	{
+		// Initialize commonly used elements
+		var sectionname = pBank.parents(".accDishContainer").attr("data-section");
+		var slots = pBank.find(".bnkSlot");
+		var tabslots = pBank.find(".bnkTabSlots");
+		var tabtoggles = pBank.find(".bnkTabToggle");
+		$("#accDishMenu_" + sectionname).remove();
+		var dishmenu = $("<aside id='accDishMenu_" + sectionname + "' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
+		
+		/*
+		 * Search bar.
+		 */
+		var searchcontainer = $("<div class='bnkSearch'></div>").prependTo(dishmenu);
+		var input = $("<input class='bnkSearchInput' type='text' />").appendTo(searchcontainer);
+		var fillertext = $("<div class='bnkSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(searchcontainer);
+		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
+		{
+			var query = $(this).val().toLowerCase();
+			var queries = [];
+			var equality = "";
+			var keywords = "";
+			if (query.length > 0)
+			{
+				equality = query.charAt(0);
+				fillertext.hide();
+				// If searching by price range
+				if ((equality === "<" || equality === ">") && query.length > 1)
+				{
+					var pricewant = E.parseCoinString(query.substring(1, query.length));
+					slots.each(function()
+					{
+						var priceslot = $(this).data("price");
+						if (priceslot && ((equality === ">" && priceslot >= pricewant) || (equality === "<" && priceslot <= pricewant)))
+						{
+							$(this).show();
+						}
+						else
+						{
+							$(this).hide();
+						}
+					});
+				}
+				// If searching by keywords
+				else
+				{
+					queries = query.split(" ");
+					// Search for every substring in the user's query, which is space separated
+					slots.each(function()
+					{
+						keywords = $(this).data("keywords"); // The text version of the item's tooltip HTML
+						var ismatch = true;
+						if (keywords)
+						{
+							for (var i = 0; i < queries.length; i++)
+							{
+								// If at least one substring of the search query isn't found, then hide that item
+								if (keywords.indexOf(queries[i]) === -1)
+								{
+									$(this).hide();
+									ismatch = false;
+									break;
+								}
+							}
+							// The boolean is only true if every substrings were found
+							if (ismatch)
+							{
+								$(this).show();
+							}
+						}
+					});
+				}
+			}
+			else
+			{
+				fillertext.show();
+				slots.each(function()
+				{
+					$(this).show();
+				});
+			}
+			A.adjustAccountScrollbar();
+		}));
+		
+		/*
+		 * Add buttons next to the search bar for bank functionalities.
+		 */
+		var buttoncontainer = $("<aside class='bnkButtons'></aside>").appendTo(dishmenu);
+		
+		// Help button shows search usage message
+		var isshowinghelp = true;
+		$("<div class='bnkButtonHelp bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
+		{
+			if (isshowinghelp || I.isConsoleShown() === false)
+			{
+				I.print($("#accInventorySearchHelp").html(), true);
+			}
+			else
+			{
+				I.clear();
+			}
+			isshowinghelp = !isshowinghelp;
+		});
+		
+		// Hide empty slots filter
+		var isfilteringempty = true;
+		$("<div class='bnkButtonEmpty bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
+		{
+			if (isfilteringempty)
+			{
+				slots.each(function()
+				{
+					// All non-empty slots should have an item with a tooltip
+					if ($(this).attr(I.cTooltipAttribute))
+					{
+						$(this).show();
+					}
+					else
+					{
+						$(this).hide();
+					}
+				});
+			}
+			else
+			{
+				slots.show();
+			}
+			$(this).toggleClass("bnkButtonFocused");
+			isfilteringempty = !isfilteringempty;
+			A.adjustAccountScrollbar();
+		});
+		
+		// Trading Post filter for items that can be traded
+		var isfilteringtrade = true;
+		$("<div class='bnkButtonTrade bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
+		{
+			if (isfilteringtrade)
+			{
+				slots.each(function()
+				{
+					if ($(this).data("price"))
+					{
+						$(this).show();
+					}
+					else
+					{
+						$(this).hide();
+					}
+				});
+			}
+			else
+			{
+				slots.show();
+			}
+			$(this).toggleClass("bnkButtonFocused");
+			isfilteringtrade = !isfilteringtrade;
+			A.adjustAccountScrollbar();
+		});
+		
+		// Toggle all tabs button
+		var istabscollapsed = false;
+		$("<div class='bnkButtonTab bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
+		{
+			// Expand or collapse all tabs
+			if (istabscollapsed)
+			{
+				tabslots.slideDown("fast", function()
+				{
+					A.adjustAccountScrollbar();
+				});
+			}
+			else
+			{
+				tabslots.slideUp("fast", function()
+				{
+					A.adjustAccountScrollbar();
+				});
+			}
+			// Also change the toggle icon
+			tabtoggles.each(function()
+			{
+				I.toggleToggleIcon($(this), istabscollapsed);
+			});
+			$(this).toggleClass("bnkButtonFocused");
+			istabscollapsed = !istabscollapsed;
+		});
+		
+		// Increase or decrease bank width buttons
+		var slotsize = slots.first().width();
+		$("<div class='bnkButtonWideLess bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
+		{
+			var minbankwidth = slotsize * 4;
+			var oldwidth = pBank.width();
+			if (oldwidth > minbankwidth)
+			{
+				pBank.css({width: oldwidth - slotsize});
+				A.adjustAccountScrollbar();
+			}
+		});
+		$("<div class='bnkButtonWideMore bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
+		{
+			var maxbankwidth = $("#accContent").width() - (slotsize * 2);
+			var oldwidth = pBank.width();
+			if (oldwidth < maxbankwidth)
+			{
+				pBank.css({width: oldwidth + slotsize});
+				A.adjustAccountScrollbar();
+			}
+		});
+		
+		// Finally
+		searchcontainer.css({width: searchcontainer.width() - buttoncontainer.width()});
+		A.adjustAccountPanel();
+	}
 };
 
 /* =============================================================================
@@ -7514,1599 +9161,6 @@ E = {
 			E.CalculatorHistoryArray.unshift(expression);
 			E.CalcHistoryIndex = 0;
 		}
-	}
-};
-
-/* =============================================================================
- * @@Quantity items, inventory, attributes, traits
- * ========================================================================== */
-Q = {
-	
-	Box: {}, // Holds objects with analyzed item details, accessed using the item's ID
-	Rarity: // Corresponds to API names for rarity levels
-	{
-		Junk: "Junk",
-		Basic: "Basic",
-		Fine: "Fine",
-		Masterwork: "Masterwork",
-		Rare: "Rare",
-		Exotic: "Exotic",
-		Ascended: "Ascended",
-		Legendary: "Legendary"
-	},
-	RunePieces:
-	{
-		Masterwork: 2,
-		Rare: 4,
-		Exotic: 6
-	},
-	cSEARCH_LIMIT: 200, // Inventory search throttle limit
-	
-	/*
-	 * Sets an object with an item rarity CSS class. Removes all if level is not provided.
-	 * @param jqobject pEntry to remove.
-	 * @param string pLevel of rarity.
-	 */
-	setRarityClass: function(pEntry, pLevel)
-	{
-		for (var i in Q.Rarity)
-		{
-			pEntry.removeClass("rarity_" + i);
-		}
-		if (Q.Rarity[pLevel] !== undefined)
-		{
-			pEntry.addClass("rarity_" + pLevel);
-		}
-	},
-	
-	/*
-	 * Gets a rarity CSS class from a rarity name.
-	 * @param string pRarity.
-	 * @returns string CSS class.
-	 */
-	getRarityClass: function(pRarity)
-	{
-		return "rarity_" + pRarity;
-	},
-	
-	/*
-	 * Gets the translated type name of an item.
-	 * @param object pItem details from API.
-	 * @returns string translated type.
-	 */
-	getItemType: function(pItem)
-	{
-		var det = pItem.details;
-		var type = pItem.type;
-		// These top level types have overriding priority
-		var validtypes = {
-			Back: 1,
-			Consumable: 1,
-			Container: 1,
-			CraftingMaterial: 1,
-			Gizmo: 1,
-			MiniPet: 1,
-			Trophy: 1,
-			UpgradeComponent: 1
-		};
-		if (validtypes[type])
-		{
-			return "<br />" + D.getString(type) + "<br />";
-		}
-		else if (det.type && det.type !== "Default") // Else use the subtype in the details property object
-		{
-			return "<br />" + D.getString(det.type) + "<br />";
-		}
-		return "";
-	},
-	
-	/*
-	 * Corrects naming inconsistency of the attributes property in item API.
-	 * @param string pString.
-	 * @returns translation.
-	 */
-	getAttributeString: function(pString)
-	{
-		var str = pString;
-		var match = {
-			"CritDamage": "Ferocity",
-			"Healing": "HealingPower",
-			"ConditionDuration": "Expertise",
-			"BoonDuration": "Concentration"
-		};
-		if (match[pString])
-		{
-			str = match[pString];
-		}
-		return D.getString(str);
-	},
-	
-	/*
-	 * Looks for attribute points in an item and adds them to the
-	 * attributes-containing object.
-	 * @param object pAttrObj.
-	 * @param object pItem to find attributes.
-	 * @param object pRuneSets numbers of runes equipped, optional.
-	 * @pre Account page's script has been loaded, which contains attribute association.
-	 * Properties this function looks for:
-	 * item.details.infix_upgrade.attributes // [{attribute: "Abc", "modifier": 123}, ...] language independent
-	 * item.details.bonuses // ["+123 Abc", ...] language dependent
-	 * item.details.infix_upgrade.buff.description // "+123 Abc\n+123 Abc..." language dependent
-	 */
-	sumItemAttribute: function(pAttrObj, pItem, pRuneSets)
-	{
-		// This object translates the current language extracted attribute name to the proper key name
-		var assocobj = A.Attribute["KeyDescription_" + D.getFullySupportedLanguage()];
-		// Reuseable function to parse array of attribute strings which are language dependent
-		var sumAttributeArray = function(pArray)
-		{
-			var attrstr, points, keyextracted, keyproper;
-			var length = pArray.length;
-			var runepieces = 0;
-			// Special case if summing for a rune
-			if (pRuneSets && pRuneSets[pItem.id])
-			{
-				// Don't re-sum if already did
-				if (pRuneSets[pItem.id].issummed === true)
-				{
-					return;
-				}
-				runepieces = pRuneSets[pItem.id].numslotted;
-				length = runepieces;
-			}
-			
-			for (var i = 0; i < length; i++)
-			{
-				attrstr = pArray[i];
-				points = U.stripToNumbers(attrstr);
-				// The attribute key name shall be whatever that remains after stripping the description of non-letter characters
-				keyextracted = (attrstr.replace(/[\s0-9%,.\-+']/g, "")).toLowerCase();
-				if (assocobj[keyextracted])
-				{
-					keyproper = assocobj[keyextracted];
-					/*
-					 * Skip an anomaly in the API details for "infused" items
-					 * that contains agony attribute in the description (being
-					 * redundant because of infusion slots).
-					 */
-					if (keyproper === "AgonyResistance" && det.infusion_slots)
-					{
-						continue;
-					}
-					pAttrObj[keyproper] += points;
-				}
-			}
-			if (pRuneSets && pRuneSets[pItem.id])
-			{
-				// Mark the rune to avoid resumming it
-				pRuneSets[pItem.id].issummed = true;
-			}
-		};
-		
-		var item = pItem;
-		if (item === undefined || item.details === undefined)
-		{
-			return;
-		}
-		var det = item.details;
-		
-		// Armors, weapons, trinkets
-		if (det.infix_upgrade && det.infix_upgrade.attributes)
-		{
-			det.infix_upgrade.attributes.forEach(function(iAttr)
-			{
-				var attrname = A.Attribute.KeyAttributes[iAttr.attribute];
-				if (attrname)
-				{
-					pAttrObj[attrname] += iAttr.modifier;
-				}
-			});
-		}
-		// Runes
-		if (det.bonuses)
-		{
-			sumAttributeArray(det.bonuses);
-		}
-		// Sigils, infusions, and miscellaneous
-		if (det.infix_upgrade && det.infix_upgrade.buff && det.infix_upgrade.buff.description)
-		{
-			var desc = det.infix_upgrade.buff.description;
-			desc.replace(/<br>/g, ""); // Cleanup markup
-			sumAttributeArray(desc.split("\n"));
-		}
-		// Armor and shield that have defense attribute (adds to armor)
-		if (det.defense !== undefined)
-		{
-			pAttrObj["Armor"] += det.defense;
-		}
-	},
-	
-	/*
-	 * Adds the attribute points of one attributes-containing object to another.
-	 * @param object pAttrMain destination.
-	 * @param object pAttrAdd source.
-	 */
-	sumAttributeObject: function(pAttrMain, pAttrAdd)
-	{
-		for (var i in pAttrMain)
-		{
-			pAttrMain[i] += pAttrAdd[i];
-		};
-	},
-	
-	/*
-	 * Uses an attributes-containing object and calculates it with the base stats.
-	 * @param object pAttrObj for adding geared stats.
-	 * @param object pCharacter for calculating base stats.
-	 * @param boolean pWantValue whether to return an object with numbers instead of formatted strings.
-	 * @returns object attributes as string representation of the numbers.
-	 */
-	calculateAttributes: function(pAttrObj, pCharacter, pWantValue)
-	{
-		var attrobj = {};
-		var level = pCharacter.level;
-		var profession = pCharacter.charprofession;
-		var constants = A.Attribute.Constants;
-		var baseattr = A.Attribute.PrimaryPoints[level - 1];
-		var precisiondivisor = A.Attribute.PrecisionDivisor[level - 1];
-		var secondarydivisor = precisiondivisor / A.Attribute.SecondaryDivisorRatio;
-		/*
-		 * Calculate the health by adding converted base vitality with the base
-		 * health points, then add it with the object's.
-		 */
-		var profhealth = 0;
-		var levelprev = 0;
-		var healthtype = A.Metadata.Profession[profession].health;
-		var healthgrowth = A.Attribute.HealthGrowth[healthtype];
-		var healthtier = 0;
-		for (var i in healthgrowth)
-		{
-			healthtier = parseInt(i);
-			if (healthtier <= level)
-			{
-				profhealth += (healthtier - levelprev) * healthgrowth[i];
-				levelprev = healthtier;
-			}
-			else
-			{
-				profhealth += (level - levelprev) * healthgrowth[i];
-				break;
-			}
-		}
-		/*
-		 * Use simple additions (with base attribute if available) and ratios to
-		 * get these attributes. This object contains unformatted raw numbers.
-		 */
-		var attrnew = {
-			Power:				baseattr + pAttrObj.Power,
-			Toughness:			baseattr + pAttrObj.Toughness,
-			Armor:				baseattr + pAttrObj.Armor + pAttrObj.Toughness,
-			Vitality:			baseattr + pAttrObj.Vitality,
-			Health:				(baseattr / constants.VITALITY_IN_HEALTH) + profhealth + pAttrObj.Health + (pAttrObj.Vitality / constants.VITALITY_IN_HEALTH),
-			Precision:			baseattr + pAttrObj.Precision,
-			CriticalChance:		constants.BASE_CRITICALCHANCE + pAttrObj.CriticalChance + (pAttrObj.Precision / precisiondivisor),
-			Ferocity:			pAttrObj.Ferocity,
-			CriticalDamage:		constants.BASE_CRITICALDAMAGE + pAttrObj.CriticalDamage + (pAttrObj.Ferocity / secondarydivisor),
-			ConditionDamage:	pAttrObj.ConditionDamage,
-			HealingPower:		pAttrObj.HealingPower,
-			Expertise:			pAttrObj.Expertise,
-			ConditionDuration:	pAttrObj.ConditionDuration + (pAttrObj.Expertise / secondarydivisor),
-			Concentration:		pAttrObj.Concentration,
-			BoonDuration:		pAttrObj.BoonDuration + (pAttrObj.Concentration / secondarydivisor),
-			AgonyResistance:	pAttrObj.AgonyResistance,
-			MagicFind:			pAttrObj.MagicFind
-		};
-		// Return raw values if requested
-		if (pWantValue)
-		{
-			return attrnew;
-		}
-		// Otherwise format the values as strings
-		for (var i in attrnew)
-		{
-			attrobj[i] = (A.Attribute.KeyType[i]) ? U.formatPercentage(attrnew[i], 2, 1) : parseInt(attrnew[i]).toLocaleString();
-		}
-		return attrobj;
-	},
-	
-	/*
-	 * Looks through a character object's equipment property and tally the
-	 * number of same runes.
-	 * @param object pCharacter.
-	 * @returns object with rune item ID and count.
-	 */
-	countRuneSets: function(pCharacter)
-	{
-		var equip = pCharacter.equipment;
-		var armorcount = 0;
-		if (equip)
-		{
-			var obj = {};
-			for (var i = 0; i < equip.length; i++)
-			{
-				// If it is an armor slot and has upgrades
-				if (A.Equipment.ArmorSlots[(equip[i].slot)] && equip[i].upgrades)
-				{
-					var runeid = equip[i].upgrades[0];
-					if (obj[runeid] === undefined)
-					{
-						obj[runeid] = {
-							numslotted: 0,
-							issummed: false // Whether the rune's attributes (if it is equipped) have been summed yet
-						};
-					}
-					obj[runeid].numslotted = obj[runeid].numslotted + 1;
-					armorcount++;
-				}
-				if (armorcount === A.Equipment.NumArmorSlots)
-				{
-					break;
-				}
-			}
-			return obj;
-		}
-		return null;
-	},
-	
-	/*
-	 * Formats the text of a rune's bonuses.
-	 * @param object pItem details from API.
-	 * @param object or int pRuneSets numbers of runes equipped, optional.
-	 * @returns string HTML.
-	 */
-	getItemRune: function(pItem, pRuneSets)
-	{
-		var str = "";
-		var det = pItem.details;
-		var runeith = 0;
-		var runemax = Q.RunePieces[pItem.rarity];
-		var runepieces = (pRuneSets && pRuneSets[pItem.id]) ? pRuneSets[pItem.id].numslotted : null;
-		if (typeof pRuneSets === "number")
-		{
-			runepieces = pRuneSets;
-		}
-		if (runepieces > runemax)
-		{
-			runepieces = runemax; // Prevent overcounting of bonuses if equipped too many of same runes
-		}
-		
-		var runecolor = "";
-		if (det.bonuses)
-		{
-			str += (runepieces !== null) ? "" : "<br />";
-			str += "<span class='itmGrayed'>";
-			if (runepieces !== null)
-			{
-				str += "<var class='itmBuff'>" + pItem.name + " (" + runepieces + "/" + runemax + ")</var><br />";
-			}
-			for (var i in det.bonuses)
-			{
-				// Colorize the bonus line if the rune is equipped
-				runecolor = (runeith < runepieces) ? " class='itmBuff'" : "";
-				runeith++;
-				str += "<var" + runecolor + ">(" + runeith + "): " + det.bonuses[i] + "</var><br />";
-			}
-			str += "</span>";
-		}
-		return str;
-	},
-	
-	/*
-	 * Gets the description of the buff property of an item.
-	 * @param object or string pItem details from API or the description itself.
-	 * @returns string description.
-	 */
-	formatItemDescription: function(pItem)
-	{
-		try
-		{
-			var desc = (typeof pItem === "string") ? pItem : pItem.details.infix_upgrade.buff.description;
-			/*
-			 * Item details' description may be pretagged with XML that colorizes
-			 * a portion of text. Example: <c=@flavor>Description</c>
-			 * If a tag exists, it shall have the "=@flavor" replaced with " class='.itmColor_flavor'"
-			 */
-			if (desc.indexOf("<c=@") !== -1)
-			{
-				desc = desc.replace(/<c=@abilitytype>/g, "<c class='itmColor_abilitytype'>");
-				desc = desc.replace(/<c=@flavor>/g, "<c class='itmColor_flavor'>");
-				desc = desc.replace(/<c=@reminder>/g, "<c class='itmColor_reminder'>");
-				desc = desc.replace(/<c=@warning>/g, "<c class='itmColor_warning'>");
-			}
-			if (desc.indexOf("\n") !== -1)
-			{
-				return desc.replace(/\n/g, "<br />");
-			}
-			else
-			{
-				return desc;
-			}
-		}
-		catch (e) {}
-		return "";
-	},
-	
-	/*
-	 * Lightweight preliminary function to check if the requested item has
-	 * already been analyzed, and simply retrieve the cache if available,
-	 * otherwise proceed with the actual analysis function.
-	 * @param object pItem item details.
-	 * @param object pOptions settings.
-	 */
-	scanItem: function(pItem, pOptions)
-	{
-		var settings = pOptions || {};
-		var box = Q.Box[pItem.id];
-		if (box)
-		{
-			if (settings.element)
-			{
-				var elm = $(settings.element);
-				elm.attr("title", box.html);
-				I.qTip.init(elm);
-			}
-			// Execute callback if provided
-			if (settings.callback)
-			{
-				settings.callback(box);
-			}
-		}
-		else
-		{
-			Q.analyzeItem(pItem, pOptions);
-		}
-	},
-	
-	/*
-	 * Generates item tooltip HTML, compiles attributes, and retrieves linked
-	 * upgrades and skins if available.
-	 * @param object pItem details retrieved from API.
-	 * @objparam jqobject element to bind tooltip.
-	 * @objparam int quantity if it is a stack of these items.
-	 * @objparam int skin ID for transmuted items.
-	 * @objparam object customitem contains information about the item's upgrades,
-	 * infusions, skins, and bindings, which are found in characters and bank API.
-	 * @objparam object runesets containing counts of runes associated with rune's item ID.
-	 * @objparam string soulbound name of character the item is bound to.
-	 * @objparam function callback what to do after the tooltip generation
-	 * completes. This provides an object containing additionally retrieved
-	 * API objects like upgrades and skin.
-	 */
-	analyzeItem: function(pItem, pOptions)
-	{
-		var settings = pOptions || {};
-		// These will hold retrieved API objects, if a callback was requested
-		var infusionobjs = [];
-		var upgradeobjs = [];
-		var skinobj = null;
-		var attrobj = null; // Holds attribute points
-		var iscustomitem = false;
-		var istradeable = true;
-		/* Example structure of customitem object:
-			{
-				"id": 68390,
-				"slot": "Coat",
-				"count": 8,
-				"binding": "Character",
-				"bound_to": "Character Name"
-				"upgrades": [24693],
-				"infusions": [70852, 49433],
-				"skin": 2346
-			}
-		 */
-		if (settings.customitem)
-		{
-			iscustomitem = true;
-		}
-		else
-		{
-			settings.customitem = {}; // If not provided then initialize as a blank object with undefined properties
-		}
-		// Initialize attribute object if requested
-		if (settings.wantattr && A.isAccountInitialized)
-		{
-			attrobj = new A.Attribute.Base();
-		}
-		
-		var item = pItem;
-		var type = item.type;
-		var subtype = "";
-		var det = item.details;
-		var isweapon = (type === "Weapon");
-		var isequipment = (isweapon || type === "Armor" || type === "Trinket" || type === "Back");
-		var isbackitem = (type === "Back");
-		var istrinket = (type === "Trinket" || isbackitem);
-		var isascended = (item.rarity === Q.Rarity.Ascended || item.rarity === Q.Rarity.Legendary);
-		var isdouble = false;
-		var isvendorable = true;
-		var isaccountbound = false;
-		var issoulbound = false;
-		var propstofetch = 0;
-		var numfetched = 0;
-		if (det && det.type)
-		{
-			subtype = det.type;
-			if (type === "Weapon") // Only weapons can have two upgrade slots
-			{
-				isdouble = (subtype === "Greatsword" || subtype === "Hammer" || subtype === "LongBow"
-					|| subtype === "ShortBow" || subtype === "Rifle" || subtype === "Staff"
-					|| subtype === "Harpoon" || subtype === "Speargun" || subtype === "Trident");
-			}
-		}
-		
-		// Correct API bug with gathering tool icons
-		if (type === "Gathering" && item.rarity !== Q.Rarity.Rare)
-		{
-			item.icon = "img/account/item/gathering_" + det.type.toLowerCase() + I.cPNG;
-		}
-		
-		// NAME
-		var namestr = "";
-		var rarity = (item.rarity !== undefined) ? item.rarity : Q.Rarity.Basic;
-		namestr = "<aside class='itmName " + ((settings.quantity !== undefined) ? (settings.quantity + " ") : "") + Q.getRarityClass(rarity)
-			+ "'><img class='itmIcon itmIconMain' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
-		
-		// WEAPON STRENGTH
-		var damagestr = "";
-		if (det && det.min_power !== undefined && det.max_power !== undefined)
-		{
-			damagestr += "<span class='itmText'>" + D.getString("WeaponStrength") + ":</span> <span class='itmAttr'>"
-				+ (det.min_power).toLocaleString() + " - " + (det.max_power).toLocaleString() + "</span><br />";
-		}
-		
-		// DEFENSE
-		var defensestr = "";
-		if (det && det.defense > 0)
-		{
-			defensestr += "<span class='itmText'>" + D.getString("Defense") + ":</span> <span class='itmAttr'>" + (det.defense).toLocaleString() + "</span><br />";
-		}
-		
-		// ATTRIBUTES
-		var attrstr = "";
-		var statsbrktop = "";
-		var buffs = [];
-		var buffcounter = 0;
-		var buffadd = 0;
-		var buffnumbers = [];
-		if (det && det.infix_upgrade)
-		{
-			var attr = det.infix_upgrade.attributes;
-			attrstr += "<aside class='itmAttr'>";
-			
-			if (det.infix_upgrade !== undefined)
-			{
-				// Armors, weapons, trinkets
-				if (isequipment)
-				{
-					if (det.infix_upgrade.buff && det.infix_upgrade.buff.description)
-					{
-						buffnumbers = (det.infix_upgrade.buff.description).split("\n");
-						buffnumbers.forEach(function(iBuff)
-						{
-							buffs.push(U.stripToNumbers(iBuff));
-						});
-					}
-					attr.forEach(function(iStats)
-					{
-						if (buffcounter < buffs.length)
-						{
-							buffadd = buffs[buffcounter];
-							buffcounter++;
-						}
-						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + Q.getAttributeString(iStats.attribute) + "<br />";
-						// Sum the iterated attribute to the attributes-containing object
-					});
-				}
-				// Sigils
-				else if (det.infix_upgrade.buff)
-				{
-					attrstr += "<span class='itmBuff'>" + Q.formatItemDescription(item) + "</span>";
-					statsbrktop = "<br />";
-				}
-				// Runes
-				else if (det.bonuses && det.type === "Rune")
-				{
-					attrstr += Q.getItemRune(item);
-				}
-			}
-			
-			attrstr = statsbrktop + attrstr;
-			attrstr += "</aside>";
-		}
-		// Foods and Utilities
-		else if (type === "Consumable")
-		{
-			attrstr += D.getString("DoubleClickToConsume") + "<br />";
-			if (det.duration_ms !== undefined)
-			{
-				var consumeimg = (det.type === "Food" || det.type === "Utility") ? ("_" + (det.type).toLowerCase()) : "";
-				var consumetypestr = (det.type === "Immediate") ? D.getString("Boost") : D.getString("Nourishment");
-				var consumedurstr = (det.duration_ms > 0) ? (" (" + T.formatTooltipTimeMS(det.duration_ms, true) + ")") : "";
-				attrstr += "<span class='itmConsumableLine'><img class='itmIcon itmConsumableIcon' src='img/account/item/nourishment" + consumeimg + ".png' /> "
-					+ "<var class='itmGrayed itmConsumableDesc'>" + consumetypestr + consumedurstr + ": " + Q.formatItemDescription(det.description) + "</var></span>";
-			}
-			else if (det.type === "Booze")
-			{
-				attrstr += D.getString("ExcessiveAlcohol") + "<br />";
-			}
-		}
-		// Sum attribute points if requested
-		if (attrobj)
-		{
-			Q.sumItemAttribute(attrobj, item);
-		}
-		
-		// RARITY
-		var raritystr = "";
-		if (isequipment)
-		{
-			// Back item will have a beginning line break because of its type name
-			raritystr = D.getString(item.rarity) + ((isbackitem) ? "" : "<br />");
-		}
-		
-		// WEIGHT
-		var weightstr = "";
-		if (det && det.weight_class)
-		{
-			weightstr = D.getString(det.weight_class) + "<br />";
-		}
-		
-		// TYPE
-		var typestr = Q.getItemType(item);
-		
-		// LEVEL
-		var levelstr = "";
-		if (item.level > 1)
-		{
-			levelstr += D.getString("RequiredLevel") + ": " + item.level + "<br />";
-		}
-		
-		// DESCRIPTION
-		/*
-		 * Item details' description may be pretagged with XML that colorizes
-		 * a portion of text. Example: <c=@flavor>Description</c>
-		 * If a tag exists, it shall have the "=@flavor" replaced with " class='.itmColor_flavor'"
-		 */
-		var desctopstr = "";
-		var descbottomstr = "";
-		var desc = item.description || "";
-		desc = Q.formatItemDescription(desc);
-		if (item.description)
-		{
-			desc = "<aside>" + desc + "</aside>";
-			if (isequipment)
-			{
-				descbottomstr = desc;
-			}
-			else
-			{
-				desctopstr = desc;
-			}
-		}
-		
-		// SELECTABLE STATS
-		var selectstatsstr = "";
-		if (isequipment)
-		{
-			if (det && det.infix_upgrade === undefined)
-			{
-				selectstatsstr = D.getString("DoubleClickToSelectStats") + "<br />";
-			}
-		}
-		
-		// FLAGS
-		var flagsstr = "";
-		var flagsobj = {};
-		var addFlag = function(pFlagName)
-		{
-			flagsstr += D.getString(pFlagName) + "<br />";
-		};
-		if (item.flags)
-		{
-			// Convert the flags array to an associative array for easier reading
-			item.flags.forEach(function(iFlag)
-			{
-				flagsobj[iFlag] = true;
-			});
-			// Uniqueness flag
-			if (flagsobj["Unique"])
-			{
-				addFlag("Unique");
-			}
-			// Binding flags for custom items (equipped items or in bound in inventory)
-			if (iscustomitem && settings.customitem.binding)
-			{
-				istradeable = false;
-				if (settings.customitem.binding === "Character" && settings.customitem.bound_to)
-				{
-					flagsstr += "<var class='itmColor_warning'>" + D.getString("SoulboundToCharacter")
-						+ ": " + settings.customitem.bound_to + "</var><br />";
-				} 
-				else if (settings.customitem.binding === "Account")
-				{
-					addFlag("AccountBound");
-				}
-			}
-			else // Binding flags for fresh items
-			{
-				// "SoulbindOnAcquire" flag shall override "SoulBindOnUse"
-				if (flagsobj["SoulbindOnAcquire"])
-				{
-					issoulbound = true;
-					istradeable = false;
-					addFlag("SoulbindOnAcquire");
-				}
-				else if (flagsobj["SoulBindOnUse"] && issoulbound === false)
-				{
-					addFlag("SoulBindOnUse");
-				}
-				// "AccountBound" flag shall override "AccountBindOnUse"
-				if (flagsobj["AccountBound"]) 
-				{
-					isaccountbound = true;
-					istradeable = false;
-					addFlag("AccountBound");
-				}
-				else if (flagsobj["AccountBindOnUse"] && isaccountbound === false)
-				{
-					addFlag("AccountBindOnUse");
-				}
-			}
-			// Vendorability flag
-			if (flagsobj["NoSell"])
-			{
-				isvendorable = false;
-			}
-		}
-		
-		// CHARACTER BINDING
-		var charbindstr = "";
-		if (settings.soulbound)
-		{
-			charbindstr = D.getString("SoulboundToCharacter") + ": " + U.escapeHTML(settings.soulbound);
-		}
-		
-		// VENDOR PRICE
-		var vendorstr = "";
-		var vendorvalue = 0;
-		if (item.vendor_value > 0 && isvendorable)
-		{
-			// If stack count is included then multiply vendor price for one item by that number
-			vendorvalue = (settings.customitem.count) ? settings.customitem.count * item.vendor_value : item.vendor_value;
-			vendorstr += E.formatCoinString(vendorvalue, {wantcolor: true, wantspace: true});
-		}
-		
-		/*
-		 * Upgrades and transmutations requires loading AJAX, so they must be
-		 * done last and checked that every requests have been fulfilled then
-		 * the tooltip HTML generation is finalized.
-		 */
-		// UPGRADES
-		var upgradebrk = "";
-		var infusionslot;
-		var infusiontype = "";
-		var preinfusions = [];
-		var infusionstr = [];
-		var preupgrades = [];
-		var upgradestr = [];
-		if (isequipment)
-		{
-			if (isascended || (isascended && istrinket) === false)
-			{
-				upgradebrk = "<br />";
-			}
-			
-			if (isascended)
-			{
-				if (det && det.infusion_slots)
-				{
-					for (var i = 0; i < det.infusion_slots.length; i++)
-					{
-						infusionslot = det.infusion_slots[i];
-						infusiontype = infusionslot.flags[0];
-						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
-							+ D.getString(infusiontype + "_Infusion") + "<br /><br />");
-						if (infusionslot.item_id !== undefined && settings.customitem.infusions === undefined)
-						{
-							preinfusions.push(infusionslot.item_id);
-							propstofetch++;
-						}
-						else
-						{
-							preinfusions.push(null);
-						}
-					}
-				}
-			}
-			if ((isascended && istrinket) === false)
-			{
-				var unupgradedslot = "<img class='itmSlotIcon' src='img/account/item/upgrade.png' /> "
-					+ D.getString("UnusedUpgradeSlot") + "<br /><br />";
-				upgradestr.push(unupgradedslot);
-				upgradestr.push((isdouble) ? unupgradedslot : "");
-				if (det && det.suffix_item_id && settings.customitem.upgrades === undefined)
-				{
-					preupgrades.push(det.suffix_item_id);
-					propstofetch++;
-				}
-				else
-				{
-					preupgrades.push(null);
-					if (isdouble)
-					{
-						preupgrades.push(null);
-					}
-				}
-			}
-		}
-		
-		// OVERWRITE INFUSIONS AND UPGRADES
-		if (settings.customitem.infusions)
-		{
-			for (var i = 0; i < settings.customitem.infusions.length; i++)
-			{
-				if (i < preinfusions.length)
-				{
-					preinfusions[i] = settings.customitem.infusions[i];
-					if (preinfusions[i])
-					{
-						propstofetch++;
-					}
-				}
-			}
-		}
-		if (settings.customitem.upgrades)
-		{
-			for (var i = 0; i < settings.customitem.upgrades.length; i++)
-			{
-				if (i < preupgrades.length)
-				{
-					preupgrades[i] = settings.customitem.upgrades[i];
-					if (preupgrades[i])
-					{
-						propstofetch++;
-					}
-				}
-			}
-		}
-		
-		// TRANSMUTATION
-		var transmstr = "";
-		if (settings.customitem.skin)
-		{
-			propstofetch++;
-		}
-		
-		/*
-		 * Final actions and binding to be done after the tooltip HTML has been
-		 * formatted and additional AJAX HTML included.
-		 */
-		var finalizeTooltip = function()
-		{
-			if (numfetched !== propstofetch)
-			{
-				return;
-			}
-			var html = "<div class='itmTooltip'>"
-				+ namestr
-				+ damagestr
-				+ defensestr
-				+ attrstr
-				+ desctopstr
-				+ upgradebrk
-				+ ((isweapon) ? (upgradestr.join("") + infusionstr.join("")) : (infusionstr.join("") + upgradestr.join("")))
-				+ transmstr
-				+ raritystr
-				+ weightstr
-				+ typestr
-				+ levelstr
-				+ descbottomstr
-				+ selectstatsstr
-				+ flagsstr
-				+ charbindstr
-				+ vendorstr
-			+ "</div>";
-			// Bind tooltip if provided an element
-			if (settings.element)
-			{
-				var elm = $(settings.element);
-				elm.attr("title", html);
-				I.qTip.init(elm);
-			}
-			/*
-			 * This object is the result of the analysis, containing tooltip
-			 * information and additionally retrieved slotted items.
-			 */
-			var box = {
-				item: item,
-				infusions: infusionobjs,
-				upgrades: upgradeobjs,
-				skin: skinobj,
-				attr: attrobj,
-				html: html,
-				istradeable: istradeable
-			};
-			// Cache the item only if it's not custom (no upgrades or transmutations)
-			if (iscustomitem === false)
-			{
-				Q.Box[item.id] = box;
-			}
-			// Execute callback if provided
-			if (settings.callback)
-			{
-				settings.callback(box);
-			}
-		};
-		
-		/*
-		 * Fetch additional data like slotted upgrades and transmutations.
-		 */
-		// SLOTTED INFUSIONS
-		for (var i = 0; i < preinfusions.length; i++)
-		{
-			if (preinfusions[i] === null)
-			{
-				continue;
-			}
-			(function(iIndex, iInfusionID)
-			{
-				$.getJSON(U.getAPIItem(iInfusionID), function(iData)
-				{
-					infusionstr[iIndex] = "<span class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + iData.name + "<br />"
-						+ iData.details.infix_upgrade.buff.description + "</span><br /><br />";
-					if (settings.callback)
-					{
-						infusionobjs.push(iData);
-					}
-					if (attrobj)
-					{
-						Q.sumItemAttribute(attrobj, iData);
-					}
-					numfetched++;
-					finalizeTooltip();
-				}).fail(function()
-				{
-					propstofetch--;
-					finalizeTooltip();
-				});
-			})(i, preinfusions[i]);
-		}
-		
-		// SLOTTED UPGRADES
-		for (var i = 0; i < preupgrades.length; i++)
-		{
-			if (preupgrades[i] === null)
-			{
-				continue;
-			}
-			(function(iIndex, iUpgradeID)
-			{
-				$.getJSON(U.getAPIItem(iUpgradeID), function(iData)
-				{
-					var upgdesc = "";
-					if (iData.details.type === "Rune")
-					{
-						var runepieces = 0;
-						if (det.type === "HelmAquatic")
-						{
-							// Count the rune in the aquatic helm for its own slotted description
-							runepieces = (settings.runesets && settings.runesets[iData.id]) ? (1 + settings.runesets[iData.id].numslotted) : 1;
-						}
-						else if (settings.runesets)
-						{
-							runepieces = settings.runesets;
-						}
-						upgdesc = Q.getItemRune(iData, runepieces);
-						if (attrobj)
-						{
-							Q.sumItemAttribute(attrobj, iData, settings.runesets);
-						}
-					}
-					else
-					{
-						upgdesc = iData.name + "<br />" + Q.formatItemDescription(iData);
-						if (attrobj)
-						{
-							Q.sumItemAttribute(attrobj, iData);
-						}
-					}
-					
-					upgradestr[iIndex] = "<aside class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + upgdesc + "</aside><br />";
-					if (settings.callback)
-					{
-						upgradeobjs.push(iData);
-					}
-					numfetched++;
-					finalizeTooltip();
-				}).fail(function()
-				{
-					propstofetch--;
-					finalizeTooltip();
-				});
-			})(i, preupgrades[i]);
-		}
-		
-		// TRANSMUTED
-		if (settings.customitem.skin)
-		{
-			$.getJSON(U.getAPISkin(settings.customitem.skin), function(iData)
-			{
-				namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + Q.getRarityClass(rarity)
-					+ "'><img class='itmIcon itmIconMain' src='" + iData.icon + "' />" + U.escapeHTML(iData.name) + "</aside>";
-				transmstr = "<aside='itmTransmute'>" + D.getString("Transmuted") + "<br />" + U.escapeHTML(item.name) + "</aside><br /><br />";
-				if (settings.callback)
-				{
-					skinobj = iData;
-				}
-				numfetched++;
-				finalizeTooltip();
-			}).fail(function()
-			{
-				propstofetch--;
-				finalizeTooltip();
-			});
-		}
-		
-		// In case no fetching is needed at all
-		if (numfetched === propstofetch)
-		{
-			finalizeTooltip();
-		}
-	},
-	
-	/*
-	 * Formats a trait or skill object to be used in tooltips.
-	 * @param object pTrait details retrieved from API.
-	 * @return string content for tooltip window.
-	 */
-	formatSkillTrait: function(pTrait)
-	{
-		var formatFact = function(pFact)
-		{
-			var text = pFact.text;
-			var type = pFact.type;
-			var value = pFact.value;
-			var attrtarget = (pFact.target !== undefined) ? Q.getAttributeString(pFact.target) : "";
-			var attrsource = (pFact.source !== undefined) ? Q.getAttributeString(pFact.source) : "";
-			var buffconv = (type === "BuffConversion") ? D.getString("GainBasedPercentage").replace("{0}", attrsource).replace("{1}", attrtarget) : "";
-			var icon = "<img class='trtFactIcon' src='" + pFact.icon + "' />";
-			var prefixicon = (pFact.prefix && pFact.prefix.icon) ? "<img class='trtFactIcon' src='" + pFact.prefix.icon + "' />" : "";
-			var desc = pFact.description;
-			var stacks = (pFact.apply_count > 1) ? "<var class='trtStacks'>" + pFact.apply_count + "</var>" : "";
-			var duration = (pFact.duration !== undefined) ? (pFact.duration + " " + D.getWord("seconds")) : "";
-			var durationabbr = (pFact.duration !== undefined) ? " (" + T.formatTooltipTime(pFact.duration) + ")" : "";
-			var status = pFact.status;
-			var combofield = pFact.field_type;
-			var combofinisher = pFact.finisher_type;
-			var percent = pFact.percent + "%";
-			var hitcount = pFact.hit_count + "x";
-			var distance = pFact.distance;
-			
-			var wrap = function(pIcon, pText)
-			{
-				return "<var class='trtFactIcons'>" + pIcon + "</var><var class='trtFactText'>" + pText + "</var>";
-			};
-			
-			var facttype = {
-				AttributeAdjust: function(){
-					return wrap(icon, "+" + value + " " + attrtarget);},
-				Buff: function(){
-					return wrap(stacks + icon, status + durationabbr + ": " + desc);},
-				BuffConversion: function(){
-					return wrap(icon, buffconv);},
-				ComboField: function(){
-					return wrap(icon, text + ": " + combofield);},
-				ComboFinisher: function(){
-					return wrap(icon, text + ": " + combofinisher + " (" + percent + ")");},
-				Damage: function(){
-					return wrap(icon, text + ": " + hitcount);},
-				Distance: function(){
-					return wrap(icon, text + ": " + distance);},
-				Duration: function(){
-					return wrap(icon, text + ": " + duration);},
-				Heal: function(){
-					return wrap(icon, text + ": " + hitcount);},
-				HealingAdjust: function(){
-					return wrap(icon, text + ": " + hitcount);},
-				NoData: function(){
-					return wrap(icon, text);},
-				Number: function(){
-					return wrap(icon, text + ": " + value);},
-				Percent: function(){
-					return wrap(icon, text + ": " + percent);},
-				PrefixedBuff: function(){
-					return wrap(icon + prefixicon, status + durationabbr + ": " + desc);},
-				Radius: function(){
-					return wrap(icon, text + ": " + distance);},
-				Range: function(){
-					return wrap(icon, text + ": " + value);},
-				Time: function(){
-					return wrap(icon, text + ": " + duration);},
-				Unblockable: function(){
-					return wrap(icon, text);}
-			};
-			
-			if (facttype[type])
-			{
-				return "<span class='trtFactLine'>" + facttype[type]() + "</span>";
-			}
-			return "";
-		};
-		
-		var name = "<span class='trtName'>" + pTrait.name + "</span>";
-		var desc = "<span class='trtDesc'>" + Q.formatItemDescription(pTrait.description) + "</span>";
-		var recharge = "";
-		var facts = "";
-		var factsinner = "";
-		if (pTrait.facts && pTrait.facts.length > 0)
-		{
-			facts += "<aside class='trtFacts'>";
-			pTrait.facts.forEach(function(iFact)
-			{
-				if (iFact.type === "Recharge")
-				{
-					recharge = "<span class='trtRecharge'>" + iFact.value + "<img class='trtRechargeIcon' src='" + iFact.icon + "' /></span>";
-				}
-				else
-				{
-					factsinner += formatFact(iFact);
-				}
-			});
-			// Don't include facts element if no fact lines were added
-			facts = (factsinner === "") ? "" : (facts + factsinner + "</aside>");
-		}
-		
-		return recharge + name + desc + facts;
-	},
-	
-	/*
-	 * Generates trait tooltip HTML.
-	 * @param object pTrait details retrieved from API.
-	 * @objparam jqobject element to bind tooltip.
-	 */
-	analyzeTrait: function(pTrait, pOptions)
-	{
-		var settings = pOptions || {};
-		var content = Q.formatSkillTrait(pTrait);
-		
-		// Calculate an extra tooltip's height by actually making it then measuring its height
-		var computeOffset = function(pContent)
-		{
-			var nullcon = $("#itemNull").empty();
-			var height = $(pContent).appendTo(nullcon).height();
-			nullcon.empty(); // Served its purpose, so delete the temporary element
-			return height;
-		};
-		
-		// Include additional tooltips if trait has a skills array
-		var skilltooltips = "";
-		var offsetcumulative = 6;
-		var offsetbetween = 20;
-		if (pTrait.skills)
-		{
-			pTrait.skills.forEach(function(iSkill)
-			{
-				/*
-				 * A trait may contain skill tooltips above its own tooltip. To
-				 * position them like in game, the vertical offsets need to be
-				 * computed so the extra tooltips float by absolute position,
-				 * even though all the tooltips share a single container.
-				 */
-				var dummytooltip = "<div class='qTip'><div class='trtTooltip'>" + Q.formatSkillTrait(iSkill) + "</div></div>";
-				offsetcumulative += computeOffset(dummytooltip) + offsetbetween;
-				// Write the actual extra skill tooltip
-				skilltooltips += "<div class='trtTooltip trtTooltipExtra' style='margin-top:" + "-" + offsetcumulative + "px" + "'>"
-					+ Q.formatSkillTrait(iSkill) + "</div>";
-			});
-		}
-		
-		var html = "<div class='trtTooltipBorder'>" + I.Symbol.Filler + "</div>"
-			+ skilltooltips + "<div class='trtTooltip'>" + content + "</div>";
-		if (settings.element)
-		{
-			var elm = $(settings.element);
-			elm.attr("title", html);
-			I.qTip.init(elm);
-		}
-	},
-	
-	/*
-	 * Creates a bank container element.
-	 * @param jqobject pDestination to append bank.
-	 * @returns jqobject bank.
-	 */
-	createBank: function(pDestination)
-	{
-		return $("<div class='bnkContainer'>"
-			+ "<div class='bnkTop'>"
-				+ "<aside class='bnkPrice'></aside>"
-			+ "</div>"
-			+ "<div class='bnkBank'></div>"
-		+ "</div>").appendTo(pDestination);
-	},
-	
-	/*
-	 * Creates a standard bank window tab that holds item slots, and a separator
-	 * that toggles the tab.
-	 * @param jqobject pBank container of tabs.
-	 * @param string pTitle of the tab, placed in the separator, optional.
-	 * @returns jqobject bank tab.
-	 */
-	createBankTab: function(pBank, pTitle)
-	{
-		var tab = $("<div class='bnkTab'></div>");
-		var titlestr = (pTitle) ? "<var class='bnkTabText'>" + pTitle + "</var>" : "";
-		var tabseparator = $("<div class='bnkTabSeparator curToggle'><aside class='bnkTabHeader'>"
-			+ titlestr
-			+ "<var class='bnkTabPrice'></var>"
-		+ "</aside></div>").appendTo(tab);
-		var tabtoggle = $("<var class='bnkTabToggle'></var>").appendTo(tabseparator);
-		var tabslots = $("<div class='bnkTabSlots'></div>").appendTo(tab);
-		tabseparator.click(function()
-		{
-			var state = tabslots.is(":visible");
-			I.toggleToggleIcon(tabtoggle, !state);
-			tabslots.slideToggle("fast");
-		});
-		pBank.append(tab);
-		return tab;
-	},
-	
-	/*
-	 * Creates a vertical bar that holds bags on the left side of a bank tab.
-	 * @param jqobject pTab to append.
-	 * @param objarray pBags from characters API.
-	 */
-	createInventorySidebar: function(pTab, pBagsData)
-	{
-		if (pBagsData === undefined)
-		{
-			return;
-		}
-		
-		pTab.addClass("bnkTabInventory");
-		var sidebar = $("<div class='bnkSidebar'></div>").prependTo(pTab);
-		var bagscolumn = $("<div class='bnkSidebarColumn'></div>").appendTo(sidebar);
-		var bagouter, bag;
-		pBagsData.forEach(function(iBagData)
-		{
-			bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
-			bag = $("<span class='bnkSidebarBag'></span>").appendTo(bagouter);
-			if (iBagData)
-			{
-				(function(iBag)
-				{
-					$.getJSON(U.getAPIItem(iBagData.id), function(iItem)
-					{
-						iBag.css({backgroundImage: "url(" + iItem.icon + ")"});
-						Q.scanItem(iItem, {element: iBag});
-					});
-				})(bag);
-			}
-		});
-	},
-		
-	/*
-	 * Constructs a standard inventory slot for use in inventory, bank, materials,
-	 * and other windows.
-	 * @returns jqobject slot.
-	 */
-	createBankSlot: function()
-	{
-		return $("<span class='bnkSlot'>"
-			+ "<var class='bnkSlotBackground'></var>"
-			+ "<var class='bnkSlotIcon'></var>"
-			+ "<var class='bnkSlotForeground'></var>"
-		+ "</span>");
-	},
-	
-	/*
-	 * Styles a standard inventory slot and prepare it for search.
-	 * @param jqobject pSlot to style.
-	 * @param object pSlotData custom item data retrieved from characters or
-	 * bank API, containing stack count and transmutation data.
-	 * @param object pItem data retrieved from item details API.
-	 * @param jqobject pTab to update tab's sum of tradeable items prices.
-	 */
-	styleBankSlot: function(pSlot, pSlotData, pItem)
-	{
-		if (pSlotData)
-		{
-			Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, callback: function(pBox)
-			{
-				// Load retrieved proper transmuted icon if available
-				var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
-				pSlot.find(".bnkSlotIcon").css({backgroundImage: "url(" + icon + ")"});
-				// Make the item searchable by converting its tooltip HTML into plain text
-				var keywords = ($(pBox.html).text() + " " + D.getString(pItem.rarity)).toLowerCase();
-				pSlot.data("keywords", keywords);
-				// Double click the slot opens its wiki page
-				pSlot.dblclick(function()
-				{
-					U.openExternalURL(U.getWikiLanguageLink(pBox.item.name));
-				});
-				// Numeric label over the slot icon indicating stack size or charges remaining
-				var count = pSlotData.count || 1;
-				if (count > 1)
-				{
-					pSlot.append("<var class='bnkSlotCount'>" + count + "</var>");
-				}
-				else if (pItem.type === "Tool")
-				{
-					// Salvage Kits gets a faux count number representing their remaining charges
-					var salv = A.Equipment.SalvageCharges;
-					if (salv && salv[pItem.id])
-					{
-						pSlot.append("<var class='bnkSlotCount'>" + salv[pItem.id] + "</var>");
-					}
-				}
-				else if (pItem.type === "Gathering")
-				{
-					var gath = A.Equipment.GatheringCharges;
-					if (gath && pItem.rarity !== Q.Rarity.Rare)
-					{
-						pSlot.append("<var class='bnkSlotCount'>" + gath[pItem.details.type] + "</var>");
-					}
-				}
-				// Fade the slots that act as collections
-				if (pSlotData.count === 0)
-				{
-					pSlot.addClass("bnkSlotZero");
-				}
-				// TP price label if the item is tradeable
-				if (pBox.istradeable)
-				{
-					$.getJSON(U.URL_API.ItemPrices + pItem.id, function(pData)
-					{
-						var pricebuy = E.deductTax(pData.buys.unit_price * count);
-						var pricesell = E.deductTax(pData.sells.unit_price * count);
-						var updatePriceDisplay = function(pDisplay)
-						{
-							var displaypricebuy = (pDisplay.data("pricebuy") || 0) + pricebuy;
-							var displaypricesell = (pDisplay.data("pricesell") || 0) + pricesell;
-							pDisplay.data("pricebuy", displaypricebuy).data("pricesell", displaypricesell);
-							var tabtext = E.formatCoinStringColored(displaypricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(displaypricebuy) + "</span>";
-							pDisplay.html(tabtext);
-						};
-						
-						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricesell, {wantcolor: true, wantshort: true}) + "</var>");
-						// Only add if item actually exists (not a zero stack slot)
-						if (pSlotData.count !== 0)
-						{
-							updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
-							updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPrice"));
-							pSlot.data("price", pricesell);
-						}
-					});
-					
-				}
-			}});
-		}
-		else
-		{
-			// Empty slot gets keywords anyway for use in search
-			pSlot.data("keywords", "*");
-		}
-	},
-	
-	/*
-	 * Creates and binds a search bar for a bank. Also creates functional buttons.
-	 * @param jqobject pBank for insertion.
-	 * @pre Bank slots were generated.
-	 */
-	createBankMenu: function(pBank)
-	{
-		// Initialize commonly used elements
-		var sectionname = pBank.parents(".accDishContainer").attr("data-section");
-		var slots = pBank.find(".bnkSlot");
-		var tabslots = pBank.find(".bnkTabSlots");
-		var tabtoggles = pBank.find(".bnkTabToggle");
-		$("#accDishMenu_" + sectionname).remove();
-		var dishmenu = $("<aside id='accDishMenu_" + sectionname + "' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
-		
-		/*
-		 * Search bar.
-		 */
-		var searchcontainer = $("<div class='bnkSearch'></div>").prependTo(dishmenu);
-		var input = $("<input class='bnkSearchInput' type='text' />").appendTo(searchcontainer);
-		var fillertext = $("<div class='bnkSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(searchcontainer);
-		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
-		{
-			var query = $(this).val().toLowerCase();
-			var queries = [];
-			var equality = "";
-			var keywords = "";
-			if (query.length > 0)
-			{
-				equality = query.charAt(0);
-				fillertext.hide();
-				// If searching by price range
-				if ((equality === "<" || equality === ">") && query.length > 1)
-				{
-					var pricewant = E.parseCoinString(query.substring(1, query.length));
-					slots.each(function()
-					{
-						var priceslot = $(this).data("price");
-						if (priceslot && ((equality === ">" && priceslot >= pricewant) || (equality === "<" && priceslot <= pricewant)))
-						{
-							$(this).show();
-						}
-						else
-						{
-							$(this).hide();
-						}
-					});
-				}
-				// If searching by keywords
-				else
-				{
-					queries = query.split(" ");
-					// Search for every substring in the user's query, which is space separated
-					slots.each(function()
-					{
-						keywords = $(this).data("keywords"); // The text version of the item's tooltip HTML
-						var ismatch = true;
-						if (keywords)
-						{
-							for (var i = 0; i < queries.length; i++)
-							{
-								// If at least one substring of the search query isn't found, then hide that item
-								if (keywords.indexOf(queries[i]) === -1)
-								{
-									$(this).hide();
-									ismatch = false;
-									break;
-								}
-							}
-							// The boolean is only true if every substrings were found
-							if (ismatch)
-							{
-								$(this).show();
-							}
-						}
-					});
-				}
-			}
-			else
-			{
-				fillertext.show();
-				slots.each(function()
-				{
-					$(this).show();
-				});
-			}
-			A.adjustAccountScrollbar();
-		}));
-		
-		/*
-		 * Add buttons next to the search bar for bank functionalities.
-		 */
-		var buttoncontainer = $("<aside class='bnkButtons'></aside>").appendTo(dishmenu);
-		
-		// Help button shows search usage message
-		var isshowinghelp = true;
-		$("<div class='bnkButtonHelp bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
-		{
-			if (isshowinghelp || I.isConsoleShown() === false)
-			{
-				I.print($("#accInventorySearchHelp").html(), true);
-			}
-			else
-			{
-				I.clear();
-			}
-			isshowinghelp = !isshowinghelp;
-		});
-		
-		// Hide empty slots filter
-		var isfilteringempty = true;
-		$("<div class='bnkButtonEmpty bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
-		{
-			if (isfilteringempty)
-			{
-				slots.each(function()
-				{
-					// All non-empty slots should have an item with a tooltip
-					if ($(this).attr(I.cTooltipAttribute))
-					{
-						$(this).show();
-					}
-					else
-					{
-						$(this).hide();
-					}
-				});
-			}
-			else
-			{
-				slots.show();
-			}
-			$(this).toggleClass("bnkButtonFocused");
-			isfilteringempty = !isfilteringempty;
-			A.adjustAccountScrollbar();
-		});
-		
-		// Trading Post filter for items that can be traded
-		var isfilteringtrade = true;
-		$("<div class='bnkButtonTrade bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
-		{
-			if (isfilteringtrade)
-			{
-				slots.each(function()
-				{
-					if ($(this).data("price"))
-					{
-						$(this).show();
-					}
-					else
-					{
-						$(this).hide();
-					}
-				});
-			}
-			else
-			{
-				slots.show();
-			}
-			$(this).toggleClass("bnkButtonFocused");
-			isfilteringtrade = !isfilteringtrade;
-			A.adjustAccountScrollbar();
-		});
-		
-		// Toggle all tabs button
-		var istabscollapsed = false;
-		$("<div class='bnkButtonTab bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
-		{
-			// Expand or collapse all tabs
-			if (istabscollapsed)
-			{
-				tabslots.slideDown("fast", function()
-				{
-					A.adjustAccountScrollbar();
-				});
-			}
-			else
-			{
-				tabslots.slideUp("fast", function()
-				{
-					A.adjustAccountScrollbar();
-				});
-			}
-			// Also change the toggle icon
-			tabtoggles.each(function()
-			{
-				I.toggleToggleIcon($(this), istabscollapsed);
-			});
-			$(this).toggleClass("bnkButtonFocused");
-			istabscollapsed = !istabscollapsed;
-		});
-		
-		// Increase or decrease bank width buttons
-		var slotsize = slots.first().width();
-		$("<div class='bnkButtonWideLess bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
-		{
-			var minbankwidth = slotsize * 4;
-			var oldwidth = pBank.width();
-			if (oldwidth > minbankwidth)
-			{
-				pBank.css({width: oldwidth - slotsize});
-				A.adjustAccountScrollbar();
-			}
-		});
-		$("<div class='bnkButtonWideMore bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
-		{
-			var maxbankwidth = $("#accContent").width() - (slotsize * 2);
-			var oldwidth = pBank.width();
-			if (oldwidth < maxbankwidth)
-			{
-				pBank.css({width: oldwidth + slotsize});
-				A.adjustAccountScrollbar();
-			}
-		});
-		
-		// Finally
-		searchcontainer.css({width: searchcontainer.width() - buttoncontainer.width()});
-		A.adjustAccountPanel();
 	}
 };
 

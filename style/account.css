@@ -1413,6 +1413,53 @@ input[type="text"].bnkSearchInput:hover {
 	border-radius: 1px;
 }
 
+.acc_wardrobe {
+	width: 32px; height: 32px;
+	margin-right: 8px;
+	background-image: url("../img/account/wardrobe.png");
+}
+.acc_wardrobe_armor_heavy_boots { background-position: 0 0; }
+.acc_wardrobe_armor_heavy_coat { background-position: -32px 0; }
+.acc_wardrobe_armor_heavy_gloves { background-position: -64px 0; }
+.acc_wardrobe_armor_heavy_helm { background-position: -96px 0; }
+.acc_wardrobe_armor_heavy_helmaquatic { background-position: -128px 0; }
+.acc_wardrobe_armor_heavy_leggings { background-position: -160px 0; }
+.acc_wardrobe_armor_heavy_shoulders { background-position: -192px 0; }
+.acc_wardrobe_armor_light_boots { background-position: -224px 0; }
+.acc_wardrobe_armor_light_coat { background-position: -256px 0; }
+.acc_wardrobe_armor_light_gloves { background-position: -288px 0; }
+.acc_wardrobe_armor_light_helm { background-position: -320px 0; }
+.acc_wardrobe_armor_light_helmaquatic { background-position: -352px 0; }
+.acc_wardrobe_armor_light_leggings { background-position: -384px 0; }
+.acc_wardrobe_armor_light_shoulders { background-position: -416px 0; }
+.acc_wardrobe_armor_medium_boots { background-position: -448px 0; }
+.acc_wardrobe_armor_medium_coat { background-position: -480px 0; }
+.acc_wardrobe_armor_medium_gloves { background-position: -512px 0; }
+.acc_wardrobe_armor_medium_helm { background-position: -544px 0; }
+.acc_wardrobe_armor_medium_helmaquatic { background-position: -576px 0; }
+.acc_wardrobe_armor_medium_leggings { background-position: -608px 0; }
+.acc_wardrobe_armor_medium_shoulders { background-position: -640px 0; }
+.acc_wardrobe_back { background-position: -672px 0; }
+.acc_wardrobe_weapon_axe { background-position: -704px 0; }
+.acc_wardrobe_weapon_dagger { background-position: -736px 0; }
+.acc_wardrobe_weapon_focus { background-position: -768px 0; }
+.acc_wardrobe_weapon_greatsword { background-position: -800px 0; }
+.acc_wardrobe_weapon_hammer { background-position: -832px 0; }
+.acc_wardrobe_weapon_harpoon { background-position: -864px 0; }
+.acc_wardrobe_weapon_longbow { background-position: -896px 0; }
+.acc_wardrobe_weapon_mace { background-position: -928px 0; }
+.acc_wardrobe_weapon_pistol { background-position: -960px 0; }
+.acc_wardrobe_weapon_rifle { background-position: -992px 0; }
+.acc_wardrobe_weapon_scepter { background-position: -1024px 0; }
+.acc_wardrobe_weapon_shield { background-position: -1056px 0; }
+.acc_wardrobe_weapon_shortbow { background-position: -1088px 0; }
+.acc_wardrobe_weapon_speargun { background-position: -1120px 0; }
+.acc_wardrobe_weapon_staff { background-position: -1152px 0; }
+.acc_wardrobe_weapon_sword { background-position: -1184px 0; }
+.acc_wardrobe_weapon_torch { background-position: -1216px 0; }
+.acc_wardrobe_weapon_trident { background-position: -1248px 0; }
+.acc_wardrobe_weapon_warhorn { background-position: -1280px 0; }
+
 /* Adjustments for smaller screens
 ----------------------------------------------------------------------------- */
 @media (max-width: 720px) {
