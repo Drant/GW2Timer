@@ -80,6 +80,7 @@ O = {
 		programVersion: {key: "int_utlProgramVersion", value: 160322},
 		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
+		APICache: {key: "obj_utlAPICache", value: {}},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
 		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
 		StoredPins: {key: "obj_utlStoredPins", value: []},
@@ -2563,7 +2564,7 @@ U = {
 		Account: "data/account.js",
 		WvW: "data/wvw.js",
 		Itinerary: "data/itinerary.js",
-		Skins: "data/skins-min.js",
+		Skins: "data/skins.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
@@ -2625,6 +2626,10 @@ U = {
 	{
 		return U.getAPI("specializations", pID);
 	},
+	getAPIPrice: function(pID)
+	{
+		return U.URL_API.ItemPrices + pID;
+	},
 
 	/*
 	 * URLArguments (Args) may contain Options object's variables. In the form of:
@@ -2663,6 +2668,40 @@ U = {
 	APICacheArrayOfIDs: null, // Array of ID numbers for any particular v2 API endpoint
 	APICacheArrayOfObjects: null, // Array of objects downloaded from the IDs pointing there
 	APICacheConsole: null, // JSON text entered by the user
+	
+	/*
+	 * Loads an object from local storage into a variable for temporary test or
+	 * console usage.
+	 * @return boolean true if successfully loaded into variable, else false.
+	 */
+	loadAPICache: function()
+	{
+		var cache = localStorage[O.Utilities.APICache.key];
+		if (cache)
+		{
+			try {
+				U.APICacheConsole = JSON.parse(cache);
+				return true;
+			}
+			catch (e) {
+				I.print("Error loading API cache object.");
+			}
+		}
+		return false;
+	},
+	saveAPICache: function()
+	{
+		if (U.APICacheConsole)
+		{
+			localStorage[O.Utilities.APICache.key] = JSON.stringify(U.APICacheConsole);
+			return true;
+		}
+		else
+		{
+			I.print("Error saving cache object.");
+		}
+		return false;
+	},
 	
 	/*
 	 * Interprets and executes a command string, which may be a console command
@@ -3071,7 +3110,7 @@ U = {
 		
 		var waitCooldown = function()
 		{
-			var percentcomplete = U.convertDecimalToPercent(reqindex / idsarray.length);
+			var percentcomplete = U.convertRatioToPercent(reqindex / idsarray.length);
 			I.print("Cooldown... " + reqindex + " / " + idsarray.length + " (" + percentcomplete + ")");
 			setTimeout(function()
 			{
@@ -4122,7 +4161,7 @@ U = {
 	 * @param int pPlaces decimal to keep.
 	 * @returns string.
 	 */
-	convertDecimalToPercent: function(pNumber, pPlaces)
+	convertRatioToPercent: function(pNumber, pPlaces)
 	{
 		if (pNumber === undefined || isFinite(pNumber) === false)
 		{
@@ -4335,9 +4374,9 @@ A = {
 	generateMenu: function()
 	{
 		var menu = $("#accMenu");
-		for (var i in I.SectionEnum.Account)
+		$("#accContent").find(".accDishMain").each(function()
 		{
-			var sectionname = I.SectionEnum.Account[i];
+			var sectionname = $(this).attr("data-section");
 			var sectionnamelow = sectionname.toLowerCase();
 			var menubutton = $("<aside id='accMenu_" + sectionname + "' class='accMenu accMenuClick curClick'>"
 				+ "<span>"
@@ -4413,7 +4452,7 @@ A = {
 					});
 				}
 			})(menubutton, sectionname);
-		}
+		});
 		
 		/*
 		 * Bind the respective generate functions with the account menu buttons
@@ -5748,7 +5787,7 @@ V = {
 		{
 			char = A.Data.Characters[i];
 			// Bank tab separator every character
-			tab = Q.createBankTab(bank, char.charname);
+			tab = Q.createBankTab(bank, {title: char.charname});
 			Q.createInventorySidebar(tab, char.bags);
 			slotscontainer = tab.find(".bnkTabSlots");
 			for (var ii = 0; ii < char.bags.length; ii++)
@@ -5866,7 +5905,7 @@ V = {
 			for (var i = 0; i < matdata.length; i++)
 			{
 				matcategory = matdata[i];
-				tab = Q.createBankTab(bank, D.getObjectName(matcategory));
+				tab = Q.createBankTab(bank, {title: D.getObjectName(matcategory)});
 				// Store the tabs to be later inserted with slots
 				slotscontainer = tab.find(".bnkTabSlots");
 				slotscontainerassoc[matcategory.id] = slotscontainer;
@@ -5924,8 +5963,8 @@ V = {
 			{
 				cat = categories[i];
 				catname = D.getObjectName(names[i]);
-				caticon = "<ins class='acc_wardrobe acc_wardrobe_" + i.toLowerCase() + "'></ins>";
-				tab = Q.createBankTab(bank, caticon + catname, true);
+				caticon = "<ins class='bnkTabIcon acc_wardrobe acc_wardrobe_" + i.toLowerCase() + "'></ins>";
+				tab = Q.createBankTab(bank, {title: catname, icon: caticon, iscollapsed: true});
 				(function(iTab, iCat)
 				{
 					iTab.find(".bnkTabSeparator").one("click", function()
@@ -5935,24 +5974,44 @@ V = {
 						{
 							var skinid = iCat[ii];
 							var slot = Q.createBankSlot(slotscontainer);
-							var skinassoc = assoc[skinid];
-							if (skinassoc && skinassoc[0])
+							slot.attr("data-skinid", skinid);
+							var skinassoc = assoc[skinid]; // If the user's unlocked skin is found in the cache associative array
+							if (skinassoc)
 							{
 								(function(iSlot, iSkinID, iItemID)
 								{
-									var count = (pUnlockedAssoc[iSkinID]) ? 1 : 0;
 									$.getJSON(U.getAPIItem(iItemID), function(iItem)
 									{
-										Q.styleBankSlot(iSlot, {note: "ID: " + iSkinID, count: count}, iItem);
+										var count = (pUnlockedAssoc[iSkinID]) ? 1 : 0;
+										Q.styleBankSlot(iSlot, {count: count}, iItem);
+										iSlot.click(function()
+										{
+											I.log(iItem.name + " " + iSkinID + " " + iItemID);
+										});
 									});
-								})(slot, skinid, skinassoc[0]);
+								})(slot, skinid, skinassoc);
 							}
 						}
 						// Recreate the bank menu
 						Q.createBankMenu(bank);
 					});
 				})(tab, cat);
+				
+				// For this ith tab, write the number of skins unlocked on the tab header
+				var skinsunlocked = 0;
+				for (var ii = 0; ii < cat.length; ii++)
+				{
+					if (pUnlockedAssoc[(cat[ii])])
+					{
+						skinsunlocked++;
+					}
+				}
+				var numskinsintab = cat.length;
+				var unlockstr = skinsunlocked + " / " + numskinsintab
+					+ "<span class='accTrivial'> (" + U.convertRatioToPercent(skinsunlocked / numskinsintab) + ")</span>";
+				tab.find(".bnkTabStats").html(unlockstr);
 			}
+			U.curateSkins();
 		};
 		
 		// Retrieve data before generating
@@ -5968,6 +6027,167 @@ V = {
 				}
 				generateWardrobe(assocobj);
 			});
+		});
+	},
+	
+	serveLab: function()
+	{
+		var dish = $("#accDish_Lab");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		
+		var CurateArray = [];
+		var CurateArrayIndex = 0;
+		var CurateDatabase = {};
+		var CurateDatabaseIndex = "";
+		
+		var curateSkin = function()
+		{
+			var Boxes = [];
+			var selection = $("#labSelection");
+			var retrieval = $("#labRetrievalDisplay");
+			selection.empty().append(I.cThrobber);
+			var items = CurateDatabase[CurateDatabaseIndex];
+			var itemstoretrieve = items.length;
+			var itemsretrieved = 0;
+			
+			var finalizeCurate = function()
+			{
+				if (itemstoretrieve !== itemsretrieved)
+				{
+					return;
+				};
+				retrieval.empty();
+				selection.empty();
+				for (var i = 0; i < Boxes.length; i++)
+				{
+					var selectionitem = $("<div style='display:inline-block; padding:4px; margin-right:8px; margin-bottom:8px; border:1px solid gray; vertical-align:top; zoom:75%;'>"
+						+ Boxes[i].box.html + "</div>").appendTo(selection);
+					var selectionbutton = $("<button style='width:100%'>Select</button>").appendTo(selectionitem);
+					(function(iItemID)
+					{
+						selectionbutton.click(function()
+						{
+							CurateArray[CurateArrayIndex].itemid = iItemID;
+							retrieval.html("Selected Item: " + iItemID);
+							$("#labControlNext").trigger("click");
+						});
+					})(Boxes[i].itemid);
+				}
+			};
+			
+			for (var i = 0; i < items.length; i++)
+			{
+				var itemid = items[i];
+				$.getJSON(U.getAPIItem(itemid), function(iItem)
+				{
+					Q.scanItem(iItem, {wantprice: true, callback: function(iBox)
+					{
+						Boxes.push({
+							box: iBox,
+							itemid: itemid
+						});
+						itemsretrieved++;
+						retrieval.html(itemsretrieved + " / " + itemstoretrieve);
+						finalizeCurate();
+					}});
+				});
+			}
+		};
+		
+		var updateIndexDisplay = function()
+		{
+			$("#labIndexDisplay").html("Index: " + CurateArrayIndex + " / " + CurateArray.length
+				+ " &nbsp; Skin: " + CurateArray[CurateArrayIndex].skinid
+				+ " &nbsp; Item: " + CurateArray[CurateArrayIndex].itemid);
+		};
+		
+		var updateIndexes = function()
+		{
+			CurateDatabaseIndex = CurateArray[CurateArrayIndex].skinid;
+			curateSkin();
+			updateIndexDisplay();
+		};
+		
+		$.getScript(U.URL_DATA.Skins).done(function()
+		{
+			CurateDatabase = GW2T_SKINS_ITEMS;
+			var assoc = GW2T_SKINS_ASSOCIATION;
+			
+			var container = $("<div id='labContainer'></div>").appendTo(dish);
+			var controls = $("<div id='labControls' style='margin-bottom:16px;'></div>").appendTo(container);
+			var buttonprev = $("<button id='labControlPrev' style='width:200px; height:40px; margin-right:8px;'>Prev</button>").appendTo(controls);
+			var buttonnext = $("<button id='labControlNext' style='width:200px; height:40px; margin-right:8px;'>Next</button>").appendTo(controls);
+			var buttonprint = $("<button id='labControlPrint' style='width:100px; height:40px; margin-right:8px;'>Print</button>").appendTo(controls);
+			var buttonsave = $("<button id='labControlPrint' style='width:100px; height:40px; margin-right:8px;'>Save</button>").appendTo(controls);
+			var indexdisplay = $("<var id='labIndexDisplay' style='margin-right:8px; font-family:monospace; font-size:20px;'></var>").appendTo(controls);
+			var inputindex = $("<input id='labIndexInput' type='text' style='margin-right:8px;' />").appendTo(controls);
+			var retrievaldisplay = $("<var id='labRetrievalDisplay' style='font-family:monospace; font-size:20px;'></var>").appendTo(controls);
+			var selectionboxes = $("<div id='labSelection'></div>").appendTo(container);
+			
+			buttonprev.click(function()
+			{
+				if (CurateArrayIndex > 0)
+				{
+					CurateArrayIndex--;
+					updateIndexes();
+				}
+			});
+			buttonnext.click(function()
+			{
+				if (CurateArrayIndex < CurateArray.length - 1)
+				{
+					CurateArrayIndex++;
+					updateIndexes();
+				}
+			});
+			buttonprint.click(function()
+			{
+				var obj;
+				var html = "";
+				for (var i = 0; i < CurateArray.length; i++)
+				{
+					obj = CurateArray[i];
+					html += "&quot;" + obj.skinid + "&quot;: " + obj.itemid + ",<br />";
+				}
+				I.print(html);
+			});
+			buttonsave.click(function()
+			{
+				var obj;
+				var retobj = {};
+				for (var i = 0; i < CurateArray.length; i++)
+				{
+					obj = CurateArray[i];
+					retobj[obj.skinid] = obj.itemid;
+				}
+				U.APICacheConsole = retobj;
+				U.saveAPICache();
+			});
+			inputindex.onEnterKey(function()
+			{
+				var customindex = parseInt($(this).val());
+				if (customindex <= CurateArray.length - 1 && customindex >= 0)
+				{
+					CurateArrayIndex = customindex;
+					updateIndexes();
+				}
+			});
+			
+			if (U.loadAPICache())
+			{
+				assoc = U.APICacheConsole;
+			}
+			for (var i in assoc)
+			{
+				CurateArray.push({
+					skinid: i,
+					itemid: assoc[i]
+				});
+			}
+			updateIndexDisplay();
 		});
 	}
 };
@@ -6423,7 +6643,7 @@ Q = {
 	 * infusions, skins, and bindings, which are found in characters and bank API.
 	 * @objparam object runesets containing counts of runes associated with rune's item ID.
 	 * @objparam string soulbound name of character the item is bound to.
-	 * @objparam string note additional strings to be appended to the tooltip.
+	 * @objparam boolean wantprice whether to retrieve and include Trading Post price also.
 	 * @objparam function callback what to do after the tooltip generation
 	 * completes. This provides an object containing additionally retrieved
 	 * API objects like upgrades and skin.
@@ -6438,6 +6658,7 @@ Q = {
 		var attrobj = null; // Holds attribute points
 		var iscustomitem = false;
 		var istradeable = true;
+		var pricebuy, pricesell;
 		/* Example structure of customitem object:
 			{
 				"id": 68390,
@@ -6729,14 +6950,14 @@ Q = {
 		{
 			// If stack count is included then multiply vendor price for one item by that number
 			vendorvalue = (settings.customitem.count) ? settings.customitem.count * item.vendor_value : item.vendor_value;
-			vendorstr += E.formatCoinString(vendorvalue, {wantcolor: true, wantspace: true});
+			vendorstr = E.formatCoinString(vendorvalue, {wantcolor: true, wantspace: true});
 		}
 		
-		// CUSTOM NOTE
-		var notestr = "";
-		if (settings.note)
+		// TRADE PRICE
+		var pricestr = "";
+		if (settings.wantprice)
 		{
-			notestr = "<br />" + settings.note;
+			propstofetch++;
 		}
 		
 		/*
@@ -6868,7 +7089,7 @@ Q = {
 				+ flagsstr
 				+ charbindstr
 				+ vendorstr
-				+ notestr
+				+ pricestr
 			+ "</div>";
 			// Bind tooltip if provided an element
 			if (settings.element)
@@ -6993,14 +7214,36 @@ Q = {
 		// TRANSMUTED
 		if (settings.customitem.skin)
 		{
-			$.getJSON(U.getAPISkin(settings.customitem.skin), function(iData)
+			$.getJSON(U.getAPISkin(settings.customitem.skin), function(pData)
 			{
 				namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + Q.getRarityClass(rarity)
-					+ "'><img class='itmIcon itmIconMain' src='" + iData.icon + "' />" + U.escapeHTML(iData.name) + "</aside>";
+					+ "'><img class='itmIcon itmIconMain' src='" + pData.icon + "' />" + U.escapeHTML(pData.name) + "</aside>";
 				transmstr = "<aside='itmTransmute'>" + D.getString("Transmuted") + "<br />" + U.escapeHTML(item.name) + "</aside><br /><br />";
 				if (settings.callback)
 				{
-					skinobj = iData;
+					skinobj = pData;
+				}
+				numfetched++;
+				finalizeTooltip();
+			}).fail(function()
+			{
+				propstofetch--;
+				finalizeTooltip();
+			});
+		}
+		
+		// TRADEABLE
+		if (settings.wantprice)
+		{
+			$.getJSON(U.getAPIPrice(item.id), function(pData)
+			{
+				var prices = E.processPrice(pData, settings.customitem.count);
+				pricestr = "<aside>" + E.formatCoinString(prices.pricesell, {wantcolor: true, wantspace: true})
+					+ " <span class='accTrivial'>" + E.formatCoinString(prices.pricebuy, {wantcolor: true, wantspace: true}) + "</span></aside>";
+				if (settings.callback)
+				{
+					pricebuy = prices.pricebuy;
+					pricesell = prices.pricesell;
 				}
 				numfetched++;
 				finalizeTooltip();
@@ -7198,15 +7441,21 @@ Q = {
 	 * that generate slots on demand.
 	 * @returns jqobject bank tab.
 	 */
-	createBankTab: function(pBank, pTitle, pIsCollapsed)
+	createBankTab: function(pBank, pOptions)
 	{
+		var settings = pOptions || {};
+		
 		var tab = $("<div class='bnkTab'></div>");
-		var titlestr = (pTitle) ? "<var class='bnkTabText'>" + pTitle + "</var>" : "";
+		var iconstr = (settings.icon) ? settings.icon : "";
+		var titlestr = (settings.title) ? "<var class='bnkTabText'>" + settings.title + "</var>" : "";
 		var tabseparator = $("<div class='bnkTabSeparator curToggle'><aside class='bnkTabHeader'>"
+			+ iconstr
 			+ titlestr
 			+ "<var class='bnkTabPrice'></var>"
+			+ "<var class='bnkTabToggle'></var>"
+			+ "<var class='bnkTabStats'></var>"
 		+ "</aside></div>").appendTo(tab);
-		var tabtoggle = $("<var class='bnkTabToggle'></var>").appendTo(tabseparator);
+		var tabtoggle = tabseparator.find(".bnkTabToggle");
 		var tabslots = $("<div class='bnkTabSlots'></div>").appendTo(tab);
 		tabseparator.click(function()
 		{
@@ -7214,7 +7463,7 @@ Q = {
 			I.toggleToggleIcon(tabtoggle, !state);
 			tabslots.slideToggle("fast");
 		});
-		if (pIsCollapsed)
+		if (settings.iscollapsed)
 		{
 			I.toggleToggleIcon(tabtoggle, false);
 			tabslots.hide();
@@ -7285,7 +7534,7 @@ Q = {
 	{
 		if (pSlotData)
 		{
-			Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, note: pSlotData.note, callback: function(pBox)
+			Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, callback: function(pBox)
 			{
 				// Load retrieved proper transmuted icon if available
 				var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
@@ -7325,30 +7574,35 @@ Q = {
 				if (pSlotData.count === 0)
 				{
 					pSlot.addClass("bnkSlotZero");
+					pSlot.data("count", pSlotData.count);
+				}
+				else
+				{
+					// Assign count data for the hide empty slots filter
+					pSlot.data("count", count);
 				}
 				// TP price label if the item is tradeable
 				if (pBox.istradeable)
 				{
-					$.getJSON(U.URL_API.ItemPrices + pItem.id, function(pData)
+					$.getJSON(U.getAPIPrice(pItem.id), function(pData)
 					{
-						var pricebuy = E.deductTax(pData.buys.unit_price * count);
-						var pricesell = E.deductTax(pData.sells.unit_price * count);
+						var prices = E.processPrice(pData, count);
 						var updatePriceDisplay = function(pDisplay)
 						{
-							var displaypricebuy = (pDisplay.data("pricebuy") || 0) + pricebuy;
-							var displaypricesell = (pDisplay.data("pricesell") || 0) + pricesell;
+							var displaypricebuy = (pDisplay.data("pricebuy") || 0) + prices.pricebuy;
+							var displaypricesell = (pDisplay.data("pricesell") || 0) + prices.pricesell;
 							pDisplay.data("pricebuy", displaypricebuy).data("pricesell", displaypricesell);
 							var tabtext = E.formatCoinStringColored(displaypricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(displaypricebuy) + "</span>";
 							pDisplay.html(tabtext);
 						};
 						
-						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricesell, {wantcolor: true, wantshort: true}) + "</var>");
+						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(prices.pricesell, {wantcolor: true, wantshort: true}) + "</var>");
 						// Only add if item actually exists (not a zero stack slot)
 						if (pSlotData.count !== 0)
 						{
 							updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
 							updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPrice"));
-							pSlot.data("price", pricesell);
+							pSlot.data("price", prices.pricesell);
 						}
 					});
 					
@@ -7479,8 +7733,8 @@ Q = {
 			{
 				slots.each(function()
 				{
-					// All non-empty slots should have an item with a tooltip
-					if ($(this).attr(I.cTooltipAttribute))
+					// The style slot function should have initialized the count data for slots without an item
+					if ($(this).data("count") > 0)
 					{
 						$(this).show();
 					}
@@ -7945,6 +8199,21 @@ E = {
 	},
 	
 	/*
+	 * Reads a price object that was returned from API and returns a processed object.
+	 * @param object pPriceData.
+	 * @param object pCount quantity of the items.
+	 * @returns object.
+	 */
+	processPrice: function(pPriceData, pCount)
+	{
+		var count = (pCount === undefined) ? 1 : pCount;
+		return {
+			pricebuy: E.deductTax(pPriceData.buys.unit_price * count),
+			pricesell: E.deductTax(pPriceData.sells.unit_price * count)
+		};
+	},
+	
+	/*
 	 * Calculates the trading calculator's output textboxes using input textboxes' values.
 	 * @param jqobject pEntry trading calculator HTML parent.
 	 */
@@ -7987,7 +8256,7 @@ E = {
 		profit.val(E.formatCoinString(Math.round(
 			profitamount
 		)));
-		margin.val(U.convertDecimalToPercent(
+		margin.val(U.convertRatioToPercent(
 			(revenueamount / (costamount + listamount)) - 1, 2
 		));
 
@@ -8063,7 +8332,7 @@ E = {
 
 		$.ajax({
 			dataType: "json",
-			url: U.URL_API.ItemPrices + id,
+			url: U.getAPIPrice(id),
 			cache: false,
 			success: function(pData)
 		{
@@ -15632,13 +15901,13 @@ G = {
 					(function(inneri){
 						$.ajax({
 							dataType: "json",
-							url: U.URL_API.ItemPrices + id,
+							url: U.getAPIPrice(id),
 							cache: false,
 							success: function(pData)
 						{
-							var price = E.deductTax(pData.sells.unit_price);
-							$("#nodPrice_" + inneri).html(E.formatCoinStringColored(price));
-							P.Resources[inneri].price = price;
+							var pricesell = E.processPrice(pData).pricesell;
+							$("#nodPrice_" + inneri).html(E.formatCoinStringColored(pricesell));
+							P.Resources[inneri].price = pricesell;
 						}});
 					})(i);
 				}
@@ -20414,7 +20683,7 @@ B = {
 	{
 		var getPercentOffString = function(pPriceNew, pPriceOld)
 		{
-			return "<span class='dsbSalePercent'>" + U.convertDecimalToPercent(-1 * (1 - (pPriceNew / pPriceOld)), 0) + "</span> ";
+			return "<span class='dsbSalePercent'>" + U.convertRatioToPercent(-1 * (1 - (pPriceNew / pPriceOld)), 0) + "</span> ";
 		};
 		var getOldPriceString = function(pPriceNew, pPriceOld, pPriceOldBulk)
 		{
@@ -20615,9 +20884,9 @@ B = {
 							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
 						+ "</div>");
 						// Get TP prices also
-						$.getJSON(U.URL_API.ItemPrices + offer.id, function(pData)
+						$.getJSON(U.getAPIPrice(offer.id), function(pData)
 						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinStringColored(E.deductTax(pData.sells.unit_price)));
+							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinStringColored(E.processPrice(pData).pricesell));
 						}).fail(function()
 						{
 							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
@@ -22434,7 +22703,6 @@ I = {
 		{
 			Mananger: "Manager",
 			Characters: "Characters",
-			Bank: "Bank",
 			Trading: "Trading",
 			PVP: "PVP",
 			Guilds: "Guilds",

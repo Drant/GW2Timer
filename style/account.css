@@ -1272,20 +1272,37 @@ input[type="text"].bnkSearchInput:hover {
 }
 .bnkTabHeader {
 	display: block;
-	float: left;
-	margin-top: 8px;
-	margin-left: 8px;
+	padding-top: 4px;
 	line-height: normal;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 18px;
 }
+.bnkTabIcon {
+	display: block;
+	float: left;
+}
 .bnkTabText {
-	margin-right: 8px;
+	display: block;
+	float: left;
+	margin-left: 8px;
+	margin-top: 4px;
+}
+.bnkTabPrice {
+	display: block;
+	float: left;
+	margin-left: 8px;
+	margin-top: 4px;
+}
+.bnkTabStats {
+	display: block;
+	float: right;
+	margin-top: 4px;
 }
 .bnkTabToggle, .bnkTabLocked {
 	display: block;
-	width: 38px; height: 38px;
 	float: right;
+	margin-top: -4px;
+	width: 38px; height: 38px;
 	background-position: center;
 }
 .bnkTabToggle {
@@ -1415,7 +1432,6 @@ input[type="text"].bnkSearchInput:hover {
 
 .acc_wardrobe {
 	width: 32px; height: 32px;
-	margin-right: 8px;
 	background-image: url("../img/account/wardrobe.png");
 }
 .acc_wardrobe_armor_heavy_boots { background-position: 0 0; }
