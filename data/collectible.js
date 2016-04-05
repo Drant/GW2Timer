@@ -547,7 +547,7 @@ BuriedChests: {
 	{n: 59, c: [5118, 16239], t: "Back of Centaur village"},
 	{n: 60, c: [5122, 16220], t: "Eastern end of the Restoration Refuge."},
 	{n: 61, c: [4992, 16280], t: "Near entrance to Centaur village."},
-	{n: 62, c: [4938, 16257], t: "Near entrance to Centaur village."},
+	{n: 62, c: [4942, 16241], t: "Near entrance to Centaur village."},
 	{n: 63, c: [4750, 16358], i: "http://i.imgur.com/gv6QG81.png"},
 	{n: 64, c: [4790, 16351], i: "http://i.imgur.com/KJbXPAu.png"},
 	{n: 65, c: [4772, 16173], i: "http://i.imgur.com/DEQPh79.png"},

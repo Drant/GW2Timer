@@ -78,7 +78,8 @@ O = {
 	Utilities:
 	{
 		programVersion: {key: "int_utlProgramVersion", value: 160322},
-		lastLocalResetTimestamp: {key: "int_utlLastLocalResetTimestamp", value: 0},
+		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
+		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
 		APICache: {key: "obj_utlAPICache", value: {}},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
@@ -601,31 +602,67 @@ O = {
 	},
 	
 	/*
-	 * Sets the local reset timestamp to the current time.
+	 * Loads a stored timestamp if it exists, is a number, and not from the
+	 * future, else initializes it.
+	 * @param object pTimestamp from options' Utilities object.
 	 */
-	updateLocalResetTimestamp: function()
+	initializeTimestamp: function(pTimestamp)
 	{
-		O.Utilities.lastLocalResetTimestamp.value = T.getUNIXSeconds();
-		localStorage[O.Utilities.lastLocalResetTimestamp.key] = O.Utilities.lastLocalResetTimestamp.value;
+		var currenttimestamp = T.getUNIXSeconds();
+		var storedtimestamp = parseInt(localStorage[pTimestamp.key]);
+		if (localStorage[pTimestamp.key] === undefined
+			|| isFinite(storedtimestamp) === false
+			|| storedtimestamp > currenttimestamp)
+		{
+			pTimestamp.value = currenttimestamp;
+			localStorage[pTimestamp.key] = pTimestamp.value;
+		}
+		else
+		{
+			pTimestamp.value = storedtimestamp;
+		}
 	},
 	
 	/*
-	 * Compares the local reset timestamp with yesterday's server reset time
-	 * (Midnight 00:00 UTC) and do clearings if so.
+	 * Sets a timestamp to the current time.
+	 * @param object pTimestamp from options' Utilities object
+	 */
+	updateResetTimestamp: function(pTimestamp)
+	{
+		pTimestamp.value = T.getUNIXSeconds();
+		localStorage[pTimestamp.key] = pTimestamp.value;
+	},
+	
+	/*
+	 * Checks if the reset timestamps expired or is expiring, and do clearings if so.
 	 * @param Date pDate.
 	 */
-	checkResetTimestamp: function(pDate)
+	checkResetTimestamps: function()
 	{
-		var midnightoffset = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
-		var yesterdaysserverresettime = T.getUNIXSeconds() - midnightoffset;
-		var lastweeksserverresettime = yesterdaysserverresettime - (T.cSECONDS_IN_DAY * pDate.getUTCDay());
-		var isdailyreset = (midnightoffset === 0);
-		var isweeklyreset = (O.Utilities.lastLocalResetTimestamp.value < lastweeksserverresettime);
+		// Initialize time values
+		var currenttimestamp = T.getUNIXSeconds();
+		var secondssincemidnight = T.getTimeSinceMidnight();
+		var secondssinceweekstart = T.getSecondsSinceWeekstart(secondssincemidnight);
+		// Get yesterday's reset timestamp
+		var yesterdaysresettime = currenttimestamp - secondssincemidnight;
+		// Get last week's reset timestamp
+		var lastweeksresettime = (secondssinceweekstart > T.cWEEKLY_RESET_SECONDS) ?
+			(currenttimestamp - (secondssinceweekstart - T.cWEEKLY_RESET_SECONDS)) :
+			((currenttimestamp - T.cSECONDS_IN_WEEK) + (T.cWEEKLY_RESET_SECONDS - secondssinceweekstart));
+		// If the reset happens while the program is running
+		var isdailyreset = (secondssincemidnight === 0);
+		var isweeklyreset = (secondssinceweekstart === T.cWEEKLY_RESET_SECONDS);
 		
-		// Local reset timestamp is outdated if it's before yesterday's server reset time
-		if (O.Utilities.lastLocalResetTimestamp.value < yesterdaysserverresettime)
+		// Execute clear functions if the timestamp expired or on exact reset time
+		if (O.Utilities.timestampDaily.value < yesterdaysresettime || isdailyreset)
 		{
-			O.clearServerSensitiveOptions(isdailyreset, isweeklyreset);
+			O.clearDailySensitiveOptions(isdailyreset);
+			O.updateResetTimestamp(O.Utilities.timestampDaily);
+		}
+		if (O.Utilities.timestampWeekly.value < lastweeksresettime || isweeklyreset)
+		{
+			O.clearWeeklySensitiveOptions(isweeklyreset);
+			O.updateResetTimestamp(O.Utilities.timestampWeekly);
 		}
 	},
 	
@@ -851,18 +888,13 @@ O = {
 	 * the disabled/deleted ones by the user.
 	 * @param boolean pIsReset whether the program was running during server reset.
 	 */
-	clearServerSensitiveOptions: function(pIsDaily, pIsWeekly)
+	clearDailySensitiveOptions: function(pIsDaily)
 	{
 		O.isServerReset = true;
 		// Notify of the reset in console
 		var messagetime = 10;
 		var dailymessage = pIsDaily ? "Daily Reset!" : "Daily Timestamp Expired!";
 		I.greet(dailymessage, messagetime);
-		if (pIsWeekly)
-		{
-			var weeklymessage = pIsDaily ? "Weekly Reset!" : "Weekly Timestamp Expired!";
-			I.greet(weeklymessage, messagetime);
-		}
 		// Update the daily object
 		T.getDaily({isReset: true});
 		
@@ -888,11 +920,6 @@ O = {
 		if (O.Options.bol_clearPersonalChecklistOnReset)
 		{
 			X.clearCustomChecklistDaily();
-			// Weekly reset is at UTC midnight on the start of Sunday
-			if (pIsWeekly)
-			{
-				X.clearCustomChecklistWeekly();
-			}
 		}
 		// Daily achievements
 		var resetgraceperiodms = 10000;
@@ -906,7 +933,16 @@ O = {
 		
 		// Finally
 		I.write("", messagetime);
-		O.updateLocalResetTimestamp();
+	},
+	clearWeeklySensitiveOptions: function(pIsWeekly)
+	{
+		var messagetime = 10;
+		var weeklymessage = pIsWeekly ? "Weekly Reset!" : "Weekly Timestamp Expired!";
+		I.greet(weeklymessage, messagetime);
+		if (O.Options.bol_clearPersonalChecklistOnReset)
+		{
+			X.clearCustomChecklistWeekly();
+		}
 	},
 	
 	/*
@@ -2222,37 +2258,49 @@ X = {
 		 * Setting this boolean will tell the clock ticker function to call the
 		 * HTML timer update function.
 		 */
-		T.isCountdownToResetStarted = true;
+		T.isChecklistCountdownsStarted = true;
 		
 		// Initially, only show the daily checklist; user clicks the buttons to toggle the various checklists
 		$("#chlDungeon, #chlCustomWeekly").hide();
 		
 		// Buttons to toggle view between daily and weekly checklist
+		var tabs = $("#chlCustomTabs button");
+		var tabcus = $("#chlCustom");
+		var tabdun = $("#chlDungeon");
+		var chld = $("#chlCustomDaily");
+		var chlw = $("#chlCustomWeekly");
+		var clkd = $("#chlCountdownToDaily").hide();
+		var clkw = $("#chlCountdownToWeekly").hide();
 		$("#chlDungeonButton").click(function()
 		{
-			$("#chlCustomButtons button").removeClass("btnFocused");
+			tabs.removeClass("btnFocused");
 			$(this).addClass("btnFocused");
-			$("#chlCustom").hide();
-			$("#chlDungeon").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
-			
+			tabcus.hide();
+			tabdun.show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+			clkd.show();
+			clkw.hide();
 		});
-		$("#chlCustomDailyButton").addClass("btnFocused").click(function()
+		$("#chlCustomDailyButton").click(function()
 		{
-			$("#chlCustomButtons button").removeClass("btnFocused");
+			tabs.removeClass("btnFocused");
 			$(this).addClass("btnFocused");
-			$("#chlDungeon").hide();
-			$("#chlCustom").show();
-			$("#chlCustomWeekly").hide();
-			$("#chlCustomDaily").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
-		});
+			tabdun.hide();
+			tabcus.show();
+			chlw.hide();
+			chld.show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+			clkd.show();
+			clkw.hide();
+		}).trigger("click");
 		$("#chlCustomWeeklyButton").click(function()
 		{
-			$("#chlCustomButtons button").removeClass("btnFocused");
+			tabs.removeClass("btnFocused");
 			$(this).addClass("btnFocused");
-			$("#chlDungeon").hide();
-			$("#chlCustom").show();
-			$("#chlCustomDaily").hide();
-			$("#chlCustomWeekly").show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+			tabdun.hide();
+			tabcus.show();
+			chld.hide();
+			chlw.show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+			clkd.hide();
+			clkw.show();
 			
 		});
 		
@@ -6046,9 +6094,9 @@ V = {
 		var curateSkin = function()
 		{
 			var Boxes = [];
-			var selection = $("#labSelection");
-			var retrieval = $("#labRetrievalDisplay");
-			selection.empty().append(I.cThrobber);
+			var selectioncontent = $("#labSelection");
+			var retrievaldisplay = $("#labRetrievalDisplay");
+			selectioncontent.empty().append(I.cThrobber);
 			var items = CurateDatabase[CurateDatabaseIndex];
 			var itemstoretrieve = items.length;
 			var itemsretrieved = 0;
@@ -6059,22 +6107,154 @@ V = {
 				{
 					return;
 				};
-				retrieval.empty();
-				selection.empty();
+				retrievaldisplay.empty();
+				selectioncontent.empty();
+				var tradeableitems = [];
+				var lowestprice = Number.POSITIVE_INFINITY;
+				var lowestlevel = Number.POSITIVE_INFINITY;
+				var highestlevel = Number.NEGATIVE_INFINITY;
+				var lowestlevelbound = Number.POSITIVE_INFINITY;
+				var indexoflowestprice = -1;
+				var indexoflowestlevel = -1;
+				var indexofhighestlevel = -1;
+				var indexoflowestlevelbound = -1;
 				for (var i = 0; i < Boxes.length; i++)
 				{
+					var box = Boxes[i];
+					var item = box.item;
+					if (box.istradeable)
+					{
+						tradeableitems.push(box.item.id);
+						if (box.pricesell < lowestprice)
+						{
+							lowestprice = box.pricesell;
+							indexoflowestprice = i;
+						}
+						
+						if (item.level > 0)
+						{
+							if (item.level < lowestlevel)
+							{
+								lowestlevel = item.level;
+								indexoflowestlevel = i;
+							}
+							if (item.level > highestlevel)
+							{
+								highestlevel = item.level;
+								indexofhighestlevel = i;
+							}
+						}
+					}
+					else
+					{
+						if (item.level > 0)
+						{
+							if (item.level < lowestlevelbound)
+							{
+								lowestlevelbound = item.level;
+								indexoflowestlevelbound = i;
+							}
+						}
+					}
+				}
+				if (indexoflowestprice >= 0)
+				{
+					Boxes[indexoflowestprice].islowestprice = true;
+				}
+				if (indexoflowestlevel >= 0)
+				{
+					Boxes[indexoflowestlevel].islowestlevel = true;
+				}
+				if (indexofhighestlevel >= 0)
+				{
+					Boxes[indexofhighestlevel].ishighestlevel = true;
+				}
+				if (indexoflowestlevelbound >= 0)
+				{
+					Boxes[indexoflowestlevelbound].islowestlevelbound = true;
+				}
+				
+				for (var i = 0; i < Boxes.length; i++)
+				{
+					var box = Boxes[i];
 					var selectionitem = $("<div style='display:inline-block; padding:4px; margin-right:8px; margin-bottom:8px; border:1px solid gray; vertical-align:top; zoom:75%;'>"
-						+ Boxes[i].box.html + "</div>").appendTo(selection);
+						+ box.html + "<div>ID: " + box.item.id + "</div></div>").appendTo(selectioncontent);
 					var selectionbutton = $("<button style='width:100%'>Select</button>").appendTo(selectionitem);
 					(function(iItemID)
 					{
-						selectionbutton.click(function()
+						selectionbutton.click(function(pEvent)
 						{
+							if (pEvent.which === 2)
+							{
+								return;
+							}
 							CurateArray[CurateArrayIndex].itemid = iItemID;
-							retrieval.html("Selected Item: " + iItemID);
+							CurateArray[CurateArrayIndex].tradeableids = tradeableitems;
+							retrievaldisplay.html("Selected Item: " + iItemID);
 							$("#labControlNext").trigger("click");
+							A.adjustAccountScrollbar();
 						});
-					})(Boxes[i].itemid);
+					})(box.item.id);
+					
+					if (box.istradeable)
+					{
+						if (box.islowestprice)
+						{
+							selectionitem.css({border: "4px dashed red"}).append("<div>LOWEST PRICE</div>");
+						}
+						
+						if (box.islowestlevel)
+						{
+							selectionitem.css({outline: "4px dashed yellow"}).append("<div>LOWEST LEVEL</div>");
+						}
+						if (box.ishighestlevel)
+						{
+							selectionitem.css({outline: "4px solid orange"}).append("<div>HIGHEST LEVEL</div>");
+						}
+						if (box.item.level === 31)
+						{
+							selectionitem.css({background: "rgba(96,32,128,0.2)"});
+						}
+						if (box.item.level === 80)
+						{
+							if (box.item.name.indexOf("Berserker") !== -1 && box.item.rarity !== "Masterwork")
+							{
+								selectionitem.css({background: "rgba(0,0,255,0.2)"});
+							}
+							else
+							{
+								selectionitem.css({outline: "4px solid blue"});
+							}
+							if ((box.item.rarity === "Rare" || box.item.rarity === "Exotic")
+								&& (box.item.name.indexOf("Cleric") !== -1))
+							{
+								selectionitem.css({background: "rgba(255,0,0,0.2)"});
+							}
+						}
+						if (box.item.rarity === "Fine"
+							&& (box.item.name.indexOf("Mighty") !== -1
+							|| box.item.name.indexOf("Strong") !== -1
+							|| box.item.name.indexOf("Berserker") !== -1))
+						{
+							selectionitem.css({background: "rgba(0,0,255,0.2)"});
+						}
+					}
+					else
+					{
+						selectionitem.css({opacity: 0.4});
+						if (box.islowestlevelbound)
+						{
+							selectionitem.css({outline: "4px dashed yellow"}).append("<div>LOWEST LEVEL</div>");
+						}
+						if (box.item.level === 80)
+						{
+							selectionitem.css({outline: "4px solid blue"});
+							if (box.item.name.indexOf("Zojja") !== -1)
+							{
+								selectionitem.css({background: "rgba(0,0,255,0.2)"});
+							}
+						}
+					}
 				}
 			};
 			
@@ -6085,12 +6265,9 @@ V = {
 				{
 					Q.scanItem(iItem, {wantprice: true, callback: function(iBox)
 					{
-						Boxes.push({
-							box: iBox,
-							itemid: itemid
-						});
+						Boxes.push(iBox);
 						itemsretrieved++;
-						retrieval.html(itemsretrieved + " / " + itemstoretrieve);
+						retrievaldisplay.html(itemsretrieved + " / " + itemstoretrieve);
 						finalizeCurate();
 					}});
 				});
@@ -6100,8 +6277,8 @@ V = {
 		var updateIndexDisplay = function()
 		{
 			$("#labIndexDisplay").html("Index: " + CurateArrayIndex + " / " + CurateArray.length
-				+ " &nbsp; Skin: " + CurateArray[CurateArrayIndex].skinid
-				+ " &nbsp; Item: " + CurateArray[CurateArrayIndex].itemid);
+				+ "&nbsp; Skin: " + CurateArray[CurateArrayIndex].skinid
+				+ "&nbsp; Item: " + CurateArray[CurateArrayIndex].itemid);
 		};
 		
 		var updateIndexes = function()
@@ -6116,14 +6293,18 @@ V = {
 			CurateDatabase = GW2T_SKINS_ITEMS;
 			var assoc = GW2T_SKINS_ASSOCIATION;
 			
+			$("#accDishMenu_Lab").remove();
+			var dishmenu = $("<aside id='accDishMenu_Lab' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
+
 			var container = $("<div id='labContainer'></div>").appendTo(dish);
-			var controls = $("<div id='labControls' style='margin-bottom:16px;'></div>").appendTo(container);
-			var buttonprev = $("<button id='labControlPrev' style='width:200px; height:40px; margin-right:8px;'>Prev</button>").appendTo(controls);
-			var buttonnext = $("<button id='labControlNext' style='width:200px; height:40px; margin-right:8px;'>Next</button>").appendTo(controls);
-			var buttonprint = $("<button id='labControlPrint' style='width:100px; height:40px; margin-right:8px;'>Print</button>").appendTo(controls);
-			var buttonsave = $("<button id='labControlPrint' style='width:100px; height:40px; margin-right:8px;'>Save</button>").appendTo(controls);
+			var controls = $("<div id='labControls' style='margin:8px; color:white;'></div>").appendTo(dishmenu);
+			var buttonprev = $("<button id='labControlPrev' style='width:96px; height:40px; margin-right:8px;'>Prev</button>").appendTo(controls);
+			var buttonnext = $("<button id='labControlNext' style='width:96px; height:40px; margin-right:8px;'>Next</button>").appendTo(controls);
+			var buttonprint = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'>Print</button>").appendTo(controls);
+			var buttonsave = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'><strong>SAVE</strong></button>").appendTo(controls);
 			var indexdisplay = $("<var id='labIndexDisplay' style='margin-right:8px; font-family:monospace; font-size:20px;'></var>").appendTo(controls);
-			var inputindex = $("<input id='labIndexInput' type='text' style='margin-right:8px;' />").appendTo(controls);
+			var inputindex = $("<input id='labIndexInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(controls);
+			var inputitem = $("<input id='labItemInput' type='text' style='width:64px; margin-right:8px;' />").appendTo(controls);
 			var retrievaldisplay = $("<var id='labRetrievalDisplay' style='font-family:monospace; font-size:20px;'></var>").appendTo(controls);
 			var selectionboxes = $("<div id='labSelection'></div>").appendTo(container);
 			
@@ -6150,7 +6331,7 @@ V = {
 				for (var i = 0; i < CurateArray.length; i++)
 				{
 					obj = CurateArray[i];
-					html += "&quot;" + obj.skinid + "&quot;: " + obj.itemid + ",<br />";
+					html += "&quot;" + obj.skinid + "&quot;: {i: " + obj.itemid + ", n: &quot;" + U.escapeHTML(obj.name) + "&quot;, t: " + U.formatJSON(obj.tradeableids) + "},<br />";
 				}
 				I.print(html);
 			});
@@ -6161,7 +6342,11 @@ V = {
 				for (var i = 0; i < CurateArray.length; i++)
 				{
 					obj = CurateArray[i];
-					retobj[obj.skinid] = obj.itemid;
+					retobj[obj.skinid] = {
+						i: obj.itemid,
+						n: obj.name,
+						t: obj.tradeableids
+					};
 				}
 				U.APICacheConsole = retobj;
 				U.saveAPICache();
@@ -6169,11 +6354,34 @@ V = {
 			inputindex.onEnterKey(function()
 			{
 				var customindex = parseInt($(this).val());
+				for (var i = 0; i < CurateArray.length; i++)
+				{
+					if (parseInt(CurateArray[i].skinid) === parseInt(customindex))
+					{
+						customindex = i;
+						break;
+					}
+				}
 				if (customindex <= CurateArray.length - 1 && customindex >= 0)
 				{
 					CurateArrayIndex = customindex;
 					updateIndexes();
 				}
+			}).click(function()
+			{
+				$(this).select();
+			});
+			inputitem.onEnterKey(function()
+			{
+				var customitem = parseInt($(this).val());
+				if (customitem)
+				{
+					CurateArray[CurateArrayIndex].itemid = customitem;
+					$("#labControlNext").trigger("click");
+				}
+			}).click(function()
+			{
+				$(this).select();
 			});
 			
 			if (U.loadAPICache())
@@ -6184,7 +6392,9 @@ V = {
 			{
 				CurateArray.push({
 					skinid: i,
-					itemid: assoc[i]
+					name: assoc[i].n,
+					itemid: assoc[i].i,
+					tradeableids: assoc[i].t
 				});
 			}
 			updateIndexDisplay();
@@ -7109,7 +7319,9 @@ Q = {
 				skin: skinobj,
 				attr: attrobj,
 				html: html,
-				istradeable: istradeable
+				istradeable: istradeable,
+				pricebuy: pricebuy,
+				pricesell: pricesell
 			};
 			// Cache the item only if it's not custom (no upgrades or transmutations)
 			if (iscustomitem === false)
@@ -19080,7 +19292,8 @@ T = {
 	DryTopCodes: {},
 	
 	DST_IN_EFFECT: 0, // Will become 1 and added to the server offset if DST is on
-	SECONDS_TILL_RESET: 0,
+	SECONDS_TILL_DAILY: 0,
+	SECONDS_TILL_WEEKLY: 0,
 	TIMESTAMP_UNIX_SECONDS: 0,
 	cUTC_OFFSET_USER: 0,
 	cUTC_OFFSET_SERVER: -8, // Server is Pacific Time, 8 hours behind UTC
@@ -19114,7 +19327,7 @@ T = {
 	cBASE_10: 10,
 	cPERCENT_100: 100,
 	// Game constants
-	WEEKLY_RESET_DAY: 1, // Monday 00:00 UTC
+	cWEEKLY_RESET_SECONDS: 113400, // Monday 07:30 UTC, seconds since Sunday 00:00 UTC
 	cDAYTIME_DAY_MINUTES: 80,
 	cDAYTIME_NIGHT_MINUTES: 40,
 	cDAYTIME_DAY_START: 25,
@@ -19144,7 +19357,7 @@ T = {
 	},
 	isTimeOutOfSync: false,
 	secondsTillResetWeekly: -1,
-	isCountdownToResetStarted: false,
+	isChecklistCountdownsStarted: false,
 	
 	/*
 	 * Gets a clipboard text of the current Dry Top events.
@@ -20176,8 +20389,8 @@ T = {
 		
 		switch (pReference)
 		{
-			case T.ReferenceEnum.Server: hour = hour + T.cUTC_OFFSET_SERVER + T.DST_IN_EFFECT; break;
 			case T.ReferenceEnum.UTC: break;
+			case T.ReferenceEnum.Server: hour = hour + T.cUTC_OFFSET_SERVER + T.DST_IN_EFFECT; break;
 			case T.ReferenceEnum.Local:
 			{
 				 hour = now.getHours();
@@ -20197,6 +20410,14 @@ T = {
 		}
 		// Default return seconds
 		return (hour * T.cSECONDS_IN_HOUR) + (min * T.cSECONDS_IN_MINUTE) + sec;
+	},
+	
+	/*
+	 * Gets the seconds since Sunday 00:00 UTC.
+	 */
+	getSecondsSinceWeekstart: function(pSecondsSinceMidnight)
+	{
+		return ((new Date()).getUTCDay() * T.cSECONDS_IN_DAY) + pSecondsSinceMidnight;
 	},
 	
 	/*
@@ -20252,55 +20473,27 @@ T = {
 	},
 	
 	/*
-	 * Gets the seconds until a time in a day of the week.
-	 * @param int pDay of week.
-	 * @param int pOffsetSeconds since midnight (start) of that day.
+	 * Gets the seconds until a time within a week.
+	 * @param int pWeekTime the target time in seconds since Sunday 00:00 UTC.
+	 * @param int pCurrentTimestamp UNIX seconds.
+	 * @param int pSecondsSinceMidnight UTC.
 	 * @returns int seconds.
 	 */
-	getSecondsTillUTCWeekday: function(pTargetDay, pOffsetSeconds)
+	getSecondsTillWeektime: function(pWeekTime, pSecondsSinceMidnight)
 	{
-		if (pOffsetSeconds === undefined)
-		{
-			pOffsetSeconds = 0;
-		}
-		var now = new Date();
-		var todaysecondselapsed = T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
-		var todaysecondsremaining = T.cSECONDS_IN_DAY - todaysecondselapsed;
-		var currentdayofweek = now.getUTCDay();
-		var wholedaysecondsbetween = 0;
-		if (pTargetDay > currentdayofweek)
-		{
-			wholedaysecondsbetween = (pTargetDay - currentdayofweek - 1) * T.cSECONDS_IN_DAY;
-			return todaysecondsremaining + wholedaysecondsbetween + pOffsetSeconds;
-		}
-		else if (pTargetDay < currentdayofweek)
-		{
-			wholedaysecondsbetween = ((T.cDAYS_IN_WEEK - 1 - currentdayofweek) + pTargetDay) * T.cSECONDS_IN_DAY;
-			return todaysecondsremaining + wholedaysecondsbetween + pOffsetSeconds;
-		}
-		// If target day is same as today
-		if (pOffsetSeconds >= todaysecondselapsed)
-		{
-			return pOffsetSeconds - todaysecondselapsed;
-		}
-		else
-		{
-			return T.cSECONDS_IN_WEEK - (todaysecondselapsed - pOffsetSeconds);
-		}
+		var secondssinceweekstart = T.getSecondsSinceWeekstart(pSecondsSinceMidnight);
+		return (secondssinceweekstart > pWeekTime) ?
+			((T.cSECONDS_IN_WEEK - secondssinceweekstart) + pWeekTime) :
+			(pWeekTime - secondssinceweekstart);
 	},
 	
 	/*
 	 * Counts down till weekly reset. For use by the personal checklist.
 	 */
-	updateCountdownToReset: function()
+	updateChecklistCountdowns: function()
 	{
-		if (T.secondsTillResetWeekly < 0)
-		{
-			T.secondsTillResetWeekly = T.getSecondsTillUTCWeekday(T.WEEKLY_RESET_DAY);
-		}
-		$("#chlCountdownToReset").text(T.formatSeconds(T.secondsTillResetWeekly, true));
-		// Decrement global variable to countdown, instead of calling the compute function every time
-		T.secondsTillResetWeekly--;
+		$("#chlCountdownToDaily").text(T.formatSeconds(T.SECONDS_TILL_DAILY, true));
+		$("#chlCountdownToWeekly").text(T.formatSeconds(T.SECONDS_TILL_WEEKLY, true));
 	},
 	
 	/*
@@ -21707,8 +21900,10 @@ K = {
 		 */
 		var localtime = T.getTimeFormatted();
 		var sec = pDate.getSeconds();
+		var secondssincemidnight = T.getTimeSinceMidnight();
 		T.TIMESTAMP_UNIX_SECONDS = T.getUNIXSeconds();
-		T.SECONDS_TILL_RESET = T.cSECONDS_IN_DAY - T.getTimeSinceMidnight(T.ReferenceEnum.UTC, T.UnitEnum.Seconds);
+		T.SECONDS_TILL_DAILY = T.cSECONDS_IN_DAY - secondssincemidnight;
+		T.SECONDS_TILL_WEEKLY = T.getSecondsTillWeektime(T.cWEEKLY_RESET_SECONDS, secondssincemidnight);
 		var min = pDate.getMinutes();
 		var hour = pDate.getHours() % T.cHOURS_IN_MERIDIEM;
 		var secinhour = min*60 + sec;
@@ -21826,11 +22021,11 @@ K = {
 		K.timeLocal.innerHTML = localtime;
 		// Times in the Options page Debug section
 		K.timestampUTC.innerHTML = T.TIMESTAMP_UNIX_SECONDS;
-		K.timestampLocal.innerHTML = O.Utilities.lastLocalResetTimestamp.value;
-		K.timestampServer.innerHTML = T.TIMESTAMP_UNIX_SECONDS + T.SECONDS_TILL_RESET;
+		K.timestampLocal.innerHTML = O.Utilities.timestampDaily.value;
+		K.timestampServer.innerHTML = T.TIMESTAMP_UNIX_SECONDS + T.SECONDS_TILL_DAILY;
 		K.timestampReset.innerHTML = T.getTimeFormatted(
 		{
-			customTimeInSeconds: T.SECONDS_TILL_RESET,
+			customTimeInSeconds: T.SECONDS_TILL_DAILY,
 			want24: true
 		});
 		
@@ -21851,9 +22046,9 @@ K = {
 		}
 		
 		// Trigger other ticking functions
-		if (T.isCountdownToResetStarted)
+		if (T.isChecklistCountdownsStarted)
 		{
-			T.updateCountdownToReset();
+			T.updateChecklistCountdowns();
 		}
 		if (B.isCountdownTickEnabled)
 		{
@@ -21988,7 +22183,7 @@ K = {
 	updateTimeFrame: function(pDate)
 	{
 		// Check if server reset happened
-		O.checkResetTimestamp(pDate);
+		O.checkResetTimestamps(pDate);
 		
 		// Remember current chain to reference variable
 		C.CurrentChainSD = T.getStandardChain();
@@ -22336,10 +22531,8 @@ K = {
 				wantSeconds: false,
 				want24: true
 			}) + "<br />" +
-			"<dfn>Reset:</dfn> " + T.getTimeFormatted(
-			{
-				customTimeInSeconds: T.SECONDS_TILL_RESET, wantSeconds: false, wantLetters: true
-			});
+			"<dfn>Daily:</dfn> " + T.formatSeconds(T.SECONDS_TILL_DAILY, false) + "<br />" +
+			"<dfn>Weekly:</dfn> " + T.formatSeconds(T.SECONDS_TILL_WEEKLY, false);
 		I.qTip.init(K.timeLocal);
 	},
 	
@@ -22773,23 +22966,10 @@ I = {
 			O.Options.bol_use24Hour = false;
 		}
 		
-		/*
-		 * Load stored server sensitive timestamp if it exists, is a number,
-		 * and not from the future, else initialize it.
-		 */ 
+		// Initialize timestamps
 		var currenttimestamp = T.getUNIXSeconds();
-		var storedtimestamp = parseInt(localStorage[O.Utilities.lastLocalResetTimestamp.key]);
-		if (localStorage[O.Utilities.lastLocalResetTimestamp.key] === undefined
-			|| isFinite(storedtimestamp) === false
-			|| storedtimestamp > currenttimestamp)
-		{
-			O.Utilities.lastLocalResetTimestamp.value = currenttimestamp;
-			localStorage[O.Utilities.lastLocalResetTimestamp.key] = O.Utilities.lastLocalResetTimestamp.value;
-		}
-		else
-		{
-			O.Utilities.lastLocalResetTimestamp.value = storedtimestamp;
-		}
+		O.initializeTimestamp(O.Utilities.timestampDaily);
+		O.initializeTimestamp(O.Utilities.timestampWeekly);
 		
 		// Initial sync of the sleep detection variable
 		K.awakeTimestampPrevious = currenttimestamp;
