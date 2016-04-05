@@ -1027,9 +1027,9 @@ Announcement:
 	Finish: new Date("2016-03-29T16:00:00Z"),
 	Messages:
 	{
-		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Mystic_Forge'>Daily Forger</a>, "
+		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
 			+ "forge 4 cheap <a href='http://wiki.guildwars2.com/wiki/Minor_Sigil_of_Earth'>minor sigils</a> "
-			+ "for a free <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Mystic Coin</a>."
+			+ "for a free Mystic Coin."
 	}
 },
 
