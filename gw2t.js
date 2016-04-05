@@ -2849,26 +2849,16 @@ U = {
 			}},
 			apicache: {usage: "Prints the cache result of the previous console API call.", f: function()
 			{
-				I.print((U.APICacheArrayOfIDs) ? ("API IDs Array:<br />" + U.escapeJSON(U.APICacheArrayOfIDs) + "<br />")
-					: "API IDs Array is empty.");
-				I.print((U.APICacheArrayOfObjects) ? ("API Objects Array:<br />" + U.escapeJSON(U.APICacheArrayOfObjects) + "<br />")
-					: "API Objects Array is empty.");
+				U.printAPICache();
+			}},
+			apicacheassoc: {usage: "Prints API cache as an associative array.", f: function()
+			{
+				U.printAPICacheAssoc();
 			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
 				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. Replace spaces with &quot;%20&quot;", f: function()
 			{
-				if (args[1] === undefined)
-				{
-					I.print("Available account API URL suffixes:");
-					for (var i in A.URL)
-					{
-						I.print(A.URL[i]);
-					}
-				}
-				else
-				{
-					A.printAccount(args[1]);
-				}
+				A.printAccount(args[1]);
 			}},
 			daily: {usage: "Prints the daily achievements.", f: function()
 			{
@@ -3016,6 +3006,32 @@ U = {
 		{
 			I.print("Unable to retrieve API at: " + U.escapeHTML(url));
 		});
+	},
+	
+	/*
+	 * Prints the cached API arrays and objects.
+	 */
+	printAPICache: function()
+	{
+		I.print((U.APICacheArrayOfIDs) ? ("API IDs Array:<br />" + U.escapeJSON(U.APICacheArrayOfIDs) + "<br />")
+			: "API IDs Array is empty.");
+		I.print((U.APICacheArrayOfObjects) ? ("API Objects Array:<br />" + U.escapeJSON(U.APICacheArrayOfObjects) + "<br />")
+			: "API Objects Array is empty.");
+	},
+	
+	/*
+	 * Prints the API cache as an associative array.
+	 */
+	printAPICacheAssoc: function()
+	{
+		var html = "";
+		var obj;
+		for (var i = 0; i < U.APICacheArrayOfObjects.length; i++)
+		{
+			obj = U.APICacheArrayOfObjects[i];
+			html += "&quot;" + obj.id + "&quot;: " + U.escapeJSON(obj) + ",<br />";
+		}
+		I.print(html);
 	},
 	
 	/*
@@ -4691,20 +4707,31 @@ A = {
 	 */
 	printAccount: function(pURLSuffix)
 	{
-		I.print("Loading " + pURLSuffix + "...");
-		$.ajax({
-			dataType: "json",
-			url: A.getURL(pURLSuffix),
-			cache: false,
-			success: function(pData, pStatus, pRequest)
+		if (pURLSuffix)
+		{
+			I.print("Loading " + pURLSuffix + "...");
+			$.ajax({
+				dataType: "json",
+				url: A.getURL(pURLSuffix),
+				cache: false,
+				success: function(pData, pStatus, pRequest)
+				{
+					U.printJSON(pData);
+				},
+				error: function(pRequest, pStatus)
+				{
+					A.printError(null, pStatus);
+				}
+			});
+		}
+		else
+		{
+			I.print("Available account API URL suffixes:");
+			for (var i in A.URL)
 			{
-				U.printJSON(pData);
-			},
-			error: function(pRequest, pStatus)
-			{
-				A.printError(null, pStatus);
+				I.print(A.URL[i]);
 			}
-		});
+		}
 	},
 	
 	/*
@@ -5613,7 +5640,7 @@ V = {
 					var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
 					Q.scanItem(iItem, {
 						element: slot,
-						customitem: iEquipment,
+						itemmeta: iEquipment,
 						runesets: runesets,
 						wantattr: true,
 						callback: function(iBox)
@@ -5854,14 +5881,14 @@ V = {
 							{
 								$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 								{
-									Q.styleBankSlot(iSlot, iSlotData, iItem);
+									Q.styleBankSlot(iSlot, {item: iItem, itemmeta: iSlotData});
 								});
 							})(slot, slotdata);
 						}
 						else
 						{
 							// For empty inventory slots
-							Q.styleBankSlot(slot, null);
+							Q.styleBankSlot(slot);
 						}
 					}
 				}
@@ -5908,14 +5935,14 @@ V = {
 					{
 						$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 						{
-							Q.styleBankSlot(iSlot, iSlotData, iItem);
+							Q.styleBankSlot(iSlot, {item: iItem, itemmeta: iSlotData});
 						});
 					})(slot, slotdata);
 				}
 				else
 				{
 					// For empty inventory slots
-					Q.styleBankSlot(slot, null);
+					Q.styleBankSlot(slot);
 				}
 			}
 			// Ornamental bank tab separator at the bottom
@@ -5976,7 +6003,7 @@ V = {
 					{
 						$.getJSON(U.getAPIItem(slotdata.id), function(iItem)
 						{
-							Q.styleBankSlot(iSlot, iSlotData, iItem);
+							Q.styleBankSlot(iSlot, {item: iItem, itemmeta: iSlotData});
 						});
 					})(slotassoc[slotdata.id], slotdata);
 				}
@@ -6015,6 +6042,7 @@ V = {
 				tab = Q.createBankTab(bank, {title: catname, icon: caticon, iscollapsed: true});
 				(function(iTab, iCat)
 				{
+					// Tab slots are generated on demand when the user expands the tab, because there are lots of slots to generate
 					iTab.find(".bnkTabSeparator").one("click", function()
 					{
 						var slotscontainer = iTab.find(".bnkTabSlots");
@@ -6023,21 +6051,21 @@ V = {
 							var skinid = iCat[ii];
 							var slot = Q.createBankSlot(slotscontainer);
 							slot.attr("data-skinid", skinid);
-							var skinassoc = assoc[skinid]; // If the user's unlocked skin is found in the cache associative array
-							if (skinassoc)
+							var skinobj = assoc[skinid]; // If the user's unlocked skin is found in the cache associative array
+							if (skinobj)
 							{
-								(function(iSlot, iSkinID, iItemID)
+								(function(iSlot, iSkinID, iItemID, iWiki)
 								{
 									$.getJSON(U.getAPIItem(iItemID), function(iItem)
 									{
 										var count = (pUnlockedAssoc[iSkinID]) ? 1 : 0;
-										Q.styleBankSlot(iSlot, {count: count}, iItem);
+										Q.styleBankSlot(iSlot, {item: iItem, itemmeta: {count: count}, wiki: iWiki});
 										iSlot.click(function()
 										{
 											I.log(iItem.name + " " + iSkinID + " " + iItemID);
 										});
 									});
-								})(slot, skinid, skinassoc);
+								})(slot, skinid, skinobj.i, skinobj.n);
 							}
 						}
 						// Recreate the bank menu
@@ -6059,7 +6087,6 @@ V = {
 					+ "<span class='accTrivial'> (" + U.convertRatioToPercent(skinsunlocked / numskinsintab) + ")</span>";
 				tab.find(".bnkTabStats").html(unlockstr);
 			}
-			U.curateSkins();
 		};
 		
 		// Retrieve data before generating
@@ -6095,11 +6122,19 @@ V = {
 		{
 			var Boxes = [];
 			var selectioncontent = $("#labSelection");
+			var skininfo = $("#labSkinInfo");
 			var retrievaldisplay = $("#labRetrievalDisplay");
 			selectioncontent.empty().append(I.cThrobber);
+			skininfo.empty();
 			var items = CurateDatabase[CurateDatabaseIndex];
 			var itemstoretrieve = items.length;
 			var itemsretrieved = 0;
+			
+			$.getJSON(U.getAPISkin(CurateDatabaseIndex), function(pData)
+			{
+				var icon = pData.icon || "";
+				skininfo.html("<img src='" + icon + "' style='float:left;' />" + U.escapeJSON(pData));
+			});
 			
 			var finalizeCurate = function()
 			{
@@ -6147,7 +6182,7 @@ V = {
 					}
 					else
 					{
-						if (item.level > 0)
+						if (item.level > 0 && item.rarity === "Fine" && box.html.indexOf("itmColor_flavor") !== -1)
 						{
 							if (item.level < lowestlevelbound)
 							{
@@ -6196,6 +6231,14 @@ V = {
 						});
 					})(box.item.id);
 					
+					(function(iName)
+					{
+						selectionitem.find(".itmIconMain").click(function()
+						{
+							U.openExternalURL(U.getWikiLink(iName));
+						});
+					})(box.item.name);
+					
 					if (box.istradeable)
 					{
 						if (box.islowestprice)
@@ -6231,6 +6274,10 @@ V = {
 								selectionitem.css({background: "rgba(255,0,0,0.2)"});
 							}
 						}
+						else if (box.item.type === "Consumable")
+						{
+							selectionitem.css({background: "rgba(0,0,255,0.2)"});
+						}
 						if (box.item.rarity === "Fine"
 							&& (box.item.name.indexOf("Mighty") !== -1
 							|| box.item.name.indexOf("Strong") !== -1
@@ -6241,7 +6288,7 @@ V = {
 					}
 					else
 					{
-						selectionitem.css({opacity: 0.4});
+						selectionitem.css({opacity: 0.6});
 						if (box.islowestlevelbound)
 						{
 							selectionitem.css({outline: "4px dashed yellow"}).append("<div>LOWEST LEVEL</div>");
@@ -6249,10 +6296,14 @@ V = {
 						if (box.item.level === 80)
 						{
 							selectionitem.css({outline: "4px solid blue"});
-							if (box.item.name.indexOf("Zojja") !== -1)
+							if (box.item.name.indexOf("Zojja") !== -1 || box.item.name.indexOf("Berserker") !== -1)
 							{
 								selectionitem.css({background: "rgba(0,0,255,0.2)"});
 							}
+						}
+						else if (box.item.type === "Consumable")
+						{
+							selectionitem.css({background: "rgba(0,0,255,0.2)"});
 						}
 					}
 				}
@@ -6307,6 +6358,7 @@ V = {
 			var inputitem = $("<input id='labItemInput' type='text' style='width:64px; margin-right:8px;' />").appendTo(controls);
 			var retrievaldisplay = $("<var id='labRetrievalDisplay' style='font-family:monospace; font-size:20px;'></var>").appendTo(controls);
 			var selectionboxes = $("<div id='labSelection'></div>").appendTo(container);
+			var skininfo = $("<div id='labSkinInfo' style='font-family:monospace'></div>").appendTo(container);
 			
 			buttonprev.click(function()
 			{
@@ -6373,10 +6425,10 @@ V = {
 			});
 			inputitem.onEnterKey(function()
 			{
-				var customitem = parseInt($(this).val());
-				if (customitem)
+				var userinputitem = parseInt($(this).val());
+				if (userinputitem)
 				{
-					CurateArray[CurateArrayIndex].itemid = customitem;
+					CurateArray[CurateArrayIndex].itemid = userinputitem;
 					$("#labControlNext").trigger("click");
 				}
 			}).click(function()
@@ -6849,7 +6901,7 @@ Q = {
 	 * @objparam jqobject element to bind tooltip.
 	 * @objparam int quantity if it is a stack of these items.
 	 * @objparam int skin ID for transmuted items.
-	 * @objparam object customitem contains information about the item's upgrades,
+	 * @objparam object itemmeta contains information about the item's upgrades,
 	 * infusions, skins, and bindings, which are found in characters and bank API.
 	 * @objparam object runesets containing counts of runes associated with rune's item ID.
 	 * @objparam string soulbound name of character the item is bound to.
@@ -6866,10 +6918,10 @@ Q = {
 		var upgradeobjs = [];
 		var skinobj = null;
 		var attrobj = null; // Holds attribute points
-		var iscustomitem = false;
+		var isitemmeta = false;
 		var istradeable = true;
 		var pricebuy, pricesell;
-		/* Example structure of customitem object:
+		/* Example structure of itemmeta object:
 			{
 				"id": 68390,
 				"slot": "Coat",
@@ -6881,13 +6933,13 @@ Q = {
 				"skin": 2346
 			}
 		 */
-		if (settings.customitem)
+		if (settings.itemmeta)
 		{
-			iscustomitem = true;
+			isitemmeta = true;
 		}
 		else
 		{
-			settings.customitem = {}; // If not provided then initialize as a blank object with undefined properties
+			settings.itemmeta = {}; // If not provided then initialize as a blank object with undefined properties
 		}
 		// Initialize attribute object if requested
 		if (settings.wantattr && A.isAccountInitialized)
@@ -7101,15 +7153,15 @@ Q = {
 				addFlag("Unique");
 			}
 			// Binding flags for custom items (equipped items or in bound in inventory)
-			if (iscustomitem && settings.customitem.binding)
+			if (isitemmeta && settings.itemmeta.binding)
 			{
 				istradeable = false;
-				if (settings.customitem.binding === "Character" && settings.customitem.bound_to)
+				if (settings.itemmeta.binding === "Character" && settings.itemmeta.bound_to)
 				{
 					flagsstr += "<var class='itmColor_warning'>" + D.getString("SoulboundToCharacter")
-						+ ": " + settings.customitem.bound_to + "</var><br />";
+						+ ": " + settings.itemmeta.bound_to + "</var><br />";
 				} 
-				else if (settings.customitem.binding === "Account")
+				else if (settings.itemmeta.binding === "Account")
 				{
 					addFlag("AccountBound");
 				}
@@ -7159,7 +7211,7 @@ Q = {
 		if (item.vendor_value > 0 && isvendorable)
 		{
 			// If stack count is included then multiply vendor price for one item by that number
-			vendorvalue = (settings.customitem.count) ? settings.customitem.count * item.vendor_value : item.vendor_value;
+			vendorvalue = (settings.itemmeta.count) ? settings.itemmeta.count * item.vendor_value : item.vendor_value;
 			vendorstr = E.formatCoinString(vendorvalue, {wantcolor: true, wantspace: true});
 		}
 		
@@ -7200,7 +7252,7 @@ Q = {
 						infusiontype = infusionslot.flags[0];
 						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
 							+ D.getString(infusiontype + "_Infusion") + "<br /><br />");
-						if (infusionslot.item_id !== undefined && settings.customitem.infusions === undefined)
+						if (infusionslot.item_id !== undefined && settings.itemmeta.infusions === undefined)
 						{
 							preinfusions.push(infusionslot.item_id);
 							propstofetch++;
@@ -7218,7 +7270,7 @@ Q = {
 					+ D.getString("UnusedUpgradeSlot") + "<br /><br />";
 				upgradestr.push(unupgradedslot);
 				upgradestr.push((isdouble) ? unupgradedslot : "");
-				if (det && det.suffix_item_id && settings.customitem.upgrades === undefined)
+				if (det && det.suffix_item_id && settings.itemmeta.upgrades === undefined)
 				{
 					preupgrades.push(det.suffix_item_id);
 					propstofetch++;
@@ -7235,13 +7287,13 @@ Q = {
 		}
 		
 		// OVERWRITE INFUSIONS AND UPGRADES
-		if (settings.customitem.infusions)
+		if (settings.itemmeta.infusions)
 		{
-			for (var i = 0; i < settings.customitem.infusions.length; i++)
+			for (var i = 0; i < settings.itemmeta.infusions.length; i++)
 			{
 				if (i < preinfusions.length)
 				{
-					preinfusions[i] = settings.customitem.infusions[i];
+					preinfusions[i] = settings.itemmeta.infusions[i];
 					if (preinfusions[i])
 					{
 						propstofetch++;
@@ -7249,13 +7301,13 @@ Q = {
 				}
 			}
 		}
-		if (settings.customitem.upgrades)
+		if (settings.itemmeta.upgrades)
 		{
-			for (var i = 0; i < settings.customitem.upgrades.length; i++)
+			for (var i = 0; i < settings.itemmeta.upgrades.length; i++)
 			{
 				if (i < preupgrades.length)
 				{
-					preupgrades[i] = settings.customitem.upgrades[i];
+					preupgrades[i] = settings.itemmeta.upgrades[i];
 					if (preupgrades[i])
 					{
 						propstofetch++;
@@ -7266,7 +7318,7 @@ Q = {
 		
 		// TRANSMUTATION
 		var transmstr = "";
-		if (settings.customitem.skin)
+		if (settings.itemmeta.skin)
 		{
 			propstofetch++;
 		}
@@ -7324,7 +7376,7 @@ Q = {
 				pricesell: pricesell
 			};
 			// Cache the item only if it's not custom (no upgrades or transmutations)
-			if (iscustomitem === false)
+			if (isitemmeta === false)
 			{
 				Q.Box[item.id] = box;
 			}
@@ -7424,9 +7476,9 @@ Q = {
 		}
 		
 		// TRANSMUTED
-		if (settings.customitem.skin)
+		if (settings.itemmeta.skin)
 		{
-			$.getJSON(U.getAPISkin(settings.customitem.skin), function(pData)
+			$.getJSON(U.getAPISkin(settings.itemmeta.skin), function(pData)
 			{
 				namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + Q.getRarityClass(rarity)
 					+ "'><img class='itmIcon itmIconMain' src='" + pData.icon + "' />" + U.escapeHTML(pData.name) + "</aside>";
@@ -7449,7 +7501,7 @@ Q = {
 		{
 			$.getJSON(U.getAPIPrice(item.id), function(pData)
 			{
-				var prices = E.processPrice(pData, settings.customitem.count);
+				var prices = E.processPrice(pData, settings.itemmeta.count);
 				pricestr = "<aside>" + E.formatCoinString(prices.pricesell, {wantcolor: true, wantspace: true})
 					+ " <span class='accTrivial'>" + E.formatCoinString(prices.pricebuy, {wantcolor: true, wantspace: true}) + "</span></aside>";
 				if (settings.callback)
@@ -7738,55 +7790,58 @@ Q = {
 	/*
 	 * Styles a standard inventory slot and prepare it for search.
 	 * @param jqobject pSlot to style.
-	 * @param object pSlotData custom item data retrieved from characters or
-	 * bank API, containing stack count and transmutation data.
+	 * @param object pOptions settings.
+	 * @objparam object itemmeta data retrieved from characters or bank API,
+	 * containing stack count and transmutation data.
+	 * @objparam object item item details retrieved from API.
 	 * @param object pItem data retrieved from item details API.
 	 */
-	styleBankSlot: function(pSlot, pSlotData, pItem)
+	styleBankSlot: function(pSlot, pOptions)
 	{
-		if (pSlotData)
+		var settings = pOptions || {};
+		if (settings.itemmeta)
 		{
-			Q.scanItem(pItem, {element: pSlot, customitem: pSlotData, callback: function(pBox)
+			Q.scanItem(settings.item, {element: pSlot, itemmeta: settings.itemmeta, callback: function(pBox)
 			{
 				// Load retrieved proper transmuted icon if available
-				var icon = (pBox.skin) ? pBox.skin.icon : pItem.icon;
+				var icon = (pBox.skin) ? pBox.skin.icon : settings.item.icon;
 				pSlot.find(".bnkSlotIcon").css({backgroundImage: "url(" + icon + ")"});
 				// Make the item searchable by converting its tooltip HTML into plain text
-				var keywords = ($(pBox.html).text() + " " + D.getString(pItem.rarity)).toLowerCase();
+				var keywords = ($(pBox.html).text() + " " + D.getString(settings.item.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
 				// Double click the slot opens its wiki page
 				pSlot.dblclick(function()
 				{
-					U.openExternalURL(U.getWikiLanguageLink(pBox.item.name));
+					U.openExternalURL(U.getWikiLanguageLink(settings.wiki || pBox.item.name));
 				});
 				// Numeric label over the slot icon indicating stack size or charges remaining
-				var count = pSlotData.count || 1;
+				var count = settings.itemmeta.count || 1;
 				if (count > 1)
 				{
 					pSlot.append("<var class='bnkSlotCount'>" + count + "</var>");
 				}
-				else if (pItem.type === "Tool")
+				else if (settings.item.type === "Tool")
 				{
 					// Salvage Kits gets a faux count number representing their remaining charges
 					var salv = A.Equipment.SalvageCharges;
-					if (salv && salv[pItem.id])
+					if (salv && salv[settings.item.id])
 					{
-						pSlot.append("<var class='bnkSlotCount'>" + salv[pItem.id] + "</var>");
+						pSlot.append("<var class='bnkSlotCount'>" + salv[settings.item.id] + "</var>");
 					}
 				}
-				else if (pItem.type === "Gathering")
+				else if (settings.item.type === "Gathering")
 				{
 					var gath = A.Equipment.GatheringCharges;
-					if (gath && pItem.rarity !== Q.Rarity.Rare)
+					if (gath && settings.item.rarity !== Q.Rarity.Rare)
 					{
-						pSlot.append("<var class='bnkSlotCount'>" + gath[pItem.details.type] + "</var>");
+						pSlot.append("<var class='bnkSlotCount'>" + gath[settings.item.details.type] + "</var>");
 					}
 				}
 				// Fade the slots that act as collections
-				if (pSlotData.count === 0)
+				if (settings.itemmeta.count === 0)
 				{
 					pSlot.addClass("bnkSlotZero");
-					pSlot.data("count", pSlotData.count);
+					pSlot.data("count", settings.itemmeta.count);
 				}
 				else
 				{
@@ -7796,7 +7851,7 @@ Q = {
 				// TP price label if the item is tradeable
 				if (pBox.istradeable)
 				{
-					$.getJSON(U.getAPIPrice(pItem.id), function(pData)
+					$.getJSON(U.getAPIPrice(settings.item.id), function(pData)
 					{
 						var prices = E.processPrice(pData, count);
 						var updatePriceDisplay = function(pDisplay)
@@ -7810,7 +7865,7 @@ Q = {
 						
 						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(prices.pricesell, {wantcolor: true, wantshort: true}) + "</var>");
 						// Only add if item actually exists (not a zero stack slot)
-						if (pSlotData.count !== 0)
+						if (settings.itemmeta.count !== 0)
 						{
 							updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
 							updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPrice"));

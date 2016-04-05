@@ -1110,8 +1110,8 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	isSpecial: true, // If a discounted sale exists
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-03-29T16:00:00Z"),
-	Finish: new Date("2016-04-05T16:00:00Z"),
+	Start: new Date("2016-04-05T16:00:00Z"),
+	Finish: new Date("2016-04-12T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1148,6 +1148,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Super Adventure Glider",
+		id: "78009",
+		price: 400,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Ironclad Appearance Pack",
 		img: "http://i.imgur.com/1SaYV5O.png",
 		price: 2000,
@@ -1155,8 +1162,22 @@ Sale: {
 		col: 1
 	},
 	{
+		name: "Basic Leather Rack",
+		id: "78019",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Ironclad Outfit",
 		id: "78010",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Gwen's Attire",
+		id: "78008",
 		price: 700,
 		discount: null,
 		col: 1
