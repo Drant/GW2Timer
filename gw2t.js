@@ -6274,9 +6274,9 @@ V = {
 								selectionitem.css({background: "rgba(255,0,0,0.2)"});
 							}
 						}
-						else if (box.item.type === "Consumable")
+						if (box.item.type === "Consumable")
 						{
-							selectionitem.css({background: "rgba(0,0,255,0.2)"});
+							selectionitem.css({background: "rgba(0,255,255,0.2)"});
 						}
 						if (box.item.rarity === "Fine"
 							&& (box.item.name.indexOf("Mighty") !== -1
@@ -6301,9 +6301,9 @@ V = {
 								selectionitem.css({background: "rgba(0,0,255,0.2)"});
 							}
 						}
-						else if (box.item.type === "Consumable")
+						if (box.item.type === "Consumable")
 						{
-							selectionitem.css({background: "rgba(0,0,255,0.2)"});
+							selectionitem.css({background: "rgba(0,255,255,0.2)"});
 						}
 					}
 				}
@@ -6451,7 +6451,71 @@ V = {
 			}
 			updateIndexDisplay();
 		});
-	}
+	},
+	
+	associateSkins: function()
+	{
+		var maindb = {};
+		var itemsarr, skinsarr;
+		
+		var processSkins = function()
+		{
+			var item;
+			var skinid;
+			// Read each item and add it to the skin database if has a default_skin property
+			for (var i = 0; i < itemsarr.length; i++)
+			{
+				item = itemsarr[i];
+				skinid = item.default_skin;
+				if (skinid)
+				{
+					if (maindb[skinid] === undefined)
+					{
+						maindb[skinid] = [];
+					}
+					maindb[skinid].push(item.id);
+					continue;
+				}
+				
+				// If no default skin then find skins array
+				if (item.details && item.details.type && item.details.skins)
+				{
+					for (var ii = 0; ii < item.details.skins.length; ii++)
+					{
+						skinid = item.details.skins[ii];
+						if (maindb[skinid] === undefined)
+						{
+							maindb[skinid] = [];
+						}
+						maindb[skinid].push(item.id);
+					}
+				}
+			}
+			
+			// Sort the arrays, with the item IDs in ascending order
+			for (var i in maindb)
+			{
+				maindb[i].sort(function(a, b)
+				{
+					return a - b;
+				});
+			}
+			
+			U.APICacheConsole = maindb;
+			//I.print(notice);
+			U.printJSON(U.APICacheConsole);
+		};
+		
+		$.getJSON("data/items.json", function(pData)
+		{
+			itemsarr = pData;
+			$.getJSON("data/skins.json", function(pDataInner)
+			{
+				skinsarr = pDataInner;
+				processSkins();
+			});
+		});
+	},
 };
 
 /* =============================================================================
@@ -20870,11 +20934,10 @@ B = {
 		// Initialize sale
 		if (B.isSaleEnabled)
 		{
-			var icon = ((B.Sale.isSpecial) ? "gemstore_special" : "gemstore") + I.cPNG;
 			var range = T.getMinMax(B.Sale.Items, "price");
 			var rangestr = (range.min === range.max) ? range.max : (range.min + "-" + range.max);
 			// Create "button" to toggle list of items on sale
-			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img src='img/ui/" + icon + "' /> "
+			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img id='dsbSaleSymbol' src='img/ui/placeholder.png' /> "
 				+ "<u>" + B.Sale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
@@ -20882,16 +20945,23 @@ B = {
 				+ "⇓@ " + B.Sale.Finish.toLocaleString()
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
 			// Add a "padding" item if the columns are not equal length
+			var isdiscounted = false;
 			var ncol0 = 0, ncol1 = 0;
-			for (var i in B.Sale.Items)
+			var item;
+			for (var i = 0; i < B.Sale.Items.length; i++)
 			{
-				if (B.Sale.Items[i].col === 0)
+				item = B.Sale.Items[i];
+				if (item.col === 0)
 				{
 					ncol0++;
 				}
 				else
 				{
 					ncol1++;
+				}
+				if (item.discount)
+				{
+					isdiscounted = true;
 				}
 			}
 			if (ncol0 < ncol1)
@@ -20904,6 +20974,7 @@ B = {
 				B.Sale.Padding.col = 1;
 				B.Sale.Items.unshift(B.Sale.Padding);
 			}
+			$("#dsbSaleSymbol").attr("src", "img/ui/" + ((isdiscounted) ? "gemstore_special" : "gemstore") + I.cPNG);
 			// Bind buttons
 			$("#dsbSaleHeader").click(function()
 			{
