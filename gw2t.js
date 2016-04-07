@@ -26,6 +26,7 @@
 	Functions that are repeated in milliseconds should use core JS instead of jQuery
 	Arguments in double quotes: $("argument"), single quotes for HTML generation
 	Parameters are camel case and start with "p": function(pExampleParameter)
+	Settings inside an object used as a function argument starts with "a", like parameters.
 	Parameters inside loops start with "i": forEach(function(iExampleParameter){})
 	CSS classes and IDs are named like instance variables: exampleID
 	Allman indentation (braces align vertically) unless it is repetitive code
@@ -886,17 +887,17 @@ O = {
 	/*
 	 * Unchecks the time sensitive checklists and clear variables, ignoring
 	 * the disabled/deleted ones by the user.
-	 * @param boolean pIsReset whether the program was running during server reset.
+	 * @param boolean pIsDaily whether the program was running during reset.
 	 */
-	clearDailySensitiveOptions: function(pIsDaily)
+	clearDailySensitiveOptions: function(pIsDuring)
 	{
 		O.isServerReset = true;
 		// Notify of the reset in console
 		var messagetime = 10;
-		var dailymessage = pIsDaily ? "Daily Reset!" : "Daily Timestamp Expired!";
+		var dailymessage = pIsDuring ? "Daily Reset!" : "Daily Timestamp Expired!";
 		I.greet(dailymessage, messagetime);
 		// Update the daily object
-		T.getDaily({isReset: true});
+		T.getDaily({aIsReset: true});
 		
 		// Chains checklist
 		var i;
@@ -934,10 +935,10 @@ O = {
 		// Finally
 		I.write("", messagetime);
 	},
-	clearWeeklySensitiveOptions: function(pIsWeekly)
+	clearWeeklySensitiveOptions: function(pIsDuring)
 	{
 		var messagetime = 10;
-		var weeklymessage = pIsWeekly ? "Weekly Reset!" : "Weekly Timestamp Expired!";
+		var weeklymessage = pIsDuring ? "Weekly Reset!" : "Weekly Timestamp Expired!";
 		I.greet(weeklymessage, messagetime);
 		if (O.Options.bol_clearPersonalChecklistOnReset)
 		{
@@ -3838,19 +3839,19 @@ U = {
 	 * Triggers the button or header associated with the requested page and section,
 	 * which will cause that section to expand/show. This is to be called after
 	 * a page has been AJAX loaded and bindings completed.
-	 * @objparam string prefix HTML ID prefix of the button to trigger, optional.
-	 * @objparam string section name to override URL's, optional.
-	 * @objparam string initialsection to open initially, optional.
-	 * @objparam string button HTML ID of the button to trigger, optional.
+	 * @objparam string aPrefix HTML ID prefix of the button to trigger, optional.
+	 * @objparam string aSection name to override URL's, optional.
+	 * @objparam string aInitialSection to open initially, optional.
+	 * @objparam string aButton HTML ID of the button to trigger, optional.
 	 */
-	openSectionFromURL: function(pOptions)
+	openSectionFromURL: function(pSettings)
 	{
-		var settings = $.extend({
-			prefix: I.cHeaderPrefix + I.PageCurrent + "_",
-			section: null,
-			initialsection: null,
-			button: null
-		}, pOptions);
+		var Settings = $.extend({
+			aPrefix: I.cHeaderPrefix + I.PageCurrent + "_",
+			aSection: null,
+			aInitialSection: null,
+			aButton: null
+		}, pSettings);
 		
 		/*
 		 * Enclosed in setTimeout because without it the scroll to element
@@ -3865,22 +3866,22 @@ U = {
 			{
 				section = U.stripToAlphanumeric(section);
 				var elm = $(null);
-				if (typeof settings.button === "string")
+				if (typeof Settings.aButton === "string")
 				{
-					if (settings.section !== undefined
-						&& settings.section.toLowerCase() === section.toLowerCase())
+					if (Settings.aSection !== undefined
+						&& Settings.aSection.toLowerCase() === section.toLowerCase())
 					{
-						elm = $(settings.button);
+						elm = $(Settings.aButton);
 					}
 				}
 				else
 				{
 					// Try going to a section name in sentence letter case
-					elm = $(settings.prefix + U.toFirstUpperCase(section));
+					elm = $(Settings.aPrefix + U.toFirstUpperCase(section));
 					if ( ! elm.length)
 					{
 						// Else try going to a section name in all caps
-						elm = $(settings.prefix + section.toUpperCase());
+						elm = $(Settings.aPrefix + section.toUpperCase());
 					}
 					if (I.PageCurrent === I.PageEnum.Chains)
 					{
@@ -3891,9 +3892,9 @@ U = {
 				elm.trigger("click");
 			}
 			// If section was specified by the function call
-			else if (typeof settings.initialsection === "string")
+			else if (typeof Settings.aInitialSection === "string")
 			{
-				$(settings.prefix + settings.initialsection).trigger("click");
+				$(Settings.aPrefix + Settings.aInitialSection).trigger("click");
 			}
 		}, 0);
 	},
@@ -4475,7 +4476,7 @@ A = {
 					// Update address
 					I.PageCurrent = I.SpecialPageEnum.Account;
 					I.SectionCurrent[I.SpecialPageEnum.Account] =
-						(iSectionName === I.SectionEnum.Account.Mananger) ? "" : iSectionName;
+						(iSectionName === I.SectionEnum.Account.Manager) ? "" : iSectionName;
 					U.updateQueryString();
 				});
 				
@@ -4534,7 +4535,7 @@ A = {
 		
 		// Open the section if specified in the URL
 		$("#accPlatterManager").show();
-		U.openSectionFromURL({prefix: "#accMenu_", initialsection: I.SectionEnum.Account.Mananger});
+		U.openSectionFromURL({aPrefix: "#accMenu_", aInitialSection: I.SectionEnum.Account.Manager});//
 	},
 	
 	/*
@@ -4697,7 +4698,7 @@ A = {
 		I.write(A.TokenCurrent);
 		if (pRequestType)
 		{
-			I.write("Requested permission: " + pRequestType, 5);
+			I.write("Requested permission: " + pRequestType, 10);
 		}
 	},
 	
@@ -5474,7 +5475,7 @@ V = {
 			+ "<img class='eqpCharProfession' src='img/account/classes/" + char.charelite + ".png' />"
 			+ "<span class='eqpCharName'>" + char.charname + "</span>"
 		+ "</div>").appendTo(container);
-		// Equipment icons and glance information
+		// Equipment icons and brief glance information
 		var subcontainer = $("<div class='eqpSubcontainer eqpSubcontainer_" + char.profession + "'></div>").appendTo(container);
 		var subconleft = $("<div class='eqpLeft eqpColumn'></div>").appendTo(subcontainer);
 		var subconright = $("<div class='eqpRight eqpColumn'></div>").appendTo(subcontainer);
@@ -5626,7 +5627,7 @@ V = {
 		// Add aquatic weapon background
 		subconright.append("<img class='eqpAquaticBackground' src='img/account/equipment/aquatic.png' />");
 		
-		// Retrieve and slot the equipments
+		// Retrieve and slot the equipment
 		var runesets = Q.countRuneSets(char);
 		for (var i in char.equipment)
 		{
@@ -5639,11 +5640,11 @@ V = {
 					var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iItem.icon;
 					var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
 					Q.scanItem(iItem, {
-						element: slot,
-						itemmeta: iEquipment,
-						runesets: runesets,
-						wantattr: true,
-						callback: function(iBox)
+						aElement: slot,
+						aItemMeta: iEquipment,
+						aRuneSets: runesets,
+						aWantAttr: true,
+						aCallback: function(iBox)
 						{
 							// Set the slot icon as the transmuted skin icon
 							ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(formatItemBrief(iBox)).show();
@@ -5766,7 +5767,7 @@ V = {
 				}
 				traitelm.append(traitname + "<mark class='" + traithighlight + "'>" + I.Symbol.Filler + "</mark>");
 				// Generate tooltip for trait
-				Q.analyzeTrait(trait, {element: traitelm});
+				Q.analyzeTrait(trait, {aElement: traitelm});
 			};
 			var formatSpecLine = function()
 			{
@@ -5862,7 +5863,7 @@ V = {
 		{
 			char = A.Data.Characters[i];
 			// Bank tab separator every character
-			tab = Q.createBankTab(bank, {title: char.charname});
+			tab = Q.createBankTab(bank, {aTitle: char.charname});
 			Q.createInventorySidebar(tab, char.bags);
 			slotscontainer = tab.find(".bnkTabSlots");
 			for (var ii = 0; ii < char.bags.length; ii++)
@@ -5881,7 +5882,7 @@ V = {
 							{
 								$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 								{
-									Q.styleBankSlot(iSlot, {item: iItem, itemmeta: iSlotData});
+									Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData});
 								});
 							})(slot, slotdata);
 						}
@@ -5935,7 +5936,7 @@ V = {
 					{
 						$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 						{
-							Q.styleBankSlot(iSlot, {item: iItem, itemmeta: iSlotData});
+							Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData});
 						});
 					})(slot, slotdata);
 				}
@@ -5949,6 +5950,10 @@ V = {
 			bank.append("<div class='bnkTabSeparator'><var class='bnkTabLocked'>" + I.Symbol.Filler + "</var></div>");
 			// Create search bar
 			Q.createBankMenu(bank);
+		}).fail(function()
+		{
+			A.printError("inventories");
+			dish.empty();
 		});
 	},
 	
@@ -5980,7 +5985,7 @@ V = {
 			for (var i = 0; i < matdata.length; i++)
 			{
 				matcategory = matdata[i];
-				tab = Q.createBankTab(bank, {title: D.getObjectName(matcategory)});
+				tab = Q.createBankTab(bank, {aTitle: D.getObjectName(matcategory)});
 				// Store the tabs to be later inserted with slots
 				slotscontainer = tab.find(".bnkTabSlots");
 				slotscontainerassoc[matcategory.id] = slotscontainer;
@@ -6003,12 +6008,16 @@ V = {
 					{
 						$.getJSON(U.getAPIItem(slotdata.id), function(iItem)
 						{
-							Q.styleBankSlot(iSlot, {item: iItem, itemmeta: iSlotData});
+							Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData});
 						});
 					})(slotassoc[slotdata.id], slotdata);
 				}
 			}
 			Q.createBankMenu(bank);
+		}).fail(function()
+		{
+			A.printError("inventories");
+			dish.empty();
 		});
 	},
 	
@@ -6039,7 +6048,7 @@ V = {
 				cat = categories[i];
 				catname = D.getObjectName(names[i]);
 				caticon = "<ins class='bnkTabIcon acc_wardrobe acc_wardrobe_" + i.toLowerCase() + "'></ins>";
-				tab = Q.createBankTab(bank, {title: catname, icon: caticon, iscollapsed: true});
+				tab = Q.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
 				(function(iTab, iCat)
 				{
 					// Tab slots are generated on demand when the user expands the tab, because there are lots of slots to generate
@@ -6059,7 +6068,7 @@ V = {
 									$.getJSON(U.getAPIItem(iItemID), function(iItem)
 									{
 										var count = (pUnlockedAssoc[iSkinID]) ? 1 : 0;
-										Q.styleBankSlot(iSlot, {item: iItem, itemmeta: {count: count}, wiki: iWiki});
+										Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: {count: count}, aWiki: iWiki});
 										iSlot.click(function()
 										{
 											I.log(iItem.name + " " + iSkinID + " " + iItemID);
@@ -6101,6 +6110,10 @@ V = {
 					assocobj[(pData[i])] = true;
 				}
 				generateWardrobe(assocobj);
+			}).fail(function()
+			{
+				A.printError("unlocks");
+				dish.empty();
 			});
 		});
 	},
@@ -6214,7 +6227,7 @@ V = {
 					var box = Boxes[i];
 					var selectionitem = $("<div style='display:inline-block; padding:4px; margin-right:8px; margin-bottom:8px; border:1px solid gray; vertical-align:top; zoom:75%;'>"
 						+ box.html + "<div>ID: " + box.item.id + "</div></div>").appendTo(selectioncontent);
-					var selectionbutton = $("<button style='width:100%'>Select</button>").appendTo(selectionitem);
+					var selectionbutton = $("<button class='labSelectItemButton' style='width:100%; height:32px;'>Select</button>").appendTo(selectionitem);
 					(function(iItemID)
 					{
 						selectionbutton.click(function(pEvent)
@@ -6225,7 +6238,6 @@ V = {
 							}
 							CurateArray[CurateArrayIndex].itemid = iItemID;
 							CurateArray[CurateArrayIndex].tradeableids = tradeableitems;
-							retrievaldisplay.html("Selected Item: " + iItemID);
 							$("#labControlNext").trigger("click");
 							A.adjustAccountScrollbar();
 						});
@@ -6296,7 +6308,18 @@ V = {
 						if (box.item.level === 80)
 						{
 							selectionitem.css({outline: "4px solid blue"});
-							if (box.item.name.indexOf("Zojja") !== -1 || box.item.name.indexOf("Berserker") !== -1)
+							if (box.item.name.indexOf("Berserker") !== -1)
+							{
+								selectionitem.css({background: "rgba(0,0,255,0.2)"});
+							}
+							else if (box.item.rarity === "Ascended" &&
+								(box.item.name.indexOf("Zojja") !== -1
+								|| box.item.name.indexOf("Soros") !== -1
+								|| box.item.name.indexOf("Beigarth") !== -1
+								|| box.item.name.indexOf("Verata") !== -1
+								|| box.item.name.indexOf("Tonn") !== -1
+								|| box.item.name.indexOf("Theodosus") !== -1
+								|| box.item.name.indexOf("Wupwup") !== -1))
 							{
 								selectionitem.css({background: "rgba(0,0,255,0.2)"});
 							}
@@ -6306,6 +6329,11 @@ V = {
 							selectionitem.css({background: "rgba(0,255,255,0.2)"});
 						}
 					}
+					
+					if (box.item.id === CurateArray[CurateArrayIndex].itemid)
+					{
+						selectionbutton.css({background: "rgba(221,255,119,1)"});
+					}
 				}
 			};
 			
@@ -6314,7 +6342,7 @@ V = {
 				var itemid = items[i];
 				$.getJSON(U.getAPIItem(itemid), function(iItem)
 				{
-					Q.scanItem(iItem, {wantprice: true, callback: function(iBox)
+					Q.scanItem(iItem, {aWantPrice: true, aCallback: function(iBox)
 					{
 						Boxes.push(iBox);
 						itemsretrieved++;
@@ -6327,7 +6355,7 @@ V = {
 		
 		var updateIndexDisplay = function()
 		{
-			$("#labIndexDisplay").html("Index: " + CurateArrayIndex + " / " + CurateArray.length
+			$("#labIndexDisplay").html("Index: " + CurateArrayIndex + " / " + (CurateArray.length - 1)
 				+ "&nbsp; Skin: " + CurateArray[CurateArrayIndex].skinid
 				+ "&nbsp; Item: " + CurateArray[CurateArrayIndex].itemid);
 		};
@@ -6351,6 +6379,7 @@ V = {
 			var controls = $("<div id='labControls' style='margin:8px; color:white;'></div>").appendTo(dishmenu);
 			var buttonprev = $("<button id='labControlPrev' style='width:96px; height:40px; margin-right:8px;'>Prev</button>").appendTo(controls);
 			var buttonnext = $("<button id='labControlNext' style='width:96px; height:40px; margin-right:8px;'>Next</button>").appendTo(controls);
+			var buttonauto = $("<button id='labControlAuto' style='width:96px; height:40px; margin-right:8px;'>Auto</button>").appendTo(controls);
 			var buttonprint = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'>Print</button>").appendTo(controls);
 			var buttonsave = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'><strong>SAVE</strong></button>").appendTo(controls);
 			var indexdisplay = $("<var id='labIndexDisplay' style='margin-right:8px; font-family:monospace; font-size:20px;'></var>").appendTo(controls);
@@ -6360,6 +6389,10 @@ V = {
 			var selectionboxes = $("<div id='labSelection'></div>").appendTo(container);
 			var skininfo = $("<div id='labSkinInfo' style='font-family:monospace'></div>").appendTo(container);
 			
+			buttonauto.click(function()
+			{
+				selectionboxes.find(".labSelectItemButton").first().trigger("click");
+			});
 			buttonprev.click(function()
 			{
 				if (CurateArrayIndex > 0)
@@ -6932,29 +6965,29 @@ Q = {
 	 * already been analyzed, and simply retrieve the cache if available,
 	 * otherwise proceed with the actual analysis function.
 	 * @param object pItem item details.
-	 * @param object pOptions settings.
+	 * @param object pSettings.
 	 */
-	scanItem: function(pItem, pOptions)
+	scanItem: function(pItem, pSettings)
 	{
-		var settings = pOptions || {};
+		var Settings = pSettings || {};
 		var box = Q.Box[pItem.id];
 		if (box)
 		{
-			if (settings.element)
+			if (Settings.aElement)
 			{
-				var elm = $(settings.element);
+				var elm = $(Settings.aElement);
 				elm.attr("title", box.html);
 				I.qTip.init(elm);
 			}
 			// Execute callback if provided
-			if (settings.callback)
+			if (Settings.aCallback)
 			{
-				settings.callback(box);
+				Settings.aCallback(box);
 			}
 		}
 		else
 		{
-			Q.analyzeItem(pItem, pOptions);
+			Q.analyzeItem(pItem, pSettings);
 		}
 	},
 	
@@ -6962,21 +6995,20 @@ Q = {
 	 * Generates item tooltip HTML, compiles attributes, and retrieves linked
 	 * upgrades and skins if available.
 	 * @param object pItem details retrieved from API.
-	 * @objparam jqobject element to bind tooltip.
-	 * @objparam int quantity if it is a stack of these items.
-	 * @objparam int skin ID for transmuted items.
-	 * @objparam object itemmeta contains information about the item's upgrades,
+	 * @objparam jqobject aElement to bind tooltip.
+	 * @objparam int aQuantity if it is a stack of these items.
+	 * @objparam object aItemMeta contains information about the item's upgrades,
 	 * infusions, skins, and bindings, which are found in characters and bank API.
-	 * @objparam object runesets containing counts of runes associated with rune's item ID.
-	 * @objparam string soulbound name of character the item is bound to.
-	 * @objparam boolean wantprice whether to retrieve and include Trading Post price also.
-	 * @objparam function callback what to do after the tooltip generation
+	 * @objparam object aRuneSets containing counts of runes associated with rune's item ID.
+	 * @objparam string aSoulbound name of character the item is bound to.
+	 * @objparam boolean aWantPrice whether to retrieve and include Trading Post price also.
+	 * @objparam function aCallback what to do after the tooltip generation
 	 * completes. This provides an object containing additionally retrieved
 	 * API objects like upgrades and skin.
 	 */
-	analyzeItem: function(pItem, pOptions)
+	analyzeItem: function(pItem, pSettings)
 	{
-		var settings = pOptions || {};
+		var Settings = pSettings || {};
 		// These will hold retrieved API objects, if a callback was requested
 		var infusionobjs = [];
 		var upgradeobjs = [];
@@ -6985,7 +7017,7 @@ Q = {
 		var isitemmeta = false;
 		var istradeable = true;
 		var pricebuy, pricesell;
-		/* Example structure of itemmeta object:
+		/* Example structure of aItemMeta object:
 			{
 				"id": 68390,
 				"slot": "Coat",
@@ -6997,16 +7029,16 @@ Q = {
 				"skin": 2346
 			}
 		 */
-		if (settings.itemmeta)
+		if (Settings.aItemMeta)
 		{
 			isitemmeta = true;
 		}
 		else
 		{
-			settings.itemmeta = {}; // If not provided then initialize as a blank object with undefined properties
+			Settings.aItemMeta = {}; // If not provided then initialize as a blank object with undefined properties
 		}
 		// Initialize attribute object if requested
-		if (settings.wantattr && A.isAccountInitialized)
+		if (Settings.aWantAttr && A.isAccountInitialized)
 		{
 			attrobj = new A.Attribute.Base();
 		}
@@ -7046,7 +7078,7 @@ Q = {
 		// NAME
 		var namestr = "";
 		var rarity = (item.rarity !== undefined) ? item.rarity : Q.Rarity.Basic;
-		namestr = "<aside class='itmName " + ((settings.quantity !== undefined) ? (settings.quantity + " ") : "") + Q.getRarityClass(rarity)
+		namestr = "<aside class='itmName " + ((Settings.aQuantity !== undefined) ? (Settings.aQuantity + " ") : "") + Q.getRarityClass(rarity)
 			+ "'><img class='itmIcon itmIconMain' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
 		
 		// WEAPON STRENGTH
@@ -7217,15 +7249,15 @@ Q = {
 				addFlag("Unique");
 			}
 			// Binding flags for custom items (equipped items or in bound in inventory)
-			if (isitemmeta && settings.itemmeta.binding)
+			if (isitemmeta && Settings.aItemMeta.binding)
 			{
 				istradeable = false;
-				if (settings.itemmeta.binding === "Character" && settings.itemmeta.bound_to)
+				if (Settings.aItemMeta.binding === "Character" && Settings.aItemMeta.bound_to)
 				{
 					flagsstr += "<var class='itmColor_warning'>" + D.getString("SoulboundToCharacter")
-						+ ": " + settings.itemmeta.bound_to + "</var><br />";
+						+ ": " + Settings.aItemMeta.bound_to + "</var><br />";
 				} 
-				else if (settings.itemmeta.binding === "Account")
+				else if (Settings.aItemMeta.binding === "Account")
 				{
 					addFlag("AccountBound");
 				}
@@ -7264,9 +7296,9 @@ Q = {
 		
 		// CHARACTER BINDING
 		var charbindstr = "";
-		if (settings.soulbound)
+		if (Settings.aSoulbound)
 		{
-			charbindstr = D.getString("SoulboundToCharacter") + ": " + U.escapeHTML(settings.soulbound);
+			charbindstr = D.getString("SoulboundToCharacter") + ": " + U.escapeHTML(Settings.aSoulbound);
 		}
 		
 		// VENDOR PRICE
@@ -7275,13 +7307,13 @@ Q = {
 		if (item.vendor_value > 0 && isvendorable)
 		{
 			// If stack count is included then multiply vendor price for one item by that number
-			vendorvalue = (settings.itemmeta.count) ? settings.itemmeta.count * item.vendor_value : item.vendor_value;
-			vendorstr = E.formatCoinString(vendorvalue, {wantcolor: true, wantspace: true});
+			vendorvalue = (Settings.aItemMeta.count) ? Settings.aItemMeta.count * item.vendor_value : item.vendor_value;
+			vendorstr = E.formatCoinString(vendorvalue, {aWantColor: true, aWantSpace: true});
 		}
 		
 		// TRADE PRICE
 		var pricestr = "";
-		if (settings.wantprice)
+		if (Settings.aWantPrice)
 		{
 			propstofetch++;
 		}
@@ -7316,7 +7348,7 @@ Q = {
 						infusiontype = infusionslot.flags[0];
 						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
 							+ D.getString(infusiontype + "_Infusion") + "<br /><br />");
-						if (infusionslot.item_id !== undefined && settings.itemmeta.infusions === undefined)
+						if (infusionslot.item_id !== undefined && Settings.aItemMeta.infusions === undefined)
 						{
 							preinfusions.push(infusionslot.item_id);
 							propstofetch++;
@@ -7334,7 +7366,7 @@ Q = {
 					+ D.getString("UnusedUpgradeSlot") + "<br /><br />";
 				upgradestr.push(unupgradedslot);
 				upgradestr.push((isdouble) ? unupgradedslot : "");
-				if (det && det.suffix_item_id && settings.itemmeta.upgrades === undefined)
+				if (det && det.suffix_item_id && Settings.aItemMeta.upgrades === undefined)
 				{
 					preupgrades.push(det.suffix_item_id);
 					propstofetch++;
@@ -7351,13 +7383,13 @@ Q = {
 		}
 		
 		// OVERWRITE INFUSIONS AND UPGRADES
-		if (settings.itemmeta.infusions)
+		if (Settings.aItemMeta.infusions)
 		{
-			for (var i = 0; i < settings.itemmeta.infusions.length; i++)
+			for (var i = 0; i < Settings.aItemMeta.infusions.length; i++)
 			{
 				if (i < preinfusions.length)
 				{
-					preinfusions[i] = settings.itemmeta.infusions[i];
+					preinfusions[i] = Settings.aItemMeta.infusions[i];
 					if (preinfusions[i])
 					{
 						propstofetch++;
@@ -7365,13 +7397,13 @@ Q = {
 				}
 			}
 		}
-		if (settings.itemmeta.upgrades)
+		if (Settings.aItemMeta.upgrades)
 		{
-			for (var i = 0; i < settings.itemmeta.upgrades.length; i++)
+			for (var i = 0; i < Settings.aItemMeta.upgrades.length; i++)
 			{
 				if (i < preupgrades.length)
 				{
-					preupgrades[i] = settings.itemmeta.upgrades[i];
+					preupgrades[i] = Settings.aItemMeta.upgrades[i];
 					if (preupgrades[i])
 					{
 						propstofetch++;
@@ -7382,7 +7414,7 @@ Q = {
 		
 		// TRANSMUTATION
 		var transmstr = "";
-		if (settings.itemmeta.skin)
+		if (Settings.aItemMeta.skin)
 		{
 			propstofetch++;
 		}
@@ -7418,9 +7450,9 @@ Q = {
 				+ pricestr
 			+ "</div>";
 			// Bind tooltip if provided an element
-			if (settings.element)
+			if (Settings.aElement)
 			{
-				var elm = $(settings.element);
+				var elm = $(Settings.aElement);
 				elm.attr("title", html);
 				I.qTip.init(elm);
 			}
@@ -7445,9 +7477,9 @@ Q = {
 				Q.Box[item.id] = box;
 			}
 			// Execute callback if provided
-			if (settings.callback)
+			if (Settings.aCallback)
 			{
-				settings.callback(box);
+				Settings.aCallback(box);
 			}
 		};
 		
@@ -7467,7 +7499,7 @@ Q = {
 				{
 					infusionstr[iIndex] = "<span class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + iData.name + "<br />"
 						+ iData.details.infix_upgrade.buff.description + "</span><br /><br />";
-					if (settings.callback)
+					if (Settings.aCallback)
 					{
 						infusionobjs.push(iData);
 					}
@@ -7503,16 +7535,16 @@ Q = {
 						if (det.type === "HelmAquatic")
 						{
 							// Count the rune in the aquatic helm for its own slotted description
-							runepieces = (settings.runesets && settings.runesets[iData.id]) ? (1 + settings.runesets[iData.id].numslotted) : 1;
+							runepieces = (Settings.aRuneSets && Settings.aRuneSets[iData.id]) ? (1 + Settings.aRuneSets[iData.id].numslotted) : 1;
 						}
-						else if (settings.runesets)
+						else if (Settings.aRuneSets)
 						{
-							runepieces = settings.runesets;
+							runepieces = Settings.aRuneSets;
 						}
 						upgdesc = Q.getItemRune(iData, runepieces);
 						if (attrobj)
 						{
-							Q.sumItemAttribute(attrobj, iData, settings.runesets);
+							Q.sumItemAttribute(attrobj, iData, Settings.aRuneSets);
 						}
 					}
 					else
@@ -7525,7 +7557,7 @@ Q = {
 					}
 					
 					upgradestr[iIndex] = "<aside class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + upgdesc + "</aside><br />";
-					if (settings.callback)
+					if (Settings.aCallback)
 					{
 						upgradeobjs.push(iData);
 					}
@@ -7540,14 +7572,14 @@ Q = {
 		}
 		
 		// TRANSMUTED
-		if (settings.itemmeta.skin)
+		if (Settings.aItemMeta.skin)
 		{
-			$.getJSON(U.getAPISkin(settings.itemmeta.skin), function(pData)
+			$.getJSON(U.getAPISkin(Settings.aItemMeta.skin), function(pData)
 			{
-				namestr = "<aside class='itmName " + ((settings.quantity !== null) ? (settings.quantity + " ") : "") + Q.getRarityClass(rarity)
+				namestr = "<aside class='itmName " + ((Settings.aQuantity !== null) ? (Settings.aQuantity + " ") : "") + Q.getRarityClass(rarity)
 					+ "'><img class='itmIcon itmIconMain' src='" + pData.icon + "' />" + U.escapeHTML(pData.name) + "</aside>";
 				transmstr = "<aside='itmTransmute'>" + D.getString("Transmuted") + "<br />" + U.escapeHTML(item.name) + "</aside><br /><br />";
-				if (settings.callback)
+				if (Settings.aCallback)
 				{
 					skinobj = pData;
 				}
@@ -7561,14 +7593,14 @@ Q = {
 		}
 		
 		// TRADEABLE
-		if (settings.wantprice)
+		if (Settings.aWantPrice)
 		{
 			$.getJSON(U.getAPIPrice(item.id), function(pData)
 			{
-				var prices = E.processPrice(pData, settings.itemmeta.count);
-				pricestr = "<aside>" + E.formatCoinString(prices.pricesell, {wantcolor: true, wantspace: true})
-					+ " <span class='accTrivial'>" + E.formatCoinString(prices.pricebuy, {wantcolor: true, wantspace: true}) + "</span></aside>";
-				if (settings.callback)
+				var prices = E.processPrice(pData, Settings.aItemMeta.count);
+				pricestr = "<aside>" + E.formatCoinString(prices.pricesell, {aWantColor: true, aWantSpace: true})
+					+ " <span class='accTrivial'>" + E.formatCoinString(prices.pricebuy, {aWantColor: true, aWantSpace: true}) + "</span></aside>";
+				if (Settings.aCallback)
 				{
 					pricebuy = prices.pricebuy;
 					pricesell = prices.pricesell;
@@ -7697,11 +7729,11 @@ Q = {
 	/*
 	 * Generates trait tooltip HTML.
 	 * @param object pTrait details retrieved from API.
-	 * @objparam jqobject element to bind tooltip.
+	 * @objparam jqobject aElement to bind tooltip.
 	 */
-	analyzeTrait: function(pTrait, pOptions)
+	analyzeTrait: function(pTrait, pSettings)
 	{
-		var settings = pOptions || {};
+		var Settings = pSettings || {};
 		var content = Q.formatSkillTrait(pTrait);
 		
 		// Calculate an extra tooltip's height by actually making it then measuring its height
@@ -7737,9 +7769,9 @@ Q = {
 		
 		var html = "<div class='trtTooltipBorder'>" + I.Symbol.Filler + "</div>"
 			+ skilltooltips + "<div class='trtTooltip'>" + content + "</div>";
-		if (settings.element)
+		if (Settings.aElement)
 		{
-			var elm = $(settings.element);
+			var elm = $(Settings.aElement);
 			elm.attr("title", html);
 			I.qTip.init(elm);
 		}
@@ -7764,18 +7796,19 @@ Q = {
 	 * Creates a standard bank window tab that holds item slots, and a separator
 	 * that toggles the tab.
 	 * @param jqobject pBank container of tabs.
-	 * @param string pTitle of the tab, placed in the separator, optional.
-	 * @param boolean pIsCollapsed whether the tab is pre-collapsed, for tabs
+	 * @objparam string iIcon HTML for tab header icon.
+	 * @objparam string aTitle for tab header title.
+	 * @objparam boolean aIsCollapsed whether the tab is pre-collapsed, for tabs
 	 * that generate slots on demand.
 	 * @returns jqobject bank tab.
 	 */
-	createBankTab: function(pBank, pOptions)
+	createBankTab: function(pBank, pSettings)
 	{
-		var settings = pOptions || {};
+		var Settings = pSettings || {};
 		
 		var tab = $("<div class='bnkTab'></div>");
-		var iconstr = (settings.icon) ? settings.icon : "";
-		var titlestr = (settings.title) ? "<var class='bnkTabText'>" + settings.title + "</var>" : "";
+		var iconstr = (Settings.aIcon) ? Settings.aIcon : "";
+		var titlestr = (Settings.aTitle) ? "<var class='bnkTabText'>" + Settings.aTitle + "</var>" : "";
 		var tabseparator = $("<div class='bnkTabSeparator curToggle'><aside class='bnkTabHeader'>"
 			+ iconstr
 			+ titlestr
@@ -7791,7 +7824,7 @@ Q = {
 			I.toggleToggleIcon(tabtoggle, !state);
 			tabslots.slideToggle("fast");
 		});
-		if (settings.iscollapsed)
+		if (Settings.aIsCollapsed)
 		{
 			I.toggleToggleIcon(tabtoggle, false);
 			tabslots.hide();
@@ -7827,7 +7860,7 @@ Q = {
 					$.getJSON(U.getAPIItem(iBagData.id), function(iItem)
 					{
 						iBag.css({backgroundImage: "url(" + iItem.icon + ")"});
-						Q.scanItem(iItem, {element: iBag});
+						Q.scanItem(iItem, {aElement: iBag});
 					});
 				})(bag);
 			}
@@ -7854,58 +7887,59 @@ Q = {
 	/*
 	 * Styles a standard inventory slot and prepare it for search.
 	 * @param jqobject pSlot to style.
-	 * @param object pOptions settings.
-	 * @objparam object itemmeta data retrieved from characters or bank API,
+	 * @param object pSettings.
+	 * @objparam object aItemMeta data retrieved from characters or bank API,
 	 * containing stack count and transmutation data.
-	 * @objparam object item item details retrieved from API.
+	 * @objparam object aItem item details retrieved from API.
+	 * @objparam string aWiki name of wiki article to open when double clicked.
 	 * @param object pItem data retrieved from item details API.
 	 */
-	styleBankSlot: function(pSlot, pOptions)
+	styleBankSlot: function(pSlot, pSettings)
 	{
-		var settings = pOptions || {};
-		if (settings.itemmeta)
+		var Settings = pSettings || {};
+		if (Settings.aItemMeta)
 		{
-			Q.scanItem(settings.item, {element: pSlot, itemmeta: settings.itemmeta, callback: function(pBox)
+			Q.scanItem(Settings.aItem, {aElement: pSlot, aItemMeta: Settings.aItemMeta, aCallback: function(pBox)
 			{
 				// Load retrieved proper transmuted icon if available
-				var icon = (pBox.skin) ? pBox.skin.icon : settings.item.icon;
+				var icon = (pBox.skin) ? pBox.skin.icon : Settings.aItem.icon;
 				pSlot.find(".bnkSlotIcon").css({backgroundImage: "url(" + icon + ")"});
 				// Make the item searchable by converting its tooltip HTML into plain text
-				var keywords = ($(pBox.html).text() + " " + D.getString(settings.item.rarity)).toLowerCase();
+				var keywords = ($(pBox.html).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
 				// Double click the slot opens its wiki page
 				pSlot.dblclick(function()
 				{
-					U.openExternalURL(U.getWikiLanguageLink(settings.wiki || pBox.item.name));
+					U.openExternalURL(U.getWikiLanguageLink(Settings.aWiki || pBox.item.name));
 				});
 				// Numeric label over the slot icon indicating stack size or charges remaining
-				var count = settings.itemmeta.count || 1;
+				var count = Settings.aItemMeta.count || 1;
 				if (count > 1)
 				{
 					pSlot.append("<var class='bnkSlotCount'>" + count + "</var>");
 				}
-				else if (settings.item.type === "Tool")
+				else if (Settings.aItem.type === "Tool")
 				{
 					// Salvage Kits gets a faux count number representing their remaining charges
 					var salv = A.Equipment.SalvageCharges;
-					if (salv && salv[settings.item.id])
+					if (salv && salv[Settings.aItem.id])
 					{
-						pSlot.append("<var class='bnkSlotCount'>" + salv[settings.item.id] + "</var>");
+						pSlot.append("<var class='bnkSlotCount'>" + salv[Settings.aItem.id] + "</var>");
 					}
 				}
-				else if (settings.item.type === "Gathering")
+				else if (Settings.aItem.type === "Gathering")
 				{
 					var gath = A.Equipment.GatheringCharges;
-					if (gath && settings.item.rarity !== Q.Rarity.Rare)
+					if (gath && Settings.aItem.rarity !== Q.Rarity.Rare)
 					{
-						pSlot.append("<var class='bnkSlotCount'>" + gath[settings.item.details.type] + "</var>");
+						pSlot.append("<var class='bnkSlotCount'>" + gath[Settings.aItem.details.type] + "</var>");
 					}
 				}
 				// Fade the slots that act as collections
-				if (settings.itemmeta.count === 0)
+				if (Settings.aItemMeta.count === 0)
 				{
 					pSlot.addClass("bnkSlotZero");
-					pSlot.data("count", settings.itemmeta.count);
+					pSlot.data("count", Settings.aItemMeta.count);
 				}
 				else
 				{
@@ -7915,7 +7949,7 @@ Q = {
 				// TP price label if the item is tradeable
 				if (pBox.istradeable)
 				{
-					$.getJSON(U.getAPIPrice(settings.item.id), function(pData)
+					$.getJSON(U.getAPIPrice(Settings.aItem.id), function(pData)
 					{
 						var prices = E.processPrice(pData, count);
 						var updatePriceDisplay = function(pDisplay)
@@ -7927,9 +7961,9 @@ Q = {
 							pDisplay.html(tabtext);
 						};
 						
-						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(prices.pricesell, {wantcolor: true, wantshort: true}) + "</var>");
+						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(prices.pricesell, {aWantColor: true, aWantShort: true}) + "</var>");
 						// Only add if item actually exists (not a zero stack slot)
-						if (settings.itemmeta.count !== 0)
+						if (Settings.aItemMeta.count !== 0)
 						{
 							updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
 							updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPrice"));
@@ -8321,31 +8355,31 @@ E = {
 	/*
 	 * Converts a coin amount in copper to a period separated string.
 	 * @param int pAmount of copper.
-	 * @objparam boolean wantcolor whether to include the coin image instead of periods.
-	 * @objparam boolean wantspace whether to separate the different coins with spaces.
-	 * @objparam boolean wantshort whether to truncate lower denominations.
+	 * @objparam boolean aWantColor whether to include the coin image instead of periods.
+	 * @objparam boolean aWantSpace whether to separate the different coins with spaces.
+	 * @objparam boolean aWantShort whether to truncate lower denominations.
 	 * @returns string coin for displaying.
 	 */
-	formatCoinString: function(pAmount, pOptions)
+	formatCoinString: function(pAmount, pSettings)
 	{
 		var amount = (pAmount === undefined || isFinite(pAmount) === false) ? 0 : parseInt(pAmount);
-		var settings = $.extend({
-			wantcolor: false,
-			wantspace: false,
-			wantshort: false
-		}, pOptions);
+		var Settings = $.extend({
+			aWantColor: false,
+			aWantSpace: false,
+			aWantShort: false
+		}, pSettings);
 		
 		var sep = ".";
 		var sg0 = ""; var ss0 = ""; var sc0 = "";
 		var sg1 = ""; var ss1 = ""; var sc1 = "";
-		if (settings.wantcolor)
+		if (Settings.aWantColor)
 		{
 			// Instead of period separating the currency units, use the coin images
 			sep = "";
 			sg0 = "<gold>"; ss0 = "<silver>"; sc0 = "<copper>";
 			sg1 = "</gold><goldcoin></goldcoin>"; ss1 = "</silver><silvercoin></silvercoin>"; sc1 = "</copper><coppercoin></coppercoin>";
 		}
-		if (settings.wantspace)
+		if (Settings.aWantSpace)
 		{
 			sep = " ";
 		}
@@ -8356,16 +8390,16 @@ E = {
 		var sign = (amount < 0) ? "−" : "";
 		
 		// Leading zero for units that are right side of the leftmost unit
-		if (!settings.wantcolor && (gold > 0 && silver < T.cBASE_10))
+		if (!Settings.aWantColor && (gold > 0 && silver < T.cBASE_10))
 		{
 			silver = "0" + silver;
 		}
-		if (!settings.wantcolor && ((silver > 0 && copper < T.cBASE_10) || (copper < T.cBASE_10)))
+		if (!Settings.aWantColor && ((silver > 0 && copper < T.cBASE_10) || (copper < T.cBASE_10)))
 		{
 			copper = "0" + copper;
 		}
 		// For short version exclude copper if showing gold and silver 
-		if (gold > 0 && settings.wantshort)
+		if (gold > 0 && Settings.aWantShort)
 		{
 			sc0 = "";
 			copper = "";
@@ -8381,7 +8415,7 @@ E = {
 		{
 			return sign + ss0 + silver + ss1 + sep + sc0 + copper + sc1;
 		}
-		if (settings.wantcolor)
+		if (Settings.aWantColor)
 		{
 			// No 0 silver prefix for copper-only price if showing color
 			return sc0 + copper + sc1;
@@ -8390,7 +8424,7 @@ E = {
 	},
 	formatCoinStringColored: function(pAmount)
 	{
-		return E.formatCoinString(pAmount, {wantcolor: true});
+		return E.formatCoinString(pAmount, {aWantColor: true});
 	},
 	
 	/*
@@ -8630,7 +8664,7 @@ E = {
 			{
 				U.printJSON(pData);
 			});
-			Q.scanItem(pData, {element: icon});
+			Q.scanItem(pData, {aElement: icon});
 		}});
 	},
 	
@@ -9214,6 +9248,10 @@ E = {
 		{
 			E.loopRefresh(true);
 		}));
+		$("#trdPause").click(function()
+		{
+			E.cancelLoopRefresh();
+		});
 		$("#trdMute").click(function()
 		{
 			D.resetSpeechQueue();
@@ -11339,8 +11377,8 @@ C = {
 					minischedulestring = minischedulestring + spacer
 						+ T.getTimeFormatted(
 						{
-							wantSeconds: false,
-							customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(
+							aWantSeconds: false,
+							aCustomTimeInSeconds: T.convertScheduleKeyToLocalSeconds(
 								ithchain.scheduleKeys[ii])
 						});
 				}
@@ -11354,15 +11392,15 @@ C = {
 			}
 			countdown = T.getTimeFormatted(
 			{
-				wantLetters: true,
-				wantSeconds: false,
-				customTimeInSeconds: T.getSecondsUntilChainStarts(ithchain)
+				aWantLetters: true,
+				aWantSeconds: false,
+				aCustomTimeInSeconds: T.getSecondsUntilChainStarts(ithchain)
 			});
 			time = T.getTimeFormatted(
 			{
-				wantLetters: false,
-				wantSeconds: false,
-				customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(ithchain.scheduleKeys[0])
+				aWantLetters: false,
+				aWantSeconds: false,
+				aCustomTimeInSeconds: T.convertScheduleKeyToLocalSeconds(ithchain.scheduleKeys[0])
 			});
 			
 			$("#chnTime_" + ithchain.nexus).html(
@@ -11392,9 +11430,9 @@ C = {
 			var nextframe = T.getDryTopMinute(1);
 			time = T.getTimeFormatted(
 			{
-				reference: T.ReferenceEnum.UTC,
-				want24: true,
-				wantHours: false
+				aReference: T.ReferenceEnum.UTC,
+				aWant24: true,
+				aWantHours: false
 			});
 			
 			$("#chnTime_" + pChain.nexus).text("(:" + currentframe + ") " + time);
@@ -11416,8 +11454,8 @@ C = {
 
 			$("#chnTime_" + pChain.nexus).text(sign + T.getTimeFormatted(
 				{
-					wantLetters: true,
-					customTimeInSeconds: time
+					aWantLetters: true,
+					aCustomTimeInSeconds: time
 				})
 			);
 		}
@@ -11455,8 +11493,8 @@ C = {
 				
 				timestring = T.getTimeFormatted(
 				{
-					wantSeconds: false,
-					customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(i)
+					aWantSeconds: false,
+					aCustomTimeInSeconds: T.convertScheduleKeyToLocalSeconds(i)
 				});
 
 				$("#sectionChains_Timetable").append(
@@ -16057,7 +16095,7 @@ G = {
 		T.getDaily().done(function()
 		{
 			G.insertDailyDay(T.DailyToday, now); // Today's dailies
-			T.getDaily({getTomorrow: true}).done(function() // Tomorrow's dailies
+			T.getDaily({aWantGetTomorrow: true}).done(function() // Tomorrow's dailies
 			{
 				I.removeThrobber("#dlyContainer");
 				G.insertDailyDay(T.DailyTomorrow, T.addDaysToDate(now, 1));
@@ -16484,7 +16522,7 @@ G = {
 						+ "Net Profit: <span class='cssRight'>" + E.formatCoinStringColored(sumprice - waypointcost) + "</span><br />"
 						+ "<br />"
 						+ "Nodes to Visit: <span class='cssRight'>" + numnodes + "</span><br />"
-						+ "Estimated Time: <span class='cssRight'>" + T.getTimeFormatted({customTimeInSeconds: timecost, wantLetters: true}) + "</span>";
+						+ "Estimated Time: <span class='cssRight'>" + T.getTimeFormatted({aCustomTimeInSeconds: timecost, aWantLetters: true}) + "</span>";
 					I.print(summary);
 				}
 			});
@@ -17709,7 +17747,7 @@ W = {
 		// Finally
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL
-		U.openSectionFromURL({button: "#lboRegion", section: "Leaderboard"});
+		U.openSectionFromURL({aButton: "#lboRegion", aSection: "Leaderboard"});
 	},
 	
 	/*
@@ -18511,7 +18549,7 @@ W = {
 			// Update the timestamps of the log entries
 			$("#logWindow li time").each(function()
 			{
-				var timestr = T.getTimeFormatted({customTimeInDate: new Date($(this).attr("data-time"))}); 
+				var timestr = T.getTimeFormatted({aCustomTimeInDate: new Date($(this).attr("data-time"))}); 
 				$(this).html(timestr);
 			});
 		});
@@ -18599,7 +18637,7 @@ W = {
 		}
 		else
 		{
-			timestr = T.getTimeFormatted({customTimeInDate: new Date(pISOTime)});
+			timestr = T.getTimeFormatted({aCustomTimeInDate: new Date(pISOTime)});
 		}
 		var entry = $("<li class='logEntry " + pClass + "'><time data-time='" + pISOTime + "'>" + timestr + "</time><span>" + pString + "</span></li>")
 			.prependTo("#logWindow");
@@ -20082,29 +20120,31 @@ T = {
 
 	/*
 	 * Gets a formatted time string, arguments are taken as key-value pairs.
-	 * @objparam string reference place to offset the time, default is local.
-	 * @objparam boolean want24 to format as 24 hour or not (AM/PM).
-	 * @objparam boolean wantLetters to format #h #m #s instead of colons. Overrides want24.
-	 * @objparam boolean wantSeconds to include the seconds.
-	 * @objparam int customTimeInSeconds to convert to a time string, will use
+	 * @objparam string aReference place to offset the time, default is local.
+	 * @objparam boolean aWant24 to format as 24 hour or not (AM/PM).
+	 * @objparam boolean aWantSeconds to include the seconds.
+	 * @objparam boolean aWantHours to include the hours.
+	 * @objparam boolean aWantLetters to format #h #m #s instead of colons. Overrides want24.
+	 * @objparam Date aCustomTimeInDate to convert to time string.
+	 * @objparam int aCustomTimeInSeconds to convert to a time string, will use
 	 * current time if undefined.
 	 * @returns 23:59:59 or 11:59:59 PM or 23h 59m 59s time string.
 	 */
-	getTimeFormatted: function(pOptions)
+	getTimeFormatted: function(pSettings)
 	{
-		var settings = $.extend({
-			reference: T.ReferenceEnum.Local,
-			want24: O.Options.bol_use24Hour,
-			wantSeconds: true,
-			wantHours: true,
-			wantLetters: false
-		}, pOptions);
+		var Settings = $.extend({
+			aReference: T.ReferenceEnum.Local,
+			aWant24: O.Options.bol_use24Hour,
+			aWantSeconds: true,
+			aWantHours: true,
+			aWantLetters: false
+		}, pSettings);
 		
 		var sec, min, hour;
-		var now = (settings.customTimeInDate === undefined) ? (new Date()) : settings.customTimeInDate;
-		if (settings.customTimeInSeconds === undefined)
+		var now = (Settings.aCustomTimeInDate === undefined) ? (new Date()) : Settings.aCustomTimeInDate;
+		if (Settings.aCustomTimeInSeconds === undefined)
 		{
-			switch (settings.reference)
+			switch (Settings.aReference)
 			{
 				case T.ReferenceEnum.Local:
 				{
@@ -20130,21 +20170,21 @@ T = {
 		else
 		{
 			// Regard negative input
-			settings.customTimeInSeconds = T.wrapInteger(settings.customTimeInSeconds, T.cSECONDS_IN_DAY);
+			Settings.aCustomTimeInSeconds = T.wrapInteger(Settings.aCustomTimeInSeconds, T.cSECONDS_IN_DAY);
 			/*
 			 * Convert specified seconds to time units. The ~~ gets rid of the
 			 * decimal so / behaves like integer divide.
 			 */
-			sec = settings.customTimeInSeconds % T.cSECONDS_IN_MINUTE;
-			min = ~~(settings.customTimeInSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
-			hour = ~~(settings.customTimeInSeconds / T.cSECONDS_IN_HOUR);
+			sec = Settings.aCustomTimeInSeconds % T.cSECONDS_IN_MINUTE;
+			min = ~~(Settings.aCustomTimeInSeconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
+			hour = ~~(Settings.aCustomTimeInSeconds / T.cSECONDS_IN_HOUR);
 		}
 		
 		var minsec = "";
 		// Include the seconds else don't
-		if (settings.wantSeconds)
+		if (Settings.aWantSeconds)
 		{
-			if (settings.wantLetters)
+			if (Settings.aWantLetters)
 			{
 				if (hour === 0 && min === 0)
 				{
@@ -20155,7 +20195,7 @@ T = {
 					minsec = min + D.getWord("m") + " " + sec + D.getWord("s");
 				}
 			}
-			else if (settings.wantHours === false)
+			else if (Settings.aWantHours === false)
 			{
 				minsec = min + ":" + ((sec < T.cBASE_10) ? "0" + sec : sec);
 			}
@@ -20166,7 +20206,7 @@ T = {
 		}
 		else
 		{
-			if (settings.wantLetters)
+			if (Settings.aWantLetters)
 			{
 				minsec = min + D.getWord("m");
 			}
@@ -20177,17 +20217,17 @@ T = {
 		}
 		
 		// Possible returns
-		if (settings.wantLetters)
+		if (Settings.aWantLetters)
 		{
-			if (hour === 0 || settings.wantHours === false)
+			if (hour === 0 || Settings.aWantHours === false)
 			{
 				return minsec;
 			}
 			return hour + D.getWord("h") + " " + minsec;
 		}
-		if (settings.want24)
+		if (Settings.aWant24)
 		{
-			if (settings.wantHours === false)
+			if (Settings.aWantHours === false)
 			{
 				return minsec;
 			}
@@ -20586,8 +20626,8 @@ T = {
 		var time = ((evenhour * T.cMINUTES_IN_HOUR)) - now.getTimezoneOffset();
 		time = T.wrapInteger(time, T.cMINUTES_IN_DAY);
 		return T.getTimeFormatted({
-			customTimeInSeconds: ((time + pOffset) * T.cSECONDS_IN_MINUTE),
-			wantSeconds: false
+			aCustomTimeInSeconds: ((time + pOffset) * T.cSECONDS_IN_MINUTE),
+			aWantSeconds: false
 		});
 	},
 	
@@ -20658,24 +20698,24 @@ T = {
 	
 	/*
 	 * Initializes the daily object and the today chain object.
-	 * @objparam boolean getTomorrow whether to get tomorrow's daily object instead.
-	 * @objparam boolean setTomorrow whether to set today's daily object as tomorrow's.
-	 * @objparam boolean isReset whether to also do daily reset related functions.
+	 * @objparam boolean aWantGetTomorrow whether to get tomorrow's daily object instead.
+	 * @objparam boolean aWantSetTomorrow whether to set today's daily object as tomorrow's.
+	 * @objparam boolean aIsReset whether to also do daily reset related functions.
 	 * @returns jqXHR object.
 	 */
-	getDaily: function(pOptions)
+	getDaily: function(pSettings)
 	{
-		pOptions = pOptions || {};
+		var Settings = pSettings || {};
 		var retrywaitminutes = 3;
 		var url = U.URL_API.Daily;
-		if (pOptions.getTomorrow || pOptions.setTomorrow)
+		if (Settings.aWantGetTomorrow || Settings.aWantSetTomorrow)
 		{
 			url = U.URL_API.Tomorrow;
 		}
 		
 		return $.getJSON(url, function(pData)
 		{
-			if (pOptions.getTomorrow) // Get tomorrow
+			if (Settings.aWantGetTomorrow) // Get tomorrow
 			{
 				T.DailyTomorrow = T.convertDailyObject(pData);
 				C.ChainTomorrow = T.extractDailyChain(T.DailyTomorrow);
@@ -20692,7 +20732,7 @@ T = {
 				{
 					startmins = T.convertScheduleKeyToUTCMinutes(dailychain.scheduleKeys[0]);
 					
-					if (pOptions.setTomorrow)
+					if (Settings.aWantSetTomorrow)
 					{
 						C.ChainToday = dailychain; // SUCCESS SET TOMORROW
 					}
@@ -20703,7 +20743,7 @@ T = {
 						 * the retrieved API daily object is different from it, in case
 						 * the API server was not updated immediately at reset time.
 						 */
-						if (C.ChainToday !== null && pOptions.isReset)
+						if (C.ChainToday !== null && Settings.aIsReset)
 						{
 							var previousalias = C.ChainToday.alias;
 							C.ChainToday = null; // Single recursion base case
@@ -20713,7 +20753,7 @@ T = {
 								// Wait a while and retrieve the daily object hoping it is updated
 								setTimeout(function()
 								{
-									T.getDaily({isReset: true});
+									T.getDaily({aIsReset: true});
 								},  retrywaitminutes * T.cMILLISECONDS_IN_MINUTE);
 								return;
 							}
@@ -20727,7 +20767,7 @@ T = {
 						// Else get tomorrow's boss
 						else
 						{
-							T.getDaily({setTomorrow: true});
+							T.getDaily({aWantSetTomorrow: true});
 						}
 					}
 				}
@@ -20745,7 +20785,7 @@ T = {
 					// Update daily icons
 					C.refreshChainDailyIcon();
 
-					if (pOptions.isReset === true)
+					if (Settings.aIsReset === true)
 					{
 						if (O.isServerReset)
 						{
@@ -20763,14 +20803,14 @@ T = {
 								+ D.getObjectName(C.ChainToday) + " " + D.getTranslation("will start") + " " + D.getTranslation("at") + " "
 								+ T.getTimeFormatted(
 								{
-									wantSeconds: false,
-									customTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
+									aWantSeconds: false,
+									aCustomTimeInSeconds: T.convertScheduleKeyToLocalSeconds(C.ChainToday.scheduleKeys[0])
 								}) + " " + D.getTranslation("in") + " "
 								+ T.getTimeFormatted(
 								{
-									wantLetters: true,
-									wantSeconds: false,
-									customTimeInSeconds: T.getSecondsUntilChainStarts(C.ChainToday)
+									aWantLetters: true,
+									aWantSeconds: false,
+									aCustomTimeInSeconds: T.getSecondsUntilChainStarts(C.ChainToday)
 								});
 							I.greet(dailybossstr + dailyspecialstr, greetduration);
 						}
@@ -21096,7 +21136,7 @@ B = {
 							$.getJSON(U.getAPIItem(iElement.attr("data-sale")), function(iData)
 							{
 								iElement.attr("src", iData.icon);
-								Q.scanItem(iData, {element: iElement});
+								Q.scanItem(iData, {aElement: iElement});
 							});
 						})($(this));
 					}
@@ -21216,7 +21256,7 @@ B = {
 						{
 							var icon = $("#dsbVendorIcon_" + iIndex);
 							icon.attr("src", pProduct.icon);
-							Q.scanItem(pProduct, {element: icon});
+							Q.scanItem(pProduct, {aElement: icon});
 						});
 					}).done(function()
 					{
@@ -22131,10 +22171,10 @@ K = {
 				K.timeSimple.innerHTML =
 				T.getTimeFormatted(
 				{
-					want24: true,
-					wantHours: false,
-					wantLetters: true,
-					customTimeInSeconds: T.cSECONDS_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime()
+					aWant24: true,
+					aWantHours: false,
+					aWantLetters: true,
+					aCustomTimeInSeconds: T.cSECONDS_IN_TIMEFRAME - T.getCurrentTimeframeElapsedTime()
 				});
 			} break;
 			
@@ -22151,8 +22191,8 @@ K = {
 		K.timestampServer.innerHTML = T.TIMESTAMP_UNIX_SECONDS + T.SECONDS_TILL_DAILY;
 		K.timestampReset.innerHTML = T.getTimeFormatted(
 		{
-			customTimeInSeconds: T.SECONDS_TILL_DAILY,
-			want24: true
+			aCustomTimeInSeconds: T.SECONDS_TILL_DAILY,
+			aWant24: true
 		});
 		
 		// Change the minute hand if passing colored marker
@@ -22639,7 +22679,7 @@ K = {
 		// Daytime clock updates time remaining
 		var daytime = T.getDayPeriodRemaining();
 		K.timeDaytime.innerHTML = daytime;
-		var maptime = T.getTimeFormatted({wantSeconds: false}) + " " + K.currentDaytimeSymbol + daytime;
+		var maptime = T.getTimeFormatted({aWantSeconds: false}) + " " + K.currentDaytimeSymbol + daytime;
 		// Clock on the map shown in overlay mode
 		K.timeMap.innerHTML = maptime;
 		K.timeWvW.innerHTML = maptime;
@@ -22648,14 +22688,14 @@ K = {
 			(new Date()).toLocaleString() + "<br />" +
 			"<dfn>Anet:</dfn> " + T.getTimeFormatted(
 			{
-				reference: T.ReferenceEnum.Server,
-				wantSeconds: false
+				aReference: T.ReferenceEnum.Server,
+				aWantSeconds: false
 			}) + "<br />" +
 			"<dfn>UTC:</dfn> " + T.getTimeFormatted(
 			{
-				reference: T.ReferenceEnum.UTC,
-				wantSeconds: false,
-				want24: true
+				aReference: T.ReferenceEnum.UTC,
+				aWantSeconds: false,
+				aWant24: true
 			}) + "<br />" +
 			"<dfn>Daily:</dfn> " + T.formatSeconds(T.SECONDS_TILL_DAILY, false) + "<br />" +
 			"<dfn>Weekly:</dfn> " + T.formatSeconds(T.SECONDS_TILL_WEEKLY, false);
@@ -23020,7 +23060,7 @@ I = {
 		},
 		Account:
 		{
-			Mananger: "Manager",
+			Manager: "Manager",
 			Characters: "Characters",
 			Trading: "Trading",
 			PVP: "PVP",
