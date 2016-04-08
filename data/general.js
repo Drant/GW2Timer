@@ -1023,7 +1023,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	content: "<a href='http://wiki.guildwars2.com/wiki/Shared_Inventory_Slot'>Shared Inventory Slots</a> are 20% off: "
-		+ "1x<gem>560</gem><ins class='s16 s16_gem'></ins> 5x<gem>1512</gem><ins class='s16 s16_gem'></ins> 5x<gem>2240</gem><ins class='s16 s16_gem'></ins>",
+		+ "1x<gem>560</gem><ins class='s16 s16_gem'></ins> 3x<gem>1512</gem><ins class='s16 s16_gem'></ins> 5x<gem>2240</gem><ins class='s16 s16_gem'></ins>",
 	Start: new Date("2016-04-08T16:00:00Z"),
 	Finish: new Date("2016-04-11T16:00:00Z"),
 	Messages:
