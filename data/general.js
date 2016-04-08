@@ -1168,23 +1168,9 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Ironclad Outfit",
-		id: "78010",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Gwen's Attire",
 		id: "78008",
 		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Ironclad Glider",
-		id: "78006",
-		price: 500,
 		discount: null,
 		col: 1
 	},
@@ -1228,16 +1214,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-04-07T00:00:00Z"),
-	Finish: new Date("2016-04-08T00:00:00Z"),
+	Start: new Date("2016-04-08T00:00:00Z"),
+	Finish: new Date("2016-04-09T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "43799", price: "12600", product: "43775" },
-		Fox: { id: "73199", price: "25200", product: "74525" },
-		Derwena: { id: "43820", price: "25200", product: "43796" },
-		Yana: { id: "43798", price: "12600", product: "43774" },
-		Katyn: { id: "48922", price: "25200", product: "48921" },
-		Verma: { id: "49765", price: "25200", product: "49810" }
+		Mehem: { id: "49767", price: "25200", product: "49812" },
+		Fox: { id: "44647", price: "25200", product: "44952" },
+		Derwena: { id: "44651", price: "25200", product: "44955" },
+		Yana: { id: "43843", price: "25200", product: "43864" },
+		Katyn: { id: "43841", price: "25200", product: "43865" },
+		Verma: { id: "67965", price: "25200", product: "67530" }
 	}
 }
 };

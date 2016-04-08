@@ -35,10 +35,10 @@
 	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
 }
-#accModal { /* Container of HTML to be written in the console as messages */
+#accAppendix { /* Pre-written HTML to be used later */
 	display: none;
 }
-.accModal {
+.accModal { /* Container of HTML to be written in the console as messages */
 	max-width: 360px;
 }
 .accTrivial { /* Situational class to fade trivial information */
@@ -1161,7 +1161,7 @@ a.chrWalletLink {
 	margin-bottom: 16px;
 	text-align: center;
 }
-.bnkPrice {
+.bnkTop {
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 18px;
 }

@@ -83,9 +83,8 @@
 
 
 
-<div id="accModal"><!-- These elements exist solely as HTML to be rewritten inside the console -->
-<div id="accInventorySearchHelp">
-<div class="accModal cntComposition">
+<div id="accAppendix"><!-- These elements exist solely as HTML to be rewritten inside the console -->
+<div id="accSearchHelp">
 	<h2>Search by Keyword</h2>
 	<p>The search bar allows you to search for items using space-separated keywords. It will look through every item's tooltip for any match of the words you type. For example, typing: &quot;exo arm&quot; will filter in any exotic armor pieces you have. If you want to look for an item that has toughness stats, then just type &quot;toug&quot; for partial matching of items with that keyword. You can search by item type by matching the words at the bottom of items' tooltips, such as &quot;gizmo&quot; (toys), &quot;consumable&quot; (foods), or &quot;container&quot; (bags).</p>
 	<h2>Search by Price</h2>
@@ -103,5 +102,18 @@
 	<h2>Notes</h2>
 	<p>Coin price displayed over the tabs are sum of that tab's tradeable items' value (after 5% listing fee and 10% tax) if they had been listed or sold instantly on the Trading Post. Price above the bank is the sum of all tradeable items' prices. Double click an item to open its wiki page.</p>
 </div>
+<div id="accWardrobeHelp">
+	<h2>Wardrobe Usage</h2>
+	<p>For fast page load, item icons and data are not downloaded and calculated until you have opened a tab to view that category of skins. Each icon shown is actually the item that unlocks that skin. Multiple items can have the same skin, so representative items were chosen based on these criteria: the item is most abundant and relatively cheap on the Trading Post, it should not be bindable so you can resell it after unlocking it, and for bound items it should be the most basic tier as to be cheaper from karma or cultural vendors.</p>
+	<p>Click on an item icon to use the context menu for ways to obtain the item. The coin price shown is the current Trading Post sell listing, which may be cheaper if you use buy orders instead.</p>
 </div>
+</div>
+
+<div id="bnkContext" class="itemContext"><!-- Context menu for bank windows -->
+	<ul>
+		<li id="bnkContextWiki">Wiki</li>
+		<li id="bnkContextWikiAlternate">Wiki 2</li>
+		<li id="bnkContextTP">Trading Post</li>
+		<li id="bnkContextTPAlternate">Trading Post 2</li>
+	</ul>
 </div>

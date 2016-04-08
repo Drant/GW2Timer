@@ -46,7 +46,9 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	s_tokens: {de: "wertmarke", es: "fichas", fr: "jetons",
 		cs: "žetony", it: "gettoni", pl: "żeton", pt: "fichas", ru: "жетоны", zh: "令牌"},
 	s_attributes: {de: "attribute", es: "atributos", fr: "caractéristiques",
-		cs: "atributy", it: "attributi", pl: "atrybuty", pt: "atributos", ru: "атрибуты", zh: "屬性"}
+		cs: "atributy", it: "attributi", pl: "atrybuty", pt: "atributos", ru: "атрибуты", zh: "屬性"},
+	s_gallery: {de: "Katalog", es: "Galería", fr: "Galerie",
+		cs: "Galerie", it: "Raccolta", pl: "Galeria", pt: "Galeria", ru: "Коллекция", zh: "圖庫"}
 };
 
 /*

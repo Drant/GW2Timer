@@ -3860,10 +3860,11 @@ U = {
 		 */
 		setTimeout(function()
 		{
-			var section = U.Args[U.KeyEnum.Section];
+			var section = (U.Args[U.KeyEnum.Section]) ? (U.Args[U.KeyEnum.Section]).toString() : null;
 			// If section was specified in the URL arguments
-			if (section !== undefined)
+			if (section)
 			{
+				U.Args[U.KeyEnum.Section] = null; // Use once only
 				section = U.stripToAlphanumeric(section);
 				var elm = $(null);
 				if (typeof Settings.aButton === "string")
@@ -4424,6 +4425,13 @@ A = {
 			var str = (val.charAt(0) === U.CommandPrefix) ? val : U.CommandPrefix + val;
 			U.parseConsoleCommand(str, M);
 		});
+		
+		// Initialize context menu for bank and inventory slots
+		I.styleContextMenu("#bnkContext");
+		$("#bnkContext").click(function()
+		{
+			$(this).hide();
+		});
 	
 		// Finally
 		setTimeout(function()
@@ -4535,7 +4543,7 @@ A = {
 		
 		// Open the section if specified in the URL
 		$("#accPlatterManager").show();
-		U.openSectionFromURL({aPrefix: "#accMenu_", aInitialSection: I.SectionEnum.Account.Manager});//
+		U.openSectionFromURL({aPrefix: "#accMenu_", aInitialSection: I.SectionEnum.Account.Manager});
 	},
 	
 	/*
@@ -6043,6 +6051,8 @@ V = {
 			var categories = GW2T_SKINS_CATEGORIES;
 			var assoc = GW2T_SKINS_ASSOCIATION;
 			var cat, catname, caticon;
+			var numskinsintabstotal = 0;
+			var numskinsunlockedtotal = 0;
 			for (var i in categories)
 			{
 				cat = categories[i];
@@ -6078,24 +6088,30 @@ V = {
 							}
 						}
 						// Recreate the bank menu
-						Q.createBankMenu(bank);
+						Q.createBankMenu(bank, {aHelpMessage: "#accWardrobeHelp"});
 					});
 				})(tab, cat);
 				
 				// For this ith tab, write the number of skins unlocked on the tab header
-				var skinsunlocked = 0;
+				var numskinsunlocked = 0;
 				for (var ii = 0; ii < cat.length; ii++)
 				{
 					if (pUnlockedAssoc[(cat[ii])])
 					{
-						skinsunlocked++;
+						numskinsunlocked++;
+						numskinsunlockedtotal++;
 					}
 				}
 				var numskinsintab = cat.length;
-				var unlockstr = skinsunlocked + " / " + numskinsintab
-					+ "<span class='accTrivial'> (" + U.convertRatioToPercent(skinsunlocked / numskinsintab) + ")</span>";
+				numskinsintabstotal += numskinsintab;
+				var unlockstr = numskinsunlocked + " / " + numskinsintab
+					+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlocked / numskinsintab) + ")</span>";
 				tab.find(".bnkTabStats").html(unlockstr);
 			}
+			var unlocktotalstr = numskinsunlockedtotal + " / " + numskinsintabstotal
+					+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlockedtotal / numskinsintabstotal) + ")</span>";
+			container.find(".bnkCount").append(unlocktotalstr);
+			Q.createBankMenu(bank, {aHelpMessage: "#accWardrobeHelp"});
 		};
 		
 		// Retrieve data before generating
@@ -7786,6 +7802,7 @@ Q = {
 	{
 		return $("<div class='bnkContainer'>"
 			+ "<div class='bnkTop'>"
+				+ "<aside class='bnkCount'></aside>"
 				+ "<aside class='bnkPrice'></aside>"
 			+ "</div>"
 			+ "<div class='bnkBank'></div>"
@@ -7908,9 +7925,10 @@ Q = {
 				var keywords = ($(pBox.html).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
 				// Double click the slot opens its wiki page
-				pSlot.dblclick(function()
+				pSlot.contextmenu(function(pEvent)
 				{
-					U.openExternalURL(U.getWikiLanguageLink(Settings.aWiki || pBox.item.name));
+					pEvent.preventDefault();
+					Q.showBankContextMenu();
 				});
 				// Numeric label over the slot icon indicating stack size or charges remaining
 				var count = Settings.aItemMeta.count || 1;
@@ -7984,10 +8002,12 @@ Q = {
 	/*
 	 * Creates and binds a search bar for a bank. Also creates functional buttons.
 	 * @param jqobject pBank for insertion.
+	 * @objparam string aHelpElement HTML ID of the message to append to the help screen.
 	 * @pre Bank slots were generated.
 	 */
-	createBankMenu: function(pBank)
+	createBankMenu: function(pBank, pSettings)
 	{
+		var Settings = pSettings || {};
 		// Initialize commonly used elements
 		var sectionname = pBank.parents(".accDishContainer").attr("data-section");
 		var slots = pBank.find(".bnkSlot");
@@ -8079,9 +8099,10 @@ Q = {
 		var isshowinghelp = true;
 		$("<div class='bnkButtonHelp bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
 		{
+			var helpmessage = (Settings.aHelpMessage) ? $(Settings.aHelpMessage).html() : "";
 			if (isshowinghelp || I.isConsoleShown() === false)
 			{
-				I.print($("#accInventorySearchHelp").html(), true);
+				I.print("<div class='accModal cntComposition'>" + helpmessage + $("#accSearchHelp").html() + "</div>", true);
 			}
 			else
 			{
@@ -8199,7 +8220,15 @@ Q = {
 		// Finally
 		searchcontainer.css({width: searchcontainer.width() - buttoncontainer.width()});
 		A.adjustAccountPanel();
-	}
+	},
+	
+	/*
+	 * Shows the shared bank context menu.
+	 */
+	showBankContextMenu: function()
+	{
+		$("#bnkContext").css({top: I.posY, left: I.posX}).show();
+	},
 };
 
 /* =============================================================================
@@ -22969,15 +22998,12 @@ I = {
 	cPANE_CLOCK_HEIGHT_COMPACT: 220,
 	cPANE_CLOCK_HEIGHT_BAR: 85,
 	cPANE_MENU_HEIGHT: 48,
-	cTOOLTIP_WIDTH_MAX: 360,
-	cTOOLTIP_OVERFLOW_WIDTH: 240,
-	cTOOLTIP_OVERFLOW_MAX: 10,
-	cTOOLTIP_DEFAULT_OFFSET_X: -180,
-	cTOOLTIP_DEFAULT_OFFSET_Y: 30,
-	cTOOLTIP_ALTERNATE_OFFSET_X: 24,
-	cTOOLTIP_ADD_OFFSET_Y: 42,
-	cTOOLTIP_ADD_OFFSET_X: 36,
-	cTOOLTIP_MOUSEMOVE_RATE: 20,
+	cTOOLTIP_MOUSEMOVE_MS: 20,
+	cTOOLTIP_OFFSET_ADD_X: 0,
+	cTOOLTIP_OFFSET_ADD_Y: 56,
+	cTOOLTIP_OVERFLOW_ADD_X: 16,
+	cTOOLTIP_OVERFLOW_ADD_Y: 38,
+	cTOOLTIP_PADDING_ADD_Y: 12,
 	CLOCK_AND_MENU_HEIGHT: 0,
 	posX: 0, // Mouse position
 	posY: 0,
@@ -22991,7 +23017,6 @@ I = {
 	},
 	
 	// Content-Plate-Page and Section-Header
-	isMouseOnPanel: false,
 	isProgramLoaded: false,
 	isProgramEmbedded: false,
 	isMapEnabled: true,
@@ -24875,22 +24900,17 @@ I = {
 	{
 		// Bind these tags with the title attribute for tooltip
 		I.qTip.init("#chnOptions img, a, ins, kbd, span, time, fieldset, label, input, button");
-		$("#panelApp").hover(
-			function() { I.isMouseOnPanel = true; },
-			function() { I.isMouseOnPanel = false; }
-		);
 	},
 	
 	/*
-	 * qTip (2008 minified) tooltip plugin by Craig Erskine http://qrayg.com
-	 * Placed here instead of plugin.js because it's customizable and so small.
+	 * qTip tooltip plugin by Craig Erskine http://qrayg.com (modified from 2008 version)
 	 */
 	qTip:
 	{
 		name: "qTip",
-		offsetX: -180,
-		offsetY: 15,
-		a: null,
+		offsetX: 0,
+		offsetY: 0,
+		TipElm: null,
 		/*
 		 * Binds matched elements with title attribute to show a popup div with
 		 * that title as content when hovered over the element.
@@ -24898,52 +24918,45 @@ I = {
 		 */
 		start: function()
 		{
-			if (!a) var a = "qTip";
-			var b = document.getElementById(a);
-			b || (b = document.createElementNS ? document.createElementNS("http://www.w3.org/1999/xhtml", "div")
-				: document.createElement("div"), b.setAttribute("id", a),
-				document.getElementsByTagName("body").item(0).appendChild(b));
-			if (document.getElementById)
+			this.TipElm = document.createElement("div");
+			this.TipElm.setAttribute("id", this.name);
+			document.body.appendChild(this.TipElm);
+			document.onmousemove = $.throttle(I.cTOOLTIP_MOUSEMOVE_MS, function(pEvent)
 			{
-				this.a = document.getElementById(this.name);
-				if (this.a)
-				{
-					document.onmousemove = $.throttle(I.cTOOLTIP_MOUSEMOVE_RATE, function(pEvent)
-					{
-						I.qTip.move(pEvent);
-					});
-				}
-			}
+				I.qTip.move(pEvent);
+			});
 		},
-		init: function(s)
+		init: function(pSelector)
 		{
 			if (I.isTouchEnabled)
 			{
 				return;
 			}
-			var a;
-			var b = document.getElementById("qTip");
-			$(s).each(function()
+			var elm, content;
+			$(pSelector).each(function()
 			{
-				a = $(this)[0];
-				b = a.getAttribute("title");
-				if (a && b)
+				elm = $(this)[0];
+				content = elm.getAttribute("title");
+				if (elm && content)
 				{
-					a.setAttribute(I.cTooltipAttribute, b), a.removeAttribute("title"),
-						a.removeAttribute("alt"), a.onmouseover = function()
+					elm.setAttribute(I.cTooltipAttribute, content);
+					elm.removeAttribute("title");
+					elm.removeAttribute("alt");
+					elm.onmouseover = function()
 					{
 						I.qTip.show(this.getAttribute(I.cTooltipAttribute));
-					}, a.onmouseout = function()
+					};
+					elm.onmouseout = function()
 					{
 						I.qTip.hide();
 					};
 				}
 			});
 		},
-		move: function(a)
+		move: function(pEvent)
 		{
-			I.posX = a.pageX;
-			I.posY = a.pageY;
+			I.posX = pEvent.pageX;
+			I.posY = pEvent.pageY;
 			var tipwidth = $("#qTip").width();
 			var tipheight = $("#qTip").height();
 			var winwidth = $(window).width();
@@ -24953,76 +24966,38 @@ I = {
 			 * Make the tooltip appear within the visible window by detecting current
 			 * tooltip size and mouse position.
 			 */
-			if (I.isMouseOnPanel)
+			this.offsetX = I.cTOOLTIP_OFFSET_ADD_X;
+			this.offsetY = -(tipheight + I.cTOOLTIP_OFFSET_ADD_Y);
+			// Tooltip overflows top edge
+			if (I.posY + this.offsetY < 0)
 			{
-				/*
-				$("#cslContent").html(
-					x + ", " + y + "<br />"
-					+ (this.a.offsetWidth) + ", " + (this.a.offsetHeight) + 
-				$("#cslContent").html(pEvent.pageX + ", " + pEvent.pageY + "<br />"
-					+ $("#qTip").width() + ", " + $("#qTip").height() + "<br />"
-					+ $(window).width() + ", " + $(window).height());
-				*/
-				// Tooltip overflows bottom edge
-				if (tipheight + I.posY + I.cTOOLTIP_ADD_OFFSET_Y > winheight)
+				if (I.posY + tipheight + I.cTOOLTIP_OVERFLOW_ADD_Y < winheight)
 				{
-					I.qTip.offsetY = -(tipheight) - I.cTOOLTIP_ADD_OFFSET_Y;
+					this.offsetY = I.cTOOLTIP_OVERFLOW_ADD_Y;
 				}
 				else
 				{
-					I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
-				}
-				// Tooltip overflows panel right edge
-				if (tipwidth >= I.cTOOLTIP_OVERFLOW_WIDTH && I.isMapEnabled && O.Options.bol_alignPanelRight)
-				{
-					I.qTip.offsetX = (winwidth - I.posX) - I.cPANEL_WIDTH - I.cTOOLTIP_OVERFLOW_MAX;
-				}
-				else if ((winwidth - I.posX) > (I.cPANEL_WIDTH / 2))
-				{
-					I.qTip.offsetX = I.cTOOLTIP_ALTERNATE_OFFSET_X;
-				}
-				else
-				{
-					I.qTip.offsetX = I.cTOOLTIP_DEFAULT_OFFSET_X;
+					this.offsetY = winheight - (tipheight + I.posY + I.cTOOLTIP_PADDING_ADD_Y);
 				}
 			}
-			else // Mouse is on the map pane
+			// Tooltip overflows right edge
+			if (I.posX + tipwidth > winwidth)
 			{
-				// Tooltip overflows right edge
-				if (I.posX + I.cTOOLTIP_ADD_OFFSET_X + tipwidth > winwidth)
-				{
-					I.qTip.offsetX = -(tipwidth) - I.cTOOLTIP_ADD_OFFSET_X;
-				}
-				else
-				{
-					I.qTip.offsetX = I.cTOOLTIP_ALTERNATE_OFFSET_X;
-				}
-				// Tooltip overflows bottom edge
-				if (tipheight - I.cTOOLTIP_ALTERNATE_OFFSET_X + I.posY > winheight)
-				{
-					I.qTip.offsetY = -(tipheight) - I.cTOOLTIP_ADD_OFFSET_Y;
-				}
-				// Tooltip overflows top edge
-				else if (I.posY < I.cTOOLTIP_ADD_OFFSET_Y)
-				{
-					I.qTip.offsetY = I.cTOOLTIP_DEFAULT_OFFSET_Y;
-				}
-				else
-				{
-					I.qTip.offsetY = -I.cTOOLTIP_ADD_OFFSET_Y;
-				}
+				this.offsetX = -(tipwidth + I.cTOOLTIP_OVERFLOW_ADD_X);
 			}
 			
-			this.a.style.left = I.posX + this.offsetX + "px";
-			this.a.style.top = I.posY + this.offsetY + "px";
+			this.TipElm.style.left = I.posX + this.offsetX + "px";
+			this.TipElm.style.top = I.posY + this.offsetY + "px";
 		},
-		show: function(a)
+		show: function(pAttributeName)
 		{
-			this.a && (this.a.innerHTML = a, this.a.style.display = "block");
+			this.TipElm.innerHTML = pAttributeName;
+			this.TipElm.style.display = "block";
 		},
 		hide: function()
 		{
-			this.a && (this.a.innerHTML = "", this.a.style.display = "none");
+			this.TipElm.innerHTML = "";
+			this.TipElm.style.display = "none";
 		}
 	}
 };
