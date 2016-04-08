@@ -1022,9 +1022,10 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "",
-	Start: new Date("2016-03-22T16:00:00Z"),
-	Finish: new Date("2016-03-29T16:00:00Z"),
+	content: "<a href='http://wiki.guildwars2.com/wiki/Shared_Inventory_Slot'>Shared Inventory Slots</a> are 20% off: "
+		+ "1x<gem>560</gem><ins class='s16 s16_gem'></ins> 5x<gem>1512</gem><ins class='s16 s16_gem'></ins> 5x<gem>2240</gem><ins class='s16 s16_gem'></ins>",
+	Start: new Date("2016-04-08T16:00:00Z"),
+	Finish: new Date("2016-04-11T16:00:00Z"),
 	Messages:
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1118,6 +1119,13 @@ Sale: {
 		discount: null
 	},
 	Items: [
+	{
+		name: "Shared Inventory Slot",
+		id: "67071",
+		price: 560,
+		discount: [[1, 560, 700], [3, 1512, 1890], [5, 2240, 2800]],
+		col: 0
+	},
 	{
 		name: "Super Adventure Pack",
 		img: "http://i.imgur.com/Oc7d8B6.png",

@@ -10,6 +10,7 @@
 var GW2T_ACCOUNT_DICTIONARY = {
 	s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 	
+	// Nouns
 	s_achievements: {de: "erfolge", es: "logros", fr: "succès",
 		cs: "výsledky", it: "obiettivi", pl: "osiągnięcia", pt: "conquistas", ru: "достижения", zh: "成就"},
 	s_bank: {de: "bank", es: "banco", fr: "banque",
@@ -26,7 +27,6 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "obchod", it: "commercio", pl: "handel", pt: "comércio", ru: "продажа", zh: "貿易"},
 	s_wardrobe: {de: "garderobenlager", es: "garderobe", fr: "escaparate",
 		cs: "skříň", it: "armadio", pl: "szafa", pt: "roupeiro", ru: "гардероб", zh: "衣櫃"},
-	
 	s_profession: {de: "klasse", es: "profesión", fr: "profession",
 		cs: "profese", it: "professione", pl: "zawód", pt: "profissão", ru: "профе́ссия", zh: "職業"},
 	s_age: {de: "alter", es: "edad", fr: "âge",
@@ -47,8 +47,16 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "žetony", it: "gettoni", pl: "żeton", pt: "fichas", ru: "жетоны", zh: "令牌"},
 	s_attributes: {de: "attribute", es: "atributos", fr: "caractéristiques",
 		cs: "atributy", it: "attributi", pl: "atrybuty", pt: "atributos", ru: "атрибуты", zh: "屬性"},
+	s_wiki: {de: "wiki", es: "wiki", fr: "wiki",
+		cs: "wiki", it: "wiki", pl: "wiki", pt: "wiki", ru: "ви́ки", zh: "維基"},
+	s_item: {de: "gegenstand", es: "objeto", fr: "objet",
+		cs: "objekt", it: "oggetto", pl: "obiekt", pt: "objeto", ru: " объе́кт", zh: "物體"},
 	s_gallery: {de: "Katalog", es: "Galería", fr: "Galerie",
-		cs: "Galerie", it: "Raccolta", pl: "Galeria", pt: "Galeria", ru: "Коллекция", zh: "圖庫"}
+		cs: "Galerie", it: "Raccolta", pl: "Galeria", pt: "Galeria", ru: "Коллекция", zh: "圖庫"},
+	
+	// Verbs
+	s_search: {de: "suchen", es: "buscar", fr: "rechercher",
+		cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"}
 };
 
 /*

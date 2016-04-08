@@ -3975,12 +3975,11 @@ U = {
 	 */
 	openExternalURL: function(pURL)
 	{
-		var url = pURL;
-		if (I.ModeCurrent !== I.ModeEnum.Overlay)
-		{
-			url = I.cSiteURL + "out/?u=" + U.encodeURL(pURL);
-		}
-		window.open(url, "_blank");
+		window.open(I.cSiteURL + "out/?u=" + U.encodeURL(pURL), "_blank");
+	},
+	openPrivateURL: function(pURL)
+	{
+		window.open(pURL, "_blank");
 	},
 	
 	/*
@@ -4265,7 +4264,7 @@ U = {
 };
 
 /* =============================================================================
- * @@Account API key management
+ * @@Account panel and API key management
  * ========================================================================== */
 A = {
 	
@@ -4309,17 +4308,18 @@ A = {
 		Games: "pvp/games",
 		TokenInfo: "tokeninfo"
 	},
-	Permissions: { // Corresponds to tokeninfo.json permissions array
-		account: null,
-		builds: null,
-		characters: null,
-		guilds: null,
-		inventories: null,
-		progression: null,
-		pvp: null,
-		tradingpost: null,
-		wallet: null,
-		unlocks: null
+	Permissions: {}, // Corresponds to tokeninfo.json permissions array
+	PermissionEnum: {
+		Account: "account",
+		Builds: "builds",
+		Characters: "characters",
+		Guilds: "guilds",
+		Inventories: "inventories",
+		Progression: "progression",
+		PvP: "pvp",
+		TradingPost: "tradingpost",
+		Wallet: "wallet",
+		Unlocks: "unlocks"
 	},
 	DishCurrent: null, // The account section currently displayed
 	
@@ -4336,13 +4336,29 @@ A = {
 	},
 	
 	/*
-	 * Sets the appearance of the account page global progress bar.
-	 * @param float pPercent 0 to 1. Leave undefined to reset the bar.
+	 * Advances the global account page progress bar by given values, or clears
+	 * the bar if completed progress.
+	 * @param int pNumFetched dividend.
+	 * @param int pNumToFetch divisor.
 	 */
-	setProgressBar: function(pPercent)
+	setProgressBar: function(pNumFetched, pNumToFetch)
+	{
+		document.getElementById("accProgress").style.width = (pNumFetched / pNumToFetch) * T.cPERCENT_100 + "%";
+		document.getElementById("accProgressCount").innerHTML = pNumFetched + " / " + pNumToFetch;
+		if (pNumFetched === pNumToFetch)
+		{
+			A.resetProgressBar();
+		}
+	},
+	
+	/*
+	 * Fades and clears the progress bar.
+	 */
+	resetProgressBar: function(pWantAnimation)
 	{
 		var progress = $("#accProgress");
-		if (pPercent === undefined)
+		var count = $("#accProgressCount");
+		if (pWantAnimation || pWantAnimation === undefined)
 		{
 			progress.css({opacity: 1}).animate({opacity: 0}, 800, function()
 			{
@@ -4351,8 +4367,9 @@ A = {
 		}
 		else
 		{
-			progress.animate({width: pPercent * T.cPERCENT_100 + "%", opacity: 1}, 50);
+			progress.css({width: "0px", opacity: 1});
 		}
+		count.empty();
 	},
 	
 	/*
@@ -4427,11 +4444,7 @@ A = {
 		});
 		
 		// Initialize context menu for bank and inventory slots
-		I.styleContextMenu("#bnkContext");
-		$("#bnkContext").click(function()
-		{
-			$(this).hide();
-		});
+		Q.initializeBankContextMenu();
 	
 		// Finally
 		setTimeout(function()
@@ -4451,61 +4464,82 @@ A = {
 		{
 			var sectionname = $(this).attr("data-section");
 			var sectionnamelow = sectionname.toLowerCase();
-			var menubutton = $("<aside id='accMenu_" + sectionname + "' class='accMenu accMenuClick curClick'>"
+			var menutab = $("<aside id='accMenu_" + sectionname + "' class='accMenuTab accMenuClick curClick'>"
 				+ "<span>"
 					+ "<img class='accMenuIcon accMenuIconMain' src='img/account/menu/" + sectionnamelow + I.cPNG + "' />"
 					+ "<var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var>"
 				+ "</span>"
-				+ "<span class='accMenuSubsection' style='display:none;'></span>"
+				+ "<span class='accMenuSubtab' style='display:none;'></span>"
 			+ "</aside>");
-			menu.append(menubutton);
-			(function(iButton, iSectionName)
+			menu.append(menutab);
+			(function(iTab, iSectionName)
 			{
 				var section = $("#accPlatter" + iSectionName);
-				// Clicking on a button shows the associated section
-				iButton.click(function()
+				/*
+				 * Clicking on a menu tab shows the associated section, and
+				 * clicking on a menu icon inside the tab shows the subsection
+				 * of that section. The tab also acts as a menu icon if the user
+				 * clicks on the tab instead of the icons the tab holds.
+				 */
+				iTab.click(function()
 				{
-					A.DishCurrent = $("#accDish_" + iSectionName);
-					// Highlight the clicked button
-					$(".accMenu").removeClass("accMenuFocused").find(".accMenuSubsection").hide();
-					$(this).addClass("accMenuFocused").find(".accMenuSubsection").show();
-					$(".accMenu").find(".accMenuIcon").removeClass("accMenuButtonFocused");
-					$(this).find(".accMenuIconMain").addClass("accMenuButtonFocused");
-					// Show dish menu menu
-					$(".accDishMenu").hide();
-					$("#accDishMenu_" + iSectionName).show();
 					// Show the section
+					$(".accMenuTab").find(".accMenuIcon").removeClass("accMenuButtonFocused");
 					$(".accPlatter").hide();
-					section.fadeIn(400);
-					A.adjustAccountPanel();
-					// Show the main subsection
-					section.find(".accDishContainer").hide();
-					section.find(".accDishMain").show();
+					// If previously viewing a non-main subsection of this section, then open that subsection
+					if ($(this).data("iscurrentmenugroup") && $(this).hasClass("accMenuTabFocused") === false)
+					{
+						section.show();
+						$(this).find(".accMenuCurrent").trigger("click");
+					}
+					else
+					{
+						// Else view the main subsection
+						$(this).data("iscurrentmenugroup", null);
+						A.DishCurrent = $("#accDish_" + iSectionName);
+						// Show dish menu menu
+						$(".accDishMenu").hide();
+						$("#accDishMenu_" + iSectionName).show();
+						// Show the main subsection
+						section.find(".accDishContainer").hide();
+						section.find(".accDishMain").show();
+						$(this).find(".accMenuIconMain").addClass("accMenuButtonFocused");
+						section.fadeIn(400);
+						A.adjustAccountPanel();
+					}
+					// Highlight the clicked tab
+					$(".accMenuTab").removeClass("accMenuTabFocused").find(".accMenuSubtab").hide();
+					$(this).addClass("accMenuTabFocused").find(".accMenuSubtab").show();
 					// Update address
 					I.PageCurrent = I.SpecialPageEnum.Account;
 					I.SectionCurrent[I.SpecialPageEnum.Account] =
 						(iSectionName === I.SectionEnum.Account.Manager) ? "" : iSectionName;
 					U.updateQueryString();
+					// Clear the global progress bar, in case it froze
+					A.resetProgressBar(false);
 				});
 				
 				// A section (platter) may have multiple subsections (dishes)
 				var subsections = section.find(".accDishContainer");
 				if (subsections.length)
 				{
-					var subbuttons = iButton.find(".accMenuSubsection");
+					var subbuttons = iTab.find(".accMenuSubtab");
 					subbuttons.append("<img src='img/ui/view.png' />");
 					subsections.each(function()
 					{
 						if ($(this).hasClass("accDishMain") === false)
 						{
 							var subsectionname = $(this).attr("data-section");
-							var subbutton = $("<img id='accMenu_" + subsectionname + "' class='accMenuSubbutton accMenuIcon accMenuClick' "
+							var subbutton = $("<img id='accMenu_" + subsectionname + "' class='accMenuButton accMenuIcon accMenuClick' "
 								+ "src='img/account/menu/" + subsectionname.toLowerCase() + I.cPNG + "' />");
 							subbuttons.append(subbutton);
 							(function(iSubbutton, iSubsection)
 							{
 								iSubbutton.click(function(iEvent)
 								{
+									$(this).parents(".accMenuTab").data("iscurrentmenugroup", subsectionname)
+										.find(".accMenuCurrent").removeClass("accMenuCurrent");
+									$(this).addClass("accMenuCurrent");
 									A.DishCurrent = $("#accDish_" + subsectionname);
 									// Show dish menu menu
 									$(".accDishMenu").hide();
@@ -4516,15 +4550,14 @@ A = {
 									iSubsection.fadeIn(200);
 									A.adjustAccountPanel();
 									// Highlight the button
-									var menubutton = $(this).parent().parent();
-									menubutton.find(".accMenuIcon").removeClass("accMenuButtonFocused");
+									iTab.find(".accMenuIcon").removeClass("accMenuButtonFocused");
 									$(this).addClass("accMenuButtonFocused");
 								});
 							})(subbutton, $(this));
 						}
 					});
 				}
-			})(menubutton, sectionname);
+			})(menutab, sectionname);
 		});
 		
 		/*
@@ -4684,7 +4717,7 @@ A = {
 			}
 		}).fail(function()
 		{
-			A.printError("account");
+			A.printError(A.PermissionEnum.Account);
 		});
 	},
 	
@@ -4693,7 +4726,7 @@ A = {
 	 * @param string pRequestType the permission requested.
 	 * @param string pStatus from AJAX.
 	 */
-	printError: function(pRequestType, pStatus)
+	printError: function(pPermission, pStatus)
 	{
 		if (pStatus === "error")
 		{
@@ -4704,10 +4737,24 @@ A = {
 			I.write("Unable to retrieve data for this key from ArenaNet API servers.");
 		}
 		I.write(A.TokenCurrent);
-		if (pRequestType)
+		if (pPermission)
 		{
-			I.write("Requested permission: " + pRequestType, 10);
+			I.write("Requested permission: " + pPermission, 10);
 		}
+	},
+	
+	/*
+	 * Checks if permission exists, else prints error.
+	 * @return boolean success.
+	 */
+	checkPermission: function(pPermission)
+	{
+		if (A.Permissions[pPermission])
+		{
+			return true;
+		}
+		A.printError(pPermission);
+		return false;
 	},
 	
 	/*
@@ -4993,11 +5040,10 @@ V = {
 		{
 			return;
 		}
-		var menusubsection = $("#accMenu_Characters").find(".accMenuSubsection");
+		var menusubsection = $("#accMenu_Characters").find(".accMenuSubtab");
 		var finishFetch = function()
 		{
 			I.suspendElement(menusubsection, false);
-			A.setProgressBar();
 			V.generateCharactersStatistics();
 		};
 		
@@ -5011,9 +5057,9 @@ V = {
 		{
 			I.removeThrobber(dish);
 			var charindex = 0;
-			var numfetched = 0;
 			var numcharacters = pData.length;
-			var numfetchable = numcharacters;
+			var numfetched = 0;
+			var numtofetch = numcharacters;
 			A.Data.CharacterNames = pData;
 			A.CharacterCurrent = null;
 			A.Data.Characters = null;
@@ -5037,16 +5083,16 @@ V = {
 							(A.Data.Characters[iIndex]).charname = U.escapeHTML(pData.name);
 							V.generateCharactersSelection(pData);
 							numfetched++;
-							A.setProgressBar(numfetched / numfetchable);
-							if (numfetched === numfetchable)
+							A.setProgressBar(numfetched, numtofetch);
+							if (numfetched === numtofetch)
 							{
 								finishFetch();
 							}
 						},
 						error: function(pRequest, pStatus)
 						{
-							numfetchable--;
-							if (numfetched === numfetchable)
+							numtofetch--;
+							if (numfetched === numtofetch)
 							{
 								finishFetch();
 							}
@@ -5059,7 +5105,7 @@ V = {
 		}).fail(function()
 		{
 			I.removeThrobber(dish);
-			A.printError("characters");
+			A.printError(A.PermissionEnum.Characters);
 		});
 	},
 	
@@ -5445,6 +5491,10 @@ V = {
 	 */
 	serveEquipment: function()
 	{
+		if (A.checkPermission(A.PermissionEnum.Builds) === false)
+		{
+			return;
+		}
 		// Generate for single character if user chosen, else all characters
 		var equipcur = $("#eqpContainer_" + A.CharacterCurrent);
 		var equipall = $(".eqpContainer");
@@ -5498,7 +5548,7 @@ V = {
 			+ D.getWordCapital("attributes") + "</span></aside><aside class='eqpAttrContent'></aside></div>").appendTo(subconbuild);
 		// Object containing attribute points to be added by the retrieved items
 		var attrobj = new A.Attribute.Base();
-		var equipstofetch = char.equipment.length;
+		var numtofetch = char.equipment.length;
 		var numfetched = 0;
 		
 		/*
@@ -5598,7 +5648,8 @@ V = {
 		 */
 		var finalizeEquipment = function()
 		{
-			if (equipstofetch === numfetched)
+			A.setProgressBar(numfetched, numtofetch);
+			if (numtofetch === numfetched)
 			{
 				formatAttributesWindow();
 				formatTraitsWindow();
@@ -5853,7 +5904,7 @@ V = {
 	 */
 	serveInventory: function()
 	{
-		if (A.Data.Characters.length < 1 || (A.Data.Characters.length > 1 && A.Data.Characters[0].bags === undefined))
+		if (A.checkPermission(A.PermissionEnum.Inventories) === false || A.Data.Characters.length < 1)
 		{
 			return;
 		}
@@ -5867,10 +5918,33 @@ V = {
 		var tab, slotscontainer, slot;
 		
 		var char, bagdata;
+		
+		// Count the number of items to fetch
+		var numtofetch = 0;
+		var numfetched = 0;
 		for (var i = 0; i < A.Data.Characters.length; i++)
 		{
 			char = A.Data.Characters[i];
-			// Bank tab separator every character
+			for (var ii = 0; ii < char.bags.length; ii++)
+			{
+				bagdata = char.bags[ii];
+				if (bagdata)
+				{
+					for (var iii = 0; iii < bagdata.inventory.length; iii++)
+					{
+						if (bagdata.inventory[iii])
+						{
+							numtofetch++;
+						}
+					}
+				}
+			}
+		}
+		
+		for (var i = 0; i < A.Data.Characters.length; i++)
+		{
+			char = A.Data.Characters[i];
+			// Bank tab separator for each character
 			tab = Q.createBankTab(bank, {aTitle: char.charname});
 			Q.createInventorySidebar(tab, char.bags);
 			slotscontainer = tab.find(".bnkTabSlots");
@@ -5890,7 +5964,11 @@ V = {
 							{
 								$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 								{
-									Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData});
+									Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData, aCallback: function()
+									{
+										numfetched++;
+										A.setProgressBar(numfetched, numtofetch);
+									}});
 								});
 							})(slot, slotdata);
 						}
@@ -5925,6 +6003,16 @@ V = {
 		{
 			// First generate empty bank slots, then fill them up asynchronously by item details retrieval
 			bank.empty();
+			var numtofetch = 0;
+			var numfetched = 0;
+			// Count the number of items in the bank first, because empty slots are written as "null" in the API
+			for (var i = 0; i < pData.length; i++)
+			{
+				if (pData[i])
+				{
+					numtofetch++;
+				}
+			}
 			for (var i = 0; i < pData.length; i++)
 			{
 				// Bank tab separator every so slots
@@ -5944,7 +6032,11 @@ V = {
 					{
 						$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
 						{
-							Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData});
+							Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData, aCallback: function()
+							{
+								numfetched++;
+								A.setProgressBar(numfetched, numtofetch);
+							}});
 						});
 					})(slot, slotdata);
 				}
@@ -5960,7 +6052,7 @@ V = {
 			Q.createBankMenu(bank);
 		}).fail(function()
 		{
-			A.printError("inventories");
+			A.printError(A.PermissionEnum.Inventories);
 			dish.empty();
 		});
 	},
@@ -5989,6 +6081,8 @@ V = {
 		$.getJSON(A.getURL(A.URL.Materials), function(pData)
 		{
 			bank.empty();
+			var numtofetch = 0;
+			var numfetched = 0;
 			// Create tabs that separate the categories
 			for (var i = 0; i < matdata.length; i++)
 			{
@@ -6003,6 +6097,7 @@ V = {
 					itemid = matcategory.items[ii];
 					slot = Q.createBankSlot(slotscontainer);
 					slotassoc[itemid] = slot;
+					numtofetch++;
 				}
 			}
 			
@@ -6016,7 +6111,11 @@ V = {
 					{
 						$.getJSON(U.getAPIItem(slotdata.id), function(iItem)
 						{
-							Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData});
+							Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData, aCallback: function()
+							{
+								numfetched++;
+								A.setProgressBar(numfetched, numtofetch);
+							}});
 						});
 					})(slotassoc[slotdata.id], slotdata);
 				}
@@ -6024,7 +6123,7 @@ V = {
 			Q.createBankMenu(bank);
 		}).fail(function()
 		{
-			A.printError("inventories");
+			A.printError(A.PermissionEnum.Inventories);
 			dish.empty();
 		});
 	},
@@ -6064,6 +6163,8 @@ V = {
 					// Tab slots are generated on demand when the user expands the tab, because there are lots of slots to generate
 					iTab.find(".bnkTabSeparator").one("click", function()
 					{
+						var numtofetch = iCat.length;
+						var numfetched = 0;
 						var slotscontainer = iTab.find(".bnkTabSlots");
 						for (var ii = 0; ii < iCat.length; ii++)
 						{
@@ -6078,11 +6179,11 @@ V = {
 									$.getJSON(U.getAPIItem(iItemID), function(iItem)
 									{
 										var count = (pUnlockedAssoc[iSkinID]) ? 1 : 0;
-										Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: {count: count}, aWiki: iWiki});
-										iSlot.click(function()
+										Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: {count: count}, aWiki: iWiki, aCallback: function()
 										{
-											I.log(iItem.name + " " + iSkinID + " " + iItemID);
-										});
+											numfetched++;
+											A.setProgressBar(numfetched, numtofetch);
+										}});
 									});
 								})(slot, skinid, skinobj.i, skinobj.n);
 							}
@@ -6128,7 +6229,7 @@ V = {
 				generateWardrobe(assocobj);
 			}).fail(function()
 			{
-				A.printError("unlocks");
+				A.printError(A.PermissionEnum.Unlocks);
 				dish.empty();
 			});
 		});
@@ -6248,14 +6349,13 @@ V = {
 					{
 						selectionbutton.click(function(pEvent)
 						{
-							if (pEvent.which === 2)
+							if (pEvent.which === I.ClickEnum.Left)
 							{
-								return;
+								CurateArray[CurateArrayIndex].itemid = iItemID;
+								CurateArray[CurateArrayIndex].tradeableids = tradeableitems;
+								$("#labControlNext").trigger("click");
+								A.adjustAccountScrollbar();
 							}
-							CurateArray[CurateArrayIndex].itemid = iItemID;
-							CurateArray[CurateArrayIndex].tradeableids = tradeableitems;
-							$("#labControlNext").trigger("click");
-							A.adjustAccountScrollbar();
 						});
 					})(box.item.id);
 					
@@ -6591,6 +6691,11 @@ Q = {
 		Exotic: 6
 	},
 	cSEARCH_LIMIT: 200, // Inventory search throttle limit
+	Context: { // Bank slots context menu data
+		ItemID: "",
+		ItemName: "",
+		ItemNameSearch: ""
+	},
 	
 	/*
 	 * Sets an object with an item rarity CSS class. Removes all if level is not provided.
@@ -7909,6 +8014,7 @@ Q = {
 	 * containing stack count and transmutation data.
 	 * @objparam object aItem item details retrieved from API.
 	 * @objparam string aWiki name of wiki article to open when double clicked.
+	 * @objparam boolean aWantTax whether to deduct the price with tax.
 	 * @param object pItem data retrieved from item details API.
 	 */
 	styleBankSlot: function(pSlot, pSettings)
@@ -7925,9 +8031,20 @@ Q = {
 				var keywords = ($(pBox.html).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
 				// Double click the slot opens its wiki page
+				var wikisearch = Settings.aWiki || Settings.aItem.name;
+				pSlot.click(function(pEvent)
+				{
+					if (pEvent.which === I.ClickEnum.Left)
+					{
+						U.openPrivateURL(U.getWikiSearchLink(wikisearch));
+					}
+				});
 				pSlot.contextmenu(function(pEvent)
 				{
 					pEvent.preventDefault();
+					Q.Context.ItemID = Settings.aItem.id;
+					Q.Context.ItemName = Settings.aItem.name;
+					Q.Context.ItemNameSearch = wikisearch;
 					Q.showBankContextMenu();
 				});
 				// Numeric label over the slot icon indicating stack size or charges remaining
@@ -7972,23 +8089,28 @@ Q = {
 						var prices = E.processPrice(pData, count);
 						var updatePriceDisplay = function(pDisplay)
 						{
-							var displaypricebuy = (pDisplay.data("pricebuy") || 0) + prices.pricebuy;
-							var displaypricesell = (pDisplay.data("pricesell") || 0) + prices.pricesell;
+							var displaypricebuy = (pDisplay.data("pricebuy") || 0) + prices.pricebuytaxed;
+							var displaypricesell = (pDisplay.data("pricesell") || 0) + prices.priceselltaxed;
 							pDisplay.data("pricebuy", displaypricebuy).data("pricesell", displaypricesell);
 							var tabtext = E.formatCoinStringColored(displaypricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(displaypricebuy) + "</span>";
 							pDisplay.html(tabtext);
 						};
 						
-						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(prices.pricesell, {aWantColor: true, aWantShort: true}) + "</var>");
+						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(prices.priceselltaxed, {aWantColor: true, aWantShort: true}) + "</var>");
 						// Only add if item actually exists (not a zero stack slot)
 						if (Settings.aItemMeta.count !== 0)
 						{
 							updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
 							updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPrice"));
-							pSlot.data("price", prices.pricesell);
+							pSlot.data("price", prices.priceselltaxed);
 						}
 					});
 					
+				}
+				// Execute callback if requested
+				if (Settings.aCallback)
+				{
+					Settings.aCallback();
 				}
 			}});
 		}
@@ -8102,7 +8224,7 @@ Q = {
 			var helpmessage = (Settings.aHelpMessage) ? $(Settings.aHelpMessage).html() : "";
 			if (isshowinghelp || I.isConsoleShown() === false)
 			{
-				I.print("<div class='accModal cntComposition'>" + helpmessage + $("#accSearchHelp").html() + "</div>", true);
+				I.print("<div class='accModal cntComposition'>" + helpmessage + $("#accBankHelp").html() + "</div>", true);
 			}
 			else
 			{
@@ -8223,12 +8345,41 @@ Q = {
 	},
 	
 	/*
+	 * Initializes the context menu that is shown for all banks' slots.
+	 */
+	initializeBankContextMenu: function()
+	{
+		I.styleContextMenu("#bnkContext");
+		$("#bnkContext").click(function()
+		{
+			$(this).hide();
+		});
+		// The context variables should be assigned by the function that styles the bank slot
+		$("#bnkContextWiki").click(function()
+		{
+			U.openPrivateURL(U.getWikiLink(Q.Context.ItemName));
+		});
+		$("#bnkContextWikiSearch").click(function()
+		{
+			U.openPrivateURL(U.getWikiSearchLink(Q.Context.ItemNameSearch));
+		});
+		$("#bnkContextTrading").click(function()
+		{
+			U.openPrivateURL(U.getTradingItemLink(Q.Context.ItemID, Q.Context.ItemName));
+		});
+		$("#bnkContextTradingSearch").click(function()
+		{
+			U.openPrivateURL(U.getTradingSearchLink(Q.Context.ItemName));
+		});
+	},
+	
+	/*
 	 * Shows the shared bank context menu.
 	 */
 	showBankContextMenu: function()
 	{
 		$("#bnkContext").css({top: I.posY, left: I.posX}).show();
-	},
+	}
 };
 
 /* =============================================================================
@@ -8577,7 +8728,7 @@ E = {
 	 */
 	deductTax: function(pAmount)
 	{
-		return parseInt(pAmount - pAmount * E.Exchange.TAX_TOTAL);
+		return Math.floor(pAmount - pAmount * E.Exchange.TAX_TOTAL);
 	},
 	convertGemToCoin: function(pAmount)
 	{
@@ -8589,21 +8740,23 @@ E = {
 	},
 	convertMoneyToGem: function(pAmount)
 	{
-		return parseInt(pAmount * E.Exchange.GEM_PER_DOLLAR);
+		return Math.floor(pAmount * E.Exchange.GEM_PER_DOLLAR);
 	},
 	
 	/*
 	 * Reads a price object that was returned from API and returns a processed object.
 	 * @param object pPriceData.
-	 * @param object pCount quantity of the items.
+	 * @param object pCount quantity of the items, optional.
 	 * @returns object.
 	 */
 	processPrice: function(pPriceData, pCount)
 	{
 		var count = (pCount === undefined) ? 1 : pCount;
 		return {
-			pricebuy: E.deductTax(pPriceData.buys.unit_price * count),
-			pricesell: E.deductTax(pPriceData.sells.unit_price * count)
+			pricebuy: Math.floor(pPriceData.buys.unit_price * count),
+			pricesell: Math.floor(pPriceData.sells.unit_price * count),
+			pricebuytaxed: E.deductTax(pPriceData.buys.unit_price * count),
+			priceselltaxed: E.deductTax(pPriceData.sells.unit_price * count)
 		};
 	},
 	
@@ -9942,8 +10095,6 @@ D = {
 			cs: "zpět", it: "annullare", pl: "cofnąć", pt: "desfazer", ru: "отменить", zh: "復原"},
 		s_optimize: {de: "optimieren", es: "optimizar", fr: "optimiser",
 			cs: "optimalizovat", it: "ottimizzare", pl: "optymalizować", pt: "otimizar", ru: "оптимизировать", zh: "最佳化"},
-		s_search: {de: "suchen", es: "buscar", fr: "rechercher",
-			cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"},
 		
 		// Adjectives and Adverbs
 		s_ago: {de: "vor", es: "hace", fr: "il ya",
@@ -16303,7 +16454,7 @@ G = {
 							cache: false,
 							success: function(pData)
 						{
-							var pricesell = E.processPrice(pData).pricesell;
+							var pricesell = E.processPrice(pData).priceselltaxed;
 							$("#nodPrice_" + inneri).html(E.formatCoinStringColored(pricesell));
 							P.Resources[inneri].price = pricesell;
 						}});
@@ -21274,7 +21425,7 @@ B = {
 						// Get TP prices also
 						$.getJSON(U.getAPIPrice(offer.id), function(pData)
 						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinStringColored(E.processPrice(pData).pricesell));
+							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinStringColored(E.processPrice(pData).priceselltaxed));
 						}).fail(function()
 						{
 							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
@@ -23115,6 +23266,12 @@ I = {
 		Firefox: 2,
 		Chrome: 3
 	},
+	ClickEnum:
+	{
+		Left: 1,
+		Middle: 2,
+		Right: 3
+	},
 	// Screen width in pixels, for determining map zoom values
 	ScreenWidth:
 	{
@@ -24001,7 +24158,7 @@ I = {
 	{
 		pContainer.mousedown(function(pEvent)
 		{
-			if (pEvent.which === 2)
+			if (pEvent.which === I.ClickEnum.Middle)
 			{
 				clearInterval(I.Scrl.Interval);
 				if (I.Scrl.isOn)
@@ -24022,7 +24179,7 @@ I = {
 					I.tickAutoscroll();
 				}
 			}
-			else if (pEvent.which === 1 || pEvent.which === 3)
+			else if (pEvent.which === I.ClickEnum.Left || pEvent.which === I.ClickEnum.Right)
 			{
 				if (I.Scrl.isOn)
 				{

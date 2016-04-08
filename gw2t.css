@@ -2516,6 +2516,7 @@ paletteText {
 
 paletteBackground {
 	color: #d19600; /* Gold experience progress bar */
+	color: #2d2619; /* Brown selection hover */
 	color: #ee7924; /* Orange event progress bar */
 	color: #bfd47a; /* Green event progress bar */
 	color: #eadf86; /* Cream crafting progress bar */
