@@ -50,7 +50,7 @@
 #accOverhead {
 	top: 0; left: 0;
 	display: block;
-	position: fixed; z-index: 1;
+	position: fixed; z-index: 3;
 	width: 100%;
 	padding-top: 2px;
 	background: linear-gradient(to left, transparent 0%, #333 50%, transparent 100%);
@@ -751,7 +751,7 @@ a.chrWalletLink {
 	pointer-events: none;
 }
 .eqpSwapAquaticOuter {
-	position: relative; z-index: 3;
+	position: relative; z-index: 2;
 	display: block;
 	float: left;
 	margin-left: -50px;

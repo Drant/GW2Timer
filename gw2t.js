@@ -6148,7 +6148,7 @@ V = {
 			
 			var names = GW2T_SKINS_NAMES;
 			var categories = GW2T_SKINS_CATEGORIES;
-			var assoc = GW2T_SKINS_ASSOCIATION;
+			var skinsdb = GW2T_SKINS_DATA;
 			var cat, catname, caticon;
 			var numskinsintabstotal = 0;
 			var numskinsunlockedtotal = 0;
@@ -6171,7 +6171,7 @@ V = {
 							var skinid = iCat[ii];
 							var slot = Q.createBankSlot(slotscontainer);
 							slot.attr("data-skinid", skinid);
-							var skinobj = assoc[skinid]; // If the user's unlocked skin is found in the cache associative array
+							var skinobj = skinsdb[skinid]; // If the user's unlocked skin is found in the cache associative array
 							if (skinobj)
 							{
 								(function(iSlot, iSkinID, iItemID, iWiki)
@@ -6243,6 +6243,7 @@ V = {
 			return;
 		}
 		
+		var SkinItems = {};
 		var CurateArray = [];
 		var CurateArrayIndex = 0;
 		var CurateDatabase = {};
@@ -6485,120 +6486,123 @@ V = {
 		
 		$.getScript(U.URL_DATA.Skins).done(function()
 		{
-			CurateDatabase = GW2T_SKINS_ITEMS;
-			var assoc = GW2T_SKINS_ASSOCIATION;
-			
-			$("#accDishMenu_Lab").remove();
-			var dishmenu = $("<aside id='accDishMenu_Lab' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
+			$.getJSON("data/skins_assoc.json", function(pData)
+			{
+				CurateDatabase = pData.SkinItems;
+				var skinsdb = GW2T_SKINS_DATA;
+				
+				$("#accDishMenu_Lab").remove();
+				var dishmenu = $("<aside id='accDishMenu_Lab' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
 
-			var container = $("<div id='labContainer'></div>").appendTo(dish);
-			var controls = $("<div id='labControls' style='margin:8px; color:white;'></div>").appendTo(dishmenu);
-			var buttonprev = $("<button id='labControlPrev' style='width:96px; height:40px; margin-right:8px;'>Prev</button>").appendTo(controls);
-			var buttonnext = $("<button id='labControlNext' style='width:96px; height:40px; margin-right:8px;'>Next</button>").appendTo(controls);
-			var buttonauto = $("<button id='labControlAuto' style='width:96px; height:40px; margin-right:8px;'>Auto</button>").appendTo(controls);
-			var buttonprint = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'>Print</button>").appendTo(controls);
-			var buttonsave = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'><strong>SAVE</strong></button>").appendTo(controls);
-			var indexdisplay = $("<var id='labIndexDisplay' style='margin-right:8px; font-family:monospace; font-size:20px;'></var>").appendTo(controls);
-			var inputindex = $("<input id='labIndexInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(controls);
-			var inputitem = $("<input id='labItemInput' type='text' style='width:64px; margin-right:8px;' />").appendTo(controls);
-			var retrievaldisplay = $("<var id='labRetrievalDisplay' style='font-family:monospace; font-size:20px;'></var>").appendTo(controls);
-			var selectionboxes = $("<div id='labSelection'></div>").appendTo(container);
-			var skininfo = $("<div id='labSkinInfo' style='font-family:monospace'></div>").appendTo(container);
-			
-			buttonauto.click(function()
-			{
-				selectionboxes.find(".labSelectItemButton").first().trigger("click");
-			});
-			buttonprev.click(function()
-			{
-				if (CurateArrayIndex > 0)
+				var container = $("<div id='labContainer'></div>").appendTo(dish);
+				var controls = $("<div id='labControls' style='margin:8px; color:white;'></div>").appendTo(dishmenu);
+				var buttonprev = $("<button id='labControlPrev' style='width:96px; height:40px; margin-right:8px;'>Prev</button>").appendTo(controls);
+				var buttonnext = $("<button id='labControlNext' style='width:96px; height:40px; margin-right:8px;'>Next</button>").appendTo(controls);
+				var buttonauto = $("<button id='labControlAuto' style='width:96px; height:40px; margin-right:8px;'>Auto</button>").appendTo(controls);
+				var buttonprint = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'>Print</button>").appendTo(controls);
+				var buttonsave = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'><strong>SAVE</strong></button>").appendTo(controls);
+				var indexdisplay = $("<var id='labIndexDisplay' style='margin-right:8px; font-family:monospace; font-size:20px;'></var>").appendTo(controls);
+				var inputindex = $("<input id='labIndexInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(controls);
+				var inputitem = $("<input id='labItemInput' type='text' style='width:64px; margin-right:8px;' />").appendTo(controls);
+				var retrievaldisplay = $("<var id='labRetrievalDisplay' style='font-family:monospace; font-size:20px;'></var>").appendTo(controls);
+				var selectionboxes = $("<div id='labSelection'></div>").appendTo(container);
+				var skininfo = $("<div id='labSkinInfo' style='font-family:monospace'></div>").appendTo(container);
+
+				buttonauto.click(function()
 				{
-					CurateArrayIndex--;
-					updateIndexes();
-				}
-			});
-			buttonnext.click(function()
-			{
-				if (CurateArrayIndex < CurateArray.length - 1)
-				{
-					CurateArrayIndex++;
-					updateIndexes();
-				}
-			});
-			buttonprint.click(function()
-			{
-				var obj;
-				var html = "";
-				for (var i = 0; i < CurateArray.length; i++)
-				{
-					obj = CurateArray[i];
-					html += "&quot;" + obj.skinid + "&quot;: {i: " + obj.itemid + ", n: &quot;" + U.escapeHTML(obj.name) + "&quot;, t: " + U.formatJSON(obj.tradeableids) + "},<br />";
-				}
-				I.print(html);
-			});
-			buttonsave.click(function()
-			{
-				var obj;
-				var retobj = {};
-				for (var i = 0; i < CurateArray.length; i++)
-				{
-					obj = CurateArray[i];
-					retobj[obj.skinid] = {
-						i: obj.itemid,
-						n: obj.name,
-						t: obj.tradeableids
-					};
-				}
-				U.APICacheConsole = retobj;
-				U.saveAPICache();
-			});
-			inputindex.onEnterKey(function()
-			{
-				var customindex = parseInt($(this).val());
-				for (var i = 0; i < CurateArray.length; i++)
-				{
-					if (parseInt(CurateArray[i].skinid) === parseInt(customindex))
-					{
-						customindex = i;
-						break;
-					}
-				}
-				if (customindex <= CurateArray.length - 1 && customindex >= 0)
-				{
-					CurateArrayIndex = customindex;
-					updateIndexes();
-				}
-			}).click(function()
-			{
-				$(this).select();
-			});
-			inputitem.onEnterKey(function()
-			{
-				var userinputitem = parseInt($(this).val());
-				if (userinputitem)
-				{
-					CurateArray[CurateArrayIndex].itemid = userinputitem;
-					$("#labControlNext").trigger("click");
-				}
-			}).click(function()
-			{
-				$(this).select();
-			});
-			
-			if (U.loadAPICache())
-			{
-				assoc = U.APICacheConsole;
-			}
-			for (var i in assoc)
-			{
-				CurateArray.push({
-					skinid: i,
-					name: assoc[i].n,
-					itemid: assoc[i].i,
-					tradeableids: assoc[i].t
+					selectionboxes.find(".labSelectItemButton").first().trigger("click");
 				});
-			}
-			updateIndexDisplay();
+				buttonprev.click(function()
+				{
+					if (CurateArrayIndex > 0)
+					{
+						CurateArrayIndex--;
+						updateIndexes();
+					}
+				});
+				buttonnext.click(function()
+				{
+					if (CurateArrayIndex < CurateArray.length - 1)
+					{
+						CurateArrayIndex++;
+						updateIndexes();
+					}
+				});
+				buttonprint.click(function()
+				{
+					var obj;
+					var html = "";
+					for (var i = 0; i < CurateArray.length; i++)
+					{
+						obj = CurateArray[i];
+						html += "&quot;" + obj.skinid + "&quot;: {i: " + obj.itemid + ", n: &quot;" + U.escapeHTML(obj.name) + "&quot;, t: " + U.formatJSON(obj.tradeableids) + "},<br />";
+					}
+					I.print(html);
+				});
+				buttonsave.click(function()
+				{
+					var obj;
+					var retobj = {};
+					for (var i = 0; i < CurateArray.length; i++)
+					{
+						obj = CurateArray[i];
+						retobj[obj.skinid] = {
+							i: obj.itemid,
+							n: obj.name,
+							t: obj.tradeableids
+						};
+					}
+					U.APICacheConsole = retobj;
+					U.saveAPICache();
+				});
+				inputindex.onEnterKey(function()
+				{
+					var customindex = parseInt($(this).val());
+					for (var i = 0; i < CurateArray.length; i++)
+					{
+						if (parseInt(CurateArray[i].skinid) === parseInt(customindex))
+						{
+							customindex = i;
+							break;
+						}
+					}
+					if (customindex <= CurateArray.length - 1 && customindex >= 0)
+					{
+						CurateArrayIndex = customindex;
+						updateIndexes();
+					}
+				}).click(function()
+				{
+					$(this).select();
+				});
+				inputitem.onEnterKey(function()
+				{
+					var userinputitem = parseInt($(this).val());
+					if (userinputitem)
+					{
+						CurateArray[CurateArrayIndex].itemid = userinputitem;
+						$("#labControlNext").trigger("click");
+					}
+				}).click(function()
+				{
+					$(this).select();
+				});
+
+				if (U.loadAPICache())
+				{
+					skinsdb = U.APICacheConsole;
+				}
+				for (var i in skinsdb)
+				{
+					CurateArray.push({
+						skinid: i,
+						name: skinsdb[i].n,
+						itemid: skinsdb[i].i,
+						tradeableids: skinsdb[i].t
+					});
+				}
+				updateIndexDisplay();
+			});
 		});
 	},
 	
