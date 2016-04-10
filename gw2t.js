@@ -5229,7 +5229,7 @@ V = {
 			{
 				highestdeaths = iChar.deaths;
 			}
-			iChar.charlifetime = ~~((nowmsec - (new Date(iChar.created)).getTime()) / T.cMILLISECONDS_IN_SECOND);
+			iChar.charlifetime = ~~((nowmsec - (new Date(iChar.created)).getTime()) / T.cMSECONDS_IN_SECOND);
 			if (highestlifetime < iChar.charlifetime)
 			{
 				highestlifetime = iChar.charlifetime;
@@ -5296,7 +5296,7 @@ V = {
 			var forumlink = U.convertExternalAnchor("https://forum-en.guildwars2.com/members/" + pData.name.replace(/[\s\.]/g, "-") + "/showposts");
 			var totalagehour = Math.round(totalage / T.cSECONDS_IN_HOUR);
 			var accountbirthdate = new Date(pData.created);
-			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMILLISECONDS_IN_SECOND);
+			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMSECONDS_IN_SECOND);
 			var accountbirthdaysince = T.formatSeconds(accountlifetime).trim();
 			var hoursperday = T.parseRatio((totalage / accountlifetime) * T.cHOURS_IN_DAY, 2);
 			var commandership = (pData.commander) ? "" : "accTrivial";
@@ -7912,7 +7912,8 @@ Q = {
 		return $("<div class='bnkContainer'>"
 			+ "<div class='bnkTop'>"
 				+ "<aside class='bnkCount'></aside>"
-				+ "<aside class='bnkPrice'></aside>"
+				+ "<aside class='bnkPrice'><var class='bnkPriceTitleA'></var><var class='bnkPriceValueA'></var></aside>"
+				+ "<aside class='bnkPrice'><var class='bnkPriceTitleB'></var><var class='bnkPriceValueB'></var></aside>"
 			+ "</div>"
 			+ "<div class='bnkBank'></div>"
 		+ "</div>").appendTo(pDestination);
@@ -8050,6 +8051,7 @@ Q = {
 					Q.Context.ItemName = Settings.aItem.name;
 					Q.Context.ItemNameSearch = wikisearch;
 					Q.showBankContextMenu();
+					I.updateClipboard("#bnkContextChatlink", Settings.aItem.chat_link + " " + Q.Context.ItemNameSearch);
 				});
 				// Numeric label over the slot icon indicating stack size or charges remaining
 				var count = Settings.aItemMeta.count || 1;
@@ -8105,7 +8107,7 @@ Q = {
 						if (Settings.aItemMeta.count !== 0)
 						{
 							updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
-							updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPrice"));
+							updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPriceValueA"));
 							pSlot.data("price", prices.priceselltaxed);
 						}
 					});
@@ -8375,6 +8377,11 @@ Q = {
 		{
 			U.openPrivateURL(U.getTradingSearchLink(Q.Context.ItemName));
 		});
+		$("#bnkContextChatlink").click(function()
+		{
+			
+		});
+		I.initializeClipboard("#bnkContextChatlink");
 	},
 	
 	/*
@@ -8756,11 +8763,13 @@ E = {
 	processPrice: function(pPriceData, pCount)
 	{
 		var count = (pCount === undefined) ? 1 : pCount;
+		var pricebuy = pPriceData.buys.unit_price * count;
+		var pricesell = pPriceData.sells.unit_price * count;
 		return {
-			pricebuy: Math.floor(pPriceData.buys.unit_price * count),
-			pricesell: Math.floor(pPriceData.sells.unit_price * count),
-			pricebuytaxed: E.deductTax(pPriceData.buys.unit_price * count),
-			priceselltaxed: E.deductTax(pPriceData.sells.unit_price * count)
+			pricebuy: pricebuy,
+			pricesell: pricesell,
+			pricebuytaxed: E.deductTax(pricebuy),
+			priceselltaxed: E.deductTax(pricesell)
 		};
 	},
 	
@@ -9023,12 +9032,12 @@ E = {
 				.insertAfter(pCalculator.find(".trdName"));
 			return $("<div class='trdResults cntPopup'>" + I.cThrobber + "</div>").appendTo(resultscontainer);
 		};
-		var insertSearchResult = function(pData, pQuery, pResultsList)
+		var insertSearchResult = function(pItem, pQuery, pResultsList)
 		{
 			I.removeThrobber(".trdResults");
-			var outputline = $("<dfn class='" + Q.getRarityClass(pData.rarity) + "' data-id='" + pData.id + "'>"
-			+ "<img src='" + pData.icon + "'>"
-			+ U.wrapSubstringHTML(pData.name, pQuery, "u") + "</dfn>").appendTo(pResultsList);
+			var outputline = $("<dfn class='" + Q.getRarityClass(pItem.rarity) + "' data-id='" + pItem.id + "'>"
+			+ "<img src='" + pItem.icon + "'>"
+			+ U.wrapSubstringHTML(pItem.name, pQuery, "u") + "</dfn>").appendTo(pResultsList);
 			// Bind click a result to memorize the item's ID and name
 			outputline.click(function()
 			{
@@ -9041,6 +9050,8 @@ E = {
 				E.updateTradingPrices(entry);
 				resultspopup.remove();
 			});
+			// Tooltip for the listed item
+			Q.scanItem(pItem, {aElement: outputline});
 		};
 		
 		for (i = 0; i < O.Options.int_numTradingCalculators; i++)
@@ -9448,20 +9459,22 @@ E = {
 			I.clear();
 			I.write("ItemID,Name,Buy,Sell,Quantity,BuyLow,BuyHigh,SellLow,SellHigh");
 			var length = X.Textlists.TradingItem.value.length;
+			var str = "";
 			for (var i = 0; i < length; i++)
 			{
-				I.write(
-					U.escapeHTML(X.Textlists.TradingItem.value[i]) + "," +
-					U.escapeHTML(X.Textlists.TradingName.value[i]) + "," +
-					U.escapeHTML(X.Textlists.TradingBuy.value[i]) + "," +
-					U.escapeHTML(X.Textlists.TradingSell.value[i]) + "," +
-					U.escapeHTML(X.Textlists.TradingQuantity.value[i]) + "," +
-					U.escapeHTML(X.Textlists.NotifyBuyLow.value[i]) + "," +
-					U.escapeHTML(X.Textlists.NotifyBuyHigh.value[i]) + "," +
-					U.escapeHTML(X.Textlists.NotifySellLow.value[i]) + "," +
-					U.escapeHTML(X.Textlists.NotifySellHigh.value[i])
-				, 30);
+				str += U.escapeHTML(
+					X.Textlists.TradingItem.value[i] + "," +
+					X.Textlists.TradingName.value[i] + "," +
+					X.Textlists.TradingBuy.value[i] + "," +
+					X.Textlists.TradingSell.value[i] + "," +
+					X.Textlists.TradingQuantity.value[i] + "," +
+					X.Textlists.NotifyBuyLow.value[i] + "," +
+					X.Textlists.NotifyBuyHigh.value[i] + "," +
+					X.Textlists.NotifySellLow.value[i] + "," +
+					X.Textlists.NotifySellHigh.value[i])
+				+ "<br />";
 			}
+			I.print(str);
 		});
 	},
 	
@@ -9883,7 +9896,7 @@ E = {
 		}
 		E.ProgressTick -= 1;
 		
-		E.ProgressTimeout = setTimeout(E.animateProgress, T.cMILLISECONDS_IN_SECOND);
+		E.ProgressTimeout = setTimeout(E.animateProgress, T.cMSECONDS_IN_SECOND);
 	},
 	
 	/*
@@ -9900,7 +9913,7 @@ E = {
 			
 			if (O.Options.bol_refreshPrices)
 			{
-				var wait = O.Options.int_secTradingRefresh * T.cMILLISECONDS_IN_SECOND;
+				var wait = O.Options.int_secTradingRefresh * T.cMSECONDS_IN_SECOND;
 				// Animate progress bar with same duration as refresh wait time
 				E.ProgressTick = O.Options.int_secTradingRefresh;
 				E.ProgressWait = O.Options.int_secTradingRefresh;
@@ -10761,7 +10774,7 @@ D = {
 			pDuration = 1 + (Math.round(pString.length / charspersecond));
 		}
 		
-		var durationms = pDuration * T.cMILLISECONDS_IN_SECOND;
+		var durationms = pDuration * T.cMSECONDS_IN_SECOND;
 		if (D.speechWait === 0)
 		{
 			// If no speech in queue then speak and add queue time, finally subtract after duration
@@ -10821,7 +10834,7 @@ D = {
 			pSeconds = 0;
 		}
 		
-		if (D.speechWait > (pSeconds * T.cMILLISECONDS_IN_SECOND))
+		if (D.speechWait > (pSeconds * T.cMSECONDS_IN_SECOND))
 		{
 			D.speechWait = 0;
 			D.stopSpeech();
@@ -11986,7 +11999,7 @@ C = {
 					{
 						C.highlightEvents(iChain, iPrimaryEventIndex);
 					};
-				})(chain, parseInt(i)), wait * T.cMILLISECONDS_IN_SECOND);
+				})(chain, parseInt(i)), wait * T.cMSECONDS_IN_SECOND);
 			}
 		}
 		
@@ -12001,7 +12014,7 @@ C = {
 				{
 					C.highlightEvents(iChain, -1);
 				};
-			})(chain), wait * T.cMILLISECONDS_IN_SECOND);
+			})(chain), wait * T.cMSECONDS_IN_SECOND);
 		}
 	},
 	
@@ -17891,8 +17904,11 @@ W = {
 	numFailedAPICalls: 0,
 	cOWNERS_PER_TIER: 3,
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
-	cMILLISECONDS_IMMUNITY: 300000,
-	MatchFinishTime: null,
+	cMSECONDS_IMMUNITY: 300000, // 5 minutes
+	cMSECONDS_RESET_GRACE: 900000, // 15 minutes from the match start time
+	MatchStartTimeMS: null,
+	MatchFinishTimeMS: null,
+	MatchFinishTimeISO: null,
 	secTillWvWReset: null,
 	numSiegeSupply: 0,
 	
@@ -19099,7 +19115,9 @@ W = {
 		W.LocaleCurrent = (O.Options.enu_Server >= W.LocaleThreshold.Europe)
 			? W.LocaleEnum.Europe : W.LocaleEnum.Americas;
 		W.MatchupIDCurrent = null;
-		W.MatchFinishTime = null;
+		W.MatchStartTimeMS = null;
+		W.MatchFinishTimeMS = null;
+		W.MatchFinishTimeISO = null;
 		W.MatchupCurrent = null;
 		$(".objUmbrellaContainer").hide();
 		$(".objTimer").empty();
@@ -19149,10 +19167,30 @@ W = {
 				return;
 			}
 			
+			// Initialize stagnant variables once
+			if (W.MatchFinishTimeISO !== pData.end_time)
+			{
+				W.MatchFinishTimeISO = pData.end_time;
+				W.MatchStartTimeMS = (new Date(pData.start_time)).getTime();
+				W.MatchFinishTimeMS = (new Date(pData.end_time)).getTime();
+				W.secTillWvWReset = ~~((W.MatchFinishTimeMS - nowmsec) / T.cMSECONDS_IN_SECOND);
+				W.MatchupIDCurrent = pData.id;
+				W.MatchupCurrent = pData.worlds;
+				W.updateParticipants();
+			}
+			
+			// Update scoreboard
+			if (O.Options.bol_showLeaderboard)
+			{
+				W.insertScoreboard(pData);
+			}
+			
+			// Update objectives
 			var map, obj, apiobj;
 			var numobjflipped = 0;
 			var maxobjflipped = 12;
 			var istoomanyflips = false;
+			var isduringreset = (nowmsec < W.MatchStartTimeMS + W.cMSECONDS_RESET_GRACE);
 			for (var i in pData.maps)
 			{
 				map = pData.maps[i];
@@ -19179,8 +19217,9 @@ W = {
 						W.updateObjectiveTooltip(obj);
 						
 						// Mark the objective as immune if it is recently captured
-						if ((nowmsec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY
-								&& obj.owner !== W.OwnerEnum.Neutral) // If it is owned by Neutral (no immunity) then it is WvW reset
+						if ((nowmsec - obj.last_flipped_msec) < W.cMSECONDS_IMMUNITY
+								&& obj.owner !== W.OwnerEnum.Neutral // Neutral objectives never have immunity
+								&& !isduringreset) // Don't show the immunity timer during the first few minutes of reset
 						{
 							W.Objectives[obj.id].isImmune = true;
 							$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
@@ -19208,21 +19247,6 @@ W = {
 					istoomanyflips = true;
 					break;
 				}
-			}
-			// Initialize stagnant variables once
-			if (W.MatchFinishTime !== pData.end_time)
-			{
-				W.MatchFinishTime = pData.end_time;
-				W.secTillWvWReset = ~~(((new Date(W.MatchFinishTime)).getTime() - nowmsec) / T.cMILLISECONDS_IN_SECOND);
-				W.MatchupIDCurrent = pData.id;
-				W.MatchupCurrent = pData.worlds;
-				W.updateParticipants();
-			}
-			
-			// Update scoreboard
-			if (O.Options.bol_showLeaderboard)
-			{
-				W.insertScoreboard(pData);
 			}
 			
 			// Check for errors
@@ -19311,8 +19335,9 @@ W = {
 							|| match.green_world_id === serverid)
 						{
 							W.MatchupIDCurrent = match.wvw_match_id;
-							W.MatchFinishTime = match.end_time;
-							W.secTillWvWReset = ~~(((new Date(W.MatchFinishTime)).getTime() - nowmsec) / T.cMILLISECONDS_IN_SECOND);
+							W.MatchStartTimeMS = (new Date(pData.start_time)).getTime();
+							W.MatchFinishTimeMS = (new Date(pData.end_time)).getTime();
+							W.secTillWvWReset = ~~((W.MatchFinishTimeMS - nowmsec) / T.cMSECONDS_IN_SECOND);
 							// Duplicate the structure the v2 matches API "worlds" subobject
 							W.MatchupCurrent = W.Matches[W.MatchupIDCurrent];
 							W.updateParticipants();
@@ -19335,8 +19360,8 @@ W = {
 						return;
 					}
 					var map, obj, apiobj, landprefix;
-					var pastfar = new Date(nowmsec - W.cMILLISECONDS_IMMUNITY);
-					var pastnear = new Date(nowmsec - (O.Options.int_secWvWRefresh * T.cMILLISECONDS_IN_SECOND));
+					var pastfar = new Date(nowmsec - W.cMSECONDS_IMMUNITY);
+					var pastnear = new Date(nowmsec - (O.Options.int_secWvWRefresh * T.cMSECONDS_IN_SECOND));
 					for (var i in pData.maps)
 					{
 						map = pData.maps[i];
@@ -19361,7 +19386,7 @@ W = {
 								W.updateObjectiveTooltip(obj);
 
 								// Mark the objective as immune if it is recently captured
-								if ((nowmsec - obj.last_flipped_msec) < W.cMILLISECONDS_IMMUNITY
+								if ((nowmsec - obj.last_flipped_msec) < W.cMSECONDS_IMMUNITY
 										&& obj.owner !== W.OwnerEnum.Neutral) // If it is owned by Neutral (no immunity) then it is WvW reset
 								{
 									W.Objectives[obj.id].isImmune = true;
@@ -19454,8 +19479,8 @@ W = {
 			if (obj.isImmune)
 			{
 				msecage = msec - obj.last_flipped_msec;
-				msecremaining = W.cMILLISECONDS_IMMUNITY - msecage;
-				percentremaining = (msecremaining / W.cMILLISECONDS_IMMUNITY) * T.cPERCENT_100;
+				msecremaining = W.cMSECONDS_IMMUNITY - msecage;
+				percentremaining = (msecremaining / W.cMSECONDS_IMMUNITY) * T.cPERCENT_100;
 				if (msecremaining > 0 && msecage + msectolerance > 0)
 				{
 					document.getElementById("objTimer_" + obj.id).innerHTML = T.formatMilliseconds(msecremaining);
@@ -19614,7 +19639,7 @@ W = {
 			W.ObjectiveTimeout = setTimeout(function()
 			{
 				W.tickObjectives();
-			}, O.Options.int_secWvWRefresh * T.cMILLISECONDS_IN_SECOND);
+			}, O.Options.int_secWvWRefresh * T.cMSECONDS_IN_SECOND);
 		}
 	}
 };
@@ -19641,9 +19666,9 @@ T = {
 	cUTC_OFFSET_HAWAII: -10,
 	cUTC_OFFSET_EASTERN: -4,
 	// Natural constants
-	cMILLISECONDS_IN_SECOND: 1000,
-	cMILLISECONDS_IN_MINUTE: 60000,
-	cMILLISECONDS_IN_DAY: 86400000,
+	cMSECONDS_IN_SECOND: 1000,
+	cMSECONDS_IN_MINUTE: 60000,
+	cMSECONDS_IN_DAY: 86400000,
 	cSECONDS_IN_MINUTE: 60,
 	cSECONDS_IN_HOUR: 3600,
 	cSECONDS_IN_DAY: 86400,
@@ -20441,7 +20466,7 @@ T = {
 	 */
 	getShorthandTime: function(pMilliseconds)
 	{
-		var seconds = ~~(pMilliseconds / T.cMILLISECONDS_IN_SECOND);
+		var seconds = ~~(pMilliseconds / T.cMSECONDS_IN_SECOND);
 		// Return minutes
 		if (seconds < T.cSECONDS_IN_MINUTE)
 		{
@@ -20462,7 +20487,7 @@ T = {
 	 */
 	formatMilliseconds: function(pMilliseconds, pWantDeciseconds)
 	{
-		var seconds = ~~(pMilliseconds / T.cMILLISECONDS_IN_SECOND);
+		var seconds = ~~(pMilliseconds / T.cMSECONDS_IN_SECOND);
 		var day, hour, min, sec;
 		var daystr = "";
 		var hourstr = "";
@@ -20511,7 +20536,7 @@ T = {
 		}
 		if (pWantDeciseconds)
 		{
-			var deciseconds = ~~((pMilliseconds % T.cMILLISECONDS_IN_SECOND) / T.cBASE_10);
+			var deciseconds = ~~((pMilliseconds % T.cMSECONDS_IN_SECOND) / T.cBASE_10);
 			msstr = "." + deciseconds;
 			if (deciseconds < T.cBASE_10)
 			{
@@ -20623,7 +20648,7 @@ T = {
 	},
 	formatTooltipTimeMS: function(pMilliseconds, pWantSpace)
 	{
-		return T.formatTooltipTime(~~(pMilliseconds / T.cMILLISECONDS_IN_SECOND), pWantSpace);
+		return T.formatTooltipTime(~~(pMilliseconds / T.cMSECONDS_IN_SECOND), pWantSpace);
 	},
 	
 	/*
@@ -20636,7 +20661,7 @@ T = {
 	isTimely: function(pObject, pDate, pGracePeriod)
 	{
 		var finish = (pGracePeriod === undefined)
-			? pObject.Finish : (new Date(pObject.Finish.getTime() + pGracePeriod * T.cMILLISECONDS_IN_SECOND));
+			? pObject.Finish : (new Date(pObject.Finish.getTime() + pGracePeriod * T.cMSECONDS_IN_SECOND));
 		if (pDate >= pObject.Start && pDate <= finish)
 		{
 			return true;
@@ -20769,7 +20794,7 @@ T = {
 	 */
 	getUNIXSeconds: function()
 	{
-		return ~~((new Date()).getTime() / T.cMILLISECONDS_IN_SECOND);
+		return ~~((new Date()).getTime() / T.cMSECONDS_IN_SECOND);
 	},
 	
 	/*
@@ -20938,7 +20963,7 @@ T = {
 								setTimeout(function()
 								{
 									T.getDaily({aIsReset: true});
-								},  retrywaitminutes * T.cMILLISECONDS_IN_MINUTE);
+								},  retrywaitminutes * T.cMSECONDS_IN_MINUTE);
 								return;
 							}
 						}
@@ -21499,7 +21524,7 @@ B = {
 			var ctd = B.Countdown.Events[i];
 			if (ctd.isTimely)
 			{
-				var ithtime = T.formatSeconds(~~((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMILLISECONDS_IN_SECOND), true);
+				var ithtime = T.formatSeconds(~~((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMSECONDS_IN_SECOND), true);
 				document.getElementById("dsbCountdownTime_" + i).innerHTML = ithtime;
 			}
 		}
@@ -22412,7 +22437,7 @@ K = {
 		{
 			K.timeLog.innerHTML = localtime;
 			W.updateObjectiveTimers();
-			if (W.MatchFinishTime !== null)
+			if (W.MatchFinishTimeMS !== null)
 			{
 				K.countdownWvW.innerHTML = T.formatSeconds(W.secTillWvWReset--, true);
 			}
@@ -22927,7 +22952,7 @@ K = {
 			}
 			
 			text = text + I.siteTagCurrent;
-			pWaypoint.attr(I.cClipboardAttribute, text);
+			I.updateClipboard(pWaypoint, text);
 		};
 		
 		updateWaypoint(K.WpChain0, C.CurrentChainSD, C.CurrentChainHC, C.NextChainSD1, C.NextChainHC1);
@@ -22945,8 +22970,8 @@ K = {
 		{
 			var s0 = T.getCurrentDryTopEvents();
 			var s1 = T.getCurrentDryTopEvents(1);
-			$("#chnDryTopWaypoint0").attr(I.cClipboardAttribute, s0);
-			$("#chnDryTopWaypoint1").attr(I.cClipboardAttribute, s1);
+			I.updateClipboard("#chnDryTopWaypoint0", s0);
+			I.updateClipboard("#chnDryTopWaypoint1", s1);
 			if (C.isDryTopIconsShown)
 			{
 				$("#mapDryTopClip0").val(s0);
@@ -23024,7 +23049,7 @@ K = {
 			$("#watToggle").show();
 			$("#itemStopwatch").show().css("font-size", O.Options.int_sizeStopwatchFont);
 			K.StopwatchTimerStart = (new Date()).getTime();
-			K.StopwatchTimerFinish = K.StopwatchTimerStart + (O.Options.int_minStopwatchAlert * T.cMILLISECONDS_IN_MINUTE);
+			K.StopwatchTimerFinish = K.StopwatchTimerStart + (O.Options.int_minStopwatchAlert * T.cMSECONDS_IN_MINUTE);
 			// Initial call to the update function
 			K.tickStopwatchDown();
 		});
@@ -23067,8 +23092,8 @@ K = {
 		if (msec > 0)
 		{
 			K.stopwatchDown.innerHTML = T.getTimeFormatted({
-				customTimeInSeconds: parseInt(msec / T.cMILLISECONDS_IN_SECOND),
-				wantLetters: true
+				aCustomTimeInSeconds: parseInt(msec / T.cMSECONDS_IN_SECOND),
+				aWantLetters: true
 			});
 		}
 		else
@@ -23751,7 +23776,7 @@ I = {
 					$(this).empty().css({opacity: 1});
 					$("#itemConsole").hide();
 				});
-			}, pSeconds * T.cMILLISECONDS_IN_SECOND);
+			}, pSeconds * T.cMSECONDS_IN_SECOND);
 		}
 	},
 	greet: function(pString, pSeconds, pClear)
@@ -24084,16 +24109,31 @@ I = {
 	/*
 	 * Binds an element for clipboard behavior.
 	 * @param string or DOM element pSelector for selecting the element.
+	 * @param string pText to set element's initial clipboard text, optional.
 	 * @returns object Clipboard.
 	 */
-	initializeClipboard: function(pSelector)
+	initializeClipboard: function(pSelector, pText)
 	{
 		var cb = new Clipboard(pSelector);
 		cb.on("success", function(pEvent)
 		{
 			I.write(I.cClipboardSuccessText + pEvent.text, 5);
 		});
+		if (pText)
+		{
+			I.updateClipboard(pSelector, pText);
+		}
 		return cb;
+	},
+	
+	/*
+	 * Sets the text to be copied for that clipboard element.
+	 * @param string or jqobject pSelector.
+	 * @param string pText to copy.
+	 */
+	updateClipboard: function(pSelector, pText)
+	{
+		$(pSelector).attr(I.cClipboardAttribute, pText);
 	},
 	
 	/*

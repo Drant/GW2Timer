@@ -56,7 +56,13 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	
 	// Verbs
 	s_search: {de: "suchen", es: "buscar", fr: "rechercher",
-		cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"}
+		cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"},
+	
+	// Adjectives and Adverbs
+	s_locked: {de: "gesperrt", es: "bloqueado", fr: "verrouillé",
+		cs: "uzamčený", it: "bloccato", pl: "zablokowany", pt: "bloqueado", ru: "заблокированный", zh: "鎖定"},
+	s_unlocked: {de: "nicht gesperrt", es: "desbloqueado", fr: "déverrouillé",
+		cs: "odemčeno", it: "sbloccata", pl: "odblokowane", pt: "desbloqueado", ru: "разблокированная", zh: "解除鎖定"}
 };
 
 /*
