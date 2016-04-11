@@ -1263,13 +1263,16 @@ input[type="text"].bnkSearchInput:hover {
 	background-image: url("../img/ui/tradingpost.png");
 }
 .bnkButtonTab {
-	background-image: url("../img/ui/adjust_vertical.png");
-}
-.bnkButtonWideMore {
-	background-image: url("../img/ui/adjust_right.png");
+	background-image: url("../img/ui/adjust_move.png");
+	transform: rotate(270deg);
 }
 .bnkButtonWideLess {
-	background-image: url("../img/ui/adjust_left.png");
+	background-image: url("../img/ui/adjust_move.png");
+	transform: rotate(180deg);
+}
+.bnkButtonWideMore {
+	background-image: url("../img/ui/adjust_move.png");
+	transform: rotate(0deg);
 }
 .bnkButton:hover {
 	opacity: 0.8;

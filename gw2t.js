@@ -5245,7 +5245,7 @@ V = {
 			var age = Math.round(iChar.age / T.cSECONDS_IN_HOUR);
 			var agepercent = (iChar.age / highestage) * T.cPERCENT_100;
 			var deathpercent = (iChar.deaths / highestdeaths) * T.cPERCENT_100;
-			var usage = "<var class='chrAge' title='" + T.formatSeconds(iChar.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
+			var usage = "<var class='chrAge' title='" + T.formatTimeLetter(iChar.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
 				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + agepercent + "%'></s></samp>"
 					+ "<samp><s style='width:" + deathpercent + "%'></s></samp></span>"
 				+ "<var class='chrDeaths' title='" + T.parseRatio(age / iChar.deaths, 3) + "' data-value='" + iChar.deaths + "'>" + iChar.deaths + "x</var>";
@@ -5297,7 +5297,7 @@ V = {
 			var totalagehour = Math.round(totalage / T.cSECONDS_IN_HOUR);
 			var accountbirthdate = new Date(pData.created);
 			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMSECONDS_IN_SECOND);
-			var accountbirthdaysince = T.formatSeconds(accountlifetime).trim();
+			var accountbirthdaysince = T.formatTimeLetter(accountlifetime).trim();
 			var hoursperday = T.parseRatio((totalage / accountlifetime) * T.cHOURS_IN_DAY, 2);
 			var commandership = (pData.commander) ? "" : "accTrivial";
 			var access = (pData.access) ? "" : "accTrivial";
@@ -5314,7 +5314,7 @@ V = {
 				+ accountadditional
 				+ "<var id='chrAccountServer'></var><br />"
 				+ "<var id='chrAccountAge' title='" + hoursperday + hourstr + " / " + T.cHOURS_IN_DAY + hourstr + "<br />"
-						+ T.formatSeconds(totalage) + " / " + accountbirthdaysince + "'>" + totalagehour + hourstr + "</var> / "
+						+ T.formatTimeLetter(totalage) + " / " + accountbirthdaysince + "'>" + totalagehour + hourstr + "</var> / "
 					+ "<var id='chrAccountDeaths' title='" + T.parseRatio(totalagehour / totaldeaths, 3) + "'>" + totaldeaths + "x</var> &nbsp; "
 					+ "<var id='chrAccountLifetime'>" + accountbirthdaysince +  "</var>";
 			$("#chrSummary").append(summary);
@@ -6139,9 +6139,11 @@ V = {
 			return;
 		}
 		
-		var container = Q.createBank(dish);
+		var container = Q.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var generateWardrobe = function(pUnlockedAssoc)
+		var accountskinassoc = {};
+		var accountskinarray = [];
+		var generateWardrobe = function()
 		{
 			bank.empty();
 			var tab;
@@ -6152,6 +6154,12 @@ V = {
 			var cat, catname, caticon;
 			var numskinsintabstotal = 0;
 			var numskinsunlockedtotal = 0;
+			var slot, skinobj, skinid;
+			
+			/* 
+			 * Create tabs for each skin category. The slots are not generated
+			 * until the user opens the pre-collapsed tabs.
+			 */
 			for (var i in categories)
 			{
 				cat = categories[i];
@@ -6160,7 +6168,6 @@ V = {
 				tab = Q.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
 				(function(iTab, iCat)
 				{
-					// Tab slots are generated on demand when the user expands the tab, because there are lots of slots to generate
 					iTab.find(".bnkTabSeparator").one("click", function()
 					{
 						var numtofetch = iCat.length;
@@ -6168,22 +6175,27 @@ V = {
 						var slotscontainer = iTab.find(".bnkTabSlots");
 						for (var ii = 0; ii < iCat.length; ii++)
 						{
-							var skinid = iCat[ii];
-							var slot = Q.createBankSlot(slotscontainer);
+							skinid = iCat[ii];
+							slot = Q.createBankSlot(slotscontainer);
 							slot.attr("data-skinid", skinid);
-							var skinobj = skinsdb[skinid]; // If the user's unlocked skin is found in the cache associative array
+							skinobj = skinsdb[skinid]; // If the user's unlocked skin is found in the cache associative array
 							if (skinobj)
 							{
 								(function(iSlot, iSkinID, iItemID, iWiki)
 								{
 									$.getJSON(U.getAPIItem(iItemID), function(iItem)
 									{
-										var count = (pUnlockedAssoc[iSkinID]) ? 1 : 0;
-										Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: {count: count}, aWiki: iWiki, aCallback: function()
-										{
-											numfetched++;
-											A.setProgressBar(numfetched, numtofetch);
-										}});
+										var count = (accountskinassoc[iSkinID]) ? 1 : 0;
+										Q.styleBankSlot(iSlot, {
+											aItem: iItem,
+											aItemMeta: {count: count},
+											aWiki: iWiki,
+											aCallback: function()
+											{
+												numfetched++;
+												A.setProgressBar(numfetched, numtofetch);
+											}
+										});
 									});
 								})(slot, skinid, skinobj.i, skinobj.n);
 							}
@@ -6197,7 +6209,7 @@ V = {
 				var numskinsunlocked = 0;
 				for (var ii = 0; ii < cat.length; ii++)
 				{
-					if (pUnlockedAssoc[(cat[ii])])
+					if (accountskinassoc[(cat[ii])])
 					{
 						numskinsunlocked++;
 						numskinsunlockedtotal++;
@@ -6220,13 +6232,13 @@ V = {
 		{
 			$.getJSON(A.getURL(A.URL.Skins), function(pData)
 			{
-				var assocobj = {};
 				// Convert the API array of unlocked skin IDs into an associative array
+				accountskinarray = pData;
 				for (var i = 0; i < pData.length; i++)
 				{
-					assocobj[(pData[i])] = true;
+					accountskinassoc[(pData[i])] = true;
 				}
-				generateWardrobe(assocobj);
+				generateWardrobe();
 			}).fail(function()
 			{
 				A.printError(A.PermissionEnum.Unlocks);
@@ -7905,18 +7917,36 @@ Q = {
 	/*
 	 * Creates a bank container element.
 	 * @param jqobject pDestination to append bank.
+	 * @objparam boolean aIsCollection whether the bank is an unlock collection
+	 * rather than inventory of actual items.
 	 * @returns jqobject bank.
 	 */
-	createBank: function(pDestination)
+	createBank: function(pDestination, pSettings)
 	{
-		return $("<div class='bnkContainer'>"
+		var Settings = pSettings || {};
+		
+		var container = $("<div class='bnkContainer'>"
 			+ "<div class='bnkTop'>"
 				+ "<aside class='bnkCount'></aside>"
-				+ "<aside class='bnkPrice'><var class='bnkPriceTitleA'></var><var class='bnkPriceValueA'></var></aside>"
-				+ "<aside class='bnkPrice'><var class='bnkPriceTitleB'></var><var class='bnkPriceValueB'></var></aside>"
+				+ "<aside class='bnkPrice'>"
+					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA'></var>"
+					+ " &nbsp; "
+					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB'></var>"
+				+ "</aside>"
 			+ "</div>"
 			+ "<div class='bnkBank'></div>"
 		+ "</div>").appendTo(pDestination);
+
+		if (Settings.aIsCollection)
+		{
+			container.data("iscollection", true);
+			container.find(".bnkPriceTitleA").html(D.getWordCapital("unlocked") + ": ");
+			container.find(".bnkPriceTitleB").html(D.getWordCapital("locked") + ": ");
+			container.find(".bnkPriceValueA").html(E.formatCoinStringColored(0));
+			container.find(".bnkPriceValueB").html(E.formatCoinStringColored(0));
+		}
+
+		return container;
 	},
 	
 	/*
@@ -8014,19 +8044,20 @@ Q = {
 	/*
 	 * Styles a standard inventory slot and prepare it for search.
 	 * @param jqobject pSlot to style.
-	 * @param object pSettings.
 	 * @objparam object aItemMeta data retrieved from characters or bank API,
 	 * containing stack count and transmutation data.
 	 * @objparam object aItem item details retrieved from API.
 	 * @objparam string aWiki name of wiki article to open when double clicked.
-	 * @objparam boolean aWantTax whether to deduct the price with tax.
-	 * @param object pItem data retrieved from item details API.
 	 */
 	styleBankSlot: function(pSlot, pSettings)
 	{
 		var Settings = pSettings || {};
 		if (Settings.aItemMeta)
 		{
+			var container = pSlot.parents(".bnkContainer");
+			var top = container.find(".bnkTop");
+			var tabdisplay = pSlot.parents(".bnkTab").find(".bnkTabPrice");
+			var iscollection = container.data("iscollection");
 			Q.scanItem(Settings.aItem, {aElement: pSlot, aItemMeta: Settings.aItemMeta, aCallback: function(pBox)
 			{
 				// Load retrieved proper transmuted icon if available
@@ -8035,7 +8066,7 @@ Q = {
 				// Make the item searchable by converting its tooltip HTML into plain text
 				var keywords = ($(pBox.html).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
-				// Double click the slot opens its wiki page
+				// Bind slot click behavior
 				var wikisearch = Settings.aWiki || Settings.aItem.name;
 				pSlot.click(function(pEvent)
 				{
@@ -8093,22 +8124,39 @@ Q = {
 					$.getJSON(U.getAPIPrice(Settings.aItem.id), function(pData)
 					{
 						var prices = E.processPrice(pData, count);
-						var updatePriceDisplay = function(pDisplay)
+						var pricetorecord = (iscollection) ? prices.pricesell : prices.priceselltaxed;
+						var updatePriceDisplay = function(pDisplay, pBuy, pSell)
 						{
-							var displaypricebuy = (pDisplay.data("pricebuy") || 0) + prices.pricebuytaxed;
-							var displaypricesell = (pDisplay.data("pricesell") || 0) + prices.priceselltaxed;
+							var displaypricebuy = (pDisplay.data("pricebuy") || 0) + pBuy;
+							var displaypricesell = (pDisplay.data("pricesell") || 0) + pSell;
 							pDisplay.data("pricebuy", displaypricebuy).data("pricesell", displaypricesell);
 							var tabtext = E.formatCoinStringColored(displaypricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(displaypricebuy) + "</span>";
 							pDisplay.html(tabtext);
 						};
 						
-						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(prices.priceselltaxed, {aWantColor: true, aWantShort: true}) + "</var>");
+						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricetorecord, {aWantColor: true, aWantShort: true}) + "</var>");
 						// Only add if item actually exists (not a zero stack slot)
-						if (Settings.aItemMeta.count !== 0)
+						if (iscollection)
 						{
-							updatePriceDisplay(pSlot.parents(".bnkTab").find(".bnkTabPrice"));
-							updatePriceDisplay(pSlot.parents(".bnkContainer").find(".bnkPriceValueA"));
-							pSlot.data("price", prices.priceselltaxed);
+							if (Settings.aItemMeta.count !== 0)
+							{
+								updatePriceDisplay(tabdisplay, prices.pricebuy, prices.pricesell);
+								updatePriceDisplay(top.find(".bnkPriceValueA"), prices.pricebuy, prices.pricesell);
+								pSlot.data("price", pricetorecord);
+							}
+							else
+							{
+								updatePriceDisplay(top.find(".bnkPriceValueB"), prices.pricebuy, prices.pricesell);
+							}
+						}
+						else
+						{
+							if (Settings.aItemMeta.count !== 0)
+							{
+								updatePriceDisplay(tabdisplay, prices.pricebuytaxed, prices.priceselltaxed);
+								updatePriceDisplay(top.find(".bnkPriceValueA"), prices.pricebuytaxed, prices.priceselltaxed);
+								pSlot.data("price", pricetorecord);
+							}
 						}
 					});
 					
@@ -8239,31 +8287,34 @@ Q = {
 			isshowinghelp = !isshowinghelp;
 		});
 		
-		// Hide empty slots filter
-		var isfilteringempty = true;
+		// Empty slot filter: first click show filled slots only, second click show empty slots only, third click show all slots, cycle
+		var emptyfilterstate = 0;
 		$("<div class='bnkButtonEmpty bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
 		{
-			if (isfilteringempty)
+			if (emptyfilterstate === 0 || emptyfilterstate === 1 )
 			{
+				var wantshow = (emptyfilterstate === 0);
 				slots.each(function()
 				{
 					// The style slot function should have initialized the count data for slots without an item
 					if ($(this).data("count") > 0)
 					{
-						$(this).show();
+						$(this).toggle(wantshow);
 					}
 					else
 					{
-						$(this).hide();
+						$(this).toggle(!wantshow);
 					}
 				});
+				$(this).addClass("bnkButtonFocused");
+				emptyfilterstate++;
 			}
 			else
 			{
 				slots.show();
+				$(this).removeClass("bnkButtonFocused");
+				emptyfilterstate = 0;
 			}
-			$(this).toggleClass("bnkButtonFocused");
-			isfilteringempty = !isfilteringempty;
 			A.adjustAccountScrollbar();
 		});
 		
@@ -13651,7 +13702,7 @@ M = {
 			);
 		}
 		var units = ~~(distance * this.cPOINTS_TO_UNITS);
-		var time = T.formatSeconds(Math.ceil(units / this.cUNITS_PER_SECOND), true);
+		var time = T.formatTimeLetter(Math.ceil(units / this.cUNITS_PER_SECOND), true);
 		this.outputCoordinatesName(units + " " + D.getWord("range") + " (" + time + ")");
 	},
 	
@@ -19483,7 +19534,7 @@ W = {
 				percentremaining = (msecremaining / W.cMSECONDS_IMMUNITY) * T.cPERCENT_100;
 				if (msecremaining > 0 && msecage + msectolerance > 0)
 				{
-					document.getElementById("objTimer_" + obj.id).innerHTML = T.formatMilliseconds(msecremaining);
+					document.getElementById("objTimer_" + obj.id).innerHTML = T.formatTimeColon(msecremaining);
 					document.getElementById("objProgress_" + obj.id).style.width = percentremaining + "%";
 				}
 				else if (msecage + msectolerance <= 0)
@@ -20485,7 +20536,7 @@ T = {
 	 * @param int pMilliseconds of time.
 	 * @returns string formatted time.
 	 */
-	formatMilliseconds: function(pMilliseconds, pWantDeciseconds)
+	formatTimeColon: function(pMilliseconds, pWantDeciseconds)
 	{
 		var seconds = ~~(pMilliseconds / T.cMSECONDS_IN_SECOND);
 		var day, hour, min, sec;
@@ -20553,7 +20604,7 @@ T = {
 	 * @param int pSeconds of time.
 	 * @returns string formatted time.
 	 */
-	formatSeconds: function(pSeconds, pWantSeconds)
+	formatTimeLetter: function(pSeconds, pWantSeconds)
 	{
 		var seconds = pSeconds;
 		var week, day, hour, min, sec;
@@ -20619,7 +20670,7 @@ T = {
 	},
 	formatMinutes: function(pMinutes)
 	{
-		return T.formatSeconds(pMinutes * T.cSECONDS_IN_MINUTE);
+		return T.formatTimeLetter(pMinutes * T.cSECONDS_IN_MINUTE);
 	},
 	
 	/*
@@ -20860,8 +20911,8 @@ T = {
 	 */
 	updateChecklistCountdowns: function()
 	{
-		$("#chlCountdownToDaily").text(T.formatSeconds(T.SECONDS_TILL_DAILY, true));
-		$("#chlCountdownToWeekly").text(T.formatSeconds(T.SECONDS_TILL_WEEKLY, true));
+		$("#chlCountdownToDaily").text(T.formatTimeLetter(T.SECONDS_TILL_DAILY, true));
+		$("#chlCountdownToWeekly").text(T.formatTimeLetter(T.SECONDS_TILL_WEEKLY, true));
 	},
 	
 	/*
@@ -21524,7 +21575,7 @@ B = {
 			var ctd = B.Countdown.Events[i];
 			if (ctd.isTimely)
 			{
-				var ithtime = T.formatSeconds(~~((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMSECONDS_IN_SECOND), true);
+				var ithtime = T.formatTimeLetter(~~((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMSECONDS_IN_SECOND), true);
 				document.getElementById("dsbCountdownTime_" + i).innerHTML = ithtime;
 			}
 		}
@@ -22439,7 +22490,7 @@ K = {
 			W.updateObjectiveTimers();
 			if (W.MatchFinishTimeMS !== null)
 			{
-				K.countdownWvW.innerHTML = T.formatSeconds(W.secTillWvWReset--, true);
+				K.countdownWvW.innerHTML = T.formatTimeLetter(W.secTillWvWReset--, true);
 			}
 			if (sec === 0)
 			{
@@ -22906,8 +22957,8 @@ K = {
 				aWantSeconds: false,
 				aWant24: true
 			}) + "<br />" +
-			"<dfn>Daily:</dfn> " + T.formatSeconds(T.SECONDS_TILL_DAILY, false) + "<br />" +
-			"<dfn>Weekly:</dfn> " + T.formatSeconds(T.SECONDS_TILL_WEEKLY, false);
+			"<dfn>Daily:</dfn> " + T.formatTimeLetter(T.SECONDS_TILL_DAILY, false) + "<br />" +
+			"<dfn>Weekly:</dfn> " + T.formatTimeLetter(T.SECONDS_TILL_WEEKLY, false);
 		I.qTip.init(K.timeLocal);
 	},
 	
@@ -23075,7 +23126,7 @@ K = {
 	tickStopwatchUp: function()
 	{
 		var elapsedms = (new Date()).getTime() - K.StopwatchTimestamp;
-		K.stopwatchUp.innerHTML = T.formatMilliseconds(elapsedms, true);
+		K.stopwatchUp.innerHTML = T.formatTimeColon(elapsedms, true);
 		K.StopwatchTimeout = setTimeout(function()
 		{
 			K.tickStopwatchUp();
@@ -23091,10 +23142,7 @@ K = {
 		var msec = K.StopwatchTimerFinish - (new Date()).getTime();
 		if (msec > 0)
 		{
-			K.stopwatchDown.innerHTML = T.getTimeFormatted({
-				aCustomTimeInSeconds: parseInt(msec / T.cMSECONDS_IN_SECOND),
-				aWantLetters: true
-			});
+			K.stopwatchDown.innerHTML = T.formatTimeLetter(~~(msec / T.cMSECONDS_IN_SECOND), true);
 		}
 		else
 		{
