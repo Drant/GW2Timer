@@ -1022,8 +1022,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<a href='http://wiki.guildwars2.com/wiki/Shared_Inventory_Slot'>Shared Inventory Slots</a> are 20% off: "
-		+ "1x<gem>560</gem><ins class='s16 s16_gem'></ins> 3x<gem>1512</gem><ins class='s16 s16_gem'></ins> 5x<gem>2240</gem><ins class='s16 s16_gem'></ins>",
+	content: "",
 	Start: new Date("2016-04-08T16:00:00Z"),
 	Finish: new Date("2016-04-11T16:00:00Z"),
 	Messages:
@@ -1120,13 +1119,6 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Shared Inventory Slot",
-		id: "67071",
-		price: 560,
-		discount: [[1, 560, 700], [3, 1512, 1890], [5, 2240, 2800]],
-		col: 0
-	},
-	{
 		name: "Super Adventure Pack",
 		img: "http://i.imgur.com/Oc7d8B6.png",
 		price: 600,
@@ -1222,16 +1214,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-04-11T00:00:00Z"),
-	Finish: new Date("2016-04-12T00:00:00Z"),
+	Start: new Date("2016-04-12T00:00:00Z"),
+	Finish: new Date("2016-04-13T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "43813", price: "25200", product: "43789" },
-		Fox: { id: "43816", price: "25200", product: "43792" },
-		Derwena: { id: "43798", price: "12600", product: "43774" },
-		Yana: { id: "49735", price: "25200", product: "49866" },
-		Katyn: { id: "49780", price: "25200", product: "49824" },
-		Verma: { id: "43799", price: "12600", product: "43775" }
+		Mehem: { id: "43838", price: "25200", product: "43860" },
+		Fox: { id: "43823", price: "25200", product: "43845" },
+		Derwena: { id: "43832", price: "25200", product: "43854" },
+		Yana: { id: "43826", price: "25200", product: "43852" },
+		Katyn: { id: "43809", price: "25200", product: "43785" },
+		Verma: { id: "43828", price: "25200", product: "43849" }
 	}
 }
 };
