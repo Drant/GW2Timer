@@ -2721,7 +2721,7 @@ U = {
 	/*
 	 * Loads an object from local storage into a variable for temporary test or
 	 * console usage.
-	 * @return boolean true if successfully loaded into variable, else false.
+	 * @returns boolean true if successfully loaded into variable, else false.
 	 */
 	loadAPICache: function()
 	{
@@ -3075,7 +3075,7 @@ U = {
 			{
 				index = E.ItemsArray.length + pSmartIndex - 1;
 				requesteditem = E.ItemsArray[index];
-				$.getJSON(U.getAPIItem(requesteditem), function(pData)
+				Q.getItem(requesteditem, function(pData)
 				{
 					I.print("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData));
 				}).fail(function()
@@ -3090,7 +3090,7 @@ U = {
 				{
 					index = E.ItemsArray.length - pSmartIndex - 1 - i;
 					requesteditem = E.ItemsArray[index];
-					$.getJSON(U.getAPIItem(requesteditem), function(pData)
+					Q.getItem(requesteditem, function(pData)
 					{
 						I.print("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData));
 					}).fail(function()
@@ -3526,7 +3526,7 @@ U = {
 	/*
 	 * Strips all non-alphabet and non-numbers from a string using regex.
 	 * @param string pString to strip.
-	 * @return string stripped.
+	 * @returns string stripped.
 	 */
 	stripToAlphanumeric: function(pString)
 	{
@@ -4694,6 +4694,8 @@ A = {
 			A.Permissions[i] = null;
 		}
 		A.Data.CharacterNames = null;
+		// Prevent skipping loading the characters section first
+		$("#accMenu_Characters").data("iscurrentmenugroup", null);
 		
 		/*
 		 * Zeroes the properties of the Worth object, which holds cumulative
@@ -4745,7 +4747,7 @@ A = {
 	
 	/*
 	 * Checks if permission exists, else prints error.
-	 * @return boolean success.
+	 * @returns boolean success.
 	 */
 	checkPermission: function(pPermission)
 	{
@@ -4923,7 +4925,7 @@ A = {
 	},
 	
 	/*
-	 * Tells if a section has content generated already.
+	 * Tells if a section has the current account's content generated, else wipe.
 	 * @param jqobject pDish to check.
 	 * @returns boolean.
 	 */
@@ -5036,7 +5038,8 @@ V = {
 	serveCharacters: function()
 	{
 		// Don't retrieve if already did
-		if (A.Data.CharacterNames !== null)
+		var dish = $("#accDish_Characters");
+		if (A.reinitializeDish(dish) === false)
 		{
 			return;
 		}
@@ -5047,11 +5050,17 @@ V = {
 			V.generateCharactersStatistics();
 		};
 		
-		$("#chrSummary, #chrStatistics ul, #accDish_Equipment, #accDish_Inventory").empty();
+		dish.html("<div id='chrSummary'></div>"
+		+ "<div id='chrStatistics'>"
+			+ "<ul id='chrSelection'></ul>"
+			+ "<ul id='chrUsage' class='chrStats'></ul>"
+			+ "<ul id='chrSeniority' class='chrStats'></ul>"
+			+ "<ul id='chrGuilds' class='chrStats'></ul>"
+		+ "</div>");
+		$("#accDish_Equipment, #accDish_Inventory").empty();
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
 		I.suspendElement(menusubsection);
-		var dish = $("#accDish_Characters");
 		dish.prepend(I.cThrobber);
 		$.getJSON(A.getURL(A.URL.Characters), function(pData)
 		{
@@ -5692,7 +5701,7 @@ V = {
 		{
 			(function(iEquipment)
 			{
-				$.getJSON(U.getAPIItem(iEquipment.id), function(iItem)
+				Q.getItem(iEquipment.id, function(iItem)
 				{
 					var ithcontainer = $("#eqpContainer_" + char.charindex);
 					var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
@@ -5962,9 +5971,9 @@ V = {
 						{
 							(function(iSlot, iSlotData)
 							{
-								$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
+								Q.getItem(iSlotData.id, function(iItem)
 								{
-									Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData, aCallback: function()
+									Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
 									{
 										numfetched++;
 										A.setProgressBar(numfetched, numtofetch);
@@ -6030,9 +6039,9 @@ V = {
 				{
 					(function(iSlot, iSlotData)
 					{
-						$.getJSON(U.getAPIItem(iSlotData.id), function(iItem)
+						Q.getItem(iSlotData.id, function(iItem)
 						{
-							Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData, aCallback: function()
+							Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
 							{
 								numfetched++;
 								A.setProgressBar(numfetched, numtofetch);
@@ -6109,9 +6118,9 @@ V = {
 				{
 					(function(iSlot, iSlotData)
 					{
-						$.getJSON(U.getAPIItem(slotdata.id), function(iItem)
+						Q.getItem(slotdata.id, function(iItem)
 						{
-							Q.styleBankSlot(iSlot, {aItem: iItem, aItemMeta: iSlotData, aCallback: function()
+							Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
 							{
 								numfetched++;
 								A.setProgressBar(numfetched, numtofetch);
@@ -6183,12 +6192,12 @@ V = {
 							{
 								(function(iSlot, iSkinID, iItemID, iWiki)
 								{
-									$.getJSON(U.getAPIItem(iItemID), function(iItem)
+									Q.getItem(iItemID, function(iItem)
 									{
 										var count = (accountskinassoc[iSkinID]) ? 1 : 0;
 										Q.styleBankSlot(iSlot, {
 											aItem: iItem,
-											aItemMeta: {count: count},
+											aQuantity: count,
 											aWiki: iWiki,
 											aCallback: function()
 											{
@@ -6469,7 +6478,7 @@ V = {
 			for (var i = 0; i < items.length; i++)
 			{
 				var itemid = items[i];
-				$.getJSON(U.getAPIItem(itemid), function(iItem)
+				Q.getItem(itemid, function(iItem)
 				{
 					Q.scanItem(iItem, {aWantPrice: true, aCallback: function(iBox)
 					{
@@ -7025,7 +7034,7 @@ Q = {
 	 * @param object or int pRuneSets numbers of runes equipped, optional.
 	 * @returns string HTML.
 	 */
-	getItemRune: function(pItem, pRuneSets)
+	getRuneBonus: function(pItem, pRuneSets)
 	{
 		var str = "";
 		var det = pItem.details;
@@ -7098,6 +7107,48 @@ Q = {
 	},
 	
 	/*
+	 * Retrieves item details from API if haven't already, then execute callback
+	 * function. Basically a wrapper for getJSON with item ID function.
+	 * @param int pItemID to get item.
+	 * @param function pSuccess to execute after successful retrieval.
+	 * @returns @returns jqXHR object.
+	 * @pre Method chaining is at most one level with "fail" function call.
+	 */
+	getItem: function(pItemID, pSuccess)
+	{
+		var box = Q.Box[pItemID];
+		var succeed = function(pItem)
+		{
+			if (pSuccess)
+			{
+				pSuccess(pItem);
+			}
+		};
+		
+		if (Q.Box[pItemID])
+		{
+			succeed(box.item);
+			// Dummy fail jqxhr function that never executes because the item was successfully cached
+			return {fail: function() {}};
+		}
+		else
+		{
+			var jqxhr = $.ajax({
+				dataType: "json",
+				url: U.getAPIItem(pItemID),
+				cache: true,
+				success: function(pItem)
+				{
+					Q.Box[pItemID] = {};
+					Q.Box[pItemID].item = pItem;
+					succeed(pItem);
+				}
+			});
+			return jqxhr;
+		}
+	},
+	
+	/*
 	 * Lightweight preliminary function to check if the requested item has
 	 * already been analyzed, and simply retrieve the cache if available,
 	 * otherwise proceed with the actual analysis function.
@@ -7108,7 +7159,7 @@ Q = {
 	{
 		var Settings = pSettings || {};
 		var box = Q.Box[pItem.id];
-		if (box)
+		if (box && box.html)
 		{
 			if (Settings.aElement)
 			{
@@ -7133,7 +7184,6 @@ Q = {
 	 * upgrades and skins if available.
 	 * @param object pItem details retrieved from API.
 	 * @objparam jqobject aElement to bind tooltip.
-	 * @objparam int aQuantity if it is a stack of these items.
 	 * @objparam object aItemMeta contains information about the item's upgrades,
 	 * infusions, skins, and bindings, which are found in characters and bank API.
 	 * @objparam object aRuneSets containing counts of runes associated with rune's item ID.
@@ -7170,10 +7220,7 @@ Q = {
 		{
 			isitemmeta = true;
 		}
-		else
-		{
-			Settings.aItemMeta = {}; // If not provided then initialize as a blank object with undefined properties
-		}
+		Settings.aItemMeta = Settings.aItemMeta || {}; // If not provided then initialize as a blank object with undefined properties
 		// Initialize attribute object if requested
 		if (Settings.aWantAttr && A.isAccountInitialized)
 		{
@@ -7215,7 +7262,7 @@ Q = {
 		// NAME
 		var namestr = "";
 		var rarity = (item.rarity !== undefined) ? item.rarity : Q.Rarity.Basic;
-		namestr = "<aside class='itmName " + ((Settings.aQuantity !== undefined) ? (Settings.aQuantity + " ") : "") + Q.getRarityClass(rarity)
+		namestr = "<aside class='itmName " + Q.getRarityClass(rarity)
 			+ "'><img class='itmIcon itmIconMain' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
 		
 		// WEAPON STRENGTH
@@ -7278,7 +7325,7 @@ Q = {
 				// Runes
 				else if (det.bonuses && det.type === "Rune")
 				{
-					attrstr += Q.getItemRune(item);
+					attrstr += Q.getRuneBonus(item);
 				}
 			}
 			
@@ -7632,7 +7679,7 @@ Q = {
 			}
 			(function(iIndex, iInfusionID)
 			{
-				$.getJSON(U.getAPIItem(iInfusionID), function(iData)
+				Q.getItem(iInfusionID, function(iData)
 				{
 					infusionstr[iIndex] = "<span class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + iData.name + "<br />"
 						+ iData.details.infix_upgrade.buff.description + "</span><br /><br />";
@@ -7663,7 +7710,7 @@ Q = {
 			}
 			(function(iIndex, iUpgradeID)
 			{
-				$.getJSON(U.getAPIItem(iUpgradeID), function(iData)
+				Q.getItem(iUpgradeID, function(iData)
 				{
 					var upgdesc = "";
 					if (iData.details.type === "Rune")
@@ -7678,7 +7725,7 @@ Q = {
 						{
 							runepieces = Settings.aRuneSets;
 						}
-						upgdesc = Q.getItemRune(iData, runepieces);
+						upgdesc = Q.getRuneBonus(iData, runepieces);
 						if (attrobj)
 						{
 							Q.sumItemAttribute(attrobj, iData, Settings.aRuneSets);
@@ -7713,7 +7760,7 @@ Q = {
 		{
 			$.getJSON(U.getAPISkin(Settings.aItemMeta.skin), function(pData)
 			{
-				namestr = "<aside class='itmName " + ((Settings.aQuantity !== null) ? (Settings.aQuantity + " ") : "") + Q.getRarityClass(rarity)
+				namestr = "<aside class='itmName " + Q.getRarityClass(rarity)
 					+ "'><img class='itmIcon itmIconMain' src='" + pData.icon + "' />" + U.escapeHTML(pData.name) + "</aside>";
 				transmstr = "<aside='itmTransmute'>" + D.getString("Transmuted") + "<br />" + U.escapeHTML(item.name) + "</aside><br /><br />";
 				if (Settings.aCallback)
@@ -7761,7 +7808,7 @@ Q = {
 	/*
 	 * Formats a trait or skill object to be used in tooltips.
 	 * @param object pTrait details retrieved from API.
-	 * @return string content for tooltip window.
+	 * @returns string content for tooltip window.
 	 */
 	formatSkillTrait: function(pTrait)
 	{
@@ -7940,8 +7987,8 @@ Q = {
 		if (Settings.aIsCollection)
 		{
 			container.data("iscollection", true);
-			container.find(".bnkPriceTitleA").html(D.getWordCapital("unlocked") + ": ");
-			container.find(".bnkPriceTitleB").html(D.getWordCapital("locked") + ": ");
+			container.find(".bnkPriceTitleA").html(D.getWordCapital("unlocked") + ": +");
+			container.find(".bnkPriceTitleB").html(D.getWordCapital("locked") + ": −");
 			container.find(".bnkPriceValueA").html(E.formatCoinStringColored(0));
 			container.find(".bnkPriceValueB").html(E.formatCoinStringColored(0));
 		}
@@ -7966,13 +8013,16 @@ Q = {
 		var tab = $("<div class='bnkTab'></div>");
 		var iconstr = (Settings.aIcon) ? Settings.aIcon : "";
 		var titlestr = (Settings.aTitle) ? "<var class='bnkTabText'>" + Settings.aTitle + "</var>" : "";
-		var tabseparator = $("<div class='bnkTabSeparator curToggle'><aside class='bnkTabHeader'>"
-			+ iconstr
-			+ titlestr
-			+ "<var class='bnkTabPrice'></var>"
-			+ "<var class='bnkTabToggle'></var>"
-			+ "<var class='bnkTabStats'></var>"
-		+ "</aside></div>").appendTo(tab);
+		var tabseparator = $("<div class='bnkTabSeparator curToggle'>"
+			+ "<div class='bnkTabHover'></div>"
+			+ "<aside class='bnkTabHeader'>"
+				+ iconstr
+				+ titlestr
+				+ "<var class='bnkTabPrice'></var>"
+				+ "<var class='bnkTabToggle'></var>"
+				+ "<var class='bnkTabStats'></var>"
+			+ "</aside>"
+		+ "</div>").appendTo(tab);
 		var tabtoggle = tabseparator.find(".bnkTabToggle");
 		var tabslots = $("<div class='bnkTabSlots'></div>").appendTo(tab);
 		tabseparator.click(function()
@@ -8014,7 +8064,7 @@ Q = {
 			{
 				(function(iBag)
 				{
-					$.getJSON(U.getAPIItem(iBagData.id), function(iItem)
+					Q.getItem(iBagData.id, function(iItem)
 					{
 						iBag.css({backgroundImage: "url(" + iItem.icon + ")"});
 						Q.scanItem(iItem, {aElement: iBag});
@@ -8044,7 +8094,7 @@ Q = {
 	/*
 	 * Styles a standard inventory slot and prepare it for search.
 	 * @param jqobject pSlot to style.
-	 * @objparam object aItemMeta data retrieved from characters or bank API,
+	 * @objparam object aSlotMeta data retrieved from characters or bank API,
 	 * containing stack count and transmutation data.
 	 * @objparam object aItem item details retrieved from API.
 	 * @objparam string aWiki name of wiki article to open when double clicked.
@@ -8052,13 +8102,27 @@ Q = {
 	styleBankSlot: function(pSlot, pSettings)
 	{
 		var Settings = pSettings || {};
-		if (Settings.aItemMeta)
+		if (Settings.aSlotMeta)
 		{
 			var container = pSlot.parents(".bnkContainer");
 			var top = container.find(".bnkTop");
 			var tabdisplay = pSlot.parents(".bnkTab").find(".bnkTabPrice");
 			var iscollection = container.data("iscollection");
-			Q.scanItem(Settings.aItem, {aElement: pSlot, aItemMeta: Settings.aItemMeta, aCallback: function(pBox)
+			var count = Settings.aSlotMeta.count || 1;
+			var itemmeta = null;
+			var validmeta = {
+				skin: true, upgrades: true, infusions: true, bound_to: true
+			};
+			for (var i in Settings.aSlotMeta)
+			{
+				if (validmeta[i])
+				{
+					itemmeta = Settings.aSlotMeta;
+					break;
+				}
+			}
+			
+			Q.scanItem(Settings.aItem, {aElement: pSlot, aItemMeta: itemmeta, aCallback: function(pBox)
 			{
 				// Load retrieved proper transmuted icon if available
 				var icon = (pBox.skin) ? pBox.skin.icon : Settings.aItem.icon;
@@ -8085,7 +8149,6 @@ Q = {
 					I.updateClipboard("#bnkContextChatlink", Settings.aItem.chat_link + " " + Q.Context.ItemNameSearch);
 				});
 				// Numeric label over the slot icon indicating stack size or charges remaining
-				var count = Settings.aItemMeta.count || 1;
 				if (count > 1)
 				{
 					pSlot.append("<var class='bnkSlotCount'>" + count + "</var>");
@@ -8108,10 +8171,10 @@ Q = {
 					}
 				}
 				// Fade the slots that act as collections
-				if (Settings.aItemMeta.count === 0)
+				if (iscollection && count === 0)
 				{
 					pSlot.addClass("bnkSlotZero");
-					pSlot.data("count", Settings.aItemMeta.count);
+					pSlot.data("count", count);
 				}
 				else
 				{
@@ -8125,12 +8188,14 @@ Q = {
 					{
 						var prices = E.processPrice(pData, count);
 						var pricetorecord = (iscollection) ? prices.pricesell : prices.priceselltaxed;
-						var updatePriceDisplay = function(pDisplay, pBuy, pSell)
+						var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
 						{
-							var displaypricebuy = (pDisplay.data("pricebuy") || 0) + pBuy;
-							var displaypricesell = (pDisplay.data("pricesell") || 0) + pSell;
-							pDisplay.data("pricebuy", displaypricebuy).data("pricesell", displaypricesell);
-							var tabtext = E.formatCoinStringColored(displaypricesell) + " <span class='accTrivial'>" + E.formatCoinStringColored(displaypricebuy) + "</span>";
+							var displaypriceleft = (pDisplay.data("priceleft") || 0) + pLeft;
+							var displaypriceright = (pDisplay.data("priceright") || 0) + pRight;
+							pDisplay.data("priceleft", displaypriceleft).data("priceright", displaypriceright);
+							var pricestrleft = E.formatCoinStringColored(displaypriceleft);
+							var pricestrright = E.formatCoinStringColored(displaypriceright);
+							var tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright + " <span class='accTrivial'>" + pricestrleft + "</span>");
 							pDisplay.html(tabtext);
 						};
 						
@@ -8138,20 +8203,21 @@ Q = {
 						// Only add if item actually exists (not a zero stack slot)
 						if (iscollection)
 						{
-							if (Settings.aItemMeta.count !== 0)
+							if (Settings.aSlotMeta.count !== 0)
 							{
-								updatePriceDisplay(tabdisplay, prices.pricebuy, prices.pricesell);
+								updatePriceDisplay(tabdisplay, prices.pricebuy, 0, true);
 								updatePriceDisplay(top.find(".bnkPriceValueA"), prices.pricebuy, prices.pricesell);
 								pSlot.data("price", pricetorecord);
 							}
 							else
 							{
+								updatePriceDisplay(tabdisplay, 0, prices.pricebuy, true);
 								updatePriceDisplay(top.find(".bnkPriceValueB"), prices.pricebuy, prices.pricesell);
 							}
 						}
 						else
 						{
-							if (Settings.aItemMeta.count !== 0)
+							if (Settings.aSlotMeta.count !== 0)
 							{
 								updatePriceDisplay(tabdisplay, prices.pricebuytaxed, prices.priceselltaxed);
 								updatePriceDisplay(top.find(".bnkPriceValueA"), prices.pricebuytaxed, prices.priceselltaxed);
@@ -8895,11 +8961,7 @@ E = {
 			return;
 		}
 		
-		$.ajax({
-			dataType: "json",
-			url: U.getAPIItem(id),
-			cache: false,
-			success: function(pData)
+		Q.getItem(id, function(pData)
 		{
 			Q.setRarityClass(pEntry.find(".trdName"), pData.rarity);
 			pEntry.attr("data-rarity", pData.rarity);
@@ -8911,7 +8973,7 @@ E = {
 				U.printJSON(pData);
 			});
 			Q.scanItem(pData, {aElement: icon});
-		}});
+		});
 	},
 	
 	/*
@@ -9313,7 +9375,7 @@ E = {
 					entry.find(".trdResultsContainer").remove();
 					resultslist = createSearchContainer(entry);
 					
-					$.getJSON(U.getAPIItem(query), function(pDataInner)
+					Q.getItem(query, function(pDataInner)
 					{
 						insertSearchResult(pDataInner, query, resultslist);
 					}).fail(function()
@@ -9388,7 +9450,7 @@ E = {
 							resultitem = resultarray[thisi];
 							resultid = parseInt(resultitem[keyname_id]);
 							// Get information of each item in the returned search result array
-							$.getJSON(U.getAPIItem(resultid), function(pDataInner)
+							Q.getItem(resultid, function(pDataInner)
 							{
 								insertSearchResult(pDataInner, query, resultslist);
 							});
@@ -21393,7 +21455,7 @@ B = {
 					{
 						(function(iElement)
 						{
-							$.getJSON(U.getAPIItem(iElement.attr("data-sale")), function(iData)
+							Q.getItem(iElement.attr("data-sale"), function(iData)
 							{
 								iElement.attr("src", iData.icon);
 								Q.scanItem(iData, {aElement: iElement});
@@ -21474,67 +21536,6 @@ B = {
 		var table = $("#dsbVendorTable");
 		var numoffers = O.getObjectLength(B.Vendor.Offers);
 		
-		if (table.is(":empty") === false)
-		{
-			I.toggleToggleIcon("#dsbVendorToggleIcon", false);
-			table.animate({height: 0}, animationspeed, function()
-			{
-				$(this).css({height: "auto"}).empty();
-			});
-		}
-		else
-		{
-			I.toggleToggleIcon("#dsbVendorToggleIcon", true);
-			table.empty();
-			table.append(I.cThrobber);
-			for (var i in B.Vendor.Offers)
-			{
-				(function(iIndex)
-				{
-					var offer = B.Vendor.Offers[iIndex];
-					$.getJSON(U.getAPIItem(offer.id), function(pData)
-					{
-						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
-						table.append("<div class='dsbVendorEntry'>"
-							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
-							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
-								+ "' data-coord='" + (B.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
-							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(offer.price) + "</span>"
-							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
-						+ "</div>");
-						// Get TP prices also
-						$.getJSON(U.getAPIPrice(offer.id), function(pData)
-						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinStringColored(E.processPrice(pData).priceselltaxed));
-						}).fail(function()
-						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
-						});
-						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
-						// Get the product that the recipe crafts
-						$.getJSON(U.getAPIItem(offer.product), function(pProduct)
-						{
-							var icon = $("#dsbVendorIcon_" + iIndex);
-							icon.attr("src", pProduct.icon);
-							Q.scanItem(pProduct, {aElement: icon});
-						});
-					}).done(function()
-					{
-						// Finalize the table after every offer has been added
-						if ($(".dsbVendorEntry").length === numoffers)
-						{
-							finalizeVendorTable();
-						}
-					}).fail(function()
-					{
-						table.empty();
-						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchLink(offer.id)) + ">"
-							+ offer.id + "</a>. ArenaNet API servers may be down.");
-					});
-				})(i);
-			}
-		}
-		
 		var finalizeVendorTable = function()
 		{
 			$(".dsbVendorItem").each(function()
@@ -21554,6 +21555,66 @@ B = {
 			}
 			I.removeThrobber(table);
 		};
+		
+		// Collapse and empty the table if currently expanded, else generate
+		if (table.is(":empty") === false)
+		{
+			I.toggleToggleIcon("#dsbVendorToggleIcon", false);
+			table.animate({height: 0}, animationspeed, function()
+			{
+				$(this).css({height: "auto"}).empty();
+			});
+		}
+		else
+		{
+			I.toggleToggleIcon("#dsbVendorToggleIcon", true);
+			table.empty();
+			table.append(I.cThrobber);
+			for (var i in B.Vendor.Offers)
+			{
+				(function(iIndex)
+				{
+					var offer = B.Vendor.Offers[iIndex];
+					Q.getItem(offer.id, function(pData)
+					{
+						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
+						table.append("<div class='dsbVendorEntry'>"
+							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
+							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
+								+ "' data-coord='" + (B.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
+							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(offer.price) + "</span>"
+							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
+						+ "</div>");
+						// Get TP prices also
+						$.getJSON(U.getAPIPrice(offer.id), function(pData)
+						{
+							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinStringColored(E.processPrice(pData).priceselltaxed));
+						}).fail(function()
+						{
+							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
+						});
+						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
+						// Get the product that the recipe crafts
+						Q.getItem(offer.product, function(pProduct)
+						{
+							var icon = $("#dsbVendorIcon_" + iIndex);
+							icon.attr("src", pProduct.icon);
+							Q.scanItem(pProduct, {aElement: icon});
+						});
+						// Finalize the table after every offer has been added
+						if ($(".dsbVendorEntry").length === numoffers)
+						{
+							finalizeVendorTable();
+						}
+					}).fail(function()
+					{
+						table.empty();
+						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchLink(offer.id)) + ">"
+							+ offer.id + "</a>. ArenaNet API servers may be down.");
+					});
+				})(i);
+			}
+		}
 	},
 	getDashboardVendorWeekday: function()
 	{
