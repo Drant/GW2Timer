@@ -2909,7 +2909,7 @@ U = {
 	 */
 	printAPI: function(pString, pLimit, pQueryStr)
 	{
-		I.write("Gathering elements...");
+		I.print("Gathering elements...");
 		var limit = Number.POSITIVE_INFINITY;
 		var scrapethreshold = 256; // Minimum array size to begin scraping
 		var querystr = (pQueryStr === undefined) ? "" : pQueryStr;
@@ -2974,7 +2974,7 @@ U = {
 						{
 							$.getJSON(url + "/" + pData[iIndex] + querystr, function(pDataInner)
 							{
-								I.write("Retrieved an element: " + iIndex);
+								I.print("Retrieved an element: " + iIndex);
 								array.push(U.formatJSON(pDataInner));
 								U.APICacheArrayOfObjects.push(pDataInner);
 							}).done(function()
@@ -4799,11 +4799,14 @@ A = {
 	 */
 	insertTokenRow: function(pName, pAPIKey, pIsUsed)
 	{
+		var useiconunused = "img/ui/check.png";
+		var useiconusing = "img/ui/refresh.png";
+		
 		var token = $("<div class='accToken'></div>").appendTo("#accManager");
 		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
 		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
-		var use = $("<button class='accTokenUse'><img src='img/ui/check.png' /></button>").appendTo(buttons);
+		var use = $("<button class='accTokenUse'><img src='" + useiconunused + "' /></button>").appendTo(buttons);
 		var del = $("<button class='accTokenDelete'><img src='img/ui/default.png' /></button>").appendTo(buttons);
 		var swap = $("<span class='btnSwap'></span>").appendTo(buttons);
 		var swapup = $("<button class='btnSwapUp'></button>").appendTo(swap);
@@ -4815,6 +4818,7 @@ A = {
 			A.TokenCurrent = U.stripToAlphanumericDash(pAPIKey);
 			name.addClass("accTokenNameUsed");
 			use.addClass("btnFocused");
+			use.find("img").attr("src", useiconusing);
 		}
 		
 		// Button to use this token's API key
@@ -4824,9 +4828,9 @@ A = {
 			if (str.length > 0)
 			{
 				$(".accTokenName").removeClass("accTokenNameUsed");
-				$(".accTokenUse").removeClass("btnFocused");
+				$(".accTokenUse").removeClass("btnFocused").find("img").attr("src", useiconunused);
 				name.addClass("accTokenNameUsed");
-				use.addClass("btnFocused");
+				use.addClass("btnFocused").find("img").attr("src", useiconusing);
 				A.TokenCurrent = U.stripToAlphanumericDash(str);
 				A.loadToken();
 				A.saveTokens();
@@ -6197,7 +6201,7 @@ V = {
 										var count = (accountskinassoc[iSkinID]) ? 1 : 0;
 										Q.styleBankSlot(iSlot, {
 											aItem: iItem,
-											aQuantity: count,
+											aSlotMeta: {count: count},
 											aWiki: iWiki,
 											aCallback: function()
 											{
@@ -7111,23 +7115,15 @@ Q = {
 	 * function. Basically a wrapper for getJSON with item ID function.
 	 * @param int pItemID to get item.
 	 * @param function pSuccess to execute after successful retrieval.
-	 * @returns @returns jqXHR object.
-	 * @pre Method chaining is at most one level with "fail" function call.
+	 * @returns jqXHR object.
+	 * @pre Method chaining is at most one level with "fail" function call only.
 	 */
 	getItem: function(pItemID, pSuccess)
 	{
 		var box = Q.Box[pItemID];
-		var succeed = function(pItem)
+		if (box)
 		{
-			if (pSuccess)
-			{
-				pSuccess(pItem);
-			}
-		};
-		
-		if (Q.Box[pItemID])
-		{
-			succeed(box.item);
+			pSuccess(box.item);
 			// Dummy fail jqxhr function that never executes because the item was successfully cached
 			return {fail: function() {}};
 		}
@@ -7139,9 +7135,12 @@ Q = {
 				cache: true,
 				success: function(pItem)
 				{
-					Q.Box[pItemID] = {};
-					Q.Box[pItemID].item = pItem;
-					succeed(pItem);
+					if (Q.Box[pItem.id] === undefined)
+					{
+						Q.Box[pItemID] = {};
+						Q.Box[pItemID].item = pItem;
+					}
+					pSuccess(pItem);
 				}
 			});
 			return jqxhr;
@@ -7158,8 +7157,15 @@ Q = {
 	scanItem: function(pItem, pSettings)
 	{
 		var Settings = pSettings || {};
+		var itemmeta = Settings.aItemMeta || {};
 		var box = Q.Box[pItem.id];
-		if (box && box.html)
+		// Only use the cached analysis if the item is fresh (unupgraded, untransmuted, unsoulbound)
+		if (box && box.html && (
+			itemmeta.slot === undefined
+			&& itemmeta.bound_to === undefined
+			&& itemmeta.upgrades === undefined
+			&& itemmeta.infusions === undefined
+			&& itemmeta.skin === undefined))
 		{
 			if (Settings.aElement)
 			{
@@ -7240,7 +7246,7 @@ Q = {
 		var isvendorable = true;
 		var isaccountbound = false;
 		var issoulbound = false;
-		var propstofetch = 0;
+		var numtofetch = 0;
 		var numfetched = 0;
 		if (det && det.type)
 		{
@@ -7499,7 +7505,7 @@ Q = {
 		var pricestr = "";
 		if (Settings.aWantPrice)
 		{
-			propstofetch++;
+			numtofetch++;
 		}
 		
 		/*
@@ -7535,7 +7541,7 @@ Q = {
 						if (infusionslot.item_id !== undefined && Settings.aItemMeta.infusions === undefined)
 						{
 							preinfusions.push(infusionslot.item_id);
-							propstofetch++;
+							numtofetch++;
 						}
 						else
 						{
@@ -7553,7 +7559,7 @@ Q = {
 				if (det && det.suffix_item_id && Settings.aItemMeta.upgrades === undefined)
 				{
 					preupgrades.push(det.suffix_item_id);
-					propstofetch++;
+					numtofetch++;
 				}
 				else
 				{
@@ -7576,7 +7582,7 @@ Q = {
 					preinfusions[i] = Settings.aItemMeta.infusions[i];
 					if (preinfusions[i])
 					{
-						propstofetch++;
+						numtofetch++;
 					}
 				}
 			}
@@ -7590,7 +7596,7 @@ Q = {
 					preupgrades[i] = Settings.aItemMeta.upgrades[i];
 					if (preupgrades[i])
 					{
-						propstofetch++;
+						numtofetch++;
 					}
 				}
 			}
@@ -7600,7 +7606,7 @@ Q = {
 		var transmstr = "";
 		if (Settings.aItemMeta.skin)
 		{
-			propstofetch++;
+			numtofetch++;
 		}
 		
 		/*
@@ -7609,7 +7615,7 @@ Q = {
 		 */
 		var finalizeTooltip = function()
 		{
-			if (numfetched !== propstofetch)
+			if (numfetched !== numtofetch)
 			{
 				return;
 			}
@@ -7679,7 +7685,7 @@ Q = {
 			}
 			(function(iIndex, iInfusionID)
 			{
-				Q.getItem(iInfusionID, function(iData)
+				$.getJSON(U.getAPIItem(iInfusionID), function(iData)
 				{
 					infusionstr[iIndex] = "<span class='itmUpgrade'><img class='itmSlotIcon' src='" + iData.icon + "' /> " + iData.name + "<br />"
 						+ iData.details.infix_upgrade.buff.description + "</span><br /><br />";
@@ -7695,7 +7701,7 @@ Q = {
 					finalizeTooltip();
 				}).fail(function()
 				{
-					propstofetch--;
+					numtofetch--;
 					finalizeTooltip();
 				});
 			})(i, preinfusions[i]);
@@ -7710,7 +7716,7 @@ Q = {
 			}
 			(function(iIndex, iUpgradeID)
 			{
-				Q.getItem(iUpgradeID, function(iData)
+				$.getJSON(U.getAPIItem(iUpgradeID), function(iData)
 				{
 					var upgdesc = "";
 					if (iData.details.type === "Rune")
@@ -7749,7 +7755,7 @@ Q = {
 					finalizeTooltip();
 				}).fail(function()
 				{
-					propstofetch--;
+					numtofetch--;
 					finalizeTooltip();
 				});
 			})(i, preupgrades[i]);
@@ -7771,7 +7777,7 @@ Q = {
 				finalizeTooltip();
 			}).fail(function()
 			{
-				propstofetch--;
+				numtofetch--;
 				finalizeTooltip();
 			});
 		}
@@ -7793,13 +7799,13 @@ Q = {
 				finalizeTooltip();
 			}).fail(function()
 			{
-				propstofetch--;
+				numtofetch--;
 				finalizeTooltip();
 			});
 		}
 		
 		// In case no fetching is needed at all
-		if (numfetched === propstofetch)
+		if (numfetched === numtofetch)
 		{
 			finalizeTooltip();
 		}
@@ -8098,11 +8104,12 @@ Q = {
 	 * containing stack count and transmutation data.
 	 * @objparam object aItem item details retrieved from API.
 	 * @objparam string aWiki name of wiki article to open when double clicked.
+	 * @objparam function aCallback to execute after styling.
 	 */
 	styleBankSlot: function(pSlot, pSettings)
 	{
 		var Settings = pSettings || {};
-		if (Settings.aSlotMeta)
+		if (pSettings)
 		{
 			var container = pSlot.parents(".bnkContainer");
 			var top = container.find(".bnkTop");
@@ -8111,7 +8118,7 @@ Q = {
 			var count = Settings.aSlotMeta.count || 1;
 			var itemmeta = null;
 			var validmeta = {
-				skin: true, upgrades: true, infusions: true, bound_to: true
+				upgrades: true, infusions: true, skin: true, bound_to: true
 			};
 			for (var i in Settings.aSlotMeta)
 			{
@@ -8171,10 +8178,10 @@ Q = {
 					}
 				}
 				// Fade the slots that act as collections
-				if (iscollection && count === 0)
+				if (Settings.aSlotMeta.count === 0)
 				{
 					pSlot.addClass("bnkSlotZero");
-					pSlot.data("count", count);
+					pSlot.data("count", Settings.aSlotMeta.count);
 				}
 				else
 				{
@@ -8225,7 +8232,6 @@ Q = {
 							}
 						}
 					});
-					
 				}
 				// Execute callback if requested
 				if (Settings.aCallback)
@@ -9570,7 +9576,7 @@ E = {
 		$("#trdPrint").click(function()
 		{
 			I.clear();
-			I.write("ItemID,Name,Buy,Sell,Quantity,BuyLow,BuyHigh,SellLow,SellHigh");
+			I.print("ItemID,Name,Buy,Sell,Quantity,BuyLow,BuyHigh,SellLow,SellHigh");
 			var length = X.Textlists.TradingItem.value.length;
 			var str = "";
 			for (var i = 0; i < length; i++)
@@ -23896,10 +23902,23 @@ I = {
 			I.write(pString, pSeconds, pClear);
 		}
 	},
+	
+	/*
+	 * Writes HTML into the console without disappearing, with fast DOM implementation.
+	 * @param string pString to write.
+	 * @param boolean pClear to empty the console before printing.
+	 */
 	print: function(pString, pClear)
 	{
-		// For messages that are shown until the user manually closes the console
-		I.write(pString, 0, pClear);
+		window.clearTimeout(I.consoleTimeout);
+		var console = document.getElementById("itemConsole");
+		var content = document.getElementById("cslContent");
+		console.style.display = "block";
+		if (pClear)
+		{
+			content.innerHTML = "";
+		}
+		content.insertAdjacentHTML("beforeend", pString + "<br />");
 	},
 	
 	/*
@@ -23913,11 +23932,11 @@ I = {
 	},
 	
 	/*
-	 * Alternative for I.write but used for testing and easier to find and remove.
+	 * Alternative for print but used for testing and easier to find and remove.
 	 */
 	log: function(pString, pClear)
 	{
-		I.write(pString, 0, pClear);
+		I.print(pString, pClear);
 	},
 	
 	/*

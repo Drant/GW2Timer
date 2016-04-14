@@ -232,9 +232,11 @@ input[type="text"].accTokenNameUsed {
 }
 #chrAccountAge {
 	color: #bbcc77;
+	border-bottom: 1px dotted #bbcc77;
 }
 #chrAccountDeaths {
 	color: #ff2200;
+	border-bottom: 1px dotted #ff2200;
 }
 #chrAccountLifetime {
 	color: #ccc;
