@@ -4799,14 +4799,11 @@ A = {
 	 */
 	insertTokenRow: function(pName, pAPIKey, pIsUsed)
 	{
-		var useiconunused = "img/ui/check.png";
-		var useiconusing = "img/ui/refresh.png";
-		
 		var token = $("<div class='accToken'></div>").appendTo("#accManager");
 		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
 		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
-		var use = $("<button class='accTokenUse'><img src='" + useiconunused + "' /></button>").appendTo(buttons);
+		var use = $("<button class='accTokenUse'><img src='img/ui/check.png' /></button>").appendTo(buttons);
 		var del = $("<button class='accTokenDelete'><img src='img/ui/default.png' /></button>").appendTo(buttons);
 		var swap = $("<span class='btnSwap'></span>").appendTo(buttons);
 		var swapup = $("<button class='btnSwapUp'></button>").appendTo(swap);
@@ -4818,7 +4815,6 @@ A = {
 			A.TokenCurrent = U.stripToAlphanumericDash(pAPIKey);
 			name.addClass("accTokenNameUsed");
 			use.addClass("btnFocused");
-			use.find("img").attr("src", useiconusing);
 		}
 		
 		// Button to use this token's API key
@@ -4828,9 +4824,9 @@ A = {
 			if (str.length > 0)
 			{
 				$(".accTokenName").removeClass("accTokenNameUsed");
-				$(".accTokenUse").removeClass("btnFocused").find("img").attr("src", useiconunused);
+				$(".accTokenUse").removeClass("btnFocused");
 				name.addClass("accTokenNameUsed");
-				use.addClass("btnFocused").find("img").attr("src", useiconusing);
+				use.addClass("btnFocused").find("img");
 				A.TokenCurrent = U.stripToAlphanumericDash(str);
 				A.loadToken();
 				A.saveTokens();
@@ -6152,18 +6148,57 @@ V = {
 			return;
 		}
 		
+		var names, categories, galleries, skinsdb;
+		var galleryword = D.getWordCapital("gallery");
+		// Macro function to add link to gallery buttons next to the tab separators
+		var createGalleryLinks = function(pTab, pCategory)
+		{
+			var galkey = names[pCategory].set || pCategory;
+			var link = galleries[galkey];
+			var hoverelm = $("<aside class='bnkTabHover'></aside>").prependTo(pTab.find(".bnkTabSeparator"));
+			if (typeof link === "string")
+			{
+				$("<button class='bnkTabHoverButton'>" + galleryword + "</button>").click(function(pEvent)
+				{
+					pEvent.stopPropagation();
+					U.openPrivateURL(link);
+				}).appendTo(hoverelm);
+			}
+			else
+			{
+				var counter = 0;
+				for (var i in link)
+				{
+					counter++;
+					(function(iLink)
+					{
+						$("<button class='bnkTabHoverButton'><img src='img/account/characters/" + i.toLowerCase() + ".png' /></button>").click(function(pEvent)
+						{
+							pEvent.stopPropagation();
+							U.openPrivateURL(iLink);
+						}).appendTo(hoverelm);
+					})(link[i]);
+					if (counter % 2 === 0)
+					{
+						hoverelm.append("<br />");
+					}
+				}
+			}
+		};
+		
 		var container = Q.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var accountskinassoc = {};
 		var accountskinarray = [];
 		var generateWardrobe = function()
 		{
+			names = GW2T_SKINS_NAMES;
+			categories = GW2T_SKINS_CATEGORIES;
+			galleries = GW2T_SKINS_GALLERIES;
+			skinsdb = GW2T_SKINS_DATA;
+			
 			bank.empty();
 			var tab;
-			
-			var names = GW2T_SKINS_NAMES;
-			var categories = GW2T_SKINS_CATEGORIES;
-			var skinsdb = GW2T_SKINS_DATA;
 			var cat, catname, caticon;
 			var numskinsintabstotal = 0;
 			var numskinsunlockedtotal = 0;
@@ -6179,6 +6214,7 @@ V = {
 				catname = D.getObjectName(names[i]);
 				caticon = "<ins class='bnkTabIcon acc_wardrobe acc_wardrobe_" + i.toLowerCase() + "'></ins>";
 				tab = Q.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
+				createGalleryLinks(tab, i, catname);
 				(function(iTab, iCat)
 				{
 					iTab.find(".bnkTabSeparator").one("click", function()
@@ -6273,6 +6309,7 @@ V = {
 		var CurateArrayIndex = 0;
 		var CurateDatabase = {};
 		var CurateDatabaseIndex = "";
+		var CurateBlacklist = {};
 		
 		var curateSkin = function()
 		{
@@ -6289,7 +6326,7 @@ V = {
 			$.getJSON(U.getAPISkin(CurateDatabaseIndex), function(pData)
 			{
 				var icon = pData.icon || "";
-				skininfo.html("<img src='" + icon + "' style='float:left;' />" + U.escapeJSON(pData));
+				skininfo.html("<a href='" + U.getWikiLink(pData.name) + "' target='_blank'><img src='" + icon + "' style='float:left;' /></a>" + U.escapeJSON(pData));
 			});
 			
 			var finalizeCurate = function()
@@ -6378,7 +6415,7 @@ V = {
 							if (pEvent.which === I.ClickEnum.Left)
 							{
 								CurateArray[CurateArrayIndex].itemid = iItemID;
-								CurateArray[CurateArrayIndex].tradeableids = tradeableitems;
+								CurateArray[CurateArrayIndex].tradeableids = (tradeableitems.length > 0) ? tradeableitems : null;
 								$("#labControlNext").trigger("click");
 								A.adjustAccountScrollbar();
 							}
@@ -6511,9 +6548,10 @@ V = {
 		
 		$.getScript(U.URL_DATA.Skins).done(function()
 		{
-			$.getJSON("data/skins_assoc.json", function(pData)
+			$.getScript("data/skins_assoc.js", function()
 			{
-				CurateDatabase = pData.SkinItems;
+				CurateDatabase = GW2T_SKINS_ASSOC.SkinItems;
+				CurateBlacklist = GW2T_SKINS_ASSOC.Blacklist;
 				var skinsdb = GW2T_SKINS_DATA;
 				
 				$("#accDishMenu_Lab").remove();
@@ -6687,7 +6725,7 @@ V = {
 		$.getJSON("data/items.json", function(pData)
 		{
 			itemsarr = pData;
-			$.getJSON("data/skins.json", function(pDataInner)
+			$.getJSON("data/skins_assoc.json", function(pDataInner)
 			{
 				skinsarr = pDataInner;
 				processSkins();
@@ -7160,23 +7198,25 @@ Q = {
 		var itemmeta = Settings.aItemMeta || {};
 		var box = Q.Box[pItem.id];
 		// Only use the cached analysis if the item is fresh (unupgraded, untransmuted, unsoulbound)
-		if (box && box.html && (
-			itemmeta.slot === undefined
-			&& itemmeta.bound_to === undefined
-			&& itemmeta.upgrades === undefined
-			&& itemmeta.infusions === undefined
-			&& itemmeta.skin === undefined))
+		if (box && box.html)
 		{
-			if (Settings.aElement)
+			if (itemmeta.upgrades || itemmeta.infusions || itemmeta.skin || itemmeta.slot || itemmeta.bound_to || Settings.aWantAttr)
 			{
-				var elm = $(Settings.aElement);
-				elm.attr("title", box.html);
-				I.qTip.init(elm);
+				if (Settings.aElement)
+				{
+					var elm = $(Settings.aElement);
+					elm.attr("title", box.html);
+					I.qTip.init(elm);
+				}
+				// Execute callback if provided
+				if (Settings.aCallback)
+				{
+					Settings.aCallback(box);
+				}
 			}
-			// Execute callback if provided
-			if (Settings.aCallback)
+			else
 			{
-				Settings.aCallback(box);
+				Q.analyzeItem(pItem, pSettings);
 			}
 		}
 		else
@@ -8020,7 +8060,6 @@ Q = {
 		var iconstr = (Settings.aIcon) ? Settings.aIcon : "";
 		var titlestr = (Settings.aTitle) ? "<var class='bnkTabText'>" + Settings.aTitle + "</var>" : "";
 		var tabseparator = $("<div class='bnkTabSeparator curToggle'>"
-			+ "<div class='bnkTabHover'></div>"
 			+ "<aside class='bnkTabHeader'>"
 				+ iconstr
 				+ titlestr
@@ -8967,18 +9006,21 @@ E = {
 			return;
 		}
 		
+		var icon = pEntry.find(".trdIcon");
 		Q.getItem(id, function(pData)
 		{
-			Q.setRarityClass(pEntry.find(".trdName"), pData.rarity);
-			pEntry.attr("data-rarity", pData.rarity);
-			pEntry.find(".trdLink").val(pData.chat_link || "");
-			var icon = pEntry.find(".trdIcon");
-			icon.attr("src", pData.icon);
-			icon.unbind("click").click(function()
+			Q.scanItem(pData, {aElement: icon, aCallback: function(pBox)
 			{
-				U.printJSON(pData);
-			});
-			Q.scanItem(pData, {aElement: icon});
+				Q.setRarityClass(pEntry.find(".trdName"), pData.rarity);
+				pEntry.attr("data-rarity", pData.rarity);
+				pEntry.find(".trdLink").val(pData.chat_link || "");
+				pEntry.data("istradeable", pBox.istradeable);
+				icon.attr("src", pData.icon);
+				icon.unbind("click").click(function()
+				{
+					U.printJSON(pData);
+				});
+			}});
 		});
 	},
 	
@@ -8990,7 +9032,7 @@ E = {
 	{
 		var name = pEntry.find(".trdName").val();
 		var id = pEntry.find(".trdItem").val();
-		if (isFinite(parseInt(id)) === false || name.length === 0)
+		if (isFinite(parseInt(id)) === false || name.length === 0 || pEntry.data("istradeable") === false)
 		{
 			return;
 		}
@@ -9684,7 +9726,7 @@ E = {
 		var gemtocoininverse = $("#trdExchange .trdGemToCoinInverse");
 		
 		var gemtoamount = gemto.val();
-		if (gemtoamount === 0)
+		if (gemtoamount === 0 || gemto.val() === "")
 		{
 			gemtocoin.val("");
 			gemtomoney.val("");

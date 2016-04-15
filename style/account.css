@@ -1293,6 +1293,23 @@ input[type="text"].bnkSearchInput:hover {
 .bnkTabSeparator:hover {
 	background-image: url("../img/background/separator_hover.png");
 }
+.bnkTabHover {
+	display: none;
+	position: absolute;
+	min-width: 128px;
+	min-height: 40px;
+	margin-left: -144px;
+	padding-right: 32px;
+	text-align: right;
+}
+.bnkTabSeparator:hover .bnkTabHover {
+	display: block;
+}
+.bnkTabHoverButton {
+	font-size: 18px;
+	padding: 4px 8px 4px 8px;
+	font-family: Trebuchet MS, Menomonia;
+}
 .bnkTabHeader {
 	display: block;
 	padding-top: 4px;

@@ -3,29 +3,98 @@
  * Cache of the skins API, pre-categorized.
  */
 
+/*
+ * Links to galleries.
+ */
+var GW2T_SKINS_GALLERIES = {
+	Back: "http://wiki.guildwars2.com/wiki/Gallery_of_back_items",
+	
+	Armor_Light: {
+		Asura_Female: "http://wiki.guildwars2.com/wiki/Asura_female_light_armor",
+		Asura_Male: "http://wiki.guildwars2.com/wiki/Asura_male_light_armor",
+		Charr_Female: "http://wiki.guildwars2.com/wiki/Charr_female_light_armor",
+		Charr_Male: "http://wiki.guildwars2.com/wiki/Charr_male_light_armor",
+		Human_Female: "http://wiki.guildwars2.com/wiki/Human_female_light_armor",
+		Human_Male: "http://wiki.guildwars2.com/wiki/Human_male_light_armor",
+		Norn_Female: "http://wiki.guildwars2.com/wiki/Norn_female_light_armor",
+		Norn_Male: "http://wiki.guildwars2.com/wiki/Norn_male_light_armor",
+		Sylvari_Female: "http://wiki.guildwars2.com/wiki/Sylvari_female_light_armor",
+		Sylvari_Male: "http://wiki.guildwars2.com/wiki/Sylvari_male_light_armor"
+	},
+	
+	Armor_Medium: {
+		Asura_Female: "http://wiki.guildwars2.com/wiki/Asura_female_medium_armor",
+		Asura_Male: "http://wiki.guildwars2.com/wiki/Asura_male_medium_armor",
+		Charr_Female: "http://wiki.guildwars2.com/wiki/Charr_female_medium_armor",
+		Charr_Male: "http://wiki.guildwars2.com/wiki/Charr_male_medium_armor",
+		Human_Female: "http://wiki.guildwars2.com/wiki/Human_female_medium_armor",
+		Human_Male: "http://wiki.guildwars2.com/wiki/Human_male_medium_armor",
+		Norn_Female: "http://wiki.guildwars2.com/wiki/Norn_female_medium_armor",
+		Norn_Male: "http://wiki.guildwars2.com/wiki/Norn_male_medium_armor",
+		Sylvari_Female: "http://wiki.guildwars2.com/wiki/Sylvari_female_medium_armor",
+		Sylvari_Male: "http://wiki.guildwars2.com/wiki/Sylvari_male_medium_armor"
+	},
+	
+	Armor_Heavy: {
+		Asura_Female: "http://wiki.guildwars2.com/wiki/Asura_female_heavy_armor",
+		Asura_Male: "http://wiki.guildwars2.com/wiki/Asura_male_heavy_armor",
+		Charr_Female: "http://wiki.guildwars2.com/wiki/Charr_female_heavy_armor",
+		Charr_Male: "http://wiki.guildwars2.com/wiki/Charr_male_heavy_armor",
+		Human_Female: "http://wiki.guildwars2.com/wiki/Human_female_heavy_armor",
+		Human_Male: "http://wiki.guildwars2.com/wiki/Human_male_heavy_armor",
+		Norn_Female: "http://wiki.guildwars2.com/wiki/Norn_female_heavy_armor",
+		Norn_Male: "http://wiki.guildwars2.com/wiki/Norn_male_heavy_armor",
+		Sylvari_Female: "http://wiki.guildwars2.com/wiki/Sylvari_female_heavy_armor",
+		Sylvari_Male: "http://wiki.guildwars2.com/wiki/Sylvari_male_heavy_armor"
+	},
+
+	Weapon_Axe: "http://wiki.guildwars2.com/wiki/Gallery_of_axes",
+	Weapon_Mace: "http://wiki.guildwars2.com/wiki/Gallery_of_maces",
+	Weapon_Sword: "http://wiki.guildwars2.com/wiki/Gallery_of_swords",
+	Weapon_Dagger: "http://wiki.guildwars2.com/wiki/Gallery_of_daggers",
+	Weapon_Pistol: "http://wiki.guildwars2.com/wiki/Gallery_of_pistols",
+	Weapon_Scepter: "http://wiki.guildwars2.com/wiki/Gallery_of_scepters",
+	Weapon_Focus: "http://wiki.guildwars2.com/wiki/Gallery_of_foci",
+	Weapon_Shield: "http://wiki.guildwars2.com/wiki/Gallery_of_shields",
+	Weapon_Torch: "http://wiki.guildwars2.com/wiki/Gallery_of_torches",
+	Weapon_Warhorn: "http://wiki.guildwars2.com/wiki/Gallery_of_warhorns",
+	Weapon_Greatsword: "http://wiki.guildwars2.com/wiki/Gallery_of_greatswords",
+	Weapon_Hammer: "http://wiki.guildwars2.com/wiki/Gallery_of_hammers",
+	Weapon_LongBow: "http://wiki.guildwars2.com/wiki/Gallery_of_longbows",
+	Weapon_ShortBow: "http://wiki.guildwars2.com/wiki/Gallery_of_short_bows",
+	Weapon_Rifle: "http://wiki.guildwars2.com/wiki/Gallery_of_rifles",
+	Weapon_Staff: "http://wiki.guildwars2.com/wiki/Gallery_of_staves",
+	Weapon_Harpoon: "http://wiki.guildwars2.com/wiki/Gallery_of_spears",
+	Weapon_Speargun: "http://wiki.guildwars2.com/wiki/Gallery_of_harpoon_guns",
+	Weapon_Trident: "http://wiki.guildwars2.com/wiki/Gallery_of_tridents"
+};
+
+/*
+ * Category translations.
+ */
 var GW2T_SKINS_NAMES = {
 	Back: {name_en: "Back", name_de: "Rücken", name_es: "Espalda", name_fr: "Objet de dos"},
 	
-	Armor_Light_Helm: {name_en: "Light Headgear", name_de: "Leichte Kopfbedeckung", name_es: "Armdadura de cabeza ligera", name_fr: "Couvre-chef léger"},
-	Armor_Light_Shoulders: {name_en: "Light Shoulders", name_de: "Leichte Schultern", name_es: "Hombros ligeros", name_fr: "Epaulières légères"},
-	Armor_Light_Coat: {name_en: "Light Chest", name_de: "Leicht Brust", name_es: "Pecho ligero", name_fr: "Cuirasse léger"},
-	Armor_Light_Gloves: {name_en: "Light Gloves", name_de: "Leichte Handschuhe", name_es: "Guantes ligeros", name_fr: "Gants légers"},
-	Armor_Light_Leggings: {name_en: "Light Leggings", name_de: "Leichtes Beinkleid", name_es: "Calzas ligeras", name_fr: "Jambières légères"},
-	Armor_Light_Boots: {name_en: "Light Boots", name_de: "Leichte Stiefel", name_es: "Botas ligeras", name_fr: "Bottes légères"},
+	Armor_Light_Helm: {set: "Armor_Light", name_en: "Light Headgear", name_de: "Leichte Kopfbedeckung", name_es: "Armdadura de cabeza ligera", name_fr: "Couvre-chef léger"},
+	Armor_Light_Shoulders: {set: "Armor_Light", name_en: "Light Shoulders", name_de: "Leichte Schultern", name_es: "Hombros ligeros", name_fr: "Epaulières légères"},
+	Armor_Light_Coat: {set: "Armor_Light", name_en: "Light Chest", name_de: "Leicht Brust", name_es: "Pecho ligero", name_fr: "Cuirasse léger"},
+	Armor_Light_Gloves: {set: "Armor_Light", name_en: "Light Gloves", name_de: "Leichte Handschuhe", name_es: "Guantes ligeros", name_fr: "Gants légers"},
+	Armor_Light_Leggings: {set: "Armor_Light", name_en: "Light Leggings", name_de: "Leichtes Beinkleid", name_es: "Calzas ligeras", name_fr: "Jambières légères"},
+	Armor_Light_Boots: {set: "Armor_Light", name_en: "Light Boots", name_de: "Leichte Stiefel", name_es: "Botas ligeras", name_fr: "Bottes légères"},
 	
-	Armor_Medium_Helm: {name_en: "Medium Headgear", name_de: "Mittlere Kopfbedeckung", name_es: "Armdadura de cabeza media", name_fr: "Couvre-chef intermédiare"},
-	Armor_Medium_Shoulders: {name_en: "Medium Shoulders", name_de: "Mittlere Schultern", name_es: "Hombros medios", name_fr: "Epaulières intermédiares"},
-	Armor_Medium_Coat: {name_en: "Medium Chest", name_de: "Mittlere Brust", name_es: "Pecho medio", name_fr: "Cuirasse intermédiare"},
-	Armor_Medium_Gloves: {name_en: "Medium Gloves", name_de: "Mittlere Handschuhe", name_es: "Guantes medios", name_fr: "Gants intermédiares"},
-	Armor_Medium_Leggings: {name_en: "Medium Leggings", name_de: "Mittleres Beinkleid", name_es: "Calzas medias", name_fr: "Jambières intermédiares"},
-	Armor_Medium_Boots: {name_en: "Medium Boots", name_de: "Mittlere Stiefel", name_es: "Botas medias", name_fr: "Bottes intermédiares"},
+	Armor_Medium_Helm: {set: "Armor_Medium", name_en: "Medium Headgear", name_de: "Mittlere Kopfbedeckung", name_es: "Armdadura de cabeza media", name_fr: "Couvre-chef intermédiare"},
+	Armor_Medium_Shoulders: {set: "Armor_Medium", name_en: "Medium Shoulders", name_de: "Mittlere Schultern", name_es: "Hombros medios", name_fr: "Epaulières intermédiares"},
+	Armor_Medium_Coat: {set: "Armor_Medium", name_en: "Medium Chest", name_de: "Mittlere Brust", name_es: "Pecho medio", name_fr: "Cuirasse intermédiare"},
+	Armor_Medium_Gloves: {set: "Armor_Medium", name_en: "Medium Gloves", name_de: "Mittlere Handschuhe", name_es: "Guantes medios", name_fr: "Gants intermédiares"},
+	Armor_Medium_Leggings: {set: "Armor_Medium", name_en: "Medium Leggings", name_de: "Mittleres Beinkleid", name_es: "Calzas medias", name_fr: "Jambières intermédiares"},
+	Armor_Medium_Boots: {set: "Armor_Medium", name_en: "Medium Boots", name_de: "Mittlere Stiefel", name_es: "Botas medias", name_fr: "Bottes intermédiares"},
 	
-	Armor_Heavy_Helm: {name_en: "Heavy Headgear", name_de: "Schwere Kopfbedeckung", name_es: "Armdadura de cabeza pesada", name_fr: "Couvre-chef lourd"},
-	Armor_Heavy_Shoulders: {name_en: "Heavy Shoulders", name_de: "Schwere Schultern", name_es: "Hombros pesados", name_fr: "Epaulières lourdes"},
-	Armor_Heavy_Coat: {name_en: "Heavy Chest", name_de: "Schwere Brust", name_es: "Pecho pesado", name_fr: "Cuirasse lourd"},
-	Armor_Heavy_Gloves: {name_en: "Heavy Gloves", name_de: "Schwere Handschuhe", name_es: "Guantes pesados", name_fr: "Gants lourds"},
-	Armor_Heavy_Leggings: {name_en: "Heavy Leggings", name_de: "Schweres Beinkleid", name_es: "Calzas pesadas", name_fr: "Jambières lourdes"},
-	Armor_Heavy_Boots: {name_en: "Heavy Boots", name_de: "Schwere Stiefel", name_es: "Botas pesadas", name_fr: "Bottes lourdes"},
+	Armor_Heavy_Helm: {set: "Armor_Heavy", name_en: "Heavy Headgear", name_de: "Schwere Kopfbedeckung", name_es: "Armdadura de cabeza pesada", name_fr: "Couvre-chef lourd"},
+	Armor_Heavy_Shoulders: {set: "Armor_Heavy", name_en: "Heavy Shoulders", name_de: "Schwere Schultern", name_es: "Hombros pesados", name_fr: "Epaulières lourdes"},
+	Armor_Heavy_Coat: {set: "Armor_Heavy", name_en: "Heavy Chest", name_de: "Schwere Brust", name_es: "Pecho pesado", name_fr: "Cuirasse lourd"},
+	Armor_Heavy_Gloves: {set: "Armor_Heavy", name_en: "Heavy Gloves", name_de: "Schwere Handschuhe", name_es: "Guantes pesados", name_fr: "Gants lourds"},
+	Armor_Heavy_Leggings: {set: "Armor_Heavy", name_en: "Heavy Leggings", name_de: "Schweres Beinkleid", name_es: "Calzas pesadas", name_fr: "Jambières lourdes"},
+	Armor_Heavy_Boots: {set: "Armor_Heavy", name_en: "Heavy Boots", name_de: "Schwere Stiefel", name_es: "Botas pesadas", name_fr: "Bottes lourdes"},
 	
 	Armor_Light_HelmAquatic: {name_en: "Light Aquatic Headgear", name_de: "Leichte Atemgeräte", name_es: "Armadura de cabeza acuática ligera", name_fr: "Couvre-chef aquatique léger"},
 	Armor_Medium_HelmAquatic: {name_en: "Medium Aquatic Headgear", name_de: "Mittlere Atemgeräte", name_es: "Armadura de cabeza acuática media", name_fr: "Couvre-chef aquatique intermédiare"},

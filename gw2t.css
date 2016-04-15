@@ -2432,10 +2432,11 @@ gem {
 .s16_language { background-position: -160px 0; }
 .s16_loot { background-position: -224px 0; }
 .s16_money { background-position: -240px 0; }
-.s16_twitter { background-position: -256px 0; }
-.s16_view { background-position: -272px 0; }
-.s16_wiki { background-position: -288px 0; }
-.s16_youtube { background-position: -304px 0; }
+.s16_token { background-position: -256px 0; }
+.s16_twitter { background-position: -272px 0; }
+.s16_view { background-position: -288px 0; }
+.s16_wiki { background-position: -304px 0; }
+.s16_youtube { background-position: -320px 0; }
 
 coppercoin, silvercoin, goldcoin, karmaunit, achievementunit {
 	display: inline-block;

@@ -1067,9 +1067,9 @@ Countdown: {
 		name_de: "Update Feder 2016",
 		name_es: "Actualización de primavera 2016",
 		name_fr: "Mise à jour du printemps 2016",
-		url: "https://forum-en.guildwars2.com/forum/game/gw2/Upcoming-changes-in-Spring-Quarterly-Update",
-		Start: new Date("2016-04-26T16:00:00Z"),
-		Finish: new Date("2016-04-27T16:00:00Z")
+		official: "news/the-spring-quarterly-update-is-coming/",
+		Start: new Date("2016-04-19T16:00:00Z"),
+		Finish: new Date("2016-04-20T16:00:00Z")
 	}
 	]
 },
@@ -1214,16 +1214,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-04-14T00:00:00Z"),
-	Finish: new Date("2016-04-15T00:00:00Z"),
+	Start: new Date("2016-04-15T00:00:00Z"),
+	Finish: new Date("2016-04-16T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "49754", price: "25200", product: "49795" },
-		Fox: { id: "43805", price: "25200", product: "43781" },
-		Derwena: { id: "49734", price: "12600", product: "49865" },
-		Yana: { id: "44715", price: "12600", product: "44943" },
-		Katyn: { id: "43830", price: "25200", product: "43851" },
-		Verma: { id: "43802", price: "25200", product: "43778" }
+		Mehem: { id: "43837", price: "25200", product: "43859" },
+		Fox: { id: "44650", price: "25200", product: "44954" },
+		Derwena: { id: "49778", price: "25200", product: "49817" },
+		Yana: { id: "49744", price: "25200", product: "49785" },
+		Katyn: { id: "49741", price: "25200", product: "49733" },
+		Verma: { id: "43818", price: "25200", product: "43794" }
 	}
 }
 };

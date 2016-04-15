@@ -1,4 +1,8 @@
-﻿{
+﻿/*
+ * This file is used by http://gw2timer.com/lab
+ * Associated item IDs for unique skins.
+ */
+var GW2T_SKINS_ASSOC = {
 	/*
 	 * Arrays of item IDs that have that unique skin.
 	 */
