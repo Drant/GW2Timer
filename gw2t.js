@@ -4269,7 +4269,7 @@ U = {
 A = {
 	
 	TokenCurrent: null,
-	CharacterCurrent: null,
+	CharIndexCurrent: null,
 	isAccountInitialized: false,
 	Metadata: {}, // Prewritten data loaded along with account page
 	Equipment: {}, // Character equipment slots
@@ -4497,7 +4497,7 @@ A = {
 						// Else view the main subsection
 						$(this).data("iscurrentmenugroup", null);
 						A.DishCurrent = $("#accDish_" + iSectionName);
-						// Show dish menu menu
+						// Show dish menu
 						$(".accDishMenu").hide();
 						$("#accDishMenu_" + iSectionName).show();
 						// Show the main subsection
@@ -4918,7 +4918,7 @@ A = {
 	{
 		try
 		{
-			return A.Data.Characters[A.CharacterCurrent];
+			return A.Data.Characters[A.CharIndexCurrent];
 		}
 		catch (e) {}
 		return null;
@@ -4937,6 +4937,17 @@ A = {
 		}
 		pDish.empty().data("token", A.TokenCurrent);
 		return true;
+	},
+	
+	/*
+	 * Creates a container to insert items into a section specific menu.
+	 * @param string pSection name.
+	 * @returns jqobject.
+	 */
+	createDishMenu: function(pSection)
+	{
+		$("#accDishMenu_" + pSection).remove();
+		return $("<aside id='accDishMenu_" + pSection + "' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
 	}
 };
 
@@ -5048,6 +5059,7 @@ V = {
 		{
 			I.suspendElement(menusubsection, false);
 			V.generateCharactersStatistics();
+			V.createEquipmentMenu();
 		};
 		
 		dish.html("<div id='chrSummary'></div>"
@@ -5070,7 +5082,7 @@ V = {
 			var numfetched = 0;
 			var numtofetch = numcharacters;
 			A.Data.CharacterNames = pData;
-			A.CharacterCurrent = null;
+			A.CharIndexCurrent = null;
 			A.Data.Characters = null;
 			A.Data.Characters = new Array(numcharacters);
 			A.Data.CharacterNames.forEach(function(iName)
@@ -5088,8 +5100,8 @@ V = {
 						{
 							// Check retrieval progress
 							A.Data.Characters[iIndex] = pData;
-							(A.Data.Characters[iIndex]).charindex = iIndex;
-							(A.Data.Characters[iIndex]).charname = U.escapeHTML(pData.name);
+							A.Data.Characters[iIndex].charindex = iIndex;
+							A.Data.Characters[iIndex].charname = U.escapeHTML(pData.name);
 							V.generateCharactersSelection(pData);
 							numfetched++;
 							A.setProgressBar(numfetched, numtofetch);
@@ -5130,6 +5142,7 @@ V = {
 			var icon = (pCharacterInner.profession).toLowerCase();
 			pCharacterInner.charelite = icon;
 			pCharacterInner.charprofession = icon;
+			pCharacterInner.charcolor = A.Metadata.Profession[icon].color;
 			if (pCharacterInner.specializations && pCharacterInner.specializations.pve)
 			{
 				var specs = pCharacterInner.specializations.pve;
@@ -5187,15 +5200,15 @@ V = {
 		.click(function()
 		{
 			var charindex = U.getSubintegerFromHTMLID($(this));
-			if (A.CharacterCurrent === charindex)
+			if (A.CharIndexCurrent === charindex)
 			{
-				A.CharacterCurrent = null;
+				A.CharIndexCurrent = null;
 				$(this).find(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
 				$(this).removeClass("chrSelected");
 			}
 			else
 			{
-				A.CharacterCurrent = charindex;
+				A.CharIndexCurrent = charindex;
 				$(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
 				$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
 				$(".chrSelection").removeClass("chrSelected");
@@ -5500,14 +5513,14 @@ V = {
 	 */
 	serveEquipment: function()
 	{
-		if (A.checkPermission(A.PermissionEnum.Builds) === false)
+		if (A.checkPermission(A.PermissionEnum.Builds) !== true)
 		{
 			return;
 		}
 		// Generate for single character if user chosen, else all characters
-		var equipcur = $("#eqpContainer_" + A.CharacterCurrent);
+		var equipcur = $("#eqpContainer_" + A.CharIndexCurrent);
 		var equipall = $(".eqpContainer");
-		if (A.CharacterCurrent !== null)
+		if (A.CharIndexCurrent !== null)
 		{
 			V.generateEquipment();
 			equipall.hide();
@@ -5521,6 +5534,36 @@ V = {
 			});
 			equipall.show();
 		}
+	},
+	
+	/*
+	 * Creates subnavigational menu for the characters' equipment section.
+	 */
+	createEquipmentMenu: function()
+	{
+		var dishmenu = A.createDishMenu("Equipment").hide();
+		var container = $("<div class='eqpSelectContainer'></div>").appendTo(dishmenu);
+		A.Data.Characters.forEach(function(iChar)
+		{
+			var select = $("<span class='eqpSelect curToggle' title='" + iChar.charname + "' style='border-left: 2px solid " + iChar.charcolor + "'>"
+				+ "<img class='eqpSelectPortrait' src='" + iChar.charportrait + "' />"
+				+ "<img class='eqpSelectProfession' src='img/account/classes/" + iChar.charelite + ".png' />"
+			+ "</span>").appendTo(container);
+			
+			(function(iIndex)
+			{
+				select.click(function()
+				{
+					$("#chrSelection_" + iIndex).trigger("click");
+					if (A.CharIndexCurrent !== iIndex)
+					{
+						$("#accMenu_Equipment").trigger("click");
+					}
+					A.adjustAccountScrollbar();
+				});
+			})(iChar.charindex);
+		});
+		I.qTip.init(container.find(".eqpSelect"));
 	},
 	
 	/*
@@ -6554,8 +6597,7 @@ V = {
 				CurateBlacklist = GW2T_SKINS_ASSOC.Blacklist;
 				var skinsdb = GW2T_SKINS_DATA;
 				
-				$("#accDishMenu_Lab").remove();
-				var dishmenu = $("<aside id='accDishMenu_Lab' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
+				var dishmenu = A.createDishMenu("Lab");
 
 				var container = $("<div id='labContainer'></div>").appendTo(dish);
 				var controls = $("<div id='labControls' style='margin:8px; color:white;'></div>").appendTo(dishmenu);
@@ -7197,11 +7239,16 @@ Q = {
 		var Settings = pSettings || {};
 		var itemmeta = Settings.aItemMeta || {};
 		var box = Q.Box[pItem.id];
-		// Only use the cached analysis if the item is fresh (unupgraded, untransmuted, unsoulbound)
+		
 		if (box && box.html)
 		{
 			if (itemmeta.upgrades || itemmeta.infusions || itemmeta.skin || itemmeta.slot || itemmeta.bound_to || Settings.aWantAttr)
 			{
+				Q.analyzeItem(pItem, pSettings);
+			}
+			else
+			{
+				// Only use the cached analysis if the item is fresh (unupgraded, untransmuted, unsoulbound)
 				if (Settings.aElement)
 				{
 					var elm = $(Settings.aElement);
@@ -7213,10 +7260,6 @@ Q = {
 				{
 					Settings.aCallback(box);
 				}
-			}
-			else
-			{
-				Q.analyzeItem(pItem, pSettings);
 			}
 		}
 		else
@@ -8300,8 +8343,7 @@ Q = {
 		var slots = pBank.find(".bnkSlot");
 		var tabslots = pBank.find(".bnkTabSlots");
 		var tabtoggles = pBank.find(".bnkTabToggle");
-		$("#accDishMenu_" + sectionname).remove();
-		var dishmenu = $("<aside id='accDishMenu_" + sectionname + "' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
+		var dishmenu = A.createDishMenu(sectionname);
 		
 		/*
 		 * Search bar.
@@ -9009,17 +9051,17 @@ E = {
 		var icon = pEntry.find(".trdIcon");
 		Q.getItem(id, function(pData)
 		{
+			Q.setRarityClass(pEntry.find(".trdName"), pData.rarity);
+			pEntry.attr("data-rarity", pData.rarity);
+			pEntry.find(".trdLink").val(pData.chat_link || "");
+			icon.attr("src", pData.icon);
+			icon.unbind("click").click(function()
+			{
+				U.printJSON(pData);
+			});
 			Q.scanItem(pData, {aElement: icon, aCallback: function(pBox)
 			{
-				Q.setRarityClass(pEntry.find(".trdName"), pData.rarity);
-				pEntry.attr("data-rarity", pData.rarity);
-				pEntry.find(".trdLink").val(pData.chat_link || "");
 				pEntry.data("istradeable", pBox.istradeable);
-				icon.attr("src", pData.icon);
-				icon.unbind("click").click(function()
-				{
-					U.printJSON(pData);
-				});
 			}});
 		});
 	},

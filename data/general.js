@@ -1214,16 +1214,16 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-04-15T00:00:00Z"),
-	Finish: new Date("2016-04-16T00:00:00Z"),
+	Start: new Date("2016-04-16T00:00:00Z"),
+	Finish: new Date("2016-04-17T00:00:00Z"),
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "product" is the crafted item, "price" is in karma
 	{
-		Mehem: { id: "43837", price: "25200", product: "43859" },
-		Fox: { id: "44650", price: "25200", product: "44954" },
-		Derwena: { id: "49778", price: "25200", product: "49817" },
-		Yana: { id: "49744", price: "25200", product: "49785" },
-		Katyn: { id: "49741", price: "25200", product: "49733" },
-		Verma: { id: "43818", price: "25200", product: "43794" }
+		Mehem: { id: "49742", price: "25200", product: "49783" },
+		Fox: { id: "43812", price: "25200", product: "43788" },
+		Derwena: { id: "43840", price: "25200", product: "43862" },
+		Yana: { id: "49734", price: "12600", product: "49865" },
+		Katyn: { id: "43808", price: "25200", product: "43784" },
+		Verma: { id: "43842", price: "25200", product: "43863" }
 	}
 }
 };

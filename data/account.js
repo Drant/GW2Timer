@@ -194,63 +194,63 @@ var GW2T_ACCOUNT_METADATA = {
 		guardian: {
 			id: 1,
 			weight: 2,
-			color: "turquoise",
+			color: "#5599ff",
 			isswappable: true,
 			health: "low"
 		},
 		warrior: {
 			id: 2,
 			weight: 3,
-			color: "sandybrown",
+			color: "#ffaa00",
 			isswappable: true,
 			health: "high"
 		},
 		engineer: {
 			id: 3,
 			weight: 4,
-			color: "burlyWood",
+			color: "#ffcc77",
 			isswappable: false,
 			health: "mid"
 		},
 		ranger: {
 			id: 4,
 			weight: 5,
-			color: "greenyellow",
+			color: "#ffdd22",
 			isswappable: true,
 			health: "mid"
 		},
 		thief: {
 			id: 5,
 			weight: 6,
-			color: "darkgray",
+			color: "#555555",
 			isswappable: true,
 			health: "low"
 		},
 		elementalist: {
 			id: 6,
 			weight: 9,
-			color: "orangered",
+			color: "#ff2200",
 			isswappable: false,
 			health: "low"
 		},
 		mesmer: {
 			id: 7,
 			weight: 8,
-			color: "violet",
+			color: "#ff4488",
 			isswappable: true,
 			health: "mid"
 		},
 		necromancer: {
 			id: 8,
 			weight: 7,
-			color: "seagreen",
+			color: "#33cc11",
 			isswappable: true,
 			health: "high"
 		},
 		revenant: {
 			id: 9,
 			weight: 1,
-			color: "slategray",
+			color: "#ffffff",
 			isswappable: true,
 			health: "mid"
 		}
