@@ -93,7 +93,8 @@
 }
 .accMenuIcon:hover, .accMenuButtonFocused {
 	border-radius: 50%;
-	box-shadow: 0px 0px 10px #e7e3bd;
+	box-shadow: 0px 0px 16px #e7e3bd;
+	animation: aniGlow 0.4s;
 }
 .accMenuIcon:active {
 	opacity: 0.6;
@@ -599,7 +600,11 @@ a.chrWalletLink {
 	border-radius: 4px;
 }
 .eqpSelect:hover {
-	box-shadow: 0px 0px 16px #e4e0b3;
+	box-shadow: 0px 0px 16px #e7e3bd;
+	animation: aniGlow 0.4s;
+}
+.eqpSelect:active {
+	opacity: 0.6;
 }
 .eqpSelectPortrait {
 	width: 32px; height: 32px;
@@ -607,9 +612,9 @@ a.chrWalletLink {
 }
 .eqpSelectProfession {
 	position: absolute;
-	margin-left: -16px;
-	margin-top: 16px;
-	width: 24px; height: 24px;
+	margin-left: -32px;
+	margin-top: 32px;
+	width: 32px; height: 32px;
 }
 
 /* Equipment and Build
@@ -948,7 +953,8 @@ a.chrWalletLink {
 }
 .spzSwitch:hover, .spzSwitchFocused {
 	border-radius: 50%;
-	box-shadow: 0px 0px 10px #e7e3bd;
+	box-shadow: 0px 0px 16px #e7e3bd;
+	animation: aniGlow 0.4s;
 	opacity: 1;
 }
 .spzSwitch:active {
@@ -1280,6 +1286,9 @@ input[type="text"].bnkSearchInput:hover {
 .bnkButtonFocused {
 	box-shadow: 0px 0px 8px rgba(255,238,187,0.5);
 	border-radius: 25%;
+}
+.bnkButtonReload {
+	background-image: url("../img/ui/refresh.png");
 }
 .bnkButtonHelp {
 	background-image: url("../img/ui/question.png");

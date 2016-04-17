@@ -4567,11 +4567,7 @@ A = {
 		$(".accMenuClick").click(function()
 		{
 			var section = U.getSubstringFromHTMLID($(this));
-			var functionname = "serve" + section; // Special generate functions start with this word
-			if (V[functionname])
-			{
-				(V[functionname])();
-			}
+			A.generateDish(section);
 		});
 		
 		// Open the section if specified in the URL
@@ -4940,7 +4936,29 @@ A = {
 	},
 	
 	/*
-	 * Creates a container to insert items into a section specific menu.
+	 * Executes the serve function which generates content for an account section.
+	 * @param string pDish.
+	 */
+	generateDish: function(pDish)
+	{
+		var functionname = "serve" + pDish; // Special generate functions start with this word
+		if (V[functionname])
+		{
+			(V[functionname])();
+		}
+	},
+	
+	/*
+	 * Wipes a section's content and reexecutes the serve function.
+	 */
+	regenerateDish: function(pDish)
+	{
+		$("#accDish_" + pDish).empty();
+		A.generateDish(pDish);
+	},
+	
+	/*
+	 * Creates a container to insert items into a section-specific menu.
 	 * @param string pSection name.
 	 * @returns jqobject.
 	 */
@@ -5136,33 +5154,30 @@ V = {
 	 */
 	generateCharactersSelection: function(pCharacter)
 	{
-		// Gets the profession icon or elite spec icon if available from the character data
-		var getProfession = function(pCharacterInner)
+		// Initializes common character values to reused later
+		var icon = (pCharacter.profession).toLowerCase();
+		pCharacter.charelite = icon;
+		pCharacter.charprofession = icon;
+		pCharacter.charcolor = A.Metadata.Profession[icon].color;
+		pCharacter.charislowlevel = (pCharacter.level < A.Metadata.ProfLevel.Max);
+		if (pCharacter.specializations && pCharacter.specializations.pve)
 		{
-			var icon = (pCharacterInner.profession).toLowerCase();
-			pCharacterInner.charelite = icon;
-			pCharacterInner.charprofession = icon;
-			pCharacterInner.charcolor = A.Metadata.Profession[icon].color;
-			if (pCharacterInner.specializations && pCharacterInner.specializations.pve)
+			var specs = pCharacter.specializations.pve;
+			for (var i = 0; i < specs.length; i++)
 			{
-				var specs = pCharacterInner.specializations.pve;
-				for (var i = 0; i < specs.length; i++)
+				if (specs[i])
 				{
-					if (specs[i])
+					// If one of the character's specs is found to be in the elite spec
+					var specid = specs[i].id;
+					if (A.Metadata.ProfElite[specid] !== undefined)
 					{
-						// If one of the character's specs is found to be in the elite spec
-						var specid = specs[i].id;
-						if (A.Metadata.ProfElite[specid] !== undefined)
-						{
-							icon = A.Metadata.ProfElite[specid];
-							pCharacterInner.charelite = icon; // Remember the icon
-							break;
-						}
+						icon = A.Metadata.ProfElite[specid];
+						pCharacter.charelite = icon; // Remember the icon
+						break;
 					}
 				}
 			}
-			return icon;
-		};
+		}
 		
 		// Get active crafting disciplines
 		var craftused = "";
@@ -5185,7 +5200,7 @@ V = {
 		// SELECTION COLUMN (left)
 		var charvalue = A.Metadata.Race[(pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase()] || 1;
 		var professionvalue = (A.Metadata.Profession[(pCharacter.profession).toLowerCase()]).weight;
-		var trivial = (pCharacter.level === A.Metadata.ProfLevel.Max) ? "" : "accTrivial";
+		var trivial = (pCharacter.charislowlevel) ? "" : "accTrivial";
 		// Store character portrait
 		pCharacter.charportrait = "img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG;
 		$("#chrSelection_" + pCharacter.charindex).append(
@@ -5193,7 +5208,7 @@ V = {
 			+ "<var id='chrName_" + pCharacter.charindex + "' class='chrName' data-value='" + charvalue + "'>" + pCharacter.charname + "</var>"
 			+ "<span class='chrCommitment' data-value='" + professionvalue + "'>"
 				+ "<var class='chrProfession " + trivial + "'>"
-					+ "<ins class='chrProfessionIcon acc_prof acc_prof_" + getProfession(pCharacter) + "'></ins><sup>" + pCharacter.level + "</sup></var>"
+					+ "<ins class='chrProfessionIcon acc_prof acc_prof_" + icon + "'></ins><sup>" + pCharacter.level + "</sup></var>"
 				+ "<var class='chrCrafting'>" + craftused + "</var>"
 			+ "</span>"
 			+ "<img class='chrProceed' src='img/ui/view.png' />")
@@ -5545,19 +5560,32 @@ V = {
 		var container = $("<div class='eqpSelectContainer'></div>").appendTo(dishmenu);
 		A.Data.Characters.forEach(function(iChar)
 		{
-			var select = $("<span class='eqpSelect curToggle' title='" + iChar.charname + "' style='border-left: 2px solid " + iChar.charcolor + "'>"
+			var select = $("<span class='eqpSelect curClick' title='" + iChar.charname + " (" + iChar.level + ")' style='border-left: 2px solid " + iChar.charcolor + "'>"
 				+ "<img class='eqpSelectPortrait' src='" + iChar.charportrait + "' />"
 				+ "<img class='eqpSelectProfession' src='img/account/classes/" + iChar.charelite + ".png' />"
 			+ "</span>").appendTo(container);
+			if (iChar.charislowlevel)
+			{
+				select.addClass("accTrivial");
+			}
 			
 			(function(iIndex)
 			{
 				select.click(function()
 				{
-					$("#chrSelection_" + iIndex).trigger("click");
-					if (A.CharIndexCurrent !== iIndex)
+					var elm = $("#eqpContainer_" + iIndex);
+					if (elm.is(":visible")) // If viewing all characters
 					{
-						$("#accMenu_Equipment").trigger("click");
+						I.scrollToElement(elm, {
+							aContainer: $("#accDish_Equipment").parent(),
+							aOffset: -($("#accOverhead").height() + 32),
+							aSpeed: "fast"
+						});
+					}
+					else // If viewing one character at a time
+					{
+						$("#chrSelection_" + A.CharIndexCurrent).trigger("click");
+						$("#chrSelection_" + iIndex).trigger("click");
 					}
 					A.adjustAccountScrollbar();
 				});
@@ -6354,7 +6382,7 @@ V = {
 		var CurateDatabaseIndex = "";
 		var CurateBlacklist = {};
 		
-		var curateSkin = function()
+		var curateSkin = function(pIsSingle)
 		{
 			var Boxes = [];
 			var selectioncontent = $("#labSelection");
@@ -6559,9 +6587,11 @@ V = {
 				}
 			};
 			
-			for (var i = 0; i < items.length; i++)
+			var itemid;
+			if (pIsSingle && CurateArray[CurateArrayIndex].itemid)
 			{
-				var itemid = items[i];
+				itemstoretrieve = 1;
+				itemid = CurateArray[CurateArrayIndex].itemid;
 				Q.getItem(itemid, function(iItem)
 				{
 					Q.scanItem(iItem, {aWantPrice: true, aCallback: function(iBox)
@@ -6573,6 +6603,23 @@ V = {
 					}});
 				});
 			}
+			else
+			{
+				for (var i = 0; i < items.length; i++)
+				{
+					itemid = items[i];
+					Q.getItem(itemid, function(iItem)
+					{
+						Q.scanItem(iItem, {aWantPrice: true, aCallback: function(iBox)
+						{
+							Boxes.push(iBox);
+							itemsretrieved++;
+							retrievaldisplay.html(itemsretrieved + " / " + itemstoretrieve);
+							finalizeCurate();
+						}});
+					});
+				}
+			}
 		};
 		
 		var updateIndexDisplay = function()
@@ -6580,12 +6627,19 @@ V = {
 			$("#labIndexDisplay").html("Index: " + CurateArrayIndex + " / " + (CurateArray.length - 1)
 				+ "&nbsp; Skin: " + CurateArray[CurateArrayIndex].skinid
 				+ "&nbsp; Item: " + CurateArray[CurateArrayIndex].itemid);
+			
+			$(".labCurrencyInput").val("0");
+			var paym = CurateArray[CurateArrayIndex].payment;
+			if (paym)
+			{
+				$("#lab" + U.toFirstUpperCase(paym.k) + "Input").val(paym.v);
+			}
 		};
 		
-		var updateIndexes = function()
+		var updateIndexes = function(pIsSingle)
 		{
 			CurateDatabaseIndex = CurateArray[CurateArrayIndex].skinid;
-			curateSkin();
+			curateSkin(pIsSingle);
 			updateIndexDisplay();
 		};
 		
@@ -6600,18 +6654,86 @@ V = {
 				var dishmenu = A.createDishMenu("Lab");
 
 				var container = $("<div id='labContainer'></div>").appendTo(dish);
-				var controls = $("<div id='labControls' style='margin:8px; color:white;'></div>").appendTo(dishmenu);
+				var controls = $("<div id='labControls' style='margin:8px; color:white; font-family:monospace;'></div>").appendTo(dishmenu);
 				var buttonprev = $("<button id='labControlPrev' style='width:96px; height:40px; margin-right:8px;'>Prev</button>").appendTo(controls);
 				var buttonnext = $("<button id='labControlNext' style='width:96px; height:40px; margin-right:8px;'>Next</button>").appendTo(controls);
 				var buttonauto = $("<button id='labControlAuto' style='width:96px; height:40px; margin-right:8px;'>Auto</button>").appendTo(controls);
 				var buttonprint = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'>Print</button>").appendTo(controls);
 				var buttonsave = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'><strong>SAVE</strong></button>").appendTo(controls);
-				var indexdisplay = $("<var id='labIndexDisplay' style='margin-right:8px; font-family:monospace; font-size:20px;'></var>").appendTo(controls);
+				var indexdisplay = $("<var id='labIndexDisplay' style='margin-right:8px; font-size:20px;'></var>").appendTo(controls);
 				var inputindex = $("<input id='labIndexInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(controls);
+				inputindex.before("Go To Skin: ");
 				var inputitem = $("<input id='labItemInput' type='text' style='width:64px; margin-right:8px;' />").appendTo(controls);
-				var retrievaldisplay = $("<var id='labRetrievalDisplay' style='font-family:monospace; font-size:20px;'></var>").appendTo(controls);
+				inputitem.before("Input Custom ID: ");
+				var retrievaldisplay = $("<var id='labRetrievalDisplay' style='font-size:20px;'></var>").appendTo(controls);
 				var selectionboxes = $("<div id='labSelection'></div>").appendTo(container);
 				var skininfo = $("<div id='labSkinInfo' style='font-family:monospace'></div>").appendTo(container);
+				
+				var currencies = $("<div id='labCurrencies' style='margin:8px; color:white;'></div>").appendTo(dishmenu);
+				var currencyprev = $("<button id='labCurrencyPrev' style='width:96px; height:40px; margin-right:8px;'>←</button>").appendTo(currencies);
+				var currencynext = $("<button id='labCurrencyNext' style='width:96px; height:40px; margin-right:8px;'>→</button>").appendTo(currencies);
+				var inputkarma = $("<input id='labKarmaInput' class='labCurrencyInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				inputkarma.before("<ins class='s16 s16_karma'></ins");
+				var inputgem = $("<input id='labGemInput' class='labCurrencyInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				inputgem.before("<ins class='s16 s16_gem'></ins");
+				var inputcoin = $("<input id='labCoinInput' class='labCurrencyInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				inputcoin.before("<ins class='s16 s16_coincopper'></ins");
+				var inputtoken = $("<input id='labTokenInput' class='labCurrencyInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				inputtoken.before("<ins class='s16 s16_token'></ins");
+				var inputachievement = $("<input id='labAchievementInput' class='labCurrencyInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				inputachievement.before("<ins class='s16 s16_achievement'></ins");
+				var currencyclear = $("<button id='labCurrencyClear' style='width:96px; height:40px; margin-right:8px;'>Clear</button>").appendTo(currencies);
+				
+				dishmenu.find("input[type=number]").click(function()
+				{
+					$(this).select();
+				});
+				
+				currencyprev.click(function()
+				{
+					while (CurateArrayIndex > 0)
+					{
+						CurateArrayIndex--;
+						if (!CurateArray[CurateArrayIndex].tradeableids)
+						{
+							updateIndexes(true);
+							break;
+						}
+					}
+				});
+				currencynext.click(function()
+				{
+					while (CurateArrayIndex < CurateArray.length - 1)
+					{
+						CurateArrayIndex++;
+						if (!CurateArray[CurateArrayIndex].tradeableids)
+						{
+							updateIndexes(true);
+							break;
+						}
+					}
+				});
+				
+				var payments = ["karma", "gem", "coin", "token", "achievement"];
+				var paymentindex = 0;
+				$([inputkarma, inputgem, inputcoin, inputtoken, inputachievement]).each(function()
+				{
+					(function(iElm, iPayment)
+					{
+						iElm.onEnterKey(function()
+						{
+							CurateArray[CurateArrayIndex].payment = {k: iPayment, v: parseInt($(this).val())};
+							currencynext.trigger("click");
+						});
+					})($(this), payments[paymentindex]);
+					paymentindex++;
+				});
+				
+				currencyclear.click(function()
+				{
+					CurateArray[CurateArrayIndex].payment = null;
+					currencynext.trigger("click");
+				});
 
 				buttonauto.click(function()
 				{
@@ -6640,7 +6762,12 @@ V = {
 					for (var i = 0; i < CurateArray.length; i++)
 					{
 						obj = CurateArray[i];
-						html += "&quot;" + obj.skinid + "&quot;: {i: " + obj.itemid + ", n: &quot;" + U.escapeHTML(obj.name) + "&quot;, t: " + U.formatJSON(obj.tradeableids) + "},<br />";
+						html += "&quot;" + obj.skinid + "&quot;: {"
+							+ "i: " + obj.itemid + ", "
+							+ "n: &quot;" + U.escapeHTML(obj.name) + "&quot;, "
+							+ ((obj.payment) ? "p: " + U.formatJSON(obj.payment) + "}," : "")
+							+ ((obj.tradeableids) ? "t: [" + obj.tradeableids + "]}," : "")
+						+ "<br />";
 					}
 					I.print(html);
 				});
@@ -6654,6 +6781,7 @@ V = {
 						retobj[obj.skinid] = {
 							i: obj.itemid,
 							n: obj.name,
+							p: obj.payment,
 							t: obj.tradeableids
 						};
 					}
@@ -6676,9 +6804,6 @@ V = {
 						CurateArrayIndex = customindex;
 						updateIndexes();
 					}
-				}).click(function()
-				{
-					$(this).select();
 				});
 				inputitem.onEnterKey(function()
 				{
@@ -6688,9 +6813,6 @@ V = {
 						CurateArray[CurateArrayIndex].itemid = userinputitem;
 						$("#labControlNext").trigger("click");
 					}
-				}).click(function()
-				{
-					$(this).select();
 				});
 
 				if (U.loadAPICache())
@@ -8113,11 +8235,14 @@ Q = {
 		+ "</div>").appendTo(tab);
 		var tabtoggle = tabseparator.find(".bnkTabToggle");
 		var tabslots = $("<div class='bnkTabSlots'></div>").appendTo(tab);
-		tabseparator.click(function()
+		tabseparator.click(function(pEvent)
 		{
-			var state = tabslots.is(":visible");
-			I.toggleToggleIcon(tabtoggle, !state);
-			tabslots.slideToggle("fast");
+			if (pEvent.which === I.ClickEnum.Left)
+			{
+				var state = tabslots.is(":visible");
+				I.toggleToggleIcon(tabtoggle, !state);
+				tabslots.slideToggle("fast");
+			}
 		});
 		if (Settings.aIsCollapsed)
 		{
@@ -8424,9 +8549,17 @@ Q = {
 		 */
 		var buttoncontainer = $("<aside class='bnkButtons'></aside>").appendTo(dishmenu);
 		
+		// Reload button reloads the section entirely
+		$("<div class='bnkButtonReload bnkButton curClick' title='<dfn>Reload</dfn> this bank.<br />Only press this if the progress bar has frozen.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			A.regenerateDish(sectionname);
+		});
+		
 		// Help button shows search usage message
 		var isshowinghelp = true;
-		$("<div class='bnkButtonHelp bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
+		$("<div class='bnkButtonHelp bnkButton curClick' title='Show the <dfn>help</dfn> message.'></div>")
+			.appendTo(buttoncontainer).click(function()
 		{
 			var helpmessage = (Settings.aHelpMessage) ? $(Settings.aHelpMessage).html() : "";
 			if (isshowinghelp || I.isConsoleShown() === false)
@@ -8442,7 +8575,8 @@ Q = {
 		
 		// Empty slot filter: first click show filled slots only, second click show empty slots only, third click show all slots, cycle
 		var emptyfilterstate = 0;
-		$("<div class='bnkButtonEmpty bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
+		$("<div class='bnkButtonEmpty bnkButton curToggle' title='Filter: item <dfn>slots</dfn>, empty slots, or any slot'></div>")
+			.appendTo(buttoncontainer).click(function()
 		{
 			if (emptyfilterstate === 0 || emptyfilterstate === 1 )
 			{
@@ -8473,7 +8607,8 @@ Q = {
 		
 		// Trading Post filter for items that can be traded
 		var isfilteringtrade = true;
-		$("<div class='bnkButtonTrade bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
+		$("<div class='bnkButtonTrade bnkButton curToggle' title='Filter: <dfn>tradeable</dfn> items.'></div>")
+			.appendTo(buttoncontainer).click(function()
 		{
 			if (isfilteringtrade)
 			{
@@ -8500,7 +8635,8 @@ Q = {
 		
 		// Toggle all tabs button
 		var istabscollapsed = false;
-		$("<div class='bnkButtonTab bnkButton curToggle'></div>").appendTo(buttoncontainer).click(function()
+		$("<div class='bnkButtonTab bnkButton curToggle' title='Expand/<dfn>Collapse</dfn> all tabs.'></div>")
+			.appendTo(buttoncontainer).click(function()
 		{
 			// Expand or collapse all tabs
 			if (istabscollapsed)
@@ -8528,7 +8664,8 @@ Q = {
 		
 		// Increase or decrease bank width buttons
 		var slotsize = slots.first().width();
-		$("<div class='bnkButtonWideLess bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
+		$("<div class='bnkButtonWideLess bnkButton curClick' title='<dfn>Decrease</dfn> bank width.'></div>")
+			.appendTo(buttoncontainer).click(function()
 		{
 			var minbankwidth = slotsize * 4;
 			var oldwidth = pBank.width();
@@ -8538,7 +8675,8 @@ Q = {
 				A.adjustAccountScrollbar();
 			}
 		});
-		$("<div class='bnkButtonWideMore bnkButton curClick'></div>").appendTo(buttoncontainer).click(function()
+		$("<div class='bnkButtonWideMore bnkButton curClick' title='<dfn>Increase</dfn> bank width.'></div>")
+			.appendTo(buttoncontainer).click(function()
 		{
 			var maxbankwidth = $("#accContent").width() - (slotsize * 2);
 			var oldwidth = pBank.width();
@@ -8551,6 +8689,7 @@ Q = {
 		
 		// Finally
 		searchcontainer.css({width: searchcontainer.width() - buttoncontainer.width()});
+		I.qTip.init(buttoncontainer.find(".bnkButton"));
 		A.adjustAccountPanel();
 	},
 	
@@ -17164,7 +17303,7 @@ G = {
 					marker.on("click", function()
 					{
 						$("#jpzCheck_" + iIndex).trigger("click");
-						I.scrollToElement("#jpz_" + this.options.id, "#plateMap");
+						I.scrollToElement("#jpz_" + this.options.id, {aContainer: "#plateMap"});
 					});
 					M.bindMarkerZoomBehavior(marker, "contextmenu");
 				})(i);
@@ -17351,7 +17490,7 @@ G = {
 				}
 			});
 			// Scroll to the section now that the list is generated
-			I.scrollToElement("#headerMap_Collectible", "#plateMap");
+			I.scrollToElement("#headerMap_Collectible", {aContainer: "#plateMap"});
 		});
 	},
 	
@@ -17561,6 +17700,7 @@ G = {
 	/*
 	 * Generates a list of pets and their pet skills, on the console.
 	 * @param objarray pNeedles from Collectibles object.
+	 * @param boolean pState to show or hide.
 	 */
 	generatePetsList: function(pNeedles, pState)
 	{
@@ -17572,7 +17712,7 @@ G = {
 		// Don't regenerate the list if already did
 		if (list.is(":empty") === false)
 		{
-			I.scrollToElement(container, $("#plateMap"));
+			I.scrollToElement(container, {aContainer: "#plateMap"});
 			return;
 		}
 		
@@ -17644,7 +17784,7 @@ G = {
 		// Scroll to the list
 		setTimeout(function()
 		{
-			I.scrollToElement(container, $("#plateMap"));
+			I.scrollToElement(container, {aContainer: "#plateMap"});
 		}, 200);
 	},
 	
@@ -21685,7 +21825,8 @@ B = {
 						});
 						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
 						// Get the product that the recipe crafts
-						Q.getItem(offer.product, function(pProduct)
+						var product = B.Vendor.Products[offer.id] || offer.id;
+						Q.getItem(product, function(pProduct)
 						{
 							var icon = $("#dsbVendorIcon_" + iIndex);
 							icon.attr("src", pProduct.icon);
@@ -23830,7 +23971,7 @@ I = {
 					var header = $(this).prev();
 					header.find("kbd").html(I.Symbol.Collapse);
 					// Automatically scroll to the clicked header
-					I.scrollToElement(header, container, "fast");
+					I.scrollToElement(header, {aContainer: container, aSpeed: "fast"});
 					
 					// View the map at Dry Top if it is that chain list
 					if ($(this).attr("id") === "sectionChains_Drytop")
@@ -24048,13 +24189,16 @@ I = {
 	},
 	
 	/*
-	 * Scrolls to an element at specified rate.
+	 * Scrolls to an element at specified rate, or the top if specified no element.
 	 * @param string pElement selector to scroll to.
-	 * @param string pContainerOfElement selector container with the scroll bar.
-	 * @param int or string pTime duration to animate.
+	 * @objparam string aContainer selector container with the scroll bar.
+	 * @objparam int or string aSpeed duration to animate.
+	 * @objparam int aOffset from scroll point.
 	 */
-	scrollToElement: function(pElement, pContainerOfElement, pTime)
+	scrollToElement: function(pElement, pSettings)
 	{
+		var Settings = pSettings || {};
+		
 		pElement = $(pElement);
 		// Mobile mode webpage height is dynamic
 		switch (I.ModeCurrent)
@@ -24068,18 +24212,18 @@ I = {
 				{
 					scrollTop: pElement.offset().top - $("#windowMain").offset().top
 						+ $("#windowMain").scrollTop()
-				}, pTime || 0);
+				}, Settings.aSpeed || 0);
 			} break;
 			
 			default: {
-				if (pContainerOfElement)
+				if (Settings.aContainer)
 				{
-					pContainerOfElement = $(pContainerOfElement);
-					pContainerOfElement.animate(
+					Settings.aContainer = $(Settings.aContainer);
+					Settings.aContainer.animate(
 					{
-						scrollTop: pElement.offset().top - pContainerOfElement.offset().top
-							+ pContainerOfElement.scrollTop()
-					}, pTime || 0);
+						scrollTop: pElement.offset().top - Settings.aContainer.offset().top
+							+ Settings.aContainer.scrollTop() + (Settings.aOffset || 0)
+					}, Settings.aSpeed || 0);
 				}
 				else
 				{
@@ -24593,7 +24737,7 @@ I = {
 				// Scroll to header if expanding, top of page if collapsing
 				if (istobeexpanded)
 				{
-					I.scrollToElement($(this), pPlate, "fast");
+					I.scrollToElement($(this), {aContainer: pPlate, aSpeed: "fast"});
 				}
 			});
 			
