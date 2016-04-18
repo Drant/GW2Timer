@@ -6397,7 +6397,12 @@ V = {
 			$.getJSON(U.getAPISkin(CurateDatabaseIndex), function(pData)
 			{
 				var icon = pData.icon || "";
-				skininfo.html("<a href='" + U.getWikiLink(pData.name) + "' target='_blank'><img src='" + icon + "' style='float:left;' /></a>" + U.escapeJSON(pData));
+				skininfo.empty();
+				$("<var id='labSkinLink'><img src='" + icon + "' style='float:left;' /></var>").appendTo(skininfo).click(function()
+				{
+					U.openPrivateURL(U.getWikiSearchLink(pData.name));
+				});
+				skininfo.append(U.escapeJSON(pData));
 			});
 			
 			var finalizeCurate = function()
@@ -6497,7 +6502,7 @@ V = {
 					{
 						selectionitem.find(".itmIconMain").click(function()
 						{
-							U.openExternalURL(U.getWikiLink(iName));
+							U.openExternalURL(U.getWikiSearchLink(iName));
 						});
 					})(box.item.name);
 					
@@ -6628,11 +6633,16 @@ V = {
 				+ "&nbsp; Skin: " + CurateArray[CurateArrayIndex].skinid
 				+ "&nbsp; Item: " + CurateArray[CurateArrayIndex].itemid);
 			
-			$(".labCurrencyInput").val("0");
+			$(".labPaymentInput").val("");
+			$(".labAcquisitionButton").removeClass("btnFocused");
 			var paym = CurateArray[CurateArrayIndex].payment;
 			if (paym)
 			{
-				$("#lab" + U.toFirstUpperCase(paym.k) + "Input").val(paym.v);
+				for (var i in paym)
+				{
+					$("#lab" + U.toFirstUpperCase(i) + "Input").val(paym[i]);
+					$("#lab" + U.toFirstUpperCase(i) + "Button").addClass("btnFocused");
+				}
 			}
 		};
 		
@@ -6670,21 +6680,28 @@ V = {
 				var skininfo = $("<div id='labSkinInfo' style='font-family:monospace'></div>").appendTo(container);
 				
 				var currencies = $("<div id='labCurrencies' style='margin:8px; color:white;'></div>").appendTo(dishmenu);
-				var currencyprev = $("<button id='labCurrencyPrev' style='width:96px; height:40px; margin-right:8px;'>←</button>").appendTo(currencies);
-				var currencynext = $("<button id='labCurrencyNext' style='width:96px; height:40px; margin-right:8px;'>→</button>").appendTo(currencies);
-				var inputkarma = $("<input id='labKarmaInput' class='labCurrencyInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				var currencyprev = $("<button id='labPaymentPrev' style='width:96px; height:40px; margin-right:8px;'>←</button>").appendTo(currencies);
+				var currencynext = $("<button id='labPaymentNext' style='width:96px; height:40px; margin-right:8px;'>→</button>").appendTo(currencies);
+				var inputkarma = $("<input id='labKarmaInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
 				inputkarma.before("<ins class='s16 s16_karma'></ins");
-				var inputgem = $("<input id='labGemInput' class='labCurrencyInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				var inputgem = $("<input id='labGemInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
 				inputgem.before("<ins class='s16 s16_gem'></ins");
-				var inputcoin = $("<input id='labCoinInput' class='labCurrencyInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				var inputcoin = $("<input id='labCoinInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
 				inputcoin.before("<ins class='s16 s16_coincopper'></ins");
-				var inputtoken = $("<input id='labTokenInput' class='labCurrencyInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				var inputbadge = $("<input id='labBadgeInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				inputbadge.before("<ins class='s16 s16_badge'></ins");
+				var inputtoken = $("<input id='labTokenInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
 				inputtoken.before("<ins class='s16 s16_token'></ins");
-				var inputachievement = $("<input id='labAchievementInput' class='labCurrencyInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				var inputachievement = $("<input id='labAchievementInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
 				inputachievement.before("<ins class='s16 s16_achievement'></ins");
-				var currencyclear = $("<button id='labCurrencyClear' style='width:96px; height:40px; margin-right:8px;'>Clear</button>").appendTo(currencies);
+				var inputmonument = $("<input id='labMonumentInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
+				inputmonument.before("<ins class='s16 s16_monument'></ins");
+				var acquisitioncraft = $("<button id='labCraftButton' class='labAcquisitionButton' style='margin-right:8px;'><ins class='s16 s16_craft'></ins></button>").appendTo(currencies);
+				var acquisitionpvp = $("<button id='labPvpButton' class='labAcquisitionButton' style='margin-right:8px;'><ins class='s16 s16_pvp'></ins></button>").appendTo(currencies);
+				var acquisitionstarting = $("<button id='labStartingButton' class='labAcquisitionButton' style='margin-right:8px;'><ins class='s16 s16_starting'></ins></button>").appendTo(currencies);
+				var currencyclear = $("<button id='labPaymentClear' style='width:96px; height:40px; margin-right:8px;'>Clear</button>").appendTo(currencies);
 				
-				dishmenu.find("input[type=number]").click(function()
+				dishmenu.find("input[type=text], input[type=number]").click(function()
 				{
 					$(this).select();
 				});
@@ -6714,19 +6731,52 @@ V = {
 					}
 				});
 				
-				var payments = ["karma", "gem", "coin", "token", "achievement"];
+				var payments = ["karma", "gem", "coin", "badge", "token", "achievement", "monument"];
 				var paymentindex = 0;
-				$([inputkarma, inputgem, inputcoin, inputtoken, inputachievement]).each(function()
+				$([inputkarma, inputgem, inputcoin, inputbadge, inputtoken, inputachievement, inputmonument]).each(function()
 				{
 					(function(iElm, iPayment)
 					{
 						iElm.onEnterKey(function()
 						{
-							CurateArray[CurateArrayIndex].payment = {k: iPayment, v: parseInt($(this).val())};
-							currencynext.trigger("click");
+							var val = parseInt($(this).val());
+							if (val >= 0)
+							{
+								CurateArray[CurateArrayIndex].payment = {};
+								var paymentval = (iPayment === "coin") ? E.parseCoinString($(this).val()) : parseInt($(this).val());
+								CurateArray[CurateArrayIndex].payment[iPayment] = paymentval;
+								currencynext.trigger("click");
+								buttonsave.trigger("click");
+								$(this).select();
+							}
+							else if (iPayment === "karma")
+							{
+								selectionboxes.find(".itmIconMain").first().trigger("click");
+							}
+							else
+							{
+								$("#labSkinLink").click();
+							}
 						});
 					})($(this), payments[paymentindex]);
 					paymentindex++;
+				});
+				
+				var acquisitions = ["craft", "pvp", "starting"];
+				var acquisitionindex = 0;
+				$([acquisitioncraft, acquisitionpvp, acquisitionstarting]).each(function()
+				{
+					(function(iElm, iPayment)
+					{
+						iElm.click(function()
+						{
+							CurateArray[CurateArrayIndex].payment = {};
+							CurateArray[CurateArrayIndex].payment[iPayment] = true;
+							currencynext.trigger("click");
+							buttonsave.trigger("click");
+						});
+					})($(this), acquisitions[acquisitionindex]);
+					acquisitionindex++;
 				});
 				
 				currencyclear.click(function()
@@ -6764,9 +6814,10 @@ V = {
 						obj = CurateArray[i];
 						html += "&quot;" + obj.skinid + "&quot;: {"
 							+ "i: " + obj.itemid + ", "
-							+ "n: &quot;" + U.escapeHTML(obj.name) + "&quot;, "
-							+ ((obj.payment) ? "p: " + U.formatJSON(obj.payment) + "}," : "")
-							+ ((obj.tradeableids) ? "t: [" + obj.tradeableids + "]}," : "")
+							+ "n: &quot;" + U.escapeHTML(obj.name) + "&quot;"
+							+ ((obj.payment) ? ", p: " + U.formatJSON(obj.payment) : "")
+							+ ((obj.tradeableids) ? ", t: [" + obj.tradeableids + "]" : "")
+							+ "},"
 						+ "<br />";
 					}
 					I.print(html);
@@ -6825,6 +6876,7 @@ V = {
 						skinid: i,
 						name: skinsdb[i].n,
 						itemid: skinsdb[i].i,
+						payment: skinsdb[i].p,
 						tradeableids: skinsdb[i].t
 					});
 				}
