@@ -5367,9 +5367,15 @@ V = {
 				+ "<var id='chrAccountAge' title='" + hoursperday + hourstr + " / " + T.cHOURS_IN_DAY + hourstr + "<br />"
 						+ T.formatTimeLetter(totalage) + " / " + accountbirthdaysince + "'>" + totalagehour + hourstr + "</var> / "
 					+ "<var id='chrAccountDeaths' title='" + T.parseRatio(totalagehour / totaldeaths, 3) + "'>" + totaldeaths + "x</var> &nbsp; "
-					+ "<var id='chrAccountLifetime'>" + accountbirthdaysince +  "</var>";
+					+ "<var id='chrAccountLifetime'>" + accountbirthdaysince +  "</var>"
+					+ " &nbsp; <button id='chrAccountReload' title='Reload characters data (statistics, equipment, inventory).'><img src='img/ui/refresh.png' /></button>";
 			$("#chrSummary").append(summary);
-			I.qTip.init("#chrSummary var");
+			I.qTip.init("#chrSummary var, #chrAccountReload");
+			// Account reload button
+			$("#chrAccountReload").click(function()
+			{
+				A.regenerateDish("Characters");
+			});
 			// Insert server name
 			$.getJSON(U.URL_API.Worlds + pData.world, function(pDataInner)
 			{
@@ -6971,6 +6977,7 @@ V = {
 					});
 				}
 				updateIndexDisplay();
+				A.adjustAccountPanel();
 			});
 		});
 	},
@@ -8344,13 +8351,25 @@ Q = {
 		}
 		
 		pTab.addClass("bnkTabInventory");
-		var sidebar = $("<div class='bnkSidebar'></div>").prependTo(pTab);
+		var sidebarcontainer = $("<div class='bnkSidebarContainer'></div>").prependTo(pTab);
+		var sidebar = $("<div class='bnkSidebar'></div>").prependTo(sidebarcontainer);
+		$("<div class='bnkSidebarBorder'></div>").appendTo(sidebarcontainer);
 		var bagscolumn = $("<div class='bnkSidebarColumn'></div>").appendTo(sidebar);
 		var bagouter, bag;
 		pBagsData.forEach(function(iBagData)
 		{
+			// Count the number of items the bag is holding
+			var bagfill = 0;
+			for (var i = 0; i < iBagData.inventory.length; i++)
+			{
+				if (iBagData.inventory[i])
+				{
+					bagfill++;
+				}
+			}
+			// Create the bag icon
 			bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
-			bag = $("<span class='bnkSidebarBag'></span>").appendTo(bagouter);
+			bag = $("<span class='bnkSidebarBag'><var class='bnkSidebarBagCount'>" + bagfill + "/" + iBagData.size + "</var></span>").appendTo(bagouter);
 			if (iBagData)
 			{
 				(function(iBag)

@@ -1470,23 +1470,23 @@ input[type="text"].bnkSearchInput:hover {
 /*
  * Sidebar for inventory bags.
  */
-.bnkSidebar {
+.bnkSidebarContainer {
 	display: none;
 	position: absolute;
-	margin-left: -62px;
+	margin-left: -64px;
+	width: 64px; height: 720px;
+}
+.bnkSidebar {
+	display: inline-block;
 	width: 52px; height: 720px;
 	background: linear-gradient(to bottom, black 0%, transparent 100%);
 }
-.bnkTabInventory:hover .bnkSidebar {
+.bnkTabInventory:hover .bnkSidebarContainer {
 	display: block;
 }
-.bnkSidebar:after {
-	content: "";
-	position: absolute;
-	width: 2px;
-	top: -2px;
-	bottom: -2px;
-	right: -2px;
+.bnkSidebarBorder {
+	display: inline-block;
+	width: 2px; height: 106%;
 	background: linear-gradient(to top, transparent 0%, rgba(201,184,177,0.8) 25%, rgba(201,184,177,0.8) 95%, transparent 100%);
 }
 .bnkSidebarBagOuter {
@@ -1494,6 +1494,7 @@ input[type="text"].bnkSearchInput:hover {
 	margin-bottom: 7px;
 }
 .bnkSidebarBag {
+	position: relative;
 	display: block;
 	width: 42px; height: 42px;
 	background: #0b0d10;
@@ -1501,6 +1502,20 @@ input[type="text"].bnkSearchInput:hover {
 	outline: 1px solid #4e5d6f;
 	border: 1px solid #343e49;
 	border-radius: 1px;
+}
+.bnkSidebarBagCount {
+	position: absolute;
+	bottom: 0;
+	right: 2px;
+	line-height: normal;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 12px;
+	color: white;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
 }
 
 .acc_wardrobe {

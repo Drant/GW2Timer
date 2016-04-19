@@ -1054,20 +1054,11 @@ Announcement:
 Countdown: {
 	Events: [
 	{
-		name_en: "Super Adventure Festival",
-		name_de: "Super Adventure Festival",
-		name_es: "Festival Super Adventure",
-		name_fr: "Festival de la Super Adventure",
-		official: "news/welcome-to-the-super-adventure-festival",
-		Start: new Date("2016-03-31T16:00:00Z"),
-		Finish: new Date("2016-04-19T16:00:00Z")
-	},
-	{
 		name_en: "Spring 2016 Update",
 		name_de: "Update Feder 2016",
 		name_es: "Actualización de primavera 2016",
 		name_fr: "Mise à jour du printemps 2016",
-		official: "news/the-spring-quarterly-update-is-coming/",
+		official: "news/the-spring-quarterly-update/",
 		Start: new Date("2016-04-19T16:00:00Z"),
 		Finish: new Date("2016-04-20T16:00:00Z")
 	}
@@ -1109,8 +1100,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-04-12T16:00:00Z"),
-	Finish: new Date("2016-04-19T16:00:00Z"),
+	Start: new Date("2016-04-19T16:00:00Z"),
+	Finish: new Date("2016-04-26T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1119,67 +1110,11 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Super Adventure Pack",
-		img: "http://i.imgur.com/Oc7d8B6.png",
-		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Super Explosive Finisher",
-		id: "44724",
-		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Miniature Super Trio",
-		id: "41907",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Miniature Super Trio—World 2",
-		id: "46498",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Super Adventure Glider",
-		id: "78009",
-		price: 400,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Ironclad Appearance Pack",
-		img: "http://i.imgur.com/1SaYV5O.png",
-		price: 2000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Basic Leather Rack",
-		id: "78019",
-		price: 800,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Gwen's Attire",
-		id: "78008",
+		name: "Sentinel Outfit",
+		img: "http://i.imgur.com/5YYPin3.png",
 		price: 700,
 		discount: null,
-		col: 1
-	},
-	{
-		name: "Bubble Glider",
-		id: "78007",
-		price: 500,
-		discount: null,
-		col: 1
+		col: 0
 	}
 	]
 },

@@ -175,7 +175,7 @@ var GW2T_SKINS_CATEGORIES = {
 
 /*
  * Handpicked single item to associate with that unique skin.
- * i: Item representative for that skin, n: Name of skin, t: Tradeable item IDs
+ * i: Item representative for that skin, n: Name of skin, t: Tradeable item IDs, p: Payment type to acquire the item
  */
 var GW2T_SKINS_DATA = {
 	"1": {i: 3171, n: "Chainmail Leggings", t: [2902,2904,2916,2905,2907,2908,2909,2910,2913,2911,2912,2915,2906,2914,2903,3117,3153,3268,3269,3135,3270,2917,3272,3271,3171,3274,3273,3275,3276,3265,3264,3277,3280,3266,3282,3263,3279,3267,3278,5020,5033,5048,5138,5156,5084,5174,5192,5210,5066,5120,5228,5246,5282,5264,3281,5102]},
@@ -2140,10 +2140,10 @@ var GW2T_SKINS_DATA = {
 	"4259": {i: 29880, n: "Warden Mace", p: { "karma": 63000 }},
 	"4260": {i: 29873, n: "Warden Axe", p: { "karma": 63000 }},
 	"4261": {i: 29879, n: "Warden Longbow", p: { "karma": 63000 }},
-	"4262": {i: 29884, n: "Warden Shield", t: [19359]},
+	"4262": {i: 19359, n: "Warden Shield", t: [19359]},
 	"4263": {i: 29947, n: "Peacemaker's Trident", p: { "karma": 63000 }},
 	"4264": {i: 29888, n: "Warden Sword", p: { "karma": 63000 }},
-	"4265": {i: 29710, n: "Adamant Guard Pistol", t: [26708]},
+	"4265": {i: 26708, n: "Adamant Guard Pistol", t: [26708]},
 	"4266": {i: 29932, n: "Peacemaker's Focus", p: { "karma": 63000 }},
 	"4267": {i: 29940, n: "Peacemaker's Scepter", p: { "karma": 63000 }},
 	"4268": {i: 29938, n: "Peacemaker's Pistol", p: { "karma": 63000 }},
@@ -2160,7 +2160,7 @@ var GW2T_SKINS_DATA = {
 	"4279": {i: 29944, n: "Peacemaker's Staff", p: { "karma": 63000 }},
 	"4280": {i: 29718, n: "Adamant Guard Torch", p: { "karma": 63000 }},
 	"4281": {i: 29715, n: "Adamant Guard Cannon", p: { "karma": 63000 }},
-	"4282": {i: 29719, n: "Adamant Guard Trident", t: [28441]},
+	"4282": {i: 28441, n: "Adamant Guard Trident", t: [28441]},
 	"4283": {i: 29658, n: "Wolfborn Speargun", p: { "karma": 63000 }},
 	"4284": {i: 29775, n: "Seraph Torch", p: { "karma": 63000 }},
 	"4285": {i: 29772, n: "Seraph Speargun", p: { "karma": 63000 }},
@@ -2628,7 +2628,7 @@ var GW2T_SKINS_DATA = {
 	"4750": {i: 26850, n: "Tinwail", t: [26850]},
 	"4751": {i: 26152, n: "Usoku's Needle", t: [26152,19354]},
 	"4752": {i: 27007, n: "Mojo", t: [27007]},
-	"4753": {i: 42699, n: "Flame Trident", t: [28444]},
+	"4753": {i: 28444, n: "Flame Trident", t: [28444]},
 	"4754": {i: 26854, n: "Siren's Call", t: [26854]},
 	"4755": {i: 47099, n: "The Hunt", t: [47099]},
 	"4756": {i: 31073, n: "Feathers of Dwayna", t: [31073]},
@@ -2675,7 +2675,7 @@ var GW2T_SKINS_DATA = {
 	"4797": {i: 44987, n: "Phoenix Reborn", t: [44987]},
 	"4798": {i: 47090, n: "Handheld Disaster", t: [47090]},
 	"4799": {i: 31050, n: "Song of the Numberless Pack", t: [31050]},
-	"4800": {i: 30010, n: "Chalice of the Gods", t: [47084]},
+	"4800": {i: 30010, n: "Chalice of the Gods", p: { "karma": 336 }},
 	"4801": {i: 25985, n: "Kevin", t: [25985]},
 	"4802": {i: 27020, n: "Adam", t: [27020]},
 	"4803": {i: 44980, n: "Arc", t: [44980]},
