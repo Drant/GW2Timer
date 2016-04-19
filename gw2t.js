@@ -11462,7 +11462,11 @@ C = {
 	},
 	getChainRegion: function(pChain)
 	{
-		return M.getZoneRegion(pChain.zone);
+		if (pChain && pChain.zone)
+		{
+			return M.getZoneRegion(pChain.zone);
+		}
+		return null;
 	},
 	
 	/*
@@ -13370,7 +13374,12 @@ M = {
 	 */
 	getZoneRegion: function(pNick)
 	{
-		return this.Zones[(pNick.toLowerCase())].region;
+		var zone = this.Zones[(pNick.toLowerCase())];
+		if (zone)
+		{
+			return zone.region;
+		}
+		return null;
 	},
 	
 	/*
@@ -16734,10 +16743,10 @@ G = {
 		var finalizeDailies = function()
 		{
 			$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
-			$("#dlyCalendar .dlyEvent").each(function()
+			/*$("#dlyCalendar .dlyEvent").each(function()
 			{
 				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
-			});
+			});*/
 			I.bindPseudoCheckbox("#dlyCalendar ins");
 			I.qTip.init("#dlyCalendar ins");
 		};
