@@ -1452,7 +1452,8 @@ input[type="text"].bnkSearchInput:hover {
 	display: block;
 	position: absolute;
 	left: 8px;
-	bottom: 8px;
+	bottom: 4px;
+	line-height: normal;
 	white-space: nowrap;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 12px;
@@ -1465,9 +1466,6 @@ input[type="text"].bnkSearchInput:hover {
 }
 .bnkSlotZero .bnkSlotIcon { /* Zero stack slots */
 	opacity: 0.2;
-}
-.bnkSlotZero .bnkSlotPrice {
-	opacity: 0.3;
 }
 /*
  * Sidebar for inventory bags.

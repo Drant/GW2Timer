@@ -2448,16 +2448,14 @@ gem {
 .s16_wiki { background-position: -400px 0; }
 .s16_youtube { background-position: -416px 0; }
 
-coppercoin, silvercoin, goldcoin, karmaunit, achievementunit {
+coppercoin, silvercoin, goldcoin, gemunit, karmaunit, achievementunit {
 	display: inline-block;
 	width: 16px; height: 16px;
-	margin-bottom: -12px;
 	vertical-align: middle;
 	background-image: url("img/ui/sixteen.png");
 }
-karmaunit {
-	margin-left: 2px;
-	margin-bottom: 2px;
+coppercoin, silvercoin, goldcoin {
+	margin-bottom: -12px;
 }
 coppercoin {
 	background-position: -48px 0;
@@ -2467,6 +2465,9 @@ silvercoin {
 }
 goldcoin {
 	background-position: -64px 0;
+}
+gemunit {
+	background-position: -144px 0;
 }
 karmaunit {
 	background-position: -176px 0;

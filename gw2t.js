@@ -4487,7 +4487,7 @@ A = {
 					$(".accMenuTab").find(".accMenuIcon").removeClass("accMenuButtonFocused");
 					$(".accPlatter").hide();
 					// If previously viewing a non-main subsection of this section, then open that subsection
-					if ($(this).data("iscurrentmenugroup") && $(this).hasClass("accMenuTabFocused") === false)
+					if ($(this).data("iscurrentaccounttab") && $(this).hasClass("accMenuTabFocused") === false)
 					{
 						section.show();
 						$(this).find(".accMenuCurrent").trigger("click");
@@ -4495,7 +4495,7 @@ A = {
 					else
 					{
 						// Else view the main subsection
-						$(this).data("iscurrentmenugroup", null);
+						$(this).data("iscurrentaccounttab", null);
 						A.DishCurrent = $("#accDish_" + iSectionName);
 						// Show dish menu
 						$(".accDishMenu").hide();
@@ -4506,15 +4506,15 @@ A = {
 						$(this).find(".accMenuIconMain").addClass("accMenuButtonFocused");
 						section.fadeIn(400);
 						A.adjustAccountPanel();
+						// Update address
+						I.PageCurrent = I.SpecialPageEnum.Account;
+						I.SectionCurrent[I.SpecialPageEnum.Account] =
+							(iSectionName === I.SectionEnum.Account.Manager) ? "" : iSectionName;
+						U.updateQueryString();
 					}
 					// Highlight the clicked tab
 					$(".accMenuTab").removeClass("accMenuTabFocused").find(".accMenuSubtab").hide();
 					$(this).addClass("accMenuTabFocused").find(".accMenuSubtab").show();
-					// Update address
-					I.PageCurrent = I.SpecialPageEnum.Account;
-					I.SectionCurrent[I.SpecialPageEnum.Account] =
-						(iSectionName === I.SectionEnum.Account.Manager) ? "" : iSectionName;
-					U.updateQueryString();
 					// Clear the global progress bar, in case it froze
 					A.resetProgressBar(false);
 				});
@@ -4537,10 +4537,15 @@ A = {
 							{
 								iSubbutton.click(function(iEvent)
 								{
-									$(this).parents(".accMenuTab").data("iscurrentmenugroup", subsectionname)
-										.find(".accMenuCurrent").removeClass("accMenuCurrent");
+									var menutab = $(this).parents(".accMenuTab").data("iscurrentaccounttab", subsectionname);
+									menutab.find(".accMenuCurrent").removeClass("accMenuCurrent");
 									$(this).addClass("accMenuCurrent");
 									A.DishCurrent = $("#accDish_" + subsectionname);
+									// For the case that the subsection was opened programmatically, style the parent tab
+									if (menutab.hasClass("accMenuTabFocused") === false)
+									{
+										menutab.addClass("accMenuTabFocused").find(".accMenuSubtab").show();
+									}
 									// Show dish menu menu
 									$(".accDishMenu").hide();
 									$("#accDishMenu_" + subsectionname).show();
@@ -4552,6 +4557,10 @@ A = {
 									// Highlight the button
 									iTab.find(".accMenuIcon").removeClass("accMenuButtonFocused");
 									$(this).addClass("accMenuButtonFocused");
+									// Update address
+									I.PageCurrent = I.SpecialPageEnum.Account;
+									I.SectionCurrent[I.SpecialPageEnum.Account] = subsectionname;
+									U.updateQueryString();
 								});
 							})(subbutton, $(this));
 						}
@@ -4691,7 +4700,7 @@ A = {
 		}
 		A.Data.CharacterNames = null;
 		// Prevent skipping loading the characters section first
-		$("#accMenu_Characters").data("iscurrentmenugroup", null);
+		$("#accMenu_Characters").data("iscurrentaccounttab", null);
 		
 		/*
 		 * Zeroes the properties of the Worth object, which holds cumulative
@@ -5063,8 +5072,9 @@ V = {
 	
 	/*
 	 * Initializes the characters subpage.
+	 * @param string pSection to open after finishing loading characters.
 	 */
-	serveCharacters: function()
+	serveCharacters: function(pSection)
 	{
 		// Don't retrieve if already did
 		var dish = $("#accDish_Characters");
@@ -5078,6 +5088,10 @@ V = {
 			I.suspendElement(menusubsection, false);
 			V.generateCharactersStatistics();
 			V.createEquipmentMenu();
+			if (pSection)
+			{
+				$("#accMenu_" + pSection).trigger("click");
+			}
 		};
 		
 		dish.html("<div id='chrSummary'></div>"
@@ -5522,13 +5536,29 @@ V = {
 	},
 	
 	/*
+	 * Requires characters data to be loaded first before loading other subsections.
+	 * @param string pSection to open after characters data are loaded.
+	 * @returns boolean true if characters data is required.
+	 */
+	requireCharacters: function(pSection)
+	{
+		if ($("#accDish_Characters").is(":empty"))
+		{
+			V.serveCharacters(pSection);
+			$("#accMenu_Characters").trigger("click");
+			return true;
+		}
+		return false;
+	},
+	
+	/*
 	 * Shows or hides a character or all characters equipment window, and
 	 * generates them if haven't already.
 	 * @pre Characters array was loaded by AJAX.
 	 */
 	serveEquipment: function()
 	{
-		if (A.checkPermission(A.PermissionEnum.Builds) !== true)
+		if (V.requireCharacters("Equipment") || A.checkPermission(A.PermissionEnum.Builds) !== true)
 		{
 			return;
 		}
@@ -5980,11 +6010,11 @@ V = {
 	},
 	
 	/*
-	 * Generates inventory windows for all characters.
+	 * Generates inventory of all characters as bank tabs.
 	 */
 	serveInventory: function()
 	{
-		if (A.checkPermission(A.PermissionEnum.Inventories) === false || A.Data.Characters.length < 1)
+		if (V.requireCharacters("Inventory") || A.checkPermission(A.PermissionEnum.Inventories) === false || A.Data.Characters.length < 1)
 		{
 			return;
 		}
@@ -6065,7 +6095,7 @@ V = {
 	},
 	
 	/*
-	 * Generates the bank window.
+	 * Generates the items bank window.
 	 */
 	serveBank: function()
 	{
@@ -6301,7 +6331,8 @@ V = {
 							skinobj = skinsdb[skinid]; // If the user's unlocked skin is found in the cache associative array
 							if (skinobj)
 							{
-								(function(iSlot, iSkinID, iItemID, iWiki)
+								// Fill the slot with the item icon
+								(function(iSlot, iSkinID, iItemID, iWiki, iPayment)
 								{
 									Q.getItem(iItemID, function(iItem)
 									{
@@ -6312,12 +6343,21 @@ V = {
 											aWiki: iWiki,
 											aCallback: function()
 											{
+												// Include payment if the item cannot be obtained on the Trading Post
+												if (iPayment)
+												{
+													for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
+													{
+														var paymentvalue = iPayment[paymentkey];
+														iSlot.append("<var class='bnkSlotPrice'>" + E.Payment[paymentkey](paymentvalue) + "</var>");
+													}
+												}
 												numfetched++;
 												A.setProgressBar(numfetched, numtofetch);
 											}
 										});
 									});
-								})(slot, skinid, skinobj.i, skinobj.n);
+								})(slot, skinid, skinobj.i, skinobj.n, skinobj.p);
 							}
 						}
 						// Recreate the bank menu
@@ -6354,9 +6394,9 @@ V = {
 			{
 				// Convert the API array of unlocked skin IDs into an associative array
 				accountskinarray = pData;
-				for (var i = 0; i < pData.length; i++)
+				for (var i = 0; i < accountskinarray.length; i++)
 				{
-					accountskinassoc[(pData[i])] = true;
+					accountskinassoc[(accountskinarray[i])] = true;
 				}
 				generateWardrobe();
 			}).fail(function()
@@ -6367,6 +6407,28 @@ V = {
 		});
 	},
 	
+	/*
+	 * Generates the miniature collection window.
+	 */
+	serveMinis: function()
+	{
+		var dish = $("#accDish_Minis");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		var container = Q.createBank(dish);
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		
+		$.getJSON(A.getURL(A.URL.Minis), function(pData)
+		{
+			bank.empty();
+			var numtofetch = 0;
+			var numfetched = 0;
+		});
+	},
+	
+		
 	serveLab: function()
 	{
 		var dish = $("#accDish_Lab");
@@ -6496,6 +6558,13 @@ V = {
 								A.adjustAccountScrollbar();
 							}
 						});
+						selectionbutton.contextmenu(function(pEvent)
+						{
+							pEvent.preventDefault();
+							CurateArray[CurateArrayIndex].itemid = iItemID;
+							CurateArray[CurateArrayIndex].tradeableids = (tradeableitems.length > 0) ? tradeableitems : null;
+							$(this).addClass("btnFocused");
+						});
 					})(box.item.id);
 					
 					(function(iName)
@@ -6590,6 +6659,7 @@ V = {
 						selectionbutton.css({background: "rgba(221,255,119,1)"});
 					}
 				}
+				A.adjustAccountScrollbar();
 			};
 			
 			var itemid;
@@ -6662,9 +6732,10 @@ V = {
 				var skinsdb = GW2T_SKINS_DATA;
 				
 				var dishmenu = A.createDishMenu("Lab");
+				var controlcontainer = $("<div style='color:white; font-family:monospace;'></div>").appendTo(dishmenu);
 
-				var container = $("<div id='labContainer'></div>").appendTo(dish);
-				var controls = $("<div id='labControls' style='margin:8px; color:white; font-family:monospace;'></div>").appendTo(dishmenu);
+				var selectioncontainer = $("<div id='labContainer'></div>").appendTo(dish);
+				var controls = $("<div id='labControls' style='margin:8px;'></div>").appendTo(controlcontainer);
 				var buttonprev = $("<button id='labControlPrev' style='width:96px; height:40px; margin-right:8px;'>Prev</button>").appendTo(controls);
 				var buttonnext = $("<button id='labControlNext' style='width:96px; height:40px; margin-right:8px;'>Next</button>").appendTo(controls);
 				var buttonauto = $("<button id='labControlAuto' style='width:96px; height:40px; margin-right:8px;'>Auto</button>").appendTo(controls);
@@ -6673,13 +6744,14 @@ V = {
 				var indexdisplay = $("<var id='labIndexDisplay' style='margin-right:8px; font-size:20px;'></var>").appendTo(controls);
 				var inputindex = $("<input id='labIndexInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(controls);
 				inputindex.before("Go To Skin: ");
+				var inputsearch = $("<input id='labSearchInput' type='text' style='width:128px; margin-right:8px;' />").appendTo(controls);
+				inputsearch.before("Search: ");
 				var inputitem = $("<input id='labItemInput' type='text' style='width:64px; margin-right:8px;' />").appendTo(controls);
 				inputitem.before("Input Custom ID: ");
-				var retrievaldisplay = $("<var id='labRetrievalDisplay' style='font-size:20px;'></var>").appendTo(controls);
-				var selectionboxes = $("<div id='labSelection'></div>").appendTo(container);
-				var skininfo = $("<div id='labSkinInfo' style='font-family:monospace'></div>").appendTo(container);
+				var selectionboxes = $("<div id='labSelection'></div>").appendTo(selectioncontainer);
+				var skininfo = $("<div id='labSkinInfo' style='font-family:monospace'></div>").appendTo(selectioncontainer);
 				
-				var currencies = $("<div id='labCurrencies' style='margin:8px; color:white;'></div>").appendTo(dishmenu);
+				var currencies = $("<div id='labCurrencies' style='margin:8px; color:white;'></div>").appendTo(controlcontainer);
 				var currencyprev = $("<button id='labPaymentPrev' style='width:96px; height:40px; margin-right:8px;'>←</button>").appendTo(currencies);
 				var currencynext = $("<button id='labPaymentNext' style='width:96px; height:40px; margin-right:8px;'>→</button>").appendTo(currencies);
 				var inputkarma = $("<input id='labKarmaInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
@@ -6701,7 +6773,9 @@ V = {
 				var acquisitionstarting = $("<button id='labStartingButton' class='labAcquisitionButton' style='margin-right:8px;'><ins class='s16 s16_starting'></ins></button>").appendTo(currencies);
 				var currencyclear = $("<button id='labPaymentClear' style='width:96px; height:40px; margin-right:8px;'>Clear</button>").appendTo(currencies);
 				
-				dishmenu.find("input[type=text], input[type=number]").click(function()
+				var retrievaldisplay = $("<div id='labRetrievalDisplay' style='font-size:20px;'></div>").appendTo(controlcontainer);
+				
+				controlcontainer.find("input[type=text], input[type=number]").click(function()
 				{
 					$(this).select();
 				});
@@ -6816,7 +6890,7 @@ V = {
 							+ "i: " + obj.itemid + ", "
 							+ "n: &quot;" + U.escapeHTML(obj.name) + "&quot;"
 							+ ((obj.payment) ? ", p: " + U.formatJSON(obj.payment) : "")
-							+ ((obj.tradeableids) ? ", t: [" + obj.tradeableids + "]" : "")
+							+ ((obj.tradeableids && !obj.payment) ? ", t: [" + obj.tradeableids + "]" : "")
 							+ "},"
 						+ "<br />";
 					}
@@ -6829,11 +6903,12 @@ V = {
 					for (var i = 0; i < CurateArray.length; i++)
 					{
 						obj = CurateArray[i];
+						var tradeablearr = (obj.payment) ? null : obj.tradeableids;
 						retobj[obj.skinid] = {
 							i: obj.itemid,
 							n: obj.name,
 							p: obj.payment,
-							t: obj.tradeableids
+							t: tradeablearr
 						};
 					}
 					U.APICacheConsole = retobj;
@@ -6865,6 +6940,21 @@ V = {
 						$("#labControlNext").trigger("click");
 					}
 				});
+				inputsearch.onEnterKey(function()
+				{
+					var val = $(this).val().toLowerCase();
+					var searchname;
+					for (var i = 0; i < CurateArray.length; i++)
+					{
+						searchname = CurateArray[i].name.toLowerCase();
+						if (searchname.indexOf(val) !== -1)
+						{
+							CurateArrayIndex = i;
+							updateIndexes();
+							break;
+						}
+					}
+				});
 
 				if (U.loadAPICache())
 				{
@@ -6881,70 +6971,6 @@ V = {
 					});
 				}
 				updateIndexDisplay();
-			});
-		});
-	},
-	
-	associateSkins: function()
-	{
-		var maindb = {};
-		var itemsarr, skinsarr;
-		
-		var processSkins = function()
-		{
-			var item;
-			var skinid;
-			// Read each item and add it to the skin database if has a default_skin property
-			for (var i = 0; i < itemsarr.length; i++)
-			{
-				item = itemsarr[i];
-				skinid = item.default_skin;
-				if (skinid)
-				{
-					if (maindb[skinid] === undefined)
-					{
-						maindb[skinid] = [];
-					}
-					maindb[skinid].push(item.id);
-					continue;
-				}
-				
-				// If no default skin then find skins array
-				if (item.details && item.details.type && item.details.skins)
-				{
-					for (var ii = 0; ii < item.details.skins.length; ii++)
-					{
-						skinid = item.details.skins[ii];
-						if (maindb[skinid] === undefined)
-						{
-							maindb[skinid] = [];
-						}
-						maindb[skinid].push(item.id);
-					}
-				}
-			}
-			
-			// Sort the arrays, with the item IDs in ascending order
-			for (var i in maindb)
-			{
-				maindb[i].sort(function(a, b)
-				{
-					return a - b;
-				});
-			}
-			
-			U.APICacheConsole = maindb;
-			//I.print(notice);
-			U.printJSON(U.APICacheConsole);
-		};
-		
-		$.getJSON("data/items.json", function(pData)
-		{
-			itemsarr = pData;
-			$.getJSON("data/skins_assoc.json", function(pDataInner)
-			{
-				skinsarr = pDataInner;
-				processSkins();
 			});
 		});
 	},
@@ -8610,13 +8636,14 @@ Q = {
 		
 		// Help button shows search usage message
 		var isshowinghelp = true;
-		$("<div class='bnkButtonHelp bnkButton curClick' title='Show the <dfn>help</dfn> message.'></div>")
+		$("<div class='bnkButtonHelp bnkButton curClick' title='Show the <dfn>help</dfn> message for this bank.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			var helpmessage = (Settings.aHelpMessage) ? $(Settings.aHelpMessage).html() : "";
 			if (isshowinghelp || I.isConsoleShown() === false)
 			{
 				I.print("<div class='accModal cntComposition'>" + helpmessage + $("#accBankHelp").html() + "</div>", true);
+				U.convertExternalLink("#cslContent a");
 			}
 			else
 			{
@@ -8834,6 +8861,23 @@ E = {
 	CalcHistoryIndex: 0,
 	
 	/*
+	 * Associative array of functions that format the payment of an item.
+	 * The function names correspond to the object key in a custom API cache.
+	 */
+	Payment: {
+		coin: function(pAmount) { return E.formatCoinString(pAmount, {aWantColor: true, aWantShort: true}); },
+		karma: function(pAmount) { return E.formatKarmaString(pAmount, true); },
+		gem: function(pAmount) { return E.formatGemString(pAmount, true); },
+		badge: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_badge'></ins>"; },
+		token: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_token'></ins>"; },
+		achievement: function(pAmount) { return ((pAmount === 0) ? "" : pAmount.toLocaleString()) + "<ins class='s16 s16_achievement'></ins>"; },
+		monument: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_monument'></ins>"; },
+		craft: function() { return "<ins class='s16 s16_craft'></ins>"; },
+		pvp: function() { return "<ins class='s16 s16_pvp'></ins>"; },
+		starting: function() { return "<ins class='s16 s16_starting'></ins>"; }
+	},
+	
+	/*
 	 * Parses a period separated string representing those units.
 	 * @param string pString to parse.
 	 * @returns int the money in copper value for calculating.
@@ -8973,40 +9017,52 @@ E = {
 		var gold = Math.abs(~~(amount / E.Exchange.COPPER_IN_GOLD));
 		var silver = Math.abs(~~(amount / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER);
 		var copper = Math.abs(amount % E.Exchange.COPPER_IN_SILVER);
+		var goldstr = gold;
+		var silverstr = silver;
+		var copperstr = copper;
 		var sign = (amount < 0) ? "−" : "";
 		
 		// Leading zero for units that are right side of the leftmost unit
 		if (!Settings.aWantColor && (gold > 0 && silver < T.cBASE_10))
 		{
-			silver = "0" + silver;
+			silverstr = "0" + silver;
 		}
 		if (!Settings.aWantColor && ((silver > 0 && copper < T.cBASE_10) || (copper < T.cBASE_10)))
 		{
-			copper = "0" + copper;
+			copperstr = "0" + copper;
 		}
-		// For short version exclude copper if showing gold and silver 
-		if (gold > 0 && Settings.aWantShort)
+		// For short version exclude copper if showing gold and silver, or is zero
+		if (Settings.aWantShort)
 		{
-			sc0 = "";
-			copper = "";
-			sc1 = "";
+			if (gold > 0 || (copper === 0 && amount > 0))
+			{
+				sc0 = "";
+				copperstr = "";
+				sc1 = "";
+			}
+			if (silver === 0)
+			{
+				ss0 = "";
+				silverstr = "";
+				ss1 = "";
+			}
 		}
 		
 		// Returns
 		if (gold > 0)
 		{
-			return sign + sg0 + gold + sg1 + sep + ss0 + silver + ss1 + sep + sc0 + copper + sc1;
+			return sign + sg0 + goldstr + sg1 + sep + ss0 + silverstr + ss1 + sep + sc0 + copperstr + sc1;
 		}
 		if (silver > 0)
 		{
-			return sign + ss0 + silver + ss1 + sep + sc0 + copper + sc1;
+			return sign + ss0 + silverstr + ss1 + sep + sc0 + copperstr + sc1;
 		}
 		if (Settings.aWantColor)
 		{
 			// No 0 silver prefix for copper-only price if showing color
-			return sc0 + copper + sc1;
+			return sc0 + copperstr + sc1;
 		}
-		return sign + ss0 + "0" + sep + ss1 + sc0 + copper + sc1;
+		return sign + ss0 + "0" + sep + ss1 + sc0 + copperstr + sc1;
 	},
 	formatCoinStringColored: function(pAmount)
 	{
@@ -23623,7 +23679,10 @@ I = {
 		WvW: "WvW",
 		DryTop: "DryTop"
 	},
-	// Section names must be unique, and may either be in sentence case or all caps
+	/*
+	 * Enumeration for opening a valid page section upon site load, if URL provided.
+	 * Section names must be unique, and may be in sentence case or all caps.
+	 */
 	SectionEnum:
 	{
 		Chains:
@@ -23658,7 +23717,15 @@ I = {
 		Account:
 		{
 			Manager: "Manager",
+			Bank: "Bank",
+			Materials: "Materials",
+			Wardrobe: "Wardrobe",
+			Minis: "Minis",
+			Dyes: "Dyes",
 			Characters: "Characters",
+			Equipment: "Equipment",
+			Inventory: "Inventory",
+			Crafting: "Crafting",
 			Trading: "Trading",
 			PVP: "PVP",
 			Guilds: "Guilds",
