@@ -4473,7 +4473,8 @@ A = {
 			var sectionnamelow = sectionname.toLowerCase();
 			var menutab = $("<aside id='accMenu_" + sectionname + "' class='accMenuTab accMenuClick curClick'>"
 				+ "<span>"
-					+ "<img class='accMenuIcon accMenuIconMain' src='img/account/menu/" + sectionnamelow + I.cPNG + "' />"
+					+ "<img class='accMenuIcon accMenuIconMain' src='img/account/menu/" + sectionnamelow + I.cPNG + "' "
+						+ "title='<dfn>" + D.getWordCapital(sectionnamelow) + "</dfn>' />"
 					+ "<var class='accMenuTitle'>" + D.getPhraseOriginal(sectionname) + "</var>"
 				+ "</span>"
 				+ "<span class='accMenuSubtab' style='display:none;'></span>"
@@ -4537,8 +4538,10 @@ A = {
 						if ($(this).hasClass("accDishMain") === false)
 						{
 							var subsectionname = $(this).attr("data-section");
+							var subsectionnamelow = subsectionname.toLowerCase();
 							var subbutton = $("<img id='accMenu_" + subsectionname + "' class='accMenuButton accMenuIcon accMenuClick' "
-								+ "src='img/account/menu/" + subsectionname.toLowerCase() + I.cPNG + "' />");
+								+ "title='<dfn>" + D.getWordCapital(subsectionnamelow) + "</dfn>' "
+								+ "src='img/account/menu/" + subsectionnamelow + I.cPNG + "' />");
 							subbuttons.append(subbutton);
 							(function(iSubbutton, iSubsection)
 							{
@@ -4572,6 +4575,7 @@ A = {
 							})(subbutton, $(this));
 						}
 					});
+					I.qTip.init(".accMenuButton");
 				}
 			})(menutab, sectionname);
 		});
