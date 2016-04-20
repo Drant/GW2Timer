@@ -3370,65 +3370,72 @@ U = {
 			$("body").hide();
 			document.location = pURL;
 		};
-		
 		var page = U.Args[U.KeyEnum.Page];
-		// Only proceed if "page" is not an actual content page
-		if (page && U.isEnumWithin(page, I.PageEnum) === false)
+		if (page)
 		{
 			page = page.toLowerCase();
-			if (page === "navi" || page === "overlay")
+			// If page is a shortcut alias for a real page
+			if (page === "a")
 			{
-				go(U.URL_META.Overlay);
+				U.Args[U.KeyEnum.Page] = I.SpecialPageEnum.Account;
 			}
-			else if (page === "m" || page === "mobile")
+			// Only proceed if "page" is not an actual content page
+			else if (U.isEnumWithin(page, I.PageEnum) === false)
 			{
-				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Mobile;
-			}
-			else if (page === "s" || page === "simple")
-			{
-				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Simple;
-			}
-			else if (page === "t" || page === "tile")
-			{
-				U.Args[U.KeyEnum.Mode] = I.ModeEnum.Tile;
-			}
-			else
-			{
-				// Check if the special page is actually a section
-				for (i in I.SectionEnum)
+				if (page === "navi" || page === "overlay")
 				{
-					ithpage = I.SectionEnum[i];
-					for (ii in ithpage)
+					go(U.URL_META.Overlay);
+				}
+				else if (page === "m" || page === "mobile")
+				{
+					U.Args[U.KeyEnum.Mode] = I.ModeEnum.Mobile;
+				}
+				else if (page === "s" || page === "simple")
+				{
+					U.Args[U.KeyEnum.Mode] = I.ModeEnum.Simple;
+				}
+				else if (page === "t" || page === "tile")
+				{
+					U.Args[U.KeyEnum.Mode] = I.ModeEnum.Tile;
+				}
+				else
+				{
+					// Check if the special page is actually a section
+					for (i in I.SectionEnum)
 					{
-						if (ii.toLowerCase() === page)
+						ithpage = I.SectionEnum[i];
+						for (ii in ithpage)
 						{
-							// Page part becomes the section, section part becomes the article
-							if (U.Args[U.KeyEnum.Section] !== undefined)
+							if (ii.toLowerCase() === page)
 							{
-								U.Args[U.KeyEnum.Article] = U.Args[U.KeyEnum.Section];
+								// Page part becomes the section, section part becomes the article
+								if (U.Args[U.KeyEnum.Section] !== undefined)
+								{
+									U.Args[U.KeyEnum.Article] = U.Args[U.KeyEnum.Section];
+								}
+								U.Args[U.KeyEnum.Page] = i;
+								U.Args[U.KeyEnum.Section] = ii;
+								return;
 							}
-							U.Args[U.KeyEnum.Page] = i;
-							U.Args[U.KeyEnum.Section] = ii;
-							return;
 						}
 					}
-				}
-				
-				// Check if the special page is actually a zone name
-				for (i in M.Zones)
-				{
-					if (page.indexOf(i) !== -1)
+
+					// Check if the special page is actually a zone name
+					for (i in M.Zones)
 					{
-						U.Args[U.KeyEnum.Go] = i;
-						return;
+						if (page.indexOf(i) !== -1)
+						{
+							U.Args[U.KeyEnum.Go] = i;
+							return;
+						}
 					}
 				}
 			}
 		}
 		// Remember the initial page when the site loaded
-		if (page !== undefined)
+		if (U.Args[U.KeyEnum.Page] !== undefined)
 		{
-			I.PageInitial = page.toLowerCase();
+			I.PageInitial = U.Args[U.KeyEnum.Page].toLowerCase();
 		}
 		
 		// Check if the special page is actually a collectible
@@ -10563,6 +10570,8 @@ D = {
 			cs: "začne", it: "inizierà", pl: "rozpocznie się", pt: "começará", ru: "начнется", zh: "開始"},
 		s_click: {de: "klicken", es: "clic", fr: "cliquer",
 			cs: "kliknout", it: "clic", pl: "klikać", pt: "clicar", ru: "щелкнуть", zh: "按一下"},
+		s_view: {de: "anzeigen", es: "ver", fr: "afficher",
+			cs: "zobrazit", it: "visualizzare", pl: "wyświetlać", pt: "exibir", ru: "представление", zh: "檢視"},
 		s_load: {de: "laden", es: "cargar", fr: "charger",
 			cs: "načíst", it: "caricare", pl: "załaduj", pt: "carregar", ru: "загрузить", zh: "載入"},
 		s_save: {de: "speichern", es: "guardar", fr: "enregistrer",
@@ -11009,7 +11018,10 @@ D = {
 				var title = $(this).attr("title");
 				if (title !== undefined)
 				{
-					$(this).attr("title", D.getPhraseOriginal(title));
+					var jqobj = $("<div>" + title + "</div>");
+					var transtext = D.getPhraseOriginal(jqobj.find("dfn").text());
+					jqobj.find("dfn").remove();
+					$(this).attr("title", "<dfn>" + transtext + "</dfn>" + jqobj.html());
 				}
 			});
 			D.translateElements();
@@ -16833,58 +16845,62 @@ G = {
 		wvw = pDaily["wvw"];
 		
 		// Some cells
-		gather = pve[0].split(" ");
-		activity = pve[1].split(" ");
-		gatherregion = "<ins class='dlyRegion dly_region_" + gather[1].toLowerCase() + "'>";
-		if (activity[0] === "Vista")
+		try
 		{
-			activityregion = "<ins class='dlyRegion dly_region_" + activity[1].toLowerCase() + "'>";
-			activityregionclose = "</ins>";
-		}
-		eventregion = "<ins class='dlyRegion dly_region_" + M.getZoneRegion(pve[2]) + "'>";
-		if (pve[3] !== null)
-		{
-			bosssrc = "dly_pve_boss";
-			bossregion = "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(pve[3])) + "'>";
-			bossregionclose = "</ins>";
-			bosshtml = "<em><img src='img/chain/" + pve[3].toLowerCase() + I.cPNG + "' /></em>";
-		}
-		
-		prof0 = pvp[2].split(" ");
-		prof1 = pvp[3].split(" ");
-		
-		switch (pDate.getUTCDay())
-		{
-			case T.DayEnum.Sunday: dayclass = "dlySunday"; break;
-			case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
-		}
+			gather = pve[0].split(" ");
+			activity = pve[1].split(" ");
+			gatherregion = "<ins class='dlyRegion dly_region_" + gather[1].toLowerCase() + "'>";
+			if (activity[0] === "Vista")
+			{
+				activityregion = "<ins class='dlyRegion dly_region_" + activity[1].toLowerCase() + "'>";
+				activityregionclose = "</ins>";
+			}
+			eventregion = "<ins class='dlyRegion dly_region_" + M.getZoneRegion(pve[2]) + "'>";
+			if (pve[3] !== null)
+			{
+				bosssrc = "dly_pve_boss";
+				bossregion = "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(pve[3])) + "'>";
+				bossregionclose = "</ins>";
+				bosshtml = "<em><img src='img/chain/" + pve[3].toLowerCase() + I.cPNG + "' /></em>";
+			}
 
-		// Generate HTML
-		$("#dlyCalendar").append("<div>"
-			// Day
-			+ "<aside></aside>" + bosshtml + "<var class='" + dayclass + "'>" + pDate.getUTCDate() + "</var>"
-			// PvE
-			+ "<span><ins class='dly_daily_pve'></ins>"
-			+ gatherregion + "<ins class='dly_pve_" + gather[0].toLowerCase() + "' title='" + pve[0] + "'></ins>" + gatherregionclose
-			+ activityregion + "<ins class='dly_pve_" + activity[0].toLowerCase() + "' title='" + pve[1] + "'></ins>" + activityregionclose
-			+ eventregion + "<ins class='dly_pve_event dlyEvent curZoom' title='" + pve[2] + " Events'"
-				+ "data-coord='" + (pve[2]).toLowerCase() + "'></ins>" + eventregionclose
-			+ bossregion + "<ins class='" + bosssrc + "' title='" + pve[3] + "'></ins>" + bossregionclose + "</span>"
-			// PvP
-			+ "<span><ins class='dly_daily_pvp'></ins>"
-			+ "<ins class='dly_pvp_" + pvp[0].toLowerCase() + "' title='" + pvp[0] + "'></ins>"
-			+ "<ins class='dly_pvp_" + pvp[1].toLowerCase() + "' title='" + pvp[1] + "'></ins>"
-			+ "<ins class='dly_pvp_profession_" + prof0[0].toLowerCase() + "_0' title='" + pvp[2] + "'>"
-				+ "<ins class='dly_pvp_profession_" + prof0[1].toLowerCase() + "_1'></ins>" + "</ins>"
-			+ "<ins class='dly_pvp_profession_" + prof1[0].toLowerCase() + "_0' title='" + pvp[3] + "'>"
-				+ "<ins class='dly_pvp_profession_" + prof1[1].toLowerCase() + "_1'></ins>" + "</ins></span>"
-			// WvW
-			+ "<span><ins class='dly_daily_wvw'></ins>"
-			+ "<ins class='dly_wvw_" + wvw[0].toLowerCase() + "' title='" + wvw[0] + "'></ins>"
-			+ "<ins class='dly_wvw_" + wvw[1].toLowerCase() + "' title='" + wvw[1] + "'></ins>"
-			+ "<ins class='dly_wvw_" + wvw[2].toLowerCase() + "' title='" + wvw[2] + "'></ins>"
-			+ "<ins class='dly_wvw_" + wvw[3].toLowerCase() + "' title='" + wvw[3] + "'></ins></span>"
-			+ "</div>");
+			prof0 = pvp[2].split(" ");
+			prof1 = pvp[3].split(" ");
+
+			switch (pDate.getUTCDay())
+			{
+				case T.DayEnum.Sunday: dayclass = "dlySunday"; break;
+				case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
+			}
+
+			// Generate HTML
+			$("#dlyCalendar").append("<div>"
+				// Day
+				+ "<aside></aside>" + bosshtml + "<var class='" + dayclass + "'>" + pDate.getUTCDate() + "</var>"
+				// PvE
+				+ "<span><ins class='dly_daily_pve'></ins>"
+				+ gatherregion + "<ins class='dly_pve_" + gather[0].toLowerCase() + "' title='" + pve[0] + "'></ins>" + gatherregionclose
+				+ activityregion + "<ins class='dly_pve_" + activity[0].toLowerCase() + "' title='" + pve[1] + "'></ins>" + activityregionclose
+				+ eventregion + "<ins class='dly_pve_event dlyEvent curZoom' title='" + pve[2] + " Events'"
+					+ "data-coord='" + (pve[2]).toLowerCase() + "'></ins>" + eventregionclose
+				+ bossregion + "<ins class='" + bosssrc + "' title='" + pve[3] + "'></ins>" + bossregionclose + "</span>"
+				// PvP
+				+ "<span><ins class='dly_daily_pvp'></ins>"
+				+ "<ins class='dly_pvp_" + pvp[0].toLowerCase() + "' title='" + pvp[0] + "'></ins>"
+				+ "<ins class='dly_pvp_" + pvp[1].toLowerCase() + "' title='" + pvp[1] + "'></ins>"
+				+ "<ins class='dly_pvp_profession_" + prof0[0].toLowerCase() + "_0' title='" + pvp[2] + "'>"
+					+ "<ins class='dly_pvp_profession_" + prof0[1].toLowerCase() + "_1'></ins>" + "</ins>"
+				+ "<ins class='dly_pvp_profession_" + prof1[0].toLowerCase() + "_0' title='" + pvp[3] + "'>"
+					+ "<ins class='dly_pvp_profession_" + prof1[1].toLowerCase() + "_1'></ins>" + "</ins></span>"
+				// WvW
+				+ "<span><ins class='dly_daily_wvw'></ins>"
+				+ "<ins class='dly_wvw_" + wvw[0].toLowerCase() + "' title='" + wvw[0] + "'></ins>"
+				+ "<ins class='dly_wvw_" + wvw[1].toLowerCase() + "' title='" + wvw[1] + "'></ins>"
+				+ "<ins class='dly_wvw_" + wvw[2].toLowerCase() + "' title='" + wvw[2] + "'></ins>"
+				+ "<ins class='dly_wvw_" + wvw[3].toLowerCase() + "' title='" + wvw[3] + "'></ins></span>"
+				+ "</div>");
+		}
+		catch (e) {};
 	},
 	
 	/*
