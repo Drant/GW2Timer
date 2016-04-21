@@ -2647,6 +2647,10 @@ U = {
 	{
 		return U.URL_API.Prefix + pAPI + "/" + pID + U.URL_API.LangKey;
 	},
+	getAPIAchievement: function(pID)
+	{
+		return U.getAPI("achievements", pID);
+	},
 	getAPIItem: function(pID)
 	{
 		return U.getAPI("items", pID);
@@ -2861,7 +2865,7 @@ U = {
 			{
 				A.printAccount(args[1]);
 			}},
-			daily: {usage: "Prints the daily achievements.", f: function()
+			daily: {usage: "Prints today's and tomorrow's daily achievements.", f: function()
 			{
 				U.printDaily();
 			}},
@@ -3249,22 +3253,67 @@ U = {
 	},
 	
 	/*
-	 * Prints today's API daily achievements arrays in alias form.
+	 * Prints the current daily achievements.
+	 * @param boolean pWantTomorrow whether to get tomorrow's instead of today's.
 	 */
-	printDaily: function()
+	printDaily: function(pWantTomorrow)
 	{
-		if (T.DailyToday !== null)
+		var numfetched = 0;
+		var numtofetch = 0;
+		var dailyobj = {};
+		var finalizeDaily = function()
 		{
-			var d = T.DailyToday;
-			var str = "pve: [&quot;" + d.pve[0] + "&quot;, &quot;" + d.pve[1] + "&quot;, &quot;" + d.pve[2] + "&quot;, &quot;" + d.pve[3] + "&quot;],<br />"
-				+ "pvp: [&quot;" + d.pvp[0] + "&quot;, &quot;" + d.pvp[1] + "&quot;, &quot;" + d.pvp[2] + "&quot;, &quot;" + d.pvp[3] + "&quot;],<br />"
-				+ "wvw: [&quot;" + d.wvw[0] + "&quot;, &quot;" + d.wvw[1] + "&quot;, &quot;" + d.wvw[2] + "&quot;, &quot;" + d.wvw[3] + "&quot;]";
-			I.print(str);
-		}
-		else
+			if (numtofetch === numfetched)
+			{
+				if (pWantTomorrow === undefined)
+				{
+					I.print("TODAY'S DAILIES");
+				}
+				for (var i in dailyobj)
+				{
+					I.print(i);
+					for (var ii in dailyobj[i])
+					{
+						var ach = (dailyobj[i])[ii];
+						U.printJSON(ach);
+					}
+				}
+				// Also recursively print tomorrow's
+				if (pWantTomorrow === undefined)
+				{
+					I.print("<br />");
+					I.print("TOMORROW'S DAILIES");
+					U.printDaily(true);
+				}
+			}
+		};
+		
+		var url = (pWantTomorrow) ? U.URL_API.Tomorrow : U.URL_API.Daily;
+		$.getJSON(url + U.URL_API.LangKey, function(pData)
 		{
-			I.write("API daily achievements object is invalid.");
-		}
+			for (var i in pData)
+			{
+				numtofetch += (pData[i]).length;
+			}
+			for (var i in pData)
+			{
+				dailyobj[i] = [];
+				for (var ii in pData[i])
+				{
+					var ach = (pData[i])[ii];
+					(function(iAchArray)
+					{
+						$.getJSON(U.getAPIAchievement(ach.id), function(iData)
+						{
+							iData.level = ach.level; // Append the level from the daily object to the actual achievement
+							iAchArray.push(iData);
+							numfetched++;
+							finalizeDaily();
+						});
+					})(dailyobj[i]);
+				}
+			}
+		});
 	},
 	
 	/*
@@ -4851,6 +4900,11 @@ A = {
 			{
 				I.write("Please enter a valid API key.");
 			}
+		});
+		// Entering a new key in the input box triggers the use button
+		key.change(function()
+		{
+			use.trigger("click");
 		});
 		// Button to delete this token
 		del.click(function()
@@ -15132,29 +15186,31 @@ M = {
 			U.interpretCommand(command, that, pZoom, pPin);
 		});
 		
-		pLink.dblclick(function()
+		var coord = that.getElementCoordinates(pLink);
+		if (coord.length > 1)
 		{
-			var thiscoord = that.getElementCoordinates($(this));
-			if (that.Map.getZoom() === that.ZoomEnum.Max)
+			pLink.dblclick(function()
 			{
-				that.goToView(thiscoord, that.ZoomEnum.Default, pPin);
-			}
-			else
+				if (that.Map.getZoom() === that.ZoomEnum.Max)
+				{
+					that.goToView(coord, that.ZoomEnum.Default, pPin);
+				}
+				else
+				{
+					that.Map.zoomIn();
+				}
+			});
+
+			// Move a point pin to that location as a preview
+			pLink.mouseover(function()
 			{
-				that.Map.zoomIn();
-			}
-		});
-		
-		// Move a point pin to that location as a preview
-		pLink.mouseover(function()
-		{
-			var thiscoord = that.getElementCoordinates($(this));
-			that.movePin(that.Pin.Over, thiscoord);
-		});
-		pLink.mouseout(function()
-		{
-			that.movePin(that.Pin.Over);
-		});
+				that.movePin(that.Pin.Over, coord);
+			});
+			pLink.mouseout(function()
+			{
+				that.movePin(that.Pin.Over);
+			});
+		}
 	},
 	
 	/*
@@ -16759,10 +16815,10 @@ G = {
 		var finalizeDailies = function()
 		{
 			$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
-			/*$("#dlyCalendar .dlyEvent").each(function()
+			$("#dlyCalendar .dlyEvent").each(function()
 			{
 				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
-			});*/
+			});
 			I.bindPseudoCheckbox("#dlyCalendar ins");
 			I.qTip.init("#dlyCalendar ins");
 		};
@@ -16841,7 +16897,6 @@ G = {
 		var activityregionclose = "";
 		var eventregionclose = "</ins>";
 		var bossregionclose = "";
-		
 
 		// The rows
 		pve = pDaily["pve"];
@@ -16849,62 +16904,58 @@ G = {
 		wvw = pDaily["wvw"];
 		
 		// Some cells
-		try
+		gather = pve[0].split(" ");
+		activity = pve[1].split(" ");
+		gatherregion = "<ins class='dlyRegion dly_region_" + gather[1].toLowerCase() + "'>";
+		if (activity[0] === "Vista")
 		{
-			gather = pve[0].split(" ");
-			activity = pve[1].split(" ");
-			gatherregion = "<ins class='dlyRegion dly_region_" + gather[1].toLowerCase() + "'>";
-			if (activity[0] === "Vista")
-			{
-				activityregion = "<ins class='dlyRegion dly_region_" + activity[1].toLowerCase() + "'>";
-				activityregionclose = "</ins>";
-			}
-			eventregion = "<ins class='dlyRegion dly_region_" + M.getZoneRegion(pve[2]) + "'>";
-			if (pve[3] !== null)
-			{
-				bosssrc = "dly_pve_boss";
-				bossregion = "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(pve[3])) + "'>";
-				bossregionclose = "</ins>";
-				bosshtml = "<em><img src='img/chain/" + pve[3].toLowerCase() + I.cPNG + "' /></em>";
-			}
-
-			prof0 = pvp[2].split(" ");
-			prof1 = pvp[3].split(" ");
-
-			switch (pDate.getUTCDay())
-			{
-				case T.DayEnum.Sunday: dayclass = "dlySunday"; break;
-				case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
-			}
-
-			// Generate HTML
-			$("#dlyCalendar").append("<div>"
-				// Day
-				+ "<aside></aside>" + bosshtml + "<var class='" + dayclass + "'>" + pDate.getUTCDate() + "</var>"
-				// PvE
-				+ "<span><ins class='dly_daily_pve'></ins>"
-				+ gatherregion + "<ins class='dly_pve_" + gather[0].toLowerCase() + "' title='" + pve[0] + "'></ins>" + gatherregionclose
-				+ activityregion + "<ins class='dly_pve_" + activity[0].toLowerCase() + "' title='" + pve[1] + "'></ins>" + activityregionclose
-				+ eventregion + "<ins class='dly_pve_event dlyEvent curZoom' title='" + pve[2] + " Events'"
-					+ "data-coord='" + (pve[2]).toLowerCase() + "'></ins>" + eventregionclose
-				+ bossregion + "<ins class='" + bosssrc + "' title='" + pve[3] + "'></ins>" + bossregionclose + "</span>"
-				// PvP
-				+ "<span><ins class='dly_daily_pvp'></ins>"
-				+ "<ins class='dly_pvp_" + pvp[0].toLowerCase() + "' title='" + pvp[0] + "'></ins>"
-				+ "<ins class='dly_pvp_" + pvp[1].toLowerCase() + "' title='" + pvp[1] + "'></ins>"
-				+ "<ins class='dly_pvp_profession_" + prof0[0].toLowerCase() + "_0' title='" + pvp[2] + "'>"
-					+ "<ins class='dly_pvp_profession_" + prof0[1].toLowerCase() + "_1'></ins>" + "</ins>"
-				+ "<ins class='dly_pvp_profession_" + prof1[0].toLowerCase() + "_0' title='" + pvp[3] + "'>"
-					+ "<ins class='dly_pvp_profession_" + prof1[1].toLowerCase() + "_1'></ins>" + "</ins></span>"
-				// WvW
-				+ "<span><ins class='dly_daily_wvw'></ins>"
-				+ "<ins class='dly_wvw_" + wvw[0].toLowerCase() + "' title='" + wvw[0] + "'></ins>"
-				+ "<ins class='dly_wvw_" + wvw[1].toLowerCase() + "' title='" + wvw[1] + "'></ins>"
-				+ "<ins class='dly_wvw_" + wvw[2].toLowerCase() + "' title='" + wvw[2] + "'></ins>"
-				+ "<ins class='dly_wvw_" + wvw[3].toLowerCase() + "' title='" + wvw[3] + "'></ins></span>"
-				+ "</div>");
+			activityregion = "<ins class='dlyRegion dly_region_" + activity[1].toLowerCase() + "'>";
+			activityregionclose = "</ins>";
 		}
-		catch (e) {};
+		eventregion = "<ins class='dlyRegion dly_region_" + M.getZoneRegion(pve[2]) + "'>";
+		if (pve[3] !== null)
+		{
+			bosssrc = "dly_pve_boss";
+			bossregion = "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(pve[3])) + "'>";
+			bossregionclose = "</ins>";
+			bosshtml = "<em><img src='img/chain/" + pve[3].toLowerCase() + I.cPNG + "' /></em>";
+		}
+
+		prof0 = pvp[2].split(" ");
+		prof1 = pvp[3].split(" ");
+
+		switch (pDate.getUTCDay())
+		{
+			case T.DayEnum.Sunday: dayclass = "dlySunday"; break;
+			case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
+		}
+
+		// Generate HTML
+		$("#dlyCalendar").append("<div>"
+			// Day
+			+ "<aside></aside>" + bosshtml + "<var class='" + dayclass + "'>" + pDate.getUTCDate() + "</var>"
+			// PvE
+			+ "<span><ins class='dly_daily_pve'></ins>"
+			+ gatherregion + "<ins class='dly_pve_" + gather[0].toLowerCase() + "' title='" + pve[0] + "'></ins>" + gatherregionclose
+			+ activityregion + "<ins class='dly_pve_" + activity[0].toLowerCase() + "' title='" + pve[1] + "'></ins>" + activityregionclose
+			+ eventregion + "<ins class='dly_pve_event dlyEvent curZoom' title='" + pve[2] + " Events'"
+				+ "data-coord='" + (pve[2]).toLowerCase() + "'></ins>" + eventregionclose
+			+ bossregion + "<ins class='" + bosssrc + "' title='" + pve[3] + "'></ins>" + bossregionclose + "</span>"
+			// PvP
+			+ "<span><ins class='dly_daily_pvp'></ins>"
+			+ "<ins class='dly_pvp_" + pvp[0].toLowerCase() + "' title='" + pvp[0] + "'></ins>"
+			+ "<ins class='dly_pvp_" + pvp[1].toLowerCase() + "' title='" + pvp[1] + "'></ins>"
+			+ "<ins class='dly_pvp_profession_" + prof0[0].toLowerCase() + "_0' title='" + pvp[2] + "'>"
+				+ "<ins class='dly_pvp_profession_" + prof0[1].toLowerCase() + "_1'></ins>" + "</ins>"
+			+ "<ins class='dly_pvp_profession_" + prof1[0].toLowerCase() + "_0' title='" + pvp[3] + "'>"
+				+ "<ins class='dly_pvp_profession_" + prof1[1].toLowerCase() + "_1'></ins>" + "</ins></span>"
+			// WvW
+			+ "<span><ins class='dly_daily_wvw'></ins>"
+			+ "<ins class='dly_wvw_" + wvw[0].toLowerCase() + "' title='" + wvw[0] + "'></ins>"
+			+ "<ins class='dly_wvw_" + wvw[1].toLowerCase() + "' title='" + wvw[1] + "'></ins>"
+			+ "<ins class='dly_wvw_" + wvw[2].toLowerCase() + "' title='" + wvw[2] + "'></ins>"
+			+ "<ins class='dly_wvw_" + wvw[3].toLowerCase() + "' title='" + wvw[3] + "'></ins></span>"
+			+ "</div>");
 	},
 	
 	/*
@@ -21415,11 +21466,7 @@ T = {
 	{
 		var Settings = pSettings || {};
 		var retrywaitminutes = 3;
-		var url = U.URL_API.Daily;
-		if (Settings.aWantGetTomorrow || Settings.aWantSetTomorrow)
-		{
-			url = U.URL_API.Tomorrow;
-		}
+		var url = (Settings.aWantGetTomorrow || Settings.aWantSetTomorrow) ? U.URL_API.Tomorrow : U.URL_API.Daily;
 		
 		return $.getJSON(url, function(pData)
 		{
@@ -24310,7 +24357,7 @@ I = {
 		{
 			content.innerHTML = "";
 		}
-		content.insertAdjacentHTML("beforeend", pString + "<br />");
+		content.insertAdjacentHTML("beforeend", (pString || "") + "<br />");
 	},
 	
 	/*
