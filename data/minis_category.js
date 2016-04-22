@@ -1,6 +1,6 @@
 ﻿var GW2T_MINIS_CATEGORIES = {
 	Set1: [
-		"Brown Bear"
+		"Brown Bear",
 		"Colocal",
 		"Devourer",
 		"Dredge Excavator",
@@ -282,7 +282,7 @@
 		"Holographic Colossus",
 		"First Mate Horrik",
 		"Kookoochoo the Incredulous",
-		"Peggellegg the "Pirate"",
+		"Peggellegg the Pirate",
 		"Poowulpi the Persnicketous",
 		"Yellow Moa",
 		"Liadri the Concealing Dark",

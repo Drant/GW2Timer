@@ -3301,16 +3301,18 @@ U = {
 				for (var ii in pData[i])
 				{
 					var ach = (pData[i])[ii];
-					(function(iAchArray)
+					(function(iAchArray, iAch)
 					{
-						$.getJSON(U.getAPIAchievement(ach.id), function(iData)
+						$.getJSON(U.getAPIAchievement(iAch.id), function(iData)
 						{
-							iData.level = ach.level; // Append the level from the daily object to the actual achievement
+							iData.level = iAch.level; // Append the level from the daily object to the actual achievement
 							iAchArray.push(iData);
+						}).always(function()
+						{
 							numfetched++;
 							finalizeDaily();
 						});
-					})(dailyobj[i]);
+					})(dailyobj[i], ach);
 				}
 			}
 		});
@@ -4013,6 +4015,11 @@ U = {
 		// This is to be placed within the property of an <a> tag
 		return " href='" + I.cSiteURL + "out/?u=" + U.encodeURL(pURL) + "' target='_blank' ";
 	},
+	convertPrivateAnchor: function(pURL)
+	{
+		// This is to be placed within the property of an <a> tag
+		return " href='" + pURL + "' target='_blank' ";
+	},
 	
 	/*
 	 * Replaces href attributes in a raw HTML string and replace them with
@@ -4705,6 +4712,9 @@ A = {
 				I.write("API tokens limit reached.");
 			}
 		});
+		
+		// Finally
+		I.qTip.init($("#accManager").find("button"));
 	},
 	
 	/*
@@ -4868,8 +4878,8 @@ A = {
 		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
 		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
-		var use = $("<button class='accTokenUse'><img src='img/ui/check.png' /></button>").appendTo(buttons);
-		var del = $("<button class='accTokenDelete'><img src='img/ui/default.png' /></button>").appendTo(buttons);
+		var use = $("<button class='accTokenUse' title='<dfn>Use</dfn> this key.'><img src='img/ui/check.png' /></button>").appendTo(buttons);
+		var del = $("<button class='accTokenDelete' title='<dfn>Delete</dfn> this key.'><img src='img/ui/default.png' /></button>").appendTo(buttons);
 		var swap = $("<span class='btnSwap'></span>").appendTo(buttons);
 		var swapup = $("<button class='btnSwapUp'></button>").appendTo(swap);
 		var swapdown = $("<button class='btnSwapDown'></button>").appendTo(swap);
@@ -5409,7 +5419,7 @@ V = {
 		{
 			A.Data.Account = pData;
 			var accountname = U.escapeHTML(((pData.name).split("."))[0]); // Omit the identifier number from the account name
-			var forumlink = U.convertExternalAnchor("https://forum-en.guildwars2.com/members/" + pData.name.replace(/[\s\.]/g, "-") + "/showposts");
+			var forumlink = U.convertPrivateAnchor("https://forum-en.guildwars2.com/members/" + pData.name.replace(/[\s\.]/g, "-") + "/showposts");
 			var totalagehour = Math.round(totalage / T.cSECONDS_IN_HOUR);
 			var accountbirthdate = new Date(pData.created);
 			var accountlifetime = ~~((nowmsec - accountbirthdate.getTime()) / T.cMSECONDS_IN_SECOND);
@@ -5431,9 +5441,9 @@ V = {
 				+ "<var id='chrAccountServer'></var><br />"
 				+ "<var id='chrAccountAge' title='" + hoursperday + hourstr + " / " + T.cHOURS_IN_DAY + hourstr + "<br />"
 						+ T.formatTimeLetter(totalage) + " / " + accountbirthdaysince + "'>" + totalagehour + hourstr + "</var> / "
-					+ "<var id='chrAccountDeaths' title='" + T.parseRatio(totalagehour / totaldeaths, 3) + "'>" + totaldeaths + "x</var> &nbsp; "
+					+ "<var id='chrAccountDeaths' title='" + T.parseRatio(totaldeaths / totalagehour, 3) + "x / " + "1" + hourstr + "'>" + totaldeaths + "x</var> &nbsp; "
 					+ "<var id='chrAccountLifetime'>" + accountbirthdaysince +  "</var>"
-					+ " &nbsp; <button id='chrAccountReload' title='Reload characters data (statistics, equipment, inventory).'><img src='img/ui/refresh.png' /></button>";
+					+ " &nbsp; <button id='chrAccountReload' title='<dfn>Reload</dfn> characters data (statistics, equipment, inventory).'><img src='img/ui/refresh.png' /></button>";
 			$("#chrSummary").append(summary);
 			I.qTip.init("#chrSummary var, #chrAccountReload");
 			// Account reload button
@@ -5629,10 +5639,16 @@ V = {
 	 */
 	serveEquipment: function()
 	{
-		if (V.requireCharacters("Equipment") || A.checkPermission(A.PermissionEnum.Builds) !== true)
+		if (V.requireCharacters("Equipment"))
 		{
 			return;
 		}
+		else if (!A.Data.Characters[0].equipment)
+		{
+			A.printError(A.PermissionEnum.Builds);
+			return;
+		}
+		
 		// Generate for single character if user chosen, else all characters
 		var equipcur = $("#eqpContainer_" + A.CharIndexCurrent);
 		var equipall = $(".eqpContainer");
@@ -5909,6 +5925,14 @@ V = {
 								sloticon.attr("src", iBox.item.icon);
 								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
 							}
+							// Bind click behavior for the icon
+							sloticon.click(function(pEvent)
+							{
+								if (pEvent.which === I.ClickEnum.Left)
+								{
+									U.openPrivateURL(U.getWikiSearchLink(iBox.item.name));
+								}
+							});
 							numfetched++;
 							finalizeEquipment();
 						}
@@ -6085,10 +6109,16 @@ V = {
 	 */
 	serveInventory: function()
 	{
-		if (V.requireCharacters("Inventory") || A.checkPermission(A.PermissionEnum.Inventories) === false || A.Data.Characters.length < 1)
+		if (V.requireCharacters("Inventory"))
 		{
 			return;
 		}
+		else if (!A.Data.Characters[0].bags)
+		{
+			A.printError(A.PermissionEnum.Inventories);
+			return;
+		}
+		
 		var dish = $("#accDish_Inventory");
 		if (A.reinitializeDish(dish) === false)
 		{
@@ -14845,9 +14875,16 @@ M = {
 		this.Map.setView(this.convertGCtoLC(pCoord), pZoom);
 		this.showCurrentZone(pCoord);
 	},
-	goOutOfView: function()
+	
+	/*
+	 * Views the map outside of bounds then instantly back at original view,
+	 * to workaround the unresponsive map bug when the map was previously hidden.
+	 */
+	refreshView: function(pCoord)
 	{
+		var latlng = (pCoord) ? this.convertGCtoLC(pCoord) : this.Map.getCenter();
 		this.Map.setView(M.cMAP_CENTER_INITIAL, this.Map.getZoom());
+		this.Map.setView(latlng, this.Map.getZoom());
 	},
 	
 	/*
@@ -15186,31 +15223,35 @@ M = {
 			U.interpretCommand(command, that, pZoom, pPin);
 		});
 		
-		var coord = that.getElementCoordinates(pLink);
-		if (coord.length > 1)
+		pLink.dblclick(function()
 		{
-			pLink.dblclick(function()
+			var thiscoord = that.getElementCoordinates($(this));
+			if (thiscoord.length > 1)
 			{
 				if (that.Map.getZoom() === that.ZoomEnum.Max)
 				{
-					that.goToView(coord, that.ZoomEnum.Default, pPin);
+					that.goToView(thiscoord, that.ZoomEnum.Default, pPin);
 				}
 				else
 				{
 					that.Map.zoomIn();
 				}
-			});
-
-			// Move a point pin to that location as a preview
-			pLink.mouseover(function()
+			}
+		});
+		
+		// Move a point pin to that location as a preview
+		pLink.mouseover(function()
+		{
+			var thiscoord = that.getElementCoordinates($(this));
+			if (thiscoord.length > 1)
 			{
-				that.movePin(that.Pin.Over, coord);
-			});
-			pLink.mouseout(function()
-			{
-				that.movePin(that.Pin.Over);
-			});
-		}
+				that.movePin(that.Pin.Over, thiscoord);
+			}
+		});
+		pLink.mouseout(function()
+		{
+			that.movePin(that.Pin.Over);
+		});
 	},
 	
 	/*
@@ -16748,8 +16789,7 @@ P = {
 		else if (followenum === O.IntEnum.Follow.Zone && that.GPSPreviousZoneID !== zoneid && that.ZoneAssociation[zoneid])
 		{
 			zonecoord = that.getZoneCenter(that.ZoneAssociation[zoneid]);
-			that.goOutOfView();
-			that.Map.setView(that.convertGCtoLC(zonecoord), that.Map.getZoom());
+			that.refreshView(zonecoord);
 			that.showCurrentZone(zonecoord);
 			that.GPSPreviousZoneID = zoneid;
 			pForceCode = -1; // Also update pin position
@@ -16859,7 +16899,7 @@ G = {
 			// The daily scale are located in these API array indexes for that URL
 			var fractal = T.Daily.Fractal;
 			var tier0 = T.DailyAssociation[(pData.achievements[0])];
-			var tier1 = T.DailyAssociation[(pData.achievements[4])];
+			var tier1 = T.DailyAssociation[(pData.achievements[1])];
 			
 			if (tier0 !== undefined && tier1 !== undefined)
 			{
@@ -16913,7 +16953,7 @@ G = {
 			activityregionclose = "</ins>";
 		}
 		eventregion = "<ins class='dlyRegion dly_region_" + M.getZoneRegion(pve[2]) + "'>";
-		if (pve[3] !== null)
+		if (pve[3] !== null && C.getChainByAlias(pve[3]))
 		{
 			bosssrc = "dly_pve_boss";
 			bossregion = "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(pve[3])) + "'>";
@@ -21421,7 +21461,7 @@ T = {
 	 */
 	convertDailyObject: function(pObj)
 	{
-		var daily = {};
+		var dailyobj = {};
 		var a = T.DailyAssociation;
 		// Trim non-max level dailies
 		for (var i = pObj.pve.length - 1; i >= 0; i--)
@@ -21433,10 +21473,10 @@ T = {
 		}
 		// Turn the achievement IDs into achievement nicknames
 		var u = "unknown";
-		daily.pve = [a[(pObj.pve[0].id)] || u, a[(pObj.pve[1].id)] || u, a[(pObj.pve[2].id)] || u, a[(pObj.pve[3].id)] || u];
-		daily.pvp = [a[(pObj.pvp[0].id)] || u, a[(pObj.pvp[1].id)] || u, a[(pObj.pvp[2].id)] || u, a[(pObj.pvp[3].id)] || u];
-		daily.wvw = [a[(pObj.wvw[0].id)] || u, a[(pObj.wvw[1].id)] || u, a[(pObj.wvw[2].id)] || u, a[(pObj.wvw[3].id)] || u];
-		return daily;
+		dailyobj.pve = [a[(pObj.pve[0].id)] || u, a[(pObj.pve[1].id)] || u, a[(pObj.pve[2].id)] || u, a[(pObj.pve[3].id)] || u];
+		dailyobj.pvp = [a[(pObj.pvp[0].id)] || u, a[(pObj.pvp[1].id)] || u, a[(pObj.pvp[2].id)] || u, a[(pObj.pvp[3].id)] || u];
+		dailyobj.wvw = [a[(pObj.wvw[0].id)] || u, a[(pObj.wvw[1].id)] || u, a[(pObj.wvw[2].id)] || u, a[(pObj.wvw[3].id)] || u];
+		return dailyobj;
 	},
 	
 	/*
@@ -24357,7 +24397,7 @@ I = {
 		{
 			content.innerHTML = "";
 		}
-		content.insertAdjacentHTML("beforeend", (pString || "") + "<br />");
+		content.insertAdjacentHTML("beforeend", pString + "<br />");
 	},
 	
 	/*
@@ -25355,6 +25395,7 @@ I = {
 						case P.MapEnum.Tyria: {
 							$("#mapPane").show();
 							M.refreshMap();
+							M.refreshView();
 						} break;
 
 						case P.MapEnum.Mists: {
@@ -25362,6 +25403,7 @@ I = {
 							if (W.isMapInitialized)
 							{
 								W.refreshMap();
+								W.refreshView();
 							}
 						} break;
 					}

@@ -6,6 +6,42 @@
  */
 
 var GW2T_JP_DATA = {
+/*"TEST": {
+	id: 60,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
+	path: null,
+	img: "",
+	description: ""
+},*/
+/*"torchers": {
+	id: 62,
+	difficulty: 5,
+	name_en: "Tendril Torchers",
+	name_de: "Rankenbrenner",
+	name_es: "Quemazarcillos",
+	name_fr: "Lance-flammes anti-tentacules",
+	coord: [3665, 15722],
+	path: null,
+	img: "",
+	description: ""
+},
+"bugs": {
+	id: 63,
+	difficulty: 5,
+	name_en: "Bugs in the Branches",
+	name_de: "Käfer im Geäst",
+	name_es: "Bichos en las ramas",
+	name_fr: "Des insectes dans les branches",
+	coord: [3682, 14925],
+	path: null,
+	img: "",
+	description: ""
+},*/
 "urmaug": {
 	id: 19,
 	difficulty: 1,
@@ -469,6 +505,30 @@ var GW2T_JP_DATA = {
 	coord: [13610, 25044],
 	img: "kDX7ZEq",
 	description: "Malchor's convoluted orrian ruins cave collecting 12 orbs"
+},
+"egg": {
+	id: 60,
+	difficulty: 3,
+	name_en: "Egg Bearer",
+	name_de: "Trägerin des Eis",
+	name_es: "Portadora del huevo",
+	name_fr: "Porteuse de l'œuf",
+	coord: [1756, 18035],
+	path: null,
+	img: "",
+	description: "Auric underground chamber edge climb"
+},
+"gear": {
+	id: 61,
+	difficulty: 3,
+	name_en: "Highest Gear",
+	name_de: "Luftige Höhen",
+	name_es: "El Engranaje Más Alto",
+	name_fr: "Équipement optimal",
+	coord: [585, 17822],
+	path: null,
+	img: "",
+	description: "Auric mushroom cave leyline gliding"
 },
 "neighborhood": {
 	id: 46,

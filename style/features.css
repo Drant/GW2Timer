@@ -211,11 +211,16 @@ dt.jpzListNameHover {
 	border-radius: 50%;
 	opacity: 0.9;
 }
+.jpzDifficulty5 {
+	border-radius: 4px;
+	opacity: 0.9;
+}
 .jpzDifficulty0 { border: 2px solid black; }
 .jpzDifficulty1 { border: 2px solid lime; }
 .jpzDifficulty2 { border: 2px solid orange; }
 .jpzDifficulty3 { border: 2px solid red; }
 .jpzDifficulty4 { border: 2px solid purple; }
+.jpzDifficulty5 { border: 2px solid gold; }
 
 
 /* =============================================================================
