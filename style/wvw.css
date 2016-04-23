@@ -260,10 +260,10 @@
 	color: #ffeeaa;
 }
 .lboName {
-	width: 96px;
+	width: 192px;
 	margin-left: 8px;
 	overflow: visible;
-	text-align: left;
+	text-align: center;
 	white-space: nowrap;
 	font-family: Menomonia;
 	font-weight: bold;
@@ -440,6 +440,21 @@
 	display: inline-block;
 	width: auto;
 	margin: 0;
+}
+#logFilters label {
+	width: 100%;
+}
+#logFiltersRed, #logFiltersBlue, #logFiltersGreen {
+	width: 100%;
+}
+#logFiltersRed {
+	text-align: center;
+}
+#logFiltersGreen {
+	text-align: left;
+}
+#logFiltersBlue {
+	text-align: right;
 }
 #logOptions input[type="checkbox"] {
 	opacity: 0.5;

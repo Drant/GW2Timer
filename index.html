@@ -22,7 +22,7 @@
 	<script>window.L || document.write('<script src="bin/leaflet.js"><\/script>');</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160422"></script>
+	<script type="text/javascript" src="data/general.js?v=20160423"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 <!-- Google Analytics -->
@@ -427,8 +427,8 @@
 									<div id="logNarrateLand" class="cssColumn">
 										<b>Narration Filter:</b>
 										<label><input id="opt_bol_narrateRedHome" type="checkbox" /><var></var></label>
-										<label><input id="opt_bol_narrateGreenHome" type="checkbox" /><var></var></label>
 										<label><input id="opt_bol_narrateBlueHome" type="checkbox" /><var></var></label>
+										<label><input id="opt_bol_narrateGreenHome" type="checkbox" /><var></var></label>
 										<label><input id="opt_bol_narrateCenter" type="checkbox" /><var></var></label>
 									</div>
 									<div id="logNarrateObjective" class="cssColumn">
@@ -442,9 +442,9 @@
 								</div>
 							</div>
 							<div id="logFilters">
-								<label><input id="opt_bol_logRedHome" type="checkbox" /><var></var></label><br />
-								<label><input id="opt_bol_logGreenHome" type="checkbox" /><var></var></label>
-								<label><input id="opt_bol_logBlueHome" type="checkbox" /><var></var></label>
+								<div id="logFiltersRed"><label><input id="opt_bol_logRedHome" type="checkbox" /><var></var></label></div>
+								<div id="logFiltersBlue"><label><input id="opt_bol_logBlueHome" type="checkbox" /><var></var></label></div>
+								<div id="logFiltersGreen"><label><input id="opt_bol_logGreenHome" type="checkbox" /><var></var></label></div>
 								<div><time id="logTime" class="curToggle" title="Toggle 24:00/12AM"></time><label><input id="opt_bol_logCenter" type="checkbox" /><var></var></label></div>
 							</div>
 						</div>

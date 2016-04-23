@@ -17,8 +17,8 @@ var GW2T_JP_DATA = {
 	path: null,
 	img: "",
 	description: ""
-},*/
-/*"torchers": {
+},
+"torchers": {
 	id: 62,
 	difficulty: 5,
 	name_en: "Tendril Torchers",
@@ -28,7 +28,7 @@ var GW2T_JP_DATA = {
 	coord: [3665, 15722],
 	path: null,
 	img: "",
-	description: ""
+	description: "Verdant flamethrower burn down tendril infestation"
 },
 "bugs": {
 	id: 63,
@@ -38,6 +38,162 @@ var GW2T_JP_DATA = {
 	name_es: "Bichos en las ramas",
 	name_fr: "Des insectes dans les branches",
 	coord: [3682, 14925],
+	path: null,
+	img: "",
+	description: "Verdant fireflies catching using updrafts"
+},
+"circus": {
+	id: 64,
+	difficulty: 5,
+	name_en: "Flying Circus",
+	name_de: "Schauflug",
+	name_es: "Circo volador",
+	name_fr: "Cirque volant",
+	coord: [1524, 14830],
+	path: null,
+	img: "",
+	description: "Verdant gliding aerial obstacle course rings"
+},
+"shooting": {
+	id: 65,
+	difficulty: 5,
+	name_en: "Shooting Gallery",
+	name_de: "Schießbude",
+	name_es: "Galería de tiro",
+	name_fr: "Stand de tir",
+	coord: [2040, 15974],
+	path: null,
+	img: "",
+	description: "Verdant rifle shoot mounted dummies around camp"
+},
+"pit": {
+	id: 66,
+	difficulty: 5,
+	name_en: "Salvage Pit",
+	name_de: "Bergungsmaterial-Grube",
+	name_es: "Pozo de reciclaje",
+	name_fr: "Gouffre aux épaves",
+	coord: [3136, 15967],
+	path: null,
+	img: "",
+	description: "Verdant collect disks and avoid spitting tendrils"
+},
+"TEST": {
+	id: 67,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
+	path: null,
+	img: "",
+	description: ""
+},
+"TEST": {
+	id: 68,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
+	path: null,
+	img: "",
+	description: ""
+},
+"TEST": {
+	id: 69,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
+	path: null,
+	img: "",
+	description: ""
+},
+"TEST": {
+	id: 70,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
+	path: null,
+	img: "",
+	description: ""
+},
+"TEST": {
+	id: 71,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
+	path: null,
+	img: "",
+	description: ""
+},
+"TEST": {
+	id: 72,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
+	path: null,
+	img: "",
+	description: ""
+},
+"TEST": {
+	id: 73,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
+	path: null,
+	img: "",
+	description: ""
+},
+"TEST": {
+	id: 74,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
+	path: null,
+	img: "",
+	description: ""
+},
+"TEST": {
+	id: 75,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
+	path: null,
+	img: "",
+	description: ""
+},
+"TEST": {
+	id: 76,
+	difficulty: 5,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	coord: null,
 	path: null,
 	img: "",
 	description: ""

@@ -171,13 +171,13 @@ O = {
 		bol_opaqueLog: false,
 		bol_maximizeLog: false,
 		bol_logRedHome: true,
-		bol_logGreenHome: true,
 		bol_logBlueHome: true,
+		bol_logGreenHome: true,
 		bol_logCenter: true,
 		bol_logNarrate: false,
 		bol_narrateRedHome: true,
-		bol_narrateGreenHome: true,
 		bol_narrateBlueHome: true,
+		bol_narrateGreenHome: true,
 		bol_narrateCenter: true,
 		bol_narrateClaimed: true,
 		bol_narrateCamp: true,
@@ -3137,6 +3137,11 @@ U = {
 				{
 					I.print("All IDs successfully retrieved.");
 				}
+				// Sort the objects by their IDs
+				if (U.APICacheArrayOfObjects.length > 0 && U.APICacheArrayOfObjects[0].id)
+				{
+					O.sortObjects(U.APICacheArrayOfObjects, "id");
+				}
 				I.print("Scrape completed. Enter /apicache to print the results.");
 			}
 		};
@@ -3180,7 +3185,9 @@ U = {
 		var waitCooldown = function()
 		{
 			var percentcomplete = U.convertRatioToPercent(reqindex / idsarray.length);
-			I.print("Cooldown... " + reqindex + " / " + idsarray.length + " (" + percentcomplete + ")");
+			var secremaining = Math.ceil((idsarray.length - reqindex) / reqlimit) * ~~(reqcooldownms / T.cMSECONDS_IN_SECOND);
+			I.print("Cooldown... " + reqindex + " / " + idsarray.length
+				+ " (" + percentcomplete + ")" + " " + T.formatTimeLetter(secremaining, true) + " remaining.");
 			setTimeout(function()
 			{
 				iterateIDs();
@@ -8453,20 +8460,20 @@ Q = {
 		var bagouter, bag;
 		pBagsData.forEach(function(iBagData)
 		{
-			// Count the number of items the bag is holding
-			var bagfill = 0;
-			for (var i = 0; i < iBagData.inventory.length; i++)
-			{
-				if (iBagData.inventory[i])
-				{
-					bagfill++;
-				}
-			}
-			// Create the bag icon
-			bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
-			bag = $("<span class='bnkSidebarBag'><var class='bnkSidebarBagCount'>" + bagfill + "/" + iBagData.size + "</var></span>").appendTo(bagouter);
 			if (iBagData)
 			{
+				// Count the number of items the bag is holding
+				var bagfill = 0;
+				for (var i = 0; i < iBagData.inventory.length; i++)
+				{
+					if (iBagData.inventory[i])
+					{
+						bagfill++;
+					}
+				}
+				// Create the bag icon
+				bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
+				bag = $("<span class='bnkSidebarBag'><var class='bnkSidebarBagCount'>" + bagfill + "/" + iBagData.size + "</var></span>").appendTo(bagouter);
 				(function(iBag)
 				{
 					Q.getItem(iBagData.id, function(iItem)
@@ -16969,33 +16976,33 @@ G = {
 			case T.DayEnum.Sunday: dayclass = "dlySunday"; break;
 			case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
 		}
+		
+		var pve0 = gatherregion + "<ins class='dly_pve_" + gather[0].toLowerCase() + "' title='" + pve[0] + "'></ins>" + gatherregionclose;
+		var pve1 = activityregion + "<ins class='dly_pve_" + activity[0].toLowerCase() + "' title='" + pve[1] + "'></ins>" + activityregionclose;
+		var pve2 = eventregion + "<ins class='dly_pve_event dlyEvent curZoom' title='" + pve[2] + " Events'" + "data-coord='" + (pve[2]).toLowerCase() + "'></ins>" + eventregionclose;
+		var pve3 = bossregion + "<ins class='" + bosssrc + "' title='" + pve[3] + "'></ins>" + bossregionclose;
+		
+		var pvp0 = "<ins class='dly_pvp_" + pvp[0].toLowerCase() + "' title='" + pvp[0] + "'></ins>";
+		var pvp1 = "<ins class='dly_pvp_" + pvp[1].toLowerCase() + "' title='" + pvp[1] + "'></ins>";
+		var pvp2 = "<ins class='dly_pvp_profession_" + prof0[0].toLowerCase() + "_0' title='" + pvp[2] + "'>" + "<ins class='dly_pvp_profession_" + prof0[1].toLowerCase() + "_1'></ins>" + "</ins>";
+		var pvp3 = "<ins class='dly_pvp_profession_" + prof1[0].toLowerCase() + "_0' title='" + pvp[3] + "'>" + "<ins class='dly_pvp_profession_" + prof1[1].toLowerCase() + "_1'></ins>" + "</ins>";
+		
+		var wvw0 = "<ins class='dly_wvw_" + wvw[0].toLowerCase() + "' title='" + wvw[0] + "'></ins>";
+		var wvw1 = "<ins class='dly_wvw_" + wvw[1].toLowerCase() + "' title='" + wvw[1] + "'></ins>";
+		var wvw2 = "<ins class='dly_wvw_" + wvw[2].toLowerCase() + "' title='" + wvw[2] + "'></ins>";
+		var wvw3 = "<ins class='dly_wvw_" + wvw[3].toLowerCase() + "' title='" + wvw[3] + "'></ins>";
 
 		// Generate HTML
 		$("#dlyCalendar").append("<div>"
 			// Day
 			+ "<aside></aside>" + bosshtml + "<var class='" + dayclass + "'>" + pDate.getUTCDate() + "</var>"
 			// PvE
-			+ "<span><ins class='dly_daily_pve'></ins>"
-			+ gatherregion + "<ins class='dly_pve_" + gather[0].toLowerCase() + "' title='" + pve[0] + "'></ins>" + gatherregionclose
-			+ activityregion + "<ins class='dly_pve_" + activity[0].toLowerCase() + "' title='" + pve[1] + "'></ins>" + activityregionclose
-			+ eventregion + "<ins class='dly_pve_event dlyEvent curZoom' title='" + pve[2] + " Events'"
-				+ "data-coord='" + (pve[2]).toLowerCase() + "'></ins>" + eventregionclose
-			+ bossregion + "<ins class='" + bosssrc + "' title='" + pve[3] + "'></ins>" + bossregionclose + "</span>"
+			+ "<span><ins class='dly_daily_pve'></ins>" + pve0 + pve1 + pve2 + pve3 + "</span>"
 			// PvP
-			+ "<span><ins class='dly_daily_pvp'></ins>"
-			+ "<ins class='dly_pvp_" + pvp[0].toLowerCase() + "' title='" + pvp[0] + "'></ins>"
-			+ "<ins class='dly_pvp_" + pvp[1].toLowerCase() + "' title='" + pvp[1] + "'></ins>"
-			+ "<ins class='dly_pvp_profession_" + prof0[0].toLowerCase() + "_0' title='" + pvp[2] + "'>"
-				+ "<ins class='dly_pvp_profession_" + prof0[1].toLowerCase() + "_1'></ins>" + "</ins>"
-			+ "<ins class='dly_pvp_profession_" + prof1[0].toLowerCase() + "_0' title='" + pvp[3] + "'>"
-				+ "<ins class='dly_pvp_profession_" + prof1[1].toLowerCase() + "_1'></ins>" + "</ins></span>"
+			+ "<span><ins class='dly_daily_pvp'></ins>" + pvp0 + pvp1 + pvp2 + pvp3 + "</span>"
 			// WvW
-			+ "<span><ins class='dly_daily_wvw'></ins>"
-			+ "<ins class='dly_wvw_" + wvw[0].toLowerCase() + "' title='" + wvw[0] + "'></ins>"
-			+ "<ins class='dly_wvw_" + wvw[1].toLowerCase() + "' title='" + wvw[1] + "'></ins>"
-			+ "<ins class='dly_wvw_" + wvw[2].toLowerCase() + "' title='" + wvw[2] + "'></ins>"
-			+ "<ins class='dly_wvw_" + wvw[3].toLowerCase() + "' title='" + wvw[3] + "'></ins></span>"
-			+ "</div>");
+			+ "<span><ins class='dly_daily_wvw'></ins>" + wvw0 + wvw1 + wvw2 + wvw3 + "</span>"
+		+ "</div>");
 	},
 	
 	/*
@@ -18474,8 +18481,8 @@ W = {
 	isWvWLoaded: false,
 	Metadata: {},
 	Servers: {}, // Server names and translations
-	Matches: null, // For fallback API, array containing objects with same structure as "worlds" subobject in matches.json
-	MatchupCurrent: null, // Example: { "red": 1019, "blue": 1008, "green": 1003 }
+	Matches: null, // For fallback API, array containing objects with same structure as "worlds" subobject in v2 API matches.json
+	MatchupCurrent: null, // Formatted superobject containing factions (servers of a color) and reuseable translated strings
 	Guilds: {}, // Holds retrieved API guild details objects
 	Objectives: {},
 	ObjectiveTimeout: {},
@@ -18485,7 +18492,6 @@ W = {
 	LandEnum: {}, // Corresponds to "map_type" property of objectives
 	ObjectiveEnum: {}, // Corresponds to "type" property of objectives
 	OwnerEnum: {}, // Corresponds to "owner" property from match API
-	OwnerCurrent: null, // The color of the user's selected server
 	MatchupIDCurrent: null,
 	isObjectiveTickEnabled: false,
 	isObjectiveTimerTickEnabled: false,
@@ -18754,19 +18760,120 @@ W = {
 	},
 	
 	/*
-	 * Gets the server object from an owner string, such as "Green".
+	 * Converts the API matchup object into a custom containing factions and
+	 * formatted server names. A faction is a set of servers on one team color.
+	 * @param object pMatchData from v2 or v1 API matches.json.
+	 * return object matchup.
+	 */
+	formatMatchup: function(pMatchData)
+	{
+		var id = 0;
+		var numfac = W.Metadata.Factions.length;
+		var facnames = W.Metadata.Factions;
+		var ithfacname, ithowner, worldid, factionserverids;
+		var servers = new Array(numfac);
+		var names = new Array(numfac);
+		var namelines = new Array(numfac);
+		var namelinks = new Array(numfac);
+		var nicks = new Array(numfac);
+		var colors = new Array(numfac);
+		
+		// Create the object
+		var custommatchup = {};
+		custommatchup.id = id; // Match ID
+		
+		if (pMatchData.wvw_match_id) // Only v1 API matches.json has this property
+		{
+			id = pMatchData.wvw_match_id;
+			for (var i = 0; i < numfac; i++)
+			{
+				ithfacname = facnames[i];
+				worldid = pMatchData[(ithfacname + "_world_id")];
+				servers[i] = new Array();
+				servers[i].push(W.Servers[worldid]);
+			}
+			// Initialize the one-server-per-faction object
+			custommatchup.worlds = W.convertWorlds(pMatchData);
+		}
+		else // Else assume it is v2 API matches.json
+		{
+			id = pMatchData.id;
+			var factions = pMatchData.all_worlds;
+			for (var i = 0; i < numfac; i++)
+			{
+				ithfacname = facnames[i];
+				factionserverids = factions[ithfacname];
+				servers[i] = new Array();
+				for (var ii = 0; ii < factionserverids.length; ii++)
+				{
+					servers[i].push(W.Servers[(factionserverids[ii])]);
+				}
+			}
+			// Initialize the one-server-per-faction object
+			custommatchup.worlds = pMatchData.worlds;
+		}
+		
+		// Initialize reuseable formatted server names string
+		for (var i = 0; i < numfac; i++)
+		{
+			ithfacname = facnames[i];
+			ithowner = U.toFirstUpperCase(ithfacname);
+			names[i] = new Array();
+			namelines[i] = new Array();
+			namelinks[i] = new Array(); 
+			nicks[i] = new Array();
+			colors[i] = D.getObjectName(W.Metadata[ithowner]);
+			
+			for (var ii = 0; ii < servers[i].length; ii++)
+			{
+				var ithserver = (servers[i])[ii];
+				var ithservername = U.escapeHTML(D.getObjectName(ithserver));
+				names[i] += ithservername;
+				namelines[i] += ithservername;
+				namelinks[i] += "<a href='/?page=WvW&enu_Server=" + ithserver.id + "'>" + ithservername + "</a>";
+				nicks[i] += D.getObjectNick(ithserver);
+				if (servers[i].length > 1 && ii < servers[i].length - 1)
+				{
+					names[i] += " &amp; ";
+					namelines[i] += "<br />";
+					namelinks[i] += " &amp; ";
+					nicks[i] += " ";
+				}
+				
+				// If the iterated server is the user's home server, then assign the color/owner string
+				if (ithserver.id === O.Options.enu_Server)
+				{
+					custommatchup.ownercurrent = ithowner;
+				}
+			}
+		}
+		
+		// Assign variables for all factions to the custom matchup object
+		for (var i = 0; i < numfac; i++)
+		{
+			ithfacname = facnames[i];
+			custommatchup[ithfacname] = {
+				servers: servers[i],
+				namestr: names[i],
+				namelinestr: namelines[i],
+				namelinkstr: namelinks[i],
+				nickstr: nicks[i],
+				color: colors[i]
+			};
+		}
+		
+		return custommatchup;
+	},
+	
+	/*
+	 * Gets the faction object (of the custom matchup object) from an owner
+	 * string, such as "Green".
 	 * @param string pOwner.
 	 * @returns object server.
 	 */
-	getServerFromOwner: function(pOwner)
+	getFactionFromOwner: function(pOwner)
 	{
-		var serverid = W.MatchupCurrent[pOwner.toLowerCase()];
-		// Neutral owner
-		if (serverid === undefined)
-		{
-			return W.Metadata.Neutral;
-		}
-		return W.Servers[serverid];
+		return W.MatchupCurrent[pOwner.toLowerCase()];
 	},
 	
 	/*
@@ -18778,7 +18885,7 @@ W = {
 	 */
 	getBorderlandsString: function(pServer, pFullServer, pFullBorderlands)
 	{
-		var server = (typeof pServer === "string") ? W.Servers[W.MatchupCurrent[pServer]] : pServer;
+		var server = (typeof pServer === "string") ? W.Servers[W.MatchupCurrent.worlds[pServer]] : pServer;
 		var serverstr, blstr;
 		
 		// If the server is actually an objective object
@@ -18793,7 +18900,7 @@ W = {
 			}
 			else
 			{
-				server = W.Servers[(W.MatchupCurrent[land])];
+				server = W.Servers[(W.MatchupCurrent.worlds[land])];
 			}
 		}
 		
@@ -18956,11 +19063,11 @@ W = {
 				continue;
 			}
 			lb.append("<div id='" + htmlid + "'></div>");
-			(function(iID, iMatchID)
+			(function(iID)
 			{
 				$.getJSON(url, function(pData)
 				{
-					var ithmatch = (W.isFallbackEnabled) ? W.Matches[iMatchID] : pData.worlds;
+					var ithmatch = W.formatMatchup(pData);
 					W.insertScoreboard(pData, ithmatch, $("#" + iID));
 					W.readjustLeaderboard();
 					I.updateScrollbar("#lboOther");
@@ -18972,7 +19079,7 @@ W = {
 	/*
 	 * Inserts a matchup/tier scoreboard into the leaderboard.
 	 * @param object pData from matches API.
-	 * @param object pMatchup from matches API.
+	 * @param object pMatchup custom matchup converted from matches API.
 	 * @param jqobject pContainer to insert the scoreboard in, optional.
 	 */
 	insertScoreboard: function(pData, pMatchup, pContainer)
@@ -19008,9 +19115,9 @@ W = {
 			var owner = W.Metadata.Owners[i];
 			PPT[owner] = {};
 			(PPT[owner]).Total = 0;
-			(PPT[owner])[W.LandEnum.GreenHome] = 0;
-			(PPT[owner])[W.LandEnum.BlueHome] = 0;
 			(PPT[owner])[W.LandEnum.RedHome] = 0;
+			(PPT[owner])[W.LandEnum.BlueHome] = 0;
+			(PPT[owner])[W.LandEnum.GreenHome] = 0;
 			(PPT[owner])[W.LandEnum.Center] = 0;
 			for (var ii in W.Metadata.Owners) // The division of "native" land in EBG
 			{
@@ -19070,10 +19177,9 @@ W = {
 			var owner = W.Metadata.Owners[i]; // Example: "Green" as in data
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
-			var serverid = pMatchup[ownerkey];
-			var servername = U.escapeHTML(D.getObjectName(W.Servers[serverid]));
-			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside><aside class='lboName'>&nbsp;<a href='/"
-				+ "?page=WvW&enu_Server=" + serverid + "'>" + servername + "</a></aside>" : "";
+			var serverid = pMatchup.worlds[ownerkey];
+			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
+				+ "<aside class='lboName'>&nbsp;" + pMatchup[ownerkey].namelinkstr + "</aside>" : "";
 			var score = scores[ownerkey];
 			var scorehighest = (T.getMinMax(scores)).max;
 			var scorepercent = (scores[ownerkey] / scorehighest) * T.cPERCENT_100;
@@ -19109,7 +19215,7 @@ W = {
 					focuses.push(focus);
 					var difference = score - scores[otherownerkey];
 					scoredifferences.push(difference);
-					var otherserver = W.Servers[(pMatchup[otherownerkey])];
+					var otherserver = W.Servers[(pMatchup.worlds[otherownerkey])];
 					otherservers.push(U.escapeHTML(D.getObjectName(otherserver)));
 				}
 			}
@@ -19320,8 +19426,8 @@ W = {
 		// Label the narration filters
 		var blstr = W.getName("Borderlands");
 		$("#opt_bol_narrateRedHome").next().html(D.orderModifier(blstr, W.getName("Red")));
-		$("#opt_bol_narrateGreenHome").next().html(D.orderModifier(blstr, W.getName("Green")));
 		$("#opt_bol_narrateBlueHome").next().html(D.orderModifier(blstr, W.getName("Blue")));
+		$("#opt_bol_narrateGreenHome").next().html(D.orderModifier(blstr, W.getName("Green")));
 		$("#opt_bol_narrateCenter").next().html(W.getName("Center"));
 		$("#opt_bol_narrateCamp").next().html(W.getName("Camp"));
 		$("#opt_bol_narrateTower").next().html(W.getName("Tower"));
@@ -19373,14 +19479,10 @@ W = {
 		var log = $("#logWindow");
 		var windowheight = $(window).height();
 		var oldheight = log.data("oldHeight");
-		var newheight = windowheight - oldheight;
+		var newheight = windowheight - (oldheight + $("#logOptions").height());
 
 		if (O.Options.bol_maximizeLog)
 		{
-			if (newheight < oldheight)
-			{
-				newheight = oldheight;
-			}
 			log.show().animate({height: newheight}, 200, function()
 			{
 				I.updateScrollbar(log);
@@ -19486,8 +19588,8 @@ W = {
 		// The entry will be added, but only shown if opted
 		var isdisplayed = true;
 		if ((land === W.LandEnum.RedHome && O.Options.bol_logRedHome === false)
-			|| (land === W.LandEnum.GreenHome && O.Options.bol_logBlueHome === false)
 			|| (land === W.LandEnum.BlueHome && O.Options.bol_logGreenHome === false)
+			|| (land === W.LandEnum.GreenHome && O.Options.bol_logBlueHome === false)
 			|| (land === W.LandEnum.Center && O.Options.bol_logCenter === false))
 		{
 			isdisplayed = false;
@@ -19513,8 +19615,8 @@ W = {
 		var type = pObjective.type;
 		if ((pIsClaim && O.Options.bol_narrateClaimed === false)
 			|| (land === W.LandEnum.RedHome && O.Options.bol_narrateRedHome === false)
-			|| (land === W.LandEnum.GreenHome && O.Options.bol_narrateGreenHome === false)
 			|| (land === W.LandEnum.BlueHome && O.Options.bol_narrateBlueHome === false)
+			|| (land === W.LandEnum.GreenHome && O.Options.bol_narrateGreenHome === false)
 			|| (land === W.LandEnum.Center && O.Options.bol_narrateCenter === false)
 			|| (type === W.ObjectiveEnum.Camp && O.Options.bol_narrateCamp === false)
 			|| (type === W.ObjectiveEnum.Tower && O.Options.bol_narrateTower === false)
@@ -19530,13 +19632,13 @@ W = {
 		{
 			ownerstr = D.getSpeechInitials(pObjective.tag);
 		}
-		else if (pObjective.owner === W.OwnerCurrent)
+		else if (pObjective.owner === W.MatchupCurrent.ownercurrent)
 		{
 			ownerstr = W.getName("Us");
 		}
 		else
 		{
-			ownerstr = D.getObjectName(W.getServerFromOwner(pObjective.owner));
+			ownerstr = W.getFactionFromOwner(pObjective.owner).color;
 		}
 		// Only include the borderlands string if user opted for more than one land filter
 		var blstr = ($("#logNarrateLand input:checked").length > 1) ? (W.getBorderlandsString(pObjective, true, true) + ". ") : "";
@@ -19650,36 +19752,26 @@ W = {
 	{
 		if (W.MatchupCurrent !== null)
 		{
-			var redserver = W.Servers[W.MatchupCurrent["red"]];
-			var greenserver = W.Servers[W.MatchupCurrent["green"]];
-			var blueserver = W.Servers[W.MatchupCurrent["blue"]];
-			for (var i in W.MatchupCurrent)
-			{
-				if (W.MatchupCurrent[i] === O.Options.enu_Server)
-				{
-					W.OwnerCurrent = U.toFirstUpperCase((i).toString());
-				}
-			}
 			// Log server borderlands names
-			$("#opt_bol_logRedHome").next().html(W.getBorderlandsString(redserver, true, false));
-			$("#opt_bol_logGreenHome").next().html(W.getBorderlandsString(greenserver, true, false));
-			$("#opt_bol_logBlueHome").next().html(W.getBorderlandsString(blueserver, true, false));
+			$("#opt_bol_logRedHome").next().html(W.MatchupCurrent["red"].namestr);
+			$("#opt_bol_logBlueHome").next().html(W.MatchupCurrent["blue"].namestr);
+			$("#opt_bol_logGreenHome").next().html(W.MatchupCurrent["green"].namestr);
 			$("#opt_bol_logCenter").next().html(W.getName("Center"));
 			
 			// Compass zone links borderlands names
-			$("#wvwZoneLinkGreen").text(W.getBorderlandsString(greenserver, true, true));
-			$("#wvwZoneLinkRed").text(W.getBorderlandsString(redserver, true, true));
-			$("#wvwZoneLinkBlue").text(W.getBorderlandsString(blueserver, true, true));
+			$("#wvwZoneLinkRed").html(W.MatchupCurrent["red"].namestr);
+			$("#wvwZoneLinkBlue").html(W.MatchupCurrent["blue"].namestr);
+			$("#wvwZoneLinkGreen").html(W.MatchupCurrent["green"].namestr);
 			
 			// Initial messages in the log window
 			W.addLogEntry($("#wvwHelpLinks").html() + "<br /><br />");
-			W.addLogEntry(D.getObjectNick(greenserver)
-				+ " : " + D.getObjectNick(blueserver) + " : " + D.getObjectNick(redserver));
+			W.addLogEntry(W.MatchupCurrent["green"].nickstr + " : " + W.MatchupCurrent["blue"].nickstr + " : " + W.MatchupCurrent["red"].nickstr);
 			
 			// Update map spawn labels
 			$(".wvwSpawnLabel").each(function()
 			{
-				var label = D.getObjectName(W.getServerFromOwner($(this).attr("data-owner")));
+				var owner = $(this).attr("data-owner").toLowerCase();
+				var label = W.MatchupCurrent[owner].namelinestr;
 				$(this).html(label);
 			});
 		}
@@ -19765,7 +19857,7 @@ W = {
 				W.MatchFinishTimeMS = (new Date(pData.end_time)).getTime();
 				W.secTillWvWReset = ~~((W.MatchFinishTimeMS - nowmsec) / T.cMSECONDS_IN_SECOND);
 				W.MatchupIDCurrent = pData.id;
-				W.MatchupCurrent = pData.worlds;
+				W.MatchupCurrent = W.formatMatchup(pData);
 				W.updateParticipants();
 			}
 			
@@ -19882,7 +19974,7 @@ W = {
 	 * @param object pMatch.
 	 * @returns object worlds.
 	 */
-	convertMatchup: function(pMatch)
+	convertWorlds: function(pMatch)
 	{
 		return {
 			red: pMatch.red_world_id,
@@ -19918,7 +20010,7 @@ W = {
 					{
 						var match = pData.wvw_matches[i];
 						var serverid = parseInt(O.Options.enu_Server);
-						W.Matches[match.wvw_match_id] = W.convertMatchup(match);
+						W.Matches[match.wvw_match_id] = W.convertWorlds(match);
 						// Execute this function again now that the match ID is found
 						if (match.red_world_id === serverid
 							|| match.blue_world_id === serverid
@@ -19928,8 +20020,8 @@ W = {
 							W.MatchStartTimeMS = (new Date(pData.start_time)).getTime();
 							W.MatchFinishTimeMS = (new Date(pData.end_time)).getTime();
 							W.secTillWvWReset = ~~((W.MatchFinishTimeMS - nowmsec) / T.cMSECONDS_IN_SECOND);
-							// Duplicate the structure the v2 matches API "worlds" subobject
-							W.MatchupCurrent = W.Matches[W.MatchupIDCurrent];
+							// Initialize matchup data
+							W.MatchupCurrent = W.formatMatchup(W.Matches[W.MatchupIDCurrent]);
 							W.updateParticipants();
 							W.updateObjectivesFallback();
 						}
@@ -21463,7 +21555,7 @@ T = {
 	{
 		var dailyobj = {};
 		var a = T.DailyAssociation;
-		// Trim non-max level dailies
+		// Remove non-max level dailies
 		for (var i = pObj.pve.length - 1; i >= 0; i--)
 		{
 			if ((pObj.pve[i]).level.max < I.cLevelMax)
