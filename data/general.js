@@ -98,9 +98,12 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1937": "Vista Wastes",
 	"1938": "Vista Ascalon",
 	"2983": "Vista Heart",
-	"2960": "Adventure Leyline",
 	"1939": "Activity",
 	"1989": "Fractal",
+	
+	// Adventure
+	"2960": "Leyline",
+	"2922": "Haywire",
 	
 	// Event
 	"1940": "Caledon",
@@ -127,6 +130,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1963": "Queensdale",
 	"1964": "Plains",
 	"1965": "Kessex",
+	"1966": "Fireheart",
 	"2968": "Tangled",
 	
 	// Boss
@@ -1033,9 +1037,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "Joint-servers <a href='http://gw2timer.com/?page=WvW'>WvW</a> began at this week's WvW reset time.",
+	content: "<a href='https://forum-en.guildwars2.com/forum/community/api/HEADS-UP-v2-characters-temporarily-disabled'>Characters API</a> and <a href='https://forum-en.guildwars2.com/forum/community/api/WvW-World-Linking'>EU Linked Worlds</a> are bugged until ArenaNet fixes them.",
 	Start: new Date("2016-04-19T16:00:00Z"),
-	Finish: new Date("2016-04-24T12:00:00Z"),
+	Finish: new Date("2016-04-25T12:00:00Z"),
 	Messages:
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1121,11 +1125,18 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Bandit Sniper Appearance Pack",
+		img: "http://i.imgur.com/mIuPrbz.png",
+		price: 2000,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Sentinel Outfit",
 		img: "http://i.imgur.com/5YYPin3.png",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	}
 	]
 },
