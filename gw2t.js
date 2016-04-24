@@ -2260,6 +2260,7 @@ X = {
 		 * HTML timer update function.
 		 */
 		T.isChecklistCountdownsStarted = true;
+		T.updateChecklistCountdowns();
 		
 		// Initially, only show the daily checklist; user clicks the buttons to toggle the various checklists
 		$("#chlDungeon, #chlCustomWeekly").hide();
@@ -18482,7 +18483,7 @@ W = {
 	Metadata: {},
 	Servers: {}, // Server names and translations
 	Matches: null, // For fallback API, array containing objects with same structure as "worlds" subobject in v2 API matches.json
-	MatchupCurrent: null, // Formatted superobject containing factions (servers of a color) and reuseable translated strings
+	MatchupCurrent: null, // Formatted superobject containing alliances (servers of a color) and reuseable translated strings
 	Guilds: {}, // Holds retrieved API guild details objects
 	Objectives: {},
 	ObjectiveTimeout: {},
@@ -18571,7 +18572,7 @@ W = {
 								+ "' class='objProgressBar'><var id='objProgress_" + obj.id + "' class='objProgress'></var></span></span>"
 							+ "<span class='objIconContainer'><img id='objIcon_" + obj.id
 								+ "' class='objIcon' data-src='img/wvw/objectives/" + (obj.type).toLowerCase() + "_' src='img/ui/placeholder.png'/></span>"
-							+ "<span class='objInfo'><cite id='objClaim_" + obj.id + "'></cite> <cite id='objAge_" + obj.id + "'></cite></span>"
+							+ "<span class='objInfo'><cite id='objClaim_" + obj.id + "' class='objClaim'></cite> <cite id='objAge_" + obj.id + "' class='objAge'></cite></span>"
 						+ "</div>",
 					iconSize: [38, 38],
 					iconAnchor: [19, 19]
@@ -18760,23 +18761,23 @@ W = {
 	},
 	
 	/*
-	 * Converts the API matchup object into a custom containing factions and
-	 * formatted server names. A faction is a set of servers on one team color.
+	 * Converts the API matchup object into a custom containing alliances and
+	 * formatted server names. An alliance is a set of servers on one team color.
 	 * @param object pMatchData from v2 or v1 API matches.json.
 	 * return object matchup.
 	 */
 	formatMatchup: function(pMatchData)
 	{
 		var id = 0;
-		var numfac = W.Metadata.Factions.length;
-		var facnames = W.Metadata.Factions;
-		var ithfacname, ithowner, worldid, factionserverids;
-		var servers = new Array(numfac);
-		var names = new Array(numfac);
-		var namelines = new Array(numfac);
-		var namelinks = new Array(numfac);
-		var nicks = new Array(numfac);
-		var colors = new Array(numfac);
+		var numalli = W.Metadata.Alliances.length;
+		var allinames = W.Metadata.Alliances;
+		var ithalliname, ithowner, worldid, allianceserverids;
+		var servers = new Array(numalli);
+		var names = new Array(numalli);
+		var namelines = new Array(numalli);
+		var namelinks = new Array(numalli);
+		var nicks = new Array(numalli);
+		var colors = new Array(numalli);
 		
 		// Create the object
 		var custommatchup = {};
@@ -18785,39 +18786,39 @@ W = {
 		if (pMatchData.wvw_match_id) // Only v1 API matches.json has this property
 		{
 			id = pMatchData.wvw_match_id;
-			for (var i = 0; i < numfac; i++)
+			for (var i = 0; i < numalli; i++)
 			{
-				ithfacname = facnames[i];
-				worldid = pMatchData[(ithfacname + "_world_id")];
+				ithalliname = allinames[i];
+				worldid = pMatchData[(ithalliname + "_world_id")];
 				servers[i] = new Array();
 				servers[i].push(W.Servers[worldid]);
 			}
-			// Initialize the one-server-per-faction object
+			// Initialize the one-server-per-alliance object
 			custommatchup.worlds = W.convertWorlds(pMatchData);
 		}
 		else // Else assume it is v2 API matches.json
 		{
 			id = pMatchData.id;
-			var factions = pMatchData.all_worlds;
-			for (var i = 0; i < numfac; i++)
+			var alliances = pMatchData.all_worlds;
+			for (var i = 0; i < numalli; i++)
 			{
-				ithfacname = facnames[i];
-				factionserverids = factions[ithfacname];
+				ithalliname = allinames[i];
+				allianceserverids = alliances[ithalliname];
 				servers[i] = new Array();
-				for (var ii = 0; ii < factionserverids.length; ii++)
+				for (var ii = 0; ii < allianceserverids.length; ii++)
 				{
-					servers[i].push(W.Servers[(factionserverids[ii])]);
+					servers[i].push(W.Servers[(allianceserverids[ii])]);
 				}
 			}
-			// Initialize the one-server-per-faction object
+			// Initialize the one-server-per-alliance object
 			custommatchup.worlds = pMatchData.worlds;
 		}
 		
 		// Initialize reuseable formatted server names string
-		for (var i = 0; i < numfac; i++)
+		for (var i = 0; i < numalli; i++)
 		{
-			ithfacname = facnames[i];
-			ithowner = U.toFirstUpperCase(ithfacname);
+			ithalliname = allinames[i];
+			ithowner = U.toFirstUpperCase(ithalliname);
 			names[i] = new Array();
 			namelines[i] = new Array();
 			namelinks[i] = new Array(); 
@@ -18848,11 +18849,11 @@ W = {
 			}
 		}
 		
-		// Assign variables for all factions to the custom matchup object
-		for (var i = 0; i < numfac; i++)
+		// Assign variables for all alliances to the custom matchup object
+		for (var i = 0; i < numalli; i++)
 		{
-			ithfacname = facnames[i];
-			custommatchup[ithfacname] = {
+			ithalliname = allinames[i];
+			custommatchup[ithalliname] = {
 				servers: servers[i],
 				namestr: names[i],
 				namelinestr: namelines[i],
@@ -18866,12 +18867,12 @@ W = {
 	},
 	
 	/*
-	 * Gets the faction object (of the custom matchup object) from an owner
+	 * Gets the alliance object (of the custom matchup object) from an owner
 	 * string, such as "Green".
 	 * @param string pOwner.
 	 * @returns object server.
 	 */
-	getFactionFromOwner: function(pOwner)
+	getAllianceFromOwner: function(pOwner)
 	{
 		return W.MatchupCurrent[pOwner.toLowerCase()];
 	},
@@ -19638,7 +19639,7 @@ W = {
 		}
 		else
 		{
-			ownerstr = W.getFactionFromOwner(pObjective.owner).color;
+			ownerstr = W.getAllianceFromOwner(pObjective.owner).color;
 		}
 		// Only include the borderlands string if user opted for more than one land filter
 		var blstr = ($("#logNarrateLand input:checked").length > 1) ? (W.getBorderlandsString(pObjective, true, true) + ". ") : "";
@@ -23854,6 +23855,7 @@ I = {
 	cPANE_CLOCK_HEIGHT_BAR: 85,
 	cPANE_MENU_HEIGHT: 48,
 	cTOOLTIP_MOUSEMOVE_MS: 20,
+	cTOOLTIP_WIDTH_MINIMUM: 180,
 	cTOOLTIP_OFFSET_ADD_X: 0,
 	cTOOLTIP_OFFSET_ADD_Y: 56,
 	cTOOLTIP_OVERFLOW_ADD_X: 16,
@@ -25847,11 +25849,11 @@ I = {
 					elm.setAttribute(I.cTooltipAttribute, content);
 					elm.removeAttribute("title");
 					elm.removeAttribute("alt");
-					elm.onmouseover = function()
+					elm.onmouseenter = function()
 					{
 						I.qTip.show(this.getAttribute(I.cTooltipAttribute));
 					};
-					elm.onmouseout = function()
+					elm.onmouseleave = function()
 					{
 						I.qTip.hide();
 					};
@@ -25890,6 +25892,17 @@ I = {
 			{
 				this.offsetX = -(tipwidth + I.cTOOLTIP_OVERFLOW_ADD_X);
 			}
+			if (I.posX + (I.cTOOLTIP_WIDTH_MINIMUM * 2) > winwidth)
+			{
+				if (I.posX + I.cTOOLTIP_WIDTH_MINIMUM > winwidth)
+				{
+					this.TipElm.style.minWidth = I.cTOOLTIP_WIDTH_MINIMUM + "px";
+				}
+				else
+				{
+					this.TipElm.style.minWidth = "auto";
+				}
+			}
 			
 			this.TipElm.style.left = I.posX + this.offsetX + "px";
 			this.TipElm.style.top = I.posY + this.offsetY + "px";
@@ -25898,11 +25911,13 @@ I = {
 		{
 			this.TipElm.innerHTML = pAttributeName;
 			this.TipElm.style.display = "block";
+			this.TipElm.classList.add("cssFadeIn");
 		},
 		hide: function()
 		{
 			this.TipElm.innerHTML = "";
 			this.TipElm.style.display = "none";
+			this.TipElm.classList.remove("cssFadeIn");
 		}
 	}
 };

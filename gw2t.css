@@ -2401,6 +2401,9 @@ dfn.cssHighlight {
 .cssLimitEqual {
 	color: white;
 }
+.cssFadeIn {
+	animation: aniFadeIn 0.2s;
+}
 
 copper {
 	color: #bb6622;
@@ -2524,7 +2527,7 @@ paletteText {
 	color: #66aaff; /* Blue gem */
 	color: #99eedd; /* Blue light tooltip */
 	color: #cc77ff; /* Purple daily */
-	color: #bbbbbb; /* Gray in mob description */
+	color: #bbbbbb; /* Gray in labels and descriptions */
 	color: #888888; /* Gray chat time timestamp */
 }
 

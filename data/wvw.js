@@ -1965,7 +1965,7 @@ var GW2T_WVW_METADATA = {
 		Americas: ["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"],
 		Europe:   ["2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9"]
 	},
-	Factions: ["red", "blue", "green"], // Corresponds to matches API
+	Alliances: ["red", "blue", "green"], // Corresponds to matches API
 	Owners: ["Green", "Blue", "Red"], // Corresponds to the 1st, 2nd, and 3rd place of previous week's matchup
 	Opposites: { /* Opposing servers, in matchup order */
 		Green: ["Blue", "Red"],
