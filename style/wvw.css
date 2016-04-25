@@ -65,6 +65,7 @@
 	position: absolute;
 	line-height: 14px;
 	white-space: nowrap;
+	font-family: Trebuchet MS, Menomonia;
 }
 .objInfo cite {
 	text-align: center;

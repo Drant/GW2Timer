@@ -6371,7 +6371,7 @@ V = {
 				$("<button class='bnkTabHoverButton'>" + galleryword + "</button>").click(function(pEvent)
 				{
 					pEvent.stopPropagation();
-					U.openPrivateURL(link);
+					U.openExternalURL(link);
 				}).appendTo(hoverelm);
 			}
 			else
@@ -6385,7 +6385,7 @@ V = {
 						$("<button class='bnkTabHoverButton'><img src='img/account/characters/" + i.toLowerCase() + ".png' /></button>").click(function(pEvent)
 						{
 							pEvent.stopPropagation();
-							U.openPrivateURL(iLink);
+							U.openExternalURL(iLink);
 						}).appendTo(hoverelm);
 					})(link[i]);
 					if (counter % 2 === 0)
@@ -13155,7 +13155,6 @@ M = {
 		
 		// Finally
 		this.isMapInitialized = true;
-		this.refreshMap();
 	},
 	
 	/*
@@ -13417,6 +13416,7 @@ M = {
 		if (this.isMapInitialized)
 		{
 			this.Map.invalidateSize();
+			this.refreshView();
 		}
 	},
 	
@@ -19585,6 +19585,10 @@ W = {
 		var str = prevobjectiveicon + " ⇒ " + objectiveicon + " <dfn data-coord='" + pObjective.coord + "'>" + objectivenick + "</dfn>";
 		var land = pObjective.map_type;
 		var cssclass = "logEntry" + land;
+		if (!pIsClaim)
+		{
+			pObjective.prevownerhtml = str;
+		}
 		
 		// The entry will be added, but only shown if opted
 		var isdisplayed = true;
@@ -20277,14 +20281,15 @@ W = {
 		var claim = "";
 		if (obj.claimed_by !== null)
 		{
-			claim = "<br /><dfn>Claim:</dfn> " + (new Date(obj.claimed_at)).toLocaleString()
-				+ "<br /><dfn>Guild:</dfn> " + U.escapeHTML(obj.guild_name + " [" + obj.tag + "]")
-				+ "<div class='cssCenter'><img class='objTooltipBanner' src='" + U.getGuildBannerURL(obj.guild_name) + "' /></div>";
+			claim = "<aside><dfn>Claim:</dfn> " + (new Date(obj.claimed_at)).toLocaleString() + "</aside>"
+				+ "<aside><dfn>Guild:</dfn> " + U.escapeHTML(obj.guild_name + " [" + obj.tag + "]") + "</aside>"
+				+ "<aside class='cssCenter'><img class='objTooltipBanner' src='" + U.getGuildBannerURL(obj.guild_name) + "' /></aside>";
 		}
 		
 		var title = "<div class='objTooltip'>"
-			+ "<dfn class='objTooltipName'>" + D.getObjectName(obj) + "</dfn>"
-			+ "<br /><dfn>Owner:</dfn> " + (new Date(obj.last_flipped)).toLocaleString()
+			+ "<aside><dfn class='objTooltipName'>" + D.getObjectName(obj) + "</dfn></aside>"
+			+ "<aside><dfn>Owner:</dfn> " + (new Date(obj.last_flipped)).toLocaleString() + "</aside>"
+			+ ((pObjective.prevownerhtml) ? "<aside class='cssCenter'>" + pObjective.prevownerhtml + "</aside>" : "")
 			+ claim
 		+ "</div>";
 		I.qTip.init(icon.attr("title", title));
@@ -21143,7 +21148,7 @@ T = {
 	},
 	
 	/*
-	 * Gets a "0m" "1m" "59m" "1h" "25h" single unit approximated time string.
+	 * Gets a "0m" "1m" "59m" "1.0h" "25.9h" single unit approximated time string.
 	 * @param int pMilliseconds of time.
 	 * @returns string shorthand.
 	 */
@@ -21160,7 +21165,7 @@ T = {
 			return (~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR) + D.getWord("m");
 		}
 		// Return hours
-		return ~~(seconds / T.cSECONDS_IN_HOUR) + D.getWord("h");
+		return (seconds / T.cSECONDS_IN_HOUR).toFixed(1) + D.getWord("h");
 	},
 	
 	/*
@@ -23856,6 +23861,7 @@ I = {
 	cPANE_MENU_HEIGHT: 48,
 	cTOOLTIP_MOUSEMOVE_MS: 20,
 	cTOOLTIP_WIDTH_MINIMUM: 180,
+	cTOOLTIP_HEIGHT_THRESHOLD: 30, // If tooltip is taller than this then its text is taller than one line
 	cTOOLTIP_OFFSET_ADD_X: 0,
 	cTOOLTIP_OFFSET_ADD_Y: 56,
 	cTOOLTIP_OVERFLOW_ADD_X: 16,
@@ -25489,7 +25495,6 @@ I = {
 						case P.MapEnum.Tyria: {
 							$("#mapPane").show();
 							M.refreshMap();
-							M.refreshView();
 						} break;
 
 						case P.MapEnum.Mists: {
@@ -25497,7 +25502,6 @@ I = {
 							if (W.isMapInitialized)
 							{
 								W.refreshMap();
-								W.refreshView();
 							}
 						} break;
 					}
@@ -25891,17 +25895,6 @@ I = {
 			if (I.posX + tipwidth > winwidth)
 			{
 				this.offsetX = -(tipwidth + I.cTOOLTIP_OVERFLOW_ADD_X);
-			}
-			if (I.posX + (I.cTOOLTIP_WIDTH_MINIMUM * 2) > winwidth)
-			{
-				if (I.posX + I.cTOOLTIP_WIDTH_MINIMUM > winwidth)
-				{
-					this.TipElm.style.minWidth = I.cTOOLTIP_WIDTH_MINIMUM + "px";
-				}
-				else
-				{
-					this.TipElm.style.minWidth = "auto";
-				}
 			}
 			
 			this.TipElm.style.left = I.posX + this.offsetX + "px";
