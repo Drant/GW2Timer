@@ -6339,7 +6339,7 @@ V = {
 					})(slotassoc[slotdata.id], slotdata);
 				}
 			}
-			Q.createBankMenu(bank);
+			Q.createBankMenu(bank, {aWantHighlightSearch: true});
 		}).fail(function()
 		{
 			A.printError(A.PermissionEnum.Inventories);
@@ -8714,20 +8714,41 @@ Q = {
 						var ismatch = true;
 						if (keywords)
 						{
-							for (var i = 0; i < queries.length; i++)
+							if (Settings.aWantHighlightSearch)
 							{
-								// If at least one substring of the search query isn't found, then hide that item
-								if (keywords.indexOf(queries[i]) === -1)
+								for (var i = 0; i < queries.length; i++)
 								{
-									$(this).hide();
-									ismatch = false;
-									break;
+									// If at least one substring of the search query isn't found, then hide that item
+									if (keywords.indexOf(queries[i]) === -1)
+									{
+										$(this).removeClass("bnkSlotMatch");
+										ismatch = false;
+										break;
+									}
+								}
+								// The boolean is only true if every substrings were found
+								if (ismatch)
+								{
+									$(this).addClass("bnkSlotMatch");
 								}
 							}
-							// The boolean is only true if every substrings were found
-							if (ismatch)
+							else
 							{
-								$(this).show();
+								for (var i = 0; i < queries.length; i++)
+								{
+									// If at least one substring of the search query isn't found, then hide that item
+									if (keywords.indexOf(queries[i]) === -1)
+									{
+										$(this).hide();
+										ismatch = false;
+										break;
+									}
+								}
+								// The boolean is only true if every substrings were found
+								if (ismatch)
+								{
+									$(this).show();
+								}
 							}
 						}
 					});
@@ -8736,10 +8757,20 @@ Q = {
 			else
 			{
 				fillertext.show();
-				slots.each(function()
+				if (Settings.aWantHighlightSearch)
 				{
-					$(this).show();
-				});
+					slots.each(function()
+					{
+						$(this).removeClass("bnkSlotMatch");
+					});
+				}
+				else
+				{
+					slots.each(function()
+					{
+						$(this).show();
+					});
+				}
 			}
 			A.adjustAccountScrollbar();
 		}));

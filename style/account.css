@@ -1429,6 +1429,10 @@ input[type="text"].bnkSearchInput:hover {
 .bnkSlot:hover .bnkSlotForeground {
 	opacity: 0;
 }
+.bnkSlotMatch {
+	background-color: red;
+	border-radius: 4px;
+}
 .bnkSlotIcon {
 	display: block;
 	position: absolute;
