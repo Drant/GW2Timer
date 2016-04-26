@@ -2108,6 +2108,9 @@ var GW2T_WVW_METADATA = {
 	Us: {
 		name_en: "us", name_de: "uns", name_es: "nosotros", name_fr: "nous", name_zh: "我們"
 	},
+	Our: {
+		name_en: "our", name_de: "unser", name_es: "nuestro", name_fr: "notre", name_zh: "我們的"
+	},
 	ObjectiveType: {
 		Camp: {
 			Quantity: {

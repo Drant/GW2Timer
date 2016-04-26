@@ -18521,9 +18521,9 @@ W = {
 	Weapons: {},
 	Placement: {},
 	MapType: {}, // Corresponds to "worlds" object from match API
-	LandEnum: {}, // Corresponds to "map_type" property of objectives
+	LandEnum: {}, // Corresponds to "map_type" property of objectives, example: "GreenHome"
 	ObjectiveEnum: {}, // Corresponds to "type" property of objectives
-	OwnerEnum: {}, // Corresponds to "owner" property from match API
+	OwnerEnum: {}, // Corresponds to "owner" property from match API, example: "Green"
 	MatchupIDCurrent: null,
 	isObjectiveTickEnabled: false,
 	isObjectiveTimerTickEnabled: false,
@@ -18859,6 +18859,7 @@ W = {
 			for (var ii = 0; ii < servers[i].length; ii++)
 			{
 				var ithserver = (servers[i])[ii];
+				ithserver.owner = ithowner; // Record the server's color
 				var ithservername = U.escapeHTML(D.getObjectName(ithserver));
 				names[i] += ithservername;
 				namelines[i] += ithservername;
@@ -18915,8 +18916,9 @@ W = {
 	 * @param boolean pFullBorderlands or false to get nick, optional.
 	 * @returns string phrase.
 	 */
-	getBorderlandsString: function(pServer, pFullServer, pFullBorderlands)
+	getBorderlandsString: function(pServer, pSettings)
 	{
+		var Settings = pSettings || {};
 		var server = (typeof pServer === "string") ? W.Servers[W.MatchupCurrent.worlds[pServer]] : pServer;
 		var serverstr, blstr;
 		
@@ -18937,10 +18939,14 @@ W = {
 		}
 		
 		// Get the full strings abbreviated or not
-		serverstr = (pFullServer) ? D.getObjectName(server) : D.getObjectNick(server);
-		blstr = (pFullBorderlands) ? W.getName("Borderlands") : W.getNick("Borderlands");
+		serverstr = (Settings.aWantServerNick) ? D.getObjectNick(server) : D.getObjectName(server);
+		blstr = (Settings.aWantBorderlandsNick) ? W.getNick("Borderlands") : W.getName("Borderlands");
 		
 		// Adjust to grammar
+		if (Settings.aWantPronoun && server.owner === W.MatchupCurrent.ownercurrent)
+		{
+			return W.getName("Our") + " " + blstr;
+		}
 		return D.orderModifier(blstr, serverstr);
 	},
 	
@@ -19677,7 +19683,7 @@ W = {
 			ownerstr = W.getAllianceFromOwner(pObjective.owner).color;
 		}
 		// Only include the borderlands string if user opted for more than one land filter
-		var blstr = ($("#logNarrateLand input:checked").length > 1) ? (W.getBorderlandsString(pObjective, true, true) + ". ") : "";
+		var blstr = ($("#logNarrateLand input:checked").length > 1) ? (W.getBorderlandsString(pObjective, {aWantPronoun: true}) + ". ") : "";
 		var verbstr;
 		if (pIsClaim)
 		{
@@ -23884,6 +23890,7 @@ I = {
 	},
 	
 	// HTML/CSS pixel units
+	cOUT_OF_VIEW: -9999,
 	cPANEL_WIDTH: 360,
 	cPANEL_HEIGHT_MIN: 220,
 	cPANE_CLOCK_HEIGHT: 360,
@@ -25922,8 +25929,8 @@ I = {
 					this.offsetY = winheight - (tipheight + I.posY + I.cTOOLTIP_PADDING_ADD_Y);
 				}
 			}
-			// Tooltip overflows right edge
-			if (I.posX + tipwidth > winwidth)
+			// Tooltip overflows right edge threshold
+			if (I.posX + tipwidth > winwidth || I.posX + I.cPANEL_WIDTH > winwidth)
 			{
 				this.offsetX = -(tipwidth + I.cTOOLTIP_OVERFLOW_ADD_X);
 			}

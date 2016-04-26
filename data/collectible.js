@@ -1677,7 +1677,7 @@ RangerPets: {
 	},{// WYVERN
 		n: 27, p: "Electric Wyvern",
 		s: {launch: 0, recharge: 30, range: 480, combo: "Lightning", damage: 1129},
-		c: [[1410,21424],[1386,21463],[1442,21452]]
+		c: [[3351, 20758], [3295, 20762], [3349, 20809]]
 	},{
 		n: 28, p: "Fire Wyvern",
 		s: {burning: [1, 2], recharge: 35, duration: 12, radius: 450, combo: "Fire"},
