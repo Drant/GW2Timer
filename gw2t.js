@@ -78,7 +78,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160322},
+		programVersion: {key: "int_utlProgramVersion", value: 160426},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -2571,7 +2571,6 @@ U = {
 		MapFloorTyria: "https://api.guildwars2.com/v1/map_floor.json?continent_id=1&floor=1",
 		MapFloorMists: "https://api.guildwars2.com/v1/map_floor.json?continent_id=2&floor=1",
 		MapsList: "https://api.guildwars2.com/v1/maps.json",
-		EventNames: "https://api.guildwars2.com/v1/event_names.json",
 		EventDetails: "https://api.guildwars2.com/v1/event_details.json",
 		
 		// Exchange
@@ -2594,6 +2593,7 @@ U = {
 		// Other
 		Worlds: "https://api.guildwars2.com/v2/worlds",
 		Prefix: "https://api.guildwars2.com/v2/",
+		Prefix1: "https://api.guildwars2.com/v1/",
 		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl="
 	},
 	
@@ -2634,7 +2634,6 @@ U = {
 		U.URL_API.Worlds += U.URL_API.LangKey + "&ids=";
 		U.URL_API.MapFloorTyria += langsuffix;
 		U.URL_API.MapFloorMists += langsuffix;
-		U.URL_API.EventNames += langsuffix;
 		U.URL_API.TextToSpeech += lang + "&sv=&vn=&pitch=0.5&rate=0.4";
 	},
 	
@@ -2915,10 +2914,11 @@ U = {
 	printAPI: function(pString, pLimit, pQueryStr)
 	{
 		I.print("Gathering elements...");
+		var legacyprefix = "v1";
 		var limit = Number.POSITIVE_INFINITY;
 		var scrapethreshold = 256; // Minimum array size to begin scraping
 		var querystr = (pQueryStr === undefined) ? "" : pQueryStr;
-		if (pLimit !== undefined)
+		if (pLimit !== undefined && pString !== legacyprefix)
 		{
 			// Query string may be sent in place of the limit parameter
 			if (O.isInteger(pLimit))
@@ -2951,6 +2951,12 @@ U = {
 				I.print("<img class='cssRight' src='" + U.escapeHTML(data.icon) + "' />");
 			}
 		};
+		
+		// If requesting v1 API by entering it in the first parameter
+		if (pString === legacyprefix)
+		{
+			url = U.URL_API.Prefix1 + pLimit;
+		}
 		
 		$.get(url + querystr, function(pData)
 		{
@@ -4098,17 +4104,6 @@ U = {
 	getPageSrc: function(pPage)
 	{
 		return "page/" + pPage.toLowerCase() + ".html";
-	},
-	
-	/*
-	 * Gets a direct link to a hosted image file.
-	 * @param string pCode image code.
-	 * @returns URL to image.
-	 * @pre image is of png format.
-	 */
-	getImageHosted: function(pCode)
-	{
-		return I.cImageHost + pCode + I.cPNG;
 	},
 	
 	/*
@@ -8789,7 +8784,7 @@ Q = {
 		
 		// Help button shows search usage message
 		var isshowinghelp = true;
-		$("<div class='bnkButtonHelp bnkButton curClick' title='Show the <dfn>help</dfn> message for this bank.'></div>")
+		$("<div class='bnkButtonHelp bnkButton curClick' title='Show this bank&apos;s <dfn>help</dfn> message.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			var helpmessage = (Settings.aHelpMessage) ? $(Settings.aHelpMessage).html() : "";
@@ -15799,14 +15794,17 @@ P = {
 		// Function to filter out unwanted events
 		var isEventUnwanted = function(pName)
 		{
-			if (pName.indexOf("guild") !== -1 || // Guild missions
-				pName.indexOf("subdue") !== -1 || // Guild bounty
-				pName.indexOf("hero ch") !== -1 || // Hero challenges
-				pName.indexOf("offshoot") !== -1 || // Obsolete events
-				pName.indexOf("vigil en") !== -1 ||
-				pName.indexOf("haunted") !== -1)
+			var blacklist = ["scarlet", "molten all", "aetherblade", "queen's cha", "mordrem inv", "offshoot", "vigil eng", "haunted", // Obsolete events
+				"guild", // Guild missions
+				"subdue", // Guild bounty
+				"hero cha" // Hero challenges
+			];
+			for (var i = 0; i < blacklist.length; i++)
 			{
-				return true;
+				if (pName.indexOf(blacklist[i]) !== -1)
+				{
+					return true;
+				}
 			}
 			return false;
 		};
@@ -15814,29 +15812,29 @@ P = {
 		// Function to guess an event's icon (not provided by the API) based on its name
 		var determineEventIcon = function(pName)
 		{
-			if (pName.indexOf("free") !== -1) return "img/event/release.png";
-			if (pName.indexOf("rescue") !== -1) return "img/event/release.png";
-			if (pName.indexOf("capture") !== -1) return "img/event/flag.png";
-			if (pName.indexOf("retake") !== -1) return "img/event/flag.png";
-			if (pName.indexOf("reclaim") !== -1) return "img/event/flag.png";
-			if (pName.indexOf("liberate") !== -1) return "img/event/flag.png";
-			if (pName.indexOf("protect") !== -1) return "img/event/shield.png";
-			if (pName.indexOf("defend") !== -1) return "img/event/shield.png";
-			if (pName.indexOf("escort") !== -1) return "img/event/shield.png";
-			if (pName.indexOf("kill") !== -1) return "img/event/boss.png";
-			if (pName.indexOf("slay") !== -1) return "img/event/boss.png";
-			if (pName.indexOf("defeat") !== -1) return "img/event/boss.png";
-			if (pName.indexOf("collect") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("help") !== -1) return "img/event/star.png";
-			if (pName.indexOf("destroy") !== -1) return "img/event/cog.png";
-			if (pName.indexOf("gather") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("bring") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("recover") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("return") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("retrieve") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("salvage") !== -1) return "img/event/collect.png";
-			if (pName.indexOf("burglar") !== -1) return "img/event/fist.png";
-			return "img/event/swords.png";
+			if (pName.indexOf("free") !== -1) return "release";
+			if (pName.indexOf("rescue") !== -1) return "release";
+			if (pName.indexOf("capture") !== -1) return "flag";
+			if (pName.indexOf("retake") !== -1) return "flag";
+			if (pName.indexOf("reclaim") !== -1) return "flag";
+			if (pName.indexOf("liberate") !== -1) return "flag";
+			if (pName.indexOf("protect") !== -1) return "shield";
+			if (pName.indexOf("defend") !== -1) return "shield";
+			if (pName.indexOf("escort") !== -1) return "shield";
+			if (pName.indexOf("kill") !== -1) return "boss";
+			if (pName.indexOf("slay") !== -1) return "boss";
+			if (pName.indexOf("defeat") !== -1) return "boss";
+			if (pName.indexOf("collect") !== -1) return "collect";
+			if (pName.indexOf("help") !== -1) return "star";
+			if (pName.indexOf("destroy") !== -1) return "cog";
+			if (pName.indexOf("gather") !== -1) return "collect";
+			if (pName.indexOf("bring") !== -1) return "collect";
+			if (pName.indexOf("recover") !== -1) return "collect";
+			if (pName.indexOf("return") !== -1) return "collect";
+			if (pName.indexOf("retrieve") !== -1) return "collect";
+			if (pName.indexOf("salvage") !== -1) return "collect";
+			if (pName.indexOf("burglar") !== -1) return "fist";
+			return "swords";
 		};
 		
 		// Function to approximate the event ring as viewed in the game's minimap
@@ -15862,19 +15860,21 @@ P = {
 			return "img/ring/c_m.png";
 		};
 		
-		// First, store the event names in user's language
-		// Note that event_names.json does not contain obsolete events, unlike event_details.json
-		$.getJSON(U.URL_API.EventNames, function(pData)
+		// Function to store event names for filtering
+		initializeEvents = function(pEventData)
 		{
-			var i;
-			for (i in pData)
+			var id;
+			for (id in pEventData.events)
 			{
-				P.Events[(pData[i].id)] = {};
-				P.Events[(pData[i].id)].name = pData[i].name;
+				P.Events[id] = {};
+				P.Events[id].name = pEventData.events[id].name;
 			}
-		}).done(function()
+		};
+		
+		// Function to filter events and generate event markers
+		var generateEvents = function(pData)
 		{
-			// Second, retrieve the event details in the default language for filtering events
+			// Retrieve the event details in the default language for filtering events
 			$.getJSON(U.URL_API.EventDetails, function(pDataInner)
 			{
 				var i;
@@ -15885,6 +15885,7 @@ P = {
 				var coord;
 
 				var zoneobj;
+				initializeEvents(pData || pDataInner);
 
 				for (i in pDataInner.events)
 				{
@@ -15893,8 +15894,7 @@ P = {
 					newname = (P.Events[i] !== undefined) ? P.Events[i].name : event.name;
 					zoneobj = M.getZoneFromID(event.map_id);
 					// Skip iterated event if...
-					if (P.Events[i] === undefined // Event is not in event_names.json also
-						|| zoneobj === undefined // Event is not in a world map zone
+					if (zoneobj === undefined // Event is not in a world map zone
 						|| isEventUnwanted(searchname) // Event is obsolete
 						|| event.map_id === 50) // LA
 					{
@@ -15923,7 +15923,7 @@ P = {
 						wiki: event.name,
 						icon: L.icon(
 						{
-							iconUrl: determineEventIcon(searchname),
+							iconUrl: "img/event/" + determineEventIcon(searchname) + I.cPNG,
 							iconSize: [48, 48],
 							iconAnchor: [24, 24]
 						})
@@ -15937,20 +15937,32 @@ P = {
 			}).done(function()
 			{
 				P.donePopulation();
-			}).fail(function()
-			{
-
 			}).always(function()
 			{
 				P.finishPopulation();
 			});
-		}).fail(function()
+		};
+		
+		/*
+		 * Before generating the events, all event names must be collected first
+		 * so obsolete events can be filtered. Non-default languages has to download
+		 * the event data twice because the filter keywords are in the default language.
+		 */
+		if (D.isLanguageDefault())
 		{
-			P.finishPopulation();
-		}).always(function()
+			generateEvents();
+		}
+		else
 		{
-			
-		});
+			// Store the event names in user's language
+			$.getJSON(U.URL_API.EventDetails + U.URL_API.LangKey, function(pData)
+			{
+				generateEvents(pData);
+			}).fail(function()
+			{
+				P.finishPopulation();
+			});
+		}
 	}, // end of populateEvents
 	
 	/*
@@ -17419,12 +17431,15 @@ G = {
 	 */
 	generateAndInitializeJPs: function()
 	{
-		var styleJPMarker = function(pMarker, pDifficulty)
+		var diffassoc;
+		var styleJPMarker = function(pMarker, pIsChecked)
 		{
+			var difficulty = (pMarker.difficulty || pMarker.options.difficulty);
+			var cssclass = (pIsChecked) ? "jpzDifficulty0" : "jpzDifficulty" + difficulty;
 			pMarker.setIcon(new L.icon(
 			{
-				className: "jpzDifficulty" + pDifficulty,
-				iconUrl: "img/map/jp.png",
+				className: cssclass,
+				iconUrl: "img/map/" + (diffassoc[difficulty]).toLowerCase() +  ".png",
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}));
@@ -17432,7 +17447,8 @@ G = {
 		
 		$.getScript(U.URL_DATA.JP).done(function()
 		{
-			P.JPs = GW2T_JP_DATA;
+			diffassoc = GW2T_JP_DATA.Type;
+			P.JPs = GW2T_JP_DATA.JP;
 			X.Checklists.JP.length = O.getObjectLength(P.JPs);
 			P.LayerArray.JP = new Array(X.Checklists.JP.length);
 		
@@ -17442,15 +17458,14 @@ G = {
 				 * Create JP markers.
 				 */
 				var jp = P.JPs[i];
-				var type = (jp.difficulty === 4) ? "Explorer" : "JP";
 				var marker = L.marker(M.convertGCtoLC(jp.coord),
 				{
 					id: jp.id,
 					difficulty: jp.difficulty,
-					title: "<div class='mapLoc'><dfn>" + type + ":</dfn> " + D.getObjectName(jp)
-						+ "<img src='" + U.getImageHosted(jp.img) + "' /></div>"
+					title: "<div class='mapLoc'><dfn>" + diffassoc[jp.difficulty] + ":</dfn> " + D.getObjectName(jp)
+						+ "<img src='" + jp.img + "' /></div>"
 				});
-				styleJPMarker(marker, jp.difficulty);
+				styleJPMarker(marker);
 				P.LayerArray.JP[jp.id] = marker;
 				M.toggleLayerArray(P.LayerArray.JP, true);
 				
@@ -17467,7 +17482,7 @@ G = {
 					+ "<dd>" + jp.description + "</dd>"
 				);
 				var jplink = $("#jpz_" + jp.id);
-				jplink.attr("title", "<div class='mapLoc'><img src='" + U.getImageHosted(jp.img) + "' /></div>");
+				jplink.attr("title", "<div class='mapLoc'><img src='" + jp.img + "' /></div>");
 				M.bindMapLinkBehavior(jplink, M.ZoomEnum.Same);
 			}
 			M.bindMapLinks(".jpzList");
@@ -17487,12 +17502,12 @@ G = {
 						var state = X.getChecklistItem(X.Checklists.JP, marker.options.id);
 						if (state === X.ChecklistEnum.Unchecked)
 						{
-							styleJPMarker(marker, marker.options.difficulty);
+							styleJPMarker(marker);
 						}
 						else
 						{
 							// Difficulty 0 is reserved for checked off JPs
-							styleJPMarker(marker, 0);
+							styleJPMarker(marker, true);
 						}
 					}
 				}
@@ -17543,7 +17558,7 @@ G = {
 					else
 					{
 						$(this).parent().prev().addClass("jpzListNameChecked");
-						styleJPMarker(P.LayerArray.JP[i], 0);
+						styleJPMarker(P.LayerArray.JP[i], true);
 					}
 
 				}).change(function()
@@ -17554,12 +17569,12 @@ G = {
 					if (checkboxstate === X.ChecklistEnum.Unchecked)
 					{
 						$(this).parent().prev().removeClass("jpzListNameChecked");
-						styleJPMarker(P.LayerArray.JP[checkboxindex], P.LayerArray.JP[checkboxindex].options.difficulty);
+						styleJPMarker(P.LayerArray.JP[checkboxindex]);
 					}
 					else
 					{
 						$(this).parent().prev().addClass("jpzListNameChecked");
-						styleJPMarker(P.LayerArray.JP[checkboxindex], 0);
+						styleJPMarker(P.LayerArray.JP[checkboxindex], true);
 					}
 
 					// Rewrite the checklist string by updating the digit at the ID/index
@@ -17602,7 +17617,7 @@ G = {
 				{
 					$("#jpzCheck_" + i).prop("checked", false)
 						.parent().prev().removeClass("jpzListNameChecked");
-					styleJPMarker(P.LayerArray.JP[i], P.LayerArray.JP[i].options.difficulty);
+					styleJPMarker(P.LayerArray.JP[i]);
 				}
 				X.clearChecklist(X.Checklists.JP);
 
@@ -17620,7 +17635,7 @@ G = {
 	 */
 	generateAndInitializeChests: function()
 	{
-		P.Chests = GW2T_CHEST_DATA;
+		P.Chests = GW2T_JP_DATA.Chest;
 		var numofchests = P.Chests.Basic.length + P.Chests.Splendid.length;
 		X.initializeChecklist(X.Checklists.Chest, numofchests);
 		

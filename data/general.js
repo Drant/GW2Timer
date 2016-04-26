@@ -106,8 +106,9 @@ var GW2T_DAILY_ASSOCIATION = {
 	"2922": "Haywire",
 	
 	// JP
-	"1886": "crystal",
-	"1902": "loreclaw",
+	"1886": "JP Crystal",
+	"1902": "JP Loreclaw",
+	"1896": "JP Shattered",
 	
 	// Event
 	"1940": "Caledon",
@@ -135,7 +136,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1964": "Plains",
 	"1965": "Kessex",
 	"1966": "Fireheart",
-	"1967": "UNKNOWN",
+	"1967": "Diessa",
 	"2968": "Tangled",
 	
 	// Boss
@@ -1122,8 +1123,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-04-19T16:00:00Z"),
-	Finish: new Date("2016-04-26T16:00:00Z"),
+	Start: new Date("2016-04-26T16:00:00Z"),
+	Finish: new Date("2016-05-03T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1132,18 +1133,25 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Sentinel Outfit",
+		id: "78574",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Chaos Gloves Skin",
+		id: "78667",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Bandit Sniper Appearance Pack",
 		img: "http://i.imgur.com/mIuPrbz.png",
 		price: 2000,
 		discount: null,
 		col: 0
-	},
-	{
-		name: "Sentinel Outfit",
-		id: "78574",
-		price: 700,
-		discount: null,
-		col: 1
 	}
 	]
 },

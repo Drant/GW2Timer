@@ -1742,6 +1742,24 @@ var GW2T_CHAIN_DATA = [
 		max: "20:00"
 	},
 	{
+		primacy: 1,
+		path: [[2458, 15413]],
+		name_en: "Kill the wyvern matriarch.",
+		name_de: "Tötet die Wyvern-Matriarchin.",
+		name_es: "Mata a la matriarca de los guivernos.",
+		name_fr: "Tuer la matriarche vouivre.",
+		icon: "boss",
+		num: "2B",
+		sGotoNum: ["1#"],
+		fGotoNum: "1#",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "20:00",
+		avg: "20:00",
+		min: "20:00",
+		max: "20:00"
+	},
+	{
 		primacy: 3,
 		path: [[2863, 15568]],
 		name_en: "Kill the Wyvern Patriarch.",
@@ -1749,7 +1767,7 @@ var GW2T_CHAIN_DATA = [
 		name_es: "Mata al patriarca guiverno.",
 		name_fr: "Tuer le patriarche vouivre.",
 		icon: "boss",
-		num: "2B",
+		num: "2C",
 		sGotoNum: ["1#"],
 		fGotoNum: "1#",
 		sInterim: ["0"],
