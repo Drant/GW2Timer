@@ -1,4 +1,4 @@
-﻿var GW2T_MINIS_CATEGORIES = {
+var GW2T_MINIS_CATEGORIES = {
 	Set1: [
 		"Brown Bear",
 		"Colocal",

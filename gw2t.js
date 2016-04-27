@@ -54,8 +54,8 @@
 
 */
 
-$(window).on("load", function() {
-	
+$(window).on("load", function() { "use strict";
+
 /* =============================================================================
  * Single letter objects serve as namespaces.
  * ========================================================================== */
@@ -14781,7 +14781,7 @@ M = {
 	 */
 	toggleLayer: function(pLayer, pBoolean)
 	{
-		if (pLayer === undefined)
+		if (!pLayer)
 		{
 			return;
 		}
@@ -15398,6 +15398,9 @@ P = {
 		ZoneGateway: new L.layerGroup(), // Interzone and intergate connections
 		DryTopNicks: new L.layerGroup(), // Dry Top event names and timestamps
 		Chest: new L.layerGroup()
+	},
+	NodeArray: { // An ordered array of markers and associated path
+		JP: []
 	},
 	LayerArray: {
 		ChainPath: [],
@@ -16020,6 +16023,48 @@ P = {
 			return true;
 		}
 		return false;
+	},
+	
+	/*
+	 * Initializes an array of nodes, which is an indexed marker with an associated path.
+	 * @param array pNodeArray reference to initialize.
+	 * @param int length for the array.
+	 * @returns array of empty nodes.
+	 */
+	createNodeArray: function(pLength)
+	{
+		var nodearray = new Array(pLength);
+		for (var i = 0; i < pLength; i++)
+		{
+			nodearray[i] = {
+				oMarker: null,
+				oPath: null
+			};
+		}
+		return nodearray;
+	},
+	
+	/*
+	 * Toggles visibility of map objects of a node.
+	 * @param array pNodeArray.
+	 * @param int pIndex to find node.
+	 * @param boolean pBoolean to show.
+	 */
+	toggleNode: function(pNodeArray, pIndex, pBoolean)
+	{
+		if (pNodeArray[pIndex])
+		{
+			M.toggleLayer(pNodeArray[pIndex].marker, pBoolean);
+			M.toggleLayer(pNodeArray[pIndex].path, pBoolean);
+		}
+	},
+	toggleNodeArray: function(pNodeArray, pBoolean)
+	{
+		for (var i = 0; i < pNodeArray.length; i++)
+		{
+			M.toggleLayer(pNodeArray[i].oMarker, pBoolean);
+			M.toggleLayer(pNodeArray[i].oPath, pBoolean);
+		}
 	},
 	
 	/*
@@ -17450,15 +17495,16 @@ G = {
 			diffassoc = GW2T_JP_DATA.Type;
 			P.JPs = GW2T_JP_DATA.JP;
 			X.Checklists.JP.length = O.getObjectLength(P.JPs);
-			P.LayerArray.JP = new Array(X.Checklists.JP.length);
+			P.NodeArray.JP = P.createNodeArray(X.Checklists.JP.length);
+			var jp, marker, path;
 		
 			for (var i in P.JPs)
 			{
 				/*
 				 * Create JP markers.
 				 */
-				var jp = P.JPs[i];
-				var marker = L.marker(M.convertGCtoLC(jp.coord),
+				jp = P.JPs[i];
+				marker = L.marker(M.convertGCtoLC(jp.coord),
 				{
 					id: jp.id,
 					difficulty: jp.difficulty,
@@ -17466,8 +17512,20 @@ G = {
 						+ "<img src='" + jp.img + "' /></div>"
 				});
 				styleJPMarker(marker);
-				P.LayerArray.JP[jp.id] = marker;
-				M.toggleLayerArray(P.LayerArray.JP, true);
+				P.NodeArray.JP[jp.id].oMarker = marker;
+				/*
+				 * Create JP path, if available.
+				 */
+				if (jp.path)
+				{
+					path = L.polyline(M.convertGCtoLCMulti(jp.path),
+					{
+						color: "white",
+						dashArray: "5,10",
+						opacity: 0.3
+					});
+					P.NodeArray.JP[jp.id].oPath = path;
+				}
 				
 				/*
 				 * Create JP HTML entries.
@@ -17485,6 +17543,7 @@ G = {
 				jplink.attr("title", "<div class='mapLoc'><img src='" + jp.img + "' /></div>");
 				M.bindMapLinkBehavior(jplink, M.ZoomEnum.Same);
 			}
+			P.toggleNodeArray(P.NodeArray.JP, true);
 			M.bindMapLinks(".jpzList");
 			U.convertExternalLink(".jpzList a");
 			I.qTip.init(".jpzList dt");
@@ -17493,13 +17552,13 @@ G = {
 			$("#jpzToggleJP").change(function()
 			{
 				var state = $(this).prop("checked");
-				M.toggleLayerArray(P.LayerArray.JP, state);
+				P.toggleNodeArray(P.NodeArray.JP, state);
 				if (state)
 				{
-					for (var i in P.LayerArray.JP)
+					for (var i = 0; i < P.NodeArray.JP.length; i++)
 					{
-						var marker = P.LayerArray.JP[i];
-						var state = X.getChecklistItem(X.Checklists.JP, marker.options.id);
+						var marker = P.NodeArray.JP[i].oMarker;
+						var state = X.getChecklistItem(X.Checklists.JP, i);
 						if (state === X.ChecklistEnum.Unchecked)
 						{
 							styleJPMarker(marker);
@@ -17558,7 +17617,7 @@ G = {
 					else
 					{
 						$(this).parent().prev().addClass("jpzListNameChecked");
-						styleJPMarker(P.LayerArray.JP[i], true);
+						styleJPMarker(P.NodeArray.JP[i].oMarker, true);
 					}
 
 				}).change(function()
@@ -17569,12 +17628,12 @@ G = {
 					if (checkboxstate === X.ChecklistEnum.Unchecked)
 					{
 						$(this).parent().prev().removeClass("jpzListNameChecked");
-						styleJPMarker(P.LayerArray.JP[checkboxindex]);
+						styleJPMarker(P.NodeArray.JP[checkboxindex].oMarker);
 					}
 					else
 					{
 						$(this).parent().prev().addClass("jpzListNameChecked");
-						styleJPMarker(P.LayerArray.JP[checkboxindex], true);
+						styleJPMarker(P.NodeArray.JP[checkboxindex].oMarker, true);
 					}
 
 					// Rewrite the checklist string by updating the digit at the ID/index
@@ -17600,7 +17659,7 @@ G = {
 				(function(iIndex)
 				{
 					// Click associated checkbox when clicked
-					var marker = P.LayerArray.JP[iIndex];
+					var marker = P.NodeArray.JP[iIndex].oMarker;
 					marker.on("click", function()
 					{
 						$("#jpzCheck_" + iIndex).trigger("click");
@@ -17617,7 +17676,7 @@ G = {
 				{
 					$("#jpzCheck_" + i).prop("checked", false)
 						.parent().prev().removeClass("jpzListNameChecked");
-					styleJPMarker(P.LayerArray.JP[i]);
+					styleJPMarker(P.NodeArray.JP[i].oMarker);
 				}
 				X.clearChecklist(X.Checklists.JP);
 
@@ -18095,7 +18154,7 @@ G = {
 	 */
 	generateGuildUI: function()
 	{
-		hideGuildMapDrawings = function(pBook)
+		var hideGuildMapDrawings = function(pBook)
 		{
 			M.toggleLayerArray(P.LayerArray["Guild_" + pBook], false);
 			$("#gldBook_" + pBook + " dfn").each(function()
@@ -18106,9 +18165,9 @@ G = {
 			{
 				M.toggleSubmapArray(P.Guild[pBook].usedSubmaps, false);
 			}
-		},
+		};
 				
-		finalizeGuildBook = function(pBook)
+		var finalizeGuildBook = function(pBook)
 		{
 			U.convertExternalLink("#gldBook_" + pBook + " a");
 			I.qTip.init("#gldBook_" + pBook + " dfn");
@@ -18117,7 +18176,7 @@ G = {
 			{
 				I.initializeClipboard($(this)[0]);
 			});
-		},
+		};
 		
 		$.getScript(U.URL_DATA.Guild).done(function()
 		{
@@ -20503,7 +20562,7 @@ T = {
 	 */
 	initializeDryTopStrings: function()
 	{
-		getDryTopSet = function(pSet)
+		var getDryTopSet = function(pSet)
 		{
 			var events = T.DryTopSets[pSet];
 			var str = "";

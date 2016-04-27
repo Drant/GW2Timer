@@ -391,6 +391,7 @@ JP: {
 		name_es: "El Engranaje Más Alto",
 		name_fr: "Équipement optimal",
 		coord: [774, 18130],
+		path: [[905,17159],[932,17266],[790,17409],[773,17648],[1152,17827],[1136,17800],[1159,17718],[1048,17586],[847,17613],[733,17622],[577,17817],[635,17967],[635,18049],[727,18175],[752,18126]],
 		img: "http://i.imgur.com/fNXvACj.png",
 		description: "Auric mushroom cave leyline gliding. <a href='http://wiki.guildwars2.com/wiki/Ancient_Golem_Part'>Access routes</a>"
 	},
