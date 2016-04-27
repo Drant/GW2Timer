@@ -1047,7 +1047,7 @@ Announcement:
 {
 	content: "Characters API is re-enabled. <a href='http://gw2timer.com/?page=Account'>Account Armory</a> beta test is open.",
 	Start: new Date("2016-04-26T16:00:00Z"),
-	Finish: new Date("2016-04-27T16:00:00Z"),
+	Finish: new Date("2016-05-03T16:00:00Z"),
 	Messages:
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "

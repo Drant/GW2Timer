@@ -15919,7 +15919,7 @@ P = {
 		};
 		
 		// Function to store event names for filtering
-		initializeEvents = function(pEventData)
+		var initializeEvents = function(pEventData)
 		{
 			var id;
 			for (id in pEventData.events)
