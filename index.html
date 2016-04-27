@@ -22,7 +22,7 @@
 	<script>window.L || document.write('<script src="bin/leaflet.js"><\/script>');</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160427A"></script>
+	<script type="text/javascript" src="data/general.js?v=20160427B"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 <!-- Google Analytics -->
@@ -96,13 +96,17 @@
 							<li id="mapContextOptimizePins">Optimize</li>
 							<li id="mapContextChatlinkPins">Chatlink</li>
 							<li id="mapContextUndoPins">Undo</li>
+							<li id="mapContextPinCustom" class="jsIgnore">
+								<input id="mapContextPinCustomColor" type="text" value="#ffffff" maxlength="32" class="cssInputText">
+							</li>
 						</ul>
 					</li>
 					<li class="itemContextSubmenu"><span>Map</span>
 						<ul>
-							<li id="mapContextToggleLock">Toggle map lock</li>
-							<li id="mapContextToggleCompletion">Toggle world completion</li>
 							<li id="mapContextDrawCompletion">Draw completion route</li>
+							<li id="mapContextToggleCompletion">Toggle world completion</li>
+							<li id="mapContextToggleLock">Toggle map lock</li>
+							<li id="mapContextToggleFloor">Toggle map</li>
 						</ul>
 					</li>
 				</ul>

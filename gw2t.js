@@ -4604,7 +4604,7 @@ A = {
 							subbuttons.append(subbutton);
 							(function(iSubbutton, iSubsection)
 							{
-								iSubbutton.click(function(iEvent)
+								iSubbutton.click(function(pEvent)
 								{
 									var menutab = $(this).parents(".accMenuTab").data("iscurrentaccounttab", subsectionname);
 									menutab.find(".accMenuCurrent").removeClass("accMenuCurrent");
@@ -4619,7 +4619,7 @@ A = {
 									$(".accDishMenu").hide();
 									$("#accDishMenu_" + subsectionname).show();
 									// Show the subsection
-									iEvent.stopPropagation();
+									pEvent.stopPropagation();
 									iSubsection.parent().find(".accDishContainer").hide();
 									iSubsection.fadeIn(200);
 									A.adjustAccountPanel();
@@ -13002,6 +13002,7 @@ M = {
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
 	isMapInitialized: false,
+	isFloorShown: true,
 	isMouseOnHUD: false,
 	isUserDragging: false,
 	isZoneLocked: false,
@@ -13361,18 +13362,14 @@ M = {
 			{
 				that.optimizePersonalPath();
 			}
+		});//
+		$(htmlidprefix + "ContextToggleFloor").click(function()
+		{
+			that.toggleFloor();
 		});
 		$(htmlidprefix + "ContextToggleLock").click(function()
 		{
-			that.isZoneLocked = !that.isZoneLocked;
-			if (that.isZoneLocked)
-			{
-				I.write("Map locked to zone: " + D.getObjectName(that.ZoneCurrent));
-			}
-			else
-			{
-				I.write("Map zoning unlocked.");
-			}
+			that.toggleZoneLock();
 		});
 		$(htmlidprefix + "ContextToggleCompletion").click(function()
 		{
@@ -13391,6 +13388,14 @@ M = {
 				$(htmlidprefix + "ContextDrawCompletion").click(function()
 				{
 					P.drawCompletionRoute();
+				});
+				$(htmlidprefix + "ContextPinCustomColor").click(function(pEvent)
+				{
+					pEvent.stopPropagation();
+					$(this).select();
+				}).change(function()
+				{
+					that.drawPersonalPath();
 				});
 			} break;
 			case P.MapEnum.Mists:
@@ -13487,6 +13492,41 @@ M = {
 			this.Map.removeLayer(this.Floors[i]);
 		}
 		this.Floors[pFloor].addTo(this.Map);
+	},
+	
+	/*
+	 * Shows or hides the map tiles.
+	 */
+	toggleFloor: function()
+	{
+		if (this.isFloorShown)
+		{
+			for (var i = 0; i < this.Floors.length; i++)
+			{
+				this.Map.removeLayer(this.Floors[i]);
+			}
+		}
+		else
+		{
+			M.changeFloor(O.Options.int_setFloor);
+		}
+		this.isFloorShown = !(this.isFloorShown);
+	},
+	
+	/*
+	 * Prevents the zone change function, which shows zone specific icons, from triggering.
+	 */
+	toggleZoneLock: function()
+	{
+		this.isZoneLocked = !this.isZoneLocked;
+		if (this.isZoneLocked)
+		{
+			I.write("Map locked to zone: " + D.getObjectName(this.ZoneCurrent));
+		}
+		else
+		{
+			I.write("Map zoning unlocked.");
+		}
 	},
 	
 	/*
@@ -14205,6 +14245,7 @@ M = {
 			var latlngs = [];
 			var pinids = [];
 			var length = 0;
+			var color = U.stripToColorString($("#mapContextPinCustomColor").val());
 			this.Layer.PersonalPin.eachLayer(function(iPin) {
 				latlngs.push(iPin.getLatLng());
 				pinids.push(P.getLayerId(iPin));
@@ -14217,7 +14258,7 @@ M = {
 				{
 					// Create a single line connecting next two pins
 					path = L.polyline([latlngs[i], latlngs[i+1]], {
-						color: "white",
+						color: color,
 						opacity: 0.4,
 						precede: i // Store the index of the preceding pin that connects the path
 					});
@@ -14530,9 +14571,9 @@ M = {
 		weaponsmenu.append(exportbutton).append(importbutton).append(importtext);
 		
 		// Allow interaction with the inputs within the context menu
-		weaponsmenu.find("input").click(function(iEvent)
+		weaponsmenu.find("input").click(function(pEvent)
 		{
-			iEvent.stopPropagation();
+			pEvent.stopPropagation();
 		});
 		
 		// The menu entry to draw standard siege placement

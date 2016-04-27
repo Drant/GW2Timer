@@ -90,6 +90,10 @@ body > windowMain
 	0% { opacity: 1; }
 	100% { opacity: 0; }
 }
+@keyframes aniFadeInPartial {
+	0% { opacity: 0; }
+	100% { opacity: 0.9; }
+}
 
 html, body {
 	width: 100%;
@@ -481,7 +485,8 @@ html, body,
 	border: 2px solid #aaa;
 	border-radius: 2px;
 	background: #212021;
-	opacity: 0.9;	
+	opacity: 0.9;
+	animation: aniFadeInPartial 0.2s;
 }
 
 /* Range Placer */
@@ -494,6 +499,9 @@ html, body,
 }
 .mapContextRangeList img:active {
 	opacity: 0.6;
+}
+.mapContextInput {
+	width: 96px;
 }
 .mapRangeCustom {
 	display: block;
