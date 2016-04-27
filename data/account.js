@@ -25,6 +25,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "barviva", it: "tinturi", pl: "barwniki", pt: "tinturas", ru: "красители", zh: "染料"},
 	s_characters: {de: "charaktere", es: "personajes", fr: "personnages",
 		cs: "postavy", it: "personaggi", pl: "postacie", pt: "personagens", ru: "персонажей", zh: "人物"},
+	s_hero: {de: "heldin", es: "héroe", fr: "héros",
+		cs: "hrdina", it: "eroe", pl: "bohater", pt: "herói", ru: "геро́й", zh: "主角"},
 	s_equipment: {de: "ausrüstung", es: "equipamiento", fr: "equipement",
 		cs: "vybavení", it: "equipaggiamento", pl: "sprzęt", pt: "equipamento", ru: "обору́дование", zh: "設備"},
 	s_inventory: {de: "inventar", es: "inventario", fr: "inventaire",

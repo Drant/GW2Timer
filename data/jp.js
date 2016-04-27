@@ -23,9 +23,9 @@ JP: {
 		name_es: "Bichos en las ramas",
 		name_fr: "Des insectes dans les branches",
 		coord: [3682, 14925],
-		path: null,
+		path: [[3692,15267],[3666,15242],[3684,14943]],
 		img: "http://i.imgur.com/tTlNj8e.png",
-		description: "☀ Verdant fireflies catching using updrafts"
+		description: "☀ Verdant fireflies collection using updrafts"
 	},
 	"tendril": {
 		id: 63,
@@ -35,7 +35,7 @@ JP: {
 		name_es: "Quemazarcillos",
 		name_fr: "Lance-flammes anti-tentacules",
 		coord: [3665, 15722],
-		path: null,
+		path: [[3712,15296],[3652,15518],[3667,15703]],
 		img: "http://i.imgur.com/tRf45xf.png",
 		description: "☀ Verdant flamethrower burn down tendril infestation"
 	},
@@ -47,7 +47,7 @@ JP: {
 		name_es: "Pozo de reciclaje",
 		name_fr: "Gouffre aux épaves",
 		coord: [3136, 15967],
-		path: null,
+		path: [[2807,15999],[2886,16014],[2951,15961],[3116,15962]],
 		img: "http://i.imgur.com/Sm0U0oL.png",
 		description: "☀ Verdant collect disks and avoid spitting tendrils"
 	},
@@ -59,8 +59,8 @@ JP: {
 		name_es: "Galería de tiro",
 		name_fr: "Stand de tir",
 		coord: [2040, 15974],
-		path: null,
-		img: "http://i.imgur.com/I6H4Hxj.png",
+		path: [[1313,15846],[1327,15875],[1412,15893],[1463,15898],[1617,15858],[2017,15962]],
+		img: "http://i.imgur.com/bNyzALa.png",
 		description: "☽ Verdant rifle shoot dummies around camp. Requires secured outpost"
 	},
 	"flying": {
@@ -71,7 +71,7 @@ JP: {
 		name_es: "Circo volador",
 		name_fr: "Cirque volant",
 		coord: [1524, 14830],
-		path: null,
+		path: [[1716,15089],[1579,14996],[1525,14937],[1521,14853]],
 		img: "http://i.imgur.com/EP5x8bS.png",
 		description: "☀ Verdant gliding aerial obstacle course rings"
 	},
@@ -83,7 +83,7 @@ JP: {
 		name_es: "¿El suelo es de lava?",
 		name_fr: "Le sol c'est de la lave !",
 		coord: [610, 16691],
-		path: null,
+		path: [[891,16454],[776,16715],[727,16700],[680,16754],[621,16713]],
 		img: "http://i.imgur.com/2HyO00K.png",
 		description: "Auric mushroom hopping fruit kicking"
 	},
@@ -95,7 +95,7 @@ JP: {
 		name_es: "Máscaras de los Caídos",
 		name_fr: "Masques tombés",
 		coord: [1210, 17092],
-		path: null,
+		path: [[1529,17555],[1415,17527],[1236,17439],[1311,17348],[1288,17314],[1243,17264],[1185,17134],[1199,17111]],
 		img: "http://i.imgur.com/jqSlry5.png",
 		description: "Auric bouncing on layered platforms. Requires <a href='http://wiki.guildwars2.com/wiki/Exalted_Acceptance'>Exalted Acceptance</a> mastery"
 	},
@@ -107,7 +107,7 @@ JP: {
 		name_es: "Con alas de oro",
 		name_fr: "Sur des ailes d'or",
 		coord: [1830, 17389],
-		path: null,
+		path: [[1546,17557],[1536,17254],[1537,17195],[1556,17179],[1615,17203],[1673,17280],[1722,17340],[1846,17394]],
 		img: "http://i.imgur.com/NBaBYX8.png",
 		description: "Auric gliding collection using updrafts"
 	},
@@ -119,7 +119,7 @@ JP: {
 		name_es: "Subida de sagrario",
 		name_fr: "Ruée du sanctuaire",
 		coord: [1763, 18027],
-		path: null,
+		path: [[1560,17560],[1585,17501],[1631,17464],[1678,17473],[1684,17516],[1674,17584],[1609,17672],[1640,17694],[1654,17706],[1779,17805],[1761,18004]],
 		img: "http://i.imgur.com/NLUxpNr.png",
 		description: "Auric aspect abilities spiral ascent climb"
 	},
@@ -131,7 +131,7 @@ JP: {
 		name_es: "Un champiñón más",
 		name_fr: "Un champignon parmi nous",
 		coord: [1018, 18374],
-		path: null,
+		path: [[1442,18220],[1360,18297],[1262,18223],[1247,18198],[1221,18212],[1152,18283],[1020,18400],[979,18423],[996,18436],[1011,18418],[1021,18400],[1026,18347]],
 		img: "http://i.imgur.com/p2661xR.png",
 		description: "Auric fungus transformation hopping course"
 	},
@@ -143,7 +143,7 @@ JP: {
 		name_es: "La carrera de la línea ley",
 		name_fr: "La course de la ligne de force",
 		coord: [3488, 19229],
-		path: null,
+		path: [[4452,19136],[4312,19164],[4277,19183],[3841,19326],[3726,19324],[3548,19261],[3514,19237]],
 		img: "http://i.imgur.com/HwOOtiY.png",
 		description: "Tangled spark transformation floating rocks leaps"
 	},
@@ -155,7 +155,7 @@ JP: {
 		name_es: "Batalla contra el puñomático averiado",
 		name_fr: "Combat du Castagn-o-matic détraqué",
 		coord: [4493, 18553],
-		path: null,
+		path: [[4495,19116],[4528,19056],[4648,18864],[4564,18800],[4530,18565],[4508,18557]],
 		img: "http://i.imgur.com/1Tt9vwP.png",
 		description: "Tangled golem transformation Chak punching rampage. Requires <a href='http://wiki.guildwars2.com/wiki/Exalted_Assistance'>Exalted Assistance</a> mastery."
 	},
@@ -167,7 +167,7 @@ JP: {
 		name_es: "Festín de escarabajos",
 		name_fr: "Festin de scarabées",
 		coord: [4548, 17730],
-		path: null,
+		path: [[4285,17938],[4295,17954],[4245,18021],[4278,18039],[4288,17963],[4351,17761],[4464,17746],[4509,17709],[4535,17724]],
 		img: "http://i.imgur.com/wuu8g7J.png",
 		description: "Tangled beetle transformation mushroom collection"
 	},
@@ -179,7 +179,7 @@ JP: {
 		name_es: "Prueba de campo de rifle de chatarra",
 		name_fr: "Expérience sur le terrain avec fusil improvisé",
 		coord: [5402, 18917],
-		path: null,
+		path: [[5196,19095],[5193,19067],[5246,19026],[5314,19103],[5429,19092],[5437,19025],[5410,18938]],
 		img: "http://i.imgur.com/AikKwS6.png",
 		description: "Tangled rifle bundle Chak blasting"
 	},
@@ -191,7 +191,7 @@ JP: {
 		name_es: "Carrera de zánganos",
 		name_fr: "Course de drone",
 		coord: [5391, 19461],
-		path: null,
+		path: [[5207,19135],[5287,19247],[5482,19221],[5526,19426],[5414,19459]],
 		img: "http://i.imgur.com/myFj66F.png",
 		description: "Tangled motorcycle transformation lethal race"
 	},

@@ -2805,7 +2805,7 @@ U = {
 			}},
 			gps: {usage: "Prints GPS location information.", f: function()
 			{
-				I.print("Position: " + U.escapeHTML(GPSPositionArray) + "<br />Direction: " + U.escapeHTML(GPSDirectionArray) + "<br />Camera: " + U.escapeHTML(GPSCameraArray));
+				I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />Direction: " + U.formatJSON(GPSDirectionArray) + "<br />Camera: " + U.formatJSON(GPSCameraArray));
 			}},
 			identity: {usage: "Prints GPS general information.", f: function()
 			{
@@ -3584,7 +3584,7 @@ U = {
 	 */
 	formatJSON: function(pObject)
 	{
-		return JSON.stringify(pObject, null, 2);
+		return JSON.stringify(pObject, null, "\t");
 	},
 	escapeJSON: function(pObject)
 	{
@@ -3592,7 +3592,7 @@ U = {
 	},
 	printJSON: function(pObject)
 	{
-		I.print(U.escapeJSON(pObject));
+		I.print("<pre>" + U.escapeJSON(pObject) + "</pre>");
 	},
 	
 	/*
@@ -5165,7 +5165,7 @@ V = {
 		{
 			I.suspendElement(menusubsection, false);
 			V.generateCharactersStatistics();
-			V.createEquipmentMenu();
+			V.createHeroMenu();
 			if (pSection)
 			{
 				$("#accMenu_" + pSection).trigger("click");
@@ -5179,7 +5179,7 @@ V = {
 			+ "<ul id='chrSeniority' class='chrStats'></ul>"
 			+ "<ul id='chrGuilds' class='chrStats'></ul>"
 		+ "</div>");
-		$("#accDish_Equipment, #accDish_Inventory").empty();
+		$("#accDish_Hero, #accDish_Inventory").empty();
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
 		I.suspendElement(menusubsection);
@@ -5320,7 +5320,7 @@ V = {
 				$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
 				$(".chrSelection").removeClass("chrSelected");
 				$(this).addClass("chrSelected");
-				$("#accMenu_Equipment").trigger("click");
+				$("#accMenu_Hero").trigger("click");
 			}
 		}).dblclick(function()
 		{
@@ -5636,13 +5636,13 @@ V = {
 	},
 	
 	/*
-	 * Shows or hides a character or all characters equipment window, and
+	 * Shows or hides a character or all characters hero overview window, and
 	 * generates them if haven't already.
 	 * @pre Characters array was loaded by AJAX.
 	 */
-	serveEquipment: function()
+	serveHero: function()
 	{
-		if (V.requireCharacters("Equipment"))
+		if (V.requireCharacters("Hero"))
 		{
 			return;
 		}
@@ -5657,7 +5657,7 @@ V = {
 		var equipall = $(".eqpContainer");
 		if (A.CharIndexCurrent !== null)
 		{
-			V.generateEquipment();
+			V.generateHero();
 			equipall.hide();
 			equipcur.show();
 		}
@@ -5665,7 +5665,7 @@ V = {
 		{
 			A.Data.Characters.forEach(function(iChar)
 			{
-				V.generateEquipment(iChar);
+				V.generateHero(iChar);
 			});
 			equipall.show();
 		}
@@ -5674,9 +5674,9 @@ V = {
 	/*
 	 * Creates subnavigational menu for the characters' equipment section.
 	 */
-	createEquipmentMenu: function()
+	createHeroMenu: function()
 	{
-		var dishmenu = A.createDishMenu("Equipment").hide();
+		var dishmenu = A.createDishMenu("Hero").hide();
 		var container = $("<div class='eqpSelectContainer'></div>").appendTo(dishmenu);
 		A.Data.Characters.forEach(function(iChar)
 		{
@@ -5697,7 +5697,7 @@ V = {
 					if (elm.is(":visible")) // If viewing all characters
 					{
 						I.scrollToElement(elm, {
-							aContainer: $("#accDish_Equipment").parent(),
+							aContainer: $("#accDish_Hero").parent(),
 							aOffset: -($("#accOverhead").height() + 32),
 							aSpeed: "fast"
 						});
@@ -5718,7 +5718,7 @@ V = {
 	 * Generates the equipment subsection of the characters page.
 	 * @param object pCharacter characters data.
 	 */
-	generateEquipment: function(pCharacter)
+	generateHero: function(pCharacter)
 	{
 		var char = pCharacter || A.getCurrentCharacter();
 		if (char === undefined || char === null || Array.isArray(char.equipment) === false || $("#eqpContainer_" + char.charindex).length)
@@ -5726,7 +5726,7 @@ V = {
 			return;
 		}
 		// Initialize variables
-		var dish = $("#accDish_Equipment");
+		var dish = $("#accDish_Hero");
 		var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
 		// Title and separator
 		$("<div class='eqpCharSeparator'><img class='eqpCharPortrait' src='" + char.charportrait + "' />"
@@ -6108,6 +6108,63 @@ V = {
 	},
 	
 	/*
+	 * Generates all characters' equipment as item slots in bank tabs.
+	 */
+	serveEquipment: function()
+	{
+		if (V.requireCharacters("Equipment"))
+		{
+			return;
+		}
+		else if (!A.Data.Characters[0].equipment)
+		{
+			A.printError(A.PermissionEnum.Builds);
+			return;
+		}
+		
+		var dish = $("#accDish_Equipment");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		var bank = Q.createBank(dish).find(".bnkBank");
+		var slotdata;
+		var tab, slotscontainer, slot;
+		
+		var numtofetch = 0;
+		var numfetched = 0;
+		// Count cumulative number of items equipped
+		A.Data.Characters.forEach(function(iChar)
+		{
+			numtofetch += iChar.equipment.length;
+		});
+		
+		// Create bank tab for each character, fill slots with equipped items
+		A.Data.Characters.forEach(function(iChar)
+		{
+			tab = Q.createBankTab(bank, {aTitle: iChar.charname});
+			slotscontainer = tab.find(".bnkTabSlots");
+			for (var i = 0; i < iChar.equipment.length; i++)
+			{
+				slotdata = iChar.equipment[i];
+				slot = Q.createBankSlot(slotscontainer);
+				(function(iSlot, iSlotData)
+				{
+					Q.getItem(iSlotData.id, function(iItem)
+					{
+						Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+						{
+							numfetched++;
+							A.setProgressBar(numfetched, numtofetch);
+						}});
+					});
+				})(slot, slotdata);
+			}
+		});
+		Q.createBankMenu(bank);
+	},
+	
+	/*
 	 * Generates inventory of all characters as bank tabs.
 	 */
 	serveInventory: function()
@@ -6130,10 +6187,8 @@ V = {
 		var bank = Q.createBank(dish).find(".bnkBank");
 		var slotdata;
 		var tab, slotscontainer, slot;
-		
 		var char, bagdata;
 		
-		// Count the number of items to fetch
 		var numtofetch = 0;
 		var numfetched = 0;
 		for (var i = 0; i < A.Data.Characters.length; i++)
@@ -16054,8 +16109,8 @@ P = {
 	{
 		if (pNodeArray[pIndex])
 		{
-			M.toggleLayer(pNodeArray[pIndex].marker, pBoolean);
-			M.toggleLayer(pNodeArray[pIndex].path, pBoolean);
+			M.toggleLayer(pNodeArray[pIndex].oMarker, pBoolean);
+			M.toggleLayer(pNodeArray[pIndex].oPath, pBoolean);
 		}
 	},
 	toggleNodeArray: function(pNodeArray, pBoolean)
@@ -17477,11 +17532,12 @@ G = {
 	generateAndInitializeJPs: function()
 	{
 		var diffassoc;
-		var styleJPMarker = function(pMarker, pIsChecked)
+		var styleJPNode = function(pNode, pIsChecked)
 		{
-			var difficulty = (pMarker.difficulty || pMarker.options.difficulty);
+			var marker = pNode.oMarker;
+			var difficulty = marker.options.difficulty;
 			var cssclass = (pIsChecked) ? "jpzDifficulty0" : "jpzDifficulty" + difficulty;
-			pMarker.setIcon(new L.icon(
+			marker.setIcon(new L.icon(
 			{
 				className: cssclass,
 				iconUrl: "img/map/" + (diffassoc[difficulty]).toLowerCase() +  ".png",
@@ -17511,8 +17567,8 @@ G = {
 					title: "<div class='mapLoc'><dfn>" + diffassoc[jp.difficulty] + ":</dfn> " + D.getObjectName(jp)
 						+ "<img src='" + jp.img + "' /></div>"
 				});
-				styleJPMarker(marker);
 				P.NodeArray.JP[jp.id].oMarker = marker;
+				styleJPNode(P.NodeArray.JP[jp.id]);
 				/*
 				 * Create JP path, if available.
 				 */
@@ -17557,16 +17613,16 @@ G = {
 				{
 					for (var i = 0; i < P.NodeArray.JP.length; i++)
 					{
-						var marker = P.NodeArray.JP[i].oMarker;
+						var node = P.NodeArray.JP[i];
 						var state = X.getChecklistItem(X.Checklists.JP, i);
 						if (state === X.ChecklistEnum.Unchecked)
 						{
-							styleJPMarker(marker);
+							styleJPNode(node);
 						}
 						else
 						{
 							// Difficulty 0 is reserved for checked off JPs
-							styleJPMarker(marker, true);
+							styleJPNode(node, true);
 						}
 					}
 				}
@@ -17617,7 +17673,7 @@ G = {
 					else
 					{
 						$(this).parent().prev().addClass("jpzListNameChecked");
-						styleJPMarker(P.NodeArray.JP[i].oMarker, true);
+						styleJPNode(P.NodeArray.JP[i], true);
 					}
 
 				}).change(function()
@@ -17628,12 +17684,12 @@ G = {
 					if (checkboxstate === X.ChecklistEnum.Unchecked)
 					{
 						$(this).parent().prev().removeClass("jpzListNameChecked");
-						styleJPMarker(P.NodeArray.JP[checkboxindex].oMarker);
+						styleJPNode(P.NodeArray.JP[checkboxindex]);
 					}
 					else
 					{
 						$(this).parent().prev().addClass("jpzListNameChecked");
-						styleJPMarker(P.NodeArray.JP[checkboxindex].oMarker, true);
+						styleJPNode(P.NodeArray.JP[checkboxindex], true);
 					}
 
 					// Rewrite the checklist string by updating the digit at the ID/index
@@ -17676,7 +17732,7 @@ G = {
 				{
 					$("#jpzCheck_" + i).prop("checked", false)
 						.parent().prev().removeClass("jpzListNameChecked");
-					styleJPMarker(P.NodeArray.JP[i].oMarker);
+					styleJPNode(P.NodeArray.JP[i]);
 				}
 				X.clearChecklist(X.Checklists.JP);
 
@@ -23972,8 +24028,7 @@ I = {
 	cPANE_CLOCK_HEIGHT_BAR: 85,
 	cPANE_MENU_HEIGHT: 48,
 	cTOOLTIP_MOUSEMOVE_MS: 20,
-	cTOOLTIP_WIDTH_MINIMUM: 180,
-	cTOOLTIP_HEIGHT_THRESHOLD: 30, // If tooltip is taller than this then its text is taller than one line
+	cTOOLTIP_NUM_RERENDER: 8, // Times to trigger the tooltip move function so the tooltip resizes to its ultimate size
 	cTOOLTIP_OFFSET_ADD_X: 0,
 	cTOOLTIP_OFFSET_ADD_Y: 56,
 	cTOOLTIP_OVERFLOW_ADD_X: 16,
@@ -23982,7 +24037,7 @@ I = {
 	CLOCK_AND_MENU_HEIGHT: 0,
 	posX: 0, // Mouse position
 	posY: 0,
-	Scrl: {
+	Scrl: { // Autoscroll
 		Anchor: {},
 		Interval: {},
 		Container: {},
@@ -24070,6 +24125,7 @@ I = {
 			Minis: "Minis",
 			Dyes: "Dyes",
 			Characters: "Characters",
+			Hero: "Hero",
 			Equipment: "Equipment",
 			Inventory: "Inventory",
 			Crafting: "Crafting",
@@ -25978,8 +26034,11 @@ I = {
 		},
 		move: function(pEvent)
 		{
-			I.posX = pEvent.pageX;
-			I.posY = pEvent.pageY;
+			if (pEvent)
+			{
+				I.posX = pEvent.pageX;
+				I.posY = pEvent.pageY;
+			}
 			var tipwidth = $("#qTip").width();
 			var tipheight = $("#qTip").height();
 			var winwidth = $(window).width();
@@ -26017,6 +26076,10 @@ I = {
 			this.TipElm.innerHTML = pAttributeName;
 			this.TipElm.style.display = "block";
 			this.TipElm.classList.add("cssFadeIn");
+			for (var i = 0; i < I.cTOOLTIP_NUM_RERENDER; i++)
+			{
+				I.qTip.move();
+			}
 		},
 		hide: function()
 		{
