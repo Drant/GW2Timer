@@ -1300,6 +1300,9 @@ input[type="text"].bnkSearchInput:hover {
 .bnkButtonTrade {
 	background-image: url("../img/ui/tradingpost.png");
 }
+.bnkButtonRarity {
+	background-image: url("../img/ui/rarity.png");
+}
 .bnkButtonTab {
 	background-image: url("../img/ui/adjust_move.png");
 	transform: rotate(270deg);
@@ -1430,18 +1433,28 @@ input[type="text"].bnkSearchInput:hover {
 	opacity: 0;
 }
 .bnkSlotMatch {
-	background-color: red;
+	background-image: linear-gradient(270deg, red, rgba(255,255,255,0.9));
+	background-size: 400% 400%;
+	animation: aniGradientBackground 3s ease infinite;
 	border-radius: 4px;
 }
 .bnkSlotIcon {
 	display: block;
 	position: absolute;
-	margin-top: 5px;
-	margin-left: 5px;
+	margin-top: 3px;
+	margin-left: 3px;
 	width: 62px; height: 62px;
 	background-size: 100%;
 	background-position: center;
+	background-repeat: no-repeat;
+	border: 2px solid transparent;
 }
+.bnkRarity .bnkSlotRarity_Fine { border-image: linear-gradient(to bottom, #5599ff 0%, rgba(85, 153, 255, 0.2)); border-image-slice: 1; background-repeat: repeat; }
+.bnkRarity .bnkSlotRarity_Masterwork { border-image: linear-gradient(to bottom, #33cc11 0%, rgba(51, 204, 17, 0.2) 100%); border-image-slice: 1; background-repeat: repeat; }
+.bnkRarity .bnkSlotRarity_Rare { border-image: linear-gradient(to bottom, #ffdd22 0%, rgba(255, 221, 34, 0.2) 100%); border-image-slice: 1; background-repeat: repeat; }
+.bnkRarity .bnkSlotRarity_Exotic { border-image: linear-gradient(to bottom, #ffaa00 0%, rgba(255, 170, 0, 0.2) 100%); border-image-slice: 1; background-repeat: repeat; }
+.bnkRarity .bnkSlotRarity_Ascended { border-image: linear-gradient(to bottom, #ff4488 0%, rgba(255, 68, 136, 0.2) 100%); border-image-slice: 1; background-repeat: repeat; }
+.bnkRarity .bnkSlotRarity_Legendary { border-image: linear-gradient(to bottom, #9933ff 0%, rgba(153, 51, 255, 0.2) 100%); border-image-slice: 1; background-repeat: repeat; }
 .bnkSlotCount {
 	display: block;
 	position: absolute;

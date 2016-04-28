@@ -1045,7 +1045,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "Characters API is re-enabled. <a href='http://gw2timer.com/?page=Account'>Account Armory</a> beta test is open.",
+	content: "Characters API is re-enabled. <a href='http://gw2timer.com/?page=Account'><img src='img/ui/pages/account.png' />Account Armory</a> beta test is open.",
 	Start: new Date("2016-04-26T16:00:00Z"),
 	Finish: new Date("2016-05-03T16:00:00Z"),
 	Messages:
@@ -1133,23 +1133,86 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Sentinel Outfit",
-		id: "78574",
-		price: 700,
-		discount: null,
+		name: "Home Portal Stone",
+		id: "66927",
+		price: 675,
+		discount: 900,
 		col: 0
 	},
 	{
-		name: "Chaos Gloves Skin",
-		id: "78667",
-		price: 500,
-		discount: null,
+		name: "Monk's Outfit",
+		id: "69863",
+		price: 630,
+		discount: 700,
+		col: 0
+	},
+	{
+		name: "Raiment of the Lich",
+		id: "67037",
+		price: 630,
+		discount: 700,
+		col: 0
+	},
+	{
+		name: "Krytan Medium Armor Skin",
+		id: "20273",
+		price: 450,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Primeval Heavy Armor Skin",
+		id: "20272",
+		price: 450,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Profane Light Armor Skin",
+		id: "20274",
+		price: 450,
+		discount: 500,
 		col: 0
 	},
 	{
 		name: "Bandit Sniper Appearance Pack",
 		img: "http://i.imgur.com/mIuPrbz.png",
 		price: 2000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Royal Terrace Pass",
+		id: "49149",
+		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Royal Pass",
+		id: "44605",
+		price: 300,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Black Wings Glider Combo",
+		id: "68685",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Sentinel Outfit",
+		id: "78574",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Chaos Gloves Skin",
+		id: "78667",
+		price: 500,
 		discount: null,
 		col: 1
 	}

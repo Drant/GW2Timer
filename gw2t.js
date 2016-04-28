@@ -5316,7 +5316,7 @@ V = {
 		// SELECTION COLUMN (left)
 		var charvalue = A.Metadata.Race[(pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase()] || 1;
 		var professionvalue = (A.Metadata.Profession[(pCharacter.profession).toLowerCase()]).weight;
-		var trivial = (pCharacter.charislowlevel) ? "" : "accTrivial";
+		var trivial = (pCharacter.charislowlevel) ? "accTrivial" : "";
 		// Store character portrait
 		pCharacter.charportrait = "img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG;
 		$("#chrSelection_" + pCharacter.charindex).append(
@@ -5345,6 +5345,7 @@ V = {
 				$(".chrSelection").removeClass("chrSelected");
 				$(this).addClass("chrSelected");
 				$("#accMenu_Hero").trigger("click");
+				A.adjustAccountScrollbar();
 			}
 		}).dblclick(function()
 		{
@@ -5957,7 +5958,7 @@ V = {
 							{
 								if (pEvent.which === I.ClickEnum.Left)
 								{
-									U.openPrivateURL(U.getWikiSearchLink(iBox.item.name));
+									U.openExternalURL(U.getWikiSearchLink(iBox.item.name));
 								}
 							});
 							numfetched++;
@@ -6645,7 +6646,7 @@ V = {
 				skininfo.empty();
 				$("<var id='labSkinLink'><img src='" + icon + "' style='float:left;' /></var>").appendTo(skininfo).click(function()
 				{
-					U.openPrivateURL(U.getWikiSearchLink(pData.name));
+					U.openExternalURL(U.getWikiSearchLink(pData.name));
 				});
 				skininfo.append(U.escapeJSON(pData));
 			});
@@ -8614,7 +8615,7 @@ Q = {
 			{
 				// Load retrieved proper transmuted icon if available
 				var icon = (pBox.skin) ? pBox.skin.icon : Settings.aItem.icon;
-				pSlot.find(".bnkSlotIcon").css({backgroundImage: "url(" + icon + ")"});
+				pSlot.find(".bnkSlotIcon").css({backgroundImage: "url(" + icon + ")"}).addClass("bnkSlotRarity_" + Settings.aItem.rarity);
 				// Make the item searchable by converting its tooltip HTML into plain text
 				var keywords = ($(pBox.html).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
@@ -8624,7 +8625,7 @@ Q = {
 				{
 					if (pEvent.which === I.ClickEnum.Left)
 					{
-						U.openPrivateURL(U.getWikiSearchLink(wikisearch));
+						U.openExternalURL(U.getWikiSearchLink(wikisearch));
 					}
 				});
 				pSlot.contextmenu(function(pEvent)
@@ -8879,12 +8880,13 @@ Q = {
 			isshowinghelp = !isshowinghelp;
 		});
 		
-		// Empty slot filter: first click show filled slots only, second click show empty slots only, third click show all slots, cycle
+		// Empty slot filter: first click show filled slots only, second click show empty slots only, third show full stacks, fourth click show all slots, cycle
 		var emptyfilterstate = 0;
-		$("<div class='bnkButtonEmpty bnkButton curToggle' title='Filter: item <dfn>slots</dfn>, empty slots, or any slot'></div>")
+		$("<div class='bnkButtonEmpty bnkButton curToggle' title='"
+			+ "Filter:<br />1st click: non-empty <dfn>slots</dfn><br />2nd click: stack slots<br />3rd click: empty slots<br />4th click: any slot (reset)'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
-			if (emptyfilterstate === 0 || emptyfilterstate === 1 )
+			if (emptyfilterstate === 0 || emptyfilterstate === 2 ) // Filter 
 			{
 				var wantshow = (emptyfilterstate === 0);
 				slots.each(function()
@@ -8900,6 +8902,21 @@ Q = {
 					}
 				});
 				$(this).addClass("bnkButtonFocused");
+				emptyfilterstate++;
+			}
+			else if (emptyfilterstate === 1)
+			{
+				slots.each(function()
+				{
+					if ($(this).data("count") >= A.Metadata.Bank.StackMax)
+					{
+						$(this).show();
+					}
+					else
+					{
+						$(this).hide();
+					}
+				});
 				emptyfilterstate++;
 			}
 			else
@@ -8937,6 +8954,16 @@ Q = {
 			$(this).toggleClass("bnkButtonFocused");
 			isfilteringtrade = !isfilteringtrade;
 			A.adjustAccountScrollbar();
+		});
+		
+		// Trading Post filter for items that can be traded
+		var isfilteringrarity = false;
+		$("<div class='bnkButtonRarity bnkButton curToggle' title='Show <dfn>rarity</dfn> colored boxes.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			isfilteringrarity = !isfilteringrarity;
+			pBank.toggleClass("bnkRarity", isfilteringrarity);
+			$(this).toggleClass("bnkButtonFocused");
 		});
 		
 		// Toggle all tabs button
@@ -9012,19 +9039,19 @@ Q = {
 		// The context variables should be assigned by the function that styles the bank slot
 		$("#bnkContextWiki").click(function()
 		{
-			U.openPrivateURL(U.getWikiLink(Q.Context.ItemName));
+			U.openExternalURL(U.getWikiLink(Q.Context.ItemName));
 		});
 		$("#bnkContextWikiSearch").click(function()
 		{
-			U.openPrivateURL(U.getWikiSearchLink(Q.Context.ItemNameSearch));
+			U.openExternalURL(U.getWikiSearchLink(Q.Context.ItemNameSearch));
 		});
 		$("#bnkContextTrading").click(function()
 		{
-			U.openPrivateURL(U.getTradingItemLink(Q.Context.ItemID, Q.Context.ItemName));
+			U.openExternalURL(U.getTradingItemLink(Q.Context.ItemID, Q.Context.ItemName));
 		});
 		$("#bnkContextTradingSearch").click(function()
 		{
-			U.openPrivateURL(U.getTradingSearchLink(Q.Context.ItemName));
+			U.openExternalURL(U.getTradingSearchLink(Q.Context.ItemName));
 		});
 		$("#bnkContextChatlink").click(function()
 		{
@@ -15391,6 +15418,32 @@ M = {
 			}
 		});
 		
+		pLink.contextmenu(function(pEvent)
+		{
+			pEvent.preventDefault();
+			var thislatlng = that.convertGCtoLC(that.getElementCoordinates($(this)));
+			if (that.Map.getZoom() === that.ZoomEnum.Max)
+			{
+				var center = that.Map.getCenter();
+				if (~~(center.lat) === ~~(thislatlng.lat)
+					&& ~~(center.lng) === ~~(thislatlng.lng))
+				{
+					// If maxed zoom and centered on the marker, then zoom out
+					that.Map.setZoom(that.ZoomEnum.Default);
+				}
+				else
+				{
+					// If maxed zoom and not centered on the marker, then center on the marker
+					that.Map.setView(thislatlng, that.Map.getZoom());
+				}
+			}
+			else
+			{
+				// All other cases zoom and center on the marker
+				that.Map.setView(thislatlng, that.ZoomEnum.Max);
+			}
+		});
+		
 		// Move a point pin to that location as a preview
 		pLink.mouseover(function()
 		{
@@ -17615,7 +17668,7 @@ G = {
 			P.JPs = GW2T_JP_DATA.JP;
 			X.Checklists.JP.length = O.getObjectLength(P.JPs);
 			P.NodeArray.JP = P.createNodeArray(X.Checklists.JP.length);
-			var jp, marker, path;
+			var jp, jplink, marker, path, translatedname, keywords;
 		
 			for (var i in P.JPs)
 			{
@@ -17649,21 +17702,23 @@ G = {
 				/*
 				 * Create JP HTML entries.
 				 */
-				var translatedname = D.getObjectName(jp);
+				translatedname = D.getObjectName(jp);
+				keywords = (translatedname + M.getZoneName(jp.zone)).toLowerCase();
 				$("<aside class='jpzItem'><dt id='jpz_" + jp.id + "' data-coord='" + jp.coord + "'>" + translatedname + "</dt>"
 					+ "<label><input type='checkbox' id='jpzCheck_" + jp.id + "' /></label>"
 					+ "&nbsp;<cite><a href='"
 					+ U.getYouTubeLink(translatedname) + "'>[Y]</a> <a href='"
 					+ U.getWikiLanguageLink(translatedname) + "'>[W]</a></cite>"
-					+ "<dd>" + jp.description + "</dd></aside>").data("keywords", translatedname.toLowerCase())
+					+ "<dd>" + jp.description + "</dd></aside>").data("keywords", keywords)
 					.appendTo("#jpzList_" + jp.difficulty);
-				var jplink = $("#jpz_" + jp.id);
+				jplink = $("#jpz_" + jp.id);
 				jplink.attr("title", "<div class='mapLoc'><img src='" + jp.img + "' /></div>");
 				M.bindMapLinkBehavior(jplink, M.ZoomEnum.Same);
 			}
 			P.toggleNodeArray(P.NodeArray.JP, true);
 			M.bindMapLinks(".jpzList");
 			U.convertExternalLink(".jpzList a");
+			I.bindSearchBar("#jpzSearch", ".jpzItem");
 			I.qTip.init(".jpzList dt");
 
 			// Button to toggle JP markers only
@@ -17801,7 +17856,6 @@ G = {
 				updateJPCount();
 			});
 			
-			I.bindSearchBar("#jpzSearch", ".jpzItem");
 			updateJPCount();
 			G.generateAndInitializeChests();
 		});
@@ -25031,9 +25085,8 @@ I = {
 	 * @param jqobject pElements to filter.
 	 * @pre Each element must have its data "keywords" assigned for the matching.
 	 */
-	bindSearchBar: function(pContainer, pElements, pSettings)
+	bindSearchBar: function(pContainer, pElements)
 	{
-		var Settings = pSettings || {};
 		var container = $(pContainer);
 		var elements = $(pElements);
 		var fillertext = $("<div class='cntSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(container);

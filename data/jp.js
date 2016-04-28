@@ -25,7 +25,9 @@ JP: {
 		coord: [3682, 14925],
 		path: [[3692,15267],[3666,15242],[3684,14943]],
 		img: "http://i.imgur.com/tTlNj8e.png",
-		description: "☀ Verdant fireflies collection using updrafts"
+		chest: null,
+		zone: "verdant",
+		description: "Verdant fireflies collection using updrafts"
 	},
 	"tendril": {
 		id: 63,
@@ -37,7 +39,9 @@ JP: {
 		coord: [3665, 15722],
 		path: [[3712,15296],[3652,15518],[3667,15703]],
 		img: "http://i.imgur.com/tRf45xf.png",
-		description: "☀ Verdant flamethrower burn down tendril infestation"
+		chest: null,
+		zone: "verdant",
+		description: "Verdant flamethrower burn down tendril infestation"
 	},
 	"salvage": {
 		id: 64,
@@ -49,7 +53,9 @@ JP: {
 		coord: [3136, 15967],
 		path: [[2807,15999],[2886,16014],[2951,15961],[3116,15962]],
 		img: "http://i.imgur.com/Sm0U0oL.png",
-		description: "☀ Verdant collect disks and avoid spitting tendrils"
+		chest: null,
+		zone: "verdant",
+		description: "Verdant collect disks and avoid spitting tendrils"
 	},
 	"shooting": {
 		id: 65,
@@ -61,7 +67,9 @@ JP: {
 		coord: [2040, 15974],
 		path: [[1313,15846],[1327,15875],[1412,15893],[1463,15898],[1617,15858],[2017,15962]],
 		img: "http://i.imgur.com/bNyzALa.png",
-		description: "☽ Verdant rifle shoot dummies around camp. Requires secured outpost"
+		chest: null,
+		zone: "verdant",
+		description: "Verdant rifle shoot dummies around camp. Requires secured outpost"
 	},
 	"flying": {
 		id: 66,
@@ -73,7 +81,9 @@ JP: {
 		coord: [1524, 14830],
 		path: [[1716,15089],[1579,14996],[1525,14937],[1521,14853]],
 		img: "http://i.imgur.com/EP5x8bS.png",
-		description: "☀ Verdant gliding aerial obstacle course rings"
+		chest: null,
+		zone: "verdant",
+		description: "Verdant gliding aerial obstacle course rings"
 	},
 	"lava": {
 		id: 67,
@@ -85,6 +95,8 @@ JP: {
 		coord: [610, 16691],
 		path: [[891,16454],[776,16715],[727,16700],[680,16754],[621,16713]],
 		img: "http://i.imgur.com/2HyO00K.png",
+		chest: null,
+		zone: "auric",
 		description: "Auric mushroom hopping fruit kicking"
 	},
 	"fallen": {
@@ -97,6 +109,8 @@ JP: {
 		coord: [1210, 17092],
 		path: [[1529,17555],[1415,17527],[1236,17439],[1311,17348],[1288,17314],[1243,17264],[1185,17134],[1199,17111]],
 		img: "http://i.imgur.com/jqSlry5.png",
+		chest: null,
+		zone: "auric",
 		description: "Auric bouncing on layered platforms. Requires <a href='http://wiki.guildwars2.com/wiki/Exalted_Acceptance'>Exalted Acceptance</a> mastery"
 	},
 	"wings": {
@@ -109,6 +123,8 @@ JP: {
 		coord: [1830, 17389],
 		path: [[1546,17557],[1536,17254],[1537,17195],[1556,17179],[1615,17203],[1673,17280],[1722,17340],[1846,17394]],
 		img: "http://i.imgur.com/NBaBYX8.png",
+		chest: null,
+		zone: "auric",
 		description: "Auric gliding collection using updrafts"
 	},
 	"sanctum": {
@@ -121,6 +137,8 @@ JP: {
 		coord: [1763, 18027],
 		path: [[1560,17560],[1585,17501],[1631,17464],[1678,17473],[1684,17516],[1674,17584],[1609,17672],[1640,17694],[1654,17706],[1779,17805],[1761,18004]],
 		img: "http://i.imgur.com/NLUxpNr.png",
+		chest: null,
+		zone: "auric",
 		description: "Auric aspect abilities spiral ascent climb"
 	},
 	"fungus": {
@@ -133,6 +151,8 @@ JP: {
 		coord: [1018, 18374],
 		path: [[1442,18220],[1360,18297],[1262,18223],[1247,18198],[1221,18212],[1152,18283],[1020,18400],[979,18423],[996,18436],[1011,18418],[1021,18400],[1026,18347]],
 		img: "http://i.imgur.com/p2661xR.png",
+		chest: null,
+		zone: "auric",
 		description: "Auric fungus transformation hopping course"
 	},
 	"leyline": {
@@ -145,6 +165,8 @@ JP: {
 		coord: [3488, 19229],
 		path: [[4452,19136],[4312,19164],[4277,19183],[3841,19326],[3726,19324],[3548,19261],[3514,19237]],
 		img: "http://i.imgur.com/HwOOtiY.png",
+		chest: null,
+		zone: "tangled",
 		description: "Tangled spark transformation floating rocks leaps"
 	},
 	"haywire": {
@@ -157,6 +179,8 @@ JP: {
 		coord: [4493, 18553],
 		path: [[4495,19116],[4528,19056],[4648,18864],[4564,18800],[4530,18565],[4508,18557]],
 		img: "http://i.imgur.com/1Tt9vwP.png",
+		chest: null,
+		zone: "tangled",
 		description: "Tangled golem transformation Chak punching rampage. Requires <a href='http://wiki.guildwars2.com/wiki/Exalted_Assistance'>Exalted Assistance</a> mastery."
 	},
 	"beetle": {
@@ -169,6 +193,8 @@ JP: {
 		coord: [4548, 17730],
 		path: [[4285,17938],[4295,17954],[4245,18021],[4278,18039],[4288,17963],[4351,17761],[4464,17746],[4509,17709],[4535,17724]],
 		img: "http://i.imgur.com/wuu8g7J.png",
+		chest: null,
+		zone: "tangled",
 		description: "Tangled beetle transformation mushroom collection"
 	},
 	"scrap": {
@@ -181,6 +207,8 @@ JP: {
 		coord: [5402, 18917],
 		path: [[5196,19095],[5193,19067],[5246,19026],[5314,19103],[5429,19092],[5437,19025],[5410,18938]],
 		img: "http://i.imgur.com/AikKwS6.png",
+		chest: null,
+		zone: "tangled",
 		description: "Tangled rifle bundle Chak blasting"
 	},
 	"drone": {
@@ -193,6 +221,8 @@ JP: {
 		coord: [5391, 19461],
 		path: [[5207,19135],[5287,19247],[5482,19221],[5526,19426],[5414,19459]],
 		img: "http://i.imgur.com/myFj66F.png",
+		chest: null,
+		zone: "tangled",
 		description: "Tangled motorcycle transformation lethal race"
 	},
 	"urmaug": {
@@ -203,7 +233,10 @@ JP: {
 		name_es: "Secreto de Urmaug",
 		name_fr: "Le secret d'Urmaug",
 		coord: [17399, 14591],
+		path: null,
 		img: "http://i.imgur.com/yjaAbBF.png",
+		chest: null,
+		zone: "lion",
 		description: "LA short climbs up cave cliff"
 	},
 	"demongrub": {
@@ -214,8 +247,10 @@ JP: {
 		name_es: "Fosos Larvademonio",
 		name_fr: "Fosses de l'engeance",
 		coord: [13202, 13674],
+		path: null,
 		img: "http://i.imgur.com/Bme6j1E.png",
 		chest: "splendid gold",
+		zone: "queensdale",
 		description: "Queensdale small cave with grubs and skelks"
 	},
 	"observatory": {
@@ -226,7 +261,10 @@ JP: {
 		name_es: "El Observatorio Derrumbado",
 		name_fr: "Observatoire effondré",
 		coord: [12781, 15876],
+		path: null,
 		img: "http://i.imgur.com/4JUI2Ba.png",
+		chest: null,
+		zone: "kessex",
 		description: "Kessex cave ruins behind a river"
 	},
 	"management": {
@@ -237,7 +275,10 @@ JP: {
 		name_es: "Nueva Administración",
 		name_fr: "La nouvelle direction",
 		coord: [13884, 20428],
+		path: null,
 		img: "http://i.imgur.com/omyJBSk.png",
+		chest: null,
+		zone: "southsun",
 		description: "Southsun short climb up the Consortium building"
 	},
 	"spelunker": {
@@ -248,7 +289,10 @@ JP: {
 		name_es: "Hondonada del Espeleólogo",
 		name_fr: "Grottes du spéléologue",
 		coord: [10635, 20000],
+		path: null,
 		img: "http://i.imgur.com/SkOg8q8.png",
+		chest: null,
+		zone: "caledon",
 		description: "Caledon giant mushrooms water cavern. Entrance is an underground hole covered by shrubs"
 	},
 	"rookery": {
@@ -259,7 +303,10 @@ JP: {
 		name_es: "Colonia del Chamán",
 		name_fr: "Perchoir des chamanes",
 		coord: [22074, 13584],
+		path: null,
 		img: "http://i.imgur.com/0vGbgNn.png",
+		chest: null,
+		zone: "wayfarer",
 		description: "Wayfarer raven knockbacks from rock pillars"
 	},
 	"jalis": {
@@ -270,7 +317,10 @@ JP: {
 		name_es: "Refugio del Rey Jalis",
 		name_fr: "Refuge du roi Jalis",
 		coord: [21490, 12271],
+		path: null,
 		img: "http://i.imgur.com/y7bmCXv.png",
+		chest: null,
+		zone: "snowden",
 		description: "Snowden Priory site with looters"
 	},
 	"coddler": {
@@ -281,7 +331,10 @@ JP: {
 		name_es: "Cala del Cuidador",
 		name_fr: "Gorge du dorloteur",
 		coord: [20756, 20878],
+		path: null,
 		img: "http://i.imgur.com/iWXzOXM.png",
+		chest: null,
+		zone: "timberline",
 		description: "Timberline skip jump over quaggan lanterns. Entrance is underwater. <dfn data-coord='[20685, 21217]'>Inner cove</dfn> <a href='http://i.imgur.com/1CRkPDo.png'>entrance note</a>"
 	},
 	"shattered": {
@@ -292,7 +345,10 @@ JP: {
 		name_es: "Ruinas de Hielo Destrozadas",
 		name_fr: "Ruines de la banquise brisée",
 		coord: [22075, 9112],
+		path: null,
 		img: "http://i.imgur.com/sV7XcGd.png",
+		chest: null,
+		zone: "frostgorge",
 		description: "Frostgorge ice cave with trolls skelks oozes"
 	},
 	"crimson": {
@@ -303,7 +359,10 @@ JP: {
 		name_es: "Meseta Carmesí",
 		name_fr: "Plateau cramoisi",
 		coord: [26258, 13026],
+		path: null,
 		img: "http://i.imgur.com/CETyR64.png",
+		chest: null,
+		zone: "diessa",
 		description: "Diessa grawl plateau with rocks and ruins"
 	},
 	"grendich": {
@@ -314,7 +373,10 @@ JP: {
 		name_es: "Apuesta de Grendich",
 		name_fr: "Saut de Grendich",
 		coord: [25136, 12227],
+		path: null,
 		img: "http://i.imgur.com/7Qxd1Wx.png",
+		chest: null,
+		zone: "diessa",
 		description: "Diessa ruined Ascalonian stone tower climb"
 	},
 	"blitz": {
@@ -325,7 +387,10 @@ JP: {
 		name_es: "Bombardeo de la Brecha del Muro",
 		name_fr: "Brèche du mur en folie",
 		coord: [25530, 13388],
+		path: null,
 		img: "http://i.imgur.com/c8sAP6V.png",
+		chest: null,
+		zone: "diessa",
 		description: "Diessa long Ascalonian wall with vista at end"
 	},
 	"behem": {
@@ -336,7 +401,10 @@ JP: {
 		name_es: "Desafío de Behem",
 		name_fr: "Défi de Behem",
 		coord: [31116, 15198],
+		path: null,
 		img: "http://i.imgur.com/5AOBdga.png",
+		chest: null,
+		zone: "blazeridge",
 		description: "Blazeridge deep spider bat cave"
 	},
 	"pig": {
@@ -347,7 +415,10 @@ JP: {
 		name_es: "Cantera de Arrabio",
 		name_fr: "La Carrière de fonte brute",
 		coord: [25986, 10719],
+		path: null,
 		img: "http://i.imgur.com/0RIGbvR.png",
+		chest: null,
+		zone: "fireheart",
 		description: "Fireheart suspended carts high over two hills"
 	},
 	"vizier": {
@@ -358,7 +429,10 @@ JP: {
 		name_es: "Torre del Visir",
 		name_fr: "La Tour du Vizir",
 		coord: [16325, 24485],
+		path: null,
 		img: "http://i.imgur.com/1whVJrb.png",
+		chest: null,
+		zone: "straits",
 		description: "Straits coral climb up a plateau tower"
 	},
 	"archives": {
@@ -369,7 +443,10 @@ JP: {
 		name_es: "Archivos Enterrados",
 		name_fr: "Archives ensevelies",
 		coord: [11078, 29012],
+		path: null,
 		img: "http://i.imgur.com/5AAMpcO.png",
+		chest: null,
+		zone: "cursed",
 		description: "Cursed wall coral jump through risens eagles"
 	},
 	"egg": {
@@ -380,7 +457,10 @@ JP: {
 		name_es: "Portadora del huevo",
 		name_fr: "Porteuse de l'œuf",
 		coord: [1756, 18035],
+		path: null,
 		img: "http://i.imgur.com/op1dSqz.png",
+		chest: null,
+		zone: "auric",
 		description: "Auric chamber spiral ascent climb"
 	},
 	"highest": {
@@ -392,7 +472,9 @@ JP: {
 		name_fr: "Équipement optimal",
 		coord: [774, 18130],
 		path: [[905,17159],[932,17266],[790,17409],[773,17648],[1152,17827],[1136,17800],[1159,17718],[1048,17586],[847,17613],[733,17622],[577,17817],[635,17967],[635,18049],[727,18175],[752,18126]],
+		chest: null,
 		img: "http://i.imgur.com/fNXvACj.png",
+		zone: "auric",
 		description: "Auric mushroom cave leyline gliding. <a href='http://wiki.guildwars2.com/wiki/Ancient_Golem_Part'>Access routes</a>"
 	},
 	"crash": {
@@ -403,8 +485,10 @@ JP: {
 		name_es: "Lugar del Impacto del Valle de las Promesas",
 		name_fr: "Site du crash de la Vallée du prospecteur",
 		coord: [5380, 16514],
+		path: null,
 		img: "http://i.imgur.com/5QS6dN2.png",
 		chest: "grand",
+		zone: "dry",
 		description: "Dry Top aspect crystal jump on bamboo beams to top plateau"
 	},
 	"weyandt": {
@@ -415,7 +499,10 @@ JP: {
 		name_es: "Venganza de Weyandt",
 		name_fr: "La revanche de Weyandt",
 		coord: [17210, 15481],
+		path: null,
 		img: "http://i.imgur.com/Asnph3I.png",
+		chest: null,
+		zone: "lion",
 		description: "LA huge pirate themed cave"
 	},
 	"swashbuckler": {
@@ -426,7 +513,10 @@ JP: {
 		name_es: "Cala del Espadachín",
 		name_fr: "La Crique du bretteur",
 		coord: [16670, 14183],
+		path: null,
 		img: "http://i.imgur.com/19dLq1S.png",
+		chest: null,
+		zone: "gendarran",
 		description: "Gendarran light torches and swim in time. <dfn data-coord='[16510, 14221]'>Cave entrance</dfn> faces east"
 	},
 	"fawcett": {
@@ -437,7 +527,10 @@ JP: {
 		name_es: "Botín de Fawcett",
 		name_fr: "Le butin de Fawcett",
 		coord: [14330, 9653],
+		path: null,
 		img: "http://i.imgur.com/vHwaBOm.png",
+		chest: null,
+		zone: "harathi",
 		description: "Harathi pirate ship in underground lake"
 	},
 	"portmatt": {
@@ -448,7 +541,10 @@ JP: {
 		name_es: "Laboratorio del Profesor Portmatt",
 		name_fr: "Labo du professeur Portmatt",
 		coord: [15726, 16423],
+		path: null,
 		img: "http://i.imgur.com/3uEgh6s.png",
+		chest: null,
+		zone: "bloodtide",
 		description: "Bloodtide underwater number puzzle force fields"
 	},
 	"morgan": {
@@ -459,7 +555,10 @@ JP: {
 		name_es: "Salto de Morgan",
 		name_fr: "Bond de Morgan",
 		coord: [11020, 19349],
+		path: null,
 		img: "http://i.imgur.com/vJ9pk02.png",
+		chest: null,
+		zone: "caledon",
 		description: "Caledon spiral tree and floating rocks in the sky. Escort <dfn data-coord='[10696, 19663]'>Brugh</dfn> to regrow the leaf stairs"
 	},
 	"spekks": {
@@ -470,7 +569,10 @@ JP: {
 		name_es: "Laboratorio de Spekks",
 		name_fr: "Laboratoire de Spekks",
 		coord: [9492, 18652],
+		path: null,
 		img: "http://i.imgur.com/wiRtb7r.png",
+		chest: null,
+		zone: "caledon",
 		description: "Caledon asuran light platforms with lava below"
 	},
 	"cubed": {
@@ -481,7 +583,10 @@ JP: {
 		name_es: "Acertijo al Cubo",
 		name_fr: "Enigme au carré",
 		coord: [17958, 21624],
+		path: null,
 		img: "http://i.imgur.com/xE1n8zJ.png",
+		chest: null,
+		zone: "maelstrom",
 		description: "Maelstrom floating cubes and electricity"
 	},
 	"hexfoundry": {
@@ -492,7 +597,10 @@ JP: {
 		name_es: "Hexafundición Destartalada",
 		name_fr: "Hexfonderie désaxée",
 		coord: [17545, 21917],
+		path: null,
 		img: "http://i.imgur.com/LlN43yV.png",
+		chest: null,
+		zone: "sparkfly",
 		description: "Sparkfly destroyed Inquest facility"
 	},
 	"griffonrook": {
@@ -503,7 +611,10 @@ JP: {
 		name_es: "Ruta Torre del Grifo",
 		name_fr: "Piste de Griffonroc",
 		coord: [18077, 17118],
+		path: null,
 		img: "http://i.imgur.com/fR9doXu.png",
+		chest: null,
+		zone: "lornar",
 		description: "Lornar's steep griffons rock pillars. <a href='http://i.imgur.com/rJk97wh.png'>Entrance note</a>"
 	},
 	"scaffolding": {
@@ -514,7 +625,10 @@ JP: {
 		name_es: "Andamiaje del Abismo de la Tribulación",
 		name_fr: "Ascension de la Faille de la tribulation",
 		coord: [19819, 17950],
+		path: null,
 		img: "http://i.imgur.com/2XMfX13.png",
+		chest: null,
+		zone: "dredgehaunt",
 		description: "Dredgehaunt tall tower scaffold planks"
 	},
 	"tribulation": {
@@ -525,7 +639,10 @@ JP: {
 		name_es: "Cavernas de la Aflicción",
 		name_fr: "Tribulations caverneuses",
 		coord: [19718, 17986],
+		path: null,
 		img: "http://i.imgur.com/2jLd6zm.png",
+		chest: null,
+		zone: "dredgehaunt",
 		description: "Dredgehaunt ice cave after the scaffold JP"
 	},
 	"zuhl": {
@@ -536,7 +653,10 @@ JP: {
 		name_es: "Solo Zuhl",
 		name_fr: "Zuhl au monde",
 		coord: [21062, 18805],
+		path: null,
 		img: "http://i.imgur.com/jG5uLNJ.png",
+		chest: null,
+		zone: "timberline",
 		description: "Timberline ice cave then lava dredge/destroyer mine. You have to kill a champ at the end to get credit"
 	},
 	"loreclaw": {
@@ -547,7 +667,10 @@ JP: {
 		name_es: "Extensión de Garrafolclore",
 		name_fr: "Etendue de Fablegriffe",
 		coord: [28465, 15425],
+		path: null,
 		img: "http://i.imgur.com/dtnDiEQ.png",
+		chest: null,
+		zone: "plains",
 		description: "Plains water cavern Ascalonian ruins with traps"
 	},
 	"branded": {
@@ -558,7 +681,10 @@ JP: {
 		name_es: "Mina del Marcado",
 		name_fr: "Mine stigmatisée",
 		coord: [28948, 16834],
+		path: null,
 		img: "http://i.imgur.com/QATS0uY.png",
+		chest: null,
+		zone: "fields",
 		description: "Fields metal platforms jaggedly hung on chains"
 	},
 	"crystal": {
@@ -569,7 +695,10 @@ JP: {
 		name_es: "Caverna del Cristal del Caos",
 		name_fr: "Grotte du cristal du chaos",
 		coord: [27345, 13106],
+		path: null,
 		img: "http://i.imgur.com/S0JZgxG.png",
+		chest: null,
+		zone: "marches",
 		description: "Marches skip rocks jumps with character transformations. <a href='http://i.imgur.com/hQKO6Mi.png'>Shortcut note</a>"
 	},
 	"folly": {
@@ -580,7 +709,10 @@ JP: {
 		name_es: "Capricho de Insanio",
 		name_fr: "La Folie de Delirius",
 		coord: [30901, 12471],
+		path: null,
 		img: "http://i.imgur.com/2Q5FzbJ.png",
+		chest: null,
+		zone: "blazeridge",
 		description: "Blazeridge Separatists hideout and troll cave. <a href='http://i.imgur.com/WNCAQlk.png'>Grand Chest note</a>"
 	},
 	"antre": {
@@ -591,7 +723,10 @@ JP: {
 		name_es: "Caverna de la Suspensión",
 		name_fr: "Antre de Suspension",
 		coord: [13598, 24798],
+		path: null,
 		img: "http://i.imgur.com/JlHp1Jb.png",
+		chest: null,
+		zone: "malchor",
 		description: "Malchor's cave wall climb with mini treasure chests"
 	},
 	"drydock": {
@@ -602,7 +737,10 @@ JP: {
 		name_es: "Gruta de Diqueseco",
 		name_fr: "Griffure de Quai-sec",
 		coord: [5850, 14793],
+		path: null,
 		img: "http://i.imgur.com/iWbwwAY.png",
+		chest: null,
+		zone: "silverwastes",
 		description: "Silverwastes map-size desert JP with checkpoints. <dfn data-coord='[5257, 14952]'>Inner entrance</dfn> is left side of the ship's roof"
 	},
 	"troll": {
@@ -613,7 +751,10 @@ JP: {
 		name_es: "Venganza del trol",
 		name_fr: "Vengeance du troll",
 		coord: [16611, 15124],
+		path: null,
 		img: "http://i.imgur.com/zho486P.png",
+		chest: null,
+		zone: "lion",
 		description: "LA city-wide rooftop jumps. Open four mini-chests to open final chest"
 	},
 	"secret": {
@@ -624,7 +765,10 @@ JP: {
 		name_es: "No Tan Secreta",
 		name_fr: "Pas si secret",
 		coord: [15379, 14282],
+		path: null,
 		img: "http://i.imgur.com/wEG8PMR.png",
+		chest: null,
+		zone: "gendarran",
 		description: "Gendarran aetherblade hideout with trampolines"
 	},
 	"goemm": {
@@ -635,7 +779,10 @@ JP: {
 		name_es: "Laboratorio de Goemm",
 		name_fr: "Laboratoire de Goemm",
 		coord: [9235, 18967],
+		path: null,
 		img: "http://i.imgur.com/782GdE5.png",
+		chest: null,
+		zone: "metrica",
 		description: "Metrica floating landmasses in the sky as asura weather stations"
 	},
 	"reverie": {
@@ -646,7 +793,10 @@ JP: {
 		name_es: "Ensoñación Oscura",
 		name_fr: "Rêverie cauchemardesque",
 		coord: [10963, 19197],
+		path: null,
 		img: "http://i.imgur.com/KcUE585.png",
+		chest: null,
+		zone: "caledon",
 		description: "Caledon nightmare court blue hideout after Morgan's Spiral"
 	},
 	"garden": {
@@ -657,7 +807,10 @@ JP: {
 		name_es: "Jardín Oculto",
 		name_fr: "Jardin caché",
 		coord: [21357, 21885],
+		path: null,
 		img: "http://i.imgur.com/ZgnQGFR.png",
+		chest: null,
+		zone: "maelstrom",
 		description: "Maelstrom unlock four element cantles. Keeper portal to JP locations: <dfn data-coord='[18335, 22125]'>Earth</dfn>, <dfn data-coord='[19514, 22714]'>Light</dfn>, <dfn data-coord='[20143, 22209]'>Waves</dfn>, <dfn data-coord='[20770, 23385]'>Winds</dfn>. Cantals are at sky and ground level of the center, southeast waterfalls, and north lake"
 	},
 	"skipping": {
@@ -668,7 +821,10 @@ JP: {
 		name_es: "Haciendo Patitos",
 		name_fr: "Ricochets",
 		coord: [12780, 19377],
+		path: null,
 		img: "http://i.imgur.com/dxTDLqJ.png",
+		chest: null,
+		zone: "southsun",
 		description: "Southsun stones gushed up by geysers"
 	},
 	"scavenger": {
@@ -679,7 +835,10 @@ JP: {
 		name_es: "Sima del Carroñero",
 		name_fr: "Gouffre du charognard",
 		coord: [13610, 25044],
+		path: null,
 		img: "http://i.imgur.com/kDX7ZEq.png",
+		chest: null,
+		zone: "malchor",
 		description: "Malchor's convoluted orrian ruins cave collecting 12 orbs"
 	},
 	"neighborhood": {
@@ -690,8 +849,10 @@ JP: {
 		name_es: "Un vecindario cruel",
 		name_fr: "Voisinage malsain",
 		coord: [11717, 11915],
+		path: null,
 		img: "http://i.imgur.com/UAuY5zY.png",
 		chest: "splendid krytan",
+		zone: "queensdale",
 		description: "Queensdale bandit headquarter cave (Easy)"
 	},
 	"goff": {
@@ -702,8 +863,10 @@ JP: {
 		name_es: "El botín de Goff",
 		name_fr: "Butin de Goff",
 		coord: [11481, 14335],
+		path: null,
 		img: "http://i.imgur.com/oziFIK5.png",
 		chest: "splendid wood",
+		zone: "kessex",
 		description: "Kessex bandit cave camp with imprisoned trolls (Easy)"
 	},
 	"provernic": {
@@ -714,7 +877,10 @@ JP: {
 		name_es: "Cripta Provérnica",
 		name_fr: "Crypte de Provernic",
 		coord: [15433, 12539],
+		path: null,
 		img: "http://i.imgur.com/j5PK9V7.png",
+		chest: null,
+		zone: "gendarran",
 		description: "Gendarran traps and spiders crypt (Easy)"
 	},
 	"shiny": {
@@ -725,8 +891,10 @@ JP: {
 		name_es: "No toques el reluciente",
 		name_fr: "Pas touche au brillant",
 		coord: [10126, 17694],
+		path: null,
 		img: "http://i.imgur.com/2bWLIdI.png",
 		chest: "splendid asura",
+		zone: "caledon",
 		description: "Caledon skritt junk cave with golem room. Take the electric sphere from the glass container and throw it at the shanty gate to enter (Easy)"
 	},
 	"verarium": {
@@ -737,8 +905,10 @@ JP: {
 		name_es: "Socavones de Verarium",
 		name_fr: "Fosses de Verarium",
 		coord: [15583, 20191],
+		path: null,
 		img: "http://i.imgur.com/PJVbyuO.png",
 		chest: "wood",
+		zone: "sparkfly",
 		description: "Sparkfly ruined tomb. Follow the cave <dfn data-coord='[15647, 19631]'>path</dfn> to the cliff vista, then jump down south from the vista where the boars are for the entrance (Easy)"
 	},
 	"seclusion": {
@@ -749,9 +919,10 @@ JP: {
 		name_es: "Aislamiento del Rebelde",
 		name_fr: "Solitude du Rebelle",
 		coord: [26906, 9674],
-		c: [27080, 9919],
+		path: null,
 		img: "http://i.imgur.com/l1CIJGo.png",
 		chest: "splendid sphere",
+		zone: "fireheart",
 		description: "Fireheart bandit camp and Ascalonian ghosts ruins (Easy)"
 	},
 	"beaker": {
@@ -762,7 +933,10 @@ JP: {
 		name_es: "El buche vacío de Pico",
 		name_fr: "Beaker au ventre vide",
 		coord: [17764, 16379],
+		path: null,
 		img: "http://i.imgur.com/H3HoEZk.png",
+		chest: null,
+		zone: "lornar",
 		description: "Lornar feed griffon ogre pet. Same area as <dfn data-coord='[18077, 17118]'>Griffonrook</dfn> JP. No chest here, just the achievement (Easy)"
 	},
 	"oola": {
@@ -773,7 +947,10 @@ JP: {
 		name_es: "Antiguo Laboratorio de Oola",
 		name_fr: "Labo d'Oola l'Ancêtre",
 		coord: [9194, 19062],
+		path: null,
 		img: "http://i.imgur.com/leOMSRn.png",
+		chest: null,
+		zone: "metrica",
 		description: "Metrica asura lab with security golems. Requires an <a href='http://wiki.guildwars2.com/wiki/Energy_Crystal'>Energy Crystal</a> (random loot) to open the outside gate (Medium)"
 	},
 	"itlaocol": {
@@ -784,8 +961,10 @@ JP: {
 		name_es: "Las lágrimas de Itlaocol",
 		name_fr: "Larmes d'Itlaocol",
 		coord: [9516, 17345],
+		path: null,
 		img: "http://i.imgur.com/d5b4LYG.png",
 		chest: "sylvari",
+		zone: "caledon",
 		description: "Caledon hylek village with pattern puzzle. Pick up a nearby boulder and throw at the gong right side of the gate to enter (Medium)"
 	},
 	"vexa": {
@@ -796,7 +975,10 @@ JP: {
 		name_es: "Laboratorio de Vexa",
 		name_fr: "Labo de Vexa",
 		coord: [26066, 9837],
+		path: null,
 		img: "http://i.imgur.com/7LGnLCr.png",
+		chest: null,
+		zone: "fireheart",
 		description: "Fireheart asura laboratory with Escher stairs. Boss Vexa (Medium)"
 	},
 	"windy": {
@@ -807,8 +989,10 @@ JP: {
 		name_es: "El tesoro de la Cueva Ventosa",
 		name_fr: "Trésor de la Grotte venteuse",
 		coord: [18322, 14297],
+		path: null,
 		img: "http://i.imgur.com/zHnC5RR.png",
 		chest: "grand dwarven",
+		zone: "lornar",
 		description: "Lornar knockdown winds cavern with shadow imps (Medium)"
 	},
 	"magellan": {
@@ -819,8 +1003,10 @@ JP: {
 		name_es: "El recordatorio de Magallanes",
 		name_fr: "Souvenirs de Magellan",
 		coord: [23434, 10877],
+		path: null,
 		img: "http://i.imgur.com/6ZOrmQ0.png",
 		chest: "grand dwarven",
+		zone: "frostgorge",
 		description: "Frostgorge grawl cave. Chest is guarded by champ ooze (Medium)"
 	},
 	"sorrows": {
@@ -831,8 +1017,10 @@ JP: {
 		name_es: "El barco de los lamentos",
 		name_fr: "Navire des lamentations",
 		coord: [15044, 22718],
+		path: null,
 		img: "http://i.imgur.com/Y5DhRbx.png",
 		chest: "grand asura",
+		zone: "straits",
 		description: "Straits shipwreck filled with underwater risens (Medium)"
 	},
 	"stream": {
@@ -843,8 +1031,10 @@ JP: {
 		name_es: "El arroyo olvidado",
 		name_fr: "Cours d'eau oublié",
 		coord: [11415, 26582],
+		path: null,
 		img: "http://i.imgur.com/IhAjhKN.png",
 		chest: "orrian",
+		zone: "cursed",
 		description: "Cursed heavily guarded orrian cavern (Medium)"
 	},
 	"grounded": {
@@ -855,8 +1045,10 @@ JP: {
 		name_es: "Encallado",
 		name_fr: "A terre",
 		coord: [11656, 28757],
+		path: null,
 		img: "http://i.imgur.com/ZznRVR5.png",
 		chest: "grand orrian",
+		zone: "cursed",
 		description: "Cursed beached shipwreck. Chest is guarded by champ risen (Medium)"
 	},
 	"flame": {
@@ -867,7 +1059,10 @@ JP: {
 		name_es: "Tumbas del Templo de la Llama",
 		name_fr: "Tombes du Temple de la Flamme",
 		coord: [26936, 11437],
+		path: null,
 		img: "http://i.imgur.com/pjRqPyE.png",
+		chest: null,
+		zone: "diessa",
 		description: "Diessa Flame Legion booby-trapped water dungeon. Boss Rhendak (Hard)"
 	},
 	"forsaken": {
@@ -878,8 +1073,10 @@ JP: {
 		name_es: "Fortuna abandonada",
 		name_fr: "Fortune oubliée",
 		coord: [19658, 15653],
+		path: null,
 		img: "http://i.imgur.com/zYpFis4.png",
 		chest: "grand dwarven",
+		zone: "dredgehaunt",
 		description: "Dredgehaunt pitch black dwarven ruin. Talk to <dfn data-coord='[20045, 15356]'>Gerrvid</dfn> and the books to start the event to open the gate (Hard)"
 	},
 	"long": {
@@ -890,7 +1087,10 @@ JP: {
 		name_es: "El camino más largo",
 		name_fr: "Grand détour",
 		coord: [16527, 23647],
+		path: null,
 		img: "http://i.imgur.com/ZDCGMmY.png",
+		chest: null,
+		zone: "straits",
 		description: "Straits dodge risen hands projectiles to deactivate datapads (Hard)"
 	}
 },

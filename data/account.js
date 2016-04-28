@@ -154,6 +154,7 @@ var GW2T_MATERIALS_CATEGORIES = [{
  */
 var GW2T_ACCOUNT_METADATA = {
 	Bank: {
+		StackMax: 250,
 		NumSlotsHorizontal: 10,
 		NumSlotsVertical: 3,
 		NumSlotsPerTab: 30
