@@ -164,6 +164,7 @@ O = {
 		bol_displayPOIsWvW: true,
 		bol_displayVistasWvW: true,
 		bol_displayChallengesWvW: true,
+		str_colorPersonalPath: "#ffffff",
 		// WvW
 		int_secWvWRefresh: 10,
 		int_numLogEntries: 128,
@@ -690,12 +691,12 @@ O = {
 		var optionkey;
 		var inputtype;
 		var variabletype;
-		var inputobj;
+		var inputelm;
 		// Load or initialize input options
 		for (optionkey in O.Options)
 		{
-			inputobj = $("#" + O.prefixOption + optionkey);
-			inputtype = inputobj.attr("type");
+			inputelm = $("#" + O.prefixOption + optionkey);
+			inputtype = inputelm.attr("type");
 			variabletype = U.getVariablePrefix(optionkey);
 			
 			/*
@@ -709,7 +710,7 @@ O = {
 			}
 			else if (inputtype === "number" || inputtype === "range")
 			{
-				O.OptionRange[optionkey] = new Array(inputobj.prop("min"), inputobj.prop("max"));
+				O.OptionRange[optionkey] = new Array(inputelm.prop("min"), inputelm.prop("max"));
 			}
 			
 			/*
@@ -746,7 +747,7 @@ O = {
 			}
 			
 			// Assign the retrieved values to the input tags
-			O.setInputValue(inputobj, O.Options[optionkey]);
+			O.setInputValue(inputelm, O.Options[optionkey]);
 
 			/*
 			 * Bind simple event handlers to each input tags that writes
@@ -772,11 +773,14 @@ O = {
 			}
 			else
 			{
-				inputobj.change(function()
+				inputelm.change(function()
 				{
 					var thisoptionkey = $(this).attr("id").slice(O.prefixOption.length);
 					O.Options[thisoptionkey] = O.getInputValue($(this), thisoptionkey);
 					localStorage[thisoptionkey] = O.Options[thisoptionkey];
+				}).click(function()
+				{
+					$(this).select();
 				});
 			}
 		}
@@ -793,27 +797,27 @@ O = {
 	 */
 	setInputValue: function(pInput, pValue)
 	{
-		var inputobj = $(pInput);
-		var inputtype = inputobj.attr("type");
+		var inputelm = $(pInput);
+		var inputtype = inputelm.attr("type");
 
 		// Assign the retrieved values to the cloned input
 		if (inputtype === "checkbox")
 		{
-			inputobj.prop("checked", pValue);
+			inputelm.prop("checked", pValue);
 		}
 		else if (inputtype === "number" || inputtype === "range")
 		{
-			inputobj.val(pValue);
+			inputelm.val(pValue);
 		}
 		else if (inputtype === "radio")
 		{
 			// Check the radio button of that index (int)
-			$("input:radio[name=" + inputobj.attr("name") + "]:eq(" + pValue + ")")
+			$("input:radio[name=" + inputelm.attr("name") + "]:eq(" + pValue + ")")
 				.prop("checked", true);
 		}
 		else
 		{
-			inputobj.val(pValue);
+			inputelm.val(pValue);
 		}
 	},
 	
@@ -824,18 +828,18 @@ O = {
 	 */
 	getInputValue: function(pInput, pOptionKey)
 	{
-		var inputobj = $(pInput);
-		var inputtype = inputobj.attr("type");
+		var inputelm = $(pInput);
+		var inputtype = inputelm.attr("type");
 		var value;
 
 		if (inputtype === "checkbox")
 		{
-			value = inputobj.prop("checked");
+			value = inputelm.prop("checked");
 		}
 		else if (inputtype === "number" || inputtype === "range")
 		{
 			// These inputs can have custom text, so sanitize them first
-			var value = inputobj.val();
+			var value = inputelm.val();
 			var integer = parseInt(value);
 			if (isFinite(value) && integer >= O.OptionRange[pOptionKey][0]
 				&& integer <= O.OptionRange[pOptionKey][1])
@@ -847,11 +851,20 @@ O = {
 				// Load default value if not an integer within range
 				value = O.OptionRange[pOptionKey][0];
 			}
-			inputobj.val(value);
+			inputelm.val(value);
+		}
+		else if (inputtype === "text")
+		{
+			value = inputelm.val();
+			var maxlength = inputelm.attr("maxlength");
+			if (value.length > maxlength)
+			{
+				value = value.substring(0, maxlength);
+			}
 		}
 		else
 		{
-			value = inputobj.val();
+			value = inputelm.val();
 		}
 
 		return value;
@@ -869,15 +882,15 @@ O = {
 		O.setInputValue(inputclone, O.Options[pOptionKey]);
 		
 		// If the cloned input value has changed then mimic that to the original
-		var inputobj = $("#" + O.prefixOption + pOptionKey);
+		var inputelm = $("#" + O.prefixOption + pOptionKey);
 		inputclone.change(function()
 		{
 			var value = O.getInputValue($(this), pOptionKey);
-			O.setInputValue(inputobj, value);
-			inputobj.trigger("change");
+			O.setInputValue(inputelm, value);
+			inputelm.trigger("change");
 		});
 		// If the original input value has changed, then superficially change the cloned input
-		inputobj.change(function()
+		inputelm.change(function()
 		{
 			O.setInputValue(inputclone, O.Options[pOptionKey]);
 		});
@@ -1244,6 +1257,17 @@ O = {
 			P.drawZoneGateways();
 		},
 		bol_showPersonalPaths: function()
+		{
+			if (M.isMapInitialized)
+			{
+				M.drawPersonalPath();
+			}
+			if (W.isMapInitialized)
+			{
+				W.drawPersonalPath();
+			}
+		},
+		str_colorPersonalPath: function()
 		{
 			if (M.isMapInitialized)
 			{
@@ -10767,6 +10791,8 @@ D = {
 			cs: "zpět", it: "annullare", pl: "cofnąć", pt: "desfazer", ru: "отменить", zh: "復原"},
 		s_optimize: {de: "optimieren", es: "optimizar", fr: "optimiser",
 			cs: "optimalizovat", it: "ottimizzare", pl: "optymalizować", pt: "otimizar", ru: "оптимизировать", zh: "最佳化"},
+		s_search: {de: "suchen", es: "buscar", fr: "rechercher",
+			cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"},
 		
 		// Adjectives and Adverbs
 		s_ago: {de: "vor", es: "hace", fr: "il ya",
@@ -13389,14 +13415,6 @@ M = {
 				{
 					P.drawCompletionRoute();
 				});
-				$(htmlidprefix + "ContextPinCustomColor").click(function(pEvent)
-				{
-					pEvent.stopPropagation();
-					$(this).select();
-				}).change(function()
-				{
-					that.drawPersonalPath();
-				});
 			} break;
 			case P.MapEnum.Mists:
 			{
@@ -13499,18 +13517,22 @@ M = {
 	 */
 	toggleFloor: function()
 	{
+		var htmlidprefix = "#" + this.MapEnum;
+		var mappane = $(htmlidprefix + "Pane");
+		
+		this.isFloorShown = !(this.isFloorShown);
+		mappane.toggleClass("mapPaneBackground", this.isFloorShown);
 		if (this.isFloorShown)
+		{
+			M.changeFloor(O.Options.int_setFloor);
+		}
+		else
 		{
 			for (var i = 0; i < this.Floors.length; i++)
 			{
 				this.Map.removeLayer(this.Floors[i]);
 			}
 		}
-		else
-		{
-			M.changeFloor(O.Options.int_setFloor);
-		}
-		this.isFloorShown = !(this.isFloorShown);
 	},
 	
 	/*
@@ -14245,7 +14267,7 @@ M = {
 			var latlngs = [];
 			var pinids = [];
 			var length = 0;
-			var color = U.stripToColorString($("#mapContextPinCustomColor").val());
+			var color = U.stripToColorString(O.Options.str_colorPersonalPath);
 			this.Layer.PersonalPin.eachLayer(function(iPin) {
 				latlngs.push(iPin.getLatLng());
 				pinids.push(P.getLayerId(iPin));
@@ -14464,7 +14486,7 @@ M = {
 		var importmaxlength = 8192;
 		
 		var weaponsmenu = $(htmlidprefix + "ContextRangeList");
-		I.preventPropagation(weaponsmenu);
+		I.preventMapPropagation(weaponsmenu);
 		var counter = 0;
 		for (var i in that.Weapons)
 		{
@@ -17628,14 +17650,13 @@ G = {
 				 * Create JP HTML entries.
 				 */
 				var translatedname = D.getObjectName(jp);
-				$("#jpzList_" + jp.difficulty).append(
-					"<dt id='jpz_" + jp.id + "' data-coord='" + jp.coord + "'>" + translatedname + "</dt>"
+				$("<aside class='jpzItem'><dt id='jpz_" + jp.id + "' data-coord='" + jp.coord + "'>" + translatedname + "</dt>"
 					+ "<label><input type='checkbox' id='jpzCheck_" + jp.id + "' /></label>"
 					+ "&nbsp;<cite><a href='"
 					+ U.getYouTubeLink(translatedname) + "'>[Y]</a> <a href='"
 					+ U.getWikiLanguageLink(translatedname) + "'>[W]</a></cite>"
-					+ "<dd>" + jp.description + "</dd>"
-				);
+					+ "<dd>" + jp.description + "</dd></aside>").data("keywords", translatedname.toLowerCase())
+					.appendTo("#jpzList_" + jp.difficulty);
 				var jplink = $("#jpz_" + jp.id);
 				jplink.attr("title", "<div class='mapLoc'><img src='" + jp.img + "' /></div>");
 				M.bindMapLinkBehavior(jplink, M.ZoomEnum.Same);
@@ -17779,7 +17800,8 @@ G = {
 
 				updateJPCount();
 			});
-
+			
+			I.bindSearchBar("#jpzSearch", ".jpzItem");
 			updateJPCount();
 			G.generateAndInitializeChests();
 		});
@@ -19207,7 +19229,7 @@ W = {
 		});
 		
 		// Prevent map scroll from interfering when using the list
-		I.preventPropagation(list);
+		I.preventMapPropagation(list);
 		I.blinkElement(list, 5000, 250);
 	},
 	
@@ -19645,7 +19667,7 @@ W = {
 		$("#opt_bol_narrateClaimed").next().html(W.getName("Claimed"));
 		
 		// Mimic the master volumn slider
-		I.preventPropagation(O.mimicInput("#logNarrateVolume", "int_setVolume"));
+		I.preventMapPropagation(O.mimicInput("#logNarrateVolume", "int_setVolume"));
 		
 		// Bind local time clock
 		$("#logTime").click(function()
@@ -19908,7 +19930,7 @@ W = {
 			pElement.html(finalblcount);
 		};
 		
-		I.preventPropagation("#wvwSupply");
+		I.preventMapPropagation("#wvwSupply");
 		for (var i in W.Metadata.Blueprints)
 		{
 			for (var ii in W.Weapons)
@@ -22272,7 +22294,7 @@ B = {
 		+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>");
 
 		// Bind buttons
-		I.preventPropagation("#dsbVendorCodes").click(function()
+		I.preventMapPropagation("#dsbVendorCodes").click(function()
 		{
 			$(this).select();
 		});
@@ -25004,10 +25026,68 @@ I = {
 	},
 	
 	/*
+	 * Binds a search input to filter in matching keywords.
+	 * @param jqobject pContainer to create search bar.
+	 * @param jqobject pElements to filter.
+	 * @pre Each element must have its data "keywords" assigned for the matching.
+	 */
+	bindSearchBar: function(pContainer, pElements, pSettings)
+	{
+		var Settings = pSettings || {};
+		var container = $(pContainer);
+		var elements = $(pElements);
+		var fillertext = $("<div class='cntSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(container);
+		var searchbar = $("<input id='jpzSearch' class='cntSearch' type='text' />").appendTo(container);
+		searchbar.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
+		{
+			var query = $(this).val().toLowerCase();
+			var queries = [];
+			var keywords = "";
+			if (query.length > 0)
+			{
+				fillertext.hide();
+				queries = query.split(" ");
+				// Search for every substring in the user's query, which is space separated
+				elements.each(function()
+				{
+					keywords = $(this).data("keywords");
+					var ismatch = true;
+					if (keywords)
+					{
+						for (var i = 0; i < queries.length; i++)
+						{
+							// If at least one substring of the search query isn't found, then hide that item
+							if (keywords.indexOf(queries[i]) === -1)
+							{
+								$(this).hide();
+								ismatch = false;
+								break;
+							}
+						}
+						// The boolean is only true if every substrings were found
+						if (ismatch)
+						{
+							$(this).show();
+						}
+					}
+				});
+			}
+			else
+			{
+				fillertext.show();
+				elements.each(function()
+				{
+					$(this).show();
+				});
+			}
+		}));
+	},
+	
+	/*
 	 * Stops map DOM events from interfering with an element.
 	 * @param string pSelector of elements to be protected.
 	 */
-	preventPropagation: function(pSelector)
+	preventMapPropagation: function(pSelector)
 	{
 		return $(pSelector).each(function()
 		{

@@ -71,8 +71,6 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "Galerie", it: "Raccolta", pl: "Galeria", pt: "Galeria", ru: "Коллекция", zh: "圖庫"},
 	
 	// Verbs
-	s_search: {de: "suchen", es: "buscar", fr: "rechercher",
-		cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"},
 	
 	// Adjectives and Adverbs
 	s_locked: {de: "gesperrt", es: "bloqueado", fr: "verrouillé",
