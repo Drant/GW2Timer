@@ -27,7 +27,7 @@ JP: {
 		img: "http://i.imgur.com/tTlNj8e.png",
 		chest: null,
 		zone: "verdant",
-		description: "Verdant fireflies collection using updrafts"
+		description: "☀ Verdant fireflies collection using updrafts"
 	},
 	"tendril": {
 		id: 63,
@@ -41,7 +41,7 @@ JP: {
 		img: "http://i.imgur.com/tRf45xf.png",
 		chest: null,
 		zone: "verdant",
-		description: "Verdant flamethrower burn down tendril infestation"
+		description: "☀ Verdant flamethrower burn down tendril infestation"
 	},
 	"salvage": {
 		id: 64,
@@ -55,7 +55,7 @@ JP: {
 		img: "http://i.imgur.com/Sm0U0oL.png",
 		chest: null,
 		zone: "verdant",
-		description: "Verdant collect disks and avoid spitting tendrils"
+		description: "☀ Verdant collect disks and avoid spitting tendrils"
 	},
 	"shooting": {
 		id: 65,
@@ -69,7 +69,7 @@ JP: {
 		img: "http://i.imgur.com/bNyzALa.png",
 		chest: null,
 		zone: "verdant",
-		description: "Verdant rifle shoot dummies around camp. Requires secured outpost"
+		description: "☽ Verdant rifle shoot dummies around camp. Requires secured outpost"
 	},
 	"flying": {
 		id: 66,
@@ -83,7 +83,7 @@ JP: {
 		img: "http://i.imgur.com/EP5x8bS.png",
 		chest: null,
 		zone: "verdant",
-		description: "Verdant gliding aerial obstacle course rings"
+		description: "☀ Verdant gliding aerial obstacle course rings"
 	},
 	"lava": {
 		id: 67,

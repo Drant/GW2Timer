@@ -91,8 +91,11 @@
 	border-right: 1px solid rgba(228,224,179,0.6);
 	background-image: linear-gradient(to top, #7c7253 0%, transparent 100%);
 }
-.accMenuIcon:hover, .accMenuButtonFocused {
+.accMenuIcon {
 	border-radius: 50%;
+	transition: box-shadow 0.4s;
+}
+.accMenuIcon:hover, .accMenuButtonFocused {
 	box-shadow: 0px 0px 16px #e7e3bd;
 	animation: aniGlow 0.4s;
 }
@@ -950,10 +953,11 @@ a.chrWalletLink {
 }
 .spzSwitch { /* Buttons to switch between game mode builds */
 	margin-left: 2px;
+	border-radius: 50%;
 	opacity: 0.8;
+	transition: box-shadow 0.4s;
 }
 .spzSwitch:hover, .spzSwitchFocused {
-	border-radius: 50%;
 	box-shadow: 0px 0px 16px #e7e3bd;
 	animation: aniGlow 0.4s;
 	opacity: 1;
@@ -968,27 +972,34 @@ a.chrWalletLink {
 }
 .spzLine { /* A specialization container for all its associated trait icons */
 	display: block;
+	position: relative;
 	width: 100%; height: 33.33%;
 	background-position: bottom left;
 	background-size: 158%;
 }
 .spzLineBackground {
 	display: block;
-	height: 100%;
+	position: absolute;
+	width: 100%; height: 100%;
 	background-image: url("../img/account/equipment/spec_regular.png");
 	background-size: 100%;
+	pointer-events: none;
 }
 .spzLine:last-child .spzLineBackground {
 	background-image: url("../img/account/equipment/spec_regular.png"), url("../img/account/equipment/spec_elite.png");
 }
 .spzLineForeground {
 	display: block;
-	height: 100%;
+	position: absolute;
+	width: 100%; height: 100%;
 	background-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 100%);
 	background-size: 100%;
+	transition: opacity 0.4s;
+	pointer-events: none;
 }
 .spzLine:hover .spzLineForeground {
-	background: transparent;
+	opacity: 0;
+	animation: aniFadeOut 0.4s;
 }
 .spzSpecSide { /* Far left side border */
 	display: inline-block;
@@ -1080,7 +1091,7 @@ a.chrWalletLink {
 	border-radius: 2px;
 	background-image: linear-gradient(270deg, transparent, rgba(255,255,255,0.5));
 	background-size: 400% 400%;
-	animation: aniGradientBackground 5s ease infinite;
+	animation: aniPulsate 5s ease infinite;
 }
 .spzColumn em.spzCon_01 {
 	display: block;
@@ -1435,7 +1446,7 @@ input[type="text"].bnkSearchInput:hover {
 .bnkSlotMatch {
 	background-image: linear-gradient(270deg, red, rgba(255,255,255,0.9));
 	background-size: 400% 400%;
-	animation: aniGradientBackground 3s ease infinite;
+	animation: aniPulsate 2s ease infinite;
 	border-radius: 4px;
 }
 .bnkSlotIcon {

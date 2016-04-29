@@ -6008,7 +6008,9 @@ V = {
 		
 		var insertSpecialization = function(pSpecID, pTraits)
 		{
-			var specline = $("<aside class='spzLine'><span class='spzLineBackground'><span class='spzLineForeground'>"
+			var specline = $("<aside class='spzLine'>"
+				+ "<span class='spzLineBackground'></span>"
+				+ "<span class='spzLineForeground'></span>"
 				+ "<span class='spzSpecSide'><var class='spzSpecSideIcon'></var></span>"
 				+ "<span class='spzSpecColumn'><var class='spzSpecName'></var></span>"
 				+ "<span class='spzColumn'>"
@@ -6036,7 +6038,7 @@ V = {
 					+ "<var class='spzMajor_31'><em class='spzCon_31L'></em></var><br />"
 					+ "<var class='spzMajor_32'><em class='spzCon_32L'></em></var><br />"
 				+ "</span>"
-			+ "</span></span></aside>").appendTo(pContainer);
+			+ "</aside>").appendTo(pContainer);
 			specline.find("img").attr("src", "img/ui/placeholder.png");
 			
 			var formatTraitIcon = function(pTraitID)
@@ -8856,7 +8858,7 @@ Q = {
 		var buttoncontainer = $("<aside class='bnkButtons'></aside>").appendTo(dishmenu);
 		
 		// Reload button reloads the section entirely
-		$("<div class='bnkButtonReload bnkButton curClick' title='<dfn>Reload</dfn> this bank.<br />Only press this if the progress bar has frozen.'></div>")
+		$("<div class='bnkButtonReload bnkButton curClick' title='<dfn>Reload</dfn> this bank.<br />Press this if the progress bar has frozen.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			A.regenerateDish(sectionname);
@@ -17703,7 +17705,7 @@ G = {
 				 * Create JP HTML entries.
 				 */
 				translatedname = D.getObjectName(jp);
-				keywords = (translatedname + M.getZoneName(jp.zone)).toLowerCase();
+				keywords = (translatedname + " " + M.getZoneName(jp.zone)).toLowerCase();
 				$("<aside class='jpzItem'><dt id='jpz_" + jp.id + "' data-coord='" + jp.coord + "'>" + translatedname + "</dt>"
 					+ "<label><input type='checkbox' id='jpzCheck_" + jp.id + "' /></label>"
 					+ "&nbsp;<cite><a href='"
