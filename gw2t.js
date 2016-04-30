@@ -2345,7 +2345,7 @@ X = {
 		// Load dungeon icons on demand because they are pretty large
 		$("#chlDungeon .chlDungeonBar").each(function()
 		{
-			$(this).prepend("<ins class='chl_" + $(this).data("name").toLowerCase() + "'></ins>");
+			$(this).prepend("<ins class='chl_dungeon chl_" + $(this).data("name").toLowerCase() + "'></ins>");
 		});
 		
 		var updateCalculator = function()
@@ -2833,7 +2833,7 @@ U = {
 			}},
 			identity: {usage: "Prints GPS general information.", f: function()
 			{
-				U.printJSON(GPSIdentityJSON);
+				U.prettyJSON(GPSIdentityJSON);
 			}},
 			lock: {usage: "Map cannot be moved.", f: function()
 			{
@@ -2876,13 +2876,17 @@ U = {
 			{
 				U.printAPI(args[1], args[2], args[3]);
 			}},
-			apicache: {usage: "Prints the cache result of the previous console API call.", f: function()
+			apicache: {usage: "Prints the cache of the previous console API call as an associative array.", f: function()
 			{
 				U.printAPICache();
 			}},
-			apicacheassoc: {usage: "Prints API cache as an associative array.", f: function()
+			apicachearray: {usage: "...as an array.", f: function()
 			{
-				U.printAPICacheAssoc();
+				U.printAPICache(1);
+			}},
+			apicacheobject: {usage: "...as an object.", f: function()
+			{
+				U.printAPICache(2);
 			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
 				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. Replace spaces with &quot;%20&quot;", f: function()
@@ -3036,7 +3040,7 @@ U = {
 			else
 			{
 				printIcon(pData);
-				U.printJSON(pData);
+				U.prettyJSON(pData);
 			}
 		}).fail(function()
 		{
@@ -3047,27 +3051,27 @@ U = {
 	/*
 	 * Prints the cached API arrays and objects.
 	 */
-	printAPICache: function()
+	printAPICache: function(pRequest)
 	{
-		I.print((U.APICacheArrayOfIDs) ? ("API IDs Array:<br />" + U.escapeJSON(U.APICacheArrayOfIDs) + "<br />")
-			: "API IDs Array is empty.");
-		I.print((U.APICacheArrayOfObjects) ? ("API Objects Array:<br />" + U.escapeJSON(U.APICacheArrayOfObjects) + "<br />")
-			: "API Objects Array is empty.");
-	},
-	
-	/*
-	 * Prints the API cache as an associative array.
-	 */
-	printAPICacheAssoc: function()
-	{
-		var html = "";
-		var obj;
-		for (var i = 0; i < U.APICacheArrayOfObjects.length; i++)
+		var output = "";
+		if (pRequest === undefined)
 		{
-			obj = U.APICacheArrayOfObjects[i];
-			html += "&quot;" + obj.id + "&quot;: " + U.escapeJSON(obj) + ",<br />";
+			var obj;
+			for (var i = 0; i < U.APICacheArrayOfObjects.length; i++)
+			{
+				obj = U.APICacheArrayOfObjects[i];
+				output += "&quot;" + obj.id + "&quot;: " + U.escapeJSON(obj) + ",<br />";
+			}
 		}
-		I.print(html);
+		else if (pRequest === 1)
+		{
+			output = (U.APICacheArrayOfIDs) ? U.escapeJSON(U.APICacheArrayOfIDs) : "API IDs Array is empty.";
+		}
+		else if (pRequest === 2)
+		{
+			output = (U.APICacheArrayOfObjects) ? U.escapeJSON(U.APICacheArrayOfObjects) : "API Objects Array is empty.";
+		}
+		I.print(output);
 	},
 	
 	/*
@@ -3313,7 +3317,7 @@ U = {
 					for (var ii in dailyobj[i])
 					{
 						var ach = (dailyobj[i])[ii];
-						U.printJSON(ach);
+						U.prettyJSON(ach);
 					}
 				}
 				// Also recursively print tomorrow's
@@ -3615,6 +3619,10 @@ U = {
 		return U.escapeHTML(U.formatJSON(pObject));
 	},
 	printJSON: function(pObject)
+	{
+		I.print(U.escapeJSON(pObject));
+	},
+	prettyJSON: function(pObject)
 	{
 		I.print("<pre>" + U.escapeJSON(pObject) + "</pre>");
 	},
@@ -4685,6 +4693,10 @@ A = {
 	{
 		// Resize the width of the menu bar based on the size of the content window
 		$("#accOverhead").css({width: ($("#accContent").width() - 8) + "px"});
+		if (O.Options.bol_alignPanelRight === false)
+		{
+			$("#accOverhead").css({left: I.cPANEL_WIDTH + "px"});
+		}
 		// Put padding between the menu bar and the content
 		if (A.DishCurrent)
 		{
@@ -4876,7 +4888,7 @@ A = {
 				cache: false,
 				success: function(pData, pStatus, pRequest)
 				{
-					U.printJSON(pData);
+					U.prettyJSON(pData);
 				},
 				error: function(pRequest, pStatus)
 				{
@@ -5350,7 +5362,7 @@ V = {
 		}).dblclick(function()
 		{
 			var charindex = U.getSubintegerFromHTMLID($(this));
-			U.printJSON(A.Data.Characters[charindex]);
+			U.prettyJSON(A.Data.Characters[charindex]);
 		});
 		// Additional information as tooltip
 		I.qTip.init($("#chrSelection_" + pCharacter.charindex).find(".chrCommitment").attr("title", crafttooltip));
@@ -6011,32 +6023,34 @@ V = {
 			var specline = $("<aside class='spzLine'>"
 				+ "<span class='spzLineBackground'></span>"
 				+ "<span class='spzLineForeground'></span>"
-				+ "<span class='spzSpecSide'><var class='spzSpecSideIcon'></var></span>"
-				+ "<span class='spzSpecColumn'><var class='spzSpecName'></var></span>"
-				+ "<span class='spzColumn'>"
-					+ "<var class='spzMinor spzMinor_10' data-tier='0'><em class='spzCon_01'></em></var>"
-				+ "</span>"
-				+ "<span class='spzColumn'>"
-					+ "<var class='spzMajor_10'><em class='spzCon_10L'></em><em class='spzCon_10R'></em></var><br />"
-					+ "<var class='spzMajor_11'><em class='spzCon_11L'></em><em class='spzCon_11R'></em></var><br />"
-					+ "<var class='spzMajor_12'><em class='spzCon_12L'></em><em class='spzCon_12R'></em></var><br />"
-				+ "</span>"
-				+ "<span class='spzColumn'>"
-					+ "<var class='spzMinor spzMinor_20' data-tier='1'></var>"
-					+ "</var>"
-				+ "</span>"
-				+ "<span class='spzColumn'>"
-					+ "<var class='spzMajor_20'><em class='spzCon_20L'></em><em class='spzCon_20R'></em></var><br />"
-					+ "<var class='spzMajor_21'><em class='spzCon_21L'></em><em class='spzCon_21R'></em></var><br />"
-					+ "<var class='spzMajor_22'><em class='spzCon_22L'></em><em class='spzCon_22R'></em></var><br />"
-				+ "</span>"
-				+ "<span class='spzColumn'>"
-					+ "<var class='spzMinor spzMinor_30' data-tier='2'></var>"
-				+ "</span>"
-				+ "<span class='spzColumn'>"
-					+ "<var class='spzMajor_30'><em class='spzCon_30L'></em></var><br />"
-					+ "<var class='spzMajor_31'><em class='spzCon_31L'></em></var><br />"
-					+ "<var class='spzMajor_32'><em class='spzCon_32L'></em></var><br />"
+				+ "<span class='spzLineContent'>"
+					+ "<span class='spzSpecSide'><var class='spzSpecSideIcon'></var></span>"
+					+ "<span class='spzSpecColumn'><var class='spzSpecName'></var></span>"
+					+ "<span class='spzColumn'>"
+						+ "<var class='spzMinor spzMinor_10' data-tier='0'><em class='spzCon_01'></em></var>"
+					+ "</span>"
+					+ "<span class='spzColumn'>"
+						+ "<var class='spzMajor_10'><em class='spzCon_10L'></em><em class='spzCon_10R'></em></var><br />"
+						+ "<var class='spzMajor_11'><em class='spzCon_11L'></em><em class='spzCon_11R'></em></var><br />"
+						+ "<var class='spzMajor_12'><em class='spzCon_12L'></em><em class='spzCon_12R'></em></var><br />"
+					+ "</span>"
+					+ "<span class='spzColumn'>"
+						+ "<var class='spzMinor spzMinor_20' data-tier='1'></var>"
+						+ "</var>"
+					+ "</span>"
+					+ "<span class='spzColumn'>"
+						+ "<var class='spzMajor_20'><em class='spzCon_20L'></em><em class='spzCon_20R'></em></var><br />"
+						+ "<var class='spzMajor_21'><em class='spzCon_21L'></em><em class='spzCon_21R'></em></var><br />"
+						+ "<var class='spzMajor_22'><em class='spzCon_22L'></em><em class='spzCon_22R'></em></var><br />"
+					+ "</span>"
+					+ "<span class='spzColumn'>"
+						+ "<var class='spzMinor spzMinor_30' data-tier='2'></var>"
+					+ "</span>"
+					+ "<span class='spzColumn'>"
+						+ "<var class='spzMajor_30'><em class='spzCon_30L'></em></var><br />"
+						+ "<var class='spzMajor_31'><em class='spzCon_31L'></em></var><br />"
+						+ "<var class='spzMajor_32'><em class='spzCon_32L'></em></var><br />"
+					+ "</span>"
 				+ "</span>"
 			+ "</aside>").appendTo(pContainer);
 			specline.find("img").attr("src", "img/ui/placeholder.png");
@@ -6547,7 +6561,7 @@ V = {
 							}
 						}
 						// Recreate the bank menu
-						Q.createBankMenu(bank, {aHelpMessage: "#accWardrobeHelp"});
+						Q.createBankMenu(bank, {aHelpMessage: "#accWardrobeHelp", aWantHighlightSearch: true});
 					});
 				})(tab, cat);
 				
@@ -6613,7 +6627,6 @@ V = {
 			var numfetched = 0;
 		});
 	},
-	
 		
 	serveLab: function()
 	{
@@ -7235,6 +7248,7 @@ Q = {
 			Consumable: 1,
 			Container: 1,
 			CraftingMaterial: 1,
+			Gathering: 1,
 			Gizmo: 1,
 			MiniPet: 1,
 			Trophy: 1,
@@ -9560,7 +9574,7 @@ E = {
 			icon.attr("src", pData.icon);
 			icon.unbind("click").click(function()
 			{
-				U.printJSON(pData);
+				U.prettyJSON(pData);
 			});
 			Q.scanItem(pData, {aElement: icon, aCallback: function(pBox)
 			{
@@ -10929,6 +10943,7 @@ D = {
 		s_Consumable: {en: "Consumable", de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable"},
 		s_Container: {en: "Container", de: "Behälter", es: "Contenedor", fr: "Conteneur"},
 		s_CraftingMaterial: {en: "Crafting Material", de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d&apos;artisanat"},
+		s_Gathering: {en: "Gathering Tool", de: "Sammelwerkzeug", es: "Herramienta de recolección", fr: "Outil de récolte"},
 		s_Gizmo: {en: "Gizmo", de: "Dingsbums", es: "Aparato", fr: "Machin"},
 		s_MiniPet: {en: "Miniature", de: "Miniatur", es: "Miniatura", fr: "Miniature"},
 		s_Nourishment: {en: "Nourishment", de: "Verbrauchsstoff", es: "Consumible", fr: "Produit consommable"},
@@ -14296,7 +14311,6 @@ M = {
 			var latlngs = [];
 			var pinids = [];
 			var length = 0;
-			var color = U.stripToColorString(O.Options.str_colorPersonalPath);
 			this.Layer.PersonalPin.eachLayer(function(iPin) {
 				latlngs.push(iPin.getLatLng());
 				pinids.push(P.getLayerId(iPin));
@@ -14309,7 +14323,7 @@ M = {
 				{
 					// Create a single line connecting next two pins
 					path = L.polyline([latlngs[i], latlngs[i+1]], {
-						color: color,
+						color: P.getUserPathColor(),
 						opacity: 0.4,
 						precede: i // Store the index of the preceding pin that connects the path
 					});
@@ -15970,7 +15984,8 @@ P = {
 		// Function to filter out unwanted events
 		var isEventUnwanted = function(pName)
 		{
-			var blacklist = ["scarlet", "molten all", "aetherblade", "queen's cha", "mordrem inv", "offshoot", "vigil eng", "haunted", // Obsolete events
+			var blacklist = [
+				"scarlet", "molten all", "overdue emi", "aetherblade", "queen's cha", "mordrem inv", "offshoot", "vigil eng", "haunted", // Obsolete events
 				"guild", // Guild missions
 				"subdue", // Guild bounty
 				"hero cha" // Hero challenges
@@ -16492,6 +16507,14 @@ P = {
 		}
 		
 		return array;
+	},
+	
+	/*
+	 * Gets the user opted color for drawing generic paths.
+	 */
+	getUserPathColor: function()
+	{
+		return U.stripToColorString(O.Options.str_colorPersonalPath);
 	},
 	
 	/*
@@ -17150,7 +17173,7 @@ G = {
 		$("#dlyCalendar").after(I.cThrobber);
 		T.getDaily().done(function()
 		{
-			G.insertDailyDay(T.DailyToday, now); // Today's dailies
+			G.insertDailyDay(T.DailyToday, now, true); // Today's dailies
 			T.getDaily({aWantGetTomorrow: true}).done(function() // Tomorrow's dailies
 			{
 				I.removeThrobber("#dlyContainer");
@@ -17161,25 +17184,6 @@ G = {
 		{
 			I.write("Unable to retrieve daily API.");
 		});
-		
-		// Daily fractal scale numbers
-		$.getJSON(U.URL_API.Fractal, function(pData)
-		{
-			// The daily scale are located in these API array indexes for that URL
-			var fractal = T.Daily.Fractal;
-			var tier0 = T.DailyAssociation[(pData.achievements[0])];
-			var tier1 = T.DailyAssociation[(pData.achievements[1])];
-			
-			if (tier0 !== undefined && tier1 !== undefined)
-			{
-				$("#dlyHeader").append(" <ins class='dly dly_pve_fractal'></ins><a title='" + D.getObjectName(fractal.Scale) + "' "
-					+ U.convertExternalAnchor(D.getObjectURL(fractal)) + ">" + tier0 + "+" + tier1 + "</a>");
-				I.qTip.init("#dlyHeader a");
-			}
-		}).fail(function()
-		{
-			I.write("Unable to retrieve daily fractal API.");
-		});
 	},
 	
 	/*
@@ -17187,84 +17191,147 @@ G = {
 	 * @param object pDaily daily object from general.js
 	 * @param object pDate of the day.
 	 */
-	insertDailyDay: function(pDaily, pDate)
+	insertDailyDay: function(pDailyObj, pDate, pIsToday)
 	{
-		var pve, pvp, wvw; // Daily types
-		var gather, activity; // Regional dailies
-		var prof0, prof1;
-		// Prepare variables
+		// Daily category rows (game modes)
+		var pve = pDailyObj["pve"];
+		var pvp = pDailyObj["pvp"];
+		var wvw = pDailyObj["wvw"];
 		var dayclass = "";
-		var bosssrc = "";
 		var bosshtml = "";
+		var dailynicks, dtitle, dtype;
 		
-		// Wrapper tags that provide the region background image
-		var gatherregion = "";
-		var activityregion = "";
-		var eventregion = "";
-		var bossregion = "";
-		var gatherregionclose = "</ins>";
-		var activityregionclose = "";
-		var eventregionclose = "</ins>";
-		var bossregionclose = "";
-
-		// The rows
-		pve = pDaily["pve"];
-		pvp = pDaily["pvp"];
-		wvw = pDaily["wvw"];
+		// PVE daily nicknames may be suffixed by a region, or prefixed by its daily type
+		var parsePVE = function(pDaily)
+		{
+			dailynicks = pDaily.split(" ");
+			dtitle = pDaily;
+			dtype = dailynicks[0].toLowerCase();
+			if (dailynicks.length === 1 || dtype === "jp" || dtype === "adventure")
+			{
+				return "<ins class='dly dly_pve_" + dtype + "' title='" + dtitle + "'></ins>";
+			}
+			
+			var dspec = dailynicks[1].toLowerCase();
+			if (dtype === "vista" || dtype === "miner" || dtype === "lumberer" || dtype === "forager")
+			{
+				return "<ins class='dlyRegion dly_region_" + dspec + "'>"
+					+ "<ins class='dly dly_pve_" + dtype + "' title='" + dtitle + "'></ins>"
+				+ "</ins>";
+			}
+			else if (dtype === "dungeon")
+			{
+				return "<ins class='chl_dungeon chl_" + dspec + "' title='" + dtitle + "'></ins>";
+			}
+			else if (dtype === "boss")
+			{
+				bosshtml = "<em class='dlyBossIconContainer'><img class='dlyBossIcon' src='img/chain/" + dspec + I.cPNG + "' /></em>";
+				return "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(dspec)) + "'>"
+					+ "<ins class='dly dly_pve_boss' title='" + dtitle + "'></ins>"
+				+ "</ins>";
+			}
+			else if (dtype === "event")
+			{
+				return "<ins class='dlyRegion dly_region_" + M.getZoneRegion(dspec) + "'>"
+					+ "<ins class='dly dly_pve_event dlyEvent curZoom' title='" + dtitle + "' data-coord='" + dspec + "'></ins>"
+				+ "</ins>";
+			}
+			return "";
+		};
 		
-		// Some cells
-		gather = pve[0].split(" ");
-		activity = pve[1].split(" ");
-		gatherregion = "<ins class='dlyRegion dly_region_" + gather[1].toLowerCase() + "'>";
-		if (activity[0] === "Vista")
+		// PVP daily nicknames may be 1 word long, or 2 words containing the daily professions
+		var parsePVP = function(pDaily)
 		{
-			activityregion = "<ins class='dlyRegion dly_region_" + activity[1].toLowerCase() + "'>";
-			activityregionclose = "</ins>";
-		}
-		eventregion = "<ins class='dlyRegion dly_region_" + M.getZoneRegion(pve[2]) + "'>";
-		if (pve[3] !== null && C.getChainByAlias(pve[3]))
+			dailynicks = pDaily.split(" ");
+			dtitle = pDaily;
+			dtype = dailynicks[0].toLowerCase();
+			if (dailynicks.length === 1)
+			{
+				return "<ins class='dly dly_pvp_" + dtype + "' title='" + dtitle + "'></ins>";
+			}
+			
+			var dspec = dailynicks[1].toLowerCase();
+			return "<ins class='dly dly_pvp_profession_" + dtype + "_0' title='" + dtitle + "'><ins class='dly dly_pvp_profession_" + dspec + "_1'></ins></ins>";
+		};
+		
+		// WvW daily nicknames are always 1 word long
+		var parseWVW = function(pDaily)
 		{
-			bosssrc = "dly_pve_boss";
-			bossregion = "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(pve[3])) + "'>";
-			bossregionclose = "</ins>";
-			bosshtml = "<em><img src='img/chain/" + pve[3].toLowerCase() + I.cPNG + "' /></em>";
-		}
+			return "<ins class='dly dly_wvw_" + pDaily.toLowerCase() + "' title='" + pDaily + "'></ins>";
+		};
+		
+		// Generate the daily icons for each game mode
+		var pvestr = "";
+		var pvpstr = "";
+		var wvwstr = "";
+		pve.forEach(function(iDaily)
+		{
+			pvestr += parsePVE(iDaily);
+		});
+		pvp.forEach(function(iDaily)
+		{
+			pvpstr += parsePVP(iDaily);
+		});
+		wvw.forEach(function(iDaily)
+		{
+			wvwstr += parseWVW(iDaily);
+		});
 
-		prof0 = pvp[2].split(" ");
-		prof1 = pvp[3].split(" ");
-
+		// Write the daily box containing the icons
 		switch (pDate.getUTCDay())
 		{
 			case T.DayEnum.Sunday: dayclass = "dlySunday"; break;
 			case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
 		}
-		
-		var pve0 = gatherregion + "<ins class='dly_pve_" + gather[0].toLowerCase() + "' title='" + pve[0] + "'></ins>" + gatherregionclose;
-		var pve1 = activityregion + "<ins class='dly_pve_" + activity[0].toLowerCase() + "' title='" + pve[1] + "'></ins>" + activityregionclose;
-		var pve2 = eventregion + "<ins class='dly_pve_event dlyEvent curZoom' title='" + pve[2] + " Events'" + "data-coord='" + (pve[2]).toLowerCase() + "'></ins>" + eventregionclose;
-		var pve3 = bossregion + "<ins class='" + bosssrc + "' title='" + pve[3] + "'></ins>" + bossregionclose;
-		
-		var pvp0 = "<ins class='dly_pvp_" + pvp[0].toLowerCase() + "' title='" + pvp[0] + "'></ins>";
-		var pvp1 = "<ins class='dly_pvp_" + pvp[1].toLowerCase() + "' title='" + pvp[1] + "'></ins>";
-		var pvp2 = "<ins class='dly_pvp_profession_" + prof0[0].toLowerCase() + "_0' title='" + pvp[2] + "'>" + "<ins class='dly_pvp_profession_" + prof0[1].toLowerCase() + "_1'></ins>" + "</ins>";
-		var pvp3 = "<ins class='dly_pvp_profession_" + prof1[0].toLowerCase() + "_0' title='" + pvp[3] + "'>" + "<ins class='dly_pvp_profession_" + prof1[1].toLowerCase() + "_1'></ins>" + "</ins>";
-		
-		var wvw0 = "<ins class='dly_wvw_" + wvw[0].toLowerCase() + "' title='" + wvw[0] + "'></ins>";
-		var wvw1 = "<ins class='dly_wvw_" + wvw[1].toLowerCase() + "' title='" + wvw[1] + "'></ins>";
-		var wvw2 = "<ins class='dly_wvw_" + wvw[2].toLowerCase() + "' title='" + wvw[2] + "'></ins>";
-		var wvw3 = "<ins class='dly_wvw_" + wvw[3].toLowerCase() + "' title='" + wvw[3] + "'></ins>";
-
 		// Generate HTML
-		$("#dlyCalendar").append("<div>"
-			// Day
-			+ "<aside></aside>" + bosshtml + "<var class='" + dayclass + "'>" + pDate.getUTCDate() + "</var>"
-			// PvE
-			+ "<span><ins class='dly_daily_pve'></ins>" + pve0 + pve1 + pve2 + pve3 + "</span>"
-			// PvP
-			+ "<span><ins class='dly_daily_pvp'></ins>" + pvp0 + pvp1 + pvp2 + pvp3 + "</span>"
-			// WvW
-			+ "<span><ins class='dly_daily_wvw'></ins>" + wvw0 + wvw1 + wvw2 + wvw3 + "</span>"
-		+ "</div>");
+		var dailybox = $("<div class='dlyBox'>"
+			+ "<aside class='dlyMonthdayBackground'></aside>" + bosshtml + "<var class='dlyMonthdayNumber " + dayclass + "'>" + pDate.getUTCDate() + "</var>"
+			+ "<span class='dlyMode'><ins class='dly dly_daily_pve'></ins>" + pvestr + "</span>"
+			+ "<span class='dlyMode'><ins class='dly dly_daily_pvp'></ins>" + pvpstr + "</span>"
+			+ "<span class='dlyMode'><ins class='dly dly_daily_wvw'></ins>" + wvwstr + "</span>"
+		+ "</div>").appendTo("#dlyCalendar");
+
+		// If generating today's dailies then also include daily fractals
+		if (pIsToday)
+		{
+			$.getJSON(U.URL_API.Fractal, function(pData)
+			{
+				var ach = pData.achievements;
+				if (!ach || ach.length < T.Daily.Fractal.numFractalDailies)
+				{
+					return;
+				}
+				// Daily fractal scale numbers
+				var fractal = T.Daily.Fractal;
+				var scaleA = T.DailyAssociation[(ach[0])]; // The daily scales are located in these API array indexes
+				var scaleB = T.DailyAssociation[(ach[1])];
+				var scalestr = "";
+				if (scaleA && scaleB)
+				{
+					scalestr = "<a class='dlyFractalScales' title='" + D.getObjectName(fractal.Scale) + "' "
+						+ U.convertExternalAnchor(D.getObjectURL(fractal)) + ">" + scaleA + " &amp; " + scaleB + "</a>";
+				}
+				
+				// Daily fractal islands
+				var islandA = T.DailyAssociation[(ach[3])]; // The daily islands are located in these API array indexes
+				var islandB = T.DailyAssociation[(ach[7])];
+				var islandC = T.DailyAssociation[(ach[11])];
+				if (islandA && islandB && islandC)
+				{
+					dailybox.append("<span class='dlyMode dlyModeFractal'>"
+						+ "<ins class='dly dly_daily_fractal'></ins>"
+						+ "<ins class='chl_fractal chl_" + islandA.toLowerCase() + "' title='" + islandA + "'></ins>"
+						+ "<ins class='chl_fractal chl_" + islandB.toLowerCase() + "' title='" + islandB + "'></ins>"
+						+ "<ins class='chl_fractal chl_" + islandC.toLowerCase() + "' title='" + islandC + "'></ins>"
+						+ scalestr
+					+ "</span>");
+				}
+				I.qTip.init(".dlyFractalScales");
+			}).fail(function()
+			{
+				I.write("Unable to retrieve daily fractal API.");
+			});
+		}
 	},
 	
 	/*
@@ -17274,6 +17341,7 @@ G = {
 	generateAndInitializeResources: function()
 	{
 		var opacityclicked = 0.3;
+		var pathcolor = P.getUserPathColor();
 		var getNodeState = function(pMarker)
 		{
 			return X.getChecklistItem(X.Checklists["Resource" + pMarker.options.grade], pMarker.options.index);
@@ -17384,7 +17452,7 @@ G = {
 						{
 							path = L.polyline(M.convertGCtoLCMulti(resource.riches[ii].p),
 							{
-								color: "white",
+								color: pathcolor,
 								dashArray: "5,10",
 								opacity: 0.3
 							});
@@ -17671,6 +17739,7 @@ G = {
 			X.Checklists.JP.length = O.getObjectLength(P.JPs);
 			P.NodeArray.JP = P.createNodeArray(X.Checklists.JP.length);
 			var jp, jplink, marker, path, translatedname, keywords;
+			var pathcolor = P.getUserPathColor();
 		
 			for (var i in P.JPs)
 			{
@@ -17694,7 +17763,7 @@ G = {
 				{
 					path = L.polyline(M.convertGCtoLCMulti(jp.path),
 					{
-						color: "white",
+						color: pathcolor,
 						dashArray: "5,10",
 						opacity: 0.3
 					});
@@ -18259,7 +18328,7 @@ G = {
 			ithneedle = pNeedles[i];
 			name = ithneedle.p;
 			peticon = "img/collectible/rangerpets/" + name.replace(/ /g, "").toLowerCase() + I.cPNG;;
-			var str = "<div class='cltPetSkill'><span class='cltPetIcon curToggle' title='" + name + "' style='background-image:url(" + peticon + ")'>" 
+			var str = "<div class='cltPetBox'><span class='cltPetIcon curToggle' title='" + name + "' style='background-image:url(" + peticon + ")'>" 
 				+ "<var class='cltPetIconBackground'>" + I.Symbol.Filler + "</var></span><aside class='cltPetFacts'>";
 			for (var ii in ithneedle.s)
 			{
@@ -18278,7 +18347,7 @@ G = {
 					+ ii + I.cPNG + "' /><var class='cltPetFactText'>" + factstr + "</var></span>";
 			}
 			str += "</aside></div>";
-			factline = $(str).appendTo(list);
+			factline = $(str).appendTo(list).data("keywords", name.toLowerCase());
 			(function(iIndex, iName)
 			{
 				factline.find(".cltPetIcon").click(function()
@@ -18316,6 +18385,9 @@ G = {
 			})(i, name);
 		}
 		I.qTip.init(list.find(".cltPetIcon"));
+		// Create search bar
+		var search = $("<div class='cntSearchContainer'></div>").insertBefore(list);
+		I.bindSearchBar(search, $(".cltPetBox"));
 		// Scroll to the list
 		setTimeout(function()
 		{

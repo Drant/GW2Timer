@@ -94,6 +94,10 @@ body > windowMain
 	0% { opacity: 0; }
 	100% { opacity: 0.9; }
 }
+@keyframes aniFadeOutPartial {
+	0% { opacity: 1; }
+	100% { opacity: 0.1; }
+}
 
 html, body {
 	width: 100%;
@@ -699,15 +703,19 @@ dfn:active, .mapZoneLinks li:active, .mapZoneLinks dt:active {
 }
 
 .cntSearchContainer {
+	display: block;
 	position: relative;
+	margin-top: 8px;
+	margin-bottom: 8px;
 }
 input[type="text"].cntSearch {
+	display: block;
 	width: 95%;
-	margin: 4px 0 4px 0;
 }
 .cntSearchFiller {
+	display: block;
 	position: absolute;
-	margin-top: 8px;
+	margin-top: 2px;
 	margin-left: 4px;
 	pointer-events: none;
 }

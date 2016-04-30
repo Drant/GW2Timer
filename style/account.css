@@ -997,6 +997,11 @@ a.chrWalletLink {
 	transition: opacity 0.4s;
 	pointer-events: none;
 }
+.spzLineContent {
+	display: block;
+	position: absolute;
+	width: 100%; height: 100%;
+}
 .spzLine:hover .spzLineForeground {
 	opacity: 0;
 	animation: aniFadeOut 0.4s;
@@ -1072,9 +1077,10 @@ a.chrWalletLink {
 	display: inline-block;
 	width: 100%; height: 100%;
 	background: rgba(0,0,0,0.5);
+	transition: opacity 0.2s;
 }
 .spzColumn mark:hover {
-	background: rgba(0,0,0,0.3);
+	opacity: 0.5;
 }
 .spzColumn mark.spzActive {
 	background: transparent;
