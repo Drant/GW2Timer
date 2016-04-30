@@ -69,34 +69,34 @@ var GW2T_LAND_ASSOCIATION = {
 var GW2T_DAILY_ASSOCIATION = {
 
 	// Gatherer
-	"1837": "Lumberer Ascalon",
-	"1838": "Forager Ascalon",
-	"1968": "Lumberer Shiverpeaks",
-	"1969": "Miner Jungle",
-	"1970": "Lumberer Jungle",
-	"1971": "Miner Kryta",
-	"1972": "Lumberer Kryta",
-	"1973": "Forager Jungle",
-	"1974": "Forager Orr",
-	"1975": "Forager Kryta",
-	"1976": "Lumberer Orr",
-	"1977": "Miner Orr",
-	"1978": "Miner Wastes",
-	"1979": "Lumberer Wastes",
-	"1980": "Forager Wastes",
-	"1981": "Miner Ascalon",
-	"1984": "Miner Shiverpeaks",
-	"1985": "Forager Shiverpeaks",
-	"2957": "Miner Heart",
+	"1837": "Lumberer Ascalon [30717,12686]",
+	"1838": "Forager Ascalon [28360,15491]",
+	"1968": "Lumberer Shiverpeaks [20714,17199]",
+	"1969": "Miner Jungle [6328,15041]",
+	"1970": "Lumberer Jungle [20166,21981]",
+	"1971": "Miner Kryta [16936,14020]",
+	"1972": "Lumberer Kryta [16669,16040]",
+	"1973": "Forager Jungle [20077,22914]",
+	"1974": "Forager Orr [11069,27131]",
+	"1975": "Forager Kryta [15420,12390]",
+	"1976": "Lumberer Orr [13808,24941]",
+	"1977": "Miner Orr [10705,27456]",
+	"1978": "Miner Wastes [5373,16541]",
+	"1979": "Lumberer Wastes [5427,16341]",
+	"1980": "Forager Wastes [4001,15893",
+	"1981": "Miner Ascalon [28961,17355]",
+	"1984": "Miner Shiverpeaks [20914,12447]",
+	"1985": "Forager Shiverpeaks [20960,13010]",
+	"2957": "Miner Heart [3411,15597]",
 	
 	// Vista
-	"1839": "Vista Kryta",
-	"1931": "Vista Jungle",
-	"1932": "Vista Orr",
-	"1936": "Vista Shiverpeaks",
-	"1937": "Vista Wastes",
-	"1938": "Vista Ascalon",
-	"2983": "Vista Heart",
+	"1839": "Vista Kryta [17096,14790]",
+	"1931": "Vista Jungle [10605,20960]",
+	"1932": "Vista Orr [16934,23611]",
+	"1936": "Vista Shiverpeaks [21092,14515]",
+	"1937": "Vista Wastes [5615,15302]",
+	"1938": "Vista Ascalon [24403,13856]",
+	"2983": "Vista Heart [3243,14779]",
 	
 	// Misc
 	"500": "Forger",
@@ -104,16 +104,18 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1989": "Fractal",
 	
 	// Adventure
-	"2960": "Adventure Leyline",
-	"2922": "Adventure Haywire",
+	"2960": "Adventure Leyline Heart",
+	"2922": "Adventure Haywire Heart",
 	
 	// JP
-	"1882": "JP Neighborhood",
-	"1884": "JP Vexa",
-	"1886": "JP Crystal",
-	"1896": "JP Shattered",
-	"1899": "JP Swashbuckler",
-	"1902": "JP Loreclaw",
+	"1882": "JP Neighborhood Kryta",
+	"1884": "JP Vexa Ascalon",
+	"1886": "JP Crystal Ascalon",
+	"1895": "JP Rookery Shiverpeaks",
+	"1896": "JP Shattered Shiverpeaks",
+	"1899": "JP Swashbuckler Kryta",
+	"1902": "JP Loreclaw Ascalon",
+	"1908": "JP Unreleased Unreleased",
 	
 	// Event
 	"1940": "Event Caledon",
@@ -156,9 +158,9 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1933": "Boss Wurm",
 	
 	// Dungeon
-	"2893": "Dungeon AC",
-	"2917": "Dungeon SE",
-	"2938": "Dungeon Arah",
+	"2893": "Dungeon AC Ascalon",
+	"2917": "Dungeon SE Shiverpeaks",
+	"2938": "Dungeon Arah Orr",
 	
 	// WvW
 	"437": "Guard",

@@ -1543,6 +1543,7 @@ X = {
 		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: ""},
 		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: ""},
 		// Heart of Thorns
+		TigerSpirit: { key: "str_chlTigerSpirit", urlkey: "tigerspirit", value: ""},
 		ItzelTotems: { key: "str_chlItzelTotems", urlkey: "itzeltotems", value: ""},
 		PriorySeals: { key: "str_chlPriorySeals", urlkey: "prioryseals", value: ""},
 		AuricTablets: { key: "str_chlAuricTablets", urlkey: "aurictablets", value: ""},
@@ -2863,7 +2864,7 @@ U = {
 			{
 				P.printNodes(M.parseCoordinatesMulti(args[1]), true);
 			}},
-			latlng: {usage: "Converts an array of LatLng's to standard coordinates. <em>Parameters: arr_latlngs</em>", f: function()
+			latlngs: {usage: "Converts an array of LatLng's to standard coordinates. <em>Parameters: arr_latlngs</em>", f: function()
 			{
 				that.convertLatLngs(JSON.parse(argstr));
 			}},
@@ -17147,7 +17148,7 @@ G = {
 		var finalizeDailies = function()
 		{
 			$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
-			$("#dlyCalendar .dlyEvent").each(function()
+			$("#dlyCalendar .dlyZoom").each(function()
 			{
 				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
 			});
@@ -17199,7 +17200,7 @@ G = {
 		var wvw = pDailyObj["wvw"];
 		var dayclass = "";
 		var bosshtml = "";
-		var dailynicks, dtitle, dtype;
+		var dailynicks, dtitle, dtype, dspec, dmeta;
 		
 		// PVE daily nicknames may be suffixed by a region, or prefixed by its daily type
 		var parsePVE = function(pDaily)
@@ -17207,21 +17208,30 @@ G = {
 			dailynicks = pDaily.split(" ");
 			dtitle = pDaily;
 			dtype = dailynicks[0].toLowerCase();
-			if (dailynicks.length === 1 || dtype === "jp" || dtype === "adventure")
+			dspec = (dailynicks.length > 1) ? dailynicks[1].toLowerCase() : "";
+			dmeta = (dailynicks.length > 2) ? dailynicks[2].toLowerCase() : "";
+			
+			if (dailynicks.length === 1)
 			{
 				return "<ins class='dly dly_pve_" + dtype + "' title='" + dtitle + "'></ins>";
 			}
-			
-			var dspec = dailynicks[1].toLowerCase();
-			if (dtype === "vista" || dtype === "miner" || dtype === "lumberer" || dtype === "forager")
+			else if (dtype === "jp" || dtype === "adventure")
+			{
+				return "<ins class='dlyRegion dly_region_" + dmeta + "'>"
+					+ "<ins class='dly dly_pve_" + dtype + "' title='" + dtitle + "'></ins>"
+				+ "</ins>";
+			}
+			else if (dtype === "vista" || dtype === "miner" || dtype === "lumberer" || dtype === "forager")
 			{
 				return "<ins class='dlyRegion dly_region_" + dspec + "'>"
-					+ "<ins class='dly dly_pve_" + dtype + "' title='" + dtitle + "'></ins>"
+					+ "<ins class='dly dly_pve_" + dtype + " dlyZoom curZoom' title='" + dtitle + "' data-coord='" + dmeta + "'></ins>"
 				+ "</ins>";
 			}
 			else if (dtype === "dungeon")
 			{
-				return "<ins class='chl_dungeon chl_" + dspec + "' title='" + dtitle + "'></ins>";
+				return "<ins class='dlyRegion dly_region_" + dmeta + "'>"
+					+ "<ins class='chl_dungeon chl_" + dspec + "' title='" + dtitle + "'></ins>"
+				+ "</ins>";
 			}
 			else if (dtype === "boss")
 			{
@@ -17233,7 +17243,7 @@ G = {
 			else if (dtype === "event")
 			{
 				return "<ins class='dlyRegion dly_region_" + M.getZoneRegion(dspec) + "'>"
-					+ "<ins class='dly dly_pve_event dlyEvent curZoom' title='" + dtitle + "' data-coord='" + dspec + "'></ins>"
+					+ "<ins class='dly dly_pve_event dlyZoom curZoom' title='" + dtitle + "' data-coord='" + dspec + "'></ins>"
 				+ "</ins>";
 			}
 			return "";
@@ -17326,6 +17336,7 @@ G = {
 						+ scalestr
 					+ "</span>");
 				}
+				I.qTip.init(dailybox.find("ins"));
 				I.qTip.init(".dlyFractalScales");
 			}).fail(function()
 			{
@@ -18048,8 +18059,7 @@ G = {
 				collectible = P.Collectibles[i];
 				translatedname = D.getObjectName(collectible);
 				defaultname = D.getObjectDefaultName(collectible);
-				$("#cltList").append(
-					"<div>"
+				$("<div class='cltBox'>"
 					+ "<label style='color:" + collectible.color + "'>"
 						+ "<ins class='clt_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
 					+ "</label>"
@@ -18059,7 +18069,7 @@ G = {
 						+ "<a href='" + collectible.credit + "'>[C]</a>&nbsp;"
 						+ "&nbsp;-&nbsp;&nbsp;</cite>"
 						+ "<a id='nedUncheck_" + i + "'>Reset</a>"
-					+ "</span></div>");
+					+ "</span></div>").appendTo("#cltList").data("keywords", translatedname.toLowerCase());
 
 				// Clicking a checkbox generates the markers for that collectible type
 				$("#ned_" + i).one("click", function()
@@ -18081,6 +18091,7 @@ G = {
 				}
 			}
 			U.convertExternalLink("#cltList cite a");
+			I.bindSearchBar("#cltSearch", ".cltBox");
 
 			// Toggle button will only hide icons, by unchecking the checked boxes
 			$("#mapToggle_Collectible").data("checked", false).data("hideonly", true).click(function()
@@ -18539,12 +18550,11 @@ G = {
 					var mission = P.Guild.Trek.data[i];
 					var translatedname = D.getObjectName(mission);
 					
-					$("#gldBook_Trek").append(
-						"<div><img class='cssWaypoint' " + I.cClipboardAttribute
+					$("<div class='gldTrek'><img class='cssWaypoint' " + I.cClipboardAttribute
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Trek) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldTrek_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn>"
 						+ "</div>"
-					);
+					).appendTo("#gldBook_Trek").data("keywords", translatedname.toLowerCase());
 					
 					var layergroup = new L.layerGroup();
 					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
@@ -18560,6 +18570,8 @@ G = {
 					});
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
+				$("#gldBook_Trek").prepend("<div id='gldTrekSearch' class='cntSearchContainer'><div>");
+				I.bindSearchBar("#gldTrekSearch", ".gldTrek");
 				finalizeGuildBook("Trek");
 			});
 			
@@ -19536,7 +19548,6 @@ W = {
 			var owner = W.Metadata.Owners[i]; // Example: "Green" as in data
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
-			var serverid = pMatchup.worlds[ownerkey];
 			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
 				+ "<aside class='lboName'>&nbsp;" + pMatchup[ownerkey].namelinkstr + "</aside>" : "";
 			var score = scores[ownerkey];

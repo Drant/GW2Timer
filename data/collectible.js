@@ -757,6 +757,29 @@ MatrixCubeKey: {
 	{n: 19, c: [7749, 17688]}
 	]
 },
+TigerSpirit: {
+	name_en: "Spirit of the Tiger",
+	name_de: "Geist des Tigers",
+	name_es: "Espíritu del tigre",
+	name_fr: "Esprit du Tigre",
+	color: "orange",
+	view: "default",
+	wiki: "http://dulfy.net/2016/04/19/gw2-spirit-of-the-tiger-explorer-achievement-guide/",
+	credit: "http://www.palingenesis.webspace.virginmedia.com/Tim/GW2/Manual/Manual.html",
+	needles: [
+	{n: 1, c: [2655, 14842]},
+	{n: 2, c: [3134, 19905]},
+	{n: 3, c: [4616, 18453]},
+	{n: 4, c: [5551, 18881]},
+	{n: 5, c: [10774, 19039]},
+	{n: 6, c: [11955, 19313]},
+	{n: 7, c: [15614, 20061]},
+	{n: 8, c: [18372, 18077]},
+	{n: 9, c: [26144, 13047]},
+	{n: 10, c: [28523, 15425]},
+	{n: 11, c: [31369, 16577]}
+	]
+},
 ItzelTotems: {
 	name_en: "Jungle Totem Hunter",
 	name_de: "Dschungeltotem-Jägerin",

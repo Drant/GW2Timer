@@ -52,6 +52,11 @@
 }
 .dlyModeFractal {
 	width: auto;
+	margin-top: 12px;
+	margin-bottom: 4px;
+	background-image: linear-gradient(to top, black 0%, rgba(255, 255, 255, 0.1) 100%);
+	border-radius: 4px;
+	box-shadow: 0px 0px 8px lime;
 }
 #dlyCalendar ins { /* Daily */
 	display: inline-block;
@@ -303,10 +308,10 @@ dt.jpzListNameHover {
 /* =============================================================================
  *  Collectible Items
  * ========================================================================== */
-#cltList div {
+.cltBox {
 	display: block;
 }
-#cltList div label {
+.cltBox label {
 	display: block;
 	width: auto;
 	margin: 0;
@@ -317,16 +322,16 @@ dt.jpzListNameHover {
 	border-radius: 8px;
 	background-image: url("../img/collectible/collectibles.png");
 }
-#cltList div a {
+.cltBox a {
 	text-decoration: underline;
 }
-#cltList div:hover label {
+.cltBox:hover label {
 	font-weight: bold;
 }
-#cltList div:hover ins {
+.cltBox:hover ins {
 	box-shadow: 0px 0px 4px #ffff66;
 }
-#cltList div span { /* Text buttons line */
+.cltBox span { /* Text buttons line */
 	display: block;
 	margin-top: -4px;
 	padding-bottom: 4px;
@@ -363,6 +368,7 @@ dt.jpzListNameHover {
 .clt_rangerpets { background-position: -736px 0; }
 .clt_speedyreader { background-position: -768px 0; }
 .clt_strongboxes { background-position: -800px 0; }
+.clt_tigerspirit { background-position: -832px 0; }
 
 .mapNeedle0, .mapNeedle1, .mapNeedle2 {
 	border-radius: 50%;

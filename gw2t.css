@@ -707,6 +707,7 @@ dfn:active, .mapZoneLinks li:active, .mapZoneLinks dt:active {
 	position: relative;
 	margin-top: 8px;
 	margin-bottom: 8px;
+	clear: both;
 }
 input[type="text"].cntSearch {
 	display: block;
