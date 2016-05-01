@@ -295,6 +295,43 @@ var GW2T_ACCOUNT_METADATA = {
 	},
 	ProfLevel: {
 		Max: 80
+	},
+	WvWRank: {
+		Ranks: [
+			[1, 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+			[150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480, 510, 540, 570],
+			[620, 670, 720, 770, 820, 870, 920, 970, 1020, 1070, 1120, 1170, 1220, 1270, 1320],
+			[1395, 1470, 1545, 1620, 1695, 1770, 1845, 1920, 1995, 2070, 2145, 2220, 2295, 2370, 2445],
+			[2545, 2645, 2745, 2845, 2945, 3045, 3145, 3245, 3345, 3445, 3545, 3645, 3745, 3845, 3945],
+			[4095, 4245, 4395, 4545, 4695, 4845, 4995, 5145, 5295, 5445, 5595, 5745, 5895, 6045, 6195],
+			[6445, 6695, 6945, 7195, 7445, 7695, 7945, 8195, 8445, 8695, 8945, 9195, 9445, 9695, 9945, 10001] // This last indexed rank must be a higher number than the highest possible rank
+		],
+		Modifiers: [
+			{en: "", de: "", es: "", fr: ""},
+			{en: "Bronze", de: "Bronze", es: "Bronce", fr: "Bronze"},
+			{en: "Silver", de: "Silber", es: "Plata", fr: "Argent"},
+			{en: "Gold", de: "Gold", es: "Oro", fr: "Or"},
+			{en: "Platinum", de: "Platin", es: "Platino", fr: "Platine"},
+			{en: "Mithril", de: "Mithril", es: "Mithril", fr: "Mithril"},
+			{en: "Diamond", de: "Diamant", es: "Diamante", fr: "Diamant"}
+		],
+		Titles: [
+			{en: "Invader", de: "Eindringling", es: "Invasor", fr: "Envahisseur"},
+			{en: "Assaulter", de: "Angreifer", es: "Asaltador", fr: "Agresseur"},
+			{en: "Raider", de: "Plünderer", es: "Asaltante", fr: "Raider"},
+			{en: "Recruit", de: "Rekrut", es: "Recluta", fr: "Recrue"},
+			{en: "Scout", de: "Späher", es: "Explorador", fr: "Éclaireur"},
+			{en: "Soldier", de: "Soldat", es: "Soldado", fr: "Soldat"},
+			{en: "Squire", de: "Knappe", es: "Escudero", fr: "Écuyer"},
+			{en: "Footman", de: "Infanterist", es: "Lacayo", fr: "Valet de pied"},
+			{en: "Knight", de: "Ritter", es: "Caballero", fr: "Chevalier"},
+			{en: "Major", de: "Major", es: "Comandante", fr: "Commandant"},
+			{en: "Colonel", de: "Oberst", es: "Coronel", fr: "Colonel"},
+			{en: "General", de: "General", es: "General", fr: "Général"},
+			{en: "Veteran", de: "Veteran", es: "Veterano", fr: "Vétéran"},
+			{en: "Champion", de: "Champion", es: "Campeón", fr: "Champion"},
+			{en: "Legend", de: "Legende", es: "Leyenda", fr: "Légende"}
+		]
 	}
 };
 

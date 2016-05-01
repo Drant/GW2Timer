@@ -97,7 +97,7 @@ JP: {
 		img: "http://i.imgur.com/2HyO00K.png",
 		chest: null,
 		zone: "auric",
-		description: "Auric mushroom hopping fruit kicking"
+		description: "Auric mushroom hopping avoid poison ground"
 	},
 	"fallen": {
 		id: 68,
@@ -223,7 +223,7 @@ JP: {
 		img: "http://i.imgur.com/myFj66F.png",
 		chest: null,
 		zone: "tangled",
-		description: "Tangled motorcycle transformation lethal race"
+		description: "Tangled motorcycle transformation lethal race course"
 	},
 	"urmaug": {
 		id: 19,

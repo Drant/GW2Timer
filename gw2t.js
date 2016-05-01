@@ -5045,6 +5045,31 @@ A = {
 	},
 	
 	/*
+	 * Gets the title from a WvW rank number.
+	 * @param int pRank.
+	 * @returns string.
+	 */
+	getWvWTitle: function(pRank)
+	{
+		var rankobj = A.Metadata.WvWRank;
+		var ranks = rankobj.Ranks;
+		for (var i = 0; i < ranks.length; i++)
+		{
+			for (var ii = 0; ii < ranks[i].length; ii++)
+			{
+				if ((ranks[i])[ii] > pRank)
+				{
+					return D.orderModifier(
+						D.getObjectTranslation(rankobj.Titles[ii-1]),
+						D.getObjectTranslation(rankobj.Modifiers[i])
+					);
+				}
+			}
+		}
+		return "";
+	},
+	
+	/*
 	 * Tells if a section has the current account's content generated, else wipe.
 	 * @param jqobject pDish to check.
 	 * @returns boolean.
@@ -5467,6 +5492,7 @@ V = {
 			var accountbirthdaysince = T.formatTimeLetter(accountlifetime).trim();
 			var hoursperday = T.parseRatio((totalage / accountlifetime) * T.cHOURS_IN_DAY, 2);
 			var commandership = (pData.commander) ? "" : "accTrivial";
+			var wvwtitle = (pData.wvw_rank) ? (" " + A.getWvWTitle(pData.wvw_rank)) : "";
 			var access = (pData.access) ? "" : "accTrivial";
 			var accountadditional = "<span id='chrAccountMisc'>"
 				+ "<dfn><a id='chrAccountLink' title='" + U.escapeHTML(pData.id) + "'" + forumlink + ">" + U.escapeHTML(pData.name) + "</a></dfn><br />" + accountbirthdate.toLocaleString() + "<br />"
@@ -5479,7 +5505,7 @@ V = {
 			+ "</span><br />";
 			var summary = "<var id='chrAccountName'>" + accountname + "</var>"
 				+ accountadditional
-				+ "<var id='chrAccountServer'></var><br />"
+				+ "<var id='chrAccountServer'></var>" + wvwtitle + "<br />"
 				+ "<var id='chrAccountAge' title='" + hoursperday + hourstr + " / " + T.cHOURS_IN_DAY + hourstr + "<br />"
 						+ T.formatTimeLetter(totalage) + " / " + accountbirthdaysince + "'>" + totalagehour + hourstr + "</var> / "
 					+ "<var id='chrAccountDeaths' title='" + T.parseRatio(totaldeaths / totalagehour, 3) + "x / " + "1" + hourstr + "'>" + totaldeaths + "x</var> &nbsp; "
@@ -11334,6 +11360,14 @@ D = {
 	{
 		return "url_" + D.getFullySupportedLanguage();
 	},
+	getObjectTranslation: function(pObject) // No prefix, just the language code
+	{
+		if (pObject[O.Options.enu_Language] !== undefined)
+		{
+			return pObject[O.Options.enu_Language];
+		}
+		return pObject[O.OptionEnum.Language.Default];
+	},
 	getObjectName: function(pObject)
 	{
 		if (pObject["name_" + O.Options.enu_Language] !== undefined)
@@ -17150,7 +17184,7 @@ G = {
 			$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
 			$("#dlyCalendar .dlyZoom").each(function()
 			{
-				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky);
+				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky, M.Pin.Program);
 			});
 			I.bindPseudoCheckbox("#dlyCalendar ins");
 			I.qTip.init("#dlyCalendar ins");
@@ -18338,7 +18372,7 @@ G = {
 		{
 			ithneedle = pNeedles[i];
 			name = ithneedle.p;
-			peticon = "img/collectible/rangerpets/" + name.replace(/ /g, "").toLowerCase() + I.cPNG;;
+			peticon = "img/collectible/rangerpets/" + name.replace(/ /g, "").toLowerCase() + I.cPNG;
 			var str = "<div class='cltPetBox'><span class='cltPetIcon curToggle' title='" + name + "' style='background-image:url(" + peticon + ")'>" 
 				+ "<var class='cltPetIconBackground'>" + I.Symbol.Filler + "</var></span><aside class='cltPetFacts'>";
 			for (var ii in ithneedle.s)
@@ -25533,7 +25567,7 @@ I = {
 			.appendTo(header.next()).click(function()
 			{
 				$(this).parent().prev().trigger("click");
-			});;
+			});
 			
 			/*
 			 * Side menu icons as alternative for headers. Clicking an icon
