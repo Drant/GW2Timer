@@ -764,7 +764,7 @@ TigerSpirit: {
 	name_fr: "Esprit du Tigre",
 	color: "orange",
 	view: "default",
-	wiki: "http://dulfy.net/2016/04/19/gw2-spirit-of-the-tiger-explorer-achievement-guide/",
+	wiki: "http://wiki.guildwars2.com/wiki/Spirit_of_the_Tiger_(achievement)",
 	credit: "http://www.palingenesis.webspace.virginmedia.com/Tim/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [2655, 14842]},

@@ -2640,6 +2640,7 @@ U = {
 		WvW: "data/wvw.js",
 		Itinerary: "data/itinerary.js",
 		Skins: "data/skins.js",
+		Minis: "data/minis.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
@@ -3627,6 +3628,18 @@ U = {
 	{
 		I.print("<pre>" + U.escapeJSON(pObject) + "</pre>");
 	},
+	lineJSON: function(pObject)
+	{
+		// Returns the stringified JSON as a single line separated with spaces.
+		return JSON.stringify(pObject, null, 1)
+			.replace(/\"([^(\")"]+)\":/g,"$1:")
+			.replace(/[\r\n]/g, "")
+			.replace(/  +/g, " ")
+			.replace(/ }/g, "}")
+			.replace(/{ /g, "{")
+			.replace(/ \]/g, "]")
+			.replace(/\[ /g, "[");
+	},
 	
 	/*
 	 * Strips all non-alphabet and non-numbers from a string using regex.
@@ -4154,20 +4167,25 @@ U = {
 	 * @param string pString search entry.
 	 * @returns string wiki link.
 	 */
-	getWikiLink: function(pString)
+	getWikiLinkDefault: function(pString)
 	{
 		pString = pString.replace(/ /g, "_"); // Replace spaces with underscores
 		return "http://wiki.guildwars2.com/wiki/" + U.encodeURL(pString);
 	},
-	getWikiLanguageLink: function(pString)
+	getWikiLinkLanguage: function(pString)
 	{
 		pString = pString.replace(/ /g, "_");
 		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/wiki/" + U.encodeURL(pString);
 	},
-	getWikiSearchLink: function(pString)
+	getWikiSearchDefault: function(pString)
 	{
 		pString = pString.replace(/ /g, "+"); // Replace spaces with plus sign
 		return "http://wiki.guildwars2.com/index.php?title=Special%3ASearch&search=" + U.encodeURL(pString);
+	},
+	getWikiSearchLanguage: function(pString)
+	{
+		pString = pString.replace(/ /g, "_");
+		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/index.php?title=Special%3ASearch&search=" + U.encodeURL(pString);
 	},
 	
 	/*
@@ -5654,7 +5672,7 @@ V = {
 
 				var percent = (value / max) * T.cPERCENT_100;
 				var name = D.getObjectName(currency);
-				var link = U.getWikiLanguageLink(name);
+				var link = U.getWikiLinkLanguage(name);
 				wallet.append("<li data-value='" + value + "'>"
 					+ "<var class='chrWalletAmount'>" + amountstr + "</var>"
 					+ "<ins class='acc_wallet acc_wallet_" + currency.id + "'></ins>"
@@ -5997,7 +6015,7 @@ V = {
 							{
 								if (pEvent.which === I.ClickEnum.Left)
 								{
-									U.openExternalURL(U.getWikiSearchLink(iBox.item.name));
+									U.openExternalURL(U.getWikiSearchLanguage(iBox.item.name));
 								}
 							});
 							numfetched++;
@@ -6476,12 +6494,12 @@ V = {
 			return;
 		}
 		
-		var names, categories, galleries, skinsdb;
+		var headers, galleries, unlocksdb;
 		var galleryword = D.getWordCapital("gallery");
 		// Macro function to add link to gallery buttons next to the tab separators
 		var createGalleryLinks = function(pTab, pCategory)
 		{
-			var galkey = names[pCategory].set || pCategory;
+			var galkey = headers[pCategory].set || pCategory;
 			var link = galleries[galkey];
 			var hoverelm = $("<aside class='bnkTabHover'></aside>").prependTo(pTab.find(".bnkTabSeparator"));
 			if (typeof link === "string")
@@ -6516,54 +6534,52 @@ V = {
 		
 		var container = Q.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var accountskinassoc = {};
-		var accountskinarray = [];
+		var unlocksassoc = {};
+		var unlocksarray = [];
 		var generateWardrobe = function()
 		{
-			names = GW2T_SKINS_NAMES;
-			categories = GW2T_SKINS_CATEGORIES;
+			headers = GW2T_SKINS_HEADERS;
 			galleries = GW2T_SKINS_GALLERIES;
-			skinsdb = GW2T_SKINS_DATA;
+			unlocksdb = GW2T_SKINS_DATA;
 			
 			bank.empty();
 			var tab;
-			var cat, catname, caticon;
+			var catobj, catname, caticon;
 			var numskinsintabstotal = 0;
 			var numskinsunlockedtotal = 0;
-			var slot, skinobj, skinid;
+			var slot, unlockobj;
 			
 			/* 
 			 * Create tabs for each skin category. The slots are not generated
 			 * until the user opens the pre-collapsed tabs.
 			 */
-			for (var i in categories)
+			for (var i in unlocksdb)
 			{
-				cat = categories[i];
-				catname = D.getObjectName(names[i]);
+				catobj = unlocksdb[i];
+				catname = D.getObjectName(headers[i]);
 				caticon = "<ins class='bnkTabIcon acc_wardrobe acc_wardrobe_" + i.toLowerCase() + "'></ins>";
 				tab = Q.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
 				createGalleryLinks(tab, i, catname);
-				(function(iTab, iCat)
+				(function(iTab, iCatObj)
 				{
 					iTab.find(".bnkTabSeparator").one("click", function()
 					{
-						var numtofetch = iCat.length;
+						var numtofetch = O.getObjectLength(iCatObj);
 						var numfetched = 0;
 						var slotscontainer = iTab.find(".bnkTabSlots");
-						for (var ii = 0; ii < iCat.length; ii++)
+						for (var ii in iCatObj)
 						{
-							skinid = iCat[ii];
 							slot = Q.createBankSlot(slotscontainer);
-							slot.attr("data-skinid", skinid);
-							skinobj = skinsdb[skinid]; // If the user's unlocked skin is found in the cache associative array
-							if (skinobj)
+							slot.attr("data-skinid", ii);
+							unlockobj = iCatObj[ii]; // If the user's unlocked skin is found in the cache associative array
+							if (unlockobj)
 							{
 								// Fill the slot with the item icon
-								(function(iSlot, iSkinID, iItemID, iWiki, iPayment)
+								(function(iSlot, iUnlockID, iItemID, iWiki, iPayment)
 								{
 									Q.getItem(iItemID, function(iItem)
 									{
-										var count = (accountskinassoc[iSkinID]) ? 1 : 0;
+										var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
 										Q.styleBankSlot(iSlot, {
 											aItem: iItem,
 											aSlotMeta: {count: count},
@@ -6584,25 +6600,25 @@ V = {
 											}
 										});
 									});
-								})(slot, skinid, skinobj.i, skinobj.n, skinobj.p);
+								})(slot, ii, unlockobj.i, unlockobj.n, unlockobj.p);
 							}
 						}
 						// Recreate the bank menu
 						Q.createBankMenu(bank, {aHelpMessage: "#accWardrobeHelp", aWantHighlightSearch: true});
 					});
-				})(tab, cat);
+				})(tab, catobj);
 				
 				// For this ith tab, write the number of skins unlocked on the tab header
 				var numskinsunlocked = 0;
-				for (var ii = 0; ii < cat.length; ii++)
+				for (var ii = 0; ii < catobj.length; ii++)
 				{
-					if (accountskinassoc[(cat[ii])])
+					if (unlocksassoc[(catobj[ii])])
 					{
 						numskinsunlocked++;
 						numskinsunlockedtotal++;
 					}
 				}
-				var numskinsintab = cat.length;
+				var numskinsintab = O.getObjectLength(catobj);
 				numskinsintabstotal += numskinsintab;
 				var unlockstr = numskinsunlocked + " / " + numskinsintab
 					+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlocked / numskinsintab) + ")</span>";
@@ -6619,11 +6635,11 @@ V = {
 		{
 			$.getJSON(A.getURL(A.URL.Skins), function(pData)
 			{
-				// Convert the API array of unlocked skin IDs into an associative array
-				accountskinarray = pData;
-				for (var i = 0; i < accountskinarray.length; i++)
+				// Convert the API array of unlocks into an associative array
+				unlocksarray = pData;
+				for (var i = 0; i < unlocksarray.length; i++)
 				{
-					accountskinassoc[(accountskinarray[i])] = true;
+					unlocksassoc[(unlocksarray[i])] = true;
 				}
 				generateWardrobe();
 			}).fail(function()
@@ -6644,14 +6660,77 @@ V = {
 		{
 			return;
 		}
-		var container = Q.createBank(dish);
+		var container = Q.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var unlocksassoc = {};
+		var unlocksarray = [];
+		var tab, slotscontainer, slot, catobj, unlockobj;
 		
-		$.getJSON(A.getURL(A.URL.Minis), function(pData)
+		var generateMinis = function()
 		{
 			bank.empty();
 			var numtofetch = 0;
 			var numfetched = 0;
+			var unlocksdata = GW2T_MINIS_DATA;
+			var headers = GW2T_MINIS_HEADERS;
+			var numunlockstotal = 0;
+			
+			for (var i in unlocksdata)
+			{
+				catobj = unlocksdata[i];
+				tab = Q.createBankTab(bank, {aTitle: D.getObjectName(headers[i])});
+				slotscontainer = tab.find(".bnkTabSlots");
+				for (var ii in catobj)
+				{
+					slot = Q.createBankSlot(slotscontainer);
+					unlockobj = catobj[ii];
+					(function(iSlot, iUnlockID, iItemID, iWiki, iPayment)
+					{
+						Q.getItem(iItemID, function(iItem)
+						{
+							var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
+							Q.styleBankSlot(iSlot, {
+								aItem: iItem,
+								aSlotMeta: {count: count},
+								aWiki: iWiki,
+								aCallback: function()
+								{
+									// Include payment if the item cannot be obtained on the Trading Post
+									if (iPayment)
+									{
+										for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
+										{
+											var paymentvalue = iPayment[paymentkey];
+											iSlot.append("<var class='bnkSlotPrice'>" + E.Payment[paymentkey](paymentvalue) + "</var>");
+										}
+									}
+									numfetched++;
+									A.setProgressBar(numfetched, numtofetch);
+								}
+							});
+						});
+					})(slot, ii, unlockobj.i, unlockobj.n, unlockobj.p);
+				}
+			}
+			Q.createBankMenu(bank, {aWantHighlightSearch: true});
+		};
+		
+		$.getScript(U.URL_DATA.Minis).done(function()
+		{
+			$.getJSON(A.getURL(A.URL.Minis), function(pData)
+			{
+				// Convert the API array of unlocks into an associative array
+				unlocksarray = pData;
+				for (var i = 0; i < unlocksarray.length; i++)
+				{
+					unlocksassoc[(unlocksarray[i])] = true;
+				}
+				generateMinis();
+			}).fail(function()
+			{
+				A.printError(A.PermissionEnum.Unlocks);
+				dish.empty();
+			});
 		});
 	},
 		
@@ -6688,7 +6767,7 @@ V = {
 				skininfo.empty();
 				$("<var id='labSkinLink'><img src='" + icon + "' style='float:left;' /></var>").appendTo(skininfo).click(function()
 				{
-					U.openExternalURL(U.getWikiSearchLink(pData.name));
+					U.openExternalURL(U.getWikiSearchLanguage(pData.name));
 				});
 				skininfo.append(U.escapeJSON(pData));
 			});
@@ -6797,7 +6876,7 @@ V = {
 					{
 						selectionitem.find(".itmIconMain").click(function()
 						{
-							U.openExternalURL(U.getWikiSearchLink(iName));
+							U.openExternalURL(U.getWikiSearchLanguage(iName));
 						});
 					})(box.item.name);
 					
@@ -8668,7 +8747,8 @@ Q = {
 				{
 					if (pEvent.which === I.ClickEnum.Left)
 					{
-						U.openExternalURL(U.getWikiSearchLink(wikisearch));
+						var searchurl = (Settings.aWiki) ? U.getWikiSearchDefault(wikisearch) : U.getWikiSearchLanguage(wikisearch);
+						U.openExternalURL(searchurl);
 					}
 				});
 				pSlot.contextmenu(function(pEvent)
@@ -9082,11 +9162,11 @@ Q = {
 		// The context variables should be assigned by the function that styles the bank slot
 		$("#bnkContextWiki").click(function()
 		{
-			U.openExternalURL(U.getWikiLink(Q.Context.ItemName));
+			U.openExternalURL(U.getWikiLinkLanguage(Q.Context.ItemName));
 		});
 		$("#bnkContextWikiSearch").click(function()
 		{
-			U.openExternalURL(U.getWikiSearchLink(Q.Context.ItemNameSearch));
+			U.openExternalURL(U.getWikiSearchLanguage(Q.Context.ItemNameSearch));
 		});
 		$("#bnkContextTrading").click(function()
 		{
@@ -9866,7 +9946,7 @@ E = {
 			$(entry + " .trdWiki").click(function()
 			{
 				var query = $(this).parents(".trdEntry").find(".trdName").val();
-				U.openExternalURL(U.getWikiLink(query));
+				U.openExternalURL(U.getWikiLinkLanguage(query));
 			});
 			$(entry + " .trdSearch").click(function()
 			{
@@ -15574,7 +15654,7 @@ M = {
 			{
 				name = name.slice(0, -1);
 			}
-			U.openExternalURL(U.getWikiLink(name));
+			U.openExternalURL(U.getWikiLinkLanguage(name));
 		});
 	},
 	
@@ -15850,7 +15930,7 @@ P = {
 							});
 							marker.on("dblclick", function(pEvent)
 							{
-								U.openExternalURL(U.getWikiLanguageLink(this.options.markername));
+								U.openExternalURL(U.getWikiLinkLanguage(this.options.markername));
 							});
 							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 						}
@@ -17202,7 +17282,7 @@ G = {
 		var activityalias = activity.Schedule[now.getUTCDay()];
 		var activityname = D.getObjectName(activity.Activities[activityalias]);
 		$("#dlyActivity").html("<h2><img src='img/daily/activities/" + activityalias + I.cPNG + "' />"
-			+ " <a" + U.convertExternalAnchor(U.getWikiLanguageLink(activityname)) + ">" + activityname + "</a> <ins class='dly dly_pve_activity'></ins></h2>");
+			+ " <a" + U.convertExternalAnchor(U.getWikiLinkLanguage(activityname)) + ">" + activityname + "</a> <ins class='dly dly_pve_activity'></ins></h2>");
 		
 		// Generate daily achievement boxes
 		$("#dlyCalendar").after(I.cThrobber);
@@ -17824,7 +17904,7 @@ G = {
 					+ "<label><input type='checkbox' id='jpzCheck_" + jp.id + "' /></label>"
 					+ "&nbsp;<cite><a href='"
 					+ U.getYouTubeLink(translatedname) + "'>[Y]</a> <a href='"
-					+ U.getWikiLanguageLink(translatedname) + "'>[W]</a></cite>"
+					+ U.getWikiLinkLanguage(translatedname) + "'>[W]</a></cite>"
 					+ "<dd>" + jp.description + "</dd></aside>").data("keywords", keywords)
 					.appendTo("#jpzList_" + jp.difficulty);
 				jplink = $("#jpz_" + jp.id);
@@ -18425,7 +18505,7 @@ G = {
 				}).dblclick(function()
 				{
 					// Double clicking on the pet icon opens the wiki
-					U.openExternalURL(U.getWikiLink("Juvenile " + iName));
+					U.openExternalURL(U.getWikiLinkDefault("Juvenile " + iName));
 				});
 			})(i, name);
 		}
@@ -18542,7 +18622,7 @@ G = {
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldBounty_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
+						+ "<a href='" + U.getWikiLinkLanguage(name) + "'>[W]</a>"
 						+ "</div>"
 					);
 					
@@ -18627,7 +18707,7 @@ G = {
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
+						+ "<a href='" + U.getWikiLinkLanguage(name) + "'>[W]</a>"
 						+ "</div>"
 					);
 			
@@ -18679,7 +18759,7 @@ G = {
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Rush) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldRush_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
+						+ "<a href='" + U.getWikiLinkLanguage(name) + "'>[W]</a>"
 						+ "</div>"
 					);
 					
@@ -18748,7 +18828,7 @@ G = {
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Puzzle) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldPuzzle_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLink(name) + "'>[W]</a>"
+						+ "<a href='" + U.getWikiLinkLanguage(name) + "'>[W]</a>"
 						+ "</div>"
 					);
 					
@@ -22375,7 +22455,7 @@ B = {
 					{
 						// Initialize variables
 						var item = B.Sale.Items[i];
-						var wiki = U.getWikiSearchLink(item.name);
+						var wiki = U.getWikiSearchDefault(item.name);
 						var video = U.getYouTubeLink(item.name);
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
 						
@@ -22553,7 +22633,7 @@ B = {
 					{
 						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
 						table.append("<div class='dsbVendorEntry'>"
-							+ "<a" + U.convertExternalAnchor(U.getWikiSearchLink(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
+							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (B.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
 							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(offer.price) + "</span>"
@@ -22584,7 +22664,7 @@ B = {
 					}).fail(function()
 					{
 						table.empty();
-						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchLink(offer.id)) + ">"
+						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offer.id)) + ">"
 							+ offer.id + "</a>. ArenaNet API servers may be down.");
 					});
 				})(i);
