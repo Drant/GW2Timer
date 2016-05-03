@@ -2572,7 +2572,7 @@ X = {
 	}
 };
 
-/* =============================================================================
+/* ============================p=================================================
  * @@URL management for links and string manipulation
  * ========================================================================== */
 U = {
@@ -6477,7 +6477,7 @@ V = {
 					})(slotassoc[slotdata.id], slotdata);
 				}
 			}
-			Q.createBankMenu(bank, {aWantHighlightSearch: true});
+			Q.createBankMenu(bank, {aWantSearchHighlight: true});
 		}).fail(function()
 		{
 			A.printError(A.PermissionEnum.Inventories);
@@ -6604,7 +6604,7 @@ V = {
 		var unlocktotalstr = numskinsunlockedtotal + " / " + numskinsintabstotal
 				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlockedtotal / numskinsintabstotal) + ")</span>";
 		container.find(".bnkCount").append(unlocktotalstr);
-		Q.createBankMenu(pBank, {aHelpMessage: Settings.aHelpMessage});
+		Q.createBankMenu(pBank, {aWantSearchHighlight: true, aHelpMessage: Settings.aHelpMessage});
 	},
 	
 	/*
@@ -6756,6 +6756,7 @@ Q = {
 	},
 	cSEARCH_LIMIT: 200, // Inventory search throttle limit
 	Context: { // Bank slots context menu data
+		Item: {},
 		ItemID: "",
 		ItemName: "",
 		ItemNameSearch: ""
@@ -8203,6 +8204,7 @@ Q = {
 				pSlot.contextmenu(function(pEvent)
 				{
 					pEvent.preventDefault();
+					Q.Context.Item = Settings.aItem;
 					Q.Context.ItemID = Settings.aItem.id;
 					Q.Context.ItemName = Settings.aItem.name;
 					Q.Context.ItemNameSearch = wikisearch;
@@ -8312,7 +8314,6 @@ Q = {
 		var Settings = pSettings || {};
 		// Initialize commonly used elements
 		var sectionname = pBank.parents(".accDishContainer").attr("data-section");
-		var slots = pBank.find(".bnkSlot");
 		var tabslots = pBank.find(".bnkTabSlots");
 		var tabtoggles = pBank.find(".bnkTabToggle");
 		var dishmenu = A.createDishMenu(sectionname);
@@ -8325,6 +8326,7 @@ Q = {
 		var fillertext = $("<div class='bnkSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(searchcontainer);
 		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
+			var slots = pBank.find(".bnkSlot");
 			var query = $(this).val().toLowerCase();
 			var queries = [];
 			var equality = "";
@@ -8361,7 +8363,7 @@ Q = {
 						var ismatch = true;
 						if (keywords)
 						{
-							if (Settings.aWantHighlightSearch)
+							if (Settings.aWantSearchHighlight)
 							{
 								for (var i = 0; i < queries.length; i++)
 								{
@@ -8404,7 +8406,7 @@ Q = {
 			else
 			{
 				fillertext.show();
-				if (Settings.aWantHighlightSearch)
+				if (Settings.aWantSearchHighlight)
 				{
 					slots.each(function()
 					{
@@ -8458,6 +8460,7 @@ Q = {
 			+ "Filter:<br />1st click: non-empty <dfn>slots</dfn><br />2nd click: stack slots<br />3rd click: empty slots<br />4th click: any slot (reset)'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
+			var slots = pBank.find(".bnkSlot");
 			if (emptyfilterstate === 0 || emptyfilterstate === 2 ) // Filter 
 			{
 				var wantshow = (emptyfilterstate === 0);
@@ -8505,6 +8508,7 @@ Q = {
 		$("<div class='bnkButtonTrade bnkButton curToggle' title='Filter: <dfn>tradeable</dfn> items.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
+			var slots = pBank.find(".bnkSlot");
 			if (isfilteringtrade)
 			{
 				slots.each(function()
@@ -8576,7 +8580,7 @@ Q = {
 		});
 		
 		// Increase or decrease bank width buttons
-		var slotsize = slots.first().width();
+		var slotsize = pBank.find(".bnkSlot").first().width();
 		$("<div class='bnkButtonWideLess bnkButton curClick' title='<dfn>Decrease</dfn> bank width.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
@@ -8633,9 +8637,9 @@ Q = {
 		{
 			U.openExternalURL(U.getTradingSearchLink(Q.Context.ItemName));
 		});
-		$("#bnkContextChatlink").click(function()
+		$("#bnkContextInfo").click(function()
 		{
-			
+			U.prettyJSON(Q.Context.Item);
 		});
 		I.initializeClipboard("#bnkContextChatlink");
 	},
@@ -8703,13 +8707,35 @@ E = {
 		karma: function(pAmount) { return E.formatKarmaString(pAmount, true); },
 		laurel: function(pAmount) { return E.formatLaurelString(pAmount, true); },
 		gem: function(pAmount) { return E.formatGemString(pAmount, true); },
-		badge: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_badge'></ins>"; },
 		token: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_token'></ins>"; },
 		achievement: function(pAmount) { return ((pAmount === 0) ? "" : pAmount.toLocaleString()) + "<ins class='s16 s16_achievement'></ins>"; },
 		monument: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_monument'></ins>"; },
 		craft: function() { return "<ins class='s16 s16_craft'></ins>"; },
 		pvp: function() { return "<ins class='s16 s16_pvp'></ins>"; },
-		starting: function() { return "<ins class='s16 s16_starting'></ins>"; }
+		starting: function() { return "<ins class='s16 s16_starting'></ins>"; },
+		cob: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_cob'></ins>"; },
+		bubble: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_bubble'></ins>"; },
+		badge: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_15'></ins>"; },
+		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_16'></ins>"; },
+		tournament: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_26'></ins>"; },
+		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_30'></ins>"; },
+		pristine: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_07'></ins>"; },
+		dungeon_ac: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_05'></ins>"; },
+		dungeon_arah: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_06'></ins>"; },
+		dungeon_fotm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_24'></ins>"; },
+		dungeon_cm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_09'></ins>"; },
+		dungeon_se: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_10'></ins>"; },
+		dungeon_ta: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_11'></ins>"; },
+		dungeon_hotw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_12'></ins>"; },
+		dungeon_cof: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_13'></ins>"; },
+		dungeon_coe: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_14'></ins>"; },
+		raid_ft: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_28'></ins>"; },
+		map_vb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_19'></ins>"; },
+		map_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_20'></ins>"; },
+		map_ab: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_22'></ins>"; },
+		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_crystalline'></ins>"; },
+		map_dt: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_25'></ins>"; },
+		map_sw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_27'></ins>"; }
 	},
 	
 	/*
@@ -10321,6 +10347,8 @@ D = {
 			cs: "účet", it: "account", pl: "konto", pt: "conta", ru: "счёт", zh: "帳戶​​"},
 		s_key: {de: "schlüssel", es: "tecla", fr: "clé",
 			cs: "klávesa", it: "chiave", pl: "klawisz", pt: "chave", ru: "ключ", zh: "索引鍵"},
+		s_info: {de: "info", es: "información", fr: "info",
+			cs: "informace", it: "info", pl: "informacje", pt: "informações", ru: "информация", zh: "資訊"},
 		s_timers: {de: "zeitgeber", es: "temporizadores", fr: "minuteurs",
 			cs: "časovače", it: "timer", pl: "czasomierzy", pt: "temporizadores", ru: "таймеров", zh: "計時器"},
 		s_tools: {de: "extras", es: "herramientas", fr: "outils",
@@ -18081,7 +18109,7 @@ G = {
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldBounty_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLinkLanguage(name) + "'>[W]</a>"
+						+ "<a href='" + U.getWikiLinkLanguage(translatedname) + "'>[W]</a>"
 						+ "</div>"
 					);
 					
@@ -18166,7 +18194,7 @@ G = {
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLinkLanguage(name) + "'>[W]</a>"
+						+ "<a href='" + U.getWikiLinkLanguage(translatedname) + "'>[W]</a>"
 						+ "</div>"
 					);
 			
@@ -18218,7 +18246,7 @@ G = {
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Rush) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldRush_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLinkLanguage(name) + "'>[W]</a>"
+						+ "<a href='" + U.getWikiLinkLanguage(translatedname) + "'>[W]</a>"
 						+ "</div>"
 					);
 					
@@ -18287,7 +18315,7 @@ G = {
 						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Puzzle) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
 						+ "<dfn id='gldPuzzle_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
 						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLinkLanguage(name) + "'>[W]</a>"
+						+ "<a href='" + U.getWikiLinkLanguage(translatedname) + "'>[W]</a>"
 						+ "</div>"
 					);
 					
@@ -22020,7 +22048,7 @@ B = {
 			+ "<u>" + vendorname + "</u>"
 			+ "<img id='dsbVendorToggleIcon' src='img/ui/toggle.png' /></kbd>"
 			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
-				+ "title='Items restock at daily reset.<br />Vendors relocate 8 hours after that.<br />Limit 1 purchase per vendor.'>Info</a> "
+				+ "title='Items restock at daily reset.<br />Vendors relocate 8 hours after that.<br />Limit 1 purchase per vendor.'>" + D.getWordCapital("info") + "</a> "
 			+ "<u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
 			+ "&nbsp;<input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' /> "
 		+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>");

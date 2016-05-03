@@ -2462,32 +2462,58 @@ gem {
 	width: 16px; height: 16px;
 	background-image: url("img/ui/sixteen.png");
 }
-.s16_achievement { background-position: 0 0; }
-.s16_badge { background-position: -16px 0; }
-.s16_bullet { background-position: -32px 0; }
-.s16_coincopper { background-position: -48px 0; }
-.s16_coingold { background-position: -64px 0; }
-.s16_coinsilver { background-position: -80px 0; }
-.s16_craft { background-position: -96px 0; }
-.s16_dragonite { background-position: -112px 0; }
-.s16_ecto { background-position: -128px 0; }
-.s16_gem { background-position: -144px 0; }
-.s16_info { background-position: -160px 0; }
-.s16_karma { background-position: -176px 0; }
-.s16_language { background-position: -192px 0; }
-.s16_laurel { background-position: -256px 0; }
-.s16_loot { background-position: -272px 0; }
-.s16_money { background-position: -288px 0; }
-.s16_monument { background-position: -304px 0; }
-.s16_pvp { background-position: -320px 0; }
-.s16_starting { background-position: -336px 0; }
-.s16_token { background-position: -352px 0; }
-.s16_twitter { background-position: -368px 0; }
-.s16_view { background-position: -384px 0; }
-.s16_wiki { background-position: -400px 0; }
-.s16_youtube { background-position: -416px 0; }
+.s16_01c { background-position: 0 0; }
+.s16_01g { background-position: -16px 0; }
+.s16_01s { background-position: -32px 0; }
+.s16_02 { background-position: -48px 0; }
+.s16_03 { background-position: -64px 0; }
+.s16_04 { background-position: -80px 0; }
+.s16_05 { background-position: -96px 0; }
+.s16_06 { background-position: -112px 0; }
+.s16_07 { background-position: -128px 0; }
+.s16_09 { background-position: -144px 0; }
+.s16_10 { background-position: -160px 0; }
+.s16_11 { background-position: -176px 0; }
+.s16_12 { background-position: -192px 0; }
+.s16_13 { background-position: -208px 0; }
+.s16_14 { background-position: -224px 0; }
+.s16_15 { background-position: -240px 0; }
+.s16_16 { background-position: -256px 0; }
+.s16_18 { background-position: -272px 0; }
+.s16_19 { background-position: -288px 0; }
+.s16_20 { background-position: -304px 0; }
+.s16_22 { background-position: -320px 0; }
+.s16_23 { background-position: -336px 0; }
+.s16_24 { background-position: -352px 0; }
+.s16_25 { background-position: -368px 0; }
+.s16_26 { background-position: -384px 0; }
+.s16_27 { background-position: -400px 0; }
+.s16_28 { background-position: -416px 0; }
+.s16_29 { background-position: -432px 0; }
+.s16_30 { background-position: -448px 0; }
+.s16_31 { background-position: -464px 0; }
+.s16_achievement { background-position: -480px 0; }
+.s16_bubble { background-position: -496px 0; }
+.s16_bullet { background-position: -512px 0; }
+.s16_cob { background-position: -528px 0; }
+.s16_craft { background-position: -544px 0; }
+.s16_crystalline { background-position: -560px 0; }
+.s16_dragonite { background-position: -576px 0; }
+.s16_ecto { background-position: -592px 0; }
+.s16_info { background-position: -608px 0; }
+.s16_language { background-position: -624px 0; }
+.s16_loot { background-position: -688px 0; }
+.s16_money { background-position: -704px 0; }
+.s16_monument { background-position: -720px 0; }
+.s16_pvp { background-position: -736px 0; }
+.s16_starting { background-position: -752px 0; }
+.s16_token { background-position: -768px 0; }
+.s16_twitter { background-position: -784px 0; }
+.s16_view { background-position: -800px 0; }
+.s16_wiki { background-position: -816px 0; }
+.s16_youtube { background-position: -832px 0; }
 
-coppercoin, silvercoin, goldcoin, gemunit, karmaunit, laurelunit, achievementunit {
+coppercoin, silvercoin, goldcoin, gemunit, karmaunit, laurelunit {
 	display: inline-block;
 	width: 16px; height: 16px;
 	vertical-align: middle;
@@ -2497,25 +2523,22 @@ coppercoin, silvercoin, goldcoin {
 	margin-bottom: -12px;
 }
 coppercoin {
-	background-position: -48px 0;
+	background-position: 0 0;
 }
 silvercoin {
-	background-position: -80px 0;
+	background-position: -32px 0;
 }
 goldcoin {
-	background-position: -64px 0;
+	background-position: -16px 0;
 }
 gemunit {
-	background-position: -144px 0;
+	background-position: -80px 0;
 }
 karmaunit {
-	background-position: -176px 0;
+	background-position: -48px 0;
 }
 laurelunit {
-	background-position: -256px 0;
-}
-achievementunit {
-	background-position: 0 0;
+	background-position: -64px 0;
 }
 
 .rarity_Junk { color: #aaaaaa; /* gray */ }
