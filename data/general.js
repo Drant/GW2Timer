@@ -1113,7 +1113,8 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "WvW feature is being updated to accomodate Alpine/Desert rotation.",
+	content: "Wardrobe and Minis available: <a href='http://gw2timer.com/?page=Account'><img src='img/ui/pages/account.png' />Account Armory</a> beta test is open.",
+	wvw: "Note: The website is still being updated to accomodate Alpine and Desert map rotations.",
 	Start: new Date("2016-05-03T16:00:00Z"),
 	Finish: new Date("2016-05-05T16:00:00Z"),
 	Messages:

@@ -495,18 +495,21 @@ O = {
 	 * @param string pKeyName, optional.
 	 * @param boolean pIsDescending order, optional. Ascending is default order.
 	 */
-	sortObjects: function(pObjects, pKeyName, pIsDescending)
+	sortObjects: function(pObjects, pSettings)
 	{
-		var key = (pKeyName) ? pKeyName : D.getNameKey();
-		if (pIsDescending)
+		var Settings = pSettings || {};
+		var key = (Settings.aKeyName) ? Settings.aKeyName : D.getNameKey();
+		if (Settings.aIsDescending)
 		{
 			pObjects.sort(function(a, b)
 			{
-				if (a[key] < b[key])
+				var valA = (Settings.aIsNumbers) ? U.stripToNumbers(a[key]) : a[key];
+				var valB = (Settings.aIsNumbers) ? U.stripToNumbers(b[key]) : b[key];
+				if (valA < valB)
 				{
 					return 1;
 				}
-				if (a[key] > b[key])
+				if (valA > valB)
 				{
 					return -1;
 				}
@@ -517,11 +520,13 @@ O = {
 		{
 			pObjects.sort(function(a, b)
 			{
-				if (a[key] > b[key])
+				var valA = (Settings.aIsNumbers) ? U.stripToNumbers(a[key]) : a[key];
+				var valB = (Settings.aIsNumbers) ? U.stripToNumbers(b[key]) : b[key];
+				if (valA > valB)
 				{
 					return 1;
 				}
-				if (a[key] < b[key])
+				if (valA < valB)
 				{
 					return -1;
 				}
@@ -2892,6 +2897,10 @@ U = {
 			{
 				U.printAPICache(2);
 			}},
+			apicacheids: {usage: "...as IDs.", f: function()
+			{
+				U.printAPICache(3);
+			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
 				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. Replace spaces with &quot;%20&quot;", f: function()
 			{
@@ -2926,7 +2935,39 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				$.getScript("data/objectives.js", function()
+				{
+					var objectives = GW2T_OBJECTIVES_EN;
+					var ithobj;
+					var retobj = {};
+					for (var i in objectives)
+					{
+						ithobj = objectives[i];
+						if (ithobj.type !== "Spawn")
+						{
+							retobj[ithobj.id] = {
+								nativeowner: ithobj.map_type.replace("Home", ""),
+								map_type: ithobj.map_type,
+								type: ithobj.type,
+								name_en: ithobj.name,
+								name_de: ithobj.name,
+								name_es: ithobj.name,
+								name_fr: ithobj.name,
+								name_zh: ithobj.name,
+								direction: "North",
+								id: ithobj.id,
+								map_id: ithobj.map_id,
+								coord: ithobj.label_coord
+							};
+						}
+					}
+					
+					for (var i in retobj)
+					{
+						ithobj = retobj[i];
+						I.print("&quot;" + i + "&quot;: " + U.formatJSON(ithobj) + ",");
+					}
+				});
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -2968,11 +3009,16 @@ U = {
 		var printResult = function(pArray)
 		{
 			I.clear();
+			// Sort the objects by their IDs
 			pArray.sort();
+			if (U.APICacheArrayOfObjects.length > 0 && U.APICacheArrayOfObjects[0].id)
+			{
+				O.sortObjects(U.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
+			}
 			for (var i = 0; i < pArray.length; i++)
 			{
 				printIcon(pArray[i]);
-				I.print(U.escapeHTML(pArray[i]));
+				I.print(U.escapeHTML(pArray[i]) + ",");
 			}
 		};
 		var printIcon = function(pData)
@@ -3058,22 +3104,29 @@ U = {
 	printAPICache: function(pRequest)
 	{
 		var output = "";
-		if (pRequest === undefined)
+		var obj;
+		if (pRequest === undefined || pRequest === 1)
 		{
-			var obj;
-			for (var i = 0; i < U.APICacheArrayOfObjects.length; i++)
+			if (U.APICacheArrayOfObjects)
 			{
-				obj = U.APICacheArrayOfObjects[i];
-				output += "&quot;" + obj.id + "&quot;: " + U.escapeJSON(obj) + ",<br />";
+				for (var i = 0; i < U.APICacheArrayOfObjects.length; i++)
+				{
+					obj = U.APICacheArrayOfObjects[i];
+					output += ((pRequest === undefined) ? "&quot;" + obj.id + "&quot;: " : "") + U.escapeJSON(obj) + ",<br />";
+				}
 			}
-		}
-		else if (pRequest === 1)
-		{
-			output = (U.APICacheArrayOfIDs) ? U.escapeJSON(U.APICacheArrayOfIDs) : "API IDs Array is empty.";
+			else
+			{
+				output = "API Objects Array is empty.";
+			}
 		}
 		else if (pRequest === 2)
 		{
 			output = (U.APICacheArrayOfObjects) ? U.escapeJSON(U.APICacheArrayOfObjects) : "API Objects Array is empty.";
+		}
+		else if (pRequest === 3)
+		{
+			output = (U.APICacheArrayOfIDs) ? U.escapeJSON(U.APICacheArrayOfIDs) : "API IDs Array is empty.";
 		}
 		I.print(output);
 	},
@@ -3179,7 +3232,7 @@ U = {
 				// Sort the objects by their IDs
 				if (U.APICacheArrayOfObjects.length > 0 && U.APICacheArrayOfObjects[0].id)
 				{
-					O.sortObjects(U.APICacheArrayOfObjects, "id");
+					O.sortObjects(U.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
 				}
 				I.print("Scrape completed. Enter /apicache to print the results.");
 			}
@@ -5195,7 +5248,7 @@ V = {
 				value: parseFloat($(this).attr("data-value"))
 			});
 		});
-		O.sortObjects(sortable, "value", pOrder);
+		O.sortObjects(sortable, {aKeyName: "value", aIsDescending: pOrder});
 		
 		for (var i = 0; i < sortable.length; i++)
 		{
@@ -5219,7 +5272,7 @@ V = {
 				value: parseInt($(this).attr("data-value"))
 			});
 		});
-		O.sortObjects(sortable, "value", pOrder);
+		O.sortObjects(sortable, {aKeyName: "value", aIsDescending: pOrder});
 		
 		// Sort all the rows using the new order
 		for (var i = 0; i < sortable.length; i++)
@@ -18479,6 +18532,7 @@ W = {
 	 */
 	initializeWvW: function()
 	{
+		W.BorderlandsCurrent = W.BorderlandsEnum.Alpine;
 		/*
 		 * Merge W's unique variables and functions with M, and use that new
 		 * object as W. This is a shallow copy, so objects within an object that
@@ -18488,7 +18542,6 @@ W = {
 		W.Zones = GW2T_LAND_DATA;
 		W.Regions = GW2T_REALM_DATA;
 		W.Servers = GW2T_SERVER_DATA;
-		W.Objectives = GW2T_OBJECTIVE_DATA;
 		W.Weapons = GW2T_WEAPON_DATA;
 		W.Placement = GW2T_PLACEMENT_DATA;
 		W.Metadata = GW2T_WVW_METADATA;
@@ -18497,6 +18550,7 @@ W = {
 		W.ObjectiveEnum = W.Metadata.ObjectiveEnum;
 		W.OwnerEnum = W.Metadata.OwnerEnum;
 		
+		W.initializeObjectives();
 		W.initializeMap();
 		W.populateWvW();
 		W.initializeLeaderboard();
@@ -18510,7 +18564,44 @@ W = {
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL
 		U.openSectionFromURL({aButton: "#lboRegion", aSection: "Leaderboard"});
-		I.print("<br /><br />The website is being updated to accomodate Alpine and Desert map rotations.<br />Please check back.<br /><br />");
+		// Write announcement if available
+		var announcement = GW2T_DASHBOARD_DATA.Announcement.wvw;
+		if (announcement && announcement.length > 0)
+		{
+			W.addLogEntry(announcement);
+		}
+	},
+	
+	/*
+	 * Initializes the objectives object to contain objectives specific to the
+	 * current map rotation.
+	 */
+	initializeObjectives: function()
+	{
+		var ebgobjs = GW2T_OBJECTIVE_DATA_EBG;
+		var alpineobjs = GW2T_OBJECTIVE_DATA_ALPINE;
+		var desertobjs = GW2T_OBJECTIVE_DATA_DESERT;
+		// Initialize the shared EBG map
+		for (var i in ebgobjs)
+		{
+			W.Objectives[i] = ebgobjs[i];
+		}
+		
+		// Initialize rotational maps
+		if (W.BorderlandsCurrent === W.BorderlandsEnum.Alpine)
+		{
+			for (var i in alpineobjs)
+			{
+				W.Objectives[i] = alpineobjs[i];
+			}
+		}
+		else
+		{
+			for (var i in desertobjs)
+			{
+				W.Objectives[i] = desertobjs[i];
+			}
+		}
 	},
 	
 	/*
@@ -18518,7 +18609,6 @@ W = {
 	 */
 	populateWvW: function()
 	{
-		W.BorderlandsCurrent = W.BorderlandsEnum.Desert;
 		var obj;
 		var marker;
 		for (var i in W.Objectives)
@@ -19116,20 +19206,23 @@ W = {
 			for (var ii in map.objectives)
 			{
 				apiobj = map.objectives[ii];
-				objid = (W.isFallbackEnabled) ? landprefix + apiobj.id : apiobj.id;
-				obj = W.Objectives[objid];
-				owner = apiobj.owner;
-				land = obj.map_type; // Example: "RedHome"
-				value = W.getObjectiveTypeValue(obj.type);
-				nativeowner = obj.nativeowner;
-				if (owner !== W.OwnerEnum.Neutral)
+				if (apiobj.type !== "Ruins")
 				{
-					(PPT[owner]).Total += value;
-					(PPT[owner])[land] += value;
-					if (land === W.LandEnum.Center)
+					objid = (W.isFallbackEnabled) ? landprefix + apiobj.id : apiobj.id;
+					obj = W.Objectives[objid];
+					owner = apiobj.owner;
+					land = obj.map_type; // Example: "RedHome"
+					value = W.getObjectiveTypeValue(obj.type);
+					nativeowner = obj.nativeowner;
+					if (owner !== W.OwnerEnum.Neutral)
 					{
-						// Example: In EBG, Red took objectives that were natively owned by Green's side, such as Lowlands
-						(PPT[owner])[W.LandEnum.Center + nativeowner] += value;
+						(PPT[owner]).Total += value;
+						(PPT[owner])[land] += value;
+						if (land === W.LandEnum.Center)
+						{
+							// Example: In EBG, Red took objectives that were natively owned by Green's side, such as Lowlands
+							(PPT[owner])[W.LandEnum.Center + nativeowner] += value;
+						}
 					}
 				}
 			}
@@ -19875,49 +19968,52 @@ W = {
 				for (var ii in map.objectives)
 				{
 					apiobj = map.objectives[ii];
-					obj = W.Objectives[apiobj.id];
-					/*
-					 * Only update the objectives if they have changed server ownership.
-					 */
-					if (obj.last_flipped !== apiobj.last_flipped)
+					if (apiobj.type !== "Ruins")
 					{
-						if (obj.last_flipped !== null)
+						obj = W.Objectives[apiobj.id];
+						/*
+						 * Only update the objectives if they have changed server ownership.
+						 */
+						if (obj.last_flipped !== apiobj.last_flipped)
 						{
-							numobjflipped++;
+							if (obj.last_flipped !== null)
+							{
+								numobjflipped++;
+							}
+							// Reinitialize properties
+							obj.last_flipped = apiobj.last_flipped;
+							obj.last_flipped_msec = (new Date(apiobj.last_flipped)).getTime();
+							obj.prevowner = obj.owner;
+							obj.owner = apiobj.owner;
+							W.updateObjectiveIcon(obj);
+							W.updateObjectiveAge(obj);
+							W.updateObjectiveTooltip(obj);
+
+							// Mark the objective as immune if it is recently captured
+							if ((nowmsec - obj.last_flipped_msec) < W.cMSECONDS_IMMUNITY
+									&& obj.owner !== W.OwnerEnum.Neutral // Neutral objectives never have immunity
+									&& !isduringreset) // Don't show the immunity timer during the first few minutes of reset
+							{
+								W.Objectives[obj.id].isImmune = true;
+								$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
+							}
 						}
-						// Reinitialize properties
-						obj.last_flipped = apiobj.last_flipped;
-						obj.last_flipped_msec = (new Date(apiobj.last_flipped)).getTime();
-						obj.prevowner = obj.owner;
-						obj.owner = apiobj.owner;
-						W.updateObjectiveIcon(obj);
-						W.updateObjectiveAge(obj);
-						W.updateObjectiveTooltip(obj);
-						
-						// Mark the objective as immune if it is recently captured
-						if ((nowmsec - obj.last_flipped_msec) < W.cMSECONDS_IMMUNITY
-								&& obj.owner !== W.OwnerEnum.Neutral // Neutral objectives never have immunity
-								&& !isduringreset) // Don't show the immunity timer during the first few minutes of reset
+						/*
+						 * Only update guild tag labels if claiming has changed.
+						 */
+						if (obj.claimed_by !== apiobj.claimed_by)
 						{
-							W.Objectives[obj.id].isImmune = true;
-							$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
+							obj.prevclaimed_by = obj.claimed_by;
+							obj.claimed_by = apiobj.claimed_by;
+							obj.claimed_at = apiobj.claimed_at;
+							W.updateObjectiveClaim(obj);
 						}
-					}
-					/*
-					 * Only update guild tag labels if claiming has changed.
-					 */
-					if (obj.claimed_by !== apiobj.claimed_by)
-					{
-						obj.prevclaimed_by = obj.claimed_by;
-						obj.claimed_by = apiobj.claimed_by;
-						obj.claimed_at = apiobj.claimed_at;
-						W.updateObjectiveClaim(obj);
-					}
-					// If these many objectives flipped after an update then there might be an error with the API
-					if (numobjflipped > maxobjflipped)
-					{
-						istoomanyflips = true;
-						break;
+						// If these many objectives flipped after an update then there might be an error with the API
+						if (numobjflipped > maxobjflipped)
+						{
+							istoomanyflips = true;
+							break;
+						}
 					}
 				}
 				if (numobjflipped > maxobjflipped)
