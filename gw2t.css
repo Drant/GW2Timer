@@ -2487,7 +2487,7 @@ gem {
 .s16_wiki { background-position: -400px 0; }
 .s16_youtube { background-position: -416px 0; }
 
-coppercoin, silvercoin, goldcoin, gemunit, karmaunit, achievementunit {
+coppercoin, silvercoin, goldcoin, gemunit, karmaunit, laurelunit, achievementunit {
 	display: inline-block;
 	width: 16px; height: 16px;
 	vertical-align: middle;
@@ -2510,6 +2510,9 @@ gemunit {
 }
 karmaunit {
 	background-position: -176px 0;
+}
+laurelunit {
+	background-position: -256px 0;
 }
 achievementunit {
 	background-position: 0 0;

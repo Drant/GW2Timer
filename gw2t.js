@@ -208,18 +208,20 @@ O = {
 		int_alertSubscribedSecond: 15,
 		bol_alertAutosubscribe: true,
 		bol_alertUnsubscribe: true,
-		// Tools
-		int_minStopwatchAlert: 5,
-		str_textStopwatchAlert: "Alert, alert, alert!",
-		int_sizeStopwatchFont: 64,
-		int_sizeNotepadFont: 12,
-		int_sizeNotepadHeight: 400,
+		// Account
+		bol_showRarity: false,
 		// Trading
 		bol_refreshPrices: true,
 		bol_useMainTPSearch: true,
 		int_numTradingCalculators: 25,
 		int_numTradingResults: 30,
 		int_secTradingRefresh: 60,
+		// Tools
+		int_minStopwatchAlert: 5,
+		str_textStopwatchAlert: "Alert, alert, alert!",
+		int_sizeStopwatchFont: 64,
+		int_sizeNotepadFont: 12,
+		int_sizeNotepadHeight: 400,
 		// Advanced
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
@@ -4764,6 +4766,7 @@ A = {
 			{
 				A.insertTokenRow("", "");
 				A.saveTokens();
+				I.qTip.init($("#accManager").find("button"));
 			}
 			else
 			{
@@ -5671,12 +5674,11 @@ V = {
 				}
 
 				var percent = (value / max) * T.cPERCENT_100;
-				var name = D.getObjectName(currency);
-				var link = U.getWikiLinkLanguage(name);
+				var link = U.getWikiLinkDefault(D.getObjectDefaultName(currency));
 				wallet.append("<li data-value='" + value + "'>"
 					+ "<var class='chrWalletAmount'>" + amountstr + "</var>"
 					+ "<ins class='acc_wallet acc_wallet_" + currency.id + "'></ins>"
-					+ "<var class='chrWalletCurrency'><a class='chrWalletLink'" + U.convertExternalAnchor(link) + ">" + name + "</a></var>"
+					+ "<var class='chrWalletCurrency'><a class='chrWalletLink'" + U.convertExternalAnchor(link) + ">" + D.getObjectName(currency) + "</a></var>"
 					+ "<samp><s style='width:" + percent + "%'></s></samp>"
 				+ "</li>");
 			}
@@ -6484,6 +6486,128 @@ V = {
 	},
 	
 	/*
+	 * Macro function for creating collection/unlockables style banks.
+	 * @param jqobject pBank to manipulate.
+	 * @objparam object aHeaders containing category header translations.
+	 * @objparam object aDatabase containing category objects holding unlockables.
+	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API.
+	 * @objparam string aHelpMessage HTML ID of help message element, optional.
+	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
+	 * A collection database stores unlockable objects with these properties:
+	 * u: Unlockable ID (such as a skin ID, or mini ID)
+	 * i: Item ID associated with that unlock
+	 * n: Name of the unlockable.
+	 * t: Tradeable array of item IDs, optional.
+	 * p: Payment to acquire the associated item if the item is not tradeable.
+	 */
+	generateCollection: function(pBank, pSettings)
+	{
+		// Convert the API array of unlocks into an associative array
+		var Settings = pSettings || {};
+		var unlocksassoc = {};
+		for (var i = 0; i < Settings.aUnlockeds.length; i++)
+		{
+			unlocksassoc[(Settings.aUnlockeds[i])] = true;
+		}
+
+		pBank.empty();
+		var container = pBank.parents(".bnkContainer");
+		var tab;
+		var catobj, catname;
+		var numskinsintabstotal = 0;
+		var numskinsunlockedtotal = 0;
+		var slot, unlockid, unlockobj;
+		
+		var fillTab = function(pTab, pCatObj)
+		{
+			var numtofetch = O.getObjectLength(pCatObj);
+			var numfetched = 0;
+			var slotscontainer = pTab.find(".bnkTabSlots");
+			for (var ii = 0; ii < pCatObj.length; ii++)
+			{
+				slot = Q.createBankSlot(slotscontainer);
+				unlockobj = pCatObj[ii]; // If the user's unlocked skin is found in the cache associative array
+				if (unlockobj)
+				{
+					// Fill the slot with the item icon
+					(function(iSlot, iUnlockID, iItemID, iWiki, iPayment)
+					{
+						Q.getItem(iItemID, function(iItem)
+						{
+							var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
+							Q.styleBankSlot(iSlot, {
+								aItem: iItem,
+								aSlotMeta: {count: count},
+								aWiki: iWiki,
+								aCallback: function()
+								{
+									// Include payment if the item cannot be obtained on the Trading Post
+									if (iPayment)
+									{
+										for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
+										{
+											var paymentvalue = iPayment[paymentkey];
+											iSlot.append("<var class='bnkSlotPrice'>" + E.Payment[paymentkey](paymentvalue) + "</var>");
+										}
+									}
+									numfetched++;
+									A.setProgressBar(numfetched, numtofetch);
+								}
+							});
+						});
+					})(slot, unlockobj.u, unlockobj.i, unlockobj.n, unlockobj.p);
+				}
+			}
+		};
+
+		/* 
+		 * Create tabs for each skin category. The slots are not generated
+		 * until the user opens the pre-collapsed tabs.
+		 */
+		for (var i in Settings.aDatabase)
+		{
+			catobj = Settings.aDatabase[i];
+			catname = D.getObjectName(Settings.aHeaders[i]);
+			tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : Q.createBankTab(pBank, {aTitle: catname});
+			(function(iTab, iCatObj)
+			{
+				if (Settings.aIsCollapsed)
+				{
+					iTab.find(".bnkTabSeparator").one("click", function()
+					{
+						fillTab(iTab, iCatObj);
+					});
+				}
+				else
+				{
+					fillTab(iTab, iCatObj);
+				}
+			})(tab, catobj);
+
+			// For this ith tab, write the number of skins unlocked on the tab header
+			var numskinsunlocked = 0;
+			for (var ii = 0; ii < catobj.length; ii++)
+			{
+				unlockid = catobj[ii].u;
+				if (unlocksassoc[unlockid])
+				{
+					numskinsunlocked++;
+					numskinsunlockedtotal++;
+				}
+			}
+			var numskinsintab = catobj.length;
+			numskinsintabstotal += numskinsintab;
+			var unlockstr = numskinsunlocked + " / " + numskinsintab
+				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlocked / numskinsintab) + ")</span>";
+			tab.find(".bnkTabStats").html(unlockstr);
+		}
+		var unlocktotalstr = numskinsunlockedtotal + " / " + numskinsintabstotal
+				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlockedtotal / numskinsintabstotal) + ")</span>";
+		container.find(".bnkCount").append(unlocktotalstr);
+		Q.createBankMenu(pBank, {aHelpMessage: Settings.aHelpMessage});
+	},
+	
+	/*
 	 * Generates the skin wardrobe window.
 	 */
 	serveWardrobe: function()
@@ -6494,7 +6618,7 @@ V = {
 			return;
 		}
 		
-		var headers, galleries, unlocksdb;
+		var headers, galleries, database;
 		var galleryword = D.getWordCapital("gallery");
 		// Macro function to add link to gallery buttons next to the tab separators
 		var createGalleryLinks = function(pTab, pCategory)
@@ -6534,100 +6658,27 @@ V = {
 		
 		var container = Q.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var unlocksassoc = {};
-		var unlocksarray = [];
-		var generateWardrobe = function()
+		var generateWardrobe = function(pUnlockeds)
 		{
-			headers = GW2T_SKINS_HEADERS;
 			galleries = GW2T_SKINS_GALLERIES;
-			unlocksdb = GW2T_SKINS_DATA;
+			headers = GW2T_SKINS_HEADERS;
+			database = GW2T_SKINS_DATA;
 			
-			bank.empty();
-			var tab;
-			var catobj, catname, caticon;
-			var numskinsintabstotal = 0;
-			var numskinsunlockedtotal = 0;
-			var slot, unlockobj;
-			
-			/* 
-			 * Create tabs for each skin category. The slots are not generated
-			 * until the user opens the pre-collapsed tabs.
-			 */
-			for (var i in unlocksdb)
-			{
-				catobj = unlocksdb[i];
-				catname = D.getObjectName(headers[i]);
-				caticon = "<ins class='bnkTabIcon acc_wardrobe acc_wardrobe_" + i.toLowerCase() + "'></ins>";
-				tab = Q.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
-				createGalleryLinks(tab, i, catname);
-				(function(iTab, iCatObj)
+			V.generateCollection(bank, {
+				aHeaders: headers,
+				aDatabase: database,
+				aUnlockeds: pUnlockeds,
+				aIsCollapsed: true,
+				aHelpMessage: "#accWardrobeHelp",
+				aTabIterator: function(pCatName)
 				{
-					iTab.find(".bnkTabSeparator").one("click", function()
-					{
-						var numtofetch = O.getObjectLength(iCatObj);
-						var numfetched = 0;
-						var slotscontainer = iTab.find(".bnkTabSlots");
-						for (var ii in iCatObj)
-						{
-							slot = Q.createBankSlot(slotscontainer);
-							slot.attr("data-skinid", ii);
-							unlockobj = iCatObj[ii]; // If the user's unlocked skin is found in the cache associative array
-							if (unlockobj)
-							{
-								// Fill the slot with the item icon
-								(function(iSlot, iUnlockID, iItemID, iWiki, iPayment)
-								{
-									Q.getItem(iItemID, function(iItem)
-									{
-										var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
-										Q.styleBankSlot(iSlot, {
-											aItem: iItem,
-											aSlotMeta: {count: count},
-											aWiki: iWiki,
-											aCallback: function()
-											{
-												// Include payment if the item cannot be obtained on the Trading Post
-												if (iPayment)
-												{
-													for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
-													{
-														var paymentvalue = iPayment[paymentkey];
-														iSlot.append("<var class='bnkSlotPrice'>" + E.Payment[paymentkey](paymentvalue) + "</var>");
-													}
-												}
-												numfetched++;
-												A.setProgressBar(numfetched, numtofetch);
-											}
-										});
-									});
-								})(slot, ii, unlockobj.i, unlockobj.n, unlockobj.p);
-							}
-						}
-						// Recreate the bank menu
-						Q.createBankMenu(bank, {aHelpMessage: "#accWardrobeHelp", aWantHighlightSearch: true});
-					});
-				})(tab, catobj);
-				
-				// For this ith tab, write the number of skins unlocked on the tab header
-				var numskinsunlocked = 0;
-				for (var ii = 0; ii < catobj.length; ii++)
-				{
-					if (unlocksassoc[(catobj[ii])])
-					{
-						numskinsunlocked++;
-						numskinsunlockedtotal++;
-					}
+					var catname = D.getObjectName(headers[pCatName]);
+					var caticon = "<ins class='bnkTabIcon acc_wardrobe acc_wardrobe_" + pCatName.toLowerCase() + "'></ins>";
+					var tab = Q.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
+					createGalleryLinks(tab, pCatName);
+					return tab;
 				}
-				var numskinsintab = O.getObjectLength(catobj);
-				numskinsintabstotal += numskinsintab;
-				var unlockstr = numskinsunlocked + " / " + numskinsintab
-					+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlocked / numskinsintab) + ")</span>";
-				tab.find(".bnkTabStats").html(unlockstr);
-			}
-			var unlocktotalstr = numskinsunlockedtotal + " / " + numskinsintabstotal
-					+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlockedtotal / numskinsintabstotal) + ")</span>";
-			container.find(".bnkCount").append(unlocktotalstr);
-			Q.createBankMenu(bank, {aHelpMessage: "#accWardrobeHelp"});
+			});
 		};
 		
 		// Retrieve data before generating
@@ -6635,13 +6686,7 @@ V = {
 		{
 			$.getJSON(A.getURL(A.URL.Skins), function(pData)
 			{
-				// Convert the API array of unlocks into an associative array
-				unlocksarray = pData;
-				for (var i = 0; i < unlocksarray.length; i++)
-				{
-					unlocksassoc[(unlocksarray[i])] = true;
-				}
-				generateWardrobe();
+				generateWardrobe(pData);
 			}).fail(function()
 			{
 				A.printError(A.PermissionEnum.Unlocks);
@@ -6660,626 +6705,30 @@ V = {
 		{
 			return;
 		}
+		
 		var container = Q.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var unlocksassoc = {};
-		var unlocksarray = [];
-		var tab, slotscontainer, slot, catobj, unlockobj;
-		
-		var generateMinis = function()
+		var generateMinis = function(pUnlockeds)
 		{
-			bank.empty();
-			var numtofetch = 0;
-			var numfetched = 0;
-			var unlocksdata = GW2T_MINIS_DATA;
-			var headers = GW2T_MINIS_HEADERS;
-			var numunlockstotal = 0;
-			
-			for (var i in unlocksdata)
-			{
-				catobj = unlocksdata[i];
-				tab = Q.createBankTab(bank, {aTitle: D.getObjectName(headers[i])});
-				slotscontainer = tab.find(".bnkTabSlots");
-				for (var ii in catobj)
-				{
-					slot = Q.createBankSlot(slotscontainer);
-					unlockobj = catobj[ii];
-					(function(iSlot, iUnlockID, iItemID, iWiki, iPayment)
-					{
-						Q.getItem(iItemID, function(iItem)
-						{
-							var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
-							Q.styleBankSlot(iSlot, {
-								aItem: iItem,
-								aSlotMeta: {count: count},
-								aWiki: iWiki,
-								aCallback: function()
-								{
-									// Include payment if the item cannot be obtained on the Trading Post
-									if (iPayment)
-									{
-										for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
-										{
-											var paymentvalue = iPayment[paymentkey];
-											iSlot.append("<var class='bnkSlotPrice'>" + E.Payment[paymentkey](paymentvalue) + "</var>");
-										}
-									}
-									numfetched++;
-									A.setProgressBar(numfetched, numtofetch);
-								}
-							});
-						});
-					})(slot, ii, unlockobj.i, unlockobj.n, unlockobj.p);
-				}
-			}
-			Q.createBankMenu(bank, {aWantHighlightSearch: true});
+			V.generateCollection(bank, {
+				aHeaders: GW2T_MINIS_HEADERS,
+				aDatabase: GW2T_MINIS_DATA,
+				aUnlockeds: pUnlockeds
+			});
 		};
 		
 		$.getScript(U.URL_DATA.Minis).done(function()
 		{
 			$.getJSON(A.getURL(A.URL.Minis), function(pData)
 			{
-				// Convert the API array of unlocks into an associative array
-				unlocksarray = pData;
-				for (var i = 0; i < unlocksarray.length; i++)
-				{
-					unlocksassoc[(unlocksarray[i])] = true;
-				}
-				generateMinis();
+				generateMinis(pData);
 			}).fail(function()
 			{
 				A.printError(A.PermissionEnum.Unlocks);
 				dish.empty();
 			});
 		});
-	},
-		
-	serveLab: function()
-	{
-		var dish = $("#accDish_Lab");
-		if (A.reinitializeDish(dish) === false)
-		{
-			return;
-		}
-		
-		var SkinItems = {};
-		var CurateArray = [];
-		var CurateArrayIndex = 0;
-		var CurateDatabase = {};
-		var CurateDatabaseIndex = "";
-		var CurateBlacklist = {};
-		
-		var curateSkin = function(pIsSingle)
-		{
-			var Boxes = [];
-			var selectioncontent = $("#labSelection");
-			var skininfo = $("#labSkinInfo");
-			var retrievaldisplay = $("#labRetrievalDisplay");
-			selectioncontent.empty().append(I.cThrobber);
-			skininfo.empty();
-			var items = CurateDatabase[CurateDatabaseIndex];
-			var itemstoretrieve = items.length;
-			var itemsretrieved = 0;
-			
-			$.getJSON(U.getAPISkin(CurateDatabaseIndex), function(pData)
-			{
-				var icon = pData.icon || "";
-				skininfo.empty();
-				$("<var id='labSkinLink'><img src='" + icon + "' style='float:left;' /></var>").appendTo(skininfo).click(function()
-				{
-					U.openExternalURL(U.getWikiSearchLanguage(pData.name));
-				});
-				skininfo.append(U.escapeJSON(pData));
-			});
-			
-			var finalizeCurate = function()
-			{
-				if (itemstoretrieve !== itemsretrieved)
-				{
-					return;
-				};
-				retrievaldisplay.empty();
-				selectioncontent.empty();
-				var tradeableitems = [];
-				var lowestprice = Number.POSITIVE_INFINITY;
-				var lowestlevel = Number.POSITIVE_INFINITY;
-				var highestlevel = Number.NEGATIVE_INFINITY;
-				var lowestlevelbound = Number.POSITIVE_INFINITY;
-				var indexoflowestprice = -1;
-				var indexoflowestlevel = -1;
-				var indexofhighestlevel = -1;
-				var indexoflowestlevelbound = -1;
-				for (var i = 0; i < Boxes.length; i++)
-				{
-					var box = Boxes[i];
-					var item = box.item;
-					if (box.istradeable)
-					{
-						tradeableitems.push(box.item.id);
-						if (box.pricesell < lowestprice)
-						{
-							lowestprice = box.pricesell;
-							indexoflowestprice = i;
-						}
-						
-						if (item.level > 0)
-						{
-							if (item.level < lowestlevel)
-							{
-								lowestlevel = item.level;
-								indexoflowestlevel = i;
-							}
-							if (item.level > highestlevel)
-							{
-								highestlevel = item.level;
-								indexofhighestlevel = i;
-							}
-						}
-					}
-					else
-					{
-						if (item.level > 0 && item.rarity === "Fine" && box.html.indexOf("itmColor_flavor") !== -1)
-						{
-							if (item.level < lowestlevelbound)
-							{
-								lowestlevelbound = item.level;
-								indexoflowestlevelbound = i;
-							}
-						}
-					}
-				}
-				if (indexoflowestprice >= 0)
-				{
-					Boxes[indexoflowestprice].islowestprice = true;
-				}
-				if (indexoflowestlevel >= 0)
-				{
-					Boxes[indexoflowestlevel].islowestlevel = true;
-				}
-				if (indexofhighestlevel >= 0)
-				{
-					Boxes[indexofhighestlevel].ishighestlevel = true;
-				}
-				if (indexoflowestlevelbound >= 0)
-				{
-					Boxes[indexoflowestlevelbound].islowestlevelbound = true;
-				}
-				
-				for (var i = 0; i < Boxes.length; i++)
-				{
-					var box = Boxes[i];
-					var selectionitem = $("<div style='display:inline-block; padding:4px; margin-right:8px; margin-bottom:8px; border:1px solid gray; vertical-align:top; zoom:75%;'>"
-						+ box.html + "<div>ID: " + box.item.id + "</div></div>").appendTo(selectioncontent);
-					var selectionbutton = $("<button class='labSelectItemButton' style='width:100%; height:32px;'>Select</button>").appendTo(selectionitem);
-					(function(iItemID)
-					{
-						selectionbutton.click(function(pEvent)
-						{
-							if (pEvent.which === I.ClickEnum.Left)
-							{
-								CurateArray[CurateArrayIndex].itemid = iItemID;
-								CurateArray[CurateArrayIndex].tradeableids = (tradeableitems.length > 0) ? tradeableitems : null;
-								$("#labControlNext").trigger("click");
-								A.adjustAccountScrollbar();
-							}
-						});
-						selectionbutton.contextmenu(function(pEvent)
-						{
-							pEvent.preventDefault();
-							CurateArray[CurateArrayIndex].itemid = iItemID;
-							CurateArray[CurateArrayIndex].tradeableids = (tradeableitems.length > 0) ? tradeableitems : null;
-							$(this).addClass("btnFocused");
-						});
-					})(box.item.id);
-					
-					(function(iName)
-					{
-						selectionitem.find(".itmIconMain").click(function()
-						{
-							U.openExternalURL(U.getWikiSearchLanguage(iName));
-						});
-					})(box.item.name);
-					
-					if (box.istradeable)
-					{
-						if (box.islowestprice)
-						{
-							selectionitem.css({border: "4px dashed red"}).append("<div>LOWEST PRICE</div>");
-						}
-						
-						if (box.islowestlevel)
-						{
-							selectionitem.css({outline: "4px dashed yellow"}).append("<div>LOWEST LEVEL</div>");
-						}
-						if (box.ishighestlevel)
-						{
-							selectionitem.css({outline: "4px solid orange"}).append("<div>HIGHEST LEVEL</div>");
-						}
-						if (box.item.level === 31)
-						{
-							selectionitem.css({background: "rgba(96,32,128,0.2)"});
-						}
-						if (box.item.level === 80)
-						{
-							if (box.item.name.indexOf("Berserker") !== -1 && box.item.rarity !== "Masterwork")
-							{
-								selectionitem.css({background: "rgba(0,0,255,0.2)"});
-							}
-							else
-							{
-								selectionitem.css({outline: "4px solid blue"});
-							}
-							if ((box.item.rarity === "Rare" || box.item.rarity === "Exotic")
-								&& (box.item.name.indexOf("Cleric") !== -1))
-							{
-								selectionitem.css({background: "rgba(255,0,0,0.2)"});
-							}
-						}
-						if (box.item.type === "Consumable")
-						{
-							selectionitem.css({background: "rgba(0,255,255,0.2)"});
-						}
-						if (box.item.rarity === "Fine"
-							&& (box.item.name.indexOf("Mighty") !== -1
-							|| box.item.name.indexOf("Strong") !== -1
-							|| box.item.name.indexOf("Berserker") !== -1))
-						{
-							selectionitem.css({background: "rgba(0,0,255,0.2)"});
-						}
-					}
-					else
-					{
-						selectionitem.css({opacity: 0.6});
-						if (box.islowestlevelbound)
-						{
-							selectionitem.css({outline: "4px dashed yellow"}).append("<div>LOWEST LEVEL</div>");
-						}
-						if (box.item.level === 80)
-						{
-							selectionitem.css({outline: "4px solid blue"});
-							if (box.item.name.indexOf("Berserker") !== -1)
-							{
-								selectionitem.css({background: "rgba(0,0,255,0.2)"});
-							}
-							else if (box.item.rarity === "Ascended" &&
-								(box.item.name.indexOf("Zojja") !== -1
-								|| box.item.name.indexOf("Soros") !== -1
-								|| box.item.name.indexOf("Beigarth") !== -1
-								|| box.item.name.indexOf("Verata") !== -1
-								|| box.item.name.indexOf("Tonn") !== -1
-								|| box.item.name.indexOf("Theodosus") !== -1
-								|| box.item.name.indexOf("Wupwup") !== -1))
-							{
-								selectionitem.css({background: "rgba(0,0,255,0.2)"});
-							}
-						}
-						if (box.item.type === "Consumable")
-						{
-							selectionitem.css({background: "rgba(0,255,255,0.2)"});
-						}
-					}
-					
-					if (box.item.id === CurateArray[CurateArrayIndex].itemid)
-					{
-						selectionbutton.css({background: "rgba(221,255,119,1)"});
-					}
-				}
-				A.adjustAccountScrollbar();
-			};
-			
-			var itemid;
-			if (pIsSingle && CurateArray[CurateArrayIndex].itemid)
-			{
-				itemstoretrieve = 1;
-				itemid = CurateArray[CurateArrayIndex].itemid;
-				Q.getItem(itemid, function(iItem)
-				{
-					Q.scanItem(iItem, {aWantPrice: true, aCallback: function(iBox)
-					{
-						Boxes.push(iBox);
-						itemsretrieved++;
-						retrievaldisplay.html(itemsretrieved + " / " + itemstoretrieve);
-						finalizeCurate();
-					}});
-				});
-			}
-			else
-			{
-				for (var i = 0; i < items.length; i++)
-				{
-					itemid = items[i];
-					Q.getItem(itemid, function(iItem)
-					{
-						Q.scanItem(iItem, {aWantPrice: true, aCallback: function(iBox)
-						{
-							Boxes.push(iBox);
-							itemsretrieved++;
-							retrievaldisplay.html(itemsretrieved + " / " + itemstoretrieve);
-							finalizeCurate();
-						}});
-					});
-				}
-			}
-		};
-		
-		var updateIndexDisplay = function()
-		{
-			$("#labIndexDisplay").html("Index: " + CurateArrayIndex + " / " + (CurateArray.length - 1)
-				+ "&nbsp; Skin: " + CurateArray[CurateArrayIndex].skinid
-				+ "&nbsp; Item: " + CurateArray[CurateArrayIndex].itemid);
-			
-			$(".labPaymentInput").val("");
-			$(".labAcquisitionButton").removeClass("btnFocused");
-			var paym = CurateArray[CurateArrayIndex].payment;
-			if (paym)
-			{
-				for (var i in paym)
-				{
-					$("#lab" + U.toFirstUpperCase(i) + "Input").val(paym[i]);
-					$("#lab" + U.toFirstUpperCase(i) + "Button").addClass("btnFocused");
-				}
-			}
-		};
-		
-		var updateIndexes = function(pIsSingle)
-		{
-			CurateDatabaseIndex = CurateArray[CurateArrayIndex].skinid;
-			curateSkin(pIsSingle);
-			updateIndexDisplay();
-		};
-		
-		$.getScript(U.URL_DATA.Skins).done(function()
-		{
-			$.getScript("data/skins_assoc.js", function()
-			{
-				CurateDatabase = GW2T_SKINS_ASSOC.SkinItems;
-				CurateBlacklist = GW2T_SKINS_ASSOC.Blacklist;
-				var skinsdb = GW2T_SKINS_DATA;
-				
-				var dishmenu = A.createDishMenu("Lab");
-				var controlcontainer = $("<div style='color:white; font-family:monospace;'></div>").appendTo(dishmenu);
-
-				var selectioncontainer = $("<div id='labContainer'></div>").appendTo(dish);
-				var controls = $("<div id='labControls' style='margin:8px;'></div>").appendTo(controlcontainer);
-				var buttonprev = $("<button id='labControlPrev' style='width:96px; height:40px; margin-right:8px;'>Prev</button>").appendTo(controls);
-				var buttonnext = $("<button id='labControlNext' style='width:96px; height:40px; margin-right:8px;'>Next</button>").appendTo(controls);
-				var buttonauto = $("<button id='labControlAuto' style='width:96px; height:40px; margin-right:8px;'>Auto</button>").appendTo(controls);
-				var buttonprint = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'>Print</button>").appendTo(controls);
-				var buttonsave = $("<button id='labControlPrint' style='width:64px; height:40px; margin-right:8px;'><strong>SAVE</strong></button>").appendTo(controls);
-				var indexdisplay = $("<var id='labIndexDisplay' style='margin-right:8px; font-size:20px;'></var>").appendTo(controls);
-				var inputindex = $("<input id='labIndexInput' type='number' value='0' style='width:64px; margin-right:8px;' />").appendTo(controls);
-				inputindex.before("Go To Skin: ");
-				var inputsearch = $("<input id='labSearchInput' type='text' style='width:128px; margin-right:8px;' />").appendTo(controls);
-				inputsearch.before("Search: ");
-				var inputitem = $("<input id='labItemInput' type='text' style='width:64px; margin-right:8px;' />").appendTo(controls);
-				inputitem.before("Input Custom ID: ");
-				var selectionboxes = $("<div id='labSelection'></div>").appendTo(selectioncontainer);
-				var skininfo = $("<div id='labSkinInfo' style='font-family:monospace'></div>").appendTo(selectioncontainer);
-				
-				var currencies = $("<div id='labCurrencies' style='margin:8px; color:white;'></div>").appendTo(controlcontainer);
-				var currencyprev = $("<button id='labPaymentPrev' style='width:96px; height:40px; margin-right:8px;'>←</button>").appendTo(currencies);
-				var currencynext = $("<button id='labPaymentNext' style='width:96px; height:40px; margin-right:8px;'>→</button>").appendTo(currencies);
-				var inputkarma = $("<input id='labKarmaInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
-				inputkarma.before("<ins class='s16 s16_karma'></ins");
-				var inputgem = $("<input id='labGemInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
-				inputgem.before("<ins class='s16 s16_gem'></ins");
-				var inputcoin = $("<input id='labCoinInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
-				inputcoin.before("<ins class='s16 s16_coincopper'></ins");
-				var inputbadge = $("<input id='labBadgeInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
-				inputbadge.before("<ins class='s16 s16_badge'></ins");
-				var inputtoken = $("<input id='labTokenInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
-				inputtoken.before("<ins class='s16 s16_token'></ins");
-				var inputachievement = $("<input id='labAchievementInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
-				inputachievement.before("<ins class='s16 s16_achievement'></ins");
-				var inputmonument = $("<input id='labMonumentInput' class='labPaymentInput' type='text' value='0' style='width:64px; margin-right:8px;' />").appendTo(currencies);
-				inputmonument.before("<ins class='s16 s16_monument'></ins");
-				var acquisitioncraft = $("<button id='labCraftButton' class='labAcquisitionButton' style='margin-right:8px;'><ins class='s16 s16_craft'></ins></button>").appendTo(currencies);
-				var acquisitionpvp = $("<button id='labPvpButton' class='labAcquisitionButton' style='margin-right:8px;'><ins class='s16 s16_pvp'></ins></button>").appendTo(currencies);
-				var acquisitionstarting = $("<button id='labStartingButton' class='labAcquisitionButton' style='margin-right:8px;'><ins class='s16 s16_starting'></ins></button>").appendTo(currencies);
-				var currencyclear = $("<button id='labPaymentClear' style='width:96px; height:40px; margin-right:8px;'>Clear</button>").appendTo(currencies);
-				
-				var retrievaldisplay = $("<div id='labRetrievalDisplay' style='font-size:20px;'></div>").appendTo(controlcontainer);
-				
-				controlcontainer.find("input[type=text], input[type=number]").click(function()
-				{
-					$(this).select();
-				});
-				
-				currencyprev.click(function()
-				{
-					while (CurateArrayIndex > 0)
-					{
-						CurateArrayIndex--;
-						if (!CurateArray[CurateArrayIndex].tradeableids)
-						{
-							updateIndexes(true);
-							break;
-						}
-					}
-				});
-				currencynext.click(function()
-				{
-					while (CurateArrayIndex < CurateArray.length - 1)
-					{
-						CurateArrayIndex++;
-						if (!CurateArray[CurateArrayIndex].tradeableids)
-						{
-							updateIndexes(true);
-							break;
-						}
-					}
-				});
-				
-				var payments = ["karma", "gem", "coin", "badge", "token", "achievement", "monument"];
-				var paymentindex = 0;
-				$([inputkarma, inputgem, inputcoin, inputbadge, inputtoken, inputachievement, inputmonument]).each(function()
-				{
-					(function(iElm, iPayment)
-					{
-						iElm.onEnterKey(function()
-						{
-							var val = parseInt($(this).val());
-							if (val >= 0)
-							{
-								CurateArray[CurateArrayIndex].payment = {};
-								var paymentval = (iPayment === "coin") ? E.parseCoinString($(this).val()) : parseInt($(this).val());
-								CurateArray[CurateArrayIndex].payment[iPayment] = paymentval;
-								currencynext.trigger("click");
-								buttonsave.trigger("click");
-								$(this).select();
-							}
-							else if (iPayment === "karma")
-							{
-								selectionboxes.find(".itmIconMain").first().trigger("click");
-							}
-							else
-							{
-								$("#labSkinLink").click();
-							}
-						});
-					})($(this), payments[paymentindex]);
-					paymentindex++;
-				});
-				
-				var acquisitions = ["craft", "pvp", "starting"];
-				var acquisitionindex = 0;
-				$([acquisitioncraft, acquisitionpvp, acquisitionstarting]).each(function()
-				{
-					(function(iElm, iPayment)
-					{
-						iElm.click(function()
-						{
-							CurateArray[CurateArrayIndex].payment = {};
-							CurateArray[CurateArrayIndex].payment[iPayment] = true;
-							currencynext.trigger("click");
-							buttonsave.trigger("click");
-						});
-					})($(this), acquisitions[acquisitionindex]);
-					acquisitionindex++;
-				});
-				
-				currencyclear.click(function()
-				{
-					CurateArray[CurateArrayIndex].payment = null;
-					currencynext.trigger("click");
-				});
-
-				buttonauto.click(function()
-				{
-					selectionboxes.find(".labSelectItemButton").first().trigger("click");
-				});
-				buttonprev.click(function()
-				{
-					if (CurateArrayIndex > 0)
-					{
-						CurateArrayIndex--;
-						updateIndexes();
-					}
-				});
-				buttonnext.click(function()
-				{
-					if (CurateArrayIndex < CurateArray.length - 1)
-					{
-						CurateArrayIndex++;
-						updateIndexes();
-					}
-				});
-				buttonprint.click(function()
-				{
-					var obj;
-					var html = "";
-					for (var i = 0; i < CurateArray.length; i++)
-					{
-						obj = CurateArray[i];
-						html += "&quot;" + obj.skinid + "&quot;: {"
-							+ "i: " + obj.itemid + ", "
-							+ "n: &quot;" + U.escapeHTML(obj.name) + "&quot;"
-							+ ((obj.payment) ? ", p: " + U.formatJSON(obj.payment) : "")
-							+ ((obj.tradeableids && !obj.payment) ? ", t: [" + obj.tradeableids + "]" : "")
-							+ "},"
-						+ "<br />";
-					}
-					I.print(html);
-				});
-				buttonsave.click(function()
-				{
-					var obj;
-					var retobj = {};
-					for (var i = 0; i < CurateArray.length; i++)
-					{
-						obj = CurateArray[i];
-						var tradeablearr = (obj.payment) ? null : obj.tradeableids;
-						retobj[obj.skinid] = {
-							i: obj.itemid,
-							n: obj.name,
-							p: obj.payment,
-							t: tradeablearr
-						};
-					}
-					U.APICacheConsole = retobj;
-					U.saveAPICache();
-				});
-				inputindex.onEnterKey(function()
-				{
-					var customindex = parseInt($(this).val());
-					for (var i = 0; i < CurateArray.length; i++)
-					{
-						if (parseInt(CurateArray[i].skinid) === parseInt(customindex))
-						{
-							customindex = i;
-							break;
-						}
-					}
-					if (customindex <= CurateArray.length - 1 && customindex >= 0)
-					{
-						CurateArrayIndex = customindex;
-						updateIndexes();
-					}
-				});
-				inputitem.onEnterKey(function()
-				{
-					var userinputitem = parseInt($(this).val());
-					if (userinputitem)
-					{
-						CurateArray[CurateArrayIndex].itemid = userinputitem;
-						$("#labControlNext").trigger("click");
-					}
-				});
-				inputsearch.onEnterKey(function()
-				{
-					var val = $(this).val().toLowerCase();
-					var searchname;
-					for (var i = 0; i < CurateArray.length; i++)
-					{
-						searchname = CurateArray[i].name.toLowerCase();
-						if (searchname.indexOf(val) !== -1)
-						{
-							CurateArrayIndex = i;
-							updateIndexes();
-							break;
-						}
-					}
-				});
-
-				if (U.loadAPICache())
-				{
-					skinsdb = U.APICacheConsole;
-				}
-				for (var i in skinsdb)
-				{
-					CurateArray.push({
-						skinid: i,
-						name: skinsdb[i].n,
-						itemid: skinsdb[i].i,
-						payment: skinsdb[i].p,
-						tradeableids: skinsdb[i].t
-					});
-				}
-				updateIndexDisplay();
-				A.adjustAccountPanel();
-			});
-		});
-	},
+	}
 };
 
 /* =============================================================================
@@ -9080,14 +8529,22 @@ Q = {
 		});
 		
 		// Trading Post filter for items that can be traded
-		var isfilteringrarity = false;
-		$("<div class='bnkButtonRarity bnkButton curToggle' title='Show <dfn>rarity</dfn> colored boxes.'></div>")
+		var isfilteringrarity = O.Options.bol_showRarity;
+		var changeRarity = function(pRarityButton)
+		{
+			pBank.toggleClass("bnkRarity", isfilteringrarity);
+			pRarityButton.toggleClass("bnkButtonFocused");
+		};
+		var raritybutton = $("<div class='bnkButtonRarity bnkButton curToggle' title='Show <dfn>rarity</dfn> colored boxes.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			isfilteringrarity = !isfilteringrarity;
-			pBank.toggleClass("bnkRarity", isfilteringrarity);
-			$(this).toggleClass("bnkButtonFocused");
+			changeRarity($(this));
 		});
+		if (O.Options.bol_showRarity)
+		{
+			changeRarity(raritybutton);
+		}
 		
 		// Toggle all tabs button
 		var istabscollapsed = false;
@@ -9244,6 +8701,7 @@ E = {
 	Payment: {
 		coin: function(pAmount) { return E.formatCoinString(pAmount, {aWantColor: true, aWantShort: true}); },
 		karma: function(pAmount) { return E.formatKarmaString(pAmount, true); },
+		laurel: function(pAmount) { return E.formatLaurelString(pAmount, true); },
 		gem: function(pAmount) { return E.formatGemString(pAmount, true); },
 		badge: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_badge'></ins>"; },
 		token: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_token'></ins>"; },
@@ -17314,50 +16772,51 @@ G = {
 		var wvw = pDailyObj["wvw"];
 		var dayclass = "";
 		var bosshtml = "";
-		var dailynicks, dtitle, dtype, dspec, dmeta;
+		var dailynicks, dtitle, d0, d1, d2, d3;
 		
 		// PVE daily nicknames may be suffixed by a region, or prefixed by its daily type
 		var parsePVE = function(pDaily)
 		{
 			dailynicks = pDaily.split(" ");
 			dtitle = pDaily;
-			dtype = dailynicks[0].toLowerCase();
-			dspec = (dailynicks.length > 1) ? dailynicks[1].toLowerCase() : "";
-			dmeta = (dailynicks.length > 2) ? dailynicks[2].toLowerCase() : "";
+			d0 = dailynicks[0].toLowerCase();
+			d1 = (dailynicks.length > 1) ? dailynicks[1].toLowerCase() : "";
+			d2 = (dailynicks.length > 2) ? dailynicks[2].toLowerCase() : "";
+			d3 = (dailynicks.length > 3) ? dailynicks[3].toLowerCase() : "";
 			
 			if (dailynicks.length === 1)
 			{
-				return "<ins class='dly dly_pve_" + dtype + "' title='" + dtitle + "'></ins>";
+				return "<ins class='dly dly_pve_" + d0 + "' title='" + dtitle + "'></ins>";
 			}
-			else if (dtype === "jp" || dtype === "adventure")
+			else if (d0 === "jp" || d0 === "adventure")
 			{
-				return "<ins class='dlyRegion dly_region_" + dmeta + "'>"
-					+ "<ins class='dly dly_pve_" + dtype + "' title='" + dtitle + "'></ins>"
+				return "<ins class='dlyRegion dly_region_" + d2 + "'>"
+					+ "<ins class='dly dly_pve_" + d0 + " dlyZoom curZoom' title='" + dtitle + "' data-coord='" + d3 + "'></ins>"
 				+ "</ins>";
 			}
-			else if (dtype === "vista" || dtype === "miner" || dtype === "lumberer" || dtype === "forager")
+			else if (d0 === "vista" || d0 === "miner" || d0 === "lumberer" || d0 === "forager")
 			{
-				return "<ins class='dlyRegion dly_region_" + dspec + "'>"
-					+ "<ins class='dly dly_pve_" + dtype + " dlyZoom curZoom' title='" + dtitle + "' data-coord='" + dmeta + "'></ins>"
+				return "<ins class='dlyRegion dly_region_" + d1 + "'>"
+					+ "<ins class='dly dly_pve_" + d0 + " dlyZoom curZoom' title='" + dtitle + "' data-coord='" + d2 + "'></ins>"
 				+ "</ins>";
 			}
-			else if (dtype === "dungeon")
+			else if (d0 === "dungeon")
 			{
-				return "<ins class='dlyRegion dly_region_" + dmeta + "'>"
-					+ "<ins class='chl_dungeon chl_" + dspec + "' title='" + dtitle + "'></ins>"
+				return "<ins class='dlyRegion dly_region_" + d2 + "'>"
+					+ "<ins class='dly dly_pve_dungeon_" + d1 + "' title='" + dtitle + "'></ins>"
 				+ "</ins>";
 			}
-			else if (dtype === "boss")
+			else if (d0 === "boss")
 			{
-				bosshtml = "<em class='dlyBossIconContainer'><img class='dlyBossIcon' src='img/chain/" + dspec + I.cPNG + "' /></em>";
-				return "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(dspec)) + "'>"
+				bosshtml = "<em class='dlyBossIconContainer'><img class='dlyBossIcon' src='img/chain/" + d1 + I.cPNG + "' /></em>";
+				return "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(d1)) + "'>"
 					+ "<ins class='dly dly_pve_boss' title='" + dtitle + "'></ins>"
 				+ "</ins>";
 			}
-			else if (dtype === "event")
+			else if (d0 === "event")
 			{
-				return "<ins class='dlyRegion dly_region_" + M.getZoneRegion(dspec) + "'>"
-					+ "<ins class='dly dly_pve_event dlyZoom curZoom' title='" + dtitle + "' data-coord='" + dspec + "'></ins>"
+				return "<ins class='dlyRegion dly_region_" + M.getZoneRegion(d1) + "'>"
+					+ "<ins class='dly dly_pve_event dlyZoom curZoom' title='" + dtitle + "' data-coord='" + d1 + "'></ins>"
 				+ "</ins>";
 			}
 			return "";
@@ -17368,14 +16827,14 @@ G = {
 		{
 			dailynicks = pDaily.split(" ");
 			dtitle = pDaily;
-			dtype = dailynicks[0].toLowerCase();
+			d0 = dailynicks[0].toLowerCase();
 			if (dailynicks.length === 1)
 			{
-				return "<ins class='dly dly_pvp_" + dtype + "' title='" + dtitle + "'></ins>";
+				return "<ins class='dly dly_pvp_" + d0 + "' title='" + dtitle + "'></ins>";
 			}
 			
 			var dspec = dailynicks[1].toLowerCase();
-			return "<ins class='dly dly_pvp_profession_" + dtype + "_0' title='" + dtitle + "'><ins class='dly dly_pvp_profession_" + dspec + "_1'></ins></ins>";
+			return "<ins class='dly dly_pvp_profession_" + d0 + "_0' title='" + dtitle + "'><ins class='dly dly_pvp_profession_" + dspec + "_1'></ins></ins>";
 		};
 		
 		// WvW daily nicknames are always 1 word long
@@ -19292,6 +18751,17 @@ W = {
 			custommatchup.worlds = pMatchData.worlds;
 		}
 		
+		// Memorize borderlands name
+		var getServerNameFromColor = function(pColor)
+		{
+			return U.escapeHTML(D.getObjectName(W.Servers[custommatchup.worlds[pColor]]));
+		};
+		var blstr = W.getName("Borderlands");
+		custommatchup.RedHome = D.orderModifier(blstr, getServerNameFromColor("red"));
+		custommatchup.BlueHome = D.orderModifier(blstr, getServerNameFromColor("blue"));
+		custommatchup.GreenHome = D.orderModifier(blstr, getServerNameFromColor("green"));
+		custommatchup.Center = W.getName("Center");
+		
 		// Initialize reuseable formatted server names string
 		for (var i = 0; i < numalli; i++)
 		{
@@ -19548,11 +19018,11 @@ W = {
 				continue;
 			}
 			lb.append("<div id='" + htmlid + "'></div>");
-			(function(iID)
+			(function(iID, iMatchID)
 			{
 				$.getJSON(url, function(pData)
 				{
-					var ithmatch = W.formatMatchup(pData);
+					var ithmatch = (W.isFallbackEnabled) ? W.formatMatchup(W.Matches[iMatchID]) : W.formatMatchup(pData);
 					W.insertScoreboard(pData, ithmatch, $("#" + iID));
 					W.readjustLeaderboard();
 					I.updateScrollbar("#lboOther");
@@ -19586,7 +19056,7 @@ W = {
 		/*
 		 * Collate objective points from each borderlands.
 		 */
-		pMatchup = pMatchup || W.MatchupCurrent;
+		var matchupdata = pMatchup || W.MatchupCurrent;
 		var map, obj, apiobj, landprefix, objid;
 		var land, value, nativeowner;
 		var numowners = W.Metadata.Owners.length;
@@ -19663,20 +19133,29 @@ W = {
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
 			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
-				+ "<aside class='lboName'>&nbsp;" + pMatchup[ownerkey].namelinkstr + "</aside>" : "";
+				+ "<aside class='lboName'>&nbsp;" + matchupdata[ownerkey].namelinkstr + "</aside>" : "";
 			var score = scores[ownerkey];
 			var scorehighest = (T.getMinMax(scores)).max;
 			var scorepercent = (scores[ownerkey] / scorehighest) * T.cPERCENT_100;
 			var ppttotal = (PPT[owner]).Total;
 			var pptpercent = (ppttotal / W.getTotalPPTPossible()) * T.cPERCENT_100;
+			// Kills and Deaths
 			var kdstr = "";
 			if (pData.kills !== undefined && W.isFallbackEnabled === false)
 			{
 				var kills = (pData.kills !== undefined) ? pData.kills[ownerkey] : "";
 				var deaths = (pData.deaths !== undefined) ? pData.deaths[ownerkey] : "";
 				var kdratio = T.parseRatio((kills / deaths), 3);
+				var kdbl = "";
 				var kdpercent = T.parseRatio(kills / (kills + deaths)) * T.cPERCENT_100;
-				kdstr = "<aside class='lboKD' title='<dfn>Kills to Deaths ratio:</dfn> " + kdratio + "'>"
+				var blkills, bldeaths;
+				pData.maps.forEach(function(iMap)
+				{
+					blkills = iMap.kills[ownerkey];
+					bldeaths = iMap.deaths[ownerkey];
+					kdbl += "<dfn>" + blkills + " : " + bldeaths + " (" + T.parseRatio((blkills / bldeaths), 3) + ")</dfn> on " + matchupdata[iMap.type] +  "<br />";
+				});
+				kdstr = "<aside class='lboKD' title='<dfn>Kills to Deaths ratio: " + kdratio + "</dfn><br />" + kdbl + "'>"
 					+ "<var class='lboKills'>" + kills.toLocaleString() + "</var>"
 					+ "<samp><s style='width:" + kdpercent + "%'><mark></mark></s></samp>"
 					+ "<var class='lboDeaths'>" + deaths.toLocaleString() + "</var>"
@@ -19699,7 +19178,7 @@ W = {
 					focuses.push(focus);
 					var difference = score - scores[otherownerkey];
 					scoredifferences.push(difference);
-					var otherserver = W.Servers[(pMatchup.worlds[otherownerkey])];
+					var otherserver = W.Servers[(matchupdata.worlds[otherownerkey])];
 					otherservers.push(U.escapeHTML(D.getObjectName(otherserver)));
 				}
 			}
@@ -20498,7 +19977,7 @@ W = {
 					{
 						var match = pData.wvw_matches[i];
 						var serverid = parseInt(O.Options.enu_Server);
-						W.Matches[match.wvw_match_id] = W.convertWorlds(match);
+						W.Matches[match.wvw_match_id] = match;
 						// Execute this function again now that the match ID is found
 						if (match.red_world_id === serverid
 							|| match.blue_world_id === serverid
@@ -22636,7 +22115,7 @@ B = {
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (B.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
-							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(offer.price) + "</span>"
+							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(B.Vendor.Prices[offer.id] || B.Vendor.PriceDefault) + "</span>"
 							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
 						+ "</div>");
 						// Get TP prices also

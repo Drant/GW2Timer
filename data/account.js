@@ -21,6 +21,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "skříň", it: "armadio", pl: "szafa", pt: "roupeiro", ru: "гардероб", zh: "衣櫃"},
 	s_minis: {de: "miniaturen", es: "miniaturas", fr: "miniatures",
 		cs: "miniatury", it: "miniature", pl: "miniatury", pt: "miniaturas", ru: "миниатюры", zh: "微縮模型"},
+	s_toys: {de: "spielzeuge", es: "juguetes", fr: "jouets",
+		cs: "hračky", it: "giochi", pl: "zabawki", pt: "brinquedos", ru: "игрушки", zh: "玩具"},
 	s_dyes: {de: "farben", es: "tintes", fr: "teintures",
 		cs: "barviva", it: "tinturi", pl: "barwniki", pt: "tinturas", ru: "красители", zh: "染料"},
 	s_characters: {de: "charaktere", es: "personajes", fr: "personnages",
