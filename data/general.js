@@ -1113,9 +1113,9 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "Characters API is re-enabled. <a href='http://gw2timer.com/?page=Account'><img src='img/ui/pages/account.png' />Account Armory</a> beta test is open.",
-	Start: new Date("2016-04-26T16:00:00Z"),
-	Finish: new Date("2016-05-03T16:00:00Z"),
+	content: "WvW feature is being updated to accomodate Alpine/Desert rotation.",
+	Start: new Date("2016-05-03T16:00:00Z"),
+	Finish: new Date("2016-05-05T16:00:00Z"),
 	Messages:
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1191,8 +1191,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-04-26T16:00:00Z"),
-	Finish: new Date("2016-05-03T16:00:00Z"),
+	Start: new Date("2016-05-03T15:00:00Z"),
+	Finish: new Date("2016-05-10T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1201,8 +1201,15 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Sentinel Outfit",
-		id: "78574",
+		name: "Blue Shift Dye Kit",
+		img: "http://i.imgur.com/o2DBfxV.png",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 0
+	},
+	{
+		name: "Macaw Wings Glider Combo",
+		img: "http://i.imgur.com/rLS1klo.png",
 		price: 700,
 		discount: null,
 		col: 0
@@ -1211,6 +1218,125 @@ Sale: {
 		name: "Chaos Gloves Skin",
 		id: "78667",
 		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Chieftain Utahein and Mini Svanir",
+		id: "67281",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Beetle",
+		id: "69690",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Zintl Cavalier",
+		id: "77675",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Angry Chest",
+		id: "70234",
+		price: 400,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Arrowhead",
+		id: "77649",
+		price: 400,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Rock",
+		id: "69790",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Tizlak",
+		id: "77574",
+		price: 200,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Braham Eirsson",
+		id: "68572",
+		price: 350,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Rox",
+		id: "68570",
+		price: 350,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Sabetha",
+		id: "77339",
+		price: 350,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Golden Pig",
+		id: "68683",
+		price: 350,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Pact Airship",
+		id: "67839",
+		price: 350,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Bonebreaker",
+		id: "70300",
+		price: 350,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Tiger",
+		id: "70231",
+		price: 350,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Wyvern",
+		id: "70191",
+		price: 350,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Red Panda",
+		id: "68569",
+		price: 350,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Miniature Moose",
+		id: "69621",
+		price: 350,
 		discount: null,
 		col: 1
 	}

@@ -18510,6 +18510,7 @@ W = {
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL
 		U.openSectionFromURL({aButton: "#lboRegion", aSection: "Leaderboard"});
+		I.print("<br /><br />The website is being updated to accomodate Alpine and Desert map rotations.<br />Please check back.<br /><br />");
 	},
 	
 	/*
@@ -21863,7 +21864,7 @@ B = {
 			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img id='dsbSaleSymbol' src='img/ui/placeholder.png' /> "
 				+ "<u>" + B.Sale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
-				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
+				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_04'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
 				+ "⇓@ " + B.Sale.Finish.toLocaleString()
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
@@ -21882,9 +21883,13 @@ B = {
 				{
 					ncol1++;
 				}
-				if (item.discount)
+				if (isdiscounted === false)
 				{
-					isdiscounted = true;
+					if (item.discount &&
+						(isFinite(item.discount) || (item.discount.length && item.discount[0].length > 2)))
+					{
+						isdiscounted = true;
+					}
 				}
 			}
 			if (ncol0 < ncol1)
@@ -21957,7 +21962,7 @@ B = {
 				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				if (E.Exchange.CoinInGem !== 0)
 				{
-					var gemstr = "<ins class='s16 s16_gem'></ins>";
+					var gemstr = "<ins class='s16 s16_04'></ins>";
 					for (var i = 0; i < B.Sale.Items.length; i++)
 					{
 						// Initialize variables
