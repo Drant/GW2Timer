@@ -3003,22 +3003,19 @@ U = {
 				querystr = pLimit;
 			}
 		}
-		var array = [];
 		var counter = 0;
 		var url = U.URL_API.Prefix + pString;
-		var printResult = function(pArray)
+		var printResult = function()
 		{
 			I.clear();
 			// Sort the objects by their IDs
-			pArray.sort();
 			if (U.APICacheArrayOfObjects.length > 0 && U.APICacheArrayOfObjects[0].id)
 			{
 				O.sortObjects(U.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
 			}
-			for (var i = 0; i < pArray.length; i++)
+			else
 			{
-				printIcon(pArray[i]);
-				I.print(U.escapeHTML(pArray[i]) + ",");
+				U.printAPICache(1);
 			}
 		};
 		var printIcon = function(pData)
@@ -3064,14 +3061,13 @@ U = {
 							$.getJSON(url + "/" + pData[iIndex] + querystr, function(pDataInner)
 							{
 								I.print("Retrieved an element: " + iIndex);
-								array.push(U.formatJSON(pDataInner));
 								U.APICacheArrayOfObjects.push(pDataInner);
 							}).done(function()
 							{
 								// Print the result when all elements have been queried
 								if (counter === successlength - 1 || counter === limit - 1)
 								{
-									printResult(array);
+									printResult();
 								}
 								counter++;
 							}).fail(function()
@@ -3079,7 +3075,7 @@ U = {
 								successlength--;
 								if (counter === successlength - 1 || counter === limit - 1)
 								{
-									printResult(array);
+									printResult();
 								}
 								I.print("Unable to retrieve API array element at: " + U.escapeHTML(url + "/" + pData[iIndex]));
 							});
