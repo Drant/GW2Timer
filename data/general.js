@@ -9,6 +9,7 @@
  * access in constant time.
  */
 var GW2T_ZONE_ASSOCIATION = {
+	// Zones
 	"15": "queensdale",
 	"17": "harathi",
 	"18": "divinity",
@@ -46,7 +47,20 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1041": "dragon",
 	"1043": "auric",
 	"1045": "tangled",
-	"1052": "verdant"
+	"1052": "verdant",
+	// Instances
+	"1069": "precipice",
+	"1071": "precipice",
+	"1076": "precipice",
+	"1104": "precipice",
+	"1124": "precipice",
+	"1144": "precipice",
+	"1068": "gilded",
+	"1101": "gilded",
+	"1107": "gilded",
+	"1108": "gilded",
+	"1121": "gilded",
+	"1125": "gilded"
 };
 var GW2T_LAND_ASSOCIATION = {
 	"38": "eternal",
@@ -61,9 +75,12 @@ var GW2T_LAND_ASSOCIATION = {
 	"984": "courtyard",
 	"968": "edge",
 	"1011": "champion",
+	"95": "alpinered",
+	"94": "alpineblue",
+	"96": "alpinegreen",
 	"1099": "desertred",
-	"1102": "desertgreen",
-	"1143": "desertblue"
+	"1143": "desertblue",
+	"1102": "desertgreen"
 };
 // Associate the API achievement IDs with the custom achievement nicknames
 var GW2T_DAILY_ASSOCIATION = {
@@ -115,10 +132,12 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1886": "JP ChaosCrystalCavern Ascalon [27345,13106]",
 	"1895": "JP ShamansRookery Shiverpeaks [22074,13584]",
 	"1896": "JP ShatteredIceRuins Shiverpeaks [22075,9112]",
+	"1897": "JP ScavengersChasm Orr [13610,25044]",
 	"1899": "JP SwashbucklersCove Kryta [16670,14183]",
 	"1902": "JP LoreclawExpanse Ascalon [28465,15425]",
-	"1905": "JP Unreleased Unreleased Default",
+	"1905": "JP GriffonrookRun Shiverpeaks [18077,17118]",
 	"1908": "JP CoddlersCove Shiverpeaks [20756,20878]",
+	"1929": "JP MorgansSpiral Jungle [10963,19197]",
 	
 	// Event
 	"1940": "Event Caledon",
@@ -646,6 +665,30 @@ var GW2T_ZONE_DATA = {
 	map_rect: [[-36864, -30720], [36864, 33792]],
 	continent_rect: [[1280, 19712], [4352, 22400]]
 },
+"precipice":
+{
+	id: "1069",
+	name_en: "Lost Precipice",
+	name_de: "Verlorener Abgrund",
+	name_es: "Precipicio Perdido",
+	name_fr: "Précipice perdu",
+	name_zh: "失落懸崖",
+	region: "heart",
+	map_rect: [[-15360, -15360], [15360, 15360]],
+	continent_rect: [[768, 13312], [2048, 14592]]
+},
+"gilded":
+{
+	id: "1068",
+	name_en: "Gilded Hollow",
+	name_de: "Vergoldete Senke",
+	name_es: "Cueva Dorada",
+	name_fr: "Caverne dorée",
+	name_zh: "鍍金山洞",
+	region: "heart",
+	map_rect: [[-15360, -15360], [15360, 15360]],
+	continent_rect: [[2560, 16128], [3840, 17408]]
+},
 "silverwastes":
 {
 	id: "1015",
@@ -1130,19 +1173,19 @@ Announcement:
  * GW2 special events, such as those announced on GuildWars2.com.
  * Requirement: Date minutes (MM in HH:MM:SS) must be divisible by 5.
  * Format:
-	name: "", // Language independent, overrides others
-	name_en: "",
-	name_de: "",
-	name_es: "",
-	name_fr: "",
-	official: "", // Official GW2 site news link, the prefix https://www.guildwars2.com/xx/ is pre-included
-	url: "", // Language independent, overrides others
-	url_en: "",
-	url_de: "",
-	url_es: "",
-	url_fr: "",
-	Start: new Date("2015-07-10T19:00:00Z"),
-	Finish: new Date("2015-07-13T19:00:00Z")
+ *	name: "", // Language independent, overrides others
+ *	name_en: "",
+ *	name_de: "",
+ *	name_es: "",
+ *	name_fr: "",
+ *	official: "", // Official GW2 site news link, the prefix https://www.guildwars2.com/xx/ is pre-included
+ *	url: "", // Language independent, overrides others
+ *	url_en: "",
+ *	url_de: "",
+ *	url_es: "",
+ *	url_fr: "",
+ *	Start: new Date("2015-07-10T19:00:00Z"),
+ *	Finish: new Date("2015-07-13T19:00:00Z")
  */
 Countdown: {
 	Events: [
@@ -1160,14 +1203,6 @@ Countdown: {
 
 /*
  * Living Story events.
- * Format:
-	isEnabled: true, // Manual enable switch
-	name_en: "", // Title to show above the list of Living Story timers
-	name_de: "",
-	name_es: "",
-	name_fr: "",
-	Start: new Date("2015-09-10T16:00:00Z"), // Living Story timers will be disabled if not within these times
-	Finish: new Date("2015-09-14T16:00:00Z")
  */
 Story:
 {
@@ -1183,12 +1218,12 @@ Story:
 /*
  * GW2 gem store sale items.
  * Format:
-	name: "", // Item name to point to English wiki
-	id: "", // Item ID to retrieve icon and tooltip details
-	img: "", // ArenaNet hosted item image, if item ID is not available
-	price: 400, // Current gem price for one item
-	discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]] OR 200, // [[quantity, gempricecurrent, gempriceoldOptional], ...] OR gempriceoldOptional
-	col: 0 // Display on left (0) or right (1) column
+ *	name: "", // Item name to point to English wiki
+ *	id: "", // Item ID to retrieve icon and tooltip details
+ *	img: "", // ArenaNet hosted item image, if item ID is not available
+ *	price: 400, // Current gem price for one item
+ *	discount: [[1, 160, 200], [5, 640, 800], [25, 3200, 4000]] OR 200, // [[quantity, gempricecurrent, gempriceoldOptional], ...] OR gempriceoldOptional
+ *	col: 0 // Display on left (0) or right (1) column
  */
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
@@ -1382,12 +1417,12 @@ Vendor:
 	PriceDefault: 25200,
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
 	{
-		Mehem: { id: "43799" },
-		Fox: { id: "43835" },
-		Derwena: { id: "67962" },
-		Yana: { id: "43798" },
-		Katyn: { id: "43804" },
-		Verma: { id: "43829" }
+		Mehem: { id: "43828" },
+		Fox: { id: "49743" },
+		Derwena: { id: "44655" },
+		Yana: { id: "43832" },
+		Katyn: { id: "43814" },
+		Verma: { id: "49757" }
 	}
 }
 };

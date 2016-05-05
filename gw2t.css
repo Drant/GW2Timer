@@ -445,19 +445,19 @@ html, body,
 ----------------------------------------------------------------------------- */
 .itemContext {
 	display: none;
-	min-width: 150px;
 	position: fixed; z-index: 1000;
-	border: 2px solid #aaa;
-	border-radius: 2px;
-	font-family: Menomonia;
-	font-size: 16px;
-	font-weight: bold;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 17px;
 	line-height: 110%;
 	color: white;
-	background: #212021;
 	text-shadow: 0px 0px 2px black;
+}
+.itemContext, .itemContextSubmenu:hover > ul {
+	min-width: 150px;
+	border: 2px solid #aaa;
+	border-radius: 2px;
+	background: rgba(33, 32, 33, 0.9);
 	box-shadow: 0px 0px 3px #888;
-	opacity: 0.9;
 }
 
 .itemContext li {
@@ -482,14 +482,9 @@ html, body,
 }
 .itemContextSubmenu:hover > ul {
 	display: inline-block;
-	min-width: 150px;
 	position: absolute; z-index: 2;
 	left: 50%;
 	white-space: nowrap;
-	border: 2px solid #aaa;
-	border-radius: 2px;
-	background: #212021;
-	opacity: 0.9;
 	animation: aniFadeInPartial 0.2s;
 }
 

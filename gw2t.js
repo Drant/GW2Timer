@@ -492,8 +492,9 @@ O = {
 	/*
 	 * Sorts an array of objects by the provided key name, or language name if not.
 	 * @param array pObjects.
-	 * @param string pKeyName, optional.
-	 * @param boolean pIsDescending order, optional. Ascending is default order.
+	 * @objparam string aKeyName to key of each property to sort by.
+	 * @objparam boolean aIsDescending order, optional. Ascending is default order.
+	 * @objparam boolean aIsNumbers whether to interpret the keys as integers.
 	 */
 	sortObjects: function(pObjects, pSettings)
 	{
@@ -503,8 +504,8 @@ O = {
 		{
 			pObjects.sort(function(a, b)
 			{
-				var valA = (Settings.aIsNumbers) ? U.stripToNumbers(a[key]) : a[key];
-				var valB = (Settings.aIsNumbers) ? U.stripToNumbers(b[key]) : b[key];
+				var valA = (Settings.aIsNumbers && typeof a[key] === "string") ? U.stripToNumbers(a[key]) : a[key];
+				var valB = (Settings.aIsNumbers && typeof b[key] === "string") ? U.stripToNumbers(b[key]) : b[key];
 				if (valA < valB)
 				{
 					return 1;
@@ -520,8 +521,8 @@ O = {
 		{
 			pObjects.sort(function(a, b)
 			{
-				var valA = (Settings.aIsNumbers) ? U.stripToNumbers(a[key]) : a[key];
-				var valB = (Settings.aIsNumbers) ? U.stripToNumbers(b[key]) : b[key];
+				var valA = (Settings.aIsNumbers && typeof a[key] === "string") ? U.stripToNumbers(a[key]) : a[key];
+				var valB = (Settings.aIsNumbers && typeof b[key] === "string") ? U.stripToNumbers(b[key]) : b[key];
 				if (valA > valB)
 				{
 					return 1;
@@ -2937,35 +2938,45 @@ U = {
 			{
 				$.getScript("data/objectives.js", function()
 				{
-					var objectives = GW2T_OBJECTIVES_EN;
-					var ithobj;
+					var ithobj_en, ithobj_de, ithobj_es, ithobj_fr, ithobj_zh;
 					var retobj = {};
-					for (var i in objectives)
+					for (var i = 0; i < GW2T_OBJECTIVES_EN.length; i++)
 					{
-						ithobj = objectives[i];
-						if (ithobj.type !== "Spawn")
+						ithobj_en = GW2T_OBJECTIVES_EN[i];
+						ithobj_de = GW2T_OBJECTIVES_DE[i];
+						ithobj_es = GW2T_OBJECTIVES_ES[i];
+						ithobj_fr = GW2T_OBJECTIVES_FR[i];
+						ithobj_zh = GW2T_OBJECTIVES_ZH[i];
+						if (ithobj_en.type !== "Spawn")
 						{
-							retobj[ithobj.id] = {
-								nativeowner: ithobj.map_type.replace("Home", ""),
-								map_type: ithobj.map_type,
-								type: ithobj.type,
-								name_en: ithobj.name,
-								name_de: ithobj.name,
-								name_es: ithobj.name,
-								name_fr: ithobj.name,
-								name_zh: ithobj.name,
-								direction: "North",
-								id: ithobj.id,
-								map_id: ithobj.map_id,
-								coord: ithobj.label_coord
+							retobj[ithobj_en.id] = {
+								nativeowner: ithobj_en.map_type.replace("Home", ""),
+								map_type: ithobj_en.map_type,
+								type: ithobj_en.type,
+								name_en: ithobj_en.name,
+								name_de: ithobj_de.name,
+								name_es: ithobj_es.name,
+								name_fr: ithobj_fr.name,
+								name_zh: ithobj_zh.name,
+								direction: "AAAAAAAAA",
+								id: ithobj_en.id,
+								map_id: ithobj_en.map_id,
+								coord: [Math.round(ithobj_en.coord[0]), Math.round(ithobj_en.coord[1])]
 							};
+						}
+						if (ithobj_en.id !== ithobj_de.id
+							|| ithobj_en.id !== ithobj_es.id
+							|| ithobj_en.id !== ithobj_fr.id
+							|| ithobj_en.id !== ithobj_zh.id)
+						{
+							I.print("MISMATCH AT ID: " + ithobj_en.id);
 						}
 					}
 					
 					for (var i in retobj)
 					{
-						ithobj = retobj[i];
-						I.print("&quot;" + i + "&quot;: " + U.formatJSON(ithobj) + ",");
+						ithobj_en = retobj[i];
+						I.print("<pre>&quot;" + i + "&quot;: " + U.stripJSONQuotations(U.formatJSON(ithobj_en)) + ",</pre>");
 					}
 				});
 			}}
@@ -3009,6 +3020,7 @@ U = {
 		{
 			I.clear();
 			// Sort the objects by their IDs
+			U.prettyJSON(U.APICacheArrayOfObjects);
 			if (U.APICacheArrayOfObjects.length > 0 && U.APICacheArrayOfObjects[0].id)
 			{
 				O.sortObjects(U.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
@@ -3042,7 +3054,7 @@ U = {
 				{
 					// Delegate the heavier task of large array scraping to another function
 					I.print("Array is too big for one simultaneous request, requesting in batches with wait in between...");
-					U.scrapeAPIArray(pData, pString, pQueryStr);
+					U.scrapeAPIArray(pData, pString, querystr);
 				}
 				else
 				{
@@ -3253,7 +3265,7 @@ U = {
 			}
 		};
 		
-		var retrieveObject = function(pID, pReqIndex)
+		var retrieveObject = function(pID)
 		{
 			$.getJSON(U.URL_API.Prefix + pString + "/" + pID + querystr, function(pData)
 			{
@@ -3682,8 +3694,7 @@ U = {
 	lineJSON: function(pObject)
 	{
 		// Returns the stringified JSON as a single line separated with spaces.
-		return JSON.stringify(pObject, null, 1)
-			.replace(/\"([^(\")"]+)\":/g,"$1:")
+		return U.stripJSONQuotations(JSON.stringify(pObject, null, 1))
 			.replace(/[\r\n]/g, "")
 			.replace(/  +/g, " ")
 			.replace(/ }/g, "}")
@@ -3718,6 +3729,11 @@ U = {
 	{
 		// Disallow spaces and ranges of programming characters !/:@[^`{~
 		return pString.replace(/ /g, "_").replace(/[0-9\u0021-\u002f\u003a-\u0040\u005b-\u005e\u0060\u007b-\u007e]/g, "");
+	},
+	stripJSONQuotations: function(pString)
+	{
+		// Removes quotation marks from JSON stringified object properties
+		return pString.replace(/\"([^(\")"]+)\":/g,"$1:");
 	},
 	
 	/*
@@ -5779,7 +5795,7 @@ V = {
 		{
 			return;
 		}
-		else if (!A.Data.Characters[0].equipment)
+		else if ( ! A.Data.Characters[0].equipment)
 		{
 			A.printError(A.PermissionEnum.Builds);
 			return;
@@ -6253,7 +6269,7 @@ V = {
 		{
 			return;
 		}
-		else if (!A.Data.Characters[0].equipment)
+		else if ( ! A.Data.Characters[0].equipment)
 		{
 			A.printError(A.PermissionEnum.Builds);
 			return;
@@ -6310,7 +6326,7 @@ V = {
 		{
 			return;
 		}
-		else if (!A.Data.Characters[0].bags)
+		else if ( ! A.Data.Characters[0].bags)
 		{
 			A.printError(A.PermissionEnum.Inventories);
 			return;
@@ -8522,7 +8538,7 @@ Q = {
 					}
 					else
 					{
-						$(this).toggle(!wantshow);
+						$(this).toggle( ! wantshow);
 					}
 				});
 				$(this).addClass("bnkButtonFocused");
@@ -8933,11 +8949,11 @@ E = {
 		var sign = (amount < 0) ? "−" : "";
 		
 		// Leading zero for units that are right side of the leftmost unit
-		if (!Settings.aWantColor && (gold > 0 && silver < T.cBASE_10))
+		if ( ! Settings.aWantColor && (gold > 0 && silver < T.cBASE_10))
 		{
 			silverstr = "0" + silver;
 		}
-		if (!Settings.aWantColor && ((silver > 0 && copper < T.cBASE_10) || (copper < T.cBASE_10)))
+		if ( ! Settings.aWantColor && ((silver > 0 && copper < T.cBASE_10) || (copper < T.cBASE_10)))
 		{
 			copperstr = "0" + copper;
 		}
@@ -9546,7 +9562,7 @@ E = {
 					{
 						return;
 					}
-					if (!isUp === $(".trdEntry").length - 1) 
+					if ( ! isUp === $(".trdEntry").length - 1) 
 					{
 						return;
 					}
@@ -12901,7 +12917,7 @@ M = {
 		}
 		
 		// Bind map click functions for non-touch devices
-		if (!I.isTouchEnabled)
+		if ( ! I.isTouchEnabled)
 		{
 			this.bindMapClicks();
 		}
@@ -12964,7 +12980,7 @@ M = {
 	 */
 	createPins: function()
 	{
-		if (!I.isMapEnabled)
+		if ( ! I.isMapEnabled)
 		{
 			return;
 		}
@@ -13278,7 +13294,12 @@ M = {
 	 */
 	getZoneFromID: function(pZoneID)
 	{
-		return this.Zones[this.ZoneAssociation[pZoneID]];
+		var zonenick = this.ZoneAssociation[pZoneID];
+		if (zonenick)
+		{
+			return this.Zones[zonenick];
+		}
+		return null;
 	},
 	
 	/*
@@ -14236,8 +14257,8 @@ M = {
 		weaponsmenu.append(clearbutton);
 		
 		// Inputs: attributes for the custom range weapon
-		weaponsmenu.append("<br /><span id='" + that.MapEnum + "RangeCustom' class='mapRangeCustom'><input id='"
-			+ that.MapEnum + "RangeCustomRange' type='number' value='1200' min='0' max='"
+		weaponsmenu.append("<br /><span id='" + that.MapEnum + "RangeCustom' class='mapRangeCustom'>"
+			+ "<input id='" + that.MapEnum + "RangeCustomRange' type='number' value='1200' min='0' max='"
 				+ rangemaxvalue + "' step='100' style='width:64px' class='cssInputText' />"
 			+ "<input id='" + that.MapEnum + "RangeCustomColor' type='text' value='#ffffff' maxlength='"
 				+ colormaxlength + "' style='width:96px' class='cssInputText' />"
@@ -14289,6 +14310,7 @@ M = {
 		weaponsmenu.find("input").click(function(pEvent)
 		{
 			pEvent.stopPropagation();
+			$(this).select();
 		});
 		
 		// The menu entry to draw standard siege placement
@@ -14592,7 +14614,7 @@ M = {
 	 */
 	toggleLayer: function(pLayer, pBoolean)
 	{
-		if (!pLayer)
+		if ( ! pLayer)
 		{
 			return;
 		}
@@ -15278,7 +15300,7 @@ P = {
 	 */
 	populateMap: function(pMapObject)
 	{
-		if (!I.isMapEnabled)
+		if ( ! I.isMapEnabled)
 		{
 			return;
 		}
@@ -15349,13 +15371,14 @@ P = {
 				for (zoneid in region.maps)
 				{
 					// Don't bother parsing if not a regular world zone
-					if ( ! that.ZoneAssociation[zoneid])
+					zoneobj = that.getZoneFromID(zoneid);
+					if ( ! zoneobj || zoneobj.ispopulated)
 					{
 						continue;
 					}
 					
+					zoneobj.ispopulated = true; // Mark as populated to avoid duplicate zones
 					apizone = region.maps[zoneid];
-					zoneobj = that.getZoneFromID(zoneid);
 					var numheart = 0;
 					var numwaypoint = 0;
 					var numlandmark = 0;
@@ -16195,7 +16218,7 @@ P = {
 			{
 				iweight = 0;
 			}
-			else if (!pIsObverse && iweight < 0)
+			else if ( ! pIsObverse && iweight < 0)
 			{
 				iweight = numofsegments-1;
 			}
@@ -16957,7 +16980,7 @@ G = {
 			$.getJSON(U.URL_API.Fractal, function(pData)
 			{
 				var ach = pData.achievements;
-				if (!ach || ach.length < T.Daily.Fractal.numFractalDailies)
+				if ( ! ach || ach.length < T.Daily.Fractal.numFractalDailies)
 				{
 					return;
 				}
@@ -17450,7 +17473,7 @@ G = {
 			P.toggleNodeArray(P.NodeArray.JP, true);
 			M.bindMapLinks(".jpzList");
 			U.convertExternalLink(".jpzList a");
-			I.bindSearchBar("#jpzSearch", ".jpzItem");
+			I.createSearchBar("#jpzSearch", ".jpzItem");
 			I.qTip.init(".jpzList dt");
 
 			// Button to toggle JP markers only
@@ -17741,7 +17764,7 @@ G = {
 				}
 			}
 			U.convertExternalLink("#cltList cite a");
-			I.bindSearchBar("#cltSearch", ".cltBox");
+			I.createSearchBar("#cltSearch", ".cltBox");
 
 			// Toggle button will only hide icons, by unchecking the checked boxes
 			$("#mapToggle_Collectible").data("checked", false).data("hideonly", true).click(function()
@@ -18048,7 +18071,7 @@ G = {
 		I.qTip.init(list.find(".cltPetIcon"));
 		// Create search bar
 		var search = $("<div class='cntSearchContainer'></div>").insertBefore(list);
-		I.bindSearchBar(search, $(".cltPetBox"));
+		I.createSearchBar(search, $(".cltPetBox"));
 		// Scroll to the list
 		setTimeout(function()
 		{
@@ -18221,7 +18244,7 @@ G = {
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
 				$("#gldBook_Trek").prepend("<div id='gldTrekSearch' class='cntSearchContainer'><div>");
-				I.bindSearchBar("#gldTrekSearch", ".gldTrek");
+				I.createSearchBar("#gldTrekSearch", ".gldTrek");
 				finalizeGuildBook("Trek");
 			});
 			
@@ -19665,7 +19688,7 @@ W = {
 		var str = prevobjectiveicon + " ⇒ " + objectiveicon + " <dfn data-coord='" + pObjective.coord + "'>" + objectivenick + "</dfn>";
 		var land = pObjective.map_type;
 		var cssclass = "logEntry" + land;
-		if (!pIsClaim)
+		if ( ! pIsClaim)
 		{
 			pObjective.prevownerhtml = str;
 		}
@@ -20287,9 +20310,12 @@ W = {
 	 */
 	updateObjectiveAge: function(pObjective)
 	{
-		var msecage = (new Date()).getTime() - pObjective.last_flipped_msec;
-		// Minutely updates
-		$("#objAge_" + pObjective.id).html(T.getShorthandTime(msecage));
+		if (pObjective.last_flipped_msec)
+		{
+			var msecage = (new Date()).getTime() - pObjective.last_flipped_msec;
+			// Minutely updates
+			$("#objAge_" + pObjective.id).html(T.getShorthandTime(msecage));
+		}
 	},
 	updateAllObjectiveAge: function()
 	{
@@ -22462,7 +22488,7 @@ B = {
 	 */
 	updateTimelineIndicator: function()
 	{
-		if (!B.isTimelineGenerated)
+		if ( ! B.isTimelineGenerated)
 		{
 			return;
 		}
@@ -22492,7 +22518,7 @@ B = {
 	 */
 	updateTimelineSegments: function()
 	{
-		if (!B.isTimelineGenerated)
+		if ( ! B.isTimelineGenerated)
 		{
 			return;
 		}
@@ -22501,7 +22527,7 @@ B = {
 		{
 			if (currentminute >= $(this).data("start") && currentminute < $(this).data("finish"))
 			{
-				if (!$(this).hasClass("tmlSegmentActive"))
+				if ( ! $(this).hasClass("tmlSegmentActive"))
 				{
 					$(this).css({opacity: 0}).animate({opacity: 1}, 1000);
 					$(this).addClass("tmlSegmentActive");
@@ -22533,7 +22559,7 @@ B = {
 	 */
 	updateTimelineLegend: function()
 	{
-		if (!B.isTimelineGenerated)
+		if ( ! B.isTimelineGenerated)
 		{
 			return;
 		}
@@ -24888,7 +24914,7 @@ I = {
 	 * @param jqobject pElements to filter.
 	 * @pre Each element must have its data "keywords" assigned for the matching.
 	 */
-	bindSearchBar: function(pContainer, pElements)
+	createSearchBar: function(pContainer, pElements)
 	{
 		var container = $(pContainer);
 		var elements = $(pElements);
@@ -24936,7 +24962,10 @@ I = {
 					$(this).show();
 				});
 			}
-		}));
+		})).click(function()
+		{
+			$(this).select();
+		});
 	},
 	
 	/*
@@ -24948,7 +24977,7 @@ I = {
 		return $(pSelector).each(function()
 		{
 			var elm = L.DomUtil.get($(this)[0]);
-			if (!L.Browser.touch)
+			if ( ! L.Browser.touch)
 			{
 				L.DomEvent.disableClickPropagation(elm);
 				L.DomEvent.on(elm, "mousewheel", L.DomEvent.stopPropagation);
