@@ -1156,8 +1156,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	content: "<a href='http://gw2timer.com/?page=Account'><img src='img/ui/pages/account.png' />Wardrobe and Minis</a> now available. "
-		+ "<a href='http://gw2timer.com/?page=WvW'>WvW Alpine</a> tiles will be added later.",
+	content: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Account'>Wardrobe and Minis</a> now available. Beta test the Account Armory.",
 	wvw: "The new Alpine maps have a different zoom level. Please set your own zoom level from the <img src='img/map/display.png'> icon at the top right corner.",
 	Start: new Date("2016-05-03T16:00:00Z"),
 	Finish: new Date("2016-05-05T16:00:00Z"),

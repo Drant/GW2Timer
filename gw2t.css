@@ -770,6 +770,9 @@ textarea.jsCopyCode {
 .mapPaneBackground {
 	background: url("img/background/space.jpg") repeat center;
 }
+#wvwPane {
+	display: none;
+}
 
 /* Bottom side: Timeline */
 #itemTimeline {
