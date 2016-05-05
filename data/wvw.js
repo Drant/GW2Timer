@@ -48,7 +48,7 @@ var GW2T_LAND_DATA = {
 },
 "alpinered": // north side
 {
-	id: "95",
+	id: "94",
 	name_en: "Red Borderlands",
 	name_de: "Rot Grenzlande",
 	name_es: "Tierras Fronterizas de rojo",
@@ -56,11 +56,11 @@ var GW2T_LAND_DATA = {
 	name_zh: "沙漠邊境之地紅色",
 	region: "wvw",
 	map_rect: [[-30720, -43008], [30720, 43008]],
-	continent_rect: [[5630, 11518], [8190, 15102]]
+	continent_rect: [[9214, 8958], [11774, 12542]]
 },
 "alpineblue": // west side
 {
-	id: "94",
+	id: "96",
 	name_en: "Blue Borderlands",
 	name_de: "Blau Grenzlande",
 	name_es: "Tierras Fronterizas de azul",
@@ -68,11 +68,11 @@ var GW2T_LAND_DATA = {
 	name_zh: "沙漠邊境之地藍色",
 	region: "wvw",
 	map_rect: [[-30720, -43008], [30720, 43008]],
-	continent_rect: [[5630, 11518], [8190, 15102]]
+	continent_rect: [[12798, 10878], [15358, 14462]]
 },
 "alpinegreen": // east side
 {
-	id: "96",
+	id: "95",
 	name_en: "Green Borderlands",
 	name_de: "Grün Grenzlande",
 	name_es: "Tierras Fronterizas de verde",
@@ -80,7 +80,7 @@ var GW2T_LAND_DATA = {
 	name_zh: "沙漠邊境之地綠色",
 	region: "wvw",
 	map_rect: [[-30720, -43008], [30720, 43008]],
-	continent_rect: [[12798, 10878], [15358, 14462]]
+	continent_rect: [[5630, 11518], [8190, 15102]]
 },
 "desertred": // north side
 {
@@ -2801,25 +2801,49 @@ var GW2T_WVW_METADATA = {
 		Neutral: "Neutral"
 	},
 	SpawnLabels: { /* Label showing the server name, positioned over their spawn in each map */
-		RedHome: {
-			Red: [10758, 9181],
-			Blue: [12112, 11894],
-			Green: [9519, 11814]
+		Alpine: {
+			RedHome: {
+				Red: [10505, 9961],
+				Blue: [11395, 12169],
+				Green: [9567, 12227]
+			},
+			GreenHome: {
+				Red: [7811, 14729],
+				Blue: [5983, 14787],
+				Green: [6921, 12521]
+			},
+			BlueHome: {
+				Red: [13151, 14147],
+				Blue: [14089, 11881],
+				Green: [14979, 14089]
+			},
+			Center: {
+				Red: [10563, 13020],
+				Blue: [11890, 15720],
+				Green: [9082, 15653]
+			}
 		},
-		GreenHome: {
-			Red: [8528, 14454],
-			Blue: [5935, 14374],
-			Green: [7174, 11741]
-		},
-		BlueHome: {
-			Red: [13103, 13734],
-			Blue: [14342, 11101],
-			Green: [15696, 13814]
-		},
-		Center: {
-			Red: [10563, 13020],
-			Blue: [11890, 15720],
-			Green: [9082, 15653]
+		Desert: {
+			RedHome: {
+				Red: [10758, 9181],
+				Blue: [12112, 11894],
+				Green: [9519, 11814]
+			},
+			GreenHome: {
+				Red: [8528, 14454],
+				Blue: [5935, 14374],
+				Green: [7174, 11741]
+			},
+			BlueHome: {
+				Red: [13103, 13734],
+				Blue: [14342, 11101],
+				Green: [15696, 13814]
+			},
+			Center: {
+				Red: [10563, 13020],
+				Blue: [11890, 15720],
+				Green: [9082, 15653]
+			}
 		}
 	},
 	Neutral: {

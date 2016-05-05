@@ -75,9 +75,9 @@ var GW2T_LAND_ASSOCIATION = {
 	"984": "courtyard",
 	"968": "edge",
 	"1011": "champion",
-	"95": "alpinered",
-	"94": "alpineblue",
-	"96": "alpinegreen",
+	"94": "alpinered",
+	"96": "alpineblue",
+	"95": "alpinegreen",
 	"1099": "desertred",
 	"1143": "desertblue",
 	"1102": "desertgreen"
@@ -1158,7 +1158,7 @@ Announcement:
 {
 	content: "<a href='http://gw2timer.com/?page=Account'><img src='img/ui/pages/account.png' />Wardrobe and Minis</a> now available. "
 		+ "<a href='http://gw2timer.com/?page=WvW'>WvW Alpine</a> tiles will be added later.",
-	wvw: "Note: The website is still being updated to accomodate Alpine and Desert map rotations.",
+	wvw: "The new Alpine maps have a different zoom level. Please set your own zoom level from the <img src='img/map/display.png'> icon at the top right corner.",
 	Start: new Date("2016-05-03T16:00:00Z"),
 	Finish: new Date("2016-05-05T16:00:00Z"),
 	Messages:

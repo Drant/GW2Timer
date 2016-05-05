@@ -141,7 +141,7 @@ O = {
 		// Map
 		int_setFloor: 1,
 		int_setInitialZoom: 3,
-		int_setInitialZoomWvW: 3,
+		int_setInitialZoomWvW: 4,
 		bol_showCoordinatesBar: true,
 		bol_showZoneBorders: false,
 		bol_showZoneGateways: false,
@@ -18454,21 +18454,21 @@ W = {
 	ZoneAssociation: GW2T_LAND_ASSOCIATION,
 	cInitialZone: "eternal",
 	cMAP_BOUND: 16384,
-	cMAP_CENTER: [10750, 12414], // This centers on the WvW portion of the map
-	cMAP_CENTER_INITIAL: [-193.96875, 167.96875],
+	cMAP_CENTER: [10494, 12414], // This centers on the WvW portion of the map
+	cMAP_CENTER_INITIAL: [-96.98437, 81.98438], // LatLng equivalent
 	cMAP_CENTER_ACTUAL: [8192, 8192],
 	ZoomEnum:
 	{
 		Adaptive: -2,
 		Same: -1,
 		Min: 0,
-		Overview: 2,
-		Default: 3,
+		Overview: 3,
+		Default: 4,
 		Space: 3,
-		Sky: 4,
-		Bird: 5,
-		Ground: 6,
-		Max: 6
+		Sky: 5,
+		Bird: 6,
+		Ground: 7,
+		Max: 7
 	},
 	Layer: {
 		Overview: new L.layerGroup(),
@@ -18660,7 +18660,7 @@ W = {
 		this.toggleLayer(this.Layer.Objective, true);
 		
 		// Generate labels over servers' map spawn points, the names will be reassigned by the objective function
-		var labels = W.Metadata.SpawnLabels;
+		var labels = W.Metadata.SpawnLabels[W.BorderlandsCurrent];
 		for (var i in labels)
 		{
 			var labelmap = labels[i];
@@ -24162,15 +24162,15 @@ I = {
 		// Tailor the initial zoom for WvW so its map fits at least vertically
 		if (screen.height >= 800)
 		{
-			O.Options.int_setInitialZoomWvW = 3;
+			O.Options.int_setInitialZoomWvW = 4;
 		}
 		else if (screen.height >= 480)
 		{
-			O.Options.int_setInitialZoomWvW = 4;
+			O.Options.int_setInitialZoomWvW = 5;
 		}
 		else
 		{
-			O.Options.int_setInitialZoomWvW = 5;
+			O.Options.int_setInitialZoomWvW = 6;
 		}
 		
 		// Remember user's browser maker
