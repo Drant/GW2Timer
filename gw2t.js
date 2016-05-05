@@ -180,7 +180,8 @@ O = {
 		bol_narrateBlueHome: true,
 		bol_narrateGreenHome: true,
 		bol_narrateCenter: true,
-		bol_narrateClaimed: true,
+		bol_narrateClaimed: false,
+		bol_narrateRuins: false,
 		bol_narrateCamp: true,
 		bol_narrateTower: true,
 		bol_narrateKeep: true,
@@ -2936,49 +2937,7 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				$.getScript("data/objectives.js", function()
-				{
-					var ithobj_en, ithobj_de, ithobj_es, ithobj_fr, ithobj_zh;
-					var retobj = {};
-					for (var i = 0; i < GW2T_OBJECTIVES_EN.length; i++)
-					{
-						ithobj_en = GW2T_OBJECTIVES_EN[i];
-						ithobj_de = GW2T_OBJECTIVES_DE[i];
-						ithobj_es = GW2T_OBJECTIVES_ES[i];
-						ithobj_fr = GW2T_OBJECTIVES_FR[i];
-						ithobj_zh = GW2T_OBJECTIVES_ZH[i];
-						if (ithobj_en.type !== "Spawn")
-						{
-							retobj[ithobj_en.id] = {
-								nativeowner: ithobj_en.map_type.replace("Home", ""),
-								map_type: ithobj_en.map_type,
-								type: ithobj_en.type,
-								name_en: ithobj_en.name,
-								name_de: ithobj_de.name,
-								name_es: ithobj_es.name,
-								name_fr: ithobj_fr.name,
-								name_zh: ithobj_zh.name,
-								direction: "AAAAAAAAA",
-								id: ithobj_en.id,
-								map_id: ithobj_en.map_id,
-								coord: [Math.round(ithobj_en.coord[0]), Math.round(ithobj_en.coord[1])]
-							};
-						}
-						if (ithobj_en.id !== ithobj_de.id
-							|| ithobj_en.id !== ithobj_es.id
-							|| ithobj_en.id !== ithobj_fr.id
-							|| ithobj_en.id !== ithobj_zh.id)
-						{
-							I.print("MISMATCH AT ID: " + ithobj_en.id);
-						}
-					}
-					
-					for (var i in retobj)
-					{
-						ithobj_en = retobj[i];
-						I.print("<pre>&quot;" + i + "&quot;: " + U.stripJSONQuotations(U.formatJSON(ithobj_en)) + ",</pre>");
-					}
-				});
+				
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -18551,14 +18510,21 @@ W = {
 	 */
 	initializeWvW: function()
 	{
+		// First determine and setup the current borderlands type rotation
 		W.BorderlandsCurrent = W.BorderlandsEnum.Alpine;
+		W.Zones = GW2T_LAND_DATA;
+		var rotationzones = GW2T_LAND_ROTATION[W.BorderlandsCurrent];
+		for (var i in rotationzones)
+		{
+			W.Zones[i] = rotationzones[i];
+		}
 		/*
 		 * Merge W's unique variables and functions with M, and use that new
 		 * object as W. This is a shallow copy, so objects within an object that
 		 * are not shared/modified must be redeclared here in W.
 		 */
+		var now = new Date();
 		$.extend(W, $.extend({}, M, W));
-		W.Zones = GW2T_LAND_DATA;
 		W.Regions = GW2T_REALM_DATA;
 		W.Servers = GW2T_SERVER_DATA;
 		W.Weapons = GW2T_WEAPON_DATA;
@@ -18584,10 +18550,10 @@ W = {
 		// Show leaderboard the first time if requested by URL
 		U.openSectionFromURL({aButton: "#lboRegion", aSection: "Leaderboard"});
 		// Write announcement if available
-		var announcement = GW2T_DASHBOARD_DATA.Announcement.wvw;
-		if (announcement && announcement.length > 0)
+		var announcement = GW2T_DASHBOARD_DATA.Announcement;
+		if (announcement.wvw.length > 0 && T.isTimely(announcement, now))
 		{
-			W.addLogEntry(announcement);
+			W.addLogEntry(announcement.wvw);
 		}
 	},
 	
@@ -18628,8 +18594,7 @@ W = {
 	 */
 	populateWvW: function()
 	{
-		var obj;
-		var marker;
+		var obj, marker;
 		for (var i in W.Objectives)
 		{
 			obj = W.Objectives[i];
@@ -18637,6 +18602,7 @@ W = {
 			{
 				clickable: true,
 				riseOnHover: true,
+				opacity: (obj.type === W.ObjectiveEnum.Ruins) ? 0.4 : 1,
 				icon: L.divIcon(
 				{
 					className: "",
@@ -18646,7 +18612,7 @@ W = {
 							+ "<span class='objProgressContainer'><span id='objProgressBar_" + obj.id
 								+ "' class='objProgressBar'><var id='objProgress_" + obj.id + "' class='objProgress'></var></span></span>"
 							+ "<span class='objIconContainer'><img id='objIcon_" + obj.id
-								+ "' class='objIcon' data-src='img/wvw/objectives/" + (obj.type).toLowerCase() + "_' src='img/ui/placeholder.png'/></span>"
+								+ "' class='objIcon' src='img/ui/placeholder.png'/></span>"
 							+ "<span class='objInfo'><cite id='objClaim_" + obj.id + "' class='objClaim'></cite> <cite id='objAge_" + obj.id + "' class='objAge'></cite></span>"
 						+ "</div>",
 					iconSize: [38, 38],
@@ -18673,7 +18639,9 @@ W = {
 					icon: L.divIcon(
 					{
 						className: "mapSec",
-						html: "<span class='mapSecIn wvwSpawnLabel wvwColor" + ii + "' data-owner='" + ii + "'></span>",
+						html: "<span class='mapSecIn wvwSpawnLabel wvwColor" + ii + "'>"
+							+ "<em class='wvwMapBonus'></em><var data-owner='" + ii + "'></var>"
+						+ "</span>",
 						iconSize: [512, 64],
 						iconAnchor: [256, 32]
 					})
@@ -19029,6 +18997,22 @@ W = {
 	},
 	
 	/*
+	 * Gets the image source for an objective.
+	 * @param object pObjective.
+	 * @param string pOwner of the objective (color).
+	 * @returns string URL.
+	 */
+	getObjectiveImage: function(pObjective, pOwner)
+	{
+		var owner = pOwner || pObjective.owner;
+		if (pObjective.type === W.ObjectiveEnum.Ruins)
+		{
+			return "img/wvw/ruins/" + (pObjective.direction + "_" + owner).toLowerCase() + I.cPNG;
+		}
+		return "img/wvw/objectives/" + (pObjective.type + "_" + owner).toLowerCase() + I.cPNG;
+	},
+	
+	/*
 	 * Gets the points worth for an objective type.
 	 * @param string pObjectiveType such as "Camp".
 	 * @returns int value.
@@ -19225,23 +19209,20 @@ W = {
 			for (var ii in map.objectives)
 			{
 				apiobj = map.objectives[ii];
-				if (apiobj.type !== "Ruins")
+				objid = (W.isFallbackEnabled) ? landprefix + apiobj.id : apiobj.id;
+				obj = W.Objectives[objid];
+				owner = apiobj.owner;
+				land = obj.map_type; // Example: "RedHome"
+				value = W.getObjectiveTypeValue(obj.type);
+				nativeowner = obj.nativeowner;
+				if (owner !== W.OwnerEnum.Neutral)
 				{
-					objid = (W.isFallbackEnabled) ? landprefix + apiobj.id : apiobj.id;
-					obj = W.Objectives[objid];
-					owner = apiobj.owner;
-					land = obj.map_type; // Example: "RedHome"
-					value = W.getObjectiveTypeValue(obj.type);
-					nativeowner = obj.nativeowner;
-					if (owner !== W.OwnerEnum.Neutral)
+					(PPT[owner]).Total += value;
+					(PPT[owner])[land] += value;
+					if (land === W.LandEnum.Center)
 					{
-						(PPT[owner]).Total += value;
-						(PPT[owner])[land] += value;
-						if (land === W.LandEnum.Center)
-						{
-							// Example: In EBG, Red took objectives that were natively owned by Green's side, such as Lowlands
-							(PPT[owner])[W.LandEnum.Center + nativeowner] += value;
-						}
+						// Example: In EBG, Red took objectives that were natively owned by Green's side, such as Lowlands
+						(PPT[owner])[W.LandEnum.Center + nativeowner] += value;
 					}
 				}
 			}
@@ -19533,6 +19514,7 @@ W = {
 		$("#opt_bol_narrateBlueHome").next().html(D.orderModifier(blstr, W.getName("Blue")));
 		$("#opt_bol_narrateGreenHome").next().html(D.orderModifier(blstr, W.getName("Green")));
 		$("#opt_bol_narrateCenter").next().html(W.getName("Center"));
+		$("#opt_bol_narrateRuins").next().html(W.getName("Ruins"));
 		$("#opt_bol_narrateCamp").next().html(W.getName("Camp"));
 		$("#opt_bol_narrateTower").next().html(W.getName("Tower"));
 		$("#opt_bol_narrateKeep").next().html(W.getName("Keep"));
@@ -19669,8 +19651,8 @@ W = {
 	 */
 	addLogEntryObjective: function(pObjective, pIsClaim)
 	{
-		var prevobjectiveicon = "<img src='img/wvw/objectives/" + (pObjective.type + "_" + pObjective.prevowner).toLowerCase() + I.cPNG + "' />";
-		var objectiveicon = "<img src='img/wvw/objectives/" + (pObjective.type + "_" + pObjective.owner).toLowerCase() + I.cPNG + "' />";
+		var prevobjectiveicon = "<img src='" + W.getObjectiveImage(pObjective, pObjective.prevowner) + "' />";
+		var objectiveicon = "<img src='" + W.getObjectiveImage(pObjective, pObjective.owner) + "' />";
 		var objectivenick = W.getObjectiveNick(pObjective, false);
 		
 		// Claiming shows the guild tag instead of the previous objective icon
@@ -19726,6 +19708,7 @@ W = {
 			|| (land === W.LandEnum.BlueHome && O.Options.bol_narrateBlueHome === false)
 			|| (land === W.LandEnum.GreenHome && O.Options.bol_narrateGreenHome === false)
 			|| (land === W.LandEnum.Center && O.Options.bol_narrateCenter === false)
+			|| (type === W.ObjectiveEnum.Ruins && O.Options.bol_narrateRuins === false)
 			|| (type === W.ObjectiveEnum.Camp && O.Options.bol_narrateCamp === false)
 			|| (type === W.ObjectiveEnum.Tower && O.Options.bol_narrateTower === false)
 			|| (type === W.ObjectiveEnum.Keep && O.Options.bol_narrateKeep === false)
@@ -19876,7 +19859,7 @@ W = {
 			W.addLogEntry(W.MatchupCurrent["green"].nickstr + " : " + W.MatchupCurrent["blue"].nickstr + " : " + W.MatchupCurrent["red"].nickstr);
 			
 			// Update map spawn labels
-			$(".wvwSpawnLabel").each(function()
+			$(".wvwSpawnLabel").find("var").each(function()
 			{
 				var owner = $(this).attr("data-owner").toLowerCase();
 				var label = W.MatchupCurrent[owner].namelinestr;
@@ -19987,52 +19970,50 @@ W = {
 				for (var ii in map.objectives)
 				{
 					apiobj = map.objectives[ii];
-					if (apiobj.type !== "Ruins")
+					obj = W.Objectives[apiobj.id];
+					/*
+					 * Only update the objectives if they have changed server ownership.
+					 */
+					if (obj.last_flipped !== apiobj.last_flipped)
 					{
-						obj = W.Objectives[apiobj.id];
-						/*
-						 * Only update the objectives if they have changed server ownership.
-						 */
-						if (obj.last_flipped !== apiobj.last_flipped)
+						if (obj.last_flipped !== null)
 						{
-							if (obj.last_flipped !== null)
-							{
-								numobjflipped++;
-							}
-							// Reinitialize properties
-							obj.last_flipped = apiobj.last_flipped;
-							obj.last_flipped_msec = (new Date(apiobj.last_flipped)).getTime();
-							obj.prevowner = obj.owner;
-							obj.owner = apiobj.owner;
-							W.updateObjectiveIcon(obj);
-							W.updateObjectiveAge(obj);
-							W.updateObjectiveTooltip(obj);
+							numobjflipped++;
+						}
+						// Reinitialize properties
+						obj.last_flipped = apiobj.last_flipped;
+						obj.last_flipped_msec = (new Date(apiobj.last_flipped)).getTime();
+						obj.prevowner = obj.owner;
+						obj.owner = apiobj.owner;
+						W.updateObjectiveIcon(obj);
+						W.updateObjectiveAge(obj);
+						W.updateObjectiveTooltip(obj);
 
-							// Mark the objective as immune if it is recently captured
-							if ((nowmsec - obj.last_flipped_msec) < W.cMSECONDS_IMMUNITY
-									&& obj.owner !== W.OwnerEnum.Neutral // Neutral objectives never have immunity
-									&& !isduringreset) // Don't show the immunity timer during the first few minutes of reset
-							{
-								W.Objectives[obj.id].isImmune = true;
-								$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
-							}
-						}
-						/*
-						 * Only update guild tag labels if claiming has changed.
-						 */
-						if (obj.claimed_by !== apiobj.claimed_by)
+						// Mark the objective as immune if it is recently captured
+						if ((nowmsec - obj.last_flipped_msec) < W.cMSECONDS_IMMUNITY
+								&& obj.owner !== W.OwnerEnum.Neutral // Neutral objectives never have immunity
+								&& obj.type !== W.ObjectiveEnum.Ruins // Ruins do not have immunity
+								&& !isduringreset) // Don't show the immunity timer during the first few minutes of reset
 						{
-							obj.prevclaimed_by = obj.claimed_by;
-							obj.claimed_by = apiobj.claimed_by;
-							obj.claimed_at = apiobj.claimed_at;
-							W.updateObjectiveClaim(obj);
+							W.Objectives[obj.id].isImmune = true;
+							$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
 						}
-						// If these many objectives flipped after an update then there might be an error with the API
-						if (numobjflipped > maxobjflipped)
-						{
-							istoomanyflips = true;
-							break;
-						}
+					}
+					/*
+					 * Only update guild tag labels if claiming has changed.
+					 */
+					if (obj.claimed_by !== apiobj.claimed_by)
+					{
+						obj.prevclaimed_by = obj.claimed_by;
+						obj.claimed_by = apiobj.claimed_by;
+						obj.claimed_at = apiobj.claimed_at;
+						W.updateObjectiveClaim(obj);
+					}
+					// If these many objectives flipped after an update then there might be an error with the API
+					if (numobjflipped > maxobjflipped)
+					{
+						istoomanyflips = true;
+						break;
 					}
 				}
 				if (numobjflipped > maxobjflipped)
@@ -20236,7 +20217,7 @@ W = {
 				objicon.css({width: prevwidth}).animate({width: 0}, animationspeed, function()
 				{
 					iUmbrella.css({borderColor: iColor, boxShadow: "0px 0px 10px " + iColor});
-					$(this).attr("src", $(this).attr("data-src") + (iOwner).toLowerCase() + I.cPNG)
+					$(this).attr("src", W.getObjectiveImage(pObjective))
 						.animate({width: prevwidth}, animationspeed, function()
 						{
 							iUmbrella.parent().parent().hide();
@@ -20250,7 +20231,7 @@ W = {
 		else
 		{
 			// If it is the first initialization (no previous known owner), then just assign the icons
-			objicon.attr("src", objicon.attr("data-src") + (pObjective.owner).toLowerCase() + I.cPNG);
+			objicon.attr("src", W.getObjectiveImage(pObjective));
 		}
 	},
 	
@@ -21877,9 +21858,9 @@ B = {
 		}
 		
 		// Verify announcement: if announcement exists
-		if (B.Announcement.content.length > 0 && T.isTimely(B.Announcement, now))
+		if (B.Announcement.pve.length > 0 && T.isTimely(B.Announcement, now))
 		{
-			U.convertExternalLink($("#dsbAnnouncement").html(B.Announcement.content).find("a"));
+			U.convertExternalLink($("#dsbAnnouncement").html(B.Announcement.pve).find("a"));
 			M.bindMapLinks("#dsbAnnouncement");
 			B.isAnnouncementEnabled = true;
 		}

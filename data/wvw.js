@@ -33,6 +33,84 @@ var GW2T_REALM_DATA = {
 /*
  * Lands are sorted by importance.
  */
+var GW2T_LAND_ROTATION = { // These will be added to the Zones object depending on map rotation
+	Alpine: {
+		"alpinered": // north side
+		{
+			id: "94",
+			name_en: "Red Borderlands",
+			name_de: "Rot Grenzlande",
+			name_es: "Tierras Fronterizas de rojo",
+			name_fr: "Territoires frontaliers rouge",
+			name_zh: "沙漠邊境之地紅色",
+			region: "wvw",
+			map_rect: [[-30720, -43008], [30720, 43008]],
+			continent_rect: [[9214, 8958], [11774, 12542]]
+		},
+		"alpineblue": // west side
+		{
+			id: "96",
+			name_en: "Blue Borderlands",
+			name_de: "Blau Grenzlande",
+			name_es: "Tierras Fronterizas de azul",
+			name_fr: "Territoires frontaliers bleu",
+			name_zh: "沙漠邊境之地藍色",
+			region: "wvw",
+			map_rect: [[-30720, -43008], [30720, 43008]],
+			continent_rect: [[12798, 10878], [15358, 14462]]
+		},
+		"alpinegreen": // east side
+		{
+			id: "95",
+			name_en: "Green Borderlands",
+			name_de: "Grün Grenzlande",
+			name_es: "Tierras Fronterizas de verde",
+			name_fr: "Territoires frontaliers vert",
+			name_zh: "沙漠邊境之地綠色",
+			region: "wvw",
+			map_rect: [[-30720, -43008], [30720, 43008]],
+			continent_rect: [[5630, 11518], [8190, 15102]]
+		}
+	},
+	Desert: {
+		"desertred": // north side
+		{
+			id: "1099",
+			name_en: "Red Borderlands",
+			name_de: "Rot Grenzlande",
+			name_es: "Tierras Fronterizas de rojo",
+			name_fr: "Territoires frontaliers rouge",
+			name_zh: "沙漠邊境之地紅色",
+			region: "wvw",
+			map_rect: [[-36864, -36864], [36864, 36864]],
+			continent_rect: [[9214, 8958], [12286, 12030]]
+		},
+		"desertblue": // west side
+		{
+			id: "1143",
+			name_en: "Blue Borderlands",
+			name_de: "Blau Grenzlande",
+			name_es: "Tierras Fronterizas de azul",
+			name_fr: "Territoires frontaliers bleu",
+			name_zh: "沙漠邊境之地藍色",
+			region: "wvw",
+			map_rect: [[-36864, -36864], [36864, 36864]],
+			continent_rect: [[12798, 10878], [15870, 13950]]
+		},
+		"desertgreen": // east side
+		{
+			id: "1102",
+			name_en: "Green Borderlands",
+			name_de: "Grün Grenzlande",
+			name_es: "Tierras Fronterizas de verde",
+			name_fr: "Territoires frontaliers vert",
+			name_zh: "沙漠邊境之地綠色",
+			region: "wvw",
+			map_rect: [[-36864, -36864], [36864, 36864]],
+			continent_rect: [[5630, 11518], [8702, 14590]]
+		}
+	}
+};
 var GW2T_LAND_DATA = {
 "eternal": // south side
 {
@@ -45,78 +123,6 @@ var GW2T_LAND_DATA = {
 	region: "wvw",
 	map_rect: [[-36864, -36864], [36864, 36864]],
 	continent_rect: [[8958, 12798], [12030, 15870]]
-},
-"alpinered": // north side
-{
-	id: "94",
-	name_en: "Red Borderlands",
-	name_de: "Rot Grenzlande",
-	name_es: "Tierras Fronterizas de rojo",
-	name_fr: "Territoires frontaliers rouge",
-	name_zh: "沙漠邊境之地紅色",
-	region: "wvw",
-	map_rect: [[-30720, -43008], [30720, 43008]],
-	continent_rect: [[9214, 8958], [11774, 12542]]
-},
-"alpineblue": // west side
-{
-	id: "96",
-	name_en: "Blue Borderlands",
-	name_de: "Blau Grenzlande",
-	name_es: "Tierras Fronterizas de azul",
-	name_fr: "Territoires frontaliers bleu",
-	name_zh: "沙漠邊境之地藍色",
-	region: "wvw",
-	map_rect: [[-30720, -43008], [30720, 43008]],
-	continent_rect: [[12798, 10878], [15358, 14462]]
-},
-"alpinegreen": // east side
-{
-	id: "95",
-	name_en: "Green Borderlands",
-	name_de: "Grün Grenzlande",
-	name_es: "Tierras Fronterizas de verde",
-	name_fr: "Territoires frontaliers vert",
-	name_zh: "沙漠邊境之地綠色",
-	region: "wvw",
-	map_rect: [[-30720, -43008], [30720, 43008]],
-	continent_rect: [[5630, 11518], [8190, 15102]]
-},
-"desertred": // north side
-{
-	id: "1099",
-	name_en: "Red Borderlands",
-	name_de: "Rot Grenzlande",
-	name_es: "Tierras Fronterizas de rojo",
-	name_fr: "Territoires frontaliers rouge",
-	name_zh: "沙漠邊境之地紅色",
-	region: "wvw",
-	map_rect: [[-36864, -36864], [36864, 36864]],
-	continent_rect: [[9214, 8958], [12286, 12030]]
-},
-"desertblue": // west side
-{
-	id: "1143",
-	name_en: "Blue Borderlands",
-	name_de: "Blau Grenzlande",
-	name_es: "Tierras Fronterizas de azul",
-	name_fr: "Territoires frontaliers bleu",
-	name_zh: "沙漠邊境之地藍色",
-	region: "wvw",
-	map_rect: [[-36864, -36864], [36864, 36864]],
-	continent_rect: [[12798, 10878], [15870, 13950]]
-},
-"desertgreen": // east side
-{
-	id: "1102",
-	name_en: "Green Borderlands",
-	name_de: "Grün Grenzlande",
-	name_es: "Tierras Fronterizas de verde",
-	name_fr: "Territoires frontaliers vert",
-	name_zh: "沙漠邊境之地綠色",
-	region: "wvw",
-	map_rect: [[-36864, -36864], [36864, 36864]],
-	continent_rect: [[5630, 11518], [8702, 14590]]
 },
 "edge":
 {
@@ -2868,10 +2874,10 @@ var GW2T_WVW_METADATA = {
 		nick_en: "E.B.G.", nick_de: "E.S.F.", nick_es: "C.B.E.", nick_fr: "C.B.E.", nick_zh: "永恆戰場"
 	},
 	Sentry: {
-		name_en: "AAAAAA", name_de: "AAAAAA", name_es: "AAAAAA", name_fr: "AAAAAA", name_zh: "AAAAAA"
+		name_en: "Sentry", name_de: "Wachposten", name_es: "Vigía", name_fr: "Sentinelle", name_zh: "哨兵"
 	},
 	Ruins: {
-		name_en: "AAAAAA", name_de: "AAAAAA", name_es: "AAAAAA", name_fr: "AAAAAA", name_zh: "AAAAAA"
+		name_en: "Ruins", name_de: "Ruine", name_es: "Ruinas", name_fr: "Ruine", name_zh: "廢墟"
 	},
 	Camp: {
 		name_en: "Camp", name_de: "Lager", name_es: "Campamento", name_fr: "Camp", name_zh: "營地"
@@ -2940,6 +2946,19 @@ var GW2T_WVW_METADATA = {
 		name_en: "our", name_de: "unser", name_es: "nuestro", name_fr: "notre", name_zh: "我們的"
 	},
 	ObjectiveType: {
+		Ruins: {
+			Quantity: {
+				teambl: 5,
+				teambg: 0,
+				all: 5
+			},
+			Value: {
+				each: 0,
+				teambl: 0,
+				teambg: 0,
+				all: 0
+			}
+		},
 		Camp: {
 			Quantity: {
 				teambl: 6,
