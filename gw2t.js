@@ -25182,7 +25182,7 @@ I = {
 	generateSectionMenu: function(pPlate)
 	{
 		// Don't bind unless there exists
-		if ($(pPlate + " header.jsSection").length <= 0 || I.ModeCurrent === I.ModeEnum.Mobile)
+		if ($(pPlate + " header.jsSection").length <= 0)
 		{
 			return;
 		}
