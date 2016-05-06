@@ -8752,10 +8752,10 @@ E = {
 		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_commendation'></ins>"; },
 		tournament: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_tournament'></ins>"; },
 		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_league'></ins>"; },
-		pristine: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_pristine'></ins>"; },
+		fotm_pristine: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_pristine'></ins>"; },
 		dungeon_ac: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_ac'></ins>"; },
 		dungeon_arah: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_arah'></ins>"; },
-		dungeon_fotm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_fotm'></ins>"; },
+		fotm_relic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_relic'></ins>"; },
 		dungeon_cm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_cm'></ins>"; },
 		dungeon_se: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_se'></ins>"; },
 		dungeon_ta: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_ta'></ins>"; },
@@ -25182,7 +25182,7 @@ I = {
 	generateSectionMenu: function(pPlate)
 	{
 		// Don't bind unless there exists
-		if ($(pPlate + " header.jsSection").length <= 0)
+		if ($(pPlate + " header.jsSection").length <= 0 || I.ModeCurrent === I.ModeEnum.Mobile)
 		{
 			return;
 		}

@@ -175,7 +175,6 @@ Back: [
 	{u: 2324, i: 62919, n: "Hearty Chef's Backpack", p: {craft: true}},
 	{u: 2325, i: 37009, n: "Book of Secrets", p: {craft: true}},
 	{u: 2326, i: 37007, n: "Tome of the Rubicon", p: {craft: true}},
-	{u: 2327, i: 39136, n: "Backpack Straps", p: {gem: 0}},
 	{u: 2328, i: 50064, n: "Tempered Spinal Blades", p: {craft: true}},
 	{u: 2330, i: 50060, n: "Spinal Blade Pack", p: {craft: true}},
 	{u: 2331, i: 50061, n: "Twin Spinal Blades", p: {craft: true}},

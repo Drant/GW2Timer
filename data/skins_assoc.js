@@ -4166,6 +4166,7 @@ var GW2T_SKINS_ASSOC = {
 	Blacklist: {
 	"1150": {i: null, n: ""},
 	"2445": {i: null, n: ""},
+	"2327": {i: null, n: "Backpack Straps"},
 	"4543": {i: null, n: "Guild Speargun"},
 	"4854": {i: null, n: "Worn Voltaic Spear"},
 	"4987": {i: null, n: "Destroyer Scythe"},

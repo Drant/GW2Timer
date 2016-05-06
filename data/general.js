@@ -292,7 +292,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"2902": "Uncategorized",
 	"2903": "Molten",
 	"2907": "Urban",
-	"2908": "Volcani",
+	"2908": "Volcanic",
 	"2909": "Aetherblade",
 	"2911": "Volcanic",
 	"2916": "Snowblind",
@@ -1253,6 +1253,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Wings of Love Glider",
+		id: "77804",
+		price: 400,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Chaos Gloves Skin",
 		id: "78667",
 		price: 500,
@@ -1260,23 +1267,23 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Bouquet of Roses",
+		id: "49933",
+		price: 250,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Box of Chocolates",
+		id: "43528",
+		price: 250,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Mini Chieftain Utahein and Mini Svanir",
 		id: "67281",
 		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Mini Beetle",
-		id: "69690",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Mini Zintl Cavalier",
-		id: "77675",
-		price: 350,
 		discount: null,
 		col: 0
 	},
@@ -1295,8 +1302,57 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Mini Braham Eirsson",
+		id: "68572",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Golden Pig",
+		id: "68683",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Pact Airship",
+		id: "67839",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Mini Rock",
 		id: "69790",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Rox",
+		id: "68570",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Sabetha",
+		id: "77339",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Wyvern",
+		id: "70191",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Zintl Cavalier",
+		id: "77675",
 		price: 350,
 		discount: null,
 		col: 0
@@ -1309,44 +1365,107 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Mini Braham Eirsson",
-		id: "68572",
-		price: 350,
+		name: "Mini Beetle",
+		id: "69690",
+		price: 500,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Mini Rox",
-		id: "68570",
-		price: 350,
+		name: "Mini Arctodus Cub",
+		id: "42581",
+		price: 400,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Mini Sabetha",
-		id: "77339",
-		price: 350,
+		name: "Mini Bear Cub",
+		id: "69667",
+		price: 400,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Mini Golden Pig",
-		id: "68683",
-		price: 350,
+		name: "Mini Black Bear Cub",
+		id: "42592",
+		price: 400,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Mini Pact Airship",
-		id: "67839",
-		price: 350,
+		name: "Mini Blue Drake Hatchling",
+		id: "69658",
+		price: 400,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Mini Bonebreaker",
-		id: "70300",
-		price: 350,
+		name: "Mini Fox Kit",
+		id: "69656",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Hippo Calf",
+		id: "42579",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Jaguar Cub",
+		id: "42584",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Lion Cub",
+		id: "42593",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Moa Chick",
+		id: "42577",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Orange Kitten",
+		id: "42583",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Piglet",
+		id: "42578",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Polar Bear Cub",
+		id: "42582",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Snow Cougar Cub",
+		id: "69672",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini White Kitten",
+		id: "42591",
+		price: 400,
 		discount: null,
 		col: 1
 	},
@@ -1358,8 +1477,8 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Mini Wyvern",
-		id: "70191",
+		name: "Mini Bonebreaker",
+		id: "70300",
 		price: 350,
 		discount: null,
 		col: 1
