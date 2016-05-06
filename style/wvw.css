@@ -30,6 +30,12 @@
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
 }
+.objSubobjective { /* If the objective is a bonus objective like Ruins or Shrines */
+	opacity: 0.4;
+}
+.objSubobjective:hover {
+	opacity: 1;
+}
 .objUmbrellaContainer {
 	position: absolute;
 	display: block;

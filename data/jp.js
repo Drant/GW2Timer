@@ -6,13 +6,12 @@
  */
 
 var GW2T_JP_DATA = {
-	
 Type: {
-	"1": "JP",
-	"2": "JP",
-	"3": "JP",
-	"4": "Explorer",
-	"5": "Adventure"
+	"1": {name: "jp", name_en: "Easy", name_de: "Leicht", name_es: "Fácil", name_fr: "Facile"},
+	"2": {name: "jp", name_en: "Medium", name_de: "Mittel", name_es: "Media", name_fr: "Moyenne"},
+	"3": {name: "jp", name_en: "Hard", name_de: "Hart", name_es: "Duro", name_fr: "Dur"},
+	"4": {name: "explorer", name_en: "Explorer", name_de: "Exploratorin", name_es: "Pionera", name_fr: "Exploratrice"},
+	"5": {name: "adventure", name_en: "Adventure", name_de: "Abenteuers", name_es: "Aventura", name_fr: "Aventure"}
 },
 JP: {
 	"bugs": {

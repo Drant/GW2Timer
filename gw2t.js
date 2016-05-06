@@ -78,7 +78,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160426},
+		programVersion: {key: "int_utlProgramVersion", value: 160506},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -4560,7 +4560,7 @@ A = {
 		});
 		$("#accExpand").click(function()
 		{
-			$("#mapDisplayButton").trigger("click");
+			$("#mapExpandButton").trigger("click");
 		});
 		$("#accClose").click(function()
 		{
@@ -6015,8 +6015,10 @@ V = {
 						{
 							// Set the slot icon as the transmuted skin icon
 							ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(formatItemBrief(iBox)).show();
+							var skinname = null;
 							if (iBox.skin)
 							{
+								skinname = iBox.skin.name;
 								sloticon.attr("src", iBox.skin.icon);
 							}
 							// If the item is slotted in an attributable slot, (armor, primary weapons, trinkets, not underwater), then tally the attribute points
@@ -6037,13 +6039,7 @@ V = {
 								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
 							}
 							// Bind click behavior for the icon
-							sloticon.click(function(pEvent)
-							{
-								if (pEvent.which === I.ClickEnum.Left)
-								{
-									U.openExternalURL(U.getWikiSearchLanguage(iBox.item.name));
-								}
-							});
+							Q.bindItemSlotBehavior(sloticon, {aItem: iBox.item, aSearch: skinname, aWantClick: true});
 							numfetched++;
 							finalizeEquipment();
 						}
@@ -6515,7 +6511,7 @@ V = {
 	 * @objparam object aHeaders containing category header translations.
 	 * @objparam object aDatabase containing category objects holding unlockables.
 	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API.
-	 * @objparam string aHelpMessage HTML ID of help message element, optional.
+	 * @objparam string aHelpMessage HTML of help message element, optional.
 	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
 	 * A collection database stores unlockable objects with these properties:
 	 * u: Unlockable ID (such as a skin ID, or mini ID)
@@ -6628,7 +6624,7 @@ V = {
 		var unlocktotalstr = numskinsunlockedtotal + " / " + numskinsintabstotal
 				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlockedtotal / numskinsintabstotal) + ")</span>";
 		container.find(".bnkCount").append(unlocktotalstr);
-		Q.createBankMenu(pBank, {aWantSearchHighlight: true, aHelpMessage: Settings.aHelpMessage});
+		Q.createBankMenu(pBank, {aWantSearchHighlight: true, aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html()});
 	},
 	
 	/*
@@ -6693,7 +6689,7 @@ V = {
 				aDatabase: database,
 				aUnlockeds: pUnlockeds,
 				aIsCollapsed: true,
-				aHelpMessage: "#accWardrobeHelp",
+				aHelpMessage: $("#accWardrobeHelp").html(),
 				aTabIterator: function(pCatName)
 				{
 					var catname = D.getObjectName(headers[pCatName]);
@@ -6781,9 +6777,7 @@ Q = {
 	cSEARCH_LIMIT: 200, // Inventory search throttle limit
 	Context: { // Bank slots context menu data
 		Item: {},
-		ItemID: "",
-		ItemName: "",
-		ItemNameSearch: ""
+		ItemSearch: ""
 	},
 	
 	/*
@@ -8152,6 +8146,7 @@ Q = {
 					{
 						iBag.css({backgroundImage: "url(" + iItem.icon + ")"});
 						Q.scanItem(iItem, {aElement: iBag});
+						Q.bindItemSlotBehavior(bag, {aItem: iItem, aWantClick: true});
 					});
 				})(bag);
 			}
@@ -8225,16 +8220,7 @@ Q = {
 						U.openExternalURL(searchurl);
 					}
 				});
-				pSlot.contextmenu(function(pEvent)
-				{
-					pEvent.preventDefault();
-					Q.Context.Item = Settings.aItem;
-					Q.Context.ItemID = Settings.aItem.id;
-					Q.Context.ItemName = Settings.aItem.name;
-					Q.Context.ItemNameSearch = wikisearch;
-					Q.showBankContextMenu();
-					I.updateClipboard("#bnkContextChatlink", Settings.aItem.chat_link + " " + Q.Context.ItemNameSearch);
-				});
+				Q.bindItemSlotBehavior(pSlot, {aItem: Settings.aItem, aSearch: wikisearch});
 				// Numeric label over the slot icon indicating stack size or charges remaining
 				if (count > 1)
 				{
@@ -8465,7 +8451,7 @@ Q = {
 		$("<div class='bnkButtonHelp bnkButton curClick' title='Show this bank&apos;s <dfn>help</dfn> message.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
-			var helpmessage = (Settings.aHelpMessage) ? $(Settings.aHelpMessage).html() : "";
+			var helpmessage = (Settings.aHelpMessage) ? Settings.aHelpMessage : "";
 			if (isshowinghelp || I.isConsoleShown() === false)
 			{
 				I.print("<div class='accModal cntComposition'>" + helpmessage + $("#accBankHelp").html() + "</div>", true);
@@ -8647,19 +8633,19 @@ Q = {
 		// The context variables should be assigned by the function that styles the bank slot
 		$("#bnkContextWiki").click(function()
 		{
-			U.openExternalURL(U.getWikiLinkLanguage(Q.Context.ItemName));
+			U.openExternalURL(U.getWikiLinkLanguage(Q.Context.Item.name));
 		});
 		$("#bnkContextWikiSearch").click(function()
 		{
-			U.openExternalURL(U.getWikiSearchLanguage(Q.Context.ItemNameSearch));
+			U.openExternalURL(U.getWikiSearchLanguage(Q.Context.ItemSearch));
 		});
 		$("#bnkContextTrading").click(function()
 		{
-			U.openExternalURL(U.getTradingItemLink(Q.Context.ItemID, Q.Context.ItemName));
+			U.openExternalURL(U.getTradingItemLink(Q.Context.Item.id, Q.Context.Item.name));
 		});
 		$("#bnkContextTradingSearch").click(function()
 		{
-			U.openExternalURL(U.getTradingSearchLink(Q.Context.ItemName));
+			U.openExternalURL(U.getTradingSearchLink(Q.Context.Item.name));
 		});
 		$("#bnkContextInfo").click(function()
 		{
@@ -8669,11 +8655,34 @@ Q = {
 	},
 	
 	/*
-	 * Shows the shared bank context menu.
+	 * Binds an element that represents a game item to have a context menu.
+	 * @param jqobject pSlot to bind.
+	 * @objparam object aItem from item details API.
+	 * @objparam string aSearch for wiki search link.
 	 */
-	showBankContextMenu: function()
+	bindItemSlotBehavior: function(pSlot, pSettings)
 	{
-		$("#bnkContext").css({top: I.posY, left: I.posX}).show();
+		var Settings = pSettings || {};
+		// Right click on the item slot shows context menu
+		pSlot.contextmenu(function(pEvent)
+		{
+			pEvent.preventDefault();
+			Q.Context.Item = Settings.aItem;
+			Q.Context.ItemSearch = Settings.aSearch || Settings.aItem.name;
+			I.updateClipboard("#bnkContextChatlink", Settings.aItem.chat_link + " " + Q.Context.ItemSearch);
+			$("#bnkContext").css({top: I.posY, left: I.posX}).show();
+		});
+		// Bind the click to go to wiki behavior if requested
+		if (Settings.aWantClick)
+		{
+			pSlot.click(function(pEvent)
+			{
+				if (pEvent.which === I.ClickEnum.Left)
+				{
+					U.openExternalURL(U.getWikiSearchLanguage(Settings.aItem.name));
+				}
+			});
+		}
 	}
 };
 
@@ -8739,27 +8748,27 @@ E = {
 		starting: function() { return "<ins class='s16 s16_starting'></ins>"; },
 		cob: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_cob'></ins>"; },
 		bubble: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_bubble'></ins>"; },
-		badge: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_15'></ins>"; },
-		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_16'></ins>"; },
-		tournament: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_26'></ins>"; },
-		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_30'></ins>"; },
-		pristine: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_07'></ins>"; },
-		dungeon_ac: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_05'></ins>"; },
-		dungeon_arah: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_06'></ins>"; },
-		dungeon_fotm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_24'></ins>"; },
-		dungeon_cm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_09'></ins>"; },
-		dungeon_se: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_10'></ins>"; },
-		dungeon_ta: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_11'></ins>"; },
-		dungeon_hotw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_12'></ins>"; },
-		dungeon_cof: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_13'></ins>"; },
-		dungeon_coe: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_14'></ins>"; },
-		raid_ft: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_28'></ins>"; },
-		map_vb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_19'></ins>"; },
-		map_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_20'></ins>"; },
-		map_ab: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_22'></ins>"; },
+		badge: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_badge'></ins>"; },
+		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_commendation'></ins>"; },
+		tournament: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_tournament'></ins>"; },
+		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_league'></ins>"; },
+		pristine: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_pristine'></ins>"; },
+		dungeon_ac: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_ac'></ins>"; },
+		dungeon_arah: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_arah'></ins>"; },
+		dungeon_fotm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_fotm'></ins>"; },
+		dungeon_cm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_cm'></ins>"; },
+		dungeon_se: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_se'></ins>"; },
+		dungeon_ta: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_ta'></ins>"; },
+		dungeon_hotw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_hotw'></ins>"; },
+		dungeon_cof: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_cof'></ins>"; },
+		dungeon_coe: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_coe'></ins>"; },
+		raid_ft: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_raid_ft'></ins>"; },
+		map_vb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_vb'></ins>"; },
+		map_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_td'></ins>"; },
+		map_ab: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ab'></ins>"; },
 		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_crystalline'></ins>"; },
-		map_dt: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_25'></ins>"; },
-		map_sw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_27'></ins>"; }
+		map_dt: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_dt'></ins>"; },
+		map_sw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_sw'></ins>"; }
 	},
 	
 	/*
@@ -17360,7 +17369,7 @@ G = {
 	 */
 	generateAndInitializeJPs: function()
 	{
-		var diffassoc;
+		var jptype;
 		var styleJPNode = function(pNode, pIsChecked)
 		{
 			var marker = pNode.oMarker;
@@ -17369,7 +17378,7 @@ G = {
 			marker.setIcon(new L.icon(
 			{
 				className: cssclass,
-				iconUrl: "img/map/" + (diffassoc[difficulty]).toLowerCase() +  ".png",
+				iconUrl: "img/map/" + (jptype[difficulty]).name + I.cPNG,
 				iconSize: [32, 32],
 				iconAnchor: [16, 16]
 			}));
@@ -17377,12 +17386,18 @@ G = {
 		
 		$.getScript(U.URL_DATA.JP).done(function()
 		{
-			diffassoc = GW2T_JP_DATA.Type;
+			jptype = GW2T_JP_DATA.Type;
 			P.JPs = GW2T_JP_DATA.JP;
 			X.Checklists.JP.length = O.getObjectLength(P.JPs);
 			P.NodeArray.JP = P.createNodeArray(X.Checklists.JP.length);
 			var jp, jplink, marker, path, translatedname, keywords;
 			var pathcolor = P.getUserPathColor();
+			
+			// Translate headers
+			$(".jpzHeader").each(function()
+			{
+				$(this).text(D.getObjectName(jptype[$(this).attr("data-difficulty")]));
+			});
 		
 			for (var i in P.JPs)
 			{
@@ -17394,7 +17409,7 @@ G = {
 				{
 					id: jp.id,
 					difficulty: jp.difficulty,
-					title: "<div class='mapLoc'><dfn>" + diffassoc[jp.difficulty] + ":</dfn> " + D.getObjectName(jp)
+					title: "<div class='mapLoc'><dfn>" + D.getObjectName(jptype[jp.difficulty]) + ":</dfn> " + D.getObjectName(jp)
 						+ "<img src='" + jp.img + "' /></div>"
 				});
 				P.NodeArray.JP[jp.id].oMarker = marker;
@@ -17969,8 +17984,8 @@ G = {
 		for (var i = 0; i < pNeedles.length; i++)
 		{
 			ithneedle = pNeedles[i];
-			name = ithneedle.p;
-			peticon = "img/collectible/rangerpets/" + name.replace(/ /g, "").toLowerCase() + I.cPNG;
+			name = D.getObjectName(ithneedle);
+			peticon = "img/collectible/rangerpets/" + ithneedle.p.replace(/ /g, "").toLowerCase() + I.cPNG;
 			var str = "<div class='cltPetBox'><span class='cltPetIcon curToggle' title='" + name + "' style='background-image:url(" + peticon + ")'>" 
 				+ "<var class='cltPetIconBackground'>" + I.Symbol.Filler + "</var></span><aside class='cltPetFacts'>";
 			for (var ii in ithneedle.s)
@@ -18506,11 +18521,11 @@ W = {
 	numSiegeSupply: 0,
 	
 	/*
-	 * Initializes the WvW map and starts the objective state and time functions.
+	 * Changes variables to match the current borderlands type rotation before
+	 * actually manipulating them.
 	 */
-	initializeWvW: function()
+	determineBorderlands: function()
 	{
-		// First determine and setup the current borderlands type rotation
 		W.BorderlandsCurrent = W.BorderlandsEnum.Alpine;
 		W.Zones = GW2T_LAND_DATA;
 		var rotationzones = GW2T_LAND_ROTATION[W.BorderlandsCurrent];
@@ -18518,6 +18533,19 @@ W = {
 		{
 			W.Zones[i] = rotationzones[i];
 		}
+		$(".wvwZoneListBorderlands").each(function()
+		{
+			var landnick = W.BorderlandsCurrent.toLowerCase() + $(this).attr("data-zone");
+			$(this).attr("data-zone", landnick);
+		});
+	},
+	
+	/*
+	 * Initializes the WvW map and starts the objective state and time functions.
+	 */
+	initializeWvW: function()
+	{
+		W.determineBorderlands();
 		/*
 		 * Merge W's unique variables and functions with M, and use that new
 		 * object as W. This is a shallow copy, so objects within an object that
@@ -18594,19 +18622,19 @@ W = {
 	 */
 	populateWvW: function()
 	{
-		var obj, marker;
+		var obj, marker, subobjclass;
 		for (var i in W.Objectives)
 		{
 			obj = W.Objectives[i];
+			subobjclass = (obj.type === W.ObjectiveEnum.Ruins) ? "objSubobjective" : "";
 			marker = L.marker(this.convertGCtoLC(obj.coord),
 			{
 				clickable: true,
 				riseOnHover: true,
-				opacity: (obj.type === W.ObjectiveEnum.Ruins) ? 0.4 : 1,
 				icon: L.divIcon(
 				{
 					className: "",
-					html: "<div id='obj_" + obj.id + "' class='objContainer'>"
+					html: "<div id='obj_" + obj.id + "' class='objContainer " + subobjclass + "'>"
 							+ "<span class='objUmbrellaContainer'><span class='objUmbrellaOuter'><span id='objUmbrella_" + obj.id + "' class='objUmbrella'></span></span></span>"
 							+ "<time id='objTimer_" + obj.id + "' class='objTimer'></time>"
 							+ "<span class='objProgressContainer'><span id='objProgressBar_" + obj.id
@@ -21963,7 +21991,7 @@ B = {
 			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img id='dsbSaleSymbol' src='img/ui/placeholder.png' /> "
 				+ "<u>" + B.Sale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
-				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_04'></ins></span>)"
+				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
 				+ "⇓@ " + B.Sale.Finish.toLocaleString()
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
@@ -22061,7 +22089,7 @@ B = {
 				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				if (E.Exchange.CoinInGem !== 0)
 				{
-					var gemstr = "<ins class='s16 s16_04'></ins>";
+					var gemstr = "<ins class='s16 s16_gem'></ins>";
 					for (var i = 0; i < B.Sale.Items.length; i++)
 					{
 						// Initialize variables

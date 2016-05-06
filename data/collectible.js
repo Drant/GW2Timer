@@ -1594,203 +1594,203 @@ RangerPets: {
 	ringsize: 48,
 	needles: [
 	{// TERRESTRIAL // BIRD
-		n: 1, p: "Eagle",
+		n: 1, p: "eagle", name_en: "Eagle", name_de: "Adler", name_es: "Águila", name_fr: "Aigle",
 		s: {bleeding: [2, 15], recharge: 6, range: 130, damage: 160},
 		c: [[31210,16741],[31206,16735],[31210,16727],[20724,19630],[10915,14418],[17588,17264],[17578,17258],[17572,17239],[17605,17219],[17427,18768],[17451,18919],[17470,18959],[11428,14432],[12587,14471],[12692,14403],[16927,13918],[16902,14068],[16896,13998],[16904,13878],[16945,13841],[17005,13747],[16377,11389],[16267,11338],[16259,11240],[16143,11292],[28878,18163],[28884,18174],[28870,18179]]
 	},{
-		n: 2, p: "Hawk",
+		n: 2, p: "hawk", name_en: "Hawk", name_de: "Falke", name_es: "Halcón", name_fr: "Faucon",
 		s: {bleeding: [2, 15], recharge: 6, range: 130, damage: 160},
 		c: [[29015,9789],[29096,9720],[29058,9666],[29004,9655],[29095,9884]]
 	},{
-		n: 3, p: "Owl",
+		n: 3, p: "owl", name_en: "Owl", name_de: "Eule", name_es: "Lechuza", name_fr: "Chouette",
 		s: {chilled: [1, 3], recharge: 20, range: 130, damage: 322},
 		c: [[21460,16618],[21435,16495],[20456,12979],[20461,12965],[21441,12917],[21422,12904],[23399,9756],[23345,9483],[23244,9372],[23133,9435],[23111,9894],[24274,9292],[24305,9343],[24366,8758],[24377,8828],[24309,8865]]
 	},{
-		n: 4, p: "Raven",
+		n: 4, p: "raven", name_en: "Raven", name_de: "Rabe", name_es: "Cuervo", name_fr: "Corbeau",
 		s: {blind: [1, 5], recharge: 18, range: 130, damage: 322},
 		c: [[18275,15333],[18354,14967],[20949,13824],[20951,13803],[20972,13807],[22596,14599],[28782,16933],[28785,16938],[28793,16933]]
 	},{
-		n: 5, p: "White Raven",
+		n: 5, p: "whiteraven", name_en: "White Raven", name_de: "Wießer Rabe", name_es: "Cuervo blanco", name_fr: "Corbeau blanc",
 		s: {blind: [1, 5], recharge: 18, range: 130, damage: 322},
 		c: [[25059,5425]]
 	},{// CANINE
-		n: 6, p: "Alpine Wolf",
+		n: 6, p: "alpinewolf", name_en: "Alpine Wolf", name_de: "Gebirgswolf", name_es: "Lobo alpino", name_fr: "Loup alpin",
 		s: {chilled: [1, 3], recharge: 30, targets: 5, radius: 600, damage: 49},
 		c: [[21257,14473],[21267,14483],[21278,14475],[18903,13860],[18928,13833],[18848,13886],[19019,14568],[19028,14532],[18993,14493],[20275,19523],[20270,19497],[19340,18489],[19296,18404],[19275,18324]]
 	},{
-		n: 7, p: "Fern Hound",
+		n: 7, p: "fernhound", name_en: "Fern Hound", name_de: "Farn-Hund", name_es: "Sabueso de helecho", name_fr: "Chien de fougère",
 		s: {healing: 1000, recharge: 25, regeneration: [1, 10], targets: 5, radius: 600},
 		c: [[17730,24169],[10448,21069],[10450,21112],[10389,21248],[10447,21021],[9630,17565],[9668,17493],[9737,17427],[9087,16127],[9140,16146],[9184,16242],[9121,16077],[9041,16063],[17121,21889],[19001,21846],[19058,21890],[19046,21899],[19565,22408],[19586,22484],[19518,22419]]
 	},{
-		n: 8, p: "Hyena",
+		n: 8, p: "hyena", name_en: "Hyena", name_de: "Hyäne", name_es: "Hiena", name_fr: "Hyène",
 		s: {pet: "Summon", recharge: 45, duration: 40},
 		c: [[30267,14118],[30234,14137],[30716,18605],[30704,18600],[30701,18609]]
 	},{
-		n: 9, p: "Krytan Drakehound",
+		n: 9, p: "krytandrakehound", name_en: "Krytan Drakehound", name_de: "Kryta-Spürhund", name_es: "Dracosabueso krytense", name_fr: "Lévridrake krytien",
 		s: {immobilize: [1, 2], recharge: 20, targets: 5, range: 600, damage: 49},
 		c: [[16577,15160],[14829,13353],[17509,24120],[11720,10909],[11703,10918],[11708,10900],[10983,11284],[10988,11250],[10997,11241],[11004,11270],[29519,19161]]
 	},{
-		n: 10, p: "Wolf",
+		n: 10, p: "wolf", name_en: "Wolf", name_de: "Wolf", name_es: "Lobo", name_fr: "Loup",
 		s: {fear: [1, 2], recharge: 45, targets: 5, range: 600, damage: 49},
 		c: [[16577, 15581]]
 	},{// FELINE
-		n: 11, p: "Lynx",
+		n: 11, p: "lynx", name_en: "Lynx", name_de: "Schneeluchs", name_es: "Lince", name_fr: "Lynx",
 		s: {bleeding: [4, 10], recharge: 30, combo: "Leap", range: 600, damage: 244},
 		c: [[16576,15157],[29518,19158],[19610,12197],[19598,12174],[19608,12149],[20649,15526],[20739,15473],[20816,15511]]
 	},{// MOA
-		n: 12, p: "Black Moa",
+		n: 12, p: "blackmoa", name_en: "Black Moa", name_de: "Schwarzer Moa", name_es: "Moa negro", name_fr: "Moa noir",
 		s: {daze: [1, 2], recharge: 30, targets: 5, range: 280, damage: 122},
 		c: [[25068,5420]]
 	},{
-		n: 13, p: "Blue Moa",
+		n: 13, p: "bluemoa", name_en: "Blue Moa", name_de: "Blauer Moa", name_es: "Moa azul", name_fr: "Moa bleu",
 		s: {protection: [1, 4], recharge: 30, targets: 5, radius: 600},
 		c: [[31234,18836],[9886,18371],[16410,16621],[16311,16427],[16485,16324],[16417,18478],[16454,18507],[16458,18530],[16585,18494],[17607,24102],[17729,24104],[17651,24067]]
 	},{
-		n: 14, p: "Pink Moa",
+		n: 14, p: "pinkmoa", name_en: "Pink Moa", name_de: "Rosa Moa", name_es: "Moa rosa", name_fr: "Moa rose",
 		s: {daze: [1, 2], recharge: 30, targets: 5, range: 280, damage: 122},
 		c: [[9017,16305],[19041,21619],[19058,21715],[19061,21725],[19156,21598],[19159,21676],[10420,21133],[10409,21105],[10386,21116],[10361,21076],[10791,16625],[10872,16685],[10942,16507],[10486,18201],[10627,18093],[5906,20555],[8196,16683],[3975,15842],[3960,15824],[3989,15829]]
 	},{
-		n: 15, p: "Red Moa",
+		n: 15, p: "redmoa", name_en: "Red Moa", name_de: "Roter Moa", name_es: "Moa rojo", name_fr: "Moa rouge",
 		s: {fury: [1, 15], recharge: 25, targets: 5, radius: 600},
 		c: [[31234,18837],[31230,18836],[31236,18830],[30878,13927],[24377,10614],[24298,10528],[24418,10557],[26792,9795],[26776,9766],[26834,9736],[26805,9739]]
 	},{
-		n: 16, p: "White Moa",
+		n: 16, p: "whitemoa", name_en: "White Moa", name_de: "Weißer Moa", name_es: "Moa blanco", name_fr: "Moa blanc",
 		s: {chilled: [1, 3], recharge: 30, targets: 5, damage: 122},
 		c: [[18040,15411],[18092,15408],[18216,15372],[18130,15546],[18228,15488],[19892,12217],[20123,12187],[20108,12209],[20100,12210],[20120,12054],[19106,16278],[19097,16294],[19076,16281],[19076,16311],[22900,10250],[22984,10227],[23030,10378],[22559,9135],[22865,9151],[22877,9254],[23059,9284],[23141,9296]]
 	},{// PORCINE
-		n: 17, p: "Boar",
+		n: 17, p: "boar", name_en: "Boar", name_de: "Eber", name_es: "Jabalí", name_fr: "Sanglier",
 		s: {pet: "Forage", recharge: 40, range: 2000},
 		c: [[17706,24193],[17643,24181],[17584,23234],[17582,23250]]
 	},{
-		n: 18, p: "Pig",
+		n: 18, p: "pig", name_en: "Pig", name_de: "Schwein", name_es: "Cerdo", name_fr: "Cochon",
 		s: {pet: "Forage", recharge: 40, range: 2000},
 		c: [[17675,24123],[17630,24138],[17595,24181],[11601,11230],[11595,11217],[11594,11255],[10909,10330],[10921,10331],[10925,10325],[17298,15149],[17283,15154],[17290,15147],[15943,13632],[15964,13632],[15966,13648],[29016,19146]]
 	},{
-		n: 19, p: "Siamoth",
+		n: 19, p: "siamoth", name_en: "Siamoth", name_de: "Siamoth", name_es: "Siamoth", name_fr: "Siamouth",
 		s: {pet: "Forage", recharge: 40, range: 2000},
 		c: [[15758,21430],[16660,21458],[8197,16712],[8258,16739],[8166,16774],[5844,20915],[5851,20933],[5859,20941],[16952,20130]]
 	},{
-		n: 20, p: "Warthog",
+		n: 20, p: "warthog", name_en: "Warthog", name_de: "Warzenschwein", name_es: "Jabalí verrugoso", name_fr: "Phacochère",
 		s: {pet: "Forage", recharge: 40, range: 2000},
 		c: [[982,18065],[971,18085],[937,18077],[31463,18844],[31460,18814],[31471,18822],[25239,12490],[25257,12309],[25236,12191],[25139,12372],[26755,12684],[26877,12571],[26827,12457],[26842,13000],[30762,18357],[25347,10682],[25427,10667],[25457,10786],[24873,10667],[24806,10637],[24844,10699],[16405,12674],[16275,12691],[16199,12683],[16244,12717],[16385,12839]]
 	},{// SAURIAN
-		n: 21, p: "Bristleback",
+		n: 21, p: "bristleback", name_en: "Bristleback", name_de: "Borstenrücken", name_es: "Lomoespinado", name_fr: "Hérissosaure",
 		s: {damage: 4650, recharge: 15, range: 1200},
 		c: [[2289,17783]]
 	},{
-		n: 22, p: "Smokescale",
+		n: 22, p: "smokescale", name_en: "Smokescale", name_de: "Rauchschuppe", name_es: "Escamahumada", name_fr: "Fumécaille",
 		s: {combo: "Smoke", recharge: 20, duration: 5, radius: 240},
 		c: [[5430,19322],[5438,19300],[4384,18297],[4348,18320]]
 	},{// SPIDER
-		n: 23, p: "Black Widow Spider",
+		n: 23, p: "blackwidowspider", name_en: "Black Widow Spider", name_de: "Schwarze Witwe", name_es: "Araña viuda negra", name_fr: "Jeune araignée veuve",
 		s: {immobilize: [1, 3], recharge: 45, duration: 30},
 		c: [[25068,5420]]
 	},{
-		n: 24, p: "Cave Spider",
+		n: 24, p: "cavespider", name_en: "Cave Spider", name_de: "Höhlenspinne", name_es: "Araña de cueva", name_fr: "Araignée cavernicole",
 		s: {vulnerability: [3, 10], recharge: 30, weakness: [1, 5], duration: 30},
 		c: [[14234,12043],[14241,11980],[14173,11967],[14073,11993],[19165,14493],[19131,14428],[19112,14385]]
 	},{
-		n: 25, p: "Forest Spider",
+		n: 25, p: "forestspider", name_en: "Forest Spider", name_de: "Waldspinne", name_es: "Araña de bosque", name_fr: "Araignée des bois",
 		s: {poison: [1, 12], recharge: 30, duration: 30},
 		c: [[28968,12451],[28923,12427],[29000,12510],[28883,12564],[28849,12527]]
 	},{
-		n: 26, p: "Jungle Spider",
+		n: 26, p: "junglespider", name_en: "Jungle Spider", name_de: "Dschungelspinne", name_es: "Araña de la selva", name_fr: "Araignée de la jungle",
 		s: {immobilize: [1, 3], recharge: 45, duration: 30},
 		c: [[17540,24005],[17595,24057],[17645,24202],[17554,24158],[17494,24128],[10984,19182],[10966,19133],[10960,19118],[10965,19089],[10447,16568],[10462,16508],[10468,16481],[10469,16420],[7577,14815],[7584,14948],[7507,14988],[15942,19485],[15914,19452]]
 	},{// WYVERN
-		n: 27, p: "Electric Wyvern",
+		n: 27, p: "electricwyvern", name_en: "Electric Wyvern", name_de: "Elektro-Wyvern", name_es: "Guiverno eléctrico", name_fr: "Vouivre électrique",
 		s: {launch: 0, recharge: 30, range: 480, combo: "Lightning", damage: 1129},
 		c: [[3351, 20758], [3295, 20762], [3349, 20809]]
 	},{
-		n: 28, p: "Fire Wyvern",
+		n: 28, p: "firewyvern", name_en: "Fire Wyvern", name_de: "Feuer-Wyvern", name_es: "Guiverno llameante", name_fr: "Vouivre de feu",
 		s: {burning: [1, 2], recharge: 35, duration: 12, radius: 450, combo: "Fire"},
 		c: [[2442,15660],[2544,15673],[2607,15646],[2567,15714]]
 	},{// AMPHIBIOUS // BEAR
-		n: 29, p: "Arctodus",
+		n: 29, p: "arctodus", name_en: "Arctodus", name_de: "Arctodus", name_es: "Arctodus", name_fr: "Arctodus",
 		s: {bleeding: [2, 7], recharge: 15, range: 130, damage: 244},
 		c: [[20945,10022],[21016,9971],[20965,9930],[21007,9817],[20980,9765],[23464,13252],[23464,13261],[23474,13262],[21985,12807],[18086,14164],[18089,14231],[18012,14232],[18680,13730],[18643,13708],[18616,13605]]
 	},{
-		n: 30, p: "Black Bear",
+		n: 30, p: "blackbear", name_en: "Black Bear", name_de: "Schwarzbär", name_es: "Oso negro", name_fr: "Ours noir",
 		s: {weakness: [1, 10], recharge: 40, targets: 5, range: 600, damage: 381},
 		c: [[30974,12706],[31002,12692]]
 	},{
-		n: 31, p: "Brown Bear",
+		n: 31, p: "brownbear", name_en: "Brown Bear", name_de: "Braunbär", name_es: "Oso pardo", name_fr: "Ours brun",
 		s: {removal: 2, recharge: 25, targets: 5, range: 600},
 		c: [[13893,13580],[13925,13636],[13901,13633],[13977,13609],[15688,11025],[15588,11017],[15673,10951],[30920,18744]]
 	},{
-		n: 32, p: "Murellow",
+		n: 32, p: "murellow", name_en: "Murellow", name_de: "Rattenbär", name_es: "Múrgolo", name_fr: "Murello",
 		s: {poison: [1, 4], recharge: 35, targets: 5, duration: 7, combo: "Poison", range: 180, damage: 24},
 		c: [[7568,15508],[7579,15525],[7563,15436],[7607,15464],[18747,21528],[18756,21532],[18757,21553],[19621,17411],[19644,17394],[19653,17413],[19638,17436]]
 	},{
-		n: 33, p: "Polar Bear",
+		n: 33, p: "polarbear", name_en: "Polar Bear", name_de: "Eisbär", name_es: "Oso polar", name_fr: "Ours polaire",
 		s: {chilled: [1, 3], recharge: 45, range: 130, damage: 122},
 		c: [[19921,14036],[19939,14089],[19859,14043],[21622,10402],[21505,10432],[21544,10566],[21448,10518]]
 	},{// DEVOURER
-		n: 34, p: "Carrion Devourer",
+		n: 34, p: "carriondevourer", name_en: "Carrion Devourer", name_de: "Aas-Verschlinger", name_es: "Devorador carroñero", name_fr: "Dévoreur de charogne",
 		s: {poison: [1, 4], recharge: 30, targets: 5, duration: 5, combo: "Poison", range: 900, damage: 49},
 		c: [[25063,8677],[25161,8620],[25165,8642],[27842,12734],[27864,12698],[27781,12676],[27740,12602],[25644,9422],[25656,9347],[25693,9358]]
 	},{
-		n: 35, p: "Lashtail Devourer",
+		n: 35, p: "lashtaildevourer", name_en: "Lashtail Devourer", name_de: "Geißelschwanz-Verschlinger", name_es: "Devorador cola de fusta", name_fr: "Dévoreur queue-cinglante",
 		s: {bleeding: [6, 5], recharge: 30, range: 900, damage: 343},
 		c: [[25457,13663],[25500,13712],[25513,13747],[30087,16712],[30080,16733],[30102,16770],[30125,16758],[30151,16742],[17560,24016],[17628,24070],[17677,24204],[17598,24155],[17562,24108],[23831,15102],[23793,15099],[23819,15129],[23796,13109],[23771,13008],[23816,12920],[26168,12324],[26258,12430],[26164,12464],[26224,12532],[25949,12576],[31011,13866],[30890,13921]]
 	},{
-		n: 36, p: "Whiptail Devourer",
+		n: 36, p: "whiptaildevourer", name_en: "Whiptail Devourer", name_de: "Peitschenschwanz-Verschlinger", name_es: "Devorador cola de látigo", name_fr: "Dévoreur fouette-queue",
 		s: {poison: [1, 2], recharge: 30, combo: "Projectile", range: 900, damage: 244},
 		c: [[30770,18336],[23786,14730],[23810,14695],[23805,14664]]
 	},{// DRAKE
-		n: 37, p: "Ice Drake",
+		n: 37, p: "icedrake", name_en: "Ice Drake", name_de: "Eislindwurm", name_es: "Draco de hielo", name_fr: "Drake des glaces",
 		s: {chilled: [1, 1], recharge: 25, targets: 5, range: 250, damage: 305},
 		c: [[22683,8463],[22677,8408],[22609,8385],[22481,8390],[22451,8340],[23078,14191],[23092,14164],[23052,14124],[23181,14016],[19839,12887],[19846,12808],[19869,12783],[19902,12806],[19967,12786],[19415,20179],[19396,20112],[19492,19996],[18216,17094],[18226,17168],[18147,17193],[19603,15695],[19572,15726],[22267,9660],[22278,9568],[22223,9445],[22079,9606]]
 	},{
-		n: 38, p: "Marsh Drake",
+		n: 38, p: "marshdrake", name_en: "Marsh Drake", name_de: "Sumpflindwurm", name_es: "Draco de pantano", name_fr: "Drake des marais",
 		s: {poison: [5, 3], recharge: 30, targets: 3, range: 900, damage: 305},
 		c: [[17152, 21798],[9485,16826],[9447,16727],[9479,16698],[9547,16657],[16966,19878],[16998,19790],[16936,19770],[16875,19705],[15365,21213],[15309,21265]]
 	},{
-		n: 39, p: "Reef Drake",
+		n: 39, p: "reefdrake", name_en: "Reef Drake", name_de: "Rifflindwurm", name_es: "Draco de arrecife", name_fr: "Drake des récifs",
 		s: {confusion: [5, 5], recharge: 25, targets: 5, range: 250, damage: 305},
 		c: [[13387,20145],[13409,20131],[13378,20111],[13311,20090],[13327,20056]]
 	},{
-		n: 40, p: "River Drake",
+		n: 40, p: "riverdrake", name_en: "River Drake", name_de: "Flusslindwurm", name_es: "Draco de río", name_fr: "Drake de rivière",
 		s: {damage: 80, recharge: 30, targets: 10, range: 600},
 		c: [[16552,17542],[16727,17579],[16764,17599],[16701,13798],[16618,13786],[16546,13760],[16596,13855],[16678,13923],[12707,15400],[12733,15460],[12811,15027],[12769,15085],[12795,14588],[12813,14461],[26993,13123]]
 	},{
-		n: 41, p: "Salamander Drake",
+		n: 41, p: "salamanderdrake", name_en: "Salamander Drake", name_de: "Salamanderlindwurm", name_es: "Draco salamandra", name_fr: "Drake salamandre",
 		s: {burning: [5, 1], recharge: 30, targets: 5, range: 250, damage: 305},
 		c: [[27043,10586],[27048,10572],[27085,10529],[27094,10516],[27088,10486],[30292, 16188],[29799,15999],[29676,13899],[29526,13926],[29379,13878],[27616,10804],[27582,10846],[27544,10864],[27477,10815],[27663,10877]]
 	},{// FELINE
-		n: 42, p: "Jaguar",
+		n: 42, p: "jaguar", name_en: "Jaguar", name_de: "Jaguar", name_es: "Jaguar", name_fr: "Jaguar",
 		s: {pet: "Stealth", recharge: 30, duration: 6},
 		c: [[6904,16519],[6897,16508],[6913,16483]]
 	},{
-		n: 43, p: "Jungle Stalker",
+		n: 43, p: "junglestalker", name_en: "Jungle Stalker", name_de: "Dschungelpirscher", name_es: "Acechador de la selva", name_fr: "Félin de la jungle",
 		s: {might: [5, 15], recharge: 25, targets: 5, radius: 600},
 		c: [[9763,18866],[9654,18885],[9619,18713],[9715,18750],[20630,23564],[20649,23615],[20598,23691],[20663,23524]]
 	},{
-		n: 44, p: "Snow Leopard",
+		n: 44, p: "snowleopard", name_en: "Snow Leopard", name_de: "Schneeleopard", name_es: "Pantera de las Nieves", name_fr: "Panthère des neiges",
 		s: {chilled: [1, 2], recharge: 30, combo: "Leap", range: 600, damage: 244},
 		c: [[20633,14123],[20653,14083],[20677,14036],[18237,14025],[18255,15730],[18230,15745],[18257,15798],[18283,13881],[18337,13863],[18384,13785],[22195,10332],[21907,10395],[21973,10114]]
 	},{
-		n: 45, p: "Tiger",
+		n: 45, p: "tiger", name_en: "Tiger", name_de: "Tiger", name_es: "Tigre", name_fr: "Tigre",
 		s: {fury: [1, 10], recharge: 10, targets: 5, radius: 240, range: 400, damage: 1689},
 		c: [[2528,20988],[2575,20955],[2487,20933],[2526,20905]]
 	},{// AQUATIC // ARMOR FISH
-		n: 46, p: "Armor Fish",
+		n: 46, p: "armorfish", name_en: "Armor Fish", name_de: "Panzerfisch", name_es: "Pez armadura", name_fr: "Poisson cuirassé",
 		s: {stun: [1, 2], recharge: 40, combo: "Leap", range: 200, damage: 195},
 		c: [[15974,15395],[15912,15392],[15899,15287],[15912,15431],[15493,18043],[15502,18085],[15425,18155],[31191,15100],[31147,15091],[21547,22604]]
 	},{// JELLYFISH
-		n: 47, p: "Blue Jellyfish",
+		n: 47, p: "bluejellyfish", name_en: "Blue Jellyfish", name_de: "Blaue Qualle", name_es: "Medusa azul", name_fr: "Méduse bleue",
 		s: {chilled: [1, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 194},
 		c: [[15782,15410],[15729,15338],[15844,15347],[15759,15260],[15824,15295],[22263,8456],[22152,8566],[22637,8651],[22796,8812],[22365,8753],[20925,22509],[21342,9470],[21178,9389],[21198,9252]]
 	},{
-		n: 48, p: "Rainbow Jellyfish",
+		n: 48, p: "rainbowjellyfish", name_en: "Rainbow Jellyfish", name_de: "Regenbogen-Qualle", name_es: "Medusa arcoíris", name_fr: "Méduse arc-en-ciel",
 		s: {chilled: [1, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 194},
 		c: [[25050,5418]]
 	},{
-		n: 49, p: "Red Jellyfish",
+		n: 49, p: "redjellyfish", name_en: "Red Jellyfish", name_de: "Rote Qualle", name_es: "Medusa roja", name_fr: "Méduse rouge",
 		s: {immobilize: [4, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 388},
 		c: [[5593,22016],[5699,21935],[5596,21769],[20027,23220],[20093,23187],[20055,23254],[20014,23275],[15910,17714],[15821,17742],[15796,17656],[15865,17564],[15898,16434],[15874,16473],[15853,16358],[15815,16510]]
 	},{// SHARK
-		n: 50, p: "Shark",
+		n: 50, p: "shark", name_en: "Shark", name_de: "Hai", name_es: "Tiburón", name_fr: "Requin",
 		s: {bleeding: [1, 5], recharge: 45, quickness: 10, range: 1200},
 		c: [[17451,15796],[16292,19248],[11702,15577],[10675,15138],[16595,16952],[16725,16895],[16829,16910],[16120,17549],[15587,17395],[16428,20815],[21224,23362],[20253,20715]]}
 	]
