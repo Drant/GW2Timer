@@ -4560,7 +4560,7 @@ A = {
 		});
 		$("#accExpand").click(function()
 		{
-			$("#mapExpandButton").trigger("click");
+			$("#opt_bol_showPanel").trigger("click");
 		});
 		$("#accClose").click(function()
 		{
@@ -12814,7 +12814,7 @@ M = {
 			inertiaThreshold: this.cInertiaThreshold,
 			doubleClickZoom: false,
 			touchZoom: false, // Disable pinch to zoom
-			zoomControl: I.isTouchEnabled, // Hide the zoom UI
+			zoomControl: false, // Hide the zoom UI
 			attributionControl: false, // Hide the Leaflet link UI
 			crs: L.CRS.Simple
 		}).setView(this.cMAP_CENTER_INITIAL, initialzoom); // Out of map boundary so browser doesn't download tiles yet
@@ -12885,7 +12885,11 @@ M = {
 		}
 		
 		// Bind map click functions for non-touch devices
-		if ( ! I.isTouchEnabled)
+		if (I.isTouchEnabled)
+		{
+			this.createTouchMenu();
+		}
+		else
 		{
 			this.bindMapClicks();
 		}
@@ -12977,6 +12981,31 @@ M = {
 		});
 		// Hide the pins, they will be shown when they are moved
 		this.toggleLayer(this.Layer.Pin, false);
+	},
+	
+	/*
+	 * Creates a large menu with map controls for touch devices.
+	 */
+	createTouchMenu: function()
+	{
+		var that = this;
+		var htmlidprefix = "#" + that.MapEnum;
+		var menu = $("<div class='tchMenu'></div>").prependTo(htmlidprefix + "Pane");
+		I.preventMapPropagation(menu);
+		$("<kbd class='tchDisplay tchZoomButton'></kbd>").appendTo(menu).click(function()
+		{
+			$("#opt_bol_showPanel").trigger("click");
+		});
+		$("<kbd class='tchZoomIn tchZoomButton'></kbd>").appendTo(menu).click(function()
+		{
+			that.Map.zoomIn();
+		});
+		$("<kbd class='tchZoomOut tchZoomButton'></kbd>").appendTo(menu).click(function()
+		{
+			that.Map.zoomOut();
+		});
+		
+		menu.css({top: "calc(50% - " + menu.height() + "px)"});
 	},
 	
 	/*
@@ -13106,7 +13135,12 @@ M = {
 	 */
 	toggleCoordinatesBar: function()
 	{
-		$(".mapCoordinatesBar input").toggle(O.Options["bol_showCoordinatesBar"]);
+		var bool = O.Options.bol_showCoordinatesBar;
+		$(".mapCoordinatesBar input").toggle(bool);
+		if (I.ModeCurrent === I.ModeEnum.Overlay)
+		{
+			$(".mapTime").toggle(bool);
+		}
 	},
 	
 	/*

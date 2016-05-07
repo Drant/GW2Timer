@@ -53,7 +53,7 @@ sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,
 section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,
 q{quotes:none}blockquote:after,blockquote:before,q:after,
-q:before{content:'';content:none}ins{text-decoration:none}
+q:before{content:"";content:none}ins{text-decoration:none}
 del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 /* Structure (same order as browser view)
@@ -772,6 +772,27 @@ textarea.jsCopyCode {
 }
 #wvwPane {
 	display: none;
+}
+
+/* Top side: Touch menu (visible on touch devices only) */
+.tchMenu {
+	position: absolute; z-index: 2;
+}
+.tchZoomButton {
+	display: block;
+	width: 64px; height: 64px;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	opacity: 0.6;
+}
+.tchDisplay {
+	background-image: url("img/touch/toggle.png");
+}
+.tchZoomIn {
+	background-image: url("img/touch/zoom_in.png");
+}
+.tchZoomOut {
+	background-image: url("img/touch/zoom_out.png");
 }
 
 /* Bottom side: Timeline */

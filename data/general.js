@@ -134,6 +134,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1895": "JP ShamansRookery Shiverpeaks [22074,13584]",
 	"1896": "JP ShatteredIceRuins Shiverpeaks [22075,9112]",
 	"1897": "JP ScavengersChasm Orr [13610,25044]",
+	"1898": "JP SpelunkersDelve Jungle [10635,20000]",
 	"1899": "JP SwashbucklersCove Kryta [16670,14183]",
 	"1902": "JP LoreclawExpanse Ascalon [28465,15425]",
 	"1905": "JP GriffonrookRun Shiverpeaks [18077,17118]",
@@ -1537,12 +1538,12 @@ Vendor:
 	PriceDefault: 25200,
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
 	{
-		Mehem: { id: "43829" },
-		Fox: { id: "43838" },
-		Derwena: { id: "43809" },
-		Yana: { id: "44657" },
-		Katyn: { id: "43826" },
-		Verma: { id: "43823" }
+		Mehem: { id: "43819" },
+		Fox: { id: "43822" },
+		Derwena: { id: "49734" },
+		Yana: { id: "49734" },
+		Katyn: { id: "49777" },
+		Verma: { id: "48912" }
 	}
 }
 };
