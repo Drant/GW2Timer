@@ -2472,7 +2472,11 @@ burningoildesert: {
  * The coordinates are all from the Green Borderlands. To place on the red and
  * blue borderlands, the offset metadata must be used.
  */
-var GW2T_PLACEMENT_DATA = {
+var GW2T_PLACEMENT_ROTATION = {
+Alpine: {
+	ZoneNicks: ["alpinered", "alpineblue", "alpinegreen"],
+	Siege: [{"id":"trebuchet","coord":[5914,14107]},{"id":"trebuchet","coord":[5965,14024]},{"id":"catapult","coord":[6067,13846]},{"id":"catapult","coord":[6069,13774]},{"id":"catapult","coord":[5883,13106]},{"id":"trebuchet","coord":[6072,13251]},{"id":"catapult","coord":[6314,13554]},{"id":"trebuchet","coord":[6451,13978]},{"id":"catapult","coord":[6549,13979]},{"id":"catapult","coord":[6805,14101]},{"id":"catapult","coord":[7452,14065]},{"id":"trebuchet","coord":[7738,13761]},{"id":"catapult","coord":[7718,13507]},{"id":"trebuchet","coord":[7858,12981]},{"id":"trebuchet","coord":[7402,12783]},{"id":"catapult","coord":[7330,12785]},{"id":"catapult","coord":[7463,12672]},{"id":"portal","coord":[6921,12731]},{"id":"catapult","coord":[6930,12837]},{"id":"trebuchet","coord":[7065,13001]},{"id":"trebuchet","coord":[6601,12641]},{"id":"trebuchet","coord":[6321,12724]},{"id":"catapult","coord":[6252,12538]},{"id":"trebuchet","coord":[6178,12301]},{"id":"trebuchet","coord":[7555,13512]}]
+},
 Desert: {
 	ZoneNicks: ["desertred", "desertblue", "desertgreen"],
 	Barricade: [
@@ -2581,7 +2585,9 @@ Desert: {
 	Sentry: [[6649,12216],[6157,12477],[6066,12634],[5912,13640],[6302,13924],[7120,14112],[8078,14070],[8062,13805],[8184,12735],[8149,12524],[7905,11960]],
 	Depot: [[7158,12101],[6275,12150],[5763,12557],[6031,13037],[5883,13191],[5925,13191],[6143,13193],[6105,13324],[5972,13889],[6775,14000],[7177,14475],[7770,14116],[8335,13823],[8231,13426],[8459,13371],[8203,13243],[8522,13133],[8221,13081],[8547,12599],[8320,12157],[7463,12719],[7340,12560],[7147,12781],[7069,12550],[6862,12495]],
 	Siege: [{"id":"cannon","coord":[8057,13294]},{"id":"cannon","coord":[8057,13239]},{"id":"mortar","coord":[8013,13193]},{"id":"mortar","coord":[8484,13462]},{"id":"cannon","coord":[8453,13483]},{"id":"cannon","coord":[8395,13445]},{"id":"cannon","coord":[8478,13056]},{"id":"cannon","coord":[8423,13091]},{"id":"mortar","coord":[8504,13073]},{"id":"mortar","coord":[8228,13478]},{"id":"cannon","coord":[8243,13506]},{"id":"cannon","coord":[8195,13485]},{"id":"mortar","coord":[8265,12292]},{"id":"cannon","coord":[8104,12420]},{"id":"cannon","coord":[8156,12416]},{"id":"mortar","coord":[7453,12625]},{"id":"mortar","coord":[7738,14113]},{"id":"cannon","coord":[7329,12461]},{"id":"cannon","coord":[7370,12506]},{"id":"cannon","coord":[7542,12579]},{"id":"cannon","coord":[7541,12664]},{"id":"cannon","coord":[7144,12835]},{"id":"cannon","coord":[7230,12839]},{"id":"mortar","coord":[7187,12876]},{"id":"cannon","coord":[6803,12563]},{"id":"cannon","coord":[6803,12646]},{"id":"mortar","coord":[6871,12604]},{"id":"cannon","coord":[7015,12528]},{"id":"cannon","coord":[6978,12578]},{"id":"mortar","coord":[7026,12575]},{"id":"cannon","coord":[6274,12351]},{"id":"cannon","coord":[6221,12351]},{"id":"cannon","coord":[6021,12921]},{"id":"cannon","coord":[6098,12920]},{"id":"mortar","coord":[6150,13392]},{"id":"mortar","coord":[6167,13184]},{"id":"cannon","coord":[5962,13110]},{"id":"mortar","coord":[5995,13115]},{"id":"cannon","coord":[5962,13270]},{"id":"mortar","coord":[5995,13267]},{"id":"mortar","coord":[5969,12952]},{"id":"mortar","coord":[6006,13411]},{"id":"cannon","coord":[6044,13433]},{"id":"cannon","coord":[6117,13435]},{"id":"mortar","coord":[6398,12273]},{"id":"cannon","coord":[5963,13335]},{"id":"cannon","coord":[5964,13048]},{"id":"cannon","coord":[6558,14121]},{"id":"cannon","coord":[6625,14136]},{"id":"cannon","coord":[7736,14329]},{"id":"cannon","coord":[7780,14302]},{"id":"mortar","coord":[6751,14065]},{"id":"mortar","coord":[7323,12509]},{"id":"cannon","coord":[8175,12962]},{"id":"cannon","coord":[8227,12964]},{"id":"mortar","coord":[8082,12947]}]
-},
+}
+};
+var GW2T_PLACEMENT_DATA = {
 Eternal: {
 	ZoneNicks: ["eternal"],
 	Wall: [
@@ -2758,8 +2764,8 @@ var GW2T_WVW_METADATA = {
 		desertblue: [7168, -640],
 		desertgreen: [0, 0],
 		eternal: [0, 0],
-		alpinered: [0, 0],
-		alpineblue: [0, 0],
+		alpinered: [3584, -2560],
+		alpineblue: [7168, -640],
 		alpinegreen: [0, 0]
 	},
 	Blueprints: ["Basic", "Superior", "Guild"], // Blueprint grades

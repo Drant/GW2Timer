@@ -8416,20 +8416,11 @@ Q = {
 			else
 			{
 				fillertext.show();
-				if (Settings.aWantSearchHighlight)
+				slots.each(function()
 				{
-					slots.each(function()
-					{
-						$(this).removeClass("bnkSlotMatch");
-					});
-				}
-				else
-				{
-					slots.each(function()
-					{
-						$(this).show();
-					});
-				}
+					$(this).removeClass("bnkSlotMatch");
+					$(this).show();
+				});
 			}
 			A.adjustAccountScrollbar();
 		}));
@@ -14410,6 +14401,7 @@ M = {
 			}
 			weapons.push(weapon);
 		});
+		O.sortObjects(weapons, {aKeyName: "id"});
 		return weapons;
 	},
 	
@@ -14471,10 +14463,11 @@ M = {
 	redrawDefaultWeapons: function()
 	{
 		var placementname = W.Metadata.PlacementAssociation[W.ZoneCurrent.nick];
+		var placement = W.Placement[placementname];
 		var offset = W.Metadata.Offsets[W.ZoneCurrent.nick];
-		if (offset !== undefined)
+		if (offset !== undefined && placement)
 		{
-			var arsenal = W.Placement[placementname].Siege;
+			var arsenal = placement.Siege;
 			W.redrawWeapons(arsenal, offset);
 		}
 	},
@@ -18561,12 +18554,17 @@ W = {
 	determineBorderlands: function()
 	{
 		W.BorderlandsCurrent = W.BorderlandsEnum.Alpine;
+		// Zone Objects
 		W.Zones = GW2T_LAND_DATA;
 		var rotationzones = GW2T_LAND_ROTATION[W.BorderlandsCurrent];
 		for (var i in rotationzones)
 		{
 			W.Zones[i] = rotationzones[i];
 		}
+		// Siege Placements
+		W.Placement = GW2T_PLACEMENT_DATA;
+		W.Placement[W.BorderlandsCurrent] = GW2T_PLACEMENT_ROTATION[W.BorderlandsCurrent];
+		// Zone List
 		$(".wvwZoneListBorderlands").each(function()
 		{
 			var landnick = W.BorderlandsCurrent.toLowerCase() + $(this).attr("data-zone");
@@ -18590,7 +18588,6 @@ W = {
 		W.Regions = GW2T_REALM_DATA;
 		W.Servers = GW2T_SERVER_DATA;
 		W.Weapons = GW2T_WEAPON_DATA;
-		W.Placement = GW2T_PLACEMENT_DATA;
 		W.Metadata = GW2T_WVW_METADATA;
 		W.MapType = W.Metadata.MapType;
 		W.LandEnum = W.Metadata.LandEnum;
@@ -18607,6 +18604,8 @@ W = {
 		I.styleContextMenu("#wvwContext");
 		U.convertExternalLink("#wvwHelpLinks a");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
+		// Background image acting as buffer at the southeast corner of the WvW map
+		L.imageOverlay("img/background/mists.png", this.convertGCtoLCMulti([[-2064, -2064], [18416, 18416]])).addTo(this.Map);
 		// Finally
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL
@@ -18770,7 +18769,7 @@ W = {
 					W.Layer.Secondaries.addLayer(marker);
 				}
 			};
-
+			
 			for (var i in W.Placement)
 			{
 				var pl = W.Placement[i];
@@ -24202,18 +24201,18 @@ I = {
 		// Initial sync of the sleep detection variable
 		K.awakeTimestampPrevious = currenttimestamp;
 		
-		// Tailor the initial zoom for WvW so its map fits at least vertically
+		// Tailor the initial zoom for WvW so all the borderlands are visible
 		if (screen.height >= 800)
 		{
 			O.Options.int_setInitialZoomWvW = 4;
 		}
 		else if (screen.height >= 480)
 		{
-			O.Options.int_setInitialZoomWvW = 5;
+			O.Options.int_setInitialZoomWvW = 3;
 		}
 		else
 		{
-			O.Options.int_setInitialZoomWvW = 6;
+			O.Options.int_setInitialZoomWvW = 2;
 		}
 		
 		// Remember user's browser maker
