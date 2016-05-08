@@ -1258,30 +1258,9 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Wings of Love Glider",
-		id: "77804",
-		price: 400,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Chaos Gloves Skin",
 		id: "78667",
 		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Bouquet of Roses",
-		id: "49933",
-		price: 250,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Box of Chocolates",
-		id: "43528",
-		price: 250,
 		discount: null,
 		col: 0
 	},

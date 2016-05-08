@@ -18685,8 +18685,13 @@ W = {
 		I.styleContextMenu("#wvwContext");
 		U.convertExternalLink("#wvwHelpLinks a");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
-		// Background image acting as buffer at the southeast corner of the WvW map
-		L.imageOverlay("img/background/mists.png", this.convertGCtoLCMulti([[-2064, -2064], [18416, 18416]])).addTo(this.Map);
+		/* 
+		 * The bounds given will stretch the custom background image from the
+		 * top left corner of the map to past the map's bottom right corner,
+		 * such that the artificial border image seamlessly snaps with the map's
+		 * south and east edges.
+		 */
+		L.imageOverlay("img/background/mists.png", this.convertGCtoLCMulti([[0, 0], [18416, 18416]])).addTo(this.Map);
 		// Finally
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL

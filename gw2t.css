@@ -772,6 +772,7 @@ textarea.jsCopyCode {
 }
 #wvwPane {
 	display: none;
+	background: white;
 }
 
 /* Top side: Touch menu (visible on touch devices only) */
