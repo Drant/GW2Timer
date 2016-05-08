@@ -2937,7 +2937,20 @@ U = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				return;
+				$.getScript("data/materials.js", function()
+				{
+					var data = GW2T_MATERIALS_DATA;
+					var itemids = [];
+					for (var i in data.Categories)
+					{
+						for (var ii = 0; ii < data.Categories[i].items.length; ii++)
+						{
+							itemids.push(data.Categories[i].items[ii]);
+						}
+					}
+					U.printJSON(itemids);
+				});
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -2959,22 +2972,12 @@ U = {
 		I.print("Gathering elements...");
 		var legacyprefix = "v1";
 		var limit = Number.POSITIVE_INFINITY;
+		var providedarray = null;
 		var scrapethreshold = 256; // Minimum array size to begin scraping
 		var querystr = (pQueryStr === undefined) ? "" : pQueryStr;
-		if (pLimit !== undefined && pString !== legacyprefix)
-		{
-			// Query string may be sent in place of the limit parameter
-			if (O.isInteger(pLimit))
-			{
-				limit = pLimit;
-			}
-			else
-			{
-				querystr = pLimit;
-			}
-		}
 		var counter = 0;
 		var url = U.URL_API.Prefix + pString;
+		
 		var printResult = function()
 		{
 			I.clear();
@@ -2997,14 +3000,8 @@ U = {
 				I.print("<img class='cssRight' src='" + U.escapeHTML(data.icon) + "' />");
 			}
 		};
-		
-		// If requesting v1 API by entering it in the first parameter
-		if (pString === legacyprefix)
-		{
-			url = U.URL_API.Prefix1 + pLimit;
-		}
-		
-		$.get(url + querystr, function(pData)
+		// Function to print retrieved data, or fetch more data if the original data is an array
+		var iterateData = function(pData)
 		{
 			var length = (pData.length === undefined) ? 0 : pData.length;
 			if (Array.isArray(pData))
@@ -3059,10 +3056,55 @@ U = {
 				printIcon(pData);
 				U.prettyJSON(pData);
 			}
-		}).fail(function()
+		};
+		
+		// Determine actions depending on parameters
+		if (pLimit !== undefined && pString !== legacyprefix)
 		{
-			I.print("Unable to retrieve API at: " + U.escapeHTML(url));
-		});
+			// Query string may be sent in place of the limit parameter
+			if (O.isInteger(pLimit))
+			{
+				limit = pLimit;
+			}
+			// If provided an array of IDs
+			else if (typeof pLimit === "string" && pLimit.charAt(0) === "[")
+			{
+				try
+				{
+					providedarray = JSON.parse(pLimit);
+					if (Array.isArray(providedarray))
+					{
+						iterateData(providedarray);
+					}
+				}
+				catch(e)
+				{
+					I.print("Error parsing custom array.");
+				}
+			}
+			else
+			{
+				querystr = pLimit;
+			}
+		}
+		
+		// If requesting v1 API by entering it in the first parameter
+		if (pString === legacyprefix)
+		{
+			url = U.URL_API.Prefix1 + pLimit;
+		}
+		
+		// Fetch if did not provide an array in the parameter
+		if ( ! providedarray)
+		{
+			$.get(url + querystr, function(pData)
+			{
+				iterateData(pData);
+			}).fail(function()
+			{
+				I.print("Unable to retrieve API at: " + U.escapeHTML(url));
+			});
+		}
 	},
 	
 	/*
@@ -5090,31 +5132,6 @@ A = {
 	},
 	
 	/*
-	 * Gets the title from a WvW rank number.
-	 * @param int pRank.
-	 * @returns string.
-	 */
-	getWvWTitle: function(pRank)
-	{
-		var rankobj = A.Metadata.WvWRank;
-		var ranks = rankobj.Ranks;
-		for (var i = 0; i < ranks.length; i++)
-		{
-			for (var ii = 0; ii < ranks[i].length; ii++)
-			{
-				if ((ranks[i])[ii] > pRank)
-				{
-					return D.orderModifier(
-						D.getObjectTranslation(rankobj.Titles[ii-1]),
-						D.getObjectTranslation(rankobj.Modifiers[i])
-					);
-				}
-			}
-		}
-		return "";
-	},
-	
-	/*
 	 * Tells if a section has the current account's content generated, else wipe.
 	 * @param jqobject pDish to check.
 	 * @returns boolean.
@@ -5455,6 +5472,34 @@ V = {
 		var totalage = 0;
 		var totaldeaths = 0;
 		
+		var getWvWTitle = function(pRank)
+		{
+			var rankobj = A.Metadata.WvWRank;
+			var ranks = rankobj.Ranks;
+			var wvwtitle = "", wvwtitletip = "", wvwtitlenext = "";
+			for (var i = 0; i < ranks.length; i++)
+			{
+				for (var ii = 0; ii < ranks[i].length; ii++)
+				{
+					if ((ranks[i])[ii] > pRank)
+					{
+						wvwtitle = D.orderModifier(
+							D.getObjectTranslation(rankobj.Titles[ii-1]),
+							D.getObjectTranslation(rankobj.Modifiers[i]));
+						if (pRank < rankobj.RankHighest)
+						{
+							wvwtitlenext = D.orderModifier(
+								D.getObjectTranslation(rankobj.Titles[ii]),
+								D.getObjectTranslation(rankobj.Modifiers[i]));
+							wvwtitletip = pRank + " + " + ((ranks[i])[ii] - pRank) + "<img src=\"img/account/summary/worldabilitypoint.png\" />" + " = " + wvwtitlenext;
+						}
+						return "<var id='chrAccountWvWRank' title='" + wvwtitletip + "'>" + wvwtitle + "</var>";
+					}
+				}
+			}
+			return "";
+		};
+		
 		// First loop to find max values for age and deaths
 		A.Data.Characters.forEach(function(iChar)
 		{
@@ -5537,7 +5582,7 @@ V = {
 			var accountbirthdaysince = T.formatTimeLetter(accountlifetime).trim();
 			var hoursperday = T.parseRatio((totalage / accountlifetime) * T.cHOURS_IN_DAY, 2);
 			var commandership = (pData.commander) ? "" : "accTrivial";
-			var wvwtitle = (pData.wvw_rank) ? (" " + A.getWvWTitle(pData.wvw_rank)) : "";
+			var wvwtitle = (pData.wvw_rank) ? (" " + getWvWTitle(pData.wvw_rank)) : "";
 			var access = (pData.access) ? "" : "accTrivial";
 			var accountadditional = "<span id='chrAccountMisc'>"
 				+ "<dfn><a id='chrAccountLink' title='" + U.escapeHTML(pData.id) + "'" + forumlink + ">" + U.escapeHTML(pData.name) + "</a></dfn><br />" + accountbirthdate.toLocaleString() + "<br />"
@@ -6457,47 +6502,50 @@ V = {
 		
 		$.getJSON(A.getURL(A.URL.Materials), function(pData)
 		{
-			bank.empty();
-			var numtofetch = 0;
-			var numfetched = 0;
-			// Create tabs that separate the categories
-			for (var i = 0; i < matdata.length; i++)
+			Q.loadItemsDatabase("materials", function()
 			{
-				matcategory = matdata[i];
-				tab = Q.createBankTab(bank, {aTitle: D.getObjectName(matcategory)});
-				// Store the tabs to be later inserted with slots
-				slotscontainer = tab.find(".bnkTabSlots");
-				slotscontainerassoc[matcategory.id] = slotscontainer;
-				// Insert empty slots in the proper order
-				for (var ii = 0; ii < matcategory.items.length; ii++)
+				bank.empty();
+				var numtofetch = 0;
+				var numfetched = 0;
+				// Create tabs that separate the categories
+				for (var i = 0; i < matdata.length; i++)
 				{
-					itemid = matcategory.items[ii];
-					slot = Q.createBankSlot(slotscontainer);
-					slotassoc[itemid] = slot;
-					numtofetch++;
-				}
-			}
-			
-			// Account materials API is a single disordered array, match the items with the pre-ordered slots
-			for (var i = 0; i < pData.length; i++)
-			{
-				slotdata = pData[i];
-				if (slotassoc[slotdata.id])
-				{
-					(function(iSlot, iSlotData)
+					matcategory = matdata[i];
+					tab = Q.createBankTab(bank, {aTitle: D.getObjectName(matcategory)});
+					// Store the tabs to be later inserted with slots
+					slotscontainer = tab.find(".bnkTabSlots");
+					slotscontainerassoc[matcategory.id] = slotscontainer;
+					// Insert empty slots in the proper order
+					for (var ii = 0; ii < matcategory.items.length; ii++)
 					{
-						Q.getItem(slotdata.id, function(iItem)
-						{
-							Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
-							{
-								numfetched++;
-								A.setProgressBar(numfetched, numtofetch);
-							}});
-						});
-					})(slotassoc[slotdata.id], slotdata);
+						itemid = matcategory.items[ii];
+						slot = Q.createBankSlot(slotscontainer);
+						slotassoc[itemid] = slot;
+						numtofetch++;
+					}
 				}
-			}
-			Q.createBankMenu(bank, {aWantSearchHighlight: true});
+
+				// Account materials API is a single disordered array, match the items with the pre-ordered slots
+				for (var i = 0; i < pData.length; i++)
+				{
+					slotdata = pData[i];
+					if (slotassoc[slotdata.id])
+					{
+						(function(iSlot, iSlotData)
+						{
+							Q.getItem(slotdata.id, function(iItem)
+							{
+								Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+								{
+									numfetched++;
+									A.setProgressBar(numfetched, numtofetch);
+								}});
+							});
+						})(slotassoc[slotdata.id], slotdata);
+					}
+				}
+				Q.createBankMenu(bank, {aWantSearchHighlight: true});
+			});
 		}).fail(function()
 		{
 			A.printError(A.PermissionEnum.Inventories);
@@ -6757,6 +6805,7 @@ V = {
 Q = {
 	
 	Box: {}, // Holds objects with analyzed item details, accessed using the item's ID
+	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
 	Rarity: // Corresponds to API names for rarity levels
 	{
 		Junk: "Junk",
@@ -6778,6 +6827,38 @@ Q = {
 	Context: { // Bank slots context menu data
 		Item: {},
 		ItemSearch: ""
+	},
+	
+	/*
+	 * Loads a database file containing item details objects precached from API.
+	 * @param string pName of the database.
+	 * @param function pSuccess to execute after success.
+	 * @pre The database files exist in the proper directory and suffixed with
+	 * the supported language nick.
+	 */
+	loadItemsDatabase: function(pName, pSuccess)
+	{
+		if (Q.RetrievedDatabases[pName])
+		{
+			pSuccess();
+		}
+		else
+		{
+			var filepath = "data/items/" + pName + "_" + D.getPartiallySupportedLanguage() + ".json";
+			$.getJSON(filepath, function(pData)
+			{
+				Q.RetrievedDatabases[pName] = true;
+				for (var i in pData)
+				{
+					if (Q.Box[i] === undefined)
+					{
+						Q.Box[i] = {};
+					}
+					Q.Box[i].item = pData[i];
+				}
+				pSuccess();
+			});
+		}
 	},
 	
 	/*
@@ -17893,7 +17974,7 @@ G = {
 			stateinstring = X.getChecklistItem(X.Collectibles[pType], i);
 
 			markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + number
-				+ ((collectible.iscushion) ? "<br />" + ithneedle.p : "");
+				+ ((collectible.iscushion) ? "<br />" + D.getObjectName(ithneedle) : "");
 			if (ithneedle.i)
 			{
 				markertitle += "<img src='" + ithneedle.i + "' />";
@@ -17919,7 +18000,7 @@ G = {
 				needleIndex: i,
 				needleType: pType,
 				needleKey: X.Collectibles[pType].urlkey,
-				needleLabel: (collectible.iconsize) ? (directory + (ithneedle.p).replace(/ /g, "").toLowerCase() + I.cPNG)
+				needleLabel: (collectible.iconsize) ? (directory + ithneedle.p + I.cPNG)
 					: ((ithneedle.l === undefined) ? number : ithneedle.l),
 				title: markertitle
 			};
@@ -18012,7 +18093,7 @@ G = {
 		{
 			ithneedle = pNeedles[i];
 			name = D.getObjectName(ithneedle);
-			peticon = "img/collectible/rangerpets/" + ithneedle.p.replace(/ /g, "").toLowerCase() + I.cPNG;
+			peticon = "img/collectible/rangerpets/" + ithneedle.p + I.cPNG;
 			var str = "<div class='cltPetBox'><span class='cltPetIcon curToggle' title='" + name + "' style='background-image:url(" + peticon + ")'>" 
 				+ "<var class='cltPetIconBackground'>" + I.Symbol.Filler + "</var></span><aside class='cltPetFacts'>";
 			for (var ii in ithneedle.s)
