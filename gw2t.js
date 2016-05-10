@@ -37,6 +37,7 @@
 	O - Options for user
 	X - Checklists
 	U - URL management
+	Z - Console commands
 	A - Account management
 	V - View account information
 	E - Economy Trading Post
@@ -59,15 +60,15 @@ $(window).on("load", function() { "use strict";
 /* =============================================================================
  * Single letter objects serve as namespaces.
  * ========================================================================== */
-var O, X, U, A, V, Q, E, D, C, M, P, G, W, T, B, K, I = {};
+var O, X, U, Z, A, V, Q, E, D, C, M, P, G, W, T, B, K, I = {};
 
 /* =============================================================================
  * @@Options for the user
  * ========================================================================== */
 O = {
 	
-	lengthOfPrefixes: 3,
-	prefixOption: "opt_",
+	cLengthOfPrefixes: 3,
+	cPrefixOption: "opt_",
 	legalLocalStorageKeys: [],
 	isServerReset: false,
 
@@ -583,7 +584,7 @@ O = {
 		// Load or initialize input options
 		for (optionkey in O.Options)
 		{
-			inputelm = $("#" + O.prefixOption + optionkey);
+			inputelm = $("#" + O.cPrefixOption + optionkey);
 			inputtype = inputelm.attr("type");
 			variabletype = U.getVariablePrefix(optionkey);
 			
@@ -663,7 +664,7 @@ O = {
 			{
 				inputelm.change(function()
 				{
-					var thisoptionkey = $(this).attr("id").slice(O.prefixOption.length);
+					var thisoptionkey = $(this).attr("id").slice(O.cPrefixOption.length);
 					O.Options[thisoptionkey] = O.getInputValue($(this), thisoptionkey);
 					localStorage[thisoptionkey] = O.Options[thisoptionkey];
 				}).click(function()
@@ -770,7 +771,7 @@ O = {
 		O.setInputValue(inputclone, O.Options[pOptionKey]);
 		
 		// If the cloned input value has changed then mimic that to the original
-		var inputelm = $("#" + O.prefixOption + pOptionKey);
+		var inputelm = $("#" + O.cPrefixOption + pOptionKey);
 		inputclone.change(function()
 		{
 			var value = O.getInputValue($(this), pOptionKey);
@@ -858,7 +859,7 @@ O = {
 		{
 			(function(iFunction){
 				var query;
-				var htmlid = O.prefixOption + iFunction;
+				var htmlid = O.cPrefixOption + iFunction;
 				var thisinputtype = $("#" + htmlid).attr("type");
 				if (thisinputtype === "radio")
 				{
@@ -2464,11 +2465,10 @@ X = {
 };
 
 /* =============================================================================
- * @@URL management for links and string manipulation
+ * @@URL management for links and string/array/object manipulation
  * ========================================================================== */
 U = {
 	
-	CommandPrefix: "/",
 	URL_META:
 	{
 		News: "http://forum.renaka.com/topic/5500046/",
@@ -2635,716 +2635,6 @@ U = {
 		Title: 3,
 		Every: 4,
 		All: 5
-	},
-	
-	APICacheFile: null, // Stores the URL to a generated blob file
-	APICacheArrayOfIDs: null, // Array of ID numbers for any particular v2 API endpoint
-	APICacheArrayOfObjects: null, // Array of objects downloaded from the IDs pointing there
-	APICacheConsole: null, // JSON text entered by the user
-	
-	/*
-	 * Loads an object from local storage into a variable for temporary test or
-	 * console usage.
-	 * @returns boolean true if successfully loaded into variable, else false.
-	 */
-	loadAPICache: function()
-	{
-		var cache = localStorage[O.Utilities.APICache.key];
-		if (cache)
-		{
-			try {
-				U.APICacheConsole = JSON.parse(cache);
-				return true;
-			}
-			catch (e) {
-				I.print("Error loading API cache object.");
-			}
-		}
-		return false;
-	},
-	saveAPICache: function()
-	{
-		if (U.APICacheConsole)
-		{
-			localStorage[O.Utilities.APICache.key] = JSON.stringify(U.APICacheConsole);
-			return true;
-		}
-		else
-		{
-			I.print("Error saving cache object.");
-		}
-		return false;
-	},
-	
-	/*
-	 * Interprets and executes a command string, which may be a console command
-	 * or a map data string.
-	 * @param string pString command.
-	 * @param object pMapObject which map to execute.
-	 * @param enum pZoom level, optional.
-	 */
-	interpretCommand: function(pString, pMapObject, pZoom, pPin)
-	{
-		if (pString.indexOf(I.cConsoleCommandPrefix) === 0)
-		{
-			// If input starts with a console command
-			U.parseConsoleCommand(pString, pMapObject);
-		}
-		else if (pString.indexOf(I.cChatcodePrefix) === 0)
-		{
-			// If input is a chatcode
-			I.print(U.getGameIDFromChatlink(pString, true));
-		}
-		else if (pMapObject.parsePersonalPath(pString) === false)
-		{
-			// If input looks like a 2D array of coordinates, then create pins from them
-			pMapObject.goToArguments(pString, pZoom, pPin);
-		}
-	},
-	
-	/*
-	 * Executes a console command.
-	 * @param string pString command.
-	 * @param object pMapObject which map the command was executed from.
-	 */
-	parseConsoleCommand: function(pString, pMapObject)
-	{
-		var that = pMapObject;
-		var args = pString.substring(1, pString.length).split(" "); // Trim the command prefix character
-		var argstr = pString.substring(pString.indexOf(" ") + 1, pString.length);
-		var command = args[0].toLowerCase();
-		
-		var Commands = {
-			clear: {usage: "Clears the console screen.", f: function()
-			{
-				I.clear();
-			}},
-			speak: {usage: "Speaks the given text. <em>Parameters: str_text</em>", f: function()
-			{
-				D.speak(argstr);
-			}},
-			gps: {usage: "Prints GPS location information.", f: function()
-			{
-				I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />Direction: " + U.formatJSON(GPSDirectionArray) + "<br />Camera: " + U.formatJSON(GPSCameraArray));
-			}},
-			identity: {usage: "Prints GPS general information.", f: function()
-			{
-				U.prettyJSON(GPSIdentityJSON);
-			}},
-			lock: {usage: "Map cannot be moved.", f: function()
-			{
-				that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked.");
-			}},
-			unlock: {usage: "Map can be moved.", f: function()
-			{
-				that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked.");
-			}},
-			nct: {usage: "Disables the map's context menu.", f: function()
-			{
-				that.Map.off("contextmenu"); I.write("Map context menu disabled.");
-			}},
-			link: {usage: "Prints a coordinates URL of the current map view.", f: function()
-			{
-				I.print(I.cSiteURL + that.convertLCtoGC(that.Map.getCenter()), true);
-			}},
-			dart: {usage: "Draws personal pins at random map locations. <em>Parameters: int_quantity</em>", f: function()
-			{
-				that.drawRandom(args[1]);
-			}},
-			nodes: {usage: "Sorts and prints a list coordinates. <em>Parameters: arr_coordinates</em>", f: function()
-			{
-				P.printNodes(P.sortCoordinates(M.parseCoordinatesMulti(args[1])));
-			}},
-			needles: {usage: "Numbers and prints a list of coordinates. <em>Parameters: arr_coordinates</em>", f: function()
-			{
-				P.printNodes(M.parseCoordinatesMulti(args[1]), true);
-			}},
-			latlngs: {usage: "Converts an array of LatLng's to standard coordinates. <em>Parameters: arr_latlngs</em>", f: function()
-			{
-				that.convertLatLngs(JSON.parse(argstr));
-			}},
-			jsonparse: {usage: "Converts a JSON string into an object for testing. <em>Parameters: str_json</em>", f: function()
-			{
-				try { U.APICacheConsole = JSON.parse(argstr); I.print("Parse JSON successful."); }
-				catch(e) { I.print("Parse JSON failed."); }
-			}},
-			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, int_limit (optional), str_querystring (optional)</em>", f: function()
-			{
-				U.printAPI(args[1], args[2], args[3]);
-			}},
-			apicache: {usage: "Prints the cache of the previous console API call as an associative array. <em>Parameters: bol_wantoutputasfile (optional)</em>", f: function()
-			{
-				U.printAPICache(0, args[1]);
-			}},
-			apicachearray: {usage: "...as an array.", f: function()
-			{
-				U.printAPICache(1, args[1]);
-			}},
-			apicacheobject: {usage: "...as an object.", f: function()
-			{
-				U.printAPICache(2, args[1]);
-			}},
-			apicacheids: {usage: "...as IDs.", f: function()
-			{
-				U.printAPICache(3, args[1]);
-			}},
-			acc: {usage: "Prints the output of an account API URL &quot;"
-				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. Replace spaces with &quot;%20&quot;", f: function()
-			{
-				A.printAccount(args[1]);
-			}},
-			daily: {usage: "Prints today's and tomorrow's daily achievements.", f: function()
-			{
-				U.printDaily();
-			}},
-			item: {usage: "Prints an item's information. <em>Parameters: int_itemid</em>", f: function()
-			{
-				U.printAPI("items/" + args[1]);
-			}},
-			items: {usage: "Prints the highest numbered item IDs in the API. <em>Parameters: int_offset</em>", f: function()
-			{
-				U.printItemsAPI(args[1]);
-			}},
-			events: {usage: "Prints the event names of the current zone, dynamic events option must be enabled.", f: function()
-			{
-				P.printZoneEvents();
-			}},
-			help: {usage: "Prints this help message.", f: function()
-			{
-				I.write("Available console commands:<br />");
-				var s = "";
-				for (var i in Commands)
-				{
-					s += "<b>" + i + "</b> - " + Commands[i].usage + "<br />";
-				}
-				s += "<br />The console also accepts: coordinates, array of coordinates, zone names, and chatcodes.<br />";
-				I.print(s);
-			}},
-			test: {usage: "Test function for debugging.", f: function()
-			{
-				
-			}}
-		};
-		// Execute the command by finding it in the object
-		if (Commands[command] !== undefined)
-		{
-			(Commands[command].f)();
-		}
-	},
-	
-	/*
-	 * Creates a blob file with the provided text.
-	 * @param string pString source text.
-	 * @returns string URL to download the generated file.
-	 */
-	createFile: function(pString, pWantLink)
-	{
-		var data = new Blob([pString], {type: "text/plain"});
-		// Delete previous file if exists
-		if (U.APICacheFile !== null)
-		{
-			window.URL.revokeObjectURL(U.APICacheFile);
-		}
-		// Generate the file and its download URL
-		U.APICacheFile = window.URL.createObjectURL(data);
-		if (pWantLink)
-		{
-			I.print("<a href='" + U.APICacheFile + "' target='_blank'>" + U.APICacheFile + "</a>");
-		}
-		return U.APICacheFile;
-	},
-	
-	/*
-	 * Prints a v2 API endpoint by querying each element in the array it
-	 * returned, or just the object.
-	 * @param string pString of API
-	 * @param int pLimit of array elements to print, optional.
-	 * @param string pQueryStr arguments for the API url, optional.
-	 */
-	printAPI: function(pString, pLimit, pQueryStr)
-	{
-		I.print("Gathering elements...");
-		var legacyprefix = "v1";
-		var limit = Number.POSITIVE_INFINITY;
-		var providedarray = null;
-		var scrapethreshold = 256; // Minimum array size to begin scraping
-		var querystr = (pQueryStr === undefined) ? "" : pQueryStr;
-		var counter = 0;
-		var url = U.URL_API.Prefix + pString;
-		
-		var printResult = function()
-		{
-			I.clear();
-			// Sort the objects by their IDs
-			U.prettyJSON(U.APICacheArrayOfObjects);
-			if (U.APICacheArrayOfObjects.length > 0 && U.APICacheArrayOfObjects[0].id)
-			{
-				U.sortObjects(U.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
-			}
-			else
-			{
-				U.printAPICache(1);
-			}
-		};
-		var printIcon = function(pData)
-		{
-			var data = (typeof pData === "string") ? JSON.parse(pData) : pData;
-			if (data.icon)
-			{
-				I.print("<img class='cssRight' src='" + U.escapeHTML(data.icon) + "' />");
-			}
-		};
-		// Function to print retrieved data, or fetch more data if the original data is an array
-		var iterateData = function(pData)
-		{
-			var length = (pData.length === undefined) ? 0 : pData.length;
-			if (Array.isArray(pData))
-			{
-				if (length > scrapethreshold)
-				{
-					// Delegate the heavier task of large array scraping to another function
-					I.print("Array is too big for one simultaneous request, requesting in batches with wait in between...");
-					U.scrapeAPIArray(pData, pString, querystr);
-				}
-				else
-				{
-					I.print("Retrieved array:<br />" + U.escapeJSON(pData));
-					U.APICacheArrayOfIDs = pData;
-					U.APICacheArrayOfObjects = [];
-					var successlength = length;
-					for (var i = 0; i < length; i++)
-					{
-						if (i === limit)
-						{
-							break;
-						}
-						(function(iIndex)
-						{
-							$.getJSON(url + "/" + pData[iIndex] + querystr, function(pDataInner)
-							{
-								I.print("Retrieved an element: " + iIndex);
-								U.APICacheArrayOfObjects.push(pDataInner);
-							}).done(function()
-							{
-								// Print the result when all elements have been queried
-								if (counter === successlength - 1 || counter === limit - 1)
-								{
-									printResult();
-								}
-								counter++;
-							}).fail(function()
-							{
-								successlength--;
-								if (counter === successlength - 1 || counter === limit - 1)
-								{
-									printResult();
-								}
-								I.print("Unable to retrieve API array element at: " + U.escapeHTML(url + "/" + pData[iIndex]));
-							});
-						})(i);
-					}
-				}
-			}
-			else
-			{
-				printIcon(pData);
-				U.prettyJSON(pData);
-			}
-		};
-		
-		// Determine actions depending on parameters
-		if (pLimit !== undefined && pString !== legacyprefix)
-		{
-			// Query string may be sent in place of the limit parameter
-			if (U.isInteger(pLimit))
-			{
-				limit = pLimit;
-			}
-			// If provided an array of IDs
-			else if (typeof pLimit === "string" && pLimit.charAt(0) === "[")
-			{
-				try
-				{
-					providedarray = JSON.parse(pLimit);
-					if (Array.isArray(providedarray))
-					{
-						iterateData(providedarray);
-					}
-				}
-				catch(e)
-				{
-					I.print("Error parsing custom array.");
-				}
-			}
-			else
-			{
-				querystr = pLimit;
-			}
-		}
-		
-		// If requesting v1 API by entering it in the first parameter
-		if (pString === legacyprefix)
-		{
-			url = U.URL_API.Prefix1 + pLimit;
-		}
-		
-		// Fetch if did not provide an array in the parameter
-		if ( ! providedarray)
-		{
-			$.get(url + querystr, function(pData)
-			{
-				iterateData(pData);
-			}).fail(function()
-			{
-				I.print("Unable to retrieve API at: " + U.escapeHTML(url));
-			});
-		}
-	},
-	
-	/*
-	 * Prints the cached API arrays and objects.
-	 * @param int pRequest type, see below.
-	 * @param boolean pWantFile whether to output to a file or print to console.
-	 */
-	printAPICache: function(pRequest, pWantFile)
-	{
-		var output = "";
-		var obj;
-		var wantfile = (pWantFile === "true" || pWantFile === true);
-		
-		// Compile the output
-		if (pRequest === 0 || pRequest === 1)
-		{
-			if (U.APICacheArrayOfObjects)
-			{
-				if (wantfile)
-				{
-					for (var i = 0; i < U.APICacheArrayOfObjects.length; i++)
-					{
-						obj = U.APICacheArrayOfObjects[i];
-						output += ((pRequest === 0) ? "\"" + obj.id + "\": " : "") + U.lineJSON(obj) + ",\r\n";
-					}
-				}
-				else
-				{
-					for (var i = 0; i < U.APICacheArrayOfObjects.length; i++)
-					{
-						obj = U.APICacheArrayOfObjects[i];
-						output += ((pRequest === 0) ? "&quot;" + obj.id + "&quot;: " : "") + U.escapeJSON(obj) + ",<br />";
-					}
-				}
-			}
-			else
-			{
-				output = "API Objects Array is empty.";
-			}
-		}
-		else if (pRequest === 2)
-		{
-			output = (U.APICacheArrayOfObjects) ?
-				((wantfile) ? U.lineJSON(U.APICacheArrayOfObjects) : U.escapeJSON(U.APICacheArrayOfObjects)) : "API Objects Array is empty.";
-		}
-		else if (pRequest === 3)
-		{
-			output = (U.APICacheArrayOfIDs) ?
-			((wantfile) ? U.lineJSON(U.APICacheArrayOfIDs) : U.escapeJSON(U.APICacheArrayOfIDs)) : "API IDs Array is empty.";
-		}
-		
-		// Print or generate the output
-		if (wantfile)
-		{
-			U.createFile(output, true);
-		}
-		else
-		{
-			I.print(output);
-		}
-	},
-	
-	/*
-	 * Gets the latest items that was added to the API item database.
-	 * @param int pSmartIndex if positive, will list that many latest items;
-	 * if negative, will list the item at that index, from end of the array.
-	 * @returns string of item details.
-	 */
-	printItemsAPI: function(pSmartIndex)
-	{
-		if (U.isInteger(pSmartIndex) === false)
-		{
-			I.write("Invalid reverse index.");
-			return;
-		}
-		else
-		{
-			I.write("Retrieving items...");
-			pSmartIndex = parseInt(pSmartIndex);
-		}
-		
-		if (E.ItemsArray.length === 0)
-		{
-			$.get(U.URL_API.ItemDatabase, function(pData)
-			{
-				E.ItemsArray = pData;
-			}).done(function()
-			{
-				U.printItemsAPI(pSmartIndex);
-			}).fail(function()
-			{
-				I.write("Unable to retrieve API items database.");
-			});
-		}
-		else
-		{
-			var requesteditem = 0;
-			var index = 0;
-			if (pSmartIndex <= 0)
-			{
-				index = E.ItemsArray.length + pSmartIndex - 1;
-				requesteditem = E.ItemsArray[index];
-				Q.getItem(requesteditem, function(pData)
-				{
-					I.print("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData));
-				}).fail(function()
-				{
-					I.write("Unable to retrieve item: " + index);
-				});
-			}
-			else
-			{
-				I.clear();
-				for (var i = 0; i < pSmartIndex; i++)
-				{
-					index = E.ItemsArray.length - pSmartIndex - 1 - i;
-					requesteditem = E.ItemsArray[index];
-					Q.getItem(requesteditem, function(pData)
-					{
-						I.print("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData));
-					}).fail(function()
-					{
-						I.write("Unable to retrieve item: " + index);
-					});
-				}
-			}
-			
-		}
-	},
-	
-	/*
-	 * Takes an array of API endpoint ID numbers and download every object that
-	 * they point to, and amass them into an accessible array of objects.
-	 * @param intarray pArray downloaded from API.
-	 * @param string pString suffix of API endpoint.
-	 * @param string pQueryStr arguments for the API url, optional.
-	 */
-	scrapeAPIArray: function(pArray, pString, pQueryStr)
-	{
-		var querystr = pQueryStr || "";
-		var idsarray = [];
-		var failedids = [];
-		var reqindex = 0;
-		var reqlimit = 500;
-		var reqcooldownms = 30000;
-		var itemstoretrieve = 0;
-		var itemsretrieved = 0;
-		
-		var finalizeScrape = function()
-		{
-			if (itemsretrieved === itemstoretrieve)
-			{
-				if (failedids.length > 0)
-				{
-					I.print("WARNING - Failed to retrieve some IDs: " + failedids);
-				}
-				else
-				{
-					I.print("All IDs successfully retrieved.");
-				}
-				// Sort the objects by their IDs
-				if (U.APICacheArrayOfObjects.length > 0 && U.APICacheArrayOfObjects[0].id)
-				{
-					U.sortObjects(U.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
-				}
-				I.print("Scrape completed. Enter /apicache to print the results.");
-			}
-		};
-		
-		var iterateIDs = function()
-		{
-			var reqcounter = 0;
-			for (var i = reqindex; i < idsarray.length; i++)
-			{
-				if (reqcounter === reqlimit)
-				{
-					waitCooldown();
-					return;
-				}
-				else
-				{
-					retrieveObject(idsarray[i], reqindex);
-				}
-				reqindex++;
-				reqcounter++;
-			}
-		};
-		
-		var retrieveObject = function(pID)
-		{
-			$.getJSON(U.URL_API.Prefix + pString + "/" + pID + querystr, function(pData)
-			{
-				U.APICacheArrayOfObjects.push(pData);
-				// Check for completion
-				itemsretrieved++;
-				finalizeScrape();
-			}).fail(function()
-			{
-				failedids.push(pID);
-				// Check for completion
-				itemstoretrieve--;
-				finalizeScrape();
-			});
-		};
-		
-		var waitCooldown = function()
-		{
-			var percentcomplete = U.convertRatioToPercent(reqindex / idsarray.length);
-			var secremaining = Math.ceil((idsarray.length - reqindex) / reqlimit) * ~~(reqcooldownms / T.cMSECONDS_IN_SECOND);
-			I.print("Cooldown... " + reqindex + " / " + idsarray.length
-				+ " (" + percentcomplete + ")" + " " + T.formatTimeLetter(secremaining, true) + " remaining.");
-			setTimeout(function()
-			{
-				iterateIDs();
-			}, reqcooldownms);
-		};
-		
-		// Start the process
-		U.APICacheArrayOfIDs = pArray;
-		U.APICacheArrayOfObjects = [];
-		idsarray = pArray;
-		itemstoretrieve = idsarray.length;
-		iterateIDs();
-	},
-	
-	/*
-	 * Categorizes API skins from a completely downloaded array of skins objects.
-	 * @pre Cache array of objects was assigned.
-	 */
-	collateSkins: function()
-	{
-		var catobj = A.Metadata.Skins;
-		
-		var arr = U.APICacheArrayOfObjects;
-		var obj, key;
-		var uncatids = [];
-		if (arr === undefined || arr === null)
-		{
-			I.print("API cache array is unassigned.");
-			return;
-		}
-		
-		for (var i = 0; i < arr.length; i++)
-		{
-			key = null;
-			obj = arr[i];
-			if (obj.type === undefined)
-			{
-				continue;
-			}
-			// Determine the skin's category name
-			if (obj.type === "Armor" && obj.details && obj.details.type && obj.details.weight_class)
-			{
-				key = obj.type + "_" + obj.details.weight_class + "_" + obj.details.type;
-			}
-			else if (obj.type === "Weapon" && obj.details && obj.details.type)
-			{
-				key = obj.type + "_" + obj.details.type;
-			}
-			else if (obj.type === "Back")
-			{
-				key = obj.type;
-			}
-			
-			// Insert the skin ID into a category array
-			if (key && catobj[key])
-			{
-				(catobj[key]).push(obj.id);
-			}
-			else
-			{
-				uncatids.push(obj.id);
-			}
-		}
-		
-		if (uncatids.length > 0)
-		{
-			I.print("Uncategorized IDs: " + U.printJSON(uncatids));
-		}
-		U.printJSON(catobj);
-	},
-	
-	/*
-	 * Prints the current daily achievements.
-	 * @param boolean pWantTomorrow whether to get tomorrow's instead of today's.
-	 */
-	printDaily: function(pWantTomorrow)
-	{
-		var numfetched = 0;
-		var numtofetch = 0;
-		var dailyobj = {};
-		var finalizeDaily = function()
-		{
-			if (numtofetch === numfetched)
-			{
-				if (pWantTomorrow === undefined)
-				{
-					I.print("TODAY'S DAILIES");
-				}
-				for (var i in dailyobj)
-				{
-					I.print(i);
-					for (var ii in dailyobj[i])
-					{
-						var ach = (dailyobj[i])[ii];
-						U.prettyJSON(ach);
-					}
-				}
-				// Also recursively print tomorrow's
-				if (pWantTomorrow === undefined)
-				{
-					I.print("<br />");
-					I.print("TOMORROW'S DAILIES");
-					U.printDaily(true);
-				}
-			}
-		};
-		
-		var url = (pWantTomorrow) ? U.URL_API.Tomorrow : U.URL_API.Daily;
-		$.getJSON(url + U.URL_API.LangKey, function(pData)
-		{
-			for (var i in pData)
-			{
-				numtofetch += (pData[i]).length;
-			}
-			for (var i in pData)
-			{
-				dailyobj[i] = [];
-				for (var ii in pData[i])
-				{
-					var ach = (pData[i])[ii];
-					(function(iAchArray, iAch)
-					{
-						$.getJSON(U.getAPIAchievement(iAch.id), function(iData)
-						{
-							iData.level = iAch.level; // Append the level from the daily object to the actual achievement
-							iAchArray.push(iData);
-						}).always(function()
-						{
-							numfetched++;
-							finalizeDaily();
-						});
-					})(dailyobj[i], ach);
-				}
-			}
-		});
 	},
 	
 	/*
@@ -3544,7 +2834,7 @@ U = {
 	 */
 	sanitizeURLOptionsValue: function(pKey, pValue)
 	{
-		var datatype = pKey.substring(0, O.lengthOfPrefixes);
+		var datatype = pKey.substring(0, O.cLengthOfPrefixes);
 		var s = pValue.toLowerCase();
 		switch (datatype)
 		{
@@ -3637,6 +2927,17 @@ U = {
 				return 0;
 			});
 		}
+	},
+	
+	/*
+	 * Gets elements from array A that do not exists in array B.
+	 * @param array pArrayA.
+	 * @param array pArrayB.
+	 * @returns array of difference.
+	 */
+	getDifference: function(pArrayA, pArrayB)
+	{
+		return $(pArrayA).not(pArrayB).get();
 	},
 	
 	/*
@@ -3735,10 +3036,15 @@ U = {
 	{
 		I.print("<pre>" + U.escapeJSON(pObject) + "</pre>");
 	},
-	lineJSON: function(pObject)
+	lineJSON: function(pObject, pWantQuotes)
 	{
 		// Returns the stringified JSON as a single line separated with spaces.
-		return U.stripJSONQuotations(JSON.stringify(pObject, null, 1))
+		var str = JSON.stringify(pObject, null, 1);
+		if (pWantQuotes === false)
+		{
+			str = U.stripJSONQuotations(str);
+		}
+		return str
 			.replace(/[\r\n]/g, "")
 			.replace(/  +/g, " ")
 			.replace(/ }/g, "}")
@@ -4492,6 +3798,719 @@ U = {
 };
 
 /* =============================================================================
+ * @@Zip console commands and server-like functions
+ * ========================================================================== */
+Z = {
+	
+	cCommandPrefix: "/",
+	APICacheFile: null, // Stores the URL to a generated blob file
+	APICacheArrayOfIDs: null, // Array of ID numbers for any particular v2 API endpoint
+	APICacheArrayOfObjects: null, // Array of objects downloaded from the IDs pointing there
+	APICacheConsole: null, // JSON text entered by the user
+	
+	/*
+	 * Loads an object from local storage into a variable for temporary test or
+	 * console usage.
+	 * @returns boolean true if successfully loaded into variable, else false.
+	 */
+	loadAPICache: function()
+	{
+		var cache = localStorage[O.Utilities.APICache.key];
+		if (cache)
+		{
+			try {
+				Z.APICacheConsole = JSON.parse(cache);
+				return true;
+			}
+			catch (e) {
+				I.print("Error loading API cache object.");
+			}
+		}
+		return false;
+	},
+	saveAPICache: function()
+	{
+		if (Z.APICacheConsole)
+		{
+			localStorage[O.Utilities.APICache.key] = JSON.stringify(Z.APICacheConsole);
+			return true;
+		}
+		else
+		{
+			I.print("Error saving cache object.");
+		}
+		return false;
+	},
+	
+	/*
+	 * Interprets and executes a command string, which may be a console command
+	 * or a map data string.
+	 * @param string pString command.
+	 * @param object pMapObject which map to execute.
+	 * @param enum pZoom level, optional.
+	 */
+	interpretCommand: function(pString, pMapObject, pZoom, pPin)
+	{
+		if (pString.indexOf(Z.cCommandPrefix) === 0)
+		{
+			// If input starts with a console command
+			Z.parseConsoleCommand(pString, pMapObject);
+		}
+		else if (pString.indexOf(I.cChatcodePrefix) === 0)
+		{
+			// If input is a chatcode
+			I.print(U.getGameIDFromChatlink(pString, true));
+		}
+		else if (pMapObject.parsePersonalPath(pString) === false)
+		{
+			// If input looks like a 2D array of coordinates, then create pins from them
+			pMapObject.goToArguments(pString, pZoom, pPin);
+		}
+	},
+	
+	/*
+	 * Executes a console command.
+	 * @param string pString command.
+	 * @param object pMapObject which map the command was executed from.
+	 */
+	parseConsoleCommand: function(pString, pMapObject)
+	{
+		var that = pMapObject;
+		var args = pString.substring(1, pString.length).split(" "); // Trim the command prefix character
+		var argstr = pString.substring(pString.indexOf(" ") + 1, pString.length);
+		var command = args[0].toLowerCase();
+		
+		var Commands = {
+			clear: {usage: "Clears the console screen.", f: function()
+			{
+				I.clear();
+			}},
+			speak: {usage: "Speaks the given text. <em>Parameters: str_text</em>", f: function()
+			{
+				D.speak(argstr);
+			}},
+			gps: {usage: "Prints GPS location information.", f: function()
+			{
+				I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />Direction: " + U.formatJSON(GPSDirectionArray) + "<br />Camera: " + U.formatJSON(GPSCameraArray));
+			}},
+			identity: {usage: "Prints GPS general information.", f: function()
+			{
+				U.prettyJSON(GPSIdentityJSON);
+			}},
+			lock: {usage: "Map cannot be moved.", f: function()
+			{
+				that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked.");
+			}},
+			unlock: {usage: "Map can be moved.", f: function()
+			{
+				that.Map.dragging.enable(); that.Map.scrollWheelZoom.enable(); I.write("Map unlocked.");
+			}},
+			nct: {usage: "Disables the map's context menu.", f: function()
+			{
+				that.Map.off("contextmenu"); I.write("Map context menu disabled.");
+			}},
+			link: {usage: "Prints a coordinates URL of the current map view.", f: function()
+			{
+				I.print(I.cSiteURL + that.convertLCtoGC(that.Map.getCenter()), true);
+			}},
+			dart: {usage: "Draws personal pins at random map locations. <em>Parameters: int_quantity</em>", f: function()
+			{
+				that.drawRandom(args[1]);
+			}},
+			nodes: {usage: "Sorts and prints a list coordinates. <em>Parameters: arr_coordinates</em>", f: function()
+			{
+				P.printNodes(P.sortCoordinates(M.parseCoordinatesMulti(args[1])));
+			}},
+			needles: {usage: "Numbers and prints a list of coordinates. <em>Parameters: arr_coordinates</em>", f: function()
+			{
+				P.printNodes(M.parseCoordinatesMulti(args[1]), true);
+			}},
+			latlngs: {usage: "Converts an array of LatLng's to standard coordinates. <em>Parameters: arr_latlngs</em>", f: function()
+			{
+				that.convertLatLngs(JSON.parse(argstr));
+			}},
+			jsonparse: {usage: "Converts a JSON string into an object for testing. <em>Parameters: str_json</em>", f: function()
+			{
+				try { Z.APICacheConsole = JSON.parse(argstr); I.print("Parse JSON successful."); }
+				catch(e) { I.print("Parse JSON failed."); }
+			}},
+			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, int_limit (optional), str_querystring (optional)</em>", f: function()
+			{
+				Z.printAPI(args[1], args[2], args[3]);
+			}},
+			apicache: {usage: "Prints the cache of the previous console API call as an associative array. <em>Parameters: bol_wantoutputasfile (optional)</em>", f: function()
+			{
+				Z.printAPICache(0, args[1]);
+			}},
+			apicachearray: {usage: "...as an array.", f: function()
+			{
+				Z.printAPICache(1, args[1]);
+			}},
+			apicacheobject: {usage: "...as an object.", f: function()
+			{
+				Z.printAPICache(2, args[1]);
+			}},
+			apicacheids: {usage: "...as IDs.", f: function()
+			{
+				Z.printAPICache(3, args[1]);
+			}},
+			acc: {usage: "Prints the output of an account API URL &quot;"
+				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. Replace spaces with &quot;%20&quot;", f: function()
+			{
+				A.printAccount(args[1]);
+			}},
+			daily: {usage: "Prints today's and tomorrow's daily achievements.", f: function()
+			{
+				Z.printDaily();
+			}},
+			item: {usage: "Prints an item's information. <em>Parameters: int_itemid</em>", f: function()
+			{
+				Z.printAPI("items/" + args[1]);
+			}},
+			items: {usage: "Prints the highest numbered item IDs in the API. <em>Parameters: int_offset</em>", f: function()
+			{
+				Z.printItemsAPI(args[1]);
+			}},
+			events: {usage: "Prints the event names of the current zone, dynamic events option must be enabled.", f: function()
+			{
+				P.printZoneEvents();
+			}},
+			help: {usage: "Prints this help message.", f: function()
+			{
+				I.write("Available console commands:<br />");
+				var s = "";
+				for (var i in Commands)
+				{
+					s += "<b>" + i + "</b> - " + Commands[i].usage + "<br />";
+				}
+				s += "<br />The console also accepts: coordinates, array of coordinates, zone names, and chatcodes.<br />";
+				I.print(s);
+			}},
+			test: {usage: "Test function for debugging.", f: function()
+			{
+				
+			}}
+		};
+		// Execute the command by finding it in the object
+		if (Commands[command] !== undefined)
+		{
+			(Commands[command].f)();
+		}
+	},
+	
+	/*
+	 * Creates a blob file with the provided text.
+	 * @param string pString source text.
+	 * @returns string URL to download the generated file.
+	 */
+	createFile: function(pString, pWantLink)
+	{
+		var data = new Blob([pString], {type: "text/plain"});
+		// Delete previous file if exists
+		if (Z.APICacheFile !== null)
+		{
+			window.URL.revokeObjectURL(Z.APICacheFile);
+		}
+		// Generate the file and its download URL
+		Z.APICacheFile = window.URL.createObjectURL(data);
+		if (pWantLink)
+		{
+			I.print("<a href='" + Z.APICacheFile + "' target='_blank'>" + Z.APICacheFile + "</a>");
+		}
+		return Z.APICacheFile;
+	},
+	
+	/*
+	 * Prints a v2 API endpoint by querying each element in the array it
+	 * returned, or just the object.
+	 * @param string pString of API
+	 * @param int pLimit of array elements to print, optional.
+	 * @param string pQueryStr arguments for the API url, optional.
+	 */
+	printAPI: function(pString, pLimit, pQueryStr)
+	{
+		I.print("Gathering elements...");
+		var legacyprefix = "v1";
+		var limit = Number.POSITIVE_INFINITY;
+		var providedarray = null;
+		var scrapethreshold = 256; // Minimum array size to begin scraping
+		var querystr = (pQueryStr === undefined) ? "" : pQueryStr;
+		var counter = 0;
+		var url = U.URL_API.Prefix + pString;
+		
+		var printResult = function()
+		{
+			I.clear();
+			// Sort the objects by their IDs
+			U.prettyJSON(Z.APICacheArrayOfObjects);
+			if (Z.APICacheArrayOfObjects.length > 0 && Z.APICacheArrayOfObjects[0].id)
+			{
+				U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
+			}
+			else
+			{
+				Z.printAPICache(1);
+			}
+		};
+		var printIcon = function(pData)
+		{
+			var data = (typeof pData === "string") ? JSON.parse(pData) : pData;
+			if (data.icon)
+			{
+				I.print("<img class='cssRight' src='" + U.escapeHTML(data.icon) + "' />");
+			}
+		};
+		// Function to print retrieved data, or fetch more data if the original data is an array
+		var iterateData = function(pData)
+		{
+			var length = (pData.length === undefined) ? 0 : pData.length;
+			if (Array.isArray(pData))
+			{
+				if (length > scrapethreshold)
+				{
+					// Delegate the heavier task of large array scraping to another function
+					I.print("Array is too big for one simultaneous request, requesting in batches with wait in between...");
+					Z.scrapeAPIArray(pData, pString, querystr);
+				}
+				else
+				{
+					I.print("Retrieved array:<br />" + U.escapeJSON(pData));
+					Z.APICacheArrayOfIDs = pData;
+					Z.APICacheArrayOfObjects = [];
+					var successlength = length;
+					for (var i = 0; i < length; i++)
+					{
+						if (i === limit)
+						{
+							break;
+						}
+						(function(iIndex)
+						{
+							$.getJSON(url + "/" + pData[iIndex] + querystr, function(pDataInner)
+							{
+								I.print("Retrieved an element: " + iIndex);
+								Z.APICacheArrayOfObjects.push(pDataInner);
+							}).done(function()
+							{
+								// Print the result when all elements have been queried
+								if (counter === successlength - 1 || counter === limit - 1)
+								{
+									printResult();
+								}
+								counter++;
+							}).fail(function()
+							{
+								successlength--;
+								if (counter === successlength - 1 || counter === limit - 1)
+								{
+									printResult();
+								}
+								I.print("Unable to retrieve API array element at: " + U.escapeHTML(url + "/" + pData[iIndex]));
+							});
+						})(i);
+					}
+				}
+			}
+			else
+			{
+				printIcon(pData);
+				U.prettyJSON(pData);
+			}
+		};
+		
+		// Determine actions depending on parameters
+		if (pLimit !== undefined && pString !== legacyprefix)
+		{
+			// Query string may be sent in place of the limit parameter
+			if (U.isInteger(pLimit))
+			{
+				limit = pLimit;
+			}
+			// If provided an array of IDs
+			else if (typeof pLimit === "string" && pLimit.charAt(0) === "[")
+			{
+				try
+				{
+					providedarray = JSON.parse(pLimit);
+					if (Array.isArray(providedarray))
+					{
+						iterateData(providedarray);
+					}
+				}
+				catch(e)
+				{
+					I.print("Error parsing custom array.");
+				}
+			}
+			else
+			{
+				querystr = pLimit;
+			}
+		}
+		
+		// If requesting v1 API by entering it in the first parameter
+		if (pString === legacyprefix)
+		{
+			url = U.URL_API.Prefix1 + pLimit;
+		}
+		
+		// Fetch if did not provide an array in the parameter
+		if ( ! providedarray)
+		{
+			$.get(url + querystr, function(pData)
+			{
+				iterateData(pData);
+			}).fail(function()
+			{
+				I.print("Unable to retrieve API at: " + U.escapeHTML(url));
+			});
+		}
+	},
+	
+	/*
+	 * Prints the cached API arrays and objects.
+	 * @param int pRequest type, see below.
+	 * @param boolean pWantFile whether to output to a file or print to console.
+	 */
+	printAPICache: function(pRequest, pWantFile)
+	{
+		var output = "";
+		var obj;
+		var wantfile = (pWantFile === "true" || pWantFile === true);
+		
+		// Compile the output
+		if (pRequest === 0 || pRequest === 1)
+		{
+			if (Z.APICacheArrayOfObjects)
+			{
+				var length = Z.APICacheArrayOfObjects.length;
+				var brk = (wantfile) ? "\r\n" : "<br />";
+				var quo = (wantfile) ? "\"" : "&quot;";
+				output += "{" + brk;
+				for (var i = 0; i < length; i++)
+				{
+					obj = Z.APICacheArrayOfObjects[i];
+					output += ((pRequest === 0) ? (quo + obj.id + quo + ": ") : "")
+						+ U.lineJSON(obj)
+					+ ((i === length - 1) ? "" : ",") + brk;
+				}
+				output += "}";
+			}
+			else
+			{
+				output = "API Objects Array is empty.";
+			}
+		}
+		else if (pRequest === 2)
+		{
+			output = (Z.APICacheArrayOfObjects) ?
+				((wantfile) ? U.lineJSON(Z.APICacheArrayOfObjects) : U.escapeJSON(Z.APICacheArrayOfObjects)) : "API Objects Array is empty.";
+		}
+		else if (pRequest === 3)
+		{
+			output = (Z.APICacheArrayOfIDs) ?
+			((wantfile) ? U.lineJSON(Z.APICacheArrayOfIDs) : U.escapeJSON(Z.APICacheArrayOfIDs)) : "API IDs Array is empty.";
+		}
+		
+		// Print or generate the output
+		if (wantfile)
+		{
+			Z.createFile(output, true);
+		}
+		else
+		{
+			I.print(output);
+		}
+	},
+	
+	/*
+	 * Gets the latest items that was added to the API item database.
+	 * @param int pSmartIndex if positive, will list that many latest items;
+	 * if negative, will list the item at that index, from end of the array.
+	 * @returns string of item details.
+	 */
+	printItemsAPI: function(pSmartIndex)
+	{
+		if (U.isInteger(pSmartIndex) === false)
+		{
+			I.write("Invalid reverse index.");
+			return;
+		}
+		else
+		{
+			I.write("Retrieving items...");
+			pSmartIndex = parseInt(pSmartIndex);
+		}
+		
+		if (E.ItemsArray.length === 0)
+		{
+			$.get(U.URL_API.ItemDatabase, function(pData)
+			{
+				E.ItemsArray = pData;
+			}).done(function()
+			{
+				Z.printItemsAPI(pSmartIndex);
+			}).fail(function()
+			{
+				I.write("Unable to retrieve API items database.");
+			});
+		}
+		else
+		{
+			var requesteditem = 0;
+			var index = 0;
+			if (pSmartIndex <= 0)
+			{
+				index = E.ItemsArray.length + pSmartIndex - 1;
+				requesteditem = E.ItemsArray[index];
+				Q.getItem(requesteditem, function(pData)
+				{
+					I.print("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData));
+				}).fail(function()
+				{
+					I.write("Unable to retrieve item: " + index);
+				});
+			}
+			else
+			{
+				I.clear();
+				for (var i = 0; i < pSmartIndex; i++)
+				{
+					index = E.ItemsArray.length - pSmartIndex - 1 - i;
+					requesteditem = E.ItemsArray[index];
+					Q.getItem(requesteditem, function(pData)
+					{
+						I.print("<img class='cssLeft' src='" + pData.icon + "' />" + U.escapeJSON(pData));
+					}).fail(function()
+					{
+						I.write("Unable to retrieve item: " + index);
+					});
+				}
+			}
+			
+		}
+	},
+	
+	/*
+	 * Takes an array of API endpoint ID numbers and download every object that
+	 * they point to, and amass them into an accessible array of objects.
+	 * @param intarray pArray downloaded from API.
+	 * @param string pString suffix of API endpoint.
+	 * @param string pQueryStr arguments for the API url, optional.
+	 */
+	scrapeAPIArray: function(pArray, pString, pQueryStr)
+	{
+		var querystr = pQueryStr || "";
+		var idsarray = [];
+		var failedids = [];
+		var reqindex = 0;
+		var reqlimit = 500;
+		var reqcooldownms = 30000;
+		var itemstoretrieve = 0;
+		var itemsretrieved = 0;
+		
+		var finalizeScrape = function()
+		{
+			if (itemsretrieved === itemstoretrieve)
+			{
+				if (failedids.length > 0)
+				{
+					I.print("WARNING - Failed to retrieve some IDs: " + failedids);
+				}
+				else
+				{
+					I.print("All IDs successfully retrieved.");
+				}
+				// Sort the objects by their IDs
+				if (Z.APICacheArrayOfObjects.length > 0 && Z.APICacheArrayOfObjects[0].id)
+				{
+					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
+				}
+				I.print("Scrape completed. Enter /apicache to print the results.");
+			}
+		};
+		
+		var iterateIDs = function()
+		{
+			var reqcounter = 0;
+			for (var i = reqindex; i < idsarray.length; i++)
+			{
+				if (reqcounter === reqlimit)
+				{
+					waitCooldown();
+					return;
+				}
+				else
+				{
+					retrieveObject(idsarray[i], reqindex);
+				}
+				reqindex++;
+				reqcounter++;
+			}
+		};
+		
+		var retrieveObject = function(pID)
+		{
+			$.getJSON(U.URL_API.Prefix + pString + "/" + pID + querystr, function(pData)
+			{
+				Z.APICacheArrayOfObjects.push(pData);
+				// Check for completion
+				itemsretrieved++;
+				finalizeScrape();
+			}).fail(function()
+			{
+				failedids.push(pID);
+				// Check for completion
+				itemstoretrieve--;
+				finalizeScrape();
+			});
+		};
+		
+		var waitCooldown = function()
+		{
+			var percentcomplete = U.convertRatioToPercent(reqindex / idsarray.length);
+			var secremaining = Math.ceil((idsarray.length - reqindex) / reqlimit) * ~~(reqcooldownms / T.cMSECONDS_IN_SECOND);
+			I.print("Cooldown... " + reqindex + " / " + idsarray.length
+				+ " (" + percentcomplete + ")" + " " + T.formatTimeLetter(secremaining, true) + " remaining.");
+			setTimeout(function()
+			{
+				iterateIDs();
+			}, reqcooldownms);
+		};
+		
+		// Start the process
+		Z.APICacheArrayOfIDs = pArray;
+		Z.APICacheArrayOfObjects = [];
+		idsarray = pArray;
+		itemstoretrieve = idsarray.length;
+		iterateIDs();
+	},
+	
+	/*
+	 * Categorizes API skins from a completely downloaded array of skins objects.
+	 * @pre Cache array of objects was assigned.
+	 */
+	collateSkins: function()
+	{
+		var catobj = A.Metadata.Skins;
+		
+		var arr = Z.APICacheArrayOfObjects;
+		var obj, key;
+		var uncatids = [];
+		if (arr === undefined || arr === null)
+		{
+			I.print("API cache array is unassigned.");
+			return;
+		}
+		
+		for (var i = 0; i < arr.length; i++)
+		{
+			key = null;
+			obj = arr[i];
+			if (obj.type === undefined)
+			{
+				continue;
+			}
+			// Determine the skin's category name
+			if (obj.type === "Armor" && obj.details && obj.details.type && obj.details.weight_class)
+			{
+				key = obj.type + "_" + obj.details.weight_class + "_" + obj.details.type;
+			}
+			else if (obj.type === "Weapon" && obj.details && obj.details.type)
+			{
+				key = obj.type + "_" + obj.details.type;
+			}
+			else if (obj.type === "Back")
+			{
+				key = obj.type;
+			}
+			
+			// Insert the skin ID into a category array
+			if (key && catobj[key])
+			{
+				(catobj[key]).push(obj.id);
+			}
+			else
+			{
+				uncatids.push(obj.id);
+			}
+		}
+		
+		if (uncatids.length > 0)
+		{
+			I.print("Uncategorized IDs: " + U.printJSON(uncatids));
+		}
+		U.printJSON(catobj);
+	},
+	
+	/*
+	 * Prints the current daily achievements.
+	 * @param boolean pWantTomorrow whether to get tomorrow's instead of today's.
+	 */
+	printDaily: function(pWantTomorrow)
+	{
+		var numfetched = 0;
+		var numtofetch = 0;
+		var dailyobj = {};
+		var finalizeDaily = function()
+		{
+			if (numtofetch === numfetched)
+			{
+				if (pWantTomorrow === undefined)
+				{
+					I.print("TODAY'S DAILIES");
+				}
+				for (var i in dailyobj)
+				{
+					I.print(i);
+					for (var ii in dailyobj[i])
+					{
+						var ach = (dailyobj[i])[ii];
+						U.prettyJSON(ach);
+					}
+				}
+				// Also recursively print tomorrow's
+				if (pWantTomorrow === undefined)
+				{
+					I.print("<br />");
+					I.print("TOMORROW'S DAILIES");
+					Z.printDaily(true);
+				}
+			}
+		};
+		
+		var url = (pWantTomorrow) ? U.URL_API.Tomorrow : U.URL_API.Daily;
+		$.getJSON(url + U.URL_API.LangKey, function(pData)
+		{
+			for (var i in pData)
+			{
+				numtofetch += (pData[i]).length;
+			}
+			for (var i in pData)
+			{
+				dailyobj[i] = [];
+				for (var ii in pData[i])
+				{
+					var ach = (pData[i])[ii];
+					(function(iAchArray, iAch)
+					{
+						$.getJSON(U.getAPIAchievement(iAch.id), function(iData)
+						{
+							iData.level = iAch.level; // Append the level from the daily object to the actual achievement
+							iAchArray.push(iData);
+						}).always(function()
+						{
+							numfetched++;
+							finalizeDaily();
+						});
+					})(dailyobj[i], ach);
+				}
+			}
+		});
+	}
+};
+
+/* =============================================================================
  * @@Account panel and API key management
  * ========================================================================== */
 A = {
@@ -4667,8 +4686,8 @@ A = {
 		$("#accConsole").onEnterKey(function()
 		{
 			var val = $(this).val();
-			var str = (val.charAt(0) === U.CommandPrefix) ? val : U.CommandPrefix + val;
-			U.parseConsoleCommand(str, M);
+			var str = (val.charAt(0) === Z.cCommandPrefix) ? val : Z.cCommandPrefix + val;
+			Z.parseConsoleCommand(str, M);
 		});
 		
 		// Initialize context menu for bank and inventory slots
@@ -6455,6 +6474,33 @@ V = {
 	},
 	
 	/*
+	 * Generates the toys bank window.
+	 */
+	serveToys: function()
+	{
+		if (V.requireCharacters("Toys"))
+		{
+			return;
+		}
+		else if ( ! A.Data.Characters[0].bags)
+		{
+			A.printError(A.PermissionEnum.Inventories);
+			return;
+		}
+		
+		var dish = $("#accDish_Toys");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		var bank = Q.createBank(dish).find(".bnkBank");
+		$.getJSON(A.getURL(A.URL.Bank), function(pData)
+		{
+			
+		});
+	},
+	
+	/*
 	 * Generates the items bank window.
 	 */
 	serveBank: function()
@@ -6837,7 +6883,10 @@ V = {
 		{
 			$.getJSON(A.getURL(A.URL.Minis), function(pData)
 			{
-				generateMinis(pData);
+				Q.loadItemsDatabase("minis", function()
+				{
+					generateMinis(pData);
+				});
 			}).fail(function()
 			{
 				A.printError(A.PermissionEnum.Unlocks);
@@ -13020,7 +13069,7 @@ M = {
 		$(htmlidprefix + "CoordinatesCopy").onEnterKey(function()
 		{
 			var val = $(this).val();
-			U.interpretCommand(val, that, that.ZoomEnum.Ground, that.Pin.Program);
+			Z.interpretCommand(val, that, that.ZoomEnum.Ground, that.Pin.Program);
 		});
 		
 		/*
@@ -15211,7 +15260,7 @@ M = {
 		pLink.click(function()
 		{
 			var command = $(this).attr("data-coord");
-			U.interpretCommand(command, that, pZoom, pPin);
+			Z.interpretCommand(command, that, pZoom, pPin);
 		});
 		
 		pLink.dblclick(function()
@@ -24107,7 +24156,6 @@ I = {
 	cAJAXGlobalTimeout: 30000, // milliseconds
 	cPNG: ".png", // Almost all used images are PNG
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
-	cConsoleCommandPrefix: "/",
 	cChatcodePrefix: "[&",
 	cChatcodeSuffix: "]",
 	cTextDelimiterChar: "|",
@@ -24246,6 +24294,7 @@ I = {
 			Hero: "Hero",
 			Equipment: "Equipment",
 			Inventory: "Inventory",
+			Toys: "Toys",
 			Crafting: "Crafting",
 			Trading: "Trading",
 			PVP: "PVP",

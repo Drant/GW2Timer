@@ -382,7 +382,6 @@ Gem: [
 	{u: 320, i: 69621, n: "Miniature Moose", p: {gem: 350}},
 	{u: 148, i: 42592, n: "Mini Black Bear Cub", p: {gem: 400}},
 	{u: 328, i: 69658, n: "Mini Blue Drake Hatchling", p: {gem: 400}},
-	{u: 210, i: 49292, n: "Mini Arctic Fox Kit", p: {gem: 400}},
 	{u: 326, i: 69672, n: "Mini Snow Cougar Cub", p: {gem: 400}},
 	{u: 329, i: 69690, n: "Mini Beetle", p: {gem: 500}},
 	{u: 330, i: 69790, n: "Mini Rock", p: {gem: 350}},

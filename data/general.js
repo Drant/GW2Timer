@@ -1237,8 +1237,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-05-03T15:00:00Z"),
-	Finish: new Date("2016-05-10T15:00:00Z"),
+	Start: new Date("2016-05-10T15:00:00Z"),
+	Finish: new Date("2016-05-17T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1247,10 +1247,10 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Blue Shift Dye Kit",
-		id: "78734",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
+		name: "Cosmic Mining Tool",
+		img: "http://i.imgur.com/y4xETsX.png",
+		price: 1000,
+		discount: null,
 		col: 0
 	},
 	{
@@ -1265,6 +1265,20 @@ Sale: {
 		id: "78667",
 		price: 500,
 		discount: null,
+		col: 0
+	},
+	{
+		name: "Sloth Backpack",
+		img: "http://i.imgur.com/fxamd1w.png",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Blue Shift Dye Kit",
+		id: "78734",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 0
 	},
 	{
