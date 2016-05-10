@@ -22,7 +22,7 @@
 	<script>window.L || document.write('<script src="bin/leaflet.js"><\/script>');</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160509"></script>
+	<script type="text/javascript" src="data/general.js?v=20160510"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 <!-- Google Analytics -->
@@ -110,24 +110,26 @@
 			</div>
 			<article id="mapHUDPane">
 			<div id="mapExpandButton" class="mapExpandButton mapHUDButton btnHorizontal" title="<dfn>Click to Expand Map</dfn>"></div>
-			<div id="mapHUDBoxes">
-				<div id="itemDashboard">
-					<kbd id="dsbToggle" class="btnWindow btnToggle" title="<dfn>Toggle the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
-					<div id="dsbContainer">
-						<div id="dsbAnnouncement"></div>
-						<div id="dsbCountdown" title="<dfn>Countdown for Official GW2 Events</dfn><br /><span class='dsbCountdownDormant' style='font-size:20px'>■</span>: not started yet, counting down to when it starts.<br /><span class='dsbCountdownActive' style='font-size:20px'>■</span>: is happening, counting down to when it ends."></div>
-						<div id="dsbSale"></div>
-						<div id="dsbVendor"></div>
-						<div id="dsbStory" class="jsScrollable"></div>
+			<div id="mapHUDOuter">
+				<div id="mapHUDBoxes">
+					<div id="itemDashboard">
+						<kbd id="dsbToggle" class="btnWindow btnToggle" title="<dfn>Toggle the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
+						<div id="dsbContainer">
+							<div id="dsbAnnouncement"></div>
+							<div id="dsbCountdown" title="<dfn>Countdown for Official GW2 Events</dfn><br /><span class='dsbCountdownDormant' style='font-size:20px'>■</span>: not started yet, counting down to when it starts.<br /><span class='dsbCountdownActive' style='font-size:20px'>■</span>: is happening, counting down to when it ends."></div>
+							<div id="dsbSale"></div>
+							<div id="dsbVendor"></div>
+							<div id="dsbStory" class="jsScrollable"></div>
+						</div>
 					</div>
-				</div>
-				<div id="itemTimeline">
-					<kbd id="tmlToggle" class="btnWindow btnToggle" title="<dfn>Toggle the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
-					<div id="tmlContainer">
-						<kbd id="tmlOpaque" class="btnWindow btnOpaque" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
-						<kbd id="tmlDelete" class="btnWindow btnClose" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
-						<div id="tmlIndicator"></div>
-						<div id="tmlBisector"></div>
+					<div id="itemTimeline">
+						<kbd id="tmlToggle" class="btnWindow btnToggle" title="<dfn>Toggle the timeline.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
+						<div id="tmlContainer">
+							<kbd id="tmlOpaque" class="btnWindow btnOpaque" title="<dfn>Toggle timeline opacity.</dfn>"></kbd>
+							<kbd id="tmlDelete" class="btnWindow btnClose" title="<dfn>Permanently hide the timeline.</dfn> To restore, go to Options page, Map section."></kbd>
+							<div id="tmlIndicator"></div>
+							<div id="tmlBisector"></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -727,6 +729,7 @@
 					</div>
 					<h2>Map</h2>
 					<label title="Show/Hide the map."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
+					<label title="Show/Hide the container for Dashboard and Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD over the map</label>
 					<label title="Show/Hide GW2 official event countdowns and gem sales on the top right corner of the map pane. Requires reload."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard (on HUD)</label>
 					<label title="Show/Hide Heart of Thorns meta events timeline."><input id="opt_bol_showTimeline" type="checkbox" /> Show the timeline (on HUD)</label>
 					<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>

@@ -134,6 +134,7 @@ O = {
 		bol_alignPanelRight: true,
 		bol_showPanel: true,
 		bol_showMap: true,
+		bol_showHUD: true,
 		bol_showDashboard: true,
 		bol_showTimeline: true,
 		bol_opaqueTimeline: false,
@@ -488,128 +489,6 @@ O = {
 			return parseFloat(s);
 		}
 		return pString;
-	},
-	
-	/*
-	 * Sorts an array of objects by the provided key name, or language name if not.
-	 * @param array pObjects.
-	 * @objparam string aKeyName to key of each property to sort by.
-	 * @objparam boolean aIsDescending order, optional. Ascending is default order.
-	 * @objparam boolean aIsNumbers whether to interpret the keys as integers.
-	 */
-	sortObjects: function(pObjects, pSettings)
-	{
-		var Settings = pSettings || {};
-		var key = (Settings.aKeyName) ? Settings.aKeyName : D.getNameKey();
-		if (Settings.aIsDescending)
-		{
-			pObjects.sort(function(a, b)
-			{
-				var valA = (Settings.aIsNumbers && typeof a[key] === "string") ? U.stripToNumbers(a[key]) : a[key];
-				var valB = (Settings.aIsNumbers && typeof b[key] === "string") ? U.stripToNumbers(b[key]) : b[key];
-				if (valA < valB)
-				{
-					return 1;
-				}
-				if (valA > valB)
-				{
-					return -1;
-				}
-				return 0;
-			});
-		}
-		else
-		{
-			pObjects.sort(function(a, b)
-			{
-				var valA = (Settings.aIsNumbers && typeof a[key] === "string") ? U.stripToNumbers(a[key]) : a[key];
-				var valB = (Settings.aIsNumbers && typeof b[key] === "string") ? U.stripToNumbers(b[key]) : b[key];
-				if (valA > valB)
-				{
-					return 1;
-				}
-				if (valA < valB)
-				{
-					return -1;
-				}
-				return 0;
-			});
-		}
-	},
-	
-	/*
-	 * Gets the length of a uniform associative array object.
-	 * @param object pObject to count.
-	 * @returns int number of subobjects in object.
-	 */
-	getObjectLength: function(pObject)
-	{
-		var count = 0;
-		for (var i in pObject)
-		{
-			count++;
-		}
-		return count;
-	},
-	
-	/*
-	 * Converts an integer to boolean.
-	 * @param int pInteger to convert.
-	 * @returns boolean true only if integer is greater than 0.
-	 */
-	intToBool: function(pInteger)
-	{
-		if (pInteger > 0)
-		{
-			return true;
-		}
-		return false;
-	},
-	boolToInt: function(pBoolean)
-	{
-		if (pBoolean)
-		{
-			return 1;
-		}
-		return 0;
-	},
-	stringToBool: function(pString)
-	{
-		if (pString.toLowerCase() === "true")
-		{
-			return true;
-		}
-		return false;
-	},
-	boolToString: function(pBoolean)
-	{
-		if (pBoolean)
-		{
-			return "true";
-		}
-		return "false";
-	},
-	randomBool: function()
-	{
-		return (Math.random() > 0.5) ? true : false;
-	},
-	isInteger: function(pValue)
-	{
-		return !isNaN(pValue) && (function(x) { return (x | 0) === x; })(parseFloat(pValue));
-	},
-	
-	/*
-	 * Returns false if object is undefined or null or falsy, otherwise true.
-	 * @param object pObject to test.
-	 * @returns boolean whether object exists.
-	 */
-	objToBool: function(pObject)
-	{
-		if (pObject)
-		{
-			return true;
-		}
-		return false;
 	},
 	
 	/*
@@ -1393,6 +1272,11 @@ O = {
 				M.refreshMap();
 			}
 		},
+		bol_showHUD: function()
+		{
+			$("#mapHUDOuter").toggle(O.Options.bol_showHUD);
+			$("#mapHUDBoxes").toggle(O.Options.bol_showHUD);
+		},
 		bol_showCoordinatesBar: function()
 		{
 			M.toggleCoordinatesBar();
@@ -1753,7 +1637,7 @@ X = {
 		if (pConversion === O.TypeEnum.isBoolean)
 		{
 			// Returns false only if unchecked
-			return O.intToBool(parseInt(thechar));
+			return U.intToBool(parseInt(thechar));
 		}
 		return thechar;
 	},
@@ -2579,7 +2463,7 @@ X = {
 	}
 };
 
-/* ============================p=================================================
+/* =============================================================================
  * @@URL management for links and string manipulation
  * ========================================================================== */
 U = {
@@ -2753,6 +2637,7 @@ U = {
 		All: 5
 	},
 	
+	APICacheFile: null, // Stores the URL to a generated blob file
 	APICacheArrayOfIDs: null, // Array of ID numbers for any particular v2 API endpoint
 	APICacheArrayOfObjects: null, // Array of objects downloaded from the IDs pointing there
 	APICacheConsole: null, // JSON text entered by the user
@@ -2887,21 +2772,21 @@ U = {
 			{
 				U.printAPI(args[1], args[2], args[3]);
 			}},
-			apicache: {usage: "Prints the cache of the previous console API call as an associative array.", f: function()
+			apicache: {usage: "Prints the cache of the previous console API call as an associative array. <em>Parameters: bol_wantoutputasfile (optional)</em>", f: function()
 			{
-				U.printAPICache();
+				U.printAPICache(0, args[1]);
 			}},
 			apicachearray: {usage: "...as an array.", f: function()
 			{
-				U.printAPICache(1);
+				U.printAPICache(1, args[1]);
 			}},
 			apicacheobject: {usage: "...as an object.", f: function()
 			{
-				U.printAPICache(2);
+				U.printAPICache(2, args[1]);
 			}},
 			apicacheids: {usage: "...as IDs.", f: function()
 			{
-				U.printAPICache(3);
+				U.printAPICache(3, args[1]);
 			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
 				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. Replace spaces with &quot;%20&quot;", f: function()
@@ -2948,6 +2833,28 @@ U = {
 	},
 	
 	/*
+	 * Creates a blob file with the provided text.
+	 * @param string pString source text.
+	 * @returns string URL to download the generated file.
+	 */
+	createFile: function(pString, pWantLink)
+	{
+		var data = new Blob([pString], {type: "text/plain"});
+		// Delete previous file if exists
+		if (U.APICacheFile !== null)
+		{
+			window.URL.revokeObjectURL(U.APICacheFile);
+		}
+		// Generate the file and its download URL
+		U.APICacheFile = window.URL.createObjectURL(data);
+		if (pWantLink)
+		{
+			I.print("<a href='" + U.APICacheFile + "' target='_blank'>" + U.APICacheFile + "</a>");
+		}
+		return U.APICacheFile;
+	},
+	
+	/*
 	 * Prints a v2 API endpoint by querying each element in the array it
 	 * returned, or just the object.
 	 * @param string pString of API
@@ -2972,7 +2879,7 @@ U = {
 			U.prettyJSON(U.APICacheArrayOfObjects);
 			if (U.APICacheArrayOfObjects.length > 0 && U.APICacheArrayOfObjects[0].id)
 			{
-				O.sortObjects(U.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
+				U.sortObjects(U.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
 			}
 			else
 			{
@@ -3049,7 +2956,7 @@ U = {
 		if (pLimit !== undefined && pString !== legacyprefix)
 		{
 			// Query string may be sent in place of the limit parameter
-			if (O.isInteger(pLimit))
+			if (U.isInteger(pLimit))
 			{
 				limit = pLimit;
 			}
@@ -3096,19 +3003,35 @@ U = {
 	
 	/*
 	 * Prints the cached API arrays and objects.
+	 * @param int pRequest type, see below.
+	 * @param boolean pWantFile whether to output to a file or print to console.
 	 */
-	printAPICache: function(pRequest)
+	printAPICache: function(pRequest, pWantFile)
 	{
 		var output = "";
 		var obj;
-		if (pRequest === undefined || pRequest === 1)
+		var wantfile = (pWantFile === "true" || pWantFile === true);
+		
+		// Compile the output
+		if (pRequest === 0 || pRequest === 1)
 		{
 			if (U.APICacheArrayOfObjects)
 			{
-				for (var i = 0; i < U.APICacheArrayOfObjects.length; i++)
+				if (wantfile)
 				{
-					obj = U.APICacheArrayOfObjects[i];
-					output += ((pRequest === undefined) ? "&quot;" + obj.id + "&quot;: " : "") + U.escapeJSON(obj) + ",<br />";
+					for (var i = 0; i < U.APICacheArrayOfObjects.length; i++)
+					{
+						obj = U.APICacheArrayOfObjects[i];
+						output += ((pRequest === 0) ? "\"" + obj.id + "\": " : "") + U.lineJSON(obj) + ",\r\n";
+					}
+				}
+				else
+				{
+					for (var i = 0; i < U.APICacheArrayOfObjects.length; i++)
+					{
+						obj = U.APICacheArrayOfObjects[i];
+						output += ((pRequest === 0) ? "&quot;" + obj.id + "&quot;: " : "") + U.escapeJSON(obj) + ",<br />";
+					}
 				}
 			}
 			else
@@ -3118,13 +3041,24 @@ U = {
 		}
 		else if (pRequest === 2)
 		{
-			output = (U.APICacheArrayOfObjects) ? U.escapeJSON(U.APICacheArrayOfObjects) : "API Objects Array is empty.";
+			output = (U.APICacheArrayOfObjects) ?
+				((wantfile) ? U.lineJSON(U.APICacheArrayOfObjects) : U.escapeJSON(U.APICacheArrayOfObjects)) : "API Objects Array is empty.";
 		}
 		else if (pRequest === 3)
 		{
-			output = (U.APICacheArrayOfIDs) ? U.escapeJSON(U.APICacheArrayOfIDs) : "API IDs Array is empty.";
+			output = (U.APICacheArrayOfIDs) ?
+			((wantfile) ? U.lineJSON(U.APICacheArrayOfIDs) : U.escapeJSON(U.APICacheArrayOfIDs)) : "API IDs Array is empty.";
 		}
-		I.print(output);
+		
+		// Print or generate the output
+		if (wantfile)
+		{
+			U.createFile(output, true);
+		}
+		else
+		{
+			I.print(output);
+		}
 	},
 	
 	/*
@@ -3135,7 +3069,7 @@ U = {
 	 */
 	printItemsAPI: function(pSmartIndex)
 	{
-		if (O.isInteger(pSmartIndex) === false)
+		if (U.isInteger(pSmartIndex) === false)
 		{
 			I.write("Invalid reverse index.");
 			return;
@@ -3228,7 +3162,7 @@ U = {
 				// Sort the objects by their IDs
 				if (U.APICacheArrayOfObjects.length > 0 && U.APICacheArrayOfObjects[0].id)
 				{
-					O.sortObjects(U.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
+					U.sortObjects(U.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
 				}
 				I.print("Scrape completed. Enter /apicache to print the results.");
 			}
@@ -3656,6 +3590,128 @@ U = {
 			} break;
 		}
 		return "null";
+	},
+	
+	/*
+	 * Sorts an array of objects by the provided key name, or language name if not.
+	 * @param array pObjects.
+	 * @objparam string aKeyName to key of each property to sort by.
+	 * @objparam boolean aIsDescending order, optional. Ascending is default order.
+	 * @objparam boolean aIsNumbers whether to interpret the keys as integers.
+	 */
+	sortObjects: function(pObjects, pSettings)
+	{
+		var Settings = pSettings || {};
+		var key = (Settings.aKeyName) ? Settings.aKeyName : D.getNameKey();
+		if (Settings.aIsDescending)
+		{
+			pObjects.sort(function(a, b)
+			{
+				var valA = (Settings.aIsNumbers && typeof a[key] === "string") ? U.stripToNumbers(a[key]) : a[key];
+				var valB = (Settings.aIsNumbers && typeof b[key] === "string") ? U.stripToNumbers(b[key]) : b[key];
+				if (valA < valB)
+				{
+					return 1;
+				}
+				if (valA > valB)
+				{
+					return -1;
+				}
+				return 0;
+			});
+		}
+		else
+		{
+			pObjects.sort(function(a, b)
+			{
+				var valA = (Settings.aIsNumbers && typeof a[key] === "string") ? U.stripToNumbers(a[key]) : a[key];
+				var valB = (Settings.aIsNumbers && typeof b[key] === "string") ? U.stripToNumbers(b[key]) : b[key];
+				if (valA > valB)
+				{
+					return 1;
+				}
+				if (valA < valB)
+				{
+					return -1;
+				}
+				return 0;
+			});
+		}
+	},
+	
+	/*
+	 * Gets the length of a uniform associative array object.
+	 * @param object pObject to count.
+	 * @returns int number of subobjects in object.
+	 */
+	getObjectLength: function(pObject)
+	{
+		var count = 0;
+		for (var i in pObject)
+		{
+			count++;
+		}
+		return count;
+	},
+	
+	/*
+	 * Converts an integer to boolean.
+	 * @param int pInteger to convert.
+	 * @returns boolean true only if integer is greater than 0.
+	 */
+	intToBool: function(pInteger)
+	{
+		if (pInteger > 0)
+		{
+			return true;
+		}
+		return false;
+	},
+	boolToInt: function(pBoolean)
+	{
+		if (pBoolean)
+		{
+			return 1;
+		}
+		return 0;
+	},
+	stringToBool: function(pString)
+	{
+		if (pString.toLowerCase() === "true")
+		{
+			return true;
+		}
+		return false;
+	},
+	boolToString: function(pBoolean)
+	{
+		if (pBoolean)
+		{
+			return "true";
+		}
+		return "false";
+	},
+	randomBool: function()
+	{
+		return (Math.random() > 0.5) ? true : false;
+	},
+	isInteger: function(pValue)
+	{
+		return !isNaN(pValue) && (function(x) { return (x | 0) === x; })(parseFloat(pValue));
+	},
+	
+	/*
+	 * Returns false if object is undefined or null or falsy, otherwise true.
+	 * @param object pObject to test.
+	 * @returns boolean whether object exists.
+	 */
+	objToBool: function(pObject)
+	{
+		if (pObject)
+		{
+			return true;
+		}
+		return false;
 	},
 	
 	/*
@@ -5223,7 +5279,7 @@ V = {
 				value: parseFloat($(this).attr("data-value"))
 			});
 		});
-		O.sortObjects(sortable, {aKeyName: "value", aIsDescending: pOrder});
+		U.sortObjects(sortable, {aKeyName: "value", aIsDescending: pOrder});
 		
 		for (var i = 0; i < sortable.length; i++)
 		{
@@ -5247,7 +5303,7 @@ V = {
 				value: parseInt($(this).attr("data-value"))
 			});
 		});
-		O.sortObjects(sortable, {aKeyName: "value", aIsDescending: pOrder});
+		U.sortObjects(sortable, {aKeyName: "value", aIsDescending: pOrder});
 		
 		// Sort all the rows using the new order
 		for (var i = 0; i < sortable.length; i++)
@@ -5981,6 +6037,11 @@ V = {
 					V.generateTraits(spec[(buildmode.toLowerCase())], buildpanel);
 				});
 			});
+			// Automatically opens the PVE traits window if user mouses over respective hero window
+			subcontainer.one("mouseover", function()
+			{
+				traitwindow.find(".spzSwitch:first").trigger("click");
+			});
 		};
 		
 		/*
@@ -6575,7 +6636,7 @@ V = {
 		
 		var fillTab = function(pTab, pCatObj)
 		{
-			var numtofetch = O.getObjectLength(pCatObj);
+			var numtofetch = U.getObjectLength(pCatObj);
 			var numfetched = 0;
 			var slotscontainer = pTab.find(".bnkTabSlots");
 			for (var ii = 0; ii < pCatObj.length; ii++)
@@ -9659,7 +9720,7 @@ E = {
 					return;
 				}
 				// If entering an item ID
-				if (query.length >= 3 && O.isInteger(query))
+				if (query.length >= 3 && U.isInteger(query))
 				{
 					// Create popup container for the items result list
 					entry.find(".trdResultsContainer").remove();
@@ -12576,8 +12637,8 @@ C = {
 				var checked = ", " + D.getSpeechWord("checked");
 				var checkedsd = "";
 				var checkedhc = "";
-				var wantsd = O.objToBool(C.NextChainSD1);
-				var wanthc = O.objToBool(C.NextChainHC1);
+				var wantsd = U.objToBool(C.NextChainSD1);
+				var wanthc = U.objToBool(C.NextChainHC1);
 				var speech = D.getSpeechWord("next " + D.orderModifier("boss", "world") + " is") + " ";
 				
 				if (C.NextChainSD1 && ( ! C.isChainUnchecked(C.NextChainSD1)))
@@ -13175,7 +13236,7 @@ M = {
 			{
 				$(htmlidprefix + "ContextToggleHUD").click(function()
 				{
-					$(htmlidprefix + "HUDBoxes").toggle();
+					$("#opt_bol_showHUD").trigger("click");
 				});
 				$(htmlidprefix + "ContextDrawCompletion").click(function()
 				{
@@ -14469,7 +14530,7 @@ M = {
 			}
 			weapons.push(weapon);
 		});
-		O.sortObjects(weapons, {aKeyName: "id"});
+		U.sortObjects(weapons, {aKeyName: "id"});
 		return weapons;
 	},
 	
@@ -17483,7 +17544,7 @@ G = {
 		{
 			jptype = GW2T_JP_DATA.Type;
 			P.JPs = GW2T_JP_DATA.JP;
-			X.Checklists.JP.length = O.getObjectLength(P.JPs);
+			X.Checklists.JP.length = U.getObjectLength(P.JPs);
 			P.NodeArray.JP = P.createNodeArray(X.Checklists.JP.length);
 			var jp, jplink, marker, path, translatedname, keywords;
 			var pathcolor = P.getUserPathColor();
@@ -18238,7 +18299,7 @@ G = {
 			 */
 			$("#gldButton_Bounty").one("click", function()
 			{
-				O.sortObjects(P.Guild.Bounty.data);
+				U.sortObjects(P.Guild.Bounty.data);
 				for (var i in P.Guild.Bounty.data)
 				{
 					var mission = P.Guild.Bounty.data[i];
@@ -18286,7 +18347,7 @@ G = {
 			 */
 			$("#gldButton_Trek").one("click", function()
 			{
-				O.sortObjects(P.Guild.Trek.data);
+				U.sortObjects(P.Guild.Trek.data);
 				for (var i in P.Guild.Trek.data)
 				{
 					var mission = P.Guild.Trek.data[i];
@@ -18323,7 +18384,7 @@ G = {
 			$("#gldButton_Challenge").one("click", function()
 			{
 				P.Guild.Challenge.usedSubmaps = [];
-				O.sortObjects(P.Guild.Challenge.data);
+				U.sortObjects(P.Guild.Challenge.data);
 				for (var i in P.Guild.Challenge.data)
 				{
 					var mission = P.Guild.Challenge.data[i];
@@ -18375,7 +18436,7 @@ G = {
 			$("#gldButton_Rush").one("click", function()
 			{
 				P.Guild.Rush.usedSubmaps = [];
-				O.sortObjects(P.Guild.Rush.data);
+				U.sortObjects(P.Guild.Rush.data);
 				for (var i in P.Guild.Rush.data)
 				{
 					var mission = P.Guild.Rush.data[i];
@@ -18444,7 +18505,7 @@ G = {
 			$("#gldButton_Puzzle").one("click", function()
 			{
 				P.Guild.Puzzle.usedSubmaps = [];
-				O.sortObjects(P.Guild.Puzzle.data);
+				U.sortObjects(P.Guild.Puzzle.data);
 				for (var i in P.Guild.Puzzle.data)
 				{
 					var mission = P.Guild.Puzzle.data[i];
@@ -19181,7 +19242,7 @@ W = {
 		{
 			servers.push(W.Servers[i]);
 		}
-		O.sortObjects(servers);
+		U.sortObjects(servers);
 		
 		// Write the list
 		var server;
@@ -21900,20 +21961,10 @@ T = {
 				{
 					// Update daily icons
 					C.refreshChainDailyIcon();
-
 					if (Settings.aIsReset === true)
 					{
 						if (O.isServerReset)
 						{
-							var greetduration = 15;
-							var dailyspecialstr = "";
-							// Mention special dailies if appropriate
-							if (T.DailyToday.pve && T.DailyToday.pve[1] === "Forger")
-							{
-								dailyspecialstr += "<br />" + U.convertExternalString(B.Announcement.Messages.Forger);
-								greetduration += 10;
-							}
-							
 							// Tell today's world boss closest scheduled time if server resetted
 							var dailybossstr = D.getModifiedWord("boss", "daily", U.CaseEnum.Sentence) + " "
 								+ D.getObjectName(C.ChainToday) + " " + D.getTranslation("will start") + " " + D.getTranslation("at") + " "
@@ -21928,7 +21979,7 @@ T = {
 									aWantSeconds: false,
 									aCustomTimeInSeconds: T.getSecondsUntilChainStarts(C.ChainToday)
 								});
-							I.greet(dailybossstr + dailyspecialstr, greetduration);
+							I.greet(dailybossstr, 15);
 						}
 
 						// Subscribe to daily chain
@@ -21941,8 +21992,15 @@ T = {
 								subscriptionbutton.trigger("click");
 							}
 						}
-						
-						
+					}
+				}
+				if (Settings.aIsReset === true && O.isServerReset)
+				{
+					// Mention special dailies if appropriate
+					if (T.DailyToday.pve && T.DailyToday.pve[1] === "Forger")
+					{
+						var dailyspecialstr = U.convertExternalString(B.Announcement.Messages.Forger);
+						I.greet(dailyspecialstr, 15);
 					}
 				}
 			}
@@ -22205,7 +22263,7 @@ B = {
 						
 						var oldprice = null;
 						// Old price also includes percent off by dividing the new with the old
-						oldprice = (O.isInteger(item.discount)) ? item.discount : oldprice;
+						oldprice = (U.isInteger(item.discount)) ? item.discount : oldprice;
 						oldprice = (Array.isArray(item.discount) && item.discount[0].length > 2) ? ((item.discount[0])[2]) : oldprice;
 						var oldpricestr = (oldprice !== null) ? getOldPriceString(item.price, oldprice) : "";
 						// Write bulk discount hover information if available
@@ -22332,7 +22390,7 @@ B = {
 		var animationspeed = 200;
 		var weekdaylocation = B.getDashboardVendorWeekday();
 		var table = $("#dsbVendorTable");
-		var numoffers = O.getObjectLength(B.Vendor.Offers);
+		var numoffers = U.getObjectLength(B.Vendor.Offers);
 		
 		var finalizeVendorTable = function()
 		{
@@ -23397,9 +23455,9 @@ K = {
 				var timephrase = " " + D.getSpeechWord("will start") + D.getPluralTime(minutestill, "minute");
 				
 				speechwb = D.getSpeechWord(D.orderModifier(D.orderModifier("boss", "world"), "subscribed")) + " ";
-				wantsd = O.objToBool(chainsd) && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
-				wanthc = O.objToBool(chainhc) && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
-				wantls = O.objToBool(chainls) && (C.isChainSubscribed(chainls) && C.isChainUnchecked(chainls));
+				wantsd = U.objToBool(chainsd) && (C.isChainSubscribed(chainsd) && C.isChainUnchecked(chainsd));
+				wanthc = U.objToBool(chainhc) && (C.isChainSubscribed(chainhc) && C.isChainUnchecked(chainhc));
+				wantls = U.objToBool(chainls) && (C.isChainSubscribed(chainls) && C.isChainUnchecked(chainls));
 				
 				if (wantsd || wanthc)
 				{
@@ -23428,7 +23486,7 @@ K = {
 					for (var i = 0; i < chainsms.length; i++)
 					{
 						chainms = chainsms[i];
-						if (O.objToBool(chainms) && (C.isChainSubscribed(chainms) && C.isChainUnchecked(chainms)))
+						if (U.objToBool(chainms) && (C.isChainSubscribed(chainms) && C.isChainUnchecked(chainms)))
 						{
 							speechms += D.getChainPronunciation(chainms);
 							// Append a conjunction between names
@@ -23538,10 +23596,10 @@ K = {
 			var checkednextsd = "";
 			var checkedcurrenthc = "";
 			var checkednexthc = "";
-			var wantcurrentsd = O.objToBool(C.CurrentChainSD);
-			var wantcurrenthc = O.objToBool(C.CurrentChainHC);
-			var wantnextsd = O.objToBool(C.NextChainSD1);
-			var wantnexthc = O.objToBool(C.NextChainHC1);
+			var wantcurrentsd = U.objToBool(C.CurrentChainSD);
+			var wantcurrenthc = U.objToBool(C.CurrentChainHC);
+			var wantnextsd = U.objToBool(C.NextChainSD1);
+			var wantnexthc = U.objToBool(C.NextChainHC1);
 			var speech = D.getSpeechWord("world boss", "current") + " " + D.getSpeechWord("is") + " ";
 			
 			if (C.CurrentChainSD && ( ! C.isChainUnchecked(C.CurrentChainSD)))
@@ -24348,6 +24406,7 @@ I = {
 		I.initializeUIForMenu();
 		I.initializeUIForHUD();
 		I.styleContextMenu("#mapContext");
+		$("#mapHUDOuter").toggle(O.Options.bol_showHUD);
 		// Bind switch map buttons
 		$("#mapSwitchButton").one("click", function()
 		{

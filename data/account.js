@@ -84,7 +84,7 @@ var GW2T_ACCOUNT_DICTIONARY = {
 /*
  * Categorized wallet currencies for generating separate lists.
  * For general currencies, coefficient property normalizes by approximating each
- * currency to 1 silver. For other currencies, it normalizes relative to the majority.
+ * currency to 1 silver. For other currencies, it normalizes relative to the plurality.
  */
 var GW2T_CURRENCY_DATA = {
 	Dungeon: [

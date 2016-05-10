@@ -1,4 +1,4 @@
-﻿{
+{
 "12128": { "name": "Baie d'Omnom", "description": "Ingrédient", "type": "CraftingMaterial", "level": 80, "rarity": "Basic", "vendor_value": 9, "game_types": [ "Activity", "Wvw", "Dungeon", "Pve" ], "flags": [], "restrictions": [], "id": 12128, "chat_link": "[&AgFgLwAA]", "icon": "https://render.guildwars2.com/file/9C5457B024D9152906D808A53BFF67539BB94FA0/219396.png" },
 "12134": { "name": "Carotte", "description": "Ingrédient", "type": "CraftingMaterial", "level": 0, "rarity": "Basic", "vendor_value": 1, "game_types": [ "Activity", "Wvw", "Dungeon", "Pve" ], "flags": [], "restrictions": [], "id": 12134, "chat_link": "[&AgFmLwAA]", "icon": "https://render.guildwars2.com/file/F06472A03B49AA6C9256195FC43B49BEA26595D0/62859.png" },
 "12135": { "name": "Pomme de terre", "description": "Ingrédient", "type": "CraftingMaterial", "level": 0, "rarity": "Basic", "vendor_value": 1, "game_types": [ "Activity", "Wvw", "Dungeon", "Pve" ], "flags": [], "restrictions": [], "id": 12135, "chat_link": "[&AgFnLwAA]", "icon": "https://render.guildwars2.com/file/24CE9454113F0609E6E9B655EF0670B40D5522EC/63245.png" },
