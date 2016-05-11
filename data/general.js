@@ -219,6 +219,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"2090": "Eng Thief",
 	"2091": "Mes Necro",
 	"2093": "Guard Eng",
+	"2094": "Guard Necro",
 	"2096": "War Guard",
 	"2097": "War Necro",
 	"2098": "Guard Ranger",
@@ -1251,7 +1252,7 @@ Sale: {
 	Items: [
 	{
 		name: "Cosmic Mining Tool",
-		img: "http://i.imgur.com/y4xETsX.png",
+		id: "78731",
 		price: 1000,
 		discount: null,
 		col: 0
@@ -1272,7 +1273,7 @@ Sale: {
 	},
 	{
 		name: "Sloth Backpack",
-		img: "http://i.imgur.com/fxamd1w.png",
+		id: "78733",
 		price: 500,
 		discount: null,
 		col: 0
