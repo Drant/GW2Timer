@@ -2534,6 +2534,7 @@ U = {
 		Itinerary: "data/itinerary.js",
 		Skins: "data/skins.js",
 		Minis: "data/minis.js",
+		Toys: "data/toys.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
@@ -2927,6 +2928,23 @@ U = {
 				return 0;
 			});
 		}
+	},
+	
+	/*
+	 * Sorts an array of integers.
+	 * @param array pArray.
+	 */
+	sortAscending: function(pArray)
+	{
+		pArray.sort(function(a, b) {
+			return a - b;
+		});
+	},
+	sortDescending: function(pArray)
+	{
+		pArray.sort(function(a, b) {
+			return b - a;
+		});
 	},
 	
 	/*
@@ -3854,7 +3872,7 @@ Z = {
 		if (pString.indexOf(Z.cCommandPrefix) === 0)
 		{
 			// If input starts with a console command
-			Z.parseConsoleCommand(pString, pMapObject);
+			Z.parseCommand(pString, pMapObject);
 		}
 		else if (pString.indexOf(I.cChatcodePrefix) === 0)
 		{
@@ -3873,9 +3891,9 @@ Z = {
 	 * @param string pString command.
 	 * @param object pMapObject which map the command was executed from.
 	 */
-	parseConsoleCommand: function(pString, pMapObject)
+	parseCommand: function(pString, pMapObject)
 	{
-		var that = pMapObject;
+		var that = pMapObject || M;
 		var args = pString.substring(1, pString.length).split(" "); // Trim the command prefix character
 		var argstr = pString.substring(pString.indexOf(" ") + 1, pString.length);
 		var command = args[0].toLowerCase();
@@ -4186,15 +4204,15 @@ Z = {
 				var length = Z.APICacheArrayOfObjects.length;
 				var brk = (wantfile) ? "\r\n" : "<br />";
 				var quo = (wantfile) ? "\"" : "&quot;";
-				output += "{" + brk;
+				output += ((pRequest === 0) ? "{" : "[") + brk;
 				for (var i = 0; i < length; i++)
 				{
 					obj = Z.APICacheArrayOfObjects[i];
 					output += ((pRequest === 0) ? (quo + obj.id + quo + ": ") : "")
-						+ U.lineJSON(obj)
+						+ U.lineJSON(obj, wantfile)
 					+ ((i === length - 1) ? "" : ",") + brk;
 				}
-				output += "}";
+				output += ((pRequest === 0) ? "}" : "]");
 			}
 			else
 			{
@@ -4519,7 +4537,7 @@ A = {
 	CharIndexCurrent: null,
 	isAccountInitialized: false,
 	Metadata: {}, // Prewritten data loaded along with account page
-	Equipment: {}, // Character equipment slots
+	Equipment: {}, // Character equipment slots information
 	Attribute: {}, // Character attribute points
 	Data: { // Cache for retrieved API data objects and arrays
 		Account: {},
@@ -4540,6 +4558,7 @@ A = {
 		Minis: {},
 		Trading: {}
 	},
+	Possessions: null, // Associative array of items generated from the user's bank, inventory, and equipment slots
 	URL: { // Account data type and URL substring
 		Account: "account",
 		Achievements: "account/achievements",
@@ -4687,7 +4706,7 @@ A = {
 		{
 			var val = $(this).val();
 			var str = (val.charAt(0) === Z.cCommandPrefix) ? val : Z.cCommandPrefix + val;
-			Z.parseConsoleCommand(str, M);
+			Z.parseCommand(str, M);
 		});
 		
 		// Initialize context menu for bank and inventory slots
@@ -6487,16 +6506,39 @@ V = {
 			A.printError(A.PermissionEnum.Inventories);
 			return;
 		}
-		
 		var dish = $("#accDish_Toys");
 		if (A.reinitializeDish(dish) === false)
 		{
 			return;
 		}
-		var bank = Q.createBank(dish).find(".bnkBank");
-		$.getJSON(A.getURL(A.URL.Bank), function(pData)
+		
+		var container = Q.createBank(dish, {aIsCollection: true});
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var toydb = {};
+		/*
+		 * Toys is a custom unlockable whose collection is generated based on
+		 * the user's bank and inventory rather than a list provided by the API.
+		 */
+		var generateToys = function(pUnlockeds)
 		{
-			
+			V.generateCollection(bank, {
+				aHeaders: GW2T_TOYS_HEADERS,
+				aDatabase: GW2T_TOYS_DATA,
+				aUnlockeds: pUnlockeds
+			});
+		};
+		
+		$.getScript(U.URL_DATA.Toys).done(function()
+		{
+			$.getJSON(A.getURL(A.URL.Bank), function(pData)
+			{
+				generateToys(pData);
+				return;
+				Q.loadItemsDatabase("toys", function()
+				{
+					generateToys(pData);
+				});
+			});
 		});
 	},
 	
@@ -21917,11 +21959,16 @@ T = {
 	 */
 	extractDailyChain: function(pDaily)
 	{
-		var alias = pDaily.pve[3];
-		alias = (alias !== undefined && alias !== null) ? alias.toLowerCase() : null;
-		if (alias !== null && C.ChainAssociation[alias] !== undefined)
+		if (pDaily && pDaily.pve)
 		{
-			return C.getChainByAlias(alias);
+			for (var i in pDaily.pve)
+			{
+				var dcode = pDaily.pve[i].split(" ");
+				if (dcode[0] === "Boss")
+				{
+					return C.getChainByAlias(dcode[1].toLowerCase());
+				}
+			}
 		}
 		return null;
 	},
