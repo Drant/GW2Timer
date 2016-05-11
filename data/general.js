@@ -1251,6 +1251,27 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Rampart Heavy Armor Skin",
+		id: "63929",
+		price: 640,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Jungle Explorer Outfit",
+		id: "67990",
+		price: 490,
+		discount: 700,
+		col: 0
+	},
+	{
+		name: "Wreath of Cooperation",
+		id: "66309",
+		price: 200,
+		discount: 400,
+		col: 0
+	},
+	{
 		name: "Cosmic Mining Tool",
 		id: "78731",
 		price: 1000,
