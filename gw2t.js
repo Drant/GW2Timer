@@ -5258,6 +5258,116 @@ A = {
 	{
 		$("#accDishMenu_" + pSection).remove();
 		return $("<aside id='accDishMenu_" + pSection + "' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
+	},
+	
+	/*
+	 * Initializes the associative array holding item IDs and count of each
+	 * items, based on the account's bank, inventory, and optionally materials.
+	 * @pre Characters data were downloaded by the Characters page.
+	 */
+	initializePossessions: function(pSuccess)
+	{
+		A.Possessions = null;
+		A.Possessions = {};
+		
+		// Adds an item to the possessions
+		var addItem = function(pItem, pCount, pLocation)
+		{
+			// Create entry if doesn't exist
+			if (A.Possessions[pItem] === undefined)
+			{
+				A.Possessions[pItem] = {
+					count: 0,
+					locations: {}
+				};
+			}
+			// Update entry
+			A.Possessions[pItem].count += pCount;
+			if (A.Possessions[pItem].locations[pLocation] === undefined)
+			{
+				A.Possessions[pItem].locations[pLocation] = true;
+			}
+		};
+		
+		// Search the account for items
+		var compilePossessions = function(pBankData, pMaterialsData)
+		{
+			A.Data.Characters.forEach(function(iChar)
+			{
+				// Add character's equipped items (equipment) and their slotted upgrades or infusions
+				if (iChar.equipment)
+				{
+					iChar.equipment.forEach(function(iEquip)
+					{
+						addItem(iEquip.id, 1, iChar.charindex);
+						if (iEquip.upgrades)
+						{
+							iEquip.upgrades.forEach(function(iID)
+							{
+								addItem(iID, 1, iChar.charindex);
+							});
+						}
+						if (iEquip.infusions)
+						{
+							iEquip.infusions.forEach(function(iID)
+							{
+								addItem(iID, 1, iChar.charindex);
+							});
+						}
+					});
+				}
+				// Add character's inventories
+				if (iChar.bags)
+				{
+					iChar.bags.forEach(function(iBag)
+					{
+						iBag.inventory.forEach(function(iInv)
+						{
+							if (iInv)
+							{
+								addItem(iInv.id, iInv.count, iChar.charindex);
+							}
+						});
+					});
+				}
+			});
+			
+			// Add bank contents
+			pBankData.forEach(function(iSlot)
+			{
+				if (iSlot)
+				{
+					addItem(iSlot.id, iSlot.count, "Bank");
+				}
+			});
+			
+			// Add materials deposits
+			pMaterialsData.forEach(function(iSlot)
+			{
+				if (iSlot)
+				{
+					addItem(iSlot.id, iSlot.count, "Materials");
+				}
+			});
+			
+			// Execute callback after finishing compilation
+			if (pSuccess)
+			{
+				pSuccess();
+			}
+		};
+		
+		// Download additional API data containing the account's items
+		$.getJSON(A.getURL(A.URL.Bank), function(pData)
+		{
+			$.getJSON(A.getURL(A.URL.Materials), function(pDataInner)
+			{
+				compilePossessions(pData, pDataInner);
+			});
+		}).fail(function()
+		{
+			A.printError(A.PermissionEnum.Inventories);
+		});
 	}
 };
 
@@ -6514,30 +6624,24 @@ V = {
 		
 		var container = Q.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var toydb = {};
-		/*
-		 * Toys is a custom unlockable whose collection is generated based on
-		 * the user's bank and inventory rather than a list provided by the API.
-		 */
-		var generateToys = function(pUnlockeds)
-		{
-			V.generateCollection(bank, {
-				aHeaders: GW2T_TOYS_HEADERS,
-				aDatabase: GW2T_TOYS_DATA,
-				aUnlockeds: pUnlockeds
-			});
-		};
-		
 		$.getScript(U.URL_DATA.Toys).done(function()
 		{
-			$.getJSON(A.getURL(A.URL.Bank), function(pData)
+			/*
+			 * Toys is a custom unlockable whose collection is generated based on
+			 * the user's bank and inventory rather than a list provided by the API.
+			 */
+			A.initializePossessions(function()
 			{
-				generateToys(pData);
-				return;
-				Q.loadItemsDatabase("toys", function()
-				{
-					generateToys(pData);
+				V.generateCollection(bank, {
+					aHeaders: GW2T_TOYS_HEADERS,
+					aDatabase: GW2T_TOYS_DATA,
+					aIsPossessions: true
 				});
+			});
+			return;
+			Q.loadItemsDatabase("toys", function()
+			{
+				
 			});
 		});
 	},
@@ -6709,19 +6813,27 @@ V = {
 		// Convert the API array of unlocks into an associative array
 		var Settings = pSettings || {};
 		var unlocksassoc = {};
-		for (var i = 0; i < Settings.aUnlockeds.length; i++)
+		if (Settings.aIsPossessions)
 		{
-			unlocksassoc[(Settings.aUnlockeds[i])] = true;
+			unlocksassoc = A.Possessions;
+		}
+		else
+		{
+			for (var i = 0; i < Settings.aUnlockeds.length; i++)
+			{
+				unlocksassoc[(Settings.aUnlockeds[i])] = true;
+			}
 		}
 
 		pBank.empty();
 		var container = pBank.parents(".bnkContainer");
 		var tab;
 		var catobj, catname;
-		var numskinsintabstotal = 0;
-		var numskinsunlockedtotal = 0;
+		var numintabstotal = 0;
+		var numsunlockedtotal = 0;
 		var slot, unlockid, unlockobj;
 		
+		// Fills a bank tab with slots
 		var fillTab = function(pTab, pCatObj)
 		{
 			var numtofetch = U.getObjectLength(pCatObj);
@@ -6730,43 +6842,39 @@ V = {
 			for (var ii = 0; ii < pCatObj.length; ii++)
 			{
 				slot = Q.createBankSlot(slotscontainer);
-				unlockobj = pCatObj[ii]; // If the user's unlocked skin is found in the cache associative array
-				if (unlockobj)
+				unlockobj = pCatObj[ii];
+				// Fill the slot with the item icon
+				(function(iSlot, iUnlockID, iItemID, iWiki, iPayment)
 				{
-					// Fill the slot with the item icon
-					(function(iSlot, iUnlockID, iItemID, iWiki, iPayment)
+					Q.getItem(iItemID, function(iItem)
 					{
-						Q.getItem(iItemID, function(iItem)
-						{
-							var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
-							Q.styleBankSlot(iSlot, {
-								aItem: iItem,
-								aSlotMeta: {count: count},
-								aWiki: iWiki,
-								aCallback: function()
+						var count = (Settings.aIsPossessions && unlocksassoc[iItemID]) ? unlocksassoc[iItemID].count : ((unlocksassoc[iUnlockID]) ? 1 : 0);
+						Q.styleBankSlot(iSlot, {
+							aItem: iItem,
+							aSlotMeta: {count: count},
+							aWiki: iWiki,
+							aCallback: function()
+							{
+								// Include payment if the item cannot be obtained on the Trading Post
+								if (iPayment)
 								{
-									// Include payment if the item cannot be obtained on the Trading Post
-									if (iPayment)
+									for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
 									{
-										for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
-										{
-											var paymentvalue = iPayment[paymentkey];
-											iSlot.append("<var class='bnkSlotPrice'>" + E.Payment[paymentkey](paymentvalue) + "</var>");
-										}
+										var paymentvalue = iPayment[paymentkey];
+										iSlot.append("<var class='bnkSlotPrice'>" + E.Payment[paymentkey](paymentvalue) + "</var>");
 									}
-									numfetched++;
-									A.setProgressBar(numfetched, numtofetch);
 								}
-							});
+								numfetched++;
+								A.setProgressBar(numfetched, numtofetch);
+							}
 						});
-					})(slot, unlockobj.u, unlockobj.i, unlockobj.n, unlockobj.p);
-				}
+					});
+				})(slot, unlockobj.u, unlockobj.i, unlockobj.n, unlockobj.p);
 			}
 		};
 
 		/* 
-		 * Create tabs for each skin category. The slots are not generated
-		 * until the user opens the pre-collapsed tabs.
+		 * Create tabs for each unlockable category.
 		 */
 		for (var i in Settings.aDatabase)
 		{
@@ -6788,25 +6896,25 @@ V = {
 				}
 			})(tab, catobj);
 
-			// For this ith tab, write the number of skins unlocked on the tab header
-			var numskinsunlocked = 0;
+			// For this ith tab, write the number of unlockables unlocked on the tab header
+			var numunlocked = 0;
 			for (var ii = 0; ii < catobj.length; ii++)
 			{
 				unlockid = catobj[ii].u;
 				if (unlocksassoc[unlockid])
 				{
-					numskinsunlocked++;
-					numskinsunlockedtotal++;
+					numunlocked++;
+					numsunlockedtotal++;
 				}
 			}
-			var numskinsintab = catobj.length;
-			numskinsintabstotal += numskinsintab;
-			var unlockstr = numskinsunlocked + " / " + numskinsintab
-				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlocked / numskinsintab) + ")</span>";
+			var numintab = catobj.length;
+			numintabstotal += numintab;
+			var unlockstr = numunlocked + " / " + numintab
+				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numunlocked / numintab) + ")</span>";
 			tab.find(".bnkTabStats").html(unlockstr);
 		}
-		var unlocktotalstr = numskinsunlockedtotal + " / " + numskinsintabstotal
-				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numskinsunlockedtotal / numskinsintabstotal) + ")</span>";
+		var unlocktotalstr = numsunlockedtotal + " / " + numintabstotal
+				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numsunlockedtotal / numintabstotal) + ")</span>";
 		container.find(".bnkCount").append(unlocktotalstr);
 		Q.createBankMenu(pBank, {aWantSearchHighlight: true, aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html()});
 	},

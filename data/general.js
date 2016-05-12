@@ -104,8 +104,9 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1981": "Miner Ascalon [28961,17355]",
 	"1984": "Miner Shiverpeaks [20914,12447]",
 	"1985": "Forager Shiverpeaks [20960,13010]",
-	"2957": "Miner Heart [3411,15597]",
 	"2912": "Forager Heart [3359,14678]",
+	"2937": "Lumberer Heart [1770,16987]",
+	"2957": "Miner Heart [3411,15597]",
 	
 	// Vista
 	"1839": "Vista Kryta [17096,14790]",
@@ -188,7 +189,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	// Dungeon
 	"2893": "Dungeon AC Ascalon",
 	"2917": "Dungeon SE Shiverpeaks",
-	"2937": "Dungeon TA Jungle",
+	"2959": "Dungeon TA Jungle",
 	"2938": "Dungeon Arah Orr",
 	
 	// WvW
@@ -1252,6 +1253,13 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Incarnate Light Armor Skin",
+		id: "63909",
+		price: 640,
+		discount: 800,
+		col: 0
+	},
+	{
 		name: "Rampart Heavy Armor Skin",
 		id: "63929",
 		price: 640,
@@ -1262,6 +1270,13 @@ Sale: {
 		name: "Jungle Explorer Outfit",
 		id: "67990",
 		price: 490,
+		discount: 700,
+		col: 0
+	},
+	{
+		name: "Cook's Outfit",
+		id: "20248",
+		price: 420,
 		discount: 700,
 		col: 0
 	},
