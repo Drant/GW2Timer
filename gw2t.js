@@ -4006,7 +4006,52 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				$.getJSON("test/items.json", function(pData)
+				{
+					Z.APICacheArrayOfObjects = [];
+					var item, unlock;
+					for (var i in pData)
+					{
+						item = pData[i];
+						/*if (item.type === "Consumable" && item.name)
+						{
+							try
+							{
+								if (item.description.indexOf("eposit this decoration") === -1
+									&& item.details.type !== "Food"
+									&& item.details.type !== "Utility"
+									&& item.details.type !== "Booze"
+									&& item.details.type !== "Unlock"
+									&& item.details.type !== "Transmutation")
+								{
+									unlock = {
+										i: i,
+										n: item.name,
+										p: {gem: 0}
+									};
+									Z.APICacheArrayOfObjects.push(unlock);
+									//Z.APICacheArrayOfObjects.push(item);
+								}
+							}
+							catch (e) {};
+						}*/
+						//if (item.rarity === "Legendary" && item.type === "Weapon")
+						if (item.name.indexOf("Bauble Infusion") !== -1)
+						{
+							unlock = {
+								i: i,
+								n: item.name
+							};
+							Z.APICacheArrayOfObjects.push(unlock);
+							//Z.APICacheArrayOfObjects.push(item);
+						}
+					}
+					Z.parseCommand("/apicachearray");
+				});
+			}},
+			updateitems: {usage: "Prints an updated database of items (test mode only).", f: function()
+			{
+				Z.updateItems();
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -4088,7 +4133,7 @@ Z = {
 				{
 					// Delegate the heavier task of large array scraping to another function
 					I.print("Array is too big for one simultaneous request, requesting in batches with wait in between...");
-					Z.scrapeAPIArray(pData, pString, querystr);
+					Z.scrapeAPIArray(pData, pString, {aQueryStr: querystr});
 				}
 				else
 				{
@@ -4314,11 +4359,12 @@ Z = {
 	 * they point to, and amass them into an accessible array of objects.
 	 * @param intarray pArray downloaded from API.
 	 * @param string pString suffix of API endpoint.
-	 * @param string pQueryStr arguments for the API url, optional.
+	 * @objparam string aQueryStr arguments for the API url, optional.
 	 */
-	scrapeAPIArray: function(pArray, pString, pQueryStr)
+	scrapeAPIArray: function(pArray, pString, pSettings)
 	{
-		var querystr = pQueryStr || "";
+		var Settings = pSettings || {};
+		var querystr = Settings.aQueryStr || "";
 		var idsarray = [];
 		var failedids = [];
 		var reqindex = 0;
@@ -4344,7 +4390,15 @@ Z = {
 				{
 					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
 				}
-				I.print("Scrape completed. Enter /apicache to print the results.");
+				// Execute callback if provided
+				if (Settings.aCallback)
+				{
+					Settings.aCallback(Z.APICacheArrayOfObjects);
+				}
+				else
+				{
+					I.print("Scrape completed. Enter /apicache to print the results.");
+				}
 			}
 		};
 		
@@ -4524,6 +4578,42 @@ Z = {
 					})(dailyobj[i], ach);
 				}
 			}
+		});
+	},
+	
+	/*
+	 * Downloads items that are missing from the current version of the items database.
+	 */
+	updateItems: function()
+	{
+		$.getJSON("test/items.json", function(pData)
+		{
+			var dbarray = [];
+			var currentitemids = [];
+			for (var i in pData)
+			{
+				dbarray.push(pData[i]);
+				currentitemids.push(parseInt(i));
+			}
+			currentitemids.sort(function(a, b) {
+				return a - b;
+			});
+			$.getJSON(U.URL_API.ItemDatabase, function(pDataInner)
+			{
+				var newitemids = $(pDataInner).not(currentitemids).get();
+				Z.scrapeAPIArray(newitemids, "items", {aCallback: function(pItems)
+				{
+					for (var ii = 0; ii < pItems.length; ii++)
+					{
+						dbarray.push(pItems[ii]);
+					}
+					U.sortObjects(dbarray, {aKeyName: "id"});
+					Z.APICacheArrayOfObjects = dbarray;
+					Z.printAPICache(0, true);
+					I.print("New items:");
+					U.prettyJSON(pItems);
+				}});
+			});
 		});
 	}
 };
@@ -6851,6 +6941,7 @@ V = {
 						var count = (Settings.aIsPossessions && unlocksassoc[iItemID]) ? unlocksassoc[iItemID].count : ((unlocksassoc[iUnlockID]) ? 1 : 0);
 						Q.styleBankSlot(iSlot, {
 							aItem: iItem,
+							aTradeableID: (Settings.aIsPossessions && iUnlockID) ? iUnlockID : null,
 							aSlotMeta: {count: count},
 							aWiki: iWiki,
 							aCallback: function()
@@ -6900,7 +6991,7 @@ V = {
 			var numunlocked = 0;
 			for (var ii = 0; ii < catobj.length; ii++)
 			{
-				unlockid = catobj[ii].u;
+				unlockid = (Settings.aIsPossessions) ? catobj[ii].i : catobj[ii].u;
 				if (unlocksassoc[unlockid])
 				{
 					numunlocked++;
@@ -8504,6 +8595,8 @@ Q = {
 	 * @objparam object aSlotMeta data retrieved from characters or bank API,
 	 * containing stack count and transmutation data.
 	 * @objparam object aItem item details retrieved from API.
+	 * @objparam int aTradeableID ID of item to get TP price, such as the
+	 * tradeable container of the bound item.
 	 * @objparam string aWiki name of wiki article to open when double clicked.
 	 * @objparam function aCallback to execute after styling.
 	 */
@@ -8583,9 +8676,10 @@ Q = {
 					pSlot.data("count", count);
 				}
 				// TP price label if the item is tradeable
-				if (pBox.istradeable)
+				if (pBox.istradeable || Settings.aTradeableID)
 				{
-					$.getJSON(U.getAPIPrice(Settings.aItem.id), function(pData)
+					var itemidforprice = Settings.aTradeableID || Settings.aItem.id;
+					$.getJSON(U.getAPIPrice(itemidforprice), function(pData)
 					{
 						var prices = E.processPrice(pData, count);
 						var pricetorecord = (iscollection) ? prices.pricesell : prices.priceselltaxed;
