@@ -27,6 +27,7 @@
 	Arguments in double quotes: $("argument"), single quotes for HTML generation
 	Parameters are camel case and start with "p": function(pExampleParameter)
 	Settings inside an object used as a function argument starts with "a", like parameters.
+	Properties of returned template objects start with "o", like parameters.
 	Parameters inside loops start with "i": forEach(function(iExampleParameter){})
 	CSS classes and IDs are named like instance variables: exampleID
 	Allman indentation (braces align vertically) unless it is repetitive code
@@ -3816,7 +3817,7 @@ U = {
 };
 
 /* =============================================================================
- * @@Zip console commands and server-like functions
+ * @@Console commands and server-like functions
  * ========================================================================== */
 Z = {
 	
@@ -4035,8 +4036,8 @@ Z = {
 							}
 							catch (e) {};
 						}*/
-						//if (item.rarity === "Legendary" && item.type === "Weapon")
-						if (item.name.indexOf("Bauble Infusion") !== -1)
+						if (item.rarity === "Legendary")
+						//if (item.name.indexOf("Bauble Infusion") !== -1)
 						{
 							unlock = {
 								i: i,
@@ -5411,13 +5412,16 @@ A = {
 				{
 					iChar.bags.forEach(function(iBag)
 					{
-						iBag.inventory.forEach(function(iInv)
+						if (iBag)
 						{
-							if (iInv)
+							iBag.inventory.forEach(function(iInv)
 							{
-								addItem(iInv.id, iInv.count, iChar.charindex);
-							}
-						});
+								if (iInv)
+								{
+									addItem(iInv.id, iInv.count, iChar.charindex);
+								}
+							});
+						}
 					});
 				}
 			});
@@ -6722,7 +6726,7 @@ V = {
 			 */
 			A.initializePossessions(function()
 			{
-				V.generateCollection(bank, {
+				V.generateUnlockables(bank, {
 					aHeaders: GW2T_TOYS_HEADERS,
 					aDatabase: GW2T_TOYS_DATA,
 					aIsPossessions: true
@@ -6884,7 +6888,7 @@ V = {
 	},
 	
 	/*
-	 * Macro function for creating collection/unlockables style banks.
+	 * Macro function for creating unlockables style banks.
 	 * @param jqobject pBank to manipulate.
 	 * @objparam object aHeaders containing category header translations.
 	 * @objparam object aDatabase containing category objects holding unlockables.
@@ -6898,7 +6902,7 @@ V = {
 	 * t: Tradeable array of item IDs, optional.
 	 * p: Payment to acquire the associated item if the item is not tradeable.
 	 */
-	generateCollection: function(pBank, pSettings)
+	generateUnlockables: function(pBank, pSettings)
 	{
 		// Convert the API array of unlocks into an associative array
 		var Settings = pSettings || {};
@@ -6938,21 +6942,29 @@ V = {
 				{
 					Q.getItem(iItemID, function(iItem)
 					{
+						var slotprice, slotgem;
+						if (iPayment)
+						{
+							slotprice = iPayment["coin"];
+							slotgem = iPayment["gem"];
+						}
 						var count = (Settings.aIsPossessions && unlocksassoc[iItemID]) ? unlocksassoc[iItemID].count : ((unlocksassoc[iUnlockID]) ? 1 : 0);
 						Q.styleBankSlot(iSlot, {
 							aItem: iItem,
 							aTradeableID: (Settings.aIsPossessions && iUnlockID) ? iUnlockID : null,
+							aPrice: slotprice,
+							aGem: slotgem,
 							aSlotMeta: {count: count},
 							aWiki: iWiki,
 							aCallback: function()
 							{
 								// Include payment if the item cannot be obtained on the Trading Post
-								if (iPayment)
+								if (iPayment && ((slotprice === undefined && slotgem === undefined) || (slotprice === 0 || slotgem === 0)))
 								{
 									for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
 									{
 										var paymentvalue = iPayment[paymentkey];
-										iSlot.append("<var class='bnkSlotPrice'>" + E.Payment[paymentkey](paymentvalue) + "</var>");
+										iSlot.append("<var class='bnkSlotPrice'>" + E.Payment[paymentkey](paymentvalue * (count || 1)) + "</var>");
 									}
 								}
 								numfetched++;
@@ -7067,7 +7079,7 @@ V = {
 			headers = GW2T_SKINS_HEADERS;
 			database = GW2T_SKINS_DATA;
 			
-			V.generateCollection(bank, {
+			V.generateUnlockables(bank, {
 				aHeaders: headers,
 				aDatabase: database,
 				aUnlockeds: pUnlockeds,
@@ -7113,7 +7125,7 @@ V = {
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var generateMinis = function(pUnlockeds)
 		{
-			V.generateCollection(bank, {
+			V.generateUnlockables(bank, {
 				aHeaders: GW2T_MINIS_HEADERS,
 				aDatabase: GW2T_MINIS_DATA,
 				aUnlockeds: pUnlockeds
@@ -7194,6 +7206,9 @@ Q = {
 					}
 					Q.Box[i].item = pData[i];
 				}
+			}).always(function()
+			{
+				// Execute callback regardless of success, in case of failed retrieval
 				pSuccess();
 			});
 		}
@@ -8265,12 +8280,12 @@ Q = {
 			$.getJSON(U.getAPIPrice(item.id), function(pData)
 			{
 				var prices = E.processPrice(pData, Settings.aItemMeta.count);
-				pricestr = "<aside>" + E.formatCoinString(prices.pricesell, {aWantColor: true, aWantSpace: true})
-					+ " <span class='accTrivial'>" + E.formatCoinString(prices.pricebuy, {aWantColor: true, aWantSpace: true}) + "</span></aside>";
+				pricestr = "<aside>" + E.formatCoinString(prices.oPriceSell, {aWantColor: true, aWantSpace: true})
+					+ " <span class='accTrivial'>" + E.formatCoinString(prices.oPriceBuy, {aWantColor: true, aWantSpace: true}) + "</span></aside>";
 				if (Settings.aCallback)
 				{
-					pricebuy = prices.pricebuy;
-					pricesell = prices.pricesell;
+					pricebuy = prices.oPriceBuy;
+					pricesell = prices.oPriceSell;
 				}
 				numfetched++;
 				finalizeTooltip();
@@ -8459,21 +8474,30 @@ Q = {
 			+ "<div class='bnkTop'>"
 				+ "<aside class='bnkCount'></aside>"
 				+ "<aside class='bnkPrice'>"
-					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA'></var>"
+					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Coin'></var>"
 					+ " &nbsp; "
-					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB'></var>"
+					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB_Coin'></var>"
 				+ "</aside>"
+				+ ((Settings.aIsCollection) ? ("<aside class='bnkGem'>"
+					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Gem'></var>"
+					+ " &nbsp; "
+					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB_Gem'></var>"
+				+ "</aside>") : "")
 			+ "</div>"
 			+ "<div class='bnkBank'></div>"
 		+ "</div>").appendTo(pDestination);
 
 		if (Settings.aIsCollection)
 		{
+			var strunlocked = D.getWordCapital("unlocked") + ": +";
+			var strlocked = D.getWordCapital("locked") + ": −";
 			container.data("iscollection", true);
-			container.find(".bnkPriceTitleA").html(D.getWordCapital("unlocked") + ": +");
-			container.find(".bnkPriceTitleB").html(D.getWordCapital("locked") + ": −");
-			container.find(".bnkPriceValueA").html(E.formatCoinStringColored(0));
-			container.find(".bnkPriceValueB").html(E.formatCoinStringColored(0));
+			container.find(".bnkPriceTitleA").html(strunlocked);
+			container.find(".bnkPriceTitleB").html(strlocked);
+			container.find(".bnkPriceValueA_Coin").html(E.formatCoinStringColored(0));
+			container.find(".bnkPriceValueB_Coin").html(E.formatCoinStringColored(0));
+			container.find(".bnkPriceValueA_Gem").html(E.formatGemString(0, true));
+			container.find(".bnkPriceValueB_Gem").html(E.formatGemString(0, true));
 		}
 
 		return container;
@@ -8500,7 +8524,8 @@ Q = {
 			+ "<aside class='bnkTabHeader'>"
 				+ iconstr
 				+ titlestr
-				+ "<var class='bnkTabPrice'></var>"
+				+ "<var class='bnkTabPrice bnkTabPrice_Coin'></var>"
+				+ "<var class='bnkTabPrice bnkTabPrice_Gem'></var>"
 				+ "<var class='bnkTabToggle'></var>"
 				+ "<var class='bnkTabStats'></var>"
 			+ "</aside>"
@@ -8607,7 +8632,6 @@ Q = {
 		{
 			var container = pSlot.parents(".bnkContainer");
 			var top = container.find(".bnkTop");
-			var tabdisplay = pSlot.parents(".bnkTab").find(".bnkTabPrice");
 			var iscollection = container.data("iscollection");
 			var count = Settings.aSlotMeta.count || 1;
 			var itemmeta = null;
@@ -8622,6 +8646,76 @@ Q = {
 					break;
 				}
 			}
+			
+			var updatePrice = function(pPrice, pPaymentEnum)
+			{
+				var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + pPaymentEnum);
+				var prices = (typeof pPrice === "number") ? E.createPrice(pPrice, count) : E.processPrice(pPrice, count);
+				var pricetorecord = (iscollection) ? prices.oPriceSell : prices.oPriceSellTaxed;
+				var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
+				{
+					var displaypriceleft = (pDisplay.data("priceleft") || 0) + pLeft;
+					var displaypriceright = (pDisplay.data("priceright") || 0) + pRight;
+					pDisplay.data("priceleft", displaypriceleft).data("priceright", displaypriceright);
+					var tabtext, pricestrleft, pricestrright;
+					switch (pPaymentEnum)
+					{
+						case E.PaymentEnum.Coin: {
+							pricestrleft = E.formatCoinStringColored(displaypriceleft);
+							pricestrright = E.formatCoinStringColored(displaypriceright);
+							tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright + " <span class='accTrivial'>" + pricestrleft + "</span>");
+						}; break;
+						case E.PaymentEnum.Gem: {
+							pricestrleft = E.formatGemString(displaypriceleft, true);
+							pricestrright = E.formatGemString(displaypriceright, true);
+							tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright);
+						}; break;
+					}
+					pDisplay.html(tabtext);
+				};
+				
+				// Label the slot with the item's or stack's price
+				switch (pPaymentEnum)
+				{
+					case E.PaymentEnum.Coin: {
+						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricetorecord, {aWantColor: true, aWantShort: true}) + "</var>");
+					}; break;
+					case E.PaymentEnum.Gem: {
+						pSlot.append("<var class='bnkSlotPrice'>" + E.formatGemString(pricetorecord, true) + "</var>");
+					}; break;
+				}
+				
+				// Only add if item actually exists (not a zero stack slot)
+				if (iscollection)
+				{
+					if (Settings.aSlotMeta.count !== 0)
+					{
+						updatePriceDisplay(tabdisplayprice, prices.oPriceBuy, 0, true);
+						updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
+						if (pPaymentEnum === E.PaymentEnum.Coin)
+						{
+							pSlot.data("price", pricetorecord);
+						}
+					}
+					else
+					{
+						updatePriceDisplay(tabdisplayprice, 0, prices.oPriceBuy, true);
+						updatePriceDisplay(top.find(".bnkPriceValueB_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
+					}
+				}
+				else
+				{
+					if (Settings.aSlotMeta.count !== 0)
+					{
+						updatePriceDisplay(tabdisplayprice, prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
+						updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
+						if (pPaymentEnum === E.PaymentEnum.Coin)
+						{
+							pSlot.data("price", pricetorecord);
+						}
+					}
+				}
+			};
 			
 			Q.scanItem(Settings.aItem, {aElement: pSlot, aItemMeta: itemmeta, aCallback: function(pBox)
 			{
@@ -8681,45 +8775,16 @@ Q = {
 					var itemidforprice = Settings.aTradeableID || Settings.aItem.id;
 					$.getJSON(U.getAPIPrice(itemidforprice), function(pData)
 					{
-						var prices = E.processPrice(pData, count);
-						var pricetorecord = (iscollection) ? prices.pricesell : prices.priceselltaxed;
-						var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
-						{
-							var displaypriceleft = (pDisplay.data("priceleft") || 0) + pLeft;
-							var displaypriceright = (pDisplay.data("priceright") || 0) + pRight;
-							pDisplay.data("priceleft", displaypriceleft).data("priceright", displaypriceright);
-							var pricestrleft = E.formatCoinStringColored(displaypriceleft);
-							var pricestrright = E.formatCoinStringColored(displaypriceright);
-							var tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright + " <span class='accTrivial'>" + pricestrleft + "</span>");
-							pDisplay.html(tabtext);
-						};
-						
-						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricetorecord, {aWantColor: true, aWantShort: true}) + "</var>");
-						// Only add if item actually exists (not a zero stack slot)
-						if (iscollection)
-						{
-							if (Settings.aSlotMeta.count !== 0)
-							{
-								updatePriceDisplay(tabdisplay, prices.pricebuy, 0, true);
-								updatePriceDisplay(top.find(".bnkPriceValueA"), prices.pricebuy, prices.pricesell);
-								pSlot.data("price", pricetorecord);
-							}
-							else
-							{
-								updatePriceDisplay(tabdisplay, 0, prices.pricebuy, true);
-								updatePriceDisplay(top.find(".bnkPriceValueB"), prices.pricebuy, prices.pricesell);
-							}
-						}
-						else
-						{
-							if (Settings.aSlotMeta.count !== 0)
-							{
-								updatePriceDisplay(tabdisplay, prices.pricebuytaxed, prices.priceselltaxed);
-								updatePriceDisplay(top.find(".bnkPriceValueA"), prices.pricebuytaxed, prices.priceselltaxed);
-								pSlot.data("price", pricetorecord);
-							}
-						}
+						updatePrice(pData, E.PaymentEnum.Coin);
 					});
+				}
+				else if (Settings.aPrice > 0)
+				{
+					updatePrice(Settings.aPrice, E.PaymentEnum.Coin);
+				}
+				else if (Settings.aGem > 0)
+				{
+					updatePrice(Settings.aGem, E.PaymentEnum.Gem);
 				}
 				// Execute callback if requested
 				if (Settings.aCallback)
@@ -9075,6 +9140,7 @@ Q = {
 	 */
 	bindItemSlotBehavior: function(pSlot, pSettings)
 	{
+		return;
 		var Settings = pSettings || {};
 		// Right click on the item slot shows context menu
 		pSlot.contextmenu(function(pEvent)
@@ -9148,7 +9214,8 @@ E = {
 	 * Associative array of functions that format the payment of an item.
 	 * The function names correspond to the object key in a custom API cache.
 	 */
-	Payment: {
+	Payment:
+	{
 		coin: function(pAmount) { return E.formatCoinString(pAmount, {aWantColor: true, aWantShort: true}); },
 		karma: function(pAmount) { return E.formatKarmaString(pAmount, true); },
 		laurel: function(pAmount) { return E.formatLaurelString(pAmount, true); },
@@ -9182,6 +9249,12 @@ E = {
 		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_crystalline'></ins>"; },
 		map_dt: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_dt'></ins>"; },
 		map_sw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_sw'></ins>"; }
+	},
+	PaymentEnum:
+	{
+		Coin: "Coin",
+		Karma: "Karma",
+		Gem: "Gem"
 	},
 	
 	/*
@@ -9524,10 +9597,20 @@ E = {
 		var pricebuy = pPriceData.buys.unit_price * count;
 		var pricesell = pPriceData.sells.unit_price * count;
 		return {
-			pricebuy: pricebuy,
-			pricesell: pricesell,
-			pricebuytaxed: E.deductTax(pricebuy),
-			priceselltaxed: E.deductTax(pricesell)
+			oPriceBuy: pricebuy,
+			oPriceSell: pricesell,
+			oPriceBuyTaxed: E.deductTax(pricebuy),
+			oPriceSellTaxed: E.deductTax(pricesell)
+		};
+	},
+	createPrice: function(pPrice, pCount)
+	{
+		var price = pPrice * pCount;
+		return {
+			oPriceBuy: price,
+			oPriceSell: price,
+			oPriceBuyTaxed: price,
+			oPriceSellTaxed: price
 		};
 	},
 	
@@ -17498,7 +17581,7 @@ G = {
 							cache: false,
 							success: function(pData)
 						{
-							var pricesell = E.processPrice(pData).priceselltaxed;
+							var pricesell = E.processPrice(pData).oPriceSellTaxed;
 							$("#nodPrice_" + inneri).html(E.formatCoinStringColored(pricesell));
 							P.Resources[inneri].price = pricesell;
 						}});
@@ -22742,7 +22825,7 @@ B = {
 						// Get TP prices also
 						$.getJSON(U.getAPIPrice(offer.id), function(pData)
 						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinStringColored(E.processPrice(pData).priceselltaxed));
+							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinStringColored(E.processPrice(pData).oPriceSellTaxed));
 						}).fail(function()
 						{
 							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
