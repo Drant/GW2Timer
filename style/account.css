@@ -44,6 +44,9 @@
 .accTrivial { /* Situational class to fade trivial information */
 	opacity: 0.3;
 }
+.accSignificant {
+	color: #aaff55;
+}
 
 /* Menu
 ----------------------------------------------------------------------------- */

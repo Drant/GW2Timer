@@ -3984,7 +3984,7 @@ Z = {
 			}},
 			item: {usage: "Prints an item's information. <em>Parameters: int_itemid</em>", f: function()
 			{
-				Z.printAPI("items/" + args[1]);
+				Z.printAPI("items/" + args[1] + (args[2] || ""));
 			}},
 			items: {usage: "Prints the highest numbered item IDs in the API. <em>Parameters: int_offset</em>", f: function()
 			{
@@ -5368,15 +5368,15 @@ A = {
 			if (A.Possessions[pItem] === undefined)
 			{
 				A.Possessions[pItem] = {
-					count: 0,
-					locations: {}
+					oCount: 0,
+					oLocations: {}
 				};
 			}
 			// Update entry
-			A.Possessions[pItem].count += pCount;
-			if (A.Possessions[pItem].locations[pLocation] === undefined)
+			A.Possessions[pItem].oCount += pCount;
+			if (A.Possessions[pItem].oLocations[pLocation] === undefined)
 			{
-				A.Possessions[pItem].locations[pLocation] = true;
+				A.Possessions[pItem].oLocations[pLocation] = true;
 			}
 		};
 		
@@ -5390,19 +5390,19 @@ A = {
 				{
 					iChar.equipment.forEach(function(iEquip)
 					{
-						addItem(iEquip.id, 1, iChar.charindex);
+						addItem(iEquip.id, 1, iChar.oCharIndex);
 						if (iEquip.upgrades)
 						{
 							iEquip.upgrades.forEach(function(iID)
 							{
-								addItem(iID, 1, iChar.charindex);
+								addItem(iID, 1, iChar.oCharIndex);
 							});
 						}
 						if (iEquip.infusions)
 						{
 							iEquip.infusions.forEach(function(iID)
 							{
-								addItem(iID, 1, iChar.charindex);
+								addItem(iID, 1, iChar.oCharIndex);
 							});
 						}
 					});
@@ -5418,7 +5418,7 @@ A = {
 							{
 								if (iInv)
 								{
-									addItem(iInv.id, iInv.count, iChar.charindex);
+									addItem(iInv.id, iInv.count, iChar.oCharIndex);
 								}
 							});
 						}
@@ -5462,6 +5462,33 @@ A = {
 		{
 			A.printError(A.PermissionEnum.Inventories);
 		});
+	},
+	
+	/*
+	 * Gets a list of locations an item of a type is located in the account.
+	 * @param object pLocations from possessions object.
+	 * @returns string.
+	 */
+	formatPossessionLocations: function(pLocations)
+	{
+		var str = "";
+		for (var i in pLocations)
+		{
+			if (isNaN(i))
+			{
+				str += i;
+			}
+			else
+			{
+				if (A.Data.Characters[i])
+				{
+					str += A.Data.Characters[i].oCharName;
+				}
+			}
+			str +=  ", ";
+		}
+		str = str.substring(0, str.length - 2); // Trim the trailing comma
+		return str;
 	}
 };
 
@@ -5619,8 +5646,8 @@ V = {
 						{
 							// Check retrieval progress
 							A.Data.Characters[iIndex] = pData;
-							A.Data.Characters[iIndex].charindex = iIndex;
-							A.Data.Characters[iIndex].charname = U.escapeHTML(pData.name);
+							A.Data.Characters[iIndex].oCharIndex = iIndex;
+							A.Data.Characters[iIndex].oCharName = U.escapeHTML(pData.name);
 							V.generateCharactersSelection(pData);
 							numfetched++;
 							A.setProgressBar(numfetched, numtofetch);
@@ -5657,10 +5684,10 @@ V = {
 	{
 		// Initializes common character values to reused later
 		var icon = (pCharacter.profession).toLowerCase();
-		pCharacter.charelite = icon;
-		pCharacter.charprofession = icon;
-		pCharacter.charcolor = A.Metadata.Profession[icon].color;
-		pCharacter.charislowlevel = (pCharacter.level < A.Metadata.ProfLevel.Max);
+		pCharacter.oCharElite = icon;
+		pCharacter.oCharProfession = icon;
+		pCharacter.oCharColor = A.Metadata.Profession[icon].color;
+		pCharacter.oCharIsLowLevel = (pCharacter.level < A.Metadata.ProfLevel.Max);
 		if (pCharacter.specializations && pCharacter.specializations.pve)
 		{
 			var specs = pCharacter.specializations.pve;
@@ -5673,7 +5700,7 @@ V = {
 					if (A.Metadata.ProfElite[specid] !== undefined)
 					{
 						icon = A.Metadata.ProfElite[specid];
-						pCharacter.charelite = icon; // Remember the icon
+						pCharacter.oCharElite = icon; // Remember the icon
 						break;
 					}
 				}
@@ -5701,12 +5728,12 @@ V = {
 		// SELECTION COLUMN (left)
 		var charvalue = A.Metadata.Race[(pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase()] || 1;
 		var professionvalue = (A.Metadata.Profession[(pCharacter.profession).toLowerCase()]).weight;
-		var trivial = (pCharacter.charislowlevel) ? "accTrivial" : "";
+		var trivial = (pCharacter.oCharIsLowLevel) ? "accTrivial" : "";
 		// Store character portrait
-		pCharacter.charportrait = "img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG;
-		$("#chrSelection_" + pCharacter.charindex).append(
-			"<img class='chrPortrait' src='" + pCharacter.charportrait + "' />"
-			+ "<var id='chrName_" + pCharacter.charindex + "' class='chrName' data-value='" + charvalue + "'>" + pCharacter.charname + "</var>"
+		pCharacter.oCharPortrait = "img/account/characters/" + (pCharacter.race).toLowerCase() + "_" + (pCharacter.gender).toLowerCase() + I.cPNG;
+		$("#chrSelection_" + pCharacter.oCharIndex).append(
+			"<img class='chrPortrait' src='" + pCharacter.oCharPortrait + "' />"
+			+ "<var id='chrName_" + pCharacter.oCharIndex + "' class='chrName' data-value='" + charvalue + "'>" + pCharacter.oCharName + "</var>"
 			+ "<span class='chrCommitment' data-value='" + professionvalue + "'>"
 				+ "<var class='chrProfession " + trivial + "'>"
 					+ "<ins class='chrProfessionIcon acc_prof acc_prof_" + icon + "'></ins><sup>" + pCharacter.level + "</sup></var>"
@@ -5738,7 +5765,7 @@ V = {
 			U.prettyJSON(A.Data.Characters[charindex]);
 		});
 		// Additional information as tooltip
-		I.qTip.init($("#chrSelection_" + pCharacter.charindex).find(".chrCommitment").attr("title", crafttooltip));
+		I.qTip.init($("#chrSelection_" + pCharacter.oCharIndex).find(".chrCommitment").attr("title", crafttooltip));
 	},
 	
 	/*
@@ -5796,10 +5823,10 @@ V = {
 			{
 				highestdeaths = iChar.deaths;
 			}
-			iChar.charlifetime = ~~((nowmsec - (new Date(iChar.created)).getTime()) / T.cMSECONDS_IN_SECOND);
-			if (highestlifetime < iChar.charlifetime)
+			iChar.oCharLifetime = ~~((nowmsec - (new Date(iChar.created)).getTime()) / T.cMSECONDS_IN_SECOND);
+			if (highestlifetime < iChar.oCharLifetime)
 			{
-				highestlifetime = iChar.charlifetime;
+				highestlifetime = iChar.oCharLifetime;
 			}
 		});
 		// Write a row for each character
@@ -5816,21 +5843,21 @@ V = {
 				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + agepercent + "%'></s></samp>"
 					+ "<samp><s style='width:" + deathpercent + "%'></s></samp></span>"
 				+ "<var class='chrDeaths' title='" + T.parseRatio(age / iChar.deaths, 3) + "' data-value='" + iChar.deaths + "'>" + iChar.deaths + "x</var>";
-			$("#chrUsage_" + iChar.charindex).append(usage);
+			$("#chrUsage_" + iChar.oCharIndex).append(usage);
 			// SENIORITY COLUMN (right)
 			var birthdate = (new Date(iChar.created)).toLocaleString();
-			var birthdays = ~~(iChar.charlifetime / T.cSECONDS_IN_YEAR);
-			var lifetime = ~~(iChar.charlifetime / T.cSECONDS_IN_DAY);
-			var lifetimepercent = (iChar.charlifetime / highestlifetime) * T.cPERCENT_100;
-			var birthdaysince = ~~((iChar.charlifetime % T.cSECONDS_IN_YEAR) / T.cSECONDS_IN_DAY);
+			var birthdays = ~~(iChar.oCharLifetime / T.cSECONDS_IN_YEAR);
+			var lifetime = ~~(iChar.oCharLifetime / T.cSECONDS_IN_DAY);
+			var lifetimepercent = (iChar.oCharLifetime / highestlifetime) * T.cPERCENT_100;
+			var birthdaysince = ~~((iChar.oCharLifetime % T.cSECONDS_IN_YEAR) / T.cSECONDS_IN_DAY);
 			var birthdaytill = T.cDAYS_IN_YEAR - birthdaysince;
 			var birthdaypercent = (birthdaysince / T.cDAYS_IN_YEAR) * T.cPERCENT_100;
-			var seniority = "<var class='chrLifetime' data-value='" + iChar.charlifetime + "'>" + lifetime + daystr + " (" + birthdays + yearstr + ")</var>"
+			var seniority = "<var class='chrLifetime' data-value='" + iChar.oCharLifetime + "'>" + lifetime + daystr + " (" + birthdays + yearstr + ")</var>"
 				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + lifetimepercent + "%'></s></samp>"
 					+ "<samp><s style='width:" + birthdaypercent + "%'></s></samp></span>"
 				+ "<var class='chrBirthday' data-value='" + birthdaysince + "'>" + birthdaytill + daystr + "</var>"
 				+ "<var class='chrBirthdate'>" + birthdate + "</var>";
-			$("#chrSeniority_" + iChar.charindex).append(seniority);
+			$("#chrSeniority_" + iChar.oCharIndex).append(seniority);
 		});
 		// Highlight the character's name when hovered over a statistics row
 		$(".chrStats li").hover(
@@ -5933,7 +5960,7 @@ V = {
 				if (iChar.guild)
 				{
 					var guildtag = "<sup class='chrTag'>[" + (A.Data.Guilds[iChar.guild]).tag + "]" + "</sup>";
-					$("#chrName_" + iChar.charindex).append(guildtag);
+					$("#chrName_" + iChar.oCharIndex).append(guildtag);
 				}
 			});
 			
@@ -6118,11 +6145,11 @@ V = {
 		var container = $("<div class='eqpSelectContainer'></div>").appendTo(dishmenu);
 		A.Data.Characters.forEach(function(iChar)
 		{
-			var select = $("<span class='eqpSelect curClick' title='" + iChar.charname + " (" + iChar.level + ")' style='border-left: 2px solid " + iChar.charcolor + "'>"
-				+ "<img class='eqpSelectPortrait' src='" + iChar.charportrait + "' />"
-				+ "<img class='eqpSelectProfession' src='img/account/classes/" + iChar.charelite + ".png' />"
+			var select = $("<span class='eqpSelect curClick' title='" + iChar.oCharName + " (" + iChar.level + ")' style='border-left: 2px solid " + iChar.oCharColor + "'>"
+				+ "<img class='eqpSelectPortrait' src='" + iChar.oCharPortrait + "' />"
+				+ "<img class='eqpSelectProfession' src='img/account/classes/" + iChar.oCharElite + ".png' />"
 			+ "</span>").appendTo(container);
-			if (iChar.charislowlevel)
+			if (iChar.oCharIsLowLevel)
 			{
 				select.addClass("accTrivial");
 			}
@@ -6147,7 +6174,7 @@ V = {
 					}
 					A.adjustAccountScrollbar();
 				});
-			})(iChar.charindex);
+			})(iChar.oCharIndex);
 		});
 		I.qTip.init(container.find(".eqpSelect"));
 	},
@@ -6159,17 +6186,17 @@ V = {
 	generateHero: function(pCharacter)
 	{
 		var char = pCharacter || A.getCurrentCharacter();
-		if (char === undefined || char === null || Array.isArray(char.equipment) === false || $("#eqpContainer_" + char.charindex).length)
+		if (char === undefined || char === null || Array.isArray(char.equipment) === false || $("#eqpContainer_" + char.oCharIndex).length)
 		{
 			return;
 		}
 		// Initialize variables
 		var dish = $("#accDish_Hero");
-		var container = $("<div id='eqpContainer_" + char.charindex + "' class='eqpContainer'></div>").appendTo(dish);
+		var container = $("<div id='eqpContainer_" + char.oCharIndex + "' class='eqpContainer'></div>").appendTo(dish);
 		// Title and separator
-		$("<div class='eqpCharSeparator'><img class='eqpCharPortrait' src='" + char.charportrait + "' />"
-			+ "<img class='eqpCharProfession' src='img/account/classes/" + char.charelite + ".png' />"
-			+ "<span class='eqpCharName'>" + char.charname + "</span>"
+		$("<div class='eqpCharSeparator'><img class='eqpCharPortrait' src='" + char.oCharPortrait + "' />"
+			+ "<img class='eqpCharProfession' src='img/account/classes/" + char.oCharElite + ".png' />"
+			+ "<span class='eqpCharName'>" + char.oCharName + "</span>"
 		+ "</div>").appendTo(container);
 		// Equipment icons and brief glance information
 		var subcontainer = $("<div class='eqpSubcontainer eqpSubcontainer_" + char.profession + "'></div>").appendTo(container);
@@ -6337,7 +6364,7 @@ V = {
 			{
 				Q.getItem(iEquipment.id, function(iItem)
 				{
-					var ithcontainer = $("#eqpContainer_" + char.charindex);
+					var ithcontainer = $("#eqpContainer_" + char.oCharIndex);
 					var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
 					var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iItem.icon;
 					var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
@@ -6389,7 +6416,7 @@ V = {
 		}
 
 		// Hide secondary weapon slots for professions that can't swap weapons
-		if ((A.Metadata.Profession[char.charprofession]).isswappable === false)
+		if ((A.Metadata.Profession[char.oCharProfession]).isswappable === false)
 		{
 			var elmstoconceal = [".eqpSwap", ".eqpSwapB", ".eqpWeaponB1", ".eqpWeaponB2"];
 			var elmstohide = [".eqpSwapAquatic", ".eqpSwapAquaticB", ".eqpWeaponAquaticB"];
@@ -6585,7 +6612,7 @@ V = {
 		// Create bank tab for each character, fill slots with equipped items
 		A.Data.Characters.forEach(function(iChar)
 		{
-			tab = Q.createBankTab(bank, {aTitle: iChar.charname});
+			tab = Q.createBankTab(bank, {aTitle: iChar.oCharName});
 			slotscontainer = tab.find(".bnkTabSlots");
 			for (var i = 0; i < iChar.equipment.length; i++)
 			{
@@ -6632,6 +6659,7 @@ V = {
 		var tab, slotscontainer, slot;
 		var char, bagdata;
 		
+		// First count the number of items to fetch
 		var numtofetch = 0;
 		var numfetched = 0;
 		for (var i = 0; i < A.Data.Characters.length; i++)
@@ -6653,11 +6681,12 @@ V = {
 			}
 		}
 		
+		// Generate the tabs and slots
 		for (var i = 0; i < A.Data.Characters.length; i++)
 		{
 			char = A.Data.Characters[i];
 			// Bank tab separator for each character
-			tab = Q.createBankTab(bank, {aTitle: char.charname});
+			tab = Q.createBankTab(bank, {aTitle: char.oCharName});
 			Q.createInventorySidebar(tab, char.bags);
 			slotscontainer = tab.find(".bnkTabSlots");
 			for (var ii = 0; ii < char.bags.length; ii++)
@@ -6926,6 +6955,7 @@ V = {
 		var numintabstotal = 0;
 		var numsunlockedtotal = 0;
 		var slot, unlockid, unlockobj;
+		var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
 		
 		// Fills a bank tab with slots
 		var fillTab = function(pTab, pCatObj)
@@ -6948,13 +6978,20 @@ V = {
 							slotprice = iPayment["coin"];
 							slotgem = iPayment["gem"];
 						}
-						var count = (Settings.aIsPossessions && unlocksassoc[iItemID]) ? unlocksassoc[iItemID].count : ((unlocksassoc[iUnlockID]) ? 1 : 0);
+						var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
+						var comment;
+						if (Settings.aIsPossessions && unlocksassoc[iItemID])
+						{
+							count = unlocksassoc[iItemID].oCount;
+							comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(unlocksassoc[iItemID].oLocations) + "</var>";
+						}
 						Q.styleBankSlot(iSlot, {
 							aItem: iItem,
 							aTradeableID: (Settings.aIsPossessions && iUnlockID) ? iUnlockID : null,
 							aPrice: slotprice,
 							aGem: slotgem,
 							aSlotMeta: {count: count},
+							aComment: comment,
 							aWiki: iWiki,
 							aCallback: function()
 							{
@@ -7012,8 +7049,10 @@ V = {
 			}
 			var numintab = catobj.length;
 			numintabstotal += numintab;
+			var unlockratio = numunlocked / numintab;
+			var unlockratioclass = (unlockratio === 1) ? "accSignificant" : "accTrivial";
 			var unlockstr = numunlocked + " / " + numintab
-				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numunlocked / numintab) + ")</span>";
+				+ "<span class='" + unlockratioclass + "'> (" + U.convertRatioToPercent(unlockratio) + ")</span>";
 			tab.find(".bnkTabStats").html(unlockstr);
 		}
 		var unlocktotalstr = numsunlockedtotal + " / " + numintabstotal
@@ -7418,7 +7457,7 @@ Q = {
 	{
 		var attrobj = {};
 		var level = pCharacter.level;
-		var profession = pCharacter.charprofession;
+		var profession = pCharacter.oCharProfession;
 		var constants = A.Attribute.Constants;
 		var baseattr = A.Attribute.PrimaryPoints[level - 1];
 		var precisiondivisor = A.Attribute.PrecisionDivisor[level - 1];
@@ -7651,13 +7690,14 @@ Q = {
 		
 		if (box && box.html)
 		{
-			if (itemmeta.upgrades || itemmeta.infusions || itemmeta.skin || itemmeta.slot || itemmeta.bound_to || Settings.aWantAttr)
+			if (itemmeta.upgrades || itemmeta.infusions || itemmeta.skin || itemmeta.slot || itemmeta.bound_to
+				|| Settings.aWantAttr || Settings.aComment)
 			{
 				Q.analyzeItem(pItem, pSettings);
 			}
 			else
 			{
-				// Only use the cached analysis if the item is fresh (unupgraded, untransmuted, unsoulbound)
+				// Only use the cached analysis if the item is fresh (unupgraded, untransmuted, unsoulbound, not commented)
 				if (Settings.aElement)
 				{
 					var elm = $(Settings.aElement);
@@ -7983,6 +8023,13 @@ Q = {
 			charbindstr = D.getString("SoulboundToCharacter") + ": " + U.escapeHTML(Settings.aSoulbound);
 		}
 		
+		// ADDED COMMENT
+		var commentstr = "";
+		if (Settings.aComment)
+		{
+			commentstr = "<aside>" + Settings.aComment + "</aside>";
+		}
+		
 		// VENDOR PRICE
 		var vendorstr = "";
 		var vendorvalue = 0;
@@ -8128,6 +8175,7 @@ Q = {
 				+ selectstatsstr
 				+ flagsstr
 				+ charbindstr
+				+ commentstr
 				+ vendorstr
 				+ pricestr
 			+ "</div>";
@@ -8154,7 +8202,7 @@ Q = {
 				pricesell: pricesell
 			};
 			// Cache the item only if it's not custom (no upgrades or transmutations)
-			if (isitemmeta === false)
+			if (isitemmeta === false && Settings.aComment === undefined)
 			{
 				Q.Box[item.id] = box;
 			}
@@ -8594,6 +8642,12 @@ Q = {
 					});
 				})(bag);
 			}
+			else
+			{
+				// For ununused bag slots (no bag placed in the sidebar slot)
+				bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
+				bag = $("<span class='bnkSidebarBag'><var class='bnkSidebarBagCount'></var></span>").appendTo(bagouter);
+			}
 		});
 	},
 		
@@ -8717,7 +8771,11 @@ Q = {
 				}
 			};
 			
-			Q.scanItem(Settings.aItem, {aElement: pSlot, aItemMeta: itemmeta, aCallback: function(pBox)
+			Q.scanItem(Settings.aItem, {
+				aElement: pSlot,
+				aItemMeta: itemmeta,
+				aComment: Settings.aComment,
+				aCallback: function(pBox)
 			{
 				// Load retrieved proper transmuted icon if available
 				var icon = (pBox.skin) ? pBox.skin.icon : Settings.aItem.icon;
@@ -9140,7 +9198,6 @@ Q = {
 	 */
 	bindItemSlotBehavior: function(pSlot, pSettings)
 	{
-		return;
 		var Settings = pSettings || {};
 		// Right click on the item slot shows context menu
 		pSlot.contextmenu(function(pEvent)
@@ -10959,7 +11016,7 @@ D = {
 		s_search: {de: "suchen", es: "buscar", fr: "rechercher",
 			cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"},
 		
-		// Adjectives and Adverbs
+		// Adjectives, Adverbs, Participles
 		s_ago: {de: "vor", es: "hace", fr: "il ya",
 			cs: "před", it: "fa", pl: "temu", pt: "há", ru: "назад", zh: "前"},
 		s_also: {de: "auch", es: "también", fr: "aussi",
@@ -10980,6 +11037,8 @@ D = {
 			cs: "odebírané", it: "sottoscritti", pl: "subskrypcji", pt: "assinado", ru: "подписан", zh: "訂閱"},
 		s_then: {de: "dann", es: "luego", fr: "puis",
 			cs: "pak", it: "poi", pl: "potem", pt: "então", ru: "затем", zh: "接著"},
+		s_found: {de: "gefunden", es: "encontró", fr: "trouvé",
+			cs: "zjištěno", it: "trovato", pl: "stwierdzono", pt: "encontrado", ru: "найден", zh: "發現了"},
 		
 		// Prepositions and Conjunctions
 		s_at: {de: "um", es: "a", fr: "à",
@@ -20454,6 +20513,7 @@ W = {
 			obj.last_flipped_msec = null; // Integer
 			obj.claimed_by = "none"; // String guild ID, the API can have actual "null" values
 			obj.claimed_at = null; // String ISO time
+			obj.prevownerhtml = null; // HTML created from log entry after ownership change
 		}
 		W.LocaleCurrent = (O.Options.enu_Server >= W.LocaleThreshold.Europe)
 			? W.LocaleEnum.Europe : W.LocaleEnum.Americas;
