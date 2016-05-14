@@ -156,9 +156,22 @@
 	overflow: visible;
 	display: inline-block;
 	padding: 8px;
-	background: rgba(0, 0, 0, 0.2);
 	border-radius: 4px;
 	text-align: left;
+}
+
+/* Classes for toggling window opacity (which is actually its background) */
+.lboOpaque {
+	background: rgba(0, 0, 0, 0.8);
+}
+.lboOpaqueNot {
+	background: rgba(0, 0, 0, 0.2);
+}
+.logOpaque {
+	background: rgba(0, 0, 0, 0.8);
+}
+.logOpaqueNot {
+	background: rgba(0, 0, 0, 0.1);
 }
 
 #lboOther { /* Contains scoreboards of other tiers */
@@ -374,7 +387,6 @@
 ----------------------------------------------------------------------------- */
 #wvwLog {
 	width: 256px;
-	background: rgba(0, 0, 0, 0.1);
 	margin: 0px 4px 4px 0px;
 	padding: 8px 12px 8px 12px;
 	border: none;

@@ -1312,23 +1312,7 @@ O = {
 		},
 		bol_opaqueTimeline: function()
 		{
-			var background;
-			if (O.Options.bol_opaqueTimeline)
-			{
-				if (I.ModeCurrent === I.ModeEnum.Overlay)
-				{
-					background = "linear-gradient(to right, #111 0%, #383838 50%, #111 100%)";
-				}
-				else
-				{
-					background = "rgba(0, 0, 0, 0.6)";
-				}
-			}
-			else
-			{
-				background = "none";
-			}
-			$("#itemTimeline").css({background: background});
+			I.toggleHUDOpacity("#itemTimeline", "tml", O.Options.bol_opaqueTimeline);
 		},
 		bol_refreshPrices: function()
 		{
@@ -2535,7 +2519,7 @@ U = {
 		Itinerary: "data/itinerary.js",
 		Skins: "data/skins.js",
 		Minis: "data/minis.js",
-		Toys: "data/toys.js",
+		Catalog: "data/catalog.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
@@ -4007,48 +3991,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				$.getJSON("test/items.json", function(pData)
-				{
-					Z.APICacheArrayOfObjects = [];
-					var item, unlock;
-					for (var i in pData)
-					{
-						item = pData[i];
-						/*if (item.type === "Consumable" && item.name)
-						{
-							try
-							{
-								if (item.description.indexOf("eposit this decoration") === -1
-									&& item.details.type !== "Food"
-									&& item.details.type !== "Utility"
-									&& item.details.type !== "Booze"
-									&& item.details.type !== "Unlock"
-									&& item.details.type !== "Transmutation")
-								{
-									unlock = {
-										i: i,
-										n: item.name,
-										p: {gem: 0}
-									};
-									Z.APICacheArrayOfObjects.push(unlock);
-									//Z.APICacheArrayOfObjects.push(item);
-								}
-							}
-							catch (e) {};
-						}*/
-						if (item.rarity === "Legendary")
-						//if (item.name.indexOf("Bauble Infusion") !== -1)
-						{
-							unlock = {
-								i: i,
-								n: item.name
-							};
-							Z.APICacheArrayOfObjects.push(unlock);
-							//Z.APICacheArrayOfObjects.push(item);
-						}
-					}
-					Z.parseCommand("/apicachearray");
-				});
+				
 			}},
 			updateitems: {usage: "Prints an updated database of items (test mode only).", f: function()
 			{
@@ -5376,8 +5319,10 @@ A = {
 			A.Possessions[pItem].oCount += pCount;
 			if (A.Possessions[pItem].oLocations[pLocation] === undefined)
 			{
-				A.Possessions[pItem].oLocations[pLocation] = true;
+				A.Possessions[pItem].oLocations[pLocation] = 0;
 			}
+			// Also record the sub-count, which is the every location's count
+			A.Possessions[pItem].oLocations[pLocation] += pCount;
 		};
 		
 		// Search the account for items
@@ -5485,7 +5430,7 @@ A = {
 					str += A.Data.Characters[i].oCharName;
 				}
 			}
-			str +=  ", ";
+			str += " (" + pLocations[i] + ")" + ", "; // Write the count next to the location name
 		}
 		str = str.substring(0, str.length - 2); // Trim the trailing comma
 		return str;
@@ -6726,11 +6671,11 @@ V = {
 	},
 	
 	/*
-	 * Generates the toys bank window.
+	 * Generates the items catalog bank window.
 	 */
-	serveToys: function()
+	serveCatalog: function()
 	{
-		if (V.requireCharacters("Toys"))
+		if (V.requireCharacters("Catalog"))
 		{
 			return;
 		}
@@ -6739,7 +6684,7 @@ V = {
 			A.printError(A.PermissionEnum.Inventories);
 			return;
 		}
-		var dish = $("#accDish_Toys");
+		var dish = $("#accDish_Catalog");
 		if (A.reinitializeDish(dish) === false)
 		{
 			return;
@@ -6747,24 +6692,23 @@ V = {
 		
 		var container = Q.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		$.getScript(U.URL_DATA.Toys).done(function()
+		$.getScript(U.URL_DATA.Catalog).done(function()
 		{
-			/*
-			 * Toys is a custom unlockable whose collection is generated based on
-			 * the user's bank and inventory rather than a list provided by the API.
-			 */
-			A.initializePossessions(function()
+			Q.loadItemsDatabase("catalog", function()
 			{
-				V.generateUnlockables(bank, {
-					aHeaders: GW2T_TOYS_HEADERS,
-					aDatabase: GW2T_TOYS_DATA,
-					aIsPossessions: true
+				/*
+				 * Catalog is a custom unlockable whose collection is generated based on
+				 * the user's bank and inventory rather than a list provided by the API.
+				 */
+				A.initializePossessions(function()
+				{
+					V.generateUnlockables(bank, {
+						aHeaders: GW2T_CATALOG_HEADERS,
+						aDatabase: GW2T_CATALOG_DATA,
+						aIsPossessions: true,
+						aWantSearchHighlight: false,
+					});
 				});
-			});
-			return;
-			Q.loadItemsDatabase("toys", function()
-			{
-				
 			});
 		});
 	},
@@ -6922,6 +6866,7 @@ V = {
 	 * @objparam object aHeaders containing category header translations.
 	 * @objparam object aDatabase containing category objects holding unlockables.
 	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API.
+	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
 	 * @objparam string aHelpMessage HTML of help message element, optional.
 	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
 	 * A collection database stores unlockable objects with these properties:
@@ -6972,12 +6917,25 @@ V = {
 				{
 					Q.getItem(iItemID, function(iItem)
 					{
-						var slotprice, slotgem;
+						var slotcoin, slotgem, slotgemvalue;
 						if (iPayment)
 						{
-							slotprice = iPayment["coin"];
+							slotcoin = iPayment["coin"];
+							// Some items with a gem price may be marked to not be added to the tab display
 							slotgem = iPayment["gem"];
+							if (slotgem !== undefined)
+							{
+								if (slotgem < 0)
+								{
+									slotgem = 0; // Let the payment function create the price label rather than the style function
+								}
+								else
+								{
+									slotgemvalue = slotgem;
+								}
+							}
 						}
+						// Determine the item count number to display
 						var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
 						var comment;
 						if (Settings.aIsPossessions && unlocksassoc[iItemID])
@@ -6985,23 +6943,33 @@ V = {
 							count = unlocksassoc[iItemID].oCount;
 							comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(unlocksassoc[iItemID].oLocations) + "</var>";
 						}
+						// Style the slot
 						Q.styleBankSlot(iSlot, {
 							aItem: iItem,
 							aTradeableID: (Settings.aIsPossessions && iUnlockID) ? iUnlockID : null,
-							aPrice: slotprice,
-							aGem: slotgem,
+							aPrice: slotcoin,
+							aGem: slotgemvalue,
 							aSlotMeta: {count: count},
 							aComment: comment,
 							aWiki: iWiki,
 							aCallback: function()
 							{
 								// Include payment if the item cannot be obtained on the Trading Post
-								if (iPayment && ((slotprice === undefined && slotgem === undefined) || (slotprice === 0 || slotgem === 0)))
+								if (iPayment && ((slotcoin === undefined && slotgem === undefined) || (slotcoin === 0 || slotgem === 0)))
 								{
 									for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
 									{
 										var paymentvalue = iPayment[paymentkey];
-										iSlot.append("<var class='bnkSlotPrice'>" + E.Payment[paymentkey](paymentvalue * (count || 1)) + "</var>");
+										var priceclass = "";
+										if (paymentvalue < 0)
+										{
+											// A negative price means it should not be added, only displayed subtly
+											priceclass = "bnkSlotPriceTrivial";
+											paymentvalue *= -1;
+										}
+										iSlot.append("<var class='bnkSlotPrice " + priceclass + "'>"
+											+ E.Payment[paymentkey](paymentvalue * (count || 1))
+										+ "</var>");
 									}
 								}
 								numfetched++;
@@ -7058,7 +7026,8 @@ V = {
 		var unlocktotalstr = numsunlockedtotal + " / " + numintabstotal
 				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numsunlockedtotal / numintabstotal) + ")</span>";
 		container.find(".bnkCount").append(unlocktotalstr);
-		Q.createBankMenu(pBank, {aWantSearchHighlight: true, aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html()});
+		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
+		Q.createBankMenu(pBank, {aWantSearchHighlight: wantsearchhighlight, aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html()});
 	},
 	
 	/*
@@ -8968,7 +8937,10 @@ Q = {
 				});
 			}
 			A.adjustAccountScrollbar();
-		}));
+		})).click(function()
+		{
+			$(this).select();
+		});
 		
 		/*
 		 * Add buttons next to the search bar for bank functionalities.
@@ -9283,6 +9255,7 @@ E = {
 		craft: function() { return "<ins class='s16 s16_craft'></ins>"; },
 		pvp: function() { return "<ins class='s16 s16_pvp'></ins>"; },
 		starting: function() { return "<ins class='s16 s16_starting'></ins>"; },
+		spirit: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_spirit'></ins>"; },
 		cob: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_cob'></ins>"; },
 		bubble: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_bubble'></ins>"; },
 		badge: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_badge'></ins>"; },
@@ -19104,7 +19077,7 @@ W = {
 	cOWNERS_PER_TIER: 3,
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
 	cMSECONDS_IMMUNITY: 300000, // 5 minutes
-	cMSECONDS_RESET_GRACE: 900000, // 15 minutes from the match start time
+	cMSECONDS_RESET_GRACE: 300000, // 5 minutes from the match start time
 	MatchStartTimeMS: null,
 	MatchFinishTimeMS: null,
 	MatchFinishTimeISO: null,
@@ -20050,8 +20023,7 @@ W = {
 	},
 	opaqueLeaderboard: function()
 	{
-		var background = (O.Options.bol_opaqueLeaderboard) ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.2)";
-		$("#lboContainer").css({background: background});
+		I.toggleHUDOpacity("#lboContainer", "lbo", O.Options.bol_opaqueLeaderboard);
 	},
 	
 	/*
@@ -20182,8 +20154,7 @@ W = {
 	},
 	opaqueLog: function()
 	{
-		var background = (O.Options.bol_opaqueLog) ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.1)";
-		$("#wvwLog").css({background: background});
+		I.toggleHUDOpacity("#wvwLog", "log", O.Options.bol_opaqueLog);
 	},
 	
 	/*
@@ -22281,17 +22252,28 @@ T = {
 	{
 		var dailyobj = {};
 		var a = T.DailyAssociation;
-		// Remove non-max level dailies
-		for (var i = pObj.pve.length - 1; i >= 0; i--)
+		var newpve = [];
+		for (var i = 0; i < pObj.pve.length; i++)
 		{
-			if ((pObj.pve[i]).level.max < I.cLevelMax)
+			var ithdaily = pObj.pve[i];
+			// Only allow max level and max expansion access dailies
+			if (ithdaily.level.max === I.cLevelMax)
 			{
-				pObj.pve.splice(i, 1);
+				for (var ii = 0; ii < ithdaily.required_access.length; ii++)
+				{
+					if (ithdaily.required_access[ii] === T.Daily.AccessEnum.Max)
+					{
+						newpve.push(ithdaily);
+						break;
+					}
+				}
+				
 			}
 		}
+		
 		// Turn the achievement IDs into achievement nicknames
 		var u = "unknown";
-		dailyobj.pve = [a[(pObj.pve[0].id)] || u, a[(pObj.pve[1].id)] || u, a[(pObj.pve[2].id)] || u, a[(pObj.pve[3].id)] || u];
+		dailyobj.pve = [a[(newpve[0].id)] || u, a[(newpve[1].id)] || u, a[(newpve[2].id)] || u, a[(newpve[3].id)] || u];
 		dailyobj.pvp = [a[(pObj.pvp[0].id)] || u, a[(pObj.pvp[1].id)] || u, a[(pObj.pvp[2].id)] || u, a[(pObj.pvp[3].id)] || u];
 		dailyobj.wvw = [a[(pObj.wvw[0].id)] || u, a[(pObj.wvw[1].id)] || u, a[(pObj.wvw[2].id)] || u, a[(pObj.wvw[3].id)] || u];
 		return dailyobj;
@@ -24686,7 +24668,7 @@ I = {
 			Hero: "Hero",
 			Equipment: "Equipment",
 			Inventory: "Inventory",
-			Toys: "Toys",
+			Catalog: "Catalog",
 			Crafting: "Crafting",
 			Trading: "Trading",
 			PVP: "PVP",
@@ -25339,6 +25321,28 @@ I = {
 		{
 			var r = pRequests[i];
 			$(r.s).animate(r.p, {duration: pSpeed, queue: false});
+		}
+	},
+	
+	/*
+	 * Toggles the opacity of a HUD window element by toggling a CSS class.
+	 * @param jqboject pElement.
+	 * @param string pSuffix for getting the associated CSS class.
+	 * @param boolean pBoolean.
+	 * @pre CSS class was defined in the stylesheet.
+	 */
+	toggleHUDOpacity: function(pElement, pPrefix, pBoolean)
+	{
+		var elm = $(pElement);
+		if (pBoolean)
+		{
+			elm.addClass(pPrefix + "Opaque");
+			elm.removeClass(pPrefix + "OpaqueNot");
+		}
+		else
+		{
+			elm.addClass(pPrefix + "OpaqueNot");
+			elm.removeClass(pPrefix + "Opaque");
 		}
 	},
 	

@@ -778,10 +778,12 @@ textarea.jsCopyCode {
 /* Top side: Touch menu (visible on touch devices only) */
 .tchMenu {
 	position: absolute; z-index: 2;
+	left: 16px;
 }
 .tchZoomButton {
 	display: block;
 	width: 64px; height: 64px;
+	margin-bottom: 16px;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	opacity: 0.6;
@@ -830,6 +832,12 @@ textarea.jsCopyCode {
 	margin-left: -2px;
 	background: transparent;
 	border-left: 2px dashed rgba(255, 136, 68, 0.3);
+}
+.tmlOpaque {
+	background: rgba(0, 0, 0, 0.6);
+}
+.tmlOpaqueNot {
+	background: none;
 }
 .tmlLine { /* A whole line representing a chain of events */
 	height: 24px;

@@ -1176,11 +1176,11 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	pve: "<img src='img/ui/pages/wvw.png' /> <a href='http://gw2timer.com/?page=WvW' title='gw2timer.com/wvw'>WvW Alpine</a> livemap ready. "
-		+ "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Account' title='gw2timer.com/account'>Wardrobe and Minis</a> now available.",
-	wvw: "The new Alpine maps have a different zoom level. Please set your own zoom level from the <img src='img/map/display.png'> icon at the top right corner.",
-	Start: new Date("2016-05-03T16:00:00Z"),
-	Finish: new Date("2016-05-10T16:00:00Z"),
+	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Account' title='gw2timer.com/catalog'>Account Keychain</a> and items catalog now available."
+		+ " <a href='http://i.imgur.com/35mlRUE.png'>Screenshot</a>.",
+	wvw: "",
+	Start: new Date("2016-05-04T16:00:00Z"),
+	Finish: new Date("2016-05-17T16:00:00Z"),
 	Messages:
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "

@@ -1504,6 +1504,9 @@ input[type="text"].bnkSearchInput:hover {
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
 }
+.bnkSlotPriceTrivial {
+	opacity: 0.6;
+}
 .bnkSlotZero .bnkSlotIcon { /* Zero stack slots */
 	opacity: 0.2;
 }
