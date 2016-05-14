@@ -75,6 +75,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	// Verbs
 	
 	// Adjectives and Adverbs
+	s_shared: {de: "gemeinsamer", es: "compartida", fr: "partagé",
+		cs: "sdílený", it: "condiviso", pl: "udostępniona", pt: "compartilhado", ru: "общий", zh: "共享"},
 	s_locked: {de: "gesperrt", es: "bloqueado", fr: "verrouillé",
 		cs: "uzamčený", it: "bloccato", pl: "zablokowany", pt: "bloqueado", ru: "заблокированный", zh: "鎖定"},
 	s_unlocked: {de: "nicht gesperrt", es: "desbloqueado", fr: "déverrouillé",

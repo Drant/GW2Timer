@@ -1261,13 +1261,6 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Incarnate Light Armor Skin",
-		id: "63909",
-		price: 640,
-		discount: 800,
-		col: 0
-	},
-	{
 		name: "Strider's Medium Armor Skin",
 		id: "63899",
 		price: 640,
@@ -1284,13 +1277,6 @@ Sale: {
 	{
 		name: "Pirate Captain's Outfit",
 		id: "20251",
-		price: 420,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "Cook's Outfit",
-		id: "20248",
 		price: 420,
 		discount: 700,
 		col: 0

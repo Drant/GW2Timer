@@ -1432,14 +1432,19 @@ input[type="text"].bnkSearchInput:hover {
 	-webkit-filter: brightness(1.05);
 	filter: brightness(1.05);
 }
-.bnkSlotBackground {
+.bnkSlotBackground, .bnkSlotBackgroundShared {
 	display: block;
 	position: absolute;
 	width: 72px; height: 72px;
-	background-image: url("../img/account/equipment/slot.png");
 	background-size: 78px 78px;
 	background-position: center;
 	opacity: 0.6;
+}
+.bnkSlotBackground {
+	background-image: url("../img/account/equipment/slot.png");
+}
+.bnkSlotBackgroundShared {
+	background-image: url("../img/account/equipment/slot_shared.png");
 }
 .bnkSlot:hover .bnkSlotBackground {
 	opacity: 0.9;

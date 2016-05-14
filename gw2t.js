@@ -4596,6 +4596,7 @@ A = {
 	URL: { // Account data type and URL substring
 		Account: "account",
 		Achievements: "account/achievements",
+		Shared: "account/inventory", // Shared inventory slots
 		Bank: "account/bank",
 		Dyes: "account/dyes",
 		Materials: "account/materials",
@@ -5326,7 +5327,7 @@ A = {
 		};
 		
 		// Search the account for items
-		var compilePossessions = function(pBankData, pMaterialsData)
+		var compilePossessions = function(pSharedData, pBankData, pMaterialsData)
 		{
 			A.Data.Characters.forEach(function(iChar)
 			{
@@ -5371,12 +5372,21 @@ A = {
 				}
 			});
 			
+			// Add shared inventory slot items
+			pSharedData.forEach(function(iSlot)
+			{
+				if (iSlot)
+				{
+					addItem(iSlot.id, iSlot.count, "shared");
+				}
+			});
+			
 			// Add bank contents
 			pBankData.forEach(function(iSlot)
 			{
 				if (iSlot)
 				{
-					addItem(iSlot.id, iSlot.count, "Bank");
+					addItem(iSlot.id, iSlot.count, "bank");
 				}
 			});
 			
@@ -5385,7 +5395,7 @@ A = {
 			{
 				if (iSlot)
 				{
-					addItem(iSlot.id, iSlot.count, "Materials");
+					addItem(iSlot.id, iSlot.count, "materials");
 				}
 			});
 			
@@ -5397,11 +5407,14 @@ A = {
 		};
 		
 		// Download additional API data containing the account's items
-		$.getJSON(A.getURL(A.URL.Bank), function(pData)
+		$.getJSON(A.getURL(A.URL.Shared), function(pSharedData)
 		{
-			$.getJSON(A.getURL(A.URL.Materials), function(pDataInner)
+			$.getJSON(A.getURL(A.URL.Bank), function(pBankData)
 			{
-				compilePossessions(pData, pDataInner);
+				$.getJSON(A.getURL(A.URL.Materials), function(pMaterialsData)
+				{
+					compilePossessions(pSharedData, pBankData, pMaterialsData);
+				});
 			});
 		}).fail(function()
 		{
@@ -5421,7 +5434,7 @@ A = {
 		{
 			if (isNaN(i))
 			{
-				str += i;
+				str += D.getWordCapital(i);
 			}
 			else
 			{
@@ -6604,7 +6617,24 @@ V = {
 		var tab, slotscontainer, slot;
 		var char, bagdata;
 		
-		// First count the number of items to fetch
+		
+		// Generate a first tab for the shared inventory slots
+		var sharedtab = Q.createBankTab(bank, {aTitle: D.getPhraseOriginal("Shared Inventory")});
+		$.getJSON(A.getURL(A.URL.Shared), function(pData)
+		{
+			for (var i = 0; i < pData.length; i++)
+			{
+				(function(iSlot, iSlotData)
+				{
+					Q.getItem(iSlotData.id, function(iItem)
+					{
+						Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData});
+					});
+				})(Q.createBankSlot(sharedtab.find(".bnkTabSlots"), true), pData[i]);
+			}
+		});
+		
+		// Count the number of inventory items to fetch
 		var numtofetch = 0;
 		var numfetched = 0;
 		for (var i = 0; i < A.Data.Characters.length; i++)
@@ -6626,7 +6656,7 @@ V = {
 			}
 		}
 		
-		// Generate the tabs and slots
+		// Generate the tabs and slots for each character
 		for (var i = 0; i < A.Data.Characters.length; i++)
 		{
 			char = A.Data.Characters[i];
@@ -8624,12 +8654,14 @@ Q = {
 	 * Inserts a standard inventory slot for use in inventory, bank, materials,
 	 * and other windows. Uses native DOM manipulation for performance.
 	 * @param jqobject pSlotContainer of a tab.
+	 * @param boolean pIsShared whether it is a shared inventory slot (for
+	 * different background image).
 	 * @returns jqobject slot.
 	 */
-	createBankSlot: function(pSlotContainer)
+	createBankSlot: function(pSlotContainer, pIsShared)
 	{
 		var slot = document.createElement("span");
-		slot.innerHTML = "<var class='bnkSlotBackground'></var>"
+		slot.innerHTML = "<var class='bnkSlotBackground" + ((pIsShared) ? "Shared" : "") + "'></var>"
 			+ "<var class='bnkSlotIcon'></var>"
 			+ "<var class='bnkSlotForeground'></var>";
 		slot.className = "bnkSlot";
