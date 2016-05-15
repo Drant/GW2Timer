@@ -1262,34 +1262,6 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Strider's Medium Armor Skin",
-		id: "63899",
-		price: 640,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Mad Scientist Outfit",
-		id: "69753",
-		price: 490,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "Pirate Captain's Outfit",
-		id: "20251",
-		price: 420,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "Wreath of Cooperation",
-		id: "66309",
-		price: 200,
-		discount: 400,
-		col: 0
-	},
-	{
 		name: "Cosmic Mining Tool",
 		id: "78731",
 		price: 1000,
@@ -1300,13 +1272,6 @@ Sale: {
 		name: "Macaw Wings Glider Combo",
 		id: "78732",
 		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Chaos Gloves Skin",
-		id: "78667",
-		price: 500,
 		discount: null,
 		col: 0
 	},

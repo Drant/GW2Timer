@@ -2519,6 +2519,7 @@ U = {
 		Itinerary: "data/itinerary.js",
 		Skins: "data/skins.js",
 		Minis: "data/minis.js",
+		Dyes: "data/dyes.js",
 		Catalog: "data/catalog.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
@@ -4530,7 +4531,7 @@ Z = {
 	 */
 	updateItems: function()
 	{
-		$.getJSON("test/items.json", function(pData)
+		$.getJSON("test/items_en.json", function(pData)
 		{
 			var dbarray = [];
 			var currentitemids = [];
@@ -6359,7 +6360,11 @@ V = {
 								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
 							}
 							// Bind click behavior for the icon
-							Q.bindItemSlotBehavior(sloticon, {aItem: iBox.item, aSearch: skinname, aWantClick: true});
+							Q.bindItemSlotBehavior(sloticon, {
+								aItem: iBox.item,
+								aSearch: skinname,
+								aWantClick: true
+							});
 							numfetched++;
 							finalizeEquipment();
 						}
@@ -7184,6 +7189,43 @@ V = {
 				dish.empty();
 			});
 		});
+	},
+	/*
+	 * Generates the dye color collection window.
+	 */
+	serveDyes: function()
+	{
+		var dish = $("#accDish_Dyes");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		
+		var container = Q.createBank(dish, {aIsCollection: true});
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var generateDyes = function(pUnlockeds)
+		{
+			V.generateUnlockables(bank, {
+				aHeaders: GW2T_DYES_HEADERS,
+				aDatabase: GW2T_DYES_DATA,
+				aUnlockeds: pUnlockeds
+			});
+		};
+		
+		$.getScript(U.URL_DATA.Dyes).done(function()
+		{
+			$.getJSON(A.getURL(A.URL.Dyes), function(pData)
+			{
+				Q.loadItemsDatabase("dyes", function()
+				{
+					generateDyes(pData);
+				});
+			}).fail(function()
+			{
+				A.printError(A.PermissionEnum.Unlocks);
+				dish.empty();
+			});
+		});
 	}
 };
 
@@ -7213,8 +7255,10 @@ Q = {
 	},
 	cSEARCH_LIMIT: 200, // Inventory search throttle limit
 	Context: { // Bank slots context menu data
-		Item: {},
-		ItemSearch: ""
+		Item: null,
+		ItemName: null,
+		ItemID: null,
+		ItemSearch: null
 	},
 	
 	/*
@@ -8794,7 +8838,11 @@ Q = {
 						U.openExternalURL(searchurl);
 					}
 				});
-				Q.bindItemSlotBehavior(pSlot, {aItem: Settings.aItem, aSearch: wikisearch});
+				Q.bindItemSlotBehavior(pSlot, {
+					aItem: Settings.aItem,
+					aTradeableID: Settings.aTradeableID,
+					aSearch: wikisearch
+				});
 				// Numeric label over the slot icon indicating stack size or charges remaining
 				if (count > 1)
 				{
@@ -9173,7 +9221,7 @@ Q = {
 		// The context variables should be assigned by the function that styles the bank slot
 		$("#bnkContextWiki").click(function()
 		{
-			U.openExternalURL(U.getWikiLinkLanguage(Q.Context.Item.name));
+			U.openExternalURL(U.getWikiLinkLanguage(Q.Context.ItemName));
 		});
 		$("#bnkContextWikiSearch").click(function()
 		{
@@ -9181,11 +9229,11 @@ Q = {
 		});
 		$("#bnkContextTrading").click(function()
 		{
-			U.openExternalURL(U.getTradingItemLink(Q.Context.Item.id, Q.Context.Item.name));
+			U.openExternalURL(U.getTradingItemLink(Q.Context.ItemID, Q.Context.ItemName));
 		});
 		$("#bnkContextTradingSearch").click(function()
 		{
-			U.openExternalURL(U.getTradingSearchLink(Q.Context.Item.name));
+			U.openExternalURL(U.getTradingSearchLink(Q.Context.ItemName));
 		});
 		$("#bnkContextInfo").click(function()
 		{
@@ -9198,7 +9246,8 @@ Q = {
 	 * Binds an element that represents a game item to have a context menu.
 	 * @param jqobject pSlot to bind.
 	 * @objparam object aItem from item details API.
-	 * @objparam string aSearch for wiki search link.
+	 * @objparam string aSearch for wiki search link, optional.
+	 * @objparam int aTradeableID for TP webpage, optional.
 	 */
 	bindItemSlotBehavior: function(pSlot, pSettings)
 	{
@@ -9208,6 +9257,8 @@ Q = {
 		{
 			pEvent.preventDefault();
 			Q.Context.Item = Settings.aItem;
+			Q.Context.ItemName = Settings.aItem.name;
+			Q.Context.ItemID = Settings.aTradeableID || Settings.aItem.id;
 			Q.Context.ItemSearch = Settings.aSearch || Settings.aItem.name;
 			I.updateClipboard("#bnkContextChatlink", Settings.aItem.chat_link + " " + Q.Context.ItemSearch);
 			$("#bnkContext").css({top: I.posY, left: I.posX}).show();

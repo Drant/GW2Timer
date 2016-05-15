@@ -1372,6 +1372,7 @@ input[type="text"].bnkSearchInput:hover {
 }
 .bnkTabHeader {
 	display: block;
+	position: relative;
 	overflow: hidden;
 	padding-top: 4px;
 	line-height: normal;
@@ -1396,7 +1397,8 @@ input[type="text"].bnkSearchInput:hover {
 }
 .bnkTabStats {
 	display: block;
-	float: right;
+	position: absolute;
+	right: 32px;
 	margin-top: 4px;
 }
 .bnkTabToggle, .bnkTabLocked {
