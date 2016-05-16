@@ -780,7 +780,7 @@ textarea.jsCopyCode {
 	position: absolute; z-index: 2;
 	left: 16px;
 }
-.tchZoomButton {
+.tchButton {
 	display: block;
 	width: 64px; height: 64px;
 	margin-bottom: 16px;
@@ -788,8 +788,11 @@ textarea.jsCopyCode {
 	background-size: 100% 100%;
 	opacity: 0.6;
 }
-.tchDisplay {
-	background-image: url("img/touch/toggle.png");
+.tchTogglePanel {
+	background-image: url("img/touch/toggle_panel.png");
+}
+.tchToggleMap {
+	background-image: url("img/touch/toggle_map.png");
 }
 .tchZoomIn {
 	background-image: url("img/touch/zoom_in.png");

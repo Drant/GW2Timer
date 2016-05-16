@@ -3992,11 +3992,19 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				return;
+				$.getJSON("test/items_en.json", function(pData)
+				{
+					
+				});
+				$.getJSON("test/colors.json", function(pData)
+				{
+					
+				});
 			}},
-			updateitems: {usage: "Prints an updated database of items (test mode only).", f: function()
+			updateitems: {usage: "Prints an updated database of items (test mode only). <em>Parameters: enu_language (optional)</em>", f: function()
 			{
-				Z.updateItems();
+				Z.updateItems(args[1]);
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -4529,9 +4537,10 @@ Z = {
 	/*
 	 * Downloads items that are missing from the current version of the items database.
 	 */
-	updateItems: function()
+	updateItems: function(pLanguage)
 	{
-		$.getJSON("test/items_en.json", function(pData)
+		var lang = (pLanguage || O.OptionEnum.Language.Default);
+		$.getJSON("test/items_" + lang + ".json", function(pData)
 		{
 			var dbarray = [];
 			var currentitemids = [];
@@ -4546,7 +4555,9 @@ Z = {
 			$.getJSON(U.URL_API.ItemDatabase, function(pDataInner)
 			{
 				var newitemids = $(pDataInner).not(currentitemids).get();
-				Z.scrapeAPIArray(newitemids, "items", {aCallback: function(pItems)
+				Z.scrapeAPIArray(newitemids, "items", {
+					aQueryStr: "?lang=" + lang,
+					aCallback: function(pItems)
 				{
 					for (var ii = 0; ii < pItems.length; ii++)
 					{
@@ -8681,7 +8692,7 @@ Q = {
 					{
 						iBag.css({backgroundImage: "url(" + iItem.icon + ")"});
 						Q.scanItem(iItem, {aElement: iBag});
-						Q.bindItemSlotBehavior(bag, {aItem: iItem, aWantClick: true});
+						Q.bindItemSlotBehavior(iBag, {aItem: iItem, aWantClick: true});
 					});
 				})(bag);
 			}
@@ -13603,15 +13614,19 @@ M = {
 		var htmlidprefix = "#" + that.MapEnum;
 		var menu = $("<div class='tchMenu'></div>").prependTo(htmlidprefix + "Pane");
 		I.preventMapPropagation(menu);
-		$("<kbd class='tchDisplay tchZoomButton'></kbd>").appendTo(menu).click(function()
+		$("<kbd class='tchTogglePanel tchButton'></kbd>").appendTo(menu).click(function()
 		{
 			$("#opt_bol_showPanel").trigger("click");
 		});
-		$("<kbd class='tchZoomIn tchZoomButton'></kbd>").appendTo(menu).click(function()
+		$("<kbd class='tchToggleMap tchButton'></kbd>").appendTo(menu).click(function()
+		{
+			$("#mapSwitchButton").trigger("click");
+		});
+		$("<kbd class='tchZoomIn tchButton'></kbd>").appendTo(menu).click(function()
 		{
 			that.Map.zoomIn();
 		});
-		$("<kbd class='tchZoomOut tchZoomButton'></kbd>").appendTo(menu).click(function()
+		$("<kbd class='tchZoomOut tchButton'></kbd>").appendTo(menu).click(function()
 		{
 			that.Map.zoomOut();
 		});
@@ -19137,6 +19152,7 @@ W = {
 		Alpine: "Alpine",
 		Desert: "Desert"
 	},
+	isWvWPrepped: false,
 	isWvWLoaded: false,
 	Metadata: {},
 	Servers: {}, // Server names and translations
@@ -21153,6 +21169,7 @@ T = {
 	cSECS_MARK_3: 2700,
 	cSECS_MARK_4: 3599,
 	cBASE_10: 10,
+	cBASE_16: 16,
 	cPERCENT_100: 100,
 	// Game constants
 	cWEEKLY_RESET_SECONDS: 113400, // Monday 07:30 UTC, seconds since Sunday 00:00 UTC
@@ -24914,35 +24931,13 @@ I = {
 		I.styleContextMenu("#mapContext");
 		$("#mapHUDOuter").toggle(O.Options.bol_showHUD);
 		// Bind switch map buttons
-		$("#mapSwitchButton").one("click", function()
+		$("#mapSwitchButton").click(function()
 		{
-			I.loadStylesheet("wvw");
-			I.loadImg("#wvwHUDPane .mapHUDButton");
-			$("#lboCurrent").append(I.cThrobber);
-			/*
-			 * WvW requires CSS to be loaded first before scripts execute.
-			 * To know that the CSS has been loaded, a CSS property is checked,
-			 * and this property must be changed here also if it was changed in
-			 * the stylesheet.
-			 */
-			var waitForWvWStylesheet = setInterval(function()
-			{
-				if ($("#wvwLeaderboard").css("position") === "absolute")
-				{
-					window.clearInterval(waitForWvWStylesheet);
-					$.getScript(U.URL_DATA.WvW).done(function()
-					{
-						W.initializeWvW();
-					});
-				}
-			}, 100);
-		}).click(function()
-		{
-			I.toggleMap(P.MapEnum.Mists);
+			I.switchMap();
 		});
 		$("#wvwSwitchButton").click(function()
 		{
-			I.toggleMap(P.MapEnum.Tyria);
+			I.switchMap();
 		});
 		// Bind account button
 		$("#mapAccountButton, #wvwAccountButton").one("click", function()
@@ -26317,23 +26312,39 @@ I = {
 	
 	/*
 	 * Switches between the API continents, and update associated variables.
-	 * @param enum pMapEnum of the map.
 	 */
-	toggleMap: function(pMapEnum)
+	switchMap: function()
 	{
-		switch (pMapEnum)
+		// When first switching to the WvW, do initializations
+		if (P.WebsiteCurrentMap === P.MapEnum.Tyria && W.isWvWPrepped === false)
+		{
+			W.isWvWPrepped = true;
+			I.loadStylesheet("wvw");
+			I.loadImg("#wvwHUDPane .mapHUDButton");
+			$("#lboCurrent").append(I.cThrobber);
+			/*
+			 * WvW requires CSS to be loaded first before scripts execute.
+			 * To know that the CSS has been loaded, a CSS property is checked,
+			 * and this property must be changed here also if it was changed in
+			 * the stylesheet.
+			 */
+			var waitForWvWStylesheet = setInterval(function()
+			{
+				if ($("#wvwLeaderboard").css("position") === "absolute")
+				{
+					window.clearInterval(waitForWvWStylesheet);
+					$.getScript(U.URL_DATA.WvW).done(function()
+					{
+						W.initializeWvW();
+					});
+				}
+			}, 100);
+		}
+		
+		// Execute map switch
+		switch (P.WebsiteCurrentMap)
 		{
 			case P.MapEnum.Tyria: {
-				$("#wvwPane").hide();
-				$("#mapPane").show();
-				M.refreshMap();
-				I.PageCurrent = I.PagePrevious;
-				I.PagePrevious = I.SpecialPageEnum.WvW;
-				P.WebsiteCurrentMap = P.MapEnum.Tyria;
-				P.SuffixCurrent = M.OptionSuffix;
-			} break;
-			
-			case P.MapEnum.Mists: {
 				$("#mapPane").hide();
 				$("#wvwPane").show();
 				if (W.isMapInitialized)
@@ -26344,6 +26355,16 @@ I = {
 				I.PageCurrent = I.SpecialPageEnum.WvW;
 				P.WebsiteCurrentMap = P.MapEnum.Mists;
 				P.SuffixCurrent = W.OptionSuffix;
+			} break;
+			
+			case P.MapEnum.Mists: {
+				$("#wvwPane").hide();
+				$("#mapPane").show();
+				M.refreshMap();
+				I.PageCurrent = I.PagePrevious;
+				I.PagePrevious = I.SpecialPageEnum.WvW;
+				P.WebsiteCurrentMap = P.MapEnum.Tyria;
+				P.SuffixCurrent = M.OptionSuffix;
 			} break;
 		}
 		U.updateQueryString();
