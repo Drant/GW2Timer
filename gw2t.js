@@ -2545,7 +2545,7 @@ U = {
 	},
 	
 	/*
-	 * Gets the localized URL of a standard v2 API that requires an ID.
+	 * Gets the language specific URL of a standard v2 API that requires an ID.
 	 * @param string pAPI endpoint name.
 	 * @param int pID for request.
 	 * @returns string URL to request data.
@@ -2589,6 +2589,24 @@ U = {
 	getAPIPrice: function(pID)
 	{
 		return U.URL_API.ItemPrices + pID;
+	},
+	
+	/*
+	 * Gets URL to retrieve the local items database.
+	 * @param string pLanguage code.
+	 * @returns string.
+	 */
+	getItemsDatabaseURL: function(pLanguage)
+	{
+		return "test/items_" + pLanguage + ".json";
+	},
+	getDataScriptURL: function(pName)
+	{
+		return "data/" + pName + ".js";
+	},
+	getDataVariableName: function(pName)
+	{
+		return "GW2T_" + pName.toUpperCase() + "_DATA";
 	},
 
 	/*
@@ -3808,10 +3826,13 @@ U = {
 Z = {
 	
 	cCommandPrefix: "/",
-	APICacheFile: null, // Stores the URL to a generated blob file
+	APICacheFiles: [], // Stores the URLs to a generated blob file
 	APICacheArrayOfIDs: null, // Array of ID numbers for any particular v2 API endpoint
 	APICacheArrayOfObjects: null, // Array of objects downloaded from the IDs pointing there
 	APICacheConsole: null, // JSON text entered by the user
+	ItemsDatabase: { // To be loaded with the database files
+		en: null, de: null, es: null, fr: null, zh: null
+	},
 	
 	/*
 	 * Loads an object from local storage into a variable for temporary test or
@@ -3993,135 +4014,15 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				var cachearray = [];
-				Z.APICacheArrayOfObjects = [];
-				
-				$.getJSON("test/items_en.json", function(pData)
-				{
-					cachearray = [];
-					var item, unlock;
-					for (var i in pData)
-					{
-						item = pData[i];
-						/*if (item.type === "Consumable" && item.name)
-						{
-							try
-							{
-								if (item.description.indexOf("eposit this decoration") === -1
-									&& item.details.type !== "Food"
-									&& item.details.type !== "Utility"
-									&& item.details.type !== "Booze"
-									&& item.details.type !== "Unlock"
-									&& item.details.type !== "Transmutation")
-								{
-									unlock = {
-										u: i,
-										i: i,
-										n: item.name,
-										p: {gem: 0}
-									};
-									cachearray.push(unlock);
-									//cachearray.push(item);
-								}
-							}
-							catch (e) {};
-						}*/
-						if (item.type === "Armor"
-							&& item.rarity === "Ascended"
-							&& item.details.weight_class === "Light")
-						{
-							unlock = {
-								i: i,
-								n: item.name,
-								p: {coin: 0}
-							};
-							cachearray.push(unlock);
-							//cachearray.push(item);
-						}
-					}
-					U.sortObjects(cachearray, {aKeyName: "n"});
-					
-					// Sort again based on set name
-					var superarr = [];
-					var superarrindex = -1;
-					var superaltarr = [];
-					var currentsetprefix = "";
-					for (var i = 0; i < cachearray.length; i++)
-					{
-						var iobj = cachearray[i];
-						if (iobj.n.indexOf("Breather") !== -1)
-						{
-							superaltarr.push(iobj);
-							continue;
-						}
-						
-						var ithnames = iobj.n.split(" ");
-						var ithsetprefix = ithnames[0];
-						var ithsetsuffix = ithnames[ithnames.length - 1];
-						if (ithsetprefix !== currentsetprefix)
-						{
-							currentsetprefix = ithsetprefix;
-							superarr.push(new Array(6));
-							superarrindex++;
-						}
-						var armorslot = null;
-						switch (ithsetsuffix)
-						{
-							case "Masque": armorslot = 0; break;
-							case "Epaulets": armorslot = 1; break;
-							case "Doublet": armorslot = 2; break;
-							case "Wristguards": armorslot = 3; break;
-							case "Breeches": armorslot = 4; break;
-							case "Footwear": armorslot = 5; break;
-							default: {
-								superarr.push([iobj]);
-								superarrindex++;
-							}
-						}
-						if (armorslot !== null)
-						{
-							if ((superarr[superarrindex])[armorslot] === undefined)
-							{
-								(superarr[superarrindex])[armorslot] = iobj;
-							}
-							else
-							{
-								(superarr[superarrindex]).push(iobj);
-							}
-						}
-					};
-					
-					for (var i = 0; i < superarr.length; i++)
-					{
-						for (var ii = 0; ii < superarr[i].length; ii++)
-						{
-							if ((superarr[i])[ii])
-							{
-								Z.APICacheArrayOfObjects.push((superarr[i])[ii]);
-							}
-						}
-					}
-					for (var i = 0; i < superaltarr.length; i++)
-					{
-						Z.APICacheArrayOfObjects.push(superaltarr[i]);
-					}
-					
-					Z.parseCommand("/apicachearray");
-				});
-				
-				return;
-				$.getJSON("test/items_en.json", function(pData)
-				{
-					
-				});
-				$.getJSON("test/colors.json", function(pData)
-				{
-					
-				});
+				Z.createItemsCache();
 			}},
-			updateitems: {usage: "Prints an updated database of items (test mode only). <em>Parameters: enu_language (optional)</em>", f: function()
+			updatedb: {usage: "Prints an updated database of items (test mode only). <em>Parameters: enu_language (optional)</em>", f: function()
 			{
-				Z.updateItems(args[1]);
+				Z.updateItemsDatabase(args[1]);
+			}},
+			updatecache: {usage: "Prints an updated cache of items used by an account page's section. <em>Parameters: str_section</em>", f: function()
+			{
+				Z.updateItemsCache(args[1]);
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -4136,21 +4037,32 @@ Z = {
 	 * @param string pString source text.
 	 * @returns string URL to download the generated file.
 	 */
-	createFile: function(pString, pWantLink)
+	createFile: function(pString, pFileName)
 	{
 		var data = new Blob([pString], {type: "text/plain"});
-		// Delete previous file if exists
-		if (Z.APICacheFile !== null)
+		var fileurl = window.URL.createObjectURL(data);
+		Z.APICacheFiles.push(fileurl);
+		
+		var filename = (pFileName) ? "<input class='cssInputText' type='text' value='" + pFileName + "' />" : "";
+		I.print(filename + "<a href='" + fileurl + "' target='_blank'>" + fileurl + "</a>");
+		return fileurl;
+	},
+	
+	/*
+	 * Clears the array that stores URLs pointing to generated files, to clear
+	 * up browser memory after the files have been used.
+	 */
+	freeFiles: function()
+	{
+		for (var i = 0; i < Z.APICacheFiles.length; i++)
 		{
-			window.URL.revokeObjectURL(Z.APICacheFile);
+			if (Z.APICacheFiles[i])
+			{
+				window.URL.revokeObjectURL(Z.APICacheFiles[i]);
+			}
 		}
-		// Generate the file and its download URL
-		Z.APICacheFile = window.URL.createObjectURL(data);
-		if (pWantLink)
-		{
-			I.print("<a href='" + Z.APICacheFile + "' target='_blank'>" + Z.APICacheFile + "</a>");
-		}
-		return Z.APICacheFile;
+		Z.APICacheFiles = null;
+		Z.APICacheFiles = [];
 	},
 	
 	/*
@@ -4305,7 +4217,7 @@ Z = {
 	 * @param int pRequest type, see below.
 	 * @param boolean pWantFile whether to output to a file or print to console.
 	 */
-	printAPICache: function(pRequest, pWantFile)
+	printAPICache: function(pRequest, pWantFile, pFileName)
 	{
 		var output = "";
 		var obj;
@@ -4348,7 +4260,7 @@ Z = {
 		// Print or generate the output
 		if (wantfile)
 		{
-			Z.createFile(output, true);
+			Z.createFile(output, pFileName);
 		}
 		else
 		{
@@ -4652,12 +4564,100 @@ Z = {
 	},
 	
 	/*
+	 * Loads the items database in all available languages.
+	 * @param function pCallback to execute after loaded.
+	 */
+	loadItemsDatabase: function(pCallback)
+	{
+		// Check to see if all language versions of the database are loaded
+		var finalize = function()
+		{
+			var isallloaded = true;
+			for (var i in Z.ItemsDatabase)
+			{
+				if (Z.ItemsDatabase[i] === null)
+				{
+					isallloaded = false;
+				}
+			}
+			if (isallloaded)
+			{
+				pCallback();
+				return true;
+			}
+		};
+		if (finalize())
+		{
+			return;
+		}
+		
+		// Retrieve the database
+		for (var i in Z.ItemsDatabase)
+		{
+			(function(iLanguage)
+			{
+				$.getJSON(U.getItemsDatabaseURL(iLanguage), function(pData)
+				{
+					Z.ItemsDatabase[iLanguage] = pData;
+					finalize();
+				});
+			})(i);
+		}
+	},
+	
+	/*
+	 * Creates files containing an associative array of item details, for used
+	 * by a specific Account page section.
+	 * @param string pType section.
+	 */
+	updateItemsCache: function(pType)
+	{
+		var scripturl = U.getDataScriptURL(pType.toLowerCase());
+		Z.loadItemsDatabase(function()
+		{
+			$.getScript(scripturl, function()
+			{
+				Z.freeFiles();
+				var data = window[U.getDataVariableName(pType)];
+				var itemids = [];
+				for (var i in data)
+				{
+					var catarr = data[i];
+					for (var ii = 0; ii < catarr.length; ii++)
+					{
+						itemids.push(catarr[ii].i);
+					}
+				}
+				
+				for (var i in Z.ItemsDatabase)
+				{
+					// Reinitialize for ith language
+					Z.APICacheArrayOfObjects = null;
+					Z.APICacheArrayOfObjects = [];
+					var db = Z.ItemsDatabase[i];
+					for (var ii = 0; ii < itemids.length; ii++)
+					{
+						var itemid = itemids[ii];
+						Z.APICacheArrayOfObjects.push(db[itemid]);
+					}
+					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id"});
+					var filename = pType.toLowerCase() + "_" + i + ".json";
+					Z.printAPICache(0, true, filename);
+				}
+			}).fail(function()
+			{
+				I.print("Error retrieveing script: " + scripturl);
+			});
+		});
+	},
+	
+	/*
 	 * Downloads items that are missing from the current version of the items database.
 	 */
-	updateItems: function(pLanguage)
+	updateItemsDatabase: function(pLanguage)
 	{
 		var lang = (pLanguage || O.OptionEnum.Language.Default);
-		$.getJSON("test/items_" + lang + ".json", function(pData)
+		$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
 		{
 			var dbarray = [];
 			var currentitemids = [];
@@ -4666,26 +4666,31 @@ Z = {
 				dbarray.push(pData[i]);
 				currentitemids.push(parseInt(i));
 			}
-			currentitemids.sort(function(a, b) {
-				return a - b;
-			});
+			U.sortAscending(currentitemids);
 			$.getJSON(U.URL_API.ItemDatabase, function(pDataInner)
 			{
 				var newitemids = $(pDataInner).not(currentitemids).get();
-				Z.scrapeAPIArray(newitemids, "items", {
-					aQueryStr: "?lang=" + lang,
-					aCallback: function(pItems)
+				if (newitemids.length)
 				{
-					for (var ii = 0; ii < pItems.length; ii++)
+					Z.scrapeAPIArray(newitemids, "items", {
+						aQueryStr: "?lang=" + lang,
+						aCallback: function(pItems)
 					{
-						dbarray.push(pItems[ii]);
-					}
-					U.sortObjects(dbarray, {aKeyName: "id"});
-					Z.APICacheArrayOfObjects = dbarray;
-					Z.printAPICache(0, true);
-					I.print("New items:");
-					U.prettyJSON(pItems);
-				}});
+						for (var ii = 0; ii < pItems.length; ii++)
+						{
+							dbarray.push(pItems[ii]);
+						}
+						U.sortObjects(dbarray, {aKeyName: "id"});
+						Z.APICacheArrayOfObjects = dbarray;
+						Z.printAPICache(0, true);
+						I.print("New items:");
+						U.prettyJSON(pItems);
+					}});
+				}
+				else
+				{
+					I.print("Database is up-to-date. No difference found in IDs list.");
+				}
 			});
 		});
 	}
@@ -6752,19 +6757,13 @@ V = {
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		$.getScript(U.URL_DATA.Ascended).done(function()
 		{
-			Q.loadItemsDatabase("ascended", function()
+			// Does not use cached database
+			A.initializePossessions(function()
 			{
-				/*
-				 * Catalog is a custom unlockable whose collection is generated based on
-				 * the user's bank and inventory rather than a list provided by the API.
-				 */
-				A.initializePossessions(function()
-				{
-					V.generateUnlockables(bank, {
-						aHeaders: GW2T_ASCENDED_HEADERS,
-						aDatabase: GW2T_ASCENDED_DATA,
-						aIsPossessions: true
-					});
+				V.generateUnlockables(bank, {
+					aHeaders: GW2T_ASCENDED_HEADERS,
+					aDatabase: GW2T_ASCENDED_DATA,
+					aIsPossessions: true
 				});
 			});
 		});
@@ -17430,7 +17429,7 @@ P = {
 			{
 				case 7: iconsize = 32; nickfontsize = 20; nickopacity = 0.9; break;
 				case 6: iconsize = 28; nickfontsize = 16; nickopacity = 0.8; break;
-				case 5: iconsize = 24; nickfontsize = 12; nickopacity = 0.6; break;
+				case 5: iconsize = 24; nickfontsize = 12; nickopacity = 0.8; break;
 				case 4: iconsize = 20; nickfontsize = 0; nickopacity = 0; break;
 				case 3: iconsize = 16; nickfontsize = 0; nickopacity = 0; break;
 				default:
