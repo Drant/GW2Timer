@@ -7216,6 +7216,7 @@ V = {
 
 			// For this ith tab, write the number of unlockables unlocked on the tab header
 			var numunlocked = 0;
+			var numacquired = 0;
 			for (var ii = 0; ii < catarr.length; ii++)
 			{
 				unlockid = (Settings.aIsPossessions) ? catarr[ii].i : catarr[ii].u;
@@ -7223,14 +7224,19 @@ V = {
 				{
 					numunlocked++;
 					numsunlockedtotal++;
+					if (Settings.aIsPossessions)
+					{
+						numacquired += unlocksassoc[unlockid].oCount;
+					}
 				}
 			}
 			var numintab = catarr.length;
 			numintabstotal += numintab;
+			var acquiredstr = (numacquired) ? (" " + numacquired + "×") : "";
 			var unlockratio = numunlocked / numintab;
 			var unlockratioclass = (unlockratio === 1) ? "accSignificant" : "accTrivial";
 			var unlockstr = numunlocked + " / " + numintab
-				+ "<span class='" + unlockratioclass + "'> (" + U.convertRatioToPercent(unlockratio) + ")</span>";
+				+ "<span class='" + unlockratioclass + "'> (" + U.convertRatioToPercent(unlockratio) + ")" + acquiredstr + "</span>";
 			tab.find(".bnkTabStats").html(unlockstr);
 		}
 		var unlocktotalstr = numsunlockedtotal + " / " + numintabstotal
