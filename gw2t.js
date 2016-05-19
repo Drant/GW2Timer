@@ -14,24 +14,24 @@
 	Google and ResponsiveVoice.JS - Text-To-Speech service
 
 	CONVENTIONS:
-	Local variables are all lower case: examplevariable
-	Instance variables are lower camel case: exampleVariable
-	Global variables are all caps spaced by underscore: EXAMPLE_VARIABLE
-	Constants are camel case and starts with "c": cExampleVariable
-	Objects are camel case: ExampleObject
-	Array names are plural (end with s or es): exampleElements
-	Functions are lower camel case and starts with a verb: getExample()
-	(function(){ // blah })(); this is an anonymous self-executing function
-	~~ operator (reverse bits twice) is shorthand for parseInt and is used in integer division
-	Functions that are repeated in milliseconds should use core JS instead of jQuery
-	Arguments in double quotes: $("argument"), single quotes for HTML generation
-	Parameters are camel case and start with "p": function(pExampleParameter)
+	Local variables are all lower case: examplevariable.
+	Instance variables are lower camel case: exampleVariable.
+	Global variables are all caps spaced by underscore: EXAMPLE_VARIABLE.
+	Constants are camel case and starts with "c": cExampleVariable.
+	Objects are camel case: ExampleObject.
+	Array names are plural (end with s or es): exampleElements.
+	Functions are lower camel case and starts with a verb: getExample().
+	(function(){ // blah })(); this is an anonymous self-executing function.
+	~~ operator (reverse bits twice) is shorthand for parseInt and is used in integer division.
+	Functions that are repeated in milliseconds should use core JS instead of jQuery.
+	Arguments in double quotes: $("argument"), single quotes for HTML generation.
+	Parameters are camel case and start with "p": function(pExampleParameter).
 	Settings inside an object used as a function argument starts with "a", like parameters.
 	Properties of returned template objects start with "o", like parameters.
-	Parameters inside loops start with "i": forEach(function(iExampleParameter){})
-	CSS classes and IDs are named like instance variables: exampleID
-	Allman indentation (braces align vertically) unless it is repetitive code
-	4 space-size tabs, you are free to Replace All tab characters with spaces
+	Parameters inside loops start with "i": forEach(function(iExampleParameter){}).
+	CSS classes and IDs are named like instance variables: exampleID.
+	Allman indentation (braces align vertically) unless it is repetitive code.
+	4 space-size tabs, you are free to Replace All tab characters with spaces.
 
 	TABLE OF CONTENTS (Ctrl+F "AtsignAtsignLetter" to jump to section)
 
@@ -7104,8 +7104,6 @@ V = {
 		var container = pBank.parents(".bnkContainer");
 		var tab;
 		var catarr, catobj;
-		var numintabstotal = 0;
-		var numsunlockedtotal = 0;
 		var slot, unlockid, unlockobj;
 		var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
 		
@@ -7191,6 +7189,9 @@ V = {
 		/* 
 		 * Create tabs for each unlockable category.
 		 */
+		var numsunlockedtotal = 0;
+		var numintabstotal = 0;
+		var numacquiredtotal = 0;
 		for (var i in Settings.aDatabase)
 		{
 			catobj = Settings.aHeaders[i];
@@ -7238,9 +7239,14 @@ V = {
 			var unlockstr = numunlocked + " / " + numintab
 				+ "<span class='" + unlockratioclass + "'> (" + U.convertRatioToPercent(unlockratio) + ")" + acquiredstr + "</span>";
 			tab.find(".bnkTabStats").html(unlockstr);
+			if (numacquired)
+			{
+				numacquiredtotal += numacquired;
+			}
 		}
+		var acquiredtotalstr = (numacquiredtotal) ? (" " + numacquiredtotal + "×") : "";
 		var unlocktotalstr = numsunlockedtotal + " / " + numintabstotal
-				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numsunlockedtotal / numintabstotal) + ")</span>";
+				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numsunlockedtotal / numintabstotal) + ")" + acquiredtotalstr + "</span>";
 		container.find(".bnkCount").append(unlocktotalstr);
 		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
 		Q.createBankMenu(pBank, {aWantSearchHighlight: wantsearchhighlight, aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html()});
@@ -7570,16 +7576,19 @@ Q = {
 	 * Looks for attribute points in an item and adds them to the
 	 * attributes-containing object.
 	 * @param object pAttrObj.
-	 * @param object pItem to find attributes.
-	 * @param object pRuneSets numbers of runes equipped, optional.
+	 * @objparam object aItem to find attributes.
+	 * @objparam object aRuneSets numbers of runes equipped, optional.
+	 * @objparam object aStats selectable stats that the player had chosen for that equipment.
 	 * @pre Account page's script has been loaded, which contains attribute association.
 	 * Properties this function looks for:
 	 * item.details.infix_upgrade.attributes // [{attribute: "Abc", "modifier": 123}, ...] language independent
 	 * item.details.bonuses // ["+123 Abc", ...] language dependent
 	 * item.details.infix_upgrade.buff.description // "+123 Abc\n+123 Abc..." language dependent
+	 * stats.attributes // {"Abc": 123, ...}
 	 */
-	sumItemAttribute: function(pAttrObj, pItem, pRuneSets)
+	sumItemAttribute: function(pAttrObj, pSettings)
 	{
+		var Settings = pSettings || {};
 		// This object translates the current language extracted attribute name to the proper key name
 		var assocobj = A.Attribute["KeyDescription_" + D.getFullySupportedLanguage()];
 		// Reuseable function to parse array of attribute strings which are language dependent
@@ -7589,14 +7598,14 @@ Q = {
 			var length = pArray.length;
 			var runepieces = 0;
 			// Special case if summing for a rune
-			if (pRuneSets && pRuneSets[pItem.id])
+			if (Settings.aRuneSets && Settings.aRuneSets[Settings.aItem.id])
 			{
 				// Don't re-sum if already did
-				if (pRuneSets[pItem.id].issummed === true)
+				if (Settings.aRuneSets[Settings.aItem.id].issummed === true)
 				{
 					return;
 				}
-				runepieces = pRuneSets[pItem.id].numslotted;
+				runepieces = Settings.aRuneSets[Settings.aItem.id].numslotted;
 				length = runepieces;
 			}
 			
@@ -7621,14 +7630,14 @@ Q = {
 					pAttrObj[keyproper] += points;
 				}
 			}
-			if (pRuneSets && pRuneSets[pItem.id])
+			if (Settings.aRuneSets && Settings.aRuneSets[Settings.aItem.id])
 			{
 				// Mark the rune to avoid resumming it
-				pRuneSets[pItem.id].issummed = true;
+				Settings.aRuneSets[Settings.aItem.id].issummed = true;
 			}
 		};
 		
-		var item = pItem;
+		var item = Settings.aItem;
 		if (item === undefined || item.details === undefined)
 		{
 			return;
@@ -7646,6 +7655,18 @@ Q = {
 					pAttrObj[attrname] += iAttr.modifier;
 				}
 			});
+		}
+		// Selectable-stats equipment
+		if (Settings.aStats)
+		{
+			var selectattr = Settings.aStats.attributes;
+			if (selectattr)
+			{
+				for (var i in selectattr)
+				{
+					
+				}
+			}
 		}
 		// Runes
 		if (det.bonuses)
@@ -8123,7 +8144,7 @@ Q = {
 		// Sum attribute points if requested
 		if (attrobj)
 		{
-			Q.sumItemAttribute(attrobj, item);
+			Q.sumItemAttribute(attrobj, {aItem: item});
 		}
 		
 		// RARITY
@@ -8468,7 +8489,7 @@ Q = {
 					}
 					if (attrobj)
 					{
-						Q.sumItemAttribute(attrobj, iData);
+						Q.sumItemAttribute(attrobj, {aItem: iData});
 					}
 					numfetched++;
 					finalizeTooltip();
@@ -8507,7 +8528,7 @@ Q = {
 						upgdesc = Q.getRuneBonus(iData, runepieces);
 						if (attrobj)
 						{
-							Q.sumItemAttribute(attrobj, iData, Settings.aRuneSets);
+							Q.sumItemAttribute(attrobj, {aItem: iData, aRuneSets: Settings.aRuneSets});
 						}
 					}
 					else
@@ -8515,7 +8536,7 @@ Q = {
 						upgdesc = iData.name + "<br />" + Q.formatItemDescription(iData);
 						if (attrobj)
 						{
-							Q.sumItemAttribute(attrobj, iData);
+							Q.sumItemAttribute(attrobj, {aItem: iData});
 						}
 					}
 					
@@ -9076,6 +9097,7 @@ Q = {
 					{
 						updatePrice(pData, E.PaymentEnum.Coin);
 					});
+					pSlot.data("istradeable", true);
 				}
 				else if (Settings.aPrice > 0)
 				{
@@ -9303,7 +9325,7 @@ Q = {
 			{
 				slots.each(function()
 				{
-					if ($(this).data("price"))
+					if ($(this).data("istradeable"))
 					{
 						$(this).show();
 					}
@@ -18822,12 +18844,13 @@ G = {
 		}
 		
 		var ithneedle, fact, factline;
-		var name, marker, factstr, durationstr, peticon;
+		var name, wiki, marker, factstr, durationstr, peticon;
 		var secstr = D.getWord("s");
 		for (var i = 0; i < pNeedles.length; i++)
 		{
 			ithneedle = pNeedles[i];
 			name = D.getObjectName(ithneedle);
+			wiki = U.getWikiLinkDefault("Juvenile " + D.getObjectDefaultName(ithneedle));
 			peticon = "img/collectible/rangerpets/" + ithneedle.p + I.cPNG;
 			var str = "<div class='cltPetBox'><span class='cltPetIcon curToggle' title='" + name + "' style='background-image:url(" + peticon + ")'>" 
 				+ "<var class='cltPetIconBackground'>" + I.Symbol.Filler + "</var></span><aside class='cltPetFacts'>";
@@ -18849,7 +18872,7 @@ G = {
 			}
 			str += "</aside></div>";
 			factline = $(str).appendTo(list).data("keywords", name.toLowerCase());
-			(function(iIndex, iName)
+			(function(iIndex, iWiki)
 			{
 				factline.find(".cltPetIcon").click(function()
 				{
@@ -18881,9 +18904,9 @@ G = {
 				}).dblclick(function()
 				{
 					// Double clicking on the pet icon opens the wiki
-					U.openExternalURL(U.getWikiLinkDefault("Juvenile " + iName));
+					U.openExternalURL(iWiki);
 				});
-			})(i, name);
+			})(i, wiki);
 		}
 		I.qTip.init(list.find(".cltPetIcon"));
 		// Create search bar
