@@ -77,6 +77,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	// Adjectives and Adverbs
 	s_shared: {de: "gemeinsamer", es: "compartida", fr: "partagé",
 		cs: "sdílený", it: "condiviso", pl: "udostępniona", pt: "compartilhado", ru: "общий", zh: "共享"},
+	s_acquired: {de: "erworben", es: "adquirido", fr: "acquis",
+		cs: "nabytý", it: "acquisita", pl: "nabyty", pt: "adquirido", ru: "приобретенный", zh: "獲得了"},
 	s_locked: {de: "gesperrt", es: "bloqueado", fr: "verrouillé",
 		cs: "uzamčený", it: "bloccato", pl: "zablokowany", pt: "bloqueado", ru: "заблокированный", zh: "鎖定"},
 	s_unlocked: {de: "nicht gesperrt", es: "desbloqueado", fr: "déverrouillé",
@@ -392,6 +394,12 @@ var GW2T_ATTRIBUTE_DATA = {
 		this.AgonyResistance = 0;
 		this.MagicFind = 0;
 	},
+	Correction: {
+		CritDamage: "Ferocity",
+		Healing: "HealingPower",
+		ConditionDuration: "Expertise",
+		BoonDuration: "Concentration"
+	},
 	PrimaryGrowth: [ // The attribute points the player gains at a level (the ith array index)
 		37, 7, 7, 7, 7, 7, 7, 7, 7, 7,     //  1-10
 		0, 10, 0, 10, 0, 10, 0, 10, 0, 10, // 11-20
@@ -469,7 +477,7 @@ var GW2T_ATTRIBUTE_DATA = {
 		"Healing": "HealingPower",
 		"ConditionDuration": "Expertise",
 		//"": "ConditionDuration",
-		"BoonDuration": "Concentration",
+		"BoonDuration": "Concentration"
 		//"": "BoonDuration",
 		//"": "AgonyResistance",
 		//"": "MagicFind"
@@ -509,7 +517,7 @@ var GW2T_ATTRIBUTE_DATA = {
 		"conditionduration": "ConditionDuration",
 		"concentration": "Concentration",
 		"boonduration": "BoonDuration",
-		"agonyresistance": "AgonyResistance",
+		"agonyresistance": "AgonyResistance"
 		//"": "MagicFind"
 	},
 	KeyDescription_de: {
@@ -528,7 +536,7 @@ var GW2T_ATTRIBUTE_DATA = {
 		"zustandsdauer": "ConditionDuration",
 		"konzentration": "Concentration",
 		"segensdauer": "BoonDuration",
-		"qualwiderstand": "AgonyResistance",
+		"qualwiderstand": "AgonyResistance"
 		//"": "MagicFind"
 	},
 	KeyDescription_es: {
@@ -547,7 +555,7 @@ var GW2T_ATTRIBUTE_DATA = {
 		"duracióndecondición": "ConditionDuration",
 		"concentración": "Concentration",
 		"duracióndebendición": "BoonDuration",
-		"resistenciaalaagonía": "AgonyResistance",
+		"resistenciaalaagonía": "AgonyResistance"
 		//"": "MagicFind"
 	},
 	KeyDescription_fr: {
@@ -566,7 +574,7 @@ var GW2T_ATTRIBUTE_DATA = {
 		"duréedaltération": "ConditionDuration",
 		"concentration": "Concentration",
 		"duréedavantage": "BoonDuration",
-		"résistanceàlagonie": "AgonyResistance",
+		"résistanceàlagonie": "AgonyResistance"
 		//"": "MagicFind"
 	}
 };

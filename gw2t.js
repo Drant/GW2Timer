@@ -2608,6 +2608,10 @@ U = {
 	{
 		return "GW2T_" + pName.toUpperCase() + "_DATA";
 	},
+	getDataHeaderVariableName: function(pName)
+	{
+		return "GW2T_" + pName.toUpperCase() + "_HEADERS";
+	},
 
 	/*
 	 * URLArguments (Args) may contain Options object's variables. In the form of:
@@ -4619,13 +4623,18 @@ Z = {
 			{
 				Z.freeFiles();
 				var data = window[U.getDataVariableName(pType)];
+				var headers = window[U.getDataHeaderVariableName(pType)];
 				var itemids = [];
 				for (var i in data)
 				{
-					var catarr = data[i];
-					for (var ii = 0; ii < catarr.length; ii++)
+					// Don't cache bank tabs that generate on demand (by clicking to expand)
+					if (headers[i].iscollapsed !== true)
 					{
-						itemids.push(catarr[ii].i);
+						var catarr = data[i];
+						for (var ii = 0; ii < catarr.length; ii++)
+						{
+							itemids.push(catarr[ii].i);
+						}
 					}
 				}
 				
@@ -6402,7 +6411,7 @@ V = {
 				});
 			});
 			// Automatically opens the PVE traits window if user mouses over respective hero window
-			subcontainer.one("mouseover", function()
+			container.one("mouseover", function()
 			{
 				traitwindow.find(".spzSwitch:first").trigger("click");
 			});
@@ -6758,12 +6767,15 @@ V = {
 		$.getScript(U.URL_DATA.Ascended).done(function()
 		{
 			// Does not use cached database
-			A.initializePossessions(function()
+			Q.loadItemsDatabase("ascended", function()
 			{
-				V.generateUnlockables(bank, {
-					aHeaders: GW2T_ASCENDED_HEADERS,
-					aDatabase: GW2T_ASCENDED_DATA,
-					aIsPossessions: true
+				A.initializePossessions(function()
+				{
+					V.generateUnlockables(bank, {
+						aHeaders: GW2T_ASCENDED_HEADERS,
+						aDatabase: GW2T_ASCENDED_DATA,
+						aIsPossessions: true
+					});
 				});
 			});
 		});
@@ -7554,22 +7566,19 @@ Q = {
 	/*
 	 * Corrects naming inconsistency of the attributes property in item API.
 	 * @param string pString.
-	 * @returns translation.
+	 * @returns string proper.
 	 */
 	getAttributeString: function(pString)
 	{
-		var str = pString;
-		var match = {
-			"CritDamage": "Ferocity",
-			"Healing": "HealingPower",
-			"ConditionDuration": "Expertise",
-			"BoonDuration": "Concentration"
-		};
-		if (match[pString])
+		if (A.Attribute.Correction[pString])
 		{
-			str = match[pString];
+			return A.Attribute.Correction[pString];
 		}
-		return D.getString(str);
+		return pString;
+	},
+	getAttributeTranslation: function(pString)
+	{
+		return D.getString(Q.getAttributeString(pString));
 	},
 	
 	/*
@@ -7637,26 +7646,44 @@ Q = {
 			}
 		};
 		
+		// For items themselves or runes
 		var item = Settings.aItem;
-		if (item === undefined || item.details === undefined)
+		if (item && item.details)
 		{
-			return;
-		}
-		var det = item.details;
-		
-		// Armors, weapons, trinkets
-		if (det.infix_upgrade && det.infix_upgrade.attributes)
-		{
-			det.infix_upgrade.attributes.forEach(function(iAttr)
+			var det = item.details;
+
+			// Armors, weapons, trinkets
+			if (det.infix_upgrade && det.infix_upgrade.attributes)
 			{
-				var attrname = A.Attribute.KeyAttributes[iAttr.attribute];
-				if (attrname)
+				det.infix_upgrade.attributes.forEach(function(iAttr)
 				{
-					pAttrObj[attrname] += iAttr.modifier;
-				}
-			});
+					var attrname = A.Attribute.KeyAttributes[iAttr.attribute];
+					if (attrname)
+					{
+						pAttrObj[attrname] += iAttr.modifier;
+					}
+				});
+			}
+			// Runes
+			if (det.bonuses)
+			{
+				sumAttributeArray(det.bonuses);
+			}
+			// Sigils, infusions, and miscellaneous
+			if (det.infix_upgrade && det.infix_upgrade.buff && det.infix_upgrade.buff.description)
+			{
+				var desc = det.infix_upgrade.buff.description;
+				desc.replace(/<br>/g, ""); // Cleanup markup
+				sumAttributeArray(desc.split("\n"));
+			}
+			// Armor and shield that have defense attribute (adds to armor)
+			if (det.defense !== undefined)
+			{
+				pAttrObj["Armor"] += det.defense;
+			}
 		}
-		// Selectable-stats equipment
+		
+		// For selectable-stats equipment
 		if (Settings.aStats)
 		{
 			var selectattr = Settings.aStats.attributes;
@@ -7664,26 +7691,9 @@ Q = {
 			{
 				for (var i in selectattr)
 				{
-					
+					pAttrObj[Q.getAttributeString(i)] += selectattr[i];
 				}
 			}
-		}
-		// Runes
-		if (det.bonuses)
-		{
-			sumAttributeArray(det.bonuses);
-		}
-		// Sigils, infusions, and miscellaneous
-		if (det.infix_upgrade && det.infix_upgrade.buff && det.infix_upgrade.buff.description)
-		{
-			var desc = det.infix_upgrade.buff.description;
-			desc.replace(/<br>/g, ""); // Cleanup markup
-			sumAttributeArray(desc.split("\n"));
-		}
-		// Armor and shield that have defense attribute (adds to armor)
-		if (det.defense !== undefined)
-		{
-			pAttrObj["Armor"] += det.defense;
 		}
 	},
 	
@@ -8104,7 +8114,7 @@ Q = {
 							buffadd = buffs[buffcounter];
 							buffcounter++;
 						}
-						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + Q.getAttributeString(iStats.attribute) + "<br />";
+						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + Q.getAttributeTranslation(iStats.attribute) + "<br />";
 						// Sum the iterated attribute to the attributes-containing object
 					});
 				}
@@ -8122,6 +8132,18 @@ Q = {
 			}
 			
 			attrstr = statsbrktop + attrstr;
+			attrstr += "</aside>";
+		}
+		// Selectable stats equipment
+		else if (Settings.aItemMeta.stats)
+		{
+			var selectattr = Settings.aItemMeta.stats.attributes;
+			attrstr += "<aside class='itmAttr'>";
+			for (var i in selectattr)
+			{
+				// Example output: +63 Condition Damage
+				attrstr += "+" + selectattr[i] + " " + Q.getAttributeTranslation(i) + "<br />";
+			}
 			attrstr += "</aside>";
 		}
 		// Foods and Utilities
@@ -8144,7 +8166,7 @@ Q = {
 		// Sum attribute points if requested
 		if (attrobj)
 		{
-			Q.sumItemAttribute(attrobj, {aItem: item});
+			Q.sumItemAttribute(attrobj, {aItem: item, aStats: Settings.aItemMeta.stats});
 		}
 		
 		// RARITY
@@ -8199,7 +8221,8 @@ Q = {
 		var selectstatsstr = "";
 		if (isequipment)
 		{
-			if (det && det.infix_upgrade === undefined)
+			// If the item does not have attributes nor are attributes assigned yet
+			if (det && det.infix_upgrade === undefined && Settings.aItemMeta.stats === undefined)
 			{
 				selectstatsstr = D.getString("DoubleClickToSelectStats") + "<br />";
 			}
@@ -8617,8 +8640,8 @@ Q = {
 			var text = pFact.text;
 			var type = pFact.type;
 			var value = pFact.value;
-			var attrtarget = (pFact.target !== undefined) ? Q.getAttributeString(pFact.target) : "";
-			var attrsource = (pFact.source !== undefined) ? Q.getAttributeString(pFact.source) : "";
+			var attrtarget = (pFact.target !== undefined) ? Q.getAttributeTranslation(pFact.target) : "";
+			var attrsource = (pFact.source !== undefined) ? Q.getAttributeTranslation(pFact.source) : "";
 			var buffconv = (type === "BuffConversion") ? D.getString("GainBasedPercentage").replace("{0}", attrsource).replace("{1}", attrtarget) : "";
 			var icon = "<img class='trtFactIcon' src='" + pFact.icon + "' />";
 			var prefixicon = (pFact.prefix && pFact.prefix.icon) ? "<img class='trtFactIcon' src='" + pFact.prefix.icon + "' />" : "";
