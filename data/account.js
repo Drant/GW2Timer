@@ -394,7 +394,7 @@ var GW2T_ATTRIBUTE_DATA = {
 		this.AgonyResistance = 0;
 		this.MagicFind = 0;
 	},
-	Correction: {
+	Correction: { // Corrects naming inconsistency of the attributes property in item API.
 		CritDamage: "Ferocity",
 		Healing: "HealingPower",
 		ConditionDuration: "Expertise",

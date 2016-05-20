@@ -7564,9 +7564,9 @@ Q = {
 	},
 	
 	/*
-	 * Corrects naming inconsistency of the attributes property in item API.
+	 * Standardizes attribute names to the base attribute object's keys.
 	 * @param string pString.
-	 * @returns string proper.
+	 * @returns string attribute name proper.
 	 */
 	getAttributeString: function(pString)
 	{

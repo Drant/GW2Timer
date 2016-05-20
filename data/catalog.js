@@ -53,6 +53,7 @@ Key: [
 ],
 Token: [
 	{i: 19721, n: "Glob of Ectoplasm"},
+	{i: 19976, n: "Mystic Coin"},
 	{i: 44941, n: "Watchwork Sprocket"},
 	{i: 48884, n: "Pristine Toxic Spore Sample"},
 	{i: 66608, n: "Pile of Silky Sand", p: {coin: 0}},
