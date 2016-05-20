@@ -1265,9 +1265,23 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Cosmic Mining Tool",
-		id: "78731",
-		price: 1000,
+		name: "Trickster's Light-Armor Skin",
+		id: "43102",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Viper's Medium-Armor Skin",
+		id: "43101",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Phalanx Heavy-Armor Skin",
+		id: "43100",
+		price: 800,
 		discount: null,
 		col: 0
 	},
@@ -1277,6 +1291,20 @@ Sale: {
 		price: 800,
 		discount: null,
 		col: 0
+	},
+	{
+		name: "Cosmic Mining Tool",
+		id: "78731",
+		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Sloth Backpack",
+		id: "78733",
+		price: 500,
+		discount: null,
+		col: 1
 	}
 	]
 },

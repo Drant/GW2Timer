@@ -2578,6 +2578,10 @@ U = {
 	{
 		return U.getAPI("minis", pID);
 	},
+	getAPISkill: function(pID)
+	{
+		return U.getAPI("skills", pID);
+	},
 	getAPITrait: function(pID)
 	{
 		return U.getAPI("traits", pID);
@@ -6378,6 +6382,7 @@ V = {
 		{
 			// BUILD COLUMN: Specializations
 			var spec = char.specializations;
+			var skills = char.skills;
 			if (spec === undefined)
 			{
 				return;
@@ -6395,6 +6400,11 @@ V = {
 					+ "<div class='spzPanel spzPanel_WVW'></div>"
 					+ "<div class='spzPanel spzPanel_PVP'></div>"
 				+ "</div>"
+				+ "<div class='sklContainer'>"
+					+ "<div class='sklPanel sklPanel_PVE'></div>"
+					+ "<div class='sklPanel sklPanel_WVW'></div>"
+					+ "<div class='sklPanel sklPanel_PVP'></div>"
+				+ "</div>"
 			+ "</div>").appendTo(subconbuild);
 			// Bind game mode buttons to switch to appropriate specializations panel
 			traitwindow.find(".spzSwitch").each(function()
@@ -6404,10 +6414,16 @@ V = {
 					traitwindow.find(".spzSwitch").removeClass("spzSwitchFocused");
 					$(this).addClass("spzSwitchFocused");
 					var buildmode = $(this).attr("data-assoc");
-					var buildpanel = traitwindow.find(".spzPanel_" + buildmode);
+					var buildmodelower = buildmode.toLowerCase();
+					var specpanel = traitwindow.find(".spzPanel_" + buildmode);
+					var skillpanel = traitwindow.find(".sklPanel_" + buildmode);
 					traitwindow.find(".spzPanel").hide();
-					buildpanel.show();
-					V.generateTraits(spec[(buildmode.toLowerCase())], buildpanel);
+					traitwindow.find(".sklPanel").hide();
+					specpanel.show();
+					skillpanel.show();
+					// Generate the traits and skills panels if have not already
+					V.generateTraits(spec[buildmodelower], specpanel);
+					V.generateSkills(skills[buildmodelower], skillpanel);
 				});
 			});
 			// Automatically opens the PVE traits window if user mouses over respective hero window
@@ -6544,7 +6560,7 @@ V = {
 	
 	/*
 	 * Generates a specializations panel for a profession.
-	 * @param array pTraitLines from API under "specializations" property.
+	 * @param array pTraitLines from character API under "specializations" property.
 	 * Example structure: [{"id": 1, "traits": [701, 1889, 704]}, ...]
 	 * @param jqobject pContainer to place the trait panel.
 	 */
@@ -6612,7 +6628,7 @@ V = {
 				}
 				traitelm.append(traitname + "<mark class='" + traithighlight + "'>" + I.Symbol.Filler + "</mark>");
 				// Generate tooltip for trait
-				Q.analyzeTrait(trait, {aElement: traitelm});
+				Q.analyzeSkillTrait(trait, {aElement: traitelm});
 			};
 			var formatSpecLine = function()
 			{
@@ -6683,6 +6699,65 @@ V = {
 				insertSpecialization(iLine.id, iLine.traits);
 			}
 		});
+	},
+	
+	/*
+	 * Generates a skills bar for a profession.
+	 * @param array pSkills from character API under "skills" property.
+	 * Example structure: { "heal": 10548, "utilities": [10622, 10606, 10612], "elite": 10646 }
+	 * @param jqobject pContainer to place the skills bar.
+	 */
+	generateSkills: function(pSkills, pContainer)
+	{
+		if (pSkills === undefined || pContainer.is(":empty") === false)
+		{
+			return;
+		}
+		
+		var bar = $("<div class='sklBar'></div>").appendTo(pContainer);
+		
+		var insertSkill = function(pSkillID, pSlot)
+		{
+			$.getJSON(U.getAPISkill(pSkillID), function(pData)
+			{
+				pSlot.find(".sklSlotIcon").css({backgroundImage: "url(" + pData.icon + ")"});
+				// Generate tooltip for trait
+				Q.analyzeSkillTrait(pData, {aElement: pSlot});
+			});
+		};
+		var createSlot = function(pSlotType, pHotkey)
+		{
+			return $("<aside class='sklSlot sklSlot_" + pSlotType + "'>"
+				+ "<span class='sklSlotSelect'></span>"
+				+ "<span class='sklSlotLocked'></span>"
+				+ "<span class='sklSlotIcon'></span>"
+				+ "<span class='sklSlotForeground'></span>"
+				+ "<span class='sklSlotHotkey'>" + pHotkey + "</span>"
+			+ "</aside>").appendTo(bar);
+		};
+		
+		// First create empty slots
+		var heal = createSlot("heal", "6");
+		createSlot("utilities0", "7");
+		createSlot("utilities1", "8");
+		createSlot("utilities2", "9");
+		var elite = createSlot("elite", "0");
+		// Fill the slots by additionally retrieving skill data
+		if (pSkills.heal)
+		{
+			insertSkill(pSkills.heal, heal);
+		}
+		if (pSkills.utilities)
+		{
+			for (var i = 0; i < pSkills.utilities.length; i++)
+			{
+				insertSkill(pSkills.utilities[i], bar.find(".sklSlot_utilities" + i));
+			}
+		}
+		if (pSkills.elite)
+		{
+			insertSkill(pSkills.elite, elite);
+		}
 	},
 	
 	/*
@@ -8734,11 +8809,11 @@ Q = {
 	},
 	
 	/*
-	 * Generates trait tooltip HTML.
+	 * Generates skill or trait tooltip HTML.
 	 * @param object pTrait details retrieved from API.
 	 * @objparam jqobject aElement to bind tooltip.
 	 */
-	analyzeTrait: function(pTrait, pSettings)
+	analyzeSkillTrait: function(pTrait, pSettings)
 	{
 		var Settings = pSettings || {};
 		var content = Q.formatSkillTrait(pTrait);
@@ -8781,6 +8856,10 @@ Q = {
 			var elm = $(Settings.aElement);
 			elm.attr("title", html);
 			I.qTip.init(elm);
+			elm.click(function()
+			{
+				U.prettyJSON(pTrait);
+			});
 		}
 	},
 	

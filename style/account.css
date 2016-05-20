@@ -934,6 +934,7 @@ a.chrWalletLink {
  */
 .spzWindow {
 	display: inline-block;
+	position: relative;
 	width: 420px;
 	margin-bottom: 32px;
 	box-shadow: 0px 0px 16px #0b0d0e;
@@ -1030,7 +1031,7 @@ a.chrWalletLink {
 	margin-top: 6px;
 	margin-left: -16px;
 	vertical-align: middle;
-	background-image: url("../img/account/equipment/spec_icon.png");
+	background-image: url("../img/account/equipment/specemblem.png");
 	background-size: 100%;
 }
 .spzSpecName {
@@ -1147,8 +1148,64 @@ a.chrWalletLink {
 /*
  * Skills bar and icons.
  */
-.sklWindow {
-	
+.sklPanel {
+	width: 100%;
+	position: absolute;
+	margin-top: 16px;
+}
+.sklSlot {
+	display: inline-block;
+	position: relative;
+	width: 52px; height: 52px;
+	box-shadow: 0px 0px 16px #0b0d0e;
+}
+.sklSlotIcon, .sklSlotLocked, .sklSlotForeground {
+	display: block;
+	position: absolute;
+	width: 100%; height: 100%;
+	background-size: 68px 68px;
+	background-position: center;
+	border: 1px solid rgba(0,0,0,0.5);
+}
+.sklSlotLocked {
+	background-size: 70px 70px;
+	background-position: -10px -8px;
+	background-image: url("../img/account/equipment/skill_locked2.png");
+}
+.sklSlotForeground {
+	position: absolute;
+	top: 0;
+	background-image: none;
+}
+.sklSlotForeground:hover {
+	background-image: url("../img/account/equipment/skill_hover.png");
+}
+.sklSlotSelect {
+	display: block;
+	width: 52px; height: 16px;
+	position: absolute;
+	top: -10px;
+	background-image: url("../img/account/equipment/skillselect.png");
+	background-size: 52px;
+	background-repeat: no-repeat;
+}
+.sklSlot_heal {
+	margin-right: 10px;
+}
+.sklSlot_elite {
+	margin-left: 10px;
+}
+.sklSlotHotkey {
+	width: 18px; height: 18px;
+	vertical-align: middle;
+	position: absolute;
+	left: 18px; bottom: -6px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 12px;
+	line-height: 20px;
+	background: rgba(0,0,0,0.8);
+	border-radius: 50%;
+	box-shadow: 0px 0px 8px black;
 }
 
 /*
