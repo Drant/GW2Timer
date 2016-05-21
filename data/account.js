@@ -108,7 +108,7 @@ var GW2T_CURRENCY_DATA = {
 		{ id: 1, coefficient: 0.01, name_en: "Coin", name_de: "Münze", name_es: "Moneda", name_fr: "Pièce", name_zh: "錢幣" },
 		{ id: 2, coefficient: 0.01, name_en: "Karma", name_de: "Karma", name_es: "Karma", name_fr: "Karma", name_zh: "業力" },
 		{ id: 3, coefficient: 100, name_en: "Laurel", name_de: "Lorbeer", name_es: "Laurel", name_fr: "Laurier", name_zh: "桂冠" },
-		{ id: 4, coefficient: 10, name_en: "Gem", name_de: "Edelstein", name_es: "Gema", name_fr: "Gemme", name_zh: "寶石" },
+		{ id: 4, coefficient: 25, name_en: "Gem", name_de: "Edelstein", name_es: "Gema", name_fr: "Gemme", name_zh: "寶石" },
 		{ id: 15, coefficient: 1, name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "榮譽徽章" },
 		{ id: 31, coefficient: 4, name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄証明" },
 		{ id: 16, coefficient: 100, name_en: "Guild Commendation", name_de: "Gilden-Belobigung", name_es: "Mención de clan", name_fr: "Recommandation de guilde", name_zh: "公會獎狀" },
@@ -396,7 +396,6 @@ var GW2T_ATTRIBUTE_DATA = {
 	},
 	Correction: { // Corrects naming inconsistency of the attributes property in item API.
 		CritDamage: "Ferocity",
-		Healing: "HealingPower",
 		ConditionDuration: "Expertise",
 		BoonDuration: "Concentration"
 	},

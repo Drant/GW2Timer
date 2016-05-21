@@ -4022,7 +4022,10 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				Z.createItemsCache();
+				$.getJSON("test/colors_en.json", function()
+				{
+					
+				});
 			}},
 			updatedb: {usage: "Prints an updated database of items (test mode only). <em>Parameters: enu_language (optional)</em>", f: function()
 			{
@@ -6715,7 +6718,6 @@ V = {
 		}
 		
 		var bar = $("<div class='sklBar'></div>").appendTo(pContainer);
-		
 		var insertSkill = function(pSkillID, pSlot)
 		{
 			$.getJSON(U.getAPISkill(pSkillID), function(pData)
@@ -6822,38 +6824,7 @@ V = {
 	 */
 	serveAscended: function()
 	{
-		if (V.requireCharacters("Ascended"))
-		{
-			return;
-		}
-		else if ( ! A.Data.Characters[0].bags)
-		{
-			A.printError(A.PermissionEnum.Inventories);
-			return;
-		}
-		var dish = $("#accDish_Ascended");
-		if (A.reinitializeDish(dish) === false)
-		{
-			return;
-		}
-		
-		var container = Q.createBank(dish, {aIsCollection: true, aSlotsPerRow: 12});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
-		$.getScript(U.URL_DATA.Ascended).done(function()
-		{
-			// Does not use cached database
-			Q.loadItemsDatabase("ascended", function()
-			{
-				A.initializePossessions(function()
-				{
-					V.generateUnlockables(bank, {
-						aHeaders: GW2T_ASCENDED_HEADERS,
-						aDatabase: GW2T_ASCENDED_DATA,
-						aIsPossessions: true
-					});
-				});
-			});
-		});
+		V.generateCatalog("ascended");
 	},
 	
 	/*
@@ -6965,11 +6936,22 @@ V = {
 	},
 	
 	/*
-	 * Generates the items catalog bank window.
+	 * Macro function to serve a catalog style bank to an account page's section.
+	 * A catalog is a bank based on the account's entire inventory, bank, and 
+	 * materials items possessions.
+	 * @param string pSection name.
+	 * @param object pSettings for the generate unlockables function.
 	 */
-	serveCatalog: function()
+	generateCatalog: function(pSection, pSettings)
 	{
-		if (V.requireCharacters("Catalog"))
+		var Settings = $.extend({
+			aIsPossessions: true,
+			aWantSearchHighlight: false
+		}, pSettings);
+		
+		var sectionupper = U.toFirstUpperCase(pSection);
+		var sectionlower = pSection.toLowerCase();
+		if (V.requireCharacters(sectionupper))
 		{
 			return;
 		}
@@ -6978,7 +6960,7 @@ V = {
 			A.printError(A.PermissionEnum.Inventories);
 			return;
 		}
-		var dish = $("#accDish_Catalog");
+		var dish = $("#accDish_" + sectionupper);
 		if (A.reinitializeDish(dish) === false)
 		{
 			return;
@@ -6986,9 +6968,9 @@ V = {
 		
 		var container = Q.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		$.getScript(U.URL_DATA.Catalog).done(function()
+		$.getScript(U.URL_DATA[sectionupper]).done(function()
 		{
-			Q.loadItemsDatabase("catalog", function()
+			Q.loadItemsDatabase(sectionlower, function()
 			{
 				/*
 				 * Catalog is a custom unlockable whose collection is generated based on
@@ -6996,15 +6978,20 @@ V = {
 				 */
 				A.initializePossessions(function()
 				{
-					V.generateUnlockables(bank, {
-						aHeaders: GW2T_CATALOG_HEADERS,
-						aDatabase: GW2T_CATALOG_DATA,
-						aIsPossessions: true,
-						aWantSearchHighlight: false
-					});
+					Settings.aHeaders = window[U.getDataHeaderVariableName(pSection)];
+					Settings.aDatabase = window[U.getDataVariableName(pSection)];
+					V.generateUnlockables(bank, Settings);
 				});
 			});
 		});
+	},
+	
+	/*
+	 * Generates the items catalog bank window.
+	 */
+	serveCatalog: function()
+	{
+		V.generateCatalog("catalog");
 	},
 	
 	/*
@@ -7645,9 +7632,16 @@ Q = {
 	 */
 	getAttributeString: function(pString)
 	{
-		if (A.Attribute.Correction[pString])
+		// Correct naming inconsistency of the attributes property in item API
+		var correction = { 
+			CritDamage: "Ferocity",
+			Healing: "HealingPower",
+			ConditionDuration: "Expertise",
+			BoonDuration: "Concentration"
+		};
+		if (correction[pString])
 		{
-			return A.Attribute.Correction[pString];
+			return correction[pString];
 		}
 		return pString;
 	},
@@ -11567,6 +11561,7 @@ D = {
 		// Item Tooltip
 		s_Defense: {en: "Defense", de: "Verteidigung", es: "Defensa", fr: "Défense"},
 		s_WeaponStrength: {en: "Weapon Strength", de: "Waffenstärke", es: "Fuerza del arma", fr: "Puissance d&apos;arme"},
+		s_Healing: {en: "Healing", de: "Heilung", es: "Curación", fr: "Guérison"},
 		s_RequiredLevel: {en: "Required Level", de: "Erforderliche Stufe", es: "Nivel necesario", fr: "Niveau requis"},
 		s_AccountBindOnUse: {en: "Account Bound on Use", de: "Accountgebunden bei Benutzung", es: "Vinculado a cuenta en uso", fr: "Lié au compte dès l&apos;utilisation"},
 		s_AccountBound: {en: "Account Bound", de: "Accountgebunden", es: "Vinculado a cuenta", fr: "Lié au compte"},

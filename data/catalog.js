@@ -35,12 +35,6 @@ var GW2T_CATALOG_HEADERS = {
  */
 var GW2T_CATALOG_DATA = {
 Key: [
-	{i: 36708, n: "Black Lion Chest Key", p: {gem: 125}},
-	{i: 19980, n: "Black Lion Chest Key", p: {gem: 125}},
-	{i: 20316, n: "Black Lion Chest"},
-	{i: 43992, n: "Black Lion Claim Ticket", p: {gem: 0}},
-	{i: 43998, n: "Black Lion Claim Ticket Scrap", p: {gem: 0}},
-	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}},
 	{i: 70827, n: "Pact Crowbar", p: {coin: 0}},
 	{i: 71416, n: "Exalted Key", p: {map_ab: 8}},
 	{i: 70892, n: "Vial of Chak Acid", p: {map_td: 8}},
@@ -49,7 +43,13 @@ Key: [
 	{i: 67826, n: "Silverwastes Shovel", p: {coin: 0}},
 	{i: 67777, n: "Bandit Skeleton Key", p: {coin: 0}},
 	{i: 67981, n: "Essence of Nightmares", p: {coin: 0}},
-	{i: 67979, n: "Key of Greater Nightmares", p: {coin: 0}}
+	{i: 67979, n: "Key of Greater Nightmares", p: {coin: 0}},
+	{i: 36708, n: "Black Lion Chest Key", p: {gem: 125}},
+	{i: 19980, n: "Black Lion Chest Key", p: {gem: 125}},
+	{i: 20316, n: "Black Lion Chest"},
+	{i: 43992, n: "Black Lion Claim Ticket", p: {gem: 0}},
+	{i: 43998, n: "Black Lion Claim Ticket Scrap", p: {gem: 0}},
+	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}}
 ],
 Token: [
 	{i: 19721, n: "Glob of Ectoplasm"},
@@ -448,6 +448,8 @@ Bundle: [
 	{i: 8695, n: "Explosive Charge", p: {coin: 16}},
 	{i: 8739, n: "Miner's Explosive Charge", p: {karma: 35}},
 	{i: 8791, n: "Vigil Clearing Device", p: {coin: 40}},
+	{i: 8464, n: "Golem in a Box", p: {coin: 160}},
+	{i: 8778, n: "Mini Golem Bomb (consumable)", p: {coin: 40}},
 	{i: 8663, n: "Wood Plank (80 copper)", p: {coin: 80}},
 	{i: 8672, n: "Wood Plank (Quartermaster Thraeingr)", p: {coin: 180}},
 	{i: 8677, n: "Plank (consumable)", p: {coin: 56}},
@@ -536,8 +538,6 @@ Bundle: [
 Consumable: [
 	{i: 8655, n: "Experimental Teleportation Gun", p: {coin: 32}},
 	{i: 8733, n: "Experimental Rifle", p: {coin: 128}},
-	{i: 8464, n: "Golem in a Box", p: {coin: 160}},
-	{i: 8778, n: "Mini Golem Bomb (consumable)", p: {coin: 40}},
 	{i: 8698, n: "Ogre Pet Whistle", p: {coin: 104}},
 	{i: 8702, n: "Fire Elemental Powder", p: {coin: 104}},
 	{i: 8703, n: "Deployable Thumper Turret", p: {coin: 104}},
