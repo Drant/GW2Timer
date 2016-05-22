@@ -394,11 +394,6 @@ var GW2T_ATTRIBUTE_DATA = {
 		this.AgonyResistance = 0;
 		this.MagicFind = 0;
 	},
-	Correction: { // Corrects naming inconsistency of the attributes property in item API.
-		CritDamage: "Ferocity",
-		ConditionDuration: "Expertise",
-		BoonDuration: "Concentration"
-	},
 	PrimaryGrowth: [ // The attribute points the player gains at a level (the ith array index)
 		37, 7, 7, 7, 7, 7, 7, 7, 7, 7,     //  1-10
 		0, 10, 0, 10, 0, 10, 0, 10, 0, 10, // 11-20

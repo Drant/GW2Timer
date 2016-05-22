@@ -2600,6 +2600,10 @@ U = {
 	 * @param string pLanguage code.
 	 * @returns string.
 	 */
+	getDatabaseURL: function(pName, pLanguage)
+	{
+		return "test/" + pName + "_" + pLanguage + ".json";
+	},
 	getItemsDatabaseURL: function(pLanguage)
 	{
 		return "test/items_" + pLanguage + ".json";
@@ -3044,6 +3048,64 @@ U = {
 			return true;
 		}
 		return false;
+	},
+	
+	/*
+	 * Converts an RGB array to a CSS color.
+	 * @param intarray pRGB.
+	 * @returns string hexadecimal color.
+	 */
+	convertRGBToHex: function(pRGB)
+	{
+		var str = "", num;
+		for (var i = 0; i < pRGB.length; i++)
+		{
+			num = parseInt(pRGB[i]);
+			str += ((num < T.cBASE_10) ? "0" : "") + num.toString(T.cBASE_16);
+		}
+		return "#" + str;
+	},
+	
+	/*
+	 * Converts a decimal number into a decimal-less percentage.
+	 * @param float pNumber to convert.
+	 * @param int pPlaces decimal to keep.
+	 * @returns string.
+	 */
+	convertRatioToPercent: function(pNumber, pPlaces)
+	{
+		if (pNumber === undefined || isFinite(pNumber) === false)
+		{
+			return "0%";
+		}
+		if (pPlaces === undefined)
+		{
+			pPlaces = 0;
+		}
+		
+		var sign = (pNumber < 0) ? "−" : "";
+		return sign + Math.abs(pNumber * 100).toFixed(pPlaces) + "%";
+	},
+	
+
+	/*
+	 * Formats a percentage number. Example: 1250.538 becomes 1,250.53%
+	 * @param float pPercentage to convert.
+	 * @param int pPlacesMax decimals to keep.
+	 * @param int pPlacesMin decimals to keep if number has no decimal values.
+	 * @returns string.
+	 */
+	formatPercentage: function(pPercentage, pPlacesMax, pPlacesMin)
+	{
+		if (pPercentage === parseInt(pPercentage)) // The percentage has no decimal points, then don't include them
+		{
+			if (pPlacesMin !== undefined)
+			{
+				return pPercentage.toFixed(pPlacesMin).toLocaleString() + "%";
+			}
+			return pPercentage.toLocaleString() + "%";
+		}
+		return pPercentage.toFixed((pPlacesMax === undefined) ? 2 : pPlacesMax).toLocaleString() + "%";
 	},
 	
 	/*
@@ -3783,48 +3845,6 @@ U = {
 		}
 
 		return (pWantType === undefined) ? id : id + " (" + type + ")";
-	},
-	
-	/*
-	 * Converts a decimal number into a decimal-less percentage.
-	 * @param float pNumber to convert.
-	 * @param int pPlaces decimal to keep.
-	 * @returns string.
-	 */
-	convertRatioToPercent: function(pNumber, pPlaces)
-	{
-		if (pNumber === undefined || isFinite(pNumber) === false)
-		{
-			return "0%";
-		}
-		if (pPlaces === undefined)
-		{
-			pPlaces = 0;
-		}
-		
-		var sign = (pNumber < 0) ? "−" : "";
-		return sign + Math.abs(pNumber * 100).toFixed(pPlaces) + "%";
-	},
-	
-
-	/*
-	 * Formats a percentage number. Example: 1250.538 becomes 1,250.53%
-	 * @param float pPercentage to convert.
-	 * @param int pPlacesMax decimals to keep.
-	 * @param int pPlacesMin decimals to keep if number has no decimal values.
-	 * @returns string.
-	 */
-	formatPercentage: function(pPercentage, pPlacesMax, pPlacesMin)
-	{
-		if (pPercentage === parseInt(pPercentage)) // The percentage has no decimal points, then don't include them
-		{
-			if (pPlacesMin !== undefined)
-			{
-				return pPercentage.toFixed(pPlacesMin).toLocaleString() + "%";
-			}
-			return pPercentage.toLocaleString() + "%";
-		}
-		return pPercentage.toFixed((pPlacesMax === undefined) ? 2 : pPlacesMax).toLocaleString() + "%";
 	}
 };
 
@@ -3834,13 +3854,12 @@ U = {
 Z = {
 	
 	cCommandPrefix: "/",
-	APICacheFiles: [], // Stores the URLs to a generated blob file
+	APICacheFiles: [], // Stores the URLs to generated blob files
 	APICacheArrayOfIDs: null, // Array of ID numbers for any particular v2 API endpoint
 	APICacheArrayOfObjects: null, // Array of objects downloaded from the IDs pointing there
 	APICacheConsole: null, // JSON text entered by the user
-	ItemsDatabase: { // To be loaded with the database files
-		en: null, de: null, es: null, fr: null, zh: null
-	},
+	DatabaseCache: {}, // To be loaded with various API databases, access order: database name > language code > item ID
+	DatabaseLanguages: {en: true, de: true, es: true, fr: true, zh: true},
 	
 	/*
 	 * Loads an object from local storage into a variable for temporary test or
@@ -3974,19 +3993,19 @@ Z = {
 			}},
 			apicache: {usage: "Prints the cache of the previous console API call as an associative array. <em>Parameters: bol_wantoutputasfile (optional)</em>", f: function()
 			{
-				Z.printAPICache(0, args[1]);
+				Z.printAPICache(0, {aWantFile: args[1]});
 			}},
 			apicachearray: {usage: "...as an array.", f: function()
 			{
-				Z.printAPICache(1, args[1]);
+				Z.printAPICache(1, {aWantFile: args[1]});
 			}},
 			apicacheobject: {usage: "...as an object.", f: function()
 			{
-				Z.printAPICache(2, args[1]);
+				Z.printAPICache(2, {aWantFile: args[1]});
 			}},
 			apicacheids: {usage: "...as IDs.", f: function()
 			{
-				Z.printAPICache(3, args[1]);
+				Z.printAPICache(3, {aWantFile: args[1]});
 			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
 				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. Replace spaces with &quot;%20&quot;", f: function()
@@ -4022,9 +4041,44 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				$.getJSON("test/colors_en.json", function()
+				I.log("start");
+				Z.loadItemsDatabase(function(pItemsDatabase)
 				{
-					
+					I.log("items");
+					Z.loadMultilingualDatabase("colors", function(pColorsDatabase)
+					{
+						I.log("colors");
+						var color, catname;
+						Z.APICacheArrayOfObjects = [];
+						var categories = {
+							Starter: [],
+							Common: [],
+							Uncommon: [],
+							Rare: []
+						};
+						var colordb = pColorsDatabase[O.OptionEnum.Language.Default];
+						for (var i in colordb)
+						{
+							color = colordb[i];
+							if (color.id !== 1) // Skip dye remover
+							{
+								catname = color.categories[2];
+								categories[catname].push(Z.processDye(color));
+							}
+						}
+						
+						for (var i in categories)
+						{
+							for (var ii in categories[i])
+							{
+								Z.APICacheArrayOfObjects.push((categories[i])[ii]);
+							}
+						}
+						
+						I.log("complete");
+						//U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "u"});
+						Z.printAPICache(1, {aWantFile: true, aFileName: "dyesnew.js"});
+					});
 				});
 			}},
 			updatedb: {usage: "Prints an updated database of items (test mode only). <em>Parameters: enu_language (optional)</em>", f: function()
@@ -4228,11 +4282,13 @@ Z = {
 	 * @param int pRequest type, see below.
 	 * @param boolean pWantFile whether to output to a file or print to console.
 	 */
-	printAPICache: function(pRequest, pWantFile, pFileName)
+	printAPICache: function(pRequest, pSettings)
 	{
+		var Settings = pSettings || {};
 		var output = "";
 		var obj;
-		var wantfile = (pWantFile === "true" || pWantFile === true);
+		var wantfile = (Settings.aWantFile === "true" || Settings.aWantFile === true);
+		var wantquotes = (Settings.aWantQuotes === true) ? true : false;
 		
 		// Compile the output
 		if (pRequest === 0 || pRequest === 1)
@@ -4247,7 +4303,7 @@ Z = {
 				{
 					obj = Z.APICacheArrayOfObjects[i];
 					output += ((pRequest === 0) ? (quo + obj.id + quo + ": ") : "")
-						+ U.lineJSON(obj, wantfile)
+						+ U.lineJSON(obj, wantquotes)
 					+ ((i === length - 1) ? "" : ",") + brk;
 				}
 				output += ((pRequest === 0) ? "}" : "]");
@@ -4271,7 +4327,7 @@ Z = {
 		// Print or generate the output
 		if (wantfile)
 		{
-			Z.createFile(output, pFileName);
+			Z.createFile(output, Settings.aFileName);
 		}
 		else
 		{
@@ -4509,6 +4565,50 @@ Z = {
 	},
 	
 	/*
+	 * Creates a processed object from a color API object, to be stored in the
+	 * custom dyes database for use in account bank.
+	 * @param object pItem a dye item, or a color object.
+	 * @returns object.
+	 * @pre Items and Colors database for all languages were loaded.
+	 */
+	processDye: function(pColor)
+	{
+		var colordb = Z.DatabaseCache["colors"];
+		var itemdb = (Z.DatabaseCache["items"])[O.OptionEnum.Language.Default];
+		// Create CSS colors from the RGB values
+		var materials = ["cloth", "leather", "metal"];
+		var matarr = [];
+		for (var i = 0; i < materials.length; i++)
+		{
+			var ithmat = materials[i];
+			matarr.push(U.convertRGBToHex((pColor[ithmat]).rgb));
+		}
+		
+		// Format of the object with properties in this order
+		var obj = {};
+		obj.u = pColor.id;
+		if (pColor.item) // If the color has an associated item to unlock it
+		{
+			obj.i = pColor.item;
+			obj.n = itemdb[pColor.item].name;
+		}
+		else
+		{
+			obj.n = pColor.name;
+		}
+		obj.c = matarr;
+		obj.h = pColor.categories[0];
+		obj.m = pColor.categories[1];
+		// Add translated names, with the property key as the language code
+		for (var lang in Z.DatabaseLanguages)
+		{
+			obj[lang] = (colordb[lang])[pColor.id].name;
+		}
+		
+		return obj;
+	},
+	
+	/*
 	 * Prints the current daily achievements.
 	 * @param boolean pWantTomorrow whether to get tomorrow's instead of today's.
 	 */
@@ -4575,56 +4675,71 @@ Z = {
 	},
 	
 	/*
-	 * Loads the items database in all available languages.
+	 * Loads a database in all available languages.
+	 * @param string pName of database to look for file.
 	 * @param function pCallback to execute after loaded.
 	 */
-	loadItemsDatabase: function(pCallback)
+	loadMultilingualDatabase: function(pName, pCallback)
 	{
+		var dbname = pName.toLowerCase();
+		var database = {};
+		// Use loaded database if available
+		if (Z.DatabaseCache[dbname] !== undefined)
+		{
+			pCallback(Z.DatabaseCache[dbname]);
+			return;
+		}
+		
 		// Check to see if all language versions of the database are loaded
 		var finalize = function()
 		{
 			var isallloaded = true;
-			for (var i in Z.ItemsDatabase)
+			for (var lang in Z.DatabaseLanguages)
 			{
-				if (Z.ItemsDatabase[i] === null)
+				if (database[lang] === undefined)
 				{
 					isallloaded = false;
 				}
 			}
 			if (isallloaded)
 			{
-				pCallback();
-				return true;
+				Z.DatabaseCache[dbname] = database;
+				pCallback(Z.DatabaseCache[dbname]);
 			}
 		};
-		if (finalize())
-		{
-			return;
-		}
 		
 		// Retrieve the database
-		for (var i in Z.ItemsDatabase)
+		for (var lang in Z.DatabaseLanguages)
 		{
 			(function(iLanguage)
 			{
-				$.getJSON(U.getItemsDatabaseURL(iLanguage), function(pData)
+				$.getJSON(U.getDatabaseURL(dbname, iLanguage), function(pData)
 				{
-					Z.ItemsDatabase[iLanguage] = pData;
+					database[iLanguage] = pData;
 					finalize();
 				});
-			})(i);
+			})(lang);
 		}
 	},
 	
 	/*
-	 * Creates files containing an associative array of item details, for used
-	 * by a specific Account page section.
+	 * Loads the items database in all available languages.
+	 * @param function pCallback to execute after loaded.
+	 */
+	loadItemsDatabase: function(pCallback)
+	{
+		Z.loadMultilingualDatabase("items", pCallback);
+	},
+	
+	/*
+	 * Creates JSON files containing an associative array of item details, for
+	 * use by a specific Account page section.
 	 * @param string pType section.
 	 */
 	updateItemsCache: function(pType)
 	{
 		var scripturl = U.getDataScriptURL(pType.toLowerCase());
-		Z.loadItemsDatabase(function()
+		Z.loadItemsDatabase(function(pDatabase)
 		{
 			$.getScript(scripturl, function()
 			{
@@ -4645,12 +4760,12 @@ Z = {
 					}
 				}
 				
-				for (var i in Z.ItemsDatabase)
+				for (var i in pDatabase)
 				{
 					// Reinitialize for ith language
 					Z.APICacheArrayOfObjects = null;
 					Z.APICacheArrayOfObjects = [];
-					var db = Z.ItemsDatabase[i];
+					var db = pDatabase[i];
 					for (var ii = 0; ii < itemids.length; ii++)
 					{
 						var itemid = itemids[ii];
@@ -4658,7 +4773,7 @@ Z = {
 					}
 					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id"});
 					var filename = pType.toLowerCase() + "_" + i + ".json";
-					Z.printAPICache(0, true, filename);
+					Z.printAPICache(0, {aWantQuotes: true, aWantFile: true, aFileName: filename});
 				}
 			}).fail(function()
 			{
@@ -4698,7 +4813,7 @@ Z = {
 						}
 						U.sortObjects(dbarray, {aKeyName: "id"});
 						Z.APICacheArrayOfObjects = dbarray;
-						Z.printAPICache(0, true);
+						Z.printAPICache(0, {aWantFile: true});
 						I.print("New items:");
 						U.prettyJSON(pItems);
 					}});
@@ -6970,7 +7085,7 @@ V = {
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		$.getScript(U.URL_DATA[sectionupper]).done(function()
 		{
-			Q.loadItemsDatabase(sectionlower, function()
+			Q.loadItemsSubdatabase(sectionlower, function()
 			{
 				/*
 				 * Catalog is a custom unlockable whose collection is generated based on
@@ -7090,7 +7205,7 @@ V = {
 		
 		$.getJSON(A.getURL(A.URL.Materials), function(pData)
 		{
-			Q.loadItemsDatabase("materials", function()
+			Q.loadItemsSubdatabase("materials", function()
 			{
 				bank.empty();
 				var numtofetch = 0;
@@ -7231,6 +7346,7 @@ V = {
 							aSlotMeta: {count: count},
 							aComment: comment,
 							aWiki: iWiki,
+							aIsDyes: Settings.aIsDyes,
 							aCallback: function()
 							{
 								// Include payment if the item cannot be obtained on the Trading Post
@@ -7440,7 +7556,7 @@ V = {
 		{
 			$.getJSON(A.getURL(A.URL.Minis), function(pData)
 			{
-				Q.loadItemsDatabase("minis", function()
+				Q.loadItemsSubdatabase("minis", function()
 				{
 					generateMinis(pData);
 				});
@@ -7469,7 +7585,8 @@ V = {
 			V.generateUnlockables(bank, {
 				aHeaders: GW2T_DYES_HEADERS,
 				aDatabase: GW2T_DYES_DATA,
-				aUnlockeds: pUnlockeds
+				aUnlockeds: pUnlockeds,
+				aIsDyes: true
 			});
 		};
 		
@@ -7477,7 +7594,7 @@ V = {
 		{
 			$.getJSON(A.getURL(A.URL.Dyes), function(pData)
 			{
-				Q.loadItemsDatabase("dyes", function()
+				Q.loadItemsSubdatabase("dyes", function()
 				{
 					generateDyes(pData);
 				});
@@ -7535,7 +7652,7 @@ Q = {
 	 * @pre The database files exist in the proper directory and suffixed with
 	 * the supported language nick.
 	 */
-	loadItemsDatabase: function(pName, pSuccess)
+	loadItemsSubdatabase: function(pName, pSuccess)
 	{
 		if (Q.RetrievedDatabases[pName])
 		{
