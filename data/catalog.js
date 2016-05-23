@@ -65,6 +65,7 @@ Token: [
 	{i: 24502, n: "Silver Doubloon"},
 	{i: 20799, n: "Mystic Crystal", p: {spirit: 0.6}},
 	{i: 20796, n: "Philosopher's Stone", p: {spirit: 0.1}},
+	{i: 19925, n: "Obsidian Shard", p: {karma: 2100}},
 	{i: 19677, n: "Gift of Exploration", p: {achievement: 0}},
 	{i: 66766, n: "Unidentified Fossilized Insect", p: {coin: 0}},
 	{i: 72205, n: "Chak Egg", p: {coin: 0}},

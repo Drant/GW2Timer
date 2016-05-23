@@ -3051,7 +3051,7 @@ U = {
 	},
 	
 	/*
-	 * Converts an RGB array to a CSS color.
+	 * Converts an RGB array to a CSS hex code.
 	 * @param intarray pRGB.
 	 * @returns string hexadecimal color.
 	 */
@@ -3061,9 +3061,83 @@ U = {
 		for (var i = 0; i < pRGB.length; i++)
 		{
 			num = parseInt(pRGB[i]);
-			str += ((num < T.cBASE_10) ? "0" : "") + num.toString(T.cBASE_16);
+			str += ((num < T.cBASE_16) ? "0" : "") + num.toString(T.cBASE_16);
 		}
 		return "#" + str;
+	},
+	
+	/*
+	 * Converts an RGB array to Hue Saturation Lightness array.
+	 * @param intarray pRGB.
+	 * @returns array.
+	 * Source: http://stackoverflow.com/questions/11923659/javascript-sort-rgb-values
+	 */
+	convertRGBToHSL: function(pRGB)
+	{
+		var r = pRGB[0]/255, g = pRGB[1]/255, b = pRGB[2]/255;
+		var max = Math.max(r, g, b), min = Math.min(r, g, b);
+		var h, s, l = (max + min) / 2;
+
+		if (max === min)
+		{
+			h = s = 0; // achromatic
+		}
+		else
+		{
+			var d = max - min;
+			s = (l > 0.5) ? (d / (2 - max - min)) : (d / (max + min));
+			switch(max)
+			{
+				case r: h = (g - b) / d + ((g < b) ? 6 : 0); break;
+				case g: h = (b - r) / d + 2; break;
+				case b: h = (r - g) / d + 4; break;
+			}
+			h /= 6;
+		}
+		return [h * 360, s * 100, l * 100];
+	},
+	sortRGBs: function(pRGBs)
+	{
+		var indexes = [];
+		var sortedindexes = [];
+		var hslArr = [];
+		for (var i = 0; i < pRGBs.length; i++)
+		{
+			hslArr[i] = [U.convertRGBToHSL(pRGBs[i]), i]; 
+			indexes.push(i);
+		}
+		
+		var sortedHslArr = [];
+		for (var i = 0; i < hslArr.length; i++)
+		{
+			var continueouter = false;
+			for (var j = 0; j < sortedHslArr.length; j++)
+			{
+				if (sortedHslArr[j][0][0] > hslArr[i][0][0])
+				{
+					sortedHslArr.splice(j, 0, hslArr[i]);
+					sortedindexes.splice(j, 0, i);
+					continueouter = true;
+					break;
+				}
+			}
+			if (continueouter)
+			{
+				continue;
+			}
+			sortedHslArr.push(hslArr[i]);
+			sortedindexes.push(i);
+		}
+		
+		var sortedRgbArr = [];
+		for (var i = 0; i < sortedHslArr.length; i++)
+		{
+			sortedRgbArr[i] = pRGBs[sortedHslArr[i][1]];
+		}
+		return {
+			oRGBs: sortedRgbArr,
+			oIndexes: sortedindexes
+		};
 	},
 	
 	/*
@@ -4041,44 +4115,28 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				I.log("start");
-				Z.loadItemsDatabase(function(pItemsDatabase)
+				$.getScript("data/dyes.js", function()
 				{
-					I.log("items");
-					Z.loadMultilingualDatabase("colors", function(pColorsDatabase)
+					var dyehues = {
+						Gray: [],
+						Brown: [],
+						Red: [],
+						Orange: [],
+						Yellow: [],
+						Green: [],
+						Blue: [],
+						Purple: []
+					};
+					var db = GW2T_DYES_DATA;
+					for (var i in db)
 					{
-						I.log("colors");
-						var color, catname;
-						Z.APICacheArrayOfObjects = [];
-						var categories = {
-							Starter: [],
-							Common: [],
-							Uncommon: [],
-							Rare: []
-						};
-						var colordb = pColorsDatabase[O.OptionEnum.Language.Default];
-						for (var i in colordb)
+						var cat = db[i];
+						for (var ii = 0; ii < cat.length; ii++)
 						{
-							color = colordb[i];
-							if (color.id !== 1) // Skip dye remover
-							{
-								catname = color.categories[2];
-								categories[catname].push(Z.processDye(color));
-							}
+							
 						}
-						
-						for (var i in categories)
-						{
-							for (var ii in categories[i])
-							{
-								Z.APICacheArrayOfObjects.push((categories[i])[ii]);
-							}
-						}
-						
-						I.log("complete");
-						//U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "u"});
-						Z.printAPICache(1, {aWantFile: true, aFileName: "dyesnew.js"});
-					});
+					}
+					U.prettyJSON(dyehues);
 				});
 			}},
 			updatedb: {usage: "Prints an updated database of items (test mode only). <em>Parameters: enu_language (optional)</em>", f: function()
@@ -6980,7 +7038,7 @@ V = {
 					{
 						Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData});
 					});
-				})(Q.createBankSlot(sharedtab.find(".bnkTabSlots"), true), pData[i]);
+				})(Q.createBankSlot(sharedtab.find(".bnkTabSlots"), "bnkSlotShared"), pData[i]);
 			}
 		});
 		
@@ -7346,7 +7404,6 @@ V = {
 							aSlotMeta: {count: count},
 							aComment: comment,
 							aWiki: iWiki,
-							aIsDyes: Settings.aIsDyes,
 							aCallback: function()
 							{
 								// Include payment if the item cannot be obtained on the Trading Post
@@ -7390,20 +7447,27 @@ V = {
 				aTitle: D.getObjectName(catobj),
 				aIsCollapsed: catobj.iscollapsed
 			});
-			(function(iTab, iCatObj, iCatArr)
+			(function(iTab, iCatObj, iCatArr, iCatArrName)
 			{
-				if (Settings.aIsCollapsed || iCatObj.iscollapsed)
+				if (Settings.aIsDyes)
 				{
-					iTab.find(".bnkTabSeparator").one("click", function()
-					{
-						fillTab(iTab, iCatArr);
-					});
+					V.fillDyeTab(iTab, iCatArr, unlocksassoc, iCatArrName);
 				}
 				else
 				{
-					fillTab(iTab, iCatArr);
+					if (Settings.aIsCollapsed || iCatObj.iscollapsed)
+					{
+						iTab.find(".bnkTabSeparator").one("click", function()
+						{
+							fillTab(iTab, iCatArr);
+						});
+					}
+					else
+					{
+						fillTab(iTab, iCatArr);
+					}
 				}
-			})(tab, catobj, catarr);
+			})(tab, catobj, catarr, i);
 
 			// For this ith tab, write the number of unlockables unlocked on the tab header
 			var numunlocked = 0;
@@ -7567,6 +7631,98 @@ V = {
 			});
 		});
 	},
+	
+	/*
+	 * Fills a bank tab with dyes (as bank slots).
+	 * @param jqobject pTab.
+	 * @param array pCatArr of unlockable objects, which are dyes.
+	 * @param object pUnlockAssoc associative array to check against.
+	 * @param string pCatArrName to determine dye rarity.
+	 * @pre Data from the dye section of the account page was loaded.
+	 */
+	fillDyeTab: function(pTab, pCatArr, pUnlockAssoc, pCatArrName)
+	{
+		var slot, unlockobj;
+		var slotscontainer = pTab.find(".bnkTabSlots");
+		var metadata = GW2T_DYES_METADATA;
+		var translations = {};
+		for (var i in metadata.Translations)
+		{
+			translations[i] = D.getObjectTranslation(metadata.Translations[i]);
+		}
+		
+		for (var i = 0; i < pCatArr.length; i++)
+		{
+			slot = Q.createBankSlot(slotscontainer);
+			unlockobj = pCatArr[i];
+			(function(iSlot, iUnlockID, iItemID, iWiki, iColors, iHue, iMaterial, iName)
+			{
+				// Color the bank slot as that dye
+				iSlot.find(".bnkSlotIcon").css({background: iColors[0]});
+				// Include name over the slot
+				iSlot.append("<var class='bnkSlotDyeName'>" + iName + "</var>");
+				// Set slot rarity depending on its tab
+				var rarity = (metadata.Rarities[pCatArrName]) ? metadata.Rarities[pCatArrName] : metadata.Rarities.Default;
+				iSlot.find(".bnkSlotIcon").addClass("bnkSlotRarity_" + rarity);
+				// Label the price, if there is an associated dye item
+				var count = (pUnlockAssoc[iUnlockID]) ? 1 : 0;
+				if (count)
+				{
+					iSlot.data("count", count);
+				}
+				if (iItemID)
+				{
+					$.getJSON(U.getAPIPrice(iItemID), function(pData)
+					{
+						Q.updateSlotPrice(iSlot, pData, count, E.PaymentEnum.Coin);
+						if (count)
+						{
+							// Fade the price label if already unlocked that dye
+							iSlot.find(".bnkSlotPrice").addClass("accTrivial");
+						}
+					});
+					slot.data("istradeable", true);
+				}
+				
+				// Tooltip shows the different colors on different materials
+				var tiphtml = "<div class='bnkDyePreview'>"
+					+ "<aside class='bnkDyePreviewTitle'><var class='bnkDyePreviewName' style='color:" + iColors[0] + "'>" + iName + "</var> ("
+						+ translations[iHue] + " " + translations[iMaterial] + ")</aside>"
+					+ "<div class='bnkDyePreviewSwatches'>"
+						+ "<aside class='bnkDyePreviewSwatch' style='background:" + iColors[0] + "'>"
+							+ "<var class='bnkDyePreviewMaterial'>" + translations["Vibrant"] + "</var></aside>"
+						+ "<aside class='bnkDyePreviewSwatch' style='background:" + iColors[1] + "'>"
+							+ "<var class='bnkDyePreviewMaterial'>" + translations["Leather"] + "</var></aside>"
+						+ "<aside class='bnkDyePreviewSwatch' style='background:" + iColors[2] + "'>"
+							+ "<var class='bnkDyePreviewMaterial'>" + translations["Metal"] + "</var></aside>"
+					+ "</div>"
+				+ "</div>";
+				iSlot.attr("title", tiphtml);
+				I.qTip.init(iSlot);
+				
+				// Remember search keywords
+				var keywords = (iName + " " + translations[iHue] + " " + translations[iMaterial]).toLowerCase();
+				iSlot.data("keywords", keywords);
+				
+				// Bind slot click behavior
+				iSlot.click(function(pEvent)
+				{
+					if (pEvent.which === I.ClickEnum.Left)
+					{
+						U.openExternalURL(U.getWikiSearchDefault(iWiki));
+					}
+				});
+				
+				Q.bindItemSlotBehavior(iSlot, {
+					aItem: {},
+					aTradeableID: iItemID,
+					aSearch: iWiki
+				});
+				
+			})(slot, unlockobj.u, unlockobj.i, unlockobj.n, unlockobj.c, unlockobj.h, unlockobj.m, D.getObjectTranslation(unlockobj));
+		}
+	},
+	
 	/*
 	 * Generates the dye color collection window.
 	 */
@@ -7580,23 +7736,17 @@ V = {
 		
 		var container = Q.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var generateDyes = function(pUnlockeds)
-		{
-			V.generateUnlockables(bank, {
-				aHeaders: GW2T_DYES_HEADERS,
-				aDatabase: GW2T_DYES_DATA,
-				aUnlockeds: pUnlockeds,
-				aIsDyes: true
-			});
-		};
-		
 		$.getScript(U.URL_DATA.Dyes).done(function()
 		{
 			$.getJSON(A.getURL(A.URL.Dyes), function(pData)
 			{
-				Q.loadItemsSubdatabase("dyes", function()
-				{
-					generateDyes(pData);
+				V.generateUnlockables(bank, {
+					aHeaders: GW2T_DYES_HEADERS,
+					aDatabase: GW2T_DYES_DATA,
+					aUnlockeds: pData,
+					aHelpMessage: $("#accDyesHelp").html(),
+					aWantSearchHighlight: false,
+					aIsDyes: true
 				});
 			}).fail(function()
 			{
@@ -9124,14 +9274,13 @@ Q = {
 	 * Inserts a standard inventory slot for use in inventory, bank, materials,
 	 * and other windows. Uses native DOM manipulation for performance.
 	 * @param jqobject pSlotContainer of a tab.
-	 * @param boolean pIsShared whether it is a shared inventory slot (for
-	 * different background image).
+	 * @param string pClass to change the slot style.
 	 * @returns jqobject slot.
 	 */
-	createBankSlot: function(pSlotContainer, pIsShared)
+	createBankSlot: function(pSlotContainer, pClass)
 	{
 		var slot = document.createElement("span");
-		slot.innerHTML = "<var class='bnkSlotBackground" + ((pIsShared) ? "Shared" : "") + "'></var>"
+		slot.innerHTML = "<var class='bnkSlotBackground " + (pClass || "") + "'></var>"
 			+ "<var class='bnkSlotIcon'></var>"
 			+ "<var class='bnkSlotForeground'></var>";
 		slot.className = "bnkSlot";
@@ -9155,9 +9304,6 @@ Q = {
 		var Settings = pSettings || {};
 		if (pSettings)
 		{
-			var container = pSlot.parents(".bnkContainer");
-			var top = container.find(".bnkTop");
-			var iscollection = container.data("iscollection");
 			var count = Settings.aSlotMeta.count || 1;
 			var itemmeta = null;
 			var validmeta = {
@@ -9171,76 +9317,6 @@ Q = {
 					break;
 				}
 			}
-			
-			var updatePrice = function(pPrice, pPaymentEnum)
-			{
-				var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + pPaymentEnum);
-				var prices = (typeof pPrice === "number") ? E.createPrice(pPrice, count) : E.processPrice(pPrice, count);
-				var pricetorecord = (iscollection) ? prices.oPriceSell : prices.oPriceSellTaxed;
-				var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
-				{
-					var displaypriceleft = (pDisplay.data("priceleft") || 0) + pLeft;
-					var displaypriceright = (pDisplay.data("priceright") || 0) + pRight;
-					pDisplay.data("priceleft", displaypriceleft).data("priceright", displaypriceright);
-					var tabtext, pricestrleft, pricestrright;
-					switch (pPaymentEnum)
-					{
-						case E.PaymentEnum.Coin: {
-							pricestrleft = E.formatCoinStringColored(displaypriceleft);
-							pricestrright = E.formatCoinStringColored(displaypriceright);
-							tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright + " <span class='accTrivial'>" + pricestrleft + "</span>");
-						}; break;
-						case E.PaymentEnum.Gem: {
-							pricestrleft = E.formatGemString(displaypriceleft, true);
-							pricestrright = E.formatGemString(displaypriceright, true);
-							tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright);
-						}; break;
-					}
-					pDisplay.html(tabtext);
-				};
-				
-				// Label the slot with the item's or stack's price
-				switch (pPaymentEnum)
-				{
-					case E.PaymentEnum.Coin: {
-						pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricetorecord, {aWantColor: true, aWantShort: true}) + "</var>");
-					}; break;
-					case E.PaymentEnum.Gem: {
-						pSlot.append("<var class='bnkSlotPrice'>" + E.formatGemString(pricetorecord, true) + "</var>");
-					}; break;
-				}
-				
-				// Only add if item actually exists (not a zero stack slot)
-				if (iscollection)
-				{
-					if (Settings.aSlotMeta.count !== 0)
-					{
-						updatePriceDisplay(tabdisplayprice, prices.oPriceBuy, 0, true);
-						updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
-						if (pPaymentEnum === E.PaymentEnum.Coin)
-						{
-							pSlot.data("price", pricetorecord);
-						}
-					}
-					else
-					{
-						updatePriceDisplay(tabdisplayprice, 0, prices.oPriceBuy, true);
-						updatePriceDisplay(top.find(".bnkPriceValueB_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
-					}
-				}
-				else
-				{
-					if (Settings.aSlotMeta.count !== 0)
-					{
-						updatePriceDisplay(tabdisplayprice, prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
-						updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
-						if (pPaymentEnum === E.PaymentEnum.Coin)
-						{
-							pSlot.data("price", pricetorecord);
-						}
-					}
-				}
-			};
 			
 			Q.scanItem(Settings.aItem, {
 				aElement: pSlot,
@@ -9308,17 +9384,17 @@ Q = {
 					var itemidforprice = Settings.aTradeableID || Settings.aItem.id;
 					$.getJSON(U.getAPIPrice(itemidforprice), function(pData)
 					{
-						updatePrice(pData, E.PaymentEnum.Coin);
+						Q.updateSlotPrice(pSlot, pData, Settings.aSlotMeta.count, E.PaymentEnum.Coin);
 					});
 					pSlot.data("istradeable", true);
 				}
 				else if (Settings.aPrice > 0)
 				{
-					updatePrice(Settings.aPrice, E.PaymentEnum.Coin);
+					Q.updateSlotPrice(pSlot, Settings.aPrice, Settings.aSlotMeta.count, E.PaymentEnum.Coin);
 				}
 				else if (Settings.aGem > 0)
 				{
-					updatePrice(Settings.aGem, E.PaymentEnum.Gem);
+					Q.updateSlotPrice(pSlot, Settings.aGem, Settings.aSlotMeta.count, E.PaymentEnum.Gem);
 				}
 				// Execute callback if requested
 				if (Settings.aCallback)
@@ -9331,6 +9407,88 @@ Q = {
 		{
 			// Empty slot gets keywords anyway for use in search
 			pSlot.data("keywords", "*");
+		}
+	},
+	
+	/*
+	 * Updates the price displayed over the bank slot, the bank tab, and bank top.
+	 * @param jqobject pSlot for price label.
+	 * @param int pPrice amount.
+	 * @param int pCount of items.
+	 * @param enum pPaymentEnum such as coin or gem.
+	 */
+	updateSlotPrice: function(pSlot, pPrice, pCount, pPaymentEnum)
+	{
+		var container = pSlot.parents(".bnkContainer");
+		var top = container.find(".bnkTop");
+		var iscollection = container.data("iscollection");
+		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + pPaymentEnum);
+		
+		var count = pCount || 1;
+		var prices = (typeof pPrice === "number") ? E.createPrice(pPrice, count) : E.processPrice(pPrice, count);
+		var pricetorecord = (iscollection) ? prices.oPriceSell : prices.oPriceSellTaxed;
+		var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
+		{
+			var displaypriceleft = (pDisplay.data("priceleft") || 0) + pLeft;
+			var displaypriceright = (pDisplay.data("priceright") || 0) + pRight;
+			pDisplay.data("priceleft", displaypriceleft).data("priceright", displaypriceright);
+			var tabtext, pricestrleft, pricestrright;
+			switch (pPaymentEnum)
+			{
+				case E.PaymentEnum.Coin: {
+					pricestrleft = E.formatCoinStringColored(displaypriceleft);
+					pricestrright = E.formatCoinStringColored(displaypriceright);
+					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright + " <span class='accTrivial'>" + pricestrleft + "</span>");
+				}; break;
+				case E.PaymentEnum.Gem: {
+					pricestrleft = E.formatGemString(displaypriceleft, true);
+					pricestrright = E.formatGemString(displaypriceright, true);
+					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright);
+				}; break;
+			}
+			pDisplay.html(tabtext);
+		};
+
+		// Label the slot with the item's or stack's price
+		switch (pPaymentEnum)
+		{
+			case E.PaymentEnum.Coin: {
+				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricetorecord, {aWantColor: true, aWantShort: true}) + "</var>");
+			}; break;
+			case E.PaymentEnum.Gem: {
+				pSlot.append("<var class='bnkSlotPrice'>" + E.formatGemString(pricetorecord, true) + "</var>");
+			}; break;
+		}
+
+		// Only add if item actually exists (not a zero stack slot)
+		if (iscollection)
+		{
+			if (pCount !== 0)
+			{
+				updatePriceDisplay(tabdisplayprice, prices.oPriceBuy, 0, true);
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
+				if (pPaymentEnum === E.PaymentEnum.Coin)
+				{
+					pSlot.data("price", pricetorecord);
+				}
+			}
+			else
+			{
+				updatePriceDisplay(tabdisplayprice, 0, prices.oPriceBuy, true);
+				updatePriceDisplay(top.find(".bnkPriceValueB_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
+			}
+		}
+		else
+		{
+			if (pCount !== 0)
+			{
+				updatePriceDisplay(tabdisplayprice, prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
+				if (pPaymentEnum === E.PaymentEnum.Coin)
+				{
+					pSlot.data("price", pricetorecord);
+				}
+			}
 		}
 	},
 	
