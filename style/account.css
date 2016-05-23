@@ -1599,8 +1599,8 @@ input[type="text"].bnkSearchInput:hover {
 	font-weight: normal;
 }
 .bnkDyePreviewTitle {
-	font-size: 18px;
 	margin-bottom: 2px;
+	font-size: 18px;
 }
 .bnkDyePreviewName {
 	font-weight: bold;

@@ -2612,13 +2612,13 @@ U = {
 	{
 		return "data/" + pName + ".js";
 	},
-	getDataVariableName: function(pName)
+	getDatabaseData: function(pName)
 	{
-		return "GW2T_" + pName.toUpperCase() + "_DATA";
+		return window["GW2T_" + pName.toUpperCase() + "_DATA"];
 	},
-	getDataHeaderVariableName: function(pName)
+	getDatabaseHeader: function(pName)
 	{
-		return "GW2T_" + pName.toUpperCase() + "_HEADERS";
+		return window["GW2T_" + pName.toUpperCase() + "_HEADERS"];
 	},
 
 	/*
@@ -3064,6 +3064,16 @@ U = {
 			str += ((num < T.cBASE_16) ? "0" : "") + num.toString(T.cBASE_16);
 		}
 		return "#" + str;
+	},
+	convertHexToRGB: function(pHex)
+	{
+		// Source: http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+		var hex = (typeof pHex === "string" && pHex.charAt(0) === "#") ? pHex.substring(1, pHex.length) : pHex;
+		var bigint = parseInt(hex, 16);
+		var r = (bigint >> 16) & 255;
+		var g = (bigint >> 8) & 255;
+		var b = bigint & 255;
+		return [r, g, b];
 	},
 	
 	/*
@@ -4115,29 +4125,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				$.getScript("data/dyes.js", function()
-				{
-					var dyehues = {
-						Gray: [],
-						Brown: [],
-						Red: [],
-						Orange: [],
-						Yellow: [],
-						Green: [],
-						Blue: [],
-						Purple: []
-					};
-					var db = GW2T_DYES_DATA;
-					for (var i in db)
-					{
-						var cat = db[i];
-						for (var ii = 0; ii < cat.length; ii++)
-						{
-							
-						}
-					}
-					U.prettyJSON(dyehues);
-				});
+				
 			}},
 			updatedb: {usage: "Prints an updated database of items (test mode only). <em>Parameters: enu_language (optional)</em>", f: function()
 			{
@@ -4394,6 +4382,32 @@ Z = {
 	},
 	
 	/*
+	 * Creates a file from a regenerated unlockables database.
+	 * @param object pDatabase.
+	 */
+	printUnlockables: function(pDatabase)
+	{
+		var output = "";
+		var catarr, arrlength;
+		var objlength = U.getObjectLength(pDatabase);
+		var objlengthcounter = 0;
+		for (var i in pDatabase)
+		{
+			output += i + ": [\r\n";
+			catarr = pDatabase[i];
+			arrlength = catarr.length;
+			for (var ii = 0; ii < arrlength; ii++)
+			{
+				output += "\t" + U.lineJSON(catarr[ii], false)
+					+ ((ii === arrlength - 1) ? "" : ",") + "\r\n";
+			}
+			output += "]" + ((objlengthcounter === objlength - 1) ? "" : ",") + "\r\n";
+			objlengthcounter++;
+		}
+		Z.createFile(output);
+	},
+	
+	/*
 	 * Gets the latest items that was added to the API item database.
 	 * @param int pSmartIndex if positive, will list that many latest items;
 	 * if negative, will list the item at that index, from end of the array.
@@ -4623,6 +4637,70 @@ Z = {
 	},
 	
 	/*
+	 * Resorts the dyes database.
+	 */
+	collateDyes: function()
+	{
+		$.getScript(U.URL_DATA.Dyes, function()
+		{
+			var DyeHues = function()
+			{
+				this.Gray = [];
+				this.Brown = [];
+				this.Red = [];
+				this.Orange = [];
+				this.Yellow = [];
+				this.Green = [];
+				this.Blue = [];
+				this.Purple = [];
+			};
+			var db = U.getDatabaseData("dyes");
+			var newdb = {};
+			var cat, overcat, entry;
+			// Put the colors in their hue category
+			for (var i in db)
+			{
+				cat = db[i];
+				newdb[i] = new DyeHues();
+				for (var ii = 0; ii < cat.length; ii++)
+				{
+					entry = cat[ii];
+					entry["lightness"] = U.convertRGBToHSL(U.convertHexToRGB(entry.c[0]))[2];
+					(newdb[i])[entry.h].push(entry);
+				}
+			}
+			// Sort each hue category by its colors' lightness
+			for (var i in newdb)
+			{
+				overcat = newdb[i];
+				for (var ii in overcat)
+				{
+					cat = overcat[ii];
+					U.sortObjects(cat, {aKeyName: "lightness", aIsDescending: true});
+				}
+			}
+			// Unfold the hue categories arrays into one array for a bank tab
+			var finaldb = {};
+			for (var i in newdb)
+			{
+				overcat = newdb[i];
+				finaldb[i] = [];
+				for (var ii in overcat)
+				{
+					cat = overcat[ii];
+					for (var iii = 0; iii < cat.length; iii++)
+					{
+						entry = cat[iii];
+						delete entry["lightness"];
+						finaldb[i].push(entry);
+					}
+				}
+			}
+			Z.printUnlockables(finaldb);
+		});
+	},
+	
+	/*
 	 * Creates a processed object from a color API object, to be stored in the
 	 * custom dyes database for use in account bank.
 	 * @param object pItem a dye item, or a color object.
@@ -4633,6 +4711,7 @@ Z = {
 	{
 		var colordb = Z.DatabaseCache["colors"];
 		var itemdb = (Z.DatabaseCache["items"])[O.OptionEnum.Language.Default];
+		var item = itemdb[pColor.item];
 		// Create CSS colors from the RGB values
 		var materials = ["cloth", "leather", "metal"];
 		var matarr = [];
@@ -4648,7 +4727,7 @@ Z = {
 		if (pColor.item) // If the color has an associated item to unlock it
 		{
 			obj.i = pColor.item;
-			obj.n = itemdb[pColor.item].name;
+			obj.n = item.name;
 		}
 		else
 		{
@@ -4657,6 +4736,7 @@ Z = {
 		obj.c = matarr;
 		obj.h = pColor.categories[0];
 		obj.m = pColor.categories[1];
+		obj.l = item.chat_link;
 		// Add translated names, with the property key as the language code
 		for (var lang in Z.DatabaseLanguages)
 		{
@@ -4781,6 +4861,20 @@ Z = {
 	},
 	
 	/*
+	 * Loads the items database in the default language.
+	 * @param function pCallback to execute after loaded.
+	 */
+	getItemsDatabase: function(pCallback)
+	{
+		var lang = O.OptionEnum.Language.Default;
+		$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
+		{
+			Z.DatabaseCache[lang] = pData;
+			pCallback(pData);
+		});
+	},
+	
+	/*
 	 * Loads the items database in all available languages.
 	 * @param function pCallback to execute after loaded.
 	 */
@@ -4802,8 +4896,8 @@ Z = {
 			$.getScript(scripturl, function()
 			{
 				Z.freeFiles();
-				var data = window[U.getDataVariableName(pType)];
-				var headers = window[U.getDataHeaderVariableName(pType)];
+				var data = U.getDatabaseData(pType);
+				var headers = U.getDatabaseHeader(pType);
 				var itemids = [];
 				for (var i in data)
 				{
@@ -6997,7 +7091,7 @@ V = {
 	 */
 	serveAscended: function()
 	{
-		V.generateCatalog("ascended");
+		V.generateCatalog("ascended", {aWantGem: false});
 	},
 	
 	/*
@@ -7119,6 +7213,7 @@ V = {
 	{
 		var Settings = $.extend({
 			aIsPossessions: true,
+			aWantGem: true,
 			aWantSearchHighlight: false
 		}, pSettings);
 		
@@ -7139,7 +7234,7 @@ V = {
 			return;
 		}
 		
-		var container = Q.createBank(dish, {aIsCollection: true});
+		var container = Q.createBank(dish, {aIsCollection: true, aWantGem: Settings.aWantGem});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		$.getScript(U.URL_DATA[sectionupper]).done(function()
 		{
@@ -7151,8 +7246,8 @@ V = {
 				 */
 				A.initializePossessions(function()
 				{
-					Settings.aHeaders = window[U.getDataHeaderVariableName(pSection)];
-					Settings.aDatabase = window[U.getDataVariableName(pSection)];
+					Settings.aHeaders = U.getDatabaseHeader(pSection);
+					Settings.aDatabase = U.getDatabaseData(pSection);
 					V.generateUnlockables(bank, Settings);
 				});
 			});
@@ -7655,7 +7750,7 @@ V = {
 		{
 			slot = Q.createBankSlot(slotscontainer);
 			unlockobj = pCatArr[i];
-			(function(iSlot, iUnlockID, iItemID, iWiki, iColors, iHue, iMaterial, iName)
+			(function(iSlot, iUnlockObj, iUnlockID, iItemID, iWiki, iColors, iHue, iMaterial, iChatlink, iName)
 			{
 				// Color the bank slot as that dye
 				iSlot.find(".bnkSlotIcon").css({background: iColors[0]});
@@ -7712,14 +7807,15 @@ V = {
 						U.openExternalURL(U.getWikiSearchDefault(iWiki));
 					}
 				});
-				
+				// Bind context menu
 				Q.bindItemSlotBehavior(iSlot, {
-					aItem: {},
+					aObject: iUnlockObj,
+					aChatlink: iChatlink,
 					aTradeableID: iItemID,
 					aSearch: iWiki
 				});
 				
-			})(slot, unlockobj.u, unlockobj.i, unlockobj.n, unlockobj.c, unlockobj.h, unlockobj.m, D.getObjectTranslation(unlockobj));
+			})(slot, unlockobj, unlockobj.u, unlockobj.i, unlockobj.n, unlockobj.c, unlockobj.h, unlockobj.m, unlockobj.l, D.getObjectTranslation(unlockobj));
 		}
 	},
 	
@@ -7734,7 +7830,7 @@ V = {
 			return;
 		}
 		
-		var container = Q.createBank(dish, {aIsCollection: true});
+		var container = Q.createBank(dish, {aIsCollection: true, aWantGem: false});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		$.getScript(U.URL_DATA.Dyes).done(function()
 		{
@@ -9127,7 +9223,8 @@ Q = {
 	/*
 	 * Creates a bank container element.
 	 * @param jqobject pDestination to append bank.
-	 * @objparam boolean aIsCollection whether the bank is an unlock collection
+	 * @objparam boolean aIsCollection whether the bank is an unlock collection.
+	 * @objparam boolean aWantGem whether to display the gem tally.
 	 * rather than inventory of actual items, optional.
 	 * @objparam int aSlotsPerRow to resize the bank beforehand, optional.
 	 * @returns jqobject bank.
@@ -9144,7 +9241,7 @@ Q = {
 					+ " &nbsp; "
 					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB_Coin'></var>"
 				+ "</aside>"
-				+ ((Settings.aIsCollection) ? ("<aside class='bnkGem'>"
+				+ ((Settings.aIsCollection && Settings.aWantGem !== false) ? ("<aside class='bnkGem'>"
 					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Gem'></var>"
 					+ " &nbsp; "
 					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB_Gem'></var>"
@@ -9467,10 +9564,7 @@ Q = {
 			{
 				updatePriceDisplay(tabdisplayprice, prices.oPriceBuy, 0, true);
 				updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
-				if (pPaymentEnum === E.PaymentEnum.Coin)
-				{
-					pSlot.data("price", pricetorecord);
-				}
+				
 			}
 			else
 			{
@@ -9484,11 +9578,12 @@ Q = {
 			{
 				updatePriceDisplay(tabdisplayprice, prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
 				updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
-				if (pPaymentEnum === E.PaymentEnum.Coin)
-				{
-					pSlot.data("price", pricetorecord);
-				}
 			}
+		}
+		// Remember coin value for price search
+		if (pPaymentEnum === E.PaymentEnum.Coin)
+		{
+			pSlot.data("price", pricetorecord);
 		}
 	},
 	
@@ -9496,6 +9591,7 @@ Q = {
 	 * Creates and binds a search bar for a bank. Also creates functional buttons.
 	 * @param jqobject pBank for insertion.
 	 * @objparam string aHelpElement HTML ID of the message to append to the help screen.
+	 * @objparam boolean aWantSearchHighlight whether to highlight instead of show and hide when searching.
 	 * @pre Bank slots were generated.
 	 */
 	createBankMenu: function(pBank, pSettings)
@@ -9822,7 +9918,14 @@ Q = {
 		});
 		$("#bnkContextInfo").click(function()
 		{
-			U.prettyJSON(Q.Context.Item);
+			if (Q.Context.Item)
+			{
+				U.prettyJSON(Q.Context.Item);
+			}
+			else
+			{
+				I.print("No information available.");
+			}
 		});
 		I.initializeClipboard("#bnkContextChatlink");
 	},
@@ -9831,6 +9934,7 @@ Q = {
 	 * Binds an element that represents a game item to have a context menu.
 	 * @param jqobject pSlot to bind.
 	 * @objparam object aItem from item details API.
+	 * @objparam object aObject non-item object for printing the slot's information, optional.
 	 * @objparam string aSearch for wiki search link, optional.
 	 * @objparam int aTradeableID for TP webpage, optional.
 	 */
@@ -9841,12 +9945,25 @@ Q = {
 		pSlot.contextmenu(function(pEvent)
 		{
 			pEvent.preventDefault();
-			Q.Context.Item = Settings.aItem;
-			Q.Context.ItemName = Settings.aItem.name;
-			Q.Context.ItemID = Settings.aTradeableID || Settings.aItem.id;
-			Q.Context.ItemSearch = Settings.aSearch || Settings.aItem.name;
-			I.updateClipboard("#bnkContextChatlink", Settings.aItem.chat_link + " " + Q.Context.ItemSearch);
-			$("#bnkContext").css({top: I.posY, left: I.posX}).show();
+			var chatlink;
+			if (Settings.aItem)
+			{
+				Q.Context.Item = Settings.aItem;
+				Q.Context.ItemName = Settings.aItem.name;
+				Q.Context.ItemID = Settings.aTradeableID || Settings.aItem.id;
+				Q.Context.ItemSearch = Settings.aSearch || Settings.aItem.name;
+				chatlink = Settings.aItem.chat_link + " " + Q.Context.ItemSearch;
+			}
+			else
+			{
+				Q.Context.Item = Settings.aObject;
+				Q.Context.ItemName = Settings.aSearch;
+				Q.Context.ItemID = Settings.aTradeableID;
+				Q.Context.ItemSearch = Settings.aSearch;
+				chatlink = Settings.aChatlink || "No chatlink available.";
+			}
+			I.updateClipboard("#bnkContextChatlink", chatlink);
+			I.showContextMenu("#bnkContext");
 		});
 		// Bind the click to go to wiki behavior if requested
 		if (Settings.aWantClick)
@@ -9859,7 +9976,7 @@ Q = {
 				}
 			});
 		}
-	}
+	},
 };
 
 /* =============================================================================
@@ -14253,7 +14370,7 @@ M = {
 		this.Map.on("contextmenu", function(pEvent)
 		{
 			that.ContextLatLng = pEvent.latlng;
-			$(htmlidprefix + "Context").css({top: I.posY, left: I.posX}).show();
+			I.showContextMenu(htmlidprefix + "Context");
 		});
 		
 		/*
@@ -23099,7 +23216,7 @@ T = {
 					if (T.DailyToday.pve && T.DailyToday.pve[1] === "Forger")
 					{
 						var dailyspecialstr = U.convertExternalString(B.Announcement.Messages.Forger);
-						I.greet(dailyspecialstr, 15);
+						I.greet(dailyspecialstr, 25);
 					}
 				}
 			}
@@ -27275,6 +27392,36 @@ I = {
 		}
 		var result = T.stepFunction($(window).width(), 14, 22, 400, 3);
 		$(".chnTitle h1").css({fontSize: result + "px"});
+	},
+	
+	/*
+	 * Shows a context menu element while respecting screen edges.
+	 * @param string pID of context menu.
+	 */
+	showContextMenu: function(pID)
+	{
+		var elm = $(pID);
+		var menuwidth = elm.width();
+		var menuheight = elm.height();
+		var winwidth = $(window).width();
+		var winheight = $(window).height();
+		var offsetX = 0;
+		var offsetY = 0;
+		var padding = 4;
+		
+		if (I.posX + menuwidth > winwidth)
+		{
+			offsetX = (I.posX + menuwidth + padding) - winwidth;
+		}
+		if (I.posY + menuheight > winheight)
+		{
+			offsetY = (I.posY + menuheight + padding) - winheight;
+		}
+		
+		elm.css({
+			top: I.posY - offsetY,
+			left: I.posX - offsetX
+		}).show();
 	},
 	
 	/*

@@ -1186,10 +1186,10 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Account' title='gw2timer.com/dyes'>Color Dyes Collection</a> now available.",
+	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Account' title='gw2timer.com/dyes'>Color Dyes Collection</a> now available. <a href='http://gw2timer.com/dyes'>gw2timer.com/dyes</a>",
 	wvw: "",
-	Start: new Date("2016-05-24T16:00:00Z"),
-	Finish: new Date("2016-05-24T16:00:00Z"),
+	Start: new Date("2016-05-22T16:00:00Z"),
+	Finish: new Date("2016-05-29T16:00:00Z"),
 	Messages:
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
