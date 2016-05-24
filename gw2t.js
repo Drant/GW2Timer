@@ -214,6 +214,7 @@ O = {
 		bol_alertUnsubscribe: true,
 		// Account
 		bol_showRarity: false,
+		bol_condenseBank: false,
 		// Trading
 		bol_refreshPrices: true,
 		bol_useMainTPSearch: true,
@@ -3229,6 +3230,10 @@ U = {
 			.replace(/ \]/g, "]")
 			.replace(/\[ /g, "[");
 	},
+	compressToJS: function(pObject)
+	{
+		return U.stripJSONQuotations(JSON.stringify(pObject));
+	},
 	
 	/*
 	 * Strips all non-alphabet and non-numbers from a string using regex.
@@ -3943,8 +3948,7 @@ Z = {
 	APICacheArrayOfObjects: null, // Array of objects downloaded from the IDs pointing there
 	APICacheConsole: null, // JSON text entered by the user
 	DatabaseCache: {}, // To be loaded with various API databases, access order: database name > language code > item ID
-	DatabaseLangAssoc: {en: true, de: true, es: true, fr: true, zh: true},
-	DatabaseLangArray: ["en", "de", "es", "fr", "zh"],
+	DatabaseLanguages: ["en", "de", "es", "fr", "zh"],
 	
 	/*
 	 * Loads an object from local storage into a variable for temporary test or
@@ -4589,23 +4593,26 @@ Z = {
 	},
 	
 	/*
-	 * Decomposes the items database into a light database for searching by name.
+	 * Decomposes the items database into a lightweight array for searching by name.
 	 * @pre Items database files are up to date.
 	 */
 	collateSearch: function()
 	{
 		Z.loadItemsDatabase(function()
 		{
-			var db = {};
-			var ithdb;
-			for (var lang in Z.DatabaseLangAssoc)
+			Z.DatabaseLanguages.forEach(function(iLang)
 			{
-				ithdb = (Z.DatabaseCache["items"])[lang];
+				var db = [];
+				var item;
+				var ithdb = (Z.DatabaseCache["items"])[iLang];
 				for (var ii in ithdb)
 				{
-					
+					item = ithdb[ii];
+					db.push([item.id, item.name.toLowerCase()]);
 				}
-			}
+				var dbstr = U.compressToJS(db, false);
+				Z.createFile(dbstr, "search_" + iLang + ".json");
+			});
 		});
 	},
 	
@@ -4768,10 +4775,10 @@ Z = {
 		obj.m = pColor.categories[1];
 		obj.l = item.chat_link;
 		// Add translated names, with the property key as the language code
-		for (var lang in Z.DatabaseLangAssoc)
+		Z.DatabaseLanguages.forEach(function(iLang)
 		{
-			obj[lang] = (colordb[lang])[pColor.id].name;
-		}
+			obj[iLang] = (colordb[iLang])[pColor.id].name;
+		});
 		
 		return obj;
 	},
@@ -4862,13 +4869,13 @@ Z = {
 		var finalize = function()
 		{
 			var isallloaded = true;
-			for (var lang in Z.DatabaseLangAssoc)
+			Z.DatabaseLanguages.forEach(function(iLang)
 			{
-				if (database[lang] === undefined)
+				if (database[iLang] === undefined)
 				{
 					isallloaded = false;
 				}
-			}
+			});
 			if (isallloaded)
 			{
 				Z.DatabaseCache[dbname] = database;
@@ -4877,17 +4884,14 @@ Z = {
 		};
 		
 		// Retrieve the database
-		for (var lang in Z.DatabaseLangAssoc)
+		Z.DatabaseLanguages.forEach(function(iLang)
 		{
-			(function(iLanguage)
+			$.getJSON(U.getDatabaseURL(dbname, iLang), function(pData)
 			{
-				$.getJSON(U.getDatabaseURL(dbname, iLanguage), function(pData)
-				{
-					database[iLanguage] = pData;
-					finalize();
-				});
-			})(lang);
-		}
+				database[iLang] = pData;
+				finalize();
+			});
+		});
 	},
 	
 	/*
@@ -4971,17 +4975,20 @@ Z = {
 	updateItemsDatabase: function()
 	{
 		var counter = 0;
-		var newitems;
+		var newitemslist, newitems;
 		var updateDBLang = function()
 		{
 			// Stopping condition for this recursive function
-			if (counter >= Z.DatabaseLangArray.length)
+			if (counter >= Z.DatabaseLanguages.length)
 			{
-				I.print("Items database of all languages updated. New items:");
-				U.prettyJSON(newitems);
+				I.print("Items database of all languages updated.");
+				if (newitems)
+				{
+					U.prettyJSON(newitems);
+				}
 				return;
 			}
-			var lang = Z.DatabaseLangArray[counter];
+			var lang = Z.DatabaseLanguages[counter];
 			$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
 			{
 				var dbarray = [];
@@ -4992,47 +4999,48 @@ Z = {
 					dbarray.push(pData[ithitemid]);
 					currentitemids.push(parseInt(ithitemid));
 				}
-				$.getJSON(U.URL_API.ItemDatabase, function(pItemsList)
+				// Find what item IDs are missing by comparing the API's current list with the one here
+				var newitemids = $(newitemslist).not(currentitemids).get();
+				if (newitemids.length)
 				{
-					// Find what item IDs are missing by comparing the API's current list with the one here
-					var newitemids = $(pItemsList).not(currentitemids).get();
-					if (newitemids.length)
+					Z.scrapeAPIArray(newitemids, "items", {
+						aQueryStr: "?lang=" + lang,
+						aCallback: function(pNewItems)
 					{
-						Z.scrapeAPIArray(newitemids, "items", {
-							aQueryStr: "?lang=" + lang,
-							aCallback: function(pNewItems)
+						for (var iii = 0; iii < pNewItems.length; iii++)
 						{
-							for (var iii = 0; iii < pNewItems.length; iii++)
-							{
-								dbarray.push(pNewItems[iii]);
-							}
-							if (lang === O.OptionEnum.Language.Default)
-							{
-								newitems = pNewItems;
-							}
-							U.sortObjects(dbarray, {aKeyName: "id"});
-							Z.APICacheArrayOfObjects = dbarray;
-							Z.printAPICache(0, {
-								aWantQuotes: true,
-								aWantFile: true,
-								aFileName: "items_" + lang + ".json"
-							});
-							counter++;
-							updateDBLang();
-						}});
-					}
-					else
-					{
-						I.print("Database &quot;" + lang + "&quot; is up-to-date. No difference found in IDs list.");
+							dbarray.push(pNewItems[iii]);
+						}
+						if (lang === O.OptionEnum.Language.Default)
+						{
+							newitems = pNewItems;
+						}
+						U.sortObjects(dbarray, {aKeyName: "id"});
+						Z.APICacheArrayOfObjects = dbarray;
+						Z.printAPICache(0, {
+							aWantQuotes: true,
+							aWantFile: true,
+							aFileName: "items_" + lang + ".json"
+						});
 						counter++;
 						updateDBLang();
-					}
-				});
+					}});
+				}
+				else
+				{
+					I.print("Database &quot;" + lang + "&quot; is up-to-date. No difference found in IDs list.");
+					counter++;
+					updateDBLang();
+				}
 			});
 		};
 		
 		// Initial call
-		updateDBLang();
+		$.getJSON(U.URL_API.ItemDatabase, function(pData)
+		{
+			newitemslist = pData;
+			updateDBLang();
+		});
 	}
 };
 
@@ -7044,12 +7052,29 @@ V = {
 		var bar = $("<div class='sklBar'></div>").appendTo(pContainer);
 		var insertSkill = function(pSkillID, pSlot)
 		{
-			$.getJSON(U.getAPISkill(pSkillID), function(pData)
+			if (pSkillID)
 			{
-				pSlot.find(".sklSlotIcon").css({backgroundImage: "url(" + pData.icon + ")"});
-				// Generate tooltip for trait
-				Q.analyzeSkillTrait(pData, {aElement: pSlot});
-			});
+				$.getJSON(U.getAPISkill(pSkillID), function(pData)
+				{
+					pSlot.find(".sklSlotIcon").css({backgroundImage: "url(" + pData.icon + ")"});
+					// Include ground targeting icon if skill is so
+					for (var i = 0; i < pData.flags.length; i++)
+					{
+						if (pData.flags[i] === "GroundTargeted")
+						{
+							pSlot.append("<span class='sklSlotTarget'></span>");
+							break;
+						}
+					}
+					// Generate tooltip for trait
+					Q.analyzeSkillTrait(pData, {aElement: pSlot});
+				});
+			}
+			else
+			{
+				// Don't show the select bar over skill slots if the skill is locked
+				pSlot.find(".sklSlotSelect, .sklSlotForeground").hide();
+			}
 		};
 		var createSlot = function(pSlotType, pHotkey)
 		{
@@ -7069,21 +7094,12 @@ V = {
 		createSlot("utilities2", "9");
 		var elite = createSlot("elite", "0");
 		// Fill the slots by additionally retrieving skill data
-		if (pSkills.heal)
+		insertSkill(pSkills.heal, heal);
+		for (var i = 0; i < pSkills.utilities.length; i++)
 		{
-			insertSkill(pSkills.heal, heal);
+			insertSkill(pSkills.utilities[i], bar.find(".sklSlot_utilities" + i));
 		}
-		if (pSkills.utilities)
-		{
-			for (var i = 0; i < pSkills.utilities.length; i++)
-			{
-				insertSkill(pSkills.utilities[i], bar.find(".sklSlot_utilities" + i));
-			}
-		}
-		if (pSkills.elite)
-		{
-			insertSkill(pSkills.elite, elite);
-		}
+		insertSkill(pSkills.elite, elite);
 	},
 	
 	/*
@@ -7928,7 +7944,17 @@ Q = {
 		Ascended: "Ascended",
 		Legendary: "Legendary"
 	},
-	RarityAssoc:
+	RarityEncode: {
+		Junk: "0",
+		Basic: "1",
+		Fine: "2",
+		Masterwork: "3",
+		Rare: "4",
+		Exotic: "5",
+		Ascended: "6",
+		Legendary: "7"
+	},
+	RarityDecode:
 	{
 		"0": "Junk",
 		"1": "Basic",
@@ -7956,6 +7982,7 @@ Q = {
 	Bank:
 	{
 		slotWidth: 72,
+		slotWidthCondensed: 52,
 		slotsPerRow: 10
 	},
 	
@@ -9317,7 +9344,7 @@ Q = {
 			+ "</div>"
 		+ "</div>").appendTo(pDestination);
 		var bank = $("<div class='bnkBank'></div>").appendTo(container);
-		bank.css({width: ((Settings.aSlotsPerRow || Q.Bank.slotsPerRow) * Q.Bank.slotWidth) + "px"});
+		bank.css({width: ((Settings.aSlotsPerRow || Q.Bank.slotsPerRow) * Q.getBankSlotWidth()) + "px"});
 
 		if (Settings.aIsCollection)
 		{
@@ -9333,6 +9360,17 @@ Q = {
 		}
 
 		return container;
+	},
+	
+	/*
+	 * Gets the bank slot's current desired width.
+	 * @param boolean pBoolean used if called from the bank buttons rather than creation.
+	 * @returns boolean true if currently want smaller slots.
+	 */
+	getBankSlotWidth: function(pBoolean)
+	{
+		var boolean = (pBoolean !== undefined) ? pBoolean : O.Options.bol_condenseBank;
+		return (boolean) ? Q.Bank.slotWidthCondensed : Q.Bank.slotWidth;
 	},
 	
 	/*
@@ -9783,7 +9821,7 @@ Q = {
 			A.regenerateDish(sectionname);
 		});
 		
-		// Help button shows search usage message
+		// Button to show help and search usage message
 		var isshowinghelp = true;
 		$("<div class='bnkButtonHelp bnkButton curClick' title='Show this bank&apos;s <dfn>help</dfn> message.'></div>")
 			.appendTo(buttoncontainer).click(function()
@@ -9850,7 +9888,7 @@ Q = {
 			A.adjustAccountScrollbar();
 		});
 		
-		// Trading Post filter for items that can be traded
+		// Button to filter tradeable items
 		var isfilteringtrade = true;
 		$("<div class='bnkButtonTrade bnkButton curToggle' title='Filter: <dfn>tradeable</dfn> items.'></div>")
 			.appendTo(buttoncontainer).click(function()
@@ -9879,14 +9917,14 @@ Q = {
 			A.adjustAccountScrollbar();
 		});
 		
-		// Trading Post filter for items that can be traded
+		// Button to show rarity colored borders over items
 		var isfilteringrarity = O.Options.bol_showRarity;
 		var changeRarity = function(pRarityButton)
 		{
 			pBank.toggleClass("bnkRarity", isfilteringrarity);
 			pRarityButton.toggleClass("bnkButtonFocused");
 		};
-		var raritybutton = $("<div class='bnkButtonRarity bnkButton curToggle' title='Show <dfn>rarity</dfn> colored boxes.'></div>")
+		var raritybutton = $("<div class='bnkButtonRarity bnkButton curToggle' title='Show <dfn>rarity</dfn> colored boxes.<br />Change permanently at Options page.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			isfilteringrarity = !isfilteringrarity;
@@ -9897,7 +9935,27 @@ Q = {
 			changeRarity(raritybutton);
 		}
 		
-		// Toggle all tabs button
+		// Button to condense bank and smaller slots
+		var isbankcondense = O.Options.bol_condenseBank;
+		var resizeSlots = function(pRarityButton)
+		{
+			pBank.toggleClass("bnkCondense", isbankcondense);
+			pRarityButton.toggleClass("bnkButtonFocused");
+			// Update bank 
+			pBank.css({width: Q.Bank.slotsPerRow * Q.getBankSlotWidth(isbankcondense)});
+		};
+		var raritybutton = $("<div class='bnkButtonCondense bnkButton curToggle' title='Toggle bank <dfn>size</dfn>.<br />Change permanently at Options page.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			isbankcondense = !isbankcondense;
+			resizeSlots($(this));
+		});
+		if (O.Options.bol_condenseBank)
+		{
+			resizeSlots(raritybutton);
+		}
+		
+		// Button to toggle all tabs
 		var istabscollapsed = false;
 		$("<div class='bnkButtonTab bnkButton curToggle' title='Expand/<dfn>Collapse</dfn> all tabs.'></div>")
 			.appendTo(buttoncontainer).click(function()
@@ -9926,11 +9984,11 @@ Q = {
 			istabscollapsed = !istabscollapsed;
 		});
 		
-		// Increase or decrease bank width buttons
-		var slotsize = pBank.find(".bnkSlot").first().width();
+		// Button to increase or decrease bank width
 		$("<div class='bnkButtonWideLess bnkButton curClick' title='<dfn>Decrease</dfn> bank width.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
+			var slotsize = Q.getBankSlotWidth(isbankcondense);
 			var minbankwidth = slotsize * 4;
 			var oldwidth = pBank.width();
 			if (oldwidth > minbankwidth)
@@ -9942,6 +10000,7 @@ Q = {
 		$("<div class='bnkButtonWideMore bnkButton curClick' title='<dfn>Increase</dfn> bank width.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
+			var slotsize = Q.getBankSlotWidth(isbankcondense);
 			var maxbankwidth = $("#accContent").width() - (slotsize * 2);
 			var oldwidth = pBank.width();
 			if (oldwidth < maxbankwidth)

@@ -1267,8 +1267,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-05-17T15:00:00Z"),
-	Finish: new Date("2016-05-24T15:00:00Z"),
+	Start: new Date("2016-05-24T15:00:00Z"),
+	Finish: new Date("2016-05-31T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1277,27 +1277,6 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Trickster's Light-Armor Skin",
-		id: "43102",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Viper's Medium-Armor Skin",
-		id: "43101",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Phalanx Heavy-Armor Skin",
-		id: "43100",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Rampart Heavy Armor Skin",
 		id: "63929",
 		price: 800,
@@ -1305,16 +1284,16 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Cosmic Mining Tool",
-		id: "78731",
-		price: 1000,
+		name: "Moth Wings Glider Combo",
+		img: "http://i.imgur.com/TovpWTG.png",
+		price: 700,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
-		name: "Sloth Backpack",
-		id: "78733",
-		price: 500,
+		name: "Caith's Bloom Dagger",
+		id: "20004",
+		price: 600,
 		discount: null,
 		col: 1
 	}

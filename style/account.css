@@ -1170,7 +1170,7 @@ a.chrWalletLink {
 .sklSlotLocked {
 	background-size: 70px 70px;
 	background-position: -10px -8px;
-	background-image: url("../img/account/equipment/skill_locked2.png");
+	background-image: url("../img/account/equipment/skill_locked.png");
 }
 .sklSlotForeground {
 	position: absolute;
@@ -1197,15 +1197,21 @@ a.chrWalletLink {
 }
 .sklSlotHotkey {
 	width: 18px; height: 18px;
-	vertical-align: middle;
 	position: absolute;
 	left: 18px; bottom: -6px;
+	vertical-align: middle;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 12px;
 	line-height: 20px;
 	background: rgba(0,0,0,0.8);
 	border-radius: 50%;
 	box-shadow: 0px 0px 8px black;
+}
+.sklSlotTarget {
+	width: 32px; height: 32px;
+	position: absolute;
+	left: 11px; bottom: -14px;
+	background-image: url("../img/account/equipment/groundtargeted.png");
 }
 
 /*
@@ -1388,6 +1394,9 @@ input[type="text"].bnkSearchInput:hover {
 .bnkButtonRarity {
 	background-image: url("../img/ui/rarity.png");
 }
+.bnkButtonCondense {
+	background-image: url("../img/ui/condense.png");
+}
 .bnkButtonTab {
 	background-image: url("../img/ui/adjust_move.png");
 	transform: rotate(270deg);
@@ -1413,6 +1422,9 @@ input[type="text"].bnkSearchInput:hover {
 	width: 100%; height: 40px;
 	background-image: url("../img/background/tab.png");
 	background-size: 100% 100%;
+}
+.bnkCondense .bnkTabSeparator  {
+	height: 29px;
 }
 .bnkTabSeparator:hover {
 	background-image: url("../img/background/tab_hover.png");
@@ -1443,6 +1455,9 @@ input[type="text"].bnkSearchInput:hover {
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 18px;
 }
+.bnkCondense .bnkTabHeader {
+	font-size: 13px;
+}
 .bnkTabIcon {
 	display: block;
 	float: left;
@@ -1472,13 +1487,22 @@ input[type="text"].bnkSearchInput:hover {
 	width: 38px; height: 38px;
 	background-position: center;
 }
+.bnkCondense .bnkTabToggle,  .bnkCondense .bnkTabLocked {
+	width: 28px; height: 28px;
+}
 .bnkTabToggle {
 	background-image: url("../img/ui/toggle.png");
 	background-size: 44px 44px;
 }
+.bnkCondense .bnkTabToggle {
+	background-size: 32px 32px;
+}
 .bnkTabLocked {
 	background-image: url("../img/ui/locked.png");
 	background-size: 34px 34px;
+}
+.bnkCondense .bnkTabLocked {
+	background-size: 24px 24px;
 }
 .bnkTabSlots {
 	margin-top: 2px;
@@ -1494,6 +1518,9 @@ input[type="text"].bnkSearchInput:hover {
 	padding: 0;
 	margin: 0;
 }
+.bnkCondense .bnkSlot {
+	width: 52px; height: 52px;
+}
 .bnkSlot:hover {
 	-webkit-filter: brightness(1.05);
 	filter: brightness(1.05);
@@ -1505,6 +1532,10 @@ input[type="text"].bnkSearchInput:hover {
 	background-size: 78px 78px;
 	background-position: center;
 	opacity: 0.6;
+}
+.bnkCondense .bnkSlotBackground {
+	width: 52px; height: 52px;
+	background-size: 56px 56px;
 }
 .bnkSlotBackground {
 	background-image: url("../img/account/equipment/slot.png");
@@ -1521,6 +1552,9 @@ input[type="text"].bnkSearchInput:hover {
 	width: 72px; height: 72px;
 	background-color: black;
 	opacity: 0.05;
+}
+.bnkCondense .bnkSlotForeground {
+	width: 52px; height: 52px;
 }
 .bnkSlot:hover .bnkSlotForeground {
 	opacity: 0;
@@ -1542,6 +1576,12 @@ input[type="text"].bnkSearchInput:hover {
 	background-repeat: no-repeat;
 	border: 2px solid transparent;
 }
+.bnkCondense .bnkSlotIcon {
+	margin-top: 3px;
+	margin-left: 3px;
+	width: 45px; height: 45px;
+	border: 1px solid transparent;
+}
 .bnkRarity .bnkSlotRarity_Fine { border-image: linear-gradient(to bottom, #5599ff 0%, rgba(85, 153, 255, 0.2)); border-image-slice: 1; background-repeat: repeat; }
 .bnkRarity .bnkSlotRarity_Masterwork { border-image: linear-gradient(to bottom, #33cc11 0%, rgba(51, 204, 17, 0.2) 100%); border-image-slice: 1; background-repeat: repeat; }
 .bnkRarity .bnkSlotRarity_Rare { border-image: linear-gradient(to bottom, #ffdd22 0%, rgba(255, 221, 34, 0.2) 100%); border-image-slice: 1; background-repeat: repeat; }
@@ -1559,6 +1599,11 @@ input[type="text"].bnkSearchInput:hover {
 	text-shadow:
 		1px 1px 1px #000;
 }
+.bnkCondense .bnkSlotCount {
+	top: 10px;
+	right: 7px;
+	font-size: 13px;
+}
 .bnkSlotPrice {
 	display: block;
 	position: absolute;
@@ -1574,6 +1619,11 @@ input[type="text"].bnkSearchInput:hover {
 		0px -1px 1px #000,
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
+}
+.bnkCondense .bnkSlotPrice {
+	left: 6px;
+	bottom: 3px;
+	font-size: 10px;
 }
 .bnkSlotPriceTrivial {
 	opacity: 0.6;
@@ -1592,6 +1642,9 @@ input[type="text"].bnkSearchInput:hover {
 	font-size: 12px;
 	color: white;
 	opacity: 0.3;
+}
+.bnkCondense .bnkSlotDyeName {
+	font-size: 9px;
 }
 .bnkDyePreview {
 	font-family: Trebuchet MS, Menomonia;
