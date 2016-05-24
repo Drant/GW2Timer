@@ -3943,7 +3943,8 @@ Z = {
 	APICacheArrayOfObjects: null, // Array of objects downloaded from the IDs pointing there
 	APICacheConsole: null, // JSON text entered by the user
 	DatabaseCache: {}, // To be loaded with various API databases, access order: database name > language code > item ID
-	DatabaseLanguages: {en: true, de: true, es: true, fr: true, zh: true},
+	DatabaseLangAssoc: {en: true, de: true, es: true, fr: true, zh: true},
+	DatabaseLangArray: ["en", "de", "es", "fr", "zh"],
 	
 	/*
 	 * Loads an object from local storage into a variable for temporary test or
@@ -4125,7 +4126,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				Z.collateSearch();
 			}},
 			updatedb: {usage: "Prints an updated database of items (test mode only). <em>Parameters: enu_language (optional)</em>", f: function()
 			{
@@ -4154,8 +4155,12 @@ Z = {
 		var fileurl = window.URL.createObjectURL(data);
 		Z.APICacheFiles.push(fileurl);
 		
-		var filename = (pFileName) ? "<input class='cssInputText' type='text' value='" + pFileName + "' />" : "";
+		var filename = (pFileName) ? "<input class='cslFilename cssInputText' type='text' value='" + pFileName + "' />" : "";
 		I.print(filename + "<a href='" + fileurl + "' target='_blank'>" + fileurl + "</a>");
+		$("#cslContent").find("input").unbind("click").click(function()
+		{
+			$(this).select();
+		});
 		return fileurl;
 	},
 	
@@ -4326,7 +4331,10 @@ Z = {
 	/*
 	 * Prints the cached API arrays and objects.
 	 * @param int pRequest type, see below.
-	 * @param boolean pWantFile whether to output to a file or print to console.
+	 * @objparam object aCustomCache to use instead of the global.
+	 * @objparam boolean aWantFile whether to output to a file or print to console.
+	 * @objparam string aFileName of the file.
+	 * @objparam boolean aWantQuotes whether to wrap key names in quotes (for JSON files).
 	 */
 	printAPICache: function(pRequest, pSettings)
 	{
@@ -4335,19 +4343,20 @@ Z = {
 		var obj;
 		var wantfile = (Settings.aWantFile === "true" || Settings.aWantFile === true);
 		var wantquotes = (Settings.aWantQuotes === true) ? true : false;
+		var cache = Settings.aCustomCache || Z.APICacheArrayOfObjects;
 		
 		// Compile the output
 		if (pRequest === 0 || pRequest === 1)
 		{
-			if (Z.APICacheArrayOfObjects)
+			if (cache)
 			{
-				var length = Z.APICacheArrayOfObjects.length;
+				var length = cache.length;
 				var brk = (wantfile) ? "\r\n" : "<br />";
 				var quo = (wantfile) ? "\"" : "&quot;";
 				output += ((pRequest === 0) ? "{" : "[") + brk;
 				for (var i = 0; i < length; i++)
 				{
-					obj = Z.APICacheArrayOfObjects[i];
+					obj = cache[i];
 					output += ((pRequest === 0) ? (quo + obj.id + quo + ": ") : "")
 						+ U.lineJSON(obj, wantquotes)
 					+ ((i === length - 1) ? "" : ",") + brk;
@@ -4361,8 +4370,8 @@ Z = {
 		}
 		else if (pRequest === 2)
 		{
-			output = (Z.APICacheArrayOfObjects) ?
-				((wantfile) ? U.lineJSON(Z.APICacheArrayOfObjects) : U.escapeJSON(Z.APICacheArrayOfObjects)) : "API Objects Array is empty.";
+			output = (cache) ?
+				((wantfile) ? U.lineJSON(cache) : U.escapeJSON(cache)) : "API Objects Array is empty.";
 		}
 		else if (pRequest === 3)
 		{
@@ -4580,6 +4589,27 @@ Z = {
 	},
 	
 	/*
+	 * Decomposes the items database into a light database for searching by name.
+	 * @pre Items database files are up to date.
+	 */
+	collateSearch: function()
+	{
+		Z.loadItemsDatabase(function()
+		{
+			var db = {};
+			var ithdb;
+			for (var lang in Z.DatabaseLangAssoc)
+			{
+				ithdb = (Z.DatabaseCache["items"])[lang];
+				for (var ii in ithdb)
+				{
+					
+				}
+			}
+		});
+	},
+	
+	/*
 	 * Categorizes API skins from a completely downloaded array of skins objects.
 	 * @pre Cache array of objects was assigned.
 	 */
@@ -4637,7 +4667,7 @@ Z = {
 	},
 	
 	/*
-	 * Resorts the dyes database.
+	 * Sorts the dyes database according to set, hue, then lightness.
 	 */
 	collateDyes: function()
 	{
@@ -4738,7 +4768,7 @@ Z = {
 		obj.m = pColor.categories[1];
 		obj.l = item.chat_link;
 		// Add translated names, with the property key as the language code
-		for (var lang in Z.DatabaseLanguages)
+		for (var lang in Z.DatabaseLangAssoc)
 		{
 			obj[lang] = (colordb[lang])[pColor.id].name;
 		}
@@ -4832,7 +4862,7 @@ Z = {
 		var finalize = function()
 		{
 			var isallloaded = true;
-			for (var lang in Z.DatabaseLanguages)
+			for (var lang in Z.DatabaseLangAssoc)
 			{
 				if (database[lang] === undefined)
 				{
@@ -4847,7 +4877,7 @@ Z = {
 		};
 		
 		// Retrieve the database
-		for (var lang in Z.DatabaseLanguages)
+		for (var lang in Z.DatabaseLangAssoc)
 		{
 			(function(iLanguage)
 			{
@@ -4929,53 +4959,80 @@ Z = {
 				}
 			}).fail(function()
 			{
-				I.print("Error retrieveing script: " + scripturl);
+				I.print("Error retrieving script: " + scripturl);
 			});
 		});
 	},
 	
 	/*
-	 * Downloads items that are missing from the current version of the items database.
+	 * Downloads items that are missing from the current version of the items
+	 * database by iterating through the available API languages array.
 	 */
-	updateItemsDatabase: function(pLanguage)
+	updateItemsDatabase: function()
 	{
-		var lang = (pLanguage || O.OptionEnum.Language.Default);
-		$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
+		var counter = 0;
+		var newitems;
+		var updateDBLang = function()
 		{
-			var dbarray = [];
-			var currentitemids = [];
-			for (var i in pData)
+			// Stopping condition for this recursive function
+			if (counter >= Z.DatabaseLangArray.length)
 			{
-				dbarray.push(pData[i]);
-				currentitemids.push(parseInt(i));
+				I.print("Items database of all languages updated. New items:");
+				U.prettyJSON(newitems);
+				return;
 			}
-			U.sortAscending(currentitemids);
-			$.getJSON(U.URL_API.ItemDatabase, function(pDataInner)
+			var lang = Z.DatabaseLangArray[counter];
+			$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
 			{
-				var newitemids = $(pDataInner).not(currentitemids).get();
-				if (newitemids.length)
+				var dbarray = [];
+				var currentitemids = [];
+				// Convert the associative array into an array for later sorting
+				for (var ithitemid in pData)
 				{
-					Z.scrapeAPIArray(newitemids, "items", {
-						aQueryStr: "?lang=" + lang,
-						aCallback: function(pItems)
+					dbarray.push(pData[ithitemid]);
+					currentitemids.push(parseInt(ithitemid));
+				}
+				$.getJSON(U.URL_API.ItemDatabase, function(pItemsList)
+				{
+					// Find what item IDs are missing by comparing the API's current list with the one here
+					var newitemids = $(pItemsList).not(currentitemids).get();
+					if (newitemids.length)
 					{
-						for (var ii = 0; ii < pItems.length; ii++)
+						Z.scrapeAPIArray(newitemids, "items", {
+							aQueryStr: "?lang=" + lang,
+							aCallback: function(pNewItems)
 						{
-							dbarray.push(pItems[ii]);
-						}
-						U.sortObjects(dbarray, {aKeyName: "id"});
-						Z.APICacheArrayOfObjects = dbarray;
-						Z.printAPICache(0, {aWantFile: true});
-						I.print("New items:");
-						U.prettyJSON(pItems);
-					}});
-				}
-				else
-				{
-					I.print("Database is up-to-date. No difference found in IDs list.");
-				}
+							for (var iii = 0; iii < pNewItems.length; iii++)
+							{
+								dbarray.push(pNewItems[iii]);
+							}
+							if (lang === O.OptionEnum.Language.Default)
+							{
+								newitems = pNewItems;
+							}
+							U.sortObjects(dbarray, {aKeyName: "id"});
+							Z.APICacheArrayOfObjects = dbarray;
+							Z.printAPICache(0, {
+								aWantQuotes: true,
+								aWantFile: true,
+								aFileName: "items_" + lang + ".json"
+							});
+							counter++;
+							updateDBLang();
+						}});
+					}
+					else
+					{
+						I.print("Database &quot;" + lang + "&quot; is up-to-date. No difference found in IDs list.");
+						counter++;
+						updateDBLang();
+					}
+				});
 			});
-		});
+		};
+		
+		// Initial call
+		updateDBLang();
 	}
 };
 
@@ -6784,7 +6841,7 @@ V = {
 								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/ui/checkbox.png' />");
 							}
 							// Add faux charges number over gathering tools
-							if (iItem.type === "Gathering" && iItem.rarity !== Q.Rarity.Rare)
+							if (iItem.type === "Gathering" && iItem.rarity !== Q.RarityEnum.Rare)
 							{
 								// Ignore Rare rarity tools which have unlimited charges
 								sloticon.attr("src", iBox.item.icon);
@@ -7860,7 +7917,7 @@ Q = {
 	
 	Box: {}, // Holds objects with analyzed item details, accessed using the item's ID
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
-	Rarity: // Corresponds to API names for rarity levels
+	RarityEnum: // Corresponds to API names for rarity levels
 	{
 		Junk: "Junk",
 		Basic: "Basic",
@@ -7870,6 +7927,17 @@ Q = {
 		Exotic: "Exotic",
 		Ascended: "Ascended",
 		Legendary: "Legendary"
+	},
+	RarityAssoc:
+	{
+		"0": "Junk",
+		"1": "Basic",
+		"2": "Fine",
+		"3": "Masterwork",
+		"4": "Rare",
+		"5": "Exotic",
+		"6": "Ascended",
+		"7": "Legendary"
 	},
 	RunePieces:
 	{
@@ -7933,11 +8001,11 @@ Q = {
 	 */
 	setRarityClass: function(pEntry, pLevel)
 	{
-		for (var i in Q.Rarity)
+		for (var i in Q.RarityEnum)
 		{
 			pEntry.removeClass("rarity_" + i);
 		}
-		if (Q.Rarity[pLevel] !== undefined)
+		if (Q.RarityEnum[pLevel] !== undefined)
 		{
 			pEntry.addClass("rarity_" + pLevel);
 		}
@@ -8469,7 +8537,7 @@ Q = {
 		var isequipment = (isweapon || type === "Armor" || type === "Trinket" || type === "Back");
 		var isbackitem = (type === "Back");
 		var istrinket = (type === "Trinket" || isbackitem);
-		var isascended = (item.rarity === Q.Rarity.Ascended || item.rarity === Q.Rarity.Legendary);
+		var isascended = (item.rarity === Q.RarityEnum.Ascended || item.rarity === Q.RarityEnum.Legendary);
 		var isdouble = false;
 		var isvendorable = true;
 		var isaccountbound = false;
@@ -8488,14 +8556,14 @@ Q = {
 		}
 		
 		// Correct API bug with gathering tool icons
-		if (type === "Gathering" && item.rarity !== Q.Rarity.Rare)
+		if (type === "Gathering" && item.rarity !== Q.RarityEnum.Rare)
 		{
 			item.icon = "img/account/item/gathering_" + det.type.toLowerCase() + I.cPNG;
 		}
 		
 		// NAME
 		var namestr = "";
-		var rarity = (item.rarity !== undefined) ? item.rarity : Q.Rarity.Basic;
+		var rarity = (item.rarity !== undefined) ? item.rarity : Q.RarityEnum.Basic;
 		namestr = "<aside class='itmName " + Q.getRarityClass(rarity)
 			+ "'><img class='itmIcon itmIconMain' src='" + item.icon + "' />" + U.escapeHTML(item.name) + "</aside>";
 		
@@ -9459,7 +9527,7 @@ Q = {
 				else if (Settings.aItem.type === "Gathering")
 				{
 					var gath = A.Equipment.GatheringCharges;
-					if (gath && Settings.aItem.rarity !== Q.Rarity.Rare)
+					if (gath && Settings.aItem.rarity !== Q.RarityEnum.Rare)
 					{
 						pSlot.append("<var class='bnkSlotCount'>" + gath[Settings.aItem.details.type] + "</var>");
 					}
