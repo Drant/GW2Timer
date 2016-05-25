@@ -1278,22 +1278,43 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Rampart Heavy Armor Skin",
-		id: "63929",
-		price: 800,
+		name: "Moth Wings Glider Combo",
+		id: "78745",
+		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Moth Wings Glider Combo",
-		img: "http://i.imgur.com/TovpWTG.png",
-		price: 700,
+		name: "Grenth Hood Skin",
+		id: "47890",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Phantom's Hood",
+		id: "65203",
+		price: 200,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Caith's Bloom Dagger",
 		id: "20004",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Rox's Quiver Set",
+		id: "42661",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Rox's Short Bow Skin",
+		id: "42659",
 		price: 600,
 		discount: null,
 		col: 1

@@ -3405,6 +3405,16 @@ U = {
 		}
 		return str;
 	},
+	wrapSubstringsSpaced: function(pString, pSubstrings)
+	{
+		var str = pString;
+		var subs = pSubstrings.split(" ");
+		for (var i = 0; i < subs.length; i++)
+		{
+			str = U.wrapSubstringHTML(str, subs[i]);
+		}
+		return str;
+	},
 	
 	/*
 	 * Strips a string of HTML special characters for use in printing.
@@ -4159,12 +4169,9 @@ Z = {
 		var fileurl = window.URL.createObjectURL(data);
 		Z.APICacheFiles.push(fileurl);
 		
-		var filename = (pFileName) ? "<input class='cslFilename cssInputText' type='text' value='" + pFileName + "' />" : "";
-		I.print(filename + "<a href='" + fileurl + "' download='" + filename + "'>" + fileurl + "</a>");
-		$("#cslContent").find("input").unbind("click").click(function()
-		{
-			$(this).select();
-		});
+		var filename = pFileName || "";
+		var filenameoutput = (pFileName) ? "<input class='cslFilename cssInputText' type='text' value='" + pFileName + "' /> " : "";
+		I.print(filenameoutput + "<a href='" + fileurl + "' download='" + filename + "'>" + fileurl + "</a>");
 		return fileurl;
 	},
 	
@@ -4594,6 +4601,7 @@ Z = {
 	
 	/*
 	 * Decomposes the items database into a lightweight array for searching by name.
+	 * Sample structure: [[69984,"bo"],[31283,"bow"],[70936,"keg"]...]
 	 * @pre Items database files are up to date.
 	 */
 	collateSearch: function()
@@ -4603,12 +4611,29 @@ Z = {
 			Z.DatabaseLanguages.forEach(function(iLang)
 			{
 				var db = [];
+				var sortabledb = [];
 				var item;
 				var ithdb = (Z.DatabaseCache["items"])[iLang];
+				
+				// Convert the assoc array into an array
 				for (var ii in ithdb)
 				{
 					item = ithdb[ii];
-					db.push([item.id, item.name.toLowerCase()]);
+					if (item.name)
+					{
+						sortabledb.push({
+							i: item.id,
+							n: item.name.toLowerCase(),
+							l: item.name.length
+						});
+					}
+				}
+				// Sort the database by the item's name length, rather than ID number as it currently is
+				U.sortObjects(sortabledb, {aKeyName: "l"});
+				for (var ii = 0; ii < sortabledb.length; ii++)
+				{
+					item = sortabledb[ii];
+					db.push([item.i, item.n]);
 				}
 				var dbstr = U.compressToJS(db, false);
 				Z.createFile(dbstr, "search_" + iLang + ".json");
@@ -5227,7 +5252,7 @@ A = {
 		});
 		
 		// Initialize context menu for bank and inventory slots
-		B.initializeBankContextMenu();
+		Q.initializeItemContextMenu();
 	
 		// Finally
 		setTimeout(function()
@@ -5781,6 +5806,7 @@ A = {
 	/*
 	 * Initializes the associative array holding item IDs and count of each
 	 * items, based on the account's bank, inventory, and optionally materials.
+	 * @param function pSuccess to execute after.
 	 * @pre Characters data were downloaded by the Characters page.
 	 */
 	initializePossessions: function(pSuccess)
@@ -6856,7 +6882,7 @@ V = {
 								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
 							}
 							// Bind click behavior for the icon
-							B.bindItemSlotBehavior(sloticon, {
+							Q.bindItemSlotBehavior(sloticon, {
 								aItem: iBox.item,
 								aSearch: skinname,
 								aWantClick: true
@@ -7881,7 +7907,7 @@ V = {
 					}
 				});
 				// Bind context menu
-				B.bindItemSlotBehavior(iSlot, {
+				Q.bindItemSlotBehavior(iSlot, {
 					aObject: iUnlockObj,
 					aChatlink: iChatlink,
 					aTradeableID: iItemID,
@@ -7931,6 +7957,13 @@ V = {
  * ========================================================================== */
 B = {
 	
+	Bank:
+	{
+		slotWidth: 72,
+		slotWidthCondensed: 52,
+		slotsPerRow: 10
+	},
+	
 	/*
 	 * Creates a bank container element.
 	 * @param jqobject pDestination to append bank.
@@ -7960,7 +7993,7 @@ B = {
 			+ "</div>"
 		+ "</div>").appendTo(pDestination);
 		var bank = $("<div class='bnkBank'></div>").appendTo(container);
-		bank.css({width: ((Settings.aSlotsPerRow || Q.Bank.slotsPerRow) * B.getBankSlotWidth()) + "px"});
+		bank.css({width: ((Settings.aSlotsPerRow || B.Bank.slotsPerRow) * B.getBankSlotWidth()) + "px"});
 
 		if (Settings.aIsCollection)
 		{
@@ -7986,7 +8019,7 @@ B = {
 	getBankSlotWidth: function(pBoolean)
 	{
 		var boolean = (pBoolean !== undefined) ? pBoolean : O.Options.bol_condenseBank;
-		return (boolean) ? Q.Bank.slotWidthCondensed : Q.Bank.slotWidth;
+		return (boolean) ? B.Bank.slotWidthCondensed : B.Bank.slotWidth;
 	},
 	
 	/*
@@ -8076,7 +8109,7 @@ B = {
 					{
 						iBag.css({backgroundImage: "url(" + iItem.icon + ")"});
 						Q.scanItem(iItem, {aElement: iBag});
-						B.bindItemSlotBehavior(iBag, {aItem: iItem, aWantClick: true});
+						Q.bindItemSlotBehavior(iBag, {aItem: iItem, aWantClick: true});
 					});
 				})(bag);
 			}
@@ -8159,7 +8192,7 @@ B = {
 						U.openExternalURL(searchurl);
 					}
 				});
-				B.bindItemSlotBehavior(pSlot, {
+				Q.bindItemSlotBehavior(pSlot, {
 					aItem: Settings.aItem,
 					aTradeableID: Settings.aTradeableID,
 					aSearch: wikisearch
@@ -8558,7 +8591,7 @@ B = {
 			pBank.toggleClass("bnkCondense", isbankcondense);
 			pRarityButton.toggleClass("bnkButtonFocused");
 			// Update bank 
-			pBank.css({width: Q.Bank.slotsPerRow * B.getBankSlotWidth(isbankcondense)});
+			pBank.css({width: B.Bank.slotsPerRow * B.getBankSlotWidth(isbankcondense)});
 			A.adjustAccountScrollbar();
 		};
 		var raritybutton = $("<div class='bnkButtonCondense bnkButton curToggle' title='Toggle bank <dfn>size</dfn>.<br />Change permanently at Options page.'></div>")
@@ -8631,104 +8664,6 @@ B = {
 		searchcontainer.css({width: searchcontainer.width() - buttoncontainer.width()});
 		I.qTip.init(buttoncontainer.find(".bnkButton"));
 		A.adjustAccountPanel();
-	},
-	
-	/*
-	 * Initializes the context menu that is shown for all banks' slots.
-	 */
-	initializeBankContextMenu: function()
-	{
-		I.styleContextMenu("#bnkContext");
-		$("#bnkContext").click(function()
-		{
-			$(this).hide();
-		});
-		// The context variables should be assigned by the function that styles the bank slot
-		$("#bnkContextWiki").click(function()
-		{
-			U.openExternalURL(U.getWikiLinkLanguage(Q.Context.ItemName));
-		});
-		$("#bnkContextWikiSearch").click(function()
-		{
-			U.openExternalURL(U.getWikiSearchLanguage(Q.Context.ItemSearch));
-		});
-		$("#bnkContextTrading").click(function()
-		{
-			U.openExternalURL(U.getTradingItemLink(Q.Context.ItemID, Q.Context.ItemName));
-		});
-		$("#bnkContextTradingSearch").click(function()
-		{
-			U.openExternalURL(U.getTradingSearchLink(Q.Context.ItemName));
-		});
-		$("#bnkContextInfo").click(function()
-		{
-			if (Q.Context.Item)
-			{
-				U.prettyJSON(Q.Context.Item);
-			}
-			else
-			{
-				I.print("No information available.");
-			}
-		});
-		I.initializeClipboard("#bnkContextChatlink");
-	},
-	
-	/*
-	 * Binds an element that represents a game item to have a context menu.
-	 * @param jqobject pSlot to bind.
-	 * @objparam object aItem from item details API.
-	 * @objparam object aObject non-item object for printing the slot's information, optional.
-	 * @objparam string aSearch for wiki search link, optional.
-	 * @objparam int aTradeableID for TP webpage, optional.
-	 */
-	bindItemSlotBehavior: function(pSlot, pSettings)
-	{
-		var Settings = pSettings || {};
-		// Right click on the item slot shows context menu
-		pSlot.contextmenu(function(pEvent)
-		{
-			pEvent.preventDefault();
-			var chatlink;
-			if (Settings.aItem)
-			{
-				Q.Context.Item = Settings.aItem;
-				Q.Context.ItemName = Settings.aItem.name;
-				Q.Context.ItemID = Settings.aTradeableID || Settings.aItem.id;
-				Q.Context.ItemSearch = Settings.aSearch || Settings.aItem.name;
-				chatlink = Settings.aItem.chat_link + " " + Q.Context.ItemSearch;
-			}
-			else
-			{
-				Q.Context.Item = Settings.aObject;
-				Q.Context.ItemName = Settings.aSearch;
-				Q.Context.ItemID = Settings.aTradeableID;
-				Q.Context.ItemSearch = Settings.aSearch;
-				chatlink = Settings.aChatlink || "No chatlink available.";
-			}
-			I.updateClipboard("#bnkContextChatlink", chatlink);
-			I.showContextMenu("#bnkContext");
-		});
-		// Bind the click to go to wiki behavior if requested
-		if (Settings.aWantClick)
-		{
-			pSlot.click(function(pEvent)
-			{
-				if (pEvent.which === I.ClickEnum.Left)
-				{
-					U.openExternalURL(U.getWikiSearchLanguage(Settings.aItem.name));
-				}
-			});
-		}
-	},
-	
-	/*
-	 * Binds an input bar to search for items by name.
-	 * @param jqobject pElement to bind.
-	 */
-	bindItemSearch: function(pElement)
-	{
-		
 	}
 };
 
@@ -8739,6 +8674,7 @@ Q = {
 	
 	Box: {}, // Holds objects with analyzed item details, accessed using the item's ID
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
+	SearchDatabase: null,
 	RarityEnum: // Corresponds to API names for rarity levels
 	{
 		Junk: "Junk",
@@ -8763,12 +8699,6 @@ Q = {
 		ItemName: null,
 		ItemID: null,
 		ItemSearch: null
-	},
-	Bank:
-	{
-		slotWidth: 72,
-		slotWidthCondensed: 52,
-		slotsPerRow: 10
 	},
 	
 	/*
@@ -8801,6 +8731,26 @@ Q = {
 			}).always(function()
 			{
 				// Execute callback regardless of success, in case of failed retrieval
+				pSuccess();
+			});
+		}
+	},
+	
+	/*
+	 * Loads the search database to search by item name.
+	 * @param function pSuccess to execute after success.
+	 */
+	loadItemsSearch: function(pSuccess)
+	{
+		if (Q.SearchDatabase)
+		{
+			pSuccess();
+		}
+		else
+		{
+			$.getJSON("data/items/search_" + O.Options.enu_Language + ".json", function(pData)
+			{
+				Q.SearchDatabase = pData;
 				pSuccess();
 			});
 		}
@@ -10097,6 +10047,235 @@ Q = {
 				U.prettyJSON(pTrait);
 			});
 		}
+	},
+	
+	/*
+	 * Initializes the context menu that is shown for all banks' slots.
+	 */
+	initializeItemContextMenu: function()
+	{
+		I.styleContextMenu("#itmContext");
+		$("#itmContext").click(function()
+		{
+			$(this).hide();
+		});
+		// The context variables should be assigned by the function that styles the bank slot
+		$("#itmContextWiki").click(function()
+		{
+			U.openExternalURL(U.getWikiLinkLanguage(Q.Context.ItemName));
+		});
+		$("#itmContextWikiSearch").click(function()
+		{
+			U.openExternalURL(U.getWikiSearchLanguage(Q.Context.ItemSearch));
+		});
+		$("#itmContextTrading").click(function()
+		{
+			U.openExternalURL(U.getTradingItemLink(Q.Context.ItemID, Q.Context.ItemName));
+		});
+		$("#itmContextTradingSearch").click(function()
+		{
+			U.openExternalURL(U.getTradingSearchLink(Q.Context.ItemName));
+		});
+		$("#itmContextInfo").click(function()
+		{
+			if (Q.Context.Item)
+			{
+				U.prettyJSON(Q.Context.Item);
+			}
+			else
+			{
+				I.print("No information available.");
+			}
+		});
+		I.initializeClipboard("#itmContextChatlink");
+	},
+	
+	/*
+	 * Binds an element that represents a game item to have a context menu.
+	 * @param jqobject pSlot to bind.
+	 * @objparam object aItem from item details API.
+	 * @objparam object aObject non-item object for printing the slot's information, optional.
+	 * @objparam string aSearch for wiki search link, optional.
+	 * @objparam int aTradeableID for TP webpage, optional.
+	 */
+	bindItemSlotBehavior: function(pSlot, pSettings)
+	{
+		var Settings = pSettings || {};
+		// Right click on the item slot shows context menu
+		pSlot.contextmenu(function(pEvent)
+		{
+			pEvent.preventDefault();
+			var chatlink;
+			if (Settings.aItem)
+			{
+				Q.Context.Item = Settings.aItem;
+				Q.Context.ItemName = Settings.aItem.name;
+				Q.Context.ItemID = Settings.aTradeableID || Settings.aItem.id;
+				Q.Context.ItemSearch = Settings.aSearch || Settings.aItem.name;
+				chatlink = Settings.aItem.chat_link + " " + Q.Context.ItemSearch;
+			}
+			else
+			{
+				Q.Context.Item = Settings.aObject;
+				Q.Context.ItemName = Settings.aSearch;
+				Q.Context.ItemID = Settings.aTradeableID;
+				Q.Context.ItemSearch = Settings.aSearch;
+				chatlink = Settings.aChatlink || "No chatlink available.";
+			}
+			I.updateClipboard("#itmContextChatlink", chatlink);
+			I.showContextMenu("#itmContext");
+		});
+		// Bind the click to go to wiki behavior if requested
+		if (Settings.aWantClick)
+		{
+			pSlot.click(function(pEvent)
+			{
+				if (pEvent.which === I.ClickEnum.Left)
+				{
+					U.openExternalURL(U.getWikiSearchLanguage(Settings.aItem.name));
+				}
+			});
+		}
+	},
+	
+	/*
+	 * Binds an input bar to search for items by name.
+	 * @param jqobject pElement to bind.
+	 * @param function pCallback to execute once the user selects an item from
+	 * the search results.
+	 */
+	bindItemSearch: function(pElement, pCallback)
+	{
+		var elm = $(pElement).val(D.getWordCapital("search") + "...").one("click", function()
+		{
+			$(this).val("");
+		});
+		var queryminchar = 1;
+		var searchcontainer = elm.parent();
+		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").appendTo(searchcontainer).hide();
+		var resultslist = $("<div class='itmSearchResultList cntPopup'>" + I.cThrobber + "</div>").appendTo(resultscontainer);
+		var searchtimestamp;
+		
+		// Toggles display of the results container popup
+		var toggleResults = function(pBoolean, pMessage)
+		{
+			resultslist.empty();
+			resultscontainer.toggle(pBoolean);
+			if (pMessage)
+			{
+				resultslist.html(pMessage);
+			}
+			if (pBoolean === false)
+			{
+				I.qTip.hide();
+			}
+		};
+		
+		// Populates the results list with downloaded API data for each result item
+		var renderSearch = function(pItemIDs, pQuery)
+		{
+			// A new search updates the timestamp, only the earliest results are allowed to be shown
+			searchtimestamp = (new Date()).getTime();
+			if (pItemIDs.length === 0)
+			{
+				toggleResults(true, D.getPhraseOriginal("Not found") + ".");
+			}
+			else
+			{
+				toggleResults(true);
+				for (var i = 0; i < pItemIDs.length; i++)
+				{
+					(function(iItemID, iTimestamp)
+					{
+						Q.getItem(iItemID, function(pItem)
+						{
+							// Prevent older searches from entering the results because of API retrieval lag
+							if (iTimestamp === searchtimestamp)
+							{
+								var outputline = $("<dfn class='itmSearchResultEntry " + Q.getRarityClass(pItem.rarity) + "' data-id='" + pItem.id + "'>"
+									+ "<img src='" + pItem.icon + "'>"
+									+ U.wrapSubstringHTML(pItem.name, pQuery) + "</dfn>").appendTo(resultslist);
+								outputline.click(function()
+								{
+									pCallback(iItemID);
+									toggleResults(false);
+								});
+								// Tooltip for the listed item
+								Q.scanItem(pItem, {aElement: outputline});
+							}
+						});
+					})(pItemIDs[i], searchtimestamp);
+				}
+			}
+		};
+		
+		// Searches the search database for matching items' names
+		var executeSearch = function(pQuery)
+		{
+			// If query is empty or below minimum length
+			if (pQuery.length < queryminchar)
+			{
+				toggleResults(false);
+				return;
+			}
+			// If query is an integer, assume it is an item ID
+			if (U.isInteger(pQuery))
+			{
+				renderSearch([parseInt(pQuery)], pQuery);
+				return;
+			}
+			
+			// Else proceed with regular search through the database
+			var entry, subqueries, itemid, itemname, ismatch;
+			var resultsarr = [];
+			for (var i = 0; i < Q.SearchDatabase.length; i++)
+			{
+				entry = Q.SearchDatabase[i];
+				subqueries = pQuery.split(" ");
+				itemid = entry[0];
+				itemname = entry[1];
+				// Search using every space separated substrings in the query
+				ismatch = true;
+				for (var ii = 0; ii < subqueries.length; ii++)
+				{
+					if (itemname.indexOf(subqueries[ii]) === -1)
+					{
+						ismatch = false;
+						continue;
+					}
+				}
+				if (ismatch)
+				{
+					// Only include in result if every subquery was found in the item's name
+					resultsarr.push(itemid);
+				}
+				// Show the results if found enough matching items
+				if (resultsarr.length >= O.Options.int_numTradingResults)
+				{
+					renderSearch(resultsarr, pQuery);
+					return;
+				}
+			}
+			// In case number of items found is below the limit
+			renderSearch(resultsarr, pQuery);
+		};
+		
+		// First load the search database
+		Q.loadItemsSearch(function()
+		{
+			// Bind search execution
+			elm.on("input", $.throttle(E.cSEARCH_LIMIT, function()
+			{
+				executeSearch($(this).val().toLowerCase());
+			})).click(function()
+			{
+				executeSearch($(this).val().toLowerCase());
+				$(this).select();
+			}).onEscapeKey(function()
+			{
+				toggleResults(false);
+			});
+		});
 	}
 };
 
@@ -10813,7 +10992,7 @@ E = {
 			I.removeThrobber(".trdResults");
 			var outputline = $("<dfn class='" + Q.getRarityClass(pItem.rarity) + "' data-id='" + pItem.id + "'>"
 			+ "<img src='" + pItem.icon + "'>"
-			+ U.wrapSubstringHTML(pItem.name, pQuery, "u") + "</dfn>").appendTo(pResultsList);
+			+ U.wrapSubstringHTML(pItem.name, pQuery) + "</dfn>").appendTo(pResultsList);
 			// Bind click a result to memorize the item's ID and name
 			outputline.click(function()
 			{
@@ -11896,6 +12075,8 @@ D = {
 			cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"},
 		
 		// Adjectives, Adverbs, Participles
+		s_not: {de: "nicht", es: "no", fr: "ne",
+			cs: "ne", it: "non", pl: "nie", pt: "não", ru: "не", zh: "不"},
 		s_ago: {de: "vor", es: "hace", fr: "il ya",
 			cs: "před", it: "fa", pl: "temu", pt: "há", ru: "назад", zh: "前"},
 		s_also: {de: "auch", es: "también", fr: "aussi",
