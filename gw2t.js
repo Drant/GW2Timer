@@ -61,7 +61,7 @@ $(window).on("load", function() { "use strict";
 /* =============================================================================
  * Single letter objects serve as namespaces.
  * ========================================================================== */
-var O, X, U, Z, A, V, Q, E, D, C, M, P, G, W, T, B, K, I = {};
+var A, B, C, D, E, G, H, I, K, M, O, P, Q, T, U, V, W, X, Z;
 
 /* =============================================================================
  * @@Options for the user
@@ -1109,7 +1109,7 @@ O = {
 			C.initializeTimetableHTML();
 			C.updateChainsTimeHTML();
 			K.updateDigitalClockMinutely();
-			B.updateTimelineLegend();
+			H.updateTimelineLegend();
 		},
 		bol_detectDST: function()
 		{
@@ -1295,20 +1295,20 @@ O = {
 		{
 			if (O.Options.bol_showTimeline)
 			{
-				if (B.isTimelineGenerated)
+				if (H.isTimelineGenerated)
 				{
-					B.toggleTimeline(true);
+					H.toggleTimeline(true);
 					return;
 				}
 				else
 				{
-					B.generateTimeline();
+					H.generateTimeline();
 					O.Enact.bol_opaqueTimeline();
 				}
 			}
 			else
 			{
-				B.toggleTimeline(false);
+				H.toggleTimeline(false);
 			}
 		},
 		bol_opaqueTimeline: function()
@@ -4136,9 +4136,9 @@ Z = {
 			{
 				Z.updateItemsDatabase(args[1]);
 			}},
-			updatecache: {usage: "Prints an updated cache of items used by an account page's section. <em>Parameters: str_section</em>", f: function()
+			updatesubdb: {usage: "Prints an updated cache of items used by an account page's section. <em>Parameters: str_section</em>", f: function()
 			{
-				Z.updateItemsCache(args[1]);
+				Z.updateItemsSubdatabase(args[1]);
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -4160,7 +4160,7 @@ Z = {
 		Z.APICacheFiles.push(fileurl);
 		
 		var filename = (pFileName) ? "<input class='cslFilename cssInputText' type='text' value='" + pFileName + "' />" : "";
-		I.print(filename + "<a href='" + fileurl + "' target='_blank'>" + fileurl + "</a>");
+		I.print(filename + "<a href='" + fileurl + "' download='" + filename + "'>" + fileurl + "</a>");
 		$("#cslContent").find("input").unbind("click").click(function()
 		{
 			$(this).select();
@@ -4922,7 +4922,7 @@ Z = {
 	 * use by a specific Account page section.
 	 * @param string pType section.
 	 */
-	updateItemsCache: function(pType)
+	updateItemsSubdatabase: function(pType)
 	{
 		var scripturl = U.getDataScriptURL(pType.toLowerCase());
 		Z.loadItemsDatabase(function(pDatabase)
@@ -4970,7 +4970,7 @@ Z = {
 	
 	/*
 	 * Downloads items that are missing from the current version of the items
-	 * database by iterating through the available API languages array.
+	 * database for every available API languages.
 	 */
 	updateItemsDatabase: function()
 	{
@@ -5007,9 +5007,9 @@ Z = {
 						aQueryStr: "?lang=" + lang,
 						aCallback: function(pNewItems)
 					{
-						for (var iii = 0; iii < pNewItems.length; iii++)
+						for (var i = 0; i < pNewItems.length; i++)
 						{
-							dbarray.push(pNewItems[iii]);
+							dbarray.push(pNewItems[i]);
 						}
 						if (lang === O.OptionEnum.Language.Default)
 						{
@@ -5227,7 +5227,7 @@ A = {
 		});
 		
 		// Initialize context menu for bank and inventory slots
-		Q.initializeBankContextMenu();
+		B.initializeBankContextMenu();
 	
 		// Finally
 		setTimeout(function()
@@ -6479,7 +6479,7 @@ V = {
 				// Adjust the value so the currencies can be compared
 				pWallet[i].value = (coef === undefined) ? amount : (amount * coef);
 			}
-			var max = T.getMinMax(pWallet, "value").max;
+			var max = T.getMinMax(pWallet, "value").oMax;
 			
 			// Generate the currencies for this wallet
 			for (var i = 0; i < pWallet.length; i++)
@@ -6856,7 +6856,7 @@ V = {
 								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
 							}
 							// Bind click behavior for the icon
-							Q.bindItemSlotBehavior(sloticon, {
+							B.bindItemSlotBehavior(sloticon, {
 								aItem: iBox.item,
 								aSearch: skinname,
 								aWantClick: true
@@ -7122,7 +7122,7 @@ V = {
 		{
 			return;
 		}
-		var bank = Q.createBank(dish).find(".bnkBank");
+		var bank = B.createBank(dish).find(".bnkBank");
 		var slotdata;
 		var tab, slotscontainer, slot;
 		
@@ -7137,17 +7137,17 @@ V = {
 		// Create bank tab for each character, fill slots with equipped items
 		A.Data.Characters.forEach(function(iChar)
 		{
-			tab = Q.createBankTab(bank, {aTitle: iChar.oCharName});
+			tab = B.createBankTab(bank, {aTitle: iChar.oCharName});
 			slotscontainer = tab.find(".bnkTabSlots");
 			for (var i = 0; i < iChar.equipment.length; i++)
 			{
 				slotdata = iChar.equipment[i];
-				slot = Q.createBankSlot(slotscontainer);
+				slot = B.createBankSlot(slotscontainer);
 				(function(iSlot, iSlotData)
 				{
 					Q.getItem(iSlotData.id, function(iItem)
 					{
-						Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+						B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
 						{
 							numfetched++;
 							A.setProgressBar(numfetched, numtofetch);
@@ -7156,7 +7156,7 @@ V = {
 				})(slot, slotdata);
 			}
 		});
-		Q.createBankMenu(bank);
+		B.createBankMenu(bank);
 	},
 	
 	/*
@@ -7187,14 +7187,14 @@ V = {
 		{
 			return;
 		}
-		var bank = Q.createBank(dish).find(".bnkBank");
+		var bank = B.createBank(dish).find(".bnkBank");
 		var slotdata;
 		var tab, slotscontainer, slot;
 		var char, bagdata;
 		
 		
 		// Generate a first tab for the shared inventory slots
-		var sharedtab = Q.createBankTab(bank, {aTitle: D.getPhraseOriginal("Shared Inventory")});
+		var sharedtab = B.createBankTab(bank, {aTitle: D.getPhraseOriginal("Shared Inventory")});
 		$.getJSON(A.getURL(A.URL.Shared), function(pData)
 		{
 			for (var i = 0; i < pData.length; i++)
@@ -7203,9 +7203,9 @@ V = {
 				{
 					Q.getItem(iSlotData.id, function(iItem)
 					{
-						Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData});
+						B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData});
 					});
-				})(Q.createBankSlot(sharedtab.find(".bnkTabSlots"), "bnkSlotShared"), pData[i]);
+				})(B.createBankSlot(sharedtab.find(".bnkTabSlots"), "bnkSlotShared"), pData[i]);
 			}
 		});
 		
@@ -7236,8 +7236,8 @@ V = {
 		{
 			char = A.Data.Characters[i];
 			// Bank tab separator for each character
-			tab = Q.createBankTab(bank, {aTitle: char.oCharName});
-			Q.createInventorySidebar(tab, char.bags);
+			tab = B.createBankTab(bank, {aTitle: char.oCharName});
+			B.createInventorySidebar(tab, char.bags);
 			slotscontainer = tab.find(".bnkTabSlots");
 			for (var ii = 0; ii < char.bags.length; ii++)
 			{
@@ -7248,14 +7248,14 @@ V = {
 					{
 						slotdata = bagdata.inventory[iii];
 						// Add slots
-						slot = Q.createBankSlot(slotscontainer);
+						slot = B.createBankSlot(slotscontainer);
 						if (slotdata)
 						{
 							(function(iSlot, iSlotData)
 							{
 								Q.getItem(iSlotData.id, function(iItem)
 								{
-									Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+									B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
 									{
 										numfetched++;
 										A.setProgressBar(numfetched, numtofetch);
@@ -7266,13 +7266,13 @@ V = {
 						else
 						{
 							// For empty inventory slots
-							Q.styleBankSlot(slot);
+							B.styleBankSlot(slot);
 						}
 					}
 				}
 			}
 		}
-		Q.createBankMenu(bank);
+		B.createBankMenu(bank);
 	},
 	
 	/*
@@ -7307,7 +7307,7 @@ V = {
 			return;
 		}
 		
-		var container = Q.createBank(dish, {aIsCollection: true, aWantGem: Settings.aWantGem});
+		var container = B.createBank(dish, {aIsCollection: true, aWantGem: Settings.aWantGem});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		$.getScript(U.URL_DATA[sectionupper]).done(function()
 		{
@@ -7345,7 +7345,7 @@ V = {
 		{
 			return;
 		}
-		var container = Q.createBank(dish);
+		var container = B.createBank(dish);
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var slotdata;
 		var tab, slotscontainer, slot;
@@ -7369,13 +7369,13 @@ V = {
 				// Bank tab separator every so slots
 				if ((i === 0 || nexti % A.Metadata.Bank.NumSlotsPerTab === 0) && nexti !== pData.length)
 				{
-					tab = Q.createBankTab(bank);
+					tab = B.createBankTab(bank);
 					slotscontainer = tab.find(".bnkTabSlots");
 				}
 				nexti = i+1;
 				slotdata = pData[i];
 				// Add slots
-				slot = Q.createBankSlot(slotscontainer);
+				slot = B.createBankSlot(slotscontainer);
 				// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
 				if (slotdata)
 				{
@@ -7383,7 +7383,7 @@ V = {
 					{
 						Q.getItem(iSlotData.id, function(iItem)
 						{
-							Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+							B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
 							{
 								numfetched++;
 								A.setProgressBar(numfetched, numtofetch);
@@ -7394,13 +7394,13 @@ V = {
 				else
 				{
 					// For empty inventory slots
-					Q.styleBankSlot(slot);
+					B.styleBankSlot(slot);
 				}
 			}
 			// Ornamental bank tab separator at the bottom
 			bank.append("<div class='bnkTabSeparator'><var class='bnkTabLocked'>" + I.Symbol.Filler + "</var></div>");
 			// Create search bar
-			Q.createBankMenu(bank);
+			B.createBankMenu(bank);
 		}).fail(function()
 		{
 			A.printError(A.PermissionEnum.Inventories);
@@ -7418,7 +7418,7 @@ V = {
 		{
 			return;
 		}
-		var container = Q.createBank(dish);
+		var container = B.createBank(dish);
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var tab, slot, slotscontainer;
 		var slotdata;
@@ -7440,7 +7440,7 @@ V = {
 				for (var i = 0; i < matdata.length; i++)
 				{
 					matcategory = matdata[i];
-					tab = Q.createBankTab(bank, {aTitle: D.getObjectName(matcategory)});
+					tab = B.createBankTab(bank, {aTitle: D.getObjectName(matcategory)});
 					// Store the tabs to be later inserted with slots
 					slotscontainer = tab.find(".bnkTabSlots");
 					slotscontainerassoc[matcategory.id] = slotscontainer;
@@ -7448,7 +7448,7 @@ V = {
 					for (var ii = 0; ii < matcategory.items.length; ii++)
 					{
 						itemid = matcategory.items[ii];
-						slot = Q.createBankSlot(slotscontainer);
+						slot = B.createBankSlot(slotscontainer);
 						slotassoc[itemid] = slot;
 						numtofetch++;
 					}
@@ -7464,7 +7464,7 @@ V = {
 						{
 							Q.getItem(slotdata.id, function(iItem)
 							{
-								Q.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+								B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
 								{
 									numfetched++;
 									A.setProgressBar(numfetched, numtofetch);
@@ -7473,7 +7473,7 @@ V = {
 						})(slotassoc[slotdata.id], slotdata);
 					}
 				}
-				Q.createBankMenu(bank, {aWantSearchHighlight: true});
+				B.createBankMenu(bank, {aWantSearchHighlight: true});
 			});
 		}).fail(function()
 		{
@@ -7530,7 +7530,7 @@ V = {
 			var slotscontainer = pTab.find(".bnkTabSlots");
 			for (var ii = 0; ii < pCatArr.length; ii++)
 			{
-				slot = Q.createBankSlot(slotscontainer);
+				slot = B.createBankSlot(slotscontainer);
 				unlockobj = pCatArr[ii];
 				// Fill the slot with the item icon
 				(function(iSlot, iUnlockID, iItemID, iWiki, iPayment)
@@ -7564,7 +7564,7 @@ V = {
 							comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(unlocksassoc[iItemID].oLocations) + "</var>";
 						}
 						// Style the slot
-						Q.styleBankSlot(iSlot, {
+						B.styleBankSlot(iSlot, {
 							aItem: iItem,
 							aTradeableID: (Settings.aIsPossessions && iUnlockID) ? iUnlockID : null,
 							aPrice: slotcoin,
@@ -7611,7 +7611,7 @@ V = {
 		{
 			catobj = Settings.aHeaders[i];
 			catarr = Settings.aDatabase[i];
-			tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : Q.createBankTab(pBank, {
+			tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : B.createBankTab(pBank, {
 				aTitle: D.getObjectName(catobj),
 				aIsCollapsed: catobj.iscollapsed
 			});
@@ -7671,7 +7671,7 @@ V = {
 				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numsunlockedtotal / numintabstotal) + ")" + acquiredtotalstr + "</span>";
 		container.find(".bnkCount").append(unlocktotalstr);
 		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
-		Q.createBankMenu(pBank, {aWantSearchHighlight: wantsearchhighlight, aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html()});
+		B.createBankMenu(pBank, {aWantSearchHighlight: wantsearchhighlight, aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html()});
 	},
 	
 	/*
@@ -7723,7 +7723,7 @@ V = {
 			}
 		};
 		
-		var container = Q.createBank(dish, {aIsCollection: true});
+		var container = B.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var generateWardrobe = function(pUnlockeds)
 		{
@@ -7741,7 +7741,7 @@ V = {
 				{
 					var catname = D.getObjectName(headers[pCatName]);
 					var caticon = "<ins class='bnkTabIcon acc_wardrobe acc_wardrobe_" + pCatName.toLowerCase() + "'></ins>";
-					var tab = Q.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
+					var tab = B.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
 					createGalleryLinks(tab, pCatName);
 					return tab;
 				}
@@ -7773,7 +7773,7 @@ V = {
 			return;
 		}
 		
-		var container = Q.createBank(dish, {aIsCollection: true});
+		var container = B.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var generateMinis = function(pUnlockeds)
 		{
@@ -7821,7 +7821,7 @@ V = {
 		
 		for (var i = 0; i < pCatArr.length; i++)
 		{
-			slot = Q.createBankSlot(slotscontainer);
+			slot = B.createBankSlot(slotscontainer);
 			unlockobj = pCatArr[i];
 			(function(iSlot, iUnlockObj, iUnlockID, iItemID, iWiki, iColors, iHue, iMaterial, iChatlink, iName)
 			{
@@ -7842,7 +7842,7 @@ V = {
 				{
 					$.getJSON(U.getAPIPrice(iItemID), function(pData)
 					{
-						Q.updateSlotPrice(iSlot, pData, count, E.PaymentEnum.Coin);
+						B.updateSlotPrice(iSlot, pData, count, E.PaymentEnum.Coin);
 						if (count)
 						{
 							// Fade the price label if already unlocked that dye
@@ -7881,7 +7881,7 @@ V = {
 					}
 				});
 				// Bind context menu
-				Q.bindItemSlotBehavior(iSlot, {
+				B.bindItemSlotBehavior(iSlot, {
 					aObject: iUnlockObj,
 					aChatlink: iChatlink,
 					aTradeableID: iItemID,
@@ -7903,7 +7903,7 @@ V = {
 			return;
 		}
 		
-		var container = Q.createBank(dish, {aIsCollection: true, aWantGem: false});
+		var container = B.createBank(dish, {aIsCollection: true, aWantGem: false});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		$.getScript(U.URL_DATA.Dyes).done(function()
 		{
@@ -7927,7 +7927,813 @@ V = {
 };
 
 /* =============================================================================
- * @@Quantity items, inventory, attributes, traits
+ * @@Bank window and item slots
+ * ========================================================================== */
+B = {
+	
+	/*
+	 * Creates a bank container element.
+	 * @param jqobject pDestination to append bank.
+	 * @objparam boolean aIsCollection whether the bank is an unlock collection.
+	 * @objparam boolean aWantGem whether to display the gem tally.
+	 * rather than inventory of actual items, optional.
+	 * @objparam int aSlotsPerRow to resize the bank beforehand, optional.
+	 * @returns jqobject bank.
+	 */
+	createBank: function(pDestination, pSettings)
+	{
+		var Settings = pSettings || {};
+		
+		var container = $("<div class='bnkContainer'>"
+			+ "<div class='bnkTop'>"
+				+ "<aside class='bnkCount'></aside>"
+				+ "<aside class='bnkPrice'>"
+					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Coin'></var>"
+					+ " &nbsp; "
+					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB_Coin'></var>"
+				+ "</aside>"
+				+ ((Settings.aIsCollection && Settings.aWantGem !== false) ? ("<aside class='bnkGem'>"
+					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Gem'></var>"
+					+ " &nbsp; "
+					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB_Gem'></var>"
+				+ "</aside>") : "")
+			+ "</div>"
+		+ "</div>").appendTo(pDestination);
+		var bank = $("<div class='bnkBank'></div>").appendTo(container);
+		bank.css({width: ((Settings.aSlotsPerRow || Q.Bank.slotsPerRow) * B.getBankSlotWidth()) + "px"});
+
+		if (Settings.aIsCollection)
+		{
+			var strunlocked = D.getWordCapital("unlocked") + ": +";
+			var strlocked = D.getWordCapital("locked") + ": −";
+			container.data("iscollection", true);
+			container.find(".bnkPriceTitleA").html(strunlocked);
+			container.find(".bnkPriceTitleB").html(strlocked);
+			container.find(".bnkPriceValueA_Coin").html(E.formatCoinStringColored(0));
+			container.find(".bnkPriceValueB_Coin").html(E.formatCoinStringColored(0));
+			container.find(".bnkPriceValueA_Gem").html(E.formatGemString(0, true));
+			container.find(".bnkPriceValueB_Gem").html(E.formatGemString(0, true));
+		}
+
+		return container;
+	},
+	
+	/*
+	 * Gets the bank slot's current desired width.
+	 * @param boolean pBoolean used if called from the bank buttons rather than creation.
+	 * @returns boolean true if currently want smaller slots.
+	 */
+	getBankSlotWidth: function(pBoolean)
+	{
+		var boolean = (pBoolean !== undefined) ? pBoolean : O.Options.bol_condenseBank;
+		return (boolean) ? Q.Bank.slotWidthCondensed : Q.Bank.slotWidth;
+	},
+	
+	/*
+	 * Creates a standard bank window tab that holds item slots, and a separator
+	 * that toggles the tab.
+	 * @param jqobject pBank container of tabs.
+	 * @objparam string iIcon HTML for tab header icon.
+	 * @objparam string aTitle for tab header title.
+	 * @objparam boolean aIsCollapsed whether the tab is pre-collapsed, for tabs
+	 * that generate slots on demand.
+	 * @returns jqobject bank tab.
+	 */
+	createBankTab: function(pBank, pSettings)
+	{
+		var Settings = pSettings || {};
+		
+		var tab = $("<div class='bnkTab'></div>");
+		var iconstr = (Settings.aIcon) ? Settings.aIcon : "";
+		var titlestr = (Settings.aTitle) ? "<var class='bnkTabText'>" + Settings.aTitle + "</var>" : "";
+		var tabseparator = $("<div class='bnkTabSeparator curToggle'>"
+			+ "<aside class='bnkTabHeader'>"
+				+ iconstr
+				+ titlestr
+				+ "<var class='bnkTabPrice bnkTabPrice_Coin'></var>"
+				+ "<var class='bnkTabPrice bnkTabPrice_Gem'></var>"
+				+ "<var class='bnkTabToggle'></var>"
+				+ "<var class='bnkTabStats'></var>"
+			+ "</aside>"
+		+ "</div>").appendTo(tab);
+		var tabtoggle = tabseparator.find(".bnkTabToggle");
+		var tabslots = $("<div class='bnkTabSlots'></div>").appendTo(tab);
+		tabseparator.click(function(pEvent)
+		{
+			if (pEvent.which === I.ClickEnum.Left)
+			{
+				var state = tabslots.is(":visible");
+				I.toggleToggleIcon(tabtoggle, !state);
+				tabslots.slideToggle("fast");
+			}
+		});
+		if (Settings.aIsCollapsed)
+		{
+			I.toggleToggleIcon(tabtoggle, false);
+			tabslots.hide();
+		}
+		pBank.append(tab);
+		return tab;
+	},
+	
+	/*
+	 * Creates a vertical bar that holds bags on the left side of a bank tab.
+	 * @param jqobject pTab to append.
+	 * @param objarray pBags from characters API.
+	 */
+	createInventorySidebar: function(pTab, pBagsData)
+	{
+		if (pBagsData === undefined)
+		{
+			return;
+		}
+		
+		pTab.addClass("bnkTabInventory");
+		var sidebarcontainer = $("<div class='bnkSidebarContainer'></div>").prependTo(pTab);
+		var sidebar = $("<div class='bnkSidebar'></div>").prependTo(sidebarcontainer);
+		$("<div class='bnkSidebarBorder'></div>").appendTo(sidebarcontainer);
+		var bagscolumn = $("<div class='bnkSidebarColumn'></div>").appendTo(sidebar);
+		var bagouter, bag;
+		pBagsData.forEach(function(iBagData)
+		{
+			if (iBagData)
+			{
+				// Count the number of items the bag is holding
+				var bagfill = 0;
+				for (var i = 0; i < iBagData.inventory.length; i++)
+				{
+					if (iBagData.inventory[i])
+					{
+						bagfill++;
+					}
+				}
+				// Create the bag icon
+				bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
+				bag = $("<span class='bnkSidebarBag'><var class='bnkSidebarBagCount'>" + bagfill + "/" + iBagData.size + "</var></span>").appendTo(bagouter);
+				(function(iBag)
+				{
+					Q.getItem(iBagData.id, function(iItem)
+					{
+						iBag.css({backgroundImage: "url(" + iItem.icon + ")"});
+						Q.scanItem(iItem, {aElement: iBag});
+						B.bindItemSlotBehavior(iBag, {aItem: iItem, aWantClick: true});
+					});
+				})(bag);
+			}
+			else
+			{
+				// For ununused bag slots (no bag placed in the sidebar slot)
+				bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
+				bag = $("<span class='bnkSidebarBag'><var class='bnkSidebarBagCount'></var></span>").appendTo(bagouter);
+			}
+		});
+	},
+		
+	/*
+	 * Inserts a standard inventory slot for use in inventory, bank, materials,
+	 * and other windows. Uses native DOM manipulation for performance.
+	 * @param jqobject pSlotContainer of a tab.
+	 * @param string pClass to change the slot style.
+	 * @returns jqobject slot.
+	 */
+	createBankSlot: function(pSlotContainer, pClass)
+	{
+		var slot = document.createElement("span");
+		slot.innerHTML = "<var class='bnkSlotBackground " + (pClass || "") + "'></var>"
+			+ "<var class='bnkSlotIcon'></var>"
+			+ "<var class='bnkSlotForeground'></var>";
+		slot.className = "bnkSlot";
+		pSlotContainer[0].appendChild(slot);
+		return $(slot);
+	},
+	
+	/*
+	 * Styles a standard inventory slot and prepare it for search.
+	 * @param jqobject pSlot to style.
+	 * @objparam object aSlotMeta data retrieved from characters or bank API,
+	 * containing stack count and transmutation data.
+	 * @objparam object aItem item details retrieved from API.
+	 * @objparam int aTradeableID ID of item to get TP price, such as the
+	 * tradeable container of the bound item.
+	 * @objparam string aWiki name of wiki article to open when double clicked.
+	 * @objparam function aCallback to execute after styling.
+	 */
+	styleBankSlot: function(pSlot, pSettings)
+	{
+		var Settings = pSettings || {};
+		if (pSettings)
+		{
+			var count = Settings.aSlotMeta.count || 1;
+			var itemmeta = null;
+			var validmeta = {
+				upgrades: true, infusions: true, skin: true, bound_to: true
+			};
+			for (var i in Settings.aSlotMeta)
+			{
+				if (validmeta[i])
+				{
+					itemmeta = Settings.aSlotMeta;
+					break;
+				}
+			}
+			
+			Q.scanItem(Settings.aItem, {
+				aElement: pSlot,
+				aItemMeta: itemmeta,
+				aComment: Settings.aComment,
+				aCallback: function(pBox)
+			{
+				// Load retrieved proper transmuted icon if available
+				var icon = (pBox.skin) ? pBox.skin.icon : Settings.aItem.icon;
+				pSlot.find(".bnkSlotIcon").css({backgroundImage: "url(" + icon + ")"}).addClass("bnkSlotRarity_" + Settings.aItem.rarity);
+				// Make the item searchable by converting its tooltip HTML into plain text
+				var keywords = ($(pBox.html).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
+				pSlot.data("keywords", keywords);
+				// Bind slot click behavior
+				var wikisearch = Settings.aWiki || Settings.aItem.name;
+				pSlot.click(function(pEvent)
+				{
+					if (pEvent.which === I.ClickEnum.Left)
+					{
+						var searchurl = (Settings.aWiki) ? U.getWikiSearchDefault(wikisearch) : U.getWikiSearchLanguage(wikisearch);
+						U.openExternalURL(searchurl);
+					}
+				});
+				B.bindItemSlotBehavior(pSlot, {
+					aItem: Settings.aItem,
+					aTradeableID: Settings.aTradeableID,
+					aSearch: wikisearch
+				});
+				// Numeric label over the slot icon indicating stack size or charges remaining
+				if (count > 1)
+				{
+					pSlot.append("<var class='bnkSlotCount'>" + count + "</var>");
+				}
+				else if (Settings.aItem.type === "Tool")
+				{
+					// Salvage Kits gets a faux count number representing their remaining charges
+					var salv = A.Equipment.SalvageCharges;
+					if (salv && salv[Settings.aItem.id])
+					{
+						pSlot.append("<var class='bnkSlotCount'>" + salv[Settings.aItem.id] + "</var>");
+					}
+				}
+				else if (Settings.aItem.type === "Gathering")
+				{
+					var gath = A.Equipment.GatheringCharges;
+					if (gath && Settings.aItem.rarity !== Q.RarityEnum.Rare)
+					{
+						pSlot.append("<var class='bnkSlotCount'>" + gath[Settings.aItem.details.type] + "</var>");
+					}
+				}
+				// Fade the slots that act as collections
+				if (Settings.aSlotMeta.count === 0)
+				{
+					pSlot.addClass("bnkSlotZero");
+					pSlot.data("count", Settings.aSlotMeta.count);
+				}
+				else
+				{
+					// Assign count data for the hide empty slots filter
+					pSlot.data("count", count);
+				}
+				// TP price label if the item is tradeable
+				if (pBox.istradeable || Settings.aTradeableID)
+				{
+					var itemidforprice = Settings.aTradeableID || Settings.aItem.id;
+					$.getJSON(U.getAPIPrice(itemidforprice), function(pData)
+					{
+						B.updateSlotPrice(pSlot, pData, Settings.aSlotMeta.count, E.PaymentEnum.Coin);
+					});
+					pSlot.data("istradeable", true);
+				}
+				else if (Settings.aPrice > 0)
+				{
+					B.updateSlotPrice(pSlot, Settings.aPrice, Settings.aSlotMeta.count, E.PaymentEnum.Coin);
+				}
+				else if (Settings.aGem > 0)
+				{
+					B.updateSlotPrice(pSlot, Settings.aGem, Settings.aSlotMeta.count, E.PaymentEnum.Gem);
+				}
+				// Execute callback if requested
+				if (Settings.aCallback)
+				{
+					Settings.aCallback();
+				}
+			}});
+		}
+		else
+		{
+			// Empty slot gets keywords anyway for use in search
+			pSlot.data("keywords", "*");
+		}
+	},
+	
+	/*
+	 * Updates the price displayed over the bank slot, the bank tab, and bank top.
+	 * @param jqobject pSlot for price label.
+	 * @param int pPrice amount.
+	 * @param int pCount of items.
+	 * @param enum pPaymentEnum such as coin or gem.
+	 */
+	updateSlotPrice: function(pSlot, pPrice, pCount, pPaymentEnum)
+	{
+		var container = pSlot.parents(".bnkContainer");
+		var top = container.find(".bnkTop");
+		var iscollection = container.data("iscollection");
+		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + pPaymentEnum);
+		
+		var count = pCount || 1;
+		var prices = (typeof pPrice === "number") ? E.createPrice(pPrice, count) : E.processPrice(pPrice, count);
+		var pricetorecord = (iscollection) ? prices.oPriceSell : prices.oPriceSellTaxed;
+		var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
+		{
+			var displaypriceleft = (pDisplay.data("priceleft") || 0) + pLeft;
+			var displaypriceright = (pDisplay.data("priceright") || 0) + pRight;
+			pDisplay.data("priceleft", displaypriceleft).data("priceright", displaypriceright);
+			var tabtext, pricestrleft, pricestrright;
+			switch (pPaymentEnum)
+			{
+				case E.PaymentEnum.Coin: {
+					pricestrleft = E.formatCoinStringColored(displaypriceleft);
+					pricestrright = E.formatCoinStringColored(displaypriceright);
+					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright + " <span class='accTrivial'>" + pricestrleft + "</span>");
+				}; break;
+				case E.PaymentEnum.Gem: {
+					pricestrleft = E.formatGemString(displaypriceleft, true);
+					pricestrright = E.formatGemString(displaypriceright, true);
+					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright);
+				}; break;
+			}
+			pDisplay.html(tabtext);
+		};
+
+		// Label the slot with the item's or stack's price
+		switch (pPaymentEnum)
+		{
+			case E.PaymentEnum.Coin: {
+				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricetorecord, {aWantColor: true, aWantShort: true}) + "</var>");
+			}; break;
+			case E.PaymentEnum.Gem: {
+				pSlot.append("<var class='bnkSlotPrice'>" + E.formatGemString(pricetorecord, true) + "</var>");
+			}; break;
+		}
+
+		// Only add if item actually exists (not a zero stack slot)
+		if (iscollection)
+		{
+			if (pCount !== 0)
+			{
+				updatePriceDisplay(tabdisplayprice, prices.oPriceBuy, 0, true);
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
+				
+			}
+			else
+			{
+				updatePriceDisplay(tabdisplayprice, 0, prices.oPriceBuy, true);
+				updatePriceDisplay(top.find(".bnkPriceValueB_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
+			}
+		}
+		else
+		{
+			if (pCount !== 0)
+			{
+				updatePriceDisplay(tabdisplayprice, prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
+			}
+		}
+		// Remember coin value for price search
+		if (pPaymentEnum === E.PaymentEnum.Coin)
+		{
+			pSlot.data("price", pricetorecord);
+		}
+	},
+	
+	/*
+	 * Creates and binds a search bar for a bank. Also creates functional buttons.
+	 * @param jqobject pBank for insertion.
+	 * @objparam string aHelpElement HTML ID of the message to append to the help screen.
+	 * @objparam boolean aWantSearchHighlight whether to highlight instead of show and hide when searching.
+	 * @pre Bank slots were generated.
+	 */
+	createBankMenu: function(pBank, pSettings)
+	{
+		var Settings = pSettings || {};
+		// Initialize commonly used elements
+		var sectionname = pBank.parents(".accDishContainer").attr("data-section");
+		var tabslots = pBank.find(".bnkTabSlots");
+		var tabtoggles = pBank.find(".bnkTabToggle");
+		var dishmenu = A.createDishMenu(sectionname);
+		
+		/*
+		 * Search bar.
+		 */
+		var searchcontainer = $("<div class='bnkSearch'></div>").prependTo(dishmenu);
+		var input = $("<input class='bnkSearchInput' type='text' />").appendTo(searchcontainer);
+		var fillertext = $("<div class='bnkSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(searchcontainer);
+		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
+		{
+			var slots = pBank.find(".bnkSlot");
+			var query = $(this).val().toLowerCase();
+			var queries = [];
+			var equality = "";
+			var keywords = "";
+			if (query.length > 0)
+			{
+				equality = query.charAt(0);
+				fillertext.hide();
+				// If searching by price range
+				if ((equality === "<" || equality === ">") && query.length > 1)
+				{
+					var pricewant = E.parseCoinString(query.substring(1, query.length));
+					slots.each(function()
+					{
+						var priceslot = $(this).data("price");
+						if (priceslot && ((equality === ">" && priceslot >= pricewant) || (equality === "<" && priceslot <= pricewant)))
+						{
+							$(this).show();
+						}
+						else
+						{
+							$(this).hide();
+						}
+					});
+				}
+				// If searching by keywords
+				else
+				{
+					queries = query.split(" ");
+					// Search for every substring in the user's query, which is space separated
+					slots.each(function()
+					{
+						keywords = $(this).data("keywords"); // The text version of the item's tooltip HTML
+						var ismatch = true;
+						if (keywords)
+						{
+							if (Settings.aWantSearchHighlight)
+							{
+								for (var i = 0; i < queries.length; i++)
+								{
+									// If at least one substring of the search query isn't found, then hide that item
+									if (keywords.indexOf(queries[i]) === -1)
+									{
+										$(this).removeClass("bnkSlotMatch");
+										ismatch = false;
+										break;
+									}
+								}
+								// The boolean is only true if every substrings were found
+								if (ismatch)
+								{
+									$(this).addClass("bnkSlotMatch");
+								}
+							}
+							else
+							{
+								for (var i = 0; i < queries.length; i++)
+								{
+									// If at least one substring of the search query isn't found, then hide that item
+									if (keywords.indexOf(queries[i]) === -1)
+									{
+										$(this).hide();
+										ismatch = false;
+										break;
+									}
+								}
+								// The boolean is only true if every substrings were found
+								if (ismatch)
+								{
+									$(this).show();
+								}
+							}
+						}
+					});
+				}
+			}
+			else
+			{
+				fillertext.show();
+				slots.each(function()
+				{
+					$(this).removeClass("bnkSlotMatch");
+					$(this).show();
+				});
+			}
+			A.adjustAccountScrollbar();
+		})).click(function()
+		{
+			$(this).select();
+		});
+		
+		/*
+		 * Add buttons next to the search bar for bank functionalities.
+		 */
+		var buttoncontainer = $("<aside class='bnkButtons'></aside>").appendTo(dishmenu);
+		
+		// Reload button reloads the section entirely
+		$("<div class='bnkButtonReload bnkButton curClick' title='<dfn>Reload</dfn> this bank.<br />Press this if the progress bar has frozen.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			A.regenerateDish(sectionname);
+		});
+		
+		// Button to show help and search usage message
+		var isshowinghelp = true;
+		$("<div class='bnkButtonHelp bnkButton curClick' title='Show this bank&apos;s <dfn>help</dfn> message.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			var helpmessage = (Settings.aHelpMessage) ? Settings.aHelpMessage : "";
+			if (isshowinghelp || I.isConsoleShown() === false)
+			{
+				I.print("<div class='accModal cntComposition'>" + helpmessage + $("#accBankHelp").html() + "</div>", true);
+				U.convertExternalLink("#cslContent a");
+			}
+			else
+			{
+				I.clear();
+			}
+			isshowinghelp = !isshowinghelp;
+		});
+		
+		// Empty slot filter: first click show filled slots only, second click show empty slots only, third show full stacks, fourth click show all slots, cycle
+		var emptyfilterstate = 0;
+		$("<div class='bnkButtonEmpty bnkButton curToggle' title='"
+			+ "Filter:<br />1st click: non-empty <dfn>slots</dfn><br />2nd click: stack slots<br />3rd click: empty slots<br />4th click: any slot (reset)'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			var slots = pBank.find(".bnkSlot");
+			if (emptyfilterstate === 0 || emptyfilterstate === 2 ) // Filter 
+			{
+				var wantshow = (emptyfilterstate === 0);
+				slots.each(function()
+				{
+					// The style slot function should have initialized the count data for slots without an item
+					if ($(this).data("count") > 0)
+					{
+						$(this).toggle(wantshow);
+					}
+					else
+					{
+						$(this).toggle( ! wantshow);
+					}
+				});
+				$(this).addClass("bnkButtonFocused");
+				emptyfilterstate++;
+			}
+			else if (emptyfilterstate === 1)
+			{
+				slots.each(function()
+				{
+					if ($(this).data("count") >= A.Metadata.Bank.StackMax)
+					{
+						$(this).show();
+					}
+					else
+					{
+						$(this).hide();
+					}
+				});
+				emptyfilterstate++;
+			}
+			else
+			{
+				slots.show();
+				$(this).removeClass("bnkButtonFocused");
+				emptyfilterstate = 0;
+			}
+			A.adjustAccountScrollbar();
+		});
+		
+		// Button to filter tradeable items
+		var isfilteringtrade = true;
+		$("<div class='bnkButtonTrade bnkButton curToggle' title='Filter: <dfn>tradeable</dfn> items.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			var slots = pBank.find(".bnkSlot");
+			if (isfilteringtrade)
+			{
+				slots.each(function()
+				{
+					if ($(this).data("istradeable"))
+					{
+						$(this).show();
+					}
+					else
+					{
+						$(this).hide();
+					}
+				});
+			}
+			else
+			{
+				slots.show();
+			}
+			$(this).toggleClass("bnkButtonFocused");
+			isfilteringtrade = !isfilteringtrade;
+			A.adjustAccountScrollbar();
+		});
+		
+		// Button to show rarity colored borders over items
+		var isfilteringrarity = O.Options.bol_showRarity;
+		var changeRarity = function(pRarityButton)
+		{
+			pBank.toggleClass("bnkRarity", isfilteringrarity);
+			pRarityButton.toggleClass("bnkButtonFocused");
+		};
+		var raritybutton = $("<div class='bnkButtonRarity bnkButton curToggle' title='Show <dfn>rarity</dfn> colored boxes.<br />Change permanently at Options page.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			isfilteringrarity = !isfilteringrarity;
+			changeRarity($(this));
+		});
+		if (O.Options.bol_showRarity)
+		{
+			changeRarity(raritybutton);
+		}
+		
+		// Button to condense bank and smaller slots
+		var isbankcondense = O.Options.bol_condenseBank;
+		var resizeSlots = function(pRarityButton)
+		{
+			pBank.toggleClass("bnkCondense", isbankcondense);
+			pRarityButton.toggleClass("bnkButtonFocused");
+			// Update bank 
+			pBank.css({width: Q.Bank.slotsPerRow * B.getBankSlotWidth(isbankcondense)});
+			A.adjustAccountScrollbar();
+		};
+		var raritybutton = $("<div class='bnkButtonCondense bnkButton curToggle' title='Toggle bank <dfn>size</dfn>.<br />Change permanently at Options page.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			isbankcondense = !isbankcondense;
+			resizeSlots($(this));
+		});
+		if (O.Options.bol_condenseBank)
+		{
+			resizeSlots(raritybutton);
+		}
+		
+		// Button to toggle all tabs
+		var istabscollapsed = false;
+		$("<div class='bnkButtonTab bnkButton curToggle' title='Expand/<dfn>Collapse</dfn> all tabs.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			// Expand or collapse all tabs
+			if (istabscollapsed)
+			{
+				tabslots.slideDown("fast", function()
+				{
+					A.adjustAccountScrollbar();
+				});
+			}
+			else
+			{
+				tabslots.slideUp("fast", function()
+				{
+					A.adjustAccountScrollbar();
+				});
+			}
+			// Also change the toggle icon
+			tabtoggles.each(function()
+			{
+				I.toggleToggleIcon($(this), istabscollapsed);
+			});
+			$(this).toggleClass("bnkButtonFocused");
+			istabscollapsed = !istabscollapsed;
+		});
+		
+		// Button to increase or decrease bank width
+		$("<div class='bnkButtonWideLess bnkButton curClick' title='<dfn>Decrease</dfn> bank width.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			var slotsize = B.getBankSlotWidth(isbankcondense);
+			var minbankwidth = slotsize * 4;
+			var oldwidth = pBank.width();
+			if (oldwidth > minbankwidth)
+			{
+				pBank.css({width: oldwidth - slotsize});
+				A.adjustAccountScrollbar();
+			}
+		});
+		$("<div class='bnkButtonWideMore bnkButton curClick' title='<dfn>Increase</dfn> bank width.'></div>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			var slotsize = B.getBankSlotWidth(isbankcondense);
+			var maxbankwidth = $("#accContent").width() - (slotsize * 2);
+			var oldwidth = pBank.width();
+			if (oldwidth < maxbankwidth)
+			{
+				pBank.css({width: oldwidth + slotsize});
+				A.adjustAccountScrollbar();
+			}
+		});
+		
+		// Finally
+		searchcontainer.css({width: searchcontainer.width() - buttoncontainer.width()});
+		I.qTip.init(buttoncontainer.find(".bnkButton"));
+		A.adjustAccountPanel();
+	},
+	
+	/*
+	 * Initializes the context menu that is shown for all banks' slots.
+	 */
+	initializeBankContextMenu: function()
+	{
+		I.styleContextMenu("#bnkContext");
+		$("#bnkContext").click(function()
+		{
+			$(this).hide();
+		});
+		// The context variables should be assigned by the function that styles the bank slot
+		$("#bnkContextWiki").click(function()
+		{
+			U.openExternalURL(U.getWikiLinkLanguage(Q.Context.ItemName));
+		});
+		$("#bnkContextWikiSearch").click(function()
+		{
+			U.openExternalURL(U.getWikiSearchLanguage(Q.Context.ItemSearch));
+		});
+		$("#bnkContextTrading").click(function()
+		{
+			U.openExternalURL(U.getTradingItemLink(Q.Context.ItemID, Q.Context.ItemName));
+		});
+		$("#bnkContextTradingSearch").click(function()
+		{
+			U.openExternalURL(U.getTradingSearchLink(Q.Context.ItemName));
+		});
+		$("#bnkContextInfo").click(function()
+		{
+			if (Q.Context.Item)
+			{
+				U.prettyJSON(Q.Context.Item);
+			}
+			else
+			{
+				I.print("No information available.");
+			}
+		});
+		I.initializeClipboard("#bnkContextChatlink");
+	},
+	
+	/*
+	 * Binds an element that represents a game item to have a context menu.
+	 * @param jqobject pSlot to bind.
+	 * @objparam object aItem from item details API.
+	 * @objparam object aObject non-item object for printing the slot's information, optional.
+	 * @objparam string aSearch for wiki search link, optional.
+	 * @objparam int aTradeableID for TP webpage, optional.
+	 */
+	bindItemSlotBehavior: function(pSlot, pSettings)
+	{
+		var Settings = pSettings || {};
+		// Right click on the item slot shows context menu
+		pSlot.contextmenu(function(pEvent)
+		{
+			pEvent.preventDefault();
+			var chatlink;
+			if (Settings.aItem)
+			{
+				Q.Context.Item = Settings.aItem;
+				Q.Context.ItemName = Settings.aItem.name;
+				Q.Context.ItemID = Settings.aTradeableID || Settings.aItem.id;
+				Q.Context.ItemSearch = Settings.aSearch || Settings.aItem.name;
+				chatlink = Settings.aItem.chat_link + " " + Q.Context.ItemSearch;
+			}
+			else
+			{
+				Q.Context.Item = Settings.aObject;
+				Q.Context.ItemName = Settings.aSearch;
+				Q.Context.ItemID = Settings.aTradeableID;
+				Q.Context.ItemSearch = Settings.aSearch;
+				chatlink = Settings.aChatlink || "No chatlink available.";
+			}
+			I.updateClipboard("#bnkContextChatlink", chatlink);
+			I.showContextMenu("#bnkContext");
+		});
+		// Bind the click to go to wiki behavior if requested
+		if (Settings.aWantClick)
+		{
+			pSlot.click(function(pEvent)
+			{
+				if (pEvent.which === I.ClickEnum.Left)
+				{
+					U.openExternalURL(U.getWikiSearchLanguage(Settings.aItem.name));
+				}
+			});
+		}
+	},
+	
+	/*
+	 * Binds an input bar to search for items by name.
+	 * @param jqobject pElement to bind.
+	 */
+	bindItemSearch: function(pElement)
+	{
+		
+	}
+};
+
+/* =============================================================================
+ * @@Quantify items, attributes, traits
  * ========================================================================== */
 Q = {
 	
@@ -7943,27 +8749,6 @@ Q = {
 		Exotic: "Exotic",
 		Ascended: "Ascended",
 		Legendary: "Legendary"
-	},
-	RarityEncode: {
-		Junk: "0",
-		Basic: "1",
-		Fine: "2",
-		Masterwork: "3",
-		Rare: "4",
-		Exotic: "5",
-		Ascended: "6",
-		Legendary: "7"
-	},
-	RarityDecode:
-	{
-		"0": "Junk",
-		"1": "Basic",
-		"2": "Fine",
-		"3": "Masterwork",
-		"4": "Rare",
-		"5": "Exotic",
-		"6": "Ascended",
-		"7": "Legendary"
 	},
 	RunePieces:
 	{
@@ -8109,12 +8894,11 @@ Q = {
 	},
 	
 	/*
-	 * Looks for attribute points in an item and adds them to the
-	 * attributes-containing object.
+	 * Looks for attribute points in an item and adds them to an attributes-containing object.
 	 * @param object pAttrObj.
 	 * @objparam object aItem to find attributes.
 	 * @objparam object aRuneSets numbers of runes equipped, optional.
-	 * @objparam object aStats selectable stats that the player had chosen for that equipment.
+	 * @objparam object aStats selectable stats that the player had chosen for that equipment, used in place of item.
 	 * @pre Account page's script has been loaded, which contains attribute association.
 	 * Properties this function looks for:
 	 * item.details.infix_upgrade.attributes // [{attribute: "Abc", "modifier": 123}, ...] language independent
@@ -9313,797 +10097,7 @@ Q = {
 				U.prettyJSON(pTrait);
 			});
 		}
-	},
-	
-	/*
-	 * Creates a bank container element.
-	 * @param jqobject pDestination to append bank.
-	 * @objparam boolean aIsCollection whether the bank is an unlock collection.
-	 * @objparam boolean aWantGem whether to display the gem tally.
-	 * rather than inventory of actual items, optional.
-	 * @objparam int aSlotsPerRow to resize the bank beforehand, optional.
-	 * @returns jqobject bank.
-	 */
-	createBank: function(pDestination, pSettings)
-	{
-		var Settings = pSettings || {};
-		
-		var container = $("<div class='bnkContainer'>"
-			+ "<div class='bnkTop'>"
-				+ "<aside class='bnkCount'></aside>"
-				+ "<aside class='bnkPrice'>"
-					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Coin'></var>"
-					+ " &nbsp; "
-					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB_Coin'></var>"
-				+ "</aside>"
-				+ ((Settings.aIsCollection && Settings.aWantGem !== false) ? ("<aside class='bnkGem'>"
-					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Gem'></var>"
-					+ " &nbsp; "
-					+ "<var class='bnkPriceTitleB'></var><var class='bnkPriceValueB_Gem'></var>"
-				+ "</aside>") : "")
-			+ "</div>"
-		+ "</div>").appendTo(pDestination);
-		var bank = $("<div class='bnkBank'></div>").appendTo(container);
-		bank.css({width: ((Settings.aSlotsPerRow || Q.Bank.slotsPerRow) * Q.getBankSlotWidth()) + "px"});
-
-		if (Settings.aIsCollection)
-		{
-			var strunlocked = D.getWordCapital("unlocked") + ": +";
-			var strlocked = D.getWordCapital("locked") + ": −";
-			container.data("iscollection", true);
-			container.find(".bnkPriceTitleA").html(strunlocked);
-			container.find(".bnkPriceTitleB").html(strlocked);
-			container.find(".bnkPriceValueA_Coin").html(E.formatCoinStringColored(0));
-			container.find(".bnkPriceValueB_Coin").html(E.formatCoinStringColored(0));
-			container.find(".bnkPriceValueA_Gem").html(E.formatGemString(0, true));
-			container.find(".bnkPriceValueB_Gem").html(E.formatGemString(0, true));
-		}
-
-		return container;
-	},
-	
-	/*
-	 * Gets the bank slot's current desired width.
-	 * @param boolean pBoolean used if called from the bank buttons rather than creation.
-	 * @returns boolean true if currently want smaller slots.
-	 */
-	getBankSlotWidth: function(pBoolean)
-	{
-		var boolean = (pBoolean !== undefined) ? pBoolean : O.Options.bol_condenseBank;
-		return (boolean) ? Q.Bank.slotWidthCondensed : Q.Bank.slotWidth;
-	},
-	
-	/*
-	 * Creates a standard bank window tab that holds item slots, and a separator
-	 * that toggles the tab.
-	 * @param jqobject pBank container of tabs.
-	 * @objparam string iIcon HTML for tab header icon.
-	 * @objparam string aTitle for tab header title.
-	 * @objparam boolean aIsCollapsed whether the tab is pre-collapsed, for tabs
-	 * that generate slots on demand.
-	 * @returns jqobject bank tab.
-	 */
-	createBankTab: function(pBank, pSettings)
-	{
-		var Settings = pSettings || {};
-		
-		var tab = $("<div class='bnkTab'></div>");
-		var iconstr = (Settings.aIcon) ? Settings.aIcon : "";
-		var titlestr = (Settings.aTitle) ? "<var class='bnkTabText'>" + Settings.aTitle + "</var>" : "";
-		var tabseparator = $("<div class='bnkTabSeparator curToggle'>"
-			+ "<aside class='bnkTabHeader'>"
-				+ iconstr
-				+ titlestr
-				+ "<var class='bnkTabPrice bnkTabPrice_Coin'></var>"
-				+ "<var class='bnkTabPrice bnkTabPrice_Gem'></var>"
-				+ "<var class='bnkTabToggle'></var>"
-				+ "<var class='bnkTabStats'></var>"
-			+ "</aside>"
-		+ "</div>").appendTo(tab);
-		var tabtoggle = tabseparator.find(".bnkTabToggle");
-		var tabslots = $("<div class='bnkTabSlots'></div>").appendTo(tab);
-		tabseparator.click(function(pEvent)
-		{
-			if (pEvent.which === I.ClickEnum.Left)
-			{
-				var state = tabslots.is(":visible");
-				I.toggleToggleIcon(tabtoggle, !state);
-				tabslots.slideToggle("fast");
-			}
-		});
-		if (Settings.aIsCollapsed)
-		{
-			I.toggleToggleIcon(tabtoggle, false);
-			tabslots.hide();
-		}
-		pBank.append(tab);
-		return tab;
-	},
-	
-	/*
-	 * Creates a vertical bar that holds bags on the left side of a bank tab.
-	 * @param jqobject pTab to append.
-	 * @param objarray pBags from characters API.
-	 */
-	createInventorySidebar: function(pTab, pBagsData)
-	{
-		if (pBagsData === undefined)
-		{
-			return;
-		}
-		
-		pTab.addClass("bnkTabInventory");
-		var sidebarcontainer = $("<div class='bnkSidebarContainer'></div>").prependTo(pTab);
-		var sidebar = $("<div class='bnkSidebar'></div>").prependTo(sidebarcontainer);
-		$("<div class='bnkSidebarBorder'></div>").appendTo(sidebarcontainer);
-		var bagscolumn = $("<div class='bnkSidebarColumn'></div>").appendTo(sidebar);
-		var bagouter, bag;
-		pBagsData.forEach(function(iBagData)
-		{
-			if (iBagData)
-			{
-				// Count the number of items the bag is holding
-				var bagfill = 0;
-				for (var i = 0; i < iBagData.inventory.length; i++)
-				{
-					if (iBagData.inventory[i])
-					{
-						bagfill++;
-					}
-				}
-				// Create the bag icon
-				bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
-				bag = $("<span class='bnkSidebarBag'><var class='bnkSidebarBagCount'>" + bagfill + "/" + iBagData.size + "</var></span>").appendTo(bagouter);
-				(function(iBag)
-				{
-					Q.getItem(iBagData.id, function(iItem)
-					{
-						iBag.css({backgroundImage: "url(" + iItem.icon + ")"});
-						Q.scanItem(iItem, {aElement: iBag});
-						Q.bindItemSlotBehavior(iBag, {aItem: iItem, aWantClick: true});
-					});
-				})(bag);
-			}
-			else
-			{
-				// For ununused bag slots (no bag placed in the sidebar slot)
-				bagouter = $("<div class='bnkSidebarBagOuter'></div>").appendTo(bagscolumn);
-				bag = $("<span class='bnkSidebarBag'><var class='bnkSidebarBagCount'></var></span>").appendTo(bagouter);
-			}
-		});
-	},
-		
-	/*
-	 * Inserts a standard inventory slot for use in inventory, bank, materials,
-	 * and other windows. Uses native DOM manipulation for performance.
-	 * @param jqobject pSlotContainer of a tab.
-	 * @param string pClass to change the slot style.
-	 * @returns jqobject slot.
-	 */
-	createBankSlot: function(pSlotContainer, pClass)
-	{
-		var slot = document.createElement("span");
-		slot.innerHTML = "<var class='bnkSlotBackground " + (pClass || "") + "'></var>"
-			+ "<var class='bnkSlotIcon'></var>"
-			+ "<var class='bnkSlotForeground'></var>";
-		slot.className = "bnkSlot";
-		pSlotContainer[0].appendChild(slot);
-		return $(slot);
-	},
-	
-	/*
-	 * Styles a standard inventory slot and prepare it for search.
-	 * @param jqobject pSlot to style.
-	 * @objparam object aSlotMeta data retrieved from characters or bank API,
-	 * containing stack count and transmutation data.
-	 * @objparam object aItem item details retrieved from API.
-	 * @objparam int aTradeableID ID of item to get TP price, such as the
-	 * tradeable container of the bound item.
-	 * @objparam string aWiki name of wiki article to open when double clicked.
-	 * @objparam function aCallback to execute after styling.
-	 */
-	styleBankSlot: function(pSlot, pSettings)
-	{
-		var Settings = pSettings || {};
-		if (pSettings)
-		{
-			var count = Settings.aSlotMeta.count || 1;
-			var itemmeta = null;
-			var validmeta = {
-				upgrades: true, infusions: true, skin: true, bound_to: true
-			};
-			for (var i in Settings.aSlotMeta)
-			{
-				if (validmeta[i])
-				{
-					itemmeta = Settings.aSlotMeta;
-					break;
-				}
-			}
-			
-			Q.scanItem(Settings.aItem, {
-				aElement: pSlot,
-				aItemMeta: itemmeta,
-				aComment: Settings.aComment,
-				aCallback: function(pBox)
-			{
-				// Load retrieved proper transmuted icon if available
-				var icon = (pBox.skin) ? pBox.skin.icon : Settings.aItem.icon;
-				pSlot.find(".bnkSlotIcon").css({backgroundImage: "url(" + icon + ")"}).addClass("bnkSlotRarity_" + Settings.aItem.rarity);
-				// Make the item searchable by converting its tooltip HTML into plain text
-				var keywords = ($(pBox.html).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
-				pSlot.data("keywords", keywords);
-				// Bind slot click behavior
-				var wikisearch = Settings.aWiki || Settings.aItem.name;
-				pSlot.click(function(pEvent)
-				{
-					if (pEvent.which === I.ClickEnum.Left)
-					{
-						var searchurl = (Settings.aWiki) ? U.getWikiSearchDefault(wikisearch) : U.getWikiSearchLanguage(wikisearch);
-						U.openExternalURL(searchurl);
-					}
-				});
-				Q.bindItemSlotBehavior(pSlot, {
-					aItem: Settings.aItem,
-					aTradeableID: Settings.aTradeableID,
-					aSearch: wikisearch
-				});
-				// Numeric label over the slot icon indicating stack size or charges remaining
-				if (count > 1)
-				{
-					pSlot.append("<var class='bnkSlotCount'>" + count + "</var>");
-				}
-				else if (Settings.aItem.type === "Tool")
-				{
-					// Salvage Kits gets a faux count number representing their remaining charges
-					var salv = A.Equipment.SalvageCharges;
-					if (salv && salv[Settings.aItem.id])
-					{
-						pSlot.append("<var class='bnkSlotCount'>" + salv[Settings.aItem.id] + "</var>");
-					}
-				}
-				else if (Settings.aItem.type === "Gathering")
-				{
-					var gath = A.Equipment.GatheringCharges;
-					if (gath && Settings.aItem.rarity !== Q.RarityEnum.Rare)
-					{
-						pSlot.append("<var class='bnkSlotCount'>" + gath[Settings.aItem.details.type] + "</var>");
-					}
-				}
-				// Fade the slots that act as collections
-				if (Settings.aSlotMeta.count === 0)
-				{
-					pSlot.addClass("bnkSlotZero");
-					pSlot.data("count", Settings.aSlotMeta.count);
-				}
-				else
-				{
-					// Assign count data for the hide empty slots filter
-					pSlot.data("count", count);
-				}
-				// TP price label if the item is tradeable
-				if (pBox.istradeable || Settings.aTradeableID)
-				{
-					var itemidforprice = Settings.aTradeableID || Settings.aItem.id;
-					$.getJSON(U.getAPIPrice(itemidforprice), function(pData)
-					{
-						Q.updateSlotPrice(pSlot, pData, Settings.aSlotMeta.count, E.PaymentEnum.Coin);
-					});
-					pSlot.data("istradeable", true);
-				}
-				else if (Settings.aPrice > 0)
-				{
-					Q.updateSlotPrice(pSlot, Settings.aPrice, Settings.aSlotMeta.count, E.PaymentEnum.Coin);
-				}
-				else if (Settings.aGem > 0)
-				{
-					Q.updateSlotPrice(pSlot, Settings.aGem, Settings.aSlotMeta.count, E.PaymentEnum.Gem);
-				}
-				// Execute callback if requested
-				if (Settings.aCallback)
-				{
-					Settings.aCallback();
-				}
-			}});
-		}
-		else
-		{
-			// Empty slot gets keywords anyway for use in search
-			pSlot.data("keywords", "*");
-		}
-	},
-	
-	/*
-	 * Updates the price displayed over the bank slot, the bank tab, and bank top.
-	 * @param jqobject pSlot for price label.
-	 * @param int pPrice amount.
-	 * @param int pCount of items.
-	 * @param enum pPaymentEnum such as coin or gem.
-	 */
-	updateSlotPrice: function(pSlot, pPrice, pCount, pPaymentEnum)
-	{
-		var container = pSlot.parents(".bnkContainer");
-		var top = container.find(".bnkTop");
-		var iscollection = container.data("iscollection");
-		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + pPaymentEnum);
-		
-		var count = pCount || 1;
-		var prices = (typeof pPrice === "number") ? E.createPrice(pPrice, count) : E.processPrice(pPrice, count);
-		var pricetorecord = (iscollection) ? prices.oPriceSell : prices.oPriceSellTaxed;
-		var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
-		{
-			var displaypriceleft = (pDisplay.data("priceleft") || 0) + pLeft;
-			var displaypriceright = (pDisplay.data("priceright") || 0) + pRight;
-			pDisplay.data("priceleft", displaypriceleft).data("priceright", displaypriceright);
-			var tabtext, pricestrleft, pricestrright;
-			switch (pPaymentEnum)
-			{
-				case E.PaymentEnum.Coin: {
-					pricestrleft = E.formatCoinStringColored(displaypriceleft);
-					pricestrright = E.formatCoinStringColored(displaypriceright);
-					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright + " <span class='accTrivial'>" + pricestrleft + "</span>");
-				}; break;
-				case E.PaymentEnum.Gem: {
-					pricestrleft = E.formatGemString(displaypriceleft, true);
-					pricestrright = E.formatGemString(displaypriceright, true);
-					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright);
-				}; break;
-			}
-			pDisplay.html(tabtext);
-		};
-
-		// Label the slot with the item's or stack's price
-		switch (pPaymentEnum)
-		{
-			case E.PaymentEnum.Coin: {
-				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricetorecord, {aWantColor: true, aWantShort: true}) + "</var>");
-			}; break;
-			case E.PaymentEnum.Gem: {
-				pSlot.append("<var class='bnkSlotPrice'>" + E.formatGemString(pricetorecord, true) + "</var>");
-			}; break;
-		}
-
-		// Only add if item actually exists (not a zero stack slot)
-		if (iscollection)
-		{
-			if (pCount !== 0)
-			{
-				updatePriceDisplay(tabdisplayprice, prices.oPriceBuy, 0, true);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
-				
-			}
-			else
-			{
-				updatePriceDisplay(tabdisplayprice, 0, prices.oPriceBuy, true);
-				updatePriceDisplay(top.find(".bnkPriceValueB_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
-			}
-		}
-		else
-		{
-			if (pCount !== 0)
-			{
-				updatePriceDisplay(tabdisplayprice, prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
-			}
-		}
-		// Remember coin value for price search
-		if (pPaymentEnum === E.PaymentEnum.Coin)
-		{
-			pSlot.data("price", pricetorecord);
-		}
-	},
-	
-	/*
-	 * Creates and binds a search bar for a bank. Also creates functional buttons.
-	 * @param jqobject pBank for insertion.
-	 * @objparam string aHelpElement HTML ID of the message to append to the help screen.
-	 * @objparam boolean aWantSearchHighlight whether to highlight instead of show and hide when searching.
-	 * @pre Bank slots were generated.
-	 */
-	createBankMenu: function(pBank, pSettings)
-	{
-		var Settings = pSettings || {};
-		// Initialize commonly used elements
-		var sectionname = pBank.parents(".accDishContainer").attr("data-section");
-		var tabslots = pBank.find(".bnkTabSlots");
-		var tabtoggles = pBank.find(".bnkTabToggle");
-		var dishmenu = A.createDishMenu(sectionname);
-		
-		/*
-		 * Search bar.
-		 */
-		var searchcontainer = $("<div class='bnkSearch'></div>").prependTo(dishmenu);
-		var input = $("<input class='bnkSearchInput' type='text' />").appendTo(searchcontainer);
-		var fillertext = $("<div class='bnkSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(searchcontainer);
-		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
-		{
-			var slots = pBank.find(".bnkSlot");
-			var query = $(this).val().toLowerCase();
-			var queries = [];
-			var equality = "";
-			var keywords = "";
-			if (query.length > 0)
-			{
-				equality = query.charAt(0);
-				fillertext.hide();
-				// If searching by price range
-				if ((equality === "<" || equality === ">") && query.length > 1)
-				{
-					var pricewant = E.parseCoinString(query.substring(1, query.length));
-					slots.each(function()
-					{
-						var priceslot = $(this).data("price");
-						if (priceslot && ((equality === ">" && priceslot >= pricewant) || (equality === "<" && priceslot <= pricewant)))
-						{
-							$(this).show();
-						}
-						else
-						{
-							$(this).hide();
-						}
-					});
-				}
-				// If searching by keywords
-				else
-				{
-					queries = query.split(" ");
-					// Search for every substring in the user's query, which is space separated
-					slots.each(function()
-					{
-						keywords = $(this).data("keywords"); // The text version of the item's tooltip HTML
-						var ismatch = true;
-						if (keywords)
-						{
-							if (Settings.aWantSearchHighlight)
-							{
-								for (var i = 0; i < queries.length; i++)
-								{
-									// If at least one substring of the search query isn't found, then hide that item
-									if (keywords.indexOf(queries[i]) === -1)
-									{
-										$(this).removeClass("bnkSlotMatch");
-										ismatch = false;
-										break;
-									}
-								}
-								// The boolean is only true if every substrings were found
-								if (ismatch)
-								{
-									$(this).addClass("bnkSlotMatch");
-								}
-							}
-							else
-							{
-								for (var i = 0; i < queries.length; i++)
-								{
-									// If at least one substring of the search query isn't found, then hide that item
-									if (keywords.indexOf(queries[i]) === -1)
-									{
-										$(this).hide();
-										ismatch = false;
-										break;
-									}
-								}
-								// The boolean is only true if every substrings were found
-								if (ismatch)
-								{
-									$(this).show();
-								}
-							}
-						}
-					});
-				}
-			}
-			else
-			{
-				fillertext.show();
-				slots.each(function()
-				{
-					$(this).removeClass("bnkSlotMatch");
-					$(this).show();
-				});
-			}
-			A.adjustAccountScrollbar();
-		})).click(function()
-		{
-			$(this).select();
-		});
-		
-		/*
-		 * Add buttons next to the search bar for bank functionalities.
-		 */
-		var buttoncontainer = $("<aside class='bnkButtons'></aside>").appendTo(dishmenu);
-		
-		// Reload button reloads the section entirely
-		$("<div class='bnkButtonReload bnkButton curClick' title='<dfn>Reload</dfn> this bank.<br />Press this if the progress bar has frozen.'></div>")
-			.appendTo(buttoncontainer).click(function()
-		{
-			A.regenerateDish(sectionname);
-		});
-		
-		// Button to show help and search usage message
-		var isshowinghelp = true;
-		$("<div class='bnkButtonHelp bnkButton curClick' title='Show this bank&apos;s <dfn>help</dfn> message.'></div>")
-			.appendTo(buttoncontainer).click(function()
-		{
-			var helpmessage = (Settings.aHelpMessage) ? Settings.aHelpMessage : "";
-			if (isshowinghelp || I.isConsoleShown() === false)
-			{
-				I.print("<div class='accModal cntComposition'>" + helpmessage + $("#accBankHelp").html() + "</div>", true);
-				U.convertExternalLink("#cslContent a");
-			}
-			else
-			{
-				I.clear();
-			}
-			isshowinghelp = !isshowinghelp;
-		});
-		
-		// Empty slot filter: first click show filled slots only, second click show empty slots only, third show full stacks, fourth click show all slots, cycle
-		var emptyfilterstate = 0;
-		$("<div class='bnkButtonEmpty bnkButton curToggle' title='"
-			+ "Filter:<br />1st click: non-empty <dfn>slots</dfn><br />2nd click: stack slots<br />3rd click: empty slots<br />4th click: any slot (reset)'></div>")
-			.appendTo(buttoncontainer).click(function()
-		{
-			var slots = pBank.find(".bnkSlot");
-			if (emptyfilterstate === 0 || emptyfilterstate === 2 ) // Filter 
-			{
-				var wantshow = (emptyfilterstate === 0);
-				slots.each(function()
-				{
-					// The style slot function should have initialized the count data for slots without an item
-					if ($(this).data("count") > 0)
-					{
-						$(this).toggle(wantshow);
-					}
-					else
-					{
-						$(this).toggle( ! wantshow);
-					}
-				});
-				$(this).addClass("bnkButtonFocused");
-				emptyfilterstate++;
-			}
-			else if (emptyfilterstate === 1)
-			{
-				slots.each(function()
-				{
-					if ($(this).data("count") >= A.Metadata.Bank.StackMax)
-					{
-						$(this).show();
-					}
-					else
-					{
-						$(this).hide();
-					}
-				});
-				emptyfilterstate++;
-			}
-			else
-			{
-				slots.show();
-				$(this).removeClass("bnkButtonFocused");
-				emptyfilterstate = 0;
-			}
-			A.adjustAccountScrollbar();
-		});
-		
-		// Button to filter tradeable items
-		var isfilteringtrade = true;
-		$("<div class='bnkButtonTrade bnkButton curToggle' title='Filter: <dfn>tradeable</dfn> items.'></div>")
-			.appendTo(buttoncontainer).click(function()
-		{
-			var slots = pBank.find(".bnkSlot");
-			if (isfilteringtrade)
-			{
-				slots.each(function()
-				{
-					if ($(this).data("istradeable"))
-					{
-						$(this).show();
-					}
-					else
-					{
-						$(this).hide();
-					}
-				});
-			}
-			else
-			{
-				slots.show();
-			}
-			$(this).toggleClass("bnkButtonFocused");
-			isfilteringtrade = !isfilteringtrade;
-			A.adjustAccountScrollbar();
-		});
-		
-		// Button to show rarity colored borders over items
-		var isfilteringrarity = O.Options.bol_showRarity;
-		var changeRarity = function(pRarityButton)
-		{
-			pBank.toggleClass("bnkRarity", isfilteringrarity);
-			pRarityButton.toggleClass("bnkButtonFocused");
-		};
-		var raritybutton = $("<div class='bnkButtonRarity bnkButton curToggle' title='Show <dfn>rarity</dfn> colored boxes.<br />Change permanently at Options page.'></div>")
-			.appendTo(buttoncontainer).click(function()
-		{
-			isfilteringrarity = !isfilteringrarity;
-			changeRarity($(this));
-		});
-		if (O.Options.bol_showRarity)
-		{
-			changeRarity(raritybutton);
-		}
-		
-		// Button to condense bank and smaller slots
-		var isbankcondense = O.Options.bol_condenseBank;
-		var resizeSlots = function(pRarityButton)
-		{
-			pBank.toggleClass("bnkCondense", isbankcondense);
-			pRarityButton.toggleClass("bnkButtonFocused");
-			// Update bank 
-			pBank.css({width: Q.Bank.slotsPerRow * Q.getBankSlotWidth(isbankcondense)});
-		};
-		var raritybutton = $("<div class='bnkButtonCondense bnkButton curToggle' title='Toggle bank <dfn>size</dfn>.<br />Change permanently at Options page.'></div>")
-			.appendTo(buttoncontainer).click(function()
-		{
-			isbankcondense = !isbankcondense;
-			resizeSlots($(this));
-		});
-		if (O.Options.bol_condenseBank)
-		{
-			resizeSlots(raritybutton);
-		}
-		
-		// Button to toggle all tabs
-		var istabscollapsed = false;
-		$("<div class='bnkButtonTab bnkButton curToggle' title='Expand/<dfn>Collapse</dfn> all tabs.'></div>")
-			.appendTo(buttoncontainer).click(function()
-		{
-			// Expand or collapse all tabs
-			if (istabscollapsed)
-			{
-				tabslots.slideDown("fast", function()
-				{
-					A.adjustAccountScrollbar();
-				});
-			}
-			else
-			{
-				tabslots.slideUp("fast", function()
-				{
-					A.adjustAccountScrollbar();
-				});
-			}
-			// Also change the toggle icon
-			tabtoggles.each(function()
-			{
-				I.toggleToggleIcon($(this), istabscollapsed);
-			});
-			$(this).toggleClass("bnkButtonFocused");
-			istabscollapsed = !istabscollapsed;
-		});
-		
-		// Button to increase or decrease bank width
-		$("<div class='bnkButtonWideLess bnkButton curClick' title='<dfn>Decrease</dfn> bank width.'></div>")
-			.appendTo(buttoncontainer).click(function()
-		{
-			var slotsize = Q.getBankSlotWidth(isbankcondense);
-			var minbankwidth = slotsize * 4;
-			var oldwidth = pBank.width();
-			if (oldwidth > minbankwidth)
-			{
-				pBank.css({width: oldwidth - slotsize});
-				A.adjustAccountScrollbar();
-			}
-		});
-		$("<div class='bnkButtonWideMore bnkButton curClick' title='<dfn>Increase</dfn> bank width.'></div>")
-			.appendTo(buttoncontainer).click(function()
-		{
-			var slotsize = Q.getBankSlotWidth(isbankcondense);
-			var maxbankwidth = $("#accContent").width() - (slotsize * 2);
-			var oldwidth = pBank.width();
-			if (oldwidth < maxbankwidth)
-			{
-				pBank.css({width: oldwidth + slotsize});
-				A.adjustAccountScrollbar();
-			}
-		});
-		
-		// Finally
-		searchcontainer.css({width: searchcontainer.width() - buttoncontainer.width()});
-		I.qTip.init(buttoncontainer.find(".bnkButton"));
-		A.adjustAccountPanel();
-	},
-	
-	/*
-	 * Initializes the context menu that is shown for all banks' slots.
-	 */
-	initializeBankContextMenu: function()
-	{
-		I.styleContextMenu("#bnkContext");
-		$("#bnkContext").click(function()
-		{
-			$(this).hide();
-		});
-		// The context variables should be assigned by the function that styles the bank slot
-		$("#bnkContextWiki").click(function()
-		{
-			U.openExternalURL(U.getWikiLinkLanguage(Q.Context.ItemName));
-		});
-		$("#bnkContextWikiSearch").click(function()
-		{
-			U.openExternalURL(U.getWikiSearchLanguage(Q.Context.ItemSearch));
-		});
-		$("#bnkContextTrading").click(function()
-		{
-			U.openExternalURL(U.getTradingItemLink(Q.Context.ItemID, Q.Context.ItemName));
-		});
-		$("#bnkContextTradingSearch").click(function()
-		{
-			U.openExternalURL(U.getTradingSearchLink(Q.Context.ItemName));
-		});
-		$("#bnkContextInfo").click(function()
-		{
-			if (Q.Context.Item)
-			{
-				U.prettyJSON(Q.Context.Item);
-			}
-			else
-			{
-				I.print("No information available.");
-			}
-		});
-		I.initializeClipboard("#bnkContextChatlink");
-	},
-	
-	/*
-	 * Binds an element that represents a game item to have a context menu.
-	 * @param jqobject pSlot to bind.
-	 * @objparam object aItem from item details API.
-	 * @objparam object aObject non-item object for printing the slot's information, optional.
-	 * @objparam string aSearch for wiki search link, optional.
-	 * @objparam int aTradeableID for TP webpage, optional.
-	 */
-	bindItemSlotBehavior: function(pSlot, pSettings)
-	{
-		var Settings = pSettings || {};
-		// Right click on the item slot shows context menu
-		pSlot.contextmenu(function(pEvent)
-		{
-			pEvent.preventDefault();
-			var chatlink;
-			if (Settings.aItem)
-			{
-				Q.Context.Item = Settings.aItem;
-				Q.Context.ItemName = Settings.aItem.name;
-				Q.Context.ItemID = Settings.aTradeableID || Settings.aItem.id;
-				Q.Context.ItemSearch = Settings.aSearch || Settings.aItem.name;
-				chatlink = Settings.aItem.chat_link + " " + Q.Context.ItemSearch;
-			}
-			else
-			{
-				Q.Context.Item = Settings.aObject;
-				Q.Context.ItemName = Settings.aSearch;
-				Q.Context.ItemID = Settings.aTradeableID;
-				Q.Context.ItemSearch = Settings.aSearch;
-				chatlink = Settings.aChatlink || "No chatlink available.";
-			}
-			I.updateClipboard("#bnkContextChatlink", chatlink);
-			I.showContextMenu("#bnkContext");
-		});
-		// Bind the click to go to wiki behavior if requested
-		if (Settings.aWantClick)
-		{
-			pSlot.click(function(pEvent)
-			{
-				if (pEvent.which === I.ClickEnum.Left)
-				{
-					U.openExternalURL(U.getWikiSearchLanguage(Settings.aItem.name));
-				}
-			});
-		}
-	},
+	}
 };
 
 /* =============================================================================
@@ -13236,7 +13230,7 @@ C = {
 				} break;
 				case C.ChainSeriesEnum.LivingStory:
 				{
-					if (B.isStoryEnabled)
+					if (H.isStoryEnabled)
 					{
 						// Show Living Story events on the dashboard if on website or overlay mode only
 						chain.htmllist = ((I.isProgramEmbedded || (I.ModeCurrent !== I.ModeEnum.Website && I.ModeCurrent !== I.ModeEnum.Overlay)))
@@ -20778,7 +20772,7 @@ W = {
 			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
 				+ "<aside class='lboName'>&nbsp;" + matchupdata[ownerkey].namelinkstr + "</aside>" : "";
 			var score = scores[ownerkey];
-			var scorehighest = (T.getMinMax(scores)).max;
+			var scorehighest = (T.getMinMax(scores)).oMax;
 			var scorepercent = (scores[ownerkey] / scorehighest) * T.cPERCENT_100;
 			var ppttotal = (PPT[owner]).Total;
 			var pptpercent = (ppttotal / W.getTotalPPTPossible()) * T.cPERCENT_100;
@@ -20790,7 +20784,8 @@ W = {
 				var deaths = (pData.deaths !== undefined) ? pData.deaths[ownerkey] : "";
 				var kdratio = T.parseRatio((kills / deaths), 3);
 				var kdbl = "";
-				var kdpercent = T.parseRatio(kills / (kills + deaths)) * T.cPERCENT_100;
+				// This constrains the ratio between 0% and 200%, where 100% means the kills and deaths numbers are equal
+				var kdpercent = T.parseRatio(T.clampCeil(kills / deaths, 2) / 2) * T.cPERCENT_100;
 				var blkills, bldeaths;
 				pData.maps.forEach(function(iMap)
 				{
@@ -22148,11 +22143,11 @@ T = {
 		var slot;
 		
 		// Initialize Living Story events, if available
-		if (B.Story.isEnabled)
+		if (H.Story.isEnabled)
 		{
-			if (T.isTimely(B.Story, new Date()))
+			if (T.isTimely(H.Story, new Date()))
 			{
-				B.isStoryEnabled = true;
+				H.isStoryEnabled = true;
 			}
 		}
 		
@@ -22471,7 +22466,12 @@ T = {
 				maxkey = i;
 			}
 		}
-		return {min: min, max: max, minkey: minkey, maxkey: maxkey};
+		return {
+			oMin: min,
+			oMax: max,
+			oMinKey: minkey,
+			oMaxKey: maxkey
+		};
 	},
 	
 	/*
@@ -22493,8 +22493,35 @@ T = {
 		{
 			i = pMax + i;
 		}
-		
 		return i;
+	},
+	
+	/*
+	 * Constraints a number to the min or max value if it is out of those bounds.
+	 * @param int pNumber.
+	 * @param int pMin.
+	 * @param int pMax.
+	 * @returns int.
+	 */
+	clampInteger: function(pNum, pMin, pMax)
+	{
+		if (pNum < pMin)
+		{
+			return pMin;
+		}
+		if (pNum > pMax)
+		{
+			return pMax;
+		}
+		return pNum;
+	},
+	clampFloor: function(pNum, pMin)
+	{
+		return T.clampInteger(pNum, pMin, Number.POSITIVE_INFINITY);
+	},
+	clampCeil: function(pNum, pMax)
+	{
+		return T.clampInteger(pNum, Number.NEGATIVE_INFINITY, pMax);
 	},
 	
 	/*
@@ -23342,7 +23369,7 @@ T = {
 					// Mention special dailies if appropriate
 					if (T.DailyToday.pve && T.DailyToday.pve[1] === "Forger")
 					{
-						var dailyspecialstr = U.convertExternalString(B.Announcement.Messages.Forger);
+						var dailyspecialstr = U.convertExternalString(H.Announcement.Messages.Forger);
 						I.greet(dailyspecialstr, 25);
 					}
 				}
@@ -23353,9 +23380,9 @@ T = {
 };
 
 /* =============================================================================
- * @@Board dashboard and timeline
+ * @@HUD head up display on the map panel: dashboard and timeline
  * ========================================================================== */
-B = {
+H = {
 	
 	Announcement: GW2T_DASHBOARD_DATA.Announcement,
 	Countdown: GW2T_DASHBOARD_DATA.Countdown,
@@ -23382,50 +23409,50 @@ B = {
 	{
 		var now = new Date();
 		// Verify countdown: if at least one countdown has not expired
-		for (var i = 0; i < B.Countdown.Events.length; i++)
+		for (var i = 0; i < H.Countdown.Events.length; i++)
 		{
-			if (B.Countdown.Events[i].Finish && now < B.Countdown.Events[i].Finish)
+			if (H.Countdown.Events[i].Finish && now < H.Countdown.Events[i].Finish)
 			{
-				B.isCountdownEnabled = true;
+				H.isCountdownEnabled = true;
 				break;
 			}
 		}
 		
 		// Verify announcement: if announcement exists
-		if (B.Announcement.pve.length > 0 && T.isTimely(B.Announcement, now))
+		if (H.Announcement.pve.length > 0 && T.isTimely(H.Announcement, now))
 		{
-			U.convertExternalLink($("#dsbAnnouncement").html(B.Announcement.pve).find("a"));
+			U.convertExternalLink($("#dsbAnnouncement").html(H.Announcement.pve).find("a"));
 			M.bindMapLinks("#dsbAnnouncement");
-			B.isAnnouncementEnabled = true;
+			H.isAnnouncementEnabled = true;
 		}
 		
 		// Verify sale: if sale exists and has not expired
-		if (B.Sale.Items.length > 0 && T.isTimely(B.Sale, now))
+		if (H.Sale.Items.length > 0 && T.isTimely(H.Sale, now))
 		{
-			B.isSaleEnabled = true;
+			H.isSaleEnabled = true;
 		}
 		// Verify vendor: if has not expired
-		if (T.isTimely(B.Vendor, now, T.cSECONDS_IN_DAY))
+		if (T.isTimely(H.Vendor, now, T.cSECONDS_IN_DAY))
 		{
-			B.isVendorEnabled = true;
+			H.isVendorEnabled = true;
 		}
 		
 		// Make sure at least one component of the dashboard is enabled, else disable the dashboard
-		if ((B.isCountdownEnabled === false
-				&& B.isAnnouncementEnabled === false
-				&& B.isSaleEnabled === false
-				&& B.isVendorEnabled === false)
-			|| B.isDashboardEnabled === false
+		if ((H.isCountdownEnabled === false
+				&& H.isAnnouncementEnabled === false
+				&& H.isSaleEnabled === false
+				&& H.isVendorEnabled === false)
+			|| H.isDashboardEnabled === false
 			|| I.isMapEnabled === false
 			|| O.Options.bol_showDashboard === false)
 		{
-			B.isDashboardEnabled = false;
+			H.isDashboardEnabled = false;
 			return;
 		}
 		else
 		{
-			B.toggleDashboard(true);
-			B.isCountdownTickEnabled = true;
+			H.toggleDashboard(true);
+			H.isCountdownTickEnabled = true;
 		}
 		
 		// Button to toggle the dashboard
@@ -23435,7 +23462,7 @@ B = {
 		});
 		
 		// Initialize countdown entries
-		if (B.isCountdownEnabled)
+		if (H.isCountdownEnabled)
 		{
 			var namekey = D.getNameKey();
 			var urlkey = D.getURLKey();
@@ -23444,10 +23471,10 @@ B = {
 			var url;
 			
 			// Initialize countdowns
-			for (var i = 0; i < B.Countdown.Events.length; i++)
+			for (var i = 0; i < H.Countdown.Events.length; i++)
 			{
 				// Initialize countdown properties
-				ctd = B.Countdown.Events[i];
+				ctd = H.Countdown.Events[i];
 				ctd.isTimely = true;
 				ctd.StartStamp = ctd.Start.toLocaleString();
 				ctd.FinishStamp = ctd.Finish.toLocaleString();
@@ -23478,36 +23505,36 @@ B = {
 					+ "</div>");
 			}
 			I.qTip.init("#dsbCountdown");
-			B.refreshDashboard(now);
+			H.refreshDashboard(now);
 		}
 		
 		// Initialize Living Story
-		if (B.isStoryEnabled)
+		if (H.isStoryEnabled)
 		{
-			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(B.Story) + "</div>").show();
+			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(H.Story) + "</div>").show();
 			I.initializeScrollbar("#dsbStory");
 		}
 		
 		// Initialize sale
-		if (B.isSaleEnabled)
+		if (H.isSaleEnabled)
 		{
-			var range = T.getMinMax(B.Sale.Items, "price");
-			var rangestr = (range.min === range.max) ? range.max : (range.min + "-" + range.max);
+			var range = T.getMinMax(H.Sale.Items, "price");
+			var rangestr = (range.oMin === range.oMax) ? range.oMax : (range.oMin + "-" + range.oMax);
 			// Create "button" to toggle list of items on sale
 			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img id='dsbSaleSymbol' src='img/ui/placeholder.png' /> "
-				+ "<u>" + B.Sale.Items.length + " "
+				+ "<u>" + H.Sale.Items.length + " "
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
-				+ "⇓@ " + B.Sale.Finish.toLocaleString()
+				+ "⇓@ " + H.Sale.Finish.toLocaleString()
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
 			// Add a "padding" item if the columns are not equal length
 			var isdiscounted = false;
 			var ncol0 = 0, ncol1 = 0;
 			var item;
-			for (var i = 0; i < B.Sale.Items.length; i++)
+			for (var i = 0; i < H.Sale.Items.length; i++)
 			{
-				item = B.Sale.Items[i];
+				item = H.Sale.Items[i];
 				if (item.col === 0)
 				{
 					ncol0++;
@@ -23527,32 +23554,32 @@ B = {
 			}
 			if (ncol0 < ncol1)
 			{
-				B.Sale.Padding.col = 0;
-				B.Sale.Items.unshift(B.Sale.Padding);
+				H.Sale.Padding.col = 0;
+				H.Sale.Items.unshift(H.Sale.Padding);
 			}
 			else if (ncol0 > ncol1)
 			{
-				B.Sale.Padding.col = 1;
-				B.Sale.Items.unshift(B.Sale.Padding);
+				H.Sale.Padding.col = 1;
+				H.Sale.Items.unshift(H.Sale.Padding);
 			}
 			$("#dsbSaleSymbol").attr("src", "img/ui/" + ((isdiscounted) ? "gemstore_special" : "gemstore") + I.cPNG);
 			// Bind buttons
 			$("#dsbSaleHeader").click(function()
 			{
-				B.generateDashboardSale();
+				H.generateDashboardSale();
 			});
 			// Automatically generate the items on sale if the boolean is true
-			I.toggleToggleIcon("#dsbSaleToggleIcon", B.Sale.isPreshown);
-			if (B.Sale.isPreshown === true)
+			I.toggleToggleIcon("#dsbSaleToggleIcon", H.Sale.isPreshown);
+			if (H.Sale.isPreshown === true)
 			{
-				B.generateDashboardSale();
+				H.generateDashboardSale();
 			}
 		}
 		
 		// Initialize vendor
-		if (B.isVendorEnabled)
+		if (H.isVendorEnabled)
 		{
-			B.generateDashboardVendorHeader();
+			H.generateDashboardVendorHeader();
 		}
 	},
 	
@@ -23588,18 +23615,18 @@ B = {
 			{
 				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
 				table.empty();
-				if (B.Sale.note.length > 0)
+				if (H.Sale.note.length > 0)
 				{
-					table.append("<div>Note: " + B.Sale.note + "</div>");
+					table.append("<div>Note: " + H.Sale.note + "</div>");
 				}
 				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				if (E.Exchange.CoinInGem !== 0)
 				{
 					var gemstr = "<ins class='s16 s16_gem'></ins>";
-					for (var i = 0; i < B.Sale.Items.length; i++)
+					for (var i = 0; i < H.Sale.Items.length; i++)
 					{
 						// Initialize variables
-						var item = B.Sale.Items[i];
+						var item = H.Sale.Items[i];
 						var wiki = U.getWikiSearchDefault(item.name);
 						var video = U.getYouTubeLink(item.name);
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
@@ -23671,16 +23698,16 @@ B = {
 	 */
 	generateDashboardVendorHeader: function()
 	{
-		var weekdaylocation = B.getDashboardVendorWeekday();
-		var vendorname = D.getObjectName(B.Vendor);
+		var weekdaylocation = H.getDashboardVendorWeekday();
+		var vendorname = D.getObjectName(H.Vendor);
 		var vendorcodes = "";
-		for (var i in B.Vendor.Codes)
+		for (var i in H.Vendor.Codes)
 		{
-			vendorcodes += i + "@" + (B.Vendor.Codes[i])[weekdaylocation] + " ";
+			vendorcodes += i + "@" + (H.Vendor.Codes[i])[weekdaylocation] + " ";
 		}
 		vendorcodes += "- " + vendorname;
 		$("#dsbVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle' "
-			+  "title='<dfn>Updated:</dfn> " + B.Vendor.Start.toLocaleString(window.navigator.language, {
+			+  "title='<dfn>Updated:</dfn> " + H.Vendor.Start.toLocaleString(window.navigator.language, {
 					year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long" })
 				+ "'><img src='img/map/vendor_karma.png' /> "
 			+ "<u>" + vendorname + "</u>"
@@ -23698,16 +23725,16 @@ B = {
 		});
 		$("#dsbVendorHeader").click(function()
 		{
-			B.generateDashboardVendor();
+			H.generateDashboardVendor();
 		});
 		$("#dsbVendorDraw").click(function()
 		{
 			if ($(this).data("hasDrawn") !== true)
 			{
 				var coords = [];
-				for (var i in B.Vendor.Coords)
+				for (var i in H.Vendor.Coords)
 				{
-					var coord = (B.Vendor.Coords[i])[weekdaylocation];
+					var coord = (H.Vendor.Coords[i])[weekdaylocation];
 					if (coord !== undefined)
 					{
 						coords.push(coord);
@@ -23722,7 +23749,7 @@ B = {
 				$(this).data("hasDrawn", false);
 			}
 		});
-		I.toggleToggleIcon("#dsbVendorToggleIcon", B.Sale.isPreshown);
+		I.toggleToggleIcon("#dsbVendorToggleIcon", H.Sale.isPreshown);
 	},
 	
 	/*
@@ -23731,9 +23758,9 @@ B = {
 	generateDashboardVendor: function()
 	{
 		var animationspeed = 200;
-		var weekdaylocation = B.getDashboardVendorWeekday();
+		var weekdaylocation = H.getDashboardVendorWeekday();
 		var table = $("#dsbVendorTable");
-		var numoffers = U.getObjectLength(B.Vendor.Offers);
+		var numoffers = U.getObjectLength(H.Vendor.Offers);
 		
 		var finalizeVendorTable = function()
 		{
@@ -23748,7 +23775,7 @@ B = {
 				I.initializeScrollbar("#dsbVendorTable");
 				I.updateScrollbar("#dsbVendorTable");
 			});
-			if (T.isTimely(B.Vendor, new Date()) === false)
+			if (T.isTimely(H.Vendor, new Date()) === false)
 			{
 				$("#dsbVendorTable").prepend("Note: These items have expired.");
 			}
@@ -23769,19 +23796,19 @@ B = {
 			I.toggleToggleIcon("#dsbVendorToggleIcon", true);
 			table.empty();
 			table.append(I.cThrobber);
-			for (var i in B.Vendor.Offers)
+			for (var i in H.Vendor.Offers)
 			{
 				(function(iIndex)
 				{
-					var offer = B.Vendor.Offers[iIndex];
+					var offer = H.Vendor.Offers[iIndex];
 					Q.getItem(offer.id, function(pData)
 					{
 						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
 						table.append("<div class='dsbVendorEntry'>"
 							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
-								+ "' data-coord='" + (B.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
-							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(B.Vendor.Prices[offer.id] || B.Vendor.PriceDefault) + "</span>"
+								+ "' data-coord='" + (H.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
+							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[offer.id] || H.Vendor.PriceDefault) + "</span>"
 							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
 						+ "</div>");
 						// Get TP prices also
@@ -23794,7 +23821,7 @@ B = {
 						});
 						M.bindMapLinkBehavior($("#dsbVendorItem_" + iIndex), M.ZoomEnum.Ground, M.Pin.Program);
 						// Get the product that the recipe crafts
-						var product = B.Vendor.Products[offer.id] || offer.id;
+						var product = H.Vendor.Products[offer.id] || offer.id;
 						Q.getItem(product, function(pProduct)
 						{
 							var icon = $("#dsbVendorIcon_" + iIndex);
@@ -23821,7 +23848,7 @@ B = {
 		var now = new Date();
 		var weekday = now.getUTCDay();
 		var hour = now.getUTCHours();
-		return (hour < B.Vendor.resetHour) ? T.wrapInteger(weekday - 1, T.cDAYS_IN_WEEK) : weekday;
+		return (hour < H.Vendor.resetHour) ? T.wrapInteger(weekday - 1, T.cDAYS_IN_WEEK) : weekday;
 	},
 	
 	/*
@@ -23831,9 +23858,9 @@ B = {
 	 */
 	updateDashboardCountdown: function(pDate)
 	{
-		for (var i = 0; i < B.Countdown.Events.length; i++)
+		for (var i = 0; i < H.Countdown.Events.length; i++)
 		{
-			var ctd = B.Countdown.Events[i];
+			var ctd = H.Countdown.Events[i];
 			if (ctd.isTimely)
 			{
 				var ithtime = T.formatTimeLetter(~~((ctd.DesiredTime.getTime() - pDate.getTime()) / T.cMSECONDS_IN_SECOND), true);
@@ -23853,9 +23880,9 @@ B = {
 		var minute = pDate.getUTCMinutes();
 		
 		// Update countdown text elements, or deactivate a countdown entry if expired
-		for (var i in B.Countdown.Events)
+		for (var i in H.Countdown.Events)
 		{
-			var ctd = B.Countdown.Events[i];
+			var ctd = H.Countdown.Events[i];
 			if (ctd.isTimely)
 			{
 				var countdownhtml = $("#dsbCountdown_" + i);
@@ -23893,24 +23920,24 @@ B = {
 		}
 		
 		// Deactivate outdated Living Story
-		if (T.isTimely(B.Story, pDate) === false)
+		if (T.isTimely(H.Story, pDate) === false)
 		{
-			B.isStoryEnabled = false;
+			H.isStoryEnabled = false;
 			$("#dsbStory").hide();
 		}
 		
 		// Deactivate outdated sale
-		if (T.isTimely(B.Sale, pDate) === false)
+		if (T.isTimely(H.Sale, pDate) === false)
 		{
-			B.isSaleEnabled = false;
+			H.isSaleEnabled = false;
 			$("#dsbSale").hide();
 		}
 		
 		// Refresh vendor header at its specific time
-		if (T.isTimely(B.Vendor, pDate)
-			&& hour === B.Vendor.resetHour && minute === 0)
+		if (T.isTimely(H.Vendor, pDate)
+			&& hour === H.Vendor.resetHour && minute === 0)
 		{
-			B.generateDashboardVendorHeader();
+			H.generateDashboardVendorHeader();
 		}
 	},
 	
@@ -23924,7 +23951,7 @@ B = {
 		{
 			pBoolean = !($("#itemDashboard").is(":visible"));
 		}
-		if (O.Options.bol_showDashboard && B.isDashboardEnabled)
+		if (O.Options.bol_showDashboard && H.isDashboardEnabled)
 		{
 			if (pBoolean)
 			{
@@ -23942,19 +23969,19 @@ B = {
 	 */
 	generateTimeline: function()
 	{
-		B.isTimelineGenerated = true;
+		H.isTimelineGenerated = true;
 		// Container for all the timelines
 		$("#itemTimeline").show();
 		var container = $("#tmlContainer").append("<div class='tmlLine curToggle' id='tmlLegend'></div>");
-		B.updateTimelineLegend();
+		H.updateTimelineLegend();
 		$("#tmlLegend").click(function()
 		{
 			$("#opt_bol_use24Hour").trigger("click");
 		});
 		// Create timings header
-		for (var i in B.Timeline)
+		for (var i in H.Timeline)
 		{
-			var chain = B.Timeline[i];
+			var chain = H.Timeline[i];
 			var name = (chain.zone === undefined) ? D.getObjectName(chain) : U.escapeHTML(M.getZoneName(chain.zone));
 			// Container for segments of a timeline (chain)
 			var line = $("<div class='tmlLine' title='<dfn>" + name + "</dfn>'></div>").appendTo(container);
@@ -23985,8 +24012,8 @@ B = {
 		$("#tmlDelete").click(function()
 		{
 			$("#opt_bol_showTimeline").prop("checked", false).trigger("change");
-			B.toggleTimeline(false);
-			B.isTimelineEnabled = false;
+			H.toggleTimeline(false);
+			H.isTimelineEnabled = false;
 		});
 		$("#tmlOpaque").click(function()
 		{
@@ -23994,8 +24021,8 @@ B = {
 		});
 		// Initialize
 		I.qTip.init(".tmlLine");
-		B.updateTimelineSegments();
-		B.updateTimelineIndicator();
+		H.updateTimelineSegments();
+		H.updateTimelineIndicator();
 	},
 	
 	/*
@@ -24003,7 +24030,7 @@ B = {
 	 */
 	updateTimelineIndicator: function()
 	{
-		if ( ! B.isTimelineGenerated)
+		if ( ! H.isTimelineGenerated)
 		{
 			return;
 		}
@@ -24033,7 +24060,7 @@ B = {
 	 */
 	updateTimelineSegments: function()
 	{
-		if ( ! B.isTimelineGenerated)
+		if ( ! H.isTimelineGenerated)
 		{
 			return;
 		}
@@ -24056,7 +24083,7 @@ B = {
 		// Refresh the legend if approached new bihour
 		if (currentminute === 0)
 		{
-			B.updateTimelineLegend();
+			H.updateTimelineLegend();
 		}
 		else
 		{
@@ -24074,7 +24101,7 @@ B = {
 	 */
 	updateTimelineLegend: function()
 	{
-		if ( ! B.isTimelineGenerated)
+		if ( ! H.isTimelineGenerated)
 		{
 			return;
 		}
@@ -24114,7 +24141,7 @@ B = {
 		{
 			pBoolean = !($("#itemTimeline").is(":visible"));
 		}
-		if (O.Options.bol_showTimeline && B.isTimelineEnabled)
+		if (O.Options.bol_showTimeline && H.isTimelineEnabled)
 		{
 			if (pBoolean)
 			{
@@ -24204,7 +24231,7 @@ K = {
 		K.stopwatchUp = $("#watUp")[0];
 		K.stopwatchDown = $("#watDown")[0];
 		
-		B.initializeDashboard();
+		H.initializeDashboard();
 		K.updateTimeFrame(new Date()); // This also calls the server reset check function
 		T.getDaily();
 		K.updateDaytimeIcon();
@@ -24658,10 +24685,10 @@ K = {
 			{
 				K.updateDaytimeIcon();
 				K.updateDryTopClipboard();
-				B.updateTimelineSegments();
-				if (B.isDashboardEnabled)
+				H.updateTimelineSegments();
+				if (H.isDashboardEnabled)
 				{
-					B.refreshDashboard(pDate);
+					H.refreshDashboard(pDate);
 				}
 			}
 			
@@ -24670,7 +24697,7 @@ K = {
 			 */
 			//K.refreshFestival();
 			K.updateDigitalClockMinutely();
-			B.updateTimelineIndicator();
+			H.updateTimelineIndicator();
 			// Refresh the chain time countdown opted
 			C.updateChainsTimeHTML();
 			K.updateWaypointsClipboard();
@@ -24737,9 +24764,9 @@ K = {
 		{
 			T.updateChecklistCountdowns();
 		}
-		if (B.isCountdownTickEnabled)
+		if (H.isCountdownTickEnabled)
 		{
-			B.updateDashboardCountdown(pDate);
+			H.updateDashboardCountdown(pDate);
 		}
 		if (K.StopwatchTimerStart !== 0)
 		{
@@ -24848,7 +24875,7 @@ K = {
 				}
 
 				// Living Story chain
-				if (B.isStoryEnabled && wantls)
+				if (H.isStoryEnabled && wantls)
 				{
 					D.speak(D.getSpeechWord("event", "subscribed") + " " + D.getChainPronunciation(chainls));
 					D.speak(timephrase);
@@ -24886,7 +24913,7 @@ K = {
 		C.NextChainHC3 = T.getHardcoreChain(3);
 		C.NextChainHC4 = T.getHardcoreChain(4);
 		
-		if (B.isStoryEnabled)
+		if (H.isStoryEnabled)
 		{
 			// These are for subscription alarm reference
 			C.NextChainLS1 = T.getLivingStoryChain(1);
@@ -27451,7 +27478,7 @@ I = {
 		{
 			$("#itemWarning").remove();
 			$(".mapHUDLinks").hide();
-			B.isDashboardEnabled = false;
+			H.isDashboardEnabled = false;
 		}
 		
 		// Disable dashboard for non-using modes
@@ -27459,7 +27486,7 @@ I = {
 		{
 			if (I.ModeCurrent !== I.ModeEnum.Overlay)
 			{
-				B.isDashboardEnabled = false;
+				H.isDashboardEnabled = false;
 			}
 		}
 	},
