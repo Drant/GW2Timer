@@ -3378,41 +3378,31 @@ U = {
 	},
 	
 	/*
-	 * Wraps a substring with a tag if substring is found in a string.
+	 * Wraps a substring (or multiple substrings if separated by spaces) with a
+	 * tag if the substring is found in the main string.
 	 * @param string pString to search in.
 	 * @param string pSubstring to wrap.
-	 * @param string pTag HTML tag.
+	 * @param string pTag HTML tag, optional.
 	 * @returns string with substring wrapped with tag.
 	 */
-	wrapSubstringHTML: function(pString, pSubstring, pTag)
+	highlightSubstring: function(pString, pSubstrings, pTag)
 	{
-		var start = pString.toLowerCase().indexOf(pSubstring.toLowerCase());
-		var end = start + pSubstring.length;
-		var str = "";
-		if (start !== -1)
-		{
-			if (pTag === undefined)
-			{
-				pTag = "u";
-			}
-			str = pString.substring(0, start)
-				+ "<" + pTag + ">" + pString.substring(start, end) + "</" + pTag + ">"
-				+ pString.substring(end, pString.length);
-		}
-		else
-		{
-			str = pString;
-		}
-		return str;
-	},
-	wrapSubstringsSpaced: function(pString, pSubstrings)
-	{
-		var str = pString;
+		var tag = pTag || "u";
+		var str = pString.replace(/{{|}}/g, ""); // Disallow the highlight markup alias
 		var subs = pSubstrings.split(" ");
+		var sub;
 		for (var i = 0; i < subs.length; i++)
 		{
-			str = U.wrapSubstringHTML(str, subs[i]);
+			// Wrap the matches in the alias so that the wrapper itself isn't matched
+			sub = subs[i];
+			if (sub.length)
+			{
+				str = str.replace(new RegExp(sub, "gi"), "{{$&}}"); // $& is the original match, to maintain letter case
+			}
 		}
+		// Replace the wrapper alias with the proper tag now that the matching is done
+		str = str.replace(/{{/g, "<" + tag + ">");
+		str = str.replace(/}}/g, "</" + tag + ">");
 		return str;
 	},
 	
@@ -4140,15 +4130,19 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				Z.collateSearch();
+				
 			}},
-			updatedb: {usage: "Prints an updated database of items (test mode only). <em>Parameters: enu_language (optional)</em>", f: function()
+			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
-				Z.updateItemsDatabase(args[1]);
+				Z.updateItemsDatabase();
 			}},
-			updatesubdb: {usage: "Prints an updated cache of items used by an account page's section. <em>Parameters: str_section</em>", f: function()
+			updatesubdb: {usage: "Prints an updated subset database of items used by an account page's section. <em>Parameters: str_section</em>", f: function()
 			{
 				Z.updateItemsSubdatabase(args[1]);
+			}},
+			updatesearch: {usage: "Prints an updated search database of items.", f: function()
+			{
+				Z.collateSearch();
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -5207,7 +5201,7 @@ A = {
 				$(this).wrapInner("<div id='accDish_" + sectionname + "' class='accDish cntComposition'></div>");
 				$(this).prepend("<div class='accDishPadding'></div>");
 			}
-			I.initializeScrollbar($(this));
+			I.bindScrollbar($(this));
 		});
 		$("#accContent").show();
 		
@@ -5249,6 +5243,10 @@ A = {
 			var val = $(this).val();
 			var str = (val.charAt(0) === Z.cCommandPrefix) ? val : Z.cCommandPrefix + val;
 			Z.parseCommand(str, M);
+		});
+		Q.bindItemSearch("#accSearch", function(pItem)
+		{
+			U.prettyJSON(pItem);
 		});
 		
 		// Initialize context menu for bank and inventory slots
@@ -5567,7 +5565,9 @@ A = {
 		I.write(A.TokenCurrent);
 		if (pPermission)
 		{
+			// If missing permission then go to the Manager section for the user to update their key
 			I.write("Requested permission: " + pPermission, 10);
+			$("#accMenu_Manager").trigger("click");
 		}
 	},
 	
@@ -5687,6 +5687,7 @@ A = {
 					token.remove();
 					A.saveTokens();
 				}
+				I.qTip.hide();
 			}
 			else
 			{
@@ -10139,22 +10140,21 @@ Q = {
 	},
 	
 	/*
-	 * Binds an input bar to search for items by name.
+	 * Binds an input bar to search for items by name. When the user clicks on
+	 * the search bar, the search database is first loaded before a search
+	 * can be executed.
 	 * @param jqobject pElement to bind.
-	 * @param function pCallback to execute once the user selects an item from
-	 * the search results.
+	 * @param function pCallback to execute with the user selected item.
 	 */
 	bindItemSearch: function(pElement, pCallback)
 	{
-		var elm = $(pElement).val(D.getWordCapital("search") + "...").one("click", function()
-		{
-			$(this).val("");
-		});
-		var queryminchar = 1;
+		var elm = $(pElement).val(D.getWordCapital("search") + "...");
+		var queryminchar = 2;
 		var searchcontainer = elm.parent();
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").appendTo(searchcontainer).hide();
-		var resultslist = $("<div class='itmSearchResultList cntPopup'>" + I.cThrobber + "</div>").appendTo(resultscontainer);
+		var resultslist = $("<div class='itmSearchResultList cntPopup jsScrollable'>" + I.cThrobber + "</div>").appendTo(resultscontainer);
 		var searchtimestamp;
+		I.bindScrollbar(resultslist);
 		
 		// Toggles display of the results container popup
 		var toggleResults = function(pBoolean, pMessage)
@@ -10170,6 +10170,13 @@ Q = {
 				I.qTip.hide();
 			}
 		};
+		var searchclose = $("<ins class='itmSearchClose btnWindow btnClose' "
+			+ "title='<dfn>Close the search results.</dfn><br />Right click an item for more menu.<br />Type a number to search by item ID.'></ins>")
+			.appendTo(resultscontainer).click(function()
+		{
+			toggleResults(false);
+		});
+		I.qTip.init(searchclose);
 		
 		// Populates the results list with downloaded API data for each result item
 		var renderSearch = function(pItemIDs, pQuery)
@@ -10178,7 +10185,7 @@ Q = {
 			searchtimestamp = (new Date()).getTime();
 			if (pItemIDs.length === 0)
 			{
-				toggleResults(true, D.getPhraseOriginal("Not found") + ".");
+				toggleResults(true, "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>");
 			}
 			else
 			{
@@ -10194,14 +10201,19 @@ Q = {
 							{
 								var outputline = $("<dfn class='itmSearchResultEntry " + Q.getRarityClass(pItem.rarity) + "' data-id='" + pItem.id + "'>"
 									+ "<img src='" + pItem.icon + "'>"
-									+ U.wrapSubstringHTML(pItem.name, pQuery) + "</dfn>").appendTo(resultslist);
-								outputline.click(function()
+									+ U.highlightSubstring(pItem.name, pQuery) + "</dfn>").appendTo(resultslist);
+								outputline.click(function(pEvent)
 								{
-									pCallback(iItemID);
-									toggleResults(false);
+									if (pEvent.which === I.ClickEnum.Left)
+									{
+										pCallback(pItem);
+										toggleResults(false);
+									}
 								});
+								I.updateScrollbar(resultslist);
 								// Tooltip for the listed item
 								Q.scanItem(pItem, {aElement: outputline});
+								Q.bindItemSlotBehavior(outputline, {aItem: pItem});
 							}
 						});
 					})(pItemIDs[i], searchtimestamp);
@@ -10260,20 +10272,27 @@ Q = {
 			renderSearch(resultsarr, pQuery);
 		};
 		
-		// First load the search database
-		Q.loadItemsSearch(function()
+		// Bind the search only after the user has clicked on the search bar
+		elm.one("click", function()
 		{
-			// Bind search execution
-			elm.on("input", $.throttle(E.cSEARCH_LIMIT, function()
-			{
-				executeSearch($(this).val().toLowerCase());
-			})).click(function()
-			{
-				executeSearch($(this).val().toLowerCase());
-				$(this).select();
-			}).onEscapeKey(function()
+			$(this).val("");
+			resultslist.append(I.cThrobber);
+			toggleResults(true);
+			Q.loadItemsSearch(function()
 			{
 				toggleResults(false);
+				// Bind search execution
+				elm.on("input", $.throttle(E.cSEARCH_LIMIT, function()
+				{
+					executeSearch($(this).val().toLowerCase());
+				})).click(function()
+				{
+					executeSearch($(this).val().toLowerCase());
+					$(this).select();
+				}).onEscapeKey(function()
+				{
+					toggleResults(false);
+				});
 			});
 		});
 	}
@@ -10992,7 +11011,7 @@ E = {
 			I.removeThrobber(".trdResults");
 			var outputline = $("<dfn class='" + Q.getRarityClass(pItem.rarity) + "' data-id='" + pItem.id + "'>"
 			+ "<img src='" + pItem.icon + "'>"
-			+ U.wrapSubstringHTML(pItem.name, pQuery) + "</dfn>").appendTo(pResultsList);
+			+ U.highlightSubstring(pItem.name, pQuery) + "</dfn>").appendTo(pResultsList);
 			// Bind click a result to memorize the item's ID and name
 			outputline.click(function()
 			{
@@ -20802,7 +20821,7 @@ W = {
 		W.toggleLeaderboard();
 		W.opaqueLeaderboard();
 		W.toggleLeaderboardWidth();
-		I.initializeScrollbar("#lboOther");
+		I.bindScrollbar("#lboOther");
 	},
 	
 	/*
@@ -21175,7 +21194,7 @@ W = {
 		W.toggleLog();
 		W.opaqueLog();
 		W.toggleLogHeight();
-		I.initializeScrollbar("#logWindow");
+		I.bindScrollbar("#logWindow");
 		
 		// Bind the checkboxes to filter log entries
 		for (var i in W.MapType)
@@ -23693,7 +23712,7 @@ H = {
 		if (H.isStoryEnabled)
 		{
 			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(H.Story) + "</div>").show();
-			I.initializeScrollbar("#dsbStory");
+			I.bindScrollbar("#dsbStory");
 		}
 		
 		// Initialize sale
@@ -23852,7 +23871,7 @@ H = {
 				table.css({height: 0}).animate({height: height}, animationspeed, function()
 				{
 					$(this).css({height: "auto"});
-					I.initializeScrollbar("#dsbSaleTable");
+					I.bindScrollbar("#dsbSaleTable");
 					I.updateScrollbar("#dsbSaleTable");
 				});
 				// Retrieve item info
@@ -23953,7 +23972,7 @@ H = {
 			table.css({height: 0}).animate({height: height}, animationspeed, function()
 			{
 				$(this).css({height: "auto"});
-				I.initializeScrollbar("#dsbVendorTable");
+				I.bindScrollbar("#dsbVendorTable");
 				I.updateScrollbar("#dsbVendorTable");
 			});
 			if (T.isTimely(H.Vendor, new Date()) === false)
@@ -26076,7 +26095,7 @@ I = {
 		// Initialize scroll bars for pre-loaded plates
 		if (I.isMapEnabled)
 		{
-			I.initializeScrollbar("#cslContent, #plateChains, #plateOptions");
+			I.bindScrollbar("#cslContent, #plateChains, #plateOptions");
 		}
 		
 		// Clean the localStorage of unrecognized variables
@@ -26746,11 +26765,11 @@ I = {
 	},
 	
 	/*
-	 * Initializes custom scroll bar for specified element using defined settings.
+	 * Binds a custom scroll bar for specified element using defined settings.
 	 * Container requirements: position relative, overflow hidden.
 	 * @param jqobject pElement to initialize.
 	 */
-	initializeScrollbar: function(pSelector)
+	bindScrollbar: function(pSelector)
 	{
 		if (I.isCustomScrollEnabled)
 		{
@@ -27459,7 +27478,7 @@ I = {
 		I.generateSectionMenu(plate);
 		if (I.isMapEnabled)
 		{
-			I.initializeScrollbar(plate);
+			I.bindScrollbar(plate);
 		}
 		I.bindHelpButtons(plate);
 		M.bindMapLinks(plate);
@@ -27640,7 +27659,7 @@ I = {
 						}
 					});
 				}
-				I.initializeScrollbar("#windowMain");
+				I.bindScrollbar("#windowMain");
 			} break;
 		}
 		
@@ -27886,7 +27905,6 @@ T.initializeSchedule(); // compute event data and write HTML
 P.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
-
 
 
 

@@ -186,7 +186,12 @@ input[type="text"].accTokenHovered {
 	border: 1px solid red;
 }
 
-#accConsole {
+#accCommandLeft, #accCommandRight {
+	display: inline-block;
+	width: 45%;
+	margin-right: 2%;
+}
+#accConsole, #accSearch {
 	width: 100%;
 }
 

@@ -321,12 +321,12 @@ img {
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding: 4px;
-}
-.itmSearchResultEntry {
-	display: block;
 	font-weight: bold;
 	font-size: 12px;
 	line-height: 18px;
+}
+.itmSearchResultEntry {
+	display: block;
 }
 .itmSearchResultEntry img {
 	width: 16px; height: 16px;

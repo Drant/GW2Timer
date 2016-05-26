@@ -1286,6 +1286,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Caith's Bloom Dagger",
+		id: "20004",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Grenth Hood Skin",
 		id: "47890",
 		price: 500,
@@ -1300,9 +1307,9 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Caith's Bloom Dagger",
-		id: "20004",
-		price: 600,
+		name: "Mad King's Outfit",
+		id: "65196",
+		price: 700,
 		discount: null,
 		col: 1
 	},
@@ -1316,6 +1323,20 @@ Sale: {
 	{
 		name: "Rox's Quiver Set",
 		id: "42661",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Braham's Mace Skin",
+		id: "42653",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Braham's Shield Skin",
+		id: "42656",
 		price: 600,
 		discount: null,
 		col: 1
