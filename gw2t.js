@@ -1422,6 +1422,7 @@ X = {
 		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: ""},
 		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: ""},
 		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: ""},
+		SkrittBurglar: { key: "str_chlSkrittBurglar", urlkey: "skrittburglar", value: ""},
 		// Heart of Thorns
 		TigerSpirit: { key: "str_chlTigerSpirit", urlkey: "tigerspirit", value: ""},
 		ItzelTotems: { key: "str_chlItzelTotems", urlkey: "itzeltotems", value: ""},
@@ -7538,11 +7539,81 @@ V = {
 
 		pBank.empty();
 		var container = pBank.parents(".bnkContainer");
-		var headers, database;
-		var tab;
+		var headers = {};
+		var database = {};
+		var tab, customtab, tabkey;
 		var catarr, catobj;
 		var slot, unlockid, unlockobj;
 		var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
+		
+		// Fills a slot with item icon and labels
+		var fillSlot = function(iSlot, iItemID, iUnlockID, iWiki, iPayment, iCallback)
+		{
+			Q.getItem(iItemID, function(iItem)
+			{
+				var slotcoin, slotgem, slotgemvalue;
+				if (iPayment)
+				{
+					slotcoin = iPayment["coin"];
+					// Some items with a gem price may be marked to not be added to the tab display
+					slotgem = iPayment["gem"];
+					if (slotgem !== undefined)
+					{
+						if (slotgem < 0)
+						{
+							slotgem = 0; // Let the payment function create the price label rather than the style function
+						}
+						else
+						{
+							slotgemvalue = slotgem;
+						}
+					}
+				}
+				// Determine the item count number to display
+				var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
+				var comment;
+				if (Settings.aIsPossessions && unlocksassoc[iItemID])
+				{
+					count = unlocksassoc[iItemID].oCount;
+					comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(unlocksassoc[iItemID].oLocations) + "</var>";
+				}
+				// Style the slot
+				B.styleBankSlot(iSlot, {
+					aItem: iItem,
+					aTradeableID: (Settings.aIsPossessions && iUnlockID) ? iUnlockID : null,
+					aPrice: slotcoin,
+					aGem: slotgemvalue,
+					aSlotMeta: {count: count},
+					aComment: comment,
+					aWiki: iWiki,
+					aCallback: function()
+					{
+						// Include payment if the item cannot be obtained on the Trading Post
+						if (iPayment && ((slotcoin === undefined && slotgem === undefined) || (slotcoin === 0 || slotgem === 0)))
+						{
+							for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
+							{
+								var paymentvalue = iPayment[paymentkey];
+								var priceclass = "";
+								if (paymentvalue < 0)
+								{
+									// A negative price means it should not be added, only displayed subtly
+									priceclass = "bnkSlotPriceTrivial";
+									paymentvalue *= -1;
+								}
+								iSlot.append("<var class='bnkSlotPrice " + priceclass + "'>"
+									+ E.Payment[paymentkey](paymentvalue * (count || 1))
+								+ "</var>");
+							}
+						}
+					}
+				});
+				if (iCallback)
+				{
+					iCallback();
+				}
+			});
+		};
 		
 		// Fills a bank tab with slots
 		var fillTab = function(pTab, pCatArr)
@@ -7555,71 +7626,11 @@ V = {
 				slot = B.createBankSlot(slotscontainer);
 				unlockobj = pCatArr[ii];
 				// Fill the slot with the item icon
-				(function(iSlot, iUnlockID, iItemID, iWiki, iPayment)
+				fillSlot(slot, unlockobj.i || unlockobj, unlockobj.u, unlockobj.n, unlockobj.p, function()
 				{
-					Q.getItem(iItemID, function(iItem)
-					{
-						var slotcoin, slotgem, slotgemvalue;
-						if (iPayment)
-						{
-							slotcoin = iPayment["coin"];
-							// Some items with a gem price may be marked to not be added to the tab display
-							slotgem = iPayment["gem"];
-							if (slotgem !== undefined)
-							{
-								if (slotgem < 0)
-								{
-									slotgem = 0; // Let the payment function create the price label rather than the style function
-								}
-								else
-								{
-									slotgemvalue = slotgem;
-								}
-							}
-						}
-						// Determine the item count number to display
-						var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
-						var comment;
-						if (Settings.aIsPossessions && unlocksassoc[iItemID])
-						{
-							count = unlocksassoc[iItemID].oCount;
-							comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(unlocksassoc[iItemID].oLocations) + "</var>";
-						}
-						// Style the slot
-						B.styleBankSlot(iSlot, {
-							aItem: iItem,
-							aTradeableID: (Settings.aIsPossessions && iUnlockID) ? iUnlockID : null,
-							aPrice: slotcoin,
-							aGem: slotgemvalue,
-							aSlotMeta: {count: count},
-							aComment: comment,
-							aWiki: iWiki,
-							aCallback: function()
-							{
-								// Include payment if the item cannot be obtained on the Trading Post
-								if (iPayment && ((slotcoin === undefined && slotgem === undefined) || (slotcoin === 0 || slotgem === 0)))
-								{
-									for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
-									{
-										var paymentvalue = iPayment[paymentkey];
-										var priceclass = "";
-										if (paymentvalue < 0)
-										{
-											// A negative price means it should not be added, only displayed subtly
-											priceclass = "bnkSlotPriceTrivial";
-											paymentvalue *= -1;
-										}
-										iSlot.append("<var class='bnkSlotPrice " + priceclass + "'>"
-											+ E.Payment[paymentkey](paymentvalue * (count || 1))
-										+ "</var>");
-									}
-								}
-								numfetched++;
-								A.setProgressBar(numfetched, numtofetch);
-							}
-						});
-					});
-				})(slot, unlockobj.u, unlockobj.i, unlockobj.n, unlockobj.p);
+					numfetched++;
+					A.setProgressBar(numfetched, numtofetch);
+				});
 			}
 		};
 
@@ -7628,7 +7639,34 @@ V = {
 		 */
 		if (Settings.aCustomTabs)
 		{
-			
+			for (var i = 0; i < Settings.aCustomTabs.length; i++)
+			{
+				customtab = Settings.aCustomTabs[i];
+				tabkey = "Tab_" + i;
+				headers[tabkey] = {
+					name_en: customtab.name
+				};
+				database[tabkey] = [];
+				// Reconstruct an unlockable entry just using the 
+				for (var ii = 0; ii < customtab.items.length; ii++)
+				{
+					database[tabkey] = customtab.items;
+				}
+			}
+			// Add the default unlockables to the custom unlockables, so that the custom ones are top ordered
+			for (var i in Settings.aHeaders)
+			{
+				headers[i] = Settings.aHeaders[i];
+			}
+			for (var i in Settings.aDatabase)
+			{
+				database[i] = Settings.aDatabase[i];
+			}
+		}
+		else
+		{
+			headers = Settings.aHeaders;
+			database = Settings.aDatabase;
 		}
 		/* 
 		 * Create tabs for each unlockable category.
@@ -7636,10 +7674,10 @@ V = {
 		var numsunlockedtotal = 0;
 		var numintabstotal = 0;
 		var numacquiredtotal = 0;
-		for (var i in Settings.aDatabase)
+		for (var i in database)
 		{
-			catobj = Settings.aHeaders[i];
-			catarr = Settings.aDatabase[i];
+			catobj = headers[i];
+			catarr = database[i];
 			tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : B.createBankTab(pBank, {
 				aTitle: D.getObjectName(catobj),
 				aIsCollapsed: catobj.iscollapsed
@@ -7662,6 +7700,16 @@ V = {
 					else
 					{
 						fillTab(iTab, iCatArr);
+					}
+					/*
+					 * If has custom tabs, add a dummy slot to the custom tab to act as a
+					 * button for the user to add items to that slot.
+					 */
+					if (Settings.aCustomTabs && typeof iCatArr[0] === "number")
+					{
+						var customsearch = $("<input type='text' />").appendTo(iTab);
+						customsearch.wrap("<div>");
+						Q.bindItemSearch(customsearch);
 					}
 				}
 			})(tab, catobj, catarr, i);
@@ -8302,9 +8350,19 @@ B = {
 		{
 			case E.PaymentEnum.Coin: {
 				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricetorecord, {aWantColor: true, aWantShort: true}) + "</var>");
+				// Also include price for a single item (shown when hovered over the slot)
+				if (pCount > 1)
+				{
+					var priceone = (typeof pPrice === "number") ? E.createPrice(pPrice, 1) : E.processPrice(pPrice, 1);
+					pSlot.append("<var class='bnkSlotPriceOne'>" + E.formatCoinString(priceone.oPriceSell, {aWantColor: true, aWantShort: true}) + "</var>");
+				}
 			}; break;
 			case E.PaymentEnum.Gem: {
 				pSlot.append("<var class='bnkSlotPrice'>" + E.formatGemString(pricetorecord, true) + "</var>");
+				if (pCount > 1)
+				{
+					pSlot.append("<var class='bnkSlotPriceOne'>" + E.formatGemString(pPrice, true) + "</var>");
+				}
 			}; break;
 		}
 
@@ -10148,6 +10206,7 @@ Q = {
 		var searchcontainer = elm.parent();
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").appendTo(searchcontainer).hide();
 		var resultslist = $("<div class='itmSearchResultList cntPopup jsScrollable'></div>").appendTo(resultscontainer);
+		var notfoundstr = "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>";
 		var searchtimestamp;
 		I.bindScrollbar(resultslist);
 		
@@ -10180,7 +10239,7 @@ Q = {
 			searchtimestamp = (new Date()).getTime();
 			if (pItemIDs.length === 0)
 			{
-				toggleResults(true, "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>");
+				toggleResults(true, notfoundstr);
 			}
 			else
 			{
@@ -10199,7 +10258,7 @@ Q = {
 									+ U.highlightSubstring(pItem.name, pQuery) + "</dfn>").appendTo(resultslist);
 								outputline.click(function(pEvent)
 								{
-									if (pEvent.which === I.ClickEnum.Left)
+									if (pEvent.which === I.ClickEnum.Left && pCallback)
 									{
 										pCallback(pItem);
 										toggleResults(false);
@@ -17396,7 +17455,7 @@ P = {
 					newname = (P.Events[i] !== undefined) ? P.Events[i].name : event.name;
 					zoneobj = M.getZoneFromID(event.map_id);
 					// Skip iterated event if...
-					if (zoneobj === undefined // Event is not in a world map zone
+					if ( ! zoneobj // Event is not in a world map zone
 						|| isEventUnwanted(searchname) // Event is obsolete
 						|| event.map_id === 50) // LA
 					{
