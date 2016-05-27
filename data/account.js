@@ -163,7 +163,9 @@ var GW2T_ACCOUNT_METADATA = {
 		StackMax: 250,
 		NumSlotsHorizontal: 10,
 		NumSlotsVertical: 3,
-		NumSlotsPerTab: 30
+		NumSlotsPerTab: 30,
+		SlotWidth: 72,
+		SlotWidthCondensed: 52
 	},
 	Skins: {
 		Back: [],

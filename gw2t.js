@@ -3206,14 +3206,6 @@ U = {
 	{
 		return U.escapeHTML(U.formatJSON(pObject));
 	},
-	printJSON: function(pObject)
-	{
-		I.print(U.escapeJSON(pObject));
-	},
-	prettyJSON: function(pObject)
-	{
-		I.print("<pre>" + U.escapeJSON(pObject) + "</pre>");
-	},
 	lineJSON: function(pObject, pWantQuotes)
 	{
 		// Returns the stringified JSON as a single line separated with spaces.
@@ -4037,7 +4029,7 @@ Z = {
 			}},
 			identity: {usage: "Prints GPS general information.", f: function()
 			{
-				U.prettyJSON(GPSIdentityJSON);
+				I.prettyJSON(GPSIdentityJSON);
 			}},
 			lock: {usage: "Map cannot be moved.", f: function()
 			{
@@ -4208,7 +4200,7 @@ Z = {
 		{
 			I.clear();
 			// Sort the objects by their IDs
-			U.prettyJSON(Z.APICacheArrayOfObjects);
+			I.prettyJSON(Z.APICacheArrayOfObjects);
 			if (Z.APICacheArrayOfObjects.length > 0 && Z.APICacheArrayOfObjects[0].id)
 			{
 				U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
@@ -4280,7 +4272,7 @@ Z = {
 			else
 			{
 				printIcon(pData);
-				U.prettyJSON(pData);
+				I.prettyJSON(pData);
 			}
 		};
 		
@@ -4687,9 +4679,9 @@ Z = {
 		
 		if (uncatids.length > 0)
 		{
-			I.print("Uncategorized IDs: " + U.printJSON(uncatids));
+			I.print("Uncategorized IDs: " + I.printJSON(uncatids));
 		}
-		U.printJSON(catobj);
+		I.printJSON(catobj);
 	},
 	
 	/*
@@ -4825,7 +4817,7 @@ Z = {
 					for (var ii in dailyobj[i])
 					{
 						var ach = (dailyobj[i])[ii];
-						U.prettyJSON(ach);
+						I.prettyJSON(ach);
 					}
 				}
 				// Also recursively print tomorrow's
@@ -5003,7 +4995,7 @@ Z = {
 				I.print("Items database of all languages updated.");
 				if (newitems)
 				{
-					U.prettyJSON(newitems);
+					I.prettyJSON(newitems);
 				}
 				return;
 			}
@@ -5246,7 +5238,8 @@ A = {
 		});
 		Q.bindItemSearch("#accSearch", function(pItem)
 		{
-			U.prettyJSON(pItem);
+			I.print("<img src='" + pItem.icon + "' />");
+			I.prettyJSON(pItem);
 		});
 		
 		// Initialize context menu for bank and inventory slots
@@ -5600,7 +5593,7 @@ A = {
 				cache: false,
 				success: function(pData, pStatus, pRequest)
 				{
-					U.prettyJSON(pData);
+					I.prettyJSON(pData);
 				},
 				error: function(pRequest, pStatus)
 				{
@@ -6232,7 +6225,7 @@ V = {
 		}).dblclick(function()
 		{
 			var charindex = U.getSubintegerFromHTMLID($(this));
-			U.prettyJSON(A.Data.Characters[charindex]);
+			I.prettyJSON(A.Data.Characters[charindex]);
 		});
 		// Additional information as tooltip
 		I.qTip.init($("#chrSelection_" + pCharacter.oCharIndex).find(".chrCommitment").attr("title", crafttooltip));
@@ -7518,6 +7511,7 @@ V = {
 	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
 	 * @objparam string aHelpMessage HTML of help message element, optional.
 	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
+	 * @objparam objarray aCustomTabs in addition to the original unlockable categories.
 	 * A collection database stores unlockable objects with these properties:
 	 * u: Unlockable ID (such as a skin ID, or mini ID)
 	 * i: Item ID associated with that unlock
@@ -7544,6 +7538,7 @@ V = {
 
 		pBank.empty();
 		var container = pBank.parents(".bnkContainer");
+		var headers, database;
 		var tab;
 		var catarr, catobj;
 		var slot, unlockid, unlockobj;
@@ -7628,6 +7623,13 @@ V = {
 			}
 		};
 
+		/*
+		 * Add to the current unlockable database if provided custom tabs.
+		 */
+		if (Settings.aCustomTabs)
+		{
+			
+		}
 		/* 
 		 * Create tabs for each unlockable category.
 		 */
@@ -7958,13 +7960,6 @@ V = {
  * ========================================================================== */
 B = {
 	
-	Bank:
-	{
-		slotWidth: 72,
-		slotWidthCondensed: 52,
-		slotsPerRow: 10
-	},
-	
 	/*
 	 * Creates a bank container element.
 	 * @param jqobject pDestination to append bank.
@@ -7994,7 +7989,7 @@ B = {
 			+ "</div>"
 		+ "</div>").appendTo(pDestination);
 		var bank = $("<div class='bnkBank'></div>").appendTo(container);
-		bank.css({width: ((Settings.aSlotsPerRow || B.Bank.slotsPerRow) * B.getBankSlotWidth()) + "px"});
+		bank.css({width: ((Settings.aSlotsPerRow || A.Metadata.Bank.NumSlotsHorizontal) * B.getBankSlotWidth()) + "px"});
 
 		if (Settings.aIsCollection)
 		{
@@ -8020,7 +8015,7 @@ B = {
 	getBankSlotWidth: function(pBoolean)
 	{
 		var boolean = (pBoolean !== undefined) ? pBoolean : O.Options.bol_condenseBank;
-		return (boolean) ? B.Bank.slotWidthCondensed : B.Bank.slotWidth;
+		return (boolean) ? A.Metadata.Bank.SlotWidthCondensed : A.Metadata.Bank.SlotWidth;
 	},
 	
 	/*
@@ -8592,7 +8587,7 @@ B = {
 			pBank.toggleClass("bnkCondense", isbankcondense);
 			pRarityButton.toggleClass("bnkButtonFocused");
 			// Update bank 
-			pBank.css({width: B.Bank.slotsPerRow * B.getBankSlotWidth(isbankcondense)});
+			pBank.css({width: A.Metadata.Bank.NumSlotsHorizontal * B.getBankSlotWidth(isbankcondense)});
 			A.adjustAccountScrollbar();
 		};
 		var raritybutton = $("<div class='bnkButtonCondense bnkButton curToggle' title='Toggle bank <dfn>size</dfn>.<br />Change permanently at Options page.'></div>")
@@ -10045,7 +10040,7 @@ Q = {
 			I.qTip.init(elm);
 			elm.click(function()
 			{
-				U.prettyJSON(pTrait);
+				I.prettyJSON(pTrait);
 			});
 		}
 	},
@@ -10081,7 +10076,7 @@ Q = {
 		{
 			if (Q.Context.Item)
 			{
-				U.prettyJSON(Q.Context.Item);
+				I.prettyJSON(Q.Context.Item);
 			}
 			else
 			{
@@ -10152,7 +10147,7 @@ Q = {
 		var queryminchar = 2;
 		var searchcontainer = elm.parent();
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").appendTo(searchcontainer).hide();
-		var resultslist = $("<div class='itmSearchResultList cntPopup jsScrollable'>" + I.cThrobber + "</div>").appendTo(resultscontainer);
+		var resultslist = $("<div class='itmSearchResultList cntPopup jsScrollable'></div>").appendTo(resultscontainer);
 		var searchtimestamp;
 		I.bindScrollbar(resultslist);
 		
@@ -10276,8 +10271,8 @@ Q = {
 		elm.one("click", function()
 		{
 			$(this).val("");
-			resultslist.append(I.cThrobber);
 			toggleResults(true);
+			resultslist.append(I.cThrobber);
 			Q.loadItemsSearch(function()
 			{
 				toggleResults(false);
@@ -10828,7 +10823,7 @@ E = {
 			icon.attr("src", pData.icon);
 			icon.unbind("click").click(function()
 			{
-				U.prettyJSON(pData);
+				I.prettyJSON(pData);
 			});
 			Q.scanItem(pData, {aElement: icon, aCallback: function(pBox)
 			{
@@ -26352,6 +26347,19 @@ I = {
 	log: function(pString, pClear)
 	{
 		I.print(pString, pClear);
+	},
+	
+	/*
+	 * Prints an object in JSON format.
+	 * @param object pObject.
+	 */
+	printJSON: function(pObject)
+	{
+		I.print(U.escapeJSON(pObject));
+	},
+	prettyJSON: function(pObject)
+	{
+		I.print("<pre>" + U.escapeJSON(pObject) + "</pre>");
 	},
 	
 	/*
