@@ -758,7 +758,7 @@ MatrixCubeKey: {
 	]
 },
 SkrittBurglar: {
-	name_en: "Skritt Burlgar",
+	name_en: "Skritt Burglar",
 	name_de: "Skritt-Einbrecherin",
 	name_es: "Ladrona skritt",
 	name_fr: "Cambrioleuse skritt",
