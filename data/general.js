@@ -1287,32 +1287,18 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Caith's Bloom Dagger",
-		id: "20004",
-		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Grenth Hood Skin",
-		id: "47890",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Phantom's Hood",
-		id: "65203",
-		price: 200,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Mad King's Outfit",
 		id: "36366",
 		price: 700,
 		discount: null,
-		col: 1
+		col: 0
+	},
+	{
+		name: "Witch's Outfit",
+		id: "36379",
+		price: 700,
+		discount: null,
+		col: 0
 	},
 	{
 		name: "Rox's Short Bow Skin",
@@ -1338,6 +1324,20 @@ Sale: {
 	{
 		name: "Braham's Shield Skin",
 		id: "42656",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Marjory's Axe Skin",
+		id: "49015",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Marjory's Dagger Skin",
+		id: "49018",
 		price: 600,
 		discount: null,
 		col: 1
