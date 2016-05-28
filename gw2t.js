@@ -63,11 +63,11 @@ $(window).on("load", function() { "use strict";
  * ========================================================================== */
 var A, B, C, D, E, G, H, I, K, M, O, P, Q, T, U, V, W, X, Z;
 
+O = {
 /* =============================================================================
  * @@Options for the user
  * ========================================================================== */
-O = {
-	
+
 	cLengthOfPrefixes: 3,
 	cPrefixOption: "opt_",
 	legalLocalStorageKeys: [],
@@ -85,6 +85,7 @@ O = {
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
 		APICache: {key: "obj_utlAPICache", value: {}},
+		CustomCatalog: {key: "obj_utlCustomCatalog", value: []},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
 		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
 		StoredPins: {key: "obj_utlStoredPins", value: []},
@@ -1375,12 +1376,11 @@ O = {
 		}
 	}
 };
-
+X = {
 /* =============================================================================
  * @@Checklist management and generation
  * ========================================================================== */
-X = {
-	
+
 	/*
 	 * A checklist is a set of checkboxes that can have the usual unchecked,
 	 * checked, and disabled states. These states are recorded as a single
@@ -2450,12 +2450,11 @@ X = {
 		items.first().show();
 	}
 };
-
+U = {
 /* =============================================================================
  * @@URL management for links and string/array/object manipulation
  * ========================================================================== */
-U = {
-	
+
 	URL_META:
 	{
 		News: "http://forum.renaka.com/topic/5500046/",
@@ -3929,12 +3928,11 @@ U = {
 		return (pWantType === undefined) ? id : id + " (" + type + ")";
 	}
 };
-
+Z = {
 /* =============================================================================
  * @@Console commands and server-like functions
  * ========================================================================== */
-Z = {
-	
+
 	cCommandPrefix: "/",
 	APICacheFiles: [], // Stores the URLs to generated blob files
 	APICacheArrayOfIDs: null, // Array of ID numbers for any particular v2 API endpoint
@@ -4389,19 +4387,19 @@ Z = {
 	},
 	
 	/*
-	 * Creates a file from a regenerated unlockables database.
-	 * @param object pDatabase.
+	 * Creates a file from a regenerated unlockables record.
+	 * @param object pRecord.
 	 */
-	printUnlockables: function(pDatabase)
+	printUnlockables: function(pRecord)
 	{
 		var output = "";
 		var catarr, arrlength;
-		var objlength = U.getObjectLength(pDatabase);
+		var objlength = U.getObjectLength(pRecord);
 		var objlengthcounter = 0;
-		for (var i in pDatabase)
+		for (var i in pRecord)
 		{
 			output += i + ": [\r\n";
-			catarr = pDatabase[i];
+			catarr = pRecord[i];
 			arrlength = catarr.length;
 			for (var ii = 0; ii < arrlength; ii++)
 			{
@@ -5055,12 +5053,11 @@ Z = {
 		});
 	}
 };
-
+A = {
 /* =============================================================================
  * @@Account panel and API key management
  * ========================================================================== */
-A = {
-	
+
 	TokenCurrent: null,
 	CharIndexCurrent: null,
 	isAccountInitialized: false,
@@ -5955,12 +5952,10 @@ A = {
 		return str;
 	}
 };
-
+V = {
 /* =============================================================================
  * @@View and generate account character and bank sections
  * ========================================================================== */
-V = {
-	
 	/*
 	 * Binds a sortable list by binding its clickable header.
 	 * @param jqobject pList to bind.
@@ -7185,7 +7180,7 @@ V = {
 	 */
 	serveAscended: function()
 	{
-		V.generateCatalog("ascended", {aWantGem: false});
+		B.generateCatalog("ascended", {aWantGem: false});
 	},
 	
 	/*
@@ -7297,63 +7292,11 @@ V = {
 	},
 	
 	/*
-	 * Macro function to serve a catalog style bank to an account page's section.
-	 * A catalog is a bank based on the account's entire inventory, bank, and 
-	 * materials items possessions.
-	 * @param string pSection name.
-	 * @param object pSettings for the generate unlockables function.
-	 */
-	generateCatalog: function(pSection, pSettings)
-	{
-		var Settings = $.extend({
-			aIsPossessions: true,
-			aWantGem: true,
-			aWantSearchHighlight: false
-		}, pSettings);
-		
-		var sectionupper = U.toFirstUpperCase(pSection);
-		var sectionlower = pSection.toLowerCase();
-		if (V.requireCharacters(sectionupper))
-		{
-			return;
-		}
-		else if ( ! A.Data.Characters[0].bags)
-		{
-			A.printError(A.PermissionEnum.Inventories);
-			return;
-		}
-		var dish = $("#accDish_" + sectionupper);
-		if (A.reinitializeDish(dish) === false)
-		{
-			return;
-		}
-		
-		var container = B.createBank(dish, {aIsCollection: true, aWantGem: Settings.aWantGem});
-		var bank = container.find(".bnkBank").append(I.cThrobber);
-		$.getScript(U.URL_DATA[sectionupper]).done(function()
-		{
-			Q.loadItemsSubdatabase(sectionlower, function()
-			{
-				/*
-				 * Catalog is a custom unlockable whose collection is generated based on
-				 * the user's bank and inventory rather than a list provided by the API.
-				 */
-				A.initializePossessions(function()
-				{
-					Settings.aHeaders = U.getDatabaseHeader(pSection);
-					Settings.aDatabase = U.getDatabaseData(pSection);
-					V.generateUnlockables(bank, Settings);
-				});
-			});
-		});
-	},
-	
-	/*
 	 * Generates the items catalog bank window.
 	 */
 	serveCatalog: function()
 	{
-		V.generateCatalog("catalog");
+		B.generateCatalog("catalog", {aCustomCatalog: "obj_utlCustomCatalog"});
 	},
 	
 	/*
@@ -7504,254 +7447,6 @@ V = {
 	},
 	
 	/*
-	 * Macro function for creating unlockables style banks.
-	 * @param jqobject pBank to manipulate.
-	 * @objparam object aHeaders containing category header translations.
-	 * @objparam object aDatabase containing category objects holding unlockables.
-	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API.
-	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
-	 * @objparam string aHelpMessage HTML of help message element, optional.
-	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
-	 * @objparam objarray aCustomTabs in addition to the original unlockable categories.
-	 * A collection database stores unlockable objects with these properties:
-	 * u: Unlockable ID (such as a skin ID, or mini ID)
-	 * i: Item ID associated with that unlock
-	 * n: Name of the unlockable.
-	 * t: Tradeable array of item IDs, optional.
-	 * p: Payment to acquire the associated item if the item is not tradeable.
-	 */
-	generateUnlockables: function(pBank, pSettings)
-	{
-		// Convert the API array of unlocks into an associative array
-		var Settings = pSettings || {};
-		var unlocksassoc = {};
-		if (Settings.aIsPossessions)
-		{
-			unlocksassoc = A.Possessions;
-		}
-		else
-		{
-			for (var i = 0; i < Settings.aUnlockeds.length; i++)
-			{
-				unlocksassoc[(Settings.aUnlockeds[i])] = true;
-			}
-		}
-
-		pBank.empty();
-		var container = pBank.parents(".bnkContainer");
-		var headers = {};
-		var database = {};
-		var tab, customtab, tabkey;
-		var catarr, catobj;
-		var slot, unlockid, unlockobj;
-		var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
-		
-		// Fills a slot with item icon and labels
-		var fillSlot = function(iSlot, iItemID, iUnlockID, iWiki, iPayment, iCallback)
-		{
-			Q.getItem(iItemID, function(iItem)
-			{
-				var slotcoin, slotgem, slotgemvalue;
-				if (iPayment)
-				{
-					slotcoin = iPayment["coin"];
-					// Some items with a gem price may be marked to not be added to the tab display
-					slotgem = iPayment["gem"];
-					if (slotgem !== undefined)
-					{
-						if (slotgem < 0)
-						{
-							slotgem = 0; // Let the payment function create the price label rather than the style function
-						}
-						else
-						{
-							slotgemvalue = slotgem;
-						}
-					}
-				}
-				// Determine the item count number to display
-				var count = (unlocksassoc[iUnlockID]) ? 1 : 0;
-				var comment;
-				if (Settings.aIsPossessions && unlocksassoc[iItemID])
-				{
-					count = unlocksassoc[iItemID].oCount;
-					comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(unlocksassoc[iItemID].oLocations) + "</var>";
-				}
-				// Style the slot
-				B.styleBankSlot(iSlot, {
-					aItem: iItem,
-					aTradeableID: (Settings.aIsPossessions && iUnlockID) ? iUnlockID : null,
-					aPrice: slotcoin,
-					aGem: slotgemvalue,
-					aSlotMeta: {count: count},
-					aComment: comment,
-					aWiki: iWiki,
-					aCallback: function()
-					{
-						// Include payment if the item cannot be obtained on the Trading Post
-						if (iPayment && ((slotcoin === undefined && slotgem === undefined) || (slotcoin === 0 || slotgem === 0)))
-						{
-							for (var paymentkey in iPayment) // This is not a loop, used to access the key of the object
-							{
-								var paymentvalue = iPayment[paymentkey];
-								var priceclass = "";
-								if (paymentvalue < 0)
-								{
-									// A negative price means it should not be added, only displayed subtly
-									priceclass = "bnkSlotPriceTrivial";
-									paymentvalue *= -1;
-								}
-								iSlot.append("<var class='bnkSlotPrice " + priceclass + "'>"
-									+ E.Payment[paymentkey](paymentvalue * (count || 1))
-								+ "</var>");
-							}
-						}
-					}
-				});
-				if (iCallback)
-				{
-					iCallback();
-				}
-			});
-		};
-		
-		// Fills a bank tab with slots
-		var fillTab = function(pTab, pCatArr)
-		{
-			var numtofetch = U.getObjectLength(pCatArr);
-			var numfetched = 0;
-			var slotscontainer = pTab.find(".bnkTabSlots");
-			for (var ii = 0; ii < pCatArr.length; ii++)
-			{
-				slot = B.createBankSlot(slotscontainer);
-				unlockobj = pCatArr[ii];
-				// Fill the slot with the item icon
-				fillSlot(slot, unlockobj.i || unlockobj, unlockobj.u, unlockobj.n, unlockobj.p, function()
-				{
-					numfetched++;
-					A.setProgressBar(numfetched, numtofetch);
-				});
-			}
-		};
-
-		/*
-		 * Add to the current unlockable database if provided custom tabs.
-		 */
-		if (Settings.aCustomTabs)
-		{
-			for (var i = 0; i < Settings.aCustomTabs.length; i++)
-			{
-				customtab = Settings.aCustomTabs[i];
-				tabkey = "Tab_" + i;
-				headers[tabkey] = {
-					name_en: customtab.name
-				};
-				database[tabkey] = [];
-				// Reconstruct an unlockable entry just using the 
-				for (var ii = 0; ii < customtab.items.length; ii++)
-				{
-					database[tabkey] = customtab.items;
-				}
-			}
-			// Add the default unlockables to the custom unlockables, so that the custom ones are top ordered
-			for (var i in Settings.aHeaders)
-			{
-				headers[i] = Settings.aHeaders[i];
-			}
-			for (var i in Settings.aDatabase)
-			{
-				database[i] = Settings.aDatabase[i];
-			}
-		}
-		else
-		{
-			headers = Settings.aHeaders;
-			database = Settings.aDatabase;
-		}
-		/* 
-		 * Create tabs for each unlockable category.
-		 */
-		var numsunlockedtotal = 0;
-		var numintabstotal = 0;
-		var numacquiredtotal = 0;
-		for (var i in database)
-		{
-			catobj = headers[i];
-			catarr = database[i];
-			tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : B.createBankTab(pBank, {
-				aTitle: D.getObjectName(catobj),
-				aIsCollapsed: catobj.iscollapsed
-			});
-			(function(iTab, iCatObj, iCatArr, iCatArrName)
-			{
-				if (Settings.aIsDyes)
-				{
-					V.fillDyeTab(iTab, iCatArr, unlocksassoc, iCatArrName);
-				}
-				else
-				{
-					if (Settings.aIsCollapsed || iCatObj.iscollapsed)
-					{
-						iTab.find(".bnkTabSeparator").one("click", function()
-						{
-							fillTab(iTab, iCatArr);
-						});
-					}
-					else
-					{
-						fillTab(iTab, iCatArr);
-					}
-					/*
-					 * If has custom tabs, add a dummy slot to the custom tab to act as a
-					 * button for the user to add items to that slot.
-					 */
-					if (Settings.aCustomTabs && typeof iCatArr[0] === "number")
-					{
-						var customsearch = $("<input type='text' />").appendTo(iTab);
-						customsearch.wrap("<div>");
-						Q.bindItemSearch(customsearch);
-					}
-				}
-			})(tab, catobj, catarr, i);
-
-			// For this ith tab, write the number of unlockables unlocked on the tab header
-			var numunlocked = 0;
-			var numacquired = 0;
-			for (var ii = 0; ii < catarr.length; ii++)
-			{
-				unlockid = (Settings.aIsPossessions) ? catarr[ii].i : catarr[ii].u;
-				if (unlocksassoc[unlockid])
-				{
-					numunlocked++;
-					numsunlockedtotal++;
-					if (Settings.aIsPossessions)
-					{
-						numacquired += unlocksassoc[unlockid].oCount;
-					}
-				}
-			}
-			var numintab = catarr.length;
-			numintabstotal += numintab;
-			var acquiredstr = (numacquired) ? (" " + numacquired + "×") : "";
-			var unlockratio = numunlocked / numintab;
-			var unlockratioclass = (unlockratio === 1) ? "accSignificant" : "accTrivial";
-			var unlockstr = numunlocked + " / " + numintab
-				+ "<span class='" + unlockratioclass + "'> (" + U.convertRatioToPercent(unlockratio) + ")" + acquiredstr + "</span>";
-			tab.find(".bnkTabStats").html(unlockstr);
-			if (numacquired)
-			{
-				numacquiredtotal += numacquired;
-			}
-		}
-		var acquiredtotalstr = (numacquiredtotal) ? (" " + numacquiredtotal + "×") : "";
-		var unlocktotalstr = numsunlockedtotal + " / " + numintabstotal
-				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numsunlockedtotal / numintabstotal) + ")" + acquiredtotalstr + "</span>";
-		container.find(".bnkCount").append(unlocktotalstr);
-		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
-		B.createBankMenu(pBank, {aWantSearchHighlight: wantsearchhighlight, aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html()});
-	},
-	
-	/*
 	 * Generates the skin wardrobe window.
 	 */
 	serveWardrobe: function()
@@ -7762,7 +7457,7 @@ V = {
 			return;
 		}
 		
-		var headers, galleries, database;
+		var headers, galleries, record;
 		var galleryword = D.getWordCapital("gallery");
 		// Macro function to add link to gallery buttons next to the tab separators
 		var createGalleryLinks = function(pTab, pCategory)
@@ -7806,11 +7501,11 @@ V = {
 		{
 			galleries = GW2T_SKINS_GALLERIES;
 			headers = GW2T_SKINS_HEADERS;
-			database = GW2T_SKINS_DATA;
+			record = GW2T_SKINS_DATA;
 			
-			V.generateUnlockables(bank, {
+			B.generateUnlockables(bank, {
 				aHeaders: headers,
-				aDatabase: database,
+				aRecord: record,
 				aUnlockeds: pUnlockeds,
 				aIsCollapsed: true,
 				aHelpMessage: $("#accWardrobeHelp").html(),
@@ -7854,9 +7549,9 @@ V = {
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var generateMinis = function(pUnlockeds)
 		{
-			V.generateUnlockables(bank, {
+			B.generateUnlockables(bank, {
 				aHeaders: GW2T_MINIS_HEADERS,
-				aDatabase: GW2T_MINIS_DATA,
+				aRecord: GW2T_MINIS_DATA,
 				aUnlockeds: pUnlockeds
 			});
 		};
@@ -7878,98 +7573,6 @@ V = {
 	},
 	
 	/*
-	 * Fills a bank tab with dyes (as bank slots).
-	 * @param jqobject pTab.
-	 * @param array pCatArr of unlockable objects, which are dyes.
-	 * @param object pUnlockAssoc associative array to check against.
-	 * @param string pCatArrName to determine dye rarity.
-	 * @pre Data from the dye section of the account page was loaded.
-	 */
-	fillDyeTab: function(pTab, pCatArr, pUnlockAssoc, pCatArrName)
-	{
-		var slot, unlockobj;
-		var slotscontainer = pTab.find(".bnkTabSlots");
-		var metadata = GW2T_DYES_METADATA;
-		var translations = {};
-		for (var i in metadata.Translations)
-		{
-			translations[i] = D.getObjectTranslation(metadata.Translations[i]);
-		}
-		
-		for (var i = 0; i < pCatArr.length; i++)
-		{
-			slot = B.createBankSlot(slotscontainer);
-			unlockobj = pCatArr[i];
-			(function(iSlot, iUnlockObj, iUnlockID, iItemID, iWiki, iColors, iHue, iMaterial, iChatlink, iName)
-			{
-				// Color the bank slot as that dye
-				iSlot.find(".bnkSlotIcon").css({background: iColors[0]});
-				// Include name over the slot
-				iSlot.append("<var class='bnkSlotDyeName'>" + iName + "</var>");
-				// Set slot rarity depending on its tab
-				var rarity = (metadata.Rarities[pCatArrName]) ? metadata.Rarities[pCatArrName] : metadata.Rarities.Default;
-				iSlot.find(".bnkSlotIcon").addClass("bnkSlotRarity_" + rarity);
-				// Label the price, if there is an associated dye item
-				var count = (pUnlockAssoc[iUnlockID]) ? 1 : 0;
-				if (count)
-				{
-					iSlot.data("count", count);
-				}
-				if (iItemID)
-				{
-					$.getJSON(U.getAPIPrice(iItemID), function(pData)
-					{
-						B.updateSlotPrice(iSlot, pData, count, E.PaymentEnum.Coin);
-						if (count)
-						{
-							// Fade the price label if already unlocked that dye
-							iSlot.find(".bnkSlotPrice").addClass("accTrivial");
-						}
-					});
-					slot.data("istradeable", true);
-				}
-				
-				// Tooltip shows the different colors on different materials
-				var tiphtml = "<div class='bnkDyePreview'>"
-					+ "<aside class='bnkDyePreviewTitle'><var class='bnkDyePreviewName' style='color:" + iColors[0] + "'>" + iName + "</var> ("
-						+ translations[iHue] + " " + translations[iMaterial] + ")</aside>"
-					+ "<div class='bnkDyePreviewSwatches'>"
-						+ "<aside class='bnkDyePreviewSwatch' style='background:" + iColors[0] + "'>"
-							+ "<var class='bnkDyePreviewMaterial'>" + translations["Vibrant"] + "</var></aside>"
-						+ "<aside class='bnkDyePreviewSwatch' style='background:" + iColors[1] + "'>"
-							+ "<var class='bnkDyePreviewMaterial'>" + translations["Leather"] + "</var></aside>"
-						+ "<aside class='bnkDyePreviewSwatch' style='background:" + iColors[2] + "'>"
-							+ "<var class='bnkDyePreviewMaterial'>" + translations["Metal"] + "</var></aside>"
-					+ "</div>"
-				+ "</div>";
-				iSlot.attr("title", tiphtml);
-				I.qTip.init(iSlot);
-				
-				// Remember search keywords
-				var keywords = (iName + " " + translations[iHue] + " " + translations[iMaterial]).toLowerCase();
-				iSlot.data("keywords", keywords);
-				
-				// Bind slot click behavior
-				iSlot.click(function(pEvent)
-				{
-					if (pEvent.which === I.ClickEnum.Left)
-					{
-						U.openExternalURL(U.getWikiSearchDefault(iWiki));
-					}
-				});
-				// Bind context menu
-				Q.bindItemSlotBehavior(iSlot, {
-					aObject: iUnlockObj,
-					aChatlink: iChatlink,
-					aTradeableID: iItemID,
-					aSearch: iWiki
-				});
-				
-			})(slot, unlockobj, unlockobj.u, unlockobj.i, unlockobj.n, unlockobj.c, unlockobj.h, unlockobj.m, unlockobj.l, D.getObjectTranslation(unlockobj));
-		}
-	},
-	
-	/*
 	 * Generates the dye color collection window.
 	 */
 	serveDyes: function()
@@ -7986,9 +7589,9 @@ V = {
 		{
 			$.getJSON(A.getURL(A.URL.Dyes), function(pData)
 			{
-				V.generateUnlockables(bank, {
+				B.generateUnlockables(bank, {
 					aHeaders: GW2T_DYES_HEADERS,
-					aDatabase: GW2T_DYES_DATA,
+					aRecord: GW2T_DYES_DATA,
 					aUnlockeds: pData,
 					aHelpMessage: $("#accDyesHelp").html(),
 					aWantSearchHighlight: false,
@@ -8002,12 +7605,10 @@ V = {
 		});
 	}
 };
-
+B = {
 /* =============================================================================
  * @@Bank window and item slots
  * ========================================================================== */
-B = {
-	
 	/*
 	 * Creates a bank container element.
 	 * @param jqobject pDestination to append bank.
@@ -8072,6 +7673,7 @@ B = {
 	 * @param jqobject pBank container of tabs.
 	 * @objparam string iIcon HTML for tab header icon.
 	 * @objparam string aTitle for tab header title.
+	 * @objparam boolean aIsTop whether to add to top of bank instead of append.
 	 * @objparam boolean aIsCollapsed whether the tab is pre-collapsed, for tabs
 	 * that generate slots on demand.
 	 * @returns jqobject bank tab.
@@ -8095,6 +7697,7 @@ B = {
 		+ "</div>").appendTo(tab);
 		var tabtoggle = tabseparator.find(".bnkTabToggle");
 		var tabslots = $("<div class='bnkTabSlots'></div>").appendTo(tab);
+		
 		tabseparator.click(function(pEvent)
 		{
 			if (pEvent.which === I.ClickEnum.Left)
@@ -8109,7 +7712,14 @@ B = {
 			I.toggleToggleIcon(tabtoggle, false);
 			tabslots.hide();
 		}
-		pBank.append(tab);
+		if (Settings.aIsTop)
+		{
+			pBank.prepend(tab);
+		}
+		else
+		{
+			pBank.append(tab);
+		}
 		return tab;
 	},
 	
@@ -8718,14 +8328,508 @@ B = {
 		searchcontainer.css({width: searchcontainer.width() - buttoncontainer.width()});
 		I.qTip.init(buttoncontainer.find(".bnkButton"));
 		A.adjustAccountPanel();
+	},
+	
+	/*
+	 * Fills a bank tab with slots.
+	 * @param jqobject pTab to fill.
+	 * @param array pCatArr of unlockables.
+	 * @param object pSettings for the slot fill function.
+	 */
+	fillTab: function(pTab, pCatArr, pSettings)
+	{
+		var Settings = pSettings || {};
+		var slot, unlockobj;
+		var numtofetch = U.getObjectLength(pCatArr);
+		var numfetched = 0;
+		var slotscontainer = pTab.find(".bnkTabSlots");
+		for (var ii = 0; ii < pCatArr.length; ii++)
+		{
+			slot = B.createBankSlot(slotscontainer);
+			unlockobj = pCatArr[ii];
+			// Fill the slot with the item icon
+			B.fillSlot(slot, unlockobj.i || unlockobj, {
+				aUnlockAssoc: Settings.aUnlockAssoc,
+				aUnlockObj: unlockobj,
+				aIsCatalog: Settings.aIsCatalog,
+				aIsCustom: Settings.aIsCustom,
+				aCallback: function()
+				{
+					numfetched++;
+					A.setProgressBar(numfetched, numtofetch);
+				}
+			});
+		}
+	},
+	
+	/*
+	 * Fills a bank tab with dyes (as bank slots).
+	 * @param jqobject pTab.
+	 * @param array pCatArr of unlockable objects, which are dyes.
+	 * @param object pUnlockAssoc associative array to check against.
+	 * @param string pCatArrName to determine dye rarity.
+	 * @pre Data from the dye section of the account page was loaded.
+	 */
+	fillDyeTab: function(pTab, pCatArr, pUnlockAssoc, pCatArrName)
+	{
+		var slot, unlockobj;
+		var slotscontainer = pTab.find(".bnkTabSlots");
+		var metadata = GW2T_DYES_METADATA;
+		var translations = {};
+		for (var i in metadata.Translations)
+		{
+			translations[i] = D.getObjectTranslation(metadata.Translations[i]);
+		}
+		
+		for (var i = 0; i < pCatArr.length; i++)
+		{
+			slot = B.createBankSlot(slotscontainer);
+			unlockobj = pCatArr[i];
+			(function(iSlot, iUnlockObj, iUnlockID, iItemID, iWiki, iColors, iHue, iMaterial, iChatlink, iName)
+			{
+				// Color the bank slot as that dye
+				iSlot.find(".bnkSlotIcon").css({background: iColors[0]});
+				// Include name over the slot
+				iSlot.append("<var class='bnkSlotDyeName'>" + iName + "</var>");
+				// Set slot rarity depending on its tab
+				var rarity = (metadata.Rarities[pCatArrName]) ? metadata.Rarities[pCatArrName] : metadata.Rarities.Default;
+				iSlot.find(".bnkSlotIcon").addClass("bnkSlotRarity_" + rarity);
+				// Label the price, if there is an associated dye item
+				var count = (pUnlockAssoc[iUnlockID]) ? 1 : 0;
+				if (count)
+				{
+					iSlot.data("count", count);
+				}
+				if (iItemID)
+				{
+					$.getJSON(U.getAPIPrice(iItemID), function(pData)
+					{
+						B.updateSlotPrice(iSlot, pData, count, E.PaymentEnum.Coin);
+						if (count)
+						{
+							// Fade the price label if already unlocked that dye
+							iSlot.find(".bnkSlotPrice").addClass("accTrivial");
+						}
+					});
+					slot.data("istradeable", true);
+				}
+				
+				// Tooltip shows the different colors on different materials
+				var tiphtml = "<div class='bnkDyePreview'>"
+					+ "<aside class='bnkDyePreviewTitle'><var class='bnkDyePreviewName' style='color:" + iColors[0] + "'>" + iName + "</var> ("
+						+ translations[iHue] + " " + translations[iMaterial] + ")</aside>"
+					+ "<div class='bnkDyePreviewSwatches'>"
+						+ "<aside class='bnkDyePreviewSwatch' style='background:" + iColors[0] + "'>"
+							+ "<var class='bnkDyePreviewMaterial'>" + translations["Vibrant"] + "</var></aside>"
+						+ "<aside class='bnkDyePreviewSwatch' style='background:" + iColors[1] + "'>"
+							+ "<var class='bnkDyePreviewMaterial'>" + translations["Leather"] + "</var></aside>"
+						+ "<aside class='bnkDyePreviewSwatch' style='background:" + iColors[2] + "'>"
+							+ "<var class='bnkDyePreviewMaterial'>" + translations["Metal"] + "</var></aside>"
+					+ "</div>"
+				+ "</div>";
+				iSlot.attr("title", tiphtml);
+				I.qTip.init(iSlot);
+				
+				// Remember search keywords
+				var keywords = (iName + " " + translations[iHue] + " " + translations[iMaterial]).toLowerCase();
+				iSlot.data("keywords", keywords);
+				
+				// Bind slot click behavior
+				iSlot.click(function(pEvent)
+				{
+					if (pEvent.which === I.ClickEnum.Left)
+					{
+						U.openExternalURL(U.getWikiSearchDefault(iWiki));
+					}
+				});
+				// Bind context menu
+				Q.bindItemSlotBehavior(iSlot, {
+					aObject: iUnlockObj,
+					aChatlink: iChatlink,
+					aTradeableID: iItemID,
+					aSearch: iWiki
+				});
+				
+			})(slot, unlockobj, unlockobj.u, unlockobj.i, unlockobj.n,
+				unlockobj.c, unlockobj.h, unlockobj.m, unlockobj.l, D.getObjectTranslation(unlockobj));
+		}
+	},
+	
+	/*
+	 * Fills a slot with item icon and labels.
+	 * @param jqobject pSlot to fill.
+	 * @param int pItemID associated with the unlockable.
+	 * @objparam object aUnlockAssoc to find the association.
+	 * @objparam object aUnlockObj for slot info.
+	 * @objparam boolean aIsCatalog whether to use the user's possessions rather
+	 * than unlockeds, optional.
+	 */
+	fillSlot: function(pSlot, pItemID, pSettings)
+	{
+		var Settings = pSettings || {};
+		var unlocksassoc = Settings.aUnlockAssoc;
+		var unlockobj = Settings.aUnlockObj;
+		var unlockid = unlockobj.u;
+		var wiki = unlockobj.n;
+		var payment = unlockobj.p;
+		
+		Q.getItem(pItemID, function(iItem)
+		{
+			var slotcoin, slotgem, slotgemvalue;
+			if (payment)
+			{
+				slotcoin = payment["coin"];
+				// Some items with a gem price may be marked to not be added to the tab display
+				slotgem = payment["gem"];
+				if (slotgem !== undefined)
+				{
+					if (slotgem < 0)
+					{
+						slotgem = 0; // Let the payment function create the price label rather than the style function
+					}
+					else
+					{
+						slotgemvalue = slotgem;
+					}
+				}
+			}
+			// Determine the item count number to display
+			var count = (unlocksassoc[unlockid]) ? 1 : 0;
+			var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
+			var comment;
+			if (Settings.aIsCatalog && unlocksassoc[pItemID])
+			{
+				count = unlocksassoc[pItemID].oCount;
+				comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(unlocksassoc[pItemID].oLocations) + "</var>";
+			}
+			// Style the slot
+			B.styleBankSlot(pSlot, {
+				aItem: iItem,
+				aTradeableID: (Settings.aIsCatalog && unlockid) ? unlockid : null,
+				aPrice: slotcoin,
+				aGem: slotgemvalue,
+				aSlotMeta: {count: count},
+				aComment: comment,
+				aWiki: wiki,
+				aCallback: function()
+				{
+					// Include payment if the item cannot be obtained on the Trading Post
+					if (payment && ((slotcoin === undefined && slotgem === undefined) || (slotcoin === 0 || slotgem === 0)))
+					{
+						for (var paymentkey in payment) // This is not a loop, used to access the key of the object
+						{
+							var paymentvalue = payment[paymentkey];
+							var priceclass = "";
+							if (paymentvalue < 0)
+							{
+								// A negative price means it should not be added, only displayed subtly
+								priceclass = "bnkSlotPriceTrivial";
+								paymentvalue *= -1;
+							}
+							pSlot.append("<var class='bnkSlotPrice " + priceclass + "'>"
+								+ E.Payment[paymentkey](paymentvalue * (count || 1))
+							+ "</var>");
+						}
+					}
+				}
+			});
+			if (Settings.aCallback)
+			{
+				Settings.aCallback();
+			}
+		});
+	},
+	
+	/*
+	 * Macro function for creating unlockables style banks.
+	 * @param jqobject pBank to manipulate.
+	 * @objparam object aHeaders containing category header translations.
+	 * @objparam object aRecord containing categorized unlockable entries.
+	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API.
+	 * @objparam boolean aIsCatalog whether to use the user's possessions rather than unlockeds.
+	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
+	 * @objparam string aHelpMessage HTML of help message element, optional.
+	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
+	 * @objparam string aCustomCatalog name of the option that stores a custom catalog.
+	 * An unlockables record has arrays that hold entries with these properties:
+	 * u: Unlockable ID (such as a skin ID, or mini ID)
+	 * i: Item ID associated with that unlock
+	 * n: Name of the unlockable.
+	 * t: Tradeable array of item IDs, optional.
+	 * p: Payment to acquire the associated item if the item is not tradeable.
+	 */
+	generateUnlockables: function(pBank, pSettings)
+	{
+		// Convert the API array of unlocks into an associative array
+		var Settings = pSettings || {};
+		var unlocksassoc = {};
+		if (Settings.aIsCatalog)
+		{
+			unlocksassoc = A.Possessions;
+		}
+		else
+		{
+			for (var i = 0; i < Settings.aUnlockeds.length; i++)
+			{
+				unlocksassoc[(Settings.aUnlockeds[i])] = true;
+			}
+		}
+
+		pBank.empty();
+		var container = pBank.parents(".bnkContainer");
+		var headers = {};
+		var database = {};
+		var tab;
+		var catarr, catobj;
+		var unlockid;
+
+		/*
+		 * Add to the current unlockable database if provided custom tabs.
+		 */
+		if (Settings.aCustomCatalog)
+		{
+			// Add custom bank behaviors
+			var customdb = B.bindCustomCatalog(pBank, Settings.aCustomCatalog, unlocksassoc, Settings.aHeaders, Settings.aRecord);
+			headers = customdb.oHeaders;
+			database = customdb.oRecord;
+		}
+		else
+		{
+			headers = Settings.aHeaders;
+			database = Settings.aRecord;
+		}
+		/* 
+		 * Create tabs for each unlockable category.
+		 */
+		var numsunlockedtotal = 0;
+		var numintabstotal = 0;
+		var numacquiredtotal = 0;
+		for (var i in database)
+		{
+			catobj = headers[i];
+			catarr = database[i];
+			tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : B.createBankTab(pBank, {
+				aTitle: D.getObjectName(catobj),
+				aIsCollapsed: catobj.iscollapsed
+			});
+			(function(iTab, iCatObj, iCatArr, iCatArrName)
+			{
+				if (Settings.aIsDyes)
+				{
+					B.fillDyeTab(iTab, iCatArr, unlocksassoc, iCatArrName);
+				}
+				else
+				{
+					if (Settings.aIsCollapsed || iCatObj.iscollapsed)
+					{
+						iTab.find(".bnkTabSeparator").one("click", function()
+						{
+							B.fillTab(iTab, iCatArr, {
+								aUnlockAssoc: unlocksassoc,
+								aIsCatalog: Settings.aIsCatalog
+							});
+						});
+					}
+					else
+					{
+						B.fillTab(iTab, iCatArr, {
+							aUnlockAssoc: unlocksassoc,
+							aIsCatalog: Settings.aIsCatalog,
+							aIsCustom: iCatObj.iscustom
+						});
+					}
+				}
+			})(tab, catobj, catarr, i);
+
+			// For this ith tab, write the number of unlockables unlocked on the tab header
+			var numunlocked = 0;
+			var numacquired = 0;
+			for (var ii = 0; ii < catarr.length; ii++)
+			{
+				unlockid = (Settings.aIsCatalog) ? catarr[ii].i : catarr[ii].u;
+				if (unlocksassoc[unlockid])
+				{
+					numunlocked++;
+					numsunlockedtotal++;
+					if (Settings.aIsCatalog)
+					{
+						numacquired += unlocksassoc[unlockid].oCount;
+					}
+				}
+			}
+			var numintab = catarr.length;
+			numintabstotal += numintab;
+			var acquiredstr = (numacquired) ? (" " + numacquired + "×") : "";
+			var unlockratio = numunlocked / numintab;
+			var unlockratioclass = (unlockratio === 1) ? "accSignificant" : "accTrivial";
+			var unlockstr = numunlocked + " / " + numintab
+				+ "<span class='" + unlockratioclass + "'> (" + U.convertRatioToPercent(unlockratio) + ")" + acquiredstr + "</span>";
+			tab.find(".bnkTabStats").html(unlockstr);
+			if (numacquired)
+			{
+				numacquiredtotal += numacquired;
+			}
+		}
+		var acquiredtotalstr = (numacquiredtotal) ? (" " + numacquiredtotal + "×") : "";
+		var unlocktotalstr = numsunlockedtotal + " / " + numintabstotal
+				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numsunlockedtotal / numintabstotal) + ")" + acquiredtotalstr + "</span>";
+		container.find(".bnkCount").append(unlocktotalstr);
+		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
+		B.createBankMenu(pBank, {aWantSearchHighlight: wantsearchhighlight, aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html()});
+	},
+	
+	/*
+	 * Macro function to serve a catalog style bank to an account page's section.
+	 * A catalog is a bank based on the account's entire inventory, bank, and 
+	 * materials items possessions.
+	 * @param string pSection name.
+	 * @param object pSettings for the generate unlockables function.
+	 */
+	generateCatalog: function(pSection, pSettings)
+	{
+		var Settings = $.extend({
+			aIsCatalog: true,
+			aWantGem: true,
+			aWantSearchHighlight: false
+		}, pSettings);
+		
+		var sectionupper = U.toFirstUpperCase(pSection);
+		var sectionlower = pSection.toLowerCase();
+		if (V.requireCharacters(sectionupper))
+		{
+			return;
+		}
+		else if ( ! A.Data.Characters[0].bags)
+		{
+			A.printError(A.PermissionEnum.Inventories);
+			return;
+		}
+		var dish = $("#accDish_" + sectionupper);
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		
+		var container = B.createBank(dish, {aIsCollection: true, aWantGem: Settings.aWantGem});
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		$.getScript(U.URL_DATA[sectionupper]).done(function()
+		{
+			Q.loadItemsSubdatabase(sectionlower, function()
+			{
+				/*
+				 * Catalog is a custom unlockable whose collection is generated
+				 * based on the user's bank and inventory contents rather than
+				 * a list provided by the API.
+				 */
+				A.initializePossessions(function()
+				{
+					Settings.aHeaders = U.getDatabaseHeader(pSection);
+					Settings.aRecord = U.getDatabaseData(pSection);
+					B.generateUnlockables(bank, Settings);
+				});
+			});
+		});
+	},
+	
+	/*
+	 * Binds additional behaviors to a bank which the user can add custom tabs to.
+	 * @param jqobject pBank element.
+	 * @param string pCustomCatalog name of stored streamlined unlockables record.
+	 * @param object pUnlockAssoc associative array to check against.
+	 * @param object pHeaders original to extend.
+	 * @param object pRecord original to extend.
+	 * Example structure of the stored custom catalog:
+	 * [
+	 *	{name: "My Tab", items: [123, 1234, 12345]},
+	 *	{name: "My Tab 2", items: [321, 4321, 54321, 21]},
+	 * ]
+	 */
+	bindCustomCatalog: function(pBank, pCustomCatalog, pUnlockAssoc, pHeaders, pRecord)
+	{
+		/*
+		 * Try to the retrieve the stored custom tabs if available and add them
+		 * to the unlockables record.
+		 */
+		var headers = {};
+		var record = {};
+		var customtab, tabkey;
+		var customtabs = [];
+		try
+		{
+			customtabs = JSON.parse(localStorage[pCustomCatalog]);
+		}
+		catch (e) {}
+		
+		// Convert the custom tabs object into the unlockables format
+		for (var i = 0; i < customtabs.length; i++)
+		{
+			customtab = pCustomCatalog[i];
+			tabkey = "Tab_" + i;
+			headers[tabkey] = {
+				name_en: customtab.name
+			};
+			record[tabkey] = [];
+			// Reconstruct an unlockable entry just using the 
+			for (var ii = 0; ii < customtab.items.length; ii++)
+			{
+				record[tabkey] = customtab.items;
+			}
+		}
+		// Add the default unlockables to the custom unlockables, so that the custom ones are top ordered
+		for (var i in pHeaders)
+		{
+			headers[i] = pHeaders[i];
+		}
+		for (var i in pRecord)
+		{
+			record[i] = pRecord[i];
+		}
+		
+		/*
+		 * Add UI functionalities.
+		 */
+		var container = pBank.parents(".bnkContainer");
+		var top = container.find(".bnkTop");
+		var bankcustom = $("<aside class='bnkCustom'>"
+			+ "<span>" + D.getPhraseTitle("new bank tab") + ":</span>"
+		+ "</aside>").appendTo(top);
+		var newtabutton = $("<button class='bnkCustomAdd' title='<dfn>Add a custom bank tab</dfn> using the name on the left.<br />"
+			+ "To edit or delete a custom bank tab, click the cog icon next to one.'>"
+			+ "<img src='img/ui/adjust_plus.png' /></button>");
+		var newtabinput = $("<input class='bnkCustomName' type='text' />").click(function()
+		{
+			$(this).select();
+		}).onEnterKey(function()
+		{
+			newtabutton.trigger("click");
+		});
+		bankcustom.append(newtabinput);
+		bankcustom.append(newtabutton);
+		I.qTip.init(bankcustom.find("input, button"));
+		
+		newtabutton.click(function()
+		{
+			var tabname = U.escapeHTML(newtabinput.val());
+			var tab = B.createBankTab(pBank, {aTitle: tabname, aIsTop: true});
+			B.fillTab(tab, [], {
+				aUnlockAssoc: pUnlockAssoc,
+				aIsCatalog: true,
+				aIsCustom: true
+			});
+		});
+		
+		// Return the extended unlockables data for the generate function to use
+		return {
+			oHeaders: headers,
+			oRecord: record
+		};
 	}
 };
-
+Q = {
 /* =============================================================================
  * @@Quantify items, attributes, traits
  * ========================================================================== */
-Q = {
-	
+
 	Box: {}, // Holds objects with analyzed item details, accessed using the item's ID
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
 	SearchDatabase: null,
@@ -10202,7 +10306,7 @@ Q = {
 	bindItemSearch: function(pElement, pCallback)
 	{
 		var elm = $(pElement).val(D.getWordCapital("search") + "...");
-		var queryminchar = 2;
+		var queryminchar = D.isLanguageLogographic() ? 1 : 2;
 		var searchcontainer = elm.parent();
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").appendTo(searchcontainer).hide();
 		var resultslist = $("<div class='itmSearchResultList cntPopup jsScrollable'></div>").appendTo(resultscontainer);
@@ -10347,16 +10451,17 @@ Q = {
 				{
 					toggleResults(false);
 				});
+				// Execute search in case the user typed something during the database load
+				elm.trigger("input");
 			});
 		});
 	}
 };
-
+E = {
 /* =============================================================================
  * @@Economy Trading Post and money
  * ========================================================================== */
-E = {
-	
+
 	Exchange:
 	{
 		COPPER_IN_SILVER: 100,
@@ -12028,12 +12133,11 @@ E = {
 		}
 	}
 };
-
+D = {
 /* =============================================================================
  * @@Dictionary to translate readable/listenable strings
  * ========================================================================== */
-D = {
-	
+
 	/*
 	 * Words to be used alone or to construct a phrase.
 	 * HTML characters like "'" (single quote) must be escaped because these
@@ -12968,12 +13072,10 @@ D = {
 		return D.getChainTitle(pChain);
 	}
 };
-
+C = {
 /* =============================================================================
  * @@Chains of events
  * ========================================================================== */
-C = {
-	
 	/*
 	 * http://gw2timer.com/data/chains.js initially holds an array of scheduled
 	 * meta event chain objects, which themselves contain an array of their events.
@@ -14367,11 +14469,11 @@ C = {
 		}
 	}
 };
-
+M = {
 /* =============================================================================
  * @@Map and map control template object
  * ========================================================================== */
-M = {
+
 	/*
 	 * http://gw2timer.com/data/general.js contains zone (e.g. Queensdale, LA)
 	 * objects with their rectangular coordinates.
@@ -16934,12 +17036,11 @@ M = {
 		});
 	}	
 };
-
+P = {
 /* =============================================================================
  * @@Populate shared and independent map properties and functions
  * ========================================================================== */
-P = {
-	
+
 	SuffixCurrent: "", // Map options with suffix to differentiate for which map
 	WebsiteCurrentMap: "map", // The map currently displayed on the website
 	GPSCurrentMap: null, // The map which the player resides in game
@@ -18502,12 +18603,10 @@ P = {
 		}
 	}
 };
-
+G = {
 /* =============================================================================
  * @@Generate content for the sections on Map page
  * ========================================================================== */
-G = {
-	
 	/*
 	 * Initializes or regenerates the daily achievements box.
 	 */
@@ -20147,12 +20246,11 @@ G = {
 		});
 	}
 };
-
+W = {
 /* =============================================================================
  * @@World vs World Mists map and objectives, an extension of the M object
  * ========================================================================== */
-W = {
-	
+
 	MapEnum: "wvw",
 	OptionSuffix: "WvW",
 	ZoneAssociation: GW2T_LAND_ASSOCIATION,
@@ -22190,12 +22288,10 @@ W = {
 		}
 	}
 };
-
+T = {
 /* =============================================================================
  * @@Time utilities, schedule, daily, and numeric functions
  * ========================================================================== */
-T = {
-	
 	Daily: GW2T_DAILY_DATA,
 	DailyAssociation: GW2T_DAILY_ASSOCIATION,
 	DailyToday: null,
@@ -23632,12 +23728,11 @@ T = {
 	}
 	
 };
-
+H = {
 /* =============================================================================
  * @@HUD head up display on the map panel: dashboard and timeline
  * ========================================================================== */
-H = {
-	
+
 	Announcement: GW2T_DASHBOARD_DATA.Announcement,
 	Countdown: GW2T_DASHBOARD_DATA.Countdown,
 	Story: GW2T_DASHBOARD_DATA.Story,
@@ -24412,12 +24507,11 @@ H = {
 		}
 	}
 };
-
+K = {
 /* =============================================================================
  * @@Klock analog and by-the-second and frame refreshes
  * ========================================================================== */
-K = {
-	
+
 	tickerFrequency: 250, // Must be a divisor of 1000 milliseconds
 	tickerSecondPrevious: null,
 	stopwatchFrequency: 50,
@@ -25716,12 +25810,11 @@ K = {
 		}
 	}
 };
-
+I = {
 /* =============================================================================
  * @@Interface HTML and CSS content manipulation
  * ========================================================================== */
-I = {
-	
+
 	cSiteName: "GW2Timer.com",
 	cSiteURL: "http://gw2timer.com/",
 	cImageHost: "http://i.imgur.com/",

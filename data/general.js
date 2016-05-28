@@ -1302,20 +1302,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Rox's Short Bow Skin",
-		id: "42659",
-		price: 600,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Rox's Quiver Set",
-		id: "42661",
-		price: 600,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Braham's Mace Skin",
 		id: "42653",
 		price: 600,
@@ -1339,6 +1325,20 @@ Sale: {
 	{
 		name: "Marjory's Dagger Skin",
 		id: "49018",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Belinda's Greatsword Skin",
+		id: "8466",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Kasmeer's Staff Skin",
+		id: "49021",
 		price: 600,
 		discount: null,
 		col: 1

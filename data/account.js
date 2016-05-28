@@ -71,10 +71,14 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "objekt", it: "oggetto", pl: "obiekt", pt: "objeto", ru: " объе́кт", zh: "物體"},
 	s_gallery: {de: "Katalog", es: "Galería", fr: "Galerie",
 		cs: "Galerie", it: "Raccolta", pl: "Galeria", pt: "Galeria", ru: "Коллекция", zh: "圖庫"},
+	s_tab: {de: "registerkarte", es: "pestaña", fr: "onglet",
+		cs: "karta", it: "scheda", pl: "karta", pt: "guia", ru: "вкладка", zh: "選項卡"},
 	
 	// Verbs
 	
 	// Adjectives and Adverbs
+	s_new: {de: "neu", es: "nuevo", fr: "nouveau",
+		cs: "nový", it: "nuovo", pl: "nowy", pt: "novo", ru: "новый", zh: "新"},
 	s_shared: {de: "gemeinsamer", es: "compartida", fr: "partagé",
 		cs: "sdílený", it: "condiviso", pl: "udostępniona", pt: "compartilhado", ru: "общий", zh: "共享"},
 	s_acquired: {de: "erworben", es: "adquirido", fr: "acquis",
@@ -164,6 +168,7 @@ var GW2T_ACCOUNT_METADATA = {
 		NumSlotsHorizontal: 10,
 		NumSlotsVertical: 3,
 		NumSlotsPerTab: 30,
+		CustomTabsLimit: 20,
 		SlotWidth: 72,
 		SlotWidthCondensed: 52
 	},
