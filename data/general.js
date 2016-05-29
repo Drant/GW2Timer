@@ -1273,7 +1273,7 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
 	Start: new Date("2016-05-24T15:00:00Z"),
-	Finish: new Date("2016-05-31T15:00:00Z"),
+	Finish: new Date("2016-06-01T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1287,34 +1287,6 @@ Sale: {
 		price: 700,
 		discount: null,
 		col: 0
-	},
-	{
-		name: "Mad King's Outfit",
-		id: "36366",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Witch's Outfit",
-		id: "36379",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Braham's Mace Skin",
-		id: "42653",
-		price: 600,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Braham's Shield Skin",
-		id: "42656",
-		price: 600,
-		discount: null,
-		col: 1
 	},
 	{
 		name: "Marjory's Axe Skin",

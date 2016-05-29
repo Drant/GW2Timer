@@ -7296,7 +7296,8 @@ V = {
 	 */
 	serveCatalog: function()
 	{
-		B.generateCatalog("catalog", {aCustomCatalog: "obj_utlCustomCatalog"});
+		//B.generateCatalog("catalog", {aIsCustom: true});
+		B.generateCatalog("catalog");
 	},
 	
 	/*
@@ -8021,11 +8022,12 @@ B = {
 		var tabslots = pBank.find(".bnkTabSlots");
 		var tabtoggles = pBank.find(".bnkTabToggle");
 		var dishmenu = A.createDishMenu(sectionname);
+		var bankmenu = $("<div class='bnkMenu'></div>").appendTo(dishmenu);
 		
 		/*
 		 * Search bar.
 		 */
-		var searchcontainer = $("<div class='bnkSearch'></div>").prependTo(dishmenu);
+		var searchcontainer = $("<div class='bnkSearch'></div>").prependTo(bankmenu);
 		var input = $("<input class='bnkSearchInput' type='text' />").appendTo(searchcontainer);
 		var fillertext = $("<div class='bnkSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(searchcontainer);
 		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
@@ -8125,7 +8127,7 @@ B = {
 		/*
 		 * Add buttons next to the search bar for bank functionalities.
 		 */
-		var buttoncontainer = $("<aside class='bnkButtons'></aside>").appendTo(dishmenu);
+		var buttoncontainer = $("<aside class='bnkButtons'></aside>").appendTo(bankmenu);
 		
 		// Reload button reloads the section entirely
 		$("<div class='bnkButtonReload bnkButton curClick' title='<dfn>Reload</dfn> this bank.<br />Press this if the progress bar has frozen.'></div>")
@@ -8360,6 +8362,11 @@ B = {
 				}
 			});
 		}
+		// Also include button for custom tabs
+		if (Settings.aIsCustom)
+		{
+			$("<kbd class='bnkCustomEdit btnWindow'></kbd>").prependTo(pTab);
+		}
 	},
 	
 	/*
@@ -8550,7 +8557,7 @@ B = {
 	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
 	 * @objparam string aHelpMessage HTML of help message element, optional.
 	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
-	 * @objparam string aCustomCatalog name of the option that stores a custom catalog.
+	 * @objparam string aIsCustom whether it is the default catalog with custom tabs.
 	 * An unlockables record has arrays that hold entries with these properties:
 	 * u: Unlockable ID (such as a skin ID, or mini ID)
 	 * i: Item ID associated with that unlock
@@ -8586,10 +8593,10 @@ B = {
 		/*
 		 * Add to the current unlockable database if provided custom tabs.
 		 */
-		if (Settings.aCustomCatalog)
+		if (Settings.aIsCustom)
 		{
 			// Add custom bank behaviors
-			var customdb = B.bindCustomCatalog(pBank, Settings.aCustomCatalog, unlocksassoc, Settings.aHeaders, Settings.aRecord);
+			var customdb = B.bindCustomCatalog(pBank, unlocksassoc, Settings.aHeaders, Settings.aRecord);
 			headers = customdb.oHeaders;
 			database = customdb.oRecord;
 		}
@@ -8675,7 +8682,11 @@ B = {
 				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numsunlockedtotal / numintabstotal) + ")" + acquiredtotalstr + "</span>";
 		container.find(".bnkCount").append(unlocktotalstr);
 		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
-		B.createBankMenu(pBank, {aWantSearchHighlight: wantsearchhighlight, aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html()});
+		B.createBankMenu(pBank, {
+			aWantSearchHighlight: wantsearchhighlight,
+			aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html(),
+			aIsCustom: Settings.aIsCustom
+		});
 	},
 	
 	/*
@@ -8734,7 +8745,6 @@ B = {
 	/*
 	 * Binds additional behaviors to a bank which the user can add custom tabs to.
 	 * @param jqobject pBank element.
-	 * @param string pCustomCatalog name of stored streamlined unlockables record.
 	 * @param object pUnlockAssoc associative array to check against.
 	 * @param object pHeaders original to extend.
 	 * @param object pRecord original to extend.
@@ -8744,7 +8754,7 @@ B = {
 	 *	{name: "My Tab 2", items: [321, 4321, 54321, 21]},
 	 * ]
 	 */
-	bindCustomCatalog: function(pBank, pCustomCatalog, pUnlockAssoc, pHeaders, pRecord)
+	bindCustomCatalog: function(pBank, pUnlockAssoc, pHeaders, pRecord)
 	{
 		/*
 		 * Try to the retrieve the stored custom tabs if available and add them
@@ -8756,14 +8766,14 @@ B = {
 		var customtabs = [];
 		try
 		{
-			customtabs = JSON.parse(localStorage[pCustomCatalog]);
+			customtabs = JSON.parse(localStorage[O.Utilities.CustomCatalog.key]);
 		}
 		catch (e) {}
 		
 		// Convert the custom tabs object into the unlockables format
 		for (var i = 0; i < customtabs.length; i++)
 		{
-			customtab = pCustomCatalog[i];
+			customtab = customtabs[i];
 			tabkey = "Tab_" + i;
 			headers[tabkey] = {
 				name_en: customtab.name
@@ -8790,19 +8800,24 @@ B = {
 		 */
 		var container = pBank.parents(".bnkContainer");
 		var top = container.find(".bnkTop");
-		var newtabutton = $("<button class='bnkCustomAdd' title='<dfn>Add a custom bank tab.</dfn><br />"
-			+ "To edit or delete a custom bank tab, click the cog icon next to one.'>"
-			+ "<img src='img/ui/adjust_plus.png' /></button>").appendTo(pBank);
+		var newtabutton = $("<kbd class='bnkCustomAdd btnWindow' title='<dfn>Add a custom bank tab.</dfn><br />"
+			+ "To edit or delete a custom bank tab, click the cog icon next to one.'></kbd>").appendTo(pBank);
 		I.qTip.init(newtabutton);
 		newtabutton.click(function()
 		{
-			var tab = B.createBankTab(pBank, {aTitle: D.getPhraseTitle(D.orderModifier("tab", "new")), aIsTop: true});
+			var tab = B.createBankTab(pBank, {
+				aTitle: D.getPhraseTitle(D.orderModifier("tab", "new")),
+				aIsTop: true
+			});
 			B.fillTab(tab, [], {
 				aUnlockAssoc: pUnlockAssoc,
 				aIsCatalog: true,
 				aIsCustom: true
 			});
 		});
+		
+		// Create custom tab and slot management
+		var sectionname = pBank.parents(".accDishContainer").attr("data-section");
 		
 		// Return the extended unlockables data for the generate function to use
 		return {
@@ -16997,7 +17012,7 @@ M = {
 			that.outputCoordinatesCopy(P.formatCoord(coord));
 		});
 	},
-	bindMarkerWikiBehavior: function(pMarker, pEventType)
+	bindMarkerWikiBehavior: function(pMarker, pEventType, pWantDefault)
 	{
 		pMarker.on(pEventType, function(pEvent)
 		{
@@ -17007,7 +17022,8 @@ M = {
 			{
 				name = name.slice(0, -1);
 			}
-			U.openExternalURL(U.getWikiLinkLanguage(name));
+			var url = (pWantDefault) ? U.getWikiLinkDefault(name) : U.getWikiLinkLanguage(name);
+			U.openExternalURL(url);
 		});
 	},
 	
@@ -17587,7 +17603,7 @@ P = {
 							iconAnchor: [24, 24]
 						})
 					});
-					M.bindMarkerWikiBehavior(marker, "click");
+					M.bindMarkerWikiBehavior(marker, "click", true);//
 					M.bindMarkerZoomBehavior(marker, "contextmenu");
 					zoneobj.Layers.EventIcon.addLayer(marker);
 				}

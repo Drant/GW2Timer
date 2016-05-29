@@ -1315,6 +1315,7 @@ a.chrWalletLink {
 	font-size: 18px;
 }
 .bnkBank {
+	position: relative;
 	display: inline-block;
 	width: 720px; /* Must be exactly wide enough to fit a number of slots per row */
 	padding: 8px;
@@ -1423,10 +1424,21 @@ input[type="text"].bnkSearchInput:hover {
 /*
  * Custom bank tabs.
  */
+ .bnkTab {
+ 	position: relative;
+ }
 .bnkCustomAdd {
-	position: absolute;
+	background: url("../img/ui/new.png");
 	top: -16px;
-	left: -16px;
+	left: auto;
+	right: -16px;
+	opacity: 1;
+	box-shadow: 0px 0px 32px #0b0d0e;
+}
+.bnkCustomEdit {
+	top: 4px;
+	left: -38px;
+	background: url("../img/ui/edit.png");
 }
 /*
  * Bank tabs and separators.
