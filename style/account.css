@@ -1423,9 +1423,10 @@ input[type="text"].bnkSearchInput:hover {
 /*
  * Custom bank tabs.
  */
-input[type="text"].bnkCustomName {
-	margin-left: 8px;
-	margin-right: 8px;
+.bnkCustomAdd {
+	position: absolute;
+	top: -16px;
+	left: -16px;
 }
 /*
  * Bank tabs and separators.

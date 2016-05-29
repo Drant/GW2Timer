@@ -8790,27 +8790,13 @@ B = {
 		 */
 		var container = pBank.parents(".bnkContainer");
 		var top = container.find(".bnkTop");
-		var bankcustom = $("<aside class='bnkCustom'>"
-			+ "<span>" + D.getPhraseTitle("new bank tab") + ":</span>"
-		+ "</aside>").appendTo(top);
-		var newtabutton = $("<button class='bnkCustomAdd' title='<dfn>Add a custom bank tab</dfn> using the name on the left.<br />"
+		var newtabutton = $("<button class='bnkCustomAdd' title='<dfn>Add a custom bank tab.</dfn><br />"
 			+ "To edit or delete a custom bank tab, click the cog icon next to one.'>"
-			+ "<img src='img/ui/adjust_plus.png' /></button>");
-		var newtabinput = $("<input class='bnkCustomName' type='text' />").click(function()
-		{
-			$(this).select();
-		}).onEnterKey(function()
-		{
-			newtabutton.trigger("click");
-		});
-		bankcustom.append(newtabinput);
-		bankcustom.append(newtabutton);
-		I.qTip.init(bankcustom.find("input, button"));
-		
+			+ "<img src='img/ui/adjust_plus.png' /></button>").appendTo(pBank);
+		I.qTip.init(newtabutton);
 		newtabutton.click(function()
 		{
-			var tabname = U.escapeHTML(newtabinput.val());
-			var tab = B.createBankTab(pBank, {aTitle: tabname, aIsTop: true});
+			var tab = B.createBankTab(pBank, {aTitle: D.getPhraseTitle(D.orderModifier("tab", "new")), aIsTop: true});
 			B.fillTab(tab, [], {
 				aUnlockAssoc: pUnlockAssoc,
 				aIsCatalog: true,
@@ -10348,6 +10334,17 @@ Q = {
 			else
 			{
 				toggleResults(true);
+				// Create an ordered list first
+				for (var i = 0; i < pItemIDs.length; i++)
+				{
+					resultslist.append("<span class='itmSearchResultEntry_" + pItemIDs[i] + "'></span>");
+				}
+				if (pItemIDs.length === O.Options.int_numTradingResults)
+				{
+					I.qTip.init($("<span class='itmSearchResultEntryFinal' "
+						+ "title='More results available. Please refine your search.'>...</span>").appendTo(resultslist));
+				}
+				// Fill the list as API items are retrieved
 				for (var i = 0; i < pItemIDs.length; i++)
 				{
 					(function(iItemID, iTimestamp)
@@ -10359,7 +10356,7 @@ Q = {
 							{
 								var outputline = $("<dfn class='itmSearchResultEntry " + Q.getRarityClass(pItem.rarity) + "' data-id='" + pItem.id + "'>"
 									+ "<img src='" + pItem.icon + "'>"
-									+ U.highlightSubstring(pItem.name, pQuery) + "</dfn>").appendTo(resultslist);
+									+ U.highlightSubstring(pItem.name, pQuery) + "</dfn>").appendTo(resultslist.find(".itmSearchResultEntry_" + iItemID));
 								outputline.click(function(pEvent)
 								{
 									if (pEvent.which === I.ClickEnum.Left && pCallback)
