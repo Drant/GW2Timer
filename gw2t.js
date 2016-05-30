@@ -7296,8 +7296,7 @@ V = {
 	 */
 	serveCatalog: function()
 	{
-		//B.generateCatalog("catalog", {aIsCustom: true});
-		B.generateCatalog("catalog");
+		B.generateCatalog("catalog", {aIsCustom: true});
 	},
 	
 	/*
