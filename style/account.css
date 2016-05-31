@@ -1342,24 +1342,12 @@ input[type="text"].bnkSearchInput {
 	padding-left: 4px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 17px;
-	color: #eeeeee;
 	background: rgba(0,0,0,0.4);
 	border: 2px solid rgba(0,0,0,0.5);
 	box-shadow: 0px 0px 2px #0b0d0e;
 }
 input[type="text"].bnkSearchInput:hover {
 	border: 2px solid rgba(0,0,0,0.5);
-}
-.bnkSearchFiller {
-	display: block;
-	position: absolute;
-	margin-top: -24px;
-	margin-left: 8px;
-	line-height: normal;
-	font-family: Trebuchet MS, Menomonia;
-	font-size: 17px;
-	color: #bbbbbb;
-	pointer-events: none;
 }
 /*
  * Bank buttons and filters.
@@ -1427,7 +1415,7 @@ input[type="text"].bnkSearchInput:hover {
  .bnkTab {
  	position: relative;
  }
-.bnkCustomAdd {
+.bnkCatalogTabAdd {
 	background: url("../img/ui/new.png");
 	top: -16px;
 	left: auto;
@@ -1435,10 +1423,13 @@ input[type="text"].bnkSearchInput:hover {
 	opacity: 1;
 	box-shadow: 0px 0px 32px #0b0d0e;
 }
-.bnkCustomEdit {
+.bnkCatalogTabEdit {
 	top: 4px;
 	left: -38px;
 	background: url("../img/ui/edit.png");
+}
+.bnkCatalogTabEditor, .bnkCatalogSlotEditor {
+	display: inline-block;
 }
 /*
  * Bank tabs and separators.

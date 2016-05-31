@@ -311,8 +311,16 @@ img {
 /*
  * Item search bar.
  */
+.itmSearchContainer {
+	position: relative;
+}
 .itmSearchResultContainer {
 	position: relative;
+	text-align: left;
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 18px;
 }
 .itmSearchResultList {
 	position: absolute; z-index: 2;
@@ -321,9 +329,6 @@ img {
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding: 4px;
-	font-weight: bold;
-	font-size: 12px;
-	line-height: 18px;
 }
 .itmSearchResultEntry {
 	display: block;
@@ -2489,6 +2494,12 @@ dfn.cssHighlight {
 }
 .cssLimitEqual {
 	color: white;
+}
+input[type="text"].cssSearchPassive {
+	color: #bbbbbb;
+}
+input[type="text"].cssSearchActive {
+	color: #eeeeee;
 }
 .cssFadeIn {
 	animation: aniFadeIn 0.2s;

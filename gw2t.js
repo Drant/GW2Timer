@@ -5273,6 +5273,7 @@ A = {
 			(function(iTab, iSectionName)
 			{
 				var section = $("#accPlatter" + iSectionName);
+				A.createDishMenu(iSectionName);
 				/*
 				 * Clicking on a menu tab shows the associated section, and
 				 * clicking on a menu icon inside the tab shows the subsection
@@ -5333,6 +5334,7 @@ A = {
 								+ "title='<dfn>" + D.getWordCapital(subsectionnamelow) + "</dfn>' "
 								+ "src='img/account/menu/" + subsectionnamelow + I.cPNG + "' />");
 							subbuttons.append(subbutton);
+							A.createDishMenu(subsectionname);
 							(function(iSubbutton, iSubsection)
 							{
 								iSubbutton.click(function(pEvent)
@@ -5748,6 +5750,16 @@ A = {
 	},
 	
 	/*
+	 * Gets the name of the account section an element resides in.
+	 * @param jqobject pElement.
+	 * @returns string.
+	 */
+	getDishName: function(pElement)
+	{
+		return $(pElement).parents(".accDishContainer").attr("data-section");
+	},
+	
+	/*
 	 * Tells if a section has the current account's content generated, else wipe.
 	 * @param jqobject pDish to check.
 	 * @returns boolean.
@@ -5764,7 +5776,7 @@ A = {
 	
 	/*
 	 * Executes the serve function which generates content for an account section.
-	 * @param string pDish.
+	 * @param string pDish section name.
 	 */
 	generateDish: function(pDish)
 	{
@@ -5777,10 +5789,12 @@ A = {
 	
 	/*
 	 * Wipes a section's content and reexecutes the serve function.
+	 * @param string pDish.
 	 */
 	regenerateDish: function(pDish)
 	{
 		$("#accDish_" + pDish).empty();
+		$("#accDishMenu_" + pDish).empty();
 		A.generateDish(pDish);
 	},
 	
@@ -5789,10 +5803,13 @@ A = {
 	 * @param string pSection name.
 	 * @returns jqobject.
 	 */
-	createDishMenu: function(pSection)
+	createDishMenu: function(pDish)
 	{
-		$("#accDishMenu_" + pSection).remove();
-		return $("<aside id='accDishMenu_" + pSection + "' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
+		$("<aside id='accDishMenu_" + U.toFirstUpperCase(pDish) + "' class='accDishMenu'></aside>").appendTo("#accDishMenuContainer");
+	},
+	getDishMenu: function(pDish)
+	{
+		return $("#accDishMenu_" + U.toFirstUpperCase(pDish));
 	},
 	
 	/*
@@ -5956,6 +5973,7 @@ V = {
 /* =============================================================================
  * @@View and generate account character and bank sections
  * ========================================================================== */
+
 	/*
 	 * Binds a sortable list by binding its clickable header.
 	 * @param jqobject pList to bind.
@@ -6600,7 +6618,7 @@ V = {
 	 */
 	createHeroMenu: function()
 	{
-		var dishmenu = A.createDishMenu("Hero").hide();
+		var dishmenu = A.getDishMenu("Hero");
 		var container = $("<div class='eqpSelectContainer'></div>").appendTo(dishmenu);
 		A.Data.Characters.forEach(function(iChar)
 		{
@@ -7296,7 +7314,8 @@ V = {
 	 */
 	serveCatalog: function()
 	{
-		B.generateCatalog("catalog", {aIsCustom: true});
+		//B.generateCatalog("catalog", {aIsCustomCatalog: true});
+		B.generateCatalog("catalog");
 	},
 	
 	/*
@@ -7609,6 +7628,7 @@ B = {
 /* =============================================================================
  * @@Bank window and item slots
  * ========================================================================== */
+
 	/*
 	 * Creates a bank container element.
 	 * @param jqobject pDestination to append bank.
@@ -8017,18 +8037,18 @@ B = {
 	{
 		var Settings = pSettings || {};
 		// Initialize commonly used elements
-		var sectionname = pBank.parents(".accDishContainer").attr("data-section");
+		var sectionname = A.getDishName(pBank);
+		var dishmenu = A.getDishMenu(sectionname);
+		var bankmenu = $("<div class='bnkMenu'></div>").prependTo(dishmenu);
 		var tabslots = pBank.find(".bnkTabSlots");
 		var tabtoggles = pBank.find(".bnkTabToggle");
-		var dishmenu = A.createDishMenu(sectionname);
-		var bankmenu = $("<div class='bnkMenu'></div>").appendTo(dishmenu);
 		
 		/*
 		 * Search bar.
 		 */
 		var searchcontainer = $("<div class='bnkSearch'></div>").prependTo(bankmenu);
 		var input = $("<input class='bnkSearchInput' type='text' />").appendTo(searchcontainer);
-		var fillertext = $("<div class='bnkSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(searchcontainer);
+		I.bindInputBarText(input);
 		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
 			var slots = pBank.find(".bnkSlot");
@@ -8039,7 +8059,6 @@ B = {
 			if (query.length > 0)
 			{
 				equality = query.charAt(0);
-				fillertext.hide();
 				// If searching by price range
 				if ((equality === "<" || equality === ">") && query.length > 1)
 				{
@@ -8110,7 +8129,6 @@ B = {
 			}
 			else
 			{
-				fillertext.show();
 				slots.each(function()
 				{
 					$(this).removeClass("bnkSlotMatch");
@@ -8353,7 +8371,7 @@ B = {
 				aUnlockAssoc: Settings.aUnlockAssoc,
 				aUnlockObj: unlockobj,
 				aIsCatalog: Settings.aIsCatalog,
-				aIsCustom: Settings.aIsCustom,
+				aIsCustomCatalog: Settings.aIsCustomCatalog,
 				aCallback: function()
 				{
 					numfetched++;
@@ -8362,9 +8380,10 @@ B = {
 			});
 		}
 		// Also include button for custom tabs
-		if (Settings.aIsCustom)
+		if (Settings.aIsCustomCatalog)
 		{
-			$("<kbd class='bnkCustomEdit btnWindow'></kbd>").prependTo(pTab);
+			pTab.addClass("bnkCatalogTab");
+			$("<kbd class='bnkCatalogTabEdit btnWindow'></kbd>").prependTo(pTab);
 		}
 	},
 	
@@ -8556,7 +8575,7 @@ B = {
 	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
 	 * @objparam string aHelpMessage HTML of help message element, optional.
 	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
-	 * @objparam string aIsCustom whether it is the default catalog with custom tabs.
+	 * @objparam string aIsCustomCatalog whether it is the default catalog with custom tabs.
 	 * An unlockables record has arrays that hold entries with these properties:
 	 * u: Unlockable ID (such as a skin ID, or mini ID)
 	 * i: Item ID associated with that unlock
@@ -8592,7 +8611,7 @@ B = {
 		/*
 		 * Add to the current unlockable database if provided custom tabs.
 		 */
-		if (Settings.aIsCustom)
+		if (Settings.aIsCustomCatalog)
 		{
 			// Add custom bank behaviors
 			var customdb = B.bindCustomCatalog(pBank, unlocksassoc, Settings.aHeaders, Settings.aRecord);
@@ -8641,7 +8660,7 @@ B = {
 						B.fillTab(iTab, iCatArr, {
 							aUnlockAssoc: unlocksassoc,
 							aIsCatalog: Settings.aIsCatalog,
-							aIsCustom: iCatObj.iscustom
+							aIsCustomCatalog: iCatObj.iscustom
 						});
 					}
 				}
@@ -8684,7 +8703,7 @@ B = {
 		B.createBankMenu(pBank, {
 			aWantSearchHighlight: wantsearchhighlight,
 			aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html(),
-			aIsCustom: Settings.aIsCustom
+			aIsCustomCatalog: Settings.aIsCustomCatalog
 		});
 	},
 	
@@ -8775,7 +8794,7 @@ B = {
 			customtab = customtabs[i];
 			tabkey = "Tab_" + i;
 			headers[tabkey] = {
-				name_en: customtab.name
+				name_en: U.escapeHTML(customtab.name)
 			};
 			record[tabkey] = [];
 			// Reconstruct an unlockable entry just using the 
@@ -8799,10 +8818,9 @@ B = {
 		 */
 		var container = pBank.parents(".bnkContainer");
 		var top = container.find(".bnkTop");
-		var newtabutton = $("<kbd class='bnkCustomAdd btnWindow' title='<dfn>Add a custom bank tab.</dfn><br />"
-			+ "To edit or delete a custom bank tab, click the cog icon next to one.'></kbd>").appendTo(pBank);
-		I.qTip.init(newtabutton);
-		newtabutton.click(function()
+		var newtabutton = $("<kbd class='bnkCatalogTabAdd btnWindow' title='<dfn>Add a custom bank tab.</dfn><br />"
+			+ "To edit or delete a custom bank tab, click the cog icon next to one.'></kbd>").appendTo(pBank)
+			.click(function()
 		{
 			var tab = B.createBankTab(pBank, {
 				aTitle: D.getPhraseTitle(D.orderModifier("tab", "new")),
@@ -8811,12 +8829,29 @@ B = {
 			B.fillTab(tab, [], {
 				aUnlockAssoc: pUnlockAssoc,
 				aIsCatalog: true,
-				aIsCustom: true
+				aIsCustomCatalog: true
 			});
 		});
+		I.qTip.init(newtabutton);
 		
-		// Create custom tab and slot management
-		var sectionname = pBank.parents(".accDishContainer").attr("data-section");
+		// Create a menu to edit custom tabs and slots
+		var sectionname = A.getDishName(pBank);
+		var dishmenu = A.getDishMenu(sectionname);
+		var catalogmenu = $("<div class='bnkCatalogMenu'></div>").appendTo(dishmenu);
+		
+		// Tab edit menu
+		var tabedit = $("<aside class='bnkCatalogTabEditor'></aside>").appendTo(catalogmenu);
+		pBank.data("tabedit", tabedit);
+		var tabrename = $("<input class='bnkCatalogTabRename bnkSearchInput' type='text' />").appendTo(tabedit);
+		
+		// Slot edit menu
+		var slotedit = $("<aside class='bnkCatalogSlotEditor'></aside>").appendTo(catalogmenu);
+		pBank.data("slotedit", slotedit);
+		var slotadd = $("<input class='bnkCatalogSlotAdd bnkSearchInput' type='text' />").appendTo(tabedit);
+		Q.bindItemSearch(slotadd, function()
+		{
+			
+		});
 		
 		// Return the extended unlockables data for the generate function to use
 		return {
@@ -10301,17 +10336,18 @@ Q = {
 	 * the search bar, the search database is first loaded before a search
 	 * can be executed.
 	 * @param jqobject pElement to bind.
-	 * @param function pCallback to execute with the user selected item.
+	 * @param function pCallback to execute after the user selects an item.
+	 * @pre Input bar has a parent container element in order to position the results list.
 	 */
 	bindItemSearch: function(pElement, pCallback)
 	{
-		var elm = $(pElement).val(D.getWordCapital("search") + "...");
+		var elm = $(pElement);
 		var queryminchar = D.isLanguageLogographic() ? 1 : 2;
-		var searchcontainer = elm.parent();
-		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").appendTo(searchcontainer).hide();
+		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").insertAfter(elm).hide();
 		var resultslist = $("<div class='itmSearchResultList cntPopup jsScrollable'></div>").appendTo(resultscontainer);
 		var notfoundstr = "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>";
 		var searchtimestamp;
+		I.bindInputBarText(elm);
 		I.bindScrollbar(resultslist);
 		
 		// Toggles display of the results container popup
@@ -26834,8 +26870,8 @@ I = {
 	{
 		var container = $(pContainer);
 		var elements = $(pElements);
-		var fillertext = $("<div class='cntSearchFiller'>" + D.getWordCapital("search") + "...</div>").appendTo(container);
 		var searchbar = $("<input id='jpzSearch' class='cntSearch' type='text' />").appendTo(container);
+		I.bindInputBarText(searchbar);
 		searchbar.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
 			var query = $(this).val().toLowerCase();
@@ -26843,7 +26879,6 @@ I = {
 			var keywords = "";
 			if (query.length > 0)
 			{
-				fillertext.hide();
 				queries = query.split(" ");
 				// Search for every substring in the user's query, which is space separated
 				elements.each(function()
@@ -26872,7 +26907,6 @@ I = {
 			}
 			else
 			{
-				fillertext.show();
 				elements.each(function()
 				{
 					$(this).show();
@@ -26881,6 +26915,38 @@ I = {
 		})).click(function()
 		{
 			$(this).select();
+		});
+	},
+	
+	/*
+	 * Binds an input bar to have a "default text" that disappears after the user
+	 * have clicked on it, but reappears after the user clears their input text.
+	 * @param jqobject pInput to bind.
+	 * @param string pText default.
+	 */
+	bindInputBarText: function(pInput, pText)
+	{
+		var defaulttext = pText || D.getWordCapital("search") + "...";
+		var bar = $(pInput).val(defaulttext).data("isdefault", true).addClass("cssSearchPassive");
+		bar.click(function()
+		{
+			if ($(this).data("isdefault"))
+			{
+				$(this).val("")
+					.removeClass("cssSearchPassive").addClass("cssSearchActive");
+			}
+		}).change(function()
+		{
+			if ($(this).val().length === 0)
+			{
+				$(this).val(defaulttext).data("isdefault", true)
+					.removeClass("cssSearchActive").addClass("cssSearchPassive");
+			}
+			else
+			{
+				$(this).data("isdefault", false)
+					.removeClass("cssSearchPassive").addClass("cssSearchActive");
+			}
 		});
 	},
 	
