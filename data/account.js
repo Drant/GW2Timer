@@ -75,6 +75,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "karta", it: "scheda", pl: "karta", pt: "guia", ru: "вкладка", zh: "選項卡"},
 	
 	// Verbs
+	s_rename: {de: "umbenennen", es: "renombrar", fr: "renommer",
+		cs: "přejmenovat", it: "rinominare", pl: "przemianować", pt: "renomear", ru: "переимено́вывать", zh: "重命名"},
 	
 	// Adjectives and Adverbs
 	s_new: {de: "neu", es: "nuevo", fr: "nouveau",

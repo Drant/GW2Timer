@@ -1337,11 +1337,12 @@ a.chrWalletLink {
 	vertical-align: bottom;
 }
 input[type="text"].bnkSearchInput {
-	display: block;
+	display: inline-block;
 	width: 100%; height: 20px;
 	padding-left: 4px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 17px;
+	color: #ffddcc;
 	background: rgba(0,0,0,0.4);
 	border: 2px solid rgba(0,0,0,0.5);
 	box-shadow: 0px 0px 2px #0b0d0e;
@@ -1410,11 +1411,13 @@ input[type="text"].bnkSearchInput:hover {
 	opacity: 0.4;
 }
 /*
- * Custom bank tabs.
+ * Bank custom catalog.
  */
- .bnkTab {
- 	position: relative;
- }
+.bnkCatalogTabHighlight {
+	background-image: linear-gradient(270deg, #e4e0b3, transparent);
+	background-size: 400% 400%;
+	animation: aniPulsate 2s ease infinite;
+}
 .bnkCatalogTabAdd {
 	background: url("../img/ui/new.png");
 	top: -16px;
@@ -1423,6 +1426,14 @@ input[type="text"].bnkSearchInput:hover {
 	opacity: 1;
 	box-shadow: 0px 0px 32px #0b0d0e;
 }
+.bnkCatalogMenu {
+	display: inline-block;
+	width: 720px;
+	background-image: linear-gradient(to top, #7c7253 0%, transparent 100%);
+	border-left: 3px solid rgba(228,224,179,0.6);
+	border-right: 3px solid rgba(228,224,179,0.6);
+	border-radius: 4px;
+}
 .bnkCatalogTabEdit {
 	top: 4px;
 	left: -38px;
@@ -1430,10 +1441,37 @@ input[type="text"].bnkSearchInput:hover {
 }
 .bnkCatalogTabEditor, .bnkCatalogSlotEditor {
 	display: inline-block;
+	line-height: 32px;
+}
+input[type="text"].bnkCatalogSlotAdd {
+	width: 256px;
+}
+input[type="text"].bnkCatalogTabRename {
+	width: 256px;
+}
+.bnkCatalogSlotAdd {
+	margin-right: 8px;
+}
+.bnkCatalogMenuClose {
+	background-image: url("../img/ui/close.png");
+}
+.bnkCatalogTabUp {
+	background-image: url("../img/ui/adjust_right.png");
+	transform: rotate(-90deg);
+}
+.bnkCatalogTabDown {
+	background-image: url("../img/ui/adjust_right.png");
+	transform: rotate(90deg);
+}
+.bnkCatalogTabDelete {
+	background-image: url("../img/ui/default.png");
 }
 /*
  * Bank tabs and separators.
  */
+.bnkTab {
+	position: relative;
+}
 .bnkTabSeparator {
 	width: 100%; height: 40px;
 	background-image: url("../img/background/tab.png");

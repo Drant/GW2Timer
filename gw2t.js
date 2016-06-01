@@ -218,7 +218,6 @@ O = {
 		bol_condenseBank: false,
 		// Trading
 		bol_refreshPrices: true,
-		bol_useMainTPSearch: true,
 		int_numTradingCalculators: 25,
 		int_numTradingResults: 30,
 		int_secTradingRefresh: 60,
@@ -4022,11 +4021,11 @@ Z = {
 			{
 				D.speak(argstr);
 			}},
-			gps: {usage: "Prints GPS location information.", f: function()
+			gps: {usage: "Prints GPS location information (overlay only).", f: function()
 			{
 				I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />Direction: " + U.formatJSON(GPSDirectionArray) + "<br />Camera: " + U.formatJSON(GPSCameraArray));
 			}},
-			identity: {usage: "Prints GPS general information.", f: function()
+			identity: {usage: "Prints GPS general information (overlay only).", f: function()
 			{
 				I.prettyJSON(GPSIdentityJSON);
 			}},
@@ -4088,7 +4087,8 @@ Z = {
 				Z.printAPICache(3, {aWantFile: args[1]});
 			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
-				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. Replace spaces with &quot;%20&quot;", f: function()
+				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. "
+				+ "Type &quot;acc&quot; alone to see list of URL suffixes. Please replace spaces in character's name with &quot;%20&quot;", f: function()
 			{
 				A.printAccount(args[1]);
 			}},
@@ -5228,12 +5228,13 @@ A = {
 		});
 		
 		// Initialize the console, which is the same as the map's coordinates bar
-		$("#accConsole").onEnterKey(function()
+		var consoleinput = $("#accConsole").onEnterKey(function()
 		{
 			var val = $(this).val();
 			var str = (val.charAt(0) === Z.cCommandPrefix) ? val : Z.cCommandPrefix + val;
 			Z.parseCommand(str, M);
 		});
+		I.bindInputBarText(consoleinput, "Enter \"help\" for commands...");
 		Q.bindItemSearch("#accSearch", function(pItem)
 		{
 			I.print("<img src='" + pItem.icon + "' />");
@@ -7314,8 +7315,7 @@ V = {
 	 */
 	serveCatalog: function()
 	{
-		//B.generateCatalog("catalog", {aIsCustomCatalog: true});
-		B.generateCatalog("catalog");
+		B.generateCatalog("catalog", {aIsCustomCatalog: false});
 	},
 	
 	/*
@@ -7634,7 +7634,6 @@ B = {
 	 * @param jqobject pDestination to append bank.
 	 * @objparam boolean aIsCollection whether the bank is an unlock collection.
 	 * @objparam boolean aWantGem whether to display the gem tally.
-	 * rather than inventory of actual items, optional.
 	 * @objparam int aSlotsPerRow to resize the bank beforehand, optional.
 	 * @returns jqobject bank.
 	 */
@@ -7732,9 +7731,9 @@ B = {
 			I.toggleToggleIcon(tabtoggle, false);
 			tabslots.hide();
 		}
-		if (Settings.aIsTop)
+		if (Settings.aIsCustomCatalog)
 		{
-			pBank.prepend(tab);
+			B.placeCatalogTab(pBank, tab);
 		}
 		else
 		{
@@ -8382,8 +8381,7 @@ B = {
 		// Also include button for custom tabs
 		if (Settings.aIsCustomCatalog)
 		{
-			pTab.addClass("bnkCatalogTab");
-			$("<kbd class='bnkCatalogTabEdit btnWindow'></kbd>").prependTo(pTab);
+			B.bindCatalogTabEdit(pTab);
 		}
 	},
 	
@@ -8614,7 +8612,7 @@ B = {
 		if (Settings.aIsCustomCatalog)
 		{
 			// Add custom bank behaviors
-			var customdb = B.bindCustomCatalog(pBank, unlocksassoc, Settings.aHeaders, Settings.aRecord);
+			var customdb = B.bindCatalog(pBank, unlocksassoc, Settings.aHeaders, Settings.aRecord);
 			headers = customdb.oHeaders;
 			database = customdb.oRecord;
 		}
@@ -8761,6 +8759,79 @@ B = {
 	},
 	
 	/*
+	 * Binds a custom tab of a catalog bank to have a button that shows the edit menu.
+	 * @param jqobject pTab to bind.
+	 */
+	bindCatalogTabEdit: function(pTab)
+	{
+		pTab.addClass("bnkCatalogTab");
+		var edit = $("<kbd class='bnkCatalogTabEdit btnWindow' title='Click to <dfn>edit</dfn> this tab.<br />"
+			+ "Click again to stop editing.'></kbd>").prependTo(pTab).click(function()
+		{
+			var bank = $(this).parents(".bnkBank");
+			var currenttab = $(bank.data("currenttab"));
+			var clickedtab = $(this).parents(".bnkTab").first();
+			var tabeditor = bank.data("tabeditor");
+			var catalogmenu = tabeditor.parent();
+			bank.find(".bnkCatalogTab").removeClass("bnkCatalogTabHighlight");
+			/*
+			 * All custom tabs share the same editor menu that decides which
+			 * tab to edit based on the bank object's current tab data.
+			 * Clicking on the edit button next to a tab updates that tab as the
+			 * current tab to be edited.
+			 */
+			if (clickedtab.is(currenttab) && tabeditor.is(":visible"))
+			{
+				if (tabeditor.is(":visible"))
+				{
+					// Hide the tab editor if is already editing it and user clicked edit again
+					catalogmenu.hide();
+					tabeditor.hide();
+					bank.data("currenttab", null);
+					pTab.removeClass("bnkCatalogTabHighlight");
+				}
+			}
+			else if (clickedtab.is(currenttab) === false || tabeditor.is(":visible") === false)
+			{
+				// Show the tab editor if clicked edit on a different tab or isn't already editing
+				catalogmenu.show();
+				tabeditor.show();
+				bank.data("currenttab", $(this).parents(".bnkTab"));
+				pTab.addClass("bnkCatalogTabHighlight");
+				// Update the name of the tab rename input
+				var tabname = pTab.find(".bnkTabText").text();
+				tabeditor.find(".bnkCatalogTabRename").val(tabname);
+			}
+			A.adjustAccountPanel();
+		});
+		I.qTip.init(edit);
+	},
+	
+	/*
+	 * Places a newly created tab of a custom catalog to the proper container.
+	 * @param jqobject pBank.
+	 * @param jqobject pTab.
+	 */
+	placeCatalogTab: function(pBank, pTab)
+	{
+		var tabcontainer = pBank.find(".bnkCatalogTabContainer");
+		if ( ! tabcontainer.length)
+		{
+			tabcontainer = $("<div class='bnkCatalogTabContainer'></div>").prependTo(pBank);
+		}
+		tabcontainer.prepend(pTab);
+	},
+	
+	/*
+	 * Saves the custom catalog to storage.
+	 * @param jqobject pBank to extract custom tabs.
+	 */
+	saveCatalog: function(pBank)
+	{
+		
+	},
+	
+	/*
 	 * Binds additional behaviors to a bank which the user can add custom tabs to.
 	 * @param jqobject pBank element.
 	 * @param object pUnlockAssoc associative array to check against.
@@ -8772,7 +8843,7 @@ B = {
 	 *	{name: "My Tab 2", items: [321, 4321, 54321, 21]},
 	 * ]
 	 */
-	bindCustomCatalog: function(pBank, pUnlockAssoc, pHeaders, pRecord)
+	bindCatalog: function(pBank, pUnlockAssoc, pHeaders, pRecord)
 	{
 		/*
 		 * Try to the retrieve the stored custom tabs if available and add them
@@ -8816,42 +8887,105 @@ B = {
 		/*
 		 * Add UI functionalities.
 		 */
-		var container = pBank.parents(".bnkContainer");
-		var top = container.find(".bnkTop");
 		var newtabutton = $("<kbd class='bnkCatalogTabAdd btnWindow' title='<dfn>Add a custom bank tab.</dfn><br />"
 			+ "To edit or delete a custom bank tab, click the cog icon next to one.'></kbd>").appendTo(pBank)
 			.click(function()
 		{
-			var tab = B.createBankTab(pBank, {
-				aTitle: D.getPhraseTitle(D.orderModifier("tab", "new")),
-				aIsTop: true
-			});
-			B.fillTab(tab, [], {
-				aUnlockAssoc: pUnlockAssoc,
-				aIsCatalog: true,
-				aIsCustomCatalog: true
-			});
+			if (pBank.find(".bnkCatalogTab").length < A.Metadata.Bank.CustomTabsLimit)
+			{
+				var tab = B.createBankTab(pBank, {
+					aTitle: D.getPhraseTitle(D.orderModifier("tab", "new")),
+					aIsCustomCatalog: true
+				});
+				B.fillTab(tab, [], {
+					aUnlockAssoc: pUnlockAssoc,
+					aIsCatalog: true,
+					aIsCustomCatalog: true
+				});
+			}
+			else
+			{
+				I.write("Custom tabs limit reached.");
+			}
 		});
 		I.qTip.init(newtabutton);
 		
 		// Create a menu to edit custom tabs and slots
 		var sectionname = A.getDishName(pBank);
 		var dishmenu = A.getDishMenu(sectionname);
-		var catalogmenu = $("<div class='bnkCatalogMenu'></div>").appendTo(dishmenu);
+		var catalogmenu = $("<div class='bnkCatalogMenu'></div>").appendTo(dishmenu).hide();
+		
+		// Close button for catalog menu
+		$("<div class='bnkCatalogMenuClose bnkButton curClick' title='<dfn>Close</dfn> the catalog menu.'></div>")
+			.appendTo(catalogmenu).click(function()
+		{
+			pBank.data("currenttab", null);
+			catalogmenu.hide();
+			pBank.find(".bnkCatalogTab").removeClass("bnkCatalogTabHighlight");
+			A.adjustAccountPanel();
+		});
 		
 		// Tab edit menu
-		var tabedit = $("<aside class='bnkCatalogTabEditor'></aside>").appendTo(catalogmenu);
-		pBank.data("tabedit", tabedit);
-		var tabrename = $("<input class='bnkCatalogTabRename bnkSearchInput' type='text' />").appendTo(tabedit);
-		
-		// Slot edit menu
-		var slotedit = $("<aside class='bnkCatalogSlotEditor'></aside>").appendTo(catalogmenu);
-		pBank.data("slotedit", slotedit);
-		var slotadd = $("<input class='bnkCatalogSlotAdd bnkSearchInput' type='text' />").appendTo(tabedit);
+		var tabeditor = $("<aside class='bnkCatalogTabEditor'></aside>").appendTo(catalogmenu).hide();
+		pBank.data("tabeditor", tabeditor);
+		var slotadd = $("<input class='bnkCatalogSlotAdd bnkSearchInput' type='text' />").appendTo(tabeditor);
 		Q.bindItemSearch(slotadd, function()
 		{
-			
+			//
+		}, D.getPhraseTitle(D.orderModifier("item", "new")) + "...");
+		$("<input class='bnkCatalogTabRename bnkSearchInput' type='text' />").appendTo(tabeditor).change(function()
+		{
+			var tab = pBank.data("currenttab");
+			if (tab)
+			{
+				tab.find(".bnkTabText").text($(this).val());
+			}
 		});
+		var tabeditorbuttons = $("<aside class='bnkButtons'></aside>").appendTo(tabeditor);
+		$("<div class='bnkCatalogTabUp bnkButton curClick' title='Move this tab <dfn>up</dfn>.'></div>")
+			.appendTo(tabeditorbuttons).click(function()
+		{
+			var tab = pBank.data("currenttab");
+			if (tab && tab.prev())
+			{
+				tab.insertBefore(tab.prev());
+				A.adjustAccountPanel();
+			}
+			B.saveCatalog(pBank);
+		});
+		$("<div class='bnkCatalogTabDown bnkButton curClick' title='Move this tab <dfn>down</dfn>.'></div>")
+			.appendTo(tabeditorbuttons).click(function()
+		{
+			var tab = pBank.data("currenttab");
+			if (tab && tab.next())
+			{
+				tab.insertAfter(tab.next());
+				A.adjustAccountPanel();
+			}
+			B.saveCatalog(pBank);
+		});
+		$("<div class='bnkCatalogTabDelete bnkButton curClick' title='<dfn>Delete</dfn> this custom bank tab.'></div>")
+			.appendTo(tabeditorbuttons).click(function()
+		{
+			if (confirm("Delete this custom tab?"))
+			{
+				var tab = pBank.data("currenttab");
+				if (tab)
+				{
+					tab.remove();
+					catalogmenu.hide();
+					tabeditor.hide();
+					A.adjustAccountPanel();
+				}
+				B.saveCatalog(pBank);
+			}
+		});
+		
+		// Slot edit menu
+		var sloteditor = $("<aside class='bnkCatalogSlotEditor'></aside>").appendTo(catalogmenu).hide();
+		pBank.data("sloteditor", sloteditor);
+		
+		I.qTip.init(catalogmenu.find(".bnkButton"));
 		
 		// Return the extended unlockables data for the generate function to use
 		return {
@@ -10337,17 +10471,21 @@ Q = {
 	 * can be executed.
 	 * @param jqobject pElement to bind.
 	 * @param function pCallback to execute after the user selects an item.
+	 * @param string pFillerText to display over the input bar, optional.
 	 * @pre Input bar has a parent container element in order to position the results list.
 	 */
-	bindItemSearch: function(pElement, pCallback)
+	bindItemSearch: function(pElement, pCallback, pFillerText)
 	{
-		var elm = $(pElement);
+		var elm = $(pElement).wrap("<span class='itmSearchContainer'></span>");
 		var queryminchar = D.isLanguageLogographic() ? 1 : 2;
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").insertAfter(elm).hide();
 		var resultslist = $("<div class='itmSearchResultList cntPopup jsScrollable'></div>").appendTo(resultscontainer);
 		var notfoundstr = "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>";
 		var searchtimestamp;
-		I.bindInputBarText(elm);
+		if (pFillerText !== null)
+		{
+			I.bindInputBarText(elm, pFillerText);
+		}
 		I.bindScrollbar(resultslist);
 		
 		// Toggles display of the results container popup
@@ -10480,7 +10618,6 @@ Q = {
 		// Bind the search only after the user has clicked on the search bar
 		elm.one("click", function()
 		{
-			$(this).val("");
 			toggleResults(true);
 			resultslist.append(I.cThrobber);
 			Q.loadItemsSearch(function()
@@ -11026,17 +11163,17 @@ E = {
 		}
 		
 		var icon = pEntry.find(".trdIcon");
-		Q.getItem(id, function(pData)
+		Q.getItem(id, function(pItem)
 		{
-			Q.setRarityClass(pEntry.find(".trdName"), pData.rarity);
-			pEntry.attr("data-rarity", pData.rarity);
-			pEntry.find(".trdLink").val(pData.chat_link || "");
-			icon.attr("src", pData.icon);
+			Q.setRarityClass(pEntry.find(".trdName"), pItem.rarity);
+			pEntry.attr("data-rarity", pItem.rarity);
+			pEntry.find(".trdLink").val(pItem.chat_link || "");
+			icon.attr("src", pItem.icon);
 			icon.unbind("click").click(function()
 			{
-				I.prettyJSON(pData);
+				I.prettyJSON(pItem);
 			});
-			Q.scanItem(pData, {aElement: icon, aCallback: function(pBox)
+			Q.scanItem(pItem, {aElement: icon, aCallback: function(pBox)
 			{
 				pEntry.data("istradeable", pBox.istradeable);
 			}});
@@ -11051,7 +11188,7 @@ E = {
 	{
 		var name = pEntry.find(".trdName").val();
 		var id = pEntry.find(".trdItem").val();
-		if (isFinite(parseInt(id)) === false || name.length === 0 || pEntry.data("istradeable") === false)
+		if (isFinite(parseInt(id)) === false || name.length === 0)
 		{
 			return;
 		}
@@ -11069,6 +11206,19 @@ E = {
 		var buyhigh = E.parseCoinString(buyhighelm.val());
 		var selllow = E.parseCoinString(selllowelm.val());
 		var sellhigh = E.parseCoinString(sellhighelm.val());
+		
+		if (pEntry.data("istradeable") === false)
+		{
+			buyelm.val("");
+			sellelm.val("");
+			if (X.getChecklistItem(X.Checklists.TradingOverwrite, U.getSubintegerFromHTMLID(pEntry))
+					=== X.ChecklistEnum.Checked)
+			{
+				pEntry.find(".trdBuy").val("").trigger("input");
+				pEntry.find(".trdSell").val("").trigger("input");
+			}
+			return;
+		}
 
 		$.ajax({
 			dataType: "json",
@@ -11205,34 +11355,6 @@ E = {
 		var i;
 		var entry = "";
 		var name, buy, sell, quantity;
-		
-		var createSearchContainer = function(pCalculator)
-		{
-			var resultscontainer = $("<div class='trdResultsContainer jsRemovable'></div>")
-				.insertAfter(pCalculator.find(".trdName"));
-			return $("<div class='trdResults cntPopup'>" + I.cThrobber + "</div>").appendTo(resultscontainer);
-		};
-		var insertSearchResult = function(pItem, pQuery, pResultsList)
-		{
-			I.removeThrobber(".trdResults");
-			var outputline = $("<dfn class='" + Q.getRarityClass(pItem.rarity) + "' data-id='" + pItem.id + "'>"
-			+ "<img src='" + pItem.icon + "'>"
-			+ U.highlightSubstring(pItem.name, pQuery) + "</dfn>").appendTo(pResultsList);
-			// Bind click a result to memorize the item's ID and name
-			outputline.click(function()
-			{
-				var resultspopup = $(this).parents(".trdResultsContainer");
-				var entry = resultspopup.parents(".trdEntry");
-				// Change triggers the storage, input triggers the calculation
-				entry.find(".trdItem").val($(this).data("id")).trigger("change");
-				entry.find(".trdName").val($(this).text()).trigger("change");
-				E.updateTradingDetails(entry);
-				E.updateTradingPrices(entry);
-				resultspopup.remove();
-			});
-			// Tooltip for the listed item
-			Q.scanItem(pItem, {aElement: outputline});
-		};
 		
 		for (i = 0; i < O.Options.int_numTradingCalculators; i++)
 		{
@@ -11422,133 +11544,33 @@ E = {
 			});
 			
 			// Bind name search box behavior
-			$(name).on("input", $.throttle(E.cSEARCH_LIMIT, function()
+			Q.bindItemSearch($(name), function(pItem)
+			{
+				var entryinner = $(entry);
+				// Change triggers the storage, input triggers the calculation
+				entryinner.find(".trdItem").val(pItem.id).trigger("change");
+				entryinner.find(".trdName").val(pItem.name).trigger("change");
+				E.updateTradingDetails(entryinner);
+				E.updateTradingPrices(entryinner);
+			}, null);
+			$(name).change(function()
 			{
 				var query = $(this).val();
-				var queryescaped = U.escapeHTML(query);
-				var entry = $(this).parents(".trdEntry");
-				var resultslist;
-				// If keywords are below this length then ignore
-				if (query.length < 3)
+				var entryinner = $(this).parents(".trdEntry");
+				if (query.length < 1)
 				{
-					// Reset API output boxes
-					E.clearCalculator(entry);
-					return;
+					E.clearCalculator(entryinner);
 				}
-				// If entering an item ID
-				if (query.length >= 3 && U.isInteger(query))
-				{
-					// Create popup container for the items result list
-					entry.find(".trdResultsContainer").remove();
-					resultslist = createSearchContainer(entry);
-					
-					Q.getItem(query, function(pDataInner)
-					{
-						insertSearchResult(pDataInner, query, resultslist);
-					}).fail(function()
-					{
-						I.write("No results found for Item ID: " + queryescaped + ".");
-						entry.find(".trdResultsContainer").remove();
-					});
-					return;
-				}
-				// Else search for item name
-				var serviceurl;
-				var keyname_id;
-				if (O.Options.bol_useMainTPSearch)
-				{
-					/*
-					 * Main API return example:
-						{
-							"count"		: 50,
-							"page"		: 1,
-							"last_page"	: 3,
-							"results"	: [{
-								"data_id"		: 23654,
-								"name"					: "Fake Item",
-								"rarity"				: 3,
-								"restriction_level"		: 72,
-								"img"					: "http://www.url-to-offical-gw2-site.com/img.png",
-								"type_id"				: 1,
-								"sub_type_id"			: 2,
-								"price_last_changed"	: "YYYY-MM-DD HH:II:SS UTC",
-								"max_offer_unit_price"	: 6523,
-								"min_sale_unit_price"	: 9345,
-								"offer_availability"	: 1235232,
-								"sale_availability"		: 203203,
-								"sale_price_change_last_hour"	: 40,
-								"offer_price_change_last_hour"	: 70
-							, {...}]
-						}
-					 */
-					serviceurl = U.URL_API.ItemSearch + query;
-					keyname_id = "data_id";
-				}
-				else
-				{
-					/*
-					 * Backup API return example:
-						[{"name":"Gift of Sunrise","item_id":"19647"},
-						{"name":"Sunrise Breeze Dye","item_id":"20641"}]
-					 */
-					serviceurl = U.URL_API.ItemSearchFallback + query;
-					keyname_id = "item_id";
-				}
-
-				$.ajax({
-					dataType: "json",
-					url: serviceurl,
-					timeout: 5000,
-					success: function(pData)
-				{
-					entry.find(".trdResultsContainer").remove();
-					var thisi;
-					var resultid, resultitem;
-					var resultarray = (O.Options.bol_useMainTPSearch) ? pData.results : pData;
-					
-					if (resultarray && resultarray.length > 0)
-					{
-						// Create popup container for the items result list
-						resultslist = createSearchContainer(entry);
-
-						// Add items to the results list
-						for (thisi = 0; thisi < resultarray.length && thisi < O.Options.int_numTradingResults; thisi++)
-						{
-							resultitem = resultarray[thisi];
-							resultid = parseInt(resultitem[keyname_id]);
-							// Get information of each item in the returned search result array
-							Q.getItem(resultid, function(pDataInner)
-							{
-								insertSearchResult(pDataInner, query, resultslist);
-							});
-						}
-					}
-					else
-					{
-						I.write("No results found for &quot;" + queryescaped + "&quot;.");
-					}
-				}}).fail(function()
-				{
-					I.write("Error retrieving search results. Current search provider may be down.<br />Switching to alternate provider...");
-					$("#opt_bol_useMainTPSearch").trigger("click"); // In effect toggles between main and backup for each failure
-				});
-			})).onEnterKey(function()
+			}).onEnterKey(function()
 			{
 				U.openExternalURL(U.getTradingSearchLink($(this).val()));
-			}).onEscapeKey(function()
-			{
-				$(this).parents(".trdEntry").find(".trdResultsContainer").remove();
-			}).click(function()
-			{
-				// Clicking name box also triggers the search
-				$(this).trigger("input");
 			});
 		}
 		
 		// Set the first entry with initial text as an example
 		entry = "#trdEntry_" + 0;
 		$(entry + " .trdIcon").attr("src", "img/ui/question.png");
-		$(entry + " .trdName").val("Bifrost");
+		$(entry + " .trdName").val("Kudzu");
 		$(entry + " .trdBuy").val("4500.37.68");
 		$(entry + " .trdSell").val("550037.68");
 		$(entry + " .trdQuantity").val("1");
@@ -11674,7 +11696,7 @@ E = {
 		var cointomoneyinverse = $("#trdExchange .trdCoinToMoneyInverse");
 		
 		var cointoamount = E.parseCoinString(cointo.val());
-		if (cointoamount === 0)
+		if (cointoamount === 0 || cointo.val() === "")
 		{
 			cointogem.val("");
 			cointomoney.val("");
@@ -11749,6 +11771,7 @@ E = {
 		{
 			gemtocoin.val("");
 			gemtomoney.val("");
+			gemtocoininverse.val("");
 		}
 		else
 		{
@@ -11808,7 +11831,7 @@ E = {
 		
 		var moneytoamount = E.parseMoneyString(moneyto.val());
 		var gems = moneytoamount * E.Exchange.GEM_PER_DOLLAR;
-		if (moneytoamount === 0)
+		if (moneytoamount === 0 || moneyto.val() === "")
 		{
 			moneytogem.val("");
 			moneytocoin.val("");
@@ -11854,7 +11877,7 @@ E = {
 		var gemhigh = E.parseGemString(gemhighelm.val());
 		
 		var cointoamount = E.parseCoinString(cointo.val());
-		if (cointoamount === 0)
+		if (cointoamount === 0 || cointo.val() === "")
 		{
 			cointogem.val("");
 		}
@@ -11904,7 +11927,7 @@ E = {
 		var coinhigh = E.parseCoinString(coinhighelm.val());
 		
 		var gemtoamount = gemto.val();
-		if (gemtoamount === 0)
+		if (gemtoamount === 0 || gemto.val() === "")
 		{
 			gemtocoin.val("");
 		}
@@ -26926,26 +26949,35 @@ I = {
 	 */
 	bindInputBarText: function(pInput, pText)
 	{
-		var defaulttext = pText || D.getWordCapital("search") + "...";
-		var bar = $(pInput).val(defaulttext).data("isdefault", true).addClass("cssSearchPassive");
+		var onclass = "cssSearchActive";
+		var offclass = "cssSearchPassive";
+		var fillertext = pText || D.getWordCapital("search") + "...";
+		var bar = $(pInput).val(fillertext).data("isfiller", true).addClass(offclass);
 		bar.click(function()
 		{
-			if ($(this).data("isdefault"))
+			if ($(this).data("isfiller"))
 			{
 				$(this).val("")
-					.removeClass("cssSearchPassive").addClass("cssSearchActive");
+					.removeClass(offclass).addClass(onclass);
 			}
 		}).change(function()
 		{
 			if ($(this).val().length === 0)
 			{
-				$(this).val(defaulttext).data("isdefault", true)
-					.removeClass("cssSearchActive").addClass("cssSearchPassive");
+				$(this).val(fillertext).data("isfiller", true)
+					.removeClass(onclass).addClass(offclass);
 			}
 			else
 			{
-				$(this).data("isdefault", false)
-					.removeClass("cssSearchPassive").addClass("cssSearchActive");
+				$(this).data("isfiller", false)
+					.removeClass(offclass).addClass(onclass);
+			}
+		}).focusout(function()
+		{
+			if ($(this).val().length === 0)
+			{
+				$(this).val(fillertext).data("isfiller", true)
+					.removeClass(onclass).addClass(offclass);
 			}
 		});
 	},

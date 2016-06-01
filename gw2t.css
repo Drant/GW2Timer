@@ -315,15 +315,15 @@ img {
 	position: relative;
 }
 .itmSearchResultContainer {
-	position: relative;
+	position: absolute; z-index: 2;
 	text-align: left;
 	font-family: Arial, sans-serif;
 	font-weight: bold;
 	font-size: 12px;
 	line-height: 18px;
+	color: white;
 }
 .itmSearchResultList {
-	position: absolute; z-index: 2;
 	width: 270px;
 	max-height: 220px;
 	overflow-y: auto;
@@ -2496,10 +2496,10 @@ dfn.cssHighlight {
 	color: white;
 }
 input[type="text"].cssSearchPassive {
-	color: #bbbbbb;
+	color: #bbbbbb !important;
 }
 input[type="text"].cssSearchActive {
-	color: #eeeeee;
+	color: #ffddcc !important;
 }
 .cssFadeIn {
 	animation: aniFadeIn 0.2s;
