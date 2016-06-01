@@ -1275,8 +1275,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-05-24T15:00:00Z"),
-	Finish: new Date("2016-06-01T15:00:00Z"),
+	Start: new Date("2016-06-01T15:00:00Z"),
+	Finish: new Date("2016-06-07T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1292,16 +1292,107 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Belinda's Greatsword Skin",
-		id: "8466",
-		price: 600,
+		name: "Aetherblade Light Armor Skin",
+		id: "42870",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Aetherblade Medium Armor Skin",
+		id: "42869",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Aetherblade Heavy Armor Skin",
+		id: "42868",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Incarnate Light Armor Skin",
+		id: "63909",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Strider's Medium Armor Skin",
+		id: "63899",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Rampart Heavy Armor Skin",
+		id: "63929",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Ceremonial Plated Outfit",
+		id: "67040",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mask of the Wanderer Skin",
+		id: "48944",
+		price: 500,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Kasmeer's Staff Skin",
-		id: "49021",
-		price: 600,
+		name: "Mask of the Queen",
+		id: "44608",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Wreath of Cooperation",
+		id: "66309",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Covert Charr Backpack Set",
+		id: "39515",
+		price: 300,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Aviator Cap",
+		id: "64742",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Fuzzy Panda Hat",
+		id: "64744",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Ringmaster's Hat",
+		id: "64745",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Electromagnetic Ascender",
+		img: "http://i.imgur.com/No0u1oz.png",
+		price: 250,
 		discount: null,
 		col: 1
 	}

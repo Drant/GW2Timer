@@ -8993,7 +8993,7 @@ B = {
 		 * New tab button.
 		 */
 		var newtabutton = $("<kbd class='bnkCatalogTabAdd btnWindow' title='<dfn>Add a custom bank tab.</dfn><br />"
-			+ "To edit a custom tab or add an item to it, click the<img src=\"img/ui/edit.png\" />icon next one.'></kbd>").appendTo(pBank)
+			+ "To edit a custom tab or add an item to it, click the<img src=\"img/ui/edit.png\" />icon next to one.'></kbd>").appendTo(pBank)
 			.click(function()
 		{
 			if (pBank.find(".bnkCatalogTab").length < A.Metadata.Bank.CustomTabsLimit)
