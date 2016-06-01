@@ -19,11 +19,11 @@ var GW2T_CATALOG_HEADERS = {
 	Music: {name_en: "Musical Instruments", name_de: "Musikinstrumente", name_es: "Instrumentos musicales", name_fr: "Instruments de musique"},
 	Gem: {name_en: "Gem Store Items", name_de: "Edelsteinshop Gegenstandes", name_es: "Objetos tienda de gemas", name_fr: "Objets boutique aux gemmes"},
 	TonicEndless: {name_en: "Endless Tonics", name_de: "Endloser Trank", name_es: "Tónicos inagotables", name_fr: "Toniques inépuisables"},
-	TonicConsumable: {name_en: "Consumable Tonics", name_de: "Verbrauchsgegenstand Trank", name_es: "Tónicos consumibles", name_fr: "Toniques consommables"},
-	Bundle: {name_en: "Bundles", name_de: "Umgebungswaffen", name_es: "Arma ambiental", name_fr: "Arme environnementale"},
-	Consumable: {name_en: "Consumables", name_de: "Verbrauchsgegenstand", name_es: "Consumibles", name_fr: "Consommables"},
-	Aura: {name_en: "Cosmetic Auras", name_de: "Kosmetik-Auren", name_es: "Auras cosméticos", name_fr: "Auras cosmétiques"},
-	Legendary: {name_en: "Legendary Equipment", name_de: "Legendäre Ausrüstung", name_es: "Equipamientos legendarias", name_fr: "Équipements légendaires"}
+	TonicConsumable: {name_en: "Consumable Tonics", name_de: "Verbrauchsgegenstand Trank", name_es: "Tónicos consumibles", name_fr: "Toniques consommables", iscollapsed: true},
+	Bundle: {name_en: "Bundles", name_de: "Umgebungswaffen", name_es: "Arma ambiental", name_fr: "Arme environnementale", iscollapsed: true},
+	Consumable: {name_en: "Consumables", name_de: "Verbrauchsgegenstand", name_es: "Consumibles", name_fr: "Consommables", iscollapsed: true},
+	Aura: {name_en: "Cosmetic Auras", name_de: "Kosmetik-Auren", name_es: "Auras cosméticos", name_fr: "Auras cosmétiques", iscollapsed: true},
+	Legendary: {name_en: "Legendary Equipment", name_de: "Legendäre Ausrüstung", name_es: "Equipamientos legendarias", name_fr: "Équipements légendaires", iscollapsed: true}
 };
 
 /*

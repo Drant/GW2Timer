@@ -1194,8 +1194,8 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	pve: "<img src='img/ui/trading.png' /> <a href='http://gw2timer.com/?page=TP' title='gw2timer.com/tp'>TP and Gem tracker</a> now supports Deutsch, Español, Français, 简化字. "
-		+ "<a href='https://www.youtube.com/watch?v=uXqvTMGNIXo&t=12m31s'>Demo</a>.",
+	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> create your own virtual bank tabs! "
+		+ "<a href='http://i.imgur.com/aiPF7B3.png'>Screenshot</a>.",
 	wvw: "",
 	Start: new Date("2016-05-31T16:00:00Z"),
 	Finish: new Date("2016-06-06T16:00:00Z"),

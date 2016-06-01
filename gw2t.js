@@ -80,7 +80,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160506},
+		programVersion: {key: "int_utlProgramVersion", value: 160601},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -5917,7 +5917,7 @@ A = {
 			// Add materials deposits
 			pMaterialsData.forEach(function(iSlot)
 			{
-				if (iSlot)
+				if (iSlot && iSlot.count > 0)
 				{
 					addItem(iSlot.id, iSlot.count, "materials");
 				}
@@ -7315,7 +7315,7 @@ V = {
 	 */
 	serveCatalog: function()
 	{
-		B.generateCatalog("catalog", {aIsCustomCatalog: false});
+		B.generateCatalog("catalog", {aIsCustomCatalog: true});
 	},
 	
 	/*
@@ -7409,7 +7409,6 @@ V = {
 		var matdata = GW2T_MATERIALS_CATEGORIES;
 		var itemid;
 		var matcategory;
-		var slotscontainerassoc = {};
 		var slotassoc = {};
 		
 		$.getJSON(A.getURL(A.URL.Materials), function(pData)
@@ -7426,7 +7425,6 @@ V = {
 					tab = B.createBankTab(bank, {aTitle: D.getObjectName(matcategory)});
 					// Store the tabs to be later inserted with slots
 					slotscontainer = tab.find(".bnkTabSlots");
-					slotscontainerassoc[matcategory.id] = slotscontainer;
 					// Insert empty slots in the proper order
 					for (var ii = 0; ii < matcategory.items.length; ii++)
 					{
@@ -7626,7 +7624,7 @@ V = {
 };
 B = {
 /* =============================================================================
- * @@Bank window and item slots
+ * @@Bank window, tab, item slot, and catalog generation
  * ========================================================================== */
 
 	/*
@@ -7690,11 +7688,11 @@ B = {
 	 * Creates a standard bank window tab that holds item slots, and a separator
 	 * that toggles the tab.
 	 * @param jqobject pBank container of tabs.
-	 * @objparam string iIcon HTML for tab header icon.
 	 * @objparam string aTitle for tab header title.
-	 * @objparam boolean aIsTop whether to add to top of bank instead of append.
+	 * @objparam string aIcon HTML for tab header icon, optional.
+	 * @objparam boolean aWantPrepend to place the tab on top, optional.
 	 * @objparam boolean aIsCollapsed whether the tab is pre-collapsed, for tabs
-	 * that generate slots on demand.
+	 * that generate slots on demand, optional.
 	 * @returns jqobject bank tab.
 	 */
 	createBankTab: function(pBank, pSettings)
@@ -7733,7 +7731,11 @@ B = {
 		}
 		if (Settings.aIsCustomCatalog)
 		{
-			B.placeCatalogTab(pBank, tab);
+			B.placeCatalogTab(pBank, tab, Settings.aWantPrepend);
+		}
+		else if (Settings.aWantPrepend)
+		{
+			pBank.prepend(tab);
 		}
 		else
 		{
@@ -7857,14 +7859,21 @@ B = {
 				pSlot.data("keywords", keywords);
 				// Bind slot click behavior
 				var wikisearch = Settings.aWiki || Settings.aItem.name;
-				pSlot.click(function(pEvent)
+				if (Settings.aIsCustomCatalog)
 				{
-					if (pEvent.which === I.ClickEnum.Left)
+					B.bindCatalogSlotEdit(pSlot);
+				}
+				else
+				{
+					pSlot.click(function(pEvent)
 					{
-						var searchurl = (Settings.aWiki) ? U.getWikiSearchDefault(wikisearch) : U.getWikiSearchLanguage(wikisearch);
-						U.openExternalURL(searchurl);
-					}
-				});
+						if (pEvent.which === I.ClickEnum.Left)
+						{
+							var searchurl = (Settings.aWiki) ? U.getWikiSearchDefault(wikisearch) : U.getWikiSearchLanguage(wikisearch);
+							U.openExternalURL(searchurl);
+						}
+					});
+				}
 				Q.bindItemSlotBehavior(pSlot, {
 					aItem: Settings.aItem,
 					aTradeableID: Settings.aTradeableID,
@@ -8498,6 +8507,12 @@ B = {
 		
 		Q.getItem(pItemID, function(iItem)
 		{
+			if (Settings.aIsCustomCatalog)
+			{
+				pSlot.data("itemid", pItemID);
+				unlockid = pItemID;
+				wiki = iItem.name;
+			}
 			var slotcoin, slotgem, slotgemvalue;
 			if (payment)
 			{
@@ -8534,6 +8549,7 @@ B = {
 				aSlotMeta: {count: count},
 				aComment: comment,
 				aWiki: wiki,
+				aIsCustomCatalog: Settings.aIsCustomCatalog,
 				aCallback: function()
 				{
 					// Include payment if the item cannot be obtained on the Trading Post
@@ -8633,7 +8649,8 @@ B = {
 			catarr = database[i];
 			tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : B.createBankTab(pBank, {
 				aTitle: D.getObjectName(catobj),
-				aIsCollapsed: catobj.iscollapsed
+				aIsCollapsed: catobj.iscollapsed,
+				aIsCustomCatalog: catobj.iscustomtab
 			});
 			(function(iTab, iCatObj, iCatArr, iCatArrName)
 			{
@@ -8658,7 +8675,7 @@ B = {
 						B.fillTab(iTab, iCatArr, {
 							aUnlockAssoc: unlocksassoc,
 							aIsCatalog: Settings.aIsCatalog,
-							aIsCustomCatalog: iCatObj.iscustom
+							aIsCustomCatalog: iCatObj.iscustomtab
 						});
 					}
 				}
@@ -8759,6 +8776,29 @@ B = {
 	},
 	
 	/*
+	 * Places a newly created tab of a custom catalog to the proper container.
+	 * @param jqobject pBank.
+	 * @param jqobject pTab.
+	 * @param boolean pWantPrepend to place the tab on top.
+	 */
+	placeCatalogTab: function(pBank, pTab, pWantPrepend)
+	{
+		var tabcontainer = pBank.find(".bnkCatalogTabContainer");
+		if ( ! tabcontainer.length)
+		{
+			tabcontainer = $("<div class='bnkCatalogTabContainer'></div>").prependTo(pBank);
+		}
+		if (pWantPrepend)
+		{
+			tabcontainer.prepend(pTab);
+		}
+		else
+		{
+			tabcontainer.append(pTab);
+		}
+	},
+	
+	/*
 	 * Binds a custom tab of a catalog bank to have a button that shows the edit menu.
 	 * @param jqobject pTab to bind.
 	 */
@@ -8766,14 +8806,14 @@ B = {
 	{
 		pTab.addClass("bnkCatalogTab");
 		var edit = $("<kbd class='bnkCatalogTabEdit btnWindow' title='Click to <dfn>edit</dfn> this tab.<br />"
-			+ "Click again to stop editing.'></kbd>").prependTo(pTab).click(function()
+			+ "Click again to stop editing.<br />To edit slots, click a slot.'></kbd>").prependTo(pTab).click(function()
 		{
 			var bank = $(this).parents(".bnkBank");
 			var currenttab = $(bank.data("currenttab"));
 			var clickedtab = $(this).parents(".bnkTab").first();
 			var tabeditor = bank.data("tabeditor");
-			var catalogmenu = tabeditor.parent();
-			bank.find(".bnkCatalogTab").removeClass("bnkCatalogTabHighlight");
+			var tabheader = pTab.find(".bnkTabHeader");
+			bank.find(".bnkTabHeader").removeClass("bnkCatalogTabHighlight");
 			/*
 			 * All custom tabs share the same editor menu that decides which
 			 * tab to edit based on the bank object's current tab data.
@@ -8782,22 +8822,17 @@ B = {
 			 */
 			if (clickedtab.is(currenttab) && tabeditor.is(":visible"))
 			{
-				if (tabeditor.is(":visible"))
-				{
-					// Hide the tab editor if is already editing it and user clicked edit again
-					catalogmenu.hide();
-					tabeditor.hide();
-					bank.data("currenttab", null);
-					pTab.removeClass("bnkCatalogTabHighlight");
-				}
+				// Hide the tab editor if is already editing it and user clicked edit again
+				tabeditor.hide();
+				bank.data("currenttab", null);
+				tabheader.removeClass("bnkCatalogTabHighlight");
 			}
 			else if (clickedtab.is(currenttab) === false || tabeditor.is(":visible") === false)
 			{
 				// Show the tab editor if clicked edit on a different tab or isn't already editing
-				catalogmenu.show();
 				tabeditor.show();
 				bank.data("currenttab", $(this).parents(".bnkTab"));
-				pTab.addClass("bnkCatalogTabHighlight");
+				tabheader.addClass("bnkCatalogTabHighlight");
 				// Update the name of the tab rename input
 				var tabname = pTab.find(".bnkTabText").text();
 				tabeditor.find(".bnkCatalogTabRename").val(tabname);
@@ -8808,40 +8843,79 @@ B = {
 	},
 	
 	/*
-	 * Places a newly created tab of a custom catalog to the proper container.
-	 * @param jqobject pBank.
-	 * @param jqobject pTab.
+	 * A catalog's custom tab's slot when clicked on shows the slot editor rather
+	 * than go to the wiki page.
+	 * @param jqobject pSlot to bind.
 	 */
-	placeCatalogTab: function(pBank, pTab)
+	bindCatalogSlotEdit: function(pSlot)
 	{
-		var tabcontainer = pBank.find(".bnkCatalogTabContainer");
-		if ( ! tabcontainer.length)
+		pSlot.click(function()
 		{
-			tabcontainer = $("<div class='bnkCatalogTabContainer'></div>").prependTo(pBank);
-		}
-		tabcontainer.prepend(pTab);
+			// Set the clicked slot as the current and highlight it
+			var bank = $(this).parents(".bnkBank");
+			bank.find(".bnkCatalogSlotHighlight").removeClass("bnkCatalogSlotHighlight");
+			var currentslot = bank.data("currentslot");
+			var sloteditor = bank.data("sloteditor");
+			if ($(this).is(currentslot) && sloteditor.is(":visible"))
+			{
+				sloteditor.hide();
+				bank.data("currentslot", null);
+				$(this).removeClass("bnkCatalogSlotHighlight");
+			}
+			else if ($(this).is(currentslot) === false || sloteditor.is(":visible") === false)
+			{
+				sloteditor.show();
+				bank.data("currentslot", $(this));
+				$(this).addClass("bnkCatalogSlotHighlight");
+			}
+			A.adjustAccountPanel();
+		}).dblclick(function()
+		{
+			var bank = $(this).parents(".bnkBank");
+			$(this).remove();
+			B.saveCatalog(bank);
+		});
 	},
 	
 	/*
 	 * Saves the custom catalog to storage.
 	 * @param jqobject pBank to extract custom tabs.
-	 */
-	saveCatalog: function(pBank)
-	{
-		
-	},
-	
-	/*
-	 * Binds additional behaviors to a bank which the user can add custom tabs to.
-	 * @param jqobject pBank element.
-	 * @param object pUnlockAssoc associative array to check against.
-	 * @param object pHeaders original to extend.
-	 * @param object pRecord original to extend.
 	 * Example structure of the stored custom catalog:
 	 * [
 	 *	{name: "My Tab", items: [123, 1234, 12345]},
 	 *	{name: "My Tab 2", items: [321, 4321, 54321, 21]},
 	 * ]
+	 */
+	saveCatalog: function(pBank)
+	{
+		var tabs = [];
+		pBank.find(".bnkCatalogTab").each(function()
+		{
+			var items = [];
+			var itemid;
+			var slotscontainer = $(this).find(".bnkTabSlots").first();
+			slotscontainer.find(".bnkSlot").each(function()
+			{
+				itemid = $(this).data("itemid");
+				if (itemid)
+				{
+					items.push(itemid);
+				}
+			});
+			tabs.push({
+				name: $(this).find(".bnkTabText").text(),
+				items: items
+			});
+		});
+		localStorage[O.Utilities.CustomCatalog.key] = JSON.stringify(tabs);
+	},
+	
+	/*
+	 * Binds additional behaviors to a bank which the user can add custom tabs to.
+	 * @param jqobject pBank element.
+	 * @param object pUnlockAssoc associative array of the account's possessions.
+	 * @param object pHeaders original to extend.
+	 * @param object pRecord original to extend.
 	 */
 	bindCatalog: function(pBank, pUnlockAssoc, pHeaders, pRecord)
 	{
@@ -8851,7 +8925,8 @@ B = {
 		 */
 		var headers = {};
 		var record = {};
-		var customtab, tabkey;
+		var customitems = {};
+		var itemid, defaulttab, customtab, tabkey;
 		var customtabs = [];
 		try
 		{
@@ -8859,19 +8934,49 @@ B = {
 		}
 		catch (e) {}
 		
-		// Convert the custom tabs object into the unlockables format
+		// Create a list of custom items
+		for (var i = 0; i < customtabs.length; i++)
+		{
+			customtab = customtabs[i];
+			for (var ii = 0; ii < customtab.items.length; ii++)
+			{
+				customitems[(customtab.items[ii])] = true;
+			}
+		}
+		// To avoid duplicate slots, remove items from the default list if the item's already in the custom list
+		for (var i in pRecord)
+		{
+			defaulttab = pRecord[i];
+			for (var ii = defaulttab.length - 1; ii >= 0; ii--)
+			{
+				if (customitems[(defaulttab[ii].i)])
+				{
+					defaulttab.splice(ii, 1);
+				}
+			}
+		}
+		
+		// Convert the custom tabs object into the unlockables record format
 		for (var i = 0; i < customtabs.length; i++)
 		{
 			customtab = customtabs[i];
 			tabkey = "Tab_" + i;
 			headers[tabkey] = {
-				name_en: U.escapeHTML(customtab.name)
+				name_en: U.escapeHTML(customtab.name || ""),
+				iscustomtab: true
 			};
 			record[tabkey] = [];
-			// Reconstruct an unlockable entry just using the 
+			// Reconstruct an unlockable entry using just the stored item ID
 			for (var ii = 0; ii < customtab.items.length; ii++)
 			{
-				record[tabkey] = customtab.items;
+				itemid = customtab.items[ii];
+				if (itemid)
+				{
+					record[tabkey].push({
+						i: itemid,
+						n: null
+					});
+				}
 			}
 		}
 		// Add the default unlockables to the custom unlockables, so that the custom ones are top ordered
@@ -8885,17 +8990,18 @@ B = {
 		}
 		
 		/*
-		 * Add UI functionalities.
+		 * New tab button.
 		 */
 		var newtabutton = $("<kbd class='bnkCatalogTabAdd btnWindow' title='<dfn>Add a custom bank tab.</dfn><br />"
-			+ "To edit or delete a custom bank tab, click the cog icon next to one.'></kbd>").appendTo(pBank)
+			+ "To edit a custom tab or add an item to it, click the<img src=\"img/ui/edit.png\" />icon next one.'></kbd>").appendTo(pBank)
 			.click(function()
 		{
 			if (pBank.find(".bnkCatalogTab").length < A.Metadata.Bank.CustomTabsLimit)
 			{
 				var tab = B.createBankTab(pBank, {
-					aTitle: D.getPhraseTitle(D.orderModifier("tab", "new")),
-					aIsCustomCatalog: true
+					aTitle: D.getPhraseTitle("rename tab"),
+					aIsCustomCatalog: true,
+					aWantPrepend: true
 				});
 				B.fillTab(tab, [], {
 					aUnlockAssoc: pUnlockAssoc,
@@ -8913,25 +9019,40 @@ B = {
 		// Create a menu to edit custom tabs and slots
 		var sectionname = A.getDishName(pBank);
 		var dishmenu = A.getDishMenu(sectionname);
-		var catalogmenu = $("<div class='bnkCatalogMenu'></div>").appendTo(dishmenu).hide();
 		
-		// Close button for catalog menu
-		$("<div class='bnkCatalogMenuClose bnkButton curClick' title='<dfn>Close</dfn> the catalog menu.'></div>")
-			.appendTo(catalogmenu).click(function()
+		/*
+		 * Tab editor.
+		 */
+		var tabeditor = $("<div class='bnkCatalogTabEditor'></div>").appendTo(dishmenu).hide();
+		pBank.data("tabeditor", tabeditor);
+		$("<div class='bnkCatalogMenuClose bnkButton curClick' title='<dfn>Close</dfn> the tab editor.'></div>")
+			.appendTo(tabeditor).click(function()
 		{
+			var currenttab = pBank.data("currenttab");
+			if (currenttab)
+			{
+				currenttab.find(".bnkTabHeader").removeClass("bnkCatalogTabHighlight");
+			}
 			pBank.data("currenttab", null);
-			catalogmenu.hide();
-			pBank.find(".bnkCatalogTab").removeClass("bnkCatalogTabHighlight");
+			tabeditor.hide();
 			A.adjustAccountPanel();
 		});
-		
-		// Tab edit menu
-		var tabeditor = $("<aside class='bnkCatalogTabEditor'></aside>").appendTo(catalogmenu).hide();
-		pBank.data("tabeditor", tabeditor);
 		var slotadd = $("<input class='bnkCatalogSlotAdd bnkSearchInput' type='text' />").appendTo(tabeditor);
-		Q.bindItemSearch(slotadd, function()
+		Q.bindItemSearch(slotadd, function(pItem)
 		{
-			//
+			var tab = pBank.data("currenttab");
+			if (tab)
+			{
+				var slotscontainer = tab.find(".bnkTabSlots");
+				var slot = B.createBankSlot(slotscontainer);
+				B.fillSlot(slot, pItem.id, {
+					aUnlockAssoc: pUnlockAssoc,
+					aUnlockObj: pItem.id,
+					aIsCatalog: true,
+					aIsCustomCatalog: true
+				});
+				B.saveCatalog(pBank);
+			}
 		}, D.getPhraseTitle(D.orderModifier("item", "new")) + "...");
 		$("<input class='bnkCatalogTabRename bnkSearchInput' type='text' />").appendTo(tabeditor).change(function()
 		{
@@ -8939,7 +9060,11 @@ B = {
 			if (tab)
 			{
 				tab.find(".bnkTabText").text($(this).val());
+				B.saveCatalog(pBank);
 			}
+		}).click(function()
+		{
+			$(this).select();
 		});
 		var tabeditorbuttons = $("<aside class='bnkButtons'></aside>").appendTo(tabeditor);
 		$("<div class='bnkCatalogTabUp bnkButton curClick' title='Move this tab <dfn>up</dfn>.'></div>")
@@ -8949,7 +9074,6 @@ B = {
 			if (tab && tab.prev())
 			{
 				tab.insertBefore(tab.prev());
-				A.adjustAccountPanel();
 			}
 			B.saveCatalog(pBank);
 		});
@@ -8960,32 +9084,91 @@ B = {
 			if (tab && tab.next())
 			{
 				tab.insertAfter(tab.next());
-				A.adjustAccountPanel();
 			}
 			B.saveCatalog(pBank);
 		});
 		$("<div class='bnkCatalogTabDelete bnkButton curClick' title='<dfn>Delete</dfn> this custom bank tab.'></div>")
 			.appendTo(tabeditorbuttons).click(function()
 		{
-			if (confirm("Delete this custom tab?"))
+			var tab = pBank.data("currenttab");
+			var removeTab = function()
 			{
-				var tab = pBank.data("currenttab");
-				if (tab)
-				{
-					tab.remove();
-					catalogmenu.hide();
-					tabeditor.hide();
-					A.adjustAccountPanel();
-				}
+				tab.remove();
+				tabeditor.hide();
+				A.adjustAccountPanel();
 				B.saveCatalog(pBank);
+			};
+			if (tab)
+			{
+				// Show confirmation if the tab is not empty
+				if (tab.find(".bnkSlot").length > 0)
+				{
+					if (confirm("Delete this custom tab?"))
+					{
+						removeTab();
+					}
+				}
+				else
+				{
+					removeTab();
+				}
 			}
 		});
 		
-		// Slot edit menu
-		var sloteditor = $("<aside class='bnkCatalogSlotEditor'></aside>").appendTo(catalogmenu).hide();
+		/*
+		 * Slot editor.
+		 */
+		var sloteditor = $("<div class='bnkCatalogSlotEditor'></div>").appendTo(dishmenu).hide();
 		pBank.data("sloteditor", sloteditor);
+		$("<div class='bnkCatalogMenuClose bnkButton curClick' title='<dfn>Close</dfn> the slot editor.'></div>")
+			.appendTo(sloteditor).click(function()
+		{
+			var currentslot = pBank.data("currentslot");
+			if (currentslot)
+			{
+				currentslot.removeClass("bnkCatalogSlotHighlight");
+			}
+			pBank.data("currentslot", null);
+			sloteditor.hide();
+			A.adjustAccountPanel();
+		});
+		var sloteditorbuttons = $("<aside class='bnkButtons'></aside>").appendTo(sloteditor);
+		$("<div class='bnkCatalogSlotLeft bnkButton curClick' title='Move this slot <dfn>left</dfn>.'></div>")
+			.appendTo(sloteditorbuttons).click(function()
+		{
+			var slot = pBank.data("currentslot");
+			if (slot && slot.prev())
+			{
+				slot.insertBefore(slot.prev());
+			}
+			B.saveCatalog(pBank);
+		});
+		$("<div class='bnkCatalogSlotRight bnkButton curClick' title='Move this slot <dfn>right</dfn>.'></div>")
+			.appendTo(sloteditorbuttons).click(function()
+		{
+			var slot = pBank.data("currentslot");
+			if (slot && slot.next())
+			{
+				slot.insertAfter(slot.next());
+			}
+			B.saveCatalog(pBank);
+		});
+		$("<div class='bnkCatalogSlotDelete bnkButton curClick' title='<dfn>Delete</dfn> this custom bank slot.<br />"
+			+ "You can also double click a custom slot to delete it.'></div>")
+			.appendTo(sloteditorbuttons).click(function()
+		{
+			var slot = pBank.data("currentslot");
+			if (slot)
+			{
+				slot.remove();
+				sloteditor.hide();
+				A.adjustAccountPanel();
+			}
+			B.saveCatalog(pBank);
+		});
 		
-		I.qTip.init(catalogmenu.find(".bnkButton"));
+		I.qTip.init(tabeditor.find(".bnkButton"));
+		I.qTip.init(sloteditor.find(".bnkButton"));
 		
 		// Return the extended unlockables data for the generate function to use
 		return {
