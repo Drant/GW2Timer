@@ -7920,7 +7920,11 @@ B = {
 					{
 						B.updateSlotPrice(pSlot, pData, Settings.aSlotMeta.count, E.PaymentEnum.Coin);
 					});
-					pSlot.data("istradeable", true);
+					if (pBox.istradeable)
+					{
+						// Add the boolean for the bank filter button to look for
+						pSlot.data("istradeable", true);
+					}
 				}
 				else if (Settings.aPrice > 0)
 				{
@@ -8806,7 +8810,7 @@ B = {
 	{
 		pTab.addClass("bnkCatalogTab");
 		var edit = $("<kbd class='bnkCatalogTabEdit btnWindow' title='Click to <dfn>edit</dfn> this tab.<br />"
-			+ "Click again to stop editing.<br />To edit slots, click a slot.'></kbd>").prependTo(pTab).click(function()
+			+ "Click again to stop editing.<br />To edit custom slots, click the slot.'></kbd>").prependTo(pTab).click(function()
 		{
 			var bank = $(this).parents(".bnkBank");
 			var currenttab = $(bank.data("currenttab"));
@@ -9008,6 +9012,8 @@ B = {
 					aIsCatalog: true,
 					aIsCustomCatalog: true
 				});
+				// Automatically open the tab editor for the newly created tab
+				tab.find(".bnkCatalogTabEdit").trigger("click");
 			}
 			else
 			{

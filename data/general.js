@@ -1391,7 +1391,7 @@ Sale: {
 	},
 	{
 		name: "Electromagnetic Ascender",
-		img: "http://i.imgur.com/No0u1oz.png",
+		id: "78771",
 		price: 250,
 		discount: null,
 		col: 1

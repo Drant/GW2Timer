@@ -1415,7 +1415,12 @@ input[type="text"].bnkSearchInput:hover {
 	background-image: linear-gradient(270deg, #e4e0b3, transparent);
 	background-size: 400% 400%;
 	animation: aniPulsate 2s ease infinite;
+}
+.bnkCatalogTabHighlight {
 	box-shadow: 0px 0px 16px #e4e0b3;
+}
+.bnkCatalogSlotHighlight {
+	box-shadow: 0px 0px 32px #e4e0b3;
 }
 .bnkCatalogTabAdd {
 	background: url("../img/ui/new.png");
