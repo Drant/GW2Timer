@@ -5235,11 +5235,13 @@ A = {
 			Z.parseCommand(str, M);
 		});
 		I.bindInputBarText(consoleinput, "Enter \"help\" for commands...");
-		Q.bindItemSearch("#accSearch", function(pItem)
-		{
-			I.print("<img src='" + pItem.icon + "' />");
-			I.prettyJSON(pItem);
-		});
+		Q.bindItemSearch("#accSearch", {
+			aCallback: function(pItem)
+			{
+				I.print("<img src='" + pItem.icon + "' />");
+				I.prettyJSON(pItem);
+			}}
+		);
 		
 		// Initialize context menu for bank and inventory slots
 		Q.initializeItemContextMenu();
@@ -7861,7 +7863,7 @@ B = {
 				var wikisearch = Settings.aWiki || Settings.aItem.name;
 				if (Settings.aIsCustomCatalog)
 				{
-					B.bindCatalogSlotEdit(pSlot);
+					B.bindCatalogSlot(pSlot);
 				}
 				else
 				{
@@ -8268,7 +8270,8 @@ B = {
 			pBank.toggleClass("bnkRarity", isfilteringrarity);
 			pRarityButton.toggleClass("bnkButtonFocused");
 		};
-		var raritybutton = $("<div class='bnkButtonRarity bnkButton curToggle' title='Show <dfn>rarity</dfn> colored boxes.<br />Change permanently at Options page.'></div>")
+		var raritybutton = $("<div class='bnkButtonRarity bnkButton curToggle' title='"
+			+ "Show <dfn>rarity</dfn> colored boxes.<br />Change permanently at Options page, Account section.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			isfilteringrarity = !isfilteringrarity;
@@ -8289,7 +8292,8 @@ B = {
 			pBank.css({width: A.Metadata.Bank.NumSlotsHorizontal * B.getBankSlotWidth(isbankcondense)});
 			A.adjustAccountScrollbar();
 		};
-		var raritybutton = $("<div class='bnkButtonCondense bnkButton curToggle' title='Toggle bank <dfn>size</dfn>.<br />Change permanently at Options page.'></div>")
+		var raritybutton = $("<div class='bnkButtonCondense bnkButton curToggle' title='"
+			+ "Toggle bank <dfn>size</dfn>.<br />Change permanently at Options page, Account section.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			isbankcondense = !isbankcondense;
@@ -8394,7 +8398,7 @@ B = {
 		// Also include button for custom tabs
 		if (Settings.aIsCustomCatalog)
 		{
-			B.bindCatalogTabEdit(pTab);
+			B.bindCatalogTab(pTab);
 		}
 	},
 	
@@ -8806,7 +8810,7 @@ B = {
 	 * Binds a custom tab of a catalog bank to have a button that shows the edit menu.
 	 * @param jqobject pTab to bind.
 	 */
-	bindCatalogTabEdit: function(pTab)
+	bindCatalogTab: function(pTab)
 	{
 		pTab.addClass("bnkCatalogTab");
 		var edit = $("<kbd class='bnkCatalogTabEdit btnWindow' title='Click to <dfn>edit</dfn> this tab.<br />"
@@ -8840,6 +8844,7 @@ B = {
 				// Update the name of the tab rename input
 				var tabname = pTab.find(".bnkTabText").text();
 				tabeditor.find(".bnkCatalogTabRename").val(tabname);
+				tabeditor.find(".bnkCatalogSlotAdd").select().trigger("focus").trigger("click");
 			}
 			A.adjustAccountPanel();
 		});
@@ -8851,7 +8856,7 @@ B = {
 	 * than go to the wiki page.
 	 * @param jqobject pSlot to bind.
 	 */
-	bindCatalogSlotEdit: function(pSlot)
+	bindCatalogSlot: function(pSlot)
 	{
 		pSlot.click(function()
 		{
@@ -8868,16 +8873,12 @@ B = {
 			}
 			else if ($(this).is(currentslot) === false || sloteditor.is(":visible") === false)
 			{
-				sloteditor.show();
+				// The slot editor appears next to the user's cursor rather than the bank menu
+				sloteditor.css({left: I.posX, top: I.posY}).show();
 				bank.data("currentslot", $(this));
 				$(this).addClass("bnkCatalogSlotHighlight");
 			}
 			A.adjustAccountPanel();
-		}).dblclick(function()
-		{
-			var bank = $(this).parents(".bnkBank");
-			$(this).remove();
-			B.saveCatalog(bank);
 		});
 	},
 	
@@ -9044,22 +9045,25 @@ B = {
 			A.adjustAccountPanel();
 		});
 		var slotadd = $("<input class='bnkCatalogSlotAdd bnkSearchInput' type='text' />").appendTo(tabeditor);
-		Q.bindItemSearch(slotadd, function(pItem)
-		{
-			var tab = pBank.data("currenttab");
-			if (tab)
+		Q.bindItemSearch(slotadd, {
+			aFillerText: D.getPhraseTitle(D.orderModifier("item", "new")) + "...",
+			aCallback: function(pItem)
 			{
-				var slotscontainer = tab.find(".bnkTabSlots");
-				var slot = B.createBankSlot(slotscontainer);
-				B.fillSlot(slot, pItem.id, {
-					aUnlockAssoc: pUnlockAssoc,
-					aUnlockObj: pItem.id,
-					aIsCatalog: true,
-					aIsCustomCatalog: true
-				});
-				B.saveCatalog(pBank);
-			}
-		}, D.getPhraseTitle(D.orderModifier("item", "new")) + "...");
+				var tab = pBank.data("currenttab");
+				if (tab)
+				{
+					var slotscontainer = tab.find(".bnkTabSlots");
+					var slot = B.createBankSlot(slotscontainer);
+					B.fillSlot(slot, pItem.id, {
+						aUnlockAssoc: pUnlockAssoc,
+						aUnlockObj: pItem.id,
+						aIsCatalog: true,
+						aIsCustomCatalog: true
+					});
+					B.saveCatalog(pBank);
+				}
+			}}
+		);
 		$("<input class='bnkCatalogTabRename bnkSearchInput' type='text' />").appendTo(tabeditor).change(function()
 		{
 			var tab = pBank.data("currenttab");
@@ -9159,8 +9163,7 @@ B = {
 			}
 			B.saveCatalog(pBank);
 		});
-		$("<div class='bnkCatalogSlotDelete bnkButton curClick' title='<dfn>Delete</dfn> this custom bank slot.<br />"
-			+ "You can also double click a custom slot to delete it.'></div>")
+		$("<div class='bnkCatalogSlotDelete bnkButton curClick' title='<dfn>Delete</dfn> this custom bank slot.'></div>")
 			.appendTo(sloteditorbuttons).click(function()
 		{
 			var slot = pBank.data("currentslot");
@@ -10659,28 +10662,30 @@ Q = {
 	 * the search bar, the search database is first loaded before a search
 	 * can be executed.
 	 * @param jqobject pElement to bind.
-	 * @param function pCallback to execute after the user selects an item.
-	 * @param string pFillerText to display over the input bar, optional.
+	 * @objparam string aFillerText to display over the input bar, optional, optional.
+	 * @objparam boolean aWantEnter whether to bind the default Enter key event, optional.
+	 * @objparam function aCallback to execute after the user selects an item.
 	 * @pre Input bar has a parent container element in order to position the results list.
 	 */
-	bindItemSearch: function(pElement, pCallback, pFillerText)
+	bindItemSearch: function(pElement, pSettings)
 	{
+		var Settings = pSettings || {};
 		var elm = $(pElement).wrap("<span class='itmSearchContainer'></span>");
 		var queryminchar = D.isLanguageLogographic() ? 1 : 2;
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").insertAfter(elm).hide();
 		var resultslist = $("<div class='itmSearchResultList cntPopup jsScrollable'></div>").appendTo(resultscontainer);
 		var notfoundstr = "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>";
 		var searchtimestamp;
-		if (pFillerText !== null)
+		if (Settings.aFillerText !== null)
 		{
-			I.bindInputBarText(elm, pFillerText);
+			I.bindInputBarText(elm, Settings.aFillerText);
 		}
 		I.bindScrollbar(resultslist);
 		
 		// Toggles display of the results container popup
 		var toggleResults = function(pBoolean, pMessage)
 		{
-			resultslist.empty();
+			resultslist.empty().removeData("selectedresult");
 			resultscontainer.toggle(pBoolean);
 			if (pMessage)
 			{
@@ -10711,10 +10716,10 @@ Q = {
 			else
 			{
 				toggleResults(true);
-				// Create an ordered list first
+				// Create an ordered list that acts as containers for each result entry
 				for (var i = 0; i < pItemIDs.length; i++)
 				{
-					resultslist.append("<span class='itmSearchResultEntry_" + pItemIDs[i] + "'></span>");
+					resultslist.append("<span class='itmSearchResultLine itmSearchResultLine_" + pItemIDs[i] + "'></span>");
 				}
 				if (pItemIDs.length === O.Options.int_numTradingResults)
 				{
@@ -10731,21 +10736,22 @@ Q = {
 							// Prevent older searches from entering the results because of API retrieval lag
 							if (iTimestamp === searchtimestamp)
 							{
-								var outputline = $("<dfn class='itmSearchResultEntry " + Q.getRarityClass(pItem.rarity) + "' data-id='" + pItem.id + "'>"
+								var resultentry = $("<dfn class='itmSearchResultEntry " + Q.getRarityClass(pItem.rarity) + "' data-id='" + pItem.id + "'>"
 									+ "<img src='" + pItem.icon + "'>"
-									+ U.highlightSubstring(pItem.name, pQuery) + "</dfn>").appendTo(resultslist.find(".itmSearchResultEntry_" + iItemID));
-								outputline.click(function(pEvent)
+									+ U.highlightSubstring(pItem.name, pQuery) + "</dfn>").appendTo(resultslist.find(".itmSearchResultLine_" + iItemID));
+								resultentry.click(function()
 								{
-									if (pEvent.which === I.ClickEnum.Left && pCallback)
+									if (Settings.aCallback)
 									{
-										pCallback(pItem);
+										Settings.aCallback(pItem);
 										toggleResults(false);
 									}
+									resultslist.removeData("selectedresult");
 								});
 								I.updateScrollbar(resultslist);
 								// Tooltip for the listed item
-								Q.scanItem(pItem, {aElement: outputline});
-								Q.bindItemSlotBehavior(outputline, {aItem: pItem});
+								Q.scanItem(pItem, {aElement: resultentry});
+								Q.bindItemSlotBehavior(resultentry, {aItem: pItem});
 							}
 						});
 					})(pItemIDs[i], searchtimestamp);
@@ -10804,6 +10810,26 @@ Q = {
 			renderSearch(resultsarr, pQuery);
 		};
 		
+		// Select an entry from the result list when user presses up or down arrow key
+		var executeArrowKey = function(pDirection)
+		{
+			var selectedresult = resultslist.data("selectedresult") || resultslist.find(".itmSearchResultEntry").first().parent();
+			if (selectedresult && selectedresult.length)
+			{
+				var nextresult = (pDirection) ? selectedresult.next() : selectedresult.prev();
+				if (nextresult && nextresult.hasClass("itmSearchResultLine"))
+				{
+					resultslist.find(".itmSearchSelected").removeClass("itmSearchSelected");
+					resultslist.data("selectedresult", nextresult);
+					nextresult.addClass("itmSearchSelected");
+					I.scrollToElement(nextresult, {
+						aContainer: resultslist,
+						aOffset: -(resultslist.height() / 2) // Scroll so the entry appears in the middle of the results window
+					});
+				}
+			}
+		};
+		
 		// Bind the search only after the user has clicked on the search bar
 		elm.one("click", function()
 		{
@@ -10824,6 +10850,26 @@ Q = {
 				{
 					toggleResults(false);
 				});
+				// Bind the enter key event to autoselect the first search result entry
+				if (Settings.aWantEnter !== false)
+				{
+					elm.onEnterKey(function()
+					{
+						// Use the selected entry or the first entry in the results list if haven't selected any
+						var selectedresult = resultslist.data("selectedresult") || resultslist.find(".itmSearchResultEntry").first().parent();
+						if (selectedresult && selectedresult.length)
+						{
+							selectedresult.find(".itmSearchResultEntry").trigger("click");
+						}
+						resultslist.removeData("selectedresult");
+					}).onArrowDownKey(function()
+					{
+						executeArrowKey(true);
+					}).onArrowUpKey(function()
+					{
+						executeArrowKey(false);
+					});
+				}
 				// Execute search in case the user typed something during the database load
 				elm.trigger("input");
 			});
@@ -11733,15 +11779,19 @@ E = {
 			});
 			
 			// Bind name search box behavior
-			Q.bindItemSearch($(name), function(pItem)
-			{
-				var entryinner = $(entry);
-				// Change triggers the storage, input triggers the calculation
-				entryinner.find(".trdItem").val(pItem.id).trigger("change");
-				entryinner.find(".trdName").val(pItem.name).trigger("change");
-				E.updateTradingDetails(entryinner);
-				E.updateTradingPrices(entryinner);
-			}, null);
+			Q.bindItemSearch($(name), {
+				aFillerText: null,
+				aWantEnter: false,
+				aCallback: function(pItem)
+				{
+					var entryinner = $(entry);
+					// Change triggers the storage, input triggers the calculation
+					entryinner.find(".trdItem").val(pItem.id).trigger("change");
+					entryinner.find(".trdName").val(pItem.name).trigger("change");
+					E.updateTradingDetails(entryinner);
+					E.updateTradingPrices(entryinner);
+				}}
+			);
 			$(name).change(function()
 			{
 				var query = $(this).val();

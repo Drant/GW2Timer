@@ -203,6 +203,7 @@ Toy: [
 	{i: 49932, n: "Enchanted Broom", p: {gem: 0}},
 	{i: 49948, n: "Sonic Tunneling Tool", p: {gem: 250}},
 	{i: 67356, n: "Magic Carpet", p: {gem: 250}},
+	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 250}},
 	{i: 49933, n: "Bouquet of Roses", p: {gem: 250}},
 	{i: 43528, n: "Box of Chocolates", p: {gem: 250}},
 	{i: 49930, n: "Boxing Gloves", p: {gem: 0}},

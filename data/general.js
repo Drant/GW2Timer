@@ -1293,6 +1293,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Electromagnetic Ascender",
+		id: "78771",
+		price: 250,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Aetherblade Light Armor Skin",
 		id: "42870",
 		price: 800,
@@ -1339,7 +1346,7 @@ Sale: {
 		id: "67040",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Mask of the Wanderer Skin",
@@ -1387,13 +1394,6 @@ Sale: {
 		name: "Ringmaster's Hat",
 		id: "64745",
 		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Electromagnetic Ascender",
-		id: "78771",
-		price: 250,
 		discount: null,
 		col: 1
 	}

@@ -35,6 +35,13 @@
 	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
 }
+#accIntroScreenshot {
+	margin-right: 24px;
+	float: left;
+}
+#accCommand {
+	clear: both;
+}
 #accAppendix { /* Pre-written HTML to be used later */
 	display: none;
 }
@@ -1442,6 +1449,9 @@ input[type="text"].bnkSearchInput:hover {
 	border-left: 3px solid rgba(228,224,179,0.6);
 	border-right: 3px solid rgba(228,224,179,0.6);
 	border-radius: 4px;
+}
+.bnkCatalogSlotEditor {
+	position: fixed;
 }
 input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	width: 256px;

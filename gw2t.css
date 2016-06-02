@@ -340,6 +340,9 @@ img {
 .itmSearchResultEntry:hover img {
 	width: 32px; height: 32px;
 }
+.itmSearchSelected img {
+	width: 32px; height: 32px;
+}
 
 /*
  * Style for perfect-scrollbar JS plugin by Hyunje Alex Jun.
