@@ -4941,18 +4941,13 @@ Z = {
 			{
 				Z.freeFiles();
 				var data = U.getDatabaseData(pType);
-				var headers = U.getDatabaseHeader(pType);
 				var itemids = [];
 				for (var i in data)
 				{
-					// Don't cache bank tabs that generate on demand (by clicking to expand)
-					if (headers[i].iscollapsed !== true)
+					var catarr = data[i];
+					for (var ii = 0; ii < catarr.length; ii++)
 					{
-						var catarr = data[i];
-						for (var ii = 0; ii < catarr.length; ii++)
-						{
-							itemids.push(catarr[ii].i);
-						}
+						itemids.push(catarr[ii].i);
 					}
 				}
 				
@@ -6269,27 +6264,42 @@ V = {
 			var rankobj = A.Metadata.WvWRank;
 			var ranks = rankobj.Ranks;
 			var wvwtitle = "", wvwtitletip = "", wvwtitlenext = "";
-			for (var i = 0; i < ranks.length; i++)
+			var titleindex, modifierindex;
+			var length = ranks.length;
+			for (var i = 0; i < length; i++)
 			{
-				for (var ii = 0; ii < ranks[i].length; ii++)
+				if (ranks[i] > pRank)
 				{
-					if ((ranks[i])[ii] > pRank)
+					// Current rank
+					titleindex = (i-1) % rankobj.RanksPerModifier;
+					modifierindex = ~~((i-1) / rankobj.RanksPerModifier);
+					wvwtitle = D.orderModifier(
+						D.getObjectTranslation(rankobj.Titles[titleindex]),
+						D.getObjectTranslation(rankobj.Modifiers[modifierindex])
+					);
+					// Next rank
+					if (i < length)
 					{
-						wvwtitle = D.orderModifier(
-							D.getObjectTranslation(rankobj.Titles[ii-1]),
-							D.getObjectTranslation(rankobj.Modifiers[i]));
-						if (pRank < rankobj.RankHighest)
-						{
-							wvwtitlenext = D.orderModifier(
-								D.getObjectTranslation(rankobj.Titles[ii]),
-								D.getObjectTranslation(rankobj.Modifiers[i]));
-							wvwtitletip = pRank + " + " + ((ranks[i])[ii] - pRank) + "<img src=\"img/account/summary/worldabilitypoint.png\" />" + " = " + wvwtitlenext;
-						}
-						return "<var id='chrAccountWvWRank' title='" + wvwtitletip + "'>" + wvwtitle + "</var>";
+						titleindex = i % rankobj.RanksPerModifier;
+						modifierindex = ~~(i / rankobj.RanksPerModifier);
+						wvwtitlenext = D.orderModifier(
+							D.getObjectTranslation(rankobj.Titles[titleindex]),
+							D.getObjectTranslation(rankobj.Modifiers[modifierindex])
+						);
+						wvwtitletip = pRank + " + " + (ranks[i] - pRank) + "<img src=\"img/account/summary/worldabilitypoint.png\" />" + " = " + wvwtitlenext;
 					}
+					break;
 				}
 			}
-			return "";
+			// Max rank case
+			if (pRank >= ranks[length - 1])
+			{
+				wvwtitle = D.orderModifier(
+					D.getObjectTranslation(rankobj.Titles[rankobj.Titles.length - 1]),
+					D.getObjectTranslation(rankobj.Modifiers[rankobj.Modifiers.length - 1])
+				);
+			}
+			return "<var id='chrAccountWvWRank' title='" + wvwtitletip + "'>" + wvwtitle + "</var>";
 		};
 		
 		// First loop to find max values for age and deaths
@@ -12612,6 +12622,8 @@ D = {
 			cs: "Drahokam Prodejna Propagace", it: "Negozio gemma promozioni", pl: "Klejnot Sklep Promocje", pt: "Loja gema promoções", ru: "Самоцве́т Магази́н Продвижения", zh: "寶石商店促銷"},
 		s_forum: {de: "forum", es: "foro", fr: "forum",
 			cs: "fórum", it: "forum", pl: "forum", pt: "fórum", ru: "форум", zh: "論壇"},
+		s_catalog: {de: "katalog", es: "catálogo", fr: "catalogue",
+			cs: "katalog", it: "catalogo", pl: "katalog", pt: "catálogo", ru: "каталог", zh: "目錄"},
 		s_simple: {de: "einfach", es: "simple", fr: "simple",
 			cs: "prostý", it: "semplice", pl: "prosty", pt: "simples", ru: "простой", zh: "簡單"},
 		s_mobile: {de: "mobil", es: "móvil", fr: "mobile",
