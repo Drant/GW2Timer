@@ -1438,12 +1438,12 @@ Vendor:
 	PriceDefault: 25200,
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
 	{
-		Mehem: { id: "43798" },
+		Mehem: { id: "44716" },
 		Fox: { id: "43816" },
-		Derwena: { id: "49735" },
-		Yana: { id: "44714" },
-		Katyn: { id: "43799" },
-		Verma: { id: "44664" }
+		Derwena: { id: "43813" },
+		Yana: { id: "49735" },
+		Katyn: { id: "49748" },
+		Verma: { id: "49772" }
 	}
 }
 };

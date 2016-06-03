@@ -219,7 +219,7 @@ O = {
 		// Trading
 		bol_refreshPrices: true,
 		int_numTradingCalculators: 25,
-		int_numTradingResults: 30,
+		int_numTradingResults: 50,
 		int_secTradingRefresh: 60,
 		// Tools
 		int_minStopwatchAlert: 5,
@@ -5547,7 +5547,7 @@ A = {
 	{
 		if (pStatus === "error")
 		{
-			I.write("Unable to retrieve response. ArenaNet API servers may be down.");
+			I.write("Unable to retrieve response. Incorrect URL or ArenaNet API servers is down.");
 		}
 		else
 		{

@@ -1495,6 +1495,9 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 .bnkTabSeparator:hover {
 	background-image: url("../img/background/tab_hover.png");
 }
+.bnkTabSeparator:active {
+	background-image: url("../img/background/tab.png");
+}
 .bnkTabHover {
 	display: none;
 	position: absolute;
