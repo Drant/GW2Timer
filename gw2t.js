@@ -4338,7 +4338,7 @@ Z = {
 		var output = "";
 		var obj;
 		var wantfile = (Settings.aWantFile === "true" || Settings.aWantFile === true);
-		var wantquotes = (Settings.aWantQuotes === true) ? true : false;
+		var wantquotes = (Settings.aWantQuotes === undefined) ? wantfile : Settings.aWantQuotes;
 		var cache = Settings.aCustomCache || Z.APICacheArrayOfObjects;
 		
 		// Compile the output
