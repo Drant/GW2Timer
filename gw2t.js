@@ -7327,7 +7327,10 @@ V = {
 	 */
 	serveCatalog: function()
 	{
-		B.generateCatalog("catalog", {aIsCustomCatalog: true});
+		B.generateCatalog("catalog", {
+			aIsCustomCatalog: true,
+			aHelpMessage: $("#accCatalogHelp").html()
+		});
 	},
 	
 	/*
@@ -7927,16 +7930,17 @@ B = {
 				// TP price label if the item is tradeable
 				if (pBox.istradeable || Settings.aTradeableID)
 				{
+					if (pBox.istradeable)
+					{
+						// Add the boolean for the bank filter button to look for
+						pSlot.addClass("bnkSlotTradeable");
+						pSlot.data("istradeable", true);
+					}
 					var itemidforprice = Settings.aTradeableID || Settings.aItem.id;
 					$.getJSON(U.getAPIPrice(itemidforprice), function(pData)
 					{
 						B.updateSlotPrice(pSlot, pData, Settings.aSlotMeta.count, E.PaymentEnum.Coin);
 					});
-					if (pBox.istradeable)
-					{
-						// Add the boolean for the bank filter button to look for
-						pSlot.data("istradeable", true);
-					}
 				}
 				else if (Settings.aPrice > 0)
 				{
@@ -8004,18 +8008,18 @@ B = {
 		{
 			case E.PaymentEnum.Coin: {
 				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricetorecord, {aWantColor: true, aWantShort: true}) + "</var>");
-				// Also include price for a single item (shown when hovered over the slot)
-				if (pCount > 1)
+				if (pSlot.data("istradeable"))
 				{
 					var priceone = (typeof pPrice === "number") ? E.createPrice(pPrice, 1) : E.processPrice(pPrice, 1);
-					pSlot.append("<var class='bnkSlotPriceOne'>" + E.formatCoinString(priceone.oPriceSell, {aWantColor: true, aWantShort: true}) + "</var>");
+					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatCoinString(priceone.oPriceBuy, {aWantColor: true, aWantShort: true}) + "</var>");
+					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatCoinString(priceone.oPriceSell, {aWantColor: true, aWantShort: true}) + "</var>");
 				}
 			}; break;
 			case E.PaymentEnum.Gem: {
 				pSlot.append("<var class='bnkSlotPrice'>" + E.formatGemString(pricetorecord, true) + "</var>");
 				if (pCount > 1)
 				{
-					pSlot.append("<var class='bnkSlotPriceOne'>" + E.formatGemString(pPrice, true) + "</var>");
+					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatGemString(pPrice, true) + "</var>");
 				}
 			}; break;
 		}
@@ -8452,6 +8456,8 @@ B = {
 				}
 				if (iItemID)
 				{
+					slot.addClass("bnkSlotTradeable");
+					slot.data("istradeable", true);
 					$.getJSON(U.getAPIPrice(iItemID), function(pData)
 					{
 						B.updateSlotPrice(iSlot, pData, count, E.PaymentEnum.Coin);
@@ -8461,7 +8467,6 @@ B = {
 							iSlot.find(".bnkSlotPrice").addClass("accTrivial");
 						}
 					});
-					slot.data("istradeable", true);
 				}
 				
 				// Tooltip shows the different colors on different materials
@@ -12683,6 +12688,7 @@ D = {
 		s_Container: {en: "Container", de: "Behälter", es: "Contenedor", fr: "Conteneur"},
 		s_CraftingMaterial: {en: "Crafting Material", de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d&apos;artisanat"},
 		s_Gathering: {en: "Gathering Tool", de: "Sammelwerkzeug", es: "Herramienta de recolección", fr: "Outil de récolte"},
+		s_Salvage: {en: "Salvage Kit", de: "Wiederverwertungskit", es: "Kit de recicla", fr: "Nécessaire de recyclage"},
 		s_Gizmo: {en: "Gizmo", de: "Dingsbums", es: "Aparato", fr: "Machin"},
 		s_MiniPet: {en: "Miniature", de: "Miniatur", es: "Miniatura", fr: "Miniature"},
 		s_Nourishment: {en: "Nourishment", de: "Verbrauchsstoff", es: "Consumible", fr: "Produit consommable"},
