@@ -31,6 +31,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "vybavení", it: "equipaggiamento", pl: "sprzęt", pt: "equipamento", ru: "обору́дование", zh: "設備"},
 	s_inventory: {de: "inventar", es: "inventario", fr: "inventaire",
 		cs: "inventář", it: "inventario", pl: "inwentarz", pt: "inventário", ru: "инвента́рь", zh: "庫存"},
+	s_recipes: {de: "rezepte", es: "recetas", fr: "recettes",
+		cs: "recepty", it: "ricette", pl: "recepty", pt: "receitas", ru: "рецепты", zh: "食譜"},
 	s_crafting: {de: "handwerkskunst", es: "artesanía", fr: "artisanat",
 		cs: "řemeslo", it: "mestiere", pl: "rzemiosło", pt: "ofício", ru: "ремесло", zh: "手藝"},
 	s_trading: {de: "handel", es: "comercio", fr: "commerciale",
@@ -197,6 +199,17 @@ var GW2T_ACCOUNT_METADATA = {
 		Weapon_Harpoon: [],
 		Weapon_Speargun: [],
 		Weapon_Trident: []
+	},
+	CraftingDiscipline: {
+		Tailor: 0,
+		Leatherworker: 1,
+		Armorsmith: 2,
+		Artificer: 3,
+		Huntsman: 4,
+		Weaponsmith: 5,
+		Scribe: 7,
+		Chef: 6,
+		Jeweler: 8
 	},
 	CraftingRank: {
 		Novice: 0,

@@ -2520,6 +2520,7 @@ U = {
 		Skins: "data/skins.js",
 		Minis: "data/minis.js",
 		Dyes: "data/dyes.js",
+		Recipes: "data/recipes.js",
 		Ascended: "data/ascended.js",
 		Catalog: "data/catalog.js",
 		// Data to load when opening a map page section
@@ -4121,7 +4122,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				Z.collateRecipes();
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -4702,24 +4703,24 @@ Z = {
 				this.Purple = [];
 			};
 			var db = U.getDatabaseData("dyes");
-			var newdb = {};
+			var newrec = {};
 			var cat, overcat, entry;
 			// Put the colors in their hue category
 			for (var i in db)
 			{
 				cat = db[i];
-				newdb[i] = new DyeHues();
+				newrec[i] = new DyeHues();
 				for (var ii = 0; ii < cat.length; ii++)
 				{
 					entry = cat[ii];
 					entry["lightness"] = U.convertRGBToHSL(U.convertHexToRGB(entry.c[0]))[2];
-					(newdb[i])[entry.h].push(entry);
+					(newrec[i])[entry.h].push(entry);
 				}
 			}
 			// Sort each hue category by its colors' lightness
-			for (var i in newdb)
+			for (var i in newrec)
 			{
-				overcat = newdb[i];
+				overcat = newrec[i];
 				for (var ii in overcat)
 				{
 					cat = overcat[ii];
@@ -4727,11 +4728,11 @@ Z = {
 				}
 			}
 			// Unfold the hue categories arrays into one array for a bank tab
-			var finaldb = {};
-			for (var i in newdb)
+			var finalrec = {};
+			for (var i in newrec)
 			{
-				overcat = newdb[i];
-				finaldb[i] = [];
+				overcat = newrec[i];
+				finalrec[i] = [];
 				for (var ii in overcat)
 				{
 					cat = overcat[ii];
@@ -4739,11 +4740,59 @@ Z = {
 					{
 						entry = cat[iii];
 						delete entry["lightness"];
-						finaldb[i].push(entry);
+						finalrec[i].push(entry);
 					}
 				}
 			}
-			Z.printUnlockables(finaldb);
+			Z.printUnlockables(finalrec);
+		});
+	},
+	
+	/*
+	 * Reads the database of recipes creates an unlockables record with the
+	 * disciplines as categories.
+	 */
+	collateRecipes: function()
+	{
+		Z.loadItemsDatabase(function(pDatabase)
+		{
+			var db = pDatabase["en"];
+			$.getJSON("test/recipes.json", function(pData)
+			{
+				var disciplines = {
+					Tailor: [],
+					Leatherworker: [],
+					Armorsmith: [],
+					Artificer: [],
+					Huntsman: [],
+					Weaponsmith: [],
+					Scribe: [],
+					Chef: [],
+					Jeweler: []
+				};
+				var types = {};
+				var recipe, discipline, type, itemid;
+				for (var i in pData)
+				{
+					recipe = pData[i];
+					if (recipe.flags[0] === "AutoLearned")
+					{
+						continue;
+					}
+					type = recipe.type;
+					itemid = recipe.output_item_id;
+					for (var ii = 0; ii < recipe.disciplines.length; ii++)
+					{
+						discipline = recipe.disciplines[ii];
+						disciplines[discipline].push({
+							u: recipe.id,
+							i: itemid,
+							n: db[itemid].name
+						});
+					}
+				}
+				Z.printUnlockables(disciplines);
+			});
 		});
 	},
 	
@@ -5097,16 +5146,16 @@ A = {
 	},
 	Permissions: {}, // Corresponds to tokeninfo.json permissions array
 	PermissionEnum: {
-		Account: "account",
-		Builds: "builds",
-		Characters: "characters",
-		Guilds: "guilds",
-		Inventories: "inventories",
-		Progression: "progression",
-		PvP: "pvp",
-		TradingPost: "tradingpost",
-		Wallet: "wallet",
-		Unlocks: "unlocks"
+		Account: "account", // Your account display name, ID, home world, and list of guilds. Required permission.
+		Builds: "builds", // Your currently equipped specializations, traits, skills, and equipment for all game modes.
+		Characters: "characters", // Basic information about your characters.
+		Guilds: "guilds", // Guilds' rosters, history, and MOTDs for all guilds you are a member of.
+		Inventories: "inventories", // Your account bank, material storage, recipe unlocks, and character inventories.
+		Progression: "progression", // Your achievements, dungeon unlock status, mastery point assignments, and general PvE progress.
+		PvP: "pvp", // Your PvP stats, match history, reward track progression, and custom arena details.
+		TradingPost: "tradingpost", // Your Trading Post transactions.
+		Wallet: "wallet", // Your account's wallet.
+		Unlocks: "unlocks" // Your wardrobe unlocks—skins, dyes, minipets, finishers, etc.—and currently equipped skins.
 	},
 	DishCurrent: null, // The account section currently displayed
 	
@@ -7334,6 +7383,47 @@ V = {
 	},
 	
 	/*
+	 * Generates the learned recipes as a bank categorized by crafting disciplines.
+	 */
+	serveRecipes: function()
+	{
+		if (V.requireCharacters("Recipes"))
+		{
+			return;
+		}
+		else if ( ! A.Data.Characters[0].recipes)
+		{
+			A.printError(A.PermissionEnum.Inventories);
+			return;
+		}
+		
+		var dish = $("#accDish_Recipes");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		var container = B.createBank(dish, {aIsCollection: true});
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		
+		// Retrieve data before generating
+		$.getScript(U.URL_DATA.Recipes).done(function()
+		{
+			// Generate the unlockeds array 
+			var unlockeds = [];
+			A.Data.Characters.forEach(function(iChar)
+			{
+				
+			});
+			
+			B.generateUnlockables(bank, {
+				aHeaders: GW2T_RECIPES_HEADERS,
+				aRecord: GW2T_RECIPES_DATA,
+				aUnlockeds: unlockeds
+			});
+		});
+	},
+	
+	/*
 	 * Generates the items bank window.
 	 */
 	serveBank: function()
@@ -7930,7 +8020,7 @@ B = {
 				// TP price label if the item is tradeable
 				if (pBox.istradeable || Settings.aTradeableID)
 				{
-					if (pBox.istradeable)
+					if (pBox.istradeable || Settings.aTradeableID)
 					{
 						// Add the boolean for the bank filter button to look for
 						pSlot.addClass("bnkSlotTradeable");
@@ -8556,10 +8646,10 @@ B = {
 			}
 			// Determine the item count number to display
 			var count = (unlocksassoc[unlockid]) ? 1 : 0;
-			var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
 			var comment;
 			if (Settings.aIsCatalog && unlocksassoc[pItemID])
 			{
+				var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
 				count = unlocksassoc[pItemID].oCount;
 				comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(unlocksassoc[pItemID].oLocations) + "</var>";
 			}
@@ -11412,9 +11502,9 @@ E = {
 			return;
 		}
 		
-		var icon = pEntry.find(".trdIcon");
 		Q.getItem(id, function(pItem)
 		{
+			var icon = pEntry.find(".trdIcon");
 			Q.setRarityClass(pEntry.find(".trdName"), pItem.rarity);
 			pEntry.attr("data-rarity", pItem.rarity);
 			pEntry.find(".trdLink").val(pItem.chat_link || "");
@@ -11747,6 +11837,12 @@ E = {
 					var calcA = $("#trdEntry_" + i);
 					var calcB = $("#trdEntry_" + j);
 					
+					// Swap item icon
+					var imgA = calcA.find(".trdIcon").attr("src");
+					var imgB = calcB.find(".trdIcon").attr("src");
+					calcA.find(".trdIcon").attr("src", imgB);
+					calcB.find(".trdIcon").attr("src", imgA);
+					
 					// Swap text data from inputs
 					var dataA = [];
 					var dataB = [];
@@ -11770,11 +11866,6 @@ E = {
 						$(this).val(dataA[counterB]).trigger("change");
 						counterB++;
 					});
-					// Swap item icon
-					var imgA = calcA.find(".trdIcon").attr("src");
-					var imgB = calcB.find(".trdIcon").attr("src");
-					calcA.find(".trdIcon").attr("src", imgB);
-					calcB.find(".trdIcon").attr("src", imgA);
 					// Swap rarity color code of the item name
 					var rarityA = calcA.attr("data-rarity");
 					var rarityB = calcB.attr("data-rarity");
@@ -11794,19 +11885,21 @@ E = {
 			});
 			
 			// Bind name search box behavior
-			Q.bindItemSearch($(name), {
-				aFillerText: null,
-				aWantEnter: false,
-				aCallback: function(pItem)
-				{
-					var entryinner = $(entry);
-					// Change triggers the storage, input triggers the calculation
-					entryinner.find(".trdItem").val(pItem.id).trigger("change");
-					entryinner.find(".trdName").val(pItem.name).trigger("change");
-					E.updateTradingDetails(entryinner);
-					E.updateTradingPrices(entryinner);
-				}}
-			);
+			(function(iEntry)
+			{
+				Q.bindItemSearch($(name), {
+					aFillerText: null,
+					aWantEnter: false,
+					aCallback: function(pItem)
+					{
+						// Change triggers the storage, input triggers the calculation
+						iEntry.find(".trdItem").val(pItem.id).trigger("change");
+						iEntry.find(".trdName").val(pItem.name).trigger("change");
+						E.updateTradingDetails(iEntry);
+						E.updateTradingPrices(iEntry);
+					}}
+				);
+			})($(entry));
 			$(name).change(function()
 			{
 				var query = $(this).val();
@@ -26292,6 +26385,7 @@ I = {
 			Ascended: "Ascended",
 			Inventory: "Inventory",
 			Catalog: "Catalog",
+			Recipes: "Recipes",
 			Crafting: "Crafting",
 			Trading: "Trading",
 			PVP: "PVP",
