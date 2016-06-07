@@ -2975,6 +2975,17 @@ U = {
 	{
 		return $(pArrayA).not(pArrayB).get();
 	},
+	getUnique: function(pArray)
+	{
+		return pArray.filter(function(iElm, iIndex)
+		{
+			return pArray.indexOf(iElm) === iIndex;
+		});
+	},
+	getUnion: function(pArrayA, pArrayB)
+	{
+		return U.getUnique(pArrayA.concat(pArrayB));
+	},
 	
 	/*
 	 * Gets the length of a uniform associative array object.
@@ -4754,44 +4765,62 @@ Z = {
 	 */
 	collateRecipes: function()
 	{
+		var disciplines = ["Tailor", "Leatherworker", "Armorsmith", "Artificer", "Huntsman", "Weaponsmith", "Scribe", "Chef", "Jeweler"];
+		var types = [
+			"Backpack", "RefinementObsidian", "RefinementEctoplasm",
+			"Refinement", "Insignia", "Inscription", "Component", "UpgradeComponent", "LegendaryComponent",
+			"Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots",
+			"Scepter", "Focus", "Staff", "Trident",
+			"Pistol", "Torch", "Warhorn", "LongBow", "ShortBow", "Rifle", "Speargun", 
+			"Axe", "Mace", "Sword", "Dagger", "Shield",  "Greatsword", "Hammer", "Harpoon",
+			"Potion", "Consumable", "Bag", "Bulk", "Snack", "Seasoning", "IngredientCooking", "Soup", "Meal", "Dessert", "Feast", "Dye",
+			"Amulet", "Ring", "Earring",
+			"GuildDecoration", "GuildConsumableWvw", "GuildConsumable"
+		];
+		var record = {};
+		// Construct categories to insert the recipes orderly
+		disciplines.forEach(function(iDisc)
+		{
+			types.forEach(function(iType)
+			{
+				record[iDisc + "_" + iType] = [];
+			});
+		});
+		
 		Z.loadItemsDatabase(function(pDatabase)
 		{
 			var db = pDatabase["en"];
 			$.getJSON("test/recipes.json", function(pData)
 			{
-				var disciplines = {
-					Tailor: [],
-					Leatherworker: [],
-					Armorsmith: [],
-					Artificer: [],
-					Huntsman: [],
-					Weaponsmith: [],
-					Scribe: [],
-					Chef: [],
-					Jeweler: []
-				};
-				var types = {};
 				var recipe, discipline, type, itemid;
 				for (var i in pData)
 				{
 					recipe = pData[i];
-					if (recipe.flags[0] === "AutoLearned")
-					{
-						continue;
-					}
 					type = recipe.type;
 					itemid = recipe.output_item_id;
 					for (var ii = 0; ii < recipe.disciplines.length; ii++)
 					{
 						discipline = recipe.disciplines[ii];
-						disciplines[discipline].push({
-							u: recipe.id,
-							i: itemid,
-							n: db[itemid].name
-						});
+						if (db[itemid] && record[discipline + "_" + recipe.type])
+						{
+							record[discipline + "_" + recipe.type].push({
+								u: recipe.id,
+								i: itemid,
+								n: db[itemid].name
+							});
+						}
 					}
 				}
-				Z.printUnlockables(disciplines);
+				// Discard the empty array categories
+				var newrecord = {};
+				for (var i in record)
+				{
+					if (record[i].length)
+					{
+						newrecord[i] = record[i];
+					}
+				}
+				Z.printUnlockables(newrecord);
 			});
 		});
 	},
@@ -7412,13 +7441,24 @@ V = {
 			var unlockeds = [];
 			A.Data.Characters.forEach(function(iChar)
 			{
-				
+				unlockeds = U.getUnion(unlockeds, iChar.recipes);
 			});
 			
+			var headers = GW2T_RECIPES_HEADERS;
+			var record = GW2T_RECIPES_DATA;
 			B.generateUnlockables(bank, {
-				aHeaders: GW2T_RECIPES_HEADERS,
-				aRecord: GW2T_RECIPES_DATA,
-				aUnlockeds: unlockeds
+				aHeaders: headers,
+				aRecord: record,
+				aUnlockeds: unlockeds,
+				aIsCollapsed: true,
+				aTabIterator: function(pCatName)
+				{
+					var discipline = pCatName.split("_")[0];
+					var catname = D.getObjectName(headers[pCatName]);
+					var caticon = "<ins class='bnkTabIcon acc_craft acc_craft_" + discipline.toLowerCase() + "'></ins>";
+					var tab = B.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
+					return tab;
+				}
 			});
 		});
 	},
@@ -8169,11 +8209,13 @@ B = {
 		I.bindInputBarText(input);
 		input.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
+			$(this).removeClass("cssSearchNone");
 			var slots = pBank.find(".bnkSlot");
 			var query = $(this).val().toLowerCase();
 			var queries = [];
 			var equality = "";
 			var keywords = "";
+			var ismatchslots = false;
 			if (query.length > 0)
 			{
 				equality = query.charAt(0);
@@ -8187,6 +8229,7 @@ B = {
 						if (priceslot && ((equality === ">" && priceslot >= pricewant) || (equality === "<" && priceslot <= pricewant)))
 						{
 							$(this).show();
+							ismatchslots = true;
 						}
 						else
 						{
@@ -8202,7 +8245,7 @@ B = {
 					slots.each(function()
 					{
 						keywords = $(this).data("keywords"); // The text version of the item's tooltip HTML
-						var ismatch = true;
+						var ismatchkeywords = true;
 						if (keywords)
 						{
 							if (Settings.aWantSearchHighlight)
@@ -8213,14 +8256,15 @@ B = {
 									if (keywords.indexOf(queries[i]) === -1)
 									{
 										$(this).removeClass("bnkSlotMatch");
-										ismatch = false;
+										ismatchkeywords = false;
 										break;
 									}
 								}
 								// The boolean is only true if every substrings were found
-								if (ismatch)
+								if (ismatchkeywords)
 								{
 									$(this).addClass("bnkSlotMatch");
+									ismatchslots = true;
 								}
 							}
 							else
@@ -8231,18 +8275,24 @@ B = {
 									if (keywords.indexOf(queries[i]) === -1)
 									{
 										$(this).hide();
-										ismatch = false;
+										ismatchkeywords = false;
 										break;
 									}
 								}
 								// The boolean is only true if every substrings were found
-								if (ismatch)
+								if (ismatchkeywords)
 								{
 									$(this).show();
+									ismatchslots = true;
 								}
 							}
 						}
 					});
+				}
+				// Recolor the search bar text if no match was fou
+				if (ismatchslots === false)
+				{
+					$(this).addClass("cssSearchNone", !ismatchslots);
 				}
 			}
 			else
@@ -13182,11 +13232,15 @@ D = {
 	},
 	getObjectName: function(pObject)
 	{
-		if (pObject["name_" + O.Options.enu_Language] !== undefined)
+		if (pObject)
 		{
-			return pObject["name_" + O.Options.enu_Language];
+			if (pObject["name_" + O.Options.enu_Language] !== undefined)
+			{
+				return pObject["name_" + O.Options.enu_Language];
+			}
+			return D.getObjectDefaultName(pObject);
 		}
-		return D.getObjectDefaultName(pObject);
+		return "NONAME";
 	},
 	getObjectNick: function(pObject)
 	{
@@ -28526,6 +28580,7 @@ T.initializeSchedule(); // compute event data and write HTML
 P.initializeMap(); // instantiate the map and populate it
 K.initializeClock(); // start the clock and infinite loop
 I.initializeLast(); // bind event handlers for misc written content
+
 
 
 

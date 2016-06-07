@@ -2504,6 +2504,9 @@ input[type="text"].cssSearchPassive {
 input[type="text"].cssSearchActive {
 	color: #ffddcc !important;
 }
+input[type="text"].cssSearchNone {
+	color: red !important;
+}
 .cssFadeIn {
 	animation: aniFadeIn 0.2s;
 }
