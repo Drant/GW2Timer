@@ -4767,16 +4767,17 @@ Z = {
 	{
 		var disciplines = ["Tailor", "Leatherworker", "Armorsmith", "Artificer", "Huntsman", "Weaponsmith", "Scribe", "Chef", "Jeweler"];
 		var types = [
-			"Backpack", "RefinementObsidian", "RefinementEctoplasm",
 			"Refinement", "Insignia", "Inscription", "Component", "UpgradeComponent", "LegendaryComponent",
 			"Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots",
 			"Scepter", "Focus", "Staff", "Trident",
 			"Pistol", "Torch", "Warhorn", "LongBow", "ShortBow", "Rifle", "Speargun", 
 			"Axe", "Mace", "Sword", "Dagger", "Shield",  "Greatsword", "Hammer", "Harpoon",
-			"Potion", "Consumable", "Bag", "Bulk", "Snack", "Seasoning", "IngredientCooking", "Soup", "Meal", "Dessert", "Feast", "Dye",
+			"Potion", "Consumable", "Bag", "Bulk",
+			"Snack", "Seasoning", "IngredientCooking", "Soup", "Meal", "Dessert", "Feast", "Dye",
 			"Amulet", "Ring", "Earring",
-			"GuildDecoration", "GuildConsumableWvw", "GuildConsumable"
+			"GuildDecoration", "GuildConsumable", "GuildConsumableWvw", "Backpack"
 		];
+		var blacklist = ["RefinementObsidian", "RefinementEctoplasm"];
 		var record = {};
 		// Construct categories to insert the recipes orderly
 		disciplines.forEach(function(iDisc)
@@ -7431,7 +7432,10 @@ V = {
 		{
 			return;
 		}
-		var container = B.createBank(dish, {aIsCollection: true});
+		var container = B.createBank(dish, {
+			aIsCollection: true,
+			aWantGem: false
+		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		
 		// Retrieve data before generating
@@ -7444,8 +7448,22 @@ V = {
 				unlockeds = U.getUnion(unlockeds, iChar.recipes);
 			});
 			
-			var headers = GW2T_RECIPES_HEADERS;
+			var headers = {};
+			var metadata = GW2T_RECIPES_METADATA;
 			var record = GW2T_RECIPES_DATA;
+			// Construct headers from crafting disciplines and recipe types
+			var lang = D.getFullySupportedLanguage();
+			var catname;
+			for (var i in metadata.Disciplines)
+			{
+				for (var ii in metadata.Types)
+				{
+					catname = i + "_" + ii;
+					headers[catname] = {};
+					(headers[catname])["name_" + lang] = (metadata.Disciplines[i])[lang] + " " + (metadata.Types[ii])[lang];
+				}
+			}
+			
 			B.generateUnlockables(bank, {
 				aHeaders: headers,
 				aRecord: record,
@@ -7455,7 +7473,8 @@ V = {
 				{
 					var discipline = pCatName.split("_")[0];
 					var catname = D.getObjectName(headers[pCatName]);
-					var caticon = "<ins class='bnkTabIcon acc_craft acc_craft_" + discipline.toLowerCase() + "'></ins>";
+					var caticon = "<ins class='bnkTabIcon acc_craft acc_craft_" + discipline.toLowerCase() + "'></ins>"
+						+ "<ins class='bnkTabIcon acc_recipes acc_recipes_" + pCatName.toLowerCase() + "'></ins>";
 					var tab = B.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
 					return tab;
 				}
@@ -10754,6 +10773,10 @@ Q = {
 		{
 			if (Q.Context.Item)
 			{
+				if (Q.Context.Item.icon)
+				{
+					I.print("<img src='" + U.escapeHTML(Q.Context.Item.icon) + "' />");
+				}
 				I.prettyJSON(Q.Context.Item);
 			}
 			else

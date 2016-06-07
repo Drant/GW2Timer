@@ -1232,6 +1232,15 @@ Announcement:
  */
 Countdown: {
 	Events: [
+	{
+		name_en: "Final Wing of Raid",
+		name_de: "Letzten Schlachtzugsflügel",
+		name_es: "Última ala de la incursión",
+		name_fr: "Dernier aile du raid",
+		official: "news/prepare-to-enter-the-stronghold-of-the-faithful/",
+		Start: new Date("2016-06-14T17:00:00Z"),
+		Finish: new Date("2016-06-15T17:00:00Z")
+	}
 	/*{
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
@@ -1280,8 +1289,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-06-01T15:00:00Z"),
-	Finish: new Date("2016-06-07T15:00:00Z"),
+	Start: new Date("2016-06-07T15:00:00Z"),
+	Finish: new Date("2016-06-14T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1290,114 +1299,184 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Moth Wings Glider Combo",
-		id: "78745",
+		name: "Floral Glider",
+		img: "http://i.imgur.com/2dbSTiH.png",
+		price: 400,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Trickster's Light-Armor Skin",
+		id: "43102",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Viper Medium-Armor Skin",
+		id: "43101",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Phalanx Heavy-Armor Skin",
+		id: "43100",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Flamekissed Light Armor Skin",
+		id: "43576",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Flamewalker Medium Armor Skin",
+		id: "43575",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Flamewrath Heavy Armor Skin",
+		id: "43574",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Jungle Explorer Outfit",
+		id: "67990",
 		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Electromagnetic Ascender",
-		id: "78771",
-		price: 250,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Aetherblade Light Armor Skin",
-		id: "42870",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Aetherblade Medium Armor Skin",
-		id: "42869",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Aetherblade Heavy Armor Skin",
-		id: "42868",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Incarnate Light Armor Skin",
-		id: "63909",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Strider's Medium Armor Skin",
-		id: "63899",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Rampart Heavy Armor Skin",
-		id: "63929",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Ceremonial Plated Outfit",
-		id: "67040",
+		name: "Shadow Assassin Outfit",
+		id: "66658",
 		price: 700,
 		discount: null,
+		col: 0
+	},
+	{
+		name: "Mist Herald Back Item Skin Set",
+		id: "44886",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Rock",
+		id: "69790",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Dragon's Fortune Fireworks",
+		id: "42876",
+		price: 200,
+		discount: [[1, 200], [5, 800]],
+		col: 0
+	},
+	{
+		name: "Lightning Kite",
+		id: "42967",
+		price: 400,
+		discount: 500,
 		col: 1
 	},
 	{
-		name: "Mask of the Wanderer Skin",
-		id: "48944",
+		name: "Sun Kite",
+		id: "43487",
+		price: 400,
+		discount: 500,
+		col: 1
+	},
+	{
+		name: "Wind Kite",
+		id: "43076",
+		price: 400,
+		discount: 500,
+		col: 1
+	},
+	{
+		name: "Water Fight Balloon Bucket",
+		id: "66342",
+		price: 400,
+		discount: 500,
+		col: 1
+	},
+	{
+		name: "Elegant Fan Focus Skin",
+		id: "69664",
+		price: 480,
+		discount: 600,
+		col: 1
+	},
+	{
+		name: "Butterfly Wings Backpack",
+		id: "70095",
+		price: 400,
+		discount: 500,
+		col: 1
+	},
+	{
+		name: "Glint's Gaze Mask",
+		id: "67857",
 		price: 500,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Mask of the Queen",
-		id: "44608",
+		name: "Mask of the Silent Skin",
+		id: "49157",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mask of the Jubilee",
+		id: "44607",
 		price: 400,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Wreath of Cooperation",
-		id: "66309",
+		name: "Magnus's Eye Patch",
+		id: "50103",
 		price: 400,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Covert Charr Backpack Set",
-		id: "39515",
-		price: 300,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Aviator Cap",
-		id: "64742",
+		name: "Fuzzy Cat Hat",
+		id: "64758",
 		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Fuzzy Panda Hat",
-		id: "64744",
+		name: "Fuzzy Hylek Hat",
+		id: "64759",
 		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Ringmaster's Hat",
-		id: "64745",
-		price: 200,
+		name: "Inventor's Sunglasses",
+		id: "64747",
+		price: 150,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Aviator Sunglasses",
+		id: "64740",
+		price: 150,
 		discount: null,
 		col: 1
 	}
