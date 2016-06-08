@@ -6275,6 +6275,7 @@ V = {
 		var crafttooltip = "";
 		if (pCharacter.crafting && pCharacter.crafting.length > 0)
 		{
+			pCharacter.oCharCraft = {};
 			pCharacter.crafting.forEach(function(iCraft)
 			{
 				var trivial = (iCraft.rating >= A.Metadata.CraftingRank.Master) ? "" : "accTrivial";
@@ -6283,6 +6284,7 @@ V = {
 				if (iCraft.active)
 				{
 					craftused += craftstr;
+					pCharacter.oCharCraft[iCraft.discipline] = iCraft.rating;
 				}
 				crafttooltip += craftstr + " ";
 			});
@@ -7456,14 +7458,25 @@ V = {
 			
 			// Merge the record arrays into one lookup table
 			var recipelookup = {}; // Will be used to find a character's unlocked recipe
-			var itemlookup = {}; // Will be used to find a character's unlocked recipe by searching with the item UD
-			var entry, recipeid, itemid;
+			var itemlookup = {}; // Will be used to find a character's unlocked recipe by searching with the item
+			var discname, entry, recipeid, itemid;
 			for (var i in record)
 			{
+				discname = i.split("_")[0];
 				for (var ii = 0; ii < record[i].length; ii++)
 				{
 					entry = (record[i])[ii];
-					recipelookup[entry.u] = entry.i;
+					if (recipelookup[entry.u] === undefined)
+					{
+						recipelookup[entry.u] = {
+							oItemID: entry.i, // Item ID of crafted product
+							oDisciplines: [discname] // Disciplines that can craft this recipe
+						};
+					}
+					else
+					{
+						recipelookup[entry.u].oDisciplines.push(discname);
+					}
 				}
 			}
 			
@@ -7476,14 +7489,27 @@ V = {
 				for (var ii = 0; ii < iChar.recipes.length; ii++)
 				{
 					recipeid = iChar.recipes[ii];
-					itemid = recipelookup[recipeid];
-					if (itemid)
+					if (recipelookup[recipeid])
 					{
-						if (itemlookup[itemid] === undefined)
+						itemid = recipelookup[recipeid].oItemID;
+						var discnames = recipelookup[recipeid].oDisciplines;
+						var discicons = "";
+						for (var iii = 0; iii < discnames.length; iii++)
 						{
-							itemlookup[itemid] = [];
+							discname = discnames[iii];
+							if (iChar.oCharCraft && iChar.oCharCraft[discname])
+							{
+								discicons += "<ins class='acc_craft acc_craft_" + discname.toLowerCase() + "'></ins>";
+							}
 						}
-						itemlookup[itemid].push(iChar.name);
+						if (discicons.length)
+						{
+							if (itemlookup[itemid] === undefined)
+							{
+								itemlookup[itemid] = [];
+							}
+							itemlookup[itemid].push(iChar.name + discicons);
+						}
 					}
 				}
 			});
@@ -7506,6 +7532,7 @@ V = {
 				aRecord: record,
 				aUnlockeds: unlockeds,
 				aIsCollapsed: true,
+				aHelpMessage: $("#accRecipesHelp").html(),
 				aTabIterator: function(pCatName)
 				{
 					var discipline = pCatName.split("_")[0];
@@ -7531,7 +7558,7 @@ V = {
 					if (itemlookup[pItem.id])
 					{
 						var charnames = (itemlookup[pItem.id]).join(", ");
-						I.print(itemname + " is learned and can be crafted by:<br /><br />" + charnames);
+						I.print(itemname + " was learned and can be crafted by:<br /><br />" + charnames);
 					}
 					else
 					{
