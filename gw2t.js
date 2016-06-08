@@ -4760,24 +4760,27 @@ Z = {
 	},
 	
 	/*
-	 * Reads the database of recipes creates an unlockables record with the
+	 * Reads the database of recipes and creates an unlockables record with the
 	 * disciplines as categories.
+	 * @pre Recipes database from API is up to date and precached.
 	 */
 	collateRecipes: function()
 	{
 		var disciplines = ["Tailor", "Leatherworker", "Armorsmith", "Artificer", "Huntsman", "Weaponsmith", "Scribe", "Chef", "Jeweler"];
 		var types = [
-			"Refinement", "Insignia", "Inscription", "Component", "UpgradeComponent", "LegendaryComponent",
+			"Refinement", "Component", "UpgradeComponent", "LegendaryComponent",
+			"Insignia", "Inscription",
+			"Potion", "Consumable", "Bag", "Bulk",
+			"GuildDecoration", "GuildConsumable", "GuildConsumableWvw",
+			"Seasoning", "IngredientCooking", "Snack", "Dessert", "Soup", "Meal", "Feast", "Dye",
+			"Amulet", "Ring", "Earring",
+			"Backpack",
 			"Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots",
 			"Scepter", "Focus", "Staff", "Trident",
 			"Pistol", "Torch", "Warhorn", "LongBow", "ShortBow", "Rifle", "Speargun", 
-			"Axe", "Mace", "Sword", "Dagger", "Shield",  "Greatsword", "Hammer", "Harpoon",
-			"Potion", "Consumable", "Bag", "Bulk",
-			"Snack", "Seasoning", "IngredientCooking", "Soup", "Meal", "Dessert", "Feast", "Dye",
-			"Amulet", "Ring", "Earring",
-			"GuildDecoration", "GuildConsumable", "GuildConsumableWvw", "Backpack"
+			"Axe", "Mace", "Sword", "Dagger", "Shield",  "Greatsword", "Hammer", "Harpoon"
 		];
-		var blacklist = ["RefinementObsidian", "RefinementEctoplasm"];
+		var mergelist = ["RefinementObsidian", "RefinementEctoplasm"];
 		var record = {};
 		// Construct categories to insert the recipes orderly
 		disciplines.forEach(function(iDisc)
@@ -4793,7 +4796,7 @@ Z = {
 			var db = pDatabase["en"];
 			$.getJSON("test/recipes.json", function(pData)
 			{
-				var recipe, discipline, type, itemid;
+				var recipe, catname, discipline, type, itemid;
 				for (var i in pData)
 				{
 					recipe = pData[i];
@@ -4802,9 +4805,15 @@ Z = {
 					for (var ii = 0; ii < recipe.disciplines.length; ii++)
 					{
 						discipline = recipe.disciplines[ii];
-						if (db[itemid] && record[discipline + "_" + recipe.type])
+						catname = discipline + "_" + recipe.type;
+						// Merge some smaller categories into a bigger category
+						if (recipe.type === "RefinementObsidian" || recipe.type === "RefinementEctoplasm")
 						{
-							record[discipline + "_" + recipe.type].push({
+							catname = discipline + "_" + "Refinement";
+						}
+						if (db[itemid] && record[catname])
+						{
+							record[catname].push({
 								u: recipe.id,
 								i: itemid,
 								n: db[itemid].name
@@ -7441,16 +7450,44 @@ V = {
 		// Retrieve data before generating
 		$.getScript(U.URL_DATA.Recipes).done(function()
 		{
-			// Generate the unlockeds array 
+			var headers = {};
+			var metadata = GW2T_RECIPES_METADATA;
+			var record = GW2T_RECIPES_DATA;
+			
+			// Merge the record arrays into one lookup table
+			var recipelookup = {}; // Will be used to find a character's unlocked recipe
+			var itemlookup = {}; // Will be used to find a character's unlocked recipe by searching with the item UD
+			var entry, recipeid, itemid;
+			for (var i in record)
+			{
+				for (var ii = 0; ii < record[i].length; ii++)
+				{
+					entry = (record[i])[ii];
+					recipelookup[entry.u] = entry.i;
+				}
+			}
+			
+			// Merge all characters' unlocked recipes array into one
 			var unlockeds = [];
 			A.Data.Characters.forEach(function(iChar)
 			{
 				unlockeds = U.getUnion(unlockeds, iChar.recipes);
+				// Create a list of items with the characters' names who can craft it
+				for (var ii = 0; ii < iChar.recipes.length; ii++)
+				{
+					recipeid = iChar.recipes[ii];
+					itemid = recipelookup[recipeid];
+					if (itemid)
+					{
+						if (itemlookup[itemid] === undefined)
+						{
+							itemlookup[itemid] = [];
+						}
+						itemlookup[itemid].push(iChar.name);
+					}
+				}
 			});
 			
-			var headers = {};
-			var metadata = GW2T_RECIPES_METADATA;
-			var record = GW2T_RECIPES_DATA;
 			// Construct headers from crafting disciplines and recipe types
 			var lang = D.getFullySupportedLanguage();
 			var catname;
@@ -7477,6 +7514,29 @@ V = {
 						+ "<ins class='bnkTabIcon acc_recipes acc_recipes_" + pCatName.toLowerCase() + "'></ins>";
 					var tab = B.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
 					return tab;
+				}
+			});
+			
+			/*
+			 * Piggyback on the bank search bar (created by the generate unlockables
+			 * function) and make it print the characters who have unlocked the
+			 * recipe to create that searched item.
+			 */
+			var searchbar = $("#accDishMenu_Recipes").find(".bnkSearch .bnkSearchInput").first();
+			Q.bindItemSearch(searchbar, {
+				aFillerText: null,
+				aCallback: function(pItem)
+				{
+					var itemname = "&quot;<a" + U.convertExternalAnchor(U.getWikiLinkLanguage(pItem.name)) + ">" + pItem.name + "</a>&quot;";
+					if (itemlookup[pItem.id])
+					{
+						var charnames = (itemlookup[pItem.id]).join(", ");
+						I.print(itemname + " is learned and can be crafted by:<br /><br />" + charnames);
+					}
+					else
+					{
+						I.write("None of your characters have learned how to craft " + itemname);
+					}
 				}
 			});
 		});
@@ -10840,7 +10900,7 @@ Q = {
 	 * the search bar, the search database is first loaded before a search
 	 * can be executed.
 	 * @param jqobject pElement to bind.
-	 * @objparam string aFillerText to display over the input bar, optional, optional.
+	 * @objparam string aFillerText to display over the input bar, optional.
 	 * @objparam boolean aWantEnter whether to bind the default Enter key event, optional.
 	 * @objparam function aCallback to execute after the user selects an item.
 	 * @pre Input bar has a parent container element in order to position the results list.
