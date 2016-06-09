@@ -5279,7 +5279,7 @@ A = {
 		$("#accContent").show();
 		
 		// Initialize common UI
-		U.convertExternalLink("#accHelp a");
+		U.convertExternalLink($("#accHelp").find(".jsExternal").find("a"));
 		A.generateMenu();
 		
 		// Bind the window buttons
@@ -6208,11 +6208,12 @@ V = {
 						cache: true,
 						success: function(pData, pStatus, pRequest)
 						{
-							// Check retrieval progress
+							// Add extra or preformatted properties 
 							A.Data.Characters[iIndex] = pData;
 							A.Data.Characters[iIndex].oCharIndex = iIndex;
 							A.Data.Characters[iIndex].oCharName = U.escapeHTML(pData.name);
 							V.generateCharactersSelection(pData);
+							// Check retrieval progress
 							numfetched++;
 							A.setProgressBar(numfetched, numtofetch);
 							if (numfetched === numtofetch)
@@ -6413,7 +6414,7 @@ V = {
 		// Write a row for each character
 		A.Data.Characters.forEach(function(iChar)
 		{
-			var name = "<abbr>" + U.escapeHTML(iChar.name) + "</abbr>";
+			var name = "<abbr>" + iChar.oCharName + "</abbr>";
 			// USAGE COLUMN (middle)
 			totalage += iChar.age; // Seconds
 			totaldeaths += iChar.deaths;
@@ -7509,7 +7510,7 @@ V = {
 							{
 								itemlookup[itemid] = [];
 							}
-							itemlookup[itemid].push(iChar.name + discicons);
+							itemlookup[itemid].push(iChar.oCharName + discicons);
 						}
 					}
 				}
@@ -9028,9 +9029,9 @@ B = {
 			aWantSearchHighlight: false
 		}, pSettings);
 		
-		var sectionupper = U.toFirstUpperCase(pSection);
-		var sectionlower = pSection.toLowerCase();
-		if (V.requireCharacters(sectionupper))
+		var sectionnameupper = U.toFirstUpperCase(pSection);
+		var sectionnamelower = pSection.toLowerCase();
+		if (V.requireCharacters(sectionnameupper))
 		{
 			return;
 		}
@@ -9039,7 +9040,7 @@ B = {
 			A.printError(A.PermissionEnum.Inventories);
 			return;
 		}
-		var dish = $("#accDish_" + sectionupper);
+		var dish = $("#accDish_" + sectionnameupper);
 		if (A.reinitializeDish(dish) === false)
 		{
 			return;
@@ -9047,9 +9048,40 @@ B = {
 		
 		var container = B.createBank(dish, {aIsCollection: true, aWantGem: Settings.aWantGem});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		$.getScript(U.URL_DATA[sectionupper]).done(function()
+		var fillCatalog = function()
 		{
-			Q.loadItemsSubdatabase(sectionlower, function()
+			Settings.aHeaders = U.getDatabaseHeader(pSection);
+			Settings.aRecord = U.getDatabaseData(pSection);
+			B.generateUnlockables(bank, Settings);
+			if (Settings.aIsCustomCatalog)
+			{
+				/*
+				 * Piggyback on the bank search bar (created by the generate unlockables
+				 * function) and make it print the characters who have an item.
+				 */
+				var searchbar = $("#accDishMenu_" + sectionnameupper).find(".bnkSearch .bnkSearchInput").first();
+				Q.bindItemSearch(searchbar, {
+					aFillerText: null,
+					aCallback: function(pItem)
+					{
+						var itemname = "&quot;<a" + U.convertExternalAnchor(U.getWikiLinkLanguage(pItem.name)) + ">" + pItem.name + "</a>&quot;";
+						if (A.Possessions[pItem.id])
+						{
+							var locations = A.formatPossessionLocations(A.Possessions[pItem.id].oLocations);
+							I.write(itemname + " was found in:<br /><br />" + locations);
+						}
+						else
+						{
+							I.write("Nowhere in your account has the item " + itemname);
+						}
+					}
+				});
+			}
+		};
+		
+		$.getScript(U.URL_DATA[sectionnameupper]).done(function()
+		{
+			Q.loadItemsSubdatabase(sectionnamelower, function()
 			{
 				/*
 				 * Catalog is a custom unlockable whose collection is generated
@@ -9058,9 +9090,7 @@ B = {
 				 */
 				A.initializePossessions(function()
 				{
-					Settings.aHeaders = U.getDatabaseHeader(pSection);
-					Settings.aRecord = U.getDatabaseData(pSection);
-					B.generateUnlockables(bank, Settings);
+					fillCatalog();
 				});
 			});
 		});

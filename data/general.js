@@ -1308,15 +1308,15 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Inventor's Sunglasses",
-		id: "64747",
+		name: "Aviator Sunglasses",
+		id: "64740",
 		price: 150,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Aviator Sunglasses",
-		id: "64740",
+		name: "Inventor's Sunglasses",
+		id: "64747",
 		price: 150,
 		discount: null,
 		col: 0
