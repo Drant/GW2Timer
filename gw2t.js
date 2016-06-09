@@ -7514,8 +7514,21 @@ V = {
 					}
 				}
 			});
+			// Add the characters' names to the record so later the style slot function can write them in item tooltips
+			var craftstr = D.getPhrase("crafted by", U.CaseEnum.Sentence) + ": ";
+			for (var i in record)
+			{
+				for (var ii = 0; ii < record[i].length; ii++)
+				{
+					var entry = (record[i])[ii];
+					if (itemlookup[entry.i])
+					{
+						entry.oComment = craftstr + (itemlookup[entry.i]).join(", ");
+					}
+				}
+			}
 			
-			// Construct headers from crafting disciplines and recipe types
+			// Construct tab headers from crafting disciplines and recipe types
 			var lang = D.getFullySupportedLanguage();
 			var catname;
 			for (var i in metadata.Disciplines)
@@ -7528,6 +7541,7 @@ V = {
 				}
 			}
 			
+			// Generate the bank
 			B.generateUnlockables(bank, {
 				aHeaders: headers,
 				aRecord: record,
@@ -8629,7 +8643,7 @@ B = {
 	/*
 	 * Fills a bank tab with slots.
 	 * @param jqobject pTab to fill.
-	 * @param array pCatArr of unlockables.
+	 * @param array pCatArr of the unlockables record.
 	 * @param object pSettings for the slot fill function.
 	 */
 	fillTab: function(pTab, pCatArr, pSettings)
@@ -8647,6 +8661,7 @@ B = {
 			B.fillSlot(slot, unlockobj.i || unlockobj, {
 				aUnlockAssoc: Settings.aUnlockAssoc,
 				aUnlockObj: unlockobj,
+				aComment: unlockobj.oComment,
 				aIsCatalog: Settings.aIsCatalog,
 				aIsCustomCatalog: Settings.aIsCustomCatalog,
 				aCallback: function()
@@ -8763,6 +8778,7 @@ B = {
 	 * @param int pItemID associated with the unlockable.
 	 * @objparam object aUnlockAssoc to find the association.
 	 * @objparam object aUnlockObj for slot info.
+	 * @objparam string aComment HTML to append to the item tooltip, optional.
 	 * @objparam boolean aIsCatalog whether to use the user's possessions rather
 	 * than unlockeds, optional.
 	 */
@@ -8803,12 +8819,17 @@ B = {
 			}
 			// Determine the item count number to display
 			var count = (unlocksassoc[unlockid]) ? 1 : 0;
-			var comment;
+			// Optional comment appended at the bottom of item tooltip
+			var comment = Settings.aComment;
 			if (Settings.aIsCatalog && unlocksassoc[pItemID])
 			{
 				var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
 				count = unlocksassoc[pItemID].oCount;
-				comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(unlocksassoc[pItemID].oLocations) + "</var>";
+				comment = foundstr + A.formatPossessionLocations(unlocksassoc[pItemID].oLocations);
+			}
+			if (comment)
+			{
+				comment = "<var class='itmColor_reminder'>" + comment + "</var>";
 			}
 			// Style the slot
 			B.styleBankSlot(pSlot, {
@@ -8887,7 +8908,7 @@ B = {
 		pBank.empty();
 		var container = pBank.parents(".bnkContainer");
 		var headers = {};
-		var database = {};
+		var record = {};
 		var tab;
 		var catarr, catobj;
 		var unlockid;
@@ -8900,12 +8921,12 @@ B = {
 			// Add custom bank behaviors
 			var customdb = B.bindCatalog(pBank, unlocksassoc, Settings.aHeaders, Settings.aRecord);
 			headers = customdb.oHeaders;
-			database = customdb.oRecord;
+			record = customdb.oRecord;
 		}
 		else
 		{
 			headers = Settings.aHeaders;
-			database = Settings.aRecord;
+			record = Settings.aRecord;
 		}
 		/* 
 		 * Create tabs for each unlockable category.
@@ -8913,10 +8934,10 @@ B = {
 		var numsunlockedtotal = 0;
 		var numintabstotal = 0;
 		var numacquiredtotal = 0;
-		for (var i in database)
+		for (var i in record)
 		{
 			catobj = headers[i];
-			catarr = database[i];
+			catarr = record[i];
 			tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : B.createBankTab(pBank, {
 				aTitle: D.getObjectName(catobj),
 				aIsCollapsed: catobj.iscollapsed,
@@ -12723,7 +12744,8 @@ D = {
 	 */
 	Dictionary:
 	{
-		s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
+		s_TEMPLATE: {de: "", es: "", fr: "",
+			cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 		
 		// Time
 		s_y: {de: "j", es: "a", fr: "a", cs: "r", it: "a", pl: "r", pt: "a", ru: "г", zh: "年"},
@@ -12860,6 +12882,8 @@ D = {
 			cs: "v", it: "a", pl: "o", pt: "a", ru: "в", zh: "在"},
 		s_and: {de: "und", es: "y", fr: "et",
 			cs: "a", it: "e", pl: "i", pt: "e", ru: "и", zh: "和"},
+		s_by: {de: "von", es: "por", fr: "de",
+			cs: "od", it: "da", pl: "przez", pt: "por", ru: "", zh: "由"},
 		s_if: {de: "wenn", es: "si", fr: "si",
 			cs: "jestliže", it: "se", pl: "jeśli", pt: "se", ru: "если", zh: "如果"},
 		s_in: {de: "in", es: "en", fr: "en",

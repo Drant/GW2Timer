@@ -8,7 +8,8 @@
  * because they will be added to it.
  */
 var GW2T_ACCOUNT_DICTIONARY = {
-	s_TEMPLATE: {de: "", es: "", fr: "", cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
+	s_TEMPLATE: {de: "", es: "", fr: "",
+		cs: "", it: "", pl: "", pt: "", ru: "", zh: ""},
 	
 	// Section names
 	s_manager: {de: "manager", es: "administrador", fr: "gestionnaire",
@@ -81,6 +82,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	// Adjectives and Adverbs
 	s_new: {de: "neu", es: "nuevo", fr: "nouveau",
 		cs: "nový", it: "nuovo", pl: "nowy", pt: "novo", ru: "новый", zh: "新"},
+	s_crafted: {de: "hergestellten", es: "fabricado", fr: "fabriqué",
+		cs: "řemeslně", it: "fabbricato", pl: "sfabrykowany", pt: "fabricado", ru: "сфабрикованы", zh: "製作"},
 	s_shared: {de: "gemeinsamer", es: "compartida", fr: "partagé",
 		cs: "sdílený", it: "condiviso", pl: "udostępniona", pt: "compartilhado", ru: "общий", zh: "共享"},
 	s_acquired: {de: "erworben", es: "adquirido", fr: "acquis",
