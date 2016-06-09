@@ -5599,6 +5599,7 @@ A = {
 		A.Possessions = null;
 		// Prevent skipping loading the characters section first
 		$("#accMenu_Characters").data("iscurrentaccounttab", null);
+		$(".accDishMenu").empty();
 		
 		/*
 		 * Zeroes the properties of the Worth object, which holds cumulative
@@ -7558,7 +7559,7 @@ V = {
 					if (itemlookup[pItem.id])
 					{
 						var charnames = (itemlookup[pItem.id]).join(", ");
-						I.print(itemname + " was learned and can be crafted by:<br /><br />" + charnames);
+						I.write(itemname + " was learned and can be crafted by:<br /><br />" + charnames);
 					}
 					else
 					{

@@ -382,7 +382,8 @@ var GW2T_EQUIPMENT_DATA = {
 		"23042": 25, // Journeyman's Salvage Kit
 		"23043": 25, // Master's Salvage Kit
 		"23045": 250, // Mystic Salvage Kit
-		"19986": 25 // Black Lion Salvage Kit
+		"19986": 25, // Black Lion Salvage Kit
+		"73481": 20 // Ascended Salvage Kit
 	}
 };
 

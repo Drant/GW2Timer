@@ -1153,7 +1153,7 @@ input.mapCoordinatesName {
 	top: 4px; right: 12px;
 }
 .mapPeripheralNorth:hover {
-	width: 520px; /* This becomes the maximum width of the HUD popup divs */
+	min-width: 520px; /* This becomes the maximum width of the HUD popup divs */
 }
 .mapPeripheralSouth {
 	position: absolute; z-index: 10;
