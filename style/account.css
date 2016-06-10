@@ -147,7 +147,7 @@
 	text-align: center;
 }
 
-/* Key manager
+/* Key manager and account lobby
 ----------------------------------------------------------------------------- */
 
 #accManager, #accHelp {
@@ -200,6 +200,17 @@ input[type="text"].accTokenHovered {
 }
 #accConsole, #accSearch {
 	width: 100%;
+}
+
+#accDirectory {
+	text-align: center;
+}
+#accDirectoryInner {
+	display: inline-block;
+	text-align: left;
+}
+#accDirectory ul {
+	list-style: disc;
 }
 
 /* Characters
