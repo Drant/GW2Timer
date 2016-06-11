@@ -32,6 +32,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "vybavení", it: "equipaggiamento", pl: "sprzęt", pt: "equipamento", ru: "обору́дование", zh: "設備"},
 	s_inventory: {de: "inventar", es: "inventario", fr: "inventaire",
 		cs: "inventář", it: "inventario", pl: "inwentarz", pt: "inventário", ru: "инвента́рь", zh: "庫存"},
+	s_cleanup: {de: "aufräumen", es: "limpia", fr: "nettoyer",
+		cs: "úklid", it: "ripulire", pl: "oczyszczenie", pt: "limpeza", ru: "уборка", zh: "淨化"},
 	s_recipes: {de: "rezepte", es: "recetas", fr: "recettes",
 		cs: "recepty", it: "ricette", pl: "recepty", pt: "receitas", ru: "рецепты", zh: "食譜"},
 	s_crafting: {de: "handwerkskunst", es: "artesanía", fr: "artisanat",

@@ -323,9 +323,9 @@ img {
 	line-height: 18px;
 	color: white;
 }
-.itmSearchResultList {
+.itmSearchResultScroll {
 	width: 336px;
-	max-height: 220px;
+	max-height: 360px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding: 4px;
@@ -1277,6 +1277,12 @@ input.mapCoordinatesName {
 }
 .mapZoneList ul {
 	margin-bottom: 16px;
+}
+#mapSearch {
+	width: 144px;
+}
+.mapSearchResults {
+	left: -192px;
 }
 
 /* Marker classes

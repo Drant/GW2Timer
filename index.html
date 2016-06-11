@@ -22,7 +22,7 @@
 	<script>window.L || document.write('<script src="bin/leaflet.js"><\/script>');</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160611"></script>
+	<script type="text/javascript" src="data/general.js?v=20160611A"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 <!-- Google Analytics -->
@@ -204,6 +204,7 @@
 					<div class="mapZonesPopup mapHUDPopup cntComposition">
 						<div id="mapZoneList" class="mapZoneList mapZoneLinks">
 							<aside>
+								<input id="mapSearch" type="text" />
 								<h2 data-region="heart"></h2>
 								<ul>
 									<li data-zone="verdant"></li>
@@ -758,7 +759,7 @@
 					<label title="Decrease or increase bank UI size."><input id="opt_bol_condenseBank" type="checkbox" /> Always condense bank</label>
 					<h2>Trading</h2>
 					<label title="Regularly get the current buy and sell prices. This option must be enabled for notification of desired price range to work."><input id="opt_bol_refreshPrices" type="checkbox" /> Auto-refresh data and enable notification</label>
-					<label title="How many seconds before the program refreshes price and exchange data?"><input id="opt_int_secTradingRefresh" type="number" min="10" max="600" step="1" /> Seconds between refreshes</label>
+					<label title="How many seconds before the program refreshes price and exchange data?"><input id="opt_int_secTradingRefresh" type="number" min="30" max="600" step="1" /> Seconds between refreshes</label>
 					<label title="How many calculators to show? If you pick a number lower than the current, data from the higher numbered calculators will be erased! Requires reload."><input id="opt_int_numTradingCalculators" type="number" min="1" max="250" step="1" /> Number of TP calculators</label>
 					<label title="How many items to show in the TP search result?"><input id="opt_int_numTradingResults" type="number" min="1" max="50" step="1" /> Number of TP search results</label>
 					<h2>Tools</h2>

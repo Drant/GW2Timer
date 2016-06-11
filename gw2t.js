@@ -2503,6 +2503,7 @@ U = {
 	URL_IMG:
 	{
 		Placeholder: "img/ui/placeholder.png",
+		Sector: "img/map/scope.png",
 		Waypoint: "img/map/waypoint.png",
 		WaypointOver: "img/map/waypoint_h.png",
 		Landmark: "img/map/landmark.png",
@@ -9568,7 +9569,7 @@ Q = {
 					{
 						Q.Box[i] = {};
 					}
-					Q.Box[i].item = pData[i];
+					Q.Box[i].oItem = pData[i];
 				}
 			}).always(function()
 			{
@@ -10016,7 +10017,7 @@ Q = {
 	getItem: function(pItemID, pSuccess)
 	{
 		var box = Q.Box[pItemID];
-		if (box && box.oItem)
+		if (box)
 		{
 			pSuccess(box.oItem);
 			// Dummy fail jqxhr function that never executes because the item was successfully cached
@@ -10033,7 +10034,7 @@ Q = {
 					if (Q.Box[pItem.id] === undefined)
 					{
 						Q.Box[pItemID] = {};
-						Q.Box[pItemID].item = pItem;
+						Q.Box[pItemID].oItem = pItem;
 					}
 					pSuccess(pItem);
 				}
@@ -10951,9 +10952,7 @@ Q = {
 	},
 	
 	/*
-	 * Binds an input bar to search for items by name. When the user clicks on
-	 * the search bar, the search database is first loaded before a search
-	 * can be executed.
+	 * Binds an input bar to search for items (or a database for objects) by name.
 	 * @param jqobject pElement to bind.
 	 * @objparam string aFillerText to display over the input bar, optional.
 	 * @objparam string aResultsClass CSS class for results container element, optional.
@@ -10976,10 +10975,12 @@ Q = {
 		var queryminchar = D.isLanguageLogographic() ? 1 : 2;
 		var resultslimit = Settings.aResultsLimit || O.Options.int_numTradingResults;
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").insertAfter(elm).hide();
-		var resultslist = $("<div class='itmSearchResultList cntPopup jsScrollable'></div>").appendTo(resultscontainer);
+		var resultsscroll = $("<div class='itmSearchResultScroll cntPopup jsScrollable'></div>").appendTo(resultscontainer);
+		var resultslist = $("<div class='itmSearchResultList'></div>").appendTo(resultsscroll);
 		var notfoundstr = "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>";
 		var isitemsearch = (Settings.aDatabase === undefined);
 		var searchtimestamp;
+		
 		if (Settings.aFillerText !== null)
 		{
 			I.bindInputBarText(elm, Settings.aFillerText);
@@ -10988,7 +10989,7 @@ Q = {
 		{
 			resultscontainer.addClass(Settings.aResultsClass);
 		}
-		I.bindScrollbar(resultslist);
+		I.bindScrollbar(resultsscroll);
 		
 		// Toggles display of the results container popup
 		var toggleResults = function(pBoolean, pMessage)
@@ -11004,8 +11005,9 @@ Q = {
 				I.qTip.hide();
 			}
 		};
+		var searchinfo = "<br />" + ((isitemsearch) ? "Right click an item for menu.<br />Type a number to search by item ID." : (Settings.aInfo || ""));
 		var searchclose = $("<ins class='itmSearchClose btnWindow btnClose' "
-			+ "title='<dfn>Close the search results.</dfn><br />Right click an item for menu.<br />Type a number to search by item ID.'></ins>")
+			+ "title='<dfn>Close the search results.</dfn>" + searchinfo + "'></ins>")
 			.appendTo(resultscontainer).click(function()
 		{
 			toggleResults(false);
@@ -11053,7 +11055,7 @@ Q = {
 									}
 									resultslist.removeData("selectedresult");
 								});
-								I.updateScrollbar(resultslist);
+								I.updateScrollbar(resultsscroll);
 								// Tooltip for the listed item
 								Q.scanItem(pItem, {aElement: resultentry});
 								Q.bindItemSlotBehavior(resultentry, {aItem: pItem});
@@ -11077,24 +11079,24 @@ Q = {
 			}
 			else
 			{
-				var result, resultentry;
 				for (var i = 0; i < pResults.length; i++)
 				{
-					result = pResults[i];
-					resultentry = $("<span class='itmSearchResultLine><dfn class='itmSearchResultEntry'>"
-						+ "<img src='" + result.icon + "'>"
-						+ U.highlightSubstring(result.name, pQuery) + "</dfn></span>").appendTo(resultslist);
-					resultentry.click(function()
+					(function(iResult)
 					{
-						if (Settings.aCallback)
+						var resultentry = $("<span class='itmSearchResultLine'><dfn class='itmSearchResultEntry'>"
+							+ "<img src='" + iResult.icon + "'>"
+							+ U.highlightSubstring(iResult.name, pQuery) + "</dfn></span>").appendTo(resultslist);
+						resultentry.click(function()
 						{
-							Settings.aCallback(result);
-							toggleResults(false);
-						}
-						resultslist.removeData("selectedresult");
-					});
-					I.updateScrollbar(resultslist);
+							if (Settings.aCallback)
+							{
+								Settings.aCallback(iResult);
+							}
+							resultslist.removeData("selectedresult");
+						});
+					})(pResults[i]);
 				}
+				I.updateScrollbar(resultsscroll);
 			}
 			// Note at bottom of results list to indicate there's more available
 			if (pResults.length === resultslimit)
@@ -11170,8 +11172,8 @@ Q = {
 					resultslist.data("selectedresult", nextresult);
 					nextresult.addClass("itmSearchSelected");
 					I.scrollToElement(nextresult, {
-						aContainer: resultslist,
-						aOffset: -(resultslist.height() / 2) // Scroll so the entry appears in the middle of the results window
+						aContainer: resultsscroll,
+						aOffset: -(resultsscroll.height() / 2) // Scroll so the entry appears in the middle of the results window
 					});
 				}
 			}
@@ -11182,7 +11184,7 @@ Q = {
 		{
 			toggleResults(true);
 			resultslist.append(I.cThrobber);
-			Q.loadItemsSearch(function()
+			var bindSearch = function()
 			{
 				toggleResults(false);
 				// Bind search execution
@@ -11219,7 +11221,20 @@ Q = {
 				}
 				// Execute search in case the user typed something during the database load
 				elm.trigger("input");
-			});
+			};
+			
+			// Load the items database if using items search
+			if (isitemsearch)
+			{
+				Q.loadItemsSearch(function()
+				{
+					bindSearch();
+				});
+			}
+			else
+			{
+				bindSearch();
+			}
 		});
 	}
 };
@@ -12925,8 +12940,7 @@ D = {
 			cs: "dosah", it: "portata", pl: "zasięg", pt: "alcance", ru: "дальность", zh: "射程"},
 		s_lock: {de: "sperre", es: "bloqueo", fr: "verrou",
 			cs: "zámek", it: "blocco", pl: "zablokuj", pt: "bloqueio", ru: "блокировка", zh: "鎖定"},
-		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", zh: "鳥瞰點"},
-		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros", zh: "技能點"},
+		
 		s_checklist: {de: "prüfliste", es: "lista de comprobación", fr: "liste de contrôle",
 			cs: "kontrolní seznam", it: "elenco di controllo", pl: "lista kontrolna", pt: "lista de verificação", ru: "контрольный список", zh: "檢查清單"},
 		s_subscription: {de: "abonnement", es: "suscripción", fr: "abonnement",
@@ -13015,6 +13029,12 @@ D = {
 			cs: "ku", it: "a", pl: "na", pt: "a", ru: "до", zh: "比"},
 		
 		// Automatic
+		s_Sector: {de: "Sektor", es: "Sector", fr: "Secteur", zh: "扇形"},
+		s_Waypoint: {de: "Wegmarke", es: "Punto de ruta", fr: "Point de passage", zh: "傳送點"},
+		s_Point_of_Interest: {de: "Sehenswürdigkeit", es: "Punto de interés", fr: "Site remarquable", zh: "興趣點"},
+		s_Vista: {de: "Aussichtspunkt", es: "Vista", fr: "Panorama", zh: "鳥瞰點"},
+		s_Hero_Challenge: {de: "Heldenherausforderung", es: "Desafío de héroe", fr: "Défi de héros", zh: "技能點"},
+		s_Heart: {de: "Herzchen-Quest", es: "Corazón de prestigio", fr: "Cœur de renommé", zh: "愛心任務"},
 		s_Scheduled_Bosses: {de: "Geplant", es: "Programado", fr: "Planifié",
 			cs: "Plánované", it: "Pianificata", pl: "Zaplanowane", pt: "Agendado", ru: "Запланирован", zh: "已排程"},
 		s_Dry_Top: {de: "Trockenkuppe", es: "Cima Seca", fr: "Cimesèche", zh: "干涸高地"},
@@ -17805,7 +17825,7 @@ P = {
 		DryTopRings: [],
 		DryTopActive: []
 	},
-	LocationsDatabase: null, // A searchable array of API markers like POIs, hearts, events
+	LocationsDatabase: [], // A searchable array of API markers like POIs, hearts, events
 	
 	Events: {},
 	DryTopTimer: {},
@@ -17825,6 +17845,24 @@ P = {
 		{
 			M.initializeMap();
 		}
+	},
+	
+	/*
+	 * Adds an API map location to the searchable database array.
+	 * @param array pCoord of the location.
+	 * @param string pName of the location.
+	 * @param string pIcon URL of the type of location.
+	 * @param string pKeywords additional words for the search string.
+	 */
+	addMapLocation: function(pCoord, pName, pIcon, pKeywords)
+	{
+		var object = {
+			name: pName,
+			icon: pIcon,
+			coord: pCoord
+		};
+		var searchstr = (pName + " " + pKeywords).toLowerCase();
+		P.LocationsDatabase.push([object, searchstr]);
 	},
 		
 	/*
@@ -17893,8 +17931,11 @@ P = {
 			var icon;
 			var cssclass;
 			var tooltip;
+			var translationsector = D.getTranslation("Sector");
+			var translationpoi = D.getTranslation("Point of Interest");
 			var translationvista = D.getTranslation("Vista");
 			var translationchallenge = D.getTranslation("Hero Challenge");
+			var translationheart = D.getTranslation("Heart");
 
 			for (regionid in pData.regions)
 			{
@@ -17911,11 +17952,13 @@ P = {
 					
 					zoneobj.ispopulated = true; // Mark as populated to avoid duplicate zones
 					apizone = region.maps[zoneid];
+					var zonename = D.getObjectName(zoneobj);
 					var numheart = 0;
 					var numwaypoint = 0;
 					var numlandmark = 0;
 					var numchallenge = 0;
 					var numvista = 0;
+					var counterchallenge = 0;
 					
 					/* 
 					 * For waypoints, points of interest, and vistas.
@@ -17935,6 +17978,7 @@ P = {
 								icon = U.URL_IMG.Waypoint;
 								cssclass = "mapWp";
 								tooltip = poi.name;
+								P.addMapLocation(poi.coord, poi.name, icon, zonename);
 							} break;
 							
 							case that.APIPOIEnum.Landmark:
@@ -17947,6 +17991,7 @@ P = {
 								icon = U.URL_IMG.Landmark;
 								cssclass = "mapPoi";
 								tooltip = poi.name;
+								P.addMapLocation(poi.coord, poi.name, icon, zonename + " " + translationpoi);
 							} break;
 							
 							case that.APIPOIEnum.Vista:
@@ -17959,6 +18004,7 @@ P = {
 								icon = U.URL_IMG.Vista;
 								cssclass = "mapPoi";
 								tooltip = translationvista;
+								P.addMapLocation(poi.coord, zonename + " " + translationvista + " " + numvista, icon, zonename + " " + translationvista);
 							} break;
 							
 							default: continue; // Don't create marker if not desired type
@@ -18032,22 +18078,24 @@ P = {
 					}
 					
 					/*
-					 * For API separate arrays for pois.
+					 * For API arrays separate from pois.
 					 */
 					if (completionboolean)
 					{
 						// Hero Challenges
 						numofpois = apizone.skill_challenges.length;
 						numchallenge = numofpois;
+						icon = U.URL_IMG.Challenge;
 						for (i = 0; i < numofpois; i++)
 						{
+							counterchallenge++;
 							poi = apizone.skill_challenges[i];
 							marker = L.marker(that.convertGCtoLC(poi.coord),
 							{
 								title: "<span class='" + "mapPoi" + "'>" + translationchallenge + "</span>",
 								icon: L.icon(
 								{
-									iconUrl: U.URL_IMG.Challenge,
+									iconUrl: icon,
 									iconSize: [16, 16],
 									iconAnchor: [8, 8]
 								})
@@ -18055,11 +18103,13 @@ P = {
 							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
 							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 							zoneobj.Layers.Challenge.addLayer(marker);
+							P.addMapLocation(poi.coord, zonename + " " + translationchallenge + " " + counterchallenge, icon, zonename + " " + translationchallenge);
 						}
 						
 						// Renown Hearts
 						numofpois = apizone.tasks.length;
 						numheart = numofpois;
+						icon = U.URL_IMG.Heart;
 						for (i = 0; i < numofpois; i++)
 						{
 							poi = apizone.tasks[i];
@@ -18069,7 +18119,7 @@ P = {
 								wiki: poi.objective,
 								icon: L.icon(
 								{
-									iconUrl: U.URL_IMG.Heart,
+									iconUrl: icon,
 									iconSize: [16, 16],
 									iconAnchor: [8, 8]
 								})
@@ -18077,10 +18127,12 @@ P = {
 							M.bindMarkerWikiBehavior(marker, "click");
 							M.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
 							zoneobj.Layers.Heart.addLayer(marker);
+							P.addMapLocation(poi.coord, poi.objective, icon, zonename + " " + translationheart);
 						}
 						
 						// Sector Names
 						numofpois = apizone.sectors.length;
+						icon = U.URL_IMG.Sector;
 						for (i = 0; i < numofpois; i++)
 						{
 							poi = apizone.sectors[i];
@@ -18096,6 +18148,7 @@ P = {
 								})
 							});
 							zoneobj.Layers.Sector.addLayer(marker);
+							P.addMapLocation(poi.coord, poi.name, icon, zonename + " " + translationsector);
 						}
 						
 						that.isMappingIconsGenerated = true;
@@ -18278,9 +18331,10 @@ P = {
 				var searchname;
 				var newname;
 				var marker;
-				var coord;
+				var icon;
+				var coord, coordmarker;
 
-				var zoneobj;
+				var zoneobj, zonename;
 				initializeEvents(pData || pDataInner);
 
 				for (i in pDataInner.events)
@@ -18289,6 +18343,7 @@ P = {
 					searchname = event.name.toLowerCase();
 					newname = (P.Events[i] !== undefined) ? P.Events[i].name : event.name;
 					zoneobj = M.getZoneFromID(event.map_id);
+					zonename = D.getObjectName(zoneobj);
 					// Skip iterated event if...
 					if ( ! zoneobj // Event is not in a world map zone
 						|| isEventUnwanted(searchname) // Event is obsolete
@@ -18296,11 +18351,12 @@ P = {
 					{
 						continue;
 					}
-
-					coord = M.convertGCtoLC(M.getEventCenter(event));
+					
+					coord = M.getEventCenter(event);
+					coordmarker = M.convertGCtoLC(coord);
 
 					// Create event's ring
-					marker = L.marker(coord,
+					marker = L.marker(coordmarker,
 					{
 						clickable: false,
 						icon: L.icon(
@@ -18313,13 +18369,14 @@ P = {
 					zoneobj.Layers.EventRing.addLayer(marker);
 
 					// Create event's icon
-					marker = L.marker(coord,
+					icon = "img/event/" + determineEventIcon(searchname) + I.cPNG;
+					marker = L.marker(coordmarker,
 					{
 						title: "<span class='" + "mapPoi" + "'>" + newname + " (" + event.level + ")" + "</span>",
 						wiki: event.name,
 						icon: L.icon(
 						{
-							iconUrl: "img/event/" + determineEventIcon(searchname) + I.cPNG,
+							iconUrl: icon,
 							iconSize: [48, 48],
 							iconAnchor: [24, 24]
 						})
@@ -18327,6 +18384,7 @@ P = {
 					M.bindMarkerWikiBehavior(marker, "click", true);//
 					M.bindMarkerZoomBehavior(marker, "contextmenu");
 					zoneobj.Layers.EventIcon.addLayer(marker);
+					P.addMapLocation(coord, event.name, icon, zonename + " " + event.name);
 				}
 				M.isEventIconsGenerated = true;
 
@@ -18382,6 +18440,7 @@ P = {
 		M.bindMapVisualChanges();
 		M.adjustZoomMapping();
 		P.adjustZoomDryTop();
+		P.initializeMapSearch();
 		
 		// Execute query string commands if available
 		var qsgo = U.Args[U.KeyEnum.Go];
@@ -18407,9 +18466,21 @@ P = {
 	 * Compiles a searchable database of API map locations like hearts and events.
 	 * @pre Locations were completely downloaded.
 	 */
-	compileLocations: function()
+	initializeMapSearch: function()
 	{
-		
+		I.preventMapPropagation("#mapSearch");
+		$("#mapCompassButton").one("mouseenter", function()
+		{
+			Q.bindItemSearch("#mapSearch", {
+				aDatabase: P.LocationsDatabase,
+				aResultsClass: "mapSearchResults",
+				aResultsLimit: 200,
+				aCallback: function(pLocation)
+				{
+					M.goToView(pLocation.coord, M.ZoomEnum.Same, M.Pin.Program);//
+				}
+			});
+		});
 	},
 	
 	/*
