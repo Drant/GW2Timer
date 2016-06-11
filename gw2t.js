@@ -3789,6 +3789,15 @@ U = {
 		pString = pString.replace(/ /g, "_");
 		return "http://wiki-" + D.getFullySupportedLanguage() + ".guildwars2.com/index.php?title=Special%3ASearch&search=" + U.encodeURL(pString);
 	},
+	getWikiItemDefault: function(pItem)
+	{
+		// This always return the English wiki. Non-English queries use item ID search rather than direct name
+		if (D.isLanguageFullySupported() === true && D.isLanguageDefault() === false)
+		{
+			return U.getWikiSearchDefault((pItem.id).toString());
+		}
+		return U.getWikiLinkDefault(pItem.name);
+	},
 	
 	/*
 	 * Generates a link to news article at the GuildWars2.com site.
@@ -5321,7 +5330,8 @@ A = {
 		Q.bindItemSearch("#accSearch", {
 			aCallback: function(pItem)
 			{
-				I.print("<img src='" + pItem.icon + "' />");
+				I.print("<img src='" + pItem.icon + "' /> <a"
+					+ U.convertExternalAnchor(U.getWikiItemDefault(pItem)) + ">" + pItem.name + "</a>");
 				I.prettyJSON(pItem);
 			}}
 		);
@@ -6819,13 +6829,13 @@ V = {
 		var formatItemBrief = function(pBox)
 		{
 			var str = "";
-			var levelstr = (pBox.item.level < A.Metadata.ProfLevel.Max) ? (" (" + pBox.item.level + ")") : "";
-			str = "<span class='eqpBriefName " + Q.getRarityClass(pBox.item.rarity) + "'>" + pBox.item.name + levelstr + "</span><br />";
-			pBox.infusions.forEach(function(iInfusion)
+			var levelstr = (pBox.oItem.level < A.Metadata.ProfLevel.Max) ? (" (" + pBox.oItem.level + ")") : "";
+			str = "<span class='eqpBriefName " + Q.getRarityClass(pBox.oItem.rarity) + "'>" + pBox.oItem.name + levelstr + "</span><br />";
+			pBox.oInfusions.forEach(function(iInfusion)
 			{
 				str += "<span class='" + Q.getRarityClass(iInfusion.rarity) + "'><img src='" + iInfusion.icon + "' /> " + iInfusion.name + "</span><br />";
 			});
-			pBox.upgrades.forEach(function(iUpgrade)
+			pBox.oUpgrades.forEach(function(iUpgrade)
 			{
 				str += "<span class='" + Q.getRarityClass(iUpgrade.rarity) + "'><img src='" + iUpgrade.icon + "' /> " + iUpgrade.name + "</span><br />";
 			});
@@ -6972,15 +6982,15 @@ V = {
 							// Set the slot icon as the transmuted skin icon
 							ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(formatItemBrief(iBox)).show();
 							var skinname = null;
-							if (iBox.skin)
+							if (iBox.oSkin)
 							{
-								skinname = iBox.skin.name;
-								sloticon.attr("src", iBox.skin.icon);
+								skinname = iBox.oSkin.name;
+								sloticon.attr("src", iBox.oSkin.icon);
 							}
 							// If the item is slotted in an attributable slot, (armor, primary weapons, trinkets, not underwater), then tally the attribute points
 							if (A.Equipment.AttributableSlots[iEquipment.slot])
 							{
-								Q.sumAttributeObject(attrobj, iBox.attr);
+								Q.sumAttributeObject(attrobj, iBox.oAttr);
 							}
 							// Add faux checkboxes for toggleable armor slots
 							if (equiptoggle[iEquipment.slot])
@@ -6991,12 +7001,12 @@ V = {
 							if (iItem.type === "Gathering" && iItem.rarity !== Q.RarityEnum.Rare)
 							{
 								// Ignore Rare rarity tools which have unlimited charges
-								sloticon.attr("src", iBox.item.icon);
+								sloticon.attr("src", iBox.oItem.icon);
 								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
 							}
 							// Bind click behavior for the icon
 							Q.bindItemSlotBehavior(sloticon, {
-								aItem: iBox.item,
+								aItem: iBox.oItem,
 								aSearch: skinname,
 								aWantClick: true
 							});
@@ -8119,10 +8129,10 @@ B = {
 				aCallback: function(pBox)
 			{
 				// Load retrieved proper transmuted icon if available
-				var icon = (pBox.skin) ? pBox.skin.icon : Settings.aItem.icon;
+				var icon = (pBox.oSkin) ? pBox.oSkin.icon : Settings.aItem.icon;
 				pSlot.find(".bnkSlotIcon").css({backgroundImage: "url(" + icon + ")"}).addClass("bnkSlotRarity_" + Settings.aItem.rarity);
 				// Make the item searchable by converting its tooltip HTML into plain text
-				var keywords = ($(pBox.html).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
+				var keywords = ($(pBox.oHTML).text() + " " + D.getString(Settings.aItem.rarity)).toLowerCase();
 				pSlot.data("keywords", keywords);
 				// Bind slot click behavior
 				var wikisearch = Settings.aWiki || Settings.aItem.name;
@@ -8180,9 +8190,9 @@ B = {
 					pSlot.data("count", count);
 				}
 				// TP price label if the item is tradeable
-				if (pBox.istradeable || Settings.aTradeableID)
+				if (pBox.oIsTradeable || Settings.aTradeableID)
 				{
-					if (pBox.istradeable || Settings.aTradeableID)
+					if (pBox.oIsTradeable || Settings.aTradeableID)
 					{
 						// Add the boolean for the bank filter button to look for
 						pSlot.addClass("bnkSlotTradeable");
@@ -8259,12 +8269,12 @@ B = {
 		switch (pPaymentEnum)
 		{
 			case E.PaymentEnum.Coin: {
-				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinString(pricetorecord, {aWantColor: true, aWantShort: true}) + "</var>");
+				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinStringShort(pricetorecord) + "</var>");
 				if (pSlot.data("istradeable"))
 				{
 					var priceone = (typeof pPrice === "number") ? E.createPrice(pPrice, 1) : E.processPrice(pPrice, 1);
-					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatCoinString(priceone.oPriceBuy, {aWantColor: true, aWantShort: true}) + "</var>");
-					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatCoinString(priceone.oPriceSell, {aWantColor: true, aWantShort: true}) + "</var>");
+					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatCoinStringShort(priceone.oPriceBuy) + "</var>");
+					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatCoinStringShort(priceone.oPriceSell) + "</var>");
 				}
 			}; break;
 			case E.PaymentEnum.Gem: {
@@ -10006,9 +10016,9 @@ Q = {
 	getItem: function(pItemID, pSuccess)
 	{
 		var box = Q.Box[pItemID];
-		if (box)
+		if (box && box.oItem)
 		{
-			pSuccess(box.item);
+			pSuccess(box.oItem);
 			// Dummy fail jqxhr function that never executes because the item was successfully cached
 			return {fail: function() {}};
 		}
@@ -10045,7 +10055,7 @@ Q = {
 		var itemmeta = Settings.aItemMeta || {};
 		var box = Q.Box[pItem.id];
 		
-		if (box && box.html)
+		if (box && box.oHTML)
 		{
 			if (itemmeta.upgrades || itemmeta.infusions || itemmeta.skin || itemmeta.slot || itemmeta.bound_to
 				|| Settings.aWantAttr || Settings.aComment)
@@ -10058,7 +10068,7 @@ Q = {
 				if (Settings.aElement)
 				{
 					var elm = $(Settings.aElement);
-					elm.attr("title", box.html);
+					elm.attr("title", box.oHTML);
 					I.qTip.init(elm);
 				}
 				// Execute callback if provided
@@ -10083,7 +10093,6 @@ Q = {
 	 * infusions, skins, and bindings, which are found in characters and bank API.
 	 * @objparam object aRuneSets containing counts of runes associated with rune's item ID.
 	 * @objparam string aSoulbound name of character the item is bound to.
-	 * @objparam boolean aWantPrice whether to retrieve and include Trading Post price also.
 	 * @objparam function aCallback what to do after the tooltip generation
 	 * completes. This provides an object containing additionally retrieved
 	 * API objects like upgrades and skin.
@@ -10098,7 +10107,6 @@ Q = {
 		var attrobj = null; // Holds attribute points
 		var isitemmeta = false;
 		var istradeable = true;
-		var pricebuy, pricesell;
 		/* Example structure of aItemMeta object:
 			{
 				"id": 68390,
@@ -10410,13 +10418,6 @@ Q = {
 			vendorstr = E.formatCoinString(vendorvalue, {aWantColor: true, aWantSpace: true});
 		}
 		
-		// TRADE PRICE
-		var pricestr = "";
-		if (Settings.aWantPrice)
-		{
-			numtofetch++;
-		}
-		
 		/*
 		 * Upgrades and transmutations requires loading AJAX, so they must be
 		 * done last and checked that every requests have been fulfilled then
@@ -10547,7 +10548,6 @@ Q = {
 				+ charbindstr
 				+ commentstr
 				+ vendorstr
-				+ pricestr
 			+ "</div>";
 			// Bind tooltip if provided an element
 			if (Settings.aElement)
@@ -10561,15 +10561,13 @@ Q = {
 			 * information and additionally retrieved slotted items.
 			 */
 			var box = {
-				item: item,
-				infusions: infusionobjs,
-				upgrades: upgradeobjs,
-				skin: skinobj,
-				attr: attrobj,
-				html: html,
-				istradeable: istradeable,
-				pricebuy: pricebuy,
-				pricesell: pricesell
+				oItem: item,
+				oInfusions: infusionobjs,
+				oUpgrades: upgradeobjs,
+				oSkin: skinobj,
+				oAttr: attrobj,
+				oHTML: html,
+				oIsTradeable: istradeable
 			};
 			// Cache the item only if it's not custom (no upgrades or transmutations)
 			if (isitemmeta === false && Settings.aComment === undefined)
@@ -10682,28 +10680,6 @@ Q = {
 				if (Settings.aCallback)
 				{
 					skinobj = pData;
-				}
-				numfetched++;
-				finalizeTooltip();
-			}).fail(function()
-			{
-				numtofetch--;
-				finalizeTooltip();
-			});
-		}
-		
-		// TRADEABLE
-		if (Settings.aWantPrice)
-		{
-			$.getJSON(U.getAPIPrice(item.id), function(pData)
-			{
-				var prices = E.processPrice(pData, Settings.aItemMeta.count);
-				pricestr = "<aside>" + E.formatCoinString(prices.oPriceSell, {aWantColor: true, aWantSpace: true})
-					+ " <span class='accTrivial'>" + E.formatCoinString(prices.oPriceBuy, {aWantColor: true, aWantSpace: true}) + "</span></aside>";
-				if (Settings.aCallback)
-				{
-					pricebuy = prices.oPriceBuy;
-					pricesell = prices.oPriceSell;
 				}
 				numfetched++;
 				finalizeTooltip();
@@ -10980,22 +10956,37 @@ Q = {
 	 * can be executed.
 	 * @param jqobject pElement to bind.
 	 * @objparam string aFillerText to display over the input bar, optional.
+	 * @objparam string aResultsClass CSS class for results container element, optional.
+	 * @objparam int aResultsLimit max number of results to show, optional.
 	 * @objparam boolean aWantEnter whether to bind the default Enter key event, optional.
+	 * @objparam objarray aDatabase custom search database to use instead of items search, optional.
 	 * @objparam function aCallback to execute after the user selects an item.
 	 * @pre Input bar has a parent container element in order to position the results list.
+	 * A search database is an array containing subarrays: [resultObject, searchNameString]
+	 * searchNameString is the searchable name of the result in lowercase.
+	 * For item search, resultObject is an integer item ID; for custom databases,
+	 * the object must have a "name" and "icon" property to display in the search
+	 * result; other properties may be assigned so to be used when the user
+	 * chooses a result.
 	 */
 	bindItemSearch: function(pElement, pSettings)
 	{
 		var Settings = pSettings || {};
 		var elm = $(pElement).wrap("<span class='itmSearchContainer'></span>");
 		var queryminchar = D.isLanguageLogographic() ? 1 : 2;
+		var resultslimit = Settings.aResultsLimit || O.Options.int_numTradingResults;
 		var resultscontainer = $("<div class='itmSearchResultContainer jsHidable'></div>").insertAfter(elm).hide();
 		var resultslist = $("<div class='itmSearchResultList cntPopup jsScrollable'></div>").appendTo(resultscontainer);
 		var notfoundstr = "<var class='itmSearchResultNone'>" + D.getPhraseOriginal("Not found") + "." + "</var>";
+		var isitemsearch = (Settings.aDatabase === undefined);
 		var searchtimestamp;
 		if (Settings.aFillerText !== null)
 		{
 			I.bindInputBarText(elm, Settings.aFillerText);
+		}
+		if (Settings.aResultsClass)
+		{
+			resultscontainer.addClass(Settings.aResultsClass);
 		}
 		I.bindScrollbar(resultslist);
 		
@@ -11014,37 +11005,34 @@ Q = {
 			}
 		};
 		var searchclose = $("<ins class='itmSearchClose btnWindow btnClose' "
-			+ "title='<dfn>Close the search results.</dfn><br />Right click an item for more menu.<br />Type a number to search by item ID.'></ins>")
+			+ "title='<dfn>Close the search results.</dfn><br />Right click an item for menu.<br />Type a number to search by item ID.'></ins>")
 			.appendTo(resultscontainer).click(function()
 		{
 			toggleResults(false);
 		});
 		I.qTip.init(searchclose);
 		
-		// Populates the results list with downloaded API data for each result item
-		var renderSearch = function(pItemIDs, pQuery)
+		// Fills the results list with downloaded API data for each result item
+		var renderSearch = function(pResults, pQuery)
 		{
-			// A new search updates the timestamp, only the earliest results are allowed to be shown
-			searchtimestamp = (new Date()).getTime();
-			if (pItemIDs.length === 0)
+			if (pResults.length === 0)
 			{
 				toggleResults(true, notfoundstr);
+				return;
 			}
-			else
+			
+			toggleResults(true);
+			if (isitemsearch)
 			{
-				toggleResults(true);
+				// A new search updates the timestamp, only the earliest results are allowed to be shown
+				searchtimestamp = (new Date()).getTime();
 				// Create an ordered list that acts as containers for each result entry
-				for (var i = 0; i < pItemIDs.length; i++)
+				for (var i = 0; i < pResults.length; i++)
 				{
-					resultslist.append("<span class='itmSearchResultLine itmSearchResultLine_" + pItemIDs[i] + "'></span>");
-				}
-				if (pItemIDs.length === O.Options.int_numTradingResults)
-				{
-					I.qTip.init($("<span class='itmSearchResultEntryFinal' "
-						+ "title='More results available. Please refine your search.'>...</span>").appendTo(resultslist));
+					resultslist.append("<span class='itmSearchResultLine itmSearchResultLine_" + pResults[i] + "'></span>");
 				}
 				// Fill the list as API items are retrieved
-				for (var i = 0; i < pItemIDs.length; i++)
+				for (var i = 0; i < pResults.length; i++)
 				{
 					(function(iItemID, iTimestamp)
 					{
@@ -11069,10 +11057,50 @@ Q = {
 								// Tooltip for the listed item
 								Q.scanItem(pItem, {aElement: resultentry});
 								Q.bindItemSlotBehavior(resultentry, {aItem: pItem});
+								// Also include price next to tradeable items
+								E.getPrice(iItemID, {
+									aWantCache: true,
+									aSuccess: function(pPriceObj)
+									{
+										if (iTimestamp === searchtimestamp)
+										{
+											var pricestr = "<span class='itmSearchResultPrice'>" + E.formatCoinStringShort(pPriceObj.oPriceSell)
+												+ " <var class='cssFaded'>" + E.formatCoinStringShort(pPriceObj.oPriceBuy) + "</var></span>";
+											resultentry.append(pricestr);
+										}
+									}
+								});
 							}
 						});
-					})(pItemIDs[i], searchtimestamp);
+					})(pResults[i], searchtimestamp);
 				}
+			}
+			else
+			{
+				var result, resultentry;
+				for (var i = 0; i < pResults.length; i++)
+				{
+					result = pResults[i];
+					resultentry = $("<span class='itmSearchResultLine><dfn class='itmSearchResultEntry'>"
+						+ "<img src='" + result.icon + "'>"
+						+ U.highlightSubstring(result.name, pQuery) + "</dfn></span>").appendTo(resultslist);
+					resultentry.click(function()
+					{
+						if (Settings.aCallback)
+						{
+							Settings.aCallback(result);
+							toggleResults(false);
+						}
+						resultslist.removeData("selectedresult");
+					});
+					I.updateScrollbar(resultslist);
+				}
+			}
+			// Note at bottom of results list to indicate there's more available
+			if (pResults.length === resultslimit)
+			{
+				I.qTip.init($("<span class='itmSearchResultEntryFinal' "
+					+ "title='More results available. Please refine your search.'>...</span>").appendTo(resultslist));
 			}
 		};
 		
@@ -11091,21 +11119,23 @@ Q = {
 				renderSearch([parseInt(pQuery)], pQuery);
 				return;
 			}
-			
+
 			// Else proceed with regular search through the database
-			var entry, subqueries, itemid, itemname, ismatch;
+			var entry, subqueries, result, searchname, ismatch;
 			var resultsarr = [];
-			for (var i = 0; i < Q.SearchDatabase.length; i++)
+			var searchdatabase = (isitemsearch) ? Q.SearchDatabase : Settings.aDatabase;
+			
+			for (var i = 0; i < searchdatabase.length; i++)
 			{
-				entry = Q.SearchDatabase[i];
+				entry = searchdatabase[i];
 				subqueries = pQuery.split(" ");
-				itemid = entry[0];
-				itemname = entry[1];
+				result = entry[0];
+				searchname = entry[1];
 				// Search using every space separated substrings in the query
 				ismatch = true;
 				for (var ii = 0; ii < subqueries.length; ii++)
 				{
-					if (itemname.indexOf(subqueries[ii]) === -1)
+					if (searchname.indexOf(subqueries[ii]) === -1)
 					{
 						ismatch = false;
 						continue;
@@ -11114,10 +11144,10 @@ Q = {
 				if (ismatch)
 				{
 					// Only include in result if every subquery was found in the item's name
-					resultsarr.push(itemid);
+					resultsarr.push(result);
 				}
 				// Show the results if found enough matching items
-				if (resultsarr.length >= O.Options.int_numTradingResults)
+				if (resultsarr.length >= resultslimit)
 				{
 					renderSearch(resultsarr, pQuery);
 					return;
@@ -11244,7 +11274,7 @@ E = {
 	 */
 	Payment:
 	{
-		coin: function(pAmount) { return E.formatCoinString(pAmount, {aWantColor: true, aWantShort: true}); },
+		coin: function(pAmount) { return E.formatCoinStringShort(pAmount); },
 		karma: function(pAmount) { return E.formatKarmaString(pAmount, true); },
 		laurel: function(pAmount) { return E.formatLaurelString(pAmount, true); },
 		gem: function(pAmount) { return E.formatGemString(pAmount, true); },
@@ -11477,6 +11507,10 @@ E = {
 	{
 		return E.formatCoinString(pAmount, {aWantColor: true});
 	},
+	formatCoinStringShort: function(pAmount)
+	{
+		return E.formatCoinString(pAmount, {aWantColor: true, aWantShort: true});
+	},
 	
 	/*
 	 * Converts a money amount in cents to dollars period separated cents string.
@@ -11644,6 +11678,64 @@ E = {
 	},
 	
 	/*
+	 * Tells whether an item can be traded and has price on the Trading Post.
+	 * @param int pItemID.
+	 * @returns boolean.
+	 * @pre Item was analyzed.
+	 */
+	isTradeable: function(pItemID)
+	{
+		var box = Q.Box[pItemID];
+		// Assume item is tradeable, unless it was analyzed not to be so
+		return (box && box.oIsTradeable === false) ? false : true;
+	},
+	
+	/*
+	 * Retrieves the Trading Post prices for an item.
+	 * @param int pItemID.
+	 * @objparam boolean aWantCache whether to cache the price or always use freshest, optional.
+	 * @objparam function aSuccess to execute after retrieval.
+	 * @objparam function aError to execute if failed to retrieve, optional.
+	 * @returns object processed price.
+	 */
+	getPrice: function(pItemID, pSettings)
+	{
+		var Settings = pSettings || {};
+		var wantcache = (Settings.aWantCache !== undefined) ? Settings.aWantCache : false;
+		
+		if (E.isTradeable(pItemID))
+		{
+			$.ajax({
+				dataType: "json",
+				url: U.getAPIPrice(pItemID),
+				cache: wantcache,
+				success: function(pData)
+				{
+					if (Settings.aSuccess)
+					{
+						var priceobj = E.processPrice(pData);
+						Settings.aSuccess(priceobj);
+					}
+				},
+				error: function()
+				{
+					if (Settings.aError)
+					{
+						Settings.aError();
+					}
+				}
+			});
+		}
+		else
+		{
+			if (Settings.aError)
+			{
+				Settings.aError();
+			}
+		}
+	},
+	
+	/*
 	 * Calculates the trading calculator's output textboxes using input textboxes' values.
 	 * @param jqobject pEntry trading calculator HTML parent.
 	 */
@@ -11727,7 +11819,7 @@ E = {
 			});
 			Q.scanItem(pItem, {aElement: icon, aCallback: function(pBox)
 			{
-				pEntry.data("istradeable", pBox.istradeable);
+				pEntry.data("istradeable", pBox.oIsTradeable);
 			}});
 		});
 	},
@@ -12102,6 +12194,7 @@ E = {
 				Q.bindItemSearch($(name), {
 					aFillerText: null,
 					aWantEnter: false,
+					aResultsClass: "trdResultsContainer",
 					aCallback: function(pItem)
 					{
 						// Change triggers the storage, input triggers the calculation
@@ -17712,6 +17805,7 @@ P = {
 		DryTopRings: [],
 		DryTopActive: []
 	},
+	LocationsDatabase: null, // A searchable array of API markers like POIs, hearts, events
 	
 	Events: {},
 	DryTopTimer: {},
@@ -18307,6 +18401,15 @@ P = {
 		{
 			P.tickGPS();
 		}
+	},
+	
+	/*
+	 * Compiles a searchable database of API map locations like hearts and events.
+	 * @pre Locations were completely downloaded.
+	 */
+	compileLocations: function()
+	{
+		
 	},
 	
 	/*

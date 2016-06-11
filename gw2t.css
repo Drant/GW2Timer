@@ -324,7 +324,7 @@ img {
 	color: white;
 }
 .itmSearchResultList {
-	width: 270px;
+	width: 336px;
 	max-height: 220px;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -332,6 +332,7 @@ img {
 }
 .itmSearchResultEntry {
 	display: block;
+	white-space: nowrap;
 }
 .itmSearchResultEntry img {
 	width: 16px; height: 16px;
@@ -342,6 +343,9 @@ img {
 }
 .itmSearchSelected img {
 	width: 32px; height: 32px;
+}
+.itmSearchResultPrice {
+	margin-left: 8px;
 }
 
 /*
@@ -2465,6 +2469,9 @@ label:hover {
 
 .cssHidden {
 	display: none !important;
+}
+.cssFaded {
+	opacity: 0.3;
 }
 .cssLeft {
 	float: left;

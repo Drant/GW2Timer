@@ -617,7 +617,7 @@ dt.jpzListNameHover {
 	display: inline-block;
 }
 .trdResultsContainer {
-	position: relative;
+	left: -40px;
 }
 .trdResults {
 	position: absolute; z-index: 2;
