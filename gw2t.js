@@ -5379,7 +5379,7 @@ A = {
 				 */
 				iTab.click(function()
 				{
-					// Show the section
+					// Reset tab styles
 					$(".accMenuTab").find(".accMenuIcon").removeClass("accMenuButtonFocused");
 					$(".accPlatter").hide();
 					// If previously viewing a non-main subsection of this section, then open that subsection
@@ -5407,6 +5407,7 @@ A = {
 						I.SectionCurrent[I.SpecialPageEnum.Account] =
 							(iSectionName === I.SectionEnum.Account.Manager) ? "" : iSectionName;
 						U.updateQueryString();
+						A.generateDish(iSectionName);
 					}
 					// Highlight the clicked tab
 					$(".accMenuTab").removeClass("accMenuTabFocused").find(".accMenuSubtab").hide();
@@ -5436,6 +5437,11 @@ A = {
 							{
 								iSubbutton.click(function(pEvent)
 								{
+									// Reset tab styles
+									$(".accMenuTab").find(".accMenuIcon").removeClass("accMenuButtonFocused");
+									$(".accPlatter").hide();
+									$(".accMenuTab").removeClass("accMenuTabFocused").find(".accMenuSubtab").hide();
+									section.show();
 									var menutab = $(this).parents(".accMenuTab").data("iscurrentaccounttab", subsectionname);
 									menutab.find(".accMenuCurrent").removeClass("accMenuCurrent");
 									$(this).addClass("accMenuCurrent");
@@ -5460,6 +5466,7 @@ A = {
 									I.PageCurrent = I.SpecialPageEnum.Account;
 									I.SectionCurrent[I.SpecialPageEnum.Account] = subsectionname;
 									U.updateQueryString();
+									A.generateDish(subsectionname);
 								});
 							})(subbutton, $(this));
 						}
@@ -5467,16 +5474,6 @@ A = {
 					I.qTip.init(".accMenuButton");
 				}
 			})(menutab, sectionname);
-		});
-		
-		/*
-		 * Bind the respective generate functions with the account menu buttons
-		 * that views that section of the account page.
-		 */
-		$(".accMenuClick").click(function()
-		{
-			var section = U.getSubstringFromHTMLID($(this));
-			A.generateDish(section);
 		});
 		
 		// Open the section if specified in the URL
@@ -14280,6 +14277,10 @@ C = {
 				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain)); },
 				function() { $("#chnTitle_" + pChain.nexus).text(D.getObjectName(pChain)); }
 			);
+			if (pChain.series === C.ChainSeriesEnum.Miscellaneous)
+			{
+				$("#chnTitle_" + pChain.nexus).addClass("chnTitleMisc");
+			}
 		}
 		$("#chnDetails_" + pChain.nexus + " .chnWaypoint").click(function()
 		{

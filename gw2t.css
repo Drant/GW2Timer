@@ -2112,6 +2112,9 @@ header.jsSection sup {
 	border-radius: 4px;
 	vertical-align: top;
 }
+.chnTitleMisc {
+	font-weight: bold;
+}
 
 .chnCheck, .chnChecked {
 	display: inline-block;

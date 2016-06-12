@@ -71,6 +71,8 @@ Token: [
 	{i: 66766, n: "Unidentified Fossilized Insect", p: {coin: 0}},
 	{i: 72205, n: "Chak Egg", p: {coin: 0}},
 	{i: 74356, n: "Reclaimed Metal Plate", p: {coin: 0}},
+	{i: 70718, n: "Tenebrous Crystal", p: {coin: 0}},
+	{i: 76254, n: "Shimmering Crystal", p: {coin: 0}},
 	{i: 50025, n: "Blade Shard", p: {coin: 0}},
 	{i: 20323, n: "Unidentified Dye"},
 	{i: 67280, n: "Teleport to Friend", p: {gem: 0}},
