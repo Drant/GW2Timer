@@ -110,6 +110,9 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	font-weight: bold;
 	text-align: center;
 }
+.chnTitleMisc {
+	text-decoration: underline;
+}
 
 .chnTitle time {
 	width: 88px;

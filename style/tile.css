@@ -124,6 +124,9 @@ body, #paneContent article {
 	text-align: center;
 	cursor: url("img/cursor/auto.cur"), auto;
 }
+.chnTitleMisc {
+	text-decoration: underline;
+}
 
 .chnTitle time {
 	width: 100%;

@@ -2521,9 +2521,10 @@ U = {
 		Skins: "data/skins.js",
 		Minis: "data/minis.js",
 		Dyes: "data/dyes.js",
-		Recipes: "data/recipes.js",
-		Ascended: "data/ascended.js",
 		Catalog: "data/catalog.js",
+		Cleanup: "data/cleanup.js",
+		Ascended: "data/ascended.js",
+		Recipes: "data/recipes.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
@@ -2614,11 +2615,11 @@ U = {
 	{
 		return "data/" + pName + ".js";
 	},
-	getDatabaseData: function(pName)
+	getRecordData: function(pName)
 	{
 		return window["GW2T_" + pName.toUpperCase() + "_DATA"];
 	},
-	getDatabaseHeader: function(pName)
+	getRecordHeader: function(pName)
 	{
 		return window["GW2T_" + pName.toUpperCase() + "_HEADERS"];
 	},
@@ -4143,7 +4144,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				Z.collateRecipes();
+				Z.collateCleanup();
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -4411,8 +4412,10 @@ Z = {
 	/*
 	 * Creates a file from a regenerated unlockables record.
 	 * @param object pRecord.
+	 * @param boolean pIsFlat whether the record is just an array of numbers
+	 * rather than objects.
 	 */
-	printUnlockables: function(pRecord)
+	printUnlockables: function(pRecord, pIsFlat)
 	{
 		var output = "";
 		var catarr, arrlength;
@@ -4420,15 +4423,23 @@ Z = {
 		var objlengthcounter = 0;
 		for (var i in pRecord)
 		{
-			output += i + ": [\r\n";
 			catarr = pRecord[i];
 			arrlength = catarr.length;
-			for (var ii = 0; ii < arrlength; ii++)
+			if (pIsFlat)
 			{
-				output += "\t" + U.lineJSON(catarr[ii], false)
-					+ ((ii === arrlength - 1) ? "" : ",") + "\r\n";
+				output += i + ": [" + catarr.toString() + "]";
 			}
-			output += "]" + ((objlengthcounter === objlength - 1) ? "" : ",") + "\r\n";
+			else
+			{
+				output += i + ": [\r\n";
+				for (var ii = 0; ii < arrlength; ii++)
+				{
+					output += "\t" + U.lineJSON(catarr[ii], false)
+						+ ((ii === arrlength - 1) ? "" : ",") + "\r\n";
+				}
+				output += "]";
+			}
+			output += ((objlengthcounter === objlength - 1) ? "" : ",") + "\r\n";
 			objlengthcounter++;
 		}
 		Z.createFile(output);
@@ -4723,7 +4734,7 @@ Z = {
 				this.Blue = [];
 				this.Purple = [];
 			};
-			var db = U.getDatabaseData("dyes");
+			var db = U.getRecordData("dyes");
 			var newrec = {};
 			var cat, overcat, entry;
 			// Put the colors in their hue category
@@ -4790,7 +4801,6 @@ Z = {
 			"Pistol", "Torch", "Warhorn", "LongBow", "ShortBow", "Rifle", "Speargun", 
 			"Axe", "Mace", "Sword", "Dagger", "Shield",  "Greatsword", "Hammer", "Harpoon"
 		];
-		var mergelist = ["RefinementObsidian", "RefinementEctoplasm"];
 		var record = {};
 		// Construct categories to insert the recipes orderly
 		disciplines.forEach(function(iDisc)
@@ -4801,9 +4811,8 @@ Z = {
 			});
 		});
 		
-		Z.loadItemsDatabase(function(pDatabase)
+		Z.getItemsDatabase(function(pDatabase)
 		{
-			var db = pDatabase["en"];
 			$.getJSON("test/recipes.json", function(pData)
 			{
 				var recipe, catname, discipline, type, itemid;
@@ -4821,12 +4830,12 @@ Z = {
 						{
 							catname = discipline + "_" + "Refinement";
 						}
-						if (db[itemid] && record[catname])
+						if (pDatabase[itemid] && record[catname])
 						{
 							record[catname].push({
 								u: recipe.id,
 								i: itemid,
-								n: db[itemid].name
+								n: pDatabase[itemid].name
 							});
 						}
 					}
@@ -4842,6 +4851,79 @@ Z = {
 				}
 				Z.printUnlockables(newrecord);
 			});
+		});
+	},
+	
+	/*
+	 * Reads the item database for container items or "useless" items.
+	 */
+	collateCleanup: function()
+	{
+		var record = {
+			Container: [],
+			ContainerGear: [],
+			ContainerAscended: [],
+			Recipe: [],
+			Collection: [],
+			Junk: []
+		};
+		var blacklist = {"20323":1, "70229":1};
+		
+		// Returns the category name of an item, if fitting
+		var categorizeItem = function(pItem)
+		{
+			var name = pItem.name.toLowerCase();
+			var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
+			if (pItem.description)
+			{
+				if (desc.indexOf("value as part of a collection") !== -1)
+				{
+					return "Collection";
+				}
+			}
+			if (name.indexOf("recipe") !== -1)
+			{
+				return "Recipe";
+			}
+			if (pItem.type === "Container")
+			{
+				if (pItem.rarity === "Ascended")
+				{
+					return "ContainerAscended";
+				}
+				if (name.indexOf("weapon") !== -1 || name.indexOf("armor") !== -1 || name.indexOf("gear") !== -1 || name.indexOf("skin") !== -1
+					|| desc.indexOf("weapon") !== -1 || desc.indexOf("armor") !== -1 || desc.indexOf("gear") !== -1 || desc.indexOf("skin") !== -1)
+				{
+					return "ContainerGear";
+				}
+				return "Container";
+			}
+			if (pItem.rarity === "Junk")
+			{
+				return "Junk";
+			}
+			return null;
+		};
+		
+		Z.getItemsDatabase(function(pDatabase)
+		{
+			var item, catname;
+			for (var i in pDatabase)
+			{
+				item = pDatabase[i];
+				// Exclude blacklisted
+				if (blacklist[item.id])
+				{
+					continue;
+				}
+				catname = categorizeItem(item);
+				// Add the item if matched
+				if (catname)
+				{
+					record[catname].push(item.id);
+				}
+			}
+			Z.printUnlockables(record, true);
 		});
 	},
 	
@@ -5038,7 +5120,7 @@ Z = {
 			$.getScript(scripturl, function()
 			{
 				Z.freeFiles();
-				var data = U.getDatabaseData(pType);
+				var data = U.getRecordData(pType);
 				var itemids = [];
 				for (var i in data)
 				{
@@ -5433,6 +5515,11 @@ A = {
 								+ "src='img/account/menu/" + subsectionnamelow + I.cPNG + "' />");
 							subbuttons.append(subbutton);
 							A.createDishMenu(subsectionname);
+							// Create a divider if this button is the beginning of a subtab group
+							if ($(this).attr("data-islead"))
+							{
+								$("<span class='accMenuTabDivider'></span>").insertBefore(subbutton);
+							}
 							(function(iSubbutton, iSubsection)
 							{
 								iSubbutton.click(function(pEvent)
@@ -5604,7 +5691,6 @@ A = {
 			A.Permissions[i] = null;
 		}
 		A.Data.CharacterNames = null;
-		A.Possessions = null;
 		// Prevent skipping loading the characters section first
 		$("#accMenu_Characters").data("iscurrentaccounttab", null);
 		$(".accDishMenu").empty();
@@ -6180,6 +6266,7 @@ V = {
 			}
 		};
 		
+		A.Possessions = null;
 		dish.html("<div id='chrSummary'></div>"
 		+ "<div id='chrStatistics'>"
 			+ "<ul id='chrSelection'></ul>"
@@ -7290,20 +7377,31 @@ V = {
 			{
 				slotdata = iChar.equipment[i];
 				slot = B.createBankSlot(slotscontainer);
-				(function(iSlot, iSlotData)
+				if (slotdata)
 				{
-					Q.getItem(iSlotData.id, function(iItem)
+					(function(iSlot, iSlotData)
 					{
-						B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+						Q.getItem(iSlotData.id, function(iItem)
 						{
-							numfetched++;
-							A.setProgressBar(numfetched, numtofetch);
-						}});
-					});
-				})(slot, slotdata);
+							B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+							{
+								numfetched++;
+								A.setProgressBar(numfetched, numtofetch);
+							}});
+						});
+					})(slot, slotdata);
+				}
 			}
 		});
 		B.createBankMenu(bank);
+	},
+	
+	/*
+	 * Generates the ascended equipment catalog bank window.
+	 */
+	serveCleanup: function()
+	{
+		B.generateCatalog("cleanup", {aWantGem: false, aWantUnlockeds: true});
 	},
 	
 	/*
@@ -7346,13 +7444,18 @@ V = {
 		{
 			for (var i = 0; i < pData.length; i++)
 			{
-				(function(iSlot, iSlotData)
+				slot = B.createBankSlot(sharedtab.find(".bnkTabSlots"), "bnkSlotShared");
+				slotdata = pData[i];
+				if (slotdata)
 				{
-					Q.getItem(iSlotData.id, function(iItem)
+					(function(iSlot, iSlotData)
 					{
-						B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData});
-					});
-				})(B.createBankSlot(sharedtab.find(".bnkTabSlots"), "bnkSlotShared"), pData[i]);
+						Q.getItem(iSlotData.id, function(iItem)
+						{
+							B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData});
+						});
+					})(slot, slotdata);
+				}
 			}
 		});
 		
@@ -7393,9 +7496,8 @@ V = {
 				{
 					for (var iii = 0; iii < bagdata.inventory.length; iii++)
 					{
-						slotdata = bagdata.inventory[iii];
-						// Add slots
 						slot = B.createBankSlot(slotscontainer);
+						slotdata = bagdata.inventory[iii];
 						if (slotdata)
 						{
 							(function(iSlot, iSlotData)
@@ -7631,9 +7733,9 @@ V = {
 					slotscontainer = tab.find(".bnkTabSlots");
 				}
 				nexti = i+1;
-				slotdata = pData[i];
-				// Add slots
+				
 				slot = B.createBankSlot(slotscontainer);
+				slotdata = pData[i];
 				// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
 				if (slotdata)
 				{
@@ -7875,7 +7977,11 @@ V = {
 			return;
 		}
 		
-		var container = B.createBank(dish, {aIsCollection: true, aWantGem: false});
+		var container = B.createBank(dish, {
+			aClass: "bnkBankDyes",
+			aIsCollection: true,
+			aWantGem: false
+		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		$.getScript(U.URL_DATA.Dyes).done(function()
 		{
@@ -7905,6 +8011,7 @@ B = {
 	/*
 	 * Creates a bank container element.
 	 * @param jqobject pDestination to append bank.
+	 * @objparam string aClass CSS style class for bank element.
 	 * @objparam boolean aIsCollection whether the bank is an unlock collection.
 	 * @objparam boolean aWantGem whether to display the gem tally.
 	 * @objparam int aSlotsPerRow to resize the bank beforehand, optional.
@@ -7929,7 +8036,7 @@ B = {
 				+ "</aside>") : "")
 			+ "</div>"
 		+ "</div>").appendTo(pDestination);
-		var bank = $("<div class='bnkBank'></div>").appendTo(container);
+		var bank = $("<div class='bnkBank " + (Settings.aClass || "") + "'></div>").appendTo(container);
 		bank.css({width: ((Settings.aSlotsPerRow || A.Metadata.Bank.NumSlotsHorizontal) * B.getBankSlotWidth()) + "px"});
 
 		if (Settings.aIsCollection)
@@ -8886,6 +8993,7 @@ B = {
 	 * @objparam object aRecord containing categorized unlockable entries.
 	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API.
 	 * @objparam boolean aIsCatalog whether to use the user's possessions rather than unlockeds.
+	 * @objparam boolean aWantUnlockeds whether to generate unlocked slots only.
 	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
 	 * @objparam string aHelpMessage HTML of help message element, optional.
 	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
@@ -8922,18 +9030,45 @@ B = {
 		var catarr, catobj;
 		var unlockid;
 
-		/*
-		 * Add to the current unlockable database if provided custom tabs.
-		 */
 		if (Settings.aIsCustomCatalog)
 		{
-			// Add custom bank behaviors
+			/*
+			 * Add to the current unlockable database if provided custom tabs.
+			 */
 			var customdb = B.bindCatalog(pBank, unlocksassoc, Settings.aHeaders, Settings.aRecord);
 			headers = customdb.oHeaders;
 			record = customdb.oRecord;
 		}
+		else if (Settings.aWantUnlockeds)
+		{
+			/*
+			 * Records called with this variable will be in the form of an array
+			 * of item IDs rather array of objects. Reformat the record so that
+			 * it only contains items that is already unlocked (no locked slots
+			 * will be generated).
+			 */
+			headers = Settings.aHeaders;
+			for (var i in Settings.aRecord)
+			{
+				record[i] = [];
+			}
+			for (var i in Settings.aRecord)
+			{
+				catarr = Settings.aRecord[i];
+				for (var ii = 0; ii < catarr.length; ii++)
+				{
+					if (unlocksassoc[(catarr[ii])])
+					{
+						record[i].push(catarr[ii]);
+					}
+				}
+			}
+		}
 		else
 		{
+			/*
+			 * For normal unlockables record.
+			 */
 			headers = Settings.aHeaders;
 			record = Settings.aRecord;
 		}
@@ -9058,8 +9193,8 @@ B = {
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var fillCatalog = function()
 		{
-			Settings.aHeaders = U.getDatabaseHeader(pSection);
-			Settings.aRecord = U.getDatabaseData(pSection);
+			Settings.aHeaders = U.getRecordHeader(pSection);
+			Settings.aRecord = U.getRecordData(pSection);
 			B.generateUnlockables(bank, Settings);
 			if (Settings.aIsCustomCatalog)
 			{
@@ -12317,7 +12452,7 @@ E = {
 		});
 		$("#trdMute").click(function()
 		{
-			D.resetSpeechQueue();
+			D.stopSpeech();
 		});
 		// Button to print all saved calculator data to console as Comma Separated Values (CSV)
 		$("#trdPrint").click(function()
@@ -14277,10 +14412,10 @@ C = {
 				function() { $("#chnTitle_" + pChain.nexus).text(D.getChainTitle(pChain)); },
 				function() { $("#chnTitle_" + pChain.nexus).text(D.getObjectName(pChain)); }
 			);
-			if (pChain.series === C.ChainSeriesEnum.Miscellaneous)
-			{
-				$("#chnTitle_" + pChain.nexus).addClass("chnTitleMisc");
-			}
+		}
+		if (pChain.series === C.ChainSeriesEnum.Miscellaneous)
+		{
+			$("#chnTitle_" + pChain.nexus).addClass("chnTitleMisc");
 		}
 		$("#chnDetails_" + pChain.nexus + " .chnWaypoint").click(function()
 		{
@@ -15632,14 +15767,14 @@ M = {
 		});
 		$(htmlidprefix + "ContextChatlinkPins").click(function()
 		{
-			if (that.isPersonalPinsLaid())
+			if (that.isPersonalPinsLaid(true))
 			{
 				P.printClosestWaypoints();
 			}
 		});
 		$(htmlidprefix + "ContextOptimizePins").click(function()
 		{
-			if (that.isPersonalPinsLaid())
+			if (that.isPersonalPinsLaid(true))
 			{
 				that.optimizePersonalPath();
 			}
@@ -16346,7 +16481,7 @@ M = {
 			}
 			else
 			{
-				that.isPersonalPinsLaid();
+				that.isPersonalPinsLaid(true);
 			}
 		};
 		var loadStoredPins = function(pIndex)
@@ -16653,11 +16788,14 @@ M = {
 	 * Tells if there is at least one personal pin laid on the map.
 	 * @returns boolean.
 	 */
-	isPersonalPinsLaid: function()
+	isPersonalPinsLaid: function(pWantMessage)
 	{
-		if (this.Layer.PersonalPin.getLayers().length === 0)
+		if (this.numPins === 0)
 		{
-			I.write("No personal pins to work with. Double click on the map to lay pins.");
+			if (pWantMessage)
+			{
+				I.write("No personal pins to work with. Double click on the map to lay pins.");
+			}
 			return false;
 		}
 		return true;
@@ -18469,9 +18607,9 @@ P = {
 	 */
 	initializeMapSearch: function()
 	{
-		I.preventMapPropagation("#mapSearch");
 		$("#mapCompassButton").one("mouseenter", function()
 		{
+			I.preventMapPropagation("#mapSearch");
 			Q.bindItemSearch("#mapSearch", {
 				aDatabase: P.LocationsDatabase,
 				aResultsClass: "mapSearchResults",
@@ -19887,10 +20025,15 @@ G = {
 				}
 			});
 			
-			// Bind button to generate a route from the currently visible and unchecked permanent nodes
+			// Bind button to draw a route from the currently visible and unchecked permanent nodes
 			$("#nodRoute").click(function()
 			{
-				M.clearPersonalPins();
+				// Clears any pins on the map if already laid, otherwise draw the route
+				if (M.isPersonalPinsLaid())
+				{
+					M.clearPersonalPins();
+					return;
+				}
 				var i = 0;
 				var coords = [];
 				var coord;
@@ -21226,7 +21369,10 @@ W = {
 		 * top left corner of the map to past the map's bottom right corner,
 		 * such that it seamlessly snaps with the map's south and east edges.
 		 */
-		L.imageOverlay("img/background/mists.png", this.convertGCtoLCMulti([[0, 0], [18416, 18416]])).addTo(this.Map);
+		if (W.BorderlandsCurrent === W.BorderlandsEnum.Alpine)
+		{
+			L.imageOverlay("img/background/mists.png", this.convertGCtoLCMulti([[0, 0], [18416, 18416]])).addTo(this.Map);
+		}
 		// Finally
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL
@@ -23645,11 +23791,17 @@ T = {
 	 * For use in circular arrays.
 	 * @param int pInteger to readjust within limit.
 	 * @param int pMax limit of the quantity.
+	 * @param boolean pIsInclusive whether Integer 24 with Limit 24 returns 24 or 0, optional.
 	 * @returns int natural number rolled over.
 	 */
-	wrapInteger: function(pInteger, pMax)
+	wrapInteger: function(pInteger, pMax, pIsInclusive)
 	{
 		var i = pInteger;
+		// Inclusive case
+		if (pIsInclusive && (pInteger / pMax === 0))
+		{
+			return pInteger;
+		}
 		// Rollover
 		i = i % pMax;
 		
@@ -25205,17 +25357,11 @@ H = {
 		// Update the countdowns next to the segment names
 		$(".tmlSegment").each(function()
 		{
+			// Show the time until event start
 			var countdown = $(this).find(".tmlSegmentCountdown");
-			if ($(this).hasClass("tmlSegmentActive"))
-			{
-				// If active then show time remaining
-				countdown.html(I.Symbol.ArrowUp + T.formatMinutes($(this).data("finish") - currentminute));
-			}
-			else
-			{
-				// If inactive then show time until
-				countdown.html(I.Symbol.ArrowDown + T.formatMinutes(T.wrapInteger(($(this).data("start") - currentminute), T.cMINUTES_IN_2_HOURS)));
-			}
+			var symbol = ($(this).hasClass("tmlSegmentActive")) ? I.Symbol.Horizontal : I.Symbol.ArrowDown;
+			var minutesremaining = T.wrapInteger(($(this).data("start") - currentminute), T.cMINUTES_IN_2_HOURS, true);
+			countdown.html(symbol + T.formatMinutes(minutesremaining));
 		});
 	},
 	
@@ -26654,6 +26800,10 @@ I = {
 		Filler: "&zwnj;", // Place this inside empty elements to give them dimension
 		ArrowUp: "⇑",
 		ArrowDown: "⇓",
+		ArrowClockwise: "↻",
+		ArrowCounterwise: "↺",
+		Horizontal: "⇄",
+		Vertical: "⇅",
 		TriUp: "▲",
 		TriDown: "▼",
 		TriRight: "►",
@@ -26779,6 +26929,7 @@ I = {
 			Ascended: "Ascended",
 			Inventory: "Inventory",
 			Catalog: "Catalog",
+			Cleanup: "Cleanup",
 			Recipes: "Recipes",
 			Crafting: "Crafting",
 			Trading: "Trading",
