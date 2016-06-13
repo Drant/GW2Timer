@@ -34,6 +34,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "inventář", it: "inventario", pl: "inwentarz", pt: "inventário", ru: "инвента́рь", zh: "庫存"},
 	s_cleanup: {de: "aufräumen", es: "limpia", fr: "nettoyer",
 		cs: "úklid", it: "ripulire", pl: "oczyszczenie", pt: "limpeza", ru: "уборка", zh: "淨化"},
+	s_ascended: {de: "aufgestiegen", es: "ascendido", fr: "élevé",
+		cs: "vystoupal", it: "asceso", pl: "wstąpił", pt: "ascendeu", ru: "вознесся", zh: "登高"},
 	s_recipes: {de: "rezepte", es: "recetas", fr: "recettes",
 		cs: "recepty", it: "ricette", pl: "recepty", pt: "receitas", ru: "рецепты", zh: "食譜"},
 	s_crafting: {de: "handwerkskunst", es: "artesanía", fr: "artisanat",
@@ -171,7 +173,6 @@ var GW2T_MATERIALS_CATEGORIES = [{
  */
 var GW2T_ACCOUNT_METADATA = {
 	Bank: {
-		StackMax: 250,
 		NumSlotsHorizontal: 10,
 		NumSlotsVertical: 3,
 		NumSlotsPerTab: 30,

@@ -2613,11 +2613,15 @@ U = {
 	},
 	getDataScriptURL: function(pName)
 	{
-		return "data/" + pName + ".js";
+		return "data/" + pName.toLowerCase() + ".js";
 	},
 	getRecordData: function(pName)
 	{
 		return window["GW2T_" + pName.toUpperCase() + "_DATA"];
+	},
+	getRecordBlacklist: function(pName)
+	{
+		return window["GW2T_" + pName.toUpperCase() + "_BLACKLIST"];
 	},
 	getRecordHeader: function(pName)
 	{
@@ -4372,11 +4376,13 @@ Z = {
 				var length = cache.length;
 				var brk = (wantfile) ? "\r\n" : "<br />";
 				var quo = (wantfile) ? "\"" : "&quot;";
+				var icon;
 				output += ((pRequest === 0) ? "{" : "[") + brk;
 				for (var i = 0; i < length; i++)
 				{
 					obj = cache[i];
-					output += ((pRequest === 0) ? (quo + obj.id + quo + ": ") : "")
+					icon = (obj.icon && !wantfile) ? "<img src='" + obj.icon + "' />" : "";
+					output += icon + ((pRequest === 0) ? (quo + obj.id + quo + ": ") : "")
 						+ U.lineJSON(obj, wantquotes)
 					+ ((i === length - 1) ? "" : ",") + brk;
 				}
@@ -4855,35 +4861,56 @@ Z = {
 	},
 	
 	/*
-	 * Reads the item database for container items or "useless" items.
+	 * Reads the item database for container items and "useless" items.
 	 */
 	collateCleanup: function()
 	{
+		var section = "Cleanup";
 		var record = {
+			Salvage: [],
+			Rare: [],
 			Container: [],
 			ContainerGear: [],
 			ContainerAscended: [],
+			Food: [],
+			Consumable: [],
+			Skin: [],
 			Recipe: [],
+			Decoration: [],
+			Combine: [],
 			Collection: [],
 			Junk: []
 		};
-		var blacklist = {"20323":1, "70229":1};
 		
 		// Returns the category name of an item, if fitting
 		var categorizeItem = function(pItem)
 		{
 			var name = pItem.name.toLowerCase();
 			var desc = (pItem.description) ? pItem.description.toLowerCase() : "";
-			if (pItem.description)
+			if (desc.indexOf("decoration") !== -1)
 			{
-				if (desc.indexOf("value as part of a collection") !== -1)
+				if (pItem.type === "Gizmo" || pItem.type === "Consumable" || pItem.type === "Trophy")
 				{
-					return "Collection";
+					return "Decoration";
 				}
+			}
+			if (desc.indexOf("value as part of a collection") !== -1)
+			{
+				return "Collection";
 			}
 			if (name.indexOf("recipe") !== -1)
 			{
 				return "Recipe";
+			}
+			if (pItem.rarity === "Rare" && pItem.level && pItem.level > Q.ItemLimit.EctoSalvageLevel)
+			{
+				if (pItem.type === "Weapon" || pItem.type === "Armor" || pItem.type === "Trinket" || pItem.type === "Back")
+				{
+					if (pItem.flags.indexOf("NoSalvage") === -1)
+					{
+						return "Rare";
+					}
+				}
 			}
 			if (pItem.type === "Container")
 			{
@@ -4891,39 +4918,99 @@ Z = {
 				{
 					return "ContainerAscended";
 				}
-				if (name.indexOf("weapon") !== -1 || name.indexOf("armor") !== -1 || name.indexOf("gear") !== -1 || name.indexOf("skin") !== -1
-					|| desc.indexOf("weapon") !== -1 || desc.indexOf("armor") !== -1 || desc.indexOf("gear") !== -1 || desc.indexOf("skin") !== -1)
+				if (name.indexOf("weapon") !== -1 || name.indexOf("armor") !== -1 || name.indexOf("skin") !== -1)
 				{
 					return "ContainerGear";
 				}
+				if (pItem.rarity === "Rare" || pItem.rarity === "Exotic")
+				{
+					if (name.indexOf("gear") !== -1 
+						|| desc.indexOf("weapon") !== -1 || desc.indexOf("armor") !== -1 || desc.indexOf("gear") !== -1 || desc.indexOf("skin") !== -1)
+					{
+						return "ContainerGear";
+					}
+				}
 				return "Container";
 			}
-			if (pItem.rarity === "Junk")
+			if (pItem.type === "Trophy")
 			{
-				return "Junk";
+				if (desc.indexOf("salvage item") !== -1)
+				{
+					return "Salvage";
+				}
+				if (pItem.rarity === "Junk")
+				{
+					return "Junk";
+				}
+				if (desc.indexOf("event item") !== -1 || (pItem.vendor_value > 0 && pItem.flags.indexOf("NoSell") === -1))
+				{
+					if (pItem.rarity !== "Legendary")
+					{
+						return "Collection";
+					}
+				}
+			}
+			if (pItem.type === "Gizmo")
+			{
+				if (desc.indexOf("combine") !== -1 && desc.indexOf("tier") === -1)
+				{
+					return "Combine";
+				}
+			}
+			if (pItem.type === "Consumable")
+			{
+				if (pItem.details.type === "Food" || pItem.details.type === "Utility")
+				{
+					return "Food";
+				}
+				if (pItem.details.type === "Transmutation")
+				{
+					return "Skin";
+				}
+				return "Consumable";
 			}
 			return null;
 		};
 		
-		Z.getItemsDatabase(function(pDatabase)
+		$.getScript(U.getDataScriptURL(section), function()
 		{
-			var item, catname;
-			for (var i in pDatabase)
+			$.getScript(U.getDataScriptURL("Catalog"), function()
 			{
-				item = pDatabase[i];
-				// Exclude blacklisted
-				if (blacklist[item.id])
+				// Use the main catalog as the blacklist
+				var blacklist = {};
+				var catarr, itemid;
+				var catalog = U.getRecordData("Catalog");
+				for (var i in catalog)
 				{
-					continue;
+					catarr = catalog[i];
+					for (var ii = 0; ii < catarr.length; ii++)
+					{
+						itemid = catarr[ii].i;
+						blacklist[itemid] = true;
+					}
 				}
-				catname = categorizeItem(item);
-				// Add the item if matched
-				if (catname)
+				
+				Z.getItemsDatabase(function(pDatabase)
 				{
-					record[catname].push(item.id);
-				}
-			}
-			Z.printUnlockables(record, true);
+					var item, catname;
+					for (var i in pDatabase)
+					{
+						item = pDatabase[i];
+						// Exclude blacklisted
+						if (blacklist[item.id])
+						{
+							continue;
+						}
+						catname = categorizeItem(item);
+						// Add the item if matched
+						if (catname)
+						{
+							record[catname].push(item.id);
+						}
+					}
+					Z.printUnlockables(record, true);
+				});
+			});
 		});
 	},
 	
@@ -7401,7 +7488,11 @@ V = {
 	 */
 	serveCleanup: function()
 	{
-		B.generateCatalog("cleanup", {aWantGem: false, aWantUnlockeds: true});
+		B.generateCatalog("Cleanup", {
+			aIsLookup: true,
+			aWantGem: false,
+			aWantDefaultHelp: false
+		});
 	},
 	
 	/*
@@ -7409,7 +7500,10 @@ V = {
 	 */
 	serveAscended: function()
 	{
-		B.generateCatalog("ascended", {aWantGem: false});
+		B.generateCatalog("Ascended", {
+			aWantGem: false,
+			aWantDefaultHelp: false
+		});
 	},
 	
 	/*
@@ -7432,22 +7526,24 @@ V = {
 		{
 			return;
 		}
-		var bank = B.createBank(dish).find(".bnkBank");
+		var container = B.createBank(dish);
+		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var slotdata;
 		var tab, slotscontainer, slot;
 		var char, bagdata;
 		
-		
 		// Generate a first tab for the shared inventory slots
-		var sharedtab = B.createBankTab(bank, {aTitle: D.getPhraseOriginal("Shared Inventory")});
 		$.getJSON(A.getURL(A.URL.Shared), function(pData)
 		{
+			bank.empty();
+			var sharedtab = B.createBankTab(bank, {aTitle: D.getPhraseOriginal("Shared Inventory")});
 			for (var i = 0; i < pData.length; i++)
 			{
 				slot = B.createBankSlot(sharedtab.find(".bnkTabSlots"), "bnkSlotShared");
 				slotdata = pData[i];
 				if (slotdata)
 				{
+					slot.data("count", slotdata.count);
 					(function(iSlot, iSlotData)
 					{
 						Q.getItem(iSlotData.id, function(iItem)
@@ -7457,71 +7553,73 @@ V = {
 					})(slot, slotdata);
 				}
 			}
-		});
-		
-		// Count the number of inventory items to fetch
-		var numtofetch = 0;
-		var numfetched = 0;
-		for (var i = 0; i < A.Data.Characters.length; i++)
-		{
-			char = A.Data.Characters[i];
-			for (var ii = 0; ii < char.bags.length; ii++)
+			
+			// Count the number of inventory items to fetch
+			var numtofetch = 0;
+			var numfetched = 0;
+			for (var i = 0; i < A.Data.Characters.length; i++)
 			{
-				bagdata = char.bags[ii];
-				if (bagdata)
+				char = A.Data.Characters[i];
+				for (var ii = 0; ii < char.bags.length; ii++)
 				{
-					for (var iii = 0; iii < bagdata.inventory.length; iii++)
+					bagdata = char.bags[ii];
+					if (bagdata)
 					{
-						if (bagdata.inventory[iii])
+						for (var iii = 0; iii < bagdata.inventory.length; iii++)
 						{
-							numtofetch++;
-						}
-					}
-				}
-			}
-		}
-		
-		// Generate the tabs and slots for each character
-		for (var i = 0; i < A.Data.Characters.length; i++)
-		{
-			char = A.Data.Characters[i];
-			// Bank tab separator for each character
-			tab = B.createBankTab(bank, {aTitle: char.oCharName});
-			B.createInventorySidebar(tab, char.bags);
-			slotscontainer = tab.find(".bnkTabSlots");
-			for (var ii = 0; ii < char.bags.length; ii++)
-			{
-				bagdata = char.bags[ii];
-				if (bagdata)
-				{
-					for (var iii = 0; iii < bagdata.inventory.length; iii++)
-					{
-						slot = B.createBankSlot(slotscontainer);
-						slotdata = bagdata.inventory[iii];
-						if (slotdata)
-						{
-							(function(iSlot, iSlotData)
+							if (bagdata.inventory[iii])
 							{
-								Q.getItem(iSlotData.id, function(iItem)
-								{
-									B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
-									{
-										numfetched++;
-										A.setProgressBar(numfetched, numtofetch);
-									}});
-								});
-							})(slot, slotdata);
-						}
-						else
-						{
-							// For empty inventory slots
-							B.styleBankSlot(slot);
+								numtofetch++;
+							}
 						}
 					}
 				}
 			}
-		}
-		B.createBankMenu(bank);
+
+			// Generate the tabs and slots for each character
+			for (var i = 0; i < A.Data.Characters.length; i++)
+			{
+				char = A.Data.Characters[i];
+				// Bank tab separator for each character
+				tab = B.createBankTab(bank, {aTitle: char.oCharName});
+				B.createInventorySidebar(tab, char.bags);
+				slotscontainer = tab.find(".bnkTabSlots");
+				for (var ii = 0; ii < char.bags.length; ii++)
+				{
+					bagdata = char.bags[ii];
+					if (bagdata)
+					{
+						for (var iii = 0; iii < bagdata.inventory.length; iii++)
+						{
+							slot = B.createBankSlot(slotscontainer);
+							slotdata = bagdata.inventory[iii];
+							if (slotdata)
+							{
+								slot.data("count", slotdata.count);
+								(function(iSlot, iSlotData)
+								{
+									Q.getItem(iSlotData.id, function(iItem)
+									{
+										B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+										{
+											numfetched++;
+											A.setProgressBar(numfetched, numtofetch);
+										}});
+									});
+								})(slot, slotdata);
+							}
+							else
+							{
+								// For empty inventory slots
+								B.styleBankSlot(slot);
+							}
+						}
+					}
+				}
+			}
+			B.tallyBank(container);
+			B.createBankMenu(bank);
+		});
 	},
 	
 	/*
@@ -7530,8 +7628,7 @@ V = {
 	serveCatalog: function()
 	{
 		B.generateCatalog("catalog", {
-			aIsCustomCatalog: true,
-			aHelpMessage: $("#accCatalogHelp").html()
+			aIsCustomCatalog: true
 		});
 	},
 	
@@ -7658,7 +7755,7 @@ V = {
 				aRecord: record,
 				aUnlockeds: unlockeds,
 				aIsCollapsed: true,
-				aHelpMessage: $("#accRecipesHelp").html(),
+				aHelpMessage: $("#accHelpRecipes").html(),
 				aTabIterator: function(pCatName)
 				{
 					var discipline = pCatName.split("_")[0];
@@ -7714,6 +7811,7 @@ V = {
 		{
 			// First generate empty bank slots, then fill them up asynchronously by item details retrieval
 			bank.empty();
+			var numitems = 0;
 			var numtofetch = 0;
 			var numfetched = 0;
 			// Count the number of items in the bank first, because empty slots are written as "null" in the API
@@ -7739,6 +7837,8 @@ V = {
 				// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
 				if (slotdata)
 				{
+					slot.data("count", slotdata.count);
+					numitems += slotdata.count;
 					(function(iSlot, iSlotData)
 					{
 						Q.getItem(iSlotData.id, function(iItem)
@@ -7757,6 +7857,8 @@ V = {
 					B.styleBankSlot(slot);
 				}
 			}
+			// Update tallies
+			B.tallyBank(container);
 			// Ornamental bank tab separator at the bottom
 			bank.append("<div class='bnkTabSeparator'><var class='bnkTabLocked'>" + I.Symbol.Filler + "</var></div>");
 			// Create search bar
@@ -7902,7 +8004,7 @@ V = {
 				aRecord: record,
 				aUnlockeds: pUnlockeds,
 				aIsCollapsed: true,
-				aHelpMessage: $("#accWardrobeHelp").html(),
+				aHelpMessage: $("#accHelpWardrobe").html(),
 				aTabIterator: function(pCatName)
 				{
 					var catname = D.getObjectName(headers[pCatName]);
@@ -7991,7 +8093,7 @@ V = {
 					aHeaders: GW2T_DYES_HEADERS,
 					aRecord: GW2T_DYES_DATA,
 					aUnlockeds: pData,
-					aHelpMessage: $("#accDyesHelp").html(),
+					aHelpMessage: $("#accHelpDyes").html(),
 					aWantSearchHighlight: false,
 					aIsDyes: true
 				});
@@ -8023,7 +8125,7 @@ B = {
 		
 		var container = $("<div class='bnkContainer'>"
 			+ "<div class='bnkTop'>"
-				+ "<aside class='bnkCount'></aside>"
+				+ "<aside class='bnkBankTally'></aside>"
 				+ "<aside class='bnkPrice'>"
 					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Coin'></var>"
 					+ " &nbsp; "
@@ -8091,7 +8193,7 @@ B = {
 				+ "<var class='bnkTabPrice bnkTabPrice_Coin'></var>"
 				+ "<var class='bnkTabPrice bnkTabPrice_Gem'></var>"
 				+ "<var class='bnkTabToggle'></var>"
-				+ "<var class='bnkTabStats'></var>"
+				+ "<var class='bnkTabTally'></var>"
 			+ "</aside>"
 		+ "</div>").appendTo(tab);
 		var tabtoggle = tabseparator.find(".bnkTabToggle");
@@ -8124,6 +8226,67 @@ B = {
 			pBank.append(tab);
 		}
 		return tab;
+	},
+	
+	/*
+	 * Gets the tally numbers on the tab header of how many slots are filled.
+	 * @param int pFilled number of filled slots
+	 * @param int pCapacity number of slots the tab has.
+	 * @param int pCount number of items summed from all slots, optional.
+	 */
+	getTallyString: function(pFilled, pCapacity, pCount)
+	{
+		var acquiredstr = (pCount) ? (" " + pCount + "×") : "";
+		var ratio = pFilled / pCapacity;
+		var ratioclass = (ratio === 1) ? "accSignificant" : "accTrivial";
+		return pFilled + " / " + pCapacity
+			+ "<span class='" + ratioclass + "'> (" + U.convertRatioToPercent(ratio) + ")" + acquiredstr + "</span>";
+	},
+	updateTabTally: function(pElement, pFilled, pCapacity, pCount)
+	{
+		pElement.find(".bnkTabTally").html(B.getTallyString(pFilled, pCapacity, pCount));
+	},
+	updateBankTally: function(pElement, pFilled, pCapacity, pCount)
+	{
+		pElement.find(".bnkBankTally").html(B.getTallyString(pFilled, pCapacity, pCount));
+	},
+	
+	/*
+	 * Updates the tally of every tabs in a bank, and of the bank itself.
+	 * Not to be used with unlockables because those banks may have on demand tab generation.
+	 * @param jqobject pContainer of the bank.
+	 */
+	tallyBank: function(pContainer)
+	{
+		var itemsinbank = 0;
+		var bankfill = 0;
+		var bankcapacity = 0;
+		pContainer.find(".bnkTabSlots").each(function()
+		{
+			var itemsintab = 0;
+			var tabfill = 0;
+			var tabcapacity = 0;
+			var slots = $(this).find(".bnkSlot");
+			slots.each(function()
+			{
+				var count = $(this).data("count");
+				if (count)
+				{
+					// Sum slot
+					itemsintab += count;
+					itemsinbank += count;
+					tabfill++;
+				}
+			});
+			// Tally tab
+			tabcapacity = slots.length;
+			B.updateTabTally($(this).parent(), tabfill, tabcapacity, itemsintab);
+			// Sum tab
+			bankfill += tabfill;
+			bankcapacity += tabcapacity;
+		});
+		// Tally bank
+		B.updateBankTally(pContainer, bankfill, bankcapacity, itemsinbank);
 	},
 	
 	/*
@@ -8605,7 +8768,7 @@ B = {
 			{
 				slots.each(function()
 				{
-					if ($(this).data("count") >= A.Metadata.Bank.StackMax)
+					if ($(this).data("count") >= Q.ItemLimit.StackSize)
 					{
 						$(this).show();
 					}
@@ -8993,8 +9156,9 @@ B = {
 	 * @objparam object aRecord containing categorized unlockable entries.
 	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API.
 	 * @objparam boolean aIsCatalog whether to use the user's possessions rather than unlockeds.
-	 * @objparam boolean aWantUnlockeds whether to generate unlocked slots only.
+	 * @objparam boolean aIsLookup whether to generate unlocked slots only.
 	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
+	 * @objparam boolean aWantDefaultHelp whether to append the unlockables help message, optional.
 	 * @objparam string aHelpMessage HTML of help message element, optional.
 	 * @objparam function aTabIterator to create a tab and execute at every category's iteration.
 	 * @objparam string aIsCustomCatalog whether it is the default catalog with custom tabs.
@@ -9039,10 +9203,10 @@ B = {
 			headers = customdb.oHeaders;
 			record = customdb.oRecord;
 		}
-		else if (Settings.aWantUnlockeds)
+		else if (Settings.aIsLookup)
 		{
 			/*
-			 * Records called with this variable will be in the form of an array
+			 * Records called with this boolean will be in the form of an array
 			 * of item IDs rather array of objects. Reformat the record so that
 			 * it only contains items that is already unlocked (no locked slots
 			 * will be generated).
@@ -9051,9 +9215,6 @@ B = {
 			for (var i in Settings.aRecord)
 			{
 				record[i] = [];
-			}
-			for (var i in Settings.aRecord)
-			{
 				catarr = Settings.aRecord[i];
 				for (var ii = 0; ii < catarr.length; ii++)
 				{
@@ -9121,7 +9282,7 @@ B = {
 			var numacquired = 0;
 			for (var ii = 0; ii < catarr.length; ii++)
 			{
-				unlockid = (Settings.aIsCatalog) ? catarr[ii].i : catarr[ii].u;
+				unlockid = ((Settings.aIsCatalog) ? catarr[ii].i : catarr[ii].u) || catarr[ii];
 				if (unlocksassoc[unlockid])
 				{
 					numunlocked++;
@@ -9134,25 +9295,18 @@ B = {
 			}
 			var numintab = catarr.length;
 			numintabstotal += numintab;
-			var acquiredstr = (numacquired) ? (" " + numacquired + "×") : "";
-			var unlockratio = numunlocked / numintab;
-			var unlockratioclass = (unlockratio === 1) ? "accSignificant" : "accTrivial";
-			var unlockstr = numunlocked + " / " + numintab
-				+ "<span class='" + unlockratioclass + "'> (" + U.convertRatioToPercent(unlockratio) + ")" + acquiredstr + "</span>";
-			tab.find(".bnkTabStats").html(unlockstr);
+			B.updateTabTally(tab, numunlocked, numintab, numacquired);
 			if (numacquired)
 			{
 				numacquiredtotal += numacquired;
 			}
 		}
-		var acquiredtotalstr = (numacquiredtotal) ? (" " + numacquiredtotal + "×") : "";
-		var unlocktotalstr = numsunlockedtotal + " / " + numintabstotal
-				+ "<span class='accTrivial'> (" + U.convertRatioToPercent(numsunlockedtotal / numintabstotal) + ")" + acquiredtotalstr + "</span>";
-		container.find(".bnkCount").append(unlocktotalstr);
+		B.updateBankTally(container, numsunlockedtotal, numintabstotal, numacquiredtotal);
 		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
+		var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accUnlockablesHelp").html();
 		B.createBankMenu(pBank, {
 			aWantSearchHighlight: wantsearchhighlight,
-			aHelpMessage: (Settings.aHelpMessage || "") + $("#accCollectionHelp").html(),
+			aHelpMessage: (Settings.aHelpMessage || "") + helpstr,
 			aIsCustomCatalog: Settings.aIsCustomCatalog
 		});
 	},
@@ -9187,6 +9341,13 @@ B = {
 		if (A.reinitializeDish(dish) === false)
 		{
 			return;
+		}
+		
+		// Include help message if available
+		var helpmessage = $("#accHelp" + sectionnameupper);
+		if (helpmessage.length)
+		{
+			Settings.aHelpMessage = helpmessage.html();
 		}
 		
 		var container = B.createBank(dish, {aIsCollection: true, aWantGem: Settings.aWantGem});
@@ -9666,6 +9827,11 @@ Q = {
 		Masterwork: 2,
 		Rare: 4,
 		Exotic: 6
+	},
+	ItemLimit:
+	{
+		StackSize: 250,
+		EctoSalvageLevel: 68
 	},
 	cSEARCH_LIMIT: 200, // Inventory search throttle limit
 	Context: // Bank slots context menu data
@@ -10287,12 +10453,6 @@ Q = {
 					|| subtype === "ShortBow" || subtype === "Rifle" || subtype === "Staff"
 					|| subtype === "Harpoon" || subtype === "Speargun" || subtype === "Trident");
 			}
-		}
-		
-		// Correct API bug with gathering tool icons
-		if (type === "Gathering" && item.rarity !== Q.RarityEnum.Rare)
-		{
-			item.icon = "img/account/item/gathering_" + det.type.toLowerCase() + I.cPNG;
 		}
 		
 		// NAME

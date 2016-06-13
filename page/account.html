@@ -44,6 +44,7 @@
 						<li>I want to find keys and items across my account: <a href="./?page=Catalog"><img src="img/account/menu/catalog.png" />Catalog</a></li>
 						<li>I want to check my bank: <a href="./?page=Bank"><img src="img/account/menu/bank.png" />Bank</a></li>
 						<li>I want to check my characters' inventory: <a href="./?page=Inventory"><img src="img/account/menu/inventory.png" />Inventory</a></li>
+						<li>I want to clean my inventory: <a href="./?page=Cleanup"><img src="img/account/menu/cleanup.png" />Cleanup</a></li>
 						<li>I want to search the materials storage: <a href="./?page=Materials"><img src="img/account/menu/materials.png" />Materials</a></li>
 						<li>I want to scan for ascended gear and unopened chests: <a href="./?page=Ascended"><img src="img/account/menu/ascended.png" />Ascended</a></li>
 					</ul>
@@ -84,7 +85,7 @@
 	<article data-section="Equipment"></article>
 	<article data-section="Inventory"></article>
 	<article data-section="Catalog" data-islead="true"></article>
-	<!--<article data-section="Cleanup"></article>-->
+	<article data-section="Cleanup"></article>
 	<article data-section="Ascended"></article>
 	<article data-section="Recipes" data-islead="true"></article>
 	<!--<article data-section="Crafting"></article>-->
@@ -138,7 +139,7 @@
 	920.. = 920<goldcoin></goldcoin>
 	</div>
 </div>
-<div id="accCollectionHelp">
+<div id="accUnlockablesHelp">
 	<h2>Unlockables Collection Usage</h2>
 	<p>Unlockables are items that unlocks skins, minis, dyes, or other cosmetics to your account that you can reuse forever.</p>
 	<p>Click on an item icon to view the unlock's wiki page, or right click for more links; the Wiki Item link will view the best item to obtain that unlock. The coin price shown is the current Trading Post sell listing, which may be cheaper if you use buy orders instead.</p>
@@ -158,27 +159,46 @@
 		<li><ins class="s16 s16_starting"></ins> Endowed by <a href="http://wiki.guildwars2.com/wiki/Starting_equipment">character</a> creation or development.</li>
 	</ul>
 </div>
-<div id="accWardrobeHelp">
+<div id="accHelpWardrobe">
 	<h2>Wardrobe Usage</h2>
 	<p>For fast page load, item icons and data are not downloaded and calculated until you have opened a tab to view that category of skins. Each icon shown is actually the item that unlocks that skin. Multiple items can have the same skin, so representative items were chosen based on these criteria: the item is most abundant and relatively cheap on the Trading Post, it should not be bindable so you can resell it after unlocking it, and for bound items it should be the most basic tier as to be cheaper from karma or cultural vendors.</p>
 	<h2>Wardrobe Free-to-Apply Skins</h2>
 	<p>If you have WvW Badges of Honor, spend them at the <a href="http://wiki.guildwars2.com/wiki/Weapon_Master_(NPC)">Weapon Master</a> and <a href="http://wiki.guildwars2.com/wiki/Armor_Master">Armor Master</a> in your borderlands Citadel. The consumable skins offered can be applied without using a Transmutation Charge.</p>
 </div>
-<div id="accDyesHelp">
+<div id="accHelpDyes">
 	<h2>Dyes Palette Usage</h2>
 	<p>Some dyes look better on different armor weights than others. Dyes are categorized into &quot;Vibrant&quot; (best for Light armor), &quot;Leather&quot; (Medium), and &quot;Metallic&quot; (Heavy). Use the search bar to filter in these dyes. You may also search by hue by typing a primary color: Gray, Brown, Red, Orange, Yellow, Green, Blue, or Purple.</p>
 	<p>Prices over the color squares (swatches) are sell listings, and are faded if you have unlocked that dye.</p>
 </div>
-	<div id="accRecipesHelp">
-	<h2>Recipes Gallery Usage</h2>
-	<p>The bank tabs contain craftable items for every discipline. A filled slot is the item associated with the recipe that you have learned on any character (although if you unlocked Light of Dwayna recipe on Tailor, it will show for Leatherworker and Armorsmith too because of the ArenaNet's API limitation). To find which of your characters know a recipe, use the bank search bar to search for the item produced from that recipe.</p>
-</div>
-<div id="accCatalogHelp">
+<div id="accHelpCatalog">
 	<h2>Catalog Usage</h2>
 	<p>The Catalog is a virtual bank of the most commonly looted or used items in the game. The filled slots are items you have in your characters' inventory, bank, or materials storage; a slot's tooltip will show you where.</p>
 	<h2>Custom Catalog</h2>
 	<p>You may create, name, fill, and rearrange your own virtual bank tabs. Click the + icon to create a new tab, click the cog icon for the tab editor, and search an item's name and add it to the tab. Click on an item slot you added to move or delete it.</p>
-	<p></p>
+</div>
+<div id="accHelpCleanup">
+	<h2>Cleanup Usage</h2>
+	<p>This catalog shows salvageable items, unopened bags, stackable items, and likely &quot;useless&quot; items. If you are not sure if an item still has value, click its icon to read its wiki page before deciding to vendor/destroy it.</p>
+	<ul>
+		<li><a href="http://wiki.guildwars2.com/wiki/Salvage">Salvage Items</a>: use basic salvage kit or sell on TP</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Glob_of_Ectoplasm">Ectoplasm Rares</a>: use master or mystic salvage kit or sell on TP</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Container">Bags</a>: open or sell on TP (if not bound)</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Equipment">Equipment Boxes</a>: choose an item you are ready to use</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Ascended_chest">Ascended Chests</a>: choose an item you are ready to use</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Food">Food</a>: distribute across your characters</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Consumable">Consumable</a>: hover over the slots to see item stack count</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Recipe_sheet">Recipes</a>: consume on your crafter character or sell on TP</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Decoration">Guild Decorations</a>: trade at the Guild Hall Decorator NPC</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Collection">Combine Items</a>: combine, keep until enough, or destroy</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Collection">Collection Items</a>: keep until you have completed the collection, or vendor/destroy if you intend to never finish it</li>
+		<li><a href="http://wiki.guildwars2.com/wiki/Junk">Junk</a>: click the &quot;Sell Junk&quot; button at a vendor</li>
+		
+	</ul>
+	<br />
+</div>
+<div id="accHelpRecipes">
+	<h2>Recipes Gallery Usage</h2>
+	<p>The bank tabs contain craftable items for every discipline. A filled slot is the item associated with the recipe that you have learned on any character (although if you unlocked Light of Dwayna recipe on Tailor, it will show for Leatherworker and Armorsmith too because of the ArenaNet's API limitation). To find which of your characters know a recipe, use the bank search bar to search for the item produced from that recipe.</p>
 </div>
 </div>
 

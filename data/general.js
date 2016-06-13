@@ -1203,11 +1203,11 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Recipes' title='gw2timer.com/recipes'>Account Recipes</a> browse and find all your characters' crafts. "
-		+ "<a href='http://i.imgur.com/NUYuuDi.png'>Screenshot</a>.",
+	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Cleanup' title='gw2timer.com/cleanup'>Account Cleanup</a> open bags and remove junk from inventories. "
+		+ "<a href='http://i.imgur.com/DjPo2SI.png'>Screenshot</a>.",
 	wvw: "",
-	Start: new Date("2016-06-07T16:00:00Z"),
-	Finish: new Date("2016-06-12T16:00:00Z"),
+	Start: new Date("2016-06-12T16:00:00Z"),
+	Finish: new Date("2016-06-19T16:00:00Z"),
 	Messages:
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "

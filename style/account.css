@@ -1563,7 +1563,7 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	margin-left: 8px;
 	margin-top: 4px;
 }
-.bnkTabStats {
+.bnkTabTally {
 	display: block;
 	position: absolute;
 	right: 32px;
