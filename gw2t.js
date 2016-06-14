@@ -4624,6 +4624,20 @@ Z = {
 	},
 	
 	/*
+	 * Prints an item's details in standard format.
+	 * @object pItem from API items.
+	 */
+	printItemInfo: function(pItem)
+	{
+		var iconstr = "<img src='" + pItem.icon + "' /> "
+			+ "<a" + U.convertExternalAnchor(U.getWikiItemDefault(pItem)) + "'>"
+				+ "<var class='" + Q.getRarityClass(pItem.rarity) + "'>" + pItem.name + "</var>"
+			+ "</a>";
+		I.print(iconstr);
+		I.prettyJSON(pItem);
+	},
+	
+	/*
 	 * Decomposes the items database into a lightweight array for searching by name.
 	 * Sample structure: [[69984,"bo"],[31283,"bow"],[70936,"keg"]...]
 	 * @pre Items database files are up to date.
@@ -5500,9 +5514,7 @@ A = {
 		Q.bindItemSearch("#accSearch", {
 			aCallback: function(pItem)
 			{
-				I.print("<img src='" + pItem.icon + "' /> <a"
-					+ U.convertExternalAnchor(U.getWikiItemDefault(pItem)) + ">" + pItem.name + "</a>");
-				I.prettyJSON(pItem);
+				Z.printItemInfo(pItem);
 			}}
 		);
 		
@@ -9357,30 +9369,27 @@ B = {
 			Settings.aHeaders = U.getRecordHeader(pSection);
 			Settings.aRecord = U.getRecordData(pSection);
 			B.generateUnlockables(bank, Settings);
-			if (Settings.aIsCustomCatalog)
-			{
-				/*
-				 * Piggyback on the bank search bar (created by the generate unlockables
-				 * function) and make it print the characters who have an item.
-				 */
-				var searchbar = $("#accDishMenu_" + sectionnameupper).find(".bnkSearch .bnkSearchInput").first();
-				Q.bindItemSearch(searchbar, {
-					aFillerText: null,
-					aCallback: function(pItem)
+			/*
+			 * Piggyback on the bank search bar (created by the generate unlockables
+			 * function) and make it print the characters who have an item.
+			 */
+			var searchbar = $("#accDishMenu_" + sectionnameupper).find(".bnkSearch .bnkSearchInput").first();
+			Q.bindItemSearch(searchbar, {
+				aFillerText: null,
+				aCallback: function(pItem)
+				{
+					var itemname = "&quot;<a" + U.convertExternalAnchor(U.getWikiLinkLanguage(pItem.name)) + ">" + pItem.name + "</a>&quot;";
+					if (A.Possessions[pItem.id])
 					{
-						var itemname = "&quot;<a" + U.convertExternalAnchor(U.getWikiLinkLanguage(pItem.name)) + ">" + pItem.name + "</a>&quot;";
-						if (A.Possessions[pItem.id])
-						{
-							var locations = A.formatPossessionLocations(A.Possessions[pItem.id].oLocations);
-							I.write(itemname + " was found in:<br /><br />" + locations);
-						}
-						else
-						{
-							I.write("Nowhere in your account has the item " + itemname);
-						}
+						var locations = A.formatPossessionLocations(A.Possessions[pItem.id].oLocations);
+						I.write(itemname + " was found in:<br /><br />" + locations);
 					}
-				});
-			}
+					else
+					{
+						I.write("Nowhere in your account has the item " + itemname);
+					}
+				}
+			});
 		};
 		
 		$.getScript(U.URL_DATA[sectionnameupper]).done(function()
@@ -11181,11 +11190,7 @@ Q = {
 		{
 			if (Q.Context.Item)
 			{
-				if (Q.Context.Item.icon)
-				{
-					I.print("<img src='" + U.escapeHTML(Q.Context.Item.icon) + "' />");
-				}
-				I.prettyJSON(Q.Context.Item);
+				Z.printItemInfo(Q.Context.Item);
 			}
 			else
 			{
@@ -12122,7 +12127,7 @@ E = {
 			icon.attr("src", pItem.icon);
 			icon.unbind("click").click(function()
 			{
-				I.prettyJSON(pItem);
+				Z.printItemInfo(pItem);
 			});
 			Q.scanItem(pItem, {aElement: icon, aCallback: function(pBox)
 			{
@@ -25475,7 +25480,7 @@ H = {
 				event.duration = T.parseChainTime(event.duration);
 				event.time = T.parseChainTime(event.time);
 				var width = (event.duration / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
-				line.append("<div class='tmlSegment' style='width:" + width + "%' data-start='" + event.time + "' data-finish='" + (event.time + event.duration)
+				line.append("<div class='tmlSegment tmlTimeslice' style='width:" + width + "%' data-start='" + event.time + "' data-finish='" + (event.time + event.duration)
 					+ "'><div class='tmlSegmentContent'>" + linename + "<span class='tmlSegmentName'>" + segmentprefix + D.getObjectName(event)
 					+ "</span><span class='tmlSegmentCountdown'></span></div></div>");
 			}
@@ -25506,21 +25511,23 @@ H = {
 	 */
 	updateTimelineIndicator: function()
 	{
+		var cycleminutes = T.cMINUTES_IN_2_HOURS;
 		if ( ! H.isTimelineGenerated)
 		{
 			return;
 		}
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
-		var offset = (currentminute / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
+		var offset = (currentminute / cycleminutes) * T.cPERCENT_100;
 		$("#tmlIndicator").css({left: offset + "%"});
 		$(".tmlLineName").css({left: offset + "%"});
 		// Update the countdowns next to the segment names
-		$(".tmlSegment").each(function()
+		$(".tmlTimeslice").each(function()
 		{
 			// Show the time until event start
 			var countdown = $(this).find(".tmlSegmentCountdown");
 			var symbol = ($(this).hasClass("tmlSegmentActive")) ? I.Symbol.Horizontal : I.Symbol.ArrowDown;
-			var minutesremaining = T.wrapInteger(($(this).data("start") - currentminute), T.cMINUTES_IN_2_HOURS, true);
+			var minutesremaining = $(this).data("start") - currentminute;
+			minutesremaining = (minutesremaining === 0) ? cycleminutes : T.wrapInteger(minutesremaining, cycleminutes);
 			countdown.html(symbol + T.formatMinutes(minutesremaining));
 		});
 	},
@@ -25535,7 +25542,7 @@ H = {
 			return;
 		}
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
-		$(".tmlSegment").each(function()
+		$(".tmlTimeslice").each(function()
 		{
 			if (currentminute >= $(this).data("start") && currentminute < $(this).data("finish"))
 			{

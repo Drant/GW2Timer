@@ -1237,15 +1237,15 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
-		name_en: "Final Wing of Raid",
-		name_de: "Letzten Schlachtzugsflügel",
-		name_es: "Última ala de la incursión",
-		name_fr: "Dernier aile du raid",
-		official: "news/prepare-to-enter-the-stronghold-of-the-faithful/",
-		Start: new Date("2016-06-14T17:00:00Z"),
-		Finish: new Date("2016-06-15T17:00:00Z")
-	}
+	/*{
+		name_en: "Summer 2016 Update",
+		name_de: "Update Sommer 2016",
+		name_es: "Actualización de verano 2016",
+		name_fr: "Mise à jour du été 2016",
+		url: "https://forum-en.guildwars2.com/forum/game/gw2/Summer-Quarterly-update",
+		Start: new Date("2016-07-12T16:00:00Z"),
+		Finish: new Date("2016-07-13T16:00:00Z")
+	}*/
 	/*{
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
@@ -1254,15 +1254,6 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4cbdjq/psa_extremely_lucrative_map_bonus_rewards_in/",
 		Start: new Date("2016-07-21T20:00:00Z"),
 		Finish: new Date("2016-07-28T20:00:00Z")
-	}*/
-	/*{
-		name_en: "Summer 2016 Update",
-		name_de: "Update Sommer 2016",
-		name_es: "Actualización de verano 2016",
-		name_fr: "Mise à jour du été 2016",
-		url: "",
-		Start: new Date("2016-07-12T16:00:00Z"),
-		Finish: new Date("2016-07-13T16:00:00Z")
 	}*/
 	]
 },
@@ -1294,8 +1285,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-06-07T15:00:00Z"),
-	Finish: new Date("2016-06-14T15:00:00Z"),
+	Start: new Date("2016-06-14T15:00:00Z"),
+	Finish: new Date("2016-06-21T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1304,16 +1295,23 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Floral Glider",
-		id: "78790",
-		price: 400,
+		name: "Heroes Dye Pack",
+		img: "http://i.imgur.com/uemIOod.png",
+		price: 500,
+		discount: [[1, 500], [3, 1300], [10, 3750]],
+		col: 0
+	},
+	{
+		name: "Phoenix Glider",
+		img: "http://i.imgur.com/AKEDmkB.png",
+		price: 500,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Aviator Sunglasses",
-		id: "64740",
-		price: 150,
+		name: "Floral Glider",
+		id: "78790",
+		price: 400,
 		discount: null,
 		col: 0
 	},
@@ -1371,62 +1369,20 @@ Sale: {
 		id: "67990",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Shadow Assassin Outfit",
 		id: "66658",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Mist Herald Back Item Skin Set",
 		id: "44886",
 		price: 500,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Lightning Kite",
-		id: "42967",
-		price: 400,
-		discount: 500,
-		col: 1
-	},
-	{
-		name: "Sun Kite",
-		id: "43487",
-		price: 400,
-		discount: 500,
-		col: 1
-	},
-	{
-		name: "Wind Kite",
-		id: "43076",
-		price: 400,
-		discount: 500,
-		col: 1
-	},
-	{
-		name: "Water Fight Balloon Bucket",
-		id: "66342",
-		price: 400,
-		discount: 500,
-		col: 1
-	},
-	{
-		name: "Elegant Fan Focus Skin",
-		id: "69664",
-		price: 480,
-		discount: 600,
-		col: 1
-	},
-	{
-		name: "Butterfly Wings Backpack",
-		id: "70095",
-		price: 400,
-		discount: 500,
 		col: 1
 	},
 	{
@@ -1476,13 +1432,6 @@ Sale: {
 		id: "69790",
 		price: 350,
 		discount: null,
-		col: 1
-	},
-	{
-		name: "Dragon's Fortune Fireworks",
-		id: "42876",
-		price: 200,
-		discount: [[1, 200], [5, 800]],
 		col: 1
 	}
 	]

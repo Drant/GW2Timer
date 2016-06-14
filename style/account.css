@@ -1449,10 +1449,11 @@ input[type="text"].bnkSearchInput:hover {
 	box-shadow: 0px 0px 32px #e4e0b3;
 }
 .bnkCatalogTabAdd {
-	background: url("../img/ui/new.png");
+	position: absolute; z-index: 1;
 	top: -16px;
 	left: auto;
 	right: -16px;
+	background: url("../img/ui/new.png");
 	opacity: 1;
 	box-shadow: 0px 0px 32px #0b0d0e;
 }
