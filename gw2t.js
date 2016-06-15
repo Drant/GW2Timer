@@ -11190,7 +11190,14 @@ Q = {
 		{
 			if (Q.Context.Item)
 			{
-				Z.printItemInfo(Q.Context.Item);
+				if (Q.Context.Item.name)
+				{
+					Z.printItemInfo(Q.Context.Item);
+				}
+				else
+				{
+					I.prettyJSON(Q.Context.Item);
+				}
 			}
 			else
 			{
@@ -13184,6 +13191,7 @@ D = {
 		
 		// Time
 		s_y: {de: "j", es: "a", fr: "a", cs: "r", it: "a", pl: "r", pt: "a", ru: "г", zh: "年"},
+		s_mo: {de: "mo", es: "me", fr: "mo", cs: "mě", it: "me", pl: "mi", pt: "mê", ru: "ме", zh: "月"},
 		s_w: {de: "w", es: "s", fr: "s", cs: "t", it: "s", pl: "t", pt: "s", ru: "н", zh: "週"},
 		s_d: {de: "t", es: "d", fr: "j", cs: "d", it: "g", pl: "d", pt: "d", ru: "д", zh: "日"},
 		s_h: {de: "h", es: "h", fr: "h", cs: "h", it: "o", pl: "g", pt: "h", ru: "ч", zh: "時"},
@@ -23442,6 +23450,7 @@ T = {
 	cSECONDS_IN_HOUR: 3600,
 	cSECONDS_IN_DAY: 86400,
 	cSECONDS_IN_WEEK: 604800,
+	cSECONDS_IN_MONTH: 2592000,
 	cSECONDS_IN_YEAR: 31536000,
 	cMINUTES_IN_HOUR: 60,
 	cMINUTES_IN_2_HOURS: 120,
@@ -23449,6 +23458,7 @@ T = {
 	cHOURS_IN_MERIDIEM: 12,
 	cHOURS_IN_DAY: 24,
 	cDAYS_IN_WEEK: 7,
+	cDAYS_IN_MONTH: 30,
 	cDAYS_IN_YEAR: 365,
 	cSECONDS_IN_TIMEFRAME: 900,
 	cMINUTES_IN_TIMEFRAME: 15,
@@ -24356,52 +24366,61 @@ T = {
 	},
 	
 	/*
-	 * Gets a "1w 6d 23h 59m 59s" string from seconds. Years is used instead of
-	 * weeks if the time is that long.
+	 * Gets a "1w 6d 23h 59m 59s" string from seconds.
+	 * Months instead of weeks if duration >= 30 days.
+	 * Years and days instead of lower denominations if duration >= 365 days.
 	 * @param int pSeconds of time.
 	 * @returns string formatted time.
 	 */
 	formatTimeLetter: function(pSeconds, pWantSeconds)
 	{
 		var seconds = pSeconds;
-		var week, day, hour, min, sec;
+		var year, month, week, day, hour, min, sec;
+		var yearstr = "";
+		var monthstr = "";
 		var weekstr = "";
 		var daystr = "";
 		var hourstr = "";
 		var minstr = "";
 		var secstr = "";
 		var signstr = "";
+		var daydivisor = T.cDAYS_IN_YEAR;
 		
+		// Sign string
 		if (seconds < 0)
 		{
 			seconds = seconds * -1;
 			signstr = "−";
 		}
+		// Year, month, and week string
 		if (seconds < T.cSECONDS_IN_YEAR)
 		{
-			if (seconds >= T.cSECONDS_IN_WEEK)
+			if (seconds >= T.cSECONDS_IN_MONTH)
 			{
-				week = ~~(seconds / T.cSECONDS_IN_WEEK);
-				weekstr = week + D.getWord("w") + " ";
+				month = ~~(seconds / T.cSECONDS_IN_MONTH);
+				monthstr = month + D.getWord("mo") + " ";
+				daydivisor = T.cDAYS_IN_MONTH;
 			}
-			if (seconds >= T.cSECONDS_IN_DAY)
+			else
 			{
-				day = ~~(seconds / T.cSECONDS_IN_DAY) % T.cDAYS_IN_WEEK;
-				daystr = day + D.getWord("d") + " ";
+				if (seconds >= T.cSECONDS_IN_WEEK)
+				{
+					week = ~~(seconds / T.cSECONDS_IN_WEEK);
+					weekstr = week + D.getWord("w") + " ";
+				}
+				daydivisor = T.cDAYS_IN_WEEK;;
 			}
 		}
 		else
 		{
-			if (seconds >= T.cSECONDS_IN_YEAR)
-			{
-				week = ~~(seconds / T.cSECONDS_IN_YEAR);
-				weekstr = week + D.getWord("y") + " ";
-			}
-			if (seconds >= T.cSECONDS_IN_DAY)
-			{
-				day = ~~(seconds / T.cSECONDS_IN_DAY) % T.cDAYS_IN_YEAR;
-				daystr = day + D.getWord("d") + " ";
-			}
+			year = ~~(seconds / T.cSECONDS_IN_YEAR);
+			yearstr = year + D.getWord("y") + " ";
+		}
+		// Day string
+		if (seconds >= T.cSECONDS_IN_DAY)
+		{
+			day = ~~(seconds / T.cSECONDS_IN_DAY) % daydivisor;
+			daystr = day + D.getWord("d") + " ";
 		}
 		// Include hms only if duration is less than a year
 		if (seconds < T.cSECONDS_IN_YEAR)
@@ -24423,7 +24442,7 @@ T = {
 			}
 		}
 		
-		return signstr + weekstr + daystr + hourstr + minstr + secstr;
+		return signstr + yearstr + monthstr + weekstr + daystr + hourstr + minstr + secstr;
 	},
 	formatMinutes: function(pMinutes)
 	{
