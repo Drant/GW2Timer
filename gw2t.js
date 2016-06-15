@@ -2518,6 +2518,7 @@ U = {
 		Account: "data/account.js",
 		WvW: "data/wvw.js",
 		Itinerary: "data/itinerary.js",
+		Materials: "data/materials.js",
 		Skins: "data/skins.js",
 		Minis: "data/minis.js",
 		Dyes: "data/dyes.js",
@@ -2555,7 +2556,8 @@ U = {
 	 */
 	getAPI: function(pAPI, pID)
 	{
-		return U.URL_API.Prefix + pAPI + "/" + pID + U.URL_API.LangKey;
+		var idstr = (pID === undefined) ? "" : "/" + pID;
+		return U.URL_API.Prefix + pAPI + idstr + U.URL_API.LangKey;
 	},
 	getAPIAchievement: function(pID)
 	{
@@ -2615,17 +2617,21 @@ U = {
 	{
 		return "data/" + pName.toLowerCase() + ".js";
 	},
-	getRecordData: function(pName)
+	getRecordHeader: function(pName)
 	{
-		return window["GW2T_" + pName.toUpperCase() + "_DATA"];
+		return window["GW2T_" + pName.toUpperCase() + "_HEADERS"];
+	},
+	getRecordMetadata: function(pName)
+	{
+		return window["GW2T_" + pName.toUpperCase() + "_METADATA"];
 	},
 	getRecordBlacklist: function(pName)
 	{
 		return window["GW2T_" + pName.toUpperCase() + "_BLACKLIST"];
 	},
-	getRecordHeader: function(pName)
+	getRecordData: function(pName)
 	{
-		return window["GW2T_" + pName.toUpperCase() + "_HEADERS"];
+		return window["GW2T_" + pName.toUpperCase() + "_DATA"];
 	},
 
 	/*
@@ -4148,7 +4154,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				Z.collateCleanup();
+				Z.collateMaterials();
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -4525,6 +4531,7 @@ Z = {
 	 * @param intarray pArray downloaded from API.
 	 * @param string pString suffix of API endpoint.
 	 * @objparam string aQueryStr arguments for the API url, optional.
+	 * @objparam function aCallback to execute after finishing scraping, optional.
 	 */
 	scrapeAPIArray: function(pArray, pString, pSettings)
 	{
@@ -4675,6 +4682,38 @@ Z = {
 				}
 				var dbstr = U.compressToJS(db, false);
 				Z.createFile(dbstr, "search_" + iLang + ".json");
+			});
+		});
+	},
+	
+	/*
+	 * Outputs the materials categories in the unlockables record format.
+	 */
+	collateMaterials: function()
+	{
+		var section = "Materials";
+		$.getScript(U.getDataScriptURL(section), function()
+		{
+			var record = {};
+			var headers = U.getRecordHeader(section);
+			var assoc = U.getRecordMetadata(section).CategoryAssoc;
+			var catname, catarr;
+			for (var i in headers)
+			{
+				record[i] = [];
+			}
+			$.getJSON(U.getAPIMaterial(), function(pMatCategoryIDs)
+			{
+				Z.scrapeAPIArray(pMatCategoryIDs, section.toLowerCase(), {aCallback: function(pMatCategories)
+				{
+					for (var i in pMatCategories)
+					{
+						catarr = pMatCategories[i];
+						catname = assoc[catarr.id];
+						record[catname] = catarr.items;
+					}
+					Z.printUnlockables(record, true);
+				}});
 			});
 		});
 	},
@@ -4880,21 +4919,7 @@ Z = {
 	collateCleanup: function()
 	{
 		var section = "Cleanup";
-		var record = {
-			Salvage: [],
-			Rare: [],
-			Container: [],
-			ContainerGear: [],
-			ContainerAscended: [],
-			Food: [],
-			Consumable: [],
-			Skin: [],
-			Recipe: [],
-			Decoration: [],
-			Combine: [],
-			Collection: [],
-			Junk: []
-		};
+		var record = {};
 		
 		// Returns the category name of an item, if fitting
 		var categorizeItem = function(pItem)
@@ -4988,6 +5013,12 @@ Z = {
 		
 		$.getScript(U.getDataScriptURL(section), function()
 		{
+			// Initialize the record's arrays
+			var headers = U.getRecordHeader(section);
+			for (var i in headers)
+			{
+				record[i] = [];
+			}
 			$.getScript(U.getDataScriptURL("Catalog"), function()
 			{
 				// Use the main catalog as the blacklist
@@ -7887,70 +7918,53 @@ V = {
 	 */
 	serveMaterials: function()
 	{
-		var dish = $("#accDish_Materials");
+		var section = "Materials";
+		var dish = $("#accDish_" + section);
 		if (A.reinitializeDish(dish) === false)
 		{
 			return;
 		}
-		var container = B.createBank(dish);
+		
+		var container = B.createBank(dish, {
+			aIsCollection: true,
+			aWantGem: false
+		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var tab, slot, slotscontainer;
-		var slotdata;
-		
-		var matdata = GW2T_MATERIALS_CATEGORIES;
-		var itemid;
-		var matcategory;
-		var slotassoc = {};
-		
-		$.getJSON(A.getURL(A.URL.Materials), function(pData)
+		var generateMaterials = function(pUnlockeds)
 		{
-			Q.loadItemsSubdatabase("materials", function()
+			var entry;
+			var unlockeds = {};
+			// Reformat the unlockeds array from API
+			for (var i in pUnlockeds)
 			{
-				bank.empty();
-				var numtofetch = 0;
-				var numfetched = 0;
-				// Create tabs that separate the categories
-				for (var i = 0; i < matdata.length; i++)
+				entry = pUnlockeds[i];
+				if (entry.count > 0)
 				{
-					matcategory = matdata[i];
-					tab = B.createBankTab(bank, {aTitle: D.getObjectName(matcategory)});
-					// Store the tabs to be later inserted with slots
-					slotscontainer = tab.find(".bnkTabSlots");
-					// Insert empty slots in the proper order
-					for (var ii = 0; ii < matcategory.items.length; ii++)
-					{
-						itemid = matcategory.items[ii];
-						slot = B.createBankSlot(slotscontainer);
-						slotassoc[itemid] = slot;
-						numtofetch++;
-					}
+					unlockeds[entry.id] = {
+						oCount: entry.count
+					};
 				}
-
-				// Account materials API is a single disordered array, match the items with the pre-ordered slots
-				for (var i = 0; i < pData.length; i++)
-				{
-					slotdata = pData[i];
-					if (slotassoc[slotdata.id])
-					{
-						(function(iSlot, iSlotData)
-						{
-							Q.getItem(slotdata.id, function(iItem)
-							{
-								B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
-								{
-									numfetched++;
-									A.setProgressBar(numfetched, numtofetch);
-								}});
-							});
-						})(slotassoc[slotdata.id], slotdata);
-					}
-				}
-				B.createBankMenu(bank, {aWantSearchHighlight: true});
+			}
+			B.generateUnlockables(bank, {
+				aHeaders: U.getRecordHeader(section),
+				aRecord: U.getRecordData(section),
+				aUnlockeds: unlockeds
 			});
-		}).fail(function()
+		};
+		
+		$.getScript(U.URL_DATA.Materials).done(function()
 		{
-			A.printError(A.PermissionEnum.Inventories);
-			dish.empty();
+			$.getJSON(A.getURL(A.URL.Materials), function(pData)
+			{
+				Q.loadItemsSubdatabase(section.toLowerCase(), function()
+				{
+					generateMaterials(pData);
+				});
+			}).fail(function()
+			{
+				A.printError(A.PermissionEnum.Inventories);
+				dish.empty();
+			});
 		});
 	},
 	
@@ -8047,7 +8061,8 @@ V = {
 	 */
 	serveMinis: function()
 	{
-		var dish = $("#accDish_Minis");
+		var section = "Minis";
+		var dish = $("#accDish_" + section);
 		if (A.reinitializeDish(dish) === false)
 		{
 			return;
@@ -8058,8 +8073,8 @@ V = {
 		var generateMinis = function(pUnlockeds)
 		{
 			B.generateUnlockables(bank, {
-				aHeaders: GW2T_MINIS_HEADERS,
-				aRecord: GW2T_MINIS_DATA,
+				aHeaders: U.getRecordHeader(section),
+				aRecord: U.getRecordData(section),
 				aUnlockeds: pUnlockeds
 			});
 		};
@@ -8068,7 +8083,7 @@ V = {
 		{
 			$.getJSON(A.getURL(A.URL.Minis), function(pData)
 			{
-				Q.loadItemsSubdatabase("minis", function()
+				Q.loadItemsSubdatabase(section.toLowerCase(), function()
 				{
 					generateMinis(pData);
 				});
@@ -9078,7 +9093,7 @@ B = {
 		var Settings = pSettings || {};
 		var unlocksassoc = Settings.aUnlockAssoc;
 		var unlockobj = Settings.aUnlockObj;
-		var unlockid = unlockobj.u;
+		var unlockid = (typeof unlockobj === "number") ? pItemID : unlockobj.u;
 		var wiki = unlockobj.n;
 		var payment = unlockobj.p;
 		
@@ -9109,14 +9124,17 @@ B = {
 				}
 			}
 			// Determine the item count number to display
-			var count = (unlocksassoc[unlockid]) ? 1 : 0;
+			var entry = unlocksassoc[unlockid];
+			var count = (entry) ? ((entry.oCount !== undefined) ? entry.oCount : 1) : 0;
 			// Optional comment appended at the bottom of item tooltip
 			var comment = Settings.aComment;
-			if (Settings.aIsCatalog && unlocksassoc[pItemID])
+			// Catalog includes custom count
+			entry = unlocksassoc[pItemID];
+			if (Settings.aIsCatalog && entry)
 			{
 				var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
-				count = unlocksassoc[pItemID].oCount;
-				comment = foundstr + A.formatPossessionLocations(unlocksassoc[pItemID].oLocations);
+				count = entry.oCount;
+				comment = foundstr + A.formatPossessionLocations(entry.oLocations);
 			}
 			if (comment)
 			{
@@ -9166,7 +9184,7 @@ B = {
 	 * @param jqobject pBank to manipulate.
 	 * @objparam object aHeaders containing category header translations.
 	 * @objparam object aRecord containing categorized unlockable entries.
-	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API.
+	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API, or an associative array containing a count property.
 	 * @objparam boolean aIsCatalog whether to use the user's possessions rather than unlockeds.
 	 * @objparam boolean aIsLookup whether to generate unlocked slots only.
 	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
@@ -9183,8 +9201,8 @@ B = {
 	 */
 	generateUnlockables: function(pBank, pSettings)
 	{
-		// Convert the API array of unlocks into an associative array
 		var Settings = pSettings || {};
+		// Convert the API array of unlocks into an associative array
 		var unlocksassoc = {};
 		if (Settings.aIsCatalog)
 		{
@@ -9192,9 +9210,16 @@ B = {
 		}
 		else
 		{
-			for (var i = 0; i < Settings.aUnlockeds.length; i++)
+			if (Array.isArray(Settings.aUnlockeds))
 			{
-				unlocksassoc[(Settings.aUnlockeds[i])] = true;
+				for (var i = 0; i < Settings.aUnlockeds.length; i++)
+				{
+					unlocksassoc[(Settings.aUnlockeds[i])] = true;
+				}
+			}
+			else
+			{
+				unlocksassoc = Settings.aUnlockeds;
 			}
 		}
 
@@ -9299,7 +9324,7 @@ B = {
 				{
 					numunlocked++;
 					numsunlockedtotal++;
-					if (Settings.aIsCatalog)
+					if (unlocksassoc[unlockid].oCount)
 					{
 						numacquired += unlocksassoc[unlockid].oCount;
 					}
@@ -21471,6 +21496,7 @@ W = {
 	isFallbackEnabled: false,
 	numFailedAPICalls: 0,
 	cOWNERS_PER_TIER: 3,
+	cTOTAL_PPT_POSSIBLE: 0, // Will be assigned by the compute function
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
 	cMSECONDS_IMMUNITY: 300000, // 5 minutes
 	cMSECONDS_RESET_GRACE: 300000, // 5 minutes from the match start time
@@ -21527,6 +21553,7 @@ W = {
 		W.ObjectiveEnum = W.Metadata.ObjectiveEnum;
 		W.OwnerEnum = W.Metadata.OwnerEnum;
 		
+		W.computeObjectivesValue();
 		W.initializeObjectives();
 		W.initializeMap();
 		W.populateWvW();
@@ -22014,17 +22041,31 @@ W = {
 	},
 	
 	/*
+	 * Computes the summed values of objectives based on their map.
+	 */
+	computeObjectivesValue: function()
+	{
+		var objs = W.Metadata.ObjectiveType;
+		var objval, uniqueval;
+		for (var i in objs)
+		{
+			objval = objs[i].Value.Each;
+			objs[i].Value.Borderlands = objs[i].Quantity.Borderlands * objval;
+			objs[i].Value.Battlegrounds = objs[i].Quantity.Battlegrounds * objval;
+			objs[i].Value.All = (objs[i].Value.Borderlands + objs[i].Value.Battlegrounds) * W.cOWNERS_PER_TIER;
+			uniqueval = (objs[i].Quantity.isUnique) ? objval : 0;
+			W.cTOTAL_PPT_POSSIBLE += objs[i].Value.All + uniqueval;
+		}
+	},
+	
+	/*
 	 * Gets the points worth for an objective type.
 	 * @param string pObjectiveType such as "Camp".
 	 * @returns int value.
 	 */
 	getObjectiveTypeValue: function(pObjectiveName)
 	{
-		return W.Metadata.ObjectiveType[pObjectiveName].Value.each;
-	},
-	getTotalPPTPossible: function()
-	{
-		return W.Metadata.ObjectiveType.Total.Value.all;
+		return W.Metadata.ObjectiveType[pObjectiveName].Value.Each;
 	},
 	
 	/*
@@ -22261,7 +22302,7 @@ W = {
 			var scorehighest = (T.getMinMax(scores)).oMax;
 			var scorepercent = (scores[ownerkey] / scorehighest) * T.cPERCENT_100;
 			var ppttotal = (PPT[owner]).Total;
-			var pptpercent = (ppttotal / W.getTotalPPTPossible()) * T.cPERCENT_100;
+			var pptpercent = (ppttotal / W.cTOTAL_PPT_POSSIBLE) * T.cPERCENT_100;
 			// Kills and Deaths
 			var kdstr = "";
 			if (pData.kills !== undefined && W.isFallbackEnabled === false)
@@ -27652,6 +27693,10 @@ I = {
 	log: function(pString, pClear)
 	{
 		I.print(pString, pClear);
+	},
+	logPretty: function(pString, pClear)
+	{
+		I.prettyJSON(pString, pClear);
 	},
 	
 	/*

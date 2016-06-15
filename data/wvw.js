@@ -2953,75 +2953,49 @@ var GW2T_WVW_METADATA = {
 	},
 	ObjectiveType: {
 		Ruins: {
-			Quantity: {
-				teambl: 5,
-				teambg: 0,
-				all: 5
+			Quantity: { /* Number of objectives in a map */
+				Borderlands: 5,
+				Battlegrounds: 0
 			},
 			Value: {
-				each: 0,
-				teambl: 0,
-				teambg: 0,
-				all: 0
+				Each: 0
 			}
 		},
 		Camp: {
 			Quantity: {
-				teambl: 6,
-				teambg: 2,
-				all: 24
+				Borderlands: 6,
+				Battlegrounds: 2
 			},
 			Value: {
-				each: 5,
-				teambl: 30,
-				teambg: 10,
-				all: 120
+				Each: 2
 			}
 		},
 		Tower: {
 			Quantity: {
-				teambl: 4,
-				teambg: 4,
-				all: 24
+				Borderlands: 4,
+				Battlegrounds: 4
 			},
 			Value: {
-				each: 10,
-				teambl: 40,
-				teambg: 40,
-				all: 240
+				Each: 4
 			}
 		},
 		Keep: {
 			Quantity: {
-				teambl: 3,
-				teambg: 1,
-				all: 12
+				Borderlands: 3,
+				Battlegrounds: 1
 			},
 			Value: {
-				each: 25,
-				teambl: 75,
-				teambg: 25,
-				all: 300
+				Each: 8
 			}
 		},
 		Castle: {
 			Quantity: {
-				teambl: 0,
-				teambg: 0,
-				all: 1
+				Borderlands: 0,
+				Battlegrounds: 0,
+				isUnique: true
 			},
 			Value: {
-				each: 35,
-				teambl: 0,
-				teambg: 0,
-				all: 35
-			}
-		},
-		Total: {
-			Value: {
-				teambl: 145,
-				teamebg: 75,
-				all: 695
+				Each: 12
 			}
 		}
 	}
