@@ -2482,6 +2482,9 @@ label:hover {
 .cssFaded {
 	opacity: 0.3;
 }
+.cssFadedMore {
+	opacity: 0.1;
+}
 .cssLeft {
 	float: left;
 }

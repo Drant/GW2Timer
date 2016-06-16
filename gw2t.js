@@ -2978,14 +2978,37 @@ U = {
 	},
 	
 	/*
-	 * Gets elements from array A that do not exists in array B.
+	 * Converts an array of objects into an associative array accessible by a
+	 * specified key name for all objects.
+	 * @param array pArray.
+	 * @param string pKeyName to find in each object.
+	 * @returns object.
+	 * @pre Array has no duplicates sharing the same key.
+	 */
+	convertArrayToAssoc: function(pArray, pKeyName)
+	{
+		var assoc = {};
+		var keyname = pKeyName || "id";
+		var obj;
+		for (var i = 0; i < pArray.length; i++)
+		{
+			obj = pArray[i];
+			assoc[obj[keyname]] = obj;
+		}
+		return assoc;
+	},
+	
+	/*
+	 * Gets elements that array A and B do not share.
 	 * @param array pArrayA.
 	 * @param array pArrayB.
 	 * @returns array of difference.
 	 */
 	getDifference: function(pArrayA, pArrayB)
 	{
-		return $(pArrayA).not(pArrayB).get();
+		return pArrayA.concat(pArrayB).filter(function(iElm, iIndex, iArr){
+			return iArr.indexOf(iElm) === iArr.lastIndexOf(iElm);
+		});
 	},
 	getUnique: function(pArray)
 	{
@@ -4154,7 +4177,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				Z.collateMaterials();
+				Z.collateSkins();
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -4375,7 +4398,7 @@ Z = {
 		var cache = Settings.aCustomCache || Z.APICacheArrayOfObjects;
 		
 		// Compile the output
-		if (pRequest === 0 || pRequest === 1)
+		if (pRequest === undefined || pRequest === 0 || pRequest === 1)
 		{
 			if (cache)
 			{
@@ -4724,6 +4747,94 @@ Z = {
 	 */
 	collateSkins: function()
 	{
+		var section = "Skins";
+		var itemdb, record, blacklist, apiskinids, storedskinids = [], newskinids = [];
+		
+		var categorizeNewSkins = function()
+		{
+			for (var i in itemdb)
+			{
+				
+			}
+		};
+		
+		var fetchNewSkins = function()
+		{
+			// Combine the record's categories into one associative array
+			var catarr, entry;
+			for (var i in record)
+			{
+				catarr = record[i];
+				for (var ii = 0; ii < catarr.length; ii++)
+				{
+					entry = catarr[ii];
+					storedskinids.push(entry.u);
+				}
+			}
+			// Compile skin IDs to fetch by filtering: new IDs, not in blacklist
+			newskinids = U.getDifference(apiskinids, storedskinids);
+			var filteredskinids = newskinids.filter(function(iID)
+			{
+				if (blacklist[iID] === undefined)
+				{
+					return iID;
+				}
+			});
+			
+			// Fetch new skins
+			Z.scrapeAPIArray(filteredskinids, section.toLowerCase(), {aCallback: function(pData)
+			{
+				// Create a new blacklist by looking for mismatch or improper skins
+				var isnewblacklist = false;
+				var filteredskins = pData.filter(function(iSkin)
+				{
+					if (iSkin.name === "")
+					{
+						isnewblacklist = true;
+						blacklist[iSkin.id] = iSkin.name;
+					}
+					else
+					{
+						return iSkin;
+					}
+				});
+				// Print the blacklist if there are new items to blacklist
+				if (isnewblacklist)
+				{
+					I.prettyJSON(blacklist);
+				}
+				Z.printAPICache(0, {
+					aCustomCache: filteredskins,
+					aWantFile: false
+				});
+				// Categorize
+				Z.loadItemsDatabase(function(pDatabase)
+				{
+					itemdb = pDatabase;
+					categorizeNewSkins();
+				});
+			}});
+		};
+		
+		// Retrieve necessary arrays and databases
+		$.getScript(U.getDataScriptURL(section), function()
+		{
+			record = U.getRecordData(section);
+			blacklist = U.getRecordBlacklist(section);
+			$.getJSON(U.getAPISkin(), function(pData)
+			{
+				apiskinids = pData;
+				fetchNewSkins();
+			});
+		});
+		
+		
+		
+		
+		
+		
+		
+		return;
 		var catobj = A.Metadata.Skins;
 		
 		var arr = Z.APICacheArrayOfObjects;
@@ -5317,7 +5428,7 @@ Z = {
 					currentitemids.push(parseInt(ithitemid));
 				}
 				// Find what item IDs are missing by comparing the API's current list with the one here
-				var newitemids = $(newitemslist).not(currentitemids).get();
+				var newitemids = U.getDifference(newitemslist, currentitemids);
 				if (newitemids.length)
 				{
 					Z.scrapeAPIArray(newitemids, "items", {
@@ -7532,6 +7643,7 @@ V = {
 	serveCleanup: function()
 	{
 		B.generateCatalog("Cleanup", {
+			aIsCollection: false,
 			aIsLookup: true,
 			aWantGem: false,
 			aWantDefaultHelp: false
@@ -7926,7 +8038,7 @@ V = {
 		}
 		
 		var container = B.createBank(dish, {
-			aIsCollection: true,
+			aIsCollection: false,
 			aWantGem: false
 		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
@@ -8140,9 +8252,9 @@ B = {
 	/*
 	 * Creates a bank container element.
 	 * @param jqobject pDestination to append bank.
-	 * @objparam string aClass CSS style class for bank element.
-	 * @objparam boolean aIsCollection whether the bank is an unlock collection.
-	 * @objparam boolean aWantGem whether to display the gem tally.
+	 * @objparam string aClass CSS style class for bank element, optional.
+	 * @objparam boolean aIsCollection whether the bank is an unlock collection, which will show untaxed prices, optional.
+	 * @objparam boolean aWantGem whether to display the gem tally, optional.
 	 * @objparam int aSlotsPerRow to resize the bank beforehand, optional.
 	 * @returns jqobject bank.
 	 */
@@ -8266,7 +8378,8 @@ B = {
 		var acquiredstr = (pCount) ? (" " + pCount + "×") : "";
 		var ratio = pFilled / pCapacity;
 		var ratioclass = (ratio === 1) ? "accSignificant" : "accTrivial";
-		return pFilled + " / " + pCapacity
+		var remaining = (ratio === 1) ? "" : ("<span class='accTrifle'>" + (pCapacity - pFilled) + "+</span>");
+		return remaining + pFilled + " / " + pCapacity
 			+ "<span class='" + ratioclass + "'> (" + U.convertRatioToPercent(ratio) + ")" + acquiredstr + "</span>";
 	},
 	updateTabTally: function(pElement, pFilled, pCapacity, pCount)
@@ -8393,9 +8506,8 @@ B = {
 	 * @objparam object aSlotMeta data retrieved from characters or bank API,
 	 * containing stack count and transmutation data.
 	 * @objparam object aItem item details retrieved from API.
-	 * @objparam int aTradeableID ID of item to get TP price, such as the
-	 * tradeable container of the bound item.
-	 * @objparam string aWiki name of wiki article to open when double clicked.
+	 * @objparam int aTradeableID ID of item to get TP price, such as the tradeable container of the bound item, optional.
+	 * @objparam string aWiki name of wiki article to open when double clicked, optional.
 	 * @objparam function aCallback to execute after styling.
 	 */
 	styleBankSlot: function(pSlot, pSettings)
@@ -8839,6 +8951,7 @@ B = {
 			{
 				slots.show();
 			}
+			pBank.toggleClass("bnkTradeable", isfilteringtrade);
 			$(this).toggleClass("bnkButtonFocused");
 			isfilteringtrade = !isfilteringtrade;
 			A.adjustAccountScrollbar();
@@ -9094,6 +9207,7 @@ B = {
 		var unlocksassoc = Settings.aUnlockAssoc;
 		var unlockobj = Settings.aUnlockObj;
 		var unlockid = (typeof unlockobj === "number") ? pItemID : unlockobj.u;
+		var tradeableid = (Settings.aIsCatalog && unlockobj.u) ? unlockobj.u : null;
 		var wiki = unlockobj.n;
 		var payment = unlockobj.p;
 		
@@ -9143,7 +9257,7 @@ B = {
 			// Style the slot
 			B.styleBankSlot(pSlot, {
 				aItem: iItem,
-				aTradeableID: (Settings.aIsCatalog && unlockid) ? unlockid : null,
+				aTradeableID: tradeableid,
 				aPrice: slotcoin,
 				aGem: slotgemvalue,
 				aSlotMeta: {count: count},
@@ -9387,7 +9501,10 @@ B = {
 			Settings.aHelpMessage = helpmessage.html();
 		}
 		
-		var container = B.createBank(dish, {aIsCollection: true, aWantGem: Settings.aWantGem});
+		var container = B.createBank(dish, {
+			aIsCollection: (Settings.aIsCollection !== undefined) ? Settings.aIsCollection : true,
+			aWantGem: Settings.aWantGem
+		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var fillCatalog = function()
 		{
@@ -18050,6 +18167,10 @@ M = {
 	},
 	bindMarkerZoomBehavior: function(pMarker, pEventType, pZoomOut)
 	{
+		if (I.isTouchEnabled)
+		{
+			return;
+		}
 		var that = this;
 		if (pZoomOut === undefined)
 		{
@@ -18082,6 +18203,10 @@ M = {
 	},
 	bindMarkerCoordBehavior: function(pMarker, pEventType)
 	{
+		if (I.isTouchEnabled)
+		{
+			return;
+		}
 		var that = this;
 		pMarker.on(pEventType, function()
 		{
@@ -18091,6 +18216,10 @@ M = {
 	},
 	bindMarkerWikiBehavior: function(pMarker, pEventType, pWantDefault)
 	{
+		if (I.isTouchEnabled)
+		{
+			return;
+		}
 		pMarker.on(pEventType, function(pEvent)
 		{
 			var name = this.options.wiki;
@@ -18394,23 +18523,26 @@ P = {
 							} break;
 						}
 						// Clicking on waypoints or POIs gives a chatlink
-						if (poi.type === that.APIPOIEnum.Waypoint || poi.type === that.APIPOIEnum.Landmark)
+						if (I.isTouchEnabled === false)
 						{
-							marker.on("click", function()
+							if (poi.type === that.APIPOIEnum.Waypoint || poi.type === that.APIPOIEnum.Landmark)
 							{
-								that.outputCoordinatesCopy(U.getChatlinkFromPoiID(this.options.id));
-								that.outputCoordinatesName(this.options.markername);
-							});
-							marker.on("dblclick", function(pEvent)
+								marker.on("click", function()
+								{
+									that.outputCoordinatesCopy(U.getChatlinkFromPoiID(this.options.id));
+									that.outputCoordinatesName(this.options.markername);
+								});
+								marker.on("dblclick", function(pEvent)
+								{
+									U.openExternalURL(U.getWikiLinkLanguage(this.options.markername));
+								});
+								that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+							}
+							else
 							{
-								U.openExternalURL(U.getWikiLinkLanguage(this.options.markername));
-							});
-							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
-						}
-						else
-						{
-							that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
-							that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+								that.bindMarkerZoomBehavior(marker, "click", that.ZoomEnum.Sky);
+								that.bindMarkerZoomBehavior(marker, "contextmenu", that.ZoomEnum.Sky);
+							}
 						}
 					}
 					
@@ -22411,6 +22543,7 @@ W = {
 					+ "<var class='lboPPTRed'>+" + (PPT[owner])[W.LandEnum.RedHome] + "</var>"
 					+ "<var class='lboPPTCenter'>+" + (PPT[owner])[W.LandEnum.Center] + "</var>"
 				+ "</aside>"
+				+ kdstr
 				+ "<aside class='lboFocus lboFocus" + owner + "' title='<dfn>Server Focus (PPT Now)</dfn><br />"
 						+ "<dfn>" + focuses[0] + " PPT</dfn> earnable from " + otherservers[0] + " native objectives<br />"
 						+ "<dfn>" + focuses[1] + " PPT</dfn> earnable from " + otherservers[1] + " native objectives'>"
@@ -22418,7 +22551,6 @@ W = {
 					+ "<samp class='" + focusclass + "'><s style='width:" + focusApercent + "%'><mark></mark></s></samp>"
 					+ "<var class='lboFocusB'>" + focusBpercent + "%</var>"
 				+ "</aside>"
-				+ kdstr
 				+ "<aside class='lboFocus lboFocus" + owner + "' title='<dfn>Server Focus (Points Matchup)</dfn><br />"
 						+ "<dfn>" + blscoreA + " points</dfn> earned from " + otherservers[0] + " Borderlands<br />"
 						+ "<dfn>" + blscoreB + " points</dfn> earned from " + otherservers[1] + " Borderlands'>"
@@ -27692,11 +27824,14 @@ I = {
 	 */
 	log: function(pString, pClear)
 	{
-		I.print(pString, pClear);
-	},
-	logPretty: function(pString, pClear)
-	{
-		I.prettyJSON(pString, pClear);
+		if (typeof pString === "string")
+		{
+			I.print(pString, pClear);
+		}
+		else
+		{
+			I.prettyJSON(pString, pClear);
+		}
 	},
 	
 	/*

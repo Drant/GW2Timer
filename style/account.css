@@ -51,6 +51,9 @@
 .accTrivial { /* Situational class to fade trivial information */
 	opacity: 0.3;
 }
+.accTrifle {
+	opacity: 0.1;
+}
 .accSignificant {
 	color: #aaff55;
 }
@@ -1710,30 +1713,36 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
 }
-.bnkSlotPrice, .bnkSlotPriceSell {
+.bnkSlotPrice {
 	bottom: 4px;
 }
-.bnkSlotPriceBuy {
+.bnkSlotPriceSell {
 	bottom: 18px;
 }
-.bnkSlotPriceBuy, .bnkSlotPriceSell {
-	display: none;
+.bnkSlotPriceBuy {
+	bottom: 32px;
 }
-.bnkSlotTradeable:hover .bnkSlotPrice {
+.bnkSlotPriceBuy, .bnkSlotPriceSell {
 	display: none;
 }
 .bnkSlot:hover .bnkSlotPriceBuy, .bnkSlot:hover .bnkSlotPriceSell {
 	display: block;
 }
-.bnkCondense .bnkSlotPrice, .bnkCondense .bnkSlotPriceSell {
+.bnkTradeable .bnkSlotPriceBuy, .bnkTradeable .bnkSlotPriceSell { /* Bank toggle class for tradeable filter */
+	display: block;
+}
+.bnkCondense .bnkSlotPrice, .bnkCondense .bnkSlotPriceSell, .bnkCondense .bnkSlotPriceBuy { /* Bank toggle class for smaller slot UI */
 	left: 6px;
-	bottom: 3px;
 	font-size: 10px;
 }
-.bnkCondense .bnkSlotPriceBuy {
-	left: 6px;
+.bnkCondense .bnkSlotPrice {
+	bottom: 3px;
+}
+.bnkCondense .bnkSlotPriceSell {
 	bottom: 14px;
-	font-size: 10px;
+}
+.bnkCondense .bnkSlotPriceBuy {
+	bottom: 25px;
 }
 .bnkSlotPriceTrivial {
 	opacity: 0.6;
