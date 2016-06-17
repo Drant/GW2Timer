@@ -1308,6 +1308,13 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Salvager's Supplies",
+		img: "http://i.imgur.com/c37rlEw.png",
+		price: 1360,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Heroes Dye Pack",
 		img: "http://i.imgur.com/uemIOod.png",
 		price: 500,

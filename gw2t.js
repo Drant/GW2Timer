@@ -20902,8 +20902,7 @@ G = {
 			P.Collectibles = GW2T_COLLECTIBLE_DATA;
 			var i;
 			var collectible;
-			var translatedname;
-			var defaultname;
+			var translatedname, defaultname, samplelink;
 			
 			for (i in P.Collectibles)
 			{
@@ -20911,17 +20910,19 @@ G = {
 				collectible = P.Collectibles[i];
 				translatedname = D.getObjectName(collectible);
 				defaultname = D.getObjectDefaultName(collectible);
+				samplelink = I.cSiteLink + "<dfn>" + X.Collectibles[i].urlkey + "</dfn>";
 				$("<div class='cltBox'>"
 					+ "<label style='color:" + collectible.color + "'>"
 						+ "<ins class='clt_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
 					+ "</label>"
-					+ "<span><cite>"
+					+ "<span class='cltLinks' title='" + samplelink + "' ><cite>"
 						+ "<a href='" + U.getYouTubeLink(defaultname) + "'>[Y]</a>&nbsp;"//
 						+ "<a href='" + collectible.wiki + "'>[W]</a>&nbsp;"
 						+ "<a href='" + collectible.credit + "'>[C]</a>&nbsp;"
 						+ "&nbsp;-&nbsp;&nbsp;</cite>"
 						+ "<a id='nedUncheck_" + i + "'>Reset</a>"
-					+ "</span></div>").appendTo("#cltList").data("keywords", translatedname.toLowerCase());
+					+ "</span>"
+				+ "</div>").appendTo("#cltList").data("keywords", translatedname.toLowerCase());
 
 				// Clicking a checkbox generates the markers for that collectible type
 				$("#ned_" + i).one("click", function()
@@ -20943,6 +20944,7 @@ G = {
 				}
 			}
 			U.convertExternalLink("#cltList cite a");
+			I.qTip.init(".cltLinks");
 			I.createSearchBar("#cltSearch", ".cltBox");
 
 			// Toggle button will only hide icons, by unchecking the checked boxes
@@ -21301,7 +21303,7 @@ G = {
 				$("#gldButtons").append("<div>"
 					+ "<button class='gldButton curToggle btnTab' id='gldButton_" + i
 						+ "' style='background-size:cover; background-image:url(img/guild/" + i.toLowerCase() + I.cPNG + ")' "
-						+ "title='<dfn>" + translatedname + "</dfn><br />gw2timer.com/guild/" + i.toLowerCase() + "'></button>"
+						+ "title='<dfn>" + translatedname + "</dfn><br />" + I.cSiteLink + "guild/" + i.toLowerCase() + "'></button>"
 					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname) + "'>Y</a>&nbsp;"
 					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "'>W</a>"
 					+ "</div>");
@@ -27225,6 +27227,7 @@ I = {
  * ========================================================================== */
 
 	cSiteName: "GW2Timer.com",
+	cSiteLink: "gw2timer.com/",
 	cSiteURL: "http://gw2timer.com/",
 	cImageHost: "http://i.imgur.com/",
 	cGameName: "Guild Wars 2",
