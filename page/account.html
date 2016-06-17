@@ -75,7 +75,7 @@
 	</article>
 	<article data-section="Bank"></article>
 	<article data-section="Materials"></article>
-	<article data-section="Wardrobe"></article>
+	<article data-section="Wardrobe" data-islead="true"></article>
 	<article data-section="Minis"></article>
 	<article data-section="Dyes"></article>
 </section>
@@ -128,7 +128,8 @@
 	<h2>Search by Keyword</h2>
 	<p>The case-insensitive search bar allows you to find items using space-separated keywords. It will look through every item's tooltip for any match of the words you type. For example, typing: &quot;exo arm&quot; will filter in any exotic armor pieces you have. If you want to look for an item that has toughness stats, then just type &quot;toug&quot; for partial matching of items with that keyword. You can search by item type by matching the words at the bottom of items' tooltips, such as &quot;gizmo&quot; (toys), &quot;consumable&quot; (foods), or &quot;container&quot; (bags). For catalogs, you can search using your characters' names or places where the items are found.</p>
 	<h2>Search by Price</h2>
-	<p>Filter in items that are tradeable with a price by first typing either &quot;&lt;&quot; or &quot;&gt;&quot; then a period-separated coin string. For example, to search for items that can be sold for more than 1 gold on the Trading Post, type in the search &quot;&gt;1..&quot;. If you type &quot;&gt;1&quot; then items valued above 1 silver will be shown. Here is the format for coin strings:</p>
+	<p>Starting your search with one equality sign &quot;&lt;&quot; or &quot;&gt;&quot; will search by Buy Price (buy orders); two equality signs &quot;&lt;&lt;&quot; or &quot;&gt;&gt;&quot; will search by Sell Price (sell listings). Type a period-separated coin string after the equality sign(s) to do the search.</p>
+	<p>For example, to search for items that can be <em>instantly sold</em> for more than 1 gold on the Trading Post, type in the search &quot;&gt;1..&quot;, or for one silver type &quot;&gt;1&quot;. Alternately, type &quot;&gt;&gt;5.70.&quot; to search for items that can be <em>listed</em> for 5 gold and 70 silver or higher. Here is the format for coin strings:</p>
 	<div class="cssIndent">
 	0.1 = 10<coppercoin></coppercoin><br />
 	.01 = 1<coppercoin></coppercoin><br />

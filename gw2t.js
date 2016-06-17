@@ -2978,14 +2978,14 @@ U = {
 	},
 	
 	/*
-	 * Converts an array of objects into an associative array accessible by a
-	 * specified key name for all objects.
+	 * Converts an array of objects into an associative array accessible by
+	 * one of their property acting as the key name.
 	 * @param array pArray.
 	 * @param string pKeyName to find in each object.
 	 * @returns object.
 	 * @pre Array has no duplicates sharing the same key.
 	 */
-	convertArrayToAssoc: function(pArray, pKeyName)
+	getAssocObject: function(pArray, pKeyName)
 	{
 		var assoc = {};
 		var keyname = pKeyName || "id";
@@ -2994,6 +2994,18 @@ U = {
 		{
 			obj = pArray[i];
 			assoc[obj[keyname]] = obj;
+		}
+		return assoc;
+	},
+	getExistObject: function(pArray)
+	{
+		// Element itself is the key
+		var assoc = {};
+		var entry;
+		for (var i = 0; i < pArray.length; i++)
+		{
+			entry = pArray[i];
+			assoc[entry] = true;
 		}
 		return assoc;
 	},
@@ -3985,7 +3997,7 @@ U = {
 };
 Z = {
 /* =============================================================================
- * @@Console commands and server-like functions
+ * @@Console commands and server-like maintenance functions
  * ========================================================================== */
 
 	cCommandPrefix: "/",
@@ -4742,26 +4754,86 @@ Z = {
 	},
 	
 	/*
-	 * Categorizes API skins from a completely downloaded array of skins objects.
-	 * @pre Cache array of objects was assigned.
+	 * Updates the skins unlockables record by looking for new skin IDs, then
+	 * downloads, categorizes, and associates the skins to their unlocking items.
+	 * @pre Items database is up to date.
 	 */
 	collateSkins: function()
 	{
 		var section = "Skins";
-		var itemdb, record, blacklist, apiskinids, storedskinids = [], newskinids = [];
+		var itemdb, record, blacklist;
+		var apiskinids, newskins, categorizedskins = {};
 		
-		var categorizeNewSkins = function()
+		// Updates an added skin entry in the record
+		var updateSkinEntry = function(pEntry, pItem)
 		{
-			for (var i in itemdb)
+			pEntry.i = pItem.id;
+			if (Q.isTradeable(pItem))
 			{
-				
+				if (pEntry.t === undefined)
+				{
+					pEntry.t = [];
+				}
+				pEntry.t.push(pItem.id);
 			}
 		};
 		
+		// Scans through the item database once, modifying the skin entry in the record if the item has a matching skin ID
+		var associateNewSkins = function()
+		{
+			var item, skinid;
+			for (var i in itemdb)
+			{
+				item = itemdb[i];
+				skinid = null;
+				if (item.default_skin)
+				{
+					skinid = item.default_skin;
+				}
+				else if (item.details && item.details.skins)
+				{
+					skinid = item.details.skins;
+				}
+				// Get the matching skin entry and update its associated item ID property
+				if (skinid)
+				{
+					if (typeof skinid === "number")
+					{
+						if (categorizedskins[skinid])
+						{
+							updateSkinEntry(categorizedskins[skinid], item);
+						}
+					}
+					else if (Array.isArray(skinid))
+					{
+						for (var ii = 0; ii < skinid.length; ii++)
+						{
+							if (categorizedskins[skinid[ii]])
+							{
+								updateSkinEntry(categorizedskins[skinid[ii]], item);
+							}
+						}
+					}
+				}
+			}
+			// Final output
+			Z.printUnlockables(record);
+			if (newskins.length)
+			{
+				I.print("New skins added:");
+				Z.printAPICache(0, {aCustomCache: newskins});
+			}
+			else
+			{
+				I.print("No new skins added. Skins database is up to date.");
+			}
+		};
+		
+		// Compares the stored skins record with the current API skins IDs list then fetch the new skins
 		var fetchNewSkins = function()
 		{
 			// Combine the record's categories into one associative array
-			var catarr, entry;
+			var catarr, entry, storedskinids = [];
 			for (var i in record)
 			{
 				catarr = record[i];
@@ -4772,7 +4844,7 @@ Z = {
 				}
 			}
 			// Compile skin IDs to fetch by filtering: new IDs, not in blacklist
-			newskinids = U.getDifference(apiskinids, storedskinids);
+			var newskinids = U.getDifference(apiskinids, storedskinids);
 			var filteredskinids = newskinids.filter(function(iID)
 			{
 				if (blacklist[iID] === undefined)
@@ -4781,42 +4853,67 @@ Z = {
 				}
 			});
 			
+			if (filteredskinids.length === 0)
+			{
+				I.print("No difference found between stored skins record and post-blacklisted API skins array.");
+				return;
+			}
 			// Fetch new skins
 			Z.scrapeAPIArray(filteredskinids, section.toLowerCase(), {aCallback: function(pData)
 			{
-				// Create a new blacklist by looking for mismatch or improper skins
+				newskins = pData;
 				var isnewblacklist = false;
-				var filteredskins = pData.filter(function(iSkin)
+				var catname;
+				var ithskin;
+				for (var i = 0; i < pData.length; i++)
 				{
-					if (iSkin.name === "")
+					ithskin = pData[i];
+					if (ithskin.name === "" || ithskin.type === undefined)
 					{
+						// Create a new blacklist by looking for mismatch or improper skins
 						isnewblacklist = true;
-						blacklist[iSkin.id] = iSkin.name;
+						blacklist[ithskin.id] = ithskin.name;
 					}
 					else
 					{
-						return iSkin;
+						// Create initial entry in the record, to be assigned with associated item ID later
+						catname = "";
+						if (ithskin.type === "Armor" && ithskin.details && ithskin.details.type && ithskin.details.weight_class)
+						{
+							catname = ithskin.type + "_" + ithskin.details.weight_class + "_" + ithskin.details.type;
+						}
+						else if (ithskin.type === "Weapon" && ithskin.details && ithskin.details.type)
+						{
+							catname = ithskin.type + "_" + ithskin.details.type;
+						}
+						else if (ithskin.type === "Back")
+						{
+							catname = ithskin.type;
+						}
+						var entry = {
+							u: ithskin.id,
+							i: null,
+							n: ithskin.name
+						};
+						record[catname].push(entry);
+						categorizedskins[ithskin.id] = entry;
 					}
-				});
+				}
 				// Print the blacklist if there are new items to blacklist
 				if (isnewblacklist)
 				{
 					I.prettyJSON(blacklist);
 				}
-				Z.printAPICache(0, {
-					aCustomCache: filteredskins,
-					aWantFile: false
-				});
 				// Categorize
-				Z.loadItemsDatabase(function(pDatabase)
+				Z.getItemsDatabase(function(pDatabase)
 				{
 					itemdb = pDatabase;
-					categorizeNewSkins();
+					associateNewSkins();
 				});
 			}});
 		};
 		
-		// Retrieve necessary arrays and databases
+		// Retrieve the stored record and the new API skin IDs
 		$.getScript(U.getDataScriptURL(section), function()
 		{
 			record = U.getRecordData(section);
@@ -4827,63 +4924,6 @@ Z = {
 				fetchNewSkins();
 			});
 		});
-		
-		
-		
-		
-		
-		
-		
-		return;
-		var catobj = A.Metadata.Skins;
-		
-		var arr = Z.APICacheArrayOfObjects;
-		var obj, key;
-		var uncatids = [];
-		if (arr === undefined || arr === null)
-		{
-			I.print("API cache array is unassigned.");
-			return;
-		}
-		
-		for (var i = 0; i < arr.length; i++)
-		{
-			key = null;
-			obj = arr[i];
-			if (obj.type === undefined)
-			{
-				continue;
-			}
-			// Determine the skin's category name
-			if (obj.type === "Armor" && obj.details && obj.details.type && obj.details.weight_class)
-			{
-				key = obj.type + "_" + obj.details.weight_class + "_" + obj.details.type;
-			}
-			else if (obj.type === "Weapon" && obj.details && obj.details.type)
-			{
-				key = obj.type + "_" + obj.details.type;
-			}
-			else if (obj.type === "Back")
-			{
-				key = obj.type;
-			}
-			
-			// Insert the skin ID into a category array
-			if (key && catobj[key])
-			{
-				(catobj[key]).push(obj.id);
-			}
-			else
-			{
-				uncatids.push(obj.id);
-			}
-		}
-		
-		if (uncatids.length > 0)
-		{
-			I.print("Uncategorized IDs: " + I.printJSON(uncatids));
-		}
-		I.printJSON(catobj);
 	},
 	
 	/*
@@ -6389,7 +6429,17 @@ A = {
 		}
 		str = str.substring(0, str.length - 2); // Trim the trailing comma
 		return str;
+	},
+	
+	/*
+	 * 
+	 * @returns {undefined}
+	 */
+	fetchCommerce: function()
+	{
+		
 	}
+	
 };
 V = {
 /* =============================================================================
@@ -8233,6 +8283,7 @@ V = {
 					aRecord: GW2T_DYES_DATA,
 					aUnlockeds: pData,
 					aHelpMessage: $("#accHelpDyes").html(),
+					aWantDefaultHelp: false,
 					aWantSearchHighlight: false,
 					aIsDyes: true
 				});
@@ -8242,6 +8293,15 @@ V = {
 				dish.empty();
 			});
 		});
+	},
+	
+	/*
+	 * Generates the Trading Post transactions overview page.
+	 * @returns {undefined}
+	 */
+	serveTrading: function()
+	{
+		
 	}
 };
 B = {
@@ -8566,7 +8626,8 @@ B = {
 				// Numeric label over the slot icon indicating stack size or charges remaining
 				if (count > 1)
 				{
-					pSlot.append("<var class='bnkSlotCount'>" + count + "</var>");
+					var countmaxclass = (count % Q.ItemLimit.StackSize === 0) ? "bnkSlotCountMax" : "";
+					pSlot.append("<var class='bnkSlotCount " + countmaxclass + "'>" + count + "</var>");
 				}
 				else if (Settings.aItem.type === "Tool")
 				{
@@ -8720,6 +8781,8 @@ B = {
 		if (pPaymentEnum === E.PaymentEnum.Coin)
 		{
 			pSlot.data("price", pricetorecord);
+			pSlot.data("pricebuy", prices.oPriceBuy);
+			pSlot.data("pricesell", prices.oPriceSell);
 		}
 	},
 	
@@ -8752,20 +8815,24 @@ B = {
 			var slots = pBank.find(".bnkSlot");
 			var query = $(this).val().toLowerCase();
 			var queries = [];
-			var equality = "";
+			var equality0, equality1;
 			var keywords = "";
 			var ismatchslots = false;
 			if (query.length > 0)
 			{
-				equality = query.charAt(0);
+				equality0 = query.charAt(0);
+				equality1 = query.charAt(1);
 				// If searching by price range
-				if ((equality === "<" || equality === ">") && query.length > 1)
+				if ((equality0 === "<" || equality0 === ">") && query.length > 1)
 				{
-					var pricewant = E.parseCoinString(query.substring(1, query.length));
+					var wantsell = (equality1 === "<" || equality1 === ">" && query.length > 2);
+					var pricequeryindex = wantsell ? 2 : 1;
+					var pricetype = wantsell ? "pricesell" : "pricebuy";
+					var pricewant = E.parseCoinString(query.substring(pricequeryindex, query.length));
 					slots.each(function()
 					{
-						var priceslot = $(this).data("price");
-						if (priceslot && ((equality === ">" && priceslot >= pricewant) || (equality === "<" && priceslot <= pricewant)))
+						var priceslot = $(this).data(pricetype);
+						if (priceslot && ((equality0 === ">" && priceslot >= pricewant) || (equality0 === "<" && priceslot <= pricewant)))
 						{
 							$(this).show();
 							ismatchslots = true;
@@ -8881,7 +8948,8 @@ B = {
 		// Empty slot filter: first click show filled slots only, second click show empty slots only, third show full stacks, fourth click show all slots, cycle
 		var emptyfilterstate = 0;
 		$("<div class='bnkButtonEmpty bnkButton curToggle' title='"
-			+ "Filter:<br />1st click: non-empty <dfn>slots</dfn><br />2nd click: stack slots<br />3rd click: empty slots<br />4th click: any slot (reset)'></div>")
+			+ "Filter:<br />1st click: non-empty/unlocked <dfn>slots</dfn><br />2nd click: "
+			+ Q.ItemLimit.StackSize + " stack slots<br />3rd click: empty/locked slots<br />4th click: any slot (reset)'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			var slots = pBank.find(".bnkSlot");
@@ -11142,6 +11210,40 @@ Q = {
 	},
 	
 	/*
+	 * Tells whether an item can be traded and has price on the Trading Post.
+	 * @param int or object pItem ID of an item, or the item itself.
+	 * @returns boolean.
+	 * @pre Item was analyzed if requesting by ID.
+	 */
+	isTradeable: function(pItem)
+	{
+		// If item is an ID
+		if (typeof pItem === "number")
+		{
+			var box = Q.Box[pItem];
+			// Assume item is tradeable, unless it was analyzed not to be so
+			if (box)
+			{
+				return (box.oIsTradeable === false) ? false : true;
+			}
+		}
+		// If item is an item details object
+		if (pItem.flags)
+		{
+			var flag;
+			for (var i = 0; i < pItem.flags.length; i++)
+			{
+				flag = pItem.flags[i];
+				if (flag === "AccountBound" || flag === "SoulbindOnAcquire")
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	},
+	
+	/*
 	 * Formats a trait or skill object to be used in tooltips.
 	 * @param object pTrait details retrieved from API.
 	 * @returns string content for tooltip window.
@@ -12139,19 +12241,6 @@ E = {
 	},
 	
 	/*
-	 * Tells whether an item can be traded and has price on the Trading Post.
-	 * @param int pItemID.
-	 * @returns boolean.
-	 * @pre Item was analyzed.
-	 */
-	isTradeable: function(pItemID)
-	{
-		var box = Q.Box[pItemID];
-		// Assume item is tradeable, unless it was analyzed not to be so
-		return (box && box.oIsTradeable === false) ? false : true;
-	},
-	
-	/*
 	 * Retrieves the Trading Post prices for an item.
 	 * @param int pItemID.
 	 * @objparam boolean aWantCache whether to cache the price or always use freshest, optional.
@@ -12164,7 +12253,7 @@ E = {
 		var Settings = pSettings || {};
 		var wantcache = (Settings.aWantCache !== undefined) ? Settings.aWantCache : false;
 		
-		if (E.isTradeable(pItemID))
+		if (Q.isTradeable(pItemID))
 		{
 			$.ajax({
 				dataType: "json",

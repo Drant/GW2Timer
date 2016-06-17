@@ -60,8 +60,8 @@ var GW2T_SKINS_GALLERIES = {
 	Weapon_Warhorn: "http://wiki.guildwars2.com/wiki/Gallery_of_warhorns",
 	Weapon_Greatsword: "http://wiki.guildwars2.com/wiki/Gallery_of_greatswords",
 	Weapon_Hammer: "http://wiki.guildwars2.com/wiki/Gallery_of_hammers",
-	Weapon_LongBow: "http://wiki.guildwars2.com/wiki/Gallery_of_longbows",
-	Weapon_ShortBow: "http://wiki.guildwars2.com/wiki/Gallery_of_short_bows",
+	Weapon_Longbow: "http://wiki.guildwars2.com/wiki/Gallery_of_longbows",
+	Weapon_Shortbow: "http://wiki.guildwars2.com/wiki/Gallery_of_short_bows",
 	Weapon_Rifle: "http://wiki.guildwars2.com/wiki/Gallery_of_rifles",
 	Weapon_Staff: "http://wiki.guildwars2.com/wiki/Gallery_of_staves",
 	Weapon_Harpoon: "http://wiki.guildwars2.com/wiki/Gallery_of_spears",
@@ -112,8 +112,8 @@ var GW2T_SKINS_HEADERS = {
 	Weapon_Warhorn: {name_en: "Warhorn", name_de: "Kriegshorn", name_es: "Cuerno de guerra", name_fr: "Cor de guerre"},
 	Weapon_Greatsword: {name_en: "Greatsword", name_de: "Großschwert", name_es: "Mandoble", name_fr: "Espadon"},
 	Weapon_Hammer: {name_en: "Hammer", name_de: "Hammer", name_es: "Martillo", name_fr: "Marteau"},
-	Weapon_LongBow: {name_en: "Longbow", name_de: "Langbogen", name_es: "Arco largo", name_fr: "Arc long"},
-	Weapon_ShortBow: {name_en: "Short Bow", name_de: "Kurzbogen", name_es: "Arco corto", name_fr: "Arc court"},
+	Weapon_Longbow: {name_en: "Longbow", name_de: "Langbogen", name_es: "Arco largo", name_fr: "Arc long"},
+	Weapon_Shortbow: {name_en: "Short Bow", name_de: "Kurzbogen", name_es: "Arco corto", name_fr: "Arc court"},
 	Weapon_Rifle: {name_en: "Rifle", name_de: "Gewehr", name_es: "Rifle", name_fr: "Fusil"},
 	Weapon_Staff: {name_en: "Staff", name_de: "Stab", name_es: "Báculo", name_fr: "Bâton"},
 	Weapon_Harpoon: {name_en: "Spear", name_de: "Speer", name_es: "Lanza", name_fr: "Lance"},
@@ -267,14 +267,30 @@ var GW2T_SKINS_BLACKLIST = {
 	"6063": "Swarm Logging Flute",
 	"6072": "Shadow Assassin Short Bow",
 	"6075": "Firefly Mining Flute",
-	"6741": ""
+	"6741": "",
+	"6773": "Guild Cavalier Axe",
+	"6766": "Guild Cavalier Mace",
+	"6770": "Guild Cavalier Sword",
+	"6781": "Guild Cavalier Dagger",
+	"6762": "Guild Cavalier Pistol",
+	"6782": "Guild Cavalier Scepter",
+	"6769": "Guild Cavalier Focus",
+	"6778": "Guild Cavalier Shield",
+	"6776": "Guild Cavalier Torch",
+	"6754": "Guild Cavalier Warhorn",
+	"6755": "Guild Cavalier Greatsword",
+	"6761": "Guild Cavalier Hammer",
+	"6748": "Guild Cavalier Longbow",
+	"6771": "Guild Cavalier Short Bow",
+	"6750": "Guild Cavalier Rifle",
+	"6763": "Guild Cavalier Staff"
 };
 
 /*
  * Associated skin item with that skin unlockable.
  * Chronologically sorted, otherwise sorted by skin ID.
  * u: Unlockable ID (skin ID)
- * i: Item ID associated with that skin
+ * i: Item ID best associated with that skin
  * n: Name of skin
  * t: Items on the Trading Post to unlock the skin
  * p: Payment type to acquire the item
@@ -380,6 +396,7 @@ Back: [
 	{u: 2362, i: 41945, n: "Super Backpack Cover", p: {bubble: 25}},
 	{u: 2361, i: 46649, n: "King Toad Backpack Cover", p: {achievement: 0}},
 	{u: 2360, i: 46652, n: "Storm Wizard Backpack Cover", p: {achievement: 0}},
+	{u: 6668, i: 78069, n: "Kaiser Snake Backpack Cover", p: {achievement: 0}},
 	{u: 2359, i: 44735, n: "Plush Moto Backpack", p: {bubble: 20}},
 	{u: 2363, i: 39512, n: "Plush Charr Backpack", p: {gem: 300}},
 	{u: 2364, i: 39508, n: "Tiger Charr Backpack", t: [39508]},
@@ -438,7 +455,10 @@ Back: [
 	{u: 6615, i: 77677, n: "Hawk Wings Backpack Skin", p: {gem: 700}},
 	{u: 6619, i: 77769, n: "Lucky Monkey Lantern", t: [77769]},
 	{u: 6620, i: 77685, n: "Lucky Great Monkey Lantern", t: [77685]},
-	{u: 6621, i: 77688, n: "Branded Backpiece", p: {achievement: 0}}
+	{u: 6621, i: 77688, n: "Branded Backpiece", p: {achievement: 0}},
+	{u: 6744, i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}},
+	{u: 6745, i: 78733, n: "Sloth Backpack", p: {gem: 500}},
+	{u: 6774, i: 78745, n: "Moth Wings Backpack", p: {gem: 700}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", t: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -576,7 +596,8 @@ Armor_Light_Helm: [
 	{u: 6319, i: 75977, n: "Ornate Guild Cowl", p: {craft: true}},
 	{u: 6339, i: 74812, n: "Leystone Cowl", p: {coin: 0}},
 	{u: 6418, i: 75672, n: "Reaper's Hood", p: {achievement: 0}},
-	{u: 6493, i: 71931, n: "Karka Helm", t: [71931]}
+	{u: 6493, i: 71931, n: "Karka Helm", t: [71931]},
+	{u: 6739, i: 78463, n: "Triumphant Masque", p: {badge: 0}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -658,7 +679,8 @@ Armor_Light_Shoulders: [
 	{u: 6334, i: 72099, n: "Ornate Guild Mantle", p: {craft: true}},
 	{u: 6350, i: 73146, n: "Tempest's Loop", p: {achievement: 0}},
 	{u: 6377, i: 73202, n: "Bladed Mantle", p: {map_vb: 500}},
-	{u: 6586, i: 77645, n: "Winter's Presence", p: {achievement: 0}}
+	{u: 6586, i: 77645, n: "Winter's Presence", p: {achievement: 0}},
+	{u: 6722, i: 78579, n: "Triumphant Epaulets", p: {badge: 0}}
 ],
 Armor_Light_Coat: [
 	{u: 4, i: 3174, n: "Apprentice Coat", t: [2959, 2948, 2950, 2952, 2955, 2960, 2947, 2949, 2954, 2953, 2957, 2956, 2961, 2962, 2951, 2958, 3120, 3138, 3156, 3174, 3321, 3331, 3332, 3333, 3334, 3335, 3319, 3320, 3322, 3338, 3336, 3337, 3324, 3329, 3328, 3325, 3330, 3327, 3323, 3326, 5022, 5035, 5051, 5087, 5069, 5105, 5123, 5141, 5159, 5177, 5195, 5213, 5231, 5267, 5249, 5285]},
@@ -726,7 +748,9 @@ Armor_Light_Coat: [
 	{u: 5743, i: 67460, n: "Carapace Vestments", p: {map_sw: 0}},
 	{u: 6254, i: 71738, n: "Bladed Vestments", p: {achievement: 0}},
 	{u: 6288, i: 76112, n: "Ornate Guild Vestments", p: {craft: true}},
-	{u: 6433, i: 76101, n: "Leystone Vestments", p: {achievement: 0}}
+	{u: 6433, i: 76101, n: "Leystone Vestments", p: {achievement: 0}},
+	{u: 5628, i: 67118, n: "Ardent Glorious Raiment"},
+	{u: 6716, i: 78336, n: "Triumphant Raiment", p: {badge: 0}}
 ],
 Armor_Light_Gloves: [
 	{u: 25, i: 3175, n: "Apprentice Gloves", t: [2975, 2964, 2966, 2970, 2969, 2971, 2973, 2967, 2974, 2978, 2968, 2972, 2977, 2963, 2976, 2965, 3139, 3157, 3121, 3175, 3340, 3339, 3342, 3345, 3344, 3341, 3346, 3355, 3343, 3347, 3348, 3350, 3349, 3351, 3354, 3352, 3353, 3358, 3356, 3357, 5036, 5052, 5070, 5106, 5023, 5088, 5142, 5124, 5160, 5196, 5178, 5214, 5232, 5250, 5286, 5268]},
@@ -803,7 +827,9 @@ Armor_Light_Gloves: [
 	{u: 6273, i: 70425, n: "Shackles of Madness", p: {cob: 6}},
 	{u: 6297, i: 71431, n: "Ornate Guild Gloves", p: {craft: true}},
 	{u: 6308, i: 74102, n: "Leystone Gloves", p: {coin: 0}},
-	{u: 6476, i: 71149, n: "Bladed Gloves", p: {map_vb: 500}}
+	{u: 6476, i: 71149, n: "Bladed Gloves", p: {map_vb: 500}},
+	{u: 6700, i: 78667, n: "Chaos Gloves", p: {gem: 500}},
+	{u: 6738, i: 78196, n: "Triumphant Armguards", p: {badge: 0}},
 ],
 Armor_Light_Leggings: [
 	{u: 3, i: 3177, n: "Apprentice Pants", t: [3000, 3003, 2999, 2993, 3007, 2995, 2996, 2998, 2997, 3002, 3001, 3005, 3004, 3006, 3008, 2994, 3123, 3141, 3159, 3177, 3377, 3378, 3391, 3379, 3396, 3380, 3381, 3382, 3383, 3384, 3386, 3385, 3388, 3390, 3387, 3393, 3392, 3389, 3394, 3395, 5024, 5090, 5072, 5054, 5108, 5126, 5038, 5144, 5162, 5198, 5180, 5216, 5270, 5234, 5252, 5288]},
@@ -871,7 +897,8 @@ Armor_Light_Leggings: [
 	{u: 5726, i: 67469, n: "Carapace Pants", p: {map_sw: 1000}},
 	{u: 6302, i: 76772, n: "Ornate Guild Pants", p: {craft: true}},
 	{u: 6378, i: 70899, n: "Bladed Pants", p: {map_vb: 500}},
-	{u: 6436, i: 76484, n: "Leystone Pants", p: {coin: 0}}
+	{u: 6436, i: 76484, n: "Leystone Pants", p: {coin: 0}},
+	{u: 6728, i: 78143, n: "Triumphant Leggings", p: {badge: 0}},
 ],
 Armor_Light_Boots: [
 	{u: 16, i: 3173, n: "Apprentice Shoes", t: [2932, 2933, 2938, 2936, 2937, 2935, 2941, 2940, 2942, 2945, 2944, 2931, 2946, 2934, 2939, 2943, 3119, 3137, 3155, 3173, 3300, 3317, 3301, 3302, 3303, 3304, 3306, 3308, 3307, 3313, 3312, 3309, 3311, 3299, 3316, 3318, 3305, 3310, 3314, 3315, 5068, 5050, 5122, 5021, 5034, 5104, 5140, 5158, 5086, 5194, 5176, 5230, 5212, 5248, 5266, 5284]},
@@ -941,7 +968,8 @@ Armor_Light_Boots: [
 	{u: 6315, i: 74566, n: "Leystone Shoes", p: {coin: 0}},
 	{u: 6351, i: 76733, n: "Ornate Guild Shoes", p: {craft: true}},
 	{u: 6387, i: 75646, n: "Bladed Shoes", p: {map_vb: 500}},
-	{u: 6456, i: 73997, n: "Invisible Slippers", t: [73997]}
+	{u: 6456, i: 73997, n: "Invisible Slippers", t: [73997]},
+	{u: 6705, i: 78179, n: "Triumphant Footgear", p: {badge: 0}},
 ],
 Armor_Medium_Helm: [
 	{u: 89, i: 41171, n: "Rawhide Mask", p: {badge: 10}},
@@ -1074,7 +1102,8 @@ Armor_Medium_Helm: [
 	{u: 6217, i: 71931, n: "Karka Helm", t: [71931]},
 	{u: 6268, i: 73811, n: "Ornate Guild Mask", p: {craft: true}},
 	{u: 6275, i: 75967, n: "Bladed Mask", p: {map_vb: 500}},
-	{u: 6317, i: 76863, n: "Leystone Mask", p: {coin: 0}}
+	{u: 6317, i: 76863, n: "Leystone Mask", p: {coin: 0}},
+	{u: 6725, i: 78620, n: "Triumphant Faceguard", p: {badge: 0}},
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1154,7 +1183,9 @@ Armor_Medium_Shoulders: [
 	{u: 6345, i: 71759, n: "Bladed Shoulderpads", p: {map_vb: 500}},
 	{u: 6354, i: 72603, n: "Leystone Shoulderpads", p: {coin: 0}},
 	{u: 6392, i: 73258, n: "Ornate Guild Shoulderpads", p: {craft: true}},
-	{u: 6583, i: 77645, n: "Winter's Presence", p: {achievement: 0}}
+	{u: 6583, i: 77645, n: "Winter's Presence", p: {achievement: 0}},
+	{u: 6059, i: 69991, n: "Druid's Shoulderguards", p: {achievement: 0}},
+	{u: 6733, i: 78269, n: "Triumphant Shoulderguards", p: {badge: 0}}
 ],
 Armor_Medium_Coat: [
 	{u: 6, i: 41169, n: "Rawhide Vest", p: {badge: 30}},
@@ -1221,7 +1252,8 @@ Armor_Medium_Coat: [
 	{u: 5730, i: 67797, n: "Luminescent Jerkin", p: {achievement: 0}},
 	{u: 6154, i: 71421, n: "Leystone Jerkin", p: {achievement: 0}},
 	{u: 6343, i: 75562, n: "Ornate Guild Jerkin", p: {craft: true}},
-	{u: 6381, i: 74543, n: "Bladed Jerkin", p: {achievement: 0}}
+	{u: 6381, i: 74543, n: "Bladed Jerkin", p: {achievement: 0}},
+	{u: 6685, i: 78178, n: "Triumphant Brigandine", p: {badge: 0}}
 ],
 Armor_Medium_Gloves: [
 	{u: 32, i: 41170, n: "Rawhide Bracers", p: {badge: 10}},
@@ -1297,7 +1329,9 @@ Armor_Medium_Gloves: [
 	{u: 6166, i: 76182, n: "Bladed Vambraces", p: {map_vb: 500}},
 	{u: 6214, i: 76880, n: "Ornate Guild Vambraces", p: {craft: true}},
 	{u: 6232, i: 75979, n: "Leystone Vambraces", p: {coin: 0}},
-	{u: 6487, i: 70425, n: "Shackles of Madness", p: {cob: 6}}
+	{u: 6487, i: 70425, n: "Shackles of Madness", p: {cob: 6}},
+	{u: 6732, i: 78667, n: "Chaos Gloves", p: {gem: 500}},
+	{u: 6684, i: 78351, n: "Triumphant Wristplates", p: {badge: 0}}
 ],
 Armor_Medium_Leggings: [
 	{u: 5, i: 41172, n: "Rawhide Leggings", p: {badge: 20}},
@@ -1364,7 +1398,8 @@ Armor_Medium_Leggings: [
 	{u: 5727, i: 67795, n: "Luminescent Leggings", p: {achievement: 0}},
 	{u: 6146, i: 75734, n: "Leystone Leggings", p: {coin: 0}},
 	{u: 6229, i: 75368, n: "Bladed Leggings", p: {map_vb: 500}},
-	{u: 6260, i: 71349, n: "Ornate Guild Leggings", p: {craft: true}}
+	{u: 6260, i: 71349, n: "Ornate Guild Leggings", p: {craft: true}},
+	{u: 6687, i: 78471, n: "Triumphant Legguards", p: {badge: 0}}
 ],
 Armor_Medium_Boots: [
 	{u: 19, i: 41168, n: "Rawhide Boots", p: {badge: 10}},
@@ -1433,7 +1468,8 @@ Armor_Medium_Boots: [
 	{u: 6148, i: 71884, n: "Leystone Boots", p: {coin: 0}},
 	{u: 6164, i: 73601, n: "Ornate Guild Boots", p: {craft: true}},
 	{u: 6205, i: 73484, n: "Bladed Boots", p: {map_vb: 500}},
-	{u: 6283, i: 72745, n: "Invisible Boots", t: [72745]}
+	{u: 6283, i: 72745, n: "Invisible Boots", t: [72745]},
+	{u: 6688, i: 78211, n: "Triumphant Shinplates", p: {badge: 0}}
 ],
 Armor_Heavy_Helm: [
 	{u: 81, i: 3170, n: "Chainmail Helm", t: [2889, 2895, 2899, 2900, 2901, 2890, 2891, 2892, 2894, 2897, 2896, 2893, 2888, 2898, 3116, 3134, 3152, 3170, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3258, 3257, 3260, 3262, 3259, 3261, 5047, 5065, 5083, 5032, 5119, 5101, 5137, 5155, 5173, 5191, 5209, 5227, 5245, 5263, 5281]},
@@ -1565,7 +1601,8 @@ Armor_Heavy_Helm: [
 	{u: 6338, i: 70597, n: "Bladed Helmet", p: {map_vb: 500}},
 	{u: 6360, i: 77255, n: "Berserker's Helm", p: {achievement: 0}},
 	{u: 6429, i: 72708, n: "Ornate Guild Helmet", p: {craft: true}},
-	{u: 6519, i: 74322, n: "Mistward Headwrap", p: {achievement: 0}}
+	{u: 6519, i: 74322, n: "Mistward Headwrap", p: {achievement: 0}},
+	{u: 6734, i: 78501, n: "Triumphant Warhelm", p: {badge: 0}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -1650,7 +1687,8 @@ Armor_Heavy_Shoulders: [
 	{u: 6306, i: 74491, n: "Nightfury", t: [74491]},
 	{u: 6428, i: 75380, n: "Bladed Pauldrons", p: {map_vb: 500}},
 	{u: 6479, i: 75344, n: "Herald's Shoulderplate", p: {achievement: 0}},
-	{u: 6577, i: 77645, n: "Winter's Presence", p: {achievement: 0}}
+	{u: 6577, i: 77645, n: "Winter's Presence", p: {achievement: 0}},
+	{u: 6719, i: 78326, n: "Triumphant Pauldrons", p: {badge: 0}}
 ],
 Armor_Heavy_Coat: [
 	{u: 2, i: 3168, n: "Chainmail Chestpiece", t: [2868, 2870, 2869, 2858, 2856, 2857, 2859, 2861, 2860, 2862, 2865, 2864, 2863, 2867, 2866, 2871, 3114, 3132, 3150, 3168, 3207, 3205, 3206, 3212, 3213, 3214, 3215, 3216, 3217, 3218, 3219, 3220, 3221, 3222, 3223, 3208, 3224, 3209, 3210, 3211, 5018, 5045, 5063, 5081, 5099, 5030, 5135, 5117, 5153, 5171, 5189, 5207, 5225, 5243, 5261, 5279]},
@@ -1719,7 +1757,8 @@ Armor_Heavy_Coat: [
 	{u: 6185, i: 75004, n: "Leystone Breastplate", p: {achievement: 0}},
 	{u: 6218, i: 70984, n: "Ornate Guild Breastplate", p: {craft: true}},
 	{u: 6244, i: 74957, n: "Bladed Breastplate", p: {achievement: 0}},
-	{u: 6523, i: 74079, n: "Mistward Plate", p: {achievement: 0}}
+	{u: 6523, i: 74079, n: "Mistward Plate", p: {achievement: 0}},
+	{u: 6740, i: 78608, n: "Triumphant Breastplate", p: {badge: 0}}
 ],
 Armor_Heavy_Gloves: [
 	{u: 20, i: 3169, n: "Chainmail Gauntlets", t: [2876, 2877, 2878, 2881, 2874, 2880, 2886, 2885, 2882, 2875, 2873, 2887, 2884, 3115, 2872, 3133, 3151, 2883, 3228, 3231, 3230, 2879, 3169, 3233, 3236, 3232, 3226, 3227, 3244, 3229, 3234, 3237, 3225, 3235, 3238, 3239, 3240, 3241, 3242, 3243, 5064, 5046, 5031, 5082, 5019, 5100, 5118, 5154, 5136, 5262, 5172, 5208, 5190, 5244, 5280, 5226]},
@@ -1797,7 +1836,9 @@ Armor_Heavy_Gloves: [
 	{u: 6375, i: 72045, n: "Dragonhunter's Gauntlet", p: {achievement: 0}},
 	{u: 6414, i: 70425, n: "Shackles of Madness", p: {cob: 6}},
 	{u: 6426, i: 72691, n: "Leystone Gauntlets", p: {coin: 0}},
-	{u: 6467, i: 72220, n: "Mistward Warfists", p: {achievement: 0}}
+	{u: 6467, i: 72220, n: "Mistward Warfists", p: {achievement: 0}},
+	{u: 6727, i: 78667, n: "Chaos Gloves", p: {gem: 500}},
+	{u: 6730, i: 78644, n: "Triumphant Gauntlets", p: {badge: 0}}
 ],
 Armor_Heavy_Leggings: [
 	{u: 1, i: 3171, n: "Chainmail Leggings", t: [2902, 2904, 2916, 2905, 2907, 2908, 2909, 2910, 2913, 2911, 2912, 2915, 2906, 2914, 2903, 3117, 3153, 3268, 3269, 3135, 3270, 2917, 3272, 3271, 3171, 3274, 3273, 3275, 3276, 3265, 3264, 3277, 3280, 3266, 3282, 3263, 3279, 3267, 3278, 5020, 5033, 5048, 5138, 5156, 5084, 5174, 5192, 5210, 5066, 5120, 5228, 5246, 5282, 5264, 3281, 5102]},
@@ -1866,7 +1907,8 @@ Armor_Heavy_Leggings: [
 	{u: 6197, i: 75879, n: "Ornate Guild Tassets", p: {craft: true}},
 	{u: 6241, i: 71237, n: "Leystone Tassets", p: {coin: 0}},
 	{u: 6262, i: 73850, n: "Bladed Tassets", p: {map_vb: 500}},
-	{u: 6511, i: 70598, n: "Mistward Legguards", p: {achievement: 0}}
+	{u: 6511, i: 70598, n: "Mistward Legguards", p: {achievement: 0}},
+	{u: 6726, i: 78198, n: "Triumphant Legplates", p: {badge: 0}}
 ],
 Armor_Heavy_Boots: [
 	{u: 27, i: 886, n: "Scallywag Greaves", t: [801, 807, 802, 820, 830, 841, 810, 846, 834, 853, 848, 827, 866, 886, 859, 874, 896, 903, 45064, 45136, 876]},
@@ -1936,7 +1978,8 @@ Armor_Heavy_Boots: [
 	{u: 6336, i: 71786, n: "Bladed Greaves", p: {map_vb: 500}},
 	{u: 6420, i: 74851, n: "Leystone Greaves", p: {coin: 0}},
 	{u: 6446, i: 70962, n: "Ornate Guild Greaves", p: {craft: true}},
-	{u: 6484, i: 74386, n: "Invisible Stompers", t: [74386]}
+	{u: 6484, i: 74386, n: "Invisible Stompers", t: [74386]},
+	{u: 6682, i: 78288, n: "Triumphant Wargreaves", p: {badge: 0}}
 ],
 Armor_Light_HelmAquatic: [
 	{u: 855, i: 6477, n: "Cloth Aquabreather", p: {starting: true}},
@@ -2094,7 +2137,10 @@ Weapon_Axe: [
 	{u: 6582, i: 77582, n: "Timekeeper Axe", t: [77582]},
 	{u: 6610, i: 77800, n: "Soaring Axe", t: [77800]},
 	{u: 6646, i: 78004, n: "Dominator Axe", t: [78004]},
-	{u: 6665, i: 78105, n: "Kaiser Snake Axe", t: [78105]}
+	{u: 6665, i: 78105, n: "Kaiser Snake Axe", t: [78105]},
+	{u: 6692, i: 78427, n: "Spectral Axe", t: [78427]},
+	{u: 6749, i: 78777, n: "Cavalier Axe", t: [78777]},
+	{u: 6789, i: 78872, n: "Privateer Axe", p: {gem: 0}}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", t: [49332]},
@@ -2217,7 +2263,11 @@ Weapon_Mace: [
 	{u: 6595, i: 77571, n: "Timekeeper Mace", t: [77571]},
 	{u: 6605, i: 77793, n: "Soaring Mace", t: [77793]},
 	{u: 6637, i: 77956, n: "Dominator Mace", t: [77956]},
-	{u: 6649, i: 77977, n: "White Mantle Gavel", p: {raid_ft: 600}}
+	{u: 6649, i: 77977, n: "White Mantle Gavel", p: {raid_ft: 600}},
+	{u: 6675, i: 78098, n: "Kaiser Snake Mace", t: [78013]},
+	{u: 6709, i: 78316, n: "Spectral Mace", t: [78316]},
+	{u: 6747, i: 78779, n: "Cavalier Mace", t: [78779]},
+	{u: 6832, i: 78889, n: "Privateer Mace", p: {gem: 0}}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", t: [49353]},
@@ -2305,7 +2355,7 @@ Weapon_Sword: [
 	{u: 5090, i: 32322, n: "Legionnaire Sword", t: [32322, 32320, 32319, 32321]},
 	{u: 5105, i: 47334, n: "Orrian Sabre", t: [47239, 47241, 47240, 47242, 47331, 47330, 47332, 47333, 47334, 47411, 47413, 47414, 47487, 47488, 47489, 47490, 47412]},
 	{u: 5134, i: 39055, n: "Verdant Blade", t: [34795, 34794, 34796, 34866, 34867, 34868, 34869, 38998, 39036, 39055, 39017]},
-	{u: 5231, i: 42138, n: "Einhänder", p: {badge: 7}},
+	{u: 5231, i: 42138, n: "EinhÃ¤nder", p: {badge: 7}},
 	{u: 5232, i: 33006, n: "Flame Blade", t: [32933, 32932, 33003, 33004, 33005, 33006, 32931]},
 	{u: 5235, i: 25595, n: "Norn Blade", t: [25591, 25593, 25589, 25590, 25594, 25592, 25595, 29266]},
 	{u: 5239, i: 42254, n: "Glyphic Edge", p: {badge: 7}},
@@ -2361,7 +2411,10 @@ Weapon_Sword: [
 	{u: 6588, i: 77672, n: "Timekeeper Sword", t: [77672]},
 	{u: 6614, i: 77801, n: "Soaring Sword", t: [77801]},
 	{u: 6643, i: 77957, n: "Dominator Sword", t: [77957]},
-	{u: 6673, i: 78103, n: "Kaiser Snake Sword", t: [78103]}
+	{u: 6673, i: 78103, n: "Kaiser Snake Sword", t: [78103]},
+	{u: 6696, i: 78523, n: "Spectral Sword", t: [78523]},
+	{u: 6772, i: 78747, n: "Cavalier Sword", t: [78747]},
+	{u: 6817, i: 78831, n: "Privateer Sword", p: {gem: 0}}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", t: [49317]},
@@ -2495,7 +2548,10 @@ Weapon_Dagger: [
 	{u: 6591, i: 77641, n: "Timekeeper Dagger", t: [77641]},
 	{u: 6611, i: 77798, n: "Soaring Dagger", t: [77798]},
 	{u: 6631, i: 77897, n: "Dominator Dagger", t: [77897]},
-	{u: 6679, i: 78024, n: "Kaiser Snake Dagger", t: [78024]}
+	{u: 6679, i: 78024, n: "Kaiser Snake Dagger", t: [78024]},
+	{u: 6729, i: 78263, n: "Spectral Dagger", t: [78263]},
+	{u: 6751, i: 78780, n: "Cavalier Dagger", t: [78780]},
+	{u: 6793, i: 78956, n: "Privateer Dagger", p: {gem: 0}}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", t: [49335]},
@@ -2624,7 +2680,10 @@ Weapon_Pistol: [
 	{u: 6609, i: 77797, n: "Soaring Pistol", t: [77797]},
 	{u: 6635, i: 77887, n: "White Mantle Pistol", p: {raid_ft: 600}},
 	{u: 6655, i: 77961, n: "Dominator Pistol", t: [77961]},
-	{u: 6666, i: 78077, n: "Kaiser Snake Pistol", t: [78077]}
+	{u: 6666, i: 78077, n: "Kaiser Snake Pistol", t: [78077]},
+	{u: 6723, i: 78648, n: "Spectral Pistol", t: [78648]},
+	{u: 6756, i: 78749, n: "Cavalier Pistol", t: [78749]},
+	{u: 6786, i: 78840, n: "Privateer Pistol", p: {gem: 0}}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", t: [49341]},
@@ -2755,7 +2814,10 @@ Weapon_Scepter: [
 	{u: 6593, i: 77600, n: "Timekeeper Scepter", t: [77600]},
 	{u: 6604, i: 77802, n: "Soaring Scepter", t: [77802]},
 	{u: 6653, i: 77814, n: "Dominator Scepter", t: [77814]},
-	{u: 6663, i: 78070, n: "Kaiser Snake Scepter", t: [78070]}
+	{u: 6663, i: 78070, n: "Kaiser Snake Scepter", t: [78070]},
+	{u: 6731, i: 78208, n: "Spectral Scepter", t: [78208]},
+	{u: 6746, i: 78774, n: "Cavalier Scepter", t: [78774]},
+	{u: 6808, i: 78854, n: "Privateer Scepter", p: {gem: 0}}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", t: [44897]},
@@ -2903,7 +2965,10 @@ Weapon_Focus: [
 	{u: 6608, i: 77803, n: "Soaring Focus", t: [77803]},
 	{u: 6639, i: 77894, n: "Slothasor Effigy", p: {raid_ft: 600}},
 	{u: 6650, i: 77973, n: "Dominator Focus", t: [77973]},
-	{u: 6678, i: 78022, n: "Kaiser Snake Focus", t: [78022]}
+	{u: 6678, i: 78022, n: "Kaiser Snake Focus", t: [78022]},
+	{u: 6708, i: 78406, n: "Spectral Focus", t: [78406]},
+	{u: 6767, i: 78755, n: "Cavalier Focus", t: [78755]},
+	{u: 6816, i: 78798, n: "Privateer Focus", p: {gem: 0}}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", t: [49344]},
@@ -3048,7 +3113,10 @@ Weapon_Shield: [
 	{u: 6600, i: 77799, n: "Soaring Shield", t: [77799]},
 	{u: 6651, i: 77964, n: "White Mantle Bulwark", p: {raid_ft: 600}},
 	{u: 6654, i: 77951, n: "Dominator Shield", t: [77951]},
-	{u: 6664, i: 78112, n: "Kaiser Snake Shield", t: [78112]}
+	{u: 6664, i: 78112, n: "Kaiser Snake Shield", t: [78112]},
+	{u: 6681, i: 78354, n: "Spectral Shield", t: [78354]},
+	{u: 6768, i: 78765, n: "Cavalier Shield", t: [78765]},
+	{u: 6827, i: 78968, n: "Privateer Shield", p: {gem: 0}}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -3173,7 +3241,10 @@ Weapon_Torch: [
 	{u: 6606, i: 77791, n: "Soaring Torch", t: [77791]},
 	{u: 6633, i: 77904, n: "White Mantle Censer", p: {raid_ft: 600}},
 	{u: 6640, i: 77996, n: "Dominator Torch", t: [77996]},
-	{u: 6670, i: 78033, n: "Kaiser Snake Torch", t: [78033]}
+	{u: 6670, i: 78033, n: "Kaiser Snake Torch", t: [78033]},
+	{u: 6714, i: 78311, n: "Spectral Torch", t: [78311]},
+	{u: 6780, i: 78761, n: "Cavalier Torch", t: [78761]},
+	{u: 6807, i: 78803, n: "Privateer Torch", p: {gem: 0}}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", t: [49359]},
@@ -3299,7 +3370,10 @@ Weapon_Warhorn: [
 	{u: 6607, i: 77792, n: "Soaring Warhorn", t: [77792]},
 	{u: 6626, i: 77896, n: "White Mantle Bugle", p: {raid_ft: 600}},
 	{u: 6627, i: 77991, n: "Dominator Warhorn", t: [77991]},
-	{u: 6671, i: 78096, n: "Kaiser Snake Warhorn", t: [78096]}
+	{u: 6671, i: 78096, n: "Kaiser Snake Warhorn", t: [78096]},
+	{u: 6735, i: 78189, n: "Spectral Warhorn", t: [78189]},
+	{u: 6777, i: 78757, n: "Cavalier Warhorn", t: [78757]},
+	{u: 6797, i: 78932, n: "Privateer Warhorn", p: {gem: 0}}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", t: [49321, 49323]},
@@ -3383,7 +3457,7 @@ Weapon_Greatsword: [
 	{u: 5082, i: 47274, n: "Orrian Longsword", t: [47191, 47193, 47192, 47194, 47270, 47271, 47273, 47272, 47274, 47362, 47363, 47364, 47439, 47365, 47440, 47441, 47442]},
 	{u: 5083, i: 39043, n: "Verdant Greatsword", t: [34758, 34759, 34819, 34821, 34820, 39043, 34818, 38986, 39005, 39024, 34760]},
 	{u: 5180, i: 32958, n: "Flame Greatsword", t: [32897, 32896, 32895, 32956, 32957, 32958, 32955]},
-	{u: 5193, i: 42128, n: "Zweihänder", p: {badge: 10}},
+	{u: 5193, i: 42128, n: "ZweihÃ¤nder", p: {badge: 10}},
 	{u: 5194, i: 25115, n: "Norn Greatsword", t: [25111, 25109, 25110, 25112, 25114, 25113, 25115]},
 	{u: 5212, i: 34137, n: "Tribal Greatsword", t: [34136, 34134, 34135, 34137]},
 	{u: 5215, i: 47518, n: "Ceremonial Scimitar", t: [27321, 47515, 47518, 47516, 47517]},
@@ -3441,7 +3515,10 @@ Weapon_Greatsword: [
 	{u: 6598, i: 77790, n: "Soaring Greatsword", t: [77790]},
 	{u: 6630, i: 77942, n: "White Mantle Sunderer", p: {raid_ft: 600}},
 	{u: 6648, i: 77898, n: "Dominator Greatsword", t: [77898]},
-	{u: 6677, i: 78053, n: "Kaiser Snake Greatsword", t: [78053]}
+	{u: 6677, i: 78053, n: "Kaiser Snake Greatsword", t: [78053]},
+	{u: 6703, i: 78660, n: "Spectral Greatsword", t: [78660]},
+	{u: 6765, i: 78772, n: "Cavalier Greatsword", t: [78772]},
+	{u: 6803, i: 78924, n: "Privateer Greatsword", p: {gem: 0}}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", t: [49326]},
@@ -3507,7 +3584,7 @@ Weapon_Hammer: [
 	{u: 4880, i: 27647, n: "The Briny Deep", t: [27647]},
 	{u: 4881, i: 27649, n: "Remnant of Ascalon", t: [27649]},
 	{u: 4884, i: 31078, n: "Foefire's Power", t: [31078]},
-	{u: 4885, i: 31079, n: "Mjölnir", t: [31079]},
+	{u: 4885, i: 31079, n: "MjÃ¶lnir", t: [31079]},
 	{u: 4940, i: 31115, n: "Priory's Historical Hammer", p: {coin: 55200}},
 	{u: 4941, i: 31134, n: "Whisper's Secret Hammer", p: {coin: 55200}},
 	{u: 4947, i: 31171, n: "Vigil's Honor Hammer", p: {coin: 55200}},
@@ -3575,9 +3652,12 @@ Weapon_Hammer: [
 	{u: 6613, i: 77794, n: "Soaring Hammer", t: [77794]},
 	{u: 6629, i: 77881, n: "Dominator Hammer", t: [77881]},
 	{u: 6642, i: 77970, n: "Sloth-Hunting Hammer", p: {raid_ft: 600}},
-	{u: 6672, i: 78081, n: "Kaiser Snake Hammer", t: [78081]}
+	{u: 6672, i: 78081, n: "Kaiser Snake Hammer", t: [78081]},
+	{u: 6724, i: 78166, n: "Spectral Hammer", t: [78166]},
+	{u: 6764, i: 78750, n: "Cavalier Hammer", t: [78750]},
+	{u: 6787, i: 78993, n: "Privateer Hammer", p: {gem: 0}}
 ],
-Weapon_LongBow: [
+Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", t: [44906]},
 	{u: 3681, i: 49329, n: "Tormented Longbow ", t: [49329]},
 	{u: 3706, i: 48973, n: "Dreamthistle Longbow", t: [48973]},
@@ -3637,7 +3717,7 @@ Weapon_LongBow: [
 	{u: 4703, i: 28272, n: "Eir's Longbow", t: [28272]},
 	{u: 4766, i: 31070, n: "Wings of Dwayna", t: [31070]},
 	{u: 4777, i: 28275, n: "Droknar's Recurve Bow", t: [28275]},
-	{u: 4779, i: 28262, n: "Éibhear Dunn", t: [28262]},
+	{u: 4779, i: 28262, n: "Ã‰ibhear Dunn", t: [28262]},
 	{u: 4784, i: 31071, n: "Azureflame", t: [31071]},
 	{u: 4803, i: 44980, n: "Arc", t: [44980]},
 	{u: 4805, i: 44983, n: "Arthropoda", t: [44983]},
@@ -3709,9 +3789,12 @@ Weapon_LongBow: [
 	{u: 6612, i: 77805, n: "Soaring Longbow", t: [77805]},
 	{u: 6628, i: 77985, n: "Dominator Longbow", t: [77985]},
 	{u: 6652, i: 77924, n: "White Mantle Greatbow", p: {raid_ft: 600}},
-	{u: 6669, i: 78048, n: "Kaiser Snake Longbow", t: [78048]}
+	{u: 6669, i: 78048, n: "Kaiser Snake Longbow", t: [78048]},
+	{u: 6689, i: 78629, n: "Spectral Longbow", t: [78629]},
+	{u: 6758, i: 78776, n: "Cavalier Longbow", t: [78776]},
+	{u: 6819, i: 78929, n: "Privateer Longbow", p: {gem: 0}}
 ],
-Weapon_ShortBow: [
+Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", t: [44924]},
 	{u: 3682, i: 49347, n: "Tormented Short Bow ", t: [49347]},
 	{u: 3715, i: 44034, n: "Aetherized Short Bow", t: [44032, 43982, 44034]},
@@ -3772,7 +3855,7 @@ Weapon_ShortBow: [
 	{u: 4746, i: 44979, n: "Stardust", t: [44979]},
 	{u: 4749, i: 44984, n: "Crustacea", t: [44984]},
 	{u: 4756, i: 31073, n: "Feathers of Dwayna", t: [31073]},
-	{u: 4772, i: 27791, n: "Éibhear Finn", t: [27791]},
+	{u: 4772, i: 27791, n: "Ã‰ibhear Finn", t: [27791]},
 	{u: 4775, i: 27795, n: "Bow of the Pale Stag", t: [27795]},
 	{u: 4778, i: 27798, n: "Trosa's Short Bow", t: [27798]},
 	{u: 4780, i: 27802, n: "Eir's Short Bow", t: [27802]},
@@ -3842,7 +3925,14 @@ Weapon_ShortBow: [
 	{u: 6603, i: 77795, n: "Soaring Short Bow", t: [77795]},
 	{u: 6638, i: 77933, n: "White Mantle Short Bow", p: {raid_ft: 600}},
 	{u: 6647, i: 77880, n: "Dominator Short Bow", t: [77880]},
-	{u: 6676, i: 78067, n: "Kaiser Snake Short Bow", t: [78067]}
+	{u: 6676, i: 78067, n: "Kaiser Snake Short Bow", t: [78067]},
+	{u: 6702, i: 78330, n: "The Hunt", p: {craft: true}},
+	{u: 6737, i: 78524, n: "The Ambush", p: {craft: true}},
+	{u: 6712, i: 78425, n: "Tigris", p: {craft: true}},
+	{u: 6717, i: 78556, n: "Chuka and Champawat", p: {craft: true}},
+	{u: 6720, i: 78664, n: "Spectral Short Bow", t: [78664]},
+	{u: 6753, i: 78778, n: "Cavalier Short Bow", t: [78778]},
+	{u: 6830, i: 78816, n: "Privateer Short Bow", p: {gem: 0}}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", t: [49338]},
@@ -3974,7 +4064,10 @@ Weapon_Rifle: [
 	{u: 6581, i: 77591, n: "Timekeeper Rifle", t: [77591]},
 	{u: 6616, i: 77796, n: "Soaring Rifle", t: [77796]},
 	{u: 6632, i: 77989, n: "Dominator Rifle", t: [77989]},
-	{u: 6667, i: 78023, n: "Kaiser Snake Rifle", t: [78023]}
+	{u: 6667, i: 78023, n: "Kaiser Snake Rifle", t: [78023]},
+	{u: 6704, i: 78131, n: "Spectral Rifle", t: [78131]},
+	{u: 6757, i: 78775, n: "Cavalier Rifle", t: [78775]},
+	{u: 6822, i: 78841, n: "Privateer Rifle", p: {gem: 0}}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", t: [49348, 49350]},
@@ -4119,7 +4212,11 @@ Weapon_Staff: [
 	{u: 6599, i: 77806, n: "Soaring Staff", t: [77806]},
 	{u: 6645, i: 77891, n: "Staff of Matthias", p: {raid_ft: 600}},
 	{u: 6656, i: 77960, n: "Dominator Staff", t: [77960]},
-	{u: 6674, i: 78050, n: "Kaiser Snake Staff", t: [78050]}
+	{u: 6674, i: 78050, n: "Kaiser Snake Staff", t: [78050]},
+	{u: 6069, i: 69974, n: "Yggdrasil"},
+	{u: 6710, i: 78580, n: "Spectral Staff", t: [78580]},
+	{u: 6783, i: 78759, n: "Cavalier Staff", t: [78759]},
+	{u: 6826, i: 78908, n: "Privateer Staff", p: {gem: 0}}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", t: [63881]},
