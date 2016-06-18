@@ -4189,7 +4189,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				Z.collateSkins();
+				
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -4199,9 +4199,9 @@ Z = {
 			{
 				Z.updateItemsSubdatabase(args[1]);
 			}},
-			updatesearch: {usage: "Prints an updated search database of items.", f: function()
+			collate: {usage: "Executes a function to update and categorize an API cache. <em>Parameters: str_cachename</em>", f: function()
 			{
-				Z.collateSearch();
+				Z.executeCollate(args[1]);
 			}}
 		};
 		// Execute the command by finding it in the object
@@ -4680,6 +4680,345 @@ Z = {
 	},
 	
 	/*
+	 * Creates a processed object from a color API object, to be stored in the
+	 * custom dyes database for use in account bank.
+	 * @param object pItem a dye item, or a color object.
+	 * @returns object.
+	 * @pre Items and Colors database for all languages were loaded.
+	 */
+	processDye: function(pColor)
+	{
+		var colordb = Z.DatabaseCache["colors"];
+		var itemdb = (Z.DatabaseCache["items"])[O.OptionEnum.Language.Default];
+		var item = itemdb[pColor.item];
+		// Create CSS colors from the RGB values
+		var materials = ["cloth", "leather", "metal"];
+		var matarr = [];
+		for (var i = 0; i < materials.length; i++)
+		{
+			var ithmat = materials[i];
+			matarr.push(U.convertRGBToHex((pColor[ithmat]).rgb));
+		}
+		
+		// Format of the object with properties in this order
+		var obj = {};
+		obj.u = pColor.id;
+		if (pColor.item) // If the color has an associated item to unlock it
+		{
+			obj.i = pColor.item;
+			obj.n = item.name;
+		}
+		else
+		{
+			obj.n = pColor.name;
+		}
+		obj.c = matarr;
+		obj.h = pColor.categories[0];
+		obj.m = pColor.categories[1];
+		obj.l = item.chat_link;
+		// Add translated names, with the property key as the language code
+		Z.DatabaseLanguages.forEach(function(iLang)
+		{
+			obj[iLang] = (colordb[iLang])[pColor.id].name;
+		});
+		
+		return obj;
+	},
+	
+	/*
+	 * Prints the current daily achievements.
+	 * @param boolean pWantTomorrow whether to get tomorrow's instead of today's.
+	 */
+	printDaily: function(pWantTomorrow)
+	{
+		var numfetched = 0;
+		var numtofetch = 0;
+		var dailyobj = {};
+		var finalizeDaily = function()
+		{
+			if (numtofetch === numfetched)
+			{
+				if (pWantTomorrow === undefined)
+				{
+					I.print("TODAY'S DAILIES");
+				}
+				for (var i in dailyobj)
+				{
+					I.print(i);
+					for (var ii in dailyobj[i])
+					{
+						var ach = (dailyobj[i])[ii];
+						I.prettyJSON(ach);
+					}
+				}
+				// Also recursively print tomorrow's
+				if (pWantTomorrow === undefined)
+				{
+					I.print("<br />");
+					I.print("TOMORROW'S DAILIES");
+					Z.printDaily(true);
+				}
+			}
+		};
+		
+		var url = (pWantTomorrow) ? U.URL_API.Tomorrow : U.URL_API.Daily;
+		$.getJSON(url + U.URL_API.LangKey, function(pData)
+		{
+			for (var i in pData)
+			{
+				numtofetch += (pData[i]).length;
+			}
+			for (var i in pData)
+			{
+				dailyobj[i] = [];
+				for (var ii in pData[i])
+				{
+					var ach = (pData[i])[ii];
+					(function(iAchArray, iAch)
+					{
+						$.getJSON(U.getAPIAchievement(iAch.id), function(iData)
+						{
+							iData.level = iAch.level; // Append the level from the daily object to the actual achievement
+							iAchArray.push(iData);
+						}).always(function()
+						{
+							numfetched++;
+							finalizeDaily();
+						});
+					})(dailyobj[i], ach);
+				}
+			}
+		});
+	},
+	
+	/*
+	 * Loads a database in all available languages.
+	 * @param string pName of database to look for file.
+	 * @param function pCallback to execute after loaded.
+	 */
+	loadMultilingualDatabase: function(pName, pCallback)
+	{
+		var dbname = pName.toLowerCase();
+		var database = {};
+		// Use loaded database if available
+		if (Z.DatabaseCache[dbname] !== undefined)
+		{
+			pCallback(Z.DatabaseCache[dbname]);
+			return;
+		}
+		
+		// Check to see if all language versions of the database are loaded
+		var finalize = function()
+		{
+			var isallloaded = true;
+			Z.DatabaseLanguages.forEach(function(iLang)
+			{
+				if (database[iLang] === undefined)
+				{
+					isallloaded = false;
+				}
+			});
+			if (isallloaded)
+			{
+				Z.DatabaseCache[dbname] = database;
+				pCallback(Z.DatabaseCache[dbname]);
+			}
+		};
+		
+		// Retrieve the database
+		Z.DatabaseLanguages.forEach(function(iLang)
+		{
+			$.getJSON(U.getDatabaseURL(dbname, iLang), function(pData)
+			{
+				database[iLang] = pData;
+				finalize();
+			});
+		});
+	},
+	
+	/*
+	 * Loads the items database in the default language.
+	 * @param function pCallback to execute after loaded.
+	 */
+	getItemsDatabase: function(pCallback)
+	{
+		var lang = O.OptionEnum.Language.Default;
+		$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
+		{
+			Z.DatabaseCache[lang] = pData;
+			pCallback(pData);
+		});
+	},
+	
+	/*
+	 * Loads the items database in all available languages.
+	 * @param function pCallback to execute after loaded.
+	 */
+	loadItemsDatabase: function(pCallback)
+	{
+		Z.loadMultilingualDatabase("items", pCallback);
+	},
+	
+	/*
+	 * Creates JSON files containing an associative array of item details, for
+	 * use by a specific Account page section.
+	 * @param string pType section.
+	 */
+	updateItemsSubdatabase: function(pType)
+	{
+		var scripturl = U.getDataScriptURL(pType.toLowerCase());
+		Z.loadItemsDatabase(function(pDatabase)
+		{
+			$.getScript(scripturl, function()
+			{
+				Z.freeFiles();
+				var data = U.getRecordData(pType);
+				var itemids = [];
+				for (var i in data)
+				{
+					var catarr = data[i];
+					for (var ii = 0; ii < catarr.length; ii++)
+					{
+						itemids.push(catarr[ii].i);
+					}
+				}
+				
+				for (var i in pDatabase)
+				{
+					// Reinitialize for ith language
+					Z.APICacheArrayOfObjects = null;
+					Z.APICacheArrayOfObjects = [];
+					var db = pDatabase[i];
+					for (var ii = 0; ii < itemids.length; ii++)
+					{
+						var itemid = itemids[ii];
+						Z.APICacheArrayOfObjects.push(db[itemid]);
+					}
+					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id"});
+					var filename = pType.toLowerCase() + "_" + i + ".json";
+					Z.printAPICache(0, {aWantQuotes: true, aWantFile: true, aFileName: filename});
+				}
+			}).fail(function()
+			{
+				I.print("Error retrieving script: " + scripturl);
+			});
+		});
+	},
+	
+	/*
+	 * Downloads items that are missing from the current version of the items
+	 * database for every available API languages.
+	 */
+	updateItemsDatabase: function()
+	{
+		var counter = 0;
+		var newitemslist, newitems;
+		var updateDBLang = function()
+		{
+			// Stopping condition for this recursive function
+			if (counter >= Z.DatabaseLanguages.length)
+			{
+				I.print("Items database of all languages updated.");
+				if (newitems)
+				{
+					I.prettyJSON(newitems);
+				}
+				return;
+			}
+			var lang = Z.DatabaseLanguages[counter];
+			$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
+			{
+				var dbarray = [];
+				var currentitemids = [];
+				// Convert the associative array into an array for later sorting
+				for (var ithitemid in pData)
+				{
+					dbarray.push(pData[ithitemid]);
+					currentitemids.push(parseInt(ithitemid));
+				}
+				// Find what item IDs are missing by comparing the API's current list with the one here
+				var newitemids = U.getDifference(newitemslist, currentitemids);
+				if (newitemids.length)
+				{
+					Z.scrapeAPIArray(newitemids, "items", {
+						aQueryStr: "?lang=" + lang,
+						aCallback: function(pNewItems)
+					{
+						for (var i = 0; i < pNewItems.length; i++)
+						{
+							dbarray.push(pNewItems[i]);
+						}
+						if (lang === O.OptionEnum.Language.Default)
+						{
+							newitems = pNewItems;
+						}
+						U.sortObjects(dbarray, {aKeyName: "id"});
+						Z.APICacheArrayOfObjects = dbarray;
+						Z.printAPICache(0, {
+							aWantQuotes: true,
+							aWantFile: true,
+							aFileName: "items_" + lang + ".json"
+						});
+						counter++;
+						updateDBLang();
+					}});
+				}
+				else
+				{
+					I.print("Database &quot;" + lang + "&quot; is up-to-date. No difference found in IDs list.");
+					counter++;
+					updateDBLang();
+				}
+			});
+		};
+		
+		// Initial call
+		$.getJSON(U.URL_API.ItemDatabase, function(pData)
+		{
+			newitemslist = pData;
+			updateDBLang();
+		});
+	},
+	
+	/*
+	 * Executes a collate function.
+	 * @param string pName of the function.
+	 */
+	executeCollate: function(pName)
+	{
+		var prefix = "collate", name;
+		var printFunctions = function()
+		{
+			I.print("Collate function not found, available functions:");
+			for (var i in Z)
+			{
+				if (i.indexOf(prefix) !== -1)
+				{
+					name = i.substring(i.indexOf(prefix) + prefix.length, i.length).toLowerCase();
+					I.print(name);
+				}
+			}
+		};
+		
+		if (pName)
+		{
+			var functionname = prefix + U.toFirstUpperCase(pName);
+			if (Z[functionname])
+			{
+				(Z[functionname])();
+			}
+			else
+			{
+				printFunctions();
+			}
+		}
+		else
+		{
+			printFunctions();
+		}
+	},
+	
+	/*
 	 * Decomposes the items database into a lightweight array for searching by name.
 	 * Sample structure: [[69984,"bo"],[31283,"bow"],[70936,"keg"]...]
 	 * @pre Items database files are up to date.
@@ -4768,20 +5107,33 @@ Z = {
 		var updateSkinEntry = function(pEntry, pItem)
 		{
 			pEntry.i = pItem.id;
+			// Add to the list of items associated with this skin, this will not be included in the result
+			if (newskins[pEntry.u].oAssocItems === undefined)
+			{
+				newskins[pEntry.u].oAssocItems = [];
+			}
+			newskins[pEntry.u].oAssocItems.push(pItem.id);
+			// Update skin entry properties
 			if (Q.isTradeable(pItem))
 			{
+				// IDs of items that unlock the skin
 				if (pEntry.t === undefined)
 				{
 					pEntry.t = [];
 				}
 				pEntry.t.push(pItem.id);
 			}
+			else
+			{
+				// If not tradeable then a custom payment property must be later manually assigned
+				pEntry.p = {coin: null};
+			}
 		};
 		
 		// Scans through the item database once, modifying the skin entry in the record if the item has a matching skin ID
 		var associateNewSkins = function()
 		{
-			var item, skinid;
+			var item, itemid, skinid, ithskin, skinelm, itemselm;
 			for (var i in itemdb)
 			{
 				item = itemdb[i];
@@ -4818,10 +5170,29 @@ Z = {
 			}
 			// Final output
 			Z.printUnlockables(record);
-			if (newskins.length)
+			I.print("<br />");
+			if (newskins)
 			{
 				I.print("New skins added:");
-				Z.printAPICache(0, {aCustomCache: newskins});
+				// Print the new skins and also items associated with that skin, for manually reassigning the "representative" item
+				for (var i in newskins)
+				{
+					ithskin = newskins[i];
+					skinelm = $("<div style='margin-bottom:24px'><span><img src='" + ithskin.icon + "' />" + U.escapeHTML(U.lineJSON(ithskin))
+						+ "</span></div>").appendTo("#cslContent");
+					itemselm = $("<div></div>").appendTo(skinelm);
+					for (var ii = 0; ii < ithskin.oAssocItems.length; ii++)
+					{
+						itemid = ithskin.oAssocItems[ii];
+						item = itemdb[itemid];
+						itemselm.append("<aside><input class='cssInputText' type='text' value='"
+							+ item.id + "' /> <a" + U.convertExternalAnchor(U.getWikiLinkDefault(item.name)) + ">" + item.name + "</a></aside>");
+					}
+					skinelm.find(".cssInputText").click(function()
+					{
+						$(this).select();
+					});
+				}
 			}
 			else
 			{
@@ -4861,13 +5232,14 @@ Z = {
 			// Fetch new skins
 			Z.scrapeAPIArray(filteredskinids, section.toLowerCase(), {aCallback: function(pData)
 			{
-				newskins = pData;
 				var isnewblacklist = false;
 				var catname;
 				var ithskin;
+				newskins = {};
 				for (var i = 0; i < pData.length; i++)
 				{
 					ithskin = pData[i];
+					newskins[ithskin.id] = ithskin;
 					if (ithskin.name === "" || ithskin.type === undefined)
 					{
 						// Create a new blacklist by looking for mismatch or improper skins
@@ -4876,7 +5248,7 @@ Z = {
 					}
 					else
 					{
-						// Create initial entry in the record, to be assigned with associated item ID later
+						// Categorize skin
 						catname = "";
 						if (ithskin.type === "Armor" && ithskin.details && ithskin.details.type && ithskin.details.weight_class)
 						{
@@ -4890,13 +5262,22 @@ Z = {
 						{
 							catname = ithskin.type;
 						}
+						// Create initial entry in the record, to be assigned with associated item ID later
 						var entry = {
 							u: ithskin.id,
 							i: null,
 							n: ithskin.name
 						};
-						record[catname].push(entry);
-						categorizedskins[ithskin.id] = entry;
+						if (record[catname])
+						{
+							record[catname].push(entry);
+							categorizedskins[ithskin.id] = entry;
+						}
+						else
+						{
+							I.print("Warning uncategorizable skin:");
+							I.prettyJSON(ithskin);
+						}
 					}
 				}
 				// Print the blacklist if there are new items to blacklist
@@ -5207,307 +5588,6 @@ Z = {
 					Z.printUnlockables(record, true);
 				});
 			});
-		});
-	},
-	
-	/*
-	 * Creates a processed object from a color API object, to be stored in the
-	 * custom dyes database for use in account bank.
-	 * @param object pItem a dye item, or a color object.
-	 * @returns object.
-	 * @pre Items and Colors database for all languages were loaded.
-	 */
-	processDye: function(pColor)
-	{
-		var colordb = Z.DatabaseCache["colors"];
-		var itemdb = (Z.DatabaseCache["items"])[O.OptionEnum.Language.Default];
-		var item = itemdb[pColor.item];
-		// Create CSS colors from the RGB values
-		var materials = ["cloth", "leather", "metal"];
-		var matarr = [];
-		for (var i = 0; i < materials.length; i++)
-		{
-			var ithmat = materials[i];
-			matarr.push(U.convertRGBToHex((pColor[ithmat]).rgb));
-		}
-		
-		// Format of the object with properties in this order
-		var obj = {};
-		obj.u = pColor.id;
-		if (pColor.item) // If the color has an associated item to unlock it
-		{
-			obj.i = pColor.item;
-			obj.n = item.name;
-		}
-		else
-		{
-			obj.n = pColor.name;
-		}
-		obj.c = matarr;
-		obj.h = pColor.categories[0];
-		obj.m = pColor.categories[1];
-		obj.l = item.chat_link;
-		// Add translated names, with the property key as the language code
-		Z.DatabaseLanguages.forEach(function(iLang)
-		{
-			obj[iLang] = (colordb[iLang])[pColor.id].name;
-		});
-		
-		return obj;
-	},
-	
-	/*
-	 * Prints the current daily achievements.
-	 * @param boolean pWantTomorrow whether to get tomorrow's instead of today's.
-	 */
-	printDaily: function(pWantTomorrow)
-	{
-		var numfetched = 0;
-		var numtofetch = 0;
-		var dailyobj = {};
-		var finalizeDaily = function()
-		{
-			if (numtofetch === numfetched)
-			{
-				if (pWantTomorrow === undefined)
-				{
-					I.print("TODAY'S DAILIES");
-				}
-				for (var i in dailyobj)
-				{
-					I.print(i);
-					for (var ii in dailyobj[i])
-					{
-						var ach = (dailyobj[i])[ii];
-						I.prettyJSON(ach);
-					}
-				}
-				// Also recursively print tomorrow's
-				if (pWantTomorrow === undefined)
-				{
-					I.print("<br />");
-					I.print("TOMORROW'S DAILIES");
-					Z.printDaily(true);
-				}
-			}
-		};
-		
-		var url = (pWantTomorrow) ? U.URL_API.Tomorrow : U.URL_API.Daily;
-		$.getJSON(url + U.URL_API.LangKey, function(pData)
-		{
-			for (var i in pData)
-			{
-				numtofetch += (pData[i]).length;
-			}
-			for (var i in pData)
-			{
-				dailyobj[i] = [];
-				for (var ii in pData[i])
-				{
-					var ach = (pData[i])[ii];
-					(function(iAchArray, iAch)
-					{
-						$.getJSON(U.getAPIAchievement(iAch.id), function(iData)
-						{
-							iData.level = iAch.level; // Append the level from the daily object to the actual achievement
-							iAchArray.push(iData);
-						}).always(function()
-						{
-							numfetched++;
-							finalizeDaily();
-						});
-					})(dailyobj[i], ach);
-				}
-			}
-		});
-	},
-	
-	/*
-	 * Loads a database in all available languages.
-	 * @param string pName of database to look for file.
-	 * @param function pCallback to execute after loaded.
-	 */
-	loadMultilingualDatabase: function(pName, pCallback)
-	{
-		var dbname = pName.toLowerCase();
-		var database = {};
-		// Use loaded database if available
-		if (Z.DatabaseCache[dbname] !== undefined)
-		{
-			pCallback(Z.DatabaseCache[dbname]);
-			return;
-		}
-		
-		// Check to see if all language versions of the database are loaded
-		var finalize = function()
-		{
-			var isallloaded = true;
-			Z.DatabaseLanguages.forEach(function(iLang)
-			{
-				if (database[iLang] === undefined)
-				{
-					isallloaded = false;
-				}
-			});
-			if (isallloaded)
-			{
-				Z.DatabaseCache[dbname] = database;
-				pCallback(Z.DatabaseCache[dbname]);
-			}
-		};
-		
-		// Retrieve the database
-		Z.DatabaseLanguages.forEach(function(iLang)
-		{
-			$.getJSON(U.getDatabaseURL(dbname, iLang), function(pData)
-			{
-				database[iLang] = pData;
-				finalize();
-			});
-		});
-	},
-	
-	/*
-	 * Loads the items database in the default language.
-	 * @param function pCallback to execute after loaded.
-	 */
-	getItemsDatabase: function(pCallback)
-	{
-		var lang = O.OptionEnum.Language.Default;
-		$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
-		{
-			Z.DatabaseCache[lang] = pData;
-			pCallback(pData);
-		});
-	},
-	
-	/*
-	 * Loads the items database in all available languages.
-	 * @param function pCallback to execute after loaded.
-	 */
-	loadItemsDatabase: function(pCallback)
-	{
-		Z.loadMultilingualDatabase("items", pCallback);
-	},
-	
-	/*
-	 * Creates JSON files containing an associative array of item details, for
-	 * use by a specific Account page section.
-	 * @param string pType section.
-	 */
-	updateItemsSubdatabase: function(pType)
-	{
-		var scripturl = U.getDataScriptURL(pType.toLowerCase());
-		Z.loadItemsDatabase(function(pDatabase)
-		{
-			$.getScript(scripturl, function()
-			{
-				Z.freeFiles();
-				var data = U.getRecordData(pType);
-				var itemids = [];
-				for (var i in data)
-				{
-					var catarr = data[i];
-					for (var ii = 0; ii < catarr.length; ii++)
-					{
-						itemids.push(catarr[ii].i);
-					}
-				}
-				
-				for (var i in pDatabase)
-				{
-					// Reinitialize for ith language
-					Z.APICacheArrayOfObjects = null;
-					Z.APICacheArrayOfObjects = [];
-					var db = pDatabase[i];
-					for (var ii = 0; ii < itemids.length; ii++)
-					{
-						var itemid = itemids[ii];
-						Z.APICacheArrayOfObjects.push(db[itemid]);
-					}
-					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id"});
-					var filename = pType.toLowerCase() + "_" + i + ".json";
-					Z.printAPICache(0, {aWantQuotes: true, aWantFile: true, aFileName: filename});
-				}
-			}).fail(function()
-			{
-				I.print("Error retrieving script: " + scripturl);
-			});
-		});
-	},
-	
-	/*
-	 * Downloads items that are missing from the current version of the items
-	 * database for every available API languages.
-	 */
-	updateItemsDatabase: function()
-	{
-		var counter = 0;
-		var newitemslist, newitems;
-		var updateDBLang = function()
-		{
-			// Stopping condition for this recursive function
-			if (counter >= Z.DatabaseLanguages.length)
-			{
-				I.print("Items database of all languages updated.");
-				if (newitems)
-				{
-					I.prettyJSON(newitems);
-				}
-				return;
-			}
-			var lang = Z.DatabaseLanguages[counter];
-			$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
-			{
-				var dbarray = [];
-				var currentitemids = [];
-				// Convert the associative array into an array for later sorting
-				for (var ithitemid in pData)
-				{
-					dbarray.push(pData[ithitemid]);
-					currentitemids.push(parseInt(ithitemid));
-				}
-				// Find what item IDs are missing by comparing the API's current list with the one here
-				var newitemids = U.getDifference(newitemslist, currentitemids);
-				if (newitemids.length)
-				{
-					Z.scrapeAPIArray(newitemids, "items", {
-						aQueryStr: "?lang=" + lang,
-						aCallback: function(pNewItems)
-					{
-						for (var i = 0; i < pNewItems.length; i++)
-						{
-							dbarray.push(pNewItems[i]);
-						}
-						if (lang === O.OptionEnum.Language.Default)
-						{
-							newitems = pNewItems;
-						}
-						U.sortObjects(dbarray, {aKeyName: "id"});
-						Z.APICacheArrayOfObjects = dbarray;
-						Z.printAPICache(0, {
-							aWantQuotes: true,
-							aWantFile: true,
-							aFileName: "items_" + lang + ".json"
-						});
-						counter++;
-						updateDBLang();
-					}});
-				}
-				else
-				{
-					I.print("Database &quot;" + lang + "&quot; is up-to-date. No difference found in IDs list.");
-					counter++;
-					updateDBLang();
-				}
-			});
-		};
-		
-		// Initial call
-		$.getJSON(U.URL_API.ItemDatabase, function(pData)
-		{
-			newitemslist = pData;
-			updateDBLang();
 		});
 	}
 };
@@ -8110,7 +8190,8 @@ V = {
 			B.generateUnlockables(bank, {
 				aHeaders: U.getRecordHeader(section),
 				aRecord: U.getRecordData(section),
-				aUnlockeds: unlockeds
+				aUnlockeds: unlockeds,
+				aWantDefaultHelp: false
 			});
 		};
 		
@@ -11850,7 +11931,7 @@ E = {
 		spirit: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_spirit'></ins>"; },
 		cob: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_cob'></ins>"; },
 		bubble: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_bubble'></ins>"; },
-		badge: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_badge'></ins>"; },
+		badge: function(pAmount) { return ((pAmount === 0) ? "" : pAmount.toLocaleString()) + "<ins class='s16 s16_badge'></ins>"; },
 		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_commendation'></ins>"; },
 		tournament: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_tournament'></ins>"; },
 		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_league'></ins>"; },
@@ -12147,6 +12228,7 @@ E = {
 	 */
 	animateValue: function(pInput, pOldValue, pNewValue)
 	{
+		return "DISABLED";
 		if (pNewValue < pOldValue)
 		{
 			// Red if value went down
@@ -12652,6 +12734,7 @@ E = {
 						$(this).prev().val(E.formatCoinString(price + 1)).trigger("change");
 						$(this).next().val(E.formatCoinString(price - 1)).trigger("change");
 						E.updateTradingPrices($(this).parents(".trdEntry"));
+						D.stopSpeech();
 					}
 				});
 			});

@@ -78,7 +78,8 @@ Token: [
 	{i: 43766, n: "Tome of Knowledge", p: {achievement: 0}},
 	{i: 68109, n: "Writ of Experience", p: {achievement: 0}},
 	{i: 36507, n: "Custom Arena Time Token", p: {coin: 20000}},
-	{i: 68110, n: "Potion of PvP Reward", p: {pvp: true}}
+	{i: 68110, n: "Potion of PvP Reward", p: {pvp: true}},
+	{i: 78600, n: "Potion of WvW Rewards", p: {badge: 0}}
 ],
 Dungeon: [
 	{i: 78252, n: "Chest of Dungeoneering", p: {achievement: 0}},
@@ -122,7 +123,8 @@ Contract: [
 	{i: 76630, n: "Black Citadel Portal Scroll", p: {craft: true}},
 	{i: 76827, n: "Hoelbrak Portal Scroll", p: {craft: true}},
 	{i: 73024, n: "Lion's Arch Portal Scroll", p: {craft: true}},
-	{i: 78177, n: "Permanent Portable Provisioner", p: {coin: 10000}}
+	{i: 78177, n: "Permanent Portable Provisioner", p: {coin: 10000}},
+	{i: 78978, n: "White Mantle Portal Device", p: {raid_ft: 1000}}
 ],
 Gathering: [
 	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
