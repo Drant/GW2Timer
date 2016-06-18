@@ -15,6 +15,13 @@ var GW2T_MINIS_HEADERS = {
 };
 
 /*
+ * Minis to be excluded from the collate function.
+ */
+var GW2T_MINIS_BLACKLIST = {
+	
+};
+
+/*
  * Associated mini item with that mini unlockable.
  * Chronologically sorted based on http://wiki.guildwars2.com/wiki/Miniature
  * u: Unlockable ID (mini ID)
@@ -92,7 +99,7 @@ Set2: [
 	{u: 94, i: 20204, n: "Mini Peacemaker Sharpshot"},
 	{u: 92, i: 20202, n: "Mini Peacemaker Shocktrooper"},
 	{u: 95, i: 20205, n: "Mini Peacemaker Soldier"},
-	{u: 8, i: 20119, n: "Mini River Drake Broodmother"},
+	{u: 65, i: 20175, n: "Mini River Drake"},
 	{u: 71, i: 20181, n: "Mini Seraph Archer"},
 	{u: 96, i: 20207, n: "Mini Seraph Juggernaut"},
 	{u: 73, i: 20191, n: "Mini Shaman Of Jormag"},
@@ -295,7 +302,10 @@ Special: [
 	{u: 397, i: 78443, n: "Mini Vinetooth Faolain"},
 	{u: 398, i: 78258, n: "Mini Stonehead"},
 	{u: 399, i: 78625, n: "Mini Axemaster Hareth"},
-	{u: 400, i: 78161, n: "Mini Pocket Raptor"}
+	{u: 400, i: 78161, n: "Mini Pocket Raptor"},
+	{u: 401, i: 78815, n: "Mini Xera", p: {raid_ft: 300}},
+	{u: 402, i: 78828, n: "Mini McLeod the Silent", p: {raid_ft: 300}},
+	{u: 403, i: 78890, n: "Mini Keep Construct", p: {raid_ft: 300}}
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},
@@ -380,8 +390,9 @@ Gem: [
 	{u: 318, i: 68683, n: "Mini Golden Pig", p: {gem: 350}},
 	{u: 314, i: 68569, n: "Mini Red Panda", p: {gem: 350}},
 	{u: 320, i: 69621, n: "Miniature Moose", p: {gem: 350}},
-	{u: 148, i: 42592, n: "Mini Black Bear Cub", p: {gem: 400}},
+	{u: 327, i: 69667, n: "Mini Bear Cub", p: {gem: 400}},
 	{u: 328, i: 69658, n: "Mini Blue Drake Hatchling", p: {gem: 400}},
+	{u: 324, i: 69656, n: "Mini Fox Kit", p: {gem: 400}},
 	{u: 326, i: 69672, n: "Mini Snow Cougar Cub", p: {gem: 400}},
 	{u: 329, i: 69690, n: "Mini Beetle", p: {gem: 500}},
 	{u: 330, i: 69790, n: "Mini Rock", p: {gem: 350}},

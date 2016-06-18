@@ -157,6 +157,7 @@ Salvage: [
 	{i: 19986, n: "Black Lion Salvage Kit", p: {gem: 300}},
 	{i: 23045, n: "Mystic Salvage Kit", p: {gem: -135}},
 	{i: 20349, n: "Upgrade Extractor", p: {gem: 200}},
+	{i: 76409, n: "Infusion Extraction Device", p: {coin: 2400}},
 	{i: 73481, n: "Ascended Salvage Kit", p: {coin: 200000}},
 	{i: 75284, n: "Ascended Salvage Tool", p: {coin: 10000}}
 ],

@@ -1315,6 +1315,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Permanent Unicorn Finisher",
+		id: "69616",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Heroes Dye Pack",
 		img: "http://i.imgur.com/uemIOod.png",
 		price: 500,

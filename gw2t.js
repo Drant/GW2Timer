@@ -4981,6 +4981,113 @@ Z = {
 	},
 	
 	/*
+	 * Loads an unlockables record, downloads the current API array, compares
+	 * for new IDs, and retrieves the new entries.
+	 * @param string pSection name of account section and record.
+	 * @param string pEndpoint name of API URL suffix.
+	 * @param function pCallback to execute after loaded.
+	 */
+	getNewAPIEntries: function(pSection, pEndpoint, pCallback)
+	{
+		var section = pSection;
+		var sectionlower = pSection.toLowerCase();
+		var endpoint = pEndpoint.toLowerCase();
+		var record, blacklist, apiids;
+		
+		var fetchNewEntries = function()
+		{
+			// Combine the record's categories into one associative array
+			var catarr, entry, storedids = [];
+			for (var i in record)
+			{
+				catarr = record[i];
+				for (var ii = 0; ii < catarr.length; ii++)
+				{
+					entry = catarr[ii];
+					storedids.push(entry.u);
+				}
+			}
+			// Compile skin IDs to fetch by filtering: new IDs, not in blacklist
+			var newids = U.getDifference(apiids, storedids);
+			var filteredids = (blacklist === undefined) ? newids : (newids.filter(function(iID)
+			{
+				if (blacklist[iID] === undefined)
+				{
+					return iID;
+				}
+			}));
+			
+			if (filteredids.length === 0)
+			{
+				I.print("No difference found between stored " + sectionlower + " record and post-blacklisted API array.");
+				return;
+			}
+			// Fetch new entries
+			Z.scrapeAPIArray(filteredids, endpoint, {aCallback: function(pData)
+			{
+				pCallback({
+					oRecord: record,
+					oBlacklist: blacklist,
+					oEntries: pData
+				});
+			}});
+		};
+		
+		$.getScript(U.getDataScriptURL(section), function()
+		{
+			record = U.getRecordData(section);
+			blacklist = U.getRecordBlacklist(section);
+			$.getJSON(U.getAPI(endpoint), function(pData)
+			{
+				apiids = pData;
+				fetchNewEntries();
+			});
+		});
+	},
+	
+	/*
+	 * Prints a new unlockables record entry to the console.
+	 * @param element pEntry.
+	 * @param array pItemIDs associated with the unlockable.
+	 */
+	printRecordEntry: function(pEntries, pSettings)
+	{
+		var Settings = pSettings || {};
+		var ithentry, entrystr, itemidsproperty, itemids, itemid, name;
+		var icon, entryelm, itemselm, inputselm;
+		
+		for (var i in pEntries)
+		{
+			ithentry = pEntries[i];
+			icon = (ithentry.icon) ? "<img src='" + ithentry.icon + "' />" : "";
+			entryelm = $("<div style='margin-bottom:24px'><span>" + icon + U.escapeHTML(U.lineJSON(ithentry))
+				+ "</span></div>").appendTo("#cslContent");
+			itemselm = $("<div></div>").appendTo(entryelm);
+			
+			itemidsproperty = ithentry[Settings.aItemIDsKey];
+			itemids = (Array.isArray(itemidsproperty)) ? itemidsproperty : [itemidsproperty];
+			for (var ii = 0; ii < itemids.length; ii++)
+			{
+				itemid = itemids[ii];
+				name = (Settings.aItemDB) ? Settings.aItemDB[itemid].name : ithentry.name;
+				entrystr = U.lineJSON(ithentry.oRecordEntry || {
+					u: ithentry.id,
+					i: itemid,
+					n: name,
+					p: {coin: null}
+				}, false);
+				inputselm = $("<aside>&nbsp;<a" + U.convertExternalAnchor(U.getWikiLinkDefault(name)) + ">" + name + "</a></aside>").appendTo(itemselm);
+				$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(entrystr);
+				$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(itemid);
+			}
+			entryelm.find(".cssInputText").click(function()
+			{
+				$(this).select();
+			});
+		}
+	},
+	
+	/*
 	 * Executes a collate function.
 	 * @param string pName of the function.
 	 */
@@ -5101,7 +5208,7 @@ Z = {
 	{
 		var section = "Skins";
 		var itemdb, record, blacklist;
-		var apiskinids, newskins, categorizedskins = {};
+		var newentries, newskins, categorizedskins = {};
 		
 		// Updates an added skin entry in the record
 		var updateSkinEntry = function(pEntry, pItem)
@@ -5133,7 +5240,7 @@ Z = {
 		// Scans through the item database once, modifying the skin entry in the record if the item has a matching skin ID
 		var associateNewSkins = function()
 		{
-			var item, itemid, skinid, ithskin, skinelm, itemselm;
+			var item, skinid, skinids;
 			for (var i in itemdb)
 			{
 				item = itemdb[i];
@@ -5149,21 +5256,12 @@ Z = {
 				// Get the matching skin entry and update its associated item ID property
 				if (skinid)
 				{
-					if (typeof skinid === "number")
+					skinids = (Array.isArray(skinid)) ? skinid : [skinid];
+					for (var ii = 0; ii < skinids.length; ii++)
 					{
-						if (categorizedskins[skinid])
+						if (categorizedskins[skinids[ii]])
 						{
-							updateSkinEntry(categorizedskins[skinid], item);
-						}
-					}
-					else if (Array.isArray(skinid))
-					{
-						for (var ii = 0; ii < skinid.length; ii++)
-						{
-							if (categorizedskins[skinid[ii]])
-							{
-								updateSkinEntry(categorizedskins[skinid[ii]], item);
-							}
+							updateSkinEntry(categorizedskins[skinids[ii]], item);
 						}
 					}
 				}
@@ -5175,24 +5273,10 @@ Z = {
 			{
 				I.print("New skins added:");
 				// Print the new skins and also items associated with that skin, for manually reassigning the "representative" item
-				for (var i in newskins)
-				{
-					ithskin = newskins[i];
-					skinelm = $("<div style='margin-bottom:24px'><span><img src='" + ithskin.icon + "' />" + U.escapeHTML(U.lineJSON(ithskin))
-						+ "</span></div>").appendTo("#cslContent");
-					itemselm = $("<div></div>").appendTo(skinelm);
-					for (var ii = 0; ii < ithskin.oAssocItems.length; ii++)
-					{
-						itemid = ithskin.oAssocItems[ii];
-						item = itemdb[itemid];
-						itemselm.append("<aside><input class='cssInputText' type='text' value='"
-							+ item.id + "' /> <a" + U.convertExternalAnchor(U.getWikiLinkDefault(item.name)) + ">" + item.name + "</a></aside>");
-					}
-					skinelm.find(".cssInputText").click(function()
-					{
-						$(this).select();
-					});
-				}
+				Z.printRecordEntry(newskins, {
+					aItemDB: itemdb,
+					aItemIDsKey: "oAssocItems"
+				});
 			}
 			else
 			{
@@ -5200,109 +5284,91 @@ Z = {
 			}
 		};
 		
-		// Compares the stored skins record with the current API skins IDs list then fetch the new skins
-		var fetchNewSkins = function()
+		// Find new API entries
+		Z.getNewAPIEntries(section, section, function(pReturn)
 		{
-			// Combine the record's categories into one associative array
-			var catarr, entry, storedskinids = [];
-			for (var i in record)
-			{
-				catarr = record[i];
-				for (var ii = 0; ii < catarr.length; ii++)
-				{
-					entry = catarr[ii];
-					storedskinids.push(entry.u);
-				}
-			}
-			// Compile skin IDs to fetch by filtering: new IDs, not in blacklist
-			var newskinids = U.getDifference(apiskinids, storedskinids);
-			var filteredskinids = newskinids.filter(function(iID)
-			{
-				if (blacklist[iID] === undefined)
-				{
-					return iID;
-				}
-			});
+			record = pReturn.oRecord;
+			blacklist = pReturn.oBlacklist;
+			newentries = pReturn.oEntries;
 			
-			if (filteredskinids.length === 0)
+			var isnewblacklist = false;
+			var catname;
+			var ithskin;
+			newskins = {};
+			for (var i = 0; i < newentries.length; i++)
 			{
-				I.print("No difference found between stored skins record and post-blacklisted API skins array.");
-				return;
-			}
-			// Fetch new skins
-			Z.scrapeAPIArray(filteredskinids, section.toLowerCase(), {aCallback: function(pData)
-			{
-				var isnewblacklist = false;
-				var catname;
-				var ithskin;
-				newskins = {};
-				for (var i = 0; i < pData.length; i++)
+				ithskin = newentries[i];
+				newskins[ithskin.id] = ithskin;
+				if (ithskin.name === "" || ithskin.type === undefined)
 				{
-					ithskin = pData[i];
-					newskins[ithskin.id] = ithskin;
-					if (ithskin.name === "" || ithskin.type === undefined)
+					// Create a new blacklist by looking for mismatch or improper skins
+					isnewblacklist = true;
+					blacklist[ithskin.id] = ithskin.name;
+				}
+				else
+				{
+					// Categorize skin
+					catname = "";
+					if (ithskin.type === "Armor" && ithskin.details && ithskin.details.type && ithskin.details.weight_class)
 					{
-						// Create a new blacklist by looking for mismatch or improper skins
-						isnewblacklist = true;
-						blacklist[ithskin.id] = ithskin.name;
+						catname = ithskin.type + "_" + ithskin.details.weight_class + "_" + ithskin.details.type;
+					}
+					else if (ithskin.type === "Weapon" && ithskin.details && ithskin.details.type)
+					{
+						catname = ithskin.type + "_" + ithskin.details.type;
+					}
+					else if (ithskin.type === "Back")
+					{
+						catname = ithskin.type;
+					}
+					// Create initial entry in the record, to be assigned with associated item ID later
+					var entry = {
+						u: ithskin.id,
+						i: null,
+						n: ithskin.name
+					};
+					if (record[catname])
+					{
+						record[catname].push(entry);
+						categorizedskins[ithskin.id] = entry;
 					}
 					else
 					{
-						// Categorize skin
-						catname = "";
-						if (ithskin.type === "Armor" && ithskin.details && ithskin.details.type && ithskin.details.weight_class)
-						{
-							catname = ithskin.type + "_" + ithskin.details.weight_class + "_" + ithskin.details.type;
-						}
-						else if (ithskin.type === "Weapon" && ithskin.details && ithskin.details.type)
-						{
-							catname = ithskin.type + "_" + ithskin.details.type;
-						}
-						else if (ithskin.type === "Back")
-						{
-							catname = ithskin.type;
-						}
-						// Create initial entry in the record, to be assigned with associated item ID later
-						var entry = {
-							u: ithskin.id,
-							i: null,
-							n: ithskin.name
-						};
-						if (record[catname])
-						{
-							record[catname].push(entry);
-							categorizedskins[ithskin.id] = entry;
-						}
-						else
-						{
-							I.print("Warning uncategorizable skin:");
-							I.prettyJSON(ithskin);
-						}
+						I.print("Warning uncategorizable skin:");
+						I.prettyJSON(ithskin);
 					}
 				}
-				// Print the blacklist if there are new items to blacklist
-				if (isnewblacklist)
-				{
-					I.prettyJSON(blacklist);
-				}
-				// Categorize
-				Z.getItemsDatabase(function(pDatabase)
-				{
-					itemdb = pDatabase;
-					associateNewSkins();
-				});
-			}});
-		};
-		
-		// Retrieve the stored record and the new API skin IDs
-		$.getScript(U.getDataScriptURL(section), function()
-		{
-			record = U.getRecordData(section);
-			blacklist = U.getRecordBlacklist(section);
-			$.getJSON(U.getAPISkin(), function(pData)
+			}
+			// Print the blacklist if there are new items to blacklist
+			if (isnewblacklist)
 			{
-				apiskinids = pData;
-				fetchNewSkins();
+				I.prettyJSON(blacklist);
+			}
+			// Categorize
+			Z.getItemsDatabase(function(pDatabase)
+			{
+				itemdb = pDatabase;
+				associateNewSkins();
+			});
+		});
+	},
+	
+	/*
+	 * Finds and prints minis from the API not already in the unlockables record.
+	 */
+	collateMinis: function()
+	{
+		var section = "Minis";
+		var record, blacklist, newentries;
+		
+		Z.getNewAPIEntries(section, section, function(pReturn)
+		{
+			record = pReturn.oRecord;
+			blacklist = pReturn.oBlacklist;
+			newentries = pReturn.oEntries;
+			
+			Z.printRecordEntry(newentries, {
+				aItemIDsKey: "item_id"
 			});
 		});
 	},
@@ -5312,6 +5378,20 @@ Z = {
 	 */
 	collateDyes: function()
 	{
+		var section = "Dyes";
+		var record, newentries;
+		Z.getNewAPIEntries(section, "colors", function(pReturn)
+		{
+			record = pReturn.oRecord;
+			newentries = pReturn.oEntries;
+			
+			// Retrieve the color's names for all available languages
+			Z.printRecordEntry(newentries, {
+				aItemIDsKey: "item"
+			});
+		});
+		
+		return;
 		$.getScript(U.URL_DATA.Dyes, function()
 		{
 			var DyeHues = function()
