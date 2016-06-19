@@ -51,6 +51,13 @@ var GW2T_DYES_HEADERS = {
 };
 
 /*
+ * Dyes to be excluded from the collate function.
+ */
+var GW2T_DYES_BLACKLIST = {
+	"1": "Dye Remover"
+};
+
+/*
  * Associated dye item with that color unlockable.
  * Categories are based on the dye window in game, with additional categories
  * from the Black Lion dyes. Colors within categories are sorted by hue.

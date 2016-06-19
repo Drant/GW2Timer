@@ -397,15 +397,6 @@ O = {
 		return O.Options[pEnumName];
 	},
 	
-	TypeEnum:
-	{
-		isBoolean: "bol",
-		isInteger: "int",
-		isFloat: "flt",
-		isEnum: "enu",
-		isString: "str"
-	},
-	
 	/*
 	 * Initializes the array of strings of legal localStorage variable keys so
 	 * another function can later erase all unrecognized variables.
@@ -612,7 +603,7 @@ O = {
 			 */
 			if (I.isProgramEmbedded)
 			{
-				if (U.Args[optionkey] !== undefined && variabletype !== O.TypeEnum.isString)
+				if (U.Args[optionkey] !== undefined && variabletype !== U.TypeEnum.isString)
 				{
 					O.Options[optionkey] = O.convertLocalStorageDataType(
 						U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]));
@@ -620,7 +611,7 @@ O = {
 			}
 			else
 			{
-				if (U.Args[optionkey] !== undefined && variabletype !== O.TypeEnum.isString)
+				if (U.Args[optionkey] !== undefined && variabletype !== U.TypeEnum.isString)
 				{
 					// Override localStorage
 					localStorage[optionkey] = U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]);
@@ -1617,11 +1608,11 @@ X = {
 		{
 			return thechar;
 		}
-		if (pConversion === O.TypeEnum.isInteger)
+		if (pConversion === U.TypeEnum.isInteger)
 		{
 			return parseInt(thechar);
 		}
-		if (pConversion === O.TypeEnum.isBoolean)
+		if (pConversion === U.TypeEnum.isBoolean)
 		{
 			// Returns false only if unchecked
 			return U.intToBool(parseInt(thechar));
@@ -2655,7 +2646,22 @@ U = {
 	},
 	
 	/*
-	 * Capitalization case style enum
+	 * Data type enum.
+	 */
+	TypeEnum:
+	{
+		isObject: "obj",
+		isAssoc: "asc",
+		isArray: "arr",
+		isString: "str",
+		isEnum: "enu",
+		isInteger: "int",
+		isFloat: "flt",
+		isBoolean: "bol"
+	},
+	
+	/*
+	 * Capitalization case style enum.
 	 */
 	CaseEnum:
 	{
@@ -2869,7 +2875,7 @@ U = {
 		var s = pValue.toLowerCase();
 		switch (datatype)
 		{
-			case O.TypeEnum.isBoolean:
+			case U.TypeEnum.isBoolean:
 			{
 				if (s === "true" || s === "false")
 				{
@@ -2877,7 +2883,7 @@ U = {
 				}
 				return O.Options[pKey].toString(); // Default boolean
 			} break;
-			case O.TypeEnum.isInteger:
+			case U.TypeEnum.isInteger:
 			{
 				if (isFinite(s)) // Is a number
 				{
@@ -2889,7 +2895,7 @@ U = {
 				}
 				return O.Options[pKey].toString(); // Default number
 			} break;
-			case O.TypeEnum.isFloat:
+			case U.TypeEnum.isFloat:
 			{
 				if (isFinite(s)) // Is a number
 				{
@@ -2901,11 +2907,11 @@ U = {
 				}
 				return O.Options[pKey].toString(); // Default number
 			} break;
-			case O.TypeEnum.isEnum:
+			case U.TypeEnum.isEnum:
 			{
 				return O.validateEnum(pKey, pValue);
 			} break;
-			case O.TypeEnum.isString:
+			case U.TypeEnum.isString:
 			{
 				return U.escapeHTML(pValue);
 			} break;
@@ -4140,19 +4146,19 @@ Z = {
 			}},
 			apicache: {usage: "Prints the cache of the previous console API call as an associative array. <em>Parameters: bol_wantoutputasfile (optional)</em>", f: function()
 			{
-				Z.printAPICache(0, {aWantFile: args[1]});
+				Z.printAPICache(U.TypeEnum.isAssoc, {aWantFile: args[1]});
 			}},
 			apicachearray: {usage: "...as an array.", f: function()
 			{
-				Z.printAPICache(1, {aWantFile: args[1]});
+				Z.printAPICache(U.TypeEnum.isArray, {aWantFile: args[1]});
 			}},
 			apicacheobject: {usage: "...as an object.", f: function()
 			{
-				Z.printAPICache(2, {aWantFile: args[1]});
+				Z.printAPICache(U.TypeEnum.isObject, {aWantFile: args[1]});
 			}},
 			apicacheids: {usage: "...as IDs.", f: function()
 			{
-				Z.printAPICache(3, {aWantFile: args[1]});
+				Z.printAPICache(U.TypeEnum.isInteger, {aWantFile: args[1]});
 			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
 				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. "
@@ -4189,7 +4195,10 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				E.getCoinForGem(args[1], {aCallback: function(pValue)
+				{
+					I.log(args[1] + " coin" + " = " + pValue + " gems");
+				}});
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -4199,7 +4208,7 @@ Z = {
 			{
 				Z.updateItemsSubdatabase(args[1]);
 			}},
-			collate: {usage: "Executes a function to update and categorize an API cache. <em>Parameters: str_cachename</em>", f: function()
+			collate: {usage: "Executes a function to update and categorize an API cache. <em>Parameters: str_section</em>", f: function()
 			{
 				Z.executeCollate(args[1]);
 			}}
@@ -4258,7 +4267,7 @@ Z = {
 		var legacyprefix = "v1";
 		var limit = Number.POSITIVE_INFINITY;
 		var providedarray = null;
-		var scrapethreshold = 256; // Minimum array size to begin scraping
+		var scrapethreshold = 256; // Minimum array size to delegate the scrape function
 		var querystr = (pQueryStr === undefined) ? "" : pQueryStr;
 		var counter = 0;
 		var url = U.URL_API.Prefix + pString;
@@ -4274,7 +4283,7 @@ Z = {
 			}
 			else
 			{
-				Z.printAPICache(1);
+				Z.printAPICache(U.TypeEnum.isArray);
 			}
 		};
 		var printIcon = function(pData)
@@ -4394,13 +4403,13 @@ Z = {
 	
 	/*
 	 * Prints the cached API arrays and objects.
-	 * @param int pRequest type, see below.
+	 * @param enum pType data type to output.
 	 * @objparam object aCustomCache to use instead of the global.
 	 * @objparam boolean aWantFile whether to output to a file or print to console.
 	 * @objparam string aFileName of the file.
 	 * @objparam boolean aWantQuotes whether to wrap key names in quotes (for JSON files).
 	 */
-	printAPICache: function(pRequest, pSettings)
+	printAPICache: function(pType, pSettings)
 	{
 		var Settings = pSettings || {};
 		var output = "";
@@ -4408,9 +4417,10 @@ Z = {
 		var wantfile = (Settings.aWantFile === "true" || Settings.aWantFile === true);
 		var wantquotes = (Settings.aWantQuotes === undefined) ? wantfile : Settings.aWantQuotes;
 		var cache = Settings.aCustomCache || Z.APICacheArrayOfObjects;
+		var req = pType;
 		
 		// Compile the output
-		if (pRequest === undefined || pRequest === 0 || pRequest === 1)
+		if (req === undefined || req === U.TypeEnum.isAssoc || req === U.TypeEnum.isArray)
 		{
 			if (cache)
 			{
@@ -4418,28 +4428,28 @@ Z = {
 				var brk = (wantfile) ? "\r\n" : "<br />";
 				var quo = (wantfile) ? "\"" : "&quot;";
 				var icon;
-				output += ((pRequest === 0) ? "{" : "[") + brk;
+				output += ((req === U.TypeEnum.isAssoc) ? "{" : "[") + brk;
 				for (var i = 0; i < length; i++)
 				{
 					obj = cache[i];
 					icon = (obj.icon && !wantfile) ? "<img src='" + obj.icon + "' />" : "";
-					output += icon + ((pRequest === 0) ? (quo + obj.id + quo + ": ") : "")
+					output += icon + ((req === U.TypeEnum.isAssoc) ? (quo + obj.id + quo + ": ") : "")
 						+ U.lineJSON(obj, wantquotes)
 					+ ((i === length - 1) ? "" : ",") + brk;
 				}
-				output += ((pRequest === 0) ? "}" : "]");
+				output += ((req === U.TypeEnum.isAssoc) ? "}" : "]");
 			}
 			else
 			{
 				output = "API Objects Array is empty.";
 			}
 		}
-		else if (pRequest === 2)
+		else if (req === U.TypeEnum.isObject)
 		{
 			output = (cache) ?
 				((wantfile) ? U.lineJSON(cache) : U.escapeJSON(cache)) : "API Objects Array is empty.";
 		}
-		else if (pRequest === 3)
+		else if (req === U.TypeEnum.isInteger)
 		{
 			output = (Z.APICacheArrayOfIDs) ?
 			((wantfile) ? U.lineJSON(Z.APICacheArrayOfIDs) : U.escapeJSON(Z.APICacheArrayOfIDs)) : "API IDs Array is empty.";
@@ -4896,7 +4906,7 @@ Z = {
 					}
 					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id"});
 					var filename = pType.toLowerCase() + "_" + i + ".json";
-					Z.printAPICache(0, {aWantQuotes: true, aWantFile: true, aFileName: filename});
+					Z.printAPICache(U.TypeEnum.isAssoc, {aWantQuotes: true, aWantFile: true, aFileName: filename});
 				}
 			}).fail(function()
 			{
@@ -4921,7 +4931,7 @@ Z = {
 				I.print("Items database of all languages updated.");
 				if (newitems)
 				{
-					I.prettyJSON(newitems);
+					Z.printAPICache(U.TypeEnum.isAssoc, {aCustomCache: newitems});
 				}
 				return;
 			}
@@ -4954,7 +4964,7 @@ Z = {
 						}
 						U.sortObjects(dbarray, {aKeyName: "id"});
 						Z.APICacheArrayOfObjects = dbarray;
-						Z.printAPICache(0, {
+						Z.printAPICache(U.TypeEnum.isAssoc, {
 							aWantQuotes: true,
 							aWantFile: true,
 							aFileName: "items_" + lang + ".json"
@@ -12010,6 +12020,7 @@ E = {
 		starting: function() { return "<ins class='s16 s16_starting'></ins>"; },
 		spirit: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_spirit'></ins>"; },
 		cob: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_cob'></ins>"; },
+		blticket: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_blticket'></ins>"; },
 		bubble: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_bubble'></ins>"; },
 		badge: function(pAmount) { return ((pAmount === 0) ? "" : pAmount.toLocaleString()) + "<ins class='s16 s16_badge'></ins>"; },
 		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_commendation'></ins>"; },
@@ -20878,7 +20889,7 @@ G = {
 					 * Read and enact the state of the JP checklist.
 					 */
 					// Convert the digit at ith position in the checklist string to boolean
-					var stateinstring = X.getChecklistItem(X.Checklists.JP, i, O.TypeEnum.isBoolean);
+					var stateinstring = X.getChecklistItem(X.Checklists.JP, i, U.TypeEnum.isBoolean);
 					$(this).prop("checked", stateinstring);
 					if (stateinstring === false)
 					{

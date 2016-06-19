@@ -312,6 +312,7 @@ Back: [
 	{u: 2341, i: 37000, n: "Quiver", p: {craft: true}},
 	{u: 2382, i: 49478, n: "Light of Dwayna", p: {craft: true}},
 	{u: 2383, i: 49479, n: "Shadow of Grenth", p: {craft: true}},
+	{u: 2380, i: 49477, n: "Fires of Balthazar", p: {pvp: true}},
 	{u: 5456, i: 66169, n: "Chaos of Lyssa", p: {craft: true}},
 	{u: 6242, i: 72446, n: "Bough of Melandru", p: {craft: true}},
 	{u: 2277, i: 62918, n: "Simple Chef's Backpack", p: {craft: true}},
@@ -408,7 +409,6 @@ Back: [
 	{u: 2370, i: 39500, n: "Green Quaggan Backpack", p: {gem: 0}},
 	{u: 2371, i: 39516, n: "Covert Charr Backpack", p: {gem: 300}},
 	{u: 2372, i: 39519, n: "Warrior Quaggan Backpack", p: {gem: 300}},
-	{u: 2380, i: 49477, n: "Fires of Balthazar", p: {pvp: true}},
 	{u: 2381, i: 49521, n: "Antitoxin Injector", p: {achievement: 0}},
 	{u: 5532, i: 66924, n: "Mysterious Vine", p: {craft: true}},
 	{u: 5545, i: 66982, n: "Cultivated Vine", p: {craft: true}},
@@ -2159,7 +2159,7 @@ Weapon_Axe: [
 	{u: 6665, i: 78105, n: "Kaiser Snake Axe", t: [78105]},
 	{u: 6692, i: 78427, n: "Spectral Axe", t: [78427]},
 	{u: 6749, i: 78777, n: "Cavalier Axe", t: [78777]},
-	{u: 6789, i: 78872, n: "Privateer Axe", p: {gem: 0}},
+	{u: 6789, i: 78872, n: "Privateer Axe", p: {blticket: 1}},
 	{u: 6810, i: 78963, n: "White Mantle Axe", p: {raid_ft: 600}}
 ],
 Weapon_Mace: [
@@ -2287,7 +2287,7 @@ Weapon_Mace: [
 	{u: 6675, i: 78098, n: "Kaiser Snake Mace", t: [78013]},
 	{u: 6709, i: 78316, n: "Spectral Mace", t: [78316]},
 	{u: 6747, i: 78779, n: "Cavalier Mace", t: [78779]},
-	{u: 6832, i: 78889, n: "Privateer Mace", p: {gem: 0}}
+	{u: 6832, i: 78889, n: "Privateer Mace", p: {blticket: 1}}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", t: [49353]},
@@ -2434,7 +2434,7 @@ Weapon_Sword: [
 	{u: 6673, i: 78103, n: "Kaiser Snake Sword", t: [78103]},
 	{u: 6696, i: 78523, n: "Spectral Sword", t: [78523]},
 	{u: 6772, i: 78747, n: "Cavalier Sword", t: [78747]},
-	{u: 6817, i: 78831, n: "Privateer Sword", p: {gem: 0}},
+	{u: 6817, i: 78831, n: "Privateer Sword", p: {blticket: 1}},
 	{u: 6788, i: 78901, n: "White Mantle Gladius", p: {raid_ft: 600}}
 ],
 Weapon_Dagger: [
@@ -2572,7 +2572,7 @@ Weapon_Dagger: [
 	{u: 6679, i: 78024, n: "Kaiser Snake Dagger", t: [78024]},
 	{u: 6729, i: 78263, n: "Spectral Dagger", t: [78263]},
 	{u: 6751, i: 78780, n: "Cavalier Dagger", t: [78780]},
-	{u: 6793, i: 78956, n: "Privateer Dagger", p: {gem: 0}},
+	{u: 6793, i: 78956, n: "Privateer Dagger", p: {blticket: 1}},
 	{u: 6815, i: 78943, n: "White Mantle Seax", p: {raid_ft: 600}}
 ],
 Weapon_Pistol: [
@@ -2705,7 +2705,7 @@ Weapon_Pistol: [
 	{u: 6666, i: 78077, n: "Kaiser Snake Pistol", t: [78077]},
 	{u: 6723, i: 78648, n: "Spectral Pistol", t: [78648]},
 	{u: 6756, i: 78749, n: "Cavalier Pistol", t: [78749]},
-	{u: 6786, i: 78840, n: "Privateer Pistol", p: {gem: 0}}
+	{u: 6786, i: 78840, n: "Privateer Pistol", p: {blticket: 1}}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", t: [49341]},
@@ -2839,7 +2839,7 @@ Weapon_Scepter: [
 	{u: 6663, i: 78070, n: "Kaiser Snake Scepter", t: [78070]},
 	{u: 6731, i: 78208, n: "Spectral Scepter", t: [78208]},
 	{u: 6746, i: 78774, n: "Cavalier Scepter", t: [78774]},
-	{u: 6808, i: 78854, n: "Privateer Scepter", p: {gem: 0}},
+	{u: 6808, i: 78854, n: "Privateer Scepter", p: {blticket: 1}},
 	{u: 6804, i: 78847, n: "White Mantle Rod", p: {raid_ft: 600}},
 	{u: 6813, i: 78852, n: "Xera's Scepter", p: {raid_ft: 600}}
 ],
@@ -2992,7 +2992,7 @@ Weapon_Focus: [
 	{u: 6678, i: 78022, n: "Kaiser Snake Focus", t: [78022]},
 	{u: 6708, i: 78406, n: "Spectral Focus", t: [78406]},
 	{u: 6767, i: 78755, n: "Cavalier Focus", t: [78755]},
-	{u: 6816, i: 78798, n: "Privateer Focus", p: {gem: 0}},
+	{u: 6816, i: 78798, n: "Privateer Focus", p: {blticket: 1}},
 	{u: 6821, i: 78844, n: "White Mantle Icon", p: {raid_ft: 600}}
 ],
 Weapon_Shield: [
@@ -3141,7 +3141,7 @@ Weapon_Shield: [
 	{u: 6664, i: 78112, n: "Kaiser Snake Shield", t: [78112]},
 	{u: 6681, i: 78354, n: "Spectral Shield", t: [78354]},
 	{u: 6768, i: 78765, n: "Cavalier Shield", t: [78765]},
-	{u: 6827, i: 78968, n: "Privateer Shield", p: {gem: 0}}
+	{u: 6827, i: 78968, n: "Privateer Shield", p: {blticket: 1}}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -3269,7 +3269,7 @@ Weapon_Torch: [
 	{u: 6670, i: 78033, n: "Kaiser Snake Torch", t: [78033]},
 	{u: 6714, i: 78311, n: "Spectral Torch", t: [78311]},
 	{u: 6780, i: 78761, n: "Cavalier Torch", t: [78761]},
-	{u: 6807, i: 78803, n: "Privateer Torch", p: {gem: 0}},
+	{u: 6807, i: 78803, n: "Privateer Torch", p: {blticket: 1}},
 	{u: 6836, i: 78986, n: "Keep Construct Torch", p: {raid_ft: 600}}
 ],
 Weapon_Warhorn: [
@@ -3399,7 +3399,7 @@ Weapon_Warhorn: [
 	{u: 6671, i: 78096, n: "Kaiser Snake Warhorn", t: [78096]},
 	{u: 6735, i: 78189, n: "Spectral Warhorn", t: [78189]},
 	{u: 6777, i: 78757, n: "Cavalier Warhorn", t: [78757]},
-	{u: 6797, i: 78932, n: "Privateer Warhorn", p: {gem: 0}}
+	{u: 6797, i: 78932, n: "Privateer Warhorn", p: {blticket: 1}}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", t: [49321, 49323]},
@@ -3544,7 +3544,7 @@ Weapon_Greatsword: [
 	{u: 6677, i: 78053, n: "Kaiser Snake Greatsword", t: [78053]},
 	{u: 6703, i: 78660, n: "Spectral Greatsword", t: [78660]},
 	{u: 6765, i: 78772, n: "Cavalier Greatsword", t: [78772]},
-	{u: 6803, i: 78924, n: "Privateer Greatsword", p: {gem: 0}}
+	{u: 6803, i: 78924, n: "Privateer Greatsword", p: {blticket: 1}}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", t: [49326]},
@@ -3681,7 +3681,7 @@ Weapon_Hammer: [
 	{u: 6672, i: 78081, n: "Kaiser Snake Hammer", t: [78081]},
 	{u: 6724, i: 78166, n: "Spectral Hammer", t: [78166]},
 	{u: 6764, i: 78750, n: "Cavalier Hammer", t: [78750]},
-	{u: 6787, i: 78993, n: "Privateer Hammer", p: {gem: 0}},
+	{u: 6787, i: 78993, n: "Privateer Hammer", p: {blticket: 1}},
 	{u: 6805, i: 78875, n: "White Mantle Sledge", p: {raid_ft: 600}}
 ],
 Weapon_Longbow: [
@@ -3819,7 +3819,7 @@ Weapon_Longbow: [
 	{u: 6669, i: 78048, n: "Kaiser Snake Longbow", t: [78048]},
 	{u: 6689, i: 78629, n: "Spectral Longbow", t: [78629]},
 	{u: 6758, i: 78776, n: "Cavalier Longbow", t: [78776]},
-	{u: 6819, i: 78929, n: "Privateer Longbow", p: {gem: 0}}
+	{u: 6819, i: 78929, n: "Privateer Longbow", p: {blticket: 1}}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", t: [44924]},
@@ -3959,7 +3959,7 @@ Weapon_Shortbow: [
 	{u: 6717, i: 78556, n: "Chuka and Champawat", p: {craft: true}},
 	{u: 6720, i: 78664, n: "Spectral Short Bow", t: [78664]},
 	{u: 6753, i: 78778, n: "Cavalier Short Bow", t: [78778]},
-	{u: 6830, i: 78816, n: "Privateer Short Bow", p: {gem: 0}}
+	{u: 6830, i: 78816, n: "Privateer Short Bow", p: {blticket: 1}}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", t: [49338]},
@@ -4094,7 +4094,7 @@ Weapon_Rifle: [
 	{u: 6667, i: 78023, n: "Kaiser Snake Rifle", t: [78023]},
 	{u: 6704, i: 78131, n: "Spectral Rifle", t: [78131]},
 	{u: 6757, i: 78775, n: "Cavalier Rifle", t: [78775]},
-	{u: 6822, i: 78841, n: "Privateer Rifle", p: {gem: 0}},
+	{u: 6822, i: 78841, n: "Privateer Rifle", p: {blticket: 1}},
 	{u: 6835, i: 78927, n: "White Mantle Rifle", p: {raid_ft: 600}}
 ],
 Weapon_Staff: [
@@ -4244,7 +4244,7 @@ Weapon_Staff: [
 	{u: 6069, i: 69974, n: "Yggdrasil"},
 	{u: 6710, i: 78580, n: "Spectral Staff", t: [78580]},
 	{u: 6783, i: 78759, n: "Cavalier Staff", t: [78759]},
-	{u: 6826, i: 78908, n: "Privateer Staff", p: {gem: 0}},
+	{u: 6826, i: 78908, n: "Privateer Staff", p: {blticket: 1}},
 	{u: 6825, i: 78911, n: "White Mantle Spire", p: {raid_ft: 600}}
 ],
 Weapon_Harpoon: [
