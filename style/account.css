@@ -1355,6 +1355,15 @@ a.chrWalletLink {
 .bnkBankDyes {
 	background: black;
 }
+.bnkTitle {
+	font-size: 36px;
+	line-height: normal;
+}
+.bnkError {
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 24px;
+	line-height: normal;
+}
 /*
  * Bank search bar.
  */

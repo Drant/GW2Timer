@@ -602,7 +602,7 @@ BanditChests: {
 	color: "wheat",
 	view: "silverwastes",
 	wiki: "http://wiki.guildwars2.com/wiki/Lost_Bandit_Chest",
-	credit: "http://www.palingenesis.webspace.virginmedia.com/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [5806, 15562]},
 	{n: 2, c: [5783, 15613]},
@@ -734,7 +734,7 @@ MatrixCubeKey: {
 	color: "greenyellow",
 	view: "[7588, 17619]",
 	wiki: "http://wiki.guildwars2.com/wiki/Matrix_Cube_Key",
-	credit: "http://www.palingenesis.webspace.virginmedia.com/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [7723, 17561]},
 	{n: 2, c: [7688, 17509]},
@@ -874,7 +874,7 @@ TigerSpirit: {
 	color: "orange",
 	view: "default",
 	wiki: "http://wiki.guildwars2.com/wiki/Spirit_of_the_Tiger_(achievement)",
-	credit: "http://www.palingenesis.webspace.virginmedia.com/Tim/GW2/Manual/Manual.html",
+	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
 	needles: [
 	{n: 1, c: [2655, 14842]},
 	{n: 2, c: [3134, 19905]},

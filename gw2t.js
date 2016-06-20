@@ -2490,6 +2490,7 @@ U = {
 		Prefix1: "https://api.guildwars2.com/v1/",
 		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl="
 	},
+	PageLimit: 200, // Number of entries per API retrieval for paginated endpoints
 	
 	URL_IMG:
 	{
@@ -2537,6 +2538,98 @@ U = {
 		U.URL_API.MapFloorTyria += langsuffix;
 		U.URL_API.MapFloorMists += langsuffix;
 		U.URL_API.TextToSpeech += lang + "&sv=&vn=&pitch=0.5&rate=0.4";
+	},
+	
+	/*
+	 * Fetches all the pages of an endpoint and combines them into a single array.
+	 * @param enum pURL of commerce transactions.
+	 * @objparam boolean aWantCache whether to use default caching.
+	 * @objparam enum aPermission of the endpoint.
+	 * @objparam function aCallback with the combined pages as parameter.
+	 */
+	fetchPaginated: function(pURL, pSettings)
+	{
+		var Settings = pSettings || {};
+		var numtofetch;
+		var numfetched = 0;
+		var url = pURL + "&page_size=" + U.PageLimit;
+		var wantcache = (Settings.aWantCache !== undefined) ? Settings.aWantCache : false;
+		var pages = [];
+		var book = [];
+		
+		var combinePages = function()
+		{
+			if (numfetched !== numtofetch)
+			{
+				return;
+			}
+			pages.forEach(function(iPage)
+			{
+				if (iPage)
+				{
+					book = book.concat(iPage);
+				}
+			});
+			// Return the result in the callback
+			Settings.aCallback(book);
+		};
+		
+		$.ajax({
+			dataType: "json",
+			url: url,
+			cache: wantcache,
+			success: function(pData, pStatus, pXHR)
+			{
+				// First retrieval fetches the first page, which also tells how many pages there are
+				numfetched++;
+				numtofetch = parseInt(pXHR.getResponseHeader("X-Page-Total"));
+				if (numtofetch > 1)
+				{
+					pages = new Array(numtofetch);
+					pages[0] = pData;
+					// Fetch the rest of the pages and insert them to the sequential array
+					for (var i = 1; i < numtofetch; i++)
+					{
+						(function(iIndex)
+						{
+							$.ajax({
+								dataType: "json",
+								url: url + "&page=" + iIndex,
+								cache: wantcache,
+								success: function(pDataInner)
+								{
+									pages[iIndex] = pDataInner;
+									numfetched++;
+									combinePages();
+								},
+								error: function()
+								{
+									numtofetch--;
+									combinePages();
+								}
+							});
+						})(i);
+					}
+				}
+				else if (numtofetch === 1)
+				{
+					// If only one page exists then proceed with processing
+					pages[0] = pData;
+					combinePages();
+				}
+				else // No current transactions
+				{
+					Settings.aCallback(null);
+				}
+			},
+			error: function()
+			{
+				if (Settings.aPermission)
+				{
+					A.printError(Settings.aPermission);
+				}
+			}
+		});
 	},
 	
 	/*
@@ -4195,10 +4288,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				E.getCoinForGem(args[1], {aCallback: function(pValue)
-				{
-					I.log(args[1] + " coin" + " = " + pValue + " gems");
-				}});
+				
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -5723,7 +5813,11 @@ A = {
 		Skins: "account/skins",
 		Wallet: "account/wallet",
 		Characters: "characters",
-		Transactions: "commerce/transactions", // suffixed by "current" or "history", then "buys" or "sells"
+		Transactions: "commerce/transactions",
+		CurrentBuys: "commerce/transactions/current/buys",
+		CurrentSells: "commerce/transactions/current/sells",
+		HistoryBuys: "commerce/transactions/history/buys",
+		HistorySells: "commerce/transactions/history/sells",
 		Stats: "pvp/stats",
 		Games: "pvp/games",
 		TokenInfo: "tokeninfo"
@@ -5753,6 +5847,18 @@ A = {
 	{
 		var divider = (pSuffix.indexOf("?") !== -1) ? "&" : "?";
 		return "https://api.guildwars2.com/v2/" + pSuffix + divider + "access_token=" + A.TokenCurrent;
+	},
+	
+	/*
+	 * Fetches a transactions.
+	 * @param enum pURL type of transactions.
+	 * @param object pSettings for the used fetch paginated function.
+	 */
+	getTransactions: function(pURL, pSettings)
+	{
+		var Settings = pSettings || {};
+		Settings.aPermission = A.PermissionEnum.TradingPost;
+		U.fetchPaginated(A.getURL(pURL), Settings);
 	},
 	
 	/*
@@ -6599,17 +6705,7 @@ A = {
 		}
 		str = str.substring(0, str.length - 2); // Trim the trailing comma
 		return str;
-	},
-	
-	/*
-	 * 
-	 * @returns {undefined}
-	 */
-	fetchCommerce: function()
-	{
-		
 	}
-	
 };
 V = {
 /* =============================================================================
@@ -8468,21 +8564,37 @@ V = {
 	
 	/*
 	 * Generates the Trading Post transactions overview page.
-	 * @returns {undefined}
 	 */
 	serveTrading: function()
 	{
 		
+	},
+	serveBuying: function()
+	{
+		B.generateTransactions("Buying", A.URL.CurrentBuys);
+	},
+	serveSelling: function()
+	{
+		B.generateTransactions("Selling", A.URL.CurrentSells);
+	},
+	serveBought: function()
+	{
+		B.generateTransactions("Bought", A.URL.HistoryBuys);
+	},
+	serveSold: function()
+	{
+		B.generateTransactions("Sold", A.URL.HistorySells);
 	}
 };
 B = {
 /* =============================================================================
- * @@Bank window, tab, item slot, and catalog generation
+ * @@Bank window, tab, item slot, catalog, and transactions generation
  * ========================================================================== */
 
 	/*
 	 * Creates a bank container element.
 	 * @param jqobject pDestination to append bank.
+	 * @objparam string aTitle of the bank, optional.
 	 * @objparam string aClass CSS style class for bank element, optional.
 	 * @objparam boolean aIsCollection whether the bank is an unlock collection, which will show untaxed prices, optional.
 	 * @objparam boolean aWantGem whether to display the gem tally, optional.
@@ -8495,6 +8607,7 @@ B = {
 		
 		var container = $("<div class='bnkContainer'>"
 			+ "<div class='bnkTop'>"
+				+ ((Settings.aTitle) ? "<aside class='bnkTitle'>" + Settings.aTitle + "</aside>" : "")
 				+ "<aside class='bnkBankTally'></aside>"
 				+ "<aside class='bnkPrice'>"
 					+ "<var class='bnkPriceTitleA'></var><var class='bnkPriceValueA_Coin'></var>"
@@ -10191,6 +10304,93 @@ B = {
 			oHeaders: headers,
 			oRecord: record
 		};
+	},
+	
+	/*
+	 * Generates a Trading Post transactions style bank.
+	 * @param string pSection account section name.
+	 * @param enum pURL of the API endpoint.
+	 */
+	generateTransactions: function(pSection, pURL)
+	{
+		var section = U.toFirstUpperCase(pSection);
+		var sectionlower = pSection.toLowerCase();
+		var dish = $("#accDish_" + section);
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		
+		var container = B.createBank(dish, {
+			aTitle: D.getWordCapital(sectionlower),
+			aClass: "bnkBankTrading",
+			aIsCollection: false,
+			aWantGem: false
+		});
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var tab, tabtitle, slotscontainer, slot;
+		var numfetched = 0, numtofetch;
+		var calendar = {}, datestr, datearray, calkey, transaction;
+		
+		A.getTransactions(pURL, {aCallback: function(pData)
+		{
+			bank.empty();
+			if (pData === null) // For the case that there are no current transactions
+			{
+				bank.append("<span class='bnkError'>" + D.getPhrase("no transactions", U.CaseEnum.Sentence) + ".</span>");
+				return;
+			}
+			/*
+			 * Categorize each transaction chronologically by its month, the
+			 * array is pre-sorted by the API based on its fulfillment time,
+			 * otherwise use the creation time of the transaction.
+			 */
+			numtofetch = pData.length;
+			for (var i = 0; i < pData.length; i++)
+			{
+				// Example date string: "2000-01-01T13:59:59+00:00"
+				datestr = pData[i].purchased || pData[i].created;
+				datearray = datestr.split("-");
+				calkey = datearray[0] + "-" + datearray[1]; // [0] is year, [1] is month
+				if (calendar[calkey] === undefined)
+				{
+					calendar[calkey] = [];
+				}
+				calendar[calkey].push(pData[i]);
+			}
+			for (var i in calendar)
+			{
+				// The tab title is the year number and the month word
+				calkey = i.split("-");
+				tabtitle = new Date(Date.UTC(calkey[0], calkey[1], 1, 0, 0, 0))
+					.toLocaleString(window.navigator.language, {year: "numeric", month: "long"});
+				// Create bank tabs representing months
+				tab = B.createBankTab(bank, {aTitle: tabtitle});
+				slotscontainer = tab.find(".bnkTabSlots");
+				for (var ii in calendar[i])
+				{
+					transaction = (calendar[i])[ii];
+					slot = B.createBankSlot(slotscontainer);
+					slot.data("count", transaction.quantity);
+					(function(iSlot, iSlotData)
+					{
+						Q.getItem(iSlotData.item_id, function(iItem)
+						{
+							B.styleBankSlot(iSlot, {
+								aItem: iItem,
+								aSlotMeta: {count: iSlotData.quantity, price: iSlotData.price},
+								aCallback: function()
+							{
+								numfetched++;
+								A.setProgressBar(numfetched, numtofetch);
+							}});
+						});
+					})(slot, transaction);
+				}
+			}
+			B.tallyBank(container);
+			B.createBankMenu(bank);
+		}});
 	}
 };
 Q = {
@@ -11811,7 +12011,6 @@ Q = {
 							{
 								Settings.aCallback(iResult);
 							}
-							resultslist.removeData("selectedresult");
 						});
 					})(pResults[i]);
 				}
@@ -11929,7 +12128,6 @@ Q = {
 						{
 							selectedresult.find(".itmSearchResultEntry").trigger("click");
 						}
-						resultslist.removeData("selectedresult");
 					}).onArrowDownKey(function()
 					{
 						executeArrowKey(true);
@@ -12697,7 +12895,6 @@ E = {
 		pEntry.find(".trdCurrentBuy").val("");
 		pEntry.find(".trdCurrentSell").val("");
 		pEntry.find(".trdLink").val("");
-		pEntry.find(".trdResultsContainer").remove();
 		
 		pEntry.find(".trdNotifyBuyLow").val("").trigger("change");
 		pEntry.find(".trdNotifyBuyHigh").val("").trigger("change");
@@ -13699,6 +13896,8 @@ D = {
 			cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"},
 		
 		// Adjectives, Adverbs, Participles
+		s_no: {de: "kein", es: "no", fr: "pas de",
+			cs: "žádný", it: "non", pl: "żaden", pt: "nada de", ru: "нет", zh: "沒有"},
 		s_not: {de: "nicht", es: "no", fr: "ne",
 			cs: "ne", it: "non", pl: "nie", pt: "não", ru: "не", zh: "不"},
 		s_ago: {de: "vor", es: "hace", fr: "il ya",

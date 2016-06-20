@@ -83,7 +83,7 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	s_rename: {de: "umbenennen", es: "renombrar", fr: "renommer",
 		cs: "přejmenovat", it: "rinominare", pl: "przemianować", pt: "renomear", ru: "переимено́вывать", zh: "重命名"},
 	
-	// Adjectives and Adverbs
+	// Adjectives, Adverbs, Participles
 	s_new: {de: "neu", es: "nuevo", fr: "nouveau",
 		cs: "nový", it: "nuovo", pl: "nowy", pt: "novo", ru: "новый", zh: "新"},
 	s_crafted: {de: "hergestellten", es: "fabricado", fr: "fabriqué",
@@ -95,7 +95,17 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	s_locked: {de: "gesperrt", es: "bloqueado", fr: "verrouillé",
 		cs: "uzamčený", it: "bloccato", pl: "zablokowany", pt: "bloqueado", ru: "заблокированный", zh: "鎖定"},
 	s_unlocked: {de: "nicht gesperrt", es: "desbloqueado", fr: "déverrouillé",
-		cs: "odemčeno", it: "sbloccata", pl: "odblokowane", pt: "desbloqueado", ru: "разблокированная", zh: "解除鎖定"}
+		cs: "odemčeno", it: "sbloccata", pl: "odblokowane", pt: "desbloqueado", ru: "разблокированная", zh: "解除鎖定"},
+	s_buying: {de: "kaufen", es: "comprando", fr: "achat en cours",
+		cs: "nákup", it: "comprando", pl: "kupuje", pt: "comprando", ru: "покупаю", zh: "目前買"},
+	s_selling: {de: "verkaufen", es: "vendiendo", fr: "vente en cours",
+		cs: "prodávat", it: "vendendo", pl: "sprzedaje", pt: "vendendo", ru: "продаю", zh: "目前賣"},
+	s_bought: {de: "gekauft", es: "comprado", fr: "achats historique",
+		cs: "koupil", it: "comprato", pl: "kupiłem", pt: "comprei", ru: "купил", zh: "買了"},
+	s_sold: {de: "verkauft", es: "vendido", fr: "ventes historique",
+		cs: "prodal", it: "venduto", pl: "sprzedał", pt: "vendi", ru: "продал", zh: "賣了"},
+	s_transactions: {de: "transaktionen", es: "transacciones", fr: "transactions",
+		cs: "transakce", it: "transazioni", pl: "transakcje", pt: "transações", ru: "транзакций", zh: "交易"}
 };
 
 /*
