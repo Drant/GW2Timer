@@ -1356,13 +1356,28 @@ a.chrWalletLink {
 	background: black;
 }
 .bnkTitle {
-	font-size: 36px;
+	display: inline-block;
+	padding-left: 64px;
+	padding-right: 64px;
+	margin-bottom: 8px;
+	border-bottom: 4px solid rgba(0,0,0,0.5);
 	line-height: normal;
+	font-family: Menomonia;
+	font-size: 48px;
+	color: #ffeebb;
+	background: linear-gradient(to bottom, transparent 0%, #333 100%);
+	border-bottom-right-radius: 50%;
+	border-bottom-left-radius: 50%;
+	text-shadow:
+		0px 1px 6px #000,
+		0px -1px 6px #000,
+		1px 0px 6px #000,
+		-1px 0px 6px #000;
 }
 .bnkError {
-	font-family: Trebuchet MS, Menomonia;
-	font-size: 24px;
 	line-height: normal;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 18px;
 }
 /*
  * Bank search bar.
@@ -1469,11 +1484,14 @@ input[type="text"].bnkSearchInput:hover {
 	opacity: 1;
 	box-shadow: 0px 0px 32px #0b0d0e;
 }
-.bnkCatalogTabEdit {
+.bnkCatalogTabEdit, .bnkTransactionsPrint {
 	position: absolute; z-index: 1;
 	top: 4px;
 	left: -38px;
 	background: url("../img/ui/edit.png");
+}
+.bnkTransactionsPrint {
+	background: url("../img/ui/info.png");
 }
 .bnkCatalogTabEditor, .bnkCatalogSlotEditor {
 	display: inline-block;
@@ -1853,6 +1871,26 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 		0px -1px 1px #000,
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
+}
+
+/*
+ * Trading Post transactions bank.
+ */
+.bnkTransactionsTooltip { /* Container for transaction entries in an item's tooltip */
+	display: block;
+	position: absolute;
+	margin-top: 8px;
+	margin-left: -8px;
+	line-height: normal;
+	padding: 4px;
+	border-radius: 4px;
+	white-space: nowrap;
+	background: rgba(0,0,0,0.5);
+}
+.bnkTransactionsPrintout {
+	padding: 8px;
+	background: rgba(255,255,255,0.1);
+	border-radius: 4px;
 }
 
 .acc_wardrobe {

@@ -4366,15 +4366,11 @@ Z = {
 		{
 			I.clear();
 			// Sort the objects by their IDs
-			I.prettyJSON(Z.APICacheArrayOfObjects);
 			if (Z.APICacheArrayOfObjects.length > 0 && Z.APICacheArrayOfObjects[0].id)
 			{
 				U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
 			}
-			else
-			{
-				Z.printAPICache(U.TypeEnum.isArray);
-			}
+			Z.printAPICache(U.TypeEnum.isArray);
 		};
 		var printIcon = function(pData)
 		{
@@ -7501,7 +7497,7 @@ V = {
 			}
 			// Insert profession-specific attribute
 			attrcontent.find(".eqpAttr_Power").after("<span class='eqpAttrBlock eqpAttr_Profession'>"
-				+ "<img src='img/account/attributes/" + char.profession.toLowerCase() + ".png' /><var>0%</var></span>");
+				+ "<img src='img/account/attributes/" + char.oCharElite.toLowerCase() + ".png' /><var>0%</var></span>");
 			I.qTip.init(attrcontent.find("span"));
 		};
 		var formatTraitsWindow = function()
@@ -8719,7 +8715,7 @@ B = {
 	 */
 	getTallyString: function(pFilled, pCapacity, pCount)
 	{
-		var acquiredstr = (pCount) ? (" " + pCount + "×") : "";
+		var acquiredstr = (pCount) ? (" " + pCount + I.Symbol.Quantity) : "";
 		var ratio = pFilled / pCapacity;
 		var ratioclass = (ratio === 1) ? "accSignificant" : "accTrivial";
 		var remaining = (ratio === 1) ? "" : ("<span class='accTrifle'>" + (pCapacity - pFilled) + "+</span>");
@@ -8851,6 +8847,7 @@ B = {
 	 * containing stack count and transmutation data.
 	 * @objparam object aItem item details retrieved from API.
 	 * @objparam int aTradeableID ID of item to get TP price, such as the tradeable container of the bound item, optional.
+	 * @objparam string aComment to append to tooltip, optional.
 	 * @objparam string aWiki name of wiki article to open when double clicked, optional.
 	 * @objparam function aCallback to execute after styling.
 	 */
@@ -8944,25 +8941,36 @@ B = {
 				// TP price label if the item is tradeable
 				if (pBox.oIsTradeable || Settings.aTradeableID)
 				{
-					if (pBox.oIsTradeable || Settings.aTradeableID)
-					{
-						// Add the boolean for the bank filter button to look for
-						pSlot.addClass("bnkSlotTradeable");
-						pSlot.data("istradeable", true);
-					}
+					// Add the boolean for the bank filter button to look for
+					pSlot.addClass("bnkSlotTradeable");
+					pSlot.data("istradeable", true);
 					var itemidforprice = Settings.aTradeableID || Settings.aItem.id;
 					$.getJSON(U.getAPIPrice(itemidforprice), function(pData)
 					{
-						B.updateSlotPrice(pSlot, pData, Settings.aSlotMeta.count, E.PaymentEnum.Coin);
+						B.updateSlotPrice(pSlot, {
+							aPrice: pData,
+							aCount: Settings.aSlotMeta.count,
+							aPaymentEnum: E.PaymentEnum.Coin,
+							aPriceBuy: Settings.aPriceBuy,
+							aPriceSell: Settings.aPriceSell
+						});
 					});
 				}
 				else if (Settings.aPrice > 0)
 				{
-					B.updateSlotPrice(pSlot, Settings.aPrice, Settings.aSlotMeta.count, E.PaymentEnum.Coin);
+					B.updateSlotPrice(pSlot, {
+						aPrice: Settings.aPrice,
+						aCount: Settings.aSlotMeta.count,
+						aPaymentEnum: E.PaymentEnum.Coin
+					});
 				}
 				else if (Settings.aGem > 0)
 				{
-					B.updateSlotPrice(pSlot, Settings.aGem, Settings.aSlotMeta.count, E.PaymentEnum.Gem);
+					B.updateSlotPrice(pSlot, {
+						aPrice: Settings.aGem,
+						aCount: Settings.aSlotMeta.count,
+						aPaymentEnum: E.PaymentEnum.Gem
+					});
 				}
 				// Execute callback if requested
 				if (Settings.aCallback)
@@ -8981,19 +8989,23 @@ B = {
 	/*
 	 * Updates the price displayed over the bank slot, the bank tab, and bank top.
 	 * @param jqobject pSlot for price label.
-	 * @param int pPrice amount.
-	 * @param int pCount of items.
-	 * @param enum pPaymentEnum such as coin or gem.
+	 * @objparam int aPrice amount, obtained from current TP prices or unlockables record.
+	 * @objparam int aPriceBuy of a transaction, optional.
+	 * @objparam int aPriceSell of a transaction, optional.
+	 * @objparam int aCount of items.
+	 * @objparam enum aPaymentEnum such as coin or gem.
 	 */
-	updateSlotPrice: function(pSlot, pPrice, pCount, pPaymentEnum)
+	updateSlotPrice: function(pSlot, pSettings)
 	{
+		var Settings = pSettings || {};
+		
 		var container = pSlot.parents(".bnkContainer");
 		var top = container.find(".bnkTop");
 		var iscollection = container.data("iscollection");
-		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + pPaymentEnum);
+		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + Settings.aPaymentEnum);
 		
-		var count = pCount || 1;
-		var prices = (typeof pPrice === "number") ? E.createPrice(pPrice, count) : E.processPrice(pPrice, count);
+		var count = Settings.aCount || 1;
+		var prices = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, count) : E.processPrice(Settings.aPrice, count);
 		var pricetorecord = (iscollection) ? prices.oPriceSell : prices.oPriceSellTaxed;
 		var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
 		{
@@ -9001,7 +9013,7 @@ B = {
 			var displaypriceright = (pDisplay.data("priceright") || 0) + pRight;
 			pDisplay.data("priceleft", displaypriceleft).data("priceright", displaypriceright);
 			var tabtext, pricestrleft, pricestrright;
-			switch (pPaymentEnum)
+			switch (Settings.aPaymentEnum)
 			{
 				case E.PaymentEnum.Coin: {
 					pricestrleft = E.formatCoinStringColored(displaypriceleft);
@@ -9018,22 +9030,22 @@ B = {
 		};
 
 		// Label the slot with the item's or stack's price
-		switch (pPaymentEnum)
+		switch (Settings.aPaymentEnum)
 		{
 			case E.PaymentEnum.Coin: {
 				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinStringShort(pricetorecord) + "</var>");
 				if (pSlot.data("istradeable"))
 				{
-					var priceone = (typeof pPrice === "number") ? E.createPrice(pPrice, 1) : E.processPrice(pPrice, 1);
+					var priceone = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, 1) : E.processPrice(Settings.aPrice, 1);
 					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatCoinStringShort(priceone.oPriceBuy) + "</var>");
 					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatCoinStringShort(priceone.oPriceSell) + "</var>");
 				}
 			}; break;
 			case E.PaymentEnum.Gem: {
 				pSlot.append("<var class='bnkSlotPrice'>" + E.formatGemString(pricetorecord, true) + "</var>");
-				if (pCount > 1)
+				if (Settings.aCount > 1)
 				{
-					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatGemString(pPrice, true) + "</var>");
+					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatGemString(Settings.aPrice, true) + "</var>");
 				}
 			}; break;
 		}
@@ -9041,28 +9053,28 @@ B = {
 		// Only add if item actually exists (not a zero stack slot)
 		if (iscollection)
 		{
-			if (pCount !== 0)
+			if (Settings.aCount !== 0)
 			{
 				updatePriceDisplay(tabdisplayprice, prices.oPriceBuy, 0, true);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + Settings.aPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
 				
 			}
 			else
 			{
 				updatePriceDisplay(tabdisplayprice, 0, prices.oPriceBuy, true);
-				updatePriceDisplay(top.find(".bnkPriceValueB_" + pPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
+				updatePriceDisplay(top.find(".bnkPriceValueB_" + Settings.aPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
 			}
 		}
 		else
 		{
-			if (pCount !== 0)
+			if (Settings.aCount !== 0)
 			{
 				updatePriceDisplay(tabdisplayprice, prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + pPaymentEnum), prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + Settings.aPaymentEnum), prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
 			}
 		}
 		// Remember coin value for price search
-		if (pPaymentEnum === E.PaymentEnum.Coin)
+		if (Settings.aPaymentEnum === E.PaymentEnum.Coin)
 		{
 			pSlot.data("price", pricetorecord);
 			pSlot.data("pricebuy", prices.oPriceBuy);
@@ -9073,7 +9085,7 @@ B = {
 	/*
 	 * Creates and binds a search bar for a bank. Also creates functional buttons.
 	 * @param jqobject pBank for insertion.
-	 * @objparam string aHelpElement HTML ID of the message to append to the help screen.
+	 * @objparam string aHelpMessage HTML of the message to append to the help screen.
 	 * @objparam boolean aWantSearchHighlight whether to highlight instead of show and hide when searching.
 	 * @pre Bank slots were generated.
 	 */
@@ -9493,7 +9505,11 @@ B = {
 					slot.data("istradeable", true);
 					$.getJSON(U.getAPIPrice(iItemID), function(pData)
 					{
-						B.updateSlotPrice(iSlot, pData, count, E.PaymentEnum.Coin);
+						B.updateSlotPrice(iSlot, {
+							aPrice: pData,
+							aCount: count,
+							aPaymentEnum: E.PaymentEnum.Coin
+						});
 						if (count)
 						{
 							// Fade the price label if already unlocked that dye
@@ -9601,10 +9617,6 @@ B = {
 				var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
 				count = entry.oCount;
 				comment = foundstr + A.formatPossessionLocations(entry.oLocations);
-			}
-			if (comment)
-			{
-				comment = "<var class='itmColor_reminder'>" + comment + "</var>";
 			}
 			// Style the slot
 			B.styleBankSlot(pSlot, {
@@ -10328,35 +10340,57 @@ B = {
 			aWantGem: false
 		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var tab, tabtitle, slotscontainer, slot;
-		var numfetched = 0, numtofetch;
-		var calendar = {}, datestr, datearray, calkey, transaction;
+		var tab, tabtitle, tabdata, slotscontainer, slot;
+		var numfetched = 0, numtofetch = 0;
+		var calendar = {}, datestr, datearray, calkey, transaction, multitrans;
 		
 		A.getTransactions(pURL, {aCallback: function(pData)
 		{
 			bank.empty();
 			if (pData === null) // For the case that there are no current transactions
 			{
-				bank.append("<span class='bnkError'>" + D.getPhrase("no transactions", U.CaseEnum.Sentence) + ".</span>");
+				bank.append("<span class='bnkError'>" + D.getWordCapital("no")
+					+ " " + D.getModifiedWord("transactions", "current") + ".</span>");
 				return;
 			}
 			/*
-			 * Categorize each transaction chronologically by its month, the
-			 * array is pre-sorted by the API based on its fulfillment time,
-			 * otherwise use the creation time of the transaction.
+			 * Categorize each transaction chronologically by its month; however,
+			 * the items in the tab will be sorted by item ID.
 			 */
-			numtofetch = pData.length;
 			for (var i = 0; i < pData.length; i++)
 			{
+				transaction = pData[i];
 				// Example date string: "2000-01-01T13:59:59+00:00"
-				datestr = pData[i].purchased || pData[i].created;
+				datestr = transaction.purchased || transaction.created;
 				datearray = datestr.split("-");
 				calkey = datearray[0] + "-" + datearray[1]; // [0] is year, [1] is month
 				if (calendar[calkey] === undefined)
 				{
-					calendar[calkey] = [];
+					calendar[calkey] = {};
 				}
-				calendar[calkey].push(pData[i]);
+				/*
+				 * Transactions of the same item will be assigned to the same
+				 * "slot" in the month associative array, accessed by the item ID.
+				 * Transactions' metadata will still be accumulated in the stamp
+				 * string for display in the slot tooltip.
+				 */
+				if ((calendar[calkey])[transaction.item_id] === undefined)
+				{
+					(calendar[calkey])[transaction.item_id] = {
+						oLatest: transaction.purchased || transaction.created,
+						oItemID: transaction.item_id,
+						oCount: 0,
+						oPrice: 0,
+						oStamps: ""
+					};
+					numtofetch++;
+				}
+				multitrans = (calendar[calkey])[transaction.item_id];
+				multitrans.oCount += transaction.quantity;
+				multitrans.oPrice += transaction.price;
+				multitrans.oStamps += transaction.quantity + I.Symbol.Quantity + " " + E.formatCoinStringColored(transaction.price)
+					+ " = " + E.formatCoinStringColored(transaction.price * transaction.quantity) + " @ "
+					+ (new Date(transaction.purchased || transaction.created)).toLocaleString() + "<br />";
 			}
 			for (var i in calendar)
 			{
@@ -10366,30 +10400,60 @@ B = {
 					.toLocaleString(window.navigator.language, {year: "numeric", month: "long"});
 				// Create bank tabs representing months
 				tab = B.createBankTab(bank, {aTitle: tabtitle});
+				tabdata = []; // Contains the multi-transactions objects but will be chronologically sorted instead of by item ID
 				slotscontainer = tab.find(".bnkTabSlots");
 				for (var ii in calendar[i])
 				{
-					transaction = (calendar[i])[ii];
+					multitrans = (calendar[i])[ii];
 					slot = B.createBankSlot(slotscontainer);
-					slot.data("count", transaction.quantity);
-					(function(iSlot, iSlotData)
+					slot.data("count", multitrans.oCount);
+					tabdata.push(multitrans);
+					(function(iSlot, iMultiTrans)
 					{
-						Q.getItem(iSlotData.item_id, function(iItem)
+						Q.getItem(iMultiTrans.oItemID, function(iItem)
 						{
 							B.styleBankSlot(iSlot, {
 								aItem: iItem,
-								aSlotMeta: {count: iSlotData.quantity, price: iSlotData.price},
+								aComment: "<span class='bnkTransactionsTooltip'>" + iMultiTrans.oStamps + "</span>",
+								aPrice: iMultiTrans.oPrice,
+								aSlotMeta: {count: iMultiTrans.oCount},
 								aCallback: function()
 							{
 								numfetched++;
 								A.setProgressBar(numfetched, numtofetch);
 							}});
 						});
-					})(slot, transaction);
+					})(slot, multitrans);
 				}
+				U.sortObjects(tabdata, {aKeyName: "oLatest"});
+				tab.data("transactions", tabdata);
+				// Button next to each tab to print that tab's transactions in text list format
+				var tabprint = $("<kbd class='bnkTransactionsPrint btnWindow' title='<dfn>Print</dfn> this tab month of transactions.'></kbd>")
+					.prependTo(tab).click(function()
+				{
+					var clickedtab = $(this).parents(".bnkTab").first();
+					var data = clickedtab.data("transactions");
+					for (var i = data.length - 1; i >= 0; i--)
+					{
+						Q.getItem(data[i].oItemID, function(iItem)
+						{
+							var countstr = (data[i].oCount > 1) ? (data[i].oCount + " ") : "";
+							var str = "<div class='bnkTransactionsPrintout'>"
+								+ "<aside><a" + U.convertExternalAnchor(U.getWikiItemDefault(iItem)) + ">"
+									+ "<img src='" + iItem.icon + "' /></a> <var class='" + Q.getRarityClass(iItem.rarity) + "'>"
+									+ countstr + iItem.name + "</var></aside>"
+								+ "<aside>" + data[i].oStamps + "</aside>"
+							+ "</div>";
+							I.print(str);
+						});
+					}
+				});
+				I.qTip.init(tabprint);
 			}
 			B.tallyBank(container);
-			B.createBankMenu(bank);
+			B.createBankMenu(bank, {
+				aHelpMessage: $("#accHelpTransactions").html()
+			});
 		}});
 	}
 };
@@ -11429,8 +11493,8 @@ Q = {
 				+ selectstatsstr
 				+ flagsstr
 				+ charbindstr
-				+ commentstr
 				+ vendorstr
+				+ commentstr
 			+ "</div>";
 			// Bind tooltip if provided an element
 			if (Settings.aElement)
@@ -27634,6 +27698,7 @@ I = {
 		TriLeft: "◄",
 		Block: "■",
 		Star: "☆",
+		Quantity: "×",
 		Ellipsis: "…",
 		Day: "☀",
 		Night: "☽",
@@ -27757,6 +27822,10 @@ I = {
 			Recipes: "Recipes",
 			Crafting: "Crafting",
 			Trading: "Trading",
+			Buying: "Buying",
+			Selling: "Selling",
+			Bought: "Bought",
+			Sold: "Sold",
 			PVP: "PVP",
 			Guilds: "Guilds",
 			Achievements: "Achievements"

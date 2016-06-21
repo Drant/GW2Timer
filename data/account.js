@@ -42,6 +42,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "řemeslo", it: "mestiere", pl: "rzemiosło", pt: "ofício", ru: "ремесло", zh: "手藝"},
 	s_trading: {de: "handel", es: "comercio", fr: "commerciale",
 		cs: "obchod", it: "commercio", pl: "handel", pt: "comércio", ru: "продажа", zh: "貿易"},
+	s_recent: {de: "aktuell", es: "reciente", fr: "récent",
+		cs: "poslední", it: "recenti", pl: "ostatnie", pt: "recente", ru: "последние", zh: "最近"},
 	s_pvp: {de: "pvp", es: "jcj", fr: "jcj",
 		cs: "hph", it: "gcg", pl: "pvp", pt: "jcj", ru: "ипи", zh: "玩家對戰"},
 	s_guilds: {de: "gilden", es: "clanes", fr: "guildes",
@@ -78,6 +80,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "Galerie", it: "Raccolta", pl: "Galeria", pt: "Galeria", ru: "Коллекция", zh: "圖庫"},
 	s_tab: {de: "registerkarte", es: "pestaña", fr: "onglet",
 		cs: "karta", it: "scheda", pl: "karta", pt: "guia", ru: "вкладка", zh: "選項卡"},
+	s_transactions: {de: "transaktionen", es: "transacciones", fr: "transactions",
+		cs: "transakce", it: "transazioni", pl: "transakcje", pt: "transações", ru: "транзакций", zh: "交易"},
 	
 	// Verbs
 	s_rename: {de: "umbenennen", es: "renombrar", fr: "renommer",
@@ -103,9 +107,7 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	s_bought: {de: "gekauft", es: "comprado", fr: "achats historique",
 		cs: "koupil", it: "comprato", pl: "kupiłem", pt: "comprei", ru: "купил", zh: "買了"},
 	s_sold: {de: "verkauft", es: "vendido", fr: "ventes historique",
-		cs: "prodal", it: "venduto", pl: "sprzedał", pt: "vendi", ru: "продал", zh: "賣了"},
-	s_transactions: {de: "transaktionen", es: "transacciones", fr: "transactions",
-		cs: "transakce", it: "transazioni", pl: "transakcje", pt: "transações", ru: "транзакций", zh: "交易"}
+		cs: "prodal", it: "venduto", pl: "sprzedał", pt: "vendi", ru: "продал", zh: "賣了"}
 };
 
 /*
