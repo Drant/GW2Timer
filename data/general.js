@@ -1299,8 +1299,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-06-14T15:00:00Z"),
-	Finish: new Date("2016-06-21T15:00:00Z"),
+	Start: new Date("2016-06-21T15:00:00Z"),
+	Finish: new Date("2016-06-28T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1309,149 +1309,37 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Salvager's Supplies",
-		img: "http://i.imgur.com/c37rlEw.png",
-		price: 1360,
-		discount: null,
+		name: "Crystal Savant Outfit",
+		id: "77808",
+		price: 595,
+		discount: 700,
 		col: 0
 	},
 	{
-		name: "Permanent Unicorn Finisher",
-		id: "69616",
-		price: 700,
-		discount: null,
+		name: "Crystal Nomad Outfit",
+		id: "68684",
+		price: 525,
+		discount: 700,
 		col: 0
 	},
 	{
-		name: "Heroes Dye Pack",
-		img: "http://i.imgur.com/uemIOod.png",
-		price: 500,
-		discount: [[1, 500], [3, 1300], [10, 3750]],
-		col: 0
-	},
-	{
-		name: "Floral Glider",
-		id: "78790",
-		price: 400,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Inventor's Sunglasses",
-		id: "64747",
-		price: 150,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Trickster's Light-Armor Skin",
-		id: "43102",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Viper Medium-Armor Skin",
-		id: "43101",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Phalanx Heavy-Armor Skin",
-		id: "43100",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Flamekissed Light Armor Skin",
-		id: "43576",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Flamewalker Medium Armor Skin",
-		id: "43575",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Flamewrath Heavy Armor Skin",
-		id: "43574",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Jungle Explorer Outfit",
-		id: "67990",
-		price: 700,
+		name: "Home Instance Node Pack",
+		img: "http://i.imgur.com/9u66LKD.png",
+		price: 3200,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Shadow Assassin Outfit",
-		id: "66658",
-		price: 700,
+		name: "Crystal Arbiter Appearance Pack",
+		img: "http://i.imgur.com/AuYSBAV.png",
+		price: 2000,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Mist Herald Back Item Skin Set",
-		id: "44886",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Glint's Gaze Mask",
-		id: "67857",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mask of the Silent Skin",
-		id: "49157",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mask of the Jubilee",
-		id: "44607",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Magnus's Eye Patch",
-		id: "50103",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fuzzy Cat Hat",
-		id: "64758",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fuzzy Hylek Hat",
-		id: "64759",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mini Rock",
-		id: "69790",
-		price: 350,
+		name: "Glitter Bomb Harvesting Tool",
+		id: "78909",
+		price: 1000,
 		discount: null,
 		col: 1
 	}

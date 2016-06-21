@@ -8198,7 +8198,7 @@ V = {
 					var entry = (record[i])[ii];
 					if (itemlookup[entry.i])
 					{
-						entry.oComment = craftstr + (itemlookup[entry.i]).join(", ");
+						entry.oComment = "<var class='itmColor_reminder'>" + craftstr + (itemlookup[entry.i]).join(", ") + "</var>";
 					}
 				}
 			}
@@ -8951,8 +8951,8 @@ B = {
 							aPrice: pData,
 							aCount: Settings.aSlotMeta.count,
 							aPaymentEnum: E.PaymentEnum.Coin,
-							aPriceBuy: Settings.aPriceBuy,
-							aPriceSell: Settings.aPriceSell
+							aTransactionBuy: Settings.aTransactionBuy,
+							aTransactionSell: Settings.aTransactionSell
 						});
 					});
 				}
@@ -8990,8 +8990,8 @@ B = {
 	 * Updates the price displayed over the bank slot, the bank tab, and bank top.
 	 * @param jqobject pSlot for price label.
 	 * @objparam int aPrice amount, obtained from current TP prices or unlockables record.
-	 * @objparam int aPriceBuy of a transaction, optional.
-	 * @objparam int aPriceSell of a transaction, optional.
+	 * @objparam int aTransactionBuy of a transaction, optional.
+	 * @objparam int aTransactionSell of a transaction, optional.
 	 * @objparam int aCount of items.
 	 * @objparam enum aPaymentEnum such as coin or gem.
 	 */
@@ -9007,6 +9007,16 @@ B = {
 		var count = Settings.aCount || 1;
 		var prices = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, count) : E.processPrice(Settings.aPrice, count);
 		var pricetorecord = (iscollection) ? prices.oPriceSell : prices.oPriceSellTaxed;
+		if (Settings.aTransactionBuy)
+		{
+			prices = E.createPrice(Settings.aTransactionBuy, 1);
+			pricetorecord = prices.oPriceBuy;
+		}
+		else if (Settings.aTransactionSell)
+		{
+			prices = E.createPrice(Settings.aTransactionSell, 1);
+			pricetorecord = prices.oPriceSellTaxed;
+		}
 		var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
 		{
 			var displaypriceleft = (pDisplay.data("priceleft") || 0) + pLeft;
@@ -9028,7 +9038,7 @@ B = {
 			}
 			pDisplay.html(tabtext);
 		};
-
+		
 		// Label the slot with the item's or stack's price
 		switch (Settings.aPaymentEnum)
 		{
@@ -9051,26 +9061,45 @@ B = {
 		}
 
 		// Only add if item actually exists (not a zero stack slot)
+		var priceleft, priceright;
 		if (iscollection)
 		{
+			priceleft = prices.oPriceBuy;
+			priceright = prices.oPriceSell;
+			// Update the display
 			if (Settings.aCount !== 0)
 			{
 				updatePriceDisplay(tabdisplayprice, prices.oPriceBuy, 0, true);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + Settings.aPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
-				
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + Settings.aPaymentEnum), priceleft, priceright);
 			}
 			else
 			{
 				updatePriceDisplay(tabdisplayprice, 0, prices.oPriceBuy, true);
-				updatePriceDisplay(top.find(".bnkPriceValueB_" + Settings.aPaymentEnum), prices.oPriceBuy, prices.oPriceSell);
+				updatePriceDisplay(top.find(".bnkPriceValueB_" + Settings.aPaymentEnum), priceleft, priceright);
 			}
 		}
 		else
 		{
+			if (Settings.aTransactionBuy)
+			{
+				priceleft = prices.oPriceBuy;
+				priceright = prices.oPriceBuy;
+			}
+			else if (Settings.aTransactionSell)
+			{
+				priceleft = prices.oPriceSell;
+				priceright = prices.oPriceSellTaxed;
+			}
+			else
+			{
+				priceleft = prices.oPriceBuyTaxed;
+				priceright = prices.oPriceSellTaxed;
+			}
+			// Update the display
 			if (Settings.aCount !== 0)
 			{
-				updatePriceDisplay(tabdisplayprice, prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
-				updatePriceDisplay(top.find(".bnkPriceValueA_" + Settings.aPaymentEnum), prices.oPriceBuyTaxed, prices.oPriceSellTaxed);
+				updatePriceDisplay(tabdisplayprice, priceleft, priceright);
+				updatePriceDisplay(top.find(".bnkPriceValueA_" + Settings.aPaymentEnum), priceleft, priceright);
 			}
 		}
 		// Remember coin value for price search
@@ -9616,7 +9645,7 @@ B = {
 			{
 				var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
 				count = entry.oCount;
-				comment = foundstr + A.formatPossessionLocations(entry.oLocations);
+				comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(entry.oLocations) + "</var>";
 			}
 			// Style the slot
 			B.styleBankSlot(pSlot, {
@@ -10343,6 +10372,7 @@ B = {
 		var tab, tabtitle, tabdata, slotscontainer, slot;
 		var numfetched = 0, numtofetch = 0;
 		var calendar = {}, datestr, datearray, calkey, transaction, multitrans;
+		var pricebuy, pricesell;
 		
 		A.getTransactions(pURL, {aCallback: function(pData)
 		{
@@ -10387,7 +10417,7 @@ B = {
 				}
 				multitrans = (calendar[calkey])[transaction.item_id];
 				multitrans.oCount += transaction.quantity;
-				multitrans.oPrice += transaction.price;
+				multitrans.oPrice += (transaction.price * transaction.quantity);
 				multitrans.oStamps += transaction.quantity + I.Symbol.Quantity + " " + E.formatCoinStringColored(transaction.price)
 					+ " = " + E.formatCoinStringColored(transaction.price * transaction.quantity) + " @ "
 					+ (new Date(transaction.purchased || transaction.created)).toLocaleString() + "<br />";
@@ -10412,10 +10442,13 @@ B = {
 					{
 						Q.getItem(iMultiTrans.oItemID, function(iItem)
 						{
+							pricebuy = (sectionlower === "buying" || sectionlower === "bought") ? iMultiTrans.oPrice : null;
+							pricesell = (sectionlower === "selling" || sectionlower === "sold") ? iMultiTrans.oPrice : null;
 							B.styleBankSlot(iSlot, {
 								aItem: iItem,
 								aComment: "<span class='bnkTransactionsTooltip'>" + iMultiTrans.oStamps + "</span>",
-								aPrice: iMultiTrans.oPrice,
+								aTransactionBuy: pricebuy,
+								aTransactionSell: pricesell,
 								aSlotMeta: {count: iMultiTrans.oCount},
 								aCallback: function()
 							{
@@ -10428,7 +10461,7 @@ B = {
 				U.sortObjects(tabdata, {aKeyName: "oLatest"});
 				tab.data("transactions", tabdata);
 				// Button next to each tab to print that tab's transactions in text list format
-				var tabprint = $("<kbd class='bnkTransactionsPrint btnWindow' title='<dfn>Print</dfn> this tab month of transactions.'></kbd>")
+				var tabprint = $("<kbd class='bnkTransactionsPrint btnWindow' title='<dfn>Print</dfn> this month of transactions in chronological order.'></kbd>")
 					.prependTo(tab).click(function()
 				{
 					var clickedtab = $(this).parents(".bnkTab").first();
@@ -12670,8 +12703,8 @@ E = {
 		return {
 			oPriceBuy: price,
 			oPriceSell: price,
-			oPriceBuyTaxed: price,
-			oPriceSellTaxed: price
+			oPriceBuyTaxed: E.deductTax(price),
+			oPriceSellTaxed: E.deductTax(price)
 		};
 	},
 	
@@ -12718,6 +12751,19 @@ E = {
 				Settings.aError();
 			}
 		}
+	},
+	
+	/*
+	 * Get the current buy orders and sell listings.
+	 * @param int pItemID.
+	 * @objparam boolean aWantCache whether to cache the price or always use freshest, optional.
+	 * @objparam function aSuccess to execute after retrieval.
+	 * @objparam function aError to execute if failed to retrieve, optional.
+	 * @returns object processed price.
+	 */
+	getListings: function(pItemID, pSettings)
+	{
+		
 	},
 	
 	/*
