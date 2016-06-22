@@ -2683,6 +2683,10 @@ U = {
 	{
 		return U.URL_API.ItemPrices + pID;
 	},
+	getAPIListings: function(pID)
+	{
+		return U.URL_API.ItemListing + pID;
+	},
 	
 	/*
 	 * Gets URL to retrieve the local items database.
@@ -4767,11 +4771,7 @@ Z = {
 	 */
 	printItemInfo: function(pItem)
 	{
-		var iconstr = "<img src='" + pItem.icon + "' /> "
-			+ "<a" + U.convertExternalAnchor(U.getWikiItemDefault(pItem)) + "'>"
-				+ "<var class='" + Q.getRarityClass(pItem.rarity) + "'>" + pItem.name + "</var>"
-			+ "</a>";
-		I.print(iconstr);
+		I.print(Q.getItemPreface(pItem));
 		I.prettyJSON(pItem);
 	},
 	
@@ -6979,6 +6979,9 @@ V = {
 			var charindex = U.getSubintegerFromHTMLID($(this));
 			I.prettyJSON(A.Data.Characters[charindex]);
 		});
+		// Remember HTML containing the character's portrait, profession icon, and name, to be used in bank tab headers
+		pCharacter.oCharPreface = "<span class='chrPreface'><img class='chrPrefaceIcon' src='" + pCharacter.oCharPortrait + "' />"
+			+ "<ins class='acc_prof acc_prof_" + pCharacter.oCharElite + "'></ins>" + pCharacter.oCharName + "</span>";
 		// Additional information as tooltip
 		I.qTip.init($("#chrSelection_" + pCharacter.oCharIndex).find(".chrCommitment").attr("title", crafttooltip));
 	},
@@ -7924,7 +7927,7 @@ V = {
 		// Create bank tab for each character, fill slots with equipped items
 		A.Data.Characters.forEach(function(iChar)
 		{
-			tab = B.createBankTab(bank, {aTitle: iChar.oCharName});
+			tab = B.createBankTab(bank, {aTitle: iChar.oCharPreface});
 			slotscontainer = tab.find(".bnkTabSlots");
 			for (var i = 0; i < iChar.equipment.length; i++)
 			{
@@ -8048,7 +8051,7 @@ V = {
 			{
 				char = A.Data.Characters[i];
 				// Bank tab separator for each character
-				tab = B.createBankTab(bank, {aTitle: char.oCharName});
+				tab = B.createBankTab(bank, {aTitle: char.oCharPreface});
 				B.createInventorySidebar(tab, char.bags);
 				slotscontainer = tab.find(".bnkTabSlots");
 				for (var ii = 0; ii < char.bags.length; ii++)
@@ -10373,6 +10376,15 @@ B = {
 		var numfetched = 0, numtofetch = 0;
 		var calendar = {}, datestr, datearray, calkey, transaction, multitrans;
 		var pricebuy, pricesell;
+		var finalizeFetch = function()
+		{
+			if (numfetched !== numtofetch)
+			{
+				return;
+			}
+			// Show the transactions printout buttons after all items are loaded
+			bank.find(".bnkTransactionsPrint").fadeIn(1200);
+		};
 		
 		A.getTransactions(pURL, {aCallback: function(pData)
 		{
@@ -10453,6 +10465,7 @@ B = {
 								aCallback: function()
 							{
 								numfetched++;
+								finalizeFetch();
 								A.setProgressBar(numfetched, numtofetch);
 							}});
 						});
@@ -10462,24 +10475,24 @@ B = {
 				tab.data("transactions", tabdata);
 				// Button next to each tab to print that tab's transactions in text list format
 				var tabprint = $("<kbd class='bnkTransactionsPrint btnWindow' title='<dfn>Print</dfn> this month of transactions in chronological order.'></kbd>")
-					.prependTo(tab).click(function()
+					.prependTo(tab).hide().click(function()
 				{
 					var clickedtab = $(this).parents(".bnkTab").first();
 					var data = clickedtab.data("transactions");
+					// Assume item is already fetched and cached, so the string order is sequential
+					var str = "<div class='bnkTransactionsPrintout'>";
 					for (var i = data.length - 1; i >= 0; i--)
-					{
+					{						
 						Q.getItem(data[i].oItemID, function(iItem)
 						{
-							var countstr = (data[i].oCount > 1) ? (data[i].oCount + " ") : "";
-							var str = "<div class='bnkTransactionsPrintout'>"
-								+ "<aside><a" + U.convertExternalAnchor(U.getWikiItemDefault(iItem)) + ">"
-									+ "<img src='" + iItem.icon + "' /></a> <var class='" + Q.getRarityClass(iItem.rarity) + "'>"
-									+ countstr + iItem.name + "</var></aside>"
+							str += "<div class='bnkTransactionsPrintoutLine'>"
+								+ Q.getItemPreface(iItem, data[i].oCount)
 								+ "<aside>" + data[i].oStamps + "</aside>"
 							+ "</div>";
-							I.print(str);
 						});
 					}
+					str += "</div>";
+					I.print(str);
 				});
 				I.qTip.init(tabprint);
 			}
@@ -12250,6 +12263,21 @@ Q = {
 				bindSearch();
 			}
 		});
+	},
+	
+	/*
+	 * Gets HTML containing an item's icon and colorized name, for use in printing.
+	 * @param object pItem details.
+	 * @param int pCount of item stack, optional.
+	 * @returns string.
+	 */
+	getItemPreface: function(pItem, pCount)
+	{
+		var countstr = (pCount > 1) ? (pCount + " ") : "";
+		return "<aside class='itmPreface'>"
+			+ "<a class='itmPrefaceIcon'" + U.convertExternalAnchor(U.getWikiItemDefault(pItem)) + "'><img src='" + pItem.icon + "' /></a> "
+			+ "<var class='" + Q.getRarityClass(pItem.rarity) + "'>" + countstr + pItem.name + "</var>"
+		+ "</aside>";
 	}
 };
 E = {
@@ -12759,11 +12787,62 @@ E = {
 	 * @objparam boolean aWantCache whether to cache the price or always use freshest, optional.
 	 * @objparam function aSuccess to execute after retrieval.
 	 * @objparam function aError to execute if failed to retrieve, optional.
-	 * @returns object processed price.
+	 * @returns object listings.
 	 */
 	getListings: function(pItemID, pSettings)
 	{
+		var Settings = pSettings || {};
+		var wantcache = (Settings.aWantCache !== undefined) ? Settings.aWantCache : false;
 		
+		if (Q.isTradeable(pItemID))
+		{
+			$.ajax({
+				dataType: "json",
+				url: U.getAPIListings(pItemID),
+				cache: wantcache,
+				success: function(pData)
+				{
+					if (Settings.aSuccess)
+					{
+						Settings.aSuccess(pData);
+					}
+				},
+				error: function()
+				{
+					if (Settings.aError)
+					{
+						Settings.aError();
+					}
+				}
+			});
+		}
+		else
+		{
+			if (Settings.aError)
+			{
+				Settings.aError();
+			}
+		}
+	},
+	
+	/*
+	 * Formats and prints a Trading Post listings API object to the console.
+	 * @param object pItem details retrieved from API.
+	 * @param object pListings.
+	 */
+	printListings: function(pItem, pListings)
+	{
+		var str = "";
+		str += Q.getItemPreface(pItem);
+		pListings.buys.forEach(function(iEntry)
+		{
+			str += "";
+		});
+		pListings.sells.forEach(function(iEntry)
+		{
+			str += "";
+		});
+		I.print(str);
 	},
 	
 	/*
@@ -14083,6 +14162,16 @@ D = {
 			cs: "tvůj", it: "tuo", pl: "twój", pt: "teu", ru: "твой", zh: "你的"},
 		s_name: {de: "namen", es: "nombre", fr: "nom",
 			cs: "název", it: "nome", pl: "nazwa", pt: "nome", ru: "имя", zh: "名"},
+		s_ordered: {de: "bestellt", es: "pedidos", fr: "demandée",
+			cs: "objednal", it: "ordinato", pl: "zamówiony", pt: "encomendado", ru: "заказал", zh: "訂了"},
+		s_available: {de: "verfügbar", es: "disponibles", fr: "disponible",
+			cs: "dostupný", it: "disponibile", pl: "dostępny", pt: "disponível", ru: "досту́пный", zh: "可用"},
+		s_supply: {de: "angebot", es: "oferta", fr: "stock",
+			cs: "nabídka", it: "offerta", pl: "podaż", pt: "suprimento", ru: "предложение", zh: "供應"},
+		s_demand: {de: "nachfrage", es: "demanda", fr: "demande",
+			cs: "poptávka", it: "domanda", pl: "popyt", pt: "demanda", ru: "спрос", zh: "需求"},
+		s_price: {de: "preis", es: "precio", fr: "prix",
+			cs: "cena", it: "prezzo", pl: "cena", pt: "preço", ru: "цена", zh: "價格"},
 		s_buy: {de: "kaufen", es: "comprar", fr: "acheter",
 			cs: "koupit", it: "comprare", pl: "kupić", pt: "comprar", ru: "купить", zh: "買"},
 		s_sell: {de: "verkaufen", es: "vender", fr: "vendre",
@@ -28569,25 +28658,6 @@ I = {
 	 * @param int pSpeed in milliseconds.
 	 * @post Element is shown at the final frame.
 	 */
-	bloatElement: function(pSelector, pDuration, pSpeed)
-	{
-		var times = parseInt(pDuration / pSpeed);
-		// Have to have even numbered times so show and hide equals
-		times = (times % 2 === 0) ? times : times + 1;
-		var isshown = true;
-		for (var i = 0; i < times; i++)
-		{
-			if (isshown)
-			{
-				$(pSelector).hide(pSpeed);
-			}
-			else
-			{
-				$(pSelector).show(pSpeed);
-			}
-			isshown = !isshown;
-		}
-	},
 	blinkElement: function(pSelector, pDuration, pSpeed)
 	{
 		var times = parseInt(pDuration / pSpeed);
@@ -28614,6 +28684,25 @@ I = {
 			}
 			counter++;
 		}, pSpeed);
+	},
+	bloatElement: function(pSelector, pDuration, pSpeed)
+	{
+		var times = parseInt(pDuration / pSpeed);
+		// Have to have even numbered times so show and hide equals
+		times = (times % 2 === 0) ? times : times + 1;
+		var isshown = true;
+		for (var i = 0; i < times; i++)
+		{
+			if (isshown)
+			{
+				$(pSelector).hide(pSpeed);
+			}
+			else
+			{
+				$(pSelector).show(pSpeed);
+			}
+			isshown = !isshown;
+		}
 	},
 	
 	/*

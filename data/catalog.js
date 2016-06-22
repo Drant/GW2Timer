@@ -149,7 +149,8 @@ Gathering: [
 	{i: 48934, n: "Jack-in-the-Box Scythe", p: {gem: 1000}},
 	{i: 48955, n: "Dreamcleaver Logging Axe", p: {gem: 1000}},
 	{i: 48825, n: "Frost Wasp Logging Tool", p: {gem: 1000}},
-	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}}
+	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}},
+	{i: 78909, n: "Glitter Bomb Harvesting Tool", p: {gem: 1000}}
 ],
 Salvage: [
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},

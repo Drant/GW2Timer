@@ -1532,6 +1532,16 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 /*
  * Bank tabs and separators.
  */
+.chrPreface {
+	display: inline-block;
+}
+.chrPrefaceIcon {
+	width: 32px; height: 32px;
+	border-radius: 4px;
+}
+.bnkTabText .chrPreface {
+	margin-top: -4px;
+}
 .bnkTab {
 	position: relative;
 }
@@ -1889,10 +1899,11 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	border: 2px solid rgba(87, 129, 170, 0.7);
 	border-radius: 2px;
 }
-.bnkTransactionsPrintout {
+.bnkTransactionsPrintoutLine {
 	padding: 8px;
+}
+.bnkTransactionsPrintout .bnkTransactionsPrintoutLine:nth-child(even) {
 	background: rgba(255,255,255,0.1);
-	border-radius: 4px;
 }
 
 .acc_wardrobe {

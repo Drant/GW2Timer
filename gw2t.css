@@ -308,6 +308,18 @@ img {
 	display: table-cell;
 	line-height: 16px;
 }
+.itmPreface { /* For console printout of item */
+	display: block;
+	margin-bottom: 4px;
+}
+.itmPrefaceIcon {
+	display: inline-block;
+	border: 1px solid #2f2b29;
+	outline: 1px solid #595859;
+}
+.itmPrefaceIcon:hover {
+	border: 1px solid red;
+}
 /*
  * Item search bar.
  */
