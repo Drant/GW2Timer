@@ -158,7 +158,7 @@
 /* Key manager and account lobby
 ----------------------------------------------------------------------------- */
 
-#accManager, #accHelp {
+#accManager, #accHelp, #accTrading {
 	width: 80%;
 	margin-left: 10%;
 	margin-right: 10%;
@@ -1689,12 +1689,18 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 .bnkSlot:hover .bnkSlotForeground {
 	opacity: 0;
 }
-.bnkSlotMatch {
-	background-image: linear-gradient(270deg, red, rgba(255,255,255,0.9));
+.bnkSlotMatch, .bnkSlotMatchAlternate {
 	background-size: 400% 400%;
 	animation: aniPulsate 2s ease infinite;
 	border-radius: 4px;
+}
+.bnkSlotMatch {
+	background-image: linear-gradient(270deg, red, rgba(255,255,255,0.9));
 	box-shadow: 0px 0px 24px red;
+}
+.bnkSlotMatchAlternate {
+	background-image: linear-gradient(270deg, lime, rgba(255,255,255,0.9));
+	box-shadow: 0px 0px 24px lime;
 }
 .bnkSlotIcon {
 	display: block;
@@ -1899,11 +1905,21 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	border: 2px solid rgba(87, 129, 170, 0.7);
 	border-radius: 2px;
 }
-.bnkTransactionsPrintoutLine {
+.bnkTransactionsContainer {
+	background: rgba(0,0,0,0.8);
+}
+.bnkTransactionsBox {
 	padding: 8px;
 }
-.bnkTransactionsPrintout .bnkTransactionsPrintoutLine:nth-child(even) {
+.bnkTransactionsContainer .bnkTransactionsBox:nth-child(even) {
 	background: rgba(255,255,255,0.1);
+}
+.bnkTransactionsList {
+	padding: 4px;
+	border-right: 2px solid rgba(255,255,255,0.1);
+	border-bottom: 4px solid rgba(255,255,255,0.1);
+	text-align: right;
+	border-radius: 8px;
 }
 
 .acc_wardrobe {

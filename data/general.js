@@ -1324,6 +1324,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Mini Candy Corn Skritt",
+		id: "67023",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Home Instance Node Pack",
 		img: "http://i.imgur.com/9u66LKD.png",
 		price: 3200,

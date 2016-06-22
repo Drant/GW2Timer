@@ -4766,16 +4766,6 @@ Z = {
 	},
 	
 	/*
-	 * Prints an item's details in standard format.
-	 * @object pItem from API items.
-	 */
-	printItemInfo: function(pItem)
-	{
-		I.print(Q.getItemPreface(pItem));
-		I.prettyJSON(pItem);
-	},
-	
-	/*
 	 * Creates a processed object from a color API object, to be stored in the
 	 * custom dyes database for use in account bank.
 	 * @param object pItem a dye item, or a color object.
@@ -5968,7 +5958,7 @@ A = {
 		Q.bindItemSearch("#accSearch", {
 			aCallback: function(pItem)
 			{
-				Z.printItemInfo(pItem);
+				Q.printItemInfo(pItem);
 			}}
 		);
 		
@@ -8853,6 +8843,8 @@ B = {
 	 * @objparam string aComment to append to tooltip, optional.
 	 * @objparam string aWiki name of wiki article to open when double clicked, optional.
 	 * @objparam function aCallback to execute after styling.
+	 * @objparam function aPriceCallback to execute after fetching the item price, optional.
+	 * @objparam function aBind for custom slot behavior binding.
 	 */
 	styleBankSlot: function(pSlot, pSettings)
 	{
@@ -8887,7 +8879,11 @@ B = {
 				pSlot.data("keywords", keywords);
 				// Bind slot click behavior
 				var wikisearch = Settings.aWiki || Settings.aItem.name;
-				if (Settings.aIsCustomCatalog)
+				if (Settings.aBind)
+				{
+					Settings.aBind(pSlot, Settings.aItem);
+				}
+				else if (Settings.aIsCustomCatalog)
 				{
 					B.bindCatalogSlot(pSlot);
 				}
@@ -8948,15 +8944,19 @@ B = {
 					pSlot.addClass("bnkSlotTradeable");
 					pSlot.data("istradeable", true);
 					var itemidforprice = Settings.aTradeableID || Settings.aItem.id;
-					$.getJSON(U.getAPIPrice(itemidforprice), function(pData)
+					E.getPrice(itemidforprice, function(pPrice)
 					{
 						B.updateSlotPrice(pSlot, {
-							aPrice: pData,
+							aPrice: pPrice,
 							aCount: Settings.aSlotMeta.count,
 							aPaymentEnum: E.PaymentEnum.Coin,
 							aTransactionBuy: Settings.aTransactionBuy,
 							aTransactionSell: Settings.aTransactionSell
 						});
+						if (Settings.aPriceCallback)
+						{
+							Settings.aPriceCallback(pPrice);
+						}
 					});
 				}
 				else if (Settings.aPrice > 0)
@@ -8992,7 +8992,7 @@ B = {
 	/*
 	 * Updates the price displayed over the bank slot, the bank tab, and bank top.
 	 * @param jqobject pSlot for price label.
-	 * @objparam int aPrice amount, obtained from current TP prices or unlockables record.
+	 * @objparam int or object aPrice amount or processed object by the get price function.
 	 * @objparam int aTransactionBuy of a transaction, optional.
 	 * @objparam int aTransactionSell of a transaction, optional.
 	 * @objparam int aCount of items.
@@ -9008,7 +9008,7 @@ B = {
 		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + Settings.aPaymentEnum);
 		
 		var count = Settings.aCount || 1;
-		var prices = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, count) : E.processPrice(Settings.aPrice, count);
+		var prices = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, count) : E.recountPrice(Settings.aPrice, count);
 		var pricetorecord = (iscollection) ? prices.oPriceSell : prices.oPriceSellTaxed;
 		if (Settings.aTransactionBuy)
 		{
@@ -9049,7 +9049,7 @@ B = {
 				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinStringShort(pricetorecord) + "</var>");
 				if (pSlot.data("istradeable"))
 				{
-					var priceone = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, 1) : E.processPrice(Settings.aPrice, 1);
+					var priceone = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, 1) : E.recountPrice(Settings.aPrice, 1);
 					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatCoinStringShort(priceone.oPriceBuy) + "</var>");
 					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatCoinStringShort(priceone.oPriceSell) + "</var>");
 				}
@@ -9265,10 +9265,6 @@ B = {
 			{
 				I.print("<div class='accModal cntComposition'>" + helpmessage + $("#accBankHelp").html() + "</div>", true);
 				U.convertExternalLink("#cslContent a");
-			}
-			else
-			{
-				I.clear();
 			}
 			isshowinghelp = !isshowinghelp;
 		});
@@ -9535,10 +9531,10 @@ B = {
 				{
 					slot.addClass("bnkSlotTradeable");
 					slot.data("istradeable", true);
-					$.getJSON(U.getAPIPrice(iItemID), function(pData)
+					E.getPrice(iItemID, function(pPrice)
 					{
 						B.updateSlotPrice(iSlot, {
-							aPrice: pData,
+							aPrice: pPrice,
 							aCount: count,
 							aPaymentEnum: E.PaymentEnum.Coin
 						});
@@ -10376,7 +10372,7 @@ B = {
 		var numfetched = 0, numtofetch = 0;
 		var calendar = {}, datestr, datearray, calkey, transaction, multitrans;
 		var pricebuy, pricesell;
-		var finalizeFetch = function()
+		var finalizeTransactions = function()
 		{
 			if (numfetched !== numtofetch)
 			{
@@ -10420,6 +10416,8 @@ B = {
 				{
 					(calendar[calkey])[transaction.item_id] = {
 						oLatest: transaction.purchased || transaction.created,
+						oHighest: Number.NEGATIVE_INFINITY,
+						oLowest: Number.POSITIVE_INFINITY,
 						oItemID: transaction.item_id,
 						oCount: 0,
 						oPrice: 0,
@@ -10433,6 +10431,14 @@ B = {
 				multitrans.oStamps += transaction.quantity + I.Symbol.Quantity + " " + E.formatCoinStringColored(transaction.price)
 					+ " = " + E.formatCoinStringColored(transaction.price * transaction.quantity) + " @ "
 					+ (new Date(transaction.purchased || transaction.created)).toLocaleString() + "<br />";
+				if (transaction.price > multitrans.oHighest)
+				{
+					multitrans.oHighest = transaction.price;
+				}
+				if (transaction.price < multitrans.oLowest)
+				{
+					multitrans.oLowest = transaction.price;
+				}
 			}
 			for (var i in calendar)
 			{
@@ -10456,18 +10462,45 @@ B = {
 						{
 							pricebuy = (sectionlower === "buying" || sectionlower === "bought") ? iMultiTrans.oPrice : null;
 							pricesell = (sectionlower === "selling" || sectionlower === "sold") ? iMultiTrans.oPrice : null;
-							B.styleBankSlot(iSlot, {
+							B.styleBankSlot(iSlot, {//
 								aItem: iItem,
 								aComment: "<span class='bnkTransactionsTooltip'>" + iMultiTrans.oStamps + "</span>",
 								aTransactionBuy: pricebuy,
 								aTransactionSell: pricesell,
 								aSlotMeta: {count: iMultiTrans.oCount},
 								aCallback: function()
-							{
-								numfetched++;
-								finalizeFetch();
-								A.setProgressBar(numfetched, numtofetch);
-							}});
+								{
+									numfetched++;
+									finalizeTransactions();
+									A.setProgressBar(numfetched, numtofetch);
+								},
+								aPriceCallback: function(pPrice)
+								{
+									if (sectionlower === "buying")
+									{
+										// If the item the user is buying is outbidded, then highlight it
+										if (pPrice.oPriceBuy === iMultiTrans.oHighest)
+										{
+											iSlot.addClass("bnkSlotMatchAlternate");
+										}
+									}
+									else if (sectionlower === "selling")
+									{
+										// If the item the user is selling is not outbidded, then highlight it
+										if (pPrice.oPriceSell === iMultiTrans.oLowest)
+										{
+											iSlot.addClass("bnkSlotMatchAlternate");
+										}
+									}
+								},
+								aBind: function(pSlot, pItem)
+								{
+									pSlot.click(function()
+									{
+										E.printListings(pItem.id);
+									});
+								}
+							});
 						});
 					})(slot, multitrans);
 				}
@@ -10480,22 +10513,24 @@ B = {
 					var clickedtab = $(this).parents(".bnkTab").first();
 					var data = clickedtab.data("transactions");
 					// Assume item is already fetched and cached, so the string order is sequential
-					var str = "<div class='bnkTransactionsPrintout'>";
+					var str = "<div class='bnkTransactionsContainer'>";
 					for (var i = data.length - 1; i >= 0; i--)
 					{						
 						Q.getItem(data[i].oItemID, function(iItem)
 						{
-							str += "<div class='bnkTransactionsPrintoutLine'>"
+							str += "<div class='bnkTransactionsBox'>"
 								+ Q.getItemPreface(iItem, data[i].oCount)
-								+ "<aside>" + data[i].oStamps + "</aside>"
+								+ "<aside class='bnkTransactionsList'>" + data[i].oStamps + "</aside>"
 							+ "</div>";
 						});
 					}
 					str += "</div>";
-					I.print(str);
+					I.print(str, true);
+					I.bindConsoleInput();
 				});
 				I.qTip.init(tabprint);
 			}
+			finalizeTransactions();
 			B.tallyBank(container);
 			B.createBankMenu(bank, {
 				aHelpMessage: $("#accHelpTransactions").html()
@@ -11917,7 +11952,7 @@ Q = {
 			{
 				if (Q.Context.Item.name)
 				{
-					Z.printItemInfo(Q.Context.Item);
+					Q.printItemInfo(Q.Context.Item);
 				}
 				else
 				{
@@ -12089,18 +12124,15 @@ Q = {
 								Q.scanItem(pItem, {aElement: resultentry});
 								Q.bindItemSlotBehavior(resultentry, {aItem: pItem});
 								// Also include price next to tradeable items
-								E.getPrice(iItemID, {
-									aWantCache: true,
-									aSuccess: function(pPriceObj)
+								E.getPrice(iItemID, function(pPriceObj)
+								{
+									if (iTimestamp === searchtimestamp)
 									{
-										if (iTimestamp === searchtimestamp)
-										{
-											var pricestr = "<span class='itmSearchResultPrice'>" + E.formatCoinStringShort(pPriceObj.oPriceSell)
-												+ " <var class='cssFaded'>" + E.formatCoinStringShort(pPriceObj.oPriceBuy) + "</var></span>";
-											resultentry.append(pricestr);
-										}
+										var pricestr = "<span class='itmSearchResultPrice'>" + E.formatCoinStringShort(pPriceObj.oPriceSell)
+											+ " <var class='cssFaded'>" + E.formatCoinStringShort(pPriceObj.oPriceBuy) + "</var></span>";
+										resultentry.append(pricestr);
 									}
-								});
+								}, true);
 							}
 						});
 					})(pResults[i], searchtimestamp);
@@ -12274,10 +12306,28 @@ Q = {
 	getItemPreface: function(pItem, pCount)
 	{
 		var countstr = (pCount > 1) ? (pCount + " ") : "";
-		return "<aside class='itmPreface'>"
-			+ "<a class='itmPrefaceIcon'" + U.convertExternalAnchor(U.getWikiItemDefault(pItem)) + "'><img src='" + pItem.icon + "' /></a> "
-			+ "<var class='" + Q.getRarityClass(pItem.rarity) + "'>" + countstr + pItem.name + "</var>"
-		+ "</aside>";
+		return "<div class='itmPreface'>"
+			+ "<aside class='itmPrefaceLeft'>"
+				+ "<a class='itmPrefaceIcon'" + U.convertExternalAnchor(U.getWikiItemDefault(pItem)) + "'>"
+					+ "<img class='itmPrefaceIconImage' src='" + pItem.icon + "' /></a> "
+				+ "<var class='itmPrefaceName " + Q.getRarityClass(pItem.rarity) + "'>" + countstr + pItem.name + "</var>"
+			+ "</aside>"
+			+ "<aside class='itmPrefaceRight'>"
+				+ "<input class='cssInputText' type='text' value='" + pItem.chat_link + "' /><br />"
+				+ "<input class='cssInputText' type='text' value='" + pItem.id + "' />"
+			+ "</aside>"
+		+ "</div>";
+	},
+	
+	/*
+	 * Prints an item's details in standard format.
+	 * @object pItem from API items.
+	 */
+	printItemInfo: function(pItem)
+	{
+		I.print(Q.getItemPreface(pItem));
+		I.prettyJSON(pItem);
+		I.bindConsoleInput();
 	}
 };
 E = {
@@ -12735,20 +12785,26 @@ E = {
 			oPriceSellTaxed: E.deductTax(price)
 		};
 	},
+	recountPrice: function(pPrice, pCount)
+	{
+		return {
+			oPriceBuy: pPrice.oPriceBuy * pCount,
+			oPriceSell: pPrice.oPriceSell * pCount,
+			oPriceBuyTaxed: pPrice.oPriceBuyTaxed * pCount,
+			oPriceSellTaxed: pPrice.oPriceSellTaxed * pCount
+		};
+	},
 	
 	/*
 	 * Retrieves the Trading Post prices for an item.
 	 * @param int pItemID.
-	 * @objparam boolean aWantCache whether to cache the price or always use freshest, optional.
-	 * @objparam function aSuccess to execute after retrieval.
-	 * @objparam function aError to execute if failed to retrieve, optional.
+	 * @objparam function pCallback to execute after retrieval.
+	 * @objparam boolean pWantCache whether to cache the price or always use freshest, optional.
 	 * @returns object processed price.
 	 */
-	getPrice: function(pItemID, pSettings)
+	getPrice: function(pItemID, pCallback, pWantCache)
 	{
-		var Settings = pSettings || {};
-		var wantcache = (Settings.aWantCache !== undefined) ? Settings.aWantCache : false;
-		
+		var wantcache = (pWantCache !== undefined) ? pWantCache : false;
 		if (Q.isTradeable(pItemID))
 		{
 			$.ajax({
@@ -12757,43 +12813,26 @@ E = {
 				cache: wantcache,
 				success: function(pData)
 				{
-					if (Settings.aSuccess)
+					if (pCallback)
 					{
 						var priceobj = E.processPrice(pData);
-						Settings.aSuccess(priceobj);
-					}
-				},
-				error: function()
-				{
-					if (Settings.aError)
-					{
-						Settings.aError();
+						pCallback(priceobj);
 					}
 				}
 			});
-		}
-		else
-		{
-			if (Settings.aError)
-			{
-				Settings.aError();
-			}
 		}
 	},
 	
 	/*
 	 * Get the current buy orders and sell listings.
 	 * @param int pItemID.
-	 * @objparam boolean aWantCache whether to cache the price or always use freshest, optional.
-	 * @objparam function aSuccess to execute after retrieval.
-	 * @objparam function aError to execute if failed to retrieve, optional.
+	 * @objparam function pCallback to execute after retrieval.
+	 * @objparam boolean pWantCache whether to cache the price or always use freshest, optional.
 	 * @returns object listings.
 	 */
-	getListings: function(pItemID, pSettings)
+	getListings: function(pItemID, pCallback, pWantCache)
 	{
-		var Settings = pSettings || {};
-		var wantcache = (Settings.aWantCache !== undefined) ? Settings.aWantCache : false;
-		
+		var wantcache = (pWantCache !== undefined) ? pWantCache : false;
 		if (Q.isTradeable(pItemID))
 		{
 			$.ajax({
@@ -12802,47 +12841,68 @@ E = {
 				cache: wantcache,
 				success: function(pData)
 				{
-					if (Settings.aSuccess)
+					if (pCallback)
 					{
-						Settings.aSuccess(pData);
-					}
-				},
-				error: function()
-				{
-					if (Settings.aError)
-					{
-						Settings.aError();
+						pCallback(pData);
 					}
 				}
 			});
 		}
-		else
-		{
-			if (Settings.aError)
-			{
-				Settings.aError();
-			}
-		}
 	},
 	
 	/*
-	 * Formats and prints a Trading Post listings API object to the console.
+	 * Formats a Trading Post listings API object into HTML tables.
 	 * @param object pItem details retrieved from API.
 	 * @param object pListings.
 	 */
-	printListings: function(pItem, pListings)
+	formatListings: function(pItem, pListings)
 	{
 		var str = "";
+		var priceword = D.getWordCapital("price");
+		var orderedword = D.getWordCapital("ordered");
+		var availableword = D.getWordCapital("available");
+		var buys = "", sells = "";
+		var supply = 0;
+		var demand = 0;
 		str += Q.getItemPreface(pItem);
+		// Buys and Sells tables
 		pListings.buys.forEach(function(iEntry)
 		{
-			str += "";
+			buys += "<tr><td>" + iEntry.quantity + " " + orderedword + "</td><td>" + E.formatCoinStringColored(iEntry.unit_price) + "</td></tr>";
+			demand += (iEntry.listings * iEntry.quantity);
 		});
+		buys += "</tbody></table>";
 		pListings.sells.forEach(function(iEntry)
 		{
-			str += "";
+			sells += "<tr><td>" + iEntry.quantity + " " + availableword + "</td><td>" + E.formatCoinStringColored(iEntry.unit_price) + "</td></tr>";
+			supply += (iEntry.listings * iEntry.quantity);
 		});
-		I.print(str);
+		sells += "</tbody></table>";
+		// Headers
+		var demandstr = "<span class='trsListingsDemand'>" + D.getWordCapital("demand") + ": " + demand.toLocaleString() + "</span>";
+		var supplystr = "<span class='trsListingsSupply'>" + D.getWordCapital("supply") + ": " + supply.toLocaleString() + "</span>";
+		var buysheader = "<table class='trsListingsBuys'><thead><tr><th>" + demandstr + "</th><th>" + priceword + "</th></tr></thead><tbody>";
+		var sellsheader = "<table class='trsListingsSells'><thead><tr><th>" + supplystr + "</th><th>" + priceword + "</th></tr></thead><tbody>";
+		// Combine HTML
+		str += "<div class='trsListings'>" + buysheader + buys + sellsheader + sells + "</div>";
+		return str;
+	},
+	
+	/*
+	 * Retrieves listings for an item and prints them to the console.
+	 * @param int pItemID.
+	 */
+	printListings: function(pItemID)
+	{
+		I.print(I.cThrobber, true);
+		Q.getItem(pItemID, function(pItem)
+		{
+			E.getListings(pItemID, function(pListing)
+			{
+				I.clear();
+				I.print(E.formatListings(pItem, pListing));
+			});	
+		});
 	},
 	
 	/*
@@ -12925,7 +12985,7 @@ E = {
 			icon.attr("src", pItem.icon);
 			icon.unbind("click").click(function()
 			{
-				Z.printItemInfo(pItem);
+				Q.printItemInfo(pItem)
 			});
 			Q.scanItem(pItem, {aElement: icon, aCallback: function(pBox)
 			{
@@ -13119,7 +13179,7 @@ E = {
 						+ "<abbr><img class='trdIcon' src='" + U.URL_IMG.Placeholder + "' /></abbr>"
 							+ "<div class='trdResultsFocus'><input class='trdName' type='text' /></div>"
 						+ "<div class='trdButtons'>"
-							+ "<button class='trdSearch' tabindex='-1'>S</button><button class='trdWiki' tabindex='-1'>W</button><br />"
+							+ "<button class='trdSearch' tabindex='-1'>S</button><button class='trdListings' tabindex='-1'>$</button><br />"
 						+ "</div>"
 						+ "<div class='trdExpand'>"
 							+ "<abbr>$~O</abbr><input class='trdBuy' type='text' />"
@@ -13171,7 +13231,14 @@ E = {
 			});
 			
 			// Bind search button behavior for ith calculator
-			$(entry + " .trdWiki").click(function()
+			$(entry + " .trdListings").click(function()
+			{
+				if (I.isConsoleShown() === false)
+				{
+					var id = $(this).parents(".trdEntry").find(".trdItem").val();
+					E.printListings(id);
+				}
+			}).dblclick(function()
 			{
 				var query = $(this).parents(".trdEntry").find(".trdName").val();
 				U.openExternalURL(U.getWikiLinkLanguage(query));
@@ -14176,6 +14243,8 @@ D = {
 			cs: "koupit", it: "comprare", pl: "kupić", pt: "comprar", ru: "купить", zh: "買"},
 		s_sell: {de: "verkaufen", es: "vender", fr: "vendre",
 			cs: "prodat", it: "vendere", pl: "sprzedać", pt: "vender", ru: "продать", zh: "賣"},
+		s_outbid: {de: "überbieten", es: "sobrepujar", fr: "surenchérir",
+			cs: "přelicitovat", it: "prezzo più alto", pl: "przelicytować", pt: "ultrapassar", ru: "перекупать", zh: "出價高於"},
 		s_quantity: {de: "anzahl", es: "cantidad", fr: "quantité",
 			cs: "množství", it: "quantità", pl: "ilość", pt: "quantidade", ru: "количество", zh: "量"},
 		s_profit: {de: "gewinn", es: "beneficio", fr: "profit",
@@ -28467,14 +28536,14 @@ I = {
 	 */
 	print: function(pString, pClear)
 	{
+		if (pClear)
+		{
+			I.clear();
+		}
 		window.clearTimeout(I.consoleTimeout);
 		var console = document.getElementById("itemConsole");
 		var content = document.getElementById("cslContent");
 		console.style.display = "block";
-		if (pClear)
-		{
-			content.innerHTML = "";
-		}
 		content.insertAdjacentHTML("beforeend", pString + "<br />");
 	},
 	
@@ -28517,12 +28586,28 @@ I = {
 	},
 	
 	/*
-	 * Tells if the console is shown
+	 * Tells if the console is shown and autoclears it if showing.
 	 * @returns boolean.
 	 */
 	isConsoleShown: function()
 	{
-		return $("#itemConsole").is(":visible");
+		var isshown = $("#itemConsole").is(":visible");
+		if (isshown)
+		{
+			I.clear();
+		}
+		return isshown;
+	},
+	
+	/*
+	 * Makes any input element in the console autoselect when clicked on.
+	 */
+	bindConsoleInput: function()
+	{
+		$("#cslContent").find(".cssInputText").unbind("click").click(function()
+		{
+			$(this).select();
+		});
 	},
 	
 	/*

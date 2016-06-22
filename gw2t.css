@@ -82,6 +82,11 @@ body > windowMain
 	0% { box-shadow: 0px 0px 0px #e7e3bd; }
 	100% { box-shadow: 0px 0px 16px #e7e3bd; }
 }
+@keyframes aniFlicker {
+	0% { box-shadow: 0px 0px 0px #e7e3bd; }
+	50% { box-shadow: 0px 0px 16px #e7e3bd; }
+	100% { box-shadow: 0px 0px 0px #e7e3bd; }
+}
 @keyframes aniFadeIn {
 	0% { opacity: 0; }
 	100% { opacity: 1; }
@@ -308,9 +313,23 @@ img {
 	display: table-cell;
 	line-height: 16px;
 }
-.itmPreface { /* For console printout of item */
-	display: block;
+
+/* 
+ * Item short printout in console.
+ */
+.itmPreface {
+	width: 100%;
+	display: table;
 	margin-bottom: 4px;
+}
+.itmPrefaceLeft, .itmPrefaceRight {
+	display: inline-block;
+}
+.itmPrefaceRight {
+	display: table-cell;
+	padding-left: 8px;
+	vertical-align: middle;
+	text-align: right;
 }
 .itmPrefaceIcon {
 	display: inline-block;
@@ -320,6 +339,53 @@ img {
 .itmPrefaceIcon:hover {
 	border: 1px solid red;
 }
+.itmPrefaceIconImage {
+	width: 64px; height: 64px;
+}
+.itmPrefaceName {
+	font-family: Menomonia;
+	font-size: 24px;
+}
+
+/*
+ * Trading Post transactions listing.
+ */
+.trsListings {
+	padding: 8px;
+	overflow: hidden;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 17px;
+	font-weight: bold;
+	border: 2px solid rgba(0,0,0,0.5);
+}
+.trsListings table {
+	min-width: 320px;
+	float: left;
+	margin-right: 8px;
+	text-align: right;
+	text-shadow: none;
+}
+.trsListings tbody {
+	background: rgba(0,0,0,0.8);
+}
+.trsListings td {
+	padding: 4px;
+	color: #4f4e49;
+}
+.trsListings th {
+	padding: 4px;
+	color: #d3ad64;
+}
+.trsListings tbody tr:nth-child(even) {
+	background: rgba(255,255,255,0.1);
+}
+.trsListings tbody tr:hover {
+	background-attachment: fixed;
+	background-repeat: repeat-y;
+	background-image: linear-gradient(to right, rgba(161, 151, 123, 0.8) 0%, transparent 100%);
+	animation: aniHighlight 0.4s;
+}
+
 /*
  * Item search bar.
  */
