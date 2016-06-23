@@ -218,6 +218,7 @@ input[type="text"].accTokenHovered {
 	text-align: left;
 }
 #accDirectory ul {
+	margin-bottom: 16px;
 	list-style: disc;
 }
 

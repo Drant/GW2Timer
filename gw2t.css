@@ -149,6 +149,7 @@ img {
 .jsSuspended { /* Apply to any element that should be temporarily unclickable */
 	pointer-events: none;
 	opacity: 0.4;
+	text-decoration: line-through;
 }
 
 .cntComposition ::selection {

@@ -12306,14 +12306,16 @@ Q = {
 	getItemPreface: function(pItem, pCount)
 	{
 		var countstr = (pCount > 1) ? (pCount + " ") : "";
+		var itemname = U.escapeHTML(pItem.name);
 		return "<div class='itmPreface'>"
 			+ "<aside class='itmPrefaceLeft'>"
 				+ "<a class='itmPrefaceIcon'" + U.convertExternalAnchor(U.getWikiItemDefault(pItem)) + "'>"
 					+ "<img class='itmPrefaceIconImage' src='" + pItem.icon + "' /></a> "
-				+ "<var class='itmPrefaceName " + Q.getRarityClass(pItem.rarity) + "'>" + countstr + pItem.name + "</var>"
+				+ "<var class='itmPrefaceName " + Q.getRarityClass(pItem.rarity) + "'>" + countstr + itemname + "</var>"
 			+ "</aside>"
 			+ "<aside class='itmPrefaceRight'>"
-				+ "<input class='cssInputText' type='text' value='" + pItem.chat_link + "' /><br />"
+				+ "<input class='cssInputText' type='text' value='" + itemname + "' /><br />"
+				+ "<input class='cssInputText' type='text' value='" + U.escapeHTML(pItem.chat_link) + "' /><br />"
 				+ "<input class='cssInputText' type='text' value='" + pItem.id + "' />"
 			+ "</aside>"
 		+ "</div>";
