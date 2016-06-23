@@ -1318,6 +1318,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Slayer's Outfit",
+		id: "77483",
+		price: 560,
+		discount: 700,
+		col: 0
+	},
+	{
 		name: "Crystal Nomad Outfit",
 		id: "68684",
 		price: 525,

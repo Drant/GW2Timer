@@ -10368,18 +10368,106 @@ B = {
 			aWantGem: false
 		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var tab, tabtitle, tabdata, slotscontainer, slot;
 		var numfetched = 0, numtofetch = 0;
 		var calendar = {}, datestr, datearray, calkey, transaction, multitrans;
 		var pricebuy, pricesell;
-		var finalizeTransactions = function()
+		var wantcollapsed = false;
+		
+		var fillTab = function(pTab, pMonthKey)
 		{
-			if (numfetched !== numtofetch)
+			var tabnumfetched = 0, tabnumtofetch = U.getObjectLength(calendar[pMonthKey]);
+			var slot;
+			var slotscontainer = pTab.find(".bnkTabSlots");
+			var tabdata = []; // Contains the multi-transactions objects but will be chronologically sorted instead of by item ID
+			for (var ii in calendar[pMonthKey])
 			{
-				return;
+				multitrans = (calendar[pMonthKey])[ii];
+				slot = B.createBankSlot(slotscontainer);
+				slot.data("count", multitrans.oCount);
+				tabdata.push(multitrans);
+				(function(iSlot, iMultiTrans)
+				{
+					Q.getItem(iMultiTrans.oItemID, function(iItem)
+					{
+						pricebuy = (sectionlower === "buying" || sectionlower === "bought") ? iMultiTrans.oPrice : null;
+						pricesell = (sectionlower === "selling" || sectionlower === "sold") ? iMultiTrans.oPrice : null;
+						B.styleBankSlot(iSlot, {
+							aItem: iItem,
+							aComment: "<span class='bnkTransactionsTooltip'>" + iMultiTrans.oStamps + "</span>",
+							aTransactionBuy: pricebuy,
+							aTransactionSell: pricesell,
+							aSlotMeta: {count: iMultiTrans.oCount},
+							aCallback: function()
+							{
+								if (wantcollapsed)
+								{
+									tabnumfetched++;
+									A.setProgressBar(tabnumfetched, tabnumtofetch);
+								}
+								else
+								{
+									numfetched++;
+									A.setProgressBar(numfetched, numtofetch);
+								}
+							},
+							aPriceCallback: function(pPrice)
+							{
+								if (sectionlower === "buying")
+								{
+									// If the item the user is buying is outbidded, then highlight it
+									if (pPrice.oPriceBuy === iMultiTrans.oHighest)
+									{
+										iSlot.addClass("bnkSlotMatchAlternate");
+									}
+								}
+								else if (sectionlower === "selling")
+								{
+									// If the item the user is selling is not outbidded, then highlight it
+									if (pPrice.oPriceSell === iMultiTrans.oLowest)
+									{
+										iSlot.addClass("bnkSlotMatchAlternate");
+									}
+								}
+							},
+							aBind: function(pSlot, pItem)
+							{
+								pSlot.click(function()
+								{
+									E.printListings(pItem.id);
+								});
+							}
+						});
+					});
+				})(slot, multitrans);
 			}
-			// Show the transactions printout buttons after all items are loaded
-			bank.find(".bnkTransactionsPrint").fadeIn(1200);
+			U.sortObjects(tabdata, {aKeyName: "oLatest"});
+			pTab.data("transactions", tabdata);
+			// Button next to each tab to print that tab's transactions in text list format
+			var tabprint = $("<kbd class='bnkTransactionsPrint btnWindow' title='<dfn>Print</dfn> this month of transactions in chronological order.'></kbd>")
+				.prependTo(pTab).click(function()
+			{
+				var clickedtab = $(this).parents(".bnkTab").first();
+				var data = clickedtab.data("transactions");
+				// Assume item is already fetched and cached, so the string order is sequential
+				var str = "<div class='bnkTransactionsContainer'>";
+				for (var i = data.length - 1; i >= 0; i--)
+				{
+					Q.getItem(data[i].oItemID, function(iItem)
+					{
+						if (data[i])
+						{
+							str += "<div class='bnkTransactionsBox'>"
+								+ Q.getItemPreface(iItem, data[i].oCount)
+								+ "<aside class='bnkTransactionsList'>" + data[i].oStamps + "</aside>"
+							+ "</div>";
+						}
+					});
+				}
+				str += "</div>";
+				I.print(str, true);
+				I.bindConsoleInput();
+			});
+			I.qTip.init(tabprint);
 		};
 		
 		A.getTransactions(pURL, {aCallback: function(pData)
@@ -10415,9 +10503,9 @@ B = {
 				if ((calendar[calkey])[transaction.item_id] === undefined)
 				{
 					(calendar[calkey])[transaction.item_id] = {
-						oLatest: transaction.purchased || transaction.created,
-						oHighest: Number.NEGATIVE_INFINITY,
-						oLowest: Number.POSITIVE_INFINITY,
+						oLatest: transaction.purchased || transaction.created, // For chronological sorting
+						oHighest: Number.NEGATIVE_INFINITY, // For outbid checking
+						oLowest: Number.POSITIVE_INFINITY, // For outprice checking
 						oItemID: transaction.item_id,
 						oCount: 0,
 						oPrice: 0,
@@ -10440,98 +10528,47 @@ B = {
 					multitrans.oLowest = transaction.price;
 				}
 			}
+			/*
+			 * Automatically fills the tabs if the total number of slots to generate
+			 * is less than the threshold, otherwise the user has to manually
+			 * expand the tab headers to trigger the fill tabs function.
+			 */
+			wantcollapsed = numtofetch > Q.ItemLimit.FetchAPI;
+			var tab, tabtitle, tabcapacity, tabcount, bankcapacity = 0, bankcount = 0;
 			for (var i in calendar)
 			{
+				tabcapacity = 0, tabcount = 0;
 				// The tab title is the year number and the month word
 				calkey = i.split("-");
 				tabtitle = new Date(Date.UTC(calkey[0], calkey[1], 1, 0, 0, 0))
 					.toLocaleString(window.navigator.language, {year: "numeric", month: "long"});
 				// Create bank tabs representing months
-				tab = B.createBankTab(bank, {aTitle: tabtitle});
-				tabdata = []; // Contains the multi-transactions objects but will be chronologically sorted instead of by item ID
-				slotscontainer = tab.find(".bnkTabSlots");
+				tab = B.createBankTab(bank, {aTitle: tabtitle, aIsCollapsed: wantcollapsed});
+				if (wantcollapsed)
+				{
+					(function(iTab, iMonthKey)
+					{
+						iTab.find(".bnkTabSeparator").one("click", function()
+						{
+							fillTab(iTab, iMonthKey);
+						});
+					})(tab, i);
+				}
+				else
+				{
+					fillTab(tab, i);
+				}
+				// Sum tab capacity and slot count
 				for (var ii in calendar[i])
 				{
-					multitrans = (calendar[i])[ii];
-					slot = B.createBankSlot(slotscontainer);
-					slot.data("count", multitrans.oCount);
-					tabdata.push(multitrans);
-					(function(iSlot, iMultiTrans)
-					{
-						Q.getItem(iMultiTrans.oItemID, function(iItem)
-						{
-							pricebuy = (sectionlower === "buying" || sectionlower === "bought") ? iMultiTrans.oPrice : null;
-							pricesell = (sectionlower === "selling" || sectionlower === "sold") ? iMultiTrans.oPrice : null;
-							B.styleBankSlot(iSlot, {//
-								aItem: iItem,
-								aComment: "<span class='bnkTransactionsTooltip'>" + iMultiTrans.oStamps + "</span>",
-								aTransactionBuy: pricebuy,
-								aTransactionSell: pricesell,
-								aSlotMeta: {count: iMultiTrans.oCount},
-								aCallback: function()
-								{
-									numfetched++;
-									finalizeTransactions();
-									A.setProgressBar(numfetched, numtofetch);
-								},
-								aPriceCallback: function(pPrice)
-								{
-									if (sectionlower === "buying")
-									{
-										// If the item the user is buying is outbidded, then highlight it
-										if (pPrice.oPriceBuy === iMultiTrans.oHighest)
-										{
-											iSlot.addClass("bnkSlotMatchAlternate");
-										}
-									}
-									else if (sectionlower === "selling")
-									{
-										// If the item the user is selling is not outbidded, then highlight it
-										if (pPrice.oPriceSell === iMultiTrans.oLowest)
-										{
-											iSlot.addClass("bnkSlotMatchAlternate");
-										}
-									}
-								},
-								aBind: function(pSlot, pItem)
-								{
-									pSlot.click(function()
-									{
-										E.printListings(pItem.id);
-									});
-								}
-							});
-						});
-					})(slot, multitrans);
+					tabcapacity++;
+					tabcount += (calendar[i])[ii].oCount;
 				}
-				U.sortObjects(tabdata, {aKeyName: "oLatest"});
-				tab.data("transactions", tabdata);
-				// Button next to each tab to print that tab's transactions in text list format
-				var tabprint = $("<kbd class='bnkTransactionsPrint btnWindow' title='<dfn>Print</dfn> this month of transactions in chronological order.'></kbd>")
-					.prependTo(tab).hide().click(function()
-				{
-					var clickedtab = $(this).parents(".bnkTab").first();
-					var data = clickedtab.data("transactions");
-					// Assume item is already fetched and cached, so the string order is sequential
-					var str = "<div class='bnkTransactionsContainer'>";
-					for (var i = data.length - 1; i >= 0; i--)
-					{						
-						Q.getItem(data[i].oItemID, function(iItem)
-						{
-							str += "<div class='bnkTransactionsBox'>"
-								+ Q.getItemPreface(iItem, data[i].oCount)
-								+ "<aside class='bnkTransactionsList'>" + data[i].oStamps + "</aside>"
-							+ "</div>";
-						});
-					}
-					str += "</div>";
-					I.print(str, true);
-					I.bindConsoleInput();
-				});
-				I.qTip.init(tabprint);
+				bankcapacity += tabcapacity;
+				bankcount += tabcount;
+				B.updateTabTally(tab, tabcapacity, tabcapacity, tabcount);
 			}
-			finalizeTransactions();
-			B.tallyBank(container);
+			B.updateBankTally(container, bankcapacity, bankcapacity, bankcount);
 			B.createBankMenu(bank, {
 				aHelpMessage: $("#accHelpTransactions").html()
 			});
@@ -10565,6 +10602,7 @@ Q = {
 	},
 	ItemLimit:
 	{
+		FetchAPI: 1000,
 		StackSize: 250,
 		EctoSalvageLevel: 68
 	},
