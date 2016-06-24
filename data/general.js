@@ -1332,9 +1332,16 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Mini Candy Corn Skritt",
-		id: "67023",
-		price: 350,
+		name: "Glittering Wings Backpack",
+		id: "70277",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Mini Chickenado",
+		id: "66164",
+		price: 500,
 		discount: null,
 		col: 0
 	},
@@ -1356,6 +1363,13 @@ Sale: {
 		name: "Glitter Bomb Harvesting Tool",
 		id: "78909",
 		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Candy Corn Skritt",
+		id: "67023",
+		price: 350,
 		discount: null,
 		col: 1
 	}

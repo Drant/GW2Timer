@@ -10518,7 +10518,7 @@ B = {
 				multitrans.oCount += transaction.quantity;
 				multitrans.oPrice += (transaction.price * transaction.quantity);
 				multitrans.oStamps += "<tr><td>" + transaction.quantity + I.Symbol.Quantity + "&nbsp;</td><td>" + E.formatCoinStringColored(transaction.price)
-					+ "</td><td>= " + E.formatCoinStringColored(transaction.price * transaction.quantity) + "</td><td> @ "
+					+ "</td><td>= " + E.formatCoinStringColored(transaction.price * transaction.quantity) + "</td><td>&nbsp;@ "
 					+ (new Date(transaction.purchased || transaction.created)).toLocaleString() + "</td></tr>";
 				if (transaction.price > multitrans.oHighest)
 				{

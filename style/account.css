@@ -1923,6 +1923,9 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	text-align: right;
 	border-radius: 8px;
 }
+.bnkTransactionsTable tr:hover {
+	background: rgba(255,255,255,0.2);
+}
 
 .acc_wardrobe {
 	width: 32px; height: 32px;
