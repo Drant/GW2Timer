@@ -1915,7 +1915,8 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 .bnkTransactionsContainer .bnkTransactionsBox:nth-child(even) {
 	background: rgba(255,255,255,0.1);
 }
-.bnkTransactionsList {
+.bnkTransactionsTable {
+	width: 100%;
 	padding: 4px;
 	border-right: 2px solid rgba(255,255,255,0.1);
 	border-bottom: 4px solid rgba(255,255,255,0.1);

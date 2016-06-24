@@ -7141,6 +7141,7 @@ V = {
 			// Account reload button
 			$("#chrAccountReload").click(function()
 			{
+				$("#accDishMenu_Hero").empty();
 				A.regenerateDish("Characters");
 			});
 			// Insert server name
@@ -10393,7 +10394,7 @@ B = {
 						pricesell = (sectionlower === "selling" || sectionlower === "sold") ? iMultiTrans.oPrice : null;
 						B.styleBankSlot(iSlot, {
 							aItem: iItem,
-							aComment: "<span class='bnkTransactionsTooltip'>" + iMultiTrans.oStamps + "</span>",
+							aComment: "<table class='bnkTransactionsTooltip'>" + iMultiTrans.oStamps + "</table>",
 							aTransactionBuy: pricebuy,
 							aTransactionSell: pricesell,
 							aSlotMeta: {count: iMultiTrans.oCount},
@@ -10458,7 +10459,7 @@ B = {
 						{
 							str += "<div class='bnkTransactionsBox'>"
 								+ Q.getItemPreface(iItem, data[i].oCount)
-								+ "<aside class='bnkTransactionsList'>" + data[i].oStamps + "</aside>"
+								+ "<table class='bnkTransactionsTable'>" + data[i].oStamps + "</table>"
 							+ "</div>";
 						}
 					});
@@ -10516,9 +10517,9 @@ B = {
 				multitrans = (calendar[calkey])[transaction.item_id];
 				multitrans.oCount += transaction.quantity;
 				multitrans.oPrice += (transaction.price * transaction.quantity);
-				multitrans.oStamps += transaction.quantity + I.Symbol.Quantity + " " + E.formatCoinStringColored(transaction.price)
-					+ " = " + E.formatCoinStringColored(transaction.price * transaction.quantity) + " @ "
-					+ (new Date(transaction.purchased || transaction.created)).toLocaleString() + "<br />";
+				multitrans.oStamps += "<tr><td>" + transaction.quantity + I.Symbol.Quantity + "&nbsp;</td><td>" + E.formatCoinStringColored(transaction.price)
+					+ "</td><td>= " + E.formatCoinStringColored(transaction.price * transaction.quantity) + "</td><td> @ "
+					+ (new Date(transaction.purchased || transaction.created)).toLocaleString() + "</td></tr>";
 				if (transaction.price > multitrans.oHighest)
 				{
 					multitrans.oHighest = transaction.price;
@@ -12775,6 +12776,11 @@ E = {
 		});
 	},
 	
+	getGemFromCoin: function(pGem, pCallback, pWantCache)
+	{
+		
+	},
+	
 	/*
 	 * Deducts Trading Post tax from a value.
 	 * @param int pAmount of copper.
@@ -12838,8 +12844,8 @@ E = {
 	/*
 	 * Retrieves the Trading Post prices for an item.
 	 * @param int pItemID.
-	 * @objparam function pCallback to execute after retrieval.
-	 * @objparam boolean pWantCache whether to cache the price or always use freshest, optional.
+	 * @param function pCallback to execute after retrieval.
+	 * @param boolean pWantCache whether to cache the price or always use freshest, optional.
 	 * @returns object processed price.
 	 */
 	getPrice: function(pItemID, pCallback, pWantCache)
@@ -12866,8 +12872,8 @@ E = {
 	/*
 	 * Get the current buy orders and sell listings.
 	 * @param int pItemID.
-	 * @objparam function pCallback to execute after retrieval.
-	 * @objparam boolean pWantCache whether to cache the price or always use freshest, optional.
+	 * @param function pCallback to execute after retrieval.
+	 * @param boolean pWantCache whether to cache the price or always use freshest, optional.
 	 * @returns object listings.
 	 */
 	getListings: function(pItemID, pCallback, pWantCache)
@@ -12894,6 +12900,7 @@ E = {
 	 * Formats a Trading Post listings API object into HTML tables.
 	 * @param object pItem details retrieved from API.
 	 * @param object pListings.
+	 * @returns string HTML.
 	 */
 	formatListings: function(pItem, pListings)
 	{
