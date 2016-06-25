@@ -6163,6 +6163,18 @@ A = {
 		A.saveTokens();
 		A.loadToken();
 		
+		// Bind button to print the tokens
+		$("#accManagerPrint").click(function()
+		{
+			var tokens = localStorage[O.Utilities.APITokens.key];
+			try
+			{
+				tokens = JSON.parse(tokens);
+				I.prettyJSON(tokens);
+			}
+			catch(e) {}
+		});
+		
 		// Bind button to add another token/row
 		$("#accTokenNew").click(function()
 		{
@@ -8553,12 +8565,44 @@ V = {
 	},
 	
 	/*
-	 * Generates the Trading Post transactions overview page.
+	 * Generates the Trading Post overview page. This function should only run once.
 	 */
 	serveTrading: function()
 	{
+		var container = $("#accTrading");
+		if (container.data("isloaded"))
+		{
+			return;
+		}
+		container.data("isloaded", true);
 		
+		$("#accExchange").html("<div id='exgGold'>"
+			+ "<div class='exgHeader'>"
+				+ "<img src='https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png' />"
+				+ "<var class='exgTitle'>" + D.getPhraseOriginal("Get Coin") + "</var>"
+			+ "</div>"
+			+ "<table id='exgGoldSamples'></table>"
+			+ "<div id='exgGoldCustom'>"
+				+ "<input id='exgGoldToGem' type='number' />"
+				+ "<var id='exgGoldToGemResult'></var>"
+			+ "</div>"
+		+ "</div>"
+		+ "<div id='exgGem'>"
+			+ "<div class='exgHeader'>"
+				+ "<img src='https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png' />"
+				+ "<var class='exgTitle'>" + D.getPhraseOriginal("Get Gem") + "</var>"
+			+ "</div>"
+			+ "<table id='exgGemSamples'></table>"
+			+ "<div id='exgGemCustom'>"
+				+ "<input id='exgGemToGold' type='number' />"
+				+ "<var id='exgGemToGoldResult'></var>"
+			+ "</div>"
+		+ "</div>");
 	},
+	
+	/*
+	 * Generates the Trading Post transactions page.
+	 */
 	serveBuying: function()
 	{
 		B.generateTransactions("Buying", A.URL.CurrentBuys);
@@ -12752,43 +12796,29 @@ E = {
 	},
 	
 	/*
-	 * Updates the coin to gem ratio and returns the AJAX object.
-	 * @returns jqXHR object.
+	 * Updates the coin to gem ratio and executes a callback.
 	 */
-	updateCoinInGem: function()
+	updateCoinInGem: function(pCallback)
 	{
-		return $.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
+		$.getJSON(U.URL_API.GemPrice + E.Exchange.COIN_SAMPLE, function(pData)
 		{
 			if (pData.quantity !== undefined)
 			{
 				E.Exchange.CoinInGem = E.Exchange.COIN_SAMPLE / pData.quantity;
+				pCallback();
 			}
 		});
 	},
-	updateGemInCoin: function()
+	updateGemInCoin: function(pCallback)
 	{
-		return $.getJSON(U.URL_API.CoinPrice + E.Exchange.GEM_SAMPLE, function(pData)
+		$.getJSON(U.URL_API.CoinPrice + E.Exchange.GEM_SAMPLE, function(pData)
 		{
 			if (pData.quantity !== undefined)
 			{
 				E.Exchange.GemInCoin = E.Exchange.GEM_SAMPLE / pData.quantity;
+				pCallback();
 			}
 		});
-	},
-	
-	getGemFromCoin: function(pGem, pCallback, pWantCache)
-	{
-		
-	},
-	
-	/*
-	 * Deducts Trading Post tax from a value.
-	 * @param int pAmount of copper.
-	 * @returns int taxed value.
-	 */
-	deductTax: function(pAmount)
-	{
-		return Math.floor(pAmount - pAmount * E.Exchange.TAX_TOTAL);
 	},
 	convertGemToCoin: function(pAmount)
 	{
@@ -12801,6 +12831,66 @@ E = {
 	convertMoneyToGem: function(pAmount)
 	{
 		return Math.floor(pAmount * E.Exchange.GEM_PER_DOLLAR);
+	},
+	
+	/*
+	 * Converts gem to coin or coin to gem with the input as the parameter, and
+	 * the output as the argument in the callback.
+	 */
+	getGemFromCoin: function(pCoin, pCallback)
+	{
+		// INPUT amount of coin results in OUTPUT amount of gems
+		$.getJSON(U.URL_API.GemPrice + pCoin, function(pData)
+		{
+			if (pData.quantity !== undefined)
+			{
+				var currentgem = parseInt(pData.quantity);
+				pCallback(currentgem);
+			}
+		});
+	},
+	getGemFromCoinInverse: function(pCoin, pCallback)
+	{
+		// OUTPUT amount of gems in order to buy INPUT amount of coin
+		E.updateGemInCoin(function()
+		{
+			if (E.Exchange.GemInCoin !== 0)
+			{
+				var currentgeminverse = Math.round(pCoin * E.Exchange.GemInCoin);
+				pCallback(currentgeminverse);
+			}
+		});
+	},
+	getCoinFromGem: function(pGem, pCallback)
+	{
+		// INPUT amount of gems results in OUTPUT amount of coin
+		$.getJSON(U.URL_API.CoinPrice + pGem, function(pData)
+		{
+			if (pData.quantity !== undefined)
+			{
+				var currentcoin = parseInt(pData.quantity);
+				pCallback(currentcoin);
+			}
+		});
+	},
+	getCoinFromGemInverse: function(pGem, pCallback)
+	{
+		// OUTPUT amount of coin in order to buy INPUT amount of gems
+		E.updateCoinInGem(function()
+		{
+			var currentcoininverse = Math.round(pGem * E.Exchange.CoinInGem);
+			pCallback(currentcoininverse);
+		});
+	},
+	
+	/*
+	 * Deducts Trading Post tax from a value.
+	 * @param int pAmount of copper.
+	 * @returns int taxed value.
+	 */
+	deductTax: function(pAmount)
+	{
+		return Math.floor(pAmount - pAmount * E.Exchange.TAX_TOTAL);
 	},
 	
 	/*
@@ -13582,20 +13672,15 @@ E = {
 		else
 		{
 			// User's coin to gem
-			$.getJSON(U.URL_API.GemPrice + cointoamount, function(pData)
+			E.getGemFromCoin(cointoamount, function(pGem)
 			{
-				if (pData.quantity !== undefined)
-				{
-					previousgem = parseInt(cointogem.val());
-					previousmoney = E.parseMoneyString(cointomoney.val());
-					currentgem = parseInt(pData.quantity);
-					currentmoney = Math.round(currentgem * E.Exchange.DOLLAR_PER_GEM);
-					
-					cointogem.val(currentgem);
-					cointomoney.val(E.formatMoneyString(currentmoney));
-				}
-			}).always(function()
-			{
+				previousgem = parseInt(cointogem.val());
+				previousmoney = E.parseMoneyString(cointomoney.val());
+				currentgem = pGem;
+				currentmoney = Math.round(currentgem * E.Exchange.DOLLAR_PER_GEM);
+
+				cointogem.val(currentgem);
+				cointomoney.val(E.formatMoneyString(currentmoney));
 				if (pWantAnimate === undefined || pWantAnimate)
 				{
 					E.animateValue(cointogem, previousgem, currentgem);
@@ -13611,23 +13696,20 @@ E = {
 			});
 			
 			// Gem to user's coin
-			E.updateGemInCoin().always(function()
+			E.getGemFromCoinInverse(cointoamount, function(pGem)
 			{
-				if (E.Exchange.GemInCoin !== 0)
+				previousgeminverse = parseInt(cointogeminverse.val());
+				previousmoneyinverse = E.parseMoneyString(cointomoneyinverse.val());
+
+				currentgeminverse = pGem;
+				currentmoneyinverse = Math.round(currentgeminverse * E.Exchange.DOLLAR_PER_GEM);
+				cointogeminverse.val(currentgeminverse);
+				cointomoneyinverse.val(E.formatMoneyString(currentmoneyinverse));
+
+				if (pWantAnimate === undefined || pWantAnimate)
 				{
-					previousgeminverse = parseInt(cointogeminverse.val());
-					previousmoneyinverse = E.parseMoneyString(cointomoneyinverse.val());
-					
-					currentgeminverse = Math.round(cointoamount * E.Exchange.GemInCoin);
-					currentmoneyinverse = Math.round(currentgeminverse * E.Exchange.DOLLAR_PER_GEM);
-					cointogeminverse.val(currentgeminverse);
-					cointomoneyinverse.val(E.formatMoneyString(currentmoneyinverse));
-					
-					if (pWantAnimate === undefined || pWantAnimate)
-					{
-						E.animateValue(cointogeminverse, previousgeminverse, currentgeminverse);
-						E.animateValue(cointomoneyinverse, previousmoneyinverse, currentmoneyinverse);
-					}
+					E.animateValue(cointogeminverse, previousgeminverse, currentgeminverse);
+					E.animateValue(cointomoneyinverse, previousmoneyinverse, currentmoneyinverse);
 				}
 			});
 		}
@@ -13652,26 +13734,21 @@ E = {
 		else
 		{
 			// User's gem to coin
-			$.getJSON(U.URL_API.CoinPrice + gemtoamount, function(pData)
+			E.getCoinFromGem(gemtoamount, function(pCoin)
 			{
-				if (pData.quantity !== undefined)
-				{
-					previouscoin = E.parseCoinString(gemtocoin.val());
-					previousmoney = E.parseMoneyString(gemtomoney.val());
-					currentcoin = parseInt(pData.quantity);
-					currentmoney = parseInt(gemtoamount * E.Exchange.DOLLAR_PER_GEM);
-					
-					gemtocoin.val(E.formatCoinString(currentcoin));
-					gemtomoney.val(E.formatMoneyString(currentmoney));
-				}
-			}).always(function()
-			{
+				previouscoin = E.parseCoinString(gemtocoin.val());
+				previousmoney = E.parseMoneyString(gemtomoney.val());
+				currentcoin = pCoin;
+				currentmoney = parseInt(gemtoamount * E.Exchange.DOLLAR_PER_GEM);
+
+				gemtocoin.val(E.formatCoinString(currentcoin));
+				gemtomoney.val(E.formatMoneyString(currentmoney));
 				if (pWantAnimate === undefined || pWantAnimate)
 				{
 					E.animateValue(gemtocoin, previouscoin, currentcoin);
 					E.animateValue(gemtomoney, previousmoney, currentmoney);
 				}
-				
+
 				if (currentcoin === 0)
 				{
 					// Got here if value is too low be exchanged
@@ -13681,18 +13758,15 @@ E = {
 			});
 			
 			// Coin to user's gem
-			E.updateCoinInGem().always(function()
+			E.getCoinFromGemInverse(gemtoamount, function(pCoin)
 			{
-				if (E.Exchange.CoinInGem !== 0)
+				previouscoininverse = E.parseCoinString(gemtocoininverse.val());
+				currentcoininverse = pCoin;
+				gemtocoininverse.val(E.formatCoinString(currentcoininverse));
+
+				if (pWantAnimate === undefined || pWantAnimate)
 				{
-					previouscoininverse = E.parseCoinString(gemtocoininverse.val());
-					currentcoininverse = Math.round(gemtoamount * E.Exchange.CoinInGem);
-					gemtocoininverse.val(E.formatCoinString(currentcoininverse));
-					
-					if (pWantAnimate === undefined || pWantAnimate)
-					{
-						E.animateValue(gemtocoininverse, previouscoininverse, currentcoininverse);
-					}
+					E.animateValue(gemtocoininverse, previouscoininverse, currentcoininverse);
 				}
 			});
 		}
@@ -13714,26 +13788,20 @@ E = {
 		}
 		else
 		{
-			$.getJSON(U.URL_API.CoinPrice + gems, function(pData)
+			E.getCoinFromGem(gems, function(pCoin)
 			{
-				if (pData.quantity !== undefined)
-				{
-					previousgem = parseInt(moneytogem.val());
-					previouscoin = E.parseCoinString(moneytocoin.val());
-					currentgem = gems;
-					currentcoin = parseInt(pData.quantity);
-					
-					moneytogem.val(gems);
-					moneytocoin.val(E.formatCoinString(currentcoin));
-				}
-			}).always(function()
-			{
+				previousgem = parseInt(moneytogem.val());
+				previouscoin = E.parseCoinString(moneytocoin.val());
+				currentgem = gems;
+				currentcoin = pCoin;
+
+				moneytogem.val(gems);
+				moneytocoin.val(E.formatCoinString(currentcoin));
 				if (pWantAnimate === undefined || pWantAnimate)
 				{
 					E.animateValue(moneytogem, previousgem, currentgem);
 					E.animateValue(moneytocoin, previouscoin, currentcoin);
 				}
-				
 				if (currentcoin === 0)
 				{
 					// Got here if value is too low be exchanged
@@ -13760,17 +13828,12 @@ E = {
 		else
 		{
 			// User's coin to gem
-			$.getJSON(U.URL_API.GemPrice + cointoamount, function(pData)
+			E.getGemFromCoin(cointoamount, function(pGem)
 			{
-				if (pData.quantity !== undefined)
-				{
-					previousgem = parseInt(cointogem.val());
-					currentgem = parseInt(pData.quantity);
-					
-					cointogem.val(currentgem);
-				}
-			}).always(function()
-			{
+				previousgem = parseInt(cointogem.val());
+				currentgem = pGem;
+
+				cointogem.val(currentgem);
 				if (pWantAnimate === undefined || pWantAnimate)
 				{
 					E.animateValue(cointogem, previousgem, currentgem);
@@ -13810,17 +13873,12 @@ E = {
 		else
 		{
 			// User's gem to coin
-			$.getJSON(U.URL_API.CoinPrice + gemtoamount, function(pData)
+			E.getCoinFromGem(gemtoamount, function(pCoin)
 			{
-				if (pData.quantity !== undefined)
-				{
-					previouscoin = E.parseCoinString(gemtocoin.val());
-					currentcoin = parseInt(pData.quantity);
-					
-					gemtocoin.val(E.formatCoinString(currentcoin));
-				}
-			}).always(function()
-			{
+				previouscoin = E.parseCoinString(gemtocoin.val());
+				currentcoin = pCoin;
+
+				gemtocoin.val(E.formatCoinString(currentcoin));
 				if (pWantAnimate === undefined || pWantAnimate)
 				{
 					E.animateValue(gemtocoin, previouscoin, currentcoin);
@@ -14197,6 +14255,8 @@ D = {
 			cs: "optimalizovat", it: "ottimizzare", pl: "optymalizować", pt: "otimizar", ru: "оптимизировать", zh: "最佳化"},
 		s_search: {de: "suchen", es: "buscar", fr: "rechercher",
 			cs: "vyhledat", it: "cerca", pl: "wyszukaj", pt: "pesquisar", ru: "поиск", zh: "搜尋"},
+		s_get: {de: "erhalten", es: "conseguir", fr: "obtenir",
+			cs: "dostat", it: "ottenere", pl: "dostawać", pt: "obter", ru: "достава́ть", zh: "获得"},
 		
 		// Adjectives, Adverbs, Participles
 		s_no: {de: "kein", es: "no", fr: "pas de",
@@ -21991,7 +22051,7 @@ G = {
 				$("#gldButtons").append("<div>"
 					+ "<button class='gldButton curToggle btnTab' id='gldButton_" + i
 						+ "' style='background-size:cover; background-image:url(img/guild/" + i.toLowerCase() + I.cPNG + ")' "
-						+ "title='<dfn>" + translatedname + "</dfn><br />" + I.cSiteLink + "guild/" + i.toLowerCase() + "'></button>"
+						+ "title='<dfn>" + translatedname + "</dfn><br />" + I.cSiteLink + "<dfn>guild/" + i.toLowerCase() + "</dfn>'></button>"
 					+ "<a class='cssButton' href='" + U.getYouTubeLink(translatedname) + "'>Y</a>&nbsp;"
 					+ "<a class='cssButton' href='" + D.getObjectURL(missiontype) + "'>W</a>"
 					+ "</div>");
@@ -26063,7 +26123,7 @@ H = {
 		else
 		{
 			table.append(I.cThrobber);
-			E.updateCoinInGem().always(function()
+			E.updateCoinInGem(function()
 			{
 				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
 				table.empty();

@@ -156,6 +156,10 @@ var GW2T_CURRENCY_DATA = {
  * Quick reference API related data.
  */
 var GW2T_ACCOUNT_METADATA = {
+	Exchange: {
+		GoldSamples: [100, 200, 500, 1000, 4000],
+		GemSamples: [100, 400, 500, 800, 2000]
+	},
 	Bank: {
 		NumSlotsHorizontal: 10,
 		NumSlotsVertical: 3,
