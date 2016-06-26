@@ -8565,7 +8565,7 @@ V = {
 	},
 	
 	/*
-	 * Generates the Trading Post overview page. This function should only run once.
+	 * Generates the Trading Post overview page. This function only runs once.
 	 */
 	serveTrading: function()
 	{
@@ -8576,6 +8576,9 @@ V = {
 		}
 		container.data("isloaded", true);
 		
+		/*
+		 * Create the gem exchange subsection.
+		 */
 		$("#accExchange").html("<div id='exgGold'>"
 			+ "<div class='exgHeader'>"
 				+ "<img src='https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png' />"
@@ -10414,7 +10417,7 @@ B = {
 		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var numfetched = 0, numtofetch = 0;
-		var calendar = {}, datestr, datearray, calkey, transaction, multitrans;
+		var calendar = {}, datestr, datearray, calkey, timesince, transaction, multitrans;
 		var pricebuy, pricesell;
 		var wantcollapsed = false;
 		
@@ -10539,6 +10542,10 @@ B = {
 				{
 					calendar[calkey] = {};
 				}
+				// Remember time since purchased for historical transactions, or time since creation for current transactions
+				timesince = (transaction.purchased)
+					? T.formatMilliseconds((new Date(transaction.purchased)).getTime() - (new Date(transaction.created)).getTime())
+					: T.formatMilliseconds((new Date()).getTime() - (new Date(transaction.created)).getTime());
 				/*
 				 * Transactions of the same item will be assigned to the same
 				 * "slot" in the month associative array, accessed by the item ID.
@@ -10561,9 +10568,13 @@ B = {
 				multitrans = (calendar[calkey])[transaction.item_id];
 				multitrans.oCount += transaction.quantity;
 				multitrans.oPrice += (transaction.price * transaction.quantity);
-				multitrans.oStamps += "<tr><td>" + transaction.quantity + I.Symbol.Quantity + "&nbsp;</td><td>" + E.formatCoinStringColored(transaction.price)
-					+ "</td><td>= " + E.formatCoinStringColored(transaction.price * transaction.quantity) + "</td><td>&nbsp;@ "
-					+ (new Date(transaction.purchased || transaction.created)).toLocaleString() + "</td></tr>";
+				multitrans.oStamps += "<tr>"
+					+ "<td>" + transaction.quantity + " " + I.Symbol.Quantity + "&nbsp;</td>"
+					+ "<td>" + E.formatCoinStringColored(transaction.price) + " =&nbsp;</td>"
+					+ "<td>" + E.formatCoinStringColored(transaction.price * transaction.quantity) + "</td>"
+					+ "<td>&nbsp;(" + timesince + ")</td>"
+					+ "<td>&nbsp;@ " + (new Date(transaction.purchased || transaction.created)).toLocaleString() + "</td>"
+				+ "</tr>";
 				if (transaction.price > multitrans.oHighest)
 				{
 					multitrans.oHighest = transaction.price;
@@ -12777,7 +12788,6 @@ E = {
 	 */
 	animateValue: function(pInput, pOldValue, pNewValue)
 	{
-		return "DISABLED";
 		if (pNewValue < pOldValue)
 		{
 			// Red if value went down
@@ -22467,6 +22477,7 @@ W = {
 	isFallbackEnabled: false,
 	numFailedAPICalls: 0,
 	cOWNERS_PER_TIER: 3,
+	cLEADERBOARD_SERVERS_CHAR_LIMIT: 32,
 	cTOTAL_PPT_POSSIBLE: 0, // Will be assigned by the compute function
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
 	cMSECONDS_IMMUNITY: 300000, // 5 minutes
@@ -22810,6 +22821,7 @@ W = {
 	 */
 	formatMatchup: function(pMatchData)
 	{
+		var maxserversbeforeabbrev = 2;
 		var id = 0;
 		var numalli = W.Metadata.Alliances.length;
 		var allinames = W.Metadata.Alliances;
@@ -22874,7 +22886,7 @@ W = {
 			ithowner = U.toFirstUpperCase(ithalliname);
 			names[i] = new Array();
 			namelines[i] = new Array();
-			namelinks[i] = new Array(); 
+			namelinks[i] = new Array();
 			nicks[i] = new Array();
 			colors[i] = D.getObjectName(W.Metadata[ithowner]);
 			
@@ -22883,11 +22895,20 @@ W = {
 				var ithserver = (servers[i])[ii];
 				ithserver.owner = ithowner; // Record the server's color
 				var ithservername = U.escapeHTML(D.getObjectName(ithserver));
-				names[i] += ithservername;
+				// Abbreviate the names if there are too many servers in one alliance
+				if (servers[i].length <= maxserversbeforeabbrev)
+				{
+					names[i] += ithservername;
+					namelinks[i] += "<a href='/?page=WvW&enu_Server=" + ithserver.id + "'>" + ithservername + "</a>";
+				}
+				else
+				{
+					names[i] += D.getObjectNick(ithserver);
+					namelinks[i] += "<a href='/?page=WvW&enu_Server=" + ithserver.id + "' title='" + ithservername + "'>" + D.getObjectNick(ithserver) + "</a>";
+				}
 				namelines[i] += ithservername;
-				namelinks[i] += "<a href='/?page=WvW&enu_Server=" + ithserver.id + "'>" + ithservername + "</a>";
 				nicks[i] += D.getObjectNick(ithserver);
-				if (servers[i].length > 1 && ii < servers[i].length - 1)
+				if (servers[i].length > 1 && ii < servers[i].length - 1) // Spacing between server names
 				{
 					names[i] += " &amp; ";
 					namelines[i] += "<br />";
@@ -22908,12 +22929,12 @@ W = {
 		{
 			ithalliname = allinames[i];
 			custommatchup[ithalliname] = {
-				servers: servers[i],
-				namestr: names[i],
-				namelinestr: namelines[i],
-				namelinkstr: namelinks[i],
-				nickstr: nicks[i],
-				color: colors[i]
+				oServers: servers[i],
+				oNameStr: names[i],
+				oNameLinesStr: namelines[i],
+				oNameLinksStr: namelinks[i],
+				oNickStr: nicks[i],
+				oColor: colors[i]
 			};
 		}
 		
@@ -23268,7 +23289,7 @@ W = {
 			var ownerkey = owner.toLowerCase(); // Example: "green" as in match API
 			var rank = ((tier - 1) * W.cOWNERS_PER_TIER) + (i+1);
 			var serverstr = (wantserver) ? "<aside class='lboRank'>" + rank + ".</aside>"
-				+ "<aside class='lboName'>&nbsp;" + matchupdata[ownerkey].namelinkstr + "</aside>" : "";
+				+ "<aside class='lboName'>&nbsp;" + matchupdata[ownerkey].oNameLinksStr + "</aside>" : "";
 			var score = scores[ownerkey];
 			var scorehighest = (T.getMinMax(scores)).oMax;
 			var scorepercent = (scores[ownerkey] / scorehighest) * T.cPERCENT_100;
@@ -23402,7 +23423,7 @@ W = {
 		html += "</section>";
 		
 		lb.append(html);
-		I.qTip.init(lb.find("aside"));
+		I.qTip.init(lb.find("aside, a"));
 		
 		if (O.Options.bol_condenseLeaderboard)
 		{
@@ -23741,7 +23762,7 @@ W = {
 		}
 		else
 		{
-			ownerstr = W.getAllianceFromOwner(pObjective.owner).color;
+			ownerstr = W.getAllianceFromOwner(pObjective.owner).oColor;
 		}
 		// Only include the borderlands string if user opted for more than one land filter
 		var blstr = ($("#logNarrateLand input:checked").length > 1) ? (W.getBorderlandsString(pObjective, {aWantPronoun: true}) + ". ") : "";
@@ -23856,25 +23877,25 @@ W = {
 		if (W.MatchupCurrent !== null)
 		{
 			// Log server borderlands names
-			$("#opt_bol_logRedHome").next().html(W.MatchupCurrent["red"].namestr);
-			$("#opt_bol_logBlueHome").next().html(W.MatchupCurrent["blue"].namestr);
-			$("#opt_bol_logGreenHome").next().html(W.MatchupCurrent["green"].namestr);
+			$("#opt_bol_logRedHome").next().html(W.MatchupCurrent["red"].oNameStr);
+			$("#opt_bol_logBlueHome").next().html(W.MatchupCurrent["blue"].oNameStr);
+			$("#opt_bol_logGreenHome").next().html(W.MatchupCurrent["green"].oNameStr);
 			$("#opt_bol_logCenter").next().html(W.getName("Center"));
 			
 			// Compass zone links borderlands names
-			$("#wvwZoneLinkRed").html(W.MatchupCurrent["red"].namestr);
-			$("#wvwZoneLinkBlue").html(W.MatchupCurrent["blue"].namestr);
-			$("#wvwZoneLinkGreen").html(W.MatchupCurrent["green"].namestr);
+			$("#wvwZoneLinkRed").html(W.MatchupCurrent["red"].oNameStr);
+			$("#wvwZoneLinkBlue").html(W.MatchupCurrent["blue"].oNameStr);
+			$("#wvwZoneLinkGreen").html(W.MatchupCurrent["green"].oNameStr);
 			
 			// Initial messages in the log window
 			W.addLogEntry($("#wvwHelpLinks").html() + "<br /><br />");
-			W.addLogEntry(W.MatchupCurrent["green"].nickstr + " : " + W.MatchupCurrent["blue"].nickstr + " : " + W.MatchupCurrent["red"].nickstr);
+			W.addLogEntry(W.MatchupCurrent["green"].oNickStr + " : " + W.MatchupCurrent["blue"].oNickStr + " : " + W.MatchupCurrent["red"].oNickStr);
 			
 			// Update map spawn labels
 			$(".wvwSpawnLabel").find("var").each(function()
 			{
 				var owner = $(this).attr("data-owner").toLowerCase();
-				var label = W.MatchupCurrent[owner].namelinestr;
+				var label = W.MatchupCurrent[owner].oNameLinesStr;
 				$(this).html(label);
 			});
 		}
@@ -25398,6 +25419,12 @@ T = {
 		var signstr = "";
 		var daydivisor = T.cDAYS_IN_YEAR;
 		
+		// Case zero
+		if (pSeconds === 0)
+		{
+			return "0" + D.getWord("s");
+		}
+		
 		// Sign string
 		if (seconds < 0)
 		{
@@ -25432,7 +25459,7 @@ T = {
 		if (seconds >= T.cSECONDS_IN_DAY)
 		{
 			day = ~~(seconds / T.cSECONDS_IN_DAY) % daydivisor;
-			daystr = day + D.getWord("d") + " ";
+			daystr = day + D.getWord("d") + ((seconds < T.cSECONDS_IN_YEAR) ? " " : "");
 		}
 		// Include hms only if duration is less than a year
 		if (seconds < T.cSECONDS_IN_YEAR)
@@ -25445,9 +25472,9 @@ T = {
 			if (seconds >= T.cSECONDS_IN_MINUTE)
 			{
 				min = ~~(seconds / T.cSECONDS_IN_MINUTE) % T.cMINUTES_IN_HOUR;
-				minstr = min + D.getWord("m") + " ";
+				minstr = min + D.getWord("m") + ((pWantSeconds || seconds < T.cSECONDS_IN_MINUTE) ? " " : "");
 			}
-			if (pWantSeconds)
+			if (pWantSeconds || seconds < T.cSECONDS_IN_MINUTE)
 			{
 				sec = seconds % T.cSECONDS_IN_MINUTE;
 				secstr = sec.toString() + D.getWord("s");
@@ -25455,6 +25482,10 @@ T = {
 		}
 		
 		return signstr + yearstr + monthstr + weekstr + daystr + hourstr + minstr + secstr;
+	},
+	formatMilliseconds: function(pMilliseconds)
+	{
+		return T.formatTimeLetter(~~(pMilliseconds / T.cMSECONDS_IN_SECOND));
 	},
 	formatMinutes: function(pMinutes)
 	{

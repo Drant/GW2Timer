@@ -1899,6 +1899,7 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	margin-top: 14px;
 	margin-left: 16px;
 	padding: 4px 6px 4px 6px;
+	text-align: right;
 	line-height: normal;
 	white-space: nowrap;
 	background-image: url("../img/background/tooltip.png");
