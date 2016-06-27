@@ -1931,8 +1931,14 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	background-image: linear-gradient(to right, rgba(43,129,190,0.5) 50%, transparent 100%);
 	box-shadow: 0px 0px 16px #2b81be;
 }
+.exgHeader {
+	text-align: left;
+}
 .exgTitle {
+	display: inline-block;
+	width: 196px;
 	vertical-align: middle;
+	line-height: normal;
 	font-size: 48px;
 	color: #e8e0d2;
 	text-shadow:
@@ -1986,13 +1992,18 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 #exgCustom {
 	display: block;
 	width: 360px;
+	margin-top: 32px;
 	padding: 10px;
 	clear: both;
 	text-align: left;
 	background-image: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 100%);
 	box-shadow: 0px 0px 16px black;
 }
-#exgReload, #trsRecentReload {
+#exgReload {
+	width: 100%;
+	margin-top: 12px;
+}
+#trsRecentReload {
 	width: 100%;
 	margin-bottom: 12px;
 }
@@ -2020,8 +2031,7 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
  * Recent transactions.
  */
 #trsRecent {
-	background-image: linear-gradient(to left, rgba(255,255,255,0.2) 0%, transparent 100%);
-	box-shadow: 0px 0px 16px white;
+	box-shadow: 0px 0px 16px black;
 }
 #trsRecentTable td {
 	font-size: 18px;
@@ -2033,7 +2043,7 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	color: #aaaaaa;
 }
 .trsRecentIcon {
-	width: 32px; height: 32px;
+	width: 48px; height: 48px;
 	margin-right: 8px;
 	border: 1px solid #2f2b29;
 	outline: 1px solid #595859;

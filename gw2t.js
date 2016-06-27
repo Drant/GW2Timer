@@ -8621,20 +8621,17 @@ V = {
 			});
 		};
 		
-		/*
-		 * Create the gem exchange subsection.
-		 */
+		// Initialize
+		I.loadImg(container);
 		$("#exgGoldTitle").text(D.getPhraseOriginal("Get Coin"));
 		$("#exgGemTitle").text(D.getPhraseOriginal("Get Gem"));
-		// Fill the table with common exchange amounts
 		fillExchange();
-		$("#exgReload").click(function()
-		{
-			fillExchange();
-		});
+		
 		// Custom exchange
 		var goldcustom = $("#exgGoldCustom");
 		var gemcustom = $("#exgGemCustom");
+		var goldinput = goldcustom.find(".exgCustomInput");
+		var geminput = gemcustom.find(".exgCustomInput");
 		var goldoutput0 = goldcustom.find(".exgCustomOutput0");
 		var goldoutput1 = goldcustom.find(".exgCustomOutput1");
 		var gemoutput0 = gemcustom.find(".exgCustomOutput0");
@@ -8643,7 +8640,7 @@ V = {
 		{
 			$(this).select();
 		});
-		goldcustom.find(".exgCustomInput").on("input", $.throttle(Q.cSEARCH_LIMIT, function()
+		goldinput.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
 			var val = parseInt($(this).val());
 			if (val > 0)
@@ -8651,12 +8648,12 @@ V = {
 				E.updateGemInCoin(function()
 				{
 					goldoutput0.html(E.formatCoinToGem(val * E.Exchange.COPPER_IN_GOLD)).addClass("cssBlur");
-					goldoutput1.html("$" + E.formatGemToMoney(val)).addClass("cssBlur");
+					goldoutput1.html("$" + E.formatGemToMoney(E.convertCoinToGem(val * E.Exchange.COPPER_IN_GOLD))).addClass("cssBlur");
 					removeBlur();
 				});
 			}
 		})).trigger("input");
-		gemcustom.find(".exgCustomInput").on("input", $.throttle(Q.cSEARCH_LIMIT, function()
+		geminput.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
 			var val = parseInt($(this).val());
 			if (val > 0)
@@ -8669,6 +8666,14 @@ V = {
 				});
 			}
 		})).trigger("input");
+		
+		// Button to refresh exchange rates
+		$("#exgReload").click(function()
+		{
+			goldinput.trigger("input");
+			geminput.trigger("input");
+			fillExchange();
+		});
 	},
 	
 	/*
@@ -8686,6 +8691,7 @@ V = {
 		
 		var fillRecent = function()
 		{
+			var nowms = (new Date()).getTime();
 			table.empty();
 			reloader.removeClass("jsSuspended");
 			A.adjustAccountScrollbar();
@@ -8704,21 +8710,23 @@ V = {
 				{
 					Q.getItem(iTrans.item_id, function(pItem)
 					{
+						var timestamp = (new Date(iTransaction.purchased)).toLocaleString();
 						var type = (iTransaction.isBought) ? boughtword : soldword;
+						var quantitystr = (iTransaction.quantity > 1) ? (iTransaction.quantity + " ") : "";
 						row.html("<td>"
-							+ "<img class='trsRecentIcon' src='" + pItem.icon + "' />"
+						+ "<img class='trsRecentIcon' src='" + pItem.icon + "' />"
 							+ "<var class='trsRecentType'>" + type + "</var>: "
-							+ "<var class='" + Q.getRarityClass(pItem.rarity) + "'>" + iTransaction.quantity + " " + pItem.name + "</var><br />"
-							+ "<var class='cssRight'>" + E.formatCoinStringColored(iTransaction.quantity * iTransaction.price) + "</var>"
-						+ "</td>"
-						+ "<td>" + (new Date(iTransaction.purchased)).toLocaleString() + "</td>");
+							+ "<var class='" + Q.getRarityClass(pItem.rarity) + "'>" + quantitystr + pItem.name + "</var>"
+							+ "<var class='cssRight'>" + E.formatCoinStringColored(iTransaction.quantity * iTransaction.price) + "</var><br />"
+							+ "<span>" + T.formatMilliseconds(nowms - (new Date(iTransaction.purchased)).getTime()) + "</span>"
+						+ "</td>");
 					});
 				})(iTrans);
 			});
 		};
 		var dealError = function()
 		{
-			table.html("<tr><td class='trsRecentError'>" + D.getPhraseOriginal("No transactions") + "</td></tr>");
+			table.html("<tr><td class='trsRecentError'>" + D.getPhraseOriginal("No transactions") + ".</td></tr>");
 			reloader.removeClass("jsSuspended");
 			A.printError();
 		};
@@ -8751,22 +8759,23 @@ V = {
 	},
 	
 	/*
-	 * Generates the Trading Post overview page. This function only runs once.
+	 * Generates the Trading Post overview page. This function only initializes once.
 	 */
 	serveTrading: function()
 	{
 		var container = $("#accTrading");
-		if (container.data("isloaded"))
+		if ( ! container.data("isloaded"))
 		{
-			return;
+			V.generateExchange();
+			V.generateRecent();
+			container.data("isloaded", true);
 		}
-		container.data("isloaded", true);
-		I.loadImg(container);
-		U.convertExternalLink(container.find("a"));
-		
-		// Generate HTML
-		V.generateExchange();
-		V.generateRecent();
+		else if (container.data("token") !== A.TokenCurrent)
+		{
+			// If already loaded but changed account, then reload the recent transactions
+			container.data("token", A.TokenCurrent);
+			$("#trsRecentReload").trigger("click");
+		}
 	},
 	
 	/*
@@ -13198,28 +13207,33 @@ E = {
 	{
 		var str = "";
 		var priceword = D.getWordCapital("price");
-		var orderedword = D.getWordCapital("ordered");
-		var availableword = D.getWordCapital("available");
+		var byword = D.getWord("by");
 		var buys = "", sells = "";
 		var supply = 0;
 		var demand = 0;
+		var suppliers = 0;
+		var demanders = 0;
 		str += Q.getItemPreface(pItem);
 		// Buys and Sells tables
 		pListings.buys.forEach(function(iEntry)
 		{
-			buys += "<tr><td>" + iEntry.quantity + " " + orderedword + "</td><td>" + E.formatCoinStringColored(iEntry.unit_price) + "</td></tr>";
-			demand += (iEntry.listings * iEntry.quantity);
+			buys += "<tr><td>" + iEntry.quantity + " " + D.getWordCapital("ordered") + "</td><td>" + E.formatCoinStringColored(iEntry.unit_price) + "</td></tr>";
+			demand += iEntry.quantity;
+			demanders += iEntry.listings;
 		});
 		buys += "</tbody></table>";
 		pListings.sells.forEach(function(iEntry)
 		{
-			sells += "<tr><td>" + iEntry.quantity + " " + availableword + "</td><td>" + E.formatCoinStringColored(iEntry.unit_price) + "</td></tr>";
-			supply += (iEntry.listings * iEntry.quantity);
+			sells += "<tr><td>" + iEntry.quantity + " " + D.getWordCapital("available") + "</td><td>" + E.formatCoinStringColored(iEntry.unit_price) + "</td></tr>";
+			supply += iEntry.quantity;
+			suppliers += iEntry.listings;
 		});
 		sells += "</tbody></table>";
 		// Headers
-		var demandstr = "<span class='trsListingsDemand'>" + D.getWordCapital("demand") + ": " + demand.toLocaleString() + "</span>";
-		var supplystr = "<span class='trsListingsSupply'>" + D.getWordCapital("supply") + ": " + supply.toLocaleString() + "</span>";
+		var demandstr = "<span class='trsListingsDemand'>" + D.getWordCapital("demand") + ": "
+			+ demand.toLocaleString() + " " + byword + " " + demanders.toLocaleString() + "</span>";
+		var supplystr = "<span class='trsListingsSupply'>" + D.getWordCapital("supply") + ": "
+			+ supply.toLocaleString() + " " + byword + " " + suppliers.toLocaleString() + "</span>";
 		var buysheader = "<table class='trsListingsBuys'><thead><tr><th>" + demandstr + "</th><th>" + priceword + "</th></tr></thead><tbody>";
 		var sellsheader = "<table class='trsListingsSells'><thead><tr><th>" + supplystr + "</th><th>" + priceword + "</th></tr></thead><tbody>";
 		// Combine HTML
@@ -13240,6 +13254,7 @@ E = {
 			{
 				I.clear();
 				I.print(E.formatListings(pItem, pListing));
+				I.bindConsoleInput();
 			});	
 		});
 	},

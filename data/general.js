@@ -1208,7 +1208,7 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Trading' title='gw2timer.com/trading'>Account Transactions and Gem Exchange</a> like in game. ",
+	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Trading' title='gw2timer.com/trading'>Gem Exchange</a> and Trading Post history now available.",
 	wvw: "",
 	Start: new Date("2016-06-26T16:00:00Z"),
 	Finish: new Date("2016-07-03T16:00:00Z"),
@@ -1355,13 +1355,6 @@ Sale: {
 		name: "Glitter Bomb Harvesting Tool",
 		id: "78909",
 		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mini Chickenado",
-		id: "66164",
-		price: 500,
 		discount: null,
 		col: 1
 	}

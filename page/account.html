@@ -122,32 +122,7 @@
 		<div id="accTradingContainer">
 			<div id="accTrading">
 				<div class="exgColumnContainer">
-					<div id="trsRecent" class="exgColumn">
-						<div>
-							<img data-src="img/account/trading/transactions.png" />
-							<var id="trsRecentTitle" class="exgTitle"></var>
-						</div>
-						<button id="trsRecentReload" title="<dfn>Reload</dfn> recent transactions."><img data-src="img/ui/refresh.png" /></button>
-						<table id="trsRecentTable" class="exgTable"></table>
-					</div>
-				</div>
-				<div class="exgColumnContainer">
-					<div id="exgGoldColumn" class="exgColumn">
-						<div>
-							<img data-src="img/account/trading/gold.png" />
-							<var id="exgGoldTitle" class="exgTitle"></var>
-						</div>
-						<table id="exgGoldSamples" class="exgTable"></table>
-					</div>
 					<div id="exgCustom">
-						<button id="exgReload" title="<dfn>Reload</dfn> exchange rates."><img data-src="img/ui/refresh.png" /></button>
-						<table id="exgGoldCustom" class="exgTable">
-							<tr>
-								<td><input class="exgCustomInput" type="number" value="100" step="1" max="1000000" /><img class="exgUnit" data-src="img/account/trading/gold_small.png" /></td>
-								<td class="exgCustomOutput0"></td>
-								<td class="exgCustomOutput1"></td>
-							</tr>
-						</table>
 						<table id="exgGemCustom" class="exgTable">
 							<tr>
 								<td><input class="exgCustomInput" type="number" value="100" step="25" max="1000000" /><img class="exgUnit" data-src="img/account/trading/gem_small.png" /></td>
@@ -155,15 +130,40 @@
 								<td class="exgCustomOutput1"></td>
 							</tr>
 						</table>
+						<table id="exgGoldCustom" class="exgTable">
+							<tr>
+								<td><input class="exgCustomInput" type="number" value="100" step="1" max="1000000" /><img class="exgUnit" data-src="img/account/trading/gold_small.png" /></td>
+								<td class="exgCustomOutput0"></td>
+								<td class="exgCustomOutput1"></td>
+							</tr>
+						</table>
+						<button id="exgReload" title="<dfn>Reload</dfn> exchange rates."><img data-src="img/ui/refresh.png" /></button>
+					</div>
+					<div id="exgGoldColumn" class="exgColumn">
+						<div class="exgHeader">
+							<img data-src="img/account/trading/gold.png" />
+							<var id="exgGoldTitle" class="exgTitle"></var>
+						</div>
+						<table id="exgGoldSamples" class="exgTable"></table>
 					</div>
 				</div>
 				<div class="exgColumnContainer">
 					<div id="exgGemColumn" class="exgColumn">
-						<div>
+						<div class="exgHeader">
 							<img data-src="img/account/trading/gem.png" />
 							<var id="exgGemTitle" class="exgTitle"></var>
 						</div>
 						<table id="exgGemSamples" class="exgTable"></table>
+					</div>
+				</div>
+				<div class="exgColumnContainer">
+					<div id="trsRecent" class="exgColumn">
+						<div class="exgHeader">
+							<img data-src="img/account/trading/transactions.png" />
+							<var id="trsRecentTitle" class="exgTitle"></var>
+						</div>
+						<button id="trsRecentReload" title="<dfn>Reload</dfn> recent transactions."><img data-src="img/ui/refresh.png" /></button>
+						<table id="trsRecentTable" class="exgTable"></table>
 					</div>
 				</div>
 			</div>
