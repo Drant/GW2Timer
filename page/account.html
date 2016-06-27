@@ -32,8 +32,8 @@
 				</aside>
 			</div>
 			<div id="accCommand">
-				<aside id="accCommandLeft"><h1>Command Console</h1><input id="accConsole" type="text" /></aside>
-				<aside id="accCommandRight"><h1>Item Database</h1><input id="accSearch" type="text" /></aside>
+				<aside id="accCommandLeft"><h2>Command Console</h2><input id="accConsole" type="text" /></aside>
+				<aside id="accCommandRight"><h2>Item Database</h2><input id="accSearch" type="text" /></aside>
 			</div>
 			<br />
 			<div id="accDirectory">
@@ -72,15 +72,20 @@
 					<ul>
 						<li>I want to craft an item or a legendary: <a href="./?page=Crafting"><img src="img/account/menu/crafting.png" />Crafting</a></li>
 					</ul>-->
-					<!--<h2>Trading Post and Money</h2>
+					<h2>Trading Post and Money</h2>
 					<ul>
-						<li>I want to make a watchlist: <a href="./?page=Catalog"><img src="img/account/menu/catalog.png" />Catalog</a></li>
+						<li>I want to make a watchlist: <a href="./?page=Catalog"><img src="img/account/menu/catalog.png" />Catalog</a> or <a href="./?page=TP"><img src="img/ui/tp.png" />Tracker</a></li>
 						<li>I want to exchange gems and gold: <a href="./?page=Trading"><img src="img/account/menu/trading.png" />Trading</a></li>
 						<li>I want to see my recent sales and purchases: <a href="./?page=Trading"><img src="img/account/menu/trading.png" />Trading</a></li>
 						<li>I want to check items I'm buying or selling: <a href="./?page=Buying"><img src="img/account/menu/buying.png" />Buying</a> <a href="./?page=Selling"><img src="img/account/menu/selling.png" />Selling</a></li>
 						<li>I want to review items I've bought or sold: <a href="./?page=Bought"><img src="img/account/menu/bought.png" />Bought</a> <a href="./?page=Sold"><img src="img/account/menu/sold.png" />Sold</a></li>
-						<li>I want calculate profits and set price alerts: <a href="http://forum.renaka.com/topic/5697040/"><img src="img/ui/tp.png" />Tracker</a></li>
-					</ul>-->
+					</ul>
+					<h2>Advanced Trading Post</h2>
+					<ul>
+						<li>I want to learn how to use the Trading Tracker: <a href="http://forum.renaka.com/topic/5697040/"><img src="img/account/menu/forum.png" />Forum</a></li>
+						<li>I want to calculate profits and set price alarms <a href="./?page=TP"><img src="img/ui/tp.png" />Tracker</a></li>
+						<li>I want to set custom exchange and gem alarms: <a href="./?page=TP"><img src="img/ui/tp.png" />Tracker</a></li>
+					</ul>
 				</div>
 			</div>
 			<br />
@@ -112,12 +117,56 @@
 	<!--<article data-section="Crafting"></article>-->
 </section>
 
-<!--<section id="accPlatterTrading">
+<section id="accPlatterTrading">
 	<article data-section="Trading" class="accDishMain">
-		<div id="accTrading">
-			<div id="accExchange"></div>
-			<div id="accRecent"></div>
-			<div id="accItems"></div>
+		<div id="accTradingContainer">
+			<div id="accTrading">
+				<div class="exgColumnContainer">
+					<div id="trsRecent" class="exgColumn">
+						<div>
+							<img data-src="img/account/trading/transactions.png" />
+							<var id="trsRecentTitle" class="exgTitle"></var>
+						</div>
+						<button id="trsRecentReload" title="<dfn>Reload</dfn> recent transactions."><img data-src="img/ui/refresh.png" /></button>
+						<table id="trsRecentTable" class="exgTable"></table>
+					</div>
+				</div>
+				<div class="exgColumnContainer">
+					<div id="exgGoldColumn" class="exgColumn">
+						<div>
+							<img data-src="img/account/trading/gold.png" />
+							<var id="exgGoldTitle" class="exgTitle"></var>
+						</div>
+						<table id="exgGoldSamples" class="exgTable"></table>
+					</div>
+					<div id="exgCustom">
+						<button id="exgReload" title="<dfn>Reload</dfn> exchange rates."><img data-src="img/ui/refresh.png" /></button>
+						<table id="exgGoldCustom" class="exgTable">
+							<tr>
+								<td><input class="exgCustomInput" type="number" value="100" step="1" max="1000000" /><img class="exgUnit" data-src="img/account/trading/gold_small.png" /></td>
+								<td class="exgCustomOutput0"></td>
+								<td class="exgCustomOutput1"></td>
+							</tr>
+						</table>
+						<table id="exgGemCustom" class="exgTable">
+							<tr>
+								<td><input class="exgCustomInput" type="number" value="100" step="25" max="1000000" /><img class="exgUnit" data-src="img/account/trading/gem_small.png" /></td>
+								<td class="exgCustomOutput0"></td>
+								<td class="exgCustomOutput1"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="exgColumnContainer">
+					<div id="exgGemColumn" class="exgColumn">
+						<div>
+							<img data-src="img/account/trading/gem.png" />
+							<var id="exgGemTitle" class="exgTitle"></var>
+						</div>
+						<table id="exgGemSamples" class="exgTable"></table>
+					</div>
+				</div>
+			</div>
 		</div>
 	</article>
 	<article data-section="Buying"></article>
@@ -126,7 +175,7 @@
 	<article data-section="Sold"></article>
 </section>
 
-<section id="accPlatterPVP">
+<!--<section id="accPlatterPVP">
 	<article data-section="PVP" class="accDishMain"></article>
 </section>
 
@@ -211,7 +260,7 @@
 </div>
 <div id="accHelpCleanup">
 	<h2>Cleanup Usage</h2>
-	<p>This catalog shows salvageable items, unopened bags, unused consumables, and likely &quot;useless&quot; items. If you are not sure if an item still has value, click its icon to read its wiki page before deciding to vendor/destroy it. Prices shown have tax included.</p>
+	<p>This catalog shows salvageable items, unopened bags, unused consumables, and likely &quot;useless&quot; items. If you are not sure if an item is worth keeping, click its icon to read its wiki page before deciding to vendor/destroy it. Sell prices shown includes tax.</p>
 	<ul>
 		<li><a href="http://wiki.guildwars2.com/wiki/Salvage">Salvage Items</a>: use basic salvage kit or sell on TP</li>
 		<li><a href="http://wiki.guildwars2.com/wiki/Glob_of_Ectoplasm">Ectoplasm Rares</a>: use master or mystic salvage kit or sell on TP</li>

@@ -158,7 +158,7 @@
 /* Key manager and account lobby
 ----------------------------------------------------------------------------- */
 
-#accManager, #accHelp, #accTrading {
+#accManager, #accHelp {
 	width: 80%;
 	margin-left: 10%;
 	margin-right: 10%;
@@ -1888,6 +1888,159 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 		0px -1px 1px #000,
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
+}
+
+/*
+ * Gem exchange.
+ */
+#accTradingContainer {
+	width: 100%;
+	margin-left: 0;
+	margin-right: 0;
+	text-align: center;
+}
+#accTrading {
+	display: inline-block;
+ 	font-family: Menomonia;
+}
+.exgColumn {
+	float: left;
+	padding: 10px;
+	margin-top: 32px;
+	margin-right: 32px;
+	margin-bottom: 32px;
+	border-radius: 4px;
+}
+.exgColumnContainer {
+	display: inline-block;
+	vertical-align: top;
+}
+#exgGoldColumn {
+	background-image: linear-gradient(to right, rgba(200,145,24,0.5) 0%, transparent 100%);
+	box-shadow: 0px 0px 16px #c89118;
+}
+#exgGemColumn {
+	background-image: linear-gradient(to left, rgba(43,129,190,0.5) 0%, transparent 100%);
+	box-shadow: 0px 0px 16px #2b81be;
+}
+#exgGoldCustom {
+	background-image: linear-gradient(to right, rgba(200,145,24,0.5) 50%, transparent 100%);
+	box-shadow: 0px 0px 16px #c89118;
+}
+#exgGemCustom {
+	background-image: linear-gradient(to right, rgba(43,129,190,0.5) 50%, transparent 100%);
+	box-shadow: 0px 0px 16px #2b81be;
+}
+.exgTitle {
+	vertical-align: middle;
+	font-size: 48px;
+	color: #e8e0d2;
+	text-shadow:
+		0px 1px 4px #000,
+		0px -1px 4px #000,
+		1px 0px 4px #000,
+		-1px 0px 4px #000;
+}
+.exgTable {
+	width: 360px;
+	text-align: right;
+	border-top: 4px solid black;
+	border-bottom: 4px solid black;
+	background: rgba(0,0,0,0.2);
+	box-shadow: 0px 0px 8px black;
+}
+.exgTable tr:nth-child(odd) {
+	background: rgba(0,0,0,0.5)
+}
+.exgTable tr:hover {
+	background-attachment: fixed;
+	background-repeat: repeat-y;
+	background-image: linear-gradient(to right, #7c7253 0%, transparent 100%);
+	animation: aniHighlight 0.4s;
+}
+.exgTable td {
+	vertical-align: middle;
+	padding: 10px 12px 10px 12px;
+}
+.exgTable td:nth-child(1) {
+	width: 40%;
+	font-size: 32px;
+}
+.exgTable td:nth-child(2) {
+	font-size: 18px;
+}
+.exgTable td:nth-child(3) {
+	width: 15%;
+	color: #ffde9d;
+}
+#exgGoldSamples td:nth-child(1) {
+	color: #fdc84e;
+}
+#exgGemSamples td:nth-child(1) {
+	color: #71a3d8;
+}
+.exgUnit {
+	width: 32px; height: 32px;
+}
+/* Custom exchange */
+#exgCustom {
+	display: block;
+	width: 360px;
+	padding: 10px;
+	clear: both;
+	text-align: left;
+	background-image: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 100%);
+	box-shadow: 0px 0px 16px black;
+}
+#exgReload, #trsRecentReload {
+	width: 100%;
+	margin-bottom: 12px;
+}
+#exgGoldCustom input, #exgGemCustom input {
+	width: 96px;
+	font-family: Menomonia;
+	font-size: 32px;
+	background: rgba(0,0,0,0.3);
+	border: 2px solid rgba(0,0,0,0.5);
+}
+#exgGoldCustom input {
+	color: #fdc84e;
+}
+#exgGemCustom input {
+	color: #71a3d8;
+}
+#exgCustom table {
+	overflow: hidden;
+}
+#exgCustom td {
+	white-space: nowrap;
+}
+
+/*
+ * Recent transactions.
+ */
+#trsRecent {
+	background-image: linear-gradient(to left, rgba(255,255,255,0.2) 0%, transparent 100%);
+	box-shadow: 0px 0px 16px white;
+}
+#trsRecentTable td {
+	font-size: 18px;
+	text-align: left;
+}
+#trsRecentTable td:nth-child(2) {
+	width: 20%;
+	word-break: break-word;
+	color: #aaaaaa;
+}
+.trsRecentIcon {
+	width: 32px; height: 32px;
+	margin-right: 8px;
+	border: 1px solid #2f2b29;
+	outline: 1px solid #595859;
+	border-radius: 2px;
+}
+.trsRecentType {
+	font-family: Trebuchet MS, Menomonia;
 }
 
 /*

@@ -737,7 +737,7 @@ button img {
 .cntComposition h1, header.cntHeader {
 	padding-top: 12px;
 	margin-bottom: 8px;
-	font-size: 20px;
+	font-size: 22px;
 	text-shadow: 0px 0px 2px #e4e0b3;
 }
 header.cntHeader {
@@ -747,8 +747,8 @@ header.cntHeader {
 }
 .cntComposition h2 {
 	margin-top: 4px;
-	margin-bottom: 2px;
-	font-size: 16px;
+	margin-bottom: 4px;
+	font-size: 18px;
 	text-shadow: 0px 0px 1px #e4e0b3;
 }
 .cntComposition h3 {
@@ -2563,6 +2563,10 @@ label:hover {
 }
 .cssFadedMore {
 	opacity: 0.1;
+}
+.cssBlur {
+	-webkit-filter: blur(1px);
+	filter: blur(1px);
 }
 .cssLeft {
 	float: left;

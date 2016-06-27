@@ -8565,6 +8565,192 @@ V = {
 	},
 	
 	/*
+	 * Generates the gem exchange columns in the Trading section.
+	 */
+	generateExchange: function()
+	{
+		var container = $("#accTrading");
+		var rowduration = 100;
+		var blurduration = 200;
+		var goldsamples = $("#exgGoldSamples");
+		var gemsamples = $("#exgGemSamples");
+		var animateRows = function(pElements)
+		{
+			pElements.find("tr").each(function(i) {
+				$(this).css({opacity: 0})
+					.delay(i * (rowduration / 2))
+					.animate({opacity: 1}, rowduration);
+			});
+		};
+		var removeBlur = function()
+		{
+			setTimeout(function()
+			{
+				container.find(".cssBlur").removeClass("cssBlur");
+			}, blurduration);
+		};
+		var fillExchange = function()
+		{
+			goldsamples.empty().html(I.cThrobber);
+			gemsamples.empty().html(I.cThrobber);
+			E.updateGemInCoin(function()
+			{
+				goldsamples.empty();
+				A.Metadata.Exchange.GoldSamples.forEach(function(iSample)
+				{
+					goldsamples.prepend("<tr>"
+						+ "<td>" + iSample.toLocaleString() + "<img class='exgUnit' src='img/account/trading/gold_small.png' /></td>"
+						+ "<td>" + E.formatCoinToGem(iSample * E.Exchange.COPPER_IN_GOLD) + "</td>"
+						+ "<td>$" + E.formatGemToMoney(E.convertCoinToGem(iSample * E.Exchange.COPPER_IN_GOLD)) + "</td>"
+					+ "</tr>");
+				});
+				animateRows(goldsamples);
+			});
+			E.updateCoinInGem(function()
+			{
+				gemsamples.empty();
+				A.Metadata.Exchange.GemSamples.forEach(function(iSample)
+				{
+					gemsamples.prepend("<tr>"
+						+ "<td>" + iSample.toLocaleString() + "<img class='exgUnit' src='img/account/trading/gem_small.png' /></td>"
+						+ "<td>" + E.formatGemToCoin(iSample) + "</td>"
+						+ "<td>$" + E.formatGemToMoney(iSample) + "</td>"
+					+ "</tr>");
+				});
+				animateRows(gemsamples);
+			});
+		};
+		
+		/*
+		 * Create the gem exchange subsection.
+		 */
+		$("#exgGoldTitle").text(D.getPhraseOriginal("Get Coin"));
+		$("#exgGemTitle").text(D.getPhraseOriginal("Get Gem"));
+		// Fill the table with common exchange amounts
+		fillExchange();
+		$("#exgReload").click(function()
+		{
+			fillExchange();
+		});
+		// Custom exchange
+		var goldcustom = $("#exgGoldCustom");
+		var gemcustom = $("#exgGemCustom");
+		var goldoutput0 = goldcustom.find(".exgCustomOutput0");
+		var goldoutput1 = goldcustom.find(".exgCustomOutput1");
+		var gemoutput0 = gemcustom.find(".exgCustomOutput0");
+		var gemoutput1 = gemcustom.find(".exgCustomOutput1");
+		$("#exgCustom").find("input").click(function()
+		{
+			$(this).select();
+		});
+		goldcustom.find(".exgCustomInput").on("input", $.throttle(Q.cSEARCH_LIMIT, function()
+		{
+			var val = parseInt($(this).val());
+			if (val > 0)
+			{
+				E.updateGemInCoin(function()
+				{
+					goldoutput0.html(E.formatCoinToGem(val * E.Exchange.COPPER_IN_GOLD)).addClass("cssBlur");
+					goldoutput1.html("$" + E.formatGemToMoney(val)).addClass("cssBlur");
+					removeBlur();
+				});
+			}
+		})).trigger("input");
+		gemcustom.find(".exgCustomInput").on("input", $.throttle(Q.cSEARCH_LIMIT, function()
+		{
+			var val = parseInt($(this).val());
+			if (val > 0)
+			{
+				E.updateGemInCoin(function()
+				{
+					gemoutput0.html(E.formatGemToCoin(val)).addClass("cssBlur");
+					gemoutput1.html("$" + E.formatGemToMoney(val)).addClass("cssBlur");
+					removeBlur();
+				});
+			}
+		})).trigger("input");
+	},
+	
+	/*
+	 * Generates the recent transactions column of the Trading section.
+	 */
+	generateRecent: function()
+	{
+		$("#trsRecentTitle").text(D.getPhraseOriginal("Recent"));
+		var table = $("#trsRecentTable");
+		var reloader = $("#trsRecentReload");
+		var transactionsrecentlimit = 10;
+		var bought, sold, combined;
+		var boughtword = D.getWordCapital("bought");
+		var soldword = D.getWordCapital("sold");
+		
+		var fillRecent = function()
+		{
+			table.empty();
+			reloader.removeClass("jsSuspended");
+			A.adjustAccountScrollbar();
+			// Get the first few transactions from the retrieved
+			for (var i = 0; i < bought.length; i++)
+			{
+				bought[i].isBought = true;
+			}
+			combined = bought.concat(sold);
+			U.sortObjects(combined, {aKeyName: "purchased"});
+			
+			combined.forEach(function(iTrans)
+			{
+				var row = $("<tr></tr>").prependTo(table);
+				(function(iTransaction)
+				{
+					Q.getItem(iTrans.item_id, function(pItem)
+					{
+						var type = (iTransaction.isBought) ? boughtword : soldword;
+						row.html("<td>"
+							+ "<img class='trsRecentIcon' src='" + pItem.icon + "' />"
+							+ "<var class='trsRecentType'>" + type + "</var>: "
+							+ "<var class='" + Q.getRarityClass(pItem.rarity) + "'>" + iTransaction.quantity + " " + pItem.name + "</var><br />"
+							+ "<var class='cssRight'>" + E.formatCoinStringColored(iTransaction.quantity * iTransaction.price) + "</var>"
+						+ "</td>"
+						+ "<td>" + (new Date(iTransaction.purchased)).toLocaleString() + "</td>");
+					});
+				})(iTrans);
+			});
+		};
+		var dealError = function()
+		{
+			table.html("<tr><td class='trsRecentError'>" + D.getPhraseOriginal("No transactions") + "</td></tr>");
+			reloader.removeClass("jsSuspended");
+			A.printError();
+		};
+		var retrieveTransactions = function()
+		{
+			table.empty().html(I.cThrobber);
+			// Retrieves the first page of the historical transactions
+			$.getJSON(A.getURL(A.URL.HistoryBuys), function(pData)
+			{
+				bought = pData.slice(0, transactionsrecentlimit);
+				$.getJSON(A.getURL(A.URL.HistorySells), function(pData)
+				{
+					sold = pData.slice(0, transactionsrecentlimit);
+					fillRecent();
+				}).fail(function(){
+					dealError();
+				});
+			}).fail(function(){
+				dealError();
+			});
+		};
+		
+		// Initialize
+		retrieveTransactions();
+		reloader.click(function()
+		{
+			retrieveTransactions();
+			$(this).addClass("jsSuspended");
+		});
+	},
+	
+	/*
 	 * Generates the Trading Post overview page. This function only runs once.
 	 */
 	serveTrading: function()
@@ -8575,32 +8761,12 @@ V = {
 			return;
 		}
 		container.data("isloaded", true);
+		I.loadImg(container);
+		U.convertExternalLink(container.find("a"));
 		
-		/*
-		 * Create the gem exchange subsection.
-		 */
-		$("#accExchange").html("<div id='exgGold'>"
-			+ "<div class='exgHeader'>"
-				+ "<img src='https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png' />"
-				+ "<var class='exgTitle'>" + D.getPhraseOriginal("Get Coin") + "</var>"
-			+ "</div>"
-			+ "<table id='exgGoldSamples'></table>"
-			+ "<div id='exgGoldCustom'>"
-				+ "<input id='exgGoldToGem' type='number' />"
-				+ "<var id='exgGoldToGemResult'></var>"
-			+ "</div>"
-		+ "</div>"
-		+ "<div id='exgGem'>"
-			+ "<div class='exgHeader'>"
-				+ "<img src='https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png' />"
-				+ "<var class='exgTitle'>" + D.getPhraseOriginal("Get Gem") + "</var>"
-			+ "</div>"
-			+ "<table id='exgGemSamples'></table>"
-			+ "<div id='exgGemCustom'>"
-				+ "<input id='exgGemToGold' type='number' />"
-				+ "<var id='exgGemToGoldResult'></var>"
-			+ "</div>"
-		+ "</div>");
+		// Generate HTML
+		V.generateExchange();
+		V.generateRecent();
 	},
 	
 	/*
@@ -10531,6 +10697,7 @@ B = {
 			 * Categorize each transaction chronologically by its month; however,
 			 * the items in the tab will be sorted by item ID.
 			 */
+			var nowms = (new Date()).getTime();
 			for (var i = 0; i < pData.length; i++)
 			{
 				transaction = pData[i];
@@ -10545,7 +10712,7 @@ B = {
 				// Remember time since purchased for historical transactions, or time since creation for current transactions
 				timesince = (transaction.purchased)
 					? T.formatMilliseconds((new Date(transaction.purchased)).getTime() - (new Date(transaction.created)).getTime())
-					: T.formatMilliseconds((new Date()).getTime() - (new Date(transaction.created)).getTime());
+					: T.formatMilliseconds(nowms - (new Date(transaction.created)).getTime());
 				/*
 				 * Transactions of the same item will be assigned to the same
 				 * "slot" in the month associative array, accessed by the item ID.
@@ -12694,7 +12861,7 @@ E = {
 		// Returns
 		if (gold > 0)
 		{
-			return sign + sg0 + goldstr + sg1 + sep + ss0 + silverstr + ss1 + sep + sc0 + copperstr + sc1;
+			return sign + sg0 + goldstr.toLocaleString() + sg1 + sep + ss0 + silverstr + ss1 + sep + sc0 + copperstr + sc1;
 		}
 		if (silver > 0)
 		{
@@ -12788,6 +12955,7 @@ E = {
 	 */
 	animateValue: function(pInput, pOldValue, pNewValue)
 	{
+		return "DISABLED";
 		if (pNewValue < pOldValue)
 		{
 			// Red if value went down
@@ -12830,17 +12998,41 @@ E = {
 			}
 		});
 	},
+	
+	/*
+	 * Converts a currency using the updated exchange rate.
+	 */
 	convertGemToCoin: function(pAmount)
 	{
-		return E.formatCoinStringColored(Math.round(pAmount * E.Exchange.CoinInGem));
+		return Math.round(pAmount * E.Exchange.CoinInGem);
+	},
+	convertCoinToGem: function(pAmount)
+	{
+		return Math.round(pAmount * E.Exchange.GemInCoin);
 	},
 	convertGemToMoney: function(pAmount)
 	{
-		return E.formatMoneyString(Math.round(pAmount * E.Exchange.DOLLAR_PER_GEM));
+		return Math.round(pAmount * E.Exchange.DOLLAR_PER_GEM);
 	},
 	convertMoneyToGem: function(pAmount)
 	{
 		return Math.floor(pAmount * E.Exchange.GEM_PER_DOLLAR);
+	},
+	formatGemToCoin: function(pAmount)
+	{
+		return E.formatCoinStringShort(E.convertGemToCoin(pAmount));
+	},
+	formatCoinToGem: function(pAmount)
+	{
+		return E.formatGemString(E.convertCoinToGem(pAmount), true);
+	},
+	formatGemToMoney: function(pAmount)
+	{
+		return E.formatMoneyString(E.convertGemToMoney(pAmount));
+	},
+	formatMoneyToGem: function(pAmount)
+	{
+		return E.formatGemString(E.convertMoneyToGem(pAmount), true);
 	},
 	
 	/*
@@ -25447,7 +25639,7 @@ T = {
 					week = ~~(seconds / T.cSECONDS_IN_WEEK);
 					weekstr = week + D.getWord("w") + " ";
 				}
-				daydivisor = T.cDAYS_IN_WEEK;;
+				daydivisor = T.cDAYS_IN_WEEK;
 			}
 		}
 		else
@@ -26192,7 +26384,7 @@ H = {
 								var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (item.discount[0])[2], disc[2]) : getPercentOffString(priceper, (item.discount[0])[1]);
 								var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
 								discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
-									+ " ≈ " + E.convertGemToCoin(disc[1]) + "<br />";
+									+ " ≈ " + E.formatGemToCoin(disc[1]) + "<br />";
 							}
 							discountstr += "</span>";
 						}
@@ -26204,8 +26396,8 @@ H = {
 							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
 							+ oldpricestr
 							+ "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
-							+ "<span class='dsbSalePriceCoin'> ≈ " + E.convertGemToCoin(item.price) + "</span>"
-							+ "<span class='dsbSalePriceMoney'> = " + E.convertGemToMoney(item.price) + "<ins class='s16 s16_money'></ins></span>"
+							+ "<span class='dsbSalePriceCoin'> ≈ " + E.formatGemToCoin(item.price) + "</span>"
+							+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "<ins class='s16 s16_money'></ins></span>"
 							+ discountstr
 						+ "</div>");
 					}
@@ -26257,8 +26449,9 @@ H = {
 			+ "<img id='dsbVendorToggleIcon' src='img/ui/toggle.png' /></kbd>"
 			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='Items restock at daily reset.<br />Vendors relocate 8 hours after that.<br />Limit 1 purchase per vendor.'>" + D.getWordCapital("info") + "</a> "
-			+ "<u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + "</u>"
-			+ "&nbsp;<input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' /> "
+			+ "<u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + ":</u>"
+			+ "&nbsp;<input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' "
+				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
 		+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>");
 
 		// Bind buttons

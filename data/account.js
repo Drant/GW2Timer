@@ -157,8 +157,8 @@ var GW2T_CURRENCY_DATA = {
  */
 var GW2T_ACCOUNT_METADATA = {
 	Exchange: {
-		GoldSamples: [100, 200, 500, 1000, 4000],
-		GemSamples: [100, 500, 800, 1000, 1800]
+		GoldSamples: [1, 10, 100, 200, 500, 1000, 4000, 5000],
+		GemSamples: [100, 125, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1800, 2000]
 	},
 	Bank: {
 		NumSlotsHorizontal: 10,
