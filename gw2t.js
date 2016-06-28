@@ -8636,10 +8636,6 @@ V = {
 		var goldoutput1 = goldcustom.find(".exgCustomOutput1");
 		var gemoutput0 = gemcustom.find(".exgCustomOutput0");
 		var gemoutput1 = gemcustom.find(".exgCustomOutput1");
-		$("#exgCustom").find("input").click(function()
-		{
-			$(this).select();
-		});
 		goldinput.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{
 			var val = parseInt($(this).val());
@@ -8666,6 +8662,40 @@ V = {
 				});
 			}
 		})).trigger("input");
+		
+		// Search bar to place an item's gold value into the custom gold exchange
+		var itemsearch = $("#exgItemSearch");
+		var itemquantity = $("#exgItemQuantity");
+		var itempricetype = $("#exgItemPriceType");
+		var exchangeItem = function(pPrice)
+		{
+			var price;
+			if (pPrice)
+			{
+				price = pPrice;
+				itemsearch.data("price", pPrice);
+			}
+			else
+			{
+				price = itemsearch.data("price");
+			}
+			var quantity = T.parseQuantity(itemquantity.val());
+			var pricequantity = (quantity * price);
+			var itemgold = (pricequantity > E.Exchange.COPPER_IN_GOLD) ? Math.round(pricequantity / E.Exchange.COPPER_IN_GOLD) : 1;
+			goldinput.val(itemgold).trigger("input");
+		};
+		Q.bindItemSearch(itemsearch, {aCallback: function(pItem)
+		{
+			E.getPrice(pItem.id, function(pPrice)
+			{
+				var price = (itempricetype.prop("checked")) ? pPrice.oPriceSell : pPrice.oPriceBuy;
+				exchangeItem(price);
+			});
+		}});
+		itemquantity.change(function()
+		{
+			exchangeItem();
+		});
 		
 		// Button to refresh exchange rates
 		$("#exgReload").click(function()
@@ -8712,14 +8742,22 @@ V = {
 					{
 						var timestamp = (new Date(iTransaction.purchased)).toLocaleString();
 						var type = (iTransaction.isBought) ? boughtword : soldword;
-						var quantitystr = (iTransaction.quantity > 1) ? (iTransaction.quantity + " ") : "";
+						var quantitystr = (iTransaction.quantity > 1) ? ("<var class='trsRecentCount'>" + iTransaction.quantity + "</var>") : "";
 						row.html("<td>"
-						+ "<img class='trsRecentIcon' src='" + pItem.icon + "' />"
-							+ "<var class='trsRecentType'>" + type + "</var>: "
-							+ "<var class='" + Q.getRarityClass(pItem.rarity) + "'>" + quantitystr + pItem.name + "</var>"
-							+ "<var class='cssRight'>" + E.formatCoinStringColored(iTransaction.quantity * iTransaction.price) + "</var><br />"
-							+ "<span>" + T.formatMilliseconds(nowms - (new Date(iTransaction.purchased)).getTime()) + "</span>"
+							+ "<span class='trsRecentItem'>"
+								+ "<span class='trsRecentSlot'><img class='trsRecentIcon' src='" + pItem.icon + "' />" + quantitystr + "</span>"
+								+ "<span class='trsRecentName'><var class='trsRecentType'>" + type
+									+ "</var>: <var class='" + Q.getRarityClass(pItem.rarity) + "'>" + pItem.name + "</var></span>"
+							+ "</span>"
+							+ "<span>"
+								+ "<var class='trsRecentTime' title='" + timestamp + "'>" + T.formatMilliseconds(nowms - (new Date(iTransaction.purchased)).getTime()) + "</var>"
+								+ "<var class='trsRecentPrice'>" + E.formatCoinStringColored(iTransaction.quantity * iTransaction.price) + "</var>"
+							+ "</span>"
 						+ "</td>");
+						var slot = row.find(".trsRecentSlot");
+						I.qTip.init(row.find(".trsRecentTime"));
+						Q.scanItem(pItem, {aElement: slot});
+						Q.bindItemSlotBehavior(slot, {aItem: pItem, aWantClick: true});
 					});
 				})(iTrans);
 			});
@@ -8768,6 +8806,11 @@ V = {
 		{
 			V.generateExchange();
 			V.generateRecent();
+			var inputs = container.find("input").click(function()
+			{
+				$(this).select();
+			});
+			I.qTip.init(inputs);
 			container.data("isloaded", true);
 		}
 		else if (container.data("token") !== A.TokenCurrent)
@@ -10862,7 +10905,7 @@ Q = {
 		}
 		else
 		{
-			var filepath = "data/items/" + pName + "_" + D.getPartiallySupportedLanguage() + ".json";
+			var filepath = "cache/" + pName + "_" + D.getPartiallySupportedLanguage() + ".json";
 			$.getJSON(filepath, function(pData)
 			{
 				Q.RetrievedDatabases[pName] = true;
@@ -10894,7 +10937,7 @@ Q = {
 		}
 		else
 		{
-			$.getJSON("data/items/search_" + O.Options.enu_Language + ".json", function(pData)
+			$.getJSON("cache/search_" + O.Options.enu_Language + ".json", function(pData)
 			{
 				Q.SearchDatabase = pData;
 				pSuccess();

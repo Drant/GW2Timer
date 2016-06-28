@@ -213,18 +213,33 @@ input[type="text"].accTokenHovered {
 	width: 100%;
 }
 
-#accDirectory {
+#accDirectoryContainer {
 	text-align: center;
+}
+#accDirectory {
+	display: inline-block;
+}
+.accDirectorySeparator {
+	width: 100%;
+	height: 4px;
+	background: linear-gradient(to right, transparent 0%, black 50%, transparent 100%);
+}
+#accDirectorySeparatorTop {
+	margin-bottom: 16px;
+}
+#accDirectorySeparatorBottom {
+	margin-top: 4px;
 }
 .accDirectoryColumn {
 	display: inline-block;
-	margin-left: 8px;
 	text-align: left;
 	vertical-align: top;
 }
+.accDirectoryColumn {
+	margin-right: 24px;
+}
 #accDirectory ul {
 	margin-bottom: 16px;
-	list-style: disc;
 }
 #accDirectory a {
 	font-family: Menomonia;
@@ -1990,10 +2005,12 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	font-size: 32px;
 }
 .exgTable td:nth-child(2) {
+	font-family: Trebuchet MS, Menomonia;
 	font-size: 18px;
 }
 .exgTable td:nth-child(3) {
 	width: 15%;
+	font-family: Trebuchet MS, Menomonia;
 	color: #ffde9d;
 }
 #exgGoldSamples td:nth-child(1) {
@@ -2020,10 +2037,6 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	width: 100%;
 	margin-top: 12px;
 }
-#trsRecentReload {
-	width: 100%;
-	margin-bottom: 12px;
-}
 #exgGoldCustom input, #exgGemCustom input {
 	width: 96px;
 	font-family: Menomonia;
@@ -2043,6 +2056,25 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 #exgCustom td {
 	white-space: nowrap;
 }
+#exgItemSearchContainer {
+	margin-bottom: 16px;
+	white-space: nowrap;
+}
+#exgItemSearch {
+	display: inline-block;
+	width: 256px;
+}
+#exgItemSearch, #exgItemQuantity {
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 16px;
+	color: white;
+	background: rgba(0,0,0,0.3);
+	border: 2px solid rgba(0,0,0,0.5);
+}
+#exgItemSearch:hover, #exgItemQuantity:hover {
+	background: #2b2b2b;
+	box-shadow: 0px 0px 6px gray;
+}
 
 /*
  * Recent transactions.
@@ -2050,14 +2082,18 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 #trsRecent {
 	box-shadow: 0px 0px 16px black;
 }
+#trsRecentReload {
+	width: 100%;
+	margin-bottom: 12px;
+}
 #trsRecentTable td {
+	font-family: Trebuchet MS, Menomonia;
 	font-size: 18px;
 	text-align: left;
 }
-#trsRecentTable td:nth-child(2) {
-	width: 20%;
-	word-break: break-word;
-	color: #aaaaaa;
+.trsRecentSlot {
+	display: block;
+	position: relative;
 }
 .trsRecentIcon {
 	width: 48px; height: 48px;
@@ -2066,8 +2102,32 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	outline: 1px solid #595859;
 	border-radius: 2px;
 }
+.trsRecentIcon:hover {
+	border: 1px solid red;
+}
+.trsRecentCount {
+	position: absolute;
+	top: -2px;
+	right: 12px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 16px;
+	color: #ffeeaa;
+	text-shadow:
+		1px 1px 1px #000;
+}
+.trsRecentItem {
+	display: table;
+}
+.trsRecentName {
+	display: table-cell;
+	vertical-align: middle;
+	font-family: Menomonia;
+}
 .trsRecentType {
 	font-family: Trebuchet MS, Menomonia;
+}
+.trsRecentPrice {
+	float: right;
 }
 
 /*

@@ -1300,8 +1300,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-06-21T15:00:00Z"),
-	Finish: new Date("2016-06-28T15:00:00Z"),
+	Start: new Date("2016-06-28T15:00:00Z"),
+	Finish: new Date("2016-07-05T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1310,51 +1310,44 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Crystal Savant Outfit",
-		id: "77808",
-		price: 595,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "Crystal Nomad Outfit",
-		id: "68684",
-		price: 525,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "Glittering Wings Backpack",
-		id: "70277",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Golden Feather Wings Backpack",
-		id: "77270",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Home Instance Node Pack",
-		img: "http://i.imgur.com/9u66LKD.png",
-		price: 3200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Crystal Arbiter Appearance Pack",
-		img: "http://i.imgur.com/AuYSBAV.png",
+		name: "White Mantle Appearance Pack",
+		img: "http://i.imgur.com/SXJh076.png",
 		price: 2000,
 		discount: null,
-		col: 1
+		col: 0
+	},
+	{
+		name: "Focused Solar Logging Tool",
+		img: "http://i.imgur.com/kml5bYv.png",
+		price: 1000,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Cosmic Mining Tool",
+		id: "78731",
+		price: 850,
+		discount: 1000,
+		col: 0
 	},
 	{
 		name: "Glitter Bomb Harvesting Tool",
 		id: "78909",
 		price: 1000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "White Mantle Outfit",
+		img: "http://i.imgur.com/VjilVMH.png",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "White Mantle Glider",
+		img: "http://i.imgur.com/yz2Kzpf.png",
+		price: 400,
 		discount: null,
 		col: 1
 	}
