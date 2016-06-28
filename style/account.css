@@ -164,6 +164,9 @@
 	margin-right: 10%;
 	font-family: sans-serif;
 }
+#accHelp {
+	margin-bottom: 64px;
+}
 #accManager {
 	text-align: center;
 	margin-bottom: 32px;
@@ -213,13 +216,27 @@ input[type="text"].accTokenHovered {
 #accDirectory {
 	text-align: center;
 }
-#accDirectoryInner {
+.accDirectoryColumn {
 	display: inline-block;
+	margin-left: 8px;
 	text-align: left;
+	vertical-align: top;
 }
 #accDirectory ul {
 	margin-bottom: 16px;
 	list-style: disc;
+}
+#accDirectory a {
+	font-family: Menomonia;
+	font-size: 18px;
+	color: #dd9900;
+	font-weight: bold;
+}
+#accDirectory a:hover {
+	color: #ffeebb;
+}
+#accDirectory img {
+	margin-right: 4px;
 }
 
 /* Characters
