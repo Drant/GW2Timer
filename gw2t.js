@@ -8681,7 +8681,7 @@ V = {
 			}
 			var quantity = T.parseQuantity(itemquantity.val());
 			var pricequantity = (quantity * price);
-			var itemgold = (pricequantity > E.Exchange.COPPER_IN_GOLD) ? Math.round(pricequantity / E.Exchange.COPPER_IN_GOLD) : 1;
+			var itemgold = (pricequantity > E.Exchange.COPPER_IN_GOLD) ? Math.ceil(pricequantity / E.Exchange.COPPER_IN_GOLD) : 1;
 			goldinput.val(itemgold).trigger("input");
 		};
 		Q.bindItemSearch(itemsearch, {aCallback: function(pItem)

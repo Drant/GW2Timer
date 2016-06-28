@@ -1157,6 +1157,15 @@ var GW2T_ZONE_DATA = {
  */
 var GW2T_TIMELINE = [
 	{
+		name_en: "Ley-Line Anomaly", name_de: "Ley-Linien-Anomalie", name_es: "Anomalía de línea ley", name_fr: "L'Anomalie des lignes de force", name_zh: "魔徑異常體",
+		color: "white",
+		Segments: [
+			{ time: "00:00", duration: "00:20", primacy: 1, name_en: "Wait", name_de: "Warten", name_es: "Esperar", name_fr: "Attendre", name_zh: "等" },
+			{ time: "00:20", duration: "00:20", primacy: 3, name_en: "Anomaly", name_de: "Anomalie", name_es: "Anomalía", name_fr: "L'Anomalie", name_zh: "魔径异常体" },
+			{ time: "00:40", duration: "01:20", primacy: 2, name_en: "Wait", name_de: "Warten", name_es: "Esperar", name_fr: "Attendre", name_zh: "等" }
+		]
+	},
+	{
 		zone: "verdant",
 		color: "yellowgreen",
 		Segments: [
@@ -1278,13 +1287,13 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: false,
-	name_en: "",
-	name_de: "",
-	name_es: "",
-	name_fr: "",
-	Start: new Date("2015-10-23T07:00:00Z"),
-	Finish: new Date("2015-11-06T08:00:00Z")
+	isEnabled: true,
+	name_en: "Ley-Line Anomaly",
+	name_de: "Ley-Linien-Anomalie",
+	name_es: "Anomalía de línea ley",
+	name_fr: "L'Anomalie des lignes de force",
+	Start: new Date("2016-06-28T16:00:00Z"),
+	Finish: new Date("2016-07-12T16:00:00Z")
 },
 
 /*
