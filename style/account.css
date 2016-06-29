@@ -1935,17 +1935,20 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 	display: inline-block;
  	font-family: Menomonia;
 }
+.exgColumnContainer {
+	display: inline-block;
+	margin-right: 32px;
+	vertical-align: top;
+}
+.exgColumnContainer:last-child {
+	margin-right: 0;
+}
 .exgColumn {
 	float: left;
 	padding: 10px;
 	margin-top: 32px;
-	margin-right: 32px;
 	margin-bottom: 32px;
 	border-radius: 4px;
-}
-.exgColumnContainer {
-	display: inline-block;
-	vertical-align: top;
 }
 #exgGoldColumn {
 	background-image: linear-gradient(to right, rgba(200,145,24,0.5) 0%, transparent 100%);

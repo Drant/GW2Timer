@@ -1354,6 +1354,9 @@ input.mapCoordinatesName {
 	min-width: 120px;
 	max-width: 140px;
 }
+.mapZoneList h2 {
+	font-size: 16px;
+}
 .mapZoneList ul {
 	margin-bottom: 16px;
 }

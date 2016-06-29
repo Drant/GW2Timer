@@ -1327,7 +1327,7 @@ Sale: {
 	},
 	{
 		name: "Focused Solar Logging Tool",
-		img: "http://i.imgur.com/kml5bYv.png",
+		id: "78724",
 		price: 1000,
 		discount: null,
 		col: 0
@@ -1355,7 +1355,7 @@ Sale: {
 	},
 	{
 		name: "White Mantle Glider",
-		img: "http://i.imgur.com/yz2Kzpf.png",
+		id: "79016",
 		price: 400,
 		discount: null,
 		col: 1

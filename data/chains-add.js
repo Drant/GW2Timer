@@ -1627,7 +1627,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 		num: "1",
 		sGotoNum: ["1"],
 		fGotoNum: "0",
-		sInterim: ["26:00~10:00"],
+		sInterim: ["25:00~10:00"],
 		fInterim: "0",
 		lim: "0",
 		avg: "8:00",

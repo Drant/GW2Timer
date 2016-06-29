@@ -130,8 +130,8 @@ Gathering: [
 	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
 	{i: 67030, n: "Fused Molten Logging Axe", p: {gem: 1000}},
 	{i: 48933, n: "Molten Alliance Mining Pick", p: {gem: 1000}},
-	{i: 67029, n: "Tireless Logging Minion", p: {gem: 1000}},
 	{i: 67063, n: "Tireless Harvesting Minion", p: {gem: 1000}},
+	{i: 67029, n: "Tireless Logging Minion", p: {gem: 1000}},
 	{i: 48932, n: "Bone Pick", p: {gem: 1000}},
 	{i: 67395, n: "Reap-r-Tron", p: {gem: 1000}},
 	{i: 67394, n: "Log-r-Tron", p: {gem: 1000}},
@@ -149,8 +149,9 @@ Gathering: [
 	{i: 48934, n: "Jack-in-the-Box Scythe", p: {gem: 1000}},
 	{i: 48955, n: "Dreamcleaver Logging Axe", p: {gem: 1000}},
 	{i: 48825, n: "Frost Wasp Logging Tool", p: {gem: 1000}},
-	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}},
-	{i: 78909, n: "Glitter Bomb Harvesting Tool", p: {gem: 1000}}
+	{i: 78909, n: "Glitter Bomb Harvesting Tool", p: {gem: 1000}},
+	{i: 78724, n: "Focused Solar Logging Tool", p: {gem: 1000}},
+	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}}
 ],
 Salvage: [
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},
@@ -342,6 +343,7 @@ TonicEndless: [
 	{u: 72203, i: 74594, n: "Endless Chak Zapper Tonic"},
 	{i: 77101, n: "Endless Nuhoch Tonic", p: {map_td: 1000}},
 	{u: 73194, i: 77167, n: "Endless Nuhoch Crusher Tonic"},
+	{i: 79034, n: "Endless Ley-Line Anomaly Tonic"},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},

@@ -80,7 +80,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160601},
+		programVersion: {key: "int_utlProgramVersion", value: 160628},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -15888,9 +15888,19 @@ C = {
 				{
 					if (H.isStoryEnabled)
 					{
-						// Show Living Story events on the dashboard if on website or overlay mode only
-						chain.htmllist = ((I.isProgramEmbedded || (I.ModeCurrent !== I.ModeEnum.Website && I.ModeCurrent !== I.ModeEnum.Overlay)))
-							? "#sectionChains_Scheduled" : "#dsbStory";
+						// Show Living Story events on the chains panel if the dashboard is not visible
+						if (I.isProgramEmbedded
+							|| I.ModeCurrent === I.ModeEnum.Mobile
+							|| I.ModeCurrent === I.ModeEnum.Tile
+							|| O.Options.bol_showHUD === false
+							|| O.Options.bol_showDashboard === false)
+						{
+							chain.htmllist = "#sectionChains_Scheduled";
+						}
+						else
+						{
+							chain.htmllist = "#dsbStory";
+						}
 						C.LivingStoryChains.push(chain);
 						C.ScheduledChains.push(chain);
 						T.insertChainToSchedule(chain);
@@ -20590,7 +20600,7 @@ P = {
 		var coords;
 		var pathline;
 		
-		if (C.isChainWorldBoss(pChain))
+		if (pChain.series !== C.ChainSeriesEnum.DryTop)
 		{
 			for (i = 0; i < pChain.primaryEvents.length; i++)
 			{
