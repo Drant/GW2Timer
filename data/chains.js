@@ -2342,7 +2342,7 @@ var GW2T_CHAIN_DATA = [
 	{
 		primacy: 2,
 		path: [[19394, 19565]],
-		name_en: "Timberline Falls",
+		name_en: "Rally at Timberline Falls in five minutes.",
 		name_de: "Baumgrenzen-Fälle",
 		name_es: "Cataratas de Linarbórea",
 		name_fr: "Chutes de la Canopée",
@@ -2397,7 +2397,7 @@ var GW2T_CHAIN_DATA = [
 	{
 		primacy: 2,
 		path: [[29048, 12423]],
-		name_en: "Iron Marches",
+		name_en: "Rally at Iron Marches in five minutes.",
 		name_de: "Eisenmark",
 		name_es: "Fronteras de Hierro",
 		name_fr: "Marais de fer",
@@ -2452,7 +2452,7 @@ var GW2T_CHAIN_DATA = [
 	{
 		primacy: 2,
 		path: [[14047, 13656]],
-		name_en: "Gendarran Fields.",
+		name_en: "Rally at Gendarran Fields in five minutes.",
 		name_de: "Gendarran-Felder",
 		name_es: "Campos de Gendarran",
 		name_fr: "Champs de Gendarran",
