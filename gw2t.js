@@ -5040,6 +5040,11 @@ Z = {
 						}
 						U.sortObjects(dbarray, {aKeyName: "id"});
 						Z.APICacheArrayOfObjects = dbarray;
+						// Force unicode encoding on English
+						if (lang === O.OptionEnum.Language.English)
+						{
+							Z.APICacheArrayOfObjects[0].name += "中";
+						}
 						Z.printAPICache(U.TypeEnum.isAssoc, {
 							aWantQuotes: true,
 							aWantFile: true,
@@ -5647,6 +5652,14 @@ Z = {
 					{
 						return "Rare";
 					}
+				}
+			}
+			if (pItem.type === "UpgradeComponent")
+			{
+				if ((name.indexOf("sigil") !== -1 || name.indexOf("rune") !== -1)
+						&& (pItem.rarity === "Masterwork" || pItem.rarity === "Rare"))
+				{
+					return "Upgrade";
 				}
 			}
 			if (pItem.type === "Container")

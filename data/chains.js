@@ -2335,7 +2335,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "timberline",
 	waypoint: "[&BEwCAAA=]",
 	level: "80",
-	reward: {ecto: "0", loot: "1"},
+	reward: {ecto: "1", loot: "1"},
 	duration: "15:00",
 	timing: {hourInitial: 0, hourMultiplier: 6, minuteOffset: 15},
 	events: [
@@ -2370,10 +2370,10 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "15:00",
-		avg: "15:00",
-		min: "15:00",
-		max: "15:00"
+		lim: "10:00",
+		avg: "10:00",
+		min: "10:00",
+		max: "10:00"
 	}
 	]
 },
@@ -2390,7 +2390,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "marches",
 	waypoint: "[&BOYBAAA=]",
 	level: "80",
-	reward: {ecto: "0", loot: "1"},
+	reward: {ecto: "1", loot: "1"},
 	duration: "15:00",
 	timing: {hourInitial: 2, hourMultiplier: 6, minuteOffset: 15},
 	events: [
@@ -2414,7 +2414,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 3,
-		path: [[28788,10859],[28666,10041],[27793,9795],[27354,10571],[27466,12038],[27710,13144]],
+		path: [[28206,13243],[28666,10041],[27793,9795],[27354,10571],[27466,12038],[27710,13144]],
 		name_en: "Disperse the coalescences before the Ley-Line Anomaly absorbs them.",
 		name_de: "Löst die Koaleszenzen auf, ehe die Ley-Linien-Anomalie sie absorbiert.",
 		name_es: "Dispersa las coalescencias antes de que la anomalía de línea ley las absorba.",
@@ -2425,10 +2425,10 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "15:00",
-		avg: "15:00",
-		min: "15:00",
-		max: "15:00"
+		lim: "10:00",
+		avg: "10:00",
+		min: "10:00",
+		max: "10:00"
 	}
 	]
 },
@@ -2445,7 +2445,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "gendarran",
 	waypoint: "[&BO0AAAA=]",
 	level: "80",
-	reward: {ecto: "0", loot: "1"},
+	reward: {ecto: "1", loot: "1"},
 	duration: "15:00",
 	timing: {hourInitial: 4, hourMultiplier: 6, minuteOffset: 15},
 	events: [
@@ -2480,10 +2480,10 @@ var GW2T_CHAIN_DATA = [
 		fGotoNum: "1#",
 		sInterim: ["0"],
 		fInterim: "*",
-		lim: "15:00",
-		avg: "15:00",
-		min: "15:00",
-		max: "15:00"
+		lim: "10:00",
+		avg: "10:00",
+		min: "10:00",
+		max: "10:00"
 	}
 	]
 },
