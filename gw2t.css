@@ -1006,8 +1006,9 @@ textarea.jsCopyCode {
 	text-shadow: 0px 0px 4px black;
 	opacity: 0.7;
 }
-.tmlSegmentNameCurrent {
-	color: #ccc;
+.tmlSegmentNameBoss {
+	font-weight: bold;
+	color: #ffaa22;
 }
 .tmlSegmentCountdown {
 	display: table-cell;
@@ -1038,9 +1039,8 @@ textarea.jsCopyCode {
 	background: rgba(255, 136, 68, 0.2);
 	outline: 1px solid rgba(0, 0, 0, 0.2);
 }
-.tmlSegmentActive .tmlSegmentName {
+.tmlSegmentActive .tmlSegmentNameBoss {
 	color: lime;
-	opacity: 0.8;
 }
 
 /* Top right corner: Dashboard */

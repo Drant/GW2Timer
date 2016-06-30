@@ -1769,6 +1769,8 @@ X = {
 	
 	/*
 	 * Programmatically selects an option in a fieldset input.
+	 * @param string pName ID of element.
+	 * @param int pOrder in the fieldset.
 	 */
 	setFieldsetState: function(pName, pOrder)
 	{
@@ -1990,10 +1992,10 @@ X = {
 					$(this).addClass("chnTimeSubscribed");
 					slottimes.addClass("chnTimeSubscribed");
 					X.setChecklistItem(X.Checklists.ChainSubscription, nexus, X.ChecklistEnum.Checked);
+					// Set the alarm mode to subscription if not already
 					if (O.Options.int_setAlarm !== O.IntEnum.Alarm.Subscription)
 					{
-						I.write("Please set <img src='img/ui/speaker.png' /> to &quot;"
-							+ D.getWordCapital("subscription") + "&quot; to enable alarm.");
+						X.setFieldsetState("int_setAlarm", O.IntEnum.Alarm.Subscription);
 					}
 				}
 			});
@@ -26807,6 +26809,7 @@ H = {
 				// Segments of a timeline (event)
 				var event = chain.Segments[ii];
 				var segmentprefix = "";
+				var bossclass = (event.primacy === C.EventPrimacyEnum.Boss) ? "tmlSegmentNameBoss" : "";
 				switch (event.primacy)
 				{
 					case C.EventPrimacyEnum.Normal: segmentprefix = I.Symbol.Ellipsis; break;
@@ -26817,7 +26820,7 @@ H = {
 				event.time = T.parseChainTime(event.time);
 				var width = (event.duration / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
 				line.append("<div class='tmlSegment tmlTimeslice' style='width:" + width + "%' data-start='" + event.time + "' data-finish='" + (event.time + event.duration)
-					+ "'><div class='tmlSegmentContent'>" + linename + "<span class='tmlSegmentName'>" + segmentprefix + D.getObjectName(event)
+					+ "'><div class='tmlSegmentContent'>" + linename + "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + D.getObjectName(event)
 					+ "</span><span class='tmlSegmentCountdown'></span></div></div>");
 			}
 		}
