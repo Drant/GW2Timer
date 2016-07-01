@@ -14464,7 +14464,7 @@ D = {
 		s_world: {de: "welt", es: "mundo", fr: "monde",
 			cs: "svět", it: "mondo", pl: "świat", pt: "mundo", ru: "босс", zh: "世界"},
 		s_boss: {de: "boss", es: "jefe", fr: "chef",
-			cs: "boss", it: "boss", pl: "szef", pt: "chefe", ru: "мировой", zh: "頭目"},
+			cs: "boss", it: "boss", pl: "szef", pt: "chefe", ru: "босс", zh: "頭目"},
 		s_event: {de: "event", es: "evento", fr: "événement",
 			cs: "událost", it: "evento", pl: "wydarzenie", pt: "evento", ru: "собы́тие", zh: "事件"},
 		s_section: {de: "abschnitt", es: "sección", fr: "section",
@@ -16039,12 +16039,15 @@ C = {
 		var ithchain;
 		var countdown;
 		var time;
+		var delayseconds;
 		
 		var subscribetext = "<dfn>" + D.getPhraseTitle("click to <br/> subscribe") + "</dfn><br />";
 		
 		for (i in C.ScheduledChains)
 		{
 			ithchain = C.ScheduledChains[i];
+			// Chains that don't start at the quarters of an hour can have the displayed time adjusted
+			delayseconds = (ithchain.timing.minuteDelay) ? ithchain.timing.minuteDelay * T.cSECONDS_IN_MINUTE : 0;
 			// Update the title tootlip with that chain's schedule
 			var minischedulestring = "";
 			var spacer;
@@ -16058,33 +16061,32 @@ C = {
 						{
 							aWantSeconds: false,
 							aCustomTimeInSeconds: T.convertScheduleKeyToLocalSeconds(
-								ithchain.scheduleKeys[ii])
+								ithchain.scheduleKeys[ii]) + delayseconds
 						});
 				}
 				$("#chnTime_" + ithchain.nexus).prop("title", minischedulestring);
 			}
 
-			// Don't change the active bars
-			if (C.isChainCurrent(ithchain))
+			// Update inactive chains' displayed time
+			if (C.isChainCurrent(ithchain) === false)
 			{
-				continue;
+				countdown = T.getTimeFormatted(
+				{
+					aWantLetters: true,
+					aWantSeconds: false,
+					aCustomTimeInSeconds: T.getSecondsUntilChainStarts(ithchain) + delayseconds
+				});
+				time = T.getTimeFormatted(
+				{
+					aWantLetters: false,
+					aWantSeconds: false,
+					aCustomTimeInSeconds: T.convertScheduleKeyToLocalSeconds(ithchain.scheduleKeys[0]) + delayseconds
+				});
+
+				$("#chnTime_" + ithchain.nexus).html(
+					countdown + "<br />" + "<sup>" + time + "</sup>"
+				);
 			}
-			countdown = T.getTimeFormatted(
-			{
-				aWantLetters: true,
-				aWantSeconds: false,
-				aCustomTimeInSeconds: T.getSecondsUntilChainStarts(ithchain)
-			});
-			time = T.getTimeFormatted(
-			{
-				aWantLetters: false,
-				aWantSeconds: false,
-				aCustomTimeInSeconds: T.convertScheduleKeyToLocalSeconds(ithchain.scheduleKeys[0])
-			});
-			
-			$("#chnTime_" + ithchain.nexus).html(
-				countdown + "<br />" + "<sup>" + time + "</sup>"
-			);
 		}
 		
 		// Rebind tooltips for the time elements because they were updated
@@ -16099,6 +16101,8 @@ C = {
 	{
 		var elapsed = T.getCurrentTimeframeElapsedTime();
 		var remaining = pChain.countdownToFinish - elapsed;
+		var delayminutes = pChain.timing.minuteDelay;
+		var delayremaining;
 		var time = remaining;
 		var sign = I.Symbol.ArrowUp + " ";
 		
@@ -16125,6 +16129,15 @@ C = {
 		else
 		{
 			// Other scheduled chains
+			if (delayminutes)
+			{
+				delayremaining = (delayminutes * T.cSECONDS_IN_MINUTE) - elapsed;
+				if (delayremaining > 0)
+				{
+					time = delayremaining;
+					sign = I.Symbol.ArrowDown + " ";
+				}
+			}
 			if (remaining <= 0)
 			{
 				time = T.cSECONDS_IN_TIMEFRAME - elapsed;
@@ -26801,7 +26814,7 @@ H = {
 		for (var i in H.Timeline)
 		{
 			var chain = H.Timeline[i];
-			var name = (chain.zone === undefined) ? D.getObjectName(chain) : U.escapeHTML(M.getZoneName(chain.zone));
+			var name = U.escapeHTML((chain.zone === undefined) ? D.getObjectName(chain) : M.getZoneName(chain.zone));
 			// Container for segments of a timeline (chain)
 			var line = $("<div class='tmlLine' title='<dfn>" + name + "</dfn>'></div>").appendTo(container);
 			for (var ii in chain.Segments)
@@ -28528,7 +28541,7 @@ I = {
 		// Initial sync of the sleep detection variable
 		K.awakeTimestampPrevious = currenttimestamp;
 		
-		// Tailor the initial zoom for WvW so all the borderlands are visible
+		// Tailor the initial zoom for WvW so all borderlands fit in the screen
 		if (screen.height >= 800)
 		{
 			O.Options.int_setInitialZoomWvW = 4;
@@ -28540,6 +28553,11 @@ I = {
 		else
 		{
 			O.Options.int_setInitialZoomWvW = 2;
+		}
+		// Pre-set account bank width
+		if (screen.width < 1200)
+		{
+			O.Options.bol_condenseBank = true;
 		}
 		
 		// Remember user's browser maker
