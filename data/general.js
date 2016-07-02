@@ -162,6 +162,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1905": "JP GriffonrookRun Shiverpeaks [18077,17118]",
 	"1907": "JP ConundrumCubed Jungle [17958,21624]",
 	"1908": "JP CoddlersCove Shiverpeaks [20756,20878]",
+	"1909": "JP HexfoundryUnhinged Jungle [17545,21917]",
 	"1914": "JP CrimsonPlateau Ascalon [26258,13026]",
 	"1915": "JP TribulationCaverns Shiverpeaks [19718,17986]",
 	"1916": "JP TribulationRiftScaffolding Shiverpeaks [19819,17950]",
@@ -1158,16 +1159,14 @@ var GW2T_ZONE_DATA = {
 var GW2T_TIMELINE = [
 	{
 		name_en: "Ley-Line Anomaly", name_de: "Ley-Linien-Anomalie", name_es: "Anomalía de línea ley", name_fr: "L'Anomalie des lignes de force", name_zh: "魔徑異常體",
-		color: "white",
 		Segments: [
 			{ time: "00:00", duration: "00:20", primacy: 1, name_en: "Accumulation", name_de: "Sammelt", name_es: "Acumulación", name_fr: "Accumulation", name_zh: "積累" },
-			{ time: "00:20", duration: "00:20", primacy: 3, name_en: "Anomaly", name_de: "Anomalie", name_es: "Anomalía", name_fr: "L'Anomalie", name_zh: "魔径异常体" },
-			{ time: "00:40", duration: "01:20", primacy: 2, name_en: "Accumulation", name_de: "Sammelt", name_es: "Acumulación", name_fr: "Accumulation", name_zh: "積累" }
+			{ time: "00:20", duration: "00:15", primacy: 3, name_en: "Anomaly", name_de: "Anomalie", name_es: "Anomalía", name_fr: "L'Anomalie", name_zh: "魔径异常体" },
+			{ time: "00:35", duration: "01:25", primacy: 2, name_en: "Accumulation", name_de: "Sammelt", name_es: "Acumulación", name_fr: "Accumulation", name_zh: "積累" }
 		]
 	},
 	{
 		zone: "verdant",
-		color: "yellowgreen",
 		Segments: [
 			{ time: "00:00", duration: "00:10", primacy: 1, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" },
 			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Koptere", name_es: "Cópteros", name_fr: "Coptères", name_zh: "直升機" },
@@ -1177,7 +1176,6 @@ var GW2T_TIMELINE = [
 	},
 	{
 		zone: "auric",
-		color: "gold",
 		Segments: [
 			{ time: "00:00", duration: "00:45", primacy: 1, name_en: "Pylons", name_de: "Pylone", name_es: "Atalayas", name_fr: "Pylônes", name_zh: "能量塔" },
 			{ time: "00:45", duration: "00:15", primacy: 2, name_en: "Challenges", name_de: "Herausforderungen", name_es: "Desafíos", name_fr: "Défis", name_zh: "挑戰" },
@@ -1188,7 +1186,6 @@ var GW2T_TIMELINE = [
 	},
 	{
 		zone: "tangled",
-		color: "violet",
 		Segments: [
 			{ time: "00:00", duration: "00:25", primacy: 1, name_en: "Outposts", name_de: "Außenposten", name_es: "Puesto avanzados", name_fr: "Avant-postes", name_zh: "前哨" },
 			{ time: "00:25", duration: "00:05", primacy: 2, name_en: "Prepare", name_de: "Vorbereiten", name_es: "Preparar", name_fr: "Préparer", name_zh: "準備" },
@@ -1198,7 +1195,6 @@ var GW2T_TIMELINE = [
 	},
 	{
 		zone: "dragon",
-		color: "skyblue",
 		Segments: [
 			{ time: "00:00", duration: "01:30", primacy: 1, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" },
 			{ time: "01:30", duration: "00:30", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" }
@@ -1393,19 +1389,19 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-07-01T00:00:00Z"),
-	Finish: new Date("2016-07-02T00:00:00Z"),
+	Start: new Date("2016-07-02T00:00:00Z"),
+	Finish: new Date("2016-07-03T00:00:00Z"),
 	Products: { "44713":44948, "44714":44949, "43482":43450, "43798":43774, "43799":43775, "43800":43866, "43802":43778, "43803":43777, "43804":43780, "43805":43781, "43806":43782, "43807":43783, "43808":43784, "43809":43785, "43810":43786, "43811":43787, "43812":43788, "43813":43789, "43814":43790, "43815":43791, "43816":43792, "43817":43793, "43818":43794, "43819":43795, "43820":43796, "43821":43797, "43822":43844, "43823":43845, "43824":43846, "43825":43847, "43826":43852, "43827":43848, "43828":43849, "43829":43850, "43830":43851, "43831":43853, "43832":43854, "43833":43855, "43834":43856, "43835":43857, "43836":43858, "43837":43859, "43838":43860, "43839":43861, "43840":43862, "43841":43865, "43842":43863, "43843":43864, "44647":44952, "44648":44953, "44649":44951, "44650":44954, "44651":44955, "44652":44956, "44653":44959, "44654":44958, "44655":44957, "44656":44946, "44657":44945, "44658":44947, "44659":44943, "44660":44942, "44661":44944, "44662":44949, "44663":44948, "44664":44950, "43483":43451, "43484":43449, "44715":44943, "44716":44942, "44717":44946, "44718":44945, "48908":48907, "48909":48907, "48910":48907, "48912":48911, "48913":48911, "48914":48911, "48918":48915, "48919":48916, "48920":48917, "48922":48921, "49734":49865, "49735":49866, "49736":49823, "49737":49782, "49741":49733, "49742":49783, "49743":49784, "49744":49785, "49745":49786, "49747":49788, "49748":49789, "49749":49790, "49750":49791, "49751":49792, "49752":49793, "49753":49794, "49754":49795, "49755":49796, "49756":49797, "49757":49798, "49758":49799, "49759":49804, "49760":49805, "49761":49781, "49762":49807, "49763":49808, "49764":49809, "49765":49810, "49766":49811, "49767":49812, "49768":49813, "49769":49814, "49770":49815, "49771":49816, "49772":49803, "49773":49806, "49774":49818, "49775":49819, "49777":49821, "49778":49817, "49779":49822, "49780":49824, "50019":50018, "50021":50020, "50023":50022, "67961":67522, "67962":67531, "67963":67524, "67964":67529, "67965":67530, "73199":74525, "75473":72446 },
 	Prices: {"43799":12600, "49737":12600, "43798":12600, "49734": 12600, "49738":50400, "49740":50400},
 	PriceDefault: 25200,
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
 	{
-		Mehem: { id: "49762" },
-		Fox: { id: "44662" },
-		Derwena: { id: "43811" },
-		Yana: { id: "67961" },
-		Katyn: { id: "43806" },
-		Verma: { id: "44652" }
+		Mehem: { id: "48912" },
+		Fox: { id: "43822" },
+		Derwena: { id: "44717" },
+		Yana: { id: "49734" },
+		Katyn: { id: "49734" },
+		Verma: { id: "43807" }
 	}
 }
 };

@@ -5770,6 +5770,18 @@ Z = {
 				});
 			});
 		});
+	},
+	
+	/*
+	 * Creates a cache database file of prices for all tradeable items.
+	 */
+	collatePrices: function()
+	{
+		var tradeable = [];
+		Z.loadItemsDatabase(function(pDatabase)
+		{
+			
+		});
 	}
 };
 A = {
@@ -6380,7 +6392,7 @@ A = {
 		var swapdown = $("<button class='btnSwapDown'></button>").appendTo(swap);
 		
 		// Use the token if specified
-		if (pIsUsed !== undefined && pIsUsed === true)
+		if (pIsUsed === true)
 		{
 			A.TokenCurrent = U.stripToAlphanumericDash(pAPIKey);
 			name.addClass("accTokenNameUsed");
@@ -8729,7 +8741,7 @@ V = {
 		$("#trsRecentTitle").text(D.getPhraseOriginal("Recent"));
 		var table = $("#trsRecentTable");
 		var reloader = $("#trsRecentReload");
-		var transactionsrecentlimit = 10;
+		var transactionsrecentlimit = 20;
 		var bought, sold, combined;
 		var boughtword = D.getWordCapital("bought");
 		var soldword = D.getWordCapital("sold");
@@ -8746,11 +8758,12 @@ V = {
 				bought[i].isBought = true;
 			}
 			combined = bought.concat(sold);
-			U.sortObjects(combined, {aKeyName: "purchased"});
+			U.sortObjects(combined, {aKeyName: "purchased", aIsDescending: true});
+			combined = combined.slice(0, transactionsrecentlimit);
 			
 			combined.forEach(function(iTrans)
 			{
-				var row = $("<tr></tr>").prependTo(table);
+				var row = $("<tr></tr>").appendTo(table);
 				(function(iTransaction)
 				{
 					Q.getItem(iTrans.item_id, function(pItem)
@@ -8789,10 +8802,10 @@ V = {
 			// Retrieves the first page of the historical transactions
 			$.getJSON(A.getURL(A.URL.HistoryBuys), function(pData)
 			{
-				bought = pData.slice(0, transactionsrecentlimit);
-				$.getJSON(A.getURL(A.URL.HistorySells), function(pData)
+				bought = pData;
+				$.getJSON(A.getURL(A.URL.HistorySells), function(pDataInner)
 				{
-					sold = pData.slice(0, transactionsrecentlimit);
+					sold = pDataInner;
 					fillRecent();
 				}).fail(function(){
 					dealError();
@@ -15904,17 +15917,13 @@ C = {
 					if (H.isStoryEnabled)
 					{
 						// Show Living Story events on the chains panel if the dashboard is not visible
-						if (I.isProgramEmbedded
-							|| I.ModeCurrent === I.ModeEnum.Mobile
-							|| I.ModeCurrent === I.ModeEnum.Tile
-							|| O.Options.bol_showHUD === false
-							|| O.Options.bol_showDashboard === false)
+						if (H.isStoryDashboard)
 						{
-							chain.htmllist = "#sectionChains_Scheduled";
+							chain.htmllist = "#dsbStory";
 						}
 						else
 						{
-							chain.htmllist = "#dsbStory";
+							chain.htmllist = "#sectionChains_Scheduled";
 						}
 						C.LivingStoryChains.push(chain);
 						C.ScheduledChains.push(chain);
@@ -24955,6 +24964,15 @@ T = {
 			if (T.isTimely(H.Story, new Date()))
 			{
 				H.isStoryEnabled = true;
+				// Determine living story location
+				if (I.isProgramEmbedded
+					|| I.ModeCurrent === I.ModeEnum.Mobile
+					|| I.ModeCurrent === I.ModeEnum.Tile
+					|| O.Options.bol_showHUD === false
+					|| O.Options.bol_showDashboard === false)
+				{
+					H.isStoryDashboard = false;
+				}
 			}
 		}
 		
@@ -26225,6 +26243,7 @@ H = {
 	isCountdownEnabled: false,
 	isCountdownTickEnabled: false,
 	isStoryEnabled: false,
+	isStoryDashboard: true,
 	isSaleEnabled: false,
 	isVendorEnabled: false,
 	
@@ -26340,7 +26359,7 @@ H = {
 		}
 		
 		// Initialize Living Story
-		if (H.isStoryEnabled)
+		if (H.isStoryEnabled && H.isStoryDashboard)
 		{
 			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(H.Story) + "</div>").show();
 			I.bindScrollbar("#dsbStory");

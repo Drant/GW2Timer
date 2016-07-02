@@ -343,7 +343,7 @@ TonicEndless: [
 	{u: 72203, i: 74594, n: "Endless Chak Zapper Tonic"},
 	{i: 77101, n: "Endless Nuhoch Tonic", p: {map_td: 1000}},
 	{u: 73194, i: 77167, n: "Endless Nuhoch Crusher Tonic"},
-	{i: 79034, n: "Endless Ley-Line Anomaly Tonic"},
+	{u: 79034, i: 79042, n: "Endless Ley-Line Anomaly Tonic"},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},
