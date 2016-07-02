@@ -15842,7 +15842,10 @@ C = {
 		{
 			$("#chnTitle_" + pChain.nexus).click(function()
 			{
-				$(this).parent().next().slideToggle(100);
+				$(this).parent().next().slideToggle(100, function()
+				{
+					I.updateScrollbar($(this));
+				});
 			});
 			$("#chnDetails_" + pChain.nexus).hide();
 		}
@@ -29530,16 +29533,22 @@ I = {
 			catch (e) {}
 		}
 	},
-	updateScrollbar: function(pSelector)
+	
+	/*
+	 * Updates the scroll bar of a container.
+	 * @param jqobject pContainer that was initialized with the scroll plugin.
+	 */
+	updateScrollbar: function(pContainer)
 	{
 		if (I.isCustomScrollEnabled)
 		{
+			var element = $(pContainer);
 			if (I.isMapEnabled)
 			{
 				try
 				{
 					// Update the pages if element is not specified
-					if (pSelector === undefined)
+					if (pContainer === undefined)
 					{
 						$("#plateMap").perfectScrollbar("update");
 						$("#plateChains").perfectScrollbar("update");
@@ -29548,7 +29557,15 @@ I = {
 					}
 					else
 					{
-						$(pSelector).perfectScrollbar("update");
+						// If the provided element is not a scroll container then find the closest parent that is
+						if (element.hasClass("ps-container") === false)
+						{
+							element = element.closest(".ps-container");
+						}
+						if (element)
+						{
+							element.perfectScrollbar("update");
+						}
 					}
 				}
 				catch (e) {}
