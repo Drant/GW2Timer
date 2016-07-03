@@ -1356,6 +1356,7 @@ input.mapCoordinatesName {
 }
 .mapZoneList h2 {
 	font-size: 16px;
+	margin-bottom: 2px;
 }
 .mapZoneList ul {
 	margin-bottom: 16px;

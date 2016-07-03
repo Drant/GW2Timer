@@ -8794,7 +8794,6 @@ V = {
 		{
 			table.html("<tr><td class='trsRecentError'>" + D.getPhraseOriginal("No transactions") + ".</td></tr>");
 			reloader.removeClass("jsSuspended");
-			A.printError();
 		};
 		var retrieveTransactions = function()
 		{
