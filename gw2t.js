@@ -5773,14 +5773,16 @@ Z = {
 	},
 	
 	/*
-	 * Creates a cache database file of prices for all tradeable items.
+	 * Creates a cache database file of prices to be used by the account audit function.
 	 */
 	collatePrices: function()
 	{
 		var tradeable = [];
-		Z.loadItemsDatabase(function(pDatabase)
+		var item;
+		var db;
+		Z.getItemsDatabase(function(pDatabase)
 		{
-			
+			db = pDatabase;
 		});
 	}
 };
@@ -6730,6 +6732,14 @@ A = {
 		}
 		str = str.substring(0, str.length - 2); // Trim the trailing comma
 		return str;
+	},
+	
+	/*
+	 * Generates the account audit subsection into the Characters page.
+	 */
+	generateAudit: function()
+	{
+		
 	}
 };
 V = {
@@ -12284,7 +12294,7 @@ Q = {
 		});
 		$("#itmContextTradingSearch").click(function()
 		{
-			U.openExternalURL(U.getTradingSearchLink(Q.Context.ItemName));
+			E.printListings(Q.Context.ItemID);
 		});
 		$("#itmContextInfo").click(function()
 		{
@@ -13250,6 +13260,12 @@ E = {
 	getListings: function(pItemID, pCallback, pWantCache)
 	{
 		var wantcache = (pWantCache !== undefined) ? pWantCache : false;
+		var dealError = function()
+		{
+			I.clear();
+			I.write("Item is not tradeable.");
+		};
+		
 		if (Q.isTradeable(pItemID))
 		{
 			$.ajax({
@@ -13262,8 +13278,16 @@ E = {
 					{
 						pCallback(pData);
 					}
+				},
+				error: function()
+				{
+					dealError();
 				}
 			});
+		}
+		else
+		{
+			dealError();
 		}
 	},
 	
@@ -16146,7 +16170,7 @@ C = {
 				if (delayremaining > 0)
 				{
 					time = delayremaining;
-					sign = I.Symbol.ArrowDown + " ";
+					sign = "";
 				}
 			}
 			if (remaining <= 0)
@@ -17239,7 +17263,14 @@ M = {
 			{
 				that.optimizePersonalPath();
 			}
-		});//
+		});
+		$(htmlidprefix + "ContextURLPins").click(function()
+		{
+			if (that.isPersonalPinsLaid(true))
+			{
+				I.print(I.cSiteURL + that.getPersonalString(), true);
+			}
+		});
 		$(htmlidprefix + "ContextToggleFloor").click(function()
 		{
 			that.toggleFloor();
