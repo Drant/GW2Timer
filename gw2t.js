@@ -5565,7 +5565,9 @@ Z = {
 			"Pistol", "Torch", "Warhorn", "LongBow", "ShortBow", "Rifle", "Speargun", 
 			"Axe", "Mace", "Sword", "Dagger", "Shield",  "Greatsword", "Hammer", "Harpoon"
 		];
-		var record = {};
+		var record = {}, item, entry;
+		var sheets = {};
+		var recipeid;
 		// Construct categories to insert the recipes orderly
 		disciplines.forEach(function(iDisc)
 		{
@@ -5577,6 +5579,19 @@ Z = {
 		
 		Z.getItemsDatabase(function(pDatabase)
 		{
+			// Create a list of recipe sheets
+			for (var i in pDatabase)
+			{
+				item = pDatabase[i];
+				if (item.details && item.details.unlock_type === "CraftingRecipe")
+				{
+					if (Q.isTradeable(item))
+					{
+						sheets[(item.details.recipe_id)] = item.id;
+					}
+				}
+			};
+			
 			$.getJSON("test/recipes.json", function(pData)
 			{
 				var recipe, catname, discipline, type, itemid;
@@ -5596,11 +5611,16 @@ Z = {
 						}
 						if (pDatabase[itemid] && record[catname])
 						{
-							record[catname].push({
+							entry = {
 								u: recipe.id,
 								i: itemid,
 								n: pDatabase[itemid].name
-							});
+							};
+							if (sheets[recipe.id])
+							{
+								entry.t = sheets[recipe.id];
+							}
+							record[catname].push(entry);
 						}
 					}
 				}
@@ -5773,16 +5793,57 @@ Z = {
 	},
 	
 	/*
-	 * Creates a cache database file of prices to be used by the account audit function.
+	 * Creates a cache file of Trading Post prices to be used by the account audit function.
 	 */
 	collatePrices: function()
 	{
 		var tradeable = [];
 		var item;
-		var db;
+		var db, record, catarr;
+		var tradeableids = {};
+		var numcaches = 5;
+		
+		var iterateRecord = function(pName, pIterator, pCallback)
+		{
+			
+		};
+		
 		Z.getItemsDatabase(function(pDatabase)
 		{
+			I.print("Database loaded");
 			db = pDatabase;
+			$.getScript(U.getDataScriptURL("materials"), function()
+			{
+				record = U.getRecordData("materials");
+				for (var i in record)
+				{
+					catarr = record[i];
+					catarr.forEach(function(iID)
+					{
+						if (Q.isTradeable(db[iID]))
+						{
+							tradeableids[iID] = true;
+						}
+					});
+				}
+				I.print("Materials complete.");
+			});
+			$.getScript(U.getDataScriptURL("skins"), function()
+			{
+				record = U.getRecordData("skins");
+				for (var i in record)
+				{
+					catarr = record[i];
+					catarr.forEach(function(iEntry)
+					{
+						if (iEntry.p === undefined && Q.isTradeable(db[iEntry.i]))
+						{
+							tradeableids[iEntry.i] = true;
+						}
+					});
+				}
+				I.print("Wardrobe complete.");
+			});
 		});
 	}
 };
@@ -13953,6 +14014,7 @@ E = {
 					X.Textlists.NotifySellHigh.value[i])
 				+ "<br />";
 			}
+			Z.createFile(str, "tp.csv");
 			I.print(str);
 		});
 	},
