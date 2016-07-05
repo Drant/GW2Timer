@@ -15,7 +15,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BEcAAAA=]",
 	level: "15",
 	reward: {ecto: "1", loot: "2", dragonite: "3-5"},
-	duration: "15:00",
 	timing: ["00:45", "02:45", "04:45", "06:45", "08:45", "10:45", "12:45", "14:45", "16:45", "18:45", "20:45", "22:45"],
 	events: [
 	{
@@ -124,7 +123,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BNQCAAA=]",
 	level: "68",
 	reward: {ecto: "1", loot: "2", dragonite: "15-25"},
-	duration: "15:00",
 	timing: ["02:00", "05:00", "08:00", "11:00", "14:00", "17:00", "20:00", "23:00"],
 	events: [
 	{
@@ -197,7 +195,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BHoCAAA=]",
 	level: "80",
 	reward: {ecto: "1", loot: "3", dragonite: "15-25"},
-	duration: "15:00",
 	timing: ["02:30", "05:30", "08:30", "11:30", "14:30", "17:30", "20:30", "23:30"],
 	events: [
 	{
@@ -342,7 +339,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BMIDAAA=]",
 	level: "10",
 	reward: {ecto: "1-2", loot: "1", dragonite: "3-5"},
-	duration: "15:00",
 	timing: ["00:15", "02:15", "04:15", "06:15", "08:15", "10:15", "12:15", "14:15", "16:15", "18:15", "20:15", "22:15"],
 	events: [
 	{
@@ -487,7 +483,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BM0CAAA=]",
 	level: "66",
 	reward: {ecto: "1", loot: "1", dragonite: "0"},
-	duration: "15:00",
 	timing: ["00:30", "03:30", "06:30", "09:30", "12:30", "15:30", "18:30", "21:30"],
 	events: [
 	{
@@ -650,7 +645,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BPcAAAA=]",
 	level: "15",
 	reward: {ecto: "1", loot: "0", dragonite: "3-5"},
-	duration: "15:00",
 	timing: ["01:45", "03:45", "05:45", "07:45", "09:45", "11:45", "13:45", "15:45", "17:45", "19:45", "21:45", "23:45"],
 	events: [
 	{
@@ -759,7 +753,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BE4DAAA=]",
 	level: "50",
 	reward: {ecto: "1", loot: "0", dragonite: "15-25"},
-	duration: "15:00",
 	timing: ["01:00", "04:00", "07:00", "10:00", "13:00", "16:00", "19:00", "22:00"],
 	events: [
 	{
@@ -832,7 +825,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BKgBAAA=]",
 	level: "50",
 	reward: {ecto: "1", loot: "0", dragonite: "3-5"},
-	duration: "15:00",
 	timing: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00"],
 	events: [
 	{
@@ -923,7 +915,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BLAAAAA=]",
 	level: "43",
 	reward: {ecto: "1", loot: "5", dragonite: "3-5"},
-	duration: "15:00",
 	timing: ["01:30", "04:30", "07:30", "10:30", "13:30", "16:30", "19:30", "22:30"],
 	events: [
 	{
@@ -1086,7 +1077,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BEEFAAA=]",
 	level: "15",
 	reward: {ecto: "1", loot: "4", dragonite: "3-5"},
-	duration: "15:00",
 	timing: ["01:15", "03:15", "05:15", "07:15", "09:15", "11:15", "13:15", "15:15", "17:15", "19:15", "21:15", "23:15"],
 	events: [
 	{
@@ -1195,7 +1185,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BNcGAAA=]",
 	level: "80",
 	reward: {ecto: "2", loot: "5", dragonite: "30"},
-	duration: "15:00",
 	timing: ["02:00", "06:00", "10:30", "15:00", "18:00", "23:00"],
 	events: [
 	{
@@ -1430,7 +1419,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BNABAAA=]",
 	level: "65",
 	reward: {ecto: "3", loot: "4", dragonite: "38"},
-	duration: "15:00",
 	timing: ["00:00", "03:00", "07:00", "11:30", "16:00", "19:00"],
 	events: [
 	{
@@ -1575,7 +1563,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BKoBAAA=]",
 	level: "55",
 	reward: {ecto: "4", loot: "6", dragonite: "78"},
-	duration: "15:00",
 	timing: ["01:00", "04:00", "08:00", "12:30", "17:00", "20:00"],
 	events: [
 	{
@@ -1702,7 +1689,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BAgIAAA=]",
 	level: "80",
 	reward: {ecto: "2", loot: "6"},
-	duration: "15:00",
 	timing: {hourInitial: 1, hourMultiplier: 2, minuteOffset: 45},
 	events: [
 	{
@@ -1829,7 +1815,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BMYHAAA=]",
 	level: "80",
 	reward: {ecto: "0", loot: "4"},
-	duration: "15:00",
 	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 45},
 	events: [
 	{
@@ -1992,7 +1977,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BPUHAAA=]",
 	level: "80",
 	reward: {ecto: "0", loot: "4"},
-	duration: "15:00",
 	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 30},
 	events: [
 	{
@@ -2083,7 +2067,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BBAIAAA=]",
 	level: "80",
 	reward: {ecto: "6", loot: "30"},
-	duration: "15:00",
 	timing: {hourInitial: 1, hourMultiplier: 2, minuteOffset: 30},
 	events: [
 	{
@@ -2336,7 +2319,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BEwCAAA=]",
 	level: "60",
 	reward: {ecto: "1", loot: "2"},
-	duration: "15:00",
 	timing: {hourInitial: 0, hourMultiplier: 6, minuteOffset: 15, minuteDelay: 5},
 	events: [
 	{
@@ -2409,7 +2391,6 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BOYBAAA=]",
 	level: "60",
 	reward: {ecto: "1", loot: "2"},
-	duration: "15:00",
 	timing: {hourInitial: 2, hourMultiplier: 6, minuteOffset: 15, minuteDelay: 5},
 	events: [
 	{
@@ -2479,10 +2460,9 @@ var GW2T_CHAIN_DATA = [
 	name_fr: "L'Anomalie des lignes de force: Champs de Gendarran",
 	name_zh: "魔徑異常體: 甘達拉戰區",
 	zone: "gendarran",
-	waypoint: "[&BO0AAAA=]",
+	waypoint: "[&BOQAAAA=]",
 	level: "35",
 	reward: {ecto: "1", loot: "2"},
-	duration: "15:00",
 	timing: {hourInitial: 4, hourMultiplier: 6, minuteOffset: 15, minuteDelay: 5},
 	events: [
 	{
@@ -2550,7 +2530,6 @@ var GW2T_CHAIN_DATA = [
 	name_es: "Cima Seca Q1",
 	name_fr: "Cimesèche Q1",
 	name_zh: "干涸高地 1/4",
-	duration: "15:00",
 	timing: {hourInitial: 0, hourMultiplier: 1, minuteOffset: 0},
 	events: [
 	{
@@ -2982,7 +2961,6 @@ var GW2T_CHAIN_DATA = [
 	name_es: "Cima Seca Q2",
 	name_fr: "Cimesèche Q2",
 	name_zh: "干涸高地 2/4",
-	duration: "15:00",
 	timing: {hourInitial: 0, hourMultiplier: 1, minuteOffset: 15},
 	events: [
 	{
@@ -3414,7 +3392,6 @@ var GW2T_CHAIN_DATA = [
 	name_es: "Cima Seca Q3",
 	name_fr: "Cimesèche Q3",
 	name_zh: "干涸高地 3/4",
-	duration: "15:00",
 	timing: {hourInitial: 0, hourMultiplier: 1, minuteOffset: 30},
 	events: [
 	{
@@ -3941,7 +3918,6 @@ var GW2T_CHAIN_DATA = [
 	name_es: "Cima Seca Q4",
 	name_fr: "Cimesèche Q4",
 	name_zh: "干涸高地 4/4",
-	duration: "15:00",
 	timing: {hourInitial: 0, hourMultiplier: 1, minuteOffset: 45},
 	events: [
 	{

@@ -1254,8 +1254,8 @@ Countdown: {
 		url_de: "https://forum-de.guildwars2.com/forum/game/wuv/WvW-Abstimmung-vom-6-Juni-Zeitplan-f-r-Weltenverbindung-Ergebnisse/first#post500378",
 		url_es: "https://forum-es.guildwars2.com/forum/game/wuv/Encuesta-de-WvW-del-6-de-junio-Frecuencia-de-la-unificaci-n-de-mundos-Cerrada/first#post121282",
 		url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sondage-McM-du-6-juin-Programme-de-l-association-de-mondes-ferm/first#post292620",
-		Start: new Date("2016-06-26T18:00:00Z"),
-		Finish: new Date("2016-06-27T02:00:00Z")
+		Start: new Date("2016-08-26T18:00:00Z"),
+		Finish: new Date("2016-08-27T02:00:00Z")
 	},*/
 	{
 		name_en: "Summer 2016 Update",
@@ -1305,8 +1305,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-06-28T15:00:00Z"),
-	Finish: new Date("2016-07-05T15:00:00Z"),
+	Start: new Date("2016-07-05T15:00:00Z"),
+	Finish: new Date("2016-07-12T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1315,22 +1315,57 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Aetherblade Light Armor Skin",
+		id: "42870",
+		price: 400,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Aetherblade Medium Armor Skin",
+		id: "42869",
+		price: 400,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Aetherblade Heavy Armor Skin",
+		id: "42868",
+		price: 400,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Aviator Quaggan Mail Carrier",
+		id: "69628",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Fuzzy Quaggan Hat",
+		id: "64739",
+		price: 160,
+		discount: 200,
+		col: 0
+	},
+	{
+		name: "Fuzzy Quaggan Hat with Bow",
+		id: "64751",
+		price: 160,
+		discount: 200,
+		col: 0
+	},
+	{
 		name: "White Mantle Appearance Pack",
 		img: "http://i.imgur.com/SXJh076.png",
 		price: 2000,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Focused Solar Logging Tool",
 		id: "78724",
-		price: 1000,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Glitter Bomb Harvesting Tool",
-		id: "78909",
 		price: 1000,
 		discount: null,
 		col: 1
@@ -1346,6 +1381,20 @@ Sale: {
 		name: "White Mantle Glider",
 		id: "79016",
 		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Xera's Mask",
+		img: "http://i.imgur.com/DHqvtvn.png",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Makeover Kit and Transmutation Charges",
+		id: "35991",
+		price: 350,
 		discount: null,
 		col: 1
 	}

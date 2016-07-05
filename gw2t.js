@@ -3090,7 +3090,7 @@ U = {
 	 * @returns object.
 	 * @pre Array has no duplicates sharing the same key.
 	 */
-	getAssocObject: function(pArray, pKeyName)
+	convertArrayToAssoc: function(pArray, pKeyName)
 	{
 		var assoc = {};
 		var keyname = pKeyName || "id";
@@ -4670,7 +4670,7 @@ Z = {
 	 * @objparam string aQueryStr arguments for the API url, optional.
 	 * @objparam function aCallback to execute after finishing scraping, optional.
 	 */
-	scrapeAPIArray: function(pArray, pString, pSettings)
+	scrapeAPIArray: function(pArray, pSuffix, pSettings)
 	{
 		var Settings = pSettings || {};
 		var querystr = Settings.aQueryStr || "";
@@ -4732,7 +4732,7 @@ Z = {
 		
 		var retrieveObject = function(pID)
 		{
-			$.getJSON(U.URL_API.Prefix + pString + "/" + pID + querystr, function(pData)
+			$.getJSON(U.URL_API.Prefix + pSuffix + "/" + pID + querystr, function(pData)
 			{
 				Z.APICacheArrayOfObjects.push(pData);
 				// Check for completion
@@ -5797,52 +5797,98 @@ Z = {
 	 */
 	collatePrices: function()
 	{
-		var tradeable = [];
-		var item;
+		var recordnames = ["materials", "skins", "minis", "dyes", "recipes"];
+		var recordnamescounter = 0;
 		var db, record, catarr;
 		var tradeableids = {};
-		var numcaches = 5;
+		var numcached = 0;
+		var numcaches = recordnames.length;
 		
-		var iterateRecord = function(pName, pIterator, pCallback)
+		var fetchPrices = function()
 		{
-			
+			var arr = [];
+			for (var i in tradeableids)
+			{
+				arr.push(parseInt(i));
+			}
+			Z.scrapeAPIArray(arr, "commerce/prices", {aCallback: function(pData)
+			{
+				var pricecache = {};
+				pData.forEach(function(iPrice)
+				{
+					pricecache[iPrice.id] = [iPrice.buys.unit_price, iPrice.sells.unit_price];
+				});
+				var str = U.lineJSON(pricecache).replace(/ /g, "");
+				Z.createFile(str, "prices.json");
+			}});
 		};
 		
-		Z.getItemsDatabase(function(pDatabase)
+		// Macro function to iterate over an unlockables record
+		var iterateRecord = function(pIterator)
 		{
-			I.print("Database loaded");
-			db = pDatabase;
-			$.getScript(U.getDataScriptURL("materials"), function()
+			var name = recordnames[recordnamescounter];
+			recordnamescounter++;
+			$.getScript(U.getDataScriptURL(name), function()
 			{
-				record = U.getRecordData("materials");
-				for (var i in record)
-				{
-					catarr = record[i];
-					catarr.forEach(function(iID)
-					{
-						if (Q.isTradeable(db[iID]))
-						{
-							tradeableids[iID] = true;
-						}
-					});
-				}
-				I.print("Materials complete.");
-			});
-			$.getScript(U.getDataScriptURL("skins"), function()
-			{
-				record = U.getRecordData("skins");
+				record = U.getRecordData(name);
 				for (var i in record)
 				{
 					catarr = record[i];
 					catarr.forEach(function(iEntry)
 					{
-						if (iEntry.p === undefined && Q.isTradeable(db[iEntry.i]))
-						{
-							tradeableids[iEntry.i] = true;
-						}
+						pIterator(iEntry);
 					});
 				}
-				I.print("Wardrobe complete.");
+				numcached++;
+				if (numcached === numcaches)
+				{
+					fetchPrices();
+				}
+			});
+		};
+		
+		/*
+		 * Load cacheable records and add unlockables' associated tradeable items'
+		 * ID to the associative array. Executions must be in the same order as
+		 * the record names array.
+		 */
+		Z.getItemsDatabase(function(pDatabase)
+		{
+			db = pDatabase;
+			iterateRecord(function(iID) // Materials
+			{
+				if (Q.isTradeable(db[iID]))
+				{
+					tradeableids[iID] = true;
+				}
+			});
+			iterateRecord(function(iEntry) // Wardrobe
+			{
+				if (iEntry.p === undefined && Q.isTradeable(db[iEntry.i]))
+				{
+					tradeableids[iEntry.i] = true;
+				}
+			});
+			iterateRecord(function(iEntry) // Minis
+			{
+				if (Q.isTradeable(db[iEntry.i]))
+				{
+					tradeableids[iEntry.i] = true;
+				}
+			});
+			iterateRecord(function(iEntry) // Dyes
+			{
+				if (Q.isTradeable(db[iEntry.i]))
+				{
+					tradeableids[iEntry.i] = true;
+				}
+			});
+			iterateRecord(function(iEntry) // Recipes
+			{
+				if (iEntry.t)
+				{
+					tradeableids[iEntry.t] = true;
+				}
 			});
 		});
 	}
@@ -6926,7 +6972,8 @@ V = {
 			+ "<ul id='chrUsage' class='chrStats'></ul>"
 			+ "<ul id='chrSeniority' class='chrStats'></ul>"
 			+ "<ul id='chrGuilds' class='chrStats'></ul>"
-		+ "</div>");
+		+ "</div>"
+		+ "<div id='chrAudit'></div>");
 		$("#accDish_Hero, #accDish_Inventory").empty();
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
@@ -12144,6 +12191,10 @@ Q = {
 	 */
 	isTradeable: function(pItem)
 	{
+		if (pItem === undefined)
+		{
+			return false;
+		}
 		// If item is an ID
 		if (typeof pItem === "number")
 		{
@@ -12740,6 +12791,10 @@ Q = {
 	{
 		I.print(Q.getItemPreface(pItem));
 		I.prettyJSON(pItem);
+		if (Q.isTradeable(pItem))
+		{
+			E.printListings(pItem.id, false);
+		}
 		I.bindConsoleInput();
 	}
 };
@@ -13368,7 +13423,6 @@ E = {
 		var demand = 0;
 		var suppliers = 0;
 		var demanders = 0;
-		str += Q.getItemPreface(pItem);
 		// Buys and Sells tables
 		pListings.buys.forEach(function(iEntry)
 		{
@@ -13399,15 +13453,23 @@ E = {
 	/*
 	 * Retrieves listings for an item and prints them to the console.
 	 * @param int pItemID.
+	 * @param boolean pWantPlain whether to just print the listing.
 	 */
-	printListings: function(pItemID)
+	printListings: function(pItemID, pWantPlain)
 	{
-		I.print(I.cThrobber, true);
+		if (pWantPlain !== false)
+		{
+			I.print(I.cThrobber, true);
+		}
 		Q.getItem(pItemID, function(pItem)
 		{
 			E.getListings(pItemID, function(pListing)
 			{
-				I.clear();
+				if (pWantPlain !== false)
+				{
+					I.clear();
+					I.print(Q.getItemPreface(pItem));
+				}
 				I.print(E.formatListings(pItem, pListing));
 				I.bindConsoleInput();
 			});	
@@ -16232,7 +16294,7 @@ C = {
 				if (delayremaining > 0)
 				{
 					time = delayremaining;
-					sign = "";
+					sign = I.Symbol.Wait + " ";
 				}
 			}
 			if (remaining <= 0)
@@ -26471,7 +26533,7 @@ H = {
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
-				+ "⇓@ " + H.Sale.Finish.toLocaleString()
+				+ I.Symbol.ArrowDown + "@ " + H.Sale.Finish.toLocaleString()
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
 			// Add a "padding" item if the columns are not equal length
 			var isdiscounted = false;
@@ -28444,6 +28506,7 @@ I = {
 		TriLeft: "◄",
 		Block: "■",
 		Star: "☆",
+		Wait: "⏳",
 		Quantity: "×",
 		Ellipsis: "…",
 		Day: "☀",
