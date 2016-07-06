@@ -5594,7 +5594,7 @@ Z = {
 			
 			$.getJSON("test/recipes.json", function(pData)
 			{
-				var recipe, catname, discipline, type, itemid;
+				var recipe, catname, discipline, ingredients, type, itemid;
 				for (var i in pData)
 				{
 					recipe = pData[i];
@@ -5611,10 +5611,16 @@ Z = {
 						}
 						if (pDatabase[itemid] && record[catname])
 						{
+							ingredients = [];
+							recipe.ingredients.forEach(function(iIngredient)
+							{
+								ingredients.push([iIngredient.item_id, iIngredient.count]);
+							});
 							entry = {
 								u: recipe.id,
 								i: itemid,
-								n: pDatabase[itemid].name
+								n: pDatabase[itemid].name,
+								r: ingredients
 							};
 							if (sheets[recipe.id])
 							{
@@ -30588,7 +30594,6 @@ I = {
 		{
 			$("#itemWarning").remove();
 			$(".mapHUDLinks").hide();
-			H.isDashboardEnabled = false;
 		}
 		
 		// Disable dashboard for non-using modes

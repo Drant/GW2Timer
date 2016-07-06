@@ -37,10 +37,50 @@ var GW2T_ASCENDED_HEADERS = {
 	LongBow: {name_en: "Longbow", name_de: "Langbogen", name_es: "Arco largo", name_fr: "Arc long"},
 	ShortBow: {name_en: "Short Bow", name_de: "Kurzbogen", name_es: "Arco corto", name_fr: "Arc court"},
 	Rifle: {name_en: "Rifle", name_de: "Gewehr", name_es: "Rifle", name_fr: "Fusil"},
-	Staff: {name_en: "Staff", name_de: "Stab", name_es: "Báculo", name_fr: "B^a^ton"},
+	Staff: {name_en: "Staff", name_de: "Stab", name_es: "Báculo", name_fr: "Bâton"},
 	Harpoon: {name_en: "Spear", name_de: "Speer", name_es: "Lanza", name_fr: "Lance"},
 	Speargun: {name_en: "Harpoon Gun", name_de: "Harpunenschleuder", name_es: "Cañón de arpón", name_fr: "Fusil-harpon"},
 	Trident: {name_en: "Trident", name_de: "Dreizack", name_es: "Tridente", name_fr: "Trident"}
+};
+
+/*
+ * Components of ascended pieces to determine Trading Post value.
+ */
+var GW2T_ASCENDED_METADATA = {
+	ContainerWeapon: {},
+	ContainerArmor: {},
+	ContainerHelm: {},
+	ContainerShoulders: {},
+	ContainerCoat: {},
+	ContainerGloves: {},
+	ContainerLeggings: {},
+	ContainerBoots: {},
+	Back: {},
+	Ring: {},
+	Accessory: {},
+	Amulet: {},
+	ArmorLight: {},
+	ArmorMedium: {},
+	ArmorHeavy: {},
+	Axe: {},
+	Mace: {},
+	Sword: {},
+	Dagger: {},
+	Pistol: {},
+	Scepter: {},
+	Focus: {},
+	Shield: {},
+	Torch: {},
+	Warhorn: {},
+	Greatsword: {},
+	Hammer: {},
+	LongBow: {},
+	ShortBow: {},
+	Rifle: {},
+	Staff: {},
+	Harpoon: {},
+	Speargun: {},
+	Trident: {}
 };
 
 /*

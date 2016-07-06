@@ -1315,6 +1315,27 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Flamekissed Light Armor Skin",
+		id: "43576",
+		price: 400,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Flamewalker Medium Armor Skin",
+		id: "43575",
+		price: 400,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Flamewrath Heavy Armor Skin",
+		id: "43574",
+		price: 400,
+		discount: 800,
+		col: 0
+	},
+	{
 		name: "Aetherblade Light Armor Skin",
 		id: "42870",
 		price: 400,
@@ -1336,13 +1357,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Aviator Quaggan Mail Carrier",
-		id: "69628",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
 		name: "Fuzzy Quaggan Hat",
 		id: "64739",
 		price: 160,
@@ -1355,6 +1369,13 @@ Sale: {
 		price: 160,
 		discount: 200,
 		col: 0
+	},
+	{
+		name: "Aviator Quaggan Mail Carrier",
+		id: "69628",
+		price: 400,
+		discount: 500,
+		col: 1
 	},
 	{
 		name: "White Mantle Appearance Pack",
