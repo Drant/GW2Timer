@@ -2785,7 +2785,7 @@ var GW2T_WVW_METADATA = {
 		Medium: 500,
 		High: 1000,
 		VeryHigh: 1800,
-		Full: 0
+		Full: 1800
 	},
 	Alliances: ["red", "blue", "green"], // Corresponds to matches API
 	Owners: ["Green", "Blue", "Red"], // Corresponds to the 1st, 2nd, and 3rd place of previous week's matchup

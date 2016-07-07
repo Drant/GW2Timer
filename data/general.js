@@ -1337,24 +1337,17 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Aetherblade Light Armor Skin",
-		id: "42870",
-		price: 400,
-		discount: 800,
+		name: "Plush Quaggan Backpack Cover",
+		id: "39137",
+		price: 240,
+		discount: 300,
 		col: 0
 	},
 	{
-		name: "Aetherblade Medium Armor Skin",
-		id: "42869",
-		price: 400,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Aetherblade Heavy Armor Skin",
-		id: "42868",
-		price: 400,
-		discount: 800,
+		name: "Warrior Quaggan Backpack Set",
+		id: "39520",
+		price: 240,
+		discount: 300,
 		col: 0
 	},
 	{
@@ -1395,6 +1388,13 @@ Sale: {
 	{
 		name: "White Mantle Outfit",
 		img: "http://i.imgur.com/VjilVMH.png",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "White Wings Glider Combo",
+		id: "69852",
 		price: 700,
 		discount: null,
 		col: 1

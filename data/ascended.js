@@ -44,45 +44,75 @@ var GW2T_ASCENDED_HEADERS = {
 };
 
 /*
- * Components of ascended pieces to determine Trading Post value.
+ * Data for determining an ascended equipment's coin calue.
  */
 var GW2T_ASCENDED_METADATA = {
-	Armor: {},
-	Weapon: {},
-	ContainerWeapon: {},
-	ContainerArmor: {},
-	ContainerHelm: {},
-	ContainerShoulders: {},
-	ContainerCoat: {},
-	ContainerGloves: {},
-	ContainerLeggings: {},
-	ContainerBoots: {},
-	Back: {},
-	Ring: {},
-	Accessory: {},
-	Amulet: {},
-	ArmorLight: {},
-	ArmorMedium: {},
-	ArmorHeavy: {},
-	Axe: {},
-	Mace: {},
-	Sword: {},
-	Dagger: {},
-	Pistol: {},
-	Scepter: {},
-	Focus: {},
-	Shield: {},
-	Torch: {},
-	Warhorn: {},
-	Greatsword: {},
-	Hammer: {},
-	LongBow: {},
-	ShortBow: {},
-	Rifle: {},
-	Staff: {},
-	Harpoon: {},
-	Speargun: {},
-	Trident: {}
+	// Payments for account bound components, tradeable components are null
+	Payment: {
+		"19925": {karma: 2100}, // Obsidian Shard
+		"24277": null, // Pile of Crystalline Dust
+		"46695": null, // Zojja's Berserker Inscription
+		"46719": null, // Zojja's Berserker Insignia
+		"46738": null, // Deldrimor Steel Ingot
+		"46736": null, // Spiritwood Plank
+		"46739": null, // Elonian Leather Square
+		"46741": null, // Bolt of Damask
+		"46747": {coin: 150} // Thermocatalytic Reagent
+	},
+	// Components of ascended pieces to determine Trading Post value.
+	Components: {
+		Armor: [[46695, 1], [19925, 12], [46747, 85]],
+		Weapon: [[46719, 1], [19925, 30], [46747, 250]],
+		ContainerWeapon: [[46738, 6]],
+		ContainerArmor: [[46741, 5], [46739, 1]],
+		ContainerHelm: [[46741, 2], [46739, 1]],
+		ContainerShoulders: [[46741, 2], [46739, 1]],
+		ContainerCoat: [[46741, 5], [46739, 1]],
+		ContainerGloves: [[46741, 2], [46739, 1]],
+		ContainerLeggings: [[46741, 5]],
+		ContainerBoots: [[46741, 2], [46739, 2]],
+		Back: [],
+		Ring: [],
+		Accessory: [],
+		Amulet: [],
+		LightHelm: [[46741, 2], [46739, 1]],
+		LightShoulders: [[46741, 2], [46739, 1]],
+		LightCoat: [[46741, 5], [46739, 1]],
+		LightGloves: [[46741, 2], [46739, 1]],
+		LightLeggings: [[46741, 5]],
+		LightBoots: [[46741, 2], [46739, 2]],
+		MediumHelm: [[46741, 2], [46739, 1]],
+		MediumShoulders: [[46741, 1], [46739, 2]],
+		MediumCoat: [[46741, 1], [46739, 5]],
+		MediumGloves: [[46741, 1], [46739, 2]],
+		MediumLeggings: [[46741, 1], [46739, 4]],
+		MediumBoots: [[46741, 1], [46739, 4]],
+		HeavyHelm: [[46741, 2], [46738, 1]],
+		HeavyShoulders: [[46741, 1], [46738, 2]],
+		HeavyCoat: [[46741, 1], [46738, 5]],
+		HeavyGloves: [[46741, 1], [46738, 2]],
+		HeavyLeggings: [[46741, 1], [46738, 4]],
+		HeavyBoots: [[46741, 1], [46738, 2]],
+		Axe: [[46738, 3], [46736, 2]],
+		Mace: [[46738, 3], [46736, 2]],
+		Sword: [[46738, 6]],
+		Dagger: [[46738, 5]],
+		Pistol: [[46738, 3], [46736, 2]],
+		Scepter: [[46736, 5]],
+		Focus: [[46736, 5]],
+		Shield: [[46738, 4]],
+		Torch: [[46738, 2], [46736, 2]],
+		Warhorn: [[46738, 2], [46736, 2]],
+		Greatsword: [[46738, 6]],
+		Hammer: [[46738, 3], [46736, 2]],
+		LongBow: [[46736, 4], [46739, 3]],
+		ShortBow: [[46736, 4], [46739, 3]],
+		Rifle: [[46738, 3], [46736, 3]],
+		Staff: [[46736, 6]],
+		Harpoon: [[46738, 3], [46736, 2]],
+		Speargun: [[46738, 2], [46736, 5]],
+		Trident: [[46738, 2], [46736, 2]]
+	}
 };
 
 /*

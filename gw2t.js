@@ -8752,7 +8752,7 @@ V = {
 					goldsamples.prepend("<tr>"
 						+ "<td>" + iSample.toLocaleString() + "<img class='exgUnit' src='img/account/trading/gold_small.png' /></td>"
 						+ "<td>" + E.formatCoinToGem(iSample * E.Exchange.COPPER_IN_GOLD) + "</td>"
-						+ "<td>$" + E.formatGemToMoney(E.convertCoinToGem(iSample * E.Exchange.COPPER_IN_GOLD)) + "</td>"
+						+ "<td>" + E.formatGemToMoney(E.convertCoinToGem(iSample * E.Exchange.COPPER_IN_GOLD)) + "</td>"
 					+ "</tr>");
 				});
 				animateRows(goldsamples);
@@ -8765,7 +8765,7 @@ V = {
 					gemsamples.prepend("<tr>"
 						+ "<td>" + iSample.toLocaleString() + "<img class='exgUnit' src='img/account/trading/gem_small.png' /></td>"
 						+ "<td>" + E.formatGemToCoin(iSample) + "</td>"
-						+ "<td>$" + E.formatGemToMoney(iSample) + "</td>"
+						+ "<td>" + E.formatGemToMoney(iSample) + "</td>"
 					+ "</tr>");
 				});
 				animateRows(gemsamples);
@@ -8795,7 +8795,7 @@ V = {
 				E.updateGemInCoin(function()
 				{
 					goldoutput0.html(E.formatCoinToGem(val * E.Exchange.COPPER_IN_GOLD)).addClass("cssBlur");
-					goldoutput1.html("$" + E.formatGemToMoney(E.convertCoinToGem(val * E.Exchange.COPPER_IN_GOLD))).addClass("cssBlur");
+					goldoutput1.html(E.formatGemToMoney(E.convertCoinToGem(val * E.Exchange.COPPER_IN_GOLD))).addClass("cssBlur");
 					removeBlur();
 				});
 			}
@@ -8808,7 +8808,7 @@ V = {
 				E.updateGemInCoin(function()
 				{
 					gemoutput0.html(E.formatGemToCoin(val)).addClass("cssBlur");
-					gemoutput1.html("$" + E.formatGemToMoney(val)).addClass("cssBlur");
+					gemoutput1.html(E.formatGemToMoney(val)).addClass("cssBlur");
 					removeBlur();
 				});
 			}
@@ -13115,7 +13115,7 @@ E = {
 		{
 			cent = "0" + cent;
 		}
-		return sign + dollar + "." + cent;
+		return sign + "$" + dollar + "." + cent;
 	},
 	
 	/*
@@ -13185,7 +13185,8 @@ E = {
 	},
 	
 	/*
-	 * Updates the coin to gem ratio and executes a callback.
+	 * Updates the coin to gem ratio and executes a callback. Use the convert
+	 * functions in the callback.
 	 */
 	updateCoinInGem: function(pCallback)
 	{
@@ -23006,7 +23007,6 @@ W = {
 		W.initializeLog();
 		W.reinitializeServerChange();
 		W.generateServerList();
-		W.initializeStats();
 		I.styleContextMenu("#wvwContext");
 		U.convertExternalLink("#wvwHelpLinks a");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
@@ -23595,6 +23595,10 @@ W = {
 		{
 			W.toggleRegionLeaderboard();
 		});
+		$("#lboStats").click(function()
+		{
+			W.generateStats();
+		});
 		$("#lboOpaque").click(function()
 		{
 			$("#opt_bol_opaqueLeaderboard").trigger("click");
@@ -23954,11 +23958,15 @@ W = {
 	/*
 	 * Binds the button to print the WvW stats of servers one by one.
 	 */
-	initializeStats: function()
+	generateStats: function()
 	{
-		$("#lboStats").click(function()
+		if (I.isConsoleShown())
 		{
-			I.print(I.cThrobber, true);
+			return;
+		}
+		I.print(I.cThrobber, true);
+		E.updateCoinInGem(function()
+		{
 			$.getJSON(U.getAPI("worlds?ids=all"), function(pData)
 			{
 				// Sort by population
@@ -23974,6 +23982,7 @@ W = {
 					+ "<th>ID</th>"
 					+ "<th>Population</th>"
 					+ "<th>Transfer</th>"
+					+ "<th>Conversion</th>"
 				+ "</tr></thead><tbody>";
 				pData.forEach(function(iWorld)
 				{
@@ -23981,11 +23990,14 @@ W = {
 					if (iWorld.id.toString().charAt(0) === W.LocaleThreshold[W.LocaleCurrent + "Prefix"])
 					{
 						var servername = U.escapeHTML(D.getObjectName(W.Servers[iWorld.id]));
+						var transfercost = W.Metadata.PopulationTransfer[iWorld.population];
 						html += "<tr>"
-							+ "<td class='wvwPopulation_" + U.escapeHTML(iWorld.population) + "'>" + servername + "</td>"
+							+ "<td><a class='wvwStatsLink wvwPopulation_" + U.escapeHTML(iWorld.population)
+								+ "' href='/?page=WvW&enu_Server=" + iWorld.id + "'>" + servername + "</a></td>"
 							+ "<td>" + iWorld.id + "</td>"
 							+ "<td>" + I.getBar(W.Metadata.PopulationPercent[iWorld.population]) + "</td>"
-							+ "<td>" + E.formatGemString(W.Metadata.PopulationTransfer[iWorld.population], true) + "</td>"
+							+ "<td>" + E.formatGemString(transfercost, true) + "</td>"
+							+ "<td>" + E.formatGemToCoin(transfercost) + "</td>"
 						+ "</tr>";
 					}
 				});
@@ -26723,7 +26735,7 @@ H = {
 							+ oldpricestr
 							+ "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
 							+ "<span class='dsbSalePriceCoin'> ≈ " + E.formatGemToCoin(item.price) + "</span>"
-							+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "<ins class='s16 s16_money'></ins></span>"
+							+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>"
 							+ discountstr
 						+ "</div>");
 					}

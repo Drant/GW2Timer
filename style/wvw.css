@@ -592,7 +592,6 @@
 ----------------------------------------------------------------------------- */
 #wvwStats {
 	text-align: right;
-	font-family: Menomonia;
 	font-size: 18px;
 	color: white;
 }
@@ -603,28 +602,39 @@
 	background: rgba(255, 255, 255, 0.2);
 }
 #wvwStats th {
+	font-family: Menomonia;
 	font-size: 20px;
 	color: #ffffbb;
 }
-#wvwStats td, #wvwStats th {
+#wvwStats td {
 	padding: 2px 8px 2px 8px;
+	font-family: Trebuchet MS, Menomonia;
+}
+#wvwStats th {
+	padding: 8px 8px 4px 8px;
 }
 #wvwStats td:first-child, #wvwStats th:first-child {
 	text-align: left;
 }
-.wvwPopulation_Low {
+#wvwStats td:first-child {
+	font-family: Menomonia;
+}
+#wvwStats .wvwStatsLink {
+	text-decoration: none;
+}
+#wvwStats .wvwPopulation_Low {
 	color: #99dd88;
 }
-.wvwPopulation_Medium {
+#wvwStats .wvwPopulation_Medium {
 	color: #99dd88;
 }
-.wvwPopulation_High {
+#wvwStats .wvwPopulation_High {
 	color: #eecc55;
 }
-.wvwPopulation_VeryHigh {
+#wvwStats .wvwPopulation_VeryHigh {
 	color: #ff7700;
 }
-.wvwPopulation_Full {
+#wvwStats .wvwPopulation_Full {
 	color: #ff0000;
 }
 
