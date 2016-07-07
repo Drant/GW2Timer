@@ -2558,6 +2558,26 @@ label:hover {
 .btnOpaque {
 	background: url("img/ui/opaque.png");
 }
+.btnStats {
+	background: url("img/ui/stats.png");
+}
+
+.cssStats samp { /* A bar graph */
+	vertical-align: middle;
+	display: inline-block;
+	width: 96px; height: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.8);
+	border-radius: 2px;
+	background: rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 0px 1px black;
+}
+.cssStats samp s { /* The inner progress of the bar graph */
+	display: block;
+	height: 100%;
+	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #fff392 0%, #eadf86 50%, #807a49 100%);
+	box-shadow: 0px 0px 2px #eadf86;
+	border-radius: 1px;
+}
 
 .cssHidden {
 	display: none !important;
@@ -2752,6 +2772,7 @@ paletteText {
 	color: #ffcc77; /* Gold highlight/notice/waypoint */
 	color: #ffeebb; /* Cream window and UI title */
 	color: #ffeeaa; /* Cream guild chat and item count */
+	color: #ffffbb; /* Yellow subheader */
 	color: #ffaa22; /* Yellow orange chain title in event panel */
 	color: #ffff00; /* Yellow chat squad name and game notices */
 	color: #ffff66; /* Yellow chat squad */

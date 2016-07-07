@@ -429,23 +429,6 @@ input[type="text"].accTokenNameUsed {
 	float: right;
 }
 
-#chrStatistics samp { /* A bar graph */
-	vertical-align: middle;
-	display: inline-block;
-	width: 96px; height: 12px;
-	border: 1px solid rgba(0, 0, 0, 0.8);
-	border-radius: 2px;
-	background: rgba(0, 0, 0, 0.2);
-	box-shadow: 0px 0px 1px black;
-}
-#chrStatistics samp s { /* The inner progress of the bar graph */
-	display: block;
-	height: 100%;
-	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #fff392 0%, #eadf86 50%, #807a49 100%);
-	box-shadow: 0px 0px 2px #eadf86;
-	border-radius: 1px;
-}
-
 .chrStats {
 	vertical-align: top;
 	text-align: left;

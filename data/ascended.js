@@ -47,6 +47,8 @@ var GW2T_ASCENDED_HEADERS = {
  * Components of ascended pieces to determine Trading Post value.
  */
 var GW2T_ASCENDED_METADATA = {
+	Armor: {},
+	Weapon: {},
 	ContainerWeapon: {},
 	ContainerArmor: {},
 	ContainerHelm: {},

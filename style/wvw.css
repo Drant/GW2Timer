@@ -207,13 +207,16 @@
 #lboRegion {
 	margin-left: 56px;
 }
-#lboOpaque {
+#lboStats {
 	margin-left: 88px;
+}
+#lboOpaque {
+	margin-left: 120px;
 }
 
 #lboCountdown { /* Countdown to WvW reset clock */
 	position: absolute;
-	margin-left: 120px;
+	margin-left: 152px;
 	margin-top: -24px;
 	font-family: Consolas, monospace;
 	font-size: 14px;
@@ -567,7 +570,7 @@
 	background: rgba(82, 165, 24, 0.3);
 }
 .logEntryBlueHome, .lboServerBlue {
-	background: rgba(49, 167, 187, 0.3);
+	background: rgba(29, 127, 187, 0.3);
 }
 .logEntryCenter {
 	background: rgba(255, 255, 0, 0.3);
@@ -582,7 +585,47 @@
 	background: rgba(82, 165, 24, 0.8);
 }
 .lboServerBlue:hover {
-	background: rgba(49, 167, 187, 0.8);
+	background: rgba(29, 127, 187, 0.8);
+}
+
+/* Stats printed
+----------------------------------------------------------------------------- */
+#wvwStats {
+	text-align: right;
+	font-family: Menomonia;
+	font-size: 18px;
+	color: white;
+}
+#wvwStats tbody tr:nth-child(odd) {
+	background: rgba(0, 0, 0, 0.2);
+}
+#wvwStats tbody tr:hover {
+	background: rgba(255, 255, 255, 0.2);
+}
+#wvwStats th {
+	font-size: 20px;
+	color: #ffffbb;
+}
+#wvwStats td, #wvwStats th {
+	padding: 2px 8px 2px 8px;
+}
+#wvwStats td:first-child, #wvwStats th:first-child {
+	text-align: left;
+}
+.wvwPopulation_Low {
+	color: #99dd88;
+}
+.wvwPopulation_Medium {
+	color: #99dd88;
+}
+.wvwPopulation_High {
+	color: #eecc55;
+}
+.wvwPopulation_VeryHigh {
+	color: #ff7700;
+}
+.wvwPopulation_Full {
+	color: #ff0000;
 }
 
 /* Siege Supply Calculator

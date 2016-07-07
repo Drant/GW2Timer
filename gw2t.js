@@ -2643,7 +2643,9 @@ U = {
 	getAPI: function(pAPI, pID)
 	{
 		var idstr = (pID === undefined) ? "" : "/" + pID;
-		return U.URL_API.Prefix + pAPI + idstr + U.URL_API.LangKey;
+		var url = U.URL_API.Prefix + pAPI + idstr;
+		var lang = (url.indexOf("?") !== -1) ? U.URL_API.LangKey.replace("?", "&") : U.URL_API.LangKey;
+		return url + lang;
 	},
 	getAPIAchievement: function(pID)
 	{
@@ -6973,7 +6975,7 @@ V = {
 		
 		A.Possessions = null;
 		dish.html("<div id='chrSummary'></div>"
-		+ "<div id='chrStatistics'>"
+		+ "<div id='chrStatistics' class='cssStats'>"
 			+ "<ul id='chrSelection'></ul>"
 			+ "<ul id='chrUsage' class='chrStats'></ul>"
 			+ "<ul id='chrSeniority' class='chrStats'></ul>"
@@ -7226,8 +7228,7 @@ V = {
 			var agepercent = (iChar.age / highestage) * T.cPERCENT_100;
 			var deathpercent = (iChar.deaths / highestdeaths) * T.cPERCENT_100;
 			var usage = "<var class='chrAge' title='" + T.formatTimeLetter(iChar.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
-				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + agepercent + "%'></s></samp>"
-					+ "<samp><s style='width:" + deathpercent + "%'></s></samp></span>"
+				+ "<span class='chrHoverName'>" + name + I.getBar(agepercent, true) + I.getBar(deathpercent) + "</span>"
 				+ "<var class='chrDeaths' title='" + T.parseRatio(age / iChar.deaths, 3) + "' data-value='" + iChar.deaths + "'>" + iChar.deaths + "x</var>";
 			$("#chrUsage_" + iChar.oCharIndex).append(usage);
 			// SENIORITY COLUMN (right)
@@ -7239,8 +7240,7 @@ V = {
 			var birthdaytill = T.cDAYS_IN_YEAR - birthdaysince;
 			var birthdaypercent = (birthdaysince / T.cDAYS_IN_YEAR) * T.cPERCENT_100;
 			var seniority = "<var class='chrLifetime' data-value='" + iChar.oCharLifetime + "'>" + lifetime + daystr + " (" + birthdays + yearstr + ")</var>"
-				+ "<span class='chrHoverName'>" + name + "<samp><s class='cssRight' style='width:" + lifetimepercent + "%'></s></samp>"
-					+ "<samp><s style='width:" + birthdaypercent + "%'></s></samp></span>"
+				+ "<span class='chrHoverName'>" + name + I.getBar(lifetimepercent, true) + I.getBar(birthdaypercent) + "</span>"
 				+ "<var class='chrBirthday' data-value='" + birthdaysince + "'>" + birthdaytill + daystr + "</var>"
 				+ "<var class='chrBirthdate'>" + birthdate + "</var>";
 			$("#chrSeniority_" + iChar.oCharIndex).append(seniority);
@@ -7447,7 +7447,7 @@ V = {
 					+ "<var class='chrWalletAmount'>" + amountstr + "</var>"
 					+ "<ins class='acc_wallet acc_wallet_" + currency.id + "'></ins>"
 					+ "<var class='chrWalletCurrency'><a class='chrWalletLink'" + U.convertExternalAnchor(link) + ">" + D.getObjectName(currency) + "</a></var>"
-					+ "<samp><s style='width:" + percent + "%'></s></samp>"
+					+ I.getBar(percent)
 				+ "</li>");
 			}
 		};
@@ -17399,6 +17399,7 @@ M = {
 			if (that.isPersonalPinsLaid(true))
 			{
 				I.print(I.cSiteURL + that.getPersonalString(), true);
+				I.selectConsole();
 			}
 		});
 		$(htmlidprefix + "ContextToggleFloor").click(function()
@@ -22898,8 +22899,10 @@ W = {
 	LocaleThreshold:
 	{
 		Range: 99,
+		AmericasPrefix: "1",
 		Americas: 1000,
 		Europe: 2000,
+		EuropePrefix: "2",
 		France: 2100,
 		Germany: 2200,
 		Spain: 2300
@@ -23003,6 +23006,7 @@ W = {
 		W.initializeLog();
 		W.reinitializeServerChange();
 		W.generateServerList();
+		W.initializeStats();
 		I.styleContextMenu("#wvwContext");
 		U.convertExternalLink("#wvwHelpLinks a");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
@@ -23945,6 +23949,50 @@ W = {
 	readjustLeaderboard: function()
 	{
 		$("#lboOther").css({maxHeight: $(window).height() - $("#lboCurrent").height() * 2});
+	},
+	
+	/*
+	 * Binds the button to print the WvW stats of servers one by one.
+	 */
+	initializeStats: function()
+	{
+		$("#lboStats").click(function()
+		{
+			I.print(I.cThrobber, true);
+			$.getJSON(U.getAPI("worlds?ids=all"), function(pData)
+			{
+				// Sort by population
+				pData.forEach(function(iWorld)
+				{
+					iWorld.sortablePopulation = W.Metadata.PopulationPercent[iWorld.population];
+				});
+				U.sortObjects(pData, {aKeyName: "sortablePopulation", aIsDescending: true});
+				// Generate table
+				var html = "<table id='wvwStats' class='cssStats'>";
+				html += "<thead><tr>"
+					+ "<th>Server</th>"
+					+ "<th>ID</th>"
+					+ "<th>Population</th>"
+					+ "<th>Transfer</th>"
+				+ "</tr></thead><tbody>";
+				pData.forEach(function(iWorld)
+				{
+					// Only insert server if it is in the same locale as the user's selected server
+					if (iWorld.id.toString().charAt(0) === W.LocaleThreshold[W.LocaleCurrent + "Prefix"])
+					{
+						var servername = U.escapeHTML(D.getObjectName(W.Servers[iWorld.id]));
+						html += "<tr>"
+							+ "<td class='wvwPopulation_" + U.escapeHTML(iWorld.population) + "'>" + servername + "</td>"
+							+ "<td>" + iWorld.id + "</td>"
+							+ "<td>" + I.getBar(W.Metadata.PopulationPercent[iWorld.population]) + "</td>"
+							+ "<td>" + E.formatGemString(W.Metadata.PopulationTransfer[iWorld.population], true) + "</td>"
+						+ "</tr>";
+					}
+				});
+				html += "</tbody></table>";
+				I.print(html, true);
+			});
+		});
 	},
 	
 	/*
@@ -28850,7 +28898,7 @@ I = {
 		});
 		$("#cslSelect").click(function()
 		{
-			I.selectText("#cslContent");
+			I.selectConsole();
 		});
 		$("#cslToggle").click(function()
 		{
@@ -29172,6 +29220,10 @@ I = {
 		$("#itemConsole").hide();
 		$("#cslContent").empty();
 	},
+	selectConsole: function()
+	{
+		I.selectText("#cslContent");
+	},
 	
 	/*
 	 * Alternative for print but used for testing and easier to find and remove.
@@ -29295,6 +29347,20 @@ I = {
 	removeThrobber: function(pContainer)
 	{
 		$(pContainer).find(".itemThrobber").remove();
+	},
+	
+	/*
+	 * Gets standard HTML for displaying a small static progress bar.
+	 * @param float pPercentage.
+	 * @param boolean pWantRight whether to align the progress fill to the right.
+	 */
+	getBar: function(pPercentage, pWantRight, pWantMarker)
+	{
+		return "<samp>"
+			+ "<s class='" + (pWantRight ? "cssRight" : "") + "' style='width:" + pPercentage + "%'>"
+				+ (pWantMarker ? "<mark></mark>" : "")
+			+ "</s>"
+		+ "</samp>";
 	},
 	
 	/*
