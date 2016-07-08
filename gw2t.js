@@ -5088,6 +5088,7 @@ Z = {
 		var sectionlower = pSection.toLowerCase();
 		var endpoint;
 		var record, blacklist, apiids;
+		var iscustomids = Array.isArray(pEndpoint);
 		
 		var fetchNewEntries = function()
 		{
@@ -5099,7 +5100,14 @@ Z = {
 				for (var ii = 0; ii < catarr.length; ii++)
 				{
 					entry = catarr[ii];
-					storedids.push(entry.u);
+					if (iscustomids)
+					{
+						storedids.push(entry.i);
+					}
+					else
+					{
+						storedids.push(entry.u);
+					}
 				}
 			}
 			// Compile IDs to fetch by filtering: new IDs, not in blacklist
@@ -5117,42 +5125,55 @@ Z = {
 				I.print("No difference found between stored " + sectionlower + " record and post-blacklisted API array.");
 				return;
 			}
-			// Fetch new entries
-			Z.scrapeAPIArray(filteredids, endpoint, {aCallback: function(pData)
+			// Execute callback with filtered list in object
+			if (iscustomids)
 			{
 				pCallback({
 					oRecord: record,
 					oBlacklist: blacklist,
-					oEntries: pData
+					oEntries: filteredids
 				});
-			}});
+			}
+			else
+			{
+				// Fetch new entries
+				Z.scrapeAPIArray(filteredids, endpoint, {aCallback: function(pData)
+				{
+					pCallback({
+						oRecord: record,
+						oBlacklist: blacklist,
+						oEntries: pData
+					});
+				}});
+			}
 		};
 		
-		if (Array.isArray(pEndpoint))
+		$.getScript(U.getDataScriptURL(section), function()
 		{
-			apiids = pEndpoint;
-			fetchNewEntries();
-		}
-		else
-		{
-			endpoint = pEndpoint.toLowerCase();
-			$.getScript(U.getDataScriptURL(section), function()
+			record = U.getRecordData(section);
+			blacklist = U.getRecordBlacklist(section);
+			if (iscustomids)
 			{
-				record = U.getRecordData(section);
-				blacklist = U.getRecordBlacklist(section);
+				apiids = pEndpoint;
+				fetchNewEntries();
+			}
+			else
+			{
+				endpoint = pEndpoint.toLowerCase();
 				$.getJSON(U.getAPI(endpoint), function(pData)
 				{
 					apiids = pData;
 					fetchNewEntries();
 				});
-			});
-		}
+			}
+		});
 	},
 	
 	/*
 	 * Prints a new unlockables record entry to the console.
-	 * @param element pEntry.
-	 * @param array pItemIDs associated with the unlockable.
+	 * @param array pEntries item details objects.
+	 * @objparam string aItemIDsKey name of property for getting the associated item ID.
+	 * @objparam object aItemDB for looking up items, optional.
 	 */
 	printRecordEntry: function(pEntries, pSettings)
 	{
@@ -5813,14 +5834,70 @@ Z = {
 	 */
 	collateAscended: function()
 	{
+		var categorizeItem = function(pItem)
+		{
+			if (pItem.type === "Weapon" || pItem.type === "Trinket")
+			{
+				return pItem.details.type;
+			}
+			if (pItem.type === "Armor")
+			{
+				return "Armor" + pItem.details.weight_class;
+			}
+			if (pItem.type === "Back")
+			{
+				return pItem.type;
+			}
+			return null;
+		};
+		
+		var ascendedids = [];
 		Z.getItemsDatabase(function(pDatabase)
 		{
-			var item;
+			var item, name, type, category;
+			var blackliststr = "", entrystr = "";
+			// Compile a list of desired ascended items from the database
 			for (var i in pDatabase)
 			{
 				item = pDatabase[i];
+				type = item.type;
 				if (item.rarity === "Ascended")
+				{
+					if (categorizeItem(item) || type === "Container")
+					{
+						if (item.name.indexOf("Recipe") === -1)
+						{
+							ascendedids.push(item.id);
+						}
+					}
+				}
 			}
+			// Filter against current list of ascendeds and print the new items
+			Z.getNewAPIEntries("ascended", ascendedids, function(pReturn)
+			{
+				for (var i in pReturn.oEntries)
+				{
+					item = pDatabase[(pReturn.oEntries[i])];
+					name = U.escapeHTML(item.name);
+					// Print out the list of new items for manual blacklisting or categorizing
+					blackliststr += "&quot;" + item.id + "&quot;" + ": " + "&quot;<a"
+						+ U.convertExternalAnchor(U.getWikiLinkDefault(name)) + "'>" + name + "</a>&quot;,<br />";
+					entrystr += "{i: " + item.id + ", n: &quot;" + name + "&quot;},<br />";
+					// Add the categorizable items to the record and output as file
+					category = categorizeItem(item);
+					if (category)
+					{
+						pReturn.oRecord[category].push({
+							i: item.id,
+							n: item.name
+						});
+					}
+				}
+				Z.printUnlockables(pReturn.oRecord);
+				I.print("");
+				I.print(blackliststr);
+				I.print(entrystr);
+			});
 		});
 	},
 	

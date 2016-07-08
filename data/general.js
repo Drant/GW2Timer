@@ -1316,24 +1316,31 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Flamekissed Light Armor Skin",
-		id: "43576",
+		name: "Zodiac Light Armor Skin",
+		id: "43018",
 		price: 400,
 		discount: 800,
 		col: 0
 	},
 	{
-		name: "Flamewalker Medium Armor Skin",
-		id: "43575",
+		name: "Zodiac Medium Armor Skin",
+		id: "43017",
 		price: 400,
 		discount: 800,
 		col: 0
 	},
 	{
-		name: "Flamewrath Heavy Armor Skin",
-		id: "43574",
+		name: "Zodiac Heavy Armor Skin",
+		id: "43016",
 		price: 400,
 		discount: 800,
+		col: 0
+	},
+	{
+		name: "Bazaar Quaggan Mini Pack",
+		id: "42981",
+		price: 400,
+		discount: 500,
 		col: 0
 	},
 	{
