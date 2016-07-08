@@ -4325,7 +4325,7 @@ Z = {
 	 */
 	createFile: function(pString, pFileName)
 	{
-		var data = new Blob([pString], {type: "text/plain"});
+		var data = new Blob([pString], {type: "text/plain;charset=UTF-8"});
 		var fileurl = window.URL.createObjectURL(data);
 		Z.APICacheFiles.push(fileurl);
 		
@@ -5079,14 +5079,14 @@ Z = {
 	 * Loads an unlockables record, downloads the current API array, compares
 	 * for new IDs, and retrieves the new entries.
 	 * @param string pSection name of account section and record.
-	 * @param string pEndpoint name of API URL suffix.
+	 * @param string pEndpoint name of API URL suffix, or an array of item IDs for comparison.
 	 * @param function pCallback to execute after loaded.
 	 */
 	getNewAPIEntries: function(pSection, pEndpoint, pCallback)
 	{
 		var section = pSection;
 		var sectionlower = pSection.toLowerCase();
-		var endpoint = pEndpoint.toLowerCase();
+		var endpoint;
 		var record, blacklist, apiids;
 		
 		var fetchNewEntries = function()
@@ -5102,7 +5102,7 @@ Z = {
 					storedids.push(entry.u);
 				}
 			}
-			// Compile skin IDs to fetch by filtering: new IDs, not in blacklist
+			// Compile IDs to fetch by filtering: new IDs, not in blacklist
 			var newids = U.getDifference(apiids, storedids);
 			var filteredids = (blacklist === undefined) ? newids : (newids.filter(function(iID)
 			{
@@ -5128,16 +5128,25 @@ Z = {
 			}});
 		};
 		
-		$.getScript(U.getDataScriptURL(section), function()
+		if (Array.isArray(pEndpoint))
 		{
-			record = U.getRecordData(section);
-			blacklist = U.getRecordBlacklist(section);
-			$.getJSON(U.getAPI(endpoint), function(pData)
+			apiids = pEndpoint;
+			fetchNewEntries();
+		}
+		else
+		{
+			endpoint = pEndpoint.toLowerCase();
+			$.getScript(U.getDataScriptURL(section), function()
 			{
-				apiids = pData;
-				fetchNewEntries();
+				record = U.getRecordData(section);
+				blacklist = U.getRecordBlacklist(section);
+				$.getJSON(U.getAPI(endpoint), function(pData)
+				{
+					apiids = pData;
+					fetchNewEntries();
+				});
 			});
-		});
+		}
 	},
 	
 	/*
@@ -5569,7 +5578,6 @@ Z = {
 		];
 		var record = {}, item, entry;
 		var sheets = {};
-		var recipeid;
 		// Construct categories to insert the recipes orderly
 		disciplines.forEach(function(iDisc)
 		{
@@ -5797,6 +5805,22 @@ Z = {
 					Z.printUnlockables(record, true);
 				});
 			});
+		});
+	},
+	
+	/*
+	 * Updates the unlockables record of ascended items.
+	 */
+	collateAscended: function()
+	{
+		Z.getItemsDatabase(function(pDatabase)
+		{
+			var item;
+			for (var i in pDatabase)
+			{
+				item = pDatabase[i];
+				if (item.rarity === "Ascended")
+			}
 		});
 	},
 	

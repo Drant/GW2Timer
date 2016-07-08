@@ -599,7 +599,8 @@ Armor_Light_Helm: [
 	{u: 6418, i: 75672, n: "Reaper's Hood", p: {achievement: 0}},
 	{u: 6493, i: 71931, n: "Karka Helm", t: [71931]},
 	{u: 6739, i: 78463, n: "Triumphant Masque", p: {badge: 0}},
-	{u: 6802, i: 78834, n: "Experimental Envoy Cowl", p: {craft: true}}
+	{u: 6802, i: 78834, n: "Experimental Envoy Cowl", p: {craft: true}},
+	{u: 6842, i: 79014, n: "Xera's Mask", p: {gem: 400}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -1111,7 +1112,8 @@ Armor_Medium_Helm: [
 	{u: 6275, i: 75967, n: "Bladed Mask", p: {map_vb: 500}},
 	{u: 6317, i: 76863, n: "Leystone Mask", p: {coin: 0}},
 	{u: 6725, i: 78620, n: "Triumphant Faceguard", p: {badge: 0}},
-	{u: 6790, i: 78995, n: "Experimental Envoy Leggings", p: {craft: true}}
+	{u: 6790, i: 78995, n: "Experimental Envoy Leggings", p: {craft: true}},
+	{u: 6845, i: 79014, n: "Xera's Mask", p: {gem: 400}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1616,7 +1618,8 @@ Armor_Heavy_Helm: [
 	{u: 6429, i: 72708, n: "Ornate Guild Helmet", p: {craft: true}},
 	{u: 6519, i: 74322, n: "Mistward Headwrap", p: {achievement: 0}},
 	{u: 6734, i: 78501, n: "Triumphant Warhelm", p: {badge: 0}},
-	{u: 6799, i: 78940, n: "Experimental Envoy Helmet", p: {craft: true}}
+	{u: 6799, i: 78940, n: "Experimental Envoy Helmet", p: {craft: true}},
+	{u: 6841, i: 79014, n: "Xera's Mask", p: {gem: 400}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -2375,7 +2378,7 @@ Weapon_Sword: [
 	{u: 5090, i: 32322, n: "Legionnaire Sword", t: [32322, 32320, 32319, 32321]},
 	{u: 5105, i: 47334, n: "Orrian Sabre", t: [47239, 47241, 47240, 47242, 47331, 47330, 47332, 47333, 47334, 47411, 47413, 47414, 47487, 47488, 47489, 47490, 47412]},
 	{u: 5134, i: 39055, n: "Verdant Blade", t: [34795, 34794, 34796, 34866, 34867, 34868, 34869, 38998, 39036, 39055, 39017]},
-	{u: 5231, i: 42138, n: "EinhÃƒÂ¤nder", p: {badge: 7}},
+	{u: 5231, i: 42138, n: "Einhänder", p: {badge: 7}},
 	{u: 5232, i: 33006, n: "Flame Blade", t: [32933, 32932, 33003, 33004, 33005, 33006, 32931]},
 	{u: 5235, i: 25595, n: "Norn Blade", t: [25591, 25593, 25589, 25590, 25594, 25592, 25595, 29266]},
 	{u: 5239, i: 42254, n: "Glyphic Edge", p: {badge: 7}},
@@ -3483,7 +3486,7 @@ Weapon_Greatsword: [
 	{u: 5082, i: 47274, n: "Orrian Longsword", t: [47191, 47193, 47192, 47194, 47270, 47271, 47273, 47272, 47274, 47362, 47363, 47364, 47439, 47365, 47440, 47441, 47442]},
 	{u: 5083, i: 39043, n: "Verdant Greatsword", t: [34758, 34759, 34819, 34821, 34820, 39043, 34818, 38986, 39005, 39024, 34760]},
 	{u: 5180, i: 32958, n: "Flame Greatsword", t: [32897, 32896, 32895, 32956, 32957, 32958, 32955]},
-	{u: 5193, i: 42128, n: "ZweihÃƒÂ¤nder", p: {badge: 10}},
+	{u: 5193, i: 42128, n: "Zweihänder", p: {badge: 10}},
 	{u: 5194, i: 25115, n: "Norn Greatsword", t: [25111, 25109, 25110, 25112, 25114, 25113, 25115]},
 	{u: 5212, i: 34137, n: "Tribal Greatsword", t: [34136, 34134, 34135, 34137]},
 	{u: 5215, i: 47518, n: "Ceremonial Scimitar", t: [27321, 47515, 47518, 47516, 47517]},
@@ -3610,7 +3613,7 @@ Weapon_Hammer: [
 	{u: 4880, i: 27647, n: "The Briny Deep", t: [27647]},
 	{u: 4881, i: 27649, n: "Remnant of Ascalon", t: [27649]},
 	{u: 4884, i: 31078, n: "Foefire's Power", t: [31078]},
-	{u: 4885, i: 31079, n: "MjÃƒÂ¶lnir", t: [31079]},
+	{u: 4885, i: 31079, n: "Mjölnir", t: [31079]},
 	{u: 4940, i: 31115, n: "Priory's Historical Hammer", p: {coin: 55200}},
 	{u: 4941, i: 31134, n: "Whisper's Secret Hammer", p: {coin: 55200}},
 	{u: 4947, i: 31171, n: "Vigil's Honor Hammer", p: {coin: 55200}},
@@ -3744,7 +3747,7 @@ Weapon_Longbow: [
 	{u: 4703, i: 28272, n: "Eir's Longbow", t: [28272]},
 	{u: 4766, i: 31070, n: "Wings of Dwayna", t: [31070]},
 	{u: 4777, i: 28275, n: "Droknar's Recurve Bow", t: [28275]},
-	{u: 4779, i: 28262, n: "Ãƒâ€°ibhear Dunn", t: [28262]},
+	{u: 4779, i: 28262, n: "Éibhear Dunn", t: [28262]},
 	{u: 4784, i: 31071, n: "Azureflame", t: [31071]},
 	{u: 4803, i: 44980, n: "Arc", t: [44980]},
 	{u: 4805, i: 44983, n: "Arthropoda", t: [44983]},
@@ -3882,7 +3885,7 @@ Weapon_Shortbow: [
 	{u: 4746, i: 44979, n: "Stardust", t: [44979]},
 	{u: 4749, i: 44984, n: "Crustacea", t: [44984]},
 	{u: 4756, i: 31073, n: "Feathers of Dwayna", t: [31073]},
-	{u: 4772, i: 27791, n: "Ãƒâ€°ibhear Finn", t: [27791]},
+	{u: 4772, i: 27791, n: "Éibhear Finn", t: [27791]},
 	{u: 4775, i: 27795, n: "Bow of the Pale Stag", t: [27795]},
 	{u: 4778, i: 27798, n: "Trosa's Short Bow", t: [27798]},
 	{u: 4780, i: 27802, n: "Eir's Short Bow", t: [27802]},
