@@ -7072,6 +7072,14 @@ V = {
 			{
 				$("#accMenu_" + pSection).trigger("click");
 			}
+			// Button to execute the audit function
+			$("#accAuditContainer").show("fast");
+			$("#accAuditTop").prepend($("#accHelpAudit").html());
+			$("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
+				.appendTo("#accAuditCenter").click(function()
+			{
+				A.generateAudit();
+			});
 		};
 		
 		A.Possessions = null;
@@ -7082,7 +7090,12 @@ V = {
 			+ "<ul id='chrSeniority' class='chrStats'></ul>"
 			+ "<ul id='chrGuilds' class='chrStats'></ul>"
 		+ "</div>"
-		+ "<div id='chrAudit'></div>");
+		+ "<div id='accAuditContainer'>"
+			+ "<div id='audSeparatorTop' class='accSeparator'></div>"
+			+ "<div id='accAuditTop' class='accComposition'></div>"
+			+ "<div id='accAuditCenter' class='cssCenter'></div>"
+			+ "<div id='accAudit'></div>"
+		+ "</div>");
 		$("#accDish_Hero, #accDish_Inventory").empty();
 		$(".chrWallet").remove();
 		$(".chrStats").hide();

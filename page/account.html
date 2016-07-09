@@ -16,12 +16,12 @@
 
 <section id="accPlatterManager">
 	<article data-section="Manager" class="accDishMain">
-		<div id="accManager">
+		<div id="accManager" class="accComposition">
 			<h2 class="accTokenKey">API <span class="jsTranslate">Key</span>:</h2>
 			<h2 class="accTokenName"><span class="jsTranslate">Name</span>:</h2>
 			<h2 class="accTokenButtons"><button id="accTokenNew" title="<dfn>Add</dfn> another key."><img src="img/ui/adjust_plus.png" /></button></h2>
 		</div>
-		<div id="accHelp">
+		<div id="accHelp" class="accComposition">
 			<div id="accIntro" class="jsExternal">
 				<aside id="accIntroScreenshot"><a href="http://i.imgur.com/pN01f47.png"><img src="http://i.imgur.com/56HALM7.png" /></a></aside>
 				<aside>
@@ -39,7 +39,7 @@
 			<div id="accDirectoryContainer">
 				<h1>What do you want to do?</h1>
 				<div id="accDirectory">
-					<div id="accDirectorySeparatorTop" class="accDirectorySeparator"></div>
+					<div id="accDirectorySeparatorTop" class="accSeparator"></div>
 					<div class="accDirectoryColumn">
 						<h2>Inventory Management</h2>
 						<ul>
@@ -91,7 +91,7 @@
 							<li><a href="./?page=TP"><img src="img/ui/tp.png" />Tracker</a> - set custom exchange and gem alarms.</li>
 						</ul>
 					</div>
-					<div id="accDirectorySeparatorBottom" class="accDirectorySeparator"></div>
+					<div id="accDirectorySeparatorBottom" class="accSeparator"></div>
 				</div>
 			</div>
 			<br />
@@ -212,6 +212,9 @@
 
 
 <div id="accAppendix"><!-- These elements exist solely as HTML to be rewritten inside the console -->
+<div id="accHelpAudit">
+	<p>The audit feature will download all of your GW2 asset information (banks, unlocks, trades), estimate their bound value, calculate their Trading Post value, and present them in a table. This process will require almost all of the account's access permissions; these information will only exist between your computer and ArenaNet servers.</p>
+</div>
 <div id="accBankHelp">
 	<h2>Bank Usage</h2>
 	<p>Right click on an item's icon to view its context menu. If an item has an associated skin, the Wiki Search link will view the skin's wiki page. For banks of actual items (equipment, inventory, bank, and materials), the slots' coin price displayed is the sell price with tax (after 5% listing fee and 10% tax); for collections (skins, minis, dyes, catalog) it is the sell price without tax. Hover over a tradeable item's slot or use the tradeable filter to view the current Buy Price (top) and Sell Price (bottom) without tax.</p>

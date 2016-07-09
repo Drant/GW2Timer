@@ -2460,7 +2460,7 @@ label:hover {
 	position: relative;
 	background: radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%);
 }
-#accContent, .accDishMain {
+#accContent {
 	display: none;
 }
 
@@ -2770,6 +2770,7 @@ paletteText {
 	color: #fcb84d; /* Orange gem store notes */
 	color: #ffbb44; /* Gold guild chat name */
 	color: #ffcc77; /* Gold highlight/notice/waypoint */
+	color: #fdc84e; /* Gold gem store */
 	color: #ffeebb; /* Cream window and UI title */
 	color: #ffeeaa; /* Cream guild chat and item count */
 	color: #ffffbb; /* Yellow subheader */

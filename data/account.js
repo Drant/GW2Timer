@@ -84,6 +84,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "transakce", it: "transazioni", pl: "transakcje", pt: "transações", ru: "транзакций", zh: "交易"},
 	
 	// Verbs
+	s_audit: {de: "prüfung", es: "auditar", fr: "auditer",
+		cs: "audit", it: "audit", pl: "audyt", pt: "auditar", ru: "аудит", zh: "審計"},
 	s_rename: {de: "umbenennen", es: "renombrar", fr: "renommer",
 		cs: "přejmenovat", it: "rinominare", pl: "przemianować", pt: "renomear", ru: "переимено́вывать", zh: "重命名"},
 	

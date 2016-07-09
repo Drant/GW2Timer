@@ -145,7 +145,8 @@ Platinum: {
 	regulars: [
 		{c: [19181, 23244]}, // maelstrom
 		{c: [18176, 23327]},
-		{c: [27231, 13285]} // marches
+		{c: [27231, 13285]}, // marches
+		{c: [29043, 10769]}
 	]
 },
 Mithril: {
