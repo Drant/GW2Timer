@@ -2520,6 +2520,7 @@ U = {
 		Cleanup: "data/cleanup.js",
 		Ascended: "data/ascended.js",
 		Recipes: "data/recipes.js",
+		Prices: "cache/prices.js",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
@@ -2548,6 +2549,7 @@ U = {
 	 * @objparam boolean aWantCache whether to use default caching.
 	 * @objparam enum aPermission of the endpoint.
 	 * @objparam function aCallback with the combined pages as parameter.
+	 * @objparam function aError to execute upon failure.
 	 */
 	fetchPaginated: function(pURL, pSettings)
 	{
@@ -2626,7 +2628,11 @@ U = {
 			},
 			error: function()
 			{
-				if (Settings.aPermission)
+				if (Settings.aError)
+				{
+					Settings.aError();
+				}
+				else if (Settings.aPermission)
 				{
 					A.printError(Settings.aPermission);
 				}
@@ -3103,6 +3109,15 @@ U = {
 			assoc[obj[keyname]] = obj;
 		}
 		return assoc;
+	},
+	convertAssocToArray: function(pAssoc)
+	{
+		var arr = [];
+		for (var i in pAssoc)
+		{
+			arr.push(i);
+		}
+		return arr;
 	},
 	getExistObject: function(pArray)
 	{
@@ -3992,7 +4007,7 @@ U = {
 	getTradingItemLink: function(pID, pName)
 	{
 		//return "https://www.gw2tp.com/item/" + U.encodeURL(pID) + "#" + U.stripToSentence(pName);
-		return "http://www.gw2spidy.com/item/" + U.encodeURL(pID) + "#" + U.stripToSentence(pName);
+		return "http://www.gw2spidy.com/item/" + U.encodeURL(pID) + "?name=" + U.stripToSentence(pName);
 	},
 	
 	/*
@@ -4296,7 +4311,20 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				var count = 0;
+				var total = 0;
+				Z.getItemsDatabase(function(pDB)
+				{
+					for (var i in pDB)
+					{
+						total++;
+						if (Q.isTradeable(pDB[i]))
+						{
+							count++;
+						}
+					}
+					I.log(count + " / " + total);
+				});
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -4681,12 +4709,18 @@ Z = {
 		var reqindex = 0;
 		var reqlimit = 500;
 		var reqcooldownms = 30000;
-		var itemstoretrieve = 0;
-		var itemsretrieved = 0;
+		var numtofetch = 0;
+		var numfetched = 0;
+		if (pArray.length === 0)
+		{
+			Settings.aCallback(null, null);
+			return;
+		}
 		
 		var finalizeScrape = function()
 		{
-			if (itemsretrieved === itemstoretrieve)
+			A.setProgressBar(numfetched, numtofetch);
+			if (numfetched === numtofetch)
 			{
 				if (failedids.length > 0)
 				{
@@ -4704,7 +4738,7 @@ Z = {
 				// Execute callback if provided
 				if (Settings.aCallback)
 				{
-					Settings.aCallback(Z.APICacheArrayOfObjects);
+					Settings.aCallback(Z.APICacheArrayOfObjects, failedids);
 				}
 				else
 				{
@@ -4738,13 +4772,13 @@ Z = {
 			{
 				Z.APICacheArrayOfObjects.push(pData);
 				// Check for completion
-				itemsretrieved++;
+				numfetched++;
 				finalizeScrape();
 			}).fail(function()
 			{
 				failedids.push(pID);
 				// Check for completion
-				itemstoretrieve--;
+				numtofetch--;
 				finalizeScrape();
 			});
 		};
@@ -4765,7 +4799,7 @@ Z = {
 		Z.APICacheArrayOfIDs = pArray;
 		Z.APICacheArrayOfObjects = [];
 		idsarray = pArray;
-		itemstoretrieve = idsarray.length;
+		numtofetch = idsarray.length;
 		iterateIDs();
 	},
 	
@@ -5910,6 +5944,7 @@ Z = {
 		var recordnamescounter = 0;
 		var db, record, catarr;
 		var tradeableids = {};
+		var untradeableids = {};
 		var numcached = 0;
 		var numcaches = recordnames.length;
 		
@@ -5920,15 +5955,22 @@ Z = {
 			{
 				arr.push(parseInt(i));
 			}
-			Z.scrapeAPIArray(arr, "commerce/prices", {aCallback: function(pData)
+			Z.scrapeAPIArray(arr, "commerce/prices", {aCallback: function(pData, pUntradeableIDs)
 			{
+				// Add to the untradeable list any items that got past the tradeable check
+				pUntradeableIDs.forEach(function(iID)
+				{
+					untradeableids[iID] = 1;
+				});
+				// Extract retrieved prices and create database of prices
 				var pricecache = {};
 				pData.forEach(function(iPrice)
 				{
 					pricecache[iPrice.id] = [iPrice.buys.unit_price, iPrice.sells.unit_price];
 				});
-				var str = U.lineJSON(pricecache).replace(/ /g, "");
-				Z.createFile(str, "prices.json");
+				var str = "var GW2T_PRICES_DATA = " + U.lineJSON(pricecache).replace(/ /g, "") + ";\r\n";
+				str += "var GW2T_PRICES_BLACKLIST = " + U.lineJSON(untradeableids).replace(/ /g, "") + ";";
+				Z.createFile(str, "prices.js");
 			}});
 		};
 		
@@ -5964,6 +6006,16 @@ Z = {
 		Z.getItemsDatabase(function(pDatabase)
 		{
 			db = pDatabase;
+			// Scan the entire item database for untradeable items
+			for (var i in db)
+			{
+				if (Q.isTradeable(db[i]) === false)
+				{
+					untradeableids[i] = 1;
+				}
+			}
+			
+			// Collect specific items that are tradeable
 			iterateRecord(function(iID) // Materials
 			{
 				if (Q.isTradeable(db[iID]))
@@ -6004,7 +6056,7 @@ Z = {
 };
 A = {
 /* =============================================================================
- * @@Account panel and API key management
+ * @@Account panel, API key management, and audit
  * ========================================================================== */
 
 	TokenCurrent: null,
@@ -6795,16 +6847,16 @@ A = {
 	
 	/*
 	 * Initializes the associative array holding item IDs and count of each
-	 * items, based on the account's bank, inventory, and optionally materials.
-	 * @param function pSuccess to execute after.
+	 * items, based on the account's bank, inventory, equipment, and materials.
+	 * @param function pCallback to execute after.
 	 * @pre Characters data were downloaded by the Characters page.
 	 */
-	initializePossessions: function(pSuccess)
+	initializePossessions: function(pCallback)
 	{
 		// Continue with callback if already initialized
 		if (A.Possessions)
 		{
-			pSuccess();
+			pCallback();
 			return;
 		}
 		A.Possessions = {};
@@ -6904,7 +6956,7 @@ A = {
 			});
 			
 			// Execute callback after finishing compilation
-			pSuccess();
+			pCallback();
 		};
 		
 		// Download additional API data containing the account's items
@@ -6951,11 +7003,137 @@ A = {
 	},
 	
 	/*
+	 * Creates an associative array from an unlockables record.
+	 * @param object pRecord.
+	 * @returns object.
+	 */
+	flattenRecord: function(pRecord)
+	{
+		var catarr, entry;
+		var obj = {};
+		for (var i in pRecord)
+		{
+			catarr = pRecord[i];
+			for (var ii = 0; ii < catarr.length; ii++)
+			{
+				entry = catarr[ii];
+				entry.category = i;
+				obj[entry.i] = entry;
+			}
+		}
+		return obj;
+	},
+	
+	/*
 	 * Generates the account audit subsection into the Characters page.
 	 */
 	generateAudit: function()
 	{
+		var button = $("#audExecute");
+		I.suspendElement(button);
+		var container = $("#accAudit");
+		var table = $("<table id='audCurrencies'></table>").appendTo(container);
+		var cachedprices; // Will contain payment or TP prices, accessible by item ID
+		var untradeabledb;
+		var priceids = {}; // An associative array so no duplicate item IDs
+		var ascendeddata, auditmetadata;
+		var currentbuysdata, currentsellsdata;
+		var wanttransactions = $("#audWantTransactions").prop("checked");
 		
+		// Begins downloading of numerous uncached prices and defines the price database
+		var fetchPrices = function()
+		{
+			Z.scrapeAPIArray(U.convertAssocToArray(priceids), "commerce/prices", {aCallback: function(pData)
+			{
+				// Get payment of untradeable items from catalog
+				I.print(D.getPhraseOriginal("Loading catalog") + "...");
+				$.getScript(U.URL_DATA.Catalog, function()
+				{
+					
+				});
+			}});
+		};
+		
+		var loadUnlocks = function()
+		{
+			I.print(D.getPhraseOriginal("Loading wardrobe") + "...");
+			I.print("Done");
+		};
+		
+		// Load the bank, inventory, equipment, materials
+		I.print(D.getPhraseOriginal("Loading bank materials inventory") + "...");
+		A.initializePossessions(function()
+		{
+			// Load a list of acceptable ascended items, audit metadata is also stored in this file
+			I.print(D.getPhraseOriginal("Loading ascended") + "...");
+			$.getScript(U.URL_DATA.Ascended, function()
+			{
+				ascendeddata = A.flattenRecord(U.getRecordData("ascended"));
+				auditmetadata = U.getRecordMetadata("ascended");
+				// Load the cached prices
+				I.print(D.getPhraseOriginal("Loading price") + "...");
+				$.getScript(U.URL_DATA.Prices, function()
+				{
+					cachedprices = U.getRecordData("prices");
+					untradeabledb = U.getRecordBlacklist("prices");
+					// Include owned items to the list of prices to fetch, if it is not already cached and is tradeable
+					for (var i in A.Possessions)
+					{
+						if (cachedprices[i] === undefined && untradeabledb[i] === undefined)
+						{
+							priceids[i] = true;
+						}
+					}
+					// Include items that require fresh uncached prices
+					auditmetadata.Tradeable.forEach(function(iID)
+					{
+						priceids[iID] = true;
+					});
+					// Load unbought and unsold items in the account's Trading Post
+					if (wanttransactions === false)
+					{
+						fetchPrices();
+						return;
+					}
+					A.getTransactions(A.URL.CurrentBuys, {
+						aCallback: function(pDataBuys)
+						{
+							A.getTransactions(A.URL.CurrentSells, {
+								aCallback: function(pDataSells)
+								{
+									// Include existing TP items to the price list
+									if (pDataBuys && pDataBuys.length)
+									{
+										currentbuysdata = pDataBuys;
+										pDataBuys.forEach(function(iTransaction)
+										{
+											priceids[iTransaction.item_id] = true;
+										});
+									}
+									if (pDataSells && pDataSells.length)
+									{
+										currentsellsdata = pDataSells;
+										pDataSells.forEach(function(iTransaction)
+										{
+											priceids[iTransaction.item_id] = true;
+										});
+									}
+									fetchPrices();
+								},
+								aError: function()
+								{
+									fetchPrices();
+								}
+							});
+						},
+						aError: function()
+						{
+							fetchPrices();
+						}
+					});
+				});
+			});
+		});
 	}
 };
 V = {
@@ -7022,7 +7200,7 @@ V = {
 		}
 	},
 	
-		/*
+	/*
 	 * Rearranges all the characters columns based on one column's data values.
 	 * @param string pClassifier class names of data containing cells.
 	 * @param boolean pOrder descending if true, ascending if false.
@@ -7051,6 +7229,23 @@ V = {
 	},
 	
 	/*
+	 * Initializes the account audit subsection of the characters page.
+	 */
+	serveAudit: function()
+	{
+		// Button to execute the audit function
+		$("#accAuditContainer").show("fast");
+		$("#accAuditTop").prepend($("#accHelpAudit").html())
+			.append("<label><input id='audWantTransactions' type='checkbox' checked='checked' />"
+				+ D.getPhraseOriginal("Load current trading transactions") + ".</label>");
+		$("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
+			.appendTo("#accAuditCenter").click(function()
+		{
+			A.generateAudit();
+		});
+	},
+	
+	/*
 	 * Initializes the characters subpage.
 	 * @param string pSection to open after finishing loading characters.
 	 */
@@ -7072,14 +7267,7 @@ V = {
 			{
 				$("#accMenu_" + pSection).trigger("click");
 			}
-			// Button to execute the audit function
-			$("#accAuditContainer").show("fast");
-			$("#accAuditTop").prepend($("#accHelpAudit").html());
-			$("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
-				.appendTo("#accAuditCenter").click(function()
-			{
-				A.generateAudit();
-			});
+			V.serveAudit();
 		};
 		
 		A.Possessions = null;
@@ -7343,7 +7531,7 @@ V = {
 			var deathpercent = (iChar.deaths / highestdeaths) * T.cPERCENT_100;
 			var usage = "<var class='chrAge' title='" + T.formatTimeLetter(iChar.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
 				+ "<span class='chrHoverName'>" + name + I.getBar(agepercent, true) + I.getBar(deathpercent) + "</span>"
-				+ "<var class='chrDeaths' title='" + T.parseRatio(age / iChar.deaths, 3) + "' data-value='" + iChar.deaths + "'>" + iChar.deaths + "x</var>";
+				+ "<var class='chrDeaths' title='" + T.parseRatio(iChar.deaths / age, 3) + "x / " + "1" + hourstr + "' data-value='" + iChar.deaths + "'>" + iChar.deaths + "x</var>";
 			$("#chrUsage_" + iChar.oCharIndex).append(usage);
 			// SENIORITY COLUMN (right)
 			var birthdate = (new Date(iChar.created)).toLocaleString();
@@ -7419,6 +7607,7 @@ V = {
 			$("#chrAccountReload").click(function()
 			{
 				$("#accDishMenu_Hero").empty();
+				I.qTip.hide();
 				A.regenerateDish("Characters");
 			});
 			// Insert server name
@@ -13430,8 +13619,9 @@ E = {
 	processPrice: function(pPriceData, pCount)
 	{
 		var count = (pCount === undefined) ? 1 : pCount;
-		var pricebuy = pPriceData.buys.unit_price * count;
-		var pricesell = pPriceData.sells.unit_price * count;
+		var isarray = Array.isArray(pPriceData);
+		var pricebuy = ((isarray) ? pPriceData[0] : pPriceData.buys.unit_price) * count;
+		var pricesell = ((isarray) ? pPriceData[1] : pPriceData.sells.unit_price) * count;
 		return {
 			oPriceBuy: pricebuy,
 			oPriceSell: pricesell,
@@ -13497,12 +13687,6 @@ E = {
 	getListings: function(pItemID, pCallback, pWantCache)
 	{
 		var wantcache = (pWantCache !== undefined) ? pWantCache : false;
-		var dealError = function()
-		{
-			I.clear();
-			I.write("Item is not tradeable.");
-		};
-		
 		if (Q.isTradeable(pItemID))
 		{
 			$.ajax({
@@ -13518,13 +13702,14 @@ E = {
 				},
 				error: function()
 				{
-					dealError();
+					I.print("Item is not on the Trading Post.");
 				}
 			});
 		}
 		else
 		{
-			dealError();
+			I.clear();
+			I.write("Item is not tradeable.");
 		}
 	},
 	
@@ -14180,9 +14365,8 @@ E = {
 		$("#trdPrint").click(function()
 		{
 			I.clear();
-			I.print("ItemID,Name,Buy,Sell,Quantity,BuyLow,BuyHigh,SellLow,SellHigh");
 			var length = X.Textlists.TradingItem.value.length;
-			var str = "";
+			var str = "ItemID,Name,Buy,Sell,Quantity,BuyLow,BuyHigh,SellLow,SellHigh<br />";
 			for (var i = 0; i < length; i++)
 			{
 				str += U.escapeHTML(
@@ -14197,7 +14381,7 @@ E = {
 					X.Textlists.NotifySellHigh.value[i])
 				+ "<br />";
 			}
-			Z.createFile(str, "tp.csv");
+			Z.createFile(str.replace(/<br \/>/g, "\r\n"), "tp.csv");
 			I.print(str);
 		});
 	},
@@ -14841,6 +15025,8 @@ D = {
 			cs: "pak", it: "poi", pl: "potem", pt: "então", ru: "затем", zh: "接著"},
 		s_found: {de: "gefunden", es: "encontró", fr: "trouvé",
 			cs: "zjištěno", it: "trovato", pl: "stwierdzono", pt: "encontrado", ru: "найден", zh: "發現了"},
+		s_loading: {de: "laden", es: "cargando", fr: "chargement",
+			cs: "načítání", it: "caricamento", pl: "ładowanie", pt: "carregando", ru: "загрузка", zh: "正在載入"},
 		
 		// Prepositions and Conjunctions
 		s_at: {de: "um", es: "a", fr: "à",

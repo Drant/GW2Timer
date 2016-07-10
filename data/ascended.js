@@ -47,18 +47,51 @@ var GW2T_ASCENDED_HEADERS = {
  * Data for determining an ascended equipment's coin value.
  */
 var GW2T_ASCENDED_METADATA = {
-	// Payments for account bound components, tradeable components are null
+	// Account bound component payments
 	Payment: {
 		"19925": {karma: 2100}, // Obsidian Shard
-		"24277": null, // Pile of Crystalline Dust
-		"46695": null, // Zojja's Berserker Inscription
-		"46719": null, // Zojja's Berserker Insignia
-		"46738": null, // Deldrimor Steel Ingot
-		"46736": null, // Spiritwood Plank
-		"46739": null, // Elonian Leather Square
-		"46741": null, // Bolt of Damask
 		"46747": {coin: 150} // Thermocatalytic Reagent
 	},
+	// Tradeable components and expensive items that should always use the live TP prices
+	Tradeable: [
+		19721, // Glob of Ectoplasm
+		19976, // Mystic Coin
+		24277, // Pile of Crystalline Dust
+		46695, // Zojja's Berserker Inscription
+		46719, // Zojja's Berserker Insignia
+		46738, // Deldrimor Steel Ingot
+		46736, // Spiritwood Plank
+		46739, // Elonian Leather Square
+		46741, // Bolt of Damask,
+		35986, // Personal Trader Express
+		35985, // Personal Merchant Express
+		35984, // Permanent Bank Access Express
+		38507, // Permanent Self-Style Hair Kit
+		78455, // Endless Repair Canister
+		35728, // Mystic Forge Conduit
+		70010, // Mystic Forge Conduit
+		30684, // Frostfang
+		30692, // The Moot
+		30699, // Bolt
+		30687, // Incinerator
+		30693, // Quip
+		30695, // Meteorlogicus
+		30688, // The Minstrel
+		30696, // The Flameseeker Prophecies
+		30700, // Rodgort
+		30702, // Howler
+		30703, // Sunrise
+		30704, // Twilight
+		30689, // Eternity
+		30690, // The Juggernaut
+		30685, // Kudzu
+		30686, // The Dreamer
+		30694, // The Predator
+		30698, // The Bifrost
+		30691, // Kamohoali'i Kotaki
+		30697, // Frenzy
+		30701 // Kraitkin
+	],
 	// Components of ascended pieces to determine Trading Post value.
 	Components: {
 		Armor: [[46695, 1], [19925, 12], [46747, 85]],
