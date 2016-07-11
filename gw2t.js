@@ -4006,8 +4006,7 @@ U = {
 	 */
 	getTradingItemLink: function(pID, pName)
 	{
-		//return "https://www.gw2tp.com/item/" + U.encodeURL(pID) + "#" + U.stripToSentence(pName);
-		return "http://www.gw2spidy.com/item/" + U.encodeURL(pID) + "?name=" + U.stripToSentence(pName);
+		return "http://www.gw2spidy.com/item/" + U.encodeURL(pID) + "?name=" + U.stripToSentence(pName).replace(/ /g, "_");
 	},
 	
 	/*
@@ -4311,19 +4310,9 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				var count = 0;
-				var total = 0;
 				Z.getItemsDatabase(function(pDB)
 				{
-					for (var i in pDB)
-					{
-						total++;
-						if (Q.isTradeable(pDB[i]))
-						{
-							count++;
-						}
-					}
-					I.log(count + " / " + total);
+					
 				});
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
@@ -5876,7 +5865,7 @@ Z = {
 			}
 			if (pItem.type === "Armor")
 			{
-				return "Armor" + pItem.details.weight_class;
+				return pItem.details.weight_class + pItem.details.type;
 			}
 			if (pItem.type === "Back")
 			{
@@ -5975,7 +5964,7 @@ Z = {
 		};
 		
 		// Macro function to iterate over an unlockables record
-		var iterateRecord = function(pIterator)
+		var iterateRecord = function(pIteration)
 		{
 			var name = recordnames[recordnamescounter];
 			recordnamescounter++;
@@ -5987,7 +5976,7 @@ Z = {
 					catarr = record[i];
 					catarr.forEach(function(iEntry)
 					{
-						pIterator(iEntry);
+						pIteration(iEntry);
 					});
 				}
 				numcached++;
@@ -6063,6 +6052,7 @@ A = {
 	CharIndexCurrent: null,
 	isAccountInitialized: false,
 	Metadata: {}, // Prewritten data loaded along with account page
+	Currency: {}, // Currency data
 	Equipment: {}, // Character equipment slots information
 	Attribute: {}, // Character attribute points
 	Data: { // Cache for retrieved API data objects and arrays
@@ -6189,6 +6179,7 @@ A = {
 		// Add new words to the dictionary
 		D.addDictionary(GW2T_ACCOUNT_DICTIONARY);
 		A.Metadata = GW2T_ACCOUNT_METADATA;
+		A.Currency = GW2T_CURRENCY_DATA;
 		A.Equipment = GW2T_EQUIPMENT_DATA;
 		A.Attribute = GW2T_ATTRIBUTE_DATA;
 		
@@ -7035,16 +7026,59 @@ A = {
 		var table = $("<table id='audCurrencies'></table>").appendTo(container);
 		var cachedprices; // Will contain payment or TP prices, accessible by item ID
 		var untradeabledb;
+		var paymentdb = {}; // Holds payment object or processed TP price, items whose ID is not in this will have no value
 		var priceids = {}; // An associative array so no duplicate item IDs
-		var ascendeddata, auditmetadata;
+		var ascendeddata, ascendedheader, ascendedcomp, auditmetadata, entry;
 		var currentbuysdata, currentsellsdata;
 		var wanttransactions = $("#audWantTransactions").prop("checked");
+		
+		// Appraise the value of ascended weapons and armor by summing their crafting components' prices
+		var appraiseAscended = function()
+		{
+			var appraisal = {};
+			var ascendedprice, ascendedtype, compprice;
+			for (var i in ascendedheader)
+			{
+				ascendedprice = E.createPrice(0);
+				// Concatenate insignia components for armors, and inscription components for weapons
+				ascendedtype = ascendedheader[i].type;
+				(ascendedcomp[i].concat(ascendedcomp[ascendedtype])).forEach(function(iComp)
+				{
+					// Sum the components' prices
+					if (iComp)
+					{
+						compprice = paymentdb[iComp[0]];
+						if (compprice)
+						{
+							ascendedprice = E.addPrice(ascendedprice, E.recountPrice(compprice, iComp[1]));
+						}
+					}
+				});
+				appraisal[i] = ascendedprice;
+			}
+			for (var i in ascendeddata)
+			{
+				entry = ascendeddata[i];
+				paymentdb[i] = appraisal[entry.category];
+			};
+		};
 		
 		// Begins downloading of numerous uncached prices and defines the price database
 		var fetchPrices = function()
 		{
-			Z.scrapeAPIArray(U.convertAssocToArray(priceids), "commerce/prices", {aCallback: function(pData)
+			Z.scrapeAPIArray(U.convertAssocToArray(priceids), "commerce/prices", {aCallback: function(pPrices)
 			{
+				// Insert cached prices
+				for (var i in cachedprices)
+				{
+					paymentdb[i] = E.processPrice(cachedprices[i]);
+				}
+				// Insert fresh prices
+				pPrices.forEach(function(iPriceObj)
+				{
+					paymentdb[iPriceObj.id] = E.processPrice(iPriceObj);
+				});
+				appraiseAscended();
 				// Get payment of untradeable items from catalog
 				I.print(D.getPhraseOriginal("Loading catalog") + "...");
 				$.getScript(U.URL_DATA.Catalog, function()
@@ -7061,6 +7095,7 @@ A = {
 		};
 		
 		// Load the bank, inventory, equipment, materials
+		I.clear();
 		I.print(D.getPhraseOriginal("Loading bank materials inventory") + "...");
 		A.initializePossessions(function()
 		{
@@ -7068,15 +7103,17 @@ A = {
 			I.print(D.getPhraseOriginal("Loading ascended") + "...");
 			$.getScript(U.URL_DATA.Ascended, function()
 			{
+				ascendedheader = U.getRecordHeader("ascended");
 				ascendeddata = A.flattenRecord(U.getRecordData("ascended"));
 				auditmetadata = U.getRecordMetadata("ascended");
+				ascendedcomp = auditmetadata.AscendedComponents;
 				// Load the cached prices
 				I.print(D.getPhraseOriginal("Loading price") + "...");
 				$.getScript(U.URL_DATA.Prices, function()
 				{
 					cachedprices = U.getRecordData("prices");
 					untradeabledb = U.getRecordBlacklist("prices");
-					// Include owned items to the list of prices to fetch, if it is not already cached and is tradeable
+					// Include owned items in the list of prices to fetch, if it is not already cached and is tradeable
 					for (var i in A.Possessions)
 					{
 						if (cachedprices[i] === undefined && untradeabledb[i] === undefined)
@@ -7101,7 +7138,7 @@ A = {
 							A.getTransactions(A.URL.CurrentSells, {
 								aCallback: function(pDataSells)
 								{
-									// Include existing TP items to the price list
+									// Include existing TP items in the price list
 									if (pDataBuys && pDataBuys.length)
 									{
 										currentbuysdata = pDataBuys;
@@ -7233,15 +7270,25 @@ V = {
 	 */
 	serveAudit: function()
 	{
-		// Button to execute the audit function
+		return;
 		$("#accAuditContainer").show("fast");
-		$("#accAuditTop").prepend($("#accHelpAudit").html())
-			.append("<label><input id='audWantTransactions' type='checkbox' checked='checked' />"
-				+ D.getPhraseOriginal("Load current trading transactions") + ".</label>");
+		// Audit option
+		$("#accAuditTop").append("<label><input id='audWantTransactions' type='checkbox' />"
+			+ D.getPhraseOriginal("Include current trading transactions") + ".</label>");
+		// Audit buttons
+		var buttoncontainer = $("#accAuditCenter");
 		$("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
-			.appendTo("#accAuditCenter").click(function()
+			.appendTo(buttoncontainer).click(function()
 		{
 			A.generateAudit();
+		});
+		$("<button id='audHelp'>" + D.getWordCapital("help") + "</button>")
+			.appendTo(buttoncontainer).click(function()
+		{
+			if (I.isConsoleShown() === false)
+			{
+				I.print("<div class='accModal cntComposition'>" + $("#accHelpAudit").html() + "</div>");
+			}
 		});
 	},
 	
@@ -7281,7 +7328,7 @@ V = {
 		+ "<div id='accAuditContainer'>"
 			+ "<div id='audSeparatorTop' class='accSeparator'></div>"
 			+ "<div id='accAuditTop' class='accComposition'></div>"
-			+ "<div id='accAuditCenter' class='cssCenter'></div>"
+			+ "<div id='accAuditCenter'></div>"
 			+ "<div id='accAudit'></div>"
 		+ "</div>");
 		$("#accDish_Hero, #accDish_Inventory").empty();
@@ -7766,7 +7813,7 @@ V = {
 				A.Data.Wallet[currency.id] = parseInt(currency.value);
 			}
 
-			var wallets = GW2T_CURRENCY_DATA;
+			var wallets = A.Currency.Wallet;
 			for (var i in wallets)
 			{
 				generateWallet(wallets[i], i);
@@ -10392,7 +10439,7 @@ B = {
 								paymentvalue *= -1;
 							}
 							pSlot.append("<var class='bnkSlotPrice " + priceclass + "'>"
-								+ E.Payment[paymentkey](paymentvalue * (count || 1))
+								+ E.PaymentFormat[paymentkey](paymentvalue * (count || 1))
 							+ "</var>");
 						}
 					}
@@ -13156,7 +13203,7 @@ E = {
 	 * Associative array of functions that format the payment of an item.
 	 * The function names correspond to the object key in a custom API cache.
 	 */
-	Payment:
+	PaymentFormat:
 	{
 		coin: function(pAmount) { return E.formatCoinStringShort(pAmount); },
 		karma: function(pAmount) { return E.formatKarmaString(pAmount, true); },
@@ -13176,23 +13223,23 @@ E = {
 		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_commendation'></ins>"; },
 		tournament: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_tournament'></ins>"; },
 		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_league'></ins>"; },
-		fotm_pristine: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_pristine'></ins>"; },
 		dungeon_ac: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_ac'></ins>"; },
 		dungeon_arah: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_arah'></ins>"; },
-		fotm_relic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_relic'></ins>"; },
 		dungeon_cm: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_cm'></ins>"; },
 		dungeon_se: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_se'></ins>"; },
 		dungeon_ta: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_ta'></ins>"; },
 		dungeon_hotw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_hotw'></ins>"; },
 		dungeon_cof: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_cof'></ins>"; },
 		dungeon_coe: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_coe'></ins>"; },
+		fotm_relic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_relic'></ins>"; },
+		fotm_pristine: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_fotm_pristine'></ins>"; },
 		raid_ft: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_raid_ft'></ins>"; },
-		map_vb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_vb'></ins>"; },
-		map_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_td'></ins>"; },
-		map_ab: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ab'></ins>"; },
-		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_crystalline'></ins>"; },
 		map_dt: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_dt'></ins>"; },
-		map_sw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_sw'></ins>"; }
+		map_sw: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_sw'></ins>"; },
+		map_vb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_vb'></ins>"; },
+		map_ab: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ab'></ins>"; },
+		map_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_td'></ins>"; },
+		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_crystalline'></ins>"; }
 	},
 	PaymentEnum:
 	{
@@ -13607,7 +13654,7 @@ E = {
 	 */
 	deductTax: function(pAmount)
 	{
-		return Math.floor(pAmount - pAmount * E.Exchange.TAX_TOTAL);
+		return Math.floor(pAmount - (pAmount * E.Exchange.TAX_TOTAL));
 	},
 	
 	/*
@@ -13631,12 +13678,22 @@ E = {
 	},
 	createPrice: function(pPrice, pCount)
 	{
-		var price = pPrice * pCount;
+		var count = (pCount === undefined) ? 1 : pCount;
+		var price = pPrice * count;
 		return {
 			oPriceBuy: price,
 			oPriceSell: price,
 			oPriceBuyTaxed: E.deductTax(price),
 			oPriceSellTaxed: E.deductTax(price)
+		};
+	},
+	addPrice: function(pPriceA, pPriceB)
+	{
+		return {
+			oPriceBuy: pPriceA.oPriceBuy + pPriceB.oPriceBuy,
+			oPriceSell: pPriceA.oPriceSell + pPriceB.oPriceSell,
+			oPriceBuyTaxed: pPriceA.oPriceBuyTaxed + pPriceB.oPriceBuyTaxed,
+			oPriceSellTaxed: pPriceA.oPriceSellTaxed + pPriceB.oPriceSellTaxed
 		};
 	},
 	recountPrice: function(pPrice, pCount)

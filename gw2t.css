@@ -2460,7 +2460,7 @@ label:hover {
 	position: relative;
 	background: radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%);
 }
-#accContent {
+#accContent, #accAppendix, #itmContext {
 	display: none;
 }
 
@@ -2574,7 +2574,7 @@ label:hover {
 .cssStats samp s { /* The inner progress of the bar graph */
 	display: block;
 	height: 100%;
-	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #fff392 0%, #eadf86 50%, #807a49 100%);
+	background: url("img/background/bargraph.png"), linear-gradient(to bottom, #fff392 0%, #eadf86 50%, #807a49 100%);
 	box-shadow: 0px 0px 2px #eadf86;
 	border-radius: 1px;
 }

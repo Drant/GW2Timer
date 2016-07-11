@@ -265,19 +265,23 @@ input[type="text"].accTokenHovered {
 	margin-bottom: 128px;
 }
 #accAuditCenter {
+	margin-top: 16px;
+	margin-bottom: 16px;
 	text-align: center;
 }
-#audExecute {
-	font-family: Trebuchet MS, Menomonia;
+#audExecute, #audHelp {
+	font-family: Menomonia;
 	font-size: 32px;
 	padding: 12px 16px 12px 16px;
-	margin-top: 16px;
-	box-shadow: 0px 0px 32px #fdc84e;
 	text-shadow:
 		0px 1px 4px #000,
 		0px -1px 4px #000,
 		1px 0px 4px #000,
 		-1px 0px 4px #000;
+}
+#audExecute {
+	margin-right: 32px;
+	box-shadow: 0px 0px 32px #fdc84e;
 }
 #audExecute:hover {
 	animation: aniFlicker 1s ease infinite;
