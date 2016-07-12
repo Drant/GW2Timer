@@ -1218,8 +1218,8 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Trading' title='gw2timer.com/trading'>Gem Exchange</a> and Trading Post history now available."
 	pve: "<a href='http://gw2timer.com/?mode=Tile' title='gw2timer.com/tile'>Use Tile Mode</a> for a simpler version of the website's timers.",
 	wvw: "",
-	Start: new Date("2016-07-08T16:00:00Z"),
-	Finish: new Date("2016-07-12T16:00:00Z"),
+	Start: new Date("2016-07-12T16:00:00Z"),
+	Finish: new Date("2016-07-19T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1265,9 +1265,9 @@ Countdown: {
 		name_de: "Update Sommer 2016",
 		name_es: "Actualización de verano 2016",
 		name_fr: "Mise à jour du été 2016",
-		url: "https://forum-en.guildwars2.com/forum/game/gw2/Living-World-Season-Three",
-		Start: new Date("2016-07-12T16:00:00Z"),
-		Finish: new Date("2016-07-13T16:00:00Z")
+		official: "news/guild-wars-2s-living-world-returns-on-july-26/",
+		Start: new Date("2016-07-26T16:00:00Z"),
+		Finish: new Date("2016-07-27T16:00:00Z")
 	},
 	{ // 8 weeks cycle, on Thursday
 		name_en: "Frostgorge Map Rewards",
@@ -1292,7 +1292,7 @@ Story:
 	name_es: "Anomalía de línea ley",
 	name_fr: "L'Anomalie des lignes de force",
 	Start: new Date("2016-06-28T16:00:00Z"),
-	Finish: new Date("2016-07-13T16:00:00Z")
+	Finish: new Date("2016-07-26T16:00:00Z")
 },
 
 /*
@@ -1308,8 +1308,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-07-05T15:00:00Z"),
-	Finish: new Date("2016-07-12T15:00:00Z"),
+	Start: new Date("2016-07-12T15:00:00Z"),
+	Finish: new Date("2016-07-19T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1318,86 +1318,23 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Bazaar Quaggan Mini Pack",
-		id: "42981",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Aviator Quaggan Mail Carrier",
-		id: "69628",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Plush Quaggan Backpack Cover",
-		id: "39137",
-		price: 240,
-		discount: 300,
-		col: 0
-	},
-	{
-		name: "Warrior Quaggan Backpack Set",
-		id: "39520",
-		price: 240,
-		discount: 300,
-		col: 0
-	},
-	{
-		name: "Fuzzy Quaggan Hat",
-		id: "64739",
-		price: 160,
-		discount: 200,
-		col: 0
-	},
-	{
-		name: "Fuzzy Quaggan Hat with Bow",
-		id: "64751",
-		price: 160,
-		discount: 200,
-		col: 0
-	},
-	{
-		name: "White Mantle Appearance Pack",
-		img: "http://i.imgur.com/SXJh076.png",
-		price: 2000,
+		name: "Unbreakable Gathering Tools",
+		img: "http://i.imgur.com/dYyhm3y.png",
+		price: 2400,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
-		name: "Focused Solar Logging Tool",
-		id: "78724",
-		price: 1000,
+		name: "Black Lion Keys and Scrap Package",
+		img: "http://i.imgur.com/X9cj6ip.png",
+		price: 900,
 		discount: null,
-		col: 1
-	},
-	{
-		name: "White Mantle Outfit",
-		img: "http://i.imgur.com/VjilVMH.png",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "White Mantle Glider",
-		id: "79016",
-		price: 400,
-		discount: null,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Xera's Mask",
 		id: "79014",
 		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Makeover Kit and Transmutation Charges",
-		id: "35991",
-		price: 350,
 		discount: null,
 		col: 1
 	}
