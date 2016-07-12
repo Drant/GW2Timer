@@ -1261,10 +1261,10 @@ Countdown: {
 		Finish: new Date("2016-08-27T02:00:00Z")
 	},*/
 	{
-		name_en: "Summer 2016 Update",
-		name_de: "Update Sommer 2016",
-		name_es: "Actualización de verano 2016",
-		name_fr: "Mise à jour du été 2016",
+		name_en: "Living Story 3",
+		name_de: "Lebendige Welt 3",
+		name_es: "Mundo Viviente 3",
+		name_fr: "Monde Vivant 3",
 		official: "news/guild-wars-2s-living-world-returns-on-july-26/",
 		Start: new Date("2016-07-26T16:00:00Z"),
 		Finish: new Date("2016-07-27T16:00:00Z")
