@@ -68,7 +68,7 @@
 						<ul>
 							<li><a href="./?page=Characters"><img src="img/account/menu/characters.png" />Characters</a> - analyze my characters and wallet.</li>
 							<li><a href="./?page=Hero"><img src="img/account/menu/hero.png" />Hero</a> - inspect my characters' build.</li>
-							<li><a href="./?page=Recipes"><img src="img/account/menu/recipes.png" />Recipes</a> - check what my characters can craft.</li>
+							<li><a href="./?page=Recipes"><img src="img/account/menu/recipes.png" />Recipes</a> - verify what my characters can craft.</li>
 						</ul>
 					</div>
 					<div class="accDirectoryColumn">
@@ -214,12 +214,18 @@
 <div id="accAppendix"><!-- These elements exist solely as HTML to be rewritten inside the console -->
 <div id="accHelpAudit">
 	<h2>Account Audit</h2>
-	<p>The audit feature will download and tally banks, unlocks, and trades data, estimate their bound value, calculate their Trading Post value, then present them in a table. This process will require almost all account permissions. Your account information will be private between your computer and ArenaNet servers.</p>
+	<p>The audit feature will download and tally banks, unlocks, and trades data, estimate their bound value, calculate their Trading Post value, then present them in a table. This process will require almost all account permissions; your account information will be private between your computer and ArenaNet servers.</p>
 	<h2>Auditing Details</h2>
-	<p>Precursor skins are not audited because their purpose is to create a legendary and not be an expensive skin by themselves. Ascended weapon and armor gold value is estimated by their T7 crafting materials and ascended inscription or insignia Trading Post price.</p>
+	<ul class="cssBullet">
+		<li>Skins are not audited if the original item that unlocked the skin still exists.</li>
+		<li>Precursor skins are not audited because their purpose is to create a legendary and not be an expensive skin by themselves.</li>
+		<li>Ascended weapon and armor coin value is estimated by their T7 crafting materials, and Zojja inscription or insignia Trading Post price. Ascended backpacks all base their coin value on the stats-selectable forged <a href='https://wiki.guildwars2.com/wiki/Quiver_of_a_Thousand_Arrows'>backpack</a> that cost 250 Vicious Claws.</li>
+		<li>Legendary items use Trading Post price if available, otherwise they use the total price of their tradeable crafting ingredients. 77 Mystic Clovers assume it takes 250 Globs of Ectoplasm and 250 Mystic Coins to forge.</li>
+	</ul>
+	<br />
 	<h2>Prices and Values</h2>
 	<p>To have a fast audit, Trading Post prices of materials, skins, minis, dyes, and recipes are from a snapshot cache, while prices of bank, inventory, and equipment contents are fetched live from ArenaNet servers. Extremely expensive items such as legendaries and permanent contracts always use the live Trading Post prices.</p>
-	<p>Non-gold prices are from the representative lowest price of an item, such as karma for a low level Fine rarity armor that unlocks a skin, as opposed to a high level Masterwork rarity armor that unlocks the same skin but cost more karma.</p>
+	<p>Non-coin prices are from the representative lowest price of an item, such as karma for a low level Fine rarity armor that unlocks a skin, as opposed to a high level Masterwork rarity armor that unlocks the same skin but cost more karma.</p>
 </div>
 <div id="accBankHelp">
 	<h2>Bank Usage</h2>

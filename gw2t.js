@@ -6907,6 +6907,7 @@ A = {
 					{
 						if (iBag)
 						{
+							addItem(iBag.id, 1, iChar.oCharIndex); // Add the bag itself which is an item
 							iBag.inventory.forEach(function(iInv)
 							{
 								if (iInv)
@@ -6994,25 +6995,22 @@ A = {
 	},
 	
 	/*
-	 * Creates an associative array from an unlockables record.
+	 * Iterates a function over an unlockables record.
 	 * @param object pRecord.
-	 * @returns object.
+	 * @param function pIteration with parameters entry and entry's category.
 	 */
-	flattenRecord: function(pRecord)
+	iterateRecord: function(pRecord, pIteration)
 	{
 		var catarr, entry;
-		var obj = {};
 		for (var i in pRecord)
 		{
 			catarr = pRecord[i];
 			for (var ii = 0; ii < catarr.length; ii++)
 			{
 				entry = catarr[ii];
-				entry.category = i;
-				obj[entry.i] = entry;
+				pIteration(entry, i);
 			}
 		}
-		return obj;
 	},
 	
 	/*
@@ -7028,39 +7026,53 @@ A = {
 		var untradeabledb;
 		var paymentdb = {}; // Holds payment object or processed TP price, items whose ID is not in this will have no value
 		var priceids = {}; // An associative array so no duplicate item IDs
-		var ascendeddata, ascendedheader, ascendedcomp, auditmetadata, entry;
+		var ascendeddata, ascendedheader, ingredients, ascendedingr, legendaryingr, auditmetadata, entry;
 		var currentbuysdata, currentsellsdata;
 		var wanttransactions = $("#audWantTransactions").prop("checked");
 		
-		// Appraise the value of ascended weapons and armor by summing their crafting components' prices
-		var appraiseAscended = function()
+		// Sums the price of an item's ingredients to get the appraised value of the untradeable item
+		var sumIngredients = function(pIngredients)
 		{
-			var appraisal = {};
-			var ascendedprice, ascendedtype, compprice;
+			var sum = E.createPrice(0), ingrprice;
+			pIngredients.forEach(function(iIngr)
+			{
+				// Sum the ingredients' prices
+				if (iIngr)
+				{
+					ingrprice = paymentdb[iIngr[0]];
+					if (ingrprice)
+					{
+						sum = E.addPrice(sum, E.recountPrice(ingrprice, iIngr[1]));
+					}
+				}
+			});
+			return sum;
+		};
+		
+		// Updates the payment database with the appraised value of untradeable crafted/forged item
+		var appraiseCraftable = function()
+		{
+			// Ascended items
+			var appraisal = {}, ascendedtype;
 			for (var i in ascendedheader)
 			{
-				ascendedprice = E.createPrice(0);
-				// Concatenate insignia components for armors, and inscription components for weapons
+				// If armor or weapon then append the ingredients for insignia or inscription
 				ascendedtype = ascendedheader[i].type;
-				(ascendedcomp[i].concat(ascendedcomp[ascendedtype])).forEach(function(iComp)
-				{
-					// Sum the components' prices
-					if (iComp)
-					{
-						compprice = paymentdb[iComp[0]];
-						if (compprice)
-						{
-							ascendedprice = E.addPrice(ascendedprice, E.recountPrice(compprice, iComp[1]));
-						}
-					}
-				});
-				appraisal[i] = ascendedprice;
+				ingredients = (ascendedtype === "Armor" || ascendedtype === "Weapon")
+					? ascendedingr[i].concat(ascendedingr[ascendedtype]) : ascendedingr[i];
+				appraisal[i] = sumIngredients(ingredients);
 			}
-			for (var i in ascendeddata)
+			// Items of an ascended category gets the same appraised value
+			A.iterateRecord(ascendeddata, function(pEntry, pCategory)
 			{
-				entry = ascendeddata[i];
-				paymentdb[i] = appraisal[entry.category];
-			};
+				paymentdb[pEntry.i] = appraisal[pCategory];
+			});
+			
+			// Legendary items
+			for (var i in legendaryingr)
+			{
+				paymentdb[i] = sumIngredients(legendaryingr[i]);
+			}
 		};
 		
 		// Begins downloading of numerous uncached prices and defines the price database
@@ -7078,7 +7090,15 @@ A = {
 				{
 					paymentdb[iPriceObj.id] = E.processPrice(iPriceObj);
 				});
-				appraiseAscended();
+				// Insert untradeable item prices
+				for (var i in auditmetadata.Payment)
+				{
+					if (auditmetadata.Payment[i].coin)
+					{
+						paymentdb[i] = E.createPrice(auditmetadata.Payment[i].coin);
+					}
+				}
+				appraiseCraftable();
 				// Get payment of untradeable items from catalog
 				I.print(D.getPhraseOriginal("Loading catalog") + "...");
 				$.getScript(U.URL_DATA.Catalog, function()
@@ -7104,9 +7124,10 @@ A = {
 			$.getScript(U.URL_DATA.Ascended, function()
 			{
 				ascendedheader = U.getRecordHeader("ascended");
-				ascendeddata = A.flattenRecord(U.getRecordData("ascended"));
+				ascendeddata = U.getRecordData("ascended");
 				auditmetadata = U.getRecordMetadata("ascended");
-				ascendedcomp = auditmetadata.AscendedComponents;
+				ascendedingr = auditmetadata.AscendedIngredients;
+				legendaryingr = auditmetadata.LegendaryIngredients;
 				// Load the cached prices
 				I.print(D.getPhraseOriginal("Loading price") + "...");
 				$.getScript(U.URL_DATA.Prices, function()
@@ -7270,7 +7291,6 @@ V = {
 	 */
 	serveAudit: function()
 	{
-		return;
 		$("#accAuditContainer").show("fast");
 		// Audit option
 		$("#accAuditTop").append("<label><input id='audWantTransactions' type='checkbox' />"
@@ -7287,7 +7307,7 @@ V = {
 		{
 			if (I.isConsoleShown() === false)
 			{
-				I.print("<div class='accModal cntComposition'>" + $("#accHelpAudit").html() + "</div>");
+				I.help($("#accHelpAudit").html());
 			}
 		});
 	},
@@ -7314,7 +7334,6 @@ V = {
 			{
 				$("#accMenu_" + pSection).trigger("click");
 			}
-			V.serveAudit();
 		};
 		
 		A.Possessions = null;
@@ -7818,6 +7837,8 @@ V = {
 			{
 				generateWallet(wallets[i], i);
 			}
+			// Show the audit button now that wallet is loaded
+			V.serveAudit();
 		});
 	},
 	
@@ -10030,8 +10051,7 @@ B = {
 			var helpmessage = (Settings.aHelpMessage) ? Settings.aHelpMessage : "";
 			if (isshowinghelp || I.isConsoleShown() === false)
 			{
-				I.print("<div class='accModal cntComposition'>" + helpmessage + $("#accBankHelp").html() + "</div>", true);
-				U.convertExternalLink("#cslContent a");
+				I.help(helpmessage + $("#accBankHelp").html());
 			}
 			isshowinghelp = !isshowinghelp;
 		});
@@ -13759,6 +13779,7 @@ E = {
 				},
 				error: function()
 				{
+					I.removeThrobber("#cslContent");
 					I.print("Item is not on the Trading Post.");
 				}
 			});
@@ -29578,6 +29599,16 @@ I = {
 		var content = document.getElementById("cslContent");
 		console.style.display = "block";
 		content.insertAdjacentHTML("beforeend", pString + "<br />");
+	},
+	
+	/*
+	 * Writes HTML into the console in a slim window format.
+	 * @param string pString to write.
+	 */
+	help: function(pString)
+	{
+		I.print("<div class='cslModal cntComposition'>" + pString + "</div>", true);
+		U.convertExternalLink("#cslContent a");
 	},
 	
 	/*

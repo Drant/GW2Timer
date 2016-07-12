@@ -7,6 +7,21 @@
 	position: absolute;
 	width: 100%; height: 100%;
 }
+#accContent .cntComposition h1 {
+	padding-top: 12px;
+	margin-bottom: 8px;
+	font-size: 22px;
+}
+#accContent .cntComposition h2 {
+	margin-top: 4px;
+	margin-bottom: 4px;
+	font-size: 18px;
+}
+#accContent .cntComposition h3 {
+	margin-left: 12px;
+	margin-bottom: 2px;
+	font-size: 14px;
+}
 
 #accToggle, #accExpand, #accClose {
 	top: auto; bottom: -14px; /* Center it across the horizontal line */
@@ -44,9 +59,6 @@
 }
 #accAppendix { /* Pre-written HTML to be used later */
 	display: none;
-}
-.accModal { /* Container of HTML to be written in the console as messages */
-	max-width: 360px;
 }
 .accTrivial { /* Situational class to fade trivial information */
 	opacity: 0.3;
@@ -263,11 +275,16 @@ input[type="text"].accTokenHovered {
 #accAuditContainer {
 	display: none;
 	margin-bottom: 128px;
+	text-align: center;
+}
+#accAuditTop label {
+	display: inline-block;
+	width: 360px;
+	text-align: left;
 }
 #accAuditCenter {
 	margin-top: 16px;
 	margin-bottom: 16px;
-	text-align: center;
 }
 #audExecute, #audHelp {
 	font-family: Menomonia;
