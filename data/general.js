@@ -1265,11 +1265,11 @@ Countdown: {
 		name_de: "Update Sommer 2016",
 		name_es: "Actualización de verano 2016",
 		name_fr: "Mise à jour du été 2016",
-		url: "https://forum-en.guildwars2.com/forum/game/gw2/Summer-Quarterly-update",
+		url: "https://forum-en.guildwars2.com/forum/game/gw2/Living-World-Season-Three",
 		Start: new Date("2016-07-12T16:00:00Z"),
 		Finish: new Date("2016-07-13T16:00:00Z")
-	}
-	/*{ // 8 weeks cycle, on Thursday
+	},
+	{ // 8 weeks cycle, on Thursday
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
@@ -1277,7 +1277,7 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4cbdjq/psa_extremely_lucrative_map_bonus_rewards_in/",
 		Start: new Date("2016-07-21T20:00:00Z"),
 		Finish: new Date("2016-07-28T20:00:00Z")
-	}*/
+	}
 	]
 },
 

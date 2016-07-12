@@ -7030,6 +7030,23 @@ A = {
 		var currentbuysdata, currentsellsdata;
 		var wanttransactions = $("#audWantTransactions").prop("checked");
 		
+		// Fills the table with a column of currency numbers
+		var fillColumn = function(pCurrencies)
+		{
+			
+		};
+		
+		// Audit the banks and unlocks after prices have been assigned
+		var executeAudit = function()
+		{
+			for (var i in A.Possessions)
+			{
+				
+			}
+			I.print(D.getPhraseOriginal("Loading wardrobe") + "...");
+			I.print("Done");
+		};
+		
 		// Sums the price of an item's ingredients to get the appraised value of the untradeable item
 		var sumIngredients = function(pIngredients)
 		{
@@ -7103,15 +7120,25 @@ A = {
 				I.print(D.getPhraseOriginal("Loading catalog") + "...");
 				$.getScript(U.URL_DATA.Catalog, function()
 				{
-					
+					var catalog = U.getRecordData("catalog");
+					A.iterateRecord(catalog, function(pEntry)
+					{
+						// Update payment database item if the payment type is proper
+						if (A.Currency.PaymentAudit[pEntry.p])
+						{
+							if (pEntry.p.coin)
+							{
+								paymentdb[pEntry.i] = E.createPrice(pEntry.p.coin);
+							}
+							else
+							{
+								paymentdb[pEntry.i] = pEntry.p;
+							}
+						}
+					});
+					executeAudit();
 				});
 			}});
-		};
-		
-		var loadUnlocks = function()
-		{
-			I.print(D.getPhraseOriginal("Loading wardrobe") + "...");
-			I.print("Done");
 		};
 		
 		// Load the bank, inventory, equipment, materials
