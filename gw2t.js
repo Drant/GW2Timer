@@ -6852,15 +6852,18 @@ A = {
 		}
 		A.Possessions = {};
 		
-		// Adds an item to the possessions
-		var addItem = function(pItem, pCount, pLocation)
+		// Adds an item to the possessions database
+		var addItem = function(pItem, pCount, pLocation, pIsBound)
 		{
 			// Create entry if doesn't exist
 			if (A.Possessions[pItem] === undefined)
 			{
 				A.Possessions[pItem] = {
 					oCount: 0,
-					oLocations: {}
+					oLocations: {}, // For displaying where the item was found
+					oBank: [0, 0], // For auditing, index 0 is unbound found, index 1 is total found
+					oCharacters: [0, 0],
+					oMaterials: [0, 0]
 				};
 			}
 			// Update entry
@@ -6869,8 +6872,24 @@ A = {
 			{
 				A.Possessions[pItem].oLocations[pLocation] = 0;
 			}
-			// Also record the sub-count, which is the every location's count
+			// Also assign the sub-count, which is the every location's count
 			A.Possessions[pItem].oLocations[pLocation] += pCount;
+			
+			// Assign discrete category counts to be used by the audit function
+			var locationkey;
+			if (isNaN(pLocation) === false || pLocation === "shared") // If location is a character's inventory, equipment, or shared slot
+			{
+				locationkey = "oCharacters";
+			}
+			else
+			{
+				locationkey = "o" + U.toFirstUpperCase(pLocation);
+			}
+			if ( ! pIsBound)
+			{
+				((A.Possessions[pItem])[locationkey])[0] += pCount;
+			}
+			((A.Possessions[pItem])[locationkey])[1] += pCount;
 		};
 		
 		// Search the account for items
@@ -6883,7 +6902,7 @@ A = {
 				{
 					iChar.equipment.forEach(function(iEquip)
 					{
-						addItem(iEquip.id, 1, iChar.oCharIndex);
+						addItem(iEquip.id, 1, iChar.oCharIndex, true);
 						if (iEquip.upgrades)
 						{
 							iEquip.upgrades.forEach(function(iID)
@@ -6912,7 +6931,7 @@ A = {
 							{
 								if (iInv)
 								{
-									addItem(iInv.id, iInv.count, iChar.oCharIndex);
+									addItem(iInv.id, iInv.count, iChar.oCharIndex, iInv.binding);
 								}
 							});
 						}
@@ -6925,7 +6944,7 @@ A = {
 			{
 				if (iSlot)
 				{
-					addItem(iSlot.id, iSlot.count, "shared");
+					addItem(iSlot.id, iSlot.count, "shared", iSlot.binding);
 				}
 			});
 			
@@ -6934,7 +6953,7 @@ A = {
 			{
 				if (iSlot)
 				{
-					addItem(iSlot.id, iSlot.count, "bank");
+					addItem(iSlot.id, iSlot.count, "bank", iSlot.binding);
 				}
 			});
 			
@@ -6948,6 +6967,7 @@ A = {
 			});
 			
 			// Execute callback after finishing compilation
+			I.log(A.Possessions);
 			pCallback();
 		};
 		
