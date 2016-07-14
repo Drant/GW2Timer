@@ -66,6 +66,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "obecné", it: "generale", pl: "ogólne", pt: "geral", ru: "общие", zh: "一般"},
 	s_dungeon: {de: "verlies", es: "mazmorra", fr: "donjon",
 		cs: "žalář", it: "segreta", pl: "loch", pt: "masmorra", ru: "подземелье", zh: "地牢"},
+	s_wallet: {de: "geldbörse", es: "cartera", fr: "portefeuille",
+		cs: "peněženka", it: "portafoglio", pl: "portfel", pt: "carteira", ru: "бума́жник", zh: "錢包"},
 	s_currencies: {de: "währung", es: "monedas", fr: "monnaies",
 		cs: "měny", it: "valute", pl: "waluty", pt: "moedas", ru: "валюта", zh: "貨幣"},
 	s_tokens: {de: "wertmarke", es: "fichas", fr: "jetons",
@@ -113,7 +115,11 @@ var GW2T_ACCOUNT_DICTIONARY = {
 	s_bought: {de: "gekauft", es: "comprado", fr: "achats historique",
 		cs: "koupil", it: "comprato", pl: "kupiłem", pt: "comprei", ru: "купил", zh: "買了"},
 	s_sold: {de: "verkauft", es: "vendido", fr: "ventes historique",
-		cs: "prodal", it: "venduto", pl: "sprzedał", pt: "vendi", ru: "продал", zh: "賣了"}
+		cs: "prodal", it: "venduto", pl: "sprzedał", pt: "vendi", ru: "продал", zh: "賣了"},
+	s_liquid: {de: "flüssige", es: "líquido", fr: "liquide",
+		cs: "likvidní", it: "liquido", pl: "płynny", pt: "líquido", ru: "ликви́дный", zh: "流動"},
+	s_appraised: {de: "schätzen", es: "apreciación", fr: "estimative",
+		cs: "odhadní", it: "apprezzato", pl: "wycenionej", pt: "apreciado", ru: "оценочная", zh: "評估"}
 };
 
 /*
@@ -158,29 +164,49 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 30, coefficient: 10, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP聯賽兌換券" }
 		]
 	},
-	PaymentAudit: { // Payments to show on the account audit table, and the associated wallet ID
-		coin: 1,
-		karma: 2,
-		laurel: 3,
-		gem: 4,
-		badge: 15,
-		commendation: 16,
-		dungeon_ac: 5,
-		dungeon_cm: 9,
-		dungeon_ta: 11,
-		dungeon_se: 10,
-		dungeon_cof: 13,
-		dungeon_hotw: 12,
-		dungeon_coe: 14,
-		dungeon_arah: 6,
-		fotm_relic: 7,
-		fotm_pristine: 15,
-		raid_ft: 10,
-		map_dt: 25,
-		map_sw: 27,
-		map_vb: 19,
-		map_ab: 22,
-		map_td: 20
+	AuditCategories: {
+		Wallet: null,
+		Characters: null,
+		Bank: null,
+		Materials: null,
+		Wardrobe: null,
+		Minis: null,
+		Dyes: null,
+		Recipes: null,
+		Buying: null,
+		Selling: null
+	},
+	/*
+	 * Payments to show on the account audit table in this order.
+	 * ID is associated with wallet, conversion is how many copper for one of that currency.
+	 * Conversions in array format: [paymentAmount, equivalentItemID]
+	 */
+	AuditPayments: {
+		coin_liquidbuy: {id: 1, conversion: 1},
+		coin_liquidsell: {id: 1, conversion: 1},
+		coin_appraisebuy: {id: 1, conversion: 1},
+		coin_appraisesell: {id: 1, conversion: 1},
+		karma: {id: 2, conversion: [5250, 24305]},
+		laurel: {id: 3, conversion: 10000},
+		gem: {id: 4, conversion: null}, // To be assigned by gem exchange
+		badge: {id: 15, conversion: 100},
+		commendation: {id: 16, conversion: 10000},
+		dungeon_ac: {id: 5, conversion: [30, 19721]}, // Glob of Ectoplasm
+		dungeon_cm: {id: 9, conversion: [30, 19721]},
+		dungeon_ta: {id: 11, conversion: [30, 19721]},
+		dungeon_se: {id: 10, conversion: [30, 19721]},
+		dungeon_cof: {id: 13, conversion: [30, 19721]},
+		dungeon_hotw: {id: 12, conversion: [30, 19721]},
+		dungeon_coe: {id: 14, conversion: [30, 19721]},
+		dungeon_arah: {id: 6, conversion: [30, 19721]},
+		fotm_relic: {id: 7, conversion: [1350, 37000]}, // Quiver of a Thousand Arrows
+		fotm_pristine: {id: 15, conversion: [135, 24351]},
+		raid_ft: {id: 10, conversion: [400, 48079]}, // Zojja Doublet
+		map_dt: {id: 25, conversion: 0},
+		map_sw: {id: 27, conversion: 0},
+		map_vb: {id: 19, conversion: 0},
+		map_ab: {id: 22, conversion: 0},
+		map_td: {id: 20, conversion: 0}
 	}
 };
 

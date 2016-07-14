@@ -151,7 +151,10 @@ Gathering: [
 	{i: 48825, n: "Frost Wasp Logging Tool", p: {gem: 1000}},
 	{i: 78909, n: "Glitter Bomb Harvesting Tool", p: {gem: 1000}},
 	{i: 78724, n: "Focused Solar Logging Tool", p: {gem: 1000}},
-	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}}
+	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}},
+	{i: 78996, n: "Unbreakable Harvesting Sickle", p: {gem: 800}},
+	{i: 78806, n: "Unbreakable Logging Axe", p: {gem: 800}},
+	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 800}}
 ],
 Salvage: [
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},
@@ -279,8 +282,9 @@ TonicEndless: [
 	{i: 50048, n: "Thoughtless Potion", p: {achievement: 0}},
 	{i: 43956, n: "Ellen Kiel Representation Button"},
 	{i: 43957, n: "Evon Gnashblade Representation Button"},
-	{i: 36176, n: "Endless Riding Clothes Tonic"},
 	{i: 36179, n: "Endless Common Clothing Tonic"},
+	{i: 36192, n: "Endless Dragon Emblem Clothing Tonic", p: {gem: 0}},
+	{i: 36176, n: "Endless Riding Clothes Tonic"},
 	{i: 36180, n: "Endless Khaki Clothing Tonic"},
 	{i: 36183, n: "Endless Designer Hoodie Clothing Tonic"},
 	{i: 36184, n: "Endless Leather Hoodie Clothing Tonic"},
@@ -291,7 +295,6 @@ TonicEndless: [
 	{i: 36189, n: "Endless Cherry Blossom Clothing Tonic"},
 	{i: 36190, n: "Endless Country Lace Clothing Tonic"},
 	{i: 36191, n: "Endless Ornate Clothing Tonic"},
-	{i: 36192, n: "Endless Dragon Emblem Clothing Tonic", p: {gem: 0}},
 	{i: 36200, n: "Endless Casual Hoodie Clothing Tonic"},
 	{u: 77637, i: 77568, n: "Enchanted Snowball"},
 	{i: 35747, n: "Cold Potion"},

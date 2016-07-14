@@ -4310,10 +4310,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				Z.getItemsDatabase(function(pDB)
-				{
-					
-				});
+				
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -6967,7 +6964,6 @@ A = {
 			});
 			
 			// Execute callback after finishing compilation
-			I.log(A.Possessions);
 			pCallback();
 		};
 		
@@ -7050,6 +7046,21 @@ A = {
 		var currentbuysdata, currentsellsdata;
 		var wanttransactions = $("#audWantTransactions").prop("checked");
 		
+		var createAuditPayments = function()
+		{
+			var paymentsobj = {};
+			for (var i in A.Currency.AuditPayments)
+			{
+				paymentsobj[i] = 0;
+			}
+			return paymentsobj;
+		};
+		
+		var insertAuditPayment =  function(pPaymentObj, pAmount)
+		{
+			
+		};
+		
 		// Fills the table with a column of currency numbers
 		var fillColumn = function(pCurrencies)
 		{
@@ -7059,12 +7070,18 @@ A = {
 		// Audit the banks and unlocks after prices have been assigned
 		var executeAudit = function()
 		{
+			for (var i in A.Currency.AuditCategories)
+			{
+				A.Currency.AuditCategories[i] = createAuditPayments();
+			}
 			for (var i in A.Possessions)
 			{
 				
 			}
 			I.print(D.getPhraseOriginal("Loading wardrobe") + "...");
 			I.print("Done");
+			var test = createAuditPayments();
+			I.log(test);
 		};
 		
 		// Sums the price of an item's ingredients to get the appraised value of the untradeable item
@@ -12095,10 +12112,6 @@ Q = {
 		// ATTRIBUTES
 		var attrstr = "";
 		var statsbrktop = "";
-		var buffs = [];
-		var buffcounter = 0;
-		var buffadd = 0;
-		var buffnumbers = [];
 		if (det && det.infix_upgrade)
 		{
 			var attr = det.infix_upgrade.attributes;
@@ -12109,23 +12122,9 @@ Q = {
 				// Armors, weapons, trinkets
 				if (isequipment)
 				{
-					if (det.infix_upgrade.buff && det.infix_upgrade.buff.description)
-					{
-						buffnumbers = (det.infix_upgrade.buff.description).split("\n");
-						buffnumbers.forEach(function(iBuff)
-						{
-							buffs.push(U.stripToNumbers(iBuff));
-						});
-					}
 					attr.forEach(function(iStats)
 					{
-						if (buffcounter < buffs.length)
-						{
-							buffadd = buffs[buffcounter];
-							buffcounter++;
-						}
-						attrstr += "+" + (parseInt(iStats.modifier) + buffadd) + " " + Q.getAttributeTranslation(iStats.attribute) + "<br />";
-						// Sum the iterated attribute to the attributes-containing object
+						attrstr += "+" + parseInt(iStats.modifier) + " " + Q.getAttributeTranslation(iStats.attribute) + "<br />";
 					});
 				}
 				// Sigils
