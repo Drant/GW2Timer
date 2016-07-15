@@ -6858,9 +6858,11 @@ A = {
 				A.Possessions[pItem] = {
 					oCount: 0,
 					oLocations: {}, // For displaying where the item was found
-					oBank: [0, 0], // For auditing, index 0 is unbound found, index 1 is total found
-					oCharacters: [0, 0],
-					oMaterials: [0, 0]
+					oAudit: {
+						Bank: [0, 0], // For auditing, index 0 is unbound found, index 1 is total found
+						Characters: [0, 0],
+						Materials: [0, 0]
+					}
 				};
 			}
 			// Update entry
@@ -6876,17 +6878,14 @@ A = {
 			var locationkey;
 			if (isNaN(pLocation) === false || pLocation === "shared") // If location is a character's inventory, equipment, or shared slot
 			{
-				locationkey = "oCharacters";
+				locationkey = "Characters";
 			}
 			else
 			{
-				locationkey = "o" + U.toFirstUpperCase(pLocation);
+				locationkey = U.toFirstUpperCase(pLocation);
 			}
-			if ( ! pIsBound)
-			{
-				((A.Possessions[pItem])[locationkey])[0] += pCount;
-			}
-			((A.Possessions[pItem])[locationkey])[1] += pCount;
+			var boundindex = (pIsBound) ? 1 : 0;
+			((A.Possessions[pItem]).oAudit[locationkey])[boundindex] += pCount;
 		};
 		
 		// Search the account for items
@@ -7041,24 +7040,97 @@ A = {
 		var cachedprices; // Will contain payment or TP prices, accessible by item ID
 		var untradeabledb;
 		var paymentdb = {}; // Holds payment object or processed TP price, items whose ID is not in this will have no value
-		var priceids = {}; // An associative array so no duplicate item IDs
-		var ascendeddata, ascendedheader, ingredients, ascendedingr, legendaryingr, auditmetadata, entry;
+		var priceids = {}; // Tradeable item IDs to fetch, an associative array so no duplicate
+		var ascendeddata, ascendedheader, ingredients, ascendedingr, legendaryingr, auditmetadata;
 		var currentbuysdata, currentsellsdata;
 		var wanttransactions = $("#audWantTransactions").prop("checked");
 		
-		var createAuditPayments = function()
+		// Initializes payment values (currencies) for all audit categories
+		var initializeAuditCategories = function()
 		{
-			var paymentsobj = {};
-			for (var i in A.Currency.AuditPayments)
+			for (var i in A.Currency.AuditCategories)
 			{
-				paymentsobj[i] = 0;
+				var paymentsobj = {};
+				for (var ii in A.Currency.AuditPayments)
+				{
+					paymentsobj[ii] = 0;
+				}
+				A.Currency.AuditCategories[i] = paymentsobj;
 			}
-			return paymentsobj;
 		};
 		
-		var insertAuditPayment =  function(pPaymentObj, pAmount)
+		// Adds a payment or price object to an audit category
+		var addPaymentToCategory = function(pCategory, pPayment, pCount, pIsBound)
 		{
-			
+			var count = (pCount === undefined) ? 1 : pCount;
+			if (pPayment.oPriceBuy !== undefined)
+			{
+				if (pIsBound)
+				{
+					// Bound items cannot be liquidated for cash, so only have appraised values
+					pCategory.coin_appraisebuy += pPayment.oPriceBuy * count;
+					pCategory.coin_appraisesell += pPayment.oPriceSell * count;
+				}
+				else
+				{
+					pCategory.coin_liquidbuy += pPayment.oPriceBuyTaxed * count;
+					pCategory.coin_liquidsell += pPayment.oPriceSellTaxed * count;
+					pCategory.coin_appraisebuy += pPayment.oPriceBuy * count;
+					pCategory.coin_appraisesell += pPayment.oPriceSell * count;
+				}
+			}
+			else
+			{
+				for (var i in pPayment)
+				{
+					if (pCategory[i] !== undefined && pPayment[i] > 0)
+					{
+						pCategory[i] += pPayment[i] * count;
+					}
+				}
+			}
+		};
+		
+		// Assign values for the wallet audit category
+		var auditWallet = function()
+		{
+			var quantity, auditcat, paymentobj;
+			for (var i in A.Data.Wallet)
+			{
+				quantity = A.Data.Wallet[i];
+				auditcat = A.Currency.AuditCategories["Wallet"];
+				if (i === "1") // If the currency is coin
+				{
+					addPaymentToCategory(auditcat, E.createPriceUniform(quantity), 1, true);
+				}
+				else if (A.Currency.WalletAssoc[i]) // Audit applicable currencies
+				{
+					paymentobj = {};
+					paymentobj[(A.Currency.WalletAssoc[i])] = quantity;
+					addPaymentToCategory(auditcat, paymentobj, 1, true);
+				}
+			}
+		};
+		
+		// Assign values for the bank, characters, and materials audit categories
+		var auditPossessions = function()
+		{
+			var payment, auditcat, catpossession;
+			for (var i in A.Possessions)
+			{
+				payment = paymentdb[i];
+				if (payment)
+				{
+					for (var ii in A.Possessions[i].oAudit)
+					{
+						catpossession = A.Possessions[i].oAudit[ii];
+						auditcat = A.Currency.AuditCategories[ii];
+						addPaymentToCategory(auditcat, payment, catpossession[0]); // Index 0 is the count of unbound items
+						addPaymentToCategory(auditcat, payment, catpossession[1], true); // Index 1 is the count of bound items
+					}
+				}
+			}
+			I.log(A.Currency.AuditCategories);
 		};
 		
 		// Fills the table with a column of currency numbers
@@ -7070,18 +7142,11 @@ A = {
 		// Audit the banks and unlocks after prices have been assigned
 		var executeAudit = function()
 		{
-			for (var i in A.Currency.AuditCategories)
-			{
-				A.Currency.AuditCategories[i] = createAuditPayments();
-			}
-			for (var i in A.Possessions)
-			{
-				
-			}
+			initializeAuditCategories();
+			auditWallet();
+			auditPossessions();
 			I.print(D.getPhraseOriginal("Loading wardrobe") + "...");
 			I.print("Done");
-			var test = createAuditPayments();
-			I.log(test);
 		};
 		
 		// Sums the price of an item's ingredients to get the appraised value of the untradeable item
@@ -7152,6 +7217,12 @@ A = {
 						paymentdb[i] = E.createPrice(auditmetadata.Payment[i].coin);
 					}
 				}
+				// Insert junk rarity item prices
+				for (var i in auditmetadata.JunkValue)
+				{
+					paymentdb[i] = E.createPriceBound(auditmetadata.JunkValue[i]);
+				}
+				// Insert untradeable crafted or forged item prices
 				appraiseCraftable();
 				// Get payment of untradeable items from catalog
 				I.print(D.getPhraseOriginal("Loading catalog") + "...");
@@ -7160,16 +7231,15 @@ A = {
 					var catalog = U.getRecordData("catalog");
 					A.iterateRecord(catalog, function(pEntry)
 					{
-						// Update payment database item if the payment type is proper
-						if (A.Currency.PaymentAudit[pEntry.p])
+						if (pEntry.p)
 						{
-							if (pEntry.p.coin)
+							for (var i in pEntry.p)
 							{
-								paymentdb[pEntry.i] = E.createPrice(pEntry.p.coin);
-							}
-							else
-							{
-								paymentdb[pEntry.i] = pEntry.p;
+								// Update payment database item if the payment type is applicable
+								if ((A.Currency.AuditPayments[i] || pEntry.p.coin))
+								{
+									paymentdb[pEntry.i] = (pEntry.p.coin) ? E.createPriceBound(pEntry.p.coin) : pEntry.p;
+								}
 							}
 						}
 					});
@@ -7355,6 +7425,7 @@ V = {
 	 */
 	serveAudit: function()
 	{
+		return;
 		$("#accAuditContainer").show("fast");
 		// Audit option
 		$("#accAuditTop").append("<label><input id='audWantTransactions' type='checkbox' />"
@@ -13753,6 +13824,28 @@ E = {
 			oPriceSellTaxed: E.deductTax(price)
 		};
 	},
+	createPriceUniform: function(pPrice, pCount)
+	{
+		var count = (pCount === undefined) ? 1 : pCount;
+		var price = pPrice * count;
+		return {
+			oPriceBuy: price,
+			oPriceSell: price,
+			oPriceBuyTaxed: price,
+			oPriceSellTaxed: price
+		};
+	},
+	createPriceBound: function(pPrice, pCount)
+	{
+		var count = (pCount === undefined) ? 1 : pCount;
+		var price = pPrice * count;
+		return {
+			oPriceBuy: price,
+			oPriceSell: price,
+			oPriceBuyTaxed: 0,
+			oPriceSellTaxed: 0
+		};
+	},
 	addPrice: function(pPriceA, pPriceB)
 	{
 		return {
@@ -18295,7 +18388,7 @@ M = {
 		};
 		var waypointsize = getZoomValue("waypoint");
 		var landmarksize = getZoomValue("landmark");
-		var eventiconsize =  getZoomValue("eventicon");
+		var eventiconsize = getZoomValue("eventicon");
 		var eventringsize = getZoomValue("eventring");
 		var sectorfont = getZoomValue("sectorfont");
 		var sectoropacity = getZoomValue("sectoropacity");

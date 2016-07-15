@@ -164,7 +164,7 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 30, coefficient: 10, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP聯賽兌換券" }
 		]
 	},
-	AuditCategories: {
+	AuditCategories: { // Each entry will hold a payments object, displayed as a column in the audit table
 		Wallet: null,
 		Characters: null,
 		Bank: null,
@@ -200,13 +200,36 @@ var GW2T_CURRENCY_DATA = {
 		dungeon_coe: {id: 14, conversion: [30, 19721]},
 		dungeon_arah: {id: 6, conversion: [30, 19721]},
 		fotm_relic: {id: 7, conversion: [1350, 37000]}, // Quiver of a Thousand Arrows
-		fotm_pristine: {id: 15, conversion: [135, 24351]},
-		raid_ft: {id: 10, conversion: [400, 48079]}, // Zojja Doublet
+		fotm_pristine: {id: 24, conversion: [135, 24351]},
+		raid_ft: {id: 28, conversion: [400, 48079]}, // Zojja Doublet
 		map_dt: {id: 25, conversion: 0},
 		map_sw: {id: 27, conversion: 0},
 		map_vb: {id: 19, conversion: 0},
 		map_ab: {id: 22, conversion: 0},
 		map_td: {id: 20, conversion: 0}
+	},
+	WalletAssoc: {
+		"2": "karma",
+		"3": "laurel",
+		"4": "gem",
+		"15": "badge",
+		"16": "commendation",
+		"5": "dungeon_ac",
+		"9": "dungeon_cm",
+		"11": "dungeon_ta",
+		"10": "dungeon_se",
+		"13": "dungeon_cof",
+		"12": "dungeon_hotw",
+		"14": "dungeon_coe",
+		"6": "dungeon_arah",
+		"7": "fotm_relic",
+		"24": "fotm_pristine",
+		"28": "raid_ft",
+		"25": "map_dt",
+		"27": "map_sw",
+		"19": "map_vb",
+		"22": "map_ab",
+		"20": "map_td"
 	}
 };
 
