@@ -3119,7 +3119,7 @@ U = {
 		}
 		return arr;
 	},
-	getExistObject: function(pArray)
+	getExistAssoc: function(pArray)
 	{
 		// Element itself is the key
 		var assoc = {};
@@ -6009,7 +6009,7 @@ Z = {
 					tradeableids[iID] = true;
 				}
 			});
-			iterateRecord(function(iEntry) // Wardrobe
+			iterateRecord(function(iEntry) // Skins
 			{
 				if (iEntry.p === undefined && Q.isTradeable(db[iEntry.i]))
 				{
@@ -6071,7 +6071,8 @@ A = {
 		Minis: {},
 		Trading: {}
 	},
-	Possessions: null, // Associative array of items generated from the user's bank, inventory, and equipment slots
+	Possessions: null, // Associative array of actual items from the user's bank, inventory, equipment slots, shared slots, and bag slots
+	Tallies: null, // Number of filled slots and capacity of banks and collections, used in auditing
 	URL: { // Account data type and URL substring
 		Account: "account",
 		Achievements: "account/achievements",
@@ -6834,8 +6835,9 @@ A = {
 	},
 	
 	/*
-	 * Initializes the associative array holding item IDs and count of each
-	 * items, based on the account's bank, inventory, equipment, and materials.
+	 * Initializes the associative array accessed by item IDs that holds the
+	 * count of each items, based on the account's bank, inventory, shared slots,
+	 * equipment, and materials.
 	 * @param function pCallback to execute after.
 	 * @pre Characters data were downloaded by the Characters page.
 	 */
@@ -6857,40 +6859,50 @@ A = {
 			{
 				A.Possessions[pItem] = {
 					oCount: 0,
-					oLocations: {}, // For displaying where the item was found
-					oAudit: {
-						Bank: [0, 0], // For auditing, index 0 is unbound found, index 1 is total found
-						Characters: [0, 0],
-						Materials: [0, 0]
-					}
+					oAudit: {} // Will contain length 2 arrays: index 0 is unbound found, index 1 is total found
 				};
 			}
-			// Update entry
-			A.Possessions[pItem].oCount += pCount;
-			if (A.Possessions[pItem].oLocations[pLocation] === undefined)
+			var auditobj = A.Possessions[pItem].oAudit;
+			// Initializes the audit object in an audit location if doesn't exist, and adds its count
+			var updateAuditObj = function(pAuditLocation)
 			{
-				A.Possessions[pItem].oLocations[pLocation] = 0;
-			}
-			// Also assign the sub-count, which is the every location's count
-			A.Possessions[pItem].oLocations[pLocation] += pCount;
+				if (auditobj[pAuditLocation] === undefined)
+				{
+					auditobj[pAuditLocation] = [0, 0];
+				}
+				if ( ! pIsBound)
+				{
+					(auditobj[pAuditLocation])[0] += pCount;
+				}
+				(auditobj[pAuditLocation])[1] += pCount;
+			};
 			
-			// Assign discrete category counts to be used by the audit function
-			var locationkey;
-			if (isNaN(pLocation) === false || pLocation === "shared") // If location is a character's inventory, equipment, or shared slot
+			// Update total item found count
+			A.Possessions[pItem].oCount += pCount;
+			
+			// Assign discrete category counts; the Characters location combines inventory, equipment, and shared slots
+			var locationkey = (isNaN(pLocation) === false || pLocation === "Shared") ? "Characters" : U.toFirstUpperCase(pLocation);
+			updateAuditObj(locationkey);
+			// Assign for shared slots again because it was assigned to Characters location
+			if (pLocation === "Shared")
 			{
-				locationkey = "Characters";
+				updateAuditObj("Shared");
 			}
-			else
+			// Per character audit entries
+			if (isNaN(pLocation) === false)
 			{
-				locationkey = U.toFirstUpperCase(pLocation);
+				updateAuditObj(pLocation);
 			}
-			var boundindex = (pIsBound) ? 1 : 0;
-			((A.Possessions[pItem]).oAudit[locationkey])[boundindex] += pCount;
 		};
 		
 		// Search the account for items
 		var compilePossessions = function(pSharedData, pBankData, pMaterialsData)
 		{
+			// Tallies object hold filled and capacity numbers
+			A.Tallies = {
+				Characters: [0, 0],
+				Bank: [0, 0]
+			};
 			A.Data.Characters.forEach(function(iChar)
 			{
 				// Add character's equipped items (equipment) and their slotted upgrades or infusions
@@ -6922,11 +6934,13 @@ A = {
 					{
 						if (iBag)
 						{
+							A.Tallies.Characters[1] += iBag.size;
 							addItem(iBag.id, 1, iChar.oCharIndex); // Add the bag itself which is an item
 							iBag.inventory.forEach(function(iInv)
 							{
 								if (iInv)
 								{
+									A.Tallies.Characters[0] += 1;
 									addItem(iInv.id, iInv.count, iChar.oCharIndex, iInv.binding);
 								}
 							});
@@ -6940,16 +6954,18 @@ A = {
 			{
 				if (iSlot)
 				{
-					addItem(iSlot.id, iSlot.count, "shared", iSlot.binding);
+					addItem(iSlot.id, iSlot.count, "Shared", iSlot.binding);
 				}
 			});
 			
 			// Add bank contents
+			A.Tallies.Bank[1] = pBankData.length;
 			pBankData.forEach(function(iSlot)
 			{
 				if (iSlot)
 				{
-					addItem(iSlot.id, iSlot.count, "bank", iSlot.binding);
+					A.Tallies.Bank[0] += 1;
+					addItem(iSlot.id, iSlot.count, "Bank", iSlot.binding);
 				}
 			});
 			
@@ -6958,7 +6974,7 @@ A = {
 			{
 				if (iSlot && iSlot.count > 0)
 				{
-					addItem(iSlot.id, iSlot.count, "materials");
+					addItem(iSlot.id, iSlot.count, "Materials");
 				}
 			});
 			
@@ -6987,23 +7003,28 @@ A = {
 	 * @param object pLocations from possessions object.
 	 * @returns string.
 	 */
-	formatPossessionLocations: function(pLocations)
+	formatPossessionLocations: function(pPossessionEntry)
 	{
 		var str = "";
-		for (var i in pLocations)
+		var locations = pPossessionEntry.oAudit;
+		for (var i in locations)
 		{
-			if (isNaN(i))
+			// Show the character names rather than the combined characters location, ignore empty locations
+			if (i !== "Characters" && ((locations[i])[0] > 0 || (locations[i])[1] > 0))
 			{
-				str += D.getWordCapital(i);
-			}
-			else
-			{
-				if (A.Data.Characters[i])
+				if (isNaN(i))
 				{
-					str += A.Data.Characters[i].oCharName;
+					str += D.getWordCapital(i);
 				}
+				else
+				{
+					if (A.Data.Characters[i])
+					{
+						str += A.Data.Characters[i].oCharName;
+					}
+				}
+				str += " (" + (locations[i])[1] + ")" + ", "; // Write the count next to the location name
 			}
-			str += " (" + pLocations[i] + ")" + ", "; // Write the count next to the location name
 		}
 		str = str.substring(0, str.length - 2); // Trim the trailing comma
 		return str;
@@ -7012,7 +7033,7 @@ A = {
 	/*
 	 * Iterates a function over an unlockables record.
 	 * @param object pRecord.
-	 * @param function pIteration with parameters entry and entry's category.
+	 * @param function pIteration with parameters entry and entry's category name.
 	 */
 	iterateRecord: function(pRecord, pIteration)
 	{
@@ -7030,32 +7051,56 @@ A = {
 	
 	/*
 	 * Generates the account audit subsection into the Characters page.
+	 * The inner functions are executed from bottom to top.
 	 */
 	generateAudit: function()
 	{
 		var button = $("#audExecute");
 		I.suspendElement(button);
-		var container = $("#accAudit");
+		var container = $("#accAudit").empty();
 		var table = $("<table id='audCurrencies'></table>").appendTo(container);
+		var wanttransactions = $("#audWantTransactions").prop("checked");
 		var cachedprices; // Will contain payment or TP prices, accessible by item ID
 		var untradeabledb;
 		var paymentdb = {}; // Holds payment object or processed TP price, items whose ID is not in this will have no value
 		var priceids = {}; // Tradeable item IDs to fetch, an associative array so no duplicate
 		var ascendeddata, ascendedheader, ingredients, ascendedingr, legendaryingr, auditmetadata;
 		var currentbuysdata, currentsellsdata;
-		var wanttransactions = $("#audWantTransactions").prop("checked");
+		var recordsdata = {
+			Ascended: {},
+			Catalog: {},
+			Skins: {},
+			Minis: {},
+			Dyes: {},
+			Recipes: {}
+		};
+		var unlocksdata = {
+			Skins: {},
+			Minis: {},
+			Dyes: {}
+		};
 		
-		// Initializes payment values (currencies) for all audit categories
+		// Resets the auditing process in case it failed to let the user restart it
+		var dealError = function()
+		{
+			I.suspendElement(button, false);
+		};
+		
+		// Creates a standard object of payments to be displayed for an audit category
+		var createAuditPayments = function()
+		{
+			var paymentsobj = {};
+			for (var ii in A.Currency.AuditPayments)
+			{
+				paymentsobj[ii] = 0;
+			}
+			return paymentsobj;
+		};
 		var initializeAuditCategories = function()
 		{
 			for (var i in A.Currency.AuditCategories)
 			{
-				var paymentsobj = {};
-				for (var ii in A.Currency.AuditPayments)
-				{
-					paymentsobj[ii] = 0;
-				}
-				A.Currency.AuditCategories[i] = paymentsobj;
+				A.Currency.AuditCategories[i] = createAuditPayments();
 			}
 		};
 		
@@ -7091,7 +7136,7 @@ A = {
 			}
 		};
 		
-		// Assign values for the wallet audit category
+		// Evaluates the wallet audit category
 		var auditWallet = function()
 		{
 			var quantity, auditcat, paymentobj;
@@ -7101,7 +7146,7 @@ A = {
 				auditcat = A.Currency.AuditCategories["Wallet"];
 				if (i === "1") // If the currency is coin
 				{
-					addPaymentToCategory(auditcat, E.createPriceUniform(quantity), 1, true);
+					addPaymentToCategory(auditcat, E.createPriceUniform(quantity), 1);
 				}
 				else if (A.Currency.WalletAssoc[i]) // Audit applicable currencies
 				{
@@ -7112,10 +7157,10 @@ A = {
 			}
 		};
 		
-		// Assign values for the bank, characters, and materials audit categories
+		// Evaluates the bank, characters, and materials audit categories
 		var auditPossessions = function()
 		{
-			var payment, auditcat, catpossession;
+			var payment, auditcat, auditobj;
 			for (var i in A.Possessions)
 			{
 				payment = paymentdb[i];
@@ -7123,33 +7168,123 @@ A = {
 				{
 					for (var ii in A.Possessions[i].oAudit)
 					{
-						catpossession = A.Possessions[i].oAudit[ii];
 						auditcat = A.Currency.AuditCategories[ii];
-						addPaymentToCategory(auditcat, payment, catpossession[0]); // Index 0 is the count of unbound items
-						addPaymentToCategory(auditcat, payment, catpossession[1], true); // Index 1 is the count of bound items
+						auditobj = A.Possessions[i].oAudit[ii];
+						if (isNaN(ii) === false) // If auditing an individual character
+						{
+							if (A.Currency.AuditCategoriesCharacters[ii] === undefined)
+							{
+								A.Currency.AuditCategoriesCharacters[ii] = createAuditPayments();
+							}
+							auditcat = A.Currency.AuditCategoriesCharacters[ii];
+						}
+						if (auditcat) // Add payment if it is of a valid audit category or is a character audit
+						{
+							addPaymentToCategory(auditcat, payment, auditobj[0]); // Index 0 is the count of unbound items
+							addPaymentToCategory(auditcat, payment, auditobj[1], true); // Index 1 is the count of all items
+						}
 					}
 				}
 			}
-			I.log(A.Currency.AuditCategories);
 		};
 		
-		// Fills the table with a column of currency numbers
-		var fillColumn = function(pCurrencies)
+		// Evaluates an unlocks audit category
+		var auditUnlocks = function(pName, pWantPossessions)
 		{
+			var unlockedids; // An associative array of unlock IDs
+			var itemkey = "i";
+			// Special case for recipes because the unlocks is stored within the characters data instead of an API flat array
+			if (pName === "Recipes")
+			{
+				// Initialize the recipes unlocks array
+				unlocksdata.Recipes = [];
+				unlockedids = {};
+				itemkey = "t"; // The item ID of tradeable recipes is stored in the recipes record under this object key
+				A.Data.Characters.forEach(function(iChar)
+				{
+					if (iChar.recipes)
+					{
+						for (var i = 0; i < iChar.recipes.length; i++)
+						{
+							unlockedids[(iChar.recipes[i])] = true;
+						}
+					}
+				});
+			}
 			
+			// Audit by adding the payment value once for each unlock (which has an associated item that has a payment)
+			A.Tallies[pName] = [(unlocksdata[pName]).length, 0];
+			var payment, auditcat = A.Currency.AuditCategories[pName];
+			if (unlockedids === undefined)
+			{
+				unlockedids = U.getExistAssoc(unlocksdata[pName]);
+				// Special case for skins, nullify some from auditing
+				if (pName === "Skins")
+				{
+					for (var i in auditmetadata.SkinsExclusion)
+					{
+						unlockedids[i] = false;
+					}
+				}
+			}
+			A.iterateRecord(recordsdata[pName], function(pEntry)
+			{
+				if (pEntry[itemkey])
+				{
+					payment = paymentdb[(pEntry[itemkey])];
+					// Audit if payment exists, skin is unlocked, and skin's associated item is not in possession
+					if (payment && unlockedids[pEntry.u]
+						&& ((pWantPossessions === false && A.Possessions[(pEntry[itemkey])] === undefined) || (pWantPossessions !== false)))
+					{
+						addPaymentToCategory(auditcat, payment, 1, true);
+						(A.Tallies[pName])[1] += 1;
+					}
+				}
+			});
 		};
 		
-		// Audit the banks and unlocks after prices have been assigned
+		// Evaluates transactions of coin in buy orders or items in sell listings
+		auditTransactions = function()
+		{
+			if (currentbuysdata)
+			{
+				currentbuysdata.forEach(function(iTransaction)
+				{
+					
+				});
+			}
+			if (currentsellsdata)
+			{
+				currentsellsdata.forEach(function(iTransaction)
+				{
+					
+				});
+			}
+		};
+		
+		// Writes HTML to display the audit results
+		var generateResults = function()
+		{
+			I.print("Done");
+			I.log(A.Currency.AuditCategories);
+			I.log(A.Currency.AuditCategoriesCharacters);
+		};
+		
+		// Audits the banks and unlocks after prices have been assigned
 		var executeAudit = function()
 		{
 			initializeAuditCategories();
 			auditWallet();
 			auditPossessions();
-			I.print(D.getPhraseOriginal("Loading wardrobe") + "...");
-			I.print("Done");
+			auditUnlocks("Skins", false);
+			auditUnlocks("Minis");
+			auditUnlocks("Dyes");
+			auditUnlocks("Recipes");
+			auditTransactions();
+			generateResults();
 		};
 		
-		// Sums the price of an item's ingredients to get the appraised value of the untradeable item
+		// Sums the coin price of an item's ingredients to get the appraised value of the untradeable item
 		var sumIngredients = function(pIngredients)
 		{
 			var sum = E.createPrice(0), ingrprice;
@@ -7171,6 +7306,11 @@ A = {
 		// Updates the payment database with the appraised value of untradeable crafted/forged item
 		var appraiseCraftable = function()
 		{
+			ascendedheader = U.getRecordHeader("ascended");
+			ascendeddata = U.getRecordData("ascended");
+			ascendedingr = auditmetadata.AscendedIngredients;
+			legendaryingr = auditmetadata.LegendaryIngredients;
+			
 			// Ascended items
 			var appraisal = {}, ascendedtype;
 			for (var i in ascendedheader)
@@ -7194,22 +7334,41 @@ A = {
 			}
 		};
 		
-		// Begins downloading of numerous uncached prices and defines the price database
+		// Scans an unlockables record and updates the payment database with applicable payments
+		var insertPaymentsFromRecord = function(pRecord)
+		{
+			A.iterateRecord(pRecord, function(pEntry)
+			{
+				if (pEntry.p)
+				{
+					for (var i in pEntry.p)
+					{
+						// Update payment database item if the payment type is applicable
+						if ((A.Currency.AuditPayments[i] || pEntry.p.coin))
+						{
+							paymentdb[pEntry.i] = (pEntry.p.coin) ? E.createPriceBound(pEntry.p.coin) : pEntry.p;
+						}
+					}
+				}
+			});
+		};
+		
+		// Begins downloading of numerous uncached prices and defines the payment database
 		var fetchPrices = function()
 		{
 			Z.scrapeAPIArray(U.convertAssocToArray(priceids), "commerce/prices", {aCallback: function(pPrices)
 			{
-				// Insert cached prices
+				// Insert cached Trading Post prices
 				for (var i in cachedprices)
 				{
 					paymentdb[i] = E.processPrice(cachedprices[i]);
 				}
-				// Insert fresh prices
+				// Insert fresh Trading Post prices
 				pPrices.forEach(function(iPriceObj)
 				{
 					paymentdb[iPriceObj.id] = E.processPrice(iPriceObj);
 				});
-				// Insert untradeable item prices
+				// Insert audit metadata untradeable item prices
 				for (var i in auditmetadata.Payment)
 				{
 					if (auditmetadata.Payment[i].coin)
@@ -7224,107 +7383,150 @@ A = {
 				}
 				// Insert untradeable crafted or forged item prices
 				appraiseCraftable();
-				// Get payment of untradeable items from catalog
-				I.print(D.getPhraseOriginal("Loading catalog") + "...");
-				$.getScript(U.URL_DATA.Catalog, function()
-				{
-					var catalog = U.getRecordData("catalog");
-					A.iterateRecord(catalog, function(pEntry)
-					{
-						if (pEntry.p)
-						{
-							for (var i in pEntry.p)
-							{
-								// Update payment database item if the payment type is applicable
-								if ((A.Currency.AuditPayments[i] || pEntry.p.coin))
-								{
-									paymentdb[pEntry.i] = (pEntry.p.coin) ? E.createPriceBound(pEntry.p.coin) : pEntry.p;
-								}
-							}
-						}
-					});
-					executeAudit();
-				});
+				// Insert untradeable catalog item payments
+				insertPaymentsFromRecord(recordsdata.Catalog);
+				// Insert armors, weapons, backpacks item payments
+				insertPaymentsFromRecord(recordsdata.Skins);
+				// Insert minis item payments
+				insertPaymentsFromRecord(recordsdata.Minis);
+				
+				// Begin auditing
+				executeAudit();
 			}});
+		};
+		
+		// Readies the IDs of possessions and priority items to retrieve live TP prices
+		var initializePrices = function()
+		{
+			// Load the cached prices
+			I.print(D.getPhraseOriginal("Loading price") + "...");
+			$.getScript(U.URL_DATA.Prices, function()
+			{
+				cachedprices = U.getRecordData("prices");
+				untradeabledb = U.getRecordBlacklist("prices");
+				// Include owned items in the list of prices to fetch, if it is not already cached and is tradeable
+				for (var i in A.Possessions)
+				{
+					if (cachedprices[i] === undefined && untradeabledb[i] === undefined)
+					{
+						priceids[i] = true;
+					}
+				}
+				// Include items that require fresh uncached prices
+				auditmetadata = U.getRecordMetadata("ascended");
+				auditmetadata.Tradeable.forEach(function(iID)
+				{
+					priceids[iID] = true;
+				});
+				// Load unbought and unsold items in the account's Trading Post
+				if (wanttransactions === false)
+				{
+					fetchPrices();
+					return;
+				}
+				A.getTransactions(A.URL.CurrentBuys, {
+					aCallback: function(pDataBuys)
+					{
+						A.getTransactions(A.URL.CurrentSells, {
+							aCallback: function(pDataSells)
+							{
+								// Include existing TP items in the price list
+								if (pDataBuys && pDataBuys.length)
+								{
+									currentbuysdata = pDataBuys;
+									pDataBuys.forEach(function(iTransaction)
+									{
+										priceids[iTransaction.item_id] = true;
+									});
+								}
+								if (pDataSells && pDataSells.length)
+								{
+									currentsellsdata = pDataSells;
+									pDataSells.forEach(function(iTransaction)
+									{
+										priceids[iTransaction.item_id] = true;
+									});
+								}
+								fetchPrices();
+							},
+							aError: function()
+							{
+								fetchPrices();
+							}
+						});
+					},
+					aError: function()
+					{
+						fetchPrices();
+					}
+				});
+			});
+		};
+		
+		// Loads all the unlockables record files to get their item payments
+		var loadRecords = function()
+		{
+			var numfetched = 0;
+			var numtofetch = U.getObjectLength(recordsdata);
+			for (var i in recordsdata)
+			{
+				I.print(D.getPhraseOriginal("Loading info " + i.toLowerCase()) + "...");
+				(function(iName)
+				{
+					$.getScript(U.URL_DATA[iName], function()
+					{
+						recordsdata[iName] = U.getRecordData(iName);
+					}).done(function()
+					{
+						numfetched++;
+						if (numfetched === numtofetch)
+						{
+							initializePrices();
+						}
+					}).fail(function()
+					{
+						I.print("Failed to load " + iName + " record file. Auditing aborted.");
+						dealError();
+					});
+				})(i);
+			}
+		};
+		
+		// Retrieves account unlocks
+		var fetchUnlocks = function()
+		{
+			var numfetched = 0;
+			var numtofetch = U.getObjectLength(unlocksdata);
+			for (var i in unlocksdata)
+			{
+				I.print(D.getPhraseOriginal("Loading account " + i.toLowerCase()) + "...");
+				(function(iName)
+				{
+					$.getJSON(A.getURL(A.URL[iName]), function(pData)
+					{
+						unlocksdata[iName] = pData;
+					}).done(function()
+					{
+						numfetched++;
+						if (numfetched === numtofetch)
+						{
+							loadRecords();
+						}
+					}).fail(function()
+					{
+						I.print("Failed to retrieve " + iName + " account unlocks. Auditing aborted.");
+						dealError();
+					});
+				})(i);
+			}
 		};
 		
 		// Load the bank, inventory, equipment, materials
 		I.clear();
-		I.print(D.getPhraseOriginal("Loading bank materials inventory") + "...");
+		I.print(D.getPhraseOriginal("Loading account bank materials inventory") + "...");
 		A.initializePossessions(function()
 		{
-			// Load a list of acceptable ascended items, audit metadata is also stored in this file
-			I.print(D.getPhraseOriginal("Loading ascended") + "...");
-			$.getScript(U.URL_DATA.Ascended, function()
-			{
-				ascendedheader = U.getRecordHeader("ascended");
-				ascendeddata = U.getRecordData("ascended");
-				auditmetadata = U.getRecordMetadata("ascended");
-				ascendedingr = auditmetadata.AscendedIngredients;
-				legendaryingr = auditmetadata.LegendaryIngredients;
-				// Load the cached prices
-				I.print(D.getPhraseOriginal("Loading price") + "...");
-				$.getScript(U.URL_DATA.Prices, function()
-				{
-					cachedprices = U.getRecordData("prices");
-					untradeabledb = U.getRecordBlacklist("prices");
-					// Include owned items in the list of prices to fetch, if it is not already cached and is tradeable
-					for (var i in A.Possessions)
-					{
-						if (cachedprices[i] === undefined && untradeabledb[i] === undefined)
-						{
-							priceids[i] = true;
-						}
-					}
-					// Include items that require fresh uncached prices
-					auditmetadata.Tradeable.forEach(function(iID)
-					{
-						priceids[iID] = true;
-					});
-					// Load unbought and unsold items in the account's Trading Post
-					if (wanttransactions === false)
-					{
-						fetchPrices();
-						return;
-					}
-					A.getTransactions(A.URL.CurrentBuys, {
-						aCallback: function(pDataBuys)
-						{
-							A.getTransactions(A.URL.CurrentSells, {
-								aCallback: function(pDataSells)
-								{
-									// Include existing TP items in the price list
-									if (pDataBuys && pDataBuys.length)
-									{
-										currentbuysdata = pDataBuys;
-										pDataBuys.forEach(function(iTransaction)
-										{
-											priceids[iTransaction.item_id] = true;
-										});
-									}
-									if (pDataSells && pDataSells.length)
-									{
-										currentsellsdata = pDataSells;
-										pDataSells.forEach(function(iTransaction)
-										{
-											priceids[iTransaction.item_id] = true;
-										});
-									}
-									fetchPrices();
-								},
-								aError: function()
-								{
-									fetchPrices();
-								}
-							});
-						},
-						aError: function()
-						{
-							fetchPrices();
-						}
-					});
-				});
-			});
+			fetchUnlocks();
 		});
 	}
 };
@@ -7425,7 +7627,6 @@ V = {
 	 */
 	serveAudit: function()
 	{
-		return;
 		$("#accAuditContainer").show("fast");
 		// Audit option
 		$("#accAuditTop").append("<label><input id='audWantTransactions' type='checkbox' />"
@@ -8757,7 +8958,7 @@ V = {
 	 */
 	serveCatalog: function()
 	{
-		B.generateCatalog("catalog", {
+		B.generateCatalog("Catalog", {
 			aIsCustomCatalog: true
 		});
 	},
@@ -9391,12 +9592,12 @@ V = {
 			U.sortObjects(combined, {aKeyName: "purchased", aIsDescending: true});
 			combined = combined.slice(0, transactionsrecentlimit);
 			
-			combined.forEach(function(iTrans)
+			combined.forEach(function(iTransaction)
 			{
 				var row = $("<tr></tr>").appendTo(table);
 				(function(iTransaction)
 				{
-					Q.getItem(iTrans.item_id, function(pItem)
+					Q.getItem(iTransaction.item_id, function(pItem)
 					{
 						var timestamp = (new Date(iTransaction.purchased)).toLocaleString();
 						var type = (iTransaction.isBought) ? boughtword : soldword;
@@ -9417,7 +9618,7 @@ V = {
 						Q.scanItem(pItem, {aElement: slot});
 						Q.bindItemSlotBehavior(slot, {aItem: pItem, aWantClick: true});
 					});
-				})(iTrans);
+				})(iTransaction);
 			});
 		};
 		var dealError = function()
@@ -10566,7 +10767,7 @@ B = {
 			{
 				var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
 				count = entry.oCount;
-				comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(entry.oLocations) + "</var>";
+				comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(entry) + "</var>";
 			}
 			// Style the slot
 			B.styleBankSlot(pSlot, {
@@ -10837,7 +11038,7 @@ B = {
 					var itemname = "&quot;<a" + U.convertExternalAnchor(U.getWikiLinkLanguage(pItem.name)) + ">" + pItem.name + "</a>&quot;";
 					if (A.Possessions[pItem.id])
 					{
-						var locations = A.formatPossessionLocations(A.Possessions[pItem.id].oLocations);
+						var locations = A.formatPossessionLocations(A.Possessions[pItem.id]);
 						I.write(itemname + " was found in:<br /><br />" + locations);
 					}
 					else

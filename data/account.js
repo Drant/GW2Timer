@@ -68,6 +68,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "žalář", it: "segreta", pl: "loch", pt: "masmorra", ru: "подземелье", zh: "地牢"},
 	s_wallet: {de: "geldbörse", es: "cartera", fr: "portefeuille",
 		cs: "peněženka", it: "portafoglio", pl: "portfel", pt: "carteira", ru: "бума́жник", zh: "錢包"},
+	s_skins: {de: "skins", es: "diseños", fr: "apparences",
+		cs: "vzhledy", it: "apparenze", pl: "karnacje", pt: "desenhos", ru: "конструкции", zh: "皮肤"},
 	s_currencies: {de: "währung", es: "monedas", fr: "monnaies",
 		cs: "měny", it: "valute", pl: "waluty", pt: "moedas", ru: "валюта", zh: "貨幣"},
 	s_tokens: {de: "wertmarke", es: "fichas", fr: "jetons",
@@ -169,13 +171,14 @@ var GW2T_CURRENCY_DATA = {
 		Characters: null,
 		Bank: null,
 		Materials: null,
-		Wardrobe: null,
+		Skins: null,
 		Minis: null,
 		Dyes: null,
 		Recipes: null,
 		Buying: null,
 		Selling: null
 	},
+	AuditCategoriesCharacters: {}, // Same format as audit categories but is a breakdown of individual characters
 	/*
 	 * Payments to show on the account audit table in this order.
 	 * ID is associated with wallet, conversion is how many copper for one of that currency.
