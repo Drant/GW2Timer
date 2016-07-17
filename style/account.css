@@ -281,6 +281,8 @@ input[type="text"].accTokenHovered {
 	display: inline-block;
 	width: 360px;
 	text-align: left;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 17px;
 }
 #accAuditCenter {
 	margin-top: 16px;
@@ -302,6 +304,48 @@ input[type="text"].accTokenHovered {
 }
 #audExecute:hover {
 	animation: aniFlicker 1s ease infinite;
+}
+
+.audTable {
+	margin-top: 64px;
+	text-align: center;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 17px;
+}
+.audTableColumn {
+	display: inline-block;
+	text-align: right;
+	min-width: 64px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border-radius: 6px;
+}
+.audTableColumn:nth-child(even) {
+	background: rgba(0,0,0,0.2);
+}
+.audTableHeaderVertical {
+	text-align: right;
+	font-family: Menomonia;
+	font-size: 16px;
+}
+.audTableHeaderHorizontal, .audTableHeaderCorner {
+	padding-top: 8px;
+	margin-bottom: 8px;
+	text-align: center;
+	font-family: Menomonia;
+	font-size: 20px;
+	border-bottom: 2px solid rgba(255,255,255,0.1);
+	border-radius: 6px;
+}
+.audTableHeaderCorner {
+	border: none;
+}
+.audTableCell {
+	display: block;
+	height: 32px;
+}
+.audTableCell .s16 {
+	margin-left: 2px;
 }
 
 /* Characters

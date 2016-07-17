@@ -217,18 +217,19 @@
 	<p>The audit feature will download, tally, and evaluate possessions, unlocks, and trades data, estimate their bound value, calculate their Trading Post value, then present them in a table. This process will require almost all account permissions; your account information will be private between your computer and ArenaNet servers.</p>
 	<h2>Auditing Details</h2>
 	<ul class="cssBullet">
-		<li>Characters audit includes all characters' equipments, inventories, shared slots, and inventory bags (which themselves are items).</li>
+		<li>Characters audit includes all items in equipment, inventory, shared slots, and inventory bags (which themselves are items).</li>
 		<li>Recipes audit is based on the associated recipe sheet's Trading Post price, if available.</li>
 		<li>Skins are not audited if the original item that unlocked the skin still exists. Precursor skins are not audited because their purpose is to create a legendary and not be an expensive skin.</li>
-		<li>Ascended gear's purpose is for their stats, so all ascended gear of a type share the same appraisal. For example, ascended weapon and armor coin value is estimated by their T7 crafting materials along with Zojja inscription or insignia Trading Post price. Ascended backpacks all base their coin value on the stats-selectable forged <a href='https://wiki.guildwars2.com/wiki/Quiver_of_a_Thousand_Arrows'>backpack</a> that cost 250 Vicious Claws.</li>
+		<li>Ascended gear's purpose is for their stats, so all of a type share the same appraisal. For example, ascended weapon and armor coin value is estimated by their T7 crafting materials along with Zojja inscription or insignia Trading Post price. Ascended backpacks all base their coin value on the stats-selectable forged <a href='https://wiki.guildwars2.com/wiki/Quiver_of_a_Thousand_Arrows'>backpack</a> that cost 250 Vicious Claws.</li>
 		<li>Legendary items use Trading Post price if available, otherwise they use the total price of their tradeable crafting ingredients. 77 Mystic Clovers assume it takes 250 Globs of Ectoplasm, Mystic Coins, and Obsidian Shards to forge.</li>
 		<li>Junk rarity are the only items to have vendor value considered.</li>
+		<li>For Trading Post transactions, Buying is the coin you'd receive back if you canceled all your orders; Selling is the coin values you'd receive if you canceled all your listings and relisted them at the current buy or sell prices.</li>
 	</ul>
 	<br />
 	<h2>Auditing Limitations</h2>
 	<ul class="cssBullet">
-		<li>ArenaNet provides no API for retrieving outfits, finishers, mail carriers, and glider unlocks so they are not audited.</li>
-		<li>Untradeable items are appraised by one currency only, so if a raid vendor item cost 500 tokens and 20 gold, only the 500 tokens will be considered.</li>
+		<li>There is no ArenaNet API for retrieving outfits, finishers, mail carriers, and glider unlocks, so they are not audited.</li>
+		<li>Untradeable items are appraised by one currency only, so if a raid vendor item cost 500 tokens and 20 gold, only the 500 tokens will be considered. Also, only a few and most common untradeable items have a recorded currency, for example Versatile Simple Infusion has Fractal Relics currency amount recorded (audited), but Gift of Ascension does not (not audited).</li>
 	</ul>
 	<br />
 	<h2>Prices and Values</h2>
@@ -236,7 +237,7 @@
 	<p>To have a fast audit, Trading Post prices of materials, skins, minis, dyes, and recipes are from a snapshot cache, while prices of bank, inventory, and equipment contents are fetched live from ArenaNet servers. Luxury items such as legendaries and permanent contracts always use the live Trading Post prices.</p>
 	<p>Non-coin prices are from the representative lowest price of an item, such as karma needed to buy a low level Fine rarity armor that unlocks a skin, as opposed to a high level Masterwork rarity armor that unlocks the same skin but cost more karma.</p>
 </div>
-<div id="accBankHelp">
+<div id="accHelpBank">
 	<h2>Bank Usage</h2>
 	<p>Right click on an item's icon to view its context menu. If an item has an associated skin, the Wiki Search link will view the skin's wiki page. For banks of actual items (equipment, inventory, bank, and materials), the slots' coin price displayed is the sell price with tax (after 5% listing fee and 10% tax); for collections (skins, minis, dyes, catalog) it is the sell price without tax. Hover over a tradeable item's slot or use the tradeable filter to view the current Buy Price (top) and Sell Price (bottom) without tax.</p>
 	<h2>Search by Keyword</h2>
@@ -255,7 +256,7 @@
 	920.. = 920<goldcoin></goldcoin>
 	</div>
 </div>
-<div id="accUnlockablesHelp">
+<div id="accHelpUnlockables">
 	<h2>Unlockables Collection Usage</h2>
 	<p>Unlockables are items that unlocks skins, minis, dyes, or other cosmetics to your account that you can reuse forever.</p>
 	<p>Click on an item icon to view the unlock's wiki page, or right click for more links; the Wiki Item link will view the best item to obtain that unlock. The coin price shown is the current Trading Post sell listing, which may be cheaper if you use buy orders instead.</p>

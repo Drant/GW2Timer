@@ -6571,11 +6571,11 @@ A = {
 	{
 		if (pStatus === "error")
 		{
-			I.write("Unable to retrieve response. Incorrect URL or ArenaNet API servers is down.");
+			I.write("Unable to retrieve response. Incorrect URL or ArenaNet API server is down.");
 		}
 		else
 		{
-			I.write("Unable to retrieve data for this key from ArenaNet API servers.");
+			I.write("Unable to retrieve data for this key from ArenaNet API server.");
 		}
 		I.write(A.TokenCurrent);
 		if (pPermission)
@@ -7058,7 +7058,9 @@ A = {
 		var button = $("#audExecute");
 		I.suspendElement(button);
 		var container = $("#accAudit").empty();
-		var table = $("<table id='audCurrencies'></table>").appendTo(container);
+		var tablecategory = $("<div id='audTable_Category' class='audTable'></div>").appendTo(container);
+		var tablesum = $("<div id='audTable_Sum' class='audTable'></div>").appendTo(container);
+		var tablebreakdown = $("<div id='audTable_Breakdown' class='audTable'></div>").appendTo(container);
 		var wanttransactions = $("#audWantTransactions").prop("checked");
 		var cachedprices; // Will contain payment or TP prices, accessible by item ID
 		var untradeabledb;
@@ -7146,12 +7148,12 @@ A = {
 				auditcat = A.Currency.AuditCategories["Wallet"];
 				if (i === "1") // If the currency is coin
 				{
-					addPaymentToCategory(auditcat, E.createPriceUniform(quantity), 1);
+					addPaymentToCategory(auditcat, E.createPricePlain(quantity), 1);
 				}
-				else if (A.Currency.WalletAssoc[i]) // Audit applicable currencies
+				else if (A.Currency.AuditWallet[i]) // Audit applicable currencies
 				{
 					paymentobj = {};
-					paymentobj[(A.Currency.WalletAssoc[i])] = quantity;
+					paymentobj[(A.Currency.AuditWallet[i]).payment] = quantity;
 					addPaymentToCategory(auditcat, paymentobj, 1, true);
 				}
 			}
@@ -7180,8 +7182,15 @@ A = {
 						}
 						if (auditcat) // Add payment if it is of a valid audit category or is a character audit
 						{
-							addPaymentToCategory(auditcat, payment, auditobj[0]); // Index 0 is the count of unbound items
-							addPaymentToCategory(auditcat, payment, auditobj[1], true); // Index 1 is the count of all items
+							if (payment.oPriceBuy !== undefined)
+							{
+								addPaymentToCategory(auditcat, payment, auditobj[0]); // Index 0 is the count of unbound items
+								addPaymentToCategory(auditcat, payment, (auditobj[1] - auditobj[0]), true); // Index 1 is the count of all items
+							}
+							else
+							{
+								addPaymentToCategory(auditcat, payment, auditobj[1], true);
+							}
 						}
 					}
 				}
@@ -7232,7 +7241,7 @@ A = {
 				if (pEntry[itemkey])
 				{
 					payment = paymentdb[(pEntry[itemkey])];
-					// Audit if payment exists, skin is unlocked, and skin's associated item is not in possession
+					// Audit if payment exists, the unlock is unlocked, and the unlock's associated item is not in possession
 					if (payment && unlockedids[pEntry.u]
 						&& ((pWantPossessions === false && A.Possessions[(pEntry[itemkey])] === undefined) || (pWantPossessions !== false)))
 					{
@@ -7244,28 +7253,89 @@ A = {
 		};
 		
 		// Evaluates transactions of coin in buy orders or items in sell listings
-		auditTransactions = function()
+		var auditTransactions = function()
 		{
+			var payment;
 			if (currentbuysdata)
 			{
+				A.Tallies.Buying = [currentbuysdata.length, currentbuysdata.length];
 				currentbuysdata.forEach(function(iTransaction)
 				{
-					
+					addPaymentToCategory(A.Currency.AuditCategories.Buying, E.createPricePlain(iTransaction.price), iTransaction.quantity);
 				});
 			}
 			if (currentsellsdata)
 			{
+				A.Tallies.Selling = [currentsellsdata.length, currentsellsdata.length];
 				currentsellsdata.forEach(function(iTransaction)
 				{
-					
+					payment = paymentdb[iTransaction.item_id];
+					if (payment)
+					{
+						addPaymentToCategory(A.Currency.AuditCategories.Selling, payment, iTransaction.quantity);
+					}
 				});
 			}
+		};
+		
+		var insertTableCurrencyHeader = function(pTable)
+		{
+			// Write the first column which acts as headers for the rows of currencies
+			var paymentobj, currency, headerwords;
+			var currencyheaders = $("<div class='audTableHeaderVertical audTableColumn'></div>").appendTo(pTable);
+			for (var i in A.Currency.AuditPayments)
+			{
+				paymentobj = A.Currency.AuditPayments[i];
+				currency = A.Currency.AuditWallet[paymentobj.id];
+				headerwords = (paymentobj.id === 1) ? D.getPhraseOriginal(paymentobj.header) : D.getObjectName(currency);
+				currencyheaders.append("<div class='audTableCell'>"
+					+ headerwords + "&nbsp;<ins class='acc_wallet acc_wallet_" + paymentobj.id + "'></ins></div>");
+			}
+			currencyheaders.prepend("<div class='audTableCell audTableHeaderCorner'></div>"); // Padding cell at the top left corner
+		};
+		
+		// Inserts an audit category as a column of currencies into the audit display table
+		var insertAuditCategory = function(pCategory)
+		{
+			
 		};
 		
 		// Writes HTML to display the audit results
 		var generateResults = function()
 		{
-			I.print("Done");
+			// Clear the console of load messages
+			//I.clear();
+			
+			// Audit category table header
+			insertTableCurrencyHeader(tablecategory);
+			// Write a column for each audit category
+			var auditcolumn, amount, paymentkey;
+			var auditcats = A.Currency.AuditCategories;
+			for (var i in auditcats)
+			{
+				auditcolumn = $("<div id='audTableColumn_" + i + "' class='audTableColumn'></div>").appendTo(tablecategory);
+				auditcolumn.append("<div class='audTableCell audTableHeaderHorizontal'>" + D.getWordCapital(i) + "</div>");
+				for (var ii in auditcats[i])
+				{
+					amount = (auditcats[i])[ii];
+					paymentkey = (ii.indexOf("coin") !== -1) ? "coin" : ii;
+					auditcolumn.append("<div class='audTableCell'>" + E.PaymentFormat[paymentkey](amount) + "</div>");
+				}
+			}
+			
+			// Audit sum table header
+			insertTableCurrencyHeader(tablesum);
+			var sumcolumn = $("<div id='audTableColumn_Sum' class='audTableColumn'></div>").appendTo(tablecategory);
+			var sumpayment = createAuditPayments();
+			// Add all audit categories' payments into one "sum" category
+			for (var i in auditcats)
+			{
+				
+			}
+			
+			I.scrollToElement("#accAuditCenter", {aSpeed: "fast"});
+			I.suspendElement(button, false);
+			return;
 			I.log(A.Currency.AuditCategories);
 			I.log(A.Currency.AuditCategoriesCharacters);
 		};
@@ -7356,26 +7426,40 @@ A = {
 		// Begins downloading of numerous uncached prices and defines the payment database
 		var fetchPrices = function()
 		{
+			priceids = [];////////////////I.log();
 			Z.scrapeAPIArray(U.convertAssocToArray(priceids), "commerce/prices", {aCallback: function(pPrices)
 			{
 				// Insert cached Trading Post prices
+				var boundpayments = auditmetadata.BoundPayments;
 				for (var i in cachedprices)
 				{
 					paymentdb[i] = E.processPrice(cachedprices[i]);
 				}
 				// Insert fresh Trading Post prices
-				pPrices.forEach(function(iPriceObj)
+				if (pPrices)
 				{
-					paymentdb[iPriceObj.id] = E.processPrice(iPriceObj);
-				});
-				// Insert audit metadata untradeable item prices
-				for (var i in auditmetadata.Payment)
-				{
-					if (auditmetadata.Payment[i].coin)
+					pPrices.forEach(function(iPriceObj)
 					{
-						paymentdb[i] = E.createPrice(auditmetadata.Payment[i].coin);
+						paymentdb[iPriceObj.id] = E.processPrice(iPriceObj);
+					});
+				}
+				// Insert audit metadata untradeable item prices
+				for (var i in boundpayments)
+				{
+					if (boundpayments[i].coin)
+					{
+						paymentdb[i] = E.createPricePlain(boundpayments[i].coin);
+					}
+					else
+					{
+						for (var ii in boundpayments[i])
+						{
+							paymentdb[i] = {};
+							(paymentdb[i])[ii] = (boundpayments[i])[ii];
+						}
 					}
 				}
+				
 				// Insert junk rarity item prices
 				for (var i in auditmetadata.JunkValue)
 				{
@@ -7414,7 +7498,7 @@ A = {
 				}
 				// Include items that require fresh uncached prices
 				auditmetadata = U.getRecordMetadata("ascended");
-				auditmetadata.Tradeable.forEach(function(iID)
+				auditmetadata.PriorityTradeable.forEach(function(iID)
 				{
 					priceids[iID] = true;
 				});
@@ -8127,6 +8211,11 @@ V = {
 				coef = pWallet[i].coefficient;
 				// Adjust the value so the currencies can be compared
 				pWallet[i].value = (coef === undefined) ? amount : (amount * coef);
+				// Insert wallet currency into accessible associative array
+				if (pWallet[i].payment)
+				{
+					A.Currency.AuditWallet[(pWallet[i]).id] = pWallet[i];
+				}
 			}
 			var max = T.getMinMax(pWallet, "value").oMax;
 			
@@ -10387,7 +10476,7 @@ B = {
 			var helpmessage = (Settings.aHelpMessage) ? Settings.aHelpMessage : "";
 			if (isshowinghelp || I.isConsoleShown() === false)
 			{
-				I.help(helpmessage + $("#accBankHelp").html());
+				I.help(helpmessage + $("#accHelpBank").html());
 			}
 			isshowinghelp = !isshowinghelp;
 		});
@@ -10969,7 +11058,7 @@ B = {
 		}
 		B.updateBankTally(container, numsunlockedtotal, numintabstotal, numacquiredtotal);
 		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
-		var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accUnlockablesHelp").html();
+		var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accHelpUnlockables").html();
 		B.createBankMenu(pBank, {
 			aWantSearchHighlight: wantsearchhighlight,
 			aHelpMessage: (Settings.aHelpMessage || "") + helpstr,
@@ -14025,7 +14114,7 @@ E = {
 			oPriceSellTaxed: E.deductTax(price)
 		};
 	},
-	createPriceUniform: function(pPrice, pCount)
+	createPricePlain: function(pPrice, pCount)
 	{
 		var count = (pCount === undefined) ? 1 : pCount;
 		var price = pPrice * count;
@@ -25301,7 +25390,7 @@ W = {
 				D.stopSpeech();
 				W.reinitializeServerChange(false);
 				W.addLogEntry("Restarted due to API error.");
-				I.write("Too many objectives updated. ArenaNet API servers may be having problems.");
+				I.write("Too many objectives updated. ArenaNet API server may be having problems.");
 			}
 			if (W.isAPIFailed)
 			{
@@ -27629,7 +27718,7 @@ H = {
 					{
 						table.empty();
 						I.print("Unable to retrieve item: <a" + U.convertExternalAnchor(U.getWikiSearchDefault(offer.id)) + ">"
-							+ offer.id + "</a>. ArenaNet API servers may be down.");
+							+ offer.id + "</a>. ArenaNet API server may be down.");
 					});
 				})(i);
 			}
@@ -30044,36 +30133,38 @@ I = {
 	{
 		var Settings = pSettings || {};
 		
-		pElement = $(pElement);
+		var elm = $(pElement);
+		var container;
 		// Mobile mode webpage height is dynamic
 		switch (I.ModeCurrent)
 		{
 			case I.ModeEnum.Mobile: {
-				$("body").scrollTop(pElement.offset().top);
+				$("body").scrollTop(elm.offset().top);
 			} break;
 			
 			case I.ModeEnum.Tile: {
 				$("#windowMain").animate(
 				{
-					scrollTop: pElement.offset().top - $("#windowMain").offset().top
+					scrollTop: elm.offset().top - $("#windowMain").offset().top
 						+ $("#windowMain").scrollTop()
 				}, Settings.aSpeed || 0);
 			} break;
 			
 			default: {
+				Settings.aContainer = Settings.aContainer || elm.closest(".jsScrollable");
 				if (Settings.aContainer)
 				{
-					Settings.aContainer = $(Settings.aContainer);
-					Settings.aContainer.animate(
+					container = $(Settings.aContainer);
+					container.animate(
 					{
-						scrollTop: pElement.offset().top - Settings.aContainer.offset().top
-							+ Settings.aContainer.scrollTop() + (Settings.aOffset || 0)
+						scrollTop: elm.offset().top - container.offset().top
+							+ container.scrollTop() + (Settings.aOffset || 0)
 					}, Settings.aSpeed || 0);
 				}
 				else
 				{
 					// Scroll to top of element without animation
-					pElement.scrollTop(0);
+					elm.scrollTop(0);
 				}
 			}
 		}

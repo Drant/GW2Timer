@@ -65,14 +65,19 @@ var GW2T_ASCENDED_HEADERS = {
  * Data for determining an ascended equipment's coin value. Also includes account audit metadata.
  */
 var GW2T_ASCENDED_METADATA = {
-	// Account bound ingredient payments
-	Payment: {
+	// Account bound items, these will supplement the catalog's item payments
+	BoundPayments: {
 		"19676": {coin: 10000}, // Icy Runestone
 		"19925": {karma: 2100}, // Obsidian Shard
-		"46747": {coin: 150} // Thermocatalytic Reagent
+		"46747": {coin: 150}, // Thermocatalytic Reagent
+		"38013": {fotm_relic: 150}, // 20 Slot Fractal Uncommon Equipment Box
+		"38012": {fotm_relic: 200}, // 20 Slot Fractal Rare Equipment Box
+		"38011": {fotm_relic: 250}, // 20 Slot Fractal Exotic Equipment Box
+		"37138": {fotm_relic: 75}, // Versatile Simple Infusion +5
+		"70852": {fotm_relic: 150}, // Versatile Simple Infusion +7
 	},
 	// Tradeable ingredients and expensive items that should always use live TP prices
-	Tradeable: [
+	PriorityTradeable: [
 		19721, // Glob of Ectoplasm
 		19976, // Mystic Coin
 		68063, // Amalgamated Gemstone
