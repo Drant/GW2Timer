@@ -306,8 +306,15 @@ input[type="text"].accTokenHovered {
 	animation: aniFlicker 1s ease infinite;
 }
 
+.audTitleContainer {
+	display: block;
+}
+#accAudit .audTitle {
+	margin-top: 48px;
+	margin-bottom: 16px;
+	border-radius: 8px;
+}
 .audTable {
-	margin-top: 64px;
 	text-align: center;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 17px;
@@ -316,8 +323,8 @@ input[type="text"].accTokenHovered {
 	display: inline-block;
 	text-align: right;
 	min-width: 64px;
-	padding-left: 6px;
-	padding-right: 6px;
+	padding-left: 8px;
+	padding-right: 8px;
 	border-radius: 6px;
 }
 .audTableColumn:nth-child(even) {
@@ -1465,7 +1472,7 @@ a.chrWalletLink {
 .bnkBankDyes {
 	background: black;
 }
-.bnkTitle {
+.bnkTitle, .audTitle {
 	display: inline-block;
 	padding-left: 64px;
 	padding-right: 64px;
@@ -1479,10 +1486,10 @@ a.chrWalletLink {
 	border-bottom-right-radius: 50%;
 	border-bottom-left-radius: 50%;
 	text-shadow:
-		0px 1px 6px #000,
-		0px -1px 6px #000,
-		1px 0px 6px #000,
-		-1px 0px 6px #000;
+		0px 1px 4px #000,
+		0px -1px 4px #000,
+		1px 0px 4px #000,
+		-1px 0px 4px #000;
 }
 .bnkError {
 	line-height: normal;

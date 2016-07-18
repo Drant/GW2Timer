@@ -82,7 +82,7 @@ Token: [
 	{i: 78600, n: "Potion of WvW Rewards", p: {badge: 0}}
 ],
 Dungeon: [
-	{i: 78252, n: "Chest of Dungeoneering", p: {achievement: 0}},
+	{i: 78252, n: "Chest of Dungeoneering", p: {dungeon_arah: 150}},
 	{i: 70438, n: "Fractal Encryption Key", p: {coin: 3000}},
 	{i: 75919, n: "Fractal Encryption"},
 	{i: 73834, n: "Fractal Research Page", p: {coin: 0}},

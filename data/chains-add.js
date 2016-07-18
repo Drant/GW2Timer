@@ -1606,7 +1606,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	series: 1,
 	alias: "FireShaman",
 	title: "Invictus Castrum",
-	name_en: "Fire Shaman",
+	name_en: "Drakin Cinderspire",
 	name_de: "Feuerschamanen",
 	name_es: "Chamán de Fuego",
 	name_fr: "Chamane de Feu",

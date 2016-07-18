@@ -86,6 +86,12 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "karta", it: "scheda", pl: "karta", pt: "guia", ru: "вкладка", zh: "選項卡"},
 	s_transactions: {de: "transaktionen", es: "transacciones", fr: "transactions",
 		cs: "transakce", it: "transazioni", pl: "transakcje", pt: "transações", ru: "транзакций", zh: "交易"},
+	s_categories: {de: "kategorien", es: "categorías", fr: "catégories",
+		cs: "kategorie", it: "categorie", pl: "kategorie", pt: "categorias", ru: "категории", zh: "類別"},
+	s_sum: {de: "summe", es: "suma", fr: "somme",
+		cs: "součet", it: "somma", pl: "suma", pt: "soma", ru: "сумма", zh: "總和"},
+	s_conversion: {de: "umrechnung", es: "conversión", fr: "conversion",
+		cs: "konverze", it: "conversione", pl: "konwersja", pt: "conversão", ru: "конвертация", zh: "轉換"},
 	
 	// Verbs
 	s_audit: {de: "prüfung", es: "auditar", fr: "auditer",
@@ -182,29 +188,30 @@ var GW2T_CURRENCY_DATA = {
 	AuditCategoriesCharacters: {}, // Same format as audit categories but is a breakdown of individual characters
 	/*
 	 * Payments to show on the account audit table in this order.
-	 * ID is associated with wallet, conversion is how many copper for one of that currency.
+	 * ID is associated with wallet, conversion is how many copper for 1 of that currency.
 	 * Conversions in array format: [paymentAmount, equivalentItemID]
+	 * Will use the TP price of the item and divide it with the currency to get a ratio.
 	 */
 	AuditPayments: {
 		coin_liquidbuy: {id: 1, conversion: 1, header: "Liquid Buy"},
 		coin_liquidsell: {id: 1, conversion: 1, header: "Liquid Sell"},
 		coin_appraisebuy: {id: 1, conversion: 1, header: "Appraised Buy"},
 		coin_appraisesell: {id: 1, conversion: 1, header: "Appraised Sell"},
-		karma: {id: 2, conversion: [5250, 24305]},
+		karma: {id: 2, conversion: [5250, 24295]}, // Vial of Powerful Blood
 		laurel: {id: 3, conversion: 10000},
 		gem: {id: 4, conversion: null}, // To be assigned by gem exchange
 		badge: {id: 15, conversion: 100},
-		commendation: {id: 16, conversion: 10000},
-		dungeon_ac: {id: 5, conversion: [30, 19721]}, // Glob of Ectoplasm
-		dungeon_cm: {id: 9, conversion: [30, 19721]},
-		dungeon_ta: {id: 11, conversion: [30, 19721]},
-		dungeon_se: {id: 10, conversion: [30, 19721]},
-		dungeon_cof: {id: 13, conversion: [30, 19721]},
-		dungeon_hotw: {id: 12, conversion: [30, 19721]},
-		dungeon_coe: {id: 14, conversion: [30, 19721]},
-		dungeon_arah: {id: 6, conversion: [30, 19721]},
+		commendation: {id: 16, conversion: [10, 41560]}, // Sentinel's Orichalcum Imbued Inscription
+		dungeon_ac: {id: 5, conversion: [390, 46239]}, // Soldier's Pearl Broadsword
+		dungeon_cm: {id: 9, conversion: [390, 15476]}, // Rampager's Pearl Broadsword
+		dungeon_ta: {id: 11, conversion: [390, 15476]}, // Rampager's Pearl Broadsword
+		dungeon_se: {id: 10, conversion: [390, 46239]}, // Soldier's Pearl Broadsword
+		dungeon_cof: {id: 13, conversion: [30, 19721]}, // Glob of Ectoplasm
+		dungeon_hotw: {id: 12, conversion: [30, 19721]}, // Glob of Ectoplasm
+		dungeon_coe: {id: 14, conversion: [30, 19721]}, // Glob of Ectoplasm
+		dungeon_arah: {id: 6, conversion: [30, 19721]}, // Glob of Ectoplasm
 		fotm_relic: {id: 7, conversion: [1350, 37000]}, // Quiver of a Thousand Arrows
-		fotm_pristine: {id: 24, conversion: [135, 24351]},
+		fotm_pristine: {id: 24, conversion: [135, 37000]}, // Quiver of a Thousand Arrows
 		raid_ft: {id: 28, conversion: [400, 48079]}, // Zojja Doublet
 		map_dt: {id: 25, conversion: 0},
 		map_sw: {id: 27, conversion: 0},
@@ -218,6 +225,14 @@ var GW2T_CURRENCY_DATA = {
  * Quick reference API related data.
  */
 var GW2T_ACCOUNT_METADATA = {
+	Upgrades: { // Account upgrades from the gem store
+		CharacterSlot: {starting: 5, purchased: 0, gem: 800},
+		CraftingLicense: {starting: 0, purchased: 0, gem: 800},
+		BankTab: {starting: 1, purchased: 0, gem: 600},
+		StorageExpander: {starting: 0, purchased: 0, gem: 800},
+		BagSlot: {starting: 5, purchased: 0, gem: 400},
+		SharedSlot: {starting: 1, purchased: 0, gem: 560}
+	},
 	Exchange: {
 		GoldSamples: [1, 10, 100, 200, 500, 1000, 4000, 5000],
 		GemSamples: [100, 125, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1800, 2000],

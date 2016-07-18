@@ -6061,16 +6061,6 @@ A = {
 		Specializations: {},
 		Traits: {}
 	},
-	Worth: { // Holds coin value for use in summing total asset net worth
-		Equipment: {},
-		Inventory: {},
-		Bank: {},
-		Materials: {},
-		Wardrobe: {},
-		Dyes: {},
-		Minis: {},
-		Trading: {}
-	},
 	Possessions: null, // Associative array of actual items from the user's bank, inventory, equipment slots, shared slots, and bag slots
 	Tallies: null, // Number of filled slots and capacity of banks and collections, used in auditing
 	URL: { // Account data type and URL substring
@@ -6535,18 +6525,6 @@ A = {
 		// Prevent skipping loading the characters section first
 		$("#accMenu_Characters").data("iscurrentaccounttab", null);
 		$(".accDishMenu").empty();
-		
-		/*
-		 * Zeroes the properties of the Worth object, which holds cumulative
-		 * copper value of the player's assets.
-		 */
-		for (var i in A.Worth)
-		{
-			A.Worth[i].Vendor = 0;
-			A.Worth[i].Buy = 0;
-			A.Worth[i].Sell = 0;
-			A.Worth[i].Estimate = 0;
-		}
 		
 		// Initialize permissions
 		$.getJSON(A.getURL(A.URL.TokenInfo), function(pData)
@@ -7055,18 +7033,16 @@ A = {
 	 */
 	generateAudit: function()
 	{
+		var sampleconversionamount = 100;
 		var button = $("#audExecute");
 		I.suspendElement(button);
 		var container = $("#accAudit").empty();
-		var tablecategory = $("<div id='audTable_Category' class='audTable'></div>").appendTo(container);
-		var tablesum = $("<div id='audTable_Sum' class='audTable'></div>").appendTo(container);
-		var tablebreakdown = $("<div id='audTable_Breakdown' class='audTable'></div>").appendTo(container);
 		var wanttransactions = $("#audWantTransactions").prop("checked");
 		var cachedprices; // Will contain payment or TP prices, accessible by item ID
 		var untradeabledb;
 		var paymentdb = {}; // Holds payment object or processed TP price, items whose ID is not in this will have no value
 		var priceids = {}; // Tradeable item IDs to fetch, an associative array so no duplicate
-		var ascendeddata, ascendedheader, ingredients, ascendedingr, legendaryingr, auditmetadata;
+		var ascendeddata, ascendedheader, ingredients, ascendedingr, compositeingr, auditmetadata;
 		var currentbuysdata, currentsellsdata;
 		var recordsdata = {
 			Ascended: {},
@@ -7089,12 +7065,13 @@ A = {
 		};
 		
 		// Creates a standard object of payments to be displayed for an audit category
-		var createAuditPayments = function()
+		var createAuditPayments = function(pInitialAmount)
 		{
 			var paymentsobj = {};
+			var amount = (pInitialAmount === undefined) ? 0 : pInitialAmount;
 			for (var ii in A.Currency.AuditPayments)
 			{
-				paymentsobj[ii] = 0;
+				paymentsobj[ii] = amount;
 			}
 			return paymentsobj;
 		};
@@ -7110,7 +7087,7 @@ A = {
 		var addPaymentToCategory = function(pCategory, pPayment, pCount, pIsBound)
 		{
 			var count = (pCount === undefined) ? 1 : pCount;
-			if (pPayment.oPriceBuy !== undefined)
+			if (E.isPriceObject(pPayment))
 			{
 				if (pIsBound)
 				{
@@ -7182,14 +7159,14 @@ A = {
 						}
 						if (auditcat) // Add payment if it is of a valid audit category or is a character audit
 						{
-							if (payment.oPriceBuy !== undefined)
+							if (E.isPriceObject(payment))
 							{
 								addPaymentToCategory(auditcat, payment, auditobj[0]); // Index 0 is the count of unbound items
 								addPaymentToCategory(auditcat, payment, (auditobj[1] - auditobj[0]), true); // Index 1 is the count of all items
 							}
 							else
 							{
-								addPaymentToCategory(auditcat, payment, auditobj[1], true);
+								addPaymentToCategory(auditcat, payment, auditobj[1]);
 							}
 						}
 					}
@@ -7278,6 +7255,69 @@ A = {
 			}
 		};
 		
+		// Adds two audit categories' payments and returns a sum audit category
+		var sumAuditCategories = function(pCategoryA, pCategoryB)
+		{
+			var auditcat = {};
+			for (var i in pCategoryA)
+			{
+				auditcat[i] = pCategoryA[i] + pCategoryB[i];
+			}
+			return auditcat;
+		};
+		
+		// Appraises a non-coin currency into a coin amount; the exchange ratios must have been initialized
+		var convertCurrencyToCoin = function(pCurrencyName, pAmount)
+		{
+			var name = pCurrencyName;
+			if (name.indexOf("coin") !== -1) // Coin cases
+			{
+				return pAmount;
+			}
+			if (name === "gem") // Gem case
+			{
+				return E.convertGemToCoin(pAmount);
+			}
+			
+			var conversion = A.Currency.AuditPayments[name].conversion;
+			if (conversion === 0) // Unconvertible case
+			{
+				return 0;
+			}
+			if (isNaN(conversion) === false) // Normal case
+			{
+				return pAmount * conversion;
+			}
+			if (Array.isArray(conversion)) // Item dependent case
+			{
+				var barteramount = conversion[0];
+				var barteritem = conversion[1];
+				var payment = paymentdb[barteritem];
+				if (payment && payment.oPriceSell)
+				{
+					return Math.floor(pAmount * (payment.oPriceSell / barteramount));
+				}
+			}
+			return 0;
+		};
+		
+		// Creates an audit presentation table
+		var createTable = function(pTitle)
+		{
+			var table = $("<div class='audTable'></div>").appendTo(container);
+			$("<div class='audTitleContainer'><aside class='audTitle'>" + pTitle + "</aside></div>").insertBefore(table);
+			return table;
+		};
+		
+		// Inserts a headered but empty column into a table
+		var insertColumn = function(pTable, pHeader)
+		{
+			var auditcolumn = $("<div class='audTableColumn'></div>").appendTo(pTable)
+				.append("<div class='audTableCell audTableHeaderHorizontal'>" + pHeader + "</div>");
+			return auditcolumn;
+		};
+		
+		// Inserts a leading column of currency names into a table
 		var insertTableCurrencyHeader = function(pTable)
 		{
 			// Write the first column which acts as headers for the rows of currencies
@@ -7291,13 +7331,32 @@ A = {
 				currencyheaders.append("<div class='audTableCell'>"
 					+ headerwords + "&nbsp;<ins class='acc_wallet acc_wallet_" + paymentobj.id + "'></ins></div>");
 			}
-			currencyheaders.prepend("<div class='audTableCell audTableHeaderCorner'></div>"); // Padding cell at the top left corner
+			// Padding cell at the top left corner of the table
+			currencyheaders.prepend("<div class='audTableCell audTableHeaderCorner'></div>");
 		};
 		
-		// Inserts an audit category as a column of currencies into the audit display table
-		var insertAuditCategory = function(pCategory)
+		// Fills a table column with currencies
+		var fillCurrencyColumn = function(pColumn, pCategory, pIsConversion)
 		{
-			
+			var amount, paymentkey;
+			var prefix = (pIsConversion) ? ("<span class='cssLeft'>" + I.Symbol.ArrowRight + "</span>") : "";
+			for (var i in pCategory)
+			{
+				amount = pCategory[i];
+				paymentkey = (i.indexOf("coin") !== -1 || pIsConversion) ? "coin" : i;
+				pColumn.append("<div class='audTableCell'>" + prefix + E.PaymentFormat[paymentkey](amount) + "</div>");
+			}
+		};
+		
+		// Fills a table column with the rows' currency converted to coin
+		var fillConversionColumn = function(pColumn, pCategory)
+		{
+			var convertedpayments = createAuditPayments();
+			for (var i in pCategory)
+			{
+				convertedpayments[i] = convertCurrencyToCoin(i, pCategory[i]);
+			}
+			fillCurrencyColumn(pColumn, convertedpayments, true);
 		};
 		
 		// Writes HTML to display the audit results
@@ -7305,39 +7364,61 @@ A = {
 		{
 			// Clear the console of load messages
 			//I.clear();
+			var tablecategory = createTable(D.getPhraseOriginal("Audit Categories"));
+			var tablesum = createTable(D.getPhraseOriginal("Sum &amp; Conversion"));
+			var tablebreakdown = createTable(D.getPhraseOriginal("Characters Breakdown"));
 			
-			// Audit category table header
+			// Audit category table
 			insertTableCurrencyHeader(tablecategory);
 			// Write a column for each audit category
-			var auditcolumn, amount, paymentkey;
+			var auditcolumn;
 			var auditcats = A.Currency.AuditCategories;
 			for (var i in auditcats)
 			{
-				auditcolumn = $("<div id='audTableColumn_" + i + "' class='audTableColumn'></div>").appendTo(tablecategory);
-				auditcolumn.append("<div class='audTableCell audTableHeaderHorizontal'>" + D.getWordCapital(i) + "</div>");
-				for (var ii in auditcats[i])
+				if ((i === "Buying" && currentbuysdata === undefined)
+					|| (i === "Selling" && currentsellsdata === undefined))
 				{
-					amount = (auditcats[i])[ii];
-					paymentkey = (ii.indexOf("coin") !== -1) ? "coin" : ii;
-					auditcolumn.append("<div class='audTableCell'>" + E.PaymentFormat[paymentkey](amount) + "</div>");
+					// Don't show the transaction columns if did not opt to audit them
+					continue;
 				}
+				auditcolumn = insertColumn(tablecategory, D.getWordCapital(i.toLowerCase()));
+				fillCurrencyColumn(auditcolumn, auditcats[i]);
 			}
 			
-			// Audit sum table header
-			insertTableCurrencyHeader(tablesum);
-			var sumcolumn = $("<div id='audTableColumn_Sum' class='audTableColumn'></div>").appendTo(tablecategory);
-			var sumpayment = createAuditPayments();
-			// Add all audit categories' payments into one "sum" category
-			for (var i in auditcats)
+			// Audit sum and conversions table
+			E.updateExchangeRatios(function() // For the gem conversion
 			{
+				insertTableCurrencyHeader(tablesum);
+				// Sum columns
+				var sumcolumn = insertColumn(tablesum, D.getPhraseTitle("account sum"));
+				var convertedsumcolumn = insertColumn(tablesum, D.getPhraseTitle("account sum"));
+				var sumcat = createAuditPayments();
+				for (var i in auditcats)
+				{
+					// Add all audit categories' payments into one "sum" category
+					sumcat = sumAuditCategories(sumcat, auditcats[i]);
+				}
+				fillCurrencyColumn(sumcolumn, sumcat);
+				fillConversionColumn(convertedsumcolumn, sumcat);
 				
-			}
+				// Wallet columns
+				var walletcat = auditcats["Wallet"];
+				var walletcolumn = insertColumn(tablesum, D.getPhraseTitle("wallet"));
+				var convertedwalletcolumn = insertColumn(tablesum, D.getPhraseTitle("wallet"));
+				fillCurrencyColumn(walletcolumn, walletcat);
+				fillConversionColumn(convertedwalletcolumn, walletcat);
+				
+				// Sample columns
+				var samplecat = createAuditPayments(sampleconversionamount);
+				var samplecolumn = insertColumn(tablesum, D.getPhraseTitle("conversion"));
+				var convertedsamplecolumn = insertColumn(tablesum, D.getPhraseTitle("conversion"));
+				fillCurrencyColumn(samplecolumn, samplecat);
+				fillConversionColumn(convertedsamplecolumn, samplecat);
+			});
 			
+			// Finally
 			I.scrollToElement("#accAuditCenter", {aSpeed: "fast"});
 			I.suspendElement(button, false);
-			return;
-			I.log(A.Currency.AuditCategories);
-			I.log(A.Currency.AuditCategoriesCharacters);
 		};
 		
 		// Audits the banks and unlocks after prices have been assigned
@@ -7364,7 +7445,7 @@ A = {
 				if (iIngr)
 				{
 					ingrprice = paymentdb[iIngr[0]];
-					if (ingrprice)
+					if (ingrprice && E.isPriceObject(ingrprice))
 					{
 						sum = E.addPrice(sum, E.recountPrice(ingrprice, iIngr[1]));
 					}
@@ -7373,13 +7454,13 @@ A = {
 			return sum;
 		};
 		
-		// Updates the payment database with the appraised value of untradeable crafted/forged item
+		// Updates the payment database with the appraised value of untradeable items
 		var appraiseCraftable = function()
 		{
 			ascendedheader = U.getRecordHeader("ascended");
 			ascendeddata = U.getRecordData("ascended");
 			ascendedingr = auditmetadata.AscendedIngredients;
-			legendaryingr = auditmetadata.LegendaryIngredients;
+			compositeingr = auditmetadata.CompositeIngredients;
 			
 			// Ascended items
 			var appraisal = {}, ascendedtype;
@@ -7397,10 +7478,10 @@ A = {
 				paymentdb[pEntry.i] = appraisal[pCategory];
 			});
 			
-			// Legendary items
-			for (var i in legendaryingr)
+			// Crafted, forged, or combined items from other ingredient items
+			for (var i in compositeingr)
 			{
-				paymentdb[i] = sumIngredients(legendaryingr[i]);
+				paymentdb[i] = sumIngredients(compositeingr[i]);
 			}
 		};
 		
@@ -7494,6 +7575,16 @@ A = {
 					if (cachedprices[i] === undefined && untradeabledb[i] === undefined)
 					{
 						priceids[i] = true;
+					}
+				}
+				// Include barter items for currencies conversion into coin
+				var conversion;
+				for (var i in A.Currency.AuditPayments)
+				{
+					conversion = A.Currency.AuditPayments[i].conversion;
+					if (Array.isArray(conversion))
+					{
+						priceids[(conversion[1])] = true;
 					}
 				}
 				// Include items that require fresh uncached prices
@@ -7711,6 +7802,7 @@ V = {
 	 */
 	serveAudit: function()
 	{
+		return;
 		$("#accAuditContainer").show("fast");
 		// Audit option
 		$("#accAuditTop").append("<label><input id='audWantTransactions' type='checkbox' />"
@@ -9540,7 +9632,7 @@ V = {
 		{
 			goldsamples.empty().html(I.cThrobber);
 			gemsamples.empty().html(I.cThrobber);
-			E.updateGemInCoin(function()
+			E.updateExchangeRatios(function()
 			{
 				goldsamples.empty();
 				A.Metadata.Exchange.GoldSamples.forEach(function(iSample)
@@ -9552,9 +9644,7 @@ V = {
 					+ "</tr>");
 				});
 				animateRows(goldsamples);
-			});
-			E.updateCoinInGem(function()
-			{
+				
 				gemsamples.empty();
 				A.Metadata.Exchange.GemSamples.forEach(function(iSample)
 				{
@@ -13987,6 +14077,16 @@ E = {
 			}
 		});
 	},
+	updateExchangeRatios: function(pCallback)
+	{
+		E.updateCoinInGem(function()
+		{
+			E.updateGemInCoin(function()
+			{
+				pCallback();
+			});
+		});
+	},
 	
 	/*
 	 * Converts a currency using the updated exchange rate.
@@ -14153,6 +14253,14 @@ E = {
 			oPriceBuyTaxed: pPrice.oPriceBuyTaxed * pCount,
 			oPriceSellTaxed: pPrice.oPriceSellTaxed * pCount
 		};
+	},
+	isPriceObject: function(pPrice)
+	{
+		if (pPrice.oPriceBuy !== undefined)
+		{
+			return true;
+		}
+		return false;
 	},
 	
 	/*
@@ -15455,7 +15563,6 @@ D = {
 			cs: "dosah", it: "portata", pl: "zasięg", pt: "alcance", ru: "дальность", zh: "射程"},
 		s_lock: {de: "sperre", es: "bloqueo", fr: "verrou",
 			cs: "zámek", it: "blocco", pl: "zablokuj", pt: "bloqueio", ru: "блокировка", zh: "鎖定"},
-		
 		s_checklist: {de: "prüfliste", es: "lista de comprobación", fr: "liste de contrôle",
 			cs: "kontrolní seznam", it: "elenco di controllo", pl: "lista kontrolna", pt: "lista de verificação", ru: "контрольный список", zh: "檢查清單"},
 		s_subscription: {de: "abonnement", es: "suscripción", fr: "abonnement",
@@ -29369,6 +29476,8 @@ I = {
 		Filler: "&zwnj;", // Place this inside empty elements to give them dimension
 		ArrowUp: "⇑",
 		ArrowDown: "⇓",
+		ArrowLeft: "⇐",
+		ArrowRight: "⇒",
 		ArrowClockwise: "↻",
 		ArrowCounterwise: "↺",
 		Horizontal: "⇄",

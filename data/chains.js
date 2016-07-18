@@ -330,10 +330,10 @@ var GW2T_CHAIN_DATA = [
 	alias: "Maw",
 	pronunciation: "svaniir shaman",
 	title: "The Frozen Maw",
-	name_en: "Frozen Maw",
-	name_de: "Svanir-Schamane",
-	name_es: "Chamán Svanir",
-	name_fr: "Chamane de Svanir",
+	name_en: "Svanir Shaman Chief",
+	name_de: "Schamanenoberhaupt der Svanir",
+	name_es: "Jefe Chamán Svanir",
+	name_fr: "Chef Chamane de Svanir",
 	name_zh: "斯瓦尼亞薩滿",
 	zone: "wayfarer",
 	waypoint: "[&BMIDAAA=]",
@@ -1814,7 +1814,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "auric",
 	waypoint: "[&BMYHAAA=]",
 	level: "80",
-	reward: {ecto: "0", loot: "4"},
+	reward: {ecto: "4", loot: "4"},
 	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 45},
 	events: [
 	{

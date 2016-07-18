@@ -214,10 +214,10 @@
 <div id="accAppendix"><!-- These elements exist solely as HTML to be rewritten inside the console -->
 <div id="accHelpAudit">
 	<h2>Account Audit</h2>
-	<p>The audit feature will download, tally, and evaluate possessions, unlocks, and trades data, estimate their bound value, calculate their Trading Post value, then present them in a table. This process will require almost all account permissions; your account information will be private between your computer and ArenaNet servers.</p>
+	<p>The audit feature will download, tally, and evaluate possessions, unlocks, and trades data; estimate their bound value, calculate their Trading Post value, then present them in a table. This process will require almost all account permissions; your account information will be private between your computer and ArenaNet servers.</p>
 	<h2>Auditing Details</h2>
 	<ul class="cssBullet">
-		<li>Characters audit includes all items in equipment, inventory, shared slots, and inventory bags (which themselves are items).</li>
+		<li>Characters audit includes all items in equipment, slotted runes/sigils/infusions, inventory, shared slots, and inventory bags (which themselves are items).</li>
 		<li>Recipes audit is based on the associated recipe sheet's Trading Post price, if available.</li>
 		<li>Skins are not audited if the original item that unlocked the skin still exists. Precursor skins are not audited because their purpose is to create a legendary and not be an expensive skin.</li>
 		<li>Ascended gear's purpose is for their stats, so all of a type share the same appraisal. For example, ascended weapon and armor coin value is estimated by their T7 crafting materials along with Zojja inscription or insignia Trading Post price. Ascended backpacks all base their coin value on the stats-selectable forged <a href='https://wiki.guildwars2.com/wiki/Quiver_of_a_Thousand_Arrows'>backpack</a> that cost 250 Vicious Claws.</li>
@@ -228,14 +228,20 @@
 	<br />
 	<h2>Auditing Limitations</h2>
 	<ul class="cssBullet">
-		<li>There is no ArenaNet API for retrieving outfits, finishers, mail carriers, and glider unlocks, so they are not audited.</li>
-		<li>Untradeable items are appraised by one currency only, so if a raid vendor item cost 500 tokens and 20 gold, only the 500 tokens will be considered. Also, only a few and most common untradeable items have a recorded currency, for example Versatile Simple Infusion has Fractal Relics currency amount recorded (audited), but Gift of Ascension does not (not audited).</li>
+		<li>There is no ArenaNet API for retrieving outfits, finishers, mail carriers, glider unlocks, and home instance nodes, so they are not audited.</li>
+		<li>Untradeable items are appraised by one currency only, so if a raid vendor item cost 500 tokens and 20 gold, only the 500 tokens will be considered.</li>
+		<li>Only a few and most common untradeable items have a recorded currency, for example Versatile Simple Infusion has Fractal Relics currency amount recorded (audited), but Gift of Ascension does not (not audited).</li>
 	</ul>
 	<br />
 	<h2>Prices and Values</h2>
-	<p>Liquid value is coin price of items that can be sold on the Trading Post, with 15% tax included. Appraised value is the imaginary coin value of the item through the process cost of obtaining it.</p>
+	<p>Liquid value is coin price of items that can be sold on the Trading Post (no bound items), with 15% tax included. Appraised value is coin price of items that can be bought on the Trading Post (includes bound item), inherent vendor coin prices, or the sum prices of their tradeable crafting ingredients.</p>
 	<p>To have a fast audit, Trading Post prices of materials, skins, minis, dyes, and recipes are from a snapshot cache, while prices of bank, inventory, and equipment contents are fetched live from ArenaNet servers. Luxury items such as legendaries and permanent contracts always use the live Trading Post prices.</p>
 	<p>Non-coin prices are from the representative lowest price of an item, such as karma needed to buy a low level Fine rarity armor that unlocks a skin, as opposed to a high level Masterwork rarity armor that unlocks the same skin but cost more karma.</p>
+	<p>Gem prices use the non-sale price. If the gem item is available in a bulk discount, for example 5 items for 1000 gems, then the lowest price is used which is 1000/5 = 200 gems price for that item.</p>
+	<h2>Currency Conversions</h2>
+	<p>Each type of currency can have its coin value approximated by taking a tradeable item it trades for and dividing its Trading Post price by that currency amount. For example, <a href="https://wiki.guildwars2.com/wiki/Pact_Scout's_Mapping_Materials">Pact Scout's Mapping Materials</a> cost 5,250 karma and can be converted to a Vial of Powerful Blood (let it be 75 silver); so 7500 copper / 5250 karma ≈ 1.43 copper per 1 karma. Note that the Trading Post price is the sell price, without tax.</p>
+	<p>Dungeon tokens' coin value is determined by the price of Glob of Ectoplasm, which for the sake of simplicity assumes 100% droprate from the 30 tokens needed to buy a Rare dungeon armor piece to salvage. The barter-conversion rates are stored in <a href="http://gw2timer.com/data/account.js">this file</a>, Ctrl+F the word &quot;conversion&quot;.</p>
+	<p>The coin value next to the gem currency is the amount needed to convert to those gems. Money value (USD/Euro) is the amount needed to buy gems to convert to those coins.</p>
 </div>
 <div id="accHelpBank">
 	<h2>Bank Usage</h2>

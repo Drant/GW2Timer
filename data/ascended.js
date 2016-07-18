@@ -75,6 +75,22 @@ var GW2T_ASCENDED_METADATA = {
 		"38011": {fotm_relic: 250}, // 20 Slot Fractal Exotic Equipment Box
 		"37138": {fotm_relic: 75}, // Versatile Simple Infusion +5
 		"70852": {fotm_relic: 150}, // Versatile Simple Infusion +7
+		"39331": {laurel: 20}, // Gilded Infusion
+		"39333": {laurel: 20}, // Magical Infusion
+		"39330": {laurel: 10}, // Experienced Infusion
+		"39332": {laurel: 10}, // Karmic Infusion
+		"39340": {laurel: 5}, // Healing Infusion
+		"39339": {laurel: 5}, // Resilient Infusion
+		"39338": {laurel: 5}, // Vital Infusion
+		"39337": {laurel: 5}, // Malign Infusion
+		"39336": {laurel: 5}, // Mighty Infusion
+		"39335": {laurel: 5}, // Precise Infusion
+		"43250": {laurel: 5}, // Healing WvW Infusion
+		"43251": {laurel: 5}, // Resilient WvW Infusion
+		"43252": {laurel: 5}, // Vital WvW Infusion
+		"43253": {laurel: 5}, // Malign WvW Infusion
+		"43254": {laurel: 5}, // Mighty WvW Infusion
+		"43255": {laurel: 5} // Precise WvW Infusion
 	},
 	// Tradeable ingredients and expensive items that should always use live TP prices
 	PriorityTradeable: [
@@ -126,8 +142,8 @@ var GW2T_ASCENDED_METADATA = {
 		30697, // Frenzy
 		30701 // Kraitkin
 	],
-	// Base ingredients of legendary items to determine Trading Post value
-	LegendaryIngredients: {
+	// Base ingredients of account bound items that are crafted, forged, or combined from other items
+	CompositeIngredients: {
 		// Astralaria
 		"76158": [[19721, 250], [19925, 250], [19976, 250], [19976, 250], [19676, 100], [71641, 65], [76491, 5], [46747, 60], [19721, 255], [68063, 250], [19700, 1500], [19699, 1200], [24295, 200], [24294, 500], [24293, 100], [24292, 100], [24283, 200], [24282, 500], [24281, 100], [24280, 100], [24300, 200], [24299, 500], [24363, 100], [24298, 100], [24277, 200], [24276, 500], [24275, 100], [24274, 100], [24351, 200], [24350, 500], [24349, 100], [24348, 100], [24289, 200], [24288, 500], [24287, 100], [24286, 100], [24358, 200], [24341, 500], [24345, 100], [24344, 100], [24357, 200], [24356, 500], [24355, 100], [24354, 100], [73248, 75], [19702, 1200], [19924, 350], [19701, 500], [19750, 50]],
 		// HOPE
@@ -139,7 +155,47 @@ var GW2T_ASCENDED_METADATA = {
 		// Ad Infinitum
 		"74155": [[19721, 250], [19925, 250], [19976, 250], [19721, 295], [46747, 350], [24357, 250], [24289, 250], [24351, 250], [24358, 250], [24295, 250], [24283, 250], [24300, 250], [24277, 250], [73248, 375], [19726, 200], [19727, 150], [19724, 300], [19699, 450], [19750, 50], [19702, 200], [19924, 100], [19728, 200], [19730, 100], [19731, 200], [19739, 200], [19741, 100], [19743, 200], [19790, 125], [19722, 750], [19700, 500], [19729, 1000], [19748, 1500]],
 		// The Ascension
-		"77474": [[19721, 250], [19925, 250], [19976, 250], [70820, 250], [19721, 250], [24357, 250], [24289, 250], [24351, 250], [24358, 250], [24295, 250], [24283, 250], [24300, 250], [24277, 250], [46747, 300]]
+		"77474": [[19721, 250], [19925, 250], [19976, 250], [70820, 250], [19721, 250], [24357, 250], [24289, 250], [24351, 250], [24358, 250], [24295, 250], [24283, 250], [24300, 250], [24277, 250], [46747, 300]],
+		// Charged Quartz Crystal
+		"43772": [[43773, 25]],
+		// Mystic Clover
+		"19675": [[19925, 3], [19721, 3], [19976, 3]],
+		// Charged Fossil
+		"70851": [[74328, 50], [43772, 25]],
+		// Charged Thorn
+		"75322": [[74202, 50], [43772, 25]],
+		// Lump of Mithrillium
+		"46742": [[19684, 50], [19721, 1], [46747, 10]],
+		// Spool of Thick Elonian Cord
+		"46745": [[19735, 50], [19721, 1], [46747, 10]],
+		// Glob of Elder Spirit Residue
+		"46744": [[19709, 50], [19721, 1], [46747, 10]],
+		// Cube of Stabilized Dark Energy
+		"73137": [[73248, 75]],
+		// Mighty Infusion
+		"37127": [[20796, 50], [19976, 20], [37907, 250], [24295, 100]],
+		// Precise Infusion
+		"37128": [[20796, 50], [19976, 20], [37907, 250], [24351, 100]],
+		// Malign Infusion
+		"37129": [[20796, 50], [19976, 20], [37907, 250], [24283, 100]],
+		// Vital Infusion
+		"37134": [[20796, 1], [19976, 20], [37907, 250], [24358, 100]],
+		// Resilient Infusion
+		"37133": [[20796, 1], [19976, 20], [37907, 250], [24289, 100]],
+		// Healing Infusion
+		"37123": [[20796, 50], [19976, 20], [37907, 250], [24300, 100]],
+		// Versatile Mighty Infusion
+		"37131": [[20796, 100], [19976, 50], [37907, 100], [24295, 250]],
+		// Versatile Malign Infusion
+		"37130": [[20796, 100], [19976, 50], [37907, 100], [24283, 250]],
+		// Versatile Precise Infusion
+		"37132": [[20796, 100], [19976, 50], [37907, 100], [24351, 250]],
+		// Versatile Vital Infusion
+		"37136": [[20796, 100], [19976, 50], [37907, 100], [24358, 250]],
+		// Versatile Resilient Infusion
+		"37135": [[20796, 100], [19976, 50], [37907, 100], [24289, 250]],
+		// Versatile Healing Infusion
+		"37125": [[20796, 100], [19976, 50], [37907, 100], [24300, 250]]
 	},
 	// Base ingredients of ascended pieces to determine Trading Post value
 	AscendedIngredients: {
@@ -815,7 +871,7 @@ Accessory: [
 	{i: 39241, n: "Armbrace of Truth", p: {coin: 0}},
 	{i: 67299, n: "Baelfire's Ember", p: {coin: 0}},
 	{i: 67306, n: "Bane's Tooth", p: {coin: 0}},
-	{i: 77988, n: "Berg's Token", p: {coin: 0}},
+	{i: 77988, n: "Berg's Token", p: {raid_ft: 250}},
 	{i: 39563, n: "Big Mama's Tooth", p: {coin: 0}},
 	{i: 67896, n: "Caithe's Blossom", p: {coin: 0}},
 	{i: 72325, n: "Caithe's Blossom", p: {coin: 0}},
@@ -841,21 +897,21 @@ Accessory: [
 	{i: 39235, n: "Matriarch's Quill", p: {coin: 0}},
 	{i: 39562, n: "Molten Ore", p: {coin: 0}},
 	{i: 39226, n: "Moon Shell", p: {coin: 0}},
-	{i: 77958, n: "Narella's Bauble", p: {coin: 0}},
-	{i: 77986, n: "Pact Badge", p: {coin: 0}},
+	{i: 77958, n: "Narella's Bauble", p: {raid_ft: 250}},
+	{i: 77986, n: "Pact Badge", p: {raid_ft: 250}},
 	{i: 39558, n: "Passiflora Karkinata", p: {coin: 0}},
 	{i: 39234, n: "Plague Idol", p: {coin: 0}},
 	{i: 67895, n: "Quetzal Crest", p: {coin: 0}},
-	{i: 77448, n: "Spectral Balm", p: {coin: 0}},
-	{i: 77413, n: "Spectral Juju", p: {coin: 0}},
-	{i: 77422, n: "Spectral Talisman", p: {coin: 0}},
-	{i: 77323, n: "Spectral Ward", p: {coin: 0}},
+	{i: 77448, n: "Spectral Balm", p: {raid_ft: 250}},
+	{i: 77413, n: "Spectral Juju", p: {raid_ft: 250}},
+	{i: 77422, n: "Spectral Talisman", p: {raid_ft: 250}},
+	{i: 77323, n: "Spectral Ward", p: {raid_ft: 250}},
 	{i: 39551, n: "Totem of the Gorilla", p: {coin: 0}},
 	{i: 67897, n: "Ventari's Chisel", p: {coin: 0}},
 	{i: 39550, n: "Warmaster's Family Heirloom", p: {coin: 0}},
 	{i: 39546, n: "Preserved Red Iris Flower", p: {coin: 0}},
 	{i: 67190, n: "Wylenn's Manual of Style", p: {coin: 0}},
-	{i: 77939, n: "Zane's Memento", p: {coin: 0}},
+	{i: 77939, n: "Zane's Memento", p: {raid_ft: 250}},
 	{i: 67302, n: "Zhaitan's Claw", p: {coin: 0}},
 	{i: 39236, n: "Zinn's Data Crystal", p: {coin: 0}},
 	{i: 74586, n: "Caithe's Remorse", p: {achievement: 0}},
@@ -906,10 +962,10 @@ Amulet: [
 	{i: 70671, n: "Sun, Moon, and Stars", p: {coin: 0}},
 	{i: 39275, n: "Symbol of the Deceiver", p: {coin: 0}},
 	{i: 39313, n: "Syzygy", p: {coin: 0}},
-	{i: 77338, n: "Talisman of Garr", p: {coin: 0}},
-	{i: 77412, n: "Talisman of Holt", p: {coin: 0}},
-	{i: 77380, n: "Talisman of Irwyn", p: {coin: 0}},
-	{i: 77410, n: "Talisman of Manton", p: {coin: 0}},
+	{i: 77338, n: "Talisman of Garr", p: {raid_ft: 250}},
+	{i: 77412, n: "Talisman of Holt", p: {raid_ft: 250}},
+	{i: 77380, n: "Talisman of Irwyn", p: {raid_ft: 250}},
+	{i: 77410, n: "Talisman of Manton", p: {raid_ft: 250}},
 	{i: 39264, n: "Thackeray Family Crest", p: {coin: 0}},
 	{i: 39589, n: "The Beetlestone Diamond", p: {coin: 0}},
 	{i: 39282, n: "The Eyes of Abaddon", p: {coin: 0}},
@@ -1654,7 +1710,7 @@ HeavyHelmAquatic: [
 	{i: 74353, n: "Zojja's Metal Breather", p: {coin: 900000}}
 ],
 Axe: [
-	{i: 77423, n: "Chest of Axes"},
+	{i: 77423, n: "Chest of Axes", p: {coin: 1100000}},
 	{i: 46759, n: "Zojja's Reaver", p: {coin: 1100000}},
 	{i: 46778, n: "Coalforge's Reaver", p: {coin: 1100000}},
 	{i: 46797, n: "Stonecleaver's Reaver", p: {coin: 1100000}},
@@ -1694,7 +1750,7 @@ Axe: [
 	{i: 78987, n: "Healer's White Mantle Axe", p: {coin: 1100000}}
 ],
 Mace: [
-	{i: 77446, n: "Chest of Maces"},
+	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
 	{i: 46766, n: "Zojja's Flanged Mace", p: {coin: 1100000}},
 	{i: 46785, n: "Coalforge's Flanged Mace", p: {coin: 1100000}},
 	{i: 46804, n: "Stonecleaver's Flanged Mace", p: {coin: 1100000}},
@@ -1733,7 +1789,7 @@ Mace: [
 	{i: 78098, n: "Kaiser Snake Mace", p: {coin: 1100000}}
 ],
 Sword: [
-	{i: 77287, n: "Chest of Swords"},
+	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
 	{i: 46774, n: "Zojja's Blade", p: {coin: 1200000}},
 	{i: 46793, n: "Coalforge's Blade", p: {coin: 1200000}},
 	{i: 46812, n: "Stonecleaver's Blade", p: {coin: 1200000}},
@@ -1773,7 +1829,7 @@ Sword: [
 	{i: 78992, n: "Assaulter's White Mantle Gladius", p: {coin: 1200000}}
 ],
 Dagger: [
-	{i: 77428, n: "Chest of Daggers"},
+	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
 	{i: 46760, n: "Zojja's Razor", p: {coin: 1100000}},
 	{i: 46779, n: "Coalforge's Razor", p: {coin: 1100000}},
 	{i: 46798, n: "Stonecleaver's Razor", p: {coin: 1100000}},
@@ -1804,10 +1860,10 @@ Dagger: [
 	{i: 74179, n: "Yassith's Razor", p: {coin: 1100000}},
 	{i: 75388, n: "Maklain's Razor", p: {coin: 1100000}},
 	{i: 75422, n: "Pahua's Razor", p: {coin: 1100000}},
-	{i: 77288, n: "Healer's Sparking Dagger", p: {coin: 1100000}},
-	{i: 77320, n: "Defender's Sparking Dagger", p: {coin: 1100000}},
-	{i: 77344, n: "Assaulter's Sparking Dagger", p: {coin: 1100000}},
-	{i: 77459, n: "Malicious Sparking Dagger", p: {coin: 1100000}},
+	{i: 77288, n: "Healer's Sparking Dagger", p: {raid_ft: 600}},
+	{i: 77320, n: "Defender's Sparking Dagger", p: {raid_ft: 600}},
+	{i: 77344, n: "Assaulter's Sparking Dagger", p: {raid_ft: 600}},
+	{i: 77459, n: "Malicious Sparking Dagger", p: {raid_ft: 600}},
 	{i: 78073, n: "Kaiser Snake Dagger", p: {coin: 1100000}},
 	{i: 78110, n: "Kaiser Snake Dagger", p: {coin: 1100000}},
 	{i: 78877, n: "Defender's White Mantle Slicer", p: {coin: 1100000}},
@@ -1816,7 +1872,7 @@ Dagger: [
 	{i: 78943, n: "Assaulter's White Mantle Slicer", p: {coin: 1100000}}
 ],
 Pistol: [
-	{i: 77465, n: "Chest of Pistols"},
+	{i: 77465, n: "Chest of Pistols", p: {coin: 1100000}},
 	{i: 46767, n: "Zojja's Revolver", p: {coin: 1100000}},
 	{i: 46786, n: "Coalforge's Revolver", p: {coin: 1100000}},
 	{i: 46805, n: "Stonecleaver's Revolver", p: {coin: 1100000}},
@@ -1856,7 +1912,7 @@ Pistol: [
 	{i: 78113, n: "Kaiser Snake Pistol", p: {coin: 1100000}}
 ],
 Scepter: [
-	{i: 77441, n: "Chest of Scepters"},
+	{i: 77441, n: "Chest of Scepters", p: {coin: 1100000}},
 	{i: 46769, n: "Zojja's Wand", p: {coin: 1100000}},
 	{i: 46788, n: "Coalforge's Wand", p: {coin: 1100000}},
 	{i: 46807, n: "Stonecleaver's Wand", p: {coin: 1100000}},
@@ -1899,7 +1955,7 @@ Scepter: [
 	{i: 78980, n: "Healer's White Mantle Rod", p: {coin: 1100000}}
 ],
 Focus: [
-	{i: 77455, n: "Chest of Foci"},
+	{i: 77455, n: "Chest of Foci", p: {coin: 1000000}},
 	{i: 46761, n: "Zojja's Artifact", p: {coin: 1000000}},
 	{i: 46780, n: "Coalforge's Artifact", p: {coin: 1000000}},
 	{i: 46799, n: "Stonecleaver's Artifact", p: {coin: 1000000}},
@@ -1930,10 +1986,10 @@ Focus: [
 	{i: 75331, n: "Pahua's Artifact", p: {coin: 1000000}},
 	{i: 75356, n: "Tizlak's Artifact", p: {coin: 1000000}},
 	{i: 75668, n: "Laranthir's Artifact", p: {coin: 1000000}},
-	{i: 77839, n: "Healer's Slothasor Effigy", p: {coin: 1000000}},
-	{i: 77894, n: "Assaulter's Slothasor Effigy", p: {coin: 1000000}},
-	{i: 77922, n: "Defender's Slothasor Effigy", p: {coin: 1000000}},
-	{i: 77944, n: "Malicious Slothasor Effigy", p: {coin: 1000000}},
+	{i: 77839, n: "Healer's Slothasor Effigy", p: {raid_ft: 600}},
+	{i: 77894, n: "Assaulter's Slothasor Effigy", p: {raid_ft: 600}},
+	{i: 77922, n: "Defender's Slothasor Effigy", p: {raid_ft: 600}},
+	{i: 77944, n: "Malicious Slothasor Effigy", p: {raid_ft: 600}},
 	{i: 78060, n: "Kaiser Snake Focus", p: {coin: 1000000}},
 	{i: 78102, n: "Kaiser Snake Focus", p: {coin: 1000000}},
 	{i: 78844, n: "Assaulter's White Mantle Icon", p: {coin: 1000000}},
@@ -1976,10 +2032,10 @@ Shield: [
 	{i: 76075, n: "Tizlak's Bastion", p: {coin: 1000000}},
 	{i: 76198, n: "Ruka's Bastion", p: {coin: 1000000}},
 	{i: 76717, n: "Pahua's Bastion", p: {coin: 1000000}},
-	{i: 77341, n: "Defender's Spirit Ward", p: {coin: 1000000}},
-	{i: 77438, n: "Malicious Spirit Ward", p: {coin: 1000000}},
-	{i: 77444, n: "Assaulter's Spirit Ward", p: {coin: 1000000}},
-	{i: 77453, n: "Healer's Spirit Ward", p: {coin: 1000000}},
+	{i: 77341, n: "Defender's Spirit Ward", p: {raid_ft: 600}},
+	{i: 77438, n: "Malicious Spirit Ward", p: {raid_ft: 600}},
+	{i: 77444, n: "Assaulter's Spirit Ward", p: {raid_ft: 600}},
+	{i: 77453, n: "Healer's Spirit Ward", p: {raid_ft: 600}},
 	{i: 77855, n: "Healer's White Mantle Bulwark", p: {coin: 1000000}},
 	{i: 77909, n: "Malicious White Mantle Bulwark", p: {coin: 1000000}},
 	{i: 77918, n: "Defender's White Mantle Bulwark", p: {coin: 1000000}},
@@ -1988,7 +2044,7 @@ Shield: [
 	{i: 78093, n: "Kaiser Snake Shield", p: {coin: 1000000}}
 ],
 Torch: [
-	{i: 77456, n: "Chest of Torches"},
+	{i: 77456, n: "Chest of Torches", p: {coin: 1000000}},
 	{i: 46775, n: "Zojja's Brazier", p: {coin: 1000000}},
 	{i: 46794, n: "Coalforge's Brazier", p: {coin: 1000000}},
 	{i: 46813, n: "Stonecleaver's Brazier", p: {coin: 1000000}},
@@ -2032,7 +2088,7 @@ Torch: [
 	{i: 78986, n: "Assaulter's Keep Construct Torch", p: {coin: 1000000}}
 ],
 Warhorn: [
-	{i: 77332, n: "Chest of Warhorns"},
+	{i: 77332, n: "Chest of Warhorns", p: {coin: 1000000}},
 	{i: 46777, n: "Zojja's Herald", p: {coin: 1000000}},
 	{i: 46796, n: "Coalforge's Herald", p: {coin: 1000000}},
 	{i: 46815, n: "Stonecleaver's Herald", p: {coin: 1000000}},
@@ -2072,7 +2128,7 @@ Warhorn: [
 	{i: 78109, n: "Kaiser Snake Warhorn", p: {coin: 1000000}}
 ],
 Greatsword: [
-	{i: 77442, n: "Chest of Greatswords"},
+	{i: 77442, n: "Chest of Greatswords", p: {coin: 1200000}},
 	{i: 46762, n: "Zojja's Claymore", p: {coin: 1200000}},
 	{i: 46781, n: "Coalforge's Claymore", p: {coin: 1200000}},
 	{i: 46800, n: "Stonecleaver's Claymore", p: {coin: 1200000}},
@@ -2104,10 +2160,10 @@ Greatsword: [
 	{i: 75307, n: "Ruka's Claymore", p: {coin: 1200000}},
 	{i: 76055, n: "Pahua's Claymore", p: {coin: 1200000}},
 	{i: 76501, n: "Maklain's Claymore", p: {coin: 1200000}},
-	{i: 77331, n: "Healer's Sparking Vanquisher", p: {coin: 1200000}},
-	{i: 77358, n: "Malicious Sparking Vanquisher", p: {coin: 1200000}},
-	{i: 77427, n: "Assaulter's Sparking Vanquisher", p: {coin: 1200000}},
-	{i: 77454, n: "Defender's Sparking Vanquisher", p: {coin: 1200000}},
+	{i: 77331, n: "Healer's Sparking Vanquisher", p: {raid_ft: 600}},
+	{i: 77358, n: "Malicious Sparking Vanquisher", p: {raid_ft: 600}},
+	{i: 77427, n: "Assaulter's Sparking Vanquisher", p: {raid_ft: 600}},
+	{i: 77454, n: "Defender's Sparking Vanquisher", p: {raid_ft: 600}},
 	{i: 77813, n: "Healer's White Mantle Sunderer", p: {coin: 1200000}},
 	{i: 77864, n: "Defender's White Mantle Sunderer", p: {coin: 1200000}},
 	{i: 77942, n: "Assaulter's White Mantle Sunderer", p: {coin: 1200000}},
@@ -2116,7 +2172,7 @@ Greatsword: [
 	{i: 78059, n: "Kaiser Snake Greatsword", p: {coin: 1200000}}
 ],
 Hammer: [
-	{i: 77328, n: "Chest of Hammers"},
+	{i: 77328, n: "Chest of Hammers", p: {coin: 1100000}},
 	{i: 46763, n: "Zojja's Warhammer", p: {coin: 1100000}},
 	{i: 46782, n: "Coalforge's Warhammer", p: {coin: 1100000}},
 	{i: 46801, n: "Stonecleaver's Warhammer", p: {coin: 1100000}},
@@ -2148,10 +2204,10 @@ Hammer: [
 	{i: 75897, n: "Svaard's Warhammer", p: {coin: 1100000}},
 	{i: 76262, n: "Maklain's Warhammer", p: {coin: 1100000}},
 	{i: 76977, n: "Tizlak's Warhammer", p: {coin: 1100000}},
-	{i: 77847, n: "Defender's Sloth-Hunting Hammer", p: {coin: 1100000}},
-	{i: 77867, n: "Malicious Sloth-Hunting Hammer", p: {coin: 1100000}},
-	{i: 77970, n: "Assaulter's Sloth-Hunting Hammer", p: {coin: 1100000}},
-	{i: 77992, n: "Healer's Sloth-Hunting Hammer", p: {coin: 1100000}},
+	{i: 77847, n: "Defender's Sloth-Hunting Hammer", p: {raid_ft: 600}},
+	{i: 77867, n: "Malicious Sloth-Hunting Hammer", p: {raid_ft: 600}},
+	{i: 77970, n: "Assaulter's Sloth-Hunting Hammer", p: {raid_ft: 600}},
+	{i: 77992, n: "Healer's Sloth-Hunting Hammer", p: {raid_ft: 600}},
 	{i: 78051, n: "Kaiser Snake Hammer", p: {coin: 1100000}},
 	{i: 78104, n: "Kaiser Snake Hammer", p: {coin: 1100000}},
 	{i: 78835, n: "Healer's White Mantle Hammer", p: {coin: 1100000}},
@@ -2160,7 +2216,7 @@ Hammer: [
 	{i: 78919, n: "Malicious White Mantle Hammer", p: {coin: 1100000}}
 ],
 LongBow: [
-	{i: 77400, n: "Chest of Longbows"},
+	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},
 	{i: 46765, n: "Zojja's Greatbow", p: {coin: 1300000}},
 	{i: 46784, n: "Coalforge's Greatbow", p: {coin: 1300000}},
 	{i: 46803, n: "Stonecleaver's Greatbow", p: {coin: 1300000}},
@@ -2200,7 +2256,7 @@ LongBow: [
 	{i: 78020, n: "Kaiser Snake Longbow", p: {coin: 1300000}}
 ],
 ShortBow: [
-	{i: 77276, n: "Chest of Short Bows"},
+	{i: 77276, n: "Chest of Short Bows", p: {coin: 1300000}},
 	{i: 46771, n: "Zojja's Short Bow", p: {coin: 1300000}},
 	{i: 46790, n: "Coalforge's Short Bow", p: {coin: 1300000}},
 	{i: 46809, n: "Stonecleaver's Short Bow", p: {coin: 1300000}},
@@ -2239,7 +2295,7 @@ ShortBow: [
 	{i: 78425, n: "Tigris", p: {coin: 1300000}},
 ],
 Rifle: [
-	{i: 77432, n: "Chest of Rifles"},
+	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},
 	{i: 46768, n: "Zojja's Musket", p: {coin: 1200000}},
 	{i: 46787, n: "Coalforge's Musket", p: {coin: 1200000}},
 	{i: 46806, n: "Stonecleaver's Musket", p: {coin: 1200000}},
@@ -2268,10 +2324,10 @@ Rifle: [
 	{i: 72279, n: "Yassith's Musket", p: {coin: 1200000}},
 	{i: 73497, n: "Maklain's Musket", p: {coin: 1200000}},
 	{i: 77055, n: "Ruka's Musket", p: {coin: 1200000}},
-	{i: 77280, n: "Sabetha's Defender Boomstick", p: {coin: 1200000}},
-	{i: 77281, n: "Sabetha's Healer Boomstick", p: {coin: 1200000}},
-	{i: 77363, n: "Sabetha's Malicious Boomstick", p: {coin: 1200000}},
-	{i: 77396, n: "Sabetha's Assaulter Boomstick", p: {coin: 1200000}},
+	{i: 77280, n: "Sabetha's Defender Boomstick", p: {raid_ft: 600}},
+	{i: 77281, n: "Sabetha's Healer Boomstick", p: {raid_ft: 600}},
+	{i: 77363, n: "Sabetha's Malicious Boomstick", p: {raid_ft: 600}},
+	{i: 77396, n: "Sabetha's Assaulter Boomstick", p: {raid_ft: 600}},
 	{i: 78032, n: "Kaiser Snake Rifle", p: {coin: 1200000}},
 	{i: 78083, n: "Kaiser Snake Rifle", p: {coin: 1200000}},
 	{i: 76984, n: "Pahua's Musket", p: {coin: 1200000}},
@@ -2281,7 +2337,7 @@ Rifle: [
 	{i: 78967, n: "Defender's White Mantle Rifle", p: {coin: 1200000}}
 ],
 Staff: [
-	{i: 77289, n: "Chest of Staves"},
+	{i: 77289, n: "Chest of Staves", p: {coin: 1200000}},
 	{i: 46773, n: "Zojja's Spire", p: {coin: 1200000}},
 	{i: 46792, n: "Coalforge's Spire", p: {coin: 1200000}},
 	{i: 46811, n: "Stonecleaver's Spire", p: {coin: 1200000}},
@@ -2315,14 +2371,14 @@ Staff: [
 	{i: 76089, n: "Tizlak's Spire", p: {coin: 1200000}},
 	{i: 76631, n: "Laranthir's Spire", p: {coin: 1200000}},
 	{i: 76889, n: "Svaard's Spire", p: {coin: 1200000}},
-	{i: 77273, n: "Malicious Spirit Branch", p: {coin: 1200000}},
-	{i: 77312, n: "Defender's Spirit Branch", p: {coin: 1200000}},
-	{i: 77346, n: "Assaulter's Spirit Branch", p: {coin: 1200000}},
-	{i: 77466, n: "Healer's Spirit Branch", p: {coin: 1200000}},
-	{i: 77851, n: "Matthias's Malicious Staff", p: {coin: 1200000}},
-	{i: 77853, n: "Matthias's Healer Staff", p: {coin: 1200000}},
-	{i: 77891, n: "Matthias's Assaulter Staff", p: {coin: 1200000}},
-	{i: 77936, n: "Matthias's Defender Staff", p: {coin: 1200000}},
+	{i: 77273, n: "Malicious Spirit Branch", p: {raid_ft: 600}},
+	{i: 77312, n: "Defender's Spirit Branch", p: {raid_ft: 600}},
+	{i: 77346, n: "Assaulter's Spirit Branch", p: {raid_ft: 600}},
+	{i: 77466, n: "Healer's Spirit Branch", p: {raid_ft: 600}},
+	{i: 77851, n: "Matthias's Malicious Staff", p: {raid_ft: 600}},
+	{i: 77853, n: "Matthias's Healer Staff", p: {raid_ft: 600}},
+	{i: 77891, n: "Matthias's Assaulter Staff", p: {raid_ft: 600}},
+	{i: 77936, n: "Matthias's Defender Staff", p: {raid_ft: 600}},
 	{i: 78078, n: "Kaiser Snake Staff", p: {coin: 1200000}},
 	{i: 78080, n: "Kaiser Snake Staff", p: {coin: 1200000}},
 	{i: 78805, n: "Defender's White Mantle Staff", p: {coin: 1200000}},
@@ -2331,7 +2387,7 @@ Staff: [
 	{i: 78931, n: "Healer's White Mantle Staff", p: {coin: 1200000}}
 ],
 Harpoon: [
-	{i: 77388, n: "Chest of Spears"},
+	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},
 	{i: 46764, n: "Zojja's Impaler", p: {coin: 1100000}},
 	{i: 46783, n: "Coalforge's Impaler", p: {coin: 1100000}},
 	{i: 46802, n: "Stonecleaver's Impaler", p: {coin: 1100000}},
@@ -2363,7 +2419,7 @@ Harpoon: [
 	{i: 76212, n: "Maklain's Impaler", p: {coin: 1100000}}
 ],
 Speargun: [
-	{i: 77285, n: "Chest of Harpoon Guns"},
+	{i: 77285, n: "Chest of Harpoon Guns", p: {coin: 1300000}},
 	{i: 46772, n: "Zojja's Harpoon Gun", p: {coin: 1300000}},
 	{i: 46791, n: "Coalforge's Harpoon Gun", p: {coin: 1300000}},
 	{i: 46810, n: "Stonecleaver's Harpoon Gun", p: {coin: 1300000}},
@@ -2396,7 +2452,7 @@ Speargun: [
 	{i: 76648, n: "Tizlak's Harpoon Gun", p: {coin: 1300000}}
 ],
 Trident: [
-	{i: 77329, n: "Chest of Tridents"},
+	{i: 77329, n: "Chest of Tridents", p: {coin: 1000000}},
 	{i: 46776, n: "Zojja's Trident", p: {coin: 1000000}},
 	{i: 46795, n: "Coalforge's Trident", p: {coin: 1000000}},
 	{i: 46814, n: "Stonecleaver's Trident", p: {coin: 1000000}},
