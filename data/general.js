@@ -1220,7 +1220,7 @@ Announcement:
 	pve: "<a href='http://gw2timer.com/?mode=Tile' title='gw2timer.com/tile'>Use Tile Mode</a> for a simpler version of the website's timers.",
 	wvw: "",
 	Start: new Date("2016-07-12T16:00:00Z"),
-	Finish: new Date("2016-07-19T16:00:00Z"),
+	Finish: new Date("2016-07-26T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1309,8 +1309,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-07-12T15:00:00Z"),
-	Finish: new Date("2016-07-19T15:00:00Z"),
+	Start: new Date("2016-07-19T15:00:00Z"),
+	Finish: new Date("2016-07-26T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1323,21 +1323,21 @@ Sale: {
 		img: "http://i.imgur.com/dYyhm3y.png",
 		price: 2400,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Black Lion Keys and Scrap Package",
-		img: "http://i.imgur.com/X9cj6ip.png",
-		price: 900,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Xera's Mask",
-		id: "79014",
-		price: 400,
-		discount: null,
 		col: 1
+	},
+	{
+		name: "Glide-R-Tron",
+		img: "http://i.imgur.com/hw1n9uq.png",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Banker Golem (2 weeks)",
+		id: "50085",
+		price: 400,
+		discount: 500,
+		col: 0
 	}
 	]
 },

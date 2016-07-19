@@ -6054,7 +6054,7 @@ A = {
 		Traits: {}
 	},
 	Possessions: null, // Associative array of actual items from the user's bank, inventory, equipment slots, shared slots, and bag slots
-	Tallies: null, // Number of filled slots and capacity of banks and collections, used in auditing
+	Tally: null, // Number of filled slots and capacity of banks and collections, used in auditing
 	URL: { // Account data type and URL substring
 		Account: "account",
 		Achievements: "account/achievements",
@@ -6900,10 +6900,11 @@ A = {
 		// Search the account for items
 		var compilePossessions = function(pSharedData, pBankData, pMaterialsData)
 		{
-			// Tallies object hold filled and capacity numbers
-			A.Tallies = {
+			// Hold filled and capacity numbers
+			A.Tally = {
 				Characters: [0, 0],
-				Bank: [0, 0]
+				Bank: [0, 0],
+				Materials: [0, 0]
 			};
 			A.Data.Characters.forEach(function(iChar)
 			{
@@ -6923,13 +6924,13 @@ A = {
 					{
 						if (iBag)
 						{
-							A.Tallies.Characters[1] += iBag.size;
+							A.Tally.Characters[1] += iBag.size;
 							addItem(iBag.id, iChar.oCharIndex, 1); // Add the bag itself which is an item
 							iBag.inventory.forEach(function(iSlot)
 							{
 								if (iSlot)
 								{
-									A.Tallies.Characters[0] += 1;
+									A.Tally.Characters[0] += 1;
 									addItem(iSlot.id, iChar.oCharIndex, iSlot.count, iSlot.binding);
 									addUpgrades(iSlot, iChar.oCharIndex);
 								}
@@ -6951,12 +6952,12 @@ A = {
 			
 			// Add bank contents
 			A.assignAccountUpgrades("BankTab", ~~(pBankData.length / A.Metadata.Bank.NumSlotsPerTab));
-			A.Tallies.Bank[1] = pBankData.length;
+			A.Tally.Bank[1] = pBankData.length;
 			pBankData.forEach(function(iSlot)
 			{
 				if (iSlot)
 				{
-					A.Tallies.Bank[0] += 1;
+					A.Tally.Bank[0] += 1;
 					addItem(iSlot.id, "Bank", iSlot.count, iSlot.binding);
 					addUpgrades(iSlot, "Bank");
 				}
@@ -6964,10 +6965,12 @@ A = {
 			
 			// Add materials deposits
 			var materialcountlargest = 0;
+			A.Tally.Materials[1] = pMaterialsData.length;
 			pMaterialsData.forEach(function(iSlot)
 			{
 				if (iSlot && iSlot.count > 0)
 				{
+					A.Tally.Materials[0] += 1;
 					addItem(iSlot.id, "Materials", iSlot.count);
 					if (iSlot.count > materialcountlargest)
 					{
@@ -7104,6 +7107,7 @@ A = {
 			{
 				A.Currency.AuditCategories[i] = createAuditPayments();
 			}
+			A.Currency.AuditCategoriesCharacters = {};
 		};
 		
 		// Adds a payment or price object to an audit category
@@ -7215,14 +7219,18 @@ A = {
 					{
 						for (var i = 0; i < iChar.recipes.length; i++)
 						{
-							unlockedids[(iChar.recipes[i])] = true;
+							if (unlockedids[(iChar.recipes[i])] === undefined)
+							{
+								unlocksdata.Recipes.push(iChar.recipes[i]);
+								unlockedids[(iChar.recipes[i])] = true;
+							}
 						}
 					}
 				});
 			}
 			
 			// Audit by adding the payment value once for each unlock (which has an associated item that has a payment)
-			A.Tallies[pName] = [(unlocksdata[pName]).length, 0];
+			A.Tally[pName] = [(unlocksdata[pName]).length, 0];
 			var payment, auditcat = A.Currency.AuditCategories[pName];
 			if (unlockedids === undefined)
 			{
@@ -7238,6 +7246,7 @@ A = {
 			}
 			A.iterateRecord(recordsdata[pName], function(pEntry)
 			{
+				(A.Tally[pName])[1] += 1;
 				if (pEntry[itemkey])
 				{
 					payment = paymentdb[(pEntry[itemkey])];
@@ -7246,7 +7255,6 @@ A = {
 						&& ((pWantPossessions === false && A.Possessions[(pEntry[itemkey])] === undefined) || (pWantPossessions !== false)))
 					{
 						addPaymentToCategory(auditcat, payment, 1, true);
-						(A.Tallies[pName])[1] += 1;
 					}
 				}
 			});
@@ -7258,7 +7266,7 @@ A = {
 			var payment;
 			if (currentbuysdata)
 			{
-				A.Tallies.Buying = [currentbuysdata.length, currentbuysdata.length];
+				A.Tally.Buying = [currentbuysdata.length, currentbuysdata.length];
 				currentbuysdata.forEach(function(iTransaction)
 				{
 					addPaymentToCategory(A.Currency.AuditCategories.Buying, E.createPricePlain(iTransaction.price), iTransaction.quantity);
@@ -7266,7 +7274,7 @@ A = {
 			}
 			if (currentsellsdata)
 			{
-				A.Tallies.Selling = [currentsellsdata.length, currentsellsdata.length];
+				A.Tally.Selling = [currentsellsdata.length, currentsellsdata.length];
 				currentsellsdata.forEach(function(iTransaction)
 				{
 					payment = paymentdb[iTransaction.item_id];
@@ -7333,10 +7341,11 @@ A = {
 		};
 		
 		// Inserts a headered but empty column into a table
-		var insertColumn = function(pTable, pHeader)
+		var insertColumn = function(pTable, pHeader, pName)
 		{
+			var tallystr = (A.Tally[pName]) ? ("<span class='audTableTally'>" + (A.Tally[pName])[0] + " / " + (A.Tally[pName])[1] + "</span>") : "";
 			var auditcolumn = $("<div class='audTableColumn'></div>").appendTo(pTable)
-				.append("<div class='audTableCell audTableHeaderHorizontal'>" + pHeader + "</div>");
+				.append("<div class='audTableCell audTableHeaderHorizontal'>" + pHeader + tallystr + "</div>");
 			return auditcolumn;
 		};
 		
@@ -7390,7 +7399,7 @@ A = {
 				if (pMaxCategory)
 				{
 					barstr = "<samp class='audTableCellBar'>"
-						+ "<s style='background:linear-gradient(to right, black 0%, " + A.Currency.AuditPayments[i].color + " 100%);"
+						+ "<s style='background:url(img/background/bargraph.png), linear-gradient(to right, black 0%, " + A.Currency.AuditPayments[i].color + " 100%);"
 						+ "width:" + ((pMaxCategory[i] > 0) ? ((amount / pMaxCategory[i]) * T.cPERCENT_100) : 0) + "%'></s>"
 					+ "</samp>";
 				}
@@ -7432,7 +7441,7 @@ A = {
 					// Don't show the transaction columns if did not opt to audit them
 					continue;
 				}
-				auditcolumn = insertColumn(tablecategory, D.getWordCapital(i.toLowerCase()));
+				auditcolumn = insertColumn(tablecategory, D.getWordCapital(i.toLowerCase()), i);
 				fillCurrencyColumn(auditcolumn, auditcats[i], false, auditcatsmax);
 			}
 			
@@ -7480,7 +7489,7 @@ A = {
 			E.getCoinFromGem(walletcat["gem"], function(pCoin)
 			{
 				var liquidsell = pCoin;
-				container.prepend("<div class='audSummary'></div>");
+				container.prepend("<div id='audSummary'></div>");
 			});
 			
 			// Finally
@@ -7870,7 +7879,6 @@ V = {
 	 */
 	serveAudit: function()
 	{
-		return;
 		$("#accAuditContainer").show("fast");
 		// Audit option
 		$("#accAuditTop").append("<label><input id='audWantTransactions' type='checkbox' />"
