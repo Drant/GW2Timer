@@ -229,15 +229,16 @@
 	<h2>Auditing Limitations</h2>
 	<ul class="cssBullet">
 		<li>There is no ArenaNet API for retrieving outfits, finishers, mail carriers, glider unlocks, and home instance nodes, so they are not audited.</li>
-		<li>Untradeable items are appraised by one currency only, so if a raid vendor item cost 500 tokens and 20 gold, only the 500 tokens will be considered.</li>
 		<li>Only a few and most common untradeable items have a recorded currency, for example Versatile Simple Infusion has Fractal Relics currency amount recorded (audited), but Gift of Ascension does not (not audited).</li>
+		<li>Untradeable items are appraised by one currency only, so if a raid vendor item cost 500 tokens and 20 gold, only the 500 tokens will be considered.</li>
+		<li>Account bound unopened bags are not audited.</li>
 	</ul>
 	<br />
 	<h2>Prices and Values</h2>
 	<p>Liquid value is coin price of items that can be sold on the Trading Post (no bound items), with 15% tax included. Appraised value is coin price of items that can be bought on the Trading Post (includes bound item), inherent vendor coin prices, or the sum prices of their tradeable crafting ingredients.</p>
 	<p>To have a fast audit, Trading Post prices of materials, skins, minis, dyes, and recipes are from a snapshot cache, while prices of bank, inventory, and equipment contents are fetched live from ArenaNet servers. Luxury items such as legendaries and permanent contracts always use the live Trading Post prices.</p>
 	<p>Non-coin prices are from the representative lowest price of an item, such as karma needed to buy a low level Fine rarity armor that unlocks a skin, as opposed to a high level Masterwork rarity armor that unlocks the same skin but cost more karma.</p>
-	<p>Gem prices use the non-sale price. If the gem item is available in a bulk discount, for example 5 items for 1000 gems, then the lowest price is used which is 1000/5 = 200 gems price for that item.</p>
+	<p>Gem prices use the non-sale price. If the gem item is available in a bulk discount, for example 5 items for 1000 gems, then the lowest price is used which is 1000/5 = 200 gems value for that item. If a gem skin is in a set of 6, then one piece is the set's price divided by 6.</p>
 	<h2>Currency Conversions</h2>
 	<p>Each type of currency can have its coin value approximated by taking a tradeable item it trades for and dividing its Trading Post price by that currency amount. For example, <a href="https://wiki.guildwars2.com/wiki/Pact_Scout's_Mapping_Materials">Pact Scout's Mapping Materials</a> cost 5,250 karma and can be converted to a Vial of Powerful Blood (let it be 75 silver); so 7500 copper / 5250 karma ≈ 1.43 copper per 1 karma. Note that the Trading Post price is the sell price, without tax.</p>
 	<p>Dungeon tokens' coin value is determined by the price of Glob of Ectoplasm, which for the sake of simplicity assumes 100% droprate from the 30 tokens needed to buy a Rare dungeon armor piece to salvage. The barter-conversion rates are stored in <a href="http://gw2timer.com/data/account.js">this file</a>, Ctrl+F the word &quot;conversion&quot;.</p>
@@ -316,7 +317,6 @@
 		<li><a href="http://wiki.guildwars2.com/wiki/Decoration">Guild Decorations</a>: trade at the Guild Hall Decorator NPC</li>
 		<li><a href="http://wiki.guildwars2.com/wiki/Collection">Combine Items</a>: combine, keep until enough, or destroy</li>
 		<li><a href="http://wiki.guildwars2.com/wiki/Collection">Collection Items</a>: keep until you have completed the collection, or vendor/destroy if you intend to never finish it</li>
-		<li><a href="http://wiki.guildwars2.com/wiki/Upgrade_component">Upgrades</a>: vendor or TP depending on price</li>
 		<li><a href="http://wiki.guildwars2.com/wiki/Junk">Junk</a>: click the &quot;Sell Junk&quot; button at a vendor</li>
 		
 	</ul>
@@ -334,7 +334,7 @@
 	<h2>Transactions Prices</h2>
 	<p>For &quot;Buying&quot; and &quot;Bought&quot; transactions, prices on the slots are the sum of all transactions for that item for that month, without tax. For &quot;Selling&quot; and &quot;Sold&quot; transactions, it is the same but with tax included, and the faded prices over tabs are the pre-taxed value. You may hover over the slots or use the tradeable filter to see the item's current Buy (top) and Sell (bottom) prices.</p>
 	<h2>Transactions Outbid/Outprice</h2>
-	<p>For the &quot;Buying&quot; section, if no one have placed a higher bid on an item than you (not outbidden), then that item will be highlighted <strong>green</strong>. For the &quot;Selling&quot; section, if no one is selling an item lower than you (not outpriced), then that item will be highlighted <strong>green</strong>.</p>
+	<p>For the &quot;Buying&quot; section, if no one has placed a higher bid on an item than you (not outbidden), then that item will be highlighted <strong>green</strong>. For the &quot;Selling&quot; section, if no one is selling an item lower than you (not outpriced), then that item will be highlighted <strong>green</strong>.</p>
 </div>
 </div>
 

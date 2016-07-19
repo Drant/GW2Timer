@@ -151,15 +151,15 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 28, payment: "raid_ft", coefficient: 10, name_en: "Magnetite Shard", name_de: "Magnetit-Scherbe", name_es: "Esquirla de magnetita", name_fr: "Éclat de magnétite", name_zh: "磁鐵碎塊" }
 		],
 		General: [
-			{ id: 1, coefficient: 0.01, name_en: "Coin", name_de: "Münze", name_es: "Moneda", name_fr: "Pièce", name_zh: "錢幣" },
-			{ id: 2, coefficient: 0.01, payment: "karma", name_en: "Karma", name_de: "Karma", name_es: "Karma", name_fr: "Karma", name_zh: "業力" },
-			{ id: 3, coefficient: 100, payment: "laurel", name_en: "Laurel", name_de: "Lorbeer", name_es: "Laurel", name_fr: "Laurier", name_zh: "桂冠" },
-			{ id: 4, coefficient: 30, payment: "gem", name_en: "Gem", name_de: "Edelstein", name_es: "Gema", name_fr: "Gemme", name_zh: "寶石" },
-			{ id: 15, coefficient: 1, payment: "badge", name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "榮譽徽章" },
-			{ id: 31, coefficient: 4, name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄証明" },
-			{ id: 16, coefficient: 100, payment: "commendation", name_en: "Guild Commendation", name_de: "Gilden-Belobigung", name_es: "Mención de clan", name_fr: "Recommandation de guilde", name_zh: "公會獎狀" },
-			{ id: 23, coefficient: 10, name_en: "Spirit Shard", name_de: "Geister-Scherbe", name_es: "Esquirla espiritual", name_fr: "Éclat d'esprit", name_zh: "靈魂碎片" },
-			{ id: 18, coefficient: 100, name_en: "Transmutation Charge", name_de: "Transmutations-Ladung", name_es: "Carga de transmutación", name_fr: "Charge de transmutation", name_zh: "幻化力" }
+			{ id: 1, coefficient: 1, name_en: "Coin", name_de: "Münze", name_es: "Moneda", name_fr: "Pièce", name_zh: "錢幣" },
+			{ id: 4, coefficient: "gem", payment: "gem", name_en: "Gem", name_de: "Edelstein", name_es: "Gema", name_fr: "Gemme", name_zh: "寶石" },
+			{ id: 2, coefficient: 1, payment: "karma", name_en: "Karma", name_de: "Karma", name_es: "Karma", name_fr: "Karma", name_zh: "業力" },
+			{ id: 3, coefficient: 10000, payment: "laurel", name_en: "Laurel", name_de: "Lorbeer", name_es: "Laurel", name_fr: "Laurier", name_zh: "桂冠" },
+			{ id: 15, coefficient: 100, payment: "badge", name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "榮譽徽章" },
+			{ id: 31, coefficient: 400, name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄証明" },
+			{ id: 16, coefficient: 10000, payment: "commendation", name_en: "Guild Commendation", name_de: "Gilden-Belobigung", name_es: "Mención de clan", name_fr: "Recommandation de guilde", name_zh: "公會獎狀" },
+			{ id: 23, coefficient: 1000, name_en: "Spirit Shard", name_de: "Geister-Scherbe", name_es: "Esquirla espiritual", name_fr: "Éclat d'esprit", name_zh: "靈魂碎片" },
+			{ id: 18, coefficient: 10000, name_en: "Transmutation Charge", name_de: "Transmutations-Ladung", name_es: "Carga de transmutación", name_fr: "Charge de transmutation", name_zh: "幻化力" }
 		],
 		Map: [
 			{ id: 25, payment: "map_dt", name_en: "Geode", name_de: "Geode", name_es: "Geoda", name_fr: "Géode", name_zh: "晶塊" },
@@ -189,35 +189,44 @@ var GW2T_CURRENCY_DATA = {
 	/*
 	 * Payments to show on the account audit table in this order.
 	 * ID is associated with wallet, conversion is how many copper for 1 of that currency.
-	 * Conversions in array format: [paymentAmount, equivalentItemID]
+	 * Color is for the progress bar under the currency amount.
+	 * Conversions in array format: [paymentAmount, equivalentItemID, isItemUntradeable]
 	 * Will use the TP price of the item and divide it with the currency to get a ratio.
 	 */
 	AuditPayments: {
-		coin_liquidbuy: {id: 1, conversion: 1, header: "Liquid Buy"},
-		coin_liquidsell: {id: 1, conversion: 1, header: "Liquid Sell"},
-		coin_appraisebuy: {id: 1, conversion: 1, header: "Appraised Buy"},
-		coin_appraisesell: {id: 1, conversion: 1, header: "Appraised Sell"},
-		karma: {id: 2, conversion: [5250, 24295]}, // Vial of Powerful Blood
-		laurel: {id: 3, conversion: 10000},
-		gem: {id: 4, conversion: null}, // To be assigned by gem exchange
-		badge: {id: 15, conversion: 100},
-		commendation: {id: 16, conversion: [10, 41560]}, // Sentinel's Orichalcum Imbued Inscription
-		dungeon_ac: {id: 5, conversion: [390, 46239]}, // Soldier's Pearl Broadsword
-		dungeon_cm: {id: 9, conversion: [390, 15476]}, // Rampager's Pearl Broadsword
-		dungeon_ta: {id: 11, conversion: [390, 15476]}, // Rampager's Pearl Broadsword
-		dungeon_se: {id: 10, conversion: [390, 46239]}, // Soldier's Pearl Broadsword
-		dungeon_cof: {id: 13, conversion: [30, 19721]}, // Glob of Ectoplasm
-		dungeon_hotw: {id: 12, conversion: [30, 19721]}, // Glob of Ectoplasm
-		dungeon_coe: {id: 14, conversion: [30, 19721]}, // Glob of Ectoplasm
-		dungeon_arah: {id: 6, conversion: [30, 19721]}, // Glob of Ectoplasm
-		fotm_relic: {id: 7, conversion: [1350, 37000]}, // Quiver of a Thousand Arrows
-		fotm_pristine: {id: 24, conversion: [135, 37000]}, // Quiver of a Thousand Arrows
-		raid_ft: {id: 28, conversion: [400, 48079]}, // Zojja Doublet
-		map_dt: {id: 25, conversion: 0},
-		map_sw: {id: 27, conversion: 0},
-		map_vb: {id: 19, conversion: 0},
-		map_ab: {id: 22, conversion: 0},
-		map_td: {id: 20, conversion: 0}
+		coin_liquidbuy: {id: 1, color: "#fdc84e", conversion: 1, header: "Liquid Buy"},
+		coin_liquidsell: {id: 1, color: "#fdc84e", conversion: 1, header: "Liquid Sell"},
+		coin_appraisebuy: {id: 1, color: "#fdc84e", conversion: 1, header: "Appraised Buy"},
+		coin_appraisesell: {id: 1, color: "#fdc84e", conversion: 1, header: "Appraised Sell"},
+		gem: {id: 4, color: "#66aaff", conversion: null}, // To be assigned by gem exchange
+		karma: {id: 2, color: "#ee55cc", conversion: [5250, 24295]}, // Vial of Powerful Blood
+		laurel: {id: 3, color: "#44dd44", conversion: 10000},
+		badge: {id: 15, color: "#8c7047", conversion: 100},
+		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560]}, // Sentinel's Orichalcum Imbued Inscription
+		dungeon_ac: {id: 5, color: "#73c7ee", conversion: [390, 46239]}, // Soldier's Pearl Broadsword
+		dungeon_cm: {id: 9, color: "#80aaa2", conversion: [390, 15476]}, // Rampager's Pearl Broadsword
+		dungeon_ta: {id: 11, color: "#5a5282", conversion: [390, 15476]}, // Rampager's Pearl Broadsword
+		dungeon_se: {id: 10, color: "#c1a390", conversion: [390, 46239]}, // Soldier's Pearl Broadsword
+		dungeon_cof: {id: 13, color: "#fd994c", conversion: [30, 19721]}, // Glob of Ectoplasm
+		dungeon_hotw: {id: 12, color: "#bddbef", conversion: [30, 19721]}, // Glob of Ectoplasm
+		dungeon_coe: {id: 14, color: "#993889", conversion: [30, 19721]}, // Glob of Ectoplasm
+		dungeon_arah: {id: 6, color: "#aab084", conversion: [30, 19721]}, // Glob of Ectoplasm
+		fotm_relic: {id: 7, color: "#9bffff", conversion: [1350, 37000, 1]}, // Quiver of a Thousand Arrows
+		fotm_pristine: {id: 24, color: "#6bbb44", conversion: [135, 37000, 1]}, // Quiver of a Thousand Arrows
+		raid_ft: {id: 28, color: "#27454a", conversion: [400, 48079, 1]}, // Zojja Doublet
+		map_dt: {id: 25, color: "#eeebba", conversion: 0},
+		map_sw: {id: 27, color: "#ebd1a1", conversion: 0},
+		map_vb: {id: 19, color: "#cecea0", conversion: 0},
+		map_ab: {id: 22, color: "#d7c762", conversion: 0},
+		map_td: {id: 20, color: "#42c8dd", conversion: 0}
+	},
+	AuditUpgrades: { // Account upgrades from the gem store
+		CharacterSlot: {starting: 5, purchased: 0, gem: 800},
+		CraftingLicense: {starting: 0, purchased: 0, gem: 800},
+		BankTab: {starting: 1, purchased: 0, gem: 600},
+		StorageExpander: {starting: 1, purchased: 0, gem: 800},
+		BagSlot: {starting: 5, purchased: 0, gem: 400},
+		SharedSlot: {starting: 1, purchased: 0, gem: 560}
 	}
 };
 
@@ -225,14 +234,6 @@ var GW2T_CURRENCY_DATA = {
  * Quick reference API related data.
  */
 var GW2T_ACCOUNT_METADATA = {
-	Upgrades: { // Account upgrades from the gem store
-		CharacterSlot: {starting: 5, purchased: 0, gem: 800},
-		CraftingLicense: {starting: 0, purchased: 0, gem: 800},
-		BankTab: {starting: 1, purchased: 0, gem: 600},
-		StorageExpander: {starting: 0, purchased: 0, gem: 800},
-		BagSlot: {starting: 5, purchased: 0, gem: 400},
-		SharedSlot: {starting: 1, purchased: 0, gem: 560}
-	},
 	Exchange: {
 		GoldSamples: [1, 10, 100, 200, 500, 1000, 4000, 5000],
 		GemSamples: [100, 125, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1800, 2000],

@@ -319,6 +319,9 @@ input[type="text"].accTokenHovered {
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 17px;
 }
+.audTableHorizontal {
+	white-space: nowrap;
+}
 .audTableColumn {
 	display: inline-block;
 	text-align: right;
@@ -353,6 +356,19 @@ input[type="text"].accTokenHovered {
 }
 .audTableCell .s16 {
 	margin-left: 2px;
+}
+.audTableCellBar { /* A bar graph */
+	vertical-align: middle;
+	display: block;
+	width: 100%; height: 2px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 2px;
+	background: rgba(0, 0, 0, 0.1);
+}
+.audTableCellBar s { /* The inner progress of the bar graph */
+	display: block;
+	height: 100%;
+	background: rgba(255,255,255,0.2);
 }
 
 /* Characters

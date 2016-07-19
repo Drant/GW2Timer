@@ -5733,14 +5733,6 @@ Z = {
 					}
 				}
 			}
-			if (pItem.type === "UpgradeComponent")
-			{
-				if ((name.indexOf("sigil") !== -1 || name.indexOf("rune") !== -1)
-						&& (pItem.rarity === "Masterwork" || pItem.rarity === "Rare"))
-				{
-					return "Upgrade";
-				}
-			}
 			if (pItem.type === "Container")
 			{
 				if (pItem.rarity === "Ascended")
@@ -6813,6 +6805,19 @@ A = {
 	},
 	
 	/*
+	 * Assigns a gem store account upgrade.
+	 * @param string pUpgrade key name.
+	 * @param int pOwned for example the total number of tabs in a bank tab.
+	 */
+	assignAccountUpgrades: function(pUpgrade, pOwned)
+	{
+		var upgobj = A.Currency.AuditUpgrades[pUpgrade];
+		upgobj.purchased = pOwned - upgobj.starting;
+		upgobj.totalgem = upgobj.gem * upgobj.purchased;
+		upgobj.totalowned = upgobj.starting + upgobj.purchased;
+	},
+	
+	/*
 	 * Initializes the associative array accessed by item IDs that holds the
 	 * count of each items, based on the account's bank, inventory, shared slots,
 	 * equipment, and materials.
@@ -6830,17 +6835,17 @@ A = {
 		A.Possessions = {};
 		
 		// Adds an item to the possessions database
-		var addItem = function(pItem, pCount, pLocation, pIsBound)
+		var addItem = function(pItemID, pLocation, pCount, pIsBound)
 		{
 			// Create entry if doesn't exist
-			if (A.Possessions[pItem] === undefined)
+			if (A.Possessions[pItemID] === undefined)
 			{
-				A.Possessions[pItem] = {
+				A.Possessions[pItemID] = {
 					oCount: 0,
 					oAudit: {} // Will contain length 2 arrays: index 0 is unbound found, index 1 is total found
 				};
 			}
-			var auditobj = A.Possessions[pItem].oAudit;
+			var auditobj = A.Possessions[pItemID].oAudit;
 			// Initializes the audit object in an audit location if doesn't exist, and adds its count
 			var updateAuditObj = function(pAuditLocation)
 			{
@@ -6856,7 +6861,7 @@ A = {
 			};
 			
 			// Update total item found count
-			A.Possessions[pItem].oCount += pCount;
+			A.Possessions[pItemID].oCount += pCount;
 			
 			// Assign discrete category counts; the Characters location combines inventory, equipment, and shared slots
 			var locationkey = (isNaN(pLocation) === false || pLocation === "Shared") ? "Characters" : U.toFirstUpperCase(pLocation);
@@ -6873,6 +6878,25 @@ A = {
 			}
 		};
 		
+		// Adds a slotted upgrade from an item such as a weapon or armor piece
+		var addUpgrades = function(pSlot, pLocation)
+		{
+			if (pSlot.upgrades)
+			{
+				pSlot.upgrades.forEach(function(iID)
+				{
+					addItem(iID, pLocation, 1, true); // Upgrades must be salvaged, so consider it account bound
+				});
+			}
+			if (pSlot.infusions)
+			{
+				pSlot.infusions.forEach(function(iID) // Infusions can be easily extracted with a coin bought item
+				{
+					addItem(iID, pLocation, 1);
+				});
+			}
+		};
+		
 		// Search the account for items
 		var compilePossessions = function(pSharedData, pBankData, pMaterialsData)
 		{
@@ -6886,23 +6910,10 @@ A = {
 				// Add character's equipped items (equipment) and their slotted upgrades or infusions
 				if (iChar.equipment)
 				{
-					iChar.equipment.forEach(function(iEquip)
+					iChar.equipment.forEach(function(iSlot)
 					{
-						addItem(iEquip.id, 1, iChar.oCharIndex, true);
-						if (iEquip.upgrades)
-						{
-							iEquip.upgrades.forEach(function(iID)
-							{
-								addItem(iID, 1, iChar.oCharIndex);
-							});
-						}
-						if (iEquip.infusions)
-						{
-							iEquip.infusions.forEach(function(iID)
-							{
-								addItem(iID, 1, iChar.oCharIndex);
-							});
-						}
+						addItem(iSlot.id, iChar.oCharIndex, 1, true);
+						addUpgrades(iSlot, iChar.oCharIndex);
 					});
 				}
 				// Add character's inventories
@@ -6913,13 +6924,14 @@ A = {
 						if (iBag)
 						{
 							A.Tallies.Characters[1] += iBag.size;
-							addItem(iBag.id, 1, iChar.oCharIndex); // Add the bag itself which is an item
-							iBag.inventory.forEach(function(iInv)
+							addItem(iBag.id, iChar.oCharIndex, 1); // Add the bag itself which is an item
+							iBag.inventory.forEach(function(iSlot)
 							{
-								if (iInv)
+								if (iSlot)
 								{
 									A.Tallies.Characters[0] += 1;
-									addItem(iInv.id, iInv.count, iChar.oCharIndex, iInv.binding);
+									addItem(iSlot.id, iChar.oCharIndex, iSlot.count, iSlot.binding);
+									addUpgrades(iSlot, iChar.oCharIndex);
 								}
 							});
 						}
@@ -6928,33 +6940,42 @@ A = {
 			});
 			
 			// Add shared inventory slot items
+			A.assignAccountUpgrades("SharedSlot", pSharedData.length);
 			pSharedData.forEach(function(iSlot)
 			{
 				if (iSlot)
 				{
-					addItem(iSlot.id, iSlot.count, "Shared", iSlot.binding);
+					addItem(iSlot.id, "Shared", iSlot.count, iSlot.binding);
 				}
 			});
 			
 			// Add bank contents
+			A.assignAccountUpgrades("BankTab", ~~(pBankData.length / A.Metadata.Bank.NumSlotsPerTab));
 			A.Tallies.Bank[1] = pBankData.length;
 			pBankData.forEach(function(iSlot)
 			{
 				if (iSlot)
 				{
 					A.Tallies.Bank[0] += 1;
-					addItem(iSlot.id, iSlot.count, "Bank", iSlot.binding);
+					addItem(iSlot.id, "Bank", iSlot.count, iSlot.binding);
+					addUpgrades(iSlot, "Bank");
 				}
 			});
 			
 			// Add materials deposits
+			var materialcountlargest = 0;
 			pMaterialsData.forEach(function(iSlot)
 			{
 				if (iSlot && iSlot.count > 0)
 				{
-					addItem(iSlot.id, iSlot.count, "Materials");
+					addItem(iSlot.id, "Materials", iSlot.count);
+					if (iSlot.count > materialcountlargest)
+					{
+						materialcountlargest = iSlot.count;
+					}
 				}
 			});
+			A.assignAccountUpgrades("StorageExpander", ((materialcountlargest / Q.ItemLimit.StackSize) + 1));
 			
 			// Execute callback after finishing compilation
 			pCallback();
@@ -7035,6 +7056,7 @@ A = {
 	{
 		var sampleconversionamount = 100;
 		var button = $("#audExecute");
+		var buttonsur = $("#audExecuteSurrogate").hide();
 		I.suspendElement(button);
 		var container = $("#accAudit").empty();
 		var wanttransactions = $("#audWantTransactions").prop("checked");
@@ -7062,6 +7084,7 @@ A = {
 		var dealError = function()
 		{
 			I.suspendElement(button, false);
+			buttonsur.show();
 		};
 		
 		// Creates a standard object of payments to be displayed for an audit category
@@ -7069,9 +7092,9 @@ A = {
 		{
 			var paymentsobj = {};
 			var amount = (pInitialAmount === undefined) ? 0 : pInitialAmount;
-			for (var ii in A.Currency.AuditPayments)
+			for (var i in A.Currency.AuditPayments)
 			{
-				paymentsobj[ii] = amount;
+				paymentsobj[i] = amount;
 			}
 			return paymentsobj;
 		};
@@ -7335,16 +7358,43 @@ A = {
 			currencyheaders.prepend("<div class='audTableCell audTableHeaderCorner'></div>");
 		};
 		
-		// Fills a table column with currencies
-		var fillCurrencyColumn = function(pColumn, pCategory, pIsConversion)
+		// Creates an audit category containing the max amount found from multiple categories, for creating mini bar graphs
+		var createCurrencyMaxes = function(pCategories)
 		{
-			var amount, paymentkey;
+			var ithcat;
+			var maxcat = createAuditPayments(Number.NEGATIVE_INFINITY);
+			for (var i in pCategories)
+			{
+				ithcat = pCategories[i];
+				for (var ii in ithcat)
+				{
+					if (ithcat[ii] > maxcat[ii])
+					{
+						maxcat[ii] = ithcat[ii];
+					}
+				}
+			}
+			return maxcat;
+		};
+		
+		// Fills a table column with currencies
+		var fillCurrencyColumn = function(pColumn, pCategory, pIsConversion, pMaxCategory)
+		{
+			var amount, paymentkey, barstr;
 			var prefix = (pIsConversion) ? ("<span class='cssLeft'>" + I.Symbol.ArrowRight + "</span>") : "";
 			for (var i in pCategory)
 			{
 				amount = pCategory[i];
 				paymentkey = (i.indexOf("coin") !== -1 || pIsConversion) ? "coin" : i;
-				pColumn.append("<div class='audTableCell'>" + prefix + E.PaymentFormat[paymentkey](amount) + "</div>");
+				barstr = "";
+				if (pMaxCategory)
+				{
+					barstr = "<samp class='audTableCellBar'>"
+						+ "<s style='background:linear-gradient(to right, black 0%, " + A.Currency.AuditPayments[i].color + " 100%);"
+						+ "width:" + ((pMaxCategory[i] > 0) ? ((amount / pMaxCategory[i]) * T.cPERCENT_100) : 0) + "%'></s>"
+					+ "</samp>";
+				}
+				pColumn.append("<div class='audTableCell'>" + prefix + E.PaymentFormat[paymentkey](amount) + barstr + "</div>");
 			}
 		};
 		
@@ -7366,13 +7416,14 @@ A = {
 			//I.clear();
 			var tablecategory = createTable(D.getPhraseOriginal("Audit Categories"));
 			var tablesum = createTable(D.getPhraseOriginal("Sum &amp; Conversion"));
-			var tablebreakdown = createTable(D.getPhraseOriginal("Characters Breakdown"));
+			var tablechar = createTable(D.getPhraseOriginal("Audit Characters"));
 			
-			// Audit category table
+			// TABLE: Audit categories
 			insertTableCurrencyHeader(tablecategory);
 			// Write a column for each audit category
 			var auditcolumn;
 			var auditcats = A.Currency.AuditCategories;
+			var auditcatsmax = createCurrencyMaxes(auditcats);
 			for (var i in auditcats)
 			{
 				if ((i === "Buying" && currentbuysdata === undefined)
@@ -7382,43 +7433,60 @@ A = {
 					continue;
 				}
 				auditcolumn = insertColumn(tablecategory, D.getWordCapital(i.toLowerCase()));
-				fillCurrencyColumn(auditcolumn, auditcats[i]);
+				fillCurrencyColumn(auditcolumn, auditcats[i], false, auditcatsmax);
 			}
 			
-			// Audit sum and conversions table
-			E.updateExchangeRatios(function() // For the gem conversion
+			// TABLE: Sum and conversions
+			insertTableCurrencyHeader(tablesum);
+			// Sum columns
+			var sumcolumn = insertColumn(tablesum, D.getPhraseTitle("account sum"));
+			var convertedsumcolumn = insertColumn(tablesum, D.getPhraseTitle("account sum"));
+			var sumcat = createAuditPayments();
+			for (var i in auditcats)
 			{
-				insertTableCurrencyHeader(tablesum);
-				// Sum columns
-				var sumcolumn = insertColumn(tablesum, D.getPhraseTitle("account sum"));
-				var convertedsumcolumn = insertColumn(tablesum, D.getPhraseTitle("account sum"));
-				var sumcat = createAuditPayments();
-				for (var i in auditcats)
-				{
-					// Add all audit categories' payments into one "sum" category
-					sumcat = sumAuditCategories(sumcat, auditcats[i]);
-				}
-				fillCurrencyColumn(sumcolumn, sumcat);
-				fillConversionColumn(convertedsumcolumn, sumcat);
-				
-				// Wallet columns
-				var walletcat = auditcats["Wallet"];
-				var walletcolumn = insertColumn(tablesum, D.getPhraseTitle("wallet"));
-				var convertedwalletcolumn = insertColumn(tablesum, D.getPhraseTitle("wallet"));
-				fillCurrencyColumn(walletcolumn, walletcat);
-				fillConversionColumn(convertedwalletcolumn, walletcat);
-				
-				// Sample columns
-				var samplecat = createAuditPayments(sampleconversionamount);
-				var samplecolumn = insertColumn(tablesum, D.getPhraseTitle("conversion"));
-				var convertedsamplecolumn = insertColumn(tablesum, D.getPhraseTitle("conversion"));
-				fillCurrencyColumn(samplecolumn, samplecat);
-				fillConversionColumn(convertedsamplecolumn, samplecat);
+				// Add all audit categories' payments into one "sum" category
+				sumcat = sumAuditCategories(sumcat, auditcats[i]);
+			}
+			fillCurrencyColumn(sumcolumn, sumcat);
+			fillConversionColumn(convertedsumcolumn, sumcat);
+			// Wallet columns
+			var walletcat = auditcats["Wallet"];
+			var walletcolumn = insertColumn(tablesum, D.getPhraseTitle("wallet"));
+			var convertedwalletcolumn = insertColumn(tablesum, D.getPhraseTitle("wallet"));
+			fillCurrencyColumn(walletcolumn, walletcat);
+			fillConversionColumn(convertedwalletcolumn, walletcat);
+			// Sample columns
+			var samplecat = createAuditPayments(sampleconversionamount);
+			var samplecolumn = insertColumn(tablesum, D.getPhraseTitle("conversion"));
+			var convertedsamplecolumn = insertColumn(tablesum, D.getPhraseTitle("conversion"));
+			fillCurrencyColumn(samplecolumn, samplecat);
+			fillConversionColumn(convertedsamplecolumn, samplecat);
+			
+			// TABLE: Characters
+			insertTableCurrencyHeader(tablechar);
+			var charcolumn;
+			var charcats = A.Currency.AuditCategoriesCharacters;
+			var charcatsmax = createCurrencyMaxes(charcats);
+			for (var i in charcats)
+			{
+				charcolumn = insertColumn(tablechar, A.Data.Characters[i].oCharIcons);
+				fillCurrencyColumn(charcolumn, charcats[i], false, charcatsmax);
+			}
+			tablechar.addClass("audTableHorizontal");
+			I.bindScrollbar(tablechar, true);
+			I.qTip.init(tablechar.find(".chrPreface"));
+			
+			// SUMMARY
+			E.getCoinFromGem(walletcat["gem"], function(pCoin)
+			{
+				var liquidsell = pCoin;
+				container.prepend("<div class='audSummary'></div>");
 			});
 			
 			// Finally
 			I.scrollToElement("#accAuditCenter", {aSpeed: "fast"});
 			I.suspendElement(button, false);
+			buttonsur.show();
 		};
 		
 		// Audits the banks and unlocks after prices have been assigned
@@ -7582,7 +7650,7 @@ A = {
 				for (var i in A.Currency.AuditPayments)
 				{
 					conversion = A.Currency.AuditPayments[i].conversion;
-					if (Array.isArray(conversion))
+					if (Array.isArray(conversion) && conversion[2] === undefined) // Untradeable items will have this index occupied
 					{
 						priceids[(conversion[1])] = true;
 					}
@@ -7822,6 +7890,13 @@ V = {
 				I.help($("#accHelpAudit").html());
 			}
 		});
+		// Surrogate button up top
+		$("<button id='audExecuteSurrogate' title='<dfn>Audit</dfn> account.'><img src='img/ui/stats.png' /></button>").insertAfter("#chrAccountReload").click(function()
+		{
+			$(this).hide();
+			$("#audExecute").trigger("click");
+		});
+		I.qTip.init("#audExecuteSurrogate");
 	},
 	
 	/*
@@ -7869,6 +7944,7 @@ V = {
 		dish.prepend(I.cThrobber);
 		$.getJSON(A.getURL(A.URL.Characters), function(pData)
 		{
+			A.adjustAccountScrollbar();
 			I.removeThrobber(dish);
 			var charindex = 0;
 			var numcharacters = pData.length;
@@ -8015,8 +8091,11 @@ V = {
 			I.prettyJSON(A.Data.Characters[charindex]);
 		});
 		// Remember HTML containing the character's portrait, profession icon, and name, to be used in bank tab headers
-		pCharacter.oCharPreface = "<span class='chrPreface'><img class='chrPrefaceIcon' src='" + pCharacter.oCharPortrait + "' />"
-			+ "<ins class='acc_prof acc_prof_" + pCharacter.oCharElite + "'></ins>" + pCharacter.oCharName + "</span>";
+		var prefacestr = "<span class='chrPreface' title='" + pCharacter.oCharName + "'>"
+			+ "<img class='chrPrefaceIcon' src='" + pCharacter.oCharPortrait + "' />"
+			+ "<ins class='acc_prof acc_prof_" + pCharacter.oCharElite + "'></ins>";
+		pCharacter.oCharPreface = prefacestr + pCharacter.oCharName + "</span>";
+		pCharacter.oCharIcons = prefacestr + "</span>";
 		// Additional information as tooltip
 		I.qTip.init($("#chrSelection_" + pCharacter.oCharIndex).find(".chrCommitment").attr("title", crafttooltip));
 	},
@@ -8295,18 +8374,22 @@ V = {
 			V.bindSortableList(wallet);
 			
 			// First loop to find max value of the wallet
-			var value, amount, coef, amountstr;
+			var currency, value, amount, coef, amountstr;
 			for (var i = 0; i < pWallet.length; i++)
 			{
-				amount = A.Data.Wallet[(pWallet[i].id)];
+				currency = pWallet[i];
+				amount = A.Data.Wallet[currency.id];
 				amount = (amount === undefined || amount === null) ? 0 : amount;
-				coef = pWallet[i].coefficient;
+				coef = currency.coefficient;
+				
 				// Adjust the value so the currencies can be compared
-				pWallet[i].value = (coef === undefined) ? amount : (amount * coef);
+				currency.value = (coef === "gem") ? E.convertGemToCoin(amount)
+					: ((coef === undefined) ? amount : (amount * coef));
+				
 				// Insert wallet currency into accessible associative array
-				if (pWallet[i].payment)
+				if (currency.payment)
 				{
-					A.Currency.AuditWallet[(pWallet[i]).id] = pWallet[i];
+					A.Currency.AuditWallet[currency.id] = currency;
 				}
 			}
 			var max = T.getMinMax(pWallet, "value").oMax;
@@ -8314,7 +8397,7 @@ V = {
 			// Generate the currencies for this wallet
 			for (var i = 0; i < pWallet.length; i++)
 			{
-				var currency = pWallet[i];
+				currency = pWallet[i];
 				amount = A.Data.Wallet[currency.id];
 				amount = (amount === undefined || amount === null) ? 0 : amount;
 				amountstr = amount.toLocaleString();
@@ -8340,22 +8423,25 @@ V = {
 		
 		$.getJSON(A.getURL(A.URL.Wallet), function(pData)
 		{
-			A.Data.Wallet = null;
-			A.Data.Wallet = {};
-			// Convert the API array of currency objects into an associative array of currency IDs and values
-			for (var i = 0; i < pData.length; i++)
+			E.updateExchangeRatios(function() // For the gem conversion
 			{
-				var currency = pData[i];
-				A.Data.Wallet[currency.id] = parseInt(currency.value);
-			}
+				A.Data.Wallet = null;
+				A.Data.Wallet = {};
+				// Convert the API array of currency objects into an associative array of currency IDs and values
+				for (var i = 0; i < pData.length; i++)
+				{
+					var currency = pData[i];
+					A.Data.Wallet[currency.id] = parseInt(currency.value);
+				}
 
-			var wallets = A.Currency.Wallet;
-			for (var i in wallets)
-			{
-				generateWallet(wallets[i], i);
-			}
-			// Show the audit button now that wallet is loaded
-			V.serveAudit();
+				var wallets = A.Currency.Wallet;
+				for (var i in wallets)
+				{
+					generateWallet(wallets[i], i);
+				}
+				// Show the audit button now that wallet is loaded
+				V.serveAudit();
+			});
 		});
 	},
 	
@@ -13723,9 +13809,9 @@ E = {
 	PaymentFormat:
 	{
 		coin: function(pAmount) { return E.formatCoinStringShort(pAmount); },
+		gem: function(pAmount) { return E.formatGemString(pAmount, true); },
 		karma: function(pAmount) { return E.formatKarmaString(pAmount, true); },
 		laurel: function(pAmount) { return E.formatLaurelString(pAmount, true); },
-		gem: function(pAmount) { return E.formatGemString(pAmount, true); },
 		token: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_token'></ins>"; },
 		achievement: function(pAmount) { return ((pAmount === 0) ? "" : pAmount.toLocaleString()) + "<ins class='s16 s16_achievement'></ins>"; },
 		monument: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_monument'></ins>"; },
@@ -14064,6 +14150,9 @@ E = {
 				E.Exchange.CoinInGem = E.Exchange.COIN_SAMPLE / pData.quantity;
 				pCallback();
 			}
+		}).fail(function()
+		{
+			pCallback();
 		});
 	},
 	updateGemInCoin: function(pCallback)
@@ -14075,6 +14164,9 @@ E = {
 				E.Exchange.GemInCoin = E.Exchange.GEM_SAMPLE / pData.quantity;
 				pCallback();
 			}
+		}).fail(function()
+		{
+			pCallback();
 		});
 	},
 	updateExchangeRatios: function(pCallback)
@@ -14138,6 +14230,9 @@ E = {
 				var currentgem = parseInt(pData.quantity);
 				pCallback(currentgem);
 			}
+		}).fail(function()
+		{
+			pCallback(0);
 		});
 	},
 	getGemFromCoinInverse: function(pCoin, pCallback)
@@ -14162,6 +14257,9 @@ E = {
 				var currentcoin = parseInt(pData.quantity);
 				pCallback(currentcoin);
 			}
+		}).fail(function()
+		{
+			pCallback(0);
 		});
 	},
 	getCoinFromGemInverse: function(pGem, pCallback)
@@ -30677,13 +30775,13 @@ I = {
 	 * Container requirements: position relative, overflow hidden.
 	 * @param jqobject pElement to initialize.
 	 */
-	bindScrollbar: function(pSelector)
+	bindScrollbar: function(pSelector, pWantHorizontal)
 	{
 		if (I.isCustomScrollEnabled)
 		{
 			try
 			{
-				var container = $(pSelector);
+				var container = $(pSelector).addClass("jsScrollable");
 				var wheelspeed = 1;
 				switch (I.BrowserCurrent)
 				{
@@ -30693,7 +30791,7 @@ I = {
 
 				container.perfectScrollbar({
 					wheelSpeed: wheelspeed,
-					suppressScrollX: true
+					suppressScrollX: ((pWantHorizontal === undefined) ? true : !pWantHorizontal)
 				});
 				I.bindAutoscroll(container);
 			}
