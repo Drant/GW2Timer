@@ -6815,6 +6815,26 @@ A = {
 		upgobj.totalgem = upgobj.gem * upgobj.purchased;
 		upgobj.totalowned = upgobj.starting + upgobj.purchased;
 	},
+	initializeAccountUpgrades: function()
+	{
+		var upgs = A.Currency.AuditUpgrades;
+		for (var i in upgs)
+		{
+			upgs[i].purchased = 0;
+			upgs[i].totalgem = 0;
+			upgs[i].totalowned = upgs[i].starting;
+		}
+	},
+	getAccountUpgradesGem: function()
+	{
+		var upgs = A.Currency.AuditUpgrades;
+		var gemsum = 0;
+		for (var i in upgs)
+		{
+			gemsum += upgs[i].totalgem;
+		}
+		return gemsum;
+	},
 	
 	/*
 	 * Initializes the associative array accessed by item IDs that holds the
@@ -7094,7 +7114,7 @@ A = {
 		var auditpayments = A.Currency.AuditPayments; // Auditable payment objects
 		var cachedprices; // Will contain payment or TP prices, accessible by item ID
 		var untradeabledb;
-		var paymentdb = {}; // Holds payment object or processed TP price, items whose ID is not in this will have no value
+		E.Paylist = {}; // Holds payment object or processed TP price, items whose ID is not in this will have no value
 		var priceids = {}; // Tradeable item IDs to fetch, an associative array so no duplicate
 		var ascendeddata, ascendedheader, ingredients, ascendedingr, compositeingr, auditmetadata;
 		var currentbuysdata, currentsellsdata;
@@ -7198,7 +7218,7 @@ A = {
 			var payment, auditcat, auditobj;
 			for (var i in A.Possessions)
 			{
-				payment = paymentdb[i];
+				payment = E.Paylist[i];
 				if (payment)
 				{
 					for (var ii in A.Possessions[i].oAudit)
@@ -7278,7 +7298,7 @@ A = {
 				(A.Tally[pName])[1] += 1;
 				if (pEntry[itemkey])
 				{
-					payment = paymentdb[(pEntry[itemkey])];
+					payment = E.Paylist[(pEntry[itemkey])];
 					// Audit if payment exists, the unlock is unlocked, and the unlock's associated item is not in possession
 					if (payment && unlockedids[pEntry.u]
 						&& ((pWantPossessions === false && A.Possessions[(pEntry[itemkey])] === undefined) || (pWantPossessions !== false)))
@@ -7306,7 +7326,7 @@ A = {
 				A.Tally.Selling = [currentsellsdata.length, currentsellsdata.length];
 				currentsellsdata.forEach(function(iTransaction)
 				{
-					payment = paymentdb[iTransaction.item_id];
+					payment = E.Paylist[iTransaction.item_id];
 					if (payment)
 					{
 						addPaymentToCategory(A.Currency.AuditCategories.Selling, payment, iTransaction.quantity);
@@ -7353,7 +7373,7 @@ A = {
 			{
 				var barteramount = conversion[0];
 				var barteritem = conversion[1];
-				var payment = paymentdb[barteritem];
+				var payment = E.Paylist[barteritem];
 				if (payment && payment[pricetype])
 				{
 					return Math.floor(pAmount * (payment[pricetype] / barteramount));
@@ -7362,11 +7382,17 @@ A = {
 			return 0;
 		};
 		
+		// Creates an audit page separator and title
+		var createTitle = function(pTitle)
+		{
+			return $("<div class='audTitleContainer'><aside class='audTitle'>" + pTitle + "</aside></div>");
+		};
+		
 		// Creates an audit presentation table
 		var createTable = function(pTitle)
 		{
 			var table = $("<div class='audTable'></div>").appendTo(container);
-			$("<div class='audTitleContainer'><aside class='audTitle'>" + pTitle + "</aside></div>").insertBefore(table);
+			createTitle(pTitle).insertBefore(table);
 			return table;
 		};
 		
@@ -7520,25 +7546,83 @@ A = {
 			I.bindScrollbar(tablechar, true);
 			I.qTip.init(tablechar.find(".chrPreface"));
 			
+			// UNLOCKS
+			var summaryupgrades = $("<div id='audUpgrades'></div>").appendTo(container);
+			createTitle("Account Upgrades").insertBefore(summaryupgrades);
+			var upg;
+			for (var i in A.Currency.AuditUpgrades)
+			{
+				upg = A.Currency.AuditUpgrades[i];
+				summaryupgrades.append("<aside class='audUpgrades'>"
+					+ "<span><img class='audUpgradeIcon' src='img/account/summary/" + i.toLowerCase() + I.cPNG + "' /></span><br />"
+					+ "<span class='audUpgradeValues'>"
+						+ "<var class='audUpgradeCount'>" + upg.starting + "+" + upg.purchased + "</var>"
+						+ ((upg.purchased > 0) ? ("<br /><var>" + E.formatGemString(upg.totalgem, true) + "</var>") : "")
+					+ "</span>"
+				+ "</aside>");
+			}
+			var upggems = A.getAccountUpgradesGem();
+			summaryupgrades.append("<aside class='audUpgradeValues>" + E.formatGemString(upggems, true) + "</aside>");
+			
 			// SUMMARY
 			E.getCoinFromGem(walletcat["gem"], function(pCoin)
 			{
-				var summary = $("<div id='audSummary'></div>").prependTo(container);
-				
-				// LIQUID TOTAL 
-				var totalliquidsell = sumcat["coin_liquidsell"] + pCoin; // Add the account sum liquid sell value with the gem converted to coin value
-				for (var i in auditpayments) // Add the liquidatable payments in the wallet
+				// Appraised sell plus all non-coin payments converted to coin
+				var totalappraisedbuy = sumcat["coin_appraisebuy"];
+				var totalappraisedsell = sumcat["coin_appraisesell"];
+				// Liquid sell plus gem converted to coin plus all non-coin payments converted to coin
+				var totalliquidbuy = sumcat["coin_liquidbuy"] + pCoin;
+				var totalliquidsell = sumcat["coin_liquidsell"] + pCoin;
+				for (var i in auditpayments)
 				{
+					if (i.indexOf("coin") === -1)
+					{
+						totalappraisedbuy += convertCurrencyToCoin(i, sumcat[i], "oPriceBuy");
+						totalappraisedsell += convertCurrencyToCoin(i, sumcat[i], "oPriceSell");
+					}
 					if (auditpayments[i].isliquid)
 					{
-						I.log(i + " " + walletcat[i]);
+						totalliquidbuy += convertCurrencyToCoin(i, walletcat[i], "oPriceBuyTaxed");
 						totalliquidsell += convertCurrencyToCoin(i, walletcat[i], "oPriceSellTaxed");
 					}
 				}
-				summary.append("<div class='audSummaryCoin'>" + E.formatCoinString(totalliquidsell, {aWantBig: true}) + "</div>");
+				// Add gems spent from account upgrades to appraisal
+				var upggemstocoin = convertCurrencyToCoin("gem", upggems);
+				totalappraisedbuy += upggemstocoin;
+				totalappraisedsell += upggemstocoin;
 				
-				// APPRAISED TOTAL
-				
+				var summary = $("<div id='audSummary'></div>").prependTo(container);
+				summary.append("<div id='audSummaryName'><var id='audAccountName'>" + U.escapeHTML(A.Data.Account.name) + "</var></div>");
+				summary.append("<div id='audSummaryValues'>"
+					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("appraised") + " ―</div>"
+					+ "<div id='audSummaryAppraised' class='audSummaryCoin'>" + E.formatCoinString(totalappraisedsell, {aWantBig: true}) + "</div>"
+					+ "<div class='audSummaryMoney'>≈ " + E.formatGemToMoney(E.convertCoinToGem(totalappraisedsell)) + "</div>"
+					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("liquid") + " ―</div>"
+					+ "<div id='audSummaryLiquid' class='audSummaryCoin'>" + E.formatCoinString(totalliquidsell, {aWantBig: true}) + "</div>"
+					+ "<div class='audSummaryMoney'>≈ " + E.formatGemToMoney(E.convertCoinToGem(totalliquidsell)) + "</div>"
+				+ "</div>");
+				// Tooltip over the coin value to show both and buy and sell
+				I.qTip.init($("#audSummaryAppraised").attr("title",
+					D.getPhraseOriginal("Appraised Sell") + ": " + E.formatCoinStringColored(totalappraisedsell) + "<br />"
+					+ D.getPhraseOriginal("Appraised Buy") + ": " + E.formatCoinStringColored(totalappraisedbuy) + "<br />"
+					+ D.getPhraseOriginal("Gem Upgrades") + ": " + E.formatGemToMoney(upggems) + " = " + E.formatGemString(upggems, true)
+						+ " " + I.Symbol.ArrowLeft + " " + E.formatCoinStringColored(upggemstocoin) + " (" + D.getWordCapital("include") + ")"
+				));
+				I.qTip.init($("#audSummaryLiquid").attr("title",
+					D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsell) + "<br />"
+					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuy)
+				));
+			});
+			
+			// Debug buttons at the bottom
+			var debug = $("<div id='audDebug'></div>").appendTo(container);
+			$("<button class='audDebugButton'>Print Possessions</button>").appendTo(debug).click(function()
+			{
+				I.prettyJSON(A.Possessions);
+			});
+			$("<button class='audDebugButton'>Print Paylist</button>").appendTo(debug).click(function()
+			{
+				I.prettyJSON(E.Paylist);
 			});
 			
 			// Finally
@@ -7570,7 +7654,7 @@ A = {
 				// Sum the ingredients' prices
 				if (iIngr)
 				{
-					ingrprice = paymentdb[iIngr[0]];
+					ingrprice = E.Paylist[iIngr[0]];
 					if (ingrprice && E.isPriceObject(ingrprice))
 					{
 						sum = E.addPrice(sum, E.recountPrice(ingrprice, iIngr[1]));
@@ -7601,13 +7685,13 @@ A = {
 			// Items of an ascended category gets the same appraised value
 			A.iterateRecord(ascendeddata, function(pEntry, pCategory)
 			{
-				paymentdb[pEntry.i] = appraisal[pCategory];
+				E.Paylist[pEntry.i] = appraisal[pCategory];
 			});
 			
 			// Crafted, forged, or combined items from other ingredient items
 			for (var i in compositeingr)
 			{
-				paymentdb[i] = sumIngredients(compositeingr[i]);
+				E.Paylist[i] = sumIngredients(compositeingr[i]);
 			}
 		};
 		
@@ -7623,7 +7707,7 @@ A = {
 						// Update payment database item if the payment type is applicable
 						if ((auditpayments[i] || pEntry.p.coin))
 						{
-							paymentdb[pEntry.i] = (pEntry.p.coin) ? E.createPriceBound(pEntry.p.coin) : pEntry.p;
+							E.Paylist[pEntry.i] = (pEntry.p.coin) ? E.createPriceBound(pEntry.p.coin) : pEntry.p;
 						}
 					}
 				}
@@ -7633,21 +7717,22 @@ A = {
 		// Begins downloading of numerous uncached prices and defines the payment database
 		var fetchPrices = function()
 		{
-			priceids = [];////////////////I.log();
+			//priceids = [];////////////I.log
+			I.print(D.getPhraseOriginal("Loading trading price") + "...");
 			Z.scrapeAPIArray(U.convertAssocToArray(priceids), "commerce/prices", {aCallback: function(pPrices)
 			{
 				// Insert cached Trading Post prices
 				var boundpayments = auditmetadata.BoundPayments;
 				for (var i in cachedprices)
 				{
-					paymentdb[i] = E.processPrice(cachedprices[i]);
+					E.Paylist[i] = E.processPrice(cachedprices[i]);
 				}
 				// Insert fresh Trading Post prices
 				if (pPrices)
 				{
 					pPrices.forEach(function(iPriceObj)
 					{
-						paymentdb[iPriceObj.id] = E.processPrice(iPriceObj);
+						E.Paylist[iPriceObj.id] = E.processPrice(iPriceObj);
 					});
 				}
 				// Insert audit metadata untradeable item prices
@@ -7655,14 +7740,14 @@ A = {
 				{
 					if (boundpayments[i].coin)
 					{
-						paymentdb[i] = E.createPricePlain(boundpayments[i].coin);
+						E.Paylist[i] = E.createPricePlain(boundpayments[i].coin);
 					}
 					else
 					{
 						for (var ii in boundpayments[i])
 						{
-							paymentdb[i] = {};
-							(paymentdb[i])[ii] = (boundpayments[i])[ii];
+							E.Paylist[i] = {};
+							(E.Paylist[i])[ii] = (boundpayments[i])[ii];
 						}
 					}
 				}
@@ -7670,7 +7755,7 @@ A = {
 				// Insert junk rarity item prices
 				for (var i in auditmetadata.JunkValue)
 				{
-					paymentdb[i] = E.createPricePlain(auditmetadata.JunkValue[i]);
+					E.Paylist[i] = E.createPricePlain(auditmetadata.JunkValue[i]);
 				}
 				// Insert untradeable crafted or forged item prices
 				appraiseCraftable();
@@ -7690,7 +7775,7 @@ A = {
 		var initializePrices = function()
 		{
 			// Load the cached prices
-			I.print(D.getPhraseOriginal("Loading price") + "...");
+			I.print(D.getPhraseOriginal("Loading info price") + "...");
 			$.getScript(U.URL_DATA.Prices, function()
 			{
 				cachedprices = U.getRecordData("prices");
@@ -7725,9 +7810,11 @@ A = {
 					fetchPrices();
 					return;
 				}
+				I.print(D.getPhraseOriginal("Loading buying transactions") + "...");
 				A.getTransactions(A.URL.CurrentBuys, {
 					aCallback: function(pDataBuys)
 					{
+						I.print(D.getPhraseOriginal("Loading selling transactions") + "...");
 						A.getTransactions(A.URL.CurrentSells, {
 							aCallback: function(pDataSells)
 							{
@@ -8007,6 +8094,7 @@ V = {
 			var numcharacters = pData.length;
 			var numfetched = 0;
 			var numtofetch = numcharacters;
+			A.initializeAccountUpgrades();
 			A.assignAccountUpgrades("CharacterSlot", numcharacters);
 			A.Data.CharacterNames = pData;
 			A.CharIndexCurrent = null;
@@ -13860,6 +13948,7 @@ E = {
 	CalculatorHistoryArray: new Array(64),
 	CalcHistoryIndex: 0,
 	
+	Paylist: {}, // Associative array accessed by item ID, containing payment (a price object, karma, or other currencies)
 	/*
 	 * Associative array of functions that format the payment of an item.
 	 * The function names correspond to the object key in a custom API cache.
@@ -14048,9 +14137,9 @@ E = {
 		{
 			sep = "";
 			sg0 = "<gold>"; ss0 = "<silver>"; sc0 = "<copper>";
-			sg1 = "</gold><img src='img/ui/coin_gold.png' />";
-			ss1 = "</silver><img src='img/ui/coin_silver.png' />";
-			sc1 = "</copper><img src='img/ui/coin_copper.png' />";
+			sg1 = "</gold><img src='img/ui/coin_gold.png' alt='g ' />";
+			ss1 = "</silver><img src='img/ui/coin_silver.png' alt='s ' />";
+			sc1 = "</copper><img src='img/ui/coin_copper.png' alt='c' />";
 		}
 		if (Settings.aWantSpace)
 		{
@@ -14311,8 +14400,7 @@ E = {
 		{
 			if (E.Exchange.GemInCoin !== 0)
 			{
-				var currentgeminverse = Math.round(pCoin * E.Exchange.GemInCoin);
-				pCallback(currentgeminverse);
+				pCallback(E.convertCoinToGem(pCoin));
 			}
 		});
 	},
@@ -14336,8 +14424,7 @@ E = {
 		// OUTPUT amount of coin in order to buy INPUT amount of gems
 		E.updateCoinInGem(function()
 		{
-			var currentcoininverse = Math.round(pGem * E.Exchange.CoinInGem);
-			pCallback(currentcoininverse);
+			pCallback(E.convertGemToCoin(pGem));
 		});
 	},
 	

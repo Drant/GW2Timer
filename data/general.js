@@ -1260,7 +1260,13 @@ Countdown: {
 		url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sondage-McM-du-6-juin-Programme-de-l-association-de-mondes-ferm/first#post292620",
 		Start: new Date("2016-08-26T18:00:00Z"),
 		Finish: new Date("2016-08-27T02:00:00Z")
-	},*/
+	},*/		
+	{
+		name: "−50% Heart of Thorns",
+		official: "news/guild-wars-2-heart-of-thorns-is-50-off/",
+		Start: new Date("2016-07-20T06:00:00Z"),
+		Finish: new Date("2016-07-28T06:00:00Z")
+	},
 	{ // 8 weeks cycle, on Thursday
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
@@ -1319,17 +1325,17 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Unbreakable Gathering Tools",
-		img: "http://i.imgur.com/dYyhm3y.png",
-		price: 2400,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Glide-r-Tron",
 		img: "http://i.imgur.com/hw1n9uq.png",
 		price: 500,
 		discount: null,
+		col: 0
+	},
+	{
+		name: "Replica Job-o-Tron Backpack",
+		id: "67405",
+		price: 400,
+		discount: 500,
 		col: 0
 	},
 	{
@@ -1338,6 +1344,34 @@ Sale: {
 		price: 400,
 		discount: 500,
 		col: 0
+	},
+	{
+		name: "Unbreakable Gathering Tools",
+		img: "http://i.imgur.com/dYyhm3y.png",
+		price: 2400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Reap-r-Tron",
+		id: "67395",
+		price: 800,
+		discount: 100,
+		col: 1
+	},
+	{
+		name: "Log-r-Tron",
+		id: "67394",
+		price: 800,
+		discount: 100,
+		col: 1
+	},
+	{
+		name: "Mine-r-Tron",
+		id: "67396",
+		price: 800,
+		discount: 100,
+		col: 1
 	}
 	]
 },

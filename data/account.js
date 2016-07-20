@@ -92,6 +92,10 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "součet", it: "somma", pl: "suma", pt: "soma", ru: "сумма", zh: "總和"},
 	s_conversion: {de: "umrechnung", es: "conversión", fr: "conversion",
 		cs: "konverze", it: "conversione", pl: "konwersja", pt: "conversão", ru: "конвертация", zh: "轉換"},
+	s_summary: {de: "zusammenfassung", es: "resumen", fr: "résumé",
+		cs: "shrnutí", it: "sommario", pl: "streszczenie", pt: "sumário", ru: "резюме", zh: "摘要"},
+	s_upgrades: {de: "aufwertungen", es: "mejoras", fr: "améliorations",
+		cs: "vylepšení", it: "miglioramenti", pl: "ulepszenia", pt: "melhorias", ru: "улучшения", zh: "改進"},
 	
 	// Verbs
 	s_audit: {de: "prüfung", es: "auditar", fr: "auditer",
