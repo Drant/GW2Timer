@@ -377,6 +377,19 @@ input[type="text"].accTokenHovered {
 	opacity: 0.5;
 }
 
+#audSummary {
+	margin-top: 64px;
+}
+.audSummaryCoin {
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 48px;
+	text-shadow:
+		0px 1px 4px #000,
+		0px -1px 4px #000,
+		1px 0px 4px #000,
+		-1px 0px 4px #000;
+}
+
 /* Characters
 ----------------------------------------------------------------------------- */
 #chrSummary, #chrStatistics {

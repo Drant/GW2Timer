@@ -3337,9 +3337,9 @@ U = {
 	 * @param int pPlaces decimal to keep.
 	 * @returns string.
 	 */
-	convertRatioToPercent: function(pNumber, pPlaces)
+	convertRatioToPercent: function(pDecimal, pPlaces)
 	{
-		if (pNumber === undefined || isFinite(pNumber) === false)
+		if (pDecimal === undefined || isFinite(pDecimal) === false)
 		{
 			return "0%";
 		}
@@ -3348,11 +3348,10 @@ U = {
 			pPlaces = 0;
 		}
 		
-		var sign = (pNumber < 0) ? "−" : "";
-		return sign + Math.abs(pNumber * 100).toFixed(pPlaces) + "%";
+		var sign = (pDecimal < 0) ? "−" : "";
+		return sign + Math.abs(pDecimal * 100).toFixed(pPlaces) + "%";
 	},
 	
-
 	/*
 	 * Formats a percentage number. Example: 1250.538 becomes 1,250.53%
 	 * @param float pPercentage to convert.
@@ -6820,7 +6819,8 @@ A = {
 	/*
 	 * Initializes the associative array accessed by item IDs that holds the
 	 * count of each items, based on the account's bank, inventory, shared slots,
-	 * equipment, and materials.
+	 * equipment, and materials. Also initializes the tally and gem store upgrades
+	 * objects for use in auditing.
 	 * @param function pCallback to execute after.
 	 * @pre Characters data were downloaded by the Characters page.
 	 */
@@ -6906,6 +6906,12 @@ A = {
 				Bank: [0, 0],
 				Materials: [0, 0]
 			};
+			var bagsupgobj = A.Currency.AuditUpgrades.BagSlot;
+			var bagspurchased = 0;
+			var craftsupgobj = A.Currency.AuditUpgrades.CraftingLicense;
+			var craftspurchased = 0;
+			
+			// Compile character possessions
 			A.Data.Characters.forEach(function(iChar)
 			{
 				// Add character's equipped items (equipment) and their slotted upgrades or infusions
@@ -6920,6 +6926,7 @@ A = {
 				// Add character's inventories
 				if (iChar.bags)
 				{
+					bagspurchased += iChar.bags.length - A.Currency.AuditUpgrades.BagSlot.starting;
 					iChar.bags.forEach(function(iBag)
 					{
 						if (iBag)
@@ -6938,7 +6945,28 @@ A = {
 						}
 					});
 				}
+				// Count the highest number of active crafting disciplines
+				if (iChar.crafting)
+				{
+					var activecrafts = 0;
+					iChar.crafting.forEach(function(iCraft)
+					{
+						if (iCraft.active)
+						{
+							activecrafts++;
+						}
+					});
+					if (activecrafts > (craftspurchased + craftsupgobj.starting))
+					{
+						craftspurchased++;
+					}
+				}
 			});
+			A.assignAccountUpgrades("CraftingLicense", craftspurchased + craftsupgobj.starting);
+			// Bag slot upgrades are counted manually instead of by the macro function
+			bagsupgobj.purchased = bagspurchased;
+			bagsupgobj.totalgem = bagsupgobj.gem * bagspurchased;
+			bagsupgobj.totalowned = (A.Data.Characters.length * bagsupgobj.starting) + bagspurchased;
 			
 			// Add shared inventory slot items
 			A.assignAccountUpgrades("SharedSlot", pSharedData.length);
@@ -6978,7 +7006,7 @@ A = {
 					}
 				}
 			});
-			A.assignAccountUpgrades("StorageExpander", ((materialcountlargest / Q.ItemLimit.StackSize) + 1));
+			A.assignAccountUpgrades("StorageExpander", Math.ceil(materialcountlargest / Q.ItemLimit.StackSize));
 			
 			// Execute callback after finishing compilation
 			pCallback();
@@ -7059,10 +7087,11 @@ A = {
 	{
 		var sampleconversionamount = 100;
 		var button = $("#audExecute");
-		var buttonsur = $("#audExecuteSurrogate").hide();
+		var buttonsur = $("#audExecuteAlternate").hide();
 		I.suspendElement(button);
 		var container = $("#accAudit").empty();
 		var wanttransactions = $("#audWantTransactions").prop("checked");
+		var auditpayments = A.Currency.AuditPayments; // Auditable payment objects
 		var cachedprices; // Will contain payment or TP prices, accessible by item ID
 		var untradeabledb;
 		var paymentdb = {}; // Holds payment object or processed TP price, items whose ID is not in this will have no value
@@ -7095,7 +7124,7 @@ A = {
 		{
 			var paymentsobj = {};
 			var amount = (pInitialAmount === undefined) ? 0 : pInitialAmount;
-			for (var i in A.Currency.AuditPayments)
+			for (var i in auditpayments)
 			{
 				paymentsobj[i] = amount;
 			}
@@ -7298,9 +7327,10 @@ A = {
 		};
 		
 		// Appraises a non-coin currency into a coin amount; the exchange ratios must have been initialized
-		var convertCurrencyToCoin = function(pCurrencyName, pAmount)
+		var convertCurrencyToCoin = function(pCurrencyName, pAmount, pPriceType)
 		{
 			var name = pCurrencyName;
+			var pricetype = pPriceType || "oPriceSell";
 			if (name.indexOf("coin") !== -1) // Coin cases
 			{
 				return pAmount;
@@ -7310,7 +7340,7 @@ A = {
 				return E.convertGemToCoin(pAmount);
 			}
 			
-			var conversion = A.Currency.AuditPayments[name].conversion;
+			var conversion = auditpayments[name].conversion;
 			if (conversion === 0) // Unconvertible case
 			{
 				return 0;
@@ -7324,9 +7354,9 @@ A = {
 				var barteramount = conversion[0];
 				var barteritem = conversion[1];
 				var payment = paymentdb[barteritem];
-				if (payment && payment.oPriceSell)
+				if (payment && payment[pricetype])
 				{
-					return Math.floor(pAmount * (payment.oPriceSell / barteramount));
+					return Math.floor(pAmount * (payment[pricetype] / barteramount));
 				}
 			}
 			return 0;
@@ -7343,7 +7373,12 @@ A = {
 		// Inserts a headered but empty column into a table
 		var insertColumn = function(pTable, pHeader, pName)
 		{
-			var tallystr = (A.Tally[pName]) ? ("<span class='audTableTally'>" + (A.Tally[pName])[0] + " / " + (A.Tally[pName])[1] + "</span>") : "";
+			var tally = A.Tally[pName], tallystr = "";
+			if (tally)
+			{
+				tallystr = "<span class='audTableTally'>" + tally[0] + " / " + tally[1]
+					+ " (" + U.convertRatioToPercent(tally[0] / tally[1]) + ")</span>";
+			}
 			var auditcolumn = $("<div class='audTableColumn'></div>").appendTo(pTable)
 				.append("<div class='audTableCell audTableHeaderHorizontal'>" + pHeader + tallystr + "</div>");
 			return auditcolumn;
@@ -7355,9 +7390,9 @@ A = {
 			// Write the first column which acts as headers for the rows of currencies
 			var paymentobj, currency, headerwords;
 			var currencyheaders = $("<div class='audTableHeaderVertical audTableColumn'></div>").appendTo(pTable);
-			for (var i in A.Currency.AuditPayments)
+			for (var i in auditpayments)
 			{
-				paymentobj = A.Currency.AuditPayments[i];
+				paymentobj = auditpayments[i];
 				currency = A.Currency.AuditWallet[paymentobj.id];
 				headerwords = (paymentobj.id === 1) ? D.getPhraseOriginal(paymentobj.header) : D.getObjectName(currency);
 				currencyheaders.append("<div class='audTableCell'>"
@@ -7399,7 +7434,7 @@ A = {
 				if (pMaxCategory)
 				{
 					barstr = "<samp class='audTableCellBar'>"
-						+ "<s style='background:url(img/background/bargraph.png), linear-gradient(to right, black 0%, " + A.Currency.AuditPayments[i].color + " 100%);"
+						+ "<s style='background:url(img/background/bargraph.png), linear-gradient(to right, black 0%, " + auditpayments[i].color + " 100%);"
 						+ "width:" + ((pMaxCategory[i] > 0) ? ((amount / pMaxCategory[i]) * T.cPERCENT_100) : 0) + "%'></s>"
 					+ "</samp>";
 				}
@@ -7488,8 +7523,22 @@ A = {
 			// SUMMARY
 			E.getCoinFromGem(walletcat["gem"], function(pCoin)
 			{
-				var liquidsell = pCoin;
-				container.prepend("<div id='audSummary'></div>");
+				var summary = $("<div id='audSummary'></div>").prependTo(container);
+				
+				// LIQUID TOTAL 
+				var totalliquidsell = sumcat["coin_liquidsell"] + pCoin; // Add the account sum liquid sell value with the gem converted to coin value
+				for (var i in auditpayments) // Add the liquidatable payments in the wallet
+				{
+					if (auditpayments[i].isliquid)
+					{
+						I.log(i + " " + walletcat[i]);
+						totalliquidsell += convertCurrencyToCoin(i, walletcat[i], "oPriceSellTaxed");
+					}
+				}
+				summary.append("<div class='audSummaryCoin'>" + E.formatCoinString(totalliquidsell, {aWantBig: true}) + "</div>");
+				
+				// APPRAISED TOTAL
+				
 			});
 			
 			// Finally
@@ -7572,7 +7621,7 @@ A = {
 					for (var i in pEntry.p)
 					{
 						// Update payment database item if the payment type is applicable
-						if ((A.Currency.AuditPayments[i] || pEntry.p.coin))
+						if ((auditpayments[i] || pEntry.p.coin))
 						{
 							paymentdb[pEntry.i] = (pEntry.p.coin) ? E.createPriceBound(pEntry.p.coin) : pEntry.p;
 						}
@@ -7621,7 +7670,7 @@ A = {
 				// Insert junk rarity item prices
 				for (var i in auditmetadata.JunkValue)
 				{
-					paymentdb[i] = E.createPriceBound(auditmetadata.JunkValue[i]);
+					paymentdb[i] = E.createPricePlain(auditmetadata.JunkValue[i]);
 				}
 				// Insert untradeable crafted or forged item prices
 				appraiseCraftable();
@@ -7656,9 +7705,9 @@ A = {
 				}
 				// Include barter items for currencies conversion into coin
 				var conversion;
-				for (var i in A.Currency.AuditPayments)
+				for (var i in auditpayments)
 				{
-					conversion = A.Currency.AuditPayments[i].conversion;
+					conversion = auditpayments[i].conversion;
 					if (Array.isArray(conversion) && conversion[2] === undefined) // Untradeable items will have this index occupied
 					{
 						priceids[(conversion[1])] = true;
@@ -7898,13 +7947,13 @@ V = {
 				I.help($("#accHelpAudit").html());
 			}
 		});
-		// Surrogate button up top
-		$("<button id='audExecuteSurrogate' title='<dfn>Audit</dfn> account.'><img src='img/ui/stats.png' /></button>").insertAfter("#chrAccountReload").click(function()
+		// Alternate button up top
+		$("<button id='audExecuteAlternate' title='<dfn>Audit</dfn> account.'><img src='img/ui/stats.png' /></button>").insertAfter("#chrAccountReload").click(function()
 		{
 			$(this).hide();
 			$("#audExecute").trigger("click");
 		});
-		I.qTip.init("#audExecuteSurrogate");
+		I.qTip.init("#audExecuteAlternate");
 	},
 	
 	/*
@@ -7958,6 +8007,7 @@ V = {
 			var numcharacters = pData.length;
 			var numfetched = 0;
 			var numtofetch = numcharacters;
+			A.assignAccountUpgrades("CharacterSlot", numcharacters);
 			A.Data.CharacterNames = pData;
 			A.CharIndexCurrent = null;
 			A.Data.Characters = null;
@@ -13978,7 +14028,8 @@ E = {
 		var Settings = $.extend({
 			aWantColor: false,
 			aWantSpace: false,
-			aWantShort: false
+			aWantShort: false,
+			aWantBig: false
 		}, pSettings);
 		
 		var sep = ".";
@@ -13989,7 +14040,17 @@ E = {
 			// Instead of period separating the currency units, use the coin images
 			sep = "";
 			sg0 = "<gold>"; ss0 = "<silver>"; sc0 = "<copper>";
-			sg1 = "</gold><goldcoin></goldcoin>"; ss1 = "</silver><silvercoin></silvercoin>"; sc1 = "</copper><coppercoin></coppercoin>";
+			sg1 = "</gold><goldcoin></goldcoin>";
+			ss1 = "</silver><silvercoin></silvercoin>";
+			sc1 = "</copper><coppercoin></coppercoin>";
+		}
+		if (Settings.aWantBig)
+		{
+			sep = "";
+			sg0 = "<gold>"; ss0 = "<silver>"; sc0 = "<copper>";
+			sg1 = "</gold><img src='img/ui/coin_gold.png' />";
+			ss1 = "</silver><img src='img/ui/coin_silver.png' />";
+			sc1 = "</copper><img src='img/ui/coin_copper.png' />";
 		}
 		if (Settings.aWantSpace)
 		{

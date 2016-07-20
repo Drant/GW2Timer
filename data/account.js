@@ -199,18 +199,18 @@ var GW2T_CURRENCY_DATA = {
 		coin_appraisebuy: {id: 1, color: "#fdc84e", conversion: 1, header: "Appraised Buy"},
 		coin_appraisesell: {id: 1, color: "#fdc84e", conversion: 1, header: "Appraised Sell"},
 		gem: {id: 4, color: "#66aaff", conversion: null}, // To be assigned by gem exchange
-		karma: {id: 2, color: "#ee55cc", conversion: [5250, 24295]}, // Vial of Powerful Blood
-		laurel: {id: 3, color: "#44dd44", conversion: 10000},
-		badge: {id: 15, color: "#8c7047", conversion: 100},
-		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560]}, // Sentinel's Orichalcum Imbued Inscription
-		dungeon_ac: {id: 5, color: "#73c7ee", conversion: [390, 46239]}, // Soldier's Pearl Broadsword
-		dungeon_cm: {id: 9, color: "#80aaa2", conversion: [390, 15476]}, // Rampager's Pearl Broadsword
-		dungeon_ta: {id: 11, color: "#5a5282", conversion: [390, 15476]}, // Rampager's Pearl Broadsword
-		dungeon_se: {id: 10, color: "#c1a390", conversion: [390, 46239]}, // Soldier's Pearl Broadsword
-		dungeon_cof: {id: 13, color: "#fd994c", conversion: [30, 19721]}, // Glob of Ectoplasm
-		dungeon_hotw: {id: 12, color: "#bddbef", conversion: [30, 19721]}, // Glob of Ectoplasm
-		dungeon_coe: {id: 14, color: "#993889", conversion: [30, 19721]}, // Glob of Ectoplasm
-		dungeon_arah: {id: 6, color: "#aab084", conversion: [30, 19721]}, // Glob of Ectoplasm
+		karma: {id: 2, color: "#ee55cc", conversion: [5250, 24295], isliquid: true}, // Vial of Powerful Blood
+		laurel: {id: 3, color: "#44dd44", conversion: [3, 24351], isliquid: true}, // Vicious Claw
+		badge: {id: 15, color: "#8c7047", conversion: [100, 21159], isliquid: true}, // Alpha Siege Golem Blueprint
+		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560], isliquid: true}, // Sentinel's Orichalcum Imbued Inscription
+		dungeon_ac: {id: 5, color: "#73c7ee", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
+		dungeon_cm: {id: 9, color: "#80aaa2", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
+		dungeon_ta: {id: 11, color: "#5a5282", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
+		dungeon_se: {id: 10, color: "#c1a390", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
+		dungeon_cof: {id: 13, color: "#fd994c", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
+		dungeon_hotw: {id: 12, color: "#bddbef", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
+		dungeon_coe: {id: 14, color: "#993889", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
+		dungeon_arah: {id: 6, color: "#aab084", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
 		fotm_relic: {id: 7, color: "#9bffff", conversion: [1350, 37000, 1]}, // Quiver of a Thousand Arrows
 		fotm_pristine: {id: 24, color: "#6bbb44", conversion: [135, 37000, 1]}, // Quiver of a Thousand Arrows
 		raid_ft: {id: 28, color: "#27454a", conversion: [400, 48079, 1]}, // Zojja Doublet
@@ -222,7 +222,7 @@ var GW2T_CURRENCY_DATA = {
 	},
 	AuditUpgrades: { // Account upgrades from the gem store
 		CharacterSlot: {starting: 5, purchased: 0, gem: 800},
-		CraftingLicense: {starting: 0, purchased: 0, gem: 800},
+		CraftingLicense: {starting: 2, purchased: 0, gem: 800},
 		BankTab: {starting: 1, purchased: 0, gem: 600},
 		StorageExpander: {starting: 1, purchased: 0, gem: 800},
 		BagSlot: {starting: 5, purchased: 0, gem: 400},
