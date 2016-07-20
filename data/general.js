@@ -1356,21 +1356,21 @@ Sale: {
 		name: "Reap-r-Tron",
 		id: "67395",
 		price: 800,
-		discount: 100,
+		discount: 1000,
 		col: 1
 	},
 	{
 		name: "Log-r-Tron",
 		id: "67394",
 		price: 800,
-		discount: 100,
+		discount: 1000,
 		col: 1
 	},
 	{
 		name: "Mine-r-Tron",
 		id: "67396",
 		price: 800,
-		discount: 100,
+		discount: 1000,
 		col: 1
 	}
 	]
