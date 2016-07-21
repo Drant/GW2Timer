@@ -200,8 +200,8 @@ var GW2T_CURRENCY_DATA = {
 	AuditPayments: {
 		coin_liquidbuy: {id: 1, color: "#fdc84e", conversion: 1, header: "Liquid Buy"},
 		coin_liquidsell: {id: 1, color: "#fdc84e", conversion: 1, header: "Liquid Sell"},
-		coin_appraisebuy: {id: 1, color: "#fdc84e", conversion: 1, header: "Appraised Buy"},
-		coin_appraisesell: {id: 1, color: "#fdc84e", conversion: 1, header: "Appraised Sell"},
+		coin_appraisedbuy: {id: 1, color: "#fdc84e", conversion: 1, header: "Appraised Buy"},
+		coin_appraisedsell: {id: 1, color: "#fdc84e", conversion: 1, header: "Appraised Sell"},
 		gem: {id: 4, color: "#66aaff", conversion: null}, // To be assigned by gem exchange
 		karma: {id: 2, color: "#ee55cc", conversion: [5250, 24295], isliquid: true}, // Vial of Powerful Blood
 		laurel: {id: 3, color: "#44dd44", conversion: [3, 24351], isliquid: true}, // Vicious Claw

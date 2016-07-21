@@ -4684,6 +4684,7 @@ Z = {
 	 * @param string pString suffix of API endpoint.
 	 * @objparam string aQueryStr arguments for the API url, optional.
 	 * @objparam function aCallback to execute after finishing scraping, optional.
+	 * @objparam int aRetryCount used internally for recursive retrieval of failed IDs.
 	 */
 	scrapeAPIArray: function(pArray, pSuffix, pSettings)
 	{
@@ -4692,6 +4693,7 @@ Z = {
 		var idsarray = [];
 		var failedids = [];
 		var reqindex = 0;
+		var numretries = 3;
 		var reqlimit = 500;
 		var reqcooldownms = 30000;
 		var numtofetch = 0;
@@ -4715,19 +4717,32 @@ Z = {
 				{
 					I.print("All IDs successfully retrieved.");
 				}
-				// Sort the objects by their IDs
-				if (Z.APICacheArrayOfObjects.length > 0 && Z.APICacheArrayOfObjects[0].id)
+				// Recurse the function to retrieved fail IDs and append them to the current cache, will stop recursion if retry number exceeds
+				if (Settings.aRetryCount !== 0 && failedids.length > 0)
 				{
-					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
-				}
-				// Execute callback if provided
-				if (Settings.aCallback)
-				{
-					Settings.aCallback(Z.APICacheArrayOfObjects, failedids);
+					var retrycount = (Settings.aRetryCount || numretries) - 1;
+					I.print("Retrying " + retrycount + " times to fetch failed IDs...");
+					Z.scrapeAPIArray(failedids, pSuffix, {
+						aRetryCount: retrycount,
+						aCallback: Settings.aCallback
+					});
 				}
 				else
 				{
-					I.print("Scrape completed. Enter /apicache to print the results.");
+					// Sort the objects by their IDs
+					if (Z.APICacheArrayOfObjects.length > 0 && Z.APICacheArrayOfObjects[0].id)
+					{
+						U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
+					}
+					// Execute callback if provided
+					if (Settings.aCallback)
+					{
+						Settings.aCallback(Z.APICacheArrayOfObjects, failedids);
+					}
+					else
+					{
+						I.print("Scrape completed. Enter /apicache to print the results.");
+					}
 				}
 			}
 		};
@@ -4781,8 +4796,11 @@ Z = {
 		};
 		
 		// Start the process
-		Z.APICacheArrayOfIDs = pArray;
-		Z.APICacheArrayOfObjects = [];
+		if (Settings.aRetryCount === undefined)
+		{
+			Z.APICacheArrayOfIDs = pArray;
+			Z.APICacheArrayOfObjects = [];
+		}
 		idsarray = pArray;
 		numtofetch = idsarray.length;
 		iterateIDs();
@@ -7168,15 +7186,15 @@ A = {
 				if (pIsBound)
 				{
 					// Bound items cannot be liquidated for cash, so only have appraised values
-					pCategory.coin_appraisebuy += pPayment.oPriceBuy * count;
-					pCategory.coin_appraisesell += pPayment.oPriceSell * count;
+					pCategory.coin_appraisedbuy += pPayment.oPriceBuy * count;
+					pCategory.coin_appraisedsell += pPayment.oPriceSell * count;
 				}
 				else
 				{
 					pCategory.coin_liquidbuy += pPayment.oPriceBuyTaxed * count;
 					pCategory.coin_liquidsell += pPayment.oPriceSellTaxed * count;
-					pCategory.coin_appraisebuy += pPayment.oPriceBuy * count;
-					pCategory.coin_appraisesell += pPayment.oPriceSell * count;
+					pCategory.coin_appraisedbuy += pPayment.oPriceBuy * count;
+					pCategory.coin_appraisedsell += pPayment.oPriceSell * count;
 				}
 			}
 			else
@@ -7237,7 +7255,7 @@ A = {
 						{
 							if (E.isPriceObject(payment))
 							{
-								addPaymentToCategory(auditcat, payment, auditobj[0]); // Index 0 is the count of unbound items
+								addPaymentToCategory(auditcat, payment, auditobj[1]); // Index 0 is the count of unbound items
 								addPaymentToCategory(auditcat, payment, (auditobj[1] - auditobj[0]), true); // Index 1 is the count of all items
 							}
 							else
@@ -7568,8 +7586,8 @@ A = {
 			E.getCoinFromGem(walletcat["gem"], function(pCoin)
 			{
 				// Appraised sell plus all non-coin payments converted to coin
-				var totalappraisedbuy = sumcat["coin_appraisebuy"];
-				var totalappraisedsell = sumcat["coin_appraisesell"];
+				var totalappraisedbuy = sumcat["coin_appraisedbuy"];
+				var totalappraisedsell = sumcat["coin_appraisedsell"];
 				// Liquid sell plus gem converted to coin plus all non-coin payments converted to coin
 				var totalliquidbuy = sumcat["coin_liquidbuy"] + pCoin;
 				var totalliquidsell = sumcat["coin_liquidsell"] + pCoin;
@@ -7661,7 +7679,7 @@ A = {
 					}
 				}
 			});
-			return sum;
+			return E.createPriceBound(sum);
 		};
 		
 		// Updates the payment database with the appraised value of untradeable items
@@ -14481,6 +14499,16 @@ E = {
 	},
 	createPriceBound: function(pPrice, pCount)
 	{
+		if (E.isPriceObject(pPrice))
+		{
+			return {
+				oPriceBuy: pPrice.oPriceBuy,
+				oPriceSell: pPrice.oPriceSell,
+				oPriceBuyTaxed: 0,
+				oPriceSellTaxed: 0
+			};
+		}
+		// If provided a numerical price instead of object
 		var count = (pCount === undefined) ? 1 : pCount;
 		var price = pPrice * count;
 		return {
