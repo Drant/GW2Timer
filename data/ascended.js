@@ -142,6 +142,37 @@ var GW2T_ASCENDED_METADATA = {
 		30697, // Frenzy
 		30701 // Kraitkin
 	],
+	// All legendary items which are the most expensive in the game
+	LegendaryExclusion:
+	{
+		30684: 1, // Frostfang
+		30692: 1, // The Moot
+		30699: 1, // Bolt
+		30687: 1, // Incinerator
+		30693: 1, // Quip
+		30695: 1, // Meteorlogicus
+		30688: 1, // The Minstrel
+		30696: 1, // The Flameseeker Prophecies
+		30700: 1, // Rodgort
+		30702: 1, // Howler
+		30703: 1, // Sunrise
+		30704: 1, // Twilight
+		30689: 1, // Eternity
+		30690: 1, // The Juggernaut
+		30685: 1, // Kudzu
+		30686: 1, // The Dreamer
+		30694: 1, // The Predator
+		30698: 1, // The Bifrost
+		30691: 1, // Kamohoali'i Kotaki
+		30697: 1, // Frenzy
+		30701: 1, // Kraitkin
+		76158: 1, // Astralaria
+		72713: 1, // HOPE
+		71383: 1, // Nevermore
+		78556: 1, // Chuka and Champawat
+		74155: 1, // Ad Infinitum
+		77474: 1 // The Ascension
+	},
 	// Base ingredients of account bound items that are crafted, forged, or combined from other items
 	CompositeIngredients: {
 		// Astralaria

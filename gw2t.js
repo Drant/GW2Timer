@@ -7183,7 +7183,7 @@ A = {
 			var count = (pCount === undefined) ? 1 : pCount;
 			if (E.isPriceObject(pPayment))
 			{
-				if (pIsBound)
+				if (pIsBound === true)
 				{
 					// Bound items cannot be liquidated for cash, so only have appraised values
 					pCategory.coin_appraisedbuy += pPayment.oPriceBuy * count;
@@ -7255,8 +7255,20 @@ A = {
 						{
 							if (E.isPriceObject(payment))
 							{
-								addPaymentToCategory(auditcat, payment, auditobj[1]); // Index 0 is the count of unbound items
-								addPaymentToCategory(auditcat, payment, (auditobj[1] - auditobj[0]), true); // Index 1 is the count of all items
+								/*
+								 * Index [0] is the count of unbound (tradeable, liquid and appraised).
+								 * Index [1] is the count of all items (mixed).
+								 * [1] - [0] = the count of bound items (untradeable, appraised only).
+								 */
+								if (auditobj[1] === auditobj[0]) // If there is no bound item
+								{
+									addPaymentToCategory(auditcat, payment, auditobj[1]);
+								}
+								else // If there at least one bound item, then add bound and unbound items separately
+								{
+									addPaymentToCategory(auditcat, payment, auditobj[0]);
+									addPaymentToCategory(auditcat, payment, (auditobj[1] - auditobj[0]), true);
+								}
 							}
 							else
 							{
@@ -7613,7 +7625,7 @@ A = {
 				summary.append("<div id='audSummaryName'><var id='audAccountName'>" + U.escapeHTML(A.Data.Account.name) + "</var></div>");
 				summary.append("<div id='audSummaryValues'>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("appraised") + " ―</div>"
-					+ "<div id='audSummaryAppraised' class='audSummaryCoin'>" + E.formatCoinString(totalappraisedsell, {aWantBig: true}) + "</div>"
+					+ "<div id='audSummaryAppraised' class='audSummaryCoin'></div>"
 					+ "<div class='audSummaryMoney'>≈ " + E.formatGemToMoney(E.convertCoinToGem(totalappraisedsell)) + "</div>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("liquid") + " ―</div>"
 					+ "<div id='audSummaryLiquid' class='audSummaryCoin'>" + E.formatCoinString(totalliquidsell, {aWantBig: true}) + "</div>"
@@ -7630,6 +7642,17 @@ A = {
 					D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsell) + "<br />"
 					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuy)
 				));
+				
+				var appraisedelm = document.getElementById("audSummaryAppraised");
+				var liquidelm = document.getElementById("audSummaryLiquid");
+				I.animateNumber(totalappraisedsell, function(pValue)
+				{
+					appraisedelm.innerHTML = E.formatCoinString(pValue, {aWantBig: true});
+				}, 3000, "easeInOutQuart");
+				I.animateNumber(totalliquidsell, function(pValue)
+				{
+					liquidelm.innerHTML = E.formatCoinString(pValue, {aWantBig: true});
+				}, 3000, "easeInOutQuart");
 			});
 			
 			// Debug buttons at the bottom
@@ -30692,6 +30715,23 @@ I = {
 			}
 			isshown = !isshown;
 		}
+	},
+	
+	/*
+	 * Executes a callback function over time.
+	 * @param int pTarget the number "animate" from 0% to 100% of its value.
+	 * @param function pStep to execute.
+	 * @param int pDuration milliseconds.
+	 */
+	animateNumber: function(pTarget, pStep, pDuration, pEasing)
+	{
+		$({value: 0}).animate({value: T.cPERCENT_100}, {
+			duration: pDuration || 3000,
+			easing: pEasing || "swing",
+			step: function(pCurrentPercent) {
+				pStep(pTarget * (pCurrentPercent / T.cPERCENT_100));
+			}
+		});
 	},
 	
 	/*

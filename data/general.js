@@ -1339,6 +1339,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Mini Scruffy",
+		id: "42960",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
 		name: "Banker Golem (2 weeks)",
 		id: "50085",
 		price: 400,

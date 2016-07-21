@@ -302,7 +302,7 @@ input[type="text"].accTokenHovered {
 	margin-right: 32px;
 	box-shadow: 0px 0px 32px #fdc84e;
 }
-#audExecute:hover {
+#audExecute:hover, #audExecuteAlternate:hover {
 	animation: aniFlicker 1s ease infinite;
 }
 
