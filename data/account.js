@@ -160,7 +160,7 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 2, coefficient: 1, payment: "karma", name_en: "Karma", name_de: "Karma", name_es: "Karma", name_fr: "Karma", name_zh: "業力" },
 			{ id: 3, coefficient: 10000, payment: "laurel", name_en: "Laurel", name_de: "Lorbeer", name_es: "Laurel", name_fr: "Laurier", name_zh: "桂冠" },
 			{ id: 15, coefficient: 100, payment: "badge", name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "榮譽徽章" },
-			{ id: 31, coefficient: 400, name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄証明" },
+			{ id: 31, coefficient: 500, payment: "proof", name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄証明" },
 			{ id: 16, coefficient: 10000, payment: "commendation", name_en: "Guild Commendation", name_de: "Gilden-Belobigung", name_es: "Mención de clan", name_fr: "Recommandation de guilde", name_zh: "公會獎狀" },
 			{ id: 23, coefficient: 1000, name_en: "Spirit Shard", name_de: "Geister-Scherbe", name_es: "Esquirla espiritual", name_fr: "Éclat d'esprit", name_zh: "靈魂碎片" },
 			{ id: 18, coefficient: 10000, name_en: "Transmutation Charge", name_de: "Transmutations-Ladung", name_es: "Carga de transmutación", name_fr: "Charge de transmutation", name_zh: "幻化力" }
@@ -180,6 +180,7 @@ var GW2T_CURRENCY_DATA = {
 	AuditCategories: { // Each entry will hold a payments object, displayed as a column in the audit table
 		Wallet: null,
 		Characters: null,
+		Shared: null,
 		Bank: null,
 		Materials: null,
 		Skins: null,
@@ -192,6 +193,7 @@ var GW2T_CURRENCY_DATA = {
 	AuditCategoriesCharacters: {}, // Same format as audit categories but is a breakdown of individual characters
 	/*
 	 * Payments to show on the account audit table in this order.
+	 * The ishidden property will hide that currency from presentation for some tables.
 	 * ID is associated with wallet, conversion is how many copper for 1 of that currency.
 	 * Color is for the progress bar under the currency amount.
 	 * Conversions in array format: [paymentAmount, equivalentItemID, isItemUntradeable]
@@ -206,7 +208,8 @@ var GW2T_CURRENCY_DATA = {
 		karma: {id: 2, color: "#ee55cc", conversion: [5250, 24295], isliquid: true}, // Vial of Powerful Blood
 		laurel: {id: 3, color: "#44dd44", conversion: [3, 24351], isliquid: true}, // Vicious Claw
 		badge: {id: 15, color: "#8c7047", conversion: [30, 71473], isliquid: true}, // Badge of Tribute
-		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560], isliquid: true}, // Sentinel's Orichalcum Imbued Inscription
+		proof: {id: 31, color: "#ffff53", conversion: [6, 21262], isliquid: true, ishidden: true}, // Superior Catapult Blueprints
+		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560], isliquid: true, ishidden: true}, // Sentinel's Orichalcum Imbued Inscription
 		dungeon_ac: {id: 5, color: "#73c7ee", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
 		dungeon_cm: {id: 9, color: "#80aaa2", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
 		dungeon_ta: {id: 11, color: "#5a5282", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
@@ -240,8 +243,7 @@ var GW2T_CURRENCY_DATA = {
 var GW2T_ACCOUNT_METADATA = {
 	Exchange: {
 		GoldSamples: [1, 10, 100, 200, 500, 1000, 4000, 5000],
-		GemSamples: [100, 125, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1800, 2000],
-		ItemSamples: [30684, 30692, 30699, 30687, 30693, 30695, 30688, 30696, 30700, 30702, 30703, 30704, 30689, 30690, 30685, 30686, 30694, 30698, 30691, 30697, 30701]
+		GemSamples: [100, 125, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1800, 2000]
 	},
 	Bank: {
 		NumSlotsHorizontal: 10,

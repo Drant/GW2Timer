@@ -6901,14 +6901,9 @@ A = {
 			// Update total item found count
 			A.Possessions[pItemID].oCount += pCount;
 			
-			// Assign discrete category counts; the Characters location combines inventory, equipment, and shared slots
-			var locationkey = (isNaN(pLocation) === false || pLocation === "Shared") ? "Characters" : U.toFirstUpperCase(pLocation);
+			// Assign discrete category counts; the Characters location combines inventory, equipment
+			var locationkey = (isNaN(pLocation) === false) ? "Characters" : U.toFirstUpperCase(pLocation);
 			updateAuditObj(locationkey);
-			// Assign for shared slots again because it was assigned to Characters location
-			if (pLocation === "Shared")
-			{
-				updateAuditObj("Shared");
-			}
 			// Per character audit entries
 			if (isNaN(pLocation) === false)
 			{
@@ -6941,6 +6936,7 @@ A = {
 			// Hold filled and capacity numbers
 			A.Tally = {
 				Characters: [0, 0],
+				Shared: [0, 0],
 				Bank: [0, 0],
 				Materials: [0, 0]
 			};
@@ -7008,10 +7004,12 @@ A = {
 			
 			// Add shared inventory slot items
 			A.assignAccountUpgrades("SharedSlot", pSharedData.length);
+			A.Tally.Shared[1] = pSharedData.length;
 			pSharedData.forEach(function(iSlot)
 			{
 				if (iSlot)
 				{
+					A.Tally.Shared[0] += 1;
 					addItem(iSlot.id, "Shared", iSlot.count, iSlot.binding);
 				}
 			});
@@ -7441,13 +7439,17 @@ A = {
 		};
 		
 		// Inserts a leading column of currency names into a table
-		var insertTableCurrencyHeader = function(pTable)
+		var insertTableCurrencyHeader = function(pTable, pWantHidden)
 		{
 			// Write the first column which acts as headers for the rows of currencies
 			var paymentobj, currency, headerwords;
 			var currencyheaders = $("<div class='audTableHeaderVertical audTableColumn'></div>").appendTo(pTable);
 			for (var i in auditpayments)
 			{
+				if (!pWantHidden && auditpayments[i].ishidden)
+				{
+					continue;
+				}
 				paymentobj = auditpayments[i];
 				currency = A.Currency.AuditWallet[paymentobj.id];
 				headerwords = (paymentobj.id === 1) ? D.getPhraseOriginal(paymentobj.header) : D.getObjectName(currency);
@@ -7478,12 +7480,16 @@ A = {
 		};
 		
 		// Fills a table column with currencies
-		var fillCurrencyColumn = function(pColumn, pCategory, pIsConversion, pMaxCategory)
+		var fillCurrencyColumn = function(pColumn, pCategory, pIsConversion, pMaxCategory, pWantHidden)
 		{
 			var amount, paymentkey, barstr;
 			var prefix = (pIsConversion) ? ("<span class='cssLeft'>" + I.Symbol.ArrowRight + "</span>") : "";
 			for (var i in pCategory)
 			{
+				if (!pWantHidden && auditpayments[i].ishidden)
+				{
+					continue;
+				}
 				amount = pCategory[i];
 				paymentkey = (i.indexOf("coin") !== -1 || pIsConversion) ? "coin" : i;
 				barstr = "";
@@ -7497,6 +7503,11 @@ A = {
 				pColumn.append("<div class='audTableCell'>" + prefix + E.PaymentFormat[paymentkey](amount) + barstr + "</div>");
 			}
 		};
+		// Same as original function but shows the hidden payment rows
+		var fillCurrencyColumnFull = function(pColumn, pCategory, pIsConversion, pMaxCategory)
+		{
+			fillCurrencyColumn(pColumn, pCategory, pIsConversion, pMaxCategory, true);
+		};
 		
 		// Fills a table column with the rows' currency converted to coin
 		var fillConversionColumn = function(pColumn, pCategory)
@@ -7506,14 +7517,14 @@ A = {
 			{
 				convertedpayments[i] = convertCurrencyToCoin(i, pCategory[i]);
 			}
-			fillCurrencyColumn(pColumn, convertedpayments, true);
+			fillCurrencyColumnFull(pColumn, convertedpayments, true);
 		};
 		
 		// Writes HTML to display the audit results
 		var generateResults = function()
 		{
 			// Clear the console of load messages
-			//I.clear();
+			I.clear();
 			var tablecategory = createTable(D.getPhraseOriginal("Audit Categories"));
 			var tablesum = createTable(D.getPhraseOriginal("Sum &amp; Conversion"));
 			var tablechar = createTable(D.getPhraseOriginal("Audit Characters"));
@@ -7537,7 +7548,7 @@ A = {
 			}
 			
 			// TABLE: Sum and conversions
-			insertTableCurrencyHeader(tablesum);
+			insertTableCurrencyHeader(tablesum, true);
 			// Sum columns
 			var sumcolumn = insertColumn(tablesum, D.getPhraseTitle("account sum"));
 			var convertedsumcolumn = insertColumn(tablesum, D.getPhraseTitle("account sum"));
@@ -7547,19 +7558,19 @@ A = {
 				// Add all audit categories' payments into one "sum" category
 				sumcat = sumAuditCategories(sumcat, auditcats[i]);
 			}
-			fillCurrencyColumn(sumcolumn, sumcat);
+			fillCurrencyColumnFull(sumcolumn, sumcat);
 			fillConversionColumn(convertedsumcolumn, sumcat);
 			// Wallet columns
 			var walletcat = auditcats["Wallet"];
 			var walletcolumn = insertColumn(tablesum, D.getPhraseTitle("wallet"));
 			var convertedwalletcolumn = insertColumn(tablesum, D.getPhraseTitle("wallet"));
-			fillCurrencyColumn(walletcolumn, walletcat);
+			fillCurrencyColumnFull(walletcolumn, walletcat);
 			fillConversionColumn(convertedwalletcolumn, walletcat);
 			// Sample columns
 			var samplecat = createAuditPayments(sampleconversionamount);
 			var samplecolumn = insertColumn(tablesum, D.getPhraseTitle("conversion"));
 			var convertedsamplecolumn = insertColumn(tablesum, D.getPhraseTitle("conversion"));
-			fillCurrencyColumn(samplecolumn, samplecat);
+			fillCurrencyColumnFull(samplecolumn, samplecat);
 			fillConversionColumn(convertedsamplecolumn, samplecat);
 			
 			// TABLE: Characters
@@ -7621,7 +7632,8 @@ A = {
 				totalappraisedbuy += upggemstocoin;
 				totalappraisedsell += upggemstocoin;
 				
-				var summary = $("<div id='audSummary'></div>").prependTo(container);
+				var summarycontainer = $("<div id='audSummaryContainer'></div>").prependTo(container);
+				var summary = $("<div id='audSummary'></div>").prependTo(summarycontainer).hide();
 				summary.append("<div id='audSummaryName'><var id='audAccountName'>" + U.escapeHTML(A.Data.Account.name) + "</var></div>");
 				summary.append("<div id='audSummaryValues'>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("appraised") + " ―</div>"
@@ -7643,16 +7655,20 @@ A = {
 					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuy)
 				));
 				
-				var appraisedelm = document.getElementById("audSummaryAppraised");
-				var liquidelm = document.getElementById("audSummaryLiquid");
-				I.animateNumber(totalappraisedsell, function(pValue)
+				// Show the summary box animated
+				summary.show("slow", function()
 				{
-					appraisedelm.innerHTML = E.formatCoinString(pValue, {aWantBig: true});
-				}, 3000, "easeInOutQuart");
-				I.animateNumber(totalliquidsell, function(pValue)
-				{
-					liquidelm.innerHTML = E.formatCoinString(pValue, {aWantBig: true});
-				}, 3000, "easeInOutQuart");
+					var appraisedelm = document.getElementById("audSummaryAppraised");
+					var liquidelm = document.getElementById("audSummaryLiquid");
+					I.animateNumber(totalappraisedsell, function(pValue)
+					{
+						appraisedelm.innerHTML = E.formatCoinString(pValue, {aWantBig: true});
+					}, 3000, "easeInOutQuart");
+					I.animateNumber(totalliquidsell, function(pValue)
+					{
+						liquidelm.innerHTML = E.formatCoinString(pValue, {aWantBig: true});
+					}, 3000, "easeInOutQuart");
+				});
 			});
 			
 			// Debug buttons at the bottom
@@ -7737,7 +7753,7 @@ A = {
 		};
 		
 		// Scans an unlockables record and updates the payment database with applicable payments
-		var insertPaymentsFromRecord = function(pRecord)
+		var insertPaymentsFromRecord = function(pRecord, pIsPossessions)
 		{
 			A.iterateRecord(pRecord, function(pEntry)
 			{
@@ -7750,6 +7766,14 @@ A = {
 						{
 							E.Paylist[pEntry.i] = (pEntry.p.coin) ? E.createPriceBound(pEntry.p.coin) : pEntry.p;
 						}
+					}
+				}
+				else if (pIsPossessions)
+				{
+					// For possessions, bound items that came from a tradeable container item will have this property, so copy the price
+					if (pEntry.u && E.Paylist[pEntry.u])
+					{
+						E.Paylist[pEntry.i] = E.createPriceBound(E.Paylist[pEntry.u]);
 					}
 				}
 			});
@@ -7801,7 +7825,7 @@ A = {
 				// Insert untradeable crafted or forged item prices
 				appraiseCraftable();
 				// Insert untradeable catalog item payments
-				insertPaymentsFromRecord(recordsdata.Catalog);
+				insertPaymentsFromRecord(recordsdata.Catalog, true);
 				// Insert armors, weapons, backpacks item payments
 				insertPaymentsFromRecord(recordsdata.Skins);
 				// Insert minis item payments
@@ -13992,7 +14016,7 @@ E = {
 	Paylist: {}, // Associative array accessed by item ID, containing payment (a price object, karma, or other currencies)
 	/*
 	 * Associative array of functions that format the payment of an item.
-	 * The function names correspond to the object key in a custom API cache.
+	 * The function names correspond to the object key in unlockables records.
 	 */
 	PaymentFormat:
 	{
@@ -14011,6 +14035,7 @@ E = {
 		blticket: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_blticket'></ins>"; },
 		bubble: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_bubble'></ins>"; },
 		badge: function(pAmount) { return ((pAmount === 0) ? "" : pAmount.toLocaleString()) + "<ins class='s16 s16_badge'></ins>"; },
+		proof: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_proof'></ins>"; },
 		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_commendation'></ins>"; },
 		tournament: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_tournament'></ins>"; },
 		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_league'></ins>"; },
