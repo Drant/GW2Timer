@@ -7281,6 +7281,7 @@ A = {
 		// Evaluates an unlocks audit category
 		var auditUnlocks = function(pName, pWantPossessions)
 		{
+			var payment, auditcat = A.Currency.AuditCategories[pName];
 			var unlockedids; // An associative array of unlock IDs
 			var itemkey = "i";
 			// Special case for recipes because the unlocks is stored within the characters data instead of an API flat array
@@ -7304,11 +7305,26 @@ A = {
 						}
 					}
 				});
+				// Add the bound recipe payments
+				var recipesdata = U.getRecordMetadata("recipes");
+				var boundpayments = recipesdata.BoundPayments;
+				for (var i in boundpayments)
+				{
+					if (unlockedids[i])
+					{
+						for (var ii in boundpayments[i])
+						{
+							payment = {};
+							payment[ii] = (boundpayments[i])[ii];
+							addPaymentToCategory(auditcat, ((ii === "coin") ?
+								E.createPriceBound((boundpayments[i])[ii]) : payment), 1, true);
+						}
+					}
+				}
 			}
 			
 			// Audit by adding the payment value once for each unlock (which has an associated item that has a payment)
 			A.Tally[pName] = [(unlocksdata[pName]).length, 0];
-			var payment, auditcat = A.Currency.AuditCategories[pName];
 			if (unlockedids === undefined)
 			{
 				unlockedids = U.getExistAssoc(unlocksdata[pName]);
@@ -7520,7 +7536,9 @@ A = {
 			fillCurrencyColumnFull(pColumn, convertedpayments, true);
 		};
 		
-		// Writes HTML to display the audit results
+		/*
+		 * Writes HTML to display the audit results.
+		 */
 		var generateResults = function()
 		{
 			// Clear the console of load messages
@@ -7588,7 +7606,7 @@ A = {
 			I.qTip.init(tablechar.find(".chrPreface"));
 			
 			// UNLOCKS
-			var summaryupgrades = $("<div id='audUpgrades'></div>").appendTo(container);
+			/*var summaryupgrades = $("<div id='audUpgrades'></div>").appendTo(container);
 			createTitle("Account Upgrades").insertBefore(summaryupgrades);
 			var upg;
 			for (var i in A.Currency.AuditUpgrades)
@@ -7602,8 +7620,8 @@ A = {
 					+ "</span>"
 				+ "</aside>");
 			}
+			summaryupgrades.append("<aside class='audUpgradeValues>" + E.formatGemString(upggems, true) + "</aside>");*/
 			var upggems = A.getAccountUpgradesGem();
-			summaryupgrades.append("<aside class='audUpgradeValues>" + E.formatGemString(upggems, true) + "</aside>");
 			
 			// SUMMARY
 			E.getCoinFromGem(walletcat["gem"], function(pCoin)
@@ -7669,6 +7687,10 @@ A = {
 						liquidelm.innerHTML = E.formatCoinString(pValue, {aWantBig: true});
 					}, 3000, "easeInOutQuart");
 				});
+				
+				// BANK of gem upgrades, legendaries, and ascended gear
+				var bankcontainer = B.createBank(container, {aTitle: D.getPhraseOriginal("Account Upgrades")});
+				var bank = container.find(".bnkBank");
 			});
 			
 			// Debug buttons at the bottom
@@ -7688,7 +7710,9 @@ A = {
 			buttonsur.show();
 		};
 		
-		// Audits the banks and unlocks after prices have been assigned
+		/*
+		 * Audits the banks and unlocks after prices have been assigned.
+		 */
 		var executeAudit = function()
 		{
 			initializeAuditCategories();
@@ -7739,10 +7763,13 @@ A = {
 					? ascendedingr[i].concat(ascendedingr[ascendedtype]) : ascendedingr[i];
 				appraisal[i] = sumIngredients(ingredients);
 			}
-			// Items of an ascended category gets the same appraised value
+			// Items of an ascended category gets the same appraised value, except trinkets
 			A.iterateRecord(ascendeddata, function(pEntry, pCategory)
 			{
-				E.Paylist[pEntry.i] = appraisal[pCategory];
+				if (pCategory !== "Ring" && pCategory !== "Accessory" && pCategory !== "Amulet")
+				{
+					E.Paylist[pEntry.i] = appraisal[pCategory];
+				}
 			});
 			
 			// Crafted, forged, or combined items from other ingredient items
@@ -7779,7 +7806,10 @@ A = {
 			});
 		};
 		
-		// Begins downloading of numerous uncached prices and defines the payment database
+		/*
+		 * Begins downloading of numerous uncached prices and defines the payment
+		 * database, the order of insertion will affect override of item payments.
+		 */
 		var fetchPrices = function()
 		{
 			//priceids = [];////////////I.log
@@ -7822,6 +7852,8 @@ A = {
 				{
 					E.Paylist[i] = E.createPricePlain(auditmetadata.JunkValue[i]);
 				}
+				// Insert ascended payments
+				insertPaymentsFromRecord(recordsdata.Ascended, true);
 				// Insert untradeable crafted or forged item prices
 				appraiseCraftable();
 				// Insert untradeable catalog item payments
@@ -7836,7 +7868,9 @@ A = {
 			}});
 		};
 		
-		// Readies the IDs of possessions and priority items to retrieve live TP prices
+		/*
+		 * Readies the IDs of possessions and priority items to retrieve live TP prices.
+		 */
 		var initializePrices = function()
 		{
 			// Load the cached prices
@@ -7916,7 +7950,9 @@ A = {
 			});
 		};
 		
-		// Loads all the unlockables record files to get their item payments
+		/*
+		 * Loads all the unlockables record files to get their item payments.
+		 */
 		var loadRecords = function()
 		{
 			var numfetched = 0;
@@ -7945,7 +7981,9 @@ A = {
 			}
 		};
 		
-		// Retrieves account unlocks
+		/*
+		 * Retrieves account unlocks.
+		 */
 		var fetchUnlocks = function()
 		{
 			var numfetched = 0;
@@ -30565,6 +30603,7 @@ I = {
 	 * Scrolls to an element at specified rate, or the top if specified no element.
 	 * @param string pElement selector to scroll to.
 	 * @objparam string aContainer selector container with the scroll bar.
+	 * @objparam function aCallback to execute after scrolling.
 	 * @objparam int or string aSpeed duration to animate.
 	 * @objparam int aOffset from scroll point.
 	 */
@@ -30598,12 +30637,22 @@ I = {
 					{
 						scrollTop: elm.offset().top - container.offset().top
 							+ container.scrollTop() + (Settings.aOffset || 0)
-					}, Settings.aSpeed || 0);
+					}, Settings.aSpeed || 0, function()
+					{
+						if (Settings.aCallback)
+						{
+							Settings.aCallback();
+						}
+					});
 				}
 				else
 				{
 					// Scroll to top of element without animation
 					elm.scrollTop(0);
+					if (Settings.aCallback)
+					{
+						Settings.aCallback();
+					}
 				}
 			}
 		}

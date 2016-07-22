@@ -1361,6 +1361,13 @@ Sale: {
 		col: 1
 	},
 	{
+		name: "Thresher-Sickle 5000",
+		id: "49308",
+		price: 800,
+		discount: 1000,
+		col: 1
+	},
+	{
 		name: "Reap-r-Tron",
 		id: "67395",
 		price: 800,

@@ -72,7 +72,7 @@ var GW2T_RECIPES_METADATA = {
 		Hammer: {en: "Hammer", de: "Hammer", es: "Martillo", fr: "Marteau"},
 		Harpoon: {en: "Spear", de: "Speer", es: "Lanza", fr: "Lance"}
 	},
-	Payment: { // Payment for expensive non-tradeable recipe sheets, key is the recipe unlock ID
+	BoundPayments: { // Payment for expensive non-tradeable recipe sheets, key is the recipe unlock ID
 		// Miyani legendary recipes
 		"842": {coin: 100000},
 		"843": {coin: 100000},
@@ -95,10 +95,30 @@ var GW2T_RECIPES_METADATA = {
 		"4317": {coin: 100000},
 		"5114": {coin: 100000},
 		"6074": {coin: 100000},
-		// Gift of Blades
-		"8455": {coin: 50000},
-		"8459": {coin: 50000},
-		"8460": {coin: 50000}
+		"8455": {coin: 50000}, // Gift of Blades
+		"8459": {coin: 50000}, // Gift of Blades
+		"8460": {coin: 50000}, // Gift of Blades
+		"7285": {karma: 25200}, // Major Rune of Exuberance
+		"7286": {karma: 25200}, // Minor Rune of Exuberance
+		"7284": {karma: 25200}, // Superior Rune of Exuberance
+		"7299": {karma: 25200}, // Minor Rune of Tormenting
+		"7300": {karma: 25200}, // Major Rune of Tormenting
+		"7301": {karma: 25200}, // Superior Rune of Tormenting
+		"7296": {karma: 25200}, // Minor Rune of Perplexity
+		"7297": {karma: 25200}, // Major Rune of Perplexity
+		"7298": {karma: 25200}, // Superior Rune of Perplexity
+		"7291": {karma: 25200}, // Major Sigil of Renewal
+		"7290": {karma: 25200}, // Minor Sigil of Renewal
+		"7292": {karma: 25200}, // Superior Sigil of Renewal
+		"7294": {karma: 25200}, // Major Sigil of Bursting
+		"7293": {karma: 25200}, // Minor Sigil of Bursting
+		"7295": {karma: 25200}, // Superior Sigil of Bursting
+		"7288": {karma: 25200}, // Minor Sigil of Malice
+		"7287": {karma: 25200}, // Major Sigil of Malice
+		"7289": {karma: 25200}, // Superior Sigil of Malice
+		"8458": {karma: 25200}, // Maintenance Oil Station
+		"8456": {karma: 25200}, // Sharpening Stone Station
+		"8457": {karma: 25200} // Tuning Crystal Station
 	}
 };
 
