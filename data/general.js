@@ -1327,6 +1327,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Watchwork Mining Pick",
+		id: "47897",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
 		name: "Replica Job-o-Tron Backpack",
 		id: "67405",
 		price: 400,
