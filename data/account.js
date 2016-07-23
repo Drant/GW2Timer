@@ -112,6 +112,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "nový", it: "nuovo", pl: "nowy", pt: "novo", ru: "новый", zh: "新"},
 	s_crafted: {de: "hergestellten", es: "fabricado", fr: "fabriqué",
 		cs: "řemeslně", it: "fabbricato", pl: "sfabrykowany", pt: "fabricado", ru: "сфабрикованы", zh: "製作"},
+	s_legendary: {de: "legendär", es: "legendario", fr: "légendaire",
+		cs: "legendární", it: "leggendario", pl: "legendarny", pt: "lendário", ru: "легендарный", zh: "傳奇"},
 	s_shared: {de: "gemeinsamer", es: "compartida", fr: "partagé",
 		cs: "sdílený", it: "condiviso", pl: "udostępniona", pt: "compartilhado", ru: "общий", zh: "共享"},
 	s_acquired: {de: "erworben", es: "adquirido", fr: "acquis",
@@ -209,7 +211,7 @@ var GW2T_CURRENCY_DATA = {
 		laurel: {id: 3, color: "#44dd44", conversion: [3, 24351], isliquid: true}, // Vicious Claw
 		badge: {id: 15, color: "#8c7047", conversion: [30, 71473], isliquid: true}, // Badge of Tribute
 		proof: {id: 31, color: "#ffff53", conversion: [6, 21262], isliquid: true, ishidden: true}, // Superior Catapult Blueprints
-		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560], isliquid: true, ishidden: true}, // Sentinel's Orichalcum Imbued Inscription
+		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560], isliquid: true}, // Sentinel's Orichalcum Imbued Inscription
 		dungeon_ac: {id: 5, color: "#73c7ee", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
 		dungeon_cm: {id: 9, color: "#80aaa2", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
 		dungeon_ta: {id: 11, color: "#5a5282", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm

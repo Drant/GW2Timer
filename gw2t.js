@@ -4787,8 +4787,8 @@ Z = {
 		{
 			var percentcomplete = U.convertRatioToPercent(reqindex / idsarray.length);
 			var secremaining = Math.ceil((idsarray.length - reqindex) / reqlimit) * ~~(reqcooldownms / T.cMSECONDS_IN_SECOND);
-			I.print("Cooldown... " + reqindex + " / " + idsarray.length
-				+ " (" + percentcomplete + ")" + " " + T.formatTimeLetter(secremaining, true) + " remaining.");
+			I.print(D.getWordCapital("cooldown") + "... " + reqindex + " / " + idsarray.length
+				+ " (" + percentcomplete + ")" + " " + T.formatTimeLetter(secremaining, true) + " " + D.getWord("remaining") + ".");
 			setTimeout(function()
 			{
 				iterateIDs();
@@ -6090,6 +6090,7 @@ A = {
 		HistorySells: "commerce/transactions/history/sells",
 		Stats: "pvp/stats",
 		Games: "pvp/games",
+		Standings: "pvp/standings",
 		TokenInfo: "tokeninfo"
 	},
 	Permissions: {}, // Corresponds to tokeninfo.json permissions array
@@ -7114,6 +7115,15 @@ A = {
 			}
 		}
 	},
+	flattenRecord: function(pRecord)
+	{
+		var newrec = {}; // Returns a record as a single associative array instead of one 
+		A.iterateRecord(pRecord, function(pEntry)
+		{
+			newrec[pEntry.i] = pEntry;
+		});
+		return newrec;
+	},
 	
 	/*
 	 * Generates the account audit subsection into the Characters page.
@@ -7542,7 +7552,7 @@ A = {
 		var generateResults = function()
 		{
 			// Clear the console of load messages
-			I.clear();
+			//I.clear();
 			var tablecategory = createTable(D.getPhraseOriginal("Audit Categories"));
 			var tablesum = createTable(D.getPhraseOriginal("Sum &amp; Conversion"));
 			var tablechar = createTable(D.getPhraseOriginal("Audit Characters"));
@@ -7568,8 +7578,8 @@ A = {
 			// TABLE: Sum and conversions
 			insertTableCurrencyHeader(tablesum, true);
 			// Sum columns
-			var sumcolumn = insertColumn(tablesum, D.getPhraseTitle("account sum"));
-			var convertedsumcolumn = insertColumn(tablesum, D.getPhraseTitle("account sum"));
+			var sumcolumn = insertColumn(tablesum, D.getPhraseOriginal("Categories Sum"));
+			var convertedsumcolumn = insertColumn(tablesum, D.getPhraseOriginal("Categories Sum"));
 			var sumcat = createAuditPayments();
 			for (var i in auditcats)
 			{
@@ -7580,14 +7590,14 @@ A = {
 			fillConversionColumn(convertedsumcolumn, sumcat);
 			// Wallet columns
 			var walletcat = auditcats["Wallet"];
-			var walletcolumn = insertColumn(tablesum, D.getPhraseTitle("wallet"));
-			var convertedwalletcolumn = insertColumn(tablesum, D.getPhraseTitle("wallet"));
+			var walletcolumn = insertColumn(tablesum, D.getPhraseOriginal("Wallet"));
+			var convertedwalletcolumn = insertColumn(tablesum, D.getPhraseOriginal("Wallet"));
 			fillCurrencyColumnFull(walletcolumn, walletcat);
 			fillConversionColumn(convertedwalletcolumn, walletcat);
 			// Sample columns
 			var samplecat = createAuditPayments(sampleconversionamount);
-			var samplecolumn = insertColumn(tablesum, D.getPhraseTitle("conversion"));
-			var convertedsamplecolumn = insertColumn(tablesum, D.getPhraseTitle("conversion"));
+			var samplecolumn = insertColumn(tablesum, D.getPhraseOriginal("Conversion"));
+			var convertedsamplecolumn = insertColumn(tablesum, D.getPhraseOriginal("Conversion"));
 			fillCurrencyColumnFull(samplecolumn, samplecat);
 			fillConversionColumn(convertedsamplecolumn, samplecat);
 			
@@ -7661,17 +7671,24 @@ A = {
 					+ "<div id='audSummaryLiquid' class='audSummaryCoin'>" + E.formatCoinString(totalliquidsell, {aWantBig: true}) + "</div>"
 					+ "<div class='audSummaryMoney'>≈ " + E.formatGemToMoney(E.convertCoinToGem(totalliquidsell)) + "</div>"
 				+ "</div>");
+				
 				// Tooltip over the coin value to show both and buy and sell
-				I.qTip.init($("#audSummaryAppraised").attr("title",
-					D.getPhraseOriginal("Appraised Sell") + ": " + E.formatCoinStringColored(totalappraisedsell) + "<br />"
+				var sumgems = sumcat["gem"];
+				var appraisedtip = "<dfn>" + D.getPhraseOriginal("Appraised Summary") + ":</dfn> <br />"
+					+ D.getPhraseOriginal("Appraised Sell") + ": " + E.formatCoinStringColored(totalappraisedsell) + "<br />"
 					+ D.getPhraseOriginal("Appraised Buy") + ": " + E.formatCoinStringColored(totalappraisedbuy) + "<br />"
-					+ D.getPhraseOriginal("Gem Upgrades") + ": " + E.formatGemToMoney(upggems) + " = " + E.formatGemString(upggems, true)
-						+ " " + I.Symbol.ArrowLeft + " " + E.formatCoinStringColored(upggemstocoin) + " (" + D.getWordCapital("include") + ")"
-				));
-				I.qTip.init($("#audSummaryLiquid").attr("title",
-					D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsell) + "<br />"
-					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuy)
-				));
+					+ "<br />"
+					+ "<dfn>" + D.getWordCapital("include") + ":</dfn> <br />"
+					+ D.getPhraseOriginal("Ascended") + ": " + E.formatCoinStringColored(A.Tally.Ascended.price.oPriceSell) + "<br />"
+					+ D.getPhraseOriginal("Gem Categories Sum") + ": " + E.formatGemToMoney(sumgems) + " = " +  E.formatGemString(sumgems, true)
+						+ " " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(sumcat["gem"]) + "<br />"
+					+ D.getPhraseOriginal("Gem Account Upgrades") + ": " + E.formatGemToMoney(upggems) + " = " + E.formatGemString(upggems, true)
+						+ " " + I.Symbol.ArrowLeft + " " + E.formatCoinStringColored(upggemstocoin);
+				var liquidtip = "<dfn>" + D.getPhraseOriginal("Liquid Summary") + ":</dfn> <br />"
+					+ D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsell) + "<br />"
+					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuy);
+				I.qTip.init($("#audSummaryAppraised").attr("title", appraisedtip));
+				I.qTip.init($("#audSummaryLiquid").attr("title", liquidtip));
 				
 				// Show the summary box animated
 				summary.show("slow", function()
@@ -7729,7 +7746,7 @@ A = {
 		// Sums the coin price of an item's ingredients to get the appraised value of the untradeable item
 		var sumIngredients = function(pIngredients)
 		{
-			var sum = E.createPrice(0), ingrprice;
+			var sum = E.createPrice(), ingrprice;
 			pIngredients.forEach(function(iIngr)
 			{
 				// Sum the ingredients' prices
@@ -7763,12 +7780,33 @@ A = {
 					? ascendedingr[i].concat(ascendedingr[ascendedtype]) : ascendedingr[i];
 				appraisal[i] = sumIngredients(ingredients);
 			}
+			A.Tally.Ascended = {
+				armorcount: 0,
+				weaponcount: 0,
+				price: E.createPrice()
+			};
 			// Items of an ascended category gets the same appraised value, except trinkets
+			var count;
 			A.iterateRecord(ascendeddata, function(pEntry, pCategory)
 			{
-				if (pCategory !== "Ring" && pCategory !== "Accessory" && pCategory !== "Amulet")
+				ascendedtype = ascendedheader[pCategory].type;
+				if (ascendedtype !== "Ring" && ascendedtype !== "Accessory" && ascendedtype !== "Amulet")
 				{
-					E.Paylist[pEntry.i] = appraisal[pCategory];
+					E.Paylist[pEntry.i] = appraisal[ascendedtype];
+					// Also count the number of ascended armor and weapons pieces, and sum the prices of all non-trinket ascended items
+					if (A.Possessions[pEntry.i])
+					{
+						count = A.Possessions[pEntry.i].oCount;
+						if (ascendedtype === "Armor")
+						{
+							A.Tally.Ascended.armorcount += count;
+						}
+						else if (ascendedtype === "Weapon")
+						{
+							A.Tally.Ascended.weaponcount += count;
+						}
+						A.Tally.Ascended.price = E.addPrice(A.Tally.Ascended.price, E.recountPrice(appraisal[pCategory], count));
+					}
 				}
 			});
 			
@@ -7780,9 +7818,10 @@ A = {
 		};
 		
 		// Scans an unlockables record and updates the payment database with applicable payments
-		var insertPaymentsFromRecord = function(pRecord, pIsPossessions)
+		var insertPaymentsFromRecord = function(pName, pIsPossessions)
 		{
-			A.iterateRecord(pRecord, function(pEntry)
+			var record = recordsdata[pName];
+			A.iterateRecord(record, function(pEntry)
 			{
 				if (pEntry.p)
 				{
@@ -7853,15 +7892,15 @@ A = {
 					E.Paylist[i] = E.createPricePlain(auditmetadata.JunkValue[i]);
 				}
 				// Insert ascended payments
-				insertPaymentsFromRecord(recordsdata.Ascended, true);
+				insertPaymentsFromRecord("Ascended", true);
 				// Insert untradeable crafted or forged item prices
 				appraiseCraftable();
 				// Insert untradeable catalog item payments
-				insertPaymentsFromRecord(recordsdata.Catalog, true);
+				insertPaymentsFromRecord("Catalog", true);
 				// Insert armors, weapons, backpacks item payments
-				insertPaymentsFromRecord(recordsdata.Skins);
+				insertPaymentsFromRecord("Skins");
 				// Insert minis item payments
-				insertPaymentsFromRecord(recordsdata.Minis);
+				insertPaymentsFromRecord("Minis");
 				
 				// Begin auditing
 				executeAudit();
@@ -14314,7 +14353,7 @@ E = {
 	 * @param int pAmount of cents.
 	 * @returns string money for displaying.
 	 */
-	formatMoneyString: function(pAmount)
+	formatMoneyString: function(pAmount, pWantColor)
 	{
 		if (pAmount === undefined || isFinite(pAmount) === false)
 		{
@@ -14330,7 +14369,9 @@ E = {
 		{
 			cent = "0" + cent;
 		}
-		return sign + "$" + dollar + "." + cent;
+		var sm0 = (pWantColor) ? "<money>" : "";
+		var sm1 = (pWantColor) ? "</money>" : "";
+		return sm0 + sign + "$" + dollar + "." + cent + sm1;
 	},
 	
 	/*
@@ -14471,7 +14512,7 @@ E = {
 	},
 	formatGemToMoney: function(pAmount)
 	{
-		return E.formatMoneyString(E.convertGemToMoney(pAmount));
+		return E.formatMoneyString(E.convertGemToMoney(pAmount), true);
 	},
 	formatMoneyToGem: function(pAmount)
 	{
@@ -14564,7 +14605,7 @@ E = {
 	createPrice: function(pPrice, pCount)
 	{
 		var count = (pCount === undefined) ? 1 : pCount;
-		var price = pPrice * count;
+		var price = (pPrice === undefined) ? 0 : (pPrice * count);
 		return {
 			oPriceBuy: price,
 			oPriceSell: price,
@@ -14575,7 +14616,7 @@ E = {
 	createPricePlain: function(pPrice, pCount)
 	{
 		var count = (pCount === undefined) ? 1 : pCount;
-		var price = pPrice * count;
+		var price = (pPrice === undefined) ? 0 : (pPrice * count);
 		return {
 			oPriceBuy: price,
 			oPriceSell: price,
@@ -14596,7 +14637,7 @@ E = {
 		}
 		// If provided a numerical price instead of object
 		var count = (pCount === undefined) ? 1 : pCount;
-		var price = pPrice * count;
+		var price = (pPrice === undefined) ? 0 : (pPrice * count);
 		return {
 			oPriceBuy: price,
 			oPriceSell: price,
@@ -15891,6 +15932,10 @@ D = {
 		s_seconds: {de: "sekunden", es: "segundos", fr: "secondes", cs: "sekund", it: "ore", pl: "sekund", pt: "segundos", ru: "секунд", zh: "秒"},
 		s_half_an_hour: {de: "eine halbe stunde", es: "media hora", fr: "demi-heure",
 			cs: "půl hodiny", it: "mezz&apos;ora", pl: "pół godziny", pt: "meia hora", ru: "полчаса", zh: "半小時"},
+		s_cooldown: {de: "abkühl", es: "recuperación", fr: "recharge",
+			cs: "dobíjení", it: "raffreddamento", pl: "ochładzania", pt: "resfriamento", ru: "перезарядка", zh: "冷卻"},
+		s_remaining: {de: "verbleibend", es: "restante", fr: "restant",
+			cs: "zbývající", it: "rimanente", pl: "pozostały", pt: "restante", ru: "оставшиеся", zh: "剩餘"},
 		
 		// Nouns
 		s_account: {de: "account", es: "cuenta", fr: "compte",
