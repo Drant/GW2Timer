@@ -459,7 +459,7 @@ img {
 	border-radius: 4px;
 	opacity: 0;
 	transition: background-color .2s linear, opacity .2s linear;
-	bottom: 0px;
+	top: 0px;
 	height: 8px;
 }
 .ps-container > .ps-scrollbar-x-rail > .ps-scrollbar-x {

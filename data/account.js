@@ -96,6 +96,10 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "shrnutí", it: "sommario", pl: "streszczenie", pt: "sumário", ru: "резюме", zh: "摘要"},
 	s_upgrades: {de: "aufwertungen", es: "mejoras", fr: "améliorations",
 		cs: "vylepšení", it: "miglioramenti", pl: "ulepszenia", pt: "melhorias", ru: "улучшения", zh: "改進"},
+	s_armor: {de: "rüstung", es: "armadura", fr: "armure",
+		cs: "brnění", it: "armatura", pl: "zbroja", pt: "armadura", ru: "броня", zh: "盔甲"},
+	s_weapons: {de: "waffen", es: "armas", fr: "armes",
+		cs: "zbraně", it: "armi", pl: "bronie", pt: "armas", ru: "оружие", zh: "武器"},
 	
 	// Verbs
 	s_audit: {de: "prüfung", es: "auditar", fr: "auditer",
@@ -230,12 +234,12 @@ var GW2T_CURRENCY_DATA = {
 		map_td: {id: 20, color: "#42c8dd", conversion: 0}
 	},
 	AuditUpgrades: { // Account upgrades from the gem store
-		CharacterSlot: {starting: 5, purchased: 0, gem: 800},
-		CraftingLicense: {starting: 2, purchased: 0, gem: 800},
-		BankTab: {starting: 1, purchased: 0, gem: 600},
-		StorageExpander: {starting: 1, purchased: 0, gem: 800},
-		BagSlot: {starting: 5, purchased: 0, gem: 400},
-		SharedSlot: {starting: 1, purchased: 0, gem: 560}
+		CharacterSlot: {starting: 5, purchased: 0, gem: 800, url: "https://wiki.guildwars2.com/wiki/Character_Slot_Expansion"},
+		CraftingLicense: {starting: 2, purchased: 0, gem: 800, url: "https://wiki.guildwars2.com/wiki/Additional_Crafting_License"},
+		BankTab: {starting: 1, purchased: 0, gem: 600, url: "https://wiki.guildwars2.com/wiki/Bank_Tab_Expansion"},
+		StorageExpander: {starting: 1, purchased: 0, gem: 800, url: "https://wiki.guildwars2.com/wiki/Storage_Expander"},
+		BagSlot: {starting: 5, purchased: 0, gem: 400, url: "https://wiki.guildwars2.com/wiki/Bag_Slot_Expansion"},
+		SharedSlot: {starting: 1, purchased: 0, gem: 560, url: "https://wiki.guildwars2.com/wiki/Shared_Inventory_Slot"}
 	}
 };
 

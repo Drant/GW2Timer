@@ -1218,7 +1218,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Trading' title='gw2timer.com/trading'>Gem Exchange</a> and Trading Post history now available."
-	pve: "<a href='http://gw2timer.com/?mode=Tile' title='gw2timer.com/tile'>Use Tile Mode</a> for a simpler version of the website's timers.",
+	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Audit' title='gw2timer.com/audit'>Account Audit</a> see the total gold and value of all your characters.",
 	wvw: "",
 	Start: new Date("2016-07-12T16:00:00Z"),
 	Finish: new Date("2016-07-26T16:00:00Z"),

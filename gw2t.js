@@ -85,6 +85,7 @@ O = {
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
 		APICache: {key: "obj_utlAPICache", value: {}},
+		AuditReport: {key: "obj_utlAuditReport", value: {}},
 		CustomCatalog: {key: "obj_utlCustomCatalog", value: []},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
 		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
@@ -2893,6 +2894,12 @@ U = {
 			{
 				U.Args[U.KeyEnum.Page] = I.SpecialPageEnum.Account;
 			}
+			else if (page === "audit")
+			{
+				U.Args[U.KeyEnum.Page] = I.SpecialPageEnum.Account;
+				U.Args[U.KeyEnum.Section] = I.SectionEnum.Account.Characters;
+				U.Args[U.KeyEnum.Article] = I.SpecialPageEnum.Audit;
+			}
 			// Only proceed if "page" is not an actual content page
 			else if (U.isEnumWithin(page, I.PageEnum) === false)
 			{
@@ -4055,7 +4062,7 @@ U = {
 			str = I.cChatcodePrefix + btoa(String.fromCharCode(2) + String.fromCharCode(1)
 			+ String.fromCharCode(pID % 256) + String.fromCharCode(Math.floor(pID / 256))
 			+ String.fromCharCode(0) + String.fromCharCode(0)) + I.cChatcodeSuffix;
-		} catch(e){};
+		} catch (e){};
 		return str;
 	},
 
@@ -4107,7 +4114,7 @@ U = {
 				case 11: type = "outfit"; break;	
 			}
 		}
-		catch(e)
+		catch (e)
 		{
 			I.write("Invalid chatlink to decode.");
 		}
@@ -4252,7 +4259,7 @@ Z = {
 			jsonparse: {usage: "Converts a JSON string into an object for testing. <em>Parameters: str_json</em>", f: function()
 			{
 				try { Z.APICacheConsole = JSON.parse(argstr); I.print("Parse JSON successful."); }
-				catch(e) { I.print("Parse JSON failed."); }
+				catch (e) { I.print("Parse JSON failed."); }
 			}},
 			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, int_limit (optional), str_querystring (optional)</em>", f: function()
 			{
@@ -4478,7 +4485,7 @@ Z = {
 						iterateData(providedarray);
 					}
 				}
-				catch(e)
+				catch (e)
 				{
 					I.print("Error parsing custom array.");
 				}
@@ -6435,7 +6442,7 @@ A = {
 		{
 			tokens = JSON.parse(tokens);
 		}
-		catch(e) {}
+		catch (e) {}
 		if (tokens === undefined)
 		{
 			tokens = [];
@@ -6458,7 +6465,7 @@ A = {
 				tokens = JSON.parse(tokens);
 				I.prettyJSON(tokens);
 			}
-			catch(e) {}
+			catch (e) {}
 		});
 		
 		// Bind button to add another token/row
@@ -7241,7 +7248,12 @@ A = {
 		// Evaluates the bank, characters, and materials audit categories
 		var auditPossessions = function()
 		{
-			var payment, auditcat, auditobj;
+			var legendaryinclusion = auditmetadata.LegendaryInclusion;
+			var payment, auditcat, auditobj, count;
+			A.Tally.Legendary = {
+				count: 0,
+				price: E.createPrice()
+			};
 			for (var i in A.Possessions)
 			{
 				payment = E.Paylist[i];
@@ -7283,6 +7295,13 @@ A = {
 								addPaymentToCategory(auditcat, payment, auditobj[1]);
 							}
 						}
+					}
+					// Tally the legendary gear possessed
+					if (legendaryinclusion[i])
+					{
+						count = A.Possessions[i].oCount;
+						A.Tally.Legendary.count += count;
+						A.Tally.Legendary.price = E.addPrice(A.Tally.Legendary.price, E.recountPrice(payment, count));
 					}
 				}
 			}
@@ -7552,7 +7571,7 @@ A = {
 		var generateResults = function()
 		{
 			// Clear the console of load messages
-			//I.clear();
+			I.clear();
 			var tablecategory = createTable(D.getPhraseOriginal("Audit Categories"));
 			var tablesum = createTable(D.getPhraseOriginal("Sum &amp; Conversion"));
 			var tablechar = createTable(D.getPhraseOriginal("Audit Characters"));
@@ -7578,8 +7597,8 @@ A = {
 			// TABLE: Sum and conversions
 			insertTableCurrencyHeader(tablesum, true);
 			// Sum columns
-			var sumcolumn = insertColumn(tablesum, D.getPhraseOriginal("Categories Sum"));
-			var convertedsumcolumn = insertColumn(tablesum, D.getPhraseOriginal("Categories Sum"));
+			var sumcolumn = insertColumn(tablesum, D.getPhraseOriginal("Account Sum"));
+			var convertedsumcolumn = insertColumn(tablesum, D.getPhraseOriginal("Account Sum"));
 			var sumcat = createAuditPayments();
 			for (var i in auditcats)
 			{
@@ -7616,22 +7635,22 @@ A = {
 			I.qTip.init(tablechar.find(".chrPreface"));
 			
 			// UNLOCKS
-			/*var summaryupgrades = $("<div id='audUpgrades'></div>").appendTo(container);
+			var summaryupgrades = $("<div id='audUpgrades'></div>").appendTo(container);
+			var upggems = A.getAccountUpgradesGem();
 			createTitle("Account Upgrades").insertBefore(summaryupgrades);
 			var upg;
 			for (var i in A.Currency.AuditUpgrades)
 			{
 				upg = A.Currency.AuditUpgrades[i];
 				summaryupgrades.append("<aside class='audUpgrades'>"
-					+ "<span><img class='audUpgradeIcon' src='img/account/summary/" + i.toLowerCase() + I.cPNG + "' /></span><br />"
+					+ "<span><a" + U.convertExternalAnchor(upg.url) + "><img class='audUpgradeIcon' src='img/account/summary/" + i.toLowerCase() + I.cPNG + "' /></a></span><br />"
 					+ "<span class='audUpgradeValues'>"
 						+ "<var class='audUpgradeCount'>" + upg.starting + "+" + upg.purchased + "</var>"
 						+ ((upg.purchased > 0) ? ("<br /><var>" + E.formatGemString(upg.totalgem, true) + "</var>") : "")
 					+ "</span>"
 				+ "</aside>");
 			}
-			summaryupgrades.append("<aside class='audUpgradeValues>" + E.formatGemString(upggems, true) + "</aside>");*/
-			var upggems = A.getAccountUpgradesGem();
+			summaryupgrades.append("<aside class='audUpgradeValues>" + E.formatGemString(upggems, true) + "</aside>");
 			
 			// SUMMARY
 			E.getCoinFromGem(walletcat["gem"], function(pCoin)
@@ -7639,15 +7658,24 @@ A = {
 				// Appraised sell plus all non-coin payments converted to coin
 				var totalappraisedbuy = sumcat["coin_appraisedbuy"];
 				var totalappraisedsell = sumcat["coin_appraisedsell"];
+				var totalappraisedbuynogems = sumcat["coin_appraisedbuy"];
+				var totalappraisedsellnogems = sumcat["coin_appraisedsell"];
 				// Liquid sell plus gem converted to coin plus all non-coin payments converted to coin
 				var totalliquidbuy = sumcat["coin_liquidbuy"] + pCoin;
 				var totalliquidsell = sumcat["coin_liquidsell"] + pCoin;
+				var totalliquidbuynogems = sumcat["coin_liquidbuy"];
+				var totalliquidsellnogems = sumcat["coin_liquidsell"];
 				for (var i in auditpayments)
 				{
 					if (i.indexOf("coin") === -1)
 					{
 						totalappraisedbuy += convertCurrencyToCoin(i, sumcat[i], "oPriceBuy");
 						totalappraisedsell += convertCurrencyToCoin(i, sumcat[i], "oPriceSell");
+						if (i.indexOf("gem") === -1)
+						{
+							totalappraisedbuynogems += convertCurrencyToCoin(i, sumcat[i], "oPriceBuy");
+							totalappraisedsellnogems += convertCurrencyToCoin(i, sumcat[i], "oPriceSell");
+						}
 					}
 					if (auditpayments[i].isliquid)
 					{
@@ -7665,49 +7693,91 @@ A = {
 				summary.append("<div id='audSummaryName'><var id='audAccountName'>" + U.escapeHTML(A.Data.Account.name) + "</var></div>");
 				summary.append("<div id='audSummaryValues'>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("appraised") + " ―</div>"
-					+ "<div id='audSummaryAppraised' class='audSummaryCoin'></div>"
+					+ "<div id='audSummaryAppraised' class='audSummaryCoin curHelp'></div>"
 					+ "<div class='audSummaryMoney'>≈ " + E.formatGemToMoney(E.convertCoinToGem(totalappraisedsell)) + "</div>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("liquid") + " ―</div>"
-					+ "<div id='audSummaryLiquid' class='audSummaryCoin'>" + E.formatCoinString(totalliquidsell, {aWantBig: true}) + "</div>"
+					+ "<div id='audSummaryLiquid' class='audSummaryCoin curHelp'>" + E.formatCoinString(totalliquidsell, {aWantBig: true}) + "</div>"
 					+ "<div class='audSummaryMoney'>≈ " + E.formatGemToMoney(E.convertCoinToGem(totalliquidsell)) + "</div>"
 				+ "</div>");
+				
+				// Get previous audit report if available
+				var prevrep = {};
+				try {
+					prevrep = JSON.parse(localStorage[O.Utilities.AuditReport.key]);
+				}
+				catch (e) {}
+				var prevstr = " " + D.getWordCapital("previous") + ": ";
+				var prevappraisedsell = (prevrep.totalappraisedsell > 0) ? (prevstr + E.formatCoinStringColored(prevrep.totalappraisedsell)) : "";
+				var prevappraisedbuy = (prevrep.totalappraisedbuy > 0) ? (prevstr + E.formatCoinStringColored(prevrep.totalappraisedbuy)) : "";
+				var prevliquidsell = (prevrep.totalliquidsell > 0) ? (prevstr + E.formatCoinStringColored(prevrep.totalliquidsell)) : "";
+				var prevliquidbuy = (prevrep.totalliquidbuy > 0) ? (prevstr + E.formatCoinStringColored(prevrep.totalliquidbuy)) : "";
 				
 				// Tooltip over the coin value to show both and buy and sell
 				var sumgems = sumcat["gem"];
 				var appraisedtip = "<dfn>" + D.getPhraseOriginal("Appraised Summary") + ":</dfn> <br />"
-					+ D.getPhraseOriginal("Appraised Sell") + ": " + E.formatCoinStringColored(totalappraisedsell) + "<br />"
-					+ D.getPhraseOriginal("Appraised Buy") + ": " + E.formatCoinStringColored(totalappraisedbuy) + "<br />"
+					+ D.getPhraseOriginal("Appraised Sell") + ": " + E.formatCoinStringColored(totalappraisedsell) + prevappraisedsell + "<br />"
+					+ D.getPhraseOriginal("Appraised Buy") + ": " + E.formatCoinStringColored(totalappraisedbuy) + prevappraisedbuy + "<br />"
 					+ "<br />"
-					+ "<dfn>" + D.getWordCapital("include") + ":</dfn> <br />"
-					+ D.getPhraseOriginal("Ascended") + ": " + E.formatCoinStringColored(A.Tally.Ascended.price.oPriceSell) + "<br />"
-					+ D.getPhraseOriginal("Gem Categories Sum") + ": " + E.formatGemToMoney(sumgems) + " = " +  E.formatGemString(sumgems, true)
+					+ "<dfn>" + D.getPhraseOriginal("Appraised Summary Exclude Gems") + ":</dfn> <br />"
+					+ D.getPhraseOriginal("Appraised Sell") + ": " + E.formatCoinStringColored(totalappraisedsellnogems) + "<br />"
+					+ D.getPhraseOriginal("Appraised Buy") + ": " + E.formatCoinStringColored(totalappraisedbuynogems) + "<br />"
+					+ "<br />"
+					+ "<dfn>" + D.getWordCapital("Info") + ":</dfn> <br />"
+					+ D.getPhraseOriginal("Legendary Equipment") + ": " + E.formatCoinStringColored(A.Tally.Legendary.price.oPriceSell)
+						+ " (" + A.Tally.Legendary.count + " " + D.getWord("legendary") + ")<br />"
+					+ D.getPhraseOriginal("Ascended Equipment") + ": " + E.formatCoinStringColored(A.Tally.Ascended.price.oPriceSell)
+						+ " (" + A.Tally.Ascended.armorcount + " " + D.getWord("armor") + ", " + A.Tally.Ascended.weaponcount + " " + D.getWord("weapons") + ")<br />"
+					+ D.getPhraseOriginal("Gem Categories Sum") + ": " + E.formatGemToMoney(sumgems)
+						+ " " + I.Symbol.ArrowRight + " " +  E.formatGemString(sumgems, true)
 						+ " " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(sumcat["gem"]) + "<br />"
-					+ D.getPhraseOriginal("Gem Account Upgrades") + ": " + E.formatGemToMoney(upggems) + " = " + E.formatGemString(upggems, true)
-						+ " " + I.Symbol.ArrowLeft + " " + E.formatCoinStringColored(upggemstocoin);
+					+ D.getPhraseOriginal("Gem Account Upgrades") + ": " + E.formatGemToMoney(upggems)
+						+ " " + I.Symbol.ArrowRight + " " + E.formatGemString(upggems, true)
+						+ " " + I.Symbol.ArrowLeft + " " + E.formatCoinStringColored(upggemstocoin) + "<br />";
 				var liquidtip = "<dfn>" + D.getPhraseOriginal("Liquid Summary") + ":</dfn> <br />"
-					+ D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsell) + "<br />"
-					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuy);
-				I.qTip.init($("#audSummaryAppraised").attr("title", appraisedtip));
-				I.qTip.init($("#audSummaryLiquid").attr("title", liquidtip));
+					+ D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsell) + prevliquidsell + "<br />"
+					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuy) + prevliquidbuy + "<br />"
+					+ "<br />"
+					+ "<dfn>" + D.getPhraseOriginal("Liquid Summary Exclude Gems") + ":</dfn> <br />"
+					+ D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsellnogems) + "<br />"
+					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuynogems) + "<br />";
+				var appraisedelm = $("#audSummaryAppraised").attr("title", appraisedtip).click(function(pEvent)
+				{
+					if (pEvent.which === I.ClickEnum.Left)
+					{
+						I.print(appraisedtip);
+					}
+				});
+				var liquidelm = $("#audSummaryLiquid").attr("title", liquidtip).click(function(pEvent)
+				{
+					if (pEvent.which === I.ClickEnum.Left)
+					{
+						I.print(liquidtip);
+					}
+				});
+				I.qTip.init(appraisedelm);
+				I.qTip.init(liquidelm);
+				
+				// Clean and save audit report
+				prevrep = {
+					totalappraisedsell: totalappraisedsell,
+					totalappraisedbuy: totalappraisedbuy,
+					totalliquidsell: totalliquidsell,
+					totalliquidbuy: totalliquidbuy
+				};
+				localStorage[O.Utilities.AuditReport.key] = JSON.stringify(prevrep);
 				
 				// Show the summary box animated
 				summary.show("slow", function()
 				{
-					var appraisedelm = document.getElementById("audSummaryAppraised");
-					var liquidelm = document.getElementById("audSummaryLiquid");
 					I.animateNumber(totalappraisedsell, function(pValue)
 					{
-						appraisedelm.innerHTML = E.formatCoinString(pValue, {aWantBig: true});
+						appraisedelm[0].innerHTML = E.formatCoinString(pValue, {aWantBig: true});
 					}, 3000, "easeInOutQuart");
 					I.animateNumber(totalliquidsell, function(pValue)
 					{
-						liquidelm.innerHTML = E.formatCoinString(pValue, {aWantBig: true});
+						liquidelm[0].innerHTML = E.formatCoinString(pValue, {aWantBig: true});
 					}, 3000, "easeInOutQuart");
 				});
-				
-				// BANK of gem upgrades, legendaries, and ascended gear
-				var bankcontainer = B.createBank(container, {aTitle: D.getPhraseOriginal("Account Upgrades")});
-				var bank = container.find(".bnkBank");
 			});
 			
 			// Debug buttons at the bottom
@@ -7792,8 +7862,8 @@ A = {
 				ascendedtype = ascendedheader[pCategory].type;
 				if (ascendedtype !== "Ring" && ascendedtype !== "Accessory" && ascendedtype !== "Amulet")
 				{
-					E.Paylist[pEntry.i] = appraisal[ascendedtype];
-					// Also count the number of ascended armor and weapons pieces, and sum the prices of all non-trinket ascended items
+					E.Paylist[pEntry.i] = appraisal[pCategory];
+					// Also count the number of ascended armor and weapons pieces
 					if (A.Possessions[pEntry.i])
 					{
 						count = A.Possessions[pEntry.i].oCount;
@@ -7805,6 +7875,7 @@ A = {
 						{
 							A.Tally.Ascended.weaponcount += count;
 						}
+						// Sum the prices of all non-trinket ascended items
 						A.Tally.Ascended.price = E.addPrice(A.Tally.Ascended.price, E.recountPrice(appraisal[pCategory], count));
 					}
 				}
@@ -7851,7 +7922,6 @@ A = {
 		 */
 		var fetchPrices = function()
 		{
-			//priceids = [];////////////I.log
 			I.print(D.getPhraseOriginal("Loading trading price") + "...");
 			Z.scrapeAPIArray(U.convertAssocToArray(priceids), "commerce/prices", {aCallback: function(pPrices)
 			{
@@ -8163,7 +8233,7 @@ V = {
 			+ D.getPhraseOriginal("Include current trading transactions") + ".</label>");
 		// Audit buttons
 		var buttoncontainer = $("#accAuditCenter");
-		$("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
+		var executebtn = $("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
 			.appendTo(buttoncontainer).click(function()
 		{
 			A.generateAudit();
@@ -8177,12 +8247,20 @@ V = {
 			}
 		});
 		// Alternate button up top
-		$("<button id='audExecuteAlternate' title='<dfn>Audit</dfn> account.'><img src='img/ui/stats.png' /></button>").insertAfter("#chrAccountReload").click(function()
+		$("<button id='audExecuteAlternate' title='<dfn>Audit</dfn> account.<br />gw2timer.com/audit'> "
+			+ "<img src='img/ui/stats.png' /></button>").insertAfter("#chrAccountReload").click(function()
 		{
 			$(this).hide();
 			$("#audExecute").trigger("click");
 		});
 		I.qTip.init("#audExecuteAlternate");
+		
+		// Scroll to execute button if requested by URL
+		if (I.ArticleCurrent === I.SpecialPageEnum.Audit)
+		{
+			I.ArticleCurrent = null;
+			executebtn.trigger("click");
+		}
 	},
 	
 	/*
@@ -10749,12 +10827,12 @@ B = {
 			// Update the display
 			if (Settings.aCount !== 0)
 			{
-				updatePriceDisplay(tabdisplayprice, prices.oPriceBuy, 0, true);
+				updatePriceDisplay(tabdisplayprice, prices.oPriceSell, 0, true);
 				updatePriceDisplay(top.find(".bnkPriceValueA_" + Settings.aPaymentEnum), priceleft, priceright);
 			}
 			else
 			{
-				updatePriceDisplay(tabdisplayprice, 0, prices.oPriceBuy, true);
+				updatePriceDisplay(tabdisplayprice, 0, prices.oPriceSell, true);
 				updatePriceDisplay(top.find(".bnkPriceValueB_" + Settings.aPaymentEnum), priceleft, priceright);
 			}
 		}
@@ -16040,6 +16118,8 @@ D = {
 			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", zh: "活期"},
 		s_daily: {de: "täglich", es: "diaria", fr: "quotidien",
 			cs: "denní", it: "giornaliero", pl: "dzienny", pt: "diário", ru: "ежедневно", zh: "每天"},
+		s_previous: {de: "vorhergehend", es: "previo", fr: "préalable",
+			cs: "předchozí", it: "previo", pl: "poprzedni", pt: "prévio", ru: "предыдущий", zh: "以前的"},
 		s_next: {de: "nächste", es: "siguiente", fr: "prochain",
 			cs: "příští", it: "seguente", pl: "następny", pt: "próximo", ru: "следующий", zh: "下一"},
 		s_off: {de: "aus", es: "desactivado", fr: "désactivé",
@@ -19419,7 +19499,7 @@ M = {
 			{
 				obj.value = JSON.parse(localStorage[key]);
 			}
-			catch(e) {}
+			catch (e) {}
 		};
 		var saveStoredPins = function(pIndex)
 		{
@@ -19479,7 +19559,7 @@ M = {
 		{
 			obj.value = JSON.parse(localStorage[obj.key]);
 		}
-		catch(e) {}
+		catch (e) {}
 		this.redrawPersonalPath(obj.value, null);
 	},
 	
@@ -19980,7 +20060,7 @@ M = {
 			{
 				obj.value = JSON.parse(localStorage[key]);
 			}
-			catch(e) {}
+			catch (e) {}
 		};
 		var saveStoredWeapons = function(pIndex)
 		{
@@ -21132,7 +21212,7 @@ P = {
 							{
 								marker.on("mouseout", function()
 								{
-									try { this._icon.src = U.URL_IMG.Waypoint; } catch(e) {}
+									try { this._icon.src = U.URL_IMG.Waypoint; } catch (e) {}
 								});
 								marker.on("mouseover", function()
 								{
@@ -21145,7 +21225,7 @@ P = {
 								marker.on("mouseout", function()
 								{
 									// Workaround a null pointer exception when changing zones
-									try { this._icon.src = U.URL_IMG.Landmark; } catch(e) {}
+									try { this._icon.src = U.URL_IMG.Landmark; } catch (e) {}
 								});
 								marker.on("mouseover", function()
 								{
@@ -29970,6 +30050,7 @@ I = {
 	SpecialPageEnum:
 	{
 		Account: "Account",
+		Audit: "Audit",
 		WvW: "WvW",
 		DryTop: "DryTop"
 	},

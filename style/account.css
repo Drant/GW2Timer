@@ -333,6 +333,7 @@ input[type="text"].accTokenHovered {
 .audUpgradeValues {
 	display: block;
 	margin-top: -28px;
+	pointer-events: none;
 }
 
 .audSummarySubtitle {

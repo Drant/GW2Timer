@@ -143,7 +143,7 @@ var GW2T_ASCENDED_METADATA = {
 		30701 // Kraitkin
 	],
 	// All legendary items which are the most expensive in the game
-	LegendaryExclusion:
+	LegendaryInclusion:
 	{
 		30684: 1, // Frostfang
 		30692: 1, // The Moot
