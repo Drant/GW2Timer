@@ -1218,7 +1218,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Trading' title='gw2timer.com/trading'>Gem Exchange</a> and Trading Post history now available."
-	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Audit' title='gw2timer.com/audit'>Account Audit</a> see the total gold and value of all your characters.",
+	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Audit' title='gw2timer.com/audit'>Account Audit</a> see the total gold and value of all your <a href='http://i.imgur.com/OyItYUR.png'>characters</a>.",
 	wvw: "",
 	Start: new Date("2016-07-12T16:00:00Z"),
 	Finish: new Date("2016-07-26T16:00:00Z"),
@@ -1434,7 +1434,7 @@ Vendor:
 		Derwena: { id: "49762" },
 		Yana: { id: "43483" },
 		Katyn: { id: "43842" },
-		Verma: { id: "" }
+		Verma: { id: "43825" }
 	}
 }
 };
