@@ -202,7 +202,7 @@ var GW2T_CURRENCY_DATA = {
 	 * The ishidden property will hide that currency from presentation for some tables.
 	 * ID is associated with wallet, conversion is how many copper for 1 of that currency.
 	 * Color is for the progress bar under the currency amount.
-	 * Conversions in array format: [paymentAmount, equivalentItemID, isItemUntradeable]
+	 * Conversions in array format: [paymentAmount, equivalentItemID, additionalCoinCost]
 	 * Will use the TP price of the item and divide it with the currency to get a ratio.
 	 */
 	AuditPayments: {
@@ -224,9 +224,9 @@ var GW2T_CURRENCY_DATA = {
 		dungeon_hotw: {id: 12, color: "#bddbef", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
 		dungeon_coe: {id: 14, color: "#993889", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
 		dungeon_arah: {id: 6, color: "#aab084", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
-		fotm_relic: {id: 7, color: "#9bffff", conversion: [1350, 37000, 1]}, // Quiver of a Thousand Arrows
-		fotm_pristine: {id: 24, color: "#6bbb44", conversion: [135, 37000, 1]}, // Quiver of a Thousand Arrows
-		raid_ft: {id: 28, color: "#27454a", conversion: [400, 48079, 1]}, // Zojja Doublet
+		fotm_relic: {id: 7, color: "#9bffff", conversion: [1350, 37000]}, // Quiver of a Thousand Arrows
+		fotm_pristine: {id: 24, color: "#6bbb44", conversion: [135, 37000]}, // Quiver of a Thousand Arrows
+		raid_ft: {id: 28, color: "#27454a", conversion: [1000, 77310, 200000], isliquid: true}, // Zojja Doublet
 		map_dt: {id: 25, color: "#eeebba", conversion: 0},
 		map_sw: {id: 27, color: "#ebd1a1", conversion: 0},
 		map_vb: {id: 19, color: "#cecea0", conversion: 0},

@@ -8001,7 +8001,7 @@ A = {
 				for (var i in auditpayments)
 				{
 					conversion = auditpayments[i].conversion;
-					if (Array.isArray(conversion) && conversion[2] === undefined) // Untradeable items will have this index occupied
+					if (Array.isArray(conversion) && auditpayments[i].isliquid)
 					{
 						priceids[(conversion[1])] = true;
 					}
@@ -8114,7 +8114,7 @@ A = {
 						}
 					}).fail(function()
 					{
-						I.print("Failed to retrieve " + iName + " account unlocks. Auditing aborted.");
+						I.print("Failed to retrieve " + iName + " account unlocks. Auditing aborted.<br />Please check account permissions.");
 						dealError();
 					});
 				})(i);
