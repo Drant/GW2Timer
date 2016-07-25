@@ -1451,12 +1451,14 @@ a.chrWalletLink {
 	background: rgba(0,0,0,0.8);
 	border-radius: 50%;
 	box-shadow: 0px 0px 8px black;
+	pointer-events: none;
 }
 .sklSlotTarget {
 	width: 32px; height: 32px;
 	position: absolute;
 	left: 11px; bottom: -14px;
 	background-image: url("../img/account/equipment/groundtargeted.png");
+	pointer-events: none;
 }
 
 /*

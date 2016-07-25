@@ -80,7 +80,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160628},
+		programVersion: {key: "int_utlProgramVersion", value: 160724},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -8012,6 +8012,20 @@ A = {
 				{
 					priceids[iID] = true;
 				});
+				// Include composite items' ingredients
+				var compositeingr = auditmetadata.CompositeIngredients;
+				var ingrid;
+				for (var i in compositeingr) // Iterate through composite items
+				{
+					for (var ii = 0; ii < compositeingr[i].length; ii++) // Iterate through a composite item's ingredients
+					{
+						ingrid = ((compositeingr[i])[ii])[0];
+						if (cachedprices[ingrid] === undefined && untradeabledb[ingrid] === undefined)
+						{
+							priceids[ingrid] = true;
+						}
+					}
+				}
 				// Load unbought and unsold items in the account's Trading Post
 				if (wanttransactions === false)
 				{
