@@ -16,6 +16,8 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "správce", it: "gestione", pl: "menedżer", pt: "gerenciador", ru: "диспетчер", zh: "管理員"},
 	s_bank: {de: "bank", es: "banco", fr: "banque",
 		cs: "banka", it: "banca", pl: "bank", pt: "banco", ru: "банк", zh: "銀行"},
+	s_vault: {de: "tresor", es: "arcón", fr: "coffre",
+		cs: "trezor", it: "volta", pl: "kufer", pt: "tesouro", ru: "сундук", zh: "保險箱"},
 	s_materials: {de: "materialien", es: "materiales", fr: "matériaux",
 		cs: "materiály", it: "materiale", pl: "materiały", pt: "materiais", ru: "материалы", zh: "物料"},
 	s_wardrobe: {de: "garderobenlager", es: "garderobe", fr: "escaparate",

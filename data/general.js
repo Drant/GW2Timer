@@ -1221,8 +1221,8 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Trading' title='gw2timer.com/trading'>Gem Exchange</a> and Trading Post history now available."
 	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Audit' title='gw2timer.com/audit'>Account Audit</a> see the total gold and value of all your <a href='http://i.imgur.com/OyItYUR.png'>characters</a>.",
 	wvw: "",
-	Start: new Date("2016-07-12T16:00:00Z"),
-	Finish: new Date("2016-07-26T16:00:00Z"),
+	Start: new Date("2016-07-26T16:00:00Z"),
+	Finish: new Date("2016-08-02T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1278,8 +1278,8 @@ Countdown: {
 		name_es: "Mundo Viviente 3",
 		name_fr: "Monde Vivant 3",
 		official: "news/guild-wars-2s-living-world-returns-on-july-26/",
-		Start: new Date("2016-07-26T16:00:00Z"),
-		Finish: new Date("2016-07-27T16:00:00Z")
+		Start: new Date("2016-07-26T17:00:00Z"),
+		Finish: new Date("2016-07-27T17:00:00Z")
 	}
 	]
 },
@@ -1295,7 +1295,7 @@ Story:
 	name_es: "Anomalía de línea ley",
 	name_fr: "L'Anomalie des lignes de force",
 	Start: new Date("2016-06-28T16:00:00Z"),
-	Finish: new Date("2016-07-26T16:00:00Z")
+	Finish: new Date("2016-07-27T16:00:00Z")
 },
 
 /*
@@ -1311,8 +1311,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-07-19T15:00:00Z"),
-	Finish: new Date("2016-07-26T15:00:00Z"),
+	Start: new Date("2016-07-26T15:00:00Z"),
+	Finish: new Date("2016-08-02T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1326,69 +1326,6 @@ Sale: {
 		price: 500,
 		discount: null,
 		col: 0
-	},
-	{
-		name: "Watchwork Mining Pick",
-		id: "47897",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Replica Job-o-Tron Backpack",
-		id: "67405",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Mini Scruffy",
-		id: "42960",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Banker Golem (2 weeks)",
-		id: "50085",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Unbreakable Gathering Tools",
-		img: "http://i.imgur.com/dYyhm3y.png",
-		price: 2400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Thresher-Sickle 5000",
-		id: "49308",
-		price: 800,
-		discount: 1000,
-		col: 1
-	},
-	{
-		name: "Reap-r-Tron",
-		id: "67395",
-		price: 800,
-		discount: 1000,
-		col: 1
-	},
-	{
-		name: "Log-r-Tron",
-		id: "67394",
-		price: 800,
-		discount: 1000,
-		col: 1
-	},
-	{
-		name: "Mine-r-Tron",
-		id: "67396",
-		price: 800,
-		discount: 1000,
-		col: 1
 	}
 	]
 },

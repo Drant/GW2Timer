@@ -6121,7 +6121,15 @@ A = {
 		Stats: "pvp/stats",
 		Games: "pvp/games",
 		Standings: "pvp/standings",
-		TokenInfo: "tokeninfo"
+		TokenInfo: "tokeninfo",
+		GuildLog: "log",
+		GuildMembers: "members",
+		GuildPermission: "permission",
+		GuildRanks: "ranks",
+		GuildStash: "stash",
+		GuildTeams: "teams",
+		GuildTreasury: "treasury",
+		GuildUpgrades: "upgrades"
 	},
 	Permissions: {}, // Corresponds to tokeninfo.json permissions array
 	PermissionEnum: {
@@ -6141,13 +6149,15 @@ A = {
 	/*
 	 * Gets an authenticated API URL to retrieve account data.
 	 * @param enum pSuffix type of account data.
+	 * @param string pGuildID for retrieving guild endpoints, optional.
 	 * @returns string.
 	 * @pre Token for use (API key) variable was initialized.
 	 */
-	getURL: function(pSuffix)
+	getURL: function(pSuffix, pGuildID)
 	{
-		var divider = (pSuffix.indexOf("?") !== -1) ? "&" : "?";
-		return "https://api.guildwars2.com/v2/" + pSuffix + divider + "access_token=" + A.TokenCurrent;
+		var suffix = (pGuildID) ? ("guild/" + pGuildID + "/" + pSuffix) : pSuffix;
+		var divider = (suffix.indexOf("?") !== -1) ? "&" : "?";
+		return "https://api.guildwars2.com/v2/" + suffix + divider + "access_token=" + A.TokenCurrent;
 	},
 	
 	/*
@@ -6883,6 +6893,19 @@ A = {
 			gemsum += upgs[i].totalgem;
 		}
 		return gemsum;
+	},
+	
+	/*
+	 * Downloads guild bank data for all of the account's guilds, if permitting.
+	 * @param function pCallback to execute after.
+	 */
+	initializeVault: function(pCallback)
+	{
+		var guilds = A.Data.Account.guilds;
+		guilds.forEach(function(iGuildID)
+		{
+			
+		});
 	},
 	
 	/*
@@ -30126,6 +30149,7 @@ I = {
 			Manager: "Manager",
 			Bank: "Bank",
 			Materials: "Materials",
+			Vault: "Vault",
 			Wardrobe: "Wardrobe",
 			Minis: "Minis",
 			Dyes: "Dyes",
