@@ -13286,7 +13286,7 @@ Q = {
 					for (var i = 0; i < det.infusion_slots.length; i++)
 					{
 						infusionslot = det.infusion_slots[i];
-						infusiontype = infusionslot.flags[0];
+						infusiontype = infusionslot.flags[0] || "Agony";
 						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
 							+ D.getString(infusiontype + "_Infusion") + "<br /><br />");
 						if (infusionslot.item_id !== undefined && Settings.aItemMeta.infusions === undefined)
