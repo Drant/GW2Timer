@@ -1277,7 +1277,7 @@ Countdown: {
 		name_de: "Lebendige Welt 3",
 		name_es: "Mundo Viviente 3",
 		name_fr: "Monde Vivant 3",
-		official: "news/guild-wars-2s-living-world-returns-on-july-26/",
+		official: "news/out-of-the-shadows-is-live/",
 		Start: new Date("2016-07-26T17:00:00Z"),
 		Finish: new Date("2016-07-27T17:00:00Z")
 	}
@@ -1321,11 +1321,32 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Shining Blade Backpack Glider Combo",
+		img: "http://i.imgur.com/pfhR8fd.png",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Verdant Executor Outfit",
+		img: "http://i.imgur.com/x6mIb58.png",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Glide-r-Tron",
 		id: "79010",
 		price: 500,
 		discount: null,
-		col: 0
+		col: 1
+	},
+	{
+		name: "Royal Pass (2 weeks)",
+		id: "44605",
+		price: 150,
+		discount: null,
+		col: 1
 	}
 	]
 },
