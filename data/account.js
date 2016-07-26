@@ -168,6 +168,7 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 15, coefficient: 100, payment: "badge", name_en: "Badge of Honor", name_de: "Ehrenabzeichen", name_es: "Insignia de honor", name_fr: "Insigne d'honneur", name_zh: "榮譽徽章" },
 			{ id: 31, coefficient: 500, payment: "proof", name_en: "Proof of Heroics", name_de: "Beweis der Heldentaten", name_es: "Prueba de hazañas", name_fr: "Preuve d'héroïsme", name_zh: "英雄証明" },
 			{ id: 16, coefficient: 10000, payment: "commendation", name_en: "Guild Commendation", name_de: "Gilden-Belobigung", name_es: "Mención de clan", name_fr: "Recommandation de guilde", name_zh: "公會獎狀" },
+			{ id: 29, coefficient: 5000, payment: "provisioner", name_en: "Provisioner Token", name_de: "Versorger-Marke", name_es: "Vale de suministrador", name_fr: "Coupon de fournisseur", name_zh: "供給官徽記" },
 			{ id: 23, coefficient: 1000, name_en: "Spirit Shard", name_de: "Geister-Scherbe", name_es: "Esquirla espiritual", name_fr: "Éclat d'esprit", name_zh: "靈魂碎片" },
 			{ id: 18, coefficient: 10000, name_en: "Transmutation Charge", name_de: "Transmutations-Ladung", name_es: "Carga de transmutación", name_fr: "Charge de transmutation", name_zh: "幻化力" }
 		],
@@ -177,7 +178,6 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 19, payment: "map_vb", name_en: "Airship Part", name_de: "Luftschiff-Teil", name_es: "Pieza de aeronave", name_fr: "Pièce d'aéronef", name_zh: "飛船部件" },
 			{ id: 22, payment: "map_ab", name_en: "Lump of Aurillium", name_de: "Aurilliumklumpen", name_es: "Trozo de aurilio", name_fr: "Bloc d'aurillium", name_zh: "塊狀赤金元素" },
 			{ id: 20, payment: "map_td", name_en: "Ley Line Crystal", name_de: "Ley-Linien-Kristall", name_es: "Cristal de línea ley", name_fr: "Cristal des lignes de force", name_zh: "魔徑水晶" },
-			{ id: 29, coefficient: 10, name_en: "Provisioner Token", name_de: "Versorger-Marke", name_es: "Vale de suministrador", name_fr: "Coupon de fournisseur", name_zh: "供給官徽記" },
 			{ id: 26, name_en: "WvW Tournament Claim Ticket", name_de: "WvW-Turnier-Ticket", name_es: "Tique de recogida de torneo WvW", name_fr: "Billet de retrait de tournoi McM", name_zh: "世界之戰錦標賽兌換券" },
 			{ id: 30, coefficient: 10, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP聯賽兌換券" }
 		]
@@ -216,6 +216,7 @@ var GW2T_CURRENCY_DATA = {
 		badge: {id: 15, color: "#8c7047", conversion: [30, 71473], isliquid: true}, // Badge of Tribute
 		proof: {id: 31, color: "#ffff53", conversion: [6, 21262], isliquid: true, ishidden: true}, // Superior Catapult Blueprints
 		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560], isliquid: true}, // Sentinel's Orichalcum Imbued Inscription
+		provisioner: {id: 29, color: "#2c9c4b", conversion: [1, 15350], isappraised: true, ishidden: true}, // Rampager's Krait Morning Star
 		dungeon_ac: {id: 5, color: "#73c7ee", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
 		dungeon_cm: {id: 9, color: "#80aaa2", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
 		dungeon_ta: {id: 11, color: "#5a5282", conversion: [180, 19721], isliquid: true}, // Glob of Ectoplasm
@@ -224,8 +225,8 @@ var GW2T_CURRENCY_DATA = {
 		dungeon_hotw: {id: 12, color: "#bddbef", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
 		dungeon_coe: {id: 14, color: "#993889", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
 		dungeon_arah: {id: 6, color: "#aab084", conversion: [30, 19721], isliquid: true}, // Glob of Ectoplasm
-		fotm_relic: {id: 7, color: "#9bffff", conversion: [1350, 37000]}, // Quiver of a Thousand Arrows
-		fotm_pristine: {id: 24, color: "#6bbb44", conversion: [135, 37000]}, // Quiver of a Thousand Arrows
+		fotm_relic: {id: 7, color: "#9bffff", conversion: [1350, 37000], isappraised: true, isbound: true}, // Quiver of a Thousand Arrows
+		fotm_pristine: {id: 24, color: "#6bbb44", conversion: [135, 37000], isappraised: true, isbound: true}, // Quiver of a Thousand Arrows
 		raid_ft: {id: 28, color: "#27454a", conversion: [1000, 77310, 200000], isliquid: true}, // Zojja Doublet
 		map_dt: {id: 25, color: "#eeebba", conversion: 0},
 		map_sw: {id: 27, color: "#ebd1a1", conversion: 0},

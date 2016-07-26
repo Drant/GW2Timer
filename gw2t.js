@@ -5945,24 +5945,43 @@ Z = {
 		var recordnames = ["materials", "skins", "minis", "dyes", "recipes"];
 		var recordnamescounter = 0;
 		var db, record, catarr;
-		var tradeableids = {};
-		var untradeableids = {};
+		var idstocache = {};
 		var numcached = 0;
 		var numcaches = recordnames.length;
 		
 		var fetchPrices = function()
 		{
-			var arr = [];
-			for (var i in tradeableids)
+			var blacklist = U.getRecordBlacklist("prices");
+			var compositeingr = U.getRecordMetadata("ascended").CompositeIngredients;
+			var ingrid;
+			// Include ingredients of composite items
+			for (var i in compositeingr)
 			{
-				arr.push(parseInt(i));
+				for (var ii = 0; ii < compositeingr[i].length; ii++)
+				{
+					ingrid = ((compositeingr[i])[ii])[0];
+					if (blacklist[ingrid] === undefined)
+					{
+						idstocache[ingrid] = true;
+					}
+				}
 			}
+			// Convert associative array into array before fetching
+			var arr = [];
+			for (var i in idstocache)
+			{
+				if (blacklist[i] === undefined)
+				{
+					arr.push(parseInt(i));
+				}
+			}
+
 			Z.scrapeAPIArray(arr, "commerce/prices", {aCallback: function(pData, pUntradeableIDs)
 			{
 				// Add to the untradeable list any items that got past the tradeable check
 				pUntradeableIDs.forEach(function(iID)
 				{
-					untradeableids[iID] = 1;
+					blacklist[iID] = 1;
 				});
 				// Extract retrieved prices and create database of prices
 				var pricecache = {};
@@ -5971,9 +5990,21 @@ Z = {
 					pricecache[iPrice.id] = [iPrice.buys.unit_price, iPrice.sells.unit_price];
 				});
 				var str = "var GW2T_PRICES_DATA = " + U.lineJSON(pricecache).replace(/ /g, "") + ";\r\n";
-				str += "var GW2T_PRICES_BLACKLIST = " + U.lineJSON(untradeableids).replace(/ /g, "") + ";";
+				str += "var GW2T_PRICES_BLACKLIST = " + U.lineJSON(blacklist).replace(/ /g, "") + ";";
 				Z.createFile(str, "prices.js");
 			}});
+		};
+		
+		// Load composite ingredient IDs and the previous ID blacklist
+		var loadMetadata = function()
+		{
+			$.getScript(U.URL_DATA.Ascended, function()
+			{
+				$.getScript(U.URL_DATA.Prices, function()
+				{
+					fetchPrices();
+				});
+			});
 		};
 		
 		// Macro function to iterate over an unlockables record
@@ -5995,7 +6026,7 @@ Z = {
 				numcached++;
 				if (numcached === numcaches)
 				{
-					fetchPrices();
+					loadMetadata();
 				}
 			});
 		};
@@ -6008,49 +6039,41 @@ Z = {
 		Z.getItemsDatabase(function(pDatabase)
 		{
 			db = pDatabase;
-			// Scan the entire item database for untradeable items
-			for (var i in db)
-			{
-				if (Q.isTradeable(db[i]) === false)
-				{
-					untradeableids[i] = 1;
-				}
-			}
 			
-			// Collect specific items that are tradeable
+			// Include specific items that are tradeable
 			iterateRecord(function(iID) // Materials
 			{
 				if (Q.isTradeable(db[iID]))
 				{
-					tradeableids[iID] = true;
+					idstocache[iID] = true;
 				}
 			});
 			iterateRecord(function(iEntry) // Skins
 			{
 				if (iEntry.p === undefined && Q.isTradeable(db[iEntry.i]))
 				{
-					tradeableids[iEntry.i] = true;
+					idstocache[iEntry.i] = true;
 				}
 			});
 			iterateRecord(function(iEntry) // Minis
 			{
 				if (Q.isTradeable(db[iEntry.i]))
 				{
-					tradeableids[iEntry.i] = true;
+					idstocache[iEntry.i] = true;
 				}
 			});
 			iterateRecord(function(iEntry) // Dyes
 			{
 				if (Q.isTradeable(db[iEntry.i]))
 				{
-					tradeableids[iEntry.i] = true;
+					idstocache[iEntry.i] = true;
 				}
 			});
 			iterateRecord(function(iEntry) // Recipes
 			{
 				if (iEntry.t)
 				{
-					tradeableids[iEntry.t] = true;
+					idstocache[iEntry.t] = true;
 				}
 			});
 		});
@@ -6436,7 +6459,7 @@ A = {
 	 */
 	initializeTokens: function()
 	{
-		var tokenslimit = 32;
+		var tokenslimit = 64;
 		var tokens = localStorage[O.Utilities.APITokens.key];
 		try
 		{
@@ -7366,17 +7389,24 @@ A = {
 					}
 				}
 			}
+			var associtems = {};
+			var associtemid;
 			A.iterateRecord(recordsdata[pName], function(pEntry)
 			{
 				(A.Tally[pName])[1] += 1;
-				if (pEntry[itemkey])
+				associtemid = pEntry[itemkey];
+				if (associtemid)
 				{
-					payment = E.Paylist[(pEntry[itemkey])];
-					// Audit if payment exists, the unlock is unlocked, and the unlock's associated item is not in possession
-					if (payment && unlockedids[pEntry.u]
-						&& ((pWantPossessions === false && A.Possessions[(pEntry[itemkey])] === undefined) || (pWantPossessions !== false)))
+					payment = E.Paylist[associtemid];
+					/*
+					 * Audit if payment exists, the unlock is unlocked, and the associated
+					 * item has not been audited for this record and is not in possession.
+					 */
+					if (payment && unlockedids[pEntry.u] && associtems[associtemid] === undefined
+						&& ((pWantPossessions === false && A.Possessions[associtemid] === undefined) || (pWantPossessions !== false)))
 					{
 						addPaymentToCategory(auditcat, payment, 1, true);
+						associtems[pEntry.i] = true;
 					}
 				}
 			});
@@ -7527,8 +7557,7 @@ A = {
 		// Fills a table column with currencies
 		var fillCurrencyColumn = function(pColumn, pCategory, pIsConversion, pMaxCategory, pWantHidden)
 		{
-			var amount, paymentkey, barstr;
-			var prefix = (pIsConversion) ? ("<span class='cssLeft'>" + I.Symbol.ArrowRight + "</span>") : "";
+			var amount, paymentkey, barstr, prefix;
 			for (var i in pCategory)
 			{
 				if (!pWantHidden && auditpayments[i].ishidden)
@@ -7545,6 +7574,7 @@ A = {
 						+ "width:" + ((pMaxCategory[i] > 0) ? ((amount / pMaxCategory[i]) * T.cPERCENT_100) : 0) + "%'></s>"
 					+ "</samp>";
 				}
+				prefix = (pIsConversion) ? ("<span class='cssLeft'>" + ((auditpayments[i].isappraised) ? I.Symbol.Approx : I.Symbol.ArrowRight) + "</span>") : "";
 				pColumn.append("<div class='audTableCell'>" + prefix + E.PaymentFormat[paymentkey](amount) + barstr + "</div>");
 			}
 		};
@@ -7694,10 +7724,10 @@ A = {
 				summary.append("<div id='audSummaryValues'>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("appraised") + " ―</div>"
 					+ "<div id='audSummaryAppraised' class='audSummaryCoin curHelp'></div>"
-					+ "<div class='audSummaryMoney'>≈ " + E.formatGemToMoney(E.convertCoinToGem(totalappraisedsell)) + "</div>"
+					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(E.convertCoinToGem(totalappraisedsell)) + "</div>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("liquid") + " ―</div>"
 					+ "<div id='audSummaryLiquid' class='audSummaryCoin curHelp'>" + E.formatCoinString(totalliquidsell, {aWantBig: true}) + "</div>"
-					+ "<div class='audSummaryMoney'>≈ " + E.formatGemToMoney(E.convertCoinToGem(totalliquidsell)) + "</div>"
+					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(E.convertCoinToGem(totalliquidsell)) + "</div>"
 				+ "</div>");
 				
 				// Get previous audit report if available
@@ -8001,7 +8031,7 @@ A = {
 				for (var i in auditpayments)
 				{
 					conversion = auditpayments[i].conversion;
-					if (Array.isArray(conversion) && auditpayments[i].isliquid)
+					if (Array.isArray(conversion) && auditpayments[i].isbound !== true)
 					{
 						priceids[(conversion[1])] = true;
 					}
@@ -8012,20 +8042,6 @@ A = {
 				{
 					priceids[iID] = true;
 				});
-				// Include composite items' ingredients
-				var compositeingr = auditmetadata.CompositeIngredients;
-				var ingrid;
-				for (var i in compositeingr) // Iterate through composite items
-				{
-					for (var ii = 0; ii < compositeingr[i].length; ii++) // Iterate through a composite item's ingredients
-					{
-						ingrid = ((compositeingr[i])[ii])[0];
-						if (cachedprices[ingrid] === undefined && untradeabledb[ingrid] === undefined)
-						{
-							priceids[ingrid] = true;
-						}
-					}
-				}
 				// Load unbought and unsold items in the account's Trading Post
 				if (wanttransactions === false)
 				{
@@ -14206,6 +14222,7 @@ E = {
 		badge: function(pAmount) { return ((pAmount === 0) ? "" : pAmount.toLocaleString()) + "<ins class='s16 s16_badge'></ins>"; },
 		proof: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_proof'></ins>"; },
 		commendation: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_commendation'></ins>"; },
+		provisioner: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_provisioner'></ins>"; },
 		tournament: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_tournament'></ins>"; },
 		league: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_league'></ins>"; },
 		dungeon_ac: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_dungeon_ac'></ins>"; },
@@ -28139,11 +28156,11 @@ H = {
 							{
 								var disc = item.discount[ii];
 								var priceper = Math.ceil(disc[1] / disc[0]);
-								// Percent off for bulk discount comes the price per item in the bulk--divided by the old price for a single (non-bulk) item
+								// Percent off for bulk discount comes from the price per item in the bulk--divided by the old price for a single (non-bulk) item
 								var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (item.discount[0])[2], disc[2]) : getPercentOffString(priceper, (item.discount[0])[1]);
 								var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
 								discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
-									+ " ≈ " + E.formatGemToCoin(disc[1]) + "<br />";
+									+ " " + I.Symbol.Approx + " " + E.formatGemToCoin(disc[1]) + "<br />";
 							}
 							discountstr += "</span>";
 						}
@@ -28155,7 +28172,7 @@ H = {
 							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
 							+ oldpricestr
 							+ "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
-							+ "<span class='dsbSalePriceCoin'> ≈ " + E.formatGemToCoin(item.price) + "</span>"
+							+ "<span class='dsbSalePriceCoin'> " + I.Symbol.Approx + " " + E.formatGemToCoin(item.price) + "</span>"
 							+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>"
 							+ discountstr
 						+ "</div>");
@@ -28309,7 +28326,7 @@ H = {
 						// Get TP prices also
 						$.getJSON(U.getAPIPrice(offer.id), function(pData)
 						{
-							$("#dsbVendorPriceCoin_" + iIndex).html(" ≈ " + E.formatCoinStringColored(E.processPrice(pData).oPriceSellTaxed));
+							$("#dsbVendorPriceCoin_" + iIndex).html(" " + I.Symbol.Approx + " " + E.formatCoinStringColored(E.processPrice(pData).oPriceSellTaxed));
 						}).fail(function()
 						{
 							$("#dsbVendorPriceCoin_" + iIndex).html(" = " + E.formatCoinStringColored(0));
@@ -29996,6 +30013,7 @@ I = {
 		Block: "■",
 		Star: "☆",
 		Wait: "⏳",
+		Approx: "≈",
 		Quantity: "×",
 		Ellipsis: "…",
 		Day: "☀",
