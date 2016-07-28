@@ -6180,11 +6180,16 @@ A = {
 	 */
 	setProgressBar: function(pNumFetched, pNumToFetch)
 	{
-		document.getElementById("accProgress").style.width = (pNumFetched / pNumToFetch) * T.cPERCENT_100 + "%";
-		document.getElementById("accProgressCount").innerHTML = pNumFetched + " / " + pNumToFetch;
-		if (pNumFetched === pNumToFetch)
+		var progressbar = document.getElementById("accProgress");
+		var progresscount = document.getElementById("accProgressCount");
+		if (progressbar)
 		{
-			A.resetProgressBar();
+			progressbar.style.width = (pNumFetched / pNumToFetch) * T.cPERCENT_100 + "%";
+			progresscount.innerHTML = pNumFetched + " / " + pNumToFetch;
+			if (pNumFetched === pNumToFetch)
+			{
+				A.resetProgressBar();
+			}
 		}
 	},
 	
@@ -13309,9 +13314,9 @@ Q = {
 					for (var i = 0; i < det.infusion_slots.length; i++)
 					{
 						infusionslot = det.infusion_slots[i];
-						infusiontype = infusionslot.flags[0] || "Agony";
-						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/infusion_" + infusiontype.toLowerCase() + ".png' /> "
-							+ D.getString(infusiontype + "_Infusion") + "<br /><br />");
+						infusiontype = (det.type === "Amulet") ? "Enrichment" : "Infusion";
+						infusionstr.push("<img class='itmSlotIcon' src='img/account/item/" + infusiontype.toLowerCase() + ".png' /> "
+							+ D.getString("Unused" + infusiontype + "Slot") + "<br /><br />");
 						if (infusionslot.item_id !== undefined && Settings.aItemMeta.infusions === undefined)
 						{
 							preinfusions.push(infusionslot.item_id);
@@ -14264,7 +14269,8 @@ E = {
 		map_vb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_vb'></ins>"; },
 		map_ab: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ab'></ins>"; },
 		map_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_td'></ins>"; },
-		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_crystalline'></ins>"; }
+		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_crystalline'></ins>"; },
+		magic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_magic'></ins>"; }
 	},
 	PaymentEnum:
 	{
@@ -16376,14 +16382,10 @@ D = {
 		s_SoulboundToCharacter: {en: "Soulbound to another character", de: "An einen anderen Charakter seelengebunden", es: "Ligado a otro personaje", fr: "Lié à l&apos;âme d&apos;un autre personnage"},
 		s_Unique: {en: "Unique", de: "Einzigartig", es: "Equipamiento único", fr: "Unique"},
 		s_Transmuted: {en: "Transmuted", de: "Transmutiert", es: "Transmutado", fr: "Transmuté"},
-		s_Defense_Infusion: {en: "Unused Defensive Infusion Slot", de: "Freier Infusionsplatz (Defensiv)",
-			es: "Casilla de infusión defensiva sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Défensive)"},
-		s_Offense_Infusion: {en: "Unused Offensive Infusion Slot", de: "Freier Infusionsplatz (Offensiv)",
-			es: "Casilla de infusión ofensiva sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Offensive)"},
-		s_Utility_Infusion: {en: "Unused Utility Infusion Slot", de: "Freier Infusionsplatz (Hilfe)",
-			es: "Casilla de infusión apoyo sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Utilitaire)"},
-		s_Agony_Infusion: {en: "Unused Agony Infusion Slot", de: "Freier Infusionsplatz (Qual)",
-			es: "Casilla de infusión agonía sin utilizar", fr: "Emplacement d&apos;infusion inutilisé (Agonie)"},
+		s_UnusedEnrichmentSlot: {en: "Unused Enrichment Slot", de: "Ungenutzter Anreicherungsplatz",
+			es: "Casilla para enriquecimientos sin utilizar", fr: "Emplacement d'enrichissement inutilisé"},
+		s_UnusedInfusionSlot: {en: "Unused Infusion Slot", de: "Freier Infusionsplatz",
+			es: "Casilla de infusión sin utilizar", fr: "Emplacement d&apos;infusion inutilisé"},
 		s_UnusedUpgradeSlot: {en: "Unused Upgrade Slot", de: "Freier Aufwertungsplatz",
 			es: "Casilla para mejoras sin utilizar", fr: "Emplacement d&apos;amélioration inutilisé"},
 		s_DoubleClickToSelectStats: {en: "Double-click to select stats.", de: "Doppelklicken, um Werte auszuwählen.",
@@ -22289,9 +22291,27 @@ P = {
 				 * the visual path of the step. Nonprimary events contain
 				 * only a single entry, that is, their location.
 				 */
-				coords = M.convertGCtoLCMulti(primaryevent.path, 1);
-				pathline = L.polyline(coords, {color: color});
-				M.Zones[(pChain.zone)].Layers.Path.addLayer(pathline);
+				if ((primaryevent.path[0])[0] === 0) // If the first entry is [0,0], then the paths are meant to be points rather than connected lines
+				{
+					for (var ii = 1; ii < primaryevent.path.length; ii++)
+					{
+						pathline = L.circleMarker(M.convertGCtoLC(primaryevent.path[ii]), {
+							clickable: false,
+							radius: 8,
+							color: "red",
+							weight: 2,
+							opacity: 0.8,
+							fillOpacity: 0.1
+						});
+						M.Zones[(pChain.zone)].Layers.Path.addLayer(pathline);
+					}
+				}
+				else // Draw a connected path
+				{
+					coords = M.convertGCtoLCMulti(primaryevent.path, 1);
+					pathline = L.polyline(coords, {color: color});
+					M.Zones[(pChain.zone)].Layers.Path.addLayer(pathline);
+				}
 			}
 		}
 
@@ -22311,7 +22331,7 @@ P = {
 			$("#chnEvent_" + pChain.nexus + "_" + eventnum).each(function()
 			{
 				// Assign a data attribute to the event name
-				var coord = event.path[0];
+				var coord = ((event.path[0])[0] === 0) ? event.path[1] : event.path[0];
 				$(this).attr("data-coord", coord[0] + "," + coord[1]);
 				$(this).attr("data-eventindex", i);
 				// Read the attribute and use the coordinate when clicked for touring

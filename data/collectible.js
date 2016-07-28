@@ -1748,15 +1748,15 @@ RangerPets: {
 		c: [[16576,15157],[29518,19158],[19610,12197],[19598,12174],[19608,12149],[20649,15526],[20739,15473],[20816,15511]]
 	},{// MOA
 		n: 12, p: "blackmoa", name_en: "Black Moa", name_de: "Schwarzer Moa", name_es: "Moa negro", name_fr: "Moa noir",
-		s: {daze: [1, 2], recharge: 30, targets: 5, range: 280, damage: 122},
+		s: {daze: [1, 3], recharge: 30, targets: 5, range: 280, damage: 122},
 		c: [[25068,5420]]
 	},{
 		n: 13, p: "bluemoa", name_en: "Blue Moa", name_de: "Blauer Moa", name_es: "Moa azul", name_fr: "Moa bleu",
-		s: {protection: [1, 4], recharge: 30, targets: 5, radius: 600},
+		s: {protection: [1, 4], recharge: 24, targets: 5, radius: 600},
 		c: [[31234,18836],[9886,18371],[16410,16621],[16311,16427],[16485,16324],[16417,18478],[16454,18507],[16458,18530],[16585,18494],[17607,24102],[17729,24104],[17651,24067]]
 	},{
 		n: 14, p: "pinkmoa", name_en: "Pink Moa", name_de: "Rosa Moa", name_es: "Moa rosa", name_fr: "Moa rose",
-		s: {daze: [1, 2], recharge: 30, targets: 5, range: 280, damage: 122},
+		s: {daze: [1, 3], recharge: 30, targets: 5, range: 280, damage: 122},
 		c: [[9017,16305],[19041,21619],[19058,21715],[19061,21725],[19156,21598],[19159,21676],[10420,21133],[10409,21105],[10386,21116],[10361,21076],[10791,16625],[10872,16685],[10942,16507],[10486,18201],[10627,18093],[5906,20555],[8196,16683],[3975,15842],[3960,15824],[3989,15829]]
 	},{
 		n: 15, p: "redmoa", name_en: "Red Moa", name_de: "Roter Moa", name_es: "Moa rojo", name_fr: "Moa rouge",
@@ -1764,23 +1764,23 @@ RangerPets: {
 		c: [[31234,18837],[31230,18836],[31236,18830],[30878,13927],[24377,10614],[24298,10528],[24418,10557],[26792,9795],[26776,9766],[26834,9736],[26805,9739]]
 	},{
 		n: 16, p: "whitemoa", name_en: "White Moa", name_de: "Weißer Moa", name_es: "Moa blanco", name_fr: "Moa blanc",
-		s: {chilled: [1, 3], recharge: 30, targets: 5, damage: 122},
+		s: {chilled: [1, 3], recharge: 24, targets: 5, damage: 122},
 		c: [[18040,15411],[18092,15408],[18216,15372],[18130,15546],[18228,15488],[19892,12217],[20123,12187],[20108,12209],[20100,12210],[20120,12054],[19106,16278],[19097,16294],[19076,16281],[19076,16311],[22900,10250],[22984,10227],[23030,10378],[22559,9135],[22865,9151],[22877,9254],[23059,9284],[23141,9296]]
 	},{// PORCINE
 		n: 17, p: "boar", name_en: "Boar", name_de: "Eber", name_es: "Jabalí", name_fr: "Sanglier",
-		s: {pet: "Forage", recharge: 40, range: 2000},
+		s: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[17706,24193],[17643,24181],[17584,23234],[17582,23250]]
 	},{
 		n: 18, p: "pig", name_en: "Pig", name_de: "Schwein", name_es: "Cerdo", name_fr: "Cochon",
-		s: {pet: "Forage", recharge: 40, range: 2000},
+		s: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[17675,24123],[17630,24138],[17595,24181],[11601,11230],[11595,11217],[11594,11255],[10909,10330],[10921,10331],[10925,10325],[17298,15149],[17283,15154],[17290,15147],[15943,13632],[15964,13632],[15966,13648],[29016,19146]]
 	},{
 		n: 19, p: "siamoth", name_en: "Siamoth", name_de: "Siamoth", name_es: "Siamoth", name_fr: "Siamouth",
-		s: {pet: "Forage", recharge: 40, range: 2000},
+		s: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[15758,21430],[16660,21458],[8197,16712],[8258,16739],[8166,16774],[5844,20915],[5851,20933],[5859,20941],[16952,20130]]
 	},{
 		n: 20, p: "warthog", name_en: "Warthog", name_de: "Warzenschwein", name_es: "Jabalí verrugoso", name_fr: "Phacochère",
-		s: {pet: "Forage", recharge: 40, range: 2000},
+		s: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[982,18065],[971,18085],[937,18077],[31463,18844],[31460,18814],[31471,18822],[25239,12490],[25257,12309],[25236,12191],[25139,12372],[26755,12684],[26877,12571],[26827,12457],[26842,13000],[30762,18357],[25347,10682],[25427,10667],[25457,10786],[24873,10667],[24806,10637],[24844,10699],[16405,12674],[16275,12691],[16199,12683],[16244,12717],[16385,12839]]
 	},{// SAURIAN
 		n: 21, p: "bristleback", name_en: "Bristleback", name_de: "Borstenrücken", name_es: "Lomoespinado", name_fr: "Hérissosaure",

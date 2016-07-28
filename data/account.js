@@ -180,6 +180,7 @@ var GW2T_CURRENCY_DATA = {
 			{ id: 19, payment: "map_vb", name_en: "Airship Part", name_de: "Luftschiff-Teil", name_es: "Pieza de aeronave", name_fr: "Pièce d'aéronef", name_zh: "飛船部件" },
 			{ id: 22, payment: "map_ab", name_en: "Lump of Aurillium", name_de: "Aurilliumklumpen", name_es: "Trozo de aurilio", name_fr: "Bloc d'aurillium", name_zh: "塊狀赤金元素" },
 			{ id: 20, payment: "map_td", name_en: "Ley Line Crystal", name_de: "Ley-Linien-Kristall", name_es: "Cristal de línea ley", name_fr: "Cristal des lignes de force", name_zh: "魔徑水晶" },
+			{ id: 32, payment: "magic", name_en: "Unbound Magic", name_de: "Entfesselte Magie", name_es: "Magia liberada", name_fr: "Magie déliée", name_zh: "未受約束的魔法" },
 			{ id: 26, name_en: "WvW Tournament Claim Ticket", name_de: "WvW-Turnier-Ticket", name_es: "Tique de recogida de torneo WvW", name_fr: "Billet de retrait de tournoi McM", name_zh: "世界之戰錦標賽兌換券" },
 			{ id: 30, coefficient: 10, name_en: "PvP League Ticket", name_de: "PvP-Liga-Ticket", name_es: "Tique de liga PvP", name_fr: "Ticket de ligue JcJ", name_zh: "PvP聯賽兌換券" }
 		]
