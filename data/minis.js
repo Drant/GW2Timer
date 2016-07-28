@@ -305,7 +305,10 @@ Special: [
 	{u: 400, i: 78161, n: "Mini Pocket Raptor"},
 	{u: 401, i: 78815, n: "Mini Xera", p: {raid_ft: 300}},
 	{u: 402, i: 78828, n: "Mini McLeod the Silent", p: {raid_ft: 300}},
-	{u: 403, i: 78890, n: "Mini Keep Construct", p: {raid_ft: 300}}
+	{u: 403, i: 78890, n: "Mini Keep Construct", p: {raid_ft: 300}},
+	{u: 406, i: 79227, n: "Mini Ghostly Justiciar Hablion", p: {magic: 2000}},
+	{u: 407, i: 79229, n: "Mini Jade Construct", p: {magic: 3750}},
+	{u: 408, i: 79139, n: "Mini Bloodstone Elemental", p: {magic: 2500}}
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},

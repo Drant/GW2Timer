@@ -1176,14 +1176,6 @@ var GW2T_ZONE_DATA = {
  */
 var GW2T_TIMELINE = [
 	{
-		name_en: "Ley-Line Anomaly", name_de: "Ley-Linien-Anomalie", name_es: "Anomalía de línea ley", name_fr: "L'Anomalie des lignes de force", name_zh: "魔徑異常體",
-		Segments: [
-			{ time: "00:00", duration: "00:20", primacy: 1, name_en: "Accumulation", name_de: "Sammelt", name_es: "Acumulación", name_fr: "Accumulation", name_zh: "積累" },
-			{ time: "00:20", duration: "00:15", primacy: 3, name_en: "Anomaly", name_de: "Anomalie", name_es: "Anomalía", name_fr: "L'Anomalie", name_zh: "魔径异常体" },
-			{ time: "00:35", duration: "01:25", primacy: 2, name_en: "Accumulation", name_de: "Sammelt", name_es: "Acumulación", name_fr: "Accumulation", name_zh: "積累" }
-		]
-	},
-	{
 		zone: "verdant",
 		Segments: [
 			{ time: "00:00", duration: "00:10", primacy: 1, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" },
@@ -1232,7 +1224,8 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Trading' title='gw2timer.com/trading'>Gem Exchange</a> and Trading Post history now available."
-	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Audit' title='gw2timer.com/audit'>Account Audit</a> see the total gold and value of all your <a href='http://i.imgur.com/OyItYUR.png'>characters</a>.",
+	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Audit' title='gw2timer.com/audit'>Account Audit</a> see the total gold and value of all your <a href='http://i.imgur.com/OyItYUR.png'>characters</a>.<br />"
+		+ "<a href='http://forum.renaka.com/topic/6194587'>Bloodstone Fen</a> map timings research.",
 	wvw: "",
 	Start: new Date("2016-07-26T16:00:00Z"),
 	Finish: new Date("2016-08-02T16:00:00Z"),

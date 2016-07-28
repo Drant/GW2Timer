@@ -5987,7 +5987,9 @@ Z = {
 				var pricecache = {};
 				pData.forEach(function(iPrice)
 				{
-					pricecache[iPrice.id] = [iPrice.buys.unit_price, iPrice.sells.unit_price];
+					var buyprice = iPrice.buys.unit_price;
+					var sellprice = iPrice.sells.unit_price || buyprice; // In case there are no sell listing for that item
+					pricecache[iPrice.id] = [buyprice, sellprice];
 				});
 				var str = "var GW2T_PRICES_DATA = " + U.lineJSON(pricecache).replace(/ /g, "") + ";\r\n";
 				str += "var GW2T_PRICES_BLACKLIST = " + U.lineJSON(blacklist).replace(/ /g, "") + ";";
@@ -14732,7 +14734,7 @@ E = {
 		var count = (pCount === undefined) ? 1 : pCount;
 		var isarray = Array.isArray(pPriceData);
 		var pricebuy = ((isarray) ? pPriceData[0] : pPriceData.buys.unit_price) * count;
-		var pricesell = ((isarray) ? pPriceData[1] : pPriceData.sells.unit_price) * count;
+		var pricesell = ((isarray) ? (pPriceData[1] || pPriceData[0]) : (pPriceData.sells.unit_price || pPriceData.buys.unit_price)) * count;
 		return {
 			oPriceBuy: pricebuy,
 			oPriceSell: pricesell,
@@ -24337,20 +24339,20 @@ W = {
 	cInitialZone: "eternal",
 	cMAP_BOUND: 16384,
 	cMAP_CENTER: [10494, 12414], // This centers on the WvW portion of the map
-	cMAP_CENTER_INITIAL: [-96.98437, 81.98438], // LatLng equivalent
+	cMAP_CENTER_INITIAL: [-193.96875, 163.96875], // LatLng equivalent
 	cMAP_CENTER_ACTUAL: [8192, 8192],
 	ZoomEnum:
 	{
 		Adaptive: -2,
 		Same: -1,
 		Min: 0,
-		Overview: 3,
-		Default: 4,
-		Space: 3,
-		Sky: 5,
-		Bird: 6,
-		Ground: 7,
-		Max: 7
+		Overview: 2,
+		Default: 3,
+		Space: 2,
+		Sky: 4,
+		Bird: 5,
+		Ground: 6,
+		Max: 6
 	},
 	Layer: {
 		Overview: new L.layerGroup(),
@@ -24491,15 +24493,6 @@ W = {
 		I.styleContextMenu("#wvwContext");
 		U.convertExternalLink("#wvwHelpLinks a");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
-		/* 
-		 * The bounds given will stretch this artificial border image from the
-		 * top left corner of the map to past the map's bottom right corner,
-		 * such that it seamlessly snaps with the map's south and east edges.
-		 */
-		if (W.BorderlandsCurrent === W.BorderlandsEnum.Alpine)
-		{
-			L.imageOverlay("img/background/mists.png", this.convertGCtoLCMulti([[0, 0], [18416, 18416]])).addTo(this.Map);
-		}
 		// Finally
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL
@@ -30273,16 +30266,17 @@ I = {
 		// Tailor the initial zoom for WvW so all borderlands fit in the screen
 		if (screen.height >= 800)
 		{
-			O.Options.int_setInitialZoomWvW = 4;
+			O.Options.int_setInitialZoomWvW = 3;
 		}
 		else if (screen.height >= 480)
 		{
-			O.Options.int_setInitialZoomWvW = 3;
+			O.Options.int_setInitialZoomWvW = 2;
 		}
 		else
 		{
-			O.Options.int_setInitialZoomWvW = 2;
+			O.Options.int_setInitialZoomWvW = 1;
 		}
+		localStorage["int_setInitialZoomWvW"] = O.Options.int_setInitialZoomWvW; // Temporary measure to reset users' zoom
 		// Pre-set account bank width
 		if (screen.width < 1200)
 		{
