@@ -255,6 +255,18 @@ var GW2T_LAND_DATA = {
 	region: "pvp",
 	map_rect: [[-12288, -6144], [12288, 9216]],
 	continent_rect: [[8448, 7680], [9472, 8320]]
+},
+"capricorn":
+{
+	id: "1011",
+	name_en: "Revenge of the Capricorn",
+	name_de: "Rache der Steinbock",
+	name_es: "La Venganza del Capricornio",
+	name_fr: "Revanche du Capricorne",
+	name_zh: "摩羯復仇戰測試版",
+	region: "pvp",
+	map_rect: [[-9216, -9216], [9216, 9216]],
+	continent_rect: [[7950, 6545], [8718, 7313]]
 }
 };
 
