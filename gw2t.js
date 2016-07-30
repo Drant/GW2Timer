@@ -4316,7 +4316,10 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				
+				A.initializeVault(function()
+				{
+					
+				});
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -6098,6 +6101,7 @@ A = {
 		Characters: [],
 		CharacterNames: null,
 		Guilds: {}, // Guild details objects, accessed using the guild IDs
+		Vaults: {},
 		Wallet: {},
 		Specializations: {},
 		Traits: {}
@@ -6909,9 +6913,30 @@ A = {
 	initializeVault: function(pCallback)
 	{
 		var guilds = A.Data.Account.guilds;
+		A.Data.Vaults = {};
+		var numfetched = 0;
+		var numtofetch = guilds.length - 1;
+		
+		var finalizeFetch = function()
+		{
+			if (numfetched === numtofetch)
+			{
+				pCallback();
+			}
+		};
+		
 		guilds.forEach(function(iGuildID)
 		{
-			
+			$.getJSON(A.getURL(A.URL.GuildStash, iGuildID), function(pData)
+			{
+				A.Data.Vaults[iGuildID] = pData;
+				numfetched++;
+				finalizeFetch();
+			}).fail(function()
+			{
+				numtofetch--;
+				finalizeFetch();
+			});
 		});
 	},
 	
@@ -12181,9 +12206,10 @@ B = {
 			aIsCollection: false,
 			aWantGem: false
 		});
+		var tooltiptransactionslimit = 100;
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var numfetched = 0, numtofetch = 0;
-		var calendar = {}, datestr, datearray, calkey, timesince, transaction, multitrans;
+		var calendar = {}, datestr, datearray, calkey, timesince, transaction, multitrans, transactionstr;
 		var pricebuy, pricesell;
 		var wantcollapsed = false;
 		
@@ -12207,7 +12233,7 @@ B = {
 						pricesell = (sectionlower === "selling" || sectionlower === "sold") ? iMultiTrans.oPrice : null;
 						B.styleBankSlot(iSlot, {
 							aItem: iItem,
-							aComment: "<table class='bnkTransactionsTooltip'>" + iMultiTrans.oStamps + "</table>",
+							aComment: "<table class='bnkTransactionsTooltip'>" + iMultiTrans.oStampsTip + "</table>",
 							aTransactionBuy: pricebuy,
 							aTransactionSell: pricesell,
 							aSlotMeta: {count: iMultiTrans.oCount},
@@ -12326,22 +12352,31 @@ B = {
 						oHighest: Number.NEGATIVE_INFINITY, // For outbid checking
 						oLowest: Number.POSITIVE_INFINITY, // For outprice checking
 						oItemID: transaction.item_id,
+						oNumTransactions: 0,
 						oCount: 0,
 						oPrice: 0,
-						oStamps: ""
+						oStamps: "",
+						oStampsTip: ""
 					};
 					numtofetch++;
 				}
 				multitrans = (calendar[calkey])[transaction.item_id];
 				multitrans.oCount += transaction.quantity;
 				multitrans.oPrice += (transaction.price * transaction.quantity);
-				multitrans.oStamps += "<tr>"
+				multitrans.oNumTransactions += 1;
+				transactionstr = "<tr>"
 					+ "<td>" + transaction.quantity + " " + I.Symbol.Quantity + "&nbsp;</td>"
 					+ "<td>" + E.formatCoinStringColored(transaction.price) + " =&nbsp;</td>"
 					+ "<td>" + E.formatCoinStringColored(transaction.price * transaction.quantity) + "</td>"
 					+ "<td>&nbsp;(" + timesince + ")</td>"
 					+ "<td>&nbsp;@ " + (new Date(transaction.purchased || transaction.created)).toLocaleString() + "</td>"
 				+ "</tr>";
+				multitrans.oStamps += transactionstr;
+				// Limit the number of transactions listed in the tooltip
+				if (multitrans.oNumTransactions < tooltiptransactionslimit)
+				{
+					multitrans.oStampsTip += transactionstr;
+				}
 				if (transaction.price > multitrans.oHighest)
 				{
 					multitrans.oHighest = transaction.price;
@@ -30276,7 +30311,6 @@ I = {
 		{
 			O.Options.int_setInitialZoomWvW = 1;
 		}
-		localStorage["int_setInitialZoomWvW"] = O.Options.int_setInitialZoomWvW; // Temporary measure to reset users' zoom
 		// Pre-set account bank width
 		if (screen.width < 1200)
 		{

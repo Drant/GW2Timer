@@ -235,7 +235,8 @@ var GW2T_CURRENCY_DATA = {
 		map_sw: {id: 27, color: "#ebd1a1", conversion: 0},
 		map_vb: {id: 19, color: "#cecea0", conversion: 0},
 		map_ab: {id: 22, color: "#d7c762", conversion: 0},
-		map_td: {id: 20, color: "#42c8dd", conversion: 0}
+		map_td: {id: 20, color: "#42c8dd", conversion: 0},
+		magic: {id: 32, color: "#ffff32", conversion: [12400, 37000], isappraised: true, isbound: true} // Quiver of a Thousand Arrows
 	},
 	AuditUpgrades: { // Account upgrades from the gem store
 		CharacterSlot: {starting: 5, purchased: 0, gem: 800, url: "https://wiki.guildwars2.com/wiki/Character_Slot_Expansion"},
