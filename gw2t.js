@@ -1415,6 +1415,7 @@ X = {
 		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: ""},
 		SkrittBurglar: { key: "str_chlSkrittBurglar", urlkey: "skrittburglar", value: ""},
 		// Heart of Thorns
+		PaperScraps: { key: "str_chlPaperScraps", urlkey: "paperscraps", value: ""},
 		TigerSpirit: { key: "str_chlTigerSpirit", urlkey: "tigerspirit", value: ""},
 		ItzelTotems: { key: "str_chlItzelTotems", urlkey: "itzeltotems", value: ""},
 		PriorySeals: { key: "str_chlPriorySeals", urlkey: "prioryseals", value: ""},
@@ -2555,6 +2556,7 @@ U = {
 	fetchPaginated: function(pURL, pSettings)
 	{
 		var Settings = pSettings || {};
+		var scrapethreshold = 50;
 		var numtofetch;
 		var numfetched = 0;
 		var url = pURL + "&page_size=" + U.PageLimit;
@@ -2588,7 +2590,26 @@ U = {
 				// First retrieval fetches the first page, which also tells how many pages there are
 				numfetched++;
 				numtofetch = parseInt(pXHR.getResponseHeader("X-Page-Total"));
-				if (numtofetch > 1)
+				if (numtofetch > scrapethreshold) // If the number of pages to fetch is too large then delegate to the scrape function
+				{
+					var pagenumbers = [];
+					for (var i = 1; i < numtofetch; i++)
+					{
+						pagenumbers.push(i);
+					}
+					Z.scrapeAPIArray(pagenumbers, url + "&page=", {
+						aIsStandard: false,
+						aCallback: function(pPages)
+					{
+						book = book.concat(pData);
+						pPages.forEach(function(iPage)
+						{
+							book = book.concat(iPage);
+						});
+						Settings.aCallback(book);
+					}});
+				}
+				else if (numtofetch > 1)
 				{
 					pages = new Array(numtofetch);
 					pages[0] = pData;
@@ -4315,10 +4336,7 @@ Z = {
 			}},
 			test: {usage: "Test function for debugging.", f: function()
 			{
-				A.initializeVault(function()
-				{
-					
-				});
+				
 			}},
 			updatedb: {usage: "Prints an updated database of items.", f: function()
 			{
@@ -4692,6 +4710,7 @@ Z = {
 	 * @param intarray pArray downloaded from API.
 	 * @param string pString suffix of API endpoint.
 	 * @objparam string aQueryStr arguments for the API url, optional.
+	 * @objparam boolean aIsStandard whether to format the URL in standard v2 API format with a "/" preceding the ID.
 	 * @objparam function aCallback to execute after finishing scraping, optional.
 	 * @objparam int aRetryCount used internally for recursive retrieval of failed IDs.
 	 * @objparam array aCacheArray from previous scrape.
@@ -4700,15 +4719,18 @@ Z = {
 	{
 		var Settings = pSettings || {};
 		var querystr = Settings.aQueryStr || "";
+		var indexsep = (Settings.aIsStandard === false) ? "" : "/";
+		var prefix = (Settings.aIsStandard === false) ? "" : U.URL_API.Prefix;
 		var idsarray = [];
 		var failedids = [];
+		var failedindexes = [];
 		var reqindex = 0;
 		var numretries = 3;
 		var reqlimit = 500;
 		var reqcooldownms = 30000;
 		var numtofetch = 0;
 		var numfetched = 0;
-		var cachearr = Settings.aCacheArray || [];
+		var cachearr = Settings.aCacheArray || new Array(pArray.length);
 		if (pArray.length === 0)
 		{
 			Settings.aCallback(null, null);
@@ -4736,6 +4758,8 @@ Z = {
 					Z.scrapeAPIArray(failedids, pSuffix, {
 						aRetryCount: retrycount,
 						aCacheArray: cachearr,
+						aFailedIndexes: failedindexes,
+						aIsStandard: Settings.aIsStandard,
 						aCallback: Settings.aCallback
 					});
 				}
@@ -4772,24 +4796,25 @@ Z = {
 				}
 				else
 				{
-					retrieveObject(idsarray[i], reqindex);
+					retrieveObject(idsarray[i], ((Settings.aFailedIndexes) ? Settings.aFailedIndexes[reqindex] : reqindex));
 				}
 				reqindex++;
 				reqcounter++;
 			}
 		};
 		
-		var retrieveObject = function(pID)
+		var retrieveObject = function(pID, pIndex)
 		{
-			$.getJSON(U.URL_API.Prefix + pSuffix + "/" + pID + querystr, function(pData)
+			$.getJSON(prefix + pSuffix + indexsep + pID + querystr, function(pData)
 			{
-				cachearr.push(pData);
+				cachearr[pIndex] = pData;
 				// Check for completion
 				numfetched++;
 				finalizeScrape();
 			}).fail(function()
 			{
 				failedids.push(pID);
+				failedindexes.push(pIndex);
 				// Check for completion
 				numtofetch--;
 				finalizeScrape();

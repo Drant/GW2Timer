@@ -371,12 +371,13 @@ dt.jpzListNameHover {
 .clt_masteryinsight { background-position: -608px 0; }
 .clt_matrixcubekey { background-position: -640px 0; }
 .clt_noxiouspods { background-position: -672px 0; }
-.clt_prioryseals { background-position: -704px 0; }
-.clt_rangerpets { background-position: -736px 0; }
-.clt_skrittburglar { background-position: -768px 0; }
-.clt_speedyreader { background-position: -800px 0; }
-.clt_strongboxes { background-position: -832px 0; }
-.clt_tigerspirit { background-position: -864px 0; }
+.clt_paperscraps { background-position: -704px 0; }
+.clt_prioryseals { background-position: -736px 0; }
+.clt_rangerpets { background-position: -768px 0; }
+.clt_skrittburglar { background-position: -800px 0; }
+.clt_speedyreader { background-position: -832px 0; }
+.clt_strongboxes { background-position: -864px 0; }
+.clt_tigerspirit { background-position: -896px 0; }
 
 .mapNeedle0, .mapNeedle1, .mapNeedle2 {
 	border-radius: 50%;
