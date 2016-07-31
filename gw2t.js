@@ -2852,6 +2852,10 @@ U = {
 	enforceURLArgumentsFirst: function()
 	{
 		U.Args = U.getURLArguments();
+		// Store article value, if exists
+		I.ArticleCurrent = U.Args[U.KeyEnum.Article];
+		U.Args[U.KeyEnum.Article] = null;
+		// Manage special URLs
 		U.enforceURLArgumentsSpecial();
 		
 		var i;
@@ -2873,9 +2877,6 @@ U = {
 		{
 			I.ModeCurrent = I.ModeEnum.Website;
 		}
-		
-		// Store article value, if exists
-		I.ArticleCurrent = U.Args[U.KeyEnum.Article];
 	},
 	
 	/*
@@ -2919,7 +2920,7 @@ U = {
 			{
 				U.Args[U.KeyEnum.Page] = I.SpecialPageEnum.Account;
 				U.Args[U.KeyEnum.Section] = I.SectionEnum.Account.Characters;
-				U.Args[U.KeyEnum.Article] = I.SpecialPageEnum.Audit;
+				I.ArticleCurrent = I.SpecialPageEnum.Audit;
 			}
 			// Only proceed if "page" is not an actual content page
 			else if (U.isEnumWithin(page, I.PageEnum) === false)
@@ -2953,7 +2954,7 @@ U = {
 								// Page part becomes the section, section part becomes the article
 								if (U.Args[U.KeyEnum.Section] !== undefined)
 								{
-									U.Args[U.KeyEnum.Article] = U.Args[U.KeyEnum.Section];
+									I.ArticleCurrent = U.Args[U.KeyEnum.Section];
 								}
 								U.Args[U.KeyEnum.Page] = i;
 								U.Args[U.KeyEnum.Section] = ii;
@@ -2989,8 +2990,31 @@ U = {
 				U.Args[U.KeyEnum.Page] = I.PageEnum.Map;
 				U.Args[U.KeyEnum.Section] = I.SectionEnum.Map.Collectible;
 				// Setting the article key will tell the generate collectibles function to do so for that one
-				U.Args[U.KeyEnum.Article] = ithpage;
+				I.ArticleCurrent = ithpage;
 				return;
+			}
+		}
+	},
+	
+	/*
+	 * Tells if the current article variable matches the requesting initialization
+	 * function before "opening" parts of the section automatically.
+	 * @param string pArticle.
+	 * @param function pCallback to execute if matches.
+	 * @returns boolean.
+	 */
+	verifyArticle: function(pArticle, pCallback)
+	{
+		if (I.ArticleCurrent)
+		{
+			if (I.ArticleCurrent.toLowerCase() === pArticle.toLowerCase())
+			{
+				I.ArticleCurrent = null;
+				if (pCallback)
+				{
+					pCallback();
+				}
+				return true;
 			}
 		}
 	},
@@ -8369,11 +8393,10 @@ V = {
 		I.qTip.init("#audExecuteAlternate");
 		
 		// Scroll to execute button if requested by URL
-		if (I.ArticleCurrent === I.SpecialPageEnum.Audit)
+		U.verifyArticle(I.SpecialPageEnum.Audit, function()
 		{
-			I.ArticleCurrent = null;
 			executebtn.trigger("click");
-		}
+		});
 	},
 	
 	/*
@@ -23331,6 +23354,10 @@ G = {
 			
 			// Finally
 			refreshResourcePrices();
+			U.verifyArticle("All", function()
+			{
+				$("#nodShowPossible").trigger("click");
+			});
 		});
 	},
 	
@@ -23699,15 +23726,10 @@ G = {
 				});
 				
 				// If article URL query string exists, show collectible of specified index
-				if (I.ArticleCurrent)
+				U.verifyArticle(X.Collectibles[i].urlkey, function()
 				{
-					if (I.ArticleCurrent.toLowerCase() === X.Collectibles[i].urlkey)
-					{
-						// Trigger the associated checkbox so the markers are generated
-						$("#ned_" + i).trigger("click");
-						I.ArticleCurrent = null;
-					}
-				}
+					$("#ned_" + i).trigger("click");
+				});
 			}
 			U.convertExternalLink("#cltList cite a");
 			I.qTip.init(".cltLinks");
@@ -24375,18 +24397,12 @@ G = {
 			/*
 			 * Open the guild mission type if article query string is present.
 			 */
-			if (I.ArticleCurrent)
+			for (i in P.Guild)
 			{
-				for (i in P.Guild)
+				U.verifyArticle(i, function()
 				{
-					if (I.ArticleCurrent.toLowerCase() === i.toLowerCase())
-					{
-						// Trigger the associated guild mission type button
-						$("#gldButton_" + i).trigger("click");
-						I.ArticleCurrent = null;
-						break;
-					}
-				}
+					$("#gldButton_" + i).trigger("click");
+				});
 			}
 		});
 	}
