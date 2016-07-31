@@ -4136,8 +4136,7 @@ Z = {
 	DatabaseLanguages: ["en", "de", "es", "fr", "zh"],
 	
 	/*
-	 * Loads an object from local storage into a variable for temporary test or
-	 * console usage.
+	 * Loads an object from local storage into a variable for testing or console usage.
 	 * @returns boolean true if successfully loaded into variable, else false.
 	 */
 	loadAPICache: function()
@@ -4695,6 +4694,7 @@ Z = {
 	 * @objparam string aQueryStr arguments for the API url, optional.
 	 * @objparam function aCallback to execute after finishing scraping, optional.
 	 * @objparam int aRetryCount used internally for recursive retrieval of failed IDs.
+	 * @objparam array aCacheArray from previous scrape.
 	 */
 	scrapeAPIArray: function(pArray, pSuffix, pSettings)
 	{
@@ -4708,6 +4708,7 @@ Z = {
 		var reqcooldownms = 30000;
 		var numtofetch = 0;
 		var numfetched = 0;
+		var cachearr = Settings.aCacheArray || [];
 		if (pArray.length === 0)
 		{
 			Settings.aCallback(null, null);
@@ -4734,20 +4735,22 @@ Z = {
 					I.print("Retrying " + retrycount + " times to fetch failed IDs...");
 					Z.scrapeAPIArray(failedids, pSuffix, {
 						aRetryCount: retrycount,
+						aCacheArray: cachearr,
 						aCallback: Settings.aCallback
 					});
 				}
 				else
 				{
 					// Sort the objects by their IDs
-					if (Z.APICacheArrayOfObjects.length > 0 && Z.APICacheArrayOfObjects[0].id)
+					if (cachearr.length > 0 && cachearr[0].id)
 					{
-						U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id", aIsNumbers: true});
+						U.sortObjects(cachearr, {aKeyName: "id", aIsNumbers: true});
 					}
+					Z.APICacheArrayOfObjects = cachearr;
 					// Execute callback if provided
 					if (Settings.aCallback)
 					{
-						Settings.aCallback(Z.APICacheArrayOfObjects, failedids);
+						Settings.aCallback(cachearr, failedids);
 					}
 					else
 					{
@@ -4780,7 +4783,7 @@ Z = {
 		{
 			$.getJSON(U.URL_API.Prefix + pSuffix + "/" + pID + querystr, function(pData)
 			{
-				Z.APICacheArrayOfObjects.push(pData);
+				cachearr.push(pData);
 				// Check for completion
 				numfetched++;
 				finalizeScrape();
@@ -13761,7 +13764,7 @@ Q = {
 		{
 			var nullcon = $("#itemNull").empty();
 			var height = $(pContent).appendTo(nullcon).height();
-			nullcon.empty(); // Served its purpose, so delete the temporary element
+			nullcon.empty(); // Served its purpose, so delete the element
 			return height;
 		};
 		
