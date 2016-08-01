@@ -118,7 +118,6 @@ Contract: [
 	{i: 20030, n: "Hall of Monuments Portal Stone", p: {coin: 0}},
 	{i: 49149, n: "Royal Terrace Pass", p: {gem: 1000}},
 	{i: 50104, n: "Captain's Airship Pass", p: {gem: 1000}},
-	{i: 79073, n: "Bloodstone Fen Portal Scroll", p: {magic: 1000}},
 	{i: 76293, n: "Rata Sum Portal Scroll", p: {craft: true}},
 	{i: 70968, n: "The Grove Portal Scroll", p: {craft: true}},
 	{i: 71577, n: "Divinity's Reach Portal Scroll", p: {craft: true}},
@@ -126,6 +125,7 @@ Contract: [
 	{i: 76630, n: "Black Citadel Portal Scroll", p: {craft: true}},
 	{i: 76827, n: "Hoelbrak Portal Scroll", p: {craft: true}},
 	{i: 73024, n: "Lion's Arch Portal Scroll", p: {craft: true}},
+	{i: 79073, n: "Bloodstone Fen Portal Scroll", p: {magic: 1000}},
 	{i: 78177, n: "Permanent Portable Provisioner", p: {coin: 10000}},
 	{i: 78978, n: "White Mantle Portal Device", p: {raid_ft: 1000}}
 ],

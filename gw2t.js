@@ -6961,6 +6961,7 @@ A = {
 	/*
 	 * Downloads guild bank data for all of the account's guilds, if permitting.
 	 * @param function pCallback to execute after.
+	 * @pre Account guilds data were downloaded.
 	 */
 	initializeVault: function(pCallback)
 	{
