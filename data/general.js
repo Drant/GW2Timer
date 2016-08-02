@@ -1245,8 +1245,8 @@ Announcement:
 	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Audit' title='gw2timer.com/audit'>Account Audit</a> see the total gold and value of all your <a href='http://i.imgur.com/OyItYUR.png'>characters</a>.<br />"
 		+ "<a href='http://forum.renaka.com/topic/6194587'>Bloodstone Fen</a> instances each have their own non-global timers,<br />use the LFG to do consecutive Bloodstone/Jade/Guardian events.",
 	wvw: "",
-	Start: new Date("2016-07-26T16:00:00Z"),
-	Finish: new Date("2016-08-02T16:00:00Z"),
+	Start: new Date("2016-08-02T16:00:00Z"),
+	Finish: new Date("2016-08-09T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1310,7 +1310,7 @@ Story:
 	name_es: "Anomalía de línea ley",
 	name_fr: "L'Anomalie des lignes de force",
 	Start: new Date("2016-06-28T16:00:00Z"),
-	Finish: new Date("2016-08-02T16:00:00Z")
+	Finish: new Date("2016-08-16T16:00:00Z")
 },
 
 /*
@@ -1326,8 +1326,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-07-26T15:00:00Z"),
-	Finish: new Date("2016-08-02T15:00:00Z"),
+	Start: new Date("2016-08-02T15:00:00Z"),
+	Finish: new Date("2016-08-09T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1336,23 +1336,44 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Noble's Folly Pass",
+		img: "http://i.imgur.com/i0BPJ76.png",
+		price: 1000,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Noble's Folly Pass (2 weeks)",
+		img: "http://i.imgur.com/OQgfU7b.png",
+		price: 150,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Lord Caudecus's Pistol Skin",
+		img: "http://i.imgur.com/LK6eoEC.png",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Lord Caudecus's Sword Skin",
+		img: "http://i.imgur.com/OXFivZS.png",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Shining Blade Backpack Glider Combo",
 		id: "79084",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Verdant Executor Outfit",
 		id: "79220",
 		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Glide-r-Tron",
-		id: "79010",
-		price: 500,
 		discount: null,
 		col: 1
 	},

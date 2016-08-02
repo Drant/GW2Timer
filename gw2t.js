@@ -7007,30 +7007,37 @@ A = {
 	 */
 	initializeVault: function(pCallback)
 	{
-		var guilds = A.Data.Account.guilds;
-		A.Data.Vaults = {};
-		var numfetched = 0;
-		var numtofetch = guilds.length - 1;
-		
-		var finalizeFetch = function()
+		A.initializeGuilds(function()
 		{
-			if (numfetched === numtofetch)
+			var guilds = A.Data.Account.guilds;
+			A.Data.Vaults = {};
+			var numfetched = 0;
+			var numtofetch = guilds.length - 1;
+
+			var finalizeFetch = function()
 			{
-				pCallback();
-			}
-		};
-		
-		guilds.forEach(function(iGuildID)
-		{
-			$.getJSON(A.getURL(A.URL.GuildStash, iGuildID), function(pData)
+				if (numfetched === numtofetch)
+				{
+					if (numfetched === 0)
+					{
+						I.print("Unable to access any guild bank for this account.<br />Note that only guild leaders may access guilt vaults API.");
+					}
+					pCallback();
+				}
+			};
+
+			guilds.forEach(function(iGuildID)
 			{
-				A.Data.Vaults[iGuildID] = pData;
-				numfetched++;
-				finalizeFetch();
-			}).fail(function()
-			{
-				numtofetch--;
-				finalizeFetch();
+				$.getJSON(A.getURL(A.URL.GuildStash, iGuildID), function(pData)
+				{
+					A.Data.Vaults[iGuildID] = pData;
+					numfetched++;
+					finalizeFetch();
+				}).fail(function()
+				{
+					numtofetch--;
+					finalizeFetch();
+				});
 			});
 		});
 	},
@@ -9968,6 +9975,33 @@ V = {
 		{
 			A.printError(A.PermissionEnum.Inventories);
 			dish.empty();
+		});
+	},
+	
+	/*
+	 * Generates the guild bank window for all permitting guilds.
+	 */
+	serveVault: function()
+	{
+		var dish = $("#accDish_Vault");
+		if (A.reinitializeDish(dish) === false)
+		{
+			return;
+		}
+		var container = B.createBank(dish);
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var slotdata;
+		var tab, slotscontainer, slot;
+		$.getJSON(A.getURL(A.URL.Account), function(pData)
+		{
+			A.Data.Account = pData;
+			A.initializeVault(function()
+			{
+				for (var i in A.Data.Vaults)
+				{
+					I.log(A.Data.Vaults[i]);
+				}
+			});
 		});
 	},
 	
