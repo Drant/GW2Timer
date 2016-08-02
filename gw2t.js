@@ -6959,6 +6959,48 @@ A = {
 	},
 	
 	/*
+	 * Caches guild details objects for the current account if haven't already.
+	 * @param array pGuilds containing guild IDs.
+	 * @param function pCallback to execute after.
+	 */
+	initializeGuilds: function(pCallback)
+	{
+		var guildids = A.Data.Account.guilds;
+		if (guildids === undefined || guildids === null || guildids.length <= 0)
+		{
+			pCallback();
+			return;
+		}
+		
+		// Fetch the guild details from the array of guild IDs
+		var numfetched = 0;
+		for (var i = 0; i < guildids.length; i++)
+		{
+			// Only fetch if haven't cached it
+			if (A.Data.Guilds[(guildids[i])] === undefined)
+			{
+				$.getJSON(U.URL_API.GuildDetails + guildids[i], function(pData)
+				{
+					A.Data.Guilds[pData.guild_id] = pData;
+					numfetched++;
+					if (numfetched === guildids.length)
+					{
+						pCallback();
+					}
+				});
+			}
+			else
+			{
+				numfetched++;
+				if (numfetched === guildids.length)
+				{
+					pCallback();
+				}
+			}
+		}
+	},
+	
+	/*
 	 * Downloads guild bank data for all of the account's guilds, if permitting.
 	 * @param function pCallback to execute after.
 	 * @pre Account guilds data were downloaded.
@@ -8779,7 +8821,31 @@ V = {
 				}
 			});
 			// Retrieve and insert guilds
-			V.initializeGuilds(pData.guilds);
+			A.initializeGuilds(function()
+			{
+				// Guild tag next to each character's name
+				var guildids = pData.guilds;
+				A.Data.Characters.forEach(function(iChar)
+				{
+					if (iChar.guild)
+					{
+						var guildtag = "<sup class='chrTag'>[" + (A.Data.Guilds[iChar.guild]).tag + "]" + "</sup>";
+						$("#chrName_" + iChar.oCharIndex).append(guildtag);
+					}
+				});
+
+				var guildheader = "<li class='chrHeader'><var class='chrHeaderLeft'>" + D.getWordCapital("guilds") + "</var></li>";
+				$("#chrGuilds").append(guildheader);
+				for (var i in guildids)
+				{
+					var guild = A.Data.Guilds[(guildids[i])];
+					var banner = U.getGuildBannerURL(guild.guild_name);
+					var guildrow = "<li class='chrGuild'><span class='chrGuildHover'><img class='chrGuildBanner' src='" + banner + "' />"
+							+ "<img class='chrGuildBanner chrGuildBannerLarge' src='" + banner + "' /></span>"
+						+ "<var class='chrGuildName'>" + guild.guild_name + " [" + guild.tag + "]</var></li>";
+					$("#chrGuilds").append(guildrow);
+				}
+			});
 			V.initializeWallet();
 			// Finally for the summary
 			$("#chrSummary").show("fast");
@@ -8788,72 +8854,6 @@ V = {
 		// Finally
 		I.qTip.init("#accPlatterCharacters var");
 		$(".chrStats").show("fast");
-	},
-	
-	/*
-	 * Caches guild details objects and writes guild information where needed.
-	 * @param array pGuilds containing guild IDs.
-	 */
-	initializeGuilds: function(pGuilds)
-	{
-		if (pGuilds === undefined || pGuilds === null || pGuilds.length <= 0)
-		{
-			return;
-		}
-		
-		// Add guild information to HTML
-		var finalizeGuilds = function()
-		{
-			// Guild tag next to each character's name
-			A.Data.Characters.forEach(function(iChar)
-			{
-				if (iChar.guild)
-				{
-					var guildtag = "<sup class='chrTag'>[" + (A.Data.Guilds[iChar.guild]).tag + "]" + "</sup>";
-					$("#chrName_" + iChar.oCharIndex).append(guildtag);
-				}
-			});
-			
-			var guildheader = "<li class='chrHeader'><var class='chrHeaderLeft'>" + D.getWordCapital("guilds") + "</var></li>";
-			$("#chrGuilds").append(guildheader);
-			for (var i in pGuilds)
-			{
-				var guild = A.Data.Guilds[(pGuilds[i])];
-				var banner = U.getGuildBannerURL(guild.guild_name);
-				var guildrow = "<li class='chrGuild'><span class='chrGuildHover'><img class='chrGuildBanner' src='" + banner + "' />"
-						+ "<img class='chrGuildBanner chrGuildBannerLarge' src='" + banner + "' /></span>"
-					+ "<var class='chrGuildName'>" + guild.guild_name + " [" + guild.tag + "]</var></li>";
-				$("#chrGuilds").append(guildrow);
-			}
-		};
-		
-		// Fetch the guild details from the array of guild IDs
-		var numfetched = 0;
-		for (var i = 0; i < pGuilds.length; i++)
-		{
-			// Only fetch if haven't cached it
-			if (A.Data.Guilds[(pGuilds[i])] === undefined)
-			{
-				$.getJSON(U.URL_API.GuildDetails + pGuilds[i], function(pData)
-				{
-					A.Data.Guilds[pData.guild_id] = pData;
-					numfetched++;
-					if (numfetched === pGuilds.length)
-					{
-						finalizeGuilds();
-					}
-				});
-			}
-			else
-			{
-				numfetched++;
-				if (numfetched === pGuilds.length)
-				{
-					finalizeGuilds();
-				}
-			}
-			
-		}
 	},
 	
 	/*

@@ -692,7 +692,8 @@ Back: [
 	{i: 79038, n: "Assaulter's Xera Backpiece (Infused)", p: {raid_ft: 600}},
 	{i: 79039, n: "Malicious Xera Backpiece (Infused)", p: {raid_ft: 600}},
 	{i: 79044, n: "Defender's Xera Backpiece (Infused)", p: {raid_ft: 600}},
-	{i: 79157, n: "Blood Ruby Backpack", p: {magic: 5000}}
+	{i: 79157, n: "Blood Ruby Backpack", p: {magic: 5000}},
+	{i: 79062, n: "Blood Ruby Backpack (Infused)", p: {magic: 5000}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -829,6 +830,7 @@ Ring: [
 	{i: 39328, n: "Circle of Light", p: {coin: 0}},
 	{i: 37095, n: "Circle of Light (Infused)", p: {coin: 0}},
 	{i: 49397, n: "Circle of Light (Infused)", p: {coin: 0}},
+	{i: 79095, n: "Attuned Circle of Light", p: {coin: 0}},
 	{i: 79072, n: "Attuned Circle of Light (Infused)", p: {coin: 0}},
 	{i: 37093, n: "Snaff's Gyre", p: {coin: 0}},
 	{i: 37113, n: "Snaff's Gyre (Infused)", p: {coin: 0}},
