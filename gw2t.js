@@ -6152,7 +6152,7 @@ A = {
 		Account: {},
 		Characters: [],
 		CharacterNames: null,
-		Guilds: {}, // Guild details objects, accessed using the guild IDs
+		Guilds: {}, // Guild details objects, accessed using a guild ID
 		Vaults: {},
 		Wallet: {},
 		Specializations: {},
@@ -6982,6 +6982,7 @@ A = {
 				$.getJSON(U.URL_API.GuildDetails + guildids[i], function(pData)
 				{
 					A.Data.Guilds[pData.guild_id] = pData;
+					A.Data.Guilds[pData.guild_id].oTag = "[" + pData.tag + "]";
 					numfetched++;
 					if (numfetched === guildids.length)
 					{
@@ -7012,7 +7013,7 @@ A = {
 			var guilds = A.Data.Account.guilds;
 			A.Data.Vaults = {};
 			var numfetched = 0;
-			var numtofetch = guilds.length - 1;
+			var numtofetch = guilds.length;
 
 			var finalizeFetch = function()
 			{
@@ -7020,9 +7021,10 @@ A = {
 				{
 					if (numfetched === 0)
 					{
-						I.print("Unable to access any guild bank for this account.<br />Note that only guild leaders may access guilt vaults API.");
+						A.Data.Vaults = null;
+						I.print("Unable to access any guild bank for this account.<br />Requires account with stash and trove guild permissions.");
 					}
-					pCallback();
+					pCallback(A.Data.Vaults);
 				}
 			};
 
@@ -9990,16 +9992,107 @@ V = {
 		}
 		var container = B.createBank(dish);
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var slotdata;
+		var guild, slotdata;
 		var tab, slotscontainer, slot;
+		var sortedvaults = [], vault, subvault;
+		var subbankname = {
+			"0": D.getString("GuildStash"),
+			"1": D.getString("TreasureTrove"),
+			"2": D.getString("DeepCave")
+		};
+		
+		var generateVault = function()
+		{
+			bank.empty();
+			var numitems = 0;
+			var numtofetch = 0;
+			var numfetched = 0;
+			// First order the vaults by the number of unique items they have
+			for (var i in A.Data.Vaults)
+			{
+				vault = A.Data.Vaults[i];
+				var uniqueitems = {};
+				var uniquecount = 0;
+				vault.forEach(function(iSubvault)
+				{
+					iSubvault.inventory.forEach(function(iSlotData)
+					{
+						if (iSlotData)
+						{
+							numtofetch++;
+							if (uniqueitems[iSlotData.id] === undefined)
+							{
+								uniqueitems[iSlotData.id] = true;
+								uniquecount++;
+							}
+						}
+					});
+				});
+				vault.oGuildID = i;
+				vault.oUniqueCount = uniquecount;
+				sortedvaults.push(vault);
+			}
+			U.sortObjects(sortedvaults, {aKeyName: "oUniqueCount", aIsDescending: true});
+			
+			// Fill the vaults
+			for (var i in sortedvaults)
+			{
+				vault = sortedvaults[i];
+				guild = A.Data.Guilds[vault.oGuildID];
+				for (var ii = 0; ii < vault.length; ii++)
+				{
+					subvault = vault[ii];
+					tab = B.createBankTab(bank, {aTitle: guild.oTag + " " + subbankname[ii]});
+					slotscontainer = tab.find(".bnkTabSlots");
+					subvault.inventory.forEach(function(iSlotData)
+					{
+						slot = B.createBankSlot(slotscontainer);
+						// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
+						if (iSlotData)
+						{
+							slot.data("count", iSlotData.count);
+							numitems += iSlotData.count;
+							(function(iSlot, iSlotData)
+							{
+								Q.getItem(iSlotData.id, function(iItem)
+								{
+									B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+									{
+										numfetched++;
+										A.setProgressBar(numfetched, numtofetch);
+									}});
+								});
+							})(slot, iSlotData);
+						}
+						else
+						{
+							// For empty inventory slots
+							B.styleBankSlot(slot);
+						}
+					});
+				}
+			}
+			// Update tallies
+			B.tallyBank(container);
+			// Create search bar
+			B.createBankMenu(bank, {
+				aHelpMessage: $("#accHelpVault").html()
+			});
+		};
+		
+		// Retrieve guilds and guild data
 		$.getJSON(A.getURL(A.URL.Account), function(pData)
 		{
 			A.Data.Account = pData;
-			A.initializeVault(function()
+			A.initializeVault(function(pData)
 			{
-				for (var i in A.Data.Vaults)
+				if (pData)
 				{
-					I.log(A.Data.Vaults[i]);
+					generateVault();
+				}
+				else
+				{
+					bank.empty();
 				}
 			});
 		});
@@ -10883,7 +10976,7 @@ B = {
 						{
 							Settings.aPriceCallback(pPrice);
 						}
-					});
+					}, true);
 				}
 				else if (Settings.aPrice > 0)
 				{
@@ -16518,7 +16611,11 @@ D = {
 		s_ExcessiveAlcohol: {en: "Excessive alcohol consumption will result in intoxication.", de: "Übermäßiger Alkoholkonsum führt zu Rauschzuständen.",
 			es: "El consumo excesivo de alcohol provoca embriaguez.", fr: "Consommer trop d&apos;alcool entraîne une ivresse manifeste."},
 		s_GainBasedPercentage: {en: "Gain {1} Based on a Percentage of {0}", de: "Erhaltener prozentualer Anteil von {0} auf {1}:",
-			es: "Ganas {1} según tu porcentaje de {0}", fr: "Vous bénéficiez d'une augmentation de {1} de {0}%."}
+			es: "Ganas {1} según tu porcentaje de {0}", fr: "Vous bénéficiez d'une augmentation de {1} de {0}%."},
+		// Guild
+		s_GuildStash: {en: "Guild Stash", de: "Geheimvorrat", es: "Alijo del clan", fr: "Réserve de guilde"},
+		s_TreasureTrove: {en: "Treasure Trove", de: "Schatzgrube", es: "Tesoro oculto", fr: "Trésor"},
+		s_DeepCave: {en: "Deep Cave", de: "Tiefe Höhle", es: "Cueva profunda", fr: "Grotte profonde"}
 	},
 	
 	
