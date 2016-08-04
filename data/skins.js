@@ -145,9 +145,9 @@ var GW2T_SKINS_BLACKLIST = {
 	"1076": "",
 	"1078": "",
 	"1080": "",
-	"1181": "Bunny Ears",
 	"1083": "",
 	"1088": "",
+	"1089": "",
 	"1104": "",
 	"1108": "",
 	"1109": "",
@@ -157,7 +157,9 @@ var GW2T_SKINS_BLACKLIST = {
 	"1115": "",
 	"1117": "",
 	"1118": "",
+	"1129": "",
 	"1133": "",
+	"1138": "",
 	"1139": "",
 	"1142": "",
 	"1146": "",
@@ -173,6 +175,7 @@ var GW2T_SKINS_BLACKLIST = {
 	"1166": "",
 	"1167": "",
 	"1168": "",
+	"1170": "",
 	"1171": "",
 	"1173": "",
 	"1174": "",
@@ -182,6 +185,7 @@ var GW2T_SKINS_BLACKLIST = {
 	"1178": "",
 	"1179": "",
 	"1180": "",
+	"1181": "Bunny Ears",
 	"1182": "",
 	"1183": "",
 	"1193": "",
@@ -268,22 +272,22 @@ var GW2T_SKINS_BLACKLIST = {
 	"6072": "Shadow Assassin Short Bow",
 	"6075": "Firefly Mining Flute",
 	"6741": "",
-	"6773": "Guild Cavalier Axe",
-	"6766": "Guild Cavalier Mace",
-	"6770": "Guild Cavalier Sword",
-	"6781": "Guild Cavalier Dagger",
-	"6762": "Guild Cavalier Pistol",
-	"6782": "Guild Cavalier Scepter",
-	"6769": "Guild Cavalier Focus",
-	"6778": "Guild Cavalier Shield",
-	"6776": "Guild Cavalier Torch",
+	"6748": "Guild Cavalier Longbow",
+	"6750": "Guild Cavalier Rifle",
 	"6754": "Guild Cavalier Warhorn",
 	"6755": "Guild Cavalier Greatsword",
 	"6761": "Guild Cavalier Hammer",
-	"6748": "Guild Cavalier Longbow",
+	"6762": "Guild Cavalier Pistol",
+	"6763": "Guild Cavalier Staff",
+	"6766": "Guild Cavalier Mace",
+	"6769": "Guild Cavalier Focus",
+	"6770": "Guild Cavalier Sword",
 	"6771": "Guild Cavalier Short Bow",
-	"6750": "Guild Cavalier Rifle",
-	"6763": "Guild Cavalier Staff"
+	"6773": "Guild Cavalier Axe",
+	"6776": "Guild Cavalier Torch",
+	"6778": "Guild Cavalier Shield",
+	"6781": "Guild Cavalier Dagger",
+	"6782": "Guild Cavalier Scepter"
 };
 
 /*
@@ -297,7 +301,7 @@ var GW2T_SKINS_BLACKLIST = {
  */
 var GW2T_SKINS_DATA = {
 Back: [
-	{u: 2340, i: 6546, n: "Universal Multitool Pack", p: {starting: true}},
+	{u: 2340, i: 6546, n: "中Universal Multitool Pack", p: {starting: true}},
 	{u: 2336, i: 36397, n: "Mad Memoires", p: {achievement: 0}},
 	{u: 2338, i: 36398, n: "Mad Memoires: Complete Edition", p: {achievement: 0}},
 	{u: 2374, i: 38473, n: "Lined Toymaker's Bag", p: {achievement: 0}},
@@ -459,7 +463,9 @@ Back: [
 	{u: 6744, i: 78732, n: "Macaw Wings Backpack", p: {gem: 700}},
 	{u: 6745, i: 78733, n: "Sloth Backpack", p: {gem: 500}},
 	{u: 6774, i: 78745, n: "Moth Wings Backpack", p: {gem: 700}},
-	{u: 6809, i: 78848, n: "Keep Construct Mask", p: {raid_ft: 600}}
+	{u: 6809, i: 78848, n: "Keep Construct Mask", p: {raid_ft: 600}},
+	{u: 6854, i: 79288, n: "Shining Blade Backpack", p: {gem: 700}},
+	{u: 6875, i: 79157, n: "Blood Ruby Backpack", p: {magic: 5000}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", t: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -600,7 +606,8 @@ Armor_Light_Helm: [
 	{u: 6493, i: 71931, n: "Karka Helm", t: [71931]},
 	{u: 6739, i: 78463, n: "Triumphant Masque", p: {badge: 0}},
 	{u: 6802, i: 78834, n: "Experimental Envoy Cowl", p: {craft: true}},
-	{u: 6842, i: 79014, n: "Xera's Mask", p: {gem: 400}}
+	{u: 6842, i: 79014, n: "Xera's Mask", p: {gem: 400}},
+	{u: 6881, i: 79050, n: "Bloodstone Crown", p: {achievement: 0}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -1113,7 +1120,8 @@ Armor_Medium_Helm: [
 	{u: 6317, i: 76863, n: "Leystone Mask", p: {coin: 0}},
 	{u: 6725, i: 78620, n: "Triumphant Faceguard", p: {badge: 0}},
 	{u: 6790, i: 78995, n: "Experimental Envoy Leggings", p: {craft: true}},
-	{u: 6845, i: 79014, n: "Xera's Mask", p: {gem: 400}}
+	{u: 6845, i: 79014, n: "Xera's Mask", p: {gem: 400}},
+	{u: 6858, i: 79159, n: "Bloodstone Crown", p: {achievement: 0}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1619,7 +1627,8 @@ Armor_Heavy_Helm: [
 	{u: 6519, i: 74322, n: "Mistward Headwrap", p: {achievement: 0}},
 	{u: 6734, i: 78501, n: "Triumphant Warhelm", p: {badge: 0}},
 	{u: 6799, i: 78940, n: "Experimental Envoy Helmet", p: {craft: true}},
-	{u: 6841, i: 79014, n: "Xera's Mask", p: {gem: 400}}
+	{u: 6841, i: 79014, n: "Xera's Mask", p: {gem: 400}},
+	{u: 6856, i: 79240, n: "Bloodstone Crown", p: {achievement: 0}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -2163,7 +2172,8 @@ Weapon_Axe: [
 	{u: 6692, i: 78427, n: "Spectral Axe", t: [78427]},
 	{u: 6749, i: 78777, n: "Cavalier Axe", t: [78777]},
 	{u: 6789, i: 78872, n: "Privateer Axe", p: {blticket: 1}},
-	{u: 6810, i: 78963, n: "White Mantle Axe", p: {raid_ft: 600}}
+	{u: 6810, i: 78963, n: "White Mantle Axe", p: {raid_ft: 600}},
+	{u: 6874, i: 79174, n: "Embellished Axe", t: [79174]}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", t: [49332]},
@@ -2290,7 +2300,8 @@ Weapon_Mace: [
 	{u: 6675, i: 78098, n: "Kaiser Snake Mace", t: [78013]},
 	{u: 6709, i: 78316, n: "Spectral Mace", t: [78316]},
 	{u: 6747, i: 78779, n: "Cavalier Mace", t: [78779]},
-	{u: 6832, i: 78889, n: "Privateer Mace", p: {blticket: 1}}
+	{u: 6832, i: 78889, n: "Privateer Mace", p: {blticket: 1}},
+	{u: 6866, i: 79300, n: "Embellished Mace", t: [79300]}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", t: [49353]},
@@ -2438,7 +2449,8 @@ Weapon_Sword: [
 	{u: 6696, i: 78523, n: "Spectral Sword", t: [78523]},
 	{u: 6772, i: 78747, n: "Cavalier Sword", t: [78747]},
 	{u: 6817, i: 78831, n: "Privateer Sword", p: {blticket: 1}},
-	{u: 6788, i: 78901, n: "White Mantle Gladius", p: {raid_ft: 600}}
+	{u: 6788, i: 78901, n: "White Mantle Gladius", p: {raid_ft: 600}},
+	{u: 6859, i: 79192, n: "Embellished Sword", t: [79192]}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", t: [49317]},
@@ -2576,7 +2588,8 @@ Weapon_Dagger: [
 	{u: 6729, i: 78263, n: "Spectral Dagger", t: [78263]},
 	{u: 6751, i: 78780, n: "Cavalier Dagger", t: [78780]},
 	{u: 6793, i: 78956, n: "Privateer Dagger", p: {blticket: 1}},
-	{u: 6815, i: 78943, n: "White Mantle Seax", p: {raid_ft: 600}}
+	{u: 6815, i: 78943, n: "White Mantle Seax", p: {raid_ft: 600}},
+	{u: 6877, i: 79246, n: "Embellished Dagger", t: [79246]}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", t: [49335]},
@@ -2708,7 +2721,8 @@ Weapon_Pistol: [
 	{u: 6666, i: 78077, n: "Kaiser Snake Pistol", t: [78077]},
 	{u: 6723, i: 78648, n: "Spectral Pistol", t: [78648]},
 	{u: 6756, i: 78749, n: "Cavalier Pistol", t: [78749]},
-	{u: 6786, i: 78840, n: "Privateer Pistol", p: {blticket: 1}}
+	{u: 6786, i: 78840, n: "Privateer Pistol", p: {blticket: 1}},
+	{u: 6886, i: 79107, n: "Embellished Pistol", t: [79107]}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", t: [49341]},
@@ -2844,7 +2858,8 @@ Weapon_Scepter: [
 	{u: 6746, i: 78774, n: "Cavalier Scepter", t: [78774]},
 	{u: 6808, i: 78854, n: "Privateer Scepter", p: {blticket: 1}},
 	{u: 6804, i: 78847, n: "White Mantle Rod", p: {raid_ft: 600}},
-	{u: 6813, i: 78852, n: "Xera's Scepter", p: {raid_ft: 600}}
+	{u: 6813, i: 78852, n: "Xera's Scepter", p: {raid_ft: 600}},
+	{u: 6861, i: 79131, n: "Embellished Scepter", t: [79131]}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", t: [44897]},
@@ -2996,7 +3011,8 @@ Weapon_Focus: [
 	{u: 6708, i: 78406, n: "Spectral Focus", t: [78406]},
 	{u: 6767, i: 78755, n: "Cavalier Focus", t: [78755]},
 	{u: 6816, i: 78798, n: "Privateer Focus", p: {blticket: 1}},
-	{u: 6821, i: 78844, n: "White Mantle Icon", p: {raid_ft: 600}}
+	{u: 6821, i: 78844, n: "White Mantle Icon", p: {raid_ft: 600}},
+	{u: 6848, i: 79109, n: "Embellished Focus", t: [79109]}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", t: [49344]},
@@ -3144,7 +3160,8 @@ Weapon_Shield: [
 	{u: 6664, i: 78112, n: "Kaiser Snake Shield", t: [78112]},
 	{u: 6681, i: 78354, n: "Spectral Shield", t: [78354]},
 	{u: 6768, i: 78765, n: "Cavalier Shield", t: [78765]},
-	{u: 6827, i: 78968, n: "Privateer Shield", p: {blticket: 1}}
+	{u: 6827, i: 78968, n: "Privateer Shield", p: {blticket: 1}},
+	{u: 6869, i: 79209, n: "Embellished Shield", t: [79209]}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -3273,7 +3290,8 @@ Weapon_Torch: [
 	{u: 6714, i: 78311, n: "Spectral Torch", t: [78311]},
 	{u: 6780, i: 78761, n: "Cavalier Torch", t: [78761]},
 	{u: 6807, i: 78803, n: "Privateer Torch", p: {blticket: 1}},
-	{u: 6836, i: 78986, n: "Keep Construct Torch", p: {raid_ft: 600}}
+	{u: 6836, i: 78986, n: "Keep Construct Torch", p: {raid_ft: 600}},
+	{u: 6873, i: 79101, n: "Embellished Torch", t: [79101]}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", t: [49359]},
@@ -3402,7 +3420,8 @@ Weapon_Warhorn: [
 	{u: 6671, i: 78096, n: "Kaiser Snake Warhorn", t: [78096]},
 	{u: 6735, i: 78189, n: "Spectral Warhorn", t: [78189]},
 	{u: 6777, i: 78757, n: "Cavalier Warhorn", t: [78757]},
-	{u: 6797, i: 78932, n: "Privateer Warhorn", p: {blticket: 1}}
+	{u: 6797, i: 78932, n: "Privateer Warhorn", p: {blticket: 1}},
+	{u: 6876, i: 79307, n: "Embellished Warhorn", t: [79307]}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", t: [49321, 49323]},
@@ -3547,7 +3566,9 @@ Weapon_Greatsword: [
 	{u: 6677, i: 78053, n: "Kaiser Snake Greatsword", t: [78053]},
 	{u: 6703, i: 78660, n: "Spectral Greatsword", t: [78660]},
 	{u: 6765, i: 78772, n: "Cavalier Greatsword", t: [78772]},
-	{u: 6803, i: 78924, n: "Privateer Greatsword", p: {blticket: 1}}
+	{u: 6803, i: 78924, n: "Privateer Greatsword", p: {blticket: 1}},
+	{u: 6864, i: 79056, n: "Mistwild Greatsword", p: {achievement: 0}},
+	{u: 6882, i: 79261, n: "Embellished Greatsword", t: [79261]}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", t: [49326]},
@@ -3685,7 +3706,8 @@ Weapon_Hammer: [
 	{u: 6724, i: 78166, n: "Spectral Hammer", t: [78166]},
 	{u: 6764, i: 78750, n: "Cavalier Hammer", t: [78750]},
 	{u: 6787, i: 78993, n: "Privateer Hammer", p: {blticket: 1}},
-	{u: 6805, i: 78875, n: "White Mantle Sledge", p: {raid_ft: 600}}
+	{u: 6805, i: 78875, n: "White Mantle Sledge", p: {raid_ft: 600}},
+	{u: 6868, i: 79277, n: "Embellished Hammer", t: [79277]}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", t: [44906]},
@@ -3822,7 +3844,8 @@ Weapon_Longbow: [
 	{u: 6669, i: 78048, n: "Kaiser Snake Longbow", t: [78048]},
 	{u: 6689, i: 78629, n: "Spectral Longbow", t: [78629]},
 	{u: 6758, i: 78776, n: "Cavalier Longbow", t: [78776]},
-	{u: 6819, i: 78929, n: "Privateer Longbow", p: {blticket: 1}}
+	{u: 6819, i: 78929, n: "Privateer Longbow", p: {blticket: 1}},
+	{u: 6865, i: 79162, n: "Embellished Longbow", t: [79162]}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", t: [44924]},
@@ -3962,7 +3985,8 @@ Weapon_Shortbow: [
 	{u: 6717, i: 78556, n: "Chuka and Champawat", p: {craft: true}},
 	{u: 6720, i: 78664, n: "Spectral Short Bow", t: [78664]},
 	{u: 6753, i: 78778, n: "Cavalier Short Bow", t: [78778]},
-	{u: 6830, i: 78816, n: "Privateer Short Bow", p: {blticket: 1}}
+	{u: 6830, i: 78816, n: "Privateer Short Bow", p: {blticket: 1}},
+	{u: 6862, i: 79125, n: "Embellished Short Bow", t: [79125]}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", t: [49338]},
@@ -4098,7 +4122,8 @@ Weapon_Rifle: [
 	{u: 6704, i: 78131, n: "Spectral Rifle", t: [78131]},
 	{u: 6757, i: 78775, n: "Cavalier Rifle", t: [78775]},
 	{u: 6822, i: 78841, n: "Privateer Rifle", p: {blticket: 1}},
-	{u: 6835, i: 78927, n: "White Mantle Rifle", p: {raid_ft: 600}}
+	{u: 6835, i: 78927, n: "White Mantle Rifle", p: {raid_ft: 600}},
+	{u: 6871, i: 79074, n: "Embellished Rifle", t: [79074]}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", t: [49348, 49350]},
@@ -4248,7 +4273,8 @@ Weapon_Staff: [
 	{u: 6710, i: 78580, n: "Spectral Staff", t: [78580]},
 	{u: 6783, i: 78759, n: "Cavalier Staff", t: [78759]},
 	{u: 6826, i: 78908, n: "Privateer Staff", p: {blticket: 1}},
-	{u: 6825, i: 78911, n: "White Mantle Spire", p: {raid_ft: 600}}
+	{u: 6825, i: 78911, n: "White Mantle Spire", p: {raid_ft: 600}},
+	{u: 6887, i: 79054, n: "Embellished Staff", t: [79054]}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", t: [63881]},

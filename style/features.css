@@ -865,18 +865,19 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 .chl_ta { background-position: -256px 0; }
 .chl_aetherblade { background-position: 0 0; }
 .chl_aquatic { background-position: -32px 0; }
-.chl_cliffside { background-position: -64px 0; }
-.chl_furnace { background-position: -96px 0; }
-.chl_maitrin { background-position: -128px 0; }
-.chl_molten { background-position: -160px 0; }
-.chl_ocean { background-position: -192px 0; }
-.chl_snowblind { background-position: -224px 0; }
-.chl_swamp { background-position: -256px 0; }
-.chl_thaumanova { background-position: -288px 0; }
-.chl_uncategorized { background-position: -320px 0; }
-.chl_underground { background-position: -352px 0; }
-.chl_urban { background-position: -384px 0; }
-.chl_volcanic { background-position: -416px 0; }
+.chl_chaos { background-position: -64px 0; }
+.chl_cliffside { background-position: -96px 0; }
+.chl_furnace { background-position: -128px 0; }
+.chl_maitrin { background-position: -160px 0; }
+.chl_molten { background-position: -192px 0; }
+.chl_ocean { background-position: -224px 0; }
+.chl_snowblind { background-position: -256px 0; }
+.chl_swamp { background-position: -288px 0; }
+.chl_thaumanova { background-position: -320px 0; }
+.chl_uncategorized { background-position: -352px 0; }
+.chl_underground { background-position: -384px 0; }
+.chl_urban { background-position: -416px 0; }
+.chl_volcanic { background-position: -448px 0; }
 
 .chlDungeonBar label {
 	display: inline;

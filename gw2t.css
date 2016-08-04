@@ -1175,6 +1175,9 @@ textarea.jsCopyCode {
 	font-weight: bold;
 	color: #dd9900;
 }
+#dsbStoryTitle a {
+	color: #dd9900;
+}
 #dsbStory .chnBar {
 	width: auto;
 	line-height: 100%;

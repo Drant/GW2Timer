@@ -2599,6 +2599,7 @@ U = {
 					}
 					Z.scrapeAPIArray(pagenumbers, url + "&page=", {
 						aIsStandard: false,
+						aCooldown: 60,
 						aCallback: function(pPages)
 					{
 						book = book.concat(pData);
@@ -4370,7 +4371,7 @@ Z = {
 			{
 				Z.updateItemsSubdatabase(args[1]);
 			}},
-			collate: {usage: "Executes a function to update and categorize an API cache. <em>Parameters: str_section</em>", f: function()
+			collate: {usage: "Executes a function to update and categorize an unlockables record. <em>Parameters: str_section</em>", f: function()
 			{
 				Z.executeCollate(args[1]);
 			}}
@@ -4736,6 +4737,7 @@ Z = {
 	 * @objparam string aQueryStr arguments for the API url, optional.
 	 * @objparam boolean aIsStandard whether to format the URL in standard v2 API format with a "/" preceding the ID.
 	 * @objparam function aCallback to execute after finishing scraping, optional.
+	 * @objparam int aCooldown seconds between cooldown.
 	 * @objparam int aRetryCount used internally for recursive retrieval of failed IDs.
 	 * @objparam array aCacheArray from previous scrape.
 	 */
@@ -4751,7 +4753,7 @@ Z = {
 		var reqindex = 0;
 		var numretries = 3;
 		var reqlimit = 500;
-		var reqcooldownms = 30000;
+		var reqcooldownms = (Settings.aCooldown || 30) * T.cMSECONDS_IN_SECOND;
 		var numtofetch = 0;
 		var numfetched = 0;
 		var cachearr = Settings.aCacheArray || new Array(pArray.length);
@@ -4784,6 +4786,7 @@ Z = {
 						aCacheArray: cachearr,
 						aFailedIndexes: failedindexes,
 						aIsStandard: Settings.aIsStandard,
+						aCooldown: Settings.aCooldown,
 						aCallback: Settings.aCallback
 					});
 				}
@@ -5146,7 +5149,7 @@ Z = {
 						// Force unicode encoding on English
 						if (lang === O.OptionEnum.Language.English)
 						{
-							Z.APICacheArrayOfObjects[0].name += "中";
+							Z.APICacheArrayOfObjects[0].name += I.Symbol.Unicode;
 						}
 						Z.printAPICache(U.TypeEnum.isAssoc, {
 							aWantQuotes: true,
@@ -5289,20 +5292,23 @@ Z = {
 			itemselm = $("<div></div>").appendTo(entryelm);
 			
 			itemidsproperty = ithentry[Settings.aItemIDsKey];
-			itemids = (Array.isArray(itemidsproperty)) ? itemidsproperty : [itemidsproperty];
-			for (var ii = 0; ii < itemids.length; ii++)
+			if (itemidsproperty)
 			{
-				itemid = itemids[ii];
-				name = (Settings.aItemDB) ? Settings.aItemDB[itemid].name : ithentry.name;
-				entrystr = U.lineJSON(ithentry.oRecordEntry || {
-					u: ithentry.id,
-					i: itemid,
-					n: name,
-					p: {coin: null}
-				}, false);
-				inputselm = $("<aside>&nbsp;<a" + U.convertExternalAnchor(U.getWikiLinkDefault(name)) + ">" + name + "</a></aside>").appendTo(itemselm);
-				$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(entrystr);
-				$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(itemid);
+				itemids = (Array.isArray(itemidsproperty)) ? itemidsproperty : [itemidsproperty];
+				for (var ii = 0; ii < itemids.length; ii++)
+				{
+					itemid = itemids[ii];
+					name = (Settings.aItemDB) ? Settings.aItemDB[itemid].name : ithentry.name;
+					entrystr = U.lineJSON(ithentry.oRecordEntry || {
+						u: ithentry.id,
+						i: itemid,
+						n: name,
+						p: {coin: null}
+					}, false);
+					inputselm = $("<aside>&nbsp;<a" + U.convertExternalAnchor(U.getWikiLinkDefault(name)) + ">" + name + "</a></aside>").appendTo(itemselm);
+					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(entrystr);
+					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(itemid);
+				}
 			}
 			entryelm.find(".cssInputText").click(function()
 			{
@@ -6006,10 +6012,18 @@ Z = {
 		
 		var fetchPrices = function()
 		{
+			// Scan the entire item database for untradeable items
 			var blacklist = U.getRecordBlacklist("prices");
+			for (var i in db)
+			{
+				if (Q.isTradeable(db[i]) === false && blacklist[i] === undefined)
+				{
+					blacklist[i] = 1;
+				}
+			}
+			// Include ingredients of composite items
 			var compositeingr = U.getRecordMetadata("ascended").CompositeIngredients;
 			var ingrid;
-			// Include ingredients of composite items
 			for (var i in compositeingr)
 			{
 				for (var ii = 0; ii < compositeingr[i].length; ii++)
@@ -6153,7 +6167,7 @@ A = {
 		Characters: [],
 		CharacterNames: null,
 		Guilds: {}, // Guild details objects, accessed using a guild ID
-		Vaults: {},
+		Vaults: null,
 		Wallet: {},
 		Specializations: {},
 		Traits: {}
@@ -6635,6 +6649,7 @@ A = {
 			A.Permissions[i] = null;
 		}
 		A.Data.CharacterNames = null;
+		A.Data.Vaults = null;
 		// Prevent skipping loading the characters section first
 		$("#accMenu_Characters").data("iscurrentaccounttab", null);
 		$(".accDishMenu").empty();
@@ -7022,7 +7037,7 @@ A = {
 					if (numfetched === 0)
 					{
 						A.Data.Vaults = null;
-						I.print("Unable to access any guild bank for this account.<br />Requires account with stash and trove guild permissions.");
+						I.print("Unable to access any guild bank for this account.<br />Requires API key from account of guild leader.");
 					}
 					pCallback(A.Data.Vaults);
 				}
@@ -7050,12 +7065,13 @@ A = {
 	 * equipment, and materials. Also initializes the tally and gem store upgrades
 	 * objects for use in auditing.
 	 * @param function pCallback to execute after.
+	 * @param boolean pWantVault whether to include guild banks too.
 	 * @pre Characters data were downloaded by the Characters page.
 	 */
-	initializePossessions: function(pCallback)
+	initializePossessions: function(pCallback, pWantVault)
 	{
 		// Continue with callback if already initialized
-		if (A.Possessions)
+		if ((A.Possessions && !pWantVault) || (A.Possessions && pWantVault && A.Data.Vaults))
 		{
 			pCallback();
 			return;
@@ -7121,14 +7137,15 @@ A = {
 		};
 		
 		// Search the account for items
-		var compilePossessions = function(pSharedData, pBankData, pMaterialsData)
+		var compilePossessions = function(pSharedData, pBankData, pMaterialsData, pVaultData)
 		{
 			// Hold filled and capacity numbers
 			A.Tally = {
 				Characters: [0, 0],
 				Shared: [0, 0],
 				Bank: [0, 0],
-				Materials: [0, 0]
+				Materials: [0, 0],
+				Vault: [0, 0]
 			};
 			var bagsupgobj = A.Currency.AuditUpgrades.BagSlot;
 			var bagspurchased = 0;
@@ -7234,6 +7251,26 @@ A = {
 			});
 			A.assignAccountUpgrades("StorageExpander", Math.ceil(materialcountlargest / Q.ItemLimit.StackSize));
 			
+			// Add vault contents for all guilds if requested and permitted
+			if (pVaultData)
+			{
+				for (var i in pVaultData)
+				{
+					pVaultData[i].forEach(function(iSubvault)
+					{
+						iSubvault.inventory.forEach(function(iSlot)
+						{
+							if (iSlot)
+							{
+								A.Tally.Vault[0] += 1;
+								addItem(iSlot.id, "Vault", iSlot.count);
+							}
+						});
+						A.Tally.Vault[1] += iSubvault.size;
+					});
+				}
+			}
+			
 			// Execute callback after finishing compilation
 			pCallback();
 		};
@@ -7245,7 +7282,17 @@ A = {
 			{
 				$.getJSON(A.getURL(A.URL.Materials), function(pMaterialsData)
 				{
-					compilePossessions(pSharedData, pBankData, pMaterialsData);
+					if (pWantVault)
+					{
+						A.initializeVault(function(pVaultData)
+						{
+							compilePossessions(pSharedData, pBankData, pMaterialsData, pVaultData);
+						});
+					}
+					else
+					{
+						compilePossessions(pSharedData, pBankData, pMaterialsData);
+					}
 				});
 			});
 		}).fail(function()
@@ -7325,6 +7372,7 @@ A = {
 		var buttonsur = $("#audExecuteAlternate").hide();
 		I.suspendElement(button);
 		var container = $("#accAudit").empty();
+		var wantvaults = $("#audWantVaults").prop("checked");
 		var wanttransactions = $("#audWantTransactions").prop("checked");
 		var auditpayments = A.Currency.AuditPayments; // Auditable payment objects
 		var cachedprices; // Will contain payment or TP prices, accessible by item ID
@@ -7773,7 +7821,8 @@ A = {
 			var auditcatsmax = createCurrencyMaxes(auditcats);
 			for (var i in auditcats)
 			{
-				if ((i === "Buying" && currentbuysdata === undefined)
+				if ((i === "Vault" && A.Data.Vaults === null)
+					|| (i === "Buying" && currentbuysdata === undefined)
 					|| (i === "Selling" && currentsellsdata === undefined))
 				{
 					// Don't show the transaction columns if did not opt to audit them
@@ -7873,6 +7922,8 @@ A = {
 					}
 				}
 				// Add gems spent from account upgrades to appraisal
+				var sumgems = sumcat["gem"];
+				var totalgems = sumgems + upggems;
 				var upggemstocoin = convertCurrencyToCoin("gem", upggems);
 				totalappraisedbuy += upggemstocoin;
 				totalappraisedsell += upggemstocoin;
@@ -7883,10 +7934,10 @@ A = {
 				summary.append("<div id='audSummaryValues'>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("appraised") + " ―</div>"
 					+ "<div id='audSummaryAppraised' class='audSummaryCoin curHelp'></div>"
-					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(E.convertCoinToGem(totalappraisedsell)) + "</div>"
+					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(totalgems + E.convertCoinToGem(totalappraisedsellnogems)) + "</div>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("liquid") + " ―</div>"
 					+ "<div id='audSummaryLiquid' class='audSummaryCoin curHelp'>" + E.formatCoinString(totalliquidsell, {aWantBig: true}) + "</div>"
-					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(E.convertCoinToGem(totalliquidsell)) + "</div>"
+					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(walletcat["gem"] + E.convertCoinToGem(totalliquidsellnogems)) + "</div>"
 				+ "</div>");
 				
 				// Get previous audit report if available
@@ -7902,7 +7953,6 @@ A = {
 				var prevliquidbuy = (prevrep.totalliquidbuy > 0) ? (prevstr + E.formatCoinStringColored(prevrep.totalliquidbuy)) : "";
 				
 				// Tooltip over the coin value to show both and buy and sell
-				var sumgems = sumcat["gem"];
 				var appraisedtip = "<dfn>" + D.getPhraseOriginal("Appraised Summary") + ":</dfn> <br />"
 					+ D.getPhraseOriginal("Appraised Sell") + ": " + E.formatCoinStringColored(totalappraisedsell) + prevappraisedsell + "<br />"
 					+ D.getPhraseOriginal("Appraised Buy") + ": " + E.formatCoinStringColored(totalappraisedbuy) + prevappraisedbuy + "<br />"
@@ -8316,7 +8366,7 @@ A = {
 		A.initializePossessions(function()
 		{
 			fetchUnlocks();
-		});
+		}, wantvaults);
 	}
 };
 V = {
@@ -8418,8 +8468,10 @@ V = {
 	{
 		$("#accAuditContainer").show("fast");
 		// Audit option
-		$("#accAuditTop").append("<label><input id='audWantTransactions' type='checkbox' />"
-			+ D.getPhraseOriginal("Include current trading transactions") + ".</label>");
+		$("#accAuditTop").append(
+			"<label><input id='audWantTransactions' type='checkbox' />" + D.getPhraseOriginal("Include current trading transactions") + ".</label><br />"
+			+ "<label><input id='audWantVaults' type='checkbox' />" + D.getPhraseOriginal("Include guilds vault") + ".</label>"
+		);
 		// Audit buttons
 		var buttoncontainer = $("#accAuditCenter");
 		var executebtn = $("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
@@ -8447,6 +8499,8 @@ V = {
 		// Scroll to execute button if requested by URL
 		U.verifyArticle(I.SpecialPageEnum.Audit, function()
 		{
+			$("#audWantTransactions").prop("checked", true);
+			$("#audWantVaults").prop("checked", true);
 			executebtn.trigger("click");
 		});
 	},
@@ -10095,6 +10149,10 @@ V = {
 					bank.empty();
 				}
 			});
+		}).fail(function()
+		{
+			bank.empty();
+			A.printError(A.PermissionEnum.Account);
 		});
 	},
 	
@@ -16344,6 +16402,8 @@ D = {
 			cs: "SpS", it: "McM", pl: "SkS", pt: "McM", ru: "МпМ", zh: "世界戰場"},
 		s_stopwatch: {de: "stoppuhr", es: "cronómetro", fr: "chronomètre",
 			cs: "stopky", it: "cronografo", pl: "stoper", pt: "cronômetro", ru: "секундомер", zh: "碼錶"},
+		s_guilds: {de: "gilden", es: "clanes", fr: "guildes",
+			cs: "cechy", it: "clan", pl: "klany", pt: "clãs", ru: "гильдий", zh: "戰隊"},
 		
 		// Verbs
 		s_is: {de: "ist", es: "es", fr: "est",
@@ -28269,7 +28329,9 @@ H = {
 		// Initialize Living Story
 		if (H.isStoryEnabled && H.isStoryDashboard)
 		{
-			$("#dsbStory").before("<div id='dsbStoryTitle'>" + D.getObjectName(H.Story) + "</div>").show();
+			var storytitle = D.getObjectName(H.Story);
+			var storystr = (H.Story.url.length) ? "<a" + U.convertExternalAnchor(H.Story.url) + ">" + storytitle + "</a>" : storytitle;
+			$("#dsbStory").before("<div id='dsbStoryTitle'>" + storystr + "</div>").show();
 			I.bindScrollbar("#dsbStory");
 		}
 		
@@ -30245,6 +30307,7 @@ I = {
 	Symbol:
 	{
 		Filler: "&zwnj;", // Place this inside empty elements to give them dimension
+		Unicode: "中",
 		ArrowUp: "⇑",
 		ArrowDown: "⇓",
 		ArrowLeft: "⇐",

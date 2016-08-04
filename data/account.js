@@ -48,8 +48,6 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "poslední", it: "recenti", pl: "ostatnie", pt: "recente", ru: "последние", zh: "最近"},
 	s_pvp: {de: "pvp", es: "jcj", fr: "jcj",
 		cs: "hph", it: "gcg", pl: "pvp", pt: "jcj", ru: "ипи", zh: "玩家對戰"},
-	s_guilds: {de: "gilden", es: "clanes", fr: "guildes",
-		cs: "cechy", it: "clan", pl: "klany", pt: "clãs", ru: "гильдий", zh: "戰隊"},
 	s_achievements: {de: "erfolge", es: "logros", fr: "succès",
 		cs: "výsledky", it: "obiettivi", pl: "osiągnięcia", pt: "conquistas", ru: "достижения", zh: "成就"},
 	
@@ -192,6 +190,7 @@ var GW2T_CURRENCY_DATA = {
 		Shared: null,
 		Bank: null,
 		Materials: null,
+		Vault: null,
 		Skins: null,
 		Minis: null,
 		Dyes: null,
