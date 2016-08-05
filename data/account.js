@@ -238,12 +238,12 @@ var GW2T_CURRENCY_DATA = {
 		magic: {id: 32, color: "#ffff32", conversion: [12400, 37000], isappraised: true, isbound: true} // Quiver of a Thousand Arrows
 	},
 	AuditUpgrades: { // Account upgrades from the gem store
-		CharacterSlot: {starting: 5, purchased: 0, gem: 800, url: "https://wiki.guildwars2.com/wiki/Character_Slot_Expansion"},
-		CraftingLicense: {starting: 2, purchased: 0, gem: 800, url: "https://wiki.guildwars2.com/wiki/Additional_Crafting_License"},
-		BankTab: {starting: 1, purchased: 0, gem: 600, url: "https://wiki.guildwars2.com/wiki/Bank_Tab_Expansion"},
-		StorageExpander: {starting: 1, purchased: 0, gem: 800, url: "https://wiki.guildwars2.com/wiki/Storage_Expander"},
-		BagSlot: {starting: 5, purchased: 0, gem: 400, url: "https://wiki.guildwars2.com/wiki/Bag_Slot_Expansion"},
-		SharedSlot: {starting: 1, purchased: 0, gem: 560, url: "https://wiki.guildwars2.com/wiki/Shared_Inventory_Slot"}
+		CharacterSlot: {starting: 5, purchased: 0, gem: 800, id: 20125},
+		CraftingLicense: {starting: 2, purchased: 0, gem: 800, id: 42970},
+		BankTab: {starting: 1, purchased: 0, gem: 600, id: 19995},
+		StorageExpander: {starting: 1, purchased: 0, gem: 800, id: 42932},
+		BagSlot: {starting: 5, purchased: 0, gem: 400, id: 19993},
+		SharedSlot: {starting: 1, purchased: 0, gem: 560, id: 67071}
 	}
 };
 

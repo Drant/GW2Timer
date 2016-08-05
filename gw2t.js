@@ -5704,6 +5704,7 @@ Z = {
 		];
 		var record = {}, item, entry;
 		var sheets = {};
+		var sheetstradeable = {};
 		// Construct categories to insert the recipes orderly
 		disciplines.forEach(function(iDisc)
 		{
@@ -5723,8 +5724,9 @@ Z = {
 				{
 					if (Q.isTradeable(item))
 					{
-						sheets[(item.details.recipe_id)] = item.id;
+						sheetstradeable[(item.details.recipe_id)] = item.id;
 					}
+					sheets[(item.details.recipe_id)] = item.id;
 				}
 			};
 			
@@ -5760,7 +5762,11 @@ Z = {
 							};
 							if (sheets[recipe.id])
 							{
-								entry.t = sheets[recipe.id];
+								entry.s = sheets[recipe.id];
+							}
+							if (sheetstradeable[recipe.id])
+							{
+								entry.t = sheetstradeable[recipe.id];
 							}
 							record[catname].push(entry);
 						}
@@ -7381,6 +7387,7 @@ A = {
 		var priceids = {}; // Tradeable item IDs to fetch, an associative array so no duplicate
 		var ascendeddata, ascendedheader, ingredients, ascendedingr, compositeingr, auditmetadata;
 		var currentbuysdata, currentsellsdata;
+		var categoriesview = {}; // Holds categories which holds item IDs and totaled payments of possession or unlocks, for the bank view
 		var recordsdata = {
 			Ascended: {},
 			Catalog: {},
@@ -7423,54 +7430,92 @@ A = {
 		};
 		
 		// Adds a payment or price object to an audit category
-		var addPaymentToCategory = function(pCategory, pPayment, pCount, pIsBound)
+		var addPaymentToCategory = function(pCategory, pPayment, pCount, pIsBound, pItemID)
 		{
+			var auditcat = A.Currency.AuditCategories[pCategory];
+			if (isNaN(pCategory) === false) // If auditing an individual character
+			{
+				if (A.Currency.AuditCategoriesCharacters[pCategory] === undefined)
+				{
+					A.Currency.AuditCategoriesCharacters[pCategory] = createAuditPayments();
+				}
+				auditcat = A.Currency.AuditCategoriesCharacters[pCategory];
+			}
 			var count = (pCount === undefined) ? 1 : pCount;
 			if (E.isPriceObject(pPayment))
 			{
 				if (pIsBound === true)
 				{
 					// Bound items cannot be liquidated for cash, so only have appraised values
-					pCategory.coin_appraisedbuy += pPayment.oPriceBuy * count;
-					pCategory.coin_appraisedsell += pPayment.oPriceSell * count;
+					auditcat.coin_appraisedbuy += pPayment.oPriceBuy * count;
+					auditcat.coin_appraisedsell += pPayment.oPriceSell * count;
 				}
 				else
 				{
-					pCategory.coin_liquidbuy += pPayment.oPriceBuyTaxed * count;
-					pCategory.coin_liquidsell += pPayment.oPriceSellTaxed * count;
-					pCategory.coin_appraisedbuy += pPayment.oPriceBuy * count;
-					pCategory.coin_appraisedsell += pPayment.oPriceSell * count;
+					auditcat.coin_liquidbuy += pPayment.oPriceBuyTaxed * count;
+					auditcat.coin_liquidsell += pPayment.oPriceSellTaxed * count;
+					auditcat.coin_appraisedbuy += pPayment.oPriceBuy * count;
+					auditcat.coin_appraisedsell += pPayment.oPriceSell * count;
 				}
 			}
 			else
 			{
 				for (var i in pPayment)
 				{
-					if (pCategory[i] !== undefined && pPayment[i] > 0)
+					if (auditcat[i] !== undefined && pPayment[i] > 0)
 					{
-						pCategory[i] += pPayment[i] * count;
+						auditcat[i] += pPayment[i] * count;
 					}
 				}
+			}
+			// Update the category view object that totals the items and appraised sell coin of that category
+			if (pItemID)
+			{
+				var itemid = parseInt(pItemID);
+				if (categoriesview[pCategory] === undefined)
+				{
+					categoriesview[pCategory] = {};
+				}
+				var catview = categoriesview[pCategory];
+				if (catview[itemid] === undefined)
+				{
+					catview[itemid] = [0, 0];
+					if (E.isPriceObject(pPayment))
+					{
+						(catview[itemid])[1] = convertCurrencyToCoin("coin_appraisedsell", pPayment.oPriceSell);
+					}
+					else
+					{
+						for (var i in pPayment)
+						{
+							if (auditcat[i] !== undefined && pPayment[i] > 0)
+							{
+								(catview[itemid])[1] = convertCurrencyToCoin(i, pPayment[i]);
+							}
+						}
+					}
+				}
+				// Update the count of the item in that category
+				(catview[itemid])[0] += count;
 			}
 		};
 		
 		// Evaluates the wallet audit category
 		var auditWallet = function()
 		{
-			var quantity, auditcat, paymentobj;
+			var quantity, paymentobj;
 			for (var i in A.Data.Wallet)
 			{
 				quantity = A.Data.Wallet[i];
-				auditcat = A.Currency.AuditCategories["Wallet"];
 				if (i === "1") // If the currency is coin
 				{
-					addPaymentToCategory(auditcat, E.createPricePlain(quantity), 1);
+					addPaymentToCategory("Wallet", E.createPricePlain(quantity), 1);
 				}
 				else if (A.Currency.AuditWallet[i]) // Audit applicable currencies
 				{
 					paymentobj = {};
 					paymentobj[(A.Currency.AuditWallet[i]).payment] = quantity;
-					addPaymentToCategory(auditcat, paymentobj, 1, true);
+					addPaymentToCategory("Wallet", paymentobj, 1, true);
 				}
 			}
 		};
@@ -7512,17 +7557,17 @@ A = {
 								 */
 								if (auditobj[1] === auditobj[0]) // If there is no bound item
 								{
-									addPaymentToCategory(auditcat, payment, auditobj[1]);
+									addPaymentToCategory(ii, payment, auditobj[1], false, i);
 								}
 								else // If there at least one bound item, then add bound and unbound items separately
 								{
-									addPaymentToCategory(auditcat, payment, auditobj[0]);
-									addPaymentToCategory(auditcat, payment, (auditobj[1] - auditobj[0]), true);
+									addPaymentToCategory(ii, payment, auditobj[0], false, i);
+									addPaymentToCategory(ii, payment, (auditobj[1] - auditobj[0]), true, i);
 								}
 							}
 							else
 							{
-								addPaymentToCategory(auditcat, payment, auditobj[1]);
+								addPaymentToCategory(ii, payment, auditobj[1], false, i);
 							}
 						}
 					}
@@ -7540,7 +7585,7 @@ A = {
 		// Evaluates an unlocks audit category
 		var auditUnlocks = function(pName, pWantPossessions)
 		{
-			var payment, auditcat = A.Currency.AuditCategories[pName];
+			var payment;
 			var unlockedids; // An associative array of unlock IDs
 			var itemkey = "i";
 			// Special case for recipes because the unlocks is stored within the characters data instead of an API flat array
@@ -7554,32 +7599,34 @@ A = {
 				{
 					if (iChar.recipes)
 					{
+						// Compile recipe unlocks by combining each characters' learned recipes
 						for (var i = 0; i < iChar.recipes.length; i++)
 						{
 							if (unlockedids[(iChar.recipes[i])] === undefined)
 							{
-								unlocksdata.Recipes.push(iChar.recipes[i]);
+								unlocksdata.Recipes.push(iChar.recipes[i]); // This is for the tally
 								unlockedids[(iChar.recipes[i])] = true;
 							}
 						}
 					}
 				});
 				// Add the bound recipe payments
-				var recipesdata = U.getRecordMetadata("recipes");
-				var boundpayments = recipesdata.BoundPayments;
-				for (var i in boundpayments)
+				var recipesdata = U.getRecordData("recipes");
+				var recipepayment;
+				A.iterateRecord(recipesdata, function(pEntry)
 				{
-					if (unlockedids[i])
+					if (unlockedids[pEntry.u] && unlockedids[pEntry.u] !== 1 && pEntry.p)
 					{
-						for (var ii in boundpayments[i])
+						unlockedids[pEntry.u] = 1; // Only audit the recipe once
+						for (var ii in pEntry.p)
 						{
 							payment = {};
-							payment[ii] = (boundpayments[i])[ii];
-							addPaymentToCategory(auditcat, ((ii === "coin") ?
-								E.createPriceBound((boundpayments[i])[ii]) : payment), 1, true);
+							payment[ii] = pEntry.p[ii];
+							recipepayment = ((ii === "coin") ? E.createPriceBound(pEntry.p[ii]) : payment);
+							addPaymentToCategory(pName, recipepayment, 1, true, pEntry.s);
 						}
 					}
-				}
+				});
 			}
 			
 			// Audit by adding the payment value once for each unlock (which has an associated item that has a payment)
@@ -7609,10 +7656,11 @@ A = {
 					 * Audit if payment exists, the unlock is unlocked, and the associated
 					 * item has not been audited for this record and is not in possession.
 					 */
-					if (payment && unlockedids[pEntry.u] && associtems[associtemid] === undefined
+					if (payment && unlockedids[pEntry.u] && unlockedids[pEntry.u] !== 1 && associtems[associtemid] === undefined
 						&& ((pWantPossessions === false && A.Possessions[associtemid] === undefined) || (pWantPossessions !== false)))
 					{
-						addPaymentToCategory(auditcat, payment, 1, true);
+						unlockedids[pEntry.u] = 1; // Only audit the unlock once
+						addPaymentToCategory(pName, payment, 1, true, associtemid);
 						associtems[pEntry.i] = true;
 					}
 				}
@@ -7628,7 +7676,7 @@ A = {
 				A.Tally.Buying = [currentbuysdata.length, currentbuysdata.length];
 				currentbuysdata.forEach(function(iTransaction)
 				{
-					addPaymentToCategory(A.Currency.AuditCategories.Buying, E.createPricePlain(iTransaction.price), iTransaction.quantity);
+					addPaymentToCategory("Buying", E.createPricePlain(iTransaction.price), iTransaction.quantity, false, iTransaction.item_id);
 				});
 			}
 			if (currentsellsdata)
@@ -7639,7 +7687,7 @@ A = {
 					payment = E.Paylist[iTransaction.item_id];
 					if (payment)
 					{
-						addPaymentToCategory(A.Currency.AuditCategories.Selling, payment, iTransaction.quantity);
+						addPaymentToCategory("Selling", payment, iTransaction.quantity, false, iTransaction.item_id);
 					}
 				});
 			}
@@ -7707,16 +7755,24 @@ A = {
 		};
 		
 		// Inserts a headered but empty column into a table
-		var insertColumn = function(pTable, pHeader, pName)
+		var insertColumn = function(pTable, pHeader, pCategory)
 		{
-			var tally = A.Tally[pName], tallystr = "";
+			var tally = A.Tally[pCategory], tallystr = "";
 			if (tally)
 			{
 				tallystr = "<span class='audTableTally'>" + tally[0] + " / " + tally[1]
 					+ " (" + U.convertRatioToPercent(tally[0] / tally[1]) + ")</span>";
 			}
-			var auditcolumn = $("<div class='audTableColumn'></div>").appendTo(pTable)
-				.append("<div class='audTableCell audTableHeaderHorizontal'>" + pHeader + tallystr + "</div>");
+			var auditcolumn = $("<div class='audTableColumn'></div>").appendTo(pTable);
+			var columnheader = $("<div class='audTableCell audTableHeaderHorizontal'>" + pHeader + tallystr + "</div>").appendTo(auditcolumn);
+			// Bind category view function on category header
+			if (pCategory && pCategory !== "Wallet")
+			{
+				columnheader.click(function()
+				{
+					createCategoryView(pCategory);
+				}).addClass("audTableHeaderView curZoom").attr("id", "audViewHeader_" + pCategory);
+			}
 			return auditcolumn;
 		};
 		
@@ -7802,6 +7858,47 @@ A = {
 			fillCurrencyColumnFull(pColumn, convertedpayments, true);
 		};
 		
+		// Generates a "bank" of audited items in a category with their payment preconverted to appraised sell coin
+		var createCategoryView = function(pCategory)
+		{
+			var audview = $("#audView").empty();
+			var viewcontainer = B.createBank(audview);
+			var viewbank = viewcontainer.find(".bnkBank");
+			var tabtitle = (isNaN(pCategory) === false) ? A.Data.Characters[pCategory].oCharPreface : D.getWordCapital(pCategory);
+			var viewtab = B.createBankTab(viewbank, {aTitle: tabtitle});
+			var viewslotscontainer = viewtab.find(".bnkTabSlots");
+			var numfetched = 0;
+			var numtofetch = 0;
+			for (var i in categoriesview[pCategory])
+			{
+				numtofetch++;
+			}
+			var finalizeView = function()
+			{
+				B.tallyBank(viewcontainer);
+			};
+			
+			// Fill the "bank" with pseudo item slots
+			for (var i in categoriesview[pCategory])
+			{
+				(function(iSlot, iItemID, iView)
+				{
+					Q.getItem(iItemID, function(iItem)
+					{
+						B.styleBankSlot(iSlot, {aItem: iItem, aPrice: iView[1], aSlotMeta: {count: iView[0]}});
+						numfetched++;
+						A.setProgressBar(numfetched, numtofetch);
+						if (numfetched === numtofetch)
+						{
+							finalizeView();
+						}
+					});
+				})(B.createBankSlot(viewslotscontainer), i, (categoriesview[pCategory])[i]);
+			}
+			B.createBankMenu(viewbank, {aWantClear: true, aReloadElement: $("#audViewHeader_" + pCategory)});
+			I.scrollToElement("#audViewTitle", {aSpeed: "fast"});
+		};
+		
 		/*
 		 * Writes HTML to display the audit results.
 		 */
@@ -7865,30 +7962,35 @@ A = {
 			var charcatsmax = createCurrencyMaxes(charcats);
 			for (var i in charcats)
 			{
-				charcolumn = insertColumn(tablechar, A.Data.Characters[i].oCharIcons);
+				charcolumn = insertColumn(tablechar, A.Data.Characters[i].oCharIcons, i);
 				fillCurrencyColumn(charcolumn, charcats[i], false, charcatsmax);
 			}
 			tablechar.addClass("audTableHorizontal");
 			I.bindScrollbar(tablechar, true);
 			I.qTip.init(tablechar.find(".chrPreface"));
 			
+			// VIEW
+			createTitle("View Audit").attr("id", "audViewTitle").appendTo(container);
+			$("<div id='audView'></div>").appendTo(container);
+			
 			// UNLOCKS
 			var summaryupgrades = $("<div id='audUpgrades'></div>").appendTo(container);
 			var upggems = A.getAccountUpgradesGem();
-			createTitle("Account Upgrades").insertBefore(summaryupgrades);
-			var upg;
+			var upgcontainer = B.createBank(summaryupgrades);
+			var upgbank = upgcontainer.find(".bnkBank");
+			var upgtab = B.createBankTab(upgbank, {aTitle: D.getPhraseTitle("Account Upgrades")});
+			var upgslotscontainer = upgtab.find(".bnkTabSlots");
+			// Fill the "bank" with pseudo item slots
 			for (var i in A.Currency.AuditUpgrades)
 			{
-				upg = A.Currency.AuditUpgrades[i];
-				summaryupgrades.append("<aside class='audUpgrades'>"
-					+ "<span><a" + U.convertExternalAnchor(upg.url) + "><img class='audUpgradeIcon' src='img/account/summary/" + i.toLowerCase() + I.cPNG + "' /></a></span><br />"
-					+ "<span class='audUpgradeValues'>"
-						+ "<var class='audUpgradeCount'>" + upg.starting + "+" + upg.purchased + "</var>"
-						+ ((upg.purchased > 0) ? ("<br /><var>" + E.formatGemString(upg.totalgem, true) + "</var>") : "")
-					+ "</span>"
-				+ "</aside>");
+				(function(iSlot, iUpg)
+				{
+					Q.getItem(iUpg.id, function(iItem)
+					{
+						B.styleBankSlot(iSlot, {aItem: iItem, aGem: iUpg.gem, aSlotMeta: {count: iUpg.purchased}});
+					});
+				})(B.createBankSlot(upgslotscontainer), A.Currency.AuditUpgrades[i]);
 			}
-			summaryupgrades.append("<aside class='audUpgradeValues>" + E.formatGemString(upggems, true) + "</aside>");
 			
 			// SUMMARY
 			E.getCoinFromGem(walletcat["gem"], function(pCoin)
@@ -8028,6 +8130,10 @@ A = {
 			$("<button class='audDebugButton'>Print Paylist</button>").appendTo(debug).click(function()
 			{
 				I.prettyJSON(E.Paylist);
+			});
+			$("<button class='audDebugButton'>Print View</button>").appendTo(debug).click(function()
+			{
+				I.prettyJSON(categoriesview);
 			});
 			
 			// Finally
@@ -8488,20 +8594,20 @@ V = {
 			}
 		});
 		// Alternate button up top
-		$("<button id='audExecuteAlternate' title='<dfn>Audit</dfn> account.<br />gw2timer.com/audit'> "
+		var executebtnalt = $("<button id='audExecuteAlternate' title='<dfn>Audit</dfn> account.<br />gw2timer.com/audit'> "
 			+ "<img src='img/ui/stats.png' /></button>").insertAfter("#chrAccountReload").click(function()
 		{
 			$(this).hide();
-			$("#audExecute").trigger("click");
+			$("#audWantTransactions").prop("checked", true);
+			$("#audWantVaults").prop("checked", true);
+			executebtn.trigger("click");
 		});
 		I.qTip.init("#audExecuteAlternate");
 		
 		// Scroll to execute button if requested by URL
 		U.verifyArticle(I.SpecialPageEnum.Audit, function()
 		{
-			$("#audWantTransactions").prop("checked", true);
-			$("#audWantVaults").prop("checked", true);
-			executebtn.trigger("click");
+			executebtnalt.trigger("click");
 		});
 	},
 	
@@ -10917,6 +11023,8 @@ B = {
 	 * containing stack count and transmutation data.
 	 * @objparam object aItem item details retrieved from API.
 	 * @objparam int aTradeableID ID of item to get TP price, such as the tradeable container of the bound item, optional.
+	 * @objparam int aPrice custom coin price for untradeable items, optional.
+	 * @objparam int aGem custom gem price for untradeable items, optional.
 	 * @objparam string aComment to append to tooltip, optional.
 	 * @objparam string aWiki name of wiki article to open when double clicked, optional.
 	 * @objparam function aCallback to execute after styling.
@@ -11014,8 +11122,24 @@ B = {
 					// Assign count data for the hide empty slots filter
 					pSlot.data("count", count);
 				}
-				// TP price label if the item is tradeable
-				if (pBox.oIsTradeable || Settings.aTradeableID)
+				// Custom price has priority over TP price
+				if (Settings.aPrice > 0)
+				{
+					B.updateSlotPrice(pSlot, {
+						aPrice: Settings.aPrice,
+						aCount: Settings.aSlotMeta.count,
+						aPaymentEnum: E.PaymentEnum.Coin
+					});
+				}
+				else if (Settings.aGem > 0)
+				{
+					B.updateSlotPrice(pSlot, {
+						aPrice: Settings.aGem,
+						aCount: Settings.aSlotMeta.count,
+						aPaymentEnum: E.PaymentEnum.Gem
+					});
+				}
+				else if (pBox.oIsTradeable || Settings.aTradeableID)
 				{
 					// Add the boolean for the bank filter button to look for
 					pSlot.addClass("bnkSlotTradeable");
@@ -11035,22 +11159,6 @@ B = {
 							Settings.aPriceCallback(pPrice);
 						}
 					}, true);
-				}
-				else if (Settings.aPrice > 0)
-				{
-					B.updateSlotPrice(pSlot, {
-						aPrice: Settings.aPrice,
-						aCount: Settings.aSlotMeta.count,
-						aPaymentEnum: E.PaymentEnum.Coin
-					});
-				}
-				else if (Settings.aGem > 0)
-				{
-					B.updateSlotPrice(pSlot, {
-						aPrice: Settings.aGem,
-						aCount: Settings.aSlotMeta.count,
-						aPaymentEnum: E.PaymentEnum.Gem
-					});
 				}
 				// Execute callback if requested
 				if (Settings.aCallback)
@@ -11085,8 +11193,10 @@ B = {
 		var tabdisplayprice = pSlot.parents(".bnkTab").find(".bnkTabPrice_" + Settings.aPaymentEnum);
 		
 		var count = Settings.aCount || 1;
-		var prices = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, count) : E.recountPrice(Settings.aPrice, count);
-		var pricetorecord = (iscollection) ? prices.oPriceSell : prices.oPriceSellTaxed;
+		var prices = (typeof Settings.aPrice === "number") ?
+			((Settings.aPaymentEnum) ? E.createPricePlain(Settings.aPrice, count) : E.createPrice(Settings.aPrice, count))
+			: E.recountPrice(Settings.aPrice, count);
+		var pricetorecord = (iscollection || Settings.aPaymentEnum) ? prices.oPriceSell : prices.oPriceSellTaxed;
 		if (Settings.aTransactionBuy)
 		{
 			prices = E.createPrice(Settings.aTransactionBuy, 1);
@@ -11194,8 +11304,10 @@ B = {
 	/*
 	 * Creates and binds a search bar for a bank. Also creates functional buttons.
 	 * @param jqobject pBank for insertion.
-	 * @objparam string aHelpMessage HTML of the message to append to the help screen.
-	 * @objparam boolean aWantSearchHighlight whether to highlight instead of show and hide when searching.
+	 * @objparam boolean aWantClear whether to wipe the dish menu to recreate the menu, optional.
+	 * @objparam jqobject aReloadElement to trigger instead of the default reload, optional.
+	 * @objparam string aHelpMessage HTML of the message to append to the help screen, optional.
+	 * @objparam boolean aWantSearchHighlight whether to highlight instead of show and hide when searching, optional.
 	 * @pre Bank slots were generated.
 	 */
 	createBankMenu: function(pBank, pSettings)
@@ -11204,6 +11316,10 @@ B = {
 		// Initialize commonly used elements
 		var sectionname = A.getDishName(pBank);
 		var dishmenu = A.getDishMenu(sectionname);
+		if (Settings.aWantClear)
+		{
+			dishmenu.empty();
+		}
 		var bankmenu = $("<div class='bnkMenu'></div>").prependTo(dishmenu);
 		var tabslots = pBank.find(".bnkTabSlots");
 		var tabtoggles = pBank.find(".bnkTabToggle");
@@ -11329,7 +11445,14 @@ B = {
 		$("<div class='bnkButtonReload bnkButton curClick' title='<dfn>Reload</dfn> this bank.<br />Press this if the progress bar has frozen.'></div>")
 			.appendTo(buttoncontainer).click(function()
 		{
-			A.regenerateDish(sectionname);
+			if (Settings.aReloadElement)
+			{
+				Settings.aReloadElement.trigger("click");
+			}
+			else
+			{
+				A.regenerateDish(sectionname);
+			}
 		});
 		
 		// Button to show help and search usage message

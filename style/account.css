@@ -390,6 +390,10 @@ input[type="text"].accTokenHovered {
 .audTableColumn:nth-child(even) {
 	background: rgba(0,0,0,0.2);
 }
+.audTableColumn:hover .audTableHeaderView {
+	border-bottom: 2px solid red;
+	animation: aniFlicker 1s ease infinite;
+}
 .audTableHeaderVertical {
 	text-align: right;
 	font-family: Menomonia;
