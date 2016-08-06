@@ -6909,18 +6909,21 @@ A = {
 			});
 		});
 		// Highlight the row when hovered on a button
-		buttons.hover(
-			function()
-			{
-				name.addClass("accTokenHovered");
-				key.addClass("accTokenHovered");
-			},
-			function()
-			{
-				name.removeClass("accTokenHovered");
-				key.removeClass("accTokenHovered");
-			}
-		);
+		$([link, buttons]).each(function()
+		{
+			$(this).hover(
+				function()
+				{
+					name.addClass("accTokenHovered");
+					key.addClass("accTokenHovered");
+				},
+				function()
+				{
+					name.removeClass("accTokenHovered");
+					key.removeClass("accTokenHovered");
+				}
+			);
+		});
 		// Button to raise or lower the token's row order
 		$([swapup, swapdown]).each(function()
 		{
@@ -17206,7 +17209,7 @@ D = {
 			}
 			return D.getObjectDefaultName(pObject);
 		}
-		return "NONAME";
+		return null;
 	},
 	getObjectNick: function(pObject)
 	{
@@ -17594,6 +17597,21 @@ C = {
 	},
 	
 	/*
+	 * Gets the coordinate of the final event in the chain.
+	 * @param object pChain.
+	 * @returns GW2 coordinates.
+	 */
+	viewChainFinale: function(pChain)
+	{
+		if (I.isMapEnabled)
+		{
+			var event = pChain.primaryEvents;
+			var coord = event[(event.length - 1)].path[0];
+			M.goToView(coord, M.ZoomEnum.Ground, M.Pin.Event);
+		}
+	},
+	
+	/*
 	 * Tells if specified chain is today's daily world boss.
 	 * @param object pChain to compare.
 	 * @returns true if daily.
@@ -17725,7 +17743,8 @@ C = {
 		var i, ii;
 		var event;
 		var chainextra = "";
-		var chainname = D.getObjectName(pChain);
+		var chainname = U.escapeHTML(D.getObjectName(pChain));
+		pChain.waypointText = pChain.waypoint + " " + chainname;
 		
 		/*
 		 * Initialize step attribute (the first number in an event
@@ -17742,7 +17761,7 @@ C = {
 		
 		if (pChain.waypoint !== undefined)
 		{
-			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypoint + " " + chainname + "' /> "
+			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypointText + "' /> "
 				+ " (" + pChain.level + ")"
 					+ "<a" + U.convertExternalAnchor(U.getYouTubeLink(D.getObjectDefaultName(pChain))) + ">"
 					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> ";
@@ -18046,7 +18065,6 @@ C = {
 						}
 						C.LivingStoryChains.push(chain);
 						C.ScheduledChains.push(chain);
-						T.insertChainToSchedule(chain);
 					}
 					else
 					{
@@ -27195,6 +27213,12 @@ T = {
 		
 		// Initialize for the touring function to access current active event
 		C.CurrentChainSD = T.getStandardChain();
+		
+		// Update the timeline
+		if (O.Options.bol_showTimeline)
+		{
+			H.updateTimelineSegments(true);
+		}
 	},
 	
 	/*
@@ -29024,25 +29048,33 @@ H = {
 			var chain = H.Timeline[i];
 			var name = U.escapeHTML((chain.zone === undefined) ? D.getObjectName(chain) : M.getZoneName(chain.zone));
 			// Container for segments of a timeline (chain)
-			var line = $("<div class='tmlLine' title='<dfn>" + name + "</dfn>'></div>").appendTo(container);
-			for (var ii in chain.Segments)
+			var linetitle = (chain.isWB) ? "" : ("title='<dfn>" + name + "</dfn>'");
+			var line = $("<div class='tmlLine' " + linetitle + "></div>").appendTo(container);
+			for (var ii = 0; ii < chain.Segments.length; ii++)
 			{
 				// Segments of a timeline (event)
 				var event = chain.Segments[ii];
 				var segmentprefix = "";
+				var wbclass = (chain.isWB) ? "tmlTimesliceWB" : "";
+				var wbdata = (chain.isWB) ? "data-offset='" + ii + "'" : "";
 				var bossclass = (event.primacy === C.EventPrimacyEnum.Boss) ? "tmlSegmentNameBoss" : "";
 				switch (event.primacy)
 				{
 					case C.EventPrimacyEnum.Normal: segmentprefix = I.Symbol.Ellipsis; break;
 					case C.EventPrimacyEnum.Boss: segmentprefix = I.Symbol.Star + " "; break;
 				}
-				var linename = (parseInt(ii) === 0) ? ("<b class='tmlLineName'>" + name + "</b>") : "";
+				var linename = (ii === 0) ? ("<b class='tmlLineName'>" + name + "</b>") : "";
 				event.duration = T.parseChainTime(event.duration);
 				event.time = T.parseChainTime(event.time);
 				var width = (event.duration / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;
-				line.append("<div class='tmlSegment tmlTimeslice' style='width:" + width + "%' data-start='" + event.time + "' data-finish='" + (event.time + event.duration)
-					+ "'><div class='tmlSegmentContent'>" + linename + "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + D.getObjectName(event)
-					+ "</span><span class='tmlSegmentCountdown'></span></div></div>");
+				line.append(
+				"<div class='tmlSegment tmlTimeslice " + wbclass + "' style='width:" + width + "%' "
+				+ "data-start='" + event.time + "' data-finish='" + (event.time + event.duration) + "' " + wbdata + ">"
+					+ "<div class='tmlSegmentContent'>"
+						+ linename + "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + (D.getObjectName(event) || "") + "</span>"
+						+ "<span class='tmlSegmentCountdown'></span>"
+					+ "</div>"
+				+ "</div>");
 			}
 		}
 		// Bind window buttons
@@ -29062,7 +29094,6 @@ H = {
 		});
 		// Initialize
 		I.qTip.init(".tmlLine");
-		H.updateTimelineSegments();
 		H.updateTimelineIndicator();
 	},
 	
@@ -29095,13 +29126,15 @@ H = {
 	/*
 	 * Highlights the active segments. Should be called every 5 minutes.
 	 */
-	updateTimelineSegments: function()
+	updateTimelineSegments: function(pForceWB)
 	{
 		if ( ! H.isTimelineGenerated)
 		{
 			return;
 		}
+		var numwbslices = T.cMINUTES_IN_2_HOURS / T.cMINUTES_IN_TIMEFRAME;
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
+		var wbcurrentoffset = 0;
 		$(".tmlTimeslice").each(function()
 		{
 			if (currentminute >= $(this).data("start") && currentminute < $(this).data("finish"))
@@ -29111,12 +29144,57 @@ H = {
 					$(this).css({opacity: 0}).animate({opacity: 1}, 1000);
 					$(this).addClass("tmlSegmentActive");
 				}
+				if ($(this).hasClass("tmlTimesliceWB"))
+				{
+					wbcurrentoffset = parseInt($(this).attr("data-offset"));
+				}
 			}
 			else
 			{
 				$(this).removeClass("tmlSegmentActive");
 			}
 		});
+		
+		// Update the world boss slices
+		if (currentminute % T.cMINUTES_IN_TIMEFRAME === 0 || pForceWB)
+		{
+			var wbcounteroffset = 0;
+			$(".tmlTimesliceWB").each(function()
+			{
+				var inner = $(this).find(".tmlSegmentName").empty();
+				var bossicon;
+				var thisoffset = parseInt($(this).attr("data-offset"));
+				var timeframeoffset;
+				if (thisoffset >= wbcurrentoffset)
+				{
+					timeframeoffset = wbcounteroffset;
+					wbcounteroffset++;
+				}
+				else
+				{
+					timeframeoffset = (numwbslices - wbcurrentoffset) + thisoffset;
+				}
+				var wbchains = T.getTimeframeChains(timeframeoffset);
+				for (var i in wbchains)
+				{
+					if (wbchains[i].series !== C.ChainSeriesEnum.DryTop)
+					{
+						(function(iChain)
+						{
+							bossicon = $("<img class='tmlIcon curZoom' src='img/chain/" + C.parseChainAlias(iChain.alias) + ".png' />").appendTo(inner);
+							bossicon.attr("title", "<dfn>" + D.getObjectName(iChain) + "</dfn>").click(function()
+							{
+								C.viewChainFinale(iChain);
+							});
+							I.initializeClipboard(bossicon[0]);
+							I.updateClipboard(bossicon[0], iChain.waypointText);
+						})(wbchains[i]);
+					}
+				}
+			});
+			I.qTip.init(".tmlIcon");
+		}
+		
 		// Refresh the legend if approached new bihour
 		if (currentminute === 0)
 		{
@@ -29517,9 +29595,6 @@ K = {
 		K.IconsStandard = new Array(K.IconSD0, K.IconSD1, K.IconSD2, K.IconSD3);
 		K.IconsHardcore = new Array(K.IconHC0, K.IconHC1, K.IconHC2, K.IconHC3);
 		
-		var i;
-		var coord;
-		
 		// Change behavior of overlay mode because the user uses the clock more
 		var checkbossbehavior = "click";
 		var zoombossbehavior = "dblclick";
@@ -29530,16 +29605,13 @@ K = {
 		}
 		
 		// Bind behavior
-		for (i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
+		for (var i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 		{
 			$([K.IconsStandard[i], K.IconsHardcore[i]]).each(function()
 			{
 				$(this).unbind(zoombossbehavior).on(zoombossbehavior, function()
 				{
-					// Coordinates of the final event in the chain
-					var event = C.Chains[$(this).data(C.cIndexSynonym)].primaryEvents;
-					coord = event[(event.length-1)].path[0];
-					M.goToView(coord, M.ZoomEnum.Ground, M.Pin.Event);
+					C.viewChainFinale(C.Chains[$(this).data(C.cIndexSynonym)]);
 					
 				}).unbind(checkbossbehavior).on(checkbossbehavior, function()
 				{
@@ -31787,19 +31859,19 @@ I = {
 	
 	/*
 	 * Updates the scroll bar of a container.
-	 * @param jqobject pContainer that was initialized with the scroll plugin.
+	 * @param jqobject pElement of or container that was initialized with the scroll plugin.
 	 */
-	updateScrollbar: function(pContainer)
+	updateScrollbar: function(pElement)
 	{
 		if (I.isCustomScrollEnabled)
 		{
-			var element = $(pContainer);
+			var element = $(pElement);
 			if (I.isMapEnabled)
 			{
 				try
 				{
 					// Update the pages if element is not specified
-					if (pContainer === undefined)
+					if (pElement === undefined)
 					{
 						$("#plateMap").perfectScrollbar("update");
 						$("#plateChains").perfectScrollbar("update");

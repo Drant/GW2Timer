@@ -1183,19 +1183,17 @@ var GW2T_ZONE_DATA = {
  */
 var GW2T_TIMELINE = [
 	{
-		zone: "bloodstone",
+		isWB: true,
+		name_en: "World Bosses", name_de: "Weltbosses", name_es: "Jefe mundo", name_fr: "Chef monde", name_zh: "頭目世界",
 		Segments: [
-			{ time: "00:00", duration: "00:10", primacy: 2, name_en: "Jade", name_de: "Jade", name_es: "Jade", name_fr: "Jade", name_zh: "翠玉" },
-			{ time: "00:10", duration: "00:10", primacy: 2, name_en: "Jade", name_de: "Jade", name_es: "Jade", name_fr: "Jade", name_zh: "翠玉" },
-			{ time: "00:20", duration: "00:10", primacy: 2, name_en: "Jade", name_de: "Jade", name_es: "Jade", name_fr: "Jade", name_zh: "翠玉" },
-			{ time: "00:30", duration: "00:10", primacy: 2, name_en: "Daylight/Jade", name_de: "Tag/Jade", name_es: "Día/Jade", name_fr: "Journée/Jade", name_zh: "白天/翠玉" },
-			{ time: "00:40", duration: "00:10", primacy: 2, name_en: "Jade", name_de: "Jade", name_es: "Jade", name_fr: "Jade", name_zh: "翠玉" },
-			{ time: "00:50", duration: "00:10", primacy: 2, name_en: "Jade", name_de: "Jade", name_es: "Jade", name_fr: "Jade", name_zh: "翠玉" },
-			{ time: "01:00", duration: "00:10", primacy: 2, name_en: "Jade", name_de: "Jade", name_es: "Jade", name_fr: "Jade", name_zh: "翠玉" },
-			{ time: "01:10", duration: "00:10", primacy: 2, name_en: "Jade", name_de: "Jade", name_es: "Jade", name_fr: "Jade", name_zh: "翠玉" },
-			{ time: "01:20", duration: "00:10", primacy: 2, name_en: "Jade", name_de: "Jade", name_es: "Jade", name_fr: "Jade", name_zh: "翠玉" },
-			{ time: "01:30", duration: "00:15", primacy: 2, name_en: "Jade", name_de: "Jade", name_es: "Jade", name_fr: "Jade", name_zh: "翠玉" },
-			{ time: "01:45", duration: "00:15", primacy: 3, name_en: "Night/Jade", name_de: "Nacht/Jade", name_es: "Noche/Jade", name_fr: "Nuit/Jade", name_zh: "夜晚/翠玉" }
+			{ time: "00:00", duration: "00:15", primacy: 2},
+			{ time: "00:15", duration: "00:15", primacy: 2},
+			{ time: "00:30", duration: "00:15", primacy: 2},
+			{ time: "00:45", duration: "00:15", primacy: 2},
+			{ time: "01:00", duration: "00:15", primacy: 2},
+			{ time: "01:15", duration: "00:15", primacy: 2},
+			{ time: "01:30", duration: "00:15", primacy: 2},
+			{ time: "01:45", duration: "00:15", primacy: 2}
 		]
 	},
 	{
