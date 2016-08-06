@@ -199,6 +199,14 @@
 	font-family: monospace;
 	font-size: 14px;
 }
+.accTokenLink {
+	position: absolute;
+	margin-left: -32px;
+	opacity: 0.5;
+}
+.accTokenLink:hover {
+	opacity: 1;
+}
 .accTokenButtons {
 	display: inline-block;
 	width: 96px;
@@ -438,6 +446,9 @@ input[type="text"].accTokenHovered {
 	opacity: 0.5;
 }
 
+#audViewTitle {
+	margin-bottom: -16px;
+}
 #audDebug {
 	margin-top: 16px;
 }
@@ -1812,6 +1823,7 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 .bnkTabIcon {
 	display: block;
 	float: left;
+	border-radius: 4px;
 }
 .bnkTabText {
 	display: block;

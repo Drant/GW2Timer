@@ -2454,6 +2454,9 @@ U = {
 		News: "http://forum.renaka.com/topic/5500046/",
 		Overlay: "http://forum.renaka.com/topic/5546166/"
 	},
+	APIKey: null,
+	APIKeyLength: 72, // The exact length of the API key in order for it to be used in the URL fragment
+	ServerIDLength: 4,
 	
 	URL_API:
 	{
@@ -2772,7 +2775,8 @@ U = {
 		Article: "article",
 		Mode: "mode",
 		Go: "go",
-		Draw: "draw"
+		Draw: "draw",
+		Fragment: "fragment"
 	},
 	
 	/*
@@ -2828,7 +2832,8 @@ U = {
 	 */
 	getURLArguments: function()
 	{
-		var urlargs = window.location.search.substr(1).split("&");
+		var loc = window.location;
+		var urlargs = loc.search.substr(1).split("&");
 		if (urlargs === "")
 		{
 			return {};
@@ -2843,6 +2848,11 @@ U = {
 				continue;
 			}
 			argsobject[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+		}
+		// The URL substring after # will be assigned to the fragment key
+		if (loc.hash.length)
+		{
+			argsobject[U.KeyEnum.Fragment] = loc.hash.substr(1);
 		}
 		return argsobject;
 	},
@@ -2909,6 +2919,21 @@ U = {
 			document.location = pURL;
 		};
 		var page = U.Args[U.KeyEnum.Page];
+		var fragment = U.Args[U.KeyEnum.Fragment];
+		// Analyze URL fragment identifier
+		if (fragment)
+		{
+			// If fragment looks like an API key
+			if (fragment.length === U.APIKeyLength)
+			{
+				U.APIKey = U.stripToAlphanumericDash(fragment).toUpperCase();
+				if (page === undefined)
+				{
+					U.Args[U.KeyEnum.Page] = I.SpecialPageEnum.Account;
+				}
+			}
+		}
+		// Analyze the page query
 		if (page)
 		{
 			page = page.toLowerCase();
@@ -2944,7 +2969,7 @@ U = {
 				}
 				else
 				{
-					// Check if the special page is actually a section
+					// Check if is a page's section
 					for (i in I.SectionEnum)
 					{
 						ithpage = I.SectionEnum[i];
@@ -2963,14 +2988,26 @@ U = {
 							}
 						}
 					}
-
-					// Check if the special page is actually a zone name
+					// Check if is a zone name
 					for (i in M.Zones)
 					{
 						if (page.indexOf(i) !== -1)
 						{
 							U.Args[U.KeyEnum.Go] = i;
 							return;
+						}
+					}
+					// Check if is a server ID
+					if (isNaN(page) === false && page.length === U.ServerIDLength)
+					{
+						for (var i in O.OptionEnum.Server)
+						{
+							if (O.OptionEnum.Server[i] === page)
+							{
+								U.Args["enu_Server"] = page;
+								U.Args[U.KeyEnum.Page] = I.SpecialPageEnum.WvW;
+								return;
+							}
 						}
 					}
 				}
@@ -6553,20 +6590,48 @@ A = {
 	initializeTokens: function()
 	{
 		var tokenslimit = 64;
-		var tokens = localStorage[O.Utilities.APITokens.key];
+		var tokensarr = localStorage[O.Utilities.APITokens.key];
+		var token;
 		try
 		{
-			tokens = JSON.parse(tokens);
+			tokensarr = JSON.parse(tokensarr);
 		}
 		catch (e) {}
-		if (tokens === undefined)
+		if (tokensarr === undefined)
 		{
-			tokens = [];
-			tokens.push(A.createToken("Example Key Name", "EXAMPLE-API-KEY-PLEASE-REPLACE-WITH-YOUR-OWN-HERE"));
+			tokensarr = [];
+			tokensarr.push(A.createToken("Example Key Name", "EXAMPLE-API-KEY-PLEASE-REPLACE-WITH-YOUR-OWN-HERE"));
 		}
-		for (var i = 0; i < tokens.length; i++)
+		// Create the token UI inputs
+		var wantnewurlapikey = true;
+		if (U.APIKey)
 		{
-			var token = tokens[i];
+			for (var i = 0; i < tokensarr.length; i++)
+			{
+				token = tokensarr[i];
+				if (U.APIKey === token.key) // If the URL API key already exists in the manager, use it
+				{
+					token.isUsed = true;
+					wantnewurlapikey = false;
+				}
+				else
+				{
+					delete token["isUsed"];
+				}
+			}
+		}
+		else
+		{
+			wantnewurlapikey = false;
+		}
+		if (U.APIKey && wantnewurlapikey) // Create a new token with the URL API key if doesn't exist
+		{
+			tokensarr.push(A.createToken("URL API Key", U.APIKey, true));
+		}
+		// Create the token UI inputs
+		for (var i = 0; i < tokensarr.length; i++)
+		{
+			token = tokensarr[i];
 			A.insertTokenRow(token.name, token.key, token.isUsed);
 		}
 		A.saveTokens();
@@ -6606,15 +6671,21 @@ A = {
 	/*
 	 * Creates a token object which contains a token's name and the API key string.
 	 * @param string pName.
-	 * @param pAPIKey pAPIKey.
+	 * @param string pAPIKey.
+	 * @param boolean pIsUsed optional.
 	 * @returns object.
 	 */
-	createToken: function(pName, pAPIKey)
+	createToken: function(pName, pAPIKey, pIsUsed)
 	{
-		return {
+		var token = {
 			name: pName,
 			key: pAPIKey
 		};
+		if (pIsUsed)
+		{
+			token.isUsed = true;
+		}
+		return token;
 	},
 	
 	/*
@@ -6627,11 +6698,7 @@ A = {
 		{
 			var name = U.escapeHTML($(this).find(".accTokenName").val());
 			var key = U.stripToAlphanumericDash($(this).find(".accTokenKey").val());
-			var token = A.createToken(name, key);
-			if ($(this).find(".accTokenUse").hasClass("btnFocused"))
-			{
-				token.isUsed = true;
-			}
+			var token = A.createToken(name, key, $(this).find(".accTokenUse").hasClass("btnFocused"));
 			tokens.push(token);
 		});
 		var obj = O.Utilities.APITokens;
@@ -6753,6 +6820,7 @@ A = {
 	insertTokenRow: function(pName, pAPIKey, pIsUsed)
 	{
 		var token = $("<div class='accToken'></div>").appendTo("#accManager");
+		var link = $("<img class='accTokenLink curClick' src='img/ui/link.png' title='Get private <dfn>shareable link</dfn>.' />").appendTo(token);
 		var key = $("<input class='accTokenKey' type='text' value='" + pAPIKey + "' maxlength='128' />").appendTo(token);
 		var name = $("<input class='accTokenName' type='text' value='" + pName + "' maxlength='64' />").appendTo(token);
 		var buttons = $("<div class='accTokenButtons'></div>").appendTo(token);
@@ -6761,6 +6829,10 @@ A = {
 		var swap = $("<span class='btnSwap'></span>").appendTo(buttons);
 		var swapup = $("<button class='btnSwapUp'></button>").appendTo(swap);
 		var swapdown = $("<button class='btnSwapDown'></button>").appendTo(swap);
+		var updateLink = function()
+		{
+			I.updateClipboard(link[0], "http://gw2timer.com#" + U.escapeHTML(U.stripToAlphanumericDash(key.val())));
+		};
 		
 		// Use the token if specified
 		if (pIsUsed === true)
@@ -6793,7 +6865,11 @@ A = {
 		key.change(function()
 		{
 			use.trigger("click");
+			updateLink();
 		});
+		// Clicking the link icon gets a shareable URL
+		I.initializeClipboard(link[0]);
+		updateLink();
 		// Button to delete this token
 		del.click(function()
 		{
@@ -7886,6 +7962,11 @@ A = {
 					Q.getItem(iItemID, function(iItem)
 					{
 						B.styleBankSlot(iSlot, {aItem: iItem, aPrice: iView[1], aSlotMeta: {count: iView[0]}});
+						var payment = E.Paylist[iItemID];
+						if (E.isPriceObject(payment) === false)
+						{
+							B.updateSlotPayment(iSlot, payment, iView[0], "bnkSlotPriceSell");
+						}
 						numfetched++;
 						A.setProgressBar(numfetched, numtofetch);
 						if (numfetched === numtofetch)
@@ -8594,7 +8675,7 @@ V = {
 			}
 		});
 		// Alternate button up top
-		var executebtnalt = $("<button id='audExecuteAlternate' title='<dfn>Audit</dfn> account.<br />gw2timer.com/audit'> "
+		var executebtnalt = $("<button id='audExecuteAlternate' title='<dfn>Audit</dfn> account using all options.<br />gw2timer.com/audit'> "
 			+ "<img src='img/ui/stats.png' /></button>").insertAfter("#chrAccountReload").click(function()
 		{
 			$(this).hide();
@@ -11199,12 +11280,12 @@ B = {
 		var pricetorecord = (iscollection || Settings.aPaymentEnum) ? prices.oPriceSell : prices.oPriceSellTaxed;
 		if (Settings.aTransactionBuy)
 		{
-			prices = E.createPrice(Settings.aTransactionBuy, 1);
+			prices = E.createPrice(Settings.aTransactionBuy);
 			pricetorecord = prices.oPriceBuy;
 		}
 		else if (Settings.aTransactionSell)
 		{
-			prices = E.createPrice(Settings.aTransactionSell, 1);
+			prices = E.createPrice(Settings.aTransactionSell);
 			pricetorecord = prices.oPriceSellTaxed;
 		}
 		var updatePriceDisplay = function(pDisplay, pLeft, pRight, pIsCollectionTab)
@@ -11298,6 +11379,31 @@ B = {
 			pSlot.data("price", pricetorecord);
 			pSlot.data("pricebuy", prices.oPriceBuy);
 			pSlot.data("pricesell", prices.oPriceSell);
+		}
+	},
+	
+	/*
+	 * Updates the price displayed over a slot with a payment.
+	 * @param jqobject pSlot.
+	 * @param object pPayment.
+	 * @param int pCount.
+	 * @param string pSlotClass optional.
+	 */
+	updateSlotPayment: function(pSlot, pPayment, pCount, pSlotClass)
+	{
+		for (var paymentkey in pPayment) // This is not a loop, used to access the key of the object
+		{
+			var paymentvalue = pPayment[paymentkey];
+			var priceclass = "";
+			if (paymentvalue < 0)
+			{
+				// A negative price means it should not be added, only displayed subtly
+				priceclass = "bnkSlotPriceTrivial";
+				paymentvalue *= -1;
+			}
+			pSlot.append("<var class='" + (pSlotClass || "bnkSlotPrice") + " " + priceclass + "'>"
+				+ E.PaymentFormat[paymentkey](paymentvalue * (pCount || 1))
+			+ "</var>");
 		}
 	},
 	
@@ -11860,20 +11966,7 @@ B = {
 					// Include payment if the item cannot be obtained on the Trading Post
 					if (payment && ((slotcoin === undefined && slotgem === undefined) || (slotcoin === 0 || slotgem === 0)))
 					{
-						for (var paymentkey in payment) // This is not a loop, used to access the key of the object
-						{
-							var paymentvalue = payment[paymentkey];
-							var priceclass = "";
-							if (paymentvalue < 0)
-							{
-								// A negative price means it should not be added, only displayed subtly
-								priceclass = "bnkSlotPriceTrivial";
-								paymentvalue *= -1;
-							}
-							pSlot.append("<var class='bnkSlotPrice " + priceclass + "'>"
-								+ E.PaymentFormat[paymentkey](paymentvalue * (count || 1))
-							+ "</var>");
-						}
+						B.updateSlotPayment(pSlot, payment, count);
 					}
 				}
 			});
@@ -14802,22 +14895,27 @@ E = {
 		var sep = ".";
 		var sg0 = ""; var ss0 = ""; var sc0 = "";
 		var sg1 = ""; var ss1 = ""; var sc1 = "";
+		// Because the coin image is not text copyable, include additional hidden selectable text
+		var abbrg = "<abbr class='cssCopyText'>" + D.getString("CoinGold") + "&nbsp;</abbr>";
+		var abbrs = "<abbr class='cssCopyText'>" + D.getString("CoinSilver") + "&nbsp;</abbr>";
+		var abbrc = "<abbr class='cssCopyText'>" + D.getString("CoinCopper") + "&nbsp;</abbr>";
+		
 		if (Settings.aWantColor)
 		{
 			// Instead of period separating the currency units, use the coin images
 			sep = "";
 			sg0 = "<gold>"; ss0 = "<silver>"; sc0 = "<copper>";
-			sg1 = "</gold><goldcoin></goldcoin>";
-			ss1 = "</silver><silvercoin></silvercoin>";
-			sc1 = "</copper><coppercoin></coppercoin>";
+			sg1 = "</gold>" + abbrg + "<goldcoin></goldcoin>";
+			ss1 = "</silver>" + abbrs + "<silvercoin></silvercoin>";
+			sc1 = "</copper>" + abbrc + "<coppercoin></coppercoin>";
 		}
 		if (Settings.aWantBig)
 		{
 			sep = "";
 			sg0 = "<gold>"; ss0 = "<silver>"; sc0 = "<copper>";
-			sg1 = "</gold><img src='img/ui/coin_gold.png' alt='g ' />";
-			ss1 = "</silver><img src='img/ui/coin_silver.png' alt='s ' />";
-			sc1 = "</copper><img src='img/ui/coin_copper.png' alt='c' />";
+			sg1 = "</gold>" + abbrg + "<img src='img/ui/coin_gold.png' />";
+			ss1 = "</silver>" + abbrs + "<img src='img/ui/coin_silver.png' />";
+			sc1 = "</copper>" + abbrc + "<img src='img/ui/coin_copper.png' />";
 		}
 		if (Settings.aWantSpace)
 		{
@@ -14957,7 +15055,6 @@ E = {
 	 */
 	animateValue: function(pInput, pOldValue, pNewValue)
 	{
-		return "DISABLED";
 		if (pNewValue < pOldValue)
 		{
 			// Red if value went down
@@ -15421,7 +15518,7 @@ E = {
 			icon.attr("src", pItem.icon);
 			icon.unbind("click").click(function()
 			{
-				Q.printItemInfo(pItem)
+				Q.printItemInfo(pItem);
 			});
 			Q.scanItem(pItem, {aElement: icon, aCallback: function(pBox)
 			{
@@ -16694,6 +16791,11 @@ D = {
 	Codex:
 	{
 		s_TEMPLATE: {en: "", de: "", es: "", fr: ""},
+
+		// Currency abbreviation
+		s_CoinGold: {en: "g", de: "g", es: "o", fr: "o", cs: "z", it: "o", pl: "z", pt: "o", ru: "з", zh: "金"},
+		s_CoinSilver: {en: "s", de: "s", es: "p", fr: "a", cs: "s", it: "a", pl: "s", pt: "p", ru: "с", zh: "銀"},
+		s_CoinCopper: {en: "c", de: "k", es: "c", fr: "c", cs: "m", it: "r", pl: "m", pt: "c", ru: "м", zh: "銅"},
 		
 		// Item Type
 		s_Back: {en: "Back Item", de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos"},
@@ -16809,22 +16911,16 @@ D = {
 	 */
 	getString: function(pText)
 	{
-		// Use default language is not using any of the fully supported language
-		var language = O.Options.enu_Language;
-		if (D.isLanguageFullySupported() === false)
-		{
-			language = O.OptionEnum.Language.Default;
-		}
-		
 		var entry = D.Codex["s_" + pText];
 		if (entry)
 		{
-			// Get the text based on user's language
-			var value = entry[language];
+			// Get the text based on user's language if available, otherwise use default
+			var value = entry[O.Options.enu_Language];
 			if (value)
 			{
 				return value;
 			}
+			return entry[O.OptionEnum.Language.Default];
 		}
 		// Language not found so use given instead
 		return pText;
@@ -30422,7 +30518,7 @@ I = {
 	cTextDelimiterChar: "|",
 	cTextDelimiterRegex: /[|]/g,
 	cClipboardAttribute: "data-clipboard-text",
-	cClipboardSuccessText: "Chat link copied to clipboard :)<br />",
+	cClipboardSuccessText: "Text copied to clipboard :)<br />",
 	cTooltipAttribute: "data-tip",
 	consoleTimeout: {},
 	siteTagDefault: " - gw2timer.com",

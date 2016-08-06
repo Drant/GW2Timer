@@ -2584,6 +2584,10 @@ label:hover {
 .cssHidden {
 	display: none !important;
 }
+.cssCopyText {
+	position: absolute;
+	top: -9999px;
+}
 .cssFaded {
 	opacity: 0.3;
 }
