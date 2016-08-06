@@ -29181,7 +29181,7 @@ H = {
 					{
 						(function(iChain)
 						{
-							bossicon = $("<img class='tmlIcon curZoom' src='img/chain/" + C.parseChainAlias(iChain.alias) + ".png' />").appendTo(inner);
+							bossicon = $("<img class='tmlIcon curZoom' src='img/chain/" + C.parseChainAlias(iChain.alias).toLowerCase() + ".png' />").appendTo(inner);
 							bossicon.attr("title", "<dfn>" + D.getObjectName(iChain) + "</dfn>").click(function()
 							{
 								C.viewChainFinale(iChain);
