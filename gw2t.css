@@ -943,6 +943,7 @@ textarea.jsCopyCode {
 	width: 2px;
 	position: absolute;
 	opacity: 0.6;
+	pointer-events: none;
 }
 #tmlIndicator {
 	height: 110%;
@@ -999,6 +1000,7 @@ textarea.jsCopyCode {
 	font-weight: bold;
 	color: #ffaa22;
 	opacity: 0.7;
+	pointer-events: none;
 }
 .tmlSegmentName {
 	display: table-cell;
@@ -2594,6 +2596,9 @@ label:hover {
 .cssCopyText {
 	position: absolute;
 	top: -9999px;
+}
+.cssFadedLess {
+	opacity: 0.5;
 }
 .cssFaded {
 	opacity: 0.3;

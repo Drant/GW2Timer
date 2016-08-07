@@ -80,7 +80,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160724},
+		programVersion: {key: "int_utlProgramVersion", value: 160806},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -7454,7 +7454,7 @@ A = {
 	{
 		var sampleconversionamount = 100;
 		var button = $("#audExecute");
-		var buttonsur = $("#audExecuteAlternate").hide();
+		var buttonalt = $("#audExecuteAlternate").hide();
 		I.suspendElement(button);
 		var container = $("#accAudit").empty();
 		var wantvaults = $("#audWantVaults").prop("checked");
@@ -7485,7 +7485,7 @@ A = {
 		var dealError = function()
 		{
 			I.suspendElement(button, false);
-			buttonsur.show();
+			buttonalt.show();
 		};
 		
 		// Creates a standard object of payments to be displayed for an audit category
@@ -8223,7 +8223,7 @@ A = {
 			// Finally
 			I.scrollToElement("#accAuditCenter", {aSpeed: "fast"});
 			I.suspendElement(button, false);
-			buttonsur.show();
+			buttonalt.show();
 		};
 		
 		/*
@@ -17745,6 +17745,7 @@ C = {
 		var chainextra = "";
 		var chainname = U.escapeHTML(D.getObjectName(pChain));
 		pChain.waypointText = pChain.waypoint + " " + chainname;
+		pChain.iconSrc = "img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG;
 		
 		/*
 		 * Initialize step attribute (the first number in an event
@@ -17782,7 +17783,7 @@ C = {
 		$(pChain.htmllist).append(
 		"<div id='chnBar_" + pChain.nexus + "' class='chnBar'>"
 			+ "<div class='chnTitle'>"
-				+ "<img id='chnIcon_" + pChain.nexus + "' src='img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG + "' />"
+				+ "<img id='chnIcon_" + pChain.nexus + "' src='" + pChain.iconSrc + "' />"
 				+ "<kbd id='chnCheck_" + pChain.nexus + "' class='chnCheck'></kbd>"
 				+ "<h1 id='chnTitle_" + pChain.nexus + "'>" + chainname + "</h1>"
 				+ "<time id='chnTime_" + pChain.nexus + "' class='chnTimeFutureFar'></time>"
@@ -18338,7 +18339,7 @@ C = {
 				$("#sectionChains_Timetable").append(
 				"<div class='chnSlot chnSlotTime_" + i + " chnSlot_" + ithchain.nexus + "' data-" + C.cIndexSynonym + "='" + ithchain.nexus + "' data-timeframe='" + i + "'>"
 					+ "<div class='chnTitle'>"
-						+ "<img src='img/chain/" + C.parseChainAlias(ithchain.alias).toLowerCase() + I.cPNG + "' />"
+						+ "<img src='" + ithchain.iconSrc + "' />"
 						+ "<kbd class='chnCheck'></kbd>"
 						+ "<h1>" + D.getObjectName(ithchain) + "</h1>"
 						+ "<time>" + timestring + "</time>"
@@ -27013,6 +27014,7 @@ T = {
 	cDAYTIME_NIGHT_MINUTES: 40,
 	cDAYTIME_DAY_START: 25,
 	cDAYTIME_NIGHT_START: 45,
+	cDAYTIME_TRANSITION_MINUTES: 5,
 	ReferenceEnum:
 	{
 		UTC: 0,
@@ -28084,6 +28086,7 @@ T = {
 	
 	/*
 	 * Gets a preformatted string of the minutes of daylight or night remaining.
+	 * Also sets the clock's background dimming.
 	 * @returns string.
 	 */
 	getDayPeriodRemaining: function()
@@ -28091,30 +28094,56 @@ T = {
 		var now = new Date();
 		var hour = now.getUTCHours();
 		var min = now.getUTCMinutes();
-		var str = "";
+		var minremain = "";// Dim the clock background
 		if (hour % 2 === 0)
 		{
-			if (min >= T.cDAYTIME_DAY_START)
+			if (min >= T.cDAYTIME_DAY_START) // Day
 			{
-				str = (T.cDAYTIME_DAY_START + T.cDAYTIME_DAY_MINUTES - min);
+				minremain = (T.cDAYTIME_DAY_START + T.cDAYTIME_DAY_MINUTES - min);
+				// Light transitions only happen during day time, night is always fully dimmed
+				if (minremain > T.cDAYTIME_TRANSITION_MINUTES)
+				{
+					if (minremain >= T.cDAYTIME_DAY_MINUTES - T.cDAYTIME_TRANSITION_MINUTES)
+					{
+						K.setDimming((T.cDAYTIME_DAY_MINUTES - minremain + 1) / T.cDAYTIME_TRANSITION_MINUTES, true);
+					}
+					else
+					{
+						K.setDimming(1);
+					}
+				}
+				else
+				{
+					K.setDimming(minremain / T.cDAYTIME_TRANSITION_MINUTES, true);
+				}
 			}
-			else
+			else // Night
 			{
-				str = (T.cDAYTIME_DAY_START - min);
+				minremain = (T.cDAYTIME_DAY_START - min);
+				K.setDimming(0);
 			}
 		}
 		else
 		{
-			if (min < T.cDAYTIME_NIGHT_START)
+			if (min < T.cDAYTIME_NIGHT_START) // Day
 			{
-				str = (T.cDAYTIME_NIGHT_START - min);
+				minremain = (T.cDAYTIME_NIGHT_START - min);
+				if ((minremain > T.cDAYTIME_TRANSITION_MINUTES))
+				{
+					K.setDimming(1);
+				}
+				else
+				{
+					K.setDimming((minremain / T.cDAYTIME_TRANSITION_MINUTES), true);
+				}
 			}
-			else
+			else // Night
 			{
-				str = (T.cDAYTIME_NIGHT_START + T.cDAYTIME_NIGHT_MINUTES - min);
+				minremain = (T.cDAYTIME_NIGHT_START + T.cDAYTIME_NIGHT_MINUTES - min);
+				K.setDimming(0);
 			}
 		}
-		return str + D.getWord("m");
+		return minremain + D.getWord("m");
 	},
 	
 	/*
@@ -28562,7 +28591,8 @@ H = {
 				 */
 				$("#dsbCountdown").append(
 					"<div id='dsbCountdown_" + i + "' class='dsbCountdownEntry'>"
-						+ "<code>" + I.Symbol.Block + "</code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> <abbr></abbr> <var></var>"
+						+ "<code>" + I.Symbol.Block + "</code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> "
+						+ "<span class='cssFaded'><abbr></abbr> <var></var></span>"
 					+ "</div>");
 			}
 			I.qTip.init("#dsbCountdown");
@@ -28589,7 +28619,7 @@ H = {
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
-				+ I.Symbol.ArrowDown + "@ " + H.Sale.Finish.toLocaleString()
+				+ "<span class='cssFaded'>" + I.Symbol.ArrowDown + "@ " + H.Sale.Finish.toLocaleString() + "</span>"
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
 			// Add a "padding" item if the columns are not equal length
 			var isdiscounted = false;
@@ -29181,13 +29211,12 @@ H = {
 					{
 						(function(iChain)
 						{
-							bossicon = $("<img class='tmlIcon curZoom' src='img/chain/" + C.parseChainAlias(iChain.alias).toLowerCase() + ".png' />").appendTo(inner);
+							bossicon = $("<img class='tmlIcon curZoom' src='" + iChain.iconSrc + "' />").appendTo(inner);
 							bossicon.attr("title", "<dfn>" + D.getObjectName(iChain) + "</dfn>").click(function()
 							{
 								C.viewChainFinale(iChain);
 							});
-							I.initializeClipboard(bossicon[0]);
-							I.updateClipboard(bossicon[0], iChain.waypointText);
+							I.initializeClipboard(bossicon[0], iChain.waypointText);
 						})(wbchains[i]);
 					}
 				}
@@ -29278,6 +29307,7 @@ K = {
  * @@Klock analog and by-the-second and frame refreshes
  * ========================================================================== */
 
+	isClockSimplified: false,
 	tickerFrequency: 250, // Must be a divisor of 1000 milliseconds
 	tickerSecondPrevious: null,
 	stopwatchFrequency: 50,
@@ -29353,6 +29383,20 @@ K = {
 		K.updateDigitalClockMinutely();
 		K.initializeClipboard();
 		//K.refreshFestival();
+		
+		// For main site mode, hide clock icons to reduce clutter
+		if (I.ModeCurrent === I.ModeEnum.Website && I.isProgramEmbedded === false
+			&& O.Options.bol_showTimeline === true && O.Options.bol_showHUD === true && O.Options.int_setClock === 0)
+		{
+			K.isClockSimplified = true;
+			$("#chnProgressBar").hide();
+			var simplifiedelms = $("#paneClockIcons, #clkWaypoints, .clkMarkerPred");
+			simplifiedelms.css({opacity: 0});
+			$("#paneClock").hover(
+				function() { simplifiedelms.animate({opacity: 1}, "fast"); },
+				function() { simplifiedelms.animate({opacity: 0}, "fast"); }
+			);
+		}
 		
 		// Other clickable elements
 		$("#itemTimeLocalActual").click(function()
@@ -29542,6 +29586,25 @@ K = {
 			case I.ModeEnum.Overlay: $("#itemSocial").hide(); break;
 		}
 	},
+	
+	/*
+	 * Sets the clock's background dimming opacity.
+	 * @param float pPercent.
+	 */
+	setDimming: function(pPercent, pWantAnimate)
+	{
+		if (O.Options.int_setDimming === 0 && I.ModeCurrent !== I.ModeEnum.Simple)
+		{
+			if (pWantAnimate)
+			{
+				$(K.clockBackground).animate({opacity: pPercent});
+			}
+			else
+			{
+				K.clockBackground.style.opacity = pPercent;
+			}
+		}
+	},
 
 	/*
 	 * Sets a marker (small spikes at clock circumference) to specified angle.
@@ -29679,11 +29742,12 @@ K = {
 	 */
 	colorPrediction: function(pColor)
 	{
-		if (pColor !== K.currentPredictionColor)
+		var color = (K.isClockSimplified) ? "white" : pColor;
+		if (color !== K.currentPredictionColor)
 		{
-			K.currentPredictionColor = pColor;
-			K.handMinute.style.stroke = pColor;
-			K.timeProgress0.style.background = "linear-gradient(to right, black 0%, " + pColor + " 100%)";
+			K.currentPredictionColor = color;
+			K.handMinute.style.stroke = color;
+			K.timeProgress0.style.background = "linear-gradient(to right, black 0%, " + color + " 100%)";
 		}
 	},
 
@@ -29737,10 +29801,10 @@ K = {
 		K.rotateClockElement(K.handMinute, minangle);
 		K.rotateClockElement(K.handHour, hourangle);
 		
-		// Opacity value 0.0 through 1.0 based on how far into the 15 minutes frame
-		var opacityadd = 1 - ((min % T.cMINUTES_IN_TIMEFRAME)*60 + sec) / (T.cSECONDS_IN_TIMEFRAME);
+		// Value 0.0 through 1.0 based on how far into the 15 minutes frame
+		var timeframeprogress = 1 - ((min % T.cMINUTES_IN_TIMEFRAME)*60 + sec) / (T.cSECONDS_IN_TIMEFRAME);
 		// Progress bar over chains page to show how far in timeframe
-		var percent = (T.cPERCENT_100 * opacityadd);
+		var percent = (T.cPERCENT_100 * timeframeprogress);
 		K.timeProgress0.style.width = percent + "%";
 		K.timeProgress1.style.width = (100 - percent) + "%";
 		
@@ -29749,11 +29813,6 @@ K = {
 		 */
 		if (min % T.cMINUTES_IN_TIMEFRAME === 0 && sec === 0)
 		{
-			if (O.Options.int_setDimming === 0
-				&& I.ModeCurrent !== I.ModeEnum.Simple)
-			{
-				$(K.clockBackground).fadeTo(800, 1);
-			}
 			$(K.timeProgress0).css({width: "0%"}).animate({width: "100%"}, 800);
 			$(K.timeProgress1).css({width: "100%"}).animate({width: "0%"}, 800);
 			K.updateTimeFrame(pDate);
@@ -29772,13 +29831,6 @@ K = {
 			}
 			// Update the timestamp
 			K.awakeTimestampPrevious = awaketimestampcurrent;
-			
-			// Dim the clock background
-			if (O.Options.int_setDimming === 0
-				&& I.ModeCurrent !== I.ModeEnum.Simple)
-			{
-				K.clockBackground.style.opacity = opacityadd;
-			}
 		}
 		
 		// If crossing a 1 second mark (given)

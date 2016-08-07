@@ -18,11 +18,11 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 	<!-- CDN fallbacks -->
-	<script>window.jQuery || document.write('<script src="bin/jquery.min.js"><\/script>');</script>
-	<script>window.L || document.write('<script src="bin/leaflet.js"><\/script>');</script>
+	<script>window.jQuery || document.write("<script src='bin/jquery.min.js'><\/script>");</script>
+	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160806A"></script>
+	<script type="text/javascript" src="data/general.js?v=20160807"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 <!-- Google Analytics -->
@@ -548,14 +548,14 @@
 					<line id="clkMarker2" x1="50.00" y1="97.00" x2="50.00" y2="90.00" />
 					<line id="clkMarker3" x1="3.00" y1="50.00" x2="10.00" y2="50.00" />
 					<!-- Markers for minimum and average time event ends -->
-					<line id="clkMarker0A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker0B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker1A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker1B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker2A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker2B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker3A" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker3B" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker0A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker0B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker1A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker1B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker2A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker2B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker3A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker3B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
 				</g>
 				<g id="clkHoursPrime">
 					<text x="50" y="18">12</text>
@@ -609,10 +609,13 @@
 				</ul>
 			</div>
 			<div id="itemSocial">
-				<a class="linkExternal" title="<dfn>Learn GW2Timer's features :?</dfn>" href="http://forum.renaka.com/topic/5602037/">
+				<a class="linkExternal" title="<dfn>Audit your account (API key).</dfn>" href="http://gw2timer.com/?page=Audit">
+					<ins class="s16 s16_gold"></ins>
+				</a>
+				<a class="linkExternal" title="<dfn>Learn GW2Timer's features.</dfn>" href="http://forum.renaka.com/topic/5602037/">
 					<ins class="s16 s16_info"></ins>
 				</a>
-				<a class="linkExternal" title="<dfn>Follow GW2Timer on Twitter :)</dfn>" href="https://twitter.com/gw2timer">
+				<a class="linkExternal" title="<dfn>Follow GW2Timer on Twitter.</dfn>" href="https://twitter.com/gw2timer">
 					<ins class="s16 s16_twitter"></ins>
 				</a>
 			</div>
@@ -726,8 +729,8 @@
 							<label><input type="radio" name="int_setClock" /> Bar</label>
 							<label><input type="radio" name="int_setClock" /> None</label>
 						</fieldset>
-						<fieldset name="int_setDimming" title="Dim the clock background from bright to dark within 15 minutes or stay as so?"><legend>Clock Bg</legend>
-							<label><input id="opt_int_setDimming" type="radio" name="int_setDimming" /> Auto-dim</label>
+						<fieldset name="int_setDimming" title="Dim the clock background according to game day/night time or stay as so?"><legend>Clock Bg</legend>
+							<label><input id="opt_int_setDimming" type="radio" name="int_setDimming" /> Daylight</label>
 							<label><input type="radio" name="int_setDimming" /> Bright</label>
 							<label><input type="radio" name="int_setDimming" /> Dark</label>
 						</fieldset>
