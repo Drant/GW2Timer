@@ -4464,7 +4464,7 @@ Z = {
 	printAPI: function(pString, pLimit, pQueryStr)
 	{
 		I.print("Gathering elements...");
-		var legacyprefix = "v1";
+		var versionprefix = "v1";
 		var limit = Number.POSITIVE_INFINITY;
 		var providedarray = null;
 		var scrapethreshold = 256; // Minimum array size to delegate the scrape function
@@ -4549,7 +4549,7 @@ Z = {
 		};
 		
 		// Determine actions depending on parameters
-		if (pLimit !== undefined && pString !== legacyprefix)
+		if (pLimit !== undefined && pString !== versionprefix)
 		{
 			// Query string may be sent in place of the limit parameter
 			if (U.isInteger(pLimit))
@@ -4579,7 +4579,7 @@ Z = {
 		}
 		
 		// If requesting v1 API by entering it in the first parameter
-		if (pString === legacyprefix)
+		if (pString === versionprefix)
 		{
 			url = U.URL_API.Prefix1 + pLimit;
 		}
