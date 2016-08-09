@@ -23,12 +23,12 @@ var GW2T_CATALOG_HEADERS = {
 	TonicConsumable: {name_en: "Consumable Tonics", name_de: "Verbrauchsgegenstand Trank", name_es: "Tónicos consumibles", name_fr: "Toniques consommables", iscollapsed: true},
 	Bundle: {name_en: "Bundles", name_de: "Umgebungswaffen", name_es: "Arma ambiental", name_fr: "Arme environnementale", iscollapsed: true},
 	Aura: {name_en: "Cosmetic Auras", name_de: "Kosmetik-Auren", name_es: "Auras cosméticos", name_fr: "Auras cosmétiques", iscollapsed: true},
+	Legendary: {name_en: "Legendary Equipment", name_de: "Legendäre Ausrüstung", name_es: "Equipamientos legendarias", name_fr: "Équipements légendaires", iscollapsed: true},
 	Outfit: {name_en: "Outfits", name_de: "Farben", name_es: "Atuendos", name_fr: "Tenues", iscollapsed: true},
 	Finisher: {name_en: "Finishers", name_de: "Todesstöße", name_es: "Remates", name_fr: "Coups de grâce", iscollapsed: true},
 	Carrier: {name_en: "Mail Carriers", name_de: "Briefboten", name_es: "Carteros", name_fr: "Messagers", iscollapsed: true},
 	Glider: {name_en: "Gliders", name_de: "Gleitschirm", name_es: "Planeador", name_fr: "Deltaplane", iscollapsed: true},
-	Node: {name_en: "Gathering Nodes", name_de: "Knoten", name_es: "Nodos", name_fr: "Zones", iscollapsed: true},
-	Legendary: {name_en: "Legendary Equipment", name_de: "Legendäre Ausrüstung", name_es: "Equipamientos legendarias", name_fr: "Équipements légendaires", iscollapsed: true}
+	Node: {name_en: "Gathering Nodes", name_de: "Knoten", name_es: "Nodos", name_fr: "Zones", iscollapsed: true}
 };
 
 /*
@@ -611,6 +611,35 @@ Aura: [
 	{i: 78057, n: "Moto's Unstable Bauble Infusion: Red", p: {achievement: 0}},
 	{i: 78097, n: "Moto's Unstable Bauble Infusion: Red", p: {achievement: 0}}
 ],
+Legendary: [
+	{i: 30684, n: "Frostfang"},
+	{i: 30692, n: "The Moot"},
+	{i: 30699, n: "Bolt"},
+	{i: 30687, n: "Incinerator"},
+	{i: 30693, n: "Quip"},
+	{i: 30695, n: "Meteorlogicus"},
+	{i: 30688, n: "The Minstrel"},
+	{i: 30696, n: "The Flameseeker Prophecies"},
+	{i: 30700, n: "Rodgort"},
+	{i: 30702, n: "Howler"},
+	{i: 30703, n: "Sunrise"},
+	{i: 30704, n: "Twilight"},
+	{i: 30689, n: "Eternity"},
+	{i: 30690, n: "The Juggernaut"},
+	{i: 30685, n: "Kudzu"},
+	{i: 30686, n: "The Dreamer"},
+	{i: 30694, n: "The Predator"},
+	{i: 30698, n: "The Bifrost"},
+	{i: 30691, n: "Kamohoali'i Kotaki"},
+	{i: 30697, n: "Frenzy"},
+	{i: 30701, n: "Kraitkin"},
+	{i: 76158, n: "Astralaria", p: {craft: true}},
+	{i: 72713, n: "HOPE", p: {craft: true}},
+	{i: 78556, n: "Chuka and Champawat", p: {craft: true}},
+	{i: 71383, n: "Nevermore", p: {craft: true}},
+	{i: 77474, n: "The Ascension", p: {craft: true}},
+	{i: 74155, n: "Ad Infinitum", p: {craft: true}}
+],
 Outfit: [
 	{i: 64754, n: "Pirate Captain's Outfit", p: {gem: 700}},
 	{i: 64756, n: "Cook's Outfit", p: {gem: 700}},
@@ -786,34 +815,5 @@ Node: [
 	{i: 68097, n: "Platinum Mining Node"},
 	{i: 68098, n: "Mithril Mining Node"},
 	{i: 68094, n: "Orichalcum Mining Node"}
-],
-Legendary: [
-	{i: 30684, n: "Frostfang"},
-	{i: 30692, n: "The Moot"},
-	{i: 30699, n: "Bolt"},
-	{i: 30687, n: "Incinerator"},
-	{i: 30693, n: "Quip"},
-	{i: 30695, n: "Meteorlogicus"},
-	{i: 30688, n: "The Minstrel"},
-	{i: 30696, n: "The Flameseeker Prophecies"},
-	{i: 30700, n: "Rodgort"},
-	{i: 30702, n: "Howler"},
-	{i: 30703, n: "Sunrise"},
-	{i: 30704, n: "Twilight"},
-	{i: 30689, n: "Eternity"},
-	{i: 30690, n: "The Juggernaut"},
-	{i: 30685, n: "Kudzu"},
-	{i: 30686, n: "The Dreamer"},
-	{i: 30694, n: "The Predator"},
-	{i: 30698, n: "The Bifrost"},
-	{i: 30691, n: "Kamohoali'i Kotaki"},
-	{i: 30697, n: "Frenzy"},
-	{i: 30701, n: "Kraitkin"},
-	{i: 76158, n: "Astralaria", p: {craft: true}},
-	{i: 72713, n: "HOPE", p: {craft: true}},
-	{i: 78556, n: "Chuka and Champawat", p: {craft: true}},
-	{i: 71383, n: "Nevermore", p: {craft: true}},
-	{i: 77474, n: "The Ascension", p: {craft: true}},
-	{i: 74155, n: "Ad Infinitum", p: {craft: true}}
 ]
 };

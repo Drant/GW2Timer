@@ -1342,8 +1342,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-08-02T15:00:00Z"),
-	Finish: new Date("2016-08-09T15:00:00Z"),
+	Start: new Date("2016-08-09T15:00:00Z"),
+	Finish: new Date("2016-08-16T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1352,44 +1352,37 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Noble's Folly Pass",
-		img: "http://i.imgur.com/i0BPJ76.png",
-		price: 1000,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Noble's Folly Pass (2 weeks)",
-		img: "http://i.imgur.com/OQgfU7b.png",
-		price: 150,
-		discount: null,
-		col: 0
-	},
-	{
 		name: "Lord Caudecus's Pistol Skin",
-		img: "http://i.imgur.com/LK6eoEC.png",
+		id: "79179",
 		price: 600,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Lord Caudecus's Sword Skin",
-		img: "http://i.imgur.com/OXFivZS.png",
+		id: "79089",
 		price: 600,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Shining Blade Backpack Glider Combo",
-		id: "79084",
-		price: 700,
-		discount: null,
-		col: 1
+		name: "Toxic Mantle Skin",
+		id: "49024",
+		price: 400,
+		discount: 320,
+		col: 0
 	},
 	{
-		name: "Verdant Executor Outfit",
-		id: "79220",
-		price: 700,
+		name: "Toxic Gloves Skin",
+		id: "49031",
+		price: 400,
+		discount: 320,
+		col: 0
+	},
+	{
+		name: "Noble's Folly Pass (2 weeks)",
+		id: "79270",
+		price: 150,
 		discount: null,
 		col: 1
 	},
@@ -1398,6 +1391,13 @@ Sale: {
 		id: "44605",
 		price: 150,
 		discount: null,
+		col: 1
+	},
+	{
+		name: "Bloodstone Dye Kit",
+		img: "http://i.imgur.com/lS9umHn.png",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]
