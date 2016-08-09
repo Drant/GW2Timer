@@ -8550,7 +8550,7 @@ A = {
 			}
 		};
 		
-		// Load the bank, inventory, equipment, materials
+		// Load the bank, inventory, equipment, materials, vaults
 		I.clear();
 		I.print(D.getPhraseOriginal("Loading account bank materials inventory") + "...");
 		A.initializePossessions(function()

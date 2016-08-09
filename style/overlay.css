@@ -36,6 +36,7 @@
 	left: 32px;
 }
 #itemTimeline {
+	z-index: 3; /* Let the timeline cover the dashboard if the window is short */
 	width: 100%;
 	margin: auto;
 	top: 0;
