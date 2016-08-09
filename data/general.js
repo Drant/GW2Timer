@@ -1249,7 +1249,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Audit' title='gw2timer.com/audit'>Account Audit</a> now considers your owned <a href='http://gw2timer.com/?page=Vault' title='gw2timer.com/vault'>guild banks</a> in the valuation."
-	pve: "<a href='http://forum.renaka.com/topic/5546166/'>Overlay app</a> to use timers, WvW livemap, and account armory in game.",
+	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes.",
 	wvw: "",
 	Start: new Date("2016-08-02T16:00:00Z"),
 	Finish: new Date("2016-08-16T16:00:00Z"),

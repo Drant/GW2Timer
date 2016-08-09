@@ -20,7 +20,7 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "trezor", it: "volta", pl: "kufer", pt: "tesouro", ru: "сундук", zh: "保險箱"},
 	s_materials: {de: "materialien", es: "materiales", fr: "matériaux",
 		cs: "materiály", it: "materiale", pl: "materiały", pt: "materiais", ru: "материалы", zh: "物料"},
-	s_wardrobe: {de: "garderobenlager", es: "garderobe", fr: "escaparate",
+	s_wardrobe: {de: "garderobenlager", es: "garderobe", fr: "garderobe",
 		cs: "skříň", it: "armadio", pl: "szafa", pt: "roupeiro", ru: "гардероб", zh: "衣櫃"},
 	s_minis: {de: "miniaturen", es: "miniaturas", fr: "miniatures",
 		cs: "miniatury", it: "miniature", pl: "miniatury", pt: "miniaturas", ru: "миниатюры", zh: "微縮模型"},
