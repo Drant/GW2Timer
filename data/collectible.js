@@ -1,18 +1,60 @@
 /*
  * This file is used by http://gw2timer.com/collectible
- * Open world collectible items map data. Needle properties:
- * n: number
- * c: coordinates
- * i: image URL (optional)
- * t: tooltip text (optional)
+ * Open world collectible items map data.
+ * COLLECTIBLE PROPERTIES:
+ * color: web color of the node label
+ * view: zone or coordinate
+ * wiki: wiki URL
+ * credit: credit URL
+ * iconsize: size of node icon, if available
+ * ringsize: size of the ring representing the node
+ * wantpath: boolean, whether to draw lines connecting the nodes
+ * NEEDLE PROPERTIES:
+ * n: number (required)
+ * c: coordinates (required)
+ * i: icon image URL instead of a number
+ * s: screenshot image URL
+ * t: tooltip text
  * l: label text (optional, used instead of number over the map marker)
- * p: name of a subset of markers, also used as filename for those markers' icons (optional)
+ * a: attributes in an object format
+ * p: name of a subset of markers, also used as filename for those markers' icons
  * e: extreme enum (optional, whether it is the start (0), substart (1), subfinish (2), or finish (3) point)
  */
 
 var GW2T_COLLECTIBLE_DATA = {
 // Must have same name as a Checklist object
-LivingStory: {
+BloodstoneCreatures: {
+	name_en: "Bloodstone Sightings",
+	name_de: "Blutstein-Sichtungen",
+	name_es: "Avistamientos de hematites",
+	name_fr: "Rep/e/rages de pierra de sang",
+	color: "crimson",
+	view: "default",
+	wiki: "https://wiki.guildwars2.com/wiki/Bloodstone_Sightings",
+	credit: "http://dulfy.net/2016/08/09/gw2-bloodstone-sightings-current-events-guide/",
+	iconsize: 96,
+	ringsize: 48,
+	wantpath: false,
+	needles: [
+	{n: 1, c: [19610, 12544], i: "moa", t: "Moa"},
+	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"},
+	{n: 1, c: [25242, 12672], i: "moa", t: "Moa"},
+	{n: 1, c: [11290, 15360], i: "moa", t: "Moa"},
+	{n: 1, c: [19610, 12544], i: "arctodus", t: "Arctodus"},
+	{n: 1, c: [15386, 13568], i: "arctodus", t: "Arctodus"},
+	{n: 1, c: [18458, 16000], i: "arctodus", t: "Arctodus"},
+	{n: 1, c: [2328, 15161], i: "wyvern", t: "Wyvern on sky island"},
+	{n: 1, c: [3728, 18677], i: "wyvern", t: "Wyvern"},
+	{n: 1, c: [21637, 8610], i: "shark", t: "Shark"},
+	{n: 1, c: [20546, 22811], i: "shark", t: "Shark"},
+	{n: 1, c: [16640, 16915], i: "shark", t: "Shark"},
+	{n: 1, c: [5405, 14989], i: "devourer", t: "Devourer"},
+	{n: 1, c: [30366, 14796], i: "devourer", t: "Devourer"},
+	{n: 1, c: [5022, 16460], i: "devourer", t: "Devourer"},
+	{n: 1, c: [30366, 18380], i: "devourer", t: "Devourer"}
+	]
+},
+BloodstoneSlivers: {
 	name_en: "Bloodstone Harvest",
 	name_de: "Blutstein-Ernte",
 	name_es: "Recolección de hematites",
@@ -508,102 +550,102 @@ BuriedChests: {
 	wiki: "http://wiki.guildwars2.com/wiki/Buried_Locked_Chest",
 	credit: "http://www.mattsta.ninja/dry-top/",
 	needles: [
-	{n: 1, c: [5197, 16321], i: "http://i.imgur.com/7pbSOkM.png"},
-	{n: 2, c: [5267, 16289], i: "http://i.imgur.com/NvmBoaw.png"},
-	{n: 3, c: [5276, 16256], i: "http://i.imgur.com/Xdf8z7Q.png"},
-	{n: 4, c: [5310, 16186], i: "http://i.imgur.com/Bw6OTEN.png"},
-	{n: 5, c: [5396, 16252], i: "http://i.imgur.com/tOMC85i.png"},
-	{n: 6, c: [5485, 16222], i: "http://i.imgur.com/lkcIL2O.png"},
-	{n: 7, c: [5568, 16118], i: "http://i.imgur.com/iGjtfrZ.png"},
+	{n: 1, c: [5197, 16321], s: "http://i.imgur.com/7pbSOkM.png"},
+	{n: 2, c: [5267, 16289], s: "http://i.imgur.com/NvmBoaw.png"},
+	{n: 3, c: [5276, 16256], s: "http://i.imgur.com/Xdf8z7Q.png"},
+	{n: 4, c: [5310, 16186], s: "http://i.imgur.com/Bw6OTEN.png"},
+	{n: 5, c: [5396, 16252], s: "http://i.imgur.com/tOMC85i.png"},
+	{n: 6, c: [5485, 16222], s: "http://i.imgur.com/lkcIL2O.png"},
+	{n: 7, c: [5568, 16118], s: "http://i.imgur.com/iGjtfrZ.png"},
 	{n: 8, c: [5471, 16287], t: "In the quicksand."},
-	{n: 9, c: [5512, 16299], i: "http://i.imgur.com/otHDoYQ.png"},
-	{n: 10, c: [5532, 16381], i: "http://i.imgur.com/qrU1XSr.png"},
-	{n: 11, c: [5468, 16455], i: "http://i.imgur.com/RDkCnH8.png"},
-	{n: 12, c: [5377, 16514], i: "http://i.imgur.com/FmIfYPt.png"},
-	{n: 13, c: [5406, 16592], i: "http://i.imgur.com/jxMmbT8.png"},
-	{n: 14, c: [5331, 16559], i: "http://i.imgur.com/ZmFmNNC.png"},
-	{n: 15, c: [5289, 16626], i: "http://i.imgur.com/hDvd7TO.png"},
-	{n: 16, c: [5254, 16598], i: "http://i.imgur.com/0rzLZvl.png"},
-	{n: 17, c: [5333, 16637], i: "http://i.imgur.com/x6OI6e9.png"},
-	{n: 18, c: [5304, 16643], i: "http://i.imgur.com/sh6ugkM.png"},
-	{n: 19, c: [5225, 16698], i: "http://i.imgur.com/9RjKjjE.png"},
-	{n: 20, c: [5281, 16762], i: "http://i.imgur.com/VzoTuEr.png"},
-	{n: 21, c: [5257, 16821], i: "http://i.imgur.com/QRK0w6C.png"},
-	{n: 22, c: [5388, 16761], i: "http://i.imgur.com/uhrpfom.png"},
-	{n: 23, c: [5345, 16711], i: "http://i.imgur.com/vCiCRf9.png"},
-	{n: 24, c: [5468, 16721], i: "http://i.imgur.com/LLsEubL.png"},
+	{n: 9, c: [5512, 16299], s: "http://i.imgur.com/otHDoYQ.png"},
+	{n: 10, c: [5532, 16381], s: "http://i.imgur.com/qrU1XSr.png"},
+	{n: 11, c: [5468, 16455], s: "http://i.imgur.com/RDkCnH8.png"},
+	{n: 12, c: [5377, 16514], s: "http://i.imgur.com/FmIfYPt.png"},
+	{n: 13, c: [5406, 16592], s: "http://i.imgur.com/jxMmbT8.png"},
+	{n: 14, c: [5331, 16559], s: "http://i.imgur.com/ZmFmNNC.png"},
+	{n: 15, c: [5289, 16626], s: "http://i.imgur.com/hDvd7TO.png"},
+	{n: 16, c: [5254, 16598], s: "http://i.imgur.com/0rzLZvl.png"},
+	{n: 17, c: [5333, 16637], s: "http://i.imgur.com/x6OI6e9.png"},
+	{n: 18, c: [5304, 16643], s: "http://i.imgur.com/sh6ugkM.png"},
+	{n: 19, c: [5225, 16698], s: "http://i.imgur.com/9RjKjjE.png"},
+	{n: 20, c: [5281, 16762], s: "http://i.imgur.com/VzoTuEr.png"},
+	{n: 21, c: [5257, 16821], s: "http://i.imgur.com/QRK0w6C.png"},
+	{n: 22, c: [5388, 16761], s: "http://i.imgur.com/uhrpfom.png"},
+	{n: 23, c: [5345, 16711], s: "http://i.imgur.com/vCiCRf9.png"},
+	{n: 24, c: [5468, 16721], s: "http://i.imgur.com/LLsEubL.png"},
 	{n: 25, c: [5506, 16720], t: "Behind the pulsing vine below the entrance waypoint."},
-	{n: 26, c: [5463, 16654], i: "http://i.imgur.com/NcgixZq.png"},
-	{n: 27, c: [5368, 16625], i: "http://i.imgur.com/8cbVhYB.png"},
-	{n: 28, c: [5407, 16561], i: "http://i.imgur.com/YqDBBmg.png"},
-	{n: 29, c: [5396, 16516], i: "http://i.imgur.com/4t18k1J.png"},
-	{n: 30, c: [5521, 16528], i: "http://i.imgur.com/XnAXqLR.png"},
-	{n: 31, c: [5558, 16564], i: "http://i.imgur.com/ZTiy9vC.png"},
-	{n: 32, c: [5535, 16594], i: "http://i.imgur.com/1uNpwbe.png"},
-	{n: 33, c: [5418, 16535], i: "http://i.imgur.com/7orCJrj.png"},
-	{n: 34, c: [5385, 16604], i: "http://i.imgur.com/CYIVXAu.png"},
-	{n: 35, c: [5249, 16508], i: "http://i.imgur.com/h33KOBP.png"},
-	{n: 36, c: [5238, 16418], i: "http://i.imgur.com/RFcrFJV.png"},
-	{n: 37, c: [5136, 16392], i: "http://i.imgur.com/Lt1Qbg1.png"},
-	{n: 38, c: [5141, 16560], i: "http://i.imgur.com/ngqmZhC.png"},
-	{n: 39, c: [5162, 16621], i: "http://i.imgur.com/dDgNvX8.png"},
-	{n: 40, c: [5168, 16678], i: "http://i.imgur.com/p0UhkQh.png"},
-	{n: 41, c: [5078, 16497], i: "http://i.imgur.com/msWUvMm.png"},
-	{n: 42, c: [5093, 16488], i: "http://i.imgur.com/hxwOtdN.png"},
-	{n: 43, c: [5030, 16521], i: "http://i.imgur.com/qnN4Ffb.png"},
-	{n: 44, c: [5121, 16716], i: "http://i.imgur.com/1xvQMyu.png"},
+	{n: 26, c: [5463, 16654], s: "http://i.imgur.com/NcgixZq.png"},
+	{n: 27, c: [5368, 16625], s: "http://i.imgur.com/8cbVhYB.png"},
+	{n: 28, c: [5407, 16561], s: "http://i.imgur.com/YqDBBmg.png"},
+	{n: 29, c: [5396, 16516], s: "http://i.imgur.com/4t18k1J.png"},
+	{n: 30, c: [5521, 16528], s: "http://i.imgur.com/XnAXqLR.png"},
+	{n: 31, c: [5558, 16564], s: "http://i.imgur.com/ZTiy9vC.png"},
+	{n: 32, c: [5535, 16594], s: "http://i.imgur.com/1uNpwbe.png"},
+	{n: 33, c: [5418, 16535], s: "http://i.imgur.com/7orCJrj.png"},
+	{n: 34, c: [5385, 16604], s: "http://i.imgur.com/CYIVXAu.png"},
+	{n: 35, c: [5249, 16508], s: "http://i.imgur.com/h33KOBP.png"},
+	{n: 36, c: [5238, 16418], s: "http://i.imgur.com/RFcrFJV.png"},
+	{n: 37, c: [5136, 16392], s: "http://i.imgur.com/Lt1Qbg1.png"},
+	{n: 38, c: [5141, 16560], s: "http://i.imgur.com/ngqmZhC.png"},
+	{n: 39, c: [5162, 16621], s: "http://i.imgur.com/dDgNvX8.png"},
+	{n: 40, c: [5168, 16678], s: "http://i.imgur.com/p0UhkQh.png"},
+	{n: 41, c: [5078, 16497], s: "http://i.imgur.com/msWUvMm.png"},
+	{n: 42, c: [5093, 16488], s: "http://i.imgur.com/hxwOtdN.png"},
+	{n: 43, c: [5030, 16521], s: "http://i.imgur.com/qnN4Ffb.png"},
+	{n: 44, c: [5121, 16716], s: "http://i.imgur.com/1xvQMyu.png"},
 	{n: 45, c: [5131, 16757], t: "Top of the ledges."},
-	{n: 46, c: [5088, 16752], i: "http://i.imgur.com/tfNh0tH.png"},
-	{n: 47, c: [4923, 16698], i: "http://i.imgur.com/Q78XIcl.png"},
+	{n: 46, c: [5088, 16752], s: "http://i.imgur.com/tfNh0tH.png"},
+	{n: 47, c: [4923, 16698], s: "http://i.imgur.com/Q78XIcl.png"},
 	{n: 48, c: [4889, 16656], t: "Inside the frog cave."},
-	{n: 49, c: [4881, 16616], i: "http://i.imgur.com/1ly4eqA.png"},
-	{n: 50, c: [4976, 16649], i: "http://i.imgur.com/7AgAITy.png"},
-	{n: 51, c: [4897, 16538], i: "http://i.imgur.com/D75YWKI.png"},
+	{n: 49, c: [4881, 16616], s: "http://i.imgur.com/1ly4eqA.png"},
+	{n: 50, c: [4976, 16649], s: "http://i.imgur.com/7AgAITy.png"},
+	{n: 51, c: [4897, 16538], s: "http://i.imgur.com/D75YWKI.png"},
 	{n: 52, c: [4931, 16464], t: "Right of the entrance of Cornered instance but on a ledge above. You need jump crystal from across the other side to get there."},
-	{n: 53, c: [4952, 16461], i: "http://i.imgur.com/6qBQq4n.png"},
-	{n: 54, c: [5088, 16354], i: "http://i.imgur.com/3yebdfp.png"},
+	{n: 53, c: [4952, 16461], s: "http://i.imgur.com/6qBQq4n.png"},
+	{n: 54, c: [5088, 16354], s: "http://i.imgur.com/3yebdfp.png"},
 	{n: 55, c: [5147, 16307], t: "Overlooking the quicksand."},
-	{n: 56, c: [4994, 16345], i: "http://i.imgur.com/xo2swdc.png"},
+	{n: 56, c: [4994, 16345], s: "http://i.imgur.com/xo2swdc.png"},
 	{n: 57, c: [5011, 16361], t: "Inside Explorer's cave at the back."},
-	{n: 58, c: [5078, 16319], i: "http://i.imgur.com/puG7aEE.png"},
+	{n: 58, c: [5078, 16319], s: "http://i.imgur.com/puG7aEE.png"},
 	{n: 59, c: [5118, 16239], t: "Back of Centaur village"},
 	{n: 60, c: [5122, 16220], t: "Eastern end of the Restoration Refuge."},
 	{n: 61, c: [4992, 16280], t: "Near entrance to Centaur village."},
 	{n: 62, c: [4942, 16241], t: "Near entrance to Centaur village."},
-	{n: 63, c: [4750, 16358], i: "http://i.imgur.com/gv6QG81.png"},
-	{n: 64, c: [4790, 16351], i: "http://i.imgur.com/KJbXPAu.png"},
-	{n: 65, c: [4772, 16173], i: "http://i.imgur.com/DEQPh79.png"},
-	{n: 66, c: [4812, 16139], i: "http://i.imgur.com/IzK7qZM.png"},
+	{n: 63, c: [4750, 16358], s: "http://i.imgur.com/gv6QG81.png"},
+	{n: 64, c: [4790, 16351], s: "http://i.imgur.com/KJbXPAu.png"},
+	{n: 65, c: [4772, 16173], s: "http://i.imgur.com/DEQPh79.png"},
+	{n: 66, c: [4812, 16139], s: "http://i.imgur.com/IzK7qZM.png"},
 	{n: 67, c: [4882, 15962], t: "Top of some ledges near the start of the canyon."},
-	{n: 68, c: [5184, 16047], i: "http://i.imgur.com/eNuJ3IH.png"},
-	{n: 69, c: [5173, 15921], i: "http://i.imgur.com/1afdXXg.png"},
-	{n: 70, c: [5002, 15877], i: "http://i.imgur.com/TOuE9B9.png"},
-	{n: 71, c: [4874, 15781], i: "http://i.imgur.com/O3PTbZA.png"},
-	{n: 72, c: [4782, 15987], i: "http://i.imgur.com/pWNi0X1.png"},
-	{n: 73, c: [4689, 16000], i: "http://i.imgur.com/VYmTrbn.png"},
-	{n: 74, c: [4681, 15860], i: "http://i.imgur.com/L28U7ho.png"},
-	{n: 75, c: [4678, 15785], i: "http://i.imgur.com/30wdUDG.png"},
-	{n: 76, c: [4454, 15972], i: "http://i.imgur.com/pO8oTya.png"},
-	{n: 77, c: [4408, 15889], i: "http://i.imgur.com/x6JSg4r.png"},
-	{n: 78, c: [4406, 15820], i: "http://i.imgur.com/iXf51Gf.png"},
+	{n: 68, c: [5184, 16047], s: "http://i.imgur.com/eNuJ3IH.png"},
+	{n: 69, c: [5173, 15921], s: "http://i.imgur.com/1afdXXg.png"},
+	{n: 70, c: [5002, 15877], s: "http://i.imgur.com/TOuE9B9.png"},
+	{n: 71, c: [4874, 15781], s: "http://i.imgur.com/O3PTbZA.png"},
+	{n: 72, c: [4782, 15987], s: "http://i.imgur.com/pWNi0X1.png"},
+	{n: 73, c: [4689, 16000], s: "http://i.imgur.com/VYmTrbn.png"},
+	{n: 74, c: [4681, 15860], s: "http://i.imgur.com/L28U7ho.png"},
+	{n: 75, c: [4678, 15785], s: "http://i.imgur.com/30wdUDG.png"},
+	{n: 76, c: [4454, 15972], s: "http://i.imgur.com/pO8oTya.png"},
+	{n: 77, c: [4408, 15889], s: "http://i.imgur.com/x6JSg4r.png"},
+	{n: 78, c: [4406, 15820], s: "http://i.imgur.com/iXf51Gf.png"},
 	{n: 79, c: [4374, 15764], t: "Up near skill point."},
 	{n: 80, c: [4202, 16012], t: "Top of this rock in Oasis. Use jump crystal hidden in grass behind the rock to get up there."},
-	{n: 81, c: [4008, 16090], i: "http://i.imgur.com/QR1tHUF.png"},
+	{n: 81, c: [4008, 16090], s: "http://i.imgur.com/QR1tHUF.png"},
 	{n: 82, c: [3918, 16134], t: "Top of this rock ledge, jump to get there."},
-	{n: 83, c: [3939, 16198], i: "http://i.imgur.com/8FcA6ev.png"},
-	{n: 84, c: [4219, 16176], i: "http://i.imgur.com/qaR0vb3.png"},
-	{n: 85, c: [4143, 16113], i: "http://i.imgur.com/HUNpmn9.png"},
-	{n: 86, c: [4571, 16172], i: "http://i.imgur.com/0h4Gr81.png"},
+	{n: 83, c: [3939, 16198], s: "http://i.imgur.com/8FcA6ev.png"},
+	{n: 84, c: [4219, 16176], s: "http://i.imgur.com/qaR0vb3.png"},
+	{n: 85, c: [4143, 16113], s: "http://i.imgur.com/HUNpmn9.png"},
+	{n: 86, c: [4571, 16172], s: "http://i.imgur.com/0h4Gr81.png"},
 	{n: 87, c: [4658, 16371], t: "Near the crash site #2."},
-	{n: 88, c: [4556, 16333], i: "http://i.imgur.com/FrV27hs.png"},
-	{n: 89, c: [4538, 16392], i: "http://i.imgur.com/3y9rJFY.png"},
-	{n: 90, c: [4430, 16409], i: "http://i.imgur.com/RJRJI5n.png"},
-	{n: 91, c: [4412, 16350], i: "http://i.imgur.com/CJ8Imz0.png"},
-	{n: 92, c: [4319, 16416], i: "http://i.imgur.com/9Js0NCw.png"},
-	{n: 93, c: [4461, 16607], i: "http://i.imgur.com/NU3KvWr.png"},
-	{n: 94, c: [4643, 16583], i: "http://i.imgur.com/R1bpzSr.png"},
-	{n: 95, c: [4466, 16762], i: "http://i.imgur.com/OJdXUco.png"},
-	{n: 96, c: [4532, 16805], i: "http://i.imgur.com/omxcCnS.png"},
+	{n: 88, c: [4556, 16333], s: "http://i.imgur.com/FrV27hs.png"},
+	{n: 89, c: [4538, 16392], s: "http://i.imgur.com/3y9rJFY.png"},
+	{n: 90, c: [4430, 16409], s: "http://i.imgur.com/RJRJI5n.png"},
+	{n: 91, c: [4412, 16350], s: "http://i.imgur.com/CJ8Imz0.png"},
+	{n: 92, c: [4319, 16416], s: "http://i.imgur.com/9Js0NCw.png"},
+	{n: 93, c: [4461, 16607], s: "http://i.imgur.com/NU3KvWr.png"},
+	{n: 94, c: [4643, 16583], s: "http://i.imgur.com/R1bpzSr.png"},
+	{n: 95, c: [4466, 16762], s: "http://i.imgur.com/OJdXUco.png"},
+	{n: 96, c: [4532, 16805], s: "http://i.imgur.com/omxcCnS.png"},
 	{n: 97, c: [4039, 16301], t: "On corner of wall."},
 	{n: 98, c: [4054, 16416], t: "In pile of rocks by cliff wall."},
 	{n: 99, c: [4295, 16429], t: "Corner of rock slabs and upper cliff."},
@@ -1088,56 +1130,56 @@ LionsArchExterminator: {
 	wiki: "http://wiki.guildwars2.com/wiki/Lion%27s_Arch_Exterminator",
 	credit: "http://dulfy.net/2015/06/23/gw2-lions-arch-exterminator-achievement-guide/",
 	needles: [
-	{n: 1, c: [15904, 14496], i: "http://i.imgur.com/q9llZz0.png"},
-	{n: 2, c: [15912, 14485], i: "http://i.imgur.com/9b2hLVo.png"},
-	{n: 3, c: [15917, 14474], i: "http://i.imgur.com/9zQJpRJ.png"},
-	{n: 4, c: [15855, 14539], i: "http://i.imgur.com/1we5DLa.png"},
-	{n: 5, c: [15718, 14491], i: "http://i.imgur.com/Hvqogpn.png"},
-	{n: 6, c: [15804, 14527], i: "http://i.imgur.com/fJjLRBE.png"},
-	{n: 7, c: [15629, 14521], i: "http://i.imgur.com/QYFYQ2k.png"},
-	{n: 8, c: [15689, 14617], i: "http://i.imgur.com/5713aHs.png"},
-	{n: 9, c: [15691, 14724], i: "http://i.imgur.com/bYXiYH8.png"},
-	{n: 10, c: [15805, 15000], i: "http://i.imgur.com/pLhyueb.png"},
-	{n: 11, c: [15799, 14849], i: "http://i.imgur.com/MBs6T0G.png"},
-	{n: 12, c: [15906, 14728], i: "http://i.imgur.com/nlV7yJB.png"},
-	{n: 13, c: [15814, 14544], i: "http://i.imgur.com/7qPd9WX.png"},
-	{n: 14, c: [15460, 15100], i: "http://i.imgur.com/YbBIFw6.png"},
-	{n: 15, c: [15498, 15177], i: "http://i.imgur.com/GBI86rk.png"},
-	{n: 16, c: [15376, 15224], i: "http://i.imgur.com/BLb9OzR.png"},
-	{n: 17, c: [15562, 15369], i: "http://i.imgur.com/uImCgmH.png"},
-	{n: 18, c: [15510, 15335], i: "http://i.imgur.com/xfnqMeZ.png"},
-	{n: 19, c: [15513, 15385], i: "http://i.imgur.com/Nf1OpnV.png"},
-	{n: 20, c: [15516, 15427], i: "http://i.imgur.com/c8XUKAr.png"},
-	{n: 21, c: [16368, 14561], i: "http://i.imgur.com/qKkArCe.png"},
-	{n: 22, c: [16543, 14603], i: "http://i.imgur.com/AqMD3XO.png"},
-	{n: 23, c: [16774, 14762], i: "http://i.imgur.com/vIBC9YC.png"},
-	{n: 24, c: [16895, 14881], i: "http://i.imgur.com/poqDI0e.png"},
-	{n: 25, c: [16955, 14642], i: "http://i.imgur.com/haxXSrz.png"},
-	{n: 26, c: [16808, 14511], i: "http://i.imgur.com/cVT1ntd.png"},
-	{n: 27, c: [16988, 14553], i: "http://i.imgur.com/5AWlPzP.png"},
-	{n: 28, c: [17010, 14419], i: "http://i.imgur.com/JmPvSB9.png"},
-	{n: 29, c: [16945, 14399], i: "http://i.imgur.com/Ebchzam.png"},
-	{n: 30, c: [17100, 14713], i: "http://i.imgur.com/dmcAlGY.png"},
-	{n: 31, c: [17080, 14798], i: "http://i.imgur.com/roiLGmV.png"},
-	{n: 32, c: [17346, 14475], i: "http://i.imgur.com/DtIuXxj.png"},
-	{n: 33, c: [17470, 14691], i: "http://i.imgur.com/e34qVRi.png"},
-	{n: 34, c: [17523, 14658], i: "http://i.imgur.com/oVWhxZp.png"},
-	{n: 35, c: [17009, 15238], i: "http://i.imgur.com/gyV2lP0.png"},
-	{n: 36, c: [16995, 15115], i: "http://i.imgur.com/kTCgycG.png"},
-	{n: 37, c: [16281, 15157], i: "http://i.imgur.com/YAaQaTh.png"},
-	{n: 38, c: [16153, 15688], i: "http://i.imgur.com/XmbHQ78.png"},
-	{n: 39, c: [16140, 15695], i: "http://i.imgur.com/wzw1mAs.png"},
-	{n: 40, c: [15849, 15726], i: "http://i.imgur.com/7TCwhHj.png"},
-	{n: 41, c: [15874, 15740], i: "http://i.imgur.com/c1TL2Lp.png"},
-	{n: 42, c: [17135, 15632], i: "http://i.imgur.com/r6HS422.png"},
-	{n: 43, c: [17116, 15624], i: "http://i.imgur.com/PhwNuBo.png"},
-	{n: 44, c: [17147, 15560], i: "http://i.imgur.com/OpEpnx3.png"},
-	{n: 45, c: [17480, 15820], i: "http://i.imgur.com/CZL3eIr.png"},
-	{n: 46, c: [17552, 15752], i: "http://i.imgur.com/ITbNokO.png"},
-	{n: 47, c: [17506, 15692], i: "http://i.imgur.com/9CzfQxh.png"},
-	{n: 48, c: [17563, 15644], i: "http://i.imgur.com/fQOCV51.png"},
-	{n: 49, c: [17378, 15673], i: "http://i.imgur.com/gwd9fGM.png"},
-	{n: 50, c: [17244, 15724], i: "http://i.imgur.com/NDFznQl.png"}
+	{n: 1, c: [15904, 14496], s: "http://i.imgur.com/q9llZz0.png"},
+	{n: 2, c: [15912, 14485], s: "http://i.imgur.com/9b2hLVo.png"},
+	{n: 3, c: [15917, 14474], s: "http://i.imgur.com/9zQJpRJ.png"},
+	{n: 4, c: [15855, 14539], s: "http://i.imgur.com/1we5DLa.png"},
+	{n: 5, c: [15718, 14491], s: "http://i.imgur.com/Hvqogpn.png"},
+	{n: 6, c: [15804, 14527], s: "http://i.imgur.com/fJjLRBE.png"},
+	{n: 7, c: [15629, 14521], s: "http://i.imgur.com/QYFYQ2k.png"},
+	{n: 8, c: [15689, 14617], s: "http://i.imgur.com/5713aHs.png"},
+	{n: 9, c: [15691, 14724], s: "http://i.imgur.com/bYXiYH8.png"},
+	{n: 10, c: [15805, 15000], s: "http://i.imgur.com/pLhyueb.png"},
+	{n: 11, c: [15799, 14849], s: "http://i.imgur.com/MBs6T0G.png"},
+	{n: 12, c: [15906, 14728], s: "http://i.imgur.com/nlV7yJB.png"},
+	{n: 13, c: [15814, 14544], s: "http://i.imgur.com/7qPd9WX.png"},
+	{n: 14, c: [15460, 15100], s: "http://i.imgur.com/YbBIFw6.png"},
+	{n: 15, c: [15498, 15177], s: "http://i.imgur.com/GBI86rk.png"},
+	{n: 16, c: [15376, 15224], s: "http://i.imgur.com/BLb9OzR.png"},
+	{n: 17, c: [15562, 15369], s: "http://i.imgur.com/uImCgmH.png"},
+	{n: 18, c: [15510, 15335], s: "http://i.imgur.com/xfnqMeZ.png"},
+	{n: 19, c: [15513, 15385], s: "http://i.imgur.com/Nf1OpnV.png"},
+	{n: 20, c: [15516, 15427], s: "http://i.imgur.com/c8XUKAr.png"},
+	{n: 21, c: [16368, 14561], s: "http://i.imgur.com/qKkArCe.png"},
+	{n: 22, c: [16543, 14603], s: "http://i.imgur.com/AqMD3XO.png"},
+	{n: 23, c: [16774, 14762], s: "http://i.imgur.com/vIBC9YC.png"},
+	{n: 24, c: [16895, 14881], s: "http://i.imgur.com/poqDI0e.png"},
+	{n: 25, c: [16955, 14642], s: "http://i.imgur.com/haxXSrz.png"},
+	{n: 26, c: [16808, 14511], s: "http://i.imgur.com/cVT1ntd.png"},
+	{n: 27, c: [16988, 14553], s: "http://i.imgur.com/5AWlPzP.png"},
+	{n: 28, c: [17010, 14419], s: "http://i.imgur.com/JmPvSB9.png"},
+	{n: 29, c: [16945, 14399], s: "http://i.imgur.com/Ebchzam.png"},
+	{n: 30, c: [17100, 14713], s: "http://i.imgur.com/dmcAlGY.png"},
+	{n: 31, c: [17080, 14798], s: "http://i.imgur.com/roiLGmV.png"},
+	{n: 32, c: [17346, 14475], s: "http://i.imgur.com/DtIuXxj.png"},
+	{n: 33, c: [17470, 14691], s: "http://i.imgur.com/e34qVRi.png"},
+	{n: 34, c: [17523, 14658], s: "http://i.imgur.com/oVWhxZp.png"},
+	{n: 35, c: [17009, 15238], s: "http://i.imgur.com/gyV2lP0.png"},
+	{n: 36, c: [16995, 15115], s: "http://i.imgur.com/kTCgycG.png"},
+	{n: 37, c: [16281, 15157], s: "http://i.imgur.com/YAaQaTh.png"},
+	{n: 38, c: [16153, 15688], s: "http://i.imgur.com/XmbHQ78.png"},
+	{n: 39, c: [16140, 15695], s: "http://i.imgur.com/wzw1mAs.png"},
+	{n: 40, c: [15849, 15726], s: "http://i.imgur.com/7TCwhHj.png"},
+	{n: 41, c: [15874, 15740], s: "http://i.imgur.com/c1TL2Lp.png"},
+	{n: 42, c: [17135, 15632], s: "http://i.imgur.com/r6HS422.png"},
+	{n: 43, c: [17116, 15624], s: "http://i.imgur.com/PhwNuBo.png"},
+	{n: 44, c: [17147, 15560], s: "http://i.imgur.com/OpEpnx3.png"},
+	{n: 45, c: [17480, 15820], s: "http://i.imgur.com/CZL3eIr.png"},
+	{n: 46, c: [17552, 15752], s: "http://i.imgur.com/ITbNokO.png"},
+	{n: 47, c: [17506, 15692], s: "http://i.imgur.com/9CzfQxh.png"},
+	{n: 48, c: [17563, 15644], s: "http://i.imgur.com/fQOCV51.png"},
+	{n: 49, c: [17378, 15673], s: "http://i.imgur.com/gwd9fGM.png"},
+	{n: 50, c: [17244, 15724], s: "http://i.imgur.com/NDFznQl.png"}
 	]
 },
 CoinUplands: {
@@ -1785,204 +1827,204 @@ RangerPets: {
 	ringsize: 48,
 	needles: [
 	{// TERRESTRIAL // BIRD
-		n: 1, p: "eagle", name_en: "Eagle", name_de: "Adler", name_es: "Águila", name_fr: "Aigle",
-		s: {bleeding: [2, 15], recharge: 6, range: 130, damage: 160},
+		n: 1, i: "eagle", name_en: "Eagle", name_de: "Adler", name_es: "Águila", name_fr: "Aigle",
+		a: {bleeding: [2, 15], recharge: 6, range: 130, damage: 160},
 		c: [[31210,16741],[31206,16735],[31210,16727],[20724,19630],[10915,14418],[17588,17264],[17578,17258],[17572,17239],[17605,17219],[17427,18768],[17451,18919],[17470,18959],[11428,14432],[12587,14471],[12692,14403],[16927,13918],[16902,14068],[16896,13998],[16904,13878],[16945,13841],[17005,13747],[16377,11389],[16267,11338],[16259,11240],[16143,11292],[28878,18163],[28884,18174],[28870,18179]]
 	},{
-		n: 2, p: "hawk", name_en: "Hawk", name_de: "Falke", name_es: "Halcón", name_fr: "Faucon",
-		s: {bleeding: [2, 15], recharge: 6, range: 130, damage: 160},
+		n: 2, i: "hawk", name_en: "Hawk", name_de: "Falke", name_es: "Halcón", name_fr: "Faucon",
+		a: {bleeding: [2, 15], recharge: 6, range: 130, damage: 160},
 		c: [[29015,9789],[29096,9720],[29058,9666],[29004,9655],[29095,9884]]
 	},{
-		n: 3, p: "owl", name_en: "Owl", name_de: "Eule", name_es: "Lechuza", name_fr: "Chouette",
-		s: {chilled: [1, 3], recharge: 20, range: 130, damage: 322},
+		n: 3, i: "owl", name_en: "Owl", name_de: "Eule", name_es: "Lechuza", name_fr: "Chouette",
+		a: {chilled: [1, 3], recharge: 20, range: 130, damage: 322},
 		c: [[21460,16618],[21435,16495],[20456,12979],[20461,12965],[21441,12917],[21422,12904],[23399,9756],[23345,9483],[23244,9372],[23133,9435],[23111,9894],[24274,9292],[24305,9343],[24366,8758],[24377,8828],[24309,8865]]
 	},{
-		n: 4, p: "raven", name_en: "Raven", name_de: "Rabe", name_es: "Cuervo", name_fr: "Corbeau",
-		s: {blind: [1, 5], recharge: 18, range: 130, damage: 322},
+		n: 4, i: "raven", name_en: "Raven", name_de: "Rabe", name_es: "Cuervo", name_fr: "Corbeau",
+		a: {blind: [1, 5], recharge: 18, range: 130, damage: 322},
 		c: [[18275,15333],[18354,14967],[20949,13824],[20951,13803],[20972,13807],[22596,14599],[28782,16933],[28785,16938],[28793,16933]]
 	},{
-		n: 5, p: "whiteraven", name_en: "White Raven", name_de: "Wießer Rabe", name_es: "Cuervo blanco", name_fr: "Corbeau blanc",
-		s: {blind: [1, 5], recharge: 18, range: 130, damage: 322},
+		n: 5, i: "whiteraven", name_en: "White Raven", name_de: "Wießer Rabe", name_es: "Cuervo blanco", name_fr: "Corbeau blanc",
+		a: {blind: [1, 5], recharge: 18, range: 130, damage: 322},
 		c: [[25059,5425]]
 	},{// CANINE
-		n: 6, p: "alpinewolf", name_en: "Alpine Wolf", name_de: "Gebirgswolf", name_es: "Lobo alpino", name_fr: "Loup alpin",
-		s: {chilled: [1, 3], recharge: 30, targets: 5, radius: 600, damage: 49},
+		n: 6, i: "alpinewolf", name_en: "Alpine Wolf", name_de: "Gebirgswolf", name_es: "Lobo alpino", name_fr: "Loup alpin",
+		a: {chilled: [1, 3], recharge: 30, targets: 5, radius: 600, damage: 49},
 		c: [[21257,14473],[21267,14483],[21278,14475],[18903,13860],[18928,13833],[18848,13886],[19019,14568],[19028,14532],[18993,14493],[20275,19523],[20270,19497],[19340,18489],[19296,18404],[19275,18324]]
 	},{
-		n: 7, p: "fernhound", name_en: "Fern Hound", name_de: "Farn-Hund", name_es: "Sabueso de helecho", name_fr: "Chien de fougère",
-		s: {healing: 1000, recharge: 25, regeneration: [1, 10], targets: 5, radius: 600},
+		n: 7, i: "fernhound", name_en: "Fern Hound", name_de: "Farn-Hund", name_es: "Sabueso de helecho", name_fr: "Chien de fougère",
+		a: {healing: 1000, recharge: 25, regeneration: [1, 10], targets: 5, radius: 600},
 		c: [[17730,24169],[10448,21069],[10450,21112],[10389,21248],[10447,21021],[9630,17565],[9668,17493],[9737,17427],[9087,16127],[9140,16146],[9184,16242],[9121,16077],[9041,16063],[17121,21889],[19001,21846],[19058,21890],[19046,21899],[19565,22408],[19586,22484],[19518,22419]]
 	},{
-		n: 8, p: "hyena", name_en: "Hyena", name_de: "Hyäne", name_es: "Hiena", name_fr: "Hyène",
-		s: {pet: "Summon", recharge: 45, duration: 40},
+		n: 8, i: "hyena", name_en: "Hyena", name_de: "Hyäne", name_es: "Hiena", name_fr: "Hyène",
+		a: {pet: "Summon", recharge: 45, duration: 40},
 		c: [[30267,14118],[30234,14137],[30716,18605],[30704,18600],[30701,18609]]
 	},{
-		n: 9, p: "krytandrakehound", name_en: "Krytan Drakehound", name_de: "Kryta-Spürhund", name_es: "Dracosabueso krytense", name_fr: "Lévridrake krytien",
-		s: {immobilize: [1, 2], recharge: 20, targets: 5, range: 600, damage: 49},
+		n: 9, i: "krytandrakehound", name_en: "Krytan Drakehound", name_de: "Kryta-Spürhund", name_es: "Dracosabueso krytense", name_fr: "Lévridrake krytien",
+		a: {immobilize: [1, 2], recharge: 20, targets: 5, range: 600, damage: 49},
 		c: [[16577,15160],[14829,13353],[17509,24120],[11720,10909],[11703,10918],[11708,10900],[10983,11284],[10988,11250],[10997,11241],[11004,11270],[29519,19161]]
 	},{
-		n: 10, p: "wolf", name_en: "Wolf", name_de: "Wolf", name_es: "Lobo", name_fr: "Loup",
-		s: {fear: [1, 2], recharge: 45, targets: 5, range: 600, damage: 49},
+		n: 10, i: "wolf", name_en: "Wolf", name_de: "Wolf", name_es: "Lobo", name_fr: "Loup",
+		a: {fear: [1, 2], recharge: 45, targets: 5, range: 600, damage: 49},
 		c: [[16577, 15581]]
 	},{// FELINE
-		n: 11, p: "lynx", name_en: "Lynx", name_de: "Schneeluchs", name_es: "Lince", name_fr: "Lynx",
-		s: {bleeding: [4, 10], recharge: 30, combo: "Leap", range: 600, damage: 244},
+		n: 11, i: "lynx", name_en: "Lynx", name_de: "Schneeluchs", name_es: "Lince", name_fr: "Lynx",
+		a: {bleeding: [4, 10], recharge: 30, combo: "Leap", range: 600, damage: 244},
 		c: [[16576,15157],[29518,19158],[19610,12197],[19598,12174],[19608,12149],[20649,15526],[20739,15473],[20816,15511]]
 	},{// MOA
-		n: 12, p: "blackmoa", name_en: "Black Moa", name_de: "Schwarzer Moa", name_es: "Moa negro", name_fr: "Moa noir",
-		s: {daze: [1, 3], recharge: 30, targets: 5, range: 280, damage: 122},
+		n: 12, i: "blackmoa", name_en: "Black Moa", name_de: "Schwarzer Moa", name_es: "Moa negro", name_fr: "Moa noir",
+		a: {daze: [1, 3], recharge: 30, targets: 5, range: 280, damage: 122},
 		c: [[25068,5420]]
 	},{
-		n: 13, p: "bluemoa", name_en: "Blue Moa", name_de: "Blauer Moa", name_es: "Moa azul", name_fr: "Moa bleu",
-		s: {protection: [1, 4], recharge: 24, targets: 5, radius: 600},
+		n: 13, i: "bluemoa", name_en: "Blue Moa", name_de: "Blauer Moa", name_es: "Moa azul", name_fr: "Moa bleu",
+		a: {protection: [1, 4], recharge: 24, targets: 5, radius: 600},
 		c: [[31234,18836],[9886,18371],[16410,16621],[16311,16427],[16485,16324],[16417,18478],[16454,18507],[16458,18530],[16585,18494],[17607,24102],[17729,24104],[17651,24067]]
 	},{
-		n: 14, p: "pinkmoa", name_en: "Pink Moa", name_de: "Rosa Moa", name_es: "Moa rosa", name_fr: "Moa rose",
-		s: {daze: [1, 3], recharge: 30, targets: 5, range: 280, damage: 122},
+		n: 14, i: "pinkmoa", name_en: "Pink Moa", name_de: "Rosa Moa", name_es: "Moa rosa", name_fr: "Moa rose",
+		a: {daze: [1, 3], recharge: 30, targets: 5, range: 280, damage: 122},
 		c: [[9017,16305],[19041,21619],[19058,21715],[19061,21725],[19156,21598],[19159,21676],[10420,21133],[10409,21105],[10386,21116],[10361,21076],[10791,16625],[10872,16685],[10942,16507],[10486,18201],[10627,18093],[5906,20555],[8196,16683],[3975,15842],[3960,15824],[3989,15829]]
 	},{
-		n: 15, p: "redmoa", name_en: "Red Moa", name_de: "Roter Moa", name_es: "Moa rojo", name_fr: "Moa rouge",
-		s: {fury: [1, 15], recharge: 25, targets: 5, radius: 600},
+		n: 15, i: "redmoa", name_en: "Red Moa", name_de: "Roter Moa", name_es: "Moa rojo", name_fr: "Moa rouge",
+		a: {fury: [1, 15], recharge: 25, targets: 5, radius: 600},
 		c: [[31234,18837],[31230,18836],[31236,18830],[30878,13927],[24377,10614],[24298,10528],[24418,10557],[26792,9795],[26776,9766],[26834,9736],[26805,9739]]
 	},{
-		n: 16, p: "whitemoa", name_en: "White Moa", name_de: "Weißer Moa", name_es: "Moa blanco", name_fr: "Moa blanc",
-		s: {chilled: [1, 3], recharge: 24, targets: 5, damage: 122},
+		n: 16, i: "whitemoa", name_en: "White Moa", name_de: "Weißer Moa", name_es: "Moa blanco", name_fr: "Moa blanc",
+		a: {chilled: [1, 3], recharge: 24, targets: 5, damage: 122},
 		c: [[18040,15411],[18092,15408],[18216,15372],[18130,15546],[18228,15488],[19892,12217],[20123,12187],[20108,12209],[20100,12210],[20120,12054],[19106,16278],[19097,16294],[19076,16281],[19076,16311],[22900,10250],[22984,10227],[23030,10378],[22559,9135],[22865,9151],[22877,9254],[23059,9284],[23141,9296]]
 	},{// PORCINE
-		n: 17, p: "boar", name_en: "Boar", name_de: "Eber", name_es: "Jabalí", name_fr: "Sanglier",
-		s: {pet: "Forage", recharge: 30, range: 2000},
+		n: 17, i: "boar", name_en: "Boar", name_de: "Eber", name_es: "Jabalí", name_fr: "Sanglier",
+		a: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[17706,24193],[17643,24181],[17584,23234],[17582,23250]]
 	},{
-		n: 18, p: "pig", name_en: "Pig", name_de: "Schwein", name_es: "Cerdo", name_fr: "Cochon",
-		s: {pet: "Forage", recharge: 30, range: 2000},
+		n: 18, i: "pig", name_en: "Pig", name_de: "Schwein", name_es: "Cerdo", name_fr: "Cochon",
+		a: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[17675,24123],[17630,24138],[17595,24181],[11601,11230],[11595,11217],[11594,11255],[10909,10330],[10921,10331],[10925,10325],[17298,15149],[17283,15154],[17290,15147],[15943,13632],[15964,13632],[15966,13648],[29016,19146]]
 	},{
-		n: 19, p: "siamoth", name_en: "Siamoth", name_de: "Siamoth", name_es: "Siamoth", name_fr: "Siamouth",
-		s: {pet: "Forage", recharge: 30, range: 2000},
+		n: 19, i: "siamoth", name_en: "Siamoth", name_de: "Siamoth", name_es: "Siamoth", name_fr: "Siamouth",
+		a: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[15758,21430],[16660,21458],[8197,16712],[8258,16739],[8166,16774],[5844,20915],[5851,20933],[5859,20941],[16952,20130]]
 	},{
-		n: 20, p: "warthog", name_en: "Warthog", name_de: "Warzenschwein", name_es: "Jabalí verrugoso", name_fr: "Phacochère",
-		s: {pet: "Forage", recharge: 30, range: 2000},
+		n: 20, i: "warthog", name_en: "Warthog", name_de: "Warzenschwein", name_es: "Jabalí verrugoso", name_fr: "Phacochère",
+		a: {pet: "Forage", recharge: 30, range: 2000},
 		c: [[982,18065],[971,18085],[937,18077],[31463,18844],[31460,18814],[31471,18822],[25239,12490],[25257,12309],[25236,12191],[25139,12372],[26755,12684],[26877,12571],[26827,12457],[26842,13000],[30762,18357],[25347,10682],[25427,10667],[25457,10786],[24873,10667],[24806,10637],[24844,10699],[16405,12674],[16275,12691],[16199,12683],[16244,12717],[16385,12839]]
 	},{// SAURIAN
-		n: 21, p: "bristleback", name_en: "Bristleback", name_de: "Borstenrücken", name_es: "Lomoespinado", name_fr: "Hérissosaure",
-		s: {damage: 4650, recharge: 15, range: 1200},
+		n: 21, i: "bristleback", name_en: "Bristleback", name_de: "Borstenrücken", name_es: "Lomoespinado", name_fr: "Hérissosaure",
+		a: {damage: 4650, recharge: 15, range: 1200},
 		c: [[2289,17783]]
 	},{
-		n: 22, p: "smokescale", name_en: "Smokescale", name_de: "Rauchschuppe", name_es: "Escamahumada", name_fr: "Fumécaille",
-		s: {combo: "Smoke", recharge: 20, duration: 5, radius: 240},
+		n: 22, i: "smokescale", name_en: "Smokescale", name_de: "Rauchschuppe", name_es: "Escamahumada", name_fr: "Fumécaille",
+		a: {combo: "Smoke", recharge: 20, duration: 5, radius: 240},
 		c: [[5430,19322],[5438,19300],[4384,18297],[4348,18320]]
 	},{// SPIDER
-		n: 23, p: "blackwidowspider", name_en: "Black Widow Spider", name_de: "Schwarze Witwe", name_es: "Araña viuda negra", name_fr: "Jeune araignée veuve",
-		s: {immobilize: [1, 3], recharge: 45, duration: 30},
+		n: 23, i: "blackwidowspider", name_en: "Black Widow Spider", name_de: "Schwarze Witwe", name_es: "Araña viuda negra", name_fr: "Jeune araignée veuve",
+		a: {immobilize: [1, 3], recharge: 45, duration: 30},
 		c: [[25068,5420]]
 	},{
-		n: 24, p: "cavespider", name_en: "Cave Spider", name_de: "Höhlenspinne", name_es: "Araña de cueva", name_fr: "Araignée cavernicole",
-		s: {vulnerability: [3, 10], recharge: 30, weakness: [1, 5], duration: 30},
+		n: 24, i: "cavespider", name_en: "Cave Spider", name_de: "Höhlenspinne", name_es: "Araña de cueva", name_fr: "Araignée cavernicole",
+		a: {vulnerability: [3, 10], recharge: 30, weakness: [1, 5], duration: 30},
 		c: [[14234,12043],[14241,11980],[14173,11967],[14073,11993],[19165,14493],[19131,14428],[19112,14385]]
 	},{
-		n: 25, p: "forestspider", name_en: "Forest Spider", name_de: "Waldspinne", name_es: "Araña de bosque", name_fr: "Araignée des bois",
-		s: {poison: [1, 12], recharge: 30, duration: 30},
+		n: 25, i: "forestspider", name_en: "Forest Spider", name_de: "Waldspinne", name_es: "Araña de bosque", name_fr: "Araignée des bois",
+		a: {poison: [1, 12], recharge: 30, duration: 30},
 		c: [[28968,12451],[28923,12427],[29000,12510],[28883,12564],[28849,12527]]
 	},{
-		n: 26, p: "junglespider", name_en: "Jungle Spider", name_de: "Dschungelspinne", name_es: "Araña de la selva", name_fr: "Araignée de la jungle",
-		s: {immobilize: [1, 3], recharge: 45, duration: 30},
+		n: 26, i: "junglespider", name_en: "Jungle Spider", name_de: "Dschungelspinne", name_es: "Araña de la selva", name_fr: "Araignée de la jungle",
+		a: {immobilize: [1, 3], recharge: 45, duration: 30},
 		c: [[17540,24005],[17595,24057],[17645,24202],[17554,24158],[17494,24128],[10984,19182],[10966,19133],[10960,19118],[10965,19089],[10447,16568],[10462,16508],[10468,16481],[10469,16420],[7577,14815],[7584,14948],[7507,14988],[15942,19485],[15914,19452]]
 	},{// WYVERN
-		n: 27, p: "electricwyvern", name_en: "Electric Wyvern", name_de: "Elektro-Wyvern", name_es: "Guiverno eléctrico", name_fr: "Vouivre électrique",
-		s: {launch: 0, recharge: 30, range: 480, combo: "Lightning", damage: 1129},
+		n: 27, i: "electricwyvern", name_en: "Electric Wyvern", name_de: "Elektro-Wyvern", name_es: "Guiverno eléctrico", name_fr: "Vouivre électrique",
+		a: {launch: 0, recharge: 30, range: 480, combo: "Lightning", damage: 1129},
 		c: [[3351, 20758], [3295, 20762], [3349, 20809]]
 	},{
-		n: 28, p: "firewyvern", name_en: "Fire Wyvern", name_de: "Feuer-Wyvern", name_es: "Guiverno llameante", name_fr: "Vouivre de feu",
-		s: {burning: [1, 2], recharge: 35, duration: 12, radius: 450, combo: "Fire"},
+		n: 28, i: "firewyvern", name_en: "Fire Wyvern", name_de: "Feuer-Wyvern", name_es: "Guiverno llameante", name_fr: "Vouivre de feu",
+		a: {burning: [1, 2], recharge: 35, duration: 12, radius: 450, combo: "Fire"},
 		c: [[2442,15660],[2544,15673],[2607,15646],[2567,15714]]
 	},{// AMPHIBIOUS // BEAR
-		n: 29, p: "arctodus", name_en: "Arctodus", name_de: "Arctodus", name_es: "Arctodus", name_fr: "Arctodus",
-		s: {bleeding: [2, 7], recharge: 15, range: 130, damage: 244},
+		n: 29, i: "arctodus", name_en: "Arctodus", name_de: "Arctodus", name_es: "Arctodus", name_fr: "Arctodus",
+		a: {bleeding: [2, 7], recharge: 15, range: 130, damage: 244},
 		c: [[20945,10022],[21016,9971],[20965,9930],[21007,9817],[20980,9765],[23464,13252],[23464,13261],[23474,13262],[21985,12807],[18086,14164],[18089,14231],[18012,14232],[18680,13730],[18643,13708],[18616,13605]]
 	},{
-		n: 30, p: "blackbear", name_en: "Black Bear", name_de: "Schwarzbär", name_es: "Oso negro", name_fr: "Ours noir",
-		s: {weakness: [1, 10], recharge: 40, targets: 5, range: 600, damage: 381},
+		n: 30, i: "blackbear", name_en: "Black Bear", name_de: "Schwarzbär", name_es: "Oso negro", name_fr: "Ours noir",
+		a: {weakness: [1, 10], recharge: 40, targets: 5, range: 600, damage: 381},
 		c: [[30974,12706],[31002,12692]]
 	},{
-		n: 31, p: "brownbear", name_en: "Brown Bear", name_de: "Braunbär", name_es: "Oso pardo", name_fr: "Ours brun",
-		s: {removal: 2, recharge: 25, targets: 5, range: 600},
+		n: 31, i: "brownbear", name_en: "Brown Bear", name_de: "Braunbär", name_es: "Oso pardo", name_fr: "Ours brun",
+		a: {removal: 2, recharge: 25, targets: 5, range: 600},
 		c: [[13893,13580],[13925,13636],[13901,13633],[13977,13609],[15688,11025],[15588,11017],[15673,10951],[30920,18744]]
 	},{
-		n: 32, p: "murellow", name_en: "Murellow", name_de: "Rattenbär", name_es: "Múrgolo", name_fr: "Murello",
-		s: {poison: [1, 4], recharge: 35, targets: 5, duration: 7, combo: "Poison", range: 180, damage: 24},
+		n: 32, i: "murellow", name_en: "Murellow", name_de: "Rattenbär", name_es: "Múrgolo", name_fr: "Murello",
+		a: {poison: [1, 4], recharge: 35, targets: 5, duration: 7, combo: "Poison", range: 180, damage: 24},
 		c: [[7568,15508],[7579,15525],[7563,15436],[7607,15464],[18747,21528],[18756,21532],[18757,21553],[19621,17411],[19644,17394],[19653,17413],[19638,17436]]
 	},{
-		n: 33, p: "polarbear", name_en: "Polar Bear", name_de: "Eisbär", name_es: "Oso polar", name_fr: "Ours polaire",
-		s: {chilled: [1, 3], recharge: 45, range: 130, damage: 122},
+		n: 33, i: "polarbear", name_en: "Polar Bear", name_de: "Eisbär", name_es: "Oso polar", name_fr: "Ours polaire",
+		a: {chilled: [1, 3], recharge: 45, range: 130, damage: 122},
 		c: [[19921,14036],[19939,14089],[19859,14043],[21622,10402],[21505,10432],[21544,10566],[21448,10518]]
 	},{// DEVOURER
-		n: 34, p: "carriondevourer", name_en: "Carrion Devourer", name_de: "Aas-Verschlinger", name_es: "Devorador carroñero", name_fr: "Dévoreur de charogne",
-		s: {poison: [1, 4], recharge: 30, targets: 5, duration: 5, combo: "Poison", range: 900, damage: 49},
+		n: 34, i: "carriondevourer", name_en: "Carrion Devourer", name_de: "Aas-Verschlinger", name_es: "Devorador carroñero", name_fr: "Dévoreur de charogne",
+		a: {poison: [1, 4], recharge: 30, targets: 5, duration: 5, combo: "Poison", range: 900, damage: 49},
 		c: [[25063,8677],[25161,8620],[25165,8642],[27842,12734],[27864,12698],[27781,12676],[27740,12602],[25644,9422],[25656,9347],[25693,9358]]
 	},{
-		n: 35, p: "lashtaildevourer", name_en: "Lashtail Devourer", name_de: "Geißelschwanz-Verschlinger", name_es: "Devorador cola de fusta", name_fr: "Dévoreur queue-cinglante",
-		s: {bleeding: [6, 5], recharge: 30, range: 900, damage: 343},
+		n: 35, i: "lashtaildevourer", name_en: "Lashtail Devourer", name_de: "Geißelschwanz-Verschlinger", name_es: "Devorador cola de fusta", name_fr: "Dévoreur queue-cinglante",
+		a: {bleeding: [6, 5], recharge: 30, range: 900, damage: 343},
 		c: [[25457,13663],[25500,13712],[25513,13747],[30087,16712],[30080,16733],[30102,16770],[30125,16758],[30151,16742],[17560,24016],[17628,24070],[17677,24204],[17598,24155],[17562,24108],[23831,15102],[23793,15099],[23819,15129],[23796,13109],[23771,13008],[23816,12920],[26168,12324],[26258,12430],[26164,12464],[26224,12532],[25949,12576],[31011,13866],[30890,13921]]
 	},{
-		n: 36, p: "whiptaildevourer", name_en: "Whiptail Devourer", name_de: "Peitschenschwanz-Verschlinger", name_es: "Devorador cola de látigo", name_fr: "Dévoreur fouette-queue",
-		s: {poison: [1, 2], recharge: 30, combo: "Projectile", range: 900, damage: 244},
+		n: 36, i: "whiptaildevourer", name_en: "Whiptail Devourer", name_de: "Peitschenschwanz-Verschlinger", name_es: "Devorador cola de látigo", name_fr: "Dévoreur fouette-queue",
+		a: {poison: [1, 2], recharge: 30, combo: "Projectile", range: 900, damage: 244},
 		c: [[30770,18336],[23786,14730],[23810,14695],[23805,14664]]
 	},{// DRAKE
-		n: 37, p: "icedrake", name_en: "Ice Drake", name_de: "Eislindwurm", name_es: "Draco de hielo", name_fr: "Drake des glaces",
-		s: {chilled: [1, 1], recharge: 25, targets: 5, range: 250, damage: 305},
+		n: 37, i: "icedrake", name_en: "Ice Drake", name_de: "Eislindwurm", name_es: "Draco de hielo", name_fr: "Drake des glaces",
+		a: {chilled: [1, 1], recharge: 25, targets: 5, range: 250, damage: 305},
 		c: [[22683,8463],[22677,8408],[22609,8385],[22481,8390],[22451,8340],[23078,14191],[23092,14164],[23052,14124],[23181,14016],[19839,12887],[19846,12808],[19869,12783],[19902,12806],[19967,12786],[19415,20179],[19396,20112],[19492,19996],[18216,17094],[18226,17168],[18147,17193],[19603,15695],[19572,15726],[22267,9660],[22278,9568],[22223,9445],[22079,9606]]
 	},{
-		n: 38, p: "marshdrake", name_en: "Marsh Drake", name_de: "Sumpflindwurm", name_es: "Draco de pantano", name_fr: "Drake des marais",
-		s: {poison: [5, 3], recharge: 30, targets: 3, range: 900, damage: 305},
+		n: 38, i: "marshdrake", name_en: "Marsh Drake", name_de: "Sumpflindwurm", name_es: "Draco de pantano", name_fr: "Drake des marais",
+		a: {poison: [5, 3], recharge: 30, targets: 3, range: 900, damage: 305},
 		c: [[17152, 21798],[9485,16826],[9447,16727],[9479,16698],[9547,16657],[16966,19878],[16998,19790],[16936,19770],[16875,19705],[15365,21213],[15309,21265]]
 	},{
-		n: 39, p: "reefdrake", name_en: "Reef Drake", name_de: "Rifflindwurm", name_es: "Draco de arrecife", name_fr: "Drake des récifs",
-		s: {confusion: [5, 5], recharge: 25, targets: 5, range: 250, damage: 305},
+		n: 39, i: "reefdrake", name_en: "Reef Drake", name_de: "Rifflindwurm", name_es: "Draco de arrecife", name_fr: "Drake des récifs",
+		a: {confusion: [5, 5], recharge: 25, targets: 5, range: 250, damage: 305},
 		c: [[13387,20145],[13409,20131],[13378,20111],[13311,20090],[13327,20056]]
 	},{
-		n: 40, p: "riverdrake", name_en: "River Drake", name_de: "Flusslindwurm", name_es: "Draco de río", name_fr: "Drake de rivière",
-		s: {damage: 80, recharge: 30, targets: 10, range: 600},
+		n: 40, i: "riverdrake", name_en: "River Drake", name_de: "Flusslindwurm", name_es: "Draco de río", name_fr: "Drake de rivière",
+		a: {damage: 80, recharge: 30, targets: 10, range: 600},
 		c: [[16552,17542],[16727,17579],[16764,17599],[16701,13798],[16618,13786],[16546,13760],[16596,13855],[16678,13923],[12707,15400],[12733,15460],[12811,15027],[12769,15085],[12795,14588],[12813,14461],[26993,13123]]
 	},{
-		n: 41, p: "salamanderdrake", name_en: "Salamander Drake", name_de: "Salamanderlindwurm", name_es: "Draco salamandra", name_fr: "Drake salamandre",
-		s: {burning: [5, 1], recharge: 30, targets: 5, range: 250, damage: 305},
+		n: 41, i: "salamanderdrake", name_en: "Salamander Drake", name_de: "Salamanderlindwurm", name_es: "Draco salamandra", name_fr: "Drake salamandre",
+		a: {burning: [5, 1], recharge: 30, targets: 5, range: 250, damage: 305},
 		c: [[27043,10586],[27048,10572],[27085,10529],[27094,10516],[27088,10486],[30292, 16188],[29799,15999],[29676,13899],[29526,13926],[29379,13878],[27616,10804],[27582,10846],[27544,10864],[27477,10815],[27663,10877]]
 	},{// FELINE
-		n: 42, p: "jaguar", name_en: "Jaguar", name_de: "Jaguar", name_es: "Jaguar", name_fr: "Jaguar",
-		s: {pet: "Stealth", recharge: 30, duration: 6},
+		n: 42, i: "jaguar", name_en: "Jaguar", name_de: "Jaguar", name_es: "Jaguar", name_fr: "Jaguar",
+		a: {pet: "Stealth", recharge: 30, duration: 6},
 		c: [[6904,16519],[6897,16508],[6913,16483]]
 	},{
-		n: 43, p: "junglestalker", name_en: "Jungle Stalker", name_de: "Dschungelpirscher", name_es: "Acechador de la selva", name_fr: "Félin de la jungle",
-		s: {might: [5, 15], recharge: 25, targets: 5, radius: 600},
+		n: 43, i: "junglestalker", name_en: "Jungle Stalker", name_de: "Dschungelpirscher", name_es: "Acechador de la selva", name_fr: "Félin de la jungle",
+		a: {might: [5, 15], recharge: 25, targets: 5, radius: 600},
 		c: [[9763,18866],[9654,18885],[9619,18713],[9715,18750],[20630,23564],[20649,23615],[20598,23691],[20663,23524]]
 	},{
-		n: 44, p: "snowleopard", name_en: "Snow Leopard", name_de: "Schneeleopard", name_es: "Pantera de las Nieves", name_fr: "Panthère des neiges",
-		s: {chilled: [1, 2], recharge: 30, combo: "Leap", range: 600, damage: 244},
+		n: 44, i: "snowleopard", name_en: "Snow Leopard", name_de: "Schneeleopard", name_es: "Pantera de las Nieves", name_fr: "Panthère des neiges",
+		a: {chilled: [1, 2], recharge: 30, combo: "Leap", range: 600, damage: 244},
 		c: [[20633,14123],[20653,14083],[20677,14036],[18237,14025],[18255,15730],[18230,15745],[18257,15798],[18283,13881],[18337,13863],[18384,13785],[22195,10332],[21907,10395],[21973,10114]]
 	},{
-		n: 45, p: "tiger", name_en: "Tiger", name_de: "Tiger", name_es: "Tigre", name_fr: "Tigre",
-		s: {fury: [1, 10], recharge: 10, targets: 5, radius: 240, range: 400, damage: 1689},
+		n: 45, i: "tiger", name_en: "Tiger", name_de: "Tiger", name_es: "Tigre", name_fr: "Tigre",
+		a: {fury: [1, 10], recharge: 10, targets: 5, radius: 240, range: 400, damage: 1689},
 		c: [[2528,20988],[2575,20955],[2487,20933],[2526,20905]]
 	},{// AQUATIC // ARMOR FISH
-		n: 46, p: "armorfish", name_en: "Armor Fish", name_de: "Panzerfisch", name_es: "Pez armadura", name_fr: "Poisson cuirassé",
-		s: {stun: [1, 2], recharge: 40, combo: "Leap", range: 200, damage: 195},
+		n: 46, i: "armorfish", name_en: "Armor Fish", name_de: "Panzerfisch", name_es: "Pez armadura", name_fr: "Poisson cuirassé",
+		a: {stun: [1, 2], recharge: 40, combo: "Leap", range: 200, damage: 195},
 		c: [[15974,15395],[15912,15392],[15899,15287],[15912,15431],[15493,18043],[15502,18085],[15425,18155],[31191,15100],[31147,15091],[21547,22604]]
 	},{// JELLYFISH
-		n: 47, p: "bluejellyfish", name_en: "Blue Jellyfish", name_de: "Blaue Qualle", name_es: "Medusa azul", name_fr: "Méduse bleue",
-		s: {chilled: [1, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 194},
+		n: 47, i: "bluejellyfish", name_en: "Blue Jellyfish", name_de: "Blaue Qualle", name_es: "Medusa azul", name_fr: "Méduse bleue",
+		a: {chilled: [1, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 194},
 		c: [[15782,15410],[15729,15338],[15844,15347],[15759,15260],[15824,15295],[22263,8456],[22152,8566],[22637,8651],[22796,8812],[22365,8753],[20925,22509],[21342,9470],[21178,9389],[21198,9252]]
 	},{
-		n: 48, p: "rainbowjellyfish", name_en: "Rainbow Jellyfish", name_de: "Regenbogen-Qualle", name_es: "Medusa arcoíris", name_fr: "Méduse arc-en-ciel",
-		s: {chilled: [1, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 194},
+		n: 48, i: "rainbowjellyfish", name_en: "Rainbow Jellyfish", name_de: "Regenbogen-Qualle", name_es: "Medusa arcoíris", name_fr: "Méduse arc-en-ciel",
+		a: {chilled: [1, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 194},
 		c: [[25050,5418]]
 	},{
-		n: 49, p: "redjellyfish", name_en: "Red Jellyfish", name_de: "Rote Qualle", name_es: "Medusa roja", name_fr: "Méduse rouge",
-		s: {immobilize: [4, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 388},
+		n: 49, i: "redjellyfish", name_en: "Red Jellyfish", name_de: "Rote Qualle", name_es: "Medusa roja", name_fr: "Méduse rouge",
+		a: {immobilize: [4, 1], recharge: 30, targets: 5, combo: "Whirl", range: 150, damage: 388},
 		c: [[5593,22016],[5699,21935],[5596,21769],[20027,23220],[20093,23187],[20055,23254],[20014,23275],[15910,17714],[15821,17742],[15796,17656],[15865,17564],[15898,16434],[15874,16473],[15853,16358],[15815,16510]]
 	},{// SHARK
-		n: 50, p: "shark", name_en: "Shark", name_de: "Hai", name_es: "Tiburón", name_fr: "Requin",
-		s: {bleeding: [1, 5], recharge: 45, quickness: 10, range: 1200},
+		n: 50, i: "shark", name_en: "Shark", name_de: "Hai", name_es: "Tiburón", name_fr: "Requin",
+		a: {bleeding: [1, 5], recharge: 45, quickness: 10, range: 1200},
 		c: [[17451,15796],[16292,19248],[11702,15577],[10675,15138],[16595,16952],[16725,16895],[16829,16910],[16120,17549],[15587,17395],[16428,20815],[21224,23362],[20253,20715]]}
 	]
 }

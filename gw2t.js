@@ -1405,7 +1405,8 @@ X = {
 	{
 		// Temporary
 		//LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans", value: ""},
-		LivingStory: { key: "str_chlBloodstoneSlivers", urlkey: "slivers", value: ""},
+		BloodstoneCreatures: { key: "str_chlBloodstoneCreatures", urlkey: "creatures", value: ""},
+		BloodstoneSlivers: { key: "str_chlBloodstoneSlivers", urlkey: "slivers", value: ""},
 		// Repeatable
 		NoxiousPods: { key: "str_chlNoxiousPods", urlkey: "noxiouspods", value: ""},
 		CrystallizedCaches: { key: "str_chlCrystallizedCaches", urlkey: "crystallizedcaches", value: ""},
@@ -24293,9 +24294,9 @@ G = {
 
 			markertitle = "<div class='mapLoc'><dfn>" + translatedname + ":</dfn> #" + number
 				+ ((collectible.iscushion) ? "<br />" + D.getObjectName(ithneedle) : "");
-			if (ithneedle.i)
+			if (ithneedle.s)
 			{
-				markertitle += "<img src='" + ithneedle.i + "' />";
+				markertitle += "<img src='" + ithneedle.s + "' />";
 			}
 			else if (ithneedle.t)
 			{
@@ -24318,7 +24319,7 @@ G = {
 				needleIndex: i,
 				needleType: pType,
 				needleKey: X.Collectibles[pType].urlkey,
-				needleLabel: (collectible.iconsize) ? (directory + ithneedle.p + I.cPNG)
+				needleLabel: (collectible.iconsize) ? (directory + ithneedle.i + I.cPNG)
 					: ((ithneedle.l === undefined) ? number : ithneedle.l),
 				title: markertitle
 			};
@@ -24334,7 +24335,7 @@ G = {
 			{
 				createMarker(ithneedle.c, markeroptions);
 				// Draw a segment from the current and next needle's coordinates
-				if (i < collectible.needles.length - 1)
+				if (i < collectible.needles.length - 1 && collectible.wantpath !== false)
 				{
 					pathstyle = (ithneedle.e === 2) ? "5,15" : "1";
 					pathline = L.polyline(M.convertGCtoLCDual([ithneedle.c, (collectible.needles[i+1]).c]),
@@ -24412,12 +24413,12 @@ G = {
 			ithneedle = pNeedles[i];
 			name = D.getObjectName(ithneedle);
 			wiki = U.getWikiLinkDefault("Juvenile " + D.getObjectDefaultName(ithneedle));
-			peticon = "img/collectible/rangerpets/" + ithneedle.p + I.cPNG;
+			peticon = "img/collectible/rangerpets/" + ithneedle.i + I.cPNG;
 			var str = "<div class='cltPetBox'><span class='cltPetIcon curToggle' title='" + name + "' style='background-image:url(" + peticon + ")'>" 
 				+ "<var class='cltPetIconBackground'>" + I.Symbol.Filler + "</var></span><aside class='cltPetFacts'>";
-			for (var ii in ithneedle.s)
+			for (var ii in ithneedle.a)
 			{
-				fact = ithneedle.s[ii];
+				fact = ithneedle.a[ii];
 				if (Array.isArray(fact))
 				{
 					// If a fact is an array containing the buff/condition's: [stackNumber, duration]
