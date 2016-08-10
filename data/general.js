@@ -1201,7 +1201,7 @@ var GW2T_TIMELINE = [
 		zone: "verdant",
 		Segments: [
 			{ time: "00:00", duration: "00:10", primacy: 1, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" },
-			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Copters", name_de: "Koptere", name_es: "Cópteros", name_fr: "Coptères", name_zh: "直升機" },
+			{ time: "00:10", duration: "00:20", primacy: 3, name_en: "Choppers", name_de: "Koptern", name_es: "Autogiros", name_fr: "Hélicos", name_zh: "直升機" },
 			{ time: "00:30", duration: "00:75", primacy: 2, name_en: "Daylight", name_de: "Tag", name_es: "Día", name_fr: "Journée", name_zh: "白天" },
 			{ time: "01:45", duration: "00:15", primacy: 2, name_en: "Night", name_de: "Nacht", name_es: "Noche", name_fr: "Nuit", name_zh: "夜晚" }
 		]
@@ -1248,8 +1248,8 @@ var GW2T_DASHBOARD_DATA = {
  */
 Announcement:
 {
-	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Audit' title='gw2timer.com/audit'>Account Audit</a> now considers your owned <a href='http://gw2timer.com/?page=Vault' title='gw2timer.com/vault'>guild banks</a> in the valuation."
-	pve: "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes.",
+	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
+	pve: "Account API is down for some accounts. Wait for <a href='https://forum-en.guildwars2.com/forum/community/api'>ArenaNet</a> to fix.",
 	wvw: "",
 	Start: new Date("2016-08-02T16:00:00Z"),
 	Finish: new Date("2016-08-16T16:00:00Z"),
