@@ -12,6 +12,28 @@
 
 var GW2T_COLLECTIBLE_DATA = {
 // Must have same name as a Checklist object
+LivingStory: {
+	name_en: "Bloodstone Harvest",
+	name_de: "Blutstein-Ernte",
+	name_es: "Recolección de hematites",
+	name_fr: "Récolte de pierres de sang",
+	color: "red",
+	view: "default",
+	wiki: "https://wiki.guildwars2.com/wiki/Bloodstone_Harvest",
+	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	needles: [
+	{n: 1, c: [6112, 20746]},
+	{n: 2, c: [2848, 15087]},
+	{n: 3, c: [5303, 14701]},
+	{n: 4, c: [7474, 14784]},
+	{n: 5, c: [11436, 12002]},
+	{n: 6, c: [15309, 11523]},
+	{n: 7, c: [21556, 8816]},
+	{n: 8, c: [31178, 12389]},
+	{n: 9, c: [20517, 20679]},
+	{n: 10, c: [19005, 23330]}
+	]
+},
 NoxiousPods: {
 	name_en: "Noxious Pods",
 	name_de: "Giftigen Kapseln",
@@ -310,7 +332,7 @@ ExaltedChests: {
 	{n: 10, c: [1461, 17465]},
 	{n: 11, c: [1254, 17429]},
 	{n: 12, c: [1145, 17684]},
-	{n: 13, c: [1486, 17682]},
+	{n: 13, c: [1486, 17682]}
 	]
 },
 AirshipCargo: {
