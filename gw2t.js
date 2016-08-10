@@ -2652,7 +2652,7 @@ U = {
 					Settings.aCallback(null);
 				}
 			},
-			error: function()
+			error: function(pRequest, pStatus)
 			{
 				if (Settings.aError)
 				{
@@ -2660,7 +2660,7 @@ U = {
 				}
 				else if (Settings.aPermission)
 				{
-					A.printError(Settings.aPermission);
+					A.printError(Settings.aPermission, pStatus);
 				}
 			}
 		});
@@ -6735,9 +6735,9 @@ A = {
 				var permission = pData.permissions[i];
 				A.Permissions[permission] = true;
 			}
-		}).fail(function()
+		}).fail(function(pRequest, pStatus)
 		{
-			A.printError(A.PermissionEnum.Account);
+			A.printError(A.PermissionEnum.Account, pStatus);
 		});
 	},
 	
@@ -6750,11 +6750,11 @@ A = {
 	{
 		if (pStatus === "error")
 		{
-			I.write("Unable to retrieve response. Incorrect URL or ArenaNet API server is down.");
+			I.write("Unable to retrieve response. ArenaNet API server may be down.");
 		}
 		else
 		{
-			I.write("Unable to retrieve data for this key from ArenaNet API server.");
+			I.write("Unable to access data for this key from ArenaNet API server.");
 		}
 		I.write(A.TokenCurrent);
 		if (pPermission)
@@ -7380,9 +7380,9 @@ A = {
 					}
 				});
 			});
-		}).fail(function()
+		}).fail(function(pRequest, pStatus)
 		{
-			A.printError(A.PermissionEnum.Inventories);
+			A.printError(A.PermissionEnum.Inventories, pStatus);
 		});
 	},
 	
@@ -8791,10 +8791,10 @@ V = {
 				})(charindex);
 				charindex++;
 			});
-		}).fail(function()
+		}).fail(function(pRequest, pStatus)
 		{
 			I.removeThrobber(dish);
-			A.printError(A.PermissionEnum.Characters);
+			A.printError(A.PermissionEnum.Characters, pStatus);
 		});
 	},
 	
@@ -10217,9 +10217,9 @@ V = {
 			bank.append("<div class='bnkTabSeparator'><var class='bnkTabLocked'>" + I.Symbol.Filler + "</var></div>");
 			// Create search bar
 			B.createBankMenu(bank);
-		}).fail(function()
+		}).fail(function(pRequest, pStatus)
 		{
-			A.printError(A.PermissionEnum.Inventories);
+			A.printError(A.PermissionEnum.Inventories, pStatus);
 			dish.empty();
 		});
 	},
@@ -10339,10 +10339,10 @@ V = {
 					bank.empty();
 				}
 			});
-		}).fail(function()
+		}).fail(function(pRequest, pStatus)
 		{
 			bank.empty();
-			A.printError(A.PermissionEnum.Account);
+			A.printError(A.PermissionEnum.Account, pStatus);
 		});
 	},
 	
@@ -10394,9 +10394,9 @@ V = {
 				{
 					generateMaterials(pData);
 				});
-			}).fail(function()
+			}).fail(function(pRequest, pStatus)
 			{
-				A.printError(A.PermissionEnum.Inventories);
+				A.printError(A.PermissionEnum.Inventories, pStatus);
 				dish.empty();
 			});
 		});
@@ -10482,9 +10482,9 @@ V = {
 			$.getJSON(A.getURL(A.URL.Skins), function(pData)
 			{
 				generateWardrobe(pData);
-			}).fail(function()
+			}).fail(function(pRequest, pStatus)
 			{
-				A.printError(A.PermissionEnum.Unlocks);
+				A.printError(A.PermissionEnum.Unlocks, pStatus);
 				dish.empty();
 			});
 		});
@@ -10521,9 +10521,9 @@ V = {
 				{
 					generateMinis(pData);
 				});
-			}).fail(function()
+			}).fail(function(pRequest, pStatus)
 			{
-				A.printError(A.PermissionEnum.Unlocks);
+				A.printError(A.PermissionEnum.Unlocks, pStatus);
 				dish.empty();
 			});
 		});
@@ -10559,9 +10559,9 @@ V = {
 					aWantSearchHighlight: false,
 					aIsDyes: true
 				});
-			}).fail(function()
+			}).fail(function(pRequest, pStatus)
 			{
-				A.printError(A.PermissionEnum.Unlocks);
+				A.printError(A.PermissionEnum.Unlocks, pStatus);
 				dish.empty();
 			});
 		});
