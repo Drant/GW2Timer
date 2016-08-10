@@ -24,14 +24,14 @@ LivingStory: {
 	needles: [
 	{n: 1, c: [6112, 20746], t: "Outside surface of Rata Sum, climb vine near waypoint"},
 	{n: 2, c: [2848, 15087], t: "Near Levvi's device"},
-	{n: 3, c: [5303, 14701], t: "Top of upside down ship northside in Drydock Scratch JP"},
+	{n: 3, c: [5303, 14701], t: "Top of upside-down ship northside in Drydock Scratch JP"},
 	{n: 4, c: [7474, 14784], t: "Near hero challenge point"},
-	{n: 5, c: [11436, 12002], t: "Low on a tree"},
+	{n: 5, c: [11436, 12002], t: "Low on a cemetery tree"},
 	{n: 6, c: [15309, 11523], t: "Cliff corner edge outside the fence"},
 	{n: 7, c: [21556, 8816], t: "On steps by gate"},
 	{n: 8, c: [31178, 12389], t: "End of stream behind Craze's Folly JP"},
 	{n: 9, c: [20517, 20679], t: "On pole opposite of vista"},
-	{n: 10, c: [19005, 23330], t: "Drop down into volcano cave near asura camp"}
+	{n: 10, c: [19005, 23330], t: "Drop down into volcano cave north of waypoint"}
 	]
 },
 NoxiousPods: {

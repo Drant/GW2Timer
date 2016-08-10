@@ -1250,7 +1250,7 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	pve: "<a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/slivers'>Bloodstone Slivers</a> map useable with GPS <a href='http://forum.renaka.com/topic/5546166/'>overlay</a> in game; <a href='http://www.timscloud.uk/Tim/GW2/Manual/Manual.html'>credit</a>."
-		+ "<br />Account API is down for some accounts. Wait for ArenaNet to fix.",
+		+ "<br /><img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes.",
 	wvw: "",
 	Start: new Date("2016-08-02T16:00:00Z"),
 	Finish: new Date("2016-08-16T16:00:00Z"),
@@ -1369,15 +1369,15 @@ Sale: {
 	{
 		name: "Toxic Mantle Skin",
 		id: "49024",
-		price: 400,
-		discount: 320,
+		price: 320,
+		discount: 400,
 		col: 0
 	},
 	{
 		name: "Toxic Gloves Skin",
 		id: "49031",
-		price: 400,
-		discount: 320,
+		price: 320,
+		discount: 400,
 		col: 0
 	},
 	{
