@@ -43,6 +43,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [7464, 14695], i: "moa", t: "Moa"}, // brisban
 	{n: 1, c: [25885, 11567], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [25202, 12026], i: "moa", t: "Moa"}, // diessa
+	{n: 1, c: [24618, 11712], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [11816, 14838], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
@@ -71,9 +72,10 @@ BloodstoneCreatures: {
 	{n: 1, c: [4076, 16673], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4390, 15944], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4785, 15415], i: "devourer", t: "Devourer"}, // silverwastes
-	{n: 1, c: [4731, 14605], i: "devourer", t: "Devourer"}, // silverwastes unconfirmed
+	{n: 1, c: [4731, 14605], i: "devourer", t: "Devourer"}, // silverwastes
+	{n: 1, c: [5140, 15057], i: "devourer", t: "Devourer"}, // silverwastes
 	{n: 1, c: [30700, 12974], i: "devourer", t: "Devourer"}, // blazeridge
-	{n: 1, c: [30366, 18380], i: "devourer", t: "Devourer"} // fields
+	{n: 1, c: [30582, 16724], i: "devourer", t: "Devourer"} // fields
 	]
 },
 BloodstoneSlivers: {

@@ -1274,7 +1274,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/creatures'>Bloodstone-Crazed Creatures</a> spawn map (Update 1) and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/slivers'>Bloodstone Slivers</a>."
+	pve: "<a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Bloodstone-Crazed Creatures</a> spawn map (Update 2) and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>Bloodstone Slivers</a>."
 		+ "<br />Use Levvi's <a href='https://wiki.guildwars2.com/wiki/Levvi%27s_Device' title='Creature sets and timings are random!'>device</a> to see the current creatures and join LFG squads for hunt."
 		+ "<br /><img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes.",
 	wvw: "",
@@ -1379,17 +1379,10 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Lord Caudecus's Pistol Skin",
-		id: "79179",
-		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Lord Caudecus's Sword Skin",
-		id: "79089",
-		price: 600,
-		discount: null,
+		name: "Chain-Whip Sword Skin",
+		id: "69752",
+		price: 480,
+		discount: 600,
 		col: 0
 	},
 	{
@@ -1407,6 +1400,27 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Bloodstone Dye Kit",
+		id: "79354",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 0
+	},
+	{
+		name: "Lord Caudecus's Pistol Skin",
+		id: "79179",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Lord Caudecus's Sword Skin",
+		id: "79089",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Noble's Folly Pass (2 weeks)",
 		id: "79270",
 		price: 150,
@@ -1418,13 +1432,6 @@ Sale: {
 		id: "44605",
 		price: 150,
 		discount: null,
-		col: 1
-	},
-	{
-		name: "Bloodstone Dye Kit",
-		img: "http://i.imgur.com/lS9umHn.png",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]
