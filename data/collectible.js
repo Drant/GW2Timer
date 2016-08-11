@@ -44,7 +44,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [11816, 14838], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
-	{n: 1, c: [15386, 13568], i: "arctodus", t: "Arctodus"}, // gendarran
+	{n: 1, c: [15559, 12471], i: "arctodus", t: "Arctodus"}, // gendarran
 	{n: 1, c: [18309, 14668], i: "arctodus", t: "Arctodus"}, // lornar
 	{n: 1, c: [18602, 13568], i: "arctodus", t: "Arctodus"}, // lornar
 	{n: 1, c: [3042, 14848], i: "wyvern", t: "Wyvern"}, // verdant
@@ -53,6 +53,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [3778, 19176], i: "wyvern", t: "Wyvern"}, // tangled
 	{n: 1, c: [21860, 8522], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // maelstrom
+	{n: 1, c: [21471, 22973], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [15456, 17155], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [16869, 16874], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [5405, 14989], i: "devourer", t: "Devourer"}, // silverwastes unconfirmed
