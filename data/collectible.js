@@ -36,7 +36,7 @@ BloodstoneCreatures: {
 	ringsize: 48,
 	wantpath: false,
 	needles: [
-	{n: 1, c: [19610, 12544], i: "moa", t: "Moa"},
+	{n: 1, c: [19372, 12546], i: "moa", t: "Moa"}, // [19610, 12544]
 	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"},
 	{n: 1, c: [25242, 12672], i: "moa", t: "Moa"},
 	{n: 1, c: [11290, 15360], i: "moa", t: "Moa"},
@@ -47,12 +47,13 @@ BloodstoneCreatures: {
 	{n: 1, c: [3042, 14848], i: "wyvern", t: "Wyvern"}, // [2328, 15161]
 	{n: 1, c: [2914, 15050], i: "wyvern", t: "Wyvern"}, // [2328, 15161]
 	{n: 1, c: [3534, 19108], i: "wyvern", t: "Wyvern"}, // [3728, 18677]
+	{n: 1, c: [3778, 19176], i: "wyvern", t: "Wyvern"}, // [3728, 18677]
 	{n: 1, c: [21637, 8610], i: "shark", t: "Shark"},
 	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // [20546, 22811]
 	{n: 1, c: [15456, 17155], i: "shark", t: "Shark"}, // [16640, 16915]
 	{n: 1, c: [5405, 14989], i: "devourer", t: "Devourer"},
 	{n: 1, c: [30366, 14796], i: "devourer", t: "Devourer"},
-	{n: 1, c: [5022, 16460], i: "devourer", t: "Devourer"},
+	{n: 1, c: [4124, 16504], i: "devourer", t: "Devourer"}, // [5022, 16460]
 	{n: 1, c: [30366, 18380], i: "devourer", t: "Devourer"}
 	]
 },
