@@ -6870,7 +6870,7 @@ A = {
 			updateLink();
 		});
 		// Clicking the link icon gets a shareable URL
-		I.initializeClipboard(link[0]);
+		I.initializeClipboard(link);
 		updateLink();
 		// Button to delete this token
 		del.click(function()
@@ -24513,7 +24513,7 @@ G = {
 			// Initialize clipboard for each waypoint
 			$("#gldBook_" + pBook + " .cssWaypoint").each(function()
 			{
-				I.initializeClipboard($(this)[0]);
+				I.initializeClipboard($(this));
 			});
 		};
 		
@@ -29193,7 +29193,7 @@ H = {
 			}
 		});
 		
-		// Update the world boss slices
+		// Update the world boss slices, called every 15 minutes
 		if (currentminute % T.cMINUTES_IN_TIMEFRAME === 0 || pForceWB)
 		{
 			var wbcounteroffset = 0;
@@ -29224,7 +29224,7 @@ H = {
 							{
 								C.viewChainFinale(iChain);
 							});
-							I.initializeClipboard(bossicon[0], iChain.waypointText);
+							I.initializeClipboard(bossicon, iChain.waypointText);
 						})(wbchains[i]);
 					}
 				}
@@ -31866,14 +31866,15 @@ I = {
 	 */
 	initializeClipboard: function(pSelector, pText)
 	{
-		var cb = new Clipboard(pSelector);
+		var elm = (pSelector instanceof jQuery) ? pSelector[0] : pSelector;
+		var cb = new Clipboard(elm);
 		cb.on("success", function(pEvent)
 		{
 			I.write(I.cClipboardSuccessText + pEvent.text, 5);
 		});
 		if (pText)
 		{
-			I.updateClipboard(pSelector, pText);
+			I.updateClipboard(elm, pText);
 		}
 		return cb;
 	},

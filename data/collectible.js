@@ -45,6 +45,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [25202, 12026], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [24618, 11712], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [11816, 14838], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [9683, 14257], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [18930, 13090], i: "arctodus", t: "Arctodus"}, // snowden
@@ -62,11 +63,12 @@ BloodstoneCreatures: {
 	{n: 1, c: [21860, 8522], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [21471, 22973], i: "shark", t: "Shark"}, // maelstrom
+	{n: 1, c: [21249, 23571], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [15405, 17226], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [16869, 16874], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [16121, 17600], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [5427, 16439], i: "devourer", t: "Devourer"}, // dry
-	{n: 1, c: [4124, 16504], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [4215, 16511], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4578, 16582], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4932, 15902], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4076, 16673], i: "devourer", t: "Devourer"}, // dry
