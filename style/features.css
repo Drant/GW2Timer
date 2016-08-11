@@ -323,6 +323,10 @@ dt.jpzListNameHover {
 	width: auto;
 	margin: 0;
 }
+.cltCheckedLabel {
+	background: linear-gradient(to right, #7c7253 0%, transparent 100%);
+	border-radius: 4px;
+}
 #cltList ins {
 	width: 32px; height: 32px;
 	margin-right: 4px;

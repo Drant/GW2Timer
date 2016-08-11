@@ -24367,6 +24367,11 @@ G = {
 				M.goToArguments(P.Collectibles[type].view);
 				// Rebind tooltip
 				I.qTip.init(".leaflet-marker-icon");
+				$(this).parent().addClass("cltCheckedLabel");
+			}
+			else
+			{
+				$(this).parent().removeClass("cltCheckedLabel");
 			}
 			// Special case for ranger pets
 			if (pType === "RangerPets")
