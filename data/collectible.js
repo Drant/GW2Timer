@@ -38,6 +38,7 @@ BloodstoneCreatures: {
 	needles: [
 	{n: 1, c: [19398, 12732], i: "moa", t: "Moa"}, // snowden
 	{n: 1, c: [19372, 12546], i: "moa", t: "Moa"}, // snowden
+	{n: 1, c: [19881, 12307], i: "moa", t: "Moa"}, // snowden
 	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"}, // brisban
 	{n: 1, c: [7477, 15926], i: "moa", t: "Moa"}, // brisban
 	{n: 1, c: [7464, 14695], i: "moa", t: "Moa"}, // brisban
@@ -51,6 +52,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [18930, 13090], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19771, 12971], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [15559, 12471], i: "arctodus", t: "Arctodus"}, // gendarran
+	{n: 1, c: [14019, 13479], i: "arctodus", t: "Arctodus"}, // gendarran
 	{n: 1, c: [18309, 14668], i: "arctodus", t: "Arctodus"}, // lornar
 	{n: 1, c: [17978, 14254], i: "arctodus", t: "Arctodus"}, // lornar
 	{n: 1, c: [18602, 13568], i: "arctodus", t: "Arctodus"}, // lornar
@@ -69,7 +71,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [15405, 17226], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [16869, 16874], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [16121, 17600], i: "shark", t: "Shark"}, // bloodtide
-	{n: 1, c: [5427, 16439], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [5359, 16359], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4215, 16511], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4578, 16582], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4932, 15902], i: "devourer", t: "Devourer"}, // dry
