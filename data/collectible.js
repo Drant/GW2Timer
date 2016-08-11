@@ -60,7 +60,9 @@ BloodstoneCreatures: {
 	{n: 1, c: [1528, 15973], i: "wyvern", t: "Wyvern"}, // verdant
 	{n: 1, c: [3534, 19108], i: "wyvern", t: "Wyvern"}, // tangled
 	{n: 1, c: [3778, 19176], i: "wyvern", t: "Wyvern"}, // tangled
+	{n: 1, c: [4200, 18932], i: "wyvern", t: "Wyvern"}, // tangled
 	{n: 1, c: [21860, 8522], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [22372, 8685], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [21471, 22973], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [21249, 23571], i: "shark", t: "Shark"}, // maelstrom
@@ -77,6 +79,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [4731, 14605], i: "devourer", t: "Devourer"}, // silverwastes
 	{n: 1, c: [5140, 15057], i: "devourer", t: "Devourer"}, // silverwastes
 	{n: 1, c: [30700, 12974], i: "devourer", t: "Devourer"}, // blazeridge
+	{n: 1, c: [30796, 18631], i: "devourer", t: "Devourer"}, // fields
 	{n: 1, c: [30582, 16724], i: "devourer", t: "Devourer"} // fields
 	]
 },
