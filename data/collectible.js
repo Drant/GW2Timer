@@ -40,7 +40,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [19372, 12546], i: "moa", t: "Moa"}, // snowden
 	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"}, // brisban unconfirmed
 	{n: 1, c: [7147, 15838], i: "moa", t: "Moa"}, // brisban unconfirmed
-	{n: 1, c: [25242, 12672], i: "moa", t: "Moa"}, // diessa
+	{n: 1, c: [25885, 11567], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [11816, 14838], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
@@ -54,6 +54,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [21860, 8522], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [15456, 17155], i: "shark", t: "Shark"}, // bloodtide
+	{n: 1, c: [16869, 16874], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [5405, 14989], i: "devourer", t: "Devourer"}, // silverwastes unconfirmed
 	{n: 1, c: [4731, 14605], i: "devourer", t: "Devourer"}, // silverwastes unconfirmed
 	{n: 1, c: [5427, 16439], i: "devourer", t: "Devourer"}, // dry
