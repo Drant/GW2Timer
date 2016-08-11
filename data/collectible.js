@@ -47,6 +47,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [18930, 13090], i: "arctodus", t: "Arctodus"}, // snowden
+	{n: 1, c: [19771, 12971], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [15559, 12471], i: "arctodus", t: "Arctodus"}, // gendarran
 	{n: 1, c: [18309, 14668], i: "arctodus", t: "Arctodus"}, // lornar
 	{n: 1, c: [17978, 14254], i: "arctodus", t: "Arctodus"}, // lornar
@@ -54,6 +55,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [3042, 14848], i: "wyvern", t: "Wyvern"}, // verdant
 	{n: 1, c: [2914, 15050], i: "wyvern", t: "Wyvern"}, // verdant
 	{n: 1, c: [1738, 15936], i: "wyvern", t: "Wyvern"}, // verdant
+	{n: 1, c: [1528, 15973], i: "wyvern", t: "Wyvern"}, // verdant
 	{n: 1, c: [3534, 19108], i: "wyvern", t: "Wyvern"}, // tangled
 	{n: 1, c: [3778, 19176], i: "wyvern", t: "Wyvern"}, // tangled
 	{n: 1, c: [21860, 8522], i: "shark", t: "Shark"}, // frostgorge
