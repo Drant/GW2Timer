@@ -36,25 +36,28 @@ BloodstoneCreatures: {
 	ringsize: 48,
 	wantpath: false,
 	needles: [
-	{n: 1, c: [19372, 12546], i: "moa", t: "Moa"}, // [19610, 12544]
-	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"},
-	{n: 1, c: [25242, 12672], i: "moa", t: "Moa"},
-	{n: 1, c: [11290, 15360], i: "moa", t: "Moa"},
-	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // [19610, 12544]
-	{n: 1, c: [15386, 13568], i: "arctodus", t: "Arctodus"},
-	{n: 1, c: [18309, 14668], i: "arctodus", t: "Arctodus"}, // [18458, 16000]
-	{n: 1, c: [18602, 13568], i: "arctodus", t: "Arctodus"}, // [18458, 16000]
-	{n: 1, c: [3042, 14848], i: "wyvern", t: "Wyvern"}, // [2328, 15161]
-	{n: 1, c: [2914, 15050], i: "wyvern", t: "Wyvern"}, // [2328, 15161]
-	{n: 1, c: [3534, 19108], i: "wyvern", t: "Wyvern"}, // [3728, 18677]
-	{n: 1, c: [3778, 19176], i: "wyvern", t: "Wyvern"}, // [3728, 18677]
-	{n: 1, c: [21637, 8610], i: "shark", t: "Shark"},
-	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // [20546, 22811]
-	{n: 1, c: [15456, 17155], i: "shark", t: "Shark"}, // [16640, 16915]
-	{n: 1, c: [5405, 14989], i: "devourer", t: "Devourer"},
-	{n: 1, c: [30366, 14796], i: "devourer", t: "Devourer"},
-	{n: 1, c: [4124, 16504], i: "devourer", t: "Devourer"}, // [5022, 16460]
-	{n: 1, c: [30366, 18380], i: "devourer", t: "Devourer"}
+	{n: 1, c: [19398, 12732], i: "moa", t: "Moa"}, // snowden
+	{n: 1, c: [19372, 12546], i: "moa", t: "Moa"}, // snowden
+	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"}, // brisban
+	{n: 1, c: [25242, 12672], i: "moa", t: "Moa"}, // diessa
+	{n: 1, c: [11816, 14838], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
+	{n: 1, c: [15386, 13568], i: "arctodus", t: "Arctodus"}, // gendarran
+	{n: 1, c: [18309, 14668], i: "arctodus", t: "Arctodus"}, // lornar
+	{n: 1, c: [18602, 13568], i: "arctodus", t: "Arctodus"}, // lornar
+	{n: 1, c: [3042, 14848], i: "wyvern", t: "Wyvern"}, // verdant
+	{n: 1, c: [2914, 15050], i: "wyvern", t: "Wyvern"}, // verdant
+	{n: 1, c: [3534, 19108], i: "wyvern", t: "Wyvern"}, // tangled
+	{n: 1, c: [3778, 19176], i: "wyvern", t: "Wyvern"}, // tangled
+	{n: 1, c: [21637, 8610], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // maelstrom
+	{n: 1, c: [15456, 17155], i: "shark", t: "Shark"}, // bloodtide
+	{n: 1, c: [5405, 14989], i: "devourer", t: "Devourer"}, // silverwastes
+	{n: 1, c: [5427, 16439], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [4124, 16504], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [4578, 16582], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [30366, 14796], i: "devourer", t: "Devourer"}, // blazeridge
+	{n: 1, c: [30366, 18380], i: "devourer", t: "Devourer"} // fields
 	]
 },
 BloodstoneSlivers: {
