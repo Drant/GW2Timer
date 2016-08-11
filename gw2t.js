@@ -22704,11 +22704,10 @@ P = {
 			&& P.Layer.ZoneGateway.getLayers().length === 0)
 		{
 			var marker, path;
-			var interzones = GW2T_GATEWAY_CONNECTION.interzones;
-			var intergates = GW2T_GATEWAY_CONNECTION.intergates;
-			var launchpads = GW2T_GATEWAY_CONNECTION.launchpads;
+			var connection = GW2T_GATEWAY_CONNECTION;
+			var launchpads = connection.launchpads;
 			
-			var drawGateway = function(pCoord, pImage, pOpacity, pTitle)
+			var createGate = function(pCoord, pImage, pOpacity, pTitle)
 			{
 				pTitle = (pTitle === undefined) ? null : pTitle;
 				var marker = L.marker(M.convertGCtoLC(pCoord),
@@ -22727,36 +22726,38 @@ P = {
 				return marker;
 			};
 			
-			for (var i in interzones)
+			var drawGates = function(pGates, pName, pPathColor)
 			{
-				// Draw the two gateways
-				for (var ii in interzones[i])
+				for (var i in pGates)
 				{
-					marker = drawGateway((interzones[i])[ii], "img/map/gateway_zone.png");
-					P.Layer.ZoneGateway.addLayer(marker);
+					// Draw the two gates
+					for (var ii in pGates[i])
+					{
+						marker = createGate((pGates[i])[ii], "img/map/gateway_" + pName + I.cPNG);
+						P.Layer.ZoneGateway.addLayer(marker);
+					}
+					// Draw the line connecting the gates
+					if (pPathColor)
+					{
+						path = L.polyline(M.convertGCtoLCDual(pGates[i]),
+						{
+							color: pPathColor,
+							opacity: 0.2
+						});
+						P.Layer.ZoneGateway.addLayer(path);
+					}
 				}
-			}
-			for (var i in intergates)
-			{
-				// Draw the two asura gates
-				for (var ii in intergates[i])
-				{
-					marker = drawGateway((intergates[i])[ii], "img/map/gateway_gate.png");
-					P.Layer.ZoneGateway.addLayer(marker);
-				}
-				// Draw the line connecting the gate
-				path = L.polyline(M.convertGCtoLCDual(intergates[i]),
-				{
-					color: "purple",
-					opacity: 0.2
-				});
-				P.Layer.ZoneGateway.addLayer(path);
-			}
+			};
+			
+			drawGates(connection.interborders, "interborders");
+			drawGates(connection.interzones, "interzones", "purple");
+			drawGates(connection.intrazones, "intrazones", "white");
+			// One-way "gate" special case
 			for (var i in launchpads)
 			{
 				var tooltip = "<div class='mapLoc'><img src='" + (launchpads[i]).i + "' /></div>";
 				// Draw the launchpad (first inner coordinates)
-				marker = drawGateway((launchpads[i]).c[0], "img/map/launchpad.png", 1, tooltip);
+				marker = createGate((launchpads[i]).c[0], "img/map/launchpad.png", 1, tooltip);
 				P.Layer.ZoneGateway.addLayer(marker);
 				// Draw the line trajectory
 				path = L.polyline(M.convertGCtoLCDual(launchpads[i].c),

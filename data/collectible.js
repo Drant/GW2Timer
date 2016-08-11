@@ -38,9 +38,11 @@ BloodstoneCreatures: {
 	needles: [
 	{n: 1, c: [19398, 12732], i: "moa", t: "Moa"}, // snowden
 	{n: 1, c: [19372, 12546], i: "moa", t: "Moa"}, // snowden
-	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"}, // brisban unconfirmed
-	{n: 1, c: [7477, 15926], i: "moa", t: "Moa"}, // brisban unconfirmed
+	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"}, // brisban
+	{n: 1, c: [7477, 15926], i: "moa", t: "Moa"}, // brisban
+	{n: 1, c: [7464, 14695], i: "moa", t: "Moa"}, // brisban
 	{n: 1, c: [25885, 11567], i: "moa", t: "Moa"}, // diessa
+	{n: 1, c: [25202, 12026], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [11816, 14838], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
@@ -59,13 +61,15 @@ BloodstoneCreatures: {
 	{n: 1, c: [21471, 22973], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [15405, 17226], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [16869, 16874], i: "shark", t: "Shark"}, // bloodtide
-	{n: 1, c: [5405, 14989], i: "devourer", t: "Devourer"}, // silverwastes unconfirmed
-	{n: 1, c: [4731, 14605], i: "devourer", t: "Devourer"}, // silverwastes unconfirmed
+	{n: 1, c: [16121, 17600], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [5427, 16439], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4124, 16504], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4578, 16582], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4932, 15902], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [4076, 16673], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4390, 15944], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [4785, 15415], i: "devourer", t: "Devourer"}, // silverwastes
+	{n: 1, c: [4731, 14605], i: "devourer", t: "Devourer"}, // silverwastes unconfirmed
 	{n: 1, c: [30700, 12974], i: "devourer", t: "Devourer"}, // blazeridge
 	{n: 1, c: [30366, 18380], i: "devourer", t: "Devourer"} // fields
 	]

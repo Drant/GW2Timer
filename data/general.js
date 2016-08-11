@@ -441,7 +441,7 @@ Fractal:
  */
 var GW2T_GATEWAY_CONNECTION = {
 	// The light blue vortexes at the edges of zones
-	interzones: [
+	interborders: [
 	[[877, 16061], [790, 16219]], // verdant to auric
 	[[2394, 18790], [2915, 18296]], // auric to tangled
 	[[2902, 19509], [3776, 19771]], // tangled to dragon
@@ -496,7 +496,7 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[11926, 25129], [11731, 25347]] // malchor to cursed
 	],
 	// The purple asura gates that mostly connect cities
-	intergates: [
+	interzones: [
 	[[6114, 20837], [7281, 20046]], // rata to metrica
 	[[6095, 20859], [5946, 21489]], // rata to incubationlab
 	[[6073, 20856], [5514, 21765]], // rata to dawnsidequay
@@ -513,6 +513,31 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[17390, 23393], [16706, 12619]], // forttrinity to vigilkeep
 	[[17418, 23392], [16672, 16653]], // forttrinity to chantryofsecrets
 	[[17442, 23401], [17815, 15000]] // forttrinity to durmandpriory
+	],
+	// Skritt Tunnels, Nuhoch Wallows, and other within zone teleports
+	intrazones: [
+	[[5754, 15219], [4929, 15359]], // silverwastes
+	[[4942, 15550], [4429, 14751]], // silverwastes
+	[[4730, 14951], [5205, 14296]], // silverwastes
+	[[5063, 15002], [4319, 15337]], // silverwastes
+	[[4815, 15589], [4784, 15606]], // silverwastes
+	[[2028, 15461], [2082, 15597]], // verdant
+	[[2778, 15132], [2778, 15201]], // verdant
+	[[810, 17777], [1185, 18496]], // auric
+	[[1423, 16995], [1470, 18080]], // auric
+	[[1970, 18729], [2118, 17772]], // auric
+	[[1060, 17395], [2286, 17520]], // auric
+	[[965, 16732], [2030, 16413]], // auric
+	[[1531, 16403], [2490, 17495]], // auric
+	[[5090, 18256], [4609, 18419]], // tangled
+	[[4371, 18477], [4328, 17935]], // tangled
+	[[3854, 17666], [4323, 17881]], // tangled
+	[[3873, 18618], [4264, 17881]], // tangled
+	[[2940, 18530], [3571, 17704]], // tangled
+	[[3606, 18087], [3743, 18275]], // tangled
+	[[3631, 19087], [3538, 19162]], // tangled
+	[[5101, 19099], [5152, 19007]], // tangled
+	[[3721, 20383], [4149, 20777]] // dragon
 	],
 	// The circular pads that cannonballs the player over the map
 	launchpads: [
