@@ -43,8 +43,9 @@ BloodstoneCreatures: {
 	{n: 1, c: [7477, 15926], i: "moa", t: "Moa"}, // brisban
 	{n: 1, c: [7464, 14695], i: "moa", t: "Moa"}, // brisban
 	{n: 1, c: [25885, 11567], i: "moa", t: "Moa"}, // diessa
-	{n: 1, c: [25202, 12026], i: "moa", t: "Moa"}, // diessa
+	{n: 1, c: [25012, 11920], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [24618, 11712], i: "moa", t: "Moa"}, // diessa
+	{n: 1, c: [24213, 13224], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [11885, 14901], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [9683, 14257], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
@@ -67,6 +68,9 @@ BloodstoneCreatures: {
 	{n: 1, c: [21860, 8522], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [22372, 8685], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [21099, 9311], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [21175, 9120], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [21560, 9738], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [22774, 8741], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [21471, 22973], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [21249, 23571], i: "shark", t: "Shark"}, // maelstrom
@@ -79,6 +83,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [4932, 15902], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4076, 16673], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4390, 15944], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [5228, 14493], i: "devourer", t: "Devourer"}, // silverwastes
 	{n: 1, c: [4785, 15415], i: "devourer", t: "Devourer"}, // silverwastes
 	{n: 1, c: [4731, 14605], i: "devourer", t: "Devourer"}, // silverwastes
 	{n: 1, c: [5140, 15057], i: "devourer", t: "Devourer"}, // silverwastes

@@ -1380,24 +1380,31 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Fused Molten Sickle",
+		id: "67032",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
+		name: "Fused Molten Logging Axe",
+		id: "67030",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
+		name: "Molten Alliance Mining Pick",
+		id: "48933",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
 		name: "Chain-Whip Sword Skin",
 		id: "69752",
 		price: 480,
 		discount: 600,
-		col: 0
-	},
-	{
-		name: "Toxic Mantle Skin",
-		id: "49024",
-		price: 320,
-		discount: 400,
-		col: 0
-	},
-	{
-		name: "Toxic Gloves Skin",
-		id: "49031",
-		price: 320,
-		discount: 400,
 		col: 0
 	},
 	{

@@ -168,7 +168,7 @@ Gathering: [
 Salvage: [
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},
 	{i: 44602, n: "Copper-Fed Salvage-o-Matic", p: {gem: 800}},
-	{i: 19986, n: "Black Lion Salvage Kit", p: {gem: 300}},
+	{i: 19986, n: "Black Lion Salvage Kit", p: {gem: -300}},
 	{i: 23045, n: "Mystic Salvage Kit", p: {gem: -135}},
 	{i: 20349, n: "Upgrade Extractor", p: {gem: 200}},
 	{i: 76409, n: "Infusion Extraction Device", p: {coin: 2400}},
