@@ -45,7 +45,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [25885, 11567], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [25202, 12026], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [24618, 11712], i: "moa", t: "Moa"}, // diessa
-	{n: 1, c: [11816, 14838], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [11885, 14901], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [9683, 14257], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
@@ -53,6 +53,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [19771, 12971], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [15559, 12471], i: "arctodus", t: "Arctodus"}, // gendarran
 	{n: 1, c: [14019, 13479], i: "arctodus", t: "Arctodus"}, // gendarran
+	{n: 1, c: [16662, 13203], i: "arctodus", t: "Arctodus"}, // gendarran
 	{n: 1, c: [18309, 14668], i: "arctodus", t: "Arctodus"}, // lornar
 	{n: 1, c: [17978, 14254], i: "arctodus", t: "Arctodus"}, // lornar
 	{n: 1, c: [18602, 13568], i: "arctodus", t: "Arctodus"}, // lornar
@@ -65,6 +66,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [4200, 18932], i: "wyvern", t: "Wyvern"}, // tangled
 	{n: 1, c: [21860, 8522], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [22372, 8685], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [21099, 9311], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [21471, 22973], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [21249, 23571], i: "shark", t: "Shark"}, // maelstrom
