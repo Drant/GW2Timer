@@ -5209,8 +5209,10 @@ Z = {
 		};
 		
 		// Initial call
+		I.print("Loading database...");
 		$.getJSON(U.URL_API.ItemDatabase, function(pData)
 		{
+			I.print("Looking for difference...");
 			newitemslist = pData;
 			updateDBLang();
 		});
@@ -18507,9 +18509,11 @@ C = {
 		/*
 		 * Now that the chains are sorted, do cosmetic updates.
 		 */
+		var currentchainids = {};
 		for (i in C.CurrentChains)
 		{
 			ithchain = C.CurrentChains[i];
+			currentchainids[ithchain.nexus] = ithchain.nexus;
 			// Highlight
 			$("#chnBar_" + ithchain.nexus).addClass("chnBarCurrent");
 			// Show the events (details)
@@ -18534,6 +18538,10 @@ C = {
 		for (i in C.PreviousChains1)
 		{
 			ithchain = C.PreviousChains1[i];
+			if (currentchainids[ithchain.nexus] === ithchain.nexus)
+			{
+				continue;
+			}
 			// Still highlight the previous chain bar but collapse it
 			$("#chnBar_" + ithchain.nexus)
 				.removeClass("chnBarCurrent").addClass("chnBarPrevious");
@@ -18553,6 +18561,10 @@ C = {
 		for (i in C.PreviousChains2)
 		{
 			ithchain = C.PreviousChains2[i];
+			if (currentchainids[ithchain.nexus] === ithchain.nexus)
+			{
+				continue;
+			}
 			// Stop highlighting the previous previous chain bar
 			$("#chnBar_" + ithchain.nexus).removeClass("chnBarPrevious");
 		}
@@ -18560,6 +18572,10 @@ C = {
 		for (i in C.NextChains1)
 		{
 			ithchain = C.NextChains1[i];
+			if (currentchainids[ithchain.nexus] === ithchain.nexus)
+			{
+				continue;
+			}
 			// Style the title and time
 			$("#chnBar_" + ithchain.nexus + " h1").first()
 				.removeClass("chnTitleFutureFar").addClass("chnTitleFuture");
@@ -18777,11 +18793,14 @@ C = {
 			pChain.CurrentPrimaryEvent = pChain.primaryEvents[finalstep];
 			
 			// Recolor all events
-			$("#chnEvents_" + pChain.nexus + " li").show()
-				.removeClass("chnEventCurrent");
-			// Recolor current (final) events as past
-			$(".chnStep_" + pChain.nexus + "_" + finalstep)
-				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
+			if (C.isChainCurrent(pChain) === false)
+			{
+				$("#chnEvents_" + pChain.nexus + " li").show()
+					.removeClass("chnEventCurrent");
+				// Recolor current (final) events as past
+				$(".chnStep_" + pChain.nexus + "_" + finalstep)
+					.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
+			}
 			
 			/*
 			 * Announce the next world boss and the time until it, only if it's
@@ -29101,7 +29120,7 @@ H = {
 					case C.EventPrimacyEnum.Normal: segmentprefix = I.Symbol.Ellipsis; break;
 					case C.EventPrimacyEnum.Boss: segmentprefix = I.Symbol.Star + " "; break;
 				}
-				var linename = (ii === 0) ? ("<b class='tmlLineName'>" + name + "</b>") : "";
+				var linename = (ii === 0 && !chain.isWB) ? ("<b class='tmlLineName'>" + name + "</b>") : "";
 				event.duration = T.parseChainTime(event.duration);
 				event.time = T.parseChainTime(event.time);
 				var width = (event.duration / T.cMINUTES_IN_2_HOURS) * T.cPERCENT_100;

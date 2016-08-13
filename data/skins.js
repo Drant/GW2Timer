@@ -607,7 +607,8 @@ Armor_Light_Helm: [
 	{u: 6739, i: 78463, n: "Triumphant Masque", p: {badge: 0}},
 	{u: 6802, i: 78834, n: "Experimental Envoy Cowl", p: {craft: true}},
 	{u: 6842, i: 79014, n: "Xera's Mask", p: {gem: 400}},
-	{u: 6881, i: 79050, n: "Bloodstone Crown", p: {achievement: 0}}
+	{u: 6881, i: 79050, n: "Bloodstone Crown", p: {achievement: 0}},
+	{u: 6896, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -1121,7 +1122,8 @@ Armor_Medium_Helm: [
 	{u: 6725, i: 78620, n: "Triumphant Faceguard", p: {badge: 0}},
 	{u: 6790, i: 78995, n: "Experimental Envoy Leggings", p: {craft: true}},
 	{u: 6845, i: 79014, n: "Xera's Mask", p: {gem: 400}},
-	{u: 6858, i: 79159, n: "Bloodstone Crown", p: {achievement: 0}}
+	{u: 6858, i: 79159, n: "Bloodstone Crown", p: {achievement: 0}},
+	{u: 6891, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1628,7 +1630,8 @@ Armor_Heavy_Helm: [
 	{u: 6734, i: 78501, n: "Triumphant Warhelm", p: {badge: 0}},
 	{u: 6799, i: 78940, n: "Experimental Envoy Helmet", p: {craft: true}},
 	{u: 6841, i: 79014, n: "Xera's Mask", p: {gem: 400}},
-	{u: 6856, i: 79240, n: "Bloodstone Crown", p: {achievement: 0}}
+	{u: 6856, i: 79240, n: "Bloodstone Crown", p: {achievement: 0}},
+	{u: 6893, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -2450,7 +2453,8 @@ Weapon_Sword: [
 	{u: 6772, i: 78747, n: "Cavalier Sword", t: [78747]},
 	{u: 6817, i: 78831, n: "Privateer Sword", p: {blticket: 1}},
 	{u: 6788, i: 78901, n: "White Mantle Gladius", p: {raid_ft: 600}},
-	{u: 6859, i: 79192, n: "Embellished Sword", t: [79192]}
+	{u: 6859, i: 79192, n: "Embellished Sword", t: [79192]},
+	{u: 6884, i: 79089, n: "Lord Caudecus's Sword", p: {gem: 600}}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", t: [49317]},
@@ -2722,7 +2726,8 @@ Weapon_Pistol: [
 	{u: 6723, i: 78648, n: "Spectral Pistol", t: [78648]},
 	{u: 6756, i: 78749, n: "Cavalier Pistol", t: [78749]},
 	{u: 6786, i: 78840, n: "Privateer Pistol", p: {blticket: 1}},
-	{u: 6886, i: 79107, n: "Embellished Pistol", t: [79107]}
+	{u: 6886, i: 79107, n: "Embellished Pistol", t: [79107]},
+	{u: 6863, i: 79179, n: "Lord Caudecus's Pistol", p: {gem: 600}}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", t: [49341]},

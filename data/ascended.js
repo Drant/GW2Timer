@@ -1514,6 +1514,7 @@ HeavyHelm: [
 	{i: 78820, n: "Assaulter's Keep Construct Helm", p: {coin: 900000}},
 	{i: 78823, n: "Malicious Keep Construct Helm", p: {coin: 900000}},
 	{i: 78860, n: "Defender's Keep Construct Helm", p: {coin: 900000}},
+	{i: 78949, n: "Healer's Keep Construct Helm", p: {coin: 900000}},
 	{i: 78940, n: "Experimental Envoy Helmet", p: {coin: 900000}}
 ],
 HeavyShoulders: [

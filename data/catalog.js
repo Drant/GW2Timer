@@ -124,6 +124,7 @@ Contract: [
 	{i: 20030, n: "Hall of Monuments Portal Stone", p: {coin: 0}},
 	{i: 49149, n: "Royal Terrace Pass", p: {gem: 1000}},
 	{i: 50104, n: "Captain's Airship Pass", p: {gem: 1000}},
+	{i: 79140, n: "Noble's Folly Pass", p: {gem: 1000}},
 	{i: 76293, n: "Rata Sum Portal Scroll", p: {craft: true}},
 	{i: 70968, n: "The Grove Portal Scroll", p: {craft: true}},
 	{i: 71577, n: "Divinity's Reach Portal Scroll", p: {craft: true}},
@@ -212,7 +213,8 @@ Blueprint: [
 	{i: 21119, n: "Guild Catapult Blueprints"},
 	{i: 42834, n: "Supply Removal Trap", p: {badge: 15}},
 	{i: 41291, n: "Stealth Disruptor Trap", p: {badge: 15}},
-	{i: 67348, n: "Siege Disabler", p: {badge: 15}}
+	{i: 67348, n: "Siege Disabler", p: {badge: 15}},
+	{i: 21265, n: "Repair Hammer", p: {coin: 496}}
 ],
 Toy: [
 	{i: 20312, n: "How to Dance, Volume 1", p: {gem: 400}},
