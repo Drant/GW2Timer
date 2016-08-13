@@ -973,9 +973,6 @@ textarea.jsCopyCode {
 .tmlLine:hover .tmlLineName {
 	opacity: 1;
 }
-.tmlLine:hover .tmlSegmentName {
-	opacity: 1;
-}
 .tmlSegment { /* A division of a line representing an event */
 	display: inline-block;
 	height: 100%;
@@ -1009,7 +1006,6 @@ textarea.jsCopyCode {
 	font-size: 16px;
 	color: #ccc;
 	text-shadow: 0px 0px 4px black;
-	opacity: 0.7;
 }
 .tmlSegmentNameBoss {
 	font-weight: bold;

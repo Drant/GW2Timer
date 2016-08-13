@@ -2633,7 +2633,7 @@ var GW2T_CHAIN_DATA = [
 	series: 4,
 	alias: "BloodWyvern",
 	pronunciation: "bloodstone wyvern",
-	title: "Bloodstone-Crazed Shark",
+	title: "Bloodstone-Crazed Wyvern",
 	name_en: "Wyvern Bloodstone-Crazed",
 	name_de: "Blutsteinverrückten Wyvern",
 	name_es: "Guiverno Hematites",
