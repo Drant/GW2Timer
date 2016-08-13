@@ -1276,7 +1276,8 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://forum.renaka.com/topic/6205181'>Bloodstone-Crazed Creatures</a> timers are in beta. <a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Spawn map</a> and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>slivers</a>.",
+	pve: "<a href='http://forum.renaka.com/topic/6205181'>Bloodstone-Crazed Creatures</a> timers are in beta. <a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Spawn map</a> and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>slivers</a>."
+		+ "<br /><img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes.",
 	wvw: "",
 	Start: new Date("2016-08-02T16:00:00Z"),
 	Finish: new Date("2016-08-16T16:00:00Z"),

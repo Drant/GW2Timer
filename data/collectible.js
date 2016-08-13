@@ -48,6 +48,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [24213, 13224], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [11885, 14901], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [9683, 14257], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [12970, 15407], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [18930, 13090], i: "arctodus", t: "Arctodus"}, // snowden
