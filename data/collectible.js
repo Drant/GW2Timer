@@ -49,6 +49,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [11885, 14901], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [9683, 14257], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [12970, 15407], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [12144, 15044], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [18930, 13090], i: "arctodus", t: "Arctodus"}, // snowden
@@ -72,6 +73,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [21175, 9120], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [21560, 9738], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [22774, 8741], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [22111, 9448], i: "shark", t: "Shark"}, // frostgorge
 	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [21471, 22973], i: "shark", t: "Shark"}, // maelstrom
 	{n: 1, c: [21249, 23571], i: "shark", t: "Shark"}, // maelstrom
