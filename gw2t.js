@@ -29173,7 +29173,7 @@ H = {
 		{
 			// Show the time until event start
 			var countdown = $(this).find(".tmlSegmentCountdown");
-			var symbol = ($(this).hasClass("tmlSegmentActive")) ? I.Symbol.Horizontal : I.Symbol.ArrowDown;
+			var symbol = ($(this).hasClass("tmlSegmentActive")) ? I.Symbol.Horizontal : "";
 			var minutesremaining = $(this).data("start") - currentminute;
 			minutesremaining = (minutesremaining === 0) ? cycleminutes : T.wrapInteger(minutesremaining, cycleminutes);
 			countdown.html(symbol + T.formatMinutes(minutesremaining));

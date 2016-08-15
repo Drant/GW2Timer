@@ -51,6 +51,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [12970, 15407], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [12144, 15044], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [9788, 14474], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [12663, 15713], i: "moa", t: "Moa"}, // kessex
 	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
 	{n: 1, c: [18930, 13090], i: "arctodus", t: "Arctodus"}, // snowden
@@ -84,6 +85,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [15405, 17226], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [16869, 16874], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [16121, 17600], i: "shark", t: "Shark"}, // bloodtide
+	{n: 1, c: [15527, 16661], i: "shark", t: "Shark"}, // bloodtide
 	{n: 1, c: [5359, 16359], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4215, 16511], i: "devourer", t: "Devourer"}, // dry
 	{n: 1, c: [4578, 16582], i: "devourer", t: "Devourer"}, // dry
@@ -98,6 +100,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [30700, 12974], i: "devourer", t: "Devourer"}, // blazeridge
 	{n: 1, c: [30807, 15105], i: "devourer", t: "Devourer"}, // blazeridge
 	{n: 1, c: [30357, 14829], i: "devourer", t: "Devourer"}, // blazeridge
+	{n: 1, c: [30329, 15368], i: "devourer", t: "Devourer"}, // blazeridge
 	{n: 1, c: [30796, 18631], i: "devourer", t: "Devourer"}, // fields
 	{n: 1, c: [30582, 16724], i: "devourer", t: "Devourer"} // fields
 	]
