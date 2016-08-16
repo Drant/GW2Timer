@@ -1282,7 +1282,7 @@ Announcement:
 		+ "<br /><img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes.",
 	wvw: "",
 	Start: new Date("2016-08-02T16:00:00Z"),
-	Finish: new Date("2016-08-16T16:00:00Z"),
+	Finish: new Date("2016-09-16T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1356,7 +1356,7 @@ Story:
 	name_fr: "L'Anomalie des lignes de force",
 	url: "https://www.reddit.com/r/Guildwars2/comments/4urr23/leyline_anomaly_tldr_guide_v2/",
 	Start: new Date("2016-06-28T16:00:00Z"),
-	Finish: new Date("2016-08-16T16:00:00Z")
+	Finish: new Date("2016-09-16T16:00:00Z")
 },
 
 /*
@@ -1373,7 +1373,7 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
 	Start: new Date("2016-08-09T15:00:00Z"),
-	Finish: new Date("2016-08-16T15:00:00Z"),
+	Finish: new Date("2016-08-23T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1382,24 +1382,17 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Fused Molten Sickle",
-		id: "67032",
-		price: 800,
-		discount: 1000,
+		name: "Emissary's Staff",
+		img: "http://i.imgur.com/8PO0LeH.png",
+		price: 600,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Fused Molten Logging Axe",
-		id: "67030",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Molten Alliance Mining Pick",
-		id: "48933",
-		price: 800,
-		discount: 1000,
+		name: "Storm Bow",
+		img: "http://i.imgur.com/pBftlFz.png",
+		price: 600,
+		discount: null,
 		col: 0
 	},
 	{
@@ -1407,34 +1400,6 @@ Sale: {
 		id: "79354",
 		price: 125,
 		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 0
-	},
-	{
-		name: "Lord Caudecus's Pistol Skin",
-		id: "79179",
-		price: 600,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Lord Caudecus's Sword Skin",
-		id: "79089",
-		price: 600,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Noble's Folly Pass (2 weeks)",
-		id: "79270",
-		price: 150,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Royal Pass (2 weeks)",
-		id: "44605",
-		price: 150,
-		discount: null,
 		col: 1
 	}
 	]

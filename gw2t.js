@@ -131,6 +131,7 @@ O = {
 		bol_hideChecked: false,
 		bol_expandWB: true,
 		bol_collapseChains: true,
+		bol_showClockIcons: false,
 		int_setClock: 0,
 		int_setDimming: 0,
 		int_setPredictor: 0,
@@ -25373,12 +25374,12 @@ W = {
 				if (servers[i].length <= maxserversbeforeabbrev)
 				{
 					names[i] += ithservername;
-					namelinks[i] += "<a href='/?page=WvW&enu_Server=" + ithserver.id + "'>" + ithservername + "</a>";
+					namelinks[i] += "<a href='?page=WvW&enu_Server=" + ithserver.id + "'>" + ithservername + "</a>";
 				}
 				else
 				{
 					names[i] += D.getObjectNick(ithserver);
-					namelinks[i] += "<a href='/?page=WvW&enu_Server=" + ithserver.id + "' title='" + ithservername + "'>" + D.getObjectNick(ithserver) + "</a>";
+					namelinks[i] += "<a href='?page=WvW&enu_Server=" + ithserver.id + "' title='" + ithservername + "'>" + D.getObjectNick(ithserver) + "</a>";
 				}
 				namelines[i] += ithservername;
 				nicks[i] += D.getObjectNick(ithserver);
@@ -26003,7 +26004,7 @@ W = {
 						var transfercost = W.Metadata.PopulationTransfer[iWorld.population];
 						html += "<tr>"
 							+ "<td><a class='wvwStatsLink wvwPopulation_" + U.escapeHTML(iWorld.population)
-								+ "' href='/?page=WvW&enu_Server=" + iWorld.id + "'>" + servername + "</a></td>"
+								+ "' href='?page=WvW&enu_Server=" + iWorld.id + "'>" + servername + "</a></td>"
 							+ "<td>" + iWorld.id + "</td>"
 							+ "<td>" + I.getBar(W.Metadata.PopulationPercent[iWorld.population]) + "</td>"
 							+ "<td>" + E.formatGemString(transfercost, true) + "</td>"
@@ -29412,7 +29413,7 @@ K = {
 		//K.refreshFestival();
 		
 		// For main site mode, hide clock icons to reduce clutter
-		if (I.ModeCurrent === I.ModeEnum.Website && I.isProgramEmbedded === false
+		if (O.Options.bol_showClockIcons !== true && I.ModeCurrent === I.ModeEnum.Website && I.isProgramEmbedded === false
 			&& O.Options.bol_showTimeline === true && O.Options.bol_showHUD === true && O.Options.int_setClock === 0)
 		{
 			K.isClockSimplified = true;
