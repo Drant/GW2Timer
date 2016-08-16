@@ -752,7 +752,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "blazeridge",
 	waypoint: "[&BE4DAAA=]",
 	level: "50",
-	reward: {ecto: "1", loot: "0", dragonite: "15-25"},
+	reward: {ecto: "3", loot: "0", dragonite: "15-25"},
 	timing: ["01:00", "04:00", "07:00", "10:00", "13:00", "16:00", "19:00", "22:00"],
 	events: [
 	{

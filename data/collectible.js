@@ -42,6 +42,7 @@ BloodstoneCreatures: {
 	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"}, // brisban
 	{n: 1, c: [7477, 15926], i: "moa", t: "Moa"}, // brisban
 	{n: 1, c: [7464, 14695], i: "moa", t: "Moa"}, // brisban
+	{n: 1, c: [6953, 16223], i: "moa", t: "Moa"}, // brisban
 	{n: 1, c: [25885, 11567], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [25012, 11920], i: "moa", t: "Moa"}, // diessa
 	{n: 1, c: [24618, 11712], i: "moa", t: "Moa"}, // diessa
