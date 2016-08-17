@@ -6873,7 +6873,7 @@ A = {
 			updateLink();
 		});
 		// Clicking the link icon gets a shareable URL
-		I.initializeClipboard(link);
+		I.bindClipboard(link);
 		updateLink();
 		// Button to delete this token
 		del.click(function()
@@ -14307,7 +14307,7 @@ Q = {
 				I.print("No information available.");
 			}
 		});
-		I.initializeClipboard("#itmContextChatlink");
+		I.bindClipboard("#itmContextChatlink");
 	},
 	
 	/*
@@ -24533,7 +24533,7 @@ G = {
 			// Initialize clipboard for each waypoint
 			$("#gldBook_" + pBook + " .cssWaypoint").each(function()
 			{
-				I.initializeClipboard($(this));
+				I.bindClipboard($(this));
 			});
 		};
 		
@@ -28841,7 +28841,9 @@ H = {
 		+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>");
 
 		// Bind buttons
-		I.preventMapPropagation("#dsbVendorCodes").click(function()
+		var vendorcopy = $("#dsbVendorCodes");
+		I.bindClipboard(vendorcopy, vendorcodes);
+		I.preventMapPropagation(vendorcopy).click(function()
 		{
 			$(this).select();
 		});
@@ -29244,7 +29246,7 @@ H = {
 							{
 								C.viewChainFinale(iChain);
 							});
-							I.initializeClipboard(bossicon, iChain.waypointText);
+							I.bindClipboard(bossicon, iChain.waypointText);
 						})(wbchains[i]);
 					}
 				}
@@ -30385,14 +30387,14 @@ K = {
 	{
 		for (var i = 0; i < T.cNUM_TIMEFRAMES_IN_HOUR; i++)
 		{
-			I.initializeClipboard("#clkWaypoint" + i);
+			I.bindClipboard("#clkWaypoint" + i);
 		}
 		
 		if (C.DryTopChains.length > 0)
 		{
 			for (var i = 0; i < 2; i++)
 			{
-				I.initializeClipboard("#chnDryTopWaypoint" + i);
+				I.bindClipboard("#chnDryTopWaypoint" + i);
 			}
 		}
 	},
@@ -31884,7 +31886,7 @@ I = {
 	 * @param string pText to set element's initial clipboard text, optional.
 	 * @returns object Clipboard.
 	 */
-	initializeClipboard: function(pSelector, pText)
+	bindClipboard: function(pSelector, pText)
 	{
 		var elm = (pSelector instanceof jQuery) ? pSelector[0] : pSelector;
 		var cb = new Clipboard(elm);

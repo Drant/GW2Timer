@@ -103,7 +103,8 @@ BloodstoneCreatures: {
 	{n: 1, c: [30357, 14829], i: "devourer", t: "Devourer"}, // blazeridge
 	{n: 1, c: [30329, 15368], i: "devourer", t: "Devourer"}, // blazeridge
 	{n: 1, c: [30796, 18631], i: "devourer", t: "Devourer"}, // fields
-	{n: 1, c: [30582, 16724], i: "devourer", t: "Devourer"} // fields
+	{n: 1, c: [30582, 16724], i: "devourer", t: "Devourer"}, // fields
+	{n: 1, c: [30059, 16697], i: "devourer", t: "Devourer"} // fields
 	]
 },
 BloodstoneSlivers: {
