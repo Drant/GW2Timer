@@ -11322,12 +11322,12 @@ B = {
 		switch (Settings.aPaymentEnum)
 		{
 			case E.PaymentEnum.Coin: {
-				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinStringShort(pricetorecord) + "</var>");
+				pSlot.append("<var class='bnkSlotPrice'>" + E.formatCoinStringSlot(pricetorecord) + "</var>");
 				if (pSlot.data("istradeable"))
 				{
 					var priceone = (typeof Settings.aPrice === "number") ? E.createPrice(Settings.aPrice, 1) : E.recountPrice(Settings.aPrice, 1);
-					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatCoinStringShort(priceone.oPriceBuy) + "</var>");
-					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatCoinStringShort(priceone.oPriceSell) + "</var>");
+					pSlot.append("<var class='bnkSlotPriceBuy'>" + E.formatCoinStringSlot(priceone.oPriceBuy) + "</var>");
+					pSlot.append("<var class='bnkSlotPriceSell'>" + E.formatCoinStringSlot(priceone.oPriceSell) + "</var>");
 				}
 			}; break;
 			case E.PaymentEnum.Gem: {
@@ -14471,8 +14471,8 @@ Q = {
 								{
 									if (iTimestamp === searchtimestamp)
 									{
-										var pricestr = "<span class='itmSearchResultPrice'>" + E.formatCoinStringShort(pPriceObj.oPriceSell)
-											+ " <var class='cssFaded'>" + E.formatCoinStringShort(pPriceObj.oPriceBuy) + "</var></span>";
+										var pricestr = "<span class='itmSearchResultPrice'>" + E.formatCoinStringSlot(pPriceObj.oPriceSell)
+											+ " <var class='cssFaded'>" + E.formatCoinStringSlot(pPriceObj.oPriceBuy) + "</var></span>";
 										resultentry.append(pricestr);
 									}
 								}, true);
@@ -14893,20 +14893,19 @@ E = {
 	formatCoinString: function(pAmount, pSettings)
 	{
 		var amount = (pAmount === undefined || isFinite(pAmount) === false) ? 0 : parseInt(pAmount);
-		var Settings = $.extend({
-			aWantColor: false,
-			aWantSpace: false,
-			aWantShort: false,
-			aWantBig: false
-		}, pSettings);
+		var Settings = pSettings || {};
 		
 		var sep = ".";
 		var sg0 = ""; var ss0 = ""; var sc0 = "";
 		var sg1 = ""; var ss1 = ""; var sc1 = "";
 		// Because the coin image is not text copyable, include additional hidden selectable text
-		var abbrg = "<abbr class='cssCopyText'>" + D.getString("CoinGold") + "&nbsp;</abbr>";
-		var abbrs = "<abbr class='cssCopyText'>" + D.getString("CoinSilver") + "&nbsp;</abbr>";
-		var abbrc = "<abbr class='cssCopyText'>" + D.getString("CoinCopper") + "&nbsp;</abbr>";
+		var abbrg = ""; var abbrs = ""; var abbrc = "";
+		if (Settings.aWantCopy !== false)
+		{
+			abbrg = "<abbr class='cssCopyText'>" + D.getString("CoinGold") + "&nbsp;</abbr>";
+			abbrs = "<abbr class='cssCopyText'>" + D.getString("CoinSilver") + "&nbsp;</abbr>";
+			abbrc = "<abbr class='cssCopyText'>" + D.getString("CoinCopper") + "&nbsp;</abbr>";
+		}
 		
 		if (Settings.aWantColor)
 		{
@@ -14987,6 +14986,10 @@ E = {
 	formatCoinStringShort: function(pAmount)
 	{
 		return E.formatCoinString(pAmount, {aWantColor: true, aWantShort: true});
+	},
+	formatCoinStringSlot: function(pAmount)
+	{
+		return E.formatCoinString(pAmount, {aWantColor: true, aWantShort: true, aWantCopy: false});
 	},
 	
 	/*
@@ -17767,7 +17770,7 @@ C = {
 		
 		if (pChain.waypoint !== undefined)
 		{
-			chainextra = "<input class='chnWaypoint' type='text' value='" + pChain.waypointText + "' /> "
+			chainextra = "<input id='chnWaypoint_" + pChain.nexus + "' class='chnWaypoint' type='text' value='" + pChain.waypointText + "' /> "
 				+ " (" + pChain.level + ")"
 					+ "<a" + U.convertExternalAnchor(U.getYouTubeLink(D.getObjectDefaultName(pChain))) + ">"
 					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> ";
@@ -18001,7 +18004,10 @@ C = {
 		{
 			$("#chnTitle_" + pChain.nexus).addClass("chnTitleMisc");
 		}
-		$("#chnDetails_" + pChain.nexus + " .chnWaypoint").click(function()
+		$("#chnDetails_" + pChain.nexus + " .chnWaypoint").each(function()
+		{
+			I.bindClipboard($(this), $(this).val());
+		}).click(function()
 		{
 			$(this).select();
 		});
