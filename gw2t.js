@@ -10387,6 +10387,7 @@ V = {
 				aHeaders: U.getRecordHeader(section),
 				aRecord: U.getRecordData(section),
 				aUnlockeds: unlockeds,
+				aWantSearchHighlight: false,
 				aWantDefaultHelp: false
 			});
 		};
@@ -17801,7 +17802,7 @@ C = {
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsExtra'>"
 					+ chainextra
-					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in ▼ icon above).'></kbd>"	
+					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in ▼ menu above).'></kbd>"	
 				+ "</div>"
 			+ "</div>"
 		+ "</div>");
@@ -19408,7 +19409,8 @@ M = {
 		{
 			if (that.isPersonalPinsLaid(true))
 			{
-				I.print(I.cSiteURL + that.getPersonalString(), true);
+				var urlmod = (P.WebsiteCurrentMap === P.MapEnum.Mists) ? "wvw/" : "";
+				I.print(I.cSiteURL + urlmod + that.getPersonalString(), true);
 				I.selectConsole();
 			}
 		});
@@ -21192,6 +21194,42 @@ M = {
 	},
 	
 	/*
+	 * Executes map commands in URL query string if available. Also starts GPS.
+	 */
+	executeQueryCommands: function()
+	{
+		var qsgo = U.Args[U.KeyEnum.Go];
+		var qsdraw = U.Args[U.KeyEnum.Draw];
+		var arr;
+		try { arr = JSON.parse(qsgo); } catch (e) {}
+		if (arr && Array.isArray(arr) && arr.length)
+		{
+			// If is draw command, array of coordinates
+			if (Array.isArray(arr[0]))
+			{
+				this.parsePersonalPath(qsgo);
+			}
+			// If is go command, just a coordinates
+			else
+			{
+				this.goToArguments(qsgo, this.ZoomEnum.Ground, this.Pin.Program);
+			}
+			U.Args[U.KeyEnum.Go] = null;
+		}
+		if (qsdraw)
+		{
+			this.parsePersonalPath(qsdraw);
+			U.Args[U.KeyEnum.Draw] = null;
+		}
+		
+		// Start GPS if on overlay
+		if (I.ModeCurrent === I.ModeEnum.Overlay)
+		{
+			P.tickGPS();
+		}
+	},
+	
+	/*
 	 * Converts GW2's coordinates XXXXX,XXXXX to Leaflet LatLng coordinates XXX,XXX.
 	 * @param array pCoord array of two numbers.
 	 * @returns LatLng Leaflet object.
@@ -22230,22 +22268,9 @@ P = {
 		P.initializeMapSearch();
 		
 		// Execute query string commands if available
-		var qsgo = U.Args[U.KeyEnum.Go];
-		var qsdraw = U.Args[U.KeyEnum.Draw];
-		if (qsgo !== undefined)
+		if (I.PageInitial !== "wvw")
 		{
-			M.goToArguments(qsgo, M.ZoomEnum.Ground, M.Pin.Program);
-			U.Args[U.KeyEnum.Go] = null;
-		}
-		if (qsdraw !== undefined)
-		{
-			M.parsePersonalPath(qsdraw);
-		}
-		
-		// Start GPS if on overlay
-		if (I.ModeCurrent === I.ModeEnum.Overlay)
-		{
-			P.tickGPS();
+			M.executeQueryCommands();
 		}
 	},
 	
@@ -25161,10 +25186,7 @@ W = {
 		W.toggleWalls();
 		W.bindMapVisualChanges();
 		W.adjustZoomMapping();
-		if (I.ModeCurrent === I.ModeEnum.Overlay)
-		{
-			P.tickGPS();
-		}
+		W.executeQueryCommands();
 	},
 	
 	/*
@@ -27205,10 +27227,9 @@ T = {
 			if (T.isTimely(H.Story, new Date()))
 			{
 				H.isStoryEnabled = true;
-				// Determine living story location
+				// Determine living story placement
 				if (I.isProgramEmbedded
-					|| I.ModeCurrent === I.ModeEnum.Mobile
-					|| I.ModeCurrent === I.ModeEnum.Tile
+					|| I.ModeCurrent !== I.ModeEnum.Website
 					|| O.Options.bol_showHUD === false
 					|| O.Options.bol_showDashboard === false)
 				{

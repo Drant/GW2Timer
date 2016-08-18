@@ -2328,18 +2328,19 @@ header.jsSection sup {
 	font-size: 12px;
 	color: #888;
 }
-.chnDetailsExtra ins {
+.chnDetailsExtra ins { /* Little icons such as chain rewards */
 	margin-left: 2px;
 	border-radius: 4px;
 	opacity: 0.5;
 }
-.chnDetailsExtra kbd {
+.chnDetailsExtra kbd { /* Button to hide the chain */
 	display: inline-block;
-	width: 16px; height: 16px;
+	float: right;
+	width: 24px; height: 24px;
 	vertical-align: middle;
-	margin-right: 6px;
+	margin: 0px 6px 0px 6px;
 	background: url("img/ui/close.png");
-	background-size: 16px 16px;
+	background-size: 24px 24px;
 	opacity: 0.4;
 }
 .chnDetailsExtra kbd:hover {
@@ -2348,19 +2349,15 @@ header.jsSection sup {
 
 /* JavaScript added classes */
 .chnBarPrevious {
-	background: #1f0f05;
 	background: linear-gradient(to right, #111 0%, #261306 100%);
 }
 .chnBarCurrent {
-	background: #3b1e09;
 	background: linear-gradient(to right, #111 0%, #4f280c 100%);
 }
 .chnBarReset {
-	background: #663b7f;
 	background: linear-gradient(to right, #111 0%, #663b7f 100%);
 }
 .chnBarHover {
-	background: #66aaff;
 	background: linear-gradient(to right, #111 0%, #66aaff 100%);
 }
 
@@ -2564,8 +2561,8 @@ label:hover {
 	background: url("img/ui/switch.png");
 	transform: rotate(90deg);
 }
-.btnSelect {
-	background: url("img/ui/select.png");
+.btnCopy {
+	background: url("img/ui/copy.png");
 }
 .btnOpaque {
 	background: url("img/ui/opaque.png");
