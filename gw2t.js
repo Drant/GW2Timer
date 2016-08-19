@@ -30894,9 +30894,6 @@ I = {
 		Large: 1024,
 		Medium: 640
 	},
-	cSMALL_DEVICE_WIDTH: 800,
-	cSMALL_DEVICE_HEIGHT: 600,
-	cBIG_DISPLAY_HEIGHT: 1200,
 	
 	/*
 	 * Does things that need to be done before everything else.
@@ -32932,7 +32929,7 @@ I = {
 			return;
 		}
 		var result = T.stepFunction($(window).width(), 14, 22, 400, 3);
-		$(".chnTitle h1").css({fontSize: result + "px"});
+		$(".chnTitle h1, .chnTitle time").css({fontSize: result + "px"});
 	},
 	
 	/*

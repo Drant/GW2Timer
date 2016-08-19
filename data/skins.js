@@ -3850,7 +3850,8 @@ Weapon_Longbow: [
 	{u: 6689, i: 78629, n: "Spectral Longbow", t: [78629]},
 	{u: 6758, i: 78776, n: "Cavalier Longbow", t: [78776]},
 	{u: 6819, i: 78929, n: "Privateer Longbow", p: {blticket: 1}},
-	{u: 6865, i: 79162, n: "Embellished Longbow", t: [79162]}
+	{u: 6865, i: 79162, n: "Embellished Longbow", t: [79162]},
+	{u: 6894, i: 79310, n: "Storm Bow", p: {gem: 600}}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", t: [44924]},
@@ -4279,7 +4280,8 @@ Weapon_Staff: [
 	{u: 6783, i: 78759, n: "Cavalier Staff", t: [78759]},
 	{u: 6826, i: 78908, n: "Privateer Staff", p: {blticket: 1}},
 	{u: 6825, i: 78911, n: "White Mantle Spire", p: {raid_ft: 600}},
-	{u: 6887, i: 79054, n: "Embellished Staff", t: [79054]}
+	{u: 6887, i: 79054, n: "Embellished Staff", t: [79054]},
+	{u: 6901, i: 79315, n: "Emissary's Staff", p: {gem: 600}}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", t: [63881]},
