@@ -13147,7 +13147,7 @@ Q = {
 		{
 			var det = item.details;
 
-			// Armors, weapons, trinkets
+			// Non-rune items
 			if (det.infix_upgrade && det.infix_upgrade.attributes)
 			{
 				det.infix_upgrade.attributes.forEach(function(iAttr)
@@ -13163,13 +13163,6 @@ Q = {
 			if (det.bonuses)
 			{
 				sumAttributeArray(det.bonuses);
-			}
-			// Sigils, infusions, and miscellaneous
-			if (det.infix_upgrade && det.infix_upgrade.buff && det.infix_upgrade.buff.description)
-			{
-				var desc = det.infix_upgrade.buff.description;
-				desc.replace(/<br>/g, ""); // Cleanup markup
-				sumAttributeArray(desc.split("\n"));
 			}
 			// Armor and shield that have defense attribute (adds to armor)
 			if (det.defense !== undefined)

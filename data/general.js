@@ -1278,8 +1278,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://forum.renaka.com/topic/6205181'>Bloodstone-Crazed Creatures</a> timers are in beta. <a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Spawn map</a> and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>slivers</a>."
-		+ "<br /><img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes.",
+	pve: "<a href='http://forum.renaka.com/topic/6205181'>Bloodstone-Crazed Creatures</a> timers are in beta. <a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Spawn map</a> and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>slivers</a>.",
 	wvw: "",
 	Start: new Date("2016-08-02T16:00:00Z"),
 	Finish: new Date("2016-09-16T16:00:00Z"),
@@ -1311,6 +1310,15 @@ Announcement:
  */
 Countdown: {
 	Events: [
+	{
+		name_en: "Anniversary Sale",
+		name_de: "Jubiläumsangebote",
+		name_es: "Rebajas de aniversario",
+		name_fr: "Offre spéciale d'anniversaire",
+		official: "news/its-the-anniversary-sale-in-the-gem-store",
+		Start: new Date("2016-08-19T16:00:00Z"),
+		Finish: new Date("2016-08-28T16:00:00Z")
+	}
 	/*{
 		name_en: "PvP League Season 4",
 		name_de: "PvP Liga Saison 4",
@@ -1382,22 +1390,64 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Lunatic Guard Outfit",
+		id: "70385",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Caithe's Bloom Dagger",
+		id: "20004",
+		price: 480,
+		discount: 600,
+		col: 0
+	},
+	{
+		name: "Exalted Glider",
+		id: "76236",
+		price: 340,
+		discount: 400,
+		col: 0
+	},
+	{
+		name: "Merchant Express",
+		id: "20018",
+		price: 17,
+		discount: [[1, 17, 35], [5, 62, 125]],
+		col: 0
+	},
+	{
 		name: "Emissary's Staff",
 		id: "79315",
 		price: 600,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Storm Bow",
 		id: "79310",
 		price: 600,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Bloodstone Dye Kit",
 		id: "79354",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 1
+	},
+	{
+		name: "Flame Dye Kit",
+		id: "41744",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 1
+	},
+	{
+		name: "Frost Dye Kit",
+		id: "41745",
 		price: 125,
 		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1

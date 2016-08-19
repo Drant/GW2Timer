@@ -47,7 +47,8 @@ var GW2T_DYES_HEADERS = {
 	Rebuild: {name_en: "Lion's Arch Rebuild Dye Kit", name_de: "Farbkit zum Wiederaufbau Löwensteins", name_es: "Kit de tintes de la reconstrucción de Arco del León", name_fr: "Kit de teintures de la reconstruction de l'Arche du Lion"},
 	Mad: {name_en: "Mad King Dye Kit", name_de: "Farbkit des Verrückten Königs", name_es: "Kit de tintes del Rey Loco", name_fr: "Kit de teintures du Roi Dément"},
 	Chimes: {name_en: "Winter Chimes Dye Kit", name_de: "Winterglocken-Farbkit", name_es: "Kit de tintes de campanitas invernales", name_fr: "Kit de teintures Carillons d'hiver"},
-	Shift: {name_en: "Blue Shift Dye Kit", name_de: "Blauverschiebung-Farbkit", name_es: "Kit de tintes de corrimiento al azul", name_fr: "Kit de teintures Variation de bleu"}
+	Shift: {name_en: "Blue Shift Dye Kit", name_de: "Blauverschiebung-Farbkit", name_es: "Kit de tintes de corrimiento al azul", name_fr: "Kit de teintures Variation de bleu"},
+	Bloodstone: {name_en: "Bloodstone Dye Kit", name_de: "Blutstein-Farbkit", name_es: "Kit de tintes de hematites", name_fr: "Kit de teintures de pierre de Sang"}
 };
 
 /*
@@ -603,5 +604,8 @@ Shift: [
 	{u: 1379, i: 78736, n: "Phthalo Blue Dye", c: ["#001c67", "#001c67", "#001c67"], h: "Blue", m: "Vibrant", l: "[&AgGQMwEA]", en: "Phthalo Blue", de: "Phthaloblau", es: "Azul ftalo", fr: "Bleu de Phthalo", zh: "酞青蓝"},
 	{u: 1376, i: 78729, n: "Zaffre Dye", c: ["#001f4c", "#001f4c", "#001f4c"], h: "Blue", m: "Vibrant", l: "[&AgGJMwEA]", en: "Zaffre", de: "Zaffre", es: "Zafre", fr: "Zaffre", zh: "钴蓝"},
 	{u: 1381, i: 78739, n: "Resolution Dye", c: ["#0c203d", "#0c203d", "#0c203d"], h: "Blue", m: "Vibrant", l: "[&AgGTMwEA]", en: "Resolution", de: "Entschlossenheit", es: "Resolución", fr: "Résolution", zh: "决心蓝"}
+],
+Bloodstone: [
+	
 ]
 };
