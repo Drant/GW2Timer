@@ -606,6 +606,11 @@ Shift: [
 	{u: 1381, i: 78739, n: "Resolution Dye", c: ["#0c203d", "#0c203d", "#0c203d"], h: "Blue", m: "Vibrant", l: "[&AgGTMwEA]", en: "Resolution", de: "Entschlossenheit", es: "Resolución", fr: "Résolution", zh: "决心蓝"}
 ],
 Bloodstone: [
-	
+	{u: 1453, i: 79317, n: "Bloodstone Coral", c: ["#630007", "#630007", "#630007"], h: "Red", m: "Vibrant", l: "[&AgHVNQEA]", en: "Bloodstone Coral", de: "Blutstein-Korallenrot", es: "Coral hematites", fr: "Corail de pierre de sang", zh: "血石珊瑚"},
+	{u: 1456, i: 79346, n: "Bloodstone Dark Coral", c: ["#310000", "#310000", "#310000"], h: "Red", m: "Vibrant", l: "[&AgHyNQEA]", en: "Bloodstone Dark Coral", de: "Dunkles Blutstein-Korallenrot", es: "Coral hematites oscuro", fr: "Corail foncé de pierre de sang", zh: "血石暗色珊瑚"},
+	{u: 1455, i: 79344, n: "Bloodstone Dark Violet", c: ["#0a000a", "#0a000a", "#0a000a"], h: "Red", m: "Vibrant", l: "[&AgHwNQEA]", en: "Bloodstone Dark Violet", de: "Dunkles Blutstein-Violett", es: "Violeta hematites oscuro", fr: "Violet foncé de pierre de sang", zh: "血石暗色紫罗兰"},
+	{u: 1457, i: 79358, n: "Bloodstone Violet", c: ["#3d003d", "#3d003d", "#3d003d"], h: "Purple", m: "Vibrant", l: "[&AgH+NQEA]", en: "Bloodstone Violet", de: "Blutstein-Violett", es: "Violeta hematites", fr: "Violet de pierre de sang", zh: "血石紫罗兰"},
+	{u: 1458, i: 79309, n: "Bloodstone Indigo", c: ["#2c004c", "#2c004c", "#2c004c"], h: "Purple", m: "Vibrant", l: "[&AgHNNQEA]", en: "Bloodstone Indigo", de: "Blutstein-Indigo", es: "Índigo hematites", fr: "Indigo de pierre de sang", zh: "血石靛蓝"},
+	{u: 1454, i: 79340, n: "Bloodstone Dark Indigo", c: ["#00001a", "#00001a", "#00001a"], h: "Purple", m: "Vibrant", l: "[&AgHsNQEA]", en: "Bloodstone Dark Indigo", de: "Dunkles Blutstein-Indigo", es: "Índigo hematites oscuro", fr: "Indigo foncé de pierre de sang", zh: "血石暗色靛蓝"}
 ]
 };

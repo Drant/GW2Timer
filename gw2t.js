@@ -4910,17 +4910,50 @@ Z = {
 		numtofetch = idsarray.length;
 		iterateIDs();
 	},
+	scrapeAPIArrayMultilingual: function(pArray, pSuffix, pCallback)
+	{
+		Z.DatabaseCache[pSuffix] = {};
+		var multidb = Z.DatabaseCache[pSuffix]; 
+		var counter = 0;
+		var retrieveData = function()
+		{
+			if (counter < Z.DatabaseLanguages.length)
+			{
+				(function(iLang)
+				{
+					Z.scrapeAPIArray(pArray, pSuffix, {
+						aQueryStr: "?lang=" + iLang,
+						aCallback: function(pData)
+						{
+							multidb[iLang] = {};
+							pData.forEach(function(iObj)
+							{
+								(multidb[iLang])[iObj.id] = iObj;
+							});
+							retrieveData();
+						}
+					});
+				})(Z.DatabaseLanguages[counter]);
+				counter++;
+			}
+			else
+			{
+				// Returns with a multilingual database, accessed first by the language code, then the object ID
+				pCallback(multidb);
+			}
+		};
+		retrieveData();
+	},
 	
 	/*
 	 * Creates a processed object from a color API object, to be stored in the
 	 * custom dyes database for use in account bank.
-	 * @param object pItem a dye item, or a color object.
+	 * @param object pColor.
 	 * @returns object.
-	 * @pre Items and Colors database for all languages were loaded.
+	 * @pre Items database for all languages were loaded.
 	 */
-	processDye: function(pColor)
+	processDye: function(pColor, pColorDB)
 	{
-		var colordb = Z.DatabaseCache["colors"];
 		var itemdb = (Z.DatabaseCache["items"])[O.OptionEnum.Language.Default];
 		var item = itemdb[pColor.item];
 		// Create CSS colors from the RGB values
@@ -4951,7 +4984,7 @@ Z = {
 		// Add translated names, with the property key as the language code
 		Z.DatabaseLanguages.forEach(function(iLang)
 		{
-			obj[iLang] = (colordb[iLang])[pColor.id].name;
+			obj[iLang] = (pColorDB[iLang])[pColor.id].name;
 		});
 		
 		return obj;
@@ -5077,7 +5110,8 @@ Z = {
 		var lang = O.OptionEnum.Language.Default;
 		$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
 		{
-			Z.DatabaseCache[lang] = pData;
+			Z.DatabaseCache["items"] = {};
+			(Z.DatabaseCache["items"])[lang] = pData;
 			pCallback(pData);
 		});
 	},
@@ -5210,7 +5244,7 @@ Z = {
 		};
 		
 		// Initial call
-		I.print("Loading database...");
+		I.print("Retrieving item indexes...");
 		$.getJSON(U.URL_API.ItemDatabase, function(pData)
 		{
 			I.print("Looking for difference...");
@@ -5275,7 +5309,8 @@ Z = {
 				pCallback({
 					oRecord: record,
 					oBlacklist: blacklist,
-					oEntries: filteredids
+					oEntries: filteredids,
+					oNewIDs: filteredids
 				});
 			}
 			else
@@ -5286,7 +5321,8 @@ Z = {
 					pCallback({
 						oRecord: record,
 						oBlacklist: blacklist,
-						oEntries: pData
+						oEntries: pData,
+						oNewIDs: filteredids
 					});
 				}});
 			}
@@ -5652,74 +5688,25 @@ Z = {
 	{
 		var section = "Dyes";
 		var record, newentries;
-		Z.getNewAPIEntries(section, "colors", function(pReturn)
+		I.print("Loading items database...");
+		Z.getItemsDatabase(function()
 		{
-			record = pReturn.oRecord;
-			newentries = pReturn.oEntries;
-			
-			// Retrieve the color's names for all available languages
-			Z.printRecordEntry(newentries, {
-				aItemIDsKey: "item"
-			});
-		});
-		
-		return;
-		$.getScript(U.URL_DATA.Dyes, function()
-		{
-			var DyeHues = function()
+			I.print("Looking for difference...");
+			Z.getNewAPIEntries(section, "colors", function(pReturn)
 			{
-				this.Gray = [];
-				this.Brown = [];
-				this.Red = [];
-				this.Orange = [];
-				this.Yellow = [];
-				this.Green = [];
-				this.Blue = [];
-				this.Purple = [];
-			};
-			var db = U.getRecordData("dyes");
-			var newrec = {};
-			var cat, overcat, entry;
-			// Put the colors in their hue category
-			for (var i in db)
-			{
-				cat = db[i];
-				newrec[i] = new DyeHues();
-				for (var ii = 0; ii < cat.length; ii++)
+				record = pReturn.oRecord;
+				newentries = pReturn.oEntries;
+				I.print("Downloading color translations...");
+				Z.scrapeAPIArrayMultilingual(pReturn.oNewIDs, "colors", function(pDataColor)
 				{
-					entry = cat[ii];
-					entry["lightness"] = U.convertRGBToHSL(U.convertHexToRGB(entry.c[0]))[2];
-					(newrec[i])[entry.h].push(entry);
-				}
-			}
-			// Sort each hue category by its colors' lightness
-			for (var i in newrec)
-			{
-				overcat = newrec[i];
-				for (var ii in overcat)
-				{
-					cat = overcat[ii];
-					U.sortObjects(cat, {aKeyName: "lightness", aIsDescending: true});
-				}
-			}
-			// Unfold the hue categories arrays into one array for a bank tab
-			var finalrec = {};
-			for (var i in newrec)
-			{
-				overcat = newrec[i];
-				finalrec[i] = [];
-				for (var ii in overcat)
-				{
-					cat = overcat[ii];
-					for (var iii = 0; iii < cat.length; iii++)
+					I.clear();
+					newentries.forEach(function(iEntry)
 					{
-						entry = cat[iii];
-						delete entry["lightness"];
-						finalrec[i].push(entry);
-					}
-				}
-			}
-			Z.printUnlockables(finalrec);
+						var color = Z.processDye(iEntry, pDataColor);
+						I.print(U.lineJSON(color, false) + ",");
+					});
+				});
+			});
 		});
 	},
 	
