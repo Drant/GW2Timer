@@ -4378,7 +4378,17 @@ Z = {
 			}},
 			item: {usage: "Prints an item's information. <em>Parameters: int_itemid</em>", f: function()
 			{
-				Z.printAPI("items/" + args[1] + (args[2] || ""));
+				Z.scrapeAPIArrayMultilingual([parseInt(args[1])], "items", function(pDatabase)
+				{
+					I.clear();
+					for (var i in pDatabase)
+					{
+						for (var ii in pDatabase[i])
+						{
+							Q.printItemInfo((pDatabase[i])[ii], false);
+						}
+					}
+				});
 			}},
 			items: {usage: "Prints the highest numbered item IDs in the API. <em>Parameters: int_offset</em>", f: function()
 			{
@@ -4910,8 +4920,9 @@ Z = {
 		numtofetch = idsarray.length;
 		iterateIDs();
 	},
-	scrapeAPIArrayMultilingual: function(pArray, pSuffix, pCallback)
+	scrapeAPIArrayMultilingual: function(pArray, pSuffix, pCallback, pSettings)
 	{
+		var Settings = pSettings || {};
 		Z.DatabaseCache[pSuffix] = {};
 		var multidb = Z.DatabaseCache[pSuffix]; 
 		var counter = 0;
@@ -4921,18 +4932,17 @@ Z = {
 			{
 				(function(iLang)
 				{
-					Z.scrapeAPIArray(pArray, pSuffix, {
-						aQueryStr: "?lang=" + iLang,
-						aCallback: function(pData)
+					Settings.aQueryStr = "?lang=" + iLang;
+					Settings.aCallback = function(pData)
+					{
+						multidb[iLang] = {};
+						pData.forEach(function(iObj)
 						{
-							multidb[iLang] = {};
-							pData.forEach(function(iObj)
-							{
-								(multidb[iLang])[iObj.id] = iObj;
-							});
-							retrieveData();
-						}
-					});
+							(multidb[iLang])[iObj.id] = iObj;
+						});
+						retrieveData();
+					};
+					Z.scrapeAPIArray(pArray, pSuffix, Settings);
 				})(Z.DatabaseLanguages[counter]);
 				counter++;
 			}
@@ -6182,6 +6192,22 @@ Z = {
 					idstocache[iEntry.t] = true;
 				}
 			});
+		});
+	},
+	
+	/*
+	 * Updates the map dynamic events list.
+	 */
+	collateEvents: function()
+	{
+		$.getJSON(U.URL_API.EventDetails, function(pData)
+		{
+			var str = "";
+			for (var i in pData.events)
+			{
+				str += "\"" + i + "\": " + U.lineJSON(pData.events[i]) + "\r\n";
+			}
+			Z.createFile(str, "events.json");
 		});
 	}
 };
@@ -14648,12 +14674,13 @@ Q = {
 	/*
 	 * Prints an item's details in standard format.
 	 * @object pItem from API items.
+	 * @boolean pWantListings whether to include Trading Post results too.
 	 */
-	printItemInfo: function(pItem)
+	printItemInfo: function(pItem, pWantListings)
 	{
 		I.print(Q.getItemPreface(pItem));
 		I.prettyJSON(pItem);
-		if (Q.isTradeable(pItem))
+		if (Q.isTradeable(pItem) && pWantListings)
 		{
 			E.printListings(pItem.id, false);
 		}
@@ -25952,7 +25979,7 @@ W = {
 	toggleLeaderboardWidth: function(pWantAnimate)
 	{
 		var isshown = !O.Options.bol_condenseLeaderboard;
-		var elms = $(".lboRank, .lboName, .lboFocus");
+		var elms = $(".lboRank, .lboLand, .lboFocus");
 		if (pWantAnimate)
 		{
 			if (isshown)

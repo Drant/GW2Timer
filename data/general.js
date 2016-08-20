@@ -106,8 +106,8 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1984": "Miner Shiverpeaks [19241,19209]",
 	"1985": "Forager Shiverpeaks [20960,13010]",
 	"2912": "Forager Heart [3359,14678]",
-	"2937": "Lumberer Heart [1770,16987]",
-	"2957": "Miner Heart [3411,15597]",
+	"2937": "Lumberer Heart [2291,14246]",
+	"2957": "Miner Heart [2974,14229]",
 	
 	// Vista
 	"1839": "Vista Kryta [17096,14790]",
@@ -1411,11 +1411,39 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Electromagnetic-Descender Glider",
+		id: "77811",
+		price: 340,
+		discount: 400,
+		col: 0
+	},
+	{
+		name: "Electromagnetic Ascender",
+		id: "78771",
+		price: 200,
+		discount: 250,
+		col: 0
+	},
+	{
 		name: "Merchant Express",
 		id: "20018",
 		price: 17,
 		discount: [[1, 17, 35], [5, 62, 125]],
 		col: 0
+	},
+	{
+		name: "Braham's Mace Skin",
+		id: "42653",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Braham's Shield Skin",
+		id: "42656",
+		price: 600,
+		discount: null,
+		col: 1
 	},
 	{
 		name: "Emissary's Staff",
