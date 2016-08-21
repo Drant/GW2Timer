@@ -18808,14 +18808,11 @@ C = {
 			pChain.CurrentPrimaryEvent = pChain.primaryEvents[finalstep];
 			
 			// Recolor all events
-			if (C.isChainCurrent(pChain) === false)
-			{
-				$("#chnEvents_" + pChain.nexus + " li").show()
-					.removeClass("chnEventCurrent");
-				// Recolor current (final) events as past
-				$(".chnStep_" + pChain.nexus + "_" + finalstep)
-					.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
-			}
+			$("#chnEvents_" + pChain.nexus + " li").show()
+				.removeClass("chnEventCurrent");
+			// Recolor current (final) events as past
+			$(".chnStep_" + pChain.nexus + "_" + finalstep)
+				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
 			
 			/*
 			 * Announce the next world boss and the time until it, only if it's

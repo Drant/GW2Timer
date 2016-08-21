@@ -1278,7 +1278,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://forum.renaka.com/topic/6205181'>Bloodstone-Crazed Creatures</a> timers are in beta. <a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Spawn map</a> and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>slivers</a>.",
+	pve: "<a href='http://forum.renaka.com/topic/6205181'>Bloodstone-Crazed Creatures</a> guide and timings. <a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Spawn map</a> and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>slivers</a>.",
 	wvw: "",
 	Start: new Date("2016-08-02T16:00:00Z"),
 	Finish: new Date("2016-09-16T16:00:00Z"),
@@ -1318,17 +1318,20 @@ Countdown: {
 		official: "news/its-the-anniversary-sale-in-the-gem-store",
 		Start: new Date("2016-08-19T16:00:00Z"),
 		Finish: new Date("2016-08-28T16:00:00Z")
-	}
-	/*{
-		name_en: "PvP League Season 4",
-		name_de: "PvP Liga Saison 4",
-		name_es: "Cuarto temporada de liga PvP",
-		name_fr: "Saison 4 de la ligue JcJ",
-		url: "http://i.imgur.com/dEObOLZ.png",
-		Start: new Date("2016-08-09T17:00:00Z"),
-		Finish: new Date("2016-08-10T17:00:00Z")
-	}*/
-	/*{ // Last Friday of even numbered months
+	},
+	{
+		name_en: "WvW Mixed Borderlands",
+		name_de: "WvW Gemischte Grenzlande",
+		name_es: "McM Tierras Fronterizas mixtas",
+		name_fr: "McM Territoires frontaliers mixtes",
+		url_en: "https://forum-en.guildwars2.com/forum/game/wuv/Mixed-Borderlands-Update",
+		url_de: "https://forum-de.guildwars2.com/forum/game/wuv/Gemischte-Grenzlande",
+		url_es: "https://forum-es.guildwars2.com/forum/game/wuv/Tierras-Fronterizas-mixtas",
+		url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Territoires-frontaliers",
+		Start: new Date("2016-08-23T16:00:00Z"),
+		Finish: new Date("2016-08-24T16:00:00Z")
+	},
+	{ // Last Friday of even numbered months
 		name_en: "WvW Re-linking",
 		name_de: "WvW Wieder-verbindung",
 		name_es: "McM Re-unificación",
@@ -1339,7 +1342,16 @@ Countdown: {
 		url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sondage-McM-du-6-juin-Programme-de-l-association-de-mondes-ferm/first#post292620",
 		Start: new Date("2016-08-26T18:00:00Z"),
 		Finish: new Date("2016-08-27T02:00:00Z")
-	},*/
+	}
+	/*{
+		name_en: "PvP League Season 4",
+		name_de: "PvP Liga Saison 4",
+		name_es: "Cuarto temporada de liga PvP",
+		name_fr: "Saison 4 de la ligue JcJ",
+		url: "http://i.imgur.com/dEObOLZ.png",
+		Start: new Date("2016-08-09T17:00:00Z"),
+		Finish: new Date("2016-08-10T17:00:00Z")
+	}*/
 	/*{ // 8 weeks cycle, on Thursday
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
@@ -1357,12 +1369,12 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: true,
-	name_en: "Ley-Line Anomaly",
-	name_de: "Ley-Linien-Anomalie",
-	name_es: "Anomalía de línea ley",
-	name_fr: "L'Anomalie des lignes de force",
-	url: "https://www.reddit.com/r/Guildwars2/comments/4urr23/leyline_anomaly_tldr_guide_v2/",
+	isEnabled: false,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	url: "",
 	Start: new Date("2016-06-28T16:00:00Z"),
 	Finish: new Date("2016-09-16T16:00:00Z")
 },
@@ -1390,24 +1402,17 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Lunatic Guard Outfit",
-		id: "70385",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Caithe's Bloom Dagger",
-		id: "20004",
+		name: "Kasmeer's Staff Skin",
+		id: "49021",
 		price: 480,
 		discount: 600,
 		col: 0
 	},
 	{
-		name: "Exalted Glider",
-		id: "76236",
-		price: 340,
-		discount: 400,
+		name: "Bag Slot Expansion",
+		id: "19993",
+		price: 200,
+		discount: [[1, 400, 400], [3, 600, 1200]],
 		col: 0
 	},
 	{
@@ -1425,23 +1430,23 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Merchant Express",
-		id: "20018",
-		price: 17,
-		discount: [[1, 17, 35], [5, 62, 125]],
-		col: 0
-	},
-	{
 		name: "Braham's Mace Skin",
 		id: "42653",
 		price: 600,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Braham's Shield Skin",
 		id: "42656",
 		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Winter Solstice Outfit",
+		id: "77595",
+		price: 700,
 		discount: null,
 		col: 1
 	},
@@ -1460,6 +1465,13 @@ Sale: {
 		col: 1
 	},
 	{
+		name: "Mini Snow Flurry Dragon",
+		id: "77581",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Bloodstone Dye Kit",
 		id: "79354",
 		price: 125,
@@ -1467,15 +1479,15 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Flame Dye Kit",
-		id: "41744",
+		name: "Taimi's Dye Kit",
+		id: "67291",
 		price: 125,
 		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	},
 	{
-		name: "Frost Dye Kit",
-		id: "41745",
+		name: "Toxic Dye Kit",
+		id: "70240",
 		price: 125,
 		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
