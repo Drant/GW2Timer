@@ -2130,8 +2130,9 @@ header.jsSection sup {
 .chn_drytop { background-position: 0 0; }
 .chn_legacy { background-position: -32px 0; }
 .chn_scheduled { background-position: -64px 0; }
-.chn_temple { background-position: -96px 0; }
-.chn_timetable { background-position: -128px 0; }
+.chn_special { background-position: -96px 0; }
+.chn_temple { background-position: -128px 0; }
+.chn_timetable { background-position: -160px 0; }
 #plateChains header span { /* Hidden header for each chain categories */
 	display: inline-block;
 	padding: 8px 0px 6px 16px;

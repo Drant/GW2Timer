@@ -1402,10 +1402,52 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Captain's Airship Pass",
+		id: "50104",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
+		name: "Royal Terrace Pass",
+		id: "49149",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
+		name: "Wedding Attire Outfit",
+		id: "70253",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
 		name: "Kasmeer's Staff Skin",
 		id: "49021",
 		price: 480,
 		discount: 600,
+		col: 0
+	},
+	{
+		name: "Grenth Hood Skin",
+		id: "47890",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Stag Helm Skin",
+		id: "47883",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Phantom's Hood",
+		id: "65203",
+		price: 160,
+		discount: 200,
 		col: 0
 	},
 	{
@@ -1430,23 +1472,23 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Braham's Mace Skin",
-		id: "42653",
-		price: 600,
+		name: "Noble's Folly Pass",
+		id: "79140",
+		price: 1000,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Braham's Shield Skin",
-		id: "42656",
-		price: 600,
-		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Winter Solstice Outfit",
 		id: "77595",
 		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Belinda's Greatsword Skin",
+		id: "8466",
+		price: 600,
 		discount: null,
 		col: 1
 	},

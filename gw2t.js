@@ -6432,6 +6432,16 @@ A = {
 		
 		// Initialize context menu for bank and inventory slots
 		Q.initializeItemContextMenu();
+		
+		// Translate directory
+		if (D.isLanguageDefault() === false)
+		{
+			$("#accDirectory var").each(function()
+			{
+				var word = $(this).text().toLowerCase();
+				$(this).html(D.getWordCapital(word));
+			});
+		}
 	
 		// Finally
 		setTimeout(function()
@@ -16737,6 +16747,8 @@ D = {
 		s_Heart: {de: "Herzchen-Quest", es: "Corazón de prestigio", fr: "Cœur de renommé", zh: "愛心任務"},
 		s_Scheduled_Bosses: {de: "Geplant", es: "Programado", fr: "Planifié",
 			cs: "Plánované", it: "Pianificata", pl: "Zaplanowane", pt: "Agendado", ru: "Запланирован", zh: "已排程"},
+		s_Special_Bosses: {de: "Speziell", es: "Especial", fr: "Spécial",
+			cs: "Speciální", it: "Speciale", pl: "Specjalny", pt: "Especial", ru: "Особый", zh: "特別的"},
 		s_Dry_Top: {de: "Trockenkuppe", es: "Cima Seca", fr: "Cimesèche", zh: "干涸高地"},
 		s_Legacy_Bosses: {de: "Legacy", es: "Heredado", fr: "Hérité",
 			cs: "Starší", it: "Legacy", pl: "Starsze", pt: "Herdado", ru: "Устаревший", zh: "舊版"},
@@ -18070,7 +18082,14 @@ C = {
 				} break;
 				case C.ChainSeriesEnum.Miscellaneous:
 				{
-					chain.htmllist = "#sectionChains_Scheduled";
+					if (chain.flags.isspecial)
+					{
+						chain.htmllist = "#sectionChains_Special";
+					}
+					else
+					{
+						chain.htmllist = "#sectionChains_Scheduled";
+					}
 					C.MiscellaneousChains.push(chain);
 					C.ScheduledChains.push(chain);
 				} break;
@@ -18811,12 +18830,15 @@ C = {
 		{
 			pChain.CurrentPrimaryEvent = pChain.primaryEvents[finalstep];
 			
-			// Recolor all events
-			$("#chnEvents_" + pChain.nexus + " li").show()
-				.removeClass("chnEventCurrent");
-			// Recolor current (final) events as past
-			$(".chnStep_" + pChain.nexus + "_" + finalstep)
-				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
+			if (C.isChainCurrent(pChain) === false)
+			{
+				// Recolor all events
+				$("#chnEvents_" + pChain.nexus + " li").show()
+					.removeClass("chnEventCurrent");
+				// Recolor current (final) events as past
+				$(".chnStep_" + pChain.nexus + "_" + finalstep)
+					.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
+			}
 			
 			/*
 			 * Announce the next world boss and the time until it, only if it's
@@ -30822,6 +30844,7 @@ I = {
 		Chains:
 		{
 			Scheduled: "Scheduled",
+			Special: "Special",
 			DryTop: "DryTop",
 			Legacy: "Legacy",
 			Temple: "Temple",

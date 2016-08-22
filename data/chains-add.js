@@ -13,6 +13,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BK4CAAA=]",
 	level: "78",
 	reward: {ecto: "1", loot: "2", dragonite: "30"},
+	flags: {},
 	events: [
 	{
 		primacy: 1,
@@ -227,6 +228,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BLICAAA=]",
 	level: "79",
 	reward: {ecto: "1", loot: "2", dragonite: "30"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -351,6 +353,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BB4DAAA=]",
 	level: "80",
 	reward: {ecto: "1", loot: "3", dragonite: "30"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -547,6 +550,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BB4DAAA=]",
 	level: "80",
 	reward: {ecto: "1", loot: "3", dragonite: "30"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -725,6 +729,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BB4DAAA=]",
 	level: "80",
 	reward: {ecto: "1", loot: "4", dragonite: "0"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -939,6 +944,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BNIEAAA=]",
 	level: "75",
 	reward: {ecto: "1", loot: "2", dragonite: "30"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -1027,6 +1033,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BFkGAAA=]",
 	level: "75",
 	reward: {ecto: "0", loot: "0", dragonite: "0"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -1223,6 +1230,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BO4CAAA=]",
 	level: "75",
 	reward: {ecto: "0", loot: "1", dragonite: "0"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -1401,6 +1409,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BO8CAAA=]",
 	level: "75",
 	reward: {ecto: "0", loot: "3", dragonite: "0"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -1615,6 +1624,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BO4BAAA=]",
 	level: "60",
 	reward: {ecto: "1", loot: "1", dragonite: "15-25"},
+	flags: {},
 	events: [
 	{
 		primacy: 3,
@@ -1649,6 +1659,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BNwAAAA=]",
 	level: "25",
 	reward: {ecto: "1", loot: "2", dragonite: "0"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -1827,6 +1838,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BDwEAAA=]",
 	level: "34",
 	reward: {ecto: "1", loot: "4", dragonite: "0"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -1969,6 +1981,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BD8FAAA=]",
 	level: "50",
 	reward: {ecto: "1", loot: "1", dragonite: "3-5"},
+	flags: {},
 	events: [
 	{
 		primacy: 1,
@@ -2075,6 +2088,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BIwBAAA=]",
 	level: "28",
 	reward: {ecto: "1", loot: "2", dragonite: "0"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
@@ -2199,6 +2213,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 	waypoint: "[&BNIEAAA=]",
 	level: "75",
 	reward: {ecto: "1", loot: "2", dragonite: "3-5"},
+	flags: {},
 	events: [
 	{
 		primacy: 2,
