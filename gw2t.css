@@ -946,9 +946,11 @@ textarea.jsCopyCode {
 	pointer-events: none;
 }
 #tmlIndicator {
+	z-index: -1;
 	height: 110%;
 	top: -10%;
 	background: lime;
+	opacity: 0.9;
 	box-shadow: -1px 2px 4px lime;
 }
 #tmlBisector {
@@ -960,9 +962,11 @@ textarea.jsCopyCode {
 }
 .tmlOpaque {
 	background: rgba(0, 0, 0, 0.6);
+	transition: background 0.4s;
 }
 .tmlOpaqueNot {
 	background: none;
+	transition: background 0.4s;
 }
 .tmlLine { /* A whole line representing a chain of events */
 	height: 24px;
@@ -1080,6 +1084,13 @@ textarea.jsCopyCode {
 #dsbAnnouncement img:hover {
 	opacity: 0.8;
 }
+#dsbCountdown:before, #dsbCountdown:after {
+	content: "";
+	width: 100%;
+	height: 1px;
+	display: block;
+	background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.4) 100%);
+}
 #dsbCountdown time {
 	font-family: Consolas, monospace;
 	font-size: 18px;
@@ -1087,6 +1098,13 @@ textarea.jsCopyCode {
 }
 #dsbCountdown code {
 	margin-right: 8px;
+}
+.dsbCountdownDate {
+	opacity: 0.3;
+	transition: opacity 0.2s;
+}
+#itemDashboard:hover .dsbCountdownDate {
+	opacity: 1;
 }
 .dsbCountdownDormant {
 	color: #7f807f;

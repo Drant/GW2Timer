@@ -581,9 +581,9 @@ var GW2T_ATTRIBUTE_DATA = {
 		"Healing": "HealingPower",
 		"ConditionDuration": "Expertise",
 		//"": "ConditionDuration",
-		"BoonDuration": "Concentration"
+		"BoonDuration": "Concentration",
 		//"": "BoonDuration",
-		//"": "AgonyResistance",
+		"AgonyResistance": "AgonyResistance"
 		//"": "MagicFind"
 	},
 	KeyType: { // 0 for numbers, 1 for percentages

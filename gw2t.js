@@ -3661,7 +3661,7 @@ U = {
 			sub = subs[i];
 			if (sub.length)
 			{
-				str = str.replace(new RegExp(sub, "gi"), "{{$&}}"); // $& is the original match, to maintain letter case
+				str = str.replace(new RegExp(U.escapeRegEx(sub), "gi"), "{{$&}}"); // $& is the original match, to maintain letter case
 			}
 		}
 		// Replace the wrapper alias with the proper tag now that the matching is done
@@ -3691,6 +3691,10 @@ U = {
 			return "undefined";
 		}
 		return "null";
+	},
+	escapeRegEx: function(pString)
+	{
+		return pString.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 	},
 	
 	/*
@@ -7984,7 +7988,7 @@ A = {
 					{
 						B.styleBankSlot(iSlot, {aItem: iItem, aPrice: iView[1], aSlotMeta: {count: iView[0]}});
 						var payment = E.Paylist[iItemID];
-						if (E.isPriceObject(payment) === false)
+						if (payment && E.isPriceObject(payment) === false)
 						{
 							B.updateSlotPayment(iSlot, payment, iView[0], "bnkSlotPriceSell");
 						}
@@ -12681,7 +12685,6 @@ B = {
 			aIsCollection: false,
 			aWantGem: false
 		});
-		var tooltiptransactionslimit = 100;
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		var numfetched = 0, numtofetch = 0;
 		var calendar = {}, datestr, datearray, calkey, timesince, transaction, multitrans, transactionstr;
@@ -12848,7 +12851,7 @@ B = {
 				+ "</tr>";
 				multitrans.oStamps += transactionstr;
 				// Limit the number of transactions listed in the tooltip
-				if (multitrans.oNumTransactions < tooltiptransactionslimit)
+				if (multitrans.oNumTransactions < Q.ItemLimit.TooltipLines)
 				{
 					multitrans.oStampsTip += transactionstr;
 				}
@@ -12935,7 +12938,8 @@ Q = {
 	},
 	ItemLimit:
 	{
-		FetchAPI: 1000,
+		FetchAPI: 500,
+		TooltipLines: 100,
 		StackSize: 250,
 		EctoSalvageLevel: 68
 	},
@@ -27279,6 +27283,7 @@ T = {
 		if (O.Options.bol_showTimeline)
 		{
 			H.updateTimelineSegments(true);
+			H.updateTimelineIndicator();
 		}
 	},
 	
@@ -28651,7 +28656,7 @@ H = {
 				$("#dsbCountdown").append(
 					"<div id='dsbCountdown_" + i + "' class='dsbCountdownEntry'>"
 						+ "<code>" + I.Symbol.Block + "</code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> "
-						+ "<span class='cssFaded'><abbr></abbr> <var></var></span>"
+						+ "<span class='dsbCountdownDate'><abbr></abbr> <var></var></span>"
 					+ "</div>");
 			}
 			I.qTip.init("#dsbCountdown");
@@ -28678,7 +28683,7 @@ H = {
 				+ D.getTranslation("Gem Store Promotions") + "</u> "
 				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
 				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
-				+ "<span class='cssFaded'>" + I.Symbol.ArrowDown + "@ " + H.Sale.Finish.toLocaleString() + "</span>"
+				+ "<span class='dsbCountdownDate'>" + I.Symbol.ArrowDown + "@ " + H.Sale.Finish.toLocaleString() + "</span>"
 			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
 			// Add a "padding" item if the columns are not equal length
 			var isdiscounted = false;
@@ -29185,7 +29190,6 @@ H = {
 		});
 		// Initialize
 		I.qTip.init(".tmlLine");
-		H.updateTimelineIndicator();
 	},
 	
 	/*
@@ -29206,11 +29210,20 @@ H = {
 		$(".tmlTimeslice").each(function()
 		{
 			// Show the time until event start
+			var isactive = $(this).hasClass("tmlSegmentActive");
 			var countdown = $(this).find(".tmlSegmentCountdown");
-			var symbol = ($(this).hasClass("tmlSegmentActive")) ? I.Symbol.Horizontal : "";
+			var symbol = (isactive) ? I.Symbol.Horizontal : "";
 			var minutesremaining = $(this).data("start") - currentminute;
 			minutesremaining = (minutesremaining === 0) ? cycleminutes : T.wrapInteger(minutesremaining, cycleminutes);
-			countdown.html(symbol + T.formatMinutes(minutesremaining));
+			if ($(this).hasClass("tmlTimesliceWB") && isactive)
+			{
+				// If timeslice is for active world bosses
+				countdown.html("");
+			}
+			else
+			{
+				countdown.html(symbol + T.formatMinutes(minutesremaining));
+			}
 		});
 	},
 	
