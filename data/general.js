@@ -1319,18 +1319,6 @@ Countdown: {
 		Start: new Date("2016-08-19T16:00:00Z"),
 		Finish: new Date("2016-08-28T16:00:00Z")
 	},
-	{
-		name_en: "WvW Mixed Borderlands",
-		name_de: "WvW Gemischte Grenzlande",
-		name_es: "McM Tierras Fronterizas mixtas",
-		name_fr: "McM Territoires frontaliers mixtes",
-		url_en: "https://forum-en.guildwars2.com/forum/game/wuv/Mixed-Borderlands-Update",
-		url_de: "https://forum-de.guildwars2.com/forum/game/wuv/Gemischte-Grenzlande",
-		url_es: "https://forum-es.guildwars2.com/forum/game/wuv/Tierras-Fronterizas-mixtas",
-		url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Territoires-frontaliers",
-		Start: new Date("2016-08-23T17:00:00Z"),
-		Finish: new Date("2016-08-24T16:00:00Z")
-	},
 	{ // Last Friday of even numbered months
 		name_en: "WvW Re-linking",
 		name_de: "WvW Wieder-verbindung",

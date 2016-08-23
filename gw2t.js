@@ -25021,6 +25021,7 @@ W = {
 	LocaleCurrent: null,
 	BorderlandsCurrent: null,
 	BorderlandsEnum: {
+		Mixed: "Mixed",
 		Alpine: "Alpine",
 		Desert: "Desert"
 	},
@@ -25063,7 +25064,7 @@ W = {
 	 */
 	determineBorderlands: function()
 	{
-		W.BorderlandsCurrent = W.BorderlandsEnum.Alpine;
+		W.BorderlandsCurrent = W.BorderlandsEnum.Mixed;
 		// Zone Objects
 		W.Zones = GW2T_LAND_DATA;
 		var rotationzones = GW2T_LAND_ROTATION[W.BorderlandsCurrent];
@@ -25134,6 +25135,7 @@ W = {
 	initializeObjectives: function()
 	{
 		var ebgobjs = GW2T_OBJECTIVE_DATA_EBG;
+		var mixedobjs = GW2T_OBJECTIVE_DATA_MIXED;
 		var alpineobjs = GW2T_OBJECTIVE_DATA_ALPINE;
 		var desertobjs = GW2T_OBJECTIVE_DATA_DESERT;
 		// Initialize the shared EBG map
@@ -25143,14 +25145,21 @@ W = {
 		}
 		
 		// Initialize rotational maps
-		if (W.BorderlandsCurrent === W.BorderlandsEnum.Alpine)
+		if (W.BorderlandsCurrent === W.BorderlandsEnum.Mixed)
+		{
+			for (var i in mixedobjs)
+			{
+				W.Objectives[i] = mixedobjs[i];
+			}
+		}
+		else if (W.BorderlandsCurrent === W.BorderlandsEnum.Alpine)
 		{
 			for (var i in alpineobjs)
 			{
 				W.Objectives[i] = alpineobjs[i];
 			}
 		}
-		else
+		else if (W.BorderlandsCurrent === W.BorderlandsEnum.Desert)
 		{
 			for (var i in desertobjs)
 			{
