@@ -965,11 +965,8 @@ O = {
 				chain = C.Chains[i];
 				$("#chnCheck_" + chain.nexus).removeClass("chnChecked");
 				$("#chnBar_" + chain.nexus).show().css({opacity: 1}).css({display: display});
-				if (C.isTimetableGenerated)
-				{
-					$(".chnSlot_" + chain.nexus).show().css({opacity: 1}).css({display: display})
-						.find(".chnCheck").removeClass("chnChecked");
-				}
+				$(".chnSlot_" + chain.nexus).show().css({opacity: 1}).css({display: display})
+					.find(".chnCheck").removeClass("chnChecked");
 			}
 			X.clearChecklist(X.Checklists.Chain);
 			// Also unfade the clock icons, which are the current first four bosses
@@ -2028,11 +2025,8 @@ X = {
 					}
 					$(this).addClass("chnChecked");
 					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Checked);
-					if (C.isTimetableGenerated)
-					{
-						theseslots.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed)
-							.find(".chnCheck").addClass("chnChecked");
-					}
+					theseslots.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed)
+						.find(".chnCheck").addClass("chnChecked");
 				} break;
 				case X.ChecklistEnum.Checked:
 				{
@@ -2044,12 +2038,9 @@ X = {
 					}
 					$(this).removeClass("chnChecked");
 					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
-					if (C.isTimetableGenerated)
-					{
-						theseslots.show("fast").css({display: display})
-							.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed)
-							.find(".chnCheck").removeClass("chnChecked");
-					}
+					theseslots.show("fast").css({display: display})
+						.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed)
+						.find(".chnCheck").removeClass("chnChecked");
 				} break;
 				case X.ChecklistEnum.Disabled:
 				{
@@ -2060,11 +2051,8 @@ X = {
 					}
 					$(this).removeClass("chnChecked");
 					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
-					if (C.isTimetableGenerated)
-					{
-						theseslots.hide().css({opacity: 1})
-							.find(".chnCheck").removeClass("chnChecked");
-					}
+					theseslots.hide().css({opacity: 1})
+						.find(".chnCheck").removeClass("chnChecked");
 				} break;
 			}
 			X.hideCheckedChainBar(nexus);
@@ -2077,10 +2065,7 @@ X = {
 		{
 			var nexus = U.getSubintegerFromHTMLID($(this));
 			$("#chnBar_" + nexus).hide("slow");
-			if (C.isTimetableGenerated)
-			{
-				$(".chnSlot_" + nexus).hide("slow");
-			}
+			$(".chnSlot_" + nexus).hide("slow");
 			X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Disabled);
 
 			// Also update the clock icon
@@ -2118,6 +2103,31 @@ X = {
 			pTime.addClass("chnTimeSubscribed");
 		}
 	},
+	reapplyChainIconState: function(pChain, pIcon, pWantHide)
+	{
+		switch (X.getChecklistItem(X.Checklists.Chain, pChain.nexus))
+		{
+			case X.ChecklistEnum.Unchecked:
+			{
+				pIcon.css({opacity: 1});
+			} break;
+			case X.ChecklistEnum.Checked:
+			{
+				pIcon.css({opacity: K.iconOpacityChecked});
+			} break;
+			case X.ChecklistEnum.Disabled:
+			{
+				if (pWantHide)
+				{
+					pIcon.hide();
+				}
+				else
+				{
+					pIcon.css({opacity: K.iconOpacityChecked});
+				}
+			} break;
+		}
+	},
 	hideCheckedChainBar: function(pIndex)
 	{
 		var display = (I.ModeCurrent === I.ModeEnum.Tile) ? "inline-block" : "block";
@@ -2127,18 +2137,12 @@ X = {
 			if (O.Options.bol_hideChecked)
 			{
 				$("#chnBar_" + pIndex).hide("fast");
-				if (C.isTimetableGenerated)
-				{
-					$(".chnSlot_" + pIndex).hide("fast");
-				}
+				$(".chnSlot_" + pIndex).hide("fast");
 			}
 			else
 			{
 				$("#chnBar_" + pIndex).show("fast").css({display: display});
-				if (C.isTimetableGenerated)
-				{
-					$(".chnSlot_" + pIndex).show("fast").css({display: display});
-				}
+				$(".chnSlot_" + pIndex).show("fast").css({display: display});
 			}
 		}
 	},
@@ -28852,6 +28856,9 @@ H = {
 					$(this).css({height: "auto"});
 					I.bindScrollbar("#dsbSaleTable");
 					I.updateScrollbar("#dsbSaleTable");
+				}).on("mouseenter", function()
+				{
+					I.updateScrollbar("#dsbSaleTable");
 				});
 				// Retrieve item info
 				$(".dsbSaleIcon").each(function()
@@ -29189,7 +29196,7 @@ H = {
 				"<div class='tmlSegment tmlTimeslice " + wbclass + "' style='width:" + width + "%' "
 				+ "data-start='" + event.time + "' data-finish='" + (event.time + event.duration) + "' " + wbdata + ">"
 					+ "<div class='tmlSegmentContent'>"
-						+ linename + "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + (D.getObjectName(event) || "") + "</span>"
+						+ linename + "<span class='tmlSegmentName " + bossclass + "'><var class='tmlIconContainer'></var>" + segmentprefix + (D.getObjectName(event) || "") + "</span>"
 						+ "<span class='tmlSegmentCountdown'></span>"
 					+ "</div>"
 				+ "</div>");
@@ -29287,7 +29294,7 @@ H = {
 			var wbcounteroffset = 0;
 			$(".tmlTimesliceWB").each(function()
 			{
-				var inner = $(this).find(".tmlSegmentName").empty();
+				var inner = $(this).find(".tmlIconContainer").empty();
 				var bossicon;
 				var thisoffset = parseInt($(this).attr("data-offset"));
 				var timeframeoffset;
@@ -29307,11 +29314,12 @@ H = {
 					{
 						(function(iChain)
 						{
-							bossicon = $("<img class='tmlIcon curZoom' src='" + iChain.iconSrc + "' />").appendTo(inner);
+							bossicon = $("<img class='tmlIcon curZoom chnSlot_" + iChain.nexus + "' src='" + iChain.iconSrc + "' />").appendTo(inner);
 							bossicon.attr("title", "<dfn>" + D.getObjectName(iChain) + "</dfn>").click(function()
 							{
 								C.viewChainFinale(iChain);
 							});
+							X.reapplyChainIconState(iChain, bossicon, true);
 							I.bindClipboard(bossicon, iChain.waypointText);
 						})(wbchains[i]);
 					}
@@ -29817,16 +29825,7 @@ K = {
 				// If clicked chain is on the clock
 				if (ithchain && pIndex === ithchain.nexus)
 				{
-					if (X.getChainChecklistState(ithchain) !== X.ChecklistEnum.Unchecked)
-					{
-						iconchain.css({opacity: 1})
-							.animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
-					}
-					else
-					{
-						iconchain.css({opacity: K.iconOpacityChecked})
-							.animate({opacity: 1}, K.iconOpacitySpeed);
-					}
+					X.reapplyChainIconState(ithchain, iconchain);
 				}
 			}
 		}
@@ -30335,15 +30334,7 @@ K = {
 						pIcon.attr("title", D.getObjectName(pChain));
 						I.qTip.init(pIcon);
 					}
-
-					if (X.getChainChecklistState(pChain) !== X.ChecklistEnum.Unchecked)
-					{
-						pIcon.css({opacity: K.iconOpacityChecked});
-					}
-					else
-					{
-						pIcon.css({opacity: 1});
-					}
+					X.reapplyChainIconState(pChain, pIcon);
 				}
 				else
 				{
