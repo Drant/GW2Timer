@@ -965,8 +965,15 @@ O = {
 				chain = C.Chains[i];
 				$("#chnCheck_" + chain.nexus).removeClass("chnChecked");
 				$("#chnBar_" + chain.nexus).show().css({opacity: 1}).css({display: display});
-				$(".chnSlot_" + chain.nexus).show().css({opacity: 1}).css({display: display})
-					.find(".chnCheck").removeClass("chnChecked");
+				$(".chnSlot_" + chain.nexus).each(function()
+				{
+					$(this).show().css({display: display, opacity: 1})
+						.find(".chnCheck").removeClass("chnChecked");
+					if ($(this).hasClass("tmlIcon"))
+					{
+						$(this).css({display: "inline-block"});
+					}
+				});
 			}
 			X.clearChecklist(X.Checklists.Chain);
 			// Also unfade the clock icons, which are the current first four bosses
@@ -2038,9 +2045,15 @@ X = {
 					}
 					$(this).removeClass("chnChecked");
 					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
-					theseslots.show("fast").css({display: display})
-						.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed)
-						.find(".chnCheck").removeClass("chnChecked");
+					theseslots.show("fast").each(function()	
+					{
+						$(this).css({display: display, opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed)
+							.find(".chnCheck").removeClass("chnChecked");
+						if ($(this).hasClass("tmlIcon"))
+						{
+							$(this).css({display: "inline-block"});
+						}
+					});
 				} break;
 				case X.ChecklistEnum.Disabled:
 				{
@@ -2142,7 +2155,14 @@ X = {
 			else
 			{
 				$("#chnBar_" + pIndex).show("fast").css({display: display});
-				$(".chnSlot_" + pIndex).show("fast").css({display: display});
+				$(".chnSlot_" + pIndex).each(function()
+				{
+					$(this).show("fast").css({display: display});
+					if ($(this).hasClass("tmlIcon"))
+					{
+						$(this).css({display: "inline-block"});
+					}
+				});
 			}
 		}
 	},
@@ -29196,7 +29216,7 @@ H = {
 				"<div class='tmlSegment tmlTimeslice " + wbclass + "' style='width:" + width + "%' "
 				+ "data-start='" + event.time + "' data-finish='" + (event.time + event.duration) + "' " + wbdata + ">"
 					+ "<div class='tmlSegmentContent'>"
-						+ linename + "<span class='tmlSegmentName " + bossclass + "'><var class='tmlIconContainer'></var>" + segmentprefix + (D.getObjectName(event) || "") + "</span>"
+						+ linename + "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + (D.getObjectName(event) || "") + "</span>"
 						+ "<span class='tmlSegmentCountdown'></span>"
 					+ "</div>"
 				+ "</div>");
@@ -29294,7 +29314,7 @@ H = {
 			var wbcounteroffset = 0;
 			$(".tmlTimesliceWB").each(function()
 			{
-				var inner = $(this).find(".tmlIconContainer").empty();
+				var inner = $(this).find(".tmlSegmentName").empty();
 				var bossicon;
 				var thisoffset = parseInt($(this).attr("data-offset"));
 				var timeframeoffset;
