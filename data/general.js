@@ -1380,8 +1380,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-08-09T15:00:00Z"),
-	Finish: new Date("2016-08-23T15:00:00Z"),
+	Start: new Date("2016-08-23T15:00:00Z"),
+	Finish: new Date("2016-08-30T15:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1411,8 +1411,8 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Kasmeer's Staff Skin",
-		id: "49021",
+		name: "Ceremonial Plated Outfit",
+		id: "67040",
 		price: 480,
 		discount: 600,
 		col: 0
@@ -1432,6 +1432,20 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Scarlet's Grasp",
+		id: "48817",
+		price: 300,
+		discount: 400,
+		col: 0
+	},
+	{
+		name: "Scarlet's Spaulders",
+		id: "48824",
+		price: 300,
+		discount: 400,
+		col: 0
+	},
+	{
 		name: "Phantom's Hood",
 		id: "65203",
 		price: 160,
@@ -1439,25 +1453,25 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Bag Slot Expansion",
-		id: "19993",
-		price: 200,
-		discount: [[1, 400, 400], [3, 600, 1200]],
-		col: 0
-	},
-	{
 		name: "Electromagnetic-Descender Glider",
 		id: "77811",
 		price: 340,
 		discount: 400,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Electromagnetic Ascender",
 		id: "78771",
 		price: 200,
 		discount: 250,
-		col: 0
+		col: 1
+	},
+	{
+		name: "Metallurgic Dye Kit",
+		id: "47900",
+		price: 87,
+		discount: [[1, 87, 125], [5, 350, 500], [25, 1750, 2500]],
+		col: 1
 	},
 	{
 		name: "Noble's Folly Pass",
@@ -1467,9 +1481,16 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Winter Solstice Outfit",
-		id: "77595",
+		name: "Crystal Arbiter Outfit",
+		id: "76905",
 		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Crystal Arbiter Glider",
+		id: "72252",
+		price: 500,
 		discount: null,
 		col: 1
 	},
@@ -1481,45 +1502,17 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Emissary's Staff",
-		id: "79315",
+		name: "Peacock Scepter Skin",
+		img: "http://i.imgur.com/VK92PuF.png",
 		price: 600,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Storm Bow",
-		id: "79310",
-		price: 600,
+		name: "Mini Garm",
+		img: "http://i.imgur.com/jCrHIdV.png",
+		price: 350,
 		discount: null,
-		col: 1
-	},
-	{
-		name: "Mini Snow Flurry Dragon",
-		id: "77581",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Bloodstone Dye Kit",
-		id: "79354",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 1
-	},
-	{
-		name: "Taimi's Dye Kit",
-		id: "67291",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 1
-	},
-	{
-		name: "Toxic Dye Kit",
-		id: "70240",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]
