@@ -23350,7 +23350,8 @@ G = {
 			});
 		}).fail(function()
 		{
-			I.write("Unable to retrieve daily API.");
+			I.write("Unable to retrieve daily API. ArenaNet API server may be down.");
+			I.removeThrobber("#dlyContainer");
 		});
 	},
 	

@@ -1278,8 +1278,9 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://forum.renaka.com/topic/6205181'>Bloodstone-Crazed Creatures</a> guide and timings. <a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Spawn map</a> and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>slivers</a>."
-		+ "<br /><a href='http://gw2timer.com/?page=WvW'>WvW livemap</a> mixed borderlands waiting for ArenaNet updated map image.",
+	pve: "Guild Wars 2 servers and API are <a href='https://twitter.com/guildwars2'>offline</a> until ArenaNet finishes <a href='https://forum-en.guildwars2.com/forum/game/gw2/We-will-have-to-roll-back'>rollback</a>.",
+		//"<a href='http://forum.renaka.com/topic/6205181'>Bloodstone-Crazed Creatures</a> guide and timings. <a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Spawn map</a> and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>slivers</a>.",
+		//+ "<br /><a href='http://gw2timer.com/?page=WvW'>WvW livemap</a> mixed borderlands waiting for ArenaNet updated map image.",
 	wvw: "",
 	Start: new Date("2016-08-02T16:00:00Z"),
 	Finish: new Date("2016-09-16T16:00:00Z"),
@@ -1316,7 +1317,7 @@ Countdown: {
 		name_de: "Jubiläumsangebote",
 		name_es: "Rebajas de aniversario",
 		name_fr: "Offre spéciale d'anniversaire",
-		official: "news/its-the-anniversary-sale-in-the-gem-store",
+		official: "news/bloodstone-weapons-peacock-scepter-and-mini-garm-in-the-gem-store",
 		Start: new Date("2016-08-19T16:00:00Z"),
 		Finish: new Date("2016-08-28T16:00:00Z")
 	},
