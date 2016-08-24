@@ -1278,7 +1278,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://forum.renaka.com/topic/6209670'>Transfer Chaser</a> (2016-08-23) living story event guide.<br />"
+	pve: "<a href='http://forum.renaka.com/topic/6209670'>Transfer Chaser</a> Current Events living story guide.<br />"
 		+ "<a href='http://forum.renaka.com/topic/6205181'>Bloodstone-Crazed Creatures</a> guide and timings. <a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Spawn map</a> and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>slivers</a>.",
 	wvw: "Desert map tiles for Red Borderlands will be updated later by ArenaNet.",
 	Start: new Date("2016-08-02T16:00:00Z"),
@@ -1391,6 +1391,20 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Character Slot Expansion",
+		img: "http://i.imgur.com/bYMfxCX.png",
+		price: 560,
+		discount: 800,
+		col: 0
+	},
+	{
+		name: "Additional Crafting License",
+		id: "42970",
+		price: 560,
+		discount: 800,
+		col: 0
+	},
+	{
 		name: "Captain's Airship Pass",
 		id: "50104",
 		price: 800,
@@ -1458,20 +1472,97 @@ Sale: {
 		id: "77811",
 		price: 340,
 		discount: 400,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Electromagnetic Ascender",
 		id: "78771",
 		price: 200,
 		discount: 250,
-		col: 1
+		col: 0
+	},
+	{
+		name: "Mad King Dye Kit",
+		id: "70367",
+		price: 100,
+		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
+		col: 0
 	},
 	{
 		name: "Metallurgic Dye Kit",
 		id: "47900",
 		price: 87,
 		discount: [[1, 87, 125], [5, 350, 500], [25, 1750, 2500]],
+		col: 0
+	},
+	{
+		name: "Red Envelope Mail Carrier",
+		id: "68652",
+		price: 420,
+		discount: 600,
+		col: 1
+	},
+	{
+		name: "Aviator Quaggan Mail Carrier",
+		id: "69628",
+		price: 350,
+		discount: 500,
+		col: 1
+	},
+	{
+		name: "Exalted Mail Courier",
+		id: "67863",
+		price: 350,
+		discount: 500,
+		col: 1
+	},
+	{
+		name: "Ghostly Mail Courier",
+		id: "67355",
+		price: 350,
+		discount: 500,
+		col: 1
+	},
+	{
+		name: "Griffon Mail Carrier",
+		id: "68106",
+		price: 350,
+		discount: 500,
+		col: 1
+	},
+	{
+		name: "Gifts Mail Delivery",
+		id: "68104",
+		price: 245,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Revenant Mail Carrier",
+		id: "69715",
+		price: 245,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Snow Owl Mail Carrier",
+		id: "68681",
+		price: 245,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Sylvari Seed Pod Mail Carrier",
+		id: "68682",
+		price: 245,
+		discount: 350,
+		col: 1
+	},
+	{
+		name: "Confetti Mail Delivery",
+		id: "68102",
+		price: 210,
+		discount: 300,
 		col: 1
 	},
 	{
