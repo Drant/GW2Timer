@@ -21256,18 +21256,16 @@ M = {
 		var qsdraw = U.Args[U.KeyEnum.Draw];
 		var arr;
 		try { arr = JSON.parse(qsgo); } catch (e) {}
-		if (arr && Array.isArray(arr) && arr.length)
+		if (arr && Array.isArray(arr) && arr.length && Array.isArray(arr[0]))
 		{
 			// If is draw command, array of coordinates
-			if (Array.isArray(arr[0]))
-			{
-				this.parsePersonalPath(qsgo);
-			}
+			this.parsePersonalPath(qsgo);
+			U.Args[U.KeyEnum.Go] = null;
+		}
+		else
+		{
 			// If is go command, just a coordinates
-			else
-			{
-				this.goToArguments(qsgo, this.ZoomEnum.Ground, this.Pin.Program);
-			}
+			this.goToArguments(qsgo, this.ZoomEnum.Ground, this.Pin.Program);
 			U.Args[U.KeyEnum.Go] = null;
 		}
 		if (qsdraw)
