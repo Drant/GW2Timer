@@ -18833,7 +18833,7 @@ C = {
 			if (O.Options.bol_tourPrediction && (I.ModeCurrent !== I.ModeEnum.Overlay)
 				&& I.PageCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && isregularchain
-				&& C.isDryTopIconsShown === false)
+				&& C.isDryTopIconsShown === false && !pChain.flags.isspecial)
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -18854,15 +18854,12 @@ C = {
 		{
 			pChain.CurrentPrimaryEvent = pChain.primaryEvents[finalstep];
 			
-			if (C.isChainCurrent(pChain) === false)
-			{
-				// Recolor all events
-				$("#chnEvents_" + pChain.nexus + " li").show()
-					.removeClass("chnEventCurrent");
-				// Recolor current (final) events as past
-				$(".chnStep_" + pChain.nexus + "_" + finalstep)
-					.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
-			}
+			// Recolor all events
+			$("#chnEvents_" + pChain.nexus + " li").show()
+				.removeClass("chnEventCurrent");
+			// Recolor current (final) events as past
+			$(".chnStep_" + pChain.nexus + "_" + finalstep)
+				.css({opacity: 1}).animate({opacity: 0.5}, animationspeed);
 			
 			/*
 			 * Announce the next world boss and the time until it, only if it's
@@ -25018,6 +25015,7 @@ W = {
 		Europe: "Europe"
 	},
 	LocaleCurrent: null,
+	BorderlandsRotation: null, // Will refer to an array of zone nicks of the current rotation
 	BorderlandsCurrent: null,
 	BorderlandsEnum: {
 		Mixed: "Mixed",
@@ -25066,11 +25064,12 @@ W = {
 		W.BorderlandsCurrent = W.BorderlandsEnum.Mixed;
 		// Zone Objects
 		W.Zones = GW2T_LAND_DATA;
-		var rotationzones = GW2T_LAND_ROTATION[W.BorderlandsCurrent];
-		for (var i in rotationzones)
+		var rotationdata = GW2T_LAND_ROTATION;
+		W.BorderlandsRotation = rotationdata.Rotation;
+		W.BorderlandsRotation.forEach(function(iLandNick)
 		{
-			W.Zones[i] = rotationzones[i];
-		}
+			W.Zones[iLandNick] = rotationdata.Land[iLandNick];
+		});
 		// Siege Placements
 		W.Placement = GW2T_PLACEMENT_DATA;
 		W.Placement[W.BorderlandsCurrent] = GW2T_PLACEMENT_ROTATION[W.BorderlandsCurrent];
@@ -25133,38 +25132,15 @@ W = {
 	 */
 	initializeObjectives: function()
 	{
-		var ebgobjs = GW2T_OBJECTIVE_DATA_EBG;
-		var mixedobjs = GW2T_OBJECTIVE_DATA_MIXED;
-		var alpineobjs = GW2T_OBJECTIVE_DATA_ALPINE;
-		var desertobjs = GW2T_OBJECTIVE_DATA_DESERT;
-		// Initialize the shared EBG map
-		for (var i in ebgobjs)
+		var objectivedata = GW2T_OBJECTIVE_DATA;
+		W.BorderlandsRotation.forEach(function(iLandNick)
 		{
-			W.Objectives[i] = ebgobjs[i];
-		}
-		
-		// Initialize rotational maps
-		if (W.BorderlandsCurrent === W.BorderlandsEnum.Mixed)
-		{
-			for (var i in mixedobjs)
+			var landobjectives = objectivedata[iLandNick];
+			for (var ii in landobjectives)
 			{
-				W.Objectives[i] = mixedobjs[i];
+				W.Objectives[ii] = landobjectives[ii];
 			}
-		}
-		else if (W.BorderlandsCurrent === W.BorderlandsEnum.Alpine)
-		{
-			for (var i in alpineobjs)
-			{
-				W.Objectives[i] = alpineobjs[i];
-			}
-		}
-		else if (W.BorderlandsCurrent === W.BorderlandsEnum.Desert)
-		{
-			for (var i in desertobjs)
-			{
-				W.Objectives[i] = desertobjs[i];
-			}
-		}
+		});
 	},
 	
 	/*
@@ -25177,7 +25153,7 @@ W = {
 		{
 			obj = W.Objectives[i];
 			subobjclass = (obj.type === W.ObjectiveEnum.Ruins) ? "objSubobjective" : "";
-			marker = L.marker(this.convertGCtoLC(obj.coord),
+			marker = L.marker(W.convertGCtoLC(obj.coord),
 			{
 				clickable: true,
 				riseOnHover: true,
@@ -25197,21 +25173,21 @@ W = {
 					iconAnchor: [19, 19]
 				})
 			});
-			this.bindMarkerZoomBehavior(marker, "contextmenu");
+			W.bindMarkerZoomBehavior(marker, "contextmenu");
 			obj.Marker = marker;
-			this.Layer.Objective.addLayer(marker);
+			W.Layer.Objective.addLayer(marker);
 		}
-		this.toggleLayer(this.Layer.Objective, true);
+		W.toggleLayer(W.Layer.Objective, true);
 		
 		// Generate labels over servers' map spawn points, the names will be reassigned by the objective function
-		var labels = W.Metadata.SpawnLabels[W.BorderlandsCurrent];
-		for (var i in labels)
+		var labels = W.Metadata.SpawnLabels;
+		W.BorderlandsRotation.forEach(function(iLandNick)
 		{
-			var labelmap = labels[i];
-			for (var ii in labelmap)
+			var landlabel = labels[iLandNick];
+			for (var ii in landlabel)
 			{
-				var coord = labelmap[ii];
-				marker = L.marker(this.convertGCtoLC(coord),
+				var coord = landlabel[ii];
+				marker = L.marker(W.convertGCtoLC(coord),
 				{
 					clickable: false,
 					icon: L.divIcon(
@@ -25224,10 +25200,10 @@ W = {
 						iconAnchor: [256, 32]
 					})
 				});
-				this.Layer.SpawnLabel.addLayer(marker);
+				W.Layer.SpawnLabel.addLayer(marker);
 			}
-		}
-		this.toggleLayer(this.Layer.SpawnLabel, true);
+		});
+		W.toggleLayer(W.Layer.SpawnLabel, true);
 		
 		// Hide map labels if opted
 		W.toggleObjectiveLabels();
