@@ -1391,6 +1391,13 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Shared Inventory Slot",
+		id: "67071",
+		price: 595,
+		discount: [[1, 595, 700], [3, 1606, 1890], [5, 2380, 2800]],
+		col: 0
+	},
+	{
 		name: "Character Slot Expansion",
 		img: "http://i.imgur.com/bYMfxCX.png",
 		price: 560,
@@ -1426,45 +1433,24 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Ceremonial Plated Outfit",
-		id: "67040",
-		price: 480,
-		discount: 600,
+		name: "Copper-Fed Salvage-o-Matic",
+		id: "44602",
+		price: 640,
+		discount: 800,
 		col: 0
 	},
 	{
-		name: "Grenth Hood Skin",
-		id: "47890",
+		name: "Balthazar's Regalia Outfit",
+		id: "69607",
+		price: 490,
+		discount: 700,
+		col: 0
+	},
+	{
+		name: "Bubble Glider",
+		id: "78007",
 		price: 400,
 		discount: 500,
-		col: 0
-	},
-	{
-		name: "Stag Helm Skin",
-		id: "47883",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Scarlet's Grasp",
-		id: "48817",
-		price: 300,
-		discount: 400,
-		col: 0
-	},
-	{
-		name: "Scarlet's Spaulders",
-		id: "48824",
-		price: 300,
-		discount: 400,
-		col: 0
-	},
-	{
-		name: "Phantom's Hood",
-		id: "65203",
-		price: 160,
-		discount: 200,
 		col: 0
 	},
 	{
@@ -1489,10 +1475,10 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Metallurgic Dye Kit",
-		id: "47900",
-		price: 87,
-		discount: [[1, 87, 125], [5, 350, 500], [25, 1750, 2500]],
+		name: "Shadow Dye Kit",
+		id: "68786",
+		price: 93,
+		discount: [[1, 93, 125], [5, 375, 500], [25, 1875, 2500]],
 		col: 0
 	},
 	{
