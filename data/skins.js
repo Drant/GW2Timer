@@ -465,7 +465,12 @@ Back: [
 	{u: 6774, i: 78745, n: "Moth Wings Backpack", p: {gem: 700}},
 	{u: 6809, i: 78848, n: "Keep Construct Mask", p: {raid_ft: 600}},
 	{u: 6854, i: 79288, n: "Shining Blade Backpack", p: {gem: 700}},
-	{u: 6875, i: 79157, n: "Blood Ruby Backpack", p: {magic: 5000}}
+	{u: 6875, i: 79157, n: "Blood Ruby Backpack", p: {magic: 5000}},
+	{u: 6890, i: 79337, n: "Rata Sum Apparatus", p: {starting: true}},
+	{u: 6892, i: 79336, n: "Hoelbrak Mountain Pack", p: {starting: true}},
+	{u: 6895, i: 79338, n: "Black Citadel Engine", p: {starting: true}},
+	{u: 6898, i: 79328, n: "Divinity's Reach Rucksack", p: {starting: true}},
+	{u: 6902, i: 79327, n: "Grove Hydria", p: {starting: true}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", t: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -2176,7 +2181,8 @@ Weapon_Axe: [
 	{u: 6749, i: 78777, n: "Cavalier Axe", t: [78777]},
 	{u: 6789, i: 78872, n: "Privateer Axe", p: {blticket: 1}},
 	{u: 6810, i: 78963, n: "White Mantle Axe", p: {raid_ft: 600}},
-	{u: 6874, i: 79174, n: "Embellished Axe", t: [79174]}
+	{u: 6874, i: 79174, n: "Embellished Axe", t: [79174]},
+	{u: 6928, i: 79379, n: "Bloodstone Axe", t: [79379]}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", t: [49332]},
@@ -2304,7 +2310,8 @@ Weapon_Mace: [
 	{u: 6709, i: 78316, n: "Spectral Mace", t: [78316]},
 	{u: 6747, i: 78779, n: "Cavalier Mace", t: [78779]},
 	{u: 6832, i: 78889, n: "Privateer Mace", p: {blticket: 1}},
-	{u: 6866, i: 79300, n: "Embellished Mace", t: [79300]}
+	{u: 6866, i: 79300, n: "Embellished Mace", t: [79300]},
+	{u: 6926, i: 79373, n: "Bloodstone Mace", t: [79373]}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", t: [49353]},
@@ -2454,7 +2461,8 @@ Weapon_Sword: [
 	{u: 6817, i: 78831, n: "Privateer Sword", p: {blticket: 1}},
 	{u: 6788, i: 78901, n: "White Mantle Gladius", p: {raid_ft: 600}},
 	{u: 6859, i: 79192, n: "Embellished Sword", t: [79192]},
-	{u: 6884, i: 79089, n: "Lord Caudecus's Sword", p: {gem: 600}}
+	{u: 6884, i: 79089, n: "Lord Caudecus's Sword", p: {gem: 600}},
+	{u: 6911, i: 79385, n: "Bloodstone Sword", t: [79385]}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", t: [49317]},
@@ -2593,7 +2601,8 @@ Weapon_Dagger: [
 	{u: 6751, i: 78780, n: "Cavalier Dagger", t: [78780]},
 	{u: 6793, i: 78956, n: "Privateer Dagger", p: {blticket: 1}},
 	{u: 6815, i: 78943, n: "White Mantle Seax", p: {raid_ft: 600}},
-	{u: 6877, i: 79246, n: "Embellished Dagger", t: [79246]}
+	{u: 6877, i: 79246, n: "Embellished Dagger", t: [79246]},
+	{u: 6907, i: 79404, n: "Bloodstone Dagger", t: [79404]}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", t: [49335]},
@@ -2727,7 +2736,8 @@ Weapon_Pistol: [
 	{u: 6756, i: 78749, n: "Cavalier Pistol", t: [78749]},
 	{u: 6786, i: 78840, n: "Privateer Pistol", p: {blticket: 1}},
 	{u: 6886, i: 79107, n: "Embellished Pistol", t: [79107]},
-	{u: 6863, i: 79179, n: "Lord Caudecus's Pistol", p: {gem: 600}}
+	{u: 6863, i: 79179, n: "Lord Caudecus's Pistol", p: {gem: 600}},
+	{u: 6930, i: 79369, n: "Bloodstone Pistol", t: [79369]}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", t: [49341]},
@@ -2864,7 +2874,9 @@ Weapon_Scepter: [
 	{u: 6808, i: 78854, n: "Privateer Scepter", p: {blticket: 1}},
 	{u: 6804, i: 78847, n: "White Mantle Rod", p: {raid_ft: 600}},
 	{u: 6813, i: 78852, n: "Xera's Scepter", p: {raid_ft: 600}},
-	{u: 6861, i: 79131, n: "Embellished Scepter", t: [79131]}
+	{u: 6861, i: 79131, n: "Embellished Scepter", t: [79131]},
+	{u: 6920, i: 79375, n: "Bloodstone Scepter", t: [79375]},
+	{u: 6940, i: 79365, n: "Peacock Scepter", p: {gem: 600}}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", t: [44897]},
@@ -3017,7 +3029,8 @@ Weapon_Focus: [
 	{u: 6767, i: 78755, n: "Cavalier Focus", t: [78755]},
 	{u: 6816, i: 78798, n: "Privateer Focus", p: {blticket: 1}},
 	{u: 6821, i: 78844, n: "White Mantle Icon", p: {raid_ft: 600}},
-	{u: 6848, i: 79109, n: "Embellished Focus", t: [79109]}
+	{u: 6848, i: 79109, n: "Embellished Focus", t: [79109]},
+	{u: 6934, i: 79382, n: "Bloodstone Focus", t: [79382]}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", t: [49344]},
@@ -3166,7 +3179,8 @@ Weapon_Shield: [
 	{u: 6681, i: 78354, n: "Spectral Shield", t: [78354]},
 	{u: 6768, i: 78765, n: "Cavalier Shield", t: [78765]},
 	{u: 6827, i: 78968, n: "Privateer Shield", p: {blticket: 1}},
-	{u: 6869, i: 79209, n: "Embellished Shield", t: [79209]}
+	{u: 6869, i: 79209, n: "Embellished Shield", t: [79209]},
+	{u: 6912, i: 79403, n: "Bloodstone Shield", t: [79403]}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -3296,7 +3310,8 @@ Weapon_Torch: [
 	{u: 6780, i: 78761, n: "Cavalier Torch", t: [78761]},
 	{u: 6807, i: 78803, n: "Privateer Torch", p: {blticket: 1}},
 	{u: 6836, i: 78986, n: "Keep Construct Torch", p: {raid_ft: 600}},
-	{u: 6873, i: 79101, n: "Embellished Torch", t: [79101]}
+	{u: 6873, i: 79101, n: "Embellished Torch", t: [79101]},
+	{u: 6936, i: 79393, n: "Bloodstone Torch", t: [79393]}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", t: [49359]},
@@ -3426,7 +3441,8 @@ Weapon_Warhorn: [
 	{u: 6735, i: 78189, n: "Spectral Warhorn", t: [78189]},
 	{u: 6777, i: 78757, n: "Cavalier Warhorn", t: [78757]},
 	{u: 6797, i: 78932, n: "Privateer Warhorn", p: {blticket: 1}},
-	{u: 6876, i: 79307, n: "Embellished Warhorn", t: [79307]}
+	{u: 6876, i: 79307, n: "Embellished Warhorn", t: [79307]},
+	{u: 6933, i: 79399, n: "Bloodstone Warhorn", t: [79399]}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", t: [49321, 49323]},
@@ -3573,7 +3589,8 @@ Weapon_Greatsword: [
 	{u: 6765, i: 78772, n: "Cavalier Greatsword", t: [78772]},
 	{u: 6803, i: 78924, n: "Privateer Greatsword", p: {blticket: 1}},
 	{u: 6864, i: 79056, n: "Mistwild Greatsword", p: {achievement: 0}},
-	{u: 6882, i: 79261, n: "Embellished Greatsword", t: [79261]}
+	{u: 6882, i: 79261, n: "Embellished Greatsword", t: [79261]},
+	{u: 6950, i: 79389, n: "Bloodstone Greatsword", t: [79389]}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", t: [49326]},
@@ -3712,7 +3729,8 @@ Weapon_Hammer: [
 	{u: 6764, i: 78750, n: "Cavalier Hammer", t: [78750]},
 	{u: 6787, i: 78993, n: "Privateer Hammer", p: {blticket: 1}},
 	{u: 6805, i: 78875, n: "White Mantle Sledge", p: {raid_ft: 600}},
-	{u: 6868, i: 79277, n: "Embellished Hammer", t: [79277]}
+	{u: 6868, i: 79277, n: "Embellished Hammer", t: [79277]},
+	{u: 6908, i: 79377, n: "Bloodstone Hammer", t: [79377]}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", t: [44906]},
@@ -3851,7 +3869,8 @@ Weapon_Longbow: [
 	{u: 6758, i: 78776, n: "Cavalier Longbow", t: [78776]},
 	{u: 6819, i: 78929, n: "Privateer Longbow", p: {blticket: 1}},
 	{u: 6865, i: 79162, n: "Embellished Longbow", t: [79162]},
-	{u: 6894, i: 79310, n: "Storm Bow", p: {gem: 600}}
+	{u: 6894, i: 79310, n: "Storm Bow", p: {gem: 600}},
+	{u: 6925, i: 79409, n: "Bloodstone Longbow", t: [79409]}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", t: [44924]},
@@ -3992,7 +4011,8 @@ Weapon_Shortbow: [
 	{u: 6720, i: 78664, n: "Spectral Short Bow", t: [78664]},
 	{u: 6753, i: 78778, n: "Cavalier Short Bow", t: [78778]},
 	{u: 6830, i: 78816, n: "Privateer Short Bow", p: {blticket: 1}},
-	{u: 6862, i: 79125, n: "Embellished Short Bow", t: [79125]}
+	{u: 6862, i: 79125, n: "Embellished Short Bow", t: [79125]},
+	{u: 6947, i: 79395, n: "Bloodstone Short Bow", t: [79395]}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", t: [49338]},
@@ -4129,7 +4149,8 @@ Weapon_Rifle: [
 	{u: 6757, i: 78775, n: "Cavalier Rifle", t: [78775]},
 	{u: 6822, i: 78841, n: "Privateer Rifle", p: {blticket: 1}},
 	{u: 6835, i: 78927, n: "White Mantle Rifle", p: {raid_ft: 600}},
-	{u: 6871, i: 79074, n: "Embellished Rifle", t: [79074]}
+	{u: 6871, i: 79074, n: "Embellished Rifle", t: [79074]},
+	{u: 6921, i: 79407, n: "Bloodstone Rifle", t: [79407]}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", t: [49348, 49350]},
@@ -4281,7 +4302,8 @@ Weapon_Staff: [
 	{u: 6826, i: 78908, n: "Privateer Staff", p: {blticket: 1}},
 	{u: 6825, i: 78911, n: "White Mantle Spire", p: {raid_ft: 600}},
 	{u: 6887, i: 79054, n: "Embellished Staff", t: [79054]},
-	{u: 6901, i: 79315, n: "Emissary's Staff", p: {gem: 600}}
+	{u: 6901, i: 79315, n: "Emissary's Staff", p: {gem: 600}},
+	{u: 6932, i: 79362, n: "Bloodstone Staff", t: [79362]}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", t: [63881]},

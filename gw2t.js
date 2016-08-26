@@ -131,7 +131,6 @@ O = {
 		bol_hideChecked: false,
 		bol_expandWB: true,
 		bol_collapseChains: true,
-		bol_showClockIcons: false,
 		int_setClock: 0,
 		int_setDimming: 0,
 		int_setPredictor: 0,
@@ -6117,7 +6116,8 @@ Z = {
 					arr.push(parseInt(i));
 				}
 			}
-
+			
+			I.print("Fetching prices...");
 			Z.scrapeAPIArray(arr, "commerce/prices", {aCallback: function(pData, pUntradeableIDs)
 			{
 				// Add to the untradeable list any items that got past the tradeable check
@@ -6142,6 +6142,7 @@ Z = {
 		// Load composite ingredient IDs and the previous ID blacklist
 		var loadMetadata = function()
 		{
+			I.print("Loading prices data...");
 			$.getScript(U.URL_DATA.Ascended, function()
 			{
 				$.getScript(U.URL_DATA.Prices, function()
@@ -6180,6 +6181,7 @@ Z = {
 		 * ID to the associative array. Executions must be in the same order as
 		 * the record names array.
 		 */
+		I.print("Loading items database...");
 		Z.getItemsDatabase(function(pDatabase)
 		{
 			db = pDatabase;
@@ -13442,6 +13444,44 @@ Q = {
 	},
 	
 	/*
+	 * Tells whether an item can be traded and has price on the Trading Post.
+	 * @param int or object pItem ID of an item, or the item itself.
+	 * @returns boolean.
+	 * @pre Item was analyzed if requesting by ID.
+	 */
+	isTradeable: function(pItem)
+	{
+		if (pItem === undefined)
+		{
+			return false;
+		}
+		// If item is an ID
+		if (typeof pItem === "number")
+		{
+			var box = Q.Box[pItem];
+			// Assume item is tradeable, unless it was analyzed not to be so
+			if (box)
+			{
+				return (box.oIsTradeable === false) ? false : true;
+			}
+		}
+		// If item is an item details object
+		if (pItem.flags)
+		{
+			var flag;
+			for (var i = 0; i < pItem.flags.length; i++)
+			{
+				flag = pItem.flags[i];
+				if (flag === "AccountBound" || flag === "SoulbindOnAcquire")
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	},
+	
+	/*
 	 * Retrieves item details from API if haven't already, then execute callback
 	 * function. Basically a wrapper for getJSON with item ID function.
 	 * @param int pItemID to get item.
@@ -13476,6 +13516,16 @@ Q = {
 			});
 			return jqxhr;
 		}
+	},
+	
+	/*
+	 * Fetches item details if not already cached.
+	 * @param array pArray of item IDs.
+	 * @param function pCallback to execute after.
+	 */
+	prefetchItems: function(pArray, pCallback)
+	{
+		
 	},
 	
 	/*
@@ -14107,44 +14157,6 @@ Q = {
 		{
 			finalizeTooltip();
 		}
-	},
-	
-	/*
-	 * Tells whether an item can be traded and has price on the Trading Post.
-	 * @param int or object pItem ID of an item, or the item itself.
-	 * @returns boolean.
-	 * @pre Item was analyzed if requesting by ID.
-	 */
-	isTradeable: function(pItem)
-	{
-		if (pItem === undefined)
-		{
-			return false;
-		}
-		// If item is an ID
-		if (typeof pItem === "number")
-		{
-			var box = Q.Box[pItem];
-			// Assume item is tradeable, unless it was analyzed not to be so
-			if (box)
-			{
-				return (box.oIsTradeable === false) ? false : true;
-			}
-		}
-		// If item is an item details object
-		if (pItem.flags)
-		{
-			var flag;
-			for (var i = 0; i < pItem.flags.length; i++)
-			{
-				flag = pItem.flags[i];
-				if (flag === "AccountBound" || flag === "SoulbindOnAcquire")
-				{
-					return false;
-				}
-			}
-		}
-		return true;
 	},
 	
 	/*
@@ -17357,7 +17369,7 @@ D = {
 	{
 		if (D.isLanguageDefault())
 		{
-			return pChain.alias;
+			return C.parseChainAlias(pChain.alias);
 		}
 		return D.getChainTitle(pChain);
 	},
@@ -17744,16 +17756,16 @@ C = {
 	},
 	
 	/*
-	 * Returns the substring before the "XXX" delimiter in a chain alias.
+	 * Returns the substring before the delimiter in a chain alias.
 	 * Used for reusing chain icons of different chains.
 	 * @param string pAlias of the chain.
 	 * @returns string common alias of the chain.
 	 */
 	parseChainAlias: function(pAlias)
 	{
-		if (pAlias.indexOf("XXX") !== -1)
+		if (pAlias.indexOf("_") !== -1)
 		{
-			return pAlias.split("XXX")[0];
+			return pAlias.split("_")[0];
 		}
 		return pAlias;
 	},
@@ -25015,13 +25027,8 @@ W = {
 		Europe: "Europe"
 	},
 	LocaleCurrent: null,
-	BorderlandsRotation: null, // Will refer to an array of zone nicks of the current rotation
-	BorderlandsCurrent: null,
-	BorderlandsEnum: {
-		Mixed: "Mixed",
-		Alpine: "Alpine",
-		Desert: "Desert"
-	},
+	Rotation: null, // Will refer to an associative array of zone nicks of the current rotation
+	LandPrefix: {},
 	isWvWPrepped: false,
 	isWvWLoaded: false,
 	Metadata: {},
@@ -25056,27 +25063,22 @@ W = {
 	numSiegeSupply: 0,
 	
 	/*
-	 * Changes variables to match the current borderlands type rotation before
-	 * actually manipulating them.
+	 * Changes variables to match the current borderlands rotation.
 	 */
-	determineBorderlands: function()
+	initializeBorderlands: function()
 	{
-		W.BorderlandsCurrent = W.BorderlandsEnum.Mixed;
 		// Zone Objects
-		W.Zones = GW2T_LAND_DATA;
-		var rotationdata = GW2T_LAND_ROTATION;
-		W.BorderlandsRotation = rotationdata.Rotation;
-		W.BorderlandsRotation.forEach(function(iLandNick)
+		W.Rotation = W.Metadata.Rotation;
+		for (var i in W.Rotation)
 		{
-			W.Zones[iLandNick] = rotationdata.Land[iLandNick];
-		});
-		// Siege Placements
-		W.Placement = GW2T_PLACEMENT_DATA;
-		W.Placement[W.BorderlandsCurrent] = GW2T_PLACEMENT_ROTATION[W.BorderlandsCurrent];
+			var landnick = W.Rotation[i];
+			W.Zones[landnick] = GW2T_LAND_ADD[landnick];
+			W.LandPrefix[i] = W.Zones[landnick].id + "-";
+		}
 		// Zone List
 		$(".wvwZoneListBorderlands").each(function()
 		{
-			var landnick = W.BorderlandsCurrent.toLowerCase() + $(this).attr("data-zone");
+			var landnick = W.Rotation[$(this).attr("data-zone")];
 			$(this).attr("data-zone", landnick);
 		});
 	},
@@ -25086,7 +25088,6 @@ W = {
 	 */
 	initializeWvW: function()
 	{
-		W.determineBorderlands();
 		/*
 		 * Merge W's unique variables and functions with M, and use that new
 		 * object as W. This is a shallow copy, so objects within an object that
@@ -25095,13 +25096,16 @@ W = {
 		var now = new Date();
 		$.extend(W, $.extend({}, M, W));
 		W.Regions = GW2T_REALM_DATA;
+		W.Zones = GW2T_LAND_DATA;
 		W.Servers = GW2T_SERVER_DATA;
 		W.Weapons = GW2T_WEAPON_DATA;
 		W.Metadata = GW2T_WVW_METADATA;
+		W.Placement = GW2T_PLACEMENT_DATA;
 		W.MapType = W.Metadata.MapType;
 		W.LandEnum = W.Metadata.LandEnum;
 		W.ObjectiveEnum = W.Metadata.ObjectiveEnum;
 		W.OwnerEnum = W.Metadata.OwnerEnum;
+		W.initializeBorderlands();
 		
 		W.computeObjectivesValue();
 		W.initializeObjectives();
@@ -25133,14 +25137,15 @@ W = {
 	initializeObjectives: function()
 	{
 		var objectivedata = GW2T_OBJECTIVE_DATA;
-		W.BorderlandsRotation.forEach(function(iLandNick)
+		for (var i in W.Rotation)
 		{
-			var landobjectives = objectivedata[iLandNick];
+			var landnick = W.Rotation[i];
+			var landobjectives = objectivedata[landnick];
 			for (var ii in landobjectives)
 			{
 				W.Objectives[ii] = landobjectives[ii];
 			}
-		});
+		}
 	},
 	
 	/*
@@ -25181,9 +25186,10 @@ W = {
 		
 		// Generate labels over servers' map spawn points, the names will be reassigned by the objective function
 		var labels = W.Metadata.SpawnLabels;
-		W.BorderlandsRotation.forEach(function(iLandNick)
+		for (var i in W.Rotation)
 		{
-			var landlabel = labels[iLandNick];
+			var landnick = W.Rotation[i];
+			var landlabel = labels[landnick];
 			for (var ii in landlabel)
 			{
 				var coord = landlabel[ii];
@@ -25202,7 +25208,7 @@ W = {
 				});
 				W.Layer.SpawnLabel.addLayer(marker);
 			}
-		});
+		}
 		W.toggleLayer(W.Layer.SpawnLabel, true);
 		
 		// Hide map labels if opted
@@ -25784,7 +25790,7 @@ W = {
 		for (var i in pData.maps)
 		{
 			map = pData.maps[i];
-			landprefix = W.Metadata.LandPrefix[map.type];
+			landprefix = W.LandPrefix[map.type];
 			for (var ii in map.objectives)
 			{
 				apiobj = map.objectives[ii];
@@ -26770,7 +26776,7 @@ W = {
 					for (var i in pData.maps)
 					{
 						map = pData.maps[i];
-						landprefix = W.Metadata.LandPrefix[map.type];
+						landprefix = W.LandPrefix[map.type];
 						for (var ii in map.objectives)
 						{
 							apiobj = map.objectives[ii];
@@ -29415,7 +29421,6 @@ K = {
  * @@Klock analog and by-the-second and frame refreshes
  * ========================================================================== */
 
-	isClockSimplified: false,
 	tickerFrequency: 250, // Must be a divisor of 1000 milliseconds
 	tickerSecondPrevious: null,
 	stopwatchFrequency: 50,
@@ -29492,18 +29497,10 @@ K = {
 		K.initializeClipboard();
 		//K.refreshFestival();
 		
-		// For main site mode, hide clock icons to reduce clutter
-		if (O.Options.bol_showClockIcons !== true && I.ModeCurrent === I.ModeEnum.Website && I.isProgramEmbedded === false
-			&& O.Options.bol_showTimeline === true && O.Options.bol_showHUD === true && O.Options.int_setClock === 0)
+		// Hide chain progress bar for main mode
+		if (I.ModeCurrent === I.ModeEnum.Website && O.Options.int_setClock !== O.IntEnum.Clock.None)
 		{
-			K.isClockSimplified = true;
 			$("#chnProgressBar").hide();
-			var simplifiedelms = $("#paneClockIcons, #clkWaypoints, .clkMarkerPred");
-			simplifiedelms.css({opacity: 0});
-			$("#paneClock").hover(
-				function() { simplifiedelms.animate({opacity: 1}, "fast"); },
-				function() { simplifiedelms.animate({opacity: 0}, "fast"); }
-			);
 		}
 		
 		// Other clickable elements
@@ -29841,12 +29838,11 @@ K = {
 	 */
 	colorPrediction: function(pColor)
 	{
-		var color = (K.isClockSimplified) ? "white" : pColor;
-		if (color !== K.currentPredictionColor)
+		if (pColor !== K.currentPredictionColor)
 		{
-			K.currentPredictionColor = color;
-			K.handMinute.style.stroke = color;
-			K.timeProgress0.style.background = "linear-gradient(to right, black 0%, " + color + " 100%)";
+			K.currentPredictionColor = pColor;
+			K.handMinute.style.stroke = pColor;
+			K.timeProgress0.style.background = "linear-gradient(to right, black 0%, " + pColor + " 100%)";
 		}
 	},
 
@@ -30331,7 +30327,7 @@ K = {
 				if (pChain)
 				{
 					pIcon.show();
-					pIcon.attr("src", "img/chain/" + pChain.alias.toLowerCase() + I.cPNG);
+					pIcon.attr("src", pChain.iconSrc);
 					pIcon.data(C.cIndexSynonym, pChain.nexus);
 					if (I.ModeCurrent === I.ModeEnum.Simple)
 					{

@@ -33,94 +33,91 @@ var GW2T_REALM_DATA = {
 /*
  * WvW zones to be added to the Zones object depending on map rotation.
  */
-var GW2T_LAND_ROTATION = {
-	Rotation: ["eternal", "desertred", "alpineblue", "alpinegreen"],
-	Land: {
-		"eternal": // south side
-		{
-			id: "38",
-			name_en: "Eternal Battlegrounds",
-			name_de: "Ewige Schlachtfelder",
-			name_es: "Campos de batalla eternos",
-			name_fr: "Champs de bataille éternels",
-			name_zh: "永恆戰場",
-			region: "wvw",
-			map_rect: [[-36864, -36864], [36864, 36864]],
-			continent_rect: [[8958, 12798], [12030, 15870]]
-		},
-		"alpinered": // north side
-		{
-			id: "94",
-			name_en: "Red Borderlands",
-			name_de: "Rot Grenzlande",
-			name_es: "Tierras Fronterizas de rojo",
-			name_fr: "Territoires frontaliers rouge",
-			name_zh: "沙漠邊境之地紅色",
-			region: "wvw",
-			map_rect: [[-30720, -43008], [30720, 43008]],
-			continent_rect: [[9214, 8958], [11774, 12542]]
-		},
-		"alpineblue": // west side
-		{
-			id: "96",
-			name_en: "Blue Borderlands",
-			name_de: "Blau Grenzlande",
-			name_es: "Tierras Fronterizas de azul",
-			name_fr: "Territoires frontaliers bleu",
-			name_zh: "沙漠邊境之地藍色",
-			region: "wvw",
-			map_rect: [[-30720, -43008], [30720, 43008]],
-			continent_rect: [[12798, 10878], [15358, 14462]]
-		},
-		"alpinegreen": // east side
-		{
-			id: "95",
-			name_en: "Green Borderlands",
-			name_de: "Grün Grenzlande",
-			name_es: "Tierras Fronterizas de verde",
-			name_fr: "Territoires frontaliers vert",
-			name_zh: "沙漠邊境之地綠色",
-			region: "wvw",
-			map_rect: [[-30720, -43008], [30720, 43008]],
-			continent_rect: [[5630, 11518], [8190, 15102]]
-		},
-		"desertred": // north side
-		{
-			id: "1099",
-			name_en: "Red Borderlands",
-			name_de: "Rot Grenzlande",
-			name_es: "Tierras Fronterizas de rojo",
-			name_fr: "Territoires frontaliers rouge",
-			name_zh: "沙漠邊境之地紅色",
-			region: "wvw",
-			map_rect: [[-36864, -36864], [36864, 36864]],
-			continent_rect: [[9214, 8958], [12286, 12030]]
-		},
-		"desertblue": // west side
-		{
-			id: "1143",
-			name_en: "Blue Borderlands",
-			name_de: "Blau Grenzlande",
-			name_es: "Tierras Fronterizas de azul",
-			name_fr: "Territoires frontaliers bleu",
-			name_zh: "沙漠邊境之地藍色",
-			region: "wvw",
-			map_rect: [[-36864, -36864], [36864, 36864]],
-			continent_rect: [[12798, 10878], [15870, 13950]]
-		},
-		"desertgreen": // east side
-		{
-			id: "1102",
-			name_en: "Green Borderlands",
-			name_de: "Grün Grenzlande",
-			name_es: "Tierras Fronterizas de verde",
-			name_fr: "Territoires frontaliers vert",
-			name_zh: "沙漠邊境之地綠色",
-			region: "wvw",
-			map_rect: [[-36864, -36864], [36864, 36864]],
-			continent_rect: [[5630, 11518], [8702, 14590]]
-		}
-	}
+var GW2T_LAND_ADD = {
+"eternal": // south side
+{
+	id: "38",
+	name_en: "Eternal Battlegrounds",
+	name_de: "Ewige Schlachtfelder",
+	name_es: "Campos de batalla eternos",
+	name_fr: "Champs de bataille éternels",
+	name_zh: "永恆戰場",
+	region: "wvw",
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[8958, 12798], [12030, 15870]]
+},
+"alpinered": // north side
+{
+	id: "94",
+	name_en: "Red Borderlands",
+	name_de: "Rot Grenzlande",
+	name_es: "Tierras Fronterizas de rojo",
+	name_fr: "Territoires frontaliers rouge",
+	name_zh: "沙漠邊境之地紅色",
+	region: "wvw",
+	map_rect: [[-30720, -43008], [30720, 43008]],
+	continent_rect: [[9214, 8958], [11774, 12542]]
+},
+"alpineblue": // west side
+{
+	id: "96",
+	name_en: "Blue Borderlands",
+	name_de: "Blau Grenzlande",
+	name_es: "Tierras Fronterizas de azul",
+	name_fr: "Territoires frontaliers bleu",
+	name_zh: "沙漠邊境之地藍色",
+	region: "wvw",
+	map_rect: [[-30720, -43008], [30720, 43008]],
+	continent_rect: [[12798, 10878], [15358, 14462]]
+},
+"alpinegreen": // east side
+{
+	id: "95",
+	name_en: "Green Borderlands",
+	name_de: "Grün Grenzlande",
+	name_es: "Tierras Fronterizas de verde",
+	name_fr: "Territoires frontaliers vert",
+	name_zh: "沙漠邊境之地綠色",
+	region: "wvw",
+	map_rect: [[-30720, -43008], [30720, 43008]],
+	continent_rect: [[5630, 11518], [8190, 15102]]
+},
+"desertred": // north side
+{
+	id: "1099",
+	name_en: "Red Borderlands",
+	name_de: "Rot Grenzlande",
+	name_es: "Tierras Fronterizas de rojo",
+	name_fr: "Territoires frontaliers rouge",
+	name_zh: "沙漠邊境之地紅色",
+	region: "wvw",
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[9214, 8958], [12286, 12030]]
+},
+"desertblue": // west side
+{
+	id: "1143",
+	name_en: "Blue Borderlands",
+	name_de: "Blau Grenzlande",
+	name_es: "Tierras Fronterizas de azul",
+	name_fr: "Territoires frontaliers bleu",
+	name_zh: "沙漠邊境之地藍色",
+	region: "wvw",
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[12798, 10878], [15870, 13950]]
+},
+"desertgreen": // east side
+{
+	id: "1102",
+	name_en: "Green Borderlands",
+	name_de: "Grün Grenzlande",
+	name_es: "Tierras Fronterizas de verde",
+	name_fr: "Territoires frontaliers vert",
+	name_zh: "沙漠邊境之地綠色",
+	region: "wvw",
+	map_rect: [[-36864, -36864], [36864, 36864]],
+	continent_rect: [[5630, 11518], [8702, 14590]]
+}
 };
 /*
  * Lands are sorted by importance.
@@ -2503,121 +2500,6 @@ burningoildesert: {
  * The coordinates are all from the Green Borderlands. To place on the red and
  * blue borderlands, the offset metadata must be used.
  */
-var GW2T_PLACEMENT_ROTATION = {
-Alpine: {
-	ZoneNicks: ["alpinered", "alpineblue", "alpinegreen"],
-	Siege: [{"id":"trebuchet","coord":[5914,14107]},{"id":"trebuchet","coord":[5965,14024]},{"id":"catapult","coord":[6067,13846]},{"id":"catapult","coord":[6069,13774]},{"id":"catapult","coord":[5883,13106]},{"id":"trebuchet","coord":[6072,13251]},{"id":"catapult","coord":[6314,13554]},{"id":"trebuchet","coord":[6451,13978]},{"id":"catapult","coord":[6549,13979]},{"id":"catapult","coord":[6805,14101]},{"id":"catapult","coord":[7452,14065]},{"id":"trebuchet","coord":[7738,13761]},{"id":"catapult","coord":[7718,13507]},{"id":"trebuchet","coord":[7858,12981]},{"id":"trebuchet","coord":[7402,12783]},{"id":"catapult","coord":[7330,12785]},{"id":"catapult","coord":[7463,12672]},{"id":"portal","coord":[6921,12731]},{"id":"catapult","coord":[6930,12837]},{"id":"trebuchet","coord":[7065,13001]},{"id":"trebuchet","coord":[6601,12641]},{"id":"trebuchet","coord":[6321,12724]},{"id":"catapult","coord":[6252,12538]},{"id":"trebuchet","coord":[6178,12301]},{"id":"trebuchet","coord":[7555,13512]}]
-},
-Desert: {
-	ZoneNicks: ["desertred", "desertblue", "desertgreen"],
-	Barricade: [
-	// rampart
-	[[6751, 12477], [6821, 12479]],
-	[[6700, 12479], [6720, 12479]],
-	[[7512, 12490], [7581, 12485]],
-	[[7614, 12481], [7635, 12480]],
-	// NW tower
-	[[6399, 12277], [6468, 12275]],
-	[[6492, 12274], [6547, 12263]],
-	// SW tower
-	[[6864, 14033], [6892, 14040]],
-	[[6824, 14021], [6844, 14026]],
-	[[6490, 13807], [6504, 13844]],
-	[[6520, 13879], [6572, 13928]],
-	// NE tower
-	[[8003, 12342], [8057, 12327]],
-	[[7933, 12369], [7977, 12358]],
-	// SE tower
-	[[7351, 13963], [7421, 13978]],
-	[[7457, 13986], [7519, 13995]],
-	[[7849, 14063], [7921, 14055]],
-	[[7949, 14043], [7992, 14018]]
-	],
-	Wall: [
-	// rampart
-	[[7373, 12545], [7408, 12584]],
-	[[7257, 12810], [7279, 12810]],
-	[[7077, 12799], [7117, 12803]],
-	[[6832, 12484], [6834, 12534]],
-	[[6840, 12476], [6922, 12471]],
-	[[7049, 12519], [7082, 12480]],
-	[[7434, 12490], [7485, 12491]],
-	[[7497, 12500], [7501, 12551]],
-	// W keep
-	[[5963, 12948], [6012, 12946]],
-	[[6108, 12945], [6160, 12946]],
-	[[6236, 13016], [6236, 13047]],
-	[[5933, 13223], [5933, 13245]],
-	[[5932, 13134], [5932, 13153]],
-	[[6001, 13411], [6034, 13411]],
-	[[6128, 13414], [6161, 13414]],
-	[[6267, 13288], [6267, 13310]],
-	// E keep
-	[[8271, 13013], [8297, 13012]],
-	[[8078, 13062], [8077, 13106]],
-	[[8408, 13338], [8426, 13349]],
-	[[8408, 13158], [8422, 13150]],
-	[[8131, 13417], [8166, 13444]],
-	// NW tower
-	[[6315, 12277], [6365, 12277]],
-	[[6378, 12211], [6377, 12262]],
-	[[6141, 12277], [6199, 12278]],
-	[[6127, 12189], [6127, 12262]],
-	[[6330, 11884], [6405, 11917]],
-	[[6413, 11938], [6401, 11965]],
-	// SW tower
-	[[6583, 13987], [6575, 14026]],
-	[[6655, 14057], [6695, 14063]],
-	[[6770, 14052], [6801, 14025]],
-	[[6714, 13880], [6741, 13907]],
-	// SE tower
-	[[7581, 13967], [7622, 13949]],
-	[[7547, 14150], [7591, 14191]],
-	[[7769, 14216], [7795, 14185]],
-	[[7821, 14159], [7828, 14082]],
-	// NE tower
-	[[8060, 12236], [8081, 12295]],
-	[[8030, 12131], [8051, 12194]],
-	[[8055, 12087], [8085, 12066]],
-	[[8117, 12055], [8184, 12027]],
-	[[8173, 12317], [8249, 12304]]
-	],
-	Gate: [
-	// rampart
-	[[7323, 12492], [7340, 12510]],
-	[[7505, 12611], [7507, 12633]],
-	[[7174, 12812], [7198, 12812]],
-	[[6835, 12594], [6835, 12617]],
-	[[7005, 12575], [7021, 12554]],
-	// W keep
-	[[6059, 12942], [6078, 12942]],
-	[[5931, 13307], [5931, 13327]],
-	[[5931, 13052], [5932, 13076]],
-	[[6060, 13412], [6081, 13412]],
-	[[6281, 13179], [6281, 13202]],
-	// E keep
-	[[8189, 12983], [8210, 12983]],
-	[[8078, 13259], [8077, 13278]],
-	[[8438, 13425], [8458, 13440]],
-	[[8458, 13110], [8480, 13096]],
-	[[8219, 13475], [8238, 13482]],
-	// NW tower
-	[[6237, 12262], [6258, 12262]],
-	// SW tower
-	[[6593, 14049], [6611, 14051]],
-	// SE tower
-	[[7716, 14242], [7734, 14236]],
-	// NE tower
-	[[8111, 12322], [8131, 12322]]
-	],
-	ShrineEarth: [[6380, 12595], [7154, 12245], [7939, 12553]],
-	ShrineFire: [[6376, 12878], [6125, 13248], [6419, 13460]],
-	ShrineAir: [[8624, 12840], [7976, 13437], [8559, 13723]],
-	Sentry: [[6649,12216],[6157,12477],[6066,12634],[5912,13640],[6302,13924],[7120,14112],[8078,14070],[8062,13805],[8184,12735],[8149,12524],[7905,11960]],
-	Depot: [[7158,12101],[6275,12150],[5763,12557],[6031,13037],[5883,13191],[5925,13191],[6143,13193],[6105,13324],[5972,13889],[6775,14000],[7177,14475],[7770,14116],[8335,13823],[8231,13426],[8459,13371],[8203,13243],[8522,13133],[8221,13081],[8547,12599],[8320,12157],[7463,12719],[7340,12560],[7147,12781],[7069,12550],[6862,12495]],
-	Siege: [{"id":"cannon","coord":[8057,13294]},{"id":"cannon","coord":[8057,13239]},{"id":"mortar","coord":[8013,13193]},{"id":"mortar","coord":[8484,13462]},{"id":"cannon","coord":[8453,13483]},{"id":"cannon","coord":[8395,13445]},{"id":"cannon","coord":[8478,13056]},{"id":"cannon","coord":[8423,13091]},{"id":"mortar","coord":[8504,13073]},{"id":"mortar","coord":[8228,13478]},{"id":"cannon","coord":[8243,13506]},{"id":"cannon","coord":[8195,13485]},{"id":"mortar","coord":[8265,12292]},{"id":"cannon","coord":[8104,12420]},{"id":"cannon","coord":[8156,12416]},{"id":"mortar","coord":[7453,12625]},{"id":"mortar","coord":[7738,14113]},{"id":"cannon","coord":[7329,12461]},{"id":"cannon","coord":[7370,12506]},{"id":"cannon","coord":[7542,12579]},{"id":"cannon","coord":[7541,12664]},{"id":"cannon","coord":[7144,12835]},{"id":"cannon","coord":[7230,12839]},{"id":"mortar","coord":[7187,12876]},{"id":"cannon","coord":[6803,12563]},{"id":"cannon","coord":[6803,12646]},{"id":"mortar","coord":[6871,12604]},{"id":"cannon","coord":[7015,12528]},{"id":"cannon","coord":[6978,12578]},{"id":"mortar","coord":[7026,12575]},{"id":"cannon","coord":[6274,12351]},{"id":"cannon","coord":[6221,12351]},{"id":"cannon","coord":[6021,12921]},{"id":"cannon","coord":[6098,12920]},{"id":"mortar","coord":[6150,13392]},{"id":"mortar","coord":[6167,13184]},{"id":"cannon","coord":[5962,13110]},{"id":"mortar","coord":[5995,13115]},{"id":"cannon","coord":[5962,13270]},{"id":"mortar","coord":[5995,13267]},{"id":"mortar","coord":[5969,12952]},{"id":"mortar","coord":[6006,13411]},{"id":"cannon","coord":[6044,13433]},{"id":"cannon","coord":[6117,13435]},{"id":"mortar","coord":[6398,12273]},{"id":"cannon","coord":[5963,13335]},{"id":"cannon","coord":[5964,13048]},{"id":"cannon","coord":[6558,14121]},{"id":"cannon","coord":[6625,14136]},{"id":"cannon","coord":[7736,14329]},{"id":"cannon","coord":[7780,14302]},{"id":"mortar","coord":[6751,14065]},{"id":"mortar","coord":[7323,12509]},{"id":"cannon","coord":[8175,12962]},{"id":"cannon","coord":[8227,12964]},{"id":"mortar","coord":[8082,12947]}]
-}
-};
 var GW2T_PLACEMENT_DATA = {
 Eternal: {
 	ZoneNicks: ["eternal"],
@@ -2774,6 +2656,117 @@ Eternal: {
 	Sentry: [[9736,15290],[10197,14912],[10119,14706],[9511,14708],[10363,14081],[10816,14080],[11097,13640],[10496,13540],[11145,14667],[10935,15038],[11226,15447],[11630,14699]],
 	Depot: [[9843,15405],[10209,15396],[10301,15063],[9948,14539],[9564,14399],[9388,14884],[9642,14928],[9781,15123],[9600,15206],[10222,14046],[9835,13584],[10291,13381],[11022,13471],[11296,13725],[10989,13906],[10703,13677],[10548,13788],[11202,14555],[11584,14491],[11721,14785],[11411,15484],[11010,15574],[10889,15255],[11595,15165],[11515,15053],[11435,15151],[10403,14784],[10326,14591],[10486,14283],[10754,14307],[10890,14608],[10772,14810],[10484,14528],[10724,14515],[10676,14696],[10571,14643]],
 	Siege: [{"id":"catapult","coord":[11005,13670]},{"id":"cannon","coord":[10578,14345]},{"id":"cannon","coord":[10374,14535]},{"id":"cannon","coord":[10822,14480]},{"id":"cannon","coord":[10746,14754]},{"id":"cannon","coord":[10492,14787]},{"id":"catapult","coord":[10883,13651]},{"id":"catapult","coord":[10503,13771]},{"id":"catapult","coord":[10532,13845]},{"id":"catapult","coord":[10474,13927]},{"id":"mortar","coord":[11411,15506]},{"id":"trebuchet","coord":[11152,14495]},{"id":"trebuchet","coord":[10424,13954]},{"id":"catapult","coord":[10015,13999]},{"id":"catapult","coord":[11072,13704]},{"id":"catapult","coord":[11114,13529]},{"id":"ballista","coord":[11119,13987]},{"id":"mortar","coord":[11736,14825]},{"id":"catapult","coord":[11833,14906]},{"id":"trebuchet","coord":[11679,14564]},{"id":"cannon","coord":[11372,15099]},{"id":"catapult","coord":[11114,15188]},{"id":"trebuchet","coord":[9914,15277]},{"id":"catapult","coord":[9923,15250]},{"id":"catapult","coord":[9368,14936]},{"id":"catapult","coord":[9595,14898]},{"id":"catapult","coord":[9857,14451]},{"id":"catapult","coord":[10376,15118]},{"id":"mortar","coord":[10726,14616]},{"id":"catapult","coord":[10757,13731]},{"id":"ballista","coord":[10153,13261]},{"id":"catapult","coord":[10121,13255]},{"id":"catapult","coord":[11359,15521]},{"id":"catapult","coord":[11440,15326]},{"id":"catapult","coord":[11676,15040]},{"id":"catapult","coord":[9894,15139]},{"id":"catapult","coord":[10257,14642]},{"id":"trebuchet","coord":[10634,13848]},{"id":"catapult","coord":[10948,14019]},{"id":"catapult","coord":[10832,14316]},{"id":"catapult","coord":[10569,14939]},{"id":"ballista","coord":[11289,15364]},{"id":"catapult","coord":[9979,15345]},{"id":"catapult","coord":[9787,15367]},{"id":"catapult","coord":[9774,15292]},{"id":"trebuchet","coord":[9615,14444]},{"id":"catapult","coord":[10158,15178]},{"id":"catapult","coord":[10121,14044]},{"id":"ballista","coord":[10361,13962]},{"id":"catapult","coord":[10373,13980]},{"id":"trebuchet","coord":[11075,14154]},{"id":"catapult","coord":[11400,14689]},{"id":"catapult","coord":[11373,14483]},{"id":"catapult","coord":[11210,14490]},{"id":"trebuchet","coord":[10965,13420]},{"id":"catapult","coord":[11341,15165]},{"id":"catapult","coord":[11325,15584]},{"id":"catapult","coord":[11133,15296]},{"id":"catapult","coord":[11422,14973]},{"id":"catapult","coord":[10839,15184]},{"id":"catapult","coord":[10707,14894]},{"id":"trebuchet","coord":[9929,13357]},{"id":"trebuchet","coord":[11143,15177]},{"id":"catapult","coord":[10361,14415]},{"id":"cannon","coord":[10337,14783]},{"id":"mortar","coord":[10492,14624]},{"id":"cannon","coord":[10283,14637]},{"id":"mortar","coord":[10313,14563]},{"id":"cannon","coord":[10358,14450]},{"id":"mortar","coord":[10392,14369]},{"id":"mortar","coord":[10465,14261]},{"id":"cannon","coord":[10523,14203]},{"id":"mortar","coord":[10613,14700]},{"id":"mortar","coord":[10529,14485]},{"id":"mortar","coord":[10674,14477]},{"id":"mortar","coord":[10677,14910]},{"id":"cannon","coord":[10617,14939]},{"id":"mortar","coord":[10520,14880]},{"id":"mortar","coord":[10375,14725]},{"id":"mortar","coord":[10735,14257]},{"id":"cannon","coord":[10686,14198]},{"id":"cannon","coord":[10795,14299]},{"id":"cannon","coord":[10887,14427]},{"id":"mortar","coord":[10915,14600]},{"id":"cannon","coord":[10935,14675]},{"id":"cannon","coord":[10855,14812]},{"id":"mortar","coord":[10779,14834]},{"id":"cannon","coord":[10413,14310]},{"id":"cannon","coord":[9705,15154]},{"id":"cannon","coord":[9642,15055]},{"id":"mortar","coord":[9521,15137]},{"id":"cannon","coord":[9477,15186]},{"id":"cannon","coord":[9522,15243]},{"id":"mortar","coord":[9653,15199]},{"id":"cannon","coord":[9905,15103]},{"id":"cannon","coord":[9922,14873]},{"id":"cannon","coord":[9899,14849]},{"id":"cannon","coord":[9687,14843]},{"id":"mortar","coord":[9711,14878]},{"id":"mortar","coord":[9872,15062]},{"id":"mortar","coord":[9450,14818]},{"id":"cannon","coord":[10961,13503]},{"id":"cannon","coord":[10814,13559]},{"id":"cannon","coord":[10737,13559]},{"id":"cannon","coord":[10671,13586]},{"id":"cannon","coord":[10650,13644]},{"id":"cannon","coord":[10830,13725]},{"id":"cannon","coord":[10743,13785]},{"id":"cannon","coord":[10648,13854]},{"id":"cannon","coord":[11658,14845]},{"id":"cannon","coord":[11583,14990]},{"id":"cannon","coord":[11562,15063]},{"id":"cannon","coord":[11408,15017]},{"id":"cannon","coord":[11448,15194]},{"id":"cannon","coord":[11644,15209]},{"id":"cannon","coord":[11389,15249]},{"id":"cannon","coord":[11329,15445]},{"id":"mortar","coord":[10843,15252]},{"id":"mortar","coord":[9763,15380]},{"id":"mortar","coord":[10855,13652]},{"id":"mortar","coord":[10728,13588]},{"id":"mortar","coord":[10676,13702]},{"id":"mortar","coord":[10797,13707]},{"id":"mortar","coord":[10525,13799]},{"id":"mortar","coord":[10573,13847]},{"id":"mortar","coord":[11514,15335]},{"id":"mortar","coord":[11393,15213]},{"id":"mortar","coord":[11535,14997]},{"id":"mortar","coord":[11694,15096]},{"id":"mortar","coord":[11642,15163]},{"id":"mortar","coord":[11556,15260]},{"id":"mortar","coord":[9895,14665]},{"id":"cannon","coord":[9919,14580]},{"id":"cannon","coord":[9834,15319]},{"id":"mortar","coord":[10122,15082]},{"id":"cannon","coord":[10221,15024]},{"id":"cannon","coord":[11000,15245]},{"id":"cannon","coord":[11214,14608]},{"id":"mortar","coord":[11150,14576]},{"id":"cannon","coord":[11600,15259]},{"id":"cannon","coord":[11446,15303]},{"id":"cannon","coord":[9457,14926]},{"id":"cannon","coord":[10604,13659]},{"id":"cannon","coord":[11090,13918]}]
+},
+Alpine: {
+	Siege: [{"id":"trebuchet","coord":[5914,14107]},{"id":"trebuchet","coord":[5965,14024]},{"id":"catapult","coord":[6067,13846]},{"id":"catapult","coord":[6069,13774]},{"id":"catapult","coord":[5883,13106]},{"id":"trebuchet","coord":[6072,13251]},{"id":"catapult","coord":[6314,13554]},{"id":"trebuchet","coord":[6451,13978]},{"id":"catapult","coord":[6549,13979]},{"id":"catapult","coord":[6805,14101]},{"id":"catapult","coord":[7452,14065]},{"id":"trebuchet","coord":[7738,13761]},{"id":"catapult","coord":[7718,13507]},{"id":"trebuchet","coord":[7858,12981]},{"id":"trebuchet","coord":[7402,12783]},{"id":"catapult","coord":[7330,12785]},{"id":"catapult","coord":[7463,12672]},{"id":"portal","coord":[6921,12731]},{"id":"catapult","coord":[6930,12837]},{"id":"trebuchet","coord":[7065,13001]},{"id":"trebuchet","coord":[6601,12641]},{"id":"trebuchet","coord":[6321,12724]},{"id":"catapult","coord":[6252,12538]},{"id":"trebuchet","coord":[6178,12301]},{"id":"trebuchet","coord":[7555,13512]}]
+},
+Desert: {
+	Barricade: [
+	// rampart
+	[[6751, 12477], [6821, 12479]],
+	[[6700, 12479], [6720, 12479]],
+	[[7512, 12490], [7581, 12485]],
+	[[7614, 12481], [7635, 12480]],
+	// NW tower
+	[[6399, 12277], [6468, 12275]],
+	[[6492, 12274], [6547, 12263]],
+	// SW tower
+	[[6864, 14033], [6892, 14040]],
+	[[6824, 14021], [6844, 14026]],
+	[[6490, 13807], [6504, 13844]],
+	[[6520, 13879], [6572, 13928]],
+	// NE tower
+	[[8003, 12342], [8057, 12327]],
+	[[7933, 12369], [7977, 12358]],
+	// SE tower
+	[[7351, 13963], [7421, 13978]],
+	[[7457, 13986], [7519, 13995]],
+	[[7849, 14063], [7921, 14055]],
+	[[7949, 14043], [7992, 14018]]
+	],
+	Wall: [
+	// rampart
+	[[7373, 12545], [7408, 12584]],
+	[[7257, 12810], [7279, 12810]],
+	[[7077, 12799], [7117, 12803]],
+	[[6832, 12484], [6834, 12534]],
+	[[6840, 12476], [6922, 12471]],
+	[[7049, 12519], [7082, 12480]],
+	[[7434, 12490], [7485, 12491]],
+	[[7497, 12500], [7501, 12551]],
+	// W keep
+	[[5963, 12948], [6012, 12946]],
+	[[6108, 12945], [6160, 12946]],
+	[[6236, 13016], [6236, 13047]],
+	[[5933, 13223], [5933, 13245]],
+	[[5932, 13134], [5932, 13153]],
+	[[6001, 13411], [6034, 13411]],
+	[[6128, 13414], [6161, 13414]],
+	[[6267, 13288], [6267, 13310]],
+	// E keep
+	[[8271, 13013], [8297, 13012]],
+	[[8078, 13062], [8077, 13106]],
+	[[8408, 13338], [8426, 13349]],
+	[[8408, 13158], [8422, 13150]],
+	[[8131, 13417], [8166, 13444]],
+	// NW tower
+	[[6315, 12277], [6365, 12277]],
+	[[6378, 12211], [6377, 12262]],
+	[[6141, 12277], [6199, 12278]],
+	[[6127, 12189], [6127, 12262]],
+	[[6330, 11884], [6405, 11917]],
+	[[6413, 11938], [6401, 11965]],
+	// SW tower
+	[[6583, 13987], [6575, 14026]],
+	[[6655, 14057], [6695, 14063]],
+	[[6770, 14052], [6801, 14025]],
+	[[6714, 13880], [6741, 13907]],
+	// SE tower
+	[[7581, 13967], [7622, 13949]],
+	[[7547, 14150], [7591, 14191]],
+	[[7769, 14216], [7795, 14185]],
+	[[7821, 14159], [7828, 14082]],
+	// NE tower
+	[[8060, 12236], [8081, 12295]],
+	[[8030, 12131], [8051, 12194]],
+	[[8055, 12087], [8085, 12066]],
+	[[8117, 12055], [8184, 12027]],
+	[[8173, 12317], [8249, 12304]]
+	],
+	Gate: [
+	// rampart
+	[[7323, 12492], [7340, 12510]],
+	[[7505, 12611], [7507, 12633]],
+	[[7174, 12812], [7198, 12812]],
+	[[6835, 12594], [6835, 12617]],
+	[[7005, 12575], [7021, 12554]],
+	// W keep
+	[[6059, 12942], [6078, 12942]],
+	[[5931, 13307], [5931, 13327]],
+	[[5931, 13052], [5932, 13076]],
+	[[6060, 13412], [6081, 13412]],
+	[[6281, 13179], [6281, 13202]],
+	// E keep
+	[[8189, 12983], [8210, 12983]],
+	[[8078, 13259], [8077, 13278]],
+	[[8438, 13425], [8458, 13440]],
+	[[8458, 13110], [8480, 13096]],
+	[[8219, 13475], [8238, 13482]],
+	// NW tower
+	[[6237, 12262], [6258, 12262]],
+	// SW tower
+	[[6593, 14049], [6611, 14051]],
+	// SE tower
+	[[7716, 14242], [7734, 14236]],
+	// NE tower
+	[[8111, 12322], [8131, 12322]]
+	],
+	ShrineEarth: [[6380, 12595], [7154, 12245], [7939, 12553]],
+	ShrineFire: [[6376, 12878], [6125, 13248], [6419, 13460]],
+	ShrineAir: [[8624, 12840], [7976, 13437], [8559, 13723]],
+	Sentry: [[6649,12216],[6157,12477],[6066,12634],[5912,13640],[6302,13924],[7120,14112],[8078,14070],[8062,13805],[8184,12735],[8149,12524],[7905,11960]],
+	Depot: [[7158,12101],[6275,12150],[5763,12557],[6031,13037],[5883,13191],[5925,13191],[6143,13193],[6105,13324],[5972,13889],[6775,14000],[7177,14475],[7770,14116],[8335,13823],[8231,13426],[8459,13371],[8203,13243],[8522,13133],[8221,13081],[8547,12599],[8320,12157],[7463,12719],[7340,12560],[7147,12781],[7069,12550],[6862,12495]],
+	Siege: [{"id":"cannon","coord":[8057,13294]},{"id":"cannon","coord":[8057,13239]},{"id":"mortar","coord":[8013,13193]},{"id":"mortar","coord":[8484,13462]},{"id":"cannon","coord":[8453,13483]},{"id":"cannon","coord":[8395,13445]},{"id":"cannon","coord":[8478,13056]},{"id":"cannon","coord":[8423,13091]},{"id":"mortar","coord":[8504,13073]},{"id":"mortar","coord":[8228,13478]},{"id":"cannon","coord":[8243,13506]},{"id":"cannon","coord":[8195,13485]},{"id":"mortar","coord":[8265,12292]},{"id":"cannon","coord":[8104,12420]},{"id":"cannon","coord":[8156,12416]},{"id":"mortar","coord":[7453,12625]},{"id":"mortar","coord":[7738,14113]},{"id":"cannon","coord":[7329,12461]},{"id":"cannon","coord":[7370,12506]},{"id":"cannon","coord":[7542,12579]},{"id":"cannon","coord":[7541,12664]},{"id":"cannon","coord":[7144,12835]},{"id":"cannon","coord":[7230,12839]},{"id":"mortar","coord":[7187,12876]},{"id":"cannon","coord":[6803,12563]},{"id":"cannon","coord":[6803,12646]},{"id":"mortar","coord":[6871,12604]},{"id":"cannon","coord":[7015,12528]},{"id":"cannon","coord":[6978,12578]},{"id":"mortar","coord":[7026,12575]},{"id":"cannon","coord":[6274,12351]},{"id":"cannon","coord":[6221,12351]},{"id":"cannon","coord":[6021,12921]},{"id":"cannon","coord":[6098,12920]},{"id":"mortar","coord":[6150,13392]},{"id":"mortar","coord":[6167,13184]},{"id":"cannon","coord":[5962,13110]},{"id":"mortar","coord":[5995,13115]},{"id":"cannon","coord":[5962,13270]},{"id":"mortar","coord":[5995,13267]},{"id":"mortar","coord":[5969,12952]},{"id":"mortar","coord":[6006,13411]},{"id":"cannon","coord":[6044,13433]},{"id":"cannon","coord":[6117,13435]},{"id":"mortar","coord":[6398,12273]},{"id":"cannon","coord":[5963,13335]},{"id":"cannon","coord":[5964,13048]},{"id":"cannon","coord":[6558,14121]},{"id":"cannon","coord":[6625,14136]},{"id":"cannon","coord":[7736,14329]},{"id":"cannon","coord":[7780,14302]},{"id":"mortar","coord":[6751,14065]},{"id":"mortar","coord":[7323,12509]},{"id":"cannon","coord":[8175,12962]},{"id":"cannon","coord":[8227,12964]},{"id":"mortar","coord":[8082,12947]}]
 }
 };
 
@@ -2781,6 +2774,12 @@ Eternal: {
  * Objective translations and map addenda.
  */
 var GW2T_WVW_METADATA = {
+	Rotation: {
+		Center: "eternal",
+		RedHome: "desertred",
+		BlueHome: "alpineblue",
+		GreenHome: "alpinegreen"
+	},
 	PlacementAssociation: {
 		desertred: "Desert",
 		desertblue: "Desert",
@@ -2836,12 +2835,6 @@ var GW2T_WVW_METADATA = {
 		BlueHome: "BlueHome",
 		GreenHome: "GreenHome",
 		Center: "Center"
-	},
-	LandPrefix: {
-		RedHome: "1099-",
-		BlueHome: "1143-",
-		GreenHome: "1102-",
-		Center: "38-"
 	},
 	ObjectiveEnum: {
 		Sentry: "Sentry",

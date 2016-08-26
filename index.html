@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160825A"></script>
+	<script type="text/javascript" src="data/general.js?v=20160826"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -411,9 +411,9 @@
 							<aside>
 								<h2 data-region="wvw"></h2>
 								<ul>
-									<li class="wvwZoneListBorderlands" data-zone="green" id="wvwZoneLinkGreen"></li>
-									<li class="wvwZoneListBorderlands" data-zone="red" id="wvwZoneLinkRed"></li>
-									<li class="wvwZoneListBorderlands" data-zone="blue" id="wvwZoneLinkBlue"></li>
+									<li class="wvwZoneListBorderlands" data-zone="GreenHome" id="wvwZoneLinkGreen"></li>
+									<li class="wvwZoneListBorderlands" data-zone="RedHome" id="wvwZoneLinkRed"></li>
+									<li class="wvwZoneListBorderlands" data-zone="BlueHome" id="wvwZoneLinkBlue"></li>
 									<li data-zone="eternal"></li>
 									<li data-zone="edge"></li>
 								</ul>
@@ -548,14 +548,14 @@
 					<line id="clkMarker2" x1="50.00" y1="97.00" x2="50.00" y2="90.00" />
 					<line id="clkMarker3" x1="3.00" y1="50.00" x2="10.00" y2="50.00" />
 					<!-- Markers for minimum and average time event ends -->
-					<line id="clkMarker0A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker0B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker1A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker1B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker2A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker2B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker3A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
-					<line id="clkMarker3B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="10.00" />
+					<line id="clkMarker0A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="6.00" />
+					<line id="clkMarker0B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="6.00" />
+					<line id="clkMarker1A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="6.00" />
+					<line id="clkMarker1B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="6.00" />
+					<line id="clkMarker2A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="6.00" />
+					<line id="clkMarker2B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="6.00" />
+					<line id="clkMarker3A" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="6.00" />
+					<line id="clkMarker3B" class="clkMarkerPred" x1="50.00" y1="5.00" x2="50.00" y2="6.00" />
 				</g>
 				<g id="clkHoursPrime">
 					<text x="50" y="18">12</text>
@@ -741,7 +741,6 @@
 							<label><input type="radio" name="int_setDimming" /> Dark</label>
 						</fieldset>
 					</div>
-					<label title="Compact clock in website mode has clock icons hidden. Requires reload."><input id="opt_bol_showClockIcons" type="checkbox" /> Always show clock icons</label>
 					<br />
 					<h2>Map</h2>
 					<label title="Show/Hide the map."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>

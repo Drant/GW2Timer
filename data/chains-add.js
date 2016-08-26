@@ -1022,7 +1022,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 },
 {
 	series: 0,
-	alias: "BalthazarXXXN",
+	alias: "Balthazar_N",
 	title: "Northern Invasion of Orr",
 	name_en: "Balthazar North",
 	name_de: "Nord Invasion von Orr",
@@ -1219,7 +1219,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 },
 {
 	series: 0,
-	alias: "BalthazarXXXC",
+	alias: "Balthazar_C",
 	title: "Central Invasion of Orr",
 	name_en: "Balthazar Central",
 	name_de: "Zentral Invasion von Orr",
@@ -1398,7 +1398,7 @@ var GW2T_CHAIN_UNSCHEDULED = [
 },
 {
 	series: 0,
-	alias: "BalthazarXXXS",
+	alias: "Balthazar_S",
 	title: "Southern Invasion of Orr",
 	name_en: "Balthazar South",
 	name_de: "Invasion der Südlichen Orr",

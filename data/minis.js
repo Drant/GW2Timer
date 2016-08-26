@@ -410,6 +410,7 @@ Gem: [
 	{u: 380, i: 77581, n: "Mini Snow Flurry Dragon", p: {gem: 500}},
 	{u: 386, i: 77574, n: "Mini Tizlak", p: {gem: 200}},
 	{u: 384, i: 77649, n: "Mini Arrowhead", p: {gem: 400}},
-	{u: 387, i: 77675, n: "Mini Zintl Cavalier", p: {gem: 350}}
+	{u: 387, i: 77675, n: "Mini Zintl Cavalier", p: {gem: 350}},
+	{u: 405, i: 79048, n: "Mini Garm", p: {gem: 350}}
 ]
 };

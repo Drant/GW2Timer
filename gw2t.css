@@ -1682,7 +1682,7 @@ input.mapCoordinatesName {
 }
 #clkMinuteHand {
 	stroke-width: 2px;
-	stroke: black;
+	stroke: white;
 }
 #clkSecondHand {
 	stroke-width: 1px;
