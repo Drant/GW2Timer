@@ -2502,7 +2502,6 @@ burningoildesert: {
  */
 var GW2T_PLACEMENT_DATA = {
 Eternal: {
-	ZoneNicks: ["eternal"],
 	Wall: [
 	// lowlands
 	[[9789, 15150], [9841, 15147]],

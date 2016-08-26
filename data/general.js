@@ -1320,8 +1320,8 @@ Countdown: {
 		official: "news/bloodstone-weapons-peacock-scepter-and-mini-garm-in-the-gem-store",
 		Start: new Date("2016-08-19T16:00:00Z"),
 		Finish: new Date("2016-08-28T16:00:00Z")
-	},
-	{ // Last Friday of even numbered months
+	}
+	/*{ // Last Friday of even numbered months
 		name_en: "WvW Re-linking",
 		name_de: "WvW Wieder-verbindung",
 		name_es: "McM Re-unificación",
@@ -1330,9 +1330,9 @@ Countdown: {
 		url_de: "https://forum-de.guildwars2.com/forum/game/wuv/WvW-Abstimmung-vom-6-Juni-Zeitplan-f-r-Weltenverbindung-Ergebnisse/first#post500378",
 		url_es: "https://forum-es.guildwars2.com/forum/game/wuv/Encuesta-de-WvW-del-6-de-junio-Frecuencia-de-la-unificaci-n-de-mundos-Cerrada/first#post121282",
 		url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sondage-McM-du-6-juin-Programme-de-l-association-de-mondes-ferm/first#post292620",
-		Start: new Date("2016-08-26T18:00:00Z"),
-		Finish: new Date("2016-08-27T02:00:00Z")
-	}
+		Start: new Date("2016-10-28T18:00:00Z"),
+		Finish: new Date("2016-10-29T02:00:00Z")
+	}*/
 	/*{
 		name_en: "PvP League Season 4",
 		name_de: "PvP Liga Saison 4",
@@ -1406,13 +1406,6 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Additional Crafting License",
-		id: "42970",
-		price: 560,
-		discount: 800,
-		col: 0
-	},
-	{
 		name: "Captain's Airship Pass",
 		id: "50104",
 		price: 800,
@@ -1469,87 +1462,17 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Mad King Dye Kit",
-		id: "70367",
+		name: "Black Lion Chest Key",
+		id: "19980",
 		price: 100,
-		discount: [[1, 100, 125], [5, 400, 500], [25, 2000, 2500]],
-		col: 0
+		discount: [[1, 93, 125], [5, 337, 450], [25, 1575, 2100]],
+		col: 1
 	},
 	{
 		name: "Shadow Dye Kit",
 		id: "68786",
 		price: 93,
 		discount: [[1, 93, 125], [5, 375, 500], [25, 1875, 2500]],
-		col: 0
-	},
-	{
-		name: "Red Envelope Mail Carrier",
-		id: "68652",
-		price: 420,
-		discount: 600,
-		col: 1
-	},
-	{
-		name: "Aviator Quaggan Mail Carrier",
-		id: "69628",
-		price: 350,
-		discount: 500,
-		col: 1
-	},
-	{
-		name: "Exalted Mail Courier",
-		id: "67863",
-		price: 350,
-		discount: 500,
-		col: 1
-	},
-	{
-		name: "Ghostly Mail Courier",
-		id: "67355",
-		price: 350,
-		discount: 500,
-		col: 1
-	},
-	{
-		name: "Griffon Mail Carrier",
-		id: "68106",
-		price: 350,
-		discount: 500,
-		col: 1
-	},
-	{
-		name: "Gifts Mail Delivery",
-		id: "68104",
-		price: 245,
-		discount: 350,
-		col: 1
-	},
-	{
-		name: "Revenant Mail Carrier",
-		id: "69715",
-		price: 245,
-		discount: 350,
-		col: 1
-	},
-	{
-		name: "Snow Owl Mail Carrier",
-		id: "68681",
-		price: 245,
-		discount: 350,
-		col: 1
-	},
-	{
-		name: "Sylvari Seed Pod Mail Carrier",
-		id: "68682",
-		price: 245,
-		discount: 350,
-		col: 1
-	},
-	{
-		name: "Confetti Mail Delivery",
-		id: "68102",
-		price: 210,
-		discount: 300,
 		col: 1
 	},
 	{
@@ -1567,8 +1490,22 @@ Sale: {
 		col: 1
 	},
 	{
+		name: "Bandit Sniper's Outfit",
+		id: "77282",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Crystal Arbiter Glider",
 		id: "72252",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Soul River Glider",
+		id: "77291",
 		price: 500,
 		discount: null,
 		col: 1

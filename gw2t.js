@@ -4811,9 +4811,10 @@ Z = {
 	 * they point to, and amass them into an accessible array of objects.
 	 * @param intarray pArray downloaded from API.
 	 * @param string pString suffix of API endpoint.
-	 * @objparam string aQueryStr arguments for the API url, optional.
+	 * @objparam string aQueryStr arguments for the API url.
 	 * @objparam boolean aIsStandard whether to format the URL in standard v2 API format with a "/" preceding the ID.
-	 * @objparam function aCallback to execute after finishing scraping, optional.
+	 * @objparam function aIterator to execute for every fetched data.
+	 * @objparam function aCallback to execute after finishing scraping.
 	 * @objparam int aCooldown seconds between cooldown.
 	 * @objparam int aRetryCount used internally for recursive retrieval of failed IDs.
 	 * @objparam array aCacheArray from previous scrape.
@@ -4864,6 +4865,7 @@ Z = {
 						aFailedIndexes: failedindexes,
 						aIsStandard: Settings.aIsStandard,
 						aCooldown: Settings.aCooldown,
+						aIterator: Settings.aIterator,
 						aCallback: Settings.aCallback
 					});
 				}
@@ -4912,6 +4914,11 @@ Z = {
 			$.getJSON(prefix + pSuffix + indexsep + pID + querystr, function(pData)
 			{
 				cachearr[pIndex] = pData;
+				// Execute iterator with data if requested
+				if (Settings.aIterator)
+				{
+					Settings.aIterator(pData);
+				}
 				// Check for completion
 				numfetched++;
 				finalizeScrape();
@@ -9987,7 +9994,7 @@ V = {
 					}
 				}
 			}
-
+			
 			// Generate the tabs and slots for each character
 			for (var i = 0; i < A.Data.Characters.length; i++)
 			{
@@ -13508,8 +13515,8 @@ Q = {
 				{
 					if (Q.Box[pItem.id] === undefined)
 					{
-						Q.Box[pItemID] = {};
-						Q.Box[pItemID].oItem = pItem;
+						Q.Box[pItem.id] = {};
+						Q.Box[pItem.id].oItem = pItem;
 					}
 					pSuccess(pItem);
 				}
@@ -13525,7 +13532,39 @@ Q = {
 	 */
 	prefetchItems: function(pArray, pCallback)
 	{
-		
+		var arr = U.getUnique(pArray);
+		var fetcharr = [];
+		for (var i = 0; i < arr.length; i++)
+		{
+			if (Q.Box[arr[i]] === undefined)
+			{
+				fetcharr.push(arr[i]);
+			}
+		}
+		// If there are uncached items to fetch
+		if (fetcharr.length)
+		{
+			Z.scrapeAPIArray(fetcharr, "items", {
+				aIterator: function(pItem)
+				{
+					if (Q.Box[pItem.id] === undefined)
+					{
+						Q.Box[pItem.id] = {};
+						Q.Box[pItem.id].oItem = pItem;
+					}
+					Q.scanItem(pItem);
+				},
+				aCallback: function()
+				{
+					I.clear();
+					pCallback();
+				}
+			});
+		}
+		else
+		{
+			pCallback();
+		}
 	},
 	
 	/*
@@ -25320,17 +25359,16 @@ W = {
 				}
 			};
 			
-			for (var i in W.Placement)
+			for (var i in W.Rotation)
 			{
-				var pl = W.Placement[i];
-				for (var ii in pl.ZoneNicks)
-				{
-					var nick = pl.ZoneNicks[ii];
-					drawWall(pl.Barricade, barricadecolor, nick);
-					drawWall(pl.Wall, wallcolor, nick);
-					drawWall(pl.Gate, gatecolor, nick);
-				}
+				var landnick = W.Rotation[i];
+				var placementname = W.Metadata.PlacementAssociation[landnick];
+				var pl = W.Placement[placementname];
+				drawWall(pl.Barricade, barricadecolor, landnick);
+				drawWall(pl.Wall, wallcolor, landnick);
+				drawWall(pl.Gate, gatecolor, landnick);
 			}
+			
 			if (pWantAdjust)
 			{
 				W.adjustZoomMapping();
