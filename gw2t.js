@@ -17920,18 +17920,25 @@ C = {
 		pChain.primaryEvents = [];
 		pChain.scheduleKeys = [];
 		
-		if (pChain.waypoint !== undefined)
+		if (pChain.waypoint)
 		{
 			chainextra = "<input id='chnWaypoint_" + pChain.nexus + "' class='chnWaypoint' type='text' value='" + pChain.waypointText + "' /> "
 				+ " (" + pChain.level + ")"
 					+ "<a" + U.convertExternalAnchor(U.getYouTubeLink(D.getObjectDefaultName(pChain))) + ">"
 					+ "<ins class='s16 s16_youtube' title='Recommended level. Click for YouTube videos.'></ins></a> ";
 		}
-		if (pChain.reward !== undefined)
+		if (pChain.reward)
 		{
 			for (i in pChain.reward)
 			{
-				chainextra += pChain.reward[i] + "<ins class='s16 s16_" + i + "' title='" + i + "'></ins> ";
+				if (i === "coin")
+				{
+					chainextra += E.formatCoinStringShort(pChain.reward[i]);
+				}
+				else
+				{
+					chainextra += pChain.reward[i] + "<ins class='s16 s16_" + i + "' title='" + i + "'></ins> ";
+				}
 			}
 		}
 		
@@ -25459,7 +25466,7 @@ W = {
 		var id = 0;
 		var numalli = W.Metadata.Alliances.length;
 		var allinames = W.Metadata.Alliances;
-		var ithalliname, ithowner, worldid, allianceserverids;
+		var ithalliname, ithowner, worldid, allianceserverids, hostserverid;
 		var servers = new Array(numalli);
 		var names = new Array(numalli);
 		var namelines = new Array(numalli);
@@ -25492,10 +25499,15 @@ W = {
 			{
 				ithalliname = allinames[i];
 				allianceserverids = alliances[ithalliname];
+				hostserverid = pMatchData.worlds[ithalliname];
 				servers[i] = new Array();
+				servers[i].push(W.Servers[hostserverid]); // Host server is index 0
 				for (var ii = 0; ii < allianceserverids.length; ii++)
 				{
-					servers[i].push(W.Servers[(allianceserverids[ii])]);
+					if (allianceserverids[ii] !== hostserverid)
+					{
+						servers[i].push(W.Servers[(allianceserverids[ii])]);
+					}
 				}
 			}
 			// Initialize the one-server-per-alliance object
@@ -25529,19 +25541,20 @@ W = {
 				var ithserver = (servers[i])[ii];
 				ithserver.owner = ithowner; // Record the server's color
 				var ithservername = U.escapeHTML(D.getObjectName(ithserver));
+				var hostflag = (ii === 0) ? "+" : "";
 				// Abbreviate the names if there are too many servers in one alliance
 				if (servers[i].length <= maxserversbeforeabbrev)
 				{
-					names[i] += ithservername;
-					namelinks[i] += "<a href='?page=WvW&enu_Server=" + ithserver.id + "'>" + ithservername + "</a>";
+					names[i] += ithservername + hostflag;
+					namelinks[i] += "<a href='?page=WvW&enu_Server=" + ithserver.id + "'>" + ithservername + hostflag + "</a>";
 				}
 				else
 				{
-					names[i] += D.getObjectNick(ithserver);
-					namelinks[i] += "<a href='?page=WvW&enu_Server=" + ithserver.id + "' title='" + ithservername + "'>" + D.getObjectNick(ithserver) + "</a>";
+					names[i] += D.getObjectNick(ithserver) + hostflag;
+					namelinks[i] += "<a href='?page=WvW&enu_Server=" + ithserver.id + "' title='" + ithservername + "'>" + D.getObjectNick(ithserver) + hostflag + "</a>";
 				}
-				namelines[i] += ithservername;
-				nicks[i] += D.getObjectNick(ithserver);
+				namelines[i] += ithservername + hostflag;
+				nicks[i] += D.getObjectNick(ithserver) + hostflag;
 				if (servers[i].length > 1 && ii < servers[i].length - 1) // Spacing between server names
 				{
 					names[i] += " &amp; ";

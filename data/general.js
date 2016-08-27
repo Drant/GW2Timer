@@ -1428,22 +1428,8 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Copper-Fed Salvage-o-Matic",
-		id: "44602",
-		price: 640,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Balthazar's Regalia Outfit",
-		id: "69607",
-		price: 490,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "Bubble Glider",
-		id: "78007",
+		name: "Silver-Fed Salvage-o-Matic",
+		id: "67027",
 		price: 400,
 		discount: 500,
 		col: 0
@@ -1463,17 +1449,66 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Heroic Booster",
+		id: "20005",
+		price: 112,
+		discount: [[1, 112, 150], [5, 476, 637], [20, 1574, 2100]],
+		col: 0
+	},
+	{
 		name: "Black Lion Chest Key",
 		id: "19980",
 		price: 100,
 		discount: [[1, 93, 125], [5, 337, 450], [25, 1575, 2100]],
+		col: 0
+	},
+	{
+		name: "White Wings Glider Combo",
+		id: "69852",
+		price: 595,
+		discount: 700,
 		col: 1
 	},
 	{
-		name: "Shadow Dye Kit",
-		id: "68786",
-		price: 93,
-		discount: [[1, 93, 125], [5, 375, 500], [25, 1875, 2500]],
+		name: "Black Wings Glider Combo",
+		id: "68685",
+		price: 595,
+		discount: 700,
+		col: 1
+	},
+	{
+		name: "Bat Wings Glider Combo",
+		id: "74684",
+		price: 595,
+		discount: 700,
+		col: 1
+	},
+	{
+		name: "Golden Feather Wings Glider Combo",
+		id: "77269",
+		price: 595,
+		discount: 700,
+		col: 1
+	},
+	{
+		name: "Hawk Wings Glider Combo",
+		id: "77678",
+		price: 595,
+		discount: 700,
+		col: 1
+	},
+	{
+		name: "Macaw Wings Glider Combo",
+		id: "78727",
+		price: 595,
+		discount: 700,
+		col: 1
+	},
+	{
+		name: "Moth Wings Glider Combo",
+		id: "78768",
+		price: 595,
+		discount: 700,
 		col: 1
 	},
 	{

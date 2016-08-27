@@ -1496,7 +1496,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "sparkfly",
 	waypoint: "[&BNABAAA=]",
 	level: "65",
-	reward: {ecto: "3", loot: "4", dragonite: "38"},
+	reward: {ecto: "3", loot: "4", dragonite: "38", coin: 10000},
 	timing: ["00:00", "03:00", "07:00", "11:30", "16:00", "19:00"],
 	flags: {},
 	events: [
@@ -1648,7 +1648,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "bloodtide",
 	waypoint: "[&BKoBAAA=]",
 	level: "55",
-	reward: {ecto: "4", loot: "6", dragonite: "78"},
+	reward: {ecto: "4", loot: "6", dragonite: "78", coin: 20000},
 	timing: ["01:00", "04:00", "08:00", "12:30", "17:00", "20:00"],
 	flags: {},
 	events: [
@@ -1781,7 +1781,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "timberline",
 	waypoint: "[&BEwCAAA=]",
 	level: "60",
-	reward: {ecto: "1", loot: "2"},
+	reward: {ecto: "1", loot: "2", coin: 5000},
 	timing: {hourInitial: 0, hourMultiplier: 6, minuteOffset: 15, minuteDelay: 5},
 	flags: {},
 	events: [
@@ -1857,7 +1857,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "marches",
 	waypoint: "[&BOYBAAA=]",
 	level: "60",
-	reward: {ecto: "1", loot: "2"},
+	reward: {ecto: "1", loot: "2", coin: 5000},
 	timing: {hourInitial: 2, hourMultiplier: 6, minuteOffset: 15, minuteDelay: 5},
 	flags: {},
 	events: [
@@ -1933,7 +1933,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "gendarran",
 	waypoint: "[&BOQAAAA=]",
 	level: "35",
-	reward: {ecto: "1", loot: "2"},
+	reward: {ecto: "1", loot: "2", coin: 5000},
 	timing: {hourInitial: 4, hourMultiplier: 6, minuteOffset: 15, minuteDelay: 5},
 	flags: {},
 	events: [
@@ -2408,7 +2408,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "dragon",
 	waypoint: "[&BBAIAAA=]",
 	level: "80",
-	reward: {ecto: "6", loot: "30"},
+	reward: {ecto: "8", loot: "30"},
 	timing: {hourInitial: 1, hourMultiplier: 2, minuteOffset: 30},
 	flags: {},
 	events: [
