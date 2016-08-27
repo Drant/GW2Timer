@@ -2693,6 +2693,16 @@ U = {
 	},
 	
 	/*
+	 * Gets the appropriate query string divider for a URL.
+	 * @param string pURL.
+	 * @returns string
+	 */
+	getDivider: function(pURL)
+	{
+		return (pURL.indexOf("?") !== -1) ? "&" : "?";
+	},
+	
+	/*
 	 * Gets the language specific URL of a standard v2 API that requires an ID.
 	 * @param string pAPI endpoint name.
 	 * @param int pID for request.
@@ -2757,11 +2767,11 @@ U = {
 	 */
 	getDatabaseURL: function(pName, pLanguage)
 	{
-		return "test/" + pName + "_" + pLanguage + ".json";
+		return "test/" + pName + "_" + pLanguage + I.cJSON;
 	},
 	getItemsDatabaseURL: function(pLanguage)
 	{
-		return "test/items_" + pLanguage + ".json";
+		return "test/items_" + pLanguage + I.cJSON;
 	},
 	getDataScriptURL: function(pName)
 	{
@@ -4379,19 +4389,19 @@ Z = {
 			}},
 			apicache: {usage: "Prints the cache of the previous console API call as an associative array. <em>Parameters: bol_wantoutputasfile (optional)</em>", f: function()
 			{
-				Z.printAPICache(U.TypeEnum.isAssoc, {aWantFile: args[1]});
+				Z.printAPICache(U.TypeEnum.isAssoc, {aFileName: "apicache"});
 			}},
 			apicachearray: {usage: "...as an array.", f: function()
 			{
-				Z.printAPICache(U.TypeEnum.isArray, {aWantFile: args[1]});
+				Z.printAPICache(U.TypeEnum.isArray, {aFileName: "apicache"});
 			}},
 			apicacheobject: {usage: "...as an object.", f: function()
 			{
-				Z.printAPICache(U.TypeEnum.isObject, {aWantFile: args[1]});
+				Z.printAPICache(U.TypeEnum.isObject, {aFileName: "apicache"});
 			}},
 			apicacheids: {usage: "...as IDs.", f: function()
 			{
-				Z.printAPICache(U.TypeEnum.isInteger, {aWantFile: args[1]});
+				Z.printAPICache(U.TypeEnum.isInteger, {aFileName: "apicache"});
 			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
 				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. "
@@ -4641,8 +4651,7 @@ Z = {
 	 * Prints the cached API arrays and objects.
 	 * @param enum pType data type to output.
 	 * @objparam object aCustomCache to use instead of the global.
-	 * @objparam boolean aWantFile whether to output to a file or print to console.
-	 * @objparam string aFileName of the file.
+	 * @objparam string aFileName of the file if want to output to file.
 	 * @objparam boolean aWantQuotes whether to wrap key names in quotes (for JSON files).
 	 */
 	printAPICache: function(pType, pSettings)
@@ -4650,7 +4659,7 @@ Z = {
 		var Settings = pSettings || {};
 		var output = "";
 		var obj;
-		var wantfile = (Settings.aWantFile === "true" || Settings.aWantFile === true);
+		var wantfile = (Settings.aFileName !== undefined);
 		var wantquotes = (Settings.aWantQuotes === undefined) ? wantfile : Settings.aWantQuotes;
 		var cache = Settings.aCustomCache || Z.APICacheArrayOfObjects;
 		var req = pType;
@@ -4807,8 +4816,8 @@ Z = {
 	},
 	
 	/*
-	 * Takes an array of API endpoint ID numbers and download every object that
-	 * they point to, and amass them into an accessible array of objects.
+	 * Takes an array of API endpoint ID numbers, downloads every object they
+	 * point to, and amasses them into an array of objects.
 	 * @param intarray pArray downloaded from API.
 	 * @param string pString suffix of API endpoint.
 	 * @objparam string aQueryStr arguments for the API url.
@@ -4979,6 +4988,44 @@ Z = {
 					Z.scrapeAPIArray(pArray, pSuffix, Settings);
 				})(Z.DatabaseLanguages[counter]);
 				counter++;
+			}
+			else
+			{
+				// Returns with a multilingual database, accessed first by the language code, then the object ID
+				pCallback(multidb);
+			}
+		};
+		retrieveData();
+	},
+	
+	/*
+	 * Fetches an API endpoint in all available languages.
+	 * @param string pURL to fetch.
+	 * @param function pCallback to execute after.
+	 */
+	fetchAPIMultilingual: function(pURL, pCallback)
+	{
+		var multidb = {};
+		var numfetched = 0;
+		var numtofetch = Z.DatabaseLanguages.length;
+		var retrieveData = function()
+		{
+			if (numfetched < numtofetch)
+			{
+				(function(iLang)
+				{
+					var url = pURL + U.getDivider(pURL) + "lang=" + iLang;
+					$.getJSON(url, function(pData)
+					{
+						multidb[iLang] = pData;
+						retrieveData();
+						A.setProgressBar(numfetched, numtofetch);
+					}).fail(function()
+					{
+						I.print("Error retrieving " + U.escapeHTML(url) + ". Fetch aborted.");
+					});
+				})(Z.DatabaseLanguages[numfetched]);
+				numfetched++;
 			}
 			else
 			{
@@ -5205,8 +5252,8 @@ Z = {
 						Z.APICacheArrayOfObjects.push(db[itemid]);
 					}
 					U.sortObjects(Z.APICacheArrayOfObjects, {aKeyName: "id"});
-					var filename = pType.toLowerCase() + "_" + i + ".json";
-					Z.printAPICache(U.TypeEnum.isAssoc, {aWantQuotes: true, aWantFile: true, aFileName: filename});
+					var filename = pType.toLowerCase() + "_" + i + I.cJSON;
+					Z.printAPICache(U.TypeEnum.isAssoc, {aWantQuotes: true, aFileName: filename});
 				}
 			}).fail(function()
 			{
@@ -5271,8 +5318,7 @@ Z = {
 						}
 						Z.printAPICache(U.TypeEnum.isAssoc, {
 							aWantQuotes: true,
-							aWantFile: true,
-							aFileName: "items_" + lang + ".json"
+							aFileName: "items_" + lang + I.cJSON
 						});
 						counter++;
 						updateDBLang();
@@ -5397,7 +5443,7 @@ Z = {
 	 * Prints a new unlockables record entry to the console.
 	 * @param array pEntries item details objects.
 	 * @objparam string aItemIDsKey name of property for getting the associated item ID.
-	 * @objparam object aItemDB for looking up items, optional.
+	 * @objparam object aItemDB for looking up items.
 	 */
 	printRecordEntry: function(pEntries, pSettings)
 	{
@@ -5514,7 +5560,7 @@ Z = {
 					db.push([item.i, item.n]);
 				}
 				var dbstr = U.compressToJS(db, false);
-				Z.createFile(dbstr, "search_" + iLang + ".json");
+				Z.createFile(dbstr, "search_" + iLang + I.cJSON);
 			});
 		});
 	},
@@ -6237,14 +6283,22 @@ Z = {
 	 */
 	collateEvents: function()
 	{
-		$.getJSON(U.URL_API.EventDetails, function(pData)
+		var printEventFile = function(pData, pLanguage)
 		{
-			var str = "";
+			var formatteddata = [];
 			for (var i in pData.events)
 			{
-				str += "\"" + i + "\": " + U.lineJSON(pData.events[i]) + "\r\n";
+				pData.events[i].id = i;
+				formatteddata.push(pData.events[i]);
 			}
-			Z.createFile(str, "events.json");
+			Z.printAPICache(U.TypeEnum.isAssoc, {aCustomCache: formatteddata, aFileName: "events_" + pLanguage + I.cJSON});
+		};
+		Z.fetchAPIMultilingual(U.URL_API.EventDetails, function(pData)
+		{
+			for (var i in pData)
+			{
+				printEventFile(pData[i], i);
+			}
 		});
 	}
 };
@@ -6326,8 +6380,7 @@ A = {
 	getURL: function(pSuffix, pGuildID)
 	{
 		var suffix = (pGuildID) ? ("guild/" + pGuildID + "/" + pSuffix) : pSuffix;
-		var divider = (suffix.indexOf("?") !== -1) ? "&" : "?";
-		return "https://api.guildwars2.com/v2/" + suffix + divider + "access_token=" + A.TokenCurrent;
+		return "https://api.guildwars2.com/v2/" + suffix + U.getDivider(suffix) + "access_token=" + A.TokenCurrent;
 	},
 	
 	/*
@@ -13010,7 +13063,7 @@ Q = {
 		}
 		else
 		{
-			var filepath = "cache/" + pName + "_" + D.getPartiallySupportedLanguage() + ".json";
+			var filepath = "cache/" + pName + "_" + D.getPartiallySupportedLanguage() + I.cJSON;
 			$.getJSON(filepath, function(pData)
 			{
 				Q.RetrievedDatabases[pName] = true;
@@ -13042,7 +13095,7 @@ Q = {
 		}
 		else
 		{
-			$.getJSON("cache/search_" + O.Options.enu_Language + ".json", function(pData)
+			$.getJSON("cache/search_" + O.Options.enu_Language + I.cJSON, function(pData)
 			{
 				Q.SearchDatabase = pData;
 				pSuccess();
@@ -20658,7 +20711,9 @@ M = {
 		
 		// Button: lay a custom range weapon
 		var custombutton = $("<img src='img/wvw/range/custom.png' "
-			+ "title='<dfn>Lay a custom weapon on the map</dfn><br />using the range and color specified below.' />")
+			+ "title='<dfn>Lay a custom weapon on the map</dfn><br />using the range and color specified below.<br /><br />"
+			+ "After laying a weapon on the map:<br />"
+			+ "Drag it to move it.<br />Right click to center it.<br />Double click to delete it.' />")
 			.click(function()
 			{
 				var cw = {
@@ -20671,15 +20726,11 @@ M = {
 			});
 		weaponsmenu.append(custombutton);
 		
-		// Button: clear all weapons
-		var clearbutton = $("<img src='img/ui/default.png' "
-			+ "title='<dfn>Delete all weapons on the map.</dfn><br />After laying a weapon on the map:<br />"
-			+ "Drag it to move it.<br />Right click to center it.<br />Double click to delete it.' />")
-			.click(function()
-			{
-				that.clearWeapons();
-			});
-		weaponsmenu.append(clearbutton);
+		// Context item: clear all weapons
+		$(htmlidprefix + "ContextClearWeapons").click(function()
+		{
+			that.clearWeapons();
+		});
 		
 		// Inputs: attributes for the custom range weapon
 		weaponsmenu.append("<br /><span id='" + that.MapEnum + "RangeCustom' class='mapRangeCustom'>"
@@ -25305,18 +25356,16 @@ W = {
 				}
 			};
 			
-			for (var i in W.Placement)
+			for (var i in W.Rotation)
 			{
-				var pl = W.Placement[i];
-				for (var ii in pl.ZoneNicks)
-				{
-					var nick = pl.ZoneNicks[ii];
-					drawSecondary(pl.ShrineEarth, "shrine_earth", nick);
-					drawSecondary(pl.ShrineFire, "shrine_fire", nick);
-					drawSecondary(pl.ShrineAir, "shrine_air", nick);
-					drawSecondary(pl.Sentry, "sentry", nick);
-					drawSecondary(pl.Depot, "depot", nick);
-				}
+				var landnick = W.Rotation[i];
+				var placementname = W.Metadata.PlacementAssociation[landnick];
+				var pl = W.Placement[placementname];
+				drawSecondary(pl.ShrineEarth, "shrine_earth", landnick);
+				drawSecondary(pl.ShrineFire, "shrine_fire", landnick);
+				drawSecondary(pl.ShrineAir, "shrine_air", landnick);
+				drawSecondary(pl.Sentry, "sentry", landnick);
+				drawSecondary(pl.Depot, "depot", landnick);
 			}
 			if (pWantAdjust)
 			{
@@ -30761,6 +30810,7 @@ I = {
 	cLevelMax: 80,
 	cAJAXGlobalTimeout: 30000, // milliseconds
 	cPNG: ".png", // Almost all used images are PNG
+	cJSON: ".json", // Format of API files
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
 	cChatcodePrefix: "[&",
 	cChatcodeSuffix: "]",
