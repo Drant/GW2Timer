@@ -17715,7 +17715,8 @@ C = {
 	PreviousChains1: [],
 	PreviousChains2: [],
 	NextChains1: [],
-	cEventTitleCharLimit: 44,
+	cEventCharLimit: 44,
+	cEventCharLimitLogographic: 20,
 	cEventNameWidth: 320,
 	TempleChains: [],
 	LegacyChains: [],
@@ -18013,11 +18014,11 @@ C = {
 			}
 			
 			var classsubstep = "";
-			var eventnamelimit = C.cEventTitleCharLimit;
+			var eventnamelimit = C.cEventCharLimit;
 			var indentEvent = function()
 			{
 				classsubstep = "chnSubstep";
-				eventnamelimit = C.cEventTitleCharLimit - 4;
+				eventnamelimit = C.cEventCharLimit - 4;
 			};
 			
 			/*
@@ -27401,6 +27402,10 @@ T = {
 		}
 		
 		// Initialize chains
+		if (D.isLanguageLogographic())
+		{
+			C.cEventCharLimit = C.cEventCharLimitLogographic;
+		}
 		X.initializeChecklist(X.Checklists.Chain, C.Chains.length + C.UnscheduledChainsLength);
 		X.initializeChecklist(X.Checklists.ChainSubscription, C.Chains.length + C.UnscheduledChainsLength);
 		C.initializeScheduledChains();

@@ -1313,15 +1313,6 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
-		name_en: "Anniversary Sale",
-		name_de: "Jubiläumsangebote",
-		name_es: "Rebajas de aniversario",
-		name_fr: "Offre spéciale d'anniversaire",
-		official: "news/bloodstone-weapons-peacock-scepter-and-mini-garm-in-the-gem-store",
-		Start: new Date("2016-08-19T16:00:00Z"),
-		Finish: new Date("2016-08-28T16:00:00Z")
-	}
 	/*{ // Last Friday of even numbered months
 		name_en: "WvW Re-linking",
 		name_de: "WvW Wieder-verbindung",
@@ -1404,6 +1395,13 @@ Sale: {
 		img: "http://i.imgur.com/bYMfxCX.png",
 		price: 560,
 		discount: 800,
+		col: 0
+	},
+	{
+		name: "Bank Tab Expansion",
+		id: "19995",
+		price: 420,
+		discount: 600,
 		col: 0
 	},
 	{
