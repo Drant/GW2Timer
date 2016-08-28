@@ -4995,7 +4995,19 @@ Z = {
 				pCallback(multidb);
 			}
 		};
-		retrieveData();
+		if (pArray)
+		{
+			retrieveData();
+		}
+		else
+		{
+			// If not provided an array of IDs then retrieve it from the API
+			$.getJSON(U.getAPI(pSuffix), function(pData)
+			{
+				pArray = pData;
+				retrieveData();
+			});
+		}
 	},
 	
 	/*
@@ -11419,8 +11431,8 @@ B = {
 			switch (Settings.aPaymentEnum)
 			{
 				case E.PaymentEnum.Coin: {
-					pricestrleft = E.formatCoinStringColored(displaypriceleft);
-					pricestrright = E.formatCoinStringColored(displaypriceright);
+					pricestrleft = E.formatCoinStringShort(displaypriceleft);
+					pricestrright = E.formatCoinStringShort(displaypriceright);
 					tabtext = (pIsCollectionTab) ? ("+" + pricestrleft + " −" + pricestrright) : (pricestrright + " <span class='accTrivial'>" + pricestrleft + "</span>");
 				}; break;
 				case E.PaymentEnum.Gem: {
@@ -22570,7 +22582,7 @@ P = {
 			return pCoords;
 		}
 	},
-	roundCoordinates: function(pCoords)
+	roundCoordinates: function(pCoords, pIsPair)
 	{
 		var coord;
 		// Convert to integer
@@ -22581,7 +22593,7 @@ P = {
 			coord[1] = Math.round(coord[1]);
 		}
 		// Print the result formatted
-		this.printCoordinates(pCoords);
+		this.printCoordinates(pCoords, pIsPair);
 	},
 	printNeedles: function(pNeedles)
 	{
@@ -22606,19 +22618,21 @@ P = {
 	{
 		return "[" + pCoord[0] + ", " + pCoord[1] + "]";
 	},
-	compileCoordinates: function(pCoords)
+	compileCoordinates: function(pCoords, pIsPair)
 	{
 		var output = "";
+		var spacing = (pIsPair) ? " " : "";
+		var sepstr;
 		for (var i = 0; i < pCoords.length; i++)
 		{
-			output += (pCoords[i] === null) ? "null," : "[" + (pCoords[i])[0] + "," + (pCoords[i])[1] + "],";
+			sepstr = (i < pCoords.length - 1) ? ((pIsPair && ((i+1) % 2 === 0)) ? ("]],<br />") : ((pIsPair && (i % 2 === 0)) ? "], " : "],")) : "]";
+			output += (pCoords[i] === null) ? "null," : "[" + ((pIsPair && (i % 2 === 0)) ? "[" : "") + (pCoords[i])[0] + "," + spacing + (pCoords[i])[1] + sepstr;
 		}
-		output = output.substring(0, output.length - 1); // Trim last comma
-		return "[" + output + "]";
+		return (pIsPair ? "[<br />" : "[") + output + (pIsPair ? "]<br />]" : "]");
 	},
-	printCoordinates: function(pCoords)
+	printCoordinates: function(pCoords, pIsPair)
 	{
-		I.print(this.compileCoordinates(pCoords), true);
+		I.print(this.compileCoordinates(pCoords, pIsPair));
 	},
 	
 	/*
@@ -22870,8 +22884,12 @@ P = {
 		if (M.isEventIconsGenerated)
 		{
 			M.ZoneCurrent.Layers.EventIcon.eachLayer(function(iLayer) {
-				I.print("<input type='text' class='cssInputText' value='[" + M.convertLCtoGC(iLayer.getLatLng()) + "]' /> " + iLayer.options.task);
+				var coord = M.convertLCtoGC(iLayer.getLatLng());
+				I.print("<input type='text' class='cssInputText' value='[" + coord + "]' /> "
+					+ "<dfn class='cssGameTitle' data-coord='" + coord + "'>" + iLayer.options.wiki + "</dfn>");
 			});
+			M.bindMapLinks("#itemConsole");
+			I.bindConsoleInput();
 		}
 		else
 		{
@@ -25464,15 +25482,15 @@ W = {
 	{
 		var maxserversbeforeabbrev = 2;
 		var id = 0;
-		var numalli = W.Metadata.Alliances.length;
-		var allinames = W.Metadata.Alliances;
-		var ithalliname, ithowner, worldid, allianceserverids, hostserverid;
-		var servers = new Array(numalli);
-		var names = new Array(numalli);
-		var namelines = new Array(numalli);
-		var namelinks = new Array(numalli);
-		var nicks = new Array(numalli);
-		var colors = new Array(numalli);
+		var numteams = W.Metadata.Alliances.length;
+		var teamnames = W.Metadata.Alliances;
+		var ithteamname, ithowner, worldid, teamserverids, hostserverid;
+		var servers = new Array(numteams);
+		var names = new Array(numteams);
+		var namelines = new Array(numteams);
+		var namelinks = new Array(numteams);
+		var nicks = new Array(numteams);
+		var colors = new Array(numteams);
 		
 		// Create the object
 		var custommatchup = {};
@@ -25481,10 +25499,10 @@ W = {
 		if (pMatchData.wvw_match_id) // Only v1 API matches.json has this property
 		{
 			id = pMatchData.wvw_match_id;
-			for (var i = 0; i < numalli; i++)
+			for (var i = 0; i < numteams; i++)
 			{
-				ithalliname = allinames[i];
-				worldid = pMatchData[(ithalliname + "_world_id")];
+				ithteamname = teamnames[i];
+				worldid = pMatchData[(ithteamname + "_world_id")];
 				servers[i] = new Array();
 				servers[i].push(W.Servers[worldid]);
 			}
@@ -25495,18 +25513,18 @@ W = {
 		{
 			id = pMatchData.id;
 			var alliances = pMatchData.all_worlds;
-			for (var i = 0; i < numalli; i++)
+			for (var i = 0; i < numteams; i++)
 			{
-				ithalliname = allinames[i];
-				allianceserverids = alliances[ithalliname];
-				hostserverid = pMatchData.worlds[ithalliname];
+				ithteamname = teamnames[i];
+				teamserverids = alliances[ithteamname];
+				hostserverid = pMatchData.worlds[ithteamname];
 				servers[i] = new Array();
 				servers[i].push(W.Servers[hostserverid]); // Host server is index 0
-				for (var ii = 0; ii < allianceserverids.length; ii++)
+				for (var ii = 0; ii < teamserverids.length; ii++)
 				{
-					if (allianceserverids[ii] !== hostserverid)
+					if (teamserverids[ii] !== hostserverid)
 					{
-						servers[i].push(W.Servers[(allianceserverids[ii])]);
+						servers[i].push(W.Servers[(teamserverids[ii])]);
 					}
 				}
 			}
@@ -25526,10 +25544,10 @@ W = {
 		custommatchup.Center = W.getName("Center");
 		
 		// Initialize reuseable formatted server names string
-		for (var i = 0; i < numalli; i++)
+		for (var i = 0; i < numteams; i++)
 		{
-			ithalliname = allinames[i];
-			ithowner = U.toFirstUpperCase(ithalliname);
+			ithteamname = teamnames[i];
+			ithowner = U.toFirstUpperCase(ithteamname);
 			names[i] = new Array();
 			namelines[i] = new Array();
 			namelinks[i] = new Array();
@@ -25541,7 +25559,7 @@ W = {
 				var ithserver = (servers[i])[ii];
 				ithserver.owner = ithowner; // Record the server's color
 				var ithservername = U.escapeHTML(D.getObjectName(ithserver));
-				var hostflag = (ii === 0) ? "+" : "";
+				var hostflag = (ii === 0 && servers[i].length > 1) ? "+" : ""; // Add a suffix next to the host server name, if that server has allies
 				// Abbreviate the names if there are too many servers in one alliance
 				if (servers[i].length <= maxserversbeforeabbrev)
 				{
@@ -25566,16 +25584,16 @@ W = {
 				// If the iterated server is the user's home server, then assign the color/owner string
 				if (ithserver.id === O.Options.enu_Server)
 				{
-					custommatchup.ownercurrent = ithowner;
+					custommatchup.oOwnerCurrent = ithowner;
 				}
 			}
 		}
 		
 		// Assign variables for all alliances to the custom matchup object
-		for (var i = 0; i < numalli; i++)
+		for (var i = 0; i < numteams; i++)
 		{
-			ithalliname = allinames[i];
-			custommatchup[ithalliname] = {
+			ithteamname = teamnames[i];
+			custommatchup[ithteamname] = {
 				oServers: servers[i],
 				oNameStr: names[i],
 				oNameLinesStr: namelines[i],
@@ -25633,7 +25651,7 @@ W = {
 		blstr = (Settings.aWantBorderlandsNick) ? W.getNick("Borderlands") : W.getName("Borderlands");
 		
 		// Adjust to grammar
-		if (Settings.aWantPronoun && server.owner === W.MatchupCurrent.ownercurrent)
+		if (Settings.aWantPronoun && server.owner === W.MatchupCurrent.oOwnerCurrent)
 		{
 			return W.getName("Our") + " " + blstr;
 		}
@@ -26459,7 +26477,7 @@ W = {
 		{
 			ownerstr = D.getSpeechInitials(pObjective.tag);
 		}
-		else if (pObjective.owner === W.MatchupCurrent.ownercurrent)
+		else if (pObjective.owner === W.MatchupCurrent.oOwnerCurrent)
 		{
 			ownerstr = W.getName("Us");
 		}
@@ -29009,7 +29027,7 @@ H = {
 			+ "<u>" + vendorname + "</u>"
 			+ "<img id='dsbVendorToggleIcon' src='img/ui/toggle.png' /></kbd>"
 			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
-				+ "title='Items restock at daily reset.<br />Vendors relocate 8 hours after that.<br />Limit 1 purchase per vendor.'>" + D.getWordCapital("info") + "</a> "
+				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
 			+ "<u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + ":</u>"
 			+ "&nbsp;<input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' "
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "

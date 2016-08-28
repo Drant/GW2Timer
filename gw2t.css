@@ -2304,19 +2304,21 @@ header.jsSection sup {
 .evt_cog { background-position: -32px 0; }
 .evt_cog_red { background-position: -48px 0; }
 .evt_collect { background-position: -64px 0; }
-.evt_cross { background-position: -80px 0; }
-.evt_fist { background-position: -96px 0; }
-.evt_flag { background-position: -112px 0; }
-.evt_release { background-position: -128px 0; }
-.evt_shield { background-position: -144px 0; }
-.evt_shield_red { background-position: -160px 0; }
-.evt_skull_red { background-position: -176px 0; }
-.evt_special { background-position: -192px 0; }
-.evt_star { background-position: -208px 0; }
-.evt_star_red { background-position: -224px 0; }
-.evt_swords { background-position: -240px 0; }
-.evt_swords_red { background-position: -256px 0; }
-.evt_wrench { background-position: -272px 0; }
+.evt_collect_red { background-position: -80px 0; }
+.evt_cross { background-position: -96px 0; }
+.evt_fist { background-position: -112px 0; }
+.evt_flag { background-position: -128px 0; }
+.evt_flag_red { background-position: -144px 0; }
+.evt_release { background-position: -160px 0; }
+.evt_shield { background-position: -176px 0; }
+.evt_shield_red { background-position: -192px 0; }
+.evt_skull_red { background-position: -208px 0; }
+.evt_special { background-position: -224px 0; }
+.evt_star { background-position: -240px 0; }
+.evt_star_red { background-position: -256px 0; }
+.evt_swords { background-position: -272px 0; }
+.evt_swords_red { background-position: -288px 0; }
+.evt_wrench { background-position: -304px 0; }
 
 .chnDetails ol li span { /* Event name */
 	margin-left: 4px;
@@ -2654,6 +2656,12 @@ label:hover {
 }
 .cssSpin {
     animation: aniSpin 1s linear infinite;
+}
+.cssGameText {
+	font-family: Trebuchet MS, Menomonia;
+}
+.cssGameTitle {
+	font-family: Menomonia;
 }
 dfn.cssHighlight {
 	color: #ffff00;

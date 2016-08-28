@@ -163,15 +163,19 @@
 /* Classes for toggling window opacity (which is actually its background) */
 .lboOpaque {
 	background: rgba(0, 0, 0, 0.8);
+	transition: background 0.4s;
 }
 .lboOpaqueNot {
 	background: rgba(0, 0, 0, 0.2);
+	transition: background 0.4s;
 }
 .logOpaque {
 	background: rgba(0, 0, 0, 0.8);
+	transition: background 0.4s;
 }
 .logOpaqueNot {
 	background: rgba(0, 0, 0, 0.1);
+	transition: background 0.4s;
 }
 
 #lboOther { /* Contains scoreboards of other tiers */

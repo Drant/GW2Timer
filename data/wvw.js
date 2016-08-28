@@ -361,7 +361,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Bahía de Ehmry",
 	name_fr: "Baie d'Ehmry",
 	name_zh: "艾瑪海灣",
-	nick_en: "EB", nick_de: "EB", nick_es: "BdE", nick_fr: "BdE", nick_zh: "艾瑪海灣"
+	nick_en: "EBay", nick_de: "EB", nick_es: "BdE", nick_fr: "BdE", nick_zh: "艾瑪海灣"
 },
 "1011": {
 	id: 1011,
@@ -1242,11 +1242,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Red",
 		map_type: "RedHome",
 		type: "Ruins",
-		name_en: "Demontrance Lake",
-		name_de: "Dämonentrance-See",
-		name_es: "Lago Trancedemoníaco",
-		name_fr: "Lac Maletranse",
-		name_zh: "魔幻湖",
+		name_en: "Temple of Lost Prayers",
+		name_de: "Tempel der Verlorenen Gebete",
+		name_es: "Templo de las Plegarias Perdidas",
+		name_fr: "Temple des prières perdues",
+		name_zh: "迷途禱告者神殿",
 		direction: "South",
 		id: "94-62",
 		map_id: 94,
@@ -1256,11 +1256,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Red",
 		map_type: "RedHome",
 		type: "Ruins",
-		name_en: "Demontrance Lake",
-		name_de: "Dämonentrance-See",
-		name_es: "Lago Trancedemoníaco",
-		name_fr: "Lac Maletranse",
-		name_zh: "魔幻湖",
+		name_en: "Battle's Hollow",
+		name_de: "Schlachten-Senke",
+		name_es: "Hondonada de la Batalla",
+		name_fr: "Vallon de bataille",
+		name_zh: "戰斗山谷",
 		direction: "Southwest",
 		id: "94-63",
 		map_id: 94,
@@ -1270,11 +1270,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Red",
 		map_type: "RedHome",
 		type: "Ruins",
-		name_en: "Demontrance Lake",
-		name_de: "Dämonentrance-See",
-		name_es: "Lago Trancedemoníaco",
-		name_fr: "Lac Maletranse",
-		name_zh: "魔幻湖",
+		name_en: "Bauer's Estate",
+		name_de: "Bauers Anwesen",
+		name_es: "Hacienda de Bauer",
+		name_fr: "Domaine de Bauer",
+		name_zh: "鮑爾庄園",
 		direction: "Northwest",
 		id: "94-64",
 		map_id: 94,
@@ -1284,11 +1284,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Red",
 		map_type: "RedHome",
 		type: "Ruins",
-		name_en: "Demontrance Lake",
-		name_de: "Dämonentrance-See",
-		name_es: "Lago Trancedemoníaco",
-		name_fr: "Lac Maletranse",
-		name_zh: "魔幻湖",
+		name_en: "Orchard Overlook",
+		name_de: "Obstgarten-Aussichtspunkt",
+		name_es: "Mirador del Huerto",
+		name_fr: "Belvédère du Verger",
+		name_zh: "果園瞭望台",
 		direction: "Northeast",
 		id: "94-65",
 		map_id: 94,
@@ -1298,11 +1298,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Red",
 		map_type: "RedHome",
 		type: "Ruins",
-		name_en: "Demontrance Lake",
-		name_de: "Dämonentrance-See",
-		name_es: "Lago Trancedemoníaco",
-		name_fr: "Lac Maletranse",
-		name_zh: "魔幻湖",
+		name_en: "Carver's Ascent",
+		name_de: "Aufstieg des Schnitzers",
+		name_es: "Ascenso del Trinchador",
+		name_fr: "Côte du couteau",
+		name_zh: "雕塑者之坡",
 		direction: "Southeast",
 		id: "94-66",
 		map_id: 94,
@@ -1497,11 +1497,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Green",
 		map_type: "GreenHome",
 		type: "Ruins",
-		name_en: "Daemonspell Lake",
-		name_de: "Dämonenzauber-See",
-		name_es: "Lago Daemonia",
-		name_fr: "Lac de Maldémon",
-		name_zh: "魔符之湖",
+		name_en: "Temple of Lost Prayers",
+		name_de: "Tempel der Verlorenen Gebete",
+		name_es: "Templo de las Plegarias Perdidas",
+		name_fr: "Temple des prières perdues",
+		name_zh: "迷途禱告者神殿",
 		direction: "South",
 		id: "95-62",
 		map_id: 95,
@@ -1511,11 +1511,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Green",
 		map_type: "GreenHome",
 		type: "Ruins",
-		name_en: "Daemonspell Lake",
-		name_de: "Dämonenzauber-See",
-		name_es: "Lago Daemonia",
-		name_fr: "Lac de Maldémon",
-		name_zh: "魔符之湖",
+		name_en: "Battle's Hollow",
+		name_de: "Schlachten-Senke",
+		name_es: "Hondonada de la Batalla",
+		name_fr: "Vallon de bataille",
+		name_zh: "戰斗山谷",
 		direction: "Southwest",
 		id: "95-63",
 		map_id: 95,
@@ -1525,11 +1525,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Green",
 		map_type: "GreenHome",
 		type: "Ruins",
-		name_en: "Daemonspell Lake",
-		name_de: "Dämonenzauber-See",
-		name_es: "Lago Daemonia",
-		name_fr: "Lac de Maldémon",
-		name_zh: "魔符之湖",
+		name_en: "Bauer's Estate",
+		name_de: "Bauers Anwesen",
+		name_es: "Hacienda de Bauer",
+		name_fr: "Domaine de Bauer",
+		name_zh: "鮑爾庄園",
 		direction: "Northwest",
 		id: "95-64",
 		map_id: 95,
@@ -1539,11 +1539,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Green",
 		map_type: "GreenHome",
 		type: "Ruins",
-		name_en: "Daemonspell Lake",
-		name_de: "Dämonenzauber-See",
-		name_es: "Lago Daemonia",
-		name_fr: "Lac de Maldémon",
-		name_zh: "魔符之湖",
+		name_en: "Orchard Overlook",
+		name_de: "Obstgarten-Aussichtspunkt",
+		name_es: "Mirador del Huerto",
+		name_fr: "Belvédère du Verger",
+		name_zh: "果園瞭望台",
 		direction: "Northeast",
 		id: "95-65",
 		map_id: 95,
@@ -1553,11 +1553,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Green",
 		map_type: "GreenHome",
 		type: "Ruins",
-		name_en: "Daemonspell Lake",
-		name_de: "Dämonenzauber-See",
-		name_es: "Lago Daemonia",
-		name_fr: "Lac de Maldémon",
-		name_zh: "魔符之湖",
+		name_en: "Carver's Ascent",
+		name_de: "Aufstieg des Schnitzers",
+		name_es: "Ascenso del Trinchador",
+		name_fr: "Côte du couteau",
+		name_zh: "雕塑者之坡",
 		direction: "Southeast",
 		id: "95-66",
 		map_id: 95,
@@ -1752,11 +1752,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Blue",
 		map_type: "BlueHome",
 		type: "Ruins",
-		name_en: "Devilheart Lake",
-		name_de: "Teufelsherz-See",
-		name_es: "Lago Corazonvil",
-		name_fr: "Lac Diablecœur",
-		name_zh: "魔心之湖",
+		name_en: "Temple of Lost Prayers",
+		name_de: "Tempel der Verlorenen Gebete",
+		name_es: "Templo de las Plegarias Perdidas",
+		name_fr: "Temple des prières perdues",
+		name_zh: "迷途禱告者神殿",
 		direction: "South",
 		id: "96-62",
 		map_id: 96,
@@ -1766,11 +1766,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Blue",
 		map_type: "BlueHome",
 		type: "Ruins",
-		name_en: "Devilheart Lake",
-		name_de: "Teufelsherz-See",
-		name_es: "Lago Corazonvil",
-		name_fr: "Lac Diablecœur",
-		name_zh: "魔心之湖",
+		name_en: "Battle's Hollow",
+		name_de: "Schlachten-Senke",
+		name_es: "Hondonada de la Batalla",
+		name_fr: "Vallon de bataille",
+		name_zh: "戰斗山谷",
 		direction: "Southwest",
 		id: "96-63",
 		map_id: 96,
@@ -1780,11 +1780,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Blue",
 		map_type: "BlueHome",
 		type: "Ruins",
-		name_en: "Devilheart Lake",
-		name_de: "Teufelsherz-See",
-		name_es: "Lago Corazonvil",
-		name_fr: "Lac Diablecœur",
-		name_zh: "魔心之湖",
+		name_en: "Bauer's Estate",
+		name_de: "Bauers Anwesen",
+		name_es: "Hacienda de Bauer",
+		name_fr: "Domaine de Bauer",
+		name_zh: "鮑爾庄園",
 		direction: "Northwest",
 		id: "96-64",
 		map_id: 96,
@@ -1794,11 +1794,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Blue",
 		map_type: "BlueHome",
 		type: "Ruins",
-		name_en: "Devilheart Lake",
-		name_de: "Teufelsherz-See",
-		name_es: "Lago Corazonvil",
-		name_fr: "Lac Diablecœur",
-		name_zh: "魔心之湖",
+		name_en: "Orchard Overlook",
+		name_de: "Obstgarten-Aussichtspunkt",
+		name_es: "Mirador del Huerto",
+		name_fr: "Belvédère du Verger",
+		name_zh: "果園瞭望台",
 		direction: "Northeast",
 		id: "96-65",
 		map_id: 96,
@@ -1808,11 +1808,11 @@ var GW2T_OBJECTIVE_DATA = {
 		nativeowner: "Blue",
 		map_type: "BlueHome",
 		type: "Ruins",
-		name_en: "Devilheart Lake",
-		name_de: "Teufelsherz-See",
-		name_es: "Lago Corazonvil",
-		name_fr: "Lac Diablecœur",
-		name_zh: "魔心之湖",
+		name_en: "Carver's Ascent",
+		name_de: "Aufstieg des Schnitzers",
+		name_es: "Ascenso del Trinchador",
+		name_fr: "Côte du couteau",
+		name_zh: "雕塑者之坡",
 		direction: "Southeast",
 		id: "96-66",
 		map_id: 96,
@@ -2502,6 +2502,57 @@ burningoildesert: {
  */
 var GW2T_PLACEMENT_DATA = {
 Eternal: {
+	Gate: [
+	// valley
+	[[11596, 15193], [11582, 15209]],
+	[[11614, 15209], [11600, 15224]],
+	[[11502, 15208], [11486, 15195]],
+	[[11569, 15103], [11584, 15117]],
+	[[11410, 15071], [11424, 15052]],
+	// quentin
+	[[10974, 15220], [10974, 15228]],
+	// durios
+	[[11237, 14586], [11229, 14588]],
+	// langor
+	[[11363, 15444], [11368, 15437]],
+	// bravost
+	[[11671, 14815], [11666, 14808]],
+	// overlook
+	[[10779, 13604], [10758, 13603]],
+	[[10759, 13581], [10780, 13581]],
+	[[10682, 13608], [10681, 13629]],
+	[[10639, 13777], [10639, 13798]],
+	// anzalias
+	[[10230, 13987], [10238, 13995]],
+	// mendon
+	[[10258, 13351], [10268, 13351]],
+	// ogrewatch
+	[[11045, 13919], [11053, 13911]],
+	// veloka
+	[[10992, 13500], [10998, 13507]],
+	// lowlands
+	[[9521, 15210], [9508, 15194]],
+	[[9538, 15196], [9526, 15180]],
+	[[9635, 15093], [9649, 15108]],
+	[[9869, 14886], [9883, 14901]],
+	[[9824, 15056], [9834, 15056]],
+	[[9727, 14954], [9736, 14960]],
+	// aldon
+	[[9448, 14893], [9453, 14887]],
+	// jerrifer
+	[[9872, 15348], [9879, 15352]],
+	// wildcreek
+	[[9937, 14579], [9943, 14584]],
+	// klovan
+	[[10249, 15049], [10249, 15057]],
+	// stonemist
+	[[10832, 14696], [10821, 14714]],
+	[[10626, 14761], [10605, 14762]],
+	[[10389, 14691], [10382, 14671]],
+	[[10482, 14442], [10499, 14429]],
+	[[10592, 14283], [10613, 14283]],
+	[[10688, 14424], [10706, 14435]]
+	],
 	Wall: [
 	// lowlands
 	[[9789, 15150], [9841, 15147]],
@@ -2601,87 +2652,114 @@ Eternal: {
 	[[10311, 14571], [10290, 14619]],
 	[[10294, 14631], [10342, 14652]]
 	],
-	Gate: [
-	// valley
-	[[11596, 15193], [11582, 15209]],
-	[[11614, 15209], [11600, 15224]],
-	[[11502, 15208], [11486, 15195]],
-	[[11569, 15103], [11584, 15117]],
-	[[11410, 15071], [11424, 15052]],
-	// quentin
-	[[10974, 15220], [10974, 15228]],
-	// durios
-	[[11237, 14586], [11229, 14588]],
-	// langor
-	[[11363, 15444], [11368, 15437]],
-	// bravost
-	[[11671, 14815], [11666, 14808]],
-	// overlook
-	[[10779, 13604], [10758, 13603]],
-	[[10759, 13581], [10780, 13581]],
-	[[10682, 13608], [10681, 13629]],
-	[[10639, 13777], [10639, 13798]],
-	// anzalias
-	[[10230, 13987], [10238, 13995]],
-	// mendon
-	[[10258, 13351], [10268, 13351]],
-	// ogrewatch
-	[[11045, 13919], [11053, 13911]],
-	// veloka
-	[[10992, 13500], [10998, 13507]],
-	// lowlands
-	[[9521, 15210], [9508, 15194]],
-	[[9538, 15196], [9526, 15180]],
-	[[9635, 15093], [9649, 15108]],
-	[[9869, 14886], [9883, 14901]],
-	[[9824, 15056], [9834, 15056]],
-	[[9727, 14954], [9736, 14960]],
-	// aldon
-	[[9448, 14893], [9453, 14887]],
-	// jerrifer
-	[[9872, 15348], [9879, 15352]],
-	// wildcreek
-	[[9937, 14579], [9943, 14584]],
-	// klovan
-	[[10249, 15049], [10249, 15057]],
-	// stonemist
-	[[10832, 14696], [10821, 14714]],
-	[[10626, 14761], [10605, 14762]],
-	[[10389, 14691], [10382, 14671]],
-	[[10482, 14442], [10499, 14429]],
-	[[10592, 14283], [10613, 14283]],
-	[[10688, 14424], [10706, 14435]]
-	],
 	Sentry: [[9736,15290],[10197,14912],[10119,14706],[9511,14708],[10363,14081],[10816,14080],[11097,13640],[10496,13540],[11145,14667],[10935,15038],[11226,15447],[11630,14699]],
 	Depot: [[9843,15405],[10209,15396],[10301,15063],[9948,14539],[9564,14399],[9388,14884],[9642,14928],[9781,15123],[9600,15206],[10222,14046],[9835,13584],[10291,13381],[11022,13471],[11296,13725],[10989,13906],[10703,13677],[10548,13788],[11202,14555],[11584,14491],[11721,14785],[11411,15484],[11010,15574],[10889,15255],[11595,15165],[11515,15053],[11435,15151],[10403,14784],[10326,14591],[10486,14283],[10754,14307],[10890,14608],[10772,14810],[10484,14528],[10724,14515],[10676,14696],[10571,14643]],
 	Siege: [{"id":"catapult","coord":[11005,13670]},{"id":"cannon","coord":[10578,14345]},{"id":"cannon","coord":[10374,14535]},{"id":"cannon","coord":[10822,14480]},{"id":"cannon","coord":[10746,14754]},{"id":"cannon","coord":[10492,14787]},{"id":"catapult","coord":[10883,13651]},{"id":"catapult","coord":[10503,13771]},{"id":"catapult","coord":[10532,13845]},{"id":"catapult","coord":[10474,13927]},{"id":"mortar","coord":[11411,15506]},{"id":"trebuchet","coord":[11152,14495]},{"id":"trebuchet","coord":[10424,13954]},{"id":"catapult","coord":[10015,13999]},{"id":"catapult","coord":[11072,13704]},{"id":"catapult","coord":[11114,13529]},{"id":"ballista","coord":[11119,13987]},{"id":"mortar","coord":[11736,14825]},{"id":"catapult","coord":[11833,14906]},{"id":"trebuchet","coord":[11679,14564]},{"id":"cannon","coord":[11372,15099]},{"id":"catapult","coord":[11114,15188]},{"id":"trebuchet","coord":[9914,15277]},{"id":"catapult","coord":[9923,15250]},{"id":"catapult","coord":[9368,14936]},{"id":"catapult","coord":[9595,14898]},{"id":"catapult","coord":[9857,14451]},{"id":"catapult","coord":[10376,15118]},{"id":"mortar","coord":[10726,14616]},{"id":"catapult","coord":[10757,13731]},{"id":"ballista","coord":[10153,13261]},{"id":"catapult","coord":[10121,13255]},{"id":"catapult","coord":[11359,15521]},{"id":"catapult","coord":[11440,15326]},{"id":"catapult","coord":[11676,15040]},{"id":"catapult","coord":[9894,15139]},{"id":"catapult","coord":[10257,14642]},{"id":"trebuchet","coord":[10634,13848]},{"id":"catapult","coord":[10948,14019]},{"id":"catapult","coord":[10832,14316]},{"id":"catapult","coord":[10569,14939]},{"id":"ballista","coord":[11289,15364]},{"id":"catapult","coord":[9979,15345]},{"id":"catapult","coord":[9787,15367]},{"id":"catapult","coord":[9774,15292]},{"id":"trebuchet","coord":[9615,14444]},{"id":"catapult","coord":[10158,15178]},{"id":"catapult","coord":[10121,14044]},{"id":"ballista","coord":[10361,13962]},{"id":"catapult","coord":[10373,13980]},{"id":"trebuchet","coord":[11075,14154]},{"id":"catapult","coord":[11400,14689]},{"id":"catapult","coord":[11373,14483]},{"id":"catapult","coord":[11210,14490]},{"id":"trebuchet","coord":[10965,13420]},{"id":"catapult","coord":[11341,15165]},{"id":"catapult","coord":[11325,15584]},{"id":"catapult","coord":[11133,15296]},{"id":"catapult","coord":[11422,14973]},{"id":"catapult","coord":[10839,15184]},{"id":"catapult","coord":[10707,14894]},{"id":"trebuchet","coord":[9929,13357]},{"id":"trebuchet","coord":[11143,15177]},{"id":"catapult","coord":[10361,14415]},{"id":"cannon","coord":[10337,14783]},{"id":"mortar","coord":[10492,14624]},{"id":"cannon","coord":[10283,14637]},{"id":"mortar","coord":[10313,14563]},{"id":"cannon","coord":[10358,14450]},{"id":"mortar","coord":[10392,14369]},{"id":"mortar","coord":[10465,14261]},{"id":"cannon","coord":[10523,14203]},{"id":"mortar","coord":[10613,14700]},{"id":"mortar","coord":[10529,14485]},{"id":"mortar","coord":[10674,14477]},{"id":"mortar","coord":[10677,14910]},{"id":"cannon","coord":[10617,14939]},{"id":"mortar","coord":[10520,14880]},{"id":"mortar","coord":[10375,14725]},{"id":"mortar","coord":[10735,14257]},{"id":"cannon","coord":[10686,14198]},{"id":"cannon","coord":[10795,14299]},{"id":"cannon","coord":[10887,14427]},{"id":"mortar","coord":[10915,14600]},{"id":"cannon","coord":[10935,14675]},{"id":"cannon","coord":[10855,14812]},{"id":"mortar","coord":[10779,14834]},{"id":"cannon","coord":[10413,14310]},{"id":"cannon","coord":[9705,15154]},{"id":"cannon","coord":[9642,15055]},{"id":"mortar","coord":[9521,15137]},{"id":"cannon","coord":[9477,15186]},{"id":"cannon","coord":[9522,15243]},{"id":"mortar","coord":[9653,15199]},{"id":"cannon","coord":[9905,15103]},{"id":"cannon","coord":[9922,14873]},{"id":"cannon","coord":[9899,14849]},{"id":"cannon","coord":[9687,14843]},{"id":"mortar","coord":[9711,14878]},{"id":"mortar","coord":[9872,15062]},{"id":"mortar","coord":[9450,14818]},{"id":"cannon","coord":[10961,13503]},{"id":"cannon","coord":[10814,13559]},{"id":"cannon","coord":[10737,13559]},{"id":"cannon","coord":[10671,13586]},{"id":"cannon","coord":[10650,13644]},{"id":"cannon","coord":[10830,13725]},{"id":"cannon","coord":[10743,13785]},{"id":"cannon","coord":[10648,13854]},{"id":"cannon","coord":[11658,14845]},{"id":"cannon","coord":[11583,14990]},{"id":"cannon","coord":[11562,15063]},{"id":"cannon","coord":[11408,15017]},{"id":"cannon","coord":[11448,15194]},{"id":"cannon","coord":[11644,15209]},{"id":"cannon","coord":[11389,15249]},{"id":"cannon","coord":[11329,15445]},{"id":"mortar","coord":[10843,15252]},{"id":"mortar","coord":[9763,15380]},{"id":"mortar","coord":[10855,13652]},{"id":"mortar","coord":[10728,13588]},{"id":"mortar","coord":[10676,13702]},{"id":"mortar","coord":[10797,13707]},{"id":"mortar","coord":[10525,13799]},{"id":"mortar","coord":[10573,13847]},{"id":"mortar","coord":[11514,15335]},{"id":"mortar","coord":[11393,15213]},{"id":"mortar","coord":[11535,14997]},{"id":"mortar","coord":[11694,15096]},{"id":"mortar","coord":[11642,15163]},{"id":"mortar","coord":[11556,15260]},{"id":"mortar","coord":[9895,14665]},{"id":"cannon","coord":[9919,14580]},{"id":"cannon","coord":[9834,15319]},{"id":"mortar","coord":[10122,15082]},{"id":"cannon","coord":[10221,15024]},{"id":"cannon","coord":[11000,15245]},{"id":"cannon","coord":[11214,14608]},{"id":"mortar","coord":[11150,14576]},{"id":"cannon","coord":[11600,15259]},{"id":"cannon","coord":[11446,15303]},{"id":"cannon","coord":[9457,14926]},{"id":"cannon","coord":[10604,13659]},{"id":"cannon","coord":[11090,13918]}]
 },
 Alpine: {
-	Siege: [{"id":"trebuchet","coord":[5914,14107]},{"id":"trebuchet","coord":[5965,14024]},{"id":"catapult","coord":[6067,13846]},{"id":"catapult","coord":[6069,13774]},{"id":"catapult","coord":[5883,13106]},{"id":"trebuchet","coord":[6072,13251]},{"id":"catapult","coord":[6314,13554]},{"id":"trebuchet","coord":[6451,13978]},{"id":"catapult","coord":[6549,13979]},{"id":"catapult","coord":[6805,14101]},{"id":"catapult","coord":[7452,14065]},{"id":"trebuchet","coord":[7738,13761]},{"id":"catapult","coord":[7718,13507]},{"id":"trebuchet","coord":[7858,12981]},{"id":"trebuchet","coord":[7402,12783]},{"id":"catapult","coord":[7330,12785]},{"id":"catapult","coord":[7463,12672]},{"id":"portal","coord":[6921,12731]},{"id":"catapult","coord":[6930,12837]},{"id":"trebuchet","coord":[7065,13001]},{"id":"trebuchet","coord":[6601,12641]},{"id":"trebuchet","coord":[6321,12724]},{"id":"catapult","coord":[6252,12538]},{"id":"trebuchet","coord":[6178,12301]},{"id":"trebuchet","coord":[7555,13512]}]
+	Gate: [
+	// garrison
+	[[6701, 13060], [6709, 13059]],
+	[[6725, 12871], [6737, 12854]],
+	[[6895, 12929], [6887, 12929]],
+	[[6904, 13150], [6892, 13151]],
+	[[6995, 12894], [7016, 12895]],
+	[[7086, 13061], [7092, 13082]],
+	[[6953, 13222], [6954, 13213]],
+	[[6746, 12996], [6766, 12991]],
+	// hills
+	[[8064, 13379], [8056, 13380]],
+	[[7841, 13517], [7840, 13525]],
+	[[7805, 13758], [7834, 13762]],
+	[[7739, 13373], [7729, 13383]],
+	// bay
+	[[5927, 13252], [5944, 13240]],
+	[[6250, 13352], [6260, 13362]],
+	[[6118, 13790], [6100, 13801]],
+	[[5888, 13722], [5880, 13722]],
+	[[5959, 13594], [5959, 13602]],
+	[[5870, 13487], [5876, 13482]],
+	// NW tower
+	[[6371, 12652], [6375, 12659]],
+	// SW tower
+	[[6614, 14114], [6622, 14114]],
+	// SE tower
+	[[7339, 14056], [7347, 14054]],
+	// NE tower
+	[[7387, 12744], [7381, 12749]]
+	],
+	Wall: [
+	// garrison
+	[[6905, 12931], [6929, 12931]],
+	[[7082, 12935], [7045, 12899]],
+	[[6711, 12909], [6682, 12951]],
+	[[6681, 12952], [6653, 12993]],
+	[[6652, 12995], [6637, 13016]],
+	// hills
+	[[8015, 13383], [8043, 13382]],
+	[[7901, 13571], [7849, 13572]],
+	[[7842, 13565], [7843, 13538]],
+	[[7849, 13472], [7902, 13473]],
+	[[7805, 13358], [7776, 13360]],
+	[[7699, 13439], [7698, 13467]],
+	[[7734, 13482], [7734, 13535]],
+	[[7735, 13551], [7741, 13604]],
+	[[7743, 13621], [7744, 13648]],
+	[[7739, 13681], [7734, 13733]],
+	// bay
+	[[6048, 13834], [6068, 13822]],
+	[[6215, 13733], [6259, 13707]],
+	[[6266, 13696], [6279, 13645]],
+	[[5859, 13679], [5859, 13705]],
+	[[5913, 13715], [5951, 13678]],
+	[[5949, 13471], [5898, 13471]],
+	[[6292, 13419], [6293, 13468]],
+	[[6293, 13472], [6295, 13522]],
+	// NW tower
+	[[6297, 12666], [6343, 12638]],
+	[[6377, 12684], [6372, 12711]],
+	[[6365, 12723], [6323, 12754]],
+	// SW tower
+	[[6550, 14011], [6570, 13994]],
+	[[6642, 14049], [6642, 14102]],
+	// SE tower
+	[[7459, 13945], [7435, 13951]],
+	[[7342, 13982], [7314, 14028]],
+	[[7358, 14047], [7383, 14041]],
+	// NE tower
+	[[7461, 12742], [7411, 12737]],
+	[[7371, 12777], [7388, 12798]]
+	],
+	Siege: [{"id":"cannon","coord":[7869,13785]},{"id":"cannon","coord":[7830,13573]},{"id":"cannon","coord":[6383,12624]},{"id":"cannon","coord":[7330,14082]},{"id":"cannon","coord":[6597,14138]},{"id":"cannon","coord":[6101,13837]},{"id":"cannon","coord":[6151,13807]},{"id":"cannon","coord":[6268,13713]},{"id":"cannon","coord":[6285,13625]},{"id":"cannon","coord":[6296,13543]},{"id":"cannon","coord":[6291,13370]},{"id":"cannon","coord":[6243,13321]},{"id":"cannon","coord":[5943,13202]},{"id":"cannon","coord":[6872,12902]},{"id":"cannon","coord":[6941,12922]},{"id":"cannon","coord":[7038,12883]},{"id":"cannon","coord":[7101,13008]},{"id":"cannon","coord":[7135,13096]},{"id":"cannon","coord":[6982,13200]},{"id":"cannon","coord":[6922,13169]},{"id":"cannon","coord":[6679,13035]},{"id":"cannon","coord":[6725,13047]},{"id":"cannon","coord":[6702,12884]},{"id":"cannon","coord":[5893,13237]},{"id":"cannon","coord":[7780,13786]},{"id":"cannon","coord":[7698,13388]},{"id":"cannon","coord":[7764,13350]},{"id":"cannon","coord":[8007,13373]},{"id":"cannon","coord":[8079,13352]},{"id":"cannon","coord":[7812,13499]},{"id":"cannon","coord":[5868,13741]},{"id":"cannon","coord":[5981,13628]},{"id":"cannon","coord":[5982,13566]},{"id":"cannon","coord":[5848,13482]},{"id":"cannon","coord":[7350,12740]},{"id":"catapult","coord":[6067,13846]},{"id":"catapult","coord":[6930,12837]},{"id":"catapult","coord":[7463,12672]},{"id":"catapult","coord":[7330,12785]},{"id":"catapult","coord":[7718,13507]},{"id":"catapult","coord":[6252,12538]},{"id":"catapult","coord":[6805,14101]},{"id":"catapult","coord":[6549,13979]},{"id":"catapult","coord":[6314,13554]},{"id":"catapult","coord":[5883,13106]},{"id":"catapult","coord":[6069,13774]},{"id":"catapult","coord":[7452,14065]},{"id":"mortar","coord":[6317,12759]},{"id":"mortar","coord":[7733,13474]},{"id":"mortar","coord":[7811,13358]},{"id":"mortar","coord":[6207,13327]},{"id":"mortar","coord":[6295,13473]},{"id":"mortar","coord":[7434,12627]},{"id":"mortar","coord":[5957,13673]},{"id":"mortar","coord":[8085,13380]},{"id":"mortar","coord":[6273,13668]},{"id":"mortar","coord":[5958,13470]},{"id":"mortar","coord":[6214,13735]},{"id":"mortar","coord":[7861,13688]},{"id":"mortar","coord":[7737,13686]},{"id":"mortar","coord":[6632,13023]},{"id":"mortar","coord":[6680,12952]},{"id":"mortar","coord":[6823,13109]},{"id":"mortar","coord":[6969,13101]},{"id":"mortar","coord":[6966,12881]},{"id":"mortar","coord":[7089,12940]},{"id":"mortar","coord":[7106,13115]},{"id":"mortar","coord":[7842,13471]},{"id":"mortar","coord":[7841,13574]},{"id":"portal","coord":[6921,12731]},{"id":"trebuchet","coord":[5965,14024]},{"id":"trebuchet","coord":[6178,12301]},{"id":"trebuchet","coord":[6321,12724]},{"id":"trebuchet","coord":[6601,12641]},{"id":"trebuchet","coord":[7065,13001]},{"id":"trebuchet","coord":[7555,13512]},{"id":"trebuchet","coord":[7402,12783]},{"id":"trebuchet","coord":[7858,12981]},{"id":"trebuchet","coord":[7738,13761]},{"id":"trebuchet","coord":[6451,13978]},{"id":"trebuchet","coord":[6072,13251]},{"id":"trebuchet","coord":[5914,14107]}]
 },
 Desert: {
-	Barricade: [
+	Gate: [
 	// rampart
-	[[6751, 12477], [6821, 12479]],
-	[[6700, 12479], [6720, 12479]],
-	[[7512, 12490], [7581, 12485]],
-	[[7614, 12481], [7635, 12480]],
+	[[7323, 12492], [7340, 12510]],
+	[[7505, 12611], [7507, 12633]],
+	[[7174, 12812], [7198, 12812]],
+	[[6835, 12594], [6835, 12617]],
+	[[7005, 12575], [7021, 12554]],
+	// W keep
+	[[6059, 12942], [6078, 12942]],
+	[[5931, 13307], [5931, 13327]],
+	[[5931, 13052], [5932, 13076]],
+	[[6060, 13412], [6081, 13412]],
+	[[6281, 13179], [6281, 13202]],
+	// E keep
+	[[8189, 12983], [8210, 12983]],
+	[[8078, 13259], [8077, 13278]],
+	[[8438, 13425], [8458, 13440]],
+	[[8458, 13110], [8480, 13096]],
+	[[8219, 13475], [8238, 13482]],
 	// NW tower
-	[[6399, 12277], [6468, 12275]],
-	[[6492, 12274], [6547, 12263]],
+	[[6237, 12262], [6258, 12262]],
 	// SW tower
-	[[6864, 14033], [6892, 14040]],
-	[[6824, 14021], [6844, 14026]],
-	[[6490, 13807], [6504, 13844]],
-	[[6520, 13879], [6572, 13928]],
-	// NE tower
-	[[8003, 12342], [8057, 12327]],
-	[[7933, 12369], [7977, 12358]],
+	[[6593, 14049], [6611, 14051]],
 	// SE tower
-	[[7351, 13963], [7421, 13978]],
-	[[7457, 13986], [7519, 13995]],
-	[[7849, 14063], [7921, 14055]],
-	[[7949, 14043], [7992, 14018]]
+	[[7716, 14242], [7734, 14236]],
+	// NE tower
+	[[8111, 12322], [8131, 12322]]
 	],
 	Wall: [
 	// rampart
@@ -2732,33 +2810,28 @@ Desert: {
 	[[8117, 12055], [8184, 12027]],
 	[[8173, 12317], [8249, 12304]]
 	],
-	Gate: [
+	Barricade: [
 	// rampart
-	[[7323, 12492], [7340, 12510]],
-	[[7505, 12611], [7507, 12633]],
-	[[7174, 12812], [7198, 12812]],
-	[[6835, 12594], [6835, 12617]],
-	[[7005, 12575], [7021, 12554]],
-	// W keep
-	[[6059, 12942], [6078, 12942]],
-	[[5931, 13307], [5931, 13327]],
-	[[5931, 13052], [5932, 13076]],
-	[[6060, 13412], [6081, 13412]],
-	[[6281, 13179], [6281, 13202]],
-	// E keep
-	[[8189, 12983], [8210, 12983]],
-	[[8078, 13259], [8077, 13278]],
-	[[8438, 13425], [8458, 13440]],
-	[[8458, 13110], [8480, 13096]],
-	[[8219, 13475], [8238, 13482]],
+	[[6751, 12477], [6821, 12479]],
+	[[6700, 12479], [6720, 12479]],
+	[[7512, 12490], [7581, 12485]],
+	[[7614, 12481], [7635, 12480]],
 	// NW tower
-	[[6237, 12262], [6258, 12262]],
+	[[6399, 12277], [6468, 12275]],
+	[[6492, 12274], [6547, 12263]],
 	// SW tower
-	[[6593, 14049], [6611, 14051]],
-	// SE tower
-	[[7716, 14242], [7734, 14236]],
+	[[6864, 14033], [6892, 14040]],
+	[[6824, 14021], [6844, 14026]],
+	[[6490, 13807], [6504, 13844]],
+	[[6520, 13879], [6572, 13928]],
 	// NE tower
-	[[8111, 12322], [8131, 12322]]
+	[[8003, 12342], [8057, 12327]],
+	[[7933, 12369], [7977, 12358]],
+	// SE tower
+	[[7351, 13963], [7421, 13978]],
+	[[7457, 13986], [7519, 13995]],
+	[[7849, 14063], [7921, 14055]],
+	[[7949, 14043], [7992, 14018]]
 	],
 	ShrineEarth: [[6380, 12595], [7154, 12245], [7939, 12553]],
 	ShrineFire: [[6376, 12878], [6125, 13248], [6419, 13460]],
