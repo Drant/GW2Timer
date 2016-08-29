@@ -30707,6 +30707,9 @@ K = {
 		}
 	},
 	
+	/*
+	 * Initializes the stopwatch and egg timer on the chains page options popup.
+	 */
 	initializeStopwatch: function()
 	{
 		// Bind toggle button on top of the digits
@@ -30724,7 +30727,9 @@ K = {
 			// Start the first time
 			if (K.StopwatchTimestamp === 0)
 			{
-				K.StopwatchTimestamp = (new Date()).getTime();
+				var offsetminutes = parseInt($("#watOffsetMinutes").val()) * T.cMSECONDS_IN_MINUTE;
+				var offsetseconds = parseInt($("#watOffsetSeconds").val()) * T.cMSECONDS_IN_SECOND;
+				K.StopwatchTimestamp = (new Date()).getTime() - (offsetminutes + offsetseconds);
 				K.tickStopwatchUp();
 			}
 			// Resume after pause
@@ -30770,7 +30775,9 @@ K = {
 			}
 		});
 		
-		// Personal timer
+		/*
+		 * Egg timer.
+		 */
 		$("#watTimerStart").click(function()
 		{
 			$("#watToggle").show();
@@ -30790,7 +30797,7 @@ K = {
 			K.StopwatchTimerStart = 0;
 			K.stopwatchDown.innerHTML = "";
 		});
-		$("#chnOptionsStopwatchDown input").click(function()
+		$("#chnOptionsStopwatchUp input, #chnOptionsStopwatchDown input").click(function()
 		{
 			$(this).select();
 		});

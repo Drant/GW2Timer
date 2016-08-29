@@ -1375,8 +1375,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-08-23T15:00:00Z"),
-	Finish: new Date("2016-08-30T15:00:00Z"),
+	Start: new Date("2016-08-29T16:00:00Z"),
+	Finish: new Date("2016-09-05T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1385,179 +1385,11 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Shared Inventory Slot",
-		id: "67071",
-		price: 595,
-		discount: [[1, 595, 700], [3, 1606, 1890], [5, 2380, 2800]],
-		col: 0
-	},
-	{
-		name: "Character Slot Expansion",
-		img: "http://i.imgur.com/bYMfxCX.png",
-		price: 560,
-		discount: 800,
-		col: 0
-	},
-	{
-		name: "Bank Tab Expansion",
-		id: "19995",
-		price: 420,
-		discount: 600,
-		col: 0
-	},
-	{
-		name: "Captain's Airship Pass",
-		id: "50104",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Royal Terrace Pass",
-		id: "49149",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Wedding Attire Outfit",
-		id: "70253",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Silver-Fed Salvage-o-Matic",
-		id: "67027",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Electromagnetic-Descender Glider",
-		id: "77811",
-		price: 340,
-		discount: 400,
-		col: 0
-	},
-	{
-		name: "Electromagnetic Ascender",
-		id: "78771",
-		price: 200,
-		discount: 250,
-		col: 0
-	},
-	{
-		name: "Heroic Booster",
-		id: "20005",
-		price: 112,
-		discount: [[1, 112, 150], [5, 476, 637], [20, 1574, 2100]],
-		col: 0
-	},
-	{
-		name: "Black Lion Chest Key",
-		id: "19980",
-		price: 100,
-		discount: [[1, 93, 125], [5, 337, 450], [25, 1575, 2100]],
-		col: 0
-	},
-	{
-		name: "White Wings Glider Combo",
-		id: "69852",
-		price: 595,
-		discount: 700,
-		col: 1
-	},
-	{
-		name: "Black Wings Glider Combo",
-		id: "68685",
-		price: 595,
-		discount: 700,
-		col: 1
-	},
-	{
-		name: "Bat Wings Glider Combo",
-		id: "74684",
-		price: 595,
-		discount: 700,
-		col: 1
-	},
-	{
-		name: "Golden Feather Wings Glider Combo",
-		id: "77269",
-		price: 595,
-		discount: 700,
-		col: 1
-	},
-	{
-		name: "Hawk Wings Glider Combo",
-		id: "77678",
-		price: 595,
-		discount: 700,
-		col: 1
-	},
-	{
-		name: "Macaw Wings Glider Combo",
-		id: "78727",
-		price: 595,
-		discount: 700,
-		col: 1
-	},
-	{
-		name: "Moth Wings Glider Combo",
-		id: "78768",
-		price: 595,
-		discount: 700,
-		col: 1
-	},
-	{
-		name: "Noble's Folly Pass",
-		id: "79140",
-		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Crystal Arbiter Outfit",
-		id: "76905",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Bandit Sniper's Outfit",
-		id: "77282",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Crystal Arbiter Glider",
-		id: "72252",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Soul River Glider",
-		id: "77291",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Belinda's Greatsword Skin",
-		id: "8466",
-		price: 600,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Peacock Scepter Skin",
 		id: "79365",
 		price: 600,
 		discount: null,
-		col: 1
+		col: 0
 	},
 	{
 		name: "Mini Garm",
