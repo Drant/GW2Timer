@@ -984,6 +984,7 @@ textarea.jsCopyCode {
 	overflow: hidden;
 	background: rgba(0, 0, 0, 0.2);
 	outline: 1px solid rgba(255, 136, 68, 0.2);
+	transition: background 1s;
 }
 .tmlSegmentContent {
 	display: table;
@@ -1043,6 +1044,7 @@ textarea.jsCopyCode {
 .tmlSegmentActive {
 	background: rgba(255, 136, 68, 0.2);
 	outline: 1px solid rgba(0, 0, 0, 0.2);
+	transition: background 1s;
 }
 .tmlSegmentActive .tmlSegmentNameBoss {
 	color: lime;

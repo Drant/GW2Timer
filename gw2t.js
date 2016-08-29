@@ -17904,6 +17904,21 @@ C = {
 			return integer;
 		}
 	},
+	
+	/*
+	 * Gets URL to wiki of an event.
+	 * @param string pName of event.
+	 * @param boolean pWantDefault
+	 * @returns string.
+	 */
+	getEventWiki: function(pName, pWantDefault)
+	{
+		if (pName.indexOf(".") === pName.length - 1)
+		{
+			pName = pName.slice(0, -1);
+		}
+		return (pWantDefault) ? U.getWikiLinkDefault(pName) : U.getWikiLinkLanguage(pName);
+	},
 
 	/*
 	 * Initializes the chain HTML plate with chains and their individual events.
@@ -21749,14 +21764,7 @@ M = {
 		}
 		pMarker.on(pEventType, function(pEvent)
 		{
-			var name = this.options.wiki;
-			// Trim trailing period if exists
-			if (name.indexOf(".") === name.length - 1)
-			{
-				name = name.slice(0, -1);
-			}
-			var url = (pWantDefault) ? U.getWikiLinkDefault(name) : U.getWikiLinkLanguage(name);
-			U.openExternalURL(url);
+			U.openExternalURL(C.getEventWiki(this.options.wiki, pWantDefault));
 		});
 	},
 	
@@ -22370,6 +22378,7 @@ P = {
 					{
 						title: "<span class='" + "mapPoi" + "'>" + newname + " (" + event.level + ")" + "</span>",
 						wiki: event.name,
+						coord: coord,
 						icon: L.icon(
 						{
 							iconUrl: icon,
@@ -22377,7 +22386,7 @@ P = {
 							iconAnchor: [24, 24]
 						})
 					});
-					M.bindMarkerWikiBehavior(marker, "click", true);//
+					M.bindMarkerWikiBehavior(marker, "click", true);
 					M.bindMarkerZoomBehavior(marker, "contextmenu");
 					zoneobj.Layers.EventIcon.addLayer(marker);
 					P.addMapLocation(coord, event.name, icon, zonename + " " + event.name);
@@ -22460,7 +22469,7 @@ P = {
 				aResultsLimit: 200,
 				aCallback: function(pLocation)
 				{
-					M.goToView(pLocation.coord, M.ZoomEnum.Same, M.Pin.Program);//
+					M.goToView(pLocation.coord, M.ZoomEnum.Same, M.Pin.Program);
 				}
 			});
 		});
@@ -22884,10 +22893,20 @@ P = {
 	{
 		if (M.isEventIconsGenerated)
 		{
-			M.ZoneCurrent.Layers.EventIcon.eachLayer(function(iLayer) {
-				var coord = M.convertLCtoGC(iLayer.getLatLng());
-				I.print("<input type='text' class='cssInputText' value='[" + coord + "]' /> "
-					+ "<dfn class='cssGameTitle' data-coord='" + coord + "'>" + iLayer.options.wiki + "</dfn>");
+			// Sort the zone events by X coordinates
+			var arr = [];
+			M.ZoneCurrent.Layers.EventIcon.eachLayer(function(iLayer)
+			{
+				iLayer.oSortableCoord = iLayer.options.coord[0];
+				arr.push(iLayer);
+			});
+			U.sortObjects(arr, {aKeyName: "oSortableCoord"});
+			// Print the coordinates and event names
+			arr.forEach(function(iLayer)
+			{
+				var obj = iLayer.options;
+				I.print("<input type='text' class='cssInputText' value='[" + obj.coord + "]' /> <a" + U.convertExternalAnchor(C.getEventWiki(obj.wiki)) + ">[W]</a> "
+					+ "<dfn class='cssGameTitle' data-coord='" + obj.coord + "'>" + obj.wiki + "</dfn>");
 			});
 			M.bindMapLinks("#itemConsole");
 			I.bindConsoleInput();
@@ -28317,7 +28336,7 @@ T = {
 		var now = new Date();
 		var hour = now.getUTCHours();
 		var min = now.getUTCMinutes();
-		var minremain = "";// Dim the clock background
+		var minremain = ""; // Dim the clock background
 		if (hour % 2 === 0)
 		{
 			if (min >= T.cDAYTIME_DAY_START) // Day
@@ -29407,7 +29426,6 @@ H = {
 			{
 				if ( ! $(this).hasClass("tmlSegmentActive"))
 				{
-					$(this).css({opacity: 0}).animate({opacity: 1}, 1000);
 					$(this).addClass("tmlSegmentActive");
 				}
 				if ($(this).hasClass("tmlTimesliceWB"))
