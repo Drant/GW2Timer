@@ -157,6 +157,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1887": "JP ProfessorPortmattsLab Jungle [15726,16423]",
 	"1888": "JP GoemmsLab Jungle [9235,18967]",
 	"1889": "JP UrmaugsSecret Kryta [17399,14591]",
+	"1890": "JP BrandedMine Ascalon [28948,16834]",
 	"1891": "JP BehemGauntlet Ascalon [31116,15198]",
 	"1892": "JP CollapsedObservatory Kryta [12781,15876]",
 	"1893": "JP AntreofAdjournment Orr [13598,24798]",
