@@ -236,14 +236,14 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1933": "Boss Wurm",
 	
 	// Dungeon
-	"2893": "Dungeon AC Ascalon",
-	"2901": "Dungeon COF Ascalon",
-	"2914": "Dungeon CM Kryta",
-	"2917": "Dungeon SE Shiverpeaks",
-	"2931": "Dungeon HOTW Shiverpeaks",
-	"2953": "Dungeon COE Jungle",
-	"2959": "Dungeon TA Jungle",
-	"2938": "Dungeon Arah Orr",
+	"2893": "Dungeon AC Ascalon [27666,13972]",
+	"2901": "Dungeon COF Ascalon [26928,8711]",
+	"2914": "Dungeon CM Kryta [13277,11943]",
+	"2917": "Dungeon SE Shiverpeaks [19687,17707]",
+	"2931": "Dungeon HOTW Shiverpeaks [22451,8816]",
+	"2953": "Dungeon COE Jungle [20982,21888]",
+	"2959": "Dungeon TA Jungle [9573,16564]",
+	"2938": "Dungeon Arah Orr [12028,27690]",
 	
 	// WvW
 	"437": "Guard",
@@ -1385,7 +1385,7 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-08-29T16:00:00Z"),
+	Start: new Date("2016-08-30T16:00:00Z"),
 	Finish: new Date("2016-09-05T16:00:00Z"),
 	Padding: {
 		name: "Gem",
@@ -1395,18 +1395,109 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Peacock Scepter Skin",
-		id: "79365",
+		name: "Total Makeover Kit",
+		id: "35991",
+		price: 280,
+		discount: [[1, 280, 350], [5, 1120, 1400]],
+		col: 0
+	},
+	{
+		name: "Royal Terrace Pass",
+		id: "49149",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
+		name: "Banker Golem (2 weeks)",
+		id: "50085",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Mist Herald Back Item Skin Set",
+		id: "44886",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Lord Faren's Rapier Skin",
+		id: "68687",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Mini Festive Lord Faren",
+		id: "68432",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Mini Golden Pig",
+		id: "68683",
+		price: 280,
+		discount: 350,
+		col: 0
+	},
+	{
+		name: "Magic Carpet",
+		id: "67356",
+		price: 200,
+		discount: 250,
+		col: 0
+	},
+	{
+		name: "Exemplar Attire Outfit",
+		id: "69623",
+		price: 560,
+		discount: 700,
+		col: 1
+	},
+	{
+		name: "Noble Count Outfit",
+		id: "67398",
+		price: 560,
+		discount: 700,
+		col: 1
+	},
+	{
+		name: "Amethyst Aegis",
+		img: "http://i.imgur.com/GP3pbVK.png",
 		price: 600,
 		discount: null,
-		col: 0
+		col: 1
+	},
+	{
+		name: "Shattered Bloodstone Circlet",
+		img: "http://i.imgur.com/XCubjla.png",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mask of the Queen",
+		id: "44608",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mini Jungle Lord Faren",
+		img: "http://i.imgur.com/bwzZpau.png",
+		price: 350,
+		discount: null,
+		col: 1
 	},
 	{
 		name: "Mini Garm",
 		id: "79048",
 		price: 350,
 		discount: null,
-		col: 0
+		col: 1
 	}
 	]
 },

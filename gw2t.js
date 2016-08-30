@@ -23550,7 +23550,7 @@ G = {
 			else if (d0 === "dungeon")
 			{
 				return "<ins class='dlyRegion dly_region_" + d2 + "'>"
-					+ "<ins class='dly dly_pve_dungeon_" + d1 + "' title='" + dtitle + "'></ins>"
+					+ "<ins class='dly dly_pve_dungeon_" + d1 + " dlyZoom curZoom' title='" + dtitle + "' data-coord='" + d3 + "'></ins>"
 				+ "</ins>";
 			}
 			else if (d0 === "boss")
