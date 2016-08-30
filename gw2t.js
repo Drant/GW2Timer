@@ -1106,6 +1106,7 @@ O = {
 			C.updateChainsTimeHTML();
 			K.updateDigitalClockMinutely();
 			H.updateTimelineLegend();
+			H.updateTimelineSegments();
 		},
 		bol_detectDST: function()
 		{
@@ -7136,9 +7137,13 @@ A = {
 	 */
 	regenerateDish: function(pDish)
 	{
+		A.wipeDish(pDish);
+		A.generateDish(pDish);
+	},
+	wipeDish: function(pDish)
+	{
 		$("#accDish_" + pDish).empty();
 		$("#accDishMenu_" + pDish).empty();
-		A.generateDish(pDish);
 	},
 	
 	/*
@@ -8863,9 +8868,9 @@ V = {
 			+ "<div id='accAuditCenter'></div>"
 			+ "<div id='accAudit'></div>"
 		+ "</div>");
-		$("#accDish_Hero, #accDish_Inventory").empty();
 		$(".chrWallet").remove();
 		$(".chrStats").hide();
+		// Retrieve characters data
 		I.suspendElement(menusubsection);
 		dish.prepend(I.cThrobber);
 		$.getJSON(A.getURL(A.URL.Characters), function(pData)
@@ -9191,7 +9196,11 @@ V = {
 			// Account reload button
 			$("#chrAccountReload").click(function()
 			{
-				$("#accDishMenu_Hero").empty();
+				// Wipe previous sections that use characters data
+				$(".accCharDependent").each(function()
+				{
+					A.wipeDish($(this).attr("data-section"));
+				});
 				I.qTip.hide();
 				A.regenerateDish("Characters");
 			});
@@ -29378,11 +29387,11 @@ H = {
 	 */
 	updateTimelineIndicator: function()
 	{
-		var cycleminutes = T.cMINUTES_IN_2_HOURS;
 		if ( ! H.isTimelineGenerated)
 		{
 			return;
 		}
+		var cycleminutes = T.cMINUTES_IN_2_HOURS;
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		var offset = (currentminute / cycleminutes) * T.cPERCENT_100;
 		$("#tmlIndicator").css({left: offset + "%"});
@@ -29406,6 +29415,8 @@ H = {
 				countdown.html(symbol + T.formatMinutes(minutesremaining));
 			}
 		});
+		// Update current timestamp minute
+		$(".tmlTimestampActive").find(".tmlSegmentTimestamp").text(T.getTimeFormatted({aWantSeconds: false}));
 	},
 	
 	/*
@@ -29418,8 +29429,10 @@ H = {
 			return;
 		}
 		var numwbslices = T.cMINUTES_IN_2_HOURS / T.cMINUTES_IN_TIMEFRAME;
-		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		var wbcurrentoffset = 0;
+		var currentminute = T.getCurrentBihourlyMinutesUTC();
+		var currenttimestamp = currentminute - (currentminute % T.cMINUTES_IN_MINIFRAME);
+		$("#tmlSegmentTimestamp_" + currenttimestamp).closest(".tmlSegment").addClass("tmlTimestampActive");
 		$(".tmlTimeslice").each(function()
 		{
 			if (currentminute >= $(this).data("start") && currentminute < $(this).data("finish"))
@@ -29439,7 +29452,7 @@ H = {
 			}
 		});
 		
-		// Update the world boss slices, called every 15 minutes
+		// Update the world boss slices, executes every 15 minutes
 		if (currentminute % T.cMINUTES_IN_TIMEFRAME === 0 || pForceWB)
 		{
 			var wbcounteroffset = 0;
@@ -29487,11 +29500,12 @@ H = {
 		else
 		{
 			// Update the timestamp just behind the indicator with future time
-			var timestampminute = currentminute - T.cMINUTES_IN_MINIFRAME;
-			$("#tmlSegmentTimestamp_" + timestampminute)
-				.html(T.getCurrentBihourlyTimestampLocal(timestampminute + T.cMINUTES_IN_2_HOURS))
-				.addClass("tmlSegmentTimestampFutureFar")
-				.parent().css({opacity: 0}).animate({opacity: 1}, 1000);
+			var previoustimestamp = currentminute - T.cMINUTES_IN_MINIFRAME;
+			$("#tmlSegmentTimestamp_" + previoustimestamp)
+				.html(T.getCurrentBihourlyTimestampLocal(previoustimestamp + T.cMINUTES_IN_2_HOURS))
+				.removeClass("tmlSegmentTimestampCurrent").addClass("tmlSegmentTimestampFutureFar")
+				.parent().css({opacity: 0}).animate({opacity: 1}, 1000)
+				.closest(".tmlSegment").removeClass("tmlTimestampActive");
 		}
 	},
 	

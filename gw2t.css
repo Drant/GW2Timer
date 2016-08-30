@@ -1041,10 +1041,14 @@ textarea.jsCopyCode {
 .tmlSegmentTimestampFutureFar {
 	color: #ccc;
 }
-.tmlSegmentActive {
+.tmlSegmentActive, .tmlTimestampActive {
 	background: rgba(255, 136, 68, 0.2);
 	outline: 1px solid rgba(0, 0, 0, 0.2);
 	transition: background 1s;
+}
+.tmlTimestampActive .tmlSegmentTimestamp {
+	font-weight: bold;
+	color: lime;
 }
 .tmlSegmentActive .tmlSegmentNameBoss {
 	color: lime;
