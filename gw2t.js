@@ -4347,6 +4347,17 @@ Z = {
 			{
 				I.prettyJSON(GPSIdentityJSON);
 			}},
+			agent: {usage: "Prints browser's navigator object.", f: function()
+			{
+				var str = "", obj, desc;
+				for (var i in window.navigator)
+				{
+					obj = window.navigator[i];
+					desc = (typeof obj === "string" || typeof obj === "number") ? obj : U.formatJSON(obj);
+					str += U.escapeHTML(i + ": " + desc) + "<br />";
+				}
+				I.print(str);
+			}},
 			lock: {usage: "Map cannot be moved.", f: function()
 			{
 				that.Map.dragging.disable(); that.Map.scrollWheelZoom.disable(); I.write("Map locked.");
@@ -18254,7 +18265,7 @@ C = {
 				} break;
 				case C.ChainSeriesEnum.Miscellaneous:
 				{
-					if (chain.flags.isspecial)
+					if (chain.flags.isSpecial)
 					{
 						chain.htmllist = "#sectionChains_Special";
 					}
@@ -18408,7 +18419,7 @@ C = {
 		{
 			ithchain = C.ScheduledChains[i];
 			// Chains that don't start at the quarters of an hour can have the displayed time adjusted
-			delayseconds = (ithchain.timing.minuteDelay) ? ithchain.timing.minuteDelay * T.cSECONDS_IN_MINUTE : 0;
+			delayseconds = (ithchain.flags.minuteDelay) ? ithchain.flags.minuteDelay * T.cSECONDS_IN_MINUTE : 0;
 			// Update the title tootlip with that chain's schedule
 			var minischedulestring = "";
 			var spacer;
@@ -18462,7 +18473,7 @@ C = {
 	{
 		var elapsed = T.getCurrentTimeframeElapsedTime();
 		var remaining = pChain.countdownToFinish - elapsed;
-		var delayminutes = pChain.timing.minuteDelay;
+		var delayminutes = pChain.flags.minuteDelay;
 		var delayremaining;
 		var time = remaining;
 		var sign = I.Symbol.ArrowUp + " ";
@@ -18981,7 +18992,7 @@ C = {
 			if (O.Options.bol_tourPrediction && (I.ModeCurrent !== I.ModeEnum.Overlay)
 				&& I.PageCurrent === I.PageEnum.Chains
 				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && isregularchain
-				&& C.isDryTopIconsShown === false && !pChain.flags.isspecial)
+				&& C.isDryTopIconsShown === false && !pChain.flags.isSpecial)
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -22388,6 +22399,7 @@ P = {
 						title: "<span class='" + "mapPoi" + "'>" + newname + " (" + event.level + ")" + "</span>",
 						wiki: event.name,
 						coord: coord,
+						eventid: i,
 						icon: L.icon(
 						{
 							iconUrl: icon,
@@ -22914,8 +22926,11 @@ P = {
 			arr.forEach(function(iLayer)
 			{
 				var obj = iLayer.options;
-				I.print("<input type='text' class='cssInputText' value='[" + obj.coord + "]' /> <a" + U.convertExternalAnchor(C.getEventWiki(obj.wiki)) + ">[W]</a> "
-					+ "<dfn class='cssGameTitle' data-coord='" + obj.coord + "'>" + obj.wiki + "</dfn>");
+				I.print("<input type='text' class='cssInputText' value='" + obj.eventid + "' /> "
+					+ "<input type='text' class='cssInputText' value='[" + obj.coord + "]' /> "
+					+ "<a" + U.convertExternalAnchor(C.getEventWiki(obj.wiki)) + ">[W]</a> "
+					+ "<dfn class='cssGameTitle' data-coord='" + obj.coord + "'>" + obj.wiki + "</dfn>"
+				);
 			});
 			M.bindMapLinks("#itemConsole");
 			I.bindConsoleInput();

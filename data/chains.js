@@ -1,5 +1,5 @@
 /* This file is used by gw2t.js */
-var GW2T_CHAIN_ADD_LENGTH = 15;
+var GW2T_CHAIN_ADD_LENGTH = 18;
 var GW2T_CHAIN_DATA = [
 {
 	series: 2,
@@ -134,7 +134,7 @@ var GW2T_CHAIN_DATA = [
 	events: [
 	{
 		primacy: 2,
-		path: [[21220, 22564], [21157, 22898], [21188, 22867], [21220, 22564]],
+		path: [[21197, 22590], [21157, 22898], [21188, 22867], [21197, 22590]],
 		name_en: "Prepare for toxic waste evacuation.",
 		name_de: "Vorbereiten auf Giftmüll-Entsorgung.",
 		name_es: "Prepárense para la evacuación de residuos tóxicos.",
@@ -153,7 +153,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 2,
-		path: [[21221, 22685], [21220, 22564], [21221, 22685], [21341, 22740], [21394, 22823], [21369, 22641], [21378, 22479]],
+		path: [[21221, 22685], [21197, 22590], [21221, 22685], [21341, 22740], [21394, 22823], [21369, 22641], [21378, 22479]],
 		name_en: "Disable the containers before they release their toxins.",
 		name_de: "Deaktiviert die Behälter, bevor sie ihre Gifte freisetzen können.",
 		name_es: "Desactiva todos los contenedores antes de que liberen las toxinas.",
@@ -172,7 +172,7 @@ var GW2T_CHAIN_DATA = [
 	},
 	{
 		primacy: 3,
-		path: [[21192, 22541], [21378, 22479], [21220, 22564], [21192, 22541]],
+		path: [[21192, 22541], [21378, 22479], [21197, 22590], [21192, 22541]],
 		name_en: "Defeat the Inquest's golem Mark II.",
 		name_de: "Besiegt den Inquestur-Golem Typ II.",
 		name_es: "Derrota al gólem serie II de la Inquisa.",
@@ -679,7 +679,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "queensdale",
 	waypoint: "[&BPcAAAA=]",
 	level: "15",
-	reward: {ecto: "1", loot: "0", dragonite: "3-5"},
+	reward: {ecto: "1-2", loot: "0", dragonite: "3-5"},
 	timing: ["01:45", "03:45", "05:45", "07:45", "09:45", "11:45", "13:45", "15:45", "17:45", "19:45", "21:45", "23:45"],
 	flags: {},
 	events: [
@@ -774,9 +774,9 @@ var GW2T_CHAIN_DATA = [
 		sInterim: ["*"],
 		fInterim: "*",
 		lim: "15:00",
-		avg: "4:00",
+		avg: "4:30",
 		min: "3:00",
-		max: "5:00"
+		max: "6:00"
 	}
 	]
 },
@@ -1782,8 +1782,8 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BEwCAAA=]",
 	level: "60",
 	reward: {ecto: "1", loot: "2", coin: 5000},
-	timing: {hourInitial: 0, hourMultiplier: 6, minuteOffset: 15, minuteDelay: 5},
-	flags: {},
+	timing: {hourInitial: 0, hourMultiplier: 6, minuteOffset: 15},
+	flags: {minuteDelay: 5},
 	events: [
 	{
 		primacy: 2,
@@ -1858,8 +1858,8 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BOYBAAA=]",
 	level: "60",
 	reward: {ecto: "1", loot: "2", coin: 5000},
-	timing: {hourInitial: 2, hourMultiplier: 6, minuteOffset: 15, minuteDelay: 5},
-	flags: {},
+	timing: {hourInitial: 2, hourMultiplier: 6, minuteOffset: 15},
+	flags: {minuteDelay: 5},
 	events: [
 	{
 		primacy: 2,
@@ -1934,8 +1934,8 @@ var GW2T_CHAIN_DATA = [
 	waypoint: "[&BOQAAAA=]",
 	level: "35",
 	reward: {ecto: "1", loot: "2", coin: 5000},
-	timing: {hourInitial: 4, hourMultiplier: 6, minuteOffset: 15, minuteDelay: 5},
-	flags: {},
+	timing: {hourInitial: 4, hourMultiplier: 6, minuteOffset: 15},
+	flags: {minuteDelay: 5},
 	events: [
 	{
 		primacy: 2,
@@ -2752,7 +2752,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "1", loot: "1", dragonite: "3-5"},
 	timing: ["00:15", "00:30", "00:45", "01:00", "01:15", "03:30", "03:45", "04:00", "04:15", "04:30", "06:30", "06:45", "07:00", "07:15", "07:30", "07:45", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "12:45", "13:00", "13:15", "13:30", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00", "18:15", "18:30", "18:45", "19:00", "19:15", "21:45", "22:00", "22:15", "22:30", "22:45", "23:00"],
-	flags: {isspecial: true},
+	flags: {isSpecial: true},
 	events: [
 	{
 		primacy: 1,
@@ -2847,7 +2847,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "1", loot: "1", dragonite: "3-5"},
 	timing: ["00:15", "00:30", "00:45", "01:00", "01:15", "03:30", "03:45", "04:00", "04:15", "04:30", "06:30", "06:45", "07:00", "07:15", "07:30", "07:45", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "12:45", "13:00", "13:15", "13:30", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00", "18:15", "18:30", "18:45", "19:00", "19:15", "21:45", "22:00", "22:15", "22:30", "22:45", "23:00"],
-	flags: {isspecial: true},
+	flags: {isSpecial: true},
 	events: [
 	{
 		primacy: 1,
@@ -2942,7 +2942,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "1", loot: "1", dragonite: "3-5"},
 	timing: ["01:15", "01:30", "01:45", "02:00", "02:15", "02:30", "02:45", "04:30", "04:45", "05:00", "05:15", "05:30", "05:45", "06:00", "07:30", "07:45", "08:00", "08:15", "08:30", "08:45", "09:00", "10:45", "11:00", "11:15", "11:30", "11:45", "13:45", "14:00", "14:15", "14:30", "14:45", "17:00", "17:15", "17:30", "17:45", "19:30", "19:45", "20:00", "20:15", "20:30", "20:45", "21:00", "22:30", "22:45", "23:00", "23:15", "23:30", "23:45"],
-	flags: {isspecial: true},
+	flags: {isSpecial: true},
 	events: [
 	{
 		primacy: 1,
@@ -3018,7 +3018,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "1", loot: "1", dragonite: "3-5"},
 	timing: ["01:15", "01:30", "01:45", "02:00", "02:15", "02:30", "02:45", "04:30", "04:45", "05:00", "05:15", "05:30", "05:45", "06:00", "07:30", "07:45", "08:00", "08:15", "08:30", "08:45", "09:00", "10:45", "11:00", "11:15", "11:30", "11:45", "13:45", "14:00", "14:15", "14:30", "14:45", "17:00", "17:15", "17:30", "17:45", "19:30", "19:45", "20:00", "20:15", "20:30", "20:45", "21:00", "22:30", "22:45", "23:00", "23:15", "23:30", "23:45"],
-	flags: {isspecial: true},
+	flags: {isSpecial: true},
 	events: [
 	{
 		primacy: 1,
@@ -3094,7 +3094,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "1", loot: "1", dragonite: "3-5"},
 	timing: ["00:00", "00:15", "02:45", "03:00", "03:15", "03:30", "03:45", "04:00", "05:45", "06:00", "06:15", "06:30", "06:45", "08:15", "08:30", "08:45", "09:00", "09:15", "09:30", "12:00", "12:15", "12:30", "12:45", "14:45", "15:00", "15:15", "15:30", "17:45", "18:00", "18:15", "18:30", "18:45", "19:00", "20:15", "20:30", "20:45", "21:00", "21:15", "21:30", "23:15", "23:30", "23:45"],
-	flags: {isspecial: true},
+	flags: {isSpecial: true},
 	events: [
 	{
 		primacy: 1,
