@@ -131,3 +131,6 @@ input.mapCoordinatesName {
 #paneMenu ins {
 	margin-top: 0px;
 }
+#menuOptions:hover #itemLanguagePopup {
+	top: 32px;
+}

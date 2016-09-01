@@ -1283,7 +1283,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "Seis Burntheart <dfn data-coord='17963,13943'>Lornar</dfn> and <dfn data-coord='17345,16148'>Bloodtide</dfn> location (4-day interval).<br />"
+	pve: "Seis Burntheart / Elemental Sprite map location <dfn data-coord='23586,9298'>1</dfn> <dfn data-coord='21615,11683'>2</dfn> <dfn data-coord='17963,13943'>3</dfn> <dfn data-coord='17345,16148'>4</dfn>.<br />"
 		+ "<a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a> guide and timings. <a href='http://gw2timer.com/?page=Creatures' title='gw2timer.com/<dfn>creatures</dfn>'>Spawn map</a> and <a href='http://gw2timer.com/?page=Slivers' title='gw2timer.com/<dfn>slivers</dfn>'>slivers</a>.",
 	wvw: "Desert map tiles for Red Borderlands will be updated later by ArenaNet.",
 	Start: new Date("2016-08-02T16:00:00Z"),
