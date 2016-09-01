@@ -22,8 +22,8 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160831"></script>
-	<script type="text/javascript" src="data/chains.js"></script>
+	<script type="text/javascript" src="data/general.js?v=20160901"></script>
+	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
 	<script>
@@ -596,6 +596,17 @@
 			</time>
 			<div id="itemLanguage">
 				<span><ins class="s16 s16_language"></ins></span>
+			</div>
+			<!--<canvas id="paneClockCanvas" class="clkSizeRegular" width="300" height="180"></canvas>--><!-- Size mismatch for anti-aliasing when scaled -->
+		</section>
+		<!-- Menu, if these IDs were changed, change the <article> tags' too
+		==================================================================== -->
+		<nav id="paneMenu" class="paneApp">
+			<span id="clkToggle" class="btnWindow btnVertical" title="<dfn>Toggle Clock</dfn>"></span>
+			<div id="menuChains" class="menuButton" title="<dfn>Chains:</dfn> Timers, Events, Schedule"><ins></ins><var class="jsTranslate">Timers</var></div>
+			<div id="menuMap" class="menuButton" title="<dfn>Map:</dfn> Dailies, Nodes, JPs, Missions, TP, Checklists"><ins></ins><var class="jsTranslate">Tools</var></div>
+			<div id="menuHelp" class="menuButton" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"><ins></ins><var class="jsTranslate">Help</var></div>
+			<div id="menuOptions" class="menuButton" title="<dfn>Options:</dfn> Display, Format, Alarm, Language"><ins></ins><var class="jsTranslate">Options</var>
 				<ul id="itemLanguagePopup" class="cntPopup">
 					<li><a class="linkLanguage" data-lang="en">English</a></li>
 					<li><a class="linkLanguage" data-lang="de">Deutsch</a></li>
@@ -610,27 +621,6 @@
 					<li><a class="linkExternal" href="http://forum.renaka.com/topic/5529319/"><sub>Help Translate</sub></a></li>
 				</ul>
 			</div>
-			<div id="itemSocial">
-				<a class="linkExternal" title="<dfn>Audit your account (API key).</dfn>" href="http://gw2timer.com/?page=Audit">
-					<ins class="s16 s16_gold"></ins>
-				</a>
-				<a class="linkExternal" title="<dfn>Learn GW2Timer's features.</dfn>" href="http://forum.renaka.com/topic/5602037/">
-					<ins class="s16 s16_info"></ins>
-				</a>
-				<a class="linkExternal" title="<dfn>Follow GW2Timer on Twitter.</dfn>" href="https://twitter.com/gw2timer">
-					<ins class="s16 s16_twitter"></ins>
-				</a>
-			</div>
-			<!--<canvas id="paneClockCanvas" class="clkSizeRegular" width="300" height="180"></canvas>--><!-- Size mismatch for anti-aliasing when scaled -->
-		</section>
-		<!-- Menu, if these IDs were changed, change the <article> tags' too
-		==================================================================== -->
-		<nav id="paneMenu" class="paneApp">
-			<span id="clkToggle" class="btnWindow btnVertical" title="<dfn>Toggle Clock</dfn>"></span>
-			<kbd id="menuChains" title="<dfn>Chains:</dfn> Timers, Events, Schedule"><ins></ins><var class="jsTranslate">Timers</var></kbd>
-			<kbd id="menuMap" title="<dfn>Map:</dfn> Dailies, Nodes, JPs, Missions, TP, Checklists"><ins></ins><var class="jsTranslate">Tools</var></kbd>
-			<kbd id="menuHelp" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"><ins></ins><var class="jsTranslate">Help</var></kbd>
-			<kbd id="menuOptions" title="<dfn>Options:</dfn> Display, Format, Alarm"><ins></ins><var class="jsTranslate">Options</var></kbd>
 		</nav>
 		<!-- Content mini-pane
 		==================================================================== -->

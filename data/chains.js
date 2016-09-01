@@ -1650,7 +1650,7 @@ var GW2T_CHAIN_DATA = [
 	level: "55",
 	reward: {ecto: "4", loot: "6", dragonite: "78", coin: 20000},
 	timing: ["01:00", "04:00", "08:00", "12:30", "17:00", "20:00"],
-	flags: {},
+	flags: {isClipped: false},
 	events: [
 	{
 		primacy: 2,
@@ -1997,7 +1997,7 @@ var GW2T_CHAIN_DATA = [
 	]
 },
 {
-	series: 4,
+	series: 3,
 	alias: "Verdant",
 	pronunciation: "night",
 	title: "Night and the Enemy",
@@ -2011,7 +2011,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "2", loot: "6"},
 	timing: {hourInitial: 1, hourMultiplier: 2, minuteOffset: 45},
-	flags: {},
+	flags: {isExpansion: true},
 	events: [
 	{
 		primacy: 2,
@@ -2130,7 +2130,7 @@ var GW2T_CHAIN_DATA = [
 	]
 },
 {
-	series: 4,
+	series: 3,
 	alias: "Auric",
 	pronunciation: "octovine",
 	title: "Battle in Tarir",
@@ -2144,7 +2144,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "4", loot: "4"},
 	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 45},
-	flags: {},
+	flags: {isExpansion: true},
 	events: [
 	{
 		primacy: 2,
@@ -2301,7 +2301,7 @@ var GW2T_CHAIN_DATA = [
 	]
 },
 {
-	series: 4,
+	series: 3,
 	alias: "Tangled",
 	pronunciation: "chak gerent",
 	title: "King of the Jungle",
@@ -2315,7 +2315,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "3", loot: "8"},
 	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 30},
-	flags: {},
+	flags: {isExpansion: true},
 	events: [
 	{
 		primacy: 1,
@@ -2472,7 +2472,7 @@ var GW2T_CHAIN_DATA = [
 	]
 },
 {
-	series: 4,
+	series: 3,
 	alias: "Dragon",
 	pronunciation: "dragon's stand",
 	title: "Against the Mouth of Mordremoth",
@@ -2486,7 +2486,7 @@ var GW2T_CHAIN_DATA = [
 	level: "80",
 	reward: {ecto: "8", loot: "30"},
 	timing: {hourInitial: 1, hourMultiplier: 2, minuteOffset: 30},
-	flags: {},
+	flags: {isExpansion: true},
 	events: [
 	{
 		primacy: 1,

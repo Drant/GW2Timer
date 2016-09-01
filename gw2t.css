@@ -1748,19 +1748,12 @@ input.mapCoordinatesName {
 }
 
 #itemLanguage {
+	display: none;
 	position: absolute;
 	padding-top: 4px;
 	padding-bottom: 28px;
 	bottom: 0px;
 	left: 10px;
-	font-family: sans-serif;
-	color: #e4e0b3;
-	text-shadow:
-		1px 1px 0px #000,
-		-1px -1px 0px #000,
-		1px -1px 0px #000,
-		-1px 1px 0px #000,
-		1px 1px 0px #000;
 }
 #itemLanguage ins {
 	width: 64px;
@@ -1773,6 +1766,15 @@ input.mapCoordinatesName {
 #itemLanguagePopup {
 	display: none;
 	left: -98px;
+	text-align: left;
+	font-family: sans-serif;
+	color: #e4e0b3;
+	text-shadow:
+		1px 1px 0px #000,
+		-1px -1px 0px #000,
+		1px -1px 0px #000,
+		-1px 1px 0px #000,
+		1px 1px 0px #000;
 }
 #itemLanguagePopup a {
 	display: block;
@@ -1797,21 +1799,14 @@ input.mapCoordinatesName {
 	top: 0px;
 	padding: 4px 2px 4px 2px;
 }
-
-#itemSocial {
+#menuOptions:hover #itemLanguagePopup {
+	display: block;
+	width: 90px;
 	position: absolute;
-	bottom: 28px;
-	right: 10px;
-	opacity: 0.8;
-}
-#itemSocial a {
-	text-decoration: none;
-}
-#itemSocial a ins {
-	vertical-align: baseline;
-}
-#itemSocial a ins:hover {
-	padding-bottom: 4px;
+	top: 48px;
+	left: auto;
+	right: 0px;
+	padding: 4px 2px 4px 2px;
 }
 
 /* @@Bar primary menu for switching pages
@@ -1821,22 +1816,22 @@ input.mapCoordinatesName {
 }
 
 #paneMenu {
-	position: absolute;
+	position: absolute; z-index: 9;
 	top: 360px;
 	width: 360px; height: 48px;
 	background: #333;
 	background: linear-gradient(to bottom, #111 0%, #444 50%, #111 100%);
 }
-#paneMenu kbd {
+.menuButton {
 	display: table;
 	float: left;
 	width: 25%; height: 100%;
 	text-align: center;
 }
-#paneMenu kbd:hover {
+.menuButton:hover {
 	box-shadow: 0px 0px 10px #e7e3bd;
 }
-#paneMenu kbd:active {
+.menuButton:active {
 	box-shadow: 0px 0px 10px white;
 }
 #paneMenu ins { /* Button image */
@@ -2008,7 +2003,7 @@ header.jsSection sup {
 }
 
 #chnOptions {
-	position: absolute; z-index: 2;
+	position: absolute; z-index: 12;
 	right: 0;
 	padding: 7px 4px 6px 0px;
 	opacity: 0.5;

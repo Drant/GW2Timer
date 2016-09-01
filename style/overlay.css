@@ -4,7 +4,7 @@
 */
 
 /* Remove elements extraneous or intrusive to overlay mode */
-#itemWarning, #itemDashboard, #itemSocial, #paneMenu var, #mapQuickURL, .mapHUDLinks {
+#itemWarning, #itemDashboard, #paneMenu var, #mapQuickURL, .mapHUDLinks {
 	display: none;
 }
 

@@ -3207,9 +3207,9 @@ var GW2T_CHAIN_UNSCHEDULED = [
 		sInterim: ["0"],
 		fInterim: "1:00:00",
 		lim: "10:00",
-		avg: "3:00",
-		min: "2:00",
-		max: "4:00"
+		avg: "4:00",
+		min: "3:00",
+		max: "5:00"
 	},
 	{
 		primacy: 2,
@@ -3226,9 +3226,9 @@ var GW2T_CHAIN_UNSCHEDULED = [
 		sInterim: ["0"],
 		fInterim: "1:00:00",
 		lim: "10:00",
-		avg: "3:00",
-		min: "2:00",
-		max: "4:00"
+		avg: "4:00",
+		min: "3:00",
+		max: "5:00"
 	},
 	{
 		primacy: 2,
@@ -3245,9 +3245,9 @@ var GW2T_CHAIN_UNSCHEDULED = [
 		sInterim: ["0"],
 		fInterim: "1:00:00",
 		lim: "10:00",
-		avg: "3:00",
-		min: "2:00",
-		max: "4:00"
+		avg: "4:00",
+		min: "3:00",
+		max: "5:00"
 	},
 	{
 		primacy: 2,
@@ -3264,9 +3264,9 @@ var GW2T_CHAIN_UNSCHEDULED = [
 		sInterim: ["0"],
 		fInterim: "1:00:00",
 		lim: "10:00",
-		avg: "3:00",
-		min: "2:00",
-		max: "4:00"
+		avg: "4:00",
+		min: "3:00",
+		max: "5:00"
 	},
 	{
 		primacy: 2,
@@ -3283,9 +3283,9 @@ var GW2T_CHAIN_UNSCHEDULED = [
 		sInterim: ["0"],
 		fInterim: "1:00:00",
 		lim: "10:00",
-		avg: "5:00",
-		min: "4:00",
-		max: "6:00"
+		avg: "6:00",
+		min: "5:00",
+		max: "7:00"
 	},
 	{
 		primacy: 3,

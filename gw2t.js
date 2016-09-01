@@ -1244,7 +1244,6 @@ O = {
 							borderRight: "none",
 							boxShadow: "-5px 0px 5px #223"
 						});
-						$("#itemLanguagePopup").css({ left: "-98px" });
 						$("#cslContent").css({ left: "24px" });
 						$(".mapExpandButton").css({right: 0, left: "auto"});
 					}
@@ -1258,7 +1257,6 @@ O = {
 						borderRight: "1px solid #444",
 						boxShadow: "5px 0px 5px #223"
 					});
-					$("#itemLanguagePopup").css({ left: "64px" });
 					$("#cslContent").css({ left: I.cPANEL_WIDTH + 24 + "px" });
 					$(".mapExpandButton").css({right: "auto", left: 0});
 				}
@@ -17305,7 +17303,7 @@ D = {
 		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
 		{
 			// Translate tooltips
-			$("#paneMenu kbd").each(function()
+			$(".menuButton").each(function()
 			{
 				$(this).attr("title", "<dfn>" + D.getPhraseOriginal($(this).find(".jsTranslate").text()) + "</dfn>");
 				I.qTip.init($(this));
@@ -18207,7 +18205,7 @@ C = {
 				function() { $("#chnTitle_" + pChain.nexus).text(D.getObjectName(pChain)); }
 			);
 		}
-		if (pChain.series === C.ChainSeriesEnum.Miscellaneous)
+		if (pChain.flags.isExpansion)
 		{
 			$("#chnTitle_" + pChain.nexus).addClass("chnTitleMisc");
 		}
@@ -29707,7 +29705,7 @@ K = {
 			case O.IntEnum.Clock.Compact:
 			{
 				$("#paneClock").show();
-				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").show();
+				$("#itemTimeLocal, #itemTimeDaytime").show();
 				// Reposition clock items
 				I.bulkAnimate([
 					{s: "#clock", p: {top: "0px", left: "70px", width: "220px", height: "220px"}},
@@ -29743,8 +29741,6 @@ K = {
 					color: "#eee",
 					opacity: 0.5
 				});
-				$("#itemLanguage").css({ bottom: "72px", left: "10px" });
-				$("#itemSocial").css({ bottom: "100px", right: "10px" });
 
 				clockpaneheight = I.cPANE_CLOCK_HEIGHT_COMPACT;
 			} break;
@@ -29752,7 +29748,7 @@ K = {
 			case O.IntEnum.Clock.Full:
 			{
 				$("#paneClock").show();
-				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").show();
+				$("#itemTimeLocal, #itemTimeDaytime").show();
 				// Reposition clock items
 				I.bulkAnimate([
 					{s: "#clock", p: {top: "70px", left: "70px", width: "220px", height: "220px"}},
@@ -29788,8 +29784,6 @@ K = {
 					color: "#bbcc77",
 					opacity: 1
 				});
-				$("#itemLanguage").css({ bottom: "0px", left: "10px" });
-				$("#itemSocial").css({ bottom: "28px", right: "10px" });
 
 				clockpaneheight = I.cPANE_CLOCK_HEIGHT;
 			} break;
@@ -29797,7 +29791,7 @@ K = {
 			case O.IntEnum.Clock.Bar:
 			{
 				$("#paneClock").show();
-				$("#itemTimeLocal, #itemTimeDaytime, #itemLanguage, #itemSocial").hide();
+				$("#itemTimeLocal, #itemTimeDaytime").hide();
 				// Reposition clock items
 				I.bulkAnimate([
 					{s: "#clock", p: {top: "0px", left: "0px", width: "85px", height: "85px"}},
@@ -29853,12 +29847,6 @@ K = {
 			// Readjust content pane
 			$("#paneContent").animate({top: clockpaneheight + I.cPANE_MENU_HEIGHT,
 				"min-height": I.cPANEL_HEIGHT_MIN - (clockpaneheight + I.cPANE_MENU_HEIGHT) + "px"}, animationspeed);
-		}
-		
-		// Other associated elements
-		switch (I.ModeCurrent)
-		{
-			case I.ModeEnum.Overlay: $("#itemSocial").hide(); break;
 		}
 	},
 	
@@ -30677,16 +30665,15 @@ K = {
 		var updateWaypoint = function(pWaypoint, pChainSD, pChainHC, pChainSDAfter, pChainHCAfter)
 		{
 			var text = "";
-			var ignoredchain = C.getChainByAlias("triplewurm");
 			
 			// Chains for the clicked timeframe
 			text += pChainSD.waypoint + " " + D.getChainAlias(pChainSD);
-			// If hardcore chain doesn't exist or is Triple Wurm
-			if ( ! pChainHC || pChainHC.nexus === ignoredchain.nexus)
+			// If hardcore chain doesn't exist
+			if ( ! pChainHC || pChainHC.flags.isClipped === false)
 			{
 				text += T.getTimeTillChainFormatted(pChainSD);
 			}
-			else if (pChainHC.nexus !== ignoredchain.nexus)
+			else if (pChainHC.flags.isClipped !== false)
 			{
 				text += " " + D.getTranslation("and") + " " + pChainHC.waypoint
 					+ " " + D.getChainAlias(pChainHC)
@@ -30696,11 +30683,11 @@ K = {
 			// Chains for the timeframe after that
 			text += ", " + D.getTranslation("then") + " " + pChainSDAfter.waypoint
 				+ " " + D.getChainAlias(pChainSDAfter);
-			if ( ! pChainHCAfter || pChainHCAfter.nexus === ignoredchain.nexus)
+			if ( ! pChainHCAfter || pChainHCAfter.flags.isClipped === false)
 			{
 				text += T.getTimeTillChainFormatted(pChainSDAfter);
 			}
-			else if (pChainHCAfter.nexus !== ignoredchain.nexus)
+			else if (pChainHCAfter.flags.isClipped !== false)
 			{
 				text += " " + D.getTranslation("and") + " " + pChainHCAfter.waypoint
 					+ " " + D.getChainAlias(pChainHCAfter)
@@ -31331,12 +31318,6 @@ I = {
 				I.clearAutoscroll();
 			});
 		}
-		
-		// The menu bar overlaps the language popup, so have to "raise" the clock pane
-		$("#itemLanguage").hover(
-			function() {$("#paneClock").css("z-index", 3);},
-			function() {$("#paneClock").css("z-index", 1);}
-		);
 
 		// Initialize scroll bars for pre-loaded plates
 		if (I.isMapEnabled)
@@ -32640,7 +32621,7 @@ I = {
 			$("#paneMenu").hover(
 				function()
 				{
-					$("#paneMenu kbd").each(function()
+					$(".menuButton").each(function()
 					{
 						// Fade icon not being hovered over
 						if ( ! $(this).is(":hover"))
@@ -32652,14 +32633,14 @@ I = {
 				function()
 				{
 					// User moused outside the menu, so stop the animations
-					$("#paneMenu kbd").finish().each(function()
+					$(".menuButton").finish().each(function()
 					{
 						$(this).animate({opacity: 1}, animationspeed);
 					});
 				}
 			);
 			// User hovers over individual menu icons
-			$("#paneMenu kbd").hover(
+			$(".menuButton").hover(
 				function()
 				{
 					$(this).animate({opacity: 1}, animationspeed);
@@ -32680,7 +32661,7 @@ I = {
 		/*
 		 * Menu click icon to show respective content plate (page).
 		 */
-		$("#paneMenu kbd").each(function()
+		$(".menuButton").each(function()
 		{
 			$(this).click(function()
 			{
@@ -33012,6 +32993,7 @@ I = {
 				I.showHomeLink();
 				// Readjust panels
 				$("#itemTimeline").appendTo("#panelApp");
+				$("#itemLanguagePopup").appendTo("#itemLanguage");
 				I.readjustSimple();
 			} break;
 			case I.ModeEnum.Mobile:
@@ -33028,6 +33010,7 @@ I = {
 				K.iconOpacityChecked = 0.2;
 				I.showHomeLink();
 				$("#itemLanguage").prependTo("#plateChains");
+				$("#itemLanguagePopup").appendTo("#itemLanguage");
 				// Show the timeline if the website is not embedded
 				if (I.isProgramEmbedded)
 				{
@@ -33082,6 +33065,10 @@ I = {
 				H.isDashboardEnabled = false;
 			}
 		}
+		$("#itemLanguagePopup").click(function(pEvent)
+		{
+			pEvent.stopPropagation();
+		});
 	},
 	
 	/*
@@ -33177,7 +33164,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind these tags with the title attribute for tooltip
-		I.qTip.init("#chnOptions img, a, ins, kbd, span, time, fieldset, label, input, button");
+		I.qTip.init("#chnOptions img, .menuButton, a, ins, kbd, span, time, fieldset, label, input, button");
 	},
 	
 	/*
