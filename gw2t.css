@@ -1056,6 +1056,7 @@ textarea.jsCopyCode {
 .tmlIcon {
 	width: 24px; height: 24px;
 	margin-right: 2px;
+	transition: opacity 0.2s;
 }
 .tmlIcon:hover {
 	outline: 1px solid rgba(255, 136, 68, 1);
@@ -1582,6 +1583,7 @@ input.mapCoordinatesName {
 	position: absolute;
 	border: 1px solid black;
 	box-shadow: 0px 0px 10px black;
+	transition: opacity 0.2s;
 }
 #paneClockIcons img.clkIconCurrent {
 	border: 1px solid lime;
@@ -1765,6 +1767,8 @@ input.mapCoordinatesName {
 }
 #itemLanguagePopup {
 	display: none;
+	position: absolute;
+	width: 90px;
 	left: -98px;
 	text-align: left;
 	font-family: sans-serif;
@@ -1794,18 +1798,14 @@ input.mapCoordinatesName {
 }
 #itemLanguage:hover #itemLanguagePopup { /* Popup when hovered over language button */
 	display: block;
-	width: 90px;
-	position: absolute;
 	top: 0px;
 	padding: 4px 2px 4px 2px;
 }
 #menuOptions:hover #itemLanguagePopup {
 	display: block;
-	width: 90px;
-	position: absolute;
 	top: 48px;
 	left: auto;
-	right: 0px;
+	right: -8px;
 	padding: 4px 2px 4px 2px;
 }
 
@@ -1822,14 +1822,19 @@ input.mapCoordinatesName {
 	background: #333;
 	background: linear-gradient(to bottom, #111 0%, #444 50%, #111 100%);
 }
+#paneMenu:hover .menuButton {
+	opacity: 0.5;
+}
+#paneMenu .menuButton:hover {
+	box-shadow: 0px 0px 10px #e7e3bd;
+	opacity: 1;
+}
 .menuButton {
 	display: table;
 	float: left;
 	width: 25%; height: 100%;
 	text-align: center;
-}
-.menuButton:hover {
-	box-shadow: 0px 0px 10px #e7e3bd;
+	transition: opacity 0.2s, box-shadow 0.2s;
 }
 .menuButton:active {
 	box-shadow: 0px 0px 10px white;
@@ -2209,13 +2214,11 @@ header.jsSection sup {
 	border-bottom-right-radius: 8px;
 	background: #222;
 	background: linear-gradient(to right, #111 0%, #333 100%);
+	transition: opacity 0.2s;
 }
 
-.chnBarChecked {
-	opacity: 0.3;
-}
-.chnBarDeleted {
-	display: none;
+.chnFaded {
+	opacity: 0.4;
 }
 
 .chnTitle {

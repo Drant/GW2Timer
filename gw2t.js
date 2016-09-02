@@ -804,7 +804,7 @@ O = {
 			{
 				chain = C.Chains[i];
 				$("#chnCheck_" + chain.nexus).removeClass("chnChecked");
-				$("#chnBar_" + chain.nexus).css({opacity: 1});
+				$("#chnBar_" + chain.nexus).removeClass("chnFaded");
 				if (X.getChecklistItem(X.Checklists.Chain, chain.nexus) !== X.ChecklistEnum.Disabled)
 				{
 					$("#chnBar_" + chain.nexus).show();
@@ -963,10 +963,10 @@ O = {
 			{
 				chain = C.Chains[i];
 				$("#chnCheck_" + chain.nexus).removeClass("chnChecked");
-				$("#chnBar_" + chain.nexus).show().css({opacity: 1}).css({display: display});
+				$("#chnBar_" + chain.nexus).show().removeClass("chnFaded").css({display: display});
 				$(".chnSlot_" + chain.nexus).each(function()
 				{
-					$(this).show().css({display: display, opacity: 1})
+					$(this).show().css({display: display}).removeClass("chnFaded")
 						.find(".chnCheck").removeClass("chnChecked");
 					if ($(this).hasClass("tmlIcon"))
 					{
@@ -2023,20 +2023,19 @@ X = {
 			{
 				case X.ChecklistEnum.Unchecked:
 				{
-					thisbar.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed);
+					thisbar.addClass("chnFaded");
 					if (I.ModeCurrent !== I.ModeEnum.Tile)
 					{
 						$("#chnDetails_" + nexus).hide("fast");
 					}
 					$(this).addClass("chnChecked");
 					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Checked);
-					theseslots.css({opacity: 1}).animate({opacity: K.iconOpacityChecked}, K.iconOpacitySpeed)
+					theseslots.addClass("chnFaded")
 						.find(".chnCheck").addClass("chnChecked");
 				} break;
 				case X.ChecklistEnum.Checked:
 				{
-					thisbar.css({opacity: 1}).show("fast").css({display: display});
-					thisbar.css({opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed);
+					thisbar.removeClass("chnFaded").show("fast").css({display: display});
 					if (I.ModeCurrent !== I.ModeEnum.Tile)
 					{
 						$("#chnDetails_" + nexus).show("fast").css({display: display});
@@ -2045,7 +2044,7 @@ X = {
 					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
 					theseslots.show("fast").each(function()	
 					{
-						$(this).css({display: display, opacity: K.iconOpacityChecked}).animate({opacity: 1}, K.iconOpacitySpeed)
+						$(this).css({display: display}).removeClass("chnFaded")
 							.find(".chnCheck").removeClass("chnChecked");
 						if ($(this).hasClass("tmlIcon"))
 						{
@@ -2055,14 +2054,14 @@ X = {
 				} break;
 				case X.ChecklistEnum.Disabled:
 				{
-					thisbar.css({opacity: 1}).show("fast").css({display: display});
+					thisbar.removeClass("chnFaded").show("fast").css({display: display});
 					if (I.ModeCurrent !== I.ModeEnum.Tile)
 					{
 						$("#chnDetails_" + nexus).show("fast").css({display: display});
 					}
 					$(this).removeClass("chnChecked");
 					X.setChecklistItem(X.Checklists.Chain, nexus, X.ChecklistEnum.Unchecked);
-					theseslots.hide().css({opacity: 1})
+					theseslots.hide().removeClass("chnFaded")
 						.find(".chnCheck").removeClass("chnChecked");
 				} break;
 			}
@@ -2094,7 +2093,7 @@ X = {
 			} break;
 			case X.ChecklistEnum.Checked:
 			{
-				pBar.css({opacity: K.iconOpacityChecked});
+				pBar.addClass("chnFaded");
 				pCheck.addClass("chnChecked");
 				if (O.Options.bol_hideChecked)
 				{
@@ -2120,11 +2119,11 @@ X = {
 		{
 			case X.ChecklistEnum.Unchecked:
 			{
-				pIcon.css({opacity: 1});
+				pIcon.removeClass("chnFaded");
 			} break;
 			case X.ChecklistEnum.Checked:
 			{
-				pIcon.css({opacity: K.iconOpacityChecked});
+				pIcon.addClass("chnFaded");
 			} break;
 			case X.ChecklistEnum.Disabled:
 			{
@@ -2134,7 +2133,7 @@ X = {
 				}
 				else
 				{
-					pIcon.css({opacity: K.iconOpacityChecked});
+					pIcon.addClass("chnFaded");
 				}
 			} break;
 		}
@@ -28121,20 +28120,21 @@ T = {
 	 */
 	formatTimeColon: function(pMilliseconds, pWantDeciseconds)
 	{
-		var seconds = ~~(pMilliseconds / T.cMSECONDS_IN_SECOND);
+		var signstr = "";
+		var ms = pMilliseconds;
+		if (ms < 0)
+		{
+			ms *= -1;
+			signstr = "−";
+		}
+		var seconds = ~~(ms / T.cMSECONDS_IN_SECOND);
 		var day, hour, min, sec;
 		var daystr = "";
 		var hourstr = "";
 		var minstr = "";
 		var secstr = "";
 		var msstr = "";
-		var signstr = "";
 		
-		if (seconds < 0)
-		{
-			seconds = seconds * -1;
-			signstr = "−";
-		}
 		if (seconds >= T.cSECONDS_IN_DAY)
 		{
 			day = ~~(seconds / T.cSECONDS_IN_DAY);
@@ -28170,7 +28170,7 @@ T = {
 		}
 		if (pWantDeciseconds)
 		{
-			var deciseconds = ~~((pMilliseconds % T.cMSECONDS_IN_SECOND) / T.cBASE_10);
+			var deciseconds = ~~((ms % T.cMSECONDS_IN_SECOND) / T.cBASE_10);
 			msstr = "." + deciseconds;
 			if (deciseconds < T.cBASE_10)
 			{
@@ -29597,8 +29597,6 @@ K = {
 	currentFrameOffsetMinutes: 0,
 	currentPredictionColor: "",
 	currentDaytimeSymbol: "",
-	iconOpacityChecked: 0.4,
-	iconOpacitySpeed: 200,
 	oldQuadrantAngle: 0,
 	cDEGREES_IN_CIRCLE: 360,
 	cDEGREES_IN_QUADRANT: 90,
@@ -30798,8 +30796,9 @@ K = {
 		{
 			$("#watToggle").show();
 			$("#itemStopwatch").show().css("font-size", O.Options.int_sizeStopwatchFont);
+			var offsetseconds = parseInt($("#watOffsetSeconds").val()) * T.cMSECONDS_IN_SECOND;
 			K.StopwatchTimerStart = (new Date()).getTime();
-			K.StopwatchTimerFinish = K.StopwatchTimerStart + (O.Options.int_minStopwatchAlert * T.cMSECONDS_IN_MINUTE);
+			K.StopwatchTimerFinish = K.StopwatchTimerStart + (O.Options.int_minStopwatchAlert * T.cMSECONDS_IN_MINUTE) + offsetseconds;
 			// Initial call to the update function
 			K.tickStopwatchDown();
 		});
@@ -32611,54 +32610,6 @@ I = {
 	initializeUIForMenu: function()
 	{
 		/*
-		 * Preset the menu to fade all icons except the one being hovered.
-		 */
-		(function()
-		{
-			var animationspeed = 200;
-			var cFadeOpacity = 0.5;
-			// User hovers over the menu bar
-			$("#paneMenu").hover(
-				function()
-				{
-					$(".menuButton").each(function()
-					{
-						// Fade icon not being hovered over
-						if ( ! $(this).is(":hover"))
-						{
-							$(this).animate({opacity: cFadeOpacity}, animationspeed);
-						}
-					});
-				},
-				function()
-				{
-					// User moused outside the menu, so stop the animations
-					$(".menuButton").finish().each(function()
-					{
-						$(this).animate({opacity: 1}, animationspeed);
-					});
-				}
-			);
-			// User hovers over individual menu icons
-			$(".menuButton").hover(
-				function()
-				{
-					$(this).animate({opacity: 1}, animationspeed);
-				},
-				function()
-				{
-					$(this).animate({opacity: cFadeOpacity}, animationspeed);
-				}
-			).mousedown(function()
-			{
-				$(this).finish().css({opacity: cFadeOpacity});
-			}).mouseup(function()
-			{
-				$(this).finish().css({opacity: 1});
-			});
-		})();
-
-		/*
 		 * Menu click icon to show respective content plate (page).
 		 */
 		$(".menuButton").each(function()
@@ -33007,7 +32958,6 @@ I = {
 			case I.ModeEnum.Tile:
 			{
 				I.isMapEnabled = false;
-				K.iconOpacityChecked = 0.2;
 				I.showHomeLink();
 				$("#itemLanguage").prependTo("#plateChains");
 				$("#itemLanguagePopup").appendTo("#itemLanguage");
