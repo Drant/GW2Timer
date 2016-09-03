@@ -30485,11 +30485,8 @@ K = {
 					pIcon.show();
 					pIcon.attr("src", pChain.iconSrc);
 					pIcon.data(C.cIndexSynonym, pChain.nexus);
-					if (I.ModeCurrent === I.ModeEnum.Simple)
-					{
-						pIcon.attr("title", D.getObjectName(pChain));
-						I.qTip.init(pIcon);
-					}
+					pIcon.attr("title", D.getObjectName(pChain));
+					I.qTip.init(pIcon);
 					X.reapplyChainIconState(pChain, pIcon);
 				}
 				else
