@@ -613,7 +613,8 @@ Armor_Light_Helm: [
 	{u: 6802, i: 78834, n: "Experimental Envoy Cowl", p: {craft: true}},
 	{u: 6842, i: 79014, n: "Xera's Mask", p: {gem: 400}},
 	{u: 6881, i: 79050, n: "Bloodstone Crown", p: {achievement: 0}},
-	{u: 6896, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}}
+	{u: 6896, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
+	{u: 6899, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -1128,7 +1129,8 @@ Armor_Medium_Helm: [
 	{u: 6790, i: 78995, n: "Experimental Envoy Leggings", p: {craft: true}},
 	{u: 6845, i: 79014, n: "Xera's Mask", p: {gem: 400}},
 	{u: 6858, i: 79159, n: "Bloodstone Crown", p: {achievement: 0}},
-	{u: 6891, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}}
+	{u: 6891, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
+	{u: 6900, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1636,7 +1638,8 @@ Armor_Heavy_Helm: [
 	{u: 6799, i: 78940, n: "Experimental Envoy Helmet", p: {craft: true}},
 	{u: 6841, i: 79014, n: "Xera's Mask", p: {gem: 400}},
 	{u: 6856, i: 79240, n: "Bloodstone Crown", p: {achievement: 0}},
-	{u: 6893, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}}
+	{u: 6893, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
+	{u: 6888, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -3180,7 +3183,8 @@ Weapon_Shield: [
 	{u: 6768, i: 78765, n: "Cavalier Shield", t: [78765]},
 	{u: 6827, i: 78968, n: "Privateer Shield", p: {blticket: 1}},
 	{u: 6869, i: 79209, n: "Embellished Shield", t: [79209]},
-	{u: 6912, i: 79403, n: "Bloodstone Shield", t: [79403]}
+	{u: 6912, i: 79403, n: "Bloodstone Shield", t: [79403]},
+	{u: 6935, i: 79360, n: "Amethyst Shield", p: {gem: 600}}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},

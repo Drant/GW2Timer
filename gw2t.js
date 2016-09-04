@@ -5492,7 +5492,7 @@ Z = {
 						u: ithentry.id,
 						i: itemid,
 						n: name,
-						p: {coin: null}
+						p: {gem: null}
 					}, false);
 					inputselm = $("<aside>&nbsp;<a" + U.convertExternalAnchor(U.getWikiLinkDefault(name)) + ">" + name + "</a></aside>").appendTo(itemselm);
 					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(entrystr);
@@ -5551,6 +5551,7 @@ Z = {
 	 */
 	collateSearch: function()
 	{
+		I.print("Loading items database...");
 		Z.loadItemsDatabase(function()
 		{
 			Z.DatabaseLanguages.forEach(function(iLang)
@@ -5652,7 +5653,7 @@ Z = {
 			else
 			{
 				// If not tradeable then a custom payment property must be later manually assigned
-				pEntry.p = {coin: null};
+				pEntry.p = {gem: null};
 			}
 		};
 		
