@@ -1284,7 +1284,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "Seis Burntheart / Elemental Sprite map location <dfn data-coord='23586,9298'>1st</dfn> <dfn data-coord='21615,11683'>2nd</dfn> <dfn data-coord='17963,13943'>3rd</dfn> <dfn data-coord='17332,16159'>4th</dfn> <dfn data-coord='13855,20425'>Final</dfn>.<br />",
+	pve: "Seis Burntheart / Elemental Sprite <dfn data-coord='[[23586,9298],[21615,11683],[17963,13943],[17332,16159],[13855,20425]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181'>Bloodstone-Crazed Creatures</a>.<br />",
 	wvw: "Desert map tiles for Red Borderlands will be updated later by ArenaNet.",
 	Start: new Date("2016-08-02T16:00:00Z"),
 	Finish: new Date("2016-09-16T16:00:00Z"),
@@ -1324,7 +1324,7 @@ Countdown: {
 		url: "http://forum.renaka.com/topic/6209670/",
 		Start: new Date("2016-09-09T00:00:00Z"),
 		Finish: new Date("2016-09-12T00:00:00Z")
-	}
+	},
 	/*{ // Last Friday of even numbered months
 		name_en: "WvW Re-linking",
 		name_de: "WvW Wieder-verbindung",
@@ -1346,7 +1346,7 @@ Countdown: {
 		Start: new Date("2016-08-09T17:00:00Z"),
 		Finish: new Date("2016-08-10T17:00:00Z")
 	}*/
-	/*{ // 8 weeks cycle, on Thursday
+	{ // 8 weeks cycle, on Thursday
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
@@ -1354,7 +1354,7 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2016-09-15T20:00:00Z"),
 		Finish: new Date("2016-09-22T20:00:00Z")
-	}*/
+	}
 	]
 },
 
@@ -1387,7 +1387,7 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
 	Start: new Date("2016-08-30T16:00:00Z"),
-	Finish: new Date("2016-09-05T16:00:00Z"),
+	Finish: new Date("2016-09-06T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",

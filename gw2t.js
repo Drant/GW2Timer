@@ -28319,6 +28319,18 @@ T = {
 	},
 	
 	/*
+	 * Gets standard localized time string with weekday word included.
+	 * @param Date pDate object.
+	 * @returns string.
+	 */
+	formatWeektime: function(pDate)
+	{
+		return pDate.toLocaleString(window.navigator.language, {
+			year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long"
+		});
+	},
+	
+	/*
 	 * Checks a time sensitive object if its Start and Finish date objects are
 	 * within the current time.
 	 * @param object pObject to check.
@@ -28892,7 +28904,7 @@ H = {
 			var range = T.getMinMax(H.Sale.Items, "price");
 			var rangestr = (range.oMin === range.oMax) ? range.oMax : (range.oMin + "-" + range.oMax);
 			// Create "button" to toggle list of items on sale
-			$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle' title='<dfn>Gem Store Promotions</dfn> expires: " + H.Sale.Finish.toLocaleString() + "'>"
+			$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle' title='<dfn>Gem Store Promotions and Sales</dfn><br />Expires: " + T.formatWeektime(H.Sale.Finish) + "'>"
 				+ "<img id='dsbSaleSymbol' src='img/ui/placeholder.png' /><img id='dsbSaleToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 				+ "<var>" + H.Sale.Items.length + " " + D.getWordCapital("promotions") + "</var> "
 				+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
@@ -28977,11 +28989,13 @@ H = {
 			{
 				$(this).css({height: "auto"}).empty();
 				$("#dsbSale").hide();
+				$("#dsbMenuSale").removeClass("dsbMenuItemActive");
 			});
 		}
 		else
 		{
 			$("#dsbSale").show();
+			$("#dsbMenuSale").addClass("dsbMenuItemActive");
 			table.append(I.cThrobber);
 			E.updateCoinInGem(function()
 			{
@@ -29082,12 +29096,11 @@ H = {
 		}
 		vendorcodes += "- " + vendorname;
 		$("#dsbMenuVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle' "
-			+  "title='<dfn>Updated:</dfn> " + H.Vendor.Start.toLocaleString(window.navigator.language, {
-					year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long" })
+			+  "title='<dfn>Pact Supply Network Agent</dfn><br />Updated: " + T.formatWeektime(H.Vendor.Start)
 				+ "'><img src='img/map/vendor_karma.png' /><img id='dsbVendorToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + vendorname + "</var></kbd>"
 		+ "</div>").css({display: "inline-block"});
-		$("#dsbVendor").append("<div id='dsbVendorMenu'>"
+		$("#dsbVendor").empty().append("<div id='dsbVendorMenu'>"
 			+ "<img data-src='img/ui/info.png' /><a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
 			+ "<img data-src='img/map/route.png' /><u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</u>"
@@ -29169,11 +29182,13 @@ H = {
 			{
 				$(this).css({height: "auto"}).empty();
 				$("#dsbVendor").hide();
+				$("#dsbMenuVendor").removeClass("dsbMenuItemActive");
 			});
 		}
 		else
 		{
 			$("#dsbVendor").show();
+			$("#dsbMenuVendor").addClass("dsbMenuItemActive");
 			I.loadImg($("#dsbVendorMenu"));
 			I.toggleToggleIcon("#dsbVendorToggleIcon", true);
 			table.empty();

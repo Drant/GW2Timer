@@ -66,7 +66,7 @@ body > windowMain
 	font-family: "Menomonia";
 	src: url("https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.woff") format("woff");
 }
-@keyframes aniPulsate { /* Used on elements with background linear-gradient(270deg, transparent, rgba(255,255,255,0.5)) */
+@keyframes aniPulsate { /* Used on elements with background linear-gradient(270deg, transparent, rgba(255, 255, 255, 0.5)) */
     0% { background-position: 0% 50% }
     50% { background-position: 100% 50% }
     100% { background-position: 0% 50% }
@@ -360,7 +360,7 @@ img {
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 17px;
 	font-weight: bold;
-	border: 2px solid rgba(0,0,0,0.5);
+	border: 2px solid rgba(0, 0, 0, 0.5);
 }
 .trsListings table {
 	min-width: 320px;
@@ -370,7 +370,7 @@ img {
 	text-shadow: none;
 }
 .trsListings tbody {
-	background: rgba(0,0,0,0.8);
+	background: rgba(0, 0, 0, 0.8);
 }
 .trsListings td {
 	padding: 4px;
@@ -381,7 +381,7 @@ img {
 	color: #d3ad64;
 }
 .trsListings tbody tr:nth-child(even) {
-	background: rgba(255,255,255,0.1);
+	background: rgba(255, 255, 255, 0.1);
 }
 .trsListings tbody tr:hover {
 	background-attachment: fixed;
@@ -1075,6 +1075,7 @@ textarea.jsCopyCode {
 	color: #bbcc77;
 	text-shadow: 0px 0px 4px black;
 	background: rgba(0, 0, 0, 0.4);
+	border-left: 4px solid rgba(0, 0, 0, 0.4);
 	border-radius: 2px;
 }
 #itemDashboard a {
@@ -1090,13 +1091,17 @@ textarea.jsCopyCode {
 	margin: 4px 0px 0px 0px;
 	font-family: Trebuchet MS, Menomonia;
 	color: rgba(255, 238, 187, 0.8);
-	background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
-	border: 2px solid rgba(0,0,0,0.4);
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
+	border: 2px solid rgba(0, 0, 0, 0.4);
 	border-radius: 4px;
+	transition: border 0.4s;
 }
 .dsbMenuItem:hover {
-	background: linear-gradient(to top, transparent 0%, rgba(0,0,0,0.6) 100%);
 	color: rgba(255, 238, 187, 1);
+	background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+	border-top: 2px solid rgba(255, 238, 187, 0.4);
+}
+.dsbMenuItemActive {
 	border-top: 2px solid rgba(255, 238, 187, 0.4);
 }
 .dsbMenuItem img {
@@ -1104,7 +1109,7 @@ textarea.jsCopyCode {
 }
 .dsbExpansion {
 	display: none;
-	background: rgba(0,0,0,0.4);
+	background: rgba(0, 0, 0, 0.4);
 	border-radius: 2px;
 	border-top: 2px solid black;
 	border-right: 1px solid black;
@@ -1118,10 +1123,10 @@ textarea.jsCopyCode {
 	content: "";
 	display: block;
 	width: 100%; height: 2px;
-	background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+	background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
 }
 #dsbAnnouncement {
-	font-family: sans-serif;
+	font-family: Arial, sans-serif;
 	font-size: 14px;
 }
 #dsbCountdown:before, #dsbCountdown:after {
@@ -1129,7 +1134,7 @@ textarea.jsCopyCode {
 	width: 100%;
 	height: 1px;
 	display: block;
-	background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.4) 100%);
+	background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.4) 100%);
 }
 #dsbCountdown time {
 	font-family: Consolas, monospace;
@@ -1342,10 +1347,6 @@ input.mapCoordinatesName {
 	color: #ddff77;
 	opacity: 0.9;
 }
-#mapQuickURL {
-	display: inline;
-	margin-right: 8px;
-}
 #wvwLogContainer {
 	display: none; /* To be displayed when loaded by JavaScript */
 }
@@ -1400,6 +1401,8 @@ input.mapCoordinatesName {
 	margin: 0;
 	padding: 10px 18px 10px 16px;
 	background: linear-gradient(to right, rgba(15, 15, 15, 0.9) 0%, rgba(51, 51, 51, 0.9) 100%);
+	border-top: 4px solid #111;
+	border-bottom: 4px solid #111;
 	border-radius: 2px;
 	box-shadow: 0px 0px 2px #555;
 	opacity: 0;
@@ -1545,7 +1548,7 @@ input.mapCoordinatesName {
 	display: block;
 	margin-top: 2px;
 	margin-bottom: 2px;
-	border: 1px solid rgba(0,0,0,0.8);
+	border: 1px solid rgba(0, 0, 0, 0.8);
 	border-radius: 2px;
 	box-shadow: 0px 0px 2px black;
 }
