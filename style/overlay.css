@@ -4,7 +4,7 @@
 */
 
 /* Remove elements extraneous or intrusive to overlay mode */
-#itemWarning, #itemDashboard, #paneMenu var, #mapQuickURL, .mapHUDLinks {
+#itemWarning, #itemDashboard, #paneMenu var, .hudTitle, .hudLinks {
 	display: none;
 }
 
@@ -90,7 +90,7 @@ input.mapCoordinatesName {
 		1px 1px 1px #000;
 	opacity: 0.9;
 }
-.mapHUDButton {
+.hudButton {
 	opacity: 0.4;
 }
 #mapZones:hover #mapZonesPopup {
@@ -120,7 +120,7 @@ input.mapCoordinatesName {
 #wvwLog {
 	margin: 0 !important;
 }
-.mapPeripheralSouth {
+.hudPeripheralSouth {
 	bottom: 0 !important; right: 0 !important;
 }
 

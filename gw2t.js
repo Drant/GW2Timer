@@ -1272,8 +1272,8 @@ O = {
 		},
 		bol_showHUD: function()
 		{
-			$("#mapHUDOuter").toggle(O.Options.bol_showHUD);
-			$("#mapHUDBoxes").toggle(O.Options.bol_showHUD);
+			$("#hudOuter").toggle(O.Options.bol_showHUD);
+			$("#hudBoxes").toggle(O.Options.bol_showHUD);
 		},
 		bol_showCoordinatesBar: function()
 		{
@@ -1283,7 +1283,7 @@ O = {
 		{
 			if (O.Options.bol_hideHUD === false)
 			{
-				$("#mapHUDBoxes").show();
+				$("#hudBoxes").show();
 			}
 		},
 		bol_showTimeline: function()
@@ -6517,11 +6517,7 @@ A = {
 		
 		// Initialize tooltips and translate
 		I.qTip.init($("#panelAccount").find("a, label, button, kbd, img"));
-		$("#accContent .jsTranslate").each(function()
-		{
-			$(this).text(D.getPhraseOriginal($(this).text()))
-				.removeClass("jsTranslate");
-		});
+		D.translateElements();
 		
 		// Initialize the console, which is the same as the map's coordinates bar
 		var consoleinput = $("#accConsole").onEnterKey(function()
@@ -16762,7 +16758,7 @@ D = {
 		
 		// Nouns
 		s_account: {de: "account", es: "cuenta", fr: "compte",
-			cs: "účet", it: "account", pl: "konto", pt: "conta", ru: "счёт", zh: "帳戶​​"},
+			cs: "účet", it: "conto", pl: "konto", pt: "conta", ru: "счёт", zh: "帳戶​​"},
 		s_key: {de: "schlüssel", es: "tecla", fr: "clé",
 			cs: "klávesa", it: "chiave", pl: "klawisz", pt: "chave", ru: "ключ", zh: "索引鍵"},
 		s_info: {de: "info", es: "información", fr: "info",
@@ -16809,8 +16805,6 @@ D = {
 			cs: "režim", it: "modalità", pl: "tryb", pt: "modo", ru: "режим", zh: "方式"},
 		s_chatlink: {de: "chatlink", es: "vínculo chat", fr: "lien chat",
 			cs: "chat odkaz", it: "collegamento chat", pl: "czat łącze", pt: "link bate-papo", ru: "чат связь", zh: "連結聊天"},
-		s_wvw: {de: "WvW", es: "McM", fr: "McM",
-			cs: "SpS", it: "McM", pl: "SkS", pt: "McM", ru: "МпМ", zh: "世界戰場"},
 		s_stopwatch: {de: "stoppuhr", es: "cronómetro", fr: "chronomètre",
 			cs: "stopky", it: "cronografo", pl: "stoper", pt: "cronômetro", ru: "секундомер", zh: "碼錶"},
 		s_guilds: {de: "gilden", es: "clanes", fr: "guildes",
@@ -16914,12 +16908,22 @@ D = {
 			cs: "Chrámy", it: "Templi", pl: "Świątynie", pt: "Templos", ru: "Храмы", zh: "寺廟"},
 		s_Full_Timetable: {de: "Zeitplan", es: "Horario", fr: "Horaire",
 			cs: "Plán", it: "Programma", pl: "Harmonogram", pt: "Horário", ru: "Расписание", zh: "時間表"},
-		s_Gem_Store_Promotions: {de: "Edelsteinshop Aktionen", es: "Promociones gemas", fr: "Promotions gemmes",
-			cs: "Drahokam Prodejna Propagace", it: "Negozio gemma promozioni", pl: "Klejnot Sklep Promocje", pt: "Loja gema promoções", ru: "Самоцве́т Магази́н Продвижения", zh: "寶石商店促銷"},
+		s_promotions: {de: "Aktionen", es: "promociones", fr: "promotions",
+			cs: "propagace", it: "promozioni", pl: "promocje", pt: "promoções", ru: "продвижения", zh: "促銷"},
+		s_directory: {de: "verzeichnis", es: "directorio", fr: "annuaire",
+			cs: "adresář", it: "directory", pl: "katalog", pt: "diretório", ru: "каталог", zh: "目錄"},
+		s_wvw: {de: "WvW", es: "McM", fr: "McM",
+			cs: "SpS", it: "McM", pl: "SkS", pt: "McM", ru: "МпМ", zh: "世界戰場"},
+		s_display: {de: "anzeige", es: "presentación", fr: "affichage",
+			cs: "zobrazení", it: "visualizzazione", pl: "wyświetlania", pt: "exibição", ru: "отображаемое", zh: "顯示"},
+		s_zone: {de: "gebiet", es: "zona", fr: "zone",
+			cs: "zóna", it: "zona", pl: "zona", pt: "zona", ru: "зона", zh: "區"},
 		s_forum: {de: "forum", es: "foro", fr: "forum",
 			cs: "fórum", it: "forum", pl: "forum", pt: "fórum", ru: "форум", zh: "論壇"},
 		s_catalog: {de: "katalog", es: "catálogo", fr: "catalogue",
 			cs: "katalog", it: "catalogo", pl: "katalog", pt: "catálogo", ru: "каталог", zh: "目錄"},
+		s_audit: {de: "prüfung", es: "auditar", fr: "auditer",
+			cs: "audit", it: "audit", pl: "audyt", pt: "auditar", ru: "аудит", zh: "審計"},
 		s_simple: {de: "einfach", es: "simple", fr: "simple",
 			cs: "prostý", it: "semplice", pl: "prosty", pt: "simples", ru: "простой", zh: "簡單"},
 		s_mobile: {de: "mobil", es: "móvil", fr: "mobile",
@@ -17308,7 +17312,7 @@ D = {
 				$(this).attr("title", "<dfn>" + D.getPhraseOriginal($(this).find(".jsTranslate").text()) + "</dfn>");
 				I.qTip.init($(this));
 			});
-			$(".mapHUDButton").each(function()
+			$(".hudButton").each(function()
 			{
 				var title = $(this).attr("title");
 				if (title !== undefined)
@@ -17321,7 +17325,7 @@ D = {
 			});
 			D.translateElements();
 		}
-		I.qTip.init(".mapHUDButton");
+		I.qTip.init(".hudButton");
 	},
 	
 	/*
@@ -19419,6 +19423,10 @@ M = {
 		/*
 		 * Bind map HUD buttons functions.
 		 */
+		$(htmlidprefix + "DirectoryButton").click(function()
+		{
+			$("#menuMap").trigger("click");
+		});
 		$(htmlidprefix + "GPSButton").click(function()
 		{
 			// Go to character if cliked on GPS button
@@ -23081,7 +23089,7 @@ P = {
 				 * the visual path of the step. Nonprimary events contain
 				 * only a single entry, that is, their location.
 				 */
-				if ((primaryevent.path[0])[0] === 0) // If the first entry is [0,0], then the paths are meant to be points rather than connected lines
+				if ((primaryevent.path[0])[0] < 0) // If the first entry has negative coordinates, then the paths are meant to be points rather than connected lines
 				{
 					for (var ii = 1; ii < primaryevent.path.length; ii++)
 					{
@@ -23121,7 +23129,12 @@ P = {
 			$("#chnEvent_" + pChain.nexus + "_" + eventnum).each(function()
 			{
 				// Assign a data attribute to the event name
-				var coord = ((event.path[0])[0] === 0) ? event.path[1] : event.path[0];
+				var firstcoord = event.path[0];
+				var coord = firstcoord;
+				if (firstcoord[0] < 0)
+				{
+					coord = [Math.abs(firstcoord[0]), Math.abs(firstcoord[1])];
+				}
 				$(this).attr("data-coord", coord[0] + "," + coord[1]);
 				$(this).attr("data-eventindex", i);
 				// Read the attribute and use the coordinate when clicked for touring
@@ -28879,13 +28892,12 @@ H = {
 			var range = T.getMinMax(H.Sale.Items, "price");
 			var rangestr = (range.oMin === range.oMax) ? range.oMax : (range.oMin + "-" + range.oMax);
 			// Create "button" to toggle list of items on sale
-			$("#dsbSale").append("<div><kbd id='dsbSaleHeader' class='curToggle'><img id='dsbSaleSymbol' src='img/ui/placeholder.png' /> "
-				+ "<u>" + H.Sale.Items.length + " "
-				+ D.getTranslation("Gem Store Promotions") + "</u> "
-				+ "(<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span>)"
-				+ "<img id='dsbSaleToggleIcon' src='img/ui/toggle.png' /></kbd>"
-				+ "<span class='dsbCountdownDate'>" + I.Symbol.ArrowDown + "@ " + H.Sale.Finish.toLocaleString() + "</span>"
-			+ "</div><div id='dsbSaleTable' class='jsScrollable'></div>");
+			$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle' title='<dfn>Gem Store Promotions</dfn> expires: " + H.Sale.Finish.toLocaleString() + "'>"
+				+ "<img id='dsbSaleSymbol' src='img/ui/placeholder.png' /><img id='dsbSaleToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
+				+ "<var>" + H.Sale.Items.length + " " + D.getWordCapital("promotions") + "</var> "
+				+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
+			+ "</div>").css({display: "inline-block"});
+			$("#dsbSale").append("<div id='dsbSaleTable' class='jsScrollable'></div>");
 			// Add a "padding" item if the columns are not equal length
 			var isdiscounted = false;
 			var ncol0 = 0, ncol1 = 0;
@@ -28922,7 +28934,7 @@ H = {
 			}
 			$("#dsbSaleSymbol").attr("src", "img/ui/" + ((isdiscounted) ? "gemstore_special" : "gemstore") + I.cPNG);
 			// Bind buttons
-			$("#dsbSaleHeader").click(function()
+			$("#dsbMenuSale").click(function()
 			{
 				H.generateDashboardSale();
 			});
@@ -28964,10 +28976,12 @@ H = {
 			table.animate({height: 0}, animationspeed, function()
 			{
 				$(this).css({height: "auto"}).empty();
+				$("#dsbSale").hide();
 			});
 		}
 		else
 		{
+			$("#dsbSale").show();
 			table.append(I.cThrobber);
 			E.updateCoinInGem(function()
 			{
@@ -29067,18 +29081,19 @@ H = {
 			vendorcodes += i + "@" + (H.Vendor.Codes[i])[weekdaylocation] + " ";
 		}
 		vendorcodes += "- " + vendorname;
-		$("#dsbVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle' "
+		$("#dsbMenuVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle' "
 			+  "title='<dfn>Updated:</dfn> " + H.Vendor.Start.toLocaleString(window.navigator.language, {
 					year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long" })
-				+ "'><img src='img/map/vendor_karma.png' /> "
-			+ "<u>" + vendorname + "</u>"
-			+ "<img id='dsbVendorToggleIcon' src='img/ui/toggle.png' /></kbd>"
-			+ "<a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
+				+ "'><img src='img/map/vendor_karma.png' /><img id='dsbVendorToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
+			+ "<var>" + vendorname + "</var></kbd>"
+		+ "</div>").css({display: "inline-block"});
+		$("#dsbVendor").append("<div id='dsbVendorMenu'>"
+			+ "<img data-src='img/ui/info.png' /><a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
-			+ "<u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Sentence) + ":</u>"
-			+ "&nbsp;<input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' "
+			+ "<img data-src='img/map/route.png' /><u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</u>"
+			+ "&nbsp;<img data-src='img/ui/copy.png' /><input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' "
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
-		+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>");
+			+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>").hide();
 
 		// Bind buttons
 		var vendorcopy = $("#dsbVendorCodes");
@@ -29087,7 +29102,7 @@ H = {
 		{
 			$(this).select();
 		});
-		$("#dsbVendorHeader").click(function()
+		$("#dsbMenuVendor").click(function()
 		{
 			H.generateDashboardVendor();
 		});
@@ -29153,10 +29168,13 @@ H = {
 			table.animate({height: 0}, animationspeed, function()
 			{
 				$(this).css({height: "auto"}).empty();
+				$("#dsbVendor").hide();
 			});
 		}
 		else
 		{
+			$("#dsbVendor").show();
+			I.loadImg($("#dsbVendorMenu"));
 			I.toggleToggleIcon("#dsbVendorToggleIcon", true);
 			table.empty();
 			table.append(I.cThrobber);
@@ -30486,7 +30504,7 @@ K = {
 					pIcon.show();
 					pIcon.attr("src", pChain.iconSrc);
 					pIcon.data(C.cIndexSynonym, pChain.nexus);
-					pIcon.attr("title", D.getObjectName(pChain));
+					pIcon.attr("title", "<dfn>" + D.getObjectName(pChain) + "</dfn>");
 					I.qTip.init(pIcon);
 					X.reapplyChainIconState(pChain, pIcon);
 				}
@@ -31207,7 +31225,7 @@ I = {
 		I.initializeUIForMenu();
 		I.initializeUIForHUD();
 		I.styleContextMenu("#mapContext");
-		$("#mapHUDOuter").toggle(O.Options.bol_showHUD);
+		$("#hudOuter").toggle(O.Options.bol_showHUD);
 		// Bind switch map buttons
 		$("#mapSwitchButton").click(function()
 		{
@@ -31259,7 +31277,7 @@ I = {
 		{
 			$("#cslContent").toggle("fast");
 		});
-		$(".mapHUDContainer").one("mouseenter", function()
+		$(".hudItem").one("mouseenter", function()
 		{
 			$(this).find("img").each(function()
 			{
@@ -31397,7 +31415,7 @@ I = {
 						}
 						I.PageCurrent = I.SpecialPageEnum.DryTop;
 						U.updateTitle(I.SpecialPageEnum.DryTop);
-						$("#mapHUDBoxes").hide();
+						$("#hudBoxes").hide();
 					}
 					else
 					{
@@ -31415,7 +31433,7 @@ I = {
 					{
 						I.PageCurrent = I.PageEnum.Chains;
 						P.toggleDryTopIcons(false);
-						$("#mapHUDBoxes").show();
+						$("#hudBoxes").show();
 					}
 					// Nullify current section variable
 					I.SectionCurrent[I.PageEnum.Chains] = "";
@@ -32627,7 +32645,7 @@ I = {
 					{
 						if (O.Options.bol_hideHUD)
 						{
-							$("#mapHUDBoxes").show();
+							$("#hudBoxes").show();
 						}
 					} break;
 					case I.PageEnum.Map:
@@ -32641,7 +32659,7 @@ I = {
 				$("#paneContent article").hide(); // Hide all plates
 				if (I.PageCurrent !== I.PageEnum.Chains && O.Options.bol_hideHUD)
 				{
-					$("#mapHUDBoxes").hide();
+					$("#hudBoxes").hide();
 				}
 				
 				// Only do animations if on regular website (to save computation)
@@ -32692,7 +32710,7 @@ I = {
 		{
 			W.isWvWPrepped = true;
 			I.loadStylesheet("wvw");
-			I.loadImg("#wvwHUDPane .mapHUDButton");
+			I.loadImg("#wvwHUDPane .hudButton");
 			$("#lboCurrent").append(I.cThrobber);
 			/*
 			 * WvW requires CSS to be loaded first before scripts execute.
@@ -32899,13 +32917,22 @@ I = {
 	initializeUIForHUD: function()
 	{
 		var animationspeed = 200;
-		$(".mapHUDContainer").each(function()
+		$(".hudItem").each(function()
 		{
 			$(this).hover(
-				function() { $(this).find(".cntComposition").show().animate({opacity: 0.8}, animationspeed); },
+				function() { $(this).find(".cntComposition").show().animate({opacity: 1}, animationspeed); },
 				function() { $(this).find(".cntComposition").animate({opacity: 0}, animationspeed); }
 			);
 		});
+		if (I.ModeCurrent === I.ModeEnum.Overlay)
+		{
+			$(".hudDirectory").find(".linkInternal").each(function()
+			{
+				var src = $(this).attr("href");
+				$(this).attr("href", src + U.getDivider(src) + "mode=Overlay");
+			});
+		}
+		$(".hudPeripheral").css({visibility: "visible"});
 	},
 	
 	/*
@@ -33002,7 +33029,7 @@ I = {
 		if (I.isProgramEmbedded)
 		{
 			$("#itemWarning").remove();
-			$(".mapHUDLinks").hide();
+			$(".hudLinks").hide();
 		}
 		
 		// Disable dashboard for non-using modes

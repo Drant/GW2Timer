@@ -75,8 +75,8 @@ body > windowMain
 	100% { transform: rotate(360deg); }
 }
 @keyframes aniHighlight { /* Used on elements with :hover and gradient background, to mimic GW2's highlight of list elements */
-	0% { background-size: 25%; }
-	100% { background-size: 100%; }
+	0% { background-size: 25% 25%; }
+	100% { background-size: 100% 100%; }
 }
 @keyframes aniGlow {
 	0% { box-shadow: 0px 0px 0px #e7e3bd; }
@@ -530,7 +530,7 @@ html, body,
 
 /* Clickable */
 .curClick, .jsClip, a, kbd, input, select, label, button,
-.btnWindow, .mapHUDButton, .itemContext li,
+.btnWindow, .hudSelect, .itemContext li,
 .menuBeam img:hover, .chnCheck:hover, .chnTitle time {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
@@ -558,7 +558,7 @@ html, body,
 }
 
 /* Help */
-.curHelp, .jsHelpTooltip, .chnDetails ol li ins {
+.curHelp, .cssHelp, .jsHelpTooltip, .chnDetails ol li ins {
 	cursor: url("img/cursor/help.cur"), help;
 }
 
@@ -641,7 +641,6 @@ html, body,
 	padding: 4px 8px 18px 12px;
 	border: 1px solid #111;
 	border-radius: 8px;
-	background: #222;
 	background: linear-gradient(to right, #111 0%, #333 100%);
 	font-family: sans-serif;
 	font-size: 12px;
@@ -654,7 +653,6 @@ html, body,
 	border: 2px solid #111;
 	border-radius: 4px;
 	box-shadow: 0px 0px 2px #555;
-	background: #222;
 	background: linear-gradient(to right, #111 0%, #333 100%);
 	opacity: 0.9;
 }
@@ -770,13 +768,10 @@ header.cntHeader {
 }
 
 .cntComposition a {
-	color: #ccc;
-}
-.cntComposition a:visited {
-	color: #999;
+	color: #aaff55;
 }
 .cntComposition a:hover {
-	color: #e4e0b3;
+	color: #44dd44;
 }
 .cntComposition a:active {
 	color: white;
@@ -1080,16 +1075,54 @@ textarea.jsCopyCode {
 	color: #bbcc77;
 	text-shadow: 0px 0px 4px black;
 	background: rgba(0, 0, 0, 0.4);
-	border-radius: 8px;
+	border-radius: 2px;
 }
 #itemDashboard a {
 	color: #bbcc77;
 }
-#itemDashboard a:hover, #itemDashboard u:hover {
+#itemDashboard a:hover, #itemDashboard u:hover, .dsbMenuItem:hover u {
 	color: #44dd44;
 }
-#dsbAnnouncement img:hover {
-	opacity: 0.8;
+.dsbMenuItem {
+	display: none;
+	line-height: normal;
+	padding: 0px 4px 0px 4px;
+	margin: 4px 0px 0px 0px;
+	font-family: Trebuchet MS, Menomonia;
+	color: rgba(255, 238, 187, 0.8);
+	background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+	border: 2px solid rgba(0,0,0,0.4);
+	border-radius: 4px;
+}
+.dsbMenuItem:hover {
+	background: linear-gradient(to top, transparent 0%, rgba(0,0,0,0.6) 100%);
+	color: rgba(255, 238, 187, 1);
+	border-top: 2px solid rgba(255, 238, 187, 0.4);
+}
+.dsbMenuItem img {
+	width: 24px; height: 24px;
+}
+.dsbExpansion {
+	display: none;
+	background: rgba(0,0,0,0.4);
+	border-radius: 2px;
+	border-top: 2px solid black;
+	border-right: 1px solid black;
+	border-bottom: 2px solid black;
+	border-left: 1px solid black;
+}
+.dsbToggleIcon {
+	margin-left: -8px;
+}
+.dsbDivider {
+	content: "";
+	display: block;
+	width: 100%; height: 2px;
+	background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+}
+#dsbAnnouncement {
+	font-family: sans-serif;
+	font-size: 14px;
 }
 #dsbCountdown:before, #dsbCountdown:after {
 	content: "";
@@ -1182,6 +1215,11 @@ textarea.jsCopyCode {
 	display: inline;
 }
 
+#dsbVendorMenu {
+	width: 100%;
+	text-align: center;
+	font-family: Trebuchet MS, Menomonia;
+}
 .dsbVendorPriceKarma {
 	float: right;
 	color: white;
@@ -1264,42 +1302,43 @@ input.mapCoordinatesName {
 }
 
 /* Right side: Misc links */
-.mapPeripheral {
+.hudPeripheral {
 	display: inline-block; z-index: 3;
 	width: auto; /* Should be just wide enough to fit the HUD buttons */
 	text-align: right;
+	visibility: hidden;
 }
-.mapPeripheral div {
+.hudPeripheral div {
 	text-align: left;
 }
-.mapPeripheralNorth {
+.hudPeripheralNorth {
 	position: absolute; z-index: 11;
 	top: 4px; right: 12px;
 }
-.mapPeripheralNorth:hover {
+.hudPeripheralNorth:hover {
 	min-width: 520px; /* This becomes the maximum width of the HUD popup divs */
 }
-.mapPeripheralSouth {
+.hudPeripheralSouth {
 	position: absolute; z-index: 10;
 	bottom: 4px; right: 12px;
 }
 #itemLogo {
 	margin-right: 2px;
 }
-.mapHUDLinks { /* Links on the map pane */
+.hudLinks { /* Links on the map pane */
 	font-family: Menomonia;
 	font-size: 18px;
 	color: #ffeebb;
 }
-.mapHUDLinks img {
+.hudLinks img {
 	width: 32px; height: 32px;
 }
-.mapHUDLinks a, .mapHUDLinks em {
+.hudLinks a, .hudLinks em {
 	text-decoration: none;
 	color: #ffeebb;
 	opacity: 0.6;
 }
-.mapHUDLinks a:hover {
+.hudLinks a:hover {
 	color: #ddff77;
 	opacity: 0.9;
 }
@@ -1312,41 +1351,80 @@ input.mapCoordinatesName {
 }
 
 /* Map HUD */
-.mapHUDContainer {
+.hudItem {
 	display: inline-block;
-	width: 32px;
 	margin-left: 0px; /* This squeezes the HUD buttons closer */
 }
-.mapHUDButton {
+.hudSelect {
+	display: block;
+	height: 32px;
+}
+.hudButtonContainer {
 	display: inline-block;
+	position: relative;
+	width: 32px; height: 32px;
+}
+.hudButton {
+	position: absolute;
 	opacity: 0.6;
 }
-.mapPeripheral:hover .mapHUDButton {
+.hudTitle {
+	display: inline-block;
+	margin: 4px 4px 0px -2px;
+	vertical-align: top;
+	font-family: Menomonia;
+	font-size: 16px;
+	color: #ffeebb;
+	text-shadow: 0px 0px 4px black;
 	opacity: 0.8;
 }
-.mapHUDContainer:hover .mapHUDButton {
-	opacity: 1;
-	width: 36px; height: 36px;
-	margin: -4px 0px -4px -2px; /* Subtract to keep its original size of 32px */
+.hudPeripheral:hover .hudButton {
+	opacity: 0.8;
 }
-.mapHUDPopup {
+.hudItem:hover .hudButton {
+	width: 36px; height: 36px;
+	top: -2px; left: -2px;
+	opacity: 1;
+}
+.hudItem:hover .hudTitle {
+	text-decoration: underline;
+	opacity: 1;
+}
+.hudPopup {
 	display: none;
 }
-.mapHUDContainer:hover .mapHUDPopup {
+.hudItem:hover .hudPopup {
 	display: block;
 	position: absolute;
 	right: 0px;
 	margin: 0;
-	padding: 10px;
+	padding: 10px 18px 10px 16px;
+	background: linear-gradient(to right, rgba(15, 15, 15, 0.9) 0%, rgba(51, 51, 51, 0.9) 100%);
+	border-radius: 2px;
 	box-shadow: 0px 0px 2px #555;
 	opacity: 0;
 }
-.mapHUDPopup label {
+.hudPopup label {
 	margin-bottom: 4px;
 }
-.mapHUDPopup label img {
+.hudPopup label img {
 	width: 24px; height: 24px;
 	margin-right: 4px;
+}
+.hudDirectory {
+	width: 580px;
+	font-size: 14px;
+}
+.hudDirectory a {
+	font-family: Menomonia;
+	font-size: 17px;
+}
+.hudDirectory ul {
+	margin-bottom: 8px;
+}
+.hudDirectoryColumn {
+	width: 50%;
+	float: left;
 }
 
 .mapGPS { /* Only shown in overlay mode */
@@ -2212,7 +2290,6 @@ header.jsSection sup {
 	border: 1px solid #111;
 	border-top-right-radius: 8px;
 	border-bottom-right-radius: 8px;
-	background: #222;
 	background: linear-gradient(to right, #111 0%, #333 100%);
 	transition: opacity 0.2s;
 }
@@ -2619,6 +2696,9 @@ label:hover {
 .cssCopyText {
 	position: fixed;
 	top: -9999px;
+}
+.cssHelp {
+	border-bottom: 1px dotted white;
 }
 .cssFadedLess {
 	opacity: 0.5;

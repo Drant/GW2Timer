@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160904"></script>
+	<script type="text/javascript" src="data/general.js?v=20160905"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -108,17 +108,24 @@
 					</li>
 				</ul>
 			</div>
-			<article id="mapHUDPane">
-			<div id="mapExpandButton" class="mapExpandButton mapHUDButton btnHorizontal" title="<dfn>Click to Expand Map</dfn>"></div>
-			<div id="mapHUDOuter">
-				<div id="mapHUDBoxes">
+			<article id="hudPane">
+			<div id="mapExpandButton" class="mapExpandButton hudButton btnHorizontal" title="<dfn>Click to Expand Map</dfn>"></div>
+			<div id="hudOuter">
+				<div id="hudBoxes">
 					<div id="itemDashboard">
 						<kbd id="dsbToggle" class="btnWindow btnToggle" title="<dfn>Toggle the dashboard.</dfn> To hide permanently, go to Options page, Map section.<br /> To toggle all, right click on the map and choose &quot;Toggle HUD&quot;."></kbd>
 						<div id="dsbContainer">
 							<div id="dsbAnnouncement"></div>
 							<div id="dsbCountdown" title="<dfn>Countdown for Official GW2 Events</dfn><br /><span class='dsbCountdownDormant' style='font-size:20px'>■</span>: not started yet, counting down to when it starts.<br /><span class='dsbCountdownActive' style='font-size:20px'>■</span>: is happening, counting down to when it ends."></div>
-							<div id="dsbSale"></div>
-							<div id="dsbVendor"></div>
+							<div id="dsbMenu">
+								<div id="dsbMenuSale" class="dsbMenuItem curToggle"></div>
+								<div id="dsbMenuVendor" class="dsbMenuItem curToggle"></div>
+								<div id="dsbMenuDaily" class="dsbMenuItem curToggle"></div>
+							</div>
+							<div class="dsbDivider"></div>
+							<div id="dsbSale" class="dsbExpansion"></div>
+							<div id="dsbVendor" class="dsbExpansion"></div>
+							<div id="dsbDaily" class="dsbExpansion"></div>
 							<div id="dsbStory" class="jsScrollable"></div>
 						</div>
 					</div>
@@ -140,24 +147,66 @@
 				<input id="mapCoordinatesCopy" type="text" />
 				<input id="mapCoordinatesName" class="mapCoordinatesName" type="text" />
 			</div>
-			<div class="mapPeripheral mapPeripheralNorth">
-				<span id="mapQuickURL" class="mapHUDLinks">
-					<u><a class="jsTranslate linkExternal" title="<dfn>Go to Forum</dfn>" href="http://forum.renaka.com/forum/368355/">forum</a></u><em> /</em>
-					<u><a class="jsTranslate" title="<dfn>Switch to Simple Mode (clock only)</dfn><br />gw2timer.com/s<div class='mapLoc'><img src='http://i.imgur.com/Nk42voP.png' /></div>" href="./?mode=Simple">simple</a></u><em> /</em>
-					<u><a class="jsTranslate" title="<dfn>Switch to Mobile Mode (right panel only)</dfn><br />gw2timer.com/m<div class='mapLoc'><img src='http://i.imgur.com/0QsaeY7.png' /></div>" href="./?mode=Mobile">mobile</a></u><em> /</em>
-					<u><a class="jsTranslate" title="<dfn>Switch to Tile Mode (timers only)</dfn><br />gw2timer.com/t<div class='mapLoc'><img src='http://i.imgur.com/Q6O2lIx.png' /></div>" href="./?mode=Tile">tile</a></u><em> /</em>
-					<u><a class="jsTranslate" title="<dfn>View WvW Live Map</dfn><br />gw2timer.com/wvw<div class='mapLoc'><img src='http://i.imgur.com/yimNX7L.png' /></div>" href="./?page=WvW">wvw</a></u><em> /</em>
-					<u><a class="jsTranslate" title="<dfn>View Your Account Catalog</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>" href="./?page=Catalog">account</a></u>
-				</span>
-				<div class="mapHUDContainer">
-					<img id="mapAccountButton" class="mapHUDButton" title="<dfn>Click to View Your Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>" src="img/ui/pages/account.png" alt="display" />
+			<div class="hudPeripheral hudPeripheralNorth">
+				<div class="hudItem">
+					<span id="mapDirectoryButton" class="hudSelect">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/directory.png" alt="display" /></span>
+						<var class="hudTitle jsTranslate">Directory</var>
+					</span>
+					<div class="hudPopup cntComposition hudDirectory">
+						<div class="hudDirectoryColumn">
+							<h2>Modes</h2>
+							<ul>
+								<li><a href="./?mode=Tile" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/Q6O2lIx.png' /></div>">Tile</a> - Timers only: gw2timer.com/t</li>
+								<li><a href="./?mode=Mobile" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/0QsaeY7.png' /></div>">Mobile</a> - App panel only: gw2timer.com/m</li>
+								<li><a href="./?mode=Simple" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/Nk42voP.png' /></div>">Simple</a> - Clock only: gw2timer.com/s</li>
+								<li><a href="./?mode=Overlay">Overlay</a> - Streamlined for <a class="linkExternal" href="http://forum.renaka.com/topic/5546166/">ingame app</a></li>
+							</ul>
+							<h2>Contact</h2>
+							<ul>
+								<li><a class="linkExternal jsTranslate" href="http://forum.renaka.com/forum/368355/">Forum</a> - Comments and updates</li>
+								<li><a class="linkExternal" href="https://twitter.com/gw2timer">Twitter</a> - Follow GW2Timer.com</li>
+							</ul>
+							<h2>Quicklinks</h2>
+							<ul>
+								<li><a class="linkInternal jsTranslate" href="./?page=Audit">Audit</a> - Account value estimate</li>
+								<li><a class="linkInternal jsTranslate" href="./?page=Catalog">Catalog</a> - Keychain and item watchlist</li>
+							</ul>
+						</div>
+						<div class="hudDirectoryColumn">
+							<h2>Guides</h2>
+							<ul>
+								<li><a class="linkExternal" href="http://forum.renaka.com/topic/6209670/">LS3: Transfer Chaser</a></li>
+								<li><a class="linkExternal" href="http://forum.renaka.com/topic/6205181/">LS3: Bloodstone-Crazed Creatures</a></li>
+								<li><a class="linkExternal" href="https://www.reddit.com/r/Guildwars2/comments/4urr23/leyline_anomaly_tldr_guide_v2/">LS3: Ley-Line Anomaly</a></li>
+								<li><a class="linkExternal" href="https://www.reddit.com/r/Guildwars2/comments/3p5lw3/i_spent_50_hours_running_through_tyria_with_a_gps/">GPS World Completion</a></li>
+								<li><a class="linkExternal" href="https://www.reddit.com/r/Guildwars2/comments/4bijoi/lets_catch_all_50_ranger_pets_a_map_and_pokedex/">Ranger Pets Map</a></li>
+							</ul>
+							<h2>Tutorials</h2>
+							<ul>
+								<li><a class="linkExternal" href="https://www.youtube.com/watch?v=uXqvTMGNIXo">How to use GW2Timer.com</a></li>
+								<li><a class="linkExternal" href="http://forum.renaka.com/topic/5602037/">Timer Features</a></li>
+								<li><a class="linkExternal" href="http://forum.renaka.com/topic/5888854/">Map Features</a></li>
+								<li><a class="linkExternal" href="http://forum.renaka.com/topic/5697040/">TP &amp; Gem Tracker</a></li>
+							</ul>
+						</div>
+					</div>
 				</div>
-				<div class="mapHUDContainer">
-					<img id="mapSwitchButton" class="mapHUDButton curToggle" title="<dfn>Click to WVW</dfn><br />gw2timer.com/wvw" src="img/ui/pages/wvw.png" alt="display" />
+				<div class="hudItem">
+					<span id="mapAccountButton" class="hudSelect" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>" >
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/pages/account.png" alt="display" /></span>
+						<var class="hudTitle jsTranslate">Account</var>
+					</span>
 				</div>
-				<div class="mapGPS mapHUDContainer">
-					<img id="mapGPSButton" class="mapHUDButton" title="<dfn>Click to Center Character</dfn>" data-src="img/map/gps.png" alt="GPS" />
-					<div class="mapHUDPopup cntComposition">
+				<div class="hudItem">
+					<span id="mapSwitchButton" class="hudSelect curToggle" title="<dfn>View WvW Live Map</dfn><br />gw2timer.com/wvw<div class='mapLoc'><img src='http://i.imgur.com/yimNX7L.png' /></div>">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/pages/wvw.png" alt="display" /></span>
+						<var class="hudTitle jsTranslate">WvW</var>
+					</span>
+				</div>
+				<div class="mapGPS hudItem">
+					<span class="hudButtonContainer"><img id="mapGPSButton" class="hudButton" title="<dfn>Click to Center Character</dfn>" data-src="img/map/gps.png" alt="GPS" /></span>
+					<div class="hudPopup cntComposition">
 						<fieldset name="int_setFollow" class="optFollowFieldset" title="Automatically moves the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
 							<label><input id="opt_int_setFollow" type="radio" name="int_setFollow" /> Off</label>
 							<label><input type="radio" name="int_setFollow" /> Character</label>
@@ -167,9 +216,12 @@
 						<label title="Repeated milliseconds before your character is pinpointed again.<br />This should not be faster than the overlay's interval."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Interval (ms)</label>
 					</div>
 				</div>
-				<div class="mapOptions mapHUDContainer">
-					<img id="mapDisplayButton" class="mapHUDButton" title="<dfn>Click to Expand Map</dfn>" src="img/map/display.png" alt="display" />
-					<div class="mapHUDPopup cntComposition">
+				<div class="mapOptions hudItem">
+					<span id="mapDisplayButton" class="hudSelect" title="<dfn>Click to Expand Map</dfn>">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/map/display.png" alt="display" /></span>
+						<var class="hudTitle jsTranslate">Display</var>
+					</span>
+					<div class="hudPopup cntComposition">
 						<div class="mapOptionsDisplay">
 							<label title="Show/Hide all icons listed below.<br /><dfn>Right click on the map</dfn> to show the world completion route."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletion" type="checkbox" /> Show completion</label>
 							<div id="mapOptionsCompletion" class="mapOptionsCompletion">
@@ -199,9 +251,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="mapZones mapHUDContainer">
-					<img id="mapCompassButton" class="mapHUDButton" title="<dfn>Click to Center Map</dfn>" src="img/map/compass.png" alt="compass" />
-					<div class="mapZonesPopup mapHUDPopup cntComposition">
+				<div class="mapZones hudItem">
+					<span id="mapCompassButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/map/compass.png" alt="compass" /></span>
+						<var class="hudTitle jsTranslate">Zone</var>
+					</span>
+					<div class="mapZonesPopup hudPopup cntComposition">
 						<div id="mapZoneList" class="mapZoneList mapZoneLinks">
 							<aside>
 								<input id="mapSearch" type="text" />
@@ -272,8 +327,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="mapPeripheral mapPeripheralSouth">
-				<span class="mapHUDLinks">
+			<div class="hudPeripheral hudPeripheralSouth">
+				<span class="hudLinks">
 					<a class="linkExternal" title="<dfn>Download the app to run GW2Timer in game!</dfn><br /><div class='mapLoc'><img src='http://i.imgur.com/mZ1Tboj.png' /></div>" href="http://forum.renaka.com/topic/5546166/">
 						<img id="itemLogo" src="img/ui/favicon.png" alt="Overlay Application" />gw2timer.com <u>overlay</u>
 					</a>
@@ -321,7 +376,7 @@
 				</ul>
 			</div>
 			<article id="wvwHUDPane">
-			<div id="wvwExpandButton" class="mapExpandButton mapHUDButton btnHorizontal" title="<dfn>Click to Expand Map</dfn>"></div>
+			<div id="wvwExpandButton" class="mapExpandButton hudButton btnHorizontal" title="<dfn>Click to Expand Map</dfn>"></div>
 			<div id="wvwLeaderboard">
 				<div id="lboContainer">
 					<kbd id="lboToggle" class="btnWindow lboButton btnToggle" title="<dfn>Toggle leaderboard.</dfn>"></kbd>
@@ -341,13 +396,10 @@
 				<input id="wvwCoordinatesCopy" type="text" />
 				<input id="wvwCoordinatesName" class="mapCoordinatesName" type="text" />
 			</div>
-			<div class="mapPeripheral mapPeripheralNorth">
-				<div class="mapHUDContainer">
-					<img id="wvwAccountButton" class="mapHUDButton" title="<dfn>Click to View Your Account</dfn> (BETA)<br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>" src="img/ui/pages/account.png" alt="display" />
-				</div>
-				<div class="mapHUDContainer">
-					<img id="wvwToolsButton" class="mapHUDButton" title="Right click on the map to lay siege weapons." data-src="img/account/menu/inventory.png" alt="Tools" />
-					<div class="mapHUDPopup cntComposition">
+			<div class="hudPeripheral hudPeripheralNorth">
+				<div class="hudItem">
+					<span class="hudButtonContainer"><img id="wvwToolsButton" class="hudButton" title="Right click on the map to lay siege weapons." data-src="img/account/menu/inventory.png" alt="Tools" /></span>
+					<div class="hudPopup cntComposition">
 						<div id="wvwSupply">
 							<div id="splCalculator">
 								<img data-src="img/wvw/supply.png" /><input id="splHave" type="text" value="0" maxlength="4" /> − <span id="splNeed">0</span> = <span id="splRemain">0</span>
@@ -361,12 +413,15 @@
 						</div>
 					</div>
 				</div>
-				<div class="mapHUDContainer">
-					<img id="wvwSwitchButton" class="mapHUDButton curToggle" title="<dfn>Click to PvE</dfn>" data-src="img/ui/leave.png" alt="display" />
+				<div class="hudItem">
+					<span class="hudButtonContainer"><img id="wvwAccountButton" class="hudButton" title="<dfn>Click to View Your Account</dfn> (BETA)<br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>" src="img/ui/pages/account.png" alt="display" /></span>
 				</div>
-				<div class="mapGPS mapHUDContainer">
-					<img id="wvwGPSButton" class="mapHUDButton" title="<dfn>Click to Center Character</dfn>" data-src="img/map/gps.png" alt="GPS" />
-					<div class="mapHUDPopup cntComposition">
+				<div class="hudItem">
+					<span class="hudButtonContainer"><img id="wvwSwitchButton" class="hudButton curToggle" title="<dfn>Click to PvE</dfn>" data-src="img/ui/leave.png" alt="display" /></span>
+				</div>
+				<div class="mapGPS hudItem">
+					<span class="hudButtonContainer"><img id="wvwGPSButton" class="hudButton" title="<dfn>Click to Center Character</dfn>" data-src="img/map/gps.png" alt="GPS" /></span>
+					<div class="hudPopup cntComposition">
 						<fieldset name="int_setFollowWvW" class="optFollowFieldset" title="Automatically moves the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
 							<label><input id="opt_int_setFollowWvW" type="radio" name="int_setFollowWvW" /> Off</label>
 							<label><input type="radio" name="int_setFollowWvW" /> Character</label>
@@ -375,9 +430,9 @@
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacterWvW" type="checkbox" />Display Character Pin</label>
 					</div>
 				</div>
-				<div class="mapOptions mapHUDContainer">
-					<img id="wvwDisplayButton" class="mapHUDButton" title="<dfn>Click to Expand Map</dfn>" data-src="img/map/display.png" alt="display" />
-					<div class="mapHUDPopup cntComposition">
+				<div class="mapOptions hudItem">
+					<span class="hudButtonContainer"><img id="wvwDisplayButton" class="hudButton" title="<dfn>Click to Expand Map</dfn>" data-src="img/map/display.png" alt="display" /></span>
+					<div class="hudPopup cntComposition">
 						<div class="mapOptionsDisplay">
 							<label title="Show/Hide all icons listed below.<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletionWvW" type="checkbox" /> Show completion</label>
 							<div id="wvwOptionsCompletion" class="mapOptionsCompletion">
@@ -406,9 +461,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="mapZones mapHUDContainer">
-					<img id="wvwCompassButton" class="mapHUDButton" title="<dfn>Click to Center Map</dfn>" data-src="img/map/compass.png" alt="compass" />
-					<div class="mapZonesPopup mapHUDPopup cntComposition">
+				<div class="mapZones hudItem">
+					<span class="hudButtonContainer"><img id="wvwCompassButton" class="hudButton" title="<dfn>Click to Center Map</dfn>" data-src="img/map/compass.png" alt="compass" /></span>
+					<div class="mapZonesPopup hudPopup cntComposition">
 						<div id="wvwZoneList" class="mapZoneList mapZoneLinks">
 							<aside>
 								<h2 data-region="wvw"></h2>
@@ -424,7 +479,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="mapPeripheral mapPeripheralSouth">
+			<div class="hudPeripheral hudPeripheralSouth">
 				<div id="wvwLogContainer">
 					<kbd id="logToggle" class="btnWindow logButton btnToggle" title="<dfn>Toggle Log</dfn>"></kbd>
 					<kbd id="logExpand" class="btnWindow logButton btnVertical logExtra" title="<dfn>Toggle Log Height</dfn>"></kbd>

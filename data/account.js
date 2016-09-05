@@ -102,8 +102,6 @@ var GW2T_ACCOUNT_DICTIONARY = {
 		cs: "zbraně", it: "armi", pl: "bronie", pt: "armas", ru: "оружие", zh: "武器"},
 	
 	// Verbs
-	s_audit: {de: "prüfung", es: "auditar", fr: "auditer",
-		cs: "audit", it: "audit", pl: "audyt", pt: "auditar", ru: "аудит", zh: "審計"},
 	s_include: {de: "einschließen", es: "incluir", fr: "inclure",
 		cs: "zahrnout", it: "includere", pl: "dołączyć", pt: "incluir", ru: "включить", zh: "包括"},
 	s_exclude: {de: "ausschließen", es: "excluir", fr: "exclure",

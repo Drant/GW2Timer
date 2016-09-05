@@ -347,8 +347,8 @@ var GW2T_CHAIN_DATA = [
 	series: 2,
 	alias: "Maw",
 	pronunciation: "svaniir shaman",
-	title: "The Frozen Maw",
-	name_en: "Svanir Shaman Chief",
+	title: "Svanir Shaman Chief",
+	name_en: "The Frozen Maw",
 	name_de: "Schamanenoberhaupt der Svanir",
 	name_es: "Jefe Chamán Svanir",
 	name_fr: "Chef Chamane de Svanir",
@@ -1787,7 +1787,7 @@ var GW2T_CHAIN_DATA = [
 	events: [
 	{
 		primacy: 2,
-		path: [[0,0],[20230,20888],[19661,20190],[19204,19503],[19629,18735],[20382,18842],[20472,19271],[20593,19780],[20996,20385]],
+		path: [[-19399,-19588],[20230,20888],[19661,20190],[19204,19503],[19629,18735],[20382,18842],[20472,19271],[20593,19780],[20996,20385]],
 		name_en: "Rally in Timberline Falls in five minutes.",
 		name_de: "Baumgrenzen-Fälle (5 min).",
 		name_es: "Cataratas de Linarbórea (5 min).",
@@ -1863,7 +1863,7 @@ var GW2T_CHAIN_DATA = [
 	events: [
 	{
 		primacy: 2,
-		path: [[0,0],[27709, 13144],[28563,12712],[28957,11937],[28789,10859],[28666,10041],[27793,9795],[27354,10571],[27466,12038],[27710,13144]],
+		path: [[-28971,-12427],[27709, 13144],[28563,12712],[28957,11937],[28789,10859],[28666,10041],[27793,9795],[27354,10571],[27466,12038],[27710,13144]],
 		name_en: "Rally in Iron Marches in five minutes.",
 		name_de: "Eisenmark (5 min).",
 		name_es: "Fronteras de Hierro (5 min).",
@@ -1939,7 +1939,7 @@ var GW2T_CHAIN_DATA = [
 	events: [
 	{
 		primacy: 2,
-		path: [[0,0],[17309,13333],[16917,13624],[16394,13127],[16185,13747],[16185, 13747],[15243, 13201],[15000, 13768],[14041, 13667],[13926, 12948]],
+		path: [[-15732,-12505],[17309,13333],[16917,13624],[16394,13127],[16185,13747],[16185, 13747],[15243, 13201],[15000, 13768],[14041, 13667],[13926, 12948]],
 		name_en: "Rally in Gendarran Fields in five minutes.",
 		name_de: "Gendarran-Felder (5 min).",
 		name_es: "Campos de Gendarran (5 min).",
