@@ -89,7 +89,8 @@ body, html, .panelMain, #windowMain, #paneContent article {
 }
 
 .chnBar, .chnSlot {
-	margin-bottom: 8px;
+	margin-bottom: 6px;
+	border-bottom: 4px solid #111;
 }
 
 .chnTitle img {
@@ -122,20 +123,16 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	font-size: 18px;
 }
 
-#plateChains header {
+.chnCategoryHeader {
 	height: 48px;
+}
+.chnCategoryName {
+	font-size: 22px;
+	color: #666;
 }
 #chnToggle {
 	top: 32px;
 	left: 0;
-}
-
-#plateChains header span {
-	visibility: visible;
-	color: #666;
-}
-#plateChains header:hover span {
-	color: white;
 }
 
 /* Options page */

@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160905A"></script>
+	<script type="text/javascript" src="data/general.js?v=20160906"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -150,16 +150,16 @@
 			<div class="hudPeripheral hudPeripheralNorth">
 				<div class="hudItem">
 					<span id="mapDirectoryButton" class="hudSelect">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/directory.png" alt="display" /></span>
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/directory.png" alt="display" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Directory</var>
 					</span>
 					<div class="hudPopup cntComposition hudDirectory">
 						<div class="hudDirectoryColumn">
 							<h2>Modes</h2>
 							<ul>
-								<li><a href="./?mode=Tile" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/Q6O2lIx.png' /></div>">Tile</a> - Timers only: gw2timer.com/t</li>
-								<li><a href="./?mode=Mobile" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/0QsaeY7.png' /></div>">Mobile</a> - App panel only: gw2timer.com/m</li>
-								<li><a href="./?mode=Simple" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/Nk42voP.png' /></div>">Simple</a> - Clock only: gw2timer.com/s</li>
+								<li><b><a href="./?mode=Tile" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/Q6O2lIx.png' /></div>">Tile</a></b> - Timers only: <a href="http://gw2timer.com/?mode=Tile" class="linkExternal">gw2timer.com/t</a></li>
+								<li><b><a href="./?mode=Mobile" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/0QsaeY7.png' /></div>">Mobile</a></b> - App panel only: <a href="http://gw2timer.com/?mode=Mobile" class="linkExternal">gw2timer.com/m</a></li>
+								<li><b><a href="./?mode=Simple" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/Nk42voP.png' /></div>">Simple</a></b> - Clock only: <a href="http://gw2timer.com/?mode=Simple" class="linkExternal">gw2timer.com/s</a></li>
 							</ul>
 							<h2>Contact</h2>
 							<ul>
@@ -192,7 +192,7 @@
 					</div>
 				</div>
 				<div class="hudItem">
-					<span id="mapAccountButton" class="hudSelect" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>" >
+					<span id="mapAccountButton" class="hudSelect" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
 						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/pages/account.png" alt="display" /></span>
 						<var class="hudTitle jsTranslate">Account</var>
 					</span>
@@ -204,7 +204,9 @@
 					</span>
 				</div>
 				<div class="mapGPS hudItem">
-					<span class="hudButtonContainer"><img id="mapGPSButton" class="hudButton" title="<dfn>Click to Center Character</dfn>" data-src="img/map/gps.png" alt="GPS" /></span>
+					<span id="mapGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
+						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/gps.png" alt="GPS" /><span class="hudArrow"></span></span>
+					</span>
 					<div class="hudPopup cntComposition">
 						<fieldset name="int_setFollow" class="optFollowFieldset" title="Automatically moves the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
 							<label><input id="opt_int_setFollow" type="radio" name="int_setFollow" /> Off</label>
@@ -217,7 +219,7 @@
 				</div>
 				<div class="mapOptions hudItem">
 					<span id="mapDisplayButton" class="hudSelect" title="<dfn>Click to Expand Map</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/map/display.png" alt="display" /></span>
+						<span class="hudButtonContainer"><img class="hudButton" src="img/map/display.png" alt="display" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Display</var>
 					</span>
 					<div class="hudPopup cntComposition">
@@ -252,7 +254,7 @@
 				</div>
 				<div class="mapZones hudItem">
 					<span id="mapCompassButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" src="img/map/compass.png" alt="compass" /></span>
+						<span class="hudButtonContainer"><img class="hudButton" src="img/map/compass.png" alt="compass" /><span class="hudArrow"></span></span>
 						<var class="hudTitle jsTranslate">Zone</var>
 					</span>
 					<div class="mapZonesPopup hudPopup cntComposition">
@@ -383,7 +385,7 @@
 					<kbd id="lboRegion" class="btnWindow lboButton btnVertical lboExtra" title="<dfn>Toggle all server matchups.</dfn><br />gw2timer.com/<dfn>wvw/leaderboard</dfn>"></kbd>
 					<kbd id="lboOpaque" class="btnWindow lboButton btnOpaque lboExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
 					<kbd id="lboStats" class="btnWindow lboButton btnStats lboExtra" title="<dfn>Print server population list.</dfn>"></kbd>
-					<time id="lboCountdown" class="lboExtra"></time>
+					<time id="lboCountdown" class="lboExtra curClick" title="<dfn>Time until reset.</dfn> Click for WvW Rankings."></time>
 					<div id="lboCurrent"></div>
 					<div id="lboOther"></div>
 				</div>
@@ -397,7 +399,9 @@
 			</div>
 			<div class="hudPeripheral hudPeripheralNorth">
 				<div class="hudItem">
-					<span class="hudButtonContainer"><img id="wvwToolsButton" class="hudButton" title="Right click on the map to lay siege weapons." data-src="img/account/menu/inventory.png" alt="Tools" /></span>
+					<span id="wvwToolsButton" class="hudSelect" title="Right click on the map to lay siege weapons.">
+						<span class="hudButtonContainer"><img class="hudButton" data-src="img/account/menu/inventory.png" alt="Tools" /><span class="hudArrow"></span></span>
+					</span>
 					<div class="hudPopup cntComposition">
 						<div id="wvwSupply">
 							<div id="splCalculator">
@@ -413,13 +417,19 @@
 					</div>
 				</div>
 				<div class="hudItem">
-					<span class="hudButtonContainer"><img id="wvwAccountButton" class="hudButton" title="<dfn>Click to View Your Account</dfn> (BETA)<br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>" src="img/ui/pages/account.png" alt="display" /></span>
+					<span id="wvwAccountButton" class="hudSelect" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
+						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/pages/account.png" alt="display" /></span>
+					</span>
 				</div>
 				<div class="hudItem">
-					<span class="hudButtonContainer"><img id="wvwSwitchButton" class="hudButton curToggle" title="<dfn>Click to PvE</dfn>" data-src="img/ui/leave.png" alt="display" /></span>
+					<span id="wvwSwitchButton" class="hudSelect" title="<dfn>Click to PvE</dfn>">
+						<span class="hudButtonContainer"><img class="hudButton curToggle" data-src="img/ui/leave.png" alt="display" /></span>
+					</span>
 				</div>
 				<div class="mapGPS hudItem">
-					<span class="hudButtonContainer"><img id="wvwGPSButton" class="hudButton" title="<dfn>Click to Center Character</dfn>" data-src="img/map/gps.png" alt="GPS" /></span>
+					<span id="wvwGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
+						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/gps.png" alt="GPS" /><span class="hudArrow"></span></span>
+					</span>
 					<div class="hudPopup cntComposition">
 						<fieldset name="int_setFollowWvW" class="optFollowFieldset" title="Automatically moves the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
 							<label><input id="opt_int_setFollowWvW" type="radio" name="int_setFollowWvW" /> Off</label>
@@ -430,7 +440,9 @@
 					</div>
 				</div>
 				<div class="mapOptions hudItem">
-					<span class="hudButtonContainer"><img id="wvwDisplayButton" class="hudButton" title="<dfn>Click to Expand Map</dfn>" data-src="img/map/display.png" alt="display" /></span>
+					<span id="wvwDisplayButton" class="hudSelect" title="<dfn>Click to Expand Map</dfn>">
+						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/display.png" alt="display" /><span class="hudArrow"></span></span>
+					</span>
 					<div class="hudPopup cntComposition">
 						<div class="mapOptionsDisplay">
 							<label title="Show/Hide all icons listed below.<br />Will increase initial site load time if enabled."><img data-src="img/map/completion.png" /><input id="opt_bol_showWorldCompletionWvW" type="checkbox" /> Show completion</label>
@@ -461,7 +473,9 @@
 					</div>
 				</div>
 				<div class="mapZones hudItem">
-					<span class="hudButtonContainer"><img id="wvwCompassButton" class="hudButton" title="<dfn>Click to Center Map</dfn>" data-src="img/map/compass.png" alt="compass" /></span>
+					<span id="wvwCompassButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
+						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/compass.png" alt="compass" /><span class="hudArrow"></span></span>
+					</span>
 					<div class="mapZonesPopup hudPopup cntComposition">
 						<div id="wvwZoneList" class="mapZoneList mapZoneLinks">
 							<aside>
@@ -657,10 +671,10 @@
 		==================================================================== -->
 		<nav id="paneMenu" class="paneApp">
 			<span id="clkToggle" class="btnWindow btnVertical" title="<dfn>Toggle Clock</dfn>"></span>
-			<div id="menuChains" class="menuButton" title="<dfn>Chains:</dfn> Timers, Events, Schedule"><ins></ins><var class="jsTranslate">Timers</var></div>
-			<div id="menuMap" class="menuButton" title="<dfn>Map:</dfn> Dailies, Nodes, JPs, Missions, TP, Checklists"><ins></ins><var class="jsTranslate">Tools</var></div>
-			<div id="menuHelp" class="menuButton" title="<dfn>Help:</dfn> FAQ, About, Walkthrough"><ins></ins><var class="jsTranslate">Help</var></div>
-			<div id="menuOptions" class="menuButton" title="<dfn>Options:</dfn> Display, Format, Alarm, Language"><ins></ins><var class="jsTranslate">Options</var>
+			<div id="menuChains" class="menuButton"><ins></ins><var class="jsTranslate">Timers</var></div>
+			<div id="menuMap" class="menuButton"><ins></ins><var class="jsTranslate">Tools</var></div>
+			<div id="menuHelp" class="menuButton"><ins></ins><var class="jsTranslate">Help</var></div>
+			<div id="menuOptions" class="menuButton"><ins></ins><var class="jsTranslate">Options</var>
 				<ul id="itemLanguagePopup" class="cntPopup">
 					<li><a class="linkLanguage" data-lang="en">English</a></li>
 					<li><a class="linkLanguage" data-lang="de">Deutsch</a></li>
@@ -720,9 +734,9 @@
 					</div>
 				</div>
 				<kbd id="chnToggle" class="btnWindow btnVertical" title="<dfn>Toggle Active Chains</dfn>"></kbd>
-				<header id="headerChains_Scheduled">
+				<header id="headerChains_Scheduled" class="chnCategoryHeader">
 					<ins class="chn_scheduled"></ins>
-					<span class="chnCategoryName jsTranslateCompound">Scheduled Bosses</span>
+					<span class="chnCategoryName chnCategoryNameFirst jsTranslateCompound">Scheduled Bosses</span>
 				</header>
 				<section id="sectionChains_Scheduled">
 				</section>
@@ -730,31 +744,31 @@
 					<img id="chnDryTopWaypoint0" class="chnDryTopWaypoint jsClip" src="img/ui/placeholder.png" alt="X:00 Waypoint">
 					<img id="chnDryTopWaypoint1" class="chnDryTopWaypoint jsClip" src="img/ui/placeholder.png" alt="X:15 Waypoint">
 				</div>
-				<header id="headerChains_Special">
+				<header id="headerChains_Special" class="chnCategoryHeader">
 					<ins class="chn_special"></ins>
 					<span class="chnCategoryName jsTranslateCompound">Special Bosses</span>
 					<kbd></kbd>
 				</header>
 				<section id="sectionChains_Special"></section>
-				<header id="headerChains_Drytop">
+				<header id="headerChains_Drytop" class="chnCategoryHeader">
 					<ins class="chn_drytop"></ins>
 					<span class="chnCategoryName jsTranslateCompound">Dry Top</span>
 					<kbd></kbd>
 				</header>
 				<section id="sectionChains_Drytop"></section>
-				<header id="headerChains_Legacy">
+				<header id="headerChains_Legacy" class="chnCategoryHeader">
 					<ins class="chn_legacy"></ins>
 					<span class="chnCategoryName jsTranslateCompound">Legacy Bosses</span>
 					<kbd></kbd>
 				</header>
 				<section id="sectionChains_Legacy"></section>
-				<header id="headerChains_Temple">
+				<header id="headerChains_Temple" class="chnCategoryHeader">
 					<ins class="chn_temple"></ins>
 					<span class="chnCategoryName jsTranslateCompound">Orr Temples</span>
 					<kbd></kbd>
 				</header>
 				<section id="sectionChains_Temple"></section>
-				<header id="headerChains_Timetable">
+				<header id="headerChains_Timetable" class="chnCategoryHeader">
 					<ins class="chn_timetable"></ins>
 					<span class="chnCategoryName jsTranslateCompound">Full Timetable</span>
 					<kbd></kbd>
@@ -770,7 +784,7 @@
 					<br />
 					<h2>Timer</h2>
 					<div class="optFieldsets">
-						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain? Auto will use your time of day to choose. Changes will take effect when the next chain starts. &lt;br /&gt;Min: for full population map&lt;br /&gt;Min-Avg: Min + (Avg - Min)/2&lt;br /&gt;Avg: for regular zerg size"><legend>Predictor</legend>
+						<fieldset name="int_setPredictor" title="What statistic should be used to predict (highlight) events of a chain?<br />Auto will use your time of day to choose.<br /><br />Min: for full population map<br />Min-Avg: Min + (Avg - Min)/2<br />Avg: for regular zerg size"><legend>Predictor</legend>
 							<label><input id="opt_int_setPredictor" type="radio" name="int_setPredictor" /> Auto</label>
 							<label><input type="radio" name="int_setPredictor" /> Min</label>
 							<label><input type="radio" name="int_setPredictor" /> Min-Avg</label>

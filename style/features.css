@@ -25,10 +25,19 @@
 	margin-bottom: 16px;
 	border-radius: 16px;
 	padding: 4px;
+	text-align: left;
 	background: linear-gradient(to top, #111 0%, #333 100%);
 }
 .dlyBox:hover {
 	background: linear-gradient(to bottom, #111 0%, #333 100%);
+}
+.dlyBoxDashboard {
+	display: inline-block;
+	width: 45%;
+	margin: 8px 8px 0px 8px;
+	vertical-align: middle;
+	background: linear-gradient(to top, rgba(17, 17, 17, 0.4) 0%, rgba(51, 51, 51, 0.4) 100%);
+	border-radius: 4px;
 }
 .dlyCurrent {
 	padding-top: 8px;
@@ -43,10 +52,9 @@
 .dlyMode { /* Daily category row */
 	display: block;
 	width: 220px;
-	border-bottom: 1px dotted #333;
+	border-bottom: 1px dotted #555;
 }
 .dlyMode:hover {
-	border-radius: 16px;
 	background-color: rgba(255, 255, 102, 0.1);
 	box-shadow: 0px 0px 4px #ffff66;
 }
@@ -58,14 +66,14 @@
 	border-radius: 4px;
 	box-shadow: 0px 0px 8px lime;
 }
-#dlyCalendar ins { /* Daily */
+.dlyCalendar ins { /* Daily */
 	display: inline-block;
 	width: 32px; height: 32px;
 	margin-right: 8px;
 	border: 1px solid transparent;
 	border-radius: 8px;
 }
-#dlyCalendar ins:hover {
+.dlyCalendar ins:hover {
 	border: 1px solid #ffff66;
 	box-shadow: 0px 0px 4px #ffff66;
 }
@@ -112,18 +120,18 @@ var.dlySunday {
 	opacity: 1;
 }
 
-#dlyCalendar .dlyFractalScales {
-	position: absolute;
+.dlyCalendar .dlyFractalScales {
 	margin-top: 8px;
+	vertical-align: middle;
 	font-size: 18px;
 	font-family: Trebuchet MS, Menomonia;
 	color: white;
 }
-#dlyCalendar .dlyFractalScales:hover {
+.dlyCalendar .dlyFractalScales:hover {
 	color: #ffeeaa;
 }
 
-#dlyCalendar ins.dlyRegion {
+.dlyCalendar ins.dlyRegion {
 	background-image: url("../img/daily/regions.png");
 	border: 1px solid transparent;
 	box-shadow: none;

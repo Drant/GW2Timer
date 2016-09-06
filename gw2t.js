@@ -80,7 +80,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160806},
+		programVersion: {key: "int_utlProgramVersion", value: 160905},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -4371,7 +4371,7 @@ Z = {
 			{
 				I.print(I.cSiteURL + that.convertLCtoGC(that.Map.getCenter()), true);
 			}},
-			dart: {usage: "Draws personal pins at random map locations. <em>Parameters: int_quantity</em>", f: function()
+			dart: {usage: "Draws personal pins at random map coordinates. <em>Parameters: int_quantity</em>", f: function()
 			{
 				that.drawRandom(args[1]);
 			}},
@@ -16859,6 +16859,8 @@ D = {
 			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", zh: "活期"},
 		s_daily: {de: "täglich", es: "diaria", fr: "quotidien",
 			cs: "denní", it: "giornaliero", pl: "dzienny", pt: "diário", ru: "ежедневно", zh: "每天"},
+		s_achievements: {de: "erfolge", es: "logros", fr: "succès",
+			cs: "výsledky", it: "obiettivi", pl: "osiągnięcia", pt: "conquistas", ru: "достижения", zh: "成就"},
 		s_previous: {de: "vorhergehend", es: "previo", fr: "préalable",
 			cs: "předchozí", it: "previo", pl: "poprzedni", pt: "prévio", ru: "предыдущий", zh: "以前的"},
 		s_next: {de: "nächste", es: "siguiente", fr: "prochain",
@@ -17307,11 +17309,6 @@ D = {
 		if (O.Options.enu_Language !== O.OptionEnum.Language.Default)
 		{
 			// Translate tooltips
-			$(".menuButton").each(function()
-			{
-				$(this).attr("title", "<dfn>" + D.getPhraseOriginal($(this).find(".jsTranslate").text()) + "</dfn>");
-				I.qTip.init($(this));
-			});
 			$(".hudButton").each(function()
 			{
 				var title = $(this).attr("title");
@@ -23483,22 +23480,14 @@ G = {
 /* =============================================================================
  * @@Generate content for the sections on Map page
  * ========================================================================== */
+
 	/*
 	 * Initializes or regenerates the daily achievements box.
 	 */
 	generateAndInitializeDailies: function()
 	{
+		var calendar = $("#dlyCalendar");
 		var now = new Date();
-		var finalizeDailies = function()
-		{
-			$("#dlyCalendar div:first").addClass("dlyCurrent").next().addClass("dlyNext");
-			$("#dlyCalendar .dlyZoom").each(function()
-			{
-				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky, M.Pin.Program);
-			});
-			I.bindPseudoCheckbox("#dlyCalendar ins");
-			I.qTip.init("#dlyCalendar ins");
-		};
 		
 		// Regenerate the whole section
 		$("#dlyHeader, #dlyCalendar, #dlyActivity").empty();
@@ -23515,20 +23504,36 @@ G = {
 			+ " <a" + U.convertExternalAnchor(U.getWikiLinkLanguage(activityname)) + ">" + activityname + "</a> <ins class='dly dly_pve_activity'></ins></h2>");
 		
 		// Generate daily achievement boxes
-		$("#dlyCalendar").after(I.cThrobber);
+		G.fillDailyCalendar(calendar, now);
+	},
+	fillDailyCalendar: function(pContainer, pDate, pIsDashboard)
+	{
+		var calendar = $(pContainer);
+		var finalizeDailies = function()
+		{
+			calendar.find("div:first").addClass("dlyCurrent").next().addClass("dlyNext");
+			calendar.find(".dlyZoom").each(function()
+			{
+				M.bindMapLinkBehavior($(this), M.ZoomEnum.Sky, M.Pin.Program);
+			});
+			I.bindPseudoCheckbox(calendar.find("ins"));
+			I.qTip.init(calendar.find("ins"));
+			I.removeThrobber(calendar.parent());
+		};
+		
+		calendar.after(I.cThrobber);
 		T.getDaily().done(function()
 		{
-			G.insertDailyDay(T.DailyToday, now, true); // Today's dailies
+			G.insertDailyDay(calendar, T.DailyToday, pDate, true, pIsDashboard); // Today's dailies
 			T.getDaily({aWantGetTomorrow: true}).done(function() // Tomorrow's dailies
 			{
-				I.removeThrobber("#dlyContainer");
-				G.insertDailyDay(T.DailyTomorrow, T.addDaysToDate(now, 1));
-				finalizeDailies();
+				G.insertDailyDay(calendar, T.DailyTomorrow, T.addDaysToDate(pDate, 1), false, pIsDashboard);
+				finalizeDailies(calendar);
 			});
 		}).fail(function()
 		{
 			I.write("Unable to retrieve daily API. ArenaNet API server may be down.");
-			I.removeThrobber("#dlyContainer");
+			I.removeThrobber(calendar.parent());
 		});
 	},
 	
@@ -23537,8 +23542,9 @@ G = {
 	 * @param object pDaily daily object from general.js
 	 * @param object pDate of the day.
 	 */
-	insertDailyDay: function(pDailyObj, pDate, pIsToday)
+	insertDailyDay: function(pContainer, pDailyObj, pDate, pIsToday, pIsDashboard)
 	{
+		var calendar = $(pContainer);
 		// Daily category rows (game modes)
 		var pve = pDailyObj["pve"];
 		var pvp = pDailyObj["pvp"];
@@ -23639,13 +23645,16 @@ G = {
 			case T.DayEnum.Sunday: dayclass = "dlySunday"; break;
 			case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
 		}
+		var daystr = (pIsDashboard) ? "" : "<aside class='dlyMonthdayBackground'></aside>" + bosshtml
+			+ "<var class='dlyMonthdayNumber " + dayclass + "'>" + pDate.getUTCDate() + "</var>";
+		var dsbclass = (pIsDashboard) ? "dlyBoxDashboard" : "";
 		// Generate HTML
-		var dailybox = $("<div class='dlyBox'>"
-			+ "<aside class='dlyMonthdayBackground'></aside>" + bosshtml + "<var class='dlyMonthdayNumber " + dayclass + "'>" + pDate.getUTCDate() + "</var>"
+		var dailybox = $("<div class='dlyBox " + dsbclass + "'>"
+			+ daystr
 			+ "<span class='dlyMode'><ins class='dly dly_daily_pve'></ins>" + pvestr + "</span>"
 			+ "<span class='dlyMode'><ins class='dly dly_daily_pvp'></ins>" + pvpstr + "</span>"
 			+ "<span class='dlyMode'><ins class='dly dly_daily_wvw'></ins>" + wvwstr + "</span>"
-		+ "</div>").appendTo("#dlyCalendar");
+		+ "</div>").appendTo(calendar);
 
 		// If generating today's dailies then also include daily fractals
 		if (pIsToday)
@@ -25196,6 +25205,10 @@ W = {
 		Americas: "Americas",
 		Europe: "Europe"
 	},
+	LeaderboardURL: {
+		Americas: "https://leaderboards.guildwars2.com/en/na/wvw",
+		Europe: "https://leaderboards.guildwars2.com/en/eu/wvw"
+	},
 	LocaleCurrent: null,
 	Rotation: null, // Will refer to an associative array of zone nicks of the current rotation
 	LandPrefix: {},
@@ -25838,7 +25851,7 @@ W = {
 	 */
 	initializeLeaderboard: function()
 	{
-		// Bind the log window buttons
+		// Bind the window buttons
 		$("#lboToggle").click(function()
 		{
 			$("#opt_bol_showLeaderboard").trigger("click");
@@ -25858,6 +25871,10 @@ W = {
 		$("#lboOpaque").click(function()
 		{
 			$("#opt_bol_opaqueLeaderboard").trigger("click");
+		});
+		$("#lboCountdown").click(function()
+		{
+			U.openExternalURL(W.LeaderboardURL[W.LocaleCurrent]);
 		});
 		
 		// Apply the leaderboard appearance options
@@ -26272,7 +26289,7 @@ W = {
 		$("#wvwLogContainer").show();
 		$("#logWindow").data("oldHeight", $("#logWindow").height());
 		
-		// Bind the log window buttons
+		// Bind the window buttons
 		$("#logToggle").click(function()
 		{
 			$("#opt_bol_showLog").trigger("click");
@@ -28774,6 +28791,7 @@ H = {
 	isCountdownTickEnabled: false,
 	isStoryEnabled: false,
 	isStoryDashboard: true,
+	isDailyEnabled: true,
 	isSaleEnabled: false,
 	isVendorEnabled: false,
 	
@@ -28901,61 +28919,7 @@ H = {
 		// Initialize sale
 		if (H.isSaleEnabled)
 		{
-			var range = T.getMinMax(H.Sale.Items, "price");
-			var rangestr = (range.oMin === range.oMax) ? range.oMax : (range.oMin + "-" + range.oMax);
-			// Create "button" to toggle list of items on sale
-			$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle' title='<dfn>Gem Store Promotions and Sales</dfn><br />Expires: " + T.formatWeektime(H.Sale.Finish) + "'>"
-				+ "<img id='dsbSaleSymbol' src='img/ui/placeholder.png' /><img id='dsbSaleToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
-				+ "<var>" + H.Sale.Items.length + " " + D.getWordCapital("promotions") + "</var> "
-				+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
-			+ "</div>").css({display: "inline-block"});
-			$("#dsbSale").append("<div id='dsbSaleTable' class='jsScrollable'></div>");
-			// Add a "padding" item if the columns are not equal length
-			var isdiscounted = false;
-			var ncol0 = 0, ncol1 = 0;
-			var item;
-			for (var i = 0; i < H.Sale.Items.length; i++)
-			{
-				item = H.Sale.Items[i];
-				if (item.col === 0)
-				{
-					ncol0++;
-				}
-				else
-				{
-					ncol1++;
-				}
-				if (isdiscounted === false)
-				{
-					if (item.discount &&
-						(isFinite(item.discount) || (item.discount.length && item.discount[0].length > 2)))
-					{
-						isdiscounted = true;
-					}
-				}
-			}
-			if (ncol0 < ncol1)
-			{
-				H.Sale.Padding.col = 0;
-				H.Sale.Items.unshift(H.Sale.Padding);
-			}
-			else if (ncol0 > ncol1)
-			{
-				H.Sale.Padding.col = 1;
-				H.Sale.Items.unshift(H.Sale.Padding);
-			}
-			$("#dsbSaleSymbol").attr("src", "img/ui/" + ((isdiscounted) ? "gemstore_special" : "gemstore") + I.cPNG);
-			// Bind buttons
-			$("#dsbMenuSale").click(function()
-			{
-				H.generateDashboardSale();
-			});
-			// Automatically generate the items on sale if the boolean is true
-			I.toggleToggleIcon("#dsbSaleToggleIcon", H.Sale.isPreshown);
-			if (H.Sale.isPreshown === true)
-			{
-				H.generateDashboardSale();
-			}
+			H.generateDashboardSaleHeader();
 		}
 		
 		// Initialize vendor
@@ -28963,11 +28927,75 @@ H = {
 		{
 			H.generateDashboardVendorHeader();
 		}
+		
+		// Initialize daily
+		if (H.isDailyEnabled)
+		{
+			H.generateDashboardDailyHeader();
+		}
 	},
 	
 	/*
-	 * Regenerates the list of items on sale in a toggle manner.
+	 * Generates the header for the sale feature.
 	 */
+	generateDashboardSaleHeader: function()
+	{
+		var range = T.getMinMax(H.Sale.Items, "price");
+		var rangestr = (range.oMin === range.oMax) ? range.oMax : (range.oMin + "-" + range.oMax);
+		// Create "button" to toggle list of items on sale
+		$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle' title='<dfn>Gem Store Promotions and Sales</dfn><br />Expires: " + T.formatWeektime(H.Sale.Finish) + "'>"
+			+ "<img id='dsbSaleSymbol' src='img/ui/placeholder.png' /><img id='dsbSaleToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
+			+ "<var>" + H.Sale.Items.length + " " + D.getWordCapital("promotions") + "</var> "
+			+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
+		+ "</div>").addClass("dsbMenuEnabled");
+		$("#dsbSale").append("<div id='dsbSaleTable' class='jsScrollable'></div>");
+		// Add a "padding" item if the columns are not equal length
+		var isdiscounted = false;
+		var ncol0 = 0, ncol1 = 0;
+		var item;
+		for (var i = 0; i < H.Sale.Items.length; i++)
+		{
+			item = H.Sale.Items[i];
+			if (item.col === 0)
+			{
+				ncol0++;
+			}
+			else
+			{
+				ncol1++;
+			}
+			if (isdiscounted === false)
+			{
+				if (item.discount &&
+					(isFinite(item.discount) || (item.discount.length && item.discount[0].length > 2)))
+				{
+					isdiscounted = true;
+				}
+			}
+		}
+		if (ncol0 < ncol1)
+		{
+			H.Sale.Padding.col = 0;
+			H.Sale.Items.unshift(H.Sale.Padding);
+		}
+		else if (ncol0 > ncol1)
+		{
+			H.Sale.Padding.col = 1;
+			H.Sale.Items.unshift(H.Sale.Padding);
+		}
+		$("#dsbSaleSymbol").attr("src", "img/ui/" + ((isdiscounted) ? "gemstore_special" : "gemstore") + I.cPNG);
+		// Bind buttons
+		$("#dsbMenuSale").click(function()
+		{
+			H.generateDashboardSale();
+		});
+		// Automatically generate the items on sale if the boolean is true
+		I.toggleToggleIcon("#dsbSaleToggleIcon", H.Sale.isPreshown);
+		if (H.Sale.isPreshown === true)
+		{
+			H.generateDashboardSale();
+		}
+	},
 	generateDashboardSale: function()
 	{
 		var getPercentOffString = function(pPriceNew, pPriceOld)
@@ -29099,7 +29127,7 @@ H = {
 			+  "title='<dfn>Pact Supply Network Agent</dfn><br />Updated: " + T.formatWeektime(H.Vendor.Start)
 				+ "'><img src='img/map/vendor_karma.png' /><img id='dsbVendorToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + vendorname + "</var></kbd>"
-		+ "</div>").css({display: "inline-block"});
+		+ "</div>").addClass("dsbMenuEnabled");
 		$("#dsbVendor").empty().append("<div id='dsbVendorMenu'>"
 			+ "<img data-src='img/ui/info.png' /><a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
 				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
@@ -29143,10 +29171,6 @@ H = {
 		});
 		I.toggleToggleIcon("#dsbVendorToggleIcon", H.Sale.isPreshown);
 	},
-	
-	/*
-	 * Generates the vendor offered.
-	 */
 	generateDashboardVendor: function()
 	{
 		var animationspeed = 200;
@@ -29246,6 +29270,51 @@ H = {
 		var weekday = now.getUTCDay();
 		var hour = now.getUTCHours();
 		return (hour < H.Vendor.resetHour) ? T.wrapInteger(weekday - 1, T.cDAYS_IN_WEEK) : weekday;
+	},
+	
+	/*
+	 * Generates the header for the daily feature.
+	 */
+	generateDashboardDailyHeader: function()
+	{
+		$("#dsbMenuDaily").empty().append("<div><kbd id='dsbDailyHeader' class='curToggle' "
+			+  "title='<dfn>Daily Achievements</dfn><br />Current and Next'><img src='img/ui/daily.png' /><img id='dsbDailyToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
+			+ "<var>" + D.getModifiedWord("achievements", "daily", U.CaseEnum.Every) + "</var></kbd>"
+		+ "</div>").addClass("dsbMenuEnabled").click(function()
+		{
+			H.generateDashboardDaily();
+		}).one("click", function()
+		{
+			I.loadStylesheet("features");
+		});
+		I.toggleToggleIcon("#dsbDailyToggleIcon", false);
+	},
+	generateDashboardDaily: function()
+	{
+		var animationspeed = 200;
+		var table = $("#dsbDaily");
+		var now = new Date();
+		
+		// Collapse and empty the table if currently expanded, else generate
+		if (table.is(":empty") === false)
+		{
+			I.toggleToggleIcon("#dsbDailyToggleIcon", false);
+			table.animate({height: 0}, animationspeed, function()
+			{
+				$(this).css({height: "auto"}).empty();
+				table.hide();
+				$("#dsbMenuDaily").removeClass("dsbMenuItemActive");
+			});
+		}
+		else
+		{
+			table.show();
+			$("#dsbMenuDaily").addClass("dsbMenuItemActive");
+			I.loadImg($("#dsbDailyMenu"));
+			I.toggleToggleIcon("#dsbDailyToggleIcon", true);
+			var calendar = $("<div class='dlyCalendar'></div>").appendTo(table);
+			G.fillDailyCalendar(calendar, now, true);
+		}
 	},
 	
 	/*
@@ -32931,14 +33000,6 @@ I = {
 	 */
 	initializeUIForHUD: function()
 	{
-		var animationspeed = 200;
-		$(".hudItem").each(function()
-		{
-			$(this).hover(
-				function() { $(this).find(".cntComposition").show().animate({opacity: 1}, animationspeed); },
-				function() { $(this).find(".cntComposition").animate({opacity: 0}, animationspeed); }
-			);
-		});
 		if (I.ModeCurrent === I.ModeEnum.Overlay)
 		{
 			$(".hudDirectory").find(".linkInternal").each(function()
@@ -32975,6 +33036,7 @@ I = {
 			} break;
 			case I.ModeEnum.Overlay:
 			{
+				$(".hudSelect, .hudButton").removeAttr("title"); // Tooltips over HUD buttons may be obtrusive in the small overlay window
 				I.cPANE_MENU_HEIGHT = 32;
 				I.loadImg("#mapGPSButton");
 			} break;
@@ -33154,7 +33216,7 @@ I = {
 	initializeTooltip: function()
 	{
 		// Bind these tags with the title attribute for tooltip
-		I.qTip.init("#chnOptions img, .menuButton, a, ins, kbd, span, time, fieldset, label, input, button");
+		I.qTip.init("#chnOptions img, a, ins, kbd, span, time, fieldset, label, input, button");
 	},
 	
 	/*

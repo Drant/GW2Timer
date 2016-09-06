@@ -103,6 +103,11 @@ body > windowMain
 	0% { opacity: 1; }
 	100% { opacity: 0.1; }
 }
+@keyframes aniDisplayFadeIn {
+	0% { display: none; opacity: 0; }
+	1% { display: block; opacity: 0; }
+	100% { display: block; opacity: 1; }
+}
 
 html, body {
 	width: 100%;
@@ -537,7 +542,7 @@ html, body,
 
 /* Toggleable */
 .curToggle, .btnToggle, .btnVertical, .btnHorizontal,
-#plateChains header, .chnTitle h1, .jsSection, .jsHelpCollapsible {
+.chnCategoryHeader, .chnTitle h1, .jsSection, .jsHelpCollapsible {
 	cursor: url("img/cursor/toggle.cur"), pointer;
 }
 
@@ -1107,6 +1112,9 @@ textarea.jsCopyCode {
 .dsbMenuItem img {
 	width: 24px; height: 24px;
 }
+.dsbMenuEnabled {
+	display: inline-block;
+}
 .dsbExpansion {
 	display: none;
 	background: rgba(0, 0, 0, 0.4);
@@ -1238,6 +1246,13 @@ textarea.jsCopyCode {
 	text-decoration: underline;
 }
 
+#dsbDaily {
+	text-align: center;
+}
+#dsbDailyTitle {
+	font-family: Trebuchet MS, Menomonia;
+}
+
 #dsbStory {
 	display: none;
 	width: auto; max-height: 124px;
@@ -1308,7 +1323,7 @@ input.mapCoordinatesName {
 
 /* Right side: Misc links */
 .hudPeripheral {
-	display: inline-block; z-index: 3;
+	z-index: 3;
 	width: auto; /* Should be just wide enough to fit the HUD buttons */
 	text-align: right;
 	visibility: hidden;
@@ -1318,9 +1333,13 @@ input.mapCoordinatesName {
 }
 .hudPeripheralNorth {
 	position: absolute; z-index: 11;
+	height: 32px;
+	overflow: hidden;
 	top: 4px; right: 12px;
 }
 .hudPeripheralNorth:hover {
+	height: auto;
+	overflow: visible;
 	min-width: 520px; /* This becomes the maximum width of the HUD popup divs */
 }
 .hudPeripheralSouth {
@@ -1405,7 +1424,7 @@ input.mapCoordinatesName {
 	border-bottom: 4px solid #111;
 	border-radius: 2px;
 	box-shadow: 0px 0px 2px #555;
-	opacity: 0;
+	animation: aniDisplayFadeIn 0.2s;
 }
 .hudPopup label {
 	margin-bottom: 4px;
@@ -1413,6 +1432,19 @@ input.mapCoordinatesName {
 .hudPopup label img {
 	width: 24px; height: 24px;
 	margin-right: 4px;
+}
+.hudArrow {
+	display: none;
+	position: absolute; z-index: 3;
+	margin-left: 4px;
+	margin-top: 22px;
+	width: 0; height: 0;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+	border-bottom: 12px solid rgba(17, 17, 17, 0.9);
+}
+.hudItem:hover .hudArrow {
+	display: block;
 }
 .hudDirectory {
 	width: 580px;
@@ -1426,8 +1458,9 @@ input.mapCoordinatesName {
 	margin-bottom: 8px;
 }
 .hudDirectoryColumn {
-	width: 50%;
-	float: left;
+	display: inline-block;
+	margin-left: 8px;
+	vertical-align: top;
 }
 
 .mapGPS { /* Only shown in overlay mode */
@@ -1900,7 +1933,6 @@ input.mapCoordinatesName {
 	position: absolute; z-index: 9;
 	top: 360px;
 	width: 360px; height: 48px;
-	background: #333;
 	background: linear-gradient(to bottom, #111 0%, #444 50%, #111 100%);
 }
 #paneMenu:hover .menuButton {
@@ -2198,7 +2230,7 @@ header.jsSection sup {
 	color: #ffcc77;
 }
 
-#plateChains header {
+.chnCategoryHeader {
 	display: block;
 	width: auto; height: 32px;
 	margin-bottom: 4px;
@@ -2208,11 +2240,17 @@ header.jsSection sup {
 	background: #444;
 	background: linear-gradient(to bottom, #222 0%, #383838 100%);
 }
-#plateChains header ins {
+.chnCategoryHeader ins {
 	width: 32px; height: 32px;
 	margin-top: 2px;
 	float: left;
 	background-image: url("img/ui/categories.png");
+}
+.chnCategoryNameFirst {
+	visibility: hidden;
+}
+.chnCategoryHeader:hover .chnCategoryNameFirst {
+	visibility: visible;
 }
 .chn_drytop { background-position: 0 0; }
 .chn_legacy { background-position: -32px 0; }
@@ -2220,11 +2258,12 @@ header.jsSection sup {
 .chn_special { background-position: -96px 0; }
 .chn_temple { background-position: -128px 0; }
 .chn_timetable { background-position: -160px 0; }
-#plateChains header span { /* Hidden header for each chain categories */
+.chnCategoryName { /* Hidden header for each chain categories */
 	display: inline-block;
-	padding: 8px 0px 6px 16px;
+	margin: 8px 0px 0px 8px;
 	font-family: Menomonia;
-	font-size: 22px;
+	font-style: italic;
+	font-size: 18px;
 	color: #888888;
 	text-shadow:
 		1px 1px 0px #000,
@@ -2232,15 +2271,11 @@ header.jsSection sup {
 		1px -1px 0px #000,
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
-	visibility: hidden;
 }
-#plateChains header:hover span {
-	visibility: visible;
-}
-#plateChains header span:active {
+.chnCategoryHeader:hover .chnCategoryName {
 	color: white;
 }
-#plateChains header kbd { /* The collapse/expand category button */
+.chnCategoryHeader kbd { /* The collapse/expand category button */
 	margin-top: 8px;
 	float: right;
 	font-family: monospace;

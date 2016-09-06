@@ -226,6 +226,9 @@
 	font-size: 14px;
 	opacity: 0.6;
 }
+#lboCountdown:hover {
+	text-decoration: underline;
+}
 
 #lboOther section { /* A block of rows for a single tier/matchup: a scoreboard */
 	margin-top: 8px;
@@ -416,7 +419,7 @@
 	position: absolute;
 	top: -8px;
 	right: 8px;
-	width: 96px;
+	width: 128px;
 	font-size: 12px;
 	color: white;
 	opacity: 0.5;
@@ -434,9 +437,6 @@
 	background: rgba(32, 32, 32, 1);
 	border: 1px solid rgba(255, 255, 255, 0.4);
 	opacity: 0.8;
-}
-#wvwServerList:hover {
-	width: 128px;
 }
 
 #wvwLogContainer:hover .logButton {
