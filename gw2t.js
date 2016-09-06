@@ -18007,7 +18007,7 @@ C = {
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsExtra'>"
 					+ chainextra
-					+ "<kbd id='chnDelete_" + pChain.nexus + "' title='Permanently hide this event chain (can undo in ▼ menu above).'></kbd>"	
+					+ "<kbd id='chnDelete_" + pChain.nexus + "' class='chnDelete' title='Permanently hide this event chain (can undo in ▼ menu above).'></kbd>"	
 				+ "</div>"
 			+ "</div>"
 		+ "</div>");
@@ -29124,7 +29124,7 @@ H = {
 		}
 		vendorcodes += "- " + vendorname;
 		$("#dsbMenuVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle' "
-			+  "title='<dfn>Pact Supply Network Agent</dfn><br />Updated: " + T.formatWeektime(H.Vendor.Start)
+			+  "title='<dfn>Pact Supply Network Agent</dfn><br />Expires: " + T.formatWeektime(H.Vendor.Finish)
 				+ "'><img src='img/map/vendor_karma.png' /><img id='dsbVendorToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + vendorname + "</var></kbd>"
 		+ "</div>").addClass("dsbMenuEnabled");
@@ -29143,7 +29143,7 @@ H = {
 		{
 			$(this).select();
 		});
-		$("#dsbMenuVendor").click(function()
+		$("#dsbMenuVendor").unbind("click").click(function()
 		{
 			H.generateDashboardVendor();
 		});
@@ -31090,6 +31090,7 @@ I = {
 		WvW: "WvW",
 		DryTop: "DryTop"
 	},
+	LoadedStylesheets: {}, // Holds names of stylesheets to not download again
 	/*
 	 * Enumeration for opening a valid page section upon site load, if URL provided.
 	 * Section names must be unique, and may be in sentence case or all caps.
@@ -32608,7 +32609,11 @@ I = {
 		{
 			return;
 		}
-		$("head").append("<link rel='stylesheet' type='text/css' href='style/" + pName.toLowerCase() + ".css' />");
+		if (I.LoadedStylesheets[pName] === undefined)
+		{
+			$("head").append("<link rel='stylesheet' type='text/css' href='style/" + pName.toLowerCase() + ".css' />");
+			I.LoadedStylesheets[pName] = true;
+		}
 	},
 	
 	/*

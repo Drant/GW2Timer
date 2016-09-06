@@ -1387,8 +1387,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-08-30T16:00:00Z"),
-	Finish: new Date("2016-09-06T16:00:00Z"),
+	Start: new Date("2016-09-06T16:00:00Z"),
+	Finish: new Date("2016-09-13T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		img: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1397,79 +1397,163 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Total Makeover Kit",
-		id: "35991",
-		price: 280,
-		discount: [[1, 280, 350], [5, 1120, 1400]],
+		name: "Wide Rim Glasses",
+		id: "64753",
+		price: 150,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Royal Terrace Pass",
-		id: "49149",
+		name: "Inventor's Sunglasses",
+		id: "64747",
+		price: 150,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Dragon Kama Skin",
+		img: "http://i.imgur.com/C4hrjeN.png",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Makeover Kit and Transmutation Charges",
+		img: "http://i.imgur.com/JLA2BV7.png",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mad Scientist's Mining Tool",
+		id: "68905",
 		price: 800,
 		discount: 1000,
 		col: 0
 	},
 	{
-		name: "Banker Golem (2 weeks)",
-		id: "50085",
-		price: 400,
-		discount: 500,
+		name: "Mad Scientist's Logging Tool",
+		id: "68799",
+		price: 800,
+		discount: 1000,
 		col: 0
+	},
+	{
+		name: "Mad Scientist's Harvesting Tool",
+		id: "69478",
+		price: 800,
+		discount: 1000,
+		col: 0
+	},
+	{
+		name: "Home Portal Stone",
+		id: "66927",
+		price: 765,
+		discount: 900,
+		col: 0
+	},
+	{
+		name: "Mad Scientist Outfit",
+		id: "69753",
+		price: 560,
+		discount: 700,
+		col: 0
+	},
+	{
+		name: "How to Dance, Volume 1",
+		id: "20312",
+		price: 260,
+		discount: 400,
+		col: 0
+	},
+	{
+		name: "Trickster's Light-Armor Skin",
+		id: "43102",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Viper Medium-Armor Skin",
+		id: "43101",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Phalanx Heavy-Armor Skin",
+		id: "43100",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Flamekissed Light Armor Skin",
+		id: "43576",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Flamewalker Medium Armor Skin",
+		id: "43575",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Flamewrath Heavy Armor Skin",
+		id: "43574",
+		price: 800,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Jungle Explorer Outfit",
+		id: "67990",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Shadow Assassin Outfit",
+		id: "66658",
+		price: 700,
+		discount: null,
+		col: 1
 	},
 	{
 		name: "Mist Herald Back Item Skin Set",
 		id: "44886",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Lord Faren's Rapier Skin",
-		id: "68687",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Mini Festive Lord Faren",
-		id: "68432",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Mini Golden Pig",
-		id: "68683",
-		price: 280,
-		discount: 350,
-		col: 0
-	},
-	{
-		name: "Magic Carpet",
-		id: "67356",
-		price: 200,
-		discount: 250,
-		col: 0
-	},
-	{
-		name: "Exemplar Attire Outfit",
-		id: "69623",
-		price: 560,
-		discount: 700,
+		price: 500,
+		discount: null,
 		col: 1
 	},
 	{
-		name: "Noble Count Outfit",
-		id: "67398",
-		price: 560,
-		discount: 700,
+		name: "Glint's Gaze Mask",
+		id: "67857",
+		price: 500,
+		discount: null,
 		col: 1
 	},
 	{
-		name: "Amethyst Aegis",
-		id: "79360",
-		price: 600,
+		name: "Mask of the Silent Skin",
+		id: "49157",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Magnus's Eye Patch",
+		id: "50103",
+		price: 400,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mask of the Jubilee",
+		id: "44607",
+		price: 400,
 		discount: null,
 		col: 1
 	},
@@ -1481,23 +1565,16 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Mask of the Queen",
-		id: "44608",
-		price: 400,
+		name: "Fuzzy Cat Hat",
+		id: "64758",
+		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Mini Jungle Lord Faren",
-		id: "79361",
-		price: 350,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mini Garm",
-		id: "79048",
-		price: 350,
+		name: "Fuzzy Hylek Hat",
+		id: "64759",
+		price: 200,
 		discount: null,
 		col: 1
 	}

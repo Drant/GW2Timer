@@ -117,6 +117,9 @@ body, #paneContent article {
 	width: 64px; height: 64px;
 	opacity: 0.6;
 }
+.chnFaded {
+	opacity: 0.2;
+}
 
 .chnTitle h1 {
 	width: 62%;
@@ -151,6 +154,15 @@ body, #paneContent article {
 
 .chnDetailsExtra {
 	text-align: left;
+}
+.chnDelete {
+	opacity: 0.1;
+}
+.chnBar:hover .chnDelete {
+	opacity: 0.4;
+}
+.chnBar:hover .chnDelete:hover {
+	opacity: 0.8;
 }
 
 #plateChains section {

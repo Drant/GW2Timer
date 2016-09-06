@@ -535,7 +535,7 @@ html, body,
 
 /* Clickable */
 .curClick, .jsClip, a, kbd, input, select, label, button,
-.btnWindow, .hudSelect, .itemContext li,
+.menuButton, .btnWindow, .hudSelect, .itemContext li,
 .menuBeam img:hover, .chnCheck:hover, .chnTitle time {
 	cursor: url("img/cursor/pointer.cur"), pointer;
 }
@@ -2473,7 +2473,7 @@ header.jsSection sup {
 	border-radius: 4px;
 	opacity: 0.5;
 }
-.chnDetailsExtra kbd { /* Button to hide the chain */
+.chnDelete { /* Button to hide the chain */
 	display: inline-block;
 	float: right;
 	width: 24px; height: 24px;
@@ -2483,7 +2483,7 @@ header.jsSection sup {
 	background-size: 24px 24px;
 	opacity: 0.4;
 }
-.chnDetailsExtra kbd:hover {
+.chnDelete:hover {
 	opacity: 0.8;
 }
 
@@ -2534,7 +2534,7 @@ header.jsSection sup {
 }
 
 .chnTimeCurrent:hover, .chnTimeFuture:hover, .chnTimeFutureFar:hover,
-.chnSlot time:hover, .chnDetailsExtra kbd:hover {
+.chnSlot time:hover, .chnDelete:hover {
 	color: white;
 }
 
