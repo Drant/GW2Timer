@@ -1355,6 +1355,15 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2016-09-15T20:00:00Z"),
 		Finish: new Date("2016-09-22T20:00:00Z")
+	},
+	{
+		name_en: "Living Story 3: Episode II",
+		name_de: "Lebendige Geschichte 3: Episode II",
+		name_es: "Historia Viviente 3: Episodio II",
+		name_fr: "Histoire Vivante 3: Épisode II",
+		url: "http://www.mmorpg.com/gamelist.cfm/game/473/feature/11142/Guild-Wars-2-Episode-2-Drops-September-20th-Takes-Us-Back-to-the-Ring-of-Fire.html",
+		Start: new Date("2016-09-20T17:00:00Z"),
+		Finish: new Date("2016-09-21T17:00:00Z")
 	}
 	]
 },
