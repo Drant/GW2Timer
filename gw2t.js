@@ -16912,8 +16912,8 @@ D = {
 			cs: "Plán", it: "Programma", pl: "Harmonogram", pt: "Horário", ru: "Расписание", zh: "時間表"},
 		s_promotions: {de: "Aktionen", es: "promociones", fr: "promotions",
 			cs: "propagace", it: "promozioni", pl: "promocje", pt: "promoções", ru: "продвижения", zh: "促銷"},
-		s_directory: {de: "verzeichnis", es: "directorio", fr: "annuaire",
-			cs: "adresář", it: "directory", pl: "katalog", pt: "diretório", ru: "каталог", zh: "目錄"},
+		s_menu: {de: "menü", es: "menú", fr: "menu",
+			cs: "nabídka", it: "menu", pl: "menu", pt: "menu", ru: "меню", zh: "功能表"},
 		s_wvw: {de: "WvW", es: "McM", fr: "McM",
 			cs: "SpS", it: "McM", pl: "SkS", pt: "McM", ru: "МпМ", zh: "世界戰場"},
 		s_display: {de: "anzeige", es: "presentación", fr: "affichage",
@@ -16926,6 +16926,8 @@ D = {
 			cs: "katalog", it: "catalogo", pl: "katalog", pt: "catálogo", ru: "каталог", zh: "目錄"},
 		s_audit: {de: "prüfung", es: "auditar", fr: "auditer",
 			cs: "audit", it: "audit", pl: "audyt", pt: "auditar", ru: "аудит", zh: "審計"},
+		s_cleanup: {de: "aufräumen", es: "limpia", fr: "nettoyer",
+			cs: "úklid", it: "ripulire", pl: "oczyszczenie", pt: "limpeza", ru: "уборка", zh: "淨化"},
 		s_simple: {de: "einfach", es: "simple", fr: "simple",
 			cs: "prostý", it: "semplice", pl: "prosty", pt: "simples", ru: "простой", zh: "簡單"},
 		s_mobile: {de: "mobil", es: "móvil", fr: "mobile",
@@ -21432,7 +21434,7 @@ M = {
 		}
 		
 		// Start GPS if on overlay
-		if (I.ModeCurrent === I.ModeEnum.Overlay)
+		if (I.ModeCurrent === I.ModeEnum.Overlay && I.isProgramEmbedded === false)
 		{
 			P.tickGPS();
 		}
@@ -29068,8 +29070,9 @@ H = {
 							discountstr += "</span>";
 						}
 						// Format the presentation of this item
-						var dataprop = (item.id) ? ("data-sale='" + item.id + "'") : "";
-						var imgsrc = (item.img) ? item.img : "img/ui/placeholder.png";
+						var idisurl = isNaN(item.id);
+						var dataprop = (idisurl) ? "" : ("data-sale='" + item.id + "'");
+						var imgsrc = (idisurl) ? item.id : "img/ui/placeholder.png";
 						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
 							+"<a" + U.convertExternalAnchor(wiki) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
 							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
@@ -33043,7 +33046,7 @@ I = {
 			{
 				$(".hudSelect, .hudButton").removeAttr("title"); // Tooltips over HUD buttons may be obtrusive in the small overlay window
 				I.cPANE_MENU_HEIGHT = 32;
-				I.loadImg("#mapGPSButton");
+				I.loadImg("#mapGPSIcon");
 			} break;
 			case I.ModeEnum.Simple:
 			{

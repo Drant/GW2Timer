@@ -2605,7 +2605,8 @@ Weapon_Dagger: [
 	{u: 6793, i: 78956, n: "Privateer Dagger", p: {blticket: 1}},
 	{u: 6815, i: 78943, n: "White Mantle Seax", p: {raid_ft: 600}},
 	{u: 6877, i: 79246, n: "Embellished Dagger", t: [79246]},
-	{u: 6907, i: 79404, n: "Bloodstone Dagger", t: [79404]}
+	{u: 6907, i: 79404, n: "Bloodstone Dagger", t: [79404]},
+	{u: 6906, i: 79386, n: "Dragon Kama Skin", p: {gem: 600}}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", t: [49335]},

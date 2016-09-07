@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160906A"></script>
+	<script type="text/javascript" src="data/general.js?v=20160907"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -122,7 +122,7 @@
 								<div id="dsbMenuVendor" class="dsbMenuItem curToggle"></div>
 								<div id="dsbMenuDaily" class="dsbMenuItem curToggle"></div>
 							</div>
-							<div class="dsbDivider"></div>
+							<div class="cntDivider"></div>
 							<div id="dsbSale" class="dsbExpansion"></div>
 							<div id="dsbVendor" class="dsbExpansion"></div>
 							<div id="dsbDaily" class="dsbExpansion"></div>
@@ -151,16 +151,18 @@
 				<div class="hudItem">
 					<span id="mapDirectoryButton" class="hudSelect">
 						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/directory.png" alt="display" /><span class="hudArrow"></span></span>
-						<var class="hudTitle jsTranslate">Directory</var>
+						<var class="hudTitle jsTranslate">Menu</var>
 					</span>
 					<div class="hudPopup cntComposition hudDirectory">
+						<table class="hudDirectoryMode">
+							<tr>
+								<td><var class="hudDirectoryModeName jsTranslate">Tile Mode</var><a href="./?mode=Tile"><img class="hudDirectoryModePreview" data-src="http://i.imgur.com/Q6O2lIx.png" /></a></td>
+								<td><var class="hudDirectoryModeName jsTranslate">Mobile Mode</var><a href="./?mode=Mobile"><img class="hudDirectoryModePreview" data-src="http://i.imgur.com/0QsaeY7.png" /></a></td>
+								<td><var class="hudDirectoryModeName jsTranslate">Simple Mode</var><a href="./?mode=Simple"><img class="hudDirectoryModePreview" data-src="http://i.imgur.com/Nk42voP.png" /></a></td>
+							</tr>
+						</table>
+						<div class="cntDivider hudDirectoryDivider"></div>
 						<div class="hudDirectoryColumn">
-							<h2>Modes</h2>
-							<ul>
-								<li><b><a href="./?mode=Tile" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/Q6O2lIx.png' /></div>">Tile</a></b> - Timers only: <a href="http://gw2timer.com/?mode=Tile" class="linkExternal">gw2timer.com/t</a></li>
-								<li><b><a href="./?mode=Mobile" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/0QsaeY7.png' /></div>">Mobile</a></b> - App panel only: <a href="http://gw2timer.com/?mode=Mobile" class="linkExternal">gw2timer.com/m</a></li>
-								<li><b><a href="./?mode=Simple" class="jsTranslate" title="<div class='mapLoc'><img src='http://i.imgur.com/Nk42voP.png' /></div>">Simple</a></b> - Clock only: <a href="http://gw2timer.com/?mode=Simple" class="linkExternal">gw2timer.com/s</a></li>
-							</ul>
 							<h2>Contact</h2>
 							<ul>
 								<li><a class="linkExternal jsTranslate" href="http://forum.renaka.com/forum/368355/">Forum</a> - Comments and updates</li>
@@ -170,6 +172,7 @@
 							<ul>
 								<li><a class="linkInternal jsTranslate" href="./?page=Audit">Audit</a> - Account value estimate</li>
 								<li><a class="linkInternal jsTranslate" href="./?page=Catalog">Catalog</a> - Keychain and item watchlist</li>
+								<li><a class="linkInternal jsTranslate" href="./?page=Cleanup">Cleanup</a> - Unused inventory items</li>
 							</ul>
 						</div>
 						<div class="hudDirectoryColumn">
@@ -205,7 +208,7 @@
 				</div>
 				<div class="mapGPS hudItem">
 					<span id="mapGPSButton" class="hudSelect" title="<dfn>Click to Center Character</dfn>">
-						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/gps.png" alt="GPS" /><span class="hudArrow"></span></span>
+						<span class="hudButtonContainer"><img id="mapGPSIcon" class="hudButton" data-src="img/map/gps.png" alt="GPS" /><span class="hudArrow"></span></span>
 					</span>
 					<div class="hudPopup cntComposition">
 						<fieldset name="int_setFollow" class="optFollowFieldset" title="Automatically moves the map to where you are:<br /><dfn>Off</dfn>: No follow<br /><dfn>Character</dfn>: Center on your character<br /><dfn>Zone</dfn>: Center on the zone your character is in"><legend>GPS Follow</legend>
