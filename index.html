@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160908"></script>
+	<script type="text/javascript" src="data/general.js?v=20160908A"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -572,7 +572,7 @@
 				<img id="clkIconHC2" class="iconHC" src="img/ui/placeholder.png" alt="X:30" />
 				<img id="clkIconHC3" class="iconHC" src="img/ui/placeholder.png" alt="X:45" />
 			</div>
-			<svg id="clock" viewBox="0 0 100 100"><!-- x=50,y=50 is the center -->
+			<svg id="itemClock" viewBox="0 0 100 100"><!-- x=50,y=50 is the center -->
 				<defs id="clkDefinitions"><!-- Shadow filters -->
 					<filter id="clkFilterShadowOuter" height="130%">
 						<feGaussianBlur in="SourceAlpha" stdDeviation="3" />
@@ -648,9 +648,9 @@
 				</g>
 				<!-- Hands and markers initially point at 12 o'clock, JS will rotate them -->
 				<g id="clkHands" filter="url(#clkFilterShadowHand)">
-					<line id="clkHourHand" x1="50" y1="50" x2="50" y2="24"/>
-					<line id="clkMinuteHand" x1="50" y1="50" x2="50" y2="16"/>
-					<line id="clkSecondHand" x1="50" y1="50" x2="50" y2="16"/>
+					<line id="clkHourHand" x1="50" y1="58" x2="50" y2="24"/>
+					<line id="clkMinuteHand" x1="50" y1="58" x2="50" y2="16"/>
+					<line id="clkSecondHand" x1="50" y1="58" x2="50" y2="16"/>
 				</g>
 			</svg>
 			<div id="clkWaypoints">
@@ -805,6 +805,7 @@
 							<label><input type="radio" name="int_setDimming" /> Dark</label>
 						</fieldset>
 					</div>
+					<label title="Show/Hide clock's tick hand."><input id="opt_bol_showSecondHand" type="checkbox" /> Show clock second hand</label>
 					<br />
 					<h2>Map</h2>
 					<label title="Show/Hide the map."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>

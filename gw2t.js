@@ -128,6 +128,7 @@ O = {
 		enu_Language: "en",
 		enu_Server: "1008",
 		// Timer
+		bol_showSecondHand: true,
 		bol_hideChecked: false,
 		bol_expandWB: true,
 		bol_collapseChains: true,
@@ -934,6 +935,7 @@ O = {
 		 * Run some enactors when the site loads (because this an initializer function).
 		 * Will have to place it elsewhere if it requires data to be loaded first.
 		 */
+		O.Enact.bol_showSecondHand();
 		O.Enact.int_setAlarm();
 		O.Enact.bol_detectDST();
 		O.Enact.bol_useSiteTag();
@@ -1043,6 +1045,10 @@ O = {
 	 */
 	Enact:
 	{
+		bol_showSecondHand: function()
+		{
+			$("#clkSecondHand").toggle(O.Options.bol_showSecondHand);
+		},
 		int_setAlarm: function()
 		{
 			var icon = "img/ui/placeholder.png";
@@ -29812,7 +29818,7 @@ K = {
 				$("#itemTimeLocal, #itemTimeDaytime").show();
 				// Reposition clock items
 				I.bulkAnimate([
-					{s: "#clock", p: {top: "0px", left: "70px", width: "220px", height: "220px"}},
+					{s: "#itemClock", p: {top: "0px", left: "70px", width: "220px", height: "220px"}},
 					{s: "#paneClockFace", p: {width: "360px", height: "360px", top: "-70px", left: "0px"}},
 					{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
 					{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},
@@ -29855,7 +29861,7 @@ K = {
 				$("#itemTimeLocal, #itemTimeDaytime").show();
 				// Reposition clock items
 				I.bulkAnimate([
-					{s: "#clock", p: {top: "70px", left: "70px", width: "220px", height: "220px"}},
+					{s: "#itemClock", p: {top: "70px", left: "70px", width: "220px", height: "220px"}},
 					{s: "#paneClockFace", p: {width: "360px", height: "360px", top: "0px", left: "0px"}},
 					{s: "#paneClockIcons .iconSD", p: {"border-radius": "12px"}},
 					{s: "#paneClockIcons .iconHC", p: {"border-radius": "12px"}},
@@ -29898,7 +29904,7 @@ K = {
 				$("#itemTimeLocal, #itemTimeDaytime").hide();
 				// Reposition clock items
 				I.bulkAnimate([
-					{s: "#clock", p: {top: "0px", left: "0px", width: "85px", height: "85px"}},
+					{s: "#itemClock", p: {top: "0px", left: "0px", width: "85px", height: "85px"}},
 					{s: "#paneClockFace", p: {width: "132px", height: "132px", top: "-24px", left: "-24px"}},
 					{s: "#paneClockIcons .iconSD", p: {"border-radius": "32px"}},
 					{s: "#paneClockIcons .iconHC", p: {"border-radius": "24px"}},

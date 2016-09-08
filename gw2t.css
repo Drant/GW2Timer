@@ -655,12 +655,17 @@ html, body,
 	border-radius: 2px;
 }
 
-.cntPopup {
-	border: 2px solid #111;
-	border-radius: 4px;
+.cntPopup, .hudPopup {
+	display: block;
+	position: absolute;
+	margin: 0;
+	padding: 10px 18px 10px 16px;
+	background: linear-gradient(to right, rgba(15, 15, 15, 0.9) 0%, rgba(51, 51, 51, 0.9) 100%);
+	border-top: 4px solid #111;
+	border-bottom: 4px solid #111;
+	border-radius: 2px;
 	box-shadow: 0px 0px 2px #555;
-	background: linear-gradient(to right, #111 0%, #333 100%);
-	opacity: 0.9;
+	animation: aniDisplayFadeIn 0.2s;
 }
 
 .cntComposition input[type="text"], .cntComposition textarea {
@@ -744,7 +749,7 @@ button img {
 .cntComposition h1, header.cntHeader {
 	padding-top: 12px;
 	margin-bottom: 8px;
-	font-size: 24px;
+	font-size: 22px;
 	font-family: Trebuchet MS, Menomonia;
 	text-shadow: 0px 0px 2px #e4e0b3;
 }
@@ -756,7 +761,7 @@ header.cntHeader {
 .cntComposition h2 {
 	margin-top: 4px;
 	margin-bottom: 2px;
-	font-size: 16px;
+	font-size: 18px;
 	text-shadow: 0px 0px 1px #e4e0b3;
 }
 .cntComposition h3 {
@@ -1412,16 +1417,7 @@ input.mapCoordinatesName {
 }
 .hudItem:hover .hudPopup {
 	display: block;
-	position: absolute;
 	right: 0px;
-	margin: 0;
-	padding: 10px 18px 10px 16px;
-	background: linear-gradient(to right, rgba(15, 15, 15, 0.9) 0%, rgba(51, 51, 51, 0.9) 100%);
-	border-top: 4px solid #111;
-	border-bottom: 4px solid #111;
-	border-radius: 2px;
-	box-shadow: 0px 0px 2px #555;
-	animation: aniDisplayFadeIn 0.2s;
 }
 .hudPopup label {
 	margin-bottom: 4px;
@@ -1535,6 +1531,9 @@ input.mapCoordinatesName {
 .mapZoneList ul, .mapZoneList h2 {
 	min-width: 120px;
 	max-width: 140px;
+}
+.mapZoneList h2 {
+	font-size: 16px;
 }
 .mapZoneList ul {
 	margin-bottom: 16px;
@@ -1800,7 +1799,7 @@ input.mapCoordinatesName {
 	opacity: 0.5;
 }
 
-#clock { /* The clock */
+#itemClock { /* The clock */
 	position: absolute;
 	top: 70px; left: 70px;
 	width: 220px; height: 220px;
@@ -1826,20 +1825,22 @@ input.mapCoordinatesName {
 	stroke-width: 2px;
 }
 #clkHourHand {
-	stroke-width: 4px;
-	opacity: 0.1;
+	stroke-width: 3px;
+	stroke: black;
+	opacity: 0.2;
 }
 #clkMinuteHand {
 	stroke-width: 2px;
 	stroke: white;
+	opacity: 0.6;
 }
 #clkSecondHand {
 	stroke-width: 1px;
-	stroke: red;
-	opacity: 0; /* Second hand is not used */
+	stroke: #feffef;
+	opacity: 0.6;
 } 
 #clkHours, #clkHoursPrime {
-	font-family: sans-serif;
+	font-family: Menomonia;
 	font-size: 5pt;
 	font-weight: bold;
 	text-anchor: middle;
@@ -1946,7 +1947,7 @@ input.mapCoordinatesName {
 	display: block;
 	top: 48px;
 	left: auto;
-	right: -8px;
+	right: -2px;
 	padding: 4px 2px 4px 2px;
 }
 
@@ -1978,6 +1979,8 @@ input.mapCoordinatesName {
 }
 .menuButton:active {
 	background: linear-gradient(135deg, rgba(255, 238, 187, 0.2) 0%, transparent 100%);
+	background-size: 400% 400%;
+	animation: aniPulsate 1s;
 }
 #paneMenu ins { /* Button image */
 	width: 32px; height: 32px;
@@ -2002,6 +2005,7 @@ input.mapCoordinatesName {
 	color: white;
 	text-shadow: 0px 0px 1px #e4e0b3;
 	opacity: 0.2;
+	pointer-events: none;
 }
 #paneMenu:hover var {
 	color: #ffeeaa;
@@ -2080,7 +2084,7 @@ header.jsSection:hover, header.jsSection:hover {
 }
 header.jsSection span img { /* Each header must have inside it an img tag as icon */
 	width: 32px; height: 32px;
-	margin-right: 16px;
+	margin-right: 12px;
 }
 header.jsSection sup {
 	float: right;
@@ -2124,7 +2128,7 @@ header.jsSection sup {
 
 #plateChains {
 	display: block; /* The first plate to be displayed, others are hidden */
-	background: linear-gradient(to right, #111 0%, #383838 50%, #111 100%);
+	background: linear-gradient(to right, #111 0%, rgba(56, 56, 56, 0.8) 50%, #111 100%);
 }
 #plateMap, #plateWvW, #plateHelp, #plateOptions {
 	display: none;
@@ -2273,7 +2277,7 @@ header.jsSection sup {
 	padding: 0px 12px 0px 4px;
 	background: linear-gradient(to bottom, #222 0%, #383838 100%);
 	border: 1px solid #111;
-	border-bottom: 2px solid black;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.4);
 	border-top-left-radius: 50%;
 
 }
@@ -2301,7 +2305,7 @@ header.jsSection sup {
 	font-family: Menomonia;
 	font-style: italic;
 	font-size: 18px;
-	color: #888888;
+	color: #aaa;
 	text-shadow:
 		1px 1px 0px #000,
 		-1px -1px 0px #000,
@@ -2363,6 +2367,7 @@ header.jsSection sup {
 	margin-bottom: 4px;
 	padding-left: 8px;
 	border: 1px solid #111;
+	border-top: 1px solid #222;
 	border-top-right-radius: 8px;
 	border-bottom-right-radius: 8px;
 	background: linear-gradient(to right, #111 0%, #333 100%);

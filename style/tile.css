@@ -108,7 +108,8 @@ body, #paneContent article {
 
 .chnTitle img {
 	width: 64px; height: 64px;
-	border-radius: 8px;
+	border-radius: 2px;
+	box-shadow: 0px 4px 10px black;
 }
 
 .chnCheck, .chnChecked {
@@ -135,7 +136,8 @@ body, #paneContent article {
 .chnTitle time {
 	width: 100%;
 	padding-right: 8px;
-	font-size: 20px;
+	background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
+	border-bottom-right-radius: 50%;
 }
 .chnTitle time sup {
 	font-size: 18px;
