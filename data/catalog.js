@@ -758,7 +758,8 @@ Carrier: [
 	{i: 69715, n: "Revenant Mail Carrier", p: {gem: 350}},
 	{i: 69745, n: "Raven Mail Carrier"},
 	{i: 69774, n: "Parrot Mail Carrier"},
-	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 600}}
+	{i: 78088, n: "Super Bee Dog Mail Carrier", p: {gem: 600}},
+	{i: 79341, n: "Anniversary Mail Carrier", p: {starting: true}}
 ],
 Glider: [
 	{i: 67054, n: "Heart of Thorns Glider", p: {gem: 0}},

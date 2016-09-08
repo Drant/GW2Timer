@@ -644,14 +644,15 @@ html, body,
 	margin: 8px;
 	margin-left: 0px;
 	padding: 4px 8px 18px 12px;
-	border: 1px solid #111;
-	border-radius: 8px;
-	background: linear-gradient(to right, #111 0%, #333 100%);
 	font-family: sans-serif;
 	font-size: 12px;
 	line-height: 150%;
 	color: #eee;
 	text-shadow: 0px 0px 2px black;
+	background: linear-gradient(to right, rgba(17, 17, 17, 1) 0%, rgba(51, 51, 51, 0.6) 100%);
+	border: 1px solid rgba(17, 17, 17, 0.5);
+	border-bottom: 4px solid rgba(17, 17, 17, 0.9);
+	border-radius: 2px;
 }
 
 .cntPopup {
@@ -743,7 +744,8 @@ button img {
 .cntComposition h1, header.cntHeader {
 	padding-top: 12px;
 	margin-bottom: 8px;
-	font-size: 20px;
+	font-size: 24px;
+	font-family: Trebuchet MS, Menomonia;
 	text-shadow: 0px 0px 2px #e4e0b3;
 }
 header.cntHeader {
@@ -1466,6 +1468,7 @@ input.mapCoordinatesName {
 	border: 2px solid black;
 	border-bottom: 4px solid black;
 	border-radius: 4px;
+	box-shadow: 4px -4px 4px rgba(0, 0, 0, 0.5);
 }
 .hudDirectoryModePreview:hover {
 	border: 2px solid #222;
@@ -1481,6 +1484,7 @@ input.mapCoordinatesName {
 		0px -1px 1px #000,
 		1px 0px 1px #000,
 		-1px 0px 1px #000;
+	pointer-events: none;
 }
 .hudDirectoryDivider {
 	margin-bottom: 4px;
@@ -1956,7 +1960,7 @@ input.mapCoordinatesName {
 	position: absolute; z-index: 9;
 	top: 360px;
 	width: 360px; height: 48px;
-	background: linear-gradient(to bottom, #111 0%, #444 50%, #111 100%);
+	background: linear-gradient(to bottom, #555 0%, #222 50%, #000 51%, #222 100%);
 }
 #paneMenu:hover .menuButton {
 	opacity: 0.5;
@@ -1973,18 +1977,19 @@ input.mapCoordinatesName {
 	transition: opacity 0.2s, box-shadow 0.2s;
 }
 .menuButton:active {
-	box-shadow: 0px 0px 10px white;
+	background: linear-gradient(135deg, rgba(255, 238, 187, 0.2) 0%, transparent 100%);
 }
 #paneMenu ins { /* Button image */
 	width: 32px; height: 32px;
 	margin-top: 8px;
-	background-image: url("img/ui/pages.png");
+	background-image: linear-gradient(to bottom, transparent 0%, transparent 50%, #111 100%), url("img/ui/pages.png");
+	border-radius: 50%;
 }
-#menuAccount ins { background-position: 0 0; }
-#menuChains ins { background-position: -32px 0;; }
-#menuHelp ins { background-position: -64px 0; }
-#menuMap ins { background-position: -96px 0; }
-#menuOptions ins { background-position: -128px 0; }
+#menuAccount ins { background-position: 0 0, 0 0; }
+#menuChains ins { background-position: 0 0, -32px 0; }
+#menuHelp ins { background-position: 0 0, -64px 0; }
+#menuMap ins { background-position: 0 0, -96px 0; }
+#menuOptions ins { background-position: 0 0, -128px 0; }
 
 #paneMenu var { /* Button subtitle */
 	display: table-cell;
@@ -2061,16 +2066,17 @@ input.mapCoordinatesName {
 }
 
 header.jsSection {
-	padding-top: 8px;
+	margin-top: 8px;
+	font-family: Menomonia;
 	font-size: 20px;
-	text-shadow: 0px 0px 2px #e4e0b3;
 	color: #e4e0b3;
 }
 header.jsSection:hover, header.jsSection:hover {
 	color: white;
-}
-header.jsSection span {
-	text-decoration: underline;
+	background-image: linear-gradient(to right, #7c7253 0%, transparent 100%);
+	background-repeat: repeat-y;
+	animation: aniHighlight 0.4s;
+	border-radius: 2px;
 }
 header.jsSection span img { /* Each header must have inside it an img tag as icon */
 	width: 32px; height: 32px;
@@ -2084,11 +2090,18 @@ header.jsSection sup {
 }
 .jsSectionDone {
 	display: inline-block;
+	padding: 0px 10px 0px 4px;
 	margin-top: 8px;
 	margin-bottom: 16px;
+	font-family: Menomonia;
 	font-size: 16px;
-	text-decoration: underline;
 	text-shadow: 0px 0px 2px #e4e0b3;
+	border-left: 2px solid white;
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 4px;
+}
+.jsSectionDone:hover {
+	background: rgba(255, 255, 255, 0.1);
 }
 
 /* =============================================================================
@@ -2102,8 +2115,7 @@ header.jsSection sup {
 	top: 408px;
 	color: #eee;
 	text-shadow: 0px 0px 2px black;
-	background: #333;
-	background: linear-gradient(to right, #111 0%, #383838 50%, #111 100%);
+	background: linear-gradient(115deg, #444 0%, #222 50%, #000 51%, #222 100%);
 }
 
 #paneContent article {
@@ -2112,6 +2124,7 @@ header.jsSection sup {
 
 #plateChains {
 	display: block; /* The first plate to be displayed, others are hidden */
+	background: linear-gradient(to right, #111 0%, #383838 50%, #111 100%);
 }
 #plateMap, #plateWvW, #plateHelp, #plateOptions {
 	display: none;
@@ -2258,10 +2271,11 @@ header.jsSection sup {
 	width: auto; height: 32px;
 	margin-bottom: 4px;
 	padding: 0px 12px 0px 4px;
-	border: 1px solid #111;
-	border-radius: 4px;
-	background: #444;
 	background: linear-gradient(to bottom, #222 0%, #383838 100%);
+	border: 1px solid #111;
+	border-bottom: 2px solid black;
+	border-top-left-radius: 50%;
+
 }
 .chnCategoryHeader ins {
 	width: 32px; height: 32px;

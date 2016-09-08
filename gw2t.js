@@ -18009,7 +18009,7 @@ C = {
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
 				+ "<div class='chnDetailsExtra'>"
 					+ chainextra
-					+ "<kbd id='chnDelete_" + pChain.nexus + "' class='chnDelete' title='Permanently hide this event chain (can undo in ▼ menu above).'></kbd>"	
+					+ "<kbd id='chnDelete_" + pChain.nexus + "' class='chnDelete' title='Permanently hide this event chain (can undo in <img src=img/ui/speaker.png /> menu above).'></kbd>"	
 				+ "</div>"
 			+ "</div>"
 		+ "</div>");
