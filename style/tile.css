@@ -72,6 +72,10 @@ body, #paneContent article {
 	margin-top: 0;
 }
 
+#plateChains {
+	background: linear-gradient(to right, #111 0%, rgba(56, 56, 56, 0.8) 50%, #111 100%);
+}
+
 /* Element resize */
 
 #itemLanguage {
@@ -83,10 +87,6 @@ body, #paneContent article {
 	bottom: auto;
 	left: auto;
 	z-index: 9;
-}
-#itemLanguage:hover #itemLanguagePopup {
-	top: auto;
-	left: auto;
 }
 
 #chnProgressBar {
@@ -100,10 +100,25 @@ body, #paneContent article {
 	max-width: 360px;
 	margin-bottom: 8px;
 	margin-right: 8px;
+	background: linear-gradient(to right, #111 0%, #333 100%);
 	border-top: 2px solid #222;
 	border-left: 2px solid #222;
 	border-right: 4px solid black;
 	border-bottom: 4px solid black;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+.chnBarPrevious {
+	background: linear-gradient(to right, #111 0%, #261306 100%);
+}
+.chnBarCurrent {
+	background: linear-gradient(to right, #111 0%, #4f280c 100%);
+}
+.chnBarReset {
+	background: linear-gradient(to right, #111 0%, #663b7f 100%);
+}
+.chnBarHover {
+	background: linear-gradient(to right, #111 0%, #66aaff 100%);
 }
 
 .chnTitle img {

@@ -750,7 +750,6 @@ button img {
 	padding-top: 12px;
 	margin-bottom: 8px;
 	font-size: 22px;
-	font-family: Trebuchet MS, Menomonia;
 	text-shadow: 0px 0px 2px #e4e0b3;
 }
 header.cntHeader {
@@ -767,10 +766,11 @@ header.cntHeader {
 .cntComposition h3 {
 	margin-left: 12px;
 	margin-bottom: 2px;
-	font-size: 14px;
+	font-size: 16px;
 	text-shadow: 0px 0px 1px #e4e0b3;
 }
 .cntComposition h1, .cntComposition h2, .cntComposition h3, header.cntHeader {
+	font-family: Trebuchet MS, Menomonia;
 	font-weight: bold;
 	color: #e4e0b3;
 }
@@ -1708,6 +1708,7 @@ input.mapCoordinatesName {
 #paneClockBackground { /* Festival sensitive */
 	/*background: url("img/background/globe_wintersday.png") no-repeat center;*/
 	background: url("img/background/globe.jpg") no-repeat center;
+	filter: blur(1px);
 	opacity: 0;
 }
 
@@ -1822,7 +1823,7 @@ input.mapCoordinatesName {
 	opacity: 0.2;
 }
 #clkMarkers {
-	stroke-width: 2px;
+	stroke-width: 1px;
 }
 #clkHourHand {
 	stroke-width: 3px;
@@ -1846,7 +1847,7 @@ input.mapCoordinatesName {
 	text-anchor: middle;
 	stroke: none;
 	fill: black;
-	opacity: 0.2;
+	opacity: 0.3;
 }
 #clkHoursPrime {
 	font-size: 6pt;
@@ -1911,7 +1912,6 @@ input.mapCoordinatesName {
 	display: none;
 	position: absolute;
 	width: 90px;
-	left: -98px;
 	text-align: left;
 	font-family: sans-serif;
 	color: #e4e0b3;
@@ -1940,13 +1940,12 @@ input.mapCoordinatesName {
 }
 #itemLanguage:hover #itemLanguagePopup { /* Popup when hovered over language button */
 	display: block;
-	top: 0px;
+	right: 0px;
 	padding: 4px 2px 4px 2px;
 }
 #menuOptions:hover #itemLanguagePopup {
 	display: block;
 	top: 48px;
-	left: auto;
 	right: -2px;
 	padding: 4px 2px 4px 2px;
 }
@@ -2080,7 +2079,7 @@ header.jsSection:hover, header.jsSection:hover {
 	background-image: linear-gradient(to right, #7c7253 0%, transparent 100%);
 	background-repeat: repeat-y;
 	animation: aniHighlight 0.4s;
-	border-radius: 2px;
+	border-radius: 1px;
 }
 header.jsSection span img { /* Each header must have inside it an img tag as icon */
 	width: 32px; height: 32px;
@@ -2128,7 +2127,6 @@ header.jsSection sup {
 
 #plateChains {
 	display: block; /* The first plate to be displayed, others are hidden */
-	background: linear-gradient(to right, #111 0%, rgba(56, 56, 56, 0.8) 50%, #111 100%);
 }
 #plateMap, #plateWvW, #plateHelp, #plateOptions {
 	display: none;
@@ -2145,14 +2143,13 @@ header.jsSection sup {
 	display: block;
 	float: left;
 	width: 100%; height: 100%;
-	border-radius: 2px;
 	background: none;
 	box-shadow: 0px 0px 4px #444;
 }
 #chnProgress1 {
 	right: 0;
 	box-shadow: 0px 0px 4px #444;
-	background: linear-gradient(to left, black 0%, white 100%);
+	background: linear-gradient(to left, transparent 0%, white 100%);
 }
 
 #chnToggle {
@@ -2368,9 +2365,7 @@ header.jsSection sup {
 	padding-left: 8px;
 	border: 1px solid #111;
 	border-top: 1px solid #222;
-	border-top-right-radius: 8px;
-	border-bottom-right-radius: 8px;
-	background: linear-gradient(to right, #111 0%, #333 100%);
+	background: linear-gradient(to right, #222 0%, transparent 100%);
 	transition: opacity 0.2s;
 }
 
@@ -2384,7 +2379,7 @@ header.jsSection sup {
 }
 .chnTitle img {
 	width: 32px; height: 32px;
-	border-radius: 4px;
+	border-radius: 2px;
 	vertical-align: top;
 }
 .chnTitleMisc {
@@ -2500,7 +2495,7 @@ header.jsSection sup {
 	opacity: 0.6;
 }
 .chnWaypoint:hover {
-	background: #333;
+	background: rgba(0, 0, 0, 0.3);
 	opacity: 0.9;
 }
 .chnDetailsExtra { /* Small gray texts bottom right of a chain bar */
@@ -2508,7 +2503,7 @@ header.jsSection sup {
 	text-align: right;
 	font-family: monospace;
 	font-size: 12px;
-	color: #888;
+	color: #999;
 }
 .chnDetailsExtra ins { /* Little icons such as chain rewards */
 	margin-left: 2px;
@@ -2531,16 +2526,16 @@ header.jsSection sup {
 
 /* JavaScript added classes */
 .chnBarPrevious {
-	background: linear-gradient(to right, #111 0%, #261306 100%);
+	background: linear-gradient(to right, #111 0%, rgba(38, 19, 6, 0.8) 100%);
 }
 .chnBarCurrent {
-	background: linear-gradient(to right, #111 0%, #4f280c 100%);
+	background: linear-gradient(to right, #111 0%, rgba(105, 53, 16, 0.8) 100%);
 }
 .chnBarReset {
-	background: linear-gradient(to right, #111 0%, #663b7f 100%);
+	background: linear-gradient(to right, #111 0%, rgba(102, 59, 127, 0.8) 100%);
 }
 .chnBarHover {
-	background: linear-gradient(to right, #111 0%, #66aaff 100%);
+	background: linear-gradient(to right, #111 0%, rgba(102, 170, 255, 0.8) 100%);
 }
 
 .chnTitleCurrent, .chnSlot h1.chnTitleCurrent {

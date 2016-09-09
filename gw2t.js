@@ -9023,7 +9023,7 @@ V = {
 			{
 				A.CharIndexCurrent = charindex;
 				$(".chrProceed").animate({rotation: 0}, {duration: 200, queue: false});
-				$(this).find(".chrProceed").animate({rotation: 90}, {duration: 200, queue: false});
+				$(this).find(".chrProceed").animate({rotation: T.cCIRCLE_RIGHT_DEGREE}, {duration: 200, queue: false});
 				$(".chrSelection").removeClass("chrSelected");
 				$(this).addClass("chrSelected");
 				$("#accMenu_Hero").trigger("click");
@@ -19261,16 +19261,6 @@ M = {
 	cZIndexRaise: 999999,
 	cZIndexBury: -999999,
 	
-	// Geometry and velocity constants
-	cCIRCLE_RIGHT_DEGREE: 90,
-	cCIRCLE_HALF_DEGREE: 180,
-	cCIRCLE_FULL_DEGREE: 360,
-	cRADIAN_TO_DEGREE: 180 / Math.PI,
-	cUNITS_TO_POINTS: 1 / 24, // Map coordinates "points" versus game range "units"
-	cPOINTS_TO_UNITS: 24, // 1 game "unit" is 1 "inch"
-	cUNITS_TO_METERS: 0.0254,
-	cMETERS_TO_UNITS: 1 / 0.0254,
-	cUNITS_PER_SECOND: 386, // Units traveled in one second while on swiftness buff
 	// MumbleLink data assigned by overlay program
 	GPSPreviousZoneID: "",
 	GPSPreviousCoord: [],
@@ -20635,8 +20625,8 @@ M = {
 				this.convertLCtoGC(markers[i+1].getLatLng())
 			);
 		}
-		var units = ~~(distance * this.cPOINTS_TO_UNITS);
-		var time = T.formatTimeLetter(Math.ceil(units / this.cUNITS_PER_SECOND), true);
+		var units = ~~(distance * T.cPOINTS_TO_UNITS);
+		var time = T.formatTimeLetter(Math.ceil(units / T.cUNITS_PER_SECOND), true);
 		this.outputCoordinatesName(units + " " + D.getWord("range") + " (" + time + ")");
 	},
 	
@@ -21045,7 +21035,7 @@ M = {
 	{
 		var that = this;
 		// The circle indcating the range
-		var trueradius = pWeapon.range * M.cUNITS_TO_POINTS;
+		var trueradius = pWeapon.range * T.cUNITS_TO_POINTS;
 		var radius = this.getZoomedDistance(trueradius);
 		var circle = L.circleMarker(pLatLng, {
 			clickable: false,
@@ -21541,9 +21531,9 @@ M = {
 	{
 		var zone = this.getZoneFromID(pZoneID);
 		var coord = new Array(3);
-		coord[0] = pPos[0] * this.cMETERS_TO_UNITS; // x coordinate
-		coord[1] = pPos[2] * this.cMETERS_TO_UNITS; // y coordinate
-		coord[2] = pPos[1] * this.cMETERS_TO_UNITS; // z coordinate
+		coord[0] = pPos[0] * T.cMETERS_TO_UNITS; // x coordinate
+		coord[1] = pPos[2] * T.cMETERS_TO_UNITS; // y coordinate
+		coord[2] = pPos[1] * T.cMETERS_TO_UNITS; // z coordinate
 		return this.convertEventCoord(coord, zone);
 	},
 	
@@ -21554,7 +21544,7 @@ M = {
 	 */
 	convertGPSAngle: function(pVector)
 	{
-		return Math.atan2(pVector[2], pVector[0]) * this.cRADIAN_TO_DEGREE;
+		return Math.atan2(pVector[2], pVector[0]) * T.cRADIAN_TO_DEGREE;
 	},
 	
 	/*
@@ -22770,7 +22760,7 @@ P = {
 	},
 	getUnitsBetweenCoords: function(pCoordA, pCoordB)
 	{
-		return ~~(P.getDistanceBetweenCoords(pCoordA, pCoordB) * M.cPOINTS_TO_UNITS);
+		return ~~(P.getDistanceBetweenCoords(pCoordA, pCoordB) * T.cPOINTS_TO_UNITS);
 	},
 	
 	/*
@@ -27306,6 +27296,16 @@ T = {
 	cBASE_10: 10,
 	cBASE_16: 16,
 	cPERCENT_100: 100,
+	// Geometry and velocity constants
+	cCIRCLE_RIGHT_DEGREE: 90,
+	cCIRCLE_HALF_DEGREE: 180,
+	cCIRCLE_FULL_DEGREE: 360,
+	cRADIAN_TO_DEGREE: 180 / Math.PI,
+	cUNITS_TO_POINTS: 1 / 24, // Map coordinates "points" versus game range "units"
+	cPOINTS_TO_UNITS: 24, // 1 game "unit" is 1 "inch"
+	cUNITS_TO_METERS: 0.0254,
+	cMETERS_TO_UNITS: 1 / 0.0254,
+	cUNITS_PER_SECOND: 386, // Units traveled in one second while on swiftness buff
 	// Game constants
 	cWEEKLY_RESET_SECONDS: 113400, // Monday 07:30 UTC, seconds since Sunday 00:00 UTC
 	cDAYTIME_DAY_MINUTES: 80,
@@ -29710,8 +29710,6 @@ K = {
 	currentPredictionColor: "",
 	currentDaytimeSymbol: "",
 	oldQuadrantAngle: 0,
-	cDEGREES_IN_CIRCLE: 360,
-	cDEGREES_IN_QUADRANT: 90,
 	paneSizePrevious: 0,
 	
 	// Clock DOM elements
@@ -30110,7 +30108,7 @@ K = {
 		{
 			K.currentPredictionColor = pColor;
 			K.handMinute.style.stroke = pColor;
-			K.timeProgress0.style.background = "linear-gradient(to right, black 0%, " + pColor + " 100%)";
+			K.timeProgress0.style.background = "linear-gradient(to right, transparent 0%, " + pColor + " 100%)";
 		}
 	},
 
@@ -30656,10 +30654,10 @@ K = {
 	
 			// Animate quadrant rotation
 			var quad = document.getElementById("clkQuadrant");
-			var newquadangle = parseInt(i0) * K.cDEGREES_IN_QUADRANT;
+			var newquadangle = parseInt(i0) * T.cCIRCLE_RIGHT_DEGREE;
 			if (newquadangle === 0 && K.oldQuadrantAngle !== 0)
 			{
-				newquadangle = K.cDEGREES_IN_CIRCLE;
+				newquadangle = T.cCIRCLE_FULL_DEGREE;
 			}
 			
 			$({angle: K.oldQuadrantAngle}).animate({angle: newquadangle}, {
@@ -30668,7 +30666,7 @@ K = {
 				done: function() { K.rotateClockElement(quad, newquadangle); }
 			});
 			
-			if (newquadangle === K.cDEGREES_IN_CIRCLE)
+			if (newquadangle === T.cCIRCLE_FULL_DEGREE)
 			{
 				newquadangle = 0;
 			}
@@ -33144,17 +33142,14 @@ I = {
 	{
 		$(window).on("resize", $.throttle(200, function()
 		{
-			/*
-			 * Resize elements' CSS properties to be more legible in the current window size.
-			 */
+			// Resize elements' CSS properties to be more legible in the current window size
 			switch (I.ModeCurrent)
 			{
 				case I.ModeEnum.Simple: I.readjustSimple(); break;
 				case I.ModeEnum.Tile: I.readjustTile(); break;
 			}
-			/*
-			 * Resize elements that may have overflowed when the user resized the browser.
-			 */
+			
+			// Resize elements that may have overflowed when the user resized the browser
 			if (W.isWvWLoaded)
 			{
 				W.readjustLeaderboard();
