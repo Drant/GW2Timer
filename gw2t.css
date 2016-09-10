@@ -184,6 +184,7 @@ img {
 	padding: 4px 10px 4px 10px;
 	background: rgba(0, 0, 0, 0.6);
 	border: 1px solid black;
+	border-left: 8px solid rgba(0, 0, 0, 0.4);
 	border-radius: 2px;
 }
 #itemWarning {
@@ -750,24 +751,22 @@ button img {
 	padding-top: 12px;
 	margin-bottom: 8px;
 	font-size: 22px;
-	text-shadow: 0px 0px 2px #e4e0b3;
 }
 header.cntHeader {
 	font-variant: small-caps;
 	text-decoration: none;
 	letter-spacing: 2px;
+	text-shadow: 0px 0px 2px #e4e0b3;
 }
 .cntComposition h2 {
 	margin-top: 4px;
 	margin-bottom: 2px;
 	font-size: 18px;
-	text-shadow: 0px 0px 1px #e4e0b3;
 }
 .cntComposition h3 {
 	margin-left: 12px;
 	margin-bottom: 2px;
 	font-size: 16px;
-	text-shadow: 0px 0px 1px #e4e0b3;
 }
 .cntComposition h1, .cntComposition h2, .cntComposition h3, header.cntHeader {
 	font-family: Trebuchet MS, Menomonia;
@@ -1397,8 +1396,12 @@ input.mapCoordinatesName {
 	font-family: Menomonia;
 	font-size: 16px;
 	color: #ffeebb;
-	text-shadow: 0px 0px 4px black;
 	opacity: 0.8;
+	text-shadow:
+		0px 1px 1px #000,
+		0px -1px 1px #000,
+		1px 0px 1px #000,
+		-1px 0px 1px #000;
 }
 .hudPeripheral:hover .hudButton {
 	opacity: 0.8;
@@ -1418,6 +1421,10 @@ input.mapCoordinatesName {
 .hudItem:hover .hudPopup {
 	display: block;
 	right: 0px;
+}
+.hudItem:hover .hudPopupLeft {
+	right: auto;
+	left: 0px;
 }
 .hudPopup label {
 	margin-bottom: 4px;
@@ -1853,6 +1860,12 @@ input.mapCoordinatesName {
 	font-size: 6pt;
 	opacity: 1;
 }
+#clkAxle {
+	stroke-width: 1px;
+	stroke: white;
+	fill: white;
+	opacity: 0.8;
+}
 
 .itemTimeDigital {
 	position: absolute;
@@ -2272,11 +2285,10 @@ header.jsSection sup {
 	width: auto; height: 32px;
 	margin-bottom: 4px;
 	padding: 0px 12px 0px 4px;
-	background: linear-gradient(to bottom, #222 0%, #383838 100%);
+	background: linear-gradient(to bottom, rgba(34, 34, 34, 0.6) 0%, #383838 100%);
 	border: 1px solid #111;
 	border-bottom: 2px solid rgba(0, 0, 0, 0.4);
 	border-top-left-radius: 50%;
-
 }
 .chnCategoryHeader ins {
 	width: 32px; height: 32px;
@@ -2303,12 +2315,7 @@ header.jsSection sup {
 	font-style: italic;
 	font-size: 18px;
 	color: #aaa;
-	text-shadow:
-		1px 1px 0px #000,
-		-1px -1px 0px #000,
-		1px -1px 0px #000,
-		-1px 1px 0px #000,
-		1px 1px 0px #000;
+	text-shadow: 0px 0px 8px black;
 }
 .chnCategoryHeader:hover .chnCategoryName {
 	color: white;

@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160909"></script>
+	<script type="text/javascript" src="data/general.js?v=20160910"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -404,8 +404,9 @@
 				<div class="hudItem">
 					<span id="wvwToolsButton" class="hudSelect" title="Right click on the map to lay siege weapons.">
 						<span class="hudButtonContainer"><img class="hudButton" data-src="img/account/menu/inventory.png" alt="Tools" /><span class="hudArrow"></span></span>
+						<var class="hudTitle jsTranslate">Supply</var>
 					</span>
-					<div class="hudPopup cntComposition">
+					<div class="hudPopup cntComposition hudPopupLeft">
 						<div id="wvwSupply">
 							<div id="splCalculator">
 								<img data-src="img/wvw/supply.png" /><input id="splHave" type="text" value="0" maxlength="4" /> − <span id="splNeed">0</span> = <span id="splRemain">0</span>
@@ -422,11 +423,13 @@
 				<div class="hudItem">
 					<span id="wvwAccountButton" class="hudSelect curToggle" title="<dfn>View Your GW2 Account</dfn><br />gw2timer.com/a<div class='mapLoc'><img src='http://i.imgur.com/56HALM7.png' /></div>">
 						<span class="hudButtonContainer"><img class="hudButton" src="img/ui/pages/account.png" alt="display" /></span>
+						<var class="hudTitle jsTranslate">Account</var>
 					</span>
 				</div>
 				<div class="hudItem">
 					<span id="wvwSwitchButton" class="hudSelect curToggle" title="<dfn>Click to PvE</dfn>">
 						<span class="hudButtonContainer"><img class="hudButton curToggle" data-src="img/ui/leave.png" alt="display" /></span>
+						<var class="hudTitle jsTranslate">PvE</var>
 					</span>
 				</div>
 				<div class="mapGPS hudItem">
@@ -445,6 +448,7 @@
 				<div class="mapOptions hudItem">
 					<span id="wvwDisplayButton" class="hudSelect" title="<dfn>Click to Expand Map</dfn>">
 						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/display.png" alt="display" /><span class="hudArrow"></span></span>
+						<var class="hudTitle jsTranslate">Display</var>
 					</span>
 					<div class="hudPopup cntComposition">
 						<div class="mapOptionsDisplay">
@@ -478,6 +482,7 @@
 				<div class="mapZones hudItem">
 					<span id="wvwCompassButton" class="hudSelect" title="<dfn>Click to Center Map</dfn>">
 						<span class="hudButtonContainer"><img class="hudButton" data-src="img/map/compass.png" alt="compass" /><span class="hudArrow"></span></span>
+						<var class="hudTitle jsTranslate">Zone</var>
 					</span>
 					<div class="mapZonesPopup hudPopup cntComposition">
 						<div id="wvwZoneList" class="mapZoneList mapZoneLinks">
@@ -652,6 +657,8 @@
 					<line id="clkMinuteHand" x1="50" y1="58" x2="50" y2="16"/>
 					<line id="clkSecondHand" x1="50" y1="58" x2="50" y2="16"/>
 				</g>
+				<!-- Center dot ornament for the second hand -->
+				<circle id="clkAxle" cx="50" cy="50" r="1" filter="url(#clkFilterShadowHand)" />
 			</svg>
 			<div id="clkWaypoints">
 				<img id="clkWaypoint0" class="cssWaypoint jsClip" src="img/ui/placeholder.png" alt="X:00 Waypoint">

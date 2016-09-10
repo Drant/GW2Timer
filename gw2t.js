@@ -12362,7 +12362,7 @@ B = {
 					if (A.Possessions[pItem.id])
 					{
 						var locations = A.formatPossessionLocations(A.Possessions[pItem.id]);
-						I.write(itemname + " was found in:<br /><br />" + locations);
+						I.print(itemname + " was found in:<br /><br />" + locations);
 					}
 					else
 					{
@@ -16922,6 +16922,8 @@ D = {
 			cs: "nabídka", it: "menu", pl: "menu", pt: "menu", ru: "меню", zh: "功能表"},
 		s_wvw: {de: "WvW", es: "McM", fr: "McM",
 			cs: "SpS", it: "McM", pl: "SkS", pt: "McM", ru: "МпМ", zh: "世界戰場"},
+		s_pve: {de: "SgU", es: "JcE", fr: "JcE",
+			cs: "HpP", it: "GcA", pl: "PvE", pt: "JcA", ru: "ИпО", zh: "玩家對抗環境"},
 		s_display: {de: "anzeige", es: "presentación", fr: "affichage",
 			cs: "zobrazení", it: "visualizzazione", pl: "wyświetlania", pt: "exibição", ru: "отображаемое", zh: "顯示"},
 		s_zone: {de: "gebiet", es: "zona", fr: "zone",
@@ -23654,9 +23656,22 @@ G = {
 			+ "<span class='dlyMode'><ins class='dly dly_daily_wvw'></ins>" + wvwstr + "</span>"
 		+ "</div>").appendTo(calendar);
 
-		// If generating today's dailies then also include daily fractals
+		// Insert fractal row
+		var insertFractal = function(pIslands, pScaleStr)
+		{
+			dailybox.append("<span class='dlyMode dlyModeFractal'>"
+				+ "<ins class='dly dly_daily_fractal'></ins>"
+				+ "<ins class='chl_fractal chl_" + pIslands[0].toLowerCase() + "' title='" + pIslands[0] + "'></ins>"
+				+ "<ins class='chl_fractal chl_" + pIslands[1].toLowerCase() + "' title='" + pIslands[1] + "'></ins>"
+				+ "<ins class='chl_fractal chl_" + pIslands[2].toLowerCase() + "' title='" + pIslands[2] + "'></ins>"
+				+ (pScaleStr || "")
+			+ "</span>");
+			I.qTip.init(dailybox.find("ins"));
+			I.qTip.init(".dlyFractalScales");
+		};
 		if (pIsToday)
 		{
+			// Get today's fractals from API
 			$.getJSON(U.URL_API.Fractal, function(pData)
 			{
 				var ach = pData.achievements;
@@ -23681,20 +23696,18 @@ G = {
 				var islandC = T.DailyAssociation[(ach[11])];
 				if (islandA && islandB && islandC)
 				{
-					dailybox.append("<span class='dlyMode dlyModeFractal'>"
-						+ "<ins class='dly dly_daily_fractal'></ins>"
-						+ "<ins class='chl_fractal chl_" + islandA.toLowerCase() + "' title='" + islandA + "'></ins>"
-						+ "<ins class='chl_fractal chl_" + islandB.toLowerCase() + "' title='" + islandB + "'></ins>"
-						+ "<ins class='chl_fractal chl_" + islandC.toLowerCase() + "' title='" + islandC + "'></ins>"
-						+ scalestr
-					+ "</span>");
+					insertFractal([islandA, islandB, islandC], scalestr);
 				}
-				I.qTip.init(dailybox.find("ins"));
-				I.qTip.init(".dlyFractalScales");
 			}).fail(function()
 			{
 				I.write("Unable to retrieve daily fractal API.");
 			});
+		}
+		else
+		{
+			// If getting future fractals then use prewritten schedule
+			var fractalday = T.getDaysSince(pDate, T.Daily.Fractal.Epoch) % T.cDAYS_IN_BIWEEK;
+			insertFractal(T.Daily.Fractal.Schedule[fractalday]);
 		}
 	},
 	
@@ -27282,6 +27295,7 @@ T = {
 	cHOURS_IN_MERIDIEM: 12,
 	cHOURS_IN_DAY: 24,
 	cDAYS_IN_WEEK: 7,
+	cDAYS_IN_BIWEEK: 14,
 	cDAYS_IN_MONTH: 30,
 	cDAYS_IN_YEAR: 365,
 	cSECONDS_IN_TIMEFRAME: 900,
@@ -28509,6 +28523,17 @@ T = {
 		}
 		// Default return seconds
 		return (hour * T.cSECONDS_IN_HOUR) + (min * T.cSECONDS_IN_MINUTE) + sec;
+	},
+	
+	/*
+	 * Gets the number of days between two dates.
+	 * @param Date pStart.
+	 * @param Date pFinish.
+	 * @returns int.
+	 */
+	getDaysSince: function(pStart, pFinish)
+	{
+		return ~~(Math.abs((pStart.getTime() - pFinish.getTime()) / T.cMSECONDS_IN_DAY));
 	},
 	
 	/*
@@ -31029,8 +31054,8 @@ I = {
 		Ellipsis: "…",
 		Day: "☀",
 		Night: "☽",
-		Expand: "[+]",
-		Collapse: "[−]",
+		Expand: "◢",
+		Collapse: "◣",
 		Help: "[?]"
 	},
 	

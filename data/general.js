@@ -443,7 +443,26 @@ Fractal:
 		name_de: "Empfohlenes Fraktal Schwierigkeitsgrad",
 		name_es: "Fractal recomendado escala",
 		name_fr: "Fractale recommandée de niveau"
-	}
+	},
+	Epoch: new Date("2016-09-04T00:00:00Z"),
+	Schedule: [
+		// Week A, 0 index is Sunday
+		["Aquatic", "Ocean", "Furnace"],
+		["Ocean", "Thaumanova", "Volcanic"],
+		["Urban", "Underground", "Snowblind"],
+		["Cliffside", "Molten", "Maitrin"],
+		["Urban", "Ocean", "Aetherblade"],
+		["Swamp", "Cliffside", "Chaos"],
+		["Uncategorized", "Thaumanova", "Molten"],
+		// Week B
+		["Underground", "Chaos", "Molten"],
+		["Urban", "Snowblind", "Maitrin"],
+		["Chaos", "Cliffside", "Aetherblade"],
+		["Uncategorized", "Snowblind", "Volcanic"],
+		["Aquatic", "Furnace", "Molten"],
+		["Swamp", "Aetherblade", "Maitrin"],
+		["Aquatic", "Swampland", "Uncategorized"]
+	]
 }
 };
 
@@ -1317,15 +1336,6 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
-		name_en: "WvW Skirmishes",
-		name_de: "WvW-Gefechte",
-		name_es: "McM Escaramuzas",
-		name_fr: "McM Escarmouches",
-		official: "news/world-vs-world-skirmishes-arrive-on-september-9/",
-		Start: new Date("2016-09-09T18:00:00Z"),
-		Finish: new Date("2016-09-10T18:00:00Z")
-	},
 	/*{ // Last Friday of even numbered months
 		name_en: "WvW Re-linking",
 		name_de: "WvW Wieder-verbindung",
@@ -1635,12 +1645,12 @@ Vendor:
 	PriceDefault: 25200,
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
 	{
-		Mehem: { id: "48908" },
-		Fox: { id: "43820" },
-		Derwena: { id: "49755" },
-		Yana: { id: "73199" },
-		Katyn: { id: "43838" },
-		Verma: { id: "49751" }
+		Mehem: { id: "43830" },
+		Fox: { id: "49734" },
+		Derwena: { id: "43819" },
+		Yana: { id: "43805" },
+		Katyn: { id: "43822" },
+		Verma: { id: "49777" }
 	}
 }
 };
