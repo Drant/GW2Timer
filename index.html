@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160910"></script>
+	<script type="text/javascript" src="data/general.js?v=20160911"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -427,7 +427,7 @@
 					</span>
 				</div>
 				<div class="hudItem">
-					<span id="wvwSwitchButton" class="hudSelect curToggle" title="<dfn>Click to PvE</dfn>">
+					<span id="wvwSwitchButton" class="hudSelect curToggle" title="<dfn>Switch to PvE Map</dfn>">
 						<span class="hudButtonContainer"><img class="hudButton curToggle" data-src="img/ui/leave.png" alt="display" /></span>
 						<var class="hudTitle jsTranslate">PvE</var>
 					</span>
@@ -744,9 +744,9 @@
 					</div>
 				</div>
 				<kbd id="chnToggle" class="btnWindow btnVertical" title="<dfn>Toggle Active Chains</dfn>"></kbd>
-				<header id="headerChains_Scheduled" class="chnCategoryHeader">
+				<header id="headerChains_Scheduled" class="chnCategoryHeader chnCategoryHeaderFirst">
 					<ins class="chn_scheduled"></ins>
-					<span class="chnCategoryName chnCategoryNameFirst jsTranslateCompound">Scheduled Bosses</span>
+					<span class="chnCategoryName jsTranslateCompound">Scheduled Bosses</span>
 				</header>
 				<section id="sectionChains_Scheduled">
 				</section>

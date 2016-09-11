@@ -5184,7 +5184,15 @@ Z = {
 		var dbname = pName.toLowerCase();
 		var database = {};
 		// Use loaded database if available
-		if (Z.DatabaseCache[dbname] !== undefined)
+		var isdbloaded = true;
+		Z.DatabaseLanguages.forEach(function(iLang)
+		{
+			if (Z.DatabaseCache[iLang] === undefined)
+			{
+				isdbloaded = false;
+			}
+		});
+		if (isdbloaded)
 		{
 			pCallback(Z.DatabaseCache[dbname]);
 			return;
@@ -5251,8 +5259,10 @@ Z = {
 	updateItemsSubdatabase: function(pType)
 	{
 		var scripturl = U.getDataScriptURL(pType.toLowerCase());
+		I.print("Loading items database...");
 		Z.loadItemsDatabase(function(pDatabase)
 		{
+			I.print("Loading section record...");
 			$.getScript(scripturl, function()
 			{
 				Z.freeFiles();
@@ -20523,7 +20533,7 @@ M = {
 			if (length > 1)
 			{
 				this.Layer.PersonalPath.clearLayers();
-				for (var i = 0; i < length-1; i++)
+				for (var i = 0; i < length - 1; i++)
 				{
 					// Create a single line connecting next two pins
 					path = L.polyline([latlngs[i], latlngs[i+1]], {
@@ -21407,28 +21417,39 @@ M = {
 	/*
 	 * Executes map commands in URL query string if available. Also starts GPS.
 	 */
-	executeQueryCommands: function()
+	executeURLCommands: function()
 	{
 		var qsgo = U.Args[U.KeyEnum.Go];
 		var qsdraw = U.Args[U.KeyEnum.Draw];
 		var arr;
+		var goPage = function()
+		{
+			// Go to map page if go or draw commanded is provided and page is not
+			if (U.Args[U.KeyEnum.Page] === undefined)
+			{
+				$("#menuMap").trigger("click");
+			}
+		};
 		try { arr = JSON.parse(qsgo); } catch (e) {}
 		if (arr && Array.isArray(arr) && arr.length && Array.isArray(arr[0]))
 		{
 			// If is draw command, array of coordinates
 			this.parsePersonalPath(qsgo);
 			U.Args[U.KeyEnum.Go] = null;
+			goPage();
 		}
 		else
 		{
 			// If is go command, just a coordinates
 			this.goToArguments(qsgo, this.ZoomEnum.Ground, this.Pin.Program);
 			U.Args[U.KeyEnum.Go] = null;
+			goPage();
 		}
 		if (qsdraw)
 		{
 			this.parsePersonalPath(qsdraw);
 			U.Args[U.KeyEnum.Draw] = null;
+			goPage();
 		}
 		
 		// Start GPS if on overlay
@@ -21577,8 +21598,8 @@ M = {
 		if (s.length >= arraylengthlimit &&
 			(s.charAt(0) === "["
 			&& s.charAt(1) === "["
-			&& s.charAt(s.length-1) === "]"
-			&& s.charAt(s.length-2) === "]"))
+			&& s.charAt(s.length - 1) === "]"
+			&& s.charAt(s.length - 2) === "]"))
 		{
 			s = s.substring(2, s.length-2); // Trim the [[ and ]]
 			sarray = s.split("],["); // Create array from assumed "separator"
@@ -22474,7 +22495,7 @@ P = {
 		// Execute query string commands if available
 		if (I.PageInitial !== "wvw")
 		{
-			M.executeQueryCommands();
+			M.executeURLCommands();
 		}
 	},
 	
@@ -23587,7 +23608,7 @@ G = {
 			}
 			else if (d0 === "boss")
 			{
-				bosshtml = "<em class='dlyBossIconContainer'><img class='dlyBossIcon' src='img/chain/" + d1 + I.cPNG + "' /></em>";
+				bosshtml = "<em class='dlyBossIconContainer dlyMonthday'><img class='dlyBossIcon' src='img/chain/" + d1 + I.cPNG + "' /></em>";
 				return "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(d1)) + "'>"
 					+ "<ins class='dly dly_pve_boss' title='" + dtitle + "'></ins>"
 				+ "</ins>";
@@ -23645,12 +23666,10 @@ G = {
 			case T.DayEnum.Sunday: dayclass = "dlySunday"; break;
 			case T.DayEnum.Saturday: dayclass = "dlySaturday"; break;
 		}
-		var daystr = (pIsDashboard) ? "" : "<aside class='dlyMonthdayBackground'></aside>" + bosshtml
-			+ "<var class='dlyMonthdayNumber " + dayclass + "'>" + pDate.getUTCDate() + "</var>";
 		var dsbclass = (pIsDashboard) ? "dlyBoxDashboard" : "";
 		// Generate HTML
 		var dailybox = $("<div class='dlyBox " + dsbclass + "'>"
-			+ daystr
+			+ "<aside class='dlyMonthdayBackground dlyMonthday'></aside>" + bosshtml + "<var class='dlyMonthdayNumber dlyMonthday " + dayclass + "'>" + pDate.getUTCDate() + "</var>"
 			+ "<span class='dlyMode'><ins class='dly dly_daily_pve'></ins>" + pvestr + "</span>"
 			+ "<span class='dlyMode'><ins class='dly dly_daily_pvp'></ins>" + pvpstr + "</span>"
 			+ "<span class='dlyMode'><ins class='dly dly_daily_wvw'></ins>" + wvwstr + "</span>"
@@ -25424,7 +25443,7 @@ W = {
 		W.toggleWalls();
 		W.bindMapVisualChanges();
 		W.adjustZoomMapping();
-		W.executeQueryCommands();
+		W.executeURLCommands();
 	},
 	
 	/*
@@ -32754,7 +32773,7 @@ I = {
 			$(this).click(function()
 			{
 				var plate = $(this).attr("id");
-				I.PageCurrent = plate.substring(I.cMenuPrefix.length-1, plate.length);
+				I.PageCurrent = plate.substring(I.cMenuPrefix.length - 1, plate.length);
 				I.contentCurrentPlate = I.cPagePrefix + I.PageCurrent;
 				if (P.WebsiteCurrentMap === P.MapEnum.Mists)
 				{

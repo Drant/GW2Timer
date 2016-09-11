@@ -2378,6 +2378,7 @@ Rifle: [
 	{i: 70201, n: "Mathilde's Musket", p: {coin: 1200000}},
 	{i: 70729, n: "Ossa's Musket", p: {coin: 1200000}},
 	{i: 71219, n: "Tizlak's Musket", p: {coin: 1200000}},
+	{i: 73357, n: "Laranthir's Musket", p: {coin: 1200000}},
 	{i: 71478, n: "Svaard's Musket", p: {coin: 1200000}},
 	{i: 72279, n: "Yassith's Musket", p: {coin: 1200000}},
 	{i: 73497, n: "Maklain's Musket", p: {coin: 1200000}},
