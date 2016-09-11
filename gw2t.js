@@ -21438,7 +21438,7 @@ M = {
 			U.Args[U.KeyEnum.Go] = null;
 			goPage();
 		}
-		else
+		else if (qsgo)
 		{
 			// If is go command, just a coordinates
 			this.goToArguments(qsgo, this.ZoomEnum.Ground, this.Pin.Program);
@@ -23513,9 +23513,7 @@ G = {
 		// Regenerate the whole section
 		$("#dlyHeader, #dlyCalendar, #dlyActivity").empty();
 		I.removeThrobber("#dlyContainer");
-		$("#dlyHeader").html(now.toLocaleString(window.navigator.language, {
-			year: "numeric", month: "numeric", day: "numeric", weekday: "long"
-		}));
+		$("#dlyHeader").html(T.formatWeektime(now));
 
 		// Get daily activity
 		var activity = T.Daily.Activity;
@@ -28381,11 +28379,16 @@ T = {
 	 * @param Date pDate object.
 	 * @returns string.
 	 */
-	formatWeektime: function(pDate)
+	formatWeektime: function(pDate, pWantTime)
 	{
-		return pDate.toLocaleString(window.navigator.language, {
-			year: "numeric", month: "numeric", day: "numeric", hour: "numeric", weekday: "long"
-		});
+		var options = {
+			year: "numeric", month: "numeric", day: "numeric", weekday: "long"
+		};
+		if (pWantTime)
+		{
+			options.hour = "numeric";
+		}
+		return pDate.toLocaleString(window.navigator.language, options);
 	},
 	
 	/*
@@ -28983,7 +28986,7 @@ H = {
 		// Initialize daily
 		if (H.isDailyEnabled)
 		{
-			H.generateDashboardDailyHeader();
+			H.generateDashboardDailyHeader(now);
 		}
 	},
 	
@@ -28995,7 +28998,7 @@ H = {
 		var range = T.getMinMax(H.Sale.Items, "price");
 		var rangestr = (range.oMin === range.oMax) ? range.oMax : (range.oMin + "-" + range.oMax);
 		// Create "button" to toggle list of items on sale
-		$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle' title='<dfn>Gem Store Promotions and Sales</dfn><br />Expires: " + T.formatWeektime(H.Sale.Finish) + "'>"
+		$("#dsbMenuSale").append("<div><kbd id='dsbSaleHeader' class='curToggle' title='<dfn>Gem Store Promotions and Sales</dfn><br />Expires: " + T.formatWeektime(H.Sale.Finish, true) + "'>"
 			+ "<img id='dsbSaleSymbol' src='img/ui/placeholder.png' /><img id='dsbSaleToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + H.Sale.Items.length + " " + D.getWordCapital("promotions") + "</var> "
 			+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
@@ -29177,7 +29180,7 @@ H = {
 		}
 		vendorcodes += "- " + vendorname;
 		$("#dsbMenuVendor").empty().append("<div><kbd id='dsbVendorHeader' class='curToggle' "
-			+  "title='<dfn>Pact Supply Network Agent</dfn><br />Expires: " + T.formatWeektime(H.Vendor.Finish)
+			+  "title='<dfn>Pact Supply Network Agent</dfn><br />Expires: " + T.formatWeektime(H.Vendor.Finish, true)
 				+ "'><img src='img/map/vendor_karma.png' /><img id='dsbVendorToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + vendorname + "</var></kbd>"
 		+ "</div>").addClass("dsbMenuEnabled");
@@ -29328,10 +29331,11 @@ H = {
 	/*
 	 * Generates the header for the daily feature.
 	 */
-	generateDashboardDailyHeader: function()
+	generateDashboardDailyHeader: function(pDate)
 	{
 		$("#dsbMenuDaily").empty().append("<div><kbd id='dsbDailyHeader' class='curToggle' "
-			+  "title='<dfn>Daily Achievements</dfn><br />Current and Next'><img src='img/ui/daily.png' /><img id='dsbDailyToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
+			+  "title='<dfn>Daily Achievements</dfn><br />" + T.formatWeektime(pDate) + " and Next'>"
+			+ "<img src='img/ui/daily.png' /><img id='dsbDailyToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
 			+ "<var>" + D.getModifiedWord("achievements", "daily", U.CaseEnum.Every) + "</var></kbd>"
 		+ "</div>").addClass("dsbMenuEnabled").click(function()
 		{
