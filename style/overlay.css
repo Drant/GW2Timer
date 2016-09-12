@@ -90,9 +90,6 @@ input.mapCoordinatesName {
 		1px 1px 1px #000;
 	opacity: 0.9;
 }
-.hudButton {
-	opacity: 0.4;
-}
 #mapZones:hover #mapZonesPopup {
 	padding: 0px 2px 0px 2px;
 }

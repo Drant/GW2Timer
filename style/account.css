@@ -544,9 +544,9 @@ input[type="text"].accTokenNameUsed {
 }
 
 .chrHeader {
-	font-size: 18px;
+	font-family: Trebuchet MS, Menomonia;
+	font-size: 19px;
 	font-weight: bold;
-	text-shadow: 0px 0px 2px #e4e0b3;
 	color: #e4e0b3;
 	border-top: 1px solid #222;
 	border-bottom: 1px solid #000;

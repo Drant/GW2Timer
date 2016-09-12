@@ -30201,14 +30201,30 @@ K = {
 		T.SECONDS_TILL_WEEKLY = T.getSecondsTillWeektime(T.cWEEKLY_RESET_SECONDS, secondssincemidnight);
 		var min = pDate.getMinutes();
 		var hour = pDate.getHours() % T.cHOURS_IN_MERIDIEM;
-		var secinhour = min*60 + sec;
-		var secangle = sec*6; // 1 degree per second
-		var minangle = min*6 + sec/10; // 0.1 degrees per second
-		var hourangle = hour*30 + (min/60)*30; // 0.5 degrees per minute
+		var secinhour = min * T.cSECONDS_IN_MINUTE + sec;
+		var secangle = sec * 6; // 1 degree per second
+		var minangle = min * 6 + (sec / 10); // 0.1 degrees per second
+		var hourangle = hour * 30 + (min / 60) * 30; // 0.5 degrees per minute
 		K.rotateClockElement(K.clockCircumference, minangle);
-		K.rotateClockElement(K.handSecond, secangle);
 		K.rotateClockElement(K.handMinute, minangle);
 		K.rotateClockElement(K.handHour, hourangle);
+		// Simulate mechanical whiplash movement for second hand
+		if (O.Options.bol_showSecondHand)
+		{
+			K.rotateClockElement(K.handSecond, secangle + 0.5);
+			setTimeout(function()
+			{
+				K.rotateClockElement(K.handSecond, secangle - 0.25);
+				setTimeout(function()
+				{
+					K.rotateClockElement(K.handSecond, secangle + 0.25);
+					setTimeout(function()
+					{
+						K.rotateClockElement(K.handSecond, secangle);
+					}, 50);
+				}, 50);
+			}, 50);
+		}
 		
 		// Value 0.0 through 1.0 based on how far into the 15 minutes frame
 		var timeframeprogress = 1 - ((min % T.cMINUTES_IN_TIMEFRAME)*60 + sec) / (T.cSECONDS_IN_TIMEFRAME);
