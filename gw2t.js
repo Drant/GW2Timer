@@ -790,7 +790,7 @@ O = {
 	{
 		O.isServerReset = true;
 		// Notify of the reset in console
-		var messagetime = 10;
+		var messagetime = 5;
 		var dailymessage = pIsDuring ? "Daily Reset!" : "Daily Timestamp Expired!";
 		I.greet(dailymessage, messagetime);
 		// Update the daily object
@@ -834,7 +834,7 @@ O = {
 	},
 	clearWeeklySensitiveOptions: function(pIsDuring)
 	{
-		var messagetime = 10;
+		var messagetime = 5;
 		var weeklymessage = pIsDuring ? "Weekly Reset!" : "Weekly Timestamp Expired!";
 		I.greet(weeklymessage, messagetime);
 		if (O.Options.bol_clearPersonalChecklistOnReset)
@@ -30202,28 +30202,31 @@ K = {
 		var min = pDate.getMinutes();
 		var hour = pDate.getHours() % T.cHOURS_IN_MERIDIEM;
 		var secinhour = min * T.cSECONDS_IN_MINUTE + sec;
-		var secangle = sec * 6; // 1 degree per second
-		var minangle = min * 6 + (sec / 10); // 0.1 degrees per second
-		var hourangle = hour * 30 + (min / 60) * 30; // 0.5 degrees per minute
+		var secangle = sec * 6; // 6 degrees per second
+		var minangle = min * 6 + (sec / 10); // 1/10 degrees per second
+		var hourangle = hour * 30 + (min / 2); // 1/240 degrees per second
+		// Simulates mechanical whiplash movement for second hand
+		var vibrateSecond = function(pPattern, pCounter)
+		{
+			if (pCounter === undefined)
+			{
+				pCounter = 0;
+			}
+			setTimeout(function()
+			{
+				K.rotateClockElement(K.handSecond, secangle + pPattern[pCounter]);
+				if (pCounter < pPattern.length - 1)
+				{
+					vibrateSecond(pPattern, pCounter + 1);
+				}
+			}, 50);
+		};
 		K.rotateClockElement(K.clockCircumference, minangle);
 		K.rotateClockElement(K.handMinute, minangle);
 		K.rotateClockElement(K.handHour, hourangle);
-		// Simulate mechanical whiplash movement for second hand
 		if (O.Options.bol_showSecondHand)
 		{
-			K.rotateClockElement(K.handSecond, secangle + 0.5);
-			setTimeout(function()
-			{
-				K.rotateClockElement(K.handSecond, secangle - 0.25);
-				setTimeout(function()
-				{
-					K.rotateClockElement(K.handSecond, secangle + 0.25);
-					setTimeout(function()
-					{
-						K.rotateClockElement(K.handSecond, secangle);
-					}, 50);
-				}, 50);
-			}, 50);
+			vibrateSecond([-0.5, 1, -0.5, 0.25, 0]);
 		}
 		
 		// Value 0.0 through 1.0 based on how far into the 15 minutes frame
@@ -33112,7 +33115,6 @@ I = {
 			} break;
 			case I.ModeEnum.Overlay:
 			{
-				$(".hudSelect, .hudButton").removeAttr("title"); // Tooltips over HUD buttons may be obtrusive in the small overlay window
 				I.cPANE_MENU_HEIGHT = 32;
 				I.loadImg("#mapGPSIcon");
 			} break;
