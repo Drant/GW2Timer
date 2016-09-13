@@ -1250,7 +1250,6 @@ O = {
 							borderRight: "none",
 							boxShadow: "-5px 0px 5px #223"
 						});
-						$("#cslContent").css({ left: "24px" });
 						$(".mapExpandButton").css({right: 0, left: "auto"});
 					}
 				}
@@ -1263,7 +1262,6 @@ O = {
 						borderRight: "1px solid #444",
 						boxShadow: "5px 0px 5px #223"
 					});
-					$("#cslContent").css({ left: I.cPANEL_WIDTH + 24 + "px" });
 					$(".mapExpandButton").css({right: "auto", left: 0});
 				}
 			}
@@ -6715,11 +6713,8 @@ A = {
 	adjustAccountPanel: function()
 	{
 		// Resize the width of the menu bar based on the size of the content window
-		$("#accOverhead").css({width: ($("#accContent").width() - 8) + "px"});
-		if (O.Options.bol_alignPanelRight === false)
-		{
-			$("#accOverhead").css({left: I.cPANEL_WIDTH + "px"});
-		}
+		var menualign = (O.Options.bol_alignPanelRight) ? {left: "0px", right: "auto"} : {left: "auto", right: "0px"};
+		$("#accOverhead").css({width: ($("#accContent").width() - 8) + "px"}).css(menualign);
 		// Put padding between the menu bar and the content
 		if (A.DishCurrent)
 		{
@@ -29086,7 +29081,7 @@ H = {
 				table.empty();
 				if (H.Sale.note.length > 0)
 				{
-					table.append("<div>Note: " + H.Sale.note + "</div>");
+					table.append("<div class='dsbNote'>Note: " + U.convertExternalString(H.Sale.note) + "</div>");
 				}
 				table.append("<div id='dsbSaleCol0'></div><div id='dsbSaleCol1'></div>");
 				if (E.Exchange.CoinInGem !== 0)
@@ -29249,7 +29244,7 @@ H = {
 			});
 			if (T.isTimely(H.Vendor, new Date()) === false)
 			{
-				$("#dsbVendorTable").prepend("Note: These items have expired.");
+				$("#dsbVendorTable").prepend("<div class='dsbNote'>Note: These items have expired.</div>");
 			}
 			I.removeThrobber(table);
 		};

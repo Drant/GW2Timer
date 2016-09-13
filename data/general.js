@@ -1304,7 +1304,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://forum.renaka.com/topic/6209670/'>Seis Burntheart</a> / Elemental Sprite <dfn data-coord='[[13822,20501],[17332,16159],[17963,13943],[21615,11683],[23586,9298]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a>.<br />",
+	pve: "<a href='http://forum.renaka.com/topic/6209670/'>Seis Burntheart</a> / Elemental Sprite <dfn data-coord='[[10475,24809],[13822,20501],[17332,16159],[17963,13943],[21615,11683],[23586,9298]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a>.<br />",
 	wvw: "Desert map tiles for Red Borderlands will be updated later by ArenaNet.",
 	Start: new Date("2016-08-02T16:00:00Z"),
 	Finish: new Date("2016-09-16T16:00:00Z"),
@@ -1336,6 +1336,15 @@ Announcement:
  */
 Countdown: {
 	Events: [
+	{
+		name_en: "Fused Weapons Sale",
+		name_de: "Pyro-Waffen Verkauf",
+		name_es: "Armas Fusionadas Venta",
+		name_fr: "Armes de la Fusion Vente",
+		url: "https://wiki.guildwars2.com/wiki/Fused_weapon_skins",
+		Start: new Date("2016-09-13T16:00:00Z"),
+		Finish: new Date("2016-09-20T16:00:00Z")
+	},
 	/*{ // Last Friday of even numbered months
 		name_en: "WvW Re-linking",
 		name_de: "WvW Wieder-verbindung",
@@ -1361,7 +1370,7 @@ Countdown: {
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
 		name_es: "Bonificación de mapa Gorjaescarcha",
-		name_fr: "Bonus de carte Gorges glacées ",
+		name_fr: "Bonus de carte Gorges glacées",
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2016-09-15T20:00:00Z"),
 		Finish: new Date("2016-09-22T20:00:00Z")
@@ -1380,7 +1389,7 @@ Countdown: {
 		name_de: "Lebendige Geschichte 3: Episode II",
 		name_es: "Historia Viviente 3: Episodio II",
 		name_fr: "Histoire Vivante 3: Épisode II",
-		url: "http://www.mmorpg.com/gamelist.cfm/game/473/feature/11142/Guild-Wars-2-Episode-2-Drops-September-20th-Takes-Us-Back-to-the-Ring-of-Fire.html",
+		official: "news/watch-the-trailer-for-risingflames/",
 		Start: new Date("2016-09-20T17:00:00Z"),
 		Finish: new Date("2016-09-21T17:00:00Z")
 	}
@@ -1414,8 +1423,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-09-06T16:00:00Z"),
-	Finish: new Date("2016-09-13T16:00:00Z"),
+	Start: new Date("2016-09-13T16:00:00Z"),
+	Finish: new Date("2016-09-20T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1424,184 +1433,170 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Dragon Kama Skin",
-		id: "79386",
+		name: "Kurzick Dual Axe Skin",
+		id: "http://i.imgur.com/g7xcElz.png",
 		price: 600,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Makeover Kit and Transmutation Charges",
-		id: "http://i.imgur.com/JLA2BV7.png",
+		name: "Peg-Leg Boots Skin",
+		id: "http://i.imgur.com/fA4M4zE.png",
+		price: 300,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Pirate Hook Skin",
+		id: "http://i.imgur.com/RmYcXny.png",
+		price: 300,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Zodiac Light Armor Skin",
+		id: "43018",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Zodiac Medium Armor Skin",
+		id: "43017",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Zodiac Heavy Armor Skin",
+		id: "43016",
+		price: 800,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Profane Light Armor Skin",
+		id: "20274",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Krytan Medium Armor Skin",
+		id: "20273",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Primeval Heavy Armor Skin",
+		id: "20272",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Phoenix Glider",
+		id: "78025",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mini Golden Pig",
+		id: "68683",
 		price: 350,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Wide Rim Glasses",
-		id: "64753",
-		price: 150,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Inventor's Sunglasses",
-		id: "64747",
-		price: 150,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Mad Scientist's Mining Tool",
-		id: "68905",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Mad Scientist's Logging Tool",
-		id: "68799",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Mad Scientist's Harvesting Tool",
-		id: "69478",
-		price: 800,
-		discount: 1000,
-		col: 0
-	},
-	{
-		name: "Home Portal Stone",
-		id: "66927",
-		price: 765,
-		discount: 900,
-		col: 0
-	},
-	{
-		name: "Mad Scientist Outfit",
-		id: "69753",
-		price: 560,
-		discount: 700,
-		col: 0
-	},
-	{
-		name: "How to Dance, Volume 1",
-		id: "20312",
-		price: 260,
-		discount: 400,
-		col: 0
-	},
-	{
-		name: "Trickster's Light-Armor Skin",
-		id: "43102",
-		price: 800,
+		name: "Frost Wasp Logging Tool",
+		id: "48825",
+		price: 1000,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Viper Medium-Armor Skin",
-		id: "43101",
-		price: 800,
+		name: "Fused Molten Sickle",
+		id: "67032",
+		price: 1000,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Phalanx Heavy-Armor Skin",
-		id: "43100",
-		price: 800,
+		name: "Fused Molten Logging Axe",
+		id: "67030",
+		price: 1000,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Flamekissed Light Armor Skin",
-		id: "43576",
-		price: 800,
+		name: "Molten Alliance Mining Pick",
+		id: "48933",
+		price: 1000,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Flamewalker Medium Armor Skin",
-		id: "43575",
-		price: 800,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Flamewrath Heavy Armor Skin",
-		id: "43574",
-		price: 800,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Jungle Explorer Outfit",
-		id: "67990",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Shadow Assassin Outfit",
-		id: "66658",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mist Herald Back Item Skin Set",
-		id: "44886",
+		name: "Glowing Crimson Mask",
+		id: "63891",
 		price: 500,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Glint's Gaze Mask",
-		id: "67857",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mask of the Silent Skin",
-		id: "49157",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Magnus's Eye Patch",
-		id: "50103",
+		name: "Mask of the Crown",
+		id: "44609",
 		price: 400,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Mask of the Jubilee",
-		id: "44607",
-		price: 400,
+		name: "Warrior Quaggan Backpack Set",
+		id: "39520",
+		price: 300,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Shattered Bloodstone Circlet",
-		id: "79316",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fuzzy Cat Hat",
-		id: "64758",
+		name: "Fuzzy Bear Hat",
+		id: "64755",
 		price: 200,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Fuzzy Hylek Hat",
-		id: "64759",
+		name: "Fuzzy Leopard Hat",
+		id: "64746",
 		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Sailor's Beanie",
+		id: "64749",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Top Hat",
+		id: "64750",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Reading Glasses",
+		id: "64748",
+		price: 150,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Wintersday Earmuffs",
+		id: "65200",
+		price: 25,
 		discount: null,
 		col: 1
 	}

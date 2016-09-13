@@ -84,6 +84,7 @@ body, html, .panelMain, #windowMain, #paneContent article {
 }
 
 #chnProgressBar {
+	position: fixed;
 	height: 4px;
 	top: 0;
 }
