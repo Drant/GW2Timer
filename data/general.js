@@ -1304,10 +1304,11 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://forum.renaka.com/topic/6209670/'>Seis Burntheart</a> / Elemental Sprite <dfn data-coord='[[10475,24809],[13822,20501],[17332,16159],[17963,13943],[21615,11683],[23586,9298]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a>.<br />",
+	pve: "<a href='http://forum.renaka.com/topic/6209670/'>Seis Burntheart</a> / Elemental Sprite <dfn data-coord='[[10475,24809],[13822,20501],[17332,16159],[17963,13943],[21615,11683],[23586,9298]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a>.<br />"
+		+ "<a href='https://wiki.guildwars2.com/wiki/Fused_weapon_skins'>Fused weapons</a> merchant is in <dfn data-coord='16548,14579'>Black Lion Vault</dfn> in Lion's Arch for 4 tickets.",
 	wvw: "Desert map tiles for Red Borderlands will be updated later by ArenaNet.",
-	Start: new Date("2016-08-02T16:00:00Z"),
-	Finish: new Date("2016-09-16T16:00:00Z"),
+	Start: new Date("2016-09-13T16:00:00Z"),
+	Finish: new Date("2016-09-20T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1336,15 +1337,6 @@ Announcement:
  */
 Countdown: {
 	Events: [
-	{
-		name_en: "Fused Weapons Sale",
-		name_de: "Pyro-Waffen Verkauf",
-		name_es: "Armas Fusionadas Venta",
-		name_fr: "Armes de la Fusion Vente",
-		url: "https://wiki.guildwars2.com/wiki/Fused_weapon_skins",
-		Start: new Date("2016-09-13T16:00:00Z"),
-		Finish: new Date("2016-09-20T16:00:00Z")
-	},
 	/*{ // Last Friday of even numbered months
 		name_en: "WvW Re-linking",
 		name_de: "WvW Wieder-verbindung",

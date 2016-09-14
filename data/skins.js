@@ -849,7 +849,8 @@ Armor_Light_Gloves: [
 	{u: 6476, i: 71149, n: "Bladed Gloves", p: {map_vb: 500}},
 	{u: 6700, i: 78667, n: "Chaos Gloves", p: {gem: 500}},
 	{u: 6738, i: 78196, n: "Triumphant Armguards", p: {badge: 0}},
-	{u: 6818, i: 78969, n: "Experimental Envoy Gloves", p: {craft: true}}
+	{u: 6818, i: 78969, n: "Experimental Envoy Gloves", p: {craft: true}},
+	{u: 6910, i: 79391, n: "Pirate Hook", p: {gem: 300}}
 ],
 Armor_Light_Leggings: [
 	{u: 3, i: 3177, n: "Apprentice Pants", t: [3000, 3003, 2999, 2993, 3007, 2995, 2996, 2998, 2997, 3002, 3001, 3005, 3004, 3006, 3008, 2994, 3123, 3141, 3159, 3177, 3377, 3378, 3391, 3379, 3396, 3380, 3381, 3382, 3383, 3384, 3386, 3385, 3388, 3390, 3387, 3393, 3392, 3389, 3394, 3395, 5024, 5090, 5072, 5054, 5108, 5126, 5038, 5144, 5162, 5198, 5180, 5216, 5270, 5234, 5252, 5288]},
@@ -991,7 +992,8 @@ Armor_Light_Boots: [
 	{u: 6387, i: 75646, n: "Bladed Shoes", p: {map_vb: 500}},
 	{u: 6456, i: 73997, n: "Invisible Slippers", t: [73997]},
 	{u: 6705, i: 78179, n: "Triumphant Footgear", p: {badge: 0}},
-	{u: 6791, i: 78974, n: "Experimental Envoy Shoes", p: {craft: true}}
+	{u: 6791, i: 78974, n: "Experimental Envoy Shoes", p: {craft: true}},
+	{u: 6905, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}}
 ],
 Armor_Medium_Helm: [
 	{u: 89, i: 41171, n: "Rawhide Mask", p: {badge: 10}},
@@ -1361,7 +1363,8 @@ Armor_Medium_Gloves: [
 	{u: 6487, i: 70425, n: "Shackles of Madness", p: {cob: 6}},
 	{u: 6732, i: 78667, n: "Chaos Gloves", p: {gem: 500}},
 	{u: 6684, i: 78351, n: "Triumphant Wristplates", p: {badge: 0}},
-	{u: 6839, i: 78892, n: "Experimental Envoy Vambraces", p: {craft: true}}
+	{u: 6839, i: 78892, n: "Experimental Envoy Vambraces", p: {craft: true}},
+	{u: 6903, i: 79391, n: "Pirate Hook", p: {gem: 300}}
 ],
 Armor_Medium_Leggings: [
 	{u: 5, i: 41172, n: "Rawhide Leggings", p: {badge: 20}},
@@ -1501,7 +1504,8 @@ Armor_Medium_Boots: [
 	{u: 6205, i: 73484, n: "Bladed Boots", p: {map_vb: 500}},
 	{u: 6283, i: 72745, n: "Invisible Boots", t: [72745]},
 	{u: 6688, i: 78211, n: "Triumphant Shinplates", p: {badge: 0}},
-	{u: 6792, i: 78796, n: "Experimental Envoy Boots", p: {craft: true}}
+	{u: 6792, i: 78796, n: "Experimental Envoy Boots", p: {craft: true}},
+	{u: 6916, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}}
 ],
 Armor_Heavy_Helm: [
 	{u: 81, i: 3170, n: "Chainmail Helm", t: [2889, 2895, 2899, 2900, 2901, 2890, 2891, 2892, 2894, 2897, 2896, 2893, 2888, 2898, 3116, 3134, 3152, 3170, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3258, 3257, 3260, 3262, 3259, 3261, 5047, 5065, 5083, 5032, 5119, 5101, 5137, 5155, 5173, 5191, 5209, 5227, 5245, 5263, 5281]},
@@ -1878,7 +1882,8 @@ Armor_Heavy_Gloves: [
 	{u: 6467, i: 72220, n: "Mistward Warfists", p: {achievement: 0}},
 	{u: 6727, i: 78667, n: "Chaos Gloves", p: {gem: 500}},
 	{u: 6730, i: 78644, n: "Triumphant Gauntlets", p: {badge: 0}},
-	{u: 6811, i: 78799, n: "Experimental Envoy Gauntlets", p: {craft: true}}
+	{u: 6811, i: 78799, n: "Experimental Envoy Gauntlets", p: {craft: true}},
+	{u: 6943, i: 79391, n: "Pirate Hook", p: {gem: 300}}
 ],
 Armor_Heavy_Leggings: [
 	{u: 1, i: 3171, n: "Chainmail Leggings", t: [2902, 2904, 2916, 2905, 2907, 2908, 2909, 2910, 2913, 2911, 2912, 2915, 2906, 2914, 2903, 3117, 3153, 3268, 3269, 3135, 3270, 2917, 3272, 3271, 3171, 3274, 3273, 3275, 3276, 3265, 3264, 3277, 3280, 3266, 3282, 3263, 3279, 3267, 3278, 5020, 5033, 5048, 5138, 5156, 5084, 5174, 5192, 5210, 5066, 5120, 5228, 5246, 5282, 5264, 3281, 5102]},
@@ -2021,7 +2026,8 @@ Armor_Heavy_Boots: [
 	{u: 6446, i: 70962, n: "Ornate Guild Greaves", p: {craft: true}},
 	{u: 6484, i: 74386, n: "Invisible Stompers", t: [74386]},
 	{u: 6682, i: 78288, n: "Triumphant Wargreaves", p: {badge: 0}},
-	{u: 6828, i: 78934, n: "Experimental Envoy Greaves", p: {craft: true}}
+	{u: 6828, i: 78934, n: "Experimental Envoy Greaves", p: {craft: true}},
+	{u: 6909, i: 79387, n: "Peg-Leg Boots", p: {gem: 300}}
 ],
 Armor_Light_HelmAquatic: [
 	{u: 855, i: 6477, n: "Cloth Aquabreather", p: {starting: true}},
