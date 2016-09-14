@@ -1422,9 +1422,9 @@ input.mapCoordinatesName {
 	display: block;
 	right: 0px;
 }
-.hudItem:hover .hudPopupLeft {
-	right: auto;
+.hudItem:hover .hudPopupWide {
 	left: 0px;
+	text-align: center;
 }
 .hudPopup label {
 	margin-bottom: 4px;
@@ -1859,6 +1859,7 @@ input.mapCoordinatesName {
 #clkHoursPrime {
 	font-size: 6pt;
 	opacity: 1;
+	text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
 }
 #clkAxle {
 	stroke-width: 1px;
