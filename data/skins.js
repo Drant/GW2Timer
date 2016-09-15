@@ -2191,7 +2191,8 @@ Weapon_Axe: [
 	{u: 6789, i: 78872, n: "Privateer Axe", p: {blticket: 1}},
 	{u: 6810, i: 78963, n: "White Mantle Axe", p: {raid_ft: 600}},
 	{u: 6874, i: 79174, n: "Embellished Axe", t: [79174]},
-	{u: 6928, i: 79379, n: "Bloodstone Axe", t: [79379]}
+	{u: 6928, i: 79379, n: "Bloodstone Axe", t: [79379]},
+	{u: 6942, i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", t: [49332]},
