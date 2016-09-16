@@ -1508,8 +1508,9 @@ input.mapCoordinatesName {
 	opacity: 0.9;
 }
 #itemExpandButton {
-	left: -16px;
+	left: auto;
 	right: auto;
+	margin-left: -16px;
 }
 
 /* Map options */
@@ -1651,7 +1652,6 @@ input.mapCoordinatesName {
  *  the map pane would be pushed down by how tall the panes on the right are.
  * ========================================================================== */
 #panelApp {
-	position: relative;
 	width: 361px; /* 1px extra compensating for the border-left */
 }
 
@@ -2295,6 +2295,12 @@ header.jsSection sup {
 	border: 1px solid #111;
 	border-bottom: 2px solid rgba(0, 0, 0, 0.4);
 	border-top-left-radius: 50%;
+}
+.chnCategoryHeader:hover {
+	background: linear-gradient(to bottom, #222 0%, transparent 100%);
+}
+.chnCategoryHeader:active {
+	background: linear-gradient(to top, rgba(34, 34, 34, 0.6) 0%, #383838 100%);
 }
 .chnCategoryHeaderFirst {
 	background: linear-gradient(to bottom, #222 0%, #383838 100%);

@@ -90,6 +90,7 @@ body, #paneContent article {
 }
 
 #chnProgressBar {
+	position: fixed;
 	width: 100%; height: 4px;
 }
 
@@ -107,6 +108,7 @@ body, #paneContent article {
 	border-bottom: 4px solid black;
 	border-top-right-radius: 8px;
 	border-bottom-right-radius: 8px;
+	vertical-align: top;
 }
 .chnBarPrevious {
 	background: linear-gradient(to right, #111 0%, #261306 100%);

@@ -1253,7 +1253,7 @@ O = {
 							boxShadow: "-5px 0px 5px #223"
 						});
 						$(".mapExpandButton").css({right: 0, left: "auto"});
-						$("#itemExpandButton").css({right: "auto", left: "-16px"});
+						$("#itemExpandButton").css({right: "auto", left: "auto", "margin-left": "-16px"});
 					}
 				}
 				else
@@ -1266,7 +1266,7 @@ O = {
 						boxShadow: "5px 0px 5px #223"
 					});
 					$(".mapExpandButton").css({right: "auto", left: 0});
-					$("#itemExpandButton").css({right: "-16px", left: "auto"});
+					$("#itemExpandButton").css({right: "auto", left: "auto", "margin-left": (I.cPANEL_WIDTH - 16) + "px"});
 				}
 			}
 		},
@@ -29179,11 +29179,11 @@ H = {
 			+ "<var>" + vendorname + "</var></kbd>"
 		+ "</div>").addClass("dsbMenuEnabled");
 		$("#dsbVendor").empty().append("<div id='dsbVendorMenu'>"
-			+ "<img data-src='img/ui/info.png' /><a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
-				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a> "
-			+ "<img data-src='img/map/route.png' /><u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</u>"
-			+ "&nbsp;<img data-src='img/ui/copy.png' /><input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' "
+			+ "<img data-src='img/ui/copy.png' /><input id='dsbVendorCodes' class='cssInputText' type='text' value='" + vendorcodes + "' "
 				+ "title='<dfn>Copy and paste</dfn> this into game chat to follow.' /> "
+			+ "<img data-src='img/map/route.png' /><u class='curZoom' id='dsbVendorDraw'>" + D.getPhrase("draw route", U.CaseEnum.Every) + "</u> "
+			+ "<img data-src='img/ui/info.png' /><a" + U.convertExternalAnchor("http://wiki.guildwars2.com/wiki/Pact_Supply_Network_Agent")
+				+ "title='New items at daily reset.<br />New vendor locations 8 hours after that.<br />Limit 1 purchase per vendor per day.'>" + D.getWordCapital("info") + "</a>"
 			+ "</div><div id='dsbVendorTable' class='jsScrollable'></div>").hide();
 
 		// Bind buttons
