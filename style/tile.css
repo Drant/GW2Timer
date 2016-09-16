@@ -14,7 +14,7 @@ html, body {
 	bottom: 24px;
 }
 
-#panelMap, #paneClock, #paneMenu, .chnEvents {
+#panelMap, #itemExpandButton, #paneClock, #paneMenu, .chnEvents {
 	display: none;
 }
 

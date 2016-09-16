@@ -1090,11 +1090,12 @@ O = {
 		},
 		bol_expandWB: function()
 		{
-			for (var i in C.CurrentChains)
+			var chains = (I.ModeCurrent === I.ModeEnum.Tile) ? C.RegularChains : C.CurrentChains;
+			for (var i in chains)
 			{
-				if (C.isChainRegular(C.CurrentChains[i]))
+				if (C.isChainRegular(chains[i]))
 				{
-					var elm = $("#chnDetails_" + C.CurrentChains[i].nexus);
+					var elm = $("#chnDetails_" + chains[i].nexus);
 					if (O.Options.bol_expandWB)
 					{
 						elm.show("fast");
@@ -1223,6 +1224,7 @@ O = {
 			if (O.Options.bol_showMap && I.isMapEnabled) // Only hide panel if map is visible
 			{
 				$("#panelApp").toggle(O.Options.bol_showPanel);
+				$("#mapExpandButton, #wvwExpandButton").toggle(!O.Options.bol_showPanel)
 				M.refreshMap();
 				if (W.isMapInitialized)
 				{
@@ -1251,6 +1253,7 @@ O = {
 							boxShadow: "-5px 0px 5px #223"
 						});
 						$(".mapExpandButton").css({right: 0, left: "auto"});
+						$("#itemExpandButton").css({right: "auto", left: "-16px"});
 					}
 				}
 				else
@@ -1263,6 +1266,7 @@ O = {
 						boxShadow: "5px 0px 5px #223"
 					});
 					$(".mapExpandButton").css({right: "auto", left: 0});
+					$("#itemExpandButton").css({right: "-16px", left: "auto"});
 				}
 			}
 		},
@@ -4402,19 +4406,19 @@ Z = {
 			}},
 			apicache: {usage: "Prints the cache of the previous console API call as an associative array. <em>Parameters: bol_wantoutputasfile (optional)</em>", f: function()
 			{
-				Z.printAPICache(U.TypeEnum.isAssoc, {aFileName: "apicache"});
+				Z.printAPICache(U.TypeEnum.isAssoc, {aFileName: (args[1] === "true")});
 			}},
 			apicachearray: {usage: "...as an array.", f: function()
 			{
-				Z.printAPICache(U.TypeEnum.isArray, {aFileName: "apicache"});
+				Z.printAPICache(U.TypeEnum.isArray, false);
 			}},
 			apicacheobject: {usage: "...as an object.", f: function()
 			{
-				Z.printAPICache(U.TypeEnum.isObject, {aFileName: "apicache"});
+				Z.printAPICache(U.TypeEnum.isObject, false);
 			}},
 			apicacheids: {usage: "...as IDs.", f: function()
 			{
-				Z.printAPICache(U.TypeEnum.isInteger, {aFileName: "apicache"});
+				Z.printAPICache(U.TypeEnum.isInteger, false);
 			}},
 			acc: {usage: "Prints the output of an account API URL &quot;"
 				+ U.URL_API.Prefix + "&quot;. Token must be initialized from the account page. <em>Parameters: str_apiurlsuffix</em>. "
@@ -4672,7 +4676,7 @@ Z = {
 		var Settings = pSettings || {};
 		var output = "";
 		var obj;
-		var wantfile = (Settings.aFileName !== undefined);
+		var wantfile = (Settings.aFileName !== undefined && Settings.aFileName !== false);
 		var wantquotes = (Settings.aWantQuotes === undefined) ? wantfile : Settings.aWantQuotes;
 		var cache = Settings.aCustomCache || Z.APICacheArrayOfObjects;
 		var req = pType;
@@ -4716,7 +4720,7 @@ Z = {
 		// Print or generate the output
 		if (wantfile)
 		{
-			Z.createFile(output, Settings.aFileName);
+			Z.createFile(output, (typeof Settings.aFileName === "string") ? Settings.aFileName : "apicache");
 		}
 		else
 		{
@@ -19452,11 +19456,6 @@ M = {
 				$("#opt_bol_showPanel").trigger("click");
 			}
 		});
-		$(htmlidprefix + "ExpandButton").click(function()
-		{
-			// Hide the right panel if click on the display button
-			$("#opt_bol_showPanel").trigger("click");
-		});
 		// Translate and bind map zones list
 		$(htmlidprefix + "CompassButton").one("mouseenter", that.bindZoneList(that)).click(function()
 		{
@@ -25240,7 +25239,7 @@ W = {
 	Metadata: {},
 	Servers: {}, // Server names and translations
 	Matches: null, // For fallback API, array containing objects with same structure as "worlds" subobject in v2 API matches.json
-	MatchupCurrent: null, // Formatted superobject containing alliances (servers of a color) and reuseable translated strings
+	MatchupCurrent: null, // Formatted superobject containing teams (servers of a color) and reuseable translated strings
 	Guilds: {}, // Holds retrieved API guild details objects
 	Objectives: {},
 	ObjectiveTimeout: {},
@@ -25564,8 +25563,8 @@ W = {
 	},
 	
 	/*
-	 * Converts the API matchup object into a custom containing alliances and
-	 * formatted server names. An alliance is a set of servers on one team color.
+	 * Converts the API matchup object into a custom containing teams and
+	 * formatted server names. A team is a set of servers on one color.
 	 * @param object pMatchData from v2 or v1 API matches.json.
 	 * return object matchup.
 	 */
@@ -25573,8 +25572,8 @@ W = {
 	{
 		var maxserversbeforeabbrev = 2;
 		var id = 0;
-		var numteams = W.Metadata.Alliances.length;
-		var teamnames = W.Metadata.Alliances;
+		var numteams = W.Metadata.Teams.length;
+		var teamnames = W.Metadata.Teams;
 		var ithteamname, ithowner, worldid, teamserverids, hostserverid;
 		var servers = new Array(numteams);
 		var names = new Array(numteams);
@@ -25597,17 +25596,17 @@ W = {
 				servers[i] = new Array();
 				servers[i].push(W.Servers[worldid]);
 			}
-			// Initialize the one-server-per-alliance object
+			// Initialize the one-server-per-team object
 			custommatchup.worlds = W.convertWorlds(pMatchData);
 		}
 		else // Else assume it is v2 API matches.json
 		{
 			id = pMatchData.id;
-			var alliances = pMatchData.all_worlds;
+			var teams = pMatchData.all_worlds;
 			for (var i = 0; i < numteams; i++)
 			{
 				ithteamname = teamnames[i];
-				teamserverids = alliances[ithteamname];
+				teamserverids = teams[ithteamname];
 				hostserverid = pMatchData.worlds[ithteamname];
 				servers[i] = new Array();
 				servers[i].push(W.Servers[hostserverid]); // Host server is index 0
@@ -25619,7 +25618,7 @@ W = {
 					}
 				}
 			}
-			// Initialize the one-server-per-alliance object
+			// Initialize the one-server-per-team object
 			custommatchup.worlds = pMatchData.worlds;
 		}
 		
@@ -25651,16 +25650,16 @@ W = {
 				ithserver.owner = ithowner; // Record the server's color
 				var ithservername = U.escapeHTML(D.getObjectName(ithserver));
 				var hostflag = (ii === 0 && servers[i].length > 1) ? "+" : ""; // Add a suffix next to the host server name, if that server has allies
-				// Abbreviate the names if there are too many servers in one alliance
-				if (servers[i].length <= maxserversbeforeabbrev)
-				{
-					names[i] += ithservername + hostflag;
-					namelinks[i] += "<a href='?page=WvW&enu_Server=" + ithserver.id + "'>" + ithservername + hostflag + "</a>";
-				}
-				else
+				// Abbreviate the names if is non-host server and there are too many on one team
+				if ((hostflag.length === 0 && servers[i].length >= maxserversbeforeabbrev) || servers[i].length > maxserversbeforeabbrev)
 				{
 					names[i] += D.getObjectNick(ithserver) + hostflag;
 					namelinks[i] += "<a href='?page=WvW&enu_Server=" + ithserver.id + "' title='" + ithservername + "'>" + D.getObjectNick(ithserver) + hostflag + "</a>";
+				}
+				else
+				{
+					names[i] += ithservername + hostflag;
+					namelinks[i] += "<a href='?page=WvW&enu_Server=" + ithserver.id + "'>" + ithservername + hostflag + "</a>";
 				}
 				namelines[i] += ithservername + hostflag;
 				nicks[i] += D.getObjectNick(ithserver) + hostflag;
@@ -25680,7 +25679,7 @@ W = {
 			}
 		}
 		
-		// Assign variables for all alliances to the custom matchup object
+		// Assign variables for all teams to the custom matchup object
 		for (var i = 0; i < numteams; i++)
 		{
 			ithteamname = teamnames[i];
@@ -25698,12 +25697,12 @@ W = {
 	},
 	
 	/*
-	 * Gets the alliance object (of the custom matchup object) from an owner
+	 * Gets the team object (of the custom matchup object) from an owner
 	 * string, such as "Green".
 	 * @param string pOwner.
 	 * @returns object server.
 	 */
-	getAllianceFromOwner: function(pOwner)
+	getTeamFromOwner: function(pOwner)
 	{
 		return W.MatchupCurrent[pOwner.toLowerCase()];
 	},
@@ -26578,7 +26577,7 @@ W = {
 		}
 		else
 		{
-			ownerstr = W.getAllianceFromOwner(pObjective.owner).oColor;
+			ownerstr = W.getTeamFromOwner(pObjective.owner).oColor;
 		}
 		// Only include the borderlands string if user opted for more than one land filter
 		var blstr = ($("#logNarrateLand input:checked").length > 1) ? (W.getBorderlandsString(pObjective, {aWantPronoun: true}) + ". ") : "";
@@ -31389,6 +31388,10 @@ I = {
 		{
 			I.switchMap();
 		});
+		$(".mapExpandButton").click(function()
+		{
+			$("#opt_bol_showPanel").trigger("click");
+		});
 		// Bind account button
 		$("#mapAccountButton, #wvwAccountButton").one("click", function()
 		{
@@ -31608,16 +31611,17 @@ I = {
 		});
 
 		// Create chain bars for unscheduled chains only when manually expanded the header
-		if (I.ModeCurrent !== I.ModeEnum.Tile)
+		if (I.ModeCurrent === I.ModeEnum.Tile)
+		{
+			$("#headerChains_Drytop").hide();
+			O.Enact.bol_expandWB();
+		}
+		else
 		{
 			$("#headerChains_Drytop").one("click", function()
 			{
 				P.generateDryTop();
 			});
-		}
-		else
-		{
-			$("#headerChains_Drytop").hide();
 		}
 		$("#headerChains_Legacy").one("click", function()
 		{

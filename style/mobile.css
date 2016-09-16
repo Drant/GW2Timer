@@ -18,7 +18,7 @@ html {
 	bottom: 24px;
 }
 
-#panelMap {
+#panelMap, #itemExpandButton {
 	display: none;
 }
 

@@ -15,7 +15,7 @@
 }
 
 /* Hide unrelated elements */
-#panelMap, #paneMenu, #paneContent {
+#panelMap, #itemExpandButton, #paneMenu, #paneContent {
 	display: none;
 }
 

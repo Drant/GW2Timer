@@ -1507,6 +1507,10 @@ input.mapCoordinatesName {
 .mapExpandButton:hover {
 	opacity: 0.9;
 }
+#itemExpandButton {
+	left: -16px;
+	right: auto;
+}
 
 /* Map options */
 .mapOptionsDisplay {
@@ -1647,6 +1651,7 @@ input.mapCoordinatesName {
  *  the map pane would be pushed down by how tall the panes on the right are.
  * ========================================================================== */
 #panelApp {
+	position: relative;
 	width: 361px; /* 1px extra compensating for the border-left */
 }
 
