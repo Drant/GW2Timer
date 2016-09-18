@@ -203,7 +203,7 @@ O = {
 		bol_displayCharacter: true,
 		int_setFollowWvW: 2,
 		bol_displayCharacterWvW: true,
-		int_msecGPSRefresh: 100,
+		int_msecGPSRefresh: 50,
 		// Alarm
 		int_setAlarm: 0,
 		int_setVolume: 75,
@@ -19060,7 +19060,7 @@ C = {
 			if (pPrimaryEventIndex === finalstep && O.Options.bol_alertArrival && isregularchain)
 			{
 				if ((O.Options.int_setAlarm === O.IntEnum.Alarm.Checklist
-						&& C.isChainUnchecked(pChain))
+						&& C.isChainUnchecked(pChain) && !pChain.flags.isSpecial)
 					|| (O.Options.int_setAlarm === O.IntEnum.Alarm.Subscription
 						&& C.isChainSubscribed(pChain) && C.isChainUnchecked(pChain)))
 				{

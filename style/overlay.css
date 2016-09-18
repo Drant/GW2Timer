@@ -150,3 +150,13 @@ input.mapCoordinatesName {
 #menuOptions:hover #itemLanguagePopup {
 	top: 32px;
 }
+
+.btnWindow {
+	opacity: 0.8;
+}
+.btnWindow:hover {
+	opacity: 1;
+}
+.btnWindow:active {
+	opacity: 0.6;
+}
