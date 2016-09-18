@@ -17,6 +17,20 @@
 	left: -4px; top: -4px;
 }
 
+.hudDirectory {
+	font-size: 13px;
+}
+.hudDirectory a {
+	font-size: 14px;
+}
+.hudDirectory h2 {
+	font-size: 16px;
+}
+.hudDirectoryModePreview {
+	width: 160px;
+	margin-right: 8px;
+}
+
 .itemContext {
 	font-size: 14px;
 }
@@ -26,6 +40,11 @@
 }
 .tmlOpaque {
 	background: linear-gradient(to right, #111 0%, #383838 50%, #111 100%);
+	transition: none;
+}
+.tmlOpaqueNot {
+	background: rgba(0, 0, 0, 0.6);
+	transition: none;
 }
 #tmlToggle {
 	top: 0;
@@ -48,8 +67,11 @@
 }
 #itemDashboard {
 	bottom: 32px; top: auto; right: 12px;
-	line-height: 120%;
+	line-height: 20px;
 	font-size: 14px;
+}
+#dsbAnnouncement {
+	font-size: 12px;
 }
 #dsbToggle {
 	left: auto;
@@ -94,10 +116,7 @@ input.mapCoordinatesName {
 	padding: 0px 2px 0px 2px;
 }
 #mapZoneList {
-	line-height: 120%;
-}
-#mapZoneList h2 {
-	font-size: 14px;
+	line-height: 16px;
 }
 #mapZoneList ul {
 	margin-bottom: 8px;

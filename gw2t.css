@@ -978,6 +978,9 @@ textarea.jsCopyCode {
 .tmlLine { /* A whole line representing a chain of events */
 	height: 24px;
 }
+.tmlLineSpecial {
+	height: 50px;
+}
 .tmlLine:hover .tmlSegment {
 	outline: 1px solid #ff8844;
 }
@@ -999,7 +1002,6 @@ textarea.jsCopyCode {
 	margin-left: 4px;
 }
 .tmlLineName {
-	display: table-cell;
 	position: absolute; z-index: 2;
 	margin-top: 10px;
 	margin-left: 6px;
@@ -1011,20 +1013,22 @@ textarea.jsCopyCode {
 	opacity: 0.7;
 	pointer-events: none;
 }
-.tmlSegmentName {
-	display: table-cell;
+.tmlSegmentName, .tmlSegmentSpecial {
 	vertical-align: middle;
 	font-family: Menomonia;
 	font-size: 16px;
 	color: #ccc;
 	text-shadow: 0px 0px 4px black;
 }
+.tmlSegmentSpecial {
+	display: block;
+	visibility: hidden;
+}
 .tmlSegmentNameBoss {
 	font-weight: bold;
 	color: #ffaa22;
 }
 .tmlSegmentCountdown {
-	display: table-cell;
 	padding-left: 4px;
 	vertical-align: middle;
 	font-family: sans-serif;
@@ -1249,6 +1253,7 @@ textarea.jsCopyCode {
 
 #dsbDaily {
 	text-align: center;
+	white-space: nowrap;
 }
 #dsbDailyTitle {
 	font-family: Trebuchet MS, Menomonia;
@@ -1447,8 +1452,9 @@ input.mapCoordinatesName {
 	display: block;
 }
 .hudDirectory {
-	width: 580px;
+	width: auto;
 	font-size: 14px;
+	text-align: center;
 }
 .hudDirectory a {
 	font-family: Menomonia;
@@ -1461,6 +1467,7 @@ input.mapCoordinatesName {
 	display: inline-block;
 	margin-left: 8px;
 	vertical-align: top;
+	text-align: left;
 }
 .hudDirectoryMode {
 	position: relative;
@@ -1472,6 +1479,9 @@ input.mapCoordinatesName {
 	border-bottom: 4px solid black;
 	border-radius: 4px;
 	box-shadow: 4px -4px 4px rgba(0, 0, 0, 0.5);
+}
+#hudDirectoryModePreviewLast {
+	margin-right: 0px;
 }
 .hudDirectoryModePreview:hover {
 	border: 2px solid #222;

@@ -98,7 +98,7 @@ var GW2T_DAILY_ASSOCIATION = {
 	"1974": "Forager Orr [11069,27131]",
 	"1975": "Forager Kryta [15420,12390]",
 	"1976": "Lumberer Orr [13808,24941]",
-	"1977": "Miner Orr [10705,27456]",
+	"1977": "Miner Orr [14256,23451]",
 	"1978": "Miner Wastes [5373,16541]",
 	"1979": "Lumberer Wastes [4858,15450]",
 	"1980": "Forager Wastes [4001,15893]",
@@ -1283,9 +1283,9 @@ var GW2T_TIMELINE = [
 	{
 		name_en: "Dragon's Stand & Dry Top", name_de: "Widerstand des Drachen & Trockenkuppe", name_es: "Defensa del Dragón & Cima Seca", name_fr: "Repli du Dragon & Cimesèche", name_zh: "巨龍陣地 和 干涸高地",
 		Segments: [
-			{ time: "00:00", duration: "00:40", primacy: 1, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" },
+			{ time: "00:00", duration: "00:40", primacy: 1, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
 			{ time: "00:40", duration: "00:20", primacy: 2, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙塵暴！" },
-			{ time: "01:00", duration: "00:30", primacy: 1, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" },
+			{ time: "01:00", duration: "00:30", primacy: 1, name_en: "", name_de: "", name_es: "", name_fr: "", name_zh: "" },
 			{ time: "01:30", duration: "00:10", primacy: 3, name_en: "Assault", name_de: "Angriff", name_es: "Asalto", name_fr: "Assaut", name_zh: "突襲" },
 			{ time: "01:40", duration: "00:20", primacy: 2, name_en: "Sandstorm!", name_de: "Sandsturm!", name_es: "¡Tormenta!", name_fr: "Tempête !", name_zh: "沙塵暴！" }
 		]
@@ -1304,7 +1304,8 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://forum.renaka.com/topic/6209670/'>Seis Burntheart</a> / Elemental Sprite <dfn data-coord='[[10475,24809],[13822,20501],[17332,16159],[17963,13943],[21615,11683],[23586,9298]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a>.<br />"
+	pve: //"<a href='http://forum.renaka.com/topic/5546166/'>GW2Navi Overlay</a> now officially uses fast Chromium engine with voice alarm support.<br />"
+		"<a href='http://forum.renaka.com/topic/6209670/'>Seis Burntheart</a> / Elemental Sprite <dfn data-coord='[[10475,24809],[13822,20501],[17332,16159],[17963,13943],[21615,11683],[23586,9298]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a>.<br />"
 		+ "<a href='https://wiki.guildwars2.com/wiki/Fused_weapon_skins'>Fused weapons</a> merchant is at <dfn data-coord='16548,14579'>Black Lion Vault</dfn> in Lion's Arch for 4 tickets.",
 	wvw: "",
 	Start: new Date("2016-09-13T16:00:00Z"),
@@ -1625,19 +1626,19 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-09-17T00:00:00Z"),
-	Finish: new Date("2016-09-18T00:00:00Z"),
+	Start: new Date("2016-09-18T00:00:00Z"),
+	Finish: new Date("2016-09-19T00:00:00Z"),
 	Products: { "44713":44948, "44714":44949, "43482":43450, "43798":43774, "43799":43775, "43800":43866, "43802":43778, "43803":43777, "43804":43780, "43805":43781, "43806":43782, "43807":43783, "43808":43784, "43809":43785, "43810":43786, "43811":43787, "43812":43788, "43813":43789, "43814":43790, "43815":43791, "43816":43792, "43817":43793, "43818":43794, "43819":43795, "43820":43796, "43821":43797, "43822":43844, "43823":43845, "43824":43846, "43825":43847, "43826":43852, "43827":43848, "43828":43849, "43829":43850, "43830":43851, "43831":43853, "43832":43854, "43833":43855, "43834":43856, "43835":43857, "43836":43858, "43837":43859, "43838":43860, "43839":43861, "43840":43862, "43841":43865, "43842":43863, "43843":43864, "44647":44952, "44648":44953, "44649":44951, "44650":44954, "44651":44955, "44652":44956, "44653":44959, "44654":44958, "44655":44957, "44656":44946, "44657":44945, "44658":44947, "44659":44943, "44660":44942, "44661":44944, "44662":44949, "44663":44948, "44664":44950, "43483":43451, "43484":43449, "44715":44943, "44716":44942, "44717":44946, "44718":44945, "48908":48907, "48909":48907, "48910":48907, "48912":48911, "48913":48911, "48914":48911, "48918":48915, "48919":48916, "48920":48917, "48922":48921, "49734":49865, "49735":49866, "49736":49823, "49737":49782, "49739":49801, "49741":49733, "49742":49783, "49743":49784, "49744":49785, "49745":49786, "49746":49787, "49747":49788, "49748":49789, "49749":49790, "49750":49791, "49751":49792, "49752":49793, "49753":49794, "49754":49795, "49755":49796, "49756":49797, "49757":49798, "49758":49799, "49759":49804, "49760":49805, "49761":49781, "49762":49807, "49763":49808, "49764":49809, "49765":49810, "49766":49811, "49767":49812, "49768":49813, "49769":49814, "49770":49815, "49771":49816, "49772":49803, "49773":49806, "49774":49818, "49775":49819, "49777":49821, "49778":49817, "49779":49822, "49780":49824, "50019":50018, "50021":50020, "50023":50022, "67961":67522, "67962":67531, "67963":67524, "67964":67529, "67965":67530, "67966":67528, "73199":74525, "75473":72446 },
 	Prices: {"43799":12600, "49737":12600, "43798":12600, "49734": 12600, "49738":50400, "49739":50400, "49740":50400},
 	PriceDefault: 25200,
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
 	{
-		Mehem: { id: "49752" },
-		Fox: { id: "43833" },
-		Derwena: { id: "49769" },
-		Yana: { id: "43836" },
-		Katyn: { id: "49756" },
-		Verma: { id: "43810" }
+		Mehem: { id: "43808" },
+		Fox: { id: "43840" },
+		Derwena: { id: "43800" },
+		Yana: { id: "43812" },
+		Katyn: { id: "49779" },
+		Verma: { id: "43817" }
 	}
 }
 };

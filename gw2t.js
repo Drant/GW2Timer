@@ -11,7 +11,7 @@
 	Craig Erskine - qTip tooltip
 	David Flanagan - SVG clock based on example from "JavaScript The Definitive Guide 6e"
 	Cliff Spradlin - GW2 API Documentation
-	Google and ResponsiveVoice.JS - Text-To-Speech service
+	Google, ResponsiveVoice.JS, and meSpeak.js - Text-To-Speech service and engine
 
 	CONVENTIONS:
 	Local variables are all lower case: examplevariable.
@@ -1063,6 +1063,7 @@ O = {
 			}
 			else
 			{
+				D.verifyNativeTTS();
 				$("#optAlarmSpeaker").attr("src", "img/ui/speaker.png");
 			}
 			$("#optAlarmIcon").attr("src", icon);
@@ -1076,7 +1077,11 @@ O = {
 		},
 		bol_logNarrate: function()
 		{
-			if (O.Options.bol_logNarrate === false)
+			if (O.Options.bol_logNarrate)
+			{
+				D.verifyNativeTTS();
+			}
+			else
 			{
 				D.stopSpeech();
 			}
@@ -2527,7 +2532,8 @@ U = {
 		Worlds: "https://api.guildwars2.com/v2/worlds",
 		Prefix: "https://api.guildwars2.com/v2/",
 		Prefix1: "https://api.guildwars2.com/v1/",
-		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl="
+		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl=",
+		TextToSpeechNative: "bin/tts/mespeak.js"
 	},
 	PageLimit: 200, // Number of entries per API retrieval for paginated endpoints
 	
@@ -4233,7 +4239,6 @@ U = {
 					type = "item";
 					id = data[3] << 8 | data[2];
 					id = (data.length > 4 ? data[4] << 16 : 0) | id;
-					
 				} break;
 				case 4: type = "location"; break;
 				case 6: type = "skill"; break;
@@ -16207,6 +16212,7 @@ E = {
 		});
 		
 		// Bind refresh button to re-download API data to refresh the calculators
+		D.verifyNativeTTS();
 		$("#trdRefresh").click($.throttle(E.cREFRESH_LIMIT, function()
 		{
 			E.loopRefresh(true);
@@ -17517,30 +17523,51 @@ D = {
 	},
 	
 	/*
+	 * Loads the client-side TTS exclusively for the overlay if haven't already.
+	 * Should be called by any feature that uses TTS so the engine is ready to speak.
+	 */
+	verifyNativeTTS: function()
+	{
+		if (I.isSpeechNativeEnabled === false
+			&& I.isProgramEmbedded === false
+			&& I.ModeCurrent === I.ModeEnum.Overlay
+			&& I.BrowserCurrent !== I.BrowserEnum.IE)
+		{
+			I.isSpeechNativeEnabled = true;
+			$.getScript(U.URL_API.TextToSpeechNative).done(function()
+			{
+				I.isSpeechNativeLoaded = true;
+				meSpeak.loadConfig("bin/tts/mespeak_config.json");
+				meSpeak.loadVoice("bin/tts/voices/" + O.Options.enu_Language + ".json");
+			});
+		}
+	},
+	
+	/*
 	 * Plays an audio representation of provided string, using Chrome's TTS
 	 * system if the user is running it. Otherwise loads a TTS sound file
 	 * generated from a TTS web service into a hidden audio tag.
 	 * @param string pString to convert to speech.
 	 * @param float pDuration of the speech in seconds.
-	 * https://developers.google.com/web/updates/2014/01/Web-apps-that-talk---Introduction-to-the-Speech-Synthesis-API?hl=en
-	 * Google Speech Synthesis API:
-		var msg = new SpeechSynthesisUtterance();
-		var voices = window.speechSynthesis.getVoices();
-		msg.voice = voices[10]; // Note: some voices don't support altering params
-		msg.voiceURI = "native";
-		msg.volume = 1; // 0 to 1
-		msg.rate = 1; // 0.1 to 10
-		msg.pitch = 2; //0 to 2
-		msg.text = "Hello World";
-		msg.lang = "en-US";
-		speechSynthesis.speak(msg);
 	 */
 	speechWait: 0, // In milliseconds
 	speak: function(pString, pDuration)
 	{
 		var volume = (O.Options.int_setVolume / T.cPERCENT_100).toFixed(2);
-		
-		// Chrome-only TTS service
+		 /* 
+		  * Chrome-only TTS service, Google Speech Synthesis API:
+		  * https://developers.google.com/web/updates/2014/01/Web-apps-that-talk---Introduction-to-the-Speech-Synthesis-API?hl=en
+			var msg = new SpeechSynthesisUtterance();
+			var voices = window.speechSynthesis.getVoices();
+			msg.voice = voices[10]; // Note: some voices don't support altering params
+			msg.voiceURI = "native";
+			msg.volume = 1; // 0 to 1
+			msg.rate = 1; // 0.1 to 10
+			msg.pitch = 2; //0 to 2
+			msg.text = "Hello World";
+			msg.lang = "en-US";
+			speechSynthesis.speak(msg);
+		 */
 		try {
 			if (I.isSpeechSynthesisEnabled && I.ModeCurrent !== I.ModeEnum.Overlay)
 			{
@@ -17568,11 +17595,20 @@ D = {
 		// If using other TTS service then use custom queue system
 		var doSpeak = function(pStringMacro)
 		{
-			var tts = document.getElementById("jsTTSAudio");
-			tts.src = U.URL_API.TextToSpeech + "&vol=" + volume + "&t=" + pStringMacro;
-			tts.volume = O.Options.int_setVolume / T.cPERCENT_100;
-			tts.load();
-			tts.play();
+			if (I.isSpeechNativeLoaded)
+			{
+				// API: http://www.masswerk.at/mespeak/
+				meSpeak.speak(pStringMacro, {volume: volume, speed: 150, variant: "f5"});
+			}
+			else
+			{
+				// API: http://responsivevoice.org/api/
+				var tts = document.getElementById("jsTTSAudio");
+				tts.src = U.URL_API.TextToSpeech + "&vol=" + volume + "&t=" + pStringMacro;
+				tts.volume = volume;
+				tts.load();
+				tts.play();
+			}
 		};
 		
 		if (pDuration === undefined)
@@ -17624,6 +17660,10 @@ D = {
 		if (I.isSpeechSynthesisEnabled)
 		{
 			window.speechSynthesis.cancel();
+		}
+		else if (I.isSpeechNativeLoaded)
+		{
+			meSpeak.stop();
 		}
 		else
 		{
@@ -18566,9 +18606,10 @@ C = {
 			{
 				ithchain = chains[ii];
 				// Only generate chain bars for these types
-				if (ithchain.series !== C.ChainSeriesEnum.Standard
+				if ((ithchain.series !== C.ChainSeriesEnum.Standard
 					&& ithchain.series !== C.ChainSeriesEnum.Hardcore
 					&& ithchain.series !== C.ChainSeriesEnum.Miscellaneous)
+					|| ithchain.flags.isSpecial)
 				{
 					break;
 				}
@@ -26372,6 +26413,7 @@ W = {
 		
 		// Mimic the master volumn slider
 		I.preventMapPropagation(O.mimicInput("#logNarrateVolume", "int_setVolume"));
+		O.Enact.bol_logNarrate();
 		
 		// Bind local time clock
 		$("#logTime").click(function()
@@ -29327,10 +29369,11 @@ H = {
 	 */
 	generateDashboardDailyHeader: function(pDate)
 	{
+		var headername = (I.ModeCurrent === I.ModeEnum.Overlay) ? D.getWordCapital("daily") : D.getModifiedWord("achievements", "daily", U.CaseEnum.Every);
 		$("#dsbMenuDaily").empty().append("<div><kbd id='dsbDailyHeader' class='curToggle' "
 			+  "title='<dfn>Daily Achievements</dfn><br />" + T.formatWeektime(pDate) + " and Next'>"
 			+ "<img src='img/ui/daily.png' /><img id='dsbDailyToggleIcon' class='dsbToggleIcon' src='img/ui/toggle.png' />"
-			+ "<var>" + D.getModifiedWord("achievements", "daily", U.CaseEnum.Every) + "</var></kbd>"
+			+ "<var>" + headername + "</var></kbd>"
 		+ "</div>").addClass("dsbMenuEnabled").click(function()
 		{
 			H.generateDashboardDaily();
@@ -29503,6 +29546,10 @@ H = {
 			// Container for segments of a timeline (chain)
 			var linetitle = (chain.isWB) ? "" : ("title='<dfn>" + name + "</dfn>'");
 			var line = $("<div class='tmlLine' " + linetitle + "></div>").appendTo(container);
+			if (chain.isWB)
+			{
+				line.addClass("tmlLineWB");
+			}
 			for (var ii = 0; ii < chain.Segments.length; ii++)
 			{
 				// Segments of a timeline (event)
@@ -29524,8 +29571,9 @@ H = {
 				"<div class='tmlSegment tmlTimeslice " + wbclass + "' style='width:" + width + "%' "
 				+ "data-start='" + event.time + "' data-finish='" + (event.time + event.duration) + "' " + wbdata + ">"
 					+ "<div class='tmlSegmentContent'>"
-						+ linename + "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + (D.getObjectName(event) || "") + "</span>"
+						+ linename + "<span class='tmlSegmentName " + bossclass + "'>" + segmentprefix + (D.getObjectName(event) || "")+ "</span>"
 						+ "<span class='tmlSegmentCountdown'></span>"
+						+ "<var class='tmlSegmentSpecial'></var>"
 					+ "</div>"
 				+ "</div>");
 			}
@@ -29626,6 +29674,7 @@ H = {
 			$(".tmlTimesliceWB").each(function()
 			{
 				var inner = $(this).find(".tmlSegmentName").empty();
+				var innerspecial = $(this).find(".tmlSegmentSpecial").empty();
 				var bossicon;
 				var thisoffset = parseInt($(this).attr("data-offset"));
 				var timeframeoffset;
@@ -29645,7 +29694,8 @@ H = {
 					{
 						(function(iChain)
 						{
-							bossicon = $("<img class='tmlIcon curZoom chnSlot_" + iChain.nexus + "' src='" + iChain.iconSrc + "' />").appendTo(inner);
+							var innersegment = (iChain.flags.isSpecial) ? innerspecial : inner;
+							bossicon = $("<img class='tmlIcon curZoom chnSlot_" + iChain.nexus + "' src='" + iChain.iconSrc + "' />").appendTo(innersegment);
 							bossicon.attr("title", "<dfn>" + D.getObjectName(iChain) + "</dfn>").click(function()
 							{
 								C.viewChainFinale(iChain);
@@ -29709,6 +29759,16 @@ H = {
 			line.append("<div class='tmlSegment' style='width:" + width + "%'><div class='tmlSegmentContent'>"
 				+ "<span id='tmlSegmentTimestamp_" + ithminute + "' class='tmlSegmentTimestamp " + hourclass + " " + tenseclass + "'>" + timestamp + "</span></div></div>");
 		}
+	},
+	
+	/*
+	 * Toggles timeline icons for special chains.
+	 * @param boolean pBoolean.
+	 */
+	toggleSpecialIcons: function(pBoolean)
+	{
+		$(".tmlSegmentSpecial").css({visibility: ((pBoolean) ? "visible" : "hidden")});
+		$(".tmlLineWB").toggleClass("tmlLineSpecial", pBoolean);
 	},
 	
 	/*
@@ -30968,6 +31028,7 @@ K = {
 			K.StopwatchTimerStart = (new Date()).getTime();
 			K.StopwatchTimerFinish = K.StopwatchTimerStart + (O.Options.int_minStopwatchAlert * T.cMSECONDS_IN_MINUTE) + offsetseconds;
 			// Initial call to the update function
+			D.verifyNativeTTS();
 			K.tickStopwatchDown();
 		});
 		$("#watTimerStop").click(function()
@@ -31129,6 +31190,8 @@ I = {
 	isTouchEnabled: false,
 	isCustomScrollEnabled: true,
 	isSpeechSynthesisEnabled: false,
+	isSpeechNativeEnabled: false,
+	isSpeechNativeLoaded: false,
 	ModeCurrent: null,
 	ModeEnum:
 	{
@@ -31551,6 +31614,7 @@ I = {
 			
 			$(this).next().slideToggle("fast", function()
 			{
+				var headerid = $(this).attr("id");
 				// Change the toggle icon after finish toggling
 				if ($(this).is(":visible"))
 				{
@@ -31563,21 +31627,28 @@ I = {
 					I.scrollToElement(header, {aContainer: container, aSpeed: "fast"});
 					
 					// View the map at Dry Top if it is that chain list
-					if ($(this).attr("id") === "sectionChains_Drytop")
+					switch (headerid)
 					{
-						if (I.isMapEnabled)
+						case "sectionChains_Drytop": 
 						{
-							M.goToZone("dry", M.ZoomEnum.Bird);
-							P.toggleDryTopIcons(true);
+							if (I.isMapEnabled)
+							{
+								M.goToZone("dry", M.ZoomEnum.Bird);
+								P.toggleDryTopIcons(true);
+							}
+							I.PageCurrent = I.SpecialPageEnum.DryTop;
+							U.updateTitle(I.SpecialPageEnum.DryTop);
+							$("#hudBoxes").hide();
+						} break;
+						case "sectionChains_Special":
+						{
+							H.toggleSpecialIcons(true);
+						} break;
+						default:
+						{
+							// Update current section variable, ignore if on Scheduled section of Chains page
+							I.SectionCurrent[I.PageEnum.Chains] = (section === I.SectionEnum.Chains.Scheduled) ? "" : section;
 						}
-						I.PageCurrent = I.SpecialPageEnum.DryTop;
-						U.updateTitle(I.SpecialPageEnum.DryTop);
-						$("#hudBoxes").hide();
-					}
-					else
-					{
-						// Update current section variable, ignore if on Scheduled section of Chains page
-						I.SectionCurrent[I.PageEnum.Chains] = (section === I.SectionEnum.Chains.Scheduled) ? "" : section;
 					}
 				}
 				else
@@ -31586,11 +31657,18 @@ I = {
 					I.updateScrollbar();
 					$(this).prev().find("kbd").html(I.Symbol.Expand);
 					// Reset Dry Top page variable
-					if ($(this).attr("id") === "sectionChains_Drytop")
+					switch (headerid)
 					{
-						I.PageCurrent = I.PageEnum.Chains;
-						P.toggleDryTopIcons(false);
-						$("#hudBoxes").show();
+						case "sectionChains_Drytop": 
+						{
+							I.PageCurrent = I.PageEnum.Chains;
+							P.toggleDryTopIcons(false);
+							$("#hudBoxes").show();
+						} break;
+						case "sectionChains_Special":
+						{
+							H.toggleSpecialIcons(false);
+						} break;
 					}
 					// Nullify current section variable
 					I.SectionCurrent[I.PageEnum.Chains] = "";
@@ -32824,8 +32902,8 @@ I = {
 					$("#hudBoxes").hide();
 				}
 				
-				// Only do animations if on regular website (to save computation)
-				if (I.ModeCurrent === I.ModeEnum.Website)
+				// App panel page animation
+				if (I.isCustomScrollEnabled)
 				{
 					$(I.contentCurrentPlate + " .cntHeader").css({opacity: 0}).animate( // Fade page title
 					{

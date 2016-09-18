@@ -156,6 +156,8 @@
 	overflow: visible;
 	display: inline-block;
 	padding: 8px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
 	border-radius: 4px;
 	text-align: left;
 }
@@ -166,7 +168,7 @@
 	transition: background 0.4s;
 }
 .lboOpaqueNot {
-	background: rgba(0, 0, 0, 0.2);
+	background: rgba(0, 0, 0, 0.1);
 	transition: background 0.4s;
 }
 .logOpaque {
@@ -399,8 +401,9 @@
 	width: 256px;
 	margin: 0px 4px 4px 0px;
 	padding: 8px 12px 8px 12px;
-	border: none;
 	font-size: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
 	text-shadow:
 		0px 1px 1px #000,
 		0px -1px 1px #000,
@@ -427,6 +430,7 @@
 	background: rgba(0, 0, 0, 0.2);
 	border: none;
 	outline: none;
+	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
 	text-shadow:
 		0px 1px 1px #000,
 		0px -1px 1px #000,
