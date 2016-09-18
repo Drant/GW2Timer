@@ -1304,8 +1304,8 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: //"<a href='http://forum.renaka.com/topic/5546166/'>GW2Navi Overlay</a> now officially uses fast Chromium engine with voice alarm support.<br />"
-		"<a href='http://forum.renaka.com/topic/6209670/'>Seis Burntheart</a> / Elemental Sprite <dfn data-coord='[[10475,24809],[13822,20501],[17332,16159],[17963,13943],[21615,11683],[23586,9298]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a>.<br />"
+	pve: "<a href='http://forum.renaka.com/topic/5546166/'>GW2Navi Overlay</a> now officially uses fast Chromium engine with voice alarm. <a href='https://docs.google.com/uc?id=0Bzz5ya_eQns3eFJSOFRBbTVJMnM&export=download'>Download</a>.<br />"
+		+ "<a href='http://forum.renaka.com/topic/6209670/'>Seis Burntheart</a> / Elemental Sprite <dfn data-coord='[[10475,24809],[13822,20501],[17332,16159],[17963,13943],[21615,11683],[23586,9298]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a>.<br />"
 		+ "<a href='https://wiki.guildwars2.com/wiki/Fused_weapon_skins'>Fused weapons</a> merchant is at <dfn data-coord='16548,14579'>Black Lion Vault</dfn> in Lion's Arch for 4 tickets.",
 	wvw: "",
 	Start: new Date("2016-09-13T16:00:00Z"),

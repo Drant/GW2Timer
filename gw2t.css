@@ -977,9 +977,11 @@ textarea.jsCopyCode {
 }
 .tmlLine { /* A whole line representing a chain of events */
 	height: 24px;
+	transition: height 0.2s;
 }
 .tmlLineSpecial {
 	height: 50px;
+	transition: height 0.2s;
 }
 .tmlLine:hover .tmlSegment {
 	outline: 1px solid #ff8844;
