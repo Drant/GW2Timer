@@ -1059,6 +1059,7 @@ O = {
 			}
 			if (O.Options.int_setAlarm === O.IntEnum.Alarm.Off)
 			{
+				D.stopSpeech();
 				$("#optAlarmSpeaker").attr("src", "img/ui/mute.png");
 			}
 			else
