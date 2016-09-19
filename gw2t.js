@@ -17570,7 +17570,7 @@ D = {
 			speechSynthesis.speak(msg);
 		 */
 		try {
-			if (I.isSpeechSynthesisEnabled && I.ModeCurrent !== I.ModeEnum.Overlay)
+			if (I.isSpeechSynthesisEnabled)
 			{
 				var msg = new SpeechSynthesisUtterance(pString);
 				/*
@@ -31402,7 +31402,7 @@ I = {
 		
 		// Detect TTS capability
 		try {
-			if (window.speechSynthesis)
+			if (window.speechSynthesis && I.ModeCurrent !== I.ModeEnum.Overlay)
 			{
 				I.isSpeechSynthesisEnabled = true;
 				// Automatically reload the asynchronous voices

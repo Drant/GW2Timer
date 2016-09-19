@@ -1304,7 +1304,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://forum.renaka.com/topic/5546166/'>GW2Navi Overlay</a> now officially uses fast Chromium engine with voice alarm. <a href='https://docs.google.com/uc?id=0Bzz5ya_eQns3eFJSOFRBbTVJMnM&export=download'>Download</a>.<br />"
+	pve: "<a href='http://forum.renaka.com/topic/5546166/'>GW2Navi Overlay</a> now officially uses fast Chromium engine with voice alarm. <a href='https://docs.google.com/uc?id=0Bzz5ya_eQns3WjE4U0VraktzczQ&export=download'>Download</a>.<br />"
 		+ "<a href='http://forum.renaka.com/topic/6209670/'>Seis Burntheart</a> / Elemental Sprite <dfn data-coord='[[10475,24809],[13822,20501],[17332,16159],[17963,13943],[21615,11683],[23586,9298]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a>.",
 	wvw: "",
 	Start: new Date("2016-09-13T16:00:00Z"),
@@ -1367,15 +1367,6 @@ Countdown: {
 		Start: new Date("2016-09-15T20:00:00Z"),
 		Finish: new Date("2016-09-22T20:00:00Z")
 	},
-	/*{
-		name_en: "Pirate Day Sale",
-		name_de: "Pirate Tag Verkauf",
-		name_es: "Dia de Pirata Rebaja",
-		name_fr: "Journée de Pirate Vente",
-		url: "https://en.wikipedia.org/wiki/International_Talk_Like_a_Pirate_Day",
-		Start: new Date("2016-09-19T16:00:00Z"),
-		Finish: new Date("2016-09-20T16:00:00Z")
-	},*/
 	{
 		name_en: "Living Story 3: Episode II",
 		name_de: "Lebendige Geschichte 3: Episode II",
@@ -1424,6 +1415,13 @@ Sale: {
 		discount: null
 	},
 	Items: [
+	{
+		name: "Pirate Captain's Outfit",
+		id: "20251",
+		price: 490,
+		discount: 700,
+		col: 0
+	},
 	{
 		name: "Kurzick Dual Axe Skin",
 		id: "79372",
