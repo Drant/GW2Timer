@@ -4,7 +4,7 @@
 */
 
 /* Remove elements extraneous or intrusive to overlay mode */
-#itemWarning, #itemDashboard, #paneMenu var, .hudTitle, .hudLinks {
+#itemWarning, #itemDashboard, .tmlLineName, #paneMenu var, .hudTitle, .hudLinks {
 	display: none;
 }
 
@@ -15,6 +15,15 @@
 }
 #cslButtons {
 	left: -4px; top: -4px;
+}
+
+#itemVignette {
+	display: block;
+	width: 100%; height: 100%;
+	position: absolute; z-index: 9;
+	top: 0;
+	box-shadow: inset 0px 0px 16px 4px rgba(0, 0, 0, 0.9);
+	pointer-events: none;
 }
 
 .hudDirectory {

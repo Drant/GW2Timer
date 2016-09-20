@@ -139,7 +139,6 @@ O = {
 		bol_alignPanelRight: true,
 		bol_showPanel: true,
 		bol_showMap: true,
-		bol_showVignette: false,
 		bol_showHUD: true,
 		bol_showDashboard: true,
 		bol_showTimeline: true,
@@ -948,7 +947,6 @@ O = {
 			O.Enact.int_setClock();
 			O.Enact.int_setDimming();
 			O.Enact.bol_showMap();
-			O.Enact.bol_showVignette();
 		}
 		
 		/*
@@ -1284,13 +1282,6 @@ O = {
 			{
 				$("#panelMap").toggle(O.Options.bol_showMap);
 				M.refreshMap();
-			}
-		},
-		bol_showVignette: function()
-		{
-			if (I.isMapEnabled)
-			{
-				$(".mapVignette").toggle(O.Options.bol_showVignette);
 			}
 		},
 		bol_showHUD: function()

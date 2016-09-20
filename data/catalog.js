@@ -682,7 +682,8 @@ Outfit: [
 	{i: 78008, n: "Gwen's Attire", p: {gem: 700}},
 	{i: 78010, n: "Ironclad Outfit", p: {gem: 700}},
 	{i: 78574, n: "Sentinel Outfit", p: {gem: 700}},
-	{i: 79220, n: "Verdant Executor Outfit", p: {gem: 700}}
+	{i: 79220, n: "Verdant Executor Outfit", p: {gem: 700}},
+	{i: 79531, n: "Mursaat Robes", p: {gem: 700}}
 ],
 Finisher: [
 	{i: 21306, n: "Rabbit Finisher", p: {pvp: true}},
@@ -786,7 +787,8 @@ Glider: [
 	{i: 78790, n: "Floral Glider", p: {gem: 400}},
 	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
 	{i: 79016, n: "White Mantle Glider", p: {gem: 400}},
-	{i: 79084, n: "Shining Blade Glider", p: {gem: 700}}
+	{i: 79084, n: "Shining Blade Glider", p: {gem: 700}},
+	{i: 79595, n: "Mursaat Wings Glider", p: {gem: 700}}
 ],
 Node: [
 	{i: 43902, n: "Gift of Quartz", p: {laurel: 25}},

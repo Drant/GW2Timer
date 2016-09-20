@@ -1307,8 +1307,8 @@ Announcement:
 	pve: "<a href='http://forum.renaka.com/topic/5546166/'>GW2Navi Overlay</a> now officially uses fast Chromium engine with voice alarm support.<br />"
 		+ "<a href='http://forum.renaka.com/topic/6209670/'>Seis Burntheart</a> / Elemental Sprite <dfn data-coord='[[10475,24809],[13822,20501],[17332,16159],[17963,13943],[21615,11683],[23586,9298]]'>map locations</dfn>. <a href='http://forum.renaka.com/topic/6205181/'>Bloodstone-Crazed Creatures</a>.",
 	wvw: "",
-	Start: new Date("2016-09-13T16:00:00Z"),
-	Finish: new Date("2016-09-20T16:00:00Z"),
+	Start: new Date("2016-09-20T16:00:00Z"),
+	Finish: new Date("2016-10-04T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1372,7 +1372,7 @@ Countdown: {
 		name_de: "Lebendige Geschichte 3: Episode II",
 		name_es: "Historia Viviente 3: Episodio II",
 		name_fr: "Histoire Vivante 3: Épisode II",
-		official: "news/ember-bay-behind-the-scenes/",
+		official: "news/rising-flames-is-live/",
 		Start: new Date("2016-09-20T17:00:00Z"),
 		Finish: new Date("2016-09-21T17:00:00Z")
 	}
@@ -1406,8 +1406,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-09-13T16:00:00Z"),
-	Finish: new Date("2016-09-20T16:00:00Z"),
+	Start: new Date("2016-09-20T16:00:00Z"),
+	Finish: new Date("2016-09-27T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1416,16 +1416,16 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Pirate Captain's Outfit",
-		id: "20251",
-		price: 490,
-		discount: 700,
+		name: "Mursaat Backpack and Glider Combo",
+		id: "79523",
+		price: 700,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Kurzick Dual Axe Skin",
-		id: "79372",
-		price: 600,
+		name: "Mursaat Robes",
+		id: "79531",
+		price: 700,
 		discount: null,
 		col: 0
 	},
@@ -1489,13 +1489,6 @@ Sale: {
 		name: "Phoenix Glider",
 		id: "78025",
 		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Mini Golden Pig",
-		id: "68683",
-		price: 350,
 		discount: null,
 		col: 0
 	},
