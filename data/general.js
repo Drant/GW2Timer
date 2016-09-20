@@ -676,6 +676,14 @@ spidernestcavern: {
  * Region categories of zones.
  */
 var GW2T_REGION_DATA = {
+"ring": {
+	name_en: "Ring of Fire",
+	name_de: "Feuerring",
+	name_es: "Anillo de Fuego",
+	name_fr: "Cercle de feu",
+	name_zh: "火焰之環",
+	color: "firebrick"
+},
 "heart": {
 	name_en: "Heart of Maguuma",
 	name_de: "Herz von Maguuma",
@@ -739,6 +747,18 @@ var GW2T_REGION_DATA = {
  * Zones are sorted by how far from the top left corner (0,0) it is.
  */
 var GW2T_ZONE_DATA = {
+"ember":
+{
+	id: "1175",
+	name_en: "Ember Bay",
+	name_de: "Glutbucht",
+	name_es: "Bahía de las Ascuas",
+	name_fr: "Baie des Braises",
+	name_zh: "余燼海灣",
+	region: "ring",
+	map_rect: [[-46080, -46080], [46080, 46080]],
+	continent_rect: [[4606, 27134], [8446, 30974]]
+},
 "bloodstone":
 {
 	id: "1165",
