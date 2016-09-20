@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160918A"></script>
+	<script type="text/javascript" src="data/general.js?v=20160919"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -67,6 +67,7 @@
 		<!-- Map, the dummy nbsp is required or Leaflet won't show
 		==================================================================== -->
 		<section id="mapPane" class="mapPane mapPaneBackground">&nbsp;
+			<div class="mapVignette"></div>
 			<div id="mapContext" class="itemContext">
 				<ul>
 					<li id="mapContextCenter">Center map</li>
@@ -217,7 +218,7 @@
 							<label><input type="radio" name="int_setFollow" /> Zone</label>
 						</fieldset>
 						<label title="Automatically move the character pin to your in-game location."><img data-src="img/map/pin_character.png" /><input id="opt_bol_displayCharacter" type="checkbox" />Display Character Pin</label>
-						<label title="Repeated milliseconds before your character is pinpointed again.<br />This should not be faster than the overlay's interval."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Interval (ms)</label>
+						<label title="Repeated milliseconds before your character is pinpointed again.<br />This should not be lower than the overlay's interval."><input id="opt_int_msecGPSRefresh" type="number" min="50" max="1000" step="10" /> GPS Interval (ms)</label>
 					</div>
 				</div>
 				<div class="mapOptions hudItem">
@@ -341,6 +342,7 @@
 			</article>
 		</section>
 		<section id="wvwPane" class="mapPane mapPaneBackground">&nbsp;
+			<div class="mapVignette"></div>
 			<div id="wvwContext" class="itemContext">
 				<ul>
 					<li id="wvwContextCenter">Center map</li>
@@ -816,12 +818,14 @@
 					<br />
 					<h2>Map</h2>
 					<label title="Show/Hide the map."><input id="opt_bol_showMap" type="checkbox" /> Show the map</label>
+					<label title="Show/Hide ornamental inner shadow over the map's edges.<br />Recommended for overlay mode."><input id="opt_bol_showVignette" type="checkbox" /> Show vignette frame</label>
+					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane. To toggle the Dashboard and Timeline, right click on the map and choose &quot;Toggle HUD&quot;.</span><br />
+					<h3>Head-Up Display</h3>
 					<label title="Show/Hide the container for Dashboard and Timeline."><input id="opt_bol_showHUD" type="checkbox" /> Show HUD over the map</label>
-					<label title="Show/Hide GW2 official event countdowns and gem sales on the top right corner of the map pane. Requires reload."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard (on HUD)</label>
-					<label title="Show/Hide Heart of Thorns meta events timeline."><input id="opt_bol_showTimeline" type="checkbox" /> Show the timeline (on HUD)</label>
+					<label title="Show/Hide GW2 official event countdowns and gem sales on the top right corner of the map pane. Requires reload."><input id="opt_bol_showDashboard" type="checkbox" /> Show the dashboard</label>
+					<label title="Show/Hide Heart of Thorns meta events timeline."><input id="opt_bol_showTimeline" type="checkbox" /> Show the timeline</label>
 					<label class="cssHidden"><input id="opt_bol_opaqueTimeline" type="checkbox" /></label>
 					<label title="Only show the HUD when you are on the Chains page."><input id="opt_bol_hideHUD" type="checkbox" /> Hide HUD if not on Chains page</label>
-					<span>For map options, hover over the <img class="cntIconExample" src="img/map/display.png" alt="Icon" /> button on the top right corner of the map pane. To toggle the Dashboard and Timeline, right click on the map and choose &quot;Toggle HUD&quot;.</span><br />
 					<br />
 					<h2>Alarm</h2>
 					<span>Voice announcement requires Chrome, Firefox, or IE11+. Hover over the speaker icon on the chains page to change alarm.</span>

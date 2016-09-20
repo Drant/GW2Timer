@@ -139,6 +139,7 @@ O = {
 		bol_alignPanelRight: true,
 		bol_showPanel: true,
 		bol_showMap: true,
+		bol_showVignette: false,
 		bol_showHUD: true,
 		bol_showDashboard: true,
 		bol_showTimeline: true,
@@ -947,6 +948,7 @@ O = {
 			O.Enact.int_setClock();
 			O.Enact.int_setDimming();
 			O.Enact.bol_showMap();
+			O.Enact.bol_showVignette();
 		}
 		
 		/*
@@ -1282,6 +1284,13 @@ O = {
 			{
 				$("#panelMap").toggle(O.Options.bol_showMap);
 				M.refreshMap();
+			}
+		},
+		bol_showVignette: function()
+		{
+			if (I.isMapEnabled)
+			{
+				$(".mapVignette").toggle(O.Options.bol_showVignette);
 			}
 		},
 		bol_showHUD: function()
@@ -18244,21 +18253,22 @@ C = {
 			}
 		}
 		
-		/*
-		 * Show individual events of a chain bar if clicked on, or
-		 * automatically shown by the ticker function.
-		 */
+		// Toggles the chain details when clicked on the chain title
 		if (I.ModeCurrent !== I.ModeEnum.Tile)
 		{
-			$("#chnTitle_" + pChain.nexus).click(function()
+			$("#chnTitle_" + pChain.nexus).click(function(pEvent)
 			{
-				$(this).parent().next().slideToggle(100, function()
+				if (pEvent.which === I.ClickEnum.Left)
 				{
-					I.updateScrollbar($(this));
-				});
+					$(this).parent().next().slideToggle(100, function()
+					{
+						I.updateScrollbar($(this));
+					});
+				}
 			});
 			$("#chnDetails_" + pChain.nexus).hide();
 		}
+		// Show meta event chain name if in default language
 		if (D.isLanguageDefault() && I.isMapEnabled)
 		{
 			$("#chnBar_" + pChain.nexus).hover(
@@ -18266,10 +18276,12 @@ C = {
 				function() { $("#chnTitle_" + pChain.nexus).text(D.getObjectName(pChain)); }
 			);
 		}
+		// Title text style for these chains
 		if (pChain.flags.isExpansion)
 		{
 			$("#chnTitle_" + pChain.nexus).addClass("chnTitleMisc");
 		}
+		// Clipboard behavior
 		$("#chnDetails_" + pChain.nexus + " .chnWaypoint").each(function()
 		{
 			I.bindClipboard($(this), $(this).val());
@@ -31219,8 +31231,7 @@ I = {
 	{
 		Account: "Account",
 		Audit: "Audit",
-		WvW: "WvW",
-		DryTop: "DryTop"
+		WvW: "WvW"
 	},
 	LoadedStylesheets: {}, // Holds names of stylesheets to not download again
 	/*
@@ -31637,20 +31648,15 @@ I = {
 								M.goToZone("dry", M.ZoomEnum.Bird);
 								P.toggleDryTopIcons(true);
 							}
-							I.PageCurrent = I.SpecialPageEnum.DryTop;
-							U.updateTitle(I.SpecialPageEnum.DryTop);
 							$("#hudBoxes").hide();
 						} break;
 						case "sectionChains_Special":
 						{
 							H.toggleSpecialIcons(true);
 						} break;
-						default:
-						{
-							// Update current section variable, ignore if on Scheduled section of Chains page
-							I.SectionCurrent[I.PageEnum.Chains] = (section === I.SectionEnum.Chains.Scheduled) ? "" : section;
-						}
 					}
+					// Update current section variable, ignore if on Scheduled section of Chains page
+					I.SectionCurrent[I.PageEnum.Chains] = (section === I.SectionEnum.Chains.Scheduled) ? "" : section;
 				}
 				else
 				{
@@ -31662,7 +31668,6 @@ I = {
 					{
 						case "sectionChains_Drytop": 
 						{
-							I.PageCurrent = I.PageEnum.Chains;
 							P.toggleDryTopIcons(false);
 							$("#hudBoxes").show();
 						} break;
