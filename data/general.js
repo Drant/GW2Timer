@@ -49,6 +49,7 @@ var GW2T_ZONE_ASSOCIATION = {
 	"1045": "tangled",
 	"1052": "verdant",
 	"1165": "bloodstone",
+	"1175": "ember",
 	// Instances
 	"1069": "precipice",
 	"1071": "precipice",
