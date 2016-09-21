@@ -19052,10 +19052,7 @@ C = {
 			}
 			
 			// Tour to the event on the map if opted
-			if (O.Options.bol_tourPrediction && (I.ModeCurrent !== I.ModeEnum.Overlay)
-				&& I.PageCurrent === I.PageEnum.Chains
-				&& M.isMapAJAXDone && C.isChainUnchecked(pChain) && isregularchain
-				&& C.isDryTopIconsShown === false && !pChain.flags.isSpecial)
+			if (P.wantTourPrediction() && C.isChainUnchecked(pChain) && isregularchain && !pChain.flags.isSpecial)
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -22513,14 +22510,7 @@ P = {
 	 */
 	donePopulation: function()
 	{
-		if (P.wantZoomToFirstEvent())
-		{
-			// Initialize the "current moused zone" variable for showing waypoints
-			M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
-			// Tour to the event on the map if opted
-			$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
-				+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
-		}
+		
 	},
 	finishPopulation: function()
 	{
@@ -22563,11 +22553,12 @@ P = {
 	 * Conditions needed to do the initial zoom to event on pageload.
 	 * @returns true if qualify.
 	 */
-	wantZoomToFirstEvent: function()
+	wantTourPrediction: function()
 	{
-		if (I.isMapEnabled && O.Options.bol_tourPrediction && (I.ModeCurrent !== I.ModeEnum.Overlay)
-			&& I.PageCurrent === I.PageEnum.Chains
-			&& U.Args[U.KeyEnum.Go] === undefined)
+		if (I.isMapEnabled
+			&& O.Options.bol_tourPrediction && I.ModeCurrent !== I.ModeEnum.Overlay
+			&& I.PageCurrent === I.PageEnum.Chains && C.isDryTopIconsShown === false
+			&& !(U.Args[U.KeyEnum.Go]))
 		{
 			return true;
 		}
@@ -31581,16 +31572,18 @@ I = {
 		D.translateAfter();
 		
 		// View map event or map center
-		if (P.wantZoomToFirstEvent())
+		if (P.wantTourPrediction())
 		{
 			$("#chnEvent_" + C.CurrentChainSD.nexus + "_"
 				+ C.CurrentChainSD.CurrentPrimaryEvent.num).trigger("click");
 		}
 		else if (I.isMapEnabled)
 		{
-			// The follow option will do the viewing instead
+			// Initialize the "current moused zone" variable for showing waypoints
+			M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
 			M.goToDefault(O.Options.int_setInitialZoom);
 		}
+		
 		// Set tile after viewing the coordinate so it downloads the tiles last
 		if (I.isMapEnabled)
 		{
