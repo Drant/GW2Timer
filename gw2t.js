@@ -31035,6 +31035,12 @@ K = {
 			D.verifyNativeTTS();
 			K.tickStopwatchDown();
 		});
+		$("#opt_int_minStopwatchAlert").onEnterKey(function()
+		{
+			// Pressing enter on the minute input triggers the egg timer start button
+			$(this).trigger("change");
+			$("#watTimerStart").trigger("click");
+		});
 		$("#watTimerStop").click(function()
 		{
 			if (K.StopwatchTimestamp === 0)
@@ -31070,7 +31076,8 @@ K = {
 	 */
 	tickStopwatchDown: function()
 	{
-		var msec = K.StopwatchTimerFinish - (new Date()).getTime();
+		var now = new Date();
+		var msec = K.StopwatchTimerFinish - now.getTime();
 		if (msec > 0)
 		{
 			K.stopwatchDown.innerHTML = T.formatTimeLetter(~~(msec / T.cMSECONDS_IN_SECOND), true);
@@ -31080,6 +31087,7 @@ K = {
 			// If negative then timer has finished
 			$("#watTimerStop").trigger("click");
 			var speech = O.Options.str_textStopwatchAlert;
+			I.print(now.toLocaleString() + ": " + U.escapeHTML(speech));
 			D.speak(speech);
 		}
 	},
