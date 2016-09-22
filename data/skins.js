@@ -470,7 +470,9 @@ Back: [
 	{u: 6892, i: 79336, n: "Hoelbrak Mountain Pack", p: {starting: true}},
 	{u: 6895, i: 79338, n: "Black Citadel Engine", p: {starting: true}},
 	{u: 6898, i: 79328, n: "Divinity's Reach Rucksack", p: {starting: true}},
-	{u: 6902, i: 79327, n: "Grove Hydria", p: {starting: true}}
+	{u: 6902, i: 79327, n: "Grove Hydria", p: {starting: true}},
+	{u: 6956, i: 79463, n: "Lava Skull Backpack", p: {magic: 5000}},
+	{u: 6965, i: 79523, n: "Mursaat Wings Backpack", p: {gem: 700}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", t: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -614,7 +616,8 @@ Armor_Light_Helm: [
 	{u: 6842, i: 79014, n: "Xera's Mask", p: {gem: 400}},
 	{u: 6881, i: 79050, n: "Bloodstone Crown", p: {achievement: 0}},
 	{u: 6896, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
-	{u: 6899, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}}
+	{u: 6899, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
+	{u: 6955, i: 79457, n: "Light Dragonscale Headdress", p: {achievement: 0}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -698,7 +701,8 @@ Armor_Light_Shoulders: [
 	{u: 6377, i: 73202, n: "Bladed Mantle", p: {map_vb: 500}},
 	{u: 6586, i: 77645, n: "Winter's Presence", p: {achievement: 0}},
 	{u: 6722, i: 78579, n: "Triumphant Epaulets", p: {badge: 0}},
-	{u: 6824, i: 78874, n: "Experimental Envoy Mantle", p: {craft: true}}
+	{u: 6824, i: 78874, n: "Experimental Envoy Mantle", p: {craft: true}},
+	{u: 6970, i: 79455, n: "Light Dragonscale Epaulets", p: {achievement: 0}}
 ],
 Armor_Light_Coat: [
 	{u: 4, i: 3174, n: "Apprentice Coat", t: [2959, 2948, 2950, 2952, 2955, 2960, 2947, 2949, 2954, 2953, 2957, 2956, 2961, 2962, 2951, 2958, 3120, 3138, 3156, 3174, 3321, 3331, 3332, 3333, 3334, 3335, 3319, 3320, 3322, 3338, 3336, 3337, 3324, 3329, 3328, 3325, 3330, 3327, 3323, 3326, 5022, 5035, 5051, 5087, 5069, 5105, 5123, 5141, 5159, 5177, 5195, 5213, 5231, 5267, 5249, 5285]},
@@ -1132,7 +1136,8 @@ Armor_Medium_Helm: [
 	{u: 6845, i: 79014, n: "Xera's Mask", p: {gem: 400}},
 	{u: 6858, i: 79159, n: "Bloodstone Crown", p: {achievement: 0}},
 	{u: 6891, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
-	{u: 6900, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}}
+	{u: 6900, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
+	{u: 6969, i: 79471, n: "Medium Dragonscale Headdress", p: {achievement: 0}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1215,7 +1220,8 @@ Armor_Medium_Shoulders: [
 	{u: 6583, i: 77645, n: "Winter's Presence", p: {achievement: 0}},
 	{u: 6059, i: 69991, n: "Druid's Shoulderguards", p: {achievement: 0}},
 	{u: 6733, i: 78269, n: "Triumphant Shoulderguards", p: {badge: 0}},
-	{u: 6794, i: 78971, n: "Experimental Envoy Shoulderpads", p: {craft: true}}
+	{u: 6794, i: 78971, n: "Experimental Envoy Shoulderpads", p: {craft: true}},
+	{u: 6964, i: 79481, n: "Medium Dragonscale Epaulets", p: {achievement: 0}}
 ],
 Armor_Medium_Coat: [
 	{u: 6, i: 41169, n: "Rawhide Vest", p: {badge: 30}},
@@ -1643,7 +1649,8 @@ Armor_Heavy_Helm: [
 	{u: 6841, i: 79014, n: "Xera's Mask", p: {gem: 400}},
 	{u: 6856, i: 79240, n: "Bloodstone Crown", p: {achievement: 0}},
 	{u: 6893, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
-	{u: 6888, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}}
+	{u: 6888, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
+	{u: 6968, i: 79508, n: "Heavy Dragonscale Headdress", p: {achievement: 0}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -1730,7 +1737,8 @@ Armor_Heavy_Shoulders: [
 	{u: 6479, i: 75344, n: "Herald's Shoulderplate", p: {achievement: 0}},
 	{u: 6577, i: 77645, n: "Winter's Presence", p: {achievement: 0}},
 	{u: 6719, i: 78326, n: "Triumphant Pauldrons", p: {badge: 0}},
-	{u: 6796, i: 78977, n: "Experimental Envoy Pauldrons", p: {craft: true}}
+	{u: 6796, i: 78977, n: "Experimental Envoy Pauldrons", p: {craft: true}},
+	{u: 6951, i: 79468, n: "Heavy Dragonscale Epaulets", p: {achievement: 0}}
 ],
 Armor_Heavy_Coat: [
 	{u: 2, i: 3168, n: "Chainmail Chestpiece", t: [2868, 2870, 2869, 2858, 2856, 2857, 2859, 2861, 2860, 2862, 2865, 2864, 2863, 2867, 2866, 2871, 3114, 3132, 3150, 3168, 3207, 3205, 3206, 3212, 3213, 3214, 3215, 3216, 3217, 3218, 3219, 3220, 3221, 3222, 3223, 3208, 3224, 3209, 3210, 3211, 5018, 5045, 5063, 5081, 5099, 5030, 5135, 5117, 5153, 5171, 5189, 5207, 5225, 5243, 5261, 5279]},
@@ -2192,7 +2200,8 @@ Weapon_Axe: [
 	{u: 6810, i: 78963, n: "White Mantle Axe", p: {raid_ft: 600}},
 	{u: 6874, i: 79174, n: "Embellished Axe", t: [79174]},
 	{u: 6928, i: 79379, n: "Bloodstone Axe", t: [79379]},
-	{u: 6942, i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}}
+	{u: 6942, i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}},
+	{u: 6929, i: 79603, n: "Carnival Axe", p: {coin: 1000000}}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", t: [49332]},
@@ -2321,7 +2330,12 @@ Weapon_Mace: [
 	{u: 6747, i: 78779, n: "Cavalier Mace", t: [78779]},
 	{u: 6832, i: 78889, n: "Privateer Mace", p: {blticket: 1}},
 	{u: 6866, i: 79300, n: "Embellished Mace", t: [79300]},
-	{u: 6926, i: 79373, n: "Bloodstone Mace", t: [79373]}
+	{u: 6926, i: 79373, n: "Bloodstone Mace", t: [79373]},
+	{u: 6941, i: 79610, n: "Carnival Mace", p: {coin: 1000000}},
+	{u: 6959, i: 79588, n: "Hypothesis", p: {craft: true}},
+	{u: 6971, i: 79537, n: "For Science", p: {craft: true}},
+	{u: 6958, i: 79570, n: "Endeavor", p: {craft: true}},
+	{u: 6966, i: 79562, n: "Eureka", p: {craft: true}}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", t: [49353]},
@@ -2472,7 +2486,8 @@ Weapon_Sword: [
 	{u: 6788, i: 78901, n: "White Mantle Gladius", p: {raid_ft: 600}},
 	{u: 6859, i: 79192, n: "Embellished Sword", t: [79192]},
 	{u: 6884, i: 79089, n: "Lord Caudecus's Sword", p: {gem: 600}},
-	{u: 6911, i: 79385, n: "Bloodstone Sword", t: [79385]}
+	{u: 6911, i: 79385, n: "Bloodstone Sword", t: [79385]},
+	{u: 6924, i: 79511, n: "Carnival Sword", p: {coin: 1000000}}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", t: [49317]},
@@ -2613,7 +2628,8 @@ Weapon_Dagger: [
 	{u: 6815, i: 78943, n: "White Mantle Seax", p: {raid_ft: 600}},
 	{u: 6877, i: 79246, n: "Embellished Dagger", t: [79246]},
 	{u: 6907, i: 79404, n: "Bloodstone Dagger", t: [79404]},
-	{u: 6906, i: 79386, n: "Dragon Kama Skin", p: {gem: 600}}
+	{u: 6906, i: 79386, n: "Dragon Kama Skin", p: {gem: 600}},
+	{u: 6948, i: 79474, n: "Carnival Dagger", p: {coin: 1000000}}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", t: [49335]},
@@ -2748,7 +2764,8 @@ Weapon_Pistol: [
 	{u: 6786, i: 78840, n: "Privateer Pistol", p: {blticket: 1}},
 	{u: 6886, i: 79107, n: "Embellished Pistol", t: [79107]},
 	{u: 6863, i: 79179, n: "Lord Caudecus's Pistol", p: {gem: 600}},
-	{u: 6930, i: 79369, n: "Bloodstone Pistol", t: [79369]}
+	{u: 6930, i: 79369, n: "Bloodstone Pistol", t: [79369]},
+	{u: 6946, i: 79617, n: "Carnival Pistol", p: {coin: 1000000}}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", t: [49341]},
@@ -2887,7 +2904,8 @@ Weapon_Scepter: [
 	{u: 6813, i: 78852, n: "Xera's Scepter", p: {raid_ft: 600}},
 	{u: 6861, i: 79131, n: "Embellished Scepter", t: [79131]},
 	{u: 6920, i: 79375, n: "Bloodstone Scepter", t: [79375]},
-	{u: 6940, i: 79365, n: "Peacock Scepter", p: {gem: 600}}
+	{u: 6940, i: 79365, n: "Peacock Scepter", p: {gem: 600}},
+	{u: 6945, i: 79461, n: "Carnival Scepter", p: {coin: 1000000}}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", t: [44897]},
@@ -3041,7 +3059,8 @@ Weapon_Focus: [
 	{u: 6816, i: 78798, n: "Privateer Focus", p: {blticket: 1}},
 	{u: 6821, i: 78844, n: "White Mantle Icon", p: {raid_ft: 600}},
 	{u: 6848, i: 79109, n: "Embellished Focus", t: [79109]},
-	{u: 6934, i: 79382, n: "Bloodstone Focus", t: [79382]}
+	{u: 6934, i: 79382, n: "Bloodstone Focus", t: [79382]},
+	{u: 6919, i: 79614, n: "Carnival Focus", p: {coin: 500000}}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", t: [49344]},
@@ -3192,7 +3211,8 @@ Weapon_Shield: [
 	{u: 6827, i: 78968, n: "Privateer Shield", p: {blticket: 1}},
 	{u: 6869, i: 79209, n: "Embellished Shield", t: [79209]},
 	{u: 6912, i: 79403, n: "Bloodstone Shield", t: [79403]},
-	{u: 6935, i: 79360, n: "Amethyst Shield", p: {gem: 600}}
+	{u: 6935, i: 79360, n: "Amethyst Shield", p: {gem: 600}},
+	{u: 6949, i: 79517, n: "Carnival Shield", p: {coin: 500000}}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -3323,7 +3343,8 @@ Weapon_Torch: [
 	{u: 6807, i: 78803, n: "Privateer Torch", p: {blticket: 1}},
 	{u: 6836, i: 78986, n: "Keep Construct Torch", p: {raid_ft: 600}},
 	{u: 6873, i: 79101, n: "Embellished Torch", t: [79101]},
-	{u: 6936, i: 79393, n: "Bloodstone Torch", t: [79393]}
+	{u: 6936, i: 79393, n: "Bloodstone Torch", t: [79393]},
+	{u: 6913, i: 79487, n: "Carnival Torch", p: {coin: 500000}}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", t: [49359]},
@@ -3454,7 +3475,8 @@ Weapon_Warhorn: [
 	{u: 6777, i: 78757, n: "Cavalier Warhorn", t: [78757]},
 	{u: 6797, i: 78932, n: "Privateer Warhorn", p: {blticket: 1}},
 	{u: 6876, i: 79307, n: "Embellished Warhorn", t: [79307]},
-	{u: 6933, i: 79399, n: "Bloodstone Warhorn", t: [79399]}
+	{u: 6933, i: 79399, n: "Bloodstone Warhorn", t: [79399]},
+	{u: 6944, i: 79482, n: "Carnival Warhorn", p: {coin: 500000}}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", t: [49321, 49323]},
@@ -3602,7 +3624,8 @@ Weapon_Greatsword: [
 	{u: 6803, i: 78924, n: "Privateer Greatsword", p: {blticket: 1}},
 	{u: 6864, i: 79056, n: "Mistwild Greatsword", p: {achievement: 0}},
 	{u: 6882, i: 79261, n: "Embellished Greatsword", t: [79261]},
-	{u: 6950, i: 79389, n: "Bloodstone Greatsword", t: [79389]}
+	{u: 6950, i: 79389, n: "Bloodstone Greatsword", t: [79389]},
+	{u: 6918, i: 79480, n: "Carnival Greatsword", p: {coin: 1500000}}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", t: [49326]},
@@ -3742,7 +3765,8 @@ Weapon_Hammer: [
 	{u: 6787, i: 78993, n: "Privateer Hammer", p: {blticket: 1}},
 	{u: 6805, i: 78875, n: "White Mantle Sledge", p: {raid_ft: 600}},
 	{u: 6868, i: 79277, n: "Embellished Hammer", t: [79277]},
-	{u: 6908, i: 79377, n: "Bloodstone Hammer", t: [79377]}
+	{u: 6908, i: 79377, n: "Bloodstone Hammer", t: [79377]},
+	{u: 6923, i: 79520, n: "Carnival Hammer", p: {coin: 1500000}}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", t: [44906]},
@@ -3882,7 +3906,8 @@ Weapon_Longbow: [
 	{u: 6819, i: 78929, n: "Privateer Longbow", p: {blticket: 1}},
 	{u: 6865, i: 79162, n: "Embellished Longbow", t: [79162]},
 	{u: 6894, i: 79310, n: "Storm Bow", p: {gem: 600}},
-	{u: 6925, i: 79409, n: "Bloodstone Longbow", t: [79409]}
+	{u: 6925, i: 79409, n: "Bloodstone Longbow", t: [79409]},
+	{u: 6922, i: 79416, n: "Carnival Longbow", p: {coin: 1500000}}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", t: [44924]},
@@ -4024,7 +4049,8 @@ Weapon_Shortbow: [
 	{u: 6753, i: 78778, n: "Cavalier Short Bow", t: [78778]},
 	{u: 6830, i: 78816, n: "Privateer Short Bow", p: {blticket: 1}},
 	{u: 6862, i: 79125, n: "Embellished Short Bow", t: [79125]},
-	{u: 6947, i: 79395, n: "Bloodstone Short Bow", t: [79395]}
+	{u: 6947, i: 79395, n: "Bloodstone Short Bow", t: [79395]},
+	{u: 6927, i: 79563, n: "Carnival Short Bow", p: {coin: 1500000}}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", t: [49338]},
@@ -4162,7 +4188,8 @@ Weapon_Rifle: [
 	{u: 6822, i: 78841, n: "Privateer Rifle", p: {blticket: 1}},
 	{u: 6835, i: 78927, n: "White Mantle Rifle", p: {raid_ft: 600}},
 	{u: 6871, i: 79074, n: "Embellished Rifle", t: [79074]},
-	{u: 6921, i: 79407, n: "Bloodstone Rifle", t: [79407]}
+	{u: 6921, i: 79407, n: "Bloodstone Rifle", t: [79407]},
+	{u: 6938, i: 79530, n: "Carnival Rifle", p: {coin: 1500000}}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", t: [49348, 49350]},
@@ -4315,7 +4342,8 @@ Weapon_Staff: [
 	{u: 6825, i: 78911, n: "White Mantle Spire", p: {raid_ft: 600}},
 	{u: 6887, i: 79054, n: "Embellished Staff", t: [79054]},
 	{u: 6901, i: 79315, n: "Emissary's Staff", p: {gem: 600}},
-	{u: 6932, i: 79362, n: "Bloodstone Staff", t: [79362]}
+	{u: 6932, i: 79362, n: "Bloodstone Staff", t: [79362]},
+	{u: 6939, i: 79539, n: "Carnival Staff", p: {coin: 1500000}}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", t: [63881]},

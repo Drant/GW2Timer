@@ -44,6 +44,7 @@ Key: [
 	{i: 71416, n: "Exalted Key", p: {map_ab: 8}},
 	{i: 70892, n: "Vial of Chak Acid", p: {map_td: 8}},
 	{i: 72210, n: "Machete", p: {token: 15}},
+	{i: 79528, n: "Skritt Worker Contract", p: {karma: 980}},
 	{i: 66624, n: "Zephyrite Lockpick", p: {coin: 0}},
 	{i: 67826, n: "Silverwastes Shovel", p: {coin: 0}},
 	{i: 67777, n: "Bandit Skeleton Key", p: {coin: 0}},
@@ -57,6 +58,8 @@ Key: [
 	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}}
 ],
 Token: [
+	{i: 79469, n: "Petrified Wood", p: {magic: 37}},
+	{i: 79280, n: "Blood Ruby", p: {magic: 37}},
 	{i: 19721, n: "Glob of Ectoplasm"},
 	{i: 19976, n: "Mystic Coin"},
 	{i: 44941, n: "Watchwork Sprocket"},
@@ -64,7 +67,6 @@ Token: [
 	{i: 66608, n: "Pile of Silky Sand", p: {coin: 0}},
 	{i: 72500, n: "Pact Scout's Mapping Materials", p: {karma: 5250}},
 	{i: 46682, n: "Crystalline Ore", p: {coin: 0}},
-	{i: 79280, n: "Blood Ruby", p: {magic: 37}},
 	{i: 46731, n: "Pile of Bloodstone Dust", p: {coin: 0}},
 	{i: 46733, n: "Dragonite Ore", p: {coin: 0}},
 	{i: 46735, n: "Empyreal Fragment", p: {coin: 0}},
@@ -134,6 +136,7 @@ Contract: [
 	{i: 76827, n: "Hoelbrak Portal Scroll", p: {craft: true}},
 	{i: 73024, n: "Lion's Arch Portal Scroll", p: {craft: true}},
 	{i: 79073, n: "Bloodstone Fen Portal Scroll", p: {magic: 1000}},
+	{i: 79456, n: "Ember Bay Portal Scroll", p: {magic: 1000}},
 	{i: 78177, n: "Permanent Portable Provisioner", p: {coin: 10000}},
 	{i: 78978, n: "White Mantle Portal Device", p: {raid_ft: 1000}}
 ],
@@ -183,6 +186,7 @@ Converter: [
 	{i: 69887, n: "Princess", p: {achievement: 0}},
 	{i: 77093, n: "Herta", p: {achievement: 0}},
 	{i: 79197, n: "Sentient Anomaly", p: {achievement: 0}},
+	{i: 79558, n: "Sentient Aberration", p: {achievement: 0}},
 	{i: 49501, n: "Tarrktun Personal Delivery Portal", p: {coin: 888888}},
 	{i: 67270, n: "Karmic Converter", p: {achievement: 0}},
 	{i: 72606, n: "Fractal Reliquary", p: {achievement: 0}},
@@ -360,6 +364,7 @@ TonicEndless: [
 	{i: 77101, n: "Endless Nuhoch Tonic", p: {map_td: 1000}},
 	{u: 73194, i: 77167, n: "Endless Nuhoch Crusher Tonic"},
 	{u: 79034, i: 79042, n: "Endless Ley-Line Anomaly Tonic"},
+	{i: 79583, n: "Endless Jade Construct Tonic", p: {karma: 75005}},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},
@@ -585,7 +590,8 @@ Bundle: [
 	{i: 8770, n: "Seraph Banner", p: {coin: 40}},
 	{i: 8773, n: "Inquest Golem Arm", p: {karma: 14}},
 	{i: 8780, n: "Spiky Fruit", p: {coin: 16}},
-	{i: 36031, n: "Toilet Paper", p: {coin: 0}}
+	{i: 36031, n: "Toilet Paper", p: {coin: 0}},
+	{i: 79424, n: "Pocket Jade Armor", p: {karma: 3150}}
 ],
 Aura: [
 	{i: 68440, n: "Preserved Queen Bee"},
@@ -637,6 +643,7 @@ Legendary: [
 	{i: 30697, n: "Frenzy"},
 	{i: 30701, n: "Kraitkin"},
 	{i: 76158, n: "Astralaria", p: {craft: true}},
+	{i: 79562, n: "Eureka", p: {craft: true}},
 	{i: 72713, n: "HOPE", p: {craft: true}},
 	{i: 78556, n: "Chuka and Champawat", p: {craft: true}},
 	{i: 71383, n: "Nevermore", p: {craft: true}},

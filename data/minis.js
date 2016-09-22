@@ -308,7 +308,13 @@ Special: [
 	{u: 403, i: 78890, n: "Mini Keep Construct", p: {raid_ft: 300}},
 	{u: 406, i: 79227, n: "Mini Ghostly Justiciar Hablion", p: {magic: 2000}},
 	{u: 407, i: 79229, n: "Mini Jade Construct", p: {magic: 3750}},
-	{u: 408, i: 79139, n: "Mini Bloodstone Elemental", p: {magic: 2500}}
+	{u: 408, i: 79139, n: "Mini Bloodstone Elemental", p: {magic: 2500}},
+	{u: 410, i: 79411, n: "Mini Rolling Devil", p: {karma: 105000}},
+	{u: 411, i: 79490, n: "Mini Captain Grumby", p: {karma: 105000}},
+	{u: 412, i: 79585, n: "Mini Holographic Taimi", p: {magic: 2500}},
+	{u: 413, i: 79433, n: "Mini Pirate Captain Huuhes", p: {karma: 105000}},
+	{u: 414, i: 79493, n: "Mini Lava Elemental", p: {karma: 105000}},
+	{u: 415, i: 79439, n: "Mini Vine-Touched Destroyer Crab", p: {karma: 105000}}
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},

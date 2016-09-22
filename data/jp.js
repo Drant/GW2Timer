@@ -588,6 +588,20 @@ JP: {
 		zone: "maelstrom",
 		description: "Maelstrom floating cubes and electricity"
 	},
+	"garden": {
+		id: 27,
+		difficulty: 2,
+		name_en: "Hidden Garden",
+		name_de: "Verborgener Garten",
+		name_es: "Jardín Oculto",
+		name_fr: "Jardin caché",
+		coord: [21357, 21885],
+		path: null,
+		img: "http://i.imgur.com/ZgnQGFR.png",
+		chest: null,
+		zone: "maelstrom",
+		description: "Maelstrom unlock four element cantles. Keeper portal to JP locations: <dfn data-coord='[18335, 22125]'>Earth</dfn>, <dfn data-coord='[19514, 22714]'>Light</dfn>, <dfn data-coord='[20143, 22209]'>Waves</dfn>, <dfn data-coord='[20770, 23385]'>Winds</dfn>. Cantals are at sky and ground level of the center, southeast waterfalls, and north lake"
+	},
 	"hexfoundry": {
 		id: 20,
 		difficulty: 2,
@@ -728,6 +742,20 @@ JP: {
 		zone: "malchor",
 		description: "Malchor's cave wall climb with mini treasure chests"
 	},
+	"volcano": {
+		id: 77,
+		difficulty: 3,
+		name_en: "Skip up the Volcano",
+		name_de: "Hüpft auf den Vulkan",
+		name_es: "Ascenso volcánico",
+		name_fr: "Saut de volcan",
+		coord: [5582, 28957],
+		path: null,
+		img: "http://i.imgur.com/Dl7rjSo.png",
+		chest: null,
+		zone: "ember",
+		description: "Ember volcano tunnel and mountain climb with checkpoints"
+	},
 	"drydock": {
 		id: 59,
 		difficulty: 3,
@@ -797,20 +825,6 @@ JP: {
 		chest: null,
 		zone: "caledon",
 		description: "Caledon nightmare court blue hideout after Morgan's Spiral"
-	},
-	"garden": {
-		id: 27,
-		difficulty: 3,
-		name_en: "Hidden Garden",
-		name_de: "Verborgener Garten",
-		name_es: "Jardín Oculto",
-		name_fr: "Jardin caché",
-		coord: [21357, 21885],
-		path: null,
-		img: "http://i.imgur.com/ZgnQGFR.png",
-		chest: null,
-		zone: "maelstrom",
-		description: "Maelstrom unlock four element cantles. Keeper portal to JP locations: <dfn data-coord='[18335, 22125]'>Earth</dfn>, <dfn data-coord='[19514, 22714]'>Light</dfn>, <dfn data-coord='[20143, 22209]'>Waves</dfn>, <dfn data-coord='[20770, 23385]'>Winds</dfn>. Cantals are at sky and ground level of the center, southeast waterfalls, and north lake"
 	},
 	"skipping": {
 		id: 6,

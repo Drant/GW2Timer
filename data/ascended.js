@@ -382,6 +382,7 @@ var GW2T_ASCENDED_BLACKLIST = {
 	"70173": "Wei Qi's Shoulderguard",
 	"70170": "Wei Qi's Striders",
 	"70179": "Wei Qi's Visage",
+	"70172": "Mathilde's Impaler",
 	"70394": "Emblazoned Boots of the Dolyak",
 	"70337": "Emblazoned Coat of the Dolyak",
 	"70377": "Emblazoned Gloves of the Dolyak",
@@ -693,7 +694,8 @@ Back: [
 	{i: 79039, n: "Malicious Xera Backpiece (Infused)", p: {raid_ft: 600}},
 	{i: 79044, n: "Defender's Xera Backpiece (Infused)", p: {raid_ft: 600}},
 	{i: 79157, n: "Blood Ruby Backpack", p: {magic: 5000}},
-	{i: 79062, n: "Blood Ruby Backpack (Infused)", p: {magic: 5000}}
+	{i: 79062, n: "Blood Ruby Backpack (Infused)", p: {magic: 5000}},
+	{i: 79463, n: "Lava Skull Backpack", p: {magic: 5000}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -973,7 +975,8 @@ Accessory: [
 	{i: 78829, n: "Pointed Keep Fragment", p: {raid_ft: 250}},
 	{i: 78863, n: "Jagged Keep Fragment", p: {raid_ft: 250}},
 	{i: 78878, n: "Rounded Keep Fragment", p: {raid_ft: 250}},
-	{i: 78915, n: "Hardened Keep Fragment", p: {raid_ft: 250}}
+	{i: 78915, n: "Hardened Keep Fragment", p: {raid_ft: 250}},
+	{i: 79444, n: "Sparking Petrified Wood", p: {magic: 4000}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1038,7 +1041,7 @@ Amulet: [
 	{i: 72529, n: "Vigil's Honor", p: {achievement: 0}},
 	{i: 74695, n: "Whisper's Secret", p: {achievement: 0}},
 	{i: 67898, n: "Wynne's Locket", p: {laurel: 20}},
-	{i: 79269, n: "Blood Ruby Pendant", p: {magic: 3000}},
+	{i: 79269, n: "Blood Ruby Pendant", p: {magic: 3000}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
@@ -1843,7 +1846,8 @@ Mace: [
 	{i: 77917, n: "Healer's White Mantle Gavel", p: {coin: 1100000}},
 	{i: 77977, n: "Assaulter's White Mantle Gavel", p: {coin: 1100000}},
 	{i: 78056, n: "Kaiser Snake Mace", p: {coin: 1100000}},
-	{i: 78098, n: "Kaiser Snake Mace", p: {coin: 1100000}}
+	{i: 78098, n: "Kaiser Snake Mace", p: {coin: 1100000}},
+	{i: 79570, n: "Endeavor", p: {coin: 1100000}}
 ],
 Sword: [
 	{i: 77287, n: "Chest of Swords", p: {coin: 1200000}},
@@ -2443,7 +2447,8 @@ Staff: [
 	{i: 78805, n: "Defender's White Mantle Staff", p: {coin: 1200000}},
 	{i: 78895, n: "Malicious White Mantle Staff", p: {coin: 1200000}},
 	{i: 78911, n: "Assaulter's White Mantle Staff", p: {coin: 1200000}},
-	{i: 78931, n: "Healer's White Mantle Staff", p: {coin: 1200000}}
+	{i: 78931, n: "Healer's White Mantle Staff", p: {coin: 1200000}},
+	{i: 79364, n: "Great Destroyer's Talon", p: {coin: 1200000}}
 ],
 Harpoon: [
 	{i: 77388, n: "Chest of Spears", p: {coin: 1100000}},

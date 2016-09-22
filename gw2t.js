@@ -6019,7 +6019,7 @@ Z = {
 				{
 					return "Junk";
 				}
-				if (desc.indexOf("event item") !== -1 || (pItem.vendor_value > 0 && pItem.flags.indexOf("NoSell") === -1))
+				if (desc.indexOf("event item") !== -1 || desc.indexOf("task item") !== -1 || (pItem.vendor_value > 0 && pItem.flags.indexOf("NoSell") === -1))
 				{
 					if (pItem.rarity !== "Legendary")
 					{
@@ -20164,7 +20164,8 @@ M = {
 				// Event Icon
 				if (O.Options.bol_displayEvents)
 				{
-					this.ZoneCurrent.Layers.EventIcon.eachLayer(function(iLayer) {
+					this.ZoneCurrent.Layers.EventIcon.eachLayer(function(iLayer)
+					{
 						that.resizeMarkerIcon(iLayer, eventiconsize);
 						if (iLayer._icon)
 						{
@@ -20173,13 +20174,19 @@ M = {
 					});
 
 					// Event Ring
-					this.ZoneCurrent.Layers.EventRing.eachLayer(function(iLayer) {
+					this.ZoneCurrent.Layers.EventRing.eachLayer(function(iLayer)
+					{
 						that.resizeMarkerIcon(iLayer, eventringsize);
 						if (iLayer._icon)
 						{
 							iLayer._icon.style.zIndex = M.cZIndexBury;
 						}
 					});
+				}
+				// Directional launch pads
+				if (O.Options.bol_showZoneGateways)
+				{
+					P.updateLaunchpad();
 				}
 				overviewboolean = O.Options.bol_showZoneOverview;
 				completionboolean = O.Options.bol_showWorldCompletion;
@@ -20198,25 +20205,29 @@ M = {
 				completionboolean = O.Options.bol_showWorldCompletionWvW;
 				sectorboolean = O.Options.bol_displaySectorsWvW;
 				// Server spawn area labels
-				this.Layer.SpawnLabel.eachLayer(function(iLayer) {
+				this.Layer.SpawnLabel.eachLayer(function(iLayer)
+				{
 					iLayer._icon.style.fontSize = spawnfont + "px";
 					iLayer._icon.style.opacity = spawnopacity;
 					iLayer._icon.style.zIndex = that.cZIndexBury + 1;
 					iLayer._icon.style.display = "table";
 				});
 				// Secondary objectives
-				this.Layer.Secondaries.eachLayer(function(iLayer) {
+				this.Layer.Secondaries.eachLayer(function(iLayer)
+				{
 					that.resizeMarkerIcon(iLayer, landmarksize);
 				});
 				// Destructible walls and gates paths
-				this.Layer.Destructible.eachLayer(function(iLayer) {
+				this.Layer.Destructible.eachLayer(function(iLayer)
+				{
 					iLayer.setStyle({weight: wallweight});
 				});
 			} break;
 		}
 		
 		// Adjust range circles
-		this.Layer.WeaponCircle.eachLayer(function(iLayer) {
+		this.Layer.WeaponCircle.eachLayer(function(iLayer)
+		{
 			iLayer.setRadius(that.getZoomedDistance(iLayer.options.trueradius));
 		});
 		
@@ -20226,7 +20237,8 @@ M = {
 			if (currentzoom === this.ZoomEnum.Overview)
 			{
 				this.toggleLayer(this.Layer.Overview, true);
-				this.Layer.Overview.eachLayer(function(iLayer) {
+				this.Layer.Overview.eachLayer(function(iLayer)
+				{
 					iLayer._icon.style.display = "table";
 				});
 			}
@@ -20241,12 +20253,14 @@ M = {
 		}
 
 		// Waypoints
-		this.ZoneCurrent.Layers.Waypoint.eachLayer(function(iLayer) {
+		this.ZoneCurrent.Layers.Waypoint.eachLayer(function(iLayer)
+		{
 			that.resizeMarkerIcon(iLayer, waypointsize);
 		});
 		
 		// Landmarks
-		this.ZoneCurrent.Layers.Landmark.eachLayer(function(iLayer) {
+		this.ZoneCurrent.Layers.Landmark.eachLayer(function(iLayer)
+		{
 			that.resizeMarkerIcon(iLayer, landmarksize);
 			if (iLayer._icon)
 			{
@@ -20255,22 +20269,26 @@ M = {
 		});
 		
 		// Vista
-		this.ZoneCurrent.Layers.Vista.eachLayer(function(iLayer) {
+		this.ZoneCurrent.Layers.Vista.eachLayer(function(iLayer)
+		{
 			that.resizeMarkerIcon(iLayer, landmarksize);
 		});
 		
 		// Challenge
-		this.ZoneCurrent.Layers.Challenge.eachLayer(function(iLayer) {
+		this.ZoneCurrent.Layers.Challenge.eachLayer(function(iLayer)
+		{
 			that.resizeMarkerIcon(iLayer, landmarksize);
 		});
 		
 		// Heart
-		this.ZoneCurrent.Layers.Heart.eachLayer(function(iLayer) {
+		this.ZoneCurrent.Layers.Heart.eachLayer(function(iLayer)
+		{
 			that.resizeMarkerIcon(iLayer, landmarksize);
 		});
 		
 		// Sector
-		this.ZoneCurrent.Layers.Sector.eachLayer(function(iLayer) {
+		this.ZoneCurrent.Layers.Sector.eachLayer(function(iLayer)
+		{
 			if (iLayer._icon)
 			{
 				iLayer._icon.style.fontSize = sectorfont + "px";
@@ -20517,7 +20535,8 @@ M = {
 		var latlngs = [];
 		var i = 0;
 		// Recompile pin coordinates for recreation
-		this.Layer.PersonalPin.eachLayer(function(iPin) {
+		this.Layer.PersonalPin.eachLayer(function(iPin)
+		{
 			latlngs.push(iPin.getLatLng());
 			if (i === pPrecede)
 			{
@@ -20541,7 +20560,8 @@ M = {
 	clearPersonalPins: function()
 	{
 		var that = this;
-		this.Layer.PersonalPin.eachLayer(function(iPin) {
+		this.Layer.PersonalPin.eachLayer(function(iPin)
+		{
 			that.toggleLayer(iPin, false);
 		});
 		this.Layer.PersonalPin.clearLayers();
@@ -20561,7 +20581,8 @@ M = {
 			var latlngs = [];
 			var pinids = [];
 			var length = 0;
-			this.Layer.PersonalPin.eachLayer(function(iPin) {
+			this.Layer.PersonalPin.eachLayer(function(iPin)
+			{
 				latlngs.push(iPin.getLatLng());
 				pinids.push(P.getLayerId(iPin));
 				length++;
@@ -20733,7 +20754,8 @@ M = {
 	{
 		var that = this;
 		var coords = [];
-		this.Layer.PersonalPin.eachLayer(function(iPin) {
+		this.Layer.PersonalPin.eachLayer(function(iPin)
+		{
 			coords.push(that.convertLCtoGC(iPin.getLatLng()));
 		});
 		return coords;
@@ -20758,7 +20780,8 @@ M = {
 		var mindistance = Number.POSITIVE_INFINITY;
 		var minmarker = null;
 		
-		pLayerGroup.eachLayer(function(iLayer) {
+		pLayerGroup.eachLayer(function(iLayer)
+		{
 			distance = P.getDistanceBetweenCoords(pCoord, that.convertLCtoGC(iLayer.getLatLng()));
 			if (distance < mindistance)
 			{
@@ -21607,6 +21630,17 @@ M = {
 	},
 	
 	/*
+	 * Gets the angle between two map coordinates.
+	 * @param array pCoordA game coordinates.
+	 * @param array pCoordB game coordinates.
+	 * @returns float degree.
+	 */
+	convertDirectionAngle: function(pCoordA, pCoordB)
+	{
+		return Math.atan2(pCoordB[1] - pCoordA[1], pCoordB[0] - pCoordA[0]) * T.cRADIAN_TO_DEGREE;
+	},
+	
+	/*
 	 * Converts a coordinate string to array coordinates.
 	 * @param string pString coordinates in the form of "[X, Y]" GW2 coords.
 	 * @returns array of numbers.
@@ -21887,6 +21921,7 @@ P = {
 	Layer: {
 		ZoneBorder: new L.layerGroup(), // Rectangles colored specific to the zones' region
 		ZoneGateway: new L.layerGroup(), // Interzone and intergate connections
+		ZoneLaunchpad: new L.layerGroup(), // One direction transports
 		DryTopNicks: new L.layerGroup(), // Dry Top event names and timestamps
 		Chest: new L.layerGroup()
 	},
@@ -23032,11 +23067,17 @@ P = {
 			var connection = GW2T_GATEWAY_CONNECTION;
 			var launchpads = connection.launchpads;
 			
+			// pCoord may be a single coordinate, or two coordinates 2D array
 			var createGate = function(pCoord, pImage, pOpacity, pTitle)
 			{
-				pTitle = (pTitle === undefined) ? null : pTitle;
-				var marker = L.marker(M.convertGCtoLC(pCoord),
+				var coordA = pCoord;
+				var coordB;
+				if (Array.isArray(pCoord[0]))
 				{
+					coordA = pCoord[0];
+					coordB = pCoord[1];
+				}
+				var options = {
 					icon: L.icon(
 					{
 						iconUrl: pImage,
@@ -23045,7 +23086,12 @@ P = {
 					}),
 					opacity: pOpacity || 0.6,
 					title: pTitle
-				});
+				};
+				if (coordB)
+				{
+					options.direction = M.convertDirectionAngle(coordA, coordB) + T.cCIRCLE_RIGHT_DEGREE;
+				}
+				var marker = L.marker(M.convertGCtoLC(coordA), options);
 				M.bindMarkerZoomBehavior(marker, "click");
 				M.bindMarkerZoomBehavior(marker, "contextmenu");
 				return marker;
@@ -23078,23 +23124,41 @@ P = {
 			drawGates(connection.interzones, "interzones", "purple");
 			drawGates(connection.intrazones, "intrazones", "white");
 			// One-way "gate" special case
-			for (var i in launchpads)
+			launchpads.forEach(function(iLaunchpad)
 			{
-				var tooltip = "<div class='mapLoc'><img src='" + (launchpads[i]).i + "' /></div>";
+				var tooltip = (iLaunchpad.i) ? "<div class='mapLoc'><img src='" + iLaunchpad.i + "' /></div>" : null;
 				// Draw the launchpad (first inner coordinates)
-				marker = createGate((launchpads[i]).c[0], "img/map/launchpad.png", 1, tooltip);
+				marker = createGate(iLaunchpad.c, "img/map/launchpad.png", 1, tooltip);
+				P.Layer.ZoneLaunchpad.addLayer(marker);
 				P.Layer.ZoneGateway.addLayer(marker);
 				// Draw the line trajectory
-				path = L.polyline(M.convertGCtoLCDual(launchpads[i].c),
+				path = L.polyline(M.convertGCtoLCDual(iLaunchpad.c),
 				{
 					color: "gold",
 					opacity: 0.2
 				});
 				P.Layer.ZoneGateway.addLayer(path);
-			}
+			});
 			I.qTip.init(".leaflet-marker-icon");
 		}
 		M.toggleLayer(P.Layer.ZoneGateway, O.Options.bol_showZoneGateways);
+		M.adjustZoomMapping();
+	},
+	
+	/*
+	 * Refreshes the rotate transform for directional launchpads because markers
+	 * reset upon zoom change.
+	 */
+	updateLaunchpad: function()
+	{
+		P.Layer.ZoneLaunchpad.eachLayer(function(iLayer)
+		{
+			var lptrans = iLayer._icon.style.transform.toString();
+			if (lptrans.indexOf("rotate") === -1)
+			{
+				iLayer._icon.style.transform = lptrans + " rotate(" + iLayer.options.direction + "deg)";
+			}
+		});
 	},
 	
 	/*
@@ -23368,7 +23432,8 @@ P = {
 				M.resizeMarkerIcon(icon, ringsize);
 			}
 			
-			P.Layer.DryTopNicks.eachLayer(function(iLayer) {
+			P.Layer.DryTopNicks.eachLayer(function(iLayer)
+			{
 				if (iLayer._icon)
 				{
 					iLayer._icon.style.fontSize = nickfontsize + "px";
@@ -24038,7 +24103,8 @@ G = {
 				var sumprice = 0;
 				
 				// Gather the coordinates of valid resource node markers
-				M.Map.eachLayer(function(iLayer) {
+				M.Map.eachLayer(function(iLayer)
+				{
 					if (iLayer instanceof L.Marker && iLayer.options.isNode
 						&& getNodeState(iLayer) === X.ChecklistEnum.Unchecked)
 					{

@@ -201,6 +201,7 @@ Orichalcum: {
 	
 	],
 	regulars: [
+	{c: [7021, 30360]}, // ember
 	{c: [2737, 14181]}, // bloodstone
 	{c: [2830, 14196]},
 	{c: [3013, 14371]},
@@ -315,6 +316,24 @@ Bloodstone: {
 	{c: [3147, 14104]},
 	{c: [3217, 14171]},
 	{c: [3240, 14175]}
+	]
+},
+Petrified: {
+	name_en: "Petrified",
+	name_de: "Versteinerter",
+	name_es: "Petrificado",
+	name_fr: "Pétrifiée",
+	type: "Metal",
+	item: null,
+	riches: [
+	
+	],
+	regulars: [
+	{c: [7377, 29663]}, // ember
+	{c: [7340, 29422]},
+	{c: [7132, 29897]},
+	{c: [7188, 29630]},
+	{c: [6559, 29195]}
 	]
 },
 Sprocket: {
