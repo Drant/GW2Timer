@@ -1124,6 +1124,7 @@ textarea.jsCopyCode {
 }
 .dsbMenuItemActive {
 	border-top: 2px solid rgba(255, 238, 187, 0.4);
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 1) 100%);
 }
 .dsbMenuItem img {
 	width: 24px; height: 24px;
@@ -1868,7 +1869,7 @@ input.mapCoordinatesName {
 	opacity: 0.6;
 } 
 #clkHours, #clkHoursPrime {
-	font-family: Menomonia;
+	font-family: Trebuchet MS, Menomonia;
 	font-size: 5pt;
 	font-weight: bold;
 	text-anchor: middle;

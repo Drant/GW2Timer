@@ -91,6 +91,9 @@
 #dsbCountdown time {
 	font-size: 16px;
 }
+.dsbSaleEntry {
+	width: 192px;
+}
 .mapGPS {
 	display: inline-block;
 }

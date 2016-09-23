@@ -34,6 +34,7 @@ Copper: {
 	name_de: "Kupfer",
 	name_es: "Cobre",
 	name_fr: "Cuivre",
+	name_zh: "銅",
 	type: "Metal",
 	item: "19697",
 	riches: [
@@ -55,6 +56,7 @@ Iron: {
 	name_de: "Eisen",
 	name_es: "Hierro",
 	name_fr: "Fer",
+	name_zh: "鐵",
 	type: "Metal",
 	item: "19699",
 	riches: [
@@ -87,6 +89,7 @@ Silver: {
 	name_de: "Silber",
 	name_es: "Plata",
 	name_fr: "Argent",
+	name_zh: "銀",
 	type: "Metal",
 	item: "19703",
 	riches: [
@@ -109,6 +112,7 @@ Gold: {
 	name_de: "Gold",
 	name_es: "Oro",
 	name_fr: "Or",
+	name_zh: "金",
 	type: "Metal",
 	item: "19698",
 	riches: [
@@ -127,6 +131,7 @@ Platinum: {
 	name_de: "Platin",
 	name_es: "Platino",
 	name_fr: "Platine",
+	name_zh: "鉑",
 	type: "Metal",
 	item: "19702",
 	riches: [
@@ -154,6 +159,7 @@ Mithril: {
 	name_de: "Mithril",
 	name_es: "Mithril",
 	name_fr: "Mithril",
+	name_zh: "秘銀",
 	type: "Metal",
 	item: "19700",
 	riches: [
@@ -195,13 +201,16 @@ Orichalcum: {
 	name_de: "Orichalcum",
 	name_es: "Oricalco",
 	name_fr: "Orichalque",
+	name_zh: "星隕石",
 	type: "Metal",
 	item: "19701",
 	riches: [
-	
+	{c: [12424, 19478], p: [[11939,20507],[12004,20476],[12080,20379],[12117,20249],[12114,20145],[12343,19727],[12328,19542],[12455,19512],[12484,19575],[12379,19618],[12286,19576],[12291,19518],[12400,19488]]}, // southsun
+	{c: [2540, 17456], p: [[2302,17430],[2375,17482],[2515,17495],[2540,17457]]} // auric
 	],
 	regulars: [
 	{c: [7021, 30360]}, // ember
+	{c: [5400, 29707]},
 	{c: [2737, 14181]}, // bloodstone
 	{c: [2830, 14196]},
 	{c: [3013, 14371]},
@@ -219,8 +228,7 @@ Orichalcum: {
 	{c: [5023, 16529]},
 	{c: [5166, 16783]},
 	{c: [5170, 16294]},
-	{c: [12424, 19478]}, // southsun
-	{c: [11939, 20363]},
+	{c: [11939, 20363]}, // southsun
 	{c: [12032, 19858]},
 	{c: [12343, 20066]},
 	{c: [12530, 20204]},
@@ -259,16 +267,44 @@ Quartz: {
 	name_de: "Quarz",
 	name_es: "Cuarzo",
 	name_fr: "Quartz",
+	name_zh: "石英",
 	type: "Metal",
 	item: "43773",
 	riches: [
 	{c: [11519, 10456]}, // divinity
 	{c: [5373, 16541]}, // dry
 	{c: [5347, 16621], p: [[5235,16353],[5287,16425],[5303,16567],[5314,16607],[5351,16556],[5402,16493],[5481,16448],[5504,16459],[5489,16524],[5373,16614]]},
-	{c: [4529, 16799]}
+	{c: [4529, 16799], p: [[4143,16291],[4276,16235],[4515,16616],[4532,16720]]}
 	],
 	regulars: [
 	
+	]
+},
+Sprocket: {
+	name_en: "Sprocket",
+	name_de: "Zwischenzahnrad",
+	name_es: "Engranaje",
+	name_fr: "Pignon",
+	name_zh: "鏈",
+	type: "Metal",
+	item: "44941",
+	riches: [
+	{c: [11518, 10483]} // divinity
+	]
+},
+Magic: {
+	name_en: "Magic",
+	name_de: "Magie",
+	name_es: "Magia",
+	name_fr: "Magie",
+	name_zh: "魔法",
+	type: "Metal",
+	item: null,
+	riches: [
+	
+	],
+	regulars: [
+		
 	]
 },
 Bloodstone: {
@@ -276,6 +312,7 @@ Bloodstone: {
 	name_de: "Blutstein",
 	name_es: "Hematite",
 	name_fr: "Pierresang",
+	name_zh: "血石",
 	type: "Metal",
 	item: null,
 	riches: [
@@ -323,42 +360,22 @@ Petrified: {
 	name_de: "Versteinerter",
 	name_es: "Petrificado",
 	name_fr: "Pétrifiée",
+	name_zh: "木化石",
 	type: "Metal",
 	item: null,
 	riches: [
 	
 	],
 	regulars: [
-	{c: [7377, 29663]}, // ember
-	{c: [7340, 29422]},
+	{c: [6559, 29195]}, // ember
+	{c: [6742, 28893]},
+	{c: [6948, 29577]},
 	{c: [7132, 29897]},
 	{c: [7188, 29630]},
-	{c: [6559, 29195]}
-	]
-},
-Sprocket: {
-	name_en: "Sprocket",
-	name_de: "Zwischenzahnrad",
-	name_es: "Engranaje",
-	name_fr: "Pignon",
-	type: "Metal",
-	item: "44941",
-	riches: [
-	{c: [11518, 10483]} // divinity
-	]
-},
-Poultry: {
-	name_en: "Poultry",
-	name_de: "Geflügelfleisch",
-	name_es: "Avecarne",
-	name_fr: "Volaille",
-	type: "Metal",
-	item: "24360",
-	regulars: [
-	{c: [27758, 11288]}, // marches
-	{c: [27805, 11398]},
-	{c: [27862, 11429]},
-	{c: [27660, 11413]}
+	{c: [7141, 29418]},
+	{c: [7340, 29422]},
+	{c: [7377, 29663]},
+	{c: [7912, 29246]}
 	]
 },
 /* =============================================================================
@@ -369,6 +386,7 @@ Green: {
 	name_de: "Grüner",
 	name_es: "Verde",
 	name_fr: "Vert",
+	name_zh: "青木",
 	type: "Wood",
 	item: "19723",
 	hotspots: [
@@ -434,6 +452,7 @@ Soft: {
 	name_de: "Geschmeidiger",
 	name_es: "Blanda",
 	name_fr: "Tendre",
+	name_zh: "軟木",
 	type: "Wood",
 	item: "19726",
 	hotspots: [
@@ -541,6 +560,7 @@ Seasoned: {
 	name_de: "Abgelagerter",
 	name_es: "Curtida",
 	name_fr: "Séché",
+	name_zh: "老練木",
 	type: "Wood",
 	item: "19727",
 	hotspots: [
@@ -608,6 +628,7 @@ Hard: {
 	name_de: "Harter",
 	name_es: "Sólida",
 	name_fr: "Dur",
+	name_zh: "硬木",
 	type: "Wood",
 	item: "19724",
 	hotspots: [
@@ -692,6 +713,7 @@ Elder: {
 	name_de: "Alter",
 	name_es: "Ancestral",
 	name_fr: "Ancestral",
+	name_zh: "長老木",
 	type: "Wood",
 	item: "19722",
 	riches: [
@@ -727,10 +749,11 @@ Ancient: {
 	name_de: "Antiker",
 	name_es: "Antigua",
 	name_fr: "Ancien",
+	name_zh: "古木",
 	type: "Wood",
 	item: "19725",
 	riches: [
-	
+	{c: [2164, 17618], p: [[2278,17440],[2264,17466],[2256,17542],[2171,17613]]} // auric
 	],
 	regulars: [
 	{c: [2432, 14313]}, // bloodstone
@@ -786,6 +809,7 @@ Mixed: {
 	name_de: "Gemischt",
 	name_es: "Mixto",
 	name_fr: "Mélangé",
+	name_zh: "雜",
 	type: "Wood",
 	item: null,
 	hotspots: [
@@ -794,10 +818,12 @@ Mixed: {
 	{c: [16991, 16085]},
 	{c: [16699, 15999]},
 	{c: [17130, 17359]},
+	{c: [7423, 15748]}, // brisban
 	{c: [20412, 22297]}, // maelstrom
 	{c: [18121, 22874]},
 	{c: [19623, 21910]},
 	{c: [20102, 21960]},
+	{c: [19019, 17736]}, // lornar
 	{c: [19917, 16932]}, // dredgehaunt
 	{c: [21074, 17050]},
 	{c: [21048, 15718]},
@@ -805,6 +831,7 @@ Mixed: {
 	{c: [19891, 20966]},
 	{c: [20732, 19382]},
 	{c: [22738, 9023]}, // frostgorge
+	{c: [26651, 12362]}, // diessa
 	{c: [29741, 17577]}, // fields
 	{c: [30717, 12686]}, // blazeridge
 	{c: [30937, 16047]},
@@ -812,6 +839,7 @@ Mixed: {
 	{c: [29410, 12779]},
 	{c: [27550, 12545]}, // marches
 	{c: [28843, 12540]},
+	{c: [24258, 10589]}, // fireheart
 	{c: [12702, 24562]}, // malchor
 	{c: [13035, 24669]},
 	{c: [13935, 24845]},
@@ -827,6 +855,7 @@ Lettuce: {
 	name_de: "Salatkopf",
 	name_es: "Lechuga",
 	name_fr: "Laitue",
+	name_zh: "萵苣",
 	type: "Plant",
 	item: "12238",
 	riches: [
@@ -843,6 +872,7 @@ Potato: {
 	name_de: "Kartoffel",
 	name_es: "Patata",
 	name_fr: "Patate",
+	name_zh: "馬鈴薯",
 	type: "Plant",
 	item: "12135",
 	riches: [
@@ -859,6 +889,7 @@ Strawberry: {
 	name_de: "Erdbeere",
 	name_es: "Fresa",
 	name_fr: "Fraise",
+	name_zh: "草莓",
 	type: "Plant",
 	item: "12253",
 	riches: [
@@ -875,6 +906,7 @@ Spinach: {
 	name_de: "Spinat",
 	name_es: "Espinaca",
 	name_fr: "Épinard",
+	name_zh: "菠菜",
 	type: "Plant",
 	item: "12241",
 	riches: [
@@ -890,6 +922,7 @@ Grape: {
 	name_de: "Traube",
 	name_es: "Uva",
 	name_fr: "Raisin",
+	name_zh: "葡萄",
 	type: "Plant",
 	item: "12341",
 	riches: [
@@ -905,6 +938,7 @@ Cabbage: {
 	name_de: "Kohlkopf",
 	name_es: "Repollo",
 	name_fr: "Chou",
+	name_zh: "捲心菜",
 	type: "Plant",
 	item: "12332",
 	riches: [
@@ -917,11 +951,27 @@ Cabbage: {
 		
 	]
 },
+Seaweed: {
+	name_en: "Seaweed",
+	name_de: "Seetang",
+	name_es: "Algas",
+	name_fr: "Algue",
+	name_zh: "海藻",
+	type: "Plant",
+	item: "12509",
+	riches: [
+	{c: [6372, 30553], p: [[6221,30068],[6372,30528]]}
+	],
+	regulars: [
+		
+	]
+},
 Pearlclam: {
 	name_en: "Pearl",
 	name_de: "Perle",
 	name_es: "Perla",
 	name_fr: "Perle",
+	name_zh: "珍珠",
 	type: "Plant",
 	item: "24500",
 	riches: [
@@ -936,6 +986,7 @@ Pearlmussel: {
 	name_de: "Perle",
 	name_es: "Perla",
 	name_fr: "Perle",
+	name_zh: "淡水珍珠",
 	type: "Plant",
 	item: "76179",
 	riches: [
@@ -955,6 +1006,7 @@ Vanilla: {
 	name_de: "Vanille",
 	name_es: "Vainilla",
 	name_fr: "Vanille",
+	name_zh: "香草",
 	type: "Plant",
 	item: "12234",
 	riches: [
@@ -971,6 +1023,7 @@ Pumpkin: {
 	name_de: "Kürbis",
 	name_es: "Calabaza",
 	name_fr: "Potiron",
+	name_zh: "甜南瓜",
 	type: "Plant",
 	item: "12538",
 	riches: [
@@ -986,6 +1039,7 @@ Cauliflower: {
 	name_de: "Blumenkohl",
 	name_es: "Coliflor",
 	name_fr: "Chou-fleur",
+	name_zh: "花椰菜頭",
 	type: "Plant",
 	item: "12532",
 	riches: [
@@ -1001,6 +1055,7 @@ Butternut: {
 	name_de: "Butternuss",
 	name_es: "Moscada",
 	name_fr: "Courge",
+	name_zh: "冬南瓜",
 	type: "Plant",
 	item: "12511",
 	riches: [
@@ -1016,6 +1071,7 @@ Artichoke: {
 	name_de: "Artischocke",
 	name_es: "Alcachofa",
 	name_fr: "Artichaut",
+	name_zh: "朝鮮薊",
 	type: "Plant",
 	item: "12512",
 	riches: [
@@ -1031,6 +1087,7 @@ Lemongrass: {
 	name_de: "Zitronengras",
 	name_es: "Limoncillo",
 	name_fr: "Citronnelle",
+	name_zh: "檸檬草",
 	type: "Plant",
 	item: "12546",
 	riches: [
@@ -1049,6 +1106,7 @@ Snowtruffle: {
 	name_de: "Schneetrüffel",
 	name_es: "Trufanieve",
 	name_fr: "Truffeneiges",
+	name_zh: "雪地鬆露",
 	type: "Plant",
 	item: "12144",
 	riches: [
@@ -1068,6 +1126,7 @@ Truffle: {
 	name_de: "Trüffel",
 	name_es: "Trufa",
 	name_fr: "Truffe",
+	name_zh: "歐爾鬆露",
 	type: "Plant",
 	item: "12545",
 	riches: [
@@ -1088,6 +1147,7 @@ Omnomberry: {
 	name_de: "Omnombeere",
 	name_es: "Omnom",
 	name_fr: "Omnom",
+	name_zh: "怪異莓",
 	type: "Plant",
 	item: "12128",
 	riches: [
@@ -1107,6 +1167,7 @@ Passiflora: {
 	name_de: "Maracujablüte",
 	name_es: "Florpasión",
 	name_fr: "Passiflore",
+	name_zh: "西番蓮",
 	type: "Plant",
 	item: "37907",
 	riches: [
@@ -1129,6 +1190,7 @@ Spore: {
 	name_de: "Spore",
 	name_es: "Espora",
 	name_fr: "Spore",
+	name_zh: "劇毒孢",
 	type: "Plant",
 	item: "48884",
 	riches: [
@@ -1167,6 +1229,7 @@ Foxfire: {
 	name_de: "Leuchtpilz",
 	name_es: "Lumin",
 	name_fr: "Biolumin",
+	name_zh: "狐火簇",
 	type: "Plant",
 	item: "66933",
 	riches: [
@@ -1183,6 +1246,7 @@ Flax: {
 	name_de: "Leinsamen",
 	name_es: "Lino",
 	name_fr: "Lin",
+	name_zh: "亞麻",
 	type: "Plant",
 	item: "74090",
 	riches: [

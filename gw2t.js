@@ -33258,6 +33258,7 @@ I = {
 			{
 				I.cPANE_MENU_HEIGHT = 32;
 				I.loadImg("#mapGPSIcon");
+				$("#dsbMenu").appendTo("#dsbContainer");
 			} break;
 			case I.ModeEnum.Simple:
 			{

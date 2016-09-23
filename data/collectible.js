@@ -1611,7 +1611,10 @@ MasteryInsight: {
 	{n: 21, c: [5346, 18778], t: "Terraced Hive"},
 	{n: 22, c: [4356, 18416], t: "Northern Confluence"},
 	{n: 23, c: [2996, 19380], t: "Twisting Viaduct"},
-	{n: 24, c: [3700, 18299], t: "Nuhoch Lane", e: 3}
+	{n: 24, c: [3700, 18299], t: "Nuhoch Lane", e: 2},
+	// ember
+	{n: 25, c: [5191, 29090], t: "Caliph's Steps", e: 0},
+	{n: 26, c: [7828, 28989], t: "Bleeding Pulpit", e: 3}
 	]
 },
 HeroChallenge: {
