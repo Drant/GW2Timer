@@ -23,112 +23,6 @@
 
 var GW2T_COLLECTIBLE_DATA = {
 // Must have same name as a Checklist object
-BloodstoneCreatures: {
-	name_en: "Bloodstone Sightings",
-	name_de: "Blutstein-Sichtungen",
-	name_es: "Avistamientos de hematites",
-	name_fr: "Repérages de pierra de sang",
-	color: "crimson",
-	view: "default",
-	wiki: "https://wiki.guildwars2.com/wiki/Bloodstone_Sightings",
-	credit: "http://forum.renaka.com/topic/6205181/",
-	iconsize: 96,
-	ringsize: 48,
-	wantpath: false,
-	needles: [
-	{n: 1, c: [19398, 12732], i: "moa", t: "Moa"}, // snowden
-	{n: 1, c: [19372, 12546], i: "moa", t: "Moa"}, // snowden
-	{n: 1, c: [19881, 12307], i: "moa", t: "Moa"}, // snowden
-	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"}, // brisban
-	{n: 1, c: [7477, 15926], i: "moa", t: "Moa"}, // brisban
-	{n: 1, c: [7464, 14695], i: "moa", t: "Moa"}, // brisban
-	{n: 1, c: [6953, 16223], i: "moa", t: "Moa"}, // brisban
-	{n: 1, c: [25885, 11567], i: "moa", t: "Moa"}, // diessa
-	{n: 1, c: [25012, 11920], i: "moa", t: "Moa"}, // diessa
-	{n: 1, c: [24618, 11712], i: "moa", t: "Moa"}, // diessa
-	{n: 1, c: [24213, 13224], i: "moa", t: "Moa"}, // diessa
-	{n: 1, c: [11885, 14901], i: "moa", t: "Moa"}, // kessex
-	{n: 1, c: [9683, 14257], i: "moa", t: "Moa"}, // kessex
-	{n: 1, c: [12970, 15407], i: "moa", t: "Moa"}, // kessex
-	{n: 1, c: [12144, 15044], i: "moa", t: "Moa"}, // kessex
-	{n: 1, c: [9788, 14474], i: "moa", t: "Moa"}, // kessex
-	{n: 1, c: [12663, 15713], i: "moa", t: "Moa"}, // kessex
-	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
-	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
-	{n: 1, c: [18930, 13090], i: "arctodus", t: "Arctodus"}, // snowden
-	{n: 1, c: [19771, 12971], i: "arctodus", t: "Arctodus"}, // snowden
-	{n: 1, c: [15559, 12471], i: "arctodus", t: "Arctodus"}, // gendarran
-	{n: 1, c: [14019, 13479], i: "arctodus", t: "Arctodus"}, // gendarran
-	{n: 1, c: [16662, 13203], i: "arctodus", t: "Arctodus"}, // gendarran
-	{n: 1, c: [18309, 14668], i: "arctodus", t: "Arctodus"}, // lornar
-	{n: 1, c: [17978, 14254], i: "arctodus", t: "Arctodus"}, // lornar
-	{n: 1, c: [18602, 13568], i: "arctodus", t: "Arctodus"}, // lornar
-	{n: 1, c: [3042, 14848], i: "wyvern", t: "Wyvern"}, // verdant
-	{n: 1, c: [2914, 15050], i: "wyvern", t: "Wyvern"}, // verdant
-	{n: 1, c: [1738, 15936], i: "wyvern", t: "Wyvern"}, // verdant
-	{n: 1, c: [1528, 15973], i: "wyvern", t: "Wyvern"}, // verdant
-	{n: 1, c: [3534, 19108], i: "wyvern", t: "Wyvern"}, // tangled
-	{n: 1, c: [3778, 19176], i: "wyvern", t: "Wyvern"}, // tangled
-	{n: 1, c: [4200, 18932], i: "wyvern", t: "Wyvern"}, // tangled
-	{n: 1, c: [3676, 18717], i: "wyvern", t: "Wyvern"}, // tangled
-	{n: 1, c: [21860, 8522], i: "shark", t: "Shark"}, // frostgorge
-	{n: 1, c: [22372, 8685], i: "shark", t: "Shark"}, // frostgorge
-	{n: 1, c: [21099, 9311], i: "shark", t: "Shark"}, // frostgorge
-	{n: 1, c: [21175, 9120], i: "shark", t: "Shark"}, // frostgorge
-	{n: 1, c: [21560, 9738], i: "shark", t: "Shark"}, // frostgorge
-	{n: 1, c: [22774, 8741], i: "shark", t: "Shark"}, // frostgorge
-	{n: 1, c: [22111, 9448], i: "shark", t: "Shark"}, // frostgorge
-	{n: 1, c: [22233, 8914], i: "shark", t: "Shark"}, // frostgorge
-	{n: 1, c: [21330, 10386], i: "shark", t: "Shark"}, // frostgorge
-	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // maelstrom
-	{n: 1, c: [21471, 22973], i: "shark", t: "Shark"}, // maelstrom
-	{n: 1, c: [21249, 23571], i: "shark", t: "Shark"}, // maelstrom
-	{n: 1, c: [15405, 17226], i: "shark", t: "Shark"}, // bloodtide
-	{n: 1, c: [16869, 16874], i: "shark", t: "Shark"}, // bloodtide
-	{n: 1, c: [16121, 17600], i: "shark", t: "Shark"}, // bloodtide
-	{n: 1, c: [15527, 16661], i: "shark", t: "Shark"}, // bloodtide
-	{n: 1, c: [5359, 16359], i: "devourer", t: "Devourer"}, // dry
-	{n: 1, c: [4215, 16511], i: "devourer", t: "Devourer"}, // dry
-	{n: 1, c: [4578, 16582], i: "devourer", t: "Devourer"}, // dry
-	{n: 1, c: [4932, 15902], i: "devourer", t: "Devourer"}, // dry
-	{n: 1, c: [4076, 16673], i: "devourer", t: "Devourer"}, // dry
-	{n: 1, c: [4390, 15944], i: "devourer", t: "Devourer"}, // dry
-	{n: 1, c: [5039, 16623], i: "devourer", t: "Devourer"}, // dry
-	{n: 1, c: [5228, 14493], i: "devourer", t: "Devourer"}, // silverwastes
-	{n: 1, c: [4785, 15415], i: "devourer", t: "Devourer"}, // silverwastes
-	{n: 1, c: [4731, 14605], i: "devourer", t: "Devourer"}, // silverwastes
-	{n: 1, c: [5140, 15057], i: "devourer", t: "Devourer"}, // silverwastes
-	{n: 1, c: [30700, 12974], i: "devourer", t: "Devourer"}, // blazeridge
-	{n: 1, c: [30807, 15105], i: "devourer", t: "Devourer"}, // blazeridge
-	{n: 1, c: [30357, 14829], i: "devourer", t: "Devourer"}, // blazeridge
-	{n: 1, c: [30329, 15368], i: "devourer", t: "Devourer"}, // blazeridge
-	{n: 1, c: [30796, 18631], i: "devourer", t: "Devourer"}, // fields
-	{n: 1, c: [30582, 16724], i: "devourer", t: "Devourer"}, // fields
-	{n: 1, c: [30059, 16697], i: "devourer", t: "Devourer"} // fields
-	]
-},
-BloodstoneSlivers: {
-	name_en: "Bloodstone Harvest",
-	name_de: "Blutstein-Ernte",
-	name_es: "Recolección de hematites",
-	name_fr: "Récolte de pierres de sang",
-	color: "red",
-	view: "default",
-	wiki: "https://wiki.guildwars2.com/wiki/Bloodstone_Harvest",
-	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
-	needles: [
-	{n: 1, c: [6112, 20746], t: "Outside surface of Rata Sum, climb vine near waypoint"},
-	{n: 2, c: [2848, 15087], t: "Near Levvi's device"},
-	{n: 3, c: [5303, 14701], t: "Top of upside-down ship northside in Drydock Scratch JP"},
-	{n: 4, c: [7474, 14784], t: "Near hero challenge point"},
-	{n: 5, c: [11436, 12002], t: "Low on a cemetery tree"},
-	{n: 6, c: [15309, 11523], t: "Cliff corner edge outside the fence"},
-	{n: 7, c: [21556, 8816], t: "On steps by gate"},
-	{n: 8, c: [31178, 12389], t: "End of stream behind Craze's Folly JP"},
-	{n: 9, c: [20517, 20679], t: "On pole opposite of vista"},
-	{n: 10, c: [19005, 23330], t: "Drop down into volcano cave north of waypoint"}
-	]
-},
 NoxiousPods: {
 	name_en: "Noxious Pods",
 	name_de: "Giftigen Kapseln",
@@ -984,6 +878,112 @@ SkrittBurglar: {
 		{n: 98, c: [30554, 16362]},
 		{n: 99, c: [30995, 16609]},
 		{n: 100, c: [31109, 19216]}
+	]
+},
+BloodstoneCreatures: {
+	name_en: "Bloodstone Sightings",
+	name_de: "Blutstein-Sichtungen",
+	name_es: "Avistamientos de hematites",
+	name_fr: "Repérages de pierra de sang",
+	color: "crimson",
+	view: "default",
+	wiki: "https://wiki.guildwars2.com/wiki/Bloodstone_Sightings",
+	credit: "http://forum.renaka.com/topic/6205181/",
+	iconsize: 96,
+	ringsize: 48,
+	wantpath: false,
+	needles: [
+	{n: 1, c: [19398, 12732], i: "moa", t: "Moa"}, // snowden
+	{n: 1, c: [19372, 12546], i: "moa", t: "Moa"}, // snowden
+	{n: 1, c: [19881, 12307], i: "moa", t: "Moa"}, // snowden
+	{n: 1, c: [7505, 14931], i: "moa", t: "Moa"}, // brisban
+	{n: 1, c: [7477, 15926], i: "moa", t: "Moa"}, // brisban
+	{n: 1, c: [7464, 14695], i: "moa", t: "Moa"}, // brisban
+	{n: 1, c: [6953, 16223], i: "moa", t: "Moa"}, // brisban
+	{n: 1, c: [25885, 11567], i: "moa", t: "Moa"}, // diessa
+	{n: 1, c: [25012, 11920], i: "moa", t: "Moa"}, // diessa
+	{n: 1, c: [24618, 11712], i: "moa", t: "Moa"}, // diessa
+	{n: 1, c: [24213, 13224], i: "moa", t: "Moa"}, // diessa
+	{n: 1, c: [11885, 14901], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [9683, 14257], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [12970, 15407], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [12144, 15044], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [9788, 14474], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [12663, 15713], i: "moa", t: "Moa"}, // kessex
+	{n: 1, c: [18951, 11808], i: "arctodus", t: "Arctodus"}, // snowden
+	{n: 1, c: [19276, 11690], i: "arctodus", t: "Arctodus"}, // snowden
+	{n: 1, c: [18930, 13090], i: "arctodus", t: "Arctodus"}, // snowden
+	{n: 1, c: [19771, 12971], i: "arctodus", t: "Arctodus"}, // snowden
+	{n: 1, c: [15559, 12471], i: "arctodus", t: "Arctodus"}, // gendarran
+	{n: 1, c: [14019, 13479], i: "arctodus", t: "Arctodus"}, // gendarran
+	{n: 1, c: [16662, 13203], i: "arctodus", t: "Arctodus"}, // gendarran
+	{n: 1, c: [18309, 14668], i: "arctodus", t: "Arctodus"}, // lornar
+	{n: 1, c: [17978, 14254], i: "arctodus", t: "Arctodus"}, // lornar
+	{n: 1, c: [18602, 13568], i: "arctodus", t: "Arctodus"}, // lornar
+	{n: 1, c: [3042, 14848], i: "wyvern", t: "Wyvern"}, // verdant
+	{n: 1, c: [2914, 15050], i: "wyvern", t: "Wyvern"}, // verdant
+	{n: 1, c: [1738, 15936], i: "wyvern", t: "Wyvern"}, // verdant
+	{n: 1, c: [1528, 15973], i: "wyvern", t: "Wyvern"}, // verdant
+	{n: 1, c: [3534, 19108], i: "wyvern", t: "Wyvern"}, // tangled
+	{n: 1, c: [3778, 19176], i: "wyvern", t: "Wyvern"}, // tangled
+	{n: 1, c: [4200, 18932], i: "wyvern", t: "Wyvern"}, // tangled
+	{n: 1, c: [3676, 18717], i: "wyvern", t: "Wyvern"}, // tangled
+	{n: 1, c: [21860, 8522], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [22372, 8685], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [21099, 9311], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [21175, 9120], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [21560, 9738], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [22774, 8741], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [22111, 9448], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [22233, 8914], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [21330, 10386], i: "shark", t: "Shark"}, // frostgorge
+	{n: 1, c: [21038, 23277], i: "shark", t: "Shark"}, // maelstrom
+	{n: 1, c: [21471, 22973], i: "shark", t: "Shark"}, // maelstrom
+	{n: 1, c: [21249, 23571], i: "shark", t: "Shark"}, // maelstrom
+	{n: 1, c: [15405, 17226], i: "shark", t: "Shark"}, // bloodtide
+	{n: 1, c: [16869, 16874], i: "shark", t: "Shark"}, // bloodtide
+	{n: 1, c: [16121, 17600], i: "shark", t: "Shark"}, // bloodtide
+	{n: 1, c: [15527, 16661], i: "shark", t: "Shark"}, // bloodtide
+	{n: 1, c: [5359, 16359], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [4215, 16511], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [4578, 16582], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [4932, 15902], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [4076, 16673], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [4390, 15944], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [5039, 16623], i: "devourer", t: "Devourer"}, // dry
+	{n: 1, c: [5228, 14493], i: "devourer", t: "Devourer"}, // silverwastes
+	{n: 1, c: [4785, 15415], i: "devourer", t: "Devourer"}, // silverwastes
+	{n: 1, c: [4731, 14605], i: "devourer", t: "Devourer"}, // silverwastes
+	{n: 1, c: [5140, 15057], i: "devourer", t: "Devourer"}, // silverwastes
+	{n: 1, c: [30700, 12974], i: "devourer", t: "Devourer"}, // blazeridge
+	{n: 1, c: [30807, 15105], i: "devourer", t: "Devourer"}, // blazeridge
+	{n: 1, c: [30357, 14829], i: "devourer", t: "Devourer"}, // blazeridge
+	{n: 1, c: [30329, 15368], i: "devourer", t: "Devourer"}, // blazeridge
+	{n: 1, c: [30796, 18631], i: "devourer", t: "Devourer"}, // fields
+	{n: 1, c: [30582, 16724], i: "devourer", t: "Devourer"}, // fields
+	{n: 1, c: [30059, 16697], i: "devourer", t: "Devourer"} // fields
+	]
+},
+BloodstoneSlivers: {
+	name_en: "Bloodstone Harvest",
+	name_de: "Blutstein-Ernte",
+	name_es: "Recolección de hematites",
+	name_fr: "Récolte de pierres de sang",
+	color: "red",
+	view: "default",
+	wiki: "https://wiki.guildwars2.com/wiki/Bloodstone_Harvest",
+	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	needles: [
+	{n: 1, c: [6112, 20746], t: "Outside surface of Rata Sum, climb vine near waypoint"},
+	{n: 2, c: [2848, 15087], t: "Near Levvi's device"},
+	{n: 3, c: [5303, 14701], t: "Top of upside-down ship northside in Drydock Scratch JP"},
+	{n: 4, c: [7474, 14784], t: "Near hero challenge point"},
+	{n: 5, c: [11436, 12002], t: "Low on a cemetery tree"},
+	{n: 6, c: [15309, 11523], t: "Cliff corner edge outside the fence"},
+	{n: 7, c: [21556, 8816], t: "On steps by gate"},
+	{n: 8, c: [31178, 12389], t: "End of stream behind Craze's Folly JP"},
+	{n: 9, c: [20517, 20679], t: "On pole opposite of vista"},
+	{n: 10, c: [19005, 23330], t: "Drop down into volcano cave north of waypoint"}
 	]
 },
 PaperScraps: {

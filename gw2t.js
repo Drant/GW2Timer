@@ -1405,6 +1405,7 @@ X = {
 		JP: { key: "str_chlJP", value: "" },
 		Chest: { key: "str_chlChest", value: "" },
 		ResourceRich: { key: "str_chlResourceRich", value: "" },
+		ResourcePermanent: { key: "str_chlResourcePermanent", value: "" },
 		ResourceRegular: { key: "str_chlResourceRegular", value: "" },
 		ResourceHotspot: { key: "str_chlResourceHotspot", value: "" },
 		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
@@ -2519,8 +2520,6 @@ U = {
 		ItemRender: "https://render.guildwars2.com/file/",
 		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
 		GemPrice: "https://api.guildwars2.com/v2/commerce/exchange/coins?quantity=",
-		ItemSearch: "http://www.gw2spidy.com/api/v0.9/json/item-search/",
-		ItemSearchFallback: "http://www.gw2shinies.com/api/json/idbyname/",
 		
 		// WvW
 		Match: "https://api.guildwars2.com/v2/wvw/matches?world=",
@@ -4845,6 +4844,7 @@ Z = {
 	 * @param string pString suffix of API endpoint.
 	 * @objparam string aQueryStr arguments for the API url.
 	 * @objparam boolean aIsStandard whether to format the URL in standard v2 API format with a "/" preceding the ID.
+	 * @objparam boolean aWantSort whether to sort the retrieved objects by their ID after, on by default.
 	 * @objparam function aIterator to execute for every fetched data.
 	 * @objparam function aCallback to execute after finishing scraping.
 	 * @objparam int aCooldown seconds between cooldown.
@@ -4896,6 +4896,7 @@ Z = {
 						aCacheArray: cachearr,
 						aFailedIndexes: failedindexes,
 						aIsStandard: Settings.aIsStandard,
+						aWantSort: Settings.aWantSort,
 						aCooldown: Settings.aCooldown,
 						aIterator: Settings.aIterator,
 						aCallback: Settings.aCallback
@@ -4904,7 +4905,7 @@ Z = {
 				else
 				{
 					// Sort the objects by their IDs
-					if (cachearr.length > 0 && cachearr[0].id)
+					if (cachearr.length > 0 && cachearr[0].id && Settings.aWantSort !== false)
 					{
 						U.sortObjects(cachearr, {aKeyName: "id", aIsNumbers: true});
 					}
@@ -19052,7 +19053,8 @@ C = {
 			}
 			
 			// Tour to the event on the map if opted
-			if (P.wantTourPrediction() && C.isChainUnchecked(pChain) && isregularchain && !pChain.flags.isSpecial)
+			if (P.wantTourPrediction() && M.isMapAJAXDone
+				&& C.isChainUnchecked(pChain) && isregularchain && !pChain.flags.isSpecial)
 			{
 				$("#chnEvent_" + pChain.nexus + "_" + pChain.CurrentPrimaryEvent.num).trigger("click");
 			}
@@ -23829,6 +23831,7 @@ G = {
 	 */
 	generateAndInitializeResources: function()
 	{
+		var metadata;
 		var opacityclicked = 0.3;
 		var pathcolor = P.getUserPathColor();
 		var getNodeState = function(pMarker)
@@ -23879,57 +23882,63 @@ G = {
 				var id = P.Resources[i].item;
 				if (id !== null)
 				{
-					(function(inneri){
+					(function(inneri)
+					{
 						$.ajax({
 							dataType: "json",
 							url: U.getAPIPrice(id),
 							cache: false,
 							success: function(pData)
-						{
-							var pricesell = E.processPrice(pData).oPriceSellTaxed;
-							$("#nodPrice_" + inneri).html(E.formatCoinStringColored(pricesell));
-							P.Resources[inneri].price = pricesell;
-						}});
+							{
+								var pricesell = E.processPrice(pData).oPriceSellTaxed;
+								$("#nodPrice_" + inneri).html(E.formatCoinStringColored(pricesell));
+								P.Resources[inneri].price = pricesell;
+							}
+						});
 					})(i);
 				}
 			}
 		};
 		var getNodeQuantity = function(pResource, pGrade)
 		{
-			return (GW2T_RESOURCE_YIELD[pResource.type])[pGrade];
+			return (metadata.Yield[pResource.type])[pGrade];
 		};
-		var initializePermanentNodes = function()
+		var initializeNodes = function(pGrade)
 		{
 			var i, ii;
-			var counterrich = 0;
+			var counter = 0;
+			var grade = pGrade;
 			var resource; // A type of resource, like copper ore
 			var layer, marker, path;
+			var iconsize = (pGrade === "Rich") ? [32, 32] : [24, 24];
+			var iconanchor = (pGrade === "Rich") ? [24, 24] : [16, 16];
 
 			for (i in P.Resources)
 			{
 				resource = P.Resources[i];
 				P.Resources[i].price = 0; // Also initialize price property
 				var name = i.toLowerCase();
+				var resourcegrade = resource[grade];
 
 				// Permanent Rich/Farm nodes
-				if (resource.riches !== undefined && resource.riches.length > 0)
+				if (resourcegrade !== undefined && resourcegrade.length > 0)
 				{
 					layer = new L.layerGroup();
-					for (ii in resource.riches)
+					for (ii in resourcegrade)
 					{
-						marker = L.marker(M.convertGCtoLC(resource.riches[ii].c),
+						marker = L.marker(M.convertGCtoLC(resourcegrade[ii].c),
 						{
-							grade: "Rich",
+							grade: grade,
 							name: i,
-							quantity: getNodeQuantity(resource, "Rich"),
-							index: counterrich,
-							coord: resource.riches[ii].c,
+							quantity: getNodeQuantity(resource, grade),
+							index: counter,
+							coord: resourcegrade[ii].c,
 							icon: L.divIcon(
 							{
-								className: "nodRich",
+								className: "nod" + grade,
 								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
-								iconSize: [32, 32],
-								iconAnchor: [16, 16]
+								iconSize: iconsize,
+								iconAnchor: iconanchor
 							}),
 							isNode: true
 						});
@@ -23937,9 +23946,9 @@ G = {
 						// Add to array
 						layer.addLayer(marker);
 						// Draw path if this node has it
-						if (resource.riches[ii].p !== undefined)
+						if (resourcegrade[ii].p !== undefined)
 						{
-							path = L.polyline(M.convertGCtoLCMulti(resource.riches[ii].p),
+							path = L.polyline(M.convertGCtoLCMulti(resourcegrade[ii].p),
 							{
 								color: pathcolor,
 								dashArray: "5,10",
@@ -23947,98 +23956,16 @@ G = {
 							});
 							layer.addLayer(path);
 						}
-						counterrich++;
+						counter++;
 					}
 					M.toggleLayer(layer);
-					P.Layer["Resource_Rich_" + i] = layer;
+					P.Layer["Resource_" + grade + "_" + i] = layer;
 					P.LayerArray.Resource.push(layer);
 				}
 			}
 			
 			// Initialize checklist for saving nodes clicked state
-			X.initializeChecklist(X.Checklists.ResourceRich, counterrich);
-			reapplyNodesState();
-		};
-		var initializePossibleNodes = function()
-		{
-			var i, ii;
-			var counterregular = 0;
-			var counterhotspot = 0;
-			var resource; // A type of resource, like copper ore
-			var layer, marker;
-			
-			for (i in P.Resources)
-			{
-				resource = P.Resources[i];
-				P.Resources[i].price = 0; // Also initialize price property
-				var name = i.toLowerCase();
-				
-				// Regular nodes that may spawn there
-				if (resource.regulars !== undefined && resource.regulars.length > 0)
-				{
-					layer = new L.layerGroup();
-					for (ii in resource.regulars)
-					{
-						marker = L.marker(M.convertGCtoLC(resource.regulars[ii].c),
-						{
-							grade: "Regular",
-							name: i,
-							quantity: getNodeQuantity(resource, "Regular"),
-							index: counterregular,
-							coord: resource.regulars[ii].c,
-							icon: L.divIcon(
-							{
-								className: "nodRegular",
-								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
-								iconSize: [24, 24],
-								iconAnchor: [12, 12]
-							}),
-							isNode: true
-						});
-						bindNodeBehavior(marker);
-						// Add to array
-						layer.addLayer(marker);
-						counterregular++;
-					}
-					M.toggleLayer(layer);
-					P.Layer["Resource_Regular_" + i] = layer;
-					P.LayerArray.Resource.push(layer);
-				}
-				// Resources nodes that may spawn in the vicinity
-				if (resource.hotspots !== undefined)
-				{
-					layer = new L.layerGroup();
-					for (ii in resource.hotspots)
-					{
-						marker = L.marker(M.convertGCtoLC(resource.hotspots[ii].c),
-						{
-							grade: "Hotspot",
-							name: i,
-							quantity: getNodeQuantity(resource, "Hotspot"),
-							index: counterhotspot,
-							coord: resource.hotspots[ii].c,
-							icon: L.divIcon(
-							{
-								className: "nodHotspot",
-								html: "<img src='" + "img/node/" + name + I.cPNG + "' />",
-								iconSize: [24, 24],
-								iconAnchor: [12, 12]
-							}),
-							isNode: true
-						});
-						bindNodeBehavior(marker);
-						// Add to array
-						layer.addLayer(marker);
-						counterhotspot++;
-					}
-					M.toggleLayer(layer);
-					P.Layer["Resource_Hotspot_" + i] = layer;
-					P.LayerArray.Resource.push(layer);
-				}
-			}
-			
-			X.initializeChecklist(X.Checklists.ResourceRegular, counterregular);
-			X.initializeChecklist(X.Checklists.ResourceHotspot, counterhotspot);
+			X.initializeChecklist(X.Checklists["Resource" + grade], counter);
 			reapplyNodesState();
 		};
 		
@@ -24047,7 +23974,9 @@ G = {
 			var i;
 			var resource;
 			P.Resources = GW2T_RESOURCE_DATA;
-			initializePermanentNodes(); // Only create rich node markers initially
+			metadata = GW2T_RESOURCE_METADATA;
+			initializeNodes("Rich"); // Only create rich and permanent node markers initially
+			initializeNodes("Permanent");
 			
 			// Create checkboxes
 			for (i in P.Resources)
@@ -24066,6 +23995,7 @@ G = {
 					var wantshow = $(this).prop("checked");
 					var wantregular = $("#nodShowPossible").prop("checked");
 					M.toggleLayer(P.Layer["Resource_Rich_" + thisresource], wantshow);
+					M.toggleLayer(P.Layer["Resource_Permanent_" + thisresource], wantshow);
 					M.toggleLayer(P.Layer["Resource_Regular_" + thisresource], (wantshow && wantregular));
 					M.toggleLayer(P.Layer["Resource_Hotspot_" + thisresource], (wantshow && wantregular));
 				});
@@ -24163,7 +24093,8 @@ G = {
 			$("#nodShowPossible").one("click", function()
 			{
 				// Only create the non-rich nodes when the user has chosen to show
-				initializePossibleNodes();
+				initializeNodes("Regular");
+				initializeNodes("Hotspot");
 			});
 			$("#nodShowPossible").change(function()
 			{
@@ -24190,6 +24121,7 @@ G = {
 					});
 				}
 				X.clearChecklist(X.Checklists.ResourceRich);
+				X.clearChecklist(X.Checklists.ResourcePermanent);
 				X.clearChecklist(X.Checklists.ResourceRegular);
 				X.clearChecklist(X.Checklists.ResourceHotspot);
 			});

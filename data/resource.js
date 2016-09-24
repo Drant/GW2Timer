@@ -7,21 +7,26 @@
  */
 
 // Units of resources that a node typically yields (10 copper ore from a rich copper vein)
-var GW2T_RESOURCE_YIELD = {
-Metal: {
-	Rich: 10,
-	Regular: 3,
-	Hotspot: 3
-},
-Plant: {
-	Rich: 8,
-	Regular: 1,
-	Hotspot: 1
-},
-Wood: {
-	Rich: 15,
-	Regular: 3,
-	Hotspot: 3
+var GW2T_RESOURCE_METADATA = {
+Yield: {
+	Metal: {
+		Rich: 10,
+		Permanent: 3,
+		Regular: 3,
+		Hotspot: 3
+	},
+	Plant: {
+		Rich: 8,
+		Permanent: 1,
+		Regular: 1,
+		Hotspot: 1
+	},
+	Wood: {
+		Rich: 15,
+		Permanent: 3,
+		Regular: 3,
+		Hotspot: 3
+	}
 }
 };
 
@@ -37,7 +42,7 @@ Copper: {
 	name_zh: "銅",
 	type: "Metal",
 	item: "19697",
-	riches: [
+	Rich: [
 	{c: [9865, 16183]}, // caledon
 	{c: [10227, 17559], p: [[10106,18114],[10121,18047],[10151,17938],[10135,17674],[10206,17624],[10224,17585]]},
 	{c: [11763, 13103]}, // queensdale 
@@ -45,7 +50,7 @@ Copper: {
 	{c: [25771, 15365]}, // plains
 	{c: [27549, 15143], p: [[27079,15033],[27424,15167],[27474,15167],[27523,15155]]}
 	],
-	regulars: [
+	Regular: [
 	{c: [26646, 15357]}, // plains
 	{c: [27369, 14606]},
 	{c: [28610, 13653]}
@@ -59,7 +64,7 @@ Iron: {
 	name_zh: "鐵",
 	type: "Metal",
 	item: "19699",
-	riches: [
+	Rich: [
 	{c: [6327, 15041]}, // brisban
 	{c: [9583, 15064], p: [[9964,15279],[9813,15212],[9636,15236],[9604,15166],[9616,15144],[9595,15102]]}, // kessex
 	{c: [12640, 15579], p: [[12780,15545],[12805,15476],[12801,15439],[12747,15598],[12720,15624],[12662,15598]]},
@@ -73,7 +78,7 @@ Iron: {
 	{c: [28961, 17355], p: [[28968,17275],[28962,17255],[29044,17253],[29026,17304],[28981,17342]]}, // fields
 	{c: [31157, 15013], p: [[30647,15185],[30791,15261],[30976,15196],[31098,15189],[31144,15174],[31146,15158],[31158,15149],[31145,15110],[31152,15092],[31133,15061],[31156,15020]]} 
 	],
-	regulars: [
+	Regular: [
 	{c: [16550, 13557]}, // gendarran
 	{c: [15654, 13136]},
 	{c: [15099, 10180]}, // harathi
@@ -92,7 +97,7 @@ Silver: {
 	name_zh: "銀",
 	type: "Metal",
 	item: "19703",
-	riches: [
+	Rich: [
 	{c: [6949, 14732]}, // brisban
 	{c: [9575, 15073]}, // kessex
 	{c: [17407, 14141]}, // gendarran
@@ -101,7 +106,7 @@ Silver: {
 	{c: [25173, 12224]}, // diessa
 	{c: [31101, 16446]} // fields
 	],
-	regulars: [
+	Regular: [
 	{c: [20857, 12888]}, // snowden
 	{c: [19249, 12515]},
 	{c: [26885, 13159]} // diessa
@@ -115,14 +120,14 @@ Gold: {
 	name_zh: "金",
 	type: "Metal",
 	item: "19698",
-	riches: [
+	Rich: [
 	{c: [16534, 9911], p: [[15254,10003],[15237,9952],[15346,9850],[15517,9845],[15729,9888],[15872,10012],[15993,9930],[16094,9826],[16177,9789],[16423,9909],[16505,9913]]}, // harathi
 	{c: [17911, 17982]}, // lornar
 	{c: [20066, 17207], p: [[19938,17136],[19912,17425],[20014,17480],[20084,17450],[20128,17367],[20074,17230]]}, // dredgehaunt
 	{c: [31650, 17347], p: [[31121,16979],[31268,17085],[31447,17136],[31510,17247],[31647,17304],[31645,17323]]}, // fields
 	{c: [31125, 12282], p: [[30734,12716],[30849,12618],[30834,12551],[30911,12485],[31001,12492],[31018,12484],[31148,12332],[31134,12298]]} // blazeridge
 	],
-	regulars: [
+	Regular: [
 	{c: [15933, 16436]} // bloodtide
 	]
 },
@@ -131,10 +136,10 @@ Platinum: {
 	name_de: "Platin",
 	name_es: "Platino",
 	name_fr: "Platine",
-	name_zh: "鉑",
+	name_zh: "白金",
 	type: "Metal",
 	item: "19702",
-	riches: [
+	Rich: [
 	{c: [16429, 18201], p: [[16248,18368],[16494,18533],[16801,18424],[16800,18355],[16665,18214],[16455,18294],[16363,18188],[16412,18167],[16420,18181]]}, // bloodtide
 	{c: [15623, 20260], p: [[15937,19856],[15638,19623],[15529,19547],[15431,19675],[15482,19768],[15599,19883],[15449,19895],[15474,19980],[15460,20061],[15649,20101],[15632,20233]]}, // sparkfly
 	{c: [17293, 20362], p: [[17482,20675],[17499,20645],[17486,20533],[17368,20417],[17274,20408],[17225,20350],[17239,20328],[17271,20353]]},
@@ -147,7 +152,7 @@ Platinum: {
 	{c: [24678, 9345], p: [[24084,9793],[24273,9816],[24396,9766],[24446,9624],[24588,9538],[24664,9373]]}, // fireheart
 	{c: [26934, 9849], p: [[26811,9783],[26899,9676],[26991,9667],[26966,9803],[26913,9836],[26928,10010],[26993,10006],[26972,9880],[26952,9867]]}
 	],
-	regulars: [
+	Regular: [
 		{c: [19181, 23244]}, // maelstrom
 		{c: [18176, 23327]},
 		{c: [27231, 13285]}, // marches
@@ -162,7 +167,7 @@ Mithril: {
 	name_zh: "秘銀",
 	type: "Metal",
 	item: "19700",
-	riches: [
+	Rich: [
 	{c: [2276, 14430]}, // bloodstone
 	{c: [21346, 10759], p: [[21128,11158],[21204,11000],[21149,10852],[21326,10767]]}, // frostgorge
 	{c: [22191, 9448], p: [[22464,8832],[22474,9033],[22397,9144],[22343,9345],[22319,9581],[22411,9605],[22489,9548],[22360,9461],[22215,9448]]},
@@ -171,7 +176,7 @@ Mithril: {
 	{c: [10705, 27456]}, // cursed
 	{c: [11658, 29142]}
 	],
-	regulars: [
+	Regular: [
 	{c: [3921, 16199]}, // dry
 	{c: [4961, 16478]},
 	{c: [4425, 15887]},
@@ -201,14 +206,14 @@ Orichalcum: {
 	name_de: "Orichalcum",
 	name_es: "Oricalco",
 	name_fr: "Orichalque",
-	name_zh: "星隕石",
+	name_zh: "星隕",
 	type: "Metal",
 	item: "19701",
-	riches: [
+	Permanent: [
 	{c: [12424, 19478], p: [[11939,20507],[12004,20476],[12080,20379],[12117,20249],[12114,20145],[12343,19727],[12328,19542],[12455,19512],[12484,19575],[12379,19618],[12286,19576],[12291,19518],[12400,19488]]}, // southsun
 	{c: [2540, 17456], p: [[2302,17430],[2375,17482],[2515,17495],[2540,17457]]} // auric
 	],
-	regulars: [
+	Regular: [
 	{c: [7021, 30360]}, // ember
 	{c: [5400, 29707]},
 	{c: [2737, 14181]}, // bloodstone
@@ -270,13 +275,13 @@ Quartz: {
 	name_zh: "石英",
 	type: "Metal",
 	item: "43773",
-	riches: [
+	Rich: [
 	{c: [11519, 10456]}, // divinity
 	{c: [5373, 16541]}, // dry
 	{c: [5347, 16621], p: [[5235,16353],[5287,16425],[5303,16567],[5314,16607],[5351,16556],[5402,16493],[5481,16448],[5504,16459],[5489,16524],[5373,16614]]},
 	{c: [4529, 16799], p: [[4143,16291],[4276,16235],[4515,16616],[4532,16720]]}
 	],
-	regulars: [
+	Regular: [
 	
 	]
 },
@@ -285,10 +290,10 @@ Sprocket: {
 	name_de: "Zwischenzahnrad",
 	name_es: "Engranaje",
 	name_fr: "Pignon",
-	name_zh: "鏈",
+	name_zh: "扣鏈齒輪",
 	type: "Metal",
 	item: "44941",
-	riches: [
+	Rich: [
 	{c: [11518, 10483]} // divinity
 	]
 },
@@ -300,10 +305,10 @@ Magic: {
 	name_zh: "魔法",
 	type: "Metal",
 	item: null,
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -315,10 +320,10 @@ Bloodstone: {
 	name_zh: "血石",
 	type: "Metal",
 	item: null,
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 	{c: [2425, 14213]}, // bloodstone
 	{c: [2437, 14306]},
 	{c: [2444, 14409]},
@@ -363,10 +368,10 @@ Petrified: {
 	name_zh: "木化石",
 	type: "Metal",
 	item: null,
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 	{c: [6559, 29195]}, // ember
 	{c: [6742, 28893]},
 	{c: [6948, 29577]},
@@ -386,10 +391,10 @@ Green: {
 	name_de: "Grüner",
 	name_es: "Verde",
 	name_fr: "Vert",
-	name_zh: "青木",
+	name_zh: "新生",
 	type: "Wood",
 	item: "19723",
-	hotspots: [
+	Hotspot: [
 	{c: [7505, 18093]}, // metrica
 	{c: [7642, 19608]},
 	{c: [7656, 18867]},
@@ -452,10 +457,10 @@ Soft: {
 	name_de: "Geschmeidiger",
 	name_es: "Blanda",
 	name_fr: "Tendre",
-	name_zh: "軟木",
+	name_zh: "軟芯",
 	type: "Wood",
 	item: "19726",
-	hotspots: [
+	Hotspot: [
 	{c: [6287, 15940]}, // brisban
 	{c: [6337, 14969]},
 	{c: [6356, 16603]},
@@ -560,10 +565,10 @@ Seasoned: {
 	name_de: "Abgelagerter",
 	name_es: "Curtida",
 	name_fr: "Séché",
-	name_zh: "老練木",
+	name_zh: "風干",
 	type: "Wood",
 	item: "19727",
-	hotspots: [
+	Hotspot: [
 	{c: [16410, 16037]}, // bloodtide
 	{c: [16794, 16081]},
 	{c: [17111, 17373]},
@@ -628,10 +633,10 @@ Hard: {
 	name_de: "Harter",
 	name_es: "Sólida",
 	name_fr: "Dur",
-	name_zh: "硬木",
+	name_zh: "硬質",
 	type: "Wood",
 	item: "19724",
-	hotspots: [
+	Hotspot: [
 	{c: [15786, 21417]}, // sparkfly
 	{c: [15820, 19646]},
 	{c: [15880, 20390]},
@@ -713,14 +718,14 @@ Elder: {
 	name_de: "Alter",
 	name_es: "Ancestral",
 	name_fr: "Ancestral",
-	name_zh: "長老木",
+	name_zh: "上古",
 	type: "Wood",
 	item: "19722",
-	riches: [
+	Rich: [
 	{c: [15575, 24851]}, // straits
 	{c: [13808, 24941]} // malchor
 	],
-	regulars: [
+	Regular: [
 	{c: [20165, 21981]}, // maelstrom
 	{c: [4052, 16277]}, // dry
 	{c: [4868, 16054]},
@@ -749,13 +754,13 @@ Ancient: {
 	name_de: "Antiker",
 	name_es: "Antigua",
 	name_fr: "Ancien",
-	name_zh: "古木",
+	name_zh: "遠古",
 	type: "Wood",
 	item: "19725",
-	riches: [
+	Permanent: [
 	{c: [2164, 17618], p: [[2278,17440],[2264,17466],[2256,17542],[2171,17613]]} // auric
 	],
-	regulars: [
+	Regular: [
 	{c: [2432, 14313]}, // bloodstone
 	{c: [2504, 14401]},
 	{c: [2583, 14108]},
@@ -809,10 +814,10 @@ Mixed: {
 	name_de: "Gemischt",
 	name_es: "Mixto",
 	name_fr: "Mélangé",
-	name_zh: "雜",
+	name_zh: "混合",
 	type: "Wood",
 	item: null,
-	hotspots: [
+	Hotspot: [
 	{c: [14426, 11102]}, // gendarran
 	{c: [16209, 17505]}, // bloodtide
 	{c: [16991, 16085]},
@@ -858,12 +863,12 @@ Lettuce: {
 	name_zh: "萵苣",
 	type: "Plant",
 	item: "12238",
-	riches: [
+	Rich: [
 	{c: [4031, 15893]}, // dry
 	{c: [10569, 16278]}, // caledon
 	{c: [13101, 12254], q: 9} // queensdale
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -875,12 +880,12 @@ Potato: {
 	name_zh: "馬鈴薯",
 	type: "Plant",
 	item: "12135",
-	riches: [
+	Rich: [
 	{c: [8860, 19448], q: 8}, // metrica
 	{c: [21930, 13888]}, // wayfarer
 	{c: [28359, 15491]} // plains
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -892,12 +897,12 @@ Strawberry: {
 	name_zh: "草莓",
 	type: "Plant",
 	item: "12253",
-	riches: [
+	Rich: [
 	{c: [13175, 15839], q: 8, p: [[12782,15590],[13060,15897],[13140,15902],[13150,15864]]}, // kessex
 	{c: [20960, 13010], q: 8, p: [[21176,12725],[21085,12859],[21049,12878],[21031,12991],[20989,13005]]}, // snowden
 	{c: [23636, 13436], q: 8, p: [[24142,13298],[24000,13297],[23826,13445],[23759,13450],[23740,13468],[23730,13538],[23760,13531],[23742,13529],[23713,13538],[23706,13555],[23691,13542],[23694,13518],[23647,13459]]} // diessa
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -909,11 +914,11 @@ Spinach: {
 	name_zh: "菠菜",
 	type: "Plant",
 	item: "12241",
-	riches: [
+	Rich: [
 	{c: [9115, 17065], q: 9, p: [[9070,16326],[9101,16452],[9103,16590],[9153,16674],[9084,16844],[9108,17037]]}, // brisban
 	{c: [15420, 12390], p: [[15762,12465],[15606,12370],[15520,12414],[15447,12411]]} // gendarran
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -925,11 +930,11 @@ Grape: {
 	name_zh: "葡萄",
 	type: "Plant",
 	item: "12341",
-	riches: [
+	Rich: [
 	{c: [17801, 17397], q: 8}, // lornar
 	{c: [31099, 19162], q: 8} // fields
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -941,13 +946,13 @@ Cabbage: {
 	name_zh: "捲心菜",
 	type: "Plant",
 	item: "12332",
-	riches: [
+	Rich: [
 	{c: [4001, 15893]}, // dry
 	{c: [13880, 11060], q: 8}, // harathi
 	{c: [21212, 16264]}, // dredgehaunt
 	{c: [30955, 13247], q: 8} // blazeridge
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -959,10 +964,10 @@ Seaweed: {
 	name_zh: "海藻",
 	type: "Plant",
 	item: "12509",
-	riches: [
+	Rich: [
 	{c: [6372, 30553], p: [[6221,30068],[6372,30528]]}
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -974,10 +979,10 @@ Pearlclam: {
 	name_zh: "珍珠",
 	type: "Plant",
 	item: "24500",
-	riches: [
+	Rich: [
 	{c: [8515, 16658]} // brisban
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -989,13 +994,13 @@ Pearlmussel: {
 	name_zh: "淡水珍珠",
 	type: "Plant",
 	item: "76179",
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 		
 	],
-	hotspots: [
+	Hotspot: [
 	{c: [3645, 14958]}, // verdant
 	{c: [3683, 15322]},
 	{c: [2199, 17920]} // auric
@@ -1009,10 +1014,10 @@ Vanilla: {
 	name_zh: "香草",
 	type: "Plant",
 	item: "12234",
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 	{c: [19833, 22345]}, // maelstrom
 	{c: [19839, 22821]},
 	{c: [20567, 22235]}
@@ -1026,11 +1031,11 @@ Pumpkin: {
 	name_zh: "甜南瓜",
 	type: "Plant",
 	item: "12538",
-	riches: [
+	Rich: [
 	{c: [17405, 17510], q: 8, p: [[17217,17047],[17191,17259],[17362,17344],[17313,17392],[17403,17441],[17327,17471],[17379,17496]]}, // bloodtide
 	{c: [27484, 10330], q: 8} // blazeridge
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -1042,11 +1047,11 @@ Cauliflower: {
 	name_zh: "花椰菜頭",
 	type: "Plant",
 	item: "12532",
-	riches: [
+	Rich: [
 	{c: [15620, 19894], q: 8}, // sparkfly
 	{c: [19176, 19194], q: 8} // timberline
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -1058,11 +1063,11 @@ Butternut: {
 	name_zh: "冬南瓜",
 	type: "Plant",
 	item: "12511",
-	riches: [
+	Rich: [
 	{c: [23316, 10718], q: 8}, // frostgorge
 	{c: [24342, 11048], p: [[24381,10641],[24138,11101],[24279,11099],[24322,11070]]} // fireheart
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -1071,14 +1076,14 @@ Artichoke: {
 	name_de: "Artischocke",
 	name_es: "Alcachofa",
 	name_fr: "Artichaut",
-	name_zh: "朝鮮薊",
+	name_zh: "洋薊",
 	type: "Plant",
 	item: "12512",
-	riches: [
+	Rich: [
 	{c: [20076, 22914]}, // maelstrom
 	{c: [17475, 22676]} // straits
 	],
-	regulars: [
+	Regular: [
 		
 	]
 },
@@ -1090,10 +1095,10 @@ Lemongrass: {
 	name_zh: "檸檬草",
 	type: "Plant",
 	item: "12546",
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 	{c: [17164, 23181]}, // straits
 	{c: [17327, 23028]},
 	{c: [17242, 22984]},
@@ -1109,10 +1114,10 @@ Snowtruffle: {
 	name_zh: "雪地鬆露",
 	type: "Plant",
 	item: "12144",
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 	{c: [23145, 10645]}, // frostgorge
 	{c: [23133, 10791]},
 	{c: [23326, 10474]},
@@ -1129,10 +1134,13 @@ Truffle: {
 	name_zh: "歐爾鬆露",
 	type: "Plant",
 	item: "12545",
-	riches: [
+	Rich: [
+	
+	],
+	Permanent: [
 	{c: [10956, 26396]}
 	],
-	regulars: [
+	Regular: [
 	{c: [15592, 25101]}, // straits
 	{c: [15404, 25051]},
 	{c: [14820, 24726]},
@@ -1150,10 +1158,10 @@ Omnomberry: {
 	name_zh: "怪異莓",
 	type: "Plant",
 	item: "12128",
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 	{c: [12001, 24499]}, // malchor
 	{c: [12873, 24592]},
 	{c: [13230, 24861]},
@@ -1170,10 +1178,10 @@ Passiflora: {
 	name_zh: "西番蓮",
 	type: "Plant",
 	item: "37907",
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 	{c: [13105, 19913]}, // southsun
 	{c: [13201, 19787]},
 	{c: [13502, 19993]},
@@ -1193,10 +1201,10 @@ Spore: {
 	name_zh: "劇毒孢",
 	type: "Plant",
 	item: "48884",
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 	{c: [9786, 14384]}, // kessex
 	{c: [9878, 14406]},
 	{c: [9930, 14502]},
@@ -1232,10 +1240,10 @@ Foxfire: {
 	name_zh: "狐火簇",
 	type: "Plant",
 	item: "66933",
-	riches: [
+	Rich: [
 	
 	],
-	regulars: [
+	Regular: [
 	{c: [20215, 21981]}, // maelstrom
 	{c: [15625, 24851]}, // straits
 	{c: [13858, 24941]} // malchor
@@ -1249,11 +1257,11 @@ Flax: {
 	name_zh: "亞麻",
 	type: "Plant",
 	item: "74090",
-	riches: [
+	Rich: [
 	{c: [3358, 14678]}, // verdant
 	{c: [3717, 18683]} // tangled
 	],
-	regulars: [
+	Regular: [
 	
 	]
 }
