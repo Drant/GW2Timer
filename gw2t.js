@@ -143,6 +143,7 @@ O = {
 		bol_showDashboard: true,
 		bol_showTimeline: true,
 		bol_opaqueTimeline: false,
+		bol_condenseTimelineHeader: true,
 		bol_hideHUD: true,
 		// Map
 		int_setFloor: 1,
@@ -1118,7 +1119,7 @@ O = {
 			C.initializeTimetableHTML();
 			C.updateChainsTimeHTML();
 			K.updateDigitalClockMinutely();
-			H.updateTimelineLegend();
+			H.updateTimelineHeader();
 			H.updateTimelineSegments();
 		},
 		bol_detectDST: function()
@@ -1324,6 +1325,11 @@ O = {
 		{
 			I.toggleHUDOpacity("#itemTimeline", "tml", O.Options.bol_opaqueTimeline);
 		},
+		bol_condenseTimelineHeader: function()
+		{
+			H.minutesInTimelineHeader = (O.Options.bol_condenseTimelineHeader) ? T.cMINUTES_IN_TIMEFRAME : T.cMINUTES_IN_MINIFRAME;
+			H.updateTimelineHeader();
+		},
 		bol_refreshPrices: function()
 		{
 			if (O.Options.bol_refreshPrices && E.isTradingCalculatorsInitialized)
@@ -1423,8 +1429,6 @@ X = {
 	{
 		// Temporary
 		//LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans", value: ""},
-		BloodstoneCreatures: { key: "str_chlBloodstoneCreatures", urlkey: "creatures", value: ""},
-		BloodstoneSlivers: { key: "str_chlBloodstoneSlivers", urlkey: "slivers", value: ""},
 		// Repeatable
 		NoxiousPods: { key: "str_chlNoxiousPods", urlkey: "noxiouspods", value: ""},
 		CrystallizedCaches: { key: "str_chlCrystallizedCaches", urlkey: "crystallizedcaches", value: ""},
@@ -1441,6 +1445,12 @@ X = {
 		PriorySeals: { key: "str_chlPriorySeals", urlkey: "prioryseals", value: ""},
 		AuricTablets: { key: "str_chlAuricTablets", urlkey: "aurictablets", value: ""},
 		ExaltedMasks: { key: "str_chlExaltedMasks", urlkey: "exaltedmasks", value: ""},
+		// Living Story 3
+		MursaatTokens: { key: "str_chlMursaatTokens", urlkey: "mursaattokens", value: ""},
+		MursaatTablets: { key: "str_chlMursaatTablets", urlkey: "mursaattablets", value: ""},
+		CamiJournals: { key: "str_chlCamiJournals", urlkey: "camijournals", value: ""},
+		BloodstoneCreatures: { key: "str_chlBloodstoneCreatures", urlkey: "creatures", value: ""},
+		BloodstoneSlivers: { key: "str_chlBloodstoneSlivers", urlkey: "slivers", value: ""},
 		// Pre-expansion
 		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator", value: ""},
 		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: ""},
@@ -18011,6 +18021,7 @@ C = {
 		var i, ii;
 		var event;
 		var chainextra = "";
+		var chainextrastr = "";
 		var chainname = U.escapeHTML(D.getObjectName(pChain));
 		pChain.waypointText = pChain.waypoint + " " + chainname;
 		pChain.iconSrc = "img/chain/" + C.parseChainAlias(pChain.alias).toLowerCase() + I.cPNG;
@@ -18049,6 +18060,14 @@ C = {
 				}
 			}
 		}
+		if (chainextra.length)
+		{
+			chainextrastr = "<div class='chnDetailsExtra'>"
+				+ chainextra
+				+ "<kbd id='chnDelete_" + pChain.nexus + "' class='chnDelete' "
+					+ "title='Permanently hide this event chain (can undo in <img src=img/ui/speaker.png /> menu above).'></kbd>"
+			+ "</div>";
+		}
 		
 		/*
 		 * A chain bar (HTML) is a rectangle that contains the event chain icon,
@@ -18066,10 +18085,7 @@ C = {
 			+ "</div>"
 			+ "<div id='chnDetails_" + pChain.nexus + "' class='chnDetails'>"
 				+ "<ol id='chnEvents_" + pChain.nexus + "' class='chnEvents'></ol>"
-				+ "<div class='chnDetailsExtra'>"
-					+ chainextra
-					+ "<kbd id='chnDelete_" + pChain.nexus + "' class='chnDelete' title='Permanently hide this event chain (can undo in <img src=img/ui/speaker.png /> menu above).'></kbd>"	
-				+ "</div>"
+				+ chainextrastr
 			+ "</div>"
 		+ "</div>");
 
@@ -20184,11 +20200,6 @@ M = {
 							iLayer._icon.style.zIndex = M.cZIndexBury;
 						}
 					});
-				}
-				// Directional launch pads
-				if (O.Options.bol_showZoneGateways)
-				{
-					P.updateLaunchpad();
 				}
 				overviewboolean = O.Options.bol_showZoneOverview;
 				completionboolean = O.Options.bol_showWorldCompletion;
@@ -23091,7 +23102,7 @@ P = {
 				};
 				if (coordB)
 				{
-					options.direction = M.convertDirectionAngle(coordA, coordB) + T.cCIRCLE_RIGHT_DEGREE;
+					options.rotationAngle = M.convertDirectionAngle(coordA, coordB) + T.cCIRCLE_RIGHT_DEGREE;
 				}
 				var marker = L.marker(M.convertGCtoLC(coordA), options);
 				M.bindMarkerZoomBehavior(marker, "click");
@@ -23145,22 +23156,6 @@ P = {
 		}
 		M.toggleLayer(P.Layer.ZoneGateway, O.Options.bol_showZoneGateways);
 		M.adjustZoomMapping();
-	},
-	
-	/*
-	 * Refreshes the rotate transform for directional launchpads because markers
-	 * reset upon zoom change.
-	 */
-	updateLaunchpad: function()
-	{
-		P.Layer.ZoneLaunchpad.eachLayer(function(iLayer)
-		{
-			var lptrans = iLayer._icon.style.transform.toString();
-			if (lptrans.indexOf("rotate") === -1)
-			{
-				iLayer._icon.style.transform = lptrans + " rotate(" + iLayer.options.direction + "deg)";
-			}
-		});
 	},
 	
 	/*
@@ -23561,16 +23556,9 @@ P = {
 				that.movePin(that.Pin.Character, coord);
 				that.movePin(that.Pin.Camera, coord);
 				that.Pin.Camera._icon.style.zIndex = that.cZIndexBury;
-				var pintranscharacter = that.Pin.Character._icon.style.transform.toString();
-				var pintranscamera = that.Pin.Camera._icon.style.transform.toString();
-				if (pintranscharacter.indexOf("rotate") === -1)
-				{
-					that.Pin.Character._icon.style.transform = pintranscharacter + " rotate(" + anglecharacter + "deg)";
-				}
-				if (pintranscamera.indexOf("rotate") === -1)
-				{
-					that.Pin.Camera._icon.style.transform = pintranscamera + " rotate(" + anglecamera + "deg)";
-				}
+				that.Pin.Camera._icon.style.pointerEvents = "none"; // Don't let this marker overlap pin
+				that.Pin.Character.setRotationAngle(anglecharacter);
+				that.Pin.Camera.setRotationAngle(anglecamera);
 				that.GPSPreviousAngleCharacter = anglecharacter;
 				that.GPSPreviousAngleCamera = anglecamera;
 			}
@@ -25434,17 +25422,27 @@ W = {
 				var coord = landlabel[ii];
 				marker = L.marker(W.convertGCtoLC(coord),
 				{
-					clickable: false,
 					icon: L.divIcon(
 					{
 						className: "mapSec",
 						html: "<span class='mapSecIn wvwSpawnLabel wvwColor" + ii + "'>"
 							+ "<em class='wvwMapBonus'></em><var data-owner='" + ii + "'></var>"
 						+ "</span>",
-						iconSize: [512, 64],
-						iconAnchor: [256, 32]
+						iconSize: [128, 64],
+						iconAnchor: [64, 32]
 					})
 				});
+				(function(iLand, iTeam)
+				{
+					marker.on("click", function()
+					{
+						$("#wvwZoneLink" + ((iLand === "Center") ? "Center" : iTeam)).trigger("click");
+					});
+					marker.on("contextmenu", function()
+					{
+						W.goToDefault();
+					});
+				})(i, ii);
 				W.Layer.SpawnLabel.addLayer(marker);
 			}
 		}
@@ -25874,14 +25872,15 @@ W = {
 		U.sortObjects(servers);
 		
 		// Write the list
-		var server;
+		var server, servername;
 		var list = $("#wvwServerList");
 		var selected;
 		for (var i in servers)
 		{
 			server = servers[i];
+			servername = D.getObjectName(server) + ((server.suffix) ? " " + server.suffix : "");
 			selected = (server.id === O.Options.enu_Server) ? "selected" : "";
-			list.append("<option value='" + server.id + "' " + selected + ">" + D.getObjectName(server) + "</option>");
+			list.append("<option value='" + server.id + "' " + selected + ">" + servername + "</option>");
 		}
 		
 		// Bind server name select function
@@ -27262,6 +27261,7 @@ W = {
 		
 		var title = "<div class='objTooltip'>"
 			+ "<aside><dfn class='objTooltipName'>" + D.getObjectName(obj) + "</dfn></aside>"
+			+ "<aside class='cntDivider objTooltipDivider'></aside>"
 			+ "<aside><dfn>Owner:</dfn> " + (new Date(obj.last_flipped)).toLocaleString() + "</aside>"
 			+ ((pObjective.prevownerhtml) ? "<aside class='cssCenter'>" + pObjective.prevownerhtml + "</aside>" : "")
 			+ claim
@@ -28882,6 +28882,7 @@ H = {
 	Timeline: GW2T_TIMELINE,
 	isTimelineEnabled: true,
 	isTimelineGenerated: false,
+	minutesInTimelineHeader: null,
 
 	/*
 	 * Initializes dashboard components.
@@ -29525,11 +29526,11 @@ H = {
 		H.isTimelineGenerated = true;
 		// Container for all the timelines
 		$("#itemTimeline").show();
-		var container = $("#tmlContainer").append("<div class='tmlLine curToggle' id='tmlLegend'></div>");
-		H.updateTimelineLegend();
-		$("#tmlLegend").click(function()
+		var container = $("#tmlContainer").append("<div class='tmlLine curToggle' id='tmlHeader'></div>");
+		O.Enact.bol_condenseTimelineHeader();
+		$("#tmlHeader").click(function()
 		{
-			$("#opt_bol_use24Hour").trigger("click");
+			$("#opt_bol_condenseTimelineHeader").trigger("click");
 		});
 		// Create timings header
 		for (var i in H.Timeline)
@@ -29639,7 +29640,7 @@ H = {
 		var numwbslices = T.cMINUTES_IN_2_HOURS / T.cMINUTES_IN_TIMEFRAME;
 		var wbcurrentoffset = 0;
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
-		var currenttimestamp = currentminute - (currentminute % T.cMINUTES_IN_MINIFRAME);
+		var currenttimestamp = currentminute - (currentminute % H.minutesInTimelineHeader);
 		$("#tmlSegmentTimestamp_" + currenttimestamp).closest(".tmlSegment").addClass("tmlTimestampActive");
 		$(".tmlTimeslice").each(function()
 		{
@@ -29702,15 +29703,15 @@ H = {
 			I.qTip.init(".tmlIcon");
 		}
 		
-		// Refresh the legend if approached new bihour
+		// Refresh the header if approached new bihour
 		if (currentminute === 0)
 		{
-			H.updateTimelineLegend();
+			H.updateTimelineHeader();
 		}
 		else
 		{
 			// Update the timestamp just behind the indicator with future time
-			var previoustimestamp = currentminute - T.cMINUTES_IN_MINIFRAME;
+			var previoustimestamp = currentminute - H.minutesInTimelineHeader;
 			$("#tmlSegmentTimestamp_" + previoustimestamp)
 				.html(T.getCurrentBihourlyTimestampLocal(previoustimestamp + T.cMINUTES_IN_2_HOURS))
 				.removeClass("tmlSegmentTimestampCurrent").addClass("tmlSegmentTimestampFutureFar")
@@ -29720,26 +29721,27 @@ H = {
 	},
 	
 	/*
-	 * Fills the legend line with timestamps. Should be called every 120 minutes.
+	 * Fills the top header line with timestamps. Should be called every 120 minutes.
 	 */
-	updateTimelineLegend: function()
+	updateTimelineHeader: function()
 	{
-		if ( ! H.isTimelineGenerated)
+		if (H.isTimelineGenerated === false)
 		{
 			return;
 		}
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
-		var line = $("#tmlLegend").empty();
-		var divisions = T.cMINUTES_IN_2_HOURS / T.cMINUTES_IN_MINIFRAME;
+		var line = $("#tmlHeader").empty();
+		var divisions = T.cMINUTES_IN_2_HOURS / H.minutesInTimelineHeader;
 		var half = divisions / 2;
 		var ithminute, timestamp;
 		for (var i = 0; i < divisions; i++)
 		{
 			var width = T.cPERCENT_100 / divisions;
 			var hourclass = (i === 0 || i === half) ? "tmlSegmentTimestampHour" : "";
+			var timestampclass = (O.Options.bol_condenseTimelineHeader) ? "tmlSegmentTimestampCondensed" : "tmlSegmentTimestamp";
 			var tenseclass = "";
-			ithminute = T.cMINUTES_IN_MINIFRAME * i;
-			if (ithminute < currentminute - T.cMINUTES_IN_MINIFRAME)
+			ithminute = H.minutesInTimelineHeader * i;
+			if (ithminute < currentminute - H.minutesInTimelineHeader)
 			{
 				// Timestamps behind the current minute indicator becomes two hours ahead
 				timestamp = T.getCurrentBihourlyTimestampLocal(ithminute + T.cMINUTES_IN_2_HOURS);
@@ -29750,7 +29752,7 @@ H = {
 				timestamp = T.getCurrentBihourlyTimestampLocal(ithminute);
 			}
 			line.append("<div class='tmlSegment' style='width:" + width + "%'><div class='tmlSegmentContent'>"
-				+ "<span id='tmlSegmentTimestamp_" + ithminute + "' class='tmlSegmentTimestamp " + hourclass + " " + tenseclass + "'>" + timestamp + "</span></div></div>");
+				+ "<span id='tmlSegmentTimestamp_" + ithminute + "' class='" + timestampclass + " " + hourclass + " " + tenseclass + "'>" + timestamp + "</span></div></div>");
 		}
 	},
 	
@@ -31437,7 +31439,7 @@ I = {
 		// Initializes all UI
 		I.initializeTooltip();
 		I.bindHelpButtons("#plateOptions");
-		I.bindWindowResize();
+		I.bindWindowReadjust();
 		I.initializeUIForMenu();
 		I.initializeUIForHUD();
 		I.styleContextMenu("#mapContext");
@@ -33278,7 +33280,7 @@ I = {
 	/*
 	 * Binds functions that activate when the user resizes the browser/screen/window.
 	 */
-	bindWindowResize: function()
+	bindWindowReadjust: function()
 	{
 		$(window).on("resize", $.throttle(200, function()
 		{

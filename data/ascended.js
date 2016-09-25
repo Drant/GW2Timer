@@ -695,7 +695,8 @@ Back: [
 	{i: 79044, n: "Defender's Xera Backpiece (Infused)", p: {raid_ft: 600}},
 	{i: 79157, n: "Blood Ruby Backpack", p: {magic: 5000}},
 	{i: 79062, n: "Blood Ruby Backpack (Infused)", p: {magic: 5000}},
-	{i: 79463, n: "Lava Skull Backpack", p: {magic: 5000}}
+	{i: 79463, n: "Lava Skull Backpack", p: {magic: 5000}},
+	{i: 79566, n: "Lava Skull Backpack (Infused)", p: {craft: true}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},

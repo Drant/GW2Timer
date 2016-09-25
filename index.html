@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160924"></script>
+	<script type="text/javascript" src="data/general.js?v=20160925"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -243,6 +243,7 @@
 						</div>
 						<div class="mapOptionsOther">
 							<label class="cssHidden"><input id="opt_bol_showCoordinatesBar" type="checkbox" /></label>
+							<label class="cssHidden"><input id="opt_bol_condenseTimelineHeader" type="checkbox" /></label>
 							<label><img data-src="img/map/floor.png" /><input id="opt_int_setFloor" class="optSlider" type="range" min="0" max="3" step="1" title="Set map floor level.<br />Example: Verdant Brink has multiple floors." /></label>
 							<label title="Show/Hide region-colored borders over zones."><img data-src="img/map/border.png" /><input id="opt_bol_showZoneBorders" type="checkbox" /> Show zone borders</label>
 							<label title="Show/Hide gateways, tunnels, wallows, and launch pads."><img data-src="img/map/gateway_interborders.png" /><input id="opt_bol_showZoneGateways" type="checkbox" /> Show zone gateways</label>
@@ -497,7 +498,7 @@
 									<li class="wvwZoneListBorderlands" data-zone="GreenHome" id="wvwZoneLinkGreen"></li>
 									<li class="wvwZoneListBorderlands" data-zone="RedHome" id="wvwZoneLinkRed"></li>
 									<li class="wvwZoneListBorderlands" data-zone="BlueHome" id="wvwZoneLinkBlue"></li>
-									<li data-zone="eternal"></li>
+									<li data-zone="eternal" id="wvwZoneLinkCenter"></li>
 									<li data-zone="edge"></li>
 								</ul>
 							</aside>

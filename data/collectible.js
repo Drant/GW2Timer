@@ -5,7 +5,7 @@
  * color: web color of the node label
  * view: zone or coordinate
  * wiki: wiki URL
- * credit: credit URL
+ * credit: attribution URL
  * iconsize: size of node icon, if available
  * ringsize: size of the ring representing the node
  * wantpath: boolean, whether to draw lines connecting the nodes
@@ -878,6 +878,106 @@ SkrittBurglar: {
 		{n: 98, c: [30554, 16362]},
 		{n: 99, c: [30995, 16609]},
 		{n: 100, c: [31109, 19216]}
+	]
+},
+MursaatTokens: {
+	name_en: "Token Collector",
+	name_de: "Markensammlerin",
+	name_es: "Coleccionista de fichas",
+	name_fr: "Collectionneuse de trophées",
+	color: "orangered",
+	view: "ember",
+	wiki: "https://wiki.guildwars2.com/wiki/Token_Collector_(Mursaat_Token)",
+	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	needles: [
+	{n: 1, c: [6393, 29806]},
+	{n: 2, c: [6948, 30137]},
+	{n: 3, c: [6904, 30148]},
+	{n: 4, c: [6938, 30487]},
+	{n: 5, c: [6717, 29439]},
+	{n: 6, c: [7024, 29181]},
+	{n: 7, c: [6563, 29260]},
+	{n: 8, c: [6627, 29413]},
+	{n: 9, c: [5066, 29073]},
+	{n: 10, c: [6952, 30471]},
+	{n: 11, c: [6685, 29798]},
+	{n: 12, c: [5439, 30416]},
+	{n: 13, c: [5414, 29297]},
+	{n: 14, c: [6193, 29716]},
+	{n: 15, c: [6255, 29036]},
+	{n: 16, c: [6200, 29756]},
+	{n: 17, c: [7422, 29758]},
+	{n: 18, c: [7075, 30683]},
+	{n: 19, c: [7138, 30541]},
+	{n: 20, c: [5456, 29088]},
+	{n: 21, c: [6110, 29474]},
+	{n: 22, c: [6684, 29278]},
+	{n: 23, c: [6139, 29081]},
+	{n: 24, c: [6152, 29106]},
+	{n: 25, c: [5577, 29007]},
+	{n: 26, c: [5582, 29744]},
+	{n: 27, c: [6233, 29765]},
+	{n: 28, c: [5674, 29811]},
+	{n: 29, c: [5793, 29173]},
+	{n: 30, c: [7463, 29597]},
+	{n: 31, c: [5652, 29357]},
+	{n: 32, c: [5362, 29027]},
+	{n: 33, c: [5537, 29053]},
+	{n: 34, c: [5241, 28877]},
+	{n: 35, c: [7147, 30668]},
+	{n: 36, c: [7090, 30415]},
+	{n: 37, c: [6934, 30290]},
+	{n: 38, c: [5082, 28920]},
+	{n: 39, c: [6251, 29613]},
+	{n: 40, c: [7867, 28741]}
+	]
+},
+MursaatTablets: {
+	name_en: "Tablets of the Unseen",
+	name_de: "Tafeln der Ungesehenen",
+	name_es: "Tablas de los Ocultos",
+	name_fr: "Tablettes des Invisibles",
+	color: "tomato",
+	view: "ember",
+	wiki: "https://wiki.guildwars2.com/wiki/Tablets_of_the_Unseen",
+	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	needles: [
+	{n: 1, c: [6234, 30251]},
+	{n: 2, c: [5388, 29690]},
+	{n: 3, c: [6175, 29418]},
+	{n: 4, c: [7113, 29668]},
+	{n: 5, c: [7433, 29311]},
+	{n: 6, c: [6983, 28931]},
+	{n: 7, c: [5252, 29135]},
+	{n: 1, c: [5196, 29163]},
+	{n: 2, c: [5242, 29107]},
+	{n: 3, c: [5413, 29146]},
+	{n: 4, c: [5433, 29184]},
+	{n: 5, c: [5477, 29034]},
+	{n: 6, c: [5379, 28990]},
+	{n: 7, c: [5284, 29125]},
+	{n: 8, c: [5129, 29083]},
+	{n: 9, c: [5049, 29086]},
+	{n: 10, c: [5077, 29288]}
+	]
+},
+CamiJournals: {
+	name_en: "Cami's Final Voyage",
+	name_de: "Camis letzte Reise",
+	name_es: "El útimo viaje de Cami",
+	name_fr: "L'ultime voyage de Cami",
+	color: "coral",
+	view: "ember",
+	wiki: "https://wiki.guildwars2.com/wiki/Rising_Flames_(achievements)",
+	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
+	needles: [
+	{n: 1, c: [6234, 30251]},
+	{n: 2, c: [5388, 29690]},
+	{n: 3, c: [6175, 29418]},
+	{n: 4, c: [7113, 29668]},
+	{n: 5, c: [7433, 29311]},
+	{n: 6, c: [6983, 28931]},
+	{n: 7, c: [5252, 29135]}
 	]
 },
 BloodstoneCreatures: {

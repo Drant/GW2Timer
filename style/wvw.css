@@ -15,6 +15,15 @@
 	text-decoration: underline;
 }
 
+/* Map elements
+----------------------------------------------------------------------------- */
+.wvwSpawnLabel {
+	white-space: nowrap;
+}
+.wvwSpawnLabel:hover {
+	font-weight: bold;
+}
+
 /* Objective
 ----------------------------------------------------------------------------- */
 .objContainer, .objIconContainer {
@@ -112,18 +121,24 @@
 	top: -18px;
 	line-height: 18px;
 	white-space: nowrap;
-	font-family: Arial, sans-serif;
+	font-family: Trebuchet MS, Menomonia;
 	color: white;
 	border-radius: 4px;
 	background: rgba(0, 0, 0, 0.5);
 	pointer-events: none;
 }
 .objTooltip {
-	font-family: Menomonia;
+	font-family: Trebuchet MS, Menomonia;
+	font-weight: normal;
 }
 .objTooltipName {
+	font-family: Menomonia;
 	font-size: 18px;
 	line-height: 18px;
+}
+.objTooltipDivider {
+	margin-top: 4px;
+	margin-bottom: 4px;
 }
 .objTooltipBanner {
 	width: 128px; height: 128px;
@@ -288,13 +303,13 @@
 	font-weight: bold;
 }
 .wvwColorGreen, .lboServerGreen .lboName a, .lboPPTGreen {
-	color: #52a518;
+	color: #88ff88;
 }
 .wvwColorBlue, .lboServerBlue .lboName a, .lboPPTBlue {
-	color: #31a7bb;
+	color: #66ccff;
 }
 .wvwColorRed, .lboServerRed .lboName a, .lboPPTRed {
-	color: #cc1f24;
+	color: #ff5544;
 }
 .lboPPTCenter {
 	color: #ffeeaa;
@@ -342,13 +357,13 @@
 	background: url("../img/background/bargraph.png"), linear-gradient(to bottom, #de3f47 0%, #b52326 50%, #621010 100%); /* Red */
 }
 .lboFocusRed .lboFocusA, .lboFocusBlue .lboFocusA {
-	color: #52a518; /* Green */
+	color: #88ff88; /* Green */
 }
 .lboFocusRed .lboFocusB, .lboFocusGreen .lboFocusA {
-	color: #31a7bb; /* Blue */
+	color: #66ccff; /* Blue */
 }
 .lboFocusGreen .lboFocusB, .lboFocusBlue .lboFocusB {
-	color: #cc1f24; /* Red */
+	color: #ff5544; /* Red */
 }
 #wvwLeaderboard samp.lboFocusZero {
 	background: rgba(0, 0, 0, 0.2);
@@ -509,13 +524,13 @@
 	opacity: 0.5;
 }
 #opt_bol_logRedHome + var, #opt_bol_narrateRedHome + var {
-	color: #cc1f24;
+	color: #ff5544;
 }
 #opt_bol_logGreenHome + var, #opt_bol_narrateGreenHome + var  {
-	color: #52a518;
+	color: #88ff88;
 }
 #opt_bol_logBlueHome + var, #opt_bol_narrateBlueHome + var  {
-	color: #31a7bb;
+	color: #66ccff;
 }
 #opt_bol_logCenter + var, #opt_bol_narrateCenter + var  {
 	color: #ffeeaa;

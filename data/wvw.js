@@ -616,7 +616,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "GH", nick_de: "GF", nick_es: "FdG", nick_fr: "CdG", nick_zh: "納爾要塞"
 },
 "2101": {
-	id: 2101,
+	id: 2101, suffix: "[FR]",
 	name_en: "Jade Sea",
 	name_de: "Jademeer",
 	name_es: "Mar de Jade",
@@ -625,7 +625,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "JS", nick_de: "JM", nick_es: "MdJ", nick_fr: "MdJ", nick_zh: "翠玉之海"
 },
 "2102": {
-	id: 2102,
+	id: 2102, suffix: "[FR]",
 	name_en: "Fort Ranik",
 	name_de: "Fort Ranik",
 	name_es: "Fuerte Ranik",
@@ -634,7 +634,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "FR", nick_de: "FR", nick_es: "FR", nick_fr: "FR", nick_zh: "拉尼克堡"
 },
 "2103": {
-	id: 2103,
+	id: 2103, suffix: "[FR]",
 	name_en: "Augury Rock",
 	name_de: "Fels der Weissagung",
 	name_es: "Roca del Augurio",
@@ -643,7 +643,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "AR", nick_de: "FdW", nick_es: "RdA", nick_fr: "RdlA", nick_zh: "預言之石"
 },
 "2104": {
-	id: 2104,
+	id: 2104, suffix: "[FR]",
 	name_en: "Vizunah Square",
 	name_de: "Vizunah-Platz",
 	name_es: "Plaza de Vizunah",
@@ -652,7 +652,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "VS", nick_de: "VP", nick_es: "PdV", nick_fr: "PdV", nick_zh: "薇茹廣場"
 },
 "2105": {
-	id: 2105,
+	id: 2105, suffix: "[FR]",
 	name_en: "Arborstone",
 	name_de: "Arborstein",
 	name_es: "Piedra Arbórea",
@@ -661,7 +661,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "AS", nick_de: "AS", nick_es: "PA", nick_fr: "PA", nick_zh: "亞博之石 "
 },
 "2201": {
-	id: 2201,
+	id: 2201, suffix: "[DE]",
 	name_en: "Kodash",
 	name_de: "Kodasch",
 	name_es: "Kodash",
@@ -670,7 +670,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "KD", nick_de: "KD", nick_es: "KD", nick_fr: "KD", nick_zh: "聖潔之石"
 },
 "2202": {
-	id: 2202,
+	id: 2202, suffix: "[DE]",
 	name_en: "Riverside",
 	name_de: "Flussufer",
 	name_es: "Ribera",
@@ -679,7 +679,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "RS", nick_de: "FS", nick_es: "RB", nick_fr: "PF", nick_zh: "河畔"
 },
 "2203": {
-	id: 2203,
+	id: 2203, suffix: "[DE]",
 	name_en: "Elona Reach",
 	name_de: "Elonaspitze",
 	name_es: "Cañón de Elona",
@@ -688,7 +688,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "ER", nick_de: "ES", nick_es: "CdE", nick_fr: "BdE", nick_zh: "伊倫娜海岸"
 },
 "2204": {
-	id: 2204,
+	id: 2204, suffix: "[DE]",
 	name_en: "Abaddon's Mouth",
 	name_de: "Abaddons Maul",
 	name_es: "Boca de Abaddon",
@@ -697,7 +697,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "AM", nick_de: "AM", nick_es: "BdA", nick_fr: "BdA", nick_zh: "阿伯頓之口"
 },
 "2205": {
-	id: 2205,
+	id: 2205, suffix: "[DE]",
 	name_en: "Drakkar Lake",
 	name_de: "Drakkar-See",
 	name_es: "Lago Drakkar",
@@ -706,7 +706,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "DL", nick_de: "DS", nick_es: "LD", nick_fr: "LD", nick_zh: "德拉克湖"
 },
 "2206": {
-	id: 2206,
+	id: 2206, suffix: "[DE]",
 	name_en: "Miller's Sound",
 	name_de: "Millersund",
 	name_es: "Estrecho de Miller",
@@ -715,7 +715,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "MS", nick_de: "MS", nick_es: "EdM", nick_fr: "DdM", nick_zh: "米勒之聲"
 },
 "2207": {
-	id: 2207,
+	id: 2207, suffix: "[DE]",
 	name_en: "Dzagonur",
 	name_de: "Dzagonur",
 	name_es: "Dzagonur",
@@ -724,7 +724,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "DZN", nick_de: "DZN", nick_es: "DZN", nick_fr: "DZN", nick_zh: "扎格諾"
 },
 "2301": {
-	id: 2301,
+	id: 2301, suffix: "[ES]",
 	name_en: "Baruch Bay",
 	name_de: "Baruch-Bucht",
 	name_es: "Bahía de Baruch",
@@ -1131,9 +1131,9 @@ var GW2T_OBJECTIVE_DATA = {
 		map_type: "RedHome",
 		type: "Keep",
 		name_en: "Garrison",
-		name_de: "Festung von",
+		name_de: "Festung",
 		name_es: "Fuerte",
-		name_fr: "- Garnison",
+		name_fr: "Garnison",
 		name_zh: "要塞",
 		alias: "Garrison",
 		id: "94-37",
@@ -1386,9 +1386,9 @@ var GW2T_OBJECTIVE_DATA = {
 		map_type: "GreenHome",
 		type: "Keep",
 		name_en: "Garrison",
-		name_de: "Festung von",
+		name_de: "Festung",
 		name_es: "Fuerte",
-		name_fr: "- Garnison",
+		name_fr: "Garnison",
 		name_zh: "要塞",
 		alias: "Garrison",
 		id: "95-37",
@@ -1641,9 +1641,9 @@ var GW2T_OBJECTIVE_DATA = {
 		map_type: "BlueHome",
 		type: "Keep",
 		name_en: "Garrison",
-		name_de: "Festung von",
+		name_de: "Festung",
 		name_es: "Fuerte",
-		name_fr: "- Garnison",
+		name_fr: "Garnison",
 		name_zh: "要塞",
 		alias: "Garrison",
 		id: "96-37",

@@ -1041,14 +1041,17 @@ textarea.jsCopyCode {
 	color: #bbcc77;
 	text-shadow: 0px 0px 4px black;
 }
-.tmlSegmentTimestamp {
+.tmlSegmentTimestamp, .tmlSegmentTimestampCondensed {
 	display: table-cell;
 	vertical-align: middle;
-	font-family: sans-serif;
+	font-family: Trebuchet MS, Menomonia;
 	font-size: 10px;
 	color: #bbcc77;
 	text-shadow: 0px 0px 4px black;
 	opacity: 0.9;
+}
+.tmlSegmentTimestampCondensed {
+	font-size: 14px;
 }
 .tmlSegmentTimestampHour {
 	font-weight: bold;
@@ -3009,10 +3012,12 @@ laurelunit {
  *  @@Palette color derived from GW2 user interface.
  *  This is for reference.
  * ========================================================================== */
-paletteText {
+#paletteText {
+	color: #ff5544; /* Red WvW team */
 	color: #cc3322; /* Red time */
 	color: #ff2200; /* Red chat warning */
 	color: #ee3333; /* Red chat team name */
+	color: #ff4444; /* Red tooltip warning */
 	color: #ff66ee; /* Pink chat whisper name */
 	color: #ff99ee; /* Pink chat whisper */
 	color: #ee55cc; /* Pink karma */
@@ -3021,16 +3026,20 @@ paletteText {
 	color: #ff8844; /* Orange event name in panel */
 	color: #dd8800; /* Orange AP */
 	color: #fcb84d; /* Orange gem store notes */
+	color: #ee9911; /* Orange WvW points */
+	color: #eebb44; /* Gold WvW subtitle */
 	color: #ffbb44; /* Gold guild chat name */
 	color: #ffcc77; /* Gold highlight/notice/waypoint */
 	color: #fdc84e; /* Gold gem store */
 	color: #ffeebb; /* Cream window and UI title */
 	color: #ffeeaa; /* Cream guild chat and item count */
+	color: #ddccaa; /* Cream WvW server name */
 	color: #ffffbb; /* Yellow subheader */
 	color: #ffaa22; /* Yellow orange chain title in event panel */
 	color: #ffff00; /* Yellow chat squad name and game notices */
 	color: #ffff66; /* Yellow chat squad */
 	color: #aaaaaa; /* Gray tooltip */
+	color: #88ff88; /* Green WvW team */
 	color: #44dd44; /* Green laurel */
 	color: #009900; /* Green attributes */
 	color: #bbcc77; /* Green time */
@@ -3039,6 +3048,7 @@ paletteText {
 	color: #88ff88; /* Green chat say name */
 	color: #66ff66; /* Green lime story chapter */
 	color: #aaff55; /* Green lime electric story */
+	color: #66ccff; /* Blue WvW team */
 	color: #44bbff; /* Blue chat party name */
 	color: #bbddff; /* Blue chat party */
 	color: #66aaff; /* Blue gem */
@@ -3048,7 +3058,7 @@ paletteText {
 	color: #888888; /* Gray chat time timestamp */
 }
 
-paletteBackground {
+#paletteBackground {
 	color: #d19600; /* Gold experience progress bar */
 	color: #2d2619; /* Brown selection hover */
 	color: #ee7924; /* Orange event progress bar */
