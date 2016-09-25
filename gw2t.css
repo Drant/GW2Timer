@@ -1045,8 +1045,8 @@ textarea.jsCopyCode {
 	display: table-cell;
 	vertical-align: middle;
 	font-family: Trebuchet MS, Menomonia;
-	font-size: 10px;
-	color: #bbcc77;
+	font-size: 11px;
+	color: #ddff77;
 	text-shadow: 0px 0px 4px black;
 	opacity: 0.9;
 }
@@ -1055,7 +1055,6 @@ textarea.jsCopyCode {
 }
 .tmlSegmentTimestampHour {
 	font-weight: bold;
-	color: #ddff77;
 }
 .tmlSegmentTimestampFutureFar {
 	color: #ccc;
