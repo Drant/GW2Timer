@@ -216,6 +216,7 @@ O = {
 		int_alertSubscribedSecond: 15,
 		bol_alertAutosubscribe: true,
 		bol_alertUnsubscribe: true,
+		bol_alertDaylight: false,
 		// Account
 		bol_showRarity: false,
 		bol_condenseBank: false,
@@ -1243,14 +1244,14 @@ O = {
 				}
 			}
 		},
-		bol_alignPanelRight: function(pInitial)
+		bol_alignPanelRight: function(pIsInitial)
 		{
 			if (I.isMapEnabled)
 			{
 				if (O.Options.bol_alignPanelRight)
 				{
 					// Don't realign if this function is called initially, because this is the default alignment
-					if (pInitial !== true)
+					if (pIsInitial !== true)
 					{
 						$("#panelApp").insertAfter("#panelMap");
 						$(".paneApp").css({
@@ -1325,10 +1326,14 @@ O = {
 		{
 			I.toggleHUDOpacity("#itemTimeline", "tml", O.Options.bol_opaqueTimeline);
 		},
-		bol_condenseTimelineHeader: function()
+		bol_condenseTimelineHeader: function(pIsInitial)
 		{
 			H.minutesInTimelineHeader = (O.Options.bol_condenseTimelineHeader) ? T.cMINUTES_IN_TIMEFRAME : T.cMINUTES_IN_MINIFRAME;
 			H.updateTimelineHeader();
+			if (pIsInitial !== true)
+			{
+				H.updateTimelineSegments();
+			}
 		},
 		bol_refreshPrices: function()
 		{
@@ -16788,6 +16793,16 @@ D = {
 			cs: "dobíjení", it: "raffreddamento", pl: "ochładzania", pt: "resfriamento", ru: "перезарядка", zh: "冷卻"},
 		s_remaining: {de: "verbleibend", es: "restante", fr: "restant",
 			cs: "zbývající", it: "rimanente", pl: "pozostały", pt: "restante", ru: "оставшиеся", zh: "剩餘"},
+		s_daylight: {de: "tageszeit", es: "luz de día", fr: "lumière du jour",
+			cs: "denní světlo", it: "luce del giorno", pl: "światło dzienne", pt: "luz do dia", ru: "дневной свет", zh: "白天"},
+		s_nighttime: {de: "nacht", es: "noche", fr: "nuit",
+			cs: "noc", it: "ore notturne", pl: "nocna pora", pt: "período noturno", ru: "ночь", zh: "夜間"},
+		s_dawn: {de: "tagesanbruch", es: "amanecer", fr: "aube",
+			cs: "svítání", it: "alba", pl: "świt", pt: "alvorecer", ru: "рассвет", zh: "黎明"},
+		s_dusk: {de: "dämmerung", es: "crepúsculo", fr: "crépuscule",
+			cs: "soumrak", it: "crepuscolo", pl: "zmierzch", pt: "crepúsculo", ru: "сумрак", zh: "黃昏"},
+		s_approaching: {de: "nähert", es: "acerca", fr: "approchant",
+			cs: "blíží", it: "avvicina", pl: "zbliża", pt: "aproximava", ru: "приближается", zh: "來臨"},
 		
 		// Nouns
 		s_account: {de: "account", es: "cuenta", fr: "compte",
@@ -17538,7 +17553,7 @@ D = {
 	 * Loads the client-side TTS exclusively for the overlay if haven't already.
 	 * Should be called by any feature that uses TTS so the engine is ready to speak.
 	 */
-	verifyNativeTTS: function()
+	verifyNativeTTS: function(pCallback)
 	{
 		if (I.isSpeechNativeEnabled === false
 			&& I.isProgramEmbedded === false
@@ -17551,7 +17566,15 @@ D = {
 				I.isSpeechNativeLoaded = true;
 				meSpeak.loadConfig("bin/tts/mespeak_config.json");
 				meSpeak.loadVoice("bin/tts/voices/" + O.Options.enu_Language + ".json");
+				if (pCallback)
+				{
+					pCallback();
+				}
 			});
+		}
+		else if (pCallback)
+		{
+			pCallback();
 		}
 	},
 	
@@ -17607,20 +17630,23 @@ D = {
 		// If using other TTS service then use custom queue system
 		var doSpeak = function(pStringMacro)
 		{
-			if (I.isSpeechNativeLoaded)
+			D.verifyNativeTTS(function()
 			{
-				// API: http://www.masswerk.at/mespeak/
-				meSpeak.speak(pStringMacro, {volume: volume, speed: 150, variant: "f5"});
-			}
-			else
-			{
-				// API: http://responsivevoice.org/api/
-				var tts = document.getElementById("jsTTSAudio");
-				tts.src = U.URL_API.TextToSpeech + "&vol=" + volume + "&t=" + pStringMacro;
-				tts.volume = volume;
-				tts.load();
-				tts.play();
-			}
+				if (I.isSpeechNativeLoaded)
+				{
+					// API: http://www.masswerk.at/mespeak/
+					meSpeak.speak(pStringMacro, {volume: volume, speed: 150, variant: "f5"});
+				}
+				else
+				{
+					// API: http://responsivevoice.org/api/
+					var tts = document.getElementById("jsTTSAudio");
+					tts.src = U.URL_API.TextToSpeech + "&vol=" + volume + "&t=" + pStringMacro;
+					tts.volume = volume;
+					tts.load();
+					tts.play();
+				}
+			});
 		};
 		
 		if (pDuration === undefined)
@@ -28496,6 +28522,11 @@ T = {
 				{
 					K.setDimming(minremain / T.cDAYTIME_TRANSITION_MINUTES, true);
 				}
+				// Is transitioning to day
+				if (min === T.cDAYTIME_DAY_START && O.Options.bol_alertDaylight)
+				{
+					D.speak(D.getPhrase("approaching daylight"));
+				}
 			}
 			else // Night
 			{
@@ -28521,6 +28552,11 @@ T = {
 			{
 				minremain = (T.cDAYTIME_NIGHT_START + T.cDAYTIME_NIGHT_MINUTES - min);
 				K.setDimming(0);
+				// Is transitioning to night
+				if (min === T.cDAYTIME_NIGHT_START && O.Options.bol_alertDaylight)
+				{
+					D.speak(D.getPhrase("approaching nighttime"));
+				}
 			}
 		}
 		return minremain + D.getWord("m");
@@ -29527,7 +29563,7 @@ H = {
 		// Container for all the timelines
 		$("#itemTimeline").show();
 		var container = $("#tmlContainer").append("<div class='tmlLine curToggle' id='tmlHeader'></div>");
-		O.Enact.bol_condenseTimelineHeader();
+		O.Enact.bol_condenseTimelineHeader(true);
 		$("#tmlHeader").click(function()
 		{
 			$("#opt_bol_condenseTimelineHeader").trigger("click");
@@ -29596,7 +29632,7 @@ H = {
 	 */
 	updateTimelineIndicator: function()
 	{
-		if ( ! H.isTimelineGenerated)
+		if (H.isTimelineGenerated === false)
 		{
 			return;
 		}
@@ -29633,7 +29669,7 @@ H = {
 	 */
 	updateTimelineSegments: function(pForceWB)
 	{
-		if ( ! H.isTimelineGenerated)
+		if (H.isTimelineGenerated === false)
 		{
 			return;
 		}
@@ -29641,25 +29677,6 @@ H = {
 		var wbcurrentoffset = 0;
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		var currenttimestamp = currentminute - (currentminute % H.minutesInTimelineHeader);
-		$("#tmlSegmentTimestamp_" + currenttimestamp).closest(".tmlSegment").addClass("tmlTimestampActive");
-		$(".tmlTimeslice").each(function()
-		{
-			if (currentminute >= $(this).data("start") && currentminute < $(this).data("finish"))
-			{
-				if ( ! $(this).hasClass("tmlSegmentActive"))
-				{
-					$(this).addClass("tmlSegmentActive");
-				}
-				if ($(this).hasClass("tmlTimesliceWB"))
-				{
-					wbcurrentoffset = parseInt($(this).attr("data-offset"));
-				}
-			}
-			else
-			{
-				$(this).removeClass("tmlSegmentActive");
-			}
-		});
 		
 		// Update the world boss slices, executes every 15 minutes
 		if (currentminute % T.cMINUTES_IN_TIMEFRAME === 0 || pForceWB)
@@ -29718,6 +29735,27 @@ H = {
 				.parent().css({opacity: 0}).animate({opacity: 1}, 1000)
 				.closest(".tmlSegment").removeClass("tmlTimestampActive");
 		}
+		
+		// Highlight active segments
+		$("#tmlSegmentTimestamp_" + currenttimestamp).closest(".tmlSegment").addClass("tmlTimestampActive");
+		$(".tmlTimeslice").each(function()
+		{
+			if (currentminute >= $(this).data("start") && currentminute < $(this).data("finish"))
+			{
+				if ( ! $(this).hasClass("tmlSegmentActive"))
+				{
+					$(this).addClass("tmlSegmentActive");
+				}
+				if ($(this).hasClass("tmlTimesliceWB"))
+				{
+					wbcurrentoffset = parseInt($(this).attr("data-offset"));
+				}
+			}
+			else
+			{
+				$(this).removeClass("tmlSegmentActive");
+			}
+		});
 	},
 	
 	/*
@@ -29738,7 +29776,7 @@ H = {
 		{
 			var width = T.cPERCENT_100 / divisions;
 			var hourclass = (i === 0 || i === half) ? "tmlSegmentTimestampHour" : "";
-			var timestampclass = (O.Options.bol_condenseTimelineHeader) ? "tmlSegmentTimestampCondensed" : "tmlSegmentTimestamp";
+			var condensedclass = (O.Options.bol_condenseTimelineHeader) ? "tmlSegmentTimestampCondensed" : "";
 			var tenseclass = "";
 			ithminute = H.minutesInTimelineHeader * i;
 			if (ithminute < currentminute - H.minutesInTimelineHeader)
@@ -29752,7 +29790,8 @@ H = {
 				timestamp = T.getCurrentBihourlyTimestampLocal(ithminute);
 			}
 			line.append("<div class='tmlSegment' style='width:" + width + "%'><div class='tmlSegmentContent'>"
-				+ "<span id='tmlSegmentTimestamp_" + ithminute + "' class='" + timestampclass + " " + hourclass + " " + tenseclass + "'>" + timestamp + "</span></div></div>");
+				+ "<span id='tmlSegmentTimestamp_" + ithminute + "' class='tmlSegmentTimestamp "
+					+ condensedclass + " " + hourclass + " " + tenseclass + "'>" + timestamp + "</span></div></div>");
 		}
 	},
 	
@@ -30254,7 +30293,7 @@ K = {
 		var secangle = sec * 6; // 6 degrees per second
 		var minangle = min * 6 + (sec / 10); // 1/10 degrees per second
 		var hourangle = hour * 30 + (min / 2); // 1/240 degrees per second
-		// Simulates mechanical whiplash movement for second hand
+		// Simulates mechanical recoil movement for second hand
 		var vibrateSecond = function(pPattern, pCounter)
 		{
 			if (pCounter === undefined)

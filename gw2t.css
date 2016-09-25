@@ -1001,6 +1001,13 @@ textarea.jsCopyCode {
 	outline: 1px solid rgba(255, 136, 68, 0.2);
 	transition: background 1s;
 }
+#tmlHeader .tmlSegment {
+	outline: none;
+	background: none;
+}
+#tmlHeader:hover .tmlSegment {
+	outline: 1px solid rgba(255, 136, 68, 1);
+}
 .tmlSegmentContent {
 	display: table;
 	height: 100%;
@@ -1041,7 +1048,7 @@ textarea.jsCopyCode {
 	color: #bbcc77;
 	text-shadow: 0px 0px 4px black;
 }
-.tmlSegmentTimestamp, .tmlSegmentTimestampCondensed {
+.tmlSegmentTimestamp {
 	display: table-cell;
 	vertical-align: middle;
 	font-family: Trebuchet MS, Menomonia;
@@ -1059,7 +1066,7 @@ textarea.jsCopyCode {
 .tmlSegmentTimestampFutureFar {
 	color: #ccc;
 }
-.tmlSegmentActive, .tmlTimestampActive {
+.tmlSegmentActive, #tmlHeader .tmlTimestampActive {
 	background: rgba(255, 136, 68, 0.2);
 	outline: 1px solid rgba(0, 0, 0, 0.2);
 	transition: background 1s;
@@ -1126,7 +1133,7 @@ textarea.jsCopyCode {
 }
 .dsbMenuItemActive {
 	border-top: 2px solid rgba(255, 238, 187, 0.4);
-	background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 1) 100%);
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 1) 100%);
 }
 .dsbMenuItem img {
 	width: 24px; height: 24px;
