@@ -14981,7 +14981,9 @@ E = {
 		map_ab: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_ab'></ins>"; },
 		map_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_td'></ins>"; },
 		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_crystalline'></ins>"; },
-		magic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_magic'></ins>"; }
+		magic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_magic'></ins>"; },
+		map_bf: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_blood'></ins>"; },
+		map_eb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_petrified'></ins>"; }
 	},
 	PaymentEnum:
 	{

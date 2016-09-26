@@ -2377,7 +2377,7 @@ var GW2T_OBJECTIVE_DATA = {
 };
 
 /*
- * Siege weapons and blueprint supply.
+ * Siege weapons and blueprint supply. [Basic, Superior, Guild]
  */
 var GW2T_WEAPON_DATA = {
 portal: {

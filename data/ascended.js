@@ -693,10 +693,10 @@ Back: [
 	{i: 79038, n: "Assaulter's Xera Backpiece (Infused)", p: {raid_ft: 600}},
 	{i: 79039, n: "Malicious Xera Backpiece (Infused)", p: {raid_ft: 600}},
 	{i: 79044, n: "Defender's Xera Backpiece (Infused)", p: {raid_ft: 600}},
-	{i: 79157, n: "Blood Ruby Backpack", p: {magic: 5000}},
-	{i: 79062, n: "Blood Ruby Backpack (Infused)", p: {magic: 5000}},
-	{i: 79463, n: "Lava Skull Backpack", p: {magic: 5000}},
-	{i: 79566, n: "Lava Skull Backpack (Infused)", p: {craft: true}}
+	{i: 79157, n: "Blood Ruby Backpack", p: {map_bf: 200}},
+	{i: 79062, n: "Blood Ruby Backpack (Infused)", p: {map_bf: 200}},
+	{i: 79463, n: "Lava Skull Backpack", p: {map_eb: 200}},
+	{i: 79566, n: "Lava Skull Backpack (Infused)", p: {map_eb: 200}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -914,10 +914,10 @@ Ring: [
 	{i: 79036, n: "Healer's Besieger Ring (Infused)", p: {raid_ft: 250}},
 	{i: 79040, n: "Attuned Healer's Besieger Ring", p: {raid_ft: 250}},
 	{i: 79035, n: "Attuned Healer's Besieger Ring (Infused)", p: {raid_ft: 250}},
-	{i: 79124, n: "Blood Ruby Band", p: {magic: 2000}},
-	{i: 79071, n: "Blood Ruby Band (Infused)", p: {magic: 2000}},
-	{i: 79155, n: "Attuned Blood Ruby Band", p: {magic: 2000}},
-	{i: 79134, n: "Attuned Blood Ruby Band (Infused)", p: {magic: 2000}}
+	{i: 79124, n: "Blood Ruby Band", p: {map_bf: 100}},
+	{i: 79071, n: "Blood Ruby Band (Infused)", p: {map_bf: 100}},
+	{i: 79155, n: "Attuned Blood Ruby Band", p: {map_bf: 100}},
+	{i: 79134, n: "Attuned Blood Ruby Band (Infused)", p: {map_bf: 100}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -977,7 +977,7 @@ Accessory: [
 	{i: 78863, n: "Jagged Keep Fragment", p: {raid_ft: 250}},
 	{i: 78878, n: "Rounded Keep Fragment", p: {raid_ft: 250}},
 	{i: 78915, n: "Hardened Keep Fragment", p: {raid_ft: 250}},
-	{i: 79444, n: "Sparking Petrified Wood", p: {magic: 4000}}
+	{i: 79444, n: "Sparking Petrified Wood", p: {map_eb: 150}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
@@ -1042,7 +1042,7 @@ Amulet: [
 	{i: 72529, n: "Vigil's Honor", p: {achievement: 0}},
 	{i: 74695, n: "Whisper's Secret", p: {achievement: 0}},
 	{i: 67898, n: "Wynne's Locket", p: {laurel: 20}},
-	{i: 79269, n: "Blood Ruby Pendant", p: {magic: 3000}}
+	{i: 79269, n: "Blood Ruby Pendant", p: {map_bf: 125}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},
