@@ -1354,7 +1354,7 @@ Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	pve: "<a href='http://forum.renaka.com/topic/5546166/'>GW2Navi Overlay</a> now officially uses fast Chromium engine with voice alarm."
-		+ "<br /><a href='http://gw2timer.com/?page=Catalog'>Account Catalog</a>, <a href='http://gw2timer.com/?page=Cleanup'>Cleanup</a>, and <a href='http://gw2timer.com/?page=Resource'>Resource Nodes</a> updated with Ember Bay items.",
+		+ "<br /><a href='http://gw2timer.com/?page=Audit'>Account Value Audit</a> updated with <a href='http://gw2timer.com/?page=Outfits'>outfits</a> and <a href='http://gw2timer.com/?page=Finishers'>finishers</a>. View the <a href='http://gw2timer.com/?page=Catalog'>Catalog</a> for more.",
 	wvw: "",
 	Start: new Date("2016-09-20T16:00:00Z"),
 	Finish: new Date("2016-10-04T16:00:00Z"),

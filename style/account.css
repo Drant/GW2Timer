@@ -458,7 +458,7 @@ input[type="text"].accTokenHovered {
 .audDebugButton {
 	margin-right: 8px;
 	padding: 4px 6px 4px 6px;
-	font-family: Menomonia;
+	font-family: Trebuchet MS, Menomonia;
 	font-size: 14px;
 }
 

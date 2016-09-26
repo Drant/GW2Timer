@@ -24,8 +24,8 @@ var GW2T_MINIS_BLACKLIST = {
 /*
  * Associated mini item with that mini unlockable.
  * Chronologically sorted based on http://wiki.guildwars2.com/wiki/Miniature
- * u: Unlockable ID (mini ID)
- * i: Item ID associated with that mini
+ * u: Unlockable ID (unlock ID)
+ * i: Item ID associated with that unlock
  * n: Name of mini
  * p: Payment type to acquire the item
  */

@@ -80,7 +80,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160905},
+		programVersion: {key: "int_utlProgramVersion", value: 160926},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -2572,8 +2572,10 @@ U = {
 		Itinerary: "data/itinerary.js",
 		Materials: "data/materials.js",
 		Skins: "data/skins.js",
-		Minis: "data/minis.js",
+		Outfits: "data/outfits.js",
 		Dyes: "data/dyes.js",
+		Minis: "data/minis.js",
+		Finishers: "data/finishers.js",
 		Catalog: "data/catalog.js",
 		Cleanup: "data/cleanup.js",
 		Ascended: "data/ascended.js",
@@ -5439,6 +5441,8 @@ Z = {
 					}
 				}
 			}
+			// Reformat the API IDs into an array of integers if it is objects
+			apiids = A.flattenUnlocks(apiids);
 			// Compile IDs to fetch by filtering: new IDs, not in blacklist
 			var newids = U.getDifference(apiids, storedids);
 			var filteredids = (blacklist === undefined) ? newids : (newids.filter(function(iID)
@@ -5814,23 +5818,29 @@ Z = {
 	},
 	
 	/*
-	 * Finds and prints minis from the API not already in the unlockables record.
+	 * Finds and prints unlockables from the API not already in the unlockables record.
 	 */
-	collateMinis: function()
+	collateUnlockables: function(pSection)
 	{
-		var section = "Minis";
-		var record, blacklist, newentries;
-		
+		var section = pSection;
 		Z.getNewAPIEntries(section, section, function(pReturn)
 		{
-			record = pReturn.oRecord;
-			blacklist = pReturn.oBlacklist;
-			newentries = pReturn.oEntries;
-			
-			Z.printRecordEntry(newentries, {
+			Z.printRecordEntry(pReturn.oEntries, {
 				aItemIDsKey: "item_id"
 			});
 		});
+	},
+	collateOutfits: function()
+	{
+		Z.collateUnlockables("Outfits");
+	},
+	collateMinis: function()
+	{
+		Z.collateUnlockables("Minis");
+	},
+	collateFinishers: function()
+	{
+		Z.collateUnlockables("Finishers");
 	},
 	
 	/*
@@ -6190,7 +6200,9 @@ Z = {
 	 */
 	collatePrices: function()
 	{
-		var recordnames = ["materials", "skins", "minis", "dyes", "recipes"];
+		
+		// Should only include records that have tradeable items
+		var recordnames = ["materials", "skins", "dyes", "minis", "finishers", "recipes"];
 		var recordnamescounter = 0;
 		var db, record, catarr;
 		var idstocache = {};
@@ -6316,6 +6328,13 @@ Z = {
 					idstocache[iEntry.i] = true;
 				}
 			});
+			iterateRecord(function(iEntry) // Dyes
+			{
+				if (Q.isTradeable(db[iEntry.i]))
+				{
+					idstocache[iEntry.i] = true;
+				}
+			});
 			iterateRecord(function(iEntry) // Minis
 			{
 				if (Q.isTradeable(db[iEntry.i]))
@@ -6323,7 +6342,7 @@ Z = {
 					idstocache[iEntry.i] = true;
 				}
 			});
-			iterateRecord(function(iEntry) // Dyes
+			iterateRecord(function(iEntry) // Finishers
 			{
 				if (Q.isTradeable(db[iEntry.i]))
 				{
@@ -6394,8 +6413,10 @@ A = {
 		Shared: "account/inventory", // Shared inventory slots
 		Bank: "account/bank",
 		Dyes: "account/dyes",
+		Finishers: "account/finishers",
 		Materials: "account/materials",
 		Minis: "account/minis",
+		Outfits: "account/outfits",
 		Skins: "account/skins",
 		Wallet: "account/wallet",
 		Characters: "characters",
@@ -7624,6 +7645,28 @@ A = {
 	},
 	
 	/*
+	 * An account's unlocks API may return an array of unlock IDs (if an ID is in
+	 * the array, that unlockable is unlocked), or an array of objects with more
+	 * information. This function flattens to the IDs format if it is objects.
+	 * @param array pUnlocks from any account unlock API.
+	 * @returns array of integers.
+	 */
+	flattenUnlocks: function(pUnlocks)
+	{
+		var arr = [];
+		if (pUnlocks.length && isNaN(pUnlocks[0]) && pUnlocks[0].id)
+		{
+			pUnlocks.forEach(function(iObj)
+			{
+				arr.push(iObj.id);
+			});
+			pUnlocks = arr;
+			return arr;
+		}
+		return pUnlocks;
+	},
+	
+	/*
 	 * Generates the account audit subsection into the Characters page.
 	 * The inner functions are executed from bottom to top.
 	 */
@@ -7648,14 +7691,18 @@ A = {
 			Ascended: {},
 			Catalog: {},
 			Skins: {},
-			Minis: {},
+			Outfits: {},
 			Dyes: {},
+			Minis: {},
+			Finishers: {},
 			Recipes: {}
 		};
-		var unlocksdata = {
+		var unlocksdata = { // Account's unlocked IDs retrieved from API
 			Skins: {},
+			Outfits: {},
+			Dyes: {},
 			Minis: {},
-			Dyes: {}
+			Finishers: {}
 		};
 		
 		// Resets the auditing process in case it failed to let the user restart it
@@ -7886,6 +7933,7 @@ A = {
 			}
 			
 			// Audit by adding the payment value once for each unlock (which has an associated item that has a payment)
+			unlocksdata[pName] = A.flattenUnlocks(unlocksdata[pName]);
 			A.Tally[pName] = [(unlocksdata[pName]).length, 0];
 			if (unlockedids === undefined)
 			{
@@ -8299,7 +8347,7 @@ A = {
 					+ "<div id='audSummaryAppraised' class='audSummaryCoin curHelp'></div>"
 					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(totalgems + E.convertCoinToGem(totalappraisedsellnogems)) + "</div>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("liquid") + " ―</div>"
-					+ "<div id='audSummaryLiquid' class='audSummaryCoin curHelp'>" + E.formatCoinString(totalliquidsell, {aWantBig: true}) + "</div>"
+					+ "<div id='audSummaryLiquid' class='audSummaryCoin curHelp'></div>"
 					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(walletcat["gem"] + E.convertCoinToGem(totalliquidsellnogems)) + "</div>"
 				+ "</div>");
 				
@@ -8412,8 +8460,10 @@ A = {
 			auditWallet();
 			auditPossessions();
 			auditUnlocks("Skins", false);
-			auditUnlocks("Minis");
+			auditUnlocks("Outfits");
 			auditUnlocks("Dyes");
+			auditUnlocks("Minis");
+			auditUnlocks("Finishers");
 			auditUnlocks("Recipes");
 			auditTransactions();
 			generateResults();
@@ -8575,8 +8625,12 @@ A = {
 				insertPaymentsFromRecord("Catalog", true);
 				// Insert armors, weapons, backpacks item payments
 				insertPaymentsFromRecord("Skins");
+				// Insert outfits item payments
+				insertPaymentsFromRecord("Outfits");
 				// Insert minis item payments
 				insertPaymentsFromRecord("Minis");
+				// Insert finisher item payments
+				insertPaymentsFromRecord("Finishers");
 				
 				// Begin auditing
 				executeAudit();
@@ -10066,12 +10120,81 @@ V = {
 		var slotdata;
 		var tab, slotscontainer, slot;
 		var char, bagdata;
+		var tabfill = 0;
+		var tabcapacity = 0;
+		var tabcount = 0;
+		var bankfill = 0;
+		var bankcapacity = 0;
+		var bankcount = 0;
+		var numtofetch = 0;
+		var numfetched = 0;
 		
-		// Generate a first tab for the shared inventory slots
+		// Fills a tab, which is one character's inventory
+		var fillInventory = function(pTab, pCharacter)
+		{
+			numtofetch = 0;
+			numfetched = 0;
+			slotscontainer = pTab.find(".bnkTabSlots");
+			// First count items to fetch
+			for (var ii = 0; ii < pCharacter.bags.length; ii++)
+			{
+				bagdata = pCharacter.bags[ii];
+				if (bagdata)
+				{
+					for (var iii = 0; iii < bagdata.inventory.length; iii++)
+					{
+						slotdata = bagdata.inventory[iii];
+						if (slotdata)
+						{
+							numtofetch++;
+						}
+					}
+				}
+			}
+			// Fetch the items and fill slots
+			for (var ii = 0; ii < pCharacter.bags.length; ii++)
+			{
+				bagdata = pCharacter.bags[ii];
+				if (bagdata)
+				{
+					for (var iii = 0; iii < bagdata.inventory.length; iii++)
+					{
+						slot = B.createBankSlot(slotscontainer);
+						slotdata = bagdata.inventory[iii];
+						if (slotdata)
+						{
+							slot.data("count", slotdata.count);
+							(function(iSlot, iSlotData)
+							{
+								Q.getItem(iSlotData.id, function(iItem)
+								{
+									B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+									{
+										numfetched++;
+										A.setProgressBar(numfetched, numtofetch);
+									}});
+								});
+							})(slot, slotdata);
+						}
+						else
+						{
+							// For empty inventory slots
+							B.styleBankSlot(slot);
+						}
+					}
+				}
+			}
+		};
+		
 		$.getJSON(A.getURL(A.URL.Shared), function(pData)
 		{
 			bank.empty();
 			var sharedtab = B.createBankTab(bank, {aTitle: D.getPhraseOriginal("Shared Inventory")});
+			tabfill = 0;
+			tabcapacity = pData.length;
+			bankcapacity = pData.length;
+			tabcount = 0;
+			// Generate a first tab for the shared inventory slots
 			for (var i = 0; i < pData.length; i++)
 			{
 				slot = B.createBankSlot(sharedtab.find(".bnkTabSlots"), "bnkSlotShared");
@@ -10079,6 +10202,10 @@ V = {
 				if (slotdata)
 				{
 					slot.data("count", slotdata.count);
+					tabfill++;
+					bankfill++;
+					tabcount += slotdata.count;
+					bankcount += slotdata.count;
 					(function(iSlot, iSlotData)
 					{
 						Q.getItem(iSlotData.id, function(iItem)
@@ -10088,37 +10215,27 @@ V = {
 					})(slot, slotdata);
 				}
 			}
+			B.updateTabTally(sharedtab, tabfill, tabcapacity, tabcount);
 			
-			// Count the number of inventory items to fetch
-			var numtofetch = 0;
-			var numfetched = 0;
+			// Generate the tabs for each character that fills their inventory after clicking to expand
 			for (var i = 0; i < A.Data.Characters.length; i++)
 			{
-				char = A.Data.Characters[i];
-				for (var ii = 0; ii < char.bags.length; ii++)
-				{
-					bagdata = char.bags[ii];
-					if (bagdata)
-					{
-						for (var iii = 0; iii < bagdata.inventory.length; iii++)
-						{
-							if (bagdata.inventory[iii])
-							{
-								numtofetch++;
-							}
-						}
-					}
-				}
-			}
-			
-			// Generate the tabs and slots for each character
-			for (var i = 0; i < A.Data.Characters.length; i++)
-			{
+				tabfill = 0;
+				tabcapacity = 0;
+				tabcount = 0;
 				char = A.Data.Characters[i];
 				// Bank tab separator for each character
-				tab = B.createBankTab(bank, {aTitle: char.oCharPreface});
+				tab = B.createBankTab(bank, {aTitle: char.oCharPreface, aIsCollapsed: true});
 				B.createInventorySidebar(tab, char.bags);
-				slotscontainer = tab.find(".bnkTabSlots");
+				(function(iTab, iChar)
+				{
+					iTab.one("click", function()
+					{
+						fillInventory(iTab, iChar);
+					});
+				})(tab, char);
+				
+				// Calculate inventory sizes and stack count
 				for (var ii = 0; ii < char.bags.length; ii++)
 				{
 					bagdata = char.bags[ii];
@@ -10126,33 +10243,25 @@ V = {
 					{
 						for (var iii = 0; iii < bagdata.inventory.length; iii++)
 						{
-							slot = B.createBankSlot(slotscontainer);
 							slotdata = bagdata.inventory[iii];
 							if (slotdata)
 							{
-								slot.data("count", slotdata.count);
-								(function(iSlot, iSlotData)
+								tabfill++;
+								bankfill++;
+								if (slotdata.count)
 								{
-									Q.getItem(iSlotData.id, function(iItem)
-									{
-										B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
-										{
-											numfetched++;
-											A.setProgressBar(numfetched, numtofetch);
-										}});
-									});
-								})(slot, slotdata);
-							}
-							else
-							{
-								// For empty inventory slots
-								B.styleBankSlot(slot);
+									tabcount += slotdata.count;
+									bankcount += slotdata.count;
+								}
 							}
 						}
+						tabcapacity += bagdata.inventory.length;
+						bankcapacity += bagdata.inventory.length;
 					}
 				}
+				B.updateTabTally(tab, tabfill, tabcapacity, tabcount);
 			}
-			B.tallyBank(container);
+			B.updateBankTally(container, bankfill, bankcapacity, bankcount);
 			B.createBankMenu(bank);
 		});
 	},
@@ -10673,11 +10782,11 @@ V = {
 	},
 	
 	/*
-	 * Generates the miniature collection window.
+	 * Generates a standard unlockables collection window without extra features.
 	 */
-	serveMinis: function()
+	serveUnlockables: function(pSection)
 	{
-		var section = "Minis";
+		var section = pSection;
 		var dish = $("#accDish_" + section);
 		if (A.reinitializeDish(dish) === false)
 		{
@@ -10686,7 +10795,7 @@ V = {
 		
 		var container = B.createBank(dish, {aIsCollection: true});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var generateMinis = function(pUnlockeds)
+		var generateUnlockables = function(pUnlockeds)
 		{
 			B.generateUnlockables(bank, {
 				aHeaders: U.getRecordHeader(section),
@@ -10695,13 +10804,13 @@ V = {
 			});
 		};
 		
-		$.getScript(U.URL_DATA.Minis).done(function()
+		$.getScript(U.URL_DATA[section]).done(function()
 		{
-			$.getJSON(A.getURL(A.URL.Minis), function(pData)
+			$.getJSON(A.getURL(A.URL[section]), function(pData)
 			{
 				Q.loadItemsSubdatabase(section.toLowerCase(), function()
 				{
-					generateMinis(pData);
+					generateUnlockables(pData);
 				});
 			}).fail(function(pRequest, pStatus)
 			{
@@ -10709,6 +10818,18 @@ V = {
 				dish.empty();
 			});
 		});
+	},
+	serveOutfits: function()
+	{
+		V.serveUnlockables("Outfits");
+	},
+	serveMinis: function()
+	{
+		V.serveUnlockables("Minis");
+	},
+	serveFinishers: function()
+	{
+		V.serveUnlockables("Finishers");
 	},
 	
 	/*
@@ -12195,9 +12316,19 @@ B = {
 		{
 			if (Array.isArray(Settings.aUnlockeds))
 			{
-				for (var i = 0; i < Settings.aUnlockeds.length; i++)
+				if (isNaN(Settings.aUnlockeds[0]))
 				{
-					unlocksassoc[(Settings.aUnlockeds[i])] = true;
+					for (var i = 0; i < Settings.aUnlockeds.length; i++)
+					{
+						unlocksassoc[(Settings.aUnlockeds[i].id)] = true;
+					}
+				}
+				else
+				{
+					for (var i = 0; i < Settings.aUnlockeds.length; i++)
+					{
+						unlocksassoc[(Settings.aUnlockeds[i])] = true;
+					}
 				}
 			}
 			else
@@ -31308,8 +31439,10 @@ I = {
 			Materials: "Materials",
 			Vault: "Vault",
 			Wardrobe: "Wardrobe",
-			Minis: "Minis",
+			Outfits: "Outfits",
 			Dyes: "Dyes",
+			Minis: "Minis",
+			Finishers: "Finishers",
 			Characters: "Characters",
 			Hero: "Hero",
 			Equipment: "Equipment",
