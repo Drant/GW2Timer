@@ -1455,8 +1455,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-09-20T16:00:00Z"),
-	Finish: new Date("2016-09-27T16:00:00Z"),
+	Start: new Date("2016-09-27T16:00:00Z"),
+	Finish: new Date("2016-10-04T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1465,173 +1465,47 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Cosmic Logging Tool",
+		id: "http://i.imgur.com/7yr95zs.png",
+		price: 1000,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Lava Lounge Pass",
+		id: "http://i.imgur.com/VDxspVp.png",
+		price: 1000,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Lava Lounge Pass (2 Weeks)",
+		id: "http://i.imgur.com/roQx16b.png",
+		price: 150,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Pirate Corsair Hat Skin",
+		id: "http://i.imgur.com/9SqxoJw.png",
+		price: 300,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Mursaat Backpack and Glider Combo",
 		id: "79523",
 		price: 700,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Mursaat Robes",
 		id: "79531",
 		price: 700,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Peg-Leg Boots Skin",
-		id: "79387",
-		price: 300,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Pirate Hook Skin",
-		id: "79391",
-		price: 300,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Zodiac Light Armor Skin",
-		id: "43018",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Zodiac Medium Armor Skin",
-		id: "43017",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Zodiac Heavy Armor Skin",
-		id: "43016",
-		price: 800,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Profane Light Armor Skin",
-		id: "20274",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Krytan Medium Armor Skin",
-		id: "20273",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Primeval Heavy Armor Skin",
-		id: "20272",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Phoenix Glider",
-		id: "78025",
-		price: 500,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Frost Wasp Logging Tool",
-		id: "48825",
-		price: 1000,
-		discount: null,
 		col: 1
 	},
-	{
-		name: "Fused Molten Sickle",
-		id: "67032",
-		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fused Molten Logging Axe",
-		id: "67030",
-		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Molten Alliance Mining Pick",
-		id: "48933",
-		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Glowing Crimson Mask",
-		id: "63891",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mask of the Crown",
-		id: "44609",
-		price: 400,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Warrior Quaggan Backpack Set",
-		id: "39520",
-		price: 300,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fuzzy Bear Hat",
-		id: "64755",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Fuzzy Leopard Hat",
-		id: "64746",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Sailor's Beanie",
-		id: "64749",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Top Hat",
-		id: "64750",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Reading Glasses",
-		id: "64748",
-		price: 150,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Wintersday Earmuffs",
-		id: "65200",
-		price: 25,
-		discount: null,
-		col: 1
-	}
 	]
 },
 
