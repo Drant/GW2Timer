@@ -144,7 +144,7 @@ body, #paneContent article {
 	font-size: 18px;
 	font-weight: bold;
 	text-align: center;
-	cursor: url("img/cursor/auto.cur"), auto;
+	cursor: url("../img/cursor/auto.cur"), auto;
 }
 .chnTitleMisc {
 	text-decoration: underline;

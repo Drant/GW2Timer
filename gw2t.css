@@ -980,6 +980,7 @@ textarea.jsCopyCode {
 }
 .tmlLine { /* A whole line representing a chain of events */
 	height: 24px;
+	line-height: 22px;
 	transition: height 0.2s;
 }
 .tmlLineSpecial {
@@ -1015,7 +1016,7 @@ textarea.jsCopyCode {
 }
 .tmlLineName {
 	position: absolute; z-index: 2;
-	margin-top: 10px;
+	margin-top: 8px;
 	margin-left: 6px;
 	vertical-align: middle;
 	font-family: Menomonia;

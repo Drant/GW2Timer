@@ -6957,6 +6957,7 @@ A = {
 			I.write("Requested permission: " + pPermission, 10);
 			$("#accMenu_Manager").trigger("click");
 		}
+		I.ArticleCurrent = null;
 	},
 	
 	/*
@@ -29810,6 +29811,43 @@ H = {
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		var currenttimestamp = currentminute - (currentminute % H.minutesInTimelineSpacing);
 		
+		// Refresh the header if approached new bihour
+		if (currentminute === 0)
+		{
+			H.updateTimelineHeader();
+		}
+		else
+		{
+			// Update the timestamp just behind the indicator with future time
+			var previoustimestamp = currentminute - H.minutesInTimelineSpacing;
+			$("#tmlSegmentTimestamp_" + previoustimestamp)
+				.html(T.getCurrentBihourlyTimestampLocal(previoustimestamp + T.cMINUTES_IN_2_HOURS))
+				.removeClass("tmlSegmentTimestampCurrent").addClass("tmlSegmentTimestampFutureFar")
+				.parent().css({opacity: 0}).animate({opacity: 1}, 1000)
+				.closest(".tmlSegment").removeClass("tmlTimestampActive");
+		}
+		
+		// Highlight active segments
+		$("#tmlSegmentTimestamp_" + currenttimestamp).closest(".tmlSegment").addClass("tmlTimestampActive");
+		$(".tmlTimeslice").each(function()
+		{
+			if (currentminute >= $(this).data("start") && currentminute < $(this).data("finish"))
+			{
+				if ( ! $(this).hasClass("tmlSegmentActive"))
+				{
+					$(this).addClass("tmlSegmentActive");
+				}
+				if ($(this).hasClass("tmlTimesliceWB"))
+				{
+					wbcurrentoffset = parseInt($(this).attr("data-offset"));
+				}
+			}
+			else
+			{
+				$(this).removeClass("tmlSegmentActive");
+			}
+		});
+		
 		// Update the world boss slices, executes every 15 minutes
 		if (currentminute % T.cMINUTES_IN_TIMEFRAME === 0 || pForceWB)
 		{
@@ -29851,43 +29889,6 @@ H = {
 			});
 			I.qTip.init(".tmlIcon");
 		}
-		
-		// Refresh the header if approached new bihour
-		if (currentminute === 0)
-		{
-			H.updateTimelineHeader();
-		}
-		else
-		{
-			// Update the timestamp just behind the indicator with future time
-			var previoustimestamp = currentminute - H.minutesInTimelineSpacing;
-			$("#tmlSegmentTimestamp_" + previoustimestamp)
-				.html(T.getCurrentBihourlyTimestampLocal(previoustimestamp + T.cMINUTES_IN_2_HOURS))
-				.removeClass("tmlSegmentTimestampCurrent").addClass("tmlSegmentTimestampFutureFar")
-				.parent().css({opacity: 0}).animate({opacity: 1}, 1000)
-				.closest(".tmlSegment").removeClass("tmlTimestampActive");
-		}
-		
-		// Highlight active segments
-		$("#tmlSegmentTimestamp_" + currenttimestamp).closest(".tmlSegment").addClass("tmlTimestampActive");
-		$(".tmlTimeslice").each(function()
-		{
-			if (currentminute >= $(this).data("start") && currentminute < $(this).data("finish"))
-			{
-				if ( ! $(this).hasClass("tmlSegmentActive"))
-				{
-					$(this).addClass("tmlSegmentActive");
-				}
-				if ($(this).hasClass("tmlTimesliceWB"))
-				{
-					wbcurrentoffset = parseInt($(this).attr("data-offset"));
-				}
-			}
-			else
-			{
-				$(this).removeClass("tmlSegmentActive");
-			}
-		});
 	},
 	
 	/*
