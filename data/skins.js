@@ -287,7 +287,8 @@ var GW2T_SKINS_BLACKLIST = {
 	"6776": "Guild Cavalier Torch",
 	"6778": "Guild Cavalier Shield",
 	"6781": "Guild Cavalier Dagger",
-	"6782": "Guild Cavalier Scepter"
+	"6782": "Guild Cavalier Scepter",
+	"6962": "Cosmic Logging Tool"
 };
 
 /*
@@ -603,9 +604,9 @@ Armor_Light_Helm: [
 	{u: 5713, i: 67796, n: "Luminescent Cowl", p: {achievement: 0}},
 	{u: 5724, i: 67485, n: "Carapace Cowl", p: {map_sw: 1000}},
 	{u: 5746, i: 67857, n: "Glint's Gaze Mask", p: {gem: 500}},
-	{u: 5818, i: 68574, n: "Shadow of the Dragon Helmet", p: {gem: 100}},
-	{u: 5850, i: 68655, n: "Dragon's Mask", p: {gem: 100}},
-	{u: 5855, i: 68656, n: "Lion's Mask", p: {gem: 100}},
+	{u: 5818, i: 68574, n: "Shadow of the Dragon Helmet", p: {gem: 300}},
+	{u: 5850, i: 68655, n: "Dragon's Mask", p: {gem: 300}},
+	{u: 5855, i: 68656, n: "Lion's Mask", p: {gem: 300}},
 	{u: 6247, i: 75625, n: "Bladed Cowl", p: {map_vb: 500}},
 	{u: 6319, i: 75977, n: "Ornate Guild Cowl", p: {craft: true}},
 	{u: 6339, i: 74812, n: "Leystone Cowl", p: {coin: 0}},
@@ -617,7 +618,8 @@ Armor_Light_Helm: [
 	{u: 6881, i: 79050, n: "Bloodstone Crown", p: {achievement: 0}},
 	{u: 6896, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
 	{u: 6899, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
-	{u: 6955, i: 79457, n: "Light Dragonscale Headdress", p: {achievement: 0}}
+	{u: 6955, i: 79457, n: "Light Dragonscale Headdress", p: {achievement: 0}},
+	{u: 6914, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -692,7 +694,7 @@ Armor_Light_Shoulders: [
 	{u: 5732, i: 67799, n: "Luminescent Mantle", p: {achievement: 0}},
 	{u: 5745, i: 67467, n: "Carapace Mantle", p: {map_sw: 1000}},
 	{u: 5793, i: 67887, n: "Shoulder Scarf", p: {gem: 400}},
-	{u: 5816, i: 68575, n: "Shadow of the Dragon Shoulders", p: {gem: 100}},
+	{u: 5816, i: 68575, n: "Shadow of the Dragon Shoulders", p: {gem: 300}},
 	{u: 6043, i: 70043, n: "Chronomancer's Epaulets", p: {achievement: 0}},
 	{u: 6252, i: 74491, n: "Nightfury", t: [74491]},
 	{u: 6332, i: 76070, n: "Leystone Mantle", p: {coin: 0}},
@@ -846,7 +848,7 @@ Armor_Light_Gloves: [
 	{u: 5640, i: 67166, n: "Glorious Armguards", p: {pvp: true}},
 	{u: 5720, i: 67794, n: "Luminescent Gloves", p: {achievement: 0}},
 	{u: 5742, i: 67482, n: "Carapace Gloves", p: {map_sw: 1000}},
-	{u: 5823, i: 68576, n: "Shadow of the Dragon Gloves", p: {gem: 100}},
+	{u: 5823, i: 68576, n: "Shadow of the Dragon Gloves", p: {gem: 300}},
 	{u: 6273, i: 70425, n: "Shackles of Madness", p: {cob: 6}},
 	{u: 6297, i: 71431, n: "Ornate Guild Gloves", p: {craft: true}},
 	{u: 6308, i: 74102, n: "Leystone Gloves", p: {coin: 0}},
@@ -1122,9 +1124,9 @@ Armor_Medium_Helm: [
 	{u: 5714, i: 67461, n: "Carapace Mask", p: {map_sw: 1000}},
 	{u: 5728, i: 67796, n: "Luminescent Mask", p: {achievement: 0}},
 	{u: 5747, i: 67857, n: "Glint's Gaze Mask", p: {gem: 500}},
-	{u: 5821, i: 68574, n: "Shadow of the Dragon Helmet", p: {gem: 100}},
-	{u: 5851, i: 68656, n: "Lion's Mask", p: {gem: 100}},
-	{u: 5853, i: 68655, n: "Dragon's Mask", p: {gem: 100}},
+	{u: 5821, i: 68574, n: "Shadow of the Dragon Helmet", p: {gem: 300}},
+	{u: 5851, i: 68656, n: "Lion's Mask", p: {gem: 300}},
+	{u: 5853, i: 68655, n: "Dragon's Mask", p: {gem: 300}},
 	{u: 6050, i: 70060, n: "Scrapper's Mask", p: {achievement: 0}},
 	{u: 6183, i: 75383, n: "Daredevil's Scarf", p: {achievement: 0}},
 	{u: 6217, i: 71931, n: "Karka Helm", t: [71931]},
@@ -1137,7 +1139,8 @@ Armor_Medium_Helm: [
 	{u: 6858, i: 79159, n: "Bloodstone Crown", p: {achievement: 0}},
 	{u: 6891, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
 	{u: 6900, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
-	{u: 6969, i: 79471, n: "Medium Dragonscale Headdress", p: {achievement: 0}}
+	{u: 6969, i: 79471, n: "Medium Dragonscale Headdress", p: {achievement: 0}},
+	{u: 6915, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1212,7 +1215,7 @@ Armor_Medium_Shoulders: [
 	{u: 5716, i: 67472, n: "Carapace Shoulderpads", p: {map_sw: 1000}},
 	{u: 5717, i: 67799, n: "Luminescent Shoulderpads", p: {achievement: 0}},
 	{u: 5794, i: 67887, n: "Shoulder Scarf", p: {gem: 400}},
-	{u: 5820, i: 68575, n: "Shadow of the Dragon Shoulders", p: {gem: 100}},
+	{u: 5820, i: 68575, n: "Shadow of the Dragon Shoulders", p: {gem: 300}},
 	{u: 6161, i: 74491, n: "Nightfury", t: [74491]},
 	{u: 6345, i: 71759, n: "Bladed Shoulderpads", p: {map_vb: 500}},
 	{u: 6354, i: 72603, n: "Leystone Shoulderpads", p: {coin: 0}},
@@ -1362,7 +1365,7 @@ Armor_Medium_Gloves: [
 	{u: 5649, i: 67139, n: "Glorious Wristplates", p: {pvp: true}},
 	{u: 5711, i: 67462, n: "Carapace Vambraces", p: {map_sw: 1000}},
 	{u: 5729, i: 67794, n: "Luminescent Vambraces", p: {achievement: 0}},
-	{u: 5817, i: 68576, n: "Shadow of the Dragon Gloves", p: {gem: 100}},
+	{u: 5817, i: 68576, n: "Shadow of the Dragon Gloves", p: {gem: 300}},
 	{u: 6166, i: 76182, n: "Bladed Vambraces", p: {map_vb: 500}},
 	{u: 6214, i: 76880, n: "Ornate Guild Vambraces", p: {craft: true}},
 	{u: 6232, i: 75979, n: "Leystone Vambraces", p: {coin: 0}},
@@ -1631,9 +1634,9 @@ Armor_Heavy_Helm: [
 	{u: 5735, i: 67468, n: "Carapace Helmet", p: {map_sw: 1000}},
 	{u: 5738, i: 67796, n: "Luminescent Helmet", p: {achievement: 0}},
 	{u: 5748, i: 67857, n: "Glint's Gaze Mask", p: {gem: 500}},
-	{u: 5819, i: 68574, n: "Shadow of the Dragon Helmet", p: {gem: 100}},
-	{u: 5852, i: 68655, n: "Dragon's Mask", p: {gem: 100}},
-	{u: 5854, i: 68656, n: "Lion's Mask", p: {gem: 100}},
+	{u: 5819, i: 68574, n: "Shadow of the Dragon Helmet", p: {gem: 300}},
+	{u: 5852, i: 68655, n: "Dragon's Mask", p: {gem: 300}},
+	{u: 5854, i: 68656, n: "Lion's Mask", p: {gem: 300}},
 	{u: 5885, i: 69420, n: "Veil Piercer", p: {starting: true}},
 	{u: 5891, i: 69145, n: "Resplendent Curtain", p: {starting: true}},
 	{u: 5920, i: 69244, n: "Mist Scrim", p: {starting: true}},
@@ -1650,7 +1653,8 @@ Armor_Heavy_Helm: [
 	{u: 6856, i: 79240, n: "Bloodstone Crown", p: {achievement: 0}},
 	{u: 6893, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
 	{u: 6888, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
-	{u: 6968, i: 79508, n: "Heavy Dragonscale Headdress", p: {achievement: 0}}
+	{u: 6968, i: 79508, n: "Heavy Dragonscale Headdress", p: {achievement: 0}},
+	{u: 6931, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
@@ -1727,7 +1731,7 @@ Armor_Heavy_Shoulders: [
 	{u: 5740, i: 67799, n: "Luminescent Pauldrons", p: {achievement: 0}},
 	{u: 5744, i: 67465, n: "Carapace Pauldrons", p: {map_sw: 1000}},
 	{u: 5795, i: 67887, n: "Shoulder Scarf", p: {gem: 400}},
-	{u: 5815, i: 68575, n: "Shadow of the Dragon Shoulders", p: {gem: 100}},
+	{u: 5815, i: 68575, n: "Shadow of the Dragon Shoulders", p: {gem: 300}},
 	{u: 5918, i: 68849, n: "Mistward Pauldrons", p: {achievement: 0}},
 	{u: 6151, i: 74144, n: "Leystone Pauldrons", p: {coin: 0}},
 	{u: 6298, i: 73589, n: "Ornate Guild Pauldrons", p: {craft: true}},
@@ -1880,7 +1884,7 @@ Armor_Heavy_Gloves: [
 	{u: 5646, i: 67160, n: "Glorious Gauntlets", p: {pvp: true}},
 	{u: 5721, i: 67794, n: "Luminescent Gauntlets", p: {achievement: 0}},
 	{u: 5736, i: 67470, n: "Carapace Gauntlets", p: {map_sw: 1000}},
-	{u: 5822, i: 68576, n: "Shadow of the Dragon Gloves", p: {gem: 100}},
+	{u: 5822, i: 68576, n: "Shadow of the Dragon Gloves", p: {gem: 300}},
 	{u: 5909, i: 69304, n: "Mistward Warfists", p: {achievement: 0}},
 	{u: 6271, i: 74006, n: "Bladed Gauntlets", p: {map_vb: 500}},
 	{u: 6321, i: 74095, n: "Ornate Guild Gauntlets", p: {craft: true}},

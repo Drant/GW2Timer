@@ -1466,28 +1466,28 @@ Sale: {
 	Items: [
 	{
 		name: "Cosmic Logging Tool",
-		id: "http://i.imgur.com/7yr95zs.png",
+		id: "79472",
 		price: 1000,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Lava Lounge Pass",
-		id: "http://i.imgur.com/VDxspVp.png",
+		id: "79500",
 		price: 1000,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Lava Lounge Pass (2 Weeks)",
-		id: "http://i.imgur.com/roQx16b.png",
+		id: "79498",
 		price: 150,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Pirate Corsair Hat Skin",
-		id: "http://i.imgur.com/9SqxoJw.png",
+		id: "79374",
 		price: 300,
 		discount: null,
 		col: 0
@@ -1505,7 +1505,7 @@ Sale: {
 		price: 700,
 		discount: null,
 		col: 1
-	},
+	}
 	]
 },
 
