@@ -1328,7 +1328,7 @@ O = {
 		},
 		bol_condenseTimelineHeader: function(pIsInitial)
 		{
-			H.minutesInTimelineHeader = (O.Options.bol_condenseTimelineHeader) ? T.cMINUTES_IN_TIMEFRAME : T.cMINUTES_IN_MINIFRAME;
+			H.minutesInTimelineSpacing = (O.Options.bol_condenseTimelineHeader) ? T.cMINUTES_IN_TIMEFRAME : T.cMINUTES_IN_MINIFRAME;
 			H.updateTimelineHeader();
 			if (pIsInitial !== true)
 			{
@@ -9120,11 +9120,10 @@ V = {
 			I.prettyJSON(A.Data.Characters[charindex]);
 		});
 		// Remember HTML containing the character's portrait, profession icon, and name, to be used in bank tab headers
-		var prefacestr = "<span class='chrPreface' title='" + pCharacter.oCharName + "'>"
-			+ "<img class='chrPrefaceIcon' src='" + pCharacter.oCharPortrait + "' />"
-			+ "<ins class='acc_prof acc_prof_" + pCharacter.oCharElite + "'></ins>";
-		pCharacter.oCharPreface = prefacestr + pCharacter.oCharName + "</span>";
-		pCharacter.oCharIcons = prefacestr + "</span>";
+		var prefacecontent = "<img class='chrPrefaceIcon' src='" + pCharacter.oCharPortrait + "' />"
+			+ "<ins class='acc_prof acc_prof_" + pCharacter.oCharElite + " " + trivial + "'></ins>";
+		pCharacter.oCharPreface = "<span class='chrPreface'>" + prefacecontent + pCharacter.oCharName + "</span>";
+		pCharacter.oCharIcons = "<span class='chrPreface' title='" + pCharacter.oCharName + "'>" + prefacecontent + "</span>";
 		// Additional information as tooltip
 		I.qTip.init($("#chrSelection_" + pCharacter.oCharIndex).find(".chrCommitment").attr("title", crafttooltip));
 	},
@@ -10126,14 +10125,12 @@ V = {
 		var bankfill = 0;
 		var bankcapacity = 0;
 		var bankcount = 0;
-		var numtofetch = 0;
-		var numfetched = 0;
 		
 		// Fills a tab, which is one character's inventory
 		var fillInventory = function(pTab, pCharacter)
 		{
-			numtofetch = 0;
-			numfetched = 0;
+			var numtofetch = 0;
+			var numfetched = 0;
 			slotscontainer = pTab.find(".bnkTabSlots");
 			// First count items to fetch
 			for (var ii = 0; ii < pCharacter.bags.length; ii++)
@@ -26521,6 +26518,8 @@ W = {
 		W.opaqueLog();
 		W.toggleLogHeight();
 		I.bindScrollbar("#logWindow");
+		I.loadImg($("#wvwLog"));
+		O.mimicInput("#wvwZoomInput", "int_setInitialZoomWvW");
 		
 		// Bind the checkboxes to filter log entries
 		for (var i in W.MapType)
@@ -29051,7 +29050,7 @@ H = {
 	Timeline: GW2T_TIMELINE,
 	isTimelineEnabled: true,
 	isTimelineGenerated: false,
-	minutesInTimelineHeader: null,
+	minutesInTimelineSpacing: null, // Must be a divisor of 120 minutes
 
 	/*
 	 * Initializes dashboard components.
@@ -29809,7 +29808,7 @@ H = {
 		var numwbslices = T.cMINUTES_IN_2_HOURS / T.cMINUTES_IN_TIMEFRAME;
 		var wbcurrentoffset = 0;
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
-		var currenttimestamp = currentminute - (currentminute % H.minutesInTimelineHeader);
+		var currenttimestamp = currentminute - (currentminute % H.minutesInTimelineSpacing);
 		
 		// Update the world boss slices, executes every 15 minutes
 		if (currentminute % T.cMINUTES_IN_TIMEFRAME === 0 || pForceWB)
@@ -29861,7 +29860,7 @@ H = {
 		else
 		{
 			// Update the timestamp just behind the indicator with future time
-			var previoustimestamp = currentminute - H.minutesInTimelineHeader;
+			var previoustimestamp = currentminute - H.minutesInTimelineSpacing;
 			$("#tmlSegmentTimestamp_" + previoustimestamp)
 				.html(T.getCurrentBihourlyTimestampLocal(previoustimestamp + T.cMINUTES_IN_2_HOURS))
 				.removeClass("tmlSegmentTimestampCurrent").addClass("tmlSegmentTimestampFutureFar")
@@ -29902,7 +29901,7 @@ H = {
 		}
 		var currentminute = T.getCurrentBihourlyMinutesUTC();
 		var line = $("#tmlHeader").empty();
-		var divisions = T.cMINUTES_IN_2_HOURS / H.minutesInTimelineHeader;
+		var divisions = T.cMINUTES_IN_2_HOURS / H.minutesInTimelineSpacing;
 		var half = divisions / 2;
 		var ithminute, timestamp;
 		for (var i = 0; i < divisions; i++)
@@ -29911,8 +29910,8 @@ H = {
 			var hourclass = (i === 0 || i === half) ? "tmlSegmentTimestampHour" : "";
 			var condensedclass = (O.Options.bol_condenseTimelineHeader) ? "tmlSegmentTimestampCondensed" : "";
 			var tenseclass = "";
-			ithminute = H.minutesInTimelineHeader * i;
-			if (ithminute < currentminute - H.minutesInTimelineHeader)
+			ithminute = H.minutesInTimelineSpacing * i;
+			if (ithminute < currentminute - H.minutesInTimelineSpacing)
 			{
 				// Timestamps behind the current minute indicator becomes two hours ahead
 				timestamp = T.getCurrentBihourlyTimestampLocal(ithminute + T.cMINUTES_IN_2_HOURS);

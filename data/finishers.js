@@ -17,7 +17,7 @@ var GW2T_FINISHERS_HEADERS = {
  */
 var GW2T_FINISHERS_BLACKLIST = {
 	"30": "WvW Golden Dolyak Finisher",
-	"31": "WvW Silver Dolyak Finisher",
+	"31": "WvW Silver Dolyak Finisher", // 49462 Permanent Silver Dolyak
 	"32": "WvW Bronze Dolyak Finisher",
 	"47": "Third Place Trophy Finisher",
 	"48": "Basic Finisher",

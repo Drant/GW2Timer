@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20160926A"></script>
+	<script type="text/javascript" src="data/general.js?v=20160927"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -508,10 +508,11 @@
 			</div>
 			<div class="hudPeripheral hudPeripheralSouth">
 				<div id="wvwLogContainer">
-					<kbd id="logToggle" class="btnWindow logButton btnToggle" title="<dfn>Toggle Log</dfn>"></kbd>
-					<kbd id="logExpand" class="btnWindow logButton btnVertical logExtra" title="<dfn>Toggle Log Height</dfn>"></kbd>
+					<kbd id="logToggle" class="btnWindow logButton btnToggle" title="<dfn>Toggle log.</dfn>"></kbd>
+					<kbd id="logExpand" class="btnWindow logButton btnVertical logExtra" title="<dfn>Toggle log height.</dfn>"></kbd>
 					<kbd id="logOpaque" class="btnWindow logButton btnOpaque logExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
 					<div id="wvwLog" class="cntComposition">
+						<label id="wvwZoom" title="Set initial zoom level for WvW map."><img id="wvwZoomIcon" data-src="img/map/zoom.png" /><input id="wvwZoomInput" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 						<select id="wvwServerList"></select>
 						<div id="logOptions">
 							<div id=logNarrationContainer>

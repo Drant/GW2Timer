@@ -433,6 +433,27 @@
 	color: #ddff77;
 }
 
+#wvwZoom {
+	position: absolute; z-index: 1;
+	width: auto; height: auto;
+	left: 0px;
+	bottom: 0px;
+	margin: 0;
+	padding: 0;
+	opacity: 0.6;
+}
+#wvwLog:hover #wvwZoom {
+	opacity: 1;
+}
+#wvwZoomIcon {
+	opacity: 0.6;
+	pointer-events: none;
+}
+#wvwZoomInput {
+	width: 128px; height: 32px;
+	margin: 0;
+	padding: 0;
+}
 #wvwServerList {
 	position: absolute;
 	top: -8px;
