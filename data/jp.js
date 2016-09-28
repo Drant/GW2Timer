@@ -754,7 +754,7 @@ JP: {
 		img: "http://i.imgur.com/Dl7rjSo.png",
 		chest: null,
 		zone: "ember",
-		description: "Ember volcano tunnel and mountain climb with checkpoints"
+		description: "Ember volcano climb with checkpoints. Glide right of the vista into the lavafall's mouth for the entrance"
 	},
 	"drydock": {
 		id: 59,
