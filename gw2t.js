@@ -137,6 +137,7 @@ O = {
 		int_setPredictor: 0,
 		// Panel
 		bol_alignPanelRight: true,
+		bol_ignoreTouch: false,
 		bol_showPanel: true,
 		bol_showMap: true,
 		bol_showHUD: true,
@@ -672,6 +673,7 @@ O = {
 		}
 		
 		// Supplementary event handlers for some inputs
+		I.isTouchEnabled = ((typeof window.ontouchstart !== "undefined") && O.Options.bol_ignoreTouch === false);
 		O.bindOptionsInputs();
 		U.initializeAPIURLs();
 	},
@@ -19559,10 +19561,13 @@ M = {
 			crs: L.CRS.Simple
 		}).setView(this.cMAP_CENTER_INITIAL, initialzoom); // Out of map boundary so browser doesn't download tiles yet
 		// Because the map will interfere with scrolling the website on touch devices
-		this.Map.touchZoom.disable();
-		if (this.Map.tap)
+		if (I.isTouchEnabled)
 		{
-			this.Map.tap.disable();
+			this.Map.touchZoom.disable();
+			if (this.Map.tap)
+			{
+				this.Map.tap.disable();
+			}
 		}
 		
 		// Initialize LayerGroup in zones to later hold world completion and dynamic event icons
@@ -31512,7 +31517,6 @@ I = {
 		{
 			I.isProgramEmbedded = true;
 		}
-		I.isTouchEnabled = typeof window.ontouchstart !== "undefined";
 		
 		// Get URL arguments and do appropriate changes
 		U.enforceURLArgumentsFirst();
