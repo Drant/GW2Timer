@@ -67,6 +67,7 @@ var GW2T_ASCENDED_HEADERS = {
 var GW2T_ASCENDED_METADATA = {
 	// Account bound items, these will supplement the catalog's item payments
 	BoundPayments: {
+		"79518": {coin: 10000000}, // Contract of Patronage
 		"19676": {coin: 10000}, // Icy Runestone
 		"19925": {karma: 2100}, // Obsidian Shard
 		"46747": {coin: 150}, // Thermocatalytic Reagent

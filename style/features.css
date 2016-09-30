@@ -408,9 +408,10 @@ dt.jpzListNameHover {
 .clt_prioryseals { background-position: -928px 0; }
 .clt_rangerpets { background-position: -960px 0; }
 .clt_skrittburglar { background-position: -992px 0; }
-.clt_speedyreader { background-position: -1024px 0; }
-.clt_strongboxes { background-position: -1056px 0; }
-.clt_tigerspirit { background-position: -1088px 0; }
+.clt_skrittstashes { background-position: -1024px 0; }
+.clt_speedyreader { background-position: -1056px 0; }
+.clt_strongboxes { background-position: -1088px 0; }
+.clt_tigerspirit { background-position: -1120px 0; }
 
 .mapNeedle0, .mapNeedle1, .mapNeedle2 {
 	border-radius: 50%;

@@ -31,9 +31,7 @@ General: [
 	{u: 1, i: 64756, n: "Cook's Outfit", p: {gem: 700}},
 	{u: 9, i: 66279, n: "Ancestral Outfit", p: {gem: 700}},
 	{u: 8, i: 66658, n: "Shadow Assassin Outfit", p: {gem: 700}},
-	{u: 5, i: 65194, n: "Executioner's Outfit", p: {gem: 700}},
 	{u: 10, i: 67040, n: "Ceremonial Plated Outfit", p: {gem: 700}},
-	{u: 12, i: 67374, n: "Hexed Outfit", p: {cob: 3}},
 	{u: 13, i: 67398, n: "Noble Count Outfit", p: {gem: 700}},
 	{u: 15, i: 67868, n: "Arctic Explorer Outfit", p: {gem: 700}},
 	{u: 14, i: 67990, n: "Jungle Explorer Outfit", p: {gem: 700}},
@@ -66,8 +64,10 @@ General: [
 Festival: [
 	{u: 2, i: 65196, n: "Mad King's Outfit", p: {gem: 700}},
 	{u: 4, i: 65201, n: "Witch's Outfit", p: {gem: 700}},
+	{u: 12, i: 67374, n: "Hexed Outfit", p: {cob: 3}},
 	{u: 7, i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}},
 	{u: 6, i: 65195, n: "Bloody Prince's Outfit", p: {gem: 700}},
+	{u: 5, i: 65194, n: "Executioner's Outfit", p: {gem: 700}},
 	{u: 11, i: 67037, n: "Raiment of the Lich", p: {gem: 700}},
 	{u: 33, i: 77595, n: "Winter Solstice Outfit", p: {gem: 700}}
 ]

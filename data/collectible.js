@@ -23,6 +23,44 @@
 
 var GW2T_COLLECTIBLE_DATA = {
 // Must have same name as a Checklist object
+SkrittStashes: {
+	name_en: "Skritt Stashes",
+	name_de: "Skritt-Vorrat",
+	name_es: "Alijo Skritt",
+	name_fr: "Réserve skritt",
+	color: "orchid",
+	view: "ember",
+	wiki: "https://wiki.guildwars2.com/wiki/Skritt_Stash",
+	credit: "https://www.reddit.com/r/Guildwars2/comments/54vao8/ember_bay_26_taco_poi_coordinates_for_skritt/",
+	needles: [
+	{n: 1, c: [6199, 29857]},
+	{n: 2, c: [6212, 29654]},
+	{n: 3, c: [6179, 29651]},
+	{n: 4, c: [6239, 29546]},
+	{n: 5, c: [6137, 29568]},
+	{n: 6, c: [6003, 29351]},
+	{n: 7, c: [5781, 29473]},
+	{n: 8, c: [5463, 29325]},
+	{n: 9, c: [5442, 29564]},
+	{n: 10, c: [5106, 29773]},
+	{n: 11, c: [5234, 30508]},
+	{n: 12, c: [5594, 30366]},
+	{n: 13, c: [6925, 30226]},
+	{n: 14, c: [7266, 30101]},
+	{n: 15, c: [7209, 29858]},
+	{n: 16, c: [7491, 29731]},
+	{n: 17, c: [7908, 29407]},
+	{n: 18, c: [7980, 28983]},
+	{n: 19, c: [7756, 28795]},
+	{n: 20, c: [7421, 29182]},
+	{n: 21, c: [7042, 29542]},
+	{n: 22, c: [6728, 29219]},
+	{n: 23, c: [7070, 29066]},
+	{n: 24, c: [7165, 29050]},
+	{n: 25, c: [7079, 28848]},
+	{n: 26, c: [6992, 28598]}
+	]
+},
 NoxiousPods: {
 	name_en: "Noxious Pods",
 	name_de: "Giftigen Kapseln",

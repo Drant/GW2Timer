@@ -1413,20 +1413,20 @@ X = {
 	Checklists:
 	{
 		// localStorage key-value pairs (key is required)
-		Chain: { key: "str_chlChain", value: "" },
-		ChainSubscription: { key: "str_chlChainSubscription", value: "" },
-		JP: { key: "str_chlJP", value: "" },
-		Chest: { key: "str_chlChest", value: "" },
-		ResourceRich: { key: "str_chlResourceRich", value: "" },
-		ResourcePermanent: { key: "str_chlResourcePermanent", value: "" },
-		ResourceRegular: { key: "str_chlResourceRegular", value: "" },
-		ResourceHotspot: { key: "str_chlResourceHotspot", value: "" },
-		Dungeon: { key: "str_chlDungeon", value: "", money: 0 },
-		CustomDaily: { key: "str_chlCustomDaily", value: "" },
-		CustomWeekly: { key: "str_chlCustomWeekly", value: "" },
+		Chain: { key: "str_chlChain" },
+		ChainSubscription: { key: "str_chlChainSubscription" },
+		JP: { key: "str_chlJP" },
+		Chest: { key: "str_chlChest" },
+		ResourceRich: { key: "str_chlResourceRich" },
+		ResourcePermanent: { key: "str_chlResourcePermanent" },
+		ResourceRegular: { key: "str_chlResourceRegular" },
+		ResourceHotspot: { key: "str_chlResourceHotspot" },
+		Dungeon: { key: "str_chlDungeon", money: 0 },
+		CustomDaily: { key: "str_chlCustomDaily" },
+		CustomWeekly: { key: "str_chlCustomWeekly" },
 		// Individual calculator's settings
-		TradingOverwrite: { key: "str_chlTradingOverwrite", value: "" },
-		TradingNotify: { key: "str_chlTradingNotify", value: "" }
+		TradingOverwrite: { key: "str_chlTradingOverwrite" },
+		TradingNotify: { key: "str_chlTradingNotify" }
 	},
 	/*
 	 * Collectible checklists must have the same variable name as in the map page's data.
@@ -1435,45 +1435,46 @@ X = {
 	Collectibles:
 	{
 		// Temporary
-		//LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans", value: ""},
+		//LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans"},
 		// Repeatable
-		NoxiousPods: { key: "str_chlNoxiousPods", urlkey: "noxiouspods", value: ""},
-		CrystallizedCaches: { key: "str_chlCrystallizedCaches", urlkey: "crystallizedcaches", value: ""},
-		ExaltedChests: { key: "str_chlExaltedChests", urlkey: "exaltedchests", value: ""},
-		AirshipCargo: { key: "str_chlAirshipCargo", urlkey: "airshipcargo", value: ""},
-		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests", value: ""},
-		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests", value: ""},
-		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey", value: ""},
-		SkrittBurglar: { key: "str_chlSkrittBurglar", urlkey: "skrittburglar", value: ""},
+		SkrittStashes: { key: "str_chlSkrittStashes", urlkey: "skrittstashes"},
+		NoxiousPods: { key: "str_chlNoxiousPods", urlkey: "noxiouspods"},
+		CrystallizedCaches: { key: "str_chlCrystallizedCaches", urlkey: "crystallizedcaches"},
+		ExaltedChests: { key: "str_chlExaltedChests", urlkey: "exaltedchests"},
+		AirshipCargo: { key: "str_chlAirshipCargo", urlkey: "airshipcargo"},
+		BuriedChests: { key: "str_chlBuriedChests", urlkey: "chests"},
+		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests"},
+		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey"},
+		SkrittBurglar: { key: "str_chlSkrittBurglar", urlkey: "skrittburglar"},
 		// Heart of Thorns
-		PaperScraps: { key: "str_chlPaperScraps", urlkey: "paperscraps", value: ""},
-		TigerSpirit: { key: "str_chlTigerSpirit", urlkey: "tigerspirit", value: ""},
-		ItzelTotems: { key: "str_chlItzelTotems", urlkey: "itzeltotems", value: ""},
-		PriorySeals: { key: "str_chlPriorySeals", urlkey: "prioryseals", value: ""},
-		AuricTablets: { key: "str_chlAuricTablets", urlkey: "aurictablets", value: ""},
-		ExaltedMasks: { key: "str_chlExaltedMasks", urlkey: "exaltedmasks", value: ""},
+		PaperScraps: { key: "str_chlPaperScraps", urlkey: "paperscraps"},
+		TigerSpirit: { key: "str_chlTigerSpirit", urlkey: "tigerspirit"},
+		ItzelTotems: { key: "str_chlItzelTotems", urlkey: "itzeltotems"},
+		PriorySeals: { key: "str_chlPriorySeals", urlkey: "prioryseals"},
+		AuricTablets: { key: "str_chlAuricTablets", urlkey: "aurictablets"},
+		ExaltedMasks: { key: "str_chlExaltedMasks", urlkey: "exaltedmasks"},
 		// Living Story 3
-		MursaatTokens: { key: "str_chlMursaatTokens", urlkey: "mursaattokens", value: ""},
-		MursaatTablets: { key: "str_chlMursaatTablets", urlkey: "mursaattablets", value: ""},
-		CamiJournals: { key: "str_chlCamiJournals", urlkey: "camijournals", value: ""},
-		BloodstoneCreatures: { key: "str_chlBloodstoneCreatures", urlkey: "creatures", value: ""},
-		BloodstoneSlivers: { key: "str_chlBloodstoneSlivers", urlkey: "slivers", value: ""},
+		MursaatTokens: { key: "str_chlMursaatTokens", urlkey: "mursaattokens"},
+		MursaatTablets: { key: "str_chlMursaatTablets", urlkey: "mursaattablets"},
+		CamiJournals: { key: "str_chlCamiJournals", urlkey: "camijournals"},
+		BloodstoneCreatures: { key: "str_chlBloodstoneCreatures", urlkey: "creatures"},
+		BloodstoneSlivers: { key: "str_chlBloodstoneSlivers", urlkey: "slivers"},
 		// Pre-expansion
-		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator", value: ""},
-		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect", value: ""},
-		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands", value: ""},
-		CoinChallenger: { key: "str_chlCoinChallenger", urlkey: "coinchallenger", value: ""},
-		LostBadges: { key: "str_chlLostBadges", urlkey: "lostbadges", value: ""},
-		GoldenLostBadges: { key: "str_chlGoldenLostBadges", urlkey: "goldenlostbadges", value: ""},
-		DiveMaster: { key: "str_chlDiveMaster", urlkey: "divemaster", value: ""},
-		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader", value: ""},
-		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup", value: ""},
-		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff", value: ""},
+		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator"},
+		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect"},
+		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands"},
+		CoinChallenger: { key: "str_chlCoinChallenger", urlkey: "coinchallenger"},
+		LostBadges: { key: "str_chlLostBadges", urlkey: "lostbadges"},
+		GoldenLostBadges: { key: "str_chlGoldenLostBadges", urlkey: "goldenlostbadges"},
+		DiveMaster: { key: "str_chlDiveMaster", urlkey: "divemaster"},
+		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader"},
+		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup"},
+		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff"},
 		// Character progress
-		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes", value: ""},
-		MasteryInsight: { key: "str_chlMasteryInsight", urlkey: "masteryinsight", value: ""},
-		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge", value: ""},
-		RangerPets: { key: "str_chlRangerPets", urlkey: "pets", value: ""}
+		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes"},
+		MasteryInsight: { key: "str_chlMasteryInsight", urlkey: "masteryinsight"},
+		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge"},
+		RangerPets: { key: "str_chlRangerPets", urlkey: "pets"}
 	},
 	ChecklistEnum:
 	{
@@ -1501,19 +1502,19 @@ X = {
 	 */
 	Textlists:
 	{
-		CustomTextDaily: { key: "str_txlCustomTextDaily", value: [], valueDefault: [] },
-		CustomTextWeekly: { key: "str_txlCustomTextWeekly", value: [], valueDefault: [] },
-		NotepadText: { key: "str_txlNotepadText", value: [], valueDefault: [] },
-		TradingItem: { key: "str_txlTradingItem", value: [] },
-		TradingName: { key: "str_txlTradingName", value: [] },
-		TradingBuy: { key: "str_txlTradingBuy", value: [] },
-		TradingSell: { key: "str_txlTradingSell", value: [] },
-		TradingQuantity: { key: "str_txlTradingQuantity", value: [] },
-		NotifyBuyLow: { key: "str_txlNotifyBuyLow", value: [] },
-		NotifyBuyHigh: { key: "str_txlNotifyBuyHigh", value: [] },
-		NotifySellLow: { key: "str_txlNotifySellLow", value: [] },
-		NotifySellHigh: { key: "str_txlNotifySellHigh", value: [] },
-		ExchangeUnit: { key: "str_txlExchangeUnit", value: [] }
+		CustomTextDaily: { key: "str_txlCustomTextDaily", valueDefault: [] },
+		CustomTextWeekly: { key: "str_txlCustomTextWeekly", valueDefault: [] },
+		NotepadText: { key: "str_txlNotepadText", valueDefault: [] },
+		TradingItem: { key: "str_txlTradingItem"},
+		TradingName: { key: "str_txlTradingName"},
+		TradingBuy: { key: "str_txlTradingBuy"},
+		TradingSell: { key: "str_txlTradingSell"},
+		TradingQuantity: { key: "str_txlTradingQuantity"},
+		NotifyBuyLow: { key: "str_txlNotifyBuyLow"},
+		NotifyBuyHigh: { key: "str_txlNotifyBuyHigh"},
+		NotifySellLow: { key: "str_txlNotifySellLow"},
+		NotifySellHigh: { key: "str_txlNotifySellHigh"},
+		ExchangeUnit: { key: "str_txlExchangeUnit"}
 	},
 	
 	/*
@@ -1545,6 +1546,7 @@ X = {
 		var indexes;
 		var index;
 		var storedlist = localStorage[pChecklist.key];
+		pChecklist.value = "";
 		pChecklist.length = pLength;
 		
 		if (pCustomList)
@@ -1914,6 +1916,7 @@ X = {
 	initializeTextlist: function(pTextlist, pTextFields, pFieldName, pMaxLength, pRestoreButton)
 	{
 		// Initialize the pre-written text in the text fields
+		pTextlist.value = [];
 		pTextFields.each(function()
 		{
 			var text = $(this).val();
@@ -2781,6 +2784,10 @@ U = {
 	getAPISpecialization: function(pID)
 	{
 		return U.getAPI("specializations", pID);
+	},
+	getAPITitle: function(pID)
+	{
+		return U.getAPI("titles", pID);
 	},
 	getAPIPrice: function(pID)
 	{
@@ -17040,6 +17047,8 @@ D = {
 			cs: "současný", it: "corrente", pl: "bieżący", pt: "corrente", ru: "текущий", zh: "活期"},
 		s_daily: {de: "täglich", es: "diaria", fr: "quotidien",
 			cs: "denní", it: "giornaliero", pl: "dzienny", pt: "diário", ru: "ежедневно", zh: "每天"},
+		s_dailies: {de: "täglichen", es: "diarios", fr: "quotidiens",
+			cs: "deníky", it: "quotidiani", pl: "dzienniki", pt: "diários", ru: "ежедневных", zh: "每天成就"},
 		s_achievements: {de: "erfolge", es: "logros", fr: "succès",
 			cs: "výsledky", it: "obiettivi", pl: "osiągnięcia", pt: "conquistas", ru: "достижения", zh: "成就"},
 		s_previous: {de: "vorhergehend", es: "previo", fr: "préalable",
@@ -24061,7 +24070,7 @@ G = {
 			var resource; // A type of resource, like copper ore
 			var layer, marker, path;
 			var iconsize = (pGrade === "Rich") ? [32, 32] : [24, 24];
-			var iconanchor = (pGrade === "Rich") ? [24, 24] : [16, 16];
+			var iconanchor = (pGrade === "Rich") ? [16, 16] : [12, 12];
 
 			for (i in P.Resources)
 			{
@@ -25356,6 +25365,7 @@ W = {
 	cMAP_CENTER: [10494, 12414], // This centers on the WvW portion of the map
 	cMAP_CENTER_INITIAL: [-193.96875, 163.96875], // LatLng equivalent
 	cMAP_CENTER_ACTUAL: [8192, 8192],
+	isMappingIconsGenerated: false,
 	ZoomEnum:
 	{
 		Adaptive: -2,
