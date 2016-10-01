@@ -255,11 +255,9 @@ input[type="text"].accTokenHovered {
 }
 .accDirectoryColumn {
 	display: inline-block;
+	margin-right: 24px;
 	text-align: left;
 	vertical-align: top;
-}
-.accDirectoryColumn {
-	margin-right: 24px;
 }
 #accDirectory ul {
 	margin-bottom: 16px;
@@ -2542,6 +2540,21 @@ input[type="text"].bnkCatalogSlotAdd, input[type="text"].bnkCatalogTabRename {
 
 /* Adjustments for smaller screens
 ----------------------------------------------------------------------------- */
+@media (max-width: 1080px) {
+	
+.accComposition {
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.accDirectoryColumn {
+	margin-right: 12px;
+	font-size: 14px;
+}
+
+}
+
 @media (max-width: 720px) {
 	
 .accMenuTitle { /* Hide text on the account page menu */

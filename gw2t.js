@@ -85,7 +85,7 @@ O = {
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
 		APICache: {key: "obj_utlAPICache", value: {}},
-		AuditReport: {key: "obj_utlAuditReport", value: {}},
+		AuditHistory: {key: "obj_utlAuditHistory", value: {}},
 		CustomCatalog: {key: "obj_utlCustomCatalog", value: []},
 		BackupPins: {key: "obj_utlBackupPins", value: []},
 		BackupPinsWvW: {key: "obj_utlBackupPinsWvW", value: []},
@@ -673,7 +673,10 @@ O = {
 		}
 		
 		// Supplementary event handlers for some inputs
-		I.isTouchEnabled = ((typeof window.ontouchstart !== "undefined") && O.Options.bol_ignoreTouch === false);
+		I.isTouchEnabled = ((typeof window.ontouchstart !== "undefined")
+			&& O.Options.bol_ignoreTouch === false
+			&& I.ModeCurrent !== I.ModeEnum.Overlay
+		);
 		O.bindOptionsInputs();
 		U.initializeAPIURLs();
 	},
@@ -7664,11 +7667,14 @@ A = {
 	flattenUnlocks: function(pUnlocks)
 	{
 		var arr = [];
-		if (pUnlocks.length && isNaN(pUnlocks[0]) && pUnlocks[0].id)
+		if (pUnlocks.length && isNaN(pUnlocks[0]))
 		{
-			pUnlocks.forEach(function(iObj)
+			pUnlocks.forEach(function(iUnlock)
 			{
-				arr.push(iObj.id);
+				if (iUnlock.id && iUnlock.permanent !== false)
+				{
+					arr.push(iUnlock.id);
+				}
 			});
 			pUnlocks = arr;
 			return arr;
@@ -8361,22 +8367,10 @@ A = {
 					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(walletcat["gem"] + E.convertCoinToGem(totalliquidsellnogems)) + "</div>"
 				+ "</div>");
 				
-				// Get previous audit report if available
-				var prevrep = {};
-				try {
-					prevrep = JSON.parse(localStorage[O.Utilities.AuditReport.key]);
-				}
-				catch (e) {}
-				var prevstr = " " + D.getWordCapital("previous") + ": ";
-				var prevappraisedsell = (prevrep.totalappraisedsell > 0) ? (prevstr + E.formatCoinStringColored(prevrep.totalappraisedsell)) : "";
-				var prevappraisedbuy = (prevrep.totalappraisedbuy > 0) ? (prevstr + E.formatCoinStringColored(prevrep.totalappraisedbuy)) : "";
-				var prevliquidsell = (prevrep.totalliquidsell > 0) ? (prevstr + E.formatCoinStringColored(prevrep.totalliquidsell)) : "";
-				var prevliquidbuy = (prevrep.totalliquidbuy > 0) ? (prevstr + E.formatCoinStringColored(prevrep.totalliquidbuy)) : "";
-				
 				// Tooltip over the coin value to show both and buy and sell
 				var appraisedtip = "<dfn>" + D.getPhraseOriginal("Appraised Summary") + ":</dfn> <br />"
-					+ D.getPhraseOriginal("Appraised Sell") + ": " + E.formatCoinStringColored(totalappraisedsell) + prevappraisedsell + "<br />"
-					+ D.getPhraseOriginal("Appraised Buy") + ": " + E.formatCoinStringColored(totalappraisedbuy) + prevappraisedbuy + "<br />"
+					+ D.getPhraseOriginal("Appraised Sell") + ": " + E.formatCoinStringColored(totalappraisedsell) + "<br />"
+					+ D.getPhraseOriginal("Appraised Buy") + ": " + E.formatCoinStringColored(totalappraisedbuy) + "<br />"
 					+ "<br />"
 					+ "<dfn>" + D.getPhraseOriginal("Appraised Summary Exclude Gems") + ":</dfn> <br />"
 					+ D.getPhraseOriginal("Appraised Sell") + ": " + E.formatCoinStringColored(totalappraisedsellnogems) + "<br />"
@@ -8394,8 +8388,8 @@ A = {
 						+ " " + I.Symbol.ArrowRight + " " + E.formatGemString(upggems, true)
 						+ " " + I.Symbol.ArrowLeft + " " + E.formatCoinStringColored(upggemstocoin) + "<br />";
 				var liquidtip = "<dfn>" + D.getPhraseOriginal("Liquid Summary") + ":</dfn> <br />"
-					+ D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsell) + prevliquidsell + "<br />"
-					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuy) + prevliquidbuy + "<br />"
+					+ D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsell) + "<br />"
+					+ D.getPhraseOriginal("Liquid Buy") + ": " + E.formatCoinStringColored(totalliquidbuy) + "<br />"
 					+ "<br />"
 					+ "<dfn>" + D.getPhraseOriginal("Liquid Summary Exclude Gems") + ":</dfn> <br />"
 					+ D.getPhraseOriginal("Liquid Sell") + ": " + E.formatCoinStringColored(totalliquidsellnogems) + "<br />"
@@ -8417,14 +8411,20 @@ A = {
 				I.qTip.init(appraisedelm);
 				I.qTip.init(liquidelm);
 				
-				// Clean and save audit report
-				prevrep = {
-					totalappraisedsell: totalappraisedsell,
-					totalappraisedbuy: totalappraisedbuy,
-					totalliquidsell: totalliquidsell,
-					totalliquidbuy: totalliquidbuy
-				};
-				localStorage[O.Utilities.AuditReport.key] = JSON.stringify(prevrep);
+				// Generate history
+				var audithistory = {};
+				try {
+					audithistory = JSON.parse(localStorage[O.Utilities.AuditHistory.key]);
+				}
+				catch (e) {}
+				var auditreport = audithistory[(A.Data.Account.oAccName)]; // Get this account's audit history
+				if (auditreport)
+				{
+					for (var i in auditreport)
+					{
+
+					}
+				}
 				
 				// Show the summary box animated
 				summary.show("slow", function()
@@ -8588,6 +8588,7 @@ A = {
 		 */
 		var fetchPrices = function()
 		{
+			priceids = []; // I.log();
 			I.print(D.getPhraseOriginal("Loading trading price") + "...");
 			Z.scrapeAPIArray(U.convertAssocToArray(priceids), "commerce/prices", {aCallback: function(pPrices)
 			{
@@ -9269,7 +9270,8 @@ V = {
 		$.getJSON(A.getURL(A.URL.Account), function(pData)
 		{
 			A.Data.Account = pData;
-			var accountname = U.escapeHTML(((pData.name).split("."))[0]); // Omit the identifier number from the account name
+			A.Data.Account.oAccName = U.escapeHTML(pData.name);
+			A.Data.Account.oAccNick = A.Data.Account.oAccName.split(".")[0]; // Omit the identifier number from the account name
 			var forumlink = U.convertPrivateAnchor("https://forum-en.guildwars2.com/members/" + pData.name.replace(/[\s\.]/g, "-") + "/showposts");
 			var totalagehour = Math.round(totalage / T.cSECONDS_IN_HOUR);
 			var accountbirthdate = new Date(pData.created);
@@ -9288,7 +9290,7 @@ V = {
 				+ "<img src='img/account/summary/daily.png' />" + (pData.daily_ap || "?") + " "
 				+ "<img src='img/account/summary/monthly.png' />" + (pData.monthly_ap || "?")
 			+ "</span><br />";
-			var summary = "<var id='chrAccountName'>" + accountname + "</var>"
+			var summary = "<var id='chrAccountName'>" + A.Data.Account.oAccNick + "</var>"
 				+ accountadditional
 				+ "<var id='chrAccountServer'></var>" + wvwtitle + "<br />"
 				+ "<var id='chrAccountAge' title='" + hoursperday + hourstr + " / " + T.cHOURS_IN_DAY + hourstr + "<br />"
@@ -10533,7 +10535,7 @@ V = {
 		}
 		var container = B.createBank(dish);
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		var guild, slotdata;
+		var guild;
 		var tab, slotscontainer, slot;
 		var sortedvaults = [], vault, subvault;
 		var subbankname = {
@@ -12327,7 +12329,10 @@ B = {
 				{
 					for (var i = 0; i < Settings.aUnlockeds.length; i++)
 					{
-						unlocksassoc[(Settings.aUnlockeds[i].id)] = true;
+						if (Settings.aUnlockeds[i].permanent !== false)
+						{
+							unlocksassoc[(Settings.aUnlockeds[i].id)] = true;
+						}
 					}
 				}
 				else
