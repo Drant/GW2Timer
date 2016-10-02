@@ -893,17 +893,19 @@ textarea.jsCopyCode {
 .mapPane {
 	height: 100%;
 	min-height: 220px;
-	background-color: black;
 }
-.mapPaneBackground {
+#mapPane {
 	background: url("img/background/space.jpg") repeat center;
-}
-#itemVignette {
-	display: none;
 }
 #wvwPane {
 	display: none;
 	background: white;
+}
+#mapPane.mapPaneOff, #wvwPane.mapPaneOff {
+	background: black;
+}
+#itemVignette {
+	display: none;
 }
 
 /* Top side: Touch menu (visible on touch devices only) */

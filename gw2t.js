@@ -148,6 +148,7 @@ O = {
 		bol_hideHUD: true,
 		// Map
 		int_setFloor: 1,
+		int_setFloorWvW: 1,
 		int_setInitialZoom: 3,
 		int_setInitialZoomWvW: 4,
 		bol_showCoordinatesBar: true,
@@ -1147,6 +1148,10 @@ O = {
 		int_setFloor: function()
 		{
 			M.changeFloor(O.Options.int_setFloor);
+		},
+		int_setFloorWvW: function()
+		{
+			W.changeFloor(O.Options.int_setFloorWvW);
 		},
 		int_setInitialZoom: function()
 		{
@@ -8412,7 +8417,7 @@ A = {
 				I.qTip.init(liquidelm);
 				
 				// Generate history
-				var audithistory = {};
+				/*var audithistory = {};
 				try {
 					audithistory = JSON.parse(localStorage[O.Utilities.AuditHistory.key]);
 				}
@@ -8424,7 +8429,7 @@ A = {
 					{
 
 					}
-				}
+				}*/
 				
 				// Show the summary box animated
 				summary.show("slow", function()
@@ -8588,7 +8593,6 @@ A = {
 		 */
 		var fetchPrices = function()
 		{
-			priceids = []; // I.log();
 			I.print(D.getPhraseOriginal("Loading trading price") + "...");
 			Z.scrapeAPIArray(U.convertAssocToArray(priceids), "commerce/prices", {aCallback: function(pPrices)
 			{
@@ -19624,11 +19628,6 @@ M = {
 			
 			case P.MapEnum.Mists: {
 				mapnumber = 2;
-				// Set tiles, Tyria tiles is set later to avoid loading extra images
-				L.tileLayer(U.URL_API.TilesMists,
-				{
-					continuousWorld: true
-				}).addTo(W.Map);
 				this.createPins();
 				P.populateMap(W);
 			} break;
@@ -20000,20 +19999,31 @@ M = {
 	 */
 	toggleFloor: function()
 	{
-		var htmlidprefix = "#" + this.MapEnum;
+		var that = this;
+		var htmlidprefix = "#" + that.MapEnum;
 		var mappane = $(htmlidprefix + "Pane");
 		
-		this.isFloorShown = !(this.isFloorShown);
-		mappane.toggleClass("mapPaneBackground", this.isFloorShown);
-		if (this.isFloorShown)
+		that.isFloorShown = !(that.isFloorShown);
+		mappane.toggleClass("mapPaneOff", !that.isFloorShown);
+		if (that.isFloorShown)
 		{
-			M.changeFloor(O.Options.int_setFloor);
+			switch (that.MapEnum)
+			{
+				case P.MapEnum.Tyria:
+				{
+					that.changeFloor(O.Options.int_setFloor);
+				} break;
+				case P.MapEnum.Mists:
+				{
+					that.changeFloor(O.Options.int_setFloorWvW);
+				} break;
+			}
 		}
 		else
 		{
-			for (var i = 0; i < this.Floors.length; i++)
+			for (var i = 0; i < that.Floors.length; i++)
 			{
-				this.Map.removeLayer(this.Floors[i]);
+				that.Map.removeLayer(that.Floors[i]);
 			}
 		}
 	},
@@ -25370,6 +25380,8 @@ W = {
 	cMAP_CENTER: [10494, 12414], // This centers on the WvW portion of the map
 	cMAP_CENTER_INITIAL: [-193.96875, 163.96875], // LatLng equivalent
 	cMAP_CENTER_ACTUAL: [8192, 8192],
+	Floors: [],
+	isFloorShown: true,
 	isMappingIconsGenerated: false,
 	ZoomEnum:
 	{
@@ -25523,6 +25535,7 @@ W = {
 		U.convertExternalLink("#wvwHelpLinks a");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
 		// Finally
+		this.changeFloor(O.Options.int_setFloorWvW); // Add tile image to the map
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL
 		U.openSectionFromURL({aButton: "#lboRegion", aSection: "Leaderboard"});
@@ -25553,7 +25566,7 @@ W = {
 	},
 	
 	/*
-	 * Generates the WvW objectives markers.
+	 * Generates the WvW objectives markers and labels.
 	 */
 	populateWvW: function()
 	{
@@ -25614,6 +25627,10 @@ W = {
 					marker.on("click", function()
 					{
 						$("#wvwZoneLink" + ((iLand === "Center") ? "Center" : iTeam)).trigger("click");
+					});
+					marker.on("dblclick", function()
+					{
+						$("#wvwZoneLink" + ((iLand === "Center") ? "Center" : iTeam)).trigger("dblclick");
 					});
 					marker.on("contextmenu", function()
 					{
@@ -26274,7 +26291,7 @@ W = {
 			{
 				var kills = (pData.kills !== undefined) ? pData.kills[ownerkey] : "";
 				var deaths = (pData.deaths !== undefined) ? pData.deaths[ownerkey] : "";
-				var kdratio = T.parseRatio((kills / deaths), 3);
+				var kdratio = T.parseRatio((kills / deaths), 2);
 				var kdbl = "";
 				// This constrains the ratio between 0% and 200%, where 100% means the kills and deaths numbers are equal
 				var kdpercent = T.parseRatio(T.clampCeil(kills / deaths, 2) / 2) * T.cPERCENT_100;
@@ -26283,7 +26300,7 @@ W = {
 				{
 					blkills = iMap.kills[ownerkey];
 					bldeaths = iMap.deaths[ownerkey];
-					kdbl += "<dfn>" + blkills + " : " + bldeaths + " (" + T.parseRatio((blkills / bldeaths), 3) + ")</dfn> on " + matchupdata[iMap.type] +  "<br />";
+					kdbl += "<dfn>" + blkills + " : " + bldeaths + " (" + T.parseRatio((blkills / bldeaths), 2) + ")</dfn> on " + matchupdata[iMap.type] +  "<br />";
 				});
 				kdstr = "<aside class='lboKD' title='<dfn>Kills to Deaths ratio: " + kdratio + "</dfn><br />" + kdbl + "'>"
 					+ "<var class='lboKills'>" + kills.toLocaleString() + "</var>"

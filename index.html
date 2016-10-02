@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20161001"></script>
+	<script type="text/javascript" src="data/general.js?v=20161002"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -381,6 +381,7 @@
 						<ul>
 							<li id="wvwContextToggleCompletion">Toggle world completion</li>
 							<li id="wvwContextToggleLock">Toggle map lock</li>
+							<li id="wvwContextToggleFloor">Toggle map</li>
 						</ul>
 					</li>
 				</ul>
@@ -470,6 +471,7 @@
 							<label title="Set initial zoom level for WvW map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoomWvW" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 						</div>
 						<div class="mapOptionsOther">
+							<label class="cssHidden"><img data-src="img/map/floor.png" /><input id="opt_int_setFloorWvW" class="optSlider" type="range" min="0" max="3" step="1" title="Set map floor level." /></label>
 							<label title="Show or hide shrines, ruins, sentries, and supply depots."><img data-src="img/wvw/secondaries/sentry.png" /><input id="opt_bol_showSecondaries" type="checkbox" /> Show secondaries</label>
 							<label title="Show or hide objectives' destructible walls and gates."><img data-src="img/wvw/wall.png" /><input id="opt_bol_showDestructibles" type="checkbox" /> Show destructible walls</label>
 							<label title="Show or hide labels on the map."><img data-src="img/wvw/label.png" /><input id="opt_bol_showObjectiveLabels" type="checkbox" /> Show objective labels</label>
