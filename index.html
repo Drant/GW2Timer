@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20161002"></script>
+	<script type="text/javascript" src="data/general.js?v=20161003"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -103,8 +103,8 @@
 						<ul>
 							<li id="mapContextDrawCompletion">Draw completion route</li>
 							<li id="mapContextToggleCompletion">Toggle world completion</li>
-							<li id="mapContextToggleLock">Toggle map lock</li>
-							<li id="mapContextToggleFloor">Toggle map</li>
+							<li id="mapContextToggleLock">Toggle zone lock</li>
+							<li id="mapContextToggleFloor">Toggle floor</li>
 						</ul>
 					</li>
 				</ul>
@@ -242,6 +242,7 @@
 							<label title="Set initial zoom level for Tyria map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoom" class="optSlider" type="range" min="0" max="7" step="1" /></label>
 						</div>
 						<div class="mapOptionsOther">
+							<label class="cssHidden"><input id="opt_bol_showFloor" type="checkbox" /></label>
 							<label class="cssHidden"><input id="opt_bol_showCoordinatesBar" type="checkbox" /></label>
 							<label class="cssHidden"><input id="opt_bol_condenseTimelineHeader" type="checkbox" /></label>
 							<label><img data-src="img/map/floor.png" /><input id="opt_int_setFloor" class="optSlider" type="range" min="0" max="3" step="1" title="Set map floor level.<br />Example: Verdant Brink has multiple floors." /></label>
@@ -380,8 +381,8 @@
 					<li class="itemContextSubmenu"><span>Map</span>
 						<ul>
 							<li id="wvwContextToggleCompletion">Toggle world completion</li>
-							<li id="wvwContextToggleLock">Toggle map lock</li>
-							<li id="wvwContextToggleFloor">Toggle map</li>
+							<li id="wvwContextToggleLock">Toggle zone lock</li>
+							<li id="wvwContextToggleFloor">Toggle floor</li>
 						</ul>
 					</li>
 				</ul>
@@ -471,7 +472,8 @@
 							<label title="Set initial zoom level for WvW map."><img data-src="img/map/zoom.png" /><input id="opt_int_setInitialZoomWvW" class="optSlider" type="range" min="0" max="6" step="1" /></label>
 						</div>
 						<div class="mapOptionsOther">
-							<label class="cssHidden"><img data-src="img/map/floor.png" /><input id="opt_int_setFloorWvW" class="optSlider" type="range" min="0" max="3" step="1" title="Set map floor level." /></label>
+							<label class="cssHidden"><input id="opt_bol_showFloorWvW" type="checkbox" /></label>
+							<label class="cssHidden"><input id="opt_int_setFloorWvW" class="optSlider" type="range" min="1" max="1" step="1" /></label>
 							<label title="Show or hide shrines, ruins, sentries, and supply depots."><img data-src="img/wvw/secondaries/sentry.png" /><input id="opt_bol_showSecondaries" type="checkbox" /> Show secondaries</label>
 							<label title="Show or hide objectives' destructible walls and gates."><img data-src="img/wvw/wall.png" /><input id="opt_bol_showDestructibles" type="checkbox" /> Show destructible walls</label>
 							<label title="Show or hide labels on the map."><img data-src="img/wvw/label.png" /><input id="opt_bol_showObjectiveLabels" type="checkbox" /> Show objective labels</label>

@@ -980,13 +980,6 @@ MursaatTablets: {
 	wiki: "https://wiki.guildwars2.com/wiki/Tablets_of_the_Unseen",
 	credit: "http://www.timscloud.uk/Tim/GW2/Manual/Manual.html",
 	needles: [
-	{n: 1, c: [6234, 30251]},
-	{n: 2, c: [5388, 29690]},
-	{n: 3, c: [6175, 29418]},
-	{n: 4, c: [7113, 29668]},
-	{n: 5, c: [7433, 29311]},
-	{n: 6, c: [6983, 28931]},
-	{n: 7, c: [5252, 29135]},
 	{n: 1, c: [5196, 29163]},
 	{n: 2, c: [5242, 29107]},
 	{n: 3, c: [5413, 29146]},
