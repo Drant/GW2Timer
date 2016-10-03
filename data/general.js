@@ -438,7 +438,6 @@ Fractal:
 	url_de: "http://wiki-de.guildwars2.com/wiki/Fraktale_der_Nebel#Stufen",
 	url_es: "http://wiki-es.guildwars2.com/wiki/Fractales_de_la_niebla#Niveles_Fractales",
 	url_fr: "http://wiki-fr.guildwars2.com/wiki/Fractales_des_Brumes#Difficult.C3.A9_et_fractales",
-	numFractalDailies: 14, // The array length of https://api.guildwars2.com/v2/achievements/categories/88
 	Scale:
 	{
 		name_en: "Recommended Fractal Scale",
@@ -450,20 +449,20 @@ Fractal:
 	Schedule: [
 		// Week A, 0 index is Sunday
 		["Snowblind", "Chaos", "Aquatic"],
-		["Ocean", "Thaumanova", "Volcanic"],
-		["Urban", "Underground", "Snowblind"],
+		["Ocean", "Underground", "Urban"],
+		["UNKNOWN", "UNKNOWN", "UNKNOWN"],
 		["Cliffside", "Molten", "Maitrin"],
-		["Urban", "Ocean", "Aetherblade"],
-		["Swamp", "Cliffside", "Chaos"],
-		["Uncategorized", "Thaumanova", "Molten"],
+		["Swamp", "Ocean", "Uncategorized"],
+		["Aquatic", "Snowblind", "Thaumanova"],
+		["Aetherblade", "Uncategorized", "Volcanic"],
 		// Week B
-		["Underground", "Chaos", "Molten"],
-		["Urban", "Snowblind", "Maitrin"],
-		["Chaos", "Cliffside", "Aetherblade"],
-		["Uncategorized", "Snowblind", "Volcanic"],
-		["Aquatic", "Furnace", "Molten"],
-		["Swamp", "Aetherblade", "Maitrin"],
-		["Aquatic", "Swampland", "Uncategorized"]
+		["Cliffside", "Urban", "Chaos"],
+		["Underground", "Volcanic", "Maitrin"],
+		["Snowblind", "Ocean", "Swamp"],
+		["Chaos", "Uncategorized", "Urban"],
+		["Cliffside", "Furnace", "Maitrin"],
+		["Underground", "Thaumanova", "Molten"],
+		["Volcanic", "Swamp", "Aetherblade"]
 	]
 }
 };

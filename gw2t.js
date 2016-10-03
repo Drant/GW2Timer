@@ -23978,7 +23978,7 @@ G = {
 			$.getJSON(U.URL_API.Fractal, function(pData)
 			{
 				var ach = pData.achievements;
-				if ( ! ach || ach.length < T.Daily.Fractal.numFractalDailies)
+				if ( ! ach)
 				{
 					return;
 				}
