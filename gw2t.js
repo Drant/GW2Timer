@@ -16990,8 +16990,8 @@ D = {
 			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "раздел", zh: "節"},
 		s_map: {de: "karte", es: "mapa", fr: "carte",
 			cs: "mapa", it: "mappa", pl: "mapa", pt: "mapa", ru: "ка́рта", zh: "地圖"},
-		s_floor: {de: "etage", es: "piso", fr: "étage",
-			cs: "podlaha", it: "piano", pl: "podłoga", pt: "andar", ru: "этаж", zh: "樓"},
+		s_terrain: {de: "terrain", es: "terreno", fr: "terrain",
+			cs: "terén", it: "terreno", pl: "teren", pt: "terreno", ru: "местность", zh: "地形"},
 		s_center: {de: "zentrum", es: "centro", fr: "centre",
 			cs: "střed", it: "centro", pl: "środek", pt: "centro", ru: "центр", zh: "中心"},
 		s_completion: {de: "abschluss", es: "finalización", fr: "progression",
@@ -31815,6 +31815,10 @@ I = {
 			// Initialize the "current moused zone" variable for showing waypoints
 			M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
 			M.goToDefault(O.Options.int_setInitialZoom);
+			if (I.ModeCurrent === I.ModeEnum.Overlay)
+			{
+				P.updateCharacter(0);
+			}
 		}
 		
 		// Set tile after viewing the coordinate so it downloads the tiles last
@@ -33433,6 +33437,14 @@ I = {
 				I.cPANE_MENU_HEIGHT = 32;
 				I.loadImg("#mapGPSIcon");
 				$("#dsbMenu").appendTo("#dsbContainer");
+				// Manually assign F5 key browser reload functionality
+				$(document.body).on("keydown", this, function (event)
+				{
+					if (event.keyCode === 116)
+					{
+						window.location.reload(true);
+					}
+				});
 			} break;
 			case I.ModeEnum.Simple:
 			{
