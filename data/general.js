@@ -1454,8 +1454,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-09-27T16:00:00Z"),
-	Finish: new Date("2016-10-04T16:00:00Z"),
+	Start: new Date("2016-10-04T16:00:00Z"),
+	Finish: new Date("2016-10-11T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1464,44 +1464,72 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Riding Broom",
+		id: "49931",
+		price: 175,
+		discount: 250,
+		col: 0
+	},
+	{
+		name: "Phantom's Hood",
+		id: "65203",
+		price: 160,
+		discount: 200,
+		col: 0
+	},
+	{
+		name: "Taimi's Outfit",
+		id: "79380",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Witch's Outfit",
+		id: "36379",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Spectral Glider",
+		id: "http://i.imgur.com/f7Srcx2.png",
+		price: 500,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Taimi's Dye Kit",
+		id: "67291",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 0
+	},
+	{
 		name: "Cosmic Logging Tool",
 		id: "79472",
 		price: 1000,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Lava Lounge Pass",
 		id: "79500",
 		price: 1000,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Lava Lounge Pass (2 Weeks)",
 		id: "79498",
 		price: 150,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Pirate Corsair Hat Skin",
 		id: "79374",
 		price: 300,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Mursaat Backpack and Glider Combo",
-		id: "79523",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mursaat Robes",
-		id: "79531",
-		price: 700,
 		discount: null,
 		col: 1
 	}
