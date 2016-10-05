@@ -692,7 +692,8 @@ Glider: [
 	{i: 79010, n: "Glide-r-Tron", p: {gem: 500}},
 	{i: 79016, n: "White Mantle Glider", p: {gem: 400}},
 	{i: 79084, n: "Shining Blade Glider", p: {gem: 700}},
-	{i: 79595, n: "Mursaat Wings Glider", p: {gem: 700}}
+	{i: 79595, n: "Mursaat Wings Glider", p: {gem: 700}},
+	{i: 79631, n: "Spectral Glider", p: {gem: 500}}
 ],
 Node: [
 	{i: 43902, n: "Gift of Quartz", p: {laurel: 25}},

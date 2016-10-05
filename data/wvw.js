@@ -502,7 +502,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "ET", nick_de: "ET", nick_es: "TdE", nick_fr: "PdE", nick_zh: "伊雷登平台"
 },
 "2001": {
-	id: 2001,
+	id: 2001, suffix: "[EU]",
 	name_en: "Fissure of Woe",
 	name_de: "Riss des Kummers",
 	name_es: "Fisura de la Aflicción",
@@ -511,7 +511,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "FoW", nick_de: "RdK", nick_es: "FdlA", nick_fr: "FdM", nick_zh: "悲嘆縫隙"
 },
 "2002": {
-	id: 2002,
+	id: 2002, suffix: "[EU]",
 	name_en: "Desolation",
 	name_de: "Ödnis",
 	name_es: "Desolación",
@@ -520,7 +520,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "DS", nick_de: "ÖN", nick_es: "DS", nick_fr: "DS", nick_zh: "荒蕪廢墟"
 },
 "2003": {
-	id: 2003,
+	id: 2003, suffix: "[EU]",
 	name_en: "Gandara",
 	name_de: "Gandara",
 	name_es: "Gandara",
@@ -529,7 +529,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "GD", nick_de: "GD", nick_es: "GD", nick_fr: "GD", nick_zh: "甘達拉"
 },
 "2004": {
-	id: 2004,
+	id: 2004, suffix: "[EU]",
 	name_en: "Blacktide",
 	name_de: "Schwarzwasser",
 	name_es: "Marea Negra",
@@ -538,7 +538,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "BT", nick_de: "SW", nick_es: "MN", nick_fr: "NF", nick_zh: "黑潮"
 },
 "2005": {
-	id: 2005,
+	id: 2005, suffix: "[EU]",
 	name_en: "Ring of Fire",
 	name_de: "Feuerring",
 	name_es: "Anillo de fuego",
@@ -547,7 +547,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "RoF", nick_de: "FR", nick_es: "AdF", nick_fr: "CdF", nick_zh: "火焰之環"
 },
 "2006": {
-	id: 2006,
+	id: 2006, suffix: "[EU]",
 	name_en: "Underworld",
 	name_de: "Unterwelt",
 	name_es: "Inframundo",
@@ -556,7 +556,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "UW", nick_de: "UW", nick_es: "IM", nick_fr: "OM", nick_zh: "地下世界"
 },
 "2007": {
-	id: 2007,
+	id: 2007, suffix: "[EU]",
 	name_en: "Far Shiverpeaks",
 	name_de: "Ferne Zittergipfel",
 	name_es: "Lejanas Picosescalofriantes",
@@ -565,7 +565,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "FSP", nick_de: "FZG", nick_es: "LPF", nick_fr: "LCF", nick_zh: "席瓦雪山遠境"
 },
 "2008": {
-	id: 2008,
+	id: 2008, suffix: "[EU]",
 	name_en: "Whiteside Ridge",
 	name_de: "Weißflankgrat",
 	name_es: "Cadena Laderablanca",
@@ -574,7 +574,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "WSR", nick_de: "WFG", nick_es: "CLB", nick_fr: "CVB", nick_zh: "白際山脊"
 },
 "2009": {
-	id: 2009,
+	id: 2009, suffix: "[EU]",
 	name_en: "Ruins of Surmia",
 	name_de: "Ruinen von Surmia",
 	name_es: "Ruinas de Surmia",
@@ -583,7 +583,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "RoS", nick_de: "RvS", nick_es: "RdS", nick_fr: "RdS", nick_zh: "瑟米亞廢墟"
 },
 "2010": {
-	id: 2010,
+	id: 2010, suffix: "[EU]",
 	name_en: "Seafarer's Rest",
 	name_de: "Seemannsruh",
 	name_es: "Refugio del Viajante",
@@ -592,7 +592,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "SFR", nick_de: "SMS", nick_es: "RdV", nick_fr: "RdM", nick_zh: "航海者之寧"
 },
 "2011": {
-	id: 2011,
+	id: 2011, suffix: "[EU]",
 	name_en: "Vabbi",
 	name_de: "Vaabi",
 	name_es: "Vabbi",
@@ -601,7 +601,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "VB", nick_de: "VB", nick_es: "VB", nick_fr: "VB", nick_zh: "瓦比"
 },
 "2012": {
-	id: 2012,
+	id: 2012, suffix: "[EU]",
 	name_en: "Piken Square",
 	name_de: "Piken-Platz",
 	name_es: "Plaza de Piken",
@@ -610,7 +610,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "PS", nick_de: "PP", nick_es: "PdP", nick_fr: "PP", nick_zh: "派肯廣場"
 },
 "2013": {
-	id: 2013,
+	id: 2013, suffix: "[EU]",
 	name_en: "Aurora Glade",
 	name_de: "Auroralichtung",
 	name_es: "Claro de la Aurora",
@@ -619,7 +619,7 @@ var GW2T_SERVER_DATA = {
 	nick_en: "AG", nick_de: "AL", nick_es: "CdlA", nick_fr: "CdlA", nick_zh: "曙光林地"
 },
 "2014": {
-	id: 2014,
+	id: 2014, suffix: "[EU]",
 	name_en: "Gunnar's Hold",
 	name_de: "Gunnars Feste",
 	name_es: "Fuerte de Gunnar",

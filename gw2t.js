@@ -31819,7 +31819,7 @@ I = {
 			M.goToDefault(O.Options.int_setInitialZoom);
 			if (I.ModeCurrent === I.ModeEnum.Overlay)
 			{
-				P.updateCharacter(0);
+				//P.updateCharacter(0);
 			}
 		}
 		
