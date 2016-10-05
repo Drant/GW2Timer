@@ -5368,7 +5368,9 @@ Z = {
 				I.print("Items database of all languages updated.");
 				if (newitems)
 				{
-					Z.printAPICache(U.TypeEnum.isAssoc, {aCustomCache: newitems});
+					Z.printRecordEntry(newitems, {
+						aItemIDsKey: "id"
+					});
 				}
 				return;
 			}

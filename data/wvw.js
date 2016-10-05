@@ -266,6 +266,18 @@ var GW2T_LAND_DATA = {
 	region: "pvp",
 	map_rect: [[-9216, -9216], [9216, 9216]],
 	continent_rect: [[7950, 6545], [8718, 7313]]
+},
+"coliseum":
+{
+	id: "1171",
+	name_en: "Eternal Coliseum",
+	name_de: "Ewiges Kolosseum",
+	name_es: "Coliseo Eterno",
+	name_fr: "Amphithéâtre éternel",
+	name_zh: "永恆大劇場",
+	region: "pvp",
+	map_rect: [[-12288, -9216], [12288, 9216]],
+	continent_rect: [[10268, 6812], [11292, 7580]]
 }
 };
 
