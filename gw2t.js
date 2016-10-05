@@ -151,6 +151,8 @@ O = {
 		int_setFloorWvW: 1,
 		int_setInitialZoom: 3,
 		int_setInitialZoomWvW: 4,
+		bol_showFloor: true,
+		bol_showFloorWvW: true,
 		bol_showCoordinatesBar: true,
 		bol_showZoneBorders: false,
 		bol_showZoneGateways: false,
@@ -1152,6 +1154,14 @@ O = {
 		int_setFloorWvW: function()
 		{
 			W.changeFloor(O.Options.int_setFloorWvW);
+		},
+		bol_showFloor: function()
+		{
+			M.toggleFloor();
+		},
+		bol_showFloorWvW: function()
+		{
+			W.toggleFloor();
 		},
 		int_setInitialZoom: function()
 		{
@@ -5358,7 +5368,9 @@ Z = {
 				I.print("Items database of all languages updated.");
 				if (newitems)
 				{
-					Z.printAPICache(U.TypeEnum.isAssoc, {aCustomCache: newitems});
+					Z.printRecordEntry(newitems, {
+						aItemIDsKey: "id"
+					});
 				}
 				return;
 			}
@@ -16980,6 +16992,8 @@ D = {
 			cs: "oddíl", it: "sezione", pl: "sekcja", pt: "seção", ru: "раздел", zh: "節"},
 		s_map: {de: "karte", es: "mapa", fr: "carte",
 			cs: "mapa", it: "mappa", pl: "mapa", pt: "mapa", ru: "ка́рта", zh: "地圖"},
+		s_terrain: {de: "terrain", es: "terreno", fr: "terrain",
+			cs: "terén", it: "terreno", pl: "teren", pt: "terreno", ru: "местность", zh: "地形"},
 		s_center: {de: "zentrum", es: "centro", fr: "centre",
 			cs: "střed", it: "centro", pl: "środek", pt: "centro", ru: "центр", zh: "中心"},
 		s_completion: {de: "abschluss", es: "finalización", fr: "progression",
@@ -19476,7 +19490,6 @@ M = {
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
 	isMapInitialized: false,
-	isFloorShown: true,
 	isMouseOnHUD: false,
 	isUserDragging: false,
 	isZoneLocked: false,
@@ -19730,8 +19743,8 @@ M = {
 				that.movePin(this);
 			});
 		});
-		// Right clicking on the character pin hides it
-		this.Pin.Character.on("contextmenu", function()
+		// Double clicking on the character pin hides it
+		this.Pin.Character.on("dblclick", function()
 		{
 			that.movePin(this);
 			that.movePin(that.Pin.Camera);
@@ -19868,7 +19881,7 @@ M = {
 		});
 		$(htmlidprefix + "ContextToggleFloor").click(function()
 		{
-			that.toggleFloor();
+			$("#opt_bol_showFloor" + that.OptionSuffix).trigger("click");
 		});
 		$(htmlidprefix + "ContextToggleLock").click(function()
 		{
@@ -19983,7 +19996,7 @@ M = {
 	
 	/*
 	 * Changes the floor tile layer.
-	 * @param int pFloor number.
+	 * @param int pFloor number. If not provided then will just remove all floors.
 	 */
 	changeFloor: function(pFloor)
 	{
@@ -19991,7 +20004,10 @@ M = {
 		{
 			this.Map.removeLayer(this.Floors[i]);
 		}
-		this.Floors[pFloor].addTo(this.Map);
+		if (pFloor !== undefined)
+		{
+			this.Floors[pFloor].addTo(this.Map);
+		}
 	},
 	
 	/*
@@ -20002,29 +20018,30 @@ M = {
 		var that = this;
 		var htmlidprefix = "#" + that.MapEnum;
 		var mappane = $(htmlidprefix + "Pane");
+		var wantfloor, levelfloor;
 		
-		that.isFloorShown = !(that.isFloorShown);
-		mappane.toggleClass("mapPaneOff", !that.isFloorShown);
-		if (that.isFloorShown)
+		switch (that.MapEnum)
 		{
-			switch (that.MapEnum)
+			case P.MapEnum.Tyria:
 			{
-				case P.MapEnum.Tyria:
-				{
-					that.changeFloor(O.Options.int_setFloor);
-				} break;
-				case P.MapEnum.Mists:
-				{
-					that.changeFloor(O.Options.int_setFloorWvW);
-				} break;
-			}
+				wantfloor = O.Options.bol_showFloor;
+				levelfloor = O.Options.int_setFloor;
+			} break;
+			case P.MapEnum.Mists:
+			{
+				wantfloor = O.Options.bol_showFloorWvW;
+				levelfloor = O.Options.int_setFloorWvW;
+			} break;
+		}
+		
+		mappane.toggleClass("mapPaneOff", !wantfloor);
+		if (wantfloor)
+		{
+			that.changeFloor(levelfloor);
 		}
 		else
 		{
-			for (var i = 0; i < that.Floors.length; i++)
-			{
-				that.Map.removeLayer(that.Floors[i]);
-			}
+			that.changeFloor();
 		}
 	},
 	
@@ -23963,7 +23980,7 @@ G = {
 			$.getJSON(U.URL_API.Fractal, function(pData)
 			{
 				var ach = pData.achievements;
-				if ( ! ach || ach.length < T.Daily.Fractal.numFractalDailies)
+				if ( ! ach)
 				{
 					return;
 				}
@@ -25381,7 +25398,6 @@ W = {
 	cMAP_CENTER_INITIAL: [-193.96875, 163.96875], // LatLng equivalent
 	cMAP_CENTER_ACTUAL: [8192, 8192],
 	Floors: [],
-	isFloorShown: true,
 	isMappingIconsGenerated: false,
 	ZoomEnum:
 	{
@@ -25535,7 +25551,6 @@ W = {
 		U.convertExternalLink("#wvwHelpLinks a");
 		$("#wvwToolsButton").one("mouseenter", W.initializeSupplyCalculator);
 		// Finally
-		this.changeFloor(O.Options.int_setFloorWvW); // Add tile image to the map
 		W.isWvWLoaded = true;
 		// Show leaderboard the first time if requested by URL
 		U.openSectionFromURL({aButton: "#lboRegion", aSection: "Leaderboard"});
@@ -25644,6 +25659,16 @@ W = {
 		
 		// Hide map labels if opted
 		W.toggleObjectiveLabels();
+		
+		// Show floor if opted
+		if (O.Options.bol_showFloorWvW)
+		{
+			W.changeFloor(O.Options.int_setFloorWvW);
+		}
+		else
+		{
+			W.toggleFloor();
+		}
 		
 		// The function below would have been called already if world completion icons were generated
 		if (O.Options.bol_showWorldCompletionWvW === false)
@@ -31792,21 +31817,32 @@ I = {
 			// Initialize the "current moused zone" variable for showing waypoints
 			M.showCurrentZone(M.getZoneCenter(M.cInitialZone));
 			M.goToDefault(O.Options.int_setInitialZoom);
+			if (I.ModeCurrent === I.ModeEnum.Overlay)
+			{
+				//P.updateCharacter(0);
+			}
 		}
 		
 		// Set tile after viewing the coordinate so it downloads the tiles last
 		if (I.isMapEnabled)
 		{
-			if (I.PageInitial === "wvw")
+			if (O.Options.bol_showFloor)
 			{
-				$("#wvwSwitchButton").one("click", function()
+				if (I.PageInitial === "wvw")
+				{
+					$("#wvwSwitchButton").one("click", function()
+					{
+						M.changeFloor(O.Options.int_setFloor);
+					});
+				}
+				else
 				{
 					M.changeFloor(O.Options.int_setFloor);
-				});
+				}
 			}
 			else
 			{
-				M.changeFloor(O.Options.int_setFloor);
+				M.toggleFloor();
 			}
 		}
 		
@@ -33403,6 +33439,14 @@ I = {
 				I.cPANE_MENU_HEIGHT = 32;
 				I.loadImg("#mapGPSIcon");
 				$("#dsbMenu").appendTo("#dsbContainer");
+				// Manually assign F5 key browser reload functionality
+				$(document.body).on("keydown", this, function (event)
+				{
+					if (event.keyCode === 116)
+					{
+						window.location.reload(true);
+					}
+				});
 			} break;
 			case I.ModeEnum.Simple:
 			{
