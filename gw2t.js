@@ -1183,11 +1183,11 @@ O = {
 		{
 			if (M.isMapInitialized)
 			{
-				M.drawPersonalPath();
+				M.redrawPersonalPath();
 			}
 			if (W.isMapInitialized)
 			{
-				W.drawPersonalPath();
+				W.redrawPersonalPath();
 			}
 		},
 		str_colorPersonalPath: function()
@@ -19487,6 +19487,7 @@ M = {
 	Floors: [],
 	ZoneCurrent: {},
 	numPins: 0,
+	coordPinPrevious: null,
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
 	isMapInitialized: false,
@@ -20669,8 +20670,12 @@ M = {
 	createPersonalPin: function(pLatLng, pWantDraw)
 	{
 		var that = this;
+		var coord = this.convertLCtoGC(pLatLng);
+		var angle = (this.coordPreviousPin && O.Options.bol_showPersonalPaths) ? this.convertDirectionAngle(this.coordPreviousPin, coord) : 0;
+		this.coordPreviousPin = coord;
+		
 		// Create a pin at double click location
-		var url = (this.numPins === 0) ? "img/map/pin_red.png" : "img/map/pin_white.png";
+		var url = (this.numPins === 0) ? "img/map/pin_red.png" : (O.Options.bol_showPersonalPaths ? "img/map/pin_directed.png" : "img/map/pin_white.png");
 		var marker = L.marker(pLatLng,
 		{
 			icon: L.icon(
@@ -20680,7 +20685,8 @@ M = {
 				iconAnchor: [16, 16]
 			}),
 			draggable: true,
-			opacity: 0.9
+			opacity: 0.9,
+			rotationAngle: angle
 		});
 		this.toggleLayer(marker, true);
 		this.Layer.PersonalPin.addLayer(marker);
@@ -20783,6 +20789,7 @@ M = {
 		this.Layer.PersonalPin.clearLayers();
 		this.drawPersonalPath();
 		this.numPins = 0;
+		this.coordPreviousPin = null;
 	},
 	
 	/*
@@ -20867,12 +20874,13 @@ M = {
 	 */
 	redrawPersonalPath: function(pCoords, pZoomArgs)
 	{
-		if (pCoords !== undefined && pCoords !== null && pCoords.length > 0)
+		var coords = (pCoords !== undefined) ? pCoords : this.getPersonalCoords();
+		if (coords !== undefined && coords !== null && coords.length > 0)
 		{
 			this.clearPersonalPins();
-			for (var i in pCoords)
+			for (var i in coords)
 			{
-				this.createPersonalPin(this.convertGCtoLC(pCoords[i]));
+				this.createPersonalPin(this.convertGCtoLC(coords[i]));
 			}
 			this.drawPersonalPath();
 			// View the first point in the generated path
@@ -20880,7 +20888,7 @@ M = {
 			{
 				if (pZoomArgs === undefined)
 				{
-					this.goToArguments(pCoords[0]);
+					this.goToArguments(coords[0]);
 				}
 				else
 				{
