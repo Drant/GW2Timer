@@ -25496,7 +25496,6 @@ W = {
 	cTOTAL_PPT_POSSIBLE: 0, // Will be assigned by the compute function
 	cSECONDS_IMMUNITY: 300, // Righteous Indignation time
 	cMSECONDS_IMMUNITY: 300000, // 5 minutes
-	cMSECONDS_RESET_GRACE: 300000, // 5 minutes from the match start time
 	MatchStartTimeMS: null,
 	MatchFinishTimeMS: null,
 	MatchFinishTimeISO: null,
@@ -27027,8 +27026,10 @@ W = {
 	{
 		var timedb = {};
 		var fliptime;
-		var numduplicatefliptime = 0;
+		var fliptimenumduplicate = 0;
+		var fliptimeignore = null;
 		var maxattemptsuntilfallback = 3;
+		var maxduplicatefliptime = 18; // Number of non-neutral objectives in the borderlands during reset
 		var nowmsec = (new Date()).getTime();
 		var succeedReconnection = function()
 		{
@@ -27086,9 +27087,13 @@ W = {
 						timedb[fliptime] = 0;
 					}
 					timedb[fliptime] += 1;
-					if (timedb[fliptime] > numduplicatefliptime)
+					if (timedb[fliptime] > fliptimenumduplicate)
 					{
-						numduplicatefliptime = timedb[fliptime];
+						fliptimenumduplicate = timedb[fliptime];
+						if (fliptimenumduplicate > maxduplicatefliptime)
+						{
+							fliptimeignore = fliptime;
+						}
 					}
 				}
 			}
@@ -27098,7 +27103,6 @@ W = {
 			var numobjflipped = 0;
 			var maxobjflipped = 12;
 			var istoomanyflips = false;
-			var isduringreset = (nowmsec < W.MatchStartTimeMS + W.cMSECONDS_RESET_GRACE);
 			for (var i in pData.maps)
 			{
 				map = pData.maps[i];
@@ -27127,11 +27131,20 @@ W = {
 						// Mark the objective as immune if it is recently captured
 						if ((nowmsec - obj.last_flipped_msec) < W.cMSECONDS_IMMUNITY
 								&& obj.owner !== W.OwnerEnum.Neutral // Neutral objectives never have immunity
-								&& obj.type !== W.ObjectiveEnum.Ruins // Ruins do not have immunity
-								&& !isduringreset) // Don't show the immunity timer during the first few minutes of reset
+								&& obj.type !== W.ObjectiveEnum.Ruins) // Ruins do not have immunity
 						{
-							W.Objectives[obj.id].isImmune = true;
-							$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
+							/*
+							 * During reset or API server problems, numerous
+							 * objectives may have the same last flipped timestamp,
+							 * so ignore these objectives until they're past the immunity limit.
+							 */
+							if (fliptimeignore === null ||
+								(fliptimeignore !== null && (fliptimeignore !== obj.last_flipped)
+								&& (nowmsec - (new Date(fliptimeignore).getTime())) > W.cMSECONDS_IMMUNITY))
+							{
+								W.Objectives[obj.id].isImmune = true;
+								$("#objProgressBar_" + obj.id).show().find("var").css({width: "0%"}).animate({width: "100%"}, 800);
+							}
 						}
 					}
 					/*
