@@ -170,7 +170,7 @@ img {
 	position: fixed; z-index: 10;
 	top: 24px;
 	left: 24px;
-	font-family: monospace;
+	font-family: Consolas, monospace;
 	font-size: 16px;
 	color: lime;
 	text-shadow:
@@ -1001,6 +1001,7 @@ textarea.jsCopyCode {
 	vertical-align: middle;
 	overflow: hidden;
 	background: rgba(0, 0, 0, 0.2);
+	background-image: url("img/background/hud.png");
 	outline: 1px solid rgba(255, 136, 68, 0.2);
 	transition: background 1s;
 }
@@ -1071,6 +1072,7 @@ textarea.jsCopyCode {
 }
 .tmlSegmentActive, #tmlHeader .tmlTimestampActive {
 	background: rgba(255, 136, 68, 0.2);
+	background-image: url("img/background/hud.png");
 	outline: 1px solid rgba(0, 0, 0, 0.2);
 	transition: background 1s;
 }
@@ -1108,6 +1110,7 @@ textarea.jsCopyCode {
 	color: #bbcc77;
 	text-shadow: 0px 0px 4px black;
 	background: rgba(0, 0, 0, 0.4);
+	background-image: url("img/background/hud.png");
 	border-left: 4px solid rgba(0, 0, 0, 0.4);
 	border-radius: 2px;
 }
@@ -1411,6 +1414,7 @@ input.mapCoordinatesName {
 .hudButton {
 	position: absolute;
 	opacity: 0.6;
+	transition: opacity 0.1s;
 }
 .hudTitle {
 	display: inline-block;
@@ -2415,7 +2419,7 @@ header.jsSection sup {
 	padding-left: 8px;
 	border: 1px solid #111;
 	border-top: 1px solid #222;
-	background: linear-gradient(to right, #222 0%, transparent 100%);
+	background: url("img/background/hud.png"), linear-gradient(to right, #222 0%, transparent 100%);
 	transition: opacity 0.2s;
 }
 
@@ -2577,16 +2581,16 @@ header.jsSection sup {
 
 /* JavaScript added classes */
 .chnBarPrevious {
-	background: linear-gradient(to right, #111 0%, rgba(38, 19, 6, 0.8) 100%);
+	background: url("img/background/hud.png"), linear-gradient(to right, #111 0%, rgba(38, 19, 6, 0.8) 100%);
 }
 .chnBarCurrent {
-	background: linear-gradient(to right, #111 0%, rgba(105, 53, 16, 0.8) 100%);
+	background: url("img/background/hud.png"), linear-gradient(to right, #111 0%, rgba(105, 53, 16, 0.8) 100%);
 }
 .chnBarReset {
-	background: linear-gradient(to right, #111 0%, rgba(102, 59, 127, 0.8) 100%);
+	background: url("img/background/hud.png"), linear-gradient(to right, #111 0%, rgba(102, 59, 127, 0.8) 100%);
 }
 .chnBarHover {
-	background: linear-gradient(to right, #111 0%, rgba(102, 170, 255, 0.8) 100%);
+	background: url("img/background/hud.png"), linear-gradient(to right, #111 0%, rgba(102, 170, 255, 0.8) 100%);
 }
 
 .chnTitleCurrent, .chnSlot h1.chnTitleCurrent {
@@ -2769,6 +2773,7 @@ label:hover {
 	left: -16px;
 	width: 32px; height: 32px;
 	opacity: 0.4;
+	transition: opacity 0.1s;
 }
 .btnWindow:hover {
 	opacity: 0.8;

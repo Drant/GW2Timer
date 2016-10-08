@@ -10,6 +10,7 @@
 
 /* Resize fonts and positions appropriate for smaller view */
 #cslContent {
+	max-width: 100%;
 	top: 12px; left: 12px;
 	font-size: 12px;
 }

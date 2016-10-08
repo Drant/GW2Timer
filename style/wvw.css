@@ -171,10 +171,11 @@
 	overflow: visible;
 	display: inline-block;
 	padding: 8px;
+	text-align: left;
+	background-image: url("../img/background/hud.png");
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
 	border-radius: 4px;
-	text-align: left;
 }
 
 /* Classes for toggling window opacity (which is actually its background) */
@@ -417,6 +418,7 @@
 	margin: 0px 4px 4px 0px;
 	padding: 8px 12px 8px 12px;
 	font-size: 12px;
+	background-image: url("../img/background/hud.png");
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
 	text-shadow:

@@ -15164,7 +15164,7 @@ E = {
 			return 0;
 		}
 		
-		var str = pString.split(".");
+		var str = pString.replace(/[^0-9.-]/gi, "").split("."); // Only allow numbers, negative sign, and period separators
 		var len = str.length;
 		var copper = 0, silver = 0, gold = 0;
 		
@@ -15306,7 +15306,7 @@ E = {
 		var gold = Math.abs(~~(amount / E.Exchange.COPPER_IN_GOLD));
 		var silver = Math.abs(~~(amount / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER);
 		var copper = Math.abs(amount % E.Exchange.COPPER_IN_SILVER);
-		var goldstr = gold;
+		var goldstr = (Settings.aWantColor) ? gold.toLocaleString() : gold;
 		var silverstr = silver;
 		var copperstr = copper;
 		var sign = (amount < 0) ? "−" : "";
@@ -15340,7 +15340,7 @@ E = {
 		// Returns
 		if (gold > 0)
 		{
-			return sign + sg0 + goldstr.toLocaleString() + sg1 + sep + ss0 + silverstr + ss1 + sep + sc0 + copperstr + sc1;
+			return sign + sg0 + goldstr + sg1 + sep + ss0 + silverstr + ss1 + sep + sc0 + copperstr + sc1;
 		}
 		if (silver > 0)
 		{
@@ -25478,6 +25478,7 @@ W = {
 	Guilds: {}, // Holds retrieved API guild details objects
 	Objectives: {},
 	ObjectiveTimeout: {},
+	ObjectiveTimestampIgnore: null,
 	Weapons: {},
 	Placement: {},
 	MapType: {}, // Corresponds to "worlds" object from match API
@@ -27024,6 +27025,9 @@ W = {
 	 */
 	updateObjectives: function()
 	{
+		var timedb = {};
+		var fliptime;
+		var numduplicatefliptime = 0;
 		var maxattemptsuntilfallback = 3;
 		var nowmsec = (new Date()).getTime();
 		var succeedReconnection = function()
@@ -27068,6 +27072,25 @@ W = {
 			if (O.Options.bol_showLeaderboard)
 			{
 				W.insertScoreboard(pData);
+			}
+			
+			// First iteration to see if the objectives are resetted (all having the same flipped time)
+			for (var i in pData.maps)
+			{
+				map = pData.maps[i];
+				for (var ii in map.objectives)
+				{
+					fliptime = map.objectives[ii].last_flipped;
+					if (timedb[fliptime] === undefined)
+					{
+						timedb[fliptime] = 0;
+					}
+					timedb[fliptime] += 1;
+					if (timedb[fliptime] > numduplicatefliptime)
+					{
+						numduplicatefliptime = timedb[fliptime];
+					}
+				}
 			}
 			
 			// Update objectives
@@ -31646,7 +31669,7 @@ I = {
 		
 		// Detect TTS capability
 		try {
-			if (window.speechSynthesis && I.ModeCurrent !== I.ModeEnum.Overlay)
+			if (window.speechSynthesis && I.BrowserCurrent === I.BrowserEnum.Chrome && I.ModeCurrent !== I.ModeEnum.Overlay)
 			{
 				I.isSpeechSynthesisEnabled = true;
 				// Automatically reload the asynchronous voices
@@ -32808,12 +32831,13 @@ I = {
 		$(pPlate + " header.jsSection").each(function()
 		{
 			var header = $(this);
+			var section = header.next().addClass("cntSection");
 			var headercontent = $(this).children("var").first();
 			// Translate header if available
 			var headertext = headercontent.data(O.Options.enu_Language) || header.text();
 			headercontent.text(headertext);
 			// Hide the entire collapsible div tag next to the header tag
-			header.next().hide();
+			section.hide();
 			header.wrapInner("<span></span>");
 			header.append("<sup>" + I.Symbol.Expand + "</sup>");
 			
@@ -32899,7 +32923,7 @@ I = {
 			
 			// Create and bind the additional bottom header to collapse the container
 			$("<div class='curClick jsSectionDone'><img src='img/ui/close.png' />" + headertext + "</div>")
-			.appendTo(header.next()).click(function()
+			.appendTo(section).click(function()
 			{
 				$(this).parent().prev().trigger("click");
 			});
@@ -32909,11 +32933,11 @@ I = {
 			 * shows the associated header's sibling container (section) by
 			 * triggering that header's handler.
 			 */
-			var section = U.getSubstringFromHTMLID(header);
+			var sectionname = U.getSubstringFromHTMLID(header);
 			var src = header.find("img:eq(0)").attr("src");
 			if (I.isMapEnabled || header.hasClass("mapOnly") === false)
 			{
-				$("<img class='menuBeamIcon' data-section='" + section + "' src='" + src + "' "
+				$("<img class='menuBeamIcon' data-section='" + sectionname + "' src='" + src + "' "
 				+ "title='&lt;dfn&gt;" + D.getWordCapital("section") + ": &lt;/dfn&gt;" + headertext + "' />")
 				.appendTo(menubeam).click(function()
 				{
