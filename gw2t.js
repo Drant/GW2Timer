@@ -15260,6 +15260,7 @@ E = {
 	 * Converts a coin amount in copper to a period separated string.
 	 * @param int pAmount of copper.
 	 * @objparam boolean aWantColor whether to include the coin image instead of periods.
+	 * @objparam boolean aWantBig whether to use big coin text and icons.
 	 * @objparam boolean aWantSpace whether to separate the different coins with spaces.
 	 * @objparam boolean aWantShort whether to truncate lower denominations.
 	 * @returns string coin for displaying.
@@ -15306,7 +15307,7 @@ E = {
 		var gold = Math.abs(~~(amount / E.Exchange.COPPER_IN_GOLD));
 		var silver = Math.abs(~~(amount / E.Exchange.SILVER_IN_GOLD) % E.Exchange.COPPER_IN_SILVER);
 		var copper = Math.abs(amount % E.Exchange.COPPER_IN_SILVER);
-		var goldstr = (Settings.aWantColor) ? gold.toLocaleString() : gold;
+		var goldstr = (Settings.aWantColor || Settings.aWantBig || Settings.aWantShort) ? gold.toLocaleString() : gold;
 		var silverstr = silver;
 		var copperstr = copper;
 		var sign = (amount < 0) ? "−" : "";

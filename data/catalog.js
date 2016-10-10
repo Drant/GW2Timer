@@ -88,6 +88,9 @@ Token: [
 	{i: 78600, n: "Potion of WvW Rewards", p: {badge: 0}}
 ],
 Dungeon: [
+	{i: 79608, n: "Infinite Mist Offensive Potion"},
+	{i: 79515, n: "Infinite Mist Defensive Potion"},
+	{i: 79494, n: "Infinite Mist Mobility Potion"},
 	{i: 78252, n: "Chest of Dungeoneering", p: {dungeon_arah: 150}},
 	{i: 70438, n: "Fractal Encryption Key", p: {coin: 3000}},
 	{i: 75919, n: "Fractal Encryption"},

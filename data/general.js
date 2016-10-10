@@ -1354,7 +1354,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://forum.renaka.com/topic/5546166/'>GW2Navi Overlay</a> updated 2016.10.05. Also fixes invisible menu bar, <a href='http://forum.renaka.com/topic/5790839/'>Changelog</a> for info.",
+	pve: "<a href='http://forum.renaka.com/topic/5546166/'>GW2Navi Overlay</a> was promoted by <a href='http://i.imgur.com/342uuxZ.png'>ArenaNet</a>!",
 	wvw: "",
 	Start: new Date("2016-10-04T16:00:00Z"),
 	Finish: new Date("2016-10-11T16:00:00Z"),
