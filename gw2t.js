@@ -801,8 +801,7 @@ O = {
 		O.isServerReset = true;
 		// Notify of the reset in console
 		var messagetime = 5;
-		var dailymessage = pIsDuring ? "Daily Reset!" : "Daily Timestamp Expired!";
-		I.greet(dailymessage, messagetime);
+		var dailymessage = pIsDuring ? "Daily Reset!" : "Expired daily checklists cleared.";
 		// Update the daily object
 		T.getDaily({aIsReset: true});
 		
@@ -811,6 +810,7 @@ O = {
 		var chain;
 		if (O.Options.bol_clearChainChecklistOnReset)
 		{
+			I.greet(dailymessage, messagetime);
 			for (i in C.Chains)
 			{
 				chain = C.Chains[i];
@@ -845,10 +845,10 @@ O = {
 	clearWeeklySensitiveOptions: function(pIsDuring)
 	{
 		var messagetime = 5;
-		var weeklymessage = pIsDuring ? "Weekly Reset!" : "Weekly Timestamp Expired!";
-		I.greet(weeklymessage, messagetime);
+		var weeklymessage = pIsDuring ? "Weekly Reset!" : "Expired weekly checklists cleared.";
 		if (O.Options.bol_clearPersonalChecklistOnReset)
 		{
+			I.greet(weeklymessage, messagetime);
 			X.clearCustomChecklistWeekly();
 		}
 	},
