@@ -1740,7 +1740,7 @@ X = {
 			case X.ChecklistJob.UncheckTheChecked:
 			{
 				// Only sets unchecked state on checked ones
-				if (localStorage[pChecklist.key] !== undefined)
+				if (localStorage[pChecklist.key] && localStorage[pChecklist.key].length)
 				{
 					value = localStorage[pChecklist.key];
 				}
