@@ -1740,7 +1740,7 @@ X = {
 			case X.ChecklistJob.UncheckTheChecked:
 			{
 				// Only sets unchecked state on checked ones
-				if (localStorage[pChecklist.key] && localStorage[pChecklist.key].length)
+				if (localStorage[pChecklist.key])
 				{
 					value = localStorage[pChecklist.key];
 				}
@@ -1749,15 +1749,18 @@ X = {
 					value = pChecklist.value;
 				}
 				
-				for (i = 0; i < value.length; i++)
+				if (value && value.length)
 				{
-					if (value[i] === X.ChecklistEnum.Checked)
+					for (i = 0; i < value.length; i++)
 					{
-						checklist += X.ChecklistEnum.Unchecked;
-					}
-					else
-					{
-						checklist += value[i];
+						if (value[i] === X.ChecklistEnum.Checked)
+						{
+							checklist += X.ChecklistEnum.Unchecked;
+						}
+						else
+						{
+							checklist += value[i];
+						}
 					}
 				}
 			} break;
