@@ -25839,6 +25839,7 @@ W = {
 		var teamnames = W.Metadata.Teams;
 		var ithteamname, ithowner, worldid, teamserverids, hostserverid;
 		var servers = new Array(numteams);
+		var hosts = new Array(numteams);
 		var names = new Array(numteams);
 		var namelines = new Array(numteams);
 		var namelinks = new Array(numteams);
@@ -25912,7 +25913,16 @@ W = {
 				var ithserver = (servers[i])[ii];
 				ithserver.owner = ithowner; // Record the server's color
 				var ithservername = U.escapeHTML(D.getObjectName(ithserver));
-				var hostflag = (ii === 0 && servers[i].length > 1) ? "+" : ""; // Add a suffix next to the host server name, if that server has allies
+				var hostflag = "";
+				if (ii === 0) // Hosts are supposed to be in the first index in the API
+				{
+					hosts[i] = D.getObjectName(ithserver);
+					// Add a suffix next to the host server name if that server has allies
+					if (servers[i].length > 1)
+					{
+						hostflag = "+";
+					}
+				}
 				// Abbreviate the names if is non-host server and there are too many on one team
 				if ((hostflag.length === 0 && servers[i].length >= maxserversbeforeabbrev) || servers[i].length > maxserversbeforeabbrev)
 				{
@@ -25948,6 +25958,7 @@ W = {
 			ithteamname = teamnames[i];
 			custommatchup[ithteamname] = {
 				oServers: servers[i],
+				oNameHost: hosts[i],
 				oNameStr: names[i],
 				oNameLinesStr: namelines[i],
 				oNameLinksStr: namelinks[i],
@@ -26844,7 +26855,7 @@ W = {
 		}
 		else
 		{
-			ownerstr = W.getTeamFromOwner(pObjective.owner).oColor;
+			ownerstr = W.getTeamFromOwner(pObjective.owner).oNameHost;
 		}
 		// Only include the borderlands string if user opted for more than one land filter
 		var blstr = ($("#logNarrateLand input:checked").length > 1) ? (W.getBorderlandsString(pObjective, {aWantPronoun: true}) + ". ") : "";
