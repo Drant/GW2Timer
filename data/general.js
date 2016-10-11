@@ -1356,8 +1356,8 @@ Announcement:
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
 	pve: "<a href='http://forum.renaka.com/topic/5546166/'>GW2Navi Overlay</a> was promoted by <a href='http://i.imgur.com/342uuxZ.png'>ArenaNet</a>!",
 	wvw: "",
-	Start: new Date("2016-10-04T16:00:00Z"),
-	Finish: new Date("2016-10-11T16:00:00Z"),
+	Start: new Date("2016-10-11T16:00:00Z"),
+	Finish: new Date("2016-10-18T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1417,13 +1417,14 @@ Countdown: {
 		Finish: new Date("2016-11-17T20:00:00Z")
 	}*/
 	{
-		name_en: "Halloween 2016",
-		name_de: "Halloween 2016",
-		name_es: "Halloween 2016",
-		name_fr: "Halloween 2016",
-		official: "the-game/releases/october-23-2015/",
-		Start: new Date("2016-10-25T17:00:00Z"),
-		Finish: new Date("2016-10-31T17:00:00Z")
+		name_en: "Halloween with ArenaNet",
+		name_de: "Halloween mit ArenaNet",
+		name_es: "Halloween con ArenaNet",
+		name_fr: "Halloween avec ArenaNet",
+		name_zh: "萬聖夜跟ArenaNet",
+		official: "news/halloween-is-coming-2/",
+		Start: new Date("2016-10-18T21:00:00Z"),
+		Finish: new Date("2016-10-18T22:00:00Z")
 	}
 	]
 },
@@ -1433,14 +1434,15 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: false,
-	name_en: "",
-	name_de: "",
-	name_es: "",
-	name_fr: "",
+	isEnabled: true,
+	name_en: "Shadow of the Mad King",
+	name_de: "Der Schatten des Verrückten Königs",
+	name_es: "La sombra del Rey Loco",
+	name_fr: "L’Ombre du Roi Dément",
+	name_zh: "瘋王聖旨",
 	url: "",
-	Start: new Date("2016-06-28T16:00:00Z"),
-	Finish: new Date("2016-09-16T16:00:00Z")
+	Start: new Date("2016-10-25T16:00:00Z"),
+	Finish: new Date("2016-11-01T16:00:00Z")
 },
 
 /*
@@ -1455,8 +1457,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-10-04T16:00:00Z"),
-	Finish: new Date("2016-10-11T16:00:00Z"),
+	Start: new Date("2016-10-11T16:00:00Z"),
+	Finish: new Date("2016-10-18T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1465,37 +1467,37 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Riding Broom",
-		id: "49931",
-		price: 175,
-		discount: 250,
+		name: "Grenth Hood Skin",
+		id: "47890",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Furrocious Cat Ears",
+		id: "http://i.imgur.com/RjYERth.png",
+		price: 400,
+		discount: null,
 		col: 0
 	},
 	{
 		name: "Phantom's Hood",
 		id: "65203",
-		price: 160,
-		discount: 200,
+		price: 200,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Bloody Prince's Outfit",
+		id: "43091",
+		price: 700,
+		discount: null,
 		col: 0
 	},
 	{
 		name: "Taimi's Outfit",
 		id: "79380",
 		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Witch's Outfit",
-		id: "36379",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Spectral Glider",
-		id: "79631",
-		price: 500,
 		discount: null,
 		col: 0
 	},
@@ -1507,30 +1509,37 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Cosmic Logging Tool",
-		id: "79472",
+		name: "Bone Pick",
+		id: "48932",
 		price: 1000,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Lava Lounge Pass",
-		id: "79500",
+		name: "Tireless Harvesting Minion",
+		id: "67063",
 		price: 1000,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Lava Lounge Pass (2 Weeks)",
-		id: "79498",
-		price: 150,
+		name: "Tireless Logging Minion",
+		id: "67029",
+		price: 1000,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Pirate Corsair Hat Skin",
-		id: "79374",
-		price: 300,
+		name: "Permanent Scarecrow Finisher",
+		id: "44069",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Spectral Glider",
+		id: "79631",
+		price: 500,
 		discount: null,
 		col: 1
 	}

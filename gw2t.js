@@ -25916,7 +25916,7 @@ W = {
 				var hostflag = "";
 				if (ii === 0) // Hosts are supposed to be in the first index in the API
 				{
-					hosts[i] = D.getObjectName(ithserver);
+					hosts[i] = ithserver;
 					// Add a suffix next to the host server name if that server has allies
 					if (servers[i].length > 1)
 					{
@@ -25958,7 +25958,7 @@ W = {
 			ithteamname = teamnames[i];
 			custommatchup[ithteamname] = {
 				oServers: servers[i],
-				oNameHost: hosts[i],
+				oHost: hosts[i],
 				oNameStr: names[i],
 				oNameLinesStr: namelines[i],
 				oNameLinksStr: namelinks[i],
@@ -26855,7 +26855,7 @@ W = {
 		}
 		else
 		{
-			ownerstr = W.getTeamFromOwner(pObjective.owner).oNameHost;
+			ownerstr = D.getSpeechInitials(D.getObjectNick(W.getTeamFromOwner(pObjective.owner).oHost));
 		}
 		// Only include the borderlands string if user opted for more than one land filter
 		var blstr = ($("#logNarrateLand input:checked").length > 1) ? (W.getBorderlandsString(pObjective, {aWantPronoun: true}) + ". ") : "";
@@ -29237,7 +29237,6 @@ H = {
 		// Initialize countdown entries
 		if (H.isCountdownEnabled)
 		{
-			var namekey = D.getNameKey();
 			var urlkey = D.getURLKey();
 			var ctd;
 			var countdownname;
@@ -29252,7 +29251,7 @@ H = {
 				ctd.StartStamp = ctd.Start.toLocaleString();
 				ctd.FinishStamp = ctd.Finish.toLocaleString();
 				// Use default name if available, or use the translated name
-				countdownname = (ctd.name === undefined) ? ctd[namekey] : ctd.name;
+				countdownname = (ctd.name === undefined) ? D.getObjectName(ctd) : ctd.name;
 				// If available: set the URL as the official news page, the translated url, or a regular url
 				url = (ctd.official === undefined) ? ctd[urlkey] : U.getGW2OfficialLink(ctd.official);
 				url = (url === undefined) ? ctd.url : url;
@@ -29287,7 +29286,7 @@ H = {
 		{
 			var storytitle = D.getObjectName(H.Story);
 			var storystr = (H.Story.url.length) ? "<a" + U.convertExternalAnchor(H.Story.url) + ">" + storytitle + "</a>" : storytitle;
-			$("#dsbStory").before("<div id='dsbStoryTitle'>" + storystr + "</div>").show();
+			$("#dsbStory").prepend("<div id='dsbStoryTitle'>" + storystr + "</div>").show();
 			I.bindScrollbar("#dsbStory");
 		}
 		
@@ -31470,6 +31469,10 @@ I = {
 	CLOCK_AND_MENU_HEIGHT: 0,
 	posX: 0, // Mouse position
 	posY: 0,
+	// Overlay sleep detector
+	isSleeping: false,
+	cMSECONDS_SLEEP: 3000,
+	SleepTimeout: {},
 	Scrl: { // Autoscroll
 		Anchor: {},
 		Interval: {},
@@ -33746,6 +33749,22 @@ I = {
 			var tipheight = $("#qTip").height();
 			var winwidth = $(window).width();
 			var winheight = $(window).height();
+			
+			// Mouse movement as detector for program use
+			if (I.ModeCurrent === I.ModeEnum.Overlay)
+			{
+				if (I.isSleeping)
+				{
+					I.isSleeping = false;
+					$(".hudPeripheralNorth").removeClass("hudPeripheralSleep");
+				}
+				window.clearTimeout(I.SleepTimeout);
+				I.SleepTimeout = setTimeout(function()
+				{
+					I.isSleeping = true;
+					$(".hudPeripheralNorth").addClass("hudPeripheralSleep");
+				}, I.cMSECONDS_SLEEP);
+			}
 			
 			/*
 			 * Make the tooltip appear within the visible window by detecting current

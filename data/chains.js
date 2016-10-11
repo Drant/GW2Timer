@@ -4931,6 +4931,44 @@ var GW2T_CHAIN_DATA = [
 		max: "5:00"
 	}
 	]
+},
+{
+	series: 6,
+	alias: "halloween",
+	pronunciation: "mad king says",
+	title: "Shadow of the Mad King",
+	name_en: "Mad King Says",
+	name_de: "Verrückte König Sagt",
+	name_es: "Rey Loco dice",
+	name_fr: "Roi Dément a dit",
+	name_zh: "瘋王聖旨",
+	zone: "lion",
+	waypoint: "[&BCkEAAA=]",
+	level: "1",
+	reward: {ecto: "1"},
+	timing: {hourInitial: 0, hourMultiplier: 2, minuteOffset: 0},
+	flags: {},
+	events: [
+	{
+		primacy: 3,
+		path: [[16293, 14796]],
+		name_en: "Your Mad King says...",
+		name_de: "Der Verrückte König sagt:",
+		name_es: "Vuestro Rey Loco dice...",
+		name_fr: "Votre Roi Dément a dit...",
+		name_zh: "疯王说......",
+		icon: "star",
+		num: "1",
+		sGotoNum: ["1"],
+		fGotoNum: "1",
+		sInterim: ["0"],
+		fInterim: "*",
+		lim: "10:00",
+		avg: "10:00",
+		min: "10:00",
+		max: "10:00"
+	}
+	]
 }
 
 ];
