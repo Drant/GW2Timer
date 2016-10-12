@@ -33595,6 +33595,24 @@ I = {
 	},
 	
 	/*
+	 * Changes appearance after program inactivity, to be called repeatedly.
+	 */
+	sleepOverlay: function()
+	{
+		if (I.isSleeping)
+		{
+			I.isSleeping = false;
+			$(".hudPeripheralNorth").removeClass("hudPeripheralSleep");
+		}
+		window.clearTimeout(I.SleepTimeout);
+		I.SleepTimeout = setTimeout(function()
+		{
+			I.isSleeping = true;
+			$(".hudPeripheralNorth").addClass("hudPeripheralSleep");
+		}, I.cMSECONDS_SLEEP);
+	},
+	
+	/*
 	 * Binds functions that activate when the user resizes the browser/screen/window.
 	 */
 	bindWindowReadjust: function()
@@ -33753,17 +33771,7 @@ I = {
 			// Mouse movement as detector for program use
 			if (I.ModeCurrent === I.ModeEnum.Overlay)
 			{
-				if (I.isSleeping)
-				{
-					I.isSleeping = false;
-					$(".hudPeripheralNorth").removeClass("hudPeripheralSleep");
-				}
-				window.clearTimeout(I.SleepTimeout);
-				I.SleepTimeout = setTimeout(function()
-				{
-					I.isSleeping = true;
-					$(".hudPeripheralNorth").addClass("hudPeripheralSleep");
-				}, I.cMSECONDS_SLEEP);
+				I.sleepOverlay();
 			}
 			
 			/*

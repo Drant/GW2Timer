@@ -619,7 +619,8 @@ Armor_Light_Helm: [
 	{u: 6896, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
 	{u: 6899, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
 	{u: 6955, i: 79457, n: "Light Dragonscale Headdress", p: {achievement: 0}},
-	{u: 6914, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}}
+	{u: 6914, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
+	{u: 6975, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}}
 ],
 Armor_Light_Shoulders: [
 	{u: 29, i: 3178, n: "Apprentice Shoulders", t: [3009, 3012, 3014, 3010, 3013, 3011, 3016, 3018, 3019, 3015, 3021, 3124, 3142, 3160, 3178, 3017, 3397, 3398, 3399, 3400, 3402, 3020, 3401, 3404, 3409, 3403, 3408, 3405, 3410, 3407, 3412, 3411, 5055, 3406, 5073, 5091, 5127, 5109, 5145, 5163, 5181, 5199, 5235, 5217, 5253, 5271, 5289]},
@@ -1140,7 +1141,8 @@ Armor_Medium_Helm: [
 	{u: 6891, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
 	{u: 6900, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
 	{u: 6969, i: 79471, n: "Medium Dragonscale Headdress", p: {achievement: 0}},
-	{u: 6915, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}}
+	{u: 6915, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
+	{u: 6974, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}}
 ],
 Armor_Medium_Shoulders: [
 	{u: 36, i: 41173, n: "Rawhide Shoulders", p: {badge: 10}},
@@ -1654,7 +1656,8 @@ Armor_Heavy_Helm: [
 	{u: 6893, i: 79311, n: "Bloodstone Visage", p: {achievement: 0}},
 	{u: 6888, i: 79316, n: "Shattered Bloodstone Circlet", p: {gem: 500}},
 	{u: 6968, i: 79508, n: "Heavy Dragonscale Headdress", p: {achievement: 0}},
-	{u: 6931, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}}
+	{u: 6931, i: 79374, n: "Pirate Corsair Hat", p: {gem: 300}},
+	{u: 6972, i: 79619, n: "Furrocious Cat Ears", p: {gem: 400}}
 ],
 Armor_Heavy_Shoulders: [
 	{u: 26, i: 3172, n: "Chainmail Shoulders", t: [2920, 2922, 2925, 2918, 2921, 2930, 2926, 2929, 2927, 2923, 2924, 2919, 2928, 3118, 3154, 3172, 3283, 3284, 3286, 3136, 3287, 3288, 3289, 3292, 3294, 3291, 3297, 3296, 3293, 3295, 3285, 5049, 3298, 3290, 5067, 5157, 5139, 5175, 5085, 5193, 5247, 5229, 5283, 5265, 5121, 5211, 5103]},
