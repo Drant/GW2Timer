@@ -156,6 +156,10 @@ img {
 	opacity: 0.4;
 	text-decoration: line-through;
 }
+.jsSleeped {
+	opacity: 0 !important;
+	transition: opacity 0.4s !important;
+}
 
 .cntComposition ::selection {
 	background: #66aaff;
@@ -1375,10 +1379,6 @@ input.mapCoordinatesName {
 .hudPeripheralSouth {
 	position: absolute; z-index: 10;
 	bottom: 4px; right: 12px;
-}
-.hudPeripheralSleep {
-	opacity: 0;
-	transition: opacity 0.4s;
 }
 #itemLogo {
 	margin-right: 2px;

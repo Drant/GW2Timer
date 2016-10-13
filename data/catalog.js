@@ -88,14 +88,14 @@ Token: [
 	{i: 78600, n: "Potion of WvW Rewards", p: {badge: 0}}
 ],
 Dungeon: [
-	{i: 79608, n: "Infinite Mist Offensive Potion"},
-	{i: 79515, n: "Infinite Mist Defensive Potion"},
-	{i: 79494, n: "Infinite Mist Mobility Potion"},
+	{i: 79608, n: "Infinite Mist Offensive Potion", p: {fotm_relic: 8000}},
+	{i: 79515, n: "Infinite Mist Defensive Potion", p: {fotm_relic: 5000}},
+	{i: 79494, n: "Infinite Mist Mobility Potion", p: {fotm_relic: 5000}},
 	{i: 78252, n: "Chest of Dungeoneering", p: {dungeon_arah: 150}},
 	{i: 70438, n: "Fractal Encryption Key", p: {coin: 3000}},
 	{i: 75919, n: "Fractal Encryption"},
 	{i: 73834, n: "Fractal Research Page", p: {coin: 0}},
-	{i: 72936, n: "Golden Fractal Relic", p: {coin: 0}},
+	{i: 72936, n: "Golden Fractal Relic", p: {coin: 30000}},
 	{i: 49424, n: "+1 Agony Infusion"}
 ],
 Festival: [
@@ -340,7 +340,7 @@ TonicEndless: [
 	{i: 50043, n: "Endless Pink Quaggan Tonic"},
 	{i: 50046, n: "Endless Black Quaggan Tonic"},
 	{i: 50047, n: "Endless Green Quaggan Tonic"},
-	{i: 49277, n: "Endless Fractal Tonic", p: {coin: 0}},
+	{i: 49277, n: "Endless Fractal Tonic", p: {fotm_pristine: 1200}},
 	{i: 66214, n: "Endless Dolyak Calf Tonic", p: {laurel: 25}},
 	{u: 66926, i: 66768, n: "Endless Monkey King Tonic"},
 	{u: 67386, i: 67362, n: "Endless Bottle of Batwing Brew"},

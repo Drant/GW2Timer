@@ -13259,8 +13259,8 @@ Q = {
 	},
 	ItemLimit:
 	{
-		FetchAPI: 500,
-		TooltipLines: 100,
+		FetchAPI: 500, // Max items before a function resorts to on demand downloads
+		TooltipLines: 100, // Text lines in a tooltip window
 		StackSize: 250,
 		EctoSalvageLevel: 68
 	},
@@ -28785,7 +28785,7 @@ T = {
 			else // Night
 			{
 				minremain = (T.cDAYTIME_DAY_START - min);
-				K.setDimming(0);
+				K.setDimming(0.1);
 			}
 		}
 		else
@@ -28805,7 +28805,7 @@ T = {
 			else // Night
 			{
 				minremain = (T.cDAYTIME_NIGHT_START + T.cDAYTIME_NIGHT_MINUTES - min);
-				K.setDimming(0);
+				K.setDimming(0.1);
 				// Is transitioning to night
 				if (min === T.cDAYTIME_NIGHT_START && O.Options.bol_alertDaylight)
 				{
@@ -33602,13 +33602,13 @@ I = {
 		if (I.isSleeping)
 		{
 			I.isSleeping = false;
-			$(".hudPeripheralNorth").removeClass("hudPeripheralSleep");
+			$(".hudButton, .btnWindow").removeClass("jsSleeped");
 		}
 		window.clearTimeout(I.SleepTimeout);
 		I.SleepTimeout = setTimeout(function()
 		{
 			I.isSleeping = true;
-			$(".hudPeripheralNorth").addClass("hudPeripheralSleep");
+			$(".hudButton, .btnWindow").addClass("jsSleeped");
 		}, I.cMSECONDS_SLEEP);
 	},
 	
