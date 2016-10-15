@@ -517,7 +517,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Desolación",
 	name_fr: "Désolation",
 	name_zh: "荒蕪廢墟",
-	nick_en: "DS", nick_de: "ÖN", nick_es: "DS", nick_fr: "DS", nick_zh: "荒蕪廢墟"
+	nick_en: "Deso", nick_de: "Ödnis", nick_es: "Deso", nick_fr: "Déso", nick_zh: "荒蕪廢墟"
 },
 "2003": {
 	id: 2003, suffix: "[EU]",
@@ -526,7 +526,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Gandara",
 	name_fr: "Gandara",
 	name_zh: "甘達拉",
-	nick_en: "GD", nick_de: "GD", nick_es: "GD", nick_fr: "GD", nick_zh: "甘達拉"
+	nick_en: "Gand", nick_de: "Gand", nick_es: "Gand", nick_fr: "Gand", nick_zh: "甘達拉"
 },
 "2004": {
 	id: 2004, suffix: "[EU]",
@@ -598,7 +598,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Vabbi",
 	name_fr: "Vabbi",
 	name_zh: "瓦比",
-	nick_en: "VB", nick_de: "VB", nick_es: "VB", nick_fr: "VB", nick_zh: "瓦比"
+	nick_en: "Vab", nick_de: "Vab", nick_es: "Vab", nick_fr: "Vab", nick_zh: "瓦比"
 },
 "2012": {
 	id: 2012, suffix: "[EU]",
@@ -607,7 +607,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Plaza de Piken",
 	name_fr: "Place Piken",
 	name_zh: "派肯廣場",
-	nick_en: "PS", nick_de: "PP", nick_es: "PdP", nick_fr: "PP", nick_zh: "派肯廣場"
+	nick_en: "Piken", nick_de: "Piken", nick_es: "Piken", nick_fr: "Piken", nick_zh: "派肯廣場"
 },
 "2013": {
 	id: 2013, suffix: "[EU]",
@@ -661,7 +661,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Plaza de Vizunah",
 	name_fr: "Place de Vizunah",
 	name_zh: "薇茹廣場",
-	nick_en: "VS", nick_de: "VP", nick_es: "PdV", nick_fr: "PdV", nick_zh: "薇茹廣場"
+	nick_en: "Viz", nick_de: "Viz", nick_es: "Viz", nick_fr: "Viz", nick_zh: "薇茹廣場"
 },
 "2105": {
 	id: 2105, suffix: "[FR]",
@@ -670,7 +670,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Piedra Arbórea",
 	name_fr: "Pierre Arborea",
 	name_zh: "亞博之石 ",
-	nick_en: "AS", nick_de: "AS", nick_es: "PA", nick_fr: "PA", nick_zh: "亞博之石 "
+	nick_en: "Arb", nick_de: "Arb", nick_es: "Arb", nick_fr: "Arb", nick_zh: "亞博之石 "
 },
 "2201": {
 	id: 2201, suffix: "[DE]",
@@ -679,7 +679,7 @@ var GW2T_SERVER_DATA = {
 	name_es: "Kodash",
 	name_fr: "Kodash",
 	name_zh: "聖潔之石",
-	nick_en: "KD", nick_de: "KD", nick_es: "KD", nick_fr: "KD", nick_zh: "聖潔之石"
+	nick_en: "Kod", nick_de: "Kod", nick_es: "Kod", nick_fr: "Kod", nick_zh: "聖潔之石"
 },
 "2202": {
 	id: 2202, suffix: "[DE]",
