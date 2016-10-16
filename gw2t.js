@@ -31491,6 +31491,7 @@ I = {
 	isSpeechSynthesisEnabled: false,
 	isSpeechNativeEnabled: false,
 	isSpeechNativeLoaded: false,
+	isProjectionEnabled: false,
 	ModeCurrent: null,
 	ModeEnum:
 	{
@@ -31498,7 +31499,8 @@ I = {
 		Mobile: "Mobile",
 		Simple: "Simple",
 		Tile: "Tile",
-		Overlay: "Overlay"
+		Overlay: "Overlay",
+		Projection: "Projection"
 	},
 	cPagePrefix: "#plate",
 	cMenuPrefix: "#menu",
@@ -33489,8 +33491,18 @@ I = {
 	 */
 	enforceProgramMode: function()
 	{
+		// Projection mode is overlay mode but tailored for full view and 3D
+		if (I.ModeCurrent === I.ModeEnum.Projection)
+		{
+			I.ModeCurrent = I.ModeEnum.Overlay;
+			I.isProjectionEnabled = true;
+			$("#panelMap, #windowMain").css({background: "transparent"});
+		}
+		
+		// Load respective stylesheet
 		I.loadStylesheet(I.ModeCurrent);
 		
+		// Structural and behavioral changes
 		switch (I.ModeCurrent)
 		{
 			case I.ModeEnum.Website:
