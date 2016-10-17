@@ -3861,7 +3861,7 @@ U = {
 			
 			if (I.ModeCurrent !== I.ModeEnum.Website)
 			{
-				modestring = "&mode=" + I.ModeCurrent;
+				modestring = "&mode=" + ((I.isProjectionEnabled) ? I.ModeEnum.Projection : I.ModeCurrent);
 			}
 
 			if (section)
@@ -9246,7 +9246,7 @@ V = {
 			var deathpercent = (iChar.deaths / highestdeaths) * T.cPERCENT_100;
 			var usage = "<var class='chrAge' title='" + T.formatTimeLetter(iChar.age) + "' data-value='" + age + "'>" + age + hourstr + "</var>"
 				+ "<span class='chrHoverName'>" + name + I.getBar(agepercent, true) + I.getBar(deathpercent) + "</span>"
-				+ "<var class='chrDeaths' title='" + T.parseRatio(iChar.deaths / age, 3) + "x / " + "1" + hourstr + "' data-value='" + iChar.deaths + "'>" + iChar.deaths + "x</var>";
+				+ "<var class='chrDeaths' title='" + T.parseRatio(iChar.deaths / age, 2) + "x / " + "1" + hourstr + "' data-value='" + iChar.deaths + "'>" + iChar.deaths + "x</var>";
 			$("#chrUsage_" + iChar.oCharIndex).append(usage);
 			// SENIORITY COLUMN (right)
 			var birthdate = (new Date(iChar.created)).toLocaleString();
@@ -9314,7 +9314,7 @@ V = {
 				+ "<var id='chrAccountServer'></var>" + wvwtitle + "<br />"
 				+ "<var id='chrAccountAge' title='" + hoursperday + hourstr + " / " + T.cHOURS_IN_DAY + hourstr + "<br />"
 						+ T.formatTimeLetter(totalage) + " / " + accountbirthdaysince + "'>" + totalagehour + hourstr + "</var> / "
-					+ "<var id='chrAccountDeaths' title='" + T.parseRatio(totaldeaths / totalagehour, 3) + "x / " + "1" + hourstr + "'>" + totaldeaths + "x</var> &nbsp; "
+					+ "<var id='chrAccountDeaths' title='" + T.parseRatio(totaldeaths / totalagehour, 2) + "x / " + "1" + hourstr + "'>" + totaldeaths + "x</var> &nbsp; "
 					+ "<var id='chrAccountLifetime'>" + accountbirthdaysince +  "</var>"
 					+ " &nbsp; <button id='chrAccountReload' title='<dfn>Reload</dfn> characters data (statistics, equipment, inventory).'><img src='img/ui/refresh.png' /></button>";
 			$("#chrSummary").append(summary);
