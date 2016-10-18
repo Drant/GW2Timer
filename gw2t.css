@@ -157,7 +157,7 @@ img {
 	text-decoration: line-through;
 }
 .jsSleeped {
-	opacity: 0 !important;
+	opacity: 0.01 !important;
 	transition: opacity 0.4s !important;
 }
 
@@ -908,7 +908,7 @@ textarea.jsCopyCode {
 #mapPane.mapPaneOff, #wvwPane.mapPaneOff {
 	background: transparent;
 }
-#itemVignette {
+#itemProjection, #itemVignette {
 	display: none;
 }
 
@@ -1282,6 +1282,9 @@ textarea.jsCopyCode {
 }
 #dsbDailyTitle {
 	font-family: Trebuchet MS, Menomonia;
+}
+.dlyBox {
+	display: none;
 }
 
 #dsbStory {

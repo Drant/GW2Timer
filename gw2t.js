@@ -1282,6 +1282,7 @@ O = {
 						});
 						$(".mapExpandButton").css({right: 0, left: "auto"});
 						$("#itemExpandButton").css({right: "auto", left: "auto", "margin-left": "-16px"});
+						$("#itemProjection").css({right: "auto"});
 					}
 				}
 				else
@@ -1295,6 +1296,7 @@ O = {
 					});
 					$(".mapExpandButton").css({right: "auto", left: 0});
 					$("#itemExpandButton").css({right: "auto", left: "auto", "margin-left": (I.cPANEL_WIDTH - 16) + "px"});
+					$("#itemProjection").css({right: 0});
 				}
 			}
 		},
@@ -2555,9 +2557,9 @@ U = {
 		EventDetails: "https://api.guildwars2.com/v1/event_details.json",
 		
 		// Exchange
-		ItemListing: "https://api.guildwars2.com/v2/commerce/listings/",
-		ItemPrices: "https://api.guildwars2.com/v2/commerce/prices/",
-		ItemDatabase: "https://api.guildwars2.com/v2/items",
+		ItemListing: "https://api.guildwars2.com/v2/commerce/listings",
+		ItemPrice: "https://api.guildwars2.com/v2/commerce/prices",
+		ItemDetail: "https://api.guildwars2.com/v2/items",
 		ItemRender: "https://render.guildwars2.com/file/",
 		CoinPrice: "https://api.guildwars2.com/v2/commerce/exchange/gems?quantity=",
 		GemPrice: "https://api.guildwars2.com/v2/commerce/exchange/coins?quantity=",
@@ -2577,6 +2579,7 @@ U = {
 		TextToSpeechNative: "bin/tts/mespeak.js"
 	},
 	PageLimit: 200, // Number of entries per API retrieval for paginated endpoints
+	IDsLimit: 200, // Max item IDs in a single fetch URL
 	
 	URL_IMG:
 	{
@@ -2748,6 +2751,67 @@ U = {
 	},
 	
 	/*
+	 * Bulk fetches an API endpoint using provided IDs. May recursively queue
+	 * the fetches so the IDs can fit in each single URL request.
+	 * @param string pURL prefix.
+	 * @param array pIDs numbers.
+	 * @objparam function aCallback with array of raw API objects accumulated.
+	 * @objparam boolean aWantCache use browser cache from previous fetches, optional.
+	 */
+	fetchAPI: function(pURL, pIDs, pCallback, pWantCache)
+	{
+		var wantcache = (pWantCache !== undefined) ? pWantCache : false;
+		var arr = [];
+		var numtofetch = 0;
+		var numfetched = 0;
+		
+		var fetchArray = function(pArray)
+		{
+			var fetchids = pArray, remainids;
+			if (fetchids.length > U.IDsLimit)
+			{
+				fetchids = pArray.slice(0, U.IDsLimit);
+				remainids = pArray.slice(U.IDsLimit);
+			}
+			$.ajax({
+				dataType: "json",
+				url: pURL + U.URL_API.LangKey + "&ids=" + fetchids.join(","),
+				cache: wantcache,
+				success: function(pData)
+				{
+					arr = arr.concat(pData);
+					if (remainids)
+					{
+						numfetched += U.IDsLimit;
+						A.setProgressBar(numfetched, numtofetch);
+						fetchArray(remainids);
+					}
+					else if (pCallback)
+					{
+						A.setProgressBar(numtofetch, numtofetch);
+						pCallback(arr);
+					}
+				},
+				error: function()
+				{
+					pCallback();
+				}
+			});
+		};
+		
+		// First call to recursive fetch function
+		if (pIDs.length)
+		{
+			numtofetch = pIDs.length;
+			fetchArray(pIDs);
+		}
+		else if (pCallback)
+		{
+			pCallback();
+		}
+	},
+	
+	/*
 	 * Gets the appropriate query string divider for a URL.
 	 * @param string pURL.
 	 * @returns string
@@ -2812,11 +2876,11 @@ U = {
 	},
 	getAPIPrice: function(pID)
 	{
-		return U.URL_API.ItemPrices + pID;
+		return U.URL_API.ItemPrice + "/" + pID;
 	},
 	getAPIListings: function(pID)
 	{
-		return U.URL_API.ItemListing + pID;
+		return U.URL_API.ItemListing + "/" + pID;
 	},
 	
 	/*
@@ -4837,7 +4901,7 @@ Z = {
 		
 		if (E.ItemsArray.length === 0)
 		{
-			$.get(U.URL_API.ItemDatabase, function(pData)
+			$.get(U.URL_API.ItemDetail, function(pData)
 			{
 				E.ItemsArray = pData;
 			}).done(function()
@@ -5430,7 +5494,7 @@ Z = {
 		
 		// Initial call
 		I.print("Retrieving item indexes...");
-		$.getJSON(U.URL_API.ItemDatabase, function(pData)
+		$.getJSON(U.URL_API.ItemDetail, function(pData)
 		{
 			I.print("Looking for difference...");
 			newitemslist = pData;
@@ -8380,10 +8444,10 @@ A = {
 				summary.append("<div id='audSummaryName'><var id='audAccountName'>" + U.escapeHTML(A.Data.Account.name) + "</var></div>");
 				summary.append("<div id='audSummaryValues'>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("appraised") + " ―</div>"
-					+ "<div id='audSummaryAppraised' class='audSummaryCoin curHelp'></div>"
+					+ "<div id='audSummaryAppraised' class='audSummaryCoin curHelp'>" + E.formatCoinString(0, {aWantBig: true}) + "</div>"
 					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(totalgems + E.convertCoinToGem(totalappraisedsellnogems)) + "</div>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("liquid") + " ―</div>"
-					+ "<div id='audSummaryLiquid' class='audSummaryCoin curHelp'></div>"
+					+ "<div id='audSummaryLiquid' class='audSummaryCoin curHelp'>" + E.formatCoinString(0, {aWantBig: true}) + "</div>"
 					+ "<div class='audSummaryMoney'>" + I.Symbol.Approx + " " + E.formatGemToMoney(walletcat["gem"] + E.convertCoinToGem(totalliquidsellnogems)) + "</div>"
 				+ "</div>");
 				
@@ -8609,7 +8673,7 @@ A = {
 		var fetchPrices = function()
 		{
 			I.print(D.getPhraseOriginal("Loading trading price") + "...");
-			Z.scrapeAPIArray(U.convertAssocToArray(priceids), "commerce/prices", {aCallback: function(pPrices)
+			E.getPrices(U.convertAssocToArray(priceids), function(pPriceDB)
 			{
 				// Insert cached Trading Post prices
 				var boundpayments = auditmetadata.BoundPayments;
@@ -8618,12 +8682,12 @@ A = {
 					E.Paylist[i] = E.processPrice(cachedprices[i]);
 				}
 				// Insert fresh Trading Post prices
-				if (pPrices)
+				if (pPriceDB)
 				{
-					pPrices.forEach(function(iPriceObj)
+					for (var i in pPriceDB)
 					{
-						E.Paylist[iPriceObj.id] = E.processPrice(iPriceObj);
-					});
+						E.Paylist[i] = pPriceDB[i];
+					}
 				}
 				// Insert audit metadata untradeable item prices
 				for (var i in boundpayments)
@@ -8664,7 +8728,7 @@ A = {
 				
 				// Begin auditing
 				executeAudit();
-			}});
+			});
 		};
 		
 		/*
@@ -10120,6 +10184,7 @@ V = {
 	serveAscended: function()
 	{
 		B.generateCatalog("Ascended", {
+			aWantPrices: false,
 			aWantGem: false,
 			aWantDefaultHelp: false
 		});
@@ -10783,6 +10848,7 @@ V = {
 				aRecord: record,
 				aUnlockeds: pUnlockeds,
 				aIsCollapsed: true,
+				aWantPrices: false,
 				aHelpMessage: $("#accHelpWardrobe").html(),
 				aTabIterator: function(pCatName)
 				{
@@ -10812,7 +10878,7 @@ V = {
 	/*
 	 * Generates a standard unlockables collection window without extra features.
 	 */
-	serveUnlockables: function(pSection)
+	serveUnlockables: function(pSection, pWantPrices)
 	{
 		var section = pSection;
 		var dish = $("#accDish_" + section);
@@ -10828,7 +10894,8 @@ V = {
 			B.generateUnlockables(bank, {
 				aHeaders: U.getRecordHeader(section),
 				aRecord: U.getRecordData(section),
-				aUnlockeds: pUnlockeds
+				aUnlockeds: pUnlockeds,
+				aWantPrices: (pWantPrices !== false) ? true : false
 			});
 		};
 		
@@ -10849,7 +10916,7 @@ V = {
 	},
 	serveOutfits: function()
 	{
-		V.serveUnlockables("Outfits");
+		V.serveUnlockables("Outfits", false);
 	},
 	serveMinis: function()
 	{
@@ -11560,7 +11627,7 @@ B = {
 					pSlot.addClass("bnkSlotTradeable");
 					pSlot.data("istradeable", true);
 					var itemidforprice = Settings.aTradeableID || Settings.aItem.id;
-					E.getPrice(itemidforprice, function(pPrice)
+					E.getPriceObject(itemidforprice, function(pPrice)
 					{
 						B.updateSlotPrice(pSlot, {
 							aPrice: pPrice,
@@ -11573,7 +11640,7 @@ B = {
 						{
 							Settings.aPriceCallback(pPrice);
 						}
-					}, true);
+					});
 				}
 				// Execute callback if requested
 				if (Settings.aCallback)
@@ -12170,7 +12237,7 @@ B = {
 				{
 					slot.addClass("bnkSlotTradeable");
 					slot.data("istradeable", true);
-					E.getPrice(iItemID, function(pPrice)
+					E.getPriceObject(iItemID, function(pPrice)
 					{
 						B.updateSlotPrice(iSlot, {
 							aPrice: pPrice,
@@ -12319,6 +12386,7 @@ B = {
 	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API, or an associative array containing a count property.
 	 * @objparam boolean aIsCatalog whether to use the user's possessions rather than unlockeds.
 	 * @objparam boolean aIsLookup whether to generate unlocked slots only.
+	 * @objparam boolean aWantPrices whether to prefetch TP prices for all items.
 	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
 	 * @objparam boolean aWantDefaultHelp whether to append the unlockables help message, optional.
 	 * @objparam string aHelpMessage HTML of help message element, optional.
@@ -12368,7 +12436,6 @@ B = {
 			}
 		}
 
-		pBank.empty();
 		var container = pBank.parents(".bnkContainer");
 		var headers = {};
 		var record = {};
@@ -12415,82 +12482,121 @@ B = {
 			headers = Settings.aHeaders;
 			record = Settings.aRecord;
 		}
-		/* 
-		 * Create tabs for each unlockable category.
-		 */
-		var numsunlockedtotal = 0;
-		var numintabstotal = 0;
-		var numacquiredtotal = 0;
-		for (var i in record)
+		
+		var doGenerate = function()
 		{
-			catobj = headers[i];
-			catarr = record[i];
-			tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : B.createBankTab(pBank, {
-				aTitle: D.getObjectName(catobj),
-				aIsCollapsed: catobj.iscollapsed,
-				aIsCustomCatalog: catobj.iscustomtab
-			});
-			(function(iTab, iCatObj, iCatArr, iCatArrName)
+			/* 
+			 * Create tabs for each unlockable category.
+			 */
+			pBank.empty();
+			var numsunlockedtotal = 0;
+			var numintabstotal = 0;
+			var numacquiredtotal = 0;
+			for (var i in record)
 			{
-				if (Settings.aIsDyes)
+				catobj = headers[i];
+				catarr = record[i];
+				tab = (Settings.aTabIterator) ? Settings.aTabIterator(i) : B.createBankTab(pBank, {
+					aTitle: D.getObjectName(catobj),
+					aIsCollapsed: catobj.iscollapsed,
+					aIsCustomCatalog: catobj.iscustomtab
+				});
+				(function(iTab, iCatObj, iCatArr, iCatArrName)
 				{
-					B.fillDyeTab(iTab, iCatArr, unlocksassoc, iCatArrName);
-				}
-				else
-				{
-					if (Settings.aIsCollapsed || iCatObj.iscollapsed)
+					if (Settings.aIsDyes)
 					{
-						iTab.find(".bnkTabSeparator").one("click", function()
-						{
-							B.fillTab(iTab, iCatArr, {
-								aUnlockAssoc: unlocksassoc,
-								aIsCatalog: Settings.aIsCatalog
-							});
-						});
+						B.fillDyeTab(iTab, iCatArr, unlocksassoc, iCatArrName);
 					}
 					else
 					{
-						B.fillTab(iTab, iCatArr, {
-							aUnlockAssoc: unlocksassoc,
-							aIsCatalog: Settings.aIsCatalog,
-							aIsCustomCatalog: iCatObj.iscustomtab
-						});
+						if (Settings.aIsCollapsed || iCatObj.iscollapsed)
+						{
+							iTab.find(".bnkTabSeparator").one("click", function()
+							{
+								B.fillTab(iTab, iCatArr, {
+									aUnlockAssoc: unlocksassoc,
+									aIsCatalog: Settings.aIsCatalog
+								});
+							});
+						}
+						else
+						{
+							B.fillTab(iTab, iCatArr, {
+								aUnlockAssoc: unlocksassoc,
+								aIsCatalog: Settings.aIsCatalog,
+								aIsCustomCatalog: iCatObj.iscustomtab
+							});
+						}
 					}
-				}
-			})(tab, catobj, catarr, i);
+				})(tab, catobj, catarr, i);
 
-			// For this ith tab, write the number of unlockables unlocked on the tab header
-			var numunlocked = 0;
-			var numacquired = 0;
-			for (var ii = 0; ii < catarr.length; ii++)
-			{
-				unlockid = ((Settings.aIsCatalog) ? catarr[ii].i : catarr[ii].u) || catarr[ii];
-				if (unlocksassoc[unlockid])
+				// For this ith tab, write the number of unlockables unlocked on the tab header
+				var numunlocked = 0;
+				var numacquired = 0;
+				for (var ii = 0; ii < catarr.length; ii++)
 				{
-					numunlocked++;
-					numsunlockedtotal++;
-					if (unlocksassoc[unlockid].oCount)
+					unlockid = ((Settings.aIsCatalog) ? catarr[ii].i : catarr[ii].u) || catarr[ii];
+					if (unlocksassoc[unlockid])
 					{
-						numacquired += unlocksassoc[unlockid].oCount;
+						numunlocked++;
+						numsunlockedtotal++;
+						if (unlocksassoc[unlockid].oCount)
+						{
+							numacquired += unlocksassoc[unlockid].oCount;
+						}
 					}
 				}
+				var numintab = catarr.length;
+				numintabstotal += numintab;
+				B.updateTabTally(tab, numunlocked, numintab, numacquired);
+				if (numacquired)
+				{
+					numacquiredtotal += numacquired;
+				}
 			}
-			var numintab = catarr.length;
-			numintabstotal += numintab;
-			B.updateTabTally(tab, numunlocked, numintab, numacquired);
-			if (numacquired)
+			B.updateBankTally(container, numsunlockedtotal, numintabstotal, numacquiredtotal);
+			var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
+			var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accHelpUnlockables").html();
+			B.createBankMenu(pBank, {
+				aWantSearchHighlight: wantsearchhighlight,
+				aHelpMessage: (Settings.aHelpMessage || "") + helpstr,
+				aIsCustomCatalog: Settings.aIsCustomCatalog
+			});
+		};
+		
+		/*
+		 * Compile item IDs to bulk fetch prices beforehand
+		 */
+		if (Settings.aWantPrices !== false)
+		{
+			var priceitemids = [];
+			A.iterateRecord(record, function(pEntry)
 			{
-				numacquiredtotal += numacquired;
-			}
+				if (isNaN(pEntry) === false)
+				{
+					priceitemids.push(pEntry);
+				}
+				else
+				{
+					if (pEntry.i)
+					{
+						priceitemids.push(pEntry.i);
+					}
+					if (pEntry.u)
+					{
+						priceitemids.push(pEntry.u);
+					}
+				}
+			});
+			E.getPrices(priceitemids, function()
+			{
+				doGenerate();
+			});
 		}
-		B.updateBankTally(container, numsunlockedtotal, numintabstotal, numacquiredtotal);
-		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
-		var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accHelpUnlockables").html();
-		B.createBankMenu(pBank, {
-			aWantSearchHighlight: wantsearchhighlight,
-			aHelpMessage: (Settings.aHelpMessage || "") + helpstr,
-			aIsCustomCatalog: Settings.aIsCustomCatalog
-		});
+		else
+		{
+			doGenerate();
+		}
 	},
 	
 	/*
@@ -15099,7 +15205,8 @@ E = {
 	CalculatorHistoryArray: new Array(64),
 	CalcHistoryIndex: 0,
 	
-	Paylist: {}, // Associative array accessed by item ID, containing payment (a price object, karma, or other currencies)
+	Pricelist: {}, // Associative array of price objects
+	Paylist: {}, // To be used by audit function, associative array accessed by item ID containing payment (a price object, gem, karma, or other currencies)
 	/*
 	 * Associative array of functions that format the payment of an item.
 	 * The function names correspond to the object key in unlockables records.
@@ -15711,12 +15818,49 @@ E = {
 				cache: wantcache,
 				success: function(pData)
 				{
+					E.Pricelist[pData.id] = priceobj;
 					if (pCallback)
 					{
 						var priceobj = E.processPrice(pData);
 						pCallback(priceobj);
 					}
 				}
+			});
+		}
+	},
+	getPrices: function(pItemIDs, pCallback, pWantCache)
+	{
+		U.fetchAPI(U.URL_API.ItemPrice, pItemIDs, function(pData)
+		{
+			var db = {};
+			if (pData)
+			{
+				pData.forEach(function(iData)
+				{
+					var priceobj = E.processPrice(iData);
+					db[iData.id] = priceobj;
+					E.Pricelist[iData.id] = priceobj;
+				});
+				pCallback(db);
+			}
+			else
+			{
+				pCallback();
+			}
+		}, pWantCache);
+	},
+	getPriceObject: function(pItemID, pCallback)
+	{
+		// To be used after get prices function was called
+		if (E.Pricelist[pItemID])
+		{
+			pCallback(E.Pricelist[pItemID]);
+		}
+		else
+		{
+			E.getPrice(pItemID, function(pData)
+			{
+				pCallback(pData);
 			});
 		}
 	},
@@ -26479,7 +26623,7 @@ W = {
 			W.updateObjectives();
 			$("#lboCurrent, #lboOther").show("fast", function()
 			{
-				$("#lboContainer").css({padding: "8px"});
+				$("#lboContainer").css({padding: ((I.ModeCurrent === I.ModeEnum.Overlay) ? 0 : 8) + "px"});
 			});
 			$(".lboExtra").show();
 		}
@@ -33491,12 +33635,25 @@ I = {
 	 */
 	enforceProgramMode: function()
 	{
-		// Projection mode is overlay mode but tailored for full view and 3D
+		// Projection mode is overlay mode but tailored for full view over the game
 		if (I.ModeCurrent === I.ModeEnum.Projection)
 		{
 			I.ModeCurrent = I.ModeEnum.Overlay;
 			I.isProjectionEnabled = true;
 			$("#panelMap, #windowMain").css({background: "transparent"});
+			$("#itemVignette").remove();
+			$("#itemProjection").show().click(function()
+			{
+				var window = $("#windowMain");
+				if (window.is(":visible"))
+				{
+					window.hide();
+				}
+				else
+				{
+					window.css({display: "table"});
+				}
+			});
 		}
 		
 		// Load respective stylesheet
