@@ -101,7 +101,7 @@ body, #paneContent article {
 	max-width: 360px;
 	margin-bottom: 8px;
 	margin-right: 8px;
-	background: url("../img/background/hud.png"), linear-gradient(to right, #111 0%, #333 100%);
+	background: linear-gradient(to right, #111 0%, #333 100%);
 	border-top: 2px solid #222;
 	border-left: 2px solid #222;
 	border-right: 4px solid black;
@@ -111,16 +111,16 @@ body, #paneContent article {
 	vertical-align: top;
 }
 .chnBarPrevious {
-	background: url("../img/background/hud.png"), linear-gradient(to right, #111 0%, #261306 100%);
+	background: linear-gradient(to right, #111 0%, #261306 100%);
 }
 .chnBarCurrent {
-	background: url("../img/background/hud.png"), linear-gradient(to right, #111 0%, #4f280c 100%);
+	background: linear-gradient(to right, #111 0%, #4f280c 100%);
 }
 .chnBarReset {
-	background: url("../img/background/hud.png"), linear-gradient(to right, #111 0%, #663b7f 100%);
+	background: linear-gradient(to right, #111 0%, #663b7f 100%);
 }
 .chnBarHover {
-	background: url("../img/background/hud.png"), linear-gradient(to right, #111 0%, #66aaff 100%);
+	background: linear-gradient(to right, #111 0%, #66aaff 100%);
 }
 
 .chnTitle img {

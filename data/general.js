@@ -1405,6 +1405,16 @@ Countdown: {
 		Finish: new Date("2016-11-17T20:00:00Z")
 	}*/
 	{
+		name_en: "Halloween 2016",
+		name_de: "Halloween 2016",
+		name_es: "Halloween 2016",
+		name_fr: "Halloween 2016",
+		name_zh: "萬聖夜2016",
+		official: "news/halloween-is-coming-2/",
+		Start: new Date("2016-10-18T16:00:00Z"),
+		Finish: new Date("2016-11-01T16:00:00Z")
+	},
+	{
 		name_en: "Halloween with ArenaNet",
 		name_de: "Halloween mit ArenaNet",
 		name_es: "Halloween con ArenaNet",
@@ -1457,8 +1467,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-10-11T16:00:00Z"),
-	Finish: new Date("2016-10-18T16:00:00Z"),
+	Start: new Date("2016-10-18T16:00:00Z"),
+	Finish: new Date("2016-10-25T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1467,43 +1477,36 @@ Sale: {
 	},
 	Items: [
 	{
-		name: "Grenth Hood Skin",
-		id: "47890",
-		price: 400,
-		discount: 500,
-		col: 0
-	},
-	{
-		name: "Furrocious Cat Ears",
-		id: "79619",
-		price: 400,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Phantom's Hood",
-		id: "65203",
-		price: 200,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Bloody Prince's Outfit",
-		id: "43091",
+		name: "Mad King's Outfit",
+		id: "36366",
 		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Taimi's Outfit",
-		id: "79380",
+		name: "Black Wings Glider Combo",
+		id: "68685",
 		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Taimi's Dye Kit",
-		id: "67291",
+		name: "Ghoul Backpack and Mini Pack",
+		id: "71323",
+		price: 600,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Candy Corn Gobbler Pack",
+		id: "67393",
+		price: 300,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Mad King Dye Kit",
+		id: "70367",
 		price: 125,
 		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 0
@@ -1530,16 +1533,9 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Permanent Scarecrow Finisher",
-		id: "44069",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Spectral Glider",
-		id: "79631",
-		price: 500,
+		name: "Furrocious Cat Ears",
+		id: "79619",
+		price: 400,
 		discount: null,
 		col: 1
 	}
