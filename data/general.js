@@ -1410,7 +1410,7 @@ Countdown: {
 		name_es: "Halloween 2016",
 		name_fr: "Halloween 2016",
 		name_zh: "萬聖夜2016",
-		official: "news/halloween-is-coming-2/",
+		official: "news/shadow-of-the-mad-king-is-live/",
 		Start: new Date("2016-10-18T16:00:00Z"),
 		Finish: new Date("2016-11-01T16:00:00Z")
 	},

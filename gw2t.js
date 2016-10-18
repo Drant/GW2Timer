@@ -31542,6 +31542,7 @@ K = {
 			var offsetseconds = parseInt($("#watOffsetSeconds").val()) * T.cMSECONDS_IN_SECOND;
 			K.StopwatchTimerStart = (new Date()).getTime();
 			K.StopwatchTimerFinish = K.StopwatchTimerStart + (O.Options.int_minStopwatchAlert * T.cMSECONDS_IN_MINUTE) + offsetseconds;
+			I.write("Alert set for " + (new Date(K.StopwatchTimerFinish)).toLocaleString());
 			// Initial call to the update function
 			D.verifyNativeTTS();
 			K.tickStopwatchDown();
