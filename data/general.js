@@ -1354,10 +1354,10 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='http://gw2timer.com/?page=Audit'>Account value audit</a> is now super fast.",
+	pve: "<a href='http://gw2timer.com/?page=Audit'>Account value audit</a>, bank, inventory, and wardrobe now load super fast.",
 	wvw: "<a href='https://forum-en.guildwars2.com/forum/game/wuv/WvW-Poll-6-June-World-Linking-Schedule-CLOSED/page/3#post6196507'>World relinking</a> on October 28.",
 	Start: new Date("2016-10-11T16:00:00Z"),
-	Finish: new Date("2016-10-18T16:00:00Z"),
+	Finish: new Date("2016-10-28T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "

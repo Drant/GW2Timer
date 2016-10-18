@@ -2623,10 +2623,10 @@ U = {
 	initializeAPIURLs: function()
 	{
 		var lang = D.getPartiallySupportedLanguage();
-		U.URL_API.LangKey = "?lang=" + lang;
+		U.URL_API.LangKey = "lang=" + lang;
 		var langsuffix = "&lang=" + lang;
 		
-		U.URL_API.Worlds += U.URL_API.LangKey + "&ids=";
+		U.URL_API.Worlds += "?" + U.URL_API.LangKey + "&ids=";
 		U.URL_API.MapFloorTyria += langsuffix;
 		U.URL_API.MapFloorMists += langsuffix;
 		U.URL_API.TextToSpeech += lang + "&sv=&vn=&pitch=0.5&rate=0.4";
@@ -2761,7 +2761,7 @@ U = {
 	fetchAPI: function(pURL, pIDs, pCallback, pWantCache)
 	{
 		var wantcache = (pWantCache !== undefined) ? pWantCache : false;
-		var arr = [];
+		var retarr = [];
 		var numtofetch = 0;
 		var numfetched = 0;
 		
@@ -2775,11 +2775,11 @@ U = {
 			}
 			$.ajax({
 				dataType: "json",
-				url: pURL + U.URL_API.LangKey + "&ids=" + fetchids.join(","),
+				url: U.getLangURL(pURL) + "&ids=" + fetchids.join(","),
 				cache: wantcache,
 				success: function(pData)
 				{
-					arr = arr.concat(pData);
+					retarr = retarr.concat(pData);
 					if (remainids)
 					{
 						numfetched += U.IDsLimit;
@@ -2789,7 +2789,7 @@ U = {
 					else if (pCallback)
 					{
 						A.setProgressBar(numtofetch, numtofetch);
-						pCallback(arr);
+						pCallback(retarr);
 					}
 				},
 				error: function()
@@ -2802,8 +2802,9 @@ U = {
 		// First call to recursive fetch function
 		if (pIDs.length)
 		{
-			numtofetch = pIDs.length;
-			fetchArray(pIDs);
+			var itemids = U.getUnique(pIDs);
+			numtofetch = itemids.length;
+			fetchArray(itemids);
 		}
 		else if (pCallback)
 		{
@@ -2820,6 +2821,10 @@ U = {
 	{
 		return (pURL.indexOf("?") !== -1) ? "&" : "?";
 	},
+	getLangURL: function(pURL)
+	{
+		return pURL + U.getDivider(pURL) + U.URL_API.LangKey;
+	},
 	
 	/*
 	 * Gets the language specific URL of a standard v2 API that requires an ID.
@@ -2831,8 +2836,7 @@ U = {
 	{
 		var idstr = (pID === undefined) ? "" : "/" + pID;
 		var url = U.URL_API.Prefix + pAPI + idstr;
-		var lang = (url.indexOf("?") !== -1) ? U.URL_API.LangKey.replace("?", "&") : U.URL_API.LangKey;
-		return url + lang;
+		return U.getLangURL(url);
 	},
 	getAPIAchievement: function(pID)
 	{
@@ -5265,7 +5269,7 @@ Z = {
 		};
 		
 		var url = (pWantTomorrow) ? U.URL_API.Tomorrow : U.URL_API.Daily;
-		$.getJSON(url + U.URL_API.LangKey, function(pData)
+		$.getJSON(U.getLangURL(url), function(pData)
 		{
 			for (var i in pData)
 			{
@@ -7038,15 +7042,22 @@ A = {
 	 */
 	printError: function(pPermission, pStatus)
 	{
-		if (pStatus === "error")
+		if (A.TokenCurrent === null)
 		{
-			I.write("Unable to retrieve response. ArenaNet API server may be down.");
+			I.write("Please enter an API key first.");
 		}
 		else
 		{
-			I.write("Unable to access data for this key from ArenaNet API server.");
+			if (pStatus === "error")
+			{
+				I.write("Unable to retrieve response. ArenaNet API server may be down.");
+			}
+			else
+			{
+				I.write("Unable to access data for this key from ArenaNet API server.");
+			}
+			I.write(A.TokenCurrent);
 		}
-		I.write(A.TokenCurrent);
 		if (pPermission)
 		{
 			// If missing permission then go to the Manager section for the user to update their key
@@ -9033,16 +9044,6 @@ V = {
 			return;
 		}
 		var menusubsection = $("#accMenu_Characters").find(".accMenuSubtab");
-		var finishFetch = function()
-		{
-			I.suspendElement(menusubsection, false);
-			V.generateCharactersStatistics();
-			V.createHeroMenu();
-			if (pSection)
-			{
-				$("#accMenu_" + pSection).trigger("click");
-			}
-		};
 		
 		A.Possessions = null;
 		dish.html("<div id='chrSummary'></div>"
@@ -9066,56 +9067,43 @@ V = {
 		$.getJSON(A.getURL(A.URL.Characters), function(pData)
 		{
 			A.adjustAccountScrollbar();
-			I.removeThrobber(dish);
-			var charindex = 0;
 			var numcharacters = pData.length;
-			var numfetched = 0;
-			var numtofetch = numcharacters;
 			A.initializeAccountUpgrades();
 			A.assignAccountUpgrades("CharacterSlot", numcharacters);
 			A.Data.CharacterNames = pData;
 			A.CharIndexCurrent = null;
 			A.Data.Characters = null;
 			A.Data.Characters = new Array(numcharacters);
+			
+			var charnames = [];
 			A.Data.CharacterNames.forEach(function(iName)
 			{
-				$("#chrSelection").append("<li id='chrSelection_" + charindex + "' class='chrSelection curClick'></li>");
-				$("#chrUsage").append("<li id='chrUsage_" + charindex + "'></li>");
-				$("#chrSeniority").append("<li id='chrSeniority_" + charindex + "'></li>");
-				(function(iIndex)
-				{
-					$.ajax({
-						dataType: "json",
-						url: A.getURL(A.URL.Characters + "/" + U.encodeURL(iName)),
-						cache: true,
-						success: function(pData, pStatus, pRequest)
-						{
-							// Add extra or preformatted properties 
-							A.Data.Characters[iIndex] = pData;
-							A.Data.Characters[iIndex].oCharIndex = iIndex;
-							A.Data.Characters[iIndex].oCharName = U.escapeHTML(pData.name);
-							V.generateCharactersSelection(pData);
-							// Check retrieval progress
-							numfetched++;
-							A.setProgressBar(numfetched, numtofetch);
-							if (numfetched === numtofetch)
-							{
-								finishFetch();
-							}
-						},
-						error: function(pRequest, pStatus)
-						{
-							numtofetch--;
-							if (numfetched === numtofetch)
-							{
-								finishFetch();
-							}
-							I.write("Error retrieving data for character: " + U.escapeHTML(iName));
-						}
-					});
-				})(charindex);
-				charindex++;
+				charnames.push(U.encodeURL(iName));
 			});
+			U.fetchAPI(A.getURL(A.URL.Characters), charnames, function(pData)
+			{
+				I.removeThrobber(dish);
+				var charindex = 0;
+				pData.forEach(function(iCharData)
+				{
+					$("#chrSelection").append("<li id='chrSelection_" + charindex + "' class='chrSelection curClick'></li>");
+					$("#chrUsage").append("<li id='chrUsage_" + charindex + "'></li>");
+					$("#chrSeniority").append("<li id='chrSeniority_" + charindex + "'></li>");
+					// Add extra or preformatted properties 
+					A.Data.Characters[charindex] = iCharData;
+					A.Data.Characters[charindex].oCharIndex = charindex;
+					A.Data.Characters[charindex].oCharName = U.escapeHTML(iCharData.name);
+					V.generateCharactersSelection(iCharData);
+					charindex++;
+				});
+				I.suspendElement(menusubsection, false);
+				V.generateCharactersStatistics();
+				V.createHeroMenu();
+				if (pSection)
+				{
+					$("#accMenu_" + pSection).trigger("click");
+				}
+			}, true);
 		}).fail(function(pRequest, pStatus)
 		{
 			I.removeThrobber(dish);
@@ -9816,61 +9804,70 @@ V = {
 		
 		// Retrieve and slot the equipment
 		var runesets = Q.countRuneSets(char);
+		var itemids = [];
 		for (var i in char.equipment)
 		{
-			(function(iEquipment)
-			{
-				Q.getItem(iEquipment.id, function(iItem)
-				{
-					var ithcontainer = $("#eqpContainer_" + char.oCharIndex);
-					var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
-					var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iItem.icon;
-					var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
-					Q.scanItem(iItem, {
-						aElement: slot,
-						aItemMeta: iEquipment,
-						aRuneSets: runesets,
-						aWantAttr: true,
-						aCallback: function(iBox)
-						{
-							// Set the slot icon as the transmuted skin icon
-							ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(formatItemBrief(iBox)).show();
-							var skinname = null;
-							if (iBox.oSkin)
-							{
-								skinname = iBox.oSkin.name;
-								sloticon.attr("src", iBox.oSkin.icon);
-							}
-							// If the item is slotted in an attributable slot, (armor, primary weapons, trinkets, not underwater), then tally the attribute points
-							if (A.Equipment.AttributableSlots[iEquipment.slot])
-							{
-								Q.sumAttributeObject(attrobj, iBox.oAttr);
-							}
-							// Add faux checkboxes for toggleable armor slots
-							if (equiptoggle[iEquipment.slot])
-							{
-								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/ui/checkbox.png' />");
-							}
-							// Add faux charges number over gathering tools
-							if (iItem.type === "Gathering" && iItem.rarity !== Q.RarityEnum.Rare)
-							{
-								// Ignore Rare rarity tools which have unlimited charges
-								sloticon.attr("src", iBox.oItem.icon);
-								subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
-							}
-							// Bind click behavior for the icon
-							Q.bindItemSlotBehavior(sloticon, {
-								aItem: iBox.oItem,
-								aSearch: skinname,
-								aWantClick: true
-							});
-							numfetched++;
-							finalizeEquipment();
-						}
-					});
-				});
-			})(char.equipment[i]);
+			itemids.push(char.equipment[i].id);
 		}
+		Q.getItems(itemids, function()
+		{
+			for (var i in char.equipment)
+			{
+				(function(iEquipment)
+				{
+					Q.getItem(iEquipment.id, function(iItem)
+					{
+						var ithcontainer = $("#eqpContainer_" + char.oCharIndex);
+						var slot = ithcontainer.find(".eqpSlot_" + iEquipment.slot);
+						var slotimg = (iEquipment.skin) ? "img/ui/placeholder.png" : iItem.icon;
+						var sloticon = $("<img class='eqpIcon' src='" + slotimg + "' />").appendTo(slot);
+						Q.scanItem(iItem, {
+							aElement: slot,
+							aItemMeta: iEquipment,
+							aRuneSets: runesets,
+							aWantAttr: true,
+							aCallback: function(iBox)
+							{
+								// Set the slot icon as the transmuted skin icon
+								ithcontainer.find(".eqpBrief_" + iEquipment.slot).append(formatItemBrief(iBox)).show();
+								var skinname = null;
+								if (iBox.oSkin)
+								{
+									skinname = iBox.oSkin.name;
+									sloticon.attr("src", iBox.oSkin.icon);
+								}
+								// If the item is slotted in an attributable slot, (armor, primary weapons, trinkets, not underwater), then tally the attribute points
+								if (A.Equipment.AttributableSlots[iEquipment.slot])
+								{
+									Q.sumAttributeObject(attrobj, iBox.oAttr);
+								}
+								// Add faux checkboxes for toggleable armor slots
+								if (equiptoggle[iEquipment.slot])
+								{
+									subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<img class='eqpCheckbox' src='img/ui/checkbox.png' />");
+								}
+								// Add faux charges number over gathering tools
+								if (iItem.type === "Gathering" && iItem.rarity !== Q.RarityEnum.Rare)
+								{
+									// Ignore Rare rarity tools which have unlimited charges
+									sloticon.attr("src", iBox.oItem.icon);
+									subcontainer.find(".eqpSlot_" + iEquipment.slot).prepend("<span class='eqpCharges'>" + equipgathering[iItem.details.type] + "</span>");
+								}
+								// Bind click behavior for the icon
+								Q.bindItemSlotBehavior(sloticon, {
+									aItem: iBox.oItem,
+									aSearch: skinname,
+									aWantClick: true
+								});
+								numfetched++;
+								finalizeEquipment();
+							}
+						});
+					});
+				})(char.equipment[i]);
+			}
+		});
+		
 		// In case the character is wearing nothing, the finalize callback would not have happened
 		if (char.equipment.length === 0)
 		{
@@ -10125,44 +10122,58 @@ V = {
 		{
 			return;
 		}
-		var bank = B.createBank(dish).find(".bnkBank");
+		var bank = B.createBank(dish).find(".bnkBank").append(I.cThrobber);
 		var slotdata;
 		var tab, slotscontainer, slot;
 		
+		var itemids = [];
 		var numtofetch = 0;
 		var numfetched = 0;
+		
 		// Count cumulative number of items equipped
 		A.Data.Characters.forEach(function(iChar)
 		{
 			numtofetch += iChar.equipment.length;
-		});
-		
-		// Create bank tab for each character, fill slots with equipped items
-		A.Data.Characters.forEach(function(iChar)
-		{
-			tab = B.createBankTab(bank, {aTitle: iChar.oCharPreface});
-			slotscontainer = tab.find(".bnkTabSlots");
 			for (var i = 0; i < iChar.equipment.length; i++)
 			{
 				slotdata = iChar.equipment[i];
-				slot = B.createBankSlot(slotscontainer);
 				if (slotdata)
 				{
-					(function(iSlot, iSlotData)
-					{
-						Q.getItem(iSlotData.id, function(iItem)
-						{
-							B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
-							{
-								numfetched++;
-								A.setProgressBar(numfetched, numtofetch);
-							}});
-						});
-					})(slot, slotdata);
+					itemids.push(slotdata.id);
 				}
 			}
 		});
-		B.createBankMenu(bank);
+		
+		// Create bank tab for each character, fill slots with equipped items
+		Q.fetchItems(itemids, function()
+		{
+			bank.empty();
+			A.Data.Characters.forEach(function(iChar)
+			{
+				tab = B.createBankTab(bank, {aTitle: iChar.oCharPreface});
+				slotscontainer = tab.find(".bnkTabSlots");
+				for (var i = 0; i < iChar.equipment.length; i++)
+				{
+					slotdata = iChar.equipment[i];
+					slot = B.createBankSlot(slotscontainer);
+					if (slotdata)
+					{
+						(function(iSlot, iSlotData)
+						{
+							Q.getItem(iSlotData.id, function(iItem)
+							{
+								B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+								{
+									numfetched++;
+									A.setProgressBar(numfetched, numtofetch);
+								}});
+							});
+						})(slot, slotdata);
+					}
+				}
+			});
+			B.createBankMenu(bank);
+		});
 	},
 	
 	/*
@@ -10173,6 +10184,7 @@ V = {
 		B.generateCatalog("Cleanup", {
 			aIsCollection: false,
 			aIsLookup: true,
+			aWantItems: true,
 			aWantGem: false,
 			aWantDefaultHelp: false
 		});
@@ -10225,9 +10237,10 @@ V = {
 		// Fills a tab, which is one character's inventory
 		var fillInventory = function(pTab, pCharacter)
 		{
+			var itemids = [];
 			var numtofetch = 0;
 			var numfetched = 0;
-			slotscontainer = pTab.find(".bnkTabSlots");
+			slotscontainer = pTab.append(I.cThrobber).find(".bnkTabSlots");
 			// First count items to fetch
 			for (var ii = 0; ii < pCharacter.bags.length; ii++)
 			{
@@ -10239,44 +10252,49 @@ V = {
 						slotdata = bagdata.inventory[iii];
 						if (slotdata)
 						{
+							itemids.push(slotdata.id);
 							numtofetch++;
 						}
 					}
 				}
 			}
 			// Fetch the items and fill slots
-			for (var ii = 0; ii < pCharacter.bags.length; ii++)
+			Q.fetchItems(itemids, function()
 			{
-				bagdata = pCharacter.bags[ii];
-				if (bagdata)
+				I.removeThrobber(pTab);
+				for (var ii = 0; ii < pCharacter.bags.length; ii++)
 				{
-					for (var iii = 0; iii < bagdata.inventory.length; iii++)
+					bagdata = pCharacter.bags[ii];
+					if (bagdata)
 					{
-						slot = B.createBankSlot(slotscontainer);
-						slotdata = bagdata.inventory[iii];
-						if (slotdata)
+						for (var iii = 0; iii < bagdata.inventory.length; iii++)
 						{
-							slot.data("count", slotdata.count);
-							(function(iSlot, iSlotData)
+							slot = B.createBankSlot(slotscontainer);
+							slotdata = bagdata.inventory[iii];
+							if (slotdata)
 							{
-								Q.getItem(iSlotData.id, function(iItem)
+								slot.data("count", slotdata.count);
+								(function(iSlot, iSlotData)
 								{
-									B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+									Q.getItem(iSlotData.id, function(iItem)
 									{
-										numfetched++;
-										A.setProgressBar(numfetched, numtofetch);
-									}});
-								});
-							})(slot, slotdata);
-						}
-						else
-						{
-							// For empty inventory slots
-							B.styleBankSlot(slot);
+										B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+										{
+											numfetched++;
+											A.setProgressBar(numfetched, numtofetch);
+										}});
+									});
+								})(slot, slotdata);
+							}
+							else
+							{
+								// For empty inventory slots
+								B.styleBankSlot(slot);
+							}
 						}
 					}
 				}
-			}
+			});
 		};
 		
 		$.getJSON(A.getURL(A.URL.Shared), function(pData)
@@ -10544,62 +10562,69 @@ V = {
 		var slotdata;
 		var tab, slotscontainer, slot;
 		var nexti;
+		var numitems = 0;
+		var numtofetch = 0;
+		var numfetched = 0;
+		
 		$.getJSON(A.getURL(A.URL.Bank), function(pData)
 		{
-			// First generate empty bank slots, then fill them up asynchronously by item details retrieval
-			bank.empty();
-			var numitems = 0;
-			var numtofetch = 0;
-			var numfetched = 0;
 			// Count the number of items in the bank first, because empty slots are written as "null" in the API
+			var itemids = [];
 			for (var i = 0; i < pData.length; i++)
 			{
-				if (pData[i])
+				slotdata = pData[i];
+				if (slotdata)
 				{
+					itemids.push(slotdata.id);
 					numtofetch++;
 				}
 			}
-			for (var i = 0; i < pData.length; i++)
+			Q.fetchItems(itemids, function()
 			{
-				// Bank tab separator every so slots
-				if ((i === 0 || nexti % A.Metadata.Bank.NumSlotsPerTab === 0) && nexti !== pData.length)
+				// First generate empty bank slots, then fill them up asynchronously by item details retrieval
+				bank.empty();
+				for (var i = 0; i < pData.length; i++)
 				{
-					tab = B.createBankTab(bank);
-					slotscontainer = tab.find(".bnkTabSlots");
-				}
-				nexti = i+1;
-				
-				slot = B.createBankSlot(slotscontainer);
-				slotdata = pData[i];
-				// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
-				if (slotdata)
-				{
-					slot.data("count", slotdata.count);
-					numitems += slotdata.count;
-					(function(iSlot, iSlotData)
+					// Bank tab separator every so slots
+					if ((i === 0 || nexti % A.Metadata.Bank.NumSlotsPerTab === 0) && nexti !== pData.length)
 					{
-						Q.getItem(iSlotData.id, function(iItem)
+						tab = B.createBankTab(bank);
+						slotscontainer = tab.find(".bnkTabSlots");
+					}
+					nexti = i+1;
+
+					slot = B.createBankSlot(slotscontainer);
+					slotdata = pData[i];
+					// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
+					if (slotdata)
+					{
+						slot.data("count", slotdata.count);
+						numitems += slotdata.count;
+						(function(iSlot, iSlotData)
 						{
-							B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+							Q.getItem(iSlotData.id, function(iItem)
 							{
-								numfetched++;
-								A.setProgressBar(numfetched, numtofetch);
-							}});
-						});
-					})(slot, slotdata);
+								B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+								{
+									numfetched++;
+									A.setProgressBar(numfetched, numtofetch);
+								}});
+							});
+						})(slot, slotdata);
+					}
+					else
+					{
+						// For empty inventory slots
+						B.styleBankSlot(slot);
+					}
 				}
-				else
-				{
-					// For empty inventory slots
-					B.styleBankSlot(slot);
-				}
-			}
-			// Update tallies
-			B.tallyBank(container);
-			// Ornamental bank tab separator at the bottom
-			bank.append("<div class='bnkTabSeparator'><var class='bnkTabLocked'>" + I.Symbol.Filler + "</var></div>");
-			// Create search bar
-			B.createBankMenu(bank);
+				// Update tallies
+				B.tallyBank(container);
+				// Ornamental bank tab separator at the bottom
+				bank.append("<div class='bnkTabSeparator'><var class='bnkTabLocked'>" + I.Symbol.Filler + "</var></div>");
+				// Create search bar
+				B.createBankMenu(bank);
+			});
 		}).fail(function(pRequest, pStatus)
 		{
 			A.printError(A.PermissionEnum.Inventories, pStatus);
@@ -10630,7 +10655,7 @@ V = {
 		
 		var generateVault = function()
 		{
-			bank.empty();
+			var itemids = [];
 			var numitems = 0;
 			var numtofetch = 0;
 			var numfetched = 0;
@@ -10651,6 +10676,7 @@ V = {
 							{
 								uniqueitems[iSlotData.id] = true;
 								uniquecount++;
+								itemids.push(iSlotData.id);
 							}
 						}
 					});
@@ -10661,49 +10687,53 @@ V = {
 			}
 			U.sortObjects(sortedvaults, {aKeyName: "oUniqueCount", aIsDescending: true});
 			
-			// Fill the vaults
-			for (var i in sortedvaults)
+			Q.fetchItems(itemids, function()
 			{
-				vault = sortedvaults[i];
-				guild = A.Data.Guilds[vault.oGuildID];
-				for (var ii = 0; ii < vault.length; ii++)
+				bank.empty();
+				// Fill the vaults
+				for (var i in sortedvaults)
 				{
-					subvault = vault[ii];
-					tab = B.createBankTab(bank, {aTitle: guild.oTag + " " + subbankname[ii]});
-					slotscontainer = tab.find(".bnkTabSlots");
-					subvault.inventory.forEach(function(iSlotData)
+					vault = sortedvaults[i];
+					guild = A.Data.Guilds[vault.oGuildID];
+					for (var ii = 0; ii < vault.length; ii++)
 					{
-						slot = B.createBankSlot(slotscontainer);
-						// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
-						if (iSlotData)
+						subvault = vault[ii];
+						tab = B.createBankTab(bank, {aTitle: guild.oTag + " " + subbankname[ii]});
+						slotscontainer = tab.find(".bnkTabSlots");
+						subvault.inventory.forEach(function(iSlotData)
 						{
-							slot.data("count", iSlotData.count);
-							numitems += iSlotData.count;
-							(function(iSlot, iSlotData)
+							slot = B.createBankSlot(slotscontainer);
+							// Line breaks (new rows) are automatically rendered by the constant width of the bank's container
+							if (iSlotData)
 							{
-								Q.getItem(iSlotData.id, function(iItem)
+								slot.data("count", iSlotData.count);
+								numitems += iSlotData.count;
+								(function(iSlot, iSlotData)
 								{
-									B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+									Q.getItem(iSlotData.id, function(iItem)
 									{
-										numfetched++;
-										A.setProgressBar(numfetched, numtofetch);
-									}});
-								});
-							})(slot, iSlotData);
-						}
-						else
-						{
-							// For empty inventory slots
-							B.styleBankSlot(slot);
-						}
-					});
+										B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
+										{
+											numfetched++;
+											A.setProgressBar(numfetched, numtofetch);
+										}});
+									});
+								})(slot, iSlotData);
+							}
+							else
+							{
+								// For empty inventory slots
+								B.styleBankSlot(slot);
+							}
+						});
+					}
 				}
-			}
-			// Update tallies
-			B.tallyBank(container);
-			// Create search bar
-			B.createBankMenu(bank, {
-				aHelpMessage: $("#accHelpVault").html()
+				// Update tallies
+				B.tallyBank(container);
+				// Create search bar
+				B.createBankMenu(bank, {
+					aHelpMessage: $("#accHelpVault").html()
+				});
 			});
 		};
 		
@@ -10848,7 +10878,6 @@ V = {
 				aRecord: record,
 				aUnlockeds: pUnlockeds,
 				aIsCollapsed: true,
-				aWantPrices: false,
 				aHelpMessage: $("#accHelpWardrobe").html(),
 				aTabIterator: function(pCatName)
 				{
@@ -12170,24 +12199,53 @@ B = {
 		var numtofetch = U.getObjectLength(pCatArr);
 		var numfetched = 0;
 		var slotscontainer = pTab.find(".bnkTabSlots");
-		for (var ii = 0; ii < pCatArr.length; ii++)
+		if (Settings.aIsCollapsed)
 		{
-			slot = B.createBankSlot(slotscontainer);
-			unlockobj = pCatArr[ii];
-			// Fill the slot with the item icon
-			B.fillSlot(slot, unlockobj.i || unlockobj, {
-				aUnlockAssoc: Settings.aUnlockAssoc,
-				aUnlockObj: unlockobj,
-				aComment: unlockobj.oComment,
-				aIsCatalog: Settings.aIsCatalog,
-				aIsCustomCatalog: Settings.aIsCustomCatalog,
-				aCallback: function()
-				{
-					numfetched++;
-					A.setProgressBar(numfetched, numtofetch);
-				}
+			pTab.append(I.cThrobber);
+		}
+		
+		var doGenerate = function()
+		{
+			for (var ii = 0; ii < pCatArr.length; ii++)
+			{
+				slot = B.createBankSlot(slotscontainer);
+				unlockobj = pCatArr[ii];
+				// Fill the slot with the item icon
+				B.fillSlot(slot, unlockobj.i || unlockobj, {
+					aUnlockAssoc: Settings.aUnlockAssoc,
+					aUnlockObj: unlockobj,
+					aComment: unlockobj.oComment,
+					aIsCatalog: Settings.aIsCatalog,
+					aIsCustomCatalog: Settings.aIsCustomCatalog,
+					aCallback: function()
+					{
+						numfetched++;
+						A.setProgressBar(numfetched, numtofetch);
+					}
+				});
+			}
+		};
+		
+		// Prefetch items if this tab was manually expanded
+		if (Settings.aIsCollapsed)
+		{
+			var itemids = [];
+			for (var ii = 0; ii < pCatArr.length; ii++)
+			{
+				unlockobj = pCatArr[ii];
+				itemids.push(unlockobj.i || unlockobj);
+			}
+			Q.fetchItems(itemids, function()
+			{
+				I.removeThrobber(pTab);
+				doGenerate();
 			});
 		}
+		else
+		{
+			doGenerate();
+		}
+		
 		// Also include button for custom tabs
 		if (Settings.aIsCustomCatalog)
 		{
@@ -12386,6 +12444,7 @@ B = {
 	 * @objparam array aUnlockeds IDs of user's unlocked unlockables from account API, or an associative array containing a count property.
 	 * @objparam boolean aIsCatalog whether to use the user's possessions rather than unlockeds.
 	 * @objparam boolean aIsLookup whether to generate unlocked slots only.
+	 * @objparam boolean aWantItems whether to prefetch item details for all items.
 	 * @objparam boolean aWantPrices whether to prefetch TP prices for all items.
 	 * @objparam boolean aWantSearchHighlight whether to use search highlight, optional.
 	 * @objparam boolean aWantDefaultHelp whether to append the unlockables help message, optional.
@@ -12402,6 +12461,10 @@ B = {
 	generateUnlockables: function(pBank, pSettings)
 	{
 		var Settings = pSettings || {};
+		if (Settings.aIsCollapsed)
+		{
+			Settings.aWantPrices = false;
+		}
 		// Convert the API array of unlocks into an associative array
 		var unlocksassoc = {};
 		if (Settings.aIsCatalog)
@@ -12515,7 +12578,8 @@ B = {
 							{
 								B.fillTab(iTab, iCatArr, {
 									aUnlockAssoc: unlocksassoc,
-									aIsCatalog: Settings.aIsCatalog
+									aIsCatalog: Settings.aIsCatalog,
+									aIsCollapsed: Settings.aIsCollapsed
 								});
 							});
 						}
@@ -12567,31 +12631,48 @@ B = {
 		/*
 		 * Compile item IDs to bulk fetch prices beforehand
 		 */
-		if (Settings.aWantPrices !== false)
+		if (Settings.aWantItems === true || Settings.aWantPrices !== false)
 		{
-			var priceitemids = [];
+			var itemids = [];
 			A.iterateRecord(record, function(pEntry)
 			{
 				if (isNaN(pEntry) === false)
 				{
-					priceitemids.push(pEntry);
+					itemids.push(pEntry);
 				}
 				else
 				{
 					if (pEntry.i)
 					{
-						priceitemids.push(pEntry.i);
+						itemids.push(pEntry.i);
 					}
-					if (pEntry.u)
+					else if (pEntry.u)
 					{
-						priceitemids.push(pEntry.u);
+						itemids.push(pEntry.u);
 					}
 				}
 			});
-			E.getPrices(priceitemids, function()
+			if (Settings.aWantItems === true && Settings.aWantPrices !== false)
 			{
-				doGenerate();
-			});
+				Q.fetchItems(itemids, function()
+				{
+					doGenerate();
+				});
+			}
+			else if (Settings.aWantItems === true)
+			{
+				Q.getItems(itemids, function()
+				{
+					doGenerate();
+				});
+			}
+			else if (Settings.aWantPrices !== false)
+			{
+				E.getPrices(itemids, function()
+				{
+					doGenerate();
+				});
+			}
 		}
 		else
 		{
@@ -13113,6 +13194,7 @@ B = {
 			aWantGem: false
 		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var itemids = [];
 		var numfetched = 0, numtofetch = 0;
 		var calendar = {}, datestr, datearray, calkey, timesince, transaction, multitrans, transactionstr;
 		var pricebuy, pricesell;
@@ -13217,9 +13299,9 @@ B = {
 		
 		A.getTransactions(pURL, {aCallback: function(pData)
 		{
-			bank.empty();
 			if (pData === null) // For the case that there are no current transactions
 			{
+				bank.empty();
 				bank.append("<span class='bnkError'>" + D.getWordCapital("no")
 					+ " " + D.getModifiedWord("transactions", "current") + ".</span>");
 				return;
@@ -13252,6 +13334,7 @@ B = {
 				 */
 				if ((calendar[calkey])[transaction.item_id] === undefined)
 				{
+					itemids.push(transaction.item_id);
 					(calendar[calkey])[transaction.item_id] = {
 						oLatest: transaction.purchased || transaction.created, // For chronological sorting
 						oHighest: Number.NEGATIVE_INFINITY, // For outbid checking
@@ -13296,44 +13379,48 @@ B = {
 			 * is less than the threshold, otherwise the user has to manually
 			 * expand the tab headers to trigger the fill tabs function.
 			 */
-			wantcollapsed = numtofetch > Q.ItemLimit.FetchAPI;
-			var tab, tabtitle, tabcapacity, tabcount, bankcapacity = 0, bankcount = 0;
-			for (var i in calendar)
+			Q.fetchItems(itemids, function()
 			{
-				tabcapacity = 0, tabcount = 0;
-				// The tab title is the year number and the month word
-				calkey = i.split("-");
-				tabtitle = new Date(Date.UTC(calkey[0], calkey[1], 1, 0, 0, 0))
-					.toLocaleString(window.navigator.language, {year: "numeric", month: "long"});
-				// Create bank tabs representing months
-				tab = B.createBankTab(bank, {aTitle: tabtitle, aIsCollapsed: wantcollapsed});
-				if (wantcollapsed)
+				bank.empty();
+				wantcollapsed = numtofetch > Q.ItemLimit.FetchAPI;
+				var tab, tabtitle, tabcapacity, tabcount, bankcapacity = 0, bankcount = 0;
+				for (var i in calendar)
 				{
-					(function(iTab, iMonthKey)
+					tabcapacity = 0, tabcount = 0;
+					// The tab title is the year number and the month word
+					calkey = i.split("-");
+					tabtitle = new Date(Date.UTC(calkey[0], calkey[1], 1, 0, 0, 0))
+						.toLocaleString(window.navigator.language, {year: "numeric", month: "long"});
+					// Create bank tabs representing months
+					tab = B.createBankTab(bank, {aTitle: tabtitle, aIsCollapsed: wantcollapsed});
+					if (wantcollapsed)
 					{
-						iTab.find(".bnkTabSeparator").one("click", function()
+						(function(iTab, iMonthKey)
 						{
-							fillTab(iTab, iMonthKey);
-						});
-					})(tab, i);
+							iTab.find(".bnkTabSeparator").one("click", function()
+							{
+								fillTab(iTab, iMonthKey);
+							});
+						})(tab, i);
+					}
+					else
+					{
+						fillTab(tab, i);
+					}
+					// Sum tab capacity and slot count
+					for (var ii in calendar[i])
+					{
+						tabcapacity++;
+						tabcount += (calendar[i])[ii].oCount;
+					}
+					bankcapacity += tabcapacity;
+					bankcount += tabcount;
+					B.updateTabTally(tab, tabcapacity, tabcapacity, tabcount);
 				}
-				else
-				{
-					fillTab(tab, i);
-				}
-				// Sum tab capacity and slot count
-				for (var ii in calendar[i])
-				{
-					tabcapacity++;
-					tabcount += (calendar[i])[ii].oCount;
-				}
-				bankcapacity += tabcapacity;
-				bankcount += tabcount;
-				B.updateTabTally(tab, tabcapacity, tabcapacity, tabcount);
-			}
-			B.updateBankTally(container, bankcapacity, bankcapacity, bankcount);
-			B.createBankMenu(bank, {
-				aHelpMessage: $("#accHelpTransactions").html()
+				B.updateBankTally(container, bankcapacity, bankcapacity, bankcount);
+				B.createBankMenu(bank, {
+					aHelpMessage: $("#accHelpTransactions").html()
+				});
 			});
 		}});
 	}
@@ -13382,15 +13469,15 @@ Q = {
 	/*
 	 * Loads a database file containing item details objects precached from API.
 	 * @param string pName of the database.
-	 * @param function pSuccess to execute after success.
+	 * @param function pCallback to execute after success.
 	 * @pre The database files exist in the proper directory and suffixed with
 	 * the supported language nick.
 	 */
-	loadItemsSubdatabase: function(pName, pSuccess)
+	loadItemsSubdatabase: function(pName, pCallback)
 	{
 		if (Q.RetrievedDatabases[pName])
 		{
-			pSuccess();
+			pCallback();
 		}
 		else
 		{
@@ -13409,27 +13496,27 @@ Q = {
 			}).always(function()
 			{
 				// Execute callback regardless of success, in case of failed retrieval
-				pSuccess();
+				pCallback();
 			});
 		}
 	},
 	
 	/*
 	 * Loads the search database to search by item name.
-	 * @param function pSuccess to execute after success.
+	 * @param function pCallback to execute after success.
 	 */
-	loadItemsSearch: function(pSuccess)
+	loadItemsSearch: function(pCallback)
 	{
 		if (Q.SearchDatabase)
 		{
-			pSuccess();
+			pCallback();
 		}
 		else
 		{
 			$.getJSON("cache/search_" + O.Options.enu_Language + I.cJSON, function(pData)
 			{
 				Q.SearchDatabase = pData;
-				pSuccess();
+				pCallback();
 			});
 		}
 	},
@@ -13876,16 +13963,16 @@ Q = {
 	 * Retrieves item details from API if haven't already, then execute callback
 	 * function. Basically a wrapper for getJSON with item ID function.
 	 * @param int pItemID to get item.
-	 * @param function pSuccess to execute after successful retrieval.
+	 * @param function pCallback to execute after successful retrieval.
 	 * @returns jqXHR object.
 	 * @pre Method chaining is at most one level with "fail" function call only.
 	 */
-	getItem: function(pItemID, pSuccess)
+	getItem: function(pItemID, pCallback)
 	{
 		var box = Q.Box[pItemID];
 		if (box)
 		{
-			pSuccess(box.oItem);
+			pCallback(box.oItem);
 			// Dummy fail jqxhr function that never executes because the item was successfully cached
 			return {fail: function() {}};
 		}
@@ -13902,53 +13989,50 @@ Q = {
 						Q.Box[pItem.id] = {};
 						Q.Box[pItem.id].oItem = pItem;
 					}
-					pSuccess(pItem);
+					pCallback(pItem);
 				}
 			});
 			return jqxhr;
 		}
 	},
-	
-	/*
-	 * Fetches item details if not already cached.
-	 * @param array pArray of item IDs.
-	 * @param function pCallback to execute after.
-	 */
-	prefetchItems: function(pArray, pCallback)
+	getItems: function(pItemIDs, pCallback)
 	{
-		var arr = U.getUnique(pArray);
-		var fetcharr = [];
-		for (var i = 0; i < arr.length; i++)
+		// Check for items already cached
+		var arr = [];
+		pItemIDs.forEach(function(iID)
 		{
-			if (Q.Box[arr[i]] === undefined)
+			if (Q.Box[iID] === undefined)
 			{
-				fetcharr.push(arr[i]);
+				arr.push(iID);
 			}
-		}
-		// If there are uncached items to fetch
-		if (fetcharr.length)
+		});
+		// Fetch if any uncached
+		U.fetchAPI(U.URL_API.ItemDetail, arr, function(pData)
 		{
-			Z.scrapeAPIArray(fetcharr, "items", {
-				aIterator: function(pItem)
+			if (pData)
+			{
+				pData.forEach(function(iData)
 				{
-					if (Q.Box[pItem.id] === undefined)
+					if (Q.Box[iData.id] === undefined)
 					{
-						Q.Box[pItem.id] = {};
-						Q.Box[pItem.id].oItem = pItem;
+						Q.Box[iData.id] = {};
+						Q.Box[iData.id].oItem = iData;
 					}
-					Q.scanItem(pItem);
-				},
-				aCallback: function()
-				{
-					I.clear();
-					pCallback();
-				}
-			});
-		}
-		else
-		{
+				});
+			}
 			pCallback();
-		}
+		}, true);
+	},
+	fetchItems: function(pItemIDs, pCallback)
+	{
+		// Combine item details and TP price retrieval in one call
+		Q.getItems(pItemIDs, function()
+		{
+			E.getPrices(pItemIDs, function()
+			{
+				pCallback();
+			});
+		});
 	},
 	
 	/*
@@ -22902,7 +22986,7 @@ P = {
 		else
 		{
 			// Store the event names in user's language
-			$.getJSON(U.URL_API.EventDetails + U.URL_API.LangKey, function(pData)
+			$.getJSON(U.getLangURL(U.URL_API.EventDetails), function(pData)
 			{
 				generateEvents(pData);
 			}).fail(function()
@@ -22917,7 +23001,7 @@ P = {
 	 */
 	donePopulation: function()
 	{
-		
+		M.refreshCurrentZone();
 	},
 	finishPopulation: function()
 	{
