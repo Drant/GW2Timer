@@ -1466,6 +1466,8 @@ X = {
 		BanditChests: { key: "str_chlBanditChests", urlkey: "banditchests"},
 		MatrixCubeKey: { key: "str_chlMatrixCubeKey", urlkey: "matrixcubekey"},
 		SkrittBurglar: { key: "str_chlSkrittBurglar", urlkey: "skrittburglar"},
+		// Festival
+		PumpkinCarving: { key: "str_chlPumpkinCarving", urlkey: "pumpkins"},
 		// Heart of Thorns
 		PaperScraps: { key: "str_chlPaperScraps", urlkey: "paperscraps"},
 		TigerSpirit: { key: "str_chlTigerSpirit", urlkey: "tigerspirit"},
