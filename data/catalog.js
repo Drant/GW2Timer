@@ -368,6 +368,10 @@ TonicEndless: [
 	{u: 73194, i: 77167, n: "Endless Nuhoch Crusher Tonic"},
 	{u: 79034, i: 79042, n: "Endless Ley-Line Anomaly Tonic"},
 	{i: 79583, n: "Endless Jade Construct Tonic", p: {karma: 75005}},
+	{i: 79650, n: "Endless Gargoyle Tonic", p: {craft: true}},
+	{i: 79657, n: "Endless Shadow Raven Tonic", p: {craft: true}},
+	{i: 79668, n: "Endless Hellfire Skeleton Tonic", p: {craft: true}},
+	{i: 79664, n: "Endless Ignited Wraith Tonic", p: {craft: true}},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},
@@ -468,7 +472,10 @@ TonicConsumable: [
 	{i: 50039, n: "Pink Quaggan Tonic"},
 	{i: 50044, n: "Green Quaggan Tonic"},
 	{i: 50045, n: "Black Quaggan Tonic"},
-	{i: 67379, n: "Bottle of Batwing Brew"}
+	{i: 67379, n: "Bottle of Batwing Brew"},
+	{i: 79673, n: "Gargoyle Tonic"},
+	{i: 79677, n: "Shadow Raven Tonic"},
+	{i: 79679, n: "Hellfire Skeleton Tonic"}
 ],
 Bundle: [
 	{i: 8655, n: "Experimental Teleportation Gun", p: {coin: 32}},
@@ -610,6 +617,9 @@ Aura: [
 	{i: 67375, n: "Poly-luminescent Undulating Refractor (Black)"},
 	{i: 67370, n: "Poly-luminescent Undulating Refractor (Green)"},
 	{i: 67372, n: "Poly-luminescent Undulating Refractor (Orange)"},
+	{i: 79647, n: "Poly-luminescent Undulating Refractor (Teal)"},
+	{i: 79665, n: "Phospholuminescent Infusion"},
+	{i: 79674, n: "Phospholuminescent Infusion"},
 	{i: 78012, n: "Moto's Unstable Bauble Infusion: Blue", p: {achievement: 0}},
 	{i: 78052, n: "Moto's Unstable Bauble Infusion: Blue", p: {achievement: 0}},
 	{i: 78054, n: "Moto's Unstable Bauble Infusion: Blue", p: {achievement: 0}},
@@ -701,6 +711,7 @@ Glider: [
 Node: [
 	{i: 43902, n: "Gift of Quartz", p: {laurel: 25}},
 	{i: 48804, n: "Gift of Candy Corn", p: {laurel: 25}},
+	{i: 79646, n: "Greater Gift of Candy Corn", p: {cob: 5}},
 	{i: 48875, n: "Krait Obelisk Shard", p: {laurel: 25}},
 	{i: 49825, n: "Gift of Sprockets", p: {laurel: 25}},
 	{i: 67234, n: "Enchanted Treasure Chest", p: {achievement: 0}},

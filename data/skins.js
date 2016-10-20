@@ -2208,7 +2208,8 @@ Weapon_Axe: [
 	{u: 6874, i: 79174, n: "Embellished Axe", t: [79174]},
 	{u: 6928, i: 79379, n: "Bloodstone Axe", t: [79379]},
 	{u: 6942, i: 79372, n: "Kurzick Dual Axe Skin", p: {gem: 600}},
-	{u: 6929, i: 79603, n: "Carnival Axe", p: {coin: 1000000}}
+	{u: 6929, i: 79603, n: "Carnival Axe", p: {coin: 1000000}},
+	{u: 6989, i: 79686, n: "Gargoyle Axe", t: [79686]}
 ],
 Weapon_Mace: [
 	{u: 3677, i: 49332, n: "Tormented Mace ", t: [49332]},
@@ -2342,7 +2343,8 @@ Weapon_Mace: [
 	{u: 6959, i: 79588, n: "Hypothesis", p: {craft: true}},
 	{u: 6971, i: 79537, n: "For Science", p: {craft: true}},
 	{u: 6958, i: 79570, n: "Endeavor", p: {craft: true}},
-	{u: 6966, i: 79562, n: "Eureka", p: {craft: true}}
+	{u: 6966, i: 79562, n: "Eureka", p: {craft: true}},
+	{u: 6990, i: 79670, n: "Gargoyle Mace", t: [79670]}
 ],
 Weapon_Sword: [
 	{u: 3670, i: 49353, n: "Tormented Sword ", t: [49353]},
@@ -2494,7 +2496,8 @@ Weapon_Sword: [
 	{u: 6859, i: 79192, n: "Embellished Sword", t: [79192]},
 	{u: 6884, i: 79089, n: "Lord Caudecus's Sword", p: {gem: 600}},
 	{u: 6911, i: 79385, n: "Bloodstone Sword", t: [79385]},
-	{u: 6924, i: 79511, n: "Carnival Sword", p: {coin: 1000000}}
+	{u: 6924, i: 79511, n: "Carnival Sword", p: {coin: 1000000}},
+	{u: 6984, i: 79644, n: "Gargoyle Sword", t: [79644]}
 ],
 Weapon_Dagger: [
 	{u: 3668, i: 49317, n: "Tormented Dagger ", t: [49317]},
@@ -2636,7 +2639,8 @@ Weapon_Dagger: [
 	{u: 6877, i: 79246, n: "Embellished Dagger", t: [79246]},
 	{u: 6907, i: 79404, n: "Bloodstone Dagger", t: [79404]},
 	{u: 6906, i: 79386, n: "Dragon Kama Skin", p: {gem: 600}},
-	{u: 6948, i: 79474, n: "Carnival Dagger", p: {coin: 1000000}}
+	{u: 6948, i: 79474, n: "Carnival Dagger", p: {coin: 1000000}},
+	{u: 6987, i: 79685, n: "Gargoyle Dagger", t: [79685]}
 ],
 Weapon_Pistol: [
 	{u: 3663, i: 49335, n: "Tormented Pistol ", t: [49335]},
@@ -2772,7 +2776,9 @@ Weapon_Pistol: [
 	{u: 6886, i: 79107, n: "Embellished Pistol", t: [79107]},
 	{u: 6863, i: 79179, n: "Lord Caudecus's Pistol", p: {gem: 600}},
 	{u: 6930, i: 79369, n: "Bloodstone Pistol", t: [79369]},
-	{u: 6946, i: 79617, n: "Carnival Pistol", p: {coin: 1000000}}
+	{u: 6946, i: 79617, n: "Carnival Pistol", p: {coin: 1000000}},
+	{u: 6981, i: 79689, n: "Gargoyle Pistol", t: [79689]},
+	{u: 6994, i: 79637, n: "Grim Pact", t: [79637]}
 ],
 Weapon_Scepter: [
 	{u: 3683, i: 49341, n: "Tormented Scepter ", t: [49341]},
@@ -2912,7 +2918,8 @@ Weapon_Scepter: [
 	{u: 6861, i: 79131, n: "Embellished Scepter", t: [79131]},
 	{u: 6920, i: 79375, n: "Bloodstone Scepter", t: [79375]},
 	{u: 6940, i: 79365, n: "Peacock Scepter", p: {gem: 600}},
-	{u: 6945, i: 79461, n: "Carnival Scepter", p: {coin: 1000000}}
+	{u: 6945, i: 79461, n: "Carnival Scepter", p: {coin: 1000000}},
+	{u: 6993, i: 79682, n: "Gargoyle Scepter", t: [79682]}
 ],
 Weapon_Focus: [
 	{u: 3673, i: 44897, n: "Lovestruck Focus", t: [44897]},
@@ -3067,7 +3074,9 @@ Weapon_Focus: [
 	{u: 6821, i: 78844, n: "White Mantle Icon", p: {raid_ft: 600}},
 	{u: 6848, i: 79109, n: "Embellished Focus", t: [79109]},
 	{u: 6934, i: 79382, n: "Bloodstone Focus", t: [79382]},
-	{u: 6919, i: 79614, n: "Carnival Focus", p: {coin: 500000}}
+	{u: 6919, i: 79614, n: "Carnival Focus", p: {coin: 500000}},
+	{u: 6977, i: 79638, n: "Jailbroken", t: [79638]},
+	{u: 6995, i: 79687, n: "Gargoyle Focus", t: [79687]}
 ],
 Weapon_Shield: [
 	{u: 3685, i: 49344, n: "Tormented Shield ", t: [49344]},
@@ -3219,7 +3228,8 @@ Weapon_Shield: [
 	{u: 6869, i: 79209, n: "Embellished Shield", t: [79209]},
 	{u: 6912, i: 79403, n: "Bloodstone Shield", t: [79403]},
 	{u: 6935, i: 79360, n: "Amethyst Shield", p: {gem: 600}},
-	{u: 6949, i: 79517, n: "Carnival Shield", p: {coin: 500000}}
+	{u: 6949, i: 79517, n: "Carnival Shield", p: {coin: 500000}},
+	{u: 6982, i: 79681, n: "Gargoyle Shield", t: [79681]}
 ],
 Weapon_Torch: [
 	{u: 3674, i: 49356, n: "Tormented Torch ", t: [49356]},
@@ -3351,7 +3361,8 @@ Weapon_Torch: [
 	{u: 6836, i: 78986, n: "Keep Construct Torch", p: {raid_ft: 600}},
 	{u: 6873, i: 79101, n: "Embellished Torch", t: [79101]},
 	{u: 6936, i: 79393, n: "Bloodstone Torch", t: [79393]},
-	{u: 6913, i: 79487, n: "Carnival Torch", p: {coin: 500000}}
+	{u: 6913, i: 79487, n: "Carnival Torch", p: {coin: 500000}},
+	{u: 6996, i: 79649, n: "Gargoyle Torch", t: [79649]}
 ],
 Weapon_Warhorn: [
 	{u: 3684, i: 49359, n: "Tormented Warhorn ", t: [49359]},
@@ -3483,7 +3494,8 @@ Weapon_Warhorn: [
 	{u: 6797, i: 78932, n: "Privateer Warhorn", p: {blticket: 1}},
 	{u: 6876, i: 79307, n: "Embellished Warhorn", t: [79307]},
 	{u: 6933, i: 79399, n: "Bloodstone Warhorn", t: [79399]},
-	{u: 6944, i: 79482, n: "Carnival Warhorn", p: {coin: 500000}}
+	{u: 6944, i: 79482, n: "Carnival Warhorn", p: {coin: 500000}},
+	{u: 6976, i: 79658, n: "Gargoyle Warhorn", t: [79658]}
 ],
 Weapon_Greatsword: [
 	{u: 3679, i: 49323, n: "Tormented Greatsword ", t: [49321, 49323]},
@@ -3632,7 +3644,8 @@ Weapon_Greatsword: [
 	{u: 6864, i: 79056, n: "Mistwild Greatsword", p: {achievement: 0}},
 	{u: 6882, i: 79261, n: "Embellished Greatsword", t: [79261]},
 	{u: 6950, i: 79389, n: "Bloodstone Greatsword", t: [79389]},
-	{u: 6918, i: 79480, n: "Carnival Greatsword", p: {coin: 1500000}}
+	{u: 6918, i: 79480, n: "Carnival Greatsword", p: {coin: 1500000}},
+	{u: 6979, i: 79655, n: "Gargoyle Greatsword", t: [79655]}
 ],
 Weapon_Hammer: [
 	{u: 3666, i: 49326, n: "Tormented Hammer ", t: [49326]},
@@ -3773,7 +3786,9 @@ Weapon_Hammer: [
 	{u: 6805, i: 78875, n: "White Mantle Sledge", p: {raid_ft: 600}},
 	{u: 6868, i: 79277, n: "Embellished Hammer", t: [79277]},
 	{u: 6908, i: 79377, n: "Bloodstone Hammer", t: [79377]},
-	{u: 6923, i: 79520, n: "Carnival Hammer", p: {coin: 1500000}}
+	{u: 6923, i: 79520, n: "Carnival Hammer", p: {coin: 1500000}},
+	{u: 6986, i: 79659, n: "Gargoyle Hammer", t: [79659]},
+	{u: 6991, i: 79690, n: "Onus", t: [79690]}
 ],
 Weapon_Longbow: [
 	{u: 3664, i: 44906, n: "Lovestruck Longbow", t: [44906]},
@@ -3914,7 +3929,8 @@ Weapon_Longbow: [
 	{u: 6865, i: 79162, n: "Embellished Longbow", t: [79162]},
 	{u: 6894, i: 79310, n: "Storm Bow", p: {gem: 600}},
 	{u: 6925, i: 79409, n: "Bloodstone Longbow", t: [79409]},
-	{u: 6922, i: 79416, n: "Carnival Longbow", p: {coin: 1500000}}
+	{u: 6922, i: 79416, n: "Carnival Longbow", p: {coin: 1500000}},
+	{u: 6999, i: 79652, n: "Gargoyle Longbow", t: [79652]}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", t: [44924]},
@@ -4057,7 +4073,8 @@ Weapon_Shortbow: [
 	{u: 6830, i: 78816, n: "Privateer Short Bow", p: {blticket: 1}},
 	{u: 6862, i: 79125, n: "Embellished Short Bow", t: [79125]},
 	{u: 6947, i: 79395, n: "Bloodstone Short Bow", t: [79395]},
-	{u: 6927, i: 79563, n: "Carnival Short Bow", p: {coin: 1500000}}
+	{u: 6927, i: 79563, n: "Carnival Short Bow", p: {coin: 1500000}},
+	{u: 6988, i: 79648, n: "Gargoyle Short Bow", t: [79648]}
 ],
 Weapon_Rifle: [
 	{u: 3661, i: 49338, n: "Tormented Rifle ", t: [49338]},
@@ -4196,7 +4213,8 @@ Weapon_Rifle: [
 	{u: 6835, i: 78927, n: "White Mantle Rifle", p: {raid_ft: 600}},
 	{u: 6871, i: 79074, n: "Embellished Rifle", t: [79074]},
 	{u: 6921, i: 79407, n: "Bloodstone Rifle", t: [79407]},
-	{u: 6938, i: 79530, n: "Carnival Rifle", p: {coin: 1500000}}
+	{u: 6938, i: 79530, n: "Carnival Rifle", p: {coin: 1500000}},
+	{u: 6992, i: 79636, n: "Gargoyle Rifle", t: [79636]}
 ],
 Weapon_Staff: [
 	{u: 3667, i: 49350, n: "Tormented Staff ", t: [49348, 49350]},
@@ -4350,7 +4368,8 @@ Weapon_Staff: [
 	{u: 6887, i: 79054, n: "Embellished Staff", t: [79054]},
 	{u: 6901, i: 79315, n: "Emissary's Staff", p: {gem: 600}},
 	{u: 6932, i: 79362, n: "Bloodstone Staff", t: [79362]},
-	{u: 6939, i: 79539, n: "Carnival Staff", p: {coin: 1500000}}
+	{u: 6939, i: 79539, n: "Carnival Staff", p: {coin: 1500000}},
+	{u: 6998, i: 79662, n: "Gargoyle Staff", t: [79662]}
 ],
 Weapon_Harpoon: [
 	{u: 3675, i: 63881, n: "Tormented Spear ", t: [63881]},

@@ -339,6 +339,13 @@ dt.jpzListNameHover {
 /* =============================================================================
  *  Collectible Items
  * ========================================================================== */
+#cltFilter {
+ 	text-align: center;
+ }
+.cltFilterButton {
+	width: 64px;
+	margin-right: 2px;
+}
 .cltBox {
 	display: block;
 }

@@ -12553,7 +12553,7 @@ B = {
 			/* 
 			 * Create tabs for each unlockable category.
 			 */
-			pBank.empty();
+			I.removeThrobber(pBank);
 			var numsunlockedtotal = 0;
 			var numintabstotal = 0;
 			var numacquiredtotal = 0;
@@ -12631,7 +12631,7 @@ B = {
 		};
 		
 		/*
-		 * Compile item IDs to bulk fetch prices beforehand
+		 * Compile item IDs to bulk fetch item details and prices beforehand
 		 */
 		if (Settings.aWantItems === true || Settings.aWantPrices !== false)
 		{
@@ -15916,7 +15916,22 @@ E = {
 	},
 	getPrices: function(pItemIDs, pCallback, pWantCache)
 	{
-		U.fetchAPI(U.URL_API.ItemPrice, pItemIDs, function(pData)
+		var tradeableids = [];
+		var itemid;
+		if (pItemIDs && pItemIDs.length)
+		{
+			for (var i = 0; i < pItemIDs.length; i++)
+			{
+				itemid = pItemIDs[i];
+				if (Q.Box[itemid] === undefined ||
+					(Q.Box[itemid] && Q.isTradeable(Q.Box[itemid].oItem)))
+				{
+					tradeableids.push(itemid);
+				}
+			}
+		}
+		
+		U.fetchAPI(U.URL_API.ItemPrice, tradeableids, function(pData)
 		{
 			var db = {};
 			if (pData)
@@ -24907,18 +24922,21 @@ G = {
 		$.getScript(U.URL_DATA.Collectible).done(function()
 		{
 			P.Collectibles = GW2T_COLLECTIBLE_DATA;
+			var metadata = GW2T_COLLECTIBLE_METADATA;
 			var i;
 			var collectible;
 			var translatedname, defaultname, samplelink;
+			var categories = {};
 			
 			for (i in P.Collectibles)
 			{
 				// Create checkboxes
 				collectible = P.Collectibles[i];
+				categories[collectible.category] = true;
 				translatedname = D.getObjectName(collectible);
 				defaultname = D.getObjectDefaultName(collectible);
 				samplelink = I.cSiteLink + "<dfn>" + X.Collectibles[i].urlkey + "</dfn>";
-				$("<div class='cltBox'>"
+				$("<div class='cltBox cltBox_" + collectible.category + "'>"
 					+ "<label style='color:" + collectible.color + "'>"
 						+ "<ins class='clt_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
 					+ "</label>"
@@ -24948,6 +24966,32 @@ G = {
 			U.convertExternalLink("#cltList cite a");
 			I.qTip.init(".cltLinks");
 			I.createSearchBar("#cltSearch", ".cltBox");
+			
+			// Create category filter
+			for (var i in metadata.Categories)
+			{
+				(function(iCategory)
+				{
+					var catimg = metadata.Categories[iCategory];
+					$("<button class='cltFilterButton btnTab curToggle' title='Filter: <dfn>" + iCategory + "</dfn>'><img src='" + catimg + "' /></button>")
+						.appendTo("#cltFilter").click(function()
+					{
+						if ($(this).hasClass("btnFocused"))
+						{
+							$(".cltFilterButton").removeClass("btnFocused");
+							$(".cltBox").show();
+						}
+						else
+						{
+							$(".cltFilterButton").removeClass("btnFocused");
+							$(this).addClass("btnFocused");
+							$(".cltBox").hide();
+							$(".cltBox_" + iCategory).show();
+						}
+					});
+				})(i);
+			}
+			I.qTip.init(".cltFilterButton");
 
 			// Toggle button will only hide icons, by unchecking the checked boxes
 			$("#mapToggle_Collectible").data("checked", false).data("hideonly", true).click(function()

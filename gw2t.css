@@ -1759,12 +1759,9 @@ input.mapCoordinatesName {
 	background: radial-gradient(ellipse at center, #4c4c4c 0%, #444444 50%, #131313 100%);
 }
 
-.cssWaypoint { /* Festival sensitive */
-	width: 24px; height: 24px;
+#clkWaypoints .cssWaypoint { /* Festival sensitive */
 	background: url("img/map/halloween.png");
 	/*background: url("img/map/wintersday.png");*/
-	/*background: url("img/map/waypoint.png");*/
-	background-size: 24px 24px;
 }
 #paneClockBackground { /* Festival sensitive */
 	background: url("img/background/globe_halloween.png") no-repeat center;
@@ -1846,6 +1843,11 @@ input.mapCoordinatesName {
 	position: absolute;
 	width: 32px; height: 32px;
 	background-size: 32px 32px;
+}
+.cssWaypoint {
+	width: 24px; height: 24px;
+	background: url("img/map/waypoint.png");
+	background-size: 24px 24px;
 }
 .clkWaypointDaily {
 	background: url("img/ui/daily.png");
