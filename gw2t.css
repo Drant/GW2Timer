@@ -1189,12 +1189,6 @@ textarea.jsCopyCode {
 #itemDashboard:hover .dsbCountdownDate {
 	opacity: 1;
 }
-.dsbCountdownDormant {
-	color: #7f807f;
-}
-.dsbCountdownActive {
-	color: lime;
-}
 #dsbSaleHeader:active, #dsbVendorHeader:active {
 	opacity: 0.8;
 }
@@ -1760,8 +1754,8 @@ input.mapCoordinatesName {
 }
 
 #clkWaypoints .cssWaypoint { /* Festival sensitive */
-	background: url("img/map/halloween.png");
-	/*background: url("img/map/wintersday.png");*/
+	background-image: url("img/map/halloween.png");
+	/*background-image: url("img/map/wintersday.png");*/
 }
 #paneClockBackground { /* Festival sensitive */
 	background: url("img/background/globe_halloween.png") no-repeat center;
@@ -1846,18 +1840,21 @@ input.mapCoordinatesName {
 }
 .cssWaypoint {
 	width: 24px; height: 24px;
-	background: url("img/map/waypoint.png");
+	background-image: url("img/map/waypoint.png");
 	background-size: 24px 24px;
 }
 .clkWaypointDaily {
-	background: url("img/ui/daily.png");
+	background-image: url("img/ui/daily.png");
 	background-size: 32px 32px;
 }
 .cssWaypoint:hover {
 	border-radius: 16px;
 	box-shadow: 0px 0px 5px white;
-	background: url("img/ui/copy.png");
+	background-image: url("img/ui/copy.png");
 	background-size: 24px 24px;
+}
+#clkWaypoints .cssWaypoint:hover {
+    background-image: url("img/ui/copy.png");
 }
 .cssWaypoint:active {
 	opacity: 0.5;
@@ -2908,6 +2905,21 @@ dfn.cssHighlight {
 }
 .cssLimitEqual {
 	color: white;
+}
+.cssState {
+	display: inline-block;
+	width: 8px; height: 8px;
+	margin-bottom: 2px;
+	vertical-align: middle;
+}
+.cssStateActive {
+	background: #00ff00;
+}
+.cssStateInactive {
+	background: #7f807f;
+}
+.cssStateWaiting {
+	background: #ffa500;
 }
 input[type="text"].cssSearchPassive {
 	color: #bbbbbb !important;

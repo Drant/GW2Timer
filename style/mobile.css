@@ -136,6 +136,10 @@ body, html, .panelMain, #windowMain, #paneContent article {
 	left: 0;
 }
 
+.cssState {
+	width: 10px; height: 10px;
+}
+
 /* Options page */
 
 #plateOptions .cntComposition {

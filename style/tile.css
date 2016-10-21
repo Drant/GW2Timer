@@ -122,6 +122,9 @@ body, #paneContent article {
 .chnBarHover {
 	background: linear-gradient(to right, #111 0%, #66aaff 100%);
 }
+.cssState {
+	width: 10px; height: 10px;
+}
 
 .chnTitle img {
 	width: 64px; height: 64px;

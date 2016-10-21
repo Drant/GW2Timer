@@ -18995,7 +18995,7 @@ C = {
 		var delayminutes = pChain.flags.minuteDelay;
 		var delayremaining;
 		var time = remaining;
-		var sign = I.Symbol.ArrowUp + " ";
+		var sign = I.Symbol.StateActive;
 		
 		if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopGenerated)
 		{
@@ -19009,7 +19009,7 @@ C = {
 				aWantHours: false
 			});
 			
-			$("#chnTime_" + pChain.nexus).text("(:" + currentframe + ") " + time);
+			$("#chnTime_" + pChain.nexus).html("(:" + currentframe + ") " + time);
 			if (C.isDryTopIconsShown)
 			{
 				$("#mapDryTopTimer").html(
@@ -19026,16 +19026,16 @@ C = {
 				if (delayremaining > 0)
 				{
 					time = delayremaining;
-					sign = I.Symbol.Wait + " ";
+					sign = I.Symbol.StateWaiting;
 				}
 			}
 			if (remaining <= 0)
 			{
 				time = T.cSECONDS_IN_TIMEFRAME - elapsed;
-				sign = I.Symbol.ArrowDown + " ";
+				sign = I.Symbol.StateInactive;
 			}
 
-			$("#chnTime_" + pChain.nexus).text(sign + T.getTimeFormatted(
+			$("#chnTime_" + pChain.nexus).html(sign + " " + T.getTimeFormatted(
 				{
 					aWantLetters: true,
 					aCustomTimeInSeconds: time
@@ -29547,7 +29547,7 @@ H = {
 				 */
 				$("#dsbCountdown").append(
 					"<div id='dsbCountdown_" + i + "' class='dsbCountdownEntry'>"
-						+ "<code>" + I.Symbol.Block + "</code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> "
+						+ "<code></code>" + ctd.Anchor + " <time id='dsbCountdownTime_" + i + "'></time> "
 						+ "<span class='dsbCountdownDate'><abbr></abbr> <var></var></span>"
 					+ "</div>");
 			}
@@ -30010,14 +30010,14 @@ H = {
 				if (pDate < ctd.Start)
 				{
 					ctd.DesiredTime = ctd.Start;
-					bulletclass = "dsbCountdownDormant";
+					bulletclass = "cssStateInactive";
 					arrow = I.Symbol.ArrowUp + "@";
 					stamp = ctd.StartStamp;
 				}
 				else if (pDate < ctd.Finish)
 				{
 					ctd.DesiredTime = ctd.Finish;
-					bulletclass = "dsbCountdownActive";
+					bulletclass = "cssStateActive";
 					arrow = I.Symbol.ArrowDown + "@";
 					stamp = ctd.FinishStamp;
 				}
@@ -30029,7 +30029,7 @@ H = {
 
 				if (ctd.isTimely)
 				{
-					countdownhtml.find("code").removeClass().addClass(bulletclass);
+					countdownhtml.find("code").removeClass().addClass("cssState " + bulletclass);
 					countdownhtml.find("abbr").text(arrow);
 					countdownhtml.find("var").text(stamp);
 				}
@@ -30174,7 +30174,6 @@ H = {
 			// Show the time until event start
 			var isactive = $(this).hasClass("tmlSegmentActive");
 			var countdown = $(this).find(".tmlSegmentCountdown");
-			var symbol = (isactive) ? I.Symbol.Horizontal : "";
 			var minutesremaining = $(this).data("start") - currentminute;
 			minutesremaining = (minutesremaining === 0) ? cycleminutes : T.wrapInteger(minutesremaining, cycleminutes);
 			if ($(this).hasClass("tmlTimesliceWB") && isactive)
@@ -30184,7 +30183,7 @@ H = {
 			}
 			else
 			{
-				countdown.html(symbol + T.formatMinutes(minutesremaining));
+				countdown.html(T.formatMinutes(minutesremaining));
 			}
 		});
 		// Update current timestamp minute
@@ -31723,7 +31722,10 @@ I = {
 		Night: "☽",
 		Expand: "◢",
 		Collapse: "◣",
-		Help: "[?]"
+		Help: "[?]",
+		StateActive: "<span class='cssState cssStateActive'></span>",
+		StateInactive: "<span class='cssState cssStateInactive'></span>",
+		StateWaiting: "<span class='cssState cssStateWaiting'></span>",
 	},
 	
 	// HTML/CSS pixel units
