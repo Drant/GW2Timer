@@ -2763,11 +2763,28 @@ U = {
 	fetchAPI: function(pURL, pIDs, pCallback, pWantCache)
 	{
 		var wantcache = (pWantCache !== undefined) ? pWantCache : false;
+		var itemids = [];
 		var retarr = [];
+		var failarr = [];
 		var numtofetch = 0;
 		var numfetched = 0;
 		
-		var fetchArray = function(pArray)
+		var finishFetch = function()
+		{
+			// Compile IDs that the API did not return
+			if (itemids.length !== retarr.length)
+			{
+				failarr = U.getDifference(itemids, retarr);
+			}
+			
+			A.fillProgressBar();
+			if (pCallback)
+			{
+				pCallback(retarr, failarr);
+			}
+		};
+		
+		var fetchArray = function(pArray, pIsRetry)
 		{
 			var fetchids = pArray, remainids;
 			if (fetchids.length > U.IDsLimit)
@@ -2775,6 +2792,20 @@ U = {
 				fetchids = pArray.slice(0, U.IDsLimit);
 				remainids = pArray.slice(U.IDsLimit);
 			}
+			var continueFetch = function()
+			{
+				if (remainids)
+				{
+					numfetched += U.IDsLimit;
+					A.setProgressBar(numfetched, numtofetch);
+					fetchArray(remainids);
+				}
+				else
+				{
+					finishFetch();
+				}
+			};
+			
 			$.ajax({
 				dataType: "json",
 				url: U.getLangURL(pURL) + "&ids=" + fetchids.join(","),
@@ -2782,21 +2813,19 @@ U = {
 				success: function(pData)
 				{
 					retarr = retarr.concat(pData);
-					if (remainids)
-					{
-						numfetched += U.IDsLimit;
-						A.setProgressBar(numfetched, numtofetch);
-						fetchArray(remainids);
-					}
-					else if (pCallback)
-					{
-						A.setProgressBar(numtofetch, numtofetch);
-						pCallback(retarr);
-					}
+					continueFetch();
 				},
 				error: function()
 				{
-					pCallback();
+					// If error then retry this batch once, else continue with remainder
+					if (pIsRetry)
+					{
+						continueFetch();
+					}
+					else
+					{
+						fetchArray(pArray, true);
+					}
 				}
 			});
 		};
@@ -2804,7 +2833,7 @@ U = {
 		// First call to recursive fetch function
 		if (pIDs.length)
 		{
-			var itemids = U.getUnique(pIDs);
+			itemids = U.getUnique(pIDs);
 			numtofetch = itemids.length;
 			fetchArray(itemids);
 		}
@@ -5360,12 +5389,20 @@ Z = {
 	getItemsDatabase: function(pCallback)
 	{
 		var lang = O.OptionEnum.Language.Default;
-		$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
+		var db = Z.DatabaseCache["items"];
+		if (db && db[lang])
 		{
-			Z.DatabaseCache["items"] = {};
-			(Z.DatabaseCache["items"])[lang] = pData;
-			pCallback(pData);
-		});
+			pCallback(db[lang]);
+		}
+		else
+		{
+			$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
+			{
+				db = {};
+				db[lang] = pData;
+				pCallback(pData);
+			});
+		}
 	},
 	
 	/*
@@ -6347,7 +6384,7 @@ Z = {
 			}
 			
 			I.print("Fetching prices...");
-			Z.scrapeAPIArray(arr, "commerce/prices", {aCallback: function(pData, pUntradeableIDs)
+			E.getPrices(arr, function(pData, pUntradeableIDs)
 			{
 				// Add to the untradeable list any items that got past the tradeable check
 				pUntradeableIDs.forEach(function(iID)
@@ -6356,16 +6393,16 @@ Z = {
 				});
 				// Extract retrieved prices and create database of prices
 				var pricecache = {};
-				pData.forEach(function(iPrice)
+				var priceobj;
+				for (var i in pData)
 				{
-					var buyprice = iPrice.buys.unit_price;
-					var sellprice = iPrice.sells.unit_price || buyprice; // In case there are no sell listing for that item
-					pricecache[iPrice.id] = [buyprice, sellprice];
-				});
+					priceobj = pData[i];
+					pricecache[i] = [priceobj.oPriceBuy, priceobj.oPriceSell];
+				}
 				var str = "var GW2T_PRICES_DATA = " + U.lineJSON(pricecache).replace(/ /g, "") + ";\r\n";
 				str += "var GW2T_PRICES_BLACKLIST = " + U.lineJSON(blacklist).replace(/ /g, "") + ";";
 				Z.createFile(str, "prices.js");
-			}});
+			});
 		};
 		
 		// Load composite ingredient IDs and the previous ID blacklist
@@ -6599,6 +6636,10 @@ A = {
 				A.resetProgressBar();
 			}
 		}
+	},
+	fillProgressBar: function()
+	{
+		A.setProgressBar(1, 1);
 	},
 	
 	/*
@@ -12548,9 +12589,18 @@ B = {
 			record = Settings.aRecord;
 		}
 		
+		// Create bank menu before the asynchronous bank generation
+		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
+		var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accHelpUnlockables").html();
+		B.createBankMenu(pBank, {
+			aWantSearchHighlight: wantsearchhighlight,
+			aHelpMessage: (Settings.aHelpMessage || "") + helpstr,
+			aIsCustomCatalog: Settings.aIsCustomCatalog
+		});
+		
 		var doGenerate = function()
 		{
-			/* 
+			/*
 			 * Create tabs for each unlockable category.
 			 */
 			I.removeThrobber(pBank);
@@ -12621,13 +12671,6 @@ B = {
 				}
 			}
 			B.updateBankTally(container, numsunlockedtotal, numintabstotal, numacquiredtotal);
-			var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
-			var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accHelpUnlockables").html();
-			B.createBankMenu(pBank, {
-				aWantSearchHighlight: wantsearchhighlight,
-				aHelpMessage: (Settings.aHelpMessage || "") + helpstr,
-				aIsCustomCatalog: Settings.aIsCustomCatalog
-			});
 		};
 		
 		/*
@@ -15931,7 +15974,7 @@ E = {
 			}
 		}
 		
-		U.fetchAPI(U.URL_API.ItemPrice, tradeableids, function(pData)
+		U.fetchAPI(U.URL_API.ItemPrice, tradeableids, function(pData, pFailedIDs)
 		{
 			var db = {};
 			if (pData)
@@ -15942,7 +15985,7 @@ E = {
 					db[iData.id] = priceobj;
 					E.Pricelist[iData.id] = priceobj;
 				});
-				pCallback(db);
+				pCallback(db, pFailedIDs);
 			}
 			else
 			{
@@ -18994,7 +19037,9 @@ C = {
 		var remaining = pChain.countdownToFinish - elapsed;
 		var delayminutes = pChain.flags.minuteDelay;
 		var delayremaining;
+		var elm = $("#chnTime_" + pChain.nexus);
 		var time = remaining;
+		var timestr;
 		var sign = I.Symbol.StateActive;
 		
 		if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopGenerated)
@@ -19002,18 +19047,18 @@ C = {
 			// Dry Top events
 			var currentframe = T.getDryTopMinute();
 			var nextframe = T.getDryTopMinute(1);
-			time = T.getTimeFormatted(
+			timestr = T.getTimeFormatted(
 			{
 				aReference: T.ReferenceEnum.UTC,
 				aWant24: true,
 				aWantHours: false
 			});
 			
-			$("#chnTime_" + pChain.nexus).html("(:" + currentframe + ") " + time);
+			elm.html("(:" + currentframe + ") " + timestr);
 			if (C.isDryTopIconsShown)
 			{
 				$("#mapDryTopTimer").html(
-					"<var style='color:" + T.getCurrentDryTopColor() + "'>:" + currentframe + "</var> " + time
+					"<var style='color:" + T.getCurrentDryTopColor() + "'>:" + currentframe + "</var> " + timestr
 					+ " <var style='color:" + T.getCurrentDryTopColor(1) + "'>:" + nextframe + "</var>");
 			}
 		}
@@ -19034,13 +19079,12 @@ C = {
 				time = T.cSECONDS_IN_TIMEFRAME - elapsed;
 				sign = I.Symbol.StateInactive;
 			}
-
-			$("#chnTime_" + pChain.nexus).html(sign + " " + T.getTimeFormatted(
-				{
-					aWantLetters: true,
-					aCustomTimeInSeconds: time
-				})
-			);
+			timestr = T.getTimeFormatted(
+			{
+				aWantLetters: true,
+				aCustomTimeInSeconds: time
+			});
+			elm.html(sign + " " + timestr);
 		}
 	},
 	
