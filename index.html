@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20161022"></script>
+	<script type="text/javascript" src="data/general.js?v=20161023"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -73,6 +73,7 @@
 				<ul>
 					<li id="mapContextCenter">Center map</li>
 					<li id="mapContextToggleHUD">Toggle HUD</li>
+					<li id="mapContextToggleFloor">Toggle terrain</li>
 					<li id="mapContextRange" class="itemContextSubmenu"><span>Range</span>
 						<ul>
 							<li id="mapContextRangeList" class="mapContextRangeList jsIgnore"></li>
@@ -105,7 +106,6 @@
 							<li id="mapContextDrawCompletion">Draw completion route</li>
 							<li id="mapContextToggleCompletion">Toggle world completion</li>
 							<li id="mapContextToggleLock">Toggle zone lock</li>
-							<li id="mapContextToggleFloor">Toggle terrain</li>
 						</ul>
 					</li>
 				</ul>
@@ -352,6 +352,7 @@
 			<div id="wvwContext" class="itemContext">
 				<ul>
 					<li id="wvwContextCenter">Center map</li>
+					<li id="wvwContextToggleFloor">Toggle terrain</li>
 					<li id="wvwContextRange" class="itemContextSubmenu"><span>Range</span>
 						<ul>
 							<li id="wvwContextRangeList" class="mapContextRangeList jsIgnore"></li>
@@ -383,7 +384,6 @@
 						<ul>
 							<li id="wvwContextToggleCompletion">Toggle world completion</li>
 							<li id="wvwContextToggleLock">Toggle zone lock</li>
-							<li id="wvwContextToggleFloor">Toggle terrain</li>
 						</ul>
 					</li>
 				</ul>

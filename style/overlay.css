@@ -7,6 +7,9 @@
 #itemWarning, #itemDashboard, .tmlLineName, #paneMenu var, .hudTitle, .hudLinks {
 	display: none;
 }
+#mapContextToggleFloor, #wvwContextToggleFloor {
+	display: block;
+}
 
 /* Overlay exclusive elements */
 #itemProjection {

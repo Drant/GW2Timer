@@ -1781,7 +1781,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "timberline",
 	waypoint: "[&BEwCAAA=]",
 	level: "60",
-	reward: {ecto: "1", loot: "2", coin: 5000},
+	reward: {mysticcoin: "1", ecto: "1", loot: "2", coin: 5000},
 	timing: {hourInitial: 0, hourMultiplier: 6, minuteOffset: 15},
 	flags: {minuteDelay: 5},
 	events: [
@@ -1857,7 +1857,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "marches",
 	waypoint: "[&BOYBAAA=]",
 	level: "60",
-	reward: {ecto: "1", loot: "2", coin: 5000},
+	reward: {mysticcoin: "1", ecto: "1", loot: "2", coin: 5000},
 	timing: {hourInitial: 2, hourMultiplier: 6, minuteOffset: 15},
 	flags: {minuteDelay: 5},
 	events: [
@@ -1933,7 +1933,7 @@ var GW2T_CHAIN_DATA = [
 	zone: "gendarran",
 	waypoint: "[&BOQAAAA=]",
 	level: "35",
-	reward: {ecto: "1", loot: "2", coin: 5000},
+	reward: {mysticcoin: "1", ecto: "1", loot: "2", coin: 5000},
 	timing: {hourInitial: 4, hourMultiplier: 6, minuteOffset: 15},
 	flags: {minuteDelay: 5},
 	events: [

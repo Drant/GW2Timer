@@ -3632,7 +3632,7 @@ U = {
 			pPlaces = 0;
 		}
 		
-		var sign = (pDecimal < 0) ? "−" : "";
+		var sign = (pDecimal < 0) ? I.Symbol.Negative : "";
 		return sign + Math.abs(pDecimal * 100).toFixed(pPlaces) + "%";
 	},
 	
@@ -13497,7 +13497,7 @@ Q = {
 	},
 	ItemLimit:
 	{
-		FetchAPI: 500, // Max items before a function resorts to on demand downloads
+		FetchAPI: 800, // Max items before a function resorts to on demand downloads
 		TooltipLines: 100, // Text lines in a tooltip window
 		StackSize: 250,
 		EctoSalvageLevel: 68
@@ -14043,7 +14043,7 @@ Q = {
 	getItems: function(pItemIDs, pCallback)
 	{
 		// Check for items already cached
-		var arr = [];
+		var arr = U.getUnique(pItemIDs);
 		pItemIDs.forEach(function(iID)
 		{
 			if (Q.Box[iID] === undefined)
@@ -15549,7 +15549,7 @@ E = {
 		var goldstr = (Settings.aWantColor || Settings.aWantBig || Settings.aWantShort) ? gold.toLocaleString() : gold;
 		var silverstr = silver;
 		var copperstr = copper;
-		var sign = (amount < 0) ? "−" : "";
+		var sign = (amount < 0) ? I.Symbol.Negative : "";
 		
 		// Leading zero for units that are right side of the leftmost unit
 		if ( ! Settings.aWantColor && (gold > 0 && silver < T.cBASE_10))
@@ -15621,7 +15621,7 @@ E = {
 		
 		var dollar = Math.abs(~~(pAmount / E.Exchange.CENTS_IN_DOLLAR));
 		var cent = Math.abs(pAmount % E.Exchange.CENTS_IN_DOLLAR);
-		var sign = (pAmount < 0) ? "−" : "";
+		var sign = (pAmount < 0) ? I.Symbol.Negative : "";
 		
 		if (cent < T.cBASE_10)
 		{
@@ -16141,10 +16141,10 @@ E = {
 		var taxamount = (sell * E.Exchange.TAX_SOLD) * quantity;
 		
 		// Do calculation and put them in outputs
-		cost.val("−" + E.formatCoinString(Math.round(
+		cost.val(I.Symbol.Negative + E.formatCoinString(Math.round(
 			costamount
 		)));
-		tax.val("−" + E.formatCoinString(Math.round(
+		tax.val(I.Symbol.Negative + E.formatCoinString(Math.round(
 			listamount
 			)) + " + −" + E.formatCoinString(Math.round(
 			taxamount
@@ -18852,6 +18852,7 @@ C = {
 							chain.htmllist = "#sectionChains_Scheduled";
 						}
 						C.LivingStoryChains.push(chain);
+						C.RegularChains.push(chain);
 						C.ScheduledChains.push(chain);
 					}
 					else
@@ -19040,7 +19041,7 @@ C = {
 		var elm = $("#chnTime_" + pChain.nexus);
 		var time = remaining;
 		var timestr;
-		var sign = I.Symbol.StateActive;
+		var signstr = I.Symbol.StateActive + " ";
 		
 		if (pChain.series === C.ChainSeriesEnum.DryTop && C.isDryTopGenerated)
 		{
@@ -19071,20 +19072,20 @@ C = {
 				if (delayremaining > 0)
 				{
 					time = delayremaining;
-					sign = I.Symbol.StateWaiting;
+					signstr = I.Symbol.StateWaiting + " ";
 				}
 			}
 			if (remaining <= 0)
 			{
 				time = T.cSECONDS_IN_TIMEFRAME - elapsed;
-				sign = I.Symbol.StateInactive;
+				signstr = I.Symbol.StateInactive + " " + I.Symbol.Negative;
 			}
 			timestr = T.getTimeFormatted(
 			{
 				aWantLetters: true,
 				aCustomTimeInSeconds: time
 			});
-			elm.html(sign + " " + timestr);
+			elm.html(signstr + timestr);
 		}
 	},
 	
@@ -20333,7 +20334,7 @@ M = {
 		{
 			that.changeFloor(levelfloor);
 		}
-		else
+		else if (I.ModeCurrent === I.ModeEnum.Overlay)
 		{
 			that.changeFloor();
 		}
@@ -25991,7 +25992,7 @@ W = {
 		W.toggleObjectiveLabels();
 		
 		// Show floor if opted
-		if (O.Options.bol_showFloorWvW)
+		if (O.Options.bol_showFloorWvW || I.ModeCurrent !== I.ModeEnum.Overlay)
 		{
 			W.changeFloor(O.Options.int_setFloorWvW);
 		}
@@ -28822,7 +28823,7 @@ T = {
 		if (ms < 0)
 		{
 			ms *= -1;
-			signstr = "−";
+			signstr = I.Symbol.Negative;
 		}
 		var seconds = ~~(ms / T.cMSECONDS_IN_SECOND);
 		var day, hour, min, sec;
@@ -28909,7 +28910,7 @@ T = {
 		if (seconds < 0)
 		{
 			seconds = seconds * -1;
-			signstr = "−";
+			signstr = I.Symbol.Negative;
 		}
 		// Year, month, and week string
 		if (seconds < T.cSECONDS_IN_YEAR)
@@ -31760,6 +31761,7 @@ I = {
 		Star: "☆",
 		Wait: "⏳",
 		Approx: "≈",
+		Negative: "−",
 		Quantity: "×",
 		Ellipsis: "…",
 		Day: "☀",
@@ -31769,7 +31771,7 @@ I = {
 		Help: "[?]",
 		StateActive: "<span class='cssState cssStateActive'></span>",
 		StateInactive: "<span class='cssState cssStateInactive'></span>",
-		StateWaiting: "<span class='cssState cssStateWaiting'></span>",
+		StateWaiting: "<span class='cssState cssStateWaiting'></span>"
 	},
 	
 	// HTML/CSS pixel units
@@ -32211,7 +32213,7 @@ I = {
 		// Set tile after viewing the coordinate so it downloads the tiles last
 		if (I.isMapEnabled)
 		{
-			if (O.Options.bol_showFloor)
+			if (O.Options.bol_showFloor || I.ModeCurrent !== I.ModeEnum.Overlay)
 			{
 				if (I.PageInitial === "wvw")
 				{
@@ -33830,6 +33832,11 @@ I = {
 				{
 					window.css({display: "table"});
 				}
+			}).contextmenu(function(pEvent)
+			{
+				pEvent.preventDefault();
+				var htmlidprefix = "#" + P.WebsiteCurrentMap;
+				I.showContextMenu(htmlidprefix + "Context");
 			});
 		}
 		
