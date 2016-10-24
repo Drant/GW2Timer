@@ -288,7 +288,7 @@ Quartz: {
 },
 Sprocket: {
 	name_en: "Sprocket",
-	name_de: "Zwischenzahnrad",
+	name_de: "Zahnrad",
 	name_es: "Engranaje",
 	name_fr: "Pignon",
 	name_zh: "扣鏈齒輪",

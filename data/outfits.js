@@ -47,7 +47,6 @@ General: [
 	{u: 25, i: 70071, n: "Harbinger of Mordremoth Outfit", p: {gem: 700}},
 	{u: 26, i: 70253, n: "Wedding Attire Outfit", p: {gem: 1000}},
 	{u: 27, i: 70299, n: "Royal Guard Outfit", p: {achievement: 0}},
-	{u: 28, i: 70385, n: "Lunatic Guard Outfit", p: {gem: 700}},
 	{u: 30, i: 75129, n: "Lyssa's Regalia", p: {gem: 700}},
 	{u: 29, i: 76905, n: "Crystal Arbiter Outfit", p: {gem: 2000}},
 	{u: 31, i: 77282, n: "Bandit Sniper's Outfit", p: {gem: 2000}},
@@ -66,10 +65,11 @@ Festival: [
 	{u: 2, i: 65196, n: "Mad King's Outfit", p: {gem: 700}},
 	{u: 4, i: 65201, n: "Witch's Outfit", p: {gem: 700}},
 	{u: 12, i: 67374, n: "Hexed Outfit", p: {cob: 3}},
-	{u: 7, i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}},
 	{u: 6, i: 65195, n: "Bloody Prince's Outfit", p: {gem: 700}},
 	{u: 5, i: 65194, n: "Executioner's Outfit", p: {gem: 700}},
 	{u: 11, i: 67037, n: "Raiment of the Lich", p: {gem: 700}},
+	{u: 28, i: 70385, n: "Lunatic Guard Outfit", p: {gem: 700}},
+	{u: 7, i: 65198, n: "Fancy Winter Outfit", p: {gem: 700}},
 	{u: 33, i: 77595, n: "Winter Solstice Outfit", p: {gem: 700}}
 ]
 };

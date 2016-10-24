@@ -2635,8 +2635,31 @@ U = {
 	},
 	
 	/*
-	 * Fetches all the pages of an endpoint and combines them into a single array.
-	 * @param enum pURL of commerce transactions.
+	 * Analog for jQuery's getScript but with the cache option enabled.
+	 * @param string pURL
+	 * @param function pCallback
+	 * @returns jqobject
+	 */
+	getScript: function(pURL, pCallback)
+	{
+		var jqxhr = $.ajax({
+			dataType: "script",
+			url: pURL,
+			cache: true,
+			success: function()
+			{
+				if (pCallback)
+				{
+					pCallback();
+				}
+			}
+		});
+		return jqxhr;
+	},
+	
+	/*
+	 * Fetches all the pages of an API endpoint and combines them into a single array.
+	 * @param enum pURL
 	 * @objparam boolean aWantCache whether to use default caching.
 	 * @objparam enum aPermission of the endpoint.
 	 * @objparam function aCallback with the combined pages as parameter.
@@ -5426,7 +5449,7 @@ Z = {
 		Z.loadItemsDatabase(function(pDatabase)
 		{
 			I.print("Loading section record...");
-			$.getScript(scripturl, function()
+			U.getScript(scripturl, function()
 			{
 				Z.freeFiles();
 				var data = U.getRecordData(pType);
@@ -5622,7 +5645,7 @@ Z = {
 			}
 		};
 		
-		$.getScript(U.getDataScriptURL(section), function()
+		U.getScript(U.getDataScriptURL(section), function()
 		{
 			record = U.getRecordData(section);
 			blacklist = U.getRecordBlacklist(section);
@@ -5776,7 +5799,7 @@ Z = {
 	collateMaterials: function()
 	{
 		var section = "Materials";
-		$.getScript(U.getDataScriptURL(section), function()
+		U.getScript(U.getDataScriptURL(section), function()
 		{
 			var record = {};
 			var headers = U.getRecordHeader(section);
@@ -6214,7 +6237,7 @@ Z = {
 			return null;
 		};
 		
-		$.getScript(U.getDataScriptURL(section), function()
+		U.getScript(U.getDataScriptURL(section), function()
 		{
 			// Initialize the record's arrays
 			var headers = U.getRecordHeader(section);
@@ -6222,7 +6245,7 @@ Z = {
 			{
 				record[i] = [];
 			}
-			$.getScript(U.getDataScriptURL("Catalog"), function()
+			U.getScript(U.getDataScriptURL("Catalog"), function()
 			{
 				// Use the main catalog as the blacklist
 				var blacklist = {};
@@ -6409,9 +6432,9 @@ Z = {
 		var loadMetadata = function()
 		{
 			I.print("Loading prices data...");
-			$.getScript(U.URL_DATA.Ascended, function()
+			U.getScript(U.URL_DATA.Ascended, function()
 			{
-				$.getScript(U.URL_DATA.Prices, function()
+				U.getScript(U.URL_DATA.Prices, function()
 				{
 					fetchPrices();
 				});
@@ -6423,7 +6446,7 @@ Z = {
 		{
 			var name = recordnames[recordnamescounter];
 			recordnamescounter++;
-			$.getScript(U.getDataScriptURL(name), function()
+			U.getScript(U.getDataScriptURL(name), function()
 			{
 				record = U.getRecordData(name);
 				for (var i in record)
@@ -8792,7 +8815,7 @@ A = {
 		{
 			// Load the cached prices
 			I.print(D.getPhraseOriginal("Loading info price") + "...");
-			$.getScript(U.URL_DATA.Prices, function()
+			U.getScript(U.URL_DATA.Prices, function()
 			{
 				cachedprices = U.getRecordData("prices");
 				untradeabledb = U.getRecordBlacklist("prices");
@@ -8879,11 +8902,9 @@ A = {
 				I.print(D.getPhraseOriginal("Loading info " + i.toLowerCase()) + "...");
 				(function(iName)
 				{
-					$.getScript(U.URL_DATA[iName], function()
+					U.getScript(U.URL_DATA[iName], function()
 					{
 						recordsdata[iName] = U.getRecordData(iName);
-					}).done(function()
-					{
 						numfetched++;
 						if (numfetched === numtofetch)
 						{
@@ -10457,7 +10478,7 @@ V = {
 		var bank = container.find(".bnkBank").append(I.cThrobber);
 		
 		// Retrieve data before generating
-		$.getScript(U.URL_DATA.Recipes).done(function()
+		U.getScript(U.URL_DATA.Recipes, function()
 		{
 			var headers = {};
 			var metadata = GW2T_RECIPES_METADATA;
@@ -10843,7 +10864,7 @@ V = {
 			});
 		};
 		
-		$.getScript(U.URL_DATA.Materials).done(function()
+		U.getScript(U.URL_DATA.Materials, function()
 		{
 			$.getJSON(A.getURL(A.URL.Materials), function(pData)
 			{
@@ -10934,7 +10955,7 @@ V = {
 		};
 		
 		// Retrieve data before generating
-		$.getScript(U.URL_DATA.Skins).done(function()
+		U.getScript(U.URL_DATA.Skins, function()
 		{
 			$.getJSON(A.getURL(A.URL.Skins), function(pData)
 			{
@@ -10971,7 +10992,7 @@ V = {
 			});
 		};
 		
-		$.getScript(U.URL_DATA[section]).done(function()
+		U.getScript(U.URL_DATA[section], function()
 		{
 			$.getJSON(A.getURL(A.URL[section]), function(pData)
 			{
@@ -11016,7 +11037,7 @@ V = {
 			aWantGem: false
 		});
 		var bank = container.find(".bnkBank").append(I.cThrobber);
-		$.getScript(U.URL_DATA.Dyes).done(function()
+		U.getScript(U.URL_DATA.Dyes, function()
 		{
 			$.getJSON(A.getURL(A.URL.Dyes), function(pData)
 			{
@@ -12797,7 +12818,7 @@ B = {
 			});
 		};
 		
-		$.getScript(U.URL_DATA[sectionnameupper]).done(function()
+		U.getScript(U.URL_DATA[sectionnameupper], function()
 		{
 			Q.loadItemsSubdatabase(sectionnamelower, function()
 			{
@@ -15961,6 +15982,7 @@ E = {
 	{
 		var tradeableids = [];
 		var itemid;
+		// Check if item IDs are tradeable beforehand
 		if (pItemIDs && pItemIDs.length)
 		{
 			for (var i = 0; i < pItemIDs.length; i++)
@@ -15979,6 +16001,7 @@ E = {
 			var db = {};
 			if (pData)
 			{
+				// Add prices to database for later uses
 				pData.forEach(function(iData)
 				{
 					var priceobj = E.processPrice(iData);
@@ -18018,7 +18041,7 @@ D = {
 			&& I.BrowserCurrent !== I.BrowserEnum.IE)
 		{
 			I.isSpeechNativeEnabled = true;
-			$.getScript(U.URL_API.TextToSpeechNative).done(function()
+			U.getScript(U.URL_API.TextToSpeechNative, function()
 			{
 				I.isSpeechNativeLoaded = true;
 				meSpeak.loadConfig("bin/tts/mespeak_config.json");
@@ -18872,7 +18895,7 @@ C = {
 	{
 		if (C.isUnscheduledChainsLoaded === false)
 		{
-			$.getScript(U.URL_DATA.Unscheduled).done(function()
+			U.getScript(U.URL_DATA.Unscheduled, function()
 			{
 				if (C.isUnscheduledChainsLoaded)
 				{
@@ -23502,7 +23525,7 @@ P = {
 		else
 		{
 			// If route data is not loaded, load it and execute this function again
-			$.getScript(U.URL_DATA.Itinerary).done(function()
+			U.getScript(U.URL_DATA.Itinerary, function()
 			{
 				for (var i in GW2T_COMPLETION_DATA)
 				{
@@ -23765,7 +23788,7 @@ P = {
 	 */
 	generateDryTop: function()
 	{
-		$.getScript(U.URL_DATA.DryTop).done(function()
+		U.getScript(U.URL_DATA.DryTop, function()
 		{
 			C.DryTop = GW2T_DRYTOP_EVENTS;
 			var i, ii;
@@ -24462,7 +24485,7 @@ G = {
 			reapplyNodesState();
 		};
 		
-		$.getScript(U.URL_DATA.Resource).done(function()
+		U.getScript(U.URL_DATA.Resource, function()
 		{
 			var i;
 			var resource;
@@ -24656,7 +24679,7 @@ G = {
 			}));
 		};
 		
-		$.getScript(U.URL_DATA.JP).done(function()
+		U.getScript(U.URL_DATA.JP, function()
 		{
 			jptype = GW2T_JP_DATA.Type;
 			P.JPs = GW2T_JP_DATA.JP;
@@ -24964,7 +24987,7 @@ G = {
 	 */
 	generateCollectiblesUI: function()
 	{
-		$.getScript(U.URL_DATA.Collectible).done(function()
+		U.getScript(U.URL_DATA.Collectible, function()
 		{
 			P.Collectibles = GW2T_COLLECTIBLE_DATA;
 			var metadata = GW2T_COLLECTIBLE_METADATA;
@@ -25387,7 +25410,7 @@ G = {
 			});
 		};
 		
-		$.getScript(U.URL_DATA.Guild).done(function()
+		U.getScript(U.URL_DATA.Guild, function()
 		{
 			P.Guild = GW2T_GUILD_DATA;
 			var i;
@@ -32087,7 +32110,7 @@ I = {
 				I.loadStylesheet("account");
 				$("#panelAccount").load(U.getPageSrc("account"), function()
 				{
-					$.getScript(U.URL_DATA.Account).done(function()
+					U.getScript(U.URL_DATA.Account, function()
 					{
 						A.initializeAccount();
 					});
@@ -33595,7 +33618,7 @@ I = {
 				if ($("#wvwLeaderboard").css("position") === "absolute")
 				{
 					window.clearInterval(waitForWvWStylesheet);
-					$.getScript(U.URL_DATA.WvW).done(function()
+					U.getScript(U.URL_DATA.WvW, function()
 					{
 						W.initializeWvW();
 					});
