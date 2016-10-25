@@ -2538,6 +2538,7 @@ U = {
 		News: "http://forum.renaka.com/topic/5500046/",
 		Overlay: "http://forum.renaka.com/topic/5546166/"
 	},
+	ScriptURLs: {}, // Associative array of script URLs, so they are not loaded again
 	APIKey: null,
 	APIKeyLength: 72, // The exact length of the API key in order for it to be used in the URL fragment
 	ServerIDLength: 4,
@@ -2642,19 +2643,29 @@ U = {
 	 */
 	getScript: function(pURL, pCallback)
 	{
-		var jqxhr = $.ajax({
-			dataType: "script",
-			url: pURL,
-			cache: true,
-			success: function()
-			{
-				if (pCallback)
+		if (U.ScriptURLs[pURL] === undefined)
+		{
+			U.ScriptURLs[pURL] = true;
+			var jqxhr = $.ajax({
+				dataType: "script",
+				url: pURL,
+				cache: true,
+				success: function()
 				{
-					pCallback();
+					if (pCallback)
+					{
+						pCallback();
+					}
 				}
-			}
-		});
-		return jqxhr;
+			});
+			return jqxhr;
+		}
+		else if (pCallback)
+		{
+			pCallback();
+		}
+		// Dummy jqxhr return in case of already loaded
+		return {fail: function() {}};
 	},
 	
 	/*
