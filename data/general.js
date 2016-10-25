@@ -1459,8 +1459,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-10-18T16:00:00Z"),
-	Finish: new Date("2016-10-25T16:00:00Z"),
+	Start: new Date("2016-10-25T16:00:00Z"),
+	Finish: new Date("2016-11-01T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1476,59 +1476,59 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Black Wings Glider Combo",
-		id: "68685",
+		name: "Executioner's Outfit",
+		id: "43098",
 		price: 700,
 		discount: null,
 		col: 0
-	},
-	{
-		name: "Ghoul Backpack and Mini Pack",
-		id: "71323",
-		price: 600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Candy Corn Gobbler Pack",
-		id: "67393",
-		price: 300,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Mad King Dye Kit",
-		id: "70367",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 0
-	},
-	{
-		name: "Bone Pick",
-		id: "48932",
-		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Tireless Harvesting Minion",
-		id: "67063",
-		price: 1000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Tireless Logging Minion",
-		id: "67029",
-		price: 1000,
-		discount: null,
-		col: 1
 	},
 	{
 		name: "Furrocious Cat Ears",
 		id: "79619",
 		price: 400,
 		discount: null,
+		col: 0
+	},
+	{
+		name: "Phantom's Hood",
+		id: "65203",
+		price: 200,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Bloodstone Glider",
+		id: "http://i.imgur.com/wyOto38.png",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Permanent Mad King Finisher",
+		id: "44068",
+		price: 500,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Candy Corn Gobbler Pack",
+		id: "67393",
+		price: 300,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Hovering Mad Mirror",
+		id: "http://i.imgur.com/GYWpBHC.png",
+		price: 250,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Mad King Dye Kit",
+		id: "70367",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]
