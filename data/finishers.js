@@ -89,7 +89,7 @@ General: [
 	{u: 62, i: 70243, n: "Permanent Birthday Finisher", p: {starting: true}}
 ],
 Gem: [
-	{u: 18, i: 44068, n: "Permanent Mad King Finisher", p: {gem: 700}},
+	{u: 18, i: 44068, n: "Permanent Mad King Finisher", p: {gem: 500}},
 	{u: 19, i: 44069, n: "Permanent Scarecrow Finisher", p: {gem: 500}},
 	{u: 11, i: 44724, n: "Permanent Super Explosive Finisher", p: {gem: 600}},
 	{u: 41, i: 49165, n: "Permanent Mystical Dragon Finisher", p: {gem: 800}},

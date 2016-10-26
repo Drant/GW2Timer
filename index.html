@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20161025A"></script>
+	<script type="text/javascript" src="data/general.js?v=20161026"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -40,7 +40,7 @@
 	<div id="itemNull"></div><!-- Container for creating temporary elements to get their computed dimensions -->
 	<div id="itemAutoscroll"></div><!-- Cursor for autoscrolling -->
 	<kbd id="itemProjection" title="<dfn>Click to toggle projection.<br />Right click for map menu.</dfn>"></kbd><!-- Menu button for projection overlay -->
-	<div id="itemVignette"></div><!-- Ornamental shadow frame for overlay -->
+	<div id="itemVignette"></div><!-- Ornamental shadow frame for window overlay -->
 	<div id="itemConsole">
 		<div id="cslButtons">
 			<kbd id="cslClose" class="btnWindow btnClose" title="<dfn>Close Console</dfn>"></kbd>
@@ -65,6 +65,7 @@
 	<iframe id="jsTTSFrame"></iframe>
 	<audio id="jsTTSAudio"></audio>
 	<main id="windowMain">
+	<div id="itemProjector"></div>
 	<div id="panelMap" class="panelMain">
 		<!-- Map, the dummy nbsp is required or Leaflet won't show
 		==================================================================== -->
