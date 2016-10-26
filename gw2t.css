@@ -908,7 +908,7 @@ textarea.jsCopyCode {
 #mapPane.mapPaneOff, #wvwPane.mapPaneOff {
 	background: transparent;
 }
-#itemProjection, #itemVignette, #mapContextToggleFloor, #wvwContextToggleFloor {
+#itemProjection, #itemProjector, #itemVignette, #mapContextToggleFloor, #wvwContextToggleFloor {
 	display: none;
 }
 
