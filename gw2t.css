@@ -2024,7 +2024,7 @@ input.mapCoordinatesName {
 }
 
 #paneMenu {
-	position: absolute; z-index: 9;
+	position: absolute; z-index: 1;
 	top: 360px;
 	width: 360px; height: 48px;
 	background: linear-gradient(to bottom, #555 0%, #222 50%, #000 51%, #222 100%);

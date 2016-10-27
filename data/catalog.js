@@ -219,7 +219,6 @@ Blueprint: [
 	{i: 42004, n: "Guild Catapult Blueprints"},
 	{i: 74323, n: "Guild Siege Golem Blueprints"},
 	{i: 21119, n: "Guild Catapult Blueprints"},
-	{i: 21265, n: "Repair Hammer", p: {coin: 496}},
 	{i: 42834, n: "Supply Removal Trap", p: {badge: 15}},
 	{i: 41291, n: "Stealth Disruptor Trap", p: {badge: 15}},
 	{i: 67348, n: "Siege Disabler", p: {badge: 15}}

@@ -26,6 +26,12 @@
 #itemProjection:active {
 	opacity: 0.6;
 }
+#itemProjector {
+	position: absolute; z-index: 9;
+	width: 100%; height: 100%;
+	background: transparent;
+	pointer-events: none;
+}
 #itemVignette {
 	display: block;
 	width: 100%; height: 100%;

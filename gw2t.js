@@ -61,7 +61,7 @@ $(window).on("load", function() { "use strict";
 /* =============================================================================
  * Single letter objects serve as namespaces.
  * ========================================================================== */
-var A, B, C, D, E, G, H, I, K, M, O, P, Q, T, U, V, W, X, Z;
+var A, B, C, D, E, G, H, I, J, K, M, O, P, Q, T, U, V, W, X, Z;
 
 O = {
 /* =============================================================================
@@ -2579,7 +2579,8 @@ U = {
 		Prefix: "https://api.guildwars2.com/v2/",
 		Prefix1: "https://api.guildwars2.com/v1/",
 		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl=",
-		TextToSpeechNative: "bin/tts/mespeak.js"
+		TextToSpeechNative: "bin/tts/mespeak.js",
+		ThreeDimensional: "https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js"
 	},
 	PageLimit: 200, // Number of entries per API retrieval for paginated endpoints
 	IDsLimit: 200, // Max item IDs in a single fetch URL
@@ -4438,7 +4439,7 @@ U = {
 };
 Z = {
 /* =============================================================================
- * @@Console commands and server-like maintenance functions
+ * @@Z Console commands and server-like maintenance functions
  * ========================================================================== */
 
 	cCommandPrefix: "/",
@@ -27938,6 +27939,17 @@ W = {
 		}
 	}
 };
+J = {
+/* =============================================================================
+ * @@J Projection 3D display for overlay.
+ * ========================================================================== */
+
+	initializeProjection: function()
+	{
+		
+	}
+
+};
 T = {
 /* =============================================================================
  * @@Time utilities, schedule, daily, and numeric functions
@@ -32084,6 +32096,9 @@ I = {
 		
 		// Default content plate
 		I.PageCurrent = I.PageEnum.Chains;
+		
+		// Manual override workaround of corrupt map tiles
+		localStorage["int_setFloor"] = 2;
 	},
 	
 	/*
@@ -33855,6 +33870,7 @@ I = {
 			I.isProjectionEnabled = true;
 			$("#panelMap, #windowMain").css({background: "transparent"});
 			$("#itemVignette").remove();
+			$("#itemProjector").show();
 			$("#itemProjection").show().click(function()
 			{
 				var window = $("#windowMain");
@@ -33871,6 +33887,11 @@ I = {
 				pEvent.preventDefault();
 				var htmlidprefix = "#" + P.WebsiteCurrentMap;
 				I.showContextMenu(htmlidprefix + "Context");
+			});
+			// Initialize this submode
+			U.getScript(U.URL_API.ThreeDimensional, function()
+			{
+				J.initializeProjection();
 			});
 		}
 		
