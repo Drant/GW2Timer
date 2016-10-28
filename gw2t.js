@@ -2580,7 +2580,7 @@ U = {
 		Prefix1: "https://api.guildwars2.com/v1/",
 		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl=",
 		TextToSpeechNative: "bin/tts/mespeak.js",
-		ThreeDimensional: "https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js"
+		ThreeDimensional: "https://cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js"
 	},
 	PageLimit: 200, // Number of entries per API retrieval for paginated endpoints
 	IDsLimit: 200, // Max item IDs in a single fetch URL
