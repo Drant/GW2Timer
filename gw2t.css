@@ -1419,6 +1419,7 @@ input.mapCoordinatesName {
 	position: absolute;
 	opacity: 0.6;
 	transition: opacity 0.1s;
+	background: rgba(0, 0, 0, 0.01);
 }
 .hudTitle {
 	display: inline-block;
@@ -2798,26 +2799,26 @@ label:hover {
 	opacity: 0.6;
 }
 .btnClose {
-	background: url("img/ui/close.png");
+	background: url("img/ui/close.png"), rgba(0, 0, 0, 0.01);
 }
 .btnToggle {
-	background: url("img/ui/toggle.png");
+	background: url("img/ui/toggle.png"), rgba(0, 0, 0, 0.01);
 }
 .btnVertical {
-	background: url("img/ui/switch.png");
+	background: url("img/ui/switch.png"), rgba(0, 0, 0, 0.01);
 }
 .btnHorizontal {
-	background: url("img/ui/switch.png");
+	background: url("img/ui/switch.png"), rgba(0, 0, 0, 0.01);
 	transform: rotate(90deg);
 }
 .btnCopy {
-	background: url("img/ui/copy.png");
+	background: url("img/ui/copy.png"), rgba(0, 0, 0, 0.01);
 }
 .btnOpaque {
-	background: url("img/ui/opaque.png");
+	background: url("img/ui/opaque.png"), rgba(0, 0, 0, 0.01);
 }
 .btnStats {
-	background: url("img/ui/stats.png");
+	background: url("img/ui/stats.png"), rgba(0, 0, 0, 0.01);
 }
 
 .cssStats samp { /* A bar graph */

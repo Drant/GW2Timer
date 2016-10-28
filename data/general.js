@@ -1395,16 +1395,6 @@ Countdown: {
 		Start: new Date("2016-08-09T17:00:00Z"),
 		Finish: new Date("2016-08-10T17:00:00Z")
 	}*/
-	/*{ // 8 weeks cycle, on Thursday, 11-10 to 11-17
-		name_en: "Frostgorge Map Rewards",
-		name_de: "Eisklamm Karten-Bonus",
-		name_es: "Bonificación de mapa Gorjaescarcha",
-		name_fr: "Bonus de carte Gorges glacées",
-		name_zh: "霜谷之音地圖獎金",
-		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2016-11-10T20:00:00Z"),
-		Finish: new Date("2016-11-17T20:00:00Z")
-	}*/
 	{
 		name_en: "Halloween 2016",
 		name_de: "Halloween 2016",
@@ -1427,6 +1417,16 @@ Countdown: {
 		url_fr: "https://forum-fr.guildwars2.com/forum/game/wuv/Sondage-McM-du-6-juin-Programme-de-l-association-de-mondes-ferm/first#post292620",
 		Start: new Date("2016-10-28T18:00:00Z"),
 		Finish: new Date("2016-10-29T02:00:00Z")
+	},
+	{ // 8 weeks cycle, on Thursday, 11-10 to 11-17
+		name_en: "Frostgorge Map Rewards",
+		name_de: "Eisklamm Karten-Bonus",
+		name_es: "Bonificación de mapa Gorjaescarcha",
+		name_fr: "Bonus de carte Gorges glacées",
+		name_zh: "霜谷之音地圖獎金",
+		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
+		Start: new Date("2016-11-10T20:00:00Z"),
+		Finish: new Date("2016-11-17T20:00:00Z")
 	}
 	]
 },
@@ -1476,6 +1476,27 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Mini Feline Familiar",
+		id: "http://i.imgur.com/9Q0m7vO.png",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Hovering Mad Mirror",
+		id: "http://i.imgur.com/GYWpBHC.png",
+		price: 250,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Hallows Fortune Fireworks",
+		id: "48714",
+		price: 100,
+		discount: 200,
+		col: 0
+	},
+	{
 		name: "Mad King's Outfit",
 		id: "36366",
 		price: 700,
@@ -1490,18 +1511,11 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Furrocious Cat Ears",
-		id: "79619",
-		price: 400,
+		name: "Bat Wings Glider Combo",
+		id: "74684",
+		price: 700,
 		discount: null,
-		col: 0
-	},
-	{
-		name: "Phantom's Hood",
-		id: "65203",
-		price: 200,
-		discount: null,
-		col: 0
+		col: 1
 	},
 	{
 		name: "Bloodstone Glider",
@@ -1525,9 +1539,16 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Hovering Mad Mirror",
-		id: "http://i.imgur.com/GYWpBHC.png",
-		price: 250,
+		name: "Devil Horns",
+		id: "65197",
+		price: 200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Phantom's Hood",
+		id: "65203",
+		price: 200,
 		discount: null,
 		col: 1
 	},
