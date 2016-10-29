@@ -59,7 +59,8 @@ General: [
 	{u: 39, i: 78574, n: "Sentinel Outfit", p: {gem: 700}},
 	{u: 40, i: 79220, n: "Verdant Executor Outfit", p: {gem: 700}},
 	{u: 42, i: 79531, n: "Mursaat Robes", p: {gem: 700}},
-	{u: 41, i: 79380, n: "Taimi Outfit", p: {gem: 700}}
+	{u: 41, i: 79380, n: "Taimi Outfit", p: {gem: 700}},
+	{u: 43, i: 79671, n: "Ghostly Outfit", p: {gem: 700}}
 ],
 Festival: [
 	{u: 2, i: 65196, n: "Mad King's Outfit", p: {gem: 700}},

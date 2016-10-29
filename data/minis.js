@@ -421,6 +421,7 @@ Gem: [
 	{u: 384, i: 77649, n: "Mini Arrowhead", p: {gem: 400}},
 	{u: 387, i: 77675, n: "Mini Zintl Cavalier", p: {gem: 350}},
 	{u: 405, i: 79048, n: "Mini Garm", p: {gem: 350}},
-	{u: 409, i: 79361, n: "Mini Jungle Lord Faren", p: {gem: 350}}
+	{u: 409, i: 79361, n: "Mini Jungle Lord Faren", p: {gem: 350}},
+	{u: 419, i: 79651, n: "Mini Feline Familiar", p: {gem: 350}}
 ]
 };

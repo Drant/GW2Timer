@@ -236,6 +236,7 @@ Toy: [
 	{i: 49932, n: "Enchanted Broom", p: {gem: 0}},
 	{i: 49948, n: "Sonic Tunneling Tool", p: {gem: 250}},
 	{i: 67356, n: "Magic Carpet", p: {gem: 250}},
+	{i: 79666, n: "Hovering Mad Mirror", p: {gem: 250}},
 	{i: 78771, n: "Electromagnetic Ascender", p: {gem: 250}},
 	{i: 49933, n: "Bouquet of Roses", p: {gem: 250}},
 	{i: 43528, n: "Box of Chocolates", p: {gem: 250}},
@@ -617,6 +618,9 @@ Aura: [
 	{i: 67370, n: "Poly-luminescent Undulating Refractor (Green)"},
 	{i: 67372, n: "Poly-luminescent Undulating Refractor (Orange)"},
 	{i: 79647, n: "Poly-luminescent Undulating Refractor (Teal)"},
+	{i: 79639, n: "Phospholuminescent Infusion"},
+	{i: 79653, n: "Phospholuminescent Infusion"},
+	{i: 79661, n: "Phospholuminescent Infusion"},
 	{i: 79665, n: "Phospholuminescent Infusion"},
 	{i: 79674, n: "Phospholuminescent Infusion"},
 	{i: 78012, n: "Moto's Unstable Bauble Infusion: Blue", p: {achievement: 0}},
@@ -705,7 +709,8 @@ Glider: [
 	{i: 79016, n: "White Mantle Glider", p: {gem: 400}},
 	{i: 79084, n: "Shining Blade Glider", p: {gem: 700}},
 	{i: 79595, n: "Mursaat Wings Glider", p: {gem: 700}},
-	{i: 79631, n: "Spectral Glider", p: {gem: 500}}
+	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
+	{i: 79663, n: "Bloodstone Glider", p: {gem: 500}}
 ],
 Node: [
 	{i: 43902, n: "Gift of Quartz", p: {laurel: 25}},

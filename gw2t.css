@@ -3056,6 +3056,16 @@ laurelunit {
 .rarity_Ascended { color: #ff4488; /* magenta */ }
 .rarity_Legendary { color: #9933ff; /* violet */ }
 
+
+/* =============================================================================
+ *  Adjustments based on browser size.
+ * ========================================================================== */
+@media (max-height: 800px) {
+	
+	
+
+}
+
 /* =============================================================================
  *  @@Palette color derived from GW2 user interface.
  *  This is for reference.
