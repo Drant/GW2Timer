@@ -2613,7 +2613,7 @@ U = {
 		Cleanup: "data/cleanup.js",
 		Ascended: "data/ascended.js",
 		Recipes: "data/recipes.js",
-		Prices: "cache/prices.js",
+		Prices: "cache/prices.json",
 		// Data to load when opening a map page section
 		Unscheduled: "data/chains-add.js",
 		Daily: "data/daily.js",
@@ -2640,17 +2640,19 @@ U = {
 	 * Analog for jQuery's getScript but with the cache option enabled.
 	 * @param string pURL
 	 * @param function pCallback
+	 * @param boolean pWantCache
 	 * @returns jqobject
 	 */
-	getScript: function(pURL, pCallback)
+	getScript: function(pURL, pCallback, pWantCache)
 	{
-		if (U.ScriptURLs[pURL] === undefined)
+		var wantcache = (pWantCache !== undefined) ? pWantCache : true;
+		if (U.ScriptURLs[pURL] === undefined || wantcache === false)
 		{
 			U.ScriptURLs[pURL] = true;
 			var jqxhr = $.ajax({
 				dataType: "script",
 				url: pURL,
-				cache: true,
+				cache: wantcache,
 				success: function()
 				{
 					if (pCallback)
@@ -2964,7 +2966,7 @@ U = {
 	},
 	getItemsDatabaseURL: function(pLanguage)
 	{
-		return "test/items_" + pLanguage + I.cJSON;
+		return "test/items_" + pLanguage;
 	},
 	getDataScriptURL: function(pName)
 	{
@@ -3698,7 +3700,13 @@ U = {
 	 */
 	formatJSON: function(pObject)
 	{
-		return JSON.stringify(pObject, null, "\t");
+		var str = "nullstring";
+		try
+		{
+			str = JSON.stringify(pObject, null, "\t");;
+		}
+		catch (e) {}
+		return str;
 	},
 	escapeJSON: function(pObject)
 	{
@@ -4532,7 +4540,11 @@ Z = {
 			}},
 			gps: {usage: "Prints GPS location information (overlay only).", f: function()
 			{
-				I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />Direction: " + U.formatJSON(GPSDirectionArray) + "<br />Camera: " + U.formatJSON(GPSCameraArray));
+				I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />"
+					+ "Direction: " + U.formatJSON(GPSDirectionArray) + "<br />"
+					+ "Perspective: " + U.formatJSON(GPSPerspectiveArray) + "<br />"
+					+ "Camera: " + U.formatJSON(GPSCameraArray)
+				);
 			}},
 			identity: {usage: "Prints GPS general information (overlay only).", f: function()
 			{
@@ -5555,7 +5567,7 @@ Z = {
 						}
 						Z.printAPICache(U.TypeEnum.isAssoc, {
 							aWantQuotes: true,
-							aFileName: "items_" + lang + I.cJSON
+							aFileName: "items_" + lang
 						});
 						counter++;
 						updateDBLang();
@@ -5712,6 +5724,10 @@ Z = {
 						n: name,
 						p: {gem: null}
 					}, false);
+					if (entrystr.u === entrystr.i)
+					{
+						delete entrystr["u"];
+					}
 					inputselm = $("<aside>&nbsp;<a" + U.convertExternalAnchor(U.getWikiLinkDefault(name)) + ">" + name + "</a></aside>").appendTo(itemselm);
 					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(entrystr);
 					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(itemid);
@@ -6047,111 +6063,6 @@ Z = {
 	},
 	
 	/*
-	 * Reads the database of recipes and creates an unlockables record with the
-	 * disciplines as categories.
-	 * @pre Recipes database from API is up to date and precached.
-	 */
-	collateRecipes: function()
-	{
-		var disciplines = ["Tailor", "Leatherworker", "Armorsmith", "Artificer", "Huntsman", "Weaponsmith", "Scribe", "Chef", "Jeweler"];
-		var types = [
-			"Refinement", "Component", "UpgradeComponent", "LegendaryComponent",
-			"Insignia", "Inscription",
-			"Potion", "Consumable", "Bag", "Bulk",
-			"GuildDecoration", "GuildConsumable", "GuildConsumableWvw",
-			"Seasoning", "IngredientCooking", "Snack", "Dessert", "Soup", "Meal", "Feast", "Dye",
-			"Amulet", "Ring", "Earring",
-			"Backpack",
-			"Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots",
-			"Scepter", "Focus", "Staff", "Trident",
-			"Pistol", "Torch", "Warhorn", "LongBow", "ShortBow", "Rifle", "Speargun", 
-			"Axe", "Mace", "Sword", "Dagger", "Shield",  "Greatsword", "Hammer", "Harpoon"
-		];
-		var record = {}, item, entry;
-		var sheets = {};
-		var sheetstradeable = {};
-		// Construct categories to insert the recipes orderly
-		disciplines.forEach(function(iDisc)
-		{
-			types.forEach(function(iType)
-			{
-				record[iDisc + "_" + iType] = [];
-			});
-		});
-		
-		Z.getItemsDatabase(function(pDatabase)
-		{
-			// Create a list of recipe sheets
-			for (var i in pDatabase)
-			{
-				item = pDatabase[i];
-				if (item.details && item.details.unlock_type === "CraftingRecipe")
-				{
-					if (Q.isTradeable(item))
-					{
-						sheetstradeable[(item.details.recipe_id)] = item.id;
-					}
-					sheets[(item.details.recipe_id)] = item.id;
-				}
-			};
-			
-			$.getJSON("test/recipes.json", function(pData)
-			{
-				var recipe, catname, discipline, ingredients, type, itemid;
-				for (var i in pData)
-				{
-					recipe = pData[i];
-					type = recipe.type;
-					itemid = recipe.output_item_id;
-					for (var ii = 0; ii < recipe.disciplines.length; ii++)
-					{
-						discipline = recipe.disciplines[ii];
-						catname = discipline + "_" + recipe.type;
-						// Merge some smaller categories into a bigger category
-						if (recipe.type === "RefinementObsidian" || recipe.type === "RefinementEctoplasm")
-						{
-							catname = discipline + "_" + "Refinement";
-						}
-						if (pDatabase[itemid] && record[catname])
-						{
-							ingredients = [];
-							recipe.ingredients.forEach(function(iIngredient)
-							{
-								ingredients.push([iIngredient.item_id, iIngredient.count]);
-							});
-							entry = {
-								u: recipe.id,
-								i: itemid,
-								n: pDatabase[itemid].name,
-								r: ingredients
-							};
-							if (sheets[recipe.id])
-							{
-								entry.s = sheets[recipe.id];
-							}
-							if (sheetstradeable[recipe.id])
-							{
-								entry.t = sheetstradeable[recipe.id];
-							}
-							record[catname].push(entry);
-						}
-					}
-				}
-				// Discard the empty array categories
-				var newrecord = {};
-				for (var i in record)
-				{
-					if (record[i].length)
-					{
-						newrecord[i] = record[i];
-					}
-				}
-				Z.printUnlockables(newrecord);
-			});
-		});
-	},
-	
-	/*
 	 * Reads the item database for container items and "useless" items.
 	 */
 	collateCleanup: function()
@@ -6370,6 +6281,111 @@ Z = {
 	},
 	
 	/*
+	 * Reads the database of recipes and creates an unlockables record with the
+	 * disciplines as categories.
+	 * @pre Recipes database from API is up to date and precached.
+	 */
+	collateRecipes: function()
+	{
+		var disciplines = ["Tailor", "Leatherworker", "Armorsmith", "Artificer", "Huntsman", "Weaponsmith", "Scribe", "Chef", "Jeweler"];
+		var types = [
+			"Refinement", "Component", "UpgradeComponent", "LegendaryComponent",
+			"Insignia", "Inscription",
+			"Potion", "Consumable", "Bag", "Bulk",
+			"GuildDecoration", "GuildConsumable", "GuildConsumableWvw",
+			"Seasoning", "IngredientCooking", "Snack", "Dessert", "Soup", "Meal", "Feast", "Dye",
+			"Amulet", "Ring", "Earring",
+			"Backpack",
+			"Helm", "Shoulders", "Coat", "Gloves", "Leggings", "Boots",
+			"Scepter", "Focus", "Staff", "Trident",
+			"Pistol", "Torch", "Warhorn", "LongBow", "ShortBow", "Rifle", "Speargun", 
+			"Axe", "Mace", "Sword", "Dagger", "Shield",  "Greatsword", "Hammer", "Harpoon"
+		];
+		var record = {}, item, entry;
+		var sheets = {};
+		var sheetstradeable = {};
+		// Construct categories to insert the recipes orderly
+		disciplines.forEach(function(iDisc)
+		{
+			types.forEach(function(iType)
+			{
+				record[iDisc + "_" + iType] = [];
+			});
+		});
+		
+		Z.getItemsDatabase(function(pDatabase)
+		{
+			// Create a list of recipe sheets
+			for (var i in pDatabase)
+			{
+				item = pDatabase[i];
+				if (item.details && item.details.unlock_type === "CraftingRecipe")
+				{
+					if (Q.isTradeable(item))
+					{
+						sheetstradeable[(item.details.recipe_id)] = item.id;
+					}
+					sheets[(item.details.recipe_id)] = item.id;
+				}
+			};
+			
+			$.getJSON("test/recipes.json", function(pData)
+			{
+				var recipe, catname, discipline, ingredients, type, itemid;
+				for (var i in pData)
+				{
+					recipe = pData[i];
+					type = recipe.type;
+					itemid = recipe.output_item_id;
+					for (var ii = 0; ii < recipe.disciplines.length; ii++)
+					{
+						discipline = recipe.disciplines[ii];
+						catname = discipline + "_" + recipe.type;
+						// Merge some smaller categories into a bigger category
+						if (recipe.type === "RefinementObsidian" || recipe.type === "RefinementEctoplasm")
+						{
+							catname = discipline + "_" + "Refinement";
+						}
+						if (pDatabase[itemid] && record[catname])
+						{
+							ingredients = [];
+							recipe.ingredients.forEach(function(iIngredient)
+							{
+								ingredients.push([iIngredient.item_id, iIngredient.count]);
+							});
+							entry = {
+								u: recipe.id,
+								i: itemid,
+								n: pDatabase[itemid].name,
+								r: ingredients
+							};
+							if (sheets[recipe.id])
+							{
+								entry.s = sheets[recipe.id];
+							}
+							if (sheetstradeable[recipe.id])
+							{
+								entry.t = sheetstradeable[recipe.id];
+							}
+							record[catname].push(entry);
+						}
+					}
+				}
+				// Discard the empty array categories
+				var newrecord = {};
+				for (var i in record)
+				{
+					if (record[i].length)
+					{
+						newrecord[i] = record[i];
+					}
+				}
+				Z.printUnlockables(newrecord);
+			});
+		});
+	},
+	
+	/*
 	 * Creates a cache file of Trading Post prices to be used by the account audit function.
 	 */
 	collatePrices: function()
@@ -6383,10 +6399,10 @@ Z = {
 		var numcached = 0;
 		var numcaches = recordnames.length;
 		
-		var fetchPrices = function()
+		var fetchPrices = function(pPriceDB)
 		{
 			// Scan the entire item database for untradeable items
-			var blacklist = U.getRecordBlacklist("prices");
+			var blacklist = pPriceDB["blacklist"];
 			for (var i in db)
 			{
 				if (Q.isTradeable(db[i]) === false && blacklist[i] === undefined)
@@ -6434,9 +6450,11 @@ Z = {
 					priceobj = pData[i];
 					pricecache[i] = [priceobj.oPriceBuy, priceobj.oPriceSell];
 				}
-				var str = "var GW2T_PRICES_DATA = " + U.lineJSON(pricecache).replace(/ /g, "") + ";\r\n";
-				str += "var GW2T_PRICES_BLACKLIST = " + U.lineJSON(blacklist).replace(/ /g, "") + ";";
-				Z.createFile(str, "prices.js");
+				var str = "{\r\n"
+					+ "\"data\":" + U.lineJSON(pricecache).replace(/ /g, "") + ",\r\n"
+					+ "\"blacklist\":" + U.lineJSON(blacklist).replace(/ /g, "") + "\r\n"
+					+ "}";
+				Z.createFile(str, "prices.json");
 			});
 		};
 		
@@ -6446,9 +6464,9 @@ Z = {
 			I.print("Loading prices data...");
 			U.getScript(U.URL_DATA.Ascended, function()
 			{
-				U.getScript(U.URL_DATA.Prices, function()
+				$.getJSON(U.URL_DATA.Prices, function(pData)
 				{
-					fetchPrices();
+					fetchPrices(pData);
 				});
 			});
 		};
@@ -8827,10 +8845,10 @@ A = {
 		{
 			// Load the cached prices
 			I.print(D.getPhraseOriginal("Loading info price") + "...");
-			U.getScript(U.URL_DATA.Prices, function()
+			$.getJSON(U.URL_DATA.Prices, function(pPriceDB)
 			{
-				cachedprices = U.getRecordData("prices");
-				untradeabledb = U.getRecordBlacklist("prices");
+				cachedprices = pPriceDB["data"];
+				untradeabledb = pPriceDB["blacklist"];
 				// Include owned items in the list of prices to fetch, if it is not already cached and is tradeable
 				for (var i in A.Possessions)
 				{
@@ -24035,12 +24053,12 @@ P = {
 		}
 		
 		/*
-		 * Validate the GPS data before allowing updates.
-		 * Sample structure of position, character angle, and camera angle:
-		 * fAvatarPosition: [116.662186, 44.60492, -104.502495]
-		 * fAvatarFront: [0.070094235, 0.0, 0.99754035]
-		 * fCameraFront: [-0.2597584, 0.02722733, 0.9652897]
-		 * Sample structure of JSON:
+		 * Validate the GPS data before allowing updates. Sample structure:
+		 * GPSPositionArray or fAvatarPosition or "character coordinates": [-81.31199, 22.930353, 305.7106]
+		 * GPSDirectionArray or fAvatarFront or "character angle": [-0.08111322, 0, 0.9967049]
+		 * GPSPerspectiveArray or fCameraPosition or "camera coordinates": [-90.5499, 28.430332, 294.4064]
+		 * GPSCameraArray or fCameraFront or "camera angle": [0.60616076, -0.28702924, 0.74174345]
+		 * GPSIdentityJSON or identity:
 		 * {"name": "Character Name","profession": 1,"race": 2,"map_id": 38,"world_id": 1234567890,"team_color_id": 9,"commander": false,"fov": 0.873}
 		 */
 		if (GPSPositionArray === undefined || GPSPositionArray === null || GPSPositionArray.length !== 3 || that.isUserDragging)
@@ -24093,6 +24111,16 @@ P = {
 				|| that.GPSPreviousAngleCamera !== anglecamera
 				|| pForceCode <= 0)
 			{
+				if (I.isProjectionEnabled)
+				{
+					I.clear();
+					I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />"
+						+ "Direction: " + U.formatJSON(GPSDirectionArray) + "<br />"
+						+ "Perspective: " + U.formatJSON(GPSPerspectiveArray) + "<br />"
+						+ "Camera: " + U.formatJSON(GPSCameraArray)
+					);
+					I.prettyJSON(GPSIdentityJSON);
+				}
 				that.movePin(that.Pin.Character, coord);
 				that.movePin(that.Pin.Camera, coord);
 				that.Pin.Camera._icon.style.zIndex = that.cZIndexBury;
@@ -33875,14 +33903,14 @@ I = {
 			$("#itemProjector").show();
 			$("#itemProjection").show().click(function()
 			{
-				var window = $("#windowMain");
-				if (window.is(":visible"))
+				var mainwindow = $("#windowMain");
+				if (mainwindow.is(":visible"))
 				{
-					window.hide();
+					mainwindow.hide();
 				}
 				else
 				{
-					window.css({display: "table"});
+					mainwindow.css({display: "table"});
 				}
 			}).contextmenu(function(pEvent)
 			{

@@ -30,6 +30,13 @@ var GW2T_CATALOG_HEADERS = {
 };
 
 /*
+ * Items to be excluded from collate.
+ */
+var GW2T_CATALOG_BLACKLIST = {
+	
+};
+
+/*
  * Catalog of common items.
  * u: Item ID of the container (tradeable) that unlocks the actual item (bound)
  * i: Item ID associated with that item

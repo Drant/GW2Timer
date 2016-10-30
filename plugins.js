@@ -22,5 +22,6 @@
 // Global variables to be assigned by the overlay program GW2Navi which is then used by gw2t.js
 var GPSPositionArray = null;
 var GPSDirectionArray = null;
+var GPSPerspectiveArray = null;
 var GPSCameraArray = null;
 var GPSIdentityJSON = null;
