@@ -1252,7 +1252,7 @@ O = {
 			if (O.Options.bol_showMap && I.isMapEnabled) // Only hide panel if map is visible
 			{
 				$("#panelApp").toggle(O.Options.bol_showPanel);
-				$("#mapExpandButton, #wvwExpandButton").toggle(!O.Options.bol_showPanel)
+				$("#mapExpandButton, #wvwExpandButton, #accExpandButton").toggle(!O.Options.bol_showPanel);
 				M.refreshMap();
 				if (W.isMapInitialized)
 				{
@@ -6767,6 +6767,10 @@ A = {
 		$("#accClose").click(function()
 		{
 			$("#mapAccountButton").trigger("click");
+		});
+		$("#accExpandButton").toggle(!O.Options.bol_showPanel).click(function()
+		{
+			$("#opt_bol_showPanel").trigger("click");
 		});
 		
 		// Initialize API keys
@@ -24111,7 +24115,7 @@ P = {
 				|| that.GPSPreviousAngleCamera !== anglecamera
 				|| pForceCode <= 0)
 			{
-				if (I.isProjectionEnabled)
+				if (J.isProjectionInitialized)
 				{
 					I.clear();
 					I.print("Position: " + U.formatJSON(GPSPositionArray) + "<br />"
@@ -24120,6 +24124,7 @@ P = {
 						+ "Camera: " + U.formatJSON(GPSCameraArray)
 					);
 					I.prettyJSON(GPSIdentityJSON);
+					J.Camera.lookAt(new THREE.Vector3(GPSCameraArray[0], GPSCameraArray[1], GPSCameraArray[2]));
 				}
 				that.movePin(that.Pin.Character, coord);
 				that.movePin(that.Pin.Camera, coord);
@@ -25426,6 +25431,38 @@ G = {
 	 */
 	generateGuildUI: function()
 	{
+		var insertMission = function(pBookName, pMission, pIndex)
+		{
+			var missiontype = D.getObjectName(P.Guild[pBookName]);
+			var name = D.getObjectDefaultName(pMission);
+			var translatedname = D.getObjectName(pMission);
+			var limitstr = (pMission.limit) ? (" - " + pMission.limit) : "";
+			var elmid = "gld" + pBookName + "_" + pIndex;
+			$("<div class='gld" + pBookName + "'><img class='cssWaypoint' " + I.cClipboardAttribute
+				+ "='" + pMission.wp + " " + missiontype + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
+				+ "<dfn id='" + elmid + "' data-coord='[" + pMission.coord[0] + "," + pMission.coord[1] + "]'>" + translatedname + limitstr + "</dfn> "
+				+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
+				+ "<a href='" + U.getWikiLinkLanguage(translatedname) + "'>[W]</a>"
+			+ "</div>").appendTo("#gldBook_" + pBookName).data("keywords", translatedname.toLowerCase());
+			// Return for binding mission type specific map behavior
+			return $("#" + elmid);
+		};
+				
+		var finalizeGuildBook = function(pBookName)
+		{
+			var bookid = "#gldBook_" + pBookName;
+			U.convertExternalLink(bookid + " a");
+			I.qTip.init(bookid + " dfn");
+			// Initialize clipboard for each waypoint
+			$(bookid + " .cssWaypoint").each(function()
+			{
+				I.bindClipboard($(this));
+			});
+			// Search bar
+			var search = $("<div class='cntSearchContainer'><div>").prependTo(bookid);
+			I.createSearchBar(search, ".gld" + pBookName);
+		};
+		
 		var hideGuildMapDrawings = function(pBook)
 		{
 			M.toggleLayerArray(P.LayerArray["Guild_" + pBook], false);
@@ -25437,17 +25474,6 @@ G = {
 			{
 				M.toggleSubmapArray(P.Guild[pBook].usedSubmaps, false);
 			}
-		};
-				
-		var finalizeGuildBook = function(pBook)
-		{
-			U.convertExternalLink("#gldBook_" + pBook + " a");
-			I.qTip.init("#gldBook_" + pBook + " dfn");
-			// Initialize clipboard for each waypoint
-			$("#gldBook_" + pBook + " .cssWaypoint").each(function()
-			{
-				I.bindClipboard($(this));
-			});
 		};
 		
 		U.getScript(U.URL_DATA.Guild, function()
@@ -25514,17 +25540,7 @@ G = {
 				for (var i in P.Guild.Bounty.data)
 				{
 					var mission = P.Guild.Bounty.data[i];
-					var name = D.getObjectDefaultName(mission);
-					var translatedname = D.getObjectName(mission);
-					
-					$("#gldBook_Bounty").append(
-						"<div><img class='cssWaypoint jsClip' " + I.cClipboardAttribute
-						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Bounty) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
-						+ "<dfn id='gldBounty_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLinkLanguage(translatedname) + "'>[W]</a>"
-						+ "</div>"
-					);
+					var elm = insertMission("Bounty", mission, i);
 					
 					var layergroup = new L.layerGroup();
 					if (mission.paths !== undefined)
@@ -25541,7 +25557,6 @@ G = {
 					P.LayerArray.Guild_Bounty.push(layergroup);
 					
 					// Bind this mission's behavior
-					var elm = $("#gldBounty_" + i);
 					elm.attr("title", "<div class='mapLoc'><img src='" + mission.img + "' /></div>")
 						.click(function()
 					{
@@ -25562,20 +25577,13 @@ G = {
 				for (var i in P.Guild.Trek.data)
 				{
 					var mission = P.Guild.Trek.data[i];
-					var translatedname = D.getObjectName(mission);
-					
-					$("<div class='gldTrek'><img class='cssWaypoint' " + I.cClipboardAttribute
-						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Trek) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
-						+ "<dfn id='gldTrek_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn>"
-						+ "</div>"
-					).appendTo("#gldBook_Trek").data("keywords", translatedname.toLowerCase());
+					var elm = insertMission("Trek", mission, i);
 					
 					var layergroup = new L.layerGroup();
 					layergroup.addLayer(L.polyline(M.convertGCtoLCMulti(mission.path), {color: "gold"}));
 					P.LayerArray.Guild_Trek.push(layergroup);
 					
 					// Bind this mission's behavior
-					var elm = $("#gldTrek_" + i);
 					elm.attr("title", "<div class='mapLoc'><img src='" + mission.img + "' /></div>")
 						.click(function()
 					{
@@ -25584,8 +25592,6 @@ G = {
 					});
 					M.bindMapLinkBehavior(elm, M.ZoomEnum.Ground, M.Pin.Program);
 				}
-				$("#gldBook_Trek").prepend("<div id='gldTrekSearch' class='cntSearchContainer'><div>");
-				I.createSearchBar("#gldTrekSearch", ".gldTrek");
 				finalizeGuildBook("Trek");
 			});
 			
@@ -25599,17 +25605,7 @@ G = {
 				for (var i in P.Guild.Challenge.data)
 				{
 					var mission = P.Guild.Challenge.data[i];
-					var name = D.getObjectDefaultName(mission);
-					var translatedname = D.getObjectName(mission);
-					
-					$("#gldBook_Challenge").append(
-						"<div><img class='cssWaypoint' " + I.cClipboardAttribute
-						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Challenge) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
-						+ "<dfn id='gldChallenge_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLinkLanguage(translatedname) + "'>[W]</a>"
-						+ "</div>"
-					);
+					var elm = insertMission("Challenge", mission, i);
 			
 					// Submap image of interior map
 					if (mission.submap !== undefined)
@@ -25624,7 +25620,6 @@ G = {
 					P.LayerArray.Guild_Challenge.push(layergroup);
 					
 					// Bind this mission's behavior
-					var elm = $("#gldChallenge_" + i);
 					elm.click(function()
 					{
 						var index = U.getSubintegerFromHTMLID($(this));
@@ -25651,17 +25646,7 @@ G = {
 				for (var i in P.Guild.Rush.data)
 				{
 					var mission = P.Guild.Rush.data[i];
-					var name = D.getObjectDefaultName(mission);
-					var translatedname = D.getObjectName(mission);
-					
-					$("#gldBook_Rush").append(
-						"<div><img class='cssWaypoint' " + I.cClipboardAttribute
-						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Rush) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
-						+ "<dfn id='gldRush_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLinkLanguage(translatedname) + "'>[W]</a>"
-						+ "</div>"
-					);
+					var elm = insertMission("Rush", mission, i);
 					
 					// Submap image of interior map
 					if (mission.submap !== undefined)
@@ -25693,7 +25678,6 @@ G = {
 					P.LayerArray.Guild_Rush.push(layergroup);
 					
 					// Bind this mission's behavior
-					var elm = $("#gldRush_" + i);
 					elm.click(function()
 					{
 						var index = U.getSubintegerFromHTMLID($(this));
@@ -25720,17 +25704,7 @@ G = {
 				for (var i in P.Guild.Puzzle.data)
 				{
 					var mission = P.Guild.Puzzle.data[i];
-					var name = D.getObjectDefaultName(mission);
-					var translatedname = D.getObjectName(mission);
-					
-					$("#gldBook_Puzzle").append(
-						"<div><img class='cssWaypoint' " + I.cClipboardAttribute
-						+ "='" + mission.wp + " " + D.getObjectName(P.Guild.Puzzle) + ": " + translatedname + "' src='img/ui/placeholder.png' /> "
-						+ "<dfn id='gldPuzzle_" + i + "' data-coord='[" + mission.coord[0] + "," + mission.coord[1] + "]'>" + translatedname + " - " + mission.limit + "</dfn> "
-						+ "<a href='" + U.getYouTubeLink(name) + "'>[Y]</a> "
-						+ "<a href='" + U.getWikiLinkLanguage(translatedname) + "'>[W]</a>"
-						+ "</div>"
-					);
+					var elm = insertMission("Puzzle", mission, i);
 					
 					// Submap image of interior map
 					if (mission.submap !== undefined)
@@ -25748,7 +25722,6 @@ G = {
 					P.LayerArray.Guild_Puzzle.push(layergroup);
 					
 					// Bind this mission's behavior
-					var elm = $("#gldPuzzle_" + i);
 					elm.click(function()
 					{
 						var index = U.getSubintegerFromHTMLID($(this));
@@ -27972,6 +27945,9 @@ J = {
  * @@J Projection 3D display for overlay.
  * ========================================================================== */
 
+	Renderer: {},
+	Scene: {},
+	Camera: {},
 	isProjectionInitialized: false,
 
 	initializeProjection: function()
@@ -32944,7 +32920,7 @@ I = {
 	{
 		var container = $(pContainer);
 		var elements = $(pElements);
-		var searchbar = $("<input id='jpzSearch' class='cntSearch' type='text' />").appendTo(container);
+		var searchbar = $("<input class='cntSearch' type='text' />").appendTo(container);
 		I.bindInputBarText(searchbar);
 		searchbar.on("input", $.throttle(Q.cSEARCH_LIMIT, function()
 		{

@@ -1546,13 +1546,6 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Phantom's Hood",
-		id: "65203",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
 		name: "Mad King Dye Kit",
 		id: "70367",
 		price: 125,
