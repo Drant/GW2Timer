@@ -315,8 +315,8 @@ Special: [
 	{u: 413, i: 79433, n: "Mini Pirate Captain Huuhes", p: {karma: 105000}},
 	{u: 414, i: 79493, n: "Mini Lava Elemental", p: {karma: 105000}},
 	{u: 415, i: 79439, n: "Mini Vine-Touched Destroyer Crab", p: {karma: 105000}},
-	{u: 416, i: 79672, n: "Mini Thailog the Gargoyle", p: {coin: 0}},
-	{u: 417, i: 79684, n: "Mini Charles the Hellfire Skeleton", p: {coin: 0}},
+	{u: 416, i: 79672, n: "Mini Thailog the Gargoyle"},
+	{u: 417, i: 79684, n: "Mini Charles the Hellfire Skeleton"},
 	{u: 418, i: 79654, n: "Mini Oxidecimus the Shadow Raven", p: {cob: 120}}
 ],
 Gem: [

@@ -1357,7 +1357,7 @@ Announcement:
 	pve: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='http://gw2timer.com/pumpkins'>more</a>. <a href='http://i.imgur.com/vtO5t1z.png'>语言选择现在可用了</a> language selection.",
 	wvw: "",
 	Start: new Date("2016-10-11T16:00:00Z"),
-	Finish: new Date("2016-11-01T16:00:00Z"),
+	Finish: new Date("2016-11-08T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1401,9 +1401,9 @@ Countdown: {
 		name_es: "Halloween 2016",
 		name_fr: "Halloween 2016",
 		name_zh: "萬聖夜2016",
-		official: "news/shadow-of-the-mad-king-is-live/",
+		url: "https://forum-en.guildwars2.com/forum/game/gw2/Arena-Net-when-does-Halloween-event-stop/6386388",
 		Start: new Date("2016-10-18T16:00:00Z"),
-		Finish: new Date("2016-11-01T16:00:00Z")
+		Finish: new Date("2016-11-08T16:00:00Z")
 	},
 	/*{ // Last Friday of even numbered months
 		name_en: "WvW Re-linking",
@@ -1444,7 +1444,7 @@ Story:
 	name_zh: "瘋王聖旨",
 	url: "",
 	Start: new Date("2016-10-18T16:00:00Z"),
-	Finish: new Date("2016-11-01T16:00:00Z")
+	Finish: new Date("2016-11-08T16:00:00Z")
 },
 
 /*
@@ -1460,7 +1460,7 @@ Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
 	Start: new Date("2016-10-25T16:00:00Z"),
-	Finish: new Date("2016-11-01T16:00:00Z"),
+	Finish: new Date("2016-11-08T16:00:00Z"),
 	Padding: {
 		name: "Gem",
 		id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
@@ -1469,50 +1469,36 @@ Sale: {
 	},
 	Items: [
 	{
+		name: "Black Lion Chest Key",
+		id: "19980",
+		price: 0,
+		discount: 125,
+		col: 0
+	},
+	{
+		name: "Mini Angry Chest",
+		id: "70234",
+		price: 320,
+		discount: 400,
+		col: 0
+	},
+	{
+		name: "Vibrant Dye Kit",
+		id: "http://i.imgur.com/tSeTszh.png",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 0
+	},
+	{
+		name: "Lunatic Guard Outfit",
+		id: "70385",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Ghostly Outfit",
 		id: "79671",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Mini Feline Familiar",
-		id: "79651",
-		price: 350,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Hovering Mad Mirror",
-		id: "79666",
-		price: 250,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Hallows Fortune Fireworks",
-		id: "48714",
-		price: 100,
-		discount: 200,
-		col: 0
-	},
-	{
-		name: "Mad King's Outfit",
-		id: "36366",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Executioner's Outfit",
-		id: "43098",
-		price: 700,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Bat Wings Glider Combo",
-		id: "74684",
 		price: 700,
 		discount: null,
 		col: 1
@@ -1522,34 +1508,6 @@ Sale: {
 		id: "79663",
 		price: 500,
 		discount: null,
-		col: 1
-	},
-	{
-		name: "Permanent Mad King Finisher",
-		id: "44068",
-		price: 500,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Candy Corn Gobbler Pack",
-		id: "67393",
-		price: 300,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Devil Horns",
-		id: "65197",
-		price: 200,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mad King Dye Kit",
-		id: "70367",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]
