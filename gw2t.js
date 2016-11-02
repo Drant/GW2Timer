@@ -2962,11 +2962,11 @@ U = {
 	 */
 	getDatabaseURL: function(pName, pLanguage)
 	{
-		return "test/" + pName + "_" + pLanguage + I.cJSON;
+		return "test/" + pName + "_" + pLanguage + ".txt";
 	},
 	getItemsDatabaseURL: function(pLanguage)
 	{
-		return "test/items_" + pLanguage;
+		return "test/items_" + pLanguage + ".txt";
 	},
 	getDataScriptURL: function(pName)
 	{
@@ -5421,7 +5421,7 @@ Z = {
 		// Retrieve the database
 		Z.DatabaseLanguages.forEach(function(iLang)
 		{
-			$.getJSON(U.getDatabaseURL(dbname, iLang), function(pData)
+			$.getJSON(U.getItemsDatabaseURL(iLang), function(pData)
 			{
 				database[iLang] = pData;
 				finalize();
@@ -5445,8 +5445,11 @@ Z = {
 		{
 			$.getJSON(U.getItemsDatabaseURL(lang), function(pData)
 			{
-				db = {};
-				db[lang] = pData;
+				if (Z.DatabaseCache["items"] === undefined)
+				{
+					Z.DatabaseCache["items"] = {};
+				}
+				(Z.DatabaseCache["items"])[lang] = pData;
 				pCallback(pData);
 			});
 		}
@@ -6203,6 +6206,18 @@ Z = {
 						}
 					}
 					Z.printUnlockables(record, true);
+					
+					// Also print junk items prices
+					var junkvalue = {};
+					for (var i in pDatabase)
+					{
+						var item = pDatabase[i];
+						if (item.rarity === "Junk" && item.vendor_value > 0)
+						{
+							junkvalue[item.id] = item.vendor_value;
+						}
+					}
+					I.print(U.lineJSON(junkvalue));
 				});
 			});
 		});

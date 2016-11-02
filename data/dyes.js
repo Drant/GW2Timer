@@ -29,26 +29,27 @@ var GW2T_DYES_METADATA = {
  * Category translations.
  */
 var GW2T_DYES_HEADERS = {
-	Starter: {name_en: "Starter", name_de: "Anfangsfarben", name_es: "Principiante", name_fr: "Couleurs de départ"},
-	Common: {name_en: "Common Dyes", name_de: "Gewöhnliche Farben", name_es: "Tintes comunes", name_fr: "Teintures communes"},
-	Uncommon: {name_en: "Uncommon Dyes", name_de: "Ungewöhnliche Farben", name_es: "Tintes atípicos", name_fr: "Teintures peu communes"},
-	Rare: {name_en: "Rare Dyes", name_de: "Seltene Farben", name_es: "Tintes excepcionales", name_fr: "Teintures rares"},
-	Flame: {name_en: "Flame Dye Kit", name_de: "Flammen-Farbkit", name_es: "Kit de tintes de Llama", name_fr: "Kit de teintures Flamme"},
-	Frost: {name_en: "Frost Dye Kit", name_de: "Frost-Farbkit", name_es: "Kit de tintes de Escarcha", name_fr: "Kit de teintures Givre"},
-	Tequatl: {name_en: "Deathly Dye Kit", name_de: "Tödliches Farbkit", name_es: "Kit de tintes letales", name_fr: "Kit de teintures mortelles"},
-	Tower: {name_en: "Toxic Dye Kit", name_de: "Toxisches Farbkit", name_es: "Kit de tintes tóxicos", name_fr: "Kit de teintures toxiques"},
-	Merry: {name_en: "Metallurgic Dye Kit", name_de: "Metallurgisches Farbkit", name_es: "Kit de tintes metalúrgicos", name_fr: "Kit de teintures métallurgiques"},
-	Battle: {name_en: "Lion's Arch Survivors Dye Kit", name_de: "Farbkit des Löwenstein-Überlebenden", name_es: "Kit de tintes de supervivientes de Arco del León", name_fr: "Kit de teintures des survivants de l'Arche du Lion"},
-	Commemorative: {name_en: "Lion's Arch Commemorative Dye Kit", name_de: "Farbkit zum Andenken an Löwenstein", name_es: "Kit de tintes conmemorativos de Arco del León", name_fr: "Kit de teintures commémoratives de l'Arche du Lion"},
-	Taimi: {name_en: "Taimi's Dye Kit", name_de: "Taimis Farbkit", name_es: "Kit de tintes de Taimi", name_fr: "Kit de teintures de Taimi"},
-	Glint: {name_en: "Glint's Winter Dye Kit", name_de: "Glints Winter-Farbkit", name_es: "Kit de tintes de invierno de Glint", name_fr: "Kit de teintures hivernales de Brill"},
-	Crimson: {name_en: "Crimson Lion Dye Kit", name_de: "Farbkit des Karmesinroten Löwen", name_es: "Kit de tintes de león carmesí", name_fr: "Kit de teintures du lion cramoisi"},
-	Shadow: {name_en: "Shadow Dye Kit", name_de: "Schatten-Farbkit", name_es: "Kit de tintes sombríos", name_fr: "Kit de teintures de l'ombre"},
-	Rebuild: {name_en: "Lion's Arch Rebuild Dye Kit", name_de: "Farbkit zum Wiederaufbau Löwensteins", name_es: "Kit de tintes de la reconstrucción de Arco del León", name_fr: "Kit de teintures de la reconstruction de l'Arche du Lion"},
-	Mad: {name_en: "Mad King Dye Kit", name_de: "Farbkit des Verrückten Königs", name_es: "Kit de tintes del Rey Loco", name_fr: "Kit de teintures du Roi Dément"},
-	Chimes: {name_en: "Winter Chimes Dye Kit", name_de: "Winterglocken-Farbkit", name_es: "Kit de tintes de campanitas invernales", name_fr: "Kit de teintures Carillons d'hiver"},
-	Shift: {name_en: "Blue Shift Dye Kit", name_de: "Blauverschiebung-Farbkit", name_es: "Kit de tintes de corrimiento al azul", name_fr: "Kit de teintures Variation de bleu"},
-	Bloodstone: {name_en: "Bloodstone Dye Kit", name_de: "Blutstein-Farbkit", name_es: "Kit de tintes de hematites", name_fr: "Kit de teintures de pierre de Sang"}
+	Starter: {name_en: "Starter", name_de: "Anfangsfarben", name_es: "Principiante", name_fr: "Couleurs de départ", name_zh: "初學者染料包"},
+	Common: {name_en: "Common Dyes", name_de: "Gewöhnliche Farben", name_es: "Tintes comunes", name_fr: "Teintures communes", name_zh: "共同染料包"},
+	Uncommon: {name_en: "Uncommon Dyes", name_de: "Ungewöhnliche Farben", name_es: "Tintes atípicos", name_fr: "Teintures peu communes", name_zh: "生僻染料包"},
+	Rare: {name_en: "Rare Dyes", name_de: "Seltene Farben", name_es: "Tintes excepcionales", name_fr: "Teintures rares", name_zh: "罕見染料包"},
+	Flame: {id: 41744, name_en: "Flame Dye Kit", name_de: "Flammen-Farbkit", name_es: "Kit de tintes de Llama", name_fr: "Kit de teintures Flamme", name_zh: "烈焰染料包"},
+	Frost: {id: 41745, name_en: "Frost Dye Kit", name_de: "Frost-Farbkit", name_es: "Kit de tintes de Escarcha", name_fr: "Kit de teintures Givre", name_zh: "冰霜染料包"},
+	Deathly: {id: 43935, name_en: "Deathly Dye Kit", name_de: "Tödliches Farbkit", name_es: "Kit de tintes letales", name_fr: "Kit de teintures mortelles", name_zh: "死亡染料包"},
+	Toxic: {id: 48954, name_en: "Toxic Dye Kit", name_de: "Toxisches Farbkit", name_es: "Kit de tintes tóxicos", name_fr: "Kit de teintures toxiques", name_zh: "剧毒染料包"},
+	Metallurgic: {id: 47900, name_en: "Metallurgic Dye Kit", name_de: "Metallurgisches Farbkit", name_es: "Kit de tintes metalúrgicos", name_fr: "Kit de teintures métallurgiques", name_zh: "冶金染料包"},
+	Survivors: {id: 64254, name_en: "Lion's Arch Survivors Dye Kit", name_de: "Farbkit des Löwenstein-Überlebenden", name_es: "Kit de tintes de supervivientes de Arco del León", name_fr: "Kit de teintures des survivants de l'Arche du Lion", name_zh: "獅子拱門幸存者染料包"},
+	Commemorative: {id: 43078, name_en: "Lion's Arch Commemorative Dye Kit", name_de: "Farbkit zum Andenken an Löwenstein", name_es: "Kit de tintes conmemorativos de Arco del León", name_fr: "Kit de teintures commémoratives de l'Arche du Lion", name_zh: "獅子拱門紀念染料包"},
+	Taimi: {id: 67291, name_en: "Taimi's Dye Kit", name_de: "Taimis Farbkit", name_es: "Kit de tintes de Taimi", name_fr: "Kit de teintures de Taimi", name_zh: "小泰蜜的大染料包"},
+	Glint: {id: 68005, name_en: "Glint's Winter Dye Kit", name_de: "Glints Winter-Farbkit", name_es: "Kit de tintes de invierno de Glint", name_fr: "Kit de teintures hivernales de Brill", name_zh: "格林特冬日染料包"},
+	Crimson: {id: 68653, name_en: "Crimson Lion Dye Kit", name_de: "Farbkit des Karmesinroten Löwen", name_es: "Kit de tintes de león carmesí", name_fr: "Kit de teintures du lion cramoisi", name_zh: "紅獅染料包"},
+	Shadow: {id: 68786, name_en: "Shadow Dye Kit", name_de: "Schatten-Farbkit", name_es: "Kit de tintes sombríos", name_fr: "Kit de teintures de l'ombre", name_zh: "暗影染料包"},
+	Rebuild: {id: 69934, name_en: "Lion's Arch Rebuild Dye Kit", name_de: "Farbkit zum Wiederaufbau Löwensteins", name_es: "Kit de tintes de la reconstrucción de Arco del León", name_fr: "Kit de teintures de la reconstruction de l'Arche du Lion", name_zh: "獅子拱門重建染料包"},
+	Mad: {id: 70367, name_en: "Mad King Dye Kit", name_de: "Farbkit des Verrückten Königs", name_es: "Kit de tintes del Rey Loco", name_fr: "Kit de teintures du Roi Dément", name_zh: "瘋王染料包"},
+	Chimes: {id: 77470, name_en: "Winter Chimes Dye Kit", name_de: "Winterglocken-Farbkit", name_es: "Kit de tintes de campanitas invernales", name_fr: "Kit de teintures Carillons d'hiver", name_zh: "冬日鈴音染料包"},
+	Shift: {id: 78734, name_en: "Blue Shift Dye Kit", name_de: "Blauverschiebung-Farbkit", name_es: "Kit de tintes de corrimiento al azul", name_fr: "Kit de teintures Variation de bleu", name_zh: "藍移染料包"},
+	Bloodstone: {id: 79354, name_en: "Bloodstone Dye Kit", name_de: "Blutstein-Farbkit", name_es: "Kit de tintes de hematites", name_fr: "Kit de teintures de pierre de Sang", name_zh: "血石染料包"},
+	Vibrant: {id: 79695, name_en: "Vibrant Kit", name_de: "Lebendige-Farben-Farbkit", name_es: "Kit de tintes vibrantes", name_fr: "Kit de teintures vibrantes", name_zh: "醒目染料包"}
 };
 
 /*
@@ -494,7 +495,7 @@ Frost: [
 	{u: 1232, i: 41750, n: "Glacial Sky Dye", c: ["#3d5e6f", "#526d7b", "#536b78"], h: "Blue", m: "Vibrant", l: "[&AgEWowAA]", en: "Glacial Sky", de: "Gletscherhimmel", es: "Cielo glacial", fr: "Bleu glacier", zh: "冰空"},
 	{u: 1236, i: 41749, n: "Deep Glacial Sky Dye", c: ["#304550", "#304550", "#183342"], h: "Blue", m: "Vibrant", l: "[&AgEVowAA]", en: "Deep Glacial Sky", de: "Tiefer Gletscherhimmel", es: "Cielo glacial profundo", fr: "Bleu glacier profond", zh: "深沉冰空"}
 ],
-Tequatl: [
+Deathly: [
 	{u: 1244, i: 47906, n: "Acrid Dye", c: ["#6e7a36", "#6e7a36", "#758339"], h: "Green", m: "Vibrant", l: "[&AgEiuwAA]", en: "Acrid", de: "Galle", es: "Acre", fr: "Acre", zh: "刺鼻"},
 	{u: 1248, i: 47904, n: "Algae Dye", c: ["#4c7200", "#4c7200", "#618b00"], h: "Green", m: "Vibrant", l: "[&AgEguwAA]", en: "Algae", de: "Algen", es: "Alga", fr: "Algue", zh: "海藻"},
 	{u: 1246, i: 47903, n: "Toxin Dye", c: ["#466300", "#3e5400", "#3e5400"], h: "Green", m: "Vibrant", l: "[&AgEfuwAA]", en: "Toxin", de: "Gift", es: "Tóxico", fr: "Toxine", zh: "剧毒"},
@@ -502,7 +503,7 @@ Tequatl: [
 	{u: 1243, i: 47902, n: "Caustic Dye", c: ["#354100", "#343c00", "#222200"], h: "Green", m: "Vibrant", l: "[&AgEeuwAA]", en: "Caustic", de: "Lauge", es: "Cáustico", fr: "Caustique", zh: "可燃"},
 	{u: 1247, i: 47901, n: "Swampblack Dye", c: ["#212400", "#212400", "#1f2200"], h: "Green", m: "Vibrant", l: "[&AgEduwAA]", en: "Swampblack", de: "Sumpfschwarz", es: "Negropantano", fr: "Noir marais", zh: "沼泽黑"}
 ],
-Tower: [
+Toxic: [
 	{u: 1251, i: 48927, n: "Limonite Dye", c: ["#7f8f05", "#807b02", "#8b7a00"], h: "Green", m: "Vibrant", l: "[&AgEfvwAA]", en: "Limonite", de: "Limonit", es: "Limonita", fr: "Limonite", zh: "褐铁"},
 	{u: 1252, i: 48926, n: "Cyanide Dye", c: ["#005562", "#00534f", "#005c56"], h: "Blue", m: "Vibrant", l: "[&AgEevwAA]", en: "Cyanide", de: "Zyanid", es: "Cián", fr: "Cyanure", zh: "氰化"},
 	{u: 1250, i: 48929, n: "Violite Dye", c: ["#664785", "#664785", "#664785"], h: "Purple", m: "Vibrant", l: "[&AgEhvwAA]", en: "Violite", de: "Copiapit", es: "Violita", fr: "Copiapite", zh: "紫矾"},
@@ -510,7 +511,7 @@ Tower: [
 	{u: 1254, i: 48924, n: "Blacklight Dye", c: ["#3d125d", "#3c214f", "#3d125d"], h: "Purple", m: "Vibrant", l: "[&AgEcvwAA]", en: "Blacklight", de: "Schwarzlicht", es: "Luz negra", fr: "Lumière noire", zh: "黑光"},
 	{u: 1253, i: 48928, n: "Vincent Dye", c: ["#290935", "#280c33", "#230028"], h: "Purple", m: "Vibrant", l: "[&AgEgvwAA]", en: "Vincent", de: "Vincentit", es: "Vincent", fr: "Van Gogh", zh: "文森特"}
 ],
-Merry: [
+Metallurgic: [
 	{u: 1265, i: 49526, n: "Fling Dye", c: ["#9e5353", "#844c4c", "#914040"], h: "Orange", m: "Metal", l: "[&AgF2wQAA]", en: "Fling", de: "Schleudern", es: "Lanzamiento", fr: "Amourette", zh: "嘲弄"},
 	{u: 1267, i: 49528, n: "Perseverance Dye", c: ["#9c6c3d", "#76522e", "#854e17"], h: "Yellow", m: "Metal", l: "[&AgF4wQAA]", en: "Perseverance", de: "Beharrlichkeit", es: "Perseverancia", fr: "Persévérance", zh: "恒心"},
 	{u: 1266, i: 49529, n: "Prosperity Dye", c: ["#928032", "#7d7035", "#76630f"], h: "Yellow", m: "Metal", l: "[&AgF5wQAA]", en: "Prosperity", de: "Wohlstand", es: "Prosperidad", fr: "Prospérité", zh: "繁盛"},
@@ -518,7 +519,7 @@ Merry: [
 	{u: 1269, i: 49525, n: "Amenity Dye", c: ["#376f8d", "#487085", "#265a75"], h: "Blue", m: "Metal", l: "[&AgF1wQAA]", en: "Amenity", de: "Annehmlichkeit", es: "Amenidad", fr: "Aménité", zh: "愉悦"},
 	{u: 1270, i: 49530, n: "Recall Dye", c: ["#6f378d", "#7a5290", "#5a2675"], h: "Purple", m: "Metal", l: "[&AgF6wQAA]", en: "Recall", de: "Rückruf", es: "Recuerdo", fr: "Réminiscence", zh: "回想"}
 ],
-Battle: [
+Survivors: [
 	{u: 1276, i: 64202, n: "Enameled Crimson Dye", c: ["#4e0000", "#4e0000", "#3f0000"], h: "Red", m: "Vibrant", l: "[&AgHK+gAA]", en: "Enameled Crimson", de: "Glasiertes Purpurrot", es: "Carmesí esmaltado", fr: "Cramoisi émaillé", zh: "釉彩深红"},
 	{u: 1275, i: 64203, n: "Enameled Emblaze Dye", c: ["#5a2200", "#5a2200", "#5b0a00"], h: "Orange", m: "Vibrant", l: "[&AgHL+gAA]", en: "Enameled Emblaze", de: "Glasierter Brand", es: "Lumbre esmaltada", fr: "Embrasement émaillé", zh: "釉彩燃焰"},
 	{u: 1271, i: 64198, n: "Enameled Legacy Dye", c: ["#604600", "#604600", "#572f00"], h: "Yellow", m: "Vibrant", l: "[&AgHG+gAA]", en: "Enameled Legacy", de: "Glasiertes Vermächtnis", es: "Legado esmaltado", fr: "Héritage émaillé", zh: "釉彩遗产"},
@@ -612,5 +613,13 @@ Bloodstone: [
 	{u: 1457, i: 79358, n: "Bloodstone Violet", c: ["#3d003d", "#3d003d", "#3d003d"], h: "Purple", m: "Vibrant", l: "[&AgH+NQEA]", en: "Bloodstone Violet", de: "Blutstein-Violett", es: "Violeta hematites", fr: "Violet de pierre de sang", zh: "血石紫罗兰"},
 	{u: 1458, i: 79309, n: "Bloodstone Indigo", c: ["#2c004c", "#2c004c", "#2c004c"], h: "Purple", m: "Vibrant", l: "[&AgHNNQEA]", en: "Bloodstone Indigo", de: "Blutstein-Indigo", es: "Índigo hematites", fr: "Indigo de pierre de sang", zh: "血石靛蓝"},
 	{u: 1454, i: 79340, n: "Bloodstone Dark Indigo", c: ["#00001a", "#00001a", "#00001a"], h: "Purple", m: "Vibrant", l: "[&AgHsNQEA]", en: "Bloodstone Dark Indigo", de: "Dunkles Blutstein-Indigo", es: "Índigo hematites oscuro", fr: "Indigo foncé de pierre de sang", zh: "血石暗色靛蓝"}
+],
+Vibrant: [
+	{u: 1490, i: 79700, n: "Magenta Dye", c: ["#ab0078", "#ab0078", "#ab0078"], h: "Red", m: "Leather", l: "[&AgFUNwEA]", en: "Magenta", de: "Magenta", es: "Magenta", fr: "Magenta", zh: "品红"},
+	{u: 1497, i: 79699, n: "Ruby Red Dye", c: ["#bd000b", "#bd000b", "#bd000b"], h: "Red", m: "Vibrant", l: "[&AgFTNwEA]", en: "Ruby Red", de: "Rubinrot", es: "Rojo rubí", fr: "Rouge rubis", zh: "宝石红"},
+	{u: 1477, i: 79701, n: "Pumpkin Orange Dye", c: ["#b74725", "#b74725", "#b74725"], h: "Orange", m: "Vibrant", l: "[&AgFVNwEA]", en: "Pumpkin Orange", de: "Kürbisorange", es: "Naranja calabaza", fr: "Orange citrouille", zh: "南瓜橙"},
+	{u: 1486, i: 79697, n: "Aqua Satin Dye", c: ["#185240", "#185240", "#185240"], h: "Green", m: "Vibrant", l: "[&AgFRNwEA]", en: "Aqua Satin", de: "Aqua-Satin", es: "Aguamarina satinado", fr: "Satin azuré", zh: "水缎"},
+	{u: 1495, i: 79694, n: "Slime Green Dye", c: ["#7a9600", "#7a9600", "#7a9600"], h: "Green", m: "Vibrant", l: "[&AgFONwEA]", en: "Slime Green", de: "Schleimgrün", es: "Verde baba", fr: "Vert baveux", zh: "黏液绿"},
+	{u: 1493, i: 79692, n: "Blue Orchid Dye", c: ["#172585", "#172585", "#172585"], h: "Blue", m: "Vibrant", l: "[&AgFMNwEA]", en: "Blue Orchid", de: "Blaue Orchidee", es: "Azul orquídea", fr: "Bleu orchidée", zh: "蓝紫"},
 ]
 };

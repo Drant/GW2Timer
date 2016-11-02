@@ -629,6 +629,7 @@ Aura: [
 	{i: 79653, n: "Phospholuminescent Infusion"},
 	{i: 79661, n: "Phospholuminescent Infusion"},
 	{i: 79665, n: "Phospholuminescent Infusion"},
+	{i: 79669, n: "Phospholuminescent Infusion"},
 	{i: 79674, n: "Phospholuminescent Infusion"},
 	{i: 78012, n: "Moto's Unstable Bauble Infusion: Blue", p: {achievement: 0}},
 	{i: 78052, n: "Moto's Unstable Bauble Infusion: Blue", p: {achievement: 0}},
@@ -717,7 +718,8 @@ Glider: [
 	{i: 79084, n: "Shining Blade Glider", p: {gem: 700}},
 	{i: 79595, n: "Mursaat Wings Glider", p: {gem: 700}},
 	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
-	{i: 79663, n: "Bloodstone Glider", p: {gem: 500}}
+	{i: 79663, n: "Bloodstone Glider", p: {gem: 500}},
+	{i: 79660, n: "Grasping Phantom Glider", p: {gem: 0}}
 ],
 Node: [
 	{i: 43902, n: "Gift of Quartz", p: {laurel: 25}},
