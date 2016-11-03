@@ -8397,41 +8397,34 @@ A = {
 			var tabtitle = (isNaN(pCategory) === false) ? A.Data.Characters[pCategory].oCharPreface : D.getWordCapital(pCategory);
 			var viewtab = B.createBankTab(viewbank, {aTitle: tabtitle});
 			var viewslotscontainer = viewtab.find(".bnkTabSlots");
-			var numfetched = 0;
-			var numtofetch = 0;
+			var itemids = [];
 			for (var i in categoriesview[pCategory])
 			{
-				numtofetch++;
+				itemids.push(i);
 			}
-			var finalizeView = function()
-			{
-				B.tallyBank(viewcontainer);
-			};
 			
 			// Fill the "bank" with pseudo item slots
-			for (var i in categoriesview[pCategory])
+			Q.getPricedItems(itemids, function()
 			{
-				(function(iSlot, iItemID, iView)
+				for (var i in categoriesview[pCategory])
 				{
-					Q.getItem(iItemID, function(iItem)
+					(function(iSlot, iItemID, iView)
 					{
-						B.styleBankSlot(iSlot, {aItem: iItem, aPrice: iView[1], aSlotMeta: {count: iView[0]}});
-						var payment = E.Paylist[iItemID];
-						if (payment && E.isPriceObject(payment) === false)
+						Q.getItem(iItemID, function(iItem)
 						{
-							B.updateSlotPayment(iSlot, payment, iView[0], "bnkSlotPriceSell");
-						}
-						numfetched++;
-						A.setProgressBar(numfetched, numtofetch);
-						if (numfetched === numtofetch)
-						{
-							finalizeView();
-						}
-					});
-				})(B.createBankSlot(viewslotscontainer), i, (categoriesview[pCategory])[i]);
-			}
-			B.createBankMenu(viewbank, {aWantClear: true, aReloadElement: $("#audViewHeader_" + pCategory)});
-			I.scrollToElement("#audViewTitle", {aSpeed: "fast"});
+							B.styleBankSlot(iSlot, {aItem: iItem, aPrice: iView[1], aSlotMeta: {count: iView[0]}});
+							var payment = E.Paylist[iItemID];
+							if (payment && E.isPriceObject(payment) === false)
+							{
+								B.updateSlotPayment(iSlot, payment, iView[0], "bnkSlotPriceSell");
+							}
+						});
+					})(B.createBankSlot(viewslotscontainer), i, (categoriesview[pCategory])[i]);
+				}
+				B.tallyBank(viewcontainer);
+				B.createBankMenu(viewbank, {aWantClear: true, aReloadElement: $("#audViewHeader_" + pCategory)});
+				I.scrollToElement("#audViewTitle", {aSpeed: "fast"});
+			});
 		};
 		
 		/*
@@ -10258,7 +10251,7 @@ V = {
 		});
 		
 		// Create bank tab for each character, fill slots with equipped items
-		Q.fetchItems(itemids, function()
+		Q.getPricedItems(itemids, function()
 		{
 			bank.empty();
 			A.Data.Characters.forEach(function(iChar)
@@ -10372,7 +10365,7 @@ V = {
 				}
 			}
 			// Fetch the items and fill slots
-			Q.fetchItems(itemids, function()
+			Q.getPricedItems(itemids, function()
 			{
 				I.removeThrobber(pTab);
 				for (var ii = 0; ii < pCharacter.bags.length; ii++)
@@ -10692,7 +10685,7 @@ V = {
 					numtofetch++;
 				}
 			}
-			Q.fetchItems(itemids, function()
+			Q.getPricedItems(itemids, function()
 			{
 				// First generate empty bank slots, then fill them up asynchronously by item details retrieval
 				bank.empty();
@@ -10800,7 +10793,7 @@ V = {
 			}
 			U.sortObjects(sortedvaults, {aKeyName: "oUniqueCount", aIsDescending: true});
 			
-			Q.fetchItems(itemids, function()
+			Q.getPricedItems(itemids, function()
 			{
 				bank.empty();
 				// Fill the vaults
@@ -12348,7 +12341,7 @@ B = {
 				unlockobj = pCatArr[ii];
 				itemids.push(unlockobj.i || unlockobj);
 			}
-			Q.fetchItems(itemids, function()
+			Q.getPricedItems(itemids, function()
 			{
 				I.removeThrobber(pTab);
 				doGenerate();
@@ -12769,7 +12762,7 @@ B = {
 			});
 			if (Settings.aWantItems === true && Settings.aWantPrices !== false)
 			{
-				Q.fetchItems(itemids, function()
+				Q.getPricedItems(itemids, function()
 				{
 					doGenerate();
 				});
@@ -13494,7 +13487,7 @@ B = {
 			 * is less than the threshold, otherwise the user has to manually
 			 * expand the tab headers to trigger the fill tabs function.
 			 */
-			Q.fetchItems(itemids, function()
+			Q.getPricedItems(itemids, function()
 			{
 				bank.empty();
 				wantcollapsed = numtofetch > Q.ItemLimit.FetchAPI;
@@ -14138,7 +14131,7 @@ Q = {
 			pCallback();
 		}, true);
 	},
-	fetchItems: function(pItemIDs, pCallback)
+	getPricedItems: function(pItemIDs, pCallback)
 	{
 		// Combine item details and TP price retrieval in one call
 		Q.getItems(pItemIDs, function()
