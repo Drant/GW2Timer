@@ -29702,21 +29702,14 @@ H = {
 			+ "<span class='dsbSalePriceCurrent'>" + rangestr + "<ins class='s16 s16_gem'></ins></span></kbd>"
 		+ "</div>").addClass("dsbMenuEnabled");
 		$("#dsbSale").append("<div id='dsbSaleTable' class='jsScrollable'></div>");
-		// Add a "padding" item if the columns are not equal length
+		// Include the exchange rate "items" after determining range
+		H.Sale.Items = H.Sale.Padding.concat(H.Sale.Items);
+		// Determine if the current sale has price reduction
 		var isdiscounted = false;
-		var ncol0 = 0, ncol1 = 0;
 		var item;
 		for (var i = 0; i < H.Sale.Items.length; i++)
 		{
 			item = H.Sale.Items[i];
-			if (item.col === 0)
-			{
-				ncol0++;
-			}
-			else
-			{
-				ncol1++;
-			}
 			if (isdiscounted === false)
 			{
 				if (item.discount &&
@@ -29725,16 +29718,6 @@ H = {
 					isdiscounted = true;
 				}
 			}
-		}
-		if (ncol0 < ncol1)
-		{
-			H.Sale.Padding.col = 0;
-			H.Sale.Items.unshift(H.Sale.Padding);
-		}
-		else if (ncol0 > ncol1)
-		{
-			H.Sale.Padding.col = 1;
-			H.Sale.Items.unshift(H.Sale.Padding);
 		}
 		$("#dsbSaleSymbol").attr("src", "img/ui/" + ((isdiscounted) ? "gemstore_special" : "gemstore") + I.cPNG);
 		// Bind buttons
@@ -29778,7 +29761,7 @@ H = {
 			$("#dsbSale").show();
 			$("#dsbMenuSale").addClass("dsbMenuItemActive");
 			table.append(I.cThrobber);
-			E.updateCoinInGem(function()
+			E.updateExchangeRatios(function()
 			{
 				I.toggleToggleIcon("#dsbSaleToggleIcon", true);
 				table.empty();
@@ -29816,9 +29799,23 @@ H = {
 								var oldpriceinner = (disc.length > 2) ? getOldPriceString(priceper, (item.discount[0])[2], disc[2]) : getPercentOffString(priceper, (item.discount[0])[1]);
 								var divisorstr = (disc[0] > 1) ? ("/" + disc[0] + " = " + Math.ceil(disc[1] / disc[0]) + gemstr) : "";
 								discountstr += oldpriceinner + "<span class='dsbSalePriceCurrent'>" + disc[1] + gemstr + divisorstr + "</span>"
-									+ " " + I.Symbol.Approx + " " + E.formatGemToCoin(disc[1]) + "<br />";
+									+ " " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(disc[1]) + "<br />";
 							}
 							discountstr += "</span>";
+						}
+						// Price display
+						var pricestr = "";
+						if (item.name === "Coin")
+						{
+							pricestr = "<span class='dsbSalePriceCoin'>" + E.formatCoinStringShort(item.price) + " " + I.Symbol.ArrowLeft + " " + "</span>"
+								+ "<span class='dsbSalePriceCurrent'>" + E.formatGemString(E.convertCoinToGem(item.price)) + "</span>"
+								+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(E.convertCoinToGem(item.price)) + "</span>";
+						}
+						else
+						{
+							pricestr = "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
+								+ "<span class='dsbSalePriceCoin'> " + I.Symbol.ArrowLeft + " " + E.formatGemToCoin(item.price) + "</span>"
+								+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>";
 						}
 						// Format the presentation of this item
 						var idisurl = isNaN(item.id);
@@ -29828,9 +29825,7 @@ H = {
 							+"<a" + U.convertExternalAnchor(wiki) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
 							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
 							+ oldpricestr
-							+ "<span class='dsbSalePriceCurrent'>" + item.price + gemstr + "</span>"
-							+ "<span class='dsbSalePriceCoin'> " + I.Symbol.Approx + " " + E.formatGemToCoin(item.price) + "</span>"
-							+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>"
+							+ pricestr
 							+ discountstr
 						+ "</div>");
 					}
@@ -32231,6 +32226,13 @@ I = {
 					}
 				}
 			});
+		}).onEscapeKey(function()
+		{
+			// Handler for escape key
+			if (I.isConsoleShown())
+			{
+				I.clear();
+			}
 		});
 		// Stop autoscrolling if user moves the scroll wheel
 		if (I.isCustomScrollEnabled)

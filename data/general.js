@@ -605,6 +605,8 @@ var GW2T_GATEWAY_CONNECTION = {
 	{c: [[14628, 10642], [14684, 10351]], i: "http://i.imgur.com/pzi7QqB.png"}, // harathi
 	{c: [[16123, 11449], [15715, 11526]], i: "http://i.imgur.com/LtlKlMd.png"}, // harathi
 	{c: [[16719, 16097], [16790, 16379]], i: "http://i.imgur.com/4knjPzn.png"}, // bloodtide
+	{c: [[17394, 16907], [17059, 17134]], i: "http://i.imgur.com/o9TKLre.png"}, // bloodtide
+	{c: [[16395, 16847], [16271, 17151]], i: "http://i.imgur.com/mf84t3E.png"}, // bloodtide
 	{c: [[16345, 20165], [15920, 20071]], i: "http://i.imgur.com/Ofvznoc.png"}, // sparkfly
 	{c: [[16984, 21336], [17092, 21633]], i: "http://i.imgur.com/CKADrul.png"}, // sparkfly
 	{c: [[15758, 20762], [16036, 21031]], i: "http://i.imgur.com/89HbHei.png"}, // sparkfly
@@ -614,6 +616,8 @@ var GW2T_GATEWAY_CONNECTION = {
 	{c: [[29637, 16740], [29530, 16996]], i: "http://i.imgur.com/wq10slX.png"}, // fields
 	{c: [[31074, 16994], [30857, 17040]], i: "http://i.imgur.com/7VtKUTz.png"}, // fields
 	{c: [[27655, 9992], [27820, 10306]], i: "http://i.imgur.com/bQcI0ZB.png"}, // marches
+	{c: [[27688, 11471], [27813, 11056]], i: "http://i.imgur.com/G7KbiUs.png"}, // marches
+	{c: [[28217, 11546], [28558, 11524]], i: "http://i.imgur.com/V02byvU.png"}, // marches
 	{c: [[29771, 12832], [29751, 12716]], i: "http://i.imgur.com/XeC45o6.png"}, // blazeridge
 	{c: [[29819, 12798], [29781, 12708]], i: "http://i.imgur.com/kYq3kVL.png"}, // blazeridge
 	{c: [[29900, 12775], [29800, 12687]], i: "http://i.imgur.com/XvjUu86.png"}, // blazeridge
@@ -621,6 +625,7 @@ var GW2T_GATEWAY_CONNECTION = {
 	{c: [[29839, 15255], [29689, 15497]], i: "http://i.imgur.com/pEE4dSa.png"}, // blazeridge
 	{c: [[30527, 15382], [30258, 15615]], i: "http://i.imgur.com/OYwI6Tr.png"}, // blazeridge
 	{c: [[25738, 10887], [25989, 10794]], i: "http://i.imgur.com/nLHpAY1.png"}, // fireheart
+	{c: [[24256, 10327], [24486, 10547]], i: "http://i.imgur.com/Mw5RlZo.png"}, // fireheart
 	{c: [[15224, 24113], [15138, 24433]], i: "http://i.imgur.com/Juve33P.png"}, // straits
 	{c: [[13922, 24269], [13706, 24364]], i: "http://i.imgur.com/muYx0K5.png"}, // malchor
 	{c: [[12708, 24331], [12352, 24504]], i: "http://i.imgur.com/20aN2Kl.png"}, // malchor
@@ -1405,6 +1410,26 @@ Countdown: {
 		Start: new Date("2016-10-18T16:00:00Z"),
 		Finish: new Date("2016-11-08T16:00:00Z")
 	},
+	{ // 8 weeks cycle, on Thursday, 11-10 to 11-17
+		name_en: "Frostgorge Map Rewards",
+		name_de: "Eisklamm Karten-Bonus",
+		name_es: "Bonificación de mapa Gorjaescarcha",
+		name_fr: "Bonus de carte Gorges glacées",
+		name_zh: "霜谷之音地圖獎金",
+		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
+		Start: new Date("2016-11-10T20:00:00Z"),
+		Finish: new Date("2016-11-17T20:00:00Z")
+	}
+	/*{
+		name_en: "Black Friday Sale",
+		name_de: "Black Friday Verkauf",
+		name_es: "Rebaja Viernes Negro",
+		name_fr: "Vente Vendredi Noir",
+		name_zh: "黑色星期五"
+		url: "https://twitter.com/GuildWars2/status/669516905657552897",
+		Start: new Date("2016-11-25T17:00:00Z"),
+		Finish: new Date("2016-11-37T17:00:00Z")
+	},*/
 	/*{
 		name_en: "Wintersday 2016",
 		name_de: "Wintertag 2016",
@@ -1428,16 +1453,6 @@ Countdown: {
 		Start: new Date("2016-12-30T18:00:00Z"),
 		Finish: new Date("2016-12-31T02:00:00Z")
 	},*/
-	{ // 8 weeks cycle, on Thursday, 11-10 to 11-17
-		name_en: "Frostgorge Map Rewards",
-		name_de: "Eisklamm Karten-Bonus",
-		name_es: "Bonificación de mapa Gorjaescarcha",
-		name_fr: "Bonus de carte Gorges glacées",
-		name_zh: "霜谷之音地圖獎金",
-		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
-		Start: new Date("2016-11-10T20:00:00Z"),
-		Finish: new Date("2016-11-17T20:00:00Z")
-	}
 	]
 },
 
@@ -1471,12 +1486,22 @@ Sale: {
 	note: "", // Important note about the sale, optional
 	Start: new Date("2016-10-25T16:00:00Z"),
 	Finish: new Date("2016-11-08T16:00:00Z"),
-	Padding: {
-		name: "Gem",
-		id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
-		price: 100,
-		discount: null
-	},
+	Padding: [
+		{
+			name: "Gem", // Gem exchange rate sample
+			id: "https://render.guildwars2.com/file/220061640ECA41C0577758030357221B4ECCE62C/502065.png",
+			price: 100,
+			discount: null,
+			col: 0
+		},
+		{
+			name: "Coin", // Gold exchange rate sample
+			id: "https://render.guildwars2.com/file/98457F504BA2FAC8457F532C4B30EDC23929ACF9/619316.png",
+			price: 1000000,
+			discount: null,
+			col: 1
+		}
+	],
 	Items: [
 	{
 		name: "Customer Appreciation Package",
@@ -1553,18 +1578,18 @@ Vendor:
 		Katyn: [[21335, 10084],[22448, 10241],[20058, 15386],[18784, 12997],[18224, 16036],[23006, 11984],[20146, 18656]],
 		Verma: [[24757, 8568],[24131, 9304],[26737, 14451],[30346, 15998],[27491, 12513],[29248, 18538],[24319, 12362]]
 	},
-	Start: new Date("2016-11-04T00:00:00Z"),
-	Finish: new Date("2016-11-05T00:00:00Z"),
+	Start: new Date("2016-11-05T00:00:00Z"),
+	Finish: new Date("2016-11-06T00:00:00Z"),
 	Products: { "44713":44948, "44714":44949, "43482":43450, "43798":43774, "43799":43775, "43800":43866, "43802":43778, "43803":43777, "43804":43780, "43805":43781, "43806":43782, "43807":43783, "43808":43784, "43809":43785, "43810":43786, "43811":43787, "43812":43788, "43813":43789, "43814":43790, "43815":43791, "43816":43792, "43817":43793, "43818":43794, "43819":43795, "43820":43796, "43821":43797, "43822":43844, "43823":43845, "43824":43846, "43825":43847, "43826":43852, "43827":43848, "43828":43849, "43829":43850, "43830":43851, "43831":43853, "43832":43854, "43833":43855, "43834":43856, "43835":43857, "43836":43858, "43837":43859, "43838":43860, "43839":43861, "43840":43862, "43841":43865, "43842":43863, "43843":43864, "44647":44952, "44648":44953, "44649":44951, "44650":44954, "44651":44955, "44652":44956, "44653":44959, "44654":44958, "44655":44957, "44656":44946, "44657":44945, "44658":44947, "44659":44943, "44660":44942, "44661":44944, "44662":44949, "44663":44948, "44664":44950, "43483":43451, "43484":43449, "44715":44943, "44716":44942, "44717":44946, "44718":44945, "48908":48907, "48909":48907, "48910":48907, "48912":48911, "48913":48911, "48914":48911, "48918":48915, "48919":48916, "48920":48917, "48922":48921, "49734":49865, "49735":49866, "49736":49823, "49737":49782, "49739":49801, "49741":49733, "49742":49783, "49743":49784, "49744":49785, "49745":49786, "49746":49787, "49747":49788, "49748":49789, "49749":49790, "49750":49791, "49751":49792, "49752":49793, "49753":49794, "49754":49795, "49755":49796, "49756":49797, "49757":49798, "49758":49799, "49759":49804, "49760":49805, "49761":49781, "49762":49807, "49763":49808, "49764":49809, "49765":49810, "49766":49811, "49767":49812, "49768":49813, "49769":49814, "49770":49815, "49771":49816, "49772":49803, "49773":49806, "49774":49818, "49775":49819, "49777":49821, "49778":49817, "49779":49822, "49780":49824, "50019":50018, "50021":50020, "50023":50022, "67961":67522, "67962":67531, "67963":67524, "67964":67529, "67965":67530, "67966":67528, "73199":74525, "75473":72446 },
 	Prices: {"43799":12600, "49737":12600, "43798":12600, "49734": 12600, "49738":50400, "49739":50400, "49740":50400},
 	PriceDefault: 25200,
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
 	{
-		Mehem: { id: "49780" },
-		Fox: { id: "44716" },
-		Derwena: { id: "43799" },
-		Yana: { id: "43813" },
-		Katyn: { id: "43816" },
+		Mehem: { id: "49747" },
+		Fox: { id: "43833" },
+		Derwena: { id: "48909" },
+		Yana: { id: "44713" },
+		Katyn: { id: "43836" },
 		Verma: { id: "49735" }
 	}
 }

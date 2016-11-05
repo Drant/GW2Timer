@@ -618,8 +618,8 @@ Vibrant: [
 	{u: 1490, i: 79700, n: "Magenta Dye", c: ["#ab0078", "#ab0078", "#ab0078"], h: "Red", m: "Leather", l: "[&AgFUNwEA]", en: "Magenta", de: "Magenta", es: "Magenta", fr: "Magenta", zh: "品红"},
 	{u: 1497, i: 79699, n: "Ruby Red Dye", c: ["#bd000b", "#bd000b", "#bd000b"], h: "Red", m: "Vibrant", l: "[&AgFTNwEA]", en: "Ruby Red", de: "Rubinrot", es: "Rojo rubí", fr: "Rouge rubis", zh: "宝石红"},
 	{u: 1477, i: 79701, n: "Pumpkin Orange Dye", c: ["#b74725", "#b74725", "#b74725"], h: "Orange", m: "Vibrant", l: "[&AgFVNwEA]", en: "Pumpkin Orange", de: "Kürbisorange", es: "Naranja calabaza", fr: "Orange citrouille", zh: "南瓜橙"},
-	{u: 1486, i: 79697, n: "Aqua Satin Dye", c: ["#185240", "#185240", "#185240"], h: "Green", m: "Vibrant", l: "[&AgFRNwEA]", en: "Aqua Satin", de: "Aqua-Satin", es: "Aguamarina satinado", fr: "Satin azuré", zh: "水缎"},
 	{u: 1495, i: 79694, n: "Slime Green Dye", c: ["#7a9600", "#7a9600", "#7a9600"], h: "Green", m: "Vibrant", l: "[&AgFONwEA]", en: "Slime Green", de: "Schleimgrün", es: "Verde baba", fr: "Vert baveux", zh: "黏液绿"},
-	{u: 1493, i: 79692, n: "Blue Orchid Dye", c: ["#172585", "#172585", "#172585"], h: "Blue", m: "Vibrant", l: "[&AgFMNwEA]", en: "Blue Orchid", de: "Blaue Orchidee", es: "Azul orquídea", fr: "Bleu orchidée", zh: "蓝紫"},
+	{u: 1486, i: 79697, n: "Aqua Satin Dye", c: ["#185240", "#185240", "#185240"], h: "Green", m: "Vibrant", l: "[&AgFRNwEA]", en: "Aqua Satin", de: "Aqua-Satin", es: "Aguamarina satinado", fr: "Satin azuré", zh: "水缎"},
+	{u: 1493, i: 79692, n: "Blue Orchid Dye", c: ["#172585", "#172585", "#172585"], h: "Blue", m: "Vibrant", l: "[&AgFMNwEA]", en: "Blue Orchid", de: "Blaue Orchidee", es: "Azul orquídea", fr: "Bleu orchidée", zh: "蓝紫"}
 ]
 };
