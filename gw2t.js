@@ -80,7 +80,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 160926},
+		programVersion: {key: "int_utlProgramVersion", value: 161105},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -2962,11 +2962,11 @@ U = {
 	 */
 	getDatabaseURL: function(pName, pLanguage)
 	{
-		return "test/" + pName + "_" + pLanguage + ".txt";
+		return "test/" + pName + "_" + pLanguage + I.cTXT;
 	},
 	getItemsDatabaseURL: function(pLanguage)
 	{
-		return "test/items_" + pLanguage + ".txt";
+		return "test/items_" + pLanguage + I.cTXT;
 	},
 	getDataScriptURL: function(pName)
 	{
@@ -5570,7 +5570,7 @@ Z = {
 						}
 						Z.printAPICache(U.TypeEnum.isAssoc, {
 							aWantQuotes: true,
-							aFileName: "items_" + lang
+							aFileName: "items_" + lang + I.cTXT
 						});
 						counter++;
 						updateDBLang();
@@ -7401,6 +7401,7 @@ A = {
 			return false;
 		}
 		pDish.empty().data("token", A.TokenCurrent);
+		I.updateScrollbar(pDish);
 		return true;
 	},
 	
@@ -7823,7 +7824,7 @@ A = {
 			{
 				if (isNaN(i))
 				{
-					str += D.getWordCapital(i);
+					str += D.getWordCapital(i.toLowerCase());
 				}
 				else
 				{
@@ -7837,6 +7838,11 @@ A = {
 		}
 		str = str.substring(0, str.length - 2); // Trim the trailing comma
 		return str;
+	},
+	getFoundString: function(pPossessionEntry)
+	{
+		return "<var class='itmColor_reminder'>" + D.getPhrase("found in", U.CaseEnum.Sentence)
+			+ ": " + A.formatPossessionLocations(pPossessionEntry) + "</var>";
 	},
 	
 	/*
@@ -10209,11 +10215,11 @@ V = {
 	},
 	
 	/*
-	 * Generates all characters' equipment as item slots in bank tabs.
+	 * Generates the account's possessions as single item slots in bank tabs.
 	 */
-	serveEquipment: function()
+	servePossessions: function()
 	{
-		if (V.requireCharacters("Equipment"))
+		if (V.requireCharacters("Possessions"))
 		{
 			return;
 		}
@@ -10223,62 +10229,58 @@ V = {
 			return;
 		}
 		
-		var dish = $("#accDish_Equipment");
+		var dish = $("#accDish_Possessions");
 		if (A.reinitializeDish(dish) === false)
 		{
 			return;
 		}
-		var bank = B.createBank(dish).find(".bnkBank").append(I.cThrobber);
-		var slotdata;
+		var container = B.createBank(dish);
+		var bank = container.find(".bnkBank").append(I.cThrobber);
+		var slotscontainers = {};
 		var tab, slotscontainer, slot;
 		
-		var itemids = [];
-		var numtofetch = 0;
-		var numfetched = 0;
-		
-		// Count cumulative number of items equipped
-		A.Data.Characters.forEach(function(iChar)
-		{
-			numtofetch += iChar.equipment.length;
-			for (var i = 0; i < iChar.equipment.length; i++)
-			{
-				slotdata = iChar.equipment[i];
-				if (slotdata)
-				{
-					itemids.push(slotdata.id);
-				}
-			}
-		});
-		
-		// Create bank tab for each character, fill slots with equipped items
-		Q.getPricedItems(itemids, function()
+		var generatePossessions = function()
 		{
 			bank.empty();
-			A.Data.Characters.forEach(function(iChar)
+			// Bank tab for each item type
+			for (var i in Q.ItemEnum)
 			{
-				tab = B.createBankTab(bank, {aTitle: iChar.oCharPreface});
-				slotscontainer = tab.find(".bnkTabSlots");
-				for (var i = 0; i < iChar.equipment.length; i++)
+				tab = B.createBankTab(bank, {aTitle: D.getString(i)});
+				slotscontainers[i] = tab.find(".bnkTabSlots");
+			}
+			// Insert item slots into proper type tab
+			for (var i in A.Possessions)
+			{
+				(function(iItemID, iPossession)
 				{
-					slotdata = iChar.equipment[i];
-					slot = B.createBankSlot(slotscontainer);
-					if (slotdata)
+					Q.getItem(iItemID, function(iItem)
 					{
-						(function(iSlot, iSlotData)
+						slotscontainer = slotscontainers[iItem.type];
+						if (slotscontainer)
 						{
-							Q.getItem(iSlotData.id, function(iItem)
+							slot = B.createBankSlot(slotscontainer);
+							B.styleBankSlot(slot,
 							{
-								B.styleBankSlot(iSlot, {aItem: iItem, aSlotMeta: iSlotData, aCallback: function()
-								{
-									numfetched++;
-									A.setProgressBar(numfetched, numtofetch);
-								}});
+								aItem: iItem,
+								aSlotMeta: {count: iPossession.oCount},
+								aComment: A.getFoundString(iPossession)
 							});
-						})(slot, slotdata);
-					}
-				}
+						}
+					});
+				})(i, A.Possessions[i]);
+			}
+			B.createBankMenu(bank, {
+				aHelpMessage: $("#accHelpPossessions").html()
 			});
-			B.createBankMenu(bank);
+			B.tallyBank(container);
+		};
+		
+		A.initializePossessions(function()
+		{
+			Q.getPricedItems(U.convertAssocToArray(A.Possessions), function()
+			{
+				generatePossessions();
+			});
 		});
 	},
 	
@@ -12512,9 +12514,8 @@ B = {
 			entry = unlocksassoc[pItemID];
 			if (Settings.aIsCatalog && entry)
 			{
-				var foundstr = D.getPhrase("found in", U.CaseEnum.Sentence) + ": ";
 				count = entry.oCount;
-				comment = "<var class='itmColor_reminder'>" + foundstr + A.formatPossessionLocations(entry) + "</var>";
+				comment = A.getFoundString(entry);
 			}
 			// Style the slot
 			B.styleBankSlot(pSlot, {
@@ -13326,7 +13327,8 @@ B = {
 					{
 						pricebuy = (sectionlower === "buying" || sectionlower === "bought") ? iMultiTrans.oPrice : null;
 						pricesell = (sectionlower === "selling" || sectionlower === "sold") ? iMultiTrans.oPrice : null;
-						B.styleBankSlot(iSlot, {
+						B.styleBankSlot(iSlot,
+						{
 							aItem: iItem,
 							aComment: "<table class='bnkTransactionsTooltip'>" + iMultiTrans.oStampsTip + "</table>",
 							aTransactionBuy: pricebuy,
@@ -13541,6 +13543,23 @@ Q = {
 	Box: {}, // Holds objects with analyzed item details, accessed using the item's ID
 	RetrievedDatabases: {}, // Stores names of retrieved items databases to avoid redoing
 	SearchDatabase: null,
+	ItemEnum: // Corresponds to item details type property
+	{
+		Gathering: "Gathering",
+		Tool: "Tool",
+		Gizmo: "Gizmo",
+		Bag: "Bag",
+		Back: "Back",
+		Armor: "Armor",
+		Weapon: "Weapon",
+		Trinket: "Trinket",
+		UpgradeComponent: "UpgradeComponent",
+		Consumable: "Consumable",
+		Container: "Container",
+		CraftingMaterial: "CraftingMaterial",
+		MiniPet: "MiniPet",
+		Trophy: "Trophy"
+	},
 	RarityEnum: // Corresponds to API names for rarity levels
 	{
 		Junk: "Junk",
@@ -17494,6 +17513,8 @@ D = {
 			cs: "zóna", it: "zona", pl: "zona", pt: "zona", ru: "зона", zh: "區"},
 		s_forum: {de: "forum", es: "foro", fr: "forum",
 			cs: "fórum", it: "forum", pl: "forum", pt: "fórum", ru: "форум", zh: "論壇"},
+		s_possessions: {de: "besitzungen", es: "posesiones", fr: "possessions",
+			cs: "bohatství", it: "patrimonio", pl: "dobytek", pt: "posses", ru: "пожитки", zh: "財產"},
 		s_catalog: {de: "katalog", es: "catálogo", fr: "catalogue",
 			cs: "katalog", it: "catalogo", pl: "katalog", pt: "catálogo", ru: "каталог", zh: "目錄"},
 		s_audit: {de: "prüfung", es: "auditar", fr: "auditer",
@@ -17563,7 +17584,7 @@ D = {
 	// Strings from the game copied verbatim, for use mainly in tooltips
 	Codex:
 	{
-		s_TEMPLATE: {en: "", de: "", es: "", fr: ""},
+		s_TEMPLATE: {en: "", de: "", es: "", fr: "", zh: ""},
 
 		// Currency abbreviation
 		s_CoinGold: {en: "g", de: "g", es: "o", fr: "o", cs: "z", it: "o", pl: "z", pt: "o", ru: "з", zh: "金"},
@@ -17571,18 +17592,20 @@ D = {
 		s_CoinCopper: {en: "c", de: "k", es: "c", fr: "c", cs: "m", it: "r", pl: "m", pt: "c", ru: "м", zh: "銅"},
 		
 		// Item Type
-		s_Back: {en: "Back Item", de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos"},
-		s_Consumable: {en: "Consumable", de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable"},
-		s_Container: {en: "Container", de: "Behälter", es: "Contenedor", fr: "Conteneur"},
-		s_CraftingMaterial: {en: "Crafting Material", de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d&apos;artisanat"},
-		s_Gathering: {en: "Gathering Tool", de: "Sammelwerkzeug", es: "Herramienta de recolección", fr: "Outil de récolte"},
-		s_Salvage: {en: "Salvage Kit", de: "Wiederverwertungskit", es: "Kit de recicla", fr: "Nécessaire de recyclage"},
-		s_Gizmo: {en: "Gizmo", de: "Dingsbums", es: "Aparato", fr: "Machin"},
-		s_MiniPet: {en: "Miniature", de: "Miniatur", es: "Miniatura", fr: "Miniature"},
-		s_Nourishment: {en: "Nourishment", de: "Verbrauchsstoff", es: "Consumible", fr: "Produit consommable"},
-		s_Boost: {en: "Boost", de: "Verstärker", es: "Potenciador", fr: "Augmentation"},
-		s_Trophy: {en: "Trophy", de: "Trophäe", es: "Trofeo", fr: "Trophée"},
-		s_UpgradeComponent: {en: "Upgrade Component", de: "Aufwertung", es: "Componente de mejora", fr: "Composant d&apos;amélioration"},
+		s_Back: {en: "Back Item", de: "Rücken-Gegenstand", es: "Objeto para espalda", fr: "Objet de dos", zh: "背包"},
+		s_Bag: {en: "Bag", de: "Tasche", es: "Saco", fr: "Sac", zh: "格包"},
+		s_Boost: {en: "Boost", de: "Verstärker", es: "Potenciador", fr: "Augmentation", zh: "增幅劑"},
+		s_Consumable: {en: "Consumable", de: "Verbrauchsgegenstand", es: "Consumible", fr: "Consommable", zh: "消耗"},
+		s_Container: {en: "Container", de: "Behälter", es: "Contenedor", fr: "Conteneur", zh: "器箱"},
+		s_CraftingMaterial: {en: "Crafting Material", de: "Handwerksmaterial", es: "Material de artesanía", fr: "Matériau d&apos;artisanat", zh: "制作材料"},
+		s_Gathering: {en: "Gathering Tool", de: "Sammelwerkzeug", es: "Herramienta de recolección", fr: "Outil de récolte", zh: "採集工具"},
+		s_Gizmo: {en: "Gizmo", de: "Dingsbums", es: "Aparato", fr: "Machin", zh: "聚能發明"},
+		s_MiniPet: {en: "Miniature", de: "Miniatur", es: "Miniatura", fr: "Miniature", zh: "迷你"},
+		s_Nourishment: {en: "Nourishment", de: "Verbrauchsstoff", es: "Consumible", fr: "Produit consommable", zh: "食品"},
+		s_Salvage: {en: "Salvage", de: "Wiederverwertungs", es: "Recicla", fr: "Recyclage", zh: "拆解"},
+		s_Tool: {en: "Salvage Kit", de: "Wiederverwertungskit", es: "Kit de recicla", fr: "Nécessaire de recyclage", zh: "拆解工具包"},
+		s_Trophy: {en: "Trophy", de: "Trophäe", es: "Trofeo", fr: "Trophée", zh: "戰利品"},
+		s_UpgradeComponent: {en: "Upgrade Component", de: "Aufwertung", es: "Componente de mejora", fr: "Composant d&apos;amélioration", zh: "升級"},
 		// Item Rarity
 		s_Junk: {en: "Junk", de: "Schrott", es: "Basura", fr: "Inutile"},
 		s_Basic: {en: "Basic", de: "Einfach", es: "Básico", fr: "Simple"},
@@ -31785,6 +31808,7 @@ I = {
 	cAJAXGlobalTimeout: 30000, // milliseconds
 	cPNG: ".png", // Almost all used images are PNG
 	cJSON: ".json", // Format of API files
+	cTXT: ".txt", // Plain text and test files
 	cThrobber: "<div class='itemThrobber'><em></em></div>",
 	cChatcodePrefix: "[&",
 	cChatcodeSuffix: "]",
@@ -31949,7 +31973,7 @@ I = {
 			Finishers: "Finishers",
 			Characters: "Characters",
 			Hero: "Hero",
-			Equipment: "Equipment",
+			Possessions: "Possessions",
 			Ascended: "Ascended",
 			Inventory: "Inventory",
 			Catalog: "Catalog",
@@ -32581,9 +32605,13 @@ I = {
 	 */
 	bindConsoleInput: function()
 	{
-		$("#cslContent").find(".cssInputText").unbind("click").click(function()
+		$("#cslContent").find(".cssInputText").each(function()
 		{
-			$(this).select();
+			I.bindClipboard($(this), $(this).val(), false);
+			$(this).unbind("click").click(function()
+			{
+				$(this).select();
+			});
 		});
 	},
 	
@@ -33047,14 +33075,18 @@ I = {
 	 * @param string pText to set element's initial clipboard text, optional.
 	 * @returns object Clipboard.
 	 */
-	bindClipboard: function(pSelector, pText)
+	bindClipboard: function(pSelector, pText, pWantMessage)
 	{
 		var elm = (pSelector instanceof jQuery) ? pSelector[0] : pSelector;
 		var cb = new Clipboard(elm);
-		cb.on("success", function(pEvent)
+		var wantmessage = pWantMessage || pWantMessage === undefined;
+		if (wantmessage)
 		{
-			I.write(I.cClipboardSuccessText + pEvent.text, 5);
-		});
+			cb.on("success", function(pEvent)
+			{
+				I.write(I.cClipboardSuccessText + pEvent.text, 5);
+			});
+		}
 		if (pText)
 		{
 			I.updateClipboard(elm, pText);
