@@ -1359,10 +1359,10 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<dfn data-coord='[[16459,14575],[16369,14555],[16248,14618],[15990,14655],[15924,14414],[15742,14745],[15896,14779],[15960,14922],[16286,15063],[16371,15137],[16639,15339],[17329,15141]]'>Carving Pumpkins</dfn> in Lion's Arch, <a href='http://gw2timer.com/pumpkins'>more</a>. Check out the new <a href='http://gw2timer.com/possessions'>Account Search</a> tool.",
+	pve: "<a href='http://gw2timer.com/possessions'>Account Search</a> items by tooltip keywords, location, or character name.",
 	wvw: "",
-	Start: new Date("2016-10-11T16:00:00Z"),
-	Finish: new Date("2016-11-08T16:00:00Z"),
+	Start: new Date("2016-11-08T16:00:00Z"),
+	Finish: new Date("2016-11-15T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
@@ -1400,16 +1400,6 @@ Countdown: {
 		Start: new Date("2016-11-15T17:00:00Z"),
 		Finish: new Date("2016-11-16T17:00:00Z")
 	}*/
-	{
-		name_en: "Halloween 2016",
-		name_de: "Halloween 2016",
-		name_es: "Halloween 2016",
-		name_fr: "Halloween 2016",
-		name_zh: "萬聖夜2016",
-		url: "https://forum-en.guildwars2.com/forum/game/gw2/Arena-Net-when-does-Halloween-event-stop/6386388",
-		Start: new Date("2016-10-18T16:00:00Z"),
-		Finish: new Date("2016-11-08T16:00:00Z")
-	},
 	{ // 8 weeks cycle, on Thursday, 11-10 to 11-17
 		name_en: "Frostgorge Map Rewards",
 		name_de: "Eisklamm Karten-Bonus",
@@ -1425,10 +1415,20 @@ Countdown: {
 		name_de: "Black Friday Verkauf",
 		name_es: "Rebaja Viernes Negro",
 		name_fr: "Vente Vendredi Noir",
-		name_zh: "黑色星期五"
+		name_zh: "黑色星期五",
 		url: "https://twitter.com/GuildWars2/status/669516905657552897",
 		Start: new Date("2016-11-25T17:00:00Z"),
 		Finish: new Date("2016-11-37T17:00:00Z")
+	}*/
+	/*{
+		name_en: "Halloween 2017",
+		name_de: "Halloween 2017",
+		name_es: "Halloween 2017",
+		name_fr: "Halloween 2017",
+		name_zh: "萬聖夜2017",
+		official: "news/shadow-of-the-mad-king-is-live/",
+		Start: new Date("2017-10-24T16:00:00Z"),
+		Finish: new Date("2017-11-03T16:00:00Z")
 	},*/
 	/*{
 		name_en: "Wintersday 2016",
@@ -1461,12 +1461,12 @@ Countdown: {
  */
 Story:
 {
-	isEnabled: true,
-	name_en: "Shadow of the Mad King",
-	name_de: "Der Schatten des Verrückten Königs",
-	name_es: "La sombra del Rey Loco",
-	name_fr: "L’Ombre du Roi Dément",
-	name_zh: "瘋王聖旨",
+	isEnabled: false,
+	name_en: "",
+	name_de: "",
+	name_es: "",
+	name_fr: "",
+	name_zh: "",
 	url: "",
 	Start: new Date("2016-10-18T16:00:00Z"),
 	Finish: new Date("2016-11-08T16:00:00Z")
@@ -1484,8 +1484,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-10-25T16:00:00Z"),
-	Finish: new Date("2016-11-08T16:00:00Z"),
+	Start: new Date("2016-11-08T16:00:00Z"),
+	Finish: new Date("2016-11-15T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1504,32 +1504,18 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Customer Appreciation Package",
-		id: "79698",
-		price: 0,
-		discount: 125,
-		col: 0
-	},
-	{
-		name: "Mini Angry Chest",
-		id: "70234",
-		price: 320,
-		discount: 400,
-		col: 0
-	},
-	{
-		name: "Vibrant Dye Kit",
-		id: "79695",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 0
-	},
-	{
-		name: "Lunatic Guard Outfit",
-		id: "70385",
-		price: 700,
+		name: "Doomsday Preparation Pack",
+		id: "http://i.imgur.com/oSAmyt3.png",
+		price: 2252,
 		discount: null,
-		col: 1
+		col: 0
+	},
+	{
+		name: "Plush Aurene Backpack Cover",
+		id: "http://i.imgur.com/Ac6eSGU.png",
+		price: 400,
+		discount: null,
+		col: 0
 	},
 	{
 		name: "Ghostly Outfit",
@@ -1539,10 +1525,10 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Bloodstone Glider",
-		id: "79663",
-		price: 500,
-		discount: null,
+		name: "Vibrant Dye Kit",
+		id: "79695",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
 		col: 1
 	}
 	]
