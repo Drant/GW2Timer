@@ -49,7 +49,7 @@ var GW2T_DYES_HEADERS = {
 	Chimes: {id: 77470, name_en: "Winter Chimes Dye Kit", name_de: "Winterglocken-Farbkit", name_es: "Kit de tintes de campanitas invernales", name_fr: "Kit de teintures Carillons d'hiver", name_zh: "冬日鈴音染料包"},
 	Shift: {id: 78734, name_en: "Blue Shift Dye Kit", name_de: "Blauverschiebung-Farbkit", name_es: "Kit de tintes de corrimiento al azul", name_fr: "Kit de teintures Variation de bleu", name_zh: "藍移染料包"},
 	Bloodstone: {id: 79354, name_en: "Bloodstone Dye Kit", name_de: "Blutstein-Farbkit", name_es: "Kit de tintes de hematites", name_fr: "Kit de teintures de pierre de Sang", name_zh: "血石染料包"},
-	Vibrant: {id: 79695, name_en: "Vibrant Kit", name_de: "Lebendige-Farben-Farbkit", name_es: "Kit de tintes vibrantes", name_fr: "Kit de teintures vibrantes", name_zh: "醒目染料包"}
+	Vibrant: {id: 79695, name_en: "Vibrant Dye Kit", name_de: "Lebendige-Farben-Farbkit", name_es: "Kit de tintes vibrantes", name_fr: "Kit de teintures vibrantes", name_zh: "醒目染料包"}
 };
 
 /*
