@@ -1518,6 +1518,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Vibrant Dye Kit",
+		id: "79695",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 0
+	},
+	{
 		name: "Ghostly Outfit",
 		id: "79671",
 		price: 700,
@@ -1525,10 +1532,24 @@ Sale: {
 		col: 1
 	},
 	{
-		name: "Vibrant Dye Kit",
-		id: "79695",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
+		name: "Shining Blade Backpack Glider Combo",
+		id: "79288",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Lord Caudecus's Sword Skin",
+		id: "79089",
+		price: 600,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Lord Caudecus's Pistol Skin",
+		id: "79179",
+		price: 600,
+		discount: null,
 		col: 1
 	}
 	]
