@@ -41,16 +41,18 @@
 	Z - Console commands
 	A - Account management
 	V - View account information
-	E - Economy Trading Post
+	B - Bank generation
 	Q - Quantity items
+	E - Economy Trading Post
 	D - Dictionary for translations
 	C - Chains events
 	M - Map Leaflet
 	P - Populate map
 	G - Generated content
 	W - World vs World
+	J - 3D overlay projection
 	T - Time utilities and schedule
-	B - Dashboard and timeline
+	H - Dashboard and timeline
 	K - Clock ticker
 	I - Interface UI
 
@@ -29991,19 +29993,19 @@ H = {
 			table.append(I.cThrobber);
 			for (var i in H.Vendor.Offers)
 			{
+				table.append("<div id='dsbVendorEntry_" + i + "' class='dsbVendorEntry'></div>");
 				(function(iIndex)
 				{
 					var offer = H.Vendor.Offers[iIndex];
 					Q.getItem(offer.id, function(pData)
 					{
 						var wikiquery = (D.isLanguageDefault()) ? pData.name : offer.id;
-						table.append("<div class='dsbVendorEntry'>"
-							+ "<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
+						$("#dsbVendorEntry_" + iIndex).html(
+							"<a" + U.convertExternalAnchor(U.getWikiSearchDefault(wikiquery)) + "><img id='dsbVendorIcon_" + iIndex + "' class='dsbVendorIcon' src='img/ui/placeholder.png' /></a> "
 							+ "<span id='dsbVendorItem_" + iIndex + "' class='dsbVendorItem curZoom " + Q.getRarityClass(pData.rarity)
 								+ "' data-coord='" + (H.Vendor.Coords[iIndex])[weekdaylocation] + "'>" + pData.name + "</span> "
 							+ "<span class='dsbVendorPriceKarma'>" + E.formatKarmaString(H.Vendor.Prices[offer.id] || H.Vendor.PriceDefault) + "</span>"
-							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>"
-						+ "</div>");
+							+ "<span class='dsbVendorPriceCoin' id='dsbVendorPriceCoin_" + iIndex + "'></span>");
 						// Get TP prices also
 						$.getJSON(U.getAPIPrice(offer.id), function(pData)
 						{
@@ -30022,7 +30024,7 @@ H = {
 							Q.scanItem(pProduct, {aElement: icon});
 						});
 						// Finalize the table after every offer has been added
-						if ($(".dsbVendorEntry").length === numoffers)
+						if ($(".dsbVendorItem").length === numoffers)
 						{
 							finalizeVendorTable();
 						}
