@@ -5580,9 +5580,7 @@ Z = {
 				}
 				else
 				{
-					I.print("Database &quot;" + lang + "&quot; is up-to-date. No difference found in IDs list.");
-					counter++;
-					updateDBLang();
+					I.print("Items database is up-to-date. No difference found in IDs list.");
 				}
 			});
 		};
