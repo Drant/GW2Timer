@@ -47,8 +47,8 @@
 	D - Dictionary for translations
 	C - Chains events
 	M - Map Leaflet
-	P - Populate map
-	G - Generated content
+	P - Populate map and GPS
+	G - Generated map page content
 	W - World vs World
 	J - 3D overlay projection
 	T - Time utilities and schedule
@@ -8622,11 +8622,16 @@ A = {
 				
 				// Generate history
 				/*var audithistory = {};
-				try {
+				try
+				{
 					audithistory = JSON.parse(localStorage[O.Utilities.AuditHistory.key]);
 				}
 				catch (e) {}
 				var auditreport = audithistory[(A.Data.Account.oAccName)]; // Get this account's audit history
+				if (auditreport === undefined)
+				{
+					
+				}
 				if (auditreport)
 				{
 					for (var i in auditreport)
@@ -12653,15 +12658,6 @@ B = {
 			record = Settings.aRecord;
 		}
 		
-		// Create bank menu before the asynchronous bank generation
-		var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
-		var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accHelpUnlockables").html();
-		B.createBankMenu(pBank, {
-			aWantSearchHighlight: wantsearchhighlight,
-			aHelpMessage: (Settings.aHelpMessage || "") + helpstr,
-			aIsCustomCatalog: Settings.aIsCustomCatalog
-		});
-		
 		var doGenerate = function()
 		{
 			/*
@@ -12734,6 +12730,14 @@ B = {
 					numacquiredtotal += numacquired;
 				}
 			}
+			// Create bank menu
+			var wantsearchhighlight = (Settings.aWantSearchHighlight === undefined) ? true : Settings.aWantSearchHighlight;
+			var helpstr = (Settings.aWantDefaultHelp === false) ? "" : $("#accHelpUnlockables").html();
+			B.createBankMenu(pBank, {
+				aWantSearchHighlight: wantsearchhighlight,
+				aHelpMessage: (Settings.aHelpMessage || "") + helpstr,
+				aIsCustomCatalog: Settings.aIsCustomCatalog
+			});
 			B.updateBankTally(container, numsunlockedtotal, numintabstotal, numacquiredtotal);
 		};
 		
@@ -19869,7 +19873,6 @@ M = {
 	Floors: [],
 	ZoneCurrent: {},
 	numPins: 0,
-	coordPinPrevious: null,
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
 	isMapInitialized: false,
@@ -21052,6 +21055,7 @@ M = {
 	createPersonalPin: function(pLatLng, pWantDraw)
 	{
 		var that = this;
+		var index = this.numPins;
 		var coord = this.convertLCtoGC(pLatLng);
 		var angle = (this.coordPreviousPin && O.Options.bol_showPersonalPaths) ? this.convertDirectionAngle(this.coordPreviousPin, coord) : 0;
 		this.coordPreviousPin = coord;
@@ -21080,26 +21084,31 @@ M = {
 		
 		// Single click pin: get its coordinates and toggle its opacity
 		this.bindMarkerCoordBehavior(marker, "click");
-		marker.on("click", function()
+		marker.on("click", function(pEvent)
 		{
-			if (this.options.isMarked === undefined || this.options.isMarked === false)
+			if (pEvent.originalEvent.which === 2)
 			{
-				this.options.isMarked = true;
-				this.setOpacity(0.3);
+				// If middle click then set as starting pin
+				that.optimizePersonalPath(index);
 			}
 			else
 			{
-				this.options.isMarked = false;
-				this.setOpacity(1);
+				if (this.options.isMarked === undefined || this.options.isMarked === false)
+				{
+					this.options.isMarked = true;
+					this.setOpacity(0.3);
+				}
+				else
+				{
+					this.options.isMarked = false;
+					this.setOpacity(1);
+				}
 			}
 		});
 		// Double click pin: remove itself from map
 		marker.on("dblclick", function()
 		{
-			that.toggleLayer(this, false);
-			that.Layer.PersonalPin.removeLayer(this);
-			that.drawPersonalPath();
-			that.numPins--;
+			that.removePersonalPin(this);
 		});
 		// Right click pin: centers the pin on GPS character
 		marker.on("contextmenu", function(pEvent)
@@ -21127,6 +21136,18 @@ M = {
 		{
 			that.drawPersonalPath();
 		});
+	},
+	
+	/*
+	 * Removes a personal pin from the map.
+	 * @param object pPin
+	 */
+	removePersonalPin: function(pPin)
+	{
+		this.toggleLayer(pPin, false);
+		this.Layer.PersonalPin.removeLayer(pPin);
+		this.drawPersonalPath();
+		this.numPins--;
 	},
 	
 	/*
@@ -23458,7 +23479,7 @@ P = {
 	},
 	
 	/*
-	 * Gets a nearest-immediate-neighbor path from an array of coordinates.
+	 * Gets a nearest neighbor path from an array of coordinates.
 	 * @param 2D array pCoords of GW2 coordinates.
 	 * @param int pStart index of the optional starting coordinate.
 	 * @returns 2D array path.
