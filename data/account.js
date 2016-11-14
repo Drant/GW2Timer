@@ -203,6 +203,13 @@ var GW2T_CURRENCY_DATA = {
 		Selling: null
 	},
 	AuditCategoriesCharacters: {}, // Same format as audit categories but is a breakdown of individual characters
+	AuditHistory: // Data to store for historical audit graphs, uses appraised sell price only, will include all entries from AuditCategories
+	{
+		Timestamps: null, // Array of ISO timestamp strings
+		TotalGems: null, // All other entries are integer arrays
+		TotalAppraisedSellNoGems: null,
+		TotalLiquidSellNoGems: null
+	},
 	/*
 	 * Payments to show on the account audit table in this order.
 	 * The ishidden property will hide that currency from presentation for some tables.

@@ -3539,6 +3539,14 @@ U = {
 	{
 		return !isNaN(pValue) && (function(x) { return (x | 0) === x; })(parseFloat(pValue));
 	},
+	isObject: function(pValue)
+	{
+		if (pValue && Object.prototype.toString.call(pValue) === "[object Object]")
+		{
+			return true;
+		}
+		return false;
+	},
 	
 	/*
 	 * Returns false if object is undefined or null or falsy, otherwise true.
@@ -7960,6 +7968,7 @@ A = {
 			for (var i in A.Currency.AuditCategories)
 			{
 				A.Currency.AuditCategories[i] = createAuditPayments();
+				A.Currency.AuditHistory[i] = []; // Also initializes audit history
 			}
 			A.Currency.AuditCategoriesCharacters = {};
 		};
@@ -8450,6 +8459,7 @@ A = {
 			var auditcolumn;
 			var auditcats = A.Currency.AuditCategories;
 			var auditcatsmax = createCurrencyMaxes(auditcats);
+			var auditcatsforhistory = {};
 			for (var i in auditcats)
 			{
 				if ((i === "Vault" && A.Data.Vaults === null)
@@ -8461,6 +8471,7 @@ A = {
 				}
 				auditcolumn = insertColumn(tablecategory, D.getWordCapital(i.toLowerCase()), i);
 				fillCurrencyColumn(auditcolumn, auditcats[i], false, auditcatsmax);
+				I.log(auditcats[i]);
 			}
 			
 			// TABLE: Sum and conversions
@@ -8620,26 +8631,6 @@ A = {
 				I.qTip.init(appraisedelm);
 				I.qTip.init(liquidelm);
 				
-				// Generate history
-				/*var audithistory = {};
-				try
-				{
-					audithistory = JSON.parse(localStorage[O.Utilities.AuditHistory.key]);
-				}
-				catch (e) {}
-				var auditreport = audithistory[(A.Data.Account.oAccName)]; // Get this account's audit history
-				if (auditreport === undefined)
-				{
-					
-				}
-				if (auditreport)
-				{
-					for (var i in auditreport)
-					{
-
-					}
-				}*/
-				
 				// Show the summary box animated
 				summary.show("slow", function()
 				{
@@ -8652,6 +8643,55 @@ A = {
 						liquidelm[0].innerHTML = E.formatCoinString(pValue, {aWantBig: true});
 					}, 3000, "easeInOutQuart");
 				});
+				
+				/*
+				 * Load audit history and generate graphs.
+				 */
+				var now = new Date();
+				var hist = {};
+				try
+				{
+					hist = JSON.parse(localStorage[O.Utilities.AuditHistory.key]);
+				}
+				catch (e) {}
+				var accname = A.Data.Account.oAccName;
+				if (U.isObject(hist[accname]) === false)
+				{
+					hist[accname] = {};
+				}
+				// Verify the account's audit history object
+				for (var i in A.Currency.AuditHistory)
+				{
+					var auditarr = (hist[accname])[i];
+					if (auditarr === undefined || Array.isArray(auditarr) === false)
+					{
+						hist = [];
+					}
+				}
+				// Each array's nth element are associated with a timestamp, so all arrays must be of the same length
+				var historylength = hist["Timestamps"].length;
+				for (var i in hist)
+				{
+					if (hist[i].length < historylength)
+					{
+						var padarray = new Array(historylength - hist[i].length).fill(0);
+						hist[i] = hist[i].concat(padarray);
+					}
+					else if (hist[i].length > historylength)
+					{
+						hist[i] = hist[i].slice(0, historylength);
+					}
+				}
+				// Append the new audit data to the history
+				hist["Timestamps"].push(T.formatISO(now));
+				hist["TotalGems"].push(totalgems);
+				hist["TotalAppraisedSellNoGems"].push(totalappraisedsellnogems);
+				hist["TotalLiquidSellNoGems"].push(totalliquidsellnogems);
+				
+				
+				// Finally save the audit history object
+				localStorage[O.Utilities.AuditHistory.key] = JSON.stringify(hist);
+				
 			});
 			
 			// Debug buttons at the bottom
@@ -29075,6 +29115,10 @@ T = {
 	formatMinutes: function(pMinutes)
 	{
 		return T.formatTimeLetter(pMinutes * T.cSECONDS_IN_MINUTE);
+	},
+	formatISO: function(pDate)
+	{
+		pDate.toISOString().split(".")[0]; // "YYYY-MM-DDTHH:mm:ss.sssZ" so milliseconds is excluded
 	},
 	
 	/*
