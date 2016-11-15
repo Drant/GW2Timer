@@ -460,6 +460,18 @@ input[type="text"].accTokenHovered {
 	font-size: 14px;
 }
 
+#audChartContainer {
+	text-align: center;
+}
+#audChart {
+	display: inline-block;
+	margin-top: 64px;
+	text-shadow: none;
+	border-top: 4px solid rgba(254, 200, 78, 0.2);
+	border-bottom: 4px solid rgba(254, 200, 78, 0.2);
+	box-shadow: 0px 0px 16px rgba(0,0,0,0.5);
+}
+
 /* Characters
 ----------------------------------------------------------------------------- */
 #chrSummary, #chrStatistics {

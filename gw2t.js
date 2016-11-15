@@ -2615,7 +2615,7 @@ U = {
 		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl=",
 		TextToSpeechNative: "bin/tts/mespeak.js",
 		ThreeDimensional: "https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js",
-		Charts: "http://code.highcharts.com/highcharts.js"
+		Charts: "bin/highstock.js"
 	},
 	PageLimit: 200, // Number of entries per API retrieval for paginated endpoints
 	IDsLimit: 200, // Max item IDs in a single fetch URL
@@ -8475,6 +8475,33 @@ A = {
 			});
 		};
 		
+		// Reformats a history object for chart display
+		var formatAuditHistory = function(pHistory)
+		{
+			var lines = [], histcat;
+			var histstamp = pHistory["Timestamps"];
+			for (var i in pHistory)
+			{
+				if (i !== "Timestamps")
+				{
+					var ithline = {
+						name: i,
+						data: []
+					};
+					histcat = pHistory[i];
+					for (var ii = 0; ii < histcat.length; ii++)
+					{
+						ithline.data.push([
+							new Date(histstamp[ii]).getTime(),
+							histcat[ii]
+						]);
+					}
+					lines.push(ithline);
+				}
+			}
+			return lines;
+		};
+		
 		/*
 		 * Writes HTML to display the audit results.
 		 */
@@ -8607,7 +8634,8 @@ A = {
 				totalappraisedsell += upggemstocoin;
 				
 				var summarycontainer = $("<div id='audSummaryContainer'></div>").prependTo(container);
-				var summary = $("<div id='audSummary'></div>").prependTo(summarycontainer).hide();
+				var summary = $("<div id='audSummary'></div>").appendTo(summarycontainer).hide();
+				var chartcontainer = $("<div id='audChartContainer'><div id='audChart'></div></div>").appendTo(summarycontainer).hide();
 				summary.append("<div id='audSummaryName'><var id='audAccountName'>" + U.escapeHTML(A.Data.Account.name) + "</var></div>");
 				summary.append("<div id='audSummaryValues'>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("appraised") + " ―</div>"
@@ -8673,19 +8701,20 @@ A = {
 					{
 						liquidelm[0].innerHTML = E.formatCoinString(pValue, {aWantBig: true});
 					}, 3000, "easeInOutQuart");
+					chartcontainer.show();
 				});
 				
 				/*
 				 * Load audit history and generate graphs.
 				 */
 				var now = new Date();
-				var histobj = O.loadCompressedObject(O.Utilities.AuditHistory.key) || {};
+				var histbook = O.loadCompressedObject(O.Utilities.AuditHistory.key) || {};
 				var accname = A.Data.Account.oAccName;
-				if (U.isObject(histobj[accname]) === false)
+				if (U.isObject(histbook[accname]) === false)
 				{
-					histobj[accname] = {};
+					histbook[accname] = {};
 				}
-				var hist = histobj[accname];
+				var hist = histbook[accname];
 				// Verify the account's audit history object
 				for (var i in A.Currency.AuditHistory)
 				{
@@ -8724,12 +8753,29 @@ A = {
 					hist[i].push((auditcats[i])["coin_appraisedsell"]);
 				}
 				// Save the audit history object
-				O.saveCompressedObject(O.Utilities.AuditHistory.key, histobj);
+				O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
 				
 				// Draw the history graph
 				U.getScript(U.URL_API.Charts, function()
 				{
-					
+					$("#audChart").highcharts("StockChart", {
+						chart: {width: 720, height: 445},
+						series: formatAuditHistory(hist),
+						credits: {enabled: false},
+						yAxis:
+						{
+							startOnTick: false,
+							endOnTick: false,
+							labels:
+							{
+								useHTML: true,
+								formatter: function()
+								{
+									return E.formatCoinStringColored(this.value);
+								}
+							}
+						}
+					});
 				});
 			});
 			

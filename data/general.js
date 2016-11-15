@@ -1359,7 +1359,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<a href='https://www.reddit.com/r/Guildwars2/comments/4urr23/leyline_anomaly_tldr_guide_v2/'>Ley-Line Anomaly</a> boss rewards 1 <a href='https://wiki.guildwars2.com/wiki/Mystic_Coin'>mystic coin</a> and 50 silver each day.",
+	pve: "",
 	wvw: "",
 	Start: new Date("2016-11-08T16:00:00Z"),
 	Finish: new Date("2016-11-15T16:00:00Z"),
@@ -1415,6 +1415,16 @@ Countdown: {
 		url: "http://buy.guildwars2.com/",
 		Start: new Date("2016-11-14T20:00:00Z"),
 		Finish: new Date("2016-11-22T08:00:00Z")
+	},
+	{
+		name_en: "Living Story 3: Episode III",
+		name_de: "Lebendige Geschichte 3: Episode III",
+		name_es: "Historia Viviente 3: Episodio III",
+		name_fr: "Histoire Vivante 3: Épisode III",
+		name_zh: "第二生活世界：第三集",
+		official: "news/watch-the-trailer-for-a-crack-in-the-ice/",
+		Start: new Date("2016-11-21T17:00:00Z"),
+		Finish: new Date("2016-11-22T17:00:00Z")
 	}
 	/*{
 		name_en: "Black Friday Sale",
@@ -1490,8 +1500,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-11-08T16:00:00Z"),
-	Finish: new Date("2016-11-15T16:00:00Z"),
+	Start: new Date("2016-11-15T16:00:00Z"),
+	Finish: new Date("2016-11-22T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1510,9 +1520,9 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Doomsday Preparation Pack",
-		id: "http://i.imgur.com/oSAmyt3.png",
-		price: 2252,
+		name: "Marjory's Shrouded Outfit",
+		id: "http://i.imgur.com/pRp0BLo.png",
+		price: 700,
 		discount: null,
 		col: 0
 	},
@@ -1524,37 +1534,16 @@ Sale: {
 		col: 0
 	},
 	{
-		name: "Vibrant Dye Kit",
-		id: "79695",
-		price: 125,
-		discount: [[1, 125], [5, 500], [25, 2500]],
-		col: 0
-	},
-	{
-		name: "Ghostly Outfit",
-		id: "79671",
-		price: 700,
+		name: "Bandit Sniper Appearance Pack",
+		id: "http://i.imgur.com/mIuPrbz.png",
+		price: 2000,
 		discount: null,
 		col: 1
 	},
 	{
-		name: "Shining Blade Backpack Glider Combo",
-		id: "79288",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Lord Caudecus's Sword Skin",
-		id: "79089",
-		price: 600,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Lord Caudecus's Pistol Skin",
-		id: "79179",
-		price: 600,
+		name: "Crystal Arbiter Appearance Pack",
+		id: "http://i.imgur.com/vFtlrW5.png",
+		price: 2000,
 		discount: null,
 		col: 1
 	}
