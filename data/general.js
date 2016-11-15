@@ -1409,6 +1409,12 @@ Countdown: {
 		url: "https://www.reddit.com/r/Guildwars2/comments/4sv5s1/frostgorge_sound_map_rewards_powerful_blood/",
 		Start: new Date("2016-11-10T20:00:00Z"),
 		Finish: new Date("2016-11-17T20:00:00Z")
+	},
+	{
+		name: "$25 Heart of Thorns",
+		url: "http://buy.guildwars2.com/",
+		Start: new Date("2016-11-14T20:00:00Z"),
+		Finish: new Date("2016-11-22T08:00:00Z")
 	}
 	/*{
 		name_en: "Black Friday Sale",
