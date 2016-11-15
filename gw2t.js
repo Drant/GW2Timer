@@ -226,6 +226,7 @@ O = {
 		// Account
 		bol_showRarity: false,
 		bol_condenseBank: false,
+		int_numAuditReports: 64,
 		// Trading
 		bol_refreshPrices: true,
 		int_numTradingCalculators: 25,
@@ -493,6 +494,37 @@ O = {
 			return parseFloat(s);
 		}
 		return pString;
+	},
+	
+	/*
+	 * Loads a compressed JSON object from localStorage.
+	 * @param string pKey name of storage entry.
+	 * @returns object that was parsed.
+	 */
+	loadCompressedObject: function(pKey)
+	{
+		var obj = localStorage[pKey];
+		if (obj)
+		{
+			// See if the string is already an uncompressed object (legacy code)
+			try
+			{
+				return JSON.parse(obj);
+			}
+			catch (e)
+			{
+				try
+				{
+					return JSON.parse(LZString.decompressFromUTF16(obj));
+				}
+				catch (e) {}
+			}
+		}
+		return null;
+	},
+	saveCompressedObject: function(pKey, pObject)
+	{
+		localStorage[pKey] = LZString.compressToUTF16(JSON.stringify(pObject));
 	},
 	
 	/*
@@ -2582,7 +2614,8 @@ U = {
 		Prefix1: "https://api.guildwars2.com/v1/",
 		TextToSpeech: "http://code.responsivevoice.org/getvoice.php?tl=",
 		TextToSpeechNative: "bin/tts/mespeak.js",
-		ThreeDimensional: "https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js"
+		ThreeDimensional: "https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js",
+		Charts: "http://code.highcharts.com/highcharts.js"
 	},
 	PageLimit: 200, // Number of entries per API retrieval for paginated endpoints
 	IDsLimit: 200, // Max item IDs in a single fetch URL
@@ -4396,7 +4429,7 @@ U = {
 			str = I.cChatcodePrefix + btoa(String.fromCharCode(2) + String.fromCharCode(1)
 			+ String.fromCharCode(pID % 256) + String.fromCharCode(Math.floor(pID / 256))
 			+ String.fromCharCode(0) + String.fromCharCode(0)) + I.cChatcodeSuffix;
-		} catch (e){};
+		} catch (e) {};
 		return str;
 	},
 
@@ -7968,7 +8001,7 @@ A = {
 			for (var i in A.Currency.AuditCategories)
 			{
 				A.Currency.AuditCategories[i] = createAuditPayments();
-				A.Currency.AuditHistory[i] = []; // Also initializes audit history
+				A.Currency.AuditHistory[i] = null; // Also initializes audit history
 			}
 			A.Currency.AuditCategoriesCharacters = {};
 		};
@@ -8459,7 +8492,6 @@ A = {
 			var auditcolumn;
 			var auditcats = A.Currency.AuditCategories;
 			var auditcatsmax = createCurrencyMaxes(auditcats);
-			var auditcatsforhistory = {};
 			for (var i in auditcats)
 			{
 				if ((i === "Vault" && A.Data.Vaults === null)
@@ -8471,7 +8503,6 @@ A = {
 				}
 				auditcolumn = insertColumn(tablecategory, D.getWordCapital(i.toLowerCase()), i);
 				fillCurrencyColumn(auditcolumn, auditcats[i], false, auditcatsmax);
-				I.log(auditcats[i]);
 			}
 			
 			// TABLE: Sum and conversions
@@ -8648,24 +8679,20 @@ A = {
 				 * Load audit history and generate graphs.
 				 */
 				var now = new Date();
-				var hist = {};
-				try
-				{
-					hist = JSON.parse(localStorage[O.Utilities.AuditHistory.key]);
-				}
-				catch (e) {}
+				var histobj = O.loadCompressedObject(O.Utilities.AuditHistory.key) || {};
 				var accname = A.Data.Account.oAccName;
-				if (U.isObject(hist[accname]) === false)
+				if (U.isObject(histobj[accname]) === false)
 				{
-					hist[accname] = {};
+					histobj[accname] = {};
 				}
+				var hist = histobj[accname];
 				// Verify the account's audit history object
 				for (var i in A.Currency.AuditHistory)
 				{
-					var auditarr = (hist[accname])[i];
+					var auditarr = hist[i];
 					if (auditarr === undefined || Array.isArray(auditarr) === false)
 					{
-						hist = [];
+						hist[i] = [];
 					}
 				}
 				// Each array's nth element are associated with a timestamp, so all arrays must be of the same length
@@ -8677,6 +8704,11 @@ A = {
 						var padarray = new Array(historylength - hist[i].length).fill(0);
 						hist[i] = hist[i].concat(padarray);
 					}
+					// Shave the history if larger than limit
+					if (historylength >= O.Options.int_numAuditReports)
+					{
+						hist[i] = hist[i].slice(1, O.Options.int_numAuditReports);
+					}
 					else if (hist[i].length > historylength)
 					{
 						hist[i] = hist[i].slice(0, historylength);
@@ -8687,11 +8719,18 @@ A = {
 				hist["TotalGems"].push(totalgems);
 				hist["TotalAppraisedSellNoGems"].push(totalappraisedsellnogems);
 				hist["TotalLiquidSellNoGems"].push(totalliquidsellnogems);
+				for (var i in auditcats)
+				{
+					hist[i].push((auditcats[i])["coin_appraisedsell"]);
+				}
+				// Save the audit history object
+				O.saveCompressedObject(O.Utilities.AuditHistory.key, histobj);
 				
-				
-				// Finally save the audit history object
-				localStorage[O.Utilities.AuditHistory.key] = JSON.stringify(hist);
-				
+				// Draw the history graph
+				U.getScript(U.URL_API.Charts, function()
+				{
+					
+				});
 			});
 			
 			// Debug buttons at the bottom
@@ -8707,6 +8746,18 @@ A = {
 			$("<button class='audDebugButton'>Print View</button>").appendTo(debug).click(function()
 			{
 				I.prettyJSON(categoriesview);
+			});
+			$("<button class='audDebugButton'>Print History</button>").appendTo(debug).click(function()
+			{
+				var history = O.loadCompressedObject(O.Utilities.AuditHistory.key);
+				if (history)
+				{
+					try
+					{
+						I.prettyJSON(history);
+					}
+					catch (e) {}
+				}
 			});
 			
 			// Finally
@@ -22707,13 +22758,9 @@ P = {
 		$.getJSON(url, function(pData)
 		{
 			var i;
-			var regionid, region, zoneid, apizone, poi;
-			var zoneobj;
 			var numofpois;
-			var marker;
-			var icon;
-			var cssclass;
-			var tooltip;
+			var regionid, region, zoneid, apizone, poi, zoneobj;
+			var marker, icon, cssclass, tooltip;
 			var translationsector = D.getTranslation("Sector");
 			var translationpoi = D.getTranslation("Point of Interest");
 			var translationvista = D.getTranslation("Vista");
@@ -22751,7 +22798,7 @@ P = {
 					{
 						poi = apizone.points_of_interest[i];
 
-						// Properties assignment based on POI's type
+						// Properties assignment based on location's type
 						switch (poi.type)
 						{
 							case that.APIPOIEnum.Waypoint:
@@ -22813,6 +22860,7 @@ P = {
 							{
 								marker.on("mouseout", function()
 								{
+									// Workaround a null pointer exception when changing zones
 									try { this._icon.src = U.URL_IMG.Waypoint; } catch (e) {}
 								});
 								marker.on("mouseover", function()
@@ -22825,7 +22873,6 @@ P = {
 							{
 								marker.on("mouseout", function()
 								{
-									// Workaround a null pointer exception when changing zones
 									try { this._icon.src = U.URL_IMG.Landmark; } catch (e) {}
 								});
 								marker.on("mouseover", function()
@@ -22849,7 +22896,7 @@ P = {
 									that.outputCoordinatesCopy(U.getChatlinkFromPoiID(this.options.id));
 									that.outputCoordinatesName(this.options.markername);
 								});
-								marker.on("dblclick", function(pEvent)
+								marker.on("dblclick", function()
 								{
 									U.openExternalURL(U.getWikiLinkLanguage(this.options.markername));
 								});
@@ -22940,7 +22987,7 @@ P = {
 						that.isMappingIconsGenerated = true;
 					}
 					
-					// Generate POIs overview for this zone
+					// Generate locations overview for this zone
 					if (completionboolean)
 					{
 						marker = L.marker(that.convertGCtoLC(zoneobj.center),
@@ -22984,7 +23031,6 @@ P = {
 			{
 				P.donePopulation();
 			}
-			
 		}).fail(function()
 		{
 			if (I.ModeCurrent === I.ModeEnum.Website)
@@ -23574,7 +23620,7 @@ P = {
 	},
 	
 	/*
-	 * Draws a path with each link of increasing or decreasing weight, to
+	 * Draws a path with each link of increasing or decreasing thickness, to
 	 * simulate a worm crawling in a direction.
 	 * @param array pCoords GW2 coordinates.
 	 * @param boolean pIsObverse or reversed.
@@ -23590,20 +23636,20 @@ P = {
 		var latlngs = M.convertGCtoLCMulti(pCoords);
 		var layergroup = new L.layerGroup();
 		var numofsegments = 8;
-		var iweight = (pIsObverse) ? 0 : numofsegments-1;
+		var ithickness = (pIsObverse) ? 0 : numofsegments-1;
 		pColor = pColor || "lime";
 		
 		for (var i = 0; i < latlngs.length - 1; i++)
 		{
-			layergroup.addLayer(L.polyline([latlngs[i], latlngs[i+1]], {color: pColor, weight: (iweight+2)*2}));
-			iweight = (pIsObverse) ? (iweight+1) : (iweight-1);
-			if (pIsObverse && iweight >= numofsegments)
+			layergroup.addLayer(L.polyline([latlngs[i], latlngs[i+1]], {color: pColor, weight: (ithickness+2)*2}));
+			ithickness = (pIsObverse) ? (ithickness+1) : (ithickness-1);
+			if (pIsObverse && ithickness >= numofsegments)
 			{
-				iweight = 0;
+				ithickness = 0;
 			}
-			else if ( ! pIsObverse && iweight < 0)
+			else if ( ! pIsObverse && ithickness < 0)
 			{
-				iweight = numofsegments-1;
+				ithickness = numofsegments-1;
 			}
 		}
 		return layergroup;
@@ -29118,7 +29164,7 @@ T = {
 	},
 	formatISO: function(pDate)
 	{
-		pDate.toISOString().split(".")[0]; // "YYYY-MM-DDTHH:mm:ss.sssZ" so milliseconds is excluded
+		return pDate.toISOString().split(".")[0]; // "YYYY-MM-DDTHH:mm:ss.sssZ" so milliseconds is excluded
 	},
 	
 	/*
