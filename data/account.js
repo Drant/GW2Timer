@@ -206,7 +206,8 @@ var GW2T_CURRENCY_DATA = {
 	AuditHistory: // Data to store for historical audit graphs, uses appraised sell price only, will include all entries from AuditCategories
 	{
 		Timestamps: null, // Array of ISO timestamp strings
-		TotalGems: null, // All other entries are integer arrays
+		WalletCoin: null, // All other entries are integer arrays
+		TotalGems: null,
 		TotalAppraisedSellNoGems: null,
 		TotalLiquidSellNoGems: null
 	},

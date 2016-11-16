@@ -1534,6 +1534,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Mini Bloodstone Rock",
+		id: "http://i.imgur.com/Ynf36oy.png",
+		price: 350,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Bandit Sniper Appearance Pack",
 		id: "http://i.imgur.com/mIuPrbz.png",
 		price: 2000,

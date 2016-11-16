@@ -453,23 +453,26 @@ input[type="text"].accTokenHovered {
 #audDebug {
 	margin-top: 16px;
 }
-.audDebugButton {
+.audButton {
 	margin-right: 8px;
 	padding: 4px 6px 4px 6px;
 	font-family: Trebuchet MS, Menomonia;
 	font-size: 14px;
 }
 
-#audChartContainer {
+#audHistoryContainer {
 	text-align: center;
 }
-#audChart {
+#audHistory {
 	display: inline-block;
 	margin-top: 64px;
 	text-shadow: none;
 	border-top: 4px solid rgba(254, 200, 78, 0.2);
 	border-bottom: 4px solid rgba(254, 200, 78, 0.2);
 	box-shadow: 0px 0px 16px rgba(0,0,0,0.5);
+}
+#audHistoryButtons {
+	
 }
 
 /* Characters

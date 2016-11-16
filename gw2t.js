@@ -227,7 +227,7 @@ O = {
 		// Account
 		bol_showRarity: false,
 		bol_condenseBank: false,
-		int_numAuditReports: 64,
+		int_numAuditReports: 128,
 		// Trading
 		bol_refreshPrices: true,
 		int_numTradingCalculators: 25,
@@ -8683,7 +8683,8 @@ A = {
 				
 				var summarycontainer = $("<div id='audSummaryContainer'></div>").prependTo(container);
 				var summary = $("<div id='audSummary'></div>").appendTo(summarycontainer).hide();
-				var chartcontainer = $("<div id='audChartContainer'><div id='audChart'></div></div>").appendTo(summarycontainer).hide();
+				var historycontainer = $("<div id='audHistoryContainer'></div>").appendTo(summarycontainer).hide();
+				var historychart = $("<div id='audHistory'></div>").appendTo(historycontainer);
 				summary.append("<div id='audSummaryName'><var id='audAccountName'>" + U.escapeHTML(A.Data.Account.name) + "</var></div>");
 				summary.append("<div id='audSummaryValues'>"
 					+ "<div class='audSummarySubtitle'>― " + D.getWordCapital("appraised") + " ―</div>"
@@ -8749,7 +8750,7 @@ A = {
 					{
 						liquidelm[0].innerHTML = E.formatCoinString(pValue, {aWantBig: true});
 					}, 3000, "easeInOutQuart");
-					chartcontainer.show();
+					historycontainer.show();
 				});
 				
 				/*
@@ -8762,18 +8763,16 @@ A = {
 				{
 					histbook[accname] = {};
 				}
-				var hist = histbook[accname];
+				var hist = {}; // New object so the variable order follows the template
 				// Verify the account's audit history object
 				for (var i in A.Currency.AuditHistory)
 				{
-					var auditarr = hist[i];
-					if (auditarr === undefined || Array.isArray(auditarr) === false)
-					{
-						hist[i] = [];
-					}
+					var histrow = (histbook[accname])[i];
+					hist[i] = (histrow === undefined || Array.isArray(histrow) === false) ? [] : histrow;
 				}
 				// Each array's nth element are associated with a timestamp, so all arrays must be of the same length
-				var historylength = hist["Timestamps"].length;
+				var audstamps = hist["Timestamps"];
+				var historylength = audstamps.length;
 				for (var i in hist)
 				{
 					if (hist[i].length < historylength)
@@ -8793,6 +8792,7 @@ A = {
 				}
 				// Append the new audit data to the history
 				hist["Timestamps"].push(T.formatISO(now));
+				hist["WalletCoin"].push(walletcat["coin_liquidsell"]);
 				hist["TotalGems"].push(totalgems);
 				hist["TotalAppraisedSellNoGems"].push(totalappraisedsellnogems);
 				hist["TotalLiquidSellNoGems"].push(totalliquidsellnogems);
@@ -8801,12 +8801,13 @@ A = {
 					hist[i].push((auditcats[i])["coin_appraisedsell"]);
 				}
 				// Save the audit history object
+				histbook[accname] = hist;
 				O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
 				
 				// Draw the history graph
 				A.initializeCharts(function()
 				{
-					$("#audChart").highcharts("StockChart", {
+					historychart.highcharts("StockChart", {
 						chart: {width: 720, height: 445},
 						series: formatAuditHistory(hist),
 						credits: {enabled: false},
@@ -8830,34 +8831,77 @@ A = {
 							}
 						}
 					});
+					var historybuttons = $("<div id='audHistoryButtons'></div>").appendTo(historycontainer);
+					// Button to print this account's history
+					$("<button id='audPrintHistory' class='audButton'>Print History</button>").appendTo(historybuttons).click(function()
+					{
+						I.prettyJSON(hist);
+					});
+					// Button to print the entire history object
+					$("<button class='audButton'>Print Storage</button>").appendTo(historybuttons).click(function()
+					{
+						var history = O.loadCompressedObject(O.Utilities.AuditHistory.key);
+						if (history)
+						{
+							try
+							{
+								I.prettyJSON(history);
+							}
+							catch (e) {}
+						}
+					});
+					// Button to reformat the history to have unique dates only
+					$("<button class='audButton'>Trim History</button>").appendTo(historybuttons).click(function()
+					{
+						var audstamps = hist["Timestamps"];
+						var historylength = audstamps.length;
+						if (historylength > 1 && confirm("This will delete your history so there is only one entry per day. Continue?"))
+						{
+							var histnew = {}, uniquedates = {}, ithstamp;
+							for (var i in A.Currency.AuditHistory)
+							{
+								histnew[i] = [];
+							}
+							for (var index = historylength - 1; index >= 0; index--) // Iterate backward so only the latest entry is saved
+							{
+								ithstamp = audstamps[index].split("T")[0]; // Get the date portion of the ISO time string
+								if (uniquedates[ithstamp] === undefined)
+								{
+									uniquedates[ithstamp] = true;
+									for (var i in A.Currency.AuditHistory)
+									{
+										histnew[i].unshift((hist[i])[index]);
+									}
+								}
+							}
+							hist = histnew;
+							histbook[accname] = hist;
+							O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
+							I.clear();
+							$("#audPrintHistory").trigger("click");
+						}
+					});
+					// Selection to delete an account in the history
+					for (var i in histbook)
+					{
+						
+					}
 				});
 			});
 			
 			// Debug buttons at the bottom
 			var debug = $("<div id='audDebug'></div>").appendTo(container);
-			$("<button class='audDebugButton'>Print Possessions</button>").appendTo(debug).click(function()
+			$("<button class='audButton'>Print Possessions</button>").appendTo(debug).click(function()
 			{
 				I.prettyJSON(A.Possessions);
 			});
-			$("<button class='audDebugButton'>Print Paylist</button>").appendTo(debug).click(function()
+			$("<button class='audButton'>Print Paylist</button>").appendTo(debug).click(function()
 			{
 				I.prettyJSON(E.Paylist);
 			});
-			$("<button class='audDebugButton'>Print View</button>").appendTo(debug).click(function()
+			$("<button class='audButton'>Print View</button>").appendTo(debug).click(function()
 			{
 				I.prettyJSON(categoriesview);
-			});
-			$("<button class='audDebugButton'>Print History</button>").appendTo(debug).click(function()
-			{
-				var history = O.loadCompressedObject(O.Utilities.AuditHistory.key);
-				if (history)
-				{
-					try
-					{
-						I.prettyJSON(history);
-					}
-					catch (e) {}
-				}
 			});
 			
 			// Finally
@@ -27574,7 +27618,7 @@ W = {
 			$("#wvwZoneLinkGreen").html(W.MatchupCurrent["green"].oNameStr);
 			
 			// Initial messages in the log window
-			W.addLogEntry($("#wvwHelpLinks").html() + "<br /><br />");
+			W.addLogEntry($("#wvwHelpLinks").html() + "<br /><br /><br />");
 			W.addLogEntry(W.MatchupCurrent["green"].oNickStr + " : " + W.MatchupCurrent["blue"].oNickStr + " : " + W.MatchupCurrent["red"].oNickStr);
 			
 			// Update map spawn labels
