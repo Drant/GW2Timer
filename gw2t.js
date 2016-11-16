@@ -123,6 +123,7 @@ O = {
 	 * All of these options should have an associated input tag in the HTML that
 	 * users interact with, and their IDs are in the form prefixOption + optionkey.
 	 * Note the three letter prefix indicating the option's data type.
+	 * Options that start with "str_" and "int_num" are protected from URL override.
 	 */
 	Options:
 	{
@@ -614,14 +615,24 @@ O = {
 
 		var optionkey;
 		var inputtype;
-		var variabletype;
 		var inputelm;
+		
+		var isURLOptionLegal = function(pOptionKey)
+		{
+			if (U.Args[pOptionKey] !== undefined
+				&& pOptionKey.lastIndexOf("int_num", 0) !== 0
+				&& pOptionKey.lastIndexOf("str_", 0) !== 0)
+			{
+				return true;
+			}
+			return false;
+		};
+		
 		// Load or initialize input options
 		for (optionkey in O.Options)
 		{
 			inputelm = $("#" + O.cPrefixOption + optionkey);
 			inputtype = inputelm.attr("type");
-			variabletype = U.getVariablePrefix(optionkey);
 			
 			/*
 			 * Initialize legal numeric values by looking up the associated
@@ -645,7 +656,7 @@ O = {
 			 */
 			if (I.isProgramEmbedded)
 			{
-				if (U.Args[optionkey] !== undefined && variabletype !== U.TypeEnum.isString)
+				if (isURLOptionLegal(optionkey))
 				{
 					O.Options[optionkey] = O.convertLocalStorageDataType(
 						U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]));
@@ -653,7 +664,7 @@ O = {
 			}
 			else
 			{
-				if (U.Args[optionkey] !== undefined && variabletype !== U.TypeEnum.isString)
+				if (isURLOptionLegal(optionkey))
 				{
 					// Override localStorage
 					localStorage[optionkey] = U.sanitizeURLOptionsValue(optionkey, U.Args[optionkey]);
@@ -6639,6 +6650,7 @@ A = {
 	TokenCurrent: null,
 	CharIndexCurrent: null,
 	isAccountInitialized: false,
+	isChartsInitialized: false,
 	Metadata: {}, // Prewritten data loaded along with account page
 	Currency: {}, // Currency data
 	Equipment: {}, // Character equipment slots information
@@ -7940,6 +7952,42 @@ A = {
 	},
 	
 	/*
+	 * Loads the charts script and initialize it if haven't already.
+	 * @param function pCallback
+	 */
+	initializeCharts: function(pCallback)
+	{
+		U.getScript(U.URL_API.Charts, function()
+		{
+			if (A.isChartsInitialized === false)
+			{
+				Highcharts.setOptions(
+				{
+					global: {useUTC: false}
+				});
+				A.isChartsInitialized = true;
+			}
+			pCallback();
+		});
+	},
+	getChartsTimeFormat: function()
+	{
+		if (O.Options.bol_use24Hour)
+		{
+			return {
+				second: "%H:%M:%S",
+				minute: "%H:%M",
+				hour: "%H:%M"
+			};
+		}
+		return {
+			second: "%l:%M:%S %p",
+			minute: "%l:%M %p",
+			hour: "%l:%M %p"
+		};
+	},
+	
+	/*
 	 * Generates the account audit subsection into the Characters page.
 	 * The inner functions are executed from bottom to top.
 	 */
@@ -8756,12 +8804,18 @@ A = {
 				O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
 				
 				// Draw the history graph
-				U.getScript(U.URL_API.Charts, function()
+				A.initializeCharts(function()
 				{
 					$("#audChart").highcharts("StockChart", {
 						chart: {width: 720, height: 445},
 						series: formatAuditHistory(hist),
 						credits: {enabled: false},
+						xAxis:
+						{
+							type: "datetime",
+							ordinal: false,
+							dateTimeLabelFormats: A.getChartsTimeFormat()
+						},
 						yAxis:
 						{
 							startOnTick: false,
