@@ -120,10 +120,10 @@ O = {
 	},
 	
 	/*
-	 * All of these options should have an associated input tag in the HTML that
-	 * users interact with, and their IDs are in the form prefixOption + optionkey.
-	 * Note the three letter prefix indicating the option's data type.
-	 * Options that start with "str_" and "int_num" are protected from URL override.
+	 * All of these URL overridable options should have an associated input tag
+	 * in the HTML that users interact with, and their IDs are in the form
+	 * prefixOption + optionkey, where prefix is the option's data type.
+	 * "str_" and "int_num" are protected from URL override.
 	 */
 	Options:
 	{
@@ -8865,7 +8865,7 @@ A = {
 							for (var index = historylength - 1; index >= 0; index--) // Iterate backward so only the latest entry is saved
 							{
 								ithstamp = audstamps[index].split("T")[0]; // Get the date portion of the ISO time string
-								if (uniquedates[ithstamp] === undefined)
+								if (ithstamp && uniquedates[ithstamp] === undefined)
 								{
 									uniquedates[ithstamp] = true;
 									for (var i in A.Currency.AuditHistory)
@@ -8882,10 +8882,29 @@ A = {
 						}
 					});
 					// Selection to delete an account in the history
+					var historydelete = $("<select id='audHistoryDelete'><option>Delete Storage:</option></select>").appendTo(historybuttons);
 					for (var i in histbook)
 					{
-						
+						historydelete.append("<option value='" + U.escapeHTML(i) + "'>" + U.escapeHTML(i) + "</option>");
 					}
+					historydelete.change(function()
+					{
+						if ($(this)[0].selectedIndex !== 0) // First element is the title
+						{
+							var acctodelete = $(this).val();
+							if (confirm("Delete account " + acctodelete + " from the storage?"))
+							{
+								historydelete.find("option[value='" + acctodelete + "']").remove();
+								if (histbook[acctodelete])
+								{
+									delete histbook[acctodelete];
+									O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
+									I.write(acctodelete + " was deleted from the storage.");
+								}
+							}
+							historydelete.find("option:first").attr("selected", "selected");
+						}
+					});
 				});
 			});
 			
@@ -9660,9 +9679,10 @@ V = {
 			var birthdaysince = ~~((iChar.oCharLifetime % T.cSECONDS_IN_YEAR) / T.cSECONDS_IN_DAY);
 			var birthdaytill = T.cDAYS_IN_YEAR - birthdaysince;
 			var birthdaypercent = (birthdaysince / T.cDAYS_IN_YEAR) * T.cPERCENT_100;
-			var seniority = "<var class='chrLifetime' data-value='" + iChar.oCharLifetime + "'>" + lifetime + daystr + " (" + birthdays + yearstr + ")</var>"
+			var seniority = "<var class='chrLifetime' title='" + T.formatTimeLetter(iChar.oCharLifetime) + "' data-value='" + iChar.oCharLifetime + "'>"
+					+ lifetime + daystr + " (" + birthdays + yearstr + ")</var>"
 				+ "<span class='chrHoverName'>" + name + I.getBar(lifetimepercent, true) + I.getBar(birthdaypercent) + "</span>"
-				+ "<var class='chrBirthday' data-value='" + birthdaysince + "'>" + birthdaytill + daystr + "</var>"
+				+ "<var class='chrBirthday' title='" + T.formatTimeLetter(birthdaytill * T.cSECONDS_IN_DAY) + "' data-value='" + birthdaysince + "'>" + birthdaytill + daystr + "</var>"
 				+ "<var class='chrBirthdate'>" + birthdate + "</var>";
 			$("#chrSeniority_" + iChar.oCharIndex).append(seniority);
 		});
