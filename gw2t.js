@@ -3754,7 +3754,7 @@ U = {
 	 */
 	formatJSON: function(pObject)
 	{
-		var str = "nullstring";
+		var str = "failedstringify";
 		try
 		{
 			str = JSON.stringify(pObject, null, "\t");;
@@ -7986,6 +7986,22 @@ A = {
 			hour: "%l:%M %p"
 		};
 	},
+	getChartsCurrencyFormat: function(pPoints)
+	{
+		var html = (T.formatWeektime(pPoints[0].x, true)) + "<table>";
+		for (var i = 0; i < pPoints.length; i++)
+		{
+			var ipoint = pPoints[i];
+			var series = ipoint.series;
+			var currencystr = (series.name === "TotalGems") ? E.formatGemString(ipoint.y, true) : E.formatCoinStringColored(ipoint.y);
+			html += "<tr>"
+				+ "<td style='color:" + series.color + "'>" + D.getWordCapital(series.name.toLowerCase()) + "</td>"
+				+ "<td><b>" + currencystr + "</b></td>"
+			+ "</tr>";
+		};
+		html += "</table>";
+		return html;
+	},
 	
 	/*
 	 * Generates the account audit subsection into the Characters page.
@@ -8828,6 +8844,14 @@ A = {
 								{
 									return E.formatCoinStringColored(this.value);
 								}
+							}
+						},
+						tooltip:
+						{
+							useHTML: true,
+							formatter: function()
+							{
+								return A.getChartsCurrencyFormat(this.points);
 							}
 						}
 					});
@@ -29367,14 +29391,14 @@ T = {
 	 */
 	formatWeektime: function(pDate, pWantTime)
 	{
-		var options = {
-			year: "numeric", month: "numeric", day: "numeric", weekday: "long"
-		};
+		var date = (pDate instanceof Date) ? pDate : (new Date(pDate));
+		var options = {year: "numeric", month: "numeric", day: "numeric", weekday: "long"};
 		if (pWantTime)
 		{
 			options.hour = "numeric";
+			options.minute = "numeric";
 		}
-		return pDate.toLocaleString(window.navigator.language, options);
+		return date.toLocaleString(window.navigator.language, options);
 	},
 	
 	/*
@@ -30075,7 +30099,7 @@ H = {
 					{
 						// Initialize variables
 						var item = H.Sale.Items[i];
-						var wiki = U.getWikiSearchDefault(item.name);
+						var url = item.url || U.getWikiSearchDefault(item.name);
 						var video = U.getYouTubeLink(item.name);
 						var column = (item.col !== undefined) ? item.col : parseInt(i) % 2;
 						
@@ -30116,11 +30140,11 @@ H = {
 								+ "<span class='dsbSalePriceMoney'> = " + E.formatGemToMoney(item.price) + "</span>";
 						}
 						// Format the presentation of this item
-						var idisurl = isNaN(item.id);
-						var dataprop = (idisurl) ? "" : ("data-sale='" + item.id + "'");
-						var imgsrc = (idisurl) ? item.id : "img/ui/placeholder.png";
+						var idisimg = isNaN(item.id);
+						var dataprop = (idisimg) ? "" : ("data-sale='" + item.id + "'");
+						var imgsrc = (idisimg) ? item.id : "img/ui/placeholder.png";
 						$("#dsbSaleCol" + column).append("<div class='dsbSaleEntry'>"
-							+"<a" + U.convertExternalAnchor(wiki) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
+							+"<a" + U.convertExternalAnchor(url) + "><img class='dsbSaleIcon' " + dataprop + " src='" + imgsrc + "' /></a> "
 							+ "<span class='dsbSaleVideo'><a" + U.convertExternalAnchor(video) + "'><ins class='s16 s16_youtube'></ins></a></span> "
 							+ oldpricestr
 							+ pricestr
