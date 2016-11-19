@@ -227,7 +227,8 @@ O = {
 		// Account
 		bol_showRarity: false,
 		bol_condenseBank: false,
-		int_numAuditReports: 128,
+		bol_auditAccountOnReset: false,
+		int_numAuditReports: 512,
 		// Trading
 		bol_refreshPrices: true,
 		int_numTradingCalculators: 25,
@@ -882,6 +883,12 @@ O = {
 			{
 				G.generateAndInitializeDailies();
 			}, resetgraceperiodms);
+		}
+		// Load the audit page in a hidden iframe, which is set to close itself when the audit finishes
+		if (O.Options.bol_auditAccountOnReset)
+		{
+			document.getElementById("jsAuditFrame").src = "./?page=Audit&isAutoAudit=true";
+			I.greet("Automatic account audit started.", messagetime);
 		}
 		
 		// Finally
@@ -8770,7 +8777,7 @@ A = {
 				});
 				
 				/*
-				 * Load audit history and generate graphs.
+				 * Load audit history and generate graph.
 				 */
 				var now = new Date();
 				var histbook = O.loadCompressedObject(O.Utilities.AuditHistory.key) || {};
@@ -8929,6 +8936,11 @@ A = {
 							historydelete.find("option:first").attr("selected", "selected");
 						}
 					});
+					// If ran from an embed then assume this was automated, so close the webpage after the audit finishes
+					if (I.isProgramEmbedded && U.Args["isAutoAudit"])
+					{
+						window.location.href = "about:blank";
+					}
 				});
 			});
 			

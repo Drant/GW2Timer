@@ -228,7 +228,7 @@ img {
 	max-width: 360px;
 }
 
-#jsTTSFrame, #jsTTSAudio {
+#jsAuditFrame, #jsTTSAudio {
 	display: none;
 }
 

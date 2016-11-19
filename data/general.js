@@ -1359,10 +1359,10 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "",
+	pve: "<a href='http://gw2timer.com/?page=Audit'>Account Audit</a> now has history graph, and automatic daily audits in the Options page.",
 	wvw: "",
-	Start: new Date("2016-11-08T16:00:00Z"),
-	Finish: new Date("2016-11-15T16:00:00Z"),
+	Start: new Date("2016-11-18T16:00:00Z"),
+	Finish: new Date("2016-11-25T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "

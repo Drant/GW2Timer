@@ -63,7 +63,7 @@
 		<div id="watUp"></div>
 		<div id="watDown"></div>
 	</div>
-	<iframe id="jsTTSFrame"></iframe>
+	<iframe id="jsAuditFrame"></iframe>
 	<audio id="jsTTSAudio"></audio>
 	<main id="windowMain">
 	<div id="panelMap" class="panelMain">
@@ -861,7 +861,8 @@
 					<h2>Account</h2>
 					<label title="Show/Hide colored borders over items in account banks."><input id="opt_bol_showRarity" type="checkbox" /> Always show rarity on item slots</label>
 					<label title="Decrease or increase bank UI size."><input id="opt_bol_condenseBank" type="checkbox" /> Always condense bank</label>
-					<label title="How many last audit reports will be saved?"><input id="opt_int_numAuditReports" type="number" min="32" max="512" step="1" /> Number of audit reports in history</label>
+					<label title="Will load an invisible iframe of the audit page at every daily reset.<br />You must have an API key entered and checkmarked on the account page."><input id="opt_bol_auditAccountOnReset" type="checkbox" /> Automatically audit at daily reset</label>
+					<label title="How many last audit reports will be saved?"><input id="opt_int_numAuditReports" type="number" min="32" max="1024" step="1" /> Number of audit reports in history</label>
 					<h2>Trading</h2>
 					<label title="Regularly get the current buy and sell prices. This option must be enabled for notification of desired price range to work."><input id="opt_bol_refreshPrices" type="checkbox" /> Auto-refresh data and enable notification</label>
 					<label title="How many seconds before the program refreshes price and exchange data?"><input id="opt_int_secTradingRefresh" type="number" min="30" max="600" step="1" /> Seconds between refreshes</label>
