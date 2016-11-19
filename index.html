@@ -22,7 +22,7 @@
 	<script>window.L || document.write("<script src='bin/leaflet.js'><\/script>");</script>
 	<!-- Web application files  -->
 	<script type="text/javascript" src="plugins.js"></script>
-	<script type="text/javascript" src="data/general.js?v=20161118"></script>
+	<script type="text/javascript" src="data/general.js?v=20161119"></script>
 	<script type="text/javascript" src="data/chains-min.js"></script>
 	<script type="text/javascript" src="gw2t-min.js"></script><!-- Source is at http://gw2timer.com/gw2t.js -->
 	<!-- Google Analytics -->
@@ -400,7 +400,10 @@
 					<kbd id="lboRegion" class="btnWindow lboButton btnVertical lboExtra" title="<dfn>Toggle all server matchups.</dfn><br />gw2timer.com/<dfn>wvw/leaderboard</dfn>"></kbd>
 					<kbd id="lboOpaque" class="btnWindow lboButton btnOpaque lboExtra" title="<dfn>Toggle opacity.</dfn>"></kbd>
 					<kbd id="lboStats" class="btnWindow lboButton btnStats lboExtra" title="<dfn>Print server population list.</dfn>"></kbd>
-					<time id="lboCountdown" class="lboExtra curClick" title="<dfn>Time until matchup reset.</dfn> Click for WvW Rankings."></time>
+					<span id="lboText">
+						<a class="lboLink" href="./?page=WvW&enu_Server=1008">NA</a> <a class="lboLink" href="./?page=WvW&enu_Server=2002">EU</a>
+						<time id="lboCountdown" class="lboExtra curClick" title="<dfn>Time until matchup reset.</dfn> Click for WvW Rankings."></time>
+					</span>
 					<div id="lboCurrent"></div>
 					<div id="lboOther"></div>
 				</div>

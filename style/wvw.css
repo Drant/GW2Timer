@@ -217,7 +217,7 @@
 #lboContainer:hover .lboButton:hover {
 	opacity: 1;
 }
-#lboContainer:hover #lboCountdown {
+#lboContainer:hover #lboText, #lboContainer:hover a.lboLink {
 	opacity: 1;
 }
 #lboToggle {
@@ -236,7 +236,8 @@
 	margin-left: 120px;
 }
 
-#lboCountdown { /* Countdown to WvW reset clock */
+#lboText { /* Countdown to WvW reset clock */
+	display: block;
 	position: absolute;
 	margin-left: 152px;
 	margin-top: -24px;
@@ -244,7 +245,12 @@
 	font-size: 14px;
 	opacity: 0.6;
 }
-#lboCountdown:hover {
+a.lboLink {
+	color: white;
+	text-decoration: none;
+	opacity: 0.4;
+}
+#lboCountdown:hover, a.lboLink:hover {
 	text-decoration: underline;
 }
 
