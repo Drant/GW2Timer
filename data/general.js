@@ -1433,8 +1433,8 @@ Countdown: {
 		name_fr: "Histoire Vivante 3: Épisode III",
 		name_zh: "第二生活世界：第三集",
 		url: "https://twitter.com/GuildWars2/status/800655080483672064",
-		Start: new Date("2016-11-22T02:00:00Z"),
-		Finish: new Date("2016-11-23T18:00:00Z")
+		Start: new Date("2016-11-21T18:30:00Z"),
+		Finish: new Date("2016-11-22T18:00:00Z")
 	}
 	/*{
 		name_en: "Halloween 2017",
