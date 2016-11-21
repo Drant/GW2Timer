@@ -1422,7 +1422,7 @@ Countdown: {
 		name_es: "Rebaja Viernes Negro",
 		name_fr: "Vente Vendredi Noir",
 		name_zh: "黑色星期五",
-		url: "https://twitter.com/GuildWars2/status/669516905657552897",
+		official: "news/get-ready-for-winter-at-the-black-lion-trading-company/",
 		Start: new Date("2016-11-21T17:00:00Z"),
 		Finish: new Date("2016-11-27T17:00:00Z")
 	},
@@ -1432,7 +1432,7 @@ Countdown: {
 		name_es: "Historia Viviente 3: Episodio III",
 		name_fr: "Histoire Vivante 3: Épisode III",
 		name_zh: "第二生活世界：第三集",
-		url: "https://twitter.com/GuildWars2/status/800655080483672064",
+		official: "news/a-crack-in-the-ice-is-live/",
 		Start: new Date("2016-11-21T18:30:00Z"),
 		Finish: new Date("2016-11-22T18:00:00Z")
 	}
@@ -1523,6 +1523,20 @@ Sale: {
 	],
 	Items: [
 	{
+		name: "Crystalline Dragon Wings Backpack Glider Combo",
+		id: "http://i.imgur.com/28mbJXc.png",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
+		name: "Braham's Wolfblood Outfit",
+		id: "http://i.imgur.com/EmwCbr0.png",
+		price: 700,
+		discount: null,
+		col: 0
+	},
+	{
 		name: "Aviator Quaggan Mail Carrier",
 		id: "69628",
 		price: 400,
@@ -1564,8 +1578,6 @@ Sale: {
 		discount: 200,
 		col: 0
 	},
-	
-	
 	{
 		name: "Toxic Gloves Skin",
 		id: "49031",
