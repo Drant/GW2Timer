@@ -1417,24 +1417,24 @@ Countdown: {
 		Finish: new Date("2016-11-23T07:55:00Z")
 	},
 	{
-		name_en: "Living Story 3: Episode III",
-		name_de: "Lebendige Geschichte 3: Episode III",
-		name_es: "Historia Viviente 3: Episodio III",
-		name_fr: "Histoire Vivante 3: Épisode III",
-		name_zh: "第二生活世界：第三集",
-		official: "news/watch-the-trailer-for-a-crack-in-the-ice/",
-		Start: new Date("2016-11-21T17:00:00Z"),
-		Finish: new Date("2016-11-22T17:00:00Z")
-	},
-	{
 		name_en: "Black Friday Sale",
 		name_de: "Black Friday Verkauf",
 		name_es: "Rebaja Viernes Negro",
 		name_fr: "Vente Vendredi Noir",
 		name_zh: "黑色星期五",
 		url: "https://twitter.com/GuildWars2/status/669516905657552897",
-		Start: new Date("2016-11-25T17:00:00Z"),
-		Finish: new Date("2016-11-37T17:00:00Z")
+		Start: new Date("2016-11-21T17:00:00Z"),
+		Finish: new Date("2016-11-27T17:00:00Z")
+	},
+	{
+		name_en: "Living Story 3: Episode III",
+		name_de: "Lebendige Geschichte 3: Episode III",
+		name_es: "Historia Viviente 3: Episodio III",
+		name_fr: "Histoire Vivante 3: Épisode III",
+		name_zh: "第二生活世界：第三集",
+		url: "https://twitter.com/GuildWars2/status/800655080483672064",
+		Start: new Date("2016-11-22T02:00:00Z"),
+		Finish: new Date("2016-11-23T18:00:00Z")
 	}
 	/*{
 		name_en: "Halloween 2017",
@@ -1523,25 +1523,69 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Marjory's Shrouded Outfit",
-		id: "http://i.imgur.com/pRp0BLo.png",
-		price: 700,
-		discount: null,
+		name: "Aviator Quaggan Mail Carrier",
+		id: "69628",
+		price: 400,
+		discount: 500,
 		col: 0
 	},
 	{
-		name: "Plush Aurene Backpack Cover",
-		id: "http://i.imgur.com/Ac6eSGU.png",
+		name: "Bazaar Quaggan Mini Pack",
+		id: "42981",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
+		name: "Plush Quaggan Backpack Cover",
+		id: "39137",
+		price: 240,
+		discount: 300,
+		col: 0
+	},
+	{
+		name: "Warrior Quaggan Backpack Set",
+		id: "39520",
+		price: 240,
+		discount: 300,
+		col: 0
+	},
+	{
+		name: "Fuzzy Quaggan Hat",
+		id: "64739",
+		price: 160,
+		discount: 200,
+		col: 0
+	},
+	{
+		name: "Fuzzy Quaggan Hat with Bow",
+		id: "64751",
+		price: 160,
+		discount: 200,
+		col: 0
+	},
+	
+	
+	{
+		name: "Toxic Gloves Skin",
+		id: "49031",
 		price: 400,
 		discount: null,
-		col: 0
+		col: 1
 	},
 	{
-		name: "Mini Bloodstone Rock",
-		id: "http://i.imgur.com/Ynf36oy.png",
-		price: 350,
+		name: "Toxic Mantle Skin",
+		id: "49024",
+		price: 400,
 		discount: null,
-		col: 0
+		col: 1
+	},
+	{
+		name: "Toxic Dye Kit",
+		id: "48954",
+		price: 125,
+		discount: [[1, 125], [5, 500], [25, 2500]],
+		col: 1
 	},
 	{
 		name: "Bandit Sniper Appearance Pack",
@@ -1554,6 +1598,20 @@ Sale: {
 		name: "Crystal Arbiter Appearance Pack",
 		id: "http://i.imgur.com/vFtlrW5.png",
 		price: 2000,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Marjory's Shrouded Outfit",
+		id: "http://i.imgur.com/pRp0BLo.png",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Plush Aurene Backpack Cover",
+		id: "http://i.imgur.com/Ac6eSGU.png",
+		price: 400,
 		discount: null,
 		col: 1
 	}
