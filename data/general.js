@@ -1417,16 +1417,6 @@ Countdown: {
 		Finish: new Date("2016-11-23T07:55:00Z")
 	},
 	{
-		name_en: "Black Friday Sale",
-		name_de: "Black Friday Verkauf",
-		name_es: "Rebaja Viernes Negro",
-		name_fr: "Vente Vendredi Noir",
-		name_zh: "黑色星期五",
-		official: "news/get-ready-for-winter-at-the-black-lion-trading-company/",
-		Start: new Date("2016-11-21T17:00:00Z"),
-		Finish: new Date("2016-11-27T17:00:00Z")
-	},
-	{
 		name_en: "Living Story 3: Episode III",
 		name_de: "Lebendige Geschichte 3: Episode III",
 		name_es: "Historia Viviente 3: Episodio III",
@@ -1435,6 +1425,16 @@ Countdown: {
 		official: "news/a-crack-in-the-ice-is-live/",
 		Start: new Date("2016-11-21T18:30:00Z"),
 		Finish: new Date("2016-11-22T18:00:00Z")
+	},
+	{
+		name_en: "Black Friday Sale",
+		name_de: "Black Friday Verkauf",
+		name_es: "Rebaja Viernes Negro",
+		name_fr: "Vente Vendredi Noir",
+		name_zh: "黑色星期五",
+		url: "https://twitter.com/GuildWars2/status/669516905657552897",
+		Start: new Date("2016-11-25T17:00:00Z"),
+		Finish: new Date("2016-11-27T17:00:00Z")
 	}
 	/*{
 		name_en: "Halloween 2017",
@@ -1523,7 +1523,7 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Crystalline Dragon Wings Backpack Glider Combo",
+		name: "Crystalline Dragon Wings Glider",
 		id: "http://i.imgur.com/28mbJXc.png",
 		price: 700,
 		discount: null,
