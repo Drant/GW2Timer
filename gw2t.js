@@ -8864,7 +8864,7 @@ A = {
 					});
 					var historybuttons = $("<div id='audHistoryButtons'></div>").appendTo(historycontainer);
 					// Button to print this account's history
-					$("<button id='audPrintHistory' class='audButton'>Print History</button>").appendTo(historybuttons).click(function()
+					$("<button class='audButton'>Print History</button>").appendTo(historybuttons).click(function()
 					{
 						I.prettyJSON(hist);
 					});
@@ -8908,8 +8908,6 @@ A = {
 							hist = histnew;
 							histbook[accname] = hist;
 							O.saveCompressedObject(O.Utilities.AuditHistory.key, histbook);
-							I.clear();
-							$("#audPrintHistory").trigger("click");
 						}
 					});
 					// Selection to delete an account in the history
@@ -9403,8 +9401,10 @@ V = {
 		// Audit option
 		$("#accAuditTop").append(
 			"<label><input id='audWantTransactions' type='checkbox' />" + D.getPhraseOriginal("Include current trading transactions") + ".</label><br />"
-			+ "<label><input id='audWantVaults' type='checkbox' />" + D.getPhraseOriginal("Include guilds vault") + ".</label>"
+			+ "<label><input id='audWantVaults' type='checkbox' />" + D.getPhraseOriginal("Include guilds vault") + ".</label><br />"
+			+ "<label><input id='audWantAutomatic' type='checkbox' />" + D.getPhraseOriginal("Automatic daily audit") + ".</label>"
 		);
+		O.mimicInput("#audWantAutomatic", "bol_auditAccountOnReset");
 		// Audit buttons
 		var buttoncontainer = $("#accAuditCenter");
 		var executebtn = $("<button id='audExecute'>" + D.getPhraseOriginal("Audit Account") + "</button>")
@@ -17761,6 +17761,8 @@ D = {
 			cs: "zjištěno", it: "trovato", pl: "stwierdzono", pt: "encontrado", ru: "найден", zh: "發現了"},
 		s_loading: {de: "laden", es: "cargando", fr: "chargement",
 			cs: "načítání", it: "caricamento", pl: "ładowanie", pt: "carregando", ru: "загрузка", zh: "正在載入"},
+		s_automatic: {de: "automatisch", es: "automático", fr: "automatique",
+			cs: "automatický", it: "automatico", pl: "automatyczny", pt: "automático", ru: "автоматический", zh: "自動的"},
 		
 		// Prepositions and Conjunctions
 		s_at: {de: "um", es: "a", fr: "à",
@@ -21856,13 +21858,8 @@ M = {
 			var obj = O.Utilities["StoredWeapons" + that.OptionSuffix];
 			// First make a new array with desired length
 			obj.value = new Array(pQuantity);
-			var key = obj.key;
 			// Try to overwrite it with the stored arrays, if this fails then the value property is unchanged (a blank array)
-			try
-			{
-				obj.value = JSON.parse(localStorage[key]);
-			}
-			catch (e) {}
+			obj.value = O.loadCompressedObject(obj.key) || new Array(pQuantity);
 		};
 		var saveStoredWeapons = function(pIndex)
 		{
@@ -21871,7 +21868,7 @@ M = {
 			if (weapons.length > 0)
 			{
 				obj.value[pIndex] = weapons;
-				localStorage[obj.key] = JSON.stringify(obj.value);
+				O.saveCompressedObject(obj.key, obj.value);
 			}
 			else
 			{
@@ -28290,7 +28287,42 @@ J = {
 
 	initializeProjection: function()
 	{
+		J.Scene = new THREE.Scene();
+		J.Camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+		J.Renderer = new THREE.WebGLRenderer({alpha: true});
+		J.Renderer.setClearColor(0xffffff, 0);
+		J.Renderer.setSize(window.innerWidth, window.innerHeight);
+		document.getElementById("itemProjector").appendChild(J.Renderer.domElement);
+
+		var geometry = new THREE.BoxGeometry(1, 1, 1);
+		var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+		var cube = new THREE.Mesh(geometry, material);
+		//J.Scene.add(cube);
+
+		//J.Camera.position.x = 3;
+		//J.Camera.position.y = 4;
+		J.Camera.position.z = 5;
+		//J.Camera.lookAt(new THREE.Vector3(1, 0, 0));
 		
+		var geometry = new THREE.CircleGeometry(1, 32);
+		var material = new THREE.MeshBasicMaterial({color: 0xffff00});
+		var circle = new THREE.Mesh(geometry, material);
+		J.Scene.add(circle);
+
+		var render = function ()
+		{
+			requestAnimationFrame(render);
+
+			cube.rotation.x += 0.1;
+			cube.rotation.y += 0.1;
+
+			J.Renderer.render(J.Scene, J.Camera);
+		};
+
+		render();
+		
+		J.isProjectionInitialized = true;
 	}
 
 };
