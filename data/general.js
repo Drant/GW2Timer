@@ -1524,14 +1524,14 @@ Sale: {
 	Items: [
 	{
 		name: "Crystalline Dragon Wings Glider",
-		id: "http://i.imgur.com/28mbJXc.png",
+		id: "79704",
 		price: 700,
 		discount: null,
 		col: 0
 	},
 	{
 		name: "Braham's Wolfblood Outfit",
-		id: "http://i.imgur.com/EmwCbr0.png",
+		id: "79703",
 		price: 700,
 		discount: null,
 		col: 0
@@ -1615,14 +1615,14 @@ Sale: {
 	},
 	{
 		name: "Marjory's Shrouded Outfit",
-		id: "http://i.imgur.com/pRp0BLo.png",
+		id: "79705",
 		price: 700,
 		discount: null,
 		col: 1
 	},
 	{
 		name: "Plush Aurene Backpack Cover",
-		id: "http://i.imgur.com/Ac6eSGU.png",
+		id: "79702",
 		price: 400,
 		discount: null,
 		col: 1
@@ -1667,12 +1667,12 @@ Vendor:
 	PriceDefault: 25200,
 	Offers: // Changes at 00:00 UTC, "id" is recipe item ID, "price" is in karma, "product" is the crafted item
 	{
-		Mehem: { id: "43834" },
-		Fox: { id: "67965" },
-		Derwena: { id: "43799" },
-		Yana: { id: "43804" },
-		Katyn: { id: "43841" },
-		Verma: { id: "44663" }
+		Mehem: { id: "43832" },
+		Fox: { id: "44655" },
+		Derwena: { id: "49743" },
+		Yana: { id: "43814" },
+		Katyn: { id: "49757" },
+		Verma: { id: "43828" }
 	}
 }
 };

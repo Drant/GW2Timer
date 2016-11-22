@@ -60,7 +60,9 @@ General: [
 	{u: 40, i: 79220, n: "Verdant Executor Outfit", p: {gem: 700}},
 	{u: 42, i: 79531, n: "Mursaat Robes", p: {gem: 700}},
 	{u: 41, i: 79380, n: "Taimi Outfit", p: {gem: 700}},
-	{u: 43, i: 79671, n: "Ghostly Outfit", p: {gem: 700}}
+	{u: 43, i: 79671, n: "Ghostly Outfit", p: {gem: 700}},
+	{u: 45, i: 79705, n: "Marjory's Shrouded Outfit", p: {gem: 700}},
+	{u: 44, i: 79703, n: "Braham's Wolfblood Outfit", p: {gem: 700}}
 ],
 Festival: [
 	{u: 2, i: 65196, n: "Mad King's Outfit", p: {gem: 700}},

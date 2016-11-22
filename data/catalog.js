@@ -60,9 +60,11 @@ Key: [
 	{i: 20316, n: "Black Lion Chest"},
 	{i: 43992, n: "Black Lion Claim Ticket", p: {gem: 0}},
 	{i: 43998, n: "Black Lion Claim Ticket Scrap", p: {gem: 0}},
-	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}}
+	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}},
+	{i: 42605, n: "Frozen Exotic Weapon Fragment", p: {coin: -1}}
 ],
 Token: [
+	{i: 79899, n: "Fresh Winterberry", p: {magic: 37}},
 	{i: 79469, n: "Petrified Wood", p: {magic: 37}},
 	{i: 79280, n: "Blood Ruby", p: {magic: 37}},
 	{i: 19721, n: "Glob of Ectoplasm"},
@@ -95,6 +97,8 @@ Token: [
 	{i: 78600, n: "Potion of WvW Rewards", p: {badge: 0}}
 ],
 Dungeon: [
+	
+	{i: 79722, n: "Infinite Mist Omnipotion", p: {fotm_relic: 20500}},
 	{i: 79608, n: "Infinite Mist Offensive Potion", p: {fotm_relic: 8000}},
 	{i: 79515, n: "Infinite Mist Defensive Potion", p: {fotm_relic: 5000}},
 	{i: 79494, n: "Infinite Mist Mobility Potion", p: {fotm_relic: 5000}},
@@ -146,8 +150,10 @@ Contract: [
 	{i: 73024, n: "Lion's Arch Portal Scroll", p: {craft: true}},
 	{i: 79073, n: "Bloodstone Fen Portal Scroll", p: {magic: 1000}},
 	{i: 79456, n: "Ember Bay Portal Scroll", p: {magic: 1000}},
+	{i: 79905, n: "Bitterfrost Frontier Portal Scroll", p: {coin: -1}},
 	{i: 78177, n: "Permanent Portable Provisioner", p: {coin: 10000}},
-	{i: 78978, n: "White Mantle Portal Device", p: {raid_ft: 1000}}
+	{i: 78978, n: "White Mantle Portal Device", p: {raid_ft: 1000}},
+	{i: 79744, n: "Exalted Portal Stone", p: {achievement: 0}}
 ],
 Gathering: [
 	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
@@ -235,6 +241,7 @@ Toy: [
 	{i: 36172, n: "Bobblehead Laboratory", p: {gem: 400}},
 	{i: 43881, n: "Bottomless Belcher's Bluff Kit", p: {coin: 1000000}},
 	{i: 43901, n: "Zephyr Sanctum Model", p: {laurel: 25}},
+	{i: 79794, n: "Bitterfrost Vantage Point", p: {coin: -1}},
 	{i: 66342, n: "Water Fight Balloon Bucket", p: {gem: 500}},
 	{i: 67881, n: "Aviator's Memory Box", p: {gem: 400}},
 	{i: 20000, n: "Box o' Fun", p: {gem: -64}},
@@ -379,6 +386,7 @@ TonicEndless: [
 	{i: 79657, n: "Endless Shadow Raven Tonic", p: {craft: true}},
 	{i: 79668, n: "Endless Hellfire Skeleton Tonic", p: {craft: true}},
 	{i: 79664, n: "Endless Ignited Wraith Tonic", p: {craft: true}},
+	{i: 79849, n: "Endless Kodan Tonic", p: {coin: -1}},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},
@@ -669,6 +677,7 @@ Legendary: [
 	{i: 76158, n: "Astralaria", p: {craft: true}},
 	{i: 79562, n: "Eureka", p: {craft: true}},
 	{i: 72713, n: "HOPE", p: {craft: true}},
+	{i: 79802, n: "Shooshadoo", p: {craft: true}},
 	{i: 78556, n: "Chuka and Champawat", p: {craft: true}},
 	{i: 71383, n: "Nevermore", p: {craft: true}},
 	{i: 77474, n: "The Ascension", p: {craft: true}},
@@ -719,7 +728,8 @@ Glider: [
 	{i: 79595, n: "Mursaat Wings Glider", p: {gem: 700}},
 	{i: 79631, n: "Spectral Glider", p: {gem: 500}},
 	{i: 79663, n: "Bloodstone Glider", p: {gem: 500}},
-	{i: 79660, n: "Grasping Phantom Glider", p: {gem: 0}}
+	{i: 79660, n: "Grasping Phantom Glider", p: {gem: 0}},
+	{i: 79704, n: "Crystalline Dragon Wings Glider", p: {gem: 700}}
 ],
 Node: [
 	{i: 43902, n: "Gift of Quartz", p: {laurel: 25}},
@@ -735,6 +745,8 @@ Node: [
 	{i: 78582, n: "Personal Exalted Chest Voucher", p: {map_ab: 250}},
 	{i: 78549, n: "Personal Crystallized Supply Cache Voucher", p: {map_td: 250}},
 	{i: 79217, n: "Bloodstone Crystal Node", p: {coin: 500000}},
+	{i: 79898, n: "Petrified Wood Node", p: {coin: -1}},
+	{i: 79903, n: "Winterberry Bush Node", p: {coin: -1}},
 	{i: 67290, n: "Basic Harvesting Node Pack", p: {gem: 800}},
 	{i: 66769, n: "Basic Lumber Node Pack", p: {gem: 800}},
 	{i: 44884, n: "Basic Ore Node Pack", p: {gem: 800}},
