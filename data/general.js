@@ -1504,8 +1504,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-11-15T16:00:00Z"),
-	Finish: new Date("2016-11-22T16:00:00Z"),
+	Start: new Date("2016-11-22T16:00:00Z"),
+	Finish: new Date("2016-11-29T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1582,6 +1582,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Tinker's Package",
+		id: "http://i.imgur.com/j5r0Kgd.png",
+		price: 1850,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Toxic Gloves Skin",
 		id: "49031",
 		price: 400,
@@ -1620,13 +1627,6 @@ Sale: {
 		name: "Marjory's Shrouded Outfit",
 		id: "79705",
 		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Plush Aurene Backpack Cover",
-		id: "79702",
-		price: 400,
 		discount: null,
 		col: 1
 	}
