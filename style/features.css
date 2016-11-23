@@ -913,14 +913,15 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 .chl_furnace { background-position: -128px 0; }
 .chl_maitrin { background-position: -160px 0; }
 .chl_molten { background-position: -192px 0; }
-.chl_ocean { background-position: -224px 0; }
-.chl_snowblind { background-position: -256px 0; }
-.chl_swamp { background-position: -288px 0; }
-.chl_thaumanova { background-position: -320px 0; }
-.chl_uncategorized { background-position: -352px 0; }
-.chl_underground { background-position: -384px 0; }
-.chl_urban { background-position: -416px 0; }
-.chl_volcanic { background-position: -448px 0; }
+.chl_nightmare { background-position: -224px 0; }
+.chl_ocean { background-position: -256px 0; }
+.chl_snowblind { background-position: -288px 0; }
+.chl_swamp { background-position: -320px 0; }
+.chl_thaumanova { background-position: -352px 0; }
+.chl_uncategorized { background-position: -384px 0; }
+.chl_underground { background-position: -416px 0; }
+.chl_urban { background-position: -448px 0; }
+.chl_volcanic { background-position: -480px 0; }
 
 .chlDungeonBar label {
 	display: inline;
