@@ -2777,7 +2777,7 @@ U = {
 					{
 						pagenumbers.push(i);
 					}
-					Z.scrapeAPIArray(pagenumbers, url + "&page=", {
+					Z.scrapeAPIArray(url + "&page=", pagenumbers, {
 						aIsStandard: false,
 						aCooldown: 60,
 						aCallback: function(pPages)
@@ -2850,10 +2850,12 @@ U = {
 	 * @param array pIDs numbers.
 	 * @objparam function aCallback with array of raw API objects accumulated.
 	 * @objparam boolean aWantCache use browser cache from previous fetches, optional.
+	 * @objparam boolean aLanguage code, otherwise user's language is used, optional.
 	 */
-	fetchAPI: function(pURL, pIDs, pCallback, pWantCache)
+	fetchAPI: function(pURL, pIDs, pSettings)
 	{
-		var wantcache = (pWantCache !== undefined) ? pWantCache : false;
+		var Settings = pSettings || {};
+		var wantcache = (Settings.aWantCache !== undefined) ? Settings.aWantCache : false;
 		var itemids = [];
 		var retarr = [];
 		var failarr = [];
@@ -2869,9 +2871,9 @@ U = {
 			}
 			
 			A.fillProgressBar();
-			if (pCallback)
+			if (Settings.aCallback)
 			{
-				pCallback(retarr, failarr);
+				Settings.aCallback(retarr, failarr);
 			}
 		};
 		
@@ -2899,7 +2901,7 @@ U = {
 			
 			$.ajax({
 				dataType: "json",
-				url: U.getLangURL(pURL) + "&ids=" + fetchids.join(","),
+				url: U.getLangURL(pURL, Settings.aLanguage) + "&ids=" + fetchids.join(","),
 				cache: wantcache,
 				success: function(pData)
 				{
@@ -2928,24 +2930,25 @@ U = {
 			numtofetch = itemids.length;
 			fetchArray(itemids);
 		}
-		else if (pCallback)
+		else if (Settings.aCallback)
 		{
-			pCallback();
+			Settings.aCallback();
 		}
 	},
 	
 	/*
 	 * Gets the appropriate query string divider for a URL.
 	 * @param string pURL.
+	 * @param string pLanguage code to use instead of the user's, optional.
 	 * @returns string
 	 */
 	getDivider: function(pURL)
 	{
 		return (pURL.indexOf("?") !== -1) ? "&" : "?";
 	},
-	getLangURL: function(pURL)
+	getLangURL: function(pURL, pLanguage)
 	{
-		return pURL + U.getDivider(pURL) + U.URL_API.LangKey;
+		return pURL + U.getDivider(pURL) + (pLanguage ? ("lang=" + pLanguage) : U.URL_API.LangKey);
 	},
 	
 	/*
@@ -4727,13 +4730,19 @@ Z = {
 			{
 				
 			}},
-			updatedb: {usage: "Prints an updated database of items.", f: function()
+			updatedb: {usage: "Prints an updated database of items. <em>Parameters: bol_wantrebuild (optional).", f: function()
 			{
-				Z.updateItemsDatabase();
+				if (args[1])
+				{
+					Z.updateItemsDatabase(U.stringToBool(args[1]));
+				}
 			}},
-			updatesubdb: {usage: "Prints an updated subset database of items used by an account page's section. <em>Parameters: str_section</em>", f: function()
+			subdb: {usage: "Prints a subset database of items used by an account page's section. <em>Parameters: str_section</em>", f: function()
 			{
-				Z.updateItemsSubdatabase(args[1]);
+				if (args[1])
+				{
+					Z.updateItemsSubdatabase(args[1]);
+				}
 			}},
 			collate: {usage: "Executes a function to update and categorize an unlockables record. <em>Parameters: str_section</em>", f: function()
 			{
@@ -4827,7 +4836,7 @@ Z = {
 				{
 					// Delegate the heavier task of large array scraping to another function
 					I.print("Array is too big for one simultaneous request, requesting in batches with wait in between...");
-					Z.scrapeAPIArray(pData, pString, {aQueryStr: querystr});
+					Z.scrapeAPIArray(pString, pData, {aQueryStr: querystr});
 				}
 				else
 				{
@@ -5095,8 +5104,8 @@ Z = {
 	/*
 	 * Takes an array of API endpoint ID numbers, downloads every object they
 	 * point to, and amasses them into an array of objects.
+	 * @param string pSuffix of API endpoint.
 	 * @param intarray pArray downloaded from API.
-	 * @param string pString suffix of API endpoint.
 	 * @objparam string aQueryStr arguments for the API url.
 	 * @objparam boolean aIsStandard whether to format the URL in standard v2 API format with a "/" preceding the ID.
 	 * @objparam boolean aWantSort whether to sort the retrieved objects by their ID after, on by default.
@@ -5106,7 +5115,7 @@ Z = {
 	 * @objparam int aRetryCount used internally for recursive retrieval of failed IDs.
 	 * @objparam array aCacheArray from previous scrape.
 	 */
-	scrapeAPIArray: function(pArray, pSuffix, pSettings)
+	scrapeAPIArray: function(pSuffix, pArray, pSettings)
 	{
 		var Settings = pSettings || {};
 		var querystr = Settings.aQueryStr || "";
@@ -5146,7 +5155,7 @@ Z = {
 				{
 					var retrycount = (Settings.aRetryCount || numretries) - 1;
 					I.print("Retrying " + retrycount + " times to fetch failed IDs...");
-					Z.scrapeAPIArray(failedids, pSuffix, {
+					Z.scrapeAPIArray(pSuffix, failedids, {
 						aRetryCount: retrycount,
 						aCacheArray: cachearr,
 						aFailedIndexes: failedindexes,
@@ -5264,7 +5273,7 @@ Z = {
 						});
 						retrieveData();
 					};
-					Z.scrapeAPIArray(pArray, pSuffix, Settings);
+					Z.scrapeAPIArray(pSuffix, pArray, Settings);
 				})(Z.DatabaseLanguages[counter]);
 				counter++;
 			}
@@ -5578,8 +5587,9 @@ Z = {
 	 * Downloads items that are missing from the current version of the items
 	 * database for every available API languages.
 	 */
-	updateItemsDatabase: function()
+	updateItemsDatabase: function(pIsRebuild)
 	{
+		var wantrebuild = (pIsRebuild === true);
 		var counter = 0;
 		var newitemslist, newitems;
 		var updateDBLang = function()
@@ -5588,7 +5598,7 @@ Z = {
 			if (counter >= Z.DatabaseLanguages.length)
 			{
 				I.print("Items database of all languages updated.");
-				if (newitems)
+				if (newitems && !wantrebuild)
 				{
 					Z.printRecordEntry(newitems, {
 						aItemIDsKey: "id"
@@ -5605,15 +5615,18 @@ Z = {
 				// Convert the associative array into an array for later sorting
 				for (var ithitemid in pData)
 				{
-					dbarray.push(pData[ithitemid]);
+					if (!wantrebuild)
+					{
+						dbarray.push(pData[ithitemid]);
+					}
 					currentitemids.push(parseInt(ithitemid));
 				}
 				// Find what item IDs are missing by comparing the API's current list with the one here
-				var newitemids = U.getDifference(newitemslist, currentitemids);
+				var newitemids = (wantrebuild) ? currentitemids : U.getDifference(newitemslist, currentitemids);
 				if (newitemids.length)
 				{
-					Z.scrapeAPIArray(newitemids, "items", {
-						aQueryStr: "?lang=" + lang,
+					U.fetchAPI(U.URL_API.ItemDetail, newitemids, {
+						aLanguage: lang,
 						aCallback: function(pNewItems)
 					{
 						for (var i = 0; i < pNewItems.length; i++)
@@ -5627,9 +5640,10 @@ Z = {
 						U.sortObjects(dbarray, {aKeyName: "id"});
 						Z.APICacheArrayOfObjects = dbarray;
 						// Force unicode encoding on English
-						if (lang === O.OptionEnum.Language.English)
+						var firstitem = Z.APICacheArrayOfObjects[0];
+						if (lang === O.OptionEnum.Language.English && firstitem.name.indexOf(I.Symbol.Unicode) === -1)
 						{
-							Z.APICacheArrayOfObjects[0].name += I.Symbol.Unicode;
+							firstitem.name += I.Symbol.Unicode;
 						}
 						Z.printAPICache(U.TypeEnum.isAssoc, {
 							aWantQuotes: true,
@@ -5721,7 +5735,7 @@ Z = {
 			else
 			{
 				// Fetch new entries
-				Z.scrapeAPIArray(filteredids, endpoint, {aCallback: function(pData)
+				Z.scrapeAPIArray(endpoint, filteredids, {aCallback: function(pData)
 				{
 					pCallback({
 						oRecord: record,
@@ -5903,7 +5917,7 @@ Z = {
 			}
 			$.getJSON(U.getAPIMaterial(), function(pMatCategoryIDs)
 			{
-				Z.scrapeAPIArray(pMatCategoryIDs, section.toLowerCase(), {aCallback: function(pMatCategories)
+				Z.scrapeAPIArray(section.toLowerCase(), pMatCategoryIDs, {aCallback: function(pMatCategories)
 				{
 					for (var i in pMatCategories)
 					{
@@ -6189,6 +6203,10 @@ Z = {
 				if (desc.indexOf("salvage item") !== -1)
 				{
 					return "Salvage";
+				}
+				if (desc.indexOf("used to") !== -1 || desc.indexOf("to make") !== -1)
+				{
+					return "Combine";
 				}
 				if (pItem.rarity === "Junk")
 				{
@@ -9489,7 +9507,9 @@ V = {
 			{
 				charnames.push(U.encodeURL(iName));
 			});
-			U.fetchAPI(A.getURL(A.URL.Characters), charnames, function(pData)
+			U.fetchAPI(A.getURL(A.URL.Characters), charnames, {
+				aWantCache: true,
+				aCallback: function(pData)
 			{
 				I.removeThrobber(dish);
 				var charindex = 0;
@@ -9512,7 +9532,7 @@ V = {
 				{
 					$("#accMenu_" + pSection).trigger("click");
 				}
-			}, true);
+			}});
 		}).fail(function(pRequest, pStatus)
 		{
 			I.removeThrobber(dish);
@@ -14431,7 +14451,9 @@ Q = {
 			}
 		});
 		// Fetch if any uncached
-		U.fetchAPI(U.URL_API.ItemDetail, arr, function(pData)
+		U.fetchAPI(U.URL_API.ItemDetail, arr, {
+			aWantCache: true,
+			aCallback: function(pData)
 		{
 			if (pData)
 			{
@@ -14445,7 +14467,7 @@ Q = {
 				});
 			}
 			pCallback();
-		}, true);
+		}});
 	},
 	getPricedItems: function(pItemIDs, pCallback)
 	{
@@ -16355,7 +16377,9 @@ E = {
 			}
 		}
 		
-		U.fetchAPI(U.URL_API.ItemPrice, tradeableids, function(pData, pFailedIDs)
+		U.fetchAPI(U.URL_API.ItemPrice, tradeableids, {
+			aWantCache: pWantCache,
+			aCallback: function(pData, pFailedIDs)
 		{
 			var db = {};
 			if (pData)
@@ -16373,7 +16397,7 @@ E = {
 			{
 				pCallback();
 			}
-		}, pWantCache);
+		}});
 	},
 	getPriceObject: function(pItemID, pCallback)
 	{

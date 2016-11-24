@@ -68,17 +68,18 @@
 	>Resource Nodes</var>
 </header>
 <section>
-<button id="mapToggle_Resource" class="curToggle" title="Toggle display of all nodes."><img data-src="img/map/display.png" alt="Toggle" /></button>
-<button id="nodRoute" class="curZoom" style="" title="Draw route for any displayed nodes.<br /> Map nodes you have clicked on are excluded.<br />Middle click a pin to set new starting point.<br /><dfn>Right click on the map</dfn> for Pins functions.">
-	<img data-src="img/map/route.png" />
-</button>
-<div class="cntOptionMini" style="margin:8px">
-	<label title="<dfn>Rich</dfn> ore vein or plant farms, permanent location"><input id="nodShowRich" type="checkbox" checked disabled /><span class="nodRich"><img data-src="img/node/strawberry.png" /></span></label>
-	<label title="<dfn>Regular</dfn> node, possible location"><input id="nodShowRegular" type="checkbox" /><span class="nodRegular"><img data-src="img/node/orichalcum.png" /></span></label>
-	<label title="<dfn>Hotspot</dfn> area, probable locations"><input id="nodShowHotspot" type="checkbox" /><span class="nodHotspot"><img data-src="img/node/soft.png" /></span></label>
+<div id="nodMenu">
+	<button id="mapToggle_Resource" class="curToggle" title="Toggle display of all nodes."><img data-src="img/map/display.png" alt="Toggle" /></button>
+	<button id="nodRoute" class="curZoom" style="" title="Draw route for any displayed nodes.<br /> Map nodes you have clicked on are excluded.<br />Middle click a pin to set new starting point.<br /><dfn>Right click on the map</dfn> for Pins functions.">
+		<img data-src="img/map/route.png" />
+	</button>
+	<div class="cntOptionMini" style="margin:8px">
+		<label title="<dfn>Rich</dfn> ore vein or plant farms, permanent location"><input id="nodShowRich" type="checkbox" checked disabled /><span class="nodRich"><img data-src="img/node/strawberry.png" /></span></label>
+		<label title="<dfn>Regular</dfn> node, possible location"><input id="nodShowRegular" type="checkbox" /><span class="nodRegular"><img data-src="img/node/orichalcum.png" /></span></label>
+		<label title="<dfn>Hotspot</dfn> area, probable locations"><input id="nodShowHotspot" type="checkbox" /><span class="nodHotspot"><img data-src="img/node/soft.png" /></span></label>
+	</div>
+	<button id="nodUncheck" class="btnUncheck" title="Reset map nodes that you have clicked on."></button>
 </div>
-<button id="nodUncheck" class="btnUncheck" title="Reset map nodes that you have clicked on."></button>
-<br />
 <div class="cntDivider" style="margin: 4px 0px 8px 0px;"></div>
 <div class="nodList">
 	<div id="nodResource_Metal" class="nodColumn"><button id="nodToggle_ResourceMetal" class="btnTab curToggle"><img data-src="img/node/resource_metal.png" alt="Toggle" /></button></div>
