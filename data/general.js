@@ -467,7 +467,7 @@ Fractal:
 		["Unknown", "Unknown", "Unknown"],
 		["Nightmare", "Snowblind", "Ocean"],
 		["Chaos", "Uncategorized", "Urban"],
-		["Swamp", "Furnace", "Cliffside"],
+		["Swamp", "Cliffside", "Furnace"],
 		["Unknown", "Unknown", "Unknown"],
 		["Unknown", "Unknown", "Unknown"]
 	]
@@ -1449,8 +1449,8 @@ Countdown: {
 		name_fr: "Vente Vendredi Noir",
 		name_zh: "黑色星期五",
 		url: "https://twitter.com/GuildWars2/status/669516905657552897",
-		Start: new Date("2016-11-25T17:00:00Z"),
-		Finish: new Date("2016-11-27T17:00:00Z")
+		Start: new Date("2016-11-24T16:00:00Z"),
+		Finish: new Date("2016-11-27T16:00:00Z")
 	}
 	/*{
 		name_en: "Halloween 2017",
@@ -1539,17 +1539,17 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Crystalline Dragon Wings Glider",
-		id: "79704",
-		price: 700,
-		discount: null,
+		name: "Silver-Fed Salvage-o-Matic",
+		id: "67027",
+		price: 400,
+		discount: 500,
 		col: 0
 	},
 	{
-		name: "Braham's Wolfblood Outfit",
-		id: "79703",
-		price: 700,
-		discount: null,
+		name: "Upgrade Extractor",
+		id: "20349",
+		price: 175,
+		discount: [[1, 175, 250], [5, 770, 1100], [25, 3500, 5000]],
 		col: 0
 	},
 	{
@@ -1602,6 +1602,34 @@ Sale: {
 		col: 1
 	},
 	{
+		name: "Mursaat Package",
+		id: "http://i.imgur.com/eIKjAhq.png",
+		price: 1200,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Crystalline Dragon Wings Glider",
+		id: "79704",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Braham's Wolfblood Outfit",
+		id: "79703",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
+		name: "Marjory's Shrouded Outfit",
+		id: "79705",
+		price: 700,
+		discount: null,
+		col: 1
+	},
+	{
 		name: "Toxic Gloves Skin",
 		id: "49031",
 		price: 400,
@@ -1633,13 +1661,6 @@ Sale: {
 		name: "Crystal Arbiter Appearance Pack",
 		id: "http://i.imgur.com/vFtlrW5.png",
 		price: 2000,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Marjory's Shrouded Outfit",
-		id: "79705",
-		price: 700,
 		discount: null,
 		col: 1
 	}

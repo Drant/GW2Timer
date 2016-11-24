@@ -24983,7 +24983,7 @@ G = {
 				if (numnodes > 0)
 				{
 					// The eastmost coordinates will be the starting point of the optimized path
-					M.redrawPersonalPath(P.getGreedyPath(coords, indexofeastmostcoord), "default");
+					M.redrawPersonalPath(P.getGreedyPath(coords, indexofeastmostcoord));
 					waypointcost = P.printClosestWaypoints() * WAYPOINT_COPPER_AVERAGE;
 					timecost = numnodes * TIME_SECOND_AVERAGE;
 					var summary = "Gather Profit: <span class='cssRight'>" + E.formatCoinStringColored(sumprice) + "</span><br />"
