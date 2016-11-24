@@ -466,7 +466,7 @@ Back: [
 	{u: 6774, i: 78745, n: "Moth Wings Backpack", p: {gem: 700}},
 	{u: 6809, i: 78848, n: "Keep Construct Mask", p: {raid_ft: 600}},
 	{u: 6854, i: 79288, n: "Shining Blade Backpack", p: {gem: 700}},
-	{u: 6875, i: 79157, n: "Blood Ruby Backpack", p: {map_bf: 200}},
+	{u: 6875, i: 79157, n: "Blood Ruby Backpack", p: {map_bs: 200}},
 	{u: 6890, i: 79337, n: "Rata Sum Apparatus", p: {starting: true}},
 	{u: 6892, i: 79336, n: "Hoelbrak Mountain Pack", p: {starting: true}},
 	{u: 6895, i: 79338, n: "Black Citadel Engine", p: {starting: true}},

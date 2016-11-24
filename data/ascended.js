@@ -699,8 +699,8 @@ Back: [
 	{i: 79038, n: "Assaulter's Xera Backpiece (Infused)", p: {raid_ft: 600}},
 	{i: 79039, n: "Malicious Xera Backpiece (Infused)", p: {raid_ft: 600}},
 	{i: 79044, n: "Defender's Xera Backpiece (Infused)", p: {raid_ft: 600}},
-	{i: 79157, n: "Blood Ruby Backpack", p: {map_bf: 200}},
-	{i: 79062, n: "Blood Ruby Backpack (Infused)", p: {map_bf: 200}},
+	{i: 79157, n: "Blood Ruby Backpack", p: {map_bs: 200}},
+	{i: 79062, n: "Blood Ruby Backpack (Infused)", p: {map_bs: 200}},
 	{i: 79463, n: "Lava Skull Backpack", p: {map_eb: 200}},
 	{i: 79566, n: "Lava Skull Backpack (Infused)", p: {map_eb: 200}}
 ],
@@ -920,10 +920,10 @@ Ring: [
 	{i: 79036, n: "Healer's Besieger Ring (Infused)", p: {raid_ft: 250}},
 	{i: 79040, n: "Attuned Healer's Besieger Ring", p: {raid_ft: 250}},
 	{i: 79035, n: "Attuned Healer's Besieger Ring (Infused)", p: {raid_ft: 250}},
-	{i: 79124, n: "Blood Ruby Band", p: {map_bf: 100}},
-	{i: 79071, n: "Blood Ruby Band (Infused)", p: {map_bf: 100}},
-	{i: 79155, n: "Attuned Blood Ruby Band", p: {map_bf: 100}},
-	{i: 79134, n: "Attuned Blood Ruby Band (Infused)", p: {map_bf: 100}},
+	{i: 79124, n: "Blood Ruby Band", p: {map_bs: 100}},
+	{i: 79071, n: "Blood Ruby Band (Infused)", p: {map_bs: 100}},
+	{i: 79155, n: "Attuned Blood Ruby Band", p: {map_bs: 100}},
+	{i: 79134, n: "Attuned Blood Ruby Band (Infused)", p: {map_bs: 100}},
 	{i: 79710, n: "Attuned Black Ice Band (Infused)"},
 	{i: 79712, n: "Black Ice Band", p: {coin: -1}},
 	{i: 79816, n: "Black Ice Band (Infused)", p: {coin: -1}},
@@ -1054,7 +1054,7 @@ Amulet: [
 	{i: 72529, n: "Vigil's Honor", p: {achievement: 0}},
 	{i: 74695, n: "Whisper's Secret", p: {achievement: 0}},
 	{i: 67898, n: "Wynne's Locket", p: {laurel: 20}},
-	{i: 79269, n: "Blood Ruby Pendant", p: {map_bf: 125}}
+	{i: 79269, n: "Blood Ruby Pendant", p: {map_bs: 125}}
 ],
 LightHelm: [
 	{i: 48099, n: "Ahamid's Masque", p: {coin: 900000}},

@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 161105},
+		programVersion: {key: "int_utlProgramVersion", value: 161124},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -1506,9 +1506,8 @@ X = {
 	 */
 	Collectibles:
 	{
-		// Temporary
-		//LivingStory: { key: "str_chlWintersdayOrphans", urlkey: "orphans"},
-		// Repeatable
+		// Chests
+		IceboundChests: { key: "str_chlIceboundChests", urlkey: "iceboundchests"},
 		SkrittStashes: { key: "str_chlSkrittStashes", urlkey: "skrittstashes"},
 		NoxiousPods: { key: "str_chlNoxiousPods", urlkey: "noxiouspods"},
 		CrystallizedCaches: { key: "str_chlCrystallizedCaches", urlkey: "crystallizedcaches"},
@@ -1520,20 +1519,22 @@ X = {
 		SkrittBurglar: { key: "str_chlSkrittBurglar", urlkey: "skrittburglar"},
 		// Festival
 		PumpkinCarving: { key: "str_chlPumpkinCarving", urlkey: "pumpkins"},
-		// Heart of Thorns
+		DonationDrive: { key: "str_chlDonationDrive", urlkey: "orphans"},
+		// Achievements
+		ThoroughSampling: { key: "str_chlThoroughSampling", urlkey: "thoroughsampling"},
+		MursaatTokens: { key: "str_chlMursaatTokens", urlkey: "mursaattokens"},
+		MursaatTablets: { key: "str_chlMursaatTablets", urlkey: "mursaattablets"},
+		CamiJournals: { key: "str_chlCamiJournals", urlkey: "camijournals"},
+		BloodstoneCreatures: { key: "str_chlBloodstoneCreatures", urlkey: "creatures"},
+		BloodstoneSlivers: { key: "str_chlBloodstoneSlivers", urlkey: "slivers"},
+		// Achievements: Heart of Thorns
 		PaperScraps: { key: "str_chlPaperScraps", urlkey: "paperscraps"},
 		TigerSpirit: { key: "str_chlTigerSpirit", urlkey: "tigerspirit"},
 		ItzelTotems: { key: "str_chlItzelTotems", urlkey: "itzeltotems"},
 		PriorySeals: { key: "str_chlPriorySeals", urlkey: "prioryseals"},
 		AuricTablets: { key: "str_chlAuricTablets", urlkey: "aurictablets"},
 		ExaltedMasks: { key: "str_chlExaltedMasks", urlkey: "exaltedmasks"},
-		// Living Story 3
-		MursaatTokens: { key: "str_chlMursaatTokens", urlkey: "mursaattokens"},
-		MursaatTablets: { key: "str_chlMursaatTablets", urlkey: "mursaattablets"},
-		CamiJournals: { key: "str_chlCamiJournals", urlkey: "camijournals"},
-		BloodstoneCreatures: { key: "str_chlBloodstoneCreatures", urlkey: "creatures"},
-		BloodstoneSlivers: { key: "str_chlBloodstoneSlivers", urlkey: "slivers"},
-		// Pre-expansion
+		// Achievements: Pre-expansion
 		LionsArchExterminator: { key: "str_chlLionsArchExterminator", urlkey: "lionsarchexterminator"},
 		CoinProspect: { key: "str_chlCoinProspect", urlkey: "coinprospect"},
 		CoinUplands: { key: "str_chlCoinUplands", urlkey: "coinuplands"},
@@ -1544,7 +1545,7 @@ X = {
 		SpeedyReader: { key: "str_chlSpeedyReader", urlkey: "speedyreader"},
 		CleaningUp: { key: "str_chlCleaningUp", urlkey: "cleaningup"},
 		HistoryBuff: { key: "str_chlHistoryBuff", urlkey: "historybuff"},
-		// Character progress
+		// Unlocks
 		Strongboxes: { key: "str_chlStrongboxes", urlkey: "strongboxes"},
 		MasteryInsight: { key: "str_chlMasteryInsight", urlkey: "masteryinsight"},
 		HeroChallenge: { key: "str_chlHeroChallenge", urlkey: "herochallenge"},
@@ -15758,8 +15759,9 @@ E = {
 		map_td: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_map_td'></ins>"; },
 		map_ds: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_crystalline'></ins>"; },
 		magic: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_magic'></ins>"; },
-		map_bf: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_blood'></ins>"; },
-		map_eb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_petrified'></ins>"; }
+		map_bs: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_blood'></ins>"; },
+		map_eb: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_petrified'></ins>"; },
+		map_bf: function(pAmount) { return pAmount.toLocaleString() + "<ins class='s16 s16_winterberry'></ins>"; }
 	},
 	PaymentEnum:
 	{
@@ -20921,6 +20923,13 @@ M = {
 			I.qTip.init(".leaflet-marker-icon");
 			// Rescale current moused mapping markers
 			this.adjustZoomMapping();
+			
+			// Temporary submaps for new zones if needed
+			if (testzone.id === "1178" && P.TempSubmap.iscreated !== true)
+			{
+				P.TempSubmap.iscreated = true;
+				this.createSubmap(P.TempSubmap, true);
+			}
 		}
 	},
 	
@@ -22174,7 +22183,7 @@ M = {
 		var submap = this.Submaps[pName];
 		if (submap.ImageOverlay === undefined)
 		{
-			submap.ImageOverlay = L.imageOverlay(submap.img, this.convertGCtoLCMulti(submap.bounds));
+			submap.ImageOverlay = this.createSubmap(submap);
 			this.toggleSubmap(pName, pBoolean);
 		}
 		else
@@ -22202,6 +22211,15 @@ M = {
 		{
 			this.toggleSubmap(pNames[i], pBoolean);
 		}
+	},
+	createSubmap: function(pSubmapData, pWantShow)
+	{
+		var submap = L.imageOverlay(pSubmapData.img, this.convertGCtoLCMulti(pSubmapData.bounds));
+		if (pWantShow)
+		{
+			submap.addTo(this.Map).bringToBack();
+		}
+		return submap;
 	},
 	
 	/*
@@ -22832,6 +22850,11 @@ P = {
 	{
 		Tyria: "map",
 		Mists: "wvw"
+	},
+	TempSubmap: {
+		submap: {},
+		img: "http://i.imgur.com/cTSJUvZ.jpg", 
+		bounds: [[20736, 6656], [23808, 8192]]
 	},
 	
 	Layer: {

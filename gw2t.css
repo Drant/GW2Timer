@@ -3017,7 +3017,8 @@ gem {
 .s16_token { background-position: -864px 0; }
 .s16_view { background-position: -880px 0; }
 .s16_wiki { background-position: -896px 0; }
-.s16_youtube { background-position: -912px 0; }
+.s16_winterberry { background-position: -912px 0; }
+.s16_youtube { background-position: -928px 0; }
 
 coppercoin, silvercoin, goldcoin, gemunit, karmaunit, laurelunit {
 	display: inline-block;

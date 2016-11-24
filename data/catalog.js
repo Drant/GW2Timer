@@ -60,8 +60,7 @@ Key: [
 	{i: 20316, n: "Black Lion Chest"},
 	{i: 43992, n: "Black Lion Claim Ticket", p: {gem: 0}},
 	{i: 43998, n: "Black Lion Claim Ticket Scrap", p: {gem: 0}},
-	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}},
-	{i: 42605, n: "Frozen Exotic Weapon Fragment", p: {coin: -1}}
+	{i: 78474, n: "Black Lion Miniature Claim Ticket", p: {gem: 0}}
 ],
 Token: [
 	{i: 79899, n: "Fresh Winterberry", p: {magic: 37}},
@@ -85,6 +84,7 @@ Token: [
 	{i: 66766, n: "Unidentified Fossilized Insect", p: {coin: 0}},
 	{i: 72205, n: "Chak Egg", p: {coin: 0}},
 	{i: 74356, n: "Reclaimed Metal Plate", p: {coin: 0}},
+	{i: 42605, n: "Frozen Exotic Weapon Fragment", p: {gem: 0}},
 	{i: 70718, n: "Tenebrous Crystal", p: {coin: 0}},
 	{i: 76254, n: "Shimmering Crystal", p: {coin: 0}},
 	{i: 50025, n: "Blade Shard", p: {coin: 0}},
@@ -184,7 +184,10 @@ Gathering: [
 	{i: 78731, n: "Cosmic Mining Tool", p: {gem: 1000}},
 	{i: 78996, n: "Unbreakable Harvesting Sickle", p: {gem: 800}},
 	{i: 78806, n: "Unbreakable Logging Axe", p: {gem: 800}},
-	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 800}}
+	{i: 78812, n: "Unbreakable Mining Pick", p: {gem: 800}},
+	{i: 79591, n: "Unbound Harvesting Sickle", p: {karma: 4900}},
+	{i: 79465, n: "Unbound Logging Axe", p: {karma: 4900}},
+	{i: 79581, n: "Unbound Mining Pick", p: {karma: 4900}}
 ],
 Salvage: [
 	{i: 67027, n: "Silver-Fed Salvage-o-Matic", p: {gem: 500}},
@@ -386,7 +389,7 @@ TonicEndless: [
 	{i: 79657, n: "Endless Shadow Raven Tonic", p: {craft: true}},
 	{i: 79668, n: "Endless Hellfire Skeleton Tonic", p: {craft: true}},
 	{i: 79664, n: "Endless Ignited Wraith Tonic", p: {craft: true}},
-	{i: 79849, n: "Endless Kodan Tonic", p: {coin: -1}},
+	{i: 79849, n: "Endless Kodan Tonic", p: {karma: 175000}},
 	{i: 42403, n: "Infinite Molten Berserker Tonic"},
 	{i: 43352, n: "Infinite Aetherized Tonic"},
 	{i: 44720, n: "Infinite Watchknight Tonic", p: {laurel: 25}},

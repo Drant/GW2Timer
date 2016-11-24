@@ -317,7 +317,13 @@ Special: [
 	{u: 415, i: 79439, n: "Mini Vine-Touched Destroyer Crab", p: {karma: 105000}},
 	{u: 416, i: 79672, n: "Mini Thailog the Gargoyle"},
 	{u: 417, i: 79684, n: "Mini Charles the Hellfire Skeleton"},
-	{u: 418, i: 79654, n: "Mini Oxidecimus the Shadow Raven", p: {cob: 120}}
+	{u: 418, i: 79654, n: "Mini Oxidecimus the Shadow Raven", p: {cob: 120}},
+	{u: 424, i: 79766, n: "Mini Aurene", p: {achievement: 0}},
+	{u: 421, i: 79821, n: "Mini Chicken", p: {karma: 105000}},
+	{u: 422, i: 79877, n: "Mini Ice Beast", p: {karma: 105000}},
+	{u: 423, i: 79783, n: "Mini Arctic Quaggan", p: {karma: 105000}},
+	{u: 425, i: 79904, n: "Mini Icebrood Ogre", p: {karma: 105000}},
+	{u: 426, i: 79774, n: "Mini Owl Griffon Hatchling", p: {karma: 105000}}
 ],
 Gem: [
 	{u: 107, i: 36317, n: "Mini Spooky Ghost", p: {gem: 166}},
@@ -424,11 +430,5 @@ Gem: [
 	{u: 409, i: 79361, n: "Mini Jungle Lord Faren", p: {gem: 350}},
 	{u: 419, i: 79651, n: "Mini Feline Familiar", p: {gem: 350}},
 	{u: 420, i: 79693, n: "Mini Bloodstone Rock", p: {gem: 350}},
-	{u: 421, i: 79821, n: "Mini Chicken", p: {gem: -1}},
-	{u: 422, i: 79877, n: "Mini Ice Beast", p: {gem: -1}},
-	{u: 423, i: 79783, n: "Mini Arctic Quaggan", p: {gem: -1}},
-	{u: 424, i: 79766, n: "Mini Aurene", p: {gem: -1}},
-	{u: 425, i: 79904, n: "Mini Icebrood Ogre", p: {gem: -1}},
-	{u: 426, i: 79774, n: "Mini Owl Griffon Hatchling", p: {gem: -1}}
 ]
 };
