@@ -1391,9 +1391,9 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<dfn data-coord='[22273,7425]'>Bitterfrost Frontier</dfn> map <a href='http://forum.renaka.com/topic/5546166/'>completion route</a>, <a href='http://gw2timer.com/?page=Resource&article=All&go=22273,7425'>resource nodes</a>, and <a href='http://gw2timer.com/?page=IceboundChests'>icebound chests</a> added.",
+	pve: "<dfn data-coord='[22273,7425]'>Bitterfrost Frontier</dfn> <a href='http://forum.renaka.com/topic/5546166/'>GPS completion route</a>, <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Bitterfrost'>resource nodes</a>, and <a href='http://gw2timer.com/?page=IceboundChests'>icebound chests</a> added.",
 	wvw: "",
-	Start: new Date("2016-11-25T16:00:00Z"),
+	Start: new Date("2016-11-23T16:00:00Z"),
 	Finish: new Date("2016-12-02T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{

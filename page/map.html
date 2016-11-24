@@ -69,10 +69,14 @@
 </header>
 <section>
 <button id="mapToggle_Resource" class="curToggle" title="Toggle display of all nodes."><img data-src="img/map/display.png" alt="Toggle" /></button>
-<button id="nodRoute" class="curZoom" style="" title="Draw route for any displayed nodes.<br /> Map nodes you have clicked on are excluded.<br /><dfn>Right click on the map</dfn> for Pins functions.">
+<button id="nodRoute" class="curZoom" style="" title="Draw route for any displayed nodes.<br /> Map nodes you have clicked on are excluded.<br />Middle click a pin to set new starting point.<br /><dfn>Right click on the map</dfn> for Pins functions.">
 	<img data-src="img/map/route.png" />
 </button>
-<div class="cntOptionMini" style="margin:8px"><label><input id="nodShowPossible" type="checkbox" /> Show possible nodes</label></div>
+<div class="cntOptionMini" style="margin:8px">
+	<label title="<dfn>Rich</dfn> ore vein or plant farms, permanent location"><input id="nodShowRich" type="checkbox" checked disabled /><span class="nodRich"><img data-src="img/node/strawberry.png" /></span></label>
+	<label title="<dfn>Regular</dfn> node, possible location"><input id="nodShowRegular" type="checkbox" /><span class="nodRegular"><img data-src="img/node/orichalcum.png" /></span></label>
+	<label title="<dfn>Hotspot</dfn> area, probable locations"><input id="nodShowHotspot" type="checkbox" /><span class="nodHotspot"><img data-src="img/node/soft.png" /></span></label>
+</div>
 <button id="nodUncheck" class="btnUncheck" title="Reset map nodes that you have clicked on."></button>
 <br />
 <div class="cntDivider" style="margin: 4px 0px 8px 0px;"></div>
@@ -81,14 +85,11 @@
 	<div id="nodResource_Plant" class="nodColumn"><button id="nodToggle_ResourcePlant" class="btnTab curToggle"><img data-src="img/node/resource_plant.png" alt="Toggle" /></button></div>
 	<div id="nodResource_Wood" class="nodColumn"><button id="nodToggle_ResourceWood" class="btnTab curToggle"><img data-src="img/node/resource_wood.png" alt="Toggle" /></button></div>
 </div>
+<button id="nodRefresh" class="trdButton cssRight" title="Refresh Trading Post prices."><img data-src="img/ui/refresh.png" alt="Refresh" /></button>
 <div id="nodOptions">
 	<label><input id="nod_int_coinWaypointAverage" type="number" min="0" max="400" step="1" value="180" /> Average Waypoint Cost (copper)</label>
 	<label><input id="nod_int_secNodeVisitAverage" type="number" min="0" max="300" step="1" value="90" /> Average Node Visit Time (seconds)</label>
 </div>
-<button id="nodRefresh" class="trdButton cssRight" title="Refresh Trading Post prices."><img data-src="img/ui/refresh.png" alt="Refresh" /></button>
-<p><span class="nodRich"><img data-src="img/node/lettuce.png" /></span> &nbsp; <strong>Rich</strong> vein or plant farms, permanent location</p>
-<p><span class="nodRegular"><img data-src="img/node/orichalcum.png" /></span> &nbsp; <strong>Regular</strong> node, possible location</p>
-<p><span class="nodHotspot"><img data-src="img/node/soft.png" /></span> &nbsp; <strong>Hotspot</strong> area, probable locations</p>
 <p>Click a node on the map to hide/unhide it; right click it to zoom in/out. Prices are lowest sell posting after tax. Please <a href="http://forum.renaka.com/topic/5565814/">report</a> bad or missing nodes.</p>
 <kbd class="jsHelpCollapsible"></kbd>
 <div>

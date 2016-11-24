@@ -23761,6 +23761,7 @@ P = {
 			{
 				$(this).select();
 			});
+			I.bindConsoleInput();
 		}
 		else
 		{
@@ -24913,11 +24914,12 @@ G = {
 				{
 					var thisresource = U.getSubstringFromHTMLID($(this));
 					var wantshow = $(this).prop("checked");
-					var wantregular = $("#nodShowPossible").prop("checked");
+					var wantregular = $("#nodShowRegular").prop("checked");
+					var wanthotspot = $("#nodShowHotspot").prop("checked");
 					M.toggleLayer(P.Layer["Resource_Rich_" + thisresource], wantshow);
 					M.toggleLayer(P.Layer["Resource_Permanent_" + thisresource], wantshow);
 					M.toggleLayer(P.Layer["Resource_Regular_" + thisresource], (wantshow && wantregular));
-					M.toggleLayer(P.Layer["Resource_Hotspot_" + thisresource], (wantshow && wantregular));
+					M.toggleLayer(P.Layer["Resource_Hotspot_" + thisresource], (wantshow && wanthotspot));
 				});
 			}
 			
@@ -25010,20 +25012,31 @@ G = {
 			});
 			
 			// Bind the checkbox to show regular nodes
-			$("#nodShowPossible").one("click", function()
+			$("#nodShowRegular").one("click", function()
 			{
 				// Only create the non-rich nodes when the user has chosen to show
 				initializeNodes("Regular");
+			});
+			$("#nodShowHotspot").one("click", function()
+			{
 				initializeNodes("Hotspot");
 			});
-			$("#nodShowPossible").change(function()
+			$("#nodShowRegular").change(function()
 			{
 				var wantregular = $(this).prop("checked");
 				for (var i in P.Resources)
 				{
 					var wantshow = $("#nod_" + i).prop("checked");
 					M.toggleLayer(P.Layer["Resource_Regular_" + i], (wantshow && wantregular));
-					M.toggleLayer(P.Layer["Resource_Hotspot_" + i], (wantshow && wantregular));
+				}
+			}).trigger("change");
+			$("#nodShowHotspot").change(function()
+			{
+				var wanthotspot = $(this).prop("checked");
+				for (var i in P.Resources)
+				{
+					var wantshow = $("#nod_" + i).prop("checked");
+					M.toggleLayer(P.Layer["Resource_Hotspot_" + i], (wantshow && wanthotspot));
 				}
 			}).trigger("change");
 			
@@ -25057,7 +25070,15 @@ G = {
 			refreshResourcePrices();
 			U.verifyArticle("All", function()
 			{
-				$("#nodShowPossible").trigger("click");
+				$("#nodShowRegular, #nodShowHotspot").trigger("click");
+			});
+			U.verifyArticle("Regular", function()
+			{
+				$("#nodShowRegular").trigger("click");
+			});
+			U.verifyArticle("Hotspot", function()
+			{
+				$("#nodShowHotspot").trigger("click");
 			});
 		});
 	},
@@ -25596,9 +25617,9 @@ G = {
 			{
 				markertitle += "<img src='" + ithneedle.s + "' />";
 			}
-			else if (ithneedle.t)
+			if (ithneedle.t)
 			{
-				markertitle += "<br /><span class='mapTip'>" + ithneedle.t + "</span>";
+				markertitle += "<div class='mapTip'>" + ithneedle.t + "</div>";
 			}
 			markertitle += "</div>";
 

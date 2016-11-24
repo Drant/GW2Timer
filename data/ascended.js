@@ -924,10 +924,10 @@ Ring: [
 	{i: 79071, n: "Blood Ruby Band (Infused)", p: {map_bs: 100}},
 	{i: 79155, n: "Attuned Blood Ruby Band", p: {map_bs: 100}},
 	{i: 79134, n: "Attuned Blood Ruby Band (Infused)", p: {map_bs: 100}},
-	{i: 79710, n: "Attuned Black Ice Band (Infused)"},
-	{i: 79712, n: "Black Ice Band", p: {coin: -1}},
-	{i: 79816, n: "Black Ice Band (Infused)", p: {coin: -1}},
-	{i: 79780, n: "Attuned Black Ice Band", p: {coin: -1}}
+	{i: 79712, n: "Black Ice Band", p: {map_bf: 200}},
+	{i: 79816, n: "Black Ice Band (Infused)", p: {map_bf: 200}},
+	{i: 79780, n: "Attuned Black Ice Band", p: {map_bf: 200}},
+	{i: 79710, n: "Attuned Black Ice Band (Infused)", p: {map_bf: 200}}
 ],
 Accessory: [
 	{i: 67294, n: "Adelbern's Burden", p: {achievement: 0}},
@@ -989,7 +989,7 @@ Accessory: [
 	{i: 78878, n: "Rounded Keep Fragment", p: {raid_ft: 250}},
 	{i: 78915, n: "Hardened Keep Fragment", p: {raid_ft: 250}},
 	{i: 79444, n: "Sparking Petrified Wood", p: {map_eb: 150}},
-	{i: 79745, n: "Black Ice Earring", p: {coin: -1}}
+	{i: 79745, n: "Black Ice Earring", p: {map_bf: 300}}
 ],
 Amulet: [
 	{i: 70889, n: "Abbadon's Cowl", p: {achievement: 0}},
