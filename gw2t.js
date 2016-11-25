@@ -6147,6 +6147,7 @@ Z = {
 	{
 		var section = "Cleanup";
 		var record = {};
+		var db;
 		
 		// Returns the category name of an item, if fitting
 		var categorizeItem = function(pItem)
@@ -6242,7 +6243,7 @@ Z = {
 			return null;
 		};
 		
-		U.getScript(U.getDataScriptURL(section), function()
+		var doCollate = function()
 		{
 			// Initialize the record's arrays
 			var headers = U.getRecordHeader(section);
@@ -6250,53 +6251,74 @@ Z = {
 			{
 				record[i] = [];
 			}
+			// Use the main catalog as the blacklist
+			var blacklist = {};
+			var catarr, itemid;
+			var catalog = U.getRecordData("Catalog");
+			for (var i in catalog)
+			{
+				catarr = catalog[i];
+				for (var ii = 0; ii < catarr.length; ii++)
+				{
+					itemid = catarr[ii].i;
+					blacklist[itemid] = true;
+				}
+			}
+			// Exclude items from material storage
+			var materials = U.getRecordData("Materials");
+			for (var i in materials)
+			{
+				var matcat = materials[i];
+				for (var ii = 0; ii < matcat.length; ii++)
+				{
+					blacklist[(matcat[ii])] = true;
+				}
+			}
+			
+			// Categorize the whitelist
+			var item, catname;
+			for (var i in db)
+			{
+				item = db[i];
+				// Exclude blacklisted
+				if (blacklist[item.id])
+				{
+					continue;
+				}
+				catname = categorizeItem(item);
+				// Add the item if matched
+				if (catname)
+				{
+					record[catname].push(item.id);
+				}
+			}
+			Z.printUnlockables(record, true);
+
+			// Also print junk items prices
+			var junkvalue = {};
+			for (var i in db)
+			{
+				var item = db[i];
+				if (item.rarity === "Junk" && item.vendor_value > 0)
+				{
+					junkvalue[item.id] = item.vendor_value;
+				}
+			}
+			I.print(U.lineJSON(junkvalue));
+		};
+		
+		// Retrieve data first
+		U.getScript(U.getDataScriptURL(section), function()
+		{
 			U.getScript(U.getDataScriptURL("Catalog"), function()
 			{
-				// Use the main catalog as the blacklist
-				var blacklist = {};
-				var catarr, itemid;
-				var catalog = U.getRecordData("Catalog");
-				for (var i in catalog)
+				U.getScript(U.getDataScriptURL("Materials"), function()
 				{
-					catarr = catalog[i];
-					for (var ii = 0; ii < catarr.length; ii++)
+					Z.getItemsDatabase(function(pDatabase)
 					{
-						itemid = catarr[ii].i;
-						blacklist[itemid] = true;
-					}
-				}
-				
-				Z.getItemsDatabase(function(pDatabase)
-				{
-					var item, catname;
-					for (var i in pDatabase)
-					{
-						item = pDatabase[i];
-						// Exclude blacklisted
-						if (blacklist[item.id])
-						{
-							continue;
-						}
-						catname = categorizeItem(item);
-						// Add the item if matched
-						if (catname)
-						{
-							record[catname].push(item.id);
-						}
-					}
-					Z.printUnlockables(record, true);
-					
-					// Also print junk items prices
-					var junkvalue = {};
-					for (var i in pDatabase)
-					{
-						var item = pDatabase[i];
-						if (item.rarity === "Junk" && item.vendor_value > 0)
-						{
-							junkvalue[item.id] = item.vendor_value;
-						}
-					}
-					I.print(U.lineJSON(junkvalue));
+						db = pDatabase;
+						doCollate();
+					});
 				});
 			});
 		});
