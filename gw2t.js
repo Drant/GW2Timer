@@ -4732,10 +4732,7 @@ Z = {
 			}},
 			updatedb: {usage: "Prints an updated database of items. <em>Parameters: bol_wantrebuild (optional).", f: function()
 			{
-				if (args[1])
-				{
-					Z.updateItemsDatabase(U.stringToBool(args[1]));
-				}
+				Z.updateItemsDatabase(args[1] === "true");
 			}},
 			subdb: {usage: "Prints a subset database of items used by an account page's section. <em>Parameters: str_section</em>", f: function()
 			{
@@ -20576,6 +20573,10 @@ M = {
 		{
 			that.initializePinStorage(that);
 		});
+		$(htmlidprefix + "ContextHelpPins").click(function()
+		{
+			that.printPinHelp();
+		});
 		$(htmlidprefix + "ContextUndoPins").click(function()
 		{
 			that.loadBackupPins();
@@ -21393,6 +21394,28 @@ M = {
 		}
 		catch (e) {}
 		this.redrawPersonalPath(obj.value, null);
+	},
+	
+	/*
+	 * Prints help message for using pins.
+	 */
+	printPinHelp: function()
+	{
+		var str = "<div class='cntComposition'><h2>Map Pins Usage</h2>"
+			+ "<ul>"
+			+ "<li><b>Create a pin:</b> double click an empty area on the map (Multiple pins creates a path).</li>"
+			+ "<li><b>Insert a pin between a path:</b> double click a part of the path.</li>"
+			+ "<li><b>Delete a pin:</b> double click that pin.</li>"
+			+ "<li><b>Delete all pins:</b> right click the map for the clear pins function.</li>"
+			+ "<li><b>Move a pin:</b> hold click and drag that pin.</li>"
+			+ "<li><b>Move a pin to center:</b> right click that pin.</li>"
+			+ "<li><b>Check off a pin:</b> single click that pin.</li>"
+			+ "<li><b>Get coordinates of a pin:</b> single click that pin.</li>"
+			+ "<li><b>Get coordinates of a path:</b> single click on the path.</li>"
+			+ "<li><b>Generate a path:</b> paste the coordinates string into the coordinates bar and press Enter.</li>"
+			+ "<li><b>Optimize a path:</b> middle click that pin, it will become the starting pin.</li>"
+			+ "</ul></div>";
+		I.print(str);
 	},
 	
 	/*

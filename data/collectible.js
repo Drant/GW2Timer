@@ -1245,7 +1245,7 @@ ThoroughSampling: {
 	{n: 11, c: [23038, 8160], s: "http://i.imgur.com/GYfIsoH.png", t: "Steam Crate — Same path as vista, take the mountain hop steps northwest of the lagoon, head northeast then turn south."},
 	{n: 12, c: [23162, 7909], s: "http://i.imgur.com/jGqPACT.png", t: "Hot Spring Depths — Dive into the hot spring center."},
 	{n: 13, c: [23572, 7705], s: "http://i.imgur.com/aATTGl4.png", t: "Dangerous Bridge Stock — Take the mountain hop steps northwest of the lagoon, head northeast."},
-	{n: 14, c: [23035, 7559], s: "http://i.imgur.com/Vkmy0Oh.png", t: "Hurler's Hoard"},
+	{n: 14, c: [23035, 7559], s: "http://i.imgur.com/Vkmy0Oh.png", t: "Hurler's Hoard — West face of the mountain."},
 	{n: 15, c: [23646, 6883], s: "http://i.imgur.com/22tIWXH.png", t: "Unstable Remains — Use thermal tube to get to The Bitter Cold area."},
 	{n: 16, c: [23405, 7071], t: "Frozen Peak Chest"},
 	{n: 17, c: [23202, 7058], t: "Frozen Bridge Case"},

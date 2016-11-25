@@ -518,6 +518,7 @@ var GW2T_GATEWAY_CONNECTION = {
 	[[23110, 11450], [23061, 11163]], // wayfarer to frostgorge
 	[[23356, 11968], [23680, 11995]], // wayfarer to diessa
 	[[23706, 9704], [23993, 9741]], // frostgorge to fireheart
+	[[21330, 8244], [21380, 8046]], // frostgorge to bitterfrost
 	[[24301, 13685], [24090, 13465]], // citadel to diessa
 	[[25049, 14227], [25270, 14411]], // citadel to plains
 	[[26719, 13660], [26847, 13506]], // plains to diessa
@@ -1539,24 +1540,24 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Silver-Fed Salvage-o-Matic",
-		id: "67027",
-		price: 400,
-		discount: 500,
+		name: "Home Instance Node Pack",
+		id: "http://i.imgur.com/4h6p3sD.png",
+		price: 3200,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Upgrade Extractor",
-		id: "20349",
-		price: 175,
-		discount: [[1, 175, 250], [5, 770, 1100], [25, 3500, 5000]],
+		name: "Jumbo Tron Package",
+		id: "http://i.imgur.com/V9GxQKQ.png",
+		price: 2600,
+		discount: null,
 		col: 0
 	},
 	{
-		name: "Aviator Quaggan Mail Carrier",
-		id: "69628",
-		price: 400,
-		discount: 500,
+		name: "Heroes Dye Pack",
+		id: "http://i.imgur.com/H6tKKEr.png",
+		price: 500,
+		discount: null,
 		col: 0
 	},
 	{
