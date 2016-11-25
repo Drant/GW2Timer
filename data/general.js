@@ -1561,6 +1561,13 @@ Sale: {
 		col: 0
 	},
 	{
+		name: "Aviator Quaggan Mail Carrier",
+		id: "69628",
+		price: 400,
+		discount: 500,
+		col: 0
+	},
+	{
 		name: "Bazaar Quaggan Mini Pack",
 		id: "42981",
 		price: 400,
@@ -1599,13 +1606,6 @@ Sale: {
 		name: "Tinker's Package",
 		id: "http://i.imgur.com/j5r0Kgd.png",
 		price: 1850,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Mursaat Package",
-		id: "http://i.imgur.com/eIKjAhq.png",
-		price: 1200,
 		discount: null,
 		col: 1
 	},
