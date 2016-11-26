@@ -469,7 +469,7 @@ Fractal:
 		["Chaos", "Uncategorized", "Urban"],
 		["Swamp", "Cliffside", "Furnace"],
 		["Thaumanova", "Underground", "Molten"],
-		["Unknown", "Unknown", "Unknown"]
+		["Swamp", "Aetherblade", "Volcanic"]
 	]
 }
 };
@@ -1392,7 +1392,7 @@ var GW2T_DASHBOARD_DATA = {
 Announcement:
 {
 	// "<img src='img/ui/pages/account.png' /> <a href='http://gw2timer.com/?page=Catalog' title='gw2timer.com/catalog'>Account Catalog</a> browse outfits, finishers, mail carriers, gliders, nodes."
-	pve: "<dfn data-coord='[22273,7425]'>Bitterfrost Frontier</dfn> <a href='http://forum.renaka.com/topic/5546166/'>GPS completion route</a>, <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Bitterfrost'>winterberry nodes</a>, and <a href='http://gw2timer.com/?page=IceboundChests'>icebound chests</a> added.",
+	pve: "<dfn data-coord='[[21325,7462],[20999,7308],[21099,7143],[21122,7048],[21048,6994],[21359,6959],[21650,6882],[21827,6925],[21995,6951],[21765,7080],[21890,7144],[21974,7158],[22061,7219],[21931,7330],[21780,7252],[21713,7352],[21706,7525],[21573,7581],[22376,7990],[23197,7470],[22679,7073]]'>Bitterfrost Frontier</dfn> <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Bitterfrost'>winterberry nodes</a>, <a href='http://gw2timer.com/?page=IceboundChests'>icebound chests</a>, and <a href='http://forum.renaka.com/topic/5546166/'>GPS completion route</a>.",
 	wvw: "",
 	Start: new Date("2016-11-23T16:00:00Z"),
 	Finish: new Date("2016-12-02T16:00:00Z"),
@@ -1540,22 +1540,22 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Home Instance Node Pack",
-		id: "http://i.imgur.com/4h6p3sD.png",
-		price: 3200,
+		name: "Revive Orb",
+		id: "19996",
+		price: 175,
+		discount: [[1, 175, 250], [5, 630, 900]],
+		col: 0
+	},
+	{
+		name: "Knight of the Grove Package",
+		id: "http://i.imgur.com/jxkIywx.png",
+		price: 1200,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Jumbo Tron Package",
-		id: "http://i.imgur.com/V9GxQKQ.png",
-		price: 2600,
-		discount: null,
-		col: 0
-	},
-	{
-		name: "Heroes Dye Pack",
-		id: "http://i.imgur.com/H6tKKEr.png",
+		name: "Enemies Dye Pack",
+		id: "http://i.imgur.com/SplekzI.png",
 		price: 500,
 		discount: null,
 		col: 0
