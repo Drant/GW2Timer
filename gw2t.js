@@ -16400,17 +16400,17 @@ E = {
 			aWantCache: pWantCache,
 			aCallback: function(pData, pFailedIDs)
 		{
-			var db = {};
+			var pricedb = {};
 			if (pData)
 			{
 				// Add prices to database for later uses
 				pData.forEach(function(iData)
 				{
 					var priceobj = E.processPrice(iData);
-					db[iData.id] = priceobj;
+					pricedb[iData.id] = priceobj;
 					E.Pricelist[iData.id] = priceobj;
 				});
-				pCallback(db, pFailedIDs);
+				pCallback(pricedb, pFailedIDs);
 			}
 			else
 			{
@@ -24821,6 +24821,7 @@ G = {
 	 */
 	generateAndInitializeResources: function()
 	{
+		var priceids = [];
 		var metadata;
 		var opacityclicked = 0.3;
 		var pathcolor = P.getUserPathColor();
@@ -24866,28 +24867,19 @@ G = {
 		};
 		var refreshResourcePrices = function()
 		{
-			// Get API prices for each resource type
-			for (var i in P.Resources)
+			E.getPrices(priceids, function(pPriceDB)
 			{
-				var id = P.Resources[i].item;
-				if (id !== null)
+				for (var i in P.Resources)
 				{
-					(function(inneri)
+					var id = P.Resources[i].item;
+					if (id && pPriceDB[id])
 					{
-						$.ajax({
-							dataType: "json",
-							url: U.getAPIPrice(id),
-							cache: false,
-							success: function(pData)
-							{
-								var pricesell = E.processPrice(pData).oPriceSellTaxed;
-								$("#nodPrice_" + inneri).html(E.formatCoinStringColored(pricesell));
-								P.Resources[inneri].price = pricesell;
-							}
-						});
-					})(i);
+						var priceobj = pPriceDB[id];
+						$("#nodPrice_" + i).html(E.formatCoinStringColored(priceobj.oPriceSell));
+						P.Resources[i].price = priceobj.oPriceSellTaxed;
+					}
 				}
-			}
+			}, false);
 		};
 		var getNodeQuantity = function(pResource, pGrade)
 		{
@@ -24975,6 +24967,10 @@ G = {
 				$("#nodResource_" + resource.type).append(
 					"<label><input id='nod_" + i + "' type='checkbox' checked='checked' /> <img src='img/node/"
 					+ i.toLowerCase() + I.cPNG + "' /> <abbr>" + D.getObjectName(resource) + "</abbr><var id='nodPrice_" + i + "'></var></label>");
+				if (resource.item)
+				{
+					priceids.push(resource.item);
+				}
 			}
 			// Bind checkboxes
 			for (i in P.Resources)
@@ -25500,7 +25496,7 @@ G = {
 				samplelink = I.cSiteLink + "<dfn>" + X.Collectibles[i].urlkey + "</dfn>";
 				$("<div class='cltBox cltBox_" + collectible.category + "'>"
 					+ "<label style='color:" + collectible.color + "'>"
-						+ "<ins class='clt_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
+						+ "<ins id='cltPins_" + i + "' class='clt_" + i.toLowerCase() + "'></ins><input id='ned_" + i + "' type='checkbox' /> " + translatedname
 					+ "</label>"
 					+ "<span class='cltLinks' title='" + samplelink + "' ><cite>"
 						+ "<a href='" + U.getYouTubeLink(defaultname) + "'>[Y]</a>&nbsp;"//
@@ -25776,6 +25772,25 @@ G = {
 			}
 			X.clearChecklist(X.Collectibles[type]);
 			U.updateQueryString();
+		});
+		// Clicking on the list icon will draw pins from the collectible path
+		$("#cltPins_" + pType).click(function()
+		{
+			if (M.isPersonalPinsLaid())
+			{
+				M.clearPersonalPins();
+				return;
+			}
+			var coords = [];
+			var testcoord = collectible.needles[0].c;
+			if (isNaN(testcoord[0]) === false) // Allow 1D arrays only
+			{
+				for (var i in collectible.needles)
+				{
+					coords.push(collectible.needles[i].c);
+				}
+				M.redrawPersonalPath(coords);
+			}
 		});
 	},
 	

@@ -141,6 +141,8 @@ Contract: [
 	{i: 50104, n: "Captain's Airship Pass", p: {gem: 1000}},
 	{i: 79140, n: "Noble's Folly Pass", p: {gem: 1000}},
 	{i: 79500, n: "Lava Lounge Pass", p: {gem: 1000}},
+	{i: 79744, n: "Exalted Portal Stone", p: {achievement: 0}},
+	{i: 79794, n: "Bitterfrost Vantage Point", p: {gem: 0}},
 	{i: 76293, n: "Rata Sum Portal Scroll", p: {craft: true}},
 	{i: 70968, n: "The Grove Portal Scroll", p: {craft: true}},
 	{i: 71577, n: "Divinity's Reach Portal Scroll", p: {craft: true}},
@@ -152,8 +154,7 @@ Contract: [
 	{i: 79456, n: "Ember Bay Portal Scroll", p: {magic: 1000}},
 	{i: 79905, n: "Bitterfrost Frontier Portal Scroll", p: {magic: 1000}},
 	{i: 78177, n: "Permanent Portable Provisioner", p: {coin: 10000}},
-	{i: 78978, n: "White Mantle Portal Device", p: {raid_ft: 1000}},
-	{i: 79744, n: "Exalted Portal Stone", p: {achievement: 0}}
+	{i: 78978, n: "White Mantle Portal Device", p: {raid_ft: 1000}}
 ],
 Gathering: [
 	{i: 67032, n: "Fused Molten Sickle", p: {gem: 1000}},
@@ -244,7 +245,6 @@ Toy: [
 	{i: 36172, n: "Bobblehead Laboratory", p: {gem: 400}},
 	{i: 43881, n: "Bottomless Belcher's Bluff Kit", p: {coin: 1000000}},
 	{i: 43901, n: "Zephyr Sanctum Model", p: {laurel: 25}},
-	{i: 79794, n: "Bitterfrost Vantage Point", p: {gem: 0}},
 	{i: 66342, n: "Water Fight Balloon Bucket", p: {gem: 500}},
 	{i: 67881, n: "Aviator's Memory Box", p: {gem: 400}},
 	{i: 20000, n: "Box o' Fun", p: {gem: -64}},
