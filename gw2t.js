@@ -30350,9 +30350,6 @@ H = {
 					$(this).css({height: "auto"});
 					I.bindScrollbar("#dsbSaleTable");
 					I.updateScrollbar("#dsbSaleTable");
-				}).on("mouseenter", function()
-				{
-					I.updateScrollbar("#dsbSaleTable");
 				});
 				// Retrieve item info
 				$(".dsbSaleIcon").each(function()

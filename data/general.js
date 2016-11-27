@@ -1540,24 +1540,31 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Revive Orb",
-		id: "19996",
-		price: 175,
-		discount: [[1, 175, 250], [5, 630, 900]],
+		name: "Shared Inventory Slot",
+		id: "67071",
+		price: 560,
+		discount: [[1, 560, 700], [3, 1512, 1890], [5, 2240, 2800]],
 		col: 0
 	},
 	{
-		name: "Knight of the Grove Package",
-		id: "http://i.imgur.com/jxkIywx.png",
-		price: 1200,
-		discount: null,
+		name: "Swashbuckler's Package",
+		id: "http://i.imgur.com/T6r8vX2.png",
+		price: 600,
+		discount: 900,
 		col: 0
 	},
 	{
-		name: "Enemies Dye Pack",
-		id: "http://i.imgur.com/SplekzI.png",
-		price: 500,
-		discount: null,
+		name: "Metabolic Primer",
+		id: "42877",
+		price: 100,
+		discount: [[1, 100, 150], [5, 368, 550], [25, 1758, 2625]],
+		col: 0
+	},
+	{
+		name: "Utility Primer",
+		id: "8469",
+		price: 100,
+		discount: [[1, 100, 150], [5, 368, 550], [25, 1758, 2625]],
 		col: 0
 	},
 	{
