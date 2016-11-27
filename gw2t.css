@@ -618,6 +618,9 @@ html, body,
 	white-space: nowrap;
 	animation: aniFadeInPartial 0.2s;
 }
+.mapContextSlots {
+	max-height: 180px;
+}
 
 /* Range Placer */
 .mapContextRangeList img {
@@ -629,9 +632,6 @@ html, body,
 }
 .mapContextRangeList img:active {
 	opacity: 0.6;
-}
-.mapContextInput {
-	width: 96px;
 }
 .mapRangeCustom {
 	display: block;
@@ -1332,6 +1332,9 @@ textarea.jsCopyCode {
 .cssInputText {
 	margin: 0;
 	padding: 2px;
+}
+.mapContextSlot {
+	width: 180px;
 }
 .mapCoordinatesBar input::selection {
 	background: #66aaff;

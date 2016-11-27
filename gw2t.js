@@ -1577,6 +1577,10 @@ X = {
 	 */
 	Textlists:
 	{
+		SlotPins: { key: "str_txlSlotPins"},
+		SlotPinsWvW: { key: "str_txlSlotPinsWvW"},
+		SlotWeapons: { key: "str_txlSlotWeapons"},
+		SlotWeaponsWvW: { key: "str_txlSlotWeaponsWvW"},
 		CustomTextDaily: { key: "str_txlCustomTextDaily", valueDefault: [] },
 		CustomTextWeekly: { key: "str_txlCustomTextWeekly", valueDefault: [] },
 		NotepadText: { key: "str_txlNotepadText", valueDefault: [] },
@@ -1989,7 +1993,7 @@ X = {
 	 * @param jqobject pTextFields input or textarea elements to iterate and read text.
 	 * @param string pFieldName name of the text fields for notifying of change.
 	 * @param int pMaxLength of characters in a text field.
-	 * @param jqobject pRestoreButton to reset all text fields.
+	 * @param jqobject pRestoreButton to reset all text fields, optional.
 	 */
 	initializeTextlist: function(pTextlist, pTextFields, pFieldName, pMaxLength, pRestoreButton)
 	{
@@ -17721,6 +17725,8 @@ D = {
 			cs: "špendlík", it: "spilli", pl: "szpilka", pt: "alfinetes", ru: "була́вка", zh: "大頭針"},
 		s_range: {de: "reichweite", es: "alcance", fr: "portée",
 			cs: "dosah", it: "portata", pl: "zasięg", pt: "alcance", ru: "дальность", zh: "射程"},
+		s_slot: {de: "steckplatz", es: "ranura", fr: "emplacement",
+			cs: "slot", it: "slot", pl: "gniazdo", pt: "slot", ru: "слот", zh: "插槽"},
 		s_lock: {de: "sperre", es: "bloqueo", fr: "verrou",
 			cs: "zámek", it: "blocco", pl: "zablokuj", pt: "bloqueio", ru: "блокировка", zh: "鎖定"},
 		s_checklist: {de: "prüfliste", es: "lista de comprobación", fr: "liste de contrôle",
@@ -20212,6 +20218,8 @@ M = {
 	Floors: [],
 	ZoneCurrent: {},
 	numPins: 0,
+	numPinsSlots: 32,
+	numWeaponsSlots: 32,
 	cICON_SIZE_STANDARD: 32,
 	cRING_SIZE_MAX: 256,
 	isMapInitialized: false,
@@ -21316,6 +21324,50 @@ M = {
 	},
 	
 	/*
+	 * Generates a save/load list in the map context menu.
+	 * @param string pName of the list.
+	 * @param int pNumSlots to generate.
+	 * @param object pMapObject
+	 * @param function pSaveFunction
+	 * @param function pLoadFunction
+	 */
+	initializeContextSlots: function(pName, pNumSlots, pMapObject, pSaveFunction, pLoadFunction)
+	{
+		var that = pMapObject;
+		var htmlidprefix = "#" + that.MapEnum;
+		var wordload = D.getWordCapital("load");
+		var wordsave = D.getWordCapital("save");
+		var wordslot = D.getWordCapital("slot");
+		var listload = $(htmlidprefix + "ContextLoad" + pName);
+		var listsave = $(htmlidprefix + "ContextSave" + pName);
+		var htmlsuffix;
+		for (var i = 0; i < pNumSlots; i++)
+		{
+			htmlsuffix = " " + wordslot + ": <input class='cssInputText mapContextSlot' type='text' value='" + "#" + (i+1) + "' /></li>";
+			listload.append("<li data-index='" + i + "'>" + wordload + htmlsuffix);
+			listsave.append("<li data-index='" + i + "'>" + wordsave + htmlsuffix);
+		}
+		X.initializeTextlist(X.Textlists["Slot" + pName + that.OptionSuffix], listload.find(".mapContextSlot"), null, 64);
+		X.initializeTextlist(X.Textlists["Slot" + pName + that.OptionSuffix], listsave.find(".mapContextSlot"), null, 64);
+		$(htmlidprefix + "Context" + pName).find(".mapContextSlot").click(function(pEvent)
+		{
+			pEvent.stopPropagation();
+			$(this).select();
+		});
+		// Bind behavior for the created list items
+		$(htmlidprefix + "ContextSave" + pName + " li").click(function()
+		{
+			pSaveFunction($(this).attr("data-index"));
+		});
+		$(htmlidprefix + "ContextLoad" + pName + " li").click(function()
+		{
+			pLoadFunction($(this).attr("data-index"));
+		});
+		I.bindScrollbar(listload);
+		I.bindScrollbar(listsave);
+	},
+	
+	/*
 	 * Initializes the personal pin storage system.
 	 */
 	initializePinStorage: function(pMapObject)
@@ -21354,26 +21406,10 @@ M = {
 			that.redrawPersonalPath(obj.value[pIndex]);
 		};
 		
-		var htmlidprefix = "#" + that.MapEnum;
 		// Generate the load/save items when user opens the Pins context menu for the first time
-		var numslots = 8;
-		var wordload = D.getWordCapital("load");
-		var wordsave = D.getWordCapital("save");
+		var numslots = that.numPinsSlots;
 		initializeStoredPins(numslots);
-		for (var i = 0; i < numslots; i++)
-		{
-			$(htmlidprefix + "ContextLoadPins").append("<li data-index='" + i + "'>" + wordload + " #" + (i+1) + "</li>");
-			$(htmlidprefix + "ContextSavePins").append("<li data-index='" + i + "'>" + wordsave + " #" + (i+1) + "</li>");
-		}
-		// Bind behavior for the created list items
-		$(htmlidprefix + "ContextLoadPins li").click(function()
-		{
-			loadStoredPins($(this).attr("data-index"));
-		});
-		$(htmlidprefix + "ContextSavePins li").click(function()
-		{
-			saveStoredPins($(this).attr("data-index"));
-		});
+		that.initializeContextSlots("Pins", numslots, that, saveStoredPins, loadStoredPins);
 	},
 	
 	/*
@@ -21412,7 +21448,7 @@ M = {
 			+ "<li><b>Check off a pin:</b> single click that pin.</li>"
 			+ "<li><b>Get coordinates of a pin:</b> single click that pin.</li>"
 			+ "<li><b>Get coordinates of a path:</b> single click on the path.</li>"
-			+ "<li><b>Generate a path:</b> paste the coordinates string into the coordinates bar and press Enter.</li>"
+			+ "<li><b>Generate a path:</b> paste the path coordinates into the coordinates bar and press Enter.</li>"
 			+ "<li><b>Optimize a path:</b> middle click that pin, it will become the starting pin.</li>"
 			+ "</ul></div>";
 		I.print(str);
@@ -21960,26 +21996,9 @@ M = {
 			that.redrawWeapons(obj.value[pIndex]);
 		};
 		
-		var htmlidprefix = "#" + that.MapEnum;
-		// Generate the load/save items when user opens the Weapons context menu for the first time
-		var numslots = 8;
-		var wordload = D.getWordCapital("load");
-		var wordsave = D.getWordCapital("save");
+		var numslots = that.numWeaponsSlots;
 		initializeStoredWeapons(numslots);
-		for (var i = 0; i < numslots; i++)
-		{
-			$(htmlidprefix + "ContextLoadWeapons").append("<li data-index='" + i + "'>" + wordload + " #" + (i+1) + "</li>");
-			$(htmlidprefix + "ContextSaveWeapons").append("<li data-index='" + i + "'>" + wordsave + " #" + (i+1) + "</li>");
-		}
-		// Bind behavior for the created list items
-		$(htmlidprefix + "ContextLoadWeapons li").click(function()
-		{
-			loadStoredWeapons($(this).attr("data-index"));
-		});
-		$(htmlidprefix + "ContextSaveWeapons li").click(function()
-		{
-			saveStoredWeapons($(this).attr("data-index"));
-		});
+		that.initializeContextSlots("Weapons", numslots, that, saveStoredWeapons, loadStoredWeapons);
 	},
 	
 	/*
@@ -33598,6 +33617,11 @@ I = {
 				container.perfectScrollbar({
 					wheelSpeed: wheelspeed,
 					suppressScrollX: ((pWantHorizontal === undefined) ? true : !pWantHorizontal)
+				});
+				container.one("mouseenter", function()
+				{
+					// Show the scrollbar when hovered over the first time
+					container.perfectScrollbar("update");
 				});
 				I.bindAutoscroll(container);
 			}
