@@ -456,7 +456,7 @@ Fractal:
 	Schedule: [
 		// Week A, 0 index is Sunday
 		["Snowblind", "Thaumanova", "Aquatic"],
-		["Unknown", "Unknown", "Unknown"],
+		["Underground", "Ocean", "Urban"],
 		["Unknown", "Unknown", "Unknown"],
 		["Unknown", "Unknown", "Unknown"],
 		["Unknown", "Unknown", "Unknown"],
@@ -1453,6 +1453,16 @@ Countdown: {
 		Start: new Date("2017-10-24T16:00:00Z"),
 		Finish: new Date("2017-11-03T16:00:00Z")
 	},*/
+	{
+		name_en: "Black Friday Sale",
+		name_de: "Black Friday Verkauf",
+		name_es: "Rebaja Viernes Negro",
+		name_fr: "Vente Vendredi Noir",
+		name_zh: "黑色星期五",
+		url: "https://twitter.com/GuildWars2/status/803312335486144513",
+		Start: new Date("2016-11-24T16:00:00Z"),
+		Finish: new Date("2016-11-29T16:00:00Z")
+	},
 	{
 		name_en: "Wintersday 2016 (Estimated)",
 		name_de: "Wintertag 2016 (Geschätzt)",
