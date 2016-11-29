@@ -457,7 +457,7 @@ Fractal:
 		// Week A, 0 index is Sunday
 		["Snowblind", "Thaumanova", "Aquatic"],
 		["Underground", "Ocean", "Urban"],
-		["Unknown", "Unknown", "Unknown"],
+		["Chaos", "Aetherblade", "Nightmare"],
 		["Unknown", "Unknown", "Unknown"],
 		["Unknown", "Unknown", "Unknown"],
 		["Unknown", "Unknown", "Unknown"],
@@ -1454,16 +1454,6 @@ Countdown: {
 		Finish: new Date("2017-11-03T16:00:00Z")
 	},*/
 	{
-		name_en: "Black Friday Sale",
-		name_de: "Black Friday Verkauf",
-		name_es: "Rebaja Viernes Negro",
-		name_fr: "Vente Vendredi Noir",
-		name_zh: "黑色星期五",
-		url: "https://twitter.com/GuildWars2/status/803312335486144513",
-		Start: new Date("2016-11-24T16:00:00Z"),
-		Finish: new Date("2016-11-29T16:00:00Z")
-	},
-	{
 		name_en: "Wintersday 2016 (Estimated)",
 		name_de: "Wintertag 2016 (Geschätzt)",
 		name_es: "Día Invernal 2016 (Estimado)",
@@ -1518,8 +1508,8 @@ Story:
 Sale: {
 	isPreshown: false, // If true, will show the items on sale without needing user click toggle
 	note: "", // Important note about the sale, optional
-	Start: new Date("2016-11-22T16:00:00Z"),
-	Finish: new Date("2016-11-29T16:00:00Z"),
+	Start: new Date("2016-11-29T16:00:00Z"),
+	Finish: new Date("2016-12-06T16:00:00Z"),
 	Padding: [
 		{
 			name: "Gem", // Gem exchange rate sample
@@ -1540,44 +1530,23 @@ Sale: {
 	],
 	Items: [
 	{
-		name: "Black Lion Chest Key",
-		id: "19980",
-		price: 87,
-		discount: [[1, 87, 125], [5, 315, 450], [25, 1470, 2100]],
-		col: 0
-	},
-	{
-		name: "Total Makeover Kit",
-		id: "35991",
-		price: 227,
-		discount: [[1, 227, 350], [5, 909, 1400]],
-		col: 0
-	},
-	{
-		name: "Transmutation Charge",
-		id: "64736",
-		price: 105,
-		discount: [[5, 105, 150], [10, 189, 270], [25, 420, 600]],
-		col: 0
-	},
-	{
-		name: "Tinker's Package",
-		id: "http://i.imgur.com/j5r0Kgd.png",
-		price: 1850,
+		name: "Cosmic Harvesting Tool",
+		id: "http://i.imgur.com/fN7Z230.png",
+		price: 1000,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Bandit Sniper Appearance Pack",
-		id: "http://i.imgur.com/mIuPrbz.png",
-		price: 2000,
+		name: "Eir's Legacy Longbow",
+		id: "http://i.imgur.com/Sr0zIIV.png",
+		price: 600,
 		discount: null,
 		col: 0
 	},
 	{
-		name: "Crystal Arbiter Appearance Pack",
-		id: "http://i.imgur.com/vFtlrW5.png",
-		price: 2000,
+		name: "Fancy Winter Outfit",
+		id: "38058",
+		price: 700,
 		discount: null,
 		col: 0
 	},
@@ -1591,13 +1560,6 @@ Sale: {
 	{
 		name: "Braham's Wolfblood Outfit",
 		id: "79703",
-		price: 700,
-		discount: null,
-		col: 1
-	},
-	{
-		name: "Marjory's Shrouded Outfit",
-		id: "79705",
 		price: 700,
 		discount: null,
 		col: 1
