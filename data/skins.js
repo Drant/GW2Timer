@@ -266,7 +266,6 @@ var GW2T_SKINS_BLACKLIST = {
 	"5898": "Mistbreaker",
 	"5906": "",
 	"5951": "",
-	"5998": "Canach's Backpack",
 	"6055": "Butterfly Harvesting Flute",
 	"6063": "Swarm Logging Flute",
 	"6072": "Shadow Assassin Short Bow",
@@ -475,7 +474,9 @@ Back: [
 	{u: 6956, i: 79463, n: "Lava Skull Backpack", p: {map_eb: 200}},
 	{u: 6965, i: 79523, n: "Mursaat Wings Backpack", p: {gem: 700}},
 	{u: 7000, i: 79702, n: "Plush Baby Aurene Backpack", p: {gem: 400}},
-	{u: 7004, i: 79707, n: "Crystalline Wings Backpack", p: {gem: 700}}
+	{u: 7004, i: 79707, n: "Crystalline Wings Backpack", p: {gem: 700}},
+	{u: 7017, i: 79830, n: "Icebrood Horn Backpack", p: {map_bf: 400}},
+	{u: 5998, i: 69754, n: "Canach's Backpack", p: {gem: 500}}
 ],
 Armor_Light_Helm: [
 	{u: 85, i: 3176, n: "Apprentice Band", t: [2992, 2982, 2988, 2984, 2990, 2980, 2981, 2986, 2985, 2987, 2989, 3122, 2991, 2979, 2983, 3140, 3158, 3176, 3364, 3365, 3366, 3363, 3368, 3367, 3369, 3370, 3372, 3374, 3371, 3361, 3376, 3360, 3373, 3359, 3375, 5037, 5053, 3362, 5089, 5125, 5143, 5161, 5215, 5251, 5071, 5179, 5107, 5233, 5269, 5287, 5197]},
@@ -860,7 +861,7 @@ Armor_Light_Gloves: [
 	{u: 6738, i: 78196, n: "Triumphant Armguards", p: {badge: 0}},
 	{u: 6818, i: 78969, n: "Experimental Envoy Gloves", p: {craft: true}},
 	{u: 6910, i: 79391, n: "Pirate Hook", p: {gem: 300}},
-	{u: 7028, i: 79874, n: "Light Glacial Gauntlets", p: {coin: -1}}
+	{u: 7028, i: 79874, n: "Light Glacial Gauntlets", p: {achievement: 0}}
 ],
 Armor_Light_Leggings: [
 	{u: 3, i: 3177, n: "Apprentice Pants", t: [3000, 3003, 2999, 2993, 3007, 2995, 2996, 2998, 2997, 3002, 3001, 3005, 3004, 3006, 3008, 2994, 3123, 3141, 3159, 3177, 3377, 3378, 3391, 3379, 3396, 3380, 3381, 3382, 3383, 3384, 3386, 3385, 3388, 3390, 3387, 3393, 3392, 3389, 3394, 3395, 5024, 5090, 5072, 5054, 5108, 5126, 5038, 5144, 5162, 5198, 5180, 5216, 5270, 5234, 5252, 5288]},
@@ -1379,7 +1380,7 @@ Armor_Medium_Gloves: [
 	{u: 6684, i: 78351, n: "Triumphant Wristplates", p: {badge: 0}},
 	{u: 6839, i: 78892, n: "Experimental Envoy Vambraces", p: {craft: true}},
 	{u: 6903, i: 79391, n: "Pirate Hook", p: {gem: 300}},
-	{u: 7032, i: 79937, n: "Medium Glacial Gauntlets", p: {coin: -1}}
+	{u: 7032, i: 79937, n: "Medium Glacial Gauntlets", p: {achievement: 0}}
 ],
 Armor_Medium_Leggings: [
 	{u: 5, i: 41172, n: "Rawhide Leggings", p: {badge: 20}},
@@ -1903,7 +1904,7 @@ Armor_Heavy_Gloves: [
 	{u: 6730, i: 78644, n: "Triumphant Gauntlets", p: {badge: 0}},
 	{u: 6811, i: 78799, n: "Experimental Envoy Gauntlets", p: {craft: true}},
 	{u: 6943, i: 79391, n: "Pirate Hook", p: {gem: 300}},
-	{u: 7006, i: 79818, n: "Heavy Glacial Gauntlets", p: {coin: -1}}
+	{u: 7006, i: 79818, n: "Heavy Glacial Gauntlets", p: {achievement: 0}}
 ],
 Armor_Heavy_Leggings: [
 	{u: 1, i: 3171, n: "Chainmail Leggings", t: [2902, 2904, 2916, 2905, 2907, 2908, 2909, 2910, 2913, 2911, 2912, 2915, 2906, 2914, 2903, 3117, 3153, 3268, 3269, 3135, 3270, 2917, 3272, 3271, 3171, 3274, 3273, 3275, 3276, 3265, 3264, 3277, 3280, 3266, 3282, 3263, 3279, 3267, 3278, 5020, 5033, 5048, 5138, 5156, 5084, 5174, 5192, 5210, 5066, 5120, 5228, 5246, 5282, 5264, 3281, 5102]},

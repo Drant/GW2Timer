@@ -626,6 +626,7 @@ Aura: [
 	{i: 77594, n: "Preserved Queen Bee"},
 	{i: 72021, n: "Chak Egg Sac"},
 	{i: 76063, n: "Vial of Liquid Aurillium"},
+	{i: 79926, n: "Koda's Warmth Enrichment", p: {craft: true}},
 	{i: 77274, n: "Ghostly Infusion"},
 	{i: 77303, n: "Ghostly Infusion"},
 	{i: 77310, n: "Ghostly Infusion"},

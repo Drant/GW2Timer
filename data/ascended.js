@@ -97,6 +97,7 @@ var GW2T_ASCENDED_METADATA = {
 	PriorityTradeable: [
 		19721, // Glob of Ectoplasm
 		19976, // Mystic Coin
+		73248, // Stabilizing Matrix
 		68063, // Amalgamated Gemstone
 		76491, // Black Diamond
 		24295, // Vial of Powerful Blood
@@ -201,6 +202,8 @@ var GW2T_ASCENDED_METADATA = {
 		"77645": [[38135, 150], [19976, 150], [68436, 50], [24, 50], [68437, 50], [38128, 50], [19925, 50], [68362, 1], [77648, 10000]],
 		// Halloween Pail
 		"48715": [[47909, 3]],
+		// Integrated Fractal Matrix
+		"79230": [[73248, 10]],
 		// Charged Quartz Crystal
 		"43772": [[43773, 25]],
 		// Mystic Clover
@@ -702,7 +705,9 @@ Back: [
 	{i: 79157, n: "Blood Ruby Backpack", p: {map_bs: 200}},
 	{i: 79062, n: "Blood Ruby Backpack (Infused)", p: {map_bs: 200}},
 	{i: 79463, n: "Lava Skull Backpack", p: {map_eb: 200}},
-	{i: 79566, n: "Lava Skull Backpack (Infused)", p: {map_eb: 200}}
+	{i: 79566, n: "Lava Skull Backpack (Infused)", p: {map_eb: 200}},
+	{i: 79830, n: "Icebrood Horn Backpack", p: {map_bf: 400}},
+	{i: 79837, n: "Icebrood Horn Backpack (Infused)", p: {map_bf: 400}}
 ],
 Ring: [
 	{i: 37075, n: "Crystalline Band", p: {coin: 0}},
@@ -1736,7 +1741,8 @@ LightHelmAquatic: [
 	{i: 77102, n: "Wei Qi's Cloth Breather", p: {coin: 900000}},
 	{i: 76837, n: "Wupwup Cloth Breather", p: {coin: 900000}},
 	{i: 74680, n: "Zintl Cloth Breather", p: {coin: 900000}},
-	{i: 75573, n: "Zojja's Cloth Breather", p: {coin: 900000}}
+	{i: 75573, n: "Zojja's Cloth Breather", p: {coin: 900000}},
+	{i: 79873, n: "Wegloop's Air Veil", p: {coin: 900000}}
 ],
 MediumHelmAquatic: [
 	{i: 71423, n: "Ahamid's Leather Breather", p: {coin: 900000}},
@@ -1758,7 +1764,8 @@ MediumHelmAquatic: [
 	{i: 72584, n: "Wei Qi's Leather Breather", p: {coin: 900000}},
 	{i: 70712, n: "Wupwup Leather Breather", p: {coin: 900000}},
 	{i: 71381, n: "Zintl Leather Breather", p: {coin: 900000}},
-	{i: 72280, n: "Zojja's Leather Breather", p: {coin: 900000}}
+	{i: 72280, n: "Zojja's Leather Breather", p: {coin: 900000}},
+	{i: 79838, n: "Wegloop's Air Mask", p: {coin: 900000}}
 ],
 HeavyHelmAquatic: [
 	{i: 75954, n: "Ahamid's Metal Breather", p: {coin: 900000}},
@@ -1780,7 +1787,8 @@ HeavyHelmAquatic: [
 	{i: 74921, n: "Wei Qi's Metal Breather", p: {coin: 900000}},
 	{i: 72221, n: "Wupwup Metal Breather", p: {coin: 900000}},
 	{i: 71450, n: "Zintl Metal Breather", p: {coin: 900000}},
-	{i: 74353, n: "Zojja's Metal Breather", p: {coin: 900000}}
+	{i: 74353, n: "Zojja's Metal Breather", p: {coin: 900000}},
+	{i: 79895, n: "Wegloop's Air Helmet", p: {coin: 900000}}
 ],
 Axe: [
 	{i: 77423, n: "Chest of Axes", p: {coin: 1100000}},
