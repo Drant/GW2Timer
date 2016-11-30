@@ -20980,11 +20980,11 @@ M = {
 			this.adjustZoomMapping();
 			
 			// Temporary submaps for new zones if needed
-			if (testzone.id === "1178" && P.TempSubmap.iscreated !== true)
+			/*if (testzone.id === "1178" && P.TempSubmap.iscreated !== true)
 			{
 				P.TempSubmap.iscreated = true;
 				this.createSubmap(P.TempSubmap, true);
-			}
+			}*/
 		}
 	},
 	
@@ -32618,8 +32618,8 @@ I = {
 		// Default content plate
 		I.PageCurrent = I.PageEnum.Chains;
 		
-		// Manual override workaround of corrupt map tiles
-		localStorage["int_setFloor"] = 2;
+		// Temporary option manual overrides
+		localStorage["int_setFloor"] = 1;
 	},
 	
 	/*
