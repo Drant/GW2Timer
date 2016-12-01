@@ -287,7 +287,8 @@ var GW2T_SKINS_BLACKLIST = {
 	"6778": "Guild Cavalier Shield",
 	"6781": "Guild Cavalier Dagger",
 	"6782": "Guild Cavalier Scepter",
-	"6962": "Cosmic Logging Tool"
+	"6962": "Cosmic Logging Tool",
+	"7034": ""
 };
 
 /*
@@ -3948,7 +3949,8 @@ Weapon_Longbow: [
 	{u: 6894, i: 79310, n: "Storm Bow", p: {gem: 600}},
 	{u: 6925, i: 79409, n: "Bloodstone Longbow", t: [79409]},
 	{u: 6922, i: 79416, n: "Carnival Longbow", p: {coin: 1500000}},
-	{u: 6999, i: 79652, n: "Gargoyle Longbow", t: [79652]}
+	{u: 6999, i: 79652, n: "Gargoyle Longbow", t: [79652]},
+	{u: 7021, i: 79853, n: "Eir's Legacy Longbow", p: {gem: 600}}
 ],
 Weapon_Shortbow: [
 	{u: 3671, i: 44924, n: "Lovestruck Short Bow", t: [44924]},

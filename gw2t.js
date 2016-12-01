@@ -5778,7 +5778,7 @@ Z = {
 	printRecordEntry: function(pEntries, pSettings)
 	{
 		var Settings = pSettings || {};
-		var ithentry, entrystr, itemidsproperty, itemids, itemid, name;
+		var ithentry, entryobj, entrystr, itemidsproperty, itemids, itemid, name;
 		var icon, entryelm, itemselm, inputselm;
 		
 		for (var i in pEntries)
@@ -5797,16 +5797,17 @@ Z = {
 				{
 					itemid = itemids[ii];
 					name = (Settings.aItemDB) ? Settings.aItemDB[itemid].name : ithentry.name;
-					entrystr = U.lineJSON(ithentry.oRecordEntry || {
+					entryobj = ithentry.oRecordEntry || {
 						u: ithentry.id,
 						i: itemid,
 						n: name,
 						p: {gem: null}
-					}, false);
-					if (entrystr.u === entrystr.i)
+					};
+					if (entryobj.u === entryobj.i)
 					{
-						delete entrystr["u"];
+						delete entryobj["u"];
 					}
+					entrystr = U.lineJSON(entryobj, false) + ",";
 					inputselm = $("<aside>&nbsp;<a" + U.convertExternalAnchor(U.getWikiLinkDefault(name)) + ">" + name + "</a></aside>").appendTo(itemselm);
 					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(entrystr);
 					$("<input class='cssInputText' type='text' />").prependTo(inputselm).val(itemid);
@@ -8622,7 +8623,7 @@ A = {
 		var generateResults = function()
 		{
 			// Clear the console of load messages
-			I.clear();
+			//I.clear();
 			var tablecategory = createTable(D.getPhraseOriginal("Audit Categories"));
 			var tablesum = createTable(D.getPhraseOriginal("Sum &amp; Conversion"));
 			var tablechar = createTable(D.getPhraseOriginal("Audit Characters"));
@@ -9071,7 +9072,7 @@ A = {
 			A.iterateRecord(ascendeddata, function(pEntry, pCategory)
 			{
 				ascendedtype = ascendedheader[pCategory].type;
-				if (ascendedtype !== "Ring" && ascendedtype !== "Accessory" && ascendedtype !== "Amulet")
+				if (ascendedtype !== "Trinket")
 				{
 					E.Paylist[pEntry.i] = appraisal[pCategory];
 					// Also count the number of ascended armor and weapons pieces
@@ -9110,7 +9111,7 @@ A = {
 					for (var i in pEntry.p)
 					{
 						// Update payment database item if the payment type is applicable
-						if ((auditpayments[i] || pEntry.p.coin))
+						if (auditpayments[i] || pEntry.p.coin)
 						{
 							E.Paylist[pEntry.i] = (pEntry.p.coin) ? E.createPriceBound(pEntry.p.coin) : pEntry.p;
 						}
@@ -9186,7 +9187,6 @@ A = {
 				insertPaymentsFromRecord("Minis");
 				// Insert finisher item payments
 				insertPaymentsFromRecord("Finishers");
-				
 				// Begin auditing
 				executeAudit();
 			});

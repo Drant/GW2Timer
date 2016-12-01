@@ -226,7 +226,7 @@ var GW2T_CURRENCY_DATA = {
 		coin_appraisedsell: {id: 1, color: "#fdc84e", conversion: 1, header: "Appraised Sell"},
 		gem: {id: 4, color: "#66aaff", conversion: null}, // To be assigned by gem exchange
 		karma: {id: 2, color: "#ee55cc", conversion: [5250, 24295], isliquid: true}, // Vial of Powerful Blood
-		laurel: {id: 3, color: "#44dd44", conversion: [3, 24351], isliquid: true}, // Vicious Claw
+		laurel: {id: 3, color: "#44dd44", conversion: [0.33, 24351], isliquid: true}, // Vicious Claw
 		badge: {id: 15, color: "#8c7047", conversion: [30, 71473], isliquid: true}, // Badge of Tribute
 		proof: {id: 31, color: "#ffff53", conversion: [6, 21262], isliquid: true, ishidden: true}, // Superior Catapult Blueprints
 		commendation: {id: 16, color: "#e9d580", conversion: [10, 41560], isliquid: true}, // Sentinel's Orichalcum Imbued Inscription
