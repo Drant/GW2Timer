@@ -459,7 +459,7 @@ Fractal:
 		["Underground", "Ocean", "Urban"],
 		["Chaos", "Aetherblade", "Nightmare"],
 		["Maitrin", "Cliffside", "Molten"],
-		["Unknown", "Unknown", "Unknown"],
+		["Swamp", "Uncategorized", "Ocean"],
 		["Unknown", "Unknown", "Unknown"],
 		["Unknown", "Unknown", "Unknown"],
 		// Week B

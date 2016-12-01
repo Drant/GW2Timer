@@ -8623,7 +8623,7 @@ A = {
 		var generateResults = function()
 		{
 			// Clear the console of load messages
-			//I.clear();
+			I.clear();
 			var tablecategory = createTable(D.getPhraseOriginal("Audit Categories"));
 			var tablesum = createTable(D.getPhraseOriginal("Sum &amp; Conversion"));
 			var tablechar = createTable(D.getPhraseOriginal("Audit Characters"));
