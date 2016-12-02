@@ -1395,7 +1395,7 @@ Announcement:
 	pve: "<dfn data-coord='[[21325,7462],[20999,7308],[21099,7143],[21122,7048],[21048,6994],[21359,6959],[21650,6882],[21827,6925],[21995,6951],[21765,7080],[21890,7144],[21974,7158],[22061,7219],[21931,7330],[21780,7252],[21713,7352],[21706,7525],[21573,7581],[22376,7990],[23197,7470],[22679,7073]]'>Bitterfrost Frontier</dfn> <a href='http://forum.renaka.com/topic/5546166/'>GPS completion route</a>, <a href='http://gw2timer.com/?page=Resource&article=Regular&go=Bitterfrost'>winterberry nodes</a>, and <a href='http://gw2timer.com/?page=IceboundChests'>icebound chests</a> added.",
 	wvw: "",
 	Start: new Date("2016-11-23T16:00:00Z"),
-	Finish: new Date("2016-12-02T16:00:00Z"),
+	Finish: new Date("2016-12-13T16:00:00Z"),
 	Messages: // Greeting messages shown upon site load
 	{
 		Forger: "Today is <a href='http://wiki.guildwars2.com/wiki/Chest_of_the_Mystic'>Daily Forger</a>, "
