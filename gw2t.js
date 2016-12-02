@@ -82,7 +82,7 @@ O = {
 	 */
 	Utilities:
 	{
-		programVersion: {key: "int_utlProgramVersion", value: 161124},
+		programVersion: {key: "int_utlProgramVersion", value: 161201},
 		timestampDaily: {key: "int_utlTimestampDaily", value: 0},
 		timestampWeekly: {key: "int_utlTimestampWeekly", value: 0},
 		APITokens: {key: "obj_utlAPITokens", value: []},
@@ -240,9 +240,12 @@ O = {
 		int_sizeStopwatchFont: 64,
 		int_sizeNotepadFont: 12,
 		int_sizeNotepadHeight: 400,
-		// Advanced
+		// Daily
 		bol_clearChainChecklistOnReset: true,
 		bol_clearPersonalChecklistOnReset: true,
+		int_numChecklistDaily: 12,
+		int_numChecklistWeekly: 12,
+		// Advanced
 		bol_use24Hour: true,
 		bol_detectDST: true,
 		bol_useSiteTag: true
@@ -1494,6 +1497,7 @@ X = {
 		ResourceRegular: { key: "str_chlResourceRegular" },
 		ResourceHotspot: { key: "str_chlResourceHotspot" },
 		Dungeon: { key: "str_chlDungeon", money: 0 },
+		Raid: { key: "str_chlRaid", money: 0 },
 		CustomDaily: { key: "str_chlCustomDaily" },
 		CustomWeekly: { key: "str_chlCustomWeekly" },
 		// Individual calculator's settings
@@ -1969,21 +1973,39 @@ X = {
 	 * @param enum pJob initial checkbox state.
 	 * @pre These checkboxes can only have a checked and unchecked state only.
 	 */
-	initializeCheckboxlist: function(pChecklist, pCheckboxes, pJob)
+	initializeCheckboxlist: function(pChecklist, pCheckboxes, pJob, pRestoreButton)
 	{
 		X.initializeChecklist(pChecklist, pCheckboxes.length, null, pJob);
-		
+
 		pCheckboxes.each(function(iIndex)
 		{
 			$(this).change(function()
 			{
 				var state = X.getCheckboxEnumState($(this));
-				
 				X.setChecklistItem(pChecklist, iIndex, state);
+				X.styleCheckbox(pChecklist, iIndex, $(this));
 			});
 			
 			// Now that this checkbox is bound, trigger it as the state in checklist
 			X.triggerCheckboxEnumState(pChecklist, iIndex, $(this));
+			X.styleCheckbox(pChecklist, iIndex, $(this));
+		});
+		
+		// Bind restore default values button
+		if (pRestoreButton)
+		{
+			pRestoreButton.click(function()
+			{
+				X.clearCheckboxes(pCheckboxes);
+			});
+		}
+	},
+	clearCheckboxes: function(pCheckboxes)
+	{
+		pCheckboxes.each(function()
+		{
+			X.setCheckboxEnumState($(this), X.ChecklistEnum.Unchecked);
+			$(this).trigger("change");
 		});
 	},
 	
@@ -2308,48 +2330,50 @@ X = {
 		
 		// Buttons to toggle view between daily and weekly checklist
 		var tabs = $("#chlCustomTabs button");
-		var tabcus = $("#chlCustom");
-		var tabdun = $("#chlDungeon");
-		var chld = $("#chlCustomDaily");
-		var chlw = $("#chlCustomWeekly");
-		var clkd = $("#chlCountdownToDaily").hide();
-		var clkw = $("#chlCountdownToWeekly").hide();
-		$("#chlDungeonButton").click(function()
+		var contcust = $("#chlCustom");
+		var contdung = $("#chlDungeon");
+		var contraid = $("#chlRaid");
+		var chldaily = $("#chlCustomDaily");
+		var chlweekly = $("#chlCustomWeekly");
+		var clkdaily = $("#chlCountdownToDaily").hide();
+		var clkweekly = $("#chlCountdownToWeekly").hide();
+		var showChecklist = function(pTab, pContainer, pChecklist, pClock)
 		{
 			tabs.removeClass("btnFocused");
-			$(this).addClass("btnFocused");
-			tabcus.hide();
-			tabdun.show().css({opacity: 0.5}).animate({opacity: 1}, 400);
-			clkd.show();
-			clkw.hide();
+			pTab.addClass("btnFocused");
+			contcust.hide();
+			contdung.hide();
+			contraid.hide();
+			chldaily.hide();
+			chlweekly.hide();
+			clkdaily.hide();
+			clkweekly.hide();
+			pClock.show();
+			pContainer.show();
+			pChecklist.show().css({opacity: 0.5}).animate({opacity: 1}, 400);
+		};
+		
+		$("#chlDungeonButton").click(function()
+		{
+			showChecklist($(this), contdung, contdung, clkdaily);
 		});
 		$("#chlCustomDailyButton").click(function()
 		{
-			tabs.removeClass("btnFocused");
-			$(this).addClass("btnFocused");
-			tabdun.hide();
-			tabcus.show();
-			chlw.hide();
-			chld.show().css({opacity: 0.5}).animate({opacity: 1}, 400);
-			clkd.show();
-			clkw.hide();
+			showChecklist($(this), contcust, chldaily, clkdaily);
 		}).trigger("click");
 		$("#chlCustomWeeklyButton").click(function()
 		{
-			tabs.removeClass("btnFocused");
-			$(this).addClass("btnFocused");
-			tabdun.hide();
-			tabcus.show();
-			chld.hide();
-			chlw.show().css({opacity: 0.5}).animate({opacity: 1}, 400);
-			clkd.hide();
-			clkw.show();
-			
+			showChecklist($(this), contcust, chlweekly, clkweekly);
+		});
+		$("#chlRaidButton").click(function()
+		{
+			showChecklist($(this), contraid, contraid, clkweekly);
 		});
 		
 		// Initialize the checklists
 		X.initializeDungeonChecklist();
 		X.initializeCustomChecklist();
+		X.initializeRaidChecklist();
 	},
 	
 	/*
@@ -2358,8 +2382,7 @@ X = {
 	initializeDungeonChecklist: function()
 	{
 		X.initializeChecklist(X.Checklists.Dungeon, $("#chlDungeon input").length);
-		
-		// Load dungeon icons on demand because they are pretty large
+		// Load icons
 		$("#chlDungeon .chlDungeonBar").each(function()
 		{
 			$(this).prepend("<ins class='chl_dungeon chl_" + $(this).data("name").toLowerCase() + "'></ins>");
@@ -2383,7 +2406,6 @@ X = {
 			$(this).change(function()
 			{
 				var state = X.getCheckboxEnumState($(this));
-				
 				X.setChecklistItem(X.Checklists.Dungeon, iIndex, state);
 				X.styleCheckbox(X.Checklists.Dungeon, iIndex, $(this));
 				
@@ -2466,18 +2488,34 @@ X = {
 	},
 	
 	/*
+	 * Binds raid checkbox storage.
+	 */
+	initializeRaidChecklist: function()
+	{
+		X.initializeCheckboxlist(X.Checklists.Raid, $("#chlRaid input"), X.ChecklistJob.UncheckAll, $("#chlRaidUncheck"));
+		// Load icons
+		$("#chlRaid input").each(function()
+		{
+			$(this).before("<ins class='chl_raid chl_" + $(this).data("name") + "'></ins>");
+		});
+	},
+	
+	/*
 	 * Binds checkbox and text field joined behavior.
 	 */
 	initializeCustomChecklist: function()
 	{
 		// Generate initial set of checkboxes and textboxes
-		var NUM_CHECKBOXES = 12;
 		var checkboxhtml = "<li><label><input type='checkbox' />" + I.Symbol.Filler + "</label><input type='text' /></li>";
-		for (var i = 0; i < NUM_CHECKBOXES; i++)
+		for (var i = 0; i < O.Options.int_numChecklistDaily; i++)
 		{
 			$("#chlCustomListDaily").append(checkboxhtml);
+		}
+		for (var i = 0; i < O.Options.int_numChecklistWeekly; i++)
+		{
 			$("#chlCustomListWeekly").append(checkboxhtml);
 		}
+		
 		var insertSampleList = function(pList)
 		{
 			var samples = $(pList).attr("data-samples").split(I.cTextDelimiterChar);
@@ -2546,15 +2584,17 @@ X = {
 	 */
 	clearCustomChecklistDaily: function()
 	{
-		$("#chlDungeonUncheck").trigger("click");
 		$("#chlCustomUncheckDaily").trigger("click");
-		X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
+		$("#chlDungeonUncheck").trigger("click");
 		X.clearChecklist(X.Checklists.CustomDaily, X.ChecklistJob.UncheckTheChecked);
+		X.clearChecklist(X.Checklists.Dungeon, X.ChecklistJob.UncheckTheChecked);
 	},
 	clearCustomChecklistWeekly: function()
 	{
 		$("#chlCustomUncheckWeekly").trigger("click");
+		$("#chlRaidUncheck").trigger("click");
 		X.clearChecklist(X.Checklists.CustomWeekly, X.ChecklistJob.UncheckTheChecked);
+		X.clearChecklist(X.Checklists.Raid, X.ChecklistJob.UncheckTheChecked);
 	},
 	
 	/*
@@ -4669,7 +4709,14 @@ Z = {
 			}},
 			api: {usage: "Prints the output of an API URL &quot;" + U.URL_API.Prefix + "&quot;. <em>Parameters: str_apiurlsuffix, int_limit (optional), str_querystring (optional)</em>", f: function()
 			{
-				Z.printAPI(args[1], args[2], args[3]);
+				if (args[1])
+				{
+					Z.printAPI(args[1], args[2], args[3]);
+				}
+				else
+				{
+					I.print("<a" + U.convertExternalAnchor("https://api.guildwars2.com/v2") + ">https://api.guildwars2.com/v2</a> for full list of API endpoints.");
+				}
 			}},
 			apicache: {usage: "Prints the cache of the previous console API call as an associative array. <em>Parameters: bol_wantoutputasfile (optional)</em>", f: function()
 			{
@@ -6730,6 +6777,7 @@ A = {
 		Outfits: "account/outfits",
 		Skins: "account/skins",
 		Wallet: "account/wallet",
+		Recipes: "account/recipes",
 		Characters: "characters",
 		Transactions: "commerce/transactions",
 		CurrentBuys: "commerce/transactions/current/buys",
@@ -10953,45 +11001,50 @@ V = {
 				}
 			}
 			
-			// Generate the bank
-			B.generateUnlockables(bank, {
-				aHeaders: headers,
-				aRecord: record,
-				aUnlockeds: unlockeds,
-				aIsCollapsed: true,
-				aHelpMessage: $("#accHelpRecipes").html(),
-				aTabIterator: function(pCatName)
-				{
-					var discipline = pCatName.split("_")[0];
-					var catname = D.getObjectName(headers[pCatName]);
-					var caticon = "<ins class='bnkTabIcon acc_craft acc_craft_" + discipline.toLowerCase() + "'></ins>"
-						+ "<ins class='bnkTabIcon acc_recipes acc_recipes_" + pCatName.toLowerCase() + "'></ins>";
-					var tab = B.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
-					return tab;
-				}
-			});
-			
-			/*
-			 * Piggyback on the bank search bar (created by the generate unlockables
-			 * function) and make it print the characters who have unlocked the
-			 * recipe to create that searched item.
-			 */
-			var searchbar = $("#accDishMenu_Recipes").find(".bnkSearch .bnkSearchInput").first();
-			Q.bindItemSearch(searchbar, {
-				aFillerText: null,
-				aCallback: function(pItem)
-				{
-					var itemname = "&quot;<a" + U.convertExternalAnchor(U.getWikiLinkLanguage(pItem.name)) + ">" + pItem.name + "</a>&quot;";
-					if (itemlookup[pItem.id])
+			// Get the account wide unlocked recipes
+			$.getJSON(A.getURL(A.URL.Recipes), function(pData)
+			{
+				unlockeds = U.getUnion(unlockeds, pData);
+				// Generate the bank
+				B.generateUnlockables(bank, {
+					aHeaders: headers,
+					aRecord: record,
+					aUnlockeds: unlockeds,
+					aIsCollapsed: true,
+					aHelpMessage: $("#accHelpRecipes").html(),
+					aTabIterator: function(pCatName)
 					{
-						var charnames = (itemlookup[pItem.id]).join(", ");
-						I.write(itemname + " was learned and can be crafted by:<br /><br />" + charnames);
+						var discipline = pCatName.split("_")[0];
+						var catname = D.getObjectName(headers[pCatName]);
+						var caticon = "<ins class='bnkTabIcon acc_craft acc_craft_" + discipline.toLowerCase() + "'></ins>"
+							+ "<ins class='bnkTabIcon acc_recipes acc_recipes_" + pCatName.toLowerCase() + "'></ins>";
+						var tab = B.createBankTab(bank, {aTitle: catname, aIcon: caticon, aIsCollapsed: true});
+						return tab;
 					}
-					else
+				});
+
+				/*
+				 * Piggyback on the bank search bar (created by the generate unlockables
+				 * function) and make it print the characters who have unlocked the
+				 * recipe to create that searched item.
+				 */
+				var searchbar = $("#accDishMenu_Recipes").find(".bnkSearch .bnkSearchInput").first();
+				Q.bindItemSearch(searchbar, {
+					aFillerText: null,
+					aCallback: function(pItem)
 					{
-						I.write("None of your characters have learned how to craft " + itemname);
+						var itemname = "&quot;<a" + U.convertExternalAnchor(U.getWikiLinkLanguage(pItem.name)) + ">" + pItem.name + "</a>&quot;";
+						if (itemlookup[pItem.id])
+						{
+							var charnames = (itemlookup[pItem.id]).join(", ");
+							I.write(itemname + " was learned and can be crafted by:<br /><br />" + charnames);
+						}
+						else
+						{
+							I.write("None of your characters have learned how to craft " + itemname);
+						}
 					}
-				}
+				});
 			});
 		});
 	},
@@ -18788,9 +18841,7 @@ C = {
 	{
 		if (I.isMapEnabled)
 		{
-			var event = pChain.primaryEvents;
-			var coord = event[(event.length - 1)].path[0];
-			M.goToView(coord, M.ZoomEnum.Ground, M.Pin.Event);
+			M.goToView(pChain.finalCoord, M.ZoomEnum.Ground, M.Pin.Event);
 		}
 	},
 	
@@ -24231,6 +24282,10 @@ P = {
 				}
 			}
 		}
+		// Remember final event coordinate
+		// Remember primary event coordinate
+		var prim = pChain.primaryEvents;
+		pChain.finalCoord = prim[(prim.length - 1)].path[0];
 
 		/*
 		 * Go to the event location when clicked on event name.
@@ -24712,9 +24767,10 @@ G = {
 			}
 			else if (d0 === "boss")
 			{
+				var bosschain = C.getChainByAlias(d1);
 				bosshtml = "<em class='dlyBossIconContainer dlyMonthday'><img class='dlyBossIcon' src='img/chain/" + d1 + I.cPNG + "' /></em>";
-				return "<ins class='dlyRegion dly_region_" + C.getChainRegion(C.getChainByAlias(d1)) + "'>"
-					+ "<ins class='dly dly_pve_boss' title='" + dtitle + "'></ins>"
+				return "<ins class='dlyRegion dly_region_" + C.getChainRegion(bosschain) + "'>"
+					+ "<ins class='dly dly_pve_boss dlyZoom curZoom' title='" + dtitle + "' data-coord='" + bosschain.finalCoord + "'></ins>"
 				+ "</ins>";
 			}
 			else if (d0 === "event")

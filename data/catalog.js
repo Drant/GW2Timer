@@ -311,7 +311,7 @@ Gem: [
 	{i: 20002, n: "Experience Booster", p: {gem: -80}},
 	{i: 20003, n: "Item Booster", p: {gem: -80}},
 	{i: 67836, n: "Celebration Booster", p: {achievement: 0}},
-	{i: 45003, n: "Birthday Booster", p: {achievement: 0}}
+	{i: 45003, n: "Birthday Booster", p: {starting: true}}
 ],
 TonicEndless: [
 	{i: 72709, n: "Mystic Chromatic Ooze", p: {craft: true}},

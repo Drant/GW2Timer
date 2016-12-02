@@ -840,13 +840,12 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 /* =============================================================================
  *  Personal Checklist
  * ========================================================================== */
-#chlDungeon {
+#chlDungeon, #chlRaid {
 	margin-top: 12px;
 	margin-left: 12px;
 }
 
 #chlDungeonCalculator {
-	
 	margin-left: 48px;
 	margin-bottom: 6px;
 	font-size: 18px;
@@ -858,12 +857,10 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 		-1px 1px 0px #000,
 		1px 1px 0px #000;
 }
-
 #chlDungeonCalculator img {
 	width: 24px; height: 24px;
 	margin-left: 2px;
 }
-
 #chlDungeonCalculator span {
 	padding-bottom: 6px;
 	padding-left: 4px;
@@ -871,7 +868,6 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 	border-radius: 4px;
 	text-align: right;
 }
-
 #chlDungeonCalculator_Gold {
 	color: #ddbb44;
 }
@@ -893,6 +889,7 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 	border-bottom: 1px solid #e4e0b3;
 	vertical-align: middle;
 }
+
 .chl_dungeon {
 	width: 32px; height: 32px;
 	background-image: url("../img/dungeon/dungeons.png");
@@ -901,6 +898,11 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 .chl_fractal {
 	width: 32px; height: 32px;
 	background-image: url("../img/dungeon/fractals.png");
+	border-radius: 4px;
+}
+.chl_raid {
+	width: 32px; height: 32px;
+	background-image: url("../img/dungeon/raids.png");
 	border-radius: 4px;
 }
 .chl_ac { background-position: 0 0; }
@@ -928,6 +930,15 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 .chl_underground { background-position: -416px 0; }
 .chl_urban { background-position: -448px 0; }
 .chl_volcanic { background-position: -480px 0; }
+.chl_ft_1_1 { background-position: 0 0; }
+.chl_ft_1_2 { background-position: -32px 0; }
+.chl_ft_1_3 { background-position: -64px 0; }
+.chl_ft_2_1 { background-position: -96px 0; }
+.chl_ft_2_2 { background-position: -128px 0; }
+.chl_ft_2_3 { background-position: -160px 0; }
+.chl_ft_3_1 { background-position: -192px 0; }
+.chl_ft_3_2 { background-position: -224px 0; }
+.chl_ft_3_3 { background-position: -256px 0; }
 
 .chlDungeonBar label {
 	display: inline;
@@ -948,6 +959,15 @@ input[type="text"].rarity_Legendary { color: #9933ff; /* violet */ }
 }
 .chlDungeonBar label.chlCheckboxDisabled {
 	opacity: 0.3;
+}
+
+.chlRaidBar {
+	margin-bottom: 8px;
+	border-bottom: 1px solid #555;
+}
+.chlRaidBar label {
+	display: inline-block;
+	padding-right: 32px;
 }
 
 /* Custom checklist */

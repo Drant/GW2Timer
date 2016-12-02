@@ -325,7 +325,7 @@ var GW2T_ASCENDED_METADATA = {
 		6233: 1, // Rage
 		6505: 1 // Venom
 	},
-	JunkValue: {"19182": 2, "19202": 15, "19526": 2, "19527": 9, "19528": 16, "19529": 2, "19530": 9, "19531": 16, "19532": 2, "19533": 9, "19534": 16, "19535": 2, "19536": 9, "19537": 16, "19538": 2, "19539": 9, "19540": 16, "19541": 2, "19542": 16, "19543": 2, "19544": 9, "19545": 16, "19546": 2, "19547": 9, "19548": 16, "19549": 2, "19550": 9, "19551": 16, "19552": 2, "19553": 9, "19554": 16, "19557": 16, "19558": 2, "19559": 9, "19560": 16, "19561": 2, "19562": 9, "19563": 16, "19564": 2, "19565": 9, "19566": 16, "19567": 2, "19568": 9, "19569": 16, "19570": 2, "19571": 9, "19572": 16, "19573": 2, "19574": 9, "19575": 16, "19576": 2, "19577": 9, "19578": 16, "19579": 2, "19584": 9, "19591": 16, "19594": 19, "19595": 20, "19596": 2, "19597": 4, "19599": 6, "19601": 9, "19603": 11, "19605": 13, "19607": 15, "19608": 16, "19609": 17, "19611": 19, "19612": 20, "19613": 2, "19614": 9, "19615": 16, "19616": 9, "19617": 2, "19618": 2, "19619": 2, "19620": 2, "24120": 2, "24361": 4, "24371": 2, "24435": 2, "24436": 2, "24437": 2, "24441": 2, "24448": 2, "35736": 1000, "39223": 50, "42680": 3, "48882": 17, "67807": 2500, "67808": 2500, "67968": 2500, "68043": 2500, "68389": 100, "68390": 1000, "68510": 2500, "68527": 2500, "68637": 888, "68638": 88, "68639": 8888, "68640": 88888, "69568": 100, "69850": 1000, "69936": 1000000, "70036": 10000, "70093": 3000, "70934": 20, "71315": 2000, "71384": 2, "71509": 3000, "72336": 2500, "72468": 2000, "72544": 16, "72657": 2500, "72796": 5000, "72847": 2, "72974": 6000, "73055": 20, "73331": 2000, "73372": 2, "73398": 10000, "73402": 2500, "73478": 6000, "73561": 3000, "73705": 2000, "73848": 3000, "73992": 2000, "74100": 2000, "74696": 3000, "74863": 16, "74916": 3000, "74924": 2500, "74996": 1000, "75096": 2500, "75220": 2000, "75653": 6000, "76046": 9, "76740": 3000, "76822": 20, "77172": 2500, "77690": 8888, "78534": 20, "78740": 10000, "78753": 25, "78769": 2500, "78946": 1000, "79047": 5000}
+	JunkValue: {"19182": 2, "19202": 15, "19526": 2, "19527": 9, "19528": 16, "19529": 2, "19530": 9, "19531": 16, "19532": 2, "19533": 9, "19534": 16, "19535": 2, "19536": 9, "19537": 16, "19538": 2, "19539": 9, "19540": 16, "19541": 2, "19542": 16, "19543": 2, "19544": 9, "19545": 16, "19546": 2, "19547": 9, "19548": 16, "19549": 2, "19550": 9, "19551": 16, "19552": 2, "19553": 9, "19554": 16, "19557": 16, "19558": 2, "19559": 9, "19560": 16, "19561": 2, "19562": 9, "19563": 16, "19564": 2, "19565": 9, "19566": 16, "19567": 2, "19568": 9, "19569": 16, "19570": 2, "19571": 9, "19572": 16, "19573": 2, "19574": 9, "19575": 16, "19576": 2, "19577": 9, "19578": 16, "19579": 2, "19584": 9, "19591": 16, "19594": 19, "19595": 20, "19596": 2, "19597": 4, "19599": 6, "19601": 9, "19603": 11, "19605": 13, "19607": 15, "19608": 16, "19609": 17, "19611": 19, "19612": 20, "19613": 2, "19614": 9, "19615": 16, "19616": 9, "19617": 2, "19618": 2, "19619": 2, "19620": 2, "21265": 496, "24120": 2, "24361": 4, "24371": 2, "24435": 2, "24436": 2, "24437": 2, "24441": 2, "24448": 2, "35736": 1000, "39223": 50, "42680": 3, "48882": 17, "67807": 2500, "67808": 2500, "67968": 2500, "68043": 2500, "68389": 100, "68390": 1000, "68510": 2500, "68527": 2500, "68637": 888, "68638": 88, "68639": 8888, "68640": 88888, "69568": 100, "69850": 1000, "69936": 1000000, "70036": 10000, "70093": 3000, "70934": 20, "71315": 2000, "71384": 2, "71509": 3000, "72336": 2500, "72468": 2000, "72544": 16, "72657": 2500, "72796": 5000, "72847": 2, "72974": 6000, "73055": 20, "73331": 2000, "73372": 2, "73398": 10000, "73402": 2500, "73478": 6000, "73561": 3000, "73705": 2000, "73848": 3000, "73992": 2000, "74100": 2000, "74696": 3000, "74863": 16, "74916": 3000, "74924": 2500, "74996": 1000, "75096": 2500, "75220": 2000, "75653": 6000, "76046": 9, "76740": 3000, "76822": 20, "77172": 2500, "77690": 8888, "78534": 20, "78740": 10000, "78753": 25, "78769": 2500, "78946": 1000, "79047": 5000, "79634": 600}
 };
 
 var GW2T_ASCENDED_BLACKLIST = {
@@ -1825,10 +1825,10 @@ Axe: [
 	{i: 77122, n: "Yassith's Reaver", p: {coin: 1100000}},
 	{i: 78029, n: "Kaiser Snake Axe", p: {coin: 1100000}},
 	{i: 78068, n: "Kaiser Snake Axe", p: {coin: 1100000}},
-	{i: 78865, n: "Defender's White Mantle Axe", p: {coin: 1100000}},
-	{i: 78963, n: "Assaulter's White Mantle Axe", p: {coin: 1100000}},
-	{i: 78981, n: "Malicious White Mantle Axe", p: {coin: 1100000}},
-	{i: 78987, n: "Healer's White Mantle Axe", p: {coin: 1100000}}
+	{i: 78865, n: "Defender's White Mantle Axe", p: {raid_ft: 600}},
+	{i: 78963, n: "Assaulter's White Mantle Axe", p: {raid_ft: 600}},
+	{i: 78981, n: "Malicious White Mantle Axe", p: {raid_ft: 600}},
+	{i: 78987, n: "Healer's White Mantle Axe", p: {raid_ft: 600}}
 ],
 Mace: [
 	{i: 77446, n: "Chest of Maces", p: {coin: 1100000}},
@@ -1862,10 +1862,10 @@ Mace: [
 	{i: 75581, n: "Ossa's Flanged Mace", p: {coin: 1100000}},
 	{i: 76786, n: "Yassith's Flanged Mace", p: {coin: 1100000}},
 	{i: 76988, n: "Tizlak's Flanged Mace", p: {coin: 1100000}},
-	{i: 77831, n: "Malicious White Mantle Gavel", p: {coin: 1100000}},
-	{i: 77895, n: "Defender's White Mantle Gavel", p: {coin: 1100000}},
-	{i: 77917, n: "Healer's White Mantle Gavel", p: {coin: 1100000}},
-	{i: 77977, n: "Assaulter's White Mantle Gavel", p: {coin: 1100000}},
+	{i: 77831, n: "Malicious White Mantle Gavel", p: {raid_ft: 600}},
+	{i: 77895, n: "Defender's White Mantle Gavel", p: {raid_ft: 600}},
+	{i: 77917, n: "Healer's White Mantle Gavel", p: {raid_ft: 600}},
+	{i: 77977, n: "Assaulter's White Mantle Gavel", p: {raid_ft: 600}},
 	{i: 78056, n: "Kaiser Snake Mace", p: {coin: 1100000}},
 	{i: 78098, n: "Kaiser Snake Mace", p: {coin: 1100000}},
 	{i: 79570, n: "Endeavor", p: {coin: 1100000}}
@@ -1905,10 +1905,10 @@ Sword: [
 	{i: 76985, n: "Svaard's Blade", p: {coin: 1200000}},
 	{i: 78061, n: "Kaiser Snake Sword", p: {coin: 1200000}},
 	{i: 78072, n: "Kaiser Snake Sword", p: {coin: 1200000}},
-	{i: 78901, n: "Assaulter's White Mantle Gladius", p: {coin: 1200000}},
-	{i: 78925, n: "Defender's White Mantle Gladius", p: {coin: 1200000}},
-	{i: 78984, n: "Malicious White Mantle Gladius", p: {coin: 1200000}},
-	{i: 78992, n: "Assaulter's White Mantle Gladius", p: {coin: 1200000}}
+	{i: 78901, n: "Assaulter's White Mantle Gladius", p: {raid_ft: 600}},
+	{i: 78925, n: "Defender's White Mantle Gladius", p: {raid_ft: 600}},
+	{i: 78984, n: "Malicious White Mantle Gladius", p: {raid_ft: 600}},
+	{i: 78992, n: "Assaulter's White Mantle Gladius", p: {raid_ft: 600}}
 ],
 Dagger: [
 	{i: 77428, n: "Chest of Daggers", p: {coin: 1100000}},
@@ -1948,10 +1948,10 @@ Dagger: [
 	{i: 77459, n: "Malicious Sparking Dagger", p: {raid_ft: 600}},
 	{i: 78073, n: "Kaiser Snake Dagger", p: {coin: 1100000}},
 	{i: 78110, n: "Kaiser Snake Dagger", p: {coin: 1100000}},
-	{i: 78877, n: "Defender's White Mantle Slicer", p: {coin: 1100000}},
-	{i: 78916, n: "Malicious White Mantle Slicer", p: {coin: 1100000}},
-	{i: 78941, n: "Healer's White Mantle Slicer", p: {coin: 1100000}},
-	{i: 78943, n: "Assaulter's White Mantle Slicer", p: {coin: 1100000}}
+	{i: 78877, n: "Defender's White Mantle Slicer", p: {raid_ft: 600}},
+	{i: 78916, n: "Malicious White Mantle Slicer", p: {raid_ft: 600}},
+	{i: 78941, n: "Healer's White Mantle Slicer", p: {raid_ft: 600}},
+	{i: 78943, n: "Assaulter's White Mantle Slicer", p: {raid_ft: 600}}
 ],
 Pistol: [
 	{i: 77465, n: "Chest of Pistols", p: {coin: 1100000}},
@@ -1986,10 +1986,10 @@ Pistol: [
 	{i: 73925, n: "Ossa's Revolver", p: {coin: 1100000}},
 	{i: 74612, n: "Laranthir's Revolver", p: {coin: 1100000}},
 	{i: 76399, n: "Prototype", p: {coin: 1100000}},
-	{i: 77841, n: "Malicious White Mantle Pistol", p: {coin: 1100000}},
-	{i: 77887, n: "Assaulter's White Mantle Pistol", p: {coin: 1100000}},
-	{i: 77920, n: "Healer's White Mantle Pistol", p: {coin: 1100000}},
-	{i: 77949, n: "Defender's White Mantle Pistol", p: {coin: 1100000}},
+	{i: 77841, n: "Malicious White Mantle Pistol", p: {raid_ft: 600}},
+	{i: 77887, n: "Assaulter's White Mantle Pistol", p: {raid_ft: 600}},
+	{i: 77920, n: "Healer's White Mantle Pistol", p: {raid_ft: 600}},
+	{i: 77949, n: "Defender's White Mantle Pistol", p: {raid_ft: 600}},
 	{i: 78047, n: "Kaiser Snake Pistol", p: {coin: 1100000}},
 	{i: 78113, n: "Kaiser Snake Pistol", p: {coin: 1100000}}
 ],
@@ -2027,14 +2027,14 @@ Scepter: [
 	{i: 76821, n: "Tizlak's Wand", p: {coin: 1100000}},
 	{i: 78063, n: "Kaiser Snake Scepter", p: {coin: 1100000}},
 	{i: 78099, n: "Kaiser Snake Scepter", p: {coin: 1100000}},
-	{i: 78795, n: "Defender's White Mantle Rod", p: {coin: 1100000}},
-	{i: 78802, n: "Healer's Xera Scepter", p: {coin: 1100000}},
-	{i: 78808, n: "Defender's Xera Scepter", p: {coin: 1100000}},
-	{i: 78847, n: "Assaulter's White Mantle Rod", p: {coin: 1100000}},
-	{i: 78852, n: "Assaulter's Xera Scepter", p: {coin: 1100000}},
-	{i: 78881, n: "Malicious Xera Scepter", p: {coin: 1100000}},
-	{i: 78945, n: "Malicious White Mantle Rod", p: {coin: 1100000}},
-	{i: 78980, n: "Healer's White Mantle Rod", p: {coin: 1100000}}
+	{i: 78795, n: "Defender's White Mantle Rod", p: {raid_ft: 600}},
+	{i: 78802, n: "Healer's Xera Scepter", p: {raid_ft: 600}},
+	{i: 78808, n: "Defender's Xera Scepter", p: {raid_ft: 600}},
+	{i: 78847, n: "Assaulter's White Mantle Rod", p: {raid_ft: 600}},
+	{i: 78852, n: "Assaulter's Xera Scepter", p: {raid_ft: 600}},
+	{i: 78881, n: "Malicious Xera Scepter", p: {raid_ft: 600}},
+	{i: 78945, n: "Malicious White Mantle Rod", p: {raid_ft: 600}},
+	{i: 78980, n: "Healer's White Mantle Rod", p: {raid_ft: 600}}
 ],
 Focus: [
 	{i: 77455, n: "Chest of Foci", p: {coin: 1000000}},
@@ -2074,10 +2074,10 @@ Focus: [
 	{i: 77944, n: "Malicious Slothasor Effigy", p: {raid_ft: 600}},
 	{i: 78060, n: "Kaiser Snake Focus", p: {coin: 1000000}},
 	{i: 78102, n: "Kaiser Snake Focus", p: {coin: 1000000}},
-	{i: 78844, n: "Assaulter's White Mantle Icon", p: {coin: 1000000}},
-	{i: 78880, n: "Defender's White Mantle Icon", p: {coin: 1000000}},
-	{i: 78964, n: "Healer's White Mantle Icon", p: {coin: 1000000}},
-	{i: 78991, n: "Malicious White Mantle Icon", p: {coin: 1000000}}
+	{i: 78844, n: "Assaulter's White Mantle Icon", p: {raid_ft: 600}},
+	{i: 78880, n: "Defender's White Mantle Icon", p: {raid_ft: 600}},
+	{i: 78964, n: "Healer's White Mantle Icon", p: {raid_ft: 600}},
+	{i: 78991, n: "Malicious White Mantle Icon", p: {raid_ft: 600}}
 ],
 Shield: [
 	{i: 77381, n: "Chest of Shields", p: {coin: 1000000}},
@@ -2118,10 +2118,10 @@ Shield: [
 	{i: 77438, n: "Malicious Spirit Ward", p: {raid_ft: 600}},
 	{i: 77444, n: "Assaulter's Spirit Ward", p: {raid_ft: 600}},
 	{i: 77453, n: "Healer's Spirit Ward", p: {raid_ft: 600}},
-	{i: 77855, n: "Healer's White Mantle Bulwark", p: {coin: 1000000}},
-	{i: 77909, n: "Malicious White Mantle Bulwark", p: {coin: 1000000}},
-	{i: 77918, n: "Defender's White Mantle Bulwark", p: {coin: 1000000}},
-	{i: 77964, n: "Assaulter's White Mantle Bulwark", p: {coin: 1000000}},
+	{i: 77855, n: "Healer's White Mantle Bulwark", p: {raid_ft: 600}},
+	{i: 77909, n: "Malicious White Mantle Bulwark", p: {raid_ft: 600}},
+	{i: 77918, n: "Defender's White Mantle Bulwark", p: {raid_ft: 600}},
+	{i: 77964, n: "Assaulter's White Mantle Bulwark", p: {raid_ft: 600}},
 	{i: 78092, n: "Kaiser Snake Shield", p: {coin: 1000000}},
 	{i: 78093, n: "Kaiser Snake Shield", p: {coin: 1000000}},
 	{i: 79836, n: "Friendship", p: {coin: 1000000}}
@@ -2158,17 +2158,17 @@ Torch: [
 	{i: 75611, n: "Tizlak's Brazier", p: {coin: 1000000}},
 	{i: 75820, n: "Maklain's Brazier", p: {coin: 1000000}},
 	{i: 76271, n: "Yassith's Brazier", p: {coin: 1000000}},
-	{i: 77885, n: "Malicious White Mantle Censer", p: {coin: 1000000}},
-	{i: 77904, n: "Assaulter's White Mantle Censer", p: {coin: 1000000}},
-	{i: 77974, n: "Healer's White Mantle Censer", p: {coin: 1000000}},
-	{i: 77990, n: "Defender's White Mantle Censer", p: {coin: 1000000}},
+	{i: 77885, n: "Malicious White Mantle Censer", p: {raid_ft: 600}},
+	{i: 77904, n: "Assaulter's White Mantle Censer", p: {raid_ft: 600}},
+	{i: 77974, n: "Healer's White Mantle Censer", p: {raid_ft: 600}},
+	{i: 77990, n: "Defender's White Mantle Censer", p: {raid_ft: 600}},
 	{i: 78040, n: "Kaiser Snake Torch", p: {coin: 1000000}},
 	{i: 78111, n: "Kaiser Snake Torch", p: {coin: 1000000}},
 	{i: 71161, n: "Laranthir's Brazier", p: {coin: 1000000}},
-	{i: 78869, n: "Healer's Keep Construct Torch", p: {coin: 1000000}},
-	{i: 78903, n: "Malicious Keep Construct Torch", p: {coin: 1000000}},
-	{i: 78953, n: "Defender's Keep Construct Torch", p: {coin: 1000000}},
-	{i: 78986, n: "Assaulter's Keep Construct Torch", p: {coin: 1000000}}
+	{i: 78869, n: "Healer's Keep Construct Torch", p: {raid_ft: 600}},
+	{i: 78903, n: "Malicious Keep Construct Torch", p: {raid_ft: 600}},
+	{i: 78953, n: "Defender's Keep Construct Torch", p: {raid_ft: 600}},
+	{i: 78986, n: "Assaulter's Keep Construct Torch", p: {raid_ft: 600}}
 ],
 Warhorn: [
 	{i: 77332, n: "Chest of Warhorns", p: {coin: 1000000}},
@@ -2203,10 +2203,10 @@ Warhorn: [
 	{i: 75325, n: "Yassith's Herald", p: {coin: 1000000}},
 	{i: 75697, n: "Pahua's Herald", p: {coin: 1000000}},
 	{i: 76824, n: "Laranthir's Herald", p: {coin: 1000000}},
-	{i: 77876, n: "Malicious White Mantle Bugle", p: {coin: 1000000}},
-	{i: 77896, n: "Assaulter's White Mantle Bugle", p: {coin: 1000000}},
-	{i: 77950, n: "Healer's White Mantle Bugle", p: {coin: 1000000}},
-	{i: 77979, n: "Defender's White Mantle Bugle", p: {coin: 1000000}},
+	{i: 77876, n: "Malicious White Mantle Bugle", p: {raid_ft: 600}},
+	{i: 77896, n: "Assaulter's White Mantle Bugle", p: {raid_ft: 600}},
+	{i: 77950, n: "Healer's White Mantle Bugle", p: {raid_ft: 600}},
+	{i: 77979, n: "Defender's White Mantle Bugle", p: {raid_ft: 600}},
 	{i: 78044, n: "Kaiser Snake Warhorn", p: {coin: 1000000}},
 	{i: 78109, n: "Kaiser Snake Warhorn", p: {coin: 1000000}}
 ],
@@ -2247,10 +2247,10 @@ Greatsword: [
 	{i: 77358, n: "Malicious Sparking Vanquisher", p: {raid_ft: 600}},
 	{i: 77427, n: "Assaulter's Sparking Vanquisher", p: {raid_ft: 600}},
 	{i: 77454, n: "Defender's Sparking Vanquisher", p: {raid_ft: 600}},
-	{i: 77813, n: "Healer's White Mantle Sunderer", p: {coin: 1200000}},
-	{i: 77864, n: "Defender's White Mantle Sunderer", p: {coin: 1200000}},
-	{i: 77942, n: "Assaulter's White Mantle Sunderer", p: {coin: 1200000}},
-	{i: 77943, n: "Malicious White Mantle Sunderer", p: {coin: 1200000}},
+	{i: 77813, n: "Healer's White Mantle Sunderer", p: {raid_ft: 600}},
+	{i: 77864, n: "Defender's White Mantle Sunderer", p: {raid_ft: 600}},
+	{i: 77942, n: "Assaulter's White Mantle Sunderer", p: {raid_ft: 600}},
+	{i: 77943, n: "Malicious White Mantle Sunderer", p: {raid_ft: 600}},
 	{i: 78037, n: "Kaiser Snake Greatsword", p: {coin: 1200000}},
 	{i: 78059, n: "Kaiser Snake Greatsword", p: {coin: 1200000}}
 ],
@@ -2293,10 +2293,10 @@ Hammer: [
 	{i: 77992, n: "Healer's Sloth-Hunting Hammer", p: {raid_ft: 600}},
 	{i: 78051, n: "Kaiser Snake Hammer", p: {coin: 1100000}},
 	{i: 78104, n: "Kaiser Snake Hammer", p: {coin: 1100000}},
-	{i: 78835, n: "Healer's White Mantle Hammer", p: {coin: 1100000}},
-	{i: 78843, n: "Defender's White Mantle Hammer", p: {coin: 1100000}},
-	{i: 78875, n: "Assaulter's White Mantle Hammer", p: {coin: 1100000}},
-	{i: 78919, n: "Malicious White Mantle Hammer", p: {coin: 1100000}}
+	{i: 78835, n: "Healer's White Mantle Hammer", p: {raid_ft: 600}},
+	{i: 78843, n: "Defender's White Mantle Hammer", p: {raid_ft: 600}},
+	{i: 78875, n: "Assaulter's White Mantle Hammer", p: {raid_ft: 600}},
+	{i: 78919, n: "Malicious White Mantle Hammer", p: {raid_ft: 600}}
 ],
 LongBow: [
 	{i: 77400, n: "Chest of Longbows", p: {coin: 1300000}},
@@ -2331,10 +2331,10 @@ LongBow: [
 	{i: 75025, n: "Laranthir's Greatbow", p: {coin: 1300000}},
 	{i: 75642, n: "Pahua's Greatbow", p: {coin: 1300000}},
 	{i: 75747, n: "Svaard's Greatbow", p: {coin: 1300000}},
-	{i: 77842, n: "Healer's White Mantle Greatbow", p: {coin: 1300000}},
-	{i: 77924, n: "Assaulter's White Mantle Greatbow", p: {coin: 1300000}},
-	{i: 77959, n: "Defender's White Mantle Greatbow", p: {coin: 1300000}},
-	{i: 77972, n: "Malicious White Mantle Greatbow", p: {coin: 1300000}},
+	{i: 77842, n: "Healer's White Mantle Greatbow", p: {raid_ft: 600}},
+	{i: 77924, n: "Assaulter's White Mantle Greatbow", p: {raid_ft: 600}},
+	{i: 77959, n: "Defender's White Mantle Greatbow", p: {raid_ft: 600}},
+	{i: 77972, n: "Malicious White Mantle Greatbow", p: {raid_ft: 600}},
 	{i: 78014, n: "Kaiser Snake Longbow", p: {coin: 1300000}},
 	{i: 78020, n: "Kaiser Snake Longbow", p: {coin: 1300000}}
 ],
@@ -2368,15 +2368,15 @@ ShortBow: [
 	{i: 76878, n: "Laranthir's Short Bow", p: {coin: 1300000}},
 	{i: 74569, n: "Yassith's Short Bow", p: {coin: 1300000}},
 	{i: 75644, n: "Maklain's Short Bow", p: {coin: 1300000}},
+	{i: 75743, n: "Ruka's Short Bow", p: {coin: 1300000}},
 	{i: 76256, n: "Pahua's Short Bow", p: {coin: 1300000}},
-	{i: 77903, n: "Healer's White Mantle Short Bow", p: {coin: 1300000}},
-	{i: 77907, n: "Malicious White Mantle Short Bow", p: {coin: 1300000}},
-	{i: 77933, n: "Assaulter's White Mantle Short Bow", p: {coin: 1300000}},
-	{i: 77965, n: "Defender's White Mantle Short Bow", p: {coin: 1300000}},
+	{i: 77903, n: "Healer's White Mantle Short Bow", p: {raid_ft: 600}},
+	{i: 77907, n: "Malicious White Mantle Short Bow", p: {raid_ft: 600}},
+	{i: 77933, n: "Assaulter's White Mantle Short Bow", p: {raid_ft: 600}},
+	{i: 77965, n: "Defender's White Mantle Short Bow", p: {raid_ft: 600}},
 	{i: 78055, n: "Kaiser Snake Short Bow", p: {coin: 1300000}},
 	{i: 78091, n: "Kaiser Snake Short Bow", p: {coin: 1300000}},
-	{i: 78425, n: "Tigris", p: {coin: 1300000}},
-	{i: 75743, n: "Ruka's Short Bow"}
+	{i: 78425, n: "Tigris", p: {coin: 1300000}}
 ],
 Rifle: [
 	{i: 77432, n: "Chest of Rifles", p: {coin: 1200000}},
@@ -2416,10 +2416,10 @@ Rifle: [
 	{i: 78032, n: "Kaiser Snake Rifle", p: {coin: 1200000}},
 	{i: 78083, n: "Kaiser Snake Rifle", p: {coin: 1200000}},
 	{i: 76984, n: "Pahua's Musket", p: {coin: 1200000}},
-	{i: 78822, n: "Healer's White Mantle Rifle", p: {coin: 1200000}},
-	{i: 78885, n: "Malicious White Mantle Rifle", p: {coin: 1200000}},
-	{i: 78927, n: "Assaulter's White Mantle Rifle", p: {coin: 1200000}},
-	{i: 78967, n: "Defender's White Mantle Rifle", p: {coin: 1200000}}
+	{i: 78822, n: "Healer's White Mantle Rifle", p: {raid_ft: 600}},
+	{i: 78885, n: "Malicious White Mantle Rifle", p: {raid_ft: 600}},
+	{i: 78927, n: "Assaulter's White Mantle Rifle", p: {raid_ft: 600}},
+	{i: 78967, n: "Defender's White Mantle Rifle", p: {raid_ft: 600}}
 ],
 Staff: [
 	{i: 77289, n: "Chest of Staves", p: {coin: 1200000}},
@@ -2466,10 +2466,10 @@ Staff: [
 	{i: 77936, n: "Matthias's Defender Staff", p: {raid_ft: 600}},
 	{i: 78078, n: "Kaiser Snake Staff", p: {coin: 1200000}},
 	{i: 78080, n: "Kaiser Snake Staff", p: {coin: 1200000}},
-	{i: 78805, n: "Defender's White Mantle Staff", p: {coin: 1200000}},
-	{i: 78895, n: "Malicious White Mantle Staff", p: {coin: 1200000}},
-	{i: 78911, n: "Assaulter's White Mantle Staff", p: {coin: 1200000}},
-	{i: 78931, n: "Healer's White Mantle Staff", p: {coin: 1200000}},
+	{i: 78805, n: "Defender's White Mantle Staff", p: {raid_ft: 600}},
+	{i: 78895, n: "Malicious White Mantle Staff", p: {raid_ft: 600}},
+	{i: 78911, n: "Assaulter's White Mantle Staff", p: {raid_ft: 600}},
+	{i: 78931, n: "Healer's White Mantle Staff", p: {raid_ft: 600}},
 	{i: 79364, n: "Great Destroyer's Talon", p: {coin: 1200000}}
 ],
 Harpoon: [
