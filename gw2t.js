@@ -4271,19 +4271,19 @@ U = {
 	{
 		$(pSelector).each(function()
 		{
-			$(this).attr("href", I.cSiteURL + "out/?u=" + U.encodeURL($(this).attr("href")))
+			$(this).attr("href", I.cSiteExternal + U.encodeURL($(this).attr("href")))
 				.attr("target", "_blank");
 		});
 	},
 	convertExternalURL: function(pURL)
 	{
 		// Prefixes the outgoing page to the URL
-		return I.cSiteURL + "out/?u=" + U.encodeURL(pURL);
+		return I.cSiteExternal + U.encodeURL(pURL);
 	},
 	convertExternalAnchor: function(pURL)
 	{
 		// This is to be placed within the property of an <a> tag
-		return " href='" + I.cSiteURL + "out/?u=" + U.encodeURL(pURL) + "' target='_blank' ";
+		return " href='" + I.cSiteExternal + U.encodeURL(pURL) + "' target='_blank' ";
 	},
 	convertPrivateAnchor: function(pURL)
 	{
@@ -4299,7 +4299,27 @@ U = {
 	 */
 	convertExternalString: function(pHTML)
 	{
-		return pHTML.replace(/href='/g, "target='_blank' href='" + I.cSiteURL + "out/?u=");
+		return pHTML.replace(/href='/g, "target='_blank' href='" + I.cSiteExternal);
+	},
+	
+	/*
+	 * Converts an internal URL to have the currently used mode query string.
+	 * @param string pSelector
+	 */
+	convertModeLink: function(pSelector)
+	{
+		if (I.ModeCurrent !== I.ModeEnum.Website)
+		{
+			$(pSelector).each(function()
+			{
+				var url = $(this).attr("href");
+				if (url && url.indexOf(I.cSiteExternal) !== 0
+					&& (url.indexOf(I.cSiteURL) === 0 || url.indexOf("./") === 0))
+				{
+					$(this).attr("href", url + U.getDivider(url) + "mode=" + I.ModeCurrent);
+				}
+			});
+		}
 	},
 	
 	/*
@@ -4308,7 +4328,7 @@ U = {
 	 */
 	openExternalURL: function(pURL)
 	{
-		window.open(I.cSiteURL + "out/?u=" + U.encodeURL(pURL), "_blank");
+		window.open(I.cSiteExternal + U.encodeURL(pURL), "_blank");
 	},
 	openPrivateURL: function(pURL)
 	{
@@ -6974,6 +6994,7 @@ A = {
 				$(this).html(D.getWordCapital(word));
 			});
 		}
+		U.convertModeLink("#accDirectory a");
 	
 		// Finally
 		setTimeout(function()
@@ -32345,6 +32366,7 @@ I = {
 	cSiteName: "GW2Timer.com",
 	cSiteLink: "gw2timer.com/",
 	cSiteURL: "http://gw2timer.com/",
+	cSiteExternal: "http://gw2timer.com/out/?u=",
 	cImageHost: "http://i.imgur.com/",
 	cGameName: "Guild Wars 2",
 	cGameNick: "GW2",
@@ -34434,14 +34456,7 @@ I = {
 	 */
 	initializeUIForHUD: function()
 	{
-		if (I.ModeCurrent === I.ModeEnum.Overlay)
-		{
-			$(".hudDirectory").find(".linkInternal").each(function()
-			{
-				var src = $(this).attr("href");
-				$(this).attr("href", src + U.getDivider(src) + "mode=Overlay");
-			});
-		}
+		U.convertModeLink(".hudDirectory a");
 		$(".hudPeripheral").css({visibility: "visible"});
 	},
 	
