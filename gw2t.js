@@ -4310,13 +4310,14 @@ U = {
 	{
 		if (I.ModeCurrent !== I.ModeEnum.Website)
 		{
+			var mode = (I.isProjectionEnabled) ? I.ModeEnum.Projection : I.ModeCurrent;
 			$(pSelector).each(function()
 			{
 				var url = $(this).attr("href");
 				if (url && url.indexOf(I.cSiteExternal) !== 0
 					&& (url.indexOf(I.cSiteURL) === 0 || url.indexOf("./") === 0))
 				{
-					$(this).attr("href", url + U.getDivider(url) + "mode=" + I.ModeCurrent);
+					$(this).attr("href", url + U.getDivider(url) + "mode=" + mode);
 				}
 			});
 		}
@@ -34501,10 +34502,13 @@ I = {
 				I.showContextMenu(htmlidprefix + "Context");
 			});
 			// Initialize this submode
-			U.getScript(U.URL_API.ThreeDimensional, function()
+			if (false) // Temporary disable
 			{
-				J.initializeProjection();
-			});
+				U.getScript(U.URL_API.ThreeDimensional, function()
+				{
+					J.initializeProjection();
+				});
+			}
 		}
 		
 		// Load respective stylesheet
